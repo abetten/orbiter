@@ -2670,11 +2670,11 @@ public:
 	homogeneous_polynomial_domain *Poly3_4;
 		// cubic polynomials in four variables
 
-	int *Double_six; // [36 * 12]
+	long int *Double_six; // [36 * 12]
 	char **Double_six_label_tex; // [36]
 
 
-	int *Half_double_sixes; // [72 * 6] 
+	long int *Half_double_sixes; // [72 * 6]
 		// warning: the half double sixes are sorted individually,
 		// so the pairing between the lines 
 		// in the associated double six is gone.
@@ -2821,10 +2821,10 @@ public:
 	void create_surface_family_S(int a, long int *Lines27,
 		int *equation20, int verbose_level);
 	void compute_tritangent_planes(long int *Lines,
-		int *&Tritangent_planes, int &nb_tritangent_planes, 
-		int *&Unitangent_planes, int &nb_unitangent_planes, 
-		int *&Lines_in_tritangent_plane, 
-		int *&Line_in_unitangent_plane, 
+		long int *&Tritangent_planes, int &nb_tritangent_planes,
+		long int *&Unitangent_planes, int &nb_unitangent_planes,
+		long int *&Lines_in_tritangent_plane,
+		long int *&Line_in_unitangent_plane,
 		int verbose_level);
 #if 0
 	void compute_external_lines_on_three_tritangent_planes(long int *Lines,
@@ -2833,7 +2833,7 @@ public:
 #endif
 	void init_double_sixes(int verbose_level);
 	void create_half_double_sixes(int verbose_level);
-	int find_half_double_six(int *half_double_six);
+	int find_half_double_six(long int *half_double_six);
 	void ijklm2n(int i, int j, int k, int l, int m, int &n);
 	void ijkl2mn(int i, int j, int k, int l, int &m, int &n);
 	void ijk2lmn(int i, int j, int k, int &l, int &m, int &n);
@@ -2961,6 +2961,7 @@ public:
 	// surface_io.cpp:
 	void print_equation(std::ostream &ost, int *coeffs);
 	void print_equation_tex(std::ostream &ost, int *coeffs);
+	void print_equation_tex_lint(std::ostream &ost, long int *coeffs);
 	void latex_double_six(std::ostream &ost, long int *double_six);
 	void make_spreadsheet_of_lines_in_three_kinds(spreadsheet *&Sp,
 		long int *Wedge_rk, long int *Line_rk, long int *Klein_rk, int nb_lines,
@@ -2990,11 +2991,11 @@ public:
 	void print_set_of_lines_tex(std::ostream &ost, long int *v, int len);
 	void latex_table_of_clebsch_maps(std::ostream &ost);
 	void print_half_double_sixes_in_GAP();
-	void sstr_line_label(std::stringstream &sstr, int pt);
+	void sstr_line_label(std::stringstream &sstr, long int pt);
 
 };
 
-void callback_surface_domain_sstr_line_label(std::stringstream &sstr, int pt, void *data);
+void callback_surface_domain_sstr_line_label(std::stringstream &sstr, long int pt, void *data);
 
 // #############################################################################
 // surface_object.cpp
@@ -3042,22 +3043,22 @@ public:
 	
 	long int *Tritangent_plane_rk; // [45]
 
-	int *Tritangent_planes; // [nb_tritangent_planes]
+	long int *Tritangent_planes; // [nb_tritangent_planes]
 	int nb_tritangent_planes;
-	int *Lines_in_tritangent_plane; // [nb_tritangent_planes * 3]
+	long int *Lines_in_tritangent_plane; // [nb_tritangent_planes * 3]
 	int *Tritangent_plane_dual; // [nb_tritangent_planes]
 
 	int *iso_type_of_tritangent_plane; // [nb_tritangent_planes]
 	classify *Type_iso_tritangent_planes;
 
-	int *Unitangent_planes; // [nb_unitangent_planes]
+	long int *Unitangent_planes; // [nb_unitangent_planes]
 	int nb_unitangent_planes;
-	int *Line_in_unitangent_plane; // [nb_unitangent_planes]
+	long int *Line_in_unitangent_plane; // [nb_unitangent_planes]
 
 	int *Tritangent_planes_on_lines; // [27 * 5]
 	int *Tritangent_plane_to_Eckardt; // [nb_tritangent_planes]
 	int *Eckardt_to_Tritangent_plane; // [nb_tritangent_planes]
-	int *Trihedral_pairs_as_tritangent_planes; // [nb_trihedral_pairs * 6]
+	long int *Trihedral_pairs_as_tritangent_planes; // [nb_trihedral_pairs * 6]
 	int *Unitangent_planes_on_lines; // [27 * (q + 1 - 5)]
 
 
@@ -3140,9 +3141,9 @@ public:
 		int &line1, int &line2);
 	int find_unique_line_in_plane(int plane_idx, int forbidden_line1, 
 		int forbidden_line2);
-	void identify_lines(int *lines, int nb_lines, int *line_idx, 
+	void identify_lines(long int *lines, int nb_lines, int *line_idx,
 		int verbose_level);
-	void print_nine_lines_latex(std::ostream &ost, int *nine_lines,
+	void print_nine_lines_latex(std::ostream &ost, long int *nine_lines,
 		int *nine_lines_idx);
 	int choose_tritangent_plane(int line_a, int line_b, 
 		int transversal_line, int verbose_level);
@@ -3155,9 +3156,9 @@ public:
 	void compute_transversal_lines(
 		int line_a, int line_b, int *transversals5, 
 		int verbose_level);
-	void clebsch_map_find_arc_and_lines(int *Clebsch_map, 
-		int *Arc, int *Blown_up_lines, int verbose_level);
-	void clebsch_map_print_fibers(int *Clebsch_map);
+	void clebsch_map_find_arc_and_lines(long int *Clebsch_map,
+		long int *Arc, long int *Blown_up_lines, int verbose_level);
+	void clebsch_map_print_fibers(long int *Clebsch_map);
 	//void compute_clebsch_maps(int verbose_level);
 	void compute_clebsch_map(int line_a, int line_b, 
 		int transversal_line, 

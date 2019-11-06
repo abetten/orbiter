@@ -230,7 +230,7 @@ void recoordinatize::do_recoordinatize(
 		}
 }
 
-void recoordinatize::compute_starter(int *&S, int &size, 
+void recoordinatize::compute_starter(long int *&S, int &size,
 	strong_generators *&Strong_gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -250,7 +250,7 @@ void recoordinatize::compute_starter(int *&S, int &size,
 
 	// initialize S with the vector (j1,j2,j3):
 	size = 3;
-	S = NEW_int(size);
+	S = NEW_lint(size);
 
 	S[0] = starter_j1;
 	S[1] = starter_j2;

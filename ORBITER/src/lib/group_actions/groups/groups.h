@@ -862,14 +862,14 @@ public:
 		void (*print_point)(std::ostream &ost, int pt, void *data),
 			void *data);
 	void print_and_list_orbits_using_labels(std::ostream &ost,
-		int *labels);
+		long int *labels);
 	void print_tables(std::ostream &ost, int f_with_cosetrep);
 	void print_tables_latex(std::ostream &ost, int f_with_cosetrep);
 	void print_generators();
 	void print_generators_latex(std::ostream &ost);
 	void print_generators_with_permutations();
 	void print_orbit(int orbit_no);
-	void print_orbit_using_labels(int orbit_no, int *labels);
+	void print_orbit_using_labels(int orbit_no, long int *labels);
 	void print_orbit(std::ostream &ost, int orbit_no);
 	void print_orbit_tex(std::ostream &ost, int orbit_no);
 	void print_and_list_orbit_and_stabilizer_tex(int i,
@@ -890,7 +890,7 @@ public:
 		action *default_action, strong_generators *gens_full_group);
 	void print_and_list_orbits_sorted_by_length(std::ostream &ost);
 	void print_and_list_orbits_sorted_by_length(std::ostream &ost, int f_tex);
-	void print_orbit_using_labels(std::ostream &ost, int orbit_no, int *labels);
+	void print_orbit_using_labels(std::ostream &ost, int orbit_no, long int *labels);
 	void print_orbit_using_callback(std::ostream &ost, int orbit_no,
 		void (*print_point)(std::ostream &ost, int pt, void *data),
 		void *data);

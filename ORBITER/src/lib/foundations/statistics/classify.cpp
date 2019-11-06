@@ -567,6 +567,35 @@ void classify::get_class_by_value(
 	//exit(1);
 }
 
+void classify::get_class_by_value_lint(
+		long int *&Pts, int &nb_pts, int value, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "classify::get_class_by_value_lint" << endl;
+		}
+	int i, j, f, l;
+
+	for (i = 0; i < nb_types; i++) {
+		f = type_first[i];
+		l = type_len[i];
+		if (data_sorted[f] == value) {
+			nb_pts = l;
+			Pts = NEW_lint(nb_pts);
+			for (j = 0; j < l; j++) {
+				Pts[j] = sorting_perm_inv[f + j];
+				}
+			return;
+			}
+		}
+	Pts = NEW_lint(1);
+	nb_pts = 0;
+	//cout << "classify::get_class_by_value
+	//did not find the value" << endl;
+	//exit(1);
+}
+
 set_of_sets *classify::get_set_partition_and_types(
 		int *&types, int &nb_types, int verbose_level)
 {

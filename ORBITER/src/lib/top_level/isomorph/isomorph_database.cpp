@@ -264,7 +264,7 @@ void isomorph::load_solution(int id, long int *data)
 }
 
 void isomorph::load_solution_by_btree(
-		int btree_idx, int idx, int &id, int *data)
+		int btree_idx, int idx, int &id, long int *data)
 {
 	//int i;
 	Vector v;
@@ -283,7 +283,7 @@ void isomorph::load_solution_by_btree(
 
 
 int isomorph::find_extension_easy(
-		int *set, int case_nb, int &idx, int verbose_level)
+		long int *set, int case_nb, int &idx, int verbose_level)
 // case_nb is the starter that is associated with the given set.
 // We wish to find out if the set is a solution that has been stored 
 // with that starter. 
@@ -332,12 +332,12 @@ int isomorph::find_extension_easy(
 #endif
 }
 
-int isomorph::find_extension_search_interval(int *set, 
+int isomorph::find_extension_search_interval(long int *set,
 	int first, int len, int &idx, 
 	int f_btree_idx, int btree_idx, 
 	int f_through_hash, int verbose_level)
 {
-	int *data = find_extension_set1;
+	long int *data = find_extension_set1;
 	int i, id = 0;
 	sorting Sorting;
 	
@@ -354,8 +354,8 @@ int isomorph::find_extension_search_interval(int *set,
 				}
 			load_solution(id, data);
 			}
-		Sorting.int_vec_heapsort(data + level, size - level);
-		if (int_vec_compare(set + level, data + level, size - level) == 0) {
+		Sorting.lint_vec_heapsort(data + level, size - level);
+		if (lint_vec_compare(set + level, data + level, size - level) == 0) {
 			break;
 			}
 		}
@@ -369,7 +369,7 @@ int isomorph::find_extension_search_interval(int *set,
 	return TRUE;
 }
 
-int isomorph::find_extension_easy_old(int *set,
+int isomorph::find_extension_easy_old(long int *set,
 		int case_nb, int &idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -380,7 +380,7 @@ int isomorph::find_extension_easy_old(int *set,
 		cout << "isomorph::find_extension_easy_old" << endl;
 		cout << "case_nb=" << case_nb << endl;
 		}
-	Sorting.int_vec_heapsort(set + level, size - level);
+	Sorting.lint_vec_heapsort(set + level, size - level);
 	first = solution_first[case_nb];
 	len = solution_len[case_nb];
 	ret = find_extension_search_interval(set, 
@@ -398,7 +398,7 @@ int isomorph::find_extension_easy_old(int *set,
 	return ret;
 }
 
-int isomorph::find_extension_easy_new(int *set,
+int isomorph::find_extension_easy_new(long int *set,
 		int case_nb, int &idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -410,11 +410,11 @@ int isomorph::find_extension_easy_new(int *set,
 	if (f_v) {
 		cout << "isomorph::find_extension_easy_new" << endl;
 		}
-	Sorting.int_vec_heapsort(set + level, size - level);
+	Sorting.lint_vec_heapsort(set + level, size - level);
 	
 	int h;
 
-	h = int_vec_hash_after_sorting(set, size);
+	h = lint_vec_hash_after_sorting(set, size);
 	if (f_v) {
 		cout << "isomorph::find_extension_easy_new h=" << h << endl;
 		}
@@ -514,7 +514,7 @@ finish:
 	
 }
 
-int isomorph::open_database_and_identify_object(int *set,
+int isomorph::open_database_and_identify_object(long int *set,
 	int *transporter,
 	int f_implicit_fusion, int verbose_level)
 {
@@ -593,8 +593,8 @@ void isomorph::create_level_database(int level, int verbose_level)
 	//int f_vvv = (verbose_level >= 3);
 	int f, nb_nodes, I, J, i, j, idx, print_mod = 1;
 	poset_orbit_node *O;
-	int set1[1000];
-	int set2[1000];
+	long int set1[1000];
+	long int set2[1000];
 	//char *elt;
 	sorting Sorting;
 
@@ -636,7 +636,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 				cout << "isomorph::create_level_database level "
 						<< level << " i=" << i << " / " << nb_nodes
 						<< " set=";
-				int_vec_print(cout, set1, level);
+				lint_vec_print(cout, set1, level);
 				cout << endl;
 				}
 
@@ -714,13 +714,13 @@ void isomorph::create_level_database(int level, int verbose_level)
 
 
 					gen->Poset->A2->map_a_set(set1, set2, level + 1, gen->Elt1, 0);
-					Sorting.int_vec_heapsort(set2, level + 1);
+					Sorting.lint_vec_heapsort(set2, level + 1);
 
 					if (f_vv /*f_vv && (i % print_mod) == 0*/) {
 						cout << "mapping ";
-						int_vec_print(cout, set1, level + 1);
+						lint_vec_print(cout, set1, level + 1);
 						cout << " to ";
-						int_vec_print(cout, set2, level + 1);
+						lint_vec_print(cout, set2, level + 1);
 						cout << endl;
 						}
 		

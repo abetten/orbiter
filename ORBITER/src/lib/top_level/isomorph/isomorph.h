@@ -217,11 +217,11 @@ public:
 	
 	int subset_rank;
 	int *subset;
-	int *subset_witness;
-	int *rearranged_set;
-	int *rearranged_set_save;
-	int *canonical_set;
-	int *tmp_set;
+	long int *subset_witness;
+	long int *rearranged_set;
+	long int *rearranged_set_save;
+	long int *canonical_set;
+	long int *tmp_set;
 	int *Elt_transporter, *tmp_Elt, *Elt1, *transporter;
 
 	int cnt_minimal;
@@ -241,22 +241,22 @@ public:
 
 	// temporary data used in identify_solution
 	int f_tmp_data_has_been_allocated;
-	int *tmp_set1;
-	int *tmp_set2;
-	int *tmp_set3;
+	long int *tmp_set1;
+	long int *tmp_set2;
+	long int *tmp_set3;
 	int *tmp_Elt1;
 	int *tmp_Elt2;
 	int *tmp_Elt3;
 	// temporary data used in trace_set_recursion
-	int *trace_set_recursion_tmp_set1;
+	long int *trace_set_recursion_tmp_set1;
 	int *trace_set_recursion_Elt1;
 	// temporary data used in trace_set_recursion
-	int *apply_fusion_tmp_set1;
+	long int *apply_fusion_tmp_set1;
 	int *apply_fusion_Elt1;
 	// temporary data used in find_extension
-	int *find_extension_set1;
+	long int *find_extension_set1;
 	// temporary data used in make_set_smaller
-	int *make_set_smaller_set;
+	long int *make_set_smaller_set;
 	int *make_set_smaller_Elt1;
 	int *make_set_smaller_Elt2;
 	// temporary data used in orbit_representative
@@ -280,7 +280,7 @@ public:
 	int *hash_vs_id_hash; // sorted
 	int *hash_vs_id_id;
 	int f_use_table_of_solutions;
-	int *table_of_solutions; // [N * size]
+	long int *table_of_solutions; // [N * size]
 
 	// pointer only, do not free:
 	database *DB_level;
@@ -292,7 +292,7 @@ public:
 
 	void (*print_set_function)(isomorph *Iso, 
 		int iso_cnt, sims *Stab, schreier &Orb, 
-		int *data, void *print_set_data, int verbose_level);
+		long int *data, void *print_set_data, int verbose_level);
 	void *print_set_data;
 	
 
@@ -329,7 +329,7 @@ public:
 	void test_compute_stabilizer(int verbose_level);
 	void test_memory();
 	void test_edges(int verbose_level);
-	int test_edge(int n1, int *subset1, 
+	int test_edge(int n1, long int *subset1,
 		int *transporter, int verbose_level);
 	void read_data_files_for_starter(int level, 
 		const char *prefix, int verbose_level);
@@ -371,10 +371,10 @@ public:
 		int &f_eof, int print_mod, 
 		int f_implicit_fusion, int verbose_level);
 	int next_subset(int t0, 
-		int &f_continue, sims *Stab, int *data, 
+		int &f_continue, sims *Stab, long int *data,
 		int f_play_back, std::ifstream *play_back_file, int &f_eof,
 		int verbose_level);
-	void process_rearranged_set(sims *Stab, int *data, 
+	void process_rearranged_set(sims *Stab, long int *data,
 		int f_implicit_fusion, int verbose_level);
 	int is_minimal(int verbose_level);
 	void stabilizer_action_exit();
@@ -384,14 +384,14 @@ public:
 		// generators for the stabilizer in AA
 	void stabilizer_action_add_generator(int *Elt, int verbose_level);
 	void print_statistics_iso_test(int t0, sims *Stab);
-	int identify(int *set, int f_implicit_fusion, 
+	int identify(long int *set, int f_implicit_fusion,
 		int verbose_level);
-	int identify_database_is_open(int *set, 
+	int identify_database_is_open(long int *set,
 		int f_implicit_fusion, int verbose_level);
 	void induced_action_on_set_basic(sims *S, 
 		long int *set, int verbose_level);
 	void induced_action_on_set(sims *S, 
-		int *set, int verbose_level);
+		long int *set, int verbose_level);
 	// Called by do_iso_test and print_isomorphism_types
 	// Creates the induced action on the set from the given action.
 	// The given action is gen->A2
@@ -400,7 +400,7 @@ public:
 	// Allocates a n e w union_find data structure and initializes it
 	// using the generators in S.
 	// Calls action::induced_action_by_restriction()
-	int handle_automorphism(int *set, 
+	int handle_automorphism(long int *set,
 		sims *Stab, int *Elt, int verbose_level);
 
 	// isomorph_database.cpp
@@ -429,23 +429,23 @@ public:
 		int print_mod, int verbose_level);
 	void load_solution(int id, long int *data);
 	void load_solution_by_btree(int btree_idx, 
-		int idx, int &id, int *data);
-	int find_extension_easy(int *set, 
+		int idx, int &id, long int *data);
+	int find_extension_easy(long int *set,
 		int case_nb, int &idx, int verbose_level);
 		// returns TRUE if found, FALSE otherwise
 		// Called from identify_solution
 		// Linear search through all solutions at a given starter.
 		// calls load solution for each of the solutions 
 		// stored with the case and compares the vectors.
-	int find_extension_search_interval(int *set, 
+	int find_extension_search_interval(long int *set,
 		int first, int len, int &idx, 
 		int f_btree_idx, int btree_idx, 
 		int f_through_hash, int verbose_level);
-	int find_extension_easy_old(int *set, 
+	int find_extension_easy_old(long int *set,
 		int case_nb, int &idx, int verbose_level);
-	int find_extension_easy_new(int *set, 
+	int find_extension_easy_new(long int *set,
 		int case_nb, int &idx, int verbose_level);
-	int open_database_and_identify_object(int *set, 
+	int open_database_and_identify_object(long int *set,
 		int *transporter, 
 		int f_implicit_fusion, int verbose_level);
 	void init_DB_level(database &D, int level, 
@@ -470,7 +470,7 @@ public:
 		// Reads generators from file fp_ge
 
 	// isomorph_trace.cpp
-	int identify_solution_relaxed(int *set, int *transporter, 
+	int identify_solution_relaxed(long int *set, int *transporter,
 		int f_implicit_fusion, int &orbit_no, 
 		int &f_failure_to_find_point, 
 		int verbose_level);
@@ -478,14 +478,14 @@ public:
 	// the canonical version of set and the extension.
 	// Calls trace_set and find_extension_easy.
 	// Called from process_rearranged_set
-	int identify_solution(int *set, int *transporter, 
+	int identify_solution(long int *set, int *transporter,
 		int f_implicit_fusion, int &f_failure_to_find_point, 
 		int verbose_level);
 		// returns the orbit number corresponding to 
 		// the canonical version of set and the extension.
 		// Calls trace_set and find_extension_easy.
 		// If needed, calls make_set_smaller
-	int trace_set(int *canonical_set, int *transporter, 
+	int trace_set(long int *canonical_set, int *transporter,
 		int f_implicit_fusion, int &f_failure_to_find_point, 
 		int verbose_level);
 		// returns the case number of the canonical set 
@@ -493,7 +493,7 @@ public:
 		// Called from identify_solution and identify_solution_relaxed
 		// calls trace_set_recursion
 	void make_set_smaller(int case_nb_local, 
-		int *set, int *transporter, int verbose_level);
+		long int *set, int *transporter, int verbose_level);
 		// Called from identify_solution.
 		// The goal is to produce a set that is lexicographically 
 		// smaller than the current starter.
@@ -506,7 +506,7 @@ public:
 		// stabilizer of the current starter.
 	int trace_set_recursion(int cur_level, 
 		int cur_node_global, 
-		int *canonical_set, int *transporter, 
+		long int *canonical_set, int *transporter,
 		int f_implicit_fusion, 
 		int &f_failure_to_find_point, int verbose_level);
 		// returns the node in the generator that corresponds 
@@ -515,7 +515,7 @@ public:
 		// Calls trace_next_point and handle_extension.
 	int trace_next_point(int cur_level, 
 		int cur_node_global, 
-		int *canonical_set, int *transporter, 
+		long int *canonical_set, int *transporter,
 		int f_implicit_fusion, 
 		int &f_failure_to_find_point, int verbose_level);
 		// Called from trace_set_recursion
@@ -524,35 +524,35 @@ public:
 		// Returns FALSE is the set becomes lexicographically smaller
 	int trace_next_point_database(int cur_level, 
 		int cur_node_global, 
-		int *canonical_set, int *Elt_transporter, 
+		long int *canonical_set, int *Elt_transporter,
 		int verbose_level);
 		// Returns FALSE is the set becomes lexicographically smaller
 	int handle_extension(int cur_level, 
 		int cur_node_global, 
-		int *canonical_set, int *Elt_transporter, 
+		long int *canonical_set, int *Elt_transporter,
 		int f_implicit_fusion, 
 		int &f_failure_to_find_point, int verbose_level);
 	int handle_extension_database(int cur_level, 
 		int cur_node_global, 
-		int *canonical_set, int *Elt_transporter, 
+		long int *canonical_set, int *Elt_transporter,
 		int f_implicit_fusion, 
 		int &f_failure_to_find_point, 
 		int verbose_level);
 	int handle_extension_oracle(int cur_level, 
 		int cur_node_global, 
-		int *canonical_set, int *Elt_transporter, 
+		long int *canonical_set, int *Elt_transporter,
 		int f_implicit_fusion, 
 		int &f_failure_to_find_point, 
 		int verbose_level);
 	// Returns next_node_global at level cur_level + 1.
 	void apply_isomorphism_database(int cur_level, 
 		int cur_node_global, 
-		int current_extension, int *canonical_set, 
+		int current_extension, long int *canonical_set,
 		int *Elt_transporter, int ref, 
 		int verbose_level);
 	void apply_isomorphism_oracle(int cur_level, 
 		int cur_node_global, 
-		int current_extension, int *canonical_set, 
+		int current_extension, long int *canonical_set,
 		int *Elt_transporter, 
 		int verbose_level);
 
@@ -562,13 +562,13 @@ public:
 		int *Nb_sol, int verbose_level);
 	// Solutions[nb_starter], Nb_sol[nb_starter]
 	void count_solutions_from_clique_finder_case_by_case(int nb_files, 
-		int *list_of_cases, const char **fname, 
+		long int *list_of_cases, const char **fname,
 		int verbose_level);
 	void count_solutions_from_clique_finder(int nb_files, 
 		const char **fname, 
 		int verbose_level);
 	void read_solutions_from_clique_finder_case_by_case(int nb_files, 
-		int *list_of_cases, const char **fname, 
+		long int *list_of_cases, const char **fname,
 		int verbose_level);
 	void read_solutions_from_clique_finder(int nb_files, 
 		const char **fname, int verbose_level);
@@ -647,7 +647,7 @@ public:
 		int verbose_level);
 		// Calls print_set_function (if available)
 	void induced_action_on_set_and_kernel(std::ostream &file,
-		action *A, sims *Stab, int size, int *set, 
+		action *A, sims *Stab, int size, long int *set,
 		int verbose_level);
 	void handle_event_files(int nb_event_files, 
 		const char **event_file_name, int verbose_level);
@@ -751,7 +751,7 @@ public:
 //! auxiliary class to pass case specific data to the function isomorph_worker
 
 struct isomorph_worker_data {
-	int *the_set;
+	long int *the_set;
 	int set_size;
 	void *callback_data;
 };
@@ -792,7 +792,7 @@ struct isomorph_worker_data {
 		action *A_base, action *A, poset_classification *gen,
 		int size, const char *prefix_classify,
 		const char *prefix_iso, int level,
-		const char **fname, int *list_of_cases,
+		const char **fname, long int *list_of_cases,
 		int nb_files, int verbose_level);
 	void isomorph_read_solution_files_from_clique_finder(action *A_base,
 		action *A, poset_classification *gen,
@@ -824,7 +824,7 @@ struct isomorph_worker_data {
 		action *A, poset_classification *gen,
 		int size, const char *prefix_classify,
 		const char *prefix_iso, int level,
-		int nb_rows, int *Table, int *Iso_type,
+		int nb_rows, long int *Table, int *Iso_type,
 		int verbose_level);
 		// Table[nb_rows * size]
 	void isomorph_worker(action *A_base, action *A,

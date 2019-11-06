@@ -28,6 +28,11 @@ void surface_domain::print_equation_tex(ostream &ost, int *coeffs)
 	Poly3_4->print_equation(ost, coeffs);
 }
 
+void surface_domain::print_equation_tex_lint(ostream &ost, long int *coeffs)
+{
+	Poly3_4->print_equation_lint(ost, coeffs);
+}
+
 void surface_domain::latex_double_six(ostream &ost, long int *double_six)
 {
 	long int i, j, a, u, v;
@@ -277,13 +282,13 @@ void surface_domain::print_trihedral_pairs(ostream &ost)
 void surface_domain::latex_table_of_double_sixes(ostream &ost)
 {
 	int i, j;
-	int H[6];
+	long int H[6];
 
 	cout << "surface::latex_table_of_double_sixes" << endl;
 	ost << "\\begin{multicols}{2}" << endl;
 	for (i = 0; i < 72; i++) {
 
-		int_vec_copy(Half_double_sixes + i * 6, H, 6);
+		lint_vec_copy(Half_double_sixes + i * 6, H, 6);
 
 		ost << "$H_{" << i << "} = " << Half_double_six_label_tex[i] << endl;
 
@@ -895,7 +900,7 @@ void surface_domain::print_half_double_sixes_in_GAP()
 }
 
 
-void surface_domain::sstr_line_label(stringstream &sstr, int pt)
+void surface_domain::sstr_line_label(stringstream &sstr, long int pt)
 {
 	if (pt >= 27) {
 		cout << "surface_domain::sstr_line_label pt >= 27, pt=" << pt << endl;
@@ -908,7 +913,7 @@ void surface_domain::sstr_line_label(stringstream &sstr, int pt)
 	sstr << Line_label_tex[pt];
 }
 
-void callback_surface_domain_sstr_line_label(stringstream &sstr, int pt, void *data)
+void callback_surface_domain_sstr_line_label(stringstream &sstr, long int pt, void *data)
 {
 	surface_domain *D = (surface_domain *) data;
 

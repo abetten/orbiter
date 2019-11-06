@@ -278,32 +278,32 @@ void subspace_orbits::compute_orbits(int verbose_level)
 }
 
 void subspace_orbits::unrank_set_to_M(
-		int len, int *S)
+		int len, long int *S)
 {
 	int i;
 	
 	for (i = 0; i < len; i++) {
-		F->PG_element_unrank_modified(tmp_M + i * n, 1, n, S[i]);
+		F->PG_element_unrank_modified_lint(tmp_M + i * n, 1, n, S[i]);
 		}
 }
 
 void subspace_orbits::unrank_set_to_matrix(
-		int len, int *S, int *M)
+		int len, long int *S, int *M)
 {
 	int i;
 	
 	for (i = 0; i < len; i++) {
-		F->PG_element_unrank_modified(M + i * n, 1, n, S[i]);
+		F->PG_element_unrank_modified_lint(M + i * n, 1, n, S[i]);
 		}
 }
 
 void subspace_orbits::rank_set_from_matrix(
-		int len, int *S, int *M)
+		int len, long int *S, int *M)
 {
 	int i;
 	
 	for (i = 0; i < len; i++) {
-		F->PG_element_rank_modified(M + i * n, 1, n, S[i]);
+		F->PG_element_rank_modified_lint(M + i * n, 1, n, S[i]);
 		}
 }
 
@@ -599,8 +599,9 @@ void subspace_orbits::print_one_solution(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, orbit_idx, len, rank, rk, cnt;
-	int *set;
+	int i, orbit_idx, len, rank, cnt;
+	long int rk;
+	long int *set;
 	int *M;
 	grassmann *Gr;
 
@@ -608,7 +609,7 @@ void subspace_orbits::print_one_solution(
 		cout << "subspace_orbits::print_one_solution" << endl;
 		}
 
-	set = NEW_int(k);
+	set = NEW_lint(k);
 	M = NEW_int(k * Gen->Poset->VS->dimension);
 	Gr = NEW_OBJECT(grassmann);
 	Gr->init(Gen->Poset->VS->dimension, k, Gen->Poset->VS->F,
@@ -633,10 +634,9 @@ void subspace_orbits::print_one_solution(
 		len = Gen->orbit_length_as_int(orbit_idx, k);
 		cout << "orbit " << orbit_idx << " of size " << len << endl;
 		for (rank = 0; rank < len; rank++) {
-			Gen->orbit_element_unrank(k, orbit_idx,
-					rank, set, 0 /* verbose_level */);
+			Gen->orbit_element_unrank(k, orbit_idx, rank, set, 0 /* verbose_level */);
 			cout << rank << " / " << len << " : ";
-			int_vec_print(cout, set, k);
+			lint_vec_print(cout, set, k);
 			cout << endl;
 			Gen->unrank_basis(M, set, k);
 #if 0
@@ -647,7 +647,7 @@ void subspace_orbits::print_one_solution(
 #endif
 			cout << "generator matrix:" << endl;
 			int_matrix_print(M, k, Gen->Poset->VS->dimension);
-			rk = Gr->rank_int_here(M, 0);
+			rk = Gr->rank_lint_here(M, 0);
 			cout << "rank = " << rk << endl;
 			
 			subspace_ranks[cnt++] = rk;
@@ -656,11 +656,11 @@ void subspace_orbits::print_one_solution(
 
 	FREE_OBJECT(Gr);
 	FREE_int(M);
-	FREE_int(set);
+	FREE_lint(set);
 }
 
 int subspace_orbits::test_dim_C_cap_Cperp_property(
-		int len, int *S, int d)
+		int len, long int *S, int d)
 {
 	//int i;
 	
@@ -708,7 +708,7 @@ int subspace_orbits::test_dim_C_cap_Cperp_property(
 		}
 }
 
-int subspace_orbits::compute_minimum_distance(int len, int *S)
+int subspace_orbits::compute_minimum_distance(int len, long int *S)
 {
 	int i, d = 0;
 	
@@ -744,14 +744,14 @@ int subspace_orbits::compute_minimum_distance(int len, int *S)
 	return d;
 }
 
-void subspace_orbits::print_set(ostream &ost, int len, int *S)
+void subspace_orbits::print_set(ostream &ost, int len, long int *S)
 {
 	latex_interface L;
 	int i;
 	
 	ost << "subspace_orbits::print_set" << endl;
 	ost << "Set ";
-	int_vec_print(ost, S, len);
+	lint_vec_print(ost, S, len);
 	ost << endl;
 
 	unrank_set_to_M(len, S);
@@ -805,21 +805,21 @@ void subspace_orbits::print_set(ostream &ost, int len, int *S)
 	L.int_matrix_print_tex(ost, tmp_M + k * n, n - k, n);
 	ost << "\\right]" << endl;
 
-	int *S1;
-	int *canonical_subset;
+	long int *S1;
+	long int *canonical_subset;
 	int *transporter;
 	int *M2;
 	int local_idx, global_idx;
 	//int f_implicit_fusion = FALSE;
 
-	S1 = NEW_int(n - k);
-	canonical_subset = NEW_int(n - k);
+	S1 = NEW_lint(n - k);
+	canonical_subset = NEW_lint(n - k);
 	transporter = NEW_int(Gen->Poset->A->elt_size_in_int);
 	M2 = NEW_int((n - k) * n);
 	rank_set_from_matrix(n - k, S1, tmp_M + k * n);
 
 	ost << "ranks of rows of the dual:" << endl;
-	int_vec_print(ost, S1, n - k);
+	lint_vec_print(ost, S1, n - k);
 	ost << endl;
 
 
@@ -836,7 +836,7 @@ void subspace_orbits::print_set(ostream &ost, int len, int *S)
 		ost << "local_idx = " << local_idx << endl;
 		ost << "global_idx = " << global_idx << endl;
 		ost << "canonical set:" << endl;
-		int_vec_print(ost, canonical_subset, n - k);
+		lint_vec_print(ost, canonical_subset, n - k);
 		ost << endl;
 
 		unrank_set_to_matrix(n - k, canonical_subset, M2);
@@ -854,8 +854,8 @@ void subspace_orbits::print_set(ostream &ost, int len, int *S)
 		Gen->Poset->A->element_print_latex(transporter, ost);
 		}
 
-	FREE_int(S1);
-	FREE_int(canonical_subset);
+	FREE_lint(S1);
+	FREE_lint(canonical_subset);
 	FREE_int(transporter);
 	FREE_int(M2);
 	
@@ -872,7 +872,7 @@ void subspace_orbits::print_set(ostream &ost, int len, int *S)
 	
 }
 
-int subspace_orbits::test_set(int len, int *S, int verbose_level)
+int subspace_orbits::test_set(int len, long int *S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -882,7 +882,7 @@ int subspace_orbits::test_set(int len, int *S, int verbose_level)
 	if (f_v) {
 		cout << "subspace_orbits::test_set" << endl;
 		cout << "Testing set ";
-		int_vec_print(cout, S, len);
+		lint_vec_print(cout, S, len);
 		cout << endl;
 		}
 	unrank_set_to_M(len, S);
@@ -920,7 +920,7 @@ int subspace_orbits::test_set(int len, int *S, int verbose_level)
 }
 
 int subspace_orbits::test_minimum_distance(
-		int len, int *S, int mindist, int verbose_level)
+		int len, long int *S, int mindist, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -934,7 +934,7 @@ int subspace_orbits::test_minimum_distance(
 	if (f_v) {
 		cout << "subspace_orbits::test_minimum_distance" << endl;
 		cout << "Testing set ";
-		int_vec_print(cout, S, len);
+		lint_vec_print(cout, S, len);
 		cout << endl;
 		}
 	k = len;
@@ -975,7 +975,7 @@ int subspace_orbits::test_minimum_distance(
 }
 
 int subspace_orbits::test_if_self_orthogonal(
-		int len, int *S, int f_doubly_even,
+		int len, long int *S, int f_doubly_even,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -988,7 +988,7 @@ int subspace_orbits::test_if_self_orthogonal(
 		cout << "subspace_orbits::test_if_self_orthogonal" << endl;
 		cout << "f_doubly_even=" << f_doubly_even << endl;
 		cout << "Testing set ";
-		int_vec_print(cout, S, len);
+		lint_vec_print(cout, S, len);
 		cout << endl;
 		}
 	M = tmp_M;
@@ -1055,20 +1055,20 @@ int subspace_orbits::test_if_self_orthogonal(
 // #############################################################################
 
 
-int subspace_orbits_rank_point_func(int *v, void *data)
+long int subspace_orbits_rank_point_func(int *v, void *data)
 {
 	subspace_orbits *G;
 	poset_classification *gen;
-	int rk;
+	long int rk;
 	
 	G = (subspace_orbits *) data;
 	gen = G->Gen;
-	gen->Poset->VS->F->PG_element_rank_modified(v, 1,
+	gen->Poset->VS->F->PG_element_rank_modified_lint(v, 1,
 			gen->Poset->VS->dimension, rk);
 	return rk;
 }
 
-void subspace_orbits_unrank_point_func(int *v, int rk, void *data)
+void subspace_orbits_unrank_point_func(int *v, long int rk, void *data)
 {
 	subspace_orbits *G;
 	poset_classification *gen;
@@ -1079,9 +1079,9 @@ void subspace_orbits_unrank_point_func(int *v, int rk, void *data)
 			gen->Poset->VS->dimension, rk);
 }
 
-void subspace_orbits_early_test_func(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void subspace_orbits_early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
 {
 	//verbose_level = 1;

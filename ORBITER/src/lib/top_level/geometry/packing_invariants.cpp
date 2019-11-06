@@ -59,7 +59,7 @@ void packing_invariants::freeself()
 
 void packing_invariants::init(packing_classify *P,
 	char *prefix, char *prefix_tex, int iso_cnt, 
-	int *the_packing, int verbose_level)
+	long int *the_packing, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

@@ -152,10 +152,10 @@ void kramer_mesner::read_arguments(
 		else if (strcmp(argv[i], "-identify") == 0) {
 			if (nb_identify == 0) {
 				Identify_label = NEW_pchar(1000);
-				Identify_data = NEW_pint(1000);
+				Identify_data = NEW_plint(1000);
 				Identify_length = NEW_int(1000);
 				}
-			int data[1000];
+			long int data[1000];
 			int data_sz = 0;
 			cout << "-identify " << endl;
 			const char *label = argv[++i];
@@ -169,9 +169,9 @@ void kramer_mesner::read_arguments(
 					}
 				}
 			data_sz = j;
-			Identify_data[nb_identify] = NEW_int(data_sz);
+			Identify_data[nb_identify] = NEW_lint(data_sz);
 			Identify_length[nb_identify] = data_sz;
-			int_vec_copy(data, Identify_data[nb_identify], data_sz);
+			lint_vec_copy(data, Identify_data[nb_identify], data_sz);
 			cout << "-identify " << Identify_label[nb_identify] << " ";
 			for (j = 0; j < Identify_length[nb_identify]; j++) {
 				cout << Identify_data[nb_identify][j] << " ";
@@ -487,7 +487,7 @@ void kramer_mesner::orbits(
 		}
 
 	if (f_list) {
-		int *Orbit_reps;
+		long int *Orbit_reps;
 		int nb_orbits;
 		int i;
 
@@ -496,7 +496,7 @@ void kramer_mesner::orbits(
 
 		cout << "We found " << nb_orbits << " orbits at level "
 				<< orbits_k << endl;
-		int_matrix_print(Orbit_reps, nb_orbits, orbits_k);
+		lint_matrix_print(Orbit_reps, nb_orbits, orbits_k);
 
 		for (i = 0; i < nb_orbits; i++) {
 			set_and_stabilizer *SaS;
@@ -544,7 +544,7 @@ void kramer_mesner::orbits(
 
 	if (nb_identify) {
 		int i, j, a, b, idx;
-		int *data_out;
+		long int *data_out;
 		int *Elt;
 		
 		Elt = NEW_int(A->elt_size_in_int);
@@ -553,9 +553,9 @@ void kramer_mesner::orbits(
 			set_and_stabilizer *SaS;
 
 
-			data_out = NEW_int(Identify_length[i]);
+			data_out = NEW_lint(Identify_length[i]);
 			cout << "identifying " << Identify_label[i] << " : ";
-			int_vec_print(cout, Identify_data[i], Identify_length[i]);
+			lint_vec_print(cout, Identify_data[i], Identify_length[i]);
 			cout << endl;
 			idx = gen->trace_set(Identify_data[i],
 				Identify_length[i], Identify_length[i],
@@ -564,7 +564,7 @@ void kramer_mesner::orbits(
 
 			cout << "the set belongs to orbit = " << idx
 					<< " canonical representative = ";
-			int_vec_print(cout, data_out, Identify_length[i]);
+			lint_vec_print(cout, data_out, Identify_length[i]);
 			cout << endl;
 			cout << "a transporter from the given set to "
 					"the canonical set is:" << endl;
@@ -604,11 +604,11 @@ void kramer_mesner::orbits(
 					fname_gens);
 
 			cout << "The given set is : ";
-			int_vec_print(cout, SaS->data, SaS->sz);
+			lint_vec_print(cout, SaS->data, SaS->sz);
 			cout << endl;
 
 			FREE_OBJECT(SaS);
-			FREE_int(data_out);
+			FREE_lint(data_out);
 			}
 		FREE_int(Elt);		
 		}
@@ -618,12 +618,13 @@ void kramer_mesner::orbits(
 }
 
 
-int kramer_mesner_test_arc(int len, int *S, void *data, int verbose_level)
+int kramer_mesner_test_arc(int len, long int *S, void *data, int verbose_level)
 {
 	kramer_mesner *G = (kramer_mesner *) data;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int pt, p1, p2, i, j, rk;
+	long int pt, p1, p2;
+	int i, j, rk;
 	int *M; // [3 * n]
 	int *base_cols;
 	int f_OK = TRUE;
@@ -631,7 +632,7 @@ int kramer_mesner_test_arc(int len, int *S, void *data, int verbose_level)
 
 	if (f_v) {
 		cout << "test_arc testing ";
-		int_vec_print(cout, S, len);
+		lint_vec_print(cout, S, len);
 		cout << endl;
 		}
 	if (!G->f_linear) {
@@ -686,7 +687,7 @@ the_end:
 	return f_OK;
 }
 
-int kramer_mesner_test_surface(int len, int *S, void *data, int verbose_level)
+int kramer_mesner_test_surface(int len, long int *S, void *data, int verbose_level)
 {
 	kramer_mesner *KM = (kramer_mesner *) data;
 	int f_v = (verbose_level >= 1);
@@ -694,7 +695,7 @@ int kramer_mesner_test_surface(int len, int *S, void *data, int verbose_level)
 
 	if (f_v) {
 		cout << "test_surface testing ";
-		int_vec_print(cout, S, len);
+		lint_vec_print(cout, S, len);
 		cout << endl;
 		}
 

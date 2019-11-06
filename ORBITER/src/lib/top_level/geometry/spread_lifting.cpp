@@ -39,25 +39,25 @@ void spread_lifting::null()
 void spread_lifting::freeself()
 {
 	if (points_covered_by_starter) {
-		FREE_int(points_covered_by_starter);
+		FREE_lint(points_covered_by_starter);
 		}
 	if (free_point_list) {
-		FREE_int(free_point_list);
+		FREE_lint(free_point_list);
 		}
 	if (point_idx) {
-		FREE_int(point_idx);
+		FREE_lint(point_idx);
 		}
 	if (col_labels) {
-		FREE_int(col_labels);
+		FREE_lint(col_labels);
 		}
 	null();
 }
 
 void spread_lifting::init(
 		spread_classify *S, exact_cover *E,
-	int *starter, int starter_size, 
+	long int *starter, int starter_size,
 	int starter_case_number, int starter_number_of_cases, 
-	int *candidates, int nb_candidates,
+	long int *candidates, int nb_candidates,
 	strong_generators *Strong_gens,
 	int f_lex, 
 	int verbose_level)
@@ -110,8 +110,8 @@ void spread_lifting::init(
 		}
 
 
-	col_labels = NEW_int(nb_candidates);
-	int_vec_copy(candidates, col_labels, nb_candidates);
+	col_labels = NEW_lint(nb_candidates);
+	lint_vec_copy(candidates, col_labels, nb_candidates);
 	nb_cols = nb_candidates;
 
 
@@ -153,14 +153,14 @@ void spread_lifting::compute_points_covered_by_starter(
 				"covered_by_starter" << endl;
 		}
 	nb_points_covered_by_starter = starter_size * S->block_size;
-	points_covered_by_starter = NEW_int(nb_points_covered_by_starter);
+	points_covered_by_starter = NEW_lint(nb_points_covered_by_starter);
 
 	for (i = 0; i < starter_size; i++) {
-		int *point_list;
+		long int *point_list;
 		int nb_points;
 
 		a = starter[i];
-		S->Grass->unrank_int(a, 0/*verbose_level - 4*/);
+		S->Grass->unrank_lint(a, 0/*verbose_level - 4*/);
 		S->F->all_PG_elements_in_subspace(
 			S->Grass->M, S->k, S->n, point_list,
 			nb_points, 0 /*verbose_level - 2*/);
@@ -171,7 +171,7 @@ void spread_lifting::compute_points_covered_by_starter(
 			exit(1);
 			}
 
-		int_vec_copy(point_list,
+		lint_vec_copy(point_list,
 				points_covered_by_starter + i * S->block_size,
 				S->block_size);
 
@@ -181,15 +181,15 @@ void spread_lifting::compute_points_covered_by_starter(
 			int_matrix_print(S->Grass->M, S->k, S->n);
 			//cout << endl;
 			cout << "points_covered_by_starter: " << endl;
-			int_vec_print(cout,
+			lint_vec_print(cout,
 					points_covered_by_starter +
 						i * S->block_size, S->block_size);
 			cout << endl;
 			}
 
-		FREE_int(point_list);
+		FREE_lint(point_list);
 		}
-	Sorting.int_vec_heapsort(points_covered_by_starter,
+	Sorting.lint_vec_heapsort(points_covered_by_starter,
 			nb_points_covered_by_starter);
 	if (f_vv) {
 		cout << "spread_lifting::compute_points_"
@@ -197,7 +197,7 @@ void spread_lifting::compute_points_covered_by_starter(
 		cout << "spread_lifting::compute_points_"
 				"covered_by_starter nb_points_covered_by_starter="
 				<< nb_points_covered_by_starter << endl;
-		int_vec_print(cout, points_covered_by_starter,
+		lint_vec_print(cout, points_covered_by_starter,
 				nb_points_covered_by_starter);
 		cout << endl;
 		}
@@ -226,12 +226,12 @@ void spread_lifting::prepare_free_points(
 		cout << "spread_lifting::prepare_free_points "
 				"nb_free_points=" << nb_free_points << endl;
 		}
-	free_point_list = NEW_int(nb_free_points);
-	point_idx = NEW_int(S->nb_points_total);
+	free_point_list = NEW_lint(nb_free_points);
+	point_idx = NEW_lint(S->nb_points_total);
 	j = 0;
 	for (i = 0; i < S->nb_points_total; i++) {
-		if (Sorting.int_vec_search(points_covered_by_starter,
-				nb_points_covered_by_starter, i, idx)) {
+		if (Sorting.lint_vec_search(points_covered_by_starter,
+				nb_points_covered_by_starter, i, idx, 0)) {
 			point_idx[i] = -1;
 			}
 		else {
@@ -253,7 +253,7 @@ void spread_lifting::prepare_free_points(
 	if (f_v3) {
 		cout << "spread_lifting::prepare_free_points "
 				"The " << nb_free_points << " free points:" << endl;
-		int_vec_print(cout,
+		lint_vec_print(cout,
 				free_point_list, nb_free_points);
 		cout << endl;
 		S->print_points(free_point_list, nb_free_points);
@@ -295,11 +295,11 @@ diophant *spread_lifting::create_system(int verbose_level)
 		}
 	for (j = 0; j < nb_cols; j++) {
 
-		int *point_list;
+		long int *point_list;
 		int nb_points;
 
 		a = col_labels[j];
-		S->Grass->unrank_int(a, 0/*verbose_level - 4*/);
+		S->Grass->unrank_lint(a, 0/*verbose_level - 4*/);
 		if (f_vv) {
 			cout << "candidate " << j << " / "
 					<< nb_cols << " is " << a << endl;
@@ -319,7 +319,7 @@ diophant *spread_lifting::create_system(int verbose_level)
 			}
 		if (FALSE /*f_vv*/) {
 			cout << "List of points: ";
-			int_vec_print(cout, point_list, nb_points);
+			lint_vec_print(cout, point_list, nb_points);
 			cout << endl;
 			}
 
@@ -342,7 +342,7 @@ diophant *spread_lifting::create_system(int verbose_level)
 				}
 			Dio->Aij(i, j) = 1;
 			}
-		FREE_int(point_list);
+		FREE_lint(point_list);
 		}
 
 	if (FALSE) {

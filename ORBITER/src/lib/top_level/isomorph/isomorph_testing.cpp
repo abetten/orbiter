@@ -47,11 +47,11 @@ void isomorph::iso_test_init2(int verbose_level)
 		}
 	
 	subset = NEW_int(level);
-	subset_witness = NEW_int(level);
-	rearranged_set = NEW_int(size);
-	rearranged_set_save = NEW_int(size);
-	canonical_set = NEW_int(size);
-	tmp_set = NEW_int(size);
+	subset_witness = NEW_lint(level);
+	rearranged_set = NEW_lint(size);
+	rearranged_set_save = NEW_lint(size);
+	canonical_set = NEW_lint(size);
+	tmp_set = NEW_lint(size);
 	Elt_transporter = NEW_int(A->elt_size_in_int);
 	tmp_Elt = NEW_int(A->elt_size_in_int);
 	Elt1 = NEW_int(A->elt_size_in_int);
@@ -79,7 +79,7 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 	int f_v = (verbose_level >= 1);
 	sims *Stab;
 	longinteger_object go;
-	int data[1000];
+	long int data[1000];
 	int i, id;
 	combinatorics_domain Combi;
 	sorting Sorting;
@@ -116,7 +116,7 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 	load_solution(id, data);
 	if (f_v) {
 		cout << "isomorph::probe flag orbit " << flag_orbit << " : ";
-		int_vec_print(cout, data, size);
+		lint_vec_print(cout, data, size);
 		cout << endl;
 		}
 	
@@ -146,8 +146,8 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 		cout << "size=" << size << endl;
 		cout << "level=" << level << endl;
 		}
-	Sorting.rearrange_subset(size, level, data,
-			subset, rearranged_set, verbose_level - 3);
+	Sorting.rearrange_subset_lint(size, level,
+			data, subset, rearranged_set, verbose_level - 3);
 		
 	
 	for (i = 0; i < size; i++) {
@@ -156,7 +156,7 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 
 	if (f_v) {
 		cout << "The rearranged set is ";
-		int_vec_print(cout, rearranged_set, size);
+		lint_vec_print(cout, rearranged_set, size);
 		cout << endl;
 		}
 
@@ -564,7 +564,7 @@ void isomorph::do_iso_test(int t0, sims *&Stab,
 	int f_v3 = (verbose_level >= 3);
 	longinteger_object go;
 	int id;
-	int data[1000];
+	long int data[1000];
 	int f_continue;
 	combinatorics_domain Combi;
 	
@@ -595,7 +595,7 @@ void isomorph::do_iso_test(int t0, sims *&Stab,
 	load_solution(id, data);
 	if (f_vv) {
 		cout << "isomorph::do_iso_test orbit_no = " << orbit_no << " : ";
-		int_vec_print(cout, data, size);
+		lint_vec_print(cout, data, size);
 		cout << endl;
 		}
 	
@@ -715,7 +715,7 @@ void isomorph::do_iso_test(int t0, sims *&Stab,
 
 
 int isomorph::next_subset(int t0, 
-	int &f_continue, sims *Stab, int *data, 
+	int &f_continue, sims *Stab, long int *data,
 	int f_play_back, ifstream *play_back_file, int &f_eof, 
 	int verbose_level)
 {
@@ -788,8 +788,8 @@ int isomorph::next_subset(int t0,
 		//AA->print_vector_as_permutation(Stab->gens);
 		}
 	
-	Sorting.rearrange_subset(size, level, data,
-		subset, rearranged_set, verbose_level - 3);
+	Sorting.rearrange_subset_lint(size, level,
+		data, subset, rearranged_set, verbose_level - 3);
 		
 	
 	for (i = 0; i < size; i++) {
@@ -802,7 +802,7 @@ int isomorph::next_subset(int t0,
 }
 
 void isomorph::process_rearranged_set(
-	sims *Stab, int *data,
+	sims *Stab, long int *data,
 	int f_implicit_fusion, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -810,7 +810,7 @@ void isomorph::process_rearranged_set(
 	//int f_vvv = (verbose_level >= 3);
 	int f_v6 = (verbose_level >= 6);
 	int orbit_no0, id0, hdl, i, j;
-	int data0[1000];
+	long int data0[1000];
 	longinteger_object new_go;
 	int f_found;
 	
@@ -966,8 +966,8 @@ void isomorph::process_rearranged_set(
 			int_vec_print(cout, subset, level);
 			cout << endl;
 
-			int my_data[1000];
-			int my_data0[1000];
+			long int my_data[1000];
+			long int my_data0[1000];
 			int original_orbit;
 			
 			original_orbit = Reps->fusion[orbit_no0];
@@ -1180,10 +1180,6 @@ void isomorph::print_statistics_iso_test(int t0, sims *Stab)
 	nb = UF->count_ancestors_above(subset_rank);
 	N = AA_on_k_subsets->degree; // - subset_rank;
 	f1 = ((double)nb / (double)N) * 100;
-#if 0
-	N = AA_on_k_subsets->degree - subset_rank;
-	f2 = ((double)nb / (double)N) * 100;
-#endif
 	cout << "ancestors left = " << nb << " / " << N
 			<< " (" << f1 << "%): ";
 	int_set_print(cout, subset, level);
@@ -1205,7 +1201,7 @@ void isomorph::print_statistics_iso_test(int t0, sims *Stab)
 }
 
 
-int isomorph::identify(int *set, int f_implicit_fusion,
+int isomorph::identify(long int *set, int f_implicit_fusion,
 		int verbose_level)
 // opens and closes the solution database and the level database.
 // Hence this function is slow.
@@ -1231,13 +1227,13 @@ int isomorph::identify(int *set, int f_implicit_fusion,
 	return idx;
 }
 
-int isomorph::identify_database_is_open(int *set,
+int isomorph::identify_database_is_open(long int *set,
 		int f_implicit_fusion, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	//database DD1, DD2;
-	int data0[1000];
+	long int data0[1000];
 	int orbit_no0, id0, f;
 	sorting Sorting;
 
@@ -1396,7 +1392,7 @@ void isomorph::induced_action_on_set_basic(sims *S,
 }
 
 void isomorph::induced_action_on_set(
-		sims *S, int *set, int verbose_level)
+		sims *S, long int *set, int verbose_level)
 // Called by do_iso_test and print_isomorphism_types
 // Creates the induced action on the set from the given action.
 // The given action is gen->A2
@@ -1585,7 +1581,7 @@ void isomorph::induced_action_on_set(
 	FREE_int(Elt1);
 }
 
-int isomorph::handle_automorphism(int *set, sims *Stab,
+int isomorph::handle_automorphism(long int *set, sims *Stab,
 		int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

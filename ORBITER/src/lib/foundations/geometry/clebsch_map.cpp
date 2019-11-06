@@ -139,7 +139,7 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 		cout << "The half double six is no " << hds
 				<< "$ = " << Surf->Half_double_six_label_tex[hds]
 				<< "$ : $";
-		int_vec_print(cout, Surf->Half_double_sixes + hds * 6, 6);
+		lint_vec_print(cout, Surf->Half_double_sixes + hds * 6, 6);
 		cout << " = \\{" << endl;
 		for (h = 0; h < 6; h++) {
 			cout << Surf->Line_label_tex[

@@ -750,15 +750,14 @@ void wreath_unrank_point_func(int *v, int rk, void *data)
 }
 
 
-void wreath_product_print_set(ostream &ost,
-		int len, int *S, void *data)
+void wreath_product_print_set(ostream &ost, int len, long int *S, void *data)
 {
 	tensor_classify *T;
 	int i;
 
 	T = (tensor_classify *) data;
 	cout << "set: ";
-	int_vec_print(cout, S, len);
+	lint_vec_print(cout, S, len);
 	cout << endl;
 	for (i = 0; i < len; i++) {
 		T->F->PG_element_unrank_modified(T->v,

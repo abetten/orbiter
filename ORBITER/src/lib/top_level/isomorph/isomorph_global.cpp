@@ -435,7 +435,7 @@ void isomorph_init_solutions_from_memory(
 void isomorph_read_solution_files_from_clique_finder_case_by_case(
 		action *A_base, action *A, poset_classification *gen,
 	int size, const char *prefix_classify, const char *prefix_iso, int level, 
-	const char **fname, int *list_of_cases, int nb_files, int verbose_level)
+	const char **fname, long int *list_of_cases, int nb_files, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_implicit_fusion = FALSE;
@@ -793,7 +793,7 @@ void isomorph_testing(
 		}
 
 
-	int data1[1000];
+	long int data1[1000];
 	int id, orbit;
 
 	Iso.setup_and_open_solution_database(verbose_level - 1);
@@ -812,7 +812,7 @@ void isomorph_testing(
 		if (FALSE) {
 			cout << "read representative of orbit " << orbit
 					<< " (id=" << id << ")" << endl;
-			int_vec_print(cout, data1, Iso.size);
+			lint_vec_print(cout, data1, Iso.size);
 			cout << endl;
 			}
 
@@ -924,7 +924,7 @@ void isomorph_identify(
 {
 	int f_v = (verbose_level >= 1);
 	int f_implicit_fusion = FALSE;
-	int *the_set;
+	long int *the_set;
 	int set_size;
 	char fname_transporter[1000];
 
@@ -967,7 +967,7 @@ void isomorph_identify(
 		if (f_v) {
 			cout << "isomorph_identify read file " << fname[i] << endl;
 			cout << "the_set = ";
-			int_vec_print(cout, the_set, set_size);
+			lint_vec_print(cout, the_set, set_size);
 			cout << endl;
 			}
 
@@ -1007,7 +1007,7 @@ void isomorph_identify(
 				<< " belongs to isomorphism type " << Iso_type[i] << endl;
 			}
 
-		FREE_int(the_set);
+		FREE_lint(the_set);
 		}
 
 
@@ -1028,13 +1028,13 @@ void isomorph_identify_table(
 	action *A_base, action *A, poset_classification *gen,
 	int size, const char *prefix_classify,
 	const char *prefix_iso, int level,
-	int nb_rows, int *Table, int *Iso_type, 
+	int nb_rows, long int *Table, int *Iso_type,
 	int verbose_level)
 // Table[nb_rows * size]
 {
 	int f_v = (verbose_level >= 1);
 	int f_implicit_fusion = FALSE;
-	int *the_set;
+	long int *the_set;
 	int set_size;
 
 
@@ -1073,17 +1073,17 @@ void isomorph_identify_table(
 
 
 	set_size = size;
-	the_set = NEW_int(set_size);
+	the_set = NEW_lint(set_size);
 
 	for (i = 0; i < nb_rows; i++) {
 	
-		int_vec_copy(Table + i * set_size, the_set, set_size);
+		lint_vec_copy(Table + i * set_size, the_set, set_size);
 		
 		if (f_v) {
 			cout << "isomorph_identify_table "
 					"Identifying set no " << i << endl;
 			cout << "the_set = ";
-			int_vec_print(cout, the_set, set_size);
+			lint_vec_print(cout, the_set, set_size);
 			cout << endl;
 			}
 
@@ -1109,7 +1109,7 @@ void isomorph_identify_table(
 			}
 
 		}
-	FREE_int(the_set);
+	FREE_lint(the_set);
 
 
 	if (f_v) {
@@ -1338,7 +1338,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	int id, rep, first; //, c;
-	int data[1000];
+	long int data[1000];
 	combinatorics_domain Combi;
 	sorting Sorting;
 
@@ -1377,7 +1377,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 		
 	if (f_vv) {
 		cout << "data after induced_action_on_set:" << endl;
-		int_vec_print(cout, data, Iso->size);
+		lint_vec_print(cout, data, Iso->size);
 		cout << endl;
 		}
 		
@@ -1400,7 +1400,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 		cnt_special_orbits = 1;
 		}
 	else {
-		int *orbit_reps;
+		long int *orbit_reps;
 		int nb_orbits;
 
 		if (f_vv) {
@@ -1424,7 +1424,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 
 		if (f_vvv) {
 			cout << "Orbit reps: nb_orbits=" << nb_orbits << endl;
-			int_matrix_print(orbit_reps, nb_orbits, Iso->level);
+			lint_matrix_print(orbit_reps, nb_orbits, Iso->level);
 			}
 
 		if (f_vv) {
@@ -1432,14 +1432,14 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 					<< nb_orbits << ".\\\\" << endl;
 			}
 
-		int *rearranged_set;
+		long int *rearranged_set;
 		int *transporter;
 		int u;
 		int case_nb;
 		int f_implicit_fusion = FALSE;
 		int idx;
 		
-		rearranged_set = NEW_int(Iso->size);
+		rearranged_set = NEW_lint(Iso->size);
 		transporter = NEW_int(Iso->A_base->elt_size_in_int);
 
 		cnt_orbits = nb_orbits;
@@ -1451,14 +1451,14 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 				cout << "iso type " << orbit << " / " << Iso->Reps->count
 						<< " down_orbit " << u << " / "
 						<< nb_orbits << ":" << endl;
-				int_vec_print(cout, orbit_reps + u * Iso->level, Iso->level);
+				lint_vec_print(cout, orbit_reps + u * Iso->level, Iso->level);
 				cout << endl;
 				}
 
 
 
-			Sorting.rearrange_subset(Iso->size, Iso->level, data,
-				orbit_reps + u * Iso->level, rearranged_set,
+			Sorting.rearrange_subset_lint_all(Iso->size, Iso->level,
+					data, orbit_reps + u * Iso->level, rearranged_set,
 				0/*verbose_level - 3*/);
 
 
@@ -1523,9 +1523,9 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 		special_orbit_identify = soi;
 
 
-		FREE_int(rearranged_set);
+		FREE_lint(rearranged_set);
 		FREE_int(transporter);
-		FREE_int(orbit_reps);
+		FREE_lint(orbit_reps);
 	}
 	FREE_OBJECT(Strong_gens);
 
@@ -1573,7 +1573,7 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(
 	int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	int h, rep, first, /*c,*/ id, i, s;
-	int data[1000];
+	long int data[1000];
 
 	if (f_v) {
 		cout << "isomorph_report_data_in_source_code" << endl;

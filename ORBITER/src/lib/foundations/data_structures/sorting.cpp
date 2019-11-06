@@ -586,6 +586,52 @@ void sorting::rearrange_subset(int n, int k,
 		}
 }
 
+void sorting::rearrange_subset_lint(int n, int k,
+	long int *set, int *subset, long int *rearranged_set,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j = 0;
+
+	for (i = 0; i < n; i++) {
+		if (j < k && subset[j] == i) {
+			rearranged_set[j] = set[subset[j]];
+			j++;
+			}
+		else {
+			rearranged_set[k + i - j] = set[i];
+			}
+		}
+	if (f_v) {
+		cout << "rearrange_subset ";
+		lint_vec_print(cout, rearranged_set, n);
+		cout << endl;
+		}
+}
+
+void sorting::rearrange_subset_lint_all(int n, int k,
+	long int *set, long int *subset, long int *rearranged_set,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j = 0;
+
+	for (i = 0; i < n; i++) {
+		if (j < k && subset[j] == i) {
+			rearranged_set[j] = set[subset[j]];
+			j++;
+			}
+		else {
+			rearranged_set[k + i - j] = set[i];
+			}
+		}
+	if (f_v) {
+		cout << "rearrange_subset ";
+		lint_vec_print(cout, rearranged_set, n);
+		cout << endl;
+		}
+}
+
 int sorting::int_vec_search_linear(int *v, int len, int a, int &idx)
 {
 	int i;

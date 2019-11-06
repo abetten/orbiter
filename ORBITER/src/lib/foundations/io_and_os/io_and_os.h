@@ -595,6 +595,7 @@ uint32_t int_vec_hash(int *data, int len);
 uint32_t lint_vec_hash(long int *data, int len);
 uint32_t char_vec_hash(char *data, int len);
 int int_vec_hash_after_sorting(int *data, int len);
+int lint_vec_hash_after_sorting(long int *data, int len);
 const char *plus_minus_string(int epsilon);
 const char *plus_minus_letter(int epsilon);
 void int_vec_complement(int *v, int n, int k);

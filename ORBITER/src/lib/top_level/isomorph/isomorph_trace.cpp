@@ -14,7 +14,7 @@ using namespace std;
 namespace orbiter {
 namespace top_level {
 
-int isomorph::identify_solution_relaxed(int *set, int *transporter, 
+int isomorph::identify_solution_relaxed(long int *set, int *transporter,
 	int f_implicit_fusion, int &orbit_no,
 	int &f_failure_to_find_point, int verbose_level)
 // returns the orbit number corresponding to 
@@ -26,7 +26,7 @@ int isomorph::identify_solution_relaxed(int *set, int *transporter,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, id, id0, orbit, case_nb;
-	int *canonical_set, *data;
+	long int *canonical_set, *data;
 	int *Elt;
 	
 	f_failure_to_find_point = FALSE;
@@ -43,7 +43,7 @@ int isomorph::identify_solution_relaxed(int *set, int *transporter,
 		//cout << "verbose_level=" << verbose_level << endl;
 		}
 	
-	int_vec_copy(set, canonical_set, size);
+	lint_vec_copy(set, canonical_set, size);
 #if 0
 	for (i = 0; i < size; i++) {
 		canonical_set[i] = set[i];
@@ -80,7 +80,7 @@ int isomorph::identify_solution_relaxed(int *set, int *transporter,
 			cout << endl;
 			//cout << "case_nb = " << case_nb << " : ";
 			cout << "canonical_set:" << endl;
-			int_vec_print(cout, canonical_set, size);
+			lint_vec_print(cout, canonical_set, size);
 			cout << endl;
 			for (i = 0; i < size; i++) {
 				cout << setw(5) << i << " : " << setw(6)
@@ -137,9 +137,9 @@ int isomorph::identify_solution_relaxed(int *set, int *transporter,
 			size, set, data, verbose_level - 2)) {
 		cout << "isomorph::identify_solution_relaxed, "
 				"check fails, stop" << endl;
-		int_vec_print(cout, set, size);
+		lint_vec_print(cout, set, size);
 		cout << endl;
-		int_vec_print(cout, data, size);
+		lint_vec_print(cout, data, size);
 		cout << endl;
 		exit(1);
 		}
@@ -173,7 +173,7 @@ int isomorph::identify_solution_relaxed(int *set, int *transporter,
 }
 
 
-int isomorph::identify_solution(int *set,
+int isomorph::identify_solution(long int *set,
 	int *transporter,
 	int f_implicit_fusion, int &f_failure_to_find_point,
 	int verbose_level)
@@ -183,7 +183,7 @@ int isomorph::identify_solution(int *set,
 // If needed, calls make_set_smaller
 // Called from identify_database_is_open
 {
-	int *canonical_set, *data;
+	long int *canonical_set, *data;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int id, id0, orbit, case_nb, cnt = 0;
@@ -202,12 +202,7 @@ int isomorph::identify_solution(int *set,
 		//cout << "verbose_level=" << verbose_level << endl;
 		}
 	
-	int_vec_copy(set, canonical_set, size);
-#if 0
-	for (i = 0; i < size; i++) {
-		canonical_set[i] = set[i];
-		}
-#endif
+	lint_vec_copy(set, canonical_set, size);
 	A->element_one(transporter, FALSE);
 
 	while (TRUE) {
@@ -294,9 +289,9 @@ int isomorph::identify_solution(int *set,
 			data, verbose_level - 2)) {
 		cout << "isomorph::identify_solution, "
 				"check fails, stop" << endl;
-		int_vec_print(cout, set, size);
+		lint_vec_print(cout, set, size);
 		cout << endl;
-		int_vec_print(cout, data, size);
+		lint_vec_print(cout, data, size);
 		cout << endl;
 		exit(1);
 		}
@@ -331,7 +326,7 @@ int isomorph::identify_solution(int *set,
 }
 
 int isomorph::trace_set(
-	int *canonical_set, int *transporter,
+	long int *canonical_set, int *transporter,
 	int f_implicit_fusion, int &f_failure_to_find_point,
 	int verbose_level)
 // returns the case number of the canonical set
@@ -391,7 +386,7 @@ int isomorph::trace_set(
 }
 
 void isomorph::make_set_smaller(int case_nb_local, 
-	int *set, int *transporter, int verbose_level)
+	long int *set, int *transporter, int verbose_level)
 // Called from identify_solution.
 // The goal is to produce a set that is lexicographically 
 // smaller than the current starter.
@@ -405,17 +400,18 @@ void isomorph::make_set_smaller(int case_nb_local,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
-	int *image_set = make_set_smaller_set;
+	long int *image_set = make_set_smaller_set;
 	int *Elt1 = make_set_smaller_Elt1;
 	int *Elt2 = make_set_smaller_Elt2;
-	int i, j, n, m, a, b;
+	int i, j;
+	long int n, m, a, b;
 	//int set1[1000];
 	sorting Sorting;
 	
 	if (f_v) {
 		cout << "iso_node " << iso_nodes
 				<< " isomorph::make_set_smaller: " << endl;
-		int_vec_print(cout, set, size);
+		lint_vec_print(cout, set, size);
 		cout << endl;
 		}
 	nb_times_make_set_smaller_called++;
@@ -435,7 +431,7 @@ void isomorph::make_set_smaller(int case_nb_local,
 
 
 	a = set[level - 1];
-	m = int_vec_minimum(set + level, size - level);
+	m = lint_vec_minimum(set + level, size - level);
 	if (m < a) {
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes
@@ -443,16 +439,16 @@ void isomorph::make_set_smaller(int case_nb_local,
 					<< " m = " << m << endl;
 			}
 		if (gen->f_starter) {
-			Sorting.int_vec_heapsort(set + gen->starter_size,
+			Sorting.lint_vec_heapsort(set + gen->starter_size,
 					size - gen->starter_size);
 			}
 		else {
-			Sorting.int_vec_heapsort(set, size);
+			Sorting.lint_vec_heapsort(set, size);
 			}
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes
 				<< "isomorph::make_set_smaller the reordered set is ";
-			int_vec_print(cout, set, size);
+			lint_vec_print(cout, set, size);
 			cout << endl;
 			}
 		return;
@@ -463,7 +459,7 @@ void isomorph::make_set_smaller(int case_nb_local,
 		b = A->least_image_of_point(gens, a, Elt1, verbose_level - 1);
 		if (b < m) {
 			A->map_a_set_and_reorder(set, image_set, size, Elt1, 0);
-			int_vec_copy(image_set, set, size);
+			lint_vec_copy(image_set, set, size);
 #if 0
 			for (ii = 0; ii < size; ii++) {
 				set[ii] = image_set[ii];
@@ -475,7 +471,7 @@ void isomorph::make_set_smaller(int case_nb_local,
 				cout << "iso_node " << iso_nodes
 					<< "isomorph::make_set_smaller "
 					"the set is made smaller: " << endl;
-				int_vec_print(cout, set, size);
+				lint_vec_print(cout, set, size);
 				cout << endl;
 				}
 			return;
@@ -486,7 +482,7 @@ void isomorph::make_set_smaller(int case_nb_local,
 			"error, something is wrong" << endl;
 	cout << "isomorph::make_set_smaller no stabilizer element maps "
 			"any element to something smaller" << endl;
-	int_vec_print(cout, set, size);
+	lint_vec_print(cout, set, size);
 	cout << endl;
 	cout << "j : set[j] : least image" << endl;
 	for (j = 0; j < size; j++) {
@@ -515,7 +511,7 @@ void isomorph::make_set_smaller(int case_nb_local,
 		}
 		
 	int f, l, id, c;
-	int data[1000];
+	long int data[1000];
 	
 	f = solution_first[case_nb_local];
 	l = solution_len[case_nb_local];
@@ -523,10 +519,10 @@ void isomorph::make_set_smaller(int case_nb_local,
 	for (i = 0; i < l; i++) {
 		id = f + i;
 		load_solution(id, data);
-		Sorting.int_vec_heapsort(data + level, size - level);
-		c = int_vec_compare(set + level, data + level, size - level);
+		Sorting.lint_vec_heapsort(data + level, size - level);
+		c = lint_vec_compare(set + level, data + level, size - level);
 		cout << setw(4) << id << " : compare = " << c << " : ";
-		int_vec_print(cout, data, size);
+		lint_vec_print(cout, data, size);
 		cout << endl;
 		}
 	exit(1);
@@ -534,7 +530,7 @@ void isomorph::make_set_smaller(int case_nb_local,
 
 int isomorph::trace_set_recursion(
 	int cur_level, int cur_node_global,
-	int *canonical_set, int *transporter, 
+	long int *canonical_set, int *transporter,
 	int f_implicit_fusion, int &f_failure_to_find_point,
 	int verbose_level)
 // returns the node in the generator that corresponds 
@@ -544,7 +540,8 @@ int isomorph::trace_set_recursion(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int pt, pt0, ret;
+	long int pt, pt0;
+	int ret;
 	sorting Sorting;
 	
 	f_failure_to_find_point = FALSE;
@@ -558,14 +555,10 @@ int isomorph::trace_set_recursion(
 		cout << endl;
 		}
 	if (cur_level == 0 && gen->f_starter) {
-		//int *cur_set = gen->set[0];
-		//int *next_set = gen->set[0 + gen->starter_size];
-		//int *cur_transporter = gen->transporter->ith(0);
-		//int *next_transporter = gen->transporter->ith(0 + gen->starter_size);
-		int *next_set;
+		long int *next_set;
 		int *next_transporter;
 
-		next_set = NEW_int(size);
+		next_set = NEW_lint(size);
 		next_transporter = NEW_int(gen->Poset->A->elt_size_in_int);
 
 		gen->root[0].trace_starter(gen, size, 
@@ -573,12 +566,7 @@ int isomorph::trace_set_recursion(
 			transporter, next_transporter, 
 			0 /*verbose_level */);
 
-		int_vec_copy(next_set, canonical_set, size);
-#if 0
-		for (u = 0; u < size; u++) {
-			canonical_set[u] = next_set[u];
-			}
-#endif
+		lint_vec_copy(next_set, canonical_set, size);
 
 		if (f_vv) {
 			cout << "iso_node "
@@ -587,12 +575,12 @@ int isomorph::trace_set_recursion(
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
 			cout << "after trace_starter" << endl;
-			int_vec_print(cout, canonical_set, size);
+			lint_vec_print(cout, canonical_set, size);
 			cout << endl;
 			}
 
 		gen->Poset->A->element_move(next_transporter, transporter, 0);
-		FREE_int(next_set);
+		FREE_lint(next_set);
 		FREE_int(next_transporter);
 		if (f_v) {
 			cout << "iso_node "
@@ -644,11 +632,11 @@ int isomorph::trace_set_recursion(
 			cout << "trace_next_point returns FALSE" << endl;
 			}
 		if (gen->f_starter) {
-			Sorting.int_vec_heapsort(canonical_set + gen->starter_size,
+			Sorting.lint_vec_heapsort(canonical_set + gen->starter_size,
 					cur_level + 1 - gen->starter_size);
 			}
 		else {
-			Sorting.int_vec_heapsort(canonical_set, cur_level + 1);
+			Sorting.lint_vec_heapsort(canonical_set, cur_level + 1);
 			}
 
 		if (f_vv) {
@@ -708,7 +696,7 @@ int isomorph::trace_set_recursion(
 
 int isomorph::trace_next_point(int cur_level,
 	int cur_node_global,
-	int *canonical_set, int *transporter, 
+	long int *canonical_set, int *transporter,
 	int f_implicit_fusion, int &f_failure_to_find_point,
 	int verbose_level)
 // Called from trace_set_recursion
@@ -806,7 +794,7 @@ int isomorph::trace_next_point(int cur_level,
 
 int isomorph::trace_next_point_database(
 	int cur_level, int cur_node_global,
-	int *canonical_set, int *Elt_transporter,
+	long int *canonical_set, int *Elt_transporter,
 	int verbose_level)
 // Returns FALSE is the set becomes lexicographically smaller
 {
@@ -814,10 +802,10 @@ int isomorph::trace_next_point_database(
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	int cur_node_local, i;
-	int set[1000];
+	long int set[1000];
 	//char *elt;
 	int *tmp_ELT;
-	int pt, image;
+	long int pt, image;
 
 	if (f_v) {
 		cout << "iso_node " << iso_nodes
@@ -855,7 +843,7 @@ int isomorph::trace_next_point_database(
 		print_node_global(cur_level, cur_node_global);
 		cout << " : ";
 		cout << "set: ";
-		int_vec_print(cout, set, cur_level);
+		lint_vec_print(cout, set, cur_level);
 		cout << endl;
 		}
 	int nb_strong_generators;
@@ -888,7 +876,6 @@ int isomorph::trace_next_point_database(
 	gens.init(gen->Poset->A, verbose_level - 2);
 	gens.allocate(nb_strong_generators, verbose_level - 2);
 
-	//fseek(fp_ge, ref * gen->Poset->A->coded_elt_size_in_char, SEEK_SET);
 	fp_ge->seekg(ref * gen->Poset->A->coded_elt_size_in_char, ios::beg);
 	for (i = 0; i < nb_strong_generators; i++) {
 		gen->Poset->A->element_read_file_fp(gens.ith(i),
@@ -987,7 +974,7 @@ final_check:
 
 int isomorph::handle_extension(
 	int cur_level, int cur_node_global,
-	int *canonical_set, int *Elt_transporter, 
+	long int *canonical_set, int *Elt_transporter,
 	int f_implicit_fusion, int &f_failure_to_find_point,
 	int verbose_level)
 {
@@ -1045,7 +1032,7 @@ int isomorph::handle_extension(
 
 int isomorph::handle_extension_database(int cur_level,
 	int cur_node_global,
-	int *canonical_set, int *Elt_transporter, 
+	long int *canonical_set, int *Elt_transporter,
 	int f_implicit_fusion, int &f_failure_to_find_point,
 	int verbose_level)
 {
@@ -1182,7 +1169,7 @@ int isomorph::handle_extension_database(int cur_level,
 			}
 
 
-		Sorting.int_vec_heapsort(canonical_set, cur_level + 1);
+		Sorting.lint_vec_heapsort(canonical_set, cur_level + 1);
 		
 		if (FALSE) {
 			cout << "iso_node " << iso_nodes
@@ -1190,7 +1177,7 @@ int isomorph::handle_extension_database(int cur_level,
 				<< " cur_node_global = " << cur_node_global << " : " 
 				<< " current_extension = " << i 
 				<< " : after sorting the initial part : ";
-			int_vec_print(cout, canonical_set, size);
+			lint_vec_print(cout, canonical_set, size);
 			cout << endl;
 			}
 		next_node_global = gen->find_poset_orbit_node_for_set(cur_level + 1,
@@ -1221,7 +1208,7 @@ int isomorph::handle_extension_database(int cur_level,
 
 int isomorph::handle_extension_oracle(int cur_level,
 	int cur_node_global,
-	int *canonical_set, int *Elt_transporter, 
+	long int *canonical_set, int *Elt_transporter,
 	int f_implicit_fusion, int &f_failure_to_find_point,
 	int verbose_level)
 // Returns next_node_global at level cur_level + 1.
@@ -1332,11 +1319,11 @@ int isomorph::handle_extension_oracle(int cur_level,
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
 			cout << "fusion element has been applied";
-			int_vec_print(cout, canonical_set, size);
+			lint_vec_print(cout, canonical_set, size);
 			cout << endl;
 			}
 
-		Sorting.int_vec_heapsort(canonical_set, cur_level + 1);
+		Sorting.lint_vec_heapsort(canonical_set, cur_level + 1);
 		
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes
@@ -1346,7 +1333,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 			cout << " : ";
 			cout << " current_extension = " << current_extension 
 				<< " : after sorting the initial part ";
-			int_vec_print(cout, canonical_set, size);
+			lint_vec_print(cout, canonical_set, size);
 			cout << endl;
 			cout << "iso_node " << iso_nodes
 					<< " isomorph::handle_extension_oracle "
@@ -1415,7 +1402,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 
 void isomorph::apply_isomorphism_database(
 	int cur_level, int cur_node_global,
-	int current_extension, int *canonical_set,
+	int current_extension, long int *canonical_set,
 	int *Elt_transporter, int ref,
 	int verbose_level)
 {
@@ -1431,7 +1418,6 @@ void isomorph::apply_isomorphism_database(
 		cout << "ref = " << ref << endl;
 		}
 	
-	//fseek(fp_ge, ref * gen->Poset->A->coded_elt_size_in_char, SEEK_SET);
 	fp_ge->seekg(ref * gen->Poset->A->coded_elt_size_in_char, ios::beg);
 	gen->Poset->A->element_read_file_fp(
 			gen->Elt1, *fp_ge, 0/* verbose_level*/);
@@ -1439,13 +1425,12 @@ void isomorph::apply_isomorphism_database(
 	gen->Poset->A2->map_a_set(canonical_set,
 			apply_fusion_tmp_set1, size, gen->Elt1, 0);
 
-	//int_vec_heapsort(apply_fusion_tmp_set1, level);
-	Sorting.int_vec_heapsort(apply_fusion_tmp_set1, cur_level + 1);
+	Sorting.lint_vec_heapsort(apply_fusion_tmp_set1, cur_level + 1);
 
 	gen->Poset->A->element_mult(Elt_transporter,
 			gen->Elt1, apply_fusion_Elt1, FALSE);
 
-	int_vec_copy(apply_fusion_tmp_set1, canonical_set, size);
+	lint_vec_copy(apply_fusion_tmp_set1, canonical_set, size);
 	gen->Poset->A->element_move(apply_fusion_Elt1,
 			Elt_transporter, FALSE);
 
@@ -1453,7 +1438,7 @@ void isomorph::apply_isomorphism_database(
 
 void isomorph::apply_isomorphism_oracle(
 	int cur_level, int cur_node_global,
-	int current_extension, int *canonical_set, int *Elt_transporter, 
+	int current_extension, long int *canonical_set, int *Elt_transporter,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1474,13 +1459,12 @@ void isomorph::apply_isomorphism_oracle(
 	gen->Poset->A2->map_a_set(canonical_set,
 			apply_fusion_tmp_set1, size, gen->Elt1, 0);
 
-	//int_vec_heapsort(apply_fusion_tmp_set1, level);
-	Sorting.int_vec_heapsort(apply_fusion_tmp_set1, cur_level + 1);
+	Sorting.lint_vec_heapsort(apply_fusion_tmp_set1, cur_level + 1);
 
 	gen->Poset->A->element_mult(Elt_transporter,
 			gen->Elt1, apply_fusion_Elt1, FALSE);
 
-	int_vec_copy(apply_fusion_tmp_set1, canonical_set, size);
+	lint_vec_copy(apply_fusion_tmp_set1, canonical_set, size);
 	gen->Poset->A->element_move(apply_fusion_Elt1,
 			Elt_transporter, FALSE);
 

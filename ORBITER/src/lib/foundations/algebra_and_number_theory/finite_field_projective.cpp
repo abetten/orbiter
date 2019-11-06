@@ -228,26 +228,23 @@ void finite_field::PG_element_normalize_from_front(
 }
 
 void finite_field::PG_elements_embed(
-		int *set_in, int *set_out, int sz,
+		long int *set_in, long int *set_out, int sz,
 		int old_length, int new_length, int *v)
 {
 	int i;
 
 	for (i = 0; i < sz; i++) {
-		set_out[i] = PG_element_embed(
-				set_in[i], old_length, new_length, v);
+		set_out[i] = PG_element_embed(set_in[i], old_length, new_length, v);
 	}
 }
 
-int finite_field::PG_element_embed(
-		int rk, int old_length, int new_length, int *v)
+long int finite_field::PG_element_embed(
+		long int rk, int old_length, int new_length, int *v)
 {
-	int a;
-	PG_element_unrank_modified(
-			v, 1, old_length, rk);
+	long int a;
+	PG_element_unrank_modified_lint(v, 1, old_length, rk);
 	int_vec_zero(v + old_length, new_length - old_length);
-	PG_element_rank_modified(
-			v, 1, new_length, a);
+	PG_element_rank_modified_lint(v, 1, new_length, a);
 	return a;
 }
 
@@ -2264,14 +2261,15 @@ void finite_field::oval_polynomial(
 
 
 void finite_field::all_PG_elements_in_subspace(
-		int *genma, int k, int n, int *&point_list, int &nb_points,
+		int *genma, int k, int n, long int *&point_list, int &nb_points,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);
 	int *message;
 	int *word;
-	int i, j;
+	int i;
+	long int a;
 	combinatorics_domain Combi;
 
 	if (f_v) {
@@ -2280,7 +2278,7 @@ void finite_field::all_PG_elements_in_subspace(
 	message = NEW_int(k);
 	word = NEW_int(n);
 	nb_points = Combi.generalized_binomial(k, 1, q);
-	point_list = NEW_int(nb_points);
+	point_list = NEW_lint(nb_points);
 
 	for (i = 0; i < nb_points; i++) {
 		PG_element_unrank_modified(message, 1, k, i);
@@ -2295,11 +2293,11 @@ void finite_field::all_PG_elements_in_subspace(
 			int_vec_print(cout, word, n);
 			cout << endl;
 			}
-		PG_element_rank_modified(word, 1, n, j);
+		PG_element_rank_modified_lint(word, 1, n, a);
 		if (f_vv) {
-			cout << "which has rank " << j << endl;
+			cout << "which has rank " << a << endl;
 			}
-		point_list[i] = j;
+		point_list[i] = a;
 		}
 
 	FREE_int(message);

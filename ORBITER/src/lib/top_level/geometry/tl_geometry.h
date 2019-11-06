@@ -140,7 +140,7 @@ public:
 		// extended by external lines versus candidate points
 	void report(isomorph &Iso, int verbose_level);
 	void report_decompositions(isomorph &Iso, std::ofstream &f, int orbit,
-		int *data, int verbose_level);
+		long int *data, int verbose_level);
 	void report_stabilizer(isomorph &Iso, std::ofstream &f, int orbit,
 		int verbose_level);
 	void simeon(int len, long int *S, int s, int verbose_level);
@@ -1737,7 +1737,7 @@ public:
 	void freeself();
 	void init(packing_classify *P,
 		char *prefix, char *prefix_tex, int iso_cnt,
-		int *the_packing, int verbose_level);
+		long int *the_packing, int verbose_level);
 	void init_klein_invariants(Vector &v, int verbose_level);
 	void compute_decomposition(int verbose_level);
 };
@@ -2124,7 +2124,7 @@ public:
 		void *check_function_incremental_data, 
 		int verbose_level);
 	void do_recoordinatize(long int i1, long int i2, long int i3, int verbose_level);
-	void compute_starter(int *&S, int &size, 
+	void compute_starter(long int *&S, int &size,
 		strong_generators *&Strong_gens, int verbose_level);
 	void stabilizer_of_first_three(strong_generators *&Strong_gens, 
 		int verbose_level);
@@ -2338,7 +2338,8 @@ public:
 	recoordinatize *R;
 
 	// if f_recoordinatize is TRUE:
-	int *Starter, Starter_size;
+	long int *Starter;
+	int Starter_size;
 	strong_generators *Starter_Strong_gens;
 
 	// for check_function_incremental:
@@ -2378,28 +2379,28 @@ public:
 		int starter_size,  
 		int argc, const char **argv, 
 		int verbose_level);
-	void unrank_point(int *v, int a);
-	int rank_point(int *v);
-	void unrank_subspace(int *M, int a);
-	int rank_subspace(int *M);
+	void unrank_point(int *v, long int a);
+	long int rank_point(int *v);
+	void unrank_subspace(int *M, long int a);
+	long int rank_subspace(int *M);
 	void print_points();
-	void print_points(int *pts, int len);
+	void print_points(long int *pts, int len);
 	void print_elements();
 	void print_elements_and_points();
 	void read_arguments(int argc, const char **argv);
 	void init2(int verbose_level);
 	void compute(int verbose_level);
-	void early_test_func(int *S, int len, 
-		int *candidates, int nb_candidates, 
-		int *good_candidates, int &nb_good_candidates, 
+	void early_test_func(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	int check_function(int len, int *S, int verbose_level);
-	int incremental_check_function(int len, int *S, int verbose_level);
+	int check_function(int len, long int *S, int verbose_level);
+	int incremental_check_function(int len, long int *S, int verbose_level);
 	//int check_function_pair(int rk1, int rk2, int verbose_level);
 	void lifting_prepare_function_new(exact_cover *E, int starter_case, 
-		int *candidates, int nb_candidates, 
+		long int *candidates, int nb_candidates,
 		strong_generators *Strong_gens, 
-		diophant *&Dio, int *&col_labels, 
+		diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out, 
 		int verbose_level);
 	void compute_dual_spread(int *spread, int *dual_spread, 
@@ -2409,32 +2410,32 @@ public:
 	// spread_classify2.cpp
 	void print_isomorphism_type(isomorph *Iso, 
 		int iso_cnt, sims *Stab, schreier &Orb, 
-		int *data, int verbose_level);
+		long int *data, int verbose_level);
 		// called from callback_print_isomorphism_type()
 	void save_klein_invariants(char *prefix, 
 		int iso_cnt, 
-		int *data, int data_size, int verbose_level);
+		long int *data, int data_size, int verbose_level);
 	void klein(std::ofstream &ost,
 		isomorph *Iso, 
 		int iso_cnt, sims *Stab, schreier &Orb, 
-		int *data, int data_size, int verbose_level);
+		long int *data, int data_size, int verbose_level);
 	void plane_intersection_type_of_klein_image(
 		projective_space *P3, 
 		projective_space *P5, 
 		grassmann *Gr, 
-		int *data, int size, 
+		long int *data, int size,
 		int *&intersection_type, int &highest_intersection_number, 
 		int verbose_level);
 
 	void czerwinski_oakden(int level, int verbose_level);
 	void write_spread_to_file(int type_of_spread, int verbose_level);
-	void make_spread(int *data, int type_of_spread, int verbose_level);
-	void make_spread_from_q_clan(int *data, int type_of_spread, 
+	void make_spread(long int *data, int type_of_spread, int verbose_level);
+	void make_spread_from_q_clan(long int *data, int type_of_spread,
 		int verbose_level);
 	void read_and_print_spread(const char *fname, int verbose_level);
 	void HMO(const char *fname, int verbose_level);
-	void get_spread_matrices(int *F, int *G, int *data, int verbose_level);
-	void print_spread(std::ostream &ost, int *data, int sz);
+	void get_spread_matrices(int *F, int *G, long int *data, int verbose_level);
+	void print_spread(std::ostream &ost, long int *data, int sz);
 	void report2(isomorph &Iso, int verbose_level);
 	void all_cooperstein_thas_quotients(isomorph &Iso, int verbose_level);
 	void cooperstein_thas_quotients(isomorph &Iso, std::ofstream &f,
@@ -2446,33 +2447,33 @@ public:
 };
 
 
-void spread_lifting_early_test_function(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void spread_lifting_early_test_function(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 void spread_lifting_prepare_function_new(exact_cover *EC, int starter_case, 
-	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
-	diophant *&Dio, int *&col_labels, 
+	long int *candidates, int nb_candidates, strong_generators *Strong_gens,
+	diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out, 
 	int verbose_level);
-int starter_canonize_callback(int *Set, int len, int *Elt, 
+int starter_canonize_callback(long int *Set, int len, int *Elt,
 	void *data, int verbose_level);
 int callback_incremental_check_function(
-	int len, int *S,
+	int len, long int *S,
 	void *data, int verbose_level);
 
 
 // spread_classify2.cpp
-void spread_early_test_func_callback(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void spread_early_test_func_callback(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
-int spread_check_function_callback(int len, int *S, 
+int spread_check_function_callback(int len, long int *S,
 	void *data, int verbose_level);
 void spread_callback_report(isomorph *Iso, void *data, int verbose_level);
 void spread_callback_make_quotients(isomorph *Iso, void *data, 
 	int verbose_level);
-void callback_spread_print(std::ostream &ost, int len, int *S, void *data);
+void callback_spread_print(std::ostream &ost, int len, long int *S, void *data);
 
 // #############################################################################
 // spread_create.cpp
@@ -2562,30 +2563,30 @@ public:
 	spread_classify *S;
 	exact_cover *E;
 	
-	int *starter;
+	long int *starter;
 	int starter_size;
 	int starter_case_number;
 	int starter_number_of_cases;
 	int f_lex;
 
-	int *candidates;
+	long int *candidates;
 	int nb_candidates;
 	strong_generators *Strong_gens;
 
-	int *points_covered_by_starter;
+	long int *points_covered_by_starter;
 		// [nb_points_covered_by_starter]
 	int nb_points_covered_by_starter;
 
 	int nb_free_points;
-	int *free_point_list; // [nb_free_points]
-	int *point_idx; // [nb_points_total]
+	long int *free_point_list; // [nb_free_points]
+	long int *point_idx; // [nb_points_total]
 		// point_idx[i] = index of a point in free_point_list 
 		// or -1 if the point is in points_covered_by_starter
 
 
 	int nb_needed;
 
-	int *col_labels; // [nb_cols]
+	long int *col_labels; // [nb_cols]
 	int nb_cols;
 
 	
@@ -2594,9 +2595,9 @@ public:
 	void null();
 	void freeself();
 	void init(spread_classify *S, exact_cover *E,
-		int *starter, int starter_size, 
+		long int *starter, int starter_size,
 		int starter_case_number, int starter_number_of_cases, 
-		int *candidates, int nb_candidates, strong_generators *Strong_gens, 
+		long int *candidates, int nb_candidates, strong_generators *Strong_gens,
 		int f_lex, 
 		int verbose_level);
 	void compute_points_covered_by_starter(
@@ -2842,7 +2843,7 @@ public:
 	int init_equation(surface_with_action *Surf_A, int *eqn, 
 		strong_generators *Aut_gens, int verbose_level);
 	void init(surface_with_action *Surf_A, 
-		int *Lines, int *eqn, 
+		long int *Lines, int *eqn,
 		strong_generators *Aut_gens, 
 		int f_find_double_six_and_rearrange_lines, 
 		int verbose_level);
@@ -2929,7 +2930,7 @@ public:
 		long int *five_lines, long int transversal_line,
 		long int *double_six, int verbose_level);
 	void arc_lifting_and_classify(int f_log_fp, std::ofstream &fp,
-		int *Arc6, 
+		long int *Arc6,
 		const char *arc_label, const char *arc_label_short, 
 		int nb_surfaces, 
 		six_arcs_not_on_a_conic *Six_arcs, 
@@ -3002,17 +3003,17 @@ public:
 			int &nb_processed,
 			int pt_representation_sz,
 			int f,
-			int *Flag_representation,
+			long int *Flag_representation,
 			int tritangent_plane_idx,
 			int line_idx, int m1, int m2, int m3,
 			int l1, int l2,
 			int cnt,
 			strong_generators *S,
-			int *Lines,
+			long int *Lines,
 			int *eqn20,
 			int *Adj,
-			int *transversals4,
-			int *P6,
+			long int *transversals4,
+			long int *P6,
 			int &f2,
 			int *Elt_alpha1,
 			int *Elt_alpha2,
@@ -3028,17 +3029,17 @@ public:
 			int &nb_processed,
 			int pt_representation_sz,
 			int f,
-			int *Flag_representation,
+			long int *Flag_representation,
 			int tritangent_plane_idx,
 			int line_idx, int m1, int m2, int m3,
 			int l1, int l2,
 			int cnt,
 			strong_generators *S,
-			int *Lines,
+			long int *Lines,
 			int *eqn20,
 			int *Adj,
-			int *transversals4,
-			int *P6,
+			long int *transversals4,
+			long int *P6,
 			int &f2,
 			int *Elt_alpha1,
 			int *Elt_alpha2,
@@ -3054,17 +3055,17 @@ public:
 			int &nb_processed,
 			int pt_representation_sz,
 			int f,
-			int *Flag_representation,
+			long int *Flag_representation,
 			int tritangent_plane_idx,
 			int line_idx, int m1, int m2, int m3,
 			int l1, int l2,
 			int cnt,
 			strong_generators *S,
-			int *Lines,
+			long int *Lines,
 			int *eqn20,
 			int *Adj,
-			int *transversals4,
-			int *P6,
+			long int *transversals4,
+			long int *P6,
 			int &f2,
 			int *Elt_alpha1,
 			int *Elt_alpha2,
@@ -3134,7 +3135,7 @@ public:
 
 int wreath_rank_point_func(int *v, void *data);
 void wreath_unrank_point_func(int *v, int rk, void *data);
-void wreath_product_print_set(std::ostream &ost, int len, int *S, void *data);
+void wreath_product_print_set(std::ostream &ost, int len, long int *S, void *data);
 void wreath_product_rank_one_early_test_func_callback(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,

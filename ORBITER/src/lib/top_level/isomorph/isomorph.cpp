@@ -177,7 +177,7 @@ void isomorph::free()
 		hash_vs_id_id = NULL;
 		}
 	if (table_of_solutions) {
-		FREE_int(table_of_solutions);
+		FREE_lint(table_of_solutions);
 		table_of_solutions = NULL;
 		f_use_table_of_solutions = FALSE;
 		}
@@ -213,22 +213,22 @@ void isomorph::allocate_tmp_data()
 // called by init_action_BLT() in isomorph_BLT()
 {
 	f_tmp_data_has_been_allocated = TRUE;
-	tmp_set1 = NEW_int(size);
-	tmp_set2 = NEW_int(size);
-	tmp_set3 = NEW_int(size);
+	tmp_set1 = NEW_lint(size);
+	tmp_set2 = NEW_lint(size);
+	tmp_set3 = NEW_lint(size);
 	tmp_Elt1 = NEW_int(A->elt_size_in_int);
 	tmp_Elt2 = NEW_int(A->elt_size_in_int);
 	tmp_Elt3 = NEW_int(A->elt_size_in_int);
 
-	trace_set_recursion_tmp_set1 = NEW_int(size);
+	trace_set_recursion_tmp_set1 = NEW_lint(size);
 	trace_set_recursion_Elt1 = NEW_int(A->elt_size_in_int);
 	
-	apply_fusion_tmp_set1 = NEW_int(size);
+	apply_fusion_tmp_set1 = NEW_lint(size);
 	apply_fusion_Elt1 = NEW_int(A->elt_size_in_int);
 	
-	find_extension_set1 = NEW_int(size);
+	find_extension_set1 = NEW_lint(size);
 
-	make_set_smaller_set = NEW_int(size);
+	make_set_smaller_set = NEW_lint(size);
 	make_set_smaller_Elt1 = NEW_int(A->elt_size_in_int);
 	make_set_smaller_Elt2 = NEW_int(A->elt_size_in_int);
 
@@ -250,17 +250,17 @@ void isomorph::free_tmp_data()
 		}
 	if (f_tmp_data_has_been_allocated) {
 		f_tmp_data_has_been_allocated = FALSE;
-		FREE_int(tmp_set1);
-		FREE_int(tmp_set2);
-		FREE_int(tmp_set3);
+		FREE_lint(tmp_set1);
+		FREE_lint(tmp_set2);
+		FREE_lint(tmp_set3);
 		FREE_int(tmp_Elt1);
 		FREE_int(tmp_Elt2);
 		FREE_int(tmp_Elt3);
-		FREE_int(trace_set_recursion_tmp_set1);
+		FREE_lint(trace_set_recursion_tmp_set1);
 		FREE_int(trace_set_recursion_Elt1);
-		FREE_int(apply_fusion_tmp_set1);
+		FREE_lint(apply_fusion_tmp_set1);
 		FREE_int(apply_fusion_Elt1);
-		FREE_int(make_set_smaller_set);
+		FREE_lint(make_set_smaller_set);
 		FREE_int(make_set_smaller_Elt1);
 		FREE_int(make_set_smaller_Elt2);
 		FREE_int(orbit_representative_Elt1);
@@ -373,13 +373,13 @@ void isomorph::load_table_of_solutions(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int id, j;
-	int data[1000];
+	long int data[1000];
 
 	if (f_v) {
 		cout << "isomorph::load_table_of_solutions N=" << N << endl;
 		}
 	setup_and_open_solution_database(verbose_level);
-	table_of_solutions = NEW_int(N * size);
+	table_of_solutions = NEW_lint(N * size);
 	for (id = 0; id < N; id++) {
 		load_solution(id, data);
 		for (j = 0; j < size; j++) {
@@ -425,8 +425,8 @@ void isomorph::init_starter_number(int verbose_level)
 void isomorph::list_solutions_by_starter()
 {
 	int i, j, idx, id, f, l, fst, len, h, pos, u;
-	int data[1000];
-	int data2[1000];
+	long int data[1000];
+	long int data2[1000];
 	int verbose_level = 0;
 	sorting Sorting;
 	
@@ -451,12 +451,12 @@ void isomorph::list_solutions_by_starter()
 				for (h = 0; h < size; h++) {
 					data2[h] = data[h];
 					}
-				Sorting.int_vec_heapsort(data2, size);
+				Sorting.lint_vec_heapsort(data2, size);
 				cout << i << " : " << j << " : "
 						<< idx << " : " << id << endl;
-				int_vec_print(cout, data, size);
+				lint_vec_print(cout, data, size);
 				cout << endl;
-				int_vec_print(cout, data2, size);
+				lint_vec_print(cout, data2, size);
 				cout << endl;
 				}
 			pos += len;
@@ -470,8 +470,8 @@ void isomorph::list_solutions_by_starter()
 void isomorph::list_solutions_by_orbit()
 {
 	int i, j, idx, id, f, l, h;
-	int data[1000];
-	int data2[1000];
+	long int data[1000];
+	long int data2[1000];
 	int verbose_level = 0;
 	sorting Sorting;
 	
@@ -489,11 +489,11 @@ void isomorph::list_solutions_by_orbit()
 			for (h = 0; h < size; h++) {
 				data2[h] = data[h];
 				}
-			Sorting.int_vec_heapsort(data2, size);
+			Sorting.lint_vec_heapsort(data2, size);
 			cout << j << " : " << idx << " : " << id << endl;
-			int_vec_print(cout, data, size);
+			lint_vec_print(cout, data, size);
 			cout << endl;
-			int_vec_print(cout, data2, size);
+			lint_vec_print(cout, data2, size);
 			cout << endl;
 			}
 		}
@@ -780,11 +780,11 @@ void isomorph::orbits_of_stabilizer_case(int the_case,
 	sims *S;
 	action *AA;
 	schreier *Schreier;
-	int *sets;
+	long int *sets;
 	int h, p, prev, b, hdl;
 	sorting Sorting;
 			
-	sets = NEW_int(l * size);
+	sets = NEW_lint(l * size);
 	S = NEW_OBJECT(sims);
 	AA = NEW_OBJECT(action);
 	Schreier = NEW_OBJECT(schreier);
@@ -831,13 +831,13 @@ void isomorph::orbits_of_stabilizer_case(int the_case,
 		load_solution(f + j, sets + j * size);
 		if (FALSE && f_vv) {
 			cout << "solution " << j << "        : ";
-			int_vec_print(cout, sets + j * size, size);
+			lint_vec_print(cout, sets + j * size, size);
 			cout << endl;
 			}
-		Sorting.int_vec_heapsort(sets + j * size, size);
+		Sorting.lint_vec_heapsort(sets + j * size, size);
 		if (FALSE && f_vv) {
 			cout << "solution " << j << " sorted : ";
-			int_vec_print(cout, sets + j * size, size);
+			lint_vec_print(cout, sets + j * size, size);
 			cout << endl;
 			}
 		}
@@ -938,7 +938,7 @@ void isomorph::orbits_of_stabilizer_case(int the_case,
 		orbit_fst[nb_orbits] = orbit_fst[nb_orbits - 1] + ll;
 		}
 			
-	FREE_int(sets);
+	FREE_lint(sets);
 	FREE_OBJECT(S);
 	FREE_OBJECT(AA);
 	FREE_OBJECT(Schreier);
@@ -1020,8 +1020,8 @@ void isomorph::test_orbit_representative(int verbose_level)
 	//int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	int r, r0, orbit, k;
-	int data1[1000];
-	int data2[1000];
+	long int data1[1000];
+	long int data2[1000];
 	int *transporter;
 	
 	transporter = NEW_int(A->elt_size_in_int);
@@ -1058,8 +1058,8 @@ void isomorph::test_identify_solution(int verbose_level)
 	//int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	int r, r0, id, id0;
-	int data1[1000];
-	int data2[1000];
+	long int data1[1000];
+	long int data2[1000];
 	int perm[1000];
 	int i, k;
 	int *transporter;
@@ -1125,7 +1125,7 @@ void isomorph::compute_stabilizer(sims *&Stab,
 	action *AA;
 	vector_ge *gens;
 	schreier *Schreier;
-	int *sets;
+	long int *sets;
 	int j, first, f, l, c, first_orbit_this_case, orb_no;
 	longinteger_object go, so, so1;
 	sorting Sorting;
@@ -1159,7 +1159,7 @@ void isomorph::compute_stabilizer(sims *&Stab,
 	AA = NEW_OBJECT(action);
 	gens = NEW_OBJECT(vector_ge);
 	Schreier = NEW_OBJECT(schreier);
-	sets = NEW_int(l * size);
+	sets = NEW_lint(l * size);
 
 	prepare_database_access(level, verbose_level);
 	
@@ -1192,18 +1192,18 @@ void isomorph::compute_stabilizer(sims *&Stab,
 		}
 	for (j = 0; j < l; j++) {
 		load_solution(f + j, sets + j * size);
-		Sorting.int_vec_heapsort(sets + j * size, size);
+		Sorting.lint_vec_heapsort(sets + j * size, size);
 		}
 	if (f_v) {
 		cout << "isomorph::compute_stabilizer "
 				"The " << l << " solutions are:" << endl;
 		if (l < 20) {
-			int_matrix_print(sets, l, size);
+			lint_matrix_print(sets, l, size);
 			}
 		else {
 			cout << "isomorph::compute_stabilizer "
 					"Too big to print, we print only 20" << endl;
-			int_matrix_print(sets, 20, size);
+			lint_matrix_print(sets, 20, size);
 			}
 		}
 
@@ -1275,7 +1275,7 @@ void isomorph::compute_stabilizer(sims *&Stab,
 	FREE_OBJECT(AA);
 	FREE_OBJECT(gens);
 	FREE_OBJECT(Schreier);
-	FREE_int(sets);
+	FREE_lint(sets);
 }
 
 void isomorph::test_compute_stabilizer(int verbose_level)
@@ -1313,7 +1313,7 @@ void isomorph::test_memory()
 	int id;
 	//action *AA;
 	sims *Stab;
-	int data[1000];
+	long int data[1000];
 	
 	
 	setup_and_open_solution_database(verbose_level - 1);
@@ -1341,11 +1341,11 @@ void isomorph::test_edges(int verbose_level)
 	int *Elt1, *Elt2;
 	//int r1, r2;
 	int id1, id2;
-	int data1[1000];
-	int data2[1000];
+	long int data1[1000];
+	long int data2[1000];
 	int subset[1000];
 	int i, j, a, b;
-	int subset1[] = {0, 1, 2, 3, 4, 8};
+	long int subset1[] = {0, 1, 2, 3, 4, 8};
 
 	transporter1 = NEW_int(A->elt_size_in_int);
 	transporter2 = NEW_int(A->elt_size_in_int);
@@ -1355,7 +1355,7 @@ void isomorph::test_edges(int verbose_level)
 	/*r1 =*/ test_edge(1, subset1, transporter1, verbose_level);
 	id1 = orbit_perm[orbit_fst[1]];
 	
-	int subset2[] = {0, 1, 2, 3, 4, 6 };
+	long int subset2[] = {0, 1, 2, 3, 4, 6 };
 	
 	/*r2 =*/ test_edge(74, subset2, transporter2, verbose_level);
 	id2 = orbit_perm[orbit_fst[74]];
@@ -1401,14 +1401,14 @@ void isomorph::test_edges(int verbose_level)
 }
 
 int isomorph::test_edge(int n1,
-		int *subset1, int *transporter, int verbose_level)
+		long int *subset1, int *transporter, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	int r, r0, id, id0;
-	int data1[1000];
-	int data2[1000];
+	long int data1[1000];
+	long int data2[1000];
 	sorting Sorting;
 
 
@@ -1425,7 +1425,7 @@ int isomorph::test_edge(int n1,
 	
 	load_solution(id, data1);
 		
-	Sorting.rearrange_subset(size, level, data1,
+	Sorting.rearrange_subset_lint_all(size, level, data1,
 			subset1, data2, verbose_level - 1);
 		
 	int f_failure_to_find_point;
@@ -1542,7 +1542,7 @@ void isomorph::test_hash(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	int data[1000];
+	long int data[1000];
 	int id, case_nb, f, l, i;
 	int *H;
 	sorting Sorting;
@@ -1564,8 +1564,8 @@ void isomorph::test_hash(int verbose_level)
 			//id = orbit_perm[f + i];
 			id = f + i;
 			load_solution(id, data);
-			Sorting.int_vec_heapsort(data, size);
-			H[i] = int_vec_hash(data, size);
+			Sorting.lint_vec_heapsort(data, size);
+			H[i] = lint_vec_hash(data, size);
 			}
 		{
 		classify C;
@@ -1586,7 +1586,7 @@ void isomorph::compute_Ago_Ago_induced(longinteger_object *&Ago,
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	int h, rep, first, /*c,*/ id;
-	int data[1000];
+	long int data[1000];
 	
 	if (f_v) {
 		cout << "isomorph::compute_Ago_Ago_induced" << endl;
@@ -1758,8 +1758,8 @@ void isomorph::get_orbit_transversal(orbit_transversal *&T,
 		first = orbit_fst[rep];
 		id = orbit_perm[first];
 
-		int *data;
-		data = NEW_int(size);
+		long int *data;
+		data = NEW_lint(size);
 
 		load_solution(id, data);
 
