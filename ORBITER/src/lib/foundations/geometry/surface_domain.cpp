@@ -190,7 +190,7 @@ void surface_domain::freeself()
 		FREE_OBJECT(Poly3_4);
 		}
 	if (Double_six) {
-		FREE_int(Double_six);
+		FREE_lint(Double_six);
 		}
 	if (Double_six_label_tex) {
 		int i;
@@ -201,7 +201,7 @@ void surface_domain::freeself()
 		FREE_pchar(Double_six_label_tex);
 		}
 	if (Half_double_sixes) {
-		FREE_int(Half_double_sixes);
+		FREE_lint(Half_double_sixes);
 		}
 
 	if (Half_double_six_label_tex) {

@@ -78,6 +78,8 @@ public:
 	int get_largest_value();
 	void get_class_by_value(int *&Pts, int &nb_pts, int value, 
 		int verbose_level);
+	void get_class_by_value_lint(
+			long int *&Pts, int &nb_pts, int value, int verbose_level);
 	set_of_sets *get_set_partition_and_types(int *&types, 
 		int &nb_types, int verbose_level);
 };

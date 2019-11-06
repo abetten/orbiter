@@ -2750,7 +2750,7 @@ void projective_space_with_action::select_packings(
 				i * spread_size, set, spread_size);
 		Sorting.lint_vec_heapsort(set, spread_size);
 		if (!Sorting.search_general(Spread_tables->spread_table,
-				nb_spreads, (int *) set, idx,
+				nb_spreads, (void *) set, idx,
 				table_of_sets_compare_func,
 				extra_data, 0 /*verbose_level*/)) {
 			cout << "projective_space_with_action::select_packings "
@@ -4395,7 +4395,7 @@ void compute_and_print_ago_distribution_with_classes(ostream &ost,
 
 
 int table_of_sets_compare_func(void *data, int i,
-		int *search_object,
+		void *search_object,
 		void *extra_data)
 {
 	long int *Data = (long int *) data;

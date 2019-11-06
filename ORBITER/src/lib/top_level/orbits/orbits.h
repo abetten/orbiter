@@ -65,7 +65,7 @@ public:
 
 	int nb_identify;
 	char **Identify_label;
-	int **Identify_data;
+	long int **Identify_data;
 	int *Identify_length;
 
 
@@ -85,8 +85,8 @@ public:
 };
 
 
-int kramer_mesner_test_arc(int len, int *S, void *data, int verbose_level);
-int kramer_mesner_test_surface(int len, int *S, void *data, int verbose_level);
+int kramer_mesner_test_arc(int len, long int *S, void *data, int verbose_level);
+int kramer_mesner_test_surface(int len, long int *S, void *data, int verbose_level);
 
 
 // #############################################################################
@@ -398,7 +398,7 @@ public:
 
 	int f_has_extra_test_func;
 	int (*extra_test_func)(subspace_orbits *SubOrb, 
-		int len, int *S, void *data, int verbose_level);
+		int len, long int *S, void *data, int verbose_level);
 	void *extra_test_func_data;
 
 	int test_dim;
@@ -411,9 +411,9 @@ public:
 		int verbose_level);
 	void init_group(int verbose_level);
 	void compute_orbits(int verbose_level);
-	void unrank_set_to_M(int len, int *S);
-	void unrank_set_to_matrix(int len, int *S, int *M);
-	void rank_set_from_matrix(int len, int *S, int *M);
+	void unrank_set_to_M(int len, long int *S);
+	void unrank_set_to_matrix(int len, long int *S, int *M);
+	void rank_set_from_matrix(int len, long int *S, int *M);
 	void Kramer_Mesner_matrix(int t, int k, int f_print_matrix, 
 		int f_read_solutions, const char *solution_fname, 
 		int verbose_level);
@@ -421,22 +421,22 @@ public:
 		int **Subspace_ranks, int &nb_subspaces, int verbose_level);
 	void print_one_solution(diophant *D, int k, int *sol, 
 		int *&subspace_ranks, int &nb_subspaces, int verbose_level);
-	int test_dim_C_cap_Cperp_property(int len, int *S, int d);
-	int compute_minimum_distance(int len, int *S);
-	void print_set(std::ostream &ost, int len, int *S);
-	int test_set(int len, int *S, int verbose_level);
-	int test_minimum_distance(int len, int *S, 
+	int test_dim_C_cap_Cperp_property(int len, long int *S, int d);
+	int compute_minimum_distance(int len, long int *S);
+	void print_set(std::ostream &ost, int len, long int *S);
+	int test_set(int len, long int *S, int verbose_level);
+	int test_minimum_distance(int len, long int *S,
 		int mindist, int verbose_level);
-	int test_if_self_orthogonal(int len, int *S, 
+	int test_if_self_orthogonal(int len, long int *S,
 		int f_doubly_even, int verbose_level);
 };
 
 
-int subspace_orbits_rank_point_func(int *v, void *data);
-void subspace_orbits_unrank_point_func(int *v, int rk, void *data);
-void subspace_orbits_early_test_func(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+long int subspace_orbits_rank_point_func(int *v, void *data);
+void subspace_orbits_unrank_point_func(int *v, long int rk, void *data);
+void subspace_orbits_early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 
 }}

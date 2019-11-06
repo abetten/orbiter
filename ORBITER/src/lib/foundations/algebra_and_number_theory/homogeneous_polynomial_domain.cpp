@@ -1249,7 +1249,7 @@ void homogeneous_polynomial_domain::print_monomial_ordering(ostream &ost)
 
 
 int homogeneous_polynomial_domain_compare_monomial_with(
-		void *data, int i, int *data2, void *extra_data)
+		void *data, int i, void *data2, void *extra_data)
 {
 	homogeneous_polynomial_domain *HPD =
 			(homogeneous_polynomial_domain *) extra_data;
@@ -1258,7 +1258,7 @@ int homogeneous_polynomial_domain_compare_monomial_with(
 
 	Data = (int *) data;
 	n = HPD->n;
-	ret = HPD->compare_monomials(Data + i * n, data2);
+	ret = HPD->compare_monomials(Data + i * n, (int *) data2);
 	return ret;
 }
 

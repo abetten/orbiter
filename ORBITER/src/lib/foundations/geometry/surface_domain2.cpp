@@ -847,10 +847,10 @@ void surface_domain::create_surface_family_S(int a,
 }
 
 void surface_domain::compute_tritangent_planes(long int *Lines,
-	int *&Tritangent_planes, int &nb_tritangent_planes,
-	int *&Unitangent_planes, int &nb_unitangent_planes,
-	int *&Lines_in_tritangent_plane,
-	int *&Line_in_unitangent_plane,
+	long int *&Tritangent_planes, int &nb_tritangent_planes,
+	long int *&Unitangent_planes, int &nb_unitangent_planes,
+	long int *&Lines_in_tritangent_plane,
+	long int *&Line_in_unitangent_plane,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -890,15 +890,15 @@ void surface_domain::compute_tritangent_planes(long int *Lines,
 		}
 
 
-	Plane_type.get_class_by_value(Tritangent_planes,
+	Plane_type.get_class_by_value_lint(Tritangent_planes,
 		nb_tritangent_planes, 3 /* value */, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "surface_domain::compute_tritangent_planes "
 				"The tritangent planes are: ";
-		int_vec_print(cout, Tritangent_planes, nb_tritangent_planes);
+		lint_vec_print(cout, Tritangent_planes, nb_tritangent_planes);
 		cout << endl;
 		}
-	Lines_in_tritangent_plane = NEW_int(nb_tritangent_planes * 3);
+	Lines_in_tritangent_plane = NEW_lint(nb_tritangent_planes * 3);
 	for (h = 0; h < nb_tritangent_planes; h++) {
 		j = Tritangent_planes[h];
 		c = 0;
@@ -914,15 +914,15 @@ void surface_domain::compute_tritangent_planes(long int *Lines,
 		}
 
 
-	Plane_type.get_class_by_value(Unitangent_planes,
+	Plane_type.get_class_by_value_lint(Unitangent_planes,
 		nb_unitangent_planes, 1 /* value */, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "surface_domain::compute_tritangent_planes "
 				"The unitangent planes are: ";
-		int_vec_print(cout, Unitangent_planes, nb_unitangent_planes);
+		lint_vec_print(cout, Unitangent_planes, nb_unitangent_planes);
 		cout << endl;
 		}
-	Line_in_unitangent_plane = NEW_int(nb_unitangent_planes);
+	Line_in_unitangent_plane = NEW_lint(nb_unitangent_planes);
 	for (h = 0; h < nb_unitangent_planes; h++) {
 		j = Unitangent_planes[h];
 		c = 0;
@@ -1114,7 +1114,7 @@ void surface_domain::init_double_sixes(int verbose_level)
 	if (f_v) {
 		cout << "surface_domain::init_double_sixes" << endl;
 		}
-	Double_six = NEW_int(36 * 12);
+	Double_six = NEW_lint(36 * 12);
 	h = 0;
 	// first type: D : a_1,..., a_6; b_1, ..., b_6
 	for (i = 0; i < 12; i++) {
@@ -1233,14 +1233,14 @@ void surface_domain::create_half_double_sixes(int verbose_level)
 	if (f_v) {
 		cout << "surface_domain::create_half_double_sixes" << endl;
 		}
-	Half_double_sixes = NEW_int(72 * 6);
+	Half_double_sixes = NEW_lint(72 * 6);
 	Half_double_six_to_double_six = NEW_int(72);
 	Half_double_six_to_double_six_row = NEW_int(72);
 
-	int_vec_copy(Double_six, Half_double_sixes, 36 * 12);
+	lint_vec_copy(Double_six, Half_double_sixes, 36 * 12);
 	for (i = 0; i < 36; i++) {
 		for (j = 0; j < 2; j++) {
-			Sorting.int_vec_heapsort(
+			Sorting.lint_vec_heapsort(
 				Half_double_sixes + (2 * i + j) * 6, 6);
 			Half_double_six_to_double_six[2 * i + j] = i;
 			Half_double_six_to_double_six_row[2 * i + j] = j;
@@ -1298,14 +1298,14 @@ void surface_domain::create_half_double_sixes(int verbose_level)
 		}
 }
 
-int surface_domain::find_half_double_six(int *half_double_six)
+int surface_domain::find_half_double_six(long int *half_double_six)
 {
 	int i;
 	sorting Sorting;
 
-	Sorting.int_vec_heapsort(half_double_six, 6);
+	Sorting.lint_vec_heapsort(half_double_six, 6);
 	for (i = 0; i < 72; i++) {
-		if (int_vec_compare(half_double_six,
+		if (lint_vec_compare(half_double_six,
 			Half_double_sixes + i * 6, 6) == 0) {
 			return i;
 			}

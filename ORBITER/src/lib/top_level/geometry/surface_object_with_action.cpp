@@ -170,7 +170,7 @@ int surface_object_with_action::init_equation(
 
 
 void surface_object_with_action::init(surface_with_action *Surf_A, 
-	int *Lines, int *eqn, 
+	long int *Lines, int *eqn,
 	strong_generators *Aut_gens,
 	int f_find_double_six_and_rearrange_lines,
 	int verbose_level)
@@ -812,7 +812,7 @@ void surface_object_with_action::print_automorphism_group(
 		double scale = 0.33;
 		double line_width = 0.5;
 		int f_has_point_labels = FALSE;
-		int *point_labels = NULL;
+		long int *point_labels = NULL;
 	
 		Orbits_on_single_sixes->draw_forest(fname_mask, 
 			xmax, ymax, 
@@ -1012,11 +1012,11 @@ void surface_object_with_action::quartic(
 	ost << "\\\\" << endl;
 	ost << "\\end{align*}" << endl;
 
-	int *Pts_on_surface;
+	long int *Pts_on_surface;
 	int nb_pts_on_surface;
 	
 	nb_pts_on_surface = SO->nb_pts;
-	Pts_on_surface = NEW_int(nb_pts_on_surface);
+	Pts_on_surface = NEW_lint(nb_pts_on_surface);
 
 	
 	cout << "surface_object_with_action::quartic "
@@ -1092,10 +1092,10 @@ void surface_object_with_action::quartic(
 	ost << ")\\\\" << endl;
 	ost << "\\end{align*}" << endl;
 
-	int *Pts_on_tangent_quadric;
+	long int *Pts_on_tangent_quadric;
 	int nb_pts_on_tangent_quadric;
 	
-	Pts_on_tangent_quadric = NEW_int(Surf->P->N_points);
+	Pts_on_tangent_quadric = NEW_lint(Surf->P->N_points);
 	
 	cout << "surface_object_with_action::quartic "
 			"before Surf->Poly2_4->enumerate_points" << endl;
@@ -1108,7 +1108,7 @@ void surface_object_with_action::quartic(
 	ost << "The tangent quadric has " << nb_pts_on_tangent_quadric
 			<< " points.\\\\" << endl;
 
-	Sorting.int_vec_heapsort(Pts_on_tangent_quadric, nb_pts_on_tangent_quadric);
+	Sorting.lint_vec_heapsort(Pts_on_tangent_quadric, nb_pts_on_tangent_quadric);
 	ost << "The points on the tangent quadric are:\\\\" << endl;
 	ost << "\\begin{multicols}{2}" << endl;
 	for (i = 0; i < nb_pts_on_tangent_quadric; i++) {
@@ -1164,10 +1164,10 @@ void surface_object_with_action::quartic(
 	
 
 
-	int *Pts_intersection;
+	long int *Pts_intersection;
 	int nb_pts_intersection;
 
-	Sorting.int_vec_intersect(Pts_on_surface, nb_pts_on_surface,
+	Sorting.vec_intersect(Pts_on_surface, nb_pts_on_surface,
 		Pts_on_tangent_quadric, nb_pts_on_tangent_quadric, 
 		Pts_intersection, nb_pts_intersection);
 
@@ -1198,11 +1198,11 @@ void surface_object_with_action::quartic(
 
 
 #if 1
-	int *Pts_on_curve;
+	long int *Pts_on_curve;
 	int sz_curve;
 
 
-	Pts_on_curve = NEW_int(Surf->P2->N_points);
+	Pts_on_curve = NEW_lint(Surf->P2->N_points);
 
 	cout << "surface_object_with_action::quartic before "
 			"Surf->Poly4_x123->enumerate_points" << endl;
@@ -1490,10 +1490,10 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 	Aut_gens->print_elements_latex_ost(ost);
 
 	ost << "\\clearpage\\subsection*{The Group Table}" << endl;
-	int go;
+	long int go;
 	int block_width = 24;
 
-	go = Aut_gens->group_order_as_int();
+	go = Aut_gens->group_order_as_lint();
 	if (go < 50) {
 		latex_interface L;
 		int *Table;
@@ -1547,15 +1547,15 @@ void surface_object_with_action::cheat_sheet_quartic_curve(
 	int *f1;
 	int *f2;
 	int *f3;
-	int *Pts_on_surface;
+	long int *Pts_on_surface;
 	int nb_pts_on_surface;
 	int *curve;
 	int *poly1;
 	int *poly2;
 	int *tangent_quadric;
-	int *Pts_on_tangent_quadric;
-	int *Pts_intersection;
-	int *Pts_on_curve;
+	long int *Pts_on_tangent_quadric;
+	long int *Pts_intersection;
+	long int *Pts_on_curve;
 	int sz_curve;
 	int nb_pts_intersection;
 	int nb_pts_on_tangent_quadric;
@@ -1639,7 +1639,7 @@ void surface_object_with_action::cheat_sheet_quartic_curve(
 
 	
 	nb_pts_on_surface = SO->nb_pts;
-	Pts_on_surface = NEW_int(nb_pts_on_surface);
+	Pts_on_surface = NEW_lint(nb_pts_on_surface);
 
 	
 	cout << "surface_object_with_action::cheat_sheet_quartic_curve "
@@ -1694,7 +1694,7 @@ void surface_object_with_action::cheat_sheet_quartic_curve(
 	ost << ")\\\\" << endl;
 	ost << "\\end{align*}" << endl;
 	
-	Pts_on_tangent_quadric = NEW_int(Surf->P->N_points);
+	Pts_on_tangent_quadric = NEW_lint(Surf->P->N_points);
 	
 	cout << "surface_object_with_action::cheat_sheet_quartic_curve "
 			"before Surf->Poly2_4->enumerate_points" << endl;
@@ -1707,7 +1707,7 @@ void surface_object_with_action::cheat_sheet_quartic_curve(
 	ost << "The tangent quadric has " << nb_pts_on_tangent_quadric
 			<< " points.\\\\" << endl;
 
-	Sorting.int_vec_heapsort(Pts_on_tangent_quadric, nb_pts_on_tangent_quadric);
+	Sorting.lint_vec_heapsort(Pts_on_tangent_quadric, nb_pts_on_tangent_quadric);
 	ost << "The points on the tangent quadric are:\\\\" << endl;
 	ost << "\\begin{multicols}{2}" << endl;
 	for (i = 0; i < nb_pts_on_tangent_quadric; i++) {
@@ -1723,7 +1723,7 @@ void surface_object_with_action::cheat_sheet_quartic_curve(
 
 
 
-	Sorting.int_vec_intersect(Pts_on_surface, nb_pts_on_surface,
+	Sorting.vec_intersect(Pts_on_surface, nb_pts_on_surface,
 		Pts_on_tangent_quadric, nb_pts_on_tangent_quadric, 
 		Pts_intersection, nb_pts_intersection);
 
@@ -1757,7 +1757,7 @@ void surface_object_with_action::cheat_sheet_quartic_curve(
 #if 1
 
 
-	Pts_on_curve = NEW_int(Surf->P2->N_points);
+	Pts_on_curve = NEW_lint(Surf->P2->N_points);
 
 	cout << "surface_object_with_action::cheat_sheet_quartic_curve "
 			"before Surf->Poly4_x123->enumerate_points" << endl;
@@ -1847,14 +1847,14 @@ void surface_object_with_action::cheat_sheet_quartic_curve(
 	FREE_int(f1);
 	FREE_int(f2);
 	FREE_int(f3);
-	FREE_int(Pts_on_surface);
+	FREE_lint(Pts_on_surface);
 	FREE_int(curve);
 	FREE_int(poly1);
 	FREE_int(poly2);
 	FREE_int(tangent_quadric);
-	FREE_int(Pts_on_tangent_quadric);
-	FREE_int(Pts_intersection);
-	FREE_int(Pts_on_curve);
+	FREE_lint(Pts_on_tangent_quadric);
+	FREE_lint(Pts_intersection);
+	FREE_lint(Pts_on_curve);
 	FREE_OBJECT(gens_copy);
 	FREE_OBJECT(moved_surface);
 	FREE_OBJECT(stab_gens_P0);

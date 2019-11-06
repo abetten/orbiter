@@ -232,7 +232,7 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 	int f_vv = (verbose_level >= 2);
 	int nb_orbits;
 	int pt_representation_sz;
-	int *Flag;
+	long int *Flag;
 	combinatorics_domain Combi;
 
 	if (f_v) {
@@ -248,7 +248,7 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 		// Flag[11..12] : 2 for the chosen lines line1 and line2 through P1 and P2
 		// Flag[13..32] : 20 for the equation of the surface
 		// Flag[33..59] : 27 for the lines of the surface
-	Flag = NEW_int(pt_representation_sz);
+	Flag = NEW_lint(pt_representation_sz);
 
 	nb_orbits = Six_arcs->nb_arcs_not_on_conic;
 	Flag_orbits = NEW_OBJECT(flag_orbits);
@@ -336,7 +336,7 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 						"orbit on pairs "
 						<< orbit_on_pairs_idx << " / "
 						<< nb_orbits_on_pairs << " pair ";
-				int_vec_print(cout, pair_orbit->data, 2);
+				lint_vec_print(cout, pair_orbit->data, 2);
 				cout << endl;
 			}
 
@@ -381,12 +381,12 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 
 				// prepare the flag
 				// copy the arc:
-				int_vec_copy(The_arc->data, Flag + 0, 6);
+				lint_vec_copy(The_arc->data, Flag + 0, 6);
 				// copy orb and the pair:
 				Flag[6] = orbit_on_pairs_idx;
 				p0 = pair_orbit->data[0];
 				p1 = pair_orbit->data[1];
-				int_vec_copy(pair_orbit->data, Flag + 7, 2);
+				lint_vec_copy(pair_orbit->data, Flag + 7, 2);
 				Flag[9] = orbit_on_partition_idx;
 				Flag[10] = partition_rk;
 
@@ -426,10 +426,10 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 						orbit_on_partition_idx,
 						verbose_level - 5);
 
-				int Arc6[6];
-				int arc[6];
-				int P0, P1;
-				int line1, line2;
+				long int Arc6[6];
+				long int arc[6];
+				long int P0, P1;
+				long int line1, line2;
 				int v4[4];
 
 				//int_vec_copy(The_arc->data, Arc6, 6);
@@ -437,17 +437,15 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 				if (f_v) {
 					cout << "surfaces_arc_lifting::downstep "
 							"the arc is: ";
-					int_vec_print(cout, The_arc->data, 6);
+					lint_vec_print(cout, The_arc->data, 6);
 					cout << endl;
 				}
-				Surf->F->PG_elements_embed(
-						The_arc->data, Arc6, 6,
-						3, 4, v4);
+				Surf->F->PG_elements_embed(The_arc->data, Arc6, 6, 3, 4, v4);
 
 				if (f_v) {
 					cout << "surfaces_arc_lifting::downstep "
 							"after embedding, the arc is: ";
-					int_vec_print(cout, Arc6, 6);
+					lint_vec_print(cout, Arc6, 6);
 					cout << endl;
 				}
 
@@ -459,7 +457,7 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 				if (f_v) {
 					cout << "surfaces_arc_lifting::downstep "
 							"the rearranged arcs is: ";
-					int_vec_print(cout, arc, 6);
+					lint_vec_print(cout, arc, 6);
 					cout << endl;
 				}
 
@@ -474,7 +472,7 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 				Flag[11] = line1;
 				Flag[12] = line2;
 				int coeff20[20];
-				int lines27[27];
+				long int lines27[27];
 
 				if (f_v) {
 					cout << "surfaces_arc_lifting::downstep "
@@ -492,18 +490,19 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 					int_vec_print(cout, coeff20, 20);
 					cout << endl;
 					cout << "lines27: ";
-					int_vec_print(cout, lines27, 27);
+					lint_vec_print(cout, lines27, 27);
 					cout << endl;
 				}
-				int_vec_copy(coeff20, Flag + 13, 20);
-				int_vec_copy(lines27, Flag + 33, 27);
+				int_vec_copy_to_lint(coeff20, Flag + 13, 20);
+				lint_vec_copy(lines27, Flag + 33, 27);
 
 
-				int arc_stab_order, partition_stab_order;
+				long int arc_stab_order;
+				long int partition_stab_order;
 				int downstep_orbit_len;
 
-				arc_stab_order = The_arc->Strong_gens->group_order_as_int();
-				partition_stab_order = SG->group_order_as_int();
+				arc_stab_order = The_arc->Strong_gens->group_order_as_lint();
+				partition_stab_order = SG->group_order_as_lint();
 
 				downstep_orbit_len = arc_stab_order / partition_stab_order;
 				if (f_v) {
@@ -576,7 +575,7 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 	} // next arc_idx
 
 	//Flag_orbits->nb_flag_orbits = nb_flag_orbits;
-	FREE_int(Flag);
+	FREE_lint(Flag);
 
 
 	flag_orbit_on_arcs_not_on_a_conic_idx = NEW_int(Flag_orbits->nb_flag_orbits);
@@ -679,7 +678,7 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 	int *f_processed;
 	int nb_processed;
 	int pt_representation_sz;
-	int *Flag_representation;
+	long int *Flag_representation;
 
 
 	if (f_v) {
@@ -702,7 +701,7 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 		// Flag[13..32] : 20 for the equation of the surface
 		// Flag[33..59] : 27 for the lines of the surface
 
-	Flag_representation = NEW_int(pt_representation_sz);
+	Flag_representation = NEW_lint(pt_representation_sz);
 
 	Surfaces = NEW_OBJECT(classification_step);
 
@@ -738,7 +737,7 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 	for (f = 0; f < Flag_orbits->nb_flag_orbits; f++) {
 
 		double progress;
-		int Lines[27];
+		long int Lines[27];
 		int eqn[20];
 
 		if (f_processed[f]) {
@@ -768,11 +767,11 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 		if (f_v) {
 			cout << "surfaces_arc_lifting::upstep po=" << po << " so=" << so << endl;
 			}
-		int_vec_copy(Flag_orbits->Pt + f * pt_representation_sz,
+		lint_vec_copy(Flag_orbits->Pt + f * pt_representation_sz,
 				Flag_representation, pt_representation_sz);
 
-		int_vec_copy(Flag_representation + 13, eqn, 20);
-		int_vec_copy(Flag_representation + 33, Lines, 27);
+		lint_vec_copy_to_int(Flag_representation + 13, eqn, 20);
+		lint_vec_copy(Flag_representation + 33, Lines, 27);
 
 
 		int *Adj;
@@ -814,7 +813,7 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 
 		if (f_v) {
 			cout << "Lines:";
-			int_vec_print(cout, Lines, 27);
+			lint_vec_print(cout, Lines, 27);
 			cout << endl;
 			}
 		S = Flag_orbits->Flag_orbit_node[f].gens->create_copy();
@@ -835,7 +834,7 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 				}
 
 			int three_lines_idx[3];
-			int three_lines[3];
+			long int three_lines[3];
 
 
 			Surf_A->Surf->Eckardt_points[tritangent_plane_idx].three_lines(
@@ -851,7 +850,7 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 						"three_lines_idx=";
 				int_vec_print(cout, three_lines_idx, 3);
 				cout << " three_lines=";
-				int_vec_print(cout, three_lines, 3);
+				lint_vec_print(cout, three_lines, 3);
 				cout << endl;
 			}
 
@@ -908,8 +907,8 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 						if (Adj[l2 * 27 + l1]) {
 							continue;
 						}
-						int P6[6];
-						int transversals4[4];
+						long int P6[6];
+						long int transversals4[4];
 
 						upstep_idx = tritangent_plane_idx * 72 + line_idx * 24 + cnt;
 
@@ -944,6 +943,37 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 								Elt_beta2,
 								Elt_beta3,
 								verbose_level - 2);
+
+#if 0
+						void surfaces_arc_lifting::upstep2(
+								surface_object *SO,
+								vector_ge *coset_reps,
+								int &nb_coset_reps,
+								int *f_processed,
+								int &nb_processed,
+								int pt_representation_sz,
+								int f,
+								long int *Flag_representation,
+								int tritangent_plane_idx,
+								int line_idx, int m1, int m2, int m3,
+								int l1, int l2,
+								int cnt,
+								strong_generators *S,
+								long int *Lines,
+								int *eqn20,
+								int *Adj,
+								long int *transversals4,
+								long int *P6,
+								int &f2,
+								int *Elt_alpha1,
+								int *Elt_alpha2,
+								int *Elt_beta1,
+								int *Elt_beta2,
+								int *Elt_beta3,
+								int verbose_level)
+#endif
+
+
 						if (f_vv) {
 							cout << "f=" << f << " / " << Flag_orbits->nb_flag_orbits
 									<< ", upstep " << upstep_idx << " / " << 3240;
@@ -1179,7 +1209,7 @@ void surfaces_arc_lifting::upstep(int verbose_level)
 
 
 	FREE_int(f_processed);
-	FREE_int(Flag_representation);
+	FREE_lint(Flag_representation);
 	FREE_int(Elt_alpha1);
 	FREE_int(Elt_alpha2);
 	FREE_int(Elt_beta1);
@@ -1204,17 +1234,17 @@ void surfaces_arc_lifting::upstep2(
 		int &nb_processed,
 		int pt_representation_sz,
 		int f,
-		int *Flag_representation,
+		long int *Flag_representation,
 		int tritangent_plane_idx,
 		int line_idx, int m1, int m2, int m3,
 		int l1, int l2,
 		int cnt,
 		strong_generators *S,
-		int *Lines,
+		long int *Lines,
 		int *eqn20,
 		int *Adj,
-		int *transversals4,
-		int *P6,
+		long int *transversals4,
+		long int *P6,
 		int &f2,
 		int *Elt_alpha1,
 		int *Elt_alpha2,
@@ -1281,7 +1311,7 @@ void surfaces_arc_lifting::upstep2(
 	}
 	if (f_v) {
 		cout << "surfaces_arc_lifting::upstep2 the four transversals are: ";
-		int_vec_print(cout, transversals4, 4);
+		lint_vec_print(cout, transversals4, 4);
 		cout << endl;
 	}
 	P6[0] = Surf_A->Surf->P->intersection_of_two_lines(Lines[l1], Lines[m1]);
@@ -1321,7 +1351,7 @@ void surfaces_arc_lifting::upstep2(
 	}
 	if (f_v) {
 		cout << "surfaces_arc_lifting::upstep2 P6=";
-		int_vec_print(cout, P6, 6);
+		lint_vec_print(cout, P6, 6);
 		cout << endl;
 	}
 
@@ -1375,17 +1405,17 @@ void surfaces_arc_lifting::upstep3(
 		int &nb_processed,
 		int pt_representation_sz,
 		int f,
-		int *Flag_representation,
+		long int *Flag_representation,
 		int tritangent_plane_idx,
 		int line_idx, int m1, int m2, int m3,
 		int l1, int l2,
 		int cnt,
 		strong_generators *S,
-		int *Lines,
+		long int *Lines,
 		int *eqn20,
 		int *Adj,
-		int *transversals4,
-		int *P6,
+		long int *transversals4,
+		long int *P6,
 		int &f2,
 		int *Elt_alpha1,
 		int *Elt_alpha2,
@@ -1424,13 +1454,13 @@ void surfaces_arc_lifting::upstep3(
 				"line_idx=" << line_idx << " / 3, "
 				"l1=" << l1 << " l2=" << l2 << " cnt=" << cnt << " / 24 ";
 		cout << " transversals4=";
-		int_vec_print(cout, transversals4, 4);
+		lint_vec_print(cout, transversals4, 4);
 		cout << " P6=";
-		int_vec_print(cout, P6, 6);
+		lint_vec_print(cout, P6, 6);
 		cout << endl;
 	}
 
-	int tritangent_plane_rk;
+	long int tritangent_plane_rk;
 
 	tritangent_plane_rk = SO->Tritangent_plane_rk[tritangent_plane_idx];
 
@@ -1439,7 +1469,7 @@ void surfaces_arc_lifting::upstep3(
 		cout << "tritangent_plane_rk = " << tritangent_plane_rk << endl;
 	}
 
-	Surf_A->Surf->Gr3->unrank_embedded_subspace_int_here(Basis_pi,
+	Surf_A->Surf->Gr3->unrank_embedded_subspace_lint_here(Basis_pi,
 			tritangent_plane_rk, 0 /*verbose_level - 5*/);
 
 	if (f_v) {
@@ -1471,7 +1501,7 @@ void surfaces_arc_lifting::upstep3(
 	int v[4];
 	int base_cols[3] = {0, 1, 2};
 	int coefficients[3];
-	int P6_local[6];
+	long int P6_local[6];
 	int Basis_identity[12] = { 1,0,0,0, 0,1,0,0, 0,0,1,0 };
 
 	for (i = 0; i < 6; i++) {
@@ -1496,13 +1526,12 @@ void surfaces_arc_lifting::upstep3(
 			int_vec_print(cout, coefficients, 3);
 			cout << endl;
 		}
-		Surf_A->Surf->F->PG_element_rank_modified(
-				coefficients, 1, 3, P6_local[i]);
+		Surf_A->Surf->F->PG_element_rank_modified_lint(coefficients, 1, 3, P6_local[i]);
 	}
 	if (f_v) {
 		cout << "surfaces_arc_lifting::upstep3" << endl;
 		cout << "P6_local=" << endl;
-		int_vec_print(cout, P6_local, 6);
+		lint_vec_print(cout, P6_local, 6);
 		cout << endl;
 	}
 
@@ -1514,7 +1543,7 @@ void surfaces_arc_lifting::upstep3(
 	if (f_v) {
 		cout << "surfaces_arc_lifting::upstep3" << endl;
 		cout << "P6_local=" << endl;
-		int_vec_print(cout, P6_local, 6);
+		lint_vec_print(cout, P6_local, 6);
 		cout << " orbit_not_on_conic_idx=" << orbit_not_on_conic_idx << endl;
 	}
 	for (i = 0; i < 6; i++) {
@@ -1523,7 +1552,7 @@ void surfaces_arc_lifting::upstep3(
 	if (f_v) {
 		cout << "surfaces_arc_lifting::upstep3" << endl;
 		cout << "P6_local=" << endl;
-		int_vec_print(cout, P6_local, 6);
+		lint_vec_print(cout, P6_local, 6);
 		cout << " orbit_not_on_conic_idx=" << orbit_not_on_conic_idx << endl;
 		cout << "The flag orbit f satisfies "
 				<< flag_orbit_fst[orbit_not_on_conic_idx]
@@ -1534,24 +1563,24 @@ void surfaces_arc_lifting::upstep3(
 
 
 	int pair_orbit_idx;
-	int pair[2];
+	long int pair[2];
 	sorting Sorting;
-	int P6_orbit_rep[6];
+	long int P6_orbit_rep[6];
 	int P6_perm[6];
 	int the_rest[4];
 	int the_partition[4];
 
-	int_vec_copy(P6_local, P6_orbit_rep, 6);
-	Sorting.int_vec_heapsort(P6_orbit_rep, 6);
+	lint_vec_copy(P6_local, P6_orbit_rep, 6);
+	Sorting.lint_vec_heapsort(P6_orbit_rep, 6);
 	for (i = 0; i < 6; i++) {
-		Sorting.int_vec_search_linear(P6_orbit_rep, 6, P6_local[i], P6_perm[i]);
+		Sorting.lint_vec_search_linear(P6_orbit_rep, 6, P6_local[i], P6_perm[i]);
 	}
 	pair[0] = P6_perm[0];
 	pair[1] = P6_perm[1];
 	if (f_v) {
 		cout << "surfaces_arc_lifting::upstep3" << endl;
 		cout << "P6_orbit_rep=" << endl;
-		int_vec_print(cout, P6_orbit_rep, 6);
+		lint_vec_print(cout, P6_orbit_rep, 6);
 		cout << endl;
 		cout << "P6_perm=" << endl;
 		int_vec_print(cout, P6_perm, 6);
@@ -1672,17 +1701,17 @@ void surfaces_arc_lifting::upstep_group_elements(
 		int &nb_processed,
 		int pt_representation_sz,
 		int f,
-		int *Flag_representation,
+		long int *Flag_representation,
 		int tritangent_plane_idx,
 		int line_idx, int m1, int m2, int m3,
 		int l1, int l2,
 		int cnt,
 		strong_generators *S,
-		int *Lines,
+		long int *Lines,
 		int *eqn20,
 		int *Adj,
-		int *transversals4,
-		int *P6,
+		long int *transversals4,
+		long int *P6,
 		int &f2,
 		int *Elt_alpha1,
 		int *Elt_alpha2,
@@ -1768,7 +1797,7 @@ void surfaces_arc_lifting::upstep_group_elements(
 	int orbit_not_on_conic_idx;
 	int pair_orbit_idx;
 	int partition_orbit_idx;
-	int line1_to, line2_to;
+	long int line1_to, line2_to;
 
 
 	orbit_not_on_conic_idx = flag_orbit_on_arcs_not_on_a_conic_idx[f2];
@@ -1780,7 +1809,7 @@ void surfaces_arc_lifting::upstep_group_elements(
 			Table_orbits_on_partition[pair_orbit_idx].
 #endif
 
-	int *Flag2_representation;
+	long int *Flag2_representation;
 	//int pt_representation_sz;
 
 	//pt_representation_sz = 6 + 1 + 2 + 1 + 1 + 2 + 20 + 27;
@@ -1794,9 +1823,9 @@ void surfaces_arc_lifting::upstep_group_elements(
 		// Flag[13..32] : 20 for the equation of the surface
 		// Flag[33..59] : 27 for the lines of the surface
 
-	Flag2_representation = NEW_int(pt_representation_sz);
+	Flag2_representation = NEW_lint(pt_representation_sz);
 
-	int_vec_copy(Flag_orbits->Pt + f2 * pt_representation_sz,
+	lint_vec_copy(Flag_orbits->Pt + f2 * pt_representation_sz,
 			Flag2_representation, pt_representation_sz);
 
 
@@ -1831,8 +1860,8 @@ void surfaces_arc_lifting::upstep_group_elements(
 
 	// test if L1 and line1_to are skew then switch L1 and L2:
 
-	int tritangent_plane_rk;
-	int p1, p2;
+	long int tritangent_plane_rk;
+	long int p1, p2;
 
 	tritangent_plane_rk = SO->Tritangent_plane_rk[tritangent_plane_idx];
 
@@ -1892,7 +1921,7 @@ void surfaces_arc_lifting::upstep_group_elements(
 
 
 
-	FREE_int(Flag2_representation);
+	FREE_lint(Flag2_representation);
 	FREE_int(Elt_Alpha2);
 	FREE_int(Elt_Beta1);
 	FREE_int(Elt_Beta2);
@@ -2042,9 +2071,9 @@ void surfaces_arc_lifting::report(int verbose_level)
 			//int_vec_print(fp, Arc6, 6);
 			pair_orbit->print_set_tex(fp);
 			fp << "$\\\\" << endl;
-			if (pair_orbit->Strong_gens->group_order_as_int() > 1) {
+			if (pair_orbit->Strong_gens->group_order_as_lint() > 1) {
 				fp << "The stabilizer is the following group of order "
-						<< pair_orbit->Strong_gens->group_order_as_int()
+						<< pair_orbit->Strong_gens->group_order_as_lint()
 						<< ":\\\\" << endl;
 				pair_orbit->Strong_gens->print_generators_tex(fp);
 				pair_orbit->Strong_gens->print_generators_as_permutations_tex(
@@ -2114,16 +2143,16 @@ void surfaces_arc_lifting::report(int verbose_level)
 						full_group_order,
 						orbit, verbose_level);
 
-				if (SG->group_order_as_int() > 1) {
+				if (SG->group_order_as_lint() > 1) {
 					fp << "The stabilizer is the following group of order "
-							<< SG->group_order_as_int()
+							<< SG->group_order_as_lint()
 							<< ":\\\\" << endl;
 					SG->print_generators_tex(fp);
 					SG->print_generators_as_permutations_tex(
 							fp, Table_orbits_on_pairs[arc_idx].A_on_arc);
 					fp << "The embedded stabilizer is the "
 							"following group of order "
-							<< SG->group_order_as_int()
+							<< SG->group_order_as_lint()
 							<< ":\\\\" << endl;
 					Flag_orbits->Flag_orbit_node[flag_orbit_idx].gens->
 						print_generators_tex(fp);
@@ -2132,7 +2161,7 @@ void surfaces_arc_lifting::report(int verbose_level)
 					fp << "The stabilizer is trivial.\\\\" << endl;
 
 				}
-				int *Flag;
+				long int *Flag;
 				int line1, line2;
 
 				Flag = Flag_orbits->Pt +
@@ -2166,7 +2195,7 @@ void surfaces_arc_lifting::report(int verbose_level)
 				fp << "$$" << endl;
 				fp << "The equation of the lifted surface is:" << endl;
 				fp << "$$" << endl;
-				Surf->print_equation_tex(fp, Flag + 13);
+				Surf->print_equation_tex_lint(fp, Flag + 13);
 				fp << "$$" << endl;
 
 				downstep_secondary_orbit++;

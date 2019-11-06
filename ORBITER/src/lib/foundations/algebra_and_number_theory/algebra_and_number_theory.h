@@ -777,10 +777,10 @@ public:
 	long int nb_calls_to_PG_element_unrank_modified;
 
 	void PG_elements_embed(
-			int *set_in, int *set_out, int sz,
+			long int *set_in, long int *set_out, int sz,
 			int old_length, int new_length, int *v);
-	int PG_element_embed(
-			int rk, int old_length, int new_length, int *v);
+	long int PG_element_embed(
+			long int rk, int old_length, int new_length, int *v);
 	void PG_element_unrank_fining(
 			int *v, int len, int a);
 	int PG_element_rank_fining(
@@ -1067,7 +1067,7 @@ public:
 		int *S, unipoly_domain &D, unipoly_object &poly,
 		int verbose_level);
 	void all_PG_elements_in_subspace(
-			int *genma, int k, int n, int *&point_list, int &nb_points,
+			int *genma, int k, int n, long int *&point_list, int &nb_points,
 			int verbose_level);
 	void all_PG_elements_in_subspace_array_is_given(
 			int *genma, int k, int n, int *point_list, int &nb_points,
@@ -1527,7 +1527,7 @@ public:
 };
 
 int homogeneous_polynomial_domain_compare_monomial_with(void *data, 
-	int i, int *data2, void *extra_data);
+	int i, void *data2, void *extra_data);
 int homogeneous_polynomial_domain_compare_monomial(void *data, 
 	int i, int j, void *extra_data);
 void homogeneous_polynomial_domain_swap_monomial(void *data, 

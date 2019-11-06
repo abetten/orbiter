@@ -403,6 +403,22 @@ int int_vec_hash_after_sorting(int *data, int len)
 	return h;
 }
 
+int lint_vec_hash_after_sorting(long int *data, int len)
+{
+	long int *data2;
+	int i, h;
+	sorting Sorting;
+
+	data2 = NEW_lint(len);
+	for (i = 0; i < len; i++) {
+		data2[i] = data[i];
+		}
+	Sorting.lint_vec_heapsort(data2, len);
+	h = lint_vec_hash(data2, len);
+	FREE_lint(data2);
+	return h;
+}
+
 const char *plus_minus_string(int epsilon)
 {
 	if (epsilon == 1) {

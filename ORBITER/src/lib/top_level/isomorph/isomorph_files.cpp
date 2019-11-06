@@ -122,7 +122,7 @@ void isomorph::init_solutions(int **Solutions, int *Nb_sol,
 }
 
 void isomorph::count_solutions_from_clique_finder_case_by_case(
-		int nb_files, int *list_of_cases, const char **fname,
+		int nb_files, long int *list_of_cases, const char **fname,
 		int verbose_level)
 // Called from isomorph_read_solution_files_from_clique_finder
 {
@@ -273,7 +273,7 @@ void isomorph::count_solutions_from_clique_finder(
 
 
 void isomorph::read_solutions_from_clique_finder_case_by_case(
-		int nb_files, int *list_of_cases, const char **fname,
+		int nb_files, long int *list_of_cases, const char **fname,
 		int verbose_level)
 // Called from isomorph_read_solution_files_from_clique_finder
 // Called after count_solutions_from_clique_finder
@@ -1640,7 +1640,7 @@ void isomorph::print_isomorphism_types(int f_select,
 			}
 		}
 
-	int data[1000];
+	long int data[1000];
 
 	setup_and_open_solution_database(verbose_level - 1);
 
@@ -1656,7 +1656,7 @@ void isomorph::print_isomorphism_types(int f_select,
 		load_solution(id, data);
 		cout << "isomorphism type " << i << " : " << j << " : "
 				<< id << " : ";
-		int_vec_print(cout, data, size);
+		lint_vec_print(cout, data, size);
 		cout << endl;
 #if 0
 		for (j = 0; j < size; j++) {
@@ -1716,7 +1716,7 @@ void isomorph::print_isomorphism_types(int f_select,
 
 void isomorph::induced_action_on_set_and_kernel(
 	ostream &file, action *A,
-	sims *Stab, int size, int *set, int verbose_level)
+	sims *Stab, int size, long int *set, int verbose_level)
 // Used in isomorph_BLT
 {
 	int f_v = (verbose_level >= 1);
@@ -1732,7 +1732,7 @@ void isomorph::induced_action_on_set_and_kernel(
 		cout << "isomorph::induced_action_on_set_and_kernel "
 				"calling induced_action_by_restriction" << endl;
 		cout << "set: ";
-		int_vec_print(cout, set, size);
+		lint_vec_print(cout, set, size);
 		cout << endl;
 		}
 
@@ -1770,12 +1770,12 @@ void isomorph::induced_action_on_set_and_kernel(
 	if (go.compare_with_int(10) < 0) {
 		file << "group order is small, so we list "
 				"all elements\\\\" << endl;
-		for (i = 0; i < go.as_int(); i++) {
+		for (i = 0; i < go.as_lint(); i++) {
 			int f_do_it_anyway_even_for_big_degree = TRUE; 
 			int f_print_cycles_of_length_one = TRUE;
 			
 			file << "$a_{" << setw(2) << i + 1 << "} = $";
-			Stab->element_unrank_int(i, Elt1);
+			Stab->element_unrank_lint(i, Elt1);
 			AAA->element_print_as_permutation_with_offset(Elt1, file, 1,
 				f_do_it_anyway_even_for_big_degree,
 				f_print_cycles_of_length_one, 
@@ -1783,9 +1783,9 @@ void isomorph::induced_action_on_set_and_kernel(
 			file << "\\\\" << endl;
 			}
 		file << "and now the elements themselves:" << endl;
-		for (i = 0; i < go.as_int(); i++) {
+		for (i = 0; i < go.as_lint(); i++) {
 
-			Stab->element_unrank_int(i, Elt1);
+			Stab->element_unrank_lint(i, Elt1);
 
 			int *fp, n;
 		

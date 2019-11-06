@@ -1878,7 +1878,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 					Lines, equation, 0 /* verbose_level */);
 			F->PG_element_normalize_from_front(equation, 1, 20);
 
-			Pts = NEW_int(Surf->nb_pts_on_surface);
+			Pts = NEW_lint(Surf->nb_pts_on_surface);
 			Surf->enumerate_points(equation, Pts, nb_pts,
 					0 /* verbose_level */);
 			if (nb_pts != Surf->nb_pts_on_surface) {

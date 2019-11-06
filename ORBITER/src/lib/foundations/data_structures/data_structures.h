@@ -661,6 +661,12 @@ public:
 	int test_if_set_with_return_value_lint(long int *set, int set_size);
 	void rearrange_subset(int n, int k, int *set,
 		int *subset, int *rearranged_set, int verbose_level);
+	void rearrange_subset_lint(int n, int k,
+		long int *set, int *subset, long int *rearranged_set,
+		int verbose_level);
+	void rearrange_subset_lint_all(int n, int k,
+		long int *set, long int *subset, long int *rearranged_set,
+		int verbose_level);
 	int int_vec_search_linear(int *v, int len, int a, int &idx);
 	int lint_vec_search_linear(long int *v, int len, long int a, int &idx);
 	void int_vec_intersect(int *v1, int len1, int *v2, int len2,

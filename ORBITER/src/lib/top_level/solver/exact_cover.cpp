@@ -120,7 +120,7 @@ void exact_cover::init_basic(void *user_data,
 		cout << "exact_cover::init_basic fname_statistics = "
 				<< fname_statistics << endl;
 		}
-	starter = NEW_int(starter_size + 1);
+	starter = NEW_lint(starter_size + 1);
 
 	if (f_v) {
 		cout << "exact_cover::init_basic done" << endl;
@@ -619,7 +619,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 		}
 
 	diophant *Dio = NULL;
-	int *col_labels;
+	long int *col_labels;
 	int f_ruled_out = FALSE;
 
 	(*prepare_function_new)(this, starter_case, 
@@ -817,7 +817,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 
 	if (Dio) {
 		delete Dio;
-		FREE_int(col_labels);
+		FREE_lint(col_labels);
 			// we don't use cleanup_function any more
 		}
 

@@ -84,7 +84,7 @@ void invariants_packing::init(isomorph *Iso,
 			}
 
 		int rep, first, c, id;
-		int the_packing[1000];
+		long int the_packing[1000];
 		
 		rep = Iso->Reps->rep[orbit];
 		first = Iso->orbit_fst[rep];
@@ -125,7 +125,7 @@ void invariants_packing::init(isomorph *Iso,
 	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
 		int spread_iso_type[1000];
 		int rep, first, c, id;
-		int the_packing[1000];
+		long int the_packing[1000];
 		
 		rep = Iso->Reps->rep[orbit];
 		first = Iso->orbit_fst[rep];
@@ -240,8 +240,8 @@ void invariants_packing::compute_dual_packings(
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int orbit, i;
-	int packing[1000];
-	int dual_packing[1000];
+	long int packing[1000];
+	long int dual_packing[1000];
 	sorting Sorting;
 	
 	if (f_v) {
@@ -265,8 +265,8 @@ void invariants_packing::compute_dual_packings(
 		for (i = 0; i < Iso->size; i++) {
 			dual_packing[i] = P->Spread_tables->dual_spread_idx[packing[i]];
 			}
-		Sorting.int_vec_heapsort(packing, Iso->size);
-		Sorting.int_vec_heapsort(dual_packing, Iso->size);
+		Sorting.lint_vec_heapsort(packing, Iso->size);
+		Sorting.lint_vec_heapsort(dual_packing, Iso->size);
 		for (i = 0; i < Iso->size; i++) {
 			if (packing[i] != dual_packing[i]) {
 				break;
@@ -289,7 +289,7 @@ void invariants_packing::compute_dual_packings(
 
 	Fio.int_vecs_write_csv(Dual_idx, f_self_dual,
 		Iso->Reps->count, "Dual_idx.csv", "dual_idx", "f_self_dual");
-	Fio.int_vec_write_csv(P->Spread_tables->dual_spread_idx,
+	Fio.lint_vec_write_csv(P->Spread_tables->dual_spread_idx,
 		P->Spread_tables->nb_spreads, "Dual_spread_idx.csv", "dual_spread_idx");
 	
 	if (f_v) {

@@ -256,13 +256,14 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	int subset[5];
 	long int four_lines[5];
 	long int P[5];
-	long int rk, i, ai4image, P4, Q, a, b, d, h, k, line3, line4;
+	long int rk, i, ai4image, P4, Q, a, b, h, k, line3, line4;
 	long int b1, b2, b3, b4, b5;
 	int size_complement;
 	int Q4[4];
 	int L[8];
 	int v[2];
 	int w[4];
+	int d;
 
 	// L0,L1,L2 are the first three lines in the regulus on the 
 	// hyperbolic quadric x_0x_3-x_1x_2 = 0:
@@ -276,7 +277,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	int *line1;
 	int *line2;
 	int M[16];
-	int image[2];
+	long int image[2];
 	int pt_coord[4 * 4];
 	int nb_pts;
 	combinatorics_domain Combi;
@@ -507,8 +508,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	
 	nb_pts = 0;
 	for (h = 0; h < 2; h++) {
-		Surf->Gr->unrank_int_here(L,
-				image[h], 0 /* verbose_level */);
+		Surf->Gr->unrank_lint_here(L, image[h], 0 /* verbose_level */);
 		for (a = 0; a < q + 1; a++) {
 			F->PG_element_unrank_modified(v, 1, 2, a);
 			F->mult_matrix_matrix(v, L, w, 1, 2, 4,
@@ -595,7 +595,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 
 void surface_with_action::arc_lifting_and_classify(
 	int f_log_fp, ofstream &fp, 
-	int *Arc6, 
+	long int *Arc6,
 	const char *arc_label, const char *arc_label_short, 
 	int nb_surfaces, 
 	six_arcs_not_on_a_conic *Six_arcs, 
@@ -841,7 +841,7 @@ void surface_with_action::arc_lifting_and_classify(
 
 		if (f_v) {
 			cout << "The half double six is no " << k << " : ";
-			int_vec_print(cout, SOA->Surf->Half_double_sixes + k * 6, 6);
+			lint_vec_print(cout, SOA->Surf->Half_double_sixes + k * 6, 6);
 			cout << endl;
 		}
 
@@ -850,7 +850,7 @@ void surface_with_action::arc_lifting_and_classify(
 		if (f_log_fp) {
 			fp << "The half double six is no " << k << "$ = "
 					<< Surf->Half_double_six_label_tex[k] << "$ : $";
-			int_vec_print(fp, Surf->Half_double_sixes + k * 6, 6);
+			lint_vec_print(fp, Surf->Half_double_sixes + k * 6, 6);
 			fp << " = \\{" << endl;
 			for (h = 0; h < 6; h++) {
 				fp << Surf->Line_label_tex[
@@ -902,12 +902,12 @@ void surface_with_action::arc_lifting_and_classify(
 		}
 
 
-		int plane_rk, plane_rk_global;
+		long int plane_rk, plane_rk_global;
 		int line_idx[2];
-		int *Clebsch_map;
+		long int *Clebsch_map;
 		int *Clebsch_coeff;
-		int Arc[6];
-		int Blown_up_lines[6];
+		long int Arc[6];
+		long int Blown_up_lines[6];
 		//int orbit_at_level;
 		
 		line_idx[0] = line1;
@@ -955,7 +955,7 @@ void surface_with_action::arc_lifting_and_classify(
 		int coefficients[3];
 
 		
-		Surf->P->Grass_planes->unrank_int_here(
+		Surf->P->Grass_planes->unrank_lint_here(
 				Plane, plane_rk_global, 0);
 		F->Gauss_simple(Plane, 3, 4, base_cols,
 				0 /* verbose_level */);
@@ -976,7 +976,7 @@ void surface_with_action::arc_lifting_and_classify(
 			cout << "The half double six is no " << k
 					<< "$ = " << Surf->Half_double_six_label_tex[k]
 					<< "$ : $";
-			int_vec_print(cout, Surf->Half_double_sixes + k * 6, 6);
+			lint_vec_print(cout, Surf->Half_double_sixes + k * 6, 6);
 			cout << " = \\{" << endl;
 			for (h = 0; h < 6; h++) {
 				cout << Surf->Line_label_tex[
@@ -1030,7 +1030,7 @@ void surface_with_action::arc_lifting_and_classify(
 		}
 
 
-		Clebsch_map = NEW_int(SOA->SO->nb_pts);
+		Clebsch_map = NEW_lint(SOA->SO->nb_pts);
 		Clebsch_coeff = NEW_int(SOA->SO->nb_pts * 4);
 
 		if (!Surf->clebsch_map(
@@ -1089,9 +1089,9 @@ void surface_with_action::arc_lifting_and_classify(
 			cout << "surface_with_action::arc_lifting_and_classify "
 					"Clebsch map for lines " << line1 << ", "
 					<< line2 << " yields arc = ";
-			int_vec_print(cout, Arc, 6);
+			lint_vec_print(cout, Arc, 6);
 			cout << " : blown up lines = ";
-			int_vec_print(cout, Blown_up_lines, 6);
+			lint_vec_print(cout, Blown_up_lines, 6);
 			cout << endl;
 		}
 
@@ -1102,9 +1102,9 @@ void surface_with_action::arc_lifting_and_classify(
 				<< " = " << Surf->Line_label_tex[line1] << ", " 
 				<< line2 << " = " << Surf->Line_label_tex[line2] 
 				<< "$ yields arc = $";
-			L.int_set_print_tex(fp, Arc, 6);
+			L.lint_set_print_tex(fp, Arc, 6);
 			fp << "$ : blown up lines = ";
-			int_vec_print(fp, Blown_up_lines, 6);
+			lint_vec_print(fp, Blown_up_lines, 6);
 			fp << "\\\\" << endl;
 
 			SOA->SO->clebsch_map_latex(fp, Clebsch_map, Clebsch_coeff);
@@ -1162,7 +1162,7 @@ void surface_with_action::arc_lifting_and_classify(
 
 
 
-		FREE_int(Clebsch_map);
+		FREE_lint(Clebsch_map);
 		FREE_int(Clebsch_coeff);
 		
 

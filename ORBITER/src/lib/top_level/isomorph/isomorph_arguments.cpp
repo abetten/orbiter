@@ -259,7 +259,7 @@ void isomorph_arguments::execute(int verbose_level)
 
 
 		cout << "f_read_solutions_from_clique_finder_list_of_cases" << endl;
-		int *list_of_cases;
+		long int *list_of_cases;
 		int nb_cases;
 
 		cout << "isomorph_arguments::execute before Fio.read_set_from_file" << endl;
@@ -290,7 +290,7 @@ void isomorph_arguments::execute(int verbose_level)
 			FREE_char(fname[i]);
 			}
 		FREE_pchar(fname);
-		FREE_int(list_of_cases);
+		FREE_lint(list_of_cases);
 		}
 
 
@@ -425,7 +425,7 @@ void isomorph_arguments::execute(int verbose_level)
 		cout << "isomorph_arguments::execute after isomorph_worker" << endl;
 
 		if (WD.the_set) {
-			FREE_int(WD.the_set);
+			FREE_lint(WD.the_set);
 			}
 		}
 	else if (f_down_orbits) {

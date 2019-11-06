@@ -147,22 +147,22 @@ void surface_object::freeself()
 		FREE_lint(Tritangent_plane_rk);
 	}
 	if (Tritangent_planes) {
-		FREE_int(Tritangent_planes);
+		FREE_lint(Tritangent_planes);
 		}
 	if (Lines_in_tritangent_plane) {
-		FREE_int(Lines_in_tritangent_plane);
+		FREE_lint(Lines_in_tritangent_plane);
 		}
 	if (Tritangent_plane_dual) {
 		FREE_int(Tritangent_plane_dual);
 		}
 	if (Unitangent_planes) {
-		FREE_int(Unitangent_planes);
+		FREE_lint(Unitangent_planes);
 		}
 	if (f_v) {
 		cout << "surface_object::freeself 3" << endl;
 		}
 	if (Line_in_unitangent_plane) {
-		FREE_int(Line_in_unitangent_plane);
+		FREE_lint(Line_in_unitangent_plane);
 		}
 	if (f_v) {
 		cout << "surface_object::freeself 4" << endl;
@@ -195,7 +195,7 @@ void surface_object::freeself()
 		FREE_int(Eckardt_to_Tritangent_plane);
 		}
 	if (Trihedral_pairs_as_tritangent_planes) {
-		FREE_int(Trihedral_pairs_as_tritangent_planes);
+		FREE_lint(Trihedral_pairs_as_tritangent_planes);
 		}
 	if (Unitangent_planes_on_lines) {
 		FREE_int(Unitangent_planes_on_lines);
@@ -922,7 +922,7 @@ void surface_object::compute_tritangent_planes(int verbose_level)
 	if (f_v) {
 		cout << "surface_object::compute_tritangent_planes "
 				"Lines_in_tritangent_plane: " << endl;
-		L.print_integer_matrix_with_standard_labels(cout,
+		L.print_lint_matrix_with_standard_labels(cout,
 				Lines_in_tritangent_plane, nb_tritangent_planes, 3,
 				FALSE);
 		}
@@ -1006,13 +1006,11 @@ void surface_object::compute_tritangent_planes(int verbose_level)
 		}
 
 
-	Trihedral_pairs_as_tritangent_planes =
-			NEW_int(Surf->nb_trihedral_pairs * 6);
+	Trihedral_pairs_as_tritangent_planes = NEW_lint(Surf->nb_trihedral_pairs * 6);
 	for (i = 0; i < Surf->nb_trihedral_pairs; i++) {
 		for (j = 0; j < 6; j++) {
 			a = Surf->Trihedral_to_Eckardt[i * 6 + j];
-			Trihedral_pairs_as_tritangent_planes[i * 6 + j] = 
-				Eckardt_to_Tritangent_plane[a];
+			Trihedral_pairs_as_tritangent_planes[i * 6 + j] = Eckardt_to_Tritangent_plane[a];
 			}
 		}
 
@@ -1847,7 +1845,7 @@ void surface_object::print_double_sixes(ostream &ost)
 	ost << "\\subsection*{Double sixes}" << endl;
 	ost << "The double sixes are:\\\\" << endl;
 	ost << "$$" << endl;
-	L.print_integer_matrix_with_standard_labels(ost,
+	L.print_lint_matrix_with_standard_labels(ost,
 		Surf->Double_six, 36, 12, TRUE /* f_tex */);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
@@ -1872,11 +1870,11 @@ void surface_object::print_double_sixes(ostream &ost)
 	//ost << "\\clearpage" << endl;
 	ost << "The half double sixes are:\\\\" << endl;
 	ost << "$$" << endl;
-	L.print_integer_matrix_with_standard_labels(ost,
+	L.print_lint_matrix_with_standard_labels(ost,
 		Surf->Half_double_sixes, 36, 6, TRUE /* f_tex */);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
-	L.print_integer_matrix_with_standard_labels_and_offset(ost,
+	L.print_lint_matrix_with_standard_labels_and_offset(ost,
 		Surf->Half_double_sixes + 36 * 6, 
 		36, 6, 36, 0, TRUE /* f_tex */);
 	ost << "$$" << endl;
@@ -2976,7 +2974,7 @@ int surface_object::find_tritangent_plane_through_two_lines(
 
 	for (i = 0; i < 5; i++) {
 		pi = Tritangent_planes_on_lines[line_a * 5 + i];
-		if (Sorting.int_vec_search_linear(
+		if (Sorting.lint_vec_search_linear(
 				Lines_in_tritangent_plane + pi * 3, 3,
 				line_b, idx)) {
 			return pi;
@@ -3047,7 +3045,7 @@ int surface_object::find_unique_line_in_plane(int plane_idx,
 	exit(1);
 }
 
-void surface_object::identify_lines(int *lines, int nb_lines, 
+void surface_object::identify_lines(long int *lines, int nb_lines,
 	int *line_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3072,13 +3070,13 @@ void surface_object::identify_lines(int *lines, int nb_lines,
 }
 
 void surface_object::print_nine_lines_latex(ostream &ost, 
-	int *nine_lines, int *nine_lines_idx)
+	long int *nine_lines, int *nine_lines_idx)
 {
 	latex_interface L;
 	int i, j, idx;
 
 	ost << "$$";
-	L.print_integer_matrix_with_standard_labels(ost,
+	L.print_lint_matrix_with_standard_labels(ost,
 			nine_lines, 3, 3, TRUE /* f_tex*/);
 
 
@@ -3152,14 +3150,14 @@ int surface_object::choose_tritangent_plane(
 		if (f_v) {
 			cout << "testing plane " << a << " = " << plane << endl;
 			}
-		if (Sorting.int_vec_search_linear(
+		if (Sorting.lint_vec_search_linear(
 				Lines_in_tritangent_plane + a * 3, 3, line_a, idx)) {
 			if (f_v) {
 				cout << "The plane is bad, it contains line_a" << endl;
 				}
 			continue;
 			}
-		if (Sorting.int_vec_search_linear(
+		if (Sorting.lint_vec_search_linear(
 				Lines_in_tritangent_plane + a * 3, 3, line_b, idx)) {
 			if (f_v) {
 				cout << "The plane is bad, it contains line_b" << endl;
@@ -3209,14 +3207,14 @@ void surface_object::find_all_tritangent_planes(
 		if (f_v) {
 			cout << "testing plane " << a << " = " << plane << endl;
 			}
-		if (Sorting.int_vec_search_linear(
+		if (Sorting.lint_vec_search_linear(
 				Lines_in_tritangent_plane + a * 3, 3, line_a, idx)) {
 			if (f_v) {
 				cout << "The plane is bad, it contains line_a" << endl;
 				}
 			continue;
 			}
-		if (Sorting.int_vec_search_linear(
+		if (Sorting.lint_vec_search_linear(
 				Lines_in_tritangent_plane + a * 3, 3, line_b, idx)) {
 			if (f_v) {
 				cout << "The plane is bad, it contains line_b" << endl;
@@ -3304,8 +3302,8 @@ void surface_object::compute_transversal_lines(
 }
 
 void surface_object::clebsch_map_find_arc_and_lines(
-	int *Clebsch_map,
-	int *Arc, int *Blown_up_lines,
+	long int *Clebsch_map,
+	long int *Arc, long int *Blown_up_lines,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3324,7 +3322,7 @@ void surface_object::clebsch_map_find_arc_and_lines(
 	{
 	classify C2;
 
-	C2.init(Clebsch_map, nb_pts, TRUE, 0);
+	C2.init_lint(Clebsch_map, nb_pts, TRUE, 0);
 	if (f_v) {
 		cout << "surface_object::clebsch_map_find_arc_and_lines "
 				"The fibers have the following sizes: ";
@@ -3496,7 +3494,7 @@ void surface_object::clebsch_map_find_arc_and_lines(
 		}
 }
 
-void surface_object::clebsch_map_print_fibers(int *Clebsch_map)
+void surface_object::clebsch_map_print_fibers(long int *Clebsch_map)
 {
 	int i, j, u, pt;
 	
@@ -3504,7 +3502,7 @@ void surface_object::clebsch_map_print_fibers(int *Clebsch_map)
 	{
 	classify C2;
 
-	C2.init(Clebsch_map, nb_pts, TRUE, 0);
+	C2.init_lint(Clebsch_map, nb_pts, TRUE, 0);
 	cout << "surface_object::clebsch_map_print_fibers The fibers "
 			"have the following sizes: ";
 	C2.print_naked(TRUE);

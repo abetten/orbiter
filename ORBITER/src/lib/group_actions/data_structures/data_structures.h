@@ -620,7 +620,7 @@ void compute_and_print_ago_distribution_with_classes(
 		std::ostream &ost,
 	classify_bitvectors *CB, int verbose_level);
 int table_of_sets_compare_func(void *data, int i,
-		int *search_object,
+		void *search_object,
 		void *extra_data);
 
 

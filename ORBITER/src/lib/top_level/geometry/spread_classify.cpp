@@ -78,7 +78,7 @@ void spread_classify::freeself()
 		FREE_OBJECT(R);
 		}
 	if (Starter) {
-		FREE_int(Starter);
+		FREE_lint(Starter);
 		}
 	if (Starter_Strong_gens) {
 		FREE_OBJECT(Starter_Strong_gens);
@@ -421,29 +421,29 @@ void spread_classify::init(int order, int n, int k, int max_depth,
 		}
 }
 
-void spread_classify::unrank_point(int *v, int a)
+void spread_classify::unrank_point(int *v, long int a)
 {
-	F->PG_element_unrank_modified(v, 1, n, a);
+	F->PG_element_unrank_modified_lint(v, 1, n, a);
 }
 
-int spread_classify::rank_point(int *v)
+long int spread_classify::rank_point(int *v)
 {
-	int a;
+	long int a;
 	
-	F->PG_element_rank_modified(v, 1, n, a);
+	F->PG_element_rank_modified_lint(v, 1, n, a);
 	return a;
 }
 
-void spread_classify::unrank_subspace(int *M, int a)
+void spread_classify::unrank_subspace(int *M, long int a)
 {
-	Grass->unrank_int_here(M, a, 0/*verbose_level - 4*/);
+	Grass->unrank_lint_here(M, a, 0/*verbose_level - 4*/);
 }
 
-int spread_classify::rank_subspace(int *M)
+long int spread_classify::rank_subspace(int *M)
 {
-	int a;
+	long int a;
 	
-	a = Grass->rank_int_here(M, 0 /*verbose_level*/);
+	a = Grass->rank_lint_here(M, 0 /*verbose_level*/);
 	return a;
 }
 
@@ -463,17 +463,18 @@ void spread_classify::print_points()
 	FREE_int(v);
 }
 
-void spread_classify::print_points(int *pts, int len)
+void spread_classify::print_points(long int *pts, int len)
 {
 	int *v;
-	int h, i;
+	int h;
+	long int a;
 
 	cout << "spread_classify::print_points" << endl;
 	v = NEW_int(n);
 	for (h = 0; h < len; h++) {
-		i = pts[h];
-		unrank_point(v, i);
-		cout << "point " << h << " : " << i << " : ";
+		a = pts[h];
+		unrank_point(v, a);
+		cout << "point " << h << " : " << a << " : ";
 		int_vec_print(cout, v, n);
 		cout << endl;
 		}
@@ -683,9 +684,9 @@ void spread_classify::compute(int verbose_level)
 }
 
 
-void spread_classify::early_test_func(int *S, int len,
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void spread_classify::early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
 // for poset classification
 {
@@ -701,12 +702,12 @@ void spread_classify::early_test_func(int *S, int len,
 		print_set(cout, len, S);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
-		int_vec_print(cout, candidates, nb_candidates);
+		lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		if (f_vv) {
 			if (nb_candidates < 100) {
 				for (i = 0; i < nb_candidates; i++) {
-					Grass->unrank_int(candidates[i], 0/*verbose_level - 4*/);
+					Grass->unrank_lint(candidates[i], 0/*verbose_level - 4*/);
 					cout << "candidate " << i << "="
 							<< candidates[i] << ":" << endl;
 					print_integer_matrix_width(cout,
@@ -742,7 +743,7 @@ void spread_classify::early_test_func(int *S, int len,
 	
 	nb_good_candidates = 0;
 	for (j = 0; j < nb_candidates; j++) {
-		Grass->unrank_int(candidates[j], 0/*verbose_level - 4*/);
+		Grass->unrank_lint(candidates[j], 0/*verbose_level - 4*/);
 		if (len == 0) {
 			i0 = 0;
 			}
@@ -786,7 +787,7 @@ void spread_classify::early_test_func(int *S, int len,
 		}
 }
 
-int spread_classify::check_function(int len, int *S, int verbose_level)
+int spread_classify::check_function(int len, long int *S, int verbose_level)
 // checks all {len \choose 2} pairs. This is very inefficient.
 // This function should not be used for poset classification!
 {
@@ -810,7 +811,7 @@ int spread_classify::check_function(int len, int *S, int verbose_level)
 	if (f_v) {
 		for (i = 0; i < len; i++) {
 			cout << "p_" << i << "=" << S[i] << ":" << endl;
-			Grass->unrank_int(S[i], 0/*verbose_level - 4*/);
+			Grass->unrank_lint(S[i], 0/*verbose_level - 4*/);
 			print_integer_matrix_width(cout, Grass->M,
 					k, n, n, F->log10_of_q + 1);
 			}
@@ -861,7 +862,7 @@ int spread_classify::check_function(int len, int *S, int verbose_level)
 
 }
 
-int spread_classify::incremental_check_function(int len, int *S, int verbose_level)
+int spread_classify::incremental_check_function(int len, long int *S, int verbose_level)
 // checks the pairs (0,len-1),(1,len-1),\ldots,(len-2,len-1) 
 // for recoordinatize
 {
@@ -889,7 +890,7 @@ int spread_classify::incremental_check_function(int len, int *S, int verbose_lev
 	if (f_v) {
 		for (i = 0; i < len; i++) {
 			cout << "p_" << i << "=" << S[i] << ":" << endl;
-			Grass->unrank_int(S[i], 0/*verbose_level - 4*/);
+			Grass->unrank_lint(S[i], 0/*verbose_level - 4*/);
 			print_integer_matrix_width(cout,
 					Grass->M, k, n, n, F->log10_of_q + 1);
 			}
@@ -983,9 +984,9 @@ int spread_classify::check_function_pair(int rk1, int rk2, int verbose_level)
 
 void spread_classify::lifting_prepare_function_new(
 	exact_cover *E, int starter_case,
-	int *candidates, int nb_candidates,
+	long int *candidates, int nb_candidates,
 	strong_generators *Strong_gens,
-	diophant *&Dio, int *&col_labels, 
+	diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out, 
 	int verbose_level)
 {
@@ -1141,7 +1142,7 @@ void spread_classify::print(ostream &ost, int len, int *S)
 	for (i = 0; i < len; i++) {
 		ost << "$S_{" << i + 1 << "}$ has rank " << S[i]
 			<< " and is generated by\\\\" << endl;
-		Grass->unrank_int(S[i], 0);
+		Grass->unrank_lint(S[i], 0);
 		ost << "$$" << endl;
 		ost << "\\left[" << endl;
 		F->latex_matrix(ost, f_elements_exponential, symbol_for_print,
@@ -1158,9 +1159,9 @@ void spread_classify::print(ostream &ost, int len, int *S)
 // #############################################################################
 
 
-void spread_lifting_early_test_function(int *S, int len, 
-	int *candidates, int nb_candidates, 
-	int *good_candidates, int &nb_good_candidates, 
+void spread_lifting_early_test_function(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
 {
 	spread_classify *Spread = (spread_classify *) data;
@@ -1182,9 +1183,9 @@ void spread_lifting_early_test_function(int *S, int len,
 
 void spread_lifting_prepare_function_new(
 	exact_cover *EC, int starter_case,
-	int *candidates, int nb_candidates,
+	long int *candidates, int nb_candidates,
 	strong_generators *Strong_gens,
-	diophant *&Dio, int *&col_labels, 
+	diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out, 
 	int verbose_level)
 {
@@ -1222,7 +1223,7 @@ void spread_lifting_prepare_function_new(
 
 
 
-int starter_canonize_callback(int *Set, int len,
+int starter_canonize_callback(long int *Set, int len,
 		int *Elt, void *data, int verbose_level)
 // for starter, interface to recoordinatize,
 // which uses callback_incremental_check_function
@@ -1247,7 +1248,7 @@ int starter_canonize_callback(int *Set, int len,
 }
 
 int callback_incremental_check_function(
-		int len, int *S, void *data, int verbose_level)
+		int len, long int *S, void *data, int verbose_level)
 // for recoordinatize
 {
 	spread_classify *Spread = (spread_classify *) data;

@@ -1279,7 +1279,7 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 	int i, first, /*c,*/ id;
 	int u, v, h, rep, tt;
 	longinteger_object go;
-	int data[1000];
+	long int data[1000];
 
 
 
@@ -1571,7 +1571,7 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 
 void arc_generator::report_decompositions(
 	isomorph &Iso, ofstream &f, int orbit,
-	int *data, int verbose_level)
+	long int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1617,9 +1617,14 @@ void arc_generator::report_decompositions(
 	// split off the column class:
 	S.subset_continguous(Inc->nb_points(), Inc->nb_lines());
 	S.split_cell(0);
+
+#if 0
+	// ToDo:
 	S.split_cell_front_or_back(data, target_size,
 			TRUE /* f_front */, 0 /* verbose_level*/);
-				
+#endif
+
+
 	int TDO_depth = N;
 	//int TDO_ht;
 

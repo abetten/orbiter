@@ -114,9 +114,9 @@ void orbit_of_sets::compute(int verbose_level)
 	new_set = NEW_lint(sz);
 	allocation_length = 1000;
 	old_length = allocation_length;
-	Sets = NEW_pint(allocation_length);
+	Sets = NEW_plint(allocation_length);
 	Extra = NEW_int(allocation_length * 2);
-	Sets[0] = NEW_int(sz);
+	Sets[0] = NEW_lint(sz);
 	lint_vec_copy(set, Sets[0], sz);
 	position_of_original_set = 0;
 	Sorting.lint_vec_heapsort(Sets[0], sz);
@@ -216,7 +216,7 @@ void orbit_of_sets::compute(int verbose_level)
 					}
 				}
 
-				Sets[used_length] = NEW_int(sz);
+				Sets[used_length] = NEW_lint(sz);
 				lint_vec_copy(new_set, Sets[used_length], sz);
 				Extra[used_length * 2 + 0] = cur;
 				Extra[used_length * 2 + 1] = j;
@@ -331,7 +331,7 @@ void orbit_of_sets::get_table_of_orbits(long int *&Table,
 		cout << "orbit_of_sets::get_table_of_orbits orbit_length="
 				<< orbit_length << endl;
 		}
-	Table = NEW_int(orbit_length * set_size);
+	Table = NEW_lint(orbit_length * set_size);
 	for (i = 0; i < orbit_length; i++) {
 		for (j = 0; j < set_size; j++) {
 			Table[i * set_size + j] = Sets[i][j];
@@ -356,7 +356,7 @@ void orbit_of_sets::get_table_of_orbits_and_hash_values(long int *&Table,
 		cout << "orbit_of_sets::get_table_of_orbits_and_hash_values orbit_length="
 				<< orbit_length << endl;
 		}
-	Table = NEW_int(orbit_length * set_size);
+	Table = NEW_lint(orbit_length * set_size);
 	for (i = 0; i < orbit_length; i++) {
 
 		h = lint_vec_hash(Sets[i], sz);

@@ -514,7 +514,7 @@ void schreier::print_and_list_orbits_of_given_length(
 }
 
 void schreier::print_and_list_orbits_using_labels(
-		ostream &ost, int *labels)
+		ostream &ost, long int *labels)
 {
 	int i;
 
@@ -713,7 +713,7 @@ void schreier::print_orbit(int orbit_no)
 }
 
 void schreier::print_orbit_using_labels(
-		int orbit_no, int *labels)
+		int orbit_no, long int *labels)
 {
 	print_orbit_using_labels(cout, orbit_no, labels);
 }
@@ -758,7 +758,7 @@ void schreier::print_orbit_tex(ostream &ost, int orbit_no)
 
 
 void schreier::print_orbit_using_labels(ostream &ost,
-	int orbit_no, int *labels)
+	int orbit_no, long int *labels)
 {
 	int i, first, len;
 	int *v;

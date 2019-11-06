@@ -38,7 +38,7 @@ public:
 	
 
 	void (*prepare_function_new)(exact_cover *E, int starter_case, 
-		int *candidates, int nb_candidates, 
+		long int *candidates, int nb_candidates,
 		strong_generators *Strong_gens, 
 		diophant *&Dio, long int *&col_label,
 		int &f_ruled_out, 
