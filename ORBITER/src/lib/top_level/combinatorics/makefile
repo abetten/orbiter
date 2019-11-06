@@ -7,6 +7,7 @@ LFLAGS = -lm
 
 MODULES = \
 	cayley_graph_search.o \
+	delandtsheer_doyen.o \
 	design_create_description.o \
 	design_create.o \
 	difference_set_in_heisenberg_group.o \
