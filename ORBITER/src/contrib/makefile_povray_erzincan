@@ -1,0 +1,165 @@
+MY_PATH=~/DEV.19/GITHUB/orbiter
+#MY_PATH=../../orbiter
+MY_PATH2=~/DEV.19
+#MY_PATH=/scratch2/betten/COMPILE/2017_10_12
+SRC=$(MY_PATH)/ORBITER/src
+SRC2=$(MY_PATH)/ORBITER2/src2
+
+#SRC=$(MY_PATH)/ORBITER/SRC
+#SRC2=$(MY_PATH)/ORBITER2/SRC2
+#SRC_LOCAL=$(MY_LOCAL_PATH)/ORBITER/SRC
+
+
+TOOLS_PATH=$(SRC)/apps/tools
+
+
+
+NB_FRAMES=31
+FNAME=lines11
+
+a:
+	povray $(FNAME).ini
+
+# this will create $(FNAME)01.png ... $(FNAME)30.png
+# where $(FNAME).ini is the ini file
+
+# use +append for left to right
+# use -append for top to bottom
+
+
+append_test:
+	convert c101.png c201.png +append c12_01.png 
+	convert c301.png c401.png +append c34_01.png 
+	convert c12_01.png c34_01.png -append c1234_01.png 
+
+append:
+	$(TOOLS_PATH)/loop.out -command_mask 'convert c1%02ld.png c2%02ld.png +append c12_%02ld.png' -N $(NB_FRAMES) -nb 3
+	$(TOOLS_PATH)/loop.out -command_mask 'convert c3%02ld.png c4%02ld.png +append c34_%02ld.png' -N $(NB_FRAMES) -nb 3
+	$(TOOLS_PATH)/loop.out -command_mask 'convert c12_%02ld.png c34_%02ld.png -append c1234_%02ld.png' -N $(NB_FRAMES) -nb 3
+	$(TOOLS_PATH)/loop.out -command_mask 'convert c1234_%02ld.png c_%02ld.gif' -N $(NB_FRAMES) -nb 2
+
+b:
+	$(TOOLS_PATH)/loop.out -command_mask 'convert $(FNAME)%02ld.png $(FNAME)_%02ld.gif' -N $(NB_FRAMES) -nb 2
+
+
+c:
+	convert -delay 50   -loop 50 \
+		$(FNAME)_01.gif \
+		$(FNAME)_02.gif \
+		$(FNAME)_03.gif \
+		$(FNAME)_04.gif \
+		$(FNAME)_05.gif \
+		$(FNAME)_06.gif \
+		$(FNAME)_07.gif \
+		$(FNAME)_08.gif \
+		$(FNAME)_09.gif \
+		$(FNAME)_10.gif \
+		$(FNAME)_11.gif \
+		$(FNAME)_12.gif \
+		$(FNAME)_13.gif \
+		$(FNAME)_14.gif \
+		$(FNAME)_15.gif \
+		$(FNAME)_16.gif \
+		$(FNAME)_17.gif \
+		$(FNAME)_18.gif \
+		$(FNAME)_19.gif \
+		$(FNAME)_20.gif \
+		$(FNAME)_21.gif \
+		$(FNAME)_22.gif \
+		$(FNAME)_23.gif \
+		$(FNAME)_24.gif \
+		$(FNAME)_25.gif \
+		$(FNAME)_26.gif \
+		$(FNAME)_27.gif \
+		$(FNAME)_28.gif \
+		$(FNAME)_29.gif \
+		$(FNAME)_30.gif \
+		$(FNAME).gif
+	cp $(FNAME).gif ~/public_html
+	chmod go+rx ~/public_html/$(FNAME).gif
+
+
+8:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	$(TOOLS_PATH)/prepare_frames.out \
+		-i 0 90 "/Volumes/Anton\ 5/DATA.2019/SURFACES_POVRAY/HIGHRES/hilbert_08_%03d.png" \
+		-output_starts_at 0 \
+		-o FRAMES/frame%04d.png
+	ffmpeg -r 15 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  8.mp4
+
+
+1:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	$(TOOLS_PATH)/prepare_frames.out \
+		-i 0 90 "/Volumes/Anton\ 5/DATA.2019/SURFACES_POVRAY/HIGHRES/hilbert_01_%03d.png" \
+		-i 0 90 "/Volumes/Anton\ 5/DATA.2019/SURFACES_POVRAY/HIGHRES/hilbert_09_%03d.png" \
+		-i 0 90 "/Volumes/Anton\ 5/DATA.2019/SURFACES_POVRAY/HIGHRES/hilbert_26_%03d.png" \
+		-i 0 90 "/Volumes/Anton\ 5/DATA.2019/SURFACES_POVRAY/HIGHRES/hilbert_25_%03d.png" \
+		-output_starts_at 0 \
+		-o FRAMES/frame%04d.png
+	ffmpeg -r 15 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  1.mp4
+
+
+9:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	$(TOOLS_PATH)/prepare_frames.out \
+		-i 0 90 "/Volumes/Anton\ 5/DATA.2019/SURFACES_POVRAY/HIGHRES/hilbert_09_%03d.png" \
+		-i 0 90 "/Volumes/Anton\ 5/DATA.2019/SURFACES_POVRAY/HIGHRES/hilbert_26_%03d.png" \
+		-i 0 90 "/Volumes/Anton\ 5/DATA.2019/SURFACES_POVRAY/HIGHRES/hilbert_25_%03d.png" \
+		-output_starts_at 0 \
+		-o FRAMES/frame%04d.png
+	ffmpeg -r 15 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  9.mp4
+
+
+76:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	$(TOOLS_PATH)/prepare_frames.out \
+		-i 0 90 "/Volumes/Anton\ 5/DATA.2019/SURFACES_POVRAY/PNG76/hilbert_76_%03d.png" \
+		-i 0 90 "/Volumes/Anton\ 5/DATA.2019/SURFACES_POVRAY/PNG81UP/hilbert_81_%03d.png" \
+		-i 0 90 "/Volumes/Anton\ 5/DATA.2019/SURFACES_POVRAY/PNG83/hilbert_83_%03d.png" \
+		-output_starts_at 0 \
+		-o FRAMES/frame%04d.png
+	ffmpeg -r 15 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  76.mp4
+
+
+84:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	$(TOOLS_PATH)/prepare_frames.out \
+		-i 0 90 "/Volumes/Anton\ 5/DATA.2019/SURFACES_POVRAY/PNG84/hilbert_84_%03d.png" \
+		-i 0 90 "/Volumes/Anton\ 5/DATA.2019/SURFACES_POVRAY/PNG85/hilbert_85_%03d.png" \
+		-output_starts_at 0 \
+		-o FRAMES/frame%04d.png
+	ffmpeg -r 15 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  84.mp4
+
+25:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	$(TOOLS_PATH)/prepare_frames.out \
+		-i 0 90 "/Volumes/Anton4/DATA_BIG.18/HILBERT/HIGHRES/hilbert_25_%03d.png" \
+		-output_starts_at 0 \
+		-o FRAMES/frame%04d.png
+	ffmpeg -r 15 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  25.mp4
+
+clebsch27:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	$(TOOLS_PATH)/prepare_frames.out \
+		-i 0 120 "/Volumes/Anton4/BACKUP.2018_03_01/DATA.18/SURFACE/POVRAY_CLEBSCH_MAP/7/clebsch_map_7%03d.png" \
+		-output_starts_at 0 \
+		-o FRAMES/frame%04d.png
+	ffmpeg -r 15 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  clebsch27.mp4
+
+46:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	$(TOOLS_PATH)/prepare_frames.out \
+		-i 0 90 "/Volumes/Anton\ 5/DATA.2019/SURFACES_POVRAY/HIGHRES/hilbert_46_%03d.png" \
+		-output_starts_at 0 \
+		-o FRAMES/frame%04d.png
+	ffmpeg -r 15 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  46.mp4
+

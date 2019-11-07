@@ -1,0 +1,116 @@
+MY_PATH=../../../..
+SRC=$(MY_PATH)/SRC
+SRC2=$(MY_PATH)/SRC2
+
+TRANSLATION_PLANE_PATH=$(SRC2)/TRANSLATION_PLANE
+GRASSMANN_PATH=$(SRC2)/GRASSMANN
+DIOPHANT_PATH=$(SRC)/DIOPHANT
+COMBINATORICS_PATH=$(SRC2)/COMBINATORICS
+
+
+Q=8
+ORDER=64
+DEPTH=6
+POLY=
+SEARCH_DEPTH=3
+PACKING_SEARCH_DEPTH=3
+
+
+
+cases:
+	- mkdir SYSTEMS
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 2 \
+		-W -order $(ORDER) -dim_over_kernel 2 \
+		-extend_regulus $(SEARCH_DEPTH)  \
+		-prefix SYSTEMS/ \
+		-lift  $(SEARCH_DEPTH) "./" \
+		-lex \
+		-solve -DLX
+
+
+# MacBook 5/22/13: finds 17080 solutions in 42 min 24 sec (with -lex) 
+
+
+#\
+#		-solve
+
+
+build_db:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 2 \
+		-W -order $(ORDER) -dim_over_kernel 2 \
+		-extend_regulus $(SEARCH_DEPTH)  \
+		-build_db $(SEARCH_DEPTH) 
+
+
+
+read_solutions:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 2 \
+		-W -order $(ORDER) -dim_over_kernel 2 \
+		-extend_regulus $(SEARCH_DEPTH)  \
+		-read_solution_files $(SEARCH_DEPTH)  ./STARTER_LINES/extend_regulus_$(Q)__depth_$(SEARCH_DEPTH)_solutions.txt -1
+
+
+# MacBook 5/22/13:  59 sec 
+
+
+orbits:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 2 \
+		-W -order $(ORDER) -dim_over_kernel 2 \
+		-extend_regulus $(SEARCH_DEPTH)  \
+		-compute_orbits $(SEARCH_DEPTH) 
+
+
+# MacBook 5/22/13:  5 sec 
+
+isomorph:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 2 \
+		-W -order $(ORDER) -dim_over_kernel 2 \
+		-print_interval 10000 \
+		-extend_regulus $(SEARCH_DEPTH)  \
+		-isomorph_testing $(SEARCH_DEPTH)  
+
+
+# MacBook 5/22/13:  8 min 4 sec, finds 108 isomorphism types
+
+klein:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 2 \
+		-W -order $(ORDER) -dim_over_kernel 2 \
+		-extend_regulus $(SEARCH_DEPTH) \
+		-klein 
+
+
+
+report:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 2 \
+		-W -order $(ORDER) -dim_over_kernel 2 \
+		-extend_regulus $(SEARCH_DEPTH) \
+		-report  
+
+
+
+undistinguish:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 2 \
+		-W -order $(ORDER) -dim_over_kernel 2 \
+		-extend_regulus $(SEARCH_DEPTH) \
+		-undistinguish_regulus  
+
+# MacBook 5/22/13:  18 min 34 sec, finds 62 isomorphism types
+
+
+dual:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 2 \
+		-W -order $(ORDER) -dim_over_kernel 2 \
+		-extend_regulus $(SEARCH_DEPTH) \
+		-dual 
+
+
+
+
+report_spreads:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 4 \
+		-W -order $(ORDER) -dim_over_kernel 2 \
+		-extend_regulus $(SEARCH_DEPTH) \
+		-report_spreads  
+
+
+

@@ -1,0 +1,885 @@
+#MY_PATH=../../../DEV.17
+MY_LOCAL_PATH=~/DEV.19/GITHUB/orbiter
+MY_LOCAL_PATH2=~/DEV.19/GITHUB/orbiter2
+MY_PATH=/scratch2/betten/COMPILE/2017_03_22
+SRC=$(MY_PATH)/ORBITER/src
+SRC2=$(MY_PATH)/ORBITER2/src
+SRC_LOCAL=$(MY_LOCAL_PATH)/ORBITER/src
+SRC2_LOCAL=$(MY_LOCAL_PATH2)/ORBITER2/src
+
+
+MATH360_PATH=$(SRC2)/MATH360
+DRAW_PATH=$(SRC2)/DRAW
+LOCAL_TOOLS_PATH=$(SRC_LOCAL)/apps/tools
+TOOLS_PATH=$(SRC)/apps/tools
+SURFACE_PATH=$(SRC2_LOCAL)/SURFACE
+ALGEBRA_PATH=$(SRC2)/ALGEBRA
+PROJECTIVE_SPACE_PATH=$(SRC)/APPS/PROJECTIVE_SPACE
+ARCS_PATH=$(SRC)/APPS/ARCS
+ALGEBRA_PATH=$(SRC2)/ALGEBRA
+ARCS_EASY_PATH=$(MY_PATH)/ORBITER_APPS/ARCS
+
+
+
+#NB_ROUNDS=4
+NB_FRAMES=90
+FNAME=hilbert_%02ld_%03ld
+FNAME_R0=hilbert_0_%03ld
+FNAME_OLD=hilbert_%03ld
+FNAME_POV=$(FNAME).pov
+
+# either:
+
+#		-W 800 -H 600 \
+#		-font_size 36 -stroke_width 2 \
+#		-global_picture_scale 1.0 \
+
+# or:
+
+#		-W 2560 -H 1920 \
+#		-font_size 126 -stroke_width 5 \
+#		-global_picture_scale 3.0 \
+
+
+# for YouTube:
+#An introduction to cubic surfaces
+#A few bits of history, Schlaefli's double six, 27 lines, the Hilbert Cohn-Vossen cubic, the Clebsch cubic, Cayley's nodal cubic, the Fermat cubic, Cayley's ruled cubic.
+# keywords:
+# Mathematics
+# Cubic surface
+# geometry
+# Hilbert
+# Clebsch
+
+#https://youtu.be/lLBOiiFs87Q
+
+# thumbnail
+# hilbert_26_019.png
+
+
+
+
+#missing or to be redone:  2,
+
+
+#running A: 
+#running B: 72
+#running C: 
+
+
+create26:
+	- rm -rf POV
+	mkdir POV
+	$(SURFACE_PATH)/animate.out -v 2 -Hilbert \
+		-output_mask $(FNAME_POV) \
+		-nb_frames_default $(NB_FRAMES) \
+		-rounds "26" \
+		-W 2560 -H 1920 \
+		-font_size 126 -stroke_width 5 \
+		-global_picture_scale 3.0 \
+		-angle 24 -clipping_radius 2.8 \
+		-zoom 26 120 120  \
+		-no_background 26 \
+		-no_bottom_plane 26 \
+	date
+	cp Alfred_Clebsch.png POV
+	cp Arthur_Cayley.png POV
+	cp Cohn-Vossen.png POV
+	cp George_Salmon.png POV
+	cp Ludwig_Schlaefli.png POV
+	cp Michel_Chasles.png POV
+	cp david_hilbert.jpg POV
+	cp Pierre_de_Fermat.png POV
+	cp double_six.png POV
+	cp Jacob_Steiner.png POV
+	mv *.pov POV
+	mv makefile_animation POV
+
+create41:
+	- rm -rf POV
+	mkdir POV
+	$(SURFACE_PATH)/animate.out -v 2 -Hilbert \
+		-output_mask $(FNAME_POV) \
+		-nb_frames_default $(NB_FRAMES) \
+		-rounds "41" \
+		-W 2560 -H 1920 \
+		-font_size 126 -stroke_width 5 \
+		-global_picture_scale 3.0 \
+		-angle 24 -clipping_radius 2.8 \
+		-zoom 41 120 120  \
+		-no_background 41 \
+		-no_bottom_plane 41 \
+	date
+	cp PICS/* POV
+	mv *.pov POV
+	mv makefile_animation POV
+
+
+#old values:
+#clipping_radius 1.8
+
+
+create:
+	- rm -rf POV
+	mkdir POV
+	$(SURFACE_PATH)/animate.out -v 2 -Hilbert \
+		-output_mask $(FNAME_POV) \
+		-nb_frames_default $(NB_FRAMES) \
+		-rounds "55" \
+		-video_options \
+		-W 2560 -H 1920 \
+		-font_size 126 -stroke_width 5 \
+		-global_picture_scale 3.0 \
+		-default_angle 90 -clipping_radius 3.6 \
+		-look_at "<0,0,0>" \
+		-zoom 53 179 1 \
+		-picture 53 0.3 "NSF_4-Color_bitmap_Logo_500.png" "-gravity SouthWest -geometry +150+100" \
+		-picture 53 0.6 "NSF_text_500.png" "-gravity South -geometry -17+275" \
+		-text 53 40 "\n\n\n\n\nAn introduction\nto cubic surfaces" \
+		-picture 47 0.5 "Pierre_de_Fermat.png" "-gravity center -geometry +0-50" \
+		-text 47 40 "\n\n\n\n\n\n\n\nPierre de Fermat\n(1607-1665)" \
+		-picture 33 0.5 "Ludwig_Schlaefli.png" "-gravity center -geometry +0-50" \
+		-text 33 40 "\n\n\n\n\n\n\n\nLudwig Schlaefli\n(1814-1895)" \
+		-picture 36 0.5 "George_Salmon.png" "-gravity center -geometry +0-50" \
+		-text 36 40 "\n\n\n\n\n\n\n\nGeorge Salmon\n(1819-1904)" \
+		-picture 35 0.5 "Arthur_Cayley.png" "-gravity center -geometry +0-50" \
+		-text 35 40 "\n\n\n\n\n\n\n\nArthur Cayley\n(1821-1895)" \
+		-picture 34 0.5 "Alfred_Clebsch.png" "-gravity center -geometry +0-50" \
+		-text 34 40 "\n\n\n\n\n\n\n\nAlfred Clebsch\n(1833-1872)" \
+		-picture 10 0.5 "david_hilbert.jpg" "-gravity center -geometry +0-50" \
+		-text 10 40 "\n\n\n\n\n\n\n\nDavid Hilbert\n(1862-1943)" \
+		-picture 37 0.3 "Arthur_Cayley.png" "-gravity NorthWest -geometry +20+20" \
+		-picture 37 0.3 "david_hilbert.jpg" "-gravity North -geometry +0+20" \
+		-picture 37 0.3 "George_Salmon.png" "-gravity NorthEast -geometry +20+20" \
+		-picture 37 0.3 "Ludwig_Schlaefli.png" "-gravity SouthWest -geometry +20+20" \
+		-picture 37 0.3 "Alfred_Clebsch.png" "-gravity SouthEast -geometry +20+20" \
+		-picture 37 0.3 "Pierre_de_Fermat.png" "-gravity South -geometry +0+20" \
+		-text 37 40 "All contributed\nto the study of\ncubic surfaces" \
+		-picture 38 0.35 "david_hilbert.jpg" "-gravity NorthWest -geometry +600+175" \
+		-picture 38 0.85 "Cohn-Vossen.png" "-gravity NorthEast -geometry +600+175" \
+		-text 38 40 "The Hilbert / Cohn-Vossen\nsurface:" \
+		-picture 40 0.3 "double_six.png" "-gravity center -geometry +0-100" \
+		-text 40 40 "\n\n\n\n\n\n\n\nIt is described\nby this diagram" \
+		-text 0 40 "\n\n\n\n\n\nA cube" \
+		-text 13 40 "\n\n\n\n\n\nPlace a tetrahedron\ninside the cube" \
+		-text 14 40 "\n\n\n\n\n\nExtend the edges of the cube\nat the vertices of the\ntetrahedron only" \
+		-text 1 30 "\n\n\n\n\n\n12 lines are defined,\ntwo on each side" \
+		-picture 15 0.3 "Ludwig_Schlaefli.png" "-gravity NorthWest -geometry +150+100" \
+		-text 15 40 "\n\n\n\n\n\nThis is a\nSchlaefli double-six" \
+		-text 20 40 "lines:\na1    \na2    \na3    \na4    \na5    \na6" \
+		-text 21 40 "lines:\nb1    \nb2    \nb3    \nb4    \nb5    \nb6" \
+		-text 2 30 "\n\n\n\n\n\nThe lines define\na cubic surface" \
+		-text 8 40 "\n\n\n\n\n\nThe double-six" \
+		-text 24 40 "\n\n\n\n\n\n15 further lines exist\n(3 of them at infinity)" \
+		-text 25 40 "\n\n\n\n\n\n27 lines\n(3 of which lie at infinity)" \
+		--text 26 40 "\n\n\n\n\n\nwith 27 lines\n(3 at infinity)" \
+		-text 9 40 "\n\n\n\n\n\nThe Hilbert /\nCohn-Vossen\nsurface" \
+		-text 11 40 "\n\n\n\n\n\nwith equation\n5/2*x*y*z-x^2-y^2-z^2+1=0" \
+		-zoom 74 24 18 \
+		-text 74 40 "\n\n\n\n\n\nThere are 45 tritangent planes" \
+		-nb_frames 72 270 \
+		-zoom 72 18 18 \
+		-clipping 72 0.7 \
+		-label 72 0 6 "-gravity NorthWest -geometry +20+20" "01/45" \
+		-label 72 6 6 "-gravity NorthWest -geometry +20+20" "02/45" \
+		-label 72 12 6 "-gravity NorthWest -geometry +20+20" "03/45" \
+		-label 72 18 6 "-gravity NorthWest -geometry +20+20" "04/45" \
+		-label 72 24 6 "-gravity NorthWest -geometry +20+20" "05/45" \
+		-label 72 30 6 "-gravity NorthWest -geometry +20+20" "06/45" \
+		-label 72 36 6 "-gravity NorthWest -geometry +20+20" "07/45" \
+		-label 72 42 6 "-gravity NorthWest -geometry +20+20" "08/45" \
+		-label 72 48 6 "-gravity NorthWest -geometry +20+20" "09/45" \
+		-label 72 54 6 "-gravity NorthWest -geometry +20+20" "10/45" \
+		-label 72 60 6 "-gravity NorthWest -geometry +20+20" "11/45" \
+		-label 72 66 6 "-gravity NorthWest -geometry +20+20" "12/45" \
+		-label 72 72 6 "-gravity NorthWest -geometry +20+20" "13/45" \
+		-label 72 78 6 "-gravity NorthWest -geometry +20+20" "14/45" \
+		-label 72 84 6 "-gravity NorthWest -geometry +20+20" "15/45" \
+		-label 72 90 6 "-gravity NorthWest -geometry +20+20" "16/45" \
+		-label 72 96 6 "-gravity NorthWest -geometry +20+20" "17/45" \
+		-label 72 102 6 "-gravity NorthWest -geometry +20+20" "18/45" \
+		-label 72 108 6 "-gravity NorthWest -geometry +20+20" "19/45" \
+		-label 72 114 6 "-gravity NorthWest -geometry +20+20" "20/45" \
+		-label 72 120 6 "-gravity NorthWest -geometry +20+20" "21/45" \
+		-label 72 126 6 "-gravity NorthWest -geometry +20+20" "22/45" \
+		-label 72 132 6 "-gravity NorthWest -geometry +20+20" "23/45" \
+		-label 72 138 6 "-gravity NorthWest -geometry +20+20" "24/45" \
+		-label 72 144 6 "-gravity NorthWest -geometry +20+20" "25/45" \
+		-label 72 150 6 "-gravity NorthWest -geometry +20+20" "26/45" \
+		-label 72 156 6 "-gravity NorthWest -geometry +20+20" "27/45" \
+		-label 72 162 6 "-gravity NorthWest -geometry +20+20" "28/45" \
+		-label 72 168 6 "-gravity NorthWest -geometry +20+20" "29/45" \
+		-label 72 174 6 "-gravity NorthWest -geometry +20+20" "30/45" \
+		-label 72 180 6 "-gravity NorthWest -geometry +20+20" "31/45" \
+		-label 72 186 6 "-gravity NorthWest -geometry +20+20" "32/45" \
+		-label 72 192 6 "-gravity NorthWest -geometry +20+20" "33/45" \
+		-label 72 198 6 "-gravity NorthWest -geometry +20+20" "34/45" \
+		-label 72 204 6 "-gravity NorthWest -geometry +20+20" "35/45" \
+		-label 72 210 6 "-gravity NorthWest -geometry +20+20" "36/45" \
+		-label 72 216 6 "-gravity NorthWest -geometry +20+20" "37/45" \
+		-label 72 222 6 "-gravity NorthWest -geometry +20+20" "38/45" \
+		-label 72 228 6 "-gravity NorthWest -geometry +20+20" "39/45" \
+		-label 72 234 6 "-gravity NorthWest -geometry +20+20" "40/45" \
+		-label 72 240 6 "-gravity NorthWest -geometry +20+20" "41/45" \
+		-label 72 246 6 "-gravity NorthWest -geometry +20+20" "42/45" \
+		-label 72 252 6 "-gravity NorthWest -geometry +20+20" "43/45" \
+		-label 72 258 6 "-gravity NorthWest -geometry +20+20" "44/45" \
+		-label 72 264 6 "-gravity NorthWest -geometry +20+20" "45/45" \
+		-picture 39 0.3 "Arthur_Cayley.png" "-gravity NorthWest -geometry +150+100" \
+		-text 39 40 "\n\n\n\n\n\nCayleys nodal surface" \
+		-text 41 40 "\n\n\n\n\n\nIt has 9 lines\n(3 lie at infinity)" \
+		-text 42 40 "\n\n\n\n\n\nwith equation\n2*x*y*z-x^2-y^2-z^2+1=0" \
+		-picture 43 0.3 "Alfred_Clebsch.png" "-gravity NorthWest -geometry +150+100" \
+		-text 43 40 "\n\n\n\n\n\nThe Clebsch surface" \
+		-zoom 44 90 120 \
+		-text 44 40 "\n\n\n\n\n\nwith 27 lines" \
+		-picture 45 0.3 "Pierre_de_Fermat.png" "-gravity NorthWest -geometry +150+100" \
+		-text 45 40 "\n\n\n\n\n\nThe Fermat surface\nx^3+y^3+z^3+1=0" \
+		-text 46 40 "\n\n\n\n\n\nWith 3 real lines\n(24 are complex)" \
+		-picture 48 0.3 "Arthur_Cayley.png" "-gravity NorthWest -geometry +150+100" \
+		-picture 48 0.3 "Michel_Chasles.png" "-gravity NorthEast -geometry +150+100" \
+		-text 48 40 "\n\n\n\n\n\nCayleys ruled surface\n(also due to Chasles)" \
+		-zoom 49 90 120 \
+		-text 49 40 "\n\n\n\n\n\nA set of lines\npartitions the surface" \
+		-text 51 40 "\n\n\n\n\n\nThe plane z=0\nis tangent at (0,0,0)" \
+		-text 54 40 "\n\n\n\n\n\nAn osculating\ntangent line at (0,0,0)" \
+		-picture 12 0.12 "disclaimer_cut.png" "-gravity South -geometry +0+50" \
+		-zoom 12 90 179 \
+		-nb_frames 12 150 \
+		-text 12 40 "Thanks for watching!\n\n\n\nAnton Betten 2018\nMusic: Claudia Betten" \
+		-end
+	date
+	cp PICS/* POV
+	mv *.pov POV
+	mv makefile_animation POV
+
+
+
+create73:
+	- rm -rf POV
+	mkdir POV
+	$(SURFACE_PATH)/animate.out -v 2 -Hilbert \
+		-output_mask $(FNAME_POV) \
+		-nb_frames_default $(NB_FRAMES) \
+		-rounds "73" \
+		-W 2560 -H 1920 \
+		-font_size 126 -stroke_width 5 \
+		-global_picture_scale 3.0 \
+		-default_angle 90 -clipping_radius 3.6 \
+		-look_at "<1,1,1>*-1/sqrt(3)" \
+		-zoom 73 120 70 \
+		-text 73 40 "\n\n\n\n\n\nSix points in a plane\ncan be associated\nto a surface" \
+		-zoom 75 18 18 \
+		-clipping 75 0.7 \
+	date
+	cp PICS/* POV
+	mv *.pov POV
+	mv makefile_animation POV
+
+create81:
+	- rm -rf POV
+	mkdir POV
+	$(SURFACE_PATH)/animate.out -v 2 -Hilbert \
+		-output_mask $(FNAME_POV) \
+		-nb_frames_default $(NB_FRAMES) \
+		-rounds "81" \
+		-W 2560 -H 1920 \
+		-font_size 126 -stroke_width 5 \
+		-global_picture_scale 3.0 \
+		-default_angle 90 -clipping_radius 3.6 \
+		-look_at "<1,1,1>*-1/sqrt(3)" \
+		-zoom 76 70 60 \
+		-zoom 77 60 60 \
+		-zoom 81 90 90 \
+		-zoom 82 90 90 \
+		-pan 81 -3 1 3 2.887 2.887 2.887 -0.577 -0.577 -0.577 \
+		-text 82 40 "\n\n\n\n\n\nThe surface is determined\nby the 6 points\nup to isomorphism" \
+	date
+	cp PICS/* POV
+	mv *.pov POV
+	mv makefile_animation POV
+
+
+create86:
+	- rm -rf POV
+	mkdir POV
+	$(SURFACE_PATH)/animate.out -v 2 -Hilbert \
+		-output_mask $(FNAME_POV) \
+		-nb_frames_default $(NB_FRAMES) \
+		-rounds "86" \
+		-W 2560 -H 1920 \
+		-font_size 126 -stroke_width 5 \
+		-global_picture_scale 3.0 \
+		-default_angle 115 -clipping_radius 3.6 \
+		-look_at "<0,0,0>" \
+		-text 87 40 "\n\n\n\n\n\n\n\nOver a finite field ..." \
+		-text 86 40 "\n\n\n\n\n\n\n\n... a surface becomes\na discrete set of points" \
+	date
+	cp PICS/* POV
+	mv *.pov POV
+	mv makefile_animation POV
+
+m86:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	$(LOCAL_TOOLS_PATH)/prepare_frames.out \
+		-i 0 $(NB_FRAMES) PNG86/hilbert_86_%03d.png \
+		-output_starts_at 0 \
+		-o FRAMES/frame%04d.png
+	ffmpeg -r 15 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  m86.mp4
+
+create85:
+	- rm -rf POV
+	mkdir POV
+	$(SURFACE_PATH)/animate.out -v 2 -Hilbert \
+		-output_mask $(FNAME_POV) \
+		-nb_frames_default $(NB_FRAMES) \
+		-rounds "85" \
+		-W 2560 -H 1920 \
+		-font_size 126 -stroke_width 5 \
+		-global_picture_scale 3.0 \
+		-default_angle 90 -clipping_radius 3.6 \
+		-look_at "<1,1,1>*-1/sqrt(3)" \
+		-zoom 84 90 90 \
+		-zoom 85 90 90 \
+		-pan_reverse 84 -3 1 3 2.887 2.887 2.887 -0.577 -0.577 -0.577 \
+	date
+	cp PICS/* POV
+	mv *.pov POV
+	mv makefile_animation POV
+
+
+create83:
+	- rm -rf POV
+	mkdir POV
+	$(SURFACE_PATH)/animate.out -v 2 -Hilbert \
+		-output_mask $(FNAME_POV) \
+		-nb_frames_default $(NB_FRAMES) \
+		-rounds "83" \
+		-W 2560 -H 1920 \
+		-font_size 126 -stroke_width 5 \
+		-global_picture_scale 3.0 \
+		-default_angle 90 -clipping_radius 3.6 \
+		-look_at "<1,1,1>*-1/sqrt(3)" \
+		-camera 83 "<3.333333,-0.666667,-2.666667>" \
+			"<2.078359,2.078359,2.078359>" \
+			"<-0.577000,-0.577000,-0.577000>" \
+		-text 83 40 "\n\n\n\n\n\nThe 6 points\ndetermine the surface\nup to isomorphism" \
+	date
+	cp PICS/* POV
+	mv *.pov POV
+	mv makefile_animation POV
+
+#		-zoom_sequence 83 "90,20,90,15,60,20,60,15,90,20s,90" \
+
+
+create13up:
+	- rm -rf POV
+	mkdir POV
+	$(SURFACE_PATH)/animate.out -v 2 -Hilbert \
+		-output_mask $(FNAME_POV) \
+		-nb_frames_default $(NB_FRAMES) \
+		-rounds "13" \
+		-W 800 -H 600 \
+		-font_size 36 -stroke_width 2 \
+		-global_picture_scale 1.0 \
+		-default_angle 90 -clipping_radius 3.6 \
+		-look_at "<1,1,1>*-1/sqrt(3)" \
+		-zoom 13 90 90 \
+		-pan 13 -3 1 3 2.887 2.887 2.887 -0.577 -0.577 -0.577 \
+		-text 14 40 "\n\n\n\n\n\nThe surface is determined\nby the 6 points\nup to isomorphism" \
+	date
+	cp PICS/* POV
+	mv *.pov POV
+	mv makefile_animation POV
+
+create13down:
+	- rm -rf POV
+	mkdir POV
+	$(SURFACE_PATH)/animate.out -v 2 -Hilbert \
+		-output_mask $(FNAME_POV) \
+		-nb_frames_default $(NB_FRAMES) \
+		-rounds "13" \
+		-W 800 -H 600 \
+		-font_size 36 -stroke_width 2 \
+		-global_picture_scale 1.0 \
+		-default_angle 90 -clipping_radius 3.6 \
+		-look_at "<1,1,1>*-1/sqrt(3)" \
+		-zoom 13 90 90 \
+		-pan_reverse 13 -3 1 3  2.887 2.887 2.887  -0.577 -0.577 -0.577 \
+		-text 14 40 "\n\n\n\n\n\nThe surface is determined\nby the 6 points\nup to isomorphism" \
+	date
+	cp PICS/* POV
+	mv *.pov POV
+	mv makefile_animation POV
+
+m13:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	$(LOCAL_TOOLS_PATH)/prepare_frames.out \
+		-i 0 $(NB_FRAMES) PNG13UP/hilbert_13_%03d.png \
+		-i 0 $(NB_FRAMES) PNG13DN/hilbert_13_%03d.png \
+		-output_starts_at 0 \
+		-o FRAMES/frame%04d.png
+	ffmpeg -r 15 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  m13.mp4
+
+
+
+
+# 53 opening screen zoom in (NSF logo and text, text: an introduction to cubic surfaces)
+# 38 The Hilbert Cohn Vossen surface (pics Hilbert, Cohn-Vossen)
+# 00 cube. text: a cube
+# 13 cube box, tetrahedron. text: place a tetrahedron inside
+# 14 extend the edges
+# 01 12 lines are defined
+# 15 this is a Schlaefli double six (pic Schlaefli)
+# 08 double six only
+# 02 surface, box, double 6 text: The lines define a cubic surface
+# 26 surface, all lines text: with 27 lines (3 lie at infinity)
+# 11 surface, no lines (text: with equation ...)
+# 39 Cayley's nodal surface, no lines
+# 41 Cayley's nodal surface with lines
+# 42 Cayley's nodal surface with lines (text with equation ...)
+# 43 Clebsch surface
+# 44 Clebsch surface (text: with 27 lines, zooming out)
+# 45 Fermat surface (text: Fermat surface, equation ...)
+# 46 Fermat surface (text: with 3 lines (24 are complex))
+# 48 Cayley's ruled surface (text: Cayleys ruled surface, also due to Chasles)
+# 49 Cayley's ruled surface, lines appearing (text: a set of lines partitions the surface)
+# 73 surface, plane, 6 points, 6 red, 2 blue lines. text: six points can be associated to a surface
+# 76 plane, 6 points, 6 red, 2 blue lines, 3d text 1-6.
+# 81 plane 6 points, 6 red, 2 blue lines, panning up.
+# 83 plane 6 points, 6 red, 2 blue lines, 3d text 1-6.
+# 84 surface, 6 red lines, panning down.
+# 85 surface, 6 red lines, side view.
+# 87 finite affine space as dots, text: over a finite field ...
+# 86 finite field surface as dots, text: ... a surface becomes a discrete set of points.
+# 12 zoom out
+
+
+
+# 40 the Hilbert Cohn Vossen diagram; text: it is described by this diagram
+# 25 all lines 
+## 50 Cayley's ruled surface, with all lines, no text
+# 51 Cayley's ruled surface, with all lines, tangent plane, ball, text: the plane z=0 is tangent
+# 54 Cayley's ruled surface, with all lines, tangent plane, ball, yellow line, text: an osculating tangent line
+
+## 09 surface, no lines
+## 24 yellow lines only (text: 15 further lines)
+## 52 Cayley's ruled surface, with all lines, tangent plane, ball, no text
+## 55 Cayley's ruled surface, with all lines, tangent plane, ball, yellow line, no text
+# 77 surface, plane, 6 points, curve and circle in dots (black and red)
+# 82 surface, plane 6 points, 6 red lines, panning down.
+
+
+short:
+	- rm short_intro.mp4
+	- rm -r FRAMES_SHORT
+	- mkdir FRAMES_SHORT
+	$(LOCAL_TOOLS_PATH)/prepare_frames.out \
+		-i 0 $(NB_FRAMES) PNG53/hilbert_53_%03ld.png \
+		-i 0 50           PNG38/hilbert_38_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG00/hilbert_00_%03d.png \
+		-i 0 $(NB_FRAMES) PNG13/hilbert_13_%03d.png \
+		-i 0 $(NB_FRAMES) PNG14/hilbert_14_%03d.png \
+		-i 0 $(NB_FRAMES) PNG01/hilbert_01_%03d.png \
+		-i 0 $(NB_FRAMES) PNG15/hilbert_15_%03d.png \
+		-i 0 $(NB_FRAMES) PNG08/hilbert_08_%03d.png \
+		-i 0 $(NB_FRAMES) PNG02/hilbert_02_%03d.png \
+		-i 0 $(NB_FRAMES) PNG26/hilbert_26_%03d.png \
+		-i 0 $(NB_FRAMES) PNG11/hilbert_11_%03d.png \
+		-i 0 $(NB_FRAMES) PNG39/hilbert_39_%03d.png \
+		-i 0 $(NB_FRAMES) PNG41/hilbert_41_%03d.png \
+		-i 0 $(NB_FRAMES) PNG42/hilbert_42_%03d.png \
+		-i 0 $(NB_FRAMES) PNG43/hilbert_43_%03d.png \
+		-i 0 $(NB_FRAMES) PNG44/hilbert_44_%03d.png \
+		-i 0 $(NB_FRAMES) PNG45/hilbert_45_%03d.png \
+		-i 0 $(NB_FRAMES) PNG46/hilbert_46_%03d.png \
+		-i 0 $(NB_FRAMES) PNG48/hilbert_48_%03d.png \
+		-i 0 $(NB_FRAMES) PNG49/hilbert_49_%03d.png \
+		-i 0 $(NB_FRAMES) PNG73/hilbert_73_%03d.png \
+		-i 0 $(NB_FRAMES) PNG76/hilbert_76_%03d.png \
+		-i 0 $(NB_FRAMES) PNG81UP/hilbert_81_%03d.png \
+		-i 0 $(NB_FRAMES) PNG83/hilbert_83_%03d.png \
+		-i 0 $(NB_FRAMES) PNG84/hilbert_84_%03d.png \
+		-i 0 $(NB_FRAMES) PNG85/hilbert_85_%03d.png \
+		-i 0 $(NB_FRAMES) PNG87/hilbert_87_%03d.png \
+		-i 0 $(NB_FRAMES) PNG86/hilbert_86_%03d.png \
+		-i 0 13           PNG86/hilbert_86_%03d.png \
+		-i 0 150          PNG12b/hilbert_12_%03d.png \
+		-output_starts_at 0 \
+		-o FRAMES_SHORT/frame%04d.png
+	ffmpeg -r 15 -f image2 -i FRAMES_SHORT/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  short_intro.mp4
+
+# 2 min 38 sec
+#		-i 0 $(NB_FRAMES) HIGHRES/hilbert_09_%03ld.png \
+#		-i 0 $(NB_FRAMES) HIGHRES/hilbert_24_%03ld.png \
+#		-i 0 $(NB_FRAMES) HIGHRES/hilbert_52_%03ld.png \
+#		-i 0 30           HIGHRES/hilbert_55_%03ld.png \
+#		-i 0 $(NB_FRAMES) HIGHRES/hilbert_50_%03ld.png \
+#		-i 0 55 PNG77/hilbert_77_%03ld.png \
+#		-i 0 $(NB_FRAMES) HIGHRES/hilbert_51_%03d.png \
+#		-i 0 $(NB_FRAMES) HIGHRES/hilbert_54_%03d.png \
+#		-i 0 $(NB_FRAMES) HIGHRES/hilbert_25_%03d.png \
+#		-i 0 $(NB_FRAMES) PNG81DN/hilbert_81_%03d.png \
+#		-i 0 $(NB_FRAMES) HIGHRES/hilbert_40_%03d.png \
+
+
+
+
+mp4:
+	- rm hilbert.mp4
+	- rm -r FRAMES
+	- mkdir FRAMES
+	$(LOCAL_TOOLS_PATH)/prepare_frames.out \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_53_%03ld.png \
+		-i 0 50 HIGHRES/hilbert_47_%03ld.png \
+		-i 0 50 HIGHRES/hilbert_33_%03ld.png \
+		-i 0 50 HIGHRES/hilbert_36_%03ld.png \
+		-i 0 50 HIGHRES/hilbert_35_%03ld.png \
+		-i 0 50 HIGHRES/hilbert_34_%03ld.png \
+		-i 0 50 HIGHRES/hilbert_10_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_37_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_38_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_40_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_00_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_13_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_14_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_01_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_15_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_20_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_21_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_02_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_09_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_11_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_08_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_24_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_25_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_26_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_74_%03ld.png \
+		-i 0 270          HIGHRES/hilbert_72_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_39_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_41_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_42_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_43_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_44_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_45_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_46_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_48_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_49_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_50_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_51_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_52_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_54_%03ld.png \
+		-i 0 30           HIGHRES/hilbert_55_%03ld.png \
+		-i 0 120          HIGHRES/hilbert_12_%03ld.png \
+		-output_starts_at 0 \
+		-o FRAMES/frame%04d.png
+	ffmpeg -r 15 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  hilbert.mp4
+
+
+
+
+
+tritangent:
+	- rm tritangent.mp4
+	- rm -r FRAMES_TRITANGENT
+	- mkdir FRAMES_TRITANGENT
+	$(LOCAL_TOOLS_PATH)/prepare_frames.out \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_74_%03ld.png \
+		-i 0 270          HIGHRES/hilbert_72_%03ld.png \
+		-output_starts_at 0 \
+		-o FRAMES_TRITANGENT/frame%04d.png
+	ffmpeg -r 15 -f image2 -i FRAMES_TRITANGENT/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  tritangent.mp4
+
+
+
+
+not_short:
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_74_%03ld.png \
+		-i 0 270          HIGHRES/hilbert_72_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_54_%03ld.png \
+		-i 0 30           HIGHRES/hilbert_55_%03ld.png \
+		-i 0 120          HIGHRES/hilbert_12_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_51_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_52_%03ld.png \
+
+################################################################################
+# poster
+################################################################################
+
+prepare_poster:
+	- rm -rf POSTER
+	mkdir POSTER
+	$(LOCAL_TOOLS_PATH)/prepare_frames.out \
+		-i 0 45 HIGHRES/hilbert_72_%03ld.png \
+		-output_starts_at 0 \
+		-step 6 \
+		-o POSTER/frame_%03d.png
+
+poster:
+	convert POSTER/frame_000.png POSTER/frame_001.png POSTER/frame_002.png POSTER/frame_003.png POSTER/frame_004.png +append a1.png 
+	convert POSTER/frame_005.png POSTER/frame_006.png POSTER/frame_007.png POSTER/frame_008.png POSTER/frame_009.png +append a2.png 
+	convert POSTER/frame_010.png POSTER/frame_011.png POSTER/frame_012.png POSTER/frame_013.png POSTER/frame_014.png +append a3.png 
+	convert POSTER/frame_015.png POSTER/frame_016.png POSTER/frame_017.png POSTER/frame_018.png POSTER/frame_019.png +append a4.png 
+	convert POSTER/frame_020.png POSTER/frame_021.png POSTER/frame_022.png POSTER/frame_023.png POSTER/frame_024.png +append a5.png 
+	convert POSTER/frame_025.png POSTER/frame_026.png POSTER/frame_027.png POSTER/frame_028.png POSTER/frame_029.png +append a6.png 
+	convert POSTER/frame_030.png POSTER/frame_031.png POSTER/frame_032.png POSTER/frame_033.png POSTER/frame_034.png +append a7.png 
+	convert POSTER/frame_035.png POSTER/frame_036.png POSTER/frame_037.png POSTER/frame_038.png POSTER/frame_039.png +append a8.png 
+	convert POSTER/frame_040.png POSTER/frame_041.png POSTER/frame_042.png POSTER/frame_043.png POSTER/frame_044.png +append a9.png 
+	convert a1.png a2.png a3.png a4.png a5.png a6.png a7.png a8.png a9.png -append poster.png 
+
+
+#	convert c301.png c401.png +append c34_01.png 
+#	convert c12_01.png c34_01.png -append c1234_01.png 
+
+
+poster_sideways:
+	convert POSTER/frame_000.png POSTER/frame_001.png POSTER/frame_002.png POSTER/frame_003.png POSTER/frame_004.png POSTER/frame_005.png POSTER/frame_006.png POSTER/frame_007.png POSTER/frame_008.png +append a1.png 
+	convert POSTER/frame_009.png POSTER/frame_010.png POSTER/frame_011.png POSTER/frame_012.png POSTER/frame_013.png POSTER/frame_014.png POSTER/frame_015.png POSTER/frame_016.png POSTER/frame_017.png +append a2.png
+	convert POSTER/frame_018.png POSTER/frame_019.png POSTER/frame_020.png POSTER/frame_021.png POSTER/frame_022.png POSTER/frame_023.png POSTER/frame_024.png POSTER/frame_025.png POSTER/frame_026.png +append a3.png
+	convert POSTER/frame_027.png POSTER/frame_028.png POSTER/frame_029.png POSTER/frame_030.png POSTER/frame_031.png POSTER/frame_032.png POSTER/frame_033.png POSTER/frame_034.png POSTER/frame_035.png +append a4.png 
+	convert POSTER/frame_036.png POSTER/frame_037.png POSTER/frame_038.png POSTER/frame_039.png POSTER/frame_040.png POSTER/frame_041.png POSTER/frame_042.png POSTER/frame_043.png POSTER/frame_044.png +append a5.png 
+	convert a1.png a2.png a3.png a4.png a5.png -append poster.png 
+
+
+
+################################################################################
+
+extra:
+	- rm -rf POV
+	mkdir POV
+	$(SURFACE_PATH)/animate.out -v 2 -Hilbert \
+		-output_mask $(FNAME_POV) \
+		-nb_frames_default $(NB_FRAMES) \
+		-rounds "2" \
+		-W 800 -H 600 \
+		-font_size 36 -stroke_width 2 \
+		-global_picture_scale 1.0 \
+		-angle 24 -clipping_radius 1.8 \
+		-zoom 61 24 46 \
+		-zoom 62 46 46 \
+		-zoom 63 48 72 \
+		-zoom 64 72 72 \
+		-zoom 65 72 96 \
+		-zoom 66 48 48 \
+		-text 66 40 "\n\n\n\n\n\nA trihedron\n(plus the plane at infinity)" \
+		-zoom 67 48 48 \
+		-text 67 40 "\n\n\n\n\n\nNine lines\n(three at infinity)" \
+		-zoom 68 48 48 \
+		-text 68 40 "\n\n\n\n\n\nAnother trihedron" \
+		-zoom 69 48 48 \
+		-text 69 40 "\n\n\n\n\n\nThey share the same nine lines" \
+		-picture 70 0.3 "Jacob_Steiner.png" "-gravity NorthWest -geometry +20+20" \
+		-zoom 70 48 48 \
+		-text 70 40 "\n\n\n\n\n\nA Steiner trihedral pair" \
+		-zoom 71 48 48 \
+		-zoom 73 18 18 \
+		-clipping 73 0.7 \
+		-text 73 40 "\n\n\n\n\n\nThere are 6 base points" \
+		-zoom 75 18 18 \
+		-clipping 75 0.7 \
+		-text 17 40 "\n\n\n\n\n\nIt has Tetrahedral\nsymmetry Alt(4)" \
+
+
+#		-text 50 40 "Hence the name\nruled surface" \
+#		-text 10 40 "Following Hilbert\nand Cohn-Vossen (1932),\na cubic surface\nis constructed" \
+
+no:
+		-text 3 40 "" \
+		-text 30 40 "Question:\n\nWhat is the minimal\n\ndata which determines\n\na surface?" \
+		-text 31 40 "Answer:\n\nA) a five-plus-one\n   of lines\n\nB) a six arc\n   not on a conic" \
+		-text 16 40 "A five-plus-one:\n\nfive lines (blue)\nwith a common\ntransversal (red)" \
+		-text 32 40 "A six arc\nnot on a conic" \
+		-text 3 30 "Consider three\nof the blue lines" \
+		-text 4 30 "They define a hyperboloid" \
+		-text 5 30 "Any further blue line\nis a secant" \
+		-text 6 30 "The second point\nof intersection\ndefines another\nred line" \
+		-text 7 30 "That way, \nall 12 lines\nof the double six\ncan be found" \
+		-text 19 40 "The plane z=0" \
+		-text 18 40 "The plane pi_{12,34,56}" \
+		-text 22 40 "The six base points\nof the Clebsch map" \
+
+
+
+big:
+	povray -W1920 -H1200 hilbert_55_053.pov
+
+
+not:
+		-text 27 40 "Two lines ai and bi are paired\n\n\nif they are disjoint\n" \
+		-text 28 40 "Two lines ai and bi are paired\n\n\nif they are orthogonal\n" \
+		-text 29 40 "For instance,\n\na1 is paired with b1,\n\nthey are orthogonal" \
+
+
+
+
+
+# -angle 18 is narrower, and closer
+# -angle 38 is wider, and further away
+
+r7:
+	$(SURFACE_PATH)/animate.out -v 2 -n $(N) \
+		-output_mask $(FNAME_POV) \
+		-nb_frames $(NB_FRAMES) \
+		-rounds 3 7 \
+		-clebsch_up_and_down 20 17 22 24 \
+		-angle 28 -clipping_radius 3.6
+
+
+
+#		-i 0 $(NB_FRAMES) HIGHRES/hilbert_17_%03ld.png \
+# it has tetrahedral symmetry
+
+# 16 is five plus one of lines
+# 32 is 6 arc in plane
+# 3 is 3 skew blue lines
+# 4 is hyperboloid and 3 skew blue lines
+# 5 is hyperboloid plus 3 blue plus one red plus one blue secant
+# 6 is two red lines 4 blue lines
+# 7 is two red lines 4 blue lines
+# 19 is surface plus plane z=0
+# 18 is tritangent plane pi_12,34,56
+# 22 is surface + double six + tritangent plane pi_12,34,56 + balls appearing
+# 23 is surface + double six + tritangent plane pi_12,34,56 + balls 
+# 29 is cube frame plus a1 plus b1
+
+
+steiner:
+	- rm steiner.mp4
+	- rm -r STEINER_FRAMES
+	- mkdir STEINER_FRAMES
+	$(LOCAL_TOOLS_PATH)/prepare_frames.out \
+		-i 0 $(NB_FRAMES) PNG/hilbert_66_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_67_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_68_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_69_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_70_%03ld.png \
+		-i 0 $(NB_FRAMES) HIGHRES/hilbert_71_%03ld.png \
+		-output_starts_at 0 \
+		-o STEINER_FRAMES/frame%04d.png
+	ffmpeg -r 15 -f image2 -i STEINER_FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  steiner.mp4
+
+
+toiletseat:
+	- rm toiletseat.mp4
+	- rm -r TOILETSEAT_FRAMES
+	- mkdir TOILETSEAT_FRAMES
+	$(LOCAL_TOOLS_PATH)/prepare_frames.out \
+		-i 0 $(NB_FRAMES) PNG/hilbert_57_%03ld.png \
+		-output_starts_at 0 \
+		-o TOILETSEAT_FRAMES/frame%04d.png
+	ffmpeg -r 15 -f image2 -i TOILETSEAT_FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  toiletseat.mp4
+
+quadrics:
+	- rm quadrics.mp4
+	- rm -r QUADRICS_FRAMES
+	- mkdir QUADRICS_FRAMES
+	$(LOCAL_TOOLS_PATH)/prepare_frames.out \
+		-i 0 $(NB_FRAMES) PNG/hilbert_56_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_57_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_58_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_59_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_60_%03ld.png \
+		-output_starts_at 0 \
+		-o QUADRICS_FRAMES/frame%04d.png
+	ffmpeg -r 15 -f image2 -i QUADRICS_FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  quadrics.mp4
+
+
+arclifting:
+	- rm arclifting.mp4
+	- rm -r ARCLIFTING_FRAMES
+	- mkdir ARCLIFTING_FRAMES
+	$(LOCAL_TOOLS_PATH)/prepare_frames.out \
+		-i 0 $(NB_FRAMES) PNG/hilbert_60_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_61_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_62_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_63_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_64_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_65_%03ld.png \
+		-output_starts_at 0 \
+		-o ARCLIFTING_FRAMES/frame%04d.png
+	ffmpeg -r 15 -f image2 -i ARCLIFTING_FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  arclifting.mp4
+
+zzero:
+	- rm zzero.mp4
+	- rm -r ZZERO_FRAMES
+	- mkdir ZZERO_FRAMES
+	$(LOCAL_TOOLS_PATH)/prepare_frames.out \
+		-i 0 $(NB_FRAMES) PNG/hilbert_19_%03ld.png \
+		-output_starts_at 0 \
+		-o ZZERO_FRAMES/frame%04d.png
+	ffmpeg -r 15 -f image2 -i ZZERO_FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  zzero.mp4
+
+
+basepoints:
+	- rm basepoints.mp4
+	- rm -r BASEPOINTS_FRAMES
+	- mkdir BASEPOINTS_FRAMES
+	$(LOCAL_TOOLS_PATH)/prepare_frames.out \
+		-i 0 $(NB_FRAMES) PNG/hilbert_73_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_75_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_75_%03ld.png \
+		-output_starts_at 0 \
+		-o BASEPOINTS_FRAMES/frame%04d.png
+	ffmpeg -r 15 -f image2 -i BASEPOINTS_FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  basepoints.mp4
+
+
+
+leftover:
+	- rm leftover.mp4
+	- rm -r LEFTOVER_FRAMES
+	- mkdir LEFTOVER_FRAMES
+	$(LOCAL_TOOLS_PATH)/prepare_frames.out \
+		-i 0 $(NB_FRAMES) PNG/hilbert_73_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_75_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_75_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_56_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_57_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_58_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_59_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_16_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_32_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_03_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_04_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_05_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_06_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_07_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_19_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_18_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_22_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_23_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_29_%03ld.png \
+		-output_starts_at 0 \
+		-o LEFTOVER_FRAMES/frame%04d.png
+	ffmpeg -r 15 -f image2 -i LEFTOVER_FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  leftover.mp4
+
+
+# empty:
+#		-i 0 $(NB_FRAMES) PNG/hilbert_30_%03ld.png \
+#		-i 0 $(NB_FRAMES) PNG/hilbert_31_%03ld.png \
+#		-i 0 $(NB_FRAMES) PNG/hilbert_39_%03ld.png \
+#		-i 0 $(NB_FRAMES) PNG/hilbert_27_%03ld.png \
+#		-i 0 $(NB_FRAMES) PNG/hilbert_28_%03ld.png \
+
+
+
+nope:
+		-i 0 $(NB_FRAMES) PNG/hilbert_30_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_31_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_16_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_32_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_03_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_04_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_05_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_06_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_07_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_19_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_18_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_22_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_23_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_27_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_28_%03ld.png \
+		-i 0 $(NB_FRAMES) PNG/hilbert_29_%03ld.png \
+
+

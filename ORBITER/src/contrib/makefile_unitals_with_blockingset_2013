@@ -1,0 +1,259 @@
+TDO_PATH = ../../../SRC/TDO
+WIDOR_PATH = ../../../SRC/WIDOR
+IG_PATH = ../../../SRC/INC_GEN
+IC_PATH = ../../../SRC/INC_CAN
+DIOPHANT_PATH = ../../../SRC/DIOPHANT
+
+all:
+	
+	#../TDO/tdo_start.out -linearspace 30 8 1 7 1 5 14 4 41 -1 Case1
+	#../TDO/tdo_refine.out -v 4 Case1.tdo >log1.1
+	#../TDO/tdo_refine.out -v 4 Case1r.tdo >log1.2
+	##../TDO/tdo_refine.out -v 4 Case1rr.tdo >log1.3
+	$(WIDOR_PATH)/widor.out unitals.widor
+	$(TDO_PATH)/tdo_print.out unitals.tdo 
+	#$(TDO_PATH)/tdo_refine.out -v 5 Case1artificial.tdo >log1.a
+	
+case1:
+	$(WIDOR_PATH)/widor.out unitals1.widor
+	$(TDO_PATH)/tdo_print.out unitals1.tdo 
+	$(TDO_PATH)/tdo_refine.out -v 4 unitals1.tdo 
+	$(TDO_PATH)/tdo_print.out unitals1r.tdo 
+
+
+#col_scheme at level 4 : 
+#is 2 x 2
+#          |   9_{  1} 54_{  3}
+#==============================
+#  1_{  0} |         1        0
+# 27_{  2} |         3        4
+
+# The single point cannot be a blocking set (there are 54 lines that are disjoint)
+
+
+
+
+case2:
+	$(WIDOR_PATH)/widor.out unitals2.widor
+	$(TDO_PATH)/tdo_print.out unitals2.tdo 
+	$(TDO_PATH)/tdo_refine.out -v 4 unitals2.tdo 
+	$(TDO_PATH)/tdo_print.out unitals2r.tdo 
+
+
+
+#col_scheme at level 5 : 
+#is 2 x 3
+#          |   1_{  1} 16_{  3} 46_{  4}
+#=======================================
+#  2_{  0} |         2        1        0
+# 26_{  2} |         2        3        4
+
+
+# cannot be a blocking set (46 disjoint lines)
+
+
+
+
+
+case3:
+	$(WIDOR_PATH)/widor.out unitals3.widor
+	$(TDO_PATH)/tdo_print.out unitals3.tdo 
+	$(TDO_PATH)/tdo_refine.out -v 4 unitals3.tdo 
+	$(TDO_PATH)/tdo_print.out unitals3r.tdo 
+
+
+# 2 refinements, none admitting a blocking set
+
+
+case4:
+	$(WIDOR_PATH)/widor.out unitals4.widor
+	$(TDO_PATH)/tdo_print.out unitals4.tdo 
+	$(TDO_PATH)/tdo_refine.out -v 4 unitals4.tdo 
+	$(TDO_PATH)/tdo_print.out unitals4r.tdo 
+
+
+# 3 refinements, none admitting a blocking set
+
+case5:
+	$(WIDOR_PATH)/widor.out unitals5.widor
+	$(TDO_PATH)/tdo_print.out unitals5.tdo 
+	$(TDO_PATH)/tdo_refine.out -v 4 unitals5.tdo 
+	$(TDO_PATH)/tdo_print.out unitals5r.tdo 
+
+
+# 5 refinements, none admitting a blocking set
+
+case6:
+	$(WIDOR_PATH)/widor.out unitals6.widor
+	$(TDO_PATH)/tdo_print.out unitals6.tdo 
+	$(TDO_PATH)/tdo_refine.out -v 4 unitals6.tdo 
+	$(TDO_PATH)/tdo_print.out unitals6r.tdo 
+
+
+# 9 refinements, none admitting a blocking set
+
+case7:
+	$(WIDOR_PATH)/widor.out unitals7.widor
+	$(TDO_PATH)/tdo_print.out unitals7.tdo 
+	$(TDO_PATH)/tdo_refine.out -v 4 unitals7.tdo 
+	$(TDO_PATH)/tdo_print.out unitals7r.tdo 
+
+
+# 18 refinements, none admitting a blocking set
+
+case8:
+	$(WIDOR_PATH)/widor.out unitals8.widor
+	$(TDO_PATH)/tdo_print.out unitals8.tdo 
+	$(TDO_PATH)/tdo_refine.out -v 4 unitals8.tdo 
+	$(TDO_PATH)/tdo_print.out unitals8r.tdo 
+
+
+# 23 refinements, none admitting a blocking set
+
+case9:
+	$(WIDOR_PATH)/widor.out unitals9.widor
+	$(TDO_PATH)/tdo_print.out unitals9.tdo 
+	$(TDO_PATH)/tdo_refine.out -v 4 unitals9.tdo 
+	$(TDO_PATH)/tdo_print.out unitals9r.tdo 
+
+# 40 refinements, none admitting a blocking set
+
+case10:
+	$(WIDOR_PATH)/widor.out unitals10.widor
+	$(TDO_PATH)/tdo_print.out unitals10.tdo 
+	$(TDO_PATH)/tdo_refine.out -v 4 unitals10.tdo 
+	$(TDO_PATH)/tdo_print.out unitals10r.tdo 
+
+# 60 refinements, none admitting a blocking set
+
+case11:
+	$(WIDOR_PATH)/widor.out unitals11.widor
+	$(TDO_PATH)/tdo_print.out unitals11.tdo 
+	$(TDO_PATH)/tdo_refine.out -v 4 unitals11.tdo 
+	$(TDO_PATH)/tdo_print.out unitals11r.tdo 
+
+
+# 70 refinements, none admitting a blocking set
+
+
+case12:
+	$(WIDOR_PATH)/widor.out unitals12.widor
+	$(TDO_PATH)/tdo_print.out unitals12.tdo 
+	$(TDO_PATH)/tdo_refine.out -v 4 unitals12.tdo 
+	$(TDO_PATH)/tdo_print.out unitals12r.tdo 
+
+# 74 refinements, none admitting a blocking set
+
+case13:
+	$(WIDOR_PATH)/widor.out unitals13.widor
+	$(TDO_PATH)/tdo_print.out unitals13.tdo 
+	$(TDO_PATH)/tdo_refine.out -v 4 unitals13.tdo 
+	$(TDO_PATH)/tdo_print.out unitals13r.tdo 
+	$(TDO_PATH)/tdo_refine.out -v 4 -select unitals1.12 unitals13r.tdo 
+	$(TDO_PATH)/tdo_print.out unitals13rr.tdo 
+	$(TDO_PATH)/tdo_refine.out -v 4 unitals13rr.tdo 
+	$(TDO_PATH)/tdo_print.out unitals13rrr.tdo 
+
+
+# 74 refinements, exactly one possibly admitting a blocking set
+
+
+#decomposition unitals1.12:
+#col_scheme at level 5 : 
+#is 2 x 3
+#          |  24_{  1}  6_{  3} 33_{  4}
+#=======================================
+# 13_{  0} |         3        2        1
+# 15_{  2} |         1        2        3
+
+
+
+case14:
+	$(WIDOR_PATH)/widor.out unitals14.widor
+	$(TDO_PATH)/tdo_print.out unitals14.tdo 
+	$(TDO_PATH)/tdo_refine.out -v 4 unitals14.tdo 
+	$(TDO_PATH)/tdo_print.out unitals14r.tdo 
+
+# 78 refinements, exactly one possibly admitting a blocking set
+
+
+#decomposition unitals1.10:
+#col_scheme at level 5 : 
+#is 2 x 3
+#          |  28_{  1}  7_{  3} 28_{  4}
+#=======================================
+# 14_{  0} |         3        2        1
+# 14_{  2} |         1        2        3
+
+
+
+u2:
+	$(TDO_PATH)/tdo_print.out u2.tdo 
+
+
+ubs:
+	$(TDO_PATH)/tdo_print.out unitals_bs.tdo 
+	$(TDO_PATH)/tdo_refine.out -v 4 unitals_bs.tdo 
+	$(TDO_PATH)/tdo_print.out unitals_bsr.tdo 
+	$(TDO_PATH)/tdo_refine.out -v 4 unitals_bsr.tdo 
+	$(TDO_PATH)/tdo_print.out unitals_bsrr.tdo 
+	$(TDO_PATH)/tdo_refine.out -v 4 unitals_bsrr.tdo 
+	$(TDO_PATH)/tdo_print.out unitals_bsrrr.tdo 
+
+
+six:
+	$(WIDOR_PATH)/widor.out 6.widor
+	$(TDO_PATH)/tdo_print.out 6.tdo 
+	$(IG_PATH)/inc_gen.out -v 4 -orderly -sol -file 6.tdo 
+	$(IC_PATH)/inc_can.out -v 3 6.inc 
+
+
+
+u:
+	$(WIDOR_PATH)/widor.out u_blocking.widor
+	$(TDO_PATH)/tdo_print.out u_blocking.tdo 
+
+
+
+12_16:
+	$(WIDOR_PATH)/widor.out 12_16.widor
+	$(TDO_PATH)/tdo_refine.out -v 7 12_16.tdo 
+	$(TDO_PATH)/tdo_print.out 12_16r.tdo 
+
+# grab the second system and put it into the file 12_16_second.xml
+
+12_16s:
+	$(DIOPHANT_PATH)/solve.out 12_16_second.xml
+	$(DIOPHANT_PATH)/reduce.out 12_16_second.xml
+
+
+13_15:
+	$(WIDOR_PATH)/widor.out 13_15.widor
+	$(TDO_PATH)/tdo_refine.out -v 7 13_15.tdo 
+	$(TDO_PATH)/tdo_print.out 13_15r.tdo 
+
+
+13_15s:
+	$(DIOPHANT_PATH)/solve.out 13_15_second.xml
+	$(DIOPHANT_PATH)/reduce.out 13_15_second.xml
+
+
+test1:
+	$(WIDOR_PATH)/widor.out test1.widor
+	$(TDO_PATH)/tdo_print.out test1.tdo 
+	$(IG_PATH)/inc_gen.out -sol -orderly -file test1.tdo
+	$(IC_PATH)/inc_can.out -v 5 test1.inc
+
+
+test2:
+	$(WIDOR_PATH)/widor.out test2.widor
+	$(TDO_PATH)/tdo_print.out test2.tdo 
+	$(IG_PATH)/inc_gen.out -sol -orderly -file test2.tdo
+	$(IC_PATH)/inc_can.out -v 5 test2.inc
+
+test3:
+	$(WIDOR_PATH)/widor.out test3.widor
+	$(TDO_PATH)/tdo_print.out test3.tdo 
+	$(IG_PATH)/inc_gen.out -sol -orderly -file test3.tdo
+	$(IC_PATH)/inc_can.out -v 5 -rowpart 2 3 3 -colpart 2 6 9 -classify test3.inc
+

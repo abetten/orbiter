@@ -1,0 +1,364 @@
+MY_PATH=../../COMPILE/2012_08_12
+SRC=$(MY_PATH)/SRC
+SRC2=$(MY_PATH)/SRC2
+
+WIDOR_PATH=$(SRC)/WIDOR
+MARUTA_PATH=$(SRC2)/MARUTA
+TDO_PATH=$(SRC)/TDO
+DIOPHANT_PATH=$(SRC)/DIOPHANT
+STABILIZER_PATH=$(SRC)/STABILIZER
+PROJECTIVE_SPACE_PATH=$(SRC)/PROJECTIVE_SPACE
+INCIDENCE_STRUCTURE_PATH=$(SRC)/INCIDENCE_STRUCTURE
+INC_CAN_PATH=$(SRC)/INC_CAN
+ORTHOGONAL_PATH=$(SRC2)/ORTHOGONAL
+KRAMER_MESNER_PATH=$(SRC2)/KRAMER_MESNER
+HERMITIAN_PATH=$(SRC2)/HERMITIAN
+BLT_PATH=$(SRC2)/BLT
+BLT_ANALYZE_PATH=$(SRC2)/BLT_ANALYZE
+TREEDRAW_PATH=$(SRC)/TREEDRAW
+
+
+Q=67
+DEPTH=5
+POLY=
+MOD=1000000
+
+
+starter:
+	$(BLT_PATH)/blt.out -v 4 -depth $(DEPTH) -W -starter -q $(Q)
+
+ex:
+	$(BLT_PATH)/blt.out -v 2 -ex 5 0 4 -q $(Q)
+
+cf:
+	$(BLT_PATH)/blt.out -v 2 -find_cliques 5 0 -q $(Q)
+	
+
+
+#Comparing with Law's output:
+Law:
+	$(BLT_PATH)/blt.out -v 2 -depth $(DEPTH) -W -Law -q $(Q)
+
+embedded_plane_type:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 1 -n 4 -q $(Q) -embed -orthogonal 0 -file Law83.txt
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 1 -n 4 -q $(Q) -plane_type -file Law83_embedded.txt > a &
+
+
+CASE=1
+
+#Computing ago:
+stab:
+	$(STABILIZER_PATH)/stabilizer.out -v 1 -BLT $(Q) -file Order$(Q).txt -save Order$(Q)_case_$(CASE)_stab.txt > a
+
+
+
+search_lex:
+	$(BLT_PATH)/blt_extend.out -v 5 -lex  -q $(Q)  $(DEPTH) $(CASE) $(MOD)
+
+# creates a file extend_BLT_$(Q)_$(DEPTH)_0_1.txt
+# copy a line from this to a file test.txt (forget about the first number)
+
+embed:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 1 -n 4 -q $(Q) -embed -orthogonal 0 -file test.txt
+
+plane_type:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 2 -n 4 -q $(Q) \
+		-plane_type  -file test_embedded.txt 
+
+
+# here we look at the known BLT sets:
+
+
+Linear:
+	$(PROJECTIVE_SPACE_PATH)/make_something.out -v 2 -n 4 -q $(Q) \
+		-BLT_in_PG \
+		-BLT_Linear
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 2 -n 4 -q $(Q) \
+		-plane_type  -file BLT_Linear_$(Q)_embedded.txt 
+
+
+
+Fisher:
+	$(PROJECTIVE_SPACE_PATH)/make_something.out -v 2 -n 4 -q $(Q) \
+		-BLT_in_PG \
+		-BLT_Fisher
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 2 -n 4 -q $(Q) \
+		-plane_type  -file BLT_Fi_$(Q)_embedded.txt 
+
+
+
+FTWKB:
+	$(PROJECTIVE_SPACE_PATH)/make_something.out -v 2 -n 4 -q $(Q) \
+		-BLT_in_PG \
+		-BLT_FTWKB
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 2 -n 4 -q $(Q) \
+		-plane_type  -file BLT_FTWKB_$(Q)_embedded.txt 
+
+
+Mondello:
+	$(PROJECTIVE_SPACE_PATH)/make_something.out -v 2 -n 4 -q $(Q) \
+		-BLT_in_PG \
+		-BLT_Mondello
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 2 -n 4 -q $(Q) \
+		-plane_type  -file BLT_Mondello_$(Q)_embedded.txt 
+
+# (Mondello exists if q congruent plus or minus 1 mod 10)
+
+
+
+stab1:
+	$(STABILIZER_PATH)/stabilizer.out -v 8 -save stab1.txt -BLT $(Q) -file sporadic1.txt
+
+# order 3
+
+stab2:
+	$(STABILIZER_PATH)/stabilizer.out -v 8 -save stab2.txt -BLT $(Q) -file sporadic2.txt
+
+stab3:
+	$(STABILIZER_PATH)/stabilizer.out -v 8 -save stab3.txt -BLT $(Q) -file sporadic3.txt
+
+stab4:
+	$(STABILIZER_PATH)/stabilizer.out -v 8 -save stab4.txt -BLT $(Q) -file sporadic4.txt
+
+
+embed1:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 1 -n 4 -q $(Q) -embed -orthogonal 0 -file sporadic1.txt
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 1 -n 4 -q $(Q) -embed -orthogonal 0 -file sporadic2.txt
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 1 -n 4 -q $(Q) -embed -orthogonal 0 -file sporadic3.txt
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 1 -n 4 -q $(Q) -embed -orthogonal 0 -file sporadic4.txt
+
+plane1:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 2 -n 4 -q $(Q) \
+		-plane_type  -file sporadic1_embedded.txt 
+
+coset:
+	$(BLT_ANALYZE_PATH)/point_orbits.out -v 2 -q 71 \
+		-point 0 -coset 16345594 \
+		-PG_action 
+
+
+
+E0:
+	mkdir 00_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 0 32 4 -output_prefix 00_32/
+	tar -cvf 00.tar 00_32
+	gzip 00.tar
+
+E1:
+	mkdir 01_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 1 32 4 -output_prefix 01_32/
+	tar -cvf 01.tar 01_32
+	gzip 01.tar
+
+E2:
+	mkdir 02_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 2 32 4 -output_prefix 02_32/
+	tar -cvf 02.tar 02_32
+	gzip 02.tar
+
+E3:
+	mkdir 03_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 3 32 4 -output_prefix 03_32/
+	tar -cvf 03.tar 03_32
+	gzip 03.tar
+
+E4:
+	mkdir 04_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 4 32 4 -output_prefix 04_32/
+	tar -cvf 04.tar 04_32
+	gzip 04.tar
+
+E5:
+	mkdir 05_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 5 32 4 -output_prefix 05_32/
+	tar -cvf 05.tar 05_32
+	gzip 05.tar
+
+E6:
+	mkdir 06_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 6 32 4 -output_prefix 06_32/
+	tar -cvf 06.tar 06_32
+	gzip 06.tar
+
+E7:
+	mkdir 07_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 7 32 4 -output_prefix 07_32/
+	tar -cvf 07.tar 07_32
+	gzip 07.tar
+
+E8:
+	mkdir 08_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 8 32 4 -output_prefix 08_32/
+	tar -cvf 08.tar 08_32
+	gzip 08.tar
+
+E9:
+	mkdir 09_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 9 32 4 -output_prefix 09_32/
+	tar -cvf 09.tar 09_32
+	gzip 09.tar
+
+E10:
+	mkdir 10_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 10 32 4 -output_prefix 10_32/
+	tar -cvf 10.tar 10_32
+	gzip 10.tar
+
+E11:
+	mkdir 11_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 11 32 4 -output_prefix 11_32/
+	tar -cvf 11.tar 11_32
+	gzip 11.tar
+
+E12:
+	mkdir 12_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 12 32 4 -output_prefix 12_32/
+	tar -cvf 12.tar 12_32
+	gzip 12.tar
+
+E13:
+	mkdir 13_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 13 32 4 -output_prefix 13_32/
+	tar -cvf 13.tar 13_32
+	gzip 13.tar
+
+E14:
+	mkdir 14_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 14 32 4 -output_prefix 14_32/
+	tar -cvf 14.tar 14_32
+	gzip 14.tar
+
+E15:
+	mkdir 15_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 15 32 4 -output_prefix 15_32/
+	tar -cvf 15.tar 15_32
+	gzip 15.tar
+
+E16:
+	mkdir 16_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 16 32 4 -output_prefix 16_32/
+	tar -cvf 16.tar 16_32
+	gzip 16.tar
+
+E17:
+	mkdir 17_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 17 32 4 -output_prefix 17_32/
+	tar -cvf 17.tar 17_32
+	gzip 17.tar
+
+E18:
+	mkdir 18_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 18 32 4 -output_prefix 18_32/
+	tar -cvf 18.tar 18_32
+	gzip 18.tar
+
+E19:
+	mkdir 19_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 19 32 4 -output_prefix 19_32/
+	tar -cvf 19.tar 19_32
+	gzip 19.tar
+
+E20:
+	mkdir 20_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 20 32 4 -output_prefix 20_32/
+	tar -cvf 20.tar 20_32
+	gzip 20.tar
+
+E21:
+	mkdir 21_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 21 32 4 -output_prefix 21_32/
+	tar -cvf 21.tar 21_32
+	gzip 21.tar
+
+E22:
+	mkdir 22_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 22 32 4 -output_prefix 22_32/
+	tar -cvf 22.tar 22_32
+	gzip 22.tar
+
+E23:
+	mkdir 23_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 23 32 4 -output_prefix 23_32/
+	tar -cvf 23.tar 23_32
+	gzip 23.tar
+
+E24:
+	mkdir 24_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 24 32 4 -output_prefix 24_32/
+	tar -cvf 24.tar 24_32
+	gzip 24.tar
+
+E25:
+	mkdir 25_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 25 32 4 -output_prefix 25_32/
+	tar -cvf 25.tar 25_32
+	gzip 25.tar
+
+E26:
+	mkdir 26_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 26 32 4 -output_prefix 26_32/
+	tar -cvf 26.tar 26_32
+	gzip 26.tar
+
+E27:
+	mkdir 27_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 27 32 4 -output_prefix 27_32/
+	tar -cvf 27.tar 27_32
+	gzip 27.tar
+
+E28:
+	mkdir 28_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 28 32 4 -output_prefix 28_32/
+	tar -cvf 28.tar 28_32
+	gzip 28.tar
+
+E29:
+	mkdir 29_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 29 32 4 -output_prefix 29_32/
+	tar -cvf 29.tar 29_32
+	gzip 29.tar
+
+E30:
+	mkdir 30_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 30 32 4 -output_prefix 30_32/
+	tar -cvf 30.tar 30_32
+	gzip 30.tar
+
+E31:
+	mkdir 31_32
+	$(BLT_PATH)/blt.out -v 2 -q $(Q) \
+		-Ex 5 31 32 4 -output_prefix 31_32/
+	tar -cvf 31.tar 31_32
+	gzip 31.tar
+

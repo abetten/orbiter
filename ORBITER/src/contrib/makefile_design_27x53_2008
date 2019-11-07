@@ -1,0 +1,229 @@
+CPP = /usr/bin/g++
+CPPFLAGS = -Wall -I../LIB -I../LIB/DISCRETA
+LIB = \
+	../LIB/DISCRETA/libdiscreta.a \
+	../LIB/SNAKES_AND_LADDERS/libsnakesandladders.a  \
+	../LIB/ACTION/libaction.a \
+	../LIB/INCIDENCE/libincidence.a \
+	../LIB/GALOIS/libgalois.a 
+LFLAGS = -lm
+
+
+all: 27x53.out search.out
+
+#design.out
+
+#  orbits_on_pairs.out prepare_group.out 
+
+# make_field.out
+
+search.out:  search.c;
+	cc search.c -o $@
+
+
+orbits_on_pairs.out: orbits_on_pairs.C;
+	g++ orbits_on_pairs.C -o orbits_on_pairs.out
+
+prepare_group.out: $(LIB) prepare_group.o ;
+	$(CPP)  prepare_group.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+make_field.out: $(LIB) make_field.o ;
+	$(CPP)  make_field.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+
+design.out: $(LIB) design.o ;
+	$(CPP)  design.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+27x53.out: $(LIB) 27x53.o ;
+	$(CPP)  27x53.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+
+clean:
+	- rm *.o *.out
+
+test:
+	./design.out -prefix test_ -maxdepth 4  -v  5 1 11 27 53 27x53_a2_b4_a0_b0.2orbits >test.log
+
+# mask 1:
+#  XX.
+#  X.X
+
+27x53_11:
+	./27x53.out -v 4 -W -prefix M1_ -depth 4  -masktest 3 x ge 1 -masktest 4 x+y ge 3    1 >log11
+
+27x53_12:
+	./27x53.out -v 4 -W -prefix M1_ -depth 4  -masktest 3 x ge 1 -masktest 4 x+y ge 3    2 >log12
+
+27x53_13:
+	./27x53.out -v 4 -W -prefix M1_ -depth 4  -masktest 3 x ge 1 -masktest 4 x+y ge 3    3 >log13
+
+27x53_14:
+	./27x53.out -v 4 -W -prefix M1_ -depth 4  -masktest 3 x ge 1 -masktest 4 x+y ge 3    4 >log14
+
+# 13 orbits in each case
+
+# mask 2:
+# XX..
+# X...
+# ..XX
+
+27x53_21:
+	./27x53.out -v 4 -W -prefix M2_ -depth  5  -masktest 4 x+y ge 1  -masktest 4 x+y le 2 -masktest 5 x+y eq 3 -masktest 5 s eq 0   1 >log21
+
+27x53_22:
+	./27x53.out -v 4 -W -prefix M2_ -depth  5  -masktest 4 x+y ge 1  -masktest 4 x+y le 2 -masktest 5 x+y eq 3 -masktest 5 s eq 0   2 >log22
+
+27x53_23:
+	./27x53.out -v 4 -W -prefix M2_ -depth  5  -masktest 4 x+y ge 1  -masktest 4 x+y le 2 -masktest 5 x+y eq 3 -masktest 5 s eq 0   3 >log23
+
+27x53_24:
+	./27x53.out -v 4 -W -prefix M2_ -depth  5  -masktest 4 x+y ge 1  -masktest 4 x+y le 2 -masktest 5 x+y eq 3 -masktest 5 s eq 0   4 >log24
+
+
+# mask3:
+# X....
+# X....
+# .XX..
+# ...XX
+
+27x53_31:
+	./27x53.out -v 4 -W -prefix M3_ -depth  6  -masktest 4 x+y ge 1  -masktest 4 x+y le 2 -masktest 5 x+y eq 2   -masktest 5 s le 1 -masktest 6 x+y eq 3 -masktest 6 s eq 0    1 >log31
+
+27x53_32:
+	./27x53.out -v 4 -W -prefix M3_ -depth  6  -masktest 4 x+y ge 1  -masktest 4 x+y le 2 -masktest 5 x+y eq 2   -masktest 5 s le 1 -masktest 6 x+y eq 3 -masktest 6 s eq 0    2 >log32
+
+27x53_33:
+	./27x53.out -v 4 -W -prefix M3_ -depth  6  -masktest 4 x+y ge 1  -masktest 4 x+y le 2 -masktest 5 x+y eq 2   -masktest 5 s le 1 -masktest 6 x+y eq 3 -masktest 6 s eq 0    3 >log33
+
+27x53_34:
+	./27x53.out -v 4 -W -prefix M3_ -depth  6  -masktest 4 x+y ge 1  -masktest 4 x+y le 2 -masktest 5 x+y eq 2   -masktest 5 s le 1 -masktest 6 x+y eq 3 -masktest 6 s eq 0    4 >log34
+
+
+27x53s11:
+	./search.out -starterfile M1_G1_lvl_4  -offset -80   2 1 11 27 53 G1.2orbits 
+
+
+###############################################################################################
+# parameter set identified by Praeger/Zhou (from the Fang-Li parameter sift)
+# (x,y,c,d,k) = (3,9,7,19,12)
+# PG(2,11)
+# {v \choose k} \approx 4*10^{16}
+# {12 \choose 2} = 66
+# cd-1 = 132
+# c = 7 = (66 - 3) / 9 = 7
+# d = 31 = (66 - 9) / 3 = 19
+# x = 66 (7 - 1) / 132 = 3
+# y = 66 (19 - 1) / 132 =  9
+#
+# (x,y,c,d,k) = (9,3,19,7,12)
+
+7x19starter:
+	./27x53.out -v 2 -depth 5 -prefix 7x19_  -W -pairs 1  >7x19_starter.log &
+
+# 15529 in 0:50 automorphism group orders: (6^2, 3^{11}, 2^{65}, 1^{15451})
+
+7x19search:
+	./search.out -starterfile 7x19_G1_lvl_5 -continue  -offset -26     9 3 12 7 19 7x19_G1.2orbits >7x19_search.log &
+
+# continue means that we search only in the subtree defined by the starters.
+# that is, we continue placing the next point at least one bigger than the 
+# largest point in the starter.
+# here we can use continue because we had no mask tests in the computation of the starters
+
+#computing time: 0:03:00
+
+#case 1082: starter: 26 27 30 46 70  (offset -26) 
+#found solution no 1: { 0, 1, 4, 20, 44, 51, 53, 59, 89, 116, 124, 130 }
+#  0  1  .  .  4  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+#  . 20  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+#  .  .  .  .  .  . 44  .  .  .  .  .  . 51  . 53  .  .  .
+#  .  . 59  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+#  .  .  .  .  .  .  .  .  .  .  .  .  . 89  .  .  .  .  .
+#  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+#  .  .116  .  .  .  .  .  .  .124  .  .  .  .  .130  .  .
+#case 1161: starter: 26 27 30 47 55  (offset -26) 
+#found solution no 1: { 0, 1, 4, 21, 29, 35, 70, 78, 101, 108, 110, 115 }
+#  0  1  .  .  4  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+#  .  . 21  .  .  .  .  .  .  . 29  .  .  .  .  . 35  .  .
+#  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+#  .  .  .  .  .  .  .  .  .  .  .  .  . 70  .  .  .  .  .
+#  .  . 78  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+#  .  .  .  .  .  .101  .  .  .  .  .  .108  .110  .  .  .
+#  .115  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+#case 1168: starter: 26 27 30 47 66  (offset -26) 
+#found solution no 1: { 0, 1, 4, 21, 40, 48, 54, 63, 70, 72, 96, 127 }
+#  0  1  .  .  4  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+#  .  . 21  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+#  .  . 40  .  .  .  .  .  .  . 48  .  .  .  .  . 54  .  .
+#  .  .  .  .  .  . 63  .  .  .  .  .  . 70  . 72  .  .  .
+#  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+#  . 96  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+#  .  .  .  .  .  .  .  .  .  .  .  .  .127  .  .  .  .  .
+#case 1471: starter: 26 27 30 51 58  (offset -26) 
+#found solution no 1: { 0, 1, 4, 25, 32, 34, 51, 59, 67, 73, 77, 97 }
+#  0  1  .  .  4  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+#  .  .  .  .  .  . 25  .  .  .  .  .  . 32  . 34  .  .  .
+#  .  .  .  .  .  .  .  .  .  .  .  .  . 51  .  .  .  .  .
+#  .  . 59  .  .  .  .  .  .  . 67  .  .  .  .  . 73  .  .
+#  . 77  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+#  .  . 97  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+#  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+#133 12 7x19_G1
+#0 1 4 20 44 51 53 59 89 116 124 130 
+#0 1 4 21 29 35 70 78 101 108 110 115 
+#0 1 4 21 40 48 54 63 70 72 96 127 
+#0 1 4 25 32 34 51 59 67 73 77 97 
+#-1
+# in all cases, the mask is
+# XXX......
+# X........
+# ...XXX...
+# ...X.....
+# ......XXX
+# ......X..
+
+7x19spandesign:
+	../../../D2/geo.out 7x19_a0b0.bblt
+
+# produces 7x19_a0b0.inc, which needs some editing
+
+7x19classify:
+	../../INCGEN/incgen.out  7x19_a0b0.inc
+
+# all 4 designs are Desarguesian
+
+
+
+###############################################################################################
+# parameter set identified by Praeger (from the Fang-Li parameter sift)
+# (x,y,c,d,k) = (1,5,7,31,9)
+# {v \choose k} \approx 2*10^{15}
+# {9 \choose 2} = 36
+# cd-1 = 216
+# c = 7 = (36 - 1) / 5 = 
+# d = 31 = (36 - 5) / 1 = 31
+# x = 36 (7 - 1) / 216 = 1
+# y = 36 (31-1) / 216 =  5 
+# G = N.Z, Z \simeq Z_3, 2 groups
+# (x,y,c,d,k) = (5,1,31,7,9)
+
+7x31test:
+	./27x53.out -v 4 -depth 5 -prefix 7x31_  -W -pairs 1 -R 3 2 2 1 -masktest 2 x ge 1 -masktest 3 x ge 3        1 >7x31_test.log 
+
+7x31starter1:
+	./27x53.out -v 2 -depth 4 -prefix 7x31_  -W -pairs 1  >7x31_starter1.log 
+
+7x31starter2:
+	./27x53.out -v 2 -depth 4 -prefix 7x31_  -W -pairs 2  >7x31_starter2.log 
+
+
+7x31search1:
+	./search.out -force 0 0 -force 1 1     5 1 9 7 31 7x31_G1.2orbits  >7x31_search1.log 
+
+# no solution in 3:47 on Macintosh, 1.53 x 10^7 nodes
+
+7x31search2:
+	./search.out -force 0 0 -force 1 1     5 1 9 7 31 7x31_G2.2orbits  >7x31_search2.log 
+
+# no solution in 3:47 on Macintosh, 1.53 x 10^7 nodes
+

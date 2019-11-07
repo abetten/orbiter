@@ -1,0 +1,97 @@
+MY_PATH=~/DEV.19/GITHUB/orbiter
+#MY_PATH=/scratch3/betten/COMPILE/2018_12_25
+SRC=$(MY_PATH)/ORBITER/src
+SRC2=$(MY_PATH)/ORBITER2/src
+
+GROUPS_PATH=$(SRC)/apps/groups
+PROJECTIVE_SPACE_PATH=$(SRC)/apps/projective_space
+
+
+W2:
+	$(GROUPS_PATH)/wreath_product.out -v 2 -nb_factors 2 -d 2 -q 2 -depth 4 -w
+
+#0 : 1 orbits
+#1 : 2 orbits
+#2 : 4 orbits
+#3 : 2 orbits
+#4 : 1 orbits
+#total: 10
+
+
+W2_3:
+	$(GROUPS_PATH)/wreath_product.out -v 2 -nb_factors 2 -d 2 -q 3 -depth 4 -w
+
+#Found 1 orbits at depth 4
+#0 : 1 orbits
+#1 : 2 orbits
+#2 : 4 orbits
+#3 : 2 orbits
+#4 : 1 orbits
+#total: 10
+#time: 0:00 on Mac
+
+cheat7_2:
+	$(PROJECTIVE_SPACE_PATH)/cheat_sheet_PG.out -q 2 -n 7 
+
+
+
+W3_2:
+	$(GROUPS_PATH)/wreath_product.out -v 5 -nb_factors 3 -d 2 -q 2 -depth 8 -w -permutations
+
+#Found 1 orbits at depth 8
+#0 : 1 orbits
+#1 : 5 orbits
+#2 : 41 orbits
+#3 : 166 orbits
+#4 : 314 orbits
+#5 : 166 orbits
+#6 : 41 orbits
+#7 : 5 orbits
+#8 : 1 orbits
+#total: 740
+# Dec 20 in 1 sec on Mac
+
+
+
+W3_3:
+	$(GROUPS_PATH)/wreath_product.out -v 5 -nb_factors 3 -d 2 -q 3 -depth 8 -w
+
+
+#0 : 1 orbits
+#1 : 5 orbits
+#2 : 69 orbits
+#3 : 533 orbits
+#4 : 1432 orbits
+#5 : 533 orbits
+#6 : 69 orbits
+#7 : 5 orbits
+#8 : 1 orbits
+#total: 2648
+
+# Dec 21, 2018, 0:24 on Mac
+
+
+
+
+
+W4_2:
+	$(GROUPS_PATH)/wreath_product.out -v 5 -nb_factors 4 -d 2 -q 2 -depth 3 -w
+
+# Dec 20, 2018, level 1: 29, level 2: 28370 orbits, in 16:10 on Mac
+
+W4_3:
+	$(GROUPS_PATH)/wreath_product.out -v 5 -nb_factors 4 -d 2 -q 3 -depth 2 -w
+
+# Dec , 2018, level 1: , level 2:  orbits, in  on Mac
+
+
+
+W5:
+	$(GROUPS_PATH)/wreath_product.out -v 5 -nb_factors 5 -d 2 -q 2 -depth 2 -w -permutations
+
+
+
+#-tensor_ranks
+
+
+

@@ -1,0 +1,132 @@
+MY_PATH=../../../DEV.18/GITHUB/orbiter
+MY_PATH2=../../../DEV.18
+#MY_PATH=/scratch3/betten/COMPILE/2018_02_06
+ORBITER=$(MY_PATH)/ORBITER
+ORBITER2=$(MY_PATH2)/ORBITER2
+SRC=$(ORBITER)/SRC
+SRC2=$(ORBITER2)/SRC2
+
+
+BLT_PATH=$(SRC)/APPS/BLT
+TOOLS_PATH=$(SRC)/APPS/TOOLS
+MATH161_PATH=$(SRC2)/MATH161
+DRAW_PATH=$(SRC2)/DRAW
+SAJEEB_PATH=../../../DEV.18/GITHUB/CliqueFinder
+CLIQUER_PATH=$(SRC2)/CLIQUER/INTERFACE
+OPTIMIZE_MM2_PATH=$(SRC2)/OPTIMIZE_MM2
+MATH460_PATH=$(SRC2)/MATH460
+LOCAL_TOOLS_PATH=$(SRC)/APPS/TOOLS
+
+
+VERBOSE_LEVEL=4
+
+animate:
+	- mkdir CUBE4D_POV
+	$(MATH460_PATH)/animate_fourD_cube.out -v 2 -output_mask CUBE4D_POV/cube4_%03ld.pov -nb_frames 120
+
+
+
+produce:
+	- rm cube4d.mp4
+	- rm -rf CUBE4D_MOVIE
+	- mkdir CUBE4D_MOVIE
+	$(LOCAL_TOOLS_PATH)/prepare_frames.out \
+		-i 0 120 CUBE4D_PNG/cube4_%03ld.png \
+		-o CUBE4D_MOVIE/frame%04d.png
+	ffmpeg -r 20 -f image2 -i CUBE4D_MOVIE/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4 -r 20 cube4d.mp4
+
+
+
+animate_4:
+	- mkdir H4_POV
+	$(MATH460_PATH)/animate_fourD_cube.out -v 2  \
+		-scene_radius 2.1 \
+		-ball_radius 0.13 \
+		-edge_radius 0.025 \
+		-output_mask H4_POV/h4_%03ld.pov -nb_frames 120
+
+
+produce_4:
+	- rm cube4.mp4
+	- rm -rf CUBE4_MOVIE
+	- mkdir CUBE4_MOVIE
+	$(LOCAL_TOOLS_PATH)/prepare_frames.out \
+		-i 0 120 H4_PNG/h4_%03ld.png \
+		-o CUBE4_MOVIE/frame%04d.png
+	ffmpeg -r 20 -f image2 -i CUBE4_MOVIE/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4 -r 20 cube4.mp4
+
+
+
+animate_5:
+	- mkdir H5_POV
+	$(MATH460_PATH)/animate_fourD_cube.out -v 2 -hypercube 5 \
+		-output_mask H5_POV/h5_%03ld.pov -nb_frames 120
+
+produce_5:
+	- rm cube5.mp4
+	- rm -rf CUBE5_MOVIE
+	- mkdir CUBE5_MOVIE
+	$(LOCAL_TOOLS_PATH)/prepare_frames.out \
+		-i 0 120 H5_PNG/h5_%03ld.png \
+		-o CUBE5_MOVIE/frame%04d.png
+	ffmpeg -r 20 -f image2 -i CUBE5_MOVIE/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4 -r 20 cube5.mp4
+
+
+
+animate_5_code:
+	- mkdir H5_CODE_POV
+	$(MATH460_PATH)/animate_fourD_cube.out -v 2 -hypercube 5 \
+		-scene_radius 2.1 \
+		-ball_radius 0.11 \
+		-edge_radius 0.013 \
+		-color_set "0, 7, 25, 30" "Blue" \
+		-output_mask H5_CODE_POV/h5_%03ld.pov -nb_frames 120
+
+
+produce_5_code:
+	- rm cube5code.mp4
+	- rm -rf CUBE5_CODE_MOVIE
+	- mkdir CUBE5_CODE_MOVIE
+	$(LOCAL_TOOLS_PATH)/prepare_frames.out \
+		-i 0 120 H5_CODE_PNG/h5_%03ld.png \
+		-o CUBE5_CODE_MOVIE/frame%04d.png
+	ffmpeg -r 20 -f image2 -i CUBE5_CODE_MOVIE/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4 -r 20 cube5code.mp4
+
+
+
+
+
+
+animate_6:
+	- mkdir H6_POV
+	$(MATH460_PATH)/animate_fourD_cube.out -v 2 -hypercube 6 -output_mask H6_POV/h6_%03ld.pov -nb_frames 120
+
+produce_6:
+	- rm cube6.mp4
+	- rm -rf CUBE6_MOVIE
+	- mkdir CUBE6_MOVIE
+	$(LOCAL_TOOLS_PATH)/prepare_frames.out \
+		-i 0 120 H6_PNG/h6_%03ld.png \
+		-o CUBE6_MOVIE/frame%04d.png
+	ffmpeg -r 20 -f image2 -i CUBE6_MOVIE/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4 -r 20 cube6.mp4
+
+
+animate_7:
+	- mkdir H7_POV
+	$(MATH460_PATH)/animate_fourD_cube.out -v 2 -hypercube 7 \
+		-scene_radius 2.1 \
+		-ball_radius 0.10 \
+		-edge_radius 0.01 \
+		-color_set "0, 15, 19, 28, 37, 42, 54, 57, 70, 73, 85, 90, 99, 108, 112, 127" "Blue" \
+		-output_mask H7_POV/h7_%03ld.pov -nb_frames 120
+
+produce_7:
+	- rm cube7.mp4
+	- rm -rf CUBE7_MOVIE
+	- mkdir CUBE7_MOVIE
+	$(LOCAL_TOOLS_PATH)/prepare_frames.out \
+		-i 0 120 H7_PNG/h7_%03ld.png \
+		-o CUBE7_MOVIE/frame%04d.png
+	ffmpeg -r 20 -f image2 -i CUBE7_MOVIE/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4 -r 20 cube7.mp4
+
+

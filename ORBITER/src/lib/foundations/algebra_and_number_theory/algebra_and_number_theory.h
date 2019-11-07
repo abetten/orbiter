@@ -1070,7 +1070,7 @@ public:
 			int *genma, int k, int n, long int *&point_list, int &nb_points,
 			int verbose_level);
 	void all_PG_elements_in_subspace_array_is_given(
-			int *genma, int k, int n, int *point_list, int &nb_points,
+			int *genma, int k, int n, long int *point_list, int &nb_points,
 			int verbose_level);
 	void display_all_PG_elements(int n);
 	void display_all_PG_elements_not_in_subspace(int n, int m);

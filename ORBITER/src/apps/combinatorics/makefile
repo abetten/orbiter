@@ -9,6 +9,7 @@ LFLAGS = -lm
 
 
 all: all_k_subsets.out \
+		bent.out \
 		burnside.out \
 		conjugacy_classes_sym_n.out \
 		costas.out \
@@ -34,6 +35,9 @@ all: all_k_subsets.out \
 
 all_k_subsets.out:  all_k_subsets.o;
 	$(DISCRETA_CPP)  all_k_subsets.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+bent.out:  bent.o;
+	$(DISCRETA_CPP)  bent.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 burnside.out:  burnside.o;
 	$(DISCRETA_CPP)  burnside.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

@@ -1,0 +1,169 @@
+MY_PATH=../../../DEV.16
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH)/ORBITER2/SRC2
+
+ARCS_PATH=$(SRC)/APPS/ARCS
+TOOLS_PATH=$(SRC)/APPS/TOOLS
+
+ORDER=32
+TARGET_SIZE=34
+STARTER_SIZE=8
+RAD=50
+EXECUTABLE=$(ARCS_PATH)/arcs_main.out
+
+
+ARGUMENTS = \
+		-q $(ORDER) \
+		-input_prefix STARTER_DIR/ \
+		-base_fname arc_$(ORDER) \
+		-target_size $(TARGET_SIZE) \
+		-output_prefix SYSTEMS/ \
+		-solution_prefix SOLUTIONS/ \
+		-starter_size $(STARTER_SIZE) \
+		-prefix_iso ./ISO/
+
+
+
+all: starter lift solve read build_db read_solutions compute_orbits classify report 
+
+
+clean:
+	- rm -rf ISO STARTER_DIR SYSTEMS SOLUTIONS
+	- rm arc_*
+	- rm hyperovals*
+
+
+deep:
+	$(EXECUTABLE) -v 4 \
+		$(ARGUMENTS) \
+		-starter_size $(TARGET_SIZE) \
+		-starter \
+		-W -T
+
+
+
+
+starter:
+	- mkdir STARTER_DIR/
+	$(EXECUTABLE) -v 4 \
+		$(ARGUMENTS) \
+		-starter \
+		-W
+
+
+# STARTER_SIZE=6: Feb 6, 2016, MacBookPro, 0 sec, 213 orbits
+# STARTER_SIZE=7: Feb 6, 2016, MacBookPro, 8 sec, 16593 orbits, about 500 live points each
+# STARTER_SIZE=8: Feb 6, 2016, MacBookPro, 9 min 57 sec, 1031750 orbits
+
+
+lift:
+	- mkdir SYSTEMS
+	- mkdir SOLUTIONS
+	$(EXECUTABLE) -v 6 \
+		$(ARGUMENTS) \
+		-lift  \
+		-lex \
+		-save
+
+solve:
+	- mkdir SOLUTIONS
+	$(TOOLS_PATH)/scheduler.out \
+		-v 2 \
+		-target_file_mask SOLUTIONS/system_%ld_213.solutions \
+		-N 213 \
+		-J 1 \
+		-command_mask  "/Users/betten/DEV.16/ORBITER/SRC/APPS/TOOLS/solve_diophant.out -v 2 -file SYSTEMS/system_%ld_213.txt -output_file SOLUTIONS/system_%ld_213.solutions" \
+		-reload
+
+
+
+
+read:
+	$(EXECUTABLE) -v 3 \
+		$(ARGUMENTS) \
+		-lift  \
+		-lex \
+		-read
+
+
+
+build_db:
+	$(EXECUTABLE) -v 3 \
+		$(ARGUMENTS) \
+		-build_db
+
+
+read_solutions:
+	$(EXECUTABLE) -v 2 \
+		$(ARGUMENTS) \
+		-read_solutions
+
+
+compute_orbits:
+	$(EXECUTABLE) -v 4 \
+		$(ARGUMENTS) \
+		-compute_orbits 
+
+
+classify:
+	$(EXECUTABLE) -v 4 \
+		$(ARGUMENTS) \
+		-isomorph_testing 
+
+report:
+	- $(EXECUTABLE) -v 2 \
+		$(ARGUMENTS) \
+		-report 
+	pdflatex hyperovals_$(ORDER).tex
+	open hyperovals_$(ORDER).pdf
+
+
+
+#####
+
+
+draw:
+	$(TOOLS_PATH)/layered_graph_main.out -v 4 \
+		-file poset_lvl_$(TARGET).layered_graph \
+		-draw poset_lvl_$(TARGET) \
+		-xin 10000 -yin 10000 \
+		-xout 1000000 -yout 1000000 \
+		-rad $(RAD) \
+		-embedded
+	pdflatex poset_lvl_$(TARGET).tex
+	open poset_lvl_$(TARGET).pdf
+
+draw_aux:
+	$(TOOLS_PATH)/layered_graph_main.out -v 4 \
+		-file aux_poset_lvl_$(TARGET).layered_graph \
+		-draw aux_poset_lvl_$(TARGET) \
+		-xin 10000 -yin 10000 \
+		-xout 1000000 -yout 1000000 \
+		-rad $(RAD) \
+		-embedded
+	pdflatex aux_poset_lvl_$(TARGET).tex
+	open aux_poset_lvl_$(TARGET).pdf
+
+tree:
+	$(TOOLS_PATH)/layered_graph_main.out -v 4 \
+		-file tree_lvl_$(TARGET).layered_graph \
+		-draw tree_lvl_$(TARGET) \
+		-xin 10000 -yin 10000 \
+		-xout 1000000 -yout 1000000 \
+		-rad $(RAD) \
+		-embedded
+	pdflatex tree_lvl_$(TARGET).tex
+	open tree_lvl_$(TARGET).pdf
+
+draw_16:
+	$(TOOLS_PATH)/treedraw.out \
+		-x 1000000 -y 1000000 \
+		-on_circle -rad 0 \
+		-file arc_$(ORDER)_$(TARGET).tree   \
+		-embedded
+	pdflatex arc_$(ORDER)_$(TARGET).tex
+	open arc_$(ORDER)_$(TARGET).pdf
+
+
+
+

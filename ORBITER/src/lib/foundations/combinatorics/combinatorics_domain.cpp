@@ -448,7 +448,7 @@ void combinatorics_domain::set_delete_element(int *elts, int &size, int a)
 
 
 int combinatorics_domain::compare_lexicographically(
-		int a_len, int *a, int b_len, int *b)
+		int a_len, long int *a, int b_len, long int *b)
 {
 	int i, l;
 	

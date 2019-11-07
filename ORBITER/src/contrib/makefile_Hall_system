@@ -1,0 +1,24 @@
+MY_PATH=~/DEV.19/GITHUB/orbiter
+MY_PATH2=~/DEV.19/GITHUB/orbiter2
+#MY_PATH=/scratch2/betten/COMPILE/2017_08_04
+SRC=$(MY_PATH)/ORBITER/arc
+SRC2=$(MY_PATH2)/ORBITER2/src
+
+
+HALL_SYSTEM_PATH=$(SRC2)/HALL_SYSTEM
+TOOLS_PATH=$(SRC)/apps/tools
+
+H19:
+	$(HALL_SYSTEM_PATH)/hall_system_main.out -v 5 -n 19 -depth 81
+
+
+
+H3:
+	$(HALL_SYSTEM_PATH)/hall_system_main.out -v 5 -e 3 -depth 104
+
+H4:
+	$(HALL_SYSTEM_PATH)/hall_system_main.out -v 3 -e 4 -depth 3 
+
+
+
+

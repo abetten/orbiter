@@ -167,14 +167,14 @@ int hermitian::rank_point(int *v)
 }
 
 void hermitian::list_of_points_embedded_in_PG(
-	int *&Pts, int &nb_pts, int verbose_level)
+	long int *&Pts, int &nb_pts, int verbose_level)
 {
 	int i, rk;
 	int *v;
 
 	v = NEW_int(k);
 	nb_pts = nb_points();
-	Pts = NEW_int(nb_pts);
+	Pts = NEW_lint(nb_pts);
 	for (i = 0; i < nb_pts; i++) {
 		unrank_point(v, i);
 		F->PG_element_rank_modified(v, 1, k, rk);

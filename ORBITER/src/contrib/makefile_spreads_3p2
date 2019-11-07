@@ -1,0 +1,309 @@
+MY_PATH=~/DEV.18/GITHUB/orbiter
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH)/ORBITER2/SRC2
+
+TRANSLATION_PLANE_PATH=$(SRC)/APPS/TRANSLATION_PLANE
+TOOLS_PATH=$(SRC)/APPS/TOOLS
+ANDRE_PATH=$(SRC2)/ANDRE
+GRASSMANN_PATH=$(SRC2)/GRASSMANN
+TREEDRAW_PATH=$(SRC2)/TREEDRAW
+PROJECTIVE_SPACE_PATH=$(SRC)/APPS/PROJECTIVE_SPACE
+ALGEBRA_PATH=$(SRC2)/ALGEBRA
+
+
+Q=3
+K=2
+ORDER=9
+ORDER_PLUS_ONE=10
+DEPTH=5
+POLY=
+
+
+
+
+
+
+ARGUMENTS= \
+		-order $(ORDER)  \
+		-input_prefix STARTER_DIR/ \
+		-output_prefix SYSTEMS/ \
+		-solution_prefix SOLUTIONS/ \
+		-base_fname TP_$(ORDER) \
+		-recoordinatize \
+
+
+
+
+
+all: starter lift build_db read_solutions compute_orbits isomorph report
+
+
+
+
+
+
+
+clean:
+	- rm spread_$(ORDER)* report*  live_points* log*
+	- rm -r ISO
+	- rm TP16*
+	- rm PG_3_4*
+	- rm -rf LIFT_DATA
+	- rm -rf STARTER_DIR
+
+
+
+cheat:
+	$(PROJECTIVE_SPACE_PATH)/cheat_sheet_PG.out -n 3 -q 4
+	pdflatex PG_3_4.tex
+	open PG_3_4.pdf
+
+
+full:
+	- mkdir STARTER_DIR
+	$(TRANSLATION_PLANE_PATH)/translation_plane_main.out -v 5 -w \
+		$(ARGUMENTS) \
+		-starter \
+		-starter_size $(ORDER_PLUS_ONE) \
+		-draw_poset \
+		-embedded
+
+
+#		-T -x 2300 -y 1000 \
+#		-list
+
+
+G0:
+	$(ALGEBRA_PATH)/projective_group.out -v 2 -n 8 -q 2 -file spread_16_2_stab_17_0.bin
+
+
+
+id:
+	$(TRANSLATION_PLANE_PATH)/translation_plane_main.out -v 2 -w -order $(ORDER) \
+		-depth $(ORDER_PLUS_ONE) \
+		-recoordinatize \
+		-test_identify $(ORDER_PLUS_ONE) 100 
+
+
+#tree_16:
+#	$(TREEDRAW_PATH)/treedraw.out  -file spread_16_2_17.tree  
+#	#-circle  -rad 20000
+#	pdflatex spread_16_2_17.tex
+#	open spread_16_2_17.pdf
+
+tree_16:
+	$(SEMIFIELD_PATH)/layered_graph_main.out -v 4 \
+		-file spread_16_2_tree_lvl_17.layered_graph \
+		-draw spread_16_2_tree_lvl_17 \
+		-rad 90 \
+		-embedded
+		pdflatex spread_16_2_tree_lvl_17.tex
+		open spread_16_2_tree_lvl_17.pdf 
+
+
+draw17:
+	$(SEMIFIELD_PATH)/layered_graph_main.out -v 4 \
+		-file spread_16_2_tree_lvl_17.layered_graph \
+		-draw TP16_tree \
+		-xin 10000 -yin 10000 \
+		-xout 800000 -yout 1100000 \
+		-nodes_empty \
+		-embedded
+		pdflatex TP16_tree.tex
+		open TP16_tree.pdf
+
+
+draw:
+	$(TREEDRAW_PATH)/treedraw.out -rad 3000 -on_circle -no_circletext -no_circle \
+		-x 3300000 -y 1000000  \
+		-file spread_16_2_17.tree
+	mpost spread_16_2_17.mp
+
+#$(TREEDRAW_PATH)/treedraw.out -on_circle -file graph_10_r3_g5_15.tree -graph 10 -rad 3000
+
+
+
+
+starter:
+	- mkdir STARTER_DIR
+	$(TRANSLATION_PLANE_PATH)/translation_plane_main.out -v 4 \
+		$(ARGUMENTS) \
+		-starter_size $(DEPTH) \
+		-starter  -W \
+		-T -x 2300 -y 1000 
+
+deep:
+	- mkdir STARTER_DIR
+	$(TRANSLATION_PLANE_PATH)/translation_plane_main.out -v 4 \
+		$(ARGUMENTS) \
+		-starter_size $(ORDER_PLUS_ONE) \
+		-starter  -W \
+		-T -x 2300 -y 1000 \
+		-draw_poset -embedded
+
+
+
+starter_draw:
+	$(TRANSLATION_PLANE_PATH)/translation_plane_main.out -v 4 \
+		$(ARGUMENTS) \
+		-starter  -W \
+		-T -x 2300 -y 1000 \
+		-draw_poset
+
+xx:
+	$(TOOLS_PATH)/layered_graph_main.out -v 2 \
+		-file STARTER_DIR/TP_$(ORDER)_poset_lvl_$(DEPTH).layered_graph \
+		-draw TP_$(ORDER)_2_poset_lvl_$(DEPTH) \
+		-xin 1000000 -yin 1000000 \
+		-xout 1000000 -yout 1000000 \
+		-y_stretch 1.1 \
+		-rad 2000 \
+		-nodes_empty \
+		-embedded
+	pdflatex TP_$(ORDER)_2_poset_lvl_$(DEPTH).tex
+	open TP_$(ORDER)_2_poset_lvl_$(DEPTH).pdf
+
+
+
+
+#generator::draw_poset writing file spread_16_2_aux_poset_lvl_5.layered_graph
+#generator::draw_poset writing file spread_16_2_poset_lvl_5.layered_graph
+#generator::draw_poset writing file spread_16_2_tree_lvl_5.layered_graph
+#generator::draw_poset writing file spread_16_2_poset_detailed_lvl_5.layered_graph
+
+
+
+draw5:
+	$(TREEDRAW_PATH)/treedraw.out -no_circletext -no_circle -x 3300000 -y 1000000  spread_16_2_5.tree
+	mpost spread_16_2_5.mp
+
+
+
+starter4:
+	$(TRANSLATION_PLANE_PATH)/translation_plane_main.out -v 4 -order $(ORDER) \
+		-depth 4 \
+		-recoordinatize \
+		-starter  -W 
+
+
+print4:
+	$(TRANSLATION_PLANE_PATH)/translation_plane_main.out -v 4 -order $(ORDER) \
+		-depth 4 \
+		-recoordinatize \
+		-print_representatives 4 spread_$(ORDER)_$(Q) 
+
+
+
+lift:
+	- mkdir SYSTEMS
+	- mkdir SOLUTIONS
+	$(TRANSLATION_PLANE_PATH)/translation_plane_main.out -v 4 -order $(ORDER) \
+		-lift $(DEPTH) ./ \
+		$(ARGUMENTS) \
+		-solve -lex -save
+
+
+
+
+
+lift_0:
+	$(TRANSLATION_PLANE_PATH)/translation_plane_main.out -v 8 -order $(ORDER) \
+		-lift $(DEPTH) ./ \
+		-solve -lex \
+		-save \
+		-split 0 1000000 \
+		-draw_system system_0
+	pdflatex system_0_0.tex
+	open system_0_0.pdf
+
+
+
+
+#lift_0:
+#	- mkdir LIFT_DATA
+#	$(TRANSLATION_PLANE_PATH)/translation_plane_main.out -v 4 -order $(ORDER) \
+#		-lift $(DEPTH) ./ \
+#		-solve -lex \
+#		-split 0 1000000 \
+#		-draw_system LIFT_DATA/system
+
+build_db:
+	$(TRANSLATION_PLANE_PATH)/translation_plane_main.out -v 2 \
+		$(ARGUMENTS) \
+		-build_db 
+
+
+
+
+read_solutions:
+	$(TRANSLATION_PLANE_PATH)/translation_plane_main.out -v 2 \
+		$(ARGUMENTS) \
+		-read_solutions
+
+compute_orbits:
+	$(TRANSLATION_PLANE_PATH)/translation_plane_main.out -v 4 \
+		$(ARGUMENTS) \
+		-compute_orbits 
+
+
+
+
+isomorph:
+	$(TRANSLATION_PLANE_PATH)/translation_plane_main.out -v 2  \
+		$(ARGUMENTS) \
+		-isomorph_testing  \
+		-print_interval 250
+
+
+
+
+classification_graph:
+	$(TRANSLATION_PLANE_PATH)/translation_plane_main.out -v 2 -order $(ORDER) \
+		-recoordinatize \
+		-make_classification_graph $(DEPTH) 
+
+
+report:
+	$(TRANSLATION_PLANE_PATH)/translation_plane_main.out -v 2 \
+		$(ARGUMENTS) \
+		-report
+	pdflatex report_TP_$(ORDER).tex
+	open report_TP_$(ORDER).pdf &
+
+
+
+quotients:
+	$(TRANSLATION_PLANE_PATH)/translation_plane_main.out -v 2 -order $(ORDER) \
+		-recoordinatize \
+		-depth $(DEPTH) \
+		-make_quotients
+
+
+Fano:
+	$(TRANSLATION_PLANE_PATH)/translation_plane_main.out -v 2 -order $(ORDER) \
+		-Fano 
+	
+Fano0:
+	$(ANDRE_PATH)/andre.out -v 2 -q $(Q) -k $(K) -no 0 -Fano \
+
+
+Fano1:
+	$(ANDRE_PATH)/andre.out -v 2 -q $(Q) -k $(K) -no 1 -Fano \
+
+
+Fano2:
+	$(ANDRE_PATH)/andre.out -v 2 -q $(Q) -k $(K) -no 2 -Fano \
+
+
+Fano3:
+	$(ANDRE_PATH)/andre.out -v 2 -q $(Q) -k $(K) -no 3 -Fano \
+
+
+Fano4:
+	$(ANDRE_PATH)/andre.out -v 2 -q $(Q) -k $(K) -no 4 -Fano \
+
+
+create:
+	$(TRANSLATION_PLANE_PATH)/spread_create.out -v 2 -description -q 3 -k 2 -catalogue 0 -end 
+
+

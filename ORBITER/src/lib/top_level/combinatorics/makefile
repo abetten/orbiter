@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	bent_function_classify.o \
 	cayley_graph_search.o \
 	delandtsheer_doyen.o \
 	design_create_description.o \

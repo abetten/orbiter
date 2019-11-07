@@ -1,0 +1,274 @@
+#MY_PATH=~/DEV.18
+#MY_PATH=/scratch2/betten/COMPILE/2017_03_22
+MY_PATH=~/DEV.19/GITHUB/orbiter
+MY_PATH2=~/DEV.19/GITHUB/orbiter2
+SRC=$(MY_PATH)/ORBITER/src
+SRC2=$(MY_LOCAL_PATH2)/ORBITER2/src
+SRC_LOCAL=$(MY_LOCAL_PATH)/ORBITER/SRC
+SRC2_LOCAL=$(MY_LOCAL_PATH2)/ORBITER2/SRC2
+
+
+CODES_PATH=$(SRC)/apps/codes
+GRAPH_THEORY_PATH=$(SRC)/apps/graph_theory
+SUBSPACE_ORBITS_PATH=$(SRC)/apps/subspace_orbits
+PROJECTIVE_SPACE_PATH=$(SRC)/apps/projective_space
+ALGEBRA_PATH=$(SRC2)/ALGEBRA
+ANGELES_PATH=$(SRC2)/ANGELES
+
+
+clean:
+	- rm codes_*
+	- rm Golay*
+	- rm Hamming*
+	- rm log a x.log
+
+
+#########
+
+PG_3_2:
+	$(PROJECTIVE_SPACE_PATH)/cheat_sheet_PG.out -v  2 -n 3 -q 2
+	pdflatex PG_3_2.tex
+	open PG_3_2.pdf
+
+
+
+######### length 3
+
+
+3_2t:
+	$(SUBSPACE_ORBITS_PATH)/subspace_orbits_main.out -v 3 \
+		-depth 3 -group -PGL 3 2 -identity_group -end \
+		-draw_poset -embedded \
+		-list \
+		-table_of_nodes
+
+3_2td:
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 4 \
+		-file Identity_3_2_poset_lvl_3.layered_graph \
+		-draw \
+		-rad 23000 \
+		-xin 1000000 \
+		-yin 1000000 \
+		-xout 1000000 \
+		-yout 1000000 \
+		-embedded \
+		-scale .30 \
+		-line_width 1.0 \
+		-y_stretch 0.8 \
+		-select_layer 0 \
+		-select_layer 1 \
+		-select_layer 2 \
+		-select_layer 3 
+	pdflatex Identity_3_2_poset_lvl_3_draw.tex
+	open Identity_3_2_poset_lvl_3_draw.pdf
+
+
+
+3_2:
+	$(SUBSPACE_ORBITS_PATH)/subspace_orbits_main.out -v 5 \
+		-depth 3 -group -PGL 3 2 -end \
+		-draw_poset -embedded \
+		-list \
+		-table_of_nodes
+
+
+3_2d:
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 4 \
+		-file PGL_3_2_poset_lvl_3.layered_graph \
+		-draw \
+		-rad 23000 \
+		-xin 1000000 \
+		-yin 1000000 \
+		-xout 1000000 \
+		-yout 1000000 \
+		-embedded \
+		-scale .30 \
+		-line_width 1.0 \
+		-y_stretch 0.8 \
+		-select_layer 0 \
+		-select_layer 1 \
+		-select_layer 2 \
+		-select_layer 3 
+	pdflatex PGL_3_2_poset_lvl_3_draw.tex
+	open PGL_3_2_poset_lvl_3_draw.pdf
+
+3_2s:
+	$(SUBSPACE_ORBITS_PATH)/subspace_orbits_main.out -v 30 \
+		-depth 3 -group -PGL 3 2 -singer 1 -end \
+		-draw_poset -embedded \
+		-list \
+		-table_of_nodes
+
+
+3_2sd:
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 4 \
+		-file Singer_3_2_power1_poset_detailed_lvl_3.layered_graph \
+		-draw \
+		-rad 23000 \
+		-xin 1000000 \
+		-yin 1000000 \
+		-xout 1000000 \
+		-yout 1000000 \
+		-embedded \
+		-scale .30 \
+		-line_width 1.0 \
+		-y_stretch 0.8 \
+		-select_layer 0 \
+		-select_layer 1 \
+		-select_layer 2 \
+		-select_layer 3 
+	pdflatex Singer_3_2_power1_poset_detailed_lvl_3_draw.tex
+	open Singer_3_2_power1_poset_detailed_lvl_3_draw.pdf
+
+4_2i:
+	$(SUBSPACE_ORBITS_PATH)/subspace_orbits_main.out -v 5 \
+		-depth 4 -group -PGL 4 2 -identity_group 1 -end \
+		-draw_poset -embedded \
+		-list \
+		-table_of_nodes
+
+
+4_2id:
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 4 \
+		-file Identity_4_2_poset_lvl_4.layered_graph \
+		-draw \
+		-rad 23000 \
+		-xin 1000000 \
+		-yin 1000000 \
+		-xout 1000000 \
+		-yout 1000000 \
+		-embedded \
+		-scale .30 \
+		-line_width 1.0 \
+		-nodes_empty \
+		-y_stretch 0.8 
+	pdflatex Identity_4_2_poset_lvl_4_draw.tex
+	open Identity_4_2_poset_lvl_4_draw.pdf
+
+
+
+4_2sd:
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 4 \
+		-file Singer_4_2_power1_poset_lvl_4.layered_graph \
+		-draw \
+		-rad 23000 \
+		-xin 1000000 \
+		-yin 1000000 \
+		-xout 1000000 \
+		-yout 1000000 \
+		-embedded \
+		-scale .30 \
+		-line_width 1.0 \
+		-y_stretch 0.8 
+	pdflatex Singer_4_2_power1_poset_lvl_4_draw.tex
+	open Singer_4_2_power1_poset_lvl_4_draw.pdf
+
+4_2o:
+	$(SUBSPACE_ORBITS_PATH)/subspace_orbits_main.out -v 5 \
+		-depth 4 -group -PGL 4 2 -orthogonal 1 -end \
+		-draw_poset -embedded \
+		-list \
+		-table_of_nodes
+
+4_2od:
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 4 \
+		-file Orthogonal_plus_4_2_poset_lvl_4.layered_graph \
+		-draw \
+		-rad 45000 \
+		-xin 1000000 \
+		-yin 1000000 \
+		-xout 1000000 \
+		-yout 1000000 \
+		-embedded \
+		-scale .30 \
+		-line_width 1.0 \
+		-y_stretch 0.8 
+	pdflatex Orthogonal_plus_4_2_poset_lvl_4_draw.tex
+	open Orthogonal_plus_4_2_poset_lvl_4_draw.pdf
+
+
+5_2s:
+	$(SUBSPACE_ORBITS_PATH)/subspace_orbits_main.out -v 5 \
+		-depth 5 -group -PGL 5 2 -singer 1 -end \
+		-draw_poset -embedded \
+		-list \
+		-table_of_nodes
+
+5_2sd:
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 4 \
+		-file Singer_5_2_power1_poset_lvl_5.layered_graph \
+		-draw \
+		-rad 23000 \
+		-xin 1000000 \
+		-yin 1000000 \
+		-xout 1000000 \
+		-yout 1000000 \
+		-embedded \
+		-scale .30 \
+		-line_width 1.0 \
+		-y_stretch 0.8 
+	pdflatex Singer_5_2_power1_poset_lvl_5_draw.tex
+	open Singer_5_2_power1_poset_lvl_5_draw.pdf
+
+6_2s:
+	$(SUBSPACE_ORBITS_PATH)/subspace_orbits_main.out -v 5 \
+		-depth 6 -group -PGL 6 2 -singer 1 -end \
+		-draw_poset -embedded \
+		-list \
+		-table_of_nodes
+
+6_2sd:
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 4 \
+		-file Singer_6_2_power1_poset_lvl_6.layered_graph \
+		-draw \
+		-rad 23000 \
+		-xin 1000000 \
+		-yin 1000000 \
+		-xout 1000000 \
+		-yout 1000000 \
+		-embedded \
+		-scale .30 \
+		-line_width 1.0 \
+		-y_stretch 0.8 
+	pdflatex Singer_6_2_power1_poset_lvl_6_draw.tex
+	open Singer_6_2_power1_poset_lvl_6_draw.pdf
+
+7_2s:
+	$(SUBSPACE_ORBITS_PATH)/subspace_orbits_main.out -v 5 \
+		-depth 7 -group -PGL 7 2 -singer 1 -end \
+		-draw_poset -embedded \
+		-list \
+		-table_of_nodes
+
+7_2sd:
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 4 \
+		-file Singer_7_2_power1_poset_lvl_7.layered_graph \
+		-draw \
+		-rad 23000 \
+		-xin 1000000 \
+		-yin 1000000 \
+		-xout 1000000 \
+		-yout 1000000 \
+		-embedded \
+		-scale .30 \
+		-line_width 1.0 \
+		-y_stretch 0.8 
+	pdflatex Singer_7_2_power1_poset_lvl_7_draw.tex
+	open Singer_7_2_power1_poset_lvl_7_draw.pdf
+
+8_2s:
+	$(SUBSPACE_ORBITS_PATH)/subspace_orbits_main.out -v 5 \
+		-depth 8 -group -PGL 8 2 -singer 1 -end 
+
+# Dec 5, 2018: 15 sec on Mac
+
+#		-draw_poset -embedded \
+#		-list \
+#		-table_of_nodes
+
+9_2s:
+	$(SUBSPACE_ORBITS_PATH)/subspace_orbits_main.out -v 5 \
+		-depth 9 -group -PGL 9 2 -singer 1 -end 
+
+# Dec 5, 2018: 9 min 42 sec on Mac
+

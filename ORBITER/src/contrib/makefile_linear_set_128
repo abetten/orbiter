@@ -1,0 +1,55 @@
+MY_PATH=~/DEV.18/GITHUB/orbiter
+MY_PATH2=~/DEV.18/GITHUB/orbiter2
+#MY_PATH=/scratch3/betten/COMPILE/2018_04_17
+ORBITER=$(MY_PATH)/ORBITER
+ORBITER2=$(MY_PATH2)/ORBITER2
+SRC=$(ORBITER)/src
+SRC2=$(ORBITER2)/src
+
+
+TOOLS_PATH=$(SRC)/apps/tools
+COMBINATORICS_PATH=$(SRC)/apps/combinatorics
+PROJECTIVE_SPACE_PATH=$(SRC2)/projective_space
+SUBSPACE_ORBITS_PATH=$(SRC)/apps/subspace_orbits
+LINEAR_SET_PATH=$(SRC2)/LINEAR_SET
+
+
+
+ls:
+	$(LINEAR_SET_PATH)/linear_set_main.out -v 5 \
+		-n 2 -Q 128 -q 2 -depth 7 -classify  
+
+
+#		-W \
+#		-print_level 7
+#		-draw_poset
+
+
+
+scattered:
+	$(LINEAR_SET_PATH)/linear_set_main.out -v 6 \
+		-n 2 -Q 128 -q 2 -depth 7 -classify  \
+		-W \
+		-scattered \
+		-print_level 7
+
+
+
+
+tree:
+	$(TREEDRAW_PATH)/treedraw.out  -file subspaces_14_2_7_7.tree  -circle  -rad 20000
+	pdflatex subspaces_14_2_7_7.tex
+	open subspaces_14_2_7_7.pdf
+
+
+
+poset:
+	$(SEMIFIELD_PATH)/layered_graph_main.out -v 4 \
+		-file subspaces_14_2_7_poset_lvl_7.layered_graph \
+		-draw subspaces_14_2_7_poset_lvl_7 \
+		-rad 90 \
+		-embedded
+		pdflatex subspaces_14_2_7_poset_lvl_7.tex
+		open subspaces_14_2_7_poset_lvl_7.pdf
+
+

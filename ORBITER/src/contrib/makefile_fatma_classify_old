@@ -1,0 +1,193 @@
+MY_PATH=~/DEV.19/GITHUB/orbiter
+#MY_PATH=../../orbiter
+MY_PATH2=~/DEV.19
+#MY_PATH=/scratch2/betten/COMPILE/2017_10_12
+SRC=$(MY_PATH)/ORBITER/src
+SRC2=$(MY_PATH)/ORBITER2/src2
+
+
+OVOID_PATH=$(SRC)/apps/ovoid
+SURFACE_PATH=$(SRC)/apps/surfaces
+SURFACE_PATH2=$(SRC2)/SURFACE
+PROJECTIVE_SPACE_PATH=$(SRC)/apps/projective_space
+GRASSMANN_PATH=$(SRC2)/GRASSMANN
+KRAMER_MESNER_PATH=$(SRC2)/kramer_mesner
+MATH360_PATH=$(SRC2)/MATH360
+MATH161_PATH=$(SRC2)/MATH161
+ARC_PATH=$(SRC)/apps/arcs
+TOOLS_PATH=$(SRC)/apps/tools
+
+
+Q=41
+GROUP=PGL
+
+cheat_sheet_PG2:
+	$(PROJECTIVE_SPACE_PATH)/cheat_sheet_PG.out -n 2 -q $(Q) -surface
+	pdflatex PG_2_$(Q).tex
+	open PG_2_$(Q).pdf
+
+cheat_sheet_PG3:
+	$(PROJECTIVE_SPACE_PATH)/cheat_sheet_PG.out -n 3 -q $(Q) 
+	pdflatex PG_3_$(Q).tex
+	open PG_3_$(Q).pdf
+
+
+cheat_0:
+	$(SURFACE_PATH2)/cheat_sheet_surface.out -v 2 -q $(Q) -no 0
+	pdflatex Surface_q$(Q)_no0.tex
+	open Surface_q$(Q)_no0.pdf
+
+
+Qall:
+	$(SURFACE_PATH)/surface_classify.out -v 4 \
+		-linear -$(GROUP) 4 $(Q) -wedge -end 
+
+
+#\
+#		-report
+
+
+pdf:
+	pdflatex Double_sixes_q$(Q).tex
+	open Double_sixes_q$(Q).pdf
+	pdflatex Surfaces_q$(Q).tex
+	open Surfaces_q$(Q).pdf
+
+
+Q:
+	$(SURFACE_PATH)/surface_classify.out -v 4 -linear -$(GROUP) 4 $(Q) -wedge -end \
+		-double_sixes_only
+	pdflatex Double_sixes_q$(Q).tex
+	open Double_sixes_q$(Q).pdf
+
+Qr:
+	$(SURFACE_PATH)/surface_classify.out -v 4 -linear -$(GROUP) 4 $(Q) -wedge -end \
+		-read_double_sixes \
+		-report
+	pdflatex Surfaces_q$(Q).tex
+	open Surfaces_q$(Q).pdf
+
+
+
+
+Qrr:
+	$(SURFACE_PATH)/surface_classify.out -v 4 -linear -$(GROUP) 4 $(Q) -wedge -end \
+		-read_double_sixes \
+		-read_surfaces \
+		-identify Fermat_cubic  1 0 1 1 1 2 1 3 -1 
+
+
+
+Q_draw:
+	$(TOOLS_PATH)/layered_graph_main.out -v 4 \
+		-file fiveplusone_q$(Q)_poset_lvl_5.layered_graph \
+		-draw test \
+		-rad 8000 \
+		-xin 1000000 \
+		-yin 1000000 \
+		-xout 1000000 \
+		-yout 1000000 \
+		-embedded \
+		-scale .44 \
+		-line_width 1.0 \
+		-y_stretch 0.8 
+	pdflatex fiveplusone_q$(Q)_poset_lvl_5_draw.tex
+	open fiveplusone_q$(Q)_poset_lvl_5_draw.pdf
+
+#		-spanning_tree
+
+Q_draw_detailed:
+	$(TOOLS_PATH)/layered_graph_main.out -v 4 \
+		-file fiveplusone_q$(Q)_poset_detailed_lvl_5.layered_graph \
+		-draw test \
+		-rad 4500 \
+		-xin 1000000 \
+		-yin 1000000 \
+		-xout 1000000 \
+		-yout 1000000 \
+		-embedded \
+		-scale .44 \
+		-line_width 1.0 \
+		-y_stretch 0.8 
+	pdflatex fiveplusone_q$(Q)_poset_detailed_lvl_5_draw.tex
+	open fiveplusone_q$(Q)_poset_detailed_lvl_5_draw.pdf
+
+
+q:
+	$(OVOID_PATH)/ovoid.out -v 3 \
+		-n 5 -q $(Q) -epsilon 1 \
+		-surface \
+		-depth 5 \
+		-identify Fermat_cubic  1 0 1 1 1 2 1 3 -1 \
+		-identify Clebsch_cubic 3 4 3 5 3 6 3 7 3 8 3 9 3 10 3 11 3 12 3 13 3 14 3 15 6 16 6 17 6 18 6 19 -1 \
+		-identify Cayleys_nodal_cubic 1 16 1 17 1 18 1 19 -1
+
+#nb_lines=2850 nb_pts=448 nb_orbits=14 nb_good_orbits = 5
+#one with 92 points and ago=24
+#another with 99 points and ago=1296
+#There are 5 orbits of double sixes.
+#For q=7, the cubic surface with 27 lines is equanharmonic and projectively
+#unique and group of projectivities is (Z_3 x Z_3 xZ_3)S_4 and the order
+#should be 648. The number of points on the surface  as you have found  is
+#99, and all the points are on the lines of the surface, none of the points
+#lie only one line, the number of points which is exactly on two of the 27
+#lines is 81, and 18 of the points are exactly on three lines. What about
+#ago=1296 in your calculation? 
+
+
+
+iso_0:
+	$(SURFACE_PATH)/iso_type_analyze.out -v 3 -linear -PGL 4 $(Q) -wedge -end \
+		-no 0 \
+		-apply_inv "0,4,0,0,2,6,0,0,0,6,0,2,5,1,2,5" \
+		-select_five_lines 164 340 213 235 2399 \
+		-print_element 7 \
+		-print_element 406 \
+		-print_element 6 \
+		-print_element 0 \
+		-subgroup "7,406,6" 24 
+
+
+arcs:
+	- mkdir PG_2_$(Q)
+	- mkdir PG_2_$(Q)/STARTER
+	- mkdir PG_2_$(Q)/SOLUTIONS
+	$(ARC_PATH)/arcs_main.out -v 3 -q $(Q) -d 2 -starter_size 6 \
+		-input_prefix PG_2_$(Q)/STARTER/ -solution_prefix PG_2_$(Q)/SOLUTIONS -base_fname arcs \
+		-starter PG_2_$(Q)/STARTER/  \
+		-W \
+		-lex \
+		-draw_poset \
+		-embedded \
+		-list 6 \
+		-recognize "2,1,0,21,46,52" \
+		-recognize "2,1,0,21,25,38"
+
+
+
+#	cp PG_2_$(Q)/STARTER/arcs_poset_lvl_6.layered_graph ./arcs_$(Q)_poset_lvl_6.layered_graph
+#	$(TOOLS_PATH)/layered_graph_main.out -v 4 \
+#		-file arcs_$(Q)_poset_lvl_6.layered_graph \
+#		-draw test \
+#		-rad 2000 \
+#		-xin 1000000 \
+#		-yin 1000000 \
+#		-xout 4000000 \
+#		-yout 2000000 \
+#		-embedded \
+#		-scale .10 \
+#		-line_width 1.0 \
+#		-y_stretch 1.0  \
+#		-nodes_empty
+#	pdflatex arcs_$(Q)_poset_lvl_6_draw.tex
+#	open arcs_$(Q)_poset_lvl_6_draw.pdf
+
+#		-list 6
+#		-recognize 1 2 0 21 18 38 -1
+
+
+table:
+	$(SURFACE_PATH)/table.out -v 2 
+
+
+

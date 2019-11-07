@@ -1,0 +1,293 @@
+MY_PATH=~/DEV.18/GITHUB/orbiter
+MY_PATH2=~/DEV.18
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH2)/ORBITER2/SRC2
+
+SPREAD_PATH=$(SRC)/APPS/SPREAD
+TOOLS_PATH=$(SRC)/APPS/TOOLS
+ANDRE_PATH=$(SRC2)/ANDRE
+GRASSMANN_PATH=$(SRC2)/GRASSMANN
+TREEDRAW_PATH=$(SRC2)/TREEDRAW
+PROJECTIVE_SPACE_PATH=$(SRC)/APPS/PROJECTIVE_SPACE
+ALGEBRA_PATH=$(SRC2)/ALGEBRA
+
+
+Q=5
+K=2
+ORDER=25
+ORDER_PLUS_ONE=36
+DEPTH=5
+POLY=
+
+
+
+
+
+
+ARGUMENTS= \
+		-order $(ORDER)  \
+		-starter_size $(DEPTH) \
+		-input_prefix STARTER_DIR/ \
+		-output_prefix SYSTEMS/ \
+		-solution_prefix SOLUTIONS/ \
+		-base_fname Spreads_$(ORDER) \
+		-recoordinatize \
+
+
+
+
+
+all: starter lift build_db read_solutions compute_orbits isomorph report
+
+
+
+
+
+
+
+clean:
+	- rm spread_$(ORDER)* report*  live_points* log*
+	- rm -r ISO
+	- rm PG_3_4*
+	- rm -rf STARTER_DIR
+	- rm -rf SOLUTIONS
+	- rm -rf SYSTEMS
+	- rm Fano_*
+	- rm _tda*
+	- rm system_*
+
+
+
+cheat:
+	$(PROJECTIVE_SPACE_PATH)/cheat_sheet_PG.out -n 3 -q 4
+	pdflatex PG_3_4.tex
+	open PG_3_4.pdf
+
+full:
+	- mkdir STARTER_DIR
+	$(SPREAD_PATH)/spread_classify.out -v 6 -w \
+		$(ARGUMENTS) \
+		-starter \
+		-starter_size $(ORDER_PLUS_ONE) 
+
+
+
+#		-T -x 2300 -y 1000 \
+#		-list
+
+
+
+
+vg_full:
+	- mkdir STARTER_DIR
+	valgrind --tool=callgrind \
+		$(SPREAD_PATH)/spread_classify.out -v 6 -w \
+		$(ARGUMENTS) \
+		-starter \
+		-starter_size $(ORDER_PLUS_ONE) \
+		-T -x 2300 -y 1000 \
+		-list
+
+
+
+G0:
+	$(ALGEBRA_PATH)/projective_group.out -v 2 -n 8 -q 2 -file spread_16_2_stab_17_0.bin
+
+
+
+id:
+	$(SPREAD_PATH)/spread_classify.out -v 2 -w -order $(ORDER) \
+		-depth $(ORDER_PLUS_ONE) \
+		-recoordinatize \
+		-test_identify $(ORDER_PLUS_ONE) 100 
+
+
+
+tree_16:
+	$(SEMIFIELD_PATH)/layered_graph_main.out -v 4 \
+		-file spread_16_2_tree_lvl_17.layered_graph \
+		-draw spread_16_2_tree_lvl_17 \
+		-rad 90 \
+		-embedded
+		pdflatex spread_16_2_tree_lvl_17.tex
+		open spread_16_2_tree_lvl_17.pdf 
+
+
+draw17:
+	$(SEMIFIELD_PATH)/layered_graph_main.out -v 4 \
+		-file spread_16_2_tree_lvl_17.layered_graph \
+		-draw TP16_tree \
+		-xin 10000 -yin 10000 \
+		-xout 800000 -yout 1100000 \
+		-nodes_empty \
+		-embedded
+		pdflatex TP16_tree.tex
+		open TP16_tree.pdf
+
+
+draw:
+	$(TREEDRAW_PATH)/treedraw.out -rad 3000 -on_circle -no_circletext -no_circle \
+		-x 3300000 -y 1000000  \
+		-file spread_16_2_17.tree
+	mpost spread_16_2_17.mp
+
+#$(TREEDRAW_PATH)/treedraw.out -on_circle -file graph_10_r3_g5_15.tree -graph 10 -rad 3000
+
+
+#generator::draw_tree read treefile spread_16_2_17.tree with 22428 nodes
+#written file spread_16_2_17.mp of size 5678460
+
+#		-clique_level 5
+
+
+
+
+
+starter:
+	- mkdir STARTER_DIR
+	$(SPREAD_PATH)/spread_classify.out -v 4 \
+		$(ARGUMENTS) \
+		-starter  -W \
+		-T -x 2300 -y 1000 
+
+starter_draw:
+	$(SPREAD_PATH)/spread_classify.out -v 4 \
+		$(ARGUMENTS) \
+		-starter  -W \
+		-T -x 2300 -y 1000 \
+		-draw_poset
+
+xx:
+	$(TOOLS_PATH)/layered_graph_main.out -v 2 \
+		-file STARTER_DIR/TP_$(ORDER)_poset_lvl_$(DEPTH).layered_graph \
+		-draw TP_$(ORDER)_2_poset_lvl_$(DEPTH) \
+		-xin 1000000 -yin 1000000 \
+		-xout 1000000 -yout 1000000 \
+		-y_stretch 1.1 \
+		-rad 2000 \
+		-nodes_empty \
+		-embedded
+	pdflatex TP_$(ORDER)_2_poset_lvl_$(DEPTH).tex
+	open TP_$(ORDER)_2_poset_lvl_$(DEPTH).pdf
+
+
+draw5:
+	$(TREEDRAW_PATH)/treedraw.out -no_circletext -no_circle -x 3300000 -y 1000000  spread_16_2_5.tree
+	mpost spread_16_2_5.mp
+
+
+
+starter4:
+	$(SPREAD_PATH)/spread_classify.out -v 4 -order $(ORDER) \
+		-depth 4 \
+		-recoordinatize \
+		-starter  -W 
+
+
+print4:
+	$(SPREAD_PATH)/spread_classify.out -v 4 -order $(ORDER) \
+		-depth 4 \
+		-recoordinatize \
+		-print_representatives 4 spread_$(ORDER)_$(Q) 
+
+
+
+lift:
+	- mkdir SYSTEMS
+	- mkdir SOLUTIONS
+	$(SPREAD_PATH)/spread_classify.out -v 4 -order $(ORDER) \
+		-lift $(DEPTH) ./ \
+		$(ARGUMENTS) \
+		-solve -save
+
+#-lex 
+
+
+rainbow_0:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 2 \
+		-file SYSTEMS/graph_0.bin \
+
+
+draw_matrix_0:
+	$(TOOLS_PATH)/draw_colored_graph.out -v 2 \
+		-file SYSTEMS/system_0_Levi_graph.bin \
+		-Levi 180 672 \
+		-bitmatrix 
+	mpost SYSTEMS/system_0_Levi_graph_bitmatrix.mp
+
+#		-Levi_discrete
+
+lift_0:
+	$(SPREAD_PATH)/spread_classify.out -v 8 -order $(ORDER) \
+		-lift $(DEPTH) ./ \
+		-solve -lex \
+		-save \
+		-split 0 1000000 \
+		-draw_system system_0
+	pdflatex system_0_0.tex
+	open system_0_0.pdf
+
+
+
+
+build_db:
+	$(SPREAD_PATH)/spread_classify.out -v 2 \
+		$(ARGUMENTS) \
+		-build_db 
+
+
+
+
+read_solutions:
+	$(SPREAD_PATH)/spread_classify.out -v 2 \
+		$(ARGUMENTS) \
+		-read_solutions
+
+
+compute_orbits:
+	$(SPREAD_PATH)/spread_classify.out -v 4 \
+		$(ARGUMENTS) \
+		-compute_orbits 
+
+
+
+
+isomorph:
+	$(SPREAD_PATH)/spread_classify.out -v 2  \
+		$(ARGUMENTS) \
+		-isomorph_testing  \
+		-print_interval 250
+
+
+
+
+classification_graph:
+	$(SPREAD_PATH)/spread_classify.out -v 2 -order $(ORDER) \
+		-recoordinatize \
+		-make_classification_graph $(DEPTH) 
+
+
+report:
+	$(SPREAD_PATH)/spread_classify.out -v 2 \
+		$(ARGUMENTS) \
+		-report
+	pdflatex report_Spreads_$(ORDER).tex
+	open report_Spreads_$(ORDER).pdf &
+
+
+
+quotients:
+	$(SPREAD_PATH)/spread_classify.out -v 2 -order $(ORDER) \
+		-recoordinatize \
+		-depth $(DEPTH) \
+		-make_quotients
+
+
+Fano:
+	$(SPREAD_PATH)/spread_classify.out -v 2 -order $(ORDER) \
+		-Fano 
+	
+Fano0:
+	$(ANDRE_PATH)/andre.out -v 2 -q $(Q) -k $(K) -no 0 -Fano \
+
+

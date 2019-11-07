@@ -1,0 +1,87 @@
+MY_PATH=~/DEV.19/GITHUB
+MY_PATH2=~/DEV.19/GITHUB
+#MY_PATH=/scratch3/betten/COMPILE
+ORBITER=$(MY_PATH)/orbiter/ORBITER
+ORBITER2=$(MY_PATH2)/orbiter2
+SRC=$(ORBITER)/src
+SRC2=$(ORBITER2)/src
+
+
+ALGEBRA_PATH=$(SRC)/apps/algebra
+SEMIFIELD_PATH=$(SRC)/apps/semifield
+SURFACES_PATH=$(SRC)/apps/surfaces
+BLT_PATH=$(SRC)/apps/blt
+TOOLS_PATH=$(SRC)/apps/tools
+MATH161_PATH=$(SRC2)/MATH161
+SURFACE_PATH=$(SRC2)/SURFACE
+DRAW_PATH=$(SRC2)/DRAW
+SAJEEB_PATH=../../../DEV.19/GITHUB/CliqueFinder
+CLIQUER_PATH=$(SRC2)/CLIQUER/INTERFACE
+OPTIMIZE_MM2_PATH=$(SRC2)/OPTIMIZE_MM2
+ALGEBRA_PATH=$(SRC)/apps/algebra
+LOCAL_TOOLS_PATH=$(SRC)/apps/tools
+PROJECTIVE_SPACE_PATH=$(SRC)/apps/projective_space
+
+update:
+	cd $(SEMIFIELD_PATH); make clean;
+	cd $(SRC); make cleana; git pull; make 
+
+update_all:
+	cd $(SRC); make clean; git pull; make 
+
+iso:
+	- mkdir TRACE
+	$(SEMIFIELD_PATH)/isomorph_testing.out -v 3 -order 64 \
+		-level2_prefix L2/ \
+		-level3_prefix L3/ \
+		-trace_record_prefix TRACE/ \
+		-FstLen semi64_liftings_FstLen.csv \
+		-Data semi64_liftings_Data.csv \
+		-identify_semifields_from_file Rua_table2.csv \
+		-report
+
+load:
+	$(SEMIFIELD_PATH)/isomorph_testing.out -v 3 -order 64 \
+		-level2_prefix L2/ \
+		-level3_prefix L3/ \
+		-trace_record_prefix TRACE/ \
+		-FstLen semi64_liftings_FstLen.csv \
+		-Data semi64_liftings_Data.csv \
+		-load_classification
+
+dec:
+	$(SEMIFIELD_PATH)/isomorph_testing.out -v 3 -order 64 \
+		-level2_prefix L2/ \
+		-level3_prefix L3/ \
+		-trace_record_prefix TRACE/ \
+		-FstLen semi64_liftings_FstLen.csv \
+		-Data semi64_liftings_Data.csv \
+		-decomposition_matrix_level_3
+
+
+
+d1062:
+	$(SEMIFIELD_PATH)/deep_search.out -v 2 -order 64 \
+		-level2_prefix L2/ \
+		-level3_prefix L3/ \
+		-split 1062 1000000 
+
+d506471:
+	$(SEMIFIELD_PATH)/deep_search.out -v 2 -order 64 \
+		-level2_prefix L2/ \
+		-level3_prefix L3/ \
+		-split 506471 1000000 
+
+
+classify:
+	- mkdir L2
+	- mkdir L3
+	$(SEMIFIELD_PATH)/semifield_classify_main.out -v 2 -order 64 \
+		-level2_prefix L2/ \
+		-level3_prefix L3/ \
+		-report 
+
+pc:
+	$(SEMIFIELD_PATH)/semifield_main.out -v 2 -order 64 -compute 4
+
+

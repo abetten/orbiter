@@ -1,0 +1,122 @@
+# makefile for GRID
+#
+# Anton Betten Aug 18, 2008
+#
+# these are the programs that accompany the paper
+# "Line-transitive point-imprimitive linear spaces: the grid case" 
+#
+# by A. Betten, G. Cresp, C. Praeger
+#
+# to appear in Innovations in Incidence Geometry
+#
+# you should do make in ../LIB first  
+# and then do make here
+#
+# to create the designs from the paper, type 
+# make design1
+# make design2a
+# make design2b
+
+
+CPP = /usr/bin/g++
+CPPFLAGS = -Wall -I../LIB -I../LIB/DISCRETA
+LIB = \
+	../LIB/DISCRETA/libdiscreta.a \
+	../LIB/SNAKES_AND_LADDERS/libsnakesandladders.a  \
+	../LIB/ACTION/libaction.a \
+	../LIB/INCIDENCE/libincidence.a \
+	../LIB/GALOIS/libgalois.a 
+LFLAGS = -lm
+
+
+all: search.out prepare_group.out orbits_on_pairs.out geo.out inc_can.out
+
+
+search.out:  search.c;
+	cc search.c -o $@
+
+
+prepare_group.out: $(LIB) prepare_group.o ;
+	$(CPP)  prepare_group.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+orbits_on_pairs.out: orbits_on_pairs.C;
+	$(CPP)  orbits_on_pairs.C $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+geo.out:  geo.o ;
+	$(CPP)  geo.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+inc_can.out:  inc_can.o ;
+	$(CPP)  inc_can.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+
+inc_can.o: inc_can.C ; $(CPP) $(CPPFLAGS) -c inc_can.C -o $@
+geo.o: geo.C ; $(CPP) $(CPPFLAGS) -c geo.C -o $@
+
+
+clean:
+	- rm *.o *.out
+
+
+
+# search.out x y k d c
+# \cC = row partition, d classes of size c
+# \cD = column partition, c classes of size d
+# x = row inner pairs
+# y = column inner pairs
+# x or y = -1 means that there is no condition
+
+# c = ({k \choose 2) - x) / y
+# d = ({k \choose 2} - y) / x
+# x = {k \choose 2} (c-1) / (cd-1)
+# y = {k \choose 2} (d-1) / (cd-1)
+
+###############################################################################################
+# (x,y,c,d,k) = (3,6,7,13,10)
+# PG(2,9)
+# {v \choose k} \approx 6*10^{12}
+# {10 \choose 2} = 45
+# cd-1 = 90
+# c = 7 = (45 - 3) / 6  = 7
+# d = 13 = (45 - 6) / 3 = 13
+# x = 45 (7 - 1) / 90 = 3
+# y = 45 (13 - 1) / 90 = 6
+
+# (x,y,c,d,k) = (6,3,13,7,10)
+
+
+design1:
+	./prepare_group.out
+	./orbits_on_pairs.out C7xC13.generators
+	./search.out -force 0 0 -force 1 1     6 3 10 7 13 C7xC13.2orbits 
+	./geo.out C7xC13.bblt 
+	./inc_can.out -nauty -classify C7xC13.inc
+
+
+###############################################################################################
+# (x,y,c,d,k) = (6,10,13,21,17) Line 7
+# PG(2,16)
+# {v \choose k} \approx 4*10^{26}
+# {17 \choose 2} = 136
+# cd-1 = 272
+# c = 13 = (136 - 6) / 10  = 13
+# d = 21 = (136 - 10) / 6 = 21
+# x = 136 (13 - 1) / 272 = 6
+# y = 136 (21 - 1) / 272 = 10
+
+design2a:
+	./prepare_group.out
+	./orbits_on_pairs.out C21xD13.generators
+	./search.out -force 0 0 -force 1 12 -inv Id21xD13inv.generators 6 10  17 21 13 C21xD13.2orbits 
+	./geo.out C21xD13.bblt 
+	./inc_can.out -nauty -classify C21xD13.inc
+	
+	
+
+
+design2b:
+	./prepare_group.out
+	./orbits_on_pairs.out F21xD13.generators
+	./search.out -force 0 0 -force 1 12 -inv Id21xD13inv.generators 6 10  17 21 13 F21xD13.2orbits 
+
+
+	

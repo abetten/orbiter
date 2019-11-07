@@ -21,6 +21,7 @@ MODULES = \
 	classify_trihedral_pairs.o \
 	code_classify.o \
 	cubic_curve_with_action.o \
+	hermitian_spreads_classify.o \
 	invariants_packing.o \
 	k_arc_generator.o \
 	linear_set_classify.o \

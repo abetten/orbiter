@@ -1,0 +1,90 @@
+MY_PATH=../../../DEV.14
+#MY_PATH=/scratch/betten/COMPILE/2014_12_02
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH)/ORBITER2/SRC2
+
+PHILIP_PATH=$(SRC)/FISHER_SCHMIDT
+TREEDRAW_PATH=$(SRC)/TOOLS
+ALGEBRA_PATH=$(SRC2)/ALGEBRA
+PROJECTIVE_SPACE_PATH=$(SRC2)/PROJECTIVE_SPACE
+
+
+
+# Magma minimal polynomials over GF(2):
+
+#x^2 + x + 1 = 7
+#x^3 + x + 1 = 11
+#x^4 + x + 1 = 19
+#x^5 + x^2 + 1 = 37
+#x^6 + x^4 + x^3 + x + 1 = 91
+#x^7 + x + 1 = 131
+#x^8 + x^4 + x^3 + x^2 + 1 = 285
+#x^9 + x^4 + 1 = 529
+#x^10 + x^6 + x^5 + x^3 + x^2 + x + 1
+#x^11 + x^2 + 1
+#x^12 + x^7 + x^6 + x^5 + x^3 + x + 1 = 4331
+#x^13 + x^4 + x^3 + x + 1
+#x^14 + x^7 + x^5 + x^3 + 1 = 16553
+#x^15 + x^5 + x^4 + x^2 + 1
+#x^16 + x^5 + x^3 + x^2 + 1 = 65581
+#x^17 + x^3 + 1
+#x^18 + x^12 + x^10 + x + 1 = 267267
+#x^19 + x^5 + x^2 + x + 1
+#x^20 + x^10 + x^9 + x^7 + x^6 + x^5 + x^4 + x + 1
+
+
+
+
+
+#####################
+#  PG(2,128)
+#####################
+
+
+
+matrix:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 -Q 16384 -poly_Q "16553" -q 128 -poly_q "131" -aut 1
+
+
+# new MacBookPro Dec 12, 2014: 4 min 43
+
+
+#nb_points=998
+#nb_colors=11
+# 497503 entries in the adjacency matrix
+# Aug 18, 2014 on MacBook 13:52, 20 solutions, 10 hyperovals
+# Aug 18, 2014 on domino 10:17, 20 solutions, 10 hyperovals
+
+# after optimizing:
+# Aug 18, 2014 on MacBook 5:32, 20 solutions, 10 hyperovals
+# Aug 18, 2014 on MacBook 5:30, 20 solutions, 10 hyperovals
+
+
+128:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 -Q 16384 -poly_Q "16553" -q 128 -poly_q "131" -aut 1 -load -draw
+
+
+# new MacBookPro Dec 12, 2014: 1 sec
+# Nov 4, 2014 on MacBook in 7 sec, 20 solutions, 10 hyperovals
+# Nov 5, 2014 on MacBook in 29 sec, 10 solutions, 10 hyperovals (with triple test)
+
+
+128r:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 -Q 16384 -poly_Q "16553" -q 128 -poly_q "131" -aut 1 -load \
+		-restrictions 0 0 10 3 0 1000 -1 \
+		-clique
+
+
+matrix128_2:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 -Q 16384 -poly_Q "16553" -q 128 -poly_q "131" -aut 2
+
+
+
+
+128_4:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 -Q 16384 -poly_Q "16553" -q 128 -poly_q "131" -aut 2 -load 
+
+
+
+
+

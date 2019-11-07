@@ -1,0 +1,82 @@
+MY_PATH=~/DEV.19/GITHUB/orbiter
+MY_PATH2=~/DEV.19/GITHUB
+#MY_PATH=/scratch3/betten/COMPILE/2018_02_06
+ORBITER=$(MY_PATH)/orbiter
+ORBITER2=$(MY_PATH2)/orbiter2/ORBITER2
+SRC=$(ORBITER)/src
+SRC2=$(ORBITER2)/src
+
+
+ALGEBRA_PATH=$(SRC)/apps/algebra
+SURFACES_PATH=$(SRC)/apps/surfaces
+PROJECTIVE_SPACE_PATH=$(SRC)/apps/projective_space
+BLT_PATH=$(SRC)/apps/blt
+TOOLS_PATH=$(SRC)/apps/tools
+MATH161_PATH=$(SRC2)/MATH161
+DRAW_PATH=$(SRC2)/DRAW
+SAJEEB_PATH=../../../DEV.19/GITHUB/CliqueFinder
+CLIQUER_PATH=$(SRC2)/CLIQUER/INTERFACE
+OPTIMIZE_MM2_PATH=$(SRC2)/OPTIMIZE_MM2
+ALGEBRA_PATH=$(SRC)/apps/algebra
+LOCAL_TOOLS_PATH=$(SRC)/apps/tools
+
+
+GROUP=PGL
+
+cheat2_8:
+	$(PROJECTIVE_SPACE_PATH)/cheat_sheet_PG.out -n 2 -q 8
+	pdflatex PG_2_8.tex
+	open PG_2_8.pdf
+
+cheat3_8:
+	$(PROJECTIVE_SPACE_PATH)/cheat_sheet_PG.out -n 3 -q 8
+	pdflatex PG_3_8.tex
+	open PG_3_8.pdf
+
+cheat13:
+	$(PROJECTIVE_SPACE_PATH)/cheat_sheet_PG.out -n 3 -q 13
+	pdflatex PG_3_13.tex
+	open PG_3_13.pdf
+
+
+
+lift11:
+	$(SURFACES_PATH)/surfaces_arc_lifting_main.out -v 3 \
+		-linear4 -$(GROUP) 4 11 -end \
+		-linear3 -$(GROUP) 3 11 -end \
+		-dummy
+	#pdflatex arc_lifting_q11.tex
+	#open arc_lifting_q11.pdf
+
+
+
+lift13:
+	$(SURFACES_PATH)/surfaces_arc_lifting_main.out -v 2 \
+		-linear4 -$(GROUP) 4 13 -end \
+		-linear3 -$(GROUP) 3 13 -end \
+		-dummy
+	#pdflatex arc_lifting_q13.tex
+	#open arc_lifting_q13.pdf
+
+
+lift8_PGL:
+	$(SURFACES_PATH)/surfaces_arc_lifting_main.out -v 3 \
+		-linear4 -PGL 4 8 -end \
+		-linear3 -PGL 3 8 -end \
+		-dummy
+
+lift8:
+	$(SURFACES_PATH)/surfaces_arc_lifting_main.out -v 7 \
+		-linear4 -PGGL 4 8 -end \
+		-linear3 -PGGL 3 8 -end \
+		-dummy
+
+
+lift16:
+	$(SURFACES_PATH)/surfaces_arc_lifting_main.out -v 3 \
+		-linear4 -PGGL 4 16 -end \
+		-linear3 -PGGL 3 16 -end \
+		-dummy
+
+
+

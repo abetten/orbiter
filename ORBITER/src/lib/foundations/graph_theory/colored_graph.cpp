@@ -1560,8 +1560,8 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(
 
 	for (i = 0; i < nb_points_subgraph; i++) {
 		c = color_in_graph[i];
-		if (!Sorting.int_vec_search(
-			color_subset->set, color_subset->k, c, idx)) {
+		if (!Sorting.lint_vec_search(
+			color_subset->set, color_subset->k, c, idx, 0)) {
 			cout << "error, did not find color" << endl;
 			exit(1);
 			}
@@ -1661,8 +1661,8 @@ colored_graph
 
 	for (i = 0; i < nb_points_subgraph; i++) {
 		c = color_in_graph[i];
-		if (!Sorting.int_vec_search(color_subset->set,
-				color_subset->k, c, idx)) {
+		if (!Sorting.lint_vec_search(color_subset->set,
+				color_subset->k, c, idx, 0)) {
 			cout << "error, did not find color" << endl;
 			exit(1);
 			}

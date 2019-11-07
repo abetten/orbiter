@@ -1,0 +1,73 @@
+#MY_PATH=../../../DEV.14
+MY_PATH=/scratch/betten/COMPILE/2014_12_11
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH)/ORBITER2/SRC2
+
+PHILIP_PATH=$(SRC)/FISHER_SCHMIDT
+TREEDRAW_PATH=$(SRC)/TOOLS
+ALGEBRA_PATH=$(SRC2)/ALGEBRA
+PROJECTIVE_SPACE_PATH=$(SRC2)/PROJECTIVE_SPACE
+
+FIELD=-Q 262144 -poly_Q "267267" -q 512 -poly_q "529"
+
+SMALLFIELD = -q 512 -poly "529"
+# Magma minimal polynomials over GF(2):
+
+#x^2 + x + 1 = 7
+#x^3 + x + 1 = 11
+#x^4 + x + 1 = 19
+#x^5 + x^2 + 1 = 37
+#x^6 + x^4 + x^3 + x + 1 = 91
+#x^7 + x + 1 = 131
+#x^8 + x^4 + x^3 + x^2 + 1 = 285
+#x^9 + x^4 + 1 = 529
+#x^10 + x^6 + x^5 + x^3 + x^2 + x + 1
+#x^11 + x^2 + 1
+#x^12 + x^7 + x^6 + x^5 + x^3 + x + 1 = 4331
+#x^13 + x^4 + x^3 + x + 1
+#x^14 + x^7 + x^5 + x^3 + 1 = 16553
+#x^15 + x^5 + x^4 + x^2 + 1
+#x^16 + x^5 + x^3 + x^2 + 1 = 65581
+#x^17 + x^3 + 1
+#x^18 + x^12 + x^10 + x + 1 = 267267
+#x^19 + x^5 + x^2 + x + 1
+#x^20 + x^10 + x^9 + x^7 + x^6 + x^5 + x^4 + x + 1
+
+
+
+
+
+
+
+
+#####################
+#  PG(2,512) over F_2
+#####################
+
+
+matrix:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 1 
+
+# Dec 14, 2014 new MacBook: 11:38
+
+
+
+c:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 1 \
+		-load -clique 
+
+# Dec 14, 2014 on tx1: 10 solutions in 8 hrs 45 min 7 sec
+
+
+
+p:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 1 -load \
+		-process FisherSchmidt_solution_512_1.txt
+
+
+
+conic_type:
+	$(PROJECTIVE_SPACE_PATH)/process_PG.out -v 2 $(SMALLFIELD) \
+		-conic_type  -n 2 -file FisherSchmidt_hyperoval_512_1.txt
+
+

@@ -1,0 +1,49 @@
+MY_PATH=../../../DEV.13
+#MY_PATH=/scratch/betten/COMPILE/2013_07_13
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH)/ORBITER2/SRC2
+
+TRANSLATION_PLANE_PATH=$(SRC2)/REGULAR_PACKING
+GRASSMANN_PATH=$(SRC2)/GRASSMANN
+
+
+Q=5
+K=2
+NO=12
+# NO is the number of the regular spread in the classification of regular packings that is stored in GALOIS
+POLY=
+DEPTH=4
+
+klein:
+	$(TRANSLATION_PLANE_PATH)/klein.out -v 2 -q $(Q)
+
+RP:
+	$(TRANSLATION_PLANE_PATH)/regular_packing_main.out -v 2 -q $(Q) -k $(K) -no $(NO) 
+
+starter:
+	$(TRANSLATION_PLANE_PATH)/regular_packing_main.out -v 5 -q $(Q) -k $(K) -no $(NO) -starter $(DEPTH) 
+
+lift:
+	$(TRANSLATION_PLANE_PATH)/regular_packing_main.out -v 5 -q $(Q) -k $(K) -no $(NO) -lift $(DEPTH) "./" -solve  
+
+#-lex
+#-dimension 4
+
+#dimension 3: no solutions
+#dimension 4: 932 partial packings at depth 3 no solutions in 1 hr 3 min
+
+analyze:
+	$(TRANSLATION_PLANE_PATH)/regular_packing_main.out -v 5 -q $(Q) -k $(K) -no $(NO) -analyze solution_case_134.txt
+
+stab:
+	$(TRANSLATION_PLANE_PATH)/regular_packing_main.out -v 5 -q $(Q) -k $(K) -no $(NO) -stabilizer solution_case_134.txt STARTER_REGULAR_SPREADS/partial_packings_5_2_ $(DEPTH)
+
+
+read:
+	$(TRANSLATION_PLANE_PATH)/regular_packing_main.out -v 5 -q $(Q) -k $(K) -no $(NO) -read_identify_subsets solution_case_134.txt STARTER_REGULAR_SPREADS/partial_packings_5_2_ $(DEPTH) identify_subsets.csv
+
+#classification of orbits:
+#( 6^21, 3^10443, 1^10 )
+
+
+

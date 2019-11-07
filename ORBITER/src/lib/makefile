@@ -287,6 +287,7 @@ MODULES= \
 		top_level/algebra_and_number_theory/semifield_trace.o \
 		top_level/algebra_and_number_theory/trace_record.o \
 		top_level/algebra_and_number_theory/young.o \
+		top_level/combinatorics/bent_function_classify.o \
 		top_level/combinatorics/cayley_graph_search.o \
 		top_level/combinatorics/delandtsheer_doyen.o \
 		top_level/combinatorics/design_create_description.o \
@@ -312,6 +313,7 @@ MODULES= \
 		top_level/geometry/classify_trihedral_pairs.o \
 		top_level/geometry/code_classify.o \
 		top_level/geometry/cubic_curve_with_action.o \
+		top_level/geometry/hermitian_spreads_classify.o \
 		top_level/geometry/invariants_packing.o \
 		top_level/geometry/k_arc_generator.o \
 		top_level/geometry/linear_set_classify.o \

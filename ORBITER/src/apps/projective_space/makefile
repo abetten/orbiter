@@ -22,6 +22,7 @@ all: analyze_projective_code.out  \
 	determine_cubic.out \
 	determine_quadric.out \
 	example_fano_plane.out \
+	hermitian_spreads_main.out \
 	orthogonal_points.out \
 	plane_search.out \
 	points.out \
@@ -67,6 +68,12 @@ determine_quadric.out:  determine_quadric.o;
 
 example_fano_plane.out:  example_fano_plane.o ;
 	$(DISCRETA_CPP)  example_fano_plane.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+hermitian_points.out:  hermitian_points.o ;
+	$(DISCRETA_CPP)  hermitian_points.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+hermitian_spreads_main.out:  hermitian_spreads_main.o ;
+	$(DISCRETA_CPP)  hermitian_spreads_main.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 hill.out:  hill.o;
 	$(DISCRETA_CPP)  hill.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

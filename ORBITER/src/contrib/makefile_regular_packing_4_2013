@@ -1,0 +1,26 @@
+MY_PATH=../../../DEV.13
+#MY_PATH=/scratch/betten/COMPILE/2013_01_23
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH)/ORBITER2/SRC2
+
+TRANSLATION_PLANE_PATH=$(SRC2)/TRANSLATION_PLANE
+GRASSMANN_PATH=$(SRC2)/GRASSMANN
+
+
+Q=4
+K=2
+NO=1
+POLY=
+DEPTH=3
+
+klein:
+	$(TRANSLATION_PLANE_PATH)/klein.out -v 2 -q $(Q)
+
+#24192 external lines
+
+RP:
+	$(TRANSLATION_PLANE_PATH)/regular_packing_main.out -v 2 -q $(Q) -k $(K) -no $(NO) 
+
+lift:
+	$(TRANSLATION_PLANE_PATH)/regular_packing_main.out -v 2 -q $(Q) -k $(K) -no $(NO) -lift $(DEPTH) "./" -solve -lex
+

@@ -126,6 +126,8 @@ class cayley_graph_search;
 class hadamard_classify;
 class linear_set_classify;
 class delandtsheer_doyen;
+class bent_function_classify;
+class hermitian_spread_classify;
 
 // #############################################################################
 // representatives.cpp

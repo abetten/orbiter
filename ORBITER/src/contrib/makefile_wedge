@@ -1,0 +1,46 @@
+MY_PATH=~/DEV.18/GITHUB/orbiter
+MY_PATH2=~/DEV.18
+#MY_PATH=/scratch3/betten/COMPILE/2018_04_17
+ORBITER=$(MY_PATH)/ORBITER
+ORBITER2=$(MY_PATH2)/ORBITER2
+SRC=$(ORBITER)/src
+SRC2=$(ORBITER2)/src
+
+
+TOOLS_PATH=$(SRC)/apps/tools
+COMBINATORICS_PATH=$(SRC)/apps/combinatorics
+PROJECTIVE_SPACE_PATH=$(SRC2)/projective_space
+SUBSPACE_ORBITS_PATH=$(SRC)/apps/subspace_orbits
+
+
+3_2:
+	$(SUBSPACE_ORBITS_PATH)/subspace_orbits_main.out -v 5 -group -PGL 3 2 -wedge -end \
+		-depth 3
+
+4_2:
+	$(SUBSPACE_ORBITS_PATH)/subspace_orbits_main.out -v 5 -group -PGL 4 2 -wedge -end \
+		-depth 6
+
+5_2:
+	$(SUBSPACE_ORBITS_PATH)/subspace_orbits_main.out -v 5 -group -PGL 5 2 -wedge -end \
+		-depth 10
+
+# Dec 7, 2018 5 sec on Mac
+
+
+5_2_5:
+	$(SUBSPACE_ORBITS_PATH)/subspace_orbits_main.out -v 5 -group -PGL 5 2 -wedge -end \
+		-depth 5
+
+# Dec 7, 2018 1 sec on Mac
+
+6_2:
+	$(SUBSPACE_ORBITS_PATH)/subspace_orbits_main.out -v 5 -group -PGL 6 2 -wedge -end \
+		-depth 15
+
+
+6_2_6:
+	$(SUBSPACE_ORBITS_PATH)/subspace_orbits_main.out -v 5 -group -PGL 6 2 -wedge -end \
+		-depth 6
+
+

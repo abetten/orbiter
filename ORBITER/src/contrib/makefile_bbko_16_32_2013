@@ -1,0 +1,50 @@
+MY_PATH=../../../SRC
+
+TEST_PATH = $(MY_PATH)/DISCRETA1_TEST
+DISCRETA_HOME = $(MY_PATH)/LIB/DISCRETA1_LIB
+
+read:
+	$(MY_PATH)/DISCRETA1_TEST/t051.out -v 2 16_32.txt
+
+
+ago:
+	$(MY_PATH)/INC_CAN/inc_can.out -v 2 -classify 16_32.inc 
+
+add_configuration_graph:
+	$(MY_PATH)/INC_CAN/inc_select.out -v 2 -add_configuration_graph 16_32c.inc 16_32cc.inc
+
+
+# need to modify the file 16_32cc.inc by hand a little bit!
+
+tda:
+	$(MY_PATH)/INC_CAN/inc_can.out -v 2 -tda 16_32cc.inc
+
+
+96:
+	$(MY_PATH)/INC_CAN/inc_can.out -v 5 -rowpart 4 4 4 4 4 -colpart 2 24 32 16_32cc_0_tda.inc
+
+
+96_1:
+	$(MY_PATH)/INC_CAN/inc_can.out -v 5 -rowpart 4 4 4 4 4 -colpart 2 24 32  -tda 16_32cc_0_tda_c.inc
+
+96_2:
+	$(MY_PATH)/INC_CAN/inc_can.out -v 5 \
+		-rowpart 4 4 4 4 4 -colpart 2 24 32  \
+		-tda \
+		-identify \
+		-path_t144 $(TEST_PATH) -discreta_home $(DISCRETA_HOME) \
+		-anti_flag_numbers \
+		-point_collinearity_graph \
+		16_32cc_0_tda_c_0_tda.inc
+
+
+96_3:
+	$(MY_PATH)/INC_CAN/inc_can.out -v 5 \
+		-tda \
+		-anti_flag_numbers \
+		-point_collinearity_graph \
+		-flag_orbits \
+		16_32_96_conf.inc
+
+
+

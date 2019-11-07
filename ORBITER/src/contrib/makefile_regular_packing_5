@@ -1,0 +1,534 @@
+MY_PATH=~/DEV.18/GITHUB
+#MY_PATH=/scratch2/betten/COMPILE/2016_04_06
+SRC=$(MY_PATH)/orbiter/ORBITER/src
+SRC2=$(MY_PATH)/orbiter2/ORBITER2/src
+
+REGULAR_PACKING_PATH=$(SRC2)/REGULAR_PACKING
+GRASSMANN_PATH=$(SRC2)/GRASSMANN
+TOOLS_PATH=$(SRC)/apps/tools
+COMBINATORICS_PATH=$(SRC)/apps/combinatorics
+
+
+Q=5
+K=2
+NO=12
+# NO is the number of the regular spread in the 
+#classification of regular packings that is stored in GALOIS
+POLY=
+DEPTH=4
+ARGUMENTS= -q $(Q) -k $(K) -no $(NO) \
+		-base_fname partial_packings_$(Q)_$(K)_ \
+		-input_prefix ./STARTER_REGULAR_SPREADS/ \
+		-output_prefix ./SYSTEMS/ \
+		-solution_prefix ./SOLUTIONS/ \
+		-starter_size $(DEPTH) 
+
+LIFT_ARGS = -q $(Q) -k $(K) -no $(NO) \
+		-lift 
+
+init:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) 
+
+klein:
+	$(REGULAR_PACKING_PATH)/klein.out -v 2 -q $(Q)
+
+RP:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 2 $(ARGUMENTS) 
+
+starter:
+	-mkdir STARTER_REGULAR_SPREADS
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-starter \
+		-W
+
+random_perm:
+	$(COMBINATORICS_PATH)/random_permutation.out -n 6238938 -save random_perm.csv
+
+
+
+# Apr 19, 2016 on dynamics: 3 hrs, 14 min
+# Jan 10, 2016 on tx1: 8 hrs, 6 min  = 486 minutes
+# Jan 3, 2016 on MacBookPro: 3 hrs 12 min 29 = 192 minutes
+# Jan 15, 2016 on dynamics: 3 hrs 11 min  = 191 minutes
+# partial packings under PO^+(6,q):
+#1 : 1 orbits
+#2 : 6 orbits
+#3 : 2096 orbits
+#4 : 6238938 orbits
+# stablizer orders at level 4: (96^8, 72^4, 48^{42}, 32, 24^{304}, 16^{10}, 12^{2116}, 8^{104}, 6^{91}, 4^{2978}, 3^{60}, 2^{254417}, 1^{5978803}) average is 1 + 298121 / 6238938
+
+
+
+# partial packings under PGL(4,q):
+#1 : 1 orbits
+#2 : 6 orbits
+#3 : 2890 orbits
+#4 : 12224417 orbits
+
+
+
+
+# order of orthogonal group PO^+(6,5): 58032000000
+#orthogonal action: ACTION O^+(6,5) degree=806 of type action_on_orthogonal_t->matrix_group_t low_level_point_size=6 f_has_sims=1 f_has_strong_generators=1 base: ( 0, 7, 1, 3, 11, 37 ) order 58032000000 = ( 806, 625, 144, 4, 25, 8 )
+
+# 58032000000 = 2^10 * 3^2 * 5^6 * 13 * 31
+
+
+
+lift_0_1024:
+	- mkdir SYSTEMS
+	- mkdir SOLUTIONS
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 3 \
+		$(ARGUMENTS) \
+		-lift \
+		-save \
+		-split 0 10000000 \
+		-randomized random_perm.csv
+
+
+#		-solve  
+
+solve_r:
+	- mkdir SOLUTIONS
+	$(TOOLS_PATH)/scheduler.out \
+		-v 2 \
+		-input_file_mask SYSTEMS/system_%ld_6238938.txt \
+		-target_file_mask SOLUTIONS/system_%ld_6238938.solutions \
+		-N 6238938 \
+		-J 10 \
+		-command_mask  "$(TOOLS_PATH)/solve_diophant.out -file SYSTEMS/system_%ld_6238938.txt -output_file SOLUTIONS/system_%ld_6238938.solutions" \
+		-reload \
+		-randomized random_perm.csv
+
+
+
+solve_0:
+	$(TOOLS_PATH)/solve_diophant.out -v 2 -file SYSTEMS/system_0_6238938.txt \
+		-output_file SOLUTIONS/system_0_6238938.solutions
+
+solve_1000:
+	$(TOOLS_PATH)/solve_diophant.out -v 2 -file SYSTEMS/system_1000_6238938.txt \
+		-output_file SOLUTIONS/system_1000_6238938.solutions
+
+
+lift_1000:
+	- mkdir SYSTEMS
+	- mkdir SOLUTIONS
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 3 \
+		$(ARGUMENTS) \
+		-lift \
+		-save \
+		-split 1000 10000000 
+
+
+
+#		-solve
+
+
+
+
+
+##########################
+
+group31:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-group 31 
+
+#Found an element of order 31
+#4 2 3 2 1 1 
+#3 4 3 1 0 0 
+#3 0 0 1 1 0 
+#0 4 1 4 2 3 
+#4 3 2 1 4 4 
+#2 4 3 4 2 0 
+
+# creates 8 packings invariant under an element of order 31 and writes a file
+# orbits_of_size_31.csv
+# and packing_0.csv ... packing_7.csv
+
+
+
+
+
+
+################################################################################
+
+sylow2:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-Sylow 2 Sylow2.bin
+
+
+try_2A:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-group_by_single_generator 11337940 2A
+
+try_2B:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-group_by_single_generator 41865246 2B
+
+search2:
+	$(TOOLS_PATH)/rainbow_cliques.out -v 2 -clique_finder -rainbow \
+		-file graph_2B.bin -weighted "31,1,2" -end
+
+################################################################################
+
+
+
+classes2:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-conjugacy_classes Sylow2.bin
+
+try_2:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-group_by_single_generator 46453
+
+# class 1 element 838 has order 4, # orbits which are partial packings = 0
+# class 2 element 960 has order 2, # orbits which are partial packings = 0
+# class 3 element 46453 has order 2, # orbits which are partial packings = 19640: 1^440, 2^19200
+#after we selected 0 / 440, the number of live points is ( 144, 10824 )
+#save_colored_graph fname=graph_0.bin
+
+try_8_1:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-group_by_single_generator 4892
+
+try_8_2:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-group_by_single_generator 4242413
+
+try_8_3:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-group_by_single_generator 16014622
+
+try_8_4:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-group_by_single_generator 16073826
+
+try_8_5:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-group_by_single_generator 16092498
+
+
+try_8_6:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-group_by_single_generator 17095226495
+
+try_8_7:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-group_by_single_generator 17095226336
+
+try_8_8:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-group_by_single_generator 17095226726
+
+try_8_9:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-group_by_single_generator 17095226622
+
+try_8_10:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-group_by_single_generator 17095296639
+
+try_8_11:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-group_by_single_generator 17130257691
+
+try_8_12:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-group_by_single_generator 17130259651
+
+try_8_13:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-group_by_single_generator 32152076835
+
+cliques0:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 2 -file graph_0.bin -all_cliques -no_colors 15 -solution_file
+
+
+
+################################################################################
+
+
+
+sylow3:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-Sylow 3 Sylow3.bin
+
+# finds a group of order 9
+# normalizer order 2304
+# found 9 conjugacy classes
+
+#Found 3 orbits
+#orbit 1 / 3 representative: 1 = 9835309213 orbit_length = 4
+#\left[
+#\begin{array}{*{6}{r}}
+#1 & 1 & 2 & 1 & 2 & 1\\
+#1 & 2 & 3 & 1 & 3 & 0\\
+#0 & 1 & 3 & 1 & 2 & 1\\
+#1 & 3 & 2 & 4 & 2 & 2\\
+#4 & 0 & 4 & 0 & 0 & 1\\
+#1 & 3 & 2 & 3 & 2 & 3\\
+#\end{array}
+#\right]
+
+#Element of order 3 and with 156 fixed points in action PGL_6_5
+#Element of order 3 and with 26 fixed points in action O^+(6,5)
+#cycle type on points in action O^+(6,5) : ( 1^26, 3^260 )
+
+#orbit 2 / 3 representative: 4 = 34386038781 orbit_length = 4
+#\left[
+#\begin{array}{*{6}{r}}
+#0 & 1 & 0 & 4 & 0 & 4\\
+#2 & 4 & 3 & 4 & 3 & 0\\
+#2 & 3 & 2 & 2 & 0 & 4\\
+#4 & 2 & 0 & 2 & 4 & 3\\
+#1 & 0 & 1 & 0 & 0 & 4\\
+#2 & 3 & 0 & 0 & 2 & 2\\
+#\end{array}
+#\right]
+
+#Element of order 3 and with 6 fixed points in action PGL_6_5
+#Element of order 3 and with 2 fixed points in action O^+(6,5)
+#cycle type on points in action O^+(6,5) : ( 1^2, 3^268 )
+
+#we found 2 classes of elements of order 3
+#regular_packing::Sylow_p done
+
+
+try_3A:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-group_by_single_generator 9835309213 3A
+
+
+# writes graph_3A.bin
+# 8 min 19 sec on Mac
+
+search3A:
+	$(TOOLS_PATH)/rainbow_cliques.out -v 2 -clique_finder -rainbow \
+		-file graph_3A.bin -weighted "31,1,3" -end
+
+
+classes3:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-conjugacy_classes Sylow3.bin
+
+
+
+################################################################################
+
+
+
+
+sylow5:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-Sylow 5 Sylow5.bin
+
+
+
+################################################################################
+
+
+sylow13:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-Sylow 13 Sylow13.bin
+
+# finds a group of order 13
+
+
+
+try_13A:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-group_by_single_generator 2692214783 13A
+
+
+
+
+group13:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-group 13 
+
+# go = 13 * 2^9 * 3^2 * 5^6 * 31
+#
+# pick a random element of the given order and perform a search
+# using find_packings_invariant_under_group
+# - compute orbits on external lines
+# - tests which orbits are partial packings (line disjoint spreads)
+# - classifies the surviving orbits by their length, 
+#   and writes each type to a file orbits_of_size_%d.csv
+# - sets the type that we want (the type is the number of orbits 
+#   of a given length that we want)
+
+
+subsets:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-classify_subsets 3 orbits_of_size_31.csv
+
+# Feb 16, 2015 on MacBookPro 2 min 46 sec 
+# all 8 packings have a stabilizer of order 93
+#packings.csv 
+# writes orbits_of_size_31_<i>_stab.bin for i = 0,..,7
+
+
+
+
+subgroup3:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-load_group orbits_of_size_31_0_stab.bin 3 
+
+
+#We found 51680 orbits
+#We found 30580 orbits which are partial packings
+#The distribution of orbit lengths is: 1^20, 3^30560
+#There are 30560 orbits of length 3 :
+#after we selected 18 / 20, the number of live points is ( 0, 16120 )
+# saves graph_18.bin
+# Feb 16, 2015 on MacBookPro 15 min 32 sec 
+
+
+
+cliques18:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 1 -file graph_18.bin -all_cliques -no_colors 10 -solution_file
+
+
+# Feb 16, 2015 on MacBookPro 14 min 58 sec 
+# nb_sol = 768
+# writes graph_18.solutions
+
+
+read3:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-load_group orbits_of_size_31_0_stab.bin 3  -read_cliques
+
+# Feb 16, 2015 on MacBookPro 1 min 45 sec 
+#We found 768 packings in case 18
+#Written file packings_case_18_as_external_lines.csv of size 153274
+
+ago:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 2 $(ARGUMENTS) \
+		-classify_subsets 3 packings_case_18_as_external_lines.csv
+
+
+# Feb 16, 2015 on MacBookPro 27 min 50 sec 
+# finds only 3 and 93
+
+
+#####
+
+
+subsets_18_0:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-identify_subsets packings_case_18_0.csv
+
+subgroup:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-load_group packing_7_stab.bin 3 
+
+load0:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-load_packing_and_group packing_0_as_external_lines.csv packing_0_stab.bin 
+
+load7:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-load_packing_and_group packing_7_as_external_lines.csv packing_7_stab.bin 
+
+#cliques0:
+#	$(TOOLS_PATH)/all_rainbow_cliques.out -v 1 -file graph_0.bin -all_cliques -no_colors 10 -solution_file
+
+cliques1:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 1 -file graph_1.bin -all_cliques -no_colors 10 -solution_file
+
+cliques2:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 1 -file graph_2.bin -all_cliques -no_colors 10 -solution_file
+
+cliques3:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 1 -file graph_3.bin -all_cliques -no_colors 10 -solution_file
+
+cliques4:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 1 -file graph_4.bin -all_cliques -no_colors 10 -solution_file
+
+cliques5:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 1 -file graph_5.bin -all_cliques -no_colors 10 -solution_file
+
+cliques6:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 1 -file graph_6.bin -all_cliques -no_colors 10 -solution_file
+
+cliques7:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 1 -file graph_7.bin -all_cliques -no_colors 10 -solution_file
+
+cliques8:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 1 -file graph_8.bin -all_cliques -no_colors 10 -solution_file
+
+cliques9:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 1 -file graph_9.bin -all_cliques -no_colors 10 -solution_file
+
+cliques10:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 1 -file graph_10.bin -all_cliques -no_colors 10 -solution_file
+
+cliques11:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 1 -file graph_11.bin -all_cliques -no_colors 10 -solution_file
+
+cliques12:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 1 -file graph_12.bin -all_cliques -no_colors 10 -solution_file
+
+cliques13:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 1 -file graph_13.bin -all_cliques -no_colors 10 -solution_file
+
+cliques14:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 1 -file graph_14.bin -all_cliques -no_colors 10 -solution_file
+
+cliques15:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 1 -file graph_15.bin -all_cliques -no_colors 10 -solution_file
+
+cliques16:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 1 -file graph_16.bin -all_cliques -no_colors 10 -solution_file
+
+cliques17:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 1 -file graph_17.bin -all_cliques -no_colors 10 -solution_file
+
+
+cliques19:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 1 -file graph_19.bin -all_cliques -no_colors 10 -solution_file
+
+r18:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-load_group packing_7_stab.bin 3  -read_cliques
+
+c18:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 2 $(ARGUMENTS) \
+		-classify_subsets 3 packings_case_18_as_external_lines.csv
+
+c18_0:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-classify_subsets 3 packings_case_18_0.csv
+
+
+
+
+#-lex
+#-dimension 4
+
+#dimension 3: no solutions
+#dimension 4: 932 partial packings at depth 3 no solutions in 1 hr 3 min
+
+
+
+
+
+analyze:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-analyze solution_case_134.txt
+
+stab:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-stabilizer solution_case_134.txt STARTER_REGULAR_SPREADS/partial_packings_5_2_ $(DEPTH)
+
+
+read:
+	$(REGULAR_PACKING_PATH)/regular_packing_main.out -v 5 $(ARGUMENTS) \
+		-read_identify_subsets solution_case_134.txt STARTER_REGULAR_SPREADS/partial_packings_5_2_ $(DEPTH) identify_subsets.csv
+
+#classification of orbits:
+#( 6^21, 3^10443, 1^10 )
+
+
+

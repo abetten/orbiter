@@ -1,0 +1,26 @@
+MY_PATH=../../..
+#MY_PATH=/scratch/betten/COMPILE/2013_01_23
+SRC=$(MY_PATH)/SRC
+SRC2=$(MY_PATH)/SRC2
+
+TDO_PATH = $(SRC)/TDO
+WIDOR_PATH = $(SRC)/WIDOR
+IG_PATH = $(SRC)/INC_GEN
+IC_PATH = $(SRC)/INC_CAN
+DIOPHANT_PATH = $(SRC)/DIOPHANT
+
+
+can:
+	$(IC_PATH)/inc_can.out -v 2 krc.inc
+
+
+bs:
+	$(IC_PATH)/inc_select.out -v 2 -blocking_set -starter_size 3 krc.inc krc_bs.inc
+
+# 322 in krc_bs.inc
+# MacBook Pro 2/19/2013 in 8 hrs 46 min 17 sec
+#Read file krc.inc with 4466 geometries, total = 4466
+#written file krc_bs.inc of size 353061
+#total number of geometries read = 4466
+#total number of geometries written = 322
+

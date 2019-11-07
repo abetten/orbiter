@@ -1,0 +1,183 @@
+MY_PATH=~/DEV.18/GITHUB/orbiter
+#MY_PATH=/projects/abetten@colostate.edu/COMPILE/2018_03_11
+MY_PATH2=~/DEV.18
+#MY_PATH=~/DEV.18
+#MY_PATH=/scratch3/betten/COMPILE/2018_03_23
+#MY_PATH2=/scratch3/betten/COMPILE/2018_03_23
+ORBITER=$(MY_PATH)/ORBITER
+ORBITER2=$(MY_PATH2)/ORBITER2
+SRC=$(ORBITER)/SRC
+SRC2=$(ORBITER2)/SRC2
+
+BLT_PATH=$(SRC)/APPS/BLT
+SEMIFIELD_PATH=$(SRC2)/SEMIFIELD
+GRASSMANN_PATH=$(SRC2)/GRASSMANN
+TOOLS_PATH=$(SRC)/APPS/TOOLS
+
+
+
+ORDER=61
+DATE_OF_BINARIES=2018_03_20
+NB_JOBS_FOR_CREATE_GRAPHS=256
+NB_JOBS_FOR_CLIQUE_FINDER=512
+NB_TASKS_PER_NODE=12
+VERBOSE_LEVEL=4
+
+nothing:
+
+step1:
+	$(TOOLS_PATH)/run_blt.out  -orbiter_path $(ORBITER) -q $(ORDER) -v $(VERBOSE_LEVEL) 
+
+# break it off after the cases have been created.
+
+
+create_jobs1:
+	$(TOOLS_PATH)/create_file.out -file_mask job%03ld \
+		-N $(NB_JOBS_FOR_CREATE_GRAPHS) \
+		-line "#!/bin/bash" \
+		-line "#SBATCH -J job%03ld" \
+		-line "#SBATCH -p shas" \
+		-line "#SBATCH --qos normal" \
+		-line "#SBATCH -t 24:00:00" \
+		-line "#SBATCH -N 1" \
+		-line "#SBATCH --mem 20000" \
+		-line "mkdir /scratch/summit/abetten@colostate.edu/BLT.18/$(ORDER)/%03ld" \
+		-line "mkdir /scratch/summit/abetten@colostate.edu/BLT.18/$(ORDER)/%03ld/G" \
+		-line "/projects/abetten@colostate.edu/COMPILE/$(DATE_OF_BINARIES)/ORBITER/SRC/APPS/BLT/blt_main.out -v 2 -BLT -q $(ORDER) -starter_size 5 -input_prefix /projects/abetten@colostate.edu/BLT.18/Q$(ORDER)/STARTER_DIR/ -output_prefix /scratch/summit/abetten@colostate.edu/BLT.18/$(ORDER)/%03ld/SYSTEMS/ -solution_prefix /scratch/summit/abetten@colostate.edu/BLT.18/$(ORDER)/%03ld/SOLUTIONS/ -base_fname BLT_$(ORDER) -create_graphs %ld $(NB_JOBS_FOR_CREATE_GRAPHS) 4 -lex -output_prefix /scratch/summit/abetten@colostate.edu/BLT.18/$(ORDER)/%03ld/G/" 
+
+
+
+
+join:
+	$(TOOLS_PATH)/join_sets.out -v 2 \
+		-N $(NB_JOBS_FOR_CREATE_GRAPHS) \
+		-file_mask /scratch/summit/abetten@colostate.edu/BLT.18/$(ORDER)/%03ld/G/list_of_cases_BLT_$(ORDER)_5_%ld_$(NB_JOBS_FOR_CREATE_GRAPHS).txt \
+		-out_mask /scratch/summit/abetten@colostate.edu/BLT.18/$(ORDER)/%03ld/G/graph_BLT_$(ORDER)_5_%ld.bin \
+		-save graphs.csv
+
+
+
+create_jobs2:
+	-mkdir JOBS2
+	$(TOOLS_PATH)/create_file.out -v 2 \
+		-read_cases_text graphs.csv 3 4 \
+		-file_mask job%04ld \
+		-N $(NB_JOBS_FOR_CLIQUE_FINDER) \
+		-line "#!/bin/bash" \
+		-line "#SBATCH -J job%04ld" \
+		-line "#SBATCH -p shas" \
+		-line "#SBATCH --qos normal" \
+		-line "#SBATCH -t 24:00:00" \
+		-line "#SBATCH -N 1" \
+		-line "#SBATCH --output=/scratch/summit/abetten@colostate.edu/BLT.18/$(ORDER)/OUTPUT/slurm-%04ld-%%j.out" \
+		-tasks $(NB_TASKS_PER_NODE) "#SBATCH --ntasks-per-node=%ld" \
+		-command  "/projects/abetten@colostate.edu/COMPILE/$(DATE_OF_BINARIES)/ORBITER/SRC/APPS/TOOLS/all_rainbow_cliques.out -v 2 -success_file /scratch/summit/abetten@colostate.edu/BLT.18/$(ORDER)/SOLUTIONS/BLT_$(ORDER)_solutions_%04ld_%02ld.success -output_file /scratch/summit/abetten@colostate.edu/BLT.18/$(ORDER)/SOLUTIONS/BLT_$(ORDER)_solutions_%04ld_%02ld.txt -input_list_of_files " \
+		-final_line "wait" 
+	mv job???? JOBS2
+	
+
+#mv makefile_submit JOBS2
+
+
+missing_0:
+	$(TOOLS_PATH)/missing_files.out -v 2 -N 256 -N2 $(NB_TASKS_PER_NODE) \
+		-mask SOLUTIONS/SOLUTIONS_0/BLT_$(ORDER)_solutions_%04ld_%02ld.success \
+		-save missing_0.csv
+
+missing_256:
+	$(TOOLS_PATH)/missing_files.out -v 2 -N 512 -N_min 256 -N2 $(NB_TASKS_PER_NODE) \
+		-mask SOLUTIONS/SOLUTIONS_256/BLT_$(ORDER)_solutions_%04ld_%02ld.success \
+		-save missing_256.csv
+
+
+
+cat_0:
+	- mkdir SOLUTIONS/SOLUTIONS_0_COLLECTED
+	$(TOOLS_PATH)/concatenate_files.out -v 2 -N $(NB_TASKS_PER_NODE) -loop 0 255 \
+		-fname_in_mask SOLUTIONS/SOLUTIONS_0/BLT_$(ORDER)_solutions_%04ld_%%02ld_stats.csv \
+		-save SOLUTIONS/SOLUTIONS_0_COLLECTED/BLT_$(ORDER)_solutions_%04ld_stats.csv \
+		-EOF_marker END \
+		-title_line 
+	$(TOOLS_PATH)/concatenate_files.out -v 2 -N $(NB_TASKS_PER_NODE) -loop 0 255 \
+		-fname_in_mask SOLUTIONS/SOLUTIONS_0/BLT_$(ORDER)_solutions_%04ld_%%02ld.txt \
+		-save SOLUTIONS/SOLUTIONS_0_COLLECTED/BLT_$(ORDER)_solutions_%04ld.txt \
+		-EOF_marker -1
+
+
+cat_256:
+	- mkdir SOLUTIONS/SOLUTIONS_256_COLLECTED
+	$(TOOLS_PATH)/concatenate_files.out -v 2 -N $(NB_TASKS_PER_NODE) -loop 256 511 \
+		-fname_in_mask SOLUTIONS/SOLUTIONS_256/BLT_$(ORDER)_solutions_%04ld_%%02ld_stats.csv \
+		-save SOLUTIONS/SOLUTIONS_256_COLLECTED/BLT_$(ORDER)_solutions_%04ld_stats.csv \
+		-EOF_marker END \
+		-title_line 
+	$(TOOLS_PATH)/concatenate_files.out -v 2 -N $(NB_TASKS_PER_NODE) -loop 256 511 \
+		-fname_in_mask SOLUTIONS/SOLUTIONS_256/BLT_$(ORDER)_solutions_%04ld_%%02ld.txt \
+		-save SOLUTIONS/SOLUTIONS_256_COLLECTED/BLT_$(ORDER)_solutions_%04ld.txt \
+		-EOF_marker -1
+
+
+
+
+copy_all:
+	- mkdir SOLUTIONS/ALL
+	cp SOLUTIONS/SOLUTIONS_0_COLLECTED/* SOLUTIONS/ALL
+	cp SOLUTIONS/SOLUTIONS_256_COLLECTED/* SOLUTIONS/ALL
+
+
+cat_all:
+	$(TOOLS_PATH)/concatenate_files.out -v 2 -N $(NB_JOBS_FOR_CLIQUE_FINDER) \
+		-fname_in_mask SOLUTIONS/ALL/BLT_$(ORDER)_solutions_%04ld_stats.csv \
+		-save SOLUTIONS/BLT_$(ORDER)_solutions_5_0_1_stats.csv \
+		-EOF_marker END \
+		-title_line 
+	$(TOOLS_PATH)/concatenate_files.out -v 2 -N $(NB_JOBS_FOR_CLIQUE_FINDER) \
+		-fname_in_mask SOLUTIONS/ALL/BLT_$(ORDER)_solutions_%04ld.txt \
+		-save SOLUTIONS/BLT_$(ORDER)_solutions_5_0_1.txt \
+		-EOF_marker -1
+
+# not needed:
+
+trouble_jobs:
+	$(TOOLS_PATH)/create_file.out -v 2 \
+		-read_cases_text graphs_trouble.csv 3 4 \
+		-file_mask trouble%02ld \
+		-N 14 \
+		-line "#!/bin/bash" \
+		-line "#SBATCH -J trouble%02ld" \
+		-line "#SBATCH -p shas" \
+		-line "#SBATCH --qos normal" \
+		-line "#SBATCH -t 24:00:00" \
+		-line "#SBATCH -N 1" \
+		-line "#SBATCH --output=/scratch/summit/abetten@colostate.edu/BLT.18/$(ORDER)/OUTPUT/slurm-%%j.out" \
+		-tasks 1 "#SBATCH --ntasks-per-node=%ld" \
+		-command  "/projects/abetten@colostate.edu/COMPILE/$(DATE_OF_BINARIES)/ORBITER/SRC/APPS/TOOLS/all_rainbow_cliques.out -v 2 -output_file /scratch/summit/abetten@colostate.edu/BLT.18/$(ORDER)/SOLUTIONS/BLT_$(ORDER)_solutions_trouble_%02ld_%01ld.txt -input_list_of_files " \
+		-final_line "wait" 
+
+
+
+
+build_db:
+	$(BLT_PATH)/blt_main.out -v 2 -BLT -q $(ORDER) -starter_size 5 -input_prefix STARTER_DIR/ -output_prefix SYSTEMS/ -solution_prefix SOLUTIONS/ -base_fname BLT_$(ORDER) -build_db
+
+
+read_solutions:
+	$(BLT_PATH)/blt_main.out -v 2 -BLT -q $(ORDER) -starter_size 5 -input_prefix STARTER_DIR/ -output_prefix SYSTEMS/ -solution_prefix SOLUTIONS/ -base_fname BLT_$(ORDER) -read_solutions_from_clique_finder 
+
+
+compute_orbits:
+	$(BLT_PATH)/blt_main.out -v 2 -BLT -q $(ORDER) -starter_size 5 -input_prefix STARTER_DIR/ -output_prefix SYSTEMS/ -solution_prefix SOLUTIONS/ -base_fname BLT_$(ORDER) -compute_orbits
+
+
+isomorph:
+	$(BLT_PATH)/blt_main.out -v 2 -BLT -q $(ORDER) -starter_size 5 -input_prefix STARTER_DIR/ -output_prefix SYSTEMS/ -solution_prefix SOLUTIONS/ -base_fname BLT_$(ORDER) -isomorph_testing -print_interval 250
+
+
+
+report:
+	$(BLT_PATH)/blt_main.out -v 2 -BLT -q $(ORDER) -starter_size 5 -input_prefix STARTER_DIR/ -output_prefix SYSTEMS/ -solution_prefix SOLUTIONS/ -base_fname BLT_$(ORDER) -report
+
+
+
+
+
