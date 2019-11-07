@@ -1,0 +1,31 @@
+MY_PATH=~/DEV.19/GITHUB
+#MY_PATH=/scratch3/betten/COMPILE/2018_10_07/
+SRC=$(MY_PATH)/orbiter/ORBITER/src
+SRC2=$(MY_PATH)/orbiter2/ORBITER2/src
+
+GROUPS_PATH=$(SRC)/apps/groups
+GRAPH_THEORY_PATH=$(SRC)/apps/graph_theory
+TOOLS_PATH=$(SRC)/apps/tools
+ALGEBRA2_PATH=$(SRC2)/ALGEBRA2
+
+woldar:
+	$(ALGEBRA2_PATH)/woldar.out -v 3 -linear -AGL 1 8 -end  
+
+AGL_1_8:
+	$(GROUPS_PATH)/linear_group.out -v 3 -linear -AGL 1 8 -end  \
+		-orbits_on_subsets 8 \
+		-W \
+		-draw_poset
+
+
+draw:
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 2 \
+		-file orbits_on_k_sets_poset_lvl_8.layered_graph \
+		-xin 1000000 -yin 1000000 \
+		-xout 1000000 -yout 1000000 \
+		-y_stretch 0.75 \
+		-rad 20000 \
+		-embedded
+	pdflatex orbits_on_k_sets_poset_lvl_8_draw.tex
+	open orbits_on_k_sets_poset_lvl_8_draw.pdf
+

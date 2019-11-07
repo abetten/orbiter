@@ -1,0 +1,97 @@
+MY_PATH=~/DEV.19
+MY_LOCAL_PATH=~/DEV.19/GITHUB/orbiter
+MY_LOCAL_PATH2=~/DEV.19/GITHUB/orbiter2
+#MY_PATH=/scratch2/betten/COMPILE/2017_03_22
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH)/ORBITER2/SRC2
+SRC_LOCAL=$(MY_LOCAL_PATH)/ORBITER/SRC
+SRC2_LOCAL=$(MY_LOCAL_PATH2)/ORBITER2/src
+
+
+MATH360_PATH=$(SRC2)/MATH360
+DRAW_PATH=$(SRC2)/DRAW
+LOCAL_TOOLS_PATH=$(SRC_LOCAL)/APPS/TOOLS
+TOOLS_PATH=$(SRC)/APPS/TOOLS
+TARUN_PATH=$(SRC2_LOCAL)/TARUN
+SURFACE_PATH=$(SRC2_LOCAL)/SURFACE
+ALGEBRA_PATH=$(SRC2)/ALGEBRA
+PROJECTIVE_SPACE_PATH=$(SRC)/APPS/PROJECTIVE_SPACE
+ARCS_PATH=$(SRC)/APPS/ARCS
+ALGEBRA_PATH=$(SRC2)/ALGEBRA
+ARCS_EASY_PATH=$(MY_PATH)/ORBITER_APPS/ARCS
+
+
+
+#NB_ROUNDS=4
+NB_FRAMES=30
+FNAME=tarun_%02ld_%03ld
+FNAME_POV=$(FNAME).pov
+
+# either:
+
+#		-W 800 -H 600 \
+#		-font_size 36 -stroke_width 2 \
+#		-global_picture_scale 1.0 \
+
+# or:
+
+#		-W 2560 -H 1920 \
+#		-font_size 126 -stroke_width 5 \
+#		-global_picture_scale 3.0 \
+
+
+
+create:
+	- rm -rf POV
+	mkdir POV
+	$(TARUN_PATH)/tarun.out -v 2  \
+		-output_mask $(FNAME_POV) \
+		-rounds "5" \
+		-nb_frames_default 30 \
+		-video_options \
+			-zoom 0 70 70 \
+			-default_angle 60 -clipping_radius 1.8 \
+			-W 800 -H 600 \
+		-end
+	mv *.pov POV
+	mv makefile_animation POV
+
+
+create_old:
+	- rm -rf POV
+	mkdir POV
+	$(SURFACE_PATH)/animate.out -v 2 -triangulation_of_cube \
+		-output_mask $(FNAME_POV) \
+		-rounds "0,1" \
+		-nb_frames_default 30 \
+		-video_options \
+			-zoom 0 70 70 \
+			-default_angle 60 -clipping_radius 1.8 \
+			-W 800 -H 600 \
+		-end
+	mv *.pov POV
+	mv makefile_animation POV
+
+
+#		-no_bottom_plane 0 \
+#		-camera 0 "<1,1,1>" "<-40+20,1+20,40+20>" "<25,25,25>" \
+#		-zoom 0 145 145 \
+#		-W 800 -H 600 \
+#		-W 2560 -H 1920 \
+
+
+tarun:
+	- rm tarun.mp4
+	- rm -r FRAMES_TARUN
+	- mkdir FRAMES_TARUN
+	$(LOCAL_TOOLS_PATH)/prepare_frames.out \
+		-i 0 30 PNG/tarun_00_%03ld.png \
+		-i 0 30 PNG/tarun_01_%03ld.png \
+		-i 0 30 PNG/tarun_02_%03ld.png \
+		-i 0 30 PNG/tarun_03_%03ld.png \
+		-i 0 30 PNG/tarun_04_%03ld.png \
+		-output_starts_at 0 \
+		-o FRAMES_TARUN/frame%04d.png
+	ffmpeg -r 15 -f image2 -i FRAMES_TARUN/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  tarun.mp4
+
+

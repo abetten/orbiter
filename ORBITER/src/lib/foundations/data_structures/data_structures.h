@@ -159,8 +159,8 @@ class fancy_set {
 
 	int n;
 	int k;
-	int *set;
-	int *set_inv;
+	long int *set;
+	long int *set_inv;
 
 	fancy_set();
 	~fancy_set();

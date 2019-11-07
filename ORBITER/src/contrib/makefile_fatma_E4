@@ -1,0 +1,44 @@
+MY_PATH=~/DEV.19/GITHUB/orbiter
+MY_PATH2=~/DEV.19/GITHUB
+#MY_PATH=/scratch3/betten/COMPILE/2018_02_06
+ORBITER=$(MY_PATH)/orbiter
+ORBITER2=$(MY_PATH2)/orbiter2/ORBITER2
+SRC=$(ORBITER)/src
+SRC2=$(ORBITER2)/src
+
+
+ALGEBRA_PATH=$(SRC)/apps/algebra
+SURFACES_PATH=$(SRC)/apps/surfaces
+PROJECTIVE_SPACE_PATH=$(SRC)/apps/projective_space
+BLT_PATH=$(SRC)/apps/blt
+TOOLS_PATH=$(SRC)/apps/tools
+MATH161_PATH=$(SRC2)/MATH161
+DRAW_PATH=$(SRC2)/DRAW
+SAJEEB_PATH=../../../DEV.19/GITHUB/CliqueFinder
+CLIQUER_PATH=$(SRC2)/CLIQUER/INTERFACE
+OPTIMIZE_MM2_PATH=$(SRC2)/OPTIMIZE_MM2
+ALGEBRA_PATH=$(SRC)/apps/algebra
+LOCAL_TOOLS_PATH=$(SRC)/apps/tools
+
+
+
+a:
+	$(ALGEBRA_PATH)/eigenstuff.out -q 13 -M 4 "1,0,0,0,0,0,12,0,0,1,1,0,6,3,10,12"
+
+
+13_0:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 13 -catalogue 0 -end
+	pdflatex surface_catalogue_q13_0.tex
+	open surface_catalogue_q13_0.pdf
+b:
+	$(ALGEBRA_PATH)/eigenstuff.out -q 13 -M 4 "1,7,11,0,2,1,0,11,8,5,0,0,1,5,0,0"
+
+
+13_0t:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 13 -catalogue 0 -end \
+		-transform_inverse "3,1,10,12,7,10,11,12,8,4,11,12,5,12,5,12"
+	pdflatex surface_catalogue_q13_0.tex
+	open surface_catalogue_q13_0.pdf
+

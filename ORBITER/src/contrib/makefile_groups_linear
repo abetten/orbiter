@@ -1,0 +1,125 @@
+MY_PATH=~/DEV.19/GITHUB/orbiter
+#MY_PATH=/scratch3/betten/COMPILE/2018_10_07/
+SRC=$(MY_PATH)/ORBITER/src
+SRC2=$(MY_PATH)/ORBITER2/src2
+
+GROUPS_PATH=$(SRC)/apps/groups
+PROJECTIVE_SPACE_PATH=$(SRC)/apps/projective_space
+GRAPH_THEORY_PATH=$(SRC)/apps/graph_theory
+
+
+J1:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PGL 7 11 -Janko1 -end \
+		-report
+	pdflatex PGL_7_11_Subgroup_Janko1_report.tex
+	open PGL_7_11_Subgroup_Janko1_report.pdf
+
+
+
+PG22:
+	$(PROJECTIVE_SPACE_PATH)/cheat_sheet_PG.out -v 2 -n 2 -q 2 
+	pdflatex PG_2_2.tex
+	open PG_2_2.pdf
+
+L32:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PGL 3 2 -end \
+		-orbit_of 0 \
+		-report
+	pdflatex PGL_3_2_report.tex
+	open PGL_3_2_report.pdf
+
+
+L42:
+	$(GROUPS_PATH)/linear_group.out -v 5  \
+		-linear -PGL 4 2 -end \
+		-orbit_of 0 \
+		-report
+	pdflatex PGL_4_2_report.tex
+	open PGL_4_2_report.pdf
+
+L42o:
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 2 \
+		-file PGL_4_2_orbit_of_point_0.layered_graph \
+		-xin 1000000 -yin 1000000 \
+		-xout 1000000 -yout 1000000 \
+		-y_stretch 0.3 \
+		-rad 18000 \
+		-embedded \
+		-spanning_tree
+	pdflatex PGL_4_2_orbit_of_point_0_draw_tree.tex
+	open PGL_4_2_orbit_of_point_0_draw_tree.pdf
+
+#		-nodes_empty \
+
+# creates PGL_4_2_orbit_of_point_0.layered_graph
+
+
+L52:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PGL 5 2 -end \
+		-orbit_of 0 \
+		-report
+	pdflatex PGL_5_2_report.tex
+	open PGL_5_2_report.pdf
+
+
+L52o:
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 2 \
+		-file PGL_5_2_orbit_of_point_0.layered_graph \
+		-xin 1000000 -yin 1000000 \
+		-xout 1000000 -yout 1000000 \
+		-y_stretch 0.5 \
+		-rad 18000 \
+		-embedded \
+		-spanning_tree
+	pdflatex PGL_5_2_orbit_of_point_0_draw_tree.tex
+	#open PGL_5_2_orbit_of_point_0_draw_tree.pdf
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 2 \
+		-file PGL_5_2_0_shallow.layered_graph \
+		-xin 1000000 -yin 1000000 \
+		-xout 1000000 -yout 1000000 \
+		-y_stretch 0.5 \
+		-rad 18000 \
+		-embedded \
+		-spanning_tree
+	pdflatex PGL_5_2_0_shallow_draw_tree.tex
+	open PGL_5_2_0_shallow_draw_tree.pdf
+
+
+#PGL_5_2_0_shallow.layered_graph
+
+
+
+
+O62:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PGL 6 2 -orthogonal -1 -end \
+
+#Strong generators for a group of order 51840:
+
+
+Om62:
+	$(GROUPS_PATH)/orthogonal_group.out -v 2 -epsilon -1 -d 6 -q 2
+
+#order_PO_minus the order of PO^-(6,2) is 51840
+#order_PO_epsilon  f_semilinear=0 epsilon=-1 k=5 q=2 order=51840
+# Not true: order 25920, degree 27 = U_4(2) = Weyl group of type E_6 = Sp_4(2) = O_5(3)
+
+
+tree:
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 2 \
+		-file O_-1_6_2_orbit_0.layered_graph \
+		-xin 1000000 -yin 1000000 \
+		-xout 1000000 -yout 1000000 \
+		-y_stretch 0.3 \
+		-rad 4000 \
+		-nodes_empty \
+		-embedded \
+		-spanning_tree
+	pdflatex O_-1_6_2_orbit_0_draw_tree.tex
+	open O_-1_6_2_orbit_0_draw_tree.pdf
+
+
+

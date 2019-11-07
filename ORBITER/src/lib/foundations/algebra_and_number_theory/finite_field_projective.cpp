@@ -2309,7 +2309,7 @@ void finite_field::all_PG_elements_in_subspace(
 }
 
 void finite_field::all_PG_elements_in_subspace_array_is_given(
-		int *genma, int k, int n, int *point_list, int &nb_points,
+		int *genma, int k, int n, long int *point_list, int &nb_points,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2644,7 +2644,7 @@ void finite_field::do_blocking_set_family_3(int n,
 
 	cout << "we created a blocking set of lines of "
 			"size " << S->k << ":" << endl;
-	int_vec_print(cout, S->set, S->k);
+	lint_vec_print(cout, S->set, S->k);
 	cout << endl;
 
 
@@ -2652,7 +2652,7 @@ void finite_field::do_blocking_set_family_3(int n,
 
 	pt_type = NEW_int(P->N_points);
 
-	P->point_types_of_line_set_int(S->set, S->k, pt_type, 0);
+	P->point_types_of_line_set(S->set, S->k, pt_type, 0);
 
 	classify C;
 

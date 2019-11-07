@@ -84,7 +84,7 @@ public:
 	void set_delete_elements(int *elts, int &size,
 		int *elts_to_delete, int nb_elts_to_delete);
 	void set_delete_element(int *elts, int &size, int a);
-	int compare_lexicographically(int a_len, int *a, int b_len, int *b);
+	int compare_lexicographically(int a_len, long int *a, int b_len, long int *b);
 	long int int_n_choose_k(int n, int k);
 	void make_t_k_incidence_matrix(int v, int t, int k, int &m, int &n, int *&M,
 		int verbose_level);

@@ -1,0 +1,52 @@
+MY_PATH=~/DEV.19/GITHUB/orbiter
+MY_PATH2=~/DEV.19/GITHUB/orbiter2
+#MY_PATH=/scratch3/betten/COMPILE/2018_12_25
+SRC=$(MY_PATH)/ORBITER/src
+SRC2=$(MY_PATH2)/ORBITER2/src
+
+ALGEBRA_PATH=$(SRC)/apps/algebra
+GROUPS_PATH=$(SRC)/apps/groups
+PROJECTIVE_SPACE_PATH=$(SRC)/apps/projective_space
+SUBSPACE_ORBITS_PATH=$(SRC)/apps/subspace_orbits
+GRAPH_THEORY_PATH=$(SRC)/apps/graph_theory
+SURFACE_PATH=$(SRC)/apps/surfaces
+ARCS_PATH=$(SRC)/apps/arcs
+MATH360_PATH=$(SRC2)/MATH360
+
+
+
+problems:
+	$(MATH360_PATH)/worksheet_mod.out -v 3 -seed 1 -nb_problems 20 
+	$(MATH360_PATH)/worksheet_mod.out -v 3 -seed 1 -nb_problems 20 -key 
+	pdflatex worksheet_mod_p.tex
+	pdflatex worksheet_mod_p_key.tex
+	open worksheet_mod_p_key.pdf
+
+problems2:
+	$(MATH360_PATH)/worksheet_mod.out -v 3 -seed 2 -nb_problems 20 
+	$(MATH360_PATH)/worksheet_mod.out -v 3 -seed 2 -nb_problems 20 -key 
+	pdflatex worksheet_mod_p.tex
+	pdflatex worksheet_mod_p_key.tex
+	open worksheet_mod_p_key.pdf
+
+
+
+gcd:
+	$(MATH360_PATH)/worksheet_gcd.out -v 3 -seed 1 -nb_problems 10  -N 250
+	$(MATH360_PATH)/worksheet_gcd.out -v 3 -seed 1 -nb_problems 10  -N 250 -key 
+	pdflatex worksheet_gcd_N250_seed1.tex
+	pdflatex worksheet_gcd_N250_seed1_key.tex
+	open worksheet_gcd_N250_seed1.pdf
+	open worksheet_gcd_N250_seed1_key.pdf
+
+
+gcd2:
+	$(MATH360_PATH)/worksheet_gcd.out -v 3 -seed 2 -nb_problems 6  -N 250
+	$(MATH360_PATH)/worksheet_gcd.out -v 3 -seed 2 -nb_problems 6  -N 250 -key 
+	pdflatex worksheet_gcd_N250_seed2.tex
+	pdflatex worksheet_gcd_N250_seed2_key.tex
+	open worksheet_gcd_N250_seed2.pdf
+	open worksheet_gcd_N250_seed2_key.pdf
+
+
+

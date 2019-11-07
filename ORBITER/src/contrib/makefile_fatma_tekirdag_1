@@ -1,0 +1,383 @@
+MY_PATH=~/DEV.19/GITHUB/orbiter/ORBITER
+MY_PATH2=~/DEV.19/GITHUB/orbiter2/ORBITER2
+#MY_PATH=/scratch3/betten/COMPILE/2018_02_06
+SRC=$(MY_PATH)/src
+SRC2=$(ORBITER2)/src
+
+
+ARCS_PATH=$(SRC)/apps/arcs
+ALGEBRA_PATH=$(SRC)/apps/algebra
+GROUPS_PATH=$(SRC)/apps/groups
+GRAPH_THEORY_PATH=$(SRC)/apps/graph_theory
+SURFACES_PATH=$(SRC)/apps/surfaces
+BLT_PATH=$(SRC)/apps/blt
+TOOLS_PATH=$(SRC)/apps/tools
+MATH161_PATH=$(SRC2)/MATH161
+SURFACE_PATH=$(SRC2)/SURFACE
+DRAW_PATH=$(SRC2)/DRAW
+SAJEEB_PATH=../../../DEV.19/GITHUB/CliqueFinder
+CLIQUER_PATH=$(SRC2)/CLIQUER/INTERFACE
+OPTIMIZE_MM2_PATH=$(SRC2)/OPTIMIZE_MM2
+ALGEBRA_PATH=$(SRC)/apps/algebra
+LOCAL_TOOLS_PATH=$(SRC)/apps/tools
+PROJECTIVE_SPACE_PATH=$(SRC)/apps/projective_space
+
+Q=8
+
+
+# from Fatma:
+
+#8_0abcd:
+
+T1:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 8 -catalogue 0 -end \
+		-transform "1,0,0,0,0,1,0,6,0,0,1,6,0,0,0,1,0" \
+		-transform "1,4,4,0,0,1,0,0,0,0,1,0,0,0,0,1,0" \
+		-transform_inverse "6,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0" \
+		-transform "1,1,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0" 
+	pdflatex surface_catalogue_q8_0.tex
+	open surface_catalogue_q8_0.pdf
+
+cheat8:
+	$(PROJECTIVE_SPACE_PATH)/cheat_sheet_PG.out -n 3 -q 8
+	pdflatex PG_3_8.tex
+	open PG_3_8.pdf
+
+
+L8:
+	$(GROUPS_PATH)/linear_group.out -v 6  \
+		-linear -PGL 2 8 -end \
+		-orbits_on_subsets 4
+
+six:
+	$(GROUPS_PATH)/linear_group.out -v 6  \
+		-linear -PGGL 3 8 -end \
+		-orbits_on_subsets 6 \
+		-draw_poset
+
+
+c_triangle:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 8 -n 2 \
+		-input -set_of_points \
+			"0,1,2" \
+			-end \
+		-classify_nauty \
+		-save triangle \
+		-latex \
+		-prefix triangle
+	pdflatex triangle_classification.tex
+	open triangle_classification.pdf
+
+c_four:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 8 -n 2 \
+		-input -set_of_points \
+			"0,1,2,3" \
+			-end \
+		-classify_nauty \
+		-save four \
+		-latex \
+		-prefix four
+	pdflatex four_classification.tex
+	open four_classification.pdf
+
+
+c_five:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 8 -n 2 \
+		-input -set_of_points \
+			"0,1,2,3,28" \
+			-end \
+		-classify_nauty \
+		-save five \
+		-latex \
+		-prefix five
+	pdflatex five_classification.tex
+	open five_classification.pdf
+
+
+canonical:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 8 -n 2 \
+		-input -set_of_points \
+			"24,18,72,2,34,58" \
+			-end \
+		-classify_nauty \
+		-save arc \
+		-latex \
+		-prefix arc
+	pdflatex arc_classification.tex
+	open arc_classification.pdf
+
+c_arc1:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 8 -n 2 \
+		-input -set_of_points \
+			"0,1,2,3,5,9" \
+			-end \
+		-classify_nauty \
+		-save arc1 \
+		-latex \
+		-prefix arc1
+	pdflatex arc1_classification.tex
+	open arc1_classification.pdf
+
+
+c_arc2:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 8 -n 2 \
+		-input -set_of_points \
+			"0,1,2,3,28,35" \
+			-end \
+		-classify_nauty \
+		-save arc2 \
+		-latex \
+		-prefix arc2
+	pdflatex arc2_classification.tex
+	open arc2_classification.pdf
+
+
+#lines 0,10,17
+c_three_lines:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 8 -n 2 \
+		-input -set_of_points \
+			"0,1,4,5,6,7,8,9,10,11,18,46,64,71,35,53,28,2,3,27,36,45,54,63,72" \
+			-end \
+		-classify_nauty \
+		-save three_lines \
+		-latex \
+		-prefix three_lines
+	pdflatex three_lines_classification.tex
+	open three_lines_classification.pdf
+
+
+canonical13:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 8 -n 2 \
+		-input -set_of_points \
+			"24,18,72,2,34,58,19,21,50,1,45,27,3" \
+			-end \
+		-classify_nauty \
+		-save eckardt \
+		-latex \
+		-prefix eckardt
+	pdflatex eckardt_classification.tex
+	open eckardt_classification.pdf
+
+c_orbit2:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 8 -n 2 \
+		-input -set_of_points \
+			"4,31,8,63,26,66" \
+			-end \
+		-classify_nauty \
+		-save orbit2 \
+		-latex \
+		-prefix orbit2
+	pdflatex orbit2_classification.tex
+	open orbit2_classification.pdf
+
+
+canonical_frame:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 8 -n 2 \
+		-input -set_of_points \
+			"0,1,2,3" \
+			-end \
+		-classify_nauty \
+		-save frame \
+		-latex \
+		-prefix frame
+	pdflatex frame_classification.tex
+	open frame_classification.pdf
+
+
+
+
+
+
+8_0ab:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 8 -catalogue 0 -end \
+		-transform "1,0,0,0,0,1,0,6,0,0,1,6,0,0,0,1,0" \
+		-transform "4,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0"
+	pdflatex surface_catalogue_q8_0.tex
+	open surface_catalogue_q8_0.pdf
+
+# Now the vertex is at 1110
+# the other points on one of the lines are 1000,0110,3110,4110
+
+
+
+T1_short:
+	$(SURFACES_PATH)/create_surface_main.out -v 20 \
+		-description -q 8 -catalogue 0 -end \
+		-transform_inverse "1,4,4,0,6,0,0,0,6,2,0,1,7,0,4,0,0"
+	pdflatex surface_catalogue_q8_0.tex
+	open surface_catalogue_q8_0.pdf
+
+# this is the one with the short equation
+# writes surface_catalogue_q8_0_points.txt, which needs hand-editing
+
+
+F8:
+	$(ALGEBRA_PATH)/cheat_sheet_GF.out -q 8
+	pdflatex GF_8.tex
+	open GF_8.pdf
+
+
+mult:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PGL 4 8  -1 -end \
+		-multiply "1,0,0,0,0,1,0,6,0,0,1,6,0,0,0,1,0" "3,1,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0" \
+		-inverse "3,1,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0"
+
+
+
+8_0:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 8 -catalogue 0 -end
+	pdflatex surface_catalogue_q8_0.tex
+	open surface_catalogue_q8_0.pdf
+
+
+
+#		-transform "1,0,0,0,0,1,0,6,0,0,1,6,0,0,0,1,0" \
+#		-transform_inverse "3,1,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0"
+
+
+8_0a:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 8 -catalogue 0 -end \
+		-transform "1,0,0,0,0,1,0,6,0,0,1,6,0,0,0,1,0" 
+	pdflatex surface_catalogue_q8_0.tex
+	open surface_catalogue_q8_0.pdf
+
+# not the Eckardt points lie in the plane x3 = 0.
+# the vertex is at omega^5,1,1,0. 
+# We move it to 1,1,1,0:
+
+
+
+
+orbits_on_line:
+	$(GROUPS_PATH)/linear_group.out -v 10  \
+		-linear -PGL 2 8  -1 -end \
+		-orbits_on_subsets 5
+
+
+
+8_0ab_old:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 8 -catalogue 0 -end \
+		-transform "1,0,0,0,0,1,0,6,0,0,1,6,0,0,0,1,0" \
+		-transform_inverse "3,1,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0"
+	pdflatex surface_catalogue_q8_0.tex
+	open surface_catalogue_q8_0.pdf
+
+
+
+
+
+canon8_0:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 10 -n 3 -q 8 \
+		-input -file_of_points surface_catalogue_q8_0_points.txt -end \
+		-classify_nauty \
+		-prefix surface_catalogue_q8_0_points \
+		-save surface_catalogue_q8_0_points \
+		-latex 
+	pdflatex surface_catalogue_q8_0_points_classification.tex
+	open surface_catalogue_q8_0_points_classification.pdf
+
+
+try:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 8 -by_coefficients "1,6,1,8,1,11,1,13,1,19" -end 
+
+try2:
+	$(SURFACES_PATH)/surface_classify.out -v 2 \
+		-linear -PGGL 4 8 -wedge -end \
+		-recognize -q 8 -by_coefficients "1,6,1,8,1,11,1,13,1,19" -end 
+
+## over F4:
+
+try4:
+	$(SURFACES_PATH)/surface_classify.out -v 2 \
+		-linear -PGGL 4 4 -wedge -end \
+		-recognize -q 4 -by_coefficients "1,6,1,8,1,11,1,13,1,19" -end 
+
+## over F16:
+
+try5:
+	$(SURFACES_PATH)/surface_classify.out -v 2 \
+		-linear -PGGL 4 16 -wedge -end \
+		-recognize -q 16 -by_coefficients "1,6,1,8,1,11,1,13,1,19" -end 
+
+## over F32:
+
+try6:
+	$(SURFACES_PATH)/surface_classify.out -v 2 \
+		-linear -PGGL 4 32 -wedge -end \
+		-recognize -q 32 -by_coefficients "1,6,1,8,1,11,1,13,1,19" -end 
+
+
+## over F64:
+
+try7:
+	$(SURFACES_PATH)/surface_classify.out -v 2 \
+		-linear -PGGL 4 64 -wedge -end \
+		-recognize -q 64 -by_coefficients "1,6,1,8,1,11,1,13,1,19" -end 
+
+# isomorphic to 64#98, with group order 1152
+#An isomorphism is given by:
+#18 48 48  0
+#34 18 18  0
+# 5 53  0 18
+#39 23 48 34
+#, 2
+#The inverse isomorphism is given by:
+# 3 14  0  0
+# 3 16 14 16
+#14 19 14 16
+#14 29 19  3
+#, 4
+# Jan13, 2019: 40:32 on Mac
+
+
+arcs:
+	- mkdir PG_2_$(Q)
+	- mkdir PG_2_$(Q)/STARTER
+	- mkdir PG_2_$(Q)/SOLUTIONS
+	$(ARCS_PATH)/arcs_main.out -v 3 -q $(Q) -n 2 -d 2 -starter_size 6 \
+		-input_prefix PG_2_$(Q)/STARTER/ \
+		-solution_prefix PG_2_$(Q)/SOLUTIONS -base_fname arcs \
+		-starter PG_2_$(Q)/STARTER/  \
+		-W \
+		-lex \
+		-embedded \
+		-draw_poset \
+		-list 6 \
+		-Report \
+		-tools_path $(GRAPH_THEORY_PATH) \
+		-export_schreier_trees \
+		-report_schreier_trees
+	cp PG_2_8/STARTER/arcs_poset_detailed_lvl_6.tex arcs_poset_detailed_lvl_6.tex
+	latex Arcs_q8.tex
+	dvips Arcs_q8.dvi -o
+	open Arcs_q8.ps
+
+
+#	pdflatex arcs_poset_detailed_lvl_6.tex
+#	open arcs_poset_detailed_lvl_6.pdf
+
+#		-recognize "1300,4,1,1282,157,130" \
+#		-recognize "260,4,1,258,161,130"
+
+lift:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 8 -arc_lifting "0,1,2,3,28,35" -end
+
+

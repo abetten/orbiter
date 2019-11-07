@@ -1,0 +1,98 @@
+MY_PATH=../../..
+SRC=$(MY_PATH)/SRC
+SRC2=$(MY_PATH)/SRC2
+
+TRANSLATION_PLANE_PATH=$(SRC2)/TRANSLATION_PLANE
+GRASSMANN_PATH=$(SRC2)/GRASSMANN
+DIOPHANT_PATH=$(SRC)/DIOPHANT
+
+
+ORDER=64
+DEPTH=4
+POLY=
+
+
+starter:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 4 \
+		-W -order $(ORDER) \
+		-depth $(DEPTH) \
+		-dim_over_kernel 2 \
+		-starter
+
+# 7 orbits on 4 sets of lines in PG(3,8)
+# distribution of ago: (6048, 648, 96, 84, 72, 56, 36)
+
+# {0, 4744, 81, 162} with stabilizer of order 6048.
+# {0, 4744, 81, 593} with stabilizer of order 648.
+# {0, 4744, 81, 594} with stabilizer of order 72.
+
+
+
+
+seventytwo:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 5 \
+		-W -order $(ORDER) -dim_over_kernel 2 \
+		-extend_regulus 3 \
+		-make72 spread_64_lvl_4 4
+
+
+# 41 spreads for {0, 4744, 81, 594}
+#spread element 0 = 0:
+#1 0 0 0 
+#0 1 0 0 
+#spread element 1 = 4744:
+#0 0 1 0 
+#0 0 0 1 
+#spread element 2 = 81:
+#1 0 1 0 
+#0 1 0 1 
+#spread element 3 = 593:
+#1 0 0 1 
+#0 1 1 1 
+
+
+
+pt:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 2 \
+		-W -order $(ORDER) -dim_over_kernel 2 \
+		-plane_type_klein spread_72_41.txt \
+
+#1:( 0, 0, 0, 0, 0, 0, 0, 0, 0, 520 )
+#13,21,31,40:( 0, 0, 0, 30816, 405, 333, 171, 90, 0, 16 )
+#22,33,38:( 0, 0, 0, 31092, 2418, 66, 96, 0, 0, 4 )
+#23,24,25,28,29,32,36,37,41:( 0, 0, 0, 32508, 2054, 70, 96, 0, 0, 4 ) this is the one we are looking for
+
+
+
+
+
+
+# 15 spreads for {0, 4744, 81, 594}
+#( 0, 0, 0, 0, 0, 0, 0, 0, 0, 520 )
+#( 0, 0, 0, 15876, 0, 0, 0, 288, 63, 169 )
+#( 0, 0, 0, 15876, 0, 0, 0, 288, 63, 169 )
+#( 0, 0, 0, 15876, 0, 0, 0, 288, 63, 169 )
+#( 0, 0, 0, 25821, 279, 180, 72, 225, 36, 43 )
+#( 0, 0, 0, 15876, 0, 0, 0, 288, 63, 169 )
+#( 0, 0, 0, 25821, 279, 180, 72, 225, 36, 43 )
+#( 0, 0, 0, 15876, 0, 0, 0, 288, 63, 169 )
+#( 0, 0, 0, 15876, 0, 0, 0, 288, 63, 169 )
+#( 0, 0, 0, 15876, 0, 0, 0, 288, 63, 169 )
+#( 0, 0, 0, 15876, 0, 0, 0, 288, 63, 169 )
+#( 0, 0, 0, 15876, 0, 0, 0, 288, 63, 169 )
+#( 0, 0, 0, 25821, 279, 180, 72, 225, 36, 43 )
+#( 0, 0, 0, 15876, 0, 0, 0, 288, 63, 169 )
+#( 0, 0, 0, 25821, 279, 180, 72, 225, 36, 43 )
+
+
+
+
+
+
+
+
+
+
+
+
+

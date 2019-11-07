@@ -1,0 +1,1121 @@
+MY_PATH=~/DEV.19/orbiter
+MY_PATH2=~/DEV.19/orbiter2
+#MY_PATH=/scratch3/betten/COMPILE/2018_12_25
+SRC=$(MY_PATH)/ORBITER/src
+SRC2=$(MY_PATH2)/ORBITER2/src
+
+ALGEBRA_PATH=$(SRC)/apps/algebra
+BLT_PATH=$(SRC)/apps/blt
+ALGEBRA2_PATH=$(SRC2)/ALGEBRA2
+GROUPS_PATH=$(SRC)/apps/groups
+COMBINATORICS_PATH=$(SRC)/apps/combinatorics
+GRAPH_CLASSIFY_PATH=$(SRC)/apps/graph_classify
+PROJECTIVE_SPACE_PATH=$(SRC)/apps/projective_space
+SUBSPACE_ORBITS_PATH=$(SRC)/apps/subspace_orbits
+GRAPH_THEORY_PATH=$(SRC)/apps/graph_theory
+SURFACE_PATH=$(SRC)/apps/surfaces
+ARCS_PATH=$(SRC)/apps/arcs
+TOOLS_PATH=$(SRC)/apps/tools
+TOOLS2_PATH=$(SRC2)/TOOLS
+SRC2_SURFACE_PATH=$(SRC2)/SURFACE
+
+
+
+3_2:
+	$(GROUPS_PATH)/linear_group.out -v 3 -linear -PGL 3 2 -end  -classes -report
+	pdflatex PGL_3_2_report.tex
+	open PGL_3_2_report.pdf
+
+3_8:
+	$(GROUPS_PATH)/linear_group.out -v 3 -linear -PGL 3 8 -end  -classes -report
+	pdflatex PGL_3_8_report.tex
+	open PGL_3_8_report.pdf
+
+G4_2o:
+	$(GROUPS_PATH)/linear_group.out -v 3 \
+		-linear -PGL 4 2 -orthogonal 1 -end \
+		-report
+	pdflatex PGL_4_2_Orthogonal_plus_4_2_report.tex
+	open PGL_4_2_Orthogonal_plus_4_2_report.pdf
+
+2_3:
+	$(GROUPS_PATH)/linear_group.out -v 3 -linear -PGL 2 3 -end  -classes -report
+
+2_3s:
+	$(GROUPS_PATH)/linear_group.out -v 3 -linear -PGL 2 3 -singer 1 -end  
+
+
+2_11:
+	$(GROUPS_PATH)/linear_group.out -v 3 -linear -PGL 2 11 -end  
+
+2_11s:
+	$(GROUPS_PATH)/linear_group.out -v 3 -linear -PGL 2 11 -singer 1 -end  
+
+
+
+#		-orbits_on_subsets 7 \
+#		-draw_poset
+
+
+3_2_orbits:
+	$(GROUPS_PATH)/linear_group.out -v 3 -linear -PGL 3 2 -end  -classes -orbits_on_points
+
+
+3_2d:
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 4 \
+		-file PGL_3_2_0.layered_graph \
+		-draw \
+		-rad 45000 \
+		-xin 1000000 \
+		-yin 1000000 \
+		-xout 1000000 \
+		-yout 1000000 \
+		-embedded \
+		-scale .30 \
+		-line_width 1.0 \
+		-y_stretch 0.8 
+	pdflatex PGL_3_2_0_draw.tex
+	open PGL_3_2_0_draw.pdf
+
+
+3_4:
+	$(GROUPS_PATH)/linear_group.out -v 3 -linear -PGGL 3 4 -end  -classes
+
+4_4:
+	$(GROUPS_PATH)/linear_group.out -v 3 -linear -PGL 4 4 -end  -classes
+
+
+Fermat_curve:
+	$(PROJECTIVE_SPACE_PATH)/make_something.out -v 2 -q 4 -n 2 \
+		-projective_variety "Fermat_curve_q4" 3 "1,0,1,1,1,2"
+
+#x^3+y^3+z^3
+
+
+#0 & X^3 & ( 3, 0, 0 )\\
+#1 & Y^3 & ( 0, 3, 0 )\\
+#2 & Z^3 & ( 0, 0, 3 )\\
+#3 & X^2Y & ( 2, 1, 0 )\\
+#4 & X^2Z & ( 2, 0, 1 )\\
+#5 & XY^2 & ( 1, 2, 0 )\\
+#6 & Y^2Z & ( 0, 2, 1 )\\
+#7 & XZ^2 & ( 1, 0, 2 )\\
+#8 & YZ^2 & ( 0, 1, 2 )\\
+#9 & XYZ & ( 1, 1, 1 )\\
+
+
+twisted_cubic:
+	$(PROJECTIVE_SPACE_PATH)/make_something.out -v 2 -q 4 -n 3 \
+		-projective_curve "Twisted_cubic_q4" 4 3 "1,1,1,1"
+
+
+
+t_cubic:
+	$(PROJECTIVE_SPACE_PATH)/make_something.out -v 2 -q 4 -n 3 \
+		-twisted_cubic 
+
+
+# twisted_cubic_4.txt
+
+
+twisted_cubic_c:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 4 -n 3 \
+		-input -file_of_point_set \
+			Twisted_cubic_q4.txt -end \
+		-classify_nauty \
+		-prefix twisted_cubic -latex
+	pdflatex twisted_cubic_classification.tex
+	open twisted_cubic_classification.pdf
+
+
+Fermat_curve_c:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 4 -n 2 \
+		-input -file_of_point_set \
+			Fermat_curve_q4.txt -end \
+		-classify_nauty \
+		-prefix Fermat_curve_q4 -latex
+	pdflatex Fermat_curve_q4_classification.tex
+	open Fermat_curve_q4_classification.pdf
+
+
+H3_2:
+	$(PROJECTIVE_SPACE_PATH)/make_something.out -v 2 -q 2 -n 3 \
+		-projective_variety "H3_q2" 2 "1,4,1,9"
+
+
+
+H3_4:
+	$(PROJECTIVE_SPACE_PATH)/make_something.out -v 2 -q 4 -n 3 \
+		-projective_variety "H3_q4" 2 "1,4,1,9"
+
+
+#0 & A^2 & ( 2, 0, 0, 0 )\\
+#1 & B^2 & ( 0, 2, 0, 0 )\\
+#2 & C^2 & ( 0, 0, 2, 0 )\\
+#3 & D^2 & ( 0, 0, 0, 2 )\\
+#4 & AB & ( 1, 1, 0, 0 )\\
+#5 & AC & ( 1, 0, 1, 0 )\\
+#6 & AD & ( 1, 0, 0, 1 )\\
+#7 & BC & ( 0, 1, 1, 0 )\\
+#8 & BD & ( 0, 1, 0, 1 )\\
+#9 & CD & ( 0, 0, 1, 1 )\\
+
+ell_curve_2:
+	$(PROJECTIVE_SPACE_PATH)/create_object.out -v 2 -q 2 -n 2 \
+		-projective_variety "elliptic_curve_q2" 3 "1,0,1,6,1,7,1,8"
+
+ell_curve_2c:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 2 -n 2 \
+		-input -file_of_point_set \
+			elliptic_curve_q2.txt -end \
+		-classify_nauty \
+		-prefix elliptic_curve_q2 -latex
+	pdflatex elliptic_curve_q2_classification.tex
+	open elliptic_curve_q2_classification.pdf
+
+
+# ago = 8
+
+
+ell_curve_3:
+	$(PROJECTIVE_SPACE_PATH)/create_object.out -v 2 -q 3 -n 2 \
+		-projective_variety "elliptic_curve_q3" 3 "1,0,1,2,2,6,2,7"
+
+
+ell_curve_3c:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 3 -n 2 \
+		-input -file_of_point_set \
+			elliptic_curve_q3.txt -end \
+		-classify_nauty \
+		-prefix elliptic_curve_q3 -latex
+	pdflatex elliptic_curve_q3_classification.tex
+	open elliptic_curve_q3_classification.pdf
+
+
+# ago = 12
+
+ell_curve_5:
+	$(PROJECTIVE_SPACE_PATH)/create_object.out -v 2 -q 5 -n 2 \
+		-projective_variety "elliptic_curve_q5" 3 "1,0,4,6,3,7"
+
+
+ell_curve_5c:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 5 -n 2 \
+		-input -file_of_point_set \
+			elliptic_curve_q5.txt -end \
+		-classify_nauty \
+		-prefix elliptic_curve_q5 -latex
+	pdflatex elliptic_curve_q5_classification.tex
+	open elliptic_curve_q5_classification.pdf
+
+
+ell_curve_7:
+	$(PROJECTIVE_SPACE_PATH)/create_object.out -v 2 -q 7 -n 2 \
+		-projective_variety "elliptic_curve_q7" 3 "1,0,6,6,0,7,3,2"
+
+ell_curve_7c:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 7 -n 2 \
+		-input -file_of_point_set \
+			elliptic_curve_q7.txt -end \
+		-classify_nauty \
+		-prefix elliptic_curve_q7 -latex
+	pdflatex elliptic_curve_q7_classification.tex
+	open elliptic_curve_q7_classification.pdf
+
+ell_curve_11:
+	$(PROJECTIVE_SPACE_PATH)/create_object.out -v 2 -q 11 -n 2 \
+		-projective_variety "elliptic_curve_q11" 3 "1,0,10,6,1,7,3,2"
+
+ell_curve_11c:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 11 -n 2 \
+		-input -file_of_point_set \
+			elliptic_curve_q11.txt -end \
+		-classify_nauty \
+		-prefix elliptic_curve_q11 -latex
+	pdflatex elliptic_curve_q11_classification.tex
+	open elliptic_curve_q11_classification.pdf
+
+
+
+#####
+
+DH4:
+	$(PROJECTIVE_SPACE_PATH)/create_object.out -v 2 -q 4 -n 3 \
+		-projective_variety "DH_surface_q4" 3 "1,6,1,8,1,11,1,13"
+
+DH4c:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 4 -n 3 \
+		-input -file_of_point_set \
+			DH_surface_q4.txt -end \
+		-classify_nauty \
+		-prefix DH_surface_q4 -latex
+	pdflatex DH_surface_q4_classification.tex
+	open DH_surface_q4_classification.pdf
+
+
+####
+
+4_2o:
+	$(SUBSPACE_ORBITS_PATH)/subspace_orbits_main.out -v 5 \
+		-depth 4 -group -PGL 4 2 -orthogonal 1 -end \
+		-draw_poset -embedded \
+		-list \
+		-table_of_nodes
+
+4_2od:
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 4 \
+		-file Orthogonal_plus_4_2_poset_lvl_4.layered_graph \
+		-draw \
+		-rad 45000 \
+		-xin 1000000 \
+		-yin 1000000 \
+		-xout 1000000 \
+		-yout 1000000 \
+		-embedded \
+		-scale .30 \
+		-line_width 1.0 \
+		-y_stretch 0.8 
+	pdflatex Orthogonal_plus_4_2_poset_lvl_4_draw.tex
+	open Orthogonal_plus_4_2_poset_lvl_4_draw.pdf
+
+PG_3_2:
+	$(PROJECTIVE_SPACE_PATH)/cheat_sheet_PG.out -v  2 -n 3 -q 2
+	pdflatex PG_3_2.tex
+	open PG_3_2.pdf
+
+F4:
+	$(ALGEBRA_PATH)/cheat_sheet_GF.out -v 2 -q 4
+	pdflatex GF_4.tex
+	open GF_4.pdf
+
+
+####
+
+
+S4:
+	time $(SURFACE_PATH)/surface_classify.out -v 2 \
+		-linear -PGGL 4 4 -wedge -end -report
+
+
+S13:
+	time $(SURFACE_PATH)/surface_classify.out -v 2 \
+		-linear -PGL 4 13 -wedge -end
+
+S13r:
+	$(SURFACE_PATH)/surface_classify.out -v 4 -linear -PGL 4 13 -wedge -end \
+		-read_double_sixes \
+		-report
+	pdflatex Surfaces_q13.tex
+	open Surfaces_q13.pdf
+
+
+S8recognize:
+	$(SURFACE_PATH)/surface_classify.out -v 2 \
+		-linear -PGGL 4 8 -wedge -end \
+		-recognize -q 8 -by_coefficients "1,6,1,8,1,11,1,13,1,19" -end 
+
+
+
+
+glynn_arc:
+	- mkdir GLYNN
+	$(ARCS_PATH)/arcs_main.out -v 4 \
+		-linear -PGL 4 9 \end \
+		-q 9 \
+		-d 2 \
+		-n 4 \
+		-base_fname arcs_9_ \
+		-input_prefix ./GLYNN/ \
+		-output_prefix ./GLYNN/ \
+		-solution_prefix ./GLYNN/ \
+		-starter_size 10  \
+		-starter \
+		-list 10 \
+		
+
+
+#NB_ROUNDS=4
+NB_FRAMES=30
+FNAME=tc_%02ld_%03ld
+FNAME_POV=$(FNAME).pov
+
+# either:
+
+#		-W 800 -H 600 \
+#		-font_size 36 -stroke_width 2 \
+#		-global_picture_scale 1.0 \
+
+# or:
+
+#		-W 2560 -H 1920 \
+#		-font_size 126 -stroke_width 5 \
+#		-global_picture_scale 3.0 \
+
+
+
+tc:
+	- rm -rf POV
+	mkdir POV
+	$(SRC2_SURFACE_PATH)/animate.out -v 2 -twisted_cubic \
+		-output_mask $(FNAME_POV) \
+		-rounds "0,1" \
+		-nb_frames_default 90 \
+		-video_options \
+		-default_angle 50 -clipping_radius 1.8 \
+		-camera 0 "<1,1,1>" "<-3,1,3>" "<1,1,1>*1/2" \
+		-camera 1 "<1,1,1>" "<-3,1,3>" "<1,1,1>*1/2" \
+		-W 2560 -H 1920 \
+		-end
+	mv *.pov POV
+	mv makefile_animation POV
+
+
+#		-no_bottom_plane 0 \
+#		-camera 0 "<1,1,1>" "<-40+20,1+20,40+20>" "<25,25,25>" \
+#		-zoom 0 145 145 \
+#		-W 800 -H 600 \
+#		-W 2560 -H 1920 \
+
+
+tcv:
+	- rm tc.mp4
+	- rm -r FRAMES_TC
+	- mkdir FRAMES_TC
+	$(TOOLS_PATH)/prepare_frames.out \
+		-i 0 90 PNG0/tc_00_%03ld.png \
+		-i 1 90 PNG0/tc_01_%03ld.png \
+		-output_starts_at 0 \
+		-o FRAMES_TC/frame%04d.png
+	ffmpeg -r 15 -f image2 -i FRAMES_TC/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  tc.mp4
+
+
+
+#https://youtu.be/AKQ-0fsaeVs
+
+
+graph:
+	$(GRAPH_THEORY_PATH)/create_graph.out -v 2 \
+		-nb_vertices 6 -adjacency "1,0,0,0,1, 1,0,0,0, 1,0,0, 1,0, 1"
+
+
+
+
+g4:
+	$(GRAPH_CLASSIFY_PATH)/graph.out -n 4 -v 40 \
+		-W -draw_poset -draw_graphs -draw_graphs  -list_all -embedded -draw_poset_full
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 4 \
+		-file graph_4_aux_poset_lvl_6.layered_graph \
+		-draw  \
+		-as_graph \
+		-rad 18000 \
+		-xin  1000000 \
+		-yin  1000000 \
+		-xout 1500000 \
+		-yout 1500000 \
+		-embedded \
+		-scale .30 \
+		-line_width 1.0 \
+		-y_stretch 1.1
+	pdflatex graph_4_aux_poset_lvl_6_draw.tex
+	open graph_4_aux_poset_lvl_6_draw.pdf
+
+
+g5:
+	$(GRAPH_CLASSIFY_PATH)/graph.out -n 5 -v 4 \
+		-W -draw_poset -draw_graphs  
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 5 \
+		-file graph_5_aux_poset_lvl_10.layered_graph \
+		-draw  \
+		-as_graph \
+		-rad 22000 \
+		-xin  1000000 \
+		-yin  1000000 \
+		-xout 1500000 \
+		-yout 1500000 \
+		-embedded \
+		-scale .30 \
+		-line_width 1.0 \
+		-y_stretch 1.1
+	pdflatex graph_5_aux_poset_lvl_10_draw.tex
+	open graph_5_aux_poset_lvl_10_draw.pdf
+
+
+
+g8r3g4:
+	$(GRAPH_CLASSIFY_PATH)/graph.out -n 8 -regular 3 -girth 4 -v 4 \
+		-W -draw_poset 
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 4 \
+		-file graph_8_r3_g4_poset_lvl_12.layered_graph \
+		-draw  \
+		-rad 18000 \
+		-xin  1000000 \
+		-yin  1000000 \
+		-xout 1500000 \
+		-yout 1500000 \
+		-embedded \
+		-scale .30 \
+		-line_width 1.0 \
+		-y_stretch 0.7
+	pdflatex graph_8_r3_g4_poset_lvl_12_draw.tex
+	open graph_8_r3_g4_poset_lvl_12_draw.pdf
+
+
+g8r3:
+	$(GRAPH_CLASSIFY_PATH)/graph.out -n 8 -regular 3  -v 4 \
+		-W -draw_poset 
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 4 \
+		-file graph_8_r3_aux_poset_lvl_12.layered_graph \
+		-draw  \
+		-as_graph \
+		-rad 18000 \
+		-xin  1000000 \
+		-yin  1000000 \
+		-xout 1500000 \
+		-yout 1500000 \
+		-embedded \
+		-scale .30 \
+		-line_width 1.0 \
+		-y_stretch 0.7
+	pdflatex graph_8_r3_aux_poset_lvl_12_draw.tex
+	open graph_8_r3_aux_poset_lvl_12_draw.pdf
+
+
+
+g6r3:
+	$(GRAPH_CLASSIFY_PATH)/graph.out -n 6 -regular 3  -v 4 \
+		-W -draw_poset 
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 4 \
+		-file graph_6_r3_aux_poset_lvl_9.layered_graph \
+		-draw  \
+		-as_graph \
+		-rad 18000 \
+		-xin  1000000 \
+		-yin  1000000 \
+		-xout 1500000 \
+		-yout 1500000 \
+		-embedded \
+		-scale .30 \
+		-line_width 1.0 \
+		-y_stretch 0.7
+	pdflatex graph_6_r3_aux_poset_lvl_9_draw.tex
+	open graph_6_r3_aux_poset_lvl_9_draw.pdf
+
+
+
+#		-as_graph \
+
+#-draw_graphs  -list_all
+
+
+woldar:
+	$(ALGEBRA2_PATH)/woldar.out -v 2 -linear -AGL 1 8 -end \
+		-depth 4 \
+		-draw_poset -embedded 
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 4 \
+		-file orbits_on_k_sets_aux_poset_lvl_4.layered_graph \
+		-draw  \
+		-rad 18000 \
+		-xin  1000000 \
+		-yin  1000000 \
+		-xout 1500000 \
+		-yout 1500000 \
+		-embedded \
+		-scale .30 \
+		-line_width 1.0 \
+		-y_stretch 0.7
+	pdflatex orbits_on_k_sets_aux_poset_lvl_4_draw.tex
+	open orbits_on_k_sets_aux_poset_lvl_4_draw.pdf
+
+
+linear1:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PGL 2 9 -subgroup_by_generators Z22 4 2 "2,0,0,1" "0,1,1,0" -end \
+		-normalizer
+
+
+################################################################################
+# q=23
+################################################################################
+
+
+
+PSL2_23:
+	$(GROUPS_PATH)/linear_group.out -v 3 -linear -PSL 2 23 -end  -classes -report
+	pdflatex PGL_2_23_report.tex
+	open PGL_2_23_report.pdf
+
+
+singer23_order2:
+	$(GROUPS_PATH)/linear_group.out -v 4  \
+		-linear -PSL 2 23 -singer 22 -end \
+		-normalizer
+
+# creates a file Singer_2_23_power22_normalizer.magma
+# running this through magma creates a file 
+# Singer_2_23_power22_normalizer.txt
+#
+# creates the Dihedral group of order 24.
+# creates normalizer_24.tex
+
+singer23_tex:
+	$(TOOLS2_PATH)/a2tex.out <PGL_2_23_Singer_2_23_power22_normalizer.magma >PGL_2_23_Singer_2_23_power22_normalizer.magma.tex
+	$(TOOLS2_PATH)/a2tex.out <PGL_2_23_Singer_2_23_power22_normalizer.txt >PGL_2_23_Singer_2_23_power22_normalizer.txt.tex
+	$(TOOLS2_PATH)/a2tex.out <PGL_2_23_Subgroup_Z22_4_normalizer.magma  >PGL_2_23_Subgroup_Z22_4_normalizer.magma.tex
+	$(TOOLS2_PATH)/a2tex.out <PGL_2_23_Subgroup_Z22_4_normalizer.txt  >PGL_2_23_Subgroup_Z22_4_normalizer.txt.tex
+
+
+
+# the subgroup Z_2 x Z_2 is generated by a^6 and b with
+# a^6 = 
+#  1  1
+# 18 22
+#
+# b =
+#  1 14
+# 22 22
+
+
+singer23_Z22:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PSL 2 23 -subgroup_by_generators \
+			Z22 4 2 "1,1,18,22" "1,14,22,22" -end \
+		-normalizer
+	#pdflatex normalizer_24.tex
+
+# Coxeter generators:
+# s1 = Elt 2 = 1,9,20,22
+# s2 = Elt 6 = 1,7,2,22
+# s3 = Elt 3 = 1,19,1,22
+
+
+
+singer23_sym4:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PSL 2 23 -subgroup_by_generators \
+			SYM4 24 3 "1,9,20,22" "1,7,2,22" "1,19,1,22" -end \
+		-print_elements_tex
+
+
+O4_23:
+	$(GROUPS_PATH)/exceptional_isomorphism_O4_main.out -v 2 -q 23 \
+		-2to4 3 \
+		"1,9,20,22" "1,0,0,1" 0 \
+		"1,7,2,22" "1,0,0,1" 0 \
+		"1,19,1,22" "1,0,0,1" 0
+
+O4_23_sym4:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PGL 4 23 \
+		-subgroup_by_generators Sym4 24 3 \
+			" 1,  0,  0,  9,  0, 22,  3,  0,  0, 14,  1,  0, 20,  0,  0, 22, " \
+			" 1,  0,  0,  7,  0, 22, 21,  0,  0, 16,  1,  0,  2,  0,  0, 22, " \
+			" 1,  0,  0, 19,  0, 22, 22,  0,  0,  4,  1,  0,  1,  0,  0, 22, " \
+		-end \
+		-print_elements_tex
+	pdflatex PGL_4_23_Subgroup_Sym4_24_elements.tex
+	open PGL_4_23_Subgroup_Sym4_24_elements.pdf
+
+
+O4to5:
+	$(GROUPS_PATH)/exceptional_isomorphism_O4_main.out -v 2 -q 23 \
+		-4to5 1 \
+		"1,  0,  0,  9,  0, 22,  3,  0,  0, 14,  1,  0, 20,  0,  0, 22" \
+
+
+O5_23_sym4:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PGL 5 23 \
+		-subgroup_by_generators Sym4 24 3 \
+			" 1,  0,  0,  0,  0,  0, 13,  0,  0,  2,  0,  0, 10, 16,  0,  0,  0, 21, 13,  0,  0,  7,  0,  0, 10, " \
+			" 1,  0,  0,  0,  0,  0,  7,  0,  0,  3,  0,  0, 16,  9,  0,  0,  0, 20,  7,  0,  0, 14,  0,  0, 16, " \
+			" 1,  0,  0,  0,  0,  0, 13,  0,  0, 17,  0,  0, 10, 10,  0,  0,  0,  6, 13,  0,  0, 13,  0,  0, 10, " \
+		-end \
+		-print_elements_tex
+
+
+BLT23_sym4:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PGL 5 23 \
+		-subgroup_by_generators Sym4 24 3 \
+			"19,0,0,11,7, 0,0,3,0,0, 0,8,0,0,0, 15,0,0,14,2, 17,0,0,4,14" \
+			"16,9,21,17,5, 22,13,8,12,20, 16,12,13,1,2, 14,2,20,13,19, 20,1,12,9,13" \
+			"20,19,1,16,17, 0,6,8,17,8, 16,16,4,5,5, 22,22,2,4,6, 2,8,4,3,11" \
+		-end \
+		-print_elements_tex
+	pdflatex Subgroup_Sym4_24_elements.tex
+	open Subgroup_Sym4_24_elements.pdf
+
+
+BLT_23_7:
+	$(BLT_PATH)/create_BLT_set_main.out -v 2 \
+		-description -q 23 -catalogue 7 -end 
+
+
+BLT23:
+	- mkdir STARTER_DIR
+	$(BLT_PATH)/blt_main.out -v 4 \
+		-BLT \
+		-q 23 \
+		-starter_size 5 \
+		-input_prefix STARTER_DIR/ \
+		-output_prefix SYSTEMS/ \
+		-solution_prefix SOLUTIONS/ \
+		-base_fname BLT_23 \
+		-schreier 24 \
+		-starter \
+		-W \
+		-write_data_files
+
+BLT23_lift_g:
+	- mkdir G
+	$(BLT_PATH)/blt_main.out -v 2 \
+		-BLT \
+		-q 23 \
+		-starter_size 5 \
+		-input_prefix STARTER_DIR/ \
+		-output_prefix SYSTEMS/ \
+		-solution_prefix SOLUTIONS/ \
+		-base_fname BLT_23 \
+		-schreier 24 \
+		-create_graphs 0 1 4 \
+		-lex \
+		-output_prefix G/
+	-mkdir SOLUTIONS
+	$(GRAPH_THEORY_PATH)/all_rainbow_cliques.out -v 2 \
+		-list_of_cases G/list_of_cases_BLT_23_5_0_1.txt \
+		G/graph_BLT_23_5_%d.bin \
+		-output_file SOLUTIONS/BLT_23_solutions_5_0_1.txt
+
+
+BLT23_iso:
+	$(BLT_PATH)/blt_main.out -v 1 \
+		-BLT \
+		-q 23 \
+		-starter_size 5 \
+		-input_prefix STARTER_DIR/ \
+		-output_prefix SYSTEMS/ \
+		-solution_prefix SOLUTIONS/ \
+		-base_fname BLT_23 \
+		-build_db 
+	$(BLT_PATH)/blt_main.out -v 2 \
+		-BLT \
+		-q 23 \
+		-starter_size 5 \
+		-input_prefix STARTER_DIR/ \
+		-output_prefix SYSTEMS/ \
+		-solution_prefix SOLUTIONS/ \
+		-base_fname BLT_23 \
+		-read_solutions_from_clique_finder \
+			G/list_of_cases_BLT_23_5_0_1.txt 
+	$(BLT_PATH)/blt_main.out -v 1 \
+		-BLT \
+		-q 23 \
+		-starter_size 5 \
+		-input_prefix STARTER_DIR/ \
+		-output_prefix SYSTEMS/ \
+		-solution_prefix SOLUTIONS/ \
+		-base_fname BLT_23 \
+		-compute_orbits 
+	$(BLT_PATH)/blt_main.out -v 2 \
+		-BLT \
+		-q 23 \
+		-starter_size 5 \
+		-input_prefix STARTER_DIR/ \
+		-output_prefix SYSTEMS/ \
+		-solution_prefix SOLUTIONS/ \
+		-base_fname BLT_23 \
+		-isomorph_testing  \
+		-print_interval 250
+	- $(BLT_PATH)/blt_main.out -v 1 \
+		-BLT \
+		-q 23 \
+		-starter_size 5 \
+		-input_prefix STARTER_DIR/ \
+		-output_prefix SYSTEMS/ \
+		-solution_prefix SOLUTIONS/ \
+		-base_fname BLT_23 \
+		-report 
+	pdflatex report_BLT_23.tex
+	open report_BLT_23.pdf
+
+
+
+BLT_23_7_orbits:
+	$(SUBSPACE_ORBITS_PATH)/subspace_orbits_main.out -v 5 \
+		-depth 5 \
+		-group -PGL 5 23 -orthogonal 0 \
+		-end \
+		-draw_poset -embedded \
+		-list \
+		-table_of_nodes
+
+
+#		-subgroup_by_generators BLT23_7 24 3 \
+#			"1, 0, 0, 6, 8, 0, 0, 21, 0, 0, 0, 10, 0, 0, 0, 4, 0, 0, 3, 10, 3, 0, 0, 20, 3," \
+#			"1, 0, 13, 4, 21, 18, 3, 3, 16, 18, 0, 16, 3, 3, 7, 22, 7, 18, 6, 21, 2, 3, 16, 22, 6, " \
+#			"1, 10, 8, 18, 13, 4, 8, 6, 19, 16, 5, 16, 8, 18, 3, 18, 3, 16, 1, 19, 9, 18, 19, 14, 1," \
+
+BLT_23_7_draw:
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 4 \
+		-file PGL_5_23_Orthogonal_5_23_aux_poset_lvl_5.layered_graph \
+		-draw  \
+		-rad 18000 \
+		-xin  1000000 \
+		-yin  1000000 \
+		-xout 1500000 \
+		-yout 1500000 \
+		-embedded \
+		-scale .30 \
+		-line_width 1.0 \
+		-y_stretch 0.7
+	pdflatex PGL_5_23_Orthogonal_5_23_aux_poset_lvl_5_draw.tex
+	open PGL_5_23_Orthogonal_5_23_aux_poset_lvl_5_draw.pdf
+
+
+
+################################################################################
+# q=71
+################################################################################
+
+
+singer71:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PGL 2 71 -singer 70 -end \
+		-normalizer
+
+
+singer71_order2:
+	$(GROUPS_PATH)/linear_group.out -v 4  \
+		-linear -PSL 2 71 -singer 1260 -end \
+		-normalizer
+
+# normalizer is a group of order 72.
+#Element    52 / 72:
+# 2 46 
+#33 52 
+
+#=
+# 1 23 
+#52 26 
+
+# on 0..71:
+#(0, 35, 41, 5, 46, 30, 38, 50, 32, 21, 59, 11, 14, 58, 57, 4, 24, 28, 2, 47, 51, 71, 18, 17, 61, 64, 16, 54, 43, 25, 37, 45, 29, 70, 34, 40)(1, 3, 55, 33, 19, 6, 15, 22, 13, 44, 63, 9, 52, 68, 39, 65, 48, 49, 8, 67, 26, 27, 10, 36, 7, 23, 66, 12, 31, 62, 53, 60, 69, 56, 42, 20)
+#GAP:(72, 35, 41, 5, 46, 30, 38, 50, 32, 21, 59, 11, 14, 58, 57, 4, 24, 28, 2, 47, 51, 71, 18, 17, 61, 64, 16, 54, 43, 25, 37, 45, 29, 70, 34, 40)(1, 3, 55, 33, 19, 6, 15, 22, 13, 44, 63, 9, 52, 68, 39, 65, 48, 49, 8, 67, 26, 27, 10, 36, 7, 23, 66, 12, 31, 62, 53, 60, 69, 56, 42, 20)
+
+#Element     6 / 72:
+#61 61 
+#70 10 
+
+#=
+# 1  1 
+#64 70 
+
+
+#(0, 2)(1, 8)(3, 67)(4, 70)(5, 71)(6, 36)(7, 15)(9, 62)(10, 19)(11, 25)(12, 44)(13, 66)(14, 37)(16, 32)(17, 30)(18, 46)(20, 49)(21, 54)(22, 23)(24, 34)(26, 55)(27, 33)(28, 40)(29, 57)(31, 63)(35, 47)(38, 61)(39, 69)(41, 51)(42, 48)(43, 59)(45, 58)(50, 64)(52, 53)(56, 65)(60, 68)
+#GAP:(72, 2)(1, 8)(3, 67)(4, 70)(5, 71)(6, 36)(7, 15)(9, 62)(10, 19)(11, 25)(12, 44)(13, 66)(14, 37)(16, 32)(17, 30)(18, 46)(20, 49)(21, 54)(22, 23)(24, 34)(26, 55)(27, 33)(28, 40)(29, 57)(31, 63)(35, 47)(38, 61)(39, 69)(41, 51)(42, 48)(43, 59)(45, 58)(50, 64)(52, 53)(56, 65)(60, 68)
+
+
+#Element    12 / 72:
+# 0 61 
+# 1  0 
+
+#=
+# 0  1 
+# 7  0 
+
+
+#(0, 1)(2, 8)(3, 40)(4, 27)(5, 56)(6, 45)(7, 14)(9, 64)(10, 57)(11, 23)(12, 21)(13, 43)(15, 37)(16, 63)(17, 68)(18, 39)(19, 29)(20, 35)(22, 25)(24, 26)(28, 67)(30, 60)(31, 32)(33, 70)(34, 55)(36, 58)(38, 53)(41, 42)(44, 54)(46, 69)(47, 49)(48, 51)(50, 62)(52, 61)(59, 66)(65, 71)
+#GAP: (72, 1)(2, 8)(3, 40)(4, 27)(5, 56)(6, 45)(7, 14)(9, 64)(10, 57)(11, 23)(12, 21)(13, 43)(15, 37)(16, 63)(17, 68)(18, 39)(19, 29)(20, 35)(22, 25)(24, 26)(28, 67)(30, 60)(31, 32)(33, 70)(34, 55)(36, 58)(38, 53)(41, 42)(44, 54)(46, 69)(47, 49)(48, 51)(50, 62)(52, 61)(59, 66)(65, 71)
+
+
+#a := (72, 35, 41, 5, 46, 30, 38, 50, 32, 21, 59, 11, 14, 58, 57, 4, 24, 28, 2, 47, 51, 71, 18, 17, 61, 64, 16, 54, 43, 25, 37, 45, 29, 70, 34, 40)(1, 3, 55, 33, 19, 6, 15, 22, 13, 44, 63, 9, 52, 68, 39, 65, 48, 49, 8, 67, 26, 27, 10, 36, 7, 23, 66, 12, 31, 62, 53, 60, 69, 56, 42, 20);
+#c := (72, 1)(2, 8)(3, 40)(4, 27)(5, 56)(6, 45)(7, 14)(9, 64)(10, 57)(11, 23)(12, 21)(13, 43)(15, 37)(16, 63)(17, 68)(18, 39)(19, 29)(20, 35)(22, 25)(24, 26)(28, 67)(30, 60)(31, 32)(33, 70)(34, 55)(36, 58)(38, 53)(41, 42)(44, 54)(46, 69)(47, 49)(48, 51)(50, 62)(52, 61)(59, 66)(65, 71);
+#G := Group([a,c]);
+#c^-1*a*c = c^-1.
+
+singer71_Z22:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PSL 2 71 -subgroup_by_generators \
+			Z22 4 2 "1,1,64,70" "0,1,7,0" -end \
+		-normalizer
+
+
+group72:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PSL 2 71 -subgroup_by_generators \
+			SN72 72 3 "1,70,7,3" "0,1,7,0" "1,9,61,70" -end 
+
+
+singer71_and_frob:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PGL 2 71 -singer_and_frobenius 1260 -end \
+		-normalizer
+
+
+linear71:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PSL 2 71 -subgroup_by_generators Z22 4 2 "1,23,17,70" "1,1,64,70" -end \
+		-normalizer
+
+
+#group order 24:
+#Generator 0 / 3 is:
+#59 59 
+#13 12 
+
+#=
+# 1  1 
+#64 70 
+
+#(0, 2)(1, 8)(3, 67)(4, 70)(5, 71)(6, 36)(7, 15)(9, 62)(10, 19)(11, 25)(12, 44)(13, 66)(14, 37)(16, 32)(17, 30)(18, 46)(20, 49)(21, 54)(22, 23)(24, 34)(26, 55)(27, 33)(28, 40)(29, 57)(31, 63)(35, 47)(38, 61)(39, 69)(41, 51)(42, 48)(43, 59)(45, 58)(50, 64)(52, 53)(56, 65)(60, 68)
+#Generator 1 / 3 is:
+#56 67 
+#69 29 
+
+#=
+# 1  5 
+#38 17 
+
+#(0, 58, 26)(1, 45, 34)(2, 6, 24)(3, 13, 33)(4, 40, 66)(5, 29, 48)(7, 11, 60)(8, 36, 55)(9, 18, 44)(10, 51, 71)(12, 50, 39)(14, 25, 17)(15, 22, 30)(16, 61, 47)(19, 42, 65)(20, 63, 38)(21, 64, 46)(23, 68, 37)(27, 28, 43)(31, 52, 35)(32, 53, 49)(41, 56, 57)(54, 62, 69)(59, 70, 67)
+#Generator 2 / 3 is:
+#61 65 
+#42 10 
+
+#=
+# 1 29 
+#10 70 
+
+#(0, 50)(1, 62)(2, 9)(3, 61)(4, 35)(5, 11)(6, 44)(7, 29)(8, 64)(10, 15)(12, 58)(13, 16)(14, 19)(17, 42)(18, 24)(20, 27)(21, 36)(22, 71)(23, 56)(25, 65)(26, 39)(28, 38)(30, 51)(31, 66)(32, 59)(33, 47)(34, 69)(37, 57)(40, 52)(41, 68)(43, 63)(45, 54)(46, 55)(48, 60)(49, 70)(53, 67)
+
+linear71_sym4:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PSL 2 71 -subgroup_by_generators Z22 24 3 \
+			"1,1,64,70" "1,5,38,17" "1,29,10,70" -end 
+
+
+subsets8:
+	$(COMBINATORICS_PATH)/poset_of_subsets.out -v 2  -n 8 -depth 4
+
+subsets8_draw:
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 4 \
+		-file poset_of_subsets_8.layered_graph \
+		-draw test \
+		-rad 28000 \
+		-xin 1000000 \
+		-yin 1000000 \
+		-xout 1000000 \
+		-yout 1000000 \
+		-embedded \
+		-scale .3 \
+		-line_width 1.3 \
+		-y_stretch 0.6 \
+	date
+	mv poset_of_subsets_8_draw.tex poset8.tex
+	pdflatex poset8.tex
+	open poset8.pdf
+
+
+aaron:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -AGL 1 8  -end \
+		-orbits_on_subsets 4 \
+		-test_if_geometric 4
+
+
+O4_2:
+	$(GROUPS_PATH)/exceptional_isomorphism_O4_main.out -v 2 -q 2 
+
+O4_71:
+	$(GROUPS_PATH)/exceptional_isomorphism_O4_main.out -v 2 -q 71 
+
+
+
+# 1 29 
+#10 70 
+
+#matrix_group::make_element done
+#E4a=
+# 1  0  0 29 
+# 0 70 61  0 
+# 0 42  1  0 
+#10  0  0 70 
+#rank =413781414
+#E5=
+# 8  0  0  0  0 
+# 0  1  0  0 29 
+# 0  0 70 61  0 
+# 0  0 42  1  0 
+# 0 10  0  0 70 
+# 8,  0,  0,  0,  0,  0,  1,  0,  0, 29,  0,  0, 70, 61,  0,  0,  0, 42,  1,  0,  0, 10,  0,  0, 70, 
+#rank in O(5,q)=-1474389905
+
+# 8 is bad, try 71-8 = 63
+
+
+#action::make_element
+#action::make_element matrix_group_t
+#matrix_group::make_element
+#data: ( 1, 43, 3, 70 )
+#matrix_group::make_element calling GL_invert_internal
+#matrix_group::make_element created the following element
+# 1 43 
+# 3 70 
+
+#matrix_group::make_element done
+#E4a=
+# 1  0  0 43 
+# 0 70 68  0 
+# 0 28  1  0 
+# 3  0  0 70 
+#rank =977623904
+#E5=
+#56  0  0  0  0 
+# 0  1  0  0 43 
+# 0  0 70 68  0 
+# 0  0 28  1  0 
+# 0  3  0  0 70 
+#56,  0,  0,  0,  0,  0,  1,  0,  0, 43,  0,  0, 70, 68,  0,  0,  0, 28,  1,  0,  0,  3,  0,  0, 70, 
+#rank in O(5,q)=-1207822493
+#action::make_element
+#action::make_element matrix_group_t
+#matrix_group::make_element
+#data: ( 1, 7, 22, 70 )
+#matrix_group::make_element calling GL_invert_internal
+#matrix_group::make_element created the following element
+# 1  7 
+#22 70 
+
+#matrix_group::make_element done
+#E4a=
+# 1  0  0  7 
+# 0 70 49  0 
+# 0 64  1  0 
+#22  0  0 70 
+#rank =-1808641576
+#E5=
+#49  0  0  0  0 
+# 0  1  0  0  7 
+# 0  0 70 49  0 
+# 0  0 64  1  0 
+# 0 22  0  0 70 
+#49,  0,  0,  0,  0,  0,  1,  0,  0,  7,  0,  0, 70, 49,  0,  0,  0, 64,  1,  0,  0, 22,  0,  0, 70, 
+#rank in O(5,q)=-1722758521
+
+
+
+
+O4_sym4:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PGL 4 71 \
+		-subgroup_by_generators Sym4 24 3 \
+			" 1,  0,  0, 29,  0, 70, 61,  0,  0, 42,  1,  0, 10,  0,  0, 70, " \
+			" 1,  0,  0, 43,  0, 70, 68,  0,  0, 28,  1,  0,  3,  0,  0, 70, " \
+			" 1,  0,  0,  7,  0, 70, 49,  0,  0, 64,  1,  0, 22,  0,  0, 70, " \
+		-end \
+		-print_elements_tex
+
+
+
+
+
+#		-subgroup_by_generators Sym4 24 3 \
+#		"1,0,0,1, 0,70,7,0, 0,70,1,0, 64,0,0,70" \
+#		"1,0,0,5, 0,17,33,0, 0,66,1,0, 38,0,0,17" \
+#		"1,0,0,29, 0,70,61,0, 0,42,1,0, 10,0,0,70" \
+
+O5_sym4:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PGL 5 71 \
+		-subgroup_by_generators Sym4 24 3 \
+			"8,  0,  0,  0,  0,  0,  1,  0,  0, 29,  0,  0, 70, 61,  0,  0,  0, 42,  1,  0,  0, 10,  0,  0, 70" \
+			"56,  0,  0,  0,  0,  0,  1,  0,  0, 43,  0,  0, 70, 68,  0,  0,  0, 28,  1,  0,  0,  3,  0,  0, 70" \
+			"49,  0,  0,  0,  0,  0,  1,  0,  0,  7,  0,  0, 70, 49,  0,  0,  0, 64,  1,  0,  0, 22,  0,  0, 70" \
+		-end 
+
+#		"19,0,0,0,0, 0,1,0,0,1,  0,0,70,7,0,  0,0,70,1,0,  0,64,0,0,70" \
+#		"53,0,0,0,0,  0,1,0,0,5,  0,0,17,33,0,  0,0,66,1,0,  0,38,0,0,17" \
+#		"8,0,0,0,0,  0,1,0,0,29,   0,0,70,61,0,  0,0,42,1,0,  0,10,0,0,70" \
+#-orthogonal 0 
+
+
+cayley_s4_coxeter:
+	$(GRAPH_THEORY_PATH)/cayley_sym_n.out -v 1 -n 4 -coxeter
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_4_coxeter.colored_graph -export Cayley_Sym_4_coxeter.txt
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_4_coxeter.colored_graph -aut -on_circle  -embedded -scale 0.25 -line_width 0.5
+	pdflatex Cayley_Sym_4_coxeter_on_circle.tex
+	open Cayley_Sym_4_coxeter_on_circle.pdf
+
+
+cayley_s5_coxeter:
+	$(GRAPH_THEORY_PATH)/cayley_sym_n.out -v 1 -n 5 -coxeter
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_5_coxeter.colored_graph -export Cayley_Sym_5_coxeter.txt
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_5_coxeter.colored_graph -aut -on_circle  -embedded -scale 0.25 -line_width 0.5
+	pdflatex Cayley_Sym_5_coxeter_on_circle.tex
+	open Cayley_Sym_5_coxeter_on_circle.pdf
+
+
+cayley_s4_star:
+	$(GRAPH_THEORY_PATH)/cayley_sym_n.out -v 1 -n 4 -star
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_4_star.colored_graph -export Cayley_Sym_4_star.txt
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_4_star.colored_graph -aut -on_circle  -embedded -scale 0.25 -line_width 0.5
+	pdflatex Cayley_Sym_4_star_on_circle.tex
+	open Cayley_Sym_4_star_on_circle.pdf
+
+cayley_s5_star:
+	$(GRAPH_THEORY_PATH)/cayley_sym_n.out -v 1 -n 5 -star
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_5_star.colored_graph -export Cayley_Sym_5_star.txt
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_5_star.colored_graph -aut -on_circle  -embedded -scale 0.25 -line_width 0.5
+	pdflatex Cayley_Sym_5_star_on_circle.tex
+	open Cayley_Sym_5_star_on_circle.pdf
+
+O7:
+	$(GROUPS_PATH)/orthogonal_group.out -v 2 -epsilon 0 -d 5 -q 7 -orbit_of 64 -draw_tree
+
+
+LO7:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PGL 5 7 \
+		-orthogonal 0 \
+		-end \
+		-orbit_of 0
+
+O7_draw:
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 4 \
+		-file O_0_5_7_orbit_0.layered_graph \
+		-draw \
+		-rad 45000 \
+		-xin 1000000 \
+		-yin 1000000 \
+		-xout 1000000 \
+		-yout 1000000 \
+		-embedded \
+		-scale .30 \
+		-line_width 1.0 \
+		-y_stretch 0.8 
+	pdflatex O_0_5_7_orbit_0_draw.tex
+	open O_0_5_7_orbit_0_draw.pdf
+
+
+O_5_7_pt:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PGL 5 7 \
+		-subgroup_by_generators O_5_7 225792 8 \
+			"2, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 4, " \
+			"1, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, " \
+			"6, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 2, " \
+			"6, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 4, 0, " \
+			"6, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 5, 6, 4, 3, 0, 4, 0, 6, 0, 0, 3, 0, 0, 6, " \
+			"2, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 1, 0, 5, 0, 2, 0, 1, 0, 0, 0, 0, 0, 4, " \
+			"4, 0, 0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 6, 0, 3, 0, 3, 1, 1, 4, 0, 0, 3, 0, 0, " \
+			"4, 0, 0, 0, 0, 0, 3, 3, 1, 5, 0, 6, 0, 1, 0, 0, 1, 0, 5, 0, 0, 3, 5, 4, 5, " \
+		-end \
+		-search_subgroup 
+

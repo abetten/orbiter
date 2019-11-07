@@ -1,0 +1,37 @@
+MY_PATH=../../../DEV.14/
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH)/ORBITER2/SRC2
+
+
+SPREAD_PATH=$(SRC2)/SPREAD
+GRAPH_PATH=$(SRC)/GRAPH
+SEMIFIELD_PATH=$(SRC)/SEMIFIELD
+TREEDRAW_PATH=$(SRC2)/TREEDRAW
+DRAW_PATH=$(SRC2)/DRAW
+
+
+ORDER=81
+DEPTH=6
+POLY=
+
+
+regulus:
+	$(SPREAD_PATH)/tp.out -v 5 \
+		-W -order $(ORDER) -dim_over_kernel 2 \
+		-extend_regulus 3 \
+		-make_cases
+
+# 2163 cases at level 3
+# in 3 sec
+
+lift:
+	$(SPREAD_PATH)/tp.out -v 5 \
+		-W -order $(ORDER) -dim_over_kernel 2 \
+		-extend_regulus 3 \
+		-lift 3 ./
+
+
+# Sept 7, 2014 on MacBook 1 min 32 sec, no solutions
+
+
+

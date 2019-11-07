@@ -1,0 +1,64 @@
+MY_PATH=~/DEV.19/GITHUB/orbiter/ORBITER
+MY_PATH2=~/DEV.19/GITHUB/orbiter2/ORBITER2
+#MY_PATH=/scratch3/betten/COMPILE/2018_02_06
+SRC=$(MY_PATH)/src
+SRC2=$(ORBITER2)/src
+
+
+ALGEBRA_PATH=$(SRC)/apps/algebra
+GROUPS_PATH=$(SRC)/apps/groups
+SURFACES_PATH=$(SRC)/apps/surfaces
+BLT_PATH=$(SRC)/apps/blt
+TOOLS_PATH=$(SRC)/apps/tools
+MATH161_PATH=$(SRC2)/MATH161
+SURFACE_PATH=$(SRC2)/SURFACE
+DRAW_PATH=$(SRC2)/DRAW
+SAJEEB_PATH=../../../DEV.19/GITHUB/CliqueFinder
+CLIQUER_PATH=$(SRC2)/CLIQUER/INTERFACE
+OPTIMIZE_MM2_PATH=$(SRC2)/OPTIMIZE_MM2
+ALGEBRA_PATH=$(SRC)/apps/algebra
+LOCAL_TOOLS_PATH=$(SRC)/apps/tools
+PROJECTIVE_SPACE_PATH=$(SRC)/apps/projective_space
+
+
+F32:
+	$(ALGEBRA_PATH)/cheat_sheet_GF.out -q 32
+	pdflatex GF_32.tex
+	open GF_32.pdf
+
+arc1:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 32 -n 2 \
+		-input -set_of_points \
+			"1023,264,1,898,96,66" \
+			-end \
+		-classify_nauty \
+		-save arc1 \
+		-latex \
+		-prefix arc1
+	pdflatex arc1_classification.tex
+	open arc1_classification.pdf
+
+six:
+	$(GROUPS_PATH)/linear_group.out -v 6  \
+		-linear -PGGL 3 32 -end \
+		-orbits_on_subsets 6 \
+		-draw_poset
+
+c_arc:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 32 -n 2 \
+		-input \
+			-set_of_points "1023,264,1,898,96,66" \
+			-set_of_points "0,1,2,3,100,131" \
+			-set_of_points "0,1,2,3,100,628" \
+			-set_of_points "0,1,2,3,100,989" \
+			-end \
+		-classify_nauty \
+		-save arcs \
+		-latex \
+		-prefix arcs
+	pdflatex arcs_classification.tex
+	open arcs_classification.pdf
+
+

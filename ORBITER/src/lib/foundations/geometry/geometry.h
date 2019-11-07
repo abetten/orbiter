@@ -987,7 +987,7 @@ public:
 	int nb_points();
 	void unrank_point(int *v, int rk);
 	int rank_point(int *v);
-	void list_of_points_embedded_in_PG(int *&Pts, int &nb_pts, 
+	void list_of_points_embedded_in_PG(long int *&Pts, int &nb_pts,
 		int verbose_level);
 	void list_all_N(int verbose_level);
 	void list_all_N1(int verbose_level);
@@ -1405,7 +1405,7 @@ public:
 
 
 	int DH_nb_reps(int k, int n);
-	int *DH_representative(int k, int n, int i);
+	long int *DH_representative(int k, int n, int i);
 	void DH_stab_gens(int k, int n, int i, int *&data, int &nb_gens,
 		int &data_size, const char *&stab_order);
 

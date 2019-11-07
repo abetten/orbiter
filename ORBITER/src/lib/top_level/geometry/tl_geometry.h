@@ -680,7 +680,7 @@ public:
 		// maps the favorite rep to the canonical rep 
 
 
-	int (*check_function)(int len, int *S, void *data, int verbose_level);
+	int (*check_function)(int len, long int *S, void *data, int verbose_level);
 
 	poset_classification *gen;
 	poset *Poset;
@@ -716,7 +716,7 @@ public:
 		action *A, action *A_lines, 
 		int f_choose_lines, 
 		int nb_points_or_lines, 
-		int (*check_function)(int len, int *S, void *data,
+		int (*check_function)(int len, long int *S, void *data,
 				int verbose_level),
 		int t0, 
 		int verbose_level);
@@ -1152,6 +1152,65 @@ public:
 			int verbose_level);
 
 };
+
+// #############################################################################
+// hermitian_spreads_classify.cpp
+// #############################################################################
+
+//! classification of Hermitian spreads
+
+
+class hermitian_spreads_classify {
+public:
+	int n;
+	int Q;
+	int len; // = n + 1
+	finite_field *F;
+	hermitian *H;
+
+	long int *Pts;
+	int nb_pts;
+	int *v;
+	int *line_type;
+	projective_space *P;
+	//sims *GU;
+	strong_generators *sg;
+	long int **Intersection_sets;
+	int sz;
+	long int *secants;
+	int nb_secants;
+	int *Adj;
+
+	action *A;
+	action *A2;
+	action *A2r;
+
+	poset *Poset;
+	poset_classification *gen;
+
+
+	hermitian_spreads_classify();
+	~hermitian_spreads_classify();
+	void null();
+	void freeself();
+	void init(int n, int Q, int verbose_level);
+	void read_arguments(int argc, const char **argv);
+	void init2(int verbose_level);
+	void compute(int depth, int verbose_level);
+	void early_test_func(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+};
+
+
+void HS_early_test_func_callback(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+int disjoint_sets(long int *v, long int *w, int len);
+void projective_space_init_line_action(projective_space *P,
+		action *A_points, action *&A_on_lines, int verbose_level);
 
 
 // #############################################################################

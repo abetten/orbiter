@@ -1,0 +1,27 @@
+MY_PATH=~/DEV.18/GITHUB/orbiter
+#MY_PATH=/projects/abetten@colostate.edu/COMPILE/2018_03_11
+MY_PATH2=~/DEV.18
+#MY_PATH=~/DEV.18
+#MY_PATH=/scratch3/betten/COMPILE/2018_03_12
+#MY_PATH2=/scratch3/betten/COMPILE/2018_03_12
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH2)/ORBITER2/SRC2
+
+BLT_PATH=$(SRC)/APPS/BLT
+SEMIFIELD_PATH=$(SRC2)/SEMIFIELD
+GRASSMANN_PATH=$(SRC2)/GRASSMANN
+TOOLS_PATH=$(SRC)/APPS/TOOLS
+
+
+nothing:
+
+
+23:
+	$(BLT_PATH)/create_BLT_set_main.out -v 5 -description -q 23 -catalogue 0 -end
+
+
+
+71:
+	$(BLT_PATH)/create_BLT_set_main.out -v 2 -description -q 71 -catalogue 0 -end
+
+

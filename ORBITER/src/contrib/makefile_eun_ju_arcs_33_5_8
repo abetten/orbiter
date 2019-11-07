@@ -1,0 +1,813 @@
+#MY_PATH=../orbiter
+MY_PATH=~/DEV.19/GITHUB/orbiter
+ORBITER=$(MY_PATH)/ORBITER
+SRC=$(ORBITER)/src
+
+
+ARCS_PATH=$(SRC)/apps/arcs
+PROJECTIVE_SPACE_PATH=$(SRC)/apps/projective_space
+GROUPS_PATH=$(SRC)/apps/groups
+SOLVER_PATH=$(SRC)/apps/solver
+LINEAR_SPACES_PATH=$(SRC)/apps/linear_spaces
+GRAPH_THEORY_PATH=$(SRC)/apps/graph_theory
+SURFACE_PATH=$(SRC)/apps/surfaces
+TOOLS_PATH=$(SRC)/apps/tools
+
+
+
+
+
+################################################################################
+# cheat sheet for PG(2,8):
+################################################################################
+
+cheat:
+	$(PROJECTIVE_SPACE_PATH)/cheat_sheet_PG.out -n 2 -q 8
+	pdflatex PG_2_8.tex
+	open PG_2_8.pdf
+
+
+################################################################################
+# create the possible line types:
+################################################################################
+
+#The file arc.widor is like this (remove the # at the beginning of each line):
+#<HTDO id=arc type=pt ptanz=2 btanz=1 fuse=simple>
+#    73
+#33   9
+#40   9
+#
+#1 1
+#</HTDO>
+
+
+
+arc:
+	$(LINEAR_SPACES_PATH)/widor.out -v 5 arc.widor
+	$(LINEAR_SPACES_PATH)/tdo_refine.out -v 10 -nopacking -D1_upper_bound_x0 5 arc.tdo
+	$(LINEAR_SPACES_PATH)/tdo_print.out -v 2 arcr.tdo
+	$(LINEAR_SPACES_PATH)/tdo_refine.out -v 10 -once -nopacking -mckay arcr.tdo 
+
+
+
+# the file typeA.xml is like this:
+#<DIOPHANT label="typeA" num_eqns=1 num_vars=6 sum=9 f_x_max=1>
+#  4  3  2  1  0  0       0        32  "1"
+#  9  9  9  9  9  0
+#</DIOPHANT>
+
+
+solveA:
+	$(SOLVER_PATH)/solve_diophant.out -v 2 -file typeA.xml -McKay -output_file pointsA.txt
+
+
+
+#Found 5 solutions with 20 backtrack steps
+
+
+# pointsA.txt:
+#5 6
+#5 4 0 0 0 0 
+#6 2 1 0 0 0 
+#7 0 2 0 0 0 
+#7 1 0 1 0 0 
+#8 0 0 0 1 0 
+#-1
+
+
+# the file typeB.xml is like this:
+#<DIOPHANT label="typeB" num_eqns=1 num_vars=6 sum=9 f_x_max=0>
+#  3  4  5  6  7  8       0   39  "1"
+#</DIOPHANT>
+#<DIOPHANT label="typeB" num_eqns=1 num_vars=6 f_has_sum=0 sum=9 f_x_max=0>
+#   3    4    5    6    7    8  0   39 "1"
+#</DIOPHANT>
+
+solveB:
+	$(SOLVER_PATH)/solve_diophant.out -v 2 -file typeB.xml -McKay -output_file pointsB.txt -print
+
+#Found 43 solutions with 65 backtrack steps
+
+#43 6
+#0 6 3 0 0 0 
+#1 4 4 0 0 0 
+#2 2 5 0 0 0 
+#3 0 6 0 0 0 
+#0 7 1 1 0 0 
+#1 5 2 1 0 0 
+#2 3 3 1 0 0 
+#3 1 4 1 0 0 
+#1 6 0 2 0 0 
+#2 4 1 2 0 0 
+#3 2 2 2 0 0 
+#4 0 3 2 0 0 
+#3 3 0 3 0 0 
+#4 1 1 3 0 0 
+#5 0 0 4 0 0 
+#0 8 0 0 1 0 
+#1 6 1 0 1 0 
+#2 4 2 0 1 0 
+#3 2 3 0 1 0 
+#4 0 4 0 1 0 
+#2 5 0 1 1 0 
+#3 3 1 1 1 0 
+#4 1 2 1 1 0 
+#4 2 0 2 1 0 
+#5 0 1 2 1 0 
+#3 4 0 0 2 0 
+#4 2 1 0 2 0 
+#5 0 2 0 2 0 
+#5 1 0 1 2 0 
+#6 0 0 0 3 0 
+#1 7 0 0 0 1 
+#2 5 1 0 0 1 
+#3 3 2 0 0 1 
+#4 1 3 0 0 1 
+#3 4 0 1 0 1 
+#4 2 1 1 0 1 
+#5 0 2 1 0 1 
+#5 1 0 2 0 1 
+#4 3 0 0 1 1 
+#6 0 0 1 1 1 
+#5 1 1 0 1 1 
+#5 2 0 0 0 2 
+#6 0 1 0 0 2 
+#-1
+
+
+
+
+################################################################################
+# a0 >= 4, Cases 52-90
+################################################################################
+
+4_2:
+	- mkdir ARCS_4_2
+	$(ARCS_PATH)/arcs_main.out -v 10 \
+		-linear -PGGL 3 8 -end \
+		-q 8 -d 2 -n 2 \
+		-input_prefix ./ARCS_4_2/ \
+		-output_prefix ./SYSTEMS/ \
+		-solution_prefix ./SOLUTIONS/ \
+		-base_fname arcs_q8_d2 \
+		-starter \
+		-starter_size 4 \
+		-W -w \
+		-draw_poset \
+		-tools_path $(GRAPH_THEORY_PATH) \
+		-export_schreier_trees \
+		-Report
+	cp ARCS_4_2/arcs_q8_d2_lvl_4 .
+
+
+
+
+4_2_lift:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 2 \
+		-job -q 8 -n 2 \
+		-arc_with_given_set_as_s_lines_after_dualizing \
+			33 5 0 0 \
+		-fname_base_out arcs_q8_d2_lvl_4_lifted \
+		-input \
+			-file_of_points arcs_q8_d2_lvl_4 \
+		-end \
+		-end 
+
+# takes 2 minutes
+
+
+mv_a04:
+	- mkdir ARCS_A0_GE_4
+	mv system_*.* ARCS_A0_GE_4
+
+
+# 120 solutions in ARCS_A0_GE_4/system_0.solutions
+
+
+4_2_classify:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 8 -n 2 \
+		-input \
+		-file_of_points ARCS_A0_GE_4/system_0.solutions \
+		-end \
+		-classify_nauty \
+		-save four_zero_lines \
+		-prefix four_zero_lines \
+		-latex  \
+		
+	pdflatex four_zero_lines_classification.tex
+	open four_zero_lines_classification.pdf
+
+# finds 5 iso types.
+
+
+
+
+################################################################################
+# a0=3, Cases 32-51
+################################################################################
+
+
+
+3_2:
+	- mkdir ARCS_3_2
+	$(ARCS_PATH)/arcs_main.out -v 10 \
+		-linear -PGGL 3 8 -end \
+		-q 8 -d 2 -n 2 \
+		-input_prefix ./ARCS_3_2/ \
+		-output_prefix ./SYSTEMS/ \
+		-solution_prefix ./SOLUTIONS/ \
+		-base_fname arcs_q8_d2 \
+		-starter \
+		-starter_size 3 \
+		-W -w \
+		-draw_poset 
+	cp ARCS_3_2/arcs_q8_d2_lvl_3 .
+
+# only one type, the projective triangle
+
+
+
+# ignore:
+
+3_2_lift:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 2 \
+		-job -q 8 -n 2 \
+		-arc_with_given_set_as_s_lines_after_dualizing \
+			33 5 0 \
+		-fname_base_out arcs_q8_d2_lvl_3_lifted \
+		-input \
+			-file_of_points arcs_q8_d2_lvl_3 \
+		-end \
+		-end 
+
+# this takes too long
+
+# ignore:
+
+ab3:
+	- mkdir ARCS_A0_GE_3
+	cp system_0.* ARCS_A0_GE_3
+
+
+# to compute the stabilizer if the projective triangle:
+
+3_2_process:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 8 -n 2 \
+		-input \
+		-file_of_points arcs_q8_d2_lvl_3 \
+		-end \
+		-classify_nauty \
+		-save 3_2 \
+		-prefix 3_2 \
+		-latex 
+	pdflatex 3_2_classification.tex
+	open 3_2_classification.pdf
+
+
+
+################################################################################
+# a0=3, a1 >= 1, Cases 34-51
+################################################################################
+
+
+
+3_2b:
+	- mkdir ARCS_3_2b
+	$(ARCS_PATH)/arcs_main.out -v 5 \
+		-linear -PGGL 3 8 \
+			-subgroup_by_generators "proj_triangle" 882 5 \
+			"1, 0, 0, 0, 1, 0, 0, 0, 1, 1" \
+			"1, 0, 0, 0, 1, 0, 0, 0, 3, 2" \
+			"1, 0, 0, 0, 2, 0, 0, 0, 2, 2" \
+			"1, 0, 0, 0, 0, 1, 0, 1, 0, 2" \
+			"0, 1, 0, 1, 0, 0, 0, 0, 1, 2" \
+			-end \
+		-forbidden_point_set "0,1,2" \
+		-q 8 -d 2 -n 2 \
+		-input_prefix ./ARCS_3_2b/ \
+		-output_prefix ./SYSTEMS/ \
+		-solution_prefix ./SOLUTIONS/ \
+		-base_fname arcs_q8_d2_b \
+		-starter \
+		-starter_size 1 \
+		-W -w \
+		-draw_poset 
+	cp ARCS_3_2b/arcs_q8_d2_b_lvl_1 .
+
+# 2 cases
+
+
+3_2b_lift:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 2 \
+		-job -q 8 -n 2 \
+		-arc_with_two_given_sets_of_lines_after_dualizing \
+			33 5 1 1 0 "0,1,2" \
+		-fname_base_out arcs_a0eq3_a1ge1_lifted \
+		-input \
+			-file_of_points arcs_q8_d2_b_lvl_1 \
+		-end \
+		-end 
+
+# 28:15, no solutions
+
+
+3_2b_mv:
+	- mkdir ARCS_A0_EQ_3_A1_GE1
+	mv system_*.* ARCS_A0_EQ_3_A1_GE1
+
+
+
+
+
+################################################################################
+# a0=3, a1 = 0, and hence a2 >= 12, Cases 32-33
+################################################################################
+
+
+# pick 2 2-lines. They form a three-arc (though this is irrelevant since we only pick two lines)
+
+3_2c:
+	- mkdir ARCS_3_2c
+	$(ARCS_PATH)/arcs_main.out -v 5 \
+		-linear -PGGL 3 8 \
+			-subgroup_by_generators "proj_triangle" 882 5 \
+			"1, 0, 0, 0, 1, 0, 0, 0, 1, 1" \
+			"1, 0, 0, 0, 1, 0, 0, 0, 3, 2" \
+			"1, 0, 0, 0, 2, 0, 0, 0, 2, 2" \
+			"1, 0, 0, 0, 0, 1, 0, 1, 0, 2" \
+			"0, 1, 0, 1, 0, 0, 0, 0, 1, 2" \
+			-end \
+		-forbidden_point_set "0,1,2" \
+		-q 8 -d 3 -n 2 \
+		-input_prefix ./ARCS_3_2c/ \
+		-output_prefix ./SYSTEMS/ \
+		-solution_prefix ./SOLUTIONS/ \
+		-base_fname arcs_q8_d3_c \
+		-starter \
+		-starter_size 2 \
+		-W -w \
+		-draw_poset 
+	cp ARCS_3_2c/arcs_q8_d3_c_lvl_2 .
+
+
+# 7 cases
+
+
+
+3_2c_lift:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 2 \
+		-job -q 8 -n 2 \
+		-arc_with_two_given_sets_of_lines_after_dualizing \
+			33 5 2 2 0 "0,1,2" \
+		-fname_base_out arcs_a0eq3_a2ge2_lifted \
+		-input \
+			-file_of_points arcs_q8_d3_c_lvl_2 \
+		-end \
+		-end 
+
+# 7/29/2019: 25:12, no solution at all
+
+#old: 1:14:17, no solution at all
+
+
+3_2c_mv:
+	- mkdir ARCS_A0_EQ_3_A2_GE2
+	mv system_*.* ARCS_A0_EQ_3_A2_GE2
+
+
+
+################################################################################
+# a0=2, Cases 17-31
+################################################################################
+
+
+
+
+2_2:
+	- mkdir ARCS_2_2
+	$(ARCS_PATH)/arcs_main.out -v 10 \
+		-linear -PGGL 3 8 -end \
+		-q 8 -d 2 -n 2 \
+		-input_prefix ./ARCS_2_2/ \
+		-output_prefix ./SYSTEMS/ \
+		-solution_prefix ./SOLUTIONS/ \
+		-base_fname arcs_q8_d2 \
+		-starter \
+		-starter_size 2 \
+		-W -w 
+	cp ARCS_2_2/arcs_q8_d2_lvl_2 .
+
+# one orbit: {0, 1} 18816
+
+
+# to compute the stabilizer of the two lines:
+
+2_2_process:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 8 -n 2 \
+		-input \
+		-file_of_points arcs_q8_d2_lvl_2 \
+		-end \
+		-classify_nauty \
+		-save 2_2 \
+		-prefix 2_2 \
+		-latex 
+	pdflatex 2_2_classification.tex
+	open 2_2_classification.pdf
+
+
+
+################################################################################
+# a0=2, a1 >= 3 Cases 19-31
+################################################################################
+
+
+2a:
+	- mkdir ARCS_2a
+	$(ARCS_PATH)/arcs_main.out -v 5 \
+		-linear -PGGL 3 8 \
+			-subgroup_by_generators "two_pts" 18816 5 \
+			"1, 0, 0, 0, 1, 0, 0, 0, 1, 1," \
+			"1, 0, 0, 0, 4, 0, 0, 0, 1, 2," \
+			"1, 0, 0, 0, 3, 0, 0, 0, 3, 2," \
+			"1, 0, 0, 0, 1, 0, 1, 1, 1, 0," \
+			"0, 1, 0, 1, 0, 0, 0, 0, 1, 0," \
+			-end \
+		-forbidden_point_set "0,1" \
+		-q 8 -d 3 -n 2 \
+		-input_prefix ./ARCS_2a/ \
+		-output_prefix ./SYSTEMS/ \
+		-solution_prefix ./SOLUTIONS/ \
+		-base_fname arcs_q8_d3_2a \
+		-starter \
+		-starter_size 3 \
+		-W -w \
+		-draw_poset 
+	cp ARCS_2a/arcs_q8_d3_2a_lvl_3 .
+
+
+# 12 orbits
+
+
+2a_lift:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 2 \
+		-job -q 8 -n 2 \
+		-arc_with_two_given_sets_of_lines_after_dualizing \
+			33 5 1 1 0 "0,1" \
+		-fname_base_out arcs_a0eq2_a1ge3_lifted \
+		-input \
+			-file_of_points arcs_q8_d3_2a_lvl_3 \
+		-end \
+		-end 
+
+# 7/29/2019: 1:16:51, no solution at all
+
+
+2a_mv:
+	- mkdir ARCS_A0EQ2_A1GE3
+	cp system_*.* ARCS_A0EQ2_A1GE3
+
+
+
+
+################################################################################
+# a0=2, a1 = 2, a2 >= 11 Cases 17-18
+################################################################################
+
+
+2b:
+	- mkdir ARCS_2b
+	$(ARCS_PATH)/arcs_main.out -v 5 \
+		-linear -PGGL 3 8 \
+			-subgroup_by_generators "two_pts" 18816 5 \
+			"1, 0, 0, 0, 1, 0, 0, 0, 1, 1," \
+			"1, 0, 0, 0, 4, 0, 0, 0, 1, 2," \
+			"1, 0, 0, 0, 3, 0, 0, 0, 3, 2," \
+			"1, 0, 0, 0, 1, 0, 1, 1, 1, 0," \
+			"0, 1, 0, 1, 0, 0, 0, 0, 1, 0," \
+			-end \
+		-forbidden_point_set "0,1" \
+		-q 8 -d 3 -n 2 \
+		-input_prefix ./ARCS_2b/ \
+		-output_prefix ./SYSTEMS/ \
+		-solution_prefix ./SOLUTIONS/ \
+		-base_fname arcs_q8_d3_2b \
+		-starter \
+		-starter_size 2 \
+		-W -w \
+		-draw_poset 
+	cp ARCS_2b/arcs_q8_d3_2b_lvl_2 .
+
+
+# 4 orbits
+#2 2 3 12 afaaaaaaadaaaaaaaaaaaaaaabaaaaaaacaaaaaaadaaaaaaafaaaaaaacaaaaaaabaaaaaaacaaaaaaabaaaaaaadaaaaaaabbaaaajabbacebbdiaoaabh
+#2 2 4 42 afaaaaaaadaaaaaaaaaaaaaaabaaaaaaacaaaaaaadaaaaaaafaaaaaaacaaaaaaabaaaaaaabaaaaaaahaaaaaaadaaaaaaabbaaabbabbaaabfdiaoaaah
+#2 2 11 42 afaaaaaaadaaaaaaaaaaaaaaabaaaaaaacaaaaaaadaaaaaaafaaaaaaabaaaaaaabaaaaaaacaaaaaaahaaaaaaadaaaaaaaggaaaaoabfaaaajachaaibc
+#2 4 5 896 afaaaaaaaeaaaaaaaaaaaaaaabaaaaaaacaaaaaaadaaaaaaafaaaaaaacaaaaaaabaaaaaaeaaaaaaaahaaaaaaabaaaaaaabbaaaadabbammababbaneabbaailiag
+#-1 4 3 in 0:00(896, 42^2, 12) average is 248 + 0 / 4
+
+
+
+2b_lift:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 2 \
+		-job -q 8 -n 2 \
+		-arc_with_two_given_sets_of_lines_after_dualizing \
+			33 5 2 1 0 "0,1" \
+		-fname_base_out 2b \
+		-input \
+			-file_of_points arcs_q8_d3_2b_lvl_2 \
+		-end \
+		-end 
+
+# 7/30/2019: 1:26:1 on Mac, no solutions
+
+
+################################################################################
+# a0=1, Cases 6-16
+################################################################################
+
+# pick one line:
+
+1:
+	- mkdir ARCS_1
+	$(ARCS_PATH)/arcs_main.out -v 10 \
+		-linear -PGGL 3 8 -end \
+		-q 8 -d 2 -n 2 \
+		-input_prefix ./ARCS_1/ \
+		-output_prefix ./SYSTEMS/ \
+		-solution_prefix ./SOLUTIONS/ \
+		-base_fname arcs_q8_d2 \
+		-starter \
+		-starter_size 1 \
+		-W -w 
+	cp ARCS_1/arcs_q8_d2_lvl_1 .
+
+
+# compute the stabilizer of the line:
+
+1p:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 8 -n 2 \
+		-input \
+		-file_of_points arcs_q8_d2_lvl_1 \
+		-end \
+		-classify_nauty \
+		-save 1 \
+		-prefix 1 \
+		-latex 
+	pdflatex 1_classification.tex
+	open 1_classification.pdf
+
+
+
+################################################################################
+# a0 = 1, a1 >= 5, Cases 8-16
+################################################################################
+
+# pick five 1-lines dinstinct from 0. They form a (5,3)-arc:
+
+1a:
+	- mkdir ARCS_1a
+	$(ARCS_PATH)/arcs_main.out -v 5 \
+		-linear -PGGL 3 8 \
+			-subgroup_by_generators "one_pts" 677376 5 \
+			"1, 0, 0, 0, 1, 0, 0, 0, 1, 1," \
+			"1, 0, 0, 0, 4, 0, 0, 0, 1, 2," \
+			"1, 0, 0, 0, 6, 0, 0, 0, 6, 0," \
+			"1, 0, 0, 0, 1, 0, 1, 1, 1, 0," \
+			"1, 0, 0, 0, 0, 1, 0, 1, 0, 2," \
+			-end \
+		-forbidden_point_set "0" \
+		-q 8 -d 3 -n 2 \
+		-input_prefix ./ARCS_1a/ \
+		-output_prefix ./SYSTEMS/ \
+		-solution_prefix ./SOLUTIONS/ \
+		-base_fname arcs_q8_d3_1a \
+		-starter \
+		-starter_size 5 \
+		-W -w \
+		-draw_poset 
+	cp ARCS_1a/arcs_q8_d3_1a_lvl_5 .
+
+
+# 31 cases
+
+1a_lift:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 2 \
+		-job -q 8 -n 2 \
+		-arc_with_two_given_sets_of_lines_after_dualizing \
+			33 5 1 1 0 "0" \
+		-fname_base_out arcs_a0eq1_lifted \
+		-input \
+			-file_of_points arcs_q8_d3_1a_lvl_5 \
+		-end \
+		-end 
+
+# the remaining lines are at least 1-lines, because we could have more 
+# 1-lines than the 5 that we assume
+
+
+# 3:17:19
+
+
+
+1a_mv:
+	- mkdir ARCS_A0EQ1_A1GE5
+	mv system_*.* ARCS_A0EQ1_A1GE5
+
+
+# no solution.
+
+
+
+################################################################################
+# a0 = 1, a1 = 4, Cases 6-7
+################################################################################
+
+
+
+
+
+
+####
+# cases 6 and 7:
+# case 6: line type (47,5,6,10,4,1)
+# case 7: line type (46,8,3,11,4,1)
+# we pick L_0 = {0}
+# compute possibilities for L_1:
+
+
+# pick 4 1-lines distinct from 0. They from a (4,3)-arc.
+
+1b:
+	- mkdir ARCS_1b
+	$(ARCS_PATH)/arcs_main.out -v 5 \
+		-linear -PGGL 3 8 \
+			-subgroup_by_generators "one_pts" 677376 5 \
+			"1, 0, 0, 0, 1, 0, 0, 0, 1, 1," \
+			"1, 0, 0, 0, 4, 0, 0, 0, 1, 2," \
+			"1, 0, 0, 0, 6, 0, 0, 0, 6, 0," \
+			"1, 0, 0, 0, 1, 0, 1, 1, 1, 0," \
+			"1, 0, 0, 0, 0, 1, 0, 1, 0, 2," \
+			-end \
+		-forbidden_point_set "0" \
+		-q 8 -d 3 -n 2 \
+		-input_prefix ./ARCS_1b/ \
+		-output_prefix ./SYSTEMS/ \
+		-solution_prefix ./SOLUTIONS/ \
+		-base_fname arcs_q8_d3_1b \
+		-starter \
+		-starter_size 4 \
+		-W -w \
+		-draw_poset 
+	cp ARCS_1b/arcs_q8_d3_1b_lvl_4 .
+
+# there are 7 orbits. 
+#4 1 2 3 4 6 afaaaaaaacaaaaaaaaaaaaaaabaaaaaaacaaaaaaadaaaaaaafaaaaaaabaaaaaaabaaaaaaacaaaaaaabaaaaaaadaaaaaaabbaaaajabbacebb
+#4 1 2 3 5 2 afaaaaaaabaaaaaaaaaaaaaaabaaaaaaacaaaaaaadaaaaaaafaaaaaaabaaaaaaabaaaaaaacaaaaaaabaaaaaaabaaaaaaabbaceab
+#4 1 2 3 25 3 afaaaaaaabaaaaaaaaaaaaaaabaaaaaaacaaaaaaadaaaaaaafaaaaaaabaaaaaaadaaaaaaabaaaaaaabaaaaaaabaaaaaaabmakaba
+#4 1 2 3 28 3 afaaaaaaabaaaaaaaaaaaaaaabaaaaaaacaaaaaaadaaaaaaafaaaaaaabaaaaaaadaaaaaaabaaaaaaabaaaaaaabaaaaaaabjccaai
+#4 1 2 3 32 12 afaaaaaaadaaaaaaaaaaaaaaabaaaaaaacaaaaaaadaaaaaaafaaaaaaabaaaaaaaeaaaaaaadaaaaaaabaaaaaaabaaaaaaabcaeebgabjccaaiablegpad
+#4 1 2 4 5 21 afaaaaaaacaaaaaaaaaaaaaaabaaaaaaacaaaaaaadaaaaaaafaaaaaaabaaaaaaadaaaaaaabaaaaaaahaaaaaaabaaaaaaabbaaaadabdcaabh
+#4 1 2 4 11 24 afaaaaaaaeaaaaaaaaaaaaaaabaaaaaaacaaaaaaadaaaaaaafaaaaaaabaaaaaaaeaaaaaaacaaaaaaabaaaaaaadaaaaaaabbaaaajabbaaeababbcaaababicceai
+#-1 7 8 in 0:00(24, 21, 12, 6, 3^2, 2) average is 10 + 1 / 7
+
+
+# the remaining lines are at least 2-lines:
+
+1b_lift:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 2 \
+		-job -q 8 -n 2 \
+		-arc_with_two_given_sets_of_lines_after_dualizing \
+			33 5 2 1 0 "0" \
+		-fname_base_out arcs_a0eq1_lifted \
+		-input \
+			-file_of_points arcs_q8_d3_1b_lvl_4 \
+		-end \
+		-end 
+
+# the remaining lines are at least 2-lines, because we assume that there are exactly 4 2-lines 
+# and we have already picked them all.
+#1:41:22
+
+
+1b_cp:
+	- rm -r ARCS_1b_LIFT
+	- mkdir ARCS_1b_LIFT
+	mv system_*.* ARCS_1b_LIFT
+
+# no solution !
+
+
+
+
+################################################################################
+# a0 = 0, a1 >= 7, Cases 1-5
+################################################################################
+
+
+
+
+#		-draw_poset \
+#		-tools_path $(GRAPH_THEORY_PATH) \
+#		-export_schreier_trees \
+#		-Report
+
+
+# no 4 1-lines are concurrent, so the one-lines form a 3-arc in 
+# the dual plane:
+# We are now assuming 7 one-lines. 
+# This almost implies that we have no 0-line:
+# There are 4 lines types with a0=1 and a1>= 7
+# there are 2 lines types with a0=2 and a1=7.
+
+
+# pick 7 1-lines. They from a (7,3)-arc:
+
+
+7_3:
+	- mkdir ARCS_7_3
+	$(ARCS_PATH)/arcs_main.out -v 10 \
+		-linear -PGGL 3 8 -end \
+		-q 8 -d 3 -n 2 \
+		-input_prefix ./ARCS_7_3/ \
+		-output_prefix ./SYSTEMS/ \
+		-solution_prefix ./SOLUTIONS/ \
+		-base_fname arcs_q8_d3 \
+		-starter \
+		-starter_size 7 \
+		-W -w \
+		-draw_poset \
+		-embedded
+	cp ARCS_7_3/arcs_q8_d3_lvl_7 .
+	cp ARCS_7_3/arcs_q8_d3_poset_lvl_7.tex .
+
+
+# 40 orbits at level 7
+# ago: (504, 42, 36, 24, 18, 6^3, 4^4, 3^4, 2^4, 1^{20}) average is 17 + 18 / 40
+
+7_3_draw:
+	pdflatex arcs_q8_d3_poset_lvl_7.tex
+	open arcs_q8_d3_poset_lvl_7.pdf
+
+
+
+# The remaining lines are at least 1-lines:
+
+
+7_3_lift:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 2 \
+		-job -q 8 -n 2 \
+		-arc_with_given_set_as_s_lines_after_dualizing \
+			33 5 1 1 \
+		-fname_base_out arcs_q8_d2_lvl_7_lifted \
+		-input \
+			-file_of_points arcs_q8_d3_lvl_7 \
+		-end \
+		-end 
+	
+# 7/29/2019: 5:6:30 on Mac
+
+# finds solutions in cases 25, 28, 30, 39 as follows:
+# case 25: 2 solutions
+# case 28: 2 solutions
+# case 30: 2 solutions
+# case 39: 28 solutions
+# they are in SYSTEM_A0_EQ_0/system_39.solutions (etc.)
+
+
+mv_a0:
+	- mkdir ARCS_A0_EQ_0
+	mv system_*.* ARCS_A0_EQ_0
+
+
+
+7_3_classify:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 \
+		-q 8 -n 2 \
+		-input \
+		-file_of_points SYSTEM_A0_EQ_0/system_25.solutions \
+		-file_of_points SYSTEM_A0_EQ_0/system_28.solutions \
+		-file_of_points SYSTEM_A0_EQ_0/system_30.solutions \
+		-file_of_points SYSTEM_A0_EQ_0/system_39.solutions \
+		-end \
+		-classify_nauty \
+		-save a0_eq_0 \
+		-prefix a0_eq_0 \
+		-latex 
+	pdflatex a0_eq_0_classification.tex
+	open a0_eq_0_classification.pdf
+
+
+# We find one solution in Case 4, with a stabilizer of order 12.
+
+
+#		-tools_path $(GRAPH_THEORY_PATH) \
+#		-export_schreier_trees \
+#		-Report
+
+
+
+

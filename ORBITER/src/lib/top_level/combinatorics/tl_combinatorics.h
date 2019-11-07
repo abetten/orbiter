@@ -13,6 +13,75 @@ namespace orbiter {
 namespace top_level {
 
 
+// #############################################################################
+// bent_function_classify.cpp
+// #############################################################################
+
+
+//! classification of bent functions
+
+
+class bent_function_classify {
+public:
+	int n;
+	int n2; // n / 2
+	int Q; // 2^n
+	int Q2; // 2^{n/2}
+	//int NN;
+	longinteger_object NN; // 2^Q
+	int N; // size of PG(n,2)
+
+	finite_field *Fq; // the field F2
+	finite_field *FQ; // the field of order 2^n
+
+	homogeneous_polynomial_domain *Poly;
+	int **A_poly;
+	int **B_poly;
+	int *Kernel;
+	int dim_kernel;
+
+	action *A;
+	vector_ge *nice_gens;
+
+	action_on_homogeneous_polynomials *AonHPD;
+	strong_generators *SG;
+	longinteger_object go;
+
+	long int *affine_points; // [Q]
+	action *A_affine; // restricted action on affine points
+
+
+	int *v; // [n]
+	int *v1; // [n + 1]
+	int *w; // [n]
+	int *f; // [Q]
+	int *f2; // [Q]
+	int *F; // [Q]
+	int *T; // [Q]
+	int *W; // [Q * Q]
+	int *f_proj;
+	int *f_proj2;
+
+
+
+	bent_function_classify();
+	~bent_function_classify();
+	void init(int n, int verbose_level);
+	void init_group(int verbose_level);
+	void setup_polynomial_rings(int verbose_level);
+	void compute_polynomial_representation(int *func, int *coeff, int verbose_level);
+	void evaluate_projectively(int *coeff, int *f);
+	void evaluate(int *coeff, int *f);
+	void raise(int *in, int *out);
+	void apply_Walsh_transform(int *in, int *out);
+	int is_bent(int *T);
+	void search(int verbose_level);
+};
+
+
+void bent_function_classify_print_function(int *poly, int sz, void *data);
+void bent_function_classify_reduction_function(int *poly, void *data);
+
 
 // #############################################################################
 // cayley_graph_search.cpp
@@ -233,7 +302,6 @@ public:
 			int verbose_level);
 	void create_graph(
 			long int *line0, int len, int verbose_level);
-	void testing(strong_generators *SG, int verbose_level);
 	int find_pair_orbit(int i, int j, int verbose_level);
 	int find_pair_orbit_by_tracing(int i, int j, int verbose_level);
 	void compute_pair_orbit_table(int verbose_level);

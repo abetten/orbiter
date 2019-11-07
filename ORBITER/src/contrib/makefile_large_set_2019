@@ -1,0 +1,163 @@
+MY_PATH=~/DEV.19/orbiter
+#MY_PATH=/scratch2/betten/COMPILE/orbiter
+SRC=$(MY_PATH)/ORBITER/src
+SRC2=$(MY_PATH)/ORBITER2/src2
+
+GRAPH_THEORY_PATH=$(SRC)/apps/graph_theory
+GROUPS_PATH=$(SRC)/apps/groups
+PROJECTIVE_SPACE_PATH=$(SRC)/apps/projective_space
+GRAPH_THEORY_PATH=$(SRC)/apps/graph_theory
+COMBINATORICS_PATH=$(SRC)/apps/combinatorics
+
+
+update:
+	cd $(COMBINATORICS_PATH); make clean;
+	cd $(GRAPH_THEORY_PATH); make clean;
+	cd $(SRC); make cleana; git pull; make 
+
+
+update_all:
+	cd $(SRC); make clean; git pull; make 
+
+
+
+d2:
+	$(COMBINATORICS_PATH)/design_create_main.out -v 8  \
+		-design -q 2 -family PG_2_q  -end \
+		-depth 5
+
+
+
+
+d3:
+	cp $(COMBINATORICS_PATH)/design_create_main.out .
+	./design_create_main.out -v 8  \
+		-design -q 3 -family PG_2_q  -end \
+		-depth 55
+
+
+# group order of Sym(13)= 6227020800
+# Order of the stabilizer of the plane PG(2,3)= 5616
+# The number of PG(2,3) designs is 1108800 = 6227020800 / 5616
+#orbit_of_sets::compute found an orbit of length 1108800
+
+
+# creates 
+#-rw-r----- 1 betten fac      1119 Sep 21 18:10 LS_PG_2_q3_lvl_1
+#-rw-r----- 1 betten fac   3567900 Sep 21 18:11 LS_PG_2_q3_lvl_1_candidates.bin
+#-rw-r----- 1 betten fac     26578 Sep 21 18:12 LS_PG_2_q3_lvl_2
+#-rw-r----- 1 betten fac 351483324 Sep 21 18:27 LS_PG_2_q3_lvl_2_candidates.bin
+#-rw-r----- 1 betten fac 381059169 Sep 24 04:10 LS_PG_2_q3_lvl_3
+# on otto
+
+
+# level 1:
+#-1 1 1 in 0:00(5616) average is 5616 + 0 / 1
+
+#level 2:
+#-1 123 2 in 0:00(78, 39, 24, 12, 8^2, 6^7, 4^8, 3^7, 2^{43}, 1^{52}) average is 3 + 33 / 123
+
+#level 3:
+#-1 18921592 125 in 0:16(39, 24^2, 18, 12, 9^4, 8^2, 6^{29}, 4^{64}, 3^{700}, 2^{7151}, 1^{18913637}) average is 1 + 9046 / 18921592
+
+
+
+
+r3:
+	cp $(COMBINATORICS_PATH)/design_create_main.out .
+	./design_create_main.out -v 8  \
+		-design -q 3 -family PG_2_q  -end \
+		-read_classification 3
+
+# 5:27 on otto
+# the last case is 18921591 and has a stabilizer of order 39
+
+
+
+l0_0:
+	cp $(COMBINATORICS_PATH)/design_create_main.out .
+	./design_create_main.out -v 8  \
+		-design -q 3 -family PG_2_q  -end \
+		-lift_case 0 0 \
+		-sylow_select 5 \
+		-cyclic_subgroup_with_n_fixpoints 3
+
+
+
+l1_0:
+	cp $(COMBINATORICS_PATH)/design_create_main.out .
+	./design_create_main.out -v 8  \
+		-design -q 3 -family PG_2_q  -end \
+		-lift_case 1 0 \
+		-sylow_select 3 \
+		-cyclic_subgroup_with_n_fixpoints 1
+
+# creates:
+#-rw-r----- 1 betten fac  59998343 Oct 26 15:11 Case_0__graph_Syl_3.bin
+
+
+
+c1_0:
+	$(GRAPH_THEORY_PATH)/all_cliques.out -v 3 \
+		-file Case_0__graph_Syl_3.bin \
+		-all_cliques_of_size 18 Case_0__graph_Syl_3_sol.txt 
+
+
+l_last:
+	cp $(COMBINATORICS_PATH)/design_create_main.out .
+	./design_create_main.out -v 8  \
+		-design -q 3 -family PG_2_q  -end \
+		-lift_case 3 18921591 \
+		-sylow_select 13
+
+
+#One 13-Sylow group has the following generators:\\
+#Strong generators for a group of order 13:
+#$$
+#(0, 5, 3, 11, 6, 12, 4, 7, 9, 2, 1, 8, 10)$$
+#5, 8, 1, 11, 7, 3, 12, 9, 10, 2, 0, 6, 4, \\
+#processing starter case with Sylow subgroup 1 / 2 of stabilizer, for p=13
+#large_set_classify::process_starter_case
+#large_set_classify::make_reduced_design_table
+#large_set_classify::make_reduced_design_table done
+#large_set_classify::process_starter_case The reduced design table has length 547236
+
+#orbits_on_something::classify_orbits_by_length The distribution of orbit lengths is: 1, 13^42095
+#large_set_classify::process_starter_case after OoS->test_orbits_of_a_certain_length prev_nb=42095 cur_nb=10314
+#save_colored_graph nb_vertices=10314
+# 3:44 on otto
+# creates
+#-rw-r----- 1 betten fac   6730542 Sep 27 18:13 Case_18921591__graph_Syl_13.bin
+#save_colored_graph nb_vertices=10314
+
+cliques:
+	$(GRAPH_THEORY_PATH)/all_cliques.out -v 2 \
+		-file Case_18921591__graph_Syl_13.bin \
+		-all_cliques_of_size 4 Case_18921591__graph_Syl_13_sol.txt 
+
+# 4 * 13 + 3 = 55
+# creates
+#-rw------- 1 betten fac       111 Sep 27 18:08 Case_18921591__graph_Syl_13_sol.txt
+
+rc:
+	$(GRAPH_THEORY_PATH)/rainbow_cliques.out -v 10 \
+		-clique_finder -file Case_18921591__graph_Syl_13.bin \
+		-rainbow -output_file Case_18921591__graph_Syl_13_sol.txt -end 
+
+
+read:
+	cp $(COMBINATORICS_PATH)/design_create_main.out .
+	./design_create_main.out -v 8  \
+		-design -q 3 -family PG_2_q  -end \
+		-lift_case 3 18921591 \
+		-read_solution_file Case_18921591__graph_Syl_13_sol.txt
+
+
+
+#We found 5 large sets
+#      0  452008  618726   20707  339767  272744  744459  550049 1101210  226601  311610  710552  107600   63502  476477  913410   41159  164831 1026766  806901  134486 1032438  646372  408700  525792  943664  378393  440073  905513   82448  157908  592663 1064737  201468  849511  704399  395345  348224  877738  983313 1001845  510847  209251  682521  641327  846415  285601  570398  952739  493539  773941  259446  790853 1069653  748924
+#      0  452008  618726   21210  250784 1020153  240351  558111  637560  147923  592420  583648  390072  304725  767656  902692   54195  843968  976322  531657  955230 1070238  702676  808734  759439  870861  647917  115575  522412   74897  852465 1055277  218992  358421  802365  725449  293737  675554  916221 1000890  329503   91322  128424  497702  407525 1037523  427138  478357  263445  161915  380511 1090067  735597  927416  191399
+#      0  452008  618726   25590  356564  763534  743841  560475   52438  465042  141296  589276  277034  978430  854557 1094858   67519  524141  384370  255144  367366  294200  988681  429235  699251  634205  168008  878112 1035795   89208  805630  219533 1065917 1068596  322005  820240  675980  406205  654538  932849  539704  108162  140853 1016313  568575  838828  195703  772073  959702  230433  917199  707958  335629  900908  486382
+#      0  452008  618726   30557  781670  824121  320761  547361  655339  272959  683464   52839 1101373  225188  567113  930058   63954  417518  629310  127683  378602  540493  892907  283780  502123 1017100  726470  709647 1029499   90470  884470  957668 1053676  518369  969368  857676  795315  183510  356027  101440  687161  836229  153776  597458  753066  473597  442607  389710  256509  167696 1002910  203362  919761 1077097  342180
+#      0  452008  618726   32205  403910  716448  240111  556035  930739  264537 1035541  190789 1099279  746185  242909  368504   56972  701233  825334  400642  870987  646208  314541  515667  682370  626491 1077269  156321  600840   74453  428367  863578  210579  179195  343550  927201  981665  339086  734792  292218  120334  472494   91135  779050  953184 1051541  140302 1005676  796591  897882  538416  494175 1016372  581129  830407
+#finite_field::print_call_stats

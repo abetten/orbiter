@@ -117,7 +117,7 @@ void choose_points_or_lines::init(const char *label, void *data,
 	action *A, action *A_lines, 
 	int f_choose_lines, 
 	int nb_points_or_lines, 
-	int (*check_function)(int len, int *S, void *data, int verbose_level),
+	int (*check_function)(int len, long int *S, void *data, int verbose_level),
 	int t0, 
 	int verbose_level)
 {

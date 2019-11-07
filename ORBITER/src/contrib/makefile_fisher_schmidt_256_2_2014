@@ -1,0 +1,798 @@
+MY_PATH=../../../DEV.14
+#MY_PATH=/scratch/betten/COMPILE/2014_12_02
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH)/ORBITER2/SRC2
+
+PHILIP_PATH=$(SRC)/FISHER_SCHMIDT
+TREEDRAW_PATH=$(SRC)/TOOLS
+ALGEBRA_PATH=$(SRC2)/ALGEBRA
+PROJECTIVE_SPACE_PATH=$(SRC2)/PROJECTIVE_SPACE
+
+FIELD=-Q 65536 -poly_Q "65581" -q 256 -poly_q "285"
+
+SMALLFIELD=-q 256 -poly "285"
+
+# Magma minimal polynomials over GF(2):
+
+#x^2 + x + 1 = 7
+#x^3 + x + 1 = 11
+#x^4 + x + 1 = 19
+#x^5 + x^2 + 1 = 37
+#x^6 + x^4 + x^3 + x + 1 = 91
+#x^7 + x + 1 = 131
+#x^8 + x^4 + x^3 + x^2 + 1 = 285
+#x^9 + x^4 + 1 = 529
+#x^10 + x^6 + x^5 + x^3 + x^2 + x + 1
+#x^11 + x^2 + 1
+#x^12 + x^7 + x^6 + x^5 + x^3 + x + 1 = 4331
+#x^13 + x^4 + x^3 + x + 1
+#x^14 + x^7 + x^5 + x^3 + 1 = 16553
+#x^15 + x^5 + x^4 + x^2 + 1
+#x^16 + x^5 + x^3 + x^2 + 1 = 65581
+#x^17 + x^3 + 1
+#x^18 + x^12 + x^10 + x + 1 = 267267
+#x^19 + x^5 + x^2 + x + 1
+#x^20 + x^10 + x^9 + x^7 + x^6 + x^5 + x^4 + x + 1
+
+
+
+
+
+
+#####################
+#  PG(2,256) over F_4
+#####################
+
+
+matrix:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2
+
+
+# Dec 14, 2014 on new MacBook: 2 min 22 (with new pair_test) 
+# Aug 18, 2014 on domino: about 3+ hrs for the matrix. 
+
+256_2:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 
+
+
+#-orbits 2 cliques \
+
+#-maxdepth 3
+#The order of PGGL(2,256) is 147571691993903923200
+#		-restrictions 0 2 3 -1 \
+
+
+#nb_points=7683
+#nb_colors=33
+
+# -restrictions 0 0 3 -1
+#depth : level_counter
+#  0 :      3
+#  1 :    240
+#  2 :  42976
+
+# -restrictions 0 1 3 -1
+#depth : level_counter
+#  0 :      3
+#  1 :    240
+#  2 :  42976
+
+# -restrictions 0 2 3 -1
+#depth : level_counter
+#  0 :      3
+#  1 :    240
+#  2 :  42976
+
+parallel60:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 0 3 -1 \
+		-case 0 >log_256_0_0 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 1 3 -1 \
+		-case 0 >log_256_0_1 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 2 3 -1 \
+		-case 0 >log_256_0_2 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 0 3 -1 \
+		-case 1 >log_256_1_0 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 1 3 -1 \
+		-case 1 >log_256_1_1 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 2 3 -1 \
+		-case 1 >log_256_1_2 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 0 3 -1 \
+		-case 2 >log_256_2_0 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 1 3 -1 \
+		-case 2 >log_256_2_1 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 2 3 -1 \
+		-case 2 >log_256_2_2 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 0 3 -1 \
+		-case 3 >log_256_3_0 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 1 3 -1 \
+		-case 3 >log_256_3_1 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 2 3 -1 \
+		-case 3 >log_256_3_2 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 0 3 -1 \
+		-case 4 >log_256_4_0 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 1 3 -1 \
+		-case 4 >log_256_4_1 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 2 3 -1 \
+		-case 4 >log_256_4_2 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 0 3 -1 \
+		-case 5 >log_256_5_0 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 1 3 -1 \
+		-case 5 >log_256_5_1 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 2 3 -1 \
+		-case 5 >log_256_5_2 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 0 3 -1 \
+		-case 6 >log_256_6_0 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 1 3 -1 \
+		-case 6 >log_256_6_1 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 2 3 -1 \
+		-case 6 >log_256_6_2 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 0 3 -1 \
+		-case 7 >log_256_7_0 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 1 3 -1 \
+		-case 7 >log_256_7_1 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 2 3 -1 \
+		-case 7 >log_256_7_2 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 0 3 -1 \
+		-case 8 >log_256_8_0 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 1 3 -1 \
+		-case 8 >log_256_8_1 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 2 3 -1 \
+		-case 8 >log_256_8_2 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 0 3 -1 \
+		-case 9 >log_256_9_0 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 1 3 -1 \
+		-case 9 >log_256_9_1 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 2 3 -1 \
+		-case 9 >log_256_9_2 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 0 3 -1 \
+		-case 10 >log_256_10_0 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 1 3 -1 \
+		-case 10 >log_256_10_1 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 2 3 -1 \
+		-case 10 >log_256_10_2 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 0 3 -1 \
+		-case 11 >log_256_11_0 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 1 3 -1 \
+		-case 11 >log_256_11_1 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 2 3 -1 \
+		-case 11 >log_256_11_2 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 0 3 -1 \
+		-case 12 >log_256_12_0 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 1 3 -1 \
+		-case 12 >log_256_12_1 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 2 3 -1 \
+		-case 12 >log_256_12_2 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 0 3 -1 \
+		-case 13 >log_256_13_0 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 1 3 -1 \
+		-case 13 >log_256_13_1 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 2 3 -1 \
+		-case 13 >log_256_13_2 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 0 3 -1 \
+		-case 14 >log_256_14_0 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 1 3 -1 \
+		-case 14 >log_256_14_1 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 2 3 -1 \
+		-case 14 >log_256_14_2 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 0 3 -1 \
+		-case 15 >log_256_15_0 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 1 3 -1 \
+		-case 15 >log_256_15_1 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 2 3 -1 \
+		-case 15 >log_256_15_2 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 0 3 -1 \
+		-case 16 >log_256_16_0 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 1 3 -1 \
+		-case 16 >log_256_16_1 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 2 3 -1 \
+		-case 16 >log_256_16_2 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 0 3 -1 \
+		-case 17 >log_256_17_0 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 1 3 -1 \
+		-case 17 >log_256_17_1 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 2 3 -1 \
+		-case 17 >log_256_17_2 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 0 3 -1 \
+		-case 18 >log_256_18_0 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 1 3 -1 \
+		-case 18 >log_256_18_1 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 2 3 -1 \
+		-case 18 >log_256_18_2 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 0 3 -1 \
+		-case 19 >log_256_19_0 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 1 3 -1 \
+		-case 19 >log_256_19_1 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-restrictions 0 2 3 -1 \
+		-case 19 >log_256_19_2 &
+	sleep 10 
+
+
+# new run finished 12/12/2014:
+# solutions in cases 
+# 5 (1 mod 3)
+# 8 (2 mod 3)
+# 11 (0 mod 3)
+# 12 (1 mod 3)
+# 14 (1 mod 3)
+# 17 (2 mod 3)
+# 18 (1 mod 3)
+# 19 (0 mod 3)
+# 8 solutions total (one in each case)
+
+# first run:
+# solutions in cases 2, 5, 10, 12 only 
+# six solutions total
+
+
+read:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 5 -restrictions 0 1 3 -1  -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 8 -restrictions 0 2 3 -1  -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 11 -restrictions 0 0 3 -1  -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 12 -restrictions 0 1 3 -1  -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 14 -restrictions 0 1 3 -1  -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 17 -restrictions 0 2 3 -1  -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 18 -restrictions 0 1 3 -1  -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 19 -restrictions 0 0 3 -1  -read_instead
+
+
+# new MacBook Dec 12, 2014: 31 sec
+
+
+cat:
+	cat \
+		FisherSchmidt_solution_256_2_r0_1_3_case_0_5.arcs \
+		FisherSchmidt_solution_256_2_r0_2_3_case_0_8.arcs \
+		FisherSchmidt_solution_256_2_r0_0_3_case_0_11.arcs \
+		FisherSchmidt_solution_256_2_r0_1_3_case_0_12.arcs \
+		FisherSchmidt_solution_256_2_r0_1_3_case_0_14.arcs \
+		FisherSchmidt_solution_256_2_r0_2_3_case_0_17.arcs \
+		FisherSchmidt_solution_256_2_r0_1_3_case_0_18.arcs \
+		FisherSchmidt_solution_256_2_r0_0_3_case_0_19.arcs \
+		> 256_2_solutions.arc
+		
+
+
+read_first_run:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 2 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 5 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 10 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 12 -read_instead
+
+
+cat_first_run:
+	cat FisherSchmidt_solution_converted_256_2_case_0_2.txt \
+		FisherSchmidt_solution_converted_256_2_case_0_5.txt \
+		FisherSchmidt_solution_converted_256_2_case_0_10.txt \
+		FisherSchmidt_solution_converted_256_2_case_0_12.txt \
+		> 256_2_solutions.arc
+
+process:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 -load \
+		-process 256_2_solutions.arc
+
+
+# new MacBook Dec 12, 2014: 1 min 0 sec
+# writes FisherSchmidt_hyperoval_256_2.txt
+
+
+conic_type:
+	$(PROJECTIVE_SPACE_PATH)/process_PG.out -v 2 $(SMALLFIELD) \
+		-conic_type 100000  -n 2 -file FisherSchmidt_hyperoval_256_2.txt
+
+# new MacBook Dec 12, 2014: 12 min 9 sec
+#reading solution 0, a set of size 258
+#The conic intersection type is:
+#257^1 
+#reading solution 1, a set of size 258
+#The conic intersection type is:
+#8^12986 9^2849 10^806 11^21 12^60 
+#reading solution 2, a set of size 258
+#The conic intersection type is:
+#8^12724 9^2975 10^842 11^19 12^44 
+#reading solution 3, a set of size 258
+#The conic intersection type is:
+#8^12633 9^2923 10^851 11^12 12^52 
+#reading solution 4, a set of size 258
+#The conic intersection type is:
+#8^12782 9^2918 10^914 11^16 12^54 
+#reading solution 5, a set of size 258
+#The conic intersection type is:
+#8^12651 9^3193 10^703 11^138 12^11 13^3 16^1 
+#reading solution 6, a set of size 258
+#The conic intersection type is:
+#8^12708 9^2966 10^891 11^18 12^40 
+#reading solution 7, a set of size 258
+#The conic intersection type is:
+#8^12381 9^3151 10^700 11^132 12^13 13^1 14^2 
+
+
+orbits:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 -load \
+		-compute_orbits 256_2_solutions.arc
+
+process2:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 -load \
+		-process 256_2_solution_orbits.txt
+
+# 72 hyperovals
+
+
+
+read_all:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 0 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 1 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 2 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 3 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 4 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 5 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 6 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 7 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 8 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 9 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 10 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 11 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 12 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 13 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 14 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 15 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 16 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 17 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 18 -read_instead
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 19 -read_instead
+
+
+read5:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 -case 5 -read_instead
+
+regular:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-case 5 \
+		-restrictions 0 97 187 1 78 143 2 54 57 3 1 14 -1 
+
+
+#writes FisherSchmidt_solution_256_2_r0_97_187_r1_78_143_r2_54_57_r3_1_14_case_0_5.txt
+
+regular_read:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-case 5 \
+		-restrictions 0 97 187 1 78 143 2 54 57 3 1 14 -1 \
+		-read_instead
+
+# writes FisherSchmidt_solution_256_2_r0_97_187_r1_78_143_r2_54_57_r3_1_14_case_0_5.arcs
+
+regular_process:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 -load \
+		-process FisherSchmidt_solution_256_2_r0_97_187_r1_78_143_r2_54_57_r3_1_14_case_0_5.arcs
+
+#writes FisherSchmidt_hyperoval_256_2.txt
+#writes 256_2_magma.txt
+
+
+regular_conic_type:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 5 -n 2 $(SMALLFIELD) -conic_type -file FisherSchmidt_hyperoval_256_2.txt 
+
+# conic type 257
+
+
+case_5:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  \
+		-clique \
+		-use_symmetry_group 2 \
+		-case 5 \
+		-restrictions 0 97 187  -1 
+
+
+hyperovals:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 2 -n 2 $(SMALLFIELD) -line_type -file 256_2_hyperovals.txt 
+
+
+#do_line_type: line intersection type: ( 0^32640, 2^33153 )
+
+
+h1:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 5 -n 2 $(SMALLFIELD) -conic_type -file 256_2_h1.txt 
+
+h2:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 5 -n 2 $(SMALLFIELD) -conic_type -file 256_2_h2.txt 
+
+h3:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 5 -n 2 $(SMALLFIELD) -conic_type -file 256_2_h3.txt 
+
+h4:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 5 -n 2 $(SMALLFIELD) -conic_type -file 256_2_h4.txt 
+
+h5:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 5 -n 2 $(SMALLFIELD) -conic_type -file 256_2_h5.txt 
+
+h6:
+	$(PROJECTIVE_SPACE_PATH)/process.out -v 5 -n 2 $(SMALLFIELD) -conic_type -file 256_2_h6.txt 
+
+
+
+case2p:
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 \
+		-case 2 -restrictions 0 0 10 -1  >log_256_2_0 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 \
+		-case 2 -restrictions 0 1 10 -1  >log_256_2_1 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 \
+		-case 2 -restrictions 0 2 10 -1  >log_256_2_2 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 \
+		-case 2 -restrictions 0 3 10 -1  >log_256_2_3 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 \
+		-case 2 -restrictions 0 4 10 -1  >log_256_2_4 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 \
+		-case 2 -restrictions 0 5 10 -1  >log_256_2_5 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 \
+		-case 2 -restrictions 0 6 10 -1  >log_256_2_6 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 \
+		-case 2 -restrictions 0 7 10 -1  >log_256_2_7 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 \
+		-case 2 -restrictions 0 8 10 -1  >log_256_2_8 &
+	sleep 10 
+	$(PHILIP_PATH)/fisher_schmidt_main.out -v 2 $(FIELD) -aut 2 \
+		-load  -clique -use_symmetry_group 2 \
+		-case 2 -restrictions 0 9 10 -1  >log_256_2_9 &
+	sleep 10 
+
+
+
+

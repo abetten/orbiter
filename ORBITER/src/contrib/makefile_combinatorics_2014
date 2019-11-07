@@ -1,0 +1,108 @@
+MY_PATH=../../DEV.14/
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH)/ORBITER2/SRC2
+
+
+SPREAD_PATH=$(SRC2)/SPREAD
+GRAPH_PATH=$(SRC)/GRAPH
+SEMIFIELD_PATH=$(SRC)/SEMIFIELD
+TREEDRAW_PATH=$(SRC2)/TREEDRAW
+DRAW_PATH=$(SRC2)/DRAW
+COMBINATORICS_PATH=$(SRC2)/COMBINATORICS
+PROJECTIVE_SPACE_PATH=$(SRC2)/PROJECTIVE_SPACE
+CRYPTO_PATH=$(SRC2)/CRYPTO
+
+
+
+puzzle:
+	$(COMBINATORICS_PATH)/puzzle.out 
+	$(COMBINATORICS_PATH)/dlx.out -file puzzle25_compressed.txt -solution_file sol25.txt
+	$(TREEDRAW_PATH)/treedraw.out -v 4 \
+		-x 2000000 -y 1000000 \
+		-circle \
+		-rad 10000 \
+		-file DLX_search_tree.tree
+	pdflatex DLX_search_tree.tex
+	open DLX_search_tree.pdf
+
+
+change:
+	$(COMBINATORICS_PATH)/change_1_dollar.out >change_1_dollar.log
+
+tex:
+	../TOOLS/a2tex.out <$(COMBINATORICS_PATH)/change_1_dollar.C >change_1_dollar.C.tex
+	cp change_1_dollar.C.tex ~/TEX.14/MATH501/EXACT_COVER
+	../TOOLS/a2tex.out <change_1_dollar.log >change_1_dollar.log.tex
+	cp change_1_dollar.log.tex ~/TEX.14/MATH501/EXACT_COVER
+
+
+conic:
+	$(PROJECTIVE_SPACE_PATH)/determine_conic.out -v 2 -q 5 \
+		-pt_coords \
+			0 0 1 \
+			1 1 1 \
+			2 4 1 \
+			3 4 1 \
+			4 1 1 -1
+
+conic7:
+	$(PROJECTIVE_SPACE_PATH)/determine_conic.out -v 2 -q 7 \
+		-pt_coords \
+			1 2 2 \
+			2 0 3 \
+			3 3 4 \
+			4 1 5 \
+			5 0 6 -1
+
+conic5:
+	$(PROJECTIVE_SPACE_PATH)/determine_conic.out -v 2 -q 5 \
+		-pt_coords \
+			0 1 0 \
+			1 0 0 \
+			0 0 1 \
+			1 2 1 \
+			2 1 1 \
+			3 3 1 -1
+
+conic5b:
+	$(PROJECTIVE_SPACE_PATH)/determine_conic.out -v 2 -q 5 \
+		-pt_coords \
+			2 1 1 \
+			4 1 0 \
+			3 2 1 \
+			0 2 1 \
+			1 3 1 -1
+
+conic5c:
+	$(PROJECTIVE_SPACE_PATH)/determine_conic.out -v 2 -q 5 \
+		-pt_coords \
+			0 1 1 \
+			1 0 1  \
+			2 2 1 \
+			2 3 1 \
+			1 0 0 -1
+
+grid:
+	$(CRYPTO_PATH)/crypto.out -v 3 -q 5 -b 1 -c 1  -draw_with_points
+	pdflatex E_5_1_1.tex
+	open E_5_1_1.pdf
+
+H4:
+	$(COMBINATORICS_PATH)/hadamard.out -v 2 -n 4 -draw
+	pdflatex Hadamard_graph_4_bitmatrix.tex
+	open Hadamard_graph_4_bitmatrix.pdf
+
+H8:
+	$(COMBINATORICS_PATH)/hadamard.out -v 2 -n 8 -draw
+	mpost Hadamard_graph_8_bitmatrix.mp
+	latex view.tex
+	dvips view.dvi -o
+	open view.ps
+
+
+H12:
+	$(COMBINATORICS_PATH)/hadamard.out -v 2 -n 12
+
+
+
+

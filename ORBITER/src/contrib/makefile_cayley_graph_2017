@@ -1,0 +1,175 @@
+MY_PATH=../../DEV.16
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH)/ORBITER2/SRC2
+
+
+TOOLS_PATH=$(SRC)/APPS/TOOLS
+COMBINATORICS_PATH=$(SRC)/APPS/COMBINATORICS
+
+
+rep4:
+	$(COMBINATORICS_PATH)/group_ring.out -v 1 -n 4
+
+
+star2:
+	$(COMBINATORICS_PATH)/cayley_sym_n.out -v 1 -n 2 -star
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_2_star.colored_graph -aut -bitmatrix -embedded -scale 0.25 -line_width 0.5 
+	#pdflatex Cayley_Sym_3_star_on_circle.tex
+	#open Cayley_Sym_3_star_on_circle.pdf
+	pdflatex Cayley_Sym_2_star_bitmatrix.tex
+	open Cayley_Sym_2_star_bitmatrix.pdf
+
+star3:
+	$(COMBINATORICS_PATH)/cayley_sym_n.out -v 1 -n 3 -star
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_3_star.colored_graph -export Cayley_Sym_3_star.txt
+	#$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_3_star.colored_graph -aut -on_circle -embedded -scale 0.25 -line_width 0.5
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_3_star.colored_graph -aut -bitmatrix -embedded -scale 0.25 -line_width 0.5 -partition 2 2 2  -1
+	#pdflatex Cayley_Sym_3_star_on_circle.tex
+	#open Cayley_Sym_3_star_on_circle.pdf
+	pdflatex Cayley_Sym_3_star_bitmatrix.tex
+	open Cayley_Sym_3_star_bitmatrix.pdf
+
+
+#-partition 2 2 2  -1
+
+# ago = 12 = 6 * 2 = 3! * 2!
+
+
+star4:
+	$(COMBINATORICS_PATH)/cayley_sym_n.out -v 1 -n 4 -star
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_4_star.colored_graph -export Cayley_Sym_4_star.txt
+	#$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_4_star.colored_graph -aut -on_circle -embedded -scale 0.25 -line_width 0.5
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_4_star.colored_graph -aut -bitmatrix -embedded -scale 0.25 -line_width 0.5 -partition 6 6 6 6  -1
+	#pdflatex Cayley_Sym_4_star_on_circle.tex
+	#open Cayley_Sym_4_star_on_circle.pdf
+	pdflatex Cayley_Sym_4_star_bitmatrix.tex
+	open Cayley_Sym_4_star_bitmatrix.pdf
+
+#-partition 6 6 6 6  -1
+# ago = 144 = 24 * 6 = 4! * 3!
+
+
+star5:
+	$(COMBINATORICS_PATH)/cayley_sym_n.out -v 1 -n 5 -star
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_5_star.colored_graph -export Cayley_Sym_5_star.txt
+	#$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_5_star.colored_graph -aut -on_circle -embedded -scale 0.25 -line_width 0.5
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_5_star.colored_graph -aut -bitmatrix -embedded -scale 0.25 -line_width 0.5 -partition 24 24 24 24 24 -1
+	#pdflatex Cayley_Sym_5_star_on_circle.tex
+	#open Cayley_Sym_5_star_on_circle.pdf
+	pdflatex Cayley_Sym_5_star_bitmatrix.tex
+	open Cayley_Sym_5_star_bitmatrix.pdf
+
+#-partition 24 24 24 24 24 -1
+# ago = 2880 = 120 * 24 = 5! * 4!
+
+star6:
+	$(COMBINATORICS_PATH)/cayley_sym_n.out -v 1 -n 6 -star
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_6_star.colored_graph -export Cayley_Sym_6_star.txt
+	#$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_6_star.colored_graph -aut -on_circle -embedded -scale 0.25 -line_width 0.5
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_6_star.colored_graph -aut -bitmatrix -embedded -scale 0.25 -line_width 0.5 -partition 120 120 120 120 120 120  -1
+	#pdflatex Cayley_Sym_6_star_on_circle.tex
+	#open Cayley_Sym_6_star_on_circle.pdf
+	pdflatex Cayley_Sym_6_star_bitmatrix.tex
+	open Cayley_Sym_6_star_bitmatrix.pdf
+
+#-partition 120 120 120 120 120 120  -1
+# ago = 86400 = 720 * 120 = 6! * 5!
+
+
+###
+
+young4:
+	$(COMBINATORICS_PATH)/group_ring.out -v 2  -n 4
+###
+
+BS2:
+	$(COMBINATORICS_PATH)/cayley_sym_n.out -v 1 -n 2 
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_2_coxeter.colored_graph -export Cayley_Sym_2.txt
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_2_coxeter.colored_graph -aut -bitmatrix -embedded -scale 0.25 -line_width 0.5  -1
+	pdflatex Cayley_Sym_2_coxeter_bitmatrix.tex
+	open Cayley_Sym_2_coxeter_bitmatrix.pdf
+
+BS3:
+	$(COMBINATORICS_PATH)/cayley_sym_n.out -v 1 -n 3 
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_3_coxeter.colored_graph -export Cayley_Sym_3.txt
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_3_coxeter.colored_graph -aut -bitmatrix -embedded -scale 0.25 -line_width 0.5 -partition 2 2 2  -1
+	pdflatex Cayley_Sym_3_coxeter_bitmatrix.tex
+	open Cayley_Sym_3_coxeter_bitmatrix.pdf
+
+BS4:
+	$(COMBINATORICS_PATH)/cayley_sym_n.out -v 1 -n 4 
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_4_coxeter.colored_graph -export Cayley_Sym_4.txt
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_4_coxeter.colored_graph -aut -bitmatrix -embedded -scale 0.25 -line_width 0.5 -partition 6 6 6 6  -1
+	pdflatex Cayley_Sym_4_coxeter_bitmatrix.tex
+	open Cayley_Sym_4_coxeter_bitmatrix.pdf
+
+BS5:
+	$(COMBINATORICS_PATH)/cayley_sym_n.out -v 1 -n 5 
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_5_coxeter.colored_graph -export Cayley_Sym_5.txt
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_5_coxeter.colored_graph -aut -bitmatrix -embedded -scale 0.25 -line_width 0.5 -partition 24 24 24 24 24  -1
+	pdflatex Cayley_Sym_5_coxeter_bitmatrix.tex
+	open Cayley_Sym_5_coxeter_bitmatrix.pdf
+
+BS6:
+	$(COMBINATORICS_PATH)/cayley_sym_n.out -v 1 -n 6
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_6_coxeter.colored_graph -export Cayley_Sym_6.txt
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_6_coxeter.colored_graph -aut -bitmatrix -embedded -scale 0.25 -line_width 0.5 -partition 120 120 120 120 120 120  -1
+	pdflatex Cayley_Sym_6_coxeter_bitmatrix.tex
+	open Cayley_Sym_6_coxeter_bitmatrix.pdf
+
+BS4aut:
+	$(COMBINATORICS_PATH)/cayley_sym_n.out -v 1 -n 4 
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_4_coxeter.colored_graph -aut 
+
+BS5aut:
+	$(COMBINATORICS_PATH)/cayley_sym_n.out -v 1 -n 5 
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_5_coxeter.colored_graph -aut 
+
+BS6aut:
+	$(COMBINATORICS_PATH)/cayley_sym_n.out -v 1 -n 6 
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_6_coxeter.colored_graph -aut 
+
+
+P3:
+	$(COMBINATORICS_PATH)/cayley_sym_n.out -v 1 -n 3 -pancake
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_pancake_3.colored_graph -export Cayley_pancake_3.txt
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_pancake_3.colored_graph -aut -bitmatrix -embedded -scale 0.25 -line_width 0.5 -partition 2 2 2  -1
+	pdflatex Cayley_pancake_3_bitmatrix.tex
+	open Cayley_pancake_3_bitmatrix.pdf
+
+P4:
+	$(COMBINATORICS_PATH)/cayley_sym_n.out -v 1 -n 4 -pancake
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_pancake_4.colored_graph -export Cayley_pancake_4.txt
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_pancake_4.colored_graph -aut -bitmatrix -embedded -scale 0.25 -line_width 0.5 -partition 6 6 6 6  -1
+	pdflatex Cayley_pancake_4_bitmatrix.tex
+	open Cayley_pancake_4_bitmatrix.pdf
+
+P5:
+	$(COMBINATORICS_PATH)/cayley_sym_n.out -v 1 -n 5 -pancake
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_pancake_5.colored_graph -export Cayley_pancake_5.txt
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_pancake_5.colored_graph -aut -bitmatrix -embedded -scale 0.25 -line_width 0.5 -partition 24 24 24 24 24  -1
+	pdflatex Cayley_pancake_5_bitmatrix.tex
+	open Cayley_pancake_5_bitmatrix.pdf
+
+P6:
+	$(COMBINATORICS_PATH)/cayley_sym_n.out -v 1 -n 6 -pancake
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_pancake_6.colored_graph -export Cayley_pancake_6.txt
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_pancake_6.colored_graph -aut -bitmatrix -embedded -scale 0.25 -line_width 0.5 -partition 120 120 120 120 120 120   -1
+	pdflatex Cayley_pancake_6_bitmatrix.tex
+	open Cayley_pancake_6_bitmatrix.pdf
+
+BP3:
+	$(COMBINATORICS_PATH)/cayley_sym_n.out -v 1 -n 3 -burnt_pancake
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_burnt_pancake_3.colored_graph -export Cayley_burnt_pancake_3.txt
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_burnt_pancake_3.colored_graph -aut -bitmatrix -embedded -scale 0.25 -line_width 0.5 -partition 8 8 8 8 8 8  -1
+	pdflatex Cayley_burnt_pancake_3_bitmatrix.tex
+	open Cayley_burnt_pancake_3_bitmatrix.pdf
+
+BP4:
+	$(COMBINATORICS_PATH)/cayley_sym_n.out -v 1 -n 4 -burnt_pancake
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_burnt_pancake_4.colored_graph -export Cayley_burnt_pancake_4.txt
+	$(TOOLS_PATH)/draw_colored_graph.out -v 1 -file Cayley_burnt_pancake_4.colored_graph -aut -bitmatrix -embedded -scale 0.25 -line_width 0.5 -partition 48 48 48 48 48 48 48 48 -1
+	pdflatex Cayley_burnt_pancake_4_bitmatrix.tex
+	open Cayley_burnt_pancake_4_bitmatrix.pdf
+
+

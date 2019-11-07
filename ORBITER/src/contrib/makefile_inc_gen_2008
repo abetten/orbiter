@@ -1,0 +1,20 @@
+STS15:
+	../INC_GEN/inc_gen.out -orderly -sol -file STS15.tdo  -v 3  >aa
+
+STS15a:
+	../INC_GEN/inc_gen.out -orderly -sol -file STS15.tdo -s 11 -v 3 -vs 3 -d 11 14 >aa
+# 24536 solutions in 1:44,  likely wrong
+
+STS15s:
+	../INC_GEN/inc_gen.out -orderly -sol -file STS15.tdo -allstarters 10 -v 3  >aa
+# 639 starter in 1 minute on Mac
+
+
+STS15b:
+	../INC_GEN/inc_gen.out -orderly -sol -file STS15.tdo -s 10 -v 3 -vs 4  >bb
+# 219992 solutions in 1 min 25 sec
+
+STS15c:
+	../INC_GEN/inc_gen.out -orderly -sol -file STS15.tdo -s 11 -v 3 -vs 2  >bb
+
+

@@ -1,0 +1,40 @@
+MY_PATH=../../../DEV.14
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH)/ORBITER2/SRC2
+
+SUBSPACE_ORBITS_PATH=$(SRC2)/SUBSPACE_ORBITS
+TREEDRAW_PATH=$(SRC2)/TREEDRAW
+SEMIFIELD_PATH=$(SRC)/SEMIFIELD
+
+
+
+
+ls:
+	$(SUBSPACE_ORBITS_PATH)/linear_set_main.out -v 5 \
+		-n 12 -q 2 -s 6 -depth 12 -classify  \
+		-W -T 
+
+
+# Jul 22, 2014 on MacBook Pro:   2 hrs 51 min 41 sec
+# Jul 24, 2014 on MacBook Pro:   2 hrs 49 min 31 sec, memory_count_allocate=191124982
+
+
+
+#		-draw_poset
+
+
+tree:
+	$(TREEDRAW_PATH)/treedraw.out  -file subspaces_12_2_6_12.tree  -circle  -rad 20000
+	pdflatex subspaces_12_2_6_12.tex
+	open subspaces_12_2_6_12.pdf
+
+poset:
+	$(SEMIFIELD_PATH)/layered_graph_main.out -v 4 \
+		-file subspaces_12_2_6_poset_lvl_12.layered_graph \
+		-draw subspaces_12_2_6_poset_lvl_12 \
+		-rad 90 \
+		-embedded
+		pdflatex subspaces_12_2_6_poset_lvl_12.tex
+		open subspaces_12_2_6_poset_lvl_12.pdf
+
+

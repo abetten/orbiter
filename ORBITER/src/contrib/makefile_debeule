@@ -1,0 +1,33 @@
+MY_PATH=~/DEV.19/GITHUB/orbiter
+MY_PATH2=~/DEV.19/GITHUB/orbiter2
+#MY_PATH=/scratch3/betten/COMPILE/2019_01_24
+#MY_PATH2=/scratch3/betten/COMPILE/2019_01_24
+SRC=$(MY_PATH)/ORBITER/src
+SRC2=$(MY_PATH2)/ORBITER2/src
+
+GRASSMANN_PATH=$(SRC2)/GRASSMANN
+ALGEBRA_PATH=$(SRC)/apps/algebra
+TOOLS_PATH=$(SRC)/apps/tools
+COMBINATORICS_PATH=$(SRC)/apps/combinatorics
+GRAPH_THEORY_PATH=$(SRC)/apps/graph_theory
+PROJECTIVE_SPACE_PATH=$(SRC)/apps/projective_space
+
+PACKING_PATH=$(SRC)/apps/packing
+PACKINGS_PATH=$(SRC2)/CLASSIFY/PACKINGS
+REGULAR_PACKING_PATH=$(SRC2)/REGULAR_PACKING
+MATH161_PATH=$(SRC2)/MATH161
+
+a:
+	$(PROJECTIVE_SPACE_PATH)/create_object.out -v 2 -hermitian -q 9 -n 4
+
+
+# slightly edit the file H_4_9.txt to make the set in one line
+
+
+b:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 4 \
+		-q 9 -n 4 \
+		-input -file_of_points \
+			H_4_9.txt  -end \
+		-classify_nauty 
+

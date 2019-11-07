@@ -1,0 +1,101 @@
+MY_PATH=../../../DEV.14/
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH)/ORBITER2/SRC2
+
+
+HERMITIAN_PATH=$(SRC2)/HERMITIAN
+SEMIFIELD_PATH=$(SRC)/SEMIFIELD
+RAD=60
+
+
+
+H_2_3:
+	$(HERMITIAN_PATH)/hermitian_spread_main.out -v 2 -n 2 -Q 9 -Sbar -w
+
+# group order 12096
+# stabilizer of spread is 192
+# 63 spreads
+
+
+draw:
+	$(SEMIFIELD_PATH)/layered_graph_main.out -v 4 \
+		-file poset_lvl_7.layered_graph \
+		-draw HS \
+		-xin 10000 -yin 10000 \
+		-xout 800000 -yout 1100000 \
+		-rad $(RAD) \
+		-embedded
+	pdflatex HS.tex
+	open HS.pdf
+
+
+#		-nodes_empty \
+
+
+H_2_4:
+	$(HERMITIAN_PATH)/hermitian_spread_main.out -v 2 -n 2 -Q 16 -Sbar -w
+
+
+# March 20, 2014 on MacBook: 1 sec 
+# 3 orbits
+# (1200, 156, 100) average is 485 + 1 / 3
+# depth 13 (=65/5)
+
+# group order 249600
+# number of spreads = 208, 1600, 2496
+
+
+draw_4:
+	$(SEMIFIELD_PATH)/layered_graph_main.out -v 4 \
+		-file poset_lvl_13.layered_graph \
+		-draw HS \
+		-xin 10000 -yin 10000 \
+		-xout 800000 -yout 1100000 \
+		-rad $(RAD) \
+		-embedded
+	pdflatex HS.tex
+	open HS.pdf
+
+
+
+H_2_5:
+	$(HERMITIAN_PATH)/hermitian_spread_main.out -v 4 -n 2 -Q 25 -Sbar -w
+
+#Found 221671 orbits at depth 6
+#0 : 1 orbits
+#1 : 1 orbits
+#2 : 4 orbits
+#3 : 44 orbits
+#4 : 778 orbits
+#5 : 15962 orbits
+#6 : 221671 orbits
+# depth 21 (=126/6)
+
+
+# according to Dover, it should be 
+# 10 spreads for q=5 (2 unexplained)
+# 81 spreads for q=7 (2 unexplained)
+
+
+2_3_Sbar:
+	$(HERMITIAN_PATH)/hermitian_points.out -v 1 -n 2 -Q 9 -Sbar 
+
+# 28 points, each point comes in q-1 multiples.
+
+
+2_3_N1:
+	$(HERMITIAN_PATH)/hermitian_points.out -v 1 -n 2 -Q 9 -N1 
+
+# 251 elements
+
+
+2_3_N:
+	$(HERMITIAN_PATH)/hermitian_points.out -v 1 -n 2 -Q 9 -N 
+
+# 504 elts
+2_4_Sbar:
+	$(HERMITIAN_PATH)/hermitian_points.out -v 1 -n 2 -Q 16 -Sbar 
+
+# 65 points, each point comes in q-1 multiples.
+
+

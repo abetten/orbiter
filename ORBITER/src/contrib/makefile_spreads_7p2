@@ -1,0 +1,114 @@
+MY_PATH=~/DEV.18/GITHUB/orbiter
+MY_PATH2=~/DEV.18
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH2)/ORBITER2/SRC2
+
+SPREAD_PATH=$(SRC)/APPS/SPREAD
+TOOLS_PATH=$(SRC)/APPS/TOOLS
+ANDRE_PATH=$(SRC2)/ANDRE
+GRASSMANN_PATH=$(SRC2)/GRASSMANN
+TREEDRAW_PATH=$(SRC2)/TREEDRAW
+PROJECTIVE_SPACE_PATH=$(SRC)/APPS/PROJECTIVE_SPACE
+ALGEBRA_PATH=$(SRC2)/ALGEBRA
+
+
+Q=7
+K=2
+TWO_K_MINUS_ONE=3
+ORDER=49
+ORDER_PLUS_ONE=50
+DEPTH=7
+POLY=
+
+
+ARGUMENTS= \
+		-order $(ORDER)  \
+		-starter_size $(DEPTH) \
+		-input_prefix STARTER_DIR/ \
+		-output_prefix SYSTEMS/ \
+		-solution_prefix SOLUTIONS/ \
+		-base_fname Spreads_$(ORDER) \
+		-recoordinatize \
+
+all: starter lift build_db read_solutions compute_orbits isomorph report
+
+
+clean:
+	- rm spread_$(ORDER)* report*  live_points* log*
+	- rm -r ISO
+	- rm PG_3_4*
+	- rm -rf STARTER_DIR
+	- rm -rf SOLUTIONS
+	- rm -rf SYSTEMS
+
+
+
+cheat:
+	$(PROJECTIVE_SPACE_PATH)/cheat_sheet_PG.out -n $(TWO_K_MINUS_ONE) -q $(Q)
+	pdflatex PG_$(TWO_K_MINUS_ONE)_$(Q).tex
+	open PG_$(TWO_K_MINUS_ONE)_$(Q).pdf
+
+
+starter:
+	- mkdir STARTER_DIR
+	$(SPREAD_PATH)/spread_classify.out -v 6 \
+		$(ARGUMENTS) \
+		-starter  -W 
+
+
+#		-T -x 2300 -y 1000 
+
+starter_draw:
+	$(SPREAD_PATH)/spread_classify.out -v 4 \
+		$(ARGUMENTS) \
+		-starter  -W \
+		-T -x 2300 -y 1000 \
+		-draw_poset
+
+lift:
+	- mkdir SYSTEMS
+	- mkdir SOLUTIONS
+	$(SPREAD_PATH)/spread_classify.out -v 2 -order $(ORDER) \
+		-lift $(DEPTH) ./ \
+		$(ARGUMENTS) \
+		-lex
+
+#		-save \
+#-lex -solve 
+
+rainbow_0:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 2 \
+		-file SYSTEMS/graph_0.bin \
+
+rainbow_1:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 2 \
+		-file SYSTEMS/graph_1.bin \
+
+# based on starter of size 6 and -lex: 4/2/2018: 49 min 46 sec on Mac, 
+# finds 1994678 solutions with 3690194444 search nodes
+
+
+
+rainbow_255:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 2 \
+		-file SYSTEMS/graph_255.bin \
+
+rainbow_500:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 2 \
+		-file SYSTEMS/graph_500.bin \
+
+rainbow_700:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 2 \
+		-file SYSTEMS/graph_700.bin \
+
+rainbow_1777:
+	$(TOOLS_PATH)/all_rainbow_cliques.out -v 2 \
+		-file SYSTEMS/graph_1777.bin \
+
+draw_matrix_0:
+	$(TOOLS_PATH)/draw_colored_graph.out -v 2 \
+		-file SYSTEMS/system_0_Levi_graph.bin \
+		-Levi 344 931 \
+		-bitmatrix 
+	mpost SYSTEMS/system_0_Levi_graph_bitmatrix.mp
+

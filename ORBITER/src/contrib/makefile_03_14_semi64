@@ -1,0 +1,200 @@
+MY_PATH=../../../DEV.18/GITHUB/orbiter
+MY_PATH2=../../../DEV.18
+#MY_PATH=../../../DEV.18
+#MY_PATH=/scratch3/betten/COMPILE/2018_02_14
+#MY_PATH2=/scratch3/betten/COMPILE/2018_02_14
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH2)/ORBITER2/SRC2
+
+SEMIFIELD_PATH=$(SRC2)/SEMIFIELD
+GRASSMANN_PATH=$(SRC2)/GRASSMANN
+TOOLS_PATH=$(SRC)/APPS/TOOLS
+
+
+ORDER=64
+DEPTH=6
+POLY=
+
+
+all:
+	$(SEMIFIELD_PATH)/semifield_main.out -v 3 \
+		-order $(ORDER) \
+		-prefix semi_$(ORDER) \
+		-W \
+		-compute $(DEPTH) \
+		-draw_poset 
+
+# too slow!
+
+#		-recoordinatize \
+
+
+poset:
+	$(TOOLS_PATH)/layered_graph_main.out -v 4 \
+		-file semi_$(ORDER)_poset_lvl_$(DEPTH).layered_graph \
+		-draw semi_$(ORDER)_poset_lvl_$(DEPTH) \
+		-rad 7000 \
+		-xin 1000000 \
+		-yin 1000000 \
+		-xout 1000000 \
+		-yout 1000000 \
+		-embedded \
+		-y_stretch 0.8 
+	pdflatex semi_$(ORDER)_poset_lvl_$(DEPTH)_draw.tex
+	open semi_$(ORDER)_poset_lvl_$(DEPTH)_draw.pdf
+
+
+
+
+classify:
+	$(SEMIFIELD_PATH)/semifield_main.out -v 2 \
+		-order $(ORDER) \
+		-break_symmetry $(DEPTH)
+
+
+deep:
+	$(SEMIFIELD_PATH)/semifield_main.out -v 2 \
+		-order $(ORDER) \
+		-prefix semi_$(ORDER) \
+		-deep_search 3 0 0 1024 
+
+
+deep_parallel:
+	- mkdir LOG
+	$(TOOLS_PATH)/scheduler.out \
+		-v 2 \
+		-target_file_mask suc_%ld_797637.txt \
+		-log_prefix LOG/ \
+		-N 797637 \
+		-J 48 \
+		-command_mask  "$(SEMIFIELD_PATH)/semifield_main.out -v 2 -order 64 -prefix semi_64 -deep_search 3 0 %ld 797637" \
+		-reload
+
+
+#		-input_file_mask G/graph_BLT_$(Q)_$(DEPTH)_%ld.bin \
+#
+
+missing_0:
+	$(TOOLS_PATH)/missing_files.out -v 2 -N 4096 \
+		-mask 0/suc_%ld_4096.txt \
+		-split 0 10 \
+		-save missing_0.csv
+
+missing_1:
+	$(TOOLS_PATH)/missing_files.out -v 2 -N 4096 \
+		-mask 1/suc_%ld_4096.txt \
+		-split 1 10 \
+		-save missing_1.csv
+
+missing_2:
+	$(TOOLS_PATH)/missing_files.out -v 2 -N 4096 \
+		-mask 2/suc_%ld_4096.txt \
+		-split 2 10 \
+		-save missing_2.csv
+
+missing_3:
+	$(TOOLS_PATH)/missing_files.out -v 2 -N 4096 \
+		-mask 3/suc_%ld_4096.txt \
+		-split 3 10 \
+		-save missing_3.csv
+
+missing_4:
+	$(TOOLS_PATH)/missing_files.out -v 2 -N 4096 \
+		-mask 4/suc_%ld_4096.txt \
+		-split 4 10 \
+		-save missing_4.csv
+
+missing_5:
+	$(TOOLS_PATH)/missing_files.out -v 2 -N 4096 \
+		-mask 5/suc_%ld_4096.txt \
+		-split 5 10 \
+		-save missing_5.csv
+
+missing_6:
+	$(TOOLS_PATH)/missing_files.out -v 2 -N 4096 \
+		-mask 6/suc_%ld_4096.txt \
+		-split 6 10 \
+		-save missing_6.csv
+
+missing_7:
+	$(TOOLS_PATH)/missing_files.out -v 2 -N 4096 \
+		-mask 7/suc_%ld_4096.txt \
+		-split 7 10 \
+		-save missing_7.csv
+
+missing_8:
+	$(TOOLS_PATH)/missing_files.out -v 2 -N 4096 \
+		-mask 8/suc_%ld_4096.txt \
+		-split 8 10 \
+		-save missing_8.csv
+
+missing_9:
+	$(TOOLS_PATH)/missing_files.out -v 2 -N 4096 \
+		-mask 9/suc_%ld_4096.txt \
+		-split 9 10 \
+		-save missing_9.csv
+
+
+create_jobs:
+	$(TOOLS_PATH)/create_file.out -file_mask job%04ld \
+		-N 4096 \
+		-line "#!/bin/bash" \
+		-line "#SBATCH -J job%04ld" \
+		-line "#SBATCH -p shas" \
+		-line "#SBATCH --qos normal" \
+		-line "#SBATCH -t 24:00:00" \
+		-line "#SBATCH -N 1" \
+		-line "/projects/abetten@colostate.edu/COMPILE/2018_02_21/ORBITER2/SRC2/SEMIFIELD/semifield_main.out -v 2 -order 64 -prefix semi_64 -level2_prefix ../L2/ -level3_prefix ../L3/ -deep_search 3 0 %ld 4096" 
+
+
+create_batch:
+	$(TOOLS_PATH)/create_file.out -file_mask makefile_submit \
+		-N 1 \
+		-line "all:" \
+		-repeat 4096 "	sbatch job%04ld" \
+		-split 10
+	
+
+create_missing_jobs:
+	$(TOOLS_PATH)/create_file.out -file_mask job%04ld \
+		-read_cases failed.csv \
+		-line "#!/bin/bash" \
+		-line "#SBATCH -J job%04ld" \
+		-line "#SBATCH -p shas" \
+		-line "#SBATCH --qos normal" \
+		-line "#SBATCH -t 24:00:00" \
+		-line "#SBATCH -N 1" \
+		-line "/projects/abetten@colostate.edu/COMPILE/2018_02_21/ORBITER2/SRC2/SEMIFIELD/semifield_main.out -v 2 -order 64 -prefix semi_64 -level2_prefix ../L2/ -level3_prefix ../L3/ -deep_search 3 0 %ld 4096" 
+
+
+missing_jobs_all:
+	$(TOOLS_PATH)/missing_files.out -v 2 -N 4096 \
+		-mask DATA/suc_%ld_4096.txt \
+		-save missing_all.csv
+
+
+create_missing_jobs2:
+	$(TOOLS_PATH)/create_file.out -file_mask job%04ld \
+		-read_cases missing_all.csv \
+		-line "#!/bin/bash" \
+		-line "#SBATCH -J job%04ld" \
+		-line "#SBATCH -p shas" \
+		-line "#SBATCH --qos normal" \
+		-line "#SBATCH -t 24:00:00" \
+		-line "#SBATCH -N 1" \
+		-line "/projects/abetten@colostate.edu/COMPILE/2018_02_21/ORBITER2/SRC2/SEMIFIELD/semifield_main.out -v 2 -order 64 -prefix semi_64 -level2_prefix ../L2/ -level3_prefix ../L3/ -deep_search 3 0 %ld 4096" 
+
+
+read_solutions:
+	$(TOOLS_PATH)/read_solutions.out -N 4096 -nb_cases 797637 \
+		-file_mask_data DATA/sol_%ld_4096.txt \
+		-file_mask_success DATA/suc_%ld_4096.txt \
+		-data_set_size 10 \
+		-save semi64_liftings
+
+
+isomorph:
+	$(SEMIFIELD_PATH)/isomorph_testing.out -v 2 \
+		-level2_prefix ./L2/ -level3_prefix ./L3/ \
+		-order $(ORDER) 
+	

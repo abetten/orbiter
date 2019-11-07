@@ -1,0 +1,53 @@
+MY_PATH=../../DEV.13
+#MY_PATH=/scratch/betten/COMPILE/2013_01_23
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH)/ORBITER2/SRC2
+
+TRANSLATION_PLANE_PATH=$(SRC2)/TRANSLATION_PLANE
+CODES_PATH=$(SRC2)/CODES
+
+
+ORDER=8
+DEPTH=3
+POLY=
+
+2_2:
+	$(CODES_PATH)/get_poly.out -v 1 -irred 2 2 
+
+3_2:
+	$(CODES_PATH)/get_poly.out -v 1 -irred 3 2 
+
+4_2:
+	$(CODES_PATH)/get_poly.out -v 1 -irred 4 2 
+
+
+5_2:
+	$(CODES_PATH)/get_poly.out -v 1 -irred 5 2 
+
+6_2:
+	$(CODES_PATH)/get_poly.out -v 1 -irred 6 2 
+
+7_2:
+	$(CODES_PATH)/get_poly.out -v 1 -irred 7 2 
+# 18 irreducible polynomials
+
+8_2:
+	$(CODES_PATH)/get_poly.out -v 1 -irred 8 2 
+# 30 irreducible polynomials
+
+2_5:
+	$(CODES_PATH)/get_poly.out -v 1 -irred 2 5 
+
+3_5:
+	$(CODES_PATH)/get_poly.out -v 1 -irred 3 5 
+# 40 irreducible polynomials
+
+4_5:
+	$(CODES_PATH)/get_poly.out -v 1 -irred 4 5 
+
+5_5:
+	$(CODES_PATH)/get_poly.out -v 1 -irred 5 5 
+# 624 irreducible polynomials
+
+
+

@@ -34,10 +34,10 @@ void fancy_set::null()
 void fancy_set::freeself()
 {
 	if (set) {
-		FREE_int(set);
+		FREE_lint(set);
 		}
 	if (set_inv) {
-		FREE_int(set_inv);
+		FREE_lint(set_inv);
 		}
 	null();
 }
@@ -52,8 +52,8 @@ void fancy_set::init(int n, int verbose_level)
 		}
 	fancy_set::n = n;
 	fancy_set::k = 0;
-	set = NEW_int(n);
-	set_inv = NEW_int(n);
+	set = NEW_lint(n);
+	set_inv = NEW_lint(n);
 	for (i = 0; i < n; i++) {
 		set[i] = i;
 		set_inv[i] = i;
@@ -241,7 +241,7 @@ void fancy_set::sort()
 	int i, a;
 	sorting Sorting;
 	
-	Sorting.int_vec_heapsort(set, k);
+	Sorting.lint_vec_heapsort(set, k);
 	for (i = 0; i < k; i++) {
 		a = set[i];
 		set_inv[a] = i;

@@ -1,0 +1,230 @@
+MY_PATH=~/DEV.19/GITHUB/orbiter
+#MY_PATH=/scratch3/betten/COMPILE/2018_10_07/
+SRC=$(MY_PATH)/ORBITER/src
+SRC2=$(MY_PATH)/ORBITER2/src2
+
+GROUPS_PATH=$(SRC)/apps/groups
+TOOLS_PATH=$(SRC)/apps/tools
+
+
+
+
+
+O53:
+	$(GROUPS_PATH)/orthogonal_group.out -v 2 -epsilon 0 -d 5 -q 3
+
+O5_23:
+	$(GROUPS_PATH)/orthogonal_group.out -v 2 -epsilon 0 -d 5 -q 23
+
+draw5_23:
+	$(TOOLS_PATH)/layered_graph_main.out -v 2 \
+		-file O_0_5_23_orbit_0.layered_graph \
+		-xin 1000000 -yin 1000000 \
+		-xout 1000000 -yout 1000000 \
+		-y_stretch 0.3 \
+		-rad 2000 \
+		-nodes_empty \
+		-embedded \
+		-spanning_tree
+	pdflatex O_0_5_23_orbit_0_draw_tree.tex
+	open O_0_5_23_orbit_0_draw_tree.pdf
+
+
+O5_97:
+	$(GROUPS_PATH)/orthogonal_group.out -v 2 -epsilon 0 -d 5 -q 97
+
+
+O5_3:
+	$(GROUPS_PATH)/orthogonal_group.out -v 3 -epsilon 0 -d 5 -q 3 
+
+
+#-tree
+	#pdflatex O_0_5_3_report.tex
+	#open O_0_5_3_report.pdf
+
+draw5_3:
+	$(TOOLS_PATH)/layered_graph_main.out -v 2 \
+		-file O_0_5_3_orbit_0.layered_graph \
+		-xin 1000000 -yin 1000000 \
+		-xout 1000000 -yout 1000000 \
+		-y_stretch 0.3 \
+		-rad 2000 \
+		-nodes_empty \
+		-embedded \
+		-spanning_tree
+	pdflatex O_0_5_3_orbit_0_draw_tree.tex
+	open O_0_5_3_orbit_0_draw_tree.pdf
+
+draw5_3s:
+	$(TOOLS_PATH)/layered_graph_main.out -v 2 \
+		-file O_0_5_3_orbit_0_shallow.layered_graph \
+		-xin 1000000 -yin 1000000 \
+		-xout 1000000 -yout 1000000 \
+		-y_stretch 0.3 \
+		-rad 2000 \
+		-nodes_empty \
+		-embedded \
+		-spanning_tree
+	pdflatex O_0_5_3_orbit_0_shallow_draw_tree.tex
+	open O_0_5_3_orbit_0_shallow_draw_tree.pdf
+
+
+O5_4:
+	$(GROUPS_PATH)/orthogonal_group.out -v 3 -epsilon 0 -d 5 -q 4 
+
+#-tree
+	#pdflatex O_0_5_4_report.tex
+	#open O_0_5_4_report.pdf
+
+draw5_4:
+	$(TOOLS_PATH)/layered_graph_main.out -v 2 \
+		-file O_0_5_4_orbit_0.layered_graph \
+		-xin 1000000 -yin 1000000 \
+		-xout 1000000 -yout 1000000 \
+		-y_stretch 0.3 \
+		-rad 2000 \
+		-nodes_empty \
+		-embedded \
+		-spanning_tree
+	pdflatex O_0_5_4_orbit_0_draw_tree.tex
+	open O_0_5_4_orbit_0_draw_tree.pdf
+
+
+
+
+O5_5:
+	$(GROUPS_PATH)/orthogonal_group.out -v 3 -epsilon 0 -d 5 -q 5 
+
+
+#-tree
+	#pdflatex O_0_5_4_report.tex
+	#open O_0_5_4_report.pdf
+
+draw5_5:
+	$(TOOLS_PATH)/layered_graph_main.out -v 2 \
+		-file O_0_5_5_orbit_0.layered_graph \
+		-xin 1000000 -yin 1000000 \
+		-xout 1000000 -yout 1000000 \
+		-y_stretch 0.3 \
+		-rad 2000 \
+		-nodes_empty \
+		-embedded \
+		-spanning_tree
+	pdflatex O_0_5_5_orbit_0_draw_tree.tex
+	open O_0_5_5_orbit_0_draw_tree.pdf
+
+
+O5_7:
+	$(GROUPS_PATH)/orthogonal_group.out -v 3 -epsilon 0 -d 5 -q 7 -tree
+	#pdflatex O_0_5_4_report.tex
+	#open O_0_5_4_report.pdf
+
+draw5_7:
+	$(TOOLS_PATH)/layered_graph_main.out -v 2 \
+		-file O_0_5_7_orbit_0.layered_graph \
+		-xin 1000000 -yin 1000000 \
+		-xout 1000000 -yout 1000000 \
+		-y_stretch 0.3 \
+		-rad 2000 \
+		-nodes_empty \
+		-embedded \
+		-spanning_tree
+	pdflatex O_0_5_7_orbit_0_draw_tree.tex
+	open O_0_5_7_orbit_0_draw_tree.pdf
+
+O5_8:
+	$(GROUPS_PATH)/orthogonal_group.out -v 3 -epsilon 0 -d 5 -q 8 -tree
+	#pdflatex O_0_5_4_report.tex
+	#open O_0_5_4_report.pdf
+
+draw5_8:
+	$(TOOLS_PATH)/layered_graph_main.out -v 2 \
+		-file O_0_5_8_orbit_0.layered_graph \
+		-xin 1000000 -yin 1000000 \
+		-xout 1000000 -yout 1000000 \
+		-y_stretch 0.3 \
+		-rad 2000 \
+		-nodes_empty \
+		-embedded \
+		-spanning_tree
+	pdflatex O_0_5_8_orbit_0_draw_tree.tex
+	open O_0_5_8_orbit_0_draw_tree.pdf
+
+draw5_8s:
+	$(TOOLS_PATH)/layered_graph_main.out -v 2 \
+		-file O_0_5_8_orbit_0_shallow.layered_graph \
+		-xin 1000000 -yin 1000000 \
+		-xout 1000000 -yout 1000000 \
+		-y_stretch 0.3 \
+		-rad 2000 \
+		-nodes_empty \
+		-embedded \
+		-spanning_tree
+	pdflatex O_0_5_8_orbit_0_shallow_draw_tree.tex
+	open O_0_5_8_orbit_0_shallow_draw_tree.pdf
+
+
+O5_11:
+	$(GROUPS_PATH)/orthogonal_group.out -v 3 -epsilon 0 -d 5 -q 11
+
+
+draw5_11:
+	$(TOOLS_PATH)/layered_graph_main.out -v 2 \
+		-file O_0_5_11_orbit_0.layered_graph \
+		-xin 1000000 -yin 1000000 \
+		-xout 1000000 -yout 1000000 \
+		-y_stretch 0.3 \
+		-rad 2000 \
+		-nodes_empty \
+		-embedded \
+		-spanning_tree
+	pdflatex O_0_5_11_orbit_0_draw_tree.tex
+	open O_0_5_11_orbit_0_draw_tree.pdf
+
+draw5_11s:
+	$(TOOLS_PATH)/layered_graph_main.out -v 2 \
+		-file O_0_5_11_orbit_0_shallow.layered_graph \
+		-xin 1000000 -yin 1000000 \
+		-xout 1000000 -yout 1000000 \
+		-y_stretch 0.3 \
+		-rad 2000 \
+		-nodes_empty \
+		-embedded \
+		-spanning_tree
+	pdflatex O_0_5_11_orbit_0_shallow_draw_tree.tex
+	open O_0_5_11_orbit_0_shallow_draw_tree.pdf
+
+
+
+
+O5_23:
+	$(GROUPS_PATH)/orthogonal_group.out -v 3 -epsilon 0 -d 5 -q 23
+
+O5_31:
+	$(GROUPS_PATH)/orthogonal_group.out -v 3 -epsilon 0 -d 5 -q 31
+
+O5_49:
+	$(GROUPS_PATH)/orthogonal_group.out -v 3 -epsilon 0 -d 5 -q 49
+
+
+O5_61:
+	$(GROUPS_PATH)/orthogonal_group.out -v 3 -epsilon 0 -d 5 -q 61
+
+
+
+Op42:
+	$(GROUPS_PATH)/orthogonal_group.out -v 2 -epsilon 1 -d 4 -q 2
+
+Om42:
+	$(GROUPS_PATH)/orthogonal_group.out -v 2 -epsilon -1 -d 4 -q 2
+
+Op62:
+	$(GROUPS_PATH)/orthogonal_group.out -v 2 -epsilon 1 -d 6 -q 2
+
+Om62:
+	$(GROUPS_PATH)/orthogonal_group.out -v 2 -epsilon -1 -d 6 -q 2
+
+# order 25920, degree 27 = U_4(2) = Weyl group of type E_6 = Sp_4(2) = O_5(3)
+
+
+

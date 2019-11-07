@@ -1,0 +1,152 @@
+#MY_PATH=../../..
+MY_PATH=../../DEV.14
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH)/ORBITER2/SRC2
+
+STABILIZER_PATH=$(SRC2)/STABILIZER
+MATH460_PATH=$(SRC2)/MATH460
+PROJECTIVE_SPACE_PATH=$(SRC2)/PROJECTIVE_SPACE
+
+test9:
+	$(STABILIZER_PATH)/stabilizer.out -v 4 -BLT 9 -file BLT_9_1.txt -save BLT_9_1_stab  
+	
+test11:
+	$(STABILIZER_PATH)/stabilizer.out -v 3 -BLT 11 -file BLT_11_1.txt
+
+# order 31680
+
+#	$(STABILIZER_PATH)/stabilizer.out -v 3 -BLT 11 -file BLT_11_2.txt  >log11_2
+#	$(STABILIZER_PATH)/stabilizer.out -v 2 -BLT 11 -file BLT_11_3.txt  >log11_3
+#	$(STABILIZER_PATH)/stabilizer.out -v 2 -BLT 11 -file BLT_11_4.txt  >log11_4
+
+
+test47:
+	$(STABILIZER_PATH)/stabilizer.out -v 3 -BLT 47 -file BLT_47_m17.txt 
+
+biplane1:
+	$(STABILIZER_PATH)/stabilizer.out -v 2 -PSL 3 2 -set 0 1 2 3 -1  
+
+# order 24
+
+
+biplane2:
+	$(STABILIZER_PATH)/stabilizer.out -v 10 -PSL 2 11  -subgroup 2 3 11 60 a bbabab -orbits 2 5  -set 0 1 10 4 5 11 -1  
+
+
+# problem!
+	
+biplane3:
+	$(STABILIZER_PATH)/stabilizer.out -v 3 -PSL 5 2 -file biplane3.txt    
+	
+AGL:
+	$(STABILIZER_PATH)/stabilizer.out -v 3 -PGL 3 2 -file AGL22.txt    
+	
+# 168
+
+PSL42:
+	$(STABILIZER_PATH)/stabilizer.out -v 7 -PSL 4 2 -orbits 7 8 -set 0 -1 
+
+code:
+	$(STABILIZER_PATH)/stabilizer.out -v 7 -PSL 4 2 -set 0 1 2 3 5 -1  
+
+# order 12
+
+PGGL232:
+	$(STABILIZER_PATH)/stabilizer.out -v 7 -PGGL 2 32 -file testPSL42.txt -orbits 7 8 
+
+PSL35:
+	$(STABILIZER_PATH)/stabilizer.out -v 7 -PSL 3 5 -file testPSL42.txt -orbits 8 10 
+
+
+PGGL34:
+	$(STABILIZER_PATH)/stabilizer.out -v 7 -PGGL 3 4 -file testPSL42.txt -orbits 7 8  
+
+
+AGL1:
+	$(STABILIZER_PATH)/stabilizer.out -v 10 -PGL 2 5 -listG -file AGL22.txt   
+
+Sym3in4:
+	$(STABILIZER_PATH)/stabilizer.out -v 3 -Sym 4 -set 3 -1 -save Sym3.sgs.txt 
+
+
+Sym4:
+	$(STABILIZER_PATH)/stabilizer.out -v 3 -Sym 4 -set  -1 -save Sym4.sgs.txt 
+
+test0:
+	$(STABILIZER_PATH)/stabilizer.out -v 3 -BLT 11 -set 0 1 54 55 56 -1 -save BLT_11_5_0_stab.sgs.txt 
+
+test1:
+	$(STABILIZER_PATH)/stabilizer.out -v 3 -BLT 11 -load_sgs BLT_11_5_0_stab.sgs.txt  -set 0 1 54 55 56 -1 -save BLT_11_5_1_stab.sgs.txt 
+
+# order 48
+
+
+PGGO11:
+	$(STABILIZER_PATH)/stabilizer.out -v 4 -BLT 11 -set  -1 -save PGGO_5_11.sgs.txt 
+
+test2:
+	$(STABILIZER_PATH)/stabilizer.out -v 6 -BLT 11 -load_sgs PGGO_5_11.sgs.txt  -set 0 1 54 55 56 -1 -save BLT_11_5_1_stab.sgs.txt 
+
+PGGO:
+	$(STABILIZER_PATH)/stabilizer.out -v 4 -BLT 11 -set  -1 -save PGGO_5_11.sgs.txt 
+	$(STABILIZER_PATH)/stabilizer.out -v 4 -BLT 13 -set  -1 -save PGGO_5_13.sgs.txt 
+	$(STABILIZER_PATH)/stabilizer.out -v 4 -BLT 17 -set  -1 -save PGGO_5_17.sgs.txt 
+	$(STABILIZER_PATH)/stabilizer.out -v 4 -BLT 19 -set  -1 -save PGGO_5_19.sgs.txt 
+	$(STABILIZER_PATH)/stabilizer.out -v 4 -BLT 23 -set  -1 -save PGGO_5_23.sgs.txt 
+	$(STABILIZER_PATH)/stabilizer.out -v 4 -BLT 25 -set  -1 -save PGGO_5_25.sgs.txt 
+	$(STABILIZER_PATH)/stabilizer.out -v 4 -BLT 27 -set  -1 -save PGGO_5_27.sgs.txt 
+	$(STABILIZER_PATH)/stabilizer.out -v 4 -BLT 29 -set  -1 -save PGGO_5_29.sgs.txt 
+	$(STABILIZER_PATH)/stabilizer.out -v 4 -BLT 31 -set  -1 -save PGGO_5_31.sgs.txt 
+	$(STABILIZER_PATH)/stabilizer.out -v 4 -BLT 37 -set  -1 -save PGGO_5_37.sgs.txt 
+	$(STABILIZER_PATH)/stabilizer.out -v 4 -BLT 41 -set  -1 -save PGGO_5_41.sgs.txt 
+	$(STABILIZER_PATH)/stabilizer.out -v 4 -BLT 43 -set  -1 -save PGGO_5_43.sgs.txt 
+	$(STABILIZER_PATH)/stabilizer.out -v 4 -BLT 47 -set  -1 -save PGGO_5_47.sgs.txt 
+	$(STABILIZER_PATH)/stabilizer.out -v 4 -BLT 49 -set  -1 -save PGGO_5_49.sgs.txt 
+	$(STABILIZER_PATH)/stabilizer.out -v 4 -BLT 53 -set  -1 -save PGGO_5_53.sgs.txt 
+	$(STABILIZER_PATH)/stabilizer.out -v 4 -BLT 59 -set  -1 -save PGGO_5_59.sgs.txt 
+	$(STABILIZER_PATH)/stabilizer.out -v 4 -BLT 61 -set  -1 -save PGGO_5_61.sgs.txt 
+	$(STABILIZER_PATH)/stabilizer.out -v 4 -BLT 67 -set  -1 -save PGGO_5_67.sgs.txt 
+	$(STABILIZER_PATH)/stabilizer.out -v 4 -BLT 71 -set  -1 -save PGGO_5_71.sgs.txt 
+
+
+
+LunelliSce:
+	$(STABILIZER_PATH)/stabilizer.out -v 7 -PGGL 3 16 -poly 19 -file LunelliSce.txt  
+	
+segre32:
+	#$(MATH460_PATH)/hyperoval_code.out -v 2 -subiaco1  64
+	$(PROJECTIVE_SPACE_PATH)/make_something.out -v 2 -q 32 -hyperoval -Segre
+	$(STABILIZER_PATH)/stabilizer.out -v 3 -PGGL 3 32  -file hyperoval_Segre_q32.txt
+	
+
+# stabilizer order 465
+
+
+translation128:
+	#$(MATH460_PATH)/hyperoval_code.out -v 2 -subiaco1  64
+	$(PROJECTIVE_SPACE_PATH)/make_something.out -v 2 -q 128 -hyperoval -translation 2
+	$(STABILIZER_PATH)/stabilizer.out -v 3 -PGGL 3 128  -file hyperoval_translation_q128.txt
+	
+
+
+cubic1:
+	$(STABILIZER_PATH)/stabilizer.out -v 7 -PGGL 3 16 -poly 19 -file cubic1.txt  
+
+
+cubic2:
+	$(STABILIZER_PATH)/stabilizer.out -v 7 -PGGL 3 16 -poly 19 -file cubic2.txt  
+
+
+Om44:
+	$(STABILIZER_PATH)/stabilizer.out -v 3 -PGGL 4 4  -file Om_4_4.txt  
+
+
+Sym6:
+	$(STABILIZER_PATH)/stabilizer.out -v 3 -Sym 6 -set  -1 -save Sym6.sgs.txt 
+
+
+Id6:
+	$(STABILIZER_PATH)/stabilizer.out -v 3 -Sym 6 -set 0 1 2 3 4 5  -1 -load_sgs Id6.sgs.txt -orbits 2 3
+
+
+

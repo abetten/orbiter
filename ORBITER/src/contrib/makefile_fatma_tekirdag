@@ -1,0 +1,289 @@
+MY_PATH=~/DEV.19/GITHUB/orbiter
+MY_PATH2=~/DEV.19/GITHUB/orbiter2
+#MY_PATH=../orbiter
+#MY_PATH2=~/DEV.18
+#MY_PATH=/scratch2/betten/COMPILE/2017_10_12
+SRC=$(MY_PATH)/ORBITER/src
+SRC2=$(MY_PATH)/ORBITER2/src2
+
+
+ALGEBRA_PATH=$(SRC)/apps/algebra
+SURFACES_PATH=$(SRC)/apps/surfaces
+BLT_PATH=$(SRC)/apps/blt
+TOOLS_PATH=$(SRC)/apps/tools
+MATH161_PATH=$(SRC2)/MATH161
+SURFACE_PATH=$(SRC2)/SURFACE
+DRAW_PATH=$(SRC2)/DRAW
+SAJEEB_PATH=../../../DEV.19/GITHUB/CliqueFinder
+CLIQUER_PATH=$(SRC2)/CLIQUER/INTERFACE
+OPTIMIZE_MM2_PATH=$(SRC2)/OPTIMIZE_MM2
+ALGEBRA_PATH=$(SRC)/apps/algebra
+LOCAL_TOOLS_PATH=$(SRC)/apps/tools
+PROJECTIVE_SPACE_PATH=$(SRC)/apps/projective_space
+GROUPS_PATH=$(SRC)/apps/groups
+
+
+4_0a:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 4 -catalogue 0 -end \
+		-transform "1,1,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0" 
+	pdflatex surface_catalogue_q4_0.tex
+	open surface_catalogue_q4_0.pdf	
+
+
+
+T1:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 8 -catalogue 0 -end \
+		-transform_inverse "1,4,4,0,6,0,0,0,6,2,0,1,7,0,4,0,0"
+	pdflatex surface_catalogue_q8_0.tex
+	open surface_catalogue_q8_0.pdf
+
+# this is the nice one!
+# writes surface_catalogue_q8_0_points.txt, which needs hand-editing
+
+
+F8:
+	$(ALGEBRA_PATH)/cheat_sheet_GF.out -q 8
+	pdflatex GF_8.tex
+	open GF_8.pdf
+
+mult:
+	$(GROUPS_PATH)/linear_group.out -v 2  \
+		-linear -PGL 4 8  -1 -end \
+		-multiply "1,4,4,0,0,1,0,0,0,0,1,0,0,0,0,1,0" "1,7,0,0,3,4,4,0,2,0,4,0,1,1,7,4,0" 
+
+		#-inverse "1,0,0,0,0,1,0,6,0,0,1,6,0,0,0,1,0"
+
+4_0:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 4 -catalogue 0 -end
+	pdflatex surface_catalogue_q4_0.tex
+	open surface_catalogue_q4_0.pdf
+		
+8_0:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 8 -catalogue 0 -end
+	pdflatex surface_catalogue_q8_0.tex
+	open surface_catalogue_q8_0.pdf
+
+
+#-description -q 8 -by_coefficients "3,6,7,8,7,11,2,13,4,17,4,18,1,19" -end 
+#		-transform "1,0,0,0,0,1,0,6,0,0,1,6,0,0,0,1,0" \
+#		-transform_inverse "3,1,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0"
+
+
+8_0a:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 8 -catalogue 0 -end \
+		-transform "1,0,0,0,0,1,0,6,0,0,1,6,0,0,0,1,0" 
+	pdflatex surface_catalogue_q8_0.tex
+	open surface_catalogue_q8_0.pdf
+
+8_0d:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 8 -catalogue 0 -end \
+		-transform "1,7,0,0,5,2,1,2,4,6,1,2,1,1,7,4,0" 
+	pdflatex surface_catalogue_q8_0.tex
+	open surface_catalogue_q8_0.pdf
+8_0ab:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 8 -catalogue 0 -end \
+		-transform "1,0,0,0,0,1,0,6,0,0,1,6,0,0,0,1,0" \
+		-transform "1,4,4,0,0,1,0,0,0,0,1,0,0,0,0,1,0"
+	pdflatex surface_catalogue_q8_0.tex
+	open surface_catalogue_q8_0.pdf
+	
+8_0abc:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 8 -catalogue 0 -end \
+		-transform "1,0,0,0,0,1,0,6,0,0,1,6,0,0,0,1,0" \
+		-transform "1,4,4,0,0,1,0,0,0,0,1,0,0,0,0,1,0" \
+		-transform_inverse "6,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0"
+	pdflatex surface_catalogue_q8_0.tex
+	open surface_catalogue_q8_0.pdf
+#-transform "1,0,0,0,4,6,6,0,3,0,6,0,7,7,2,6,0"
+#-transform "4,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0"
+
+8_0abcd:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 8 -catalogue 0 -end \
+		-transform "1,0,0,0,0,1,0,6,0,0,1,6,0,0,0,1,0" \
+		-transform "1,4,4,0,0,1,0,0,0,0,1,0,0,0,0,1,0" \
+		-transform_inverse "6,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0" \
+		-transform "1,1,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0" 
+	pdflatex surface_catalogue_q8_0.tex
+	open surface_catalogue_q8_0.pdf
+	
+F16:
+	$(ALGEBRA_PATH)/cheat_sheet_GF.out -q 16
+	pdflatex GF_16.tex
+	open GF_16.pdf
+
+
+16_0:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 16 -catalogue 0 -end
+	pdflatex surface_catalogue_q16_0.tex
+	open surface_catalogue_q16_0.pdf
+
+16_0a:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 16 -catalogue 0 -end \
+		-transform "1,0,0,0,0,1,0,12,0,0,1,12,0,0,0,1,0" 
+	pdflatex surface_catalogue_q16_0.tex
+	open surface_catalogue_q16_0.pdf
+
+16_0ab:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 16 -catalogue 0 -end \
+		-transform "1,0,0,0,0,1,0,12,0,0,1,12,0,0,0,1,0" \
+		-transform "1,8,8,0,0,1,0,0,0,0,1,0,0,0,0,1,0"
+	pdflatex surface_catalogue_q16_0.tex
+	open surface_catalogue_q16_0.pdf
+
+16_0abc:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 16 -catalogue 0 -end \
+		-transform "1,0,0,0,0,1,0,12,0,0,1,12,0,0,0,1,0" \
+		-transform "1,8,8,0,0,1,0,0,0,0,1,0,0,0,0,1,0" \
+		-transform_inverse "2,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0"
+	pdflatex surface_catalogue_q16_0.tex
+	open surface_catalogue_q16_0.pdf
+	
+16_0abcd:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 16 -catalogue 0 -end \
+		-transform "1,0,0,0,0,1,0,12,0,0,1,12,0,0,0,1,0" \
+		-transform "1,8,8,0,0,1,0,0,0,0,1,0,0,0,0,1,0" \
+		-transform_inverse "2,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0" \
+		-transform "1,1,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0" 
+	pdflatex surface_catalogue_q16_0.tex
+	open surface_catalogue_q16_0.pdf
+
+	
+#-transform "1,1,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0"  
+
+F32:
+	$(ALGEBRA_PATH)/cheat_sheet_GF.out -q 32
+	pdflatex GF_32.tex
+	open GF_32.pdf
+	
+32_0:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 32 -catalogue 0 -end
+	pdflatex surface_catalogue_q32_0.tex
+	open surface_catalogue_q32_0.pdf
+	
+	
+32_0a:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 32 -catalogue 0 -end \
+		-transform "1,0,0,0,0,1,0,18,0,0,1,18,0,0,0,1,0" 
+	pdflatex surface_catalogue_q32_0.tex
+	open surface_catalogue_q32_0.pdf
+	
+32_0ab:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 32 -catalogue 0 -end \
+		-transform "1,0,0,0,0,1,0,18,0,0,1,18,0,0,0,1,0" \
+		-transform "1,28,28,0,0,1,0,0,0,0,1,0,0,0,0,1,0"
+	pdflatex surface_catalogue_q32_0.tex
+	open surface_catalogue_q32_0.pdf
+	
+	
+32_0abc:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 32 -catalogue 0 -end \
+		-transform "1,0,0,0,0,1,0,18,0,0,1,18,0,0,0,1,0" \
+		-transform "1,28,28,0,0,1,0,0,0,0,1,0,0,0,0,1,0" \
+		-transform_inverse "23,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0"
+	pdflatex surface_catalogue_q32_0.tex
+	open surface_catalogue_q32_0.pdf
+
+
+32_0abcd:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 32 -catalogue 0 -end \
+		-transform "1,0,0,0,0,1,0,18,0,0,1,18,0,0,0,1,0" \
+		-transform "1,28,28,0,0,1,0,0,0,0,1,0,0,0,0,1,0" \
+		-transform_inverse "23,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0" \
+		-transform "1,1,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0"
+	pdflatex surface_catalogue_q32_0.tex
+	open surface_catalogue_q32_0.pdf
+	
+8_0ab_old:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 8 -catalogue 0 -end \
+		-transform "1,0,0,0,0,1,0,6,0,0,1,6,0,0,0,1,0" \
+		-transform_inverse "3,1,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0"
+	pdflatex surface_catalogue_q8_0.tex
+	open surface_catalogue_q8_0.pdf
+
+
+
+
+
+canon8_0:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 10 -n 3 -q 8 \
+		-input -file_of_points surface_catalogue_q8_0_points.txt -end \
+		-classify_nauty \
+		-prefix surface_catalogue_q8_0_points \
+		-save surface_catalogue_q8_0_points \
+		-latex 
+	pdflatex surface_catalogue_q8_0_points_classification.tex
+	open surface_catalogue_q8_0_points_classification.pdf
+
+
+try:
+	$(SURFACES_PATH)/create_surface_main.out -v 2 \
+		-description -q 8 -by_coefficients "1,6,1,8,1,11,1,13,1,19" -end 
+
+try2:
+	$(SURFACES_PATH)/surface_classify.out -v 2 \
+		-linear -PGGL 4 8 -wedge -end \
+		-recognize -q 8 -by_coefficients "1,6,1,8,1,11,1,13,1,19" -end 
+
+## over F4:
+
+try4:
+	$(SURFACES_PATH)/surface_classify.out -v 2 \
+		-linear -PGGL 4 4 -wedge -end \
+		-recognize -q 4 -by_coefficients "1,6,1,8,1,11,1,13,1,19" -end 
+
+## over F16:
+
+try5:
+	$(SURFACES_PATH)/surface_classify.out -v 2 \
+		-linear -PGGL 4 16 -wedge -end \
+		-recognize -q 16 -by_coefficients "1,6,1,8,1,11,1,13,1,19" -end 
+
+## over F32:
+
+try6:
+	$(SURFACES_PATH)/surface_classify.out -v 2 \
+		-linear -PGGL 4 32 -wedge -end \
+		-recognize -q 32 -by_coefficients "1,6,1,8,1,11,1,13,1,19" -end 
+
+
+## over F64:
+
+try7:
+	$(SURFACES_PATH)/surface_classify.out -v 2 \
+		-linear -PGGL 4 64 -wedge -end \
+		-recognize -q 64 -by_coefficients "20,6,10,8,10,11,1,13,1,19" -end 
+# isomorphic to 64#98, with group order 1152
+#An isomorphism is given by:
+#18 48 48  0
+#34 18 18  0
+# 5 53  0 18
+#39 23 48 34
+#, 2
+#The inverse isomorphism is given by:
+# 3 14  0  0
+# 3 16 14 16
+#14 19 14 16
+#14 29 19  3
+#, 4
+# Jan13, 2019: 40:32 on Mac
+

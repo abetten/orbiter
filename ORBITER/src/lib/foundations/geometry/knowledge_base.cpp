@@ -1323,10 +1323,10 @@ int knowledge_base::DH_nb_reps(int k, int n)
 	return nb;
 }
 
-int *knowledge_base::DH_representative(int k, int n, int i)
+long int *knowledge_base::DH_representative(int k, int n, int i)
 // i starts from 0
 {
-	int *p, nb, sz;
+	long int *p, nb, sz;
 	if (k == 4 && n == 7) {
 		p = DH_4_7_reps;
 		nb = DH_4_7_nb_reps;

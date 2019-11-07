@@ -1,0 +1,31 @@
+MY_PATH=../../../DEV.14/
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH)/ORBITER2/SRC2
+
+
+CODES_PATH=$(SRC2)/CODES
+SEMIFIELD_PATH=$(SRC)/SEMIFIELD
+TREEDRAW_PATH=$(SRC2)/TREEDRAW
+DRAW_PATH=$(SRC2)/DRAW
+
+
+
+
+18_9_8:
+	$(CODES_PATH)/codes.out -v 2 -n 18 -k 9 -q 4 -d 8 -w -draw_poset
+ 
+18_9_7:
+	$(CODES_PATH)/codes.out -v 2 -n 50 -k 41 -q 4 -d 7 -w 
+ 
+draw:
+	$(SEMIFIELD_PATH)/layered_graph_main.out -v 4 \
+		-file codes_18_9_4_8_poset_lvl_18.layered_graph \
+		-draw TwistedTensor \
+		-xin 10000 -yin 10000 \
+		-xout 1000000 -yout 1000000 \
+		-y_stretch 1.2 \
+		-nodes_empty \
+		-embedded
+	pdflatex TwistedTensor.tex
+	open TwistedTensor.pdf
+

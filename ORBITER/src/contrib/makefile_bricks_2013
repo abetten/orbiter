@@ -1,0 +1,93 @@
+#MY_PATH=../..
+MY_PATH=/scratch/betten/COMPILE/2013_01_21
+#MY_PATH=../../COMPILE/2011_12_08
+SRC=$(MY_PATH)/SRC
+SRC2=$(MY_PATH)/SRC2
+
+BRICKS_PATH=$(SRC2)/BRICKS
+
+
+test2:
+	$(BRICKS_PATH)/bricks.out -v 3 -q 5 -n 1 -starter -depth 1 -max_depth 2
+
+#test2:
+#	$(BRICKS_PATH)/bricks.out -v 4 -q 5 -n 2 -starter -depth 2 
+
+
+test3a:
+	$(BRICKS_PATH)/bricks.out -v 1 -q 7 -n 3 -starter -depth 1 -max_depth 3
+
+# 1/14/2013 on MacBook: 26 solutions in 0 sec
+
+
+test3:
+	$(BRICKS_PATH)/bricks.out -v 1 -q 7 -n 3 -starter -depth 2 -max_depth 3
+
+# 1/14/2013 on MacBook: 26 solutions in 0 sec
+
+test4a:
+	$(BRICKS_PATH)/bricks.out -v 1 -q 11 -n 4 -starter -depth 1 -max_depth 4
+
+
+# 1/14/2013 on MacBook: 255 solutions in 0 sec
+
+test4:
+	$(BRICKS_PATH)/bricks.out -v 1 -q 11 -n 4 -starter -depth 2 -max_depth 4
+
+# 1/14/2013 on MacBook: 255 solutions in 0 sec
+
+
+
+test5a:
+	$(BRICKS_PATH)/bricks.out -v 1 -q 11 -n 5 -starter -depth 1 -max_depth 5
+
+
+# 1/14/2013 on MacBook: 2874 solutions in 2 sec
+
+
+test5:
+	$(BRICKS_PATH)/bricks.out -v 1 -q 11 -n 5 -starter -depth 2 -max_depth 5
+
+# 1/14/2013 on MacBook: 2874 solutions in 2 sec
+
+
+
+
+test6:
+	$(BRICKS_PATH)/bricks.out -v 1 -q 13 -n 6 -starter -depth 2 -max_depth 6
+
+
+# 1/17/2013 on MacBook: 35520 solutions in 1 min 0 sec
+
+test6b:
+	$(BRICKS_PATH)/bricks.out -v 1 -q 13 -n 6 -starter -depth 3 -max_depth 6
+
+# 1/13/2013 on MacBook: 35520 solutions in 59 sec 
+
+
+test7:
+	$(BRICKS_PATH)/bricks.out -v 1 -q 17 -n 7 -starter -depth 4 -max_depth 7
+
+# 1/17/2013 on blaster: 454491 solutions in 50 min 41 sec
+# 1/23/2013 on domino: 454491 solutions in 31 min 39 sec
+
+test8:
+	$(BRICKS_PATH)/bricks.out -v 1 -q 17 -n 8 -starter -depth 4 -max_depth 8
+
+# 1/18/2013 on blaster: 5954914 solutions in 12 hrs 13 min 13 sec
+
+
+
+test9:
+	$(BRICKS_PATH)/bricks.out -v 1 -split 0 8 -q 19 -n 9 -starter -depth 4 -max_depth 9 >log_0 &
+	$(BRICKS_PATH)/bricks.out -v 1 -split 1 8 -q 19 -n 9 -starter -depth 4 -max_depth 9 >log_1 &
+	$(BRICKS_PATH)/bricks.out -v 1 -split 2 8 -q 19 -n 9 -starter -depth 4 -max_depth 9 >log_2 &
+	$(BRICKS_PATH)/bricks.out -v 1 -split 3 8 -q 19 -n 9 -starter -depth 4 -max_depth 9 >log_3 &
+	$(BRICKS_PATH)/bricks.out -v 1 -split 4 8 -q 19 -n 9 -starter -depth 4 -max_depth 9 >log_4 &
+	$(BRICKS_PATH)/bricks.out -v 1 -split 5 8 -q 19 -n 9 -starter -depth 4 -max_depth 9 >log_5 &
+	$(BRICKS_PATH)/bricks.out -v 1 -split 6 8 -q 19 -n 9 -starter -depth 4 -max_depth 9 >log_6 &
+	$(BRICKS_PATH)/bricks.out -v 1 -split 7 8 -q 19 -n 9 -starter -depth 4 -max_depth 9 >log_7 &
+
+
+
+

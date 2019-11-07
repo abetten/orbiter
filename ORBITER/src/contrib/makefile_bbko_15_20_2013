@@ -1,0 +1,18 @@
+MY_PATH=../../../SRC
+
+
+
+15_convert:
+	$(MY_PATH)/INC_CAN/geo.out -v 2 -write_inc 15_20gross.geo
+
+add_configuration_graph:
+	$(MY_PATH)/INC_CAN/inc_select.out -v 2 -add_configuration_graph 15_20gross.inc 15_20.inc
+
+
+# need to modify the file 15_20.inc by hand a little bit!
+
+15:
+	$(MY_PATH)/INC_CAN/inc_can.out -v 2 -tda 15_20.inc
+
+
+

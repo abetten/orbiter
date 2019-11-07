@@ -1,0 +1,80 @@
+MY_LOCAL_PATH=~/DEV.19/GITHUB/orbiter
+MY_LOCAL_PATH2=~/DEV.19/GITHUB/orbiter2
+MY_PATH=/scratch2/betten/COMPILE/2017_03_22
+SRC=$(MY_PATH)/ORBITER/src
+SRC2=$(MY_PATH)/ORBITER2/src
+SRC_LOCAL=$(MY_LOCAL_PATH)/ORBITER/src
+SRC2_LOCAL=$(MY_LOCAL_PATH2)/ORBITER2/src
+
+
+MATH360_PATH=$(SRC2)/MATH360
+DRAW_PATH=$(SRC2)/DRAW
+LOCAL_TOOLS_PATH=$(SRC_LOCAL)/apps/tools
+TOOLS_PATH=$(SRC)/apps/tools
+SURFACE_PATH=$(SRC2_LOCAL)/SURFACE
+ALGEBRA_PATH=$(SRC2)/ALGEBRA
+PROJECTIVE_SPACE_PATH=$(SRC)/apps/projective_space
+ARCS_PATH=$(SRC)/apps/arcs
+ALGEBRA_PATH=$(SRC2)/ALGEBRA
+ARCS_EASY_PATH=$(MY_PATH)/ORBITER_APPS/ARCS
+
+
+
+#NB_ROUNDS=4
+NB_FRAMES=90
+FNAME=hilbert_%02ld_%03ld
+FNAME_R0=hilbert_0_%03ld
+FNAME_OLD=hilbert_%03ld
+FNAME_POV=$(FNAME).pov
+
+
+# either:
+
+#		-W 800 -H 600 \
+#		-font_size 36 -stroke_width 2 \
+#		-global_picture_scale 1.0 \
+
+# or:
+
+#		-W 2560 -H 1920 \
+#		-font_size 126 -stroke_width 5 \
+#		-global_picture_scale 3.0 \
+
+create:
+	- rm -rf POV
+	mkdir POV
+	$(SURFACE_PATH)/animate.out -v 2 -E4_surface \
+		-output_mask E4_surface_%02ld_%03ld.pov \
+		-nb_frames_default $(NB_FRAMES) \
+		-rounds "0" \
+		-video_options \
+			-W 800 -H 600 \
+			-font_size 36 -stroke_width 2 \
+			-global_picture_scale 0.3 \
+			-scale_factor 0.5 \
+			-default_angle 80 -clipping_radius 5 \
+			-omit_bottom_plane \
+			-camera 0 \
+				"<1,1,1>" \
+				"<3-3,3+1,3+3>" \
+				"<0,0,0>" \
+			-camera 1 \
+				"<1,1,1>" \
+				"<3-3,3+1,3+3>" \
+				"<0,0,0>" \
+		-end 
+	date
+	mv *.pov POV
+	mv makefile_animation POV
+
+
+E4:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	$(LOCAL_TOOLS_PATH)/prepare_frames.out \
+		-i 0 $(NB_FRAMES) PNG/E4_surface_00_%03d.png \
+		-i 0 $(NB_FRAMES) PNG/E4_surface_01_%03d.png \
+		-output_starts_at 0 \
+		-o FRAMES/frame%04d.png
+	ffmpeg -r 15 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  E4.mp4
+

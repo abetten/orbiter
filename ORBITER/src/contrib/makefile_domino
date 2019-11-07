@@ -1,0 +1,33 @@
+MY_PATH=~/DEV.18/GITHUB/orbiter
+MY_PATH2=~/DEV.18/GITHUB/orbiter2
+#MY_PATH=/scratch3/betten/COMPILE/2018_02_06
+ORBITER=$(MY_PATH)/ORBITER
+ORBITER2=$(MY_PATH2)/ORBITER2
+SRC=$(ORBITER)/src
+SRC2=$(ORBITER2)/src
+
+
+BLT_PATH=$(SRC)/apps/blt
+TOOLS_PATH=$(SRC)/apps/tools
+MATH161_PATH=$(SRC2)/MATH161
+DRAW_PATH=$(SRC2)/DRAW
+SAJEEB_PATH=../../../DEV.18/GITHUB/CliqueFinder
+CLIQUER_PATH=$(SRC2)/CLIQUER/INTERFACE
+OPTIMIZE_MM2_PATH=$(SRC2)/OPTIMIZE_MM2
+LOCAL_TOOLS_PATH=$(SRC)/APPS/TOOLS
+DOMINO_PATH=$(SRC2)/DOMINO
+
+
+VERBOSE_LEVEL=4
+
+
+Dzahmay:
+	$(DOMINO_PATH)/domino.out -D 7 -s 4 -file Dzahmay
+
+Shipman:
+	$(DOMINO_PATH)/domino.out -D 7 -s 4 -file Shipman
+
+Kenmcl:
+	$(DOMINO_PATH)/domino.out -D 7 -s 4 -file kenmcl
+
+

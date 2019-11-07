@@ -1,0 +1,137 @@
+MY_PATH=~/DEV.19/GITHUB/orbiter
+#MY_PATH=/scratch3/betten/COMPILE/2018_12_25
+SRC=$(MY_PATH)/ORBITER/src
+SRC2=$(MY_PATH)/ORBITER2/src
+
+ALGEBRA_PATH=$(SRC)/apps/algebra
+GROUPS_PATH=$(SRC)/apps/groups
+PROJECTIVE_SPACE_PATH=$(SRC)/apps/projective_space
+SUBSPACE_ORBITS_PATH=$(SRC)/apps/subspace_orbits
+GRAPH_THEORY_PATH=$(SRC)/apps/graph_theory
+
+
+
+
+cayley_s3s:
+	$(GRAPH_THEORY_PATH)/cayley_sym_n.out -v 1 -n 3 -star
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_3_special.colored_graph -export Cayley_Sym_3_special.txt
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_3_special.colored_graph -aut -on_circle -embedded -scale 0.25 -line_width 0.5
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_3_special.colored_graph -aut -bitmatrix -embedded -scale 0.25 -line_width 0.5
+	pdflatex Cayley_Sym_3_special_on_circle.tex
+	open Cayley_Sym_3_special_on_circle.pdf
+	pdflatex Cayley_Sym_3_special_bitmatrix.tex
+	open Cayley_Sym_3_special_bitmatrix.pdf
+
+cayley_s4s:
+	$(GRAPH_THEORY_PATH)/cayley_sym_n.out -v 1 -n 4 -star
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_4_special.colored_graph -export Cayley_Sym_4_special.txt
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_4_special.colored_graph -aut -on_circle -embedded -scale 0.25 -line_width 0.5
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_4_special.colored_graph -aut -bitmatrix -embedded -scale 0.25 -line_width 0.5
+	pdflatex Cayley_Sym_4_special_on_circle.tex
+	open Cayley_Sym_4_special_on_circle.pdf
+	pdflatex Cayley_Sym_4_special_bitmatrix.tex
+	open Cayley_Sym_4_special_bitmatrix.pdf
+
+#-labels 
+
+cayley_s4:
+	$(GRAPH_THEORY_PATH)/cayley_sym_n.out -v 1 -n 4 -coxeter
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_4_coxeter.colored_graph -export Cayley_Sym_4_coxeter.txt
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_4_coxeter.colored_graph -aut -on_circle  -embedded -scale 0.25 -line_width 0.5
+	pdflatex Cayley_Sym_4_coxeter_on_circle.tex
+	open Cayley_Sym_4_coxeter_on_circle.pdf
+
+cayley_s4s:
+	$(GRAPH_THEORY_PATH)/cayley_sym_n.out -v 1 -n 4 -star
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_4_star.colored_graph -export Cayley_Sym_4.txt
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_4_star.colored_graph -aut -on_circle  -embedded -scale 0.25 -line_width 0.5
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_4_star.colored_graph -aut -bitmatrix -embedded -scale 0.25 -line_width 0.5
+	pdflatex Cayley_Sym_4_star_on_circle.tex
+	open Cayley_Sym_4_star_on_circle.pdf
+	pdflatex Cayley_Sym_4_star_bitmatrix.tex
+	open Cayley_Sym_4_star_bitmatrix.pdf
+
+#-labels
+
+
+cayley_s5:
+	$(GRAPH_THEORY_PATH)/cayley_sym_n.out -v 1 -n 5 -coxeter
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_5_coxeter.colored_graph -export Cayley_Sym_5_coxeter.txt
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_5_coxeter.colored_graph -aut -on_circle  -embedded -scale 0.25 -line_width 0.5
+	pdflatex Cayley_Sym_5_coxeter_on_circle.tex
+	open Cayley_Sym_5_coxeter_on_circle.pdf
+
+#-labels
+
+cayley_s5s:
+	$(GRAPH_THEORY_PATH)/cayley_sym_n.out -v 1 -n 5 -star
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_5_star.colored_graph -export Cayley_Sym_5_star.txt
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_5_star.colored_graph -aut -on_circle -embedded -scale 0.25 -line_width 0.5
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_Sym_5_star.colored_graph -aut -bitmatrix -embedded -scale 0.25 -line_width 0.5
+	pdflatex Cayley_Sym_5_star_on_circle.tex
+	open Cayley_Sym_5_star_on_circle.pdf
+	pdflatex Cayley_Sym_5_star_bitmatrix.tex
+	open Cayley_Sym_5_star_bitmatrix.pdf
+
+#-labels 
+
+
+
+D9_3:
+	$(GRAPH_THEORY_PATH)/cayley.out -v 1 -D1 9 3
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_D_9_3.colored_graph -export Cayley_D_9_3.txt
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_D_9_3.colored_graph -aut -on_circle -labels -embedded -scale 0.25 -line_width 0.5
+	pdflatex Cayley_D_9_3_on_circle.tex
+	open Cayley_D_9_3_on_circle.pdf
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_D_9_3_complement.colored_graph -export Cayley_D_9_3_complement.txt
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_D_9_3_complement.colored_graph -aut -on_circle -labels -embedded -scale 0.25 -line_width 0.5
+	pdflatex Cayley_D_9_3_complement_on_circle.tex
+	open Cayley_D_9_3_complement_on_circle.pdf
+
+D15_3:
+	$(GRAPH_THEORY_PATH)/cayley.out -v 1 -D1 15 3
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_D_15_3.colored_graph -export Cayley_D_15_3.txt
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_D_15_3.colored_graph -aut -on_circle -labels -embedded -scale 0.25 -line_width 0.5
+	pdflatex Cayley_D_15_3_on_circle.tex
+	open Cayley_D_15_3_on_circle.pdf
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_D_15_3_complement.colored_graph -export Cayley_D_15_3_complement.txt
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_D_15_3_complement.colored_graph -aut -on_circle -labels -embedded -scale 0.25 -line_width 0.5
+	pdflatex Cayley_D_15_3_complement_on_circle.tex
+	open Cayley_D_15_3_complement_on_circle.pdf
+
+D21_3:
+	$(GRAPH_THEORY_PATH)/cayley.out -v 1 -D1 21 3
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_D_21_3.colored_graph -export Cayley_D_21_3.txt
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_D_21_3.colored_graph -aut -on_circle -labels -embedded -scale 0.25 -line_width 0.5
+	pdflatex Cayley_D_21_3_on_circle.tex
+	open Cayley_D_21_3_on_circle.pdf
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_D_21_3_complement.colored_graph -export Cayley_D_21_3_complement.txt
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_D_21_3_complement.colored_graph -aut -on_circle -labels -embedded -scale 0.25 -line_width 0.5
+	pdflatex Cayley_D_21_3_complement_on_circle.tex
+	open Cayley_D_21_3_complement_on_circle.pdf
+
+D27_3:
+	$(GRAPH_THEORY_PATH)/cayley.out -v 1 -D1 27 3
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_D_27_3.colored_graph -export Cayley_D_27_3.txt
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_D_27_3.colored_graph -aut -on_circle -labels -embedded -scale 0.25 -line_width 0.5
+	pdflatex Cayley_D_27_3_on_circle.tex
+	open Cayley_D_27_3_on_circle.pdf
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_D_27_3_complement.colored_graph -export Cayley_D_27_3_complement.txt
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_D_27_3_complement.colored_graph -aut -on_circle -labels -embedded -scale 0.25 -line_width 0.5
+	pdflatex Cayley_D_27_3_complement_on_circle.tex
+	open Cayley_D_27_3_complement_on_circle.pdf
+
+D27_9:
+	$(GRAPH_THEORY_PATH)/cayley.out -v 1 -D1 27 9
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_D_27_9.colored_graph -export Cayley_D_27_9.txt
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_D_27_9.colored_graph -aut -on_circle -labels -embedded -scale 0.25 -line_width 0.5
+	pdflatex Cayley_D_27_9_on_circle.tex
+	open Cayley_D_27_9_on_circle.pdf
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_D_27_9_complement.colored_graph -export Cayley_D_27_9_complement.txt
+	$(GRAPH_THEORY_PATH)/draw_colored_graph.out -v 1 -file Cayley_D_27_9_complement.colored_graph -aut -on_circle -labels -embedded -scale 0.25 -line_width 0.5
+	pdflatex Cayley_D_27_9_complement_on_circle.tex
+	open Cayley_D_27_9_complement_on_circle.pdf
+
+
+
+
