@@ -1226,6 +1226,100 @@ void latex_interface::int_matrix_print_with_labels_and_partition(ostream &ost,
 		}
 }
 
+void latex_interface::lint_matrix_print_with_labels_and_partition(ostream &ost,
+	long int *p, int m, int n,
+	int *row_labels, int *col_labels,
+	int *row_part_first, int *row_part_len, int nb_row_parts,
+	int *col_part_first, int *col_part_len, int nb_col_parts,
+	void (*process_function_or_NULL)(long int *p, int m, int n,
+		int i, int j, int val, char *output, void *data),
+	void *data,
+	int f_tex)
+{
+	int i, j, I, J, u, v;
+	char output[1000];
+
+	if (f_tex) {
+		ost << "\\begin{array}{r|";
+		for (J = 0; J < nb_col_parts; J++) {
+			ost << "*{" << col_part_len[J] << "}{r}|";
+			}
+		ost << "}" << endl;
+		}
+
+	for (j = 0; j < n; j++) {
+		if (f_tex) {
+			ost << " & ";
+			}
+		else {
+			ost << " ";
+			}
+		if (process_function_or_NULL) {
+			(*process_function_or_NULL)(
+				p, m, n, -1, j,
+				col_labels[j], output, data);
+			ost << output;
+			}
+		else {
+			ost << col_labels[j];
+			}
+		}
+	if (f_tex) {
+		ost << "\\\\" << endl;
+		ost << "\\hline" << endl;
+		}
+	else {
+		ost << endl;
+		}
+	for (I = 0; I < nb_row_parts; I++) {
+		for (u = 0; u < row_part_len[I]; u++) {
+			i = row_part_first[I] + u;
+
+			if (process_function_or_NULL) {
+				(*process_function_or_NULL)(
+					p, m, n, i, -1,
+					row_labels[i], output, data);
+				ost << output;
+				}
+			else {
+				ost << row_labels[i];
+				}
+
+			for (J = 0; J < nb_col_parts; J++) {
+				for (v = 0; v < col_part_len[J]; v++) {
+					j = col_part_first[J] + v;
+					if (f_tex) {
+						ost << " & ";
+						}
+					else {
+						ost << " ";
+						}
+					if (process_function_or_NULL) {
+						(*process_function_or_NULL)(
+						p, m, n, i, j, p[i * n + j],
+						output, data);
+						ost << output;
+						}
+					else {
+						ost << p[i * n + j];
+						}
+					}
+				}
+			if (f_tex) {
+				ost << "\\\\";
+				}
+			ost << endl;
+			}
+		if (f_tex) {
+			ost << "\\hline";
+			}
+		ost << endl;
+		}
+	if (f_tex) {
+		ost << "\\end{array}" << endl;
+		}
+}
+
 void latex_interface::int_matrix_print_tex(ostream &ost, int *p, int m, int n)
 {
 	int i, j;

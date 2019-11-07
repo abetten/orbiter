@@ -79,6 +79,20 @@ void sorting::int_vec_search_vec_linear(
 		}
 }
 
+void sorting::lint_vec_search_vec_linear(
+		long int *v, int len, long int *A, int A_sz, long int *Idx)
+{
+	int i, idx;
+
+	for (i = 0; i < A_sz; i++) {
+		if (!lint_vec_search_linear(v, len, A[i], idx)) {
+			cout << "lint_vec_search_vec did not find entry" << endl;
+			exit(1);
+		}
+		Idx[i] = idx;
+	}
+}
+
 int sorting::int_vec_is_subset_of(
 		int *set, int sz, int *big_set, int big_set_sz)
 {

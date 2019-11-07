@@ -43,7 +43,7 @@ void sims::subgroup_make_characteristic_vector(
 }
 
 void sims::normalizer_based_on_characteristic_vector(int *C_sub, 
-	int *Gen_idx, int nb_gens, int *N, int &N_go, int verbose_level)
+	int *Gen_idx, int nb_gens, int *N, long int &N_go, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int go;

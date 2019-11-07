@@ -14,6 +14,7 @@ MODULES = \
 	difference_set_in_heisenberg_group.o \
 	graph_classify.o \
 	hadamard_classify.o \
+	hall_system_classify.o \
 	large_set_classify.o \
 	regular_ls_classify.o \
 	tactical_decomposition.o

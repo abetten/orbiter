@@ -419,7 +419,7 @@ public:
 		int f_semilinear, int frobenius_power, 
 		int f_multiplication, int multiplication_order, 
 		int &nb_gens, int &degree, int *&gens, 
-		int &base_len, int *&the_base);
+		int &base_len, long int *&the_base);
 	int evaluate_bilinear_form(int n, int *v1, int *v2, int *Gram);
 	int evaluate_standard_hyperbolic_bilinear_form(int n, 
 		int *v1, int *v2);

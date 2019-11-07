@@ -507,6 +507,34 @@ void classify::get_data_by_multiplicity(
 		}
 }
 
+void classify::get_data_by_multiplicity_as_lint(
+		long int *&Pts, int &nb_pts, int multiplicity, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "classify::get_data_by_multiplicity" << endl;
+		}
+	int i, j, f, l;
+
+	nb_pts = 0;
+	for (i = 0; i < nb_types; i++) {
+		l = type_len[i];
+		if (l == multiplicity) {
+			nb_pts++;
+			}
+		}
+	Pts = NEW_lint(nb_pts);
+	j = 0;
+	for (i = 0; i < nb_types; i++) {
+		l = type_len[i];
+		if (l == multiplicity) {
+			f = type_first[i];
+			Pts[j++] = data_sorted[f];
+			}
+		}
+}
+
 int classify::determine_class_by_value(int value)
 {
 	int i, f;

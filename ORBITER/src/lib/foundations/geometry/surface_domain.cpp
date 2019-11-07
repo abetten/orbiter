@@ -61,20 +61,22 @@ void surface_domain::freeself()
 	if (Klein) {
 		FREE_OBJECT(Klein);
 		}
+
 	if (Sets) {
-		FREE_int(Sets);
+		FREE_lint(Sets);
 		}
 	if (M) {
 		FREE_int(M);
 		}
 	if (Sets2) {
-		FREE_int(Sets2);
+		FREE_lint(Sets2);
 		}
+
 	if (Pts) {
 		FREE_int(Pts);
 		}
 	if (pt_list) {
-		FREE_int(pt_list);
+		FREE_lint(pt_list);
 		}
 	if (System) {
 		FREE_int(System);
@@ -268,9 +270,11 @@ void surface_domain::null()
 	Gr3 = NULL;
 	O = NULL;
 	Klein = NULL;
+
 	Sets = NULL;
 	M = NULL;
 	Sets2 = NULL;
+
 
 	Pts = NULL;
 	pt_list = NULL;
@@ -973,7 +977,7 @@ void surface_domain::init_system(int verbose_level)
 
 	max_pts = 27 * (q + 1);
 	Pts = NEW_int(max_pts * n);
-	pt_list = NEW_int(max_pts);
+	pt_list = NEW_lint(max_pts);
 	System = NEW_int(max_pts * nb_monomials);
 	base_cols = NEW_int(nb_monomials);
 	

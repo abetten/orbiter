@@ -2516,12 +2516,12 @@ void projective_space::find_nucleus(
 }
 
 void projective_space::points_on_projective_triangle(
-	int *&set, int &set_size, int *three_points,
+	long int *&set, int &set_size, long int *three_points,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int three_lines[3];
-	int *Pts;
+	long int three_lines[3];
+	long int *Pts;
 	int sz, h, i, a;
 	sorting Sorting;
 
@@ -2529,22 +2529,16 @@ void projective_space::points_on_projective_triangle(
 		cout << "projective_space::points_on_projective_triangle" << endl;
 		}
 	set_size = 3 * (q - 1);
-	set = NEW_int(set_size);
+	set = NEW_lint(set_size);
 	sz = 3 * (q + 1);
-	Pts = NEW_int(sz);
-	three_lines[0] = line_through_two_points(
-			three_points[0], three_points[1]);
-	three_lines[1] = line_through_two_points(
-			three_points[0], three_points[2]);
-	three_lines[2] = line_through_two_points(
-			three_points[1], three_points[2]);
+	Pts = NEW_lint(sz);
+	three_lines[0] = line_through_two_points(three_points[0], three_points[1]);
+	three_lines[1] = line_through_two_points(three_points[0], three_points[2]);
+	three_lines[2] = line_through_two_points(three_points[1], three_points[2]);
 
-	create_points_on_line(three_lines[0],
-			Pts, 0 /* verbose_level */);
-	create_points_on_line(three_lines[1],
-			Pts + (q + 1), 0 /* verbose_level */);
-	create_points_on_line(three_lines[2],
-			Pts + 2 * (q + 1), 0 /* verbose_level */);
+	create_points_on_line(three_lines[0], Pts, 0 /* verbose_level */);
+	create_points_on_line(three_lines[1], Pts + (q + 1), 0 /* verbose_level */);
+	create_points_on_line(three_lines[2], Pts + 2 * (q + 1), 0 /* verbose_level */);
 	h = 0;
 	for (i = 0; i < sz; i++) {
 		a = Pts[i];
@@ -2564,9 +2558,9 @@ void projective_space::points_on_projective_triangle(
 				"h != set_size" << endl;
 		exit(1);
 		}
-	Sorting.int_vec_heapsort(set, set_size);
+	Sorting.lint_vec_heapsort(set, set_size);
 
-	FREE_int(Pts);
+	FREE_lint(Pts);
 	if (f_v) {
 		cout << "projective_space::points_on_projective_triangle "
 				"done" << endl;

@@ -1612,7 +1612,7 @@ public:
 	int *v_neighbor5; 
 	
 	int *find_root_x, *find_root_y, *find_root_z;
-	int *line1, *line2, *line3;
+	//int *line1, *line2, *line3;
 	finite_field *F;
 	
 	// stuff for rank_point
@@ -1656,7 +1656,7 @@ public:
 			long int *line, int verbose_level);
 	void points_on_line_by_coordinates(int pi, int pj, 
 		int *pt_coords, int verbose_level);
-	void lines_on_point(int pt, 
+	void lines_on_point(long int pt,
 		int *line_pencil_point_ranks, int verbose_level);
 	void lines_on_point_by_line_rank_must_fit_into_int(int pt,
 			int *line_pencil_line_ranks, int verbose_level);
@@ -2182,7 +2182,7 @@ public:
 	void init_incidence_structure(int verbose_level);
 	void intersect_with_line(long int *set, int set_sz,
 			int line_rk, long int *intersection, int &sz, int verbose_level);
-	void create_points_on_line(long int line_rk, int *line,
+	void create_points_on_line(long int line_rk, long int *line,
 		int verbose_level);
 		// needs line[k]
 	int create_point_on_line(
@@ -2263,8 +2263,8 @@ public:
 		int verbose_level);
 	void create_Maruta_Hamada_arc2(long int *the_arc, int &size,
 		int verbose_level);
-	void create_pasch_arc(int *the_arc, int &size, int verbose_level);
-	void create_Cheon_arc(int *the_arc, int &size, int verbose_level);
+	void create_pasch_arc(long int *the_arc, int &size, int verbose_level);
+	void create_Cheon_arc(long int *the_arc, int &size, int verbose_level);
 	void create_regular_hyperoval(long int *the_arc, int &size,
 		int verbose_level);
 	void create_translation_hyperoval(long int *the_arc, int &size,
@@ -2413,8 +2413,8 @@ public:
 		int verbose_level);
 	void find_nucleus(int *set, int set_size, int &nucleus, 
 		int verbose_level);
-	void points_on_projective_triangle(int *&set, int &set_size, 
-		int *three_points, int verbose_level);
+	void points_on_projective_triangle(long int *&set, int &set_size,
+		long int *three_points, int verbose_level);
 	void elliptic_curve_addition_table(int *A6, int *Pts, int nb_pts, 
 		int *&Table, int verbose_level);
 	int elliptic_curve_addition(int *A6, int p1_rk, int p2_rk, 
@@ -2593,9 +2593,12 @@ public:
 	orthogonal *O;
 	klein_correspondence *Klein;
 
-	int *Sets;
-	int *M;
-	int *Sets2;
+
+	// allocated in init_line_data:
+	long int *Sets; // [30 * 2]
+	int *M; // [6 * 6]
+	long int *Sets2; // [15 * 2]
+
 
 	int Basis0[16];
 	int Basis1[16];
@@ -2610,7 +2613,7 @@ public:
 
 	int max_pts; // 27 * (q + 1)
 	int *Pts; // [max_pts * n] point coordinates
-	int *pt_list;
+	long int *pt_list;
 		// [max_pts] list of points, 
 		// used only in compute_system_in_RREF
 	int *System; // [max_pts * nb_monomials]
@@ -2893,7 +2896,7 @@ public:
 	int compute_system_in_RREF(int len, long int *S, int verbose_level);
 	void compute_intersection_points(int *Adj,
 		long int *Lines, int nb_lines,
-		int *&Intersection_pt,
+		long int *&Intersection_pt,
 		int verbose_level);
 	void compute_intersection_points_and_indices(int *Adj,
 		long int *Points, int nb_points,

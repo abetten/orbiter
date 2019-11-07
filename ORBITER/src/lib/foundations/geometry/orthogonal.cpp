@@ -90,9 +90,11 @@ orthogonal::orthogonal()
 	find_root_x = NULL;
 	find_root_y = NULL;
 	find_root_z = NULL;
+#if 0
 	line1 = NULL;
 	line2 = NULL;
 	line3 = NULL;
+#endif
 	F = NULL;
 
 	rk_pt_v = NULL;
@@ -173,12 +175,14 @@ orthogonal::~orthogonal()
 		FREE_int(Gram_matrix);
 	if (subspace)
 		delete subspace;
+#if 0
 	if (line1)
 		FREE_int(line1);
 	if (line2)
 		FREE_int(line2);
 	if (line3)
 		FREE_int(line3);
+#endif
 	if (minus_squares)
 		FREE_int(minus_squares);
 	if (minus_squares_without)
@@ -290,9 +294,11 @@ void orthogonal::init(int epsilon, int n,
 	T1 = NEW_int(n * n);
 	T2 = NEW_int(n * n);
 	T3 = NEW_int(n * n);
+#if 0
 	line1 = NEW_int(q + 1);
 	line2 = NEW_int(q + 1);
 	line3 = NEW_int(q + 1);
+#endif
 
 	rk_pt_v = NEW_int(n);
 
@@ -1279,12 +1285,12 @@ void orthogonal::points_on_line_by_coordinates(
 	}
 }
 
-void orthogonal::lines_on_point(int pt,
+void orthogonal::lines_on_point(long int pt,
 		int *line_pencil_point_ranks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);
-	int t, i, rk, rk1, root1, root2;
+	long int t, i, rk, rk1, root1, root2;
 	
 	if (f_v) {
 		cout << "orthogonal::lines_on_point pt=" << pt << endl;

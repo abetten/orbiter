@@ -15,6 +15,7 @@ LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 all:  arc_lifting_main.out \
 	create_surface_main.out \
 	intersection.out \
+	study_surface.out \
 	surface_classify.out \
 	surfaces_arc_lifting_main.out 
 
@@ -27,6 +28,9 @@ create_surface_main.out:  create_surface_main.o   ;
 
 intersection.out:  intersection.o   ;
 	$(DISCRETA_CPP)  intersection.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+study_surface.out:  study_surface.o   ;
+	$(DISCRETA_CPP)  study_surface.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 surface_classify.out:  surface_classify.o ;
 	$(DISCRETA_CPP)  surface_classify.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

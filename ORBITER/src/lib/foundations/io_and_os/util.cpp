@@ -154,6 +154,24 @@ void int_vec_take_away(int *v, int &len,
 		}
 }
 
+void lint_vec_take_away(long int *v, int &len,
+		long int *take_away, int nb_take_away)
+	// v must be sorted
+{
+	int i, j, idx;
+	sorting Sorting;
+
+	for (i = 0; i < nb_take_away; i++) {
+		if (!Sorting.lint_vec_search(v, len, take_away[i], idx, 0)) {
+			continue;
+			}
+		for (j = idx; j < len; j++) {
+			v[j] = v[j + 1];
+			}
+		len--;
+		}
+}
+
 
 int int_vec_count_number_of_nonzero_entries(int *v, int len)
 {
@@ -206,6 +224,16 @@ void int_vec_mone(int *v, int len)
 {
 	int i;
 	int *p;
+
+	for (p = v, i = 0; i < len; p++, i++) {
+		*p = -1;
+		}
+}
+
+void lint_vec_mone(long int *v, int len)
+{
+	int i;
+	long int *p;
 
 	for (p = v, i = 0; i < len; p++, i++) {
 		*p = -1;

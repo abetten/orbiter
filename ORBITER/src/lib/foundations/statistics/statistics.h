@@ -73,6 +73,8 @@ public:
 	double average_of_non_zero_values();
 	void get_data_by_multiplicity(int *&Pts, int &nb_pts, 
 		int multiplicity, int verbose_level);
+	void get_data_by_multiplicity_as_lint(
+			long int *&Pts, int &nb_pts, int multiplicity, int verbose_level);
 	int determine_class_by_value(int value);
 	int get_value_of_class(int class_idx);
 	int get_largest_value();

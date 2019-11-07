@@ -247,6 +247,7 @@ action *nauty_interface::create_automorphism_group_of_graph_with_partition_and_l
 	//int *labeling; //, *labeling_inv;
 	int *Aut;
 	int *Base, *Transversal_length, *partitions;
+	long int *Base_lint;
 	int Aut_counter = 0, Base_length = 0, Ago = 0;
 	int i, u, a;
 	longinteger_object ago;
@@ -257,6 +258,7 @@ action *nauty_interface::create_automorphism_group_of_graph_with_partition_and_l
 
 	Aut = NEW_int(n * n);
 	Base = NEW_int(n);
+	Base_lint = NEW_lint(n);
 	Transversal_length = NEW_int(n);
 	partitions = NEW_int(n);
 
@@ -316,6 +318,8 @@ action *nauty_interface::create_automorphism_group_of_graph_with_partition_and_l
 			}
 		}
 
+	int_vec_copy_to_lint(Base, Base_lint, Base_length);
+
 #if 0
 	for (i = 0; i < n; i++) {
 		j = labeling[i];
@@ -357,7 +361,7 @@ action *nauty_interface::create_automorphism_group_of_graph_with_partition_and_l
 	A->init_permutation_group_from_generators(n,
 		FALSE, ago,
 		Aut_counter, Aut,
-		Base_length, Base,
+		Base_length, Base_lint,
 		verbose_level - 2);
 
 	if (f_v) {
@@ -370,6 +374,7 @@ action *nauty_interface::create_automorphism_group_of_graph_with_partition_and_l
 
 	FREE_int(Aut);
 	FREE_int(Base);
+	FREE_lint(Base_lint);
 	FREE_int(Transversal_length);
 	FREE_int(partitions);
 	//FREE_int(labeling);
@@ -445,12 +450,14 @@ action *nauty_interface::create_automorphism_group_of_graph(
 	int *labeling;
 	int *Aut;
 	int *Base, *Transversal_length, *partition;
+	long int *Base_lint;
 	int Aut_counter = 0, Base_length = 0, Ago = 0;
 	int i;
 
 
 	Aut = NEW_int(n * n);
 	Base = NEW_int(n);
+	Base_lint = NEW_lint(n);
 	Transversal_length = NEW_int(n);
 	partition = NEW_int(n);
 	labeling = NEW_int(n);
@@ -476,6 +483,9 @@ action *nauty_interface::create_automorphism_group_of_graph(
 		cout << "nauty_interface::create_automorphism_group_of_graph "
 				"after nauty_interface_graph_int Ago=" << Ago << endl;
 		}
+
+	int_vec_copy_to_lint(Base, Base_lint, Base_length);
+
 	action *A;
 	longinteger_object ago;
 
@@ -490,7 +500,7 @@ action *nauty_interface::create_automorphism_group_of_graph(
 	A->init_permutation_group_from_generators(n,
 		TRUE, ago,
 		Aut_counter, Aut,
-		Base_length, Base,
+		Base_length, Base_lint,
 		0 /*verbose_level - 2*/);
 	if (f_v) {
 		cout << "nauty_interface::create_automorphism_group_of_graph "
@@ -506,6 +516,7 @@ action *nauty_interface::create_automorphism_group_of_graph(
 
 	FREE_int(Aut);
 	FREE_int(Base);
+	FREE_lint(Base_lint);
 	FREE_int(Transversal_length);
 	FREE_int(partition);
 	FREE_int(labeling);
@@ -532,12 +543,14 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_gra
 	//int *labeling;
 	int *Aut;
 	int *Base, *Transversal_length, *partition;
+	long int *Base_lint;
 	int Aut_counter = 0, Base_length = 0, Ago = 0;
 	int i;
 
 
 	Aut = NEW_int(n * n);
 	Base = NEW_int(n);
+	Base_lint = NEW_lint(n);
 	Transversal_length = NEW_int(n);
 	partition = NEW_int(n);
 	//labeling = NEW_int(n);
@@ -564,6 +577,9 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_gra
 		cout << "nauty_interface::create_automorphism_group_and_canonical_labeling_of_graph "
 				"after nauty_interface_graph_int" << endl;
 		}
+
+	int_vec_copy_to_lint(Base, Base_lint, Base_length);
+
 	action *A;
 	longinteger_object ago;
 
@@ -573,7 +589,7 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_gra
 	A->init_permutation_group_from_generators(n,
 		TRUE, ago,
 		Aut_counter, Aut,
-		Base_length, Base,
+		Base_length, Base_lint,
 		0 /*verbose_level - 2*/);
 
 	if (f_v) {
@@ -585,6 +601,7 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_gra
 
 	FREE_int(Aut);
 	FREE_int(Base);
+	FREE_lint(Base_lint);
 	FREE_int(Transversal_length);
 	FREE_int(partition);
 	//FREE_int(labeling);
@@ -808,6 +825,7 @@ action *nauty_interface::create_automorphism_group_of_incidence_structure_with_p
 	int *labeling; //, *labeling_inv;
 	int *Aut;
 	int *Base, *Transversal_length;
+	long int *Base_lint;
 	int Aut_counter = 0, Base_length = 0, Ago = 0;
 
 
@@ -816,6 +834,7 @@ action *nauty_interface::create_automorphism_group_of_incidence_structure_with_p
 
 	Aut = NEW_int((m+n) * (m+n));
 	Base = NEW_int(m+n);
+	Base_lint = NEW_lint(m+n);
 	Transversal_length = NEW_int(m + n);
 
 	if (f_v) {
@@ -840,6 +859,8 @@ action *nauty_interface::create_automorphism_group_of_incidence_structure_with_p
 			}
 		}
 
+	int_vec_copy_to_lint(Base, Base_lint, Base_length);
+
 #if 0
 	for (i = 0; i < m + n; i++) {
 		j = labeling[i];
@@ -860,7 +881,7 @@ action *nauty_interface::create_automorphism_group_of_incidence_structure_with_p
 		cout << "nauty_interface::create_automorphism_group_of_"
 				"incidence_structure_with_partition: "
 				"Base:" << endl;
-		int_vec_print(cout, Base, Base_length);
+		lint_vec_print(cout, Base_lint, Base_length);
 		cout << endl;
 
 		cout << "nauty_interface::create_automorphism_group_of_"
@@ -882,7 +903,7 @@ action *nauty_interface::create_automorphism_group_of_incidence_structure_with_p
 	A->init_permutation_group_from_generators(m + n,
 		TRUE, ago,
 		Aut_counter, Aut,
-		Base_length, Base,
+		Base_length, Base_lint,
 		verbose_level - 2);
 
 	if (f_v) {
@@ -895,6 +916,7 @@ action *nauty_interface::create_automorphism_group_of_incidence_structure_with_p
 
 	FREE_int(Aut);
 	FREE_int(Base);
+	FREE_lint(Base_lint);
 	FREE_int(Transversal_length);
 	FREE_int(labeling);
 
@@ -960,6 +982,7 @@ void nauty_interface::do_self_dual_self_polar(int input_no,
 	int *labeling; //, *labeling_inv;
 	int *Aut;
 	int *Base, *Transversal_length, *partitions;
+	long int *Base_lint;
 	int Aut_counter = 0, Base_length = 0, Ago = 0;
 	int i; //, j;
 
@@ -972,6 +995,7 @@ void nauty_interface::do_self_dual_self_polar(int input_no,
 		}
 	Aut = NEW_int((m+n) * (m+n));
 	Base = NEW_int(m+n);
+	Base_lint = NEW_lint(m+n);
 	Transversal_length = NEW_int(m + n);
 	partitions = NEW_int(m + n);
 
@@ -1017,6 +1041,8 @@ void nauty_interface::do_self_dual_self_polar(int input_no,
 			cout << "The group order is = " << Ago << endl;
 			}
 		}
+
+	int_vec_copy_to_lint(Base, Base_lint, Base_length);
 
 #if 0
 	for (i = 0; i < m + n; i++) {
@@ -1082,7 +1108,7 @@ void nauty_interface::do_self_dual_self_polar(int input_no,
 	A.init_permutation_group_from_generators(m + n,
 		TRUE, ago,
 		Aut_counter, Aut,
-		Base_length, Base,
+		Base_length, Base_lint,
 		verbose_level);
 
 	cout << "created action ";
@@ -1135,6 +1161,7 @@ void nauty_interface::do_self_dual_self_polar(int input_no,
 	FREE_int(aut);
 	FREE_int(Aut);
 	FREE_int(Base);
+	FREE_lint(Base_lint);
 	FREE_int(Transversal_length);
 	FREE_int(partitions);
 	FREE_int(labeling);
