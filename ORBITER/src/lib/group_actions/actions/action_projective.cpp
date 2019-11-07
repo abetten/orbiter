@@ -37,6 +37,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	int nb_rows, nb_cols;
 	int *Aut, Aut_counter;
 	int *Base, Base_length;
+	long int *Base_lint;
 	int *Transversal_length, Ago;
 	int N, i, j, h;
 	file_io Fio;
@@ -202,6 +203,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		}
 	Aut = NEW_int(N * N);
 	Base = NEW_int(N);
+	Base_lint = NEW_lint(N);
 	Transversal_length = NEW_int(N);
 
 	if (f_v) {
@@ -217,6 +219,8 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		cout << "action::set_stabilizer_in_projective_space, "
 				"done with nauty_interface_matrix_int, Ago=" << Ago << endl;
 		}
+
+	int_vec_copy_to_lint(Base, Base_lint, Base_length);
 
 	int *Incma_out;
 	int ii, jj;
@@ -323,7 +327,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	A_perm->init_permutation_group_from_generators(N,
 		TRUE, ago,
 		Aut_counter, Aut,
-		Base_length, Base,
+		Base_length, Base_lint,
 		0 /*verbose_level - 2 */);
 
 	if (f_vv) {

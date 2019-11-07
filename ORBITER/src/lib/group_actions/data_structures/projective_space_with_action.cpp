@@ -168,6 +168,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 	int nb_rows, nb_cols;
 	int *Aut, Aut_counter;
 	int *Base, Base_length;
+	long int *Base_lint;
 	int *Transversal_length, Ago;
 	int N, i, j, h, a, L;
 	file_io Fio;
@@ -337,6 +338,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		}
 	Aut = NEW_int(N * N);
 	Base = NEW_int(N);
+	Base_lint = NEW_lint(N);
 	Transversal_length = NEW_int(N);
 	
 	if (f_v) {
@@ -367,6 +369,8 @@ strong_generators *projective_space_with_action::set_stabilizer(
 				"Ago=" << Ago << " dt=" << dt
 				<< " delta_t_in_sec=" << delta_t_in_sec << endl;
 		}
+
+	int_vec_copy_to_lint(Base, Base_lint, Base_length);
 
 	int *Incma_out;
 	int ii, jj;
@@ -490,7 +494,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 	A_perm->init_permutation_group_from_generators(N, 
 		TRUE, ago, 
 		Aut_counter, Aut, 
-		Base_length, Base,
+		Base_length, Base_lint,
 		verbose_level - 2);
 
 	if (f_vv) {
@@ -644,6 +648,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 
 	FREE_int(Aut);
 	FREE_int(Base);
+	FREE_lint(Base_lint);
 	FREE_int(Transversal_length);
 	FREE_int(Incma);
 	FREE_int(partition);
@@ -819,6 +824,7 @@ strong_generators
 	int nb_rows, nb_cols;
 	int *Aut, Aut_counter;
 	int *Base, Base_length;
+	long int *Base_lint;
 	int *Transversal_length, Ago;
 	int N, i, j, a, L;
 	combinatorics_domain Combi;
@@ -904,6 +910,7 @@ strong_generators
 		}
 	Aut = NEW_int(N * N);
 	Base = NEW_int(N);
+	Base_lint = NEW_lint(N);
 	Transversal_length = NEW_int(N);
 	
 	if (f_v) {
@@ -933,6 +940,7 @@ strong_generators
 		}
 	FREE_int(can_labeling);
 
+	int_vec_copy_to_lint(Base, Base_lint, Base_length);
 
 	t1 = Os.os_ticks();
 	dt = t1 - t0;
@@ -1057,7 +1065,7 @@ strong_generators
 	A_perm->init_permutation_group_from_generators(N, 
 		TRUE, ago,
 		Aut_counter, Aut, 
-		Base_length, Base,
+		Base_length, Base_lint,
 		verbose_level);
 
 	if (f_vv) {
@@ -1214,6 +1222,7 @@ strong_generators
 		cout << "before freeing Base" << endl;
 	}
 	FREE_int(Base);
+	FREE_lint(Base_lint);
 	if (f_v) {
 		cout << "before freeing Transversal_length" << endl;
 	}

@@ -633,6 +633,8 @@ public:
 	void lint_vec_search_vec(
 			long int *v, int len, long int *A, int A_sz, long int *Idx);
 	void int_vec_search_vec_linear(int *v, int len, int *A, int A_sz, int *Idx);
+	void lint_vec_search_vec_linear(
+			long int *v, int len, long int *A, int A_sz, long int *Idx);
 	int int_vec_is_subset_of(int *set, int sz, int *big_set, int big_set_sz);
 	int lint_vec_is_subset_of(int *set, int sz, long int *big_set, int big_set_sz);
 	void int_vec_swap_points(int *list, int *list_inv, int idx1, int idx2);

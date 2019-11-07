@@ -65,7 +65,11 @@ void difference_set_in_heisenberg_group::init(int n, finite_field *F, int verbos
 
 
 	given_base_length = nb_gens;
-	given_base = gens;
+	//given_base = gens;
+
+	given_base = NEW_lint(given_base_length);
+	int_vec_copy_to_lint(gens, given_base, given_base_length);
+
 #if 0
 	magma_normalizer_in_Sym_n(fname_base,
 			H->group_order, Table, gens, nb_gens,

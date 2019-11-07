@@ -29,7 +29,7 @@ void surface_domain::init_line_data(int verbose_level)
 		cout << "surface_domain::init_line_data" << endl;
 		}
 
-	Sets = NEW_int(30 * 2);
+	Sets = NEW_lint(30 * 2);
 	M = NEW_int(6 * 6);
 	int_vec_zero(M, 6 * 6);
 
@@ -55,13 +55,13 @@ void surface_domain::init_line_data(int verbose_level)
 
 	if (f_v) {
 		cout << "surface_domain::init_line_data Sets:" << endl;
-		L.print_integer_matrix_with_standard_labels(cout,
+		L.print_lint_matrix_with_standard_labels(cout,
 			Sets, 30, 2, FALSE /* f_tex */);
 		//int_matrix_print(Sets, 30, 2);
 		}
 
 
-	Sets2 = NEW_int(15 * 2);
+	Sets2 = NEW_lint(15 * 2);
 	h2 = 0;
 	for (i = 0; i < 6; i++) {
 		for (j = i + 1; j < 6; j++) {
@@ -77,7 +77,7 @@ void surface_domain::init_line_data(int verbose_level)
 
 	if (f_v) {
 		cout << "Sets2:" << endl;
-		L.print_integer_matrix_with_standard_labels(cout,
+		L.print_lint_matrix_with_standard_labels(cout,
 			Sets2, 15, 2, FALSE /* f_tex */);
 		//int_matrix_print(Sets2, 15, 2);
 		}
@@ -312,7 +312,7 @@ int surface_domain::compute_system_in_RREF(
 	if (FALSE) {
 		cout << "surface_domain::compute_system_in_RREF list of "
 				"covered points by lines:" << endl;
-		int_matrix_print(pt_list, len, P->k);
+		lint_matrix_print(pt_list, len, P->k);
 		}
 	for (i = 0; i < nb_pts; i++) {
 		unrank_point(Pts + i * n, pt_list[i]);
@@ -352,7 +352,7 @@ int surface_domain::compute_system_in_RREF(
 
 void surface_domain::compute_intersection_points(int *Adj,
 	long int *Lines, int nb_lines,
-	int *&Intersection_pt,
+	long int *&Intersection_pt,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -361,8 +361,8 @@ void surface_domain::compute_intersection_points(int *Adj,
 	if (f_v) {
 		cout << "surface_domain::compute_intersection_points" << endl;
 		}
-	Intersection_pt = NEW_int(nb_lines * nb_lines);
-	int_vec_mone(Intersection_pt, nb_lines * nb_lines);
+	Intersection_pt = NEW_lint(nb_lines * nb_lines);
+	lint_vec_mone(Intersection_pt, nb_lines * nb_lines);
 	for (j1 = 0; j1 < nb_lines; j1++) {
 		a1 = Lines[j1];
 		for (j2 = j1 + 1; j2 < nb_lines; j2++) {
@@ -1775,7 +1775,7 @@ int surface_domain::identify_three_lines(long int *lines, int verbose_level)
 		iso = 5;
 		}
 	else if (c == 3) {
-		int *Intersection_pt;
+		long int *Intersection_pt;
 		int rk;
 
 		compute_intersection_points(Adj,
@@ -1806,7 +1806,7 @@ int surface_domain::identify_three_lines(long int *lines, int verbose_level)
 		else {
 			iso = 3;
 			}
-		FREE_int(Intersection_pt);
+		FREE_lint(Intersection_pt);
 		}
 
 

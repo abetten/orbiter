@@ -46,6 +46,7 @@ MODULES = \
 	surface_create_description.o \
 	surface_create.o \
 	surface_object_with_action.o \
+	surface_study.o \
 	surface_with_action.o \
 	surfaces_arc_lifting.o \
 	tensor_classify.o \

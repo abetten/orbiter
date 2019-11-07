@@ -451,7 +451,7 @@ public:
 	longinteger_object Aut_order;
 
 	int given_base_length; // = nb_gens
-	int *given_base; // = gens
+	long int *given_base; // = gens
 	int *base_image;
 	int *base_image_elts;
 	int *E1;
@@ -661,6 +661,112 @@ void hadamard_classify_early_test_function(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
+
+
+
+// #############################################################################
+// hall_system_classify.cpp
+// #############################################################################
+
+//! classification of Hall systems
+
+
+class hall_system_classify {
+public:
+	//int e;
+	int n; // 3^e
+	int nm1; // n-1
+		// number of points different from the reflection point
+	int nb_pairs;
+		// nm1 / 2
+		// = number of lines (=triples) through the reflection point
+		// = number of lines (=triples) through any point
+	int nb_pairs2; // = nm1 choose 2
+		// number of pairs of points different from the reflection point.
+		// these are the pairs of points that are covered by the
+		// triples that we will choose.
+		// The other pairs have been covered by the lines through
+		// the reflection point, so they are fine because we assume that
+		// these lines exist.
+	int nb_blocks_overall; // {n \choose 2} / 6
+	int nb_blocks_needed; // nb_blocks_overall - (n - 1) / 2
+	int nb_orbits_needed; // nb_blocks_needed / 2
+	int depth;
+	int N;
+		// {nb_pairs choose 3} * 8
+		// {nb_pairs choose 3} counts the number of ways to shoose three lines
+		// through the reflection point.
+		// the times 8 is because every triple of lines through the
+		// reflection point has 2^3 ways of choosing one point on each line.
+	int N0; // {nb_pairs choose 3} * 4
+	int *row_sum; // [nm1]
+		// this is where we test whether each of the
+		// points different from the reflection point lies on
+		// the right number of triples.
+		// The right number is nb_pairs
+	int *pair_covering; // [nb_pairs2]
+		// this is where we test whether each of the
+		// pairs of points not including the reflection point
+		// is covered once
+
+
+	long int *triples; // [N0 * 6]
+		// a table of all triples so that
+		// we can induce the group action on to them.
+
+
+	action *A;
+		// The symmetric group on nm1 points.
+	action *A_on_triples;
+		// the induced action on unordered triples as stored in triples[].
+	strong_generators *Strong_gens_Hall_reflection;
+		// the involution which switches the
+		// points on every line through the center (other than the center).
+	strong_generators *Strong_gens_normalizer;
+		// Strong generators for the normalizer of the involution.
+	sims *S;
+		// The normalizer of the involution
+
+	char prefix[1000];
+	char fname_orbits_on_triples[1000];
+	schreier *Orbits_on_triples;
+		// Orbits of the reflection group on triples.
+	action *A_on_orbits;
+		// Induced action of A_on_triples
+		// on the orbit of the reflection group.
+	int f_play_it_safe;
+
+	poset *Poset;
+		// subset lattice for action A_on_orbits
+	poset_classification *PC;
+		// Classification of subsets in the action A_on_orbits
+
+
+	hall_system_classify();
+	~hall_system_classify();
+	void null();
+	void freeself();
+	void init(int argc, const char **argv,
+			int n, int depth,
+			int verbose_level);
+	void orbits_on_triples(int verbose_level);
+	void print(std::ostream &ost, long int *S, int len);
+	void unrank_triple(long int *T, int rk);
+	void unrank_triple_pair(long int *T1, long int *T2, int rk);
+	void early_test_func(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+};
+
+
+// in hall_system.cpp:
+void hall_system_print_set(std::ostream &ost, int len, long int *S, void *data);
+void hall_system_early_test_function(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+
 
 
 

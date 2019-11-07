@@ -2943,6 +2943,81 @@ public:
 };
 
 // #############################################################################
+// surface_study.cpp
+// #############################################################################
+
+//! to study properties of cubic surfaces
+
+class surface_study {
+public:
+	int q;
+	int nb;
+	int *rep;
+	char prefix[1000];
+	finite_field *F;
+	surface_domain *Surf;
+
+	int nb_lines_PG_3;
+
+	int *data;
+	int nb_gens;
+	int data_size;
+	const char *stab_order;
+
+	action *A;
+	action *A2;
+	sims *S;
+	long int *Lines;
+	int *coeff;
+
+	int f_semilinear;
+
+	set_and_stabilizer *SaS;
+
+
+	// line orbits:
+	int *orbit_first;
+	int *orbit_length;
+	int *orbit;
+	int nb_orbits;
+
+
+	// orbit_on_lines:
+	action *A_on_lines;
+	schreier *Orb;
+	int shortest_line_orbit_idx;
+
+	// for study_find_eckardt_points:
+	int *Adj;
+	int *R;
+	long int *Intersection_pt;
+	long int *Double_pts;
+	int nb_double_pts;
+	long int *Eckardt_pts;
+	int nb_Eckardt_pts;
+
+
+	void init(int q, int nb, int verbose_level);
+	void study_intersection_points(int verbose_level);
+	void study_line_orbits(int verbose_level);
+	void study_group(int verbose_level);
+	void study_orbits_on_lines(int verbose_level);
+	void study_find_eckardt_points(int verbose_level);
+	void study_surface_with_6_eckardt_points(int verbose_level);
+};
+
+
+void move_point_set(action *A2,
+	set_and_stabilizer *Universe, long int *Pts, int nb_pts,
+	int *Elt, set_and_stabilizer *&new_stab,
+	int verbose_level);
+void matrix_entry_print(long int *p,
+		int m, int n, int i, int j, int val,
+		char *output, void *data);
+
+
+
+// #############################################################################
 // surface_with_action.cpp
 // #############################################################################
 

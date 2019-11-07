@@ -2624,7 +2624,7 @@ void finite_field::affine_generators(int n,
 	int f_semilinear, int frobenius_power, 
 	int f_multiplication, int multiplication_order, 
 	int &nb_gens, int &degree, int *&gens, 
-	int &base_len, int *&the_base)
+	int &base_len, long int *&the_base)
 {
 	int k, h;
 	geometry_global Gg;
@@ -2646,7 +2646,7 @@ void finite_field::affine_generators(int n,
 		}
 	
 	gens = NEW_int(nb_gens * degree);
-	the_base = NEW_int(base_len);
+	the_base = NEW_lint(base_len);
 	k = 0;
 	h = 0;
 	if (f_translations) {

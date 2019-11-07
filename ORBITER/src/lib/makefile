@@ -295,6 +295,7 @@ MODULES= \
 		top_level/combinatorics/difference_set_in_heisenberg_group.o \
 		top_level/combinatorics/graph_classify.o \
 		top_level/combinatorics/hadamard_classify.o \
+		top_level/combinatorics/hall_system_classify.o \
 		top_level/combinatorics/large_set_classify.o \
 		top_level/combinatorics/regular_ls_classify.o \
 		top_level/combinatorics/tactical_decomposition.o \
@@ -338,6 +339,7 @@ MODULES= \
 		top_level/geometry/surface_create_description.o \
 		top_level/geometry/surface_create.o \
 		top_level/geometry/surface_object_with_action.o \
+		top_level/geometry/surface_study.o \
 		top_level/geometry/surface_with_action.o \
 		top_level/geometry/surfaces_arc_lifting.o \
 		top_level/geometry/tensor_classify.o \

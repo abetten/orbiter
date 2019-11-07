@@ -463,7 +463,7 @@ public:
 	void init_permutation_group_from_generators(int degree, 
 		int f_target_go, longinteger_object &target_go, 
 		int nb_gens, int *gens, 
-		int given_base_length, int *given_base,
+		int given_base_length, long int *given_base,
 		int verbose_level);
 
 	/** Create the affine group AGL(n,q) as abstract permutation group,

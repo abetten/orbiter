@@ -283,6 +283,15 @@ public:
 			int val, char *output, void *data),
 		void *data,
 		int f_tex);
+	void lint_matrix_print_with_labels_and_partition(std::ostream &ost,
+		long int *p, int m, int n,
+		int *row_labels, int *col_labels,
+		int *row_part_first, int *row_part_len, int nb_row_parts,
+		int *col_part_first, int *col_part_len, int nb_col_parts,
+		void (*process_function_or_NULL)(long int *p, int m, int n,
+			int i, int j, int val, char *output, void *data),
+		void *data,
+		int f_tex);
 	void int_matrix_print_tex(std::ostream &ost, int *p, int m, int n);
 	void lint_matrix_print_tex(std::ostream &ost, long int *p, int m, int n);
 	void print_cycle_tex_with_special_point_labels(
@@ -579,11 +588,14 @@ void lint_vec_apply(long int *from, long int *through, long int *to, int len);
 int int_vec_is_constant_on_subset(int *v, int *subset, int sz, int &value);
 void int_vec_take_away(int *v, int &len, int *take_away, int nb_take_away);
 	// v must be sorted
+void lint_vec_take_away(long int *v, int &len,
+		long int *take_away, int nb_take_away);
 int int_vec_count_number_of_nonzero_entries(int *v, int len);
 int int_vec_find_first_nonzero_entry(int *v, int len);
 void int_vec_zero(int *v, int len);
 void lint_vec_zero(long int *v, int len);
 void int_vec_mone(int *v, int len);
+void lint_vec_mone(long int *v, int len);
 void int_vec_copy(int *from, int *to, int len);
 void lint_vec_copy(long int *from, long int *to, int len);
 void int_vec_copy_to_lint(int *from, long int *to, int len);

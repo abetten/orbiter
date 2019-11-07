@@ -677,7 +677,7 @@ void projective_space::intersect_with_line(long int *set, int set_sz,
 }
 
 void projective_space::create_points_on_line(
-	long int line_rk, int *line, int verbose_level)
+	long int line_rk, long int *line, int verbose_level)
 // needs line[k]
 {
 	int a, b;
@@ -2284,7 +2284,7 @@ void projective_space::create_Maruta_Hamada_arc2(
 
 
 void projective_space::create_pasch_arc(
-	int *the_arc, int &size, int verbose_level)
+	long int *the_arc, int &size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int data[] = {1,1,1, 1,0,0, 0,1,1,  0,1,0,  1,0,1 };
@@ -2330,7 +2330,7 @@ void projective_space::create_pasch_arc(
 	for (h = 0; h < 4; h++) {
 		for (i = 0; i < r; i++) {
 			b = Lines[L[h] * r + i];
-			if (Sorting.int_vec_search(the_arc, size, b, idx)) {
+			if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
 				continue;
 				}
 			for (j = size; j > idx; j--) {
@@ -2342,7 +2342,7 @@ void projective_space::create_pasch_arc(
 		}
 	if (f_v) {
 		cout << "there are " << size << " points on the pasch lines: ";
-		int_vec_print(cout, the_arc, size);
+		lint_vec_print(cout, the_arc, size);
 		cout << endl;
 		}
 
@@ -2351,7 +2351,7 @@ void projective_space::create_pasch_arc(
 	v[1] = 1;
 	v[2] = 0;
 	b = rank_point(v);
-	if (Sorting.int_vec_search(the_arc, size, b, idx)) {
+	if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
 		cout << "error, special point already there" << endl;
 		exit(1);
 		}
@@ -2365,14 +2365,14 @@ void projective_space::create_pasch_arc(
 		cout << "projective_space::create_pasch_arc: after "
 				"adding the special point, there are "
 				<< size << " points on the arc: ";
-		int_vec_print(cout, the_arc, size);
+		lint_vec_print(cout, the_arc, size);
 		cout << endl;
 		}
 
 }
 
 void projective_space::create_Cheon_arc(
-	int *the_arc, int &size, int verbose_level)
+	long int *the_arc, int &size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int data[] = {1,0,0, 0,1,0, 0,0,1 };
@@ -2423,7 +2423,7 @@ void projective_space::create_Cheon_arc(
 	for (h = 0; h < 3; h++) {
 		for (i = 0; i < r; i++) {
 			b = Lines[L[h] * r + i];
-			if (Sorting.int_vec_search(the_arc, size, b, idx)) {
+			if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
 				continue;
 				}
 			for (j = size; j > idx; j--) {
@@ -2437,7 +2437,7 @@ void projective_space::create_Cheon_arc(
 	if (f_v) {
 		cout << "projective_space::create_Cheon_arc there are "
 				<< size << " points on the 3 lines: ";
-		int_vec_print(cout, the_arc, size);
+		lint_vec_print(cout, the_arc, size);
 		cout << endl;
 		}
 
@@ -2485,7 +2485,7 @@ void projective_space::create_Cheon_arc(
 			if (f_v) {
 				cout << "c=" << c << endl;
 				}
-			if (Sorting.int_vec_search(the_arc, size, c, idx)) {
+			if (Sorting.lint_vec_search(the_arc, size, c, idx, 0)) {
 				continue;
 				}
 			for (t = size; t > idx; t--) {
@@ -2502,7 +2502,7 @@ void projective_space::create_Cheon_arc(
 		}
 	if (f_v) {
 		cout << "there are " << size << " points on the Cheon lines: ";
-		int_vec_print(cout, the_arc, size);
+		lint_vec_print(cout, the_arc, size);
 		cout << endl;
 		}
 

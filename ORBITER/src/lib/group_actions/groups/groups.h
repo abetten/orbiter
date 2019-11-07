@@ -1296,7 +1296,7 @@ public:
 	void subgroup_make_characteristic_vector(sims *Sub, 
 		int *C, int verbose_level);
 	void normalizer_based_on_characteristic_vector(int *C_sub, 
-		int *Gen_idx, int nb_gens, int *N, int &N_go, 
+		int *Gen_idx, int nb_gens, int *N, long int &N_go,
 		int verbose_level);
 	void order_structure_relative_to_subgroup(int *C_sub, 
 		int *Order, int *Residue, int verbose_level);

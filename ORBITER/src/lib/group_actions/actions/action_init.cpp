@@ -651,7 +651,7 @@ void action::init_permutation_group(int degree, int verbose_level)
 void action::init_permutation_group_from_generators(int degree, 
 	int f_target_go, longinteger_object &target_go, 
 	int nb_gens, int *gens, 
-	int given_base_length, int *given_base,
+	int given_base_length, long int *given_base,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -702,7 +702,7 @@ void action::init_permutation_group_from_generators(int degree,
 		cout << "action::init_permutation_group_from_generators "
 				"calling allocate_base_data" << endl;
 		cout << "given_base:";
-		int_vec_print(cout, given_base, given_base_length);
+		lint_vec_print(cout, given_base, given_base_length);
 		cout << " of length " << given_base_length << endl;
 		}
 	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
@@ -807,7 +807,7 @@ void action::init_affine_group(int n, int q,
 	int nb_gens, degree;
 	int *gens;
 	int given_base_length;
-	int *given_base;
+	long int *given_base;
 	finite_field F;
 	longinteger_object go;
 	
@@ -830,14 +830,15 @@ void action::init_affine_group(int n, int q,
 		verbose_level);
 
 	FREE_int(gens);
-	FREE_int(given_base);
+	FREE_lint(given_base);
 }
 
 
 void action::init_symmetric_group(int degree, int verbose_level)
 {
 	int nb_gens, *gens;
-	int given_base_length, *given_base;
+	int given_base_length;
+	long int *given_base;
 	int i, j;
 	longinteger_object go;
 	longinteger_domain D;
@@ -851,7 +852,7 @@ void action::init_symmetric_group(int degree, int verbose_level)
 	nb_gens = degree - 1;
 	given_base_length = degree - 1;
 	gens = NEW_int(nb_gens * degree);
-	given_base = NEW_int(given_base_length);
+	given_base = NEW_lint(given_base_length);
 	for (i = 0; i < nb_gens; i++) {
 		for (j = 0; j < degree; j++) {
 			gens[i * degree + j] = j;
@@ -868,7 +869,7 @@ void action::init_symmetric_group(int degree, int verbose_level)
 		given_base_length, given_base,
 		verbose_level);
 	FREE_int(gens);
-	FREE_int(given_base);
+	FREE_lint(given_base);
 }
 
 
@@ -2446,11 +2447,19 @@ void action::init_automorphism_group_from_group_table(
 		cout << "action::init_automorphism_group_from_group_table "
 				"creating holomorph" << endl;
 	}
+
+	long int *gens1;
+	int i;
+	gens1 = NEW_lint(nb_gens);
+	for (i = 0; i < nb_gens; i++) {
+		gens1[i] = gens[i];
+	}
+
 	init_permutation_group_from_generators(
 		group_order /* degree */,
 		TRUE, go,
 		N_nb_gens, N_gens,
-		nb_gens /* given_base_length */, gens /* given_base */,
+		nb_gens /* given_base_length */, gens1 /* given_base */,
 		verbose_level);
 	{
 	longinteger_object go;
