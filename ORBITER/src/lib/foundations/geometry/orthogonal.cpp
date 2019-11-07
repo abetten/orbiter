@@ -1286,7 +1286,7 @@ void orthogonal::points_on_line_by_coordinates(
 }
 
 void orthogonal::lines_on_point(long int pt,
-		int *line_pencil_point_ranks, int verbose_level)
+		long int *line_pencil_point_ranks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);
@@ -1328,7 +1328,7 @@ void orthogonal::lines_on_point(long int pt,
 	if (f_vv) {
 		cout << "orthogonal::lines_on_point line pencil (point ranks) "
 				"on point " << pt << " : ";
-		int_vec_print(cout, line_pencil_point_ranks, alpha);
+		lint_vec_print(cout, line_pencil_point_ranks, alpha);
 		cout << endl;
 		}
 	if (f_v) {

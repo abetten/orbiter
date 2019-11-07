@@ -1441,10 +1441,10 @@ int knowledge_base::Spread_nb_reps(int q, int k)
 }
 
 
-int *knowledge_base::Spread_representative(int q, int k, int i, int &sz)
+long int *knowledge_base::Spread_representative(int q, int k, int i, int &sz)
 // i starts from 0
 {
-	int *p, nb;
+	long int *p, nb;
 
 	if (q == 2 && k == 2) {
 		p = Spreads_2_2_reps;

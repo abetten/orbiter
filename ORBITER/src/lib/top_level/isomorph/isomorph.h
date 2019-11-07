@@ -725,7 +725,7 @@ public:
 	void *callback_data;
 
 	int f_has_final_test_function;
-	int (*final_test_function)(int *data, int sz, 
+	int (*final_test_function)(long int *data, int sz,
 		void *final_test_data, int verbose_level);
 	void *final_test_data;
 	

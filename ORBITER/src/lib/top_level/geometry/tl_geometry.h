@@ -1681,7 +1681,7 @@ public:
 	// tests if every spread from orbit a
 	// is line-disjoint from every spread from orbit b
 	int test_if_pair_of_sets_are_adjacent(
-		int *set1, int sz1, int *set2, int sz2,
+		long int *set1, int sz1, long int *set2, int sz2,
 		int verbose_level);
 	int test_if_spreads_are_disjoint_based_on_table(int a, int b);
 
