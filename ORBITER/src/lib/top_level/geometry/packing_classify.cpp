@@ -2197,12 +2197,12 @@ int packing_classify::test_if_pair_of_orbits_are_adjacent(
 }
 
 int packing_classify::test_if_pair_of_sets_are_adjacent(
-		int *set1, int sz1,
-		int *set2, int sz2,
+		long int *set1, int sz1,
+		long int *set2, int sz2,
 		int verbose_level)
 {
 	int f_v = FALSE; // (verbose_level >= 1);
-	int s1, s2;
+	long int s1, s2;
 	int i, j;
 
 	if (f_v) {

@@ -1410,7 +1410,7 @@ public:
 		int &data_size, const char *&stab_order);
 
 	int Spread_nb_reps(int q, int k);
-	int *Spread_representative(int q, int k, int i, int &sz);
+	long int *Spread_representative(int q, int k, int i, int &sz);
 	void Spread_stab_gens(int q, int k, int i, int *&data, int &nb_gens,
 		int &data_size, const char *&stab_order);
 
@@ -1657,7 +1657,7 @@ public:
 	void points_on_line_by_coordinates(int pi, int pj, 
 		int *pt_coords, int verbose_level);
 	void lines_on_point(long int pt,
-		int *line_pencil_point_ranks, int verbose_level);
+		long int *line_pencil_point_ranks, int verbose_level);
 	void lines_on_point_by_line_rank_must_fit_into_int(int pt,
 			int *line_pencil_line_ranks, int verbose_level);
 	void lines_on_point_by_line_rank(int pt, 
