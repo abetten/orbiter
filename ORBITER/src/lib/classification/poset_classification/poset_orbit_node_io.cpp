@@ -199,7 +199,9 @@ long int poset_orbit_node::calc_size_on_file(action *A, int verbose_level)
 	int i;
 	long int s = 0;
 
-	s += 4 * sizeof(int); // node, prev, pt, nb_strong_generators
+	s += 2 * sizeof(int); // node, prev
+	s += sizeof(long int); // pt
+	s += sizeof(int); // nb_strong_generators
 	//m->write_int(node);
 	//m->write_int(prev);
 	//m->write_int(pt);
@@ -215,7 +217,8 @@ long int poset_orbit_node::calc_size_on_file(action *A, int verbose_level)
 	//m->write_int(nb_extensions);
 
 	for (i = 0; i < nb_extensions; i++) {
-		s += 3 * sizeof(int); // pt, orbit_len, type
+		s += sizeof(long int); // pt
+		s += 2 * sizeof(int); // orbit_len, type
 		//m->write_int(E[i].pt);
 		//m->write_int(E[i].orbit_len);
 		//m->write_int(E[i].type);
