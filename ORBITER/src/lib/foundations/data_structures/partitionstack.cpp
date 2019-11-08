@@ -657,9 +657,7 @@ void partitionstack::refine_arbitrary_set_lint(
 		int size, long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
 	int *set2;
-	int i;
 
 	if (f_v) {
 		cout << "partitionstack::refine_arbitrary_set_lint" << endl;

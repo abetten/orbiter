@@ -113,7 +113,7 @@ void buekenhout_metz::freeself()
 		FREE_int(point_of_tangency);
 		}
 	if (Intersection_sets) {
-		FREE_int(Intersection_sets);
+		FREE_lint(Intersection_sets);
 		}
 	if (Design_blocks) {
 		FREE_int(Design_blocks);
@@ -928,7 +928,7 @@ void buekenhout_metz::compute_the_design(int verbose_level)
 		idx_in_secants[a] = i;
 		}
 
-	Intersection_sets = NEW_int(nb_secant_lines * (q + 1));
+	Intersection_sets = NEW_lint(nb_secant_lines * (q + 1));
 	Design_blocks = NEW_int(nb_secant_lines * (q + 1));
 
 	for (h = 0; h < nb_secant_lines; h++) {
@@ -973,7 +973,7 @@ void buekenhout_metz::compute_the_design(int verbose_level)
 		for (i = 0; i < nb_secant_lines; i++) {
 			cout << setw(3) << i << " : ";
 			cout << setw(3) << secant_lines[i] << " : ";
-			int_vec_print(cout, Intersection_sets + i * (q + 1), q + 1);
+			lint_vec_print(cout, Intersection_sets + i * (q + 1), q + 1);
 			cout << " : ";
 			cout << setw(3) << f_is_Baer[i] << endl;
 			}

@@ -384,12 +384,12 @@ int packing_classify::predict_spread_table_length(
 			f_do_it = TRUE;
 			}
 		if (f_do_it) {
-			int *rep;
+			long int *rep;
 			int sz;
 
 			rep = K.Spread_representative(
 					q, T->k, no, sz);
-			int_vec_copy_to_lint(rep,
+			lint_vec_copy(rep,
 					input_spreads + nb_input_spreads * spread_size,
 					spread_size);
 

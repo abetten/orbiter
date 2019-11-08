@@ -32,11 +32,11 @@ public:
 	grassmann *Grass;
 	finite_field *F;
 
-	int *spread_elements_numeric; // [spread_size]
-	int *spread_elements_numeric_sorted; // [spread_size]
+	long int *spread_elements_numeric; // [spread_size]
+	long int *spread_elements_numeric_sorted; // [spread_size]
 
-	int *spread_elements_perm;
-	int *spread_elements_perm_inv;
+	long int *spread_elements_perm;
+	long int *spread_elements_perm_inv;
 
 	int *spread_elements_genma; // [spread_size * k * n]
 	int *pivot; //[spread_size * k]
@@ -47,7 +47,7 @@ public:
 	~andre_construction();
 	void null();
 	void freeself();
-	void init(finite_field *F, int k, int *spread_elements_numeric, 
+	void init(finite_field *F, int k, long int *spread_elements_numeric,
 		int verbose_level);
 	void points_on_line(andre_construction_line_element *Line, 
 		int *pts_on_line, int verbose_level);
@@ -335,7 +335,7 @@ public:
 	int nb_secant_lines;
 	long int *tangent_lines;
 	int nb_tangent_lines;
-	int *Intersection_sets;
+	long int *Intersection_sets;
 	int *Design_blocks;
 	long int *block;
 	int block_size;
@@ -2318,9 +2318,9 @@ public:
 	void find_k_secant_lines(long int *set, int set_size, int k,
 		long int *secant_lines, int &nb_secant_lines,
 		int verbose_level);
-	void Baer_subline(int *pts3, long int *&pts, int &nb_pts,
+	void Baer_subline(long int *pts3, long int *&pts, int &nb_pts,
 		int verbose_level);
-	int is_contained_in_Baer_subline(int *pts, int nb_pts,
+	int is_contained_in_Baer_subline(long int *pts, int nb_pts,
 		int verbose_level);
 
 	// projective_space2.cpp:

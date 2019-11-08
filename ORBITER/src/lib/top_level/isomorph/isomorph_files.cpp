@@ -511,13 +511,13 @@ void isomorph::add_solutions_to_database(int *Solutions,
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	int u, v;
-	int *data;
+	long int *data;
 	
 	if (f_v) {
 		cout << "isomorph::add_solutions_to_database "
 				"case " << the_case << endl;
 		}
-	data = NEW_int(size + 1);
+	data = NEW_lint(size + 1);
 	for (u = 0; u < nb_solutions; u++) {
 
 		uint_4 datref;
@@ -529,7 +529,7 @@ void isomorph::add_solutions_to_database(int *Solutions,
 			}
 		id = solution_first[data[0]] + u;
 
-		hs = int_vec_hash_after_sorting(data + 1, size);
+		hs = lint_vec_hash_after_sorting(data + 1, size);
 		if (f_vvv) {
 			cout << "isomorph::add_solutions_to_database "
 					"case " << the_case << " u=" << u << " id=" << id
@@ -549,7 +549,7 @@ void isomorph::add_solutions_to_database(int *Solutions,
 				
 		no++;
 		}
-	FREE_int(data);
+	FREE_lint(data);
 	if (f_v) {
 		cout << "isomorph::add_solutions_to_database "
 				"case " << the_case << " done, added "
@@ -562,7 +562,7 @@ void isomorph::add_solutions_to_database(int *Solutions,
 void isomorph::build_up_database(int nb_files,
 	const char **fname,
 	int f_has_final_test_function, 
-	int (*final_test_function)(int *data, int sz,
+	int (*final_test_function)(long int *data, int sz,
 			void *final_test_data, int verbose_level),
 	void *final_test_data, 
 	int verbose_level)
@@ -574,7 +574,7 @@ void isomorph::build_up_database(int nb_files,
 
 	int i, nb_total = 0, j, a, nb = 0, prev = 0, id = 0, h;
 	char *p_buf;
-	int data[1000];
+	long int data[1000];
 	char buf[MY_BUFSIZE];
 	int print_mod = 1000;
 	uint_4 datref;
@@ -676,7 +676,7 @@ void isomorph::build_up_database(int nb_files,
 					}
 				else {
 					cout << nb_total << " : " << data[0] << " : ";
-					int_vec_print(cout, data + 1, size);
+					lint_vec_print(cout, data + 1, size);
 					cout << endl;
 					}
 				}
@@ -684,7 +684,7 @@ void isomorph::build_up_database(int nb_files,
 			id = solution_first[data[0]] + nb;
 			
 
-			h = int_vec_hash_after_sorting(data + 1, size);
+			h = lint_vec_hash_after_sorting(data + 1, size);
 			
 			add_solution_to_database(data, 
 				nb, id, nb_total, N, h, datref, print_mod,
@@ -746,7 +746,7 @@ void isomorph::init_cases_from_file_modulus_and_build_up_database(
 	int f_collated, int base_split, 
 	int f_get_statistics, 
 	int f_has_final_test_function, 
-	int (*final_test_function)(int *data, int sz,
+	int (*final_test_function)(long int *data, int sz,
 			void *final_test_data, int verbose_level),
 	void *final_test_data, 
 	int verbose_level)
@@ -816,7 +816,7 @@ void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
 	int nb_Mod, int *Mod_r, int *Mod_split, int *Mod_base_split, 
 	int level, int f_get_statistics, 
 	int f_has_final_test_function, 
-	int (*final_test_function)(int *data, int sz,
+	int (*final_test_function)(long int *data, int sz,
 			void *final_test_data, int verbose_level),
 	void *final_test_data, 
 	int verbose_level)
@@ -909,7 +909,7 @@ void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
 void isomorph::count_solutions(int nb_files, const char **fname, 
 	int f_get_statistics, 
 	int f_has_final_test_function, 
-	int (*final_test_function)(int *data, int sz,
+	int (*final_test_function)(long int *data, int sz,
 			void *final_test_data, int verbose_level),
 	void *final_test_data, 
 	int verbose_level)
@@ -1153,7 +1153,7 @@ void isomorph::evaluate_statistics(int verbose_level)
 void isomorph::count_solutions2(int nb_files, const char **fname, 
 	int &total_days, int &total_hours, int &total_minutes, 
 	int f_has_final_test_function, 
-	int (*final_test_function)(int *data, int sz,
+	int (*final_test_function)(long int *data, int sz,
 			void *final_test_data, int verbose_level),
 	void *final_test_data, 
 	int verbose_level)
@@ -1166,7 +1166,7 @@ void isomorph::count_solutions2(int nb_files, const char **fname,
 	int i, no, l, j, a, nb, prev;
 	char *p_buf;
 	char buf[MY_BUFSIZE];
-	int data[1000];
+	long int data[1000];
 	int *nb_sol_per_file;
 	Vector v;
 	char str[1000];

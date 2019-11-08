@@ -99,7 +99,7 @@ void translation_plane_via_andre_model::freeself()
 
 
 void translation_plane_via_andre_model::init(
-	int *spread_elements_numeric,
+	long int *spread_elements_numeric,
 	int k, finite_field *F, 
 	vector_ge *spread_stab_gens, longinteger_object &spread_stab_go, 
 	int verbose_level)
@@ -135,7 +135,7 @@ void translation_plane_via_andre_model::init(
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "
 				"spread_elements_numeric:" << endl;
-		int_vec_print(cout, spread_elements_numeric,
+		lint_vec_print(cout, spread_elements_numeric,
 				NT.i_power_j(q, k) + 1);
 		cout << endl;
 		}

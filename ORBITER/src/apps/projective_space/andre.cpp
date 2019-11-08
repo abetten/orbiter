@@ -101,7 +101,7 @@ void do_it(int q, int k, int no,
 		int f_Fano, int f_arcs, int f_depth, int depth,
 		int verbose_level)
 {
-	int *spread_elements_numeric; // do not free
+	long int *spread_elements_numeric; // do not free
 	int n;
 	action *An;
 	vector_ge *gens;

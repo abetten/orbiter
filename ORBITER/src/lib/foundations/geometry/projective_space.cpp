@@ -3611,7 +3611,7 @@ void projective_space::find_k_secant_lines(
 }
 
 
-void projective_space::Baer_subline(int *pts3,
+void projective_space::Baer_subline(long int *pts3,
 	long int *&pts, int &nb_pts, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

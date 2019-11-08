@@ -46,16 +46,16 @@ void andre_construction::freeself()
 		FREE_OBJECT(Grass);
 		}
 	if (spread_elements_numeric) {
-		FREE_int(spread_elements_numeric);
+		FREE_lint(spread_elements_numeric);
 		}
 	if (spread_elements_numeric_sorted) {
-		FREE_int(spread_elements_numeric_sorted);
+		FREE_lint(spread_elements_numeric_sorted);
 		}
 	if (spread_elements_perm) {
-		FREE_int(spread_elements_perm);
+		FREE_lint(spread_elements_perm);
 		}
 	if (spread_elements_perm_inv) {
-		FREE_int(spread_elements_perm_inv);
+		FREE_lint(spread_elements_perm_inv);
 		}
 	if (spread_elements_genma) {
 		FREE_int(spread_elements_genma);
@@ -70,7 +70,7 @@ void andre_construction::freeself()
 }
 
 void andre_construction::init(finite_field *F,
-	int k, int *spread_elements_numeric,
+	int k, long int *spread_elements_numeric,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -102,8 +102,8 @@ void andre_construction::init(finite_field *F,
 		}
 
 	andre_construction::spread_elements_numeric =
-			NEW_int(spread_size);
-	spread_elements_numeric_sorted = NEW_int(spread_size);
+			NEW_lint(spread_size);
+	spread_elements_numeric_sorted = NEW_lint(spread_size);
 	for (i = 0; i < spread_size; i++) {
 		andre_construction::spread_elements_numeric[i] =
 				spread_elements_numeric[i];
@@ -116,12 +116,12 @@ void andre_construction::init(finite_field *F,
 				"spread_elements_perm" << endl;
 		}
 
-	spread_elements_perm = NEW_int(spread_size);
-	spread_elements_perm_inv = NEW_int(spread_size);
+	spread_elements_perm = NEW_lint(spread_size);
+	spread_elements_perm_inv = NEW_lint(spread_size);
 	for (i = 0; i < spread_size; i++) {
 		spread_elements_perm_inv[i] = i;
 		}
-	Sorting.int_vec_heapsort_with_log(
+	Sorting.lint_vec_heapsort_with_log(
 			spread_elements_numeric_sorted,
 			spread_elements_perm_inv,
 			spread_size);

@@ -423,7 +423,7 @@ public:
 	void init_DB_sol(int verbose_level);
 		// We assume that the starter is of size 5 and that 
 		// fields 3-8 are the starter
-	void add_solution_to_database(int *data, 
+	void add_solution_to_database(long int *data,
 		int nb, int id, int no, 
 		int nb_solutions, int h, uint_4 &datref,
 		int print_mod, int verbose_level);
@@ -578,7 +578,7 @@ public:
 		int verbose_level);
 	void build_up_database(int nb_files, const char **fname, 
 		int f_has_final_test_function, 
-		int (*final_test_function)(int *data, int sz, 
+		int (*final_test_function)(long int *data, int sz,
 			void *final_test_data, int verbose_level),
 		void *final_test_data, 
 		int verbose_level);
@@ -587,7 +587,7 @@ public:
 		int f_collated, int base_split, 
 		int f_get_statistics, 
 		int f_has_final_test_function, 
-		int (*final_test_function)(int *data, int sz, 
+		int (*final_test_function)(long int *data, int sz,
 			void *final_test_data, int verbose_level),
 		void *final_test_data, 
 		int verbose_level);
@@ -595,14 +595,14 @@ public:
 		int nb_Mod, int *Mod_r, int *Mod_split, int *Mod_base_split, 
 		int level, int f_get_statistics, 
 		int f_has_final_test_function, 
-		int (*final_test_function)(int *data, int sz, 
+		int (*final_test_function)(long int *data, int sz,
 			void *final_test_data, int verbose_level),
 		void *final_test_data, 
 		int verbose_level);
 	void count_solutions(int nb_files, 
 		const char **fname, int f_get_statistics, 
 		int f_has_final_test_function, 
-		int (*final_test_function)(int *data, int sz, 
+		int (*final_test_function)(long int *data, int sz,
 			void *final_test_data, int verbose_level),
 		void *final_test_data, 
 		int verbose_level);
@@ -613,7 +613,7 @@ public:
 	void count_solutions2(int nb_files, const char **fname, 
 		int &total_days, int &total_hours, int &total_minutes, 
 		int f_has_final_test_function, 
-		int (*final_test_function)(int *data, int sz, 
+		int (*final_test_function)(long int *data, int sz,
 			void *final_test_data, int verbose_level),
 		void *final_test_data, 
 		int verbose_level);
@@ -779,7 +779,7 @@ struct isomorph_worker_data {
 		const char *prefix_iso, int level,
 		const char **fname, int nb_files,
 		int f_has_final_test_function,
-		int (*final_test_function)(int *data, int sz,
+		int (*final_test_function)(long int *data, int sz,
 			void *final_test_data, int verbose_level),
 		void *final_test_data,
 		int verbose_level);
