@@ -364,8 +364,8 @@ class partitionstack {
 		int verbose_level);
 	void write_cell_to_file_points_or_lines(int i, 
 		char *fname, int verbose_level);
-	void refine_arbitrary_set(int size, int *set, 
-		int verbose_level);
+	void refine_arbitrary_set_lint(int size, long int *set, int verbose_level);
+	void refine_arbitrary_set(int size, int *set, int verbose_level);
 	void split_cell(int verbose_level);
 	void split_multiple_cells(int *set, int set_size, 
 		int f_front, int verbose_level);

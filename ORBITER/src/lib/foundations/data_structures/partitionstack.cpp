@@ -653,6 +653,27 @@ void partitionstack::print_subset()
 #endif
 }
 
+void partitionstack::refine_arbitrary_set_lint(
+		int size, long int *set, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *set2;
+	int i;
+
+	if (f_v) {
+		cout << "partitionstack::refine_arbitrary_set_lint" << endl;
+		}
+	set2 = NEW_int(size);
+	lint_vec_copy_to_int(set, set2, size);
+	refine_arbitrary_set(size, set2, verbose_level);
+	if (f_v) {
+		cout << "partitionstack::refine_arbitrary_set_lint done" << endl;
+		}
+
+}
+
+
 void partitionstack::refine_arbitrary_set(
 		int size, int *set, int verbose_level)
 {
