@@ -212,7 +212,7 @@ void isomorph::init_DB_sol(int verbose_level)
 	//cout << "isomorph::init_DB_sol done" << endl;
 }
 
-void isomorph::add_solution_to_database(int *data, 
+void isomorph::add_solution_to_database(long int *data,
 	int nb, int id, int no, int nb_solutions, int h, uint_4 &datref,
 	int print_mod, int verbose_level)
 {

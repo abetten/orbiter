@@ -162,8 +162,8 @@ int andre_construction_line_element::rank(int verbose_level)
 
 		rk = Andre->Grass->rank_lint_here(
 				coordinates, 0 /* verbose_level*/);
-		if (!Sorting.int_vec_search(Andre->spread_elements_numeric_sorted,
-				spread_size, rk, idx)) {
+		if (!Sorting.lint_vec_search(Andre->spread_elements_numeric_sorted,
+				spread_size, rk, idx, 0)) {
 			cout << "andre_construction_line_element::rank cannot "
 					"find the spread element in the sorted list" << endl;
 			exit(1);

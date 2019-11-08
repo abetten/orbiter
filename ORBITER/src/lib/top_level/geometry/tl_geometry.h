@@ -2560,7 +2560,7 @@ public:
 	action *A;
 	int degree;
 	
-	int *set;
+	long int *set;
 	int sz;
 
 	int f_has_group;
@@ -3325,7 +3325,7 @@ public:
 	~translation_plane_via_andre_model();
 	void null();
 	void freeself();
-	void init(int *spread_elements_numeric, 
+	void init(long int *spread_elements_numeric,
 		int k, finite_field *F, 
 		vector_ge *spread_stab_gens, 
 		longinteger_object &spread_stab_go, 

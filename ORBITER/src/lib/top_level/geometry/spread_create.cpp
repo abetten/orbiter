@@ -42,7 +42,7 @@ void spread_create::freeself()
 		FREE_OBJECT(F);
 		}
 	if (set) {
-		FREE_int(set);
+		FREE_lint(set);
 		}
 	if (Sg) {
 		FREE_OBJECT(Sg);
@@ -119,11 +119,11 @@ void spread_create::init(spread_create_description *Descr, int verbose_level)
 			exit(1);
 			}
 
-		int *rep;
+		long int *rep;
 
 		rep = K.Spread_representative(q, k, Descr->iso, sz);
-		set = NEW_int(sz);
-		int_vec_copy(rep, set, sz);
+		set = NEW_lint(sz);
+		lint_vec_copy(rep, set, sz);
 
 		Sg = NEW_OBJECT(strong_generators);
 
@@ -157,7 +157,7 @@ void spread_create::init(spread_create_description *Descr, int verbose_level)
 
 	if (f_v) {
 		cout << "spread_create::init set = ";
-		int_vec_print(cout, set, sz);
+		lint_vec_print(cout, set, sz);
 		cout << endl;
 		}
 

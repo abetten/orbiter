@@ -145,9 +145,9 @@ long int action_on_andre::compute_image_of_point(int *Elt,
 		if (f_v) {
 			cout << "rk=" << rk << endl;
 			}
-		if (!Sorting.int_vec_search(
+		if (!Sorting.lint_vec_search(
 				Andre->spread_elements_numeric_sorted,
-				Andre->spread_size, rk, idx)) {
+				Andre->spread_size, rk, idx, 0)) {
 			cout << "andre_construction_line_element::rank "
 					"cannot find the spread element in the sorted list" << endl;
 			exit(1);

@@ -117,7 +117,7 @@ int main(int argc, const char **argv)
 
 	cout << "We have created the following spread set:" << endl;
 	cout << "$$" << endl;
-	L.int_set_print_tex(cout, SC->set, SC->sz);
+	L.lint_set_print_tex(cout, SC->set, SC->sz);
 	cout << endl;
 	cout << "$$" << endl;
 

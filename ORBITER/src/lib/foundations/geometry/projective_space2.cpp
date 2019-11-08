@@ -79,7 +79,7 @@ void projective_space::print_line_set_numerical(
 
 
 int projective_space::is_contained_in_Baer_subline(
-	int *pts, int nb_pts, int verbose_level)
+	long int *pts, int nb_pts, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -92,7 +92,7 @@ int projective_space::is_contained_in_Baer_subline(
 	if (f_v) {
 		cout << "projective_space::is_contained_in_Baer_subline "
 				"pts=" << endl;
-		int_vec_print(cout, pts, nb_pts);
+		lint_vec_print(cout, pts, nb_pts);
 		cout << endl;
 		cout << "computing Baer subline determined by the "
 				"first three points:" << endl;
@@ -251,7 +251,7 @@ void projective_space::circle_type_of_line_subset(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	long int *subline;
-	int subset[3];
+	long int subset[3];
 	int idx_set[3];
 	int sz;
 	int i, idx, a, b;
@@ -289,7 +289,7 @@ void projective_space::circle_type_of_line_subset(
 		if (f_v) {
 			cout << "projective_space::circle_type_of_line_subset "
 					"The Baer subline determined by " << endl;
-			int_vec_print(cout, subset, 3);
+			lint_vec_print(cout, subset, 3);
 			cout << " is ";
 			lint_vec_print(cout, subline, sz);
 			cout << " which intersects in " << b << " points" << endl;
