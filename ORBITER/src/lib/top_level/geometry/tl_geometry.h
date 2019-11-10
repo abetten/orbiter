@@ -535,6 +535,36 @@ void blt_set_classify_callback_report(isomorph *Iso, void *data, int verbose_lev
 //void blt_set_callback_subset_orbits(isomorph *Iso, void *data, int verbose_level);
 
 
+// #############################################################################
+// BLT_set_create_description.cpp
+// #############################################################################
+
+//! to create BLT set with a description from the command line
+
+
+
+class BLT_set_create_description {
+
+public:
+
+	int f_q;
+	int q;
+	int f_catalogue;
+	int iso;
+	int f_family;
+	const char *family_name;
+
+
+
+	BLT_set_create_description();
+	~BLT_set_create_description();
+	void null();
+	void freeself();
+	int read_arguments(int argc, const char **argv,
+		int verbose_level);
+};
+
+
 
 
 // #############################################################################
@@ -578,36 +608,6 @@ public:
 	void apply_transformations(const char **transform_coeffs,
 		int *f_inverse_transform, int nb_transform, int verbose_level);
 };
-
-// #############################################################################
-// BLT_set_create_description.cpp
-// #############################################################################
-
-//! to create BLT set with a description from the command line
-
-
-
-class BLT_set_create_description {
-
-public:
-
-	int f_q;
-	int q;
-	int f_catalogue;
-	int iso;
-	int f_family;
-	const char *family_name;
-
-
-
-	BLT_set_create_description();
-	~BLT_set_create_description();
-	void null();
-	void freeself();
-	int read_arguments(int argc, const char **argv,
-		int verbose_level);
-};
-
 
 // #############################################################################
 // blt_set_with_action.cpp
@@ -2072,7 +2072,7 @@ public:
 	void init_group(int *group_generator_data, int group_generator_size, 
 		int f_group_order_target, const char *group_order_target, 
 		int verbose_level);
-	void init(int argc, const char **argv, action *A, orthogonal *O, 
+	void init(action *A, orthogonal *O,
 		int epsilon, int n, int k, finite_field *F, int depth, 
 		int verbose_level);
 	void init2(int verbose_level);
@@ -2120,7 +2120,7 @@ void polar_callback_early_test_func(long int *S, int len,
 // #############################################################################
 
 
-void Hill_cap56(int argc, const char **argv, 
+void Hill_cap56(
 	char *fname, int &nb_Pts, long int *&Pts,
 	int verbose_level);
 void append_orbit_and_adjust_size(schreier *Orb, int idx, int *set, int &sz);

@@ -17,7 +17,7 @@ namespace orbiter {
 namespace top_level {
 
 
-void Hill_cap56(int argc, const char **argv, 
+void Hill_cap56(
 	char *fname, int &nb_Pts, long int *&Pts,
 	int verbose_level)
 {
@@ -103,7 +103,7 @@ void Hill_cap56(int argc, const char **argv,
 	if (f_v) {
 		cout << "Hill_cap before P.init" << endl;
 		}
-	P->init(argc, argv, A, O, epsilon, n, w, F, w, verbose_level - 2);
+	P->init(A, O, epsilon, n, w, F, w, verbose_level - 2);
 	if (f_v) {
 		cout << "Hill_cap before P.init2" << endl;
 		}

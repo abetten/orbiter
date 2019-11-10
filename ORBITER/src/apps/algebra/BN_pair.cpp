@@ -184,7 +184,7 @@ void compute_B(action *A, int epsilon, int n,
 
 	depth = Gg.Witt_index(epsilon, n - 1);
 	
-	P.init(0, NULL, A, O, epsilon, n,
+	P.init(A, O, epsilon, n,
 			depth, F, depth, verbose_level);
 
 	P.Gen->f_do_group_extension_in_upstep = FALSE;

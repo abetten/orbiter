@@ -131,6 +131,9 @@ class hermitian_spread_classify;
 class surface_study;
 class pentomino_puzzle;
 class character_table_burnside;
+class combinatorial_object_description;
+class combinatorial_object_create;
+
 
 // #############################################################################
 // representatives.cpp
