@@ -129,6 +129,8 @@ class delandtsheer_doyen;
 class bent_function_classify;
 class hermitian_spread_classify;
 class surface_study;
+class pentomino_puzzle;
+class character_table_burnside;
 
 // #############################################################################
 // representatives.cpp

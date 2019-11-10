@@ -276,6 +276,7 @@ MODULES= \
 		DISCRETA/unipoly.o \
 		DISCRETA/vector.o \
 		top_level/algebra_and_number_theory/analyze_group.o \
+		top_level/algebra_and_number_theory/character_table_burnside.o \
 		top_level/algebra_and_number_theory/factor_group.o \
 		top_level/algebra_and_number_theory/semifield_classify_with_substructure.o \
 		top_level/algebra_and_number_theory/semifield_classify.o \
@@ -297,6 +298,7 @@ MODULES= \
 		top_level/combinatorics/hadamard_classify.o \
 		top_level/combinatorics/hall_system_classify.o \
 		top_level/combinatorics/large_set_classify.o \
+		top_level/combinatorics/pentomino_puzzle.o \
 		top_level/combinatorics/regular_ls_classify.o \
 		top_level/combinatorics/tactical_decomposition.o \
 		top_level/geometry/arc_generator.o \

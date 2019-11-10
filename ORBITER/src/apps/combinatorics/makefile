@@ -20,7 +20,6 @@ all: all_k_subsets.out \
 		had.out \
 		hadamard.out \
 		hall_system_main.out \
-		hamming.out \
 		johnson_table.out \
 		kramer_mesner.out \
 		matrix_rank.out \
@@ -69,9 +68,6 @@ hadamard.out:  hadamard.o;
 
 hall_system_main.out:  hall_system_main.o;
 	$(DISCRETA_CPP)  hall_system_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-hamming.out:  hamming.o;
-	$(DISCRETA_CPP)  hamming.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 johnson_table.out:  johnson_table.o;
 	$(DISCRETA_CPP)  johnson_table.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

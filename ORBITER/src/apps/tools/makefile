@@ -21,6 +21,7 @@ all: collect.out \
 	plot_xy.out \
 	prepare_frames.out \
 	read_orbiter_file.out \
+	read_solutions.out \
 	read_vector_and_extract_set.out \
 	run_blt.out  \
 	run_lifting.out  \
@@ -80,6 +81,9 @@ prepare_frames.out:  prepare_frames.o
 
 read_orbiter_file.out:  read_orbiter_file.o 
 	$(DISCRETA_CPP)  read_orbiter_file.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+read_solutions.out:  read_solutions.o 
+	$(DISCRETA_CPP)  read_solutions.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 read_vector_and_extract_set.out:  read_vector_and_extract_set.o 
 	$(DISCRETA_CPP)  read_vector_and_extract_set.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

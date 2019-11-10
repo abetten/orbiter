@@ -111,7 +111,7 @@ int main(int argc, char **argv)
 	
 	cout << "allocating adjacency matrix" << endl;
 	Adj = NEW_int(N * N);
-	cout << "allocating adjacency matrix was successfull" << endl;
+	cout << "allocating adjacency matrix was successful" << endl;
 	nb_e = 0;
 	nb_inc = 0;
 	for (i = 0; i < N; i++) {
