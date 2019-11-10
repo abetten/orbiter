@@ -24,7 +24,6 @@ all: analyze_projective_code.out  \
 	example_fano_plane.out \
 	hermitian_spreads_main.out \
 	orthogonal_points.out \
-	plane_search.out \
 	points.out \
 	polar.out \
 	process.out
@@ -80,9 +79,6 @@ hill.out:  hill.o;
 
 orthogonal_points.out:  orthogonal_points.o ;
 	$(DISCRETA_CPP)  orthogonal_points.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-plane_search.out:  plane_search.o ;
-	$(DISCRETA_CPP)  plane_search.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 points.out:  points.o;
 	$(DISCRETA_CPP)  points.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

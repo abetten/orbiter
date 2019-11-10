@@ -1,4 +1,4 @@
-// direct_product.cpp
+// delandtsheer_doyen_main.cpp
 //
 // Anton Betten
 //

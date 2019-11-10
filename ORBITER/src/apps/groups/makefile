@@ -18,7 +18,6 @@ LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 
 ALL_TARGETS=\
 	action_on_set_partitions.out \
-	direct_product.out \
 	exceptional_isomorphism_O4_main.out \
 	linear_group.out \
 	orthogonal_group.out \
@@ -74,9 +73,6 @@ not_cuda_all: $(ALL_TARGETS)
 action_on_set_partitions.out:  action_on_set_partitions.o;
 	$(DISCRETA_CPP)  action_on_set_partitions.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-
-direct_product.out:  direct_product.o;
-	$(DISCRETA_CPP)  direct_product.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 exceptional_isomorphism_O4_main.out:  exceptional_isomorphism_O4_main.o;

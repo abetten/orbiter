@@ -792,6 +792,7 @@ public:
 	void familyE_recognize(int *Iso_type, int verbose_level);
 	void familyH_recognize(int *Iso_type, int verbose_level);
 	void familyG_recognize(int *Iso_type, int verbose_level);
+	void report(std::ostream &ost, int verbose_level);
 
 };
 

@@ -1260,6 +1260,461 @@ void classify_cubic_curves::familyG_recognize(int *Iso_type,
 }
 
 
+void classify_cubic_curves::report(ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_with_stabilizers = TRUE;
+
+
+	if (f_v) {
+		cout << "classify_cubic_curves::report writing cheat sheet "
+				"on cubic curves" << endl;
+	}
+	long int *Pts_on_curve;
+	long int *inflexion_Pts;
+	long int *singular_Pts;
+	int *type;
+
+	Pts_on_curve = NEW_lint(CCA->CC->P->N_points);
+	inflexion_Pts = NEW_lint(CCA->CC->P->N_points);
+	singular_Pts = NEW_lint(CCA->CC->P->N_points);
+	type = NEW_int(CCA->CC->P->N_lines);
+
+
+
+	ost << "The order of the group is ";
+	Curves->go.print_not_scientific(ost);
+	ost << "\\\\" << endl;
+
+	ost << "\\bigskip" << endl;
+
+	ost << "The group has " << Curves->nb_orbits
+			<< " orbits: \\\\" << endl;
+
+	int i;
+	longinteger_domain D;
+	longinteger_object go1, ol, Ol;
+	Ol.create(0);
+
+	vector<string> References;
+	int *Ago;
+	int *Nb_points;
+	int *Nb_singular_points;
+	int *Nb_inflexions;
+	Ago = NEW_int(Curves->nb_orbits);
+	Nb_points = NEW_int(Curves->nb_orbits);
+	Nb_singular_points = NEW_int(Curves->nb_orbits);
+	Nb_inflexions = NEW_int(Curves->nb_orbits);
+
+
+
+	for (i = 0; i < Curves->nb_orbits; i++) {
+
+		if (f_v) {
+			cout << "Curve " << i << " / "
+					<< Curves->nb_orbits << ": "
+					"verbose_level=" << verbose_level << endl;
+		}
+
+		Curves->Orbit[i].gens->group_order(go1);
+
+		if (f_v) {
+			cout << "stab order " << go1 << endl;
+		}
+
+		Ago[i] = go1.as_int();
+
+		D.integral_division_exact(Curves->go, go1, ol);
+
+		if (f_v) {
+			cout << "orbit length " << ol << endl;
+		}
+
+		long int *data;
+		long int *eqn1;
+		int eqn[10];
+		int nb_pts_on_curve;
+		int nb_singular_pts;
+		int nb_inflection_pts;
+		latex_interface L;
+
+		data = Curves->Rep + i * Curves->representation_sz;
+		eqn1 = data + 9;
+		lint_vec_copy_to_int(eqn1, eqn, 10);
+
+		ost << "\\subsection*{Curve " << i << " / "
+				<< Curves->nb_orbits << "}" << endl;
+		//ost << "$" << i << " / " << Curves->nb_orbits << "$ $" << endl;
+
+		ost << "$";
+		L.lint_set_print_tex_for_inline_text(ost,
+				data,
+				9 /*CCC->Curves->representation_sz*/);
+		ost << "_{";
+		go1.print_not_scientific(ost);
+		ost << "}$ orbit length $";
+		ol.print_not_scientific(ost);
+		ost << "$\\\\" << endl;
+
+
+#if 0
+		int_vec_zero(eqn, 10);
+		// y = x^3 or X^3 - YZ^2
+		eqn[0] = 1;
+		eqn[8] = F->minus_one();
+		eqn[2] = 0;
+//0 & X^3 & ( 3, 0, 0 )
+//1 & Y^3 & ( 0, 3, 0 )
+//2 & Z^3 & ( 0, 0, 3 )
+//3 & X^2Y & ( 2, 1, 0 )
+//4 & X^2Z & ( 2, 0, 1 )
+//5 & XY^2 & ( 1, 2, 0 )
+//6 & Y^2Z & ( 0, 2, 1 )
+//7 & XZ^2 & ( 1, 0, 2 )
+//8 & YZ^2 & ( 0, 1, 2 )
+//9 & XYZ & ( 1, 1, 1 )
+#endif
+#if 0
+		int_vec_zero(eqn, 10);
+		// y = x^3 + x + 3
+		eqn[0] = 1;
+		eqn[2] = 3;
+		eqn[6] = 10;
+		eqn[7] = 1;
+#endif
+
+
+		ost << "\\begin{eqnarray*}" << endl;
+		ost << "&&";
+
+
+		CCA->CC->Poly->enumerate_points(eqn,
+				Pts_on_curve, nb_pts_on_curve,
+				verbose_level - 2);
+
+		Nb_points[i] = nb_pts_on_curve;
+
+
+		CC->Poly->print_equation_with_line_breaks_tex(ost,
+				eqn,
+				5 /* nb_terms_per_line */,
+				"\\\\\n&&");
+		ost << "\\end{eqnarray*}" << endl;
+
+		ost << "The curve has " << nb_pts_on_curve
+				<< " points.\\\\" << endl;
+
+
+		CC->compute_singular_points(
+				eqn,
+				Pts_on_curve, nb_pts_on_curve,
+				singular_Pts, nb_singular_pts,
+				verbose_level - 2);
+
+		ost << "The curve has " << nb_singular_pts
+				<< " singular points.\\\\" << endl;
+		Nb_singular_points[i] = nb_singular_pts;
+
+
+		CC->compute_inflexion_points(
+				eqn,
+				Pts_on_curve, nb_pts_on_curve,
+				inflexion_Pts, nb_inflection_pts,
+				verbose_level - 2);
+
+
+		Nb_inflexions[i] = nb_inflection_pts;
+
+		ost << "The curve has " << nb_inflection_pts << " inflexion points: $";
+		lint_vec_print(ost, inflexion_Pts, nb_inflection_pts);
+		ost << "$\\\\" << endl;
+
+
+		CCA->CC->P->line_intersection_type(
+				Pts_on_curve, nb_pts_on_curve /* set_size */,
+				type, 0 /*verbose_level*/);
+		// type[N_lines]
+
+		ost << "The line type is $";
+		classify C;
+		C.init(type, CCA->CC->P->N_lines, FALSE, 0);
+		C.print_naked_tex(ost, TRUE /* f_backwards*/);
+		ost << ".$ \\\\" << endl;
+
+
+		if (f_with_stabilizers) {
+			//ost << "Strong generators are:" << endl;
+			Curves->Orbit[i].gens->print_generators_tex(ost);
+			D.add_in_place(Ol, ol);
+		}
+
+#if 1
+		if (nb_inflection_pts == 3) {
+			int Basis[9];
+			int Basis_t[9];
+			int Basis_inv[9];
+			int transformed_eqn[10];
+
+			CC->P->unrank_point(Basis, inflexion_Pts[0]);
+			CC->P->unrank_point(Basis + 3, inflexion_Pts[1]);
+
+			CC->P->F->extend_basis(2, 3, Basis,
+				verbose_level);
+
+			//CC->P->unrank_point(Basis + 6, inflexion_Pts[2]);
+			CC->F->transpose_matrix(Basis, Basis_t, 3, 3);
+			CC->F->invert_matrix(Basis, Basis_inv, 3);
+			CC->Poly->substitute_linear(eqn, transformed_eqn,
+					Basis /* int *Mtx_inv */, 0 /* verbose_level */);
+
+
+			ost << "The transformed equation is:\\\\" << endl;
+			ost << "\\begin{eqnarray*}" << endl;
+			ost << "&&";
+
+
+			CCA->CC->Poly->enumerate_points(transformed_eqn,
+					Pts_on_curve, nb_pts_on_curve,
+					verbose_level - 2);
+
+
+			CC->Poly->print_equation_with_line_breaks_tex(ost,
+					transformed_eqn,
+					5 /* nb_terms_per_line */,
+					"\\\\\n&&");
+			ost << "\\end{eqnarray*}" << endl;
+
+			ost << "The transformed curve has " << nb_pts_on_curve
+					<< " points.\\\\" << endl;
+
+			CC->compute_singular_points(
+					transformed_eqn,
+					Pts_on_curve, nb_pts_on_curve,
+					singular_Pts, nb_singular_pts,
+					verbose_level - 2);
+
+			ost << "The curve has " << nb_singular_pts
+					<< " singular points.\\\\" << endl;
+
+
+			CC->compute_inflexion_points(
+					transformed_eqn,
+					Pts_on_curve, nb_pts_on_curve,
+					inflexion_Pts, nb_inflection_pts,
+					verbose_level - 2);
+
+			ost << "The transformed curve has " << nb_inflection_pts
+					<< " inflexion points: $";
+			lint_vec_print(ost, inflexion_Pts, nb_inflection_pts);
+			ost << "$\\\\" << endl;
+
+
+
+		}
+#endif
+
+
+	} // next i
+	ost << "The overall number of objects is: " << Ol << "\\\\" << endl;
+
+
+
+
+	ost << "summary of the stabilizer orders:\\\\" << endl;
+
+
+	for (i = 0; i < Curves->nb_orbits; i++) {
+		string ref("");
+		References.push_back(ref);
+	}
+
+
+	int *Iso_type1;
+	int *Iso_type2;
+	int *Iso_type3;
+	int *Iso_typeE;
+	int *Iso_typeH;
+	int *Iso_typeG;
+	int e, c, d;
+
+	Iso_type1 = NEW_int(F->q);
+	Iso_type2 = NEW_int(F->q);
+	Iso_type3 = NEW_int(F->q);
+	Iso_typeE = NEW_int(F->q);
+	Iso_typeH = NEW_int(F->q);
+	Iso_typeG = NEW_int(F->q * F->q);
+	family1_recognize(Iso_type1, verbose_level - 1);
+	family2_recognize(Iso_type2, verbose_level - 1);
+	family3_recognize(Iso_type3, verbose_level - 1);
+	familyE_recognize(Iso_typeE, verbose_level - 1);
+	familyH_recognize(Iso_typeH, verbose_level - 1);
+	familyG_recognize(Iso_typeG, verbose_level - 1);
+
+	ost << "Families 1, 2, 3, E, H: \\\\" << endl;
+	for (e = 0; e < F->q; e++) {
+		ost << "e=" << e
+				<< " iso1=" << Iso_type1[e]
+				<< " iso2=" << Iso_type2[e]
+				<< " iso3=" << Iso_type2[e]
+				<< " isoE=" << Iso_typeE[e]
+				<< " isoH=" << Iso_typeH[e]
+				<< " \\\\" << endl;
+	}
+	for (c = 1; c < F->q; c++) {
+		for (d = 1; d < F->q; d++) {
+			ost << "c=" << c << " d=" << d
+					<< " isoG=" << Iso_typeG[c * F->q + d]
+					<< " \\\\" << endl;
+		}
+	}
+	for (e = 0; e < F->q; e++) {
+		if (Iso_type1[e] != -1) {
+			string ref;
+			char str[1000];
+			ref = References[Iso_type1[e]];
+			if (strlen(ref.c_str())) {
+				ref.append(",");
+			}
+			sprintf(str, "F1_{%d}", e);
+			ref.append(str);
+			References[Iso_type1[e]] = ref;
+		}
+	}
+	for (e = 0; e < F->q; e++) {
+		if (Iso_type2[e] != -1) {
+			string ref;
+			char str[1000];
+			ref = References[Iso_type2[e]];
+			if (strlen(ref.c_str())) {
+				ref.append(",");
+			}
+			sprintf(str, "F2_{%d}", e);
+			ref.append(str);
+			References[Iso_type2[e]] = ref;
+		}
+	}
+	for (e = 0; e < F->q; e++) {
+		if (Iso_type3[e] != -1) {
+			string ref;
+			char str[1000];
+			ref = References[Iso_type3[e]];
+			if (strlen(ref.c_str())) {
+				ref.append(",");
+			}
+			sprintf(str, "F3_{%d}", e);
+			ref.append(str);
+			References[Iso_type3[e]] = ref;
+		}
+	}
+	for (e = 0; e < F->q; e++) {
+		if (Iso_typeE[e] != -1) {
+			string ref;
+			char str[1000];
+			ref = References[Iso_typeE[e]];
+			if (strlen(ref.c_str())) {
+				ref.append(",");
+			}
+			sprintf(str, "E_{%d}", e);
+			ref.append(str);
+			References[Iso_typeE[e]] = ref;
+		}
+	}
+	for (e = 0; e < F->q; e++) {
+		if (Iso_typeH[e] != -1) {
+			string ref;
+			char str[1000];
+			ref = References[Iso_typeH[e]];
+			if (strlen(ref.c_str())) {
+				ref.append(",");
+			}
+			sprintf(str, "H_{%d}", e);
+			ref.append(str);
+			References[Iso_typeH[e]] = ref;
+		}
+	}
+	for (c = 1; c < F->q; c++) {
+		for (d = 1; d < F->q; d++) {
+			int iso;
+
+			iso = Iso_typeG[c * F->q + d];
+			if (iso == -1) {
+				continue;
+			}
+			string ref;
+			char str[1000];
+			ref = References[iso];
+			if (strlen(ref.c_str())) {
+				ref.append(",");
+			}
+			sprintf(str, "G_{%d,%d}", c,d);
+			ref.append(str);
+			References[iso] = ref;
+		}
+	}
+
+
+
+	classify C;
+
+	C.init(Ago, Curves->nb_orbits, FALSE, 0);
+	ost << "Distribution: $(";
+	C.print_naked_tex(ost, TRUE /* f_backwards */);
+	ost << ")$\\\\" << endl;
+
+
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|c||c|c|c|c|c|}";
+	ost << "\\hline";
+	ost << "\\mbox{Curve} & ";
+	ost << "\\mbox{Ago} & ";
+	ost << "\\mbox{Pts} & ";
+	ost << "\\mbox{s. Pts} & ";
+	ost << "\\mbox{Infl} & ";
+	ost << "\\mbox{References} \\\\";
+	ost << "\\hline";
+	for (i = 0; i < Curves->nb_orbits; i++) {
+		ost << i;
+		ost << " & " << Ago[i];
+		ost << " & " << Nb_points[i];
+		ost << " & " << Nb_singular_points[i];
+		ost << " & " << Nb_inflexions[i];
+		ost << " & " << References[i];
+		ost << "\\\\";
+	}
+	ost << "\\hline";
+	ost << "\\end{array}" << endl;
+	ost << "$$" << endl;
+
+	ost << "with canonical forms " << endl;
+	ost << "\\begin{eqnarray*}" << endl;
+	ost << "F1_e &=& X^2Y + XY^2 + eZ^3 \\\\" << endl;
+	ost << "F2_e &=& X^2Y + XY^2 + XYZ + eZ^3 \\\\" << endl;
+	ost << "F3_e &=& XYZ + e(X + Y + Z)^3 \\\\" << endl;
+	ost << "E_d &=& Z^2Y + X^3 - dY^3 \\\\" << endl;
+	ost << "H_e &=& Z^2Y + X^3 + eXY^2 \\\\" << endl;
+	ost << "G_{c,d} &=&  Z^2Y + X^3 + cXY^2 + dY^3 \\\\" << endl;
+	ost << "\\end{eqnarray*}" << endl;
+	ost << "for $c,d,e \\in {\\mathbb F}_{" << F->q << "}$ \\\\" << endl;
+
+	FREE_int(Iso_type1);
+	FREE_int(Iso_type2);
+	FREE_int(Iso_type3);
+	FREE_int(Iso_typeE);
+	FREE_int(Iso_typeH);
+	FREE_int(Iso_typeG);
+	FREE_int(Ago);
+	FREE_int(Nb_points);
+	FREE_int(Nb_singular_points);
+	FREE_int(Nb_inflexions);
+
+
+	FREE_lint(Pts_on_curve);
+	FREE_lint(inflexion_Pts);
+	FREE_lint(singular_Pts);
+	FREE_int(type);
+
+}
+
 
 }}
 
