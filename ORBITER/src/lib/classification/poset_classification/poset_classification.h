@@ -1398,7 +1398,7 @@ public:
 		// We are extending a set of size 'size' 
 		// to a set of size 'size' + 1. 
 		// Calls poset_orbit_node::init_extension_node for the 
-		// n e w node that is (possibly) created
+		// n e w node that ƒis (possibly) created
 	void handle_extension_fusion_type(int verbose_level);
 		// called from upstep_work::handle_extension
 		// Handles the extension 'cur_ex' in node 'prev'.

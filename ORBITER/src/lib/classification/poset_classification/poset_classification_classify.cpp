@@ -258,6 +258,11 @@ int poset_classification::main(int t0,
 	
 	for (size = depth_completed; size < target_depth; size++) {
 
+		if (f_v) {
+			cout << "poset_classification::main: "
+					"level " << size << " / " << target_depth << endl;
+		}
+
 		int f_write_candidate_file = FALSE;
 
 #if 1
@@ -441,7 +446,7 @@ void poset_classification::compute_flag_orbits(int size,
 				"##################################################" << endl;
 		print_problem_label();
 		cout << endl;
-		cout << "compute_flag_orbits depth " << size
+		cout << "poset_classification::compute_flag_orbits depth " << size
 				<< " creating orbits at level " << size + 1
 				<< " verbose_level=" << verbose_level << endl;
 		}
@@ -456,24 +461,36 @@ void poset_classification::compute_flag_orbits(int size,
 		
 		if (f_print) {
 			print_level_info(size, prev);
-			cout << " compute_flag_orbits node " << u << " / " << l
+			cout << " poset_classification::compute_flag_orbits node " << u << " / " << l
 					<< " starting" << endl;
 			}
 			
 		if (Poset->f_subspace_lattice) {
+			if (f_v) {
+				cout << "poset_classification::compute_flag_orbits before compute_flag_orbits_subspace_action" << endl;
+			}
 			root[prev].compute_flag_orbits_subspace_action(this, size,
 				f_create_schreier_vector,
 				f_use_invariant_subset_if_available, 
 				f_lex, 
 				verbose_level - 2);
+			if (f_v) {
+				cout << "poset_classification::compute_flag_orbits after compute_flag_orbits_subspace_action" << endl;
 			}
+		}
 		else {
+			if (f_v) {
+				cout << "poset_classification::compute_flag_orbits before compute_flag_orbits" << endl;
+			}
 			root[prev].compute_flag_orbits(this, size,
 				f_create_schreier_vector,
 				f_use_invariant_subset_if_available, 
 				f_lex, 
 				verbose_level - 2);
+			if (f_v) {
+				cout << "poset_classification::compute_flag_orbits after compute_flag_orbits" << endl;
 			}
+		}
 		if (f_print) {
 			//cout << endl;
 			print_level_info(size, prev);
@@ -484,20 +501,25 @@ void poset_classification::compute_flag_orbits(int size,
 				int nb = root[prev].get_nb_of_live_points();
 				cout << " found " << nb << " live points in "
 					<< root[prev].nb_extensions << " orbits : ";
-				int *live_points = root[prev].live_points();
-				cout << "The live points are : ";
-				int_vec_print(cout, live_points, nb);
+
+				if (FALSE) {
+					int *live_points = root[prev].live_points();
+					cout << "The live points are : ";
+					int_vec_print(cout, live_points, nb);
+				}
 				cout << endl;
 				}
 			if (f_vv) {
 				print_level_info(size, prev);
 				cout << " compute_flag_orbits node " << u << " / " << l
 						<< " the extensions are : ";
-				root[prev].print_extensions(this);
+				if (FALSE) {
+					root[prev].print_extensions(this);
 				}
+			}
 			print_progress(progress);
 			//cout << endl;
-			}
+		}
 
 		progress = (double) u / (double) l;
 
@@ -568,7 +590,7 @@ void poset_classification::upstep(int size,
 		else {
 			}
 
-#if 1
+#if 0
 		if (f_v4) {
 			cout << "poset_classification::upstep "
 					"before extend_node" << endl;
@@ -687,7 +709,7 @@ void poset_classification::extend_node(
 		cout << " with " << root[prev].nb_extensions
 				<< " extensions" << endl;
 		cout << " verbose_level=" << verbose_level << endl;
-		if (f_vvv) {
+		if (FALSE) {
 			cout << "poset_classification::extend_node prev=" << prev
 					<< " cur=" << cur << " extensions:" << endl;
 			//print_set_verbose(prev);
@@ -743,7 +765,7 @@ void poset_classification::extend_node(
 #endif
 		//verbose_level_down = verbose_level - 4;
 
-		if (f_vvv) {
+		if (FALSE) {
 			print_level_info(size, prev);
 			cout << "poset_classification::extend_node "
 					"working on extension "
@@ -757,7 +779,7 @@ void poset_classification::extend_node(
 			f_indicate_not_canonicals,
 			verbose_level - 4);
 
-		if (f_vvv) {
+		if (FALSE) {
 			print_level_info(size, prev);
 			cout << "poset_classification::extend_node "
 					"working on extension "
@@ -773,7 +795,7 @@ void poset_classification::extend_node(
 						prev, prev_ex, nb_ext_cur, nb_fuse_cur);
 				}
 			}
-		if (f_vvv) {
+		if (FALSE) {
 			print_level_info(size, prev);
 			cout << "poset_classification::extend_node "
 					"working on extension "
@@ -785,7 +807,7 @@ void poset_classification::extend_node(
 			verbose_level - 4);
 		// in upstep_work.cpp
 
-		if (f_vvv) {
+		if (FALSE) {
 			print_level_info(size, prev);
 			cout << "poset_classification::extend_node after "
 					"Work.handle_extension" << endl;

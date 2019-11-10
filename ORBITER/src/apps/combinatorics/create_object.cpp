@@ -48,13 +48,13 @@ int main(int argc, const char **argv)
 			verbose_level = atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
 		}
-		else if (strcmp(argv[i], "-description") == 0) {
+		else if (strcmp(argv[i], "-object") == 0) {
 			f_description = TRUE;
 			Descr = NEW_OBJECT(combinatorial_object_description);
 			i += Descr->read_arguments(argc - (i - 1),
 					argv + i, verbose_level) - 1;
 
-			cout << "-description" << endl;
+			cout << "-object" << endl;
 		}
 #if 0
 		else if (strcmp(argv[i], "-transform") == 0) {

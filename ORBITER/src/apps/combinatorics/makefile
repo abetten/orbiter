@@ -14,12 +14,11 @@ all: all_k_subsets.out \
 		conjugacy_classes_sym_n.out \
 		costas.out \
 		create_object.out \
-		delandtsheer_doyen_main.o \
+		delandtsheer_doyen_main.out \
 		design_create_main.out \
 		design.out \
 		ferdinand.out \
 		group_ring.out \
-		had.out \
 		hadamard.out \
 		hall_system_main.out \
 		johnson_table.out \
@@ -28,7 +27,6 @@ all: all_k_subsets.out \
 		orthogonal.out \
 		poset_of_subsets.out \
 		random_permutation.out \
-		random.out \
 		rank_anything.out \
 		rank_subsets_lex.out \
 		tao.out \
@@ -68,9 +66,6 @@ ferdinand.out:  ferdinand.o;
 group_ring.out:  group_ring.o;
 	$(DISCRETA_CPP)  group_ring.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-had.out:  had.o;
-	$(DISCRETA_CPP)  had.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 hadamard.out:  hadamard.o;
 	$(DISCRETA_CPP)  hadamard.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
@@ -94,9 +89,6 @@ poset_of_subsets.out:  poset_of_subsets.o;
 
 random_permutation.out:  random_permutation.o;
 	$(DISCRETA_CPP)  random_permutation.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-random.out:  random.o;
-	$(DISCRETA_CPP)  random.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 rank_anything.out:  rank_anything.o;
 	$(DISCRETA_CPP)  rank_anything.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

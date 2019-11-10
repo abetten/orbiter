@@ -152,7 +152,8 @@ int main(int argc, const char **argv)
 			depth, verbose_level);
 
 
-	the_end_quietly(t0);
+	the_end(t0);
+	//the_end_quietly(t0);
 
 }
 
