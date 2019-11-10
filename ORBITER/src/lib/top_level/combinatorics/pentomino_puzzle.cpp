@@ -148,8 +148,8 @@ void pentomino_puzzle::main(int verbose_level)
 	int *orbit_len;
 
 	L->compute_orbits(nb_orbits, orbit, orbit_inv, orbit_first, orbit_len,
-		compute_image_function,
-		NULL /* void *compute_image_data */,
+		pentomino_puzzle_compute_image_function,
+		this /* void *compute_image_data */,
 		2 /* nb_gens */,
 		verbose_level + 2);
 
@@ -556,7 +556,7 @@ void pentomino_puzzle::draw_it(ostream &ost, long int *sol)
 }
 
 void pentomino_puzzle::compute_image_function(set_of_sets *S,
-		void *compute_image_data, int elt_idx,
+		int elt_idx,
 		int gen_idx, int &idx_of_image, int verbose_level)
 // implements a rotation by 90 degree:
 {
@@ -605,8 +605,8 @@ void pentomino_puzzle::compute_image_function(set_of_sets *S,
 		}
 	Sorting.lint_vec_heapsort(set2, sz);
 	if (!Sorting.vec_search_general(S,
-		compare_func,
-		NULL /* void *data_for_compare */,
+			pentomino_puzzle_compare_func,
+			this /* void *data_for_compare */,
 		S->nb_sets, set2, idx, 0 /*verbose_level*/)) {
 		cout << "compute_image_function cannot find image" << endl;
 		lint_vec_print(cout, set2, sz);
@@ -621,23 +621,6 @@ void pentomino_puzzle::compute_image_function(set_of_sets *S,
 		}
 	FREE_lint(set2);
 
-}
-
-int pentomino_puzzle::compare_func(void *vec, void *a, int b, void *data_for_compare)
-{
-	set_of_sets *S = (set_of_sets *) vec;
-	int sz, c;
-
-	sz = S->Set_size[b];
-	c = lint_vec_compare((long int *) a, S->Sets[b], sz);
-#if 0
-	cout << "compare ";
-	int_vec_print(cout, (int *) a, sz);
-	cout << " : ";
-	int_vec_print(cout, S->Sets[b], sz);
-	cout << " yields " << c << endl;
-#endif
-	return -c;
 }
 
 void pentomino_puzzle::turn_piece(int &h, int &r, int &t, int verbose_level)
@@ -1158,6 +1141,33 @@ void pentomino_puzzle::make_coefficient_matrix(diophant *D)
 }
 
 
+void pentomino_puzzle_compute_image_function(set_of_sets *S,
+		void *compute_image_data, int elt_idx,
+		int gen_idx, int &idx_of_image, int verbose_level)
+{
+	pentomino_puzzle *PP = (pentomino_puzzle *) compute_image_data;
+
+	PP->compute_image_function(S, elt_idx,
+			gen_idx, idx_of_image, verbose_level);
+}
+
+int pentomino_puzzle_compare_func(void *vec, void *a, int b, void *data_for_compare)
+{
+	//pentomino_puzzle *PP = (pentomino_puzzle *) data_for_compare;
+	set_of_sets *S = (set_of_sets *) vec;
+	int sz, c;
+
+	sz = S->Set_size[b];
+	c = lint_vec_compare((long int *) a, S->Sets[b], sz);
+#if 0
+	cout << "compare ";
+	int_vec_print(cout, (int *) a, sz);
+	cout << " : ";
+	int_vec_print(cout, S->Sets[b], sz);
+	cout << " yields " << c << endl;
+#endif
+	return -c;
+}
 
 
 }}

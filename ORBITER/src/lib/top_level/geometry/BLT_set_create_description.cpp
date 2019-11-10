@@ -19,6 +19,12 @@ namespace top_level {
 
 BLT_set_create_description::BLT_set_create_description()
 {
+	f_q = FALSE;
+	q = 0;
+	f_catalogue = FALSE;
+	iso = 0;
+	f_family = FALSE;
+	family_name = NULL;
 	null();
 }
 
@@ -29,12 +35,6 @@ BLT_set_create_description::~BLT_set_create_description()
 
 void BLT_set_create_description::null()
 {
-	f_q = FALSE;
-	q = 0;
-	f_catalogue = FALSE;
-	iso = 0;
-	f_family = FALSE;
-	family_name = NULL;
 }
 
 void BLT_set_create_description::freeself()

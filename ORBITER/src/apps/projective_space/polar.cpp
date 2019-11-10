@@ -206,7 +206,7 @@ int main(int argc, const char **argv)
 	
 	cout << "after init_orthogonal" << endl;
 
-	P.init(argc, argv, A, O, epsilon, n, k, F, depth, verbose_level);
+	P.init(A, O, epsilon, n, k, F, depth, verbose_level);
 
 #if 0
 	{

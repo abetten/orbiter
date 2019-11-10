@@ -18,6 +18,11 @@ namespace top_level {
 
 BLT_set_create::BLT_set_create()
 {
+	F = NULL;
+	A = NULL;
+	set = NULL;
+	f_has_group = FALSE;
+	Sg = NULL;
 	null();
 }
 
@@ -28,11 +33,6 @@ BLT_set_create::~BLT_set_create()
 
 void BLT_set_create::null()
 {
-	F = NULL;
-	A = NULL;
-	set = NULL;
-	f_has_group = FALSE;
-	Sg = NULL;
 }
 
 void BLT_set_create::freeself()

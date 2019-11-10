@@ -121,7 +121,7 @@ void polar::init_group(
 	f_has_strong_generators_allocated = TRUE;
 }
 
-void polar::init(int argc, const char **argv,
+void polar::init(
 	action *A, orthogonal *O,
 	int epsilon, int n, int k, finite_field *F, 
 	int depth, int verbose_level)
@@ -152,7 +152,7 @@ void polar::init(int argc, const char **argv,
 	base_cols = NEW_int(n);
 	Gen = NEW_OBJECT(poset_classification);
 
-	Gen->read_arguments(argc, argv, 0);
+	//Gen->read_arguments(argc, argv, 0);
 
 	//Gen->prefix[0] = 0;
 	sprintf(Gen->fname_base, "polar_%d_%d_%d_%d", epsilon, n, k, q);

@@ -165,6 +165,157 @@ public:
 };
 
 
+// #############################################################################
+// combinatorial_object_create.cpp
+// #############################################################################
+
+
+//! to create a combinatiorial object from a description using class combinatorial_object_description
+
+
+
+class combinatorial_object_create {
+
+public:
+	combinatorial_object_description *Descr;
+
+	char prefix[1000];
+	char label_txt[1000];
+	char label_tex[1000];
+
+	int q;
+	finite_field *F;
+
+
+	int *set;
+	int f_has_group;
+	strong_generators *Sg;
+
+
+
+
+	combinatorial_object_create();
+	~combinatorial_object_create();
+	void null();
+	void freeself();
+	void init(combinatorial_object_description *Descr, int verbose_level);
+	void apply_transformations(const char **transform_coeffs,
+		int *f_inverse_transform, int nb_transform, int verbose_level);
+};
+
+
+
+// #############################################################################
+// combinatorial_object_description.cpp
+// #############################################################################
+
+
+//! to create a combinatorial object encoded as a set using a description from the command line
+
+
+
+class combinatorial_object_description {
+
+public:
+
+	int f_q;
+	int q;
+	int f_n;
+	int n;
+	int f_poly;
+	const char *poly;
+	int f_Q;
+	int Q;
+	int f_poly_Q;
+	const char *poly_Q;
+
+	int f_subiaco_oval;
+	int f_short;
+	int f_subiaco_hyperoval;
+	int f_adelaide_hyperoval;
+
+	int f_hyperoval;
+	int f_translation;
+	int translation_exponent;
+	int f_Segre;
+	int f_Payne;
+	int f_Cherowitzo;
+	int f_OKeefe_Penttila;
+
+	int f_BLT_database;
+	int BLT_k;
+	int f_BLT_in_PG;
+
+	int f_BLT_Linear;
+	int f_BLT_Fisher;
+	int f_BLT_Mondello;
+	int f_BLT_FTWKB;
+
+	int f_ovoid;
+
+	int f_Baer;
+
+	int f_orthogonal;
+	int orthogonal_epsilon;
+
+	int f_hermitian;
+
+	int f_cubic; // twisted cubic in PG(2,q)
+	int f_twisted_cubic; // twisted cubic in PG(3,q)
+
+	int f_elliptic_curve;
+	int elliptic_curve_b;
+	int elliptic_curve_c;
+
+	int f_Hill_cap_56;
+
+	int f_ttp_code;
+	int f_ttp_construction_A;
+	int f_ttp_hyperoval;
+	int f_ttp_construction_B;
+
+	int f_unital_XXq_YZq_ZYq;
+
+	int f_desarguesian_line_spread_in_PG_3_q;
+	int f_embedded_in_PG_4_q;
+
+	int f_Buekenhout_Metz;
+	int f_classical;
+	int f_Uab;
+	int parameter_a;
+	int parameter_b;
+
+	int f_whole_space;
+	int f_hyperplane;
+	int pt;
+
+	int f_segre_variety;
+	int segre_variety_a;
+	int segre_variety_b;
+
+	int f_Maruta_Hamada_arc;
+
+	int f_projective_variety;
+	const char *variety_label;
+	int variety_degree;
+	const char *variety_coeffs;
+
+
+	int f_projective_curve;
+	const char *curve_label;
+	int curve_nb_vars;
+	int curve_degree;
+	const char *curve_coeffs;
+
+
+	combinatorial_object_description();
+	~combinatorial_object_description();
+	int read_arguments(int argc, const char **argv,
+		int verbose_level);
+};
+
+
+
 
 // #############################################################################
 // delandtsheer_doyen.cpp
@@ -933,9 +1084,8 @@ class pentomino_puzzle {
 	int code_piece(int h, int r, int t);
 	void draw_it(std::ostream &ost, long int *sol);
 	void compute_image_function(set_of_sets *S,
-			void *compute_image_data, int elt_idx,
+			int elt_idx,
 			int gen_idx, int &idx_of_image, int verbose_level);
-	int compare_func(void *vec, void *a, int b, void *data_for_compare);
 	void turn_piece(int &h, int &r, int &t, int verbose_level);
 	void flip_piece(int &h, int &r, int &t, int verbose_level);
 	void setup_pieces();
@@ -945,6 +1095,11 @@ class pentomino_puzzle {
 
 };
 
+
+void pentomino_puzzle_compute_image_function(set_of_sets *S,
+		void *compute_image_data, int elt_idx,
+		int gen_idx, int &idx_of_image, int verbose_level);
+int pentomino_puzzle_compare_func(void *vec, void *a, int b, void *data_for_compare);
 
 
 // #############################################################################
