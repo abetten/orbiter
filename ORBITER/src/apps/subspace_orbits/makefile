@@ -6,16 +6,12 @@ LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
 
 
-all:  desarguesian_spread.out \
+all:  \
 	linear_set_main.out \
 	long_orbit.out \
 	subspace_orbits_main.out 
 
 
-
-desarguesian_spread.out:  desarguesian_spread.o;
-	$(DISCRETA_CPP)  desarguesian_spread.o \
-		$(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 linear_set_main.out:  linear_set_main.o ;
 	$(DISCRETA_CPP) linear_set_main.o \

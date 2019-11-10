@@ -18,6 +18,7 @@ all: analyze_projective_code.out  \
 	cheat_sheet_PG.out \
 	classify_cubic_curves.out \
 	create_object.out \
+	desarguesian_spread.out \
 	determine_conic.out \
 	determine_cubic.out \
 	determine_quadric.out \
@@ -56,6 +57,9 @@ classify_cubic_curves.out:  classify_cubic_curves.o;
 
 create_object.out:  create_object.o ;
 	$(DISCRETA_CPP)  create_object.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+desarguesian_spread.out:  desarguesian_spread.o ;
+	$(DISCRETA_CPP)  desarguesian_spread.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 determine_conic.out:  determine_conic.o;
 	$(DISCRETA_CPP)  determine_conic.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

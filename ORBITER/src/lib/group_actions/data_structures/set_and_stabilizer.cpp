@@ -661,6 +661,22 @@ void set_and_stabilizer::init_surface(surface_domain *Surf,
 		}
 }
 
+
+int set_and_stabilizer::find(long int pt)
+{
+	sorting Sorting;
+	int idx;
+
+	if (!Sorting.lint_vec_search(
+			data,
+			sz, pt, idx, 0)) {
+		cout << "set_and_stabilizer::find" << endl;
+		exit(1);
+		}
+	return idx;
+}
+
+
 }}
 
 

@@ -1515,15 +1515,9 @@ void move_point_set(action *A2,
 	data2 = NEW_lint(nb_pts);
 
 	for (i = 0; i < nb_pts; i++) {
-		int idx;
 
-		if (!Sorting.lint_vec_search(
-				Universe->data,
-				Universe->sz, Pts[i], idx, 0)) {
-			cout << "move_point_set cannot find point" << endl;
-			exit(1);
-			}
-		data_in[i] = idx;
+		data_in[i] = Universe->find(Pts[i]);
+
 		}
 
 	if (f_v) {

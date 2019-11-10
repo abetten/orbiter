@@ -24,6 +24,58 @@ void presentation(action *A, sims *S, int goi, vector_ge *gens,
 
 
 // #############################################################################
+// character_table_burnside.cpp
+// #############################################################################
+
+//! character table using Burnside algorithm
+
+
+class character_table_burnside {
+public:
+	void do_it(int n, int verbose_level);
+	void create_matrix(matrix &M, int i, int *S, int nb_classes,
+		int *character_degree, int *class_size,
+		int verbose_level);
+	void compute_character_table(a_domain *D, int nb_classes, int *Omega,
+		int *character_degree, int *class_size,
+		int *&character_table, int verbose_level);
+	void compute_character_degrees(a_domain *D,
+		int goi, int nb_classes, int *Omega, int *class_size,
+		int *&character_degree, int verbose_level);
+	void compute_omega(a_domain *D, int *N0, int nb_classes,
+			int *Mu, int nb_mu, int *&Omega, int verbose_level);
+	int compute_r0(int *N, int nb_classes, int verbose_level);
+	void compute_multiplication_constants_center_of_group_ring(action *A,
+		action_by_conjugation *ABC,
+		schreier *Sch, int nb_classes, int *&N, int verbose_level);
+	void compute_Distribution_table(action *A, action_by_conjugation *ABC,
+		schreier *Sch, int nb_classes,
+		int **Gens, int nb_gens, int t_max, int *&Distribution, int verbose_level);
+	void multiply_word(action *A, int **Gens,
+			int *Choice, int t, int *Elt1, int *Elt2, int verbose_level);
+	void create_generators(action *A, int n,
+			int **&Elt, int &nb_gens, int f_special, int verbose_level);
+	void integral_eigenvalues(int *M, int n,
+		int *&Lambda,
+		int &nb_lambda,
+		int *&Mu,
+		int *&Mu_mult,
+		int &nb_mu,
+		int verbose_level);
+	void characteristic_poly(int *N, int size, unipoly &charpoly, int verbose_level);
+	void double_swap(double &a, double &b);
+	int double_Gauss(double *A, int m, int n, int *base_cols, int verbose_level);
+	void double_matrix_print(double *A, int m, int n);
+	double double_abs(double x);
+	void kernel_columns(int n, int nb_base_cols, int *base_cols, int *kernel_cols);
+	void matrix_get_kernel(double *M, int m, int n, int *base_cols, int nb_base_cols,
+		int &kernel_m, int &kernel_n, double *kernel);
+	int double_as_int(double x);
+};
+
+
+
+// #############################################################################
 // factor_group.cpp
 // #############################################################################
 

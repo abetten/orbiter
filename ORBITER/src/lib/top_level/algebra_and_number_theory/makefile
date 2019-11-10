@@ -7,6 +7,7 @@ LFLAGS = -lm
 
 MODULES = \
 	analyze_group.o \
+	character_table_burnside.o \
 	factor_group.o \
 	semifield_classify_with_substructure.o \
 	semifield_classify.o \

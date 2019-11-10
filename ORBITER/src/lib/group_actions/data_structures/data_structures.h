@@ -800,6 +800,7 @@ public:
 	
 	void init_surface(surface_domain *Surf, action *A, action *A2,
 		int q, int no, int verbose_level);
+	int find(long int pt);
 };
 
 // #############################################################################

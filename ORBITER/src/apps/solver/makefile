@@ -9,7 +9,6 @@ LFLAGS = -lm
 
 all: dio.out \
 	dlx.out \
-	read_solutions.out \
 	pentomino_5x5.out \
 	puzzle.out \
 	solve_diophant.out 
@@ -31,9 +30,6 @@ dio.out:  dio.o
 
 dlx.out:  dlx.o
 	$(DISCRETA_CPP)  dlx.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-read_solutions.out:  read_solutions.o 
-	$(DISCRETA_CPP)  read_solutions.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 pentomino_5x5.out:  pentomino_5x5.o;
 	$(DISCRETA_CPP)  pentomino_5x5.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
