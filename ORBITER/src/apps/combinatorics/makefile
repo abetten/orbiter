@@ -14,6 +14,7 @@ all: all_k_subsets.out \
 		conjugacy_classes_sym_n.out \
 		costas.out \
 		create_object.out \
+		delandtsheer_doyen_main.o \
 		design_create_main.out \
 		design.out \
 		ferdinand.out \
@@ -54,6 +55,9 @@ create_object.out:  create_object.o;
 
 design_create_main.out:  design_create_main.o;
 	$(DISCRETA_CPP)  design_create_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+delandtsheer_doyen_main.out:  delandtsheer_doyen_main.o;
+	$(DISCRETA_CPP)  delandtsheer_doyen_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 design.out:  design.o;
 	$(DISCRETA_CPP)  design.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
