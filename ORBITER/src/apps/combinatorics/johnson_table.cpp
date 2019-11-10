@@ -99,7 +99,7 @@ int main(int argc, char **argv)
 				cout << "n=" << n << " k=" << k << " s=" << s
 						<< " ago_quotient = " << b << endl;
 
-				delete Aut;
+				FREE_OBJECT(Aut);
 				FREE_int(Adj);
 				FREE_int(set1);
 				FREE_int(set2);

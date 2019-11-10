@@ -170,7 +170,7 @@ public:
 // #############################################################################
 
 
-//! to create a combinatiorial object from a description using class combinatorial_object_description
+//! to create a combinatorial object from a description using class combinatorial_object_description
 
 
 
@@ -187,7 +187,8 @@ public:
 	finite_field *F;
 
 
-	int *set;
+	long int *set;
+	int set_size;
 	int f_has_group;
 	strong_generators *Sg;
 
@@ -458,6 +459,10 @@ public:
 	void compute_pair_orbit_table(int verbose_level);
 	void write_pair_orbit_file(int verbose_level);
 	void print_mask_test_i(std::ostream &ost, int i);
+	void early_test_func(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
 	int check_conditions(long int *S, int len, int verbose_level);
 	int check_orbit_covering(long int *line,
 			int len, int verbose_level);
@@ -474,8 +479,10 @@ public:
 };
 
 
-int delandtsheer_doyen_check_conditions(int len, long int *S,
-		void *data, int verbose_level);
+void delandtsheer_doyen_early_test_func_callback(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
 
 
 // #############################################################################

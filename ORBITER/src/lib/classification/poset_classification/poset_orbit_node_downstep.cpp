@@ -159,7 +159,7 @@ void poset_orbit_node::compute_flag_orbits(
 				"we have " << nb_extensions << " extensions" << endl;
 		}
 
-	if (f_vvv) {
+	if (FALSE) {
 		print_extensions(gen);
 		}
 	
@@ -363,10 +363,10 @@ void poset_orbit_node::compute_schreier_vector(
 				"calling compute_all_point_orbits" << endl;
 	}
 	if (lvl == 0) {
-		Schreier->compute_all_point_orbits(verbose_level - 1 /*FALSE*/);
+		Schreier->compute_all_point_orbits(0 /*verbose_level - 1 */);
 	}
 	else {
-		Schreier->compute_all_point_orbits(FALSE);
+		Schreier->compute_all_point_orbits(0 /* verbose_level */);
 	}
 	if (f_v) {
 		cout << "poset_orbit_node::compute_schreier_vector "
@@ -528,7 +528,7 @@ void poset_orbit_node::schreier_forest(
 			gen, 
 			lvl, 
 			n, subset,
-			verbose_level /*- 2 */);
+			verbose_level - 2);
 
 
 
@@ -653,7 +653,7 @@ void poset_orbit_node::schreier_forest(
 		}
 
 
-	if (f_v) {
+	if (FALSE) {
 		gen->print_level_info(lvl, node);
 		cout << " : generators:" << endl;
 		Schreier.print_generators();
@@ -667,7 +667,7 @@ void poset_orbit_node::schreier_forest(
 			gen->print_level_info(lvl, node);
 			cout << " : poset_orbit_node::schreier_forest before Schreier.compute_all_point_orbits" << endl;
 		}
-		Schreier.compute_all_point_orbits(verbose_level);
+		Schreier.compute_all_point_orbits( 0 /*verbose_level - 1 */);
 		if (f_v) {
 			gen->print_level_info(lvl, node);
 			cout << " : poset_orbit_node::schreier_forest after Schreier.compute_all_point_orbits" << endl;
@@ -678,14 +678,14 @@ void poset_orbit_node::schreier_forest(
 			gen->print_level_info(lvl, node);
 			cout << " : poset_orbit_node::schreier_forest before Schreier.compute_all_point_orbits" << endl;
 		}
-		Schreier.compute_all_point_orbits(verbose_level);
+		Schreier.compute_all_point_orbits(0 /*verbose_level - 4*/);
 		if (f_v) {
 			gen->print_level_info(lvl, node);
 			cout << " : poset_orbit_node::schreier_forest after Schreier.compute_all_point_orbits" << endl;
 		}
 	}
 
-	if (f_v) {
+	if (FALSE) {
 		int f_print_orbits = FALSE;
 		if (f_vv) {
 			f_print_orbits = TRUE;
@@ -726,7 +726,7 @@ void poset_orbit_node::downstep_orbit_test_and_schreier_vector(
 // The order in which these two functions are called matters.
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	int f_print_orbits = FALSE;
 	if (f_vvv) {
@@ -756,7 +756,7 @@ void poset_orbit_node::downstep_orbit_test_and_schreier_vector(
 			cout << "nb_good_orbits=" << nb_good_orbits << endl;
 			cout << "nb_points=" << nb_points << endl;
 			}
-		if (f_vv) {
+		if (FALSE) {
 			downstep_orbits_print(gen, 
 				Schreier, AR, lvl, 
 				f_print_orbits, 
@@ -808,7 +808,7 @@ void poset_orbit_node::downstep_orbit_test_and_schreier_vector(
 			cout << "nb_good_orbits=" << nb_good_orbits << endl;
 			cout << "nb_points=" << nb_points << endl;
 		}
-		if (f_vv) {
+		if (FALSE) {
 			downstep_orbits_print(gen, 
 				Schreier, AR, lvl, 
 				f_print_orbits, 
@@ -1449,7 +1449,7 @@ void poset_orbit_node::check_orbits(
 		cout << "check_orbits: orbit testing finished: " << u
 				<< " orbits out of " << L << " accepted" << endl;
 		}
-	if (f_vvv) {
+	if (FALSE) {
 		cout << "the good orbits are:" << endl;
 		cout << "i : representative : orbit length" << endl;
 		for (k = 0; k < Schreier->nb_orbits; k++) {

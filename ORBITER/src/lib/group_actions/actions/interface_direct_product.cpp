@@ -385,17 +385,29 @@ static void direct_product_group_element_code_for_make_element(action &A,
 static void direct_product_group_element_print_for_make_element(action &A,
 		void *elt, ostream &ost)
 {
-	cout << "direct_product_group_element_print_for_make_element "
-			"not yet implemented" << endl;
-	exit(1);
+	direct_product *P = A.G.direct_product_group;
+	int *Elt = (int *) elt;
+
+	P->M1->GL_print_for_make_element(Elt + P->offset_i(0), ost);
+	ost << ",";
+	P->M2->GL_print_for_make_element(Elt + P->offset_i(1), ost);
+	ost << ",";
+	//cout << "direct_product_group_element_print_for_make_element "
+	//		"not yet implemented" << endl;
 }
 
 static void direct_product_group_element_print_for_make_element_no_commas(
 		action &A, void *elt, ostream &ost)
 {
-	cout << "direct_product_group_element_print_for_make_element_no_commas "
-			"not yet implemented" << endl;
-	exit(1);
+	direct_product *P = A.G.direct_product_group;
+	int *Elt = (int *) elt;
+
+	P->M1->GL_print_for_make_element(Elt + P->offset_i(0), ost);
+	ost << ",";
+	P->M2->GL_print_for_make_element(Elt + P->offset_i(1), ost);
+	ost << ",";
+	//cout << "direct_product_group_element_print_for_make_element_no_commas "
+	//		"not yet implemented" << endl;
 }
 
 static void direct_product_group_element_print_quick(

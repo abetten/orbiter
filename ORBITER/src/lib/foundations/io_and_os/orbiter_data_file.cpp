@@ -81,7 +81,7 @@ void orbiter_data_file::load(const char *fname, int verbose_level)
 		FALSE /*f_casenumbers */,
 		set_sizes, sets, Ago_ascii, Aut_ascii, 
 		Casenumbers, 
-		0/*verbose_level - 2*/);
+		verbose_level - 2);
 	if (f_v) {
 		cout << "read_and_parse_data_file: "
 				"parsing sets done" << endl;

@@ -671,7 +671,7 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 			Pairs->depth /* schreier_depth */,
 			f_use_invariant_subset_if_available,
 			f_debug,
-			verbose_level);
+			verbose_level - 2);
 
 		if (f_v) {
 			cout << "delandtsheer_doyen::init "
@@ -932,6 +932,14 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 		Poset_search->init_subset_lattice(A0, A, SG,
 				verbose_level);
 
+		if (f_v) {
+			cout << "delandtsheer_doyen::init before "
+					"Poset->add_testing_without_group" << endl;
+			}
+		Poset_search->add_testing_without_group(
+				delandtsheer_doyen_early_test_func_callback,
+					this /* void *data */,
+					verbose_level);
 
 		if (f_v) {
 			cout << "delandtsheer_doyen::init "
@@ -943,12 +951,6 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 			cout << "delandtsheer_doyen::init "
 					"after Gen->init" << endl;
 			}
-
-#if 0
-		// ToDo
-		Gen->init_check_func(::design_search_check_conditions,
-			(void *)this /* candidate_check_data */);
-#endif
 
 		int nb_nodes = 1000;
 
@@ -986,7 +988,7 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 			Gen->depth /* schreier_depth */,
 			f_use_invariant_subset_if_available,
 			f_debug,
-			verbose_level + 10);
+			verbose_level - 2);
 
 		if (f_v) {
 			cout << "delandtsheer_doyen::init "
@@ -1034,7 +1036,8 @@ void delandtsheer_doyen::create_graph(
 
 	if (!check_orbit_covering(line0,
 		len, 0 /* verbose_level */)) {
-		cout << "line0 is not good" << endl;
+		cout << "delandtsheer_doyen::create_graph line0 is not good (check_orbit_covering)" << endl;
+		check_orbit_covering(line0, len, 2 /* verbose_level */);
 		exit(1);
 	}
 
@@ -1240,6 +1243,55 @@ void delandtsheer_doyen::print_mask_test_i(
 		}
 	ost << mask_test_value[i];
 	ost << endl;
+}
+
+void delandtsheer_doyen::early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int j;
+	int f_OK;
+
+	if (f_v) {
+		cout << "delandtsheer_doyen::early_test_func checking set ";
+		print_set(cout, len, S);
+		cout << endl;
+		cout << "candidate set of size "
+				<< nb_candidates << ":" << endl;
+		lint_vec_print(cout, candidates, nb_candidates);
+		cout << endl;
+	}
+
+
+	if (len == 0) {
+		lint_vec_copy(candidates, good_candidates, nb_candidates);
+		nb_good_candidates = nb_candidates;
+	}
+	else {
+		nb_good_candidates = 0;
+
+		if (f_vv) {
+			cout << "delandtsheer_doyen::early_test_func before testing" << endl;
+		}
+		for (j = 0; j < nb_candidates; j++) {
+
+			S[len] = candidates[j];
+
+			f_OK = check_conditions(S, len + 1, verbose_level);
+			if (f_vv) {
+				cout << "delandtsheer_doyen::early_test_func "
+						"testing " << j << " / "
+						<< nb_candidates << endl;
+			}
+
+			if (f_OK) {
+				good_candidates[nb_good_candidates++] = candidates[j];
+			}
+		} // next j
+	} // else
 }
 
 int delandtsheer_doyen::check_conditions(
@@ -1657,6 +1709,7 @@ void delandtsheer_doyen::get_mask_core_and_singletons(
 		}
 }
 
+#if 0
 int delandtsheer_doyen_check_conditions(int len, long int *S,
 		void *data, int verbose_level)
 {
@@ -1668,6 +1721,31 @@ int delandtsheer_doyen_check_conditions(int len, long int *S,
 	}
 	return P->check_conditions(S, len, verbose_level);
 }
+#endif
+
+void delandtsheer_doyen_early_test_func_callback(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level)
+{
+	delandtsheer_doyen *P = (delandtsheer_doyen *) data;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "delandtsheer_doyen_early_test_func_callback for set ";
+		print_set(cout, len, S);
+		cout << endl;
+		}
+	P->early_test_func(S, len,
+		candidates, nb_candidates,
+		good_candidates, nb_good_candidates,
+		verbose_level - 2);
+	if (f_v) {
+		cout << "delandtsheer_doyen_early_test_func_callback done" << endl;
+		}
+}
+
+
 
 
 

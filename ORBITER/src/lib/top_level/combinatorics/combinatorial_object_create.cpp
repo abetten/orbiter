@@ -22,6 +22,7 @@ combinatorial_object_create::combinatorial_object_create()
 	F = NULL;
 	//A = NULL;
 	set = NULL;
+	set_size = 0;
 	f_has_group = FALSE;
 	Sg = NULL;
 	null();
@@ -42,7 +43,7 @@ void combinatorial_object_create::freeself()
 		delete F;
 		}
 	if (set) {
-		FREE_int(set);
+		FREE_lint(set);
 		}
 	if (Sg) {
 		delete Sg;
@@ -368,6 +369,12 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 		lint_vec_print(cout, Pts, nb_pts);
 		cout << endl;
 		}
+
+	set = NEW_lint(nb_pts);
+	lint_vec_copy(Pts, set, nb_pts);
+	set_size = nb_pts;
+
+	FREE_lint(Pts);
 
 	if (f_has_group) {
 		cout << "combinatorial_object_create::init the stabilizer is:" << endl;

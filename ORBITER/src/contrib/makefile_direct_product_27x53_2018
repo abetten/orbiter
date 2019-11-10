@@ -1,0 +1,538 @@
+MY_PATH=~/DEV.18/GITHUB/orbiter/ORBITER/
+#MY_PATH=/scratch3/betten/COMPILE/2018_08_14/ORBITER/
+SRC=$(MY_PATH)/src
+SRC2=$(MY_PATH)/ORBITER2/SRC2
+
+GROUPS_PATH=$(SRC)/APPS/GROUPS
+
+all: M1 M2 M3
+
+
+# 1455.362u  = 24 min 15 sec on Mac 8/15/2018
+
+
+M1: M1G1 M1G1S M1G2 M1G2S M1G3 M1G3S M1G4 M1G4S
+M2: M2G1 M2G1S M2G2 M2G2S M2G3 M2G3S M2G4 M2G4S
+M3: M3G1 M3G1S M3G2 M3G2S M3G3 M3G3S M3G4 M3G4S
+
+GROUP1="1,1,1,0, 1,3,1,0, 1,9,1,0, 1,0,1,1, -2,0,-4,0"
+GROUP2="1,1,1,0, 1,3,1,0, 1,9,1,0, 1,0,1,1, -4,0,-4,0"
+GROUP3="1,1,1,0, 1,3,1,0, 1,9,1,0, 1,0,1,1, -8,0,-4,0"
+GROUP4="1,1,1,0, 1,3,1,0, 1,9,1,0, 1,0,1,1, -14,0,-4,0"
+
+# negative numbers indicate powers of the primitive element
+# for instance -a means \alpha^a, where \alpha is the primitive element
+
+
+
+# mask 1:
+#  XX.
+#  X.X
+
+MASK1=		-masktest 3 x ge 1 \
+		-masktest 4 x+y ge 3 
+
+
+
+# mask 2:
+# XX..
+# X...
+# ..XX
+
+
+MASK2=		-masktest 4 x+y ge 1  \
+		-masktest 4 x+y le 2 \
+		-masktest 5 x+y eq 3 \
+		-masktest 5 s eq 0 
+
+
+
+# mask 3:
+# X....
+# X....
+# .XX..
+# ...XX
+
+
+MASK3=	-masktest 4 x+y ge 1  \
+	-masktest 4 x+y le 2 \
+	-masktest 5 x+y eq 2   \
+	-masktest 5 s le 1 \
+	-masktest 6 x+y eq 3 \
+	-masktest 6 s eq 0 
+
+
+
+
+
+
+################################################################################
+# Mask 1
+################################################################################
+
+
+M1G1:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP1) "18603" "mask1_group1"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		$(MASK1) \
+		-depth 4 -W
+
+#Found 13 orbits at depth 4
+#0 : 1 orbits
+#1 : 1 orbits
+#2 : 3 orbits
+#3 : 27 orbits
+#4 : 13 orbits
+#total: 45
+#(1^{13}) average is 1 + 0 / 13
+
+
+M1G1S:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP1) "18603" "mask1_group1"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		-depth 4 \
+		-singletons
+
+
+#nb_cases=13
+#nb_cases_eliminated=0
+#orbit_not_ruled_out=0 / 13 is orbit_idx 0
+#orbit_not_ruled_out=0 / 13 is orbit_idx0 / 13 we found 11 live points
+#orbit_not_ruled_out=0 / 13 is orbit_idx0 / 13 we found 11 live points, doing a search
+#orbit_not_ruled_out=1 / 13 is orbit_idx1 / 13 we found 11 live points, doing a search
+#orbit_not_ruled_out=2 / 13 is orbit_idx2 / 13 we found 10 live points, doing a search
+#orbit_not_ruled_out=3 / 13 is orbit_idx3 / 13 we found 11 live points, doing a search
+#orbit_not_ruled_out=4 / 13 is orbit_idx4 / 13 we found 10 live points, doing a search
+#orbit_not_ruled_out=5 / 13 is orbit_idx5 / 13 we found 10 live points, doing a search
+#orbit_not_ruled_out=6 / 13 is orbit_idx6 / 13 we found 10 live points, doing a search
+#orbit_not_ruled_out=7 / 13 is orbit_idx7 / 13 we found 10 live points, doing a search
+#orbit_not_ruled_out=8 / 13 is orbit_idx8 / 13 we found 9 live points, doing a search
+#orbit_not_ruled_out=9 / 13 is orbit_idx9 / 13 we found 10 live points, doing a search
+#orbit_not_ruled_out=10 / 13 is orbit_idx10 / 13 we found 11 live points, doing a search
+#orbit_not_ruled_out=11 / 13 is orbit_idx11 / 13 we found 11 live points, doing a search
+#orbit_not_ruled_out=12 / 13 is orbit_idx12 / 13 we found 11 live points, doing a search
+#nb_sol=0
+#searching singletons done
+#direct_product_action::init done
+#0:7
+
+
+M1G2:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP2) "18603" "mask1_group2"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		$(MASK1) \
+		-depth 4 -W
+
+
+#Found 13 orbits at depth 4
+#0 : 1 orbits
+#1 : 1 orbits
+#2 : 3 orbits
+#3 : 27 orbits
+#4 : 13 orbits
+#total: 45
+#(1^{13}) average is 1 + 0 / 13
+#0:7
+
+
+M1G2S:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP2) "18603" "mask1_group2"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		-depth 4 \
+		-singletons
+
+#nb_sol=0
+#searching singletons done
+#direct_product_action::init done
+#0:7
+
+
+M1G3:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP3) "18603" "mask1_group3"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		$(MASK1) \
+		-depth 4 -W
+
+
+#Found 13 orbits at depth 4
+#0 : 1 orbits
+#1 : 1 orbits
+#2 : 3 orbits
+#3 : 27 orbits
+#4 : 13 orbits
+#total: 45
+#(1^{13}) average is 1 + 0 / 13
+
+M1G3S:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP3) "18603" "mask1_group3"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		-depth 4 \
+		-singletons
+
+#nb_sol=0
+#searching singletons done
+#direct_product_action::init done
+#0:7
+
+
+M1G4:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP4) "18603" "mask1_group4"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		$(MASK1) \
+		-depth 4 -W
+
+
+#Found 13 orbits at depth 4
+#0 : 1 orbits
+#1 : 1 orbits
+#2 : 3 orbits
+#3 : 27 orbits
+#4 : 13 orbits
+#total: 45
+#(1^{13}) average is 1 + 0 / 13
+
+
+
+M1G4S:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP4) "18603" "mask1_group4"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		-depth 4 \
+		-singletons
+
+#nb_sol=0
+#0:7
+
+
+################################################################################
+# Mask 2
+################################################################################
+
+
+
+M2G1:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP1) "18603" "mask2_group1"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		$(MASK2) \
+		-depth 5 -W
+
+#Found 12392 orbits at depth 5
+#0 : 1 orbits
+#1 : 1 orbits
+#2 : 3 orbits
+#3 : 240 orbits
+#4 : 21703 orbits
+#5 : 12392 orbits
+#total: 34340
+#(1^{12392}) average is 1 + 0 / 12392
+#0:27 on Mac 8/15/2018
+#17:28 on Mac 8/14/2018
+#compare: 1:8:16 in 2007
+
+
+M2G1S:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP1) "18603" "mask2_group1"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		-depth 5 \
+		-singletons
+
+#nb_sol=0
+#searching singletons done
+#direct_product_action::init done
+#0:8
+
+
+M2G2:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP2) "18603" "mask2_group2"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		$(MASK2) \
+		-depth 5 -W
+
+
+#Found 12404 orbits at depth 5
+#0 : 1 orbits
+#1 : 1 orbits
+#2 : 3 orbits
+#3 : 240 orbits
+#4 : 21704 orbits
+#5 : 12404 orbits
+#total: 34353
+#(1^{12404}) average is 1 + 0 / 12404
+#0:26
+
+M2G2S:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP2) "18603" "mask2_group2"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		-depth 5 \
+		-singletons
+
+
+#nb_sol=0
+#0:8
+
+
+M2G3:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP3) "18603" "mask2_group3"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		$(MASK2) \
+		-depth 5 -W
+
+
+#Found 12377 orbits at depth 5
+#0 : 1 orbits
+#1 : 1 orbits
+#2 : 3 orbits
+#3 : 240 orbits
+#4 : 21703 orbits
+#5 : 12377 orbits
+#total: 34325
+#(1^{12377}) average is 1 + 0 / 12377
+#0:26
+
+
+M2G3S:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP3) "18603" "mask2_group3"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		-depth 5 \
+		-singletons
+
+#nb_sol=0
+#0:8
+
+
+M2G4:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP4) "18603" "mask2_group4"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		$(MASK2) \
+		-depth 5 -W
+
+#Found 12428 orbits at depth 5
+#0 : 1 orbits
+#1 : 1 orbits
+#2 : 3 orbits
+#3 : 240 orbits
+#4 : 21704 orbits
+#5 : 12428 orbits
+#total: 34377
+#(1^{12428}) average is 1 + 0 / 12428
+#0:26
+
+M2G4S:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP4) "18603" "mask2_group4"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		-depth 5 \
+		-singletons
+
+
+
+#nb_sol=0
+#0:8
+
+
+
+################################################################################
+# Mask 3
+################################################################################
+
+
+M3G1:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP1) "18603" "mask3_group1"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		$(MASK3) \
+		-depth 6 -W
+
+
+#Found 762418 orbits at depth 6
+#0 : 1 orbits
+#1 : 1 orbits
+#2 : 3 orbits
+#3 : 240 orbits
+#4 : 21703 orbits
+#5 : 370503 orbits
+#6 : 762418 orbits
+#total: 1154869
+#(4^{10}, 2^{1280}, 1^{761128}) average is 1 + 1310 / 762418
+#generator_housekeeping writing files
+#5:44:10 on tx1 08/14/2018
+#8:46 on tx1 08/15/2018 (speedup factor = 38; with table pair_orbit instead of trace)
+# 4:23 on Mac 08/15/2018
+
+# creates file design_mask3_group1_27_53_lvl_6
+
+
+M3G1S:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP1) "18603" "mask3_group1"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		-depth 6 \
+		-singletons
+
+
+#nb_sol=0
+#searching singletons done
+#direct_product_action::init done
+#51 sec on Mac 08/15/2018
+
+M3G2:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP2) "18603" "mask3_group2"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		$(MASK3) \
+		-depth 6 -W
+
+#Found 762408 orbits at depth 6
+#0 : 1 orbits
+#1 : 1 orbits
+#2 : 3 orbits
+#3 : 240 orbits
+#4 : 21704 orbits
+#5 : 370541 orbits
+#6 : 762408 orbits
+#total: 1154898
+#(4^{10}, 2^{1261}, 1^{761137}) average is 1 + 1291 / 762408
+#4:25 on Mac 8/15/2018
+
+M3G2S:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP2) "18603" "mask3_group2"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		-depth 6 \
+		-singletons
+
+#nb_sol=0
+#0:51
+
+
+
+
+M3G3:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP3) "18603" "mask3_group3"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		$(MASK3) \
+		-depth 6 -W
+
+
+#Found 763040 orbits at depth 6
+#0 : 1 orbits
+#1 : 1 orbits
+#2 : 3 orbits
+#3 : 240 orbits
+#4 : 21703 orbits
+#5 : 370524 orbits
+#6 : 763040 orbits
+#total: 1155512
+#(4^{10}, 2^{1259}, 1^{761771}) average is 1 + 1289 / 763040
+#4:21 on Mac 8/15/2018
+
+
+
+M3G3S:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP3) "18603" "mask3_group3"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		-depth 6 \
+		-singletons
+
+
+#nb_sol=0
+#0:49
+
+
+M3G4:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP4) "18603" "mask3_group4"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		$(MASK3) \
+		-depth 6 -W
+
+
+
+#Found 762454 orbits at depth 6
+#0 : 1 orbits
+#1 : 1 orbits
+#2 : 3 orbits
+#3 : 240 orbits
+#4 : 21704 orbits
+#5 : 370602 orbits
+#6 : 762454 orbits
+#total: 1155005
+#(4^{10}, 2^{1260}, 1^{761184}) average is 1 + 1290 / 762454
+#4:25
+
+M3G4S:
+	$(GROUPS_PATH)/direct_product.out -v 5 -d1 1 -q1 27 -d2 1 -q2 53 \
+		-subgroup $(GROUP4) "18603" "mask3_group4"\
+		-K 11 \
+		-DDx 2 \
+		-DDy 1 \
+		-depth 6 \
+		-singletons
+
+#nb_sol=0
+#0:49
+
+
+
