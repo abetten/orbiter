@@ -1,0 +1,1695 @@
+#MY_PATH=../../../DEV.17
+MY_PATH=/scratch2/betten/COMPILE/2017_08_04
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH)/ORBITER2/SRC2
+
+DUAL_HYPEROVAL_PATH=$(SRC2)/DUAL_HYPEROVAL
+TOOLS_PATH=$(SRC)/APPS/TOOLS
+GRASSMANN_PATH=$(SRC2)/GRASSMANN
+
+
+
+K=4
+N=8
+Q=2
+DEPTH=6
+POLY=
+
+ARGUMENTS= \
+		-W \
+		-lex \
+		-n $(N) -k $(K) -q $(Q)\
+		-starter_size $(DEPTH) \
+		-input_prefix STARTER_DIR/ \
+		-output_prefix SYSTEMS/ \
+		-solution_prefix SOLUTIONS/ \
+		-base_fname DH_$(N)_$(K)_$(Q) 
+
+
+clean:
+	rm DH_*
+
+
+all: starter lift 
+
+
+#build_db read_solutions compute_orbits isomorph report
+
+
+
+
+starter:
+	- mkdir STARTER_DIR
+	- mkdir SYSTEMS
+	- mkdir SOLUTIONS
+	$(DUAL_HYPEROVAL_PATH)/dh.out -v 5 \
+		$(ARGUMENTS) \
+		-starter 
+
+
+
+#		-draw_poset \
+#		-embedded 
+
+# on dynamics: 52 min 38 sec, finds 684477 orbits at depth 6 (2016)
+# on tx1: 9hrs 38 min (8/2017)
+
+
+
+#		-draw_poset \
+#		-embedded 
+
+
+LIFTARGS = -v 2 -W -n $(N) -k $(K) -q $(Q)\
+	-depth $(DEPTH) \
+	-solve \
+	-lex \
+	-lift $(DEPTH) ./ \
+	-split
+
+
+lift_0_10000:
+	$(DUAL_HYPEROVAL_PATH)/dh.out -v 3 \
+		$(ARGUMENTS) \
+		-save \
+		-solve \
+		-split 0 10000 \
+		-lift $(DEPTH) ./
+
+#		-draw_system system_0 \
+#		-write_tree system_0_tree \
+
+
+solve_0:
+	$(TOOLS_PATH)/solve_diophant.out -v 2 -file SYSTEMS/system_0_684477.txt -draw -draw_solutions -output_file system_0_684477
+
+#no solutions
+
+solve_1:
+	$(TOOLS_PATH)/solve_diophant.out -v 2 -file SYSTEMS/system_1_684477.txt -draw -draw_solutions -output_file system_1_684477
+
+
+
+solve_100000:
+	$(TOOLS_PATH)/solve_diophant.out -v 2 -file SYSTEMS/system_100000_684477.txt -draw -draw_solutions -output_file system_100000_684477
+
+
+
+
+lift430:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 430 1000000 >log_430 	
+
+# 6 solutions after cleanup, originally 19792 solutions
+
+
+test430_1:
+	$(DUAL_HYPEROVAL_PATH)/tdo.out -v 3 -n $(N) -k $(K) -q $(Q) -file 430_1.txt
+
+
+
+lift:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 0 50 >log_0 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 1 50 >log_1 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 2 50 >log_2 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 3 50 >log_3 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 4 50 >log_4 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 5 50 >log_5 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 6 50 >log_6 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 7 50 >log_7 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 8 50 >log_8 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 9 50 >log_9 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 10 50 >log_10 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 11 50 >log_11 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 12 50 >log_12 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 13 50 >log_13 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 14 50 >log_14 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 15 50 >log_15 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 16 50 >log_16 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 17 50 >log_17 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 18 50 >log_18 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 19 50 >log_19 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 20 50 >log_20 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 21 50 >log_21 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 22 50 >log_22 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 23 50 >log_23 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 24 50 >log_24 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 25 50 >log_25 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 26 50 >log_26 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 27 50 >log_27 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 28 50 >log_28 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 29 50 >log_29 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 30 50 >log_30 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 31 50 >log_31 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 32 50 >log_32 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 33 50 >log_33 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 34 50 >log_34 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 35 50 >log_35 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 36 50 >log_36 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 37 50 >log_37 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 38 50 >log_38 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 39 50 >log_39 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 40 50 >log_40 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 41 50 >log_41 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 42 50 >log_42 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 43 50 >log_43 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 44 50 >log_44 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 45 50 >log_45 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 46 50 >log_46 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 47 50 >log_47 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 48 50 >log_48 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 49 50 >log_49 &	
+	sleep 5
+
+
+# each case takes about 3 days on tx1, but cases 32 and 43 had a problem.
+# in case 32: 375532 is bad
+# in case 43: 373943 is bad Tanja Betten BaBa is BAD!
+
+lift_32_250:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 32 250 >log_32_250 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 82 250 >log_82_250 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 132 250 >log_132_250 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 182 250 >log_182_250 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 232 250 >log_232_250 &	
+	sleep 5
+
+lift_43_250:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 43 250 >log_43_250 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 93 250 >log_93_250 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 143 250 >log_143_250 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 193 250 >log_193_250 &	
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 243 250 >log_243_250 &	
+	sleep 5
+
+
+
+lift_bad1:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 375532 1000000 -v 2 -save  
+
+
+lift_bad2:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 373943 1000000 -v 2 -save  
+
+# May 20, 2015: on MacBookPro: 17 sec. Finds 13 solutions (this agrees with Alfred)
+
+solve_bad1:
+	$(TOOLS_PATH)/solve_diophant.out -v 2 -file system_375532_684477.txt -draw
+
+# May 20, 2015: 16 hrs, 46 min, 17 sec on domino with 0 solutions
+#exact_cover::compute_liftings_single_case case 375532 / 684477 stab_go = 128 starter = ( 0, 717, 11941, 13253, 16559, 49958 )
+
+tdo_bad1:
+	$(DUAL_HYPEROVAL_PATH)/tdo.out -v 5 -n $(N) -k $(K) -q $(Q)\
+		-file bad1.txt
+
+
+
+solve_test:
+	$(TOOLS_PATH)/solve_diophant.out -v 4 -file test.system
+
+solve_system:
+	$(TOOLS_PATH)/solve_diophant.out -v 2 -file case_375532_684477_changed.system
+
+
+
+unrank:
+	$(GRASSMANN_PATH)/rank_unrank.out -q 2 -n 8 -k 4 -unrank 0
+	$(GRASSMANN_PATH)/rank_unrank.out -q 2 -n 8 -k 4 -unrank 717
+	$(GRASSMANN_PATH)/rank_unrank.out -q 2 -n 8 -k 4 -unrank 11941
+	$(GRASSMANN_PATH)/rank_unrank.out -q 2 -n 8 -k 4 -unrank 11943
+
+extend:
+	$(DUAL_HYPEROVAL_PATH)/dh.out -v 5 -n $(N) -k $(K) -q $(Q) \
+		-ex 6 684476 5
+
+
+E0:
+	$(DUAL_HYPEROVAL_PATH)/dh.out -v 5 -n $(N) -k $(K) -q $(Q) \
+		-Ex 6 0 1024 5
+
+E330:
+	$(DUAL_HYPEROVAL_PATH)/dh.out -v 10 -n $(N) -k $(K) -q $(Q) \
+		-Ex 6 330 1000000 5
+
+
+read_alfred:
+	$(DUAL_HYPEROVAL_PATH)/dh.out -v 5 -n $(N) -k $(K) -q $(Q) \
+		-read_wassermann 6 5 
+
+
+# July 27, 2012 on MacBook Pro: 9 hrs 0 min 53 sec
+
+# Aug 9, 2012 MacBook Pro:
+#Case 684173 finished, total_solutions_read=6986 total_solutions=6952
+#Read 6986 solutions from the solver
+#Amongst these, we found 6952 true solutions
+#Written file solutions.txt of size 684636
+#
+#clock ticks per second = 100
+#8:17:19
+
+#process:
+#	$(DUAL_HYPEROVAL_PATH)/dh.out -v 5 -n $(N) -k $(K) -q $(Q) \
+#		-process
+# not needed any more. This was because the old read_wassermann did not write the full solutions.
+
+
+build_db:
+	$(DUAL_HYPEROVAL_PATH)/dh.out -v 1 -n $(N) -k $(K) -q $(Q) \
+		-depth $(DEPTH) \
+		-build_db 
+
+# July 27, 2012 on MacBook Pro: 25 min 25 sec
+# May 27, 2013 on MacBook Pro: 33 min 29 sec
+# April 5, 2015 on MacBookPro: 1 hr 22 min 16 sec (DEPTH=6)
+# May 28, 2015 on MacBookPro: 1 hr 22 min 6 sec (DEPTH=6)
+
+
+read_solutions:
+	$(DUAL_HYPEROVAL_PATH)/dh.out -v 1 -n $(N) -k $(K) -q $(Q) \
+		-depth $(DEPTH) \
+		-read_solutions_after_split 250 
+
+# April 5, 2014: 1min45 on MacBookPro: read 6948 solutions
+# May 28, 2014: 1 min46 on MacBookPro: read 6988 solutions
+
+
+diff_solutions:
+	diff ISO/case_len.txt ../4_8.OLD/ISO/case_len.txt
+# case 430 differs:
+# 0 solution in 4_8.OLD
+# 6 solutions in 4_8
+
+
+
+compute_orbits:
+	$(DUAL_HYPEROVAL_PATH)/dh.out -v 1 -n $(N) -k $(K) -q $(Q) \
+		-depth $(DEPTH) \
+		-compute_orbits 
+
+# July 27, 2012 on MacBook Pro: 1 min 45 sec
+# found 6700 orbits
+
+# Aug 9, 2012 on MacBook Pro: 1 min 50 sec
+# found 6667 orbits
+
+
+# May 27, 2013 on MacBook Pro: 1 min 42 sec
+# found 6667 orbits : 8^8, 4^11, 3^4, 2^188, 1^6456
+
+
+# April 5, 2015 on MacBookPro: 10 min 49 
+# found 6651 orbits : 8^9, 4^11, 3^4, 2^193, 1^6434 (with data from Alfred)
+
+# May 28, 2015 on MacBookPro: 10 min 52 
+# found 6686 orbits : 8^9, 4^11, 3^4, 2^198, 1^6464 (with data from tx1)
+
+
+isomorph:
+	$(DUAL_HYPEROVAL_PATH)/dh.out -v 2 -n $(N) -k $(K) -q $(Q) \
+		-depth $(DEPTH) \
+		-isomorph_testing \
+		-print_interval 250
+
+# Aug 9, 2012: MacBook Pro 4 min 30 sec, finds 63 isomorphism types
+# May 27, 2013 on MacBook Pro: 4 min 26 sec
+# May 28, 2015 on MacBook Pro: 16 min 2 sec, finds 63 isomorphism types
+
+report:
+	$(DUAL_HYPEROVAL_PATH)/dh.out -v 1 -n $(N) -k $(K) -q $(Q) \
+		-depth $(DEPTH) \
+		-report  
+	pdflatex report_DH_16.tex
+	open report_DH_16.pdf
+
+
+# May 28, 2015 on MacBook Pro: 54 sec
+
+
+magma:
+	$(DUAL_HYPEROVAL_PATH)/dh.out -v 1 -n $(N) -k $(K) -q $(Q) \
+		-depth $(DEPTH) \
+		-export_magma 
+
+
+D1:
+	$(DUAL_HYPEROVAL_PATH)/dh.out -v 1 -n $(N) -k $(K) -q $(Q) \
+		-D1 
+
+
+
+D2:
+	$(DUAL_HYPEROVAL_PATH)/dh.out -v 1 -n $(N) -k $(K) -q $(Q) \
+		-D2 
+
+identify1:
+	$(DUAL_HYPEROVAL_PATH)/dh.out -v 1 -n $(N) -k $(K) -q $(Q) \
+		-depth $(DEPTH) \
+		-identify  \
+		Demp1_0.txt \
+		Demp1_1.txt \
+		Demp1_2.txt \
+		Demp1_3.txt \
+		Demp1_4.txt \
+		Demp1_5.txt \
+		Demp1_6.txt \
+		Demp1_7.txt \
+		Demp1_8.txt \
+		Demp1_9.txt \
+		Demp1_10.txt \
+		Demp1_11.txt \
+		Demp1_12.txt \
+		Demp1_13.txt \
+		Demp1_14.txt \
+		Demp1_15.txt \
+		Demp1_16.txt \
+		Demp1_17.txt \
+		Demp1_18.txt \
+		Demp1_19.txt \
+		Demp1_20.txt \
+		Demp1_21.txt \
+		Demp1_22.txt \
+		Demp1_23.txt \
+		Demp1_24.txt \
+		-1
+
+identify2:
+	$(DUAL_HYPEROVAL_PATH)/dh.out -v 1 -n $(N) -k $(K) -q $(Q) \
+		-depth $(DEPTH) \
+		-identify \
+		Demp2_0.txt \
+		Demp2_1.txt \
+		Demp2_2.txt \
+		Demp2_3.txt \
+		Demp2_4.txt \
+		Demp2_5.txt \
+		Demp2_6.txt \
+		Demp2_7.txt \
+		Demp2_8.txt \
+		Demp2_9.txt \
+		Demp2_10.txt \
+		Demp2_11.txt \
+		Demp2_12.txt \
+		Demp2_13.txt \
+		Demp2_14.txt \
+		Demp2_15.txt \
+		Demp2_16.txt \
+		-1
+
+identify:
+	$(DUAL_HYPEROVAL_PATH)/dh.out -v 1 -n $(N) -k $(K) -q $(Q) \
+		-depth $(DEPTH) \
+		-identify \
+			QUOTIENTS_16/quotient_q2_nb0.txt \
+			QUOTIENTS_16/quotient_q2_nb1.txt \
+			QUOTIENTS_16/quotient_q2_nb2.txt \
+			QUOTIENTS_16/quotient_q2_nb3.txt \
+			QUOTIENTS_16/quotient_q2_nb4.txt \
+			QUOTIENTS_16/quotient_q2_nb5.txt \
+			QUOTIENTS_16/quotient_q2_nb6.txt \
+			QUOTIENTS_16/quotient_q2_nb7.txt \
+			QUOTIENTS_16/quotient_q2_nb8.txt \
+			QUOTIENTS_16/quotient_q2_nb9.txt \
+			QUOTIENTS_16/quotient_q2_nb10.txt \
+			QUOTIENTS_16/quotient_q2_nb11.txt \
+			QUOTIENTS_16/quotient_q2_nb12.txt \
+			QUOTIENTS_16/quotient_q2_nb13.txt \
+			QUOTIENTS_16/quotient_q2_nb14.txt \
+			QUOTIENTS_16/quotient_q2_nb15.txt \
+			QUOTIENTS_16/quotient_q2_nb16.txt \
+			QUOTIENTS_16/quotient_q2_nb17.txt \
+			QUOTIENTS_16/quotient_q2_nb18.txt \
+			QUOTIENTS_16/quotient_q2_nb19.txt \
+			QUOTIENTS_16/quotient_q2_nb20.txt \
+			QUOTIENTS_16/quotient_q2_nb21.txt \
+			QUOTIENTS_16/quotient_q2_nb22.txt \
+			QUOTIENTS_16/quotient_q2_nb23.txt \
+			QUOTIENTS_16/quotient_q2_nb24.txt \
+			QUOTIENTS_16/quotient_q2_nb25.txt \
+			QUOTIENTS_16/quotient_q2_nb26.txt \
+			QUOTIENTS_16/quotient_q2_nb27.txt \
+			QUOTIENTS_16/quotient_q2_nb28.txt \
+			QUOTIENTS_16/quotient_q2_nb29.txt \
+			QUOTIENTS_16/quotient_q2_nb30.txt \
+			-1
+ 
+
+lift_0_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 0 500 >log_0_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 50 500 >log_50_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 100 500 >log_100_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 150 500 >log_150_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 200 500 >log_200_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 250 500 >log_250_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 300 500 >log_300_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 350 500 >log_350_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 400 500 >log_400_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 450 500 >log_450_500 &
+	sleep 5
+
+
+lift_1_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 1 500 >log_1_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 51 500 >log_51_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 101 500 >log_101_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 151 500 >log_151_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 201 500 >log_201_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 251 500 >log_251_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 301 500 >log_301_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 351 500 >log_351_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 401 500 >log_401_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 451 500 >log_451_500 &
+	sleep 5
+
+
+lift_2_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 2 500 >log_2_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 52 500 >log_52_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 102 500 >log_102_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 152 500 >log_152_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 202 500 >log_202_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 252 500 >log_252_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 302 500 >log_302_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 352 500 >log_352_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 402 500 >log_402_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 452 500 >log_452_500 &
+	sleep 5
+
+
+lift_3_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 3 500 >log_3_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 53 500 >log_53_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 103 500 >log_103_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 153 500 >log_153_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 203 500 >log_203_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 253 500 >log_253_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 303 500 >log_303_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 353 500 >log_353_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 403 500 >log_403_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 453 500 >log_453_500 &
+	sleep 5
+
+
+lift_4_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 4 500 >log_4_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 54 500 >log_54_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 104 500 >log_104_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 154 500 >log_154_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 204 500 >log_204_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 254 500 >log_254_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 304 500 >log_304_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 354 500 >log_354_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 404 500 >log_404_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 454 500 >log_454_500 &
+	sleep 5
+
+
+lift_5_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 5 500 >log_5_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 55 500 >log_55_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 105 500 >log_105_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 155 500 >log_155_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 205 500 >log_205_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 255 500 >log_255_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 305 500 >log_305_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 355 500 >log_355_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 405 500 >log_405_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 455 500 >log_455_500 &
+	sleep 5
+
+
+lift_6_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 6 500 >log_6_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 56 500 >log_56_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 106 500 >log_106_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 156 500 >log_156_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 206 500 >log_206_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 256 500 >log_256_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 306 500 >log_306_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 356 500 >log_356_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 406 500 >log_406_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 456 500 >log_456_500 &
+	sleep 5
+
+
+lift_7_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 7 500 >log_7_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 57 500 >log_57_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 107 500 >log_107_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 157 500 >log_157_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 207 500 >log_207_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 257 500 >log_257_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 307 500 >log_307_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 357 500 >log_357_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 407 500 >log_407_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 457 500 >log_457_500 &
+	sleep 5
+
+
+lift_8_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 8 500 >log_8_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 58 500 >log_58_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 108 500 >log_108_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 158 500 >log_158_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 208 500 >log_208_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 258 500 >log_258_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 308 500 >log_308_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 358 500 >log_358_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 408 500 >log_408_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 458 500 >log_458_500 &
+	sleep 5
+
+
+lift_9_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 9 500 >log_9_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 59 500 >log_59_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 109 500 >log_109_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 159 500 >log_159_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 209 500 >log_209_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 259 500 >log_259_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 309 500 >log_309_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 359 500 >log_359_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 409 500 >log_409_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 459 500 >log_459_500 &
+	sleep 5
+
+
+lift_10_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 10 500 >log_10_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 60 500 >log_60_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 110 500 >log_110_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 160 500 >log_160_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 210 500 >log_210_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 260 500 >log_260_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 310 500 >log_310_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 360 500 >log_360_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 410 500 >log_410_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 460 500 >log_460_500 &
+	sleep 5
+
+
+lift_11_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 11 500 >log_11_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 61 500 >log_61_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 111 500 >log_111_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 161 500 >log_161_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 211 500 >log_211_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 261 500 >log_261_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 311 500 >log_311_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 361 500 >log_361_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 411 500 >log_411_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 461 500 >log_461_500 &
+	sleep 5
+
+
+lift_12_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 12 500 >log_12_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 62 500 >log_62_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 112 500 >log_112_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 162 500 >log_162_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 212 500 >log_212_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 262 500 >log_262_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 312 500 >log_312_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 362 500 >log_362_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 412 500 >log_412_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 462 500 >log_462_500 &
+	sleep 5
+
+
+lift_13_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 13 500 >log_13_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 63 500 >log_63_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 113 500 >log_113_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 163 500 >log_163_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 213 500 >log_213_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 263 500 >log_263_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 313 500 >log_313_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 363 500 >log_363_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 413 500 >log_413_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 463 500 >log_463_500 &
+	sleep 5
+
+
+lift_14_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 14 500 >log_14_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 64 500 >log_64_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 114 500 >log_114_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 164 500 >log_164_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 214 500 >log_214_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 264 500 >log_264_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 314 500 >log_314_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 364 500 >log_364_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 414 500 >log_414_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 464 500 >log_464_500 &
+	sleep 5
+
+
+lift_15_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 15 500 >log_15_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 65 500 >log_65_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 115 500 >log_115_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 165 500 >log_165_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 215 500 >log_215_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 265 500 >log_265_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 315 500 >log_315_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 365 500 >log_365_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 415 500 >log_415_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 465 500 >log_465_500 &
+	sleep 5
+
+
+lift_16_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 16 500 >log_16_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 66 500 >log_66_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 116 500 >log_116_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 166 500 >log_166_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 216 500 >log_216_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 266 500 >log_266_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 316 500 >log_316_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 366 500 >log_366_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 416 500 >log_416_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 466 500 >log_466_500 &
+	sleep 5
+
+
+lift_17_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 17 500 >log_17_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 67 500 >log_67_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 117 500 >log_117_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 167 500 >log_167_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 217 500 >log_217_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 267 500 >log_267_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 317 500 >log_317_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 367 500 >log_367_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 417 500 >log_417_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 467 500 >log_467_500 &
+	sleep 5
+
+
+lift_18_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 18 500 >log_18_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 68 500 >log_68_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 118 500 >log_118_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 168 500 >log_168_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 218 500 >log_218_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 268 500 >log_268_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 318 500 >log_318_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 368 500 >log_368_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 418 500 >log_418_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 468 500 >log_468_500 &
+	sleep 5
+
+
+lift_19_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 19 500 >log_19_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 69 500 >log_69_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 119 500 >log_119_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 169 500 >log_169_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 219 500 >log_219_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 269 500 >log_269_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 319 500 >log_319_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 369 500 >log_369_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 419 500 >log_419_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 469 500 >log_469_500 &
+	sleep 5
+
+
+lift_20_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 20 500 >log_20_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 70 500 >log_70_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 120 500 >log_120_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 170 500 >log_170_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 220 500 >log_220_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 270 500 >log_270_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 320 500 >log_320_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 370 500 >log_370_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 420 500 >log_420_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 470 500 >log_470_500 &
+	sleep 5
+
+
+lift_21_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 21 500 >log_21_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 71 500 >log_71_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 121 500 >log_121_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 171 500 >log_171_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 221 500 >log_221_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 271 500 >log_271_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 321 500 >log_321_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 371 500 >log_371_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 421 500 >log_421_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 471 500 >log_471_500 &
+	sleep 5
+
+
+lift_22_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 22 500 >log_22_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 72 500 >log_72_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 122 500 >log_122_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 172 500 >log_172_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 222 500 >log_222_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 272 500 >log_272_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 322 500 >log_322_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 372 500 >log_372_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 422 500 >log_422_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 472 500 >log_472_500 &
+	sleep 5
+
+
+lift_23_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 23 500 >log_23_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 73 500 >log_73_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 123 500 >log_123_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 173 500 >log_173_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 223 500 >log_223_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 273 500 >log_273_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 323 500 >log_323_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 373 500 >log_373_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 423 500 >log_423_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 473 500 >log_473_500 &
+	sleep 5
+
+
+lift_24_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 24 500 >log_24_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 74 500 >log_74_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 124 500 >log_124_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 174 500 >log_174_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 224 500 >log_224_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 274 500 >log_274_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 324 500 >log_324_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 374 500 >log_374_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 424 500 >log_424_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 474 500 >log_474_500 &
+	sleep 5
+
+
+lift_25_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 25 500 >log_25_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 75 500 >log_75_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 125 500 >log_125_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 175 500 >log_175_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 225 500 >log_225_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 275 500 >log_275_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 325 500 >log_325_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 375 500 >log_375_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 425 500 >log_425_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 475 500 >log_475_500 &
+	sleep 5
+
+
+lift_26_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 26 500 >log_26_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 76 500 >log_76_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 126 500 >log_126_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 176 500 >log_176_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 226 500 >log_226_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 276 500 >log_276_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 326 500 >log_326_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 376 500 >log_376_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 426 500 >log_426_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 476 500 >log_476_500 &
+	sleep 5
+
+
+lift_27_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 27 500 >log_27_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 77 500 >log_77_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 127 500 >log_127_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 177 500 >log_177_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 227 500 >log_227_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 277 500 >log_277_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 327 500 >log_327_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 377 500 >log_377_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 427 500 >log_427_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 477 500 >log_477_500 &
+	sleep 5
+
+
+lift_28_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 28 500 >log_28_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 78 500 >log_78_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 128 500 >log_128_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 178 500 >log_178_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 228 500 >log_228_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 278 500 >log_278_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 328 500 >log_328_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 378 500 >log_378_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 428 500 >log_428_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 478 500 >log_478_500 &
+	sleep 5
+
+
+lift_29_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 29 500 >log_29_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 79 500 >log_79_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 129 500 >log_129_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 179 500 >log_179_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 229 500 >log_229_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 279 500 >log_279_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 329 500 >log_329_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 379 500 >log_379_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 429 500 >log_429_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 479 500 >log_479_500 &
+	sleep 5
+
+
+lift_30_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 30 500 >log_30_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 80 500 >log_80_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 130 500 >log_130_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 180 500 >log_180_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 230 500 >log_230_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 280 500 >log_280_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 330 500 >log_330_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 380 500 >log_380_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 430 500 >log_430_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 480 500 >log_480_500 &
+	sleep 5
+
+
+lift_31_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 31 500 >log_31_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 81 500 >log_81_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 131 500 >log_131_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 181 500 >log_181_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 231 500 >log_231_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 281 500 >log_281_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 331 500 >log_331_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 381 500 >log_381_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 431 500 >log_431_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 481 500 >log_481_500 &
+	sleep 5
+
+
+lift_32_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 32 500 >log_32_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 82 500 >log_82_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 132 500 >log_132_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 182 500 >log_182_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 232 500 >log_232_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 282 500 >log_282_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 332 500 >log_332_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 382 500 >log_382_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 432 500 >log_432_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 482 500 >log_482_500 &
+	sleep 5
+
+
+lift_33_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 33 500 >log_33_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 83 500 >log_83_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 133 500 >log_133_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 183 500 >log_183_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 233 500 >log_233_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 283 500 >log_283_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 333 500 >log_333_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 383 500 >log_383_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 433 500 >log_433_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 483 500 >log_483_500 &
+	sleep 5
+
+
+lift_34_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 34 500 >log_34_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 84 500 >log_84_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 134 500 >log_134_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 184 500 >log_184_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 234 500 >log_234_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 284 500 >log_284_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 334 500 >log_334_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 384 500 >log_384_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 434 500 >log_434_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 484 500 >log_484_500 &
+	sleep 5
+
+
+lift_35_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 35 500 >log_35_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 85 500 >log_85_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 135 500 >log_135_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 185 500 >log_185_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 235 500 >log_235_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 285 500 >log_285_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 335 500 >log_335_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 385 500 >log_385_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 435 500 >log_435_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 485 500 >log_485_500 &
+	sleep 5
+
+
+lift_36_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 36 500 >log_36_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 86 500 >log_86_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 136 500 >log_136_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 186 500 >log_186_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 236 500 >log_236_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 286 500 >log_286_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 336 500 >log_336_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 386 500 >log_386_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 436 500 >log_436_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 486 500 >log_486_500 &
+	sleep 5
+
+
+lift_37_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 37 500 >log_37_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 87 500 >log_87_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 137 500 >log_137_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 187 500 >log_187_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 237 500 >log_237_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 287 500 >log_287_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 337 500 >log_337_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 387 500 >log_387_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 437 500 >log_437_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 487 500 >log_487_500 &
+	sleep 5
+
+
+lift_38_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 38 500 >log_38_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 88 500 >log_88_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 138 500 >log_138_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 188 500 >log_188_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 238 500 >log_238_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 288 500 >log_288_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 338 500 >log_338_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 388 500 >log_388_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 438 500 >log_438_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 488 500 >log_488_500 &
+	sleep 5
+
+
+lift_39_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 39 500 >log_39_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 89 500 >log_89_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 139 500 >log_139_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 189 500 >log_189_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 239 500 >log_239_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 289 500 >log_289_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 339 500 >log_339_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 389 500 >log_389_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 439 500 >log_439_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 489 500 >log_489_500 &
+	sleep 5
+
+
+lift_40_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 40 500 >log_40_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 90 500 >log_90_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 140 500 >log_140_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 190 500 >log_190_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 240 500 >log_240_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 290 500 >log_290_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 340 500 >log_340_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 390 500 >log_390_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 440 500 >log_440_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 490 500 >log_490_500 &
+	sleep 5
+
+
+lift_41_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 41 500 >log_41_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 91 500 >log_91_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 141 500 >log_141_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 191 500 >log_191_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 241 500 >log_241_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 291 500 >log_291_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 341 500 >log_341_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 391 500 >log_391_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 441 500 >log_441_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 491 500 >log_491_500 &
+	sleep 5
+
+
+lift_42_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 42 500 >log_42_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 92 500 >log_92_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 142 500 >log_142_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 192 500 >log_192_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 242 500 >log_242_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 292 500 >log_292_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 342 500 >log_342_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 392 500 >log_392_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 442 500 >log_442_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 492 500 >log_492_500 &
+	sleep 5
+
+
+lift_43_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 43 500 >log_43_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 93 500 >log_93_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 143 500 >log_143_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 193 500 >log_193_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 243 500 >log_243_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 293 500 >log_293_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 343 500 >log_343_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 393 500 >log_393_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 443 500 >log_443_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 493 500 >log_493_500 &
+	sleep 5
+
+
+lift_44_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 44 500 >log_44_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 94 500 >log_94_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 144 500 >log_144_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 194 500 >log_194_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 244 500 >log_244_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 294 500 >log_294_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 344 500 >log_344_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 394 500 >log_394_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 444 500 >log_444_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 494 500 >log_494_500 &
+	sleep 5
+
+
+lift_45_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 45 500 >log_45_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 95 500 >log_95_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 145 500 >log_145_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 195 500 >log_195_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 245 500 >log_245_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 295 500 >log_295_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 345 500 >log_345_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 395 500 >log_395_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 445 500 >log_445_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 495 500 >log_495_500 &
+	sleep 5
+
+
+lift_46_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 46 500 >log_46_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 96 500 >log_96_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 146 500 >log_146_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 196 500 >log_196_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 246 500 >log_246_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 296 500 >log_296_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 346 500 >log_346_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 396 500 >log_396_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 446 500 >log_446_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 496 500 >log_496_500 &
+	sleep 5
+
+
+lift_47_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 47 500 >log_47_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 97 500 >log_97_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 147 500 >log_147_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 197 500 >log_197_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 247 500 >log_247_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 297 500 >log_297_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 347 500 >log_347_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 397 500 >log_397_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 447 500 >log_447_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 497 500 >log_497_500 &
+	sleep 5
+
+
+lift_48_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 48 500 >log_48_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 98 500 >log_98_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 148 500 >log_148_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 198 500 >log_198_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 248 500 >log_248_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 298 500 >log_298_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 348 500 >log_348_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 398 500 >log_398_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 448 500 >log_448_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 498 500 >log_498_500 &
+	sleep 5
+
+
+lift_49_50:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 49 500 >log_49_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 99 500 >log_99_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 149 500 >log_149_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 199 500 >log_199_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 249 500 >log_249_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 299 500 >log_299_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 349 500 >log_349_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 399 500 >log_399_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 449 500 >log_449_500 &
+	sleep 5
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 499 500 >log_499_500 &
+	sleep 5
+
+
+
+read_stats:
+	$(DUAL_HYPEROVAL_PATH)/dh.out -v 1 -n $(N) -k $(K) -q $(Q) \
+		-depth $(DEPTH) \
+		-read_statistics_after_split 250 
+
+
+# it took 238 days to complete the lifts on tx1
+# we found 6988 solutions (using -lex)
+
+
+lift_330:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 330 1000000 -v 2 -save  
+
+
+# 3 solutions (1 deleted)
+#exact_cover::compute_liftings_single_case case 330 / 684477 stab_go = 3 starter = ( 0, 717, 11941, 12650, 13380, 27598 )
+
+#6 10
+#71 318 569 661 693 704 813 905 997 1109 
+#54 368 714 726 750 762 844 905 921 1354 
+#32 163 351 354 480 485 524 745 826 905 
+#29 314 351 354 480 485 508 745 826 905 
+#71 364 568 693 813 905 961 1172 1221 1303 
+#36 145 158 320 404 886 905 1215 1230 1308 
+
+#330 0 717 11941 12650 13380 27598 29295 67405 113191 115643 119544 121740 131893 138443 140298 195217
+#330 0 717 11941 12650 13380 27598 30535 66680 92337 110395 127630 138443 145263 175848 182283 192430
+#330 0 717 11941 12650 13380 27598 28192 39539 40124 62019 70193 136108 138443 181576 183582 192735
+
+
+solve_330:
+	$(TOOLS_PATH)/solve_diophant.out -v 2 -file system_330_684477.txt 
+
+# 4 solutions
+
+
+test_330:
+	$(TOOLS_PATH)/solve_diophant.out -v 2 -file system_330_684477.txt  -test system_330_684477.sol
+
+
+lift_430:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 430 1000000 -v 2 -save  
+
+test_430:
+	$(TOOLS_PATH)/solve_diophant.out -v 2 -file system_430_684477.txt -test system_430_684477.sol
+
+lift_24326:
+	$(DUAL_HYPEROVAL_PATH)/dh.out $(LIFTARGS) 24326 1000000 -v 2 -save  
+
+
+

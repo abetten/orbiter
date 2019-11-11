@@ -433,6 +433,7 @@ void poset_classification::compute_flag_orbits(int size,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+	int f_v4 = (verbose_level >= 4);
 	int f, cur, l, prev, u;
 	int f_print = f_v;
 	double progress;
@@ -473,21 +474,21 @@ void poset_classification::compute_flag_orbits(int size,
 				f_create_schreier_vector,
 				f_use_invariant_subset_if_available, 
 				f_lex, 
-				verbose_level - 2);
+				verbose_level - 1);
 			if (f_v) {
 				cout << "poset_classification::compute_flag_orbits after compute_flag_orbits_subspace_action" << endl;
 			}
 		}
 		else {
-			if (f_v) {
+			if (f_v4) {
 				cout << "poset_classification::compute_flag_orbits before compute_flag_orbits" << endl;
 			}
 			root[prev].compute_flag_orbits(this, size,
 				f_create_schreier_vector,
 				f_use_invariant_subset_if_available, 
 				f_lex, 
-				verbose_level - 2);
-			if (f_v) {
+				verbose_level - 1);
+			if (f_v4) {
 				cout << "poset_classification::compute_flag_orbits after compute_flag_orbits" << endl;
 			}
 		}
@@ -740,7 +741,7 @@ void poset_classification::extend_node(
 
 		}
 
-		if (f_vvv) {
+		if (FALSE) {
 			print_level_info(size, prev);
 			cout << "poset_classification::extend_node "
 					"working on extension "
@@ -804,7 +805,7 @@ void poset_classification::extend_node(
 					<< nb_ext_cur << endl;
 			}
 		Work.handle_extension(nb_fuse_cur, nb_ext_cur, 
-			verbose_level - 4);
+			verbose_level - 2);
 		// in upstep_work.cpp
 
 		if (FALSE) {

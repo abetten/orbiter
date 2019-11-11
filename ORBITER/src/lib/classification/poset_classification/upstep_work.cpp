@@ -186,7 +186,7 @@ void upstep_work::handle_extension(
 		if (f_v) {
 			cout << "upstep_work::handle_extension unprocessed type" << endl;
 			}
-		handle_extension_unprocessed_type(verbose_level - 2);
+		handle_extension_unprocessed_type(verbose_level);
 		nb_ext_cur++;
 		}
 	else {

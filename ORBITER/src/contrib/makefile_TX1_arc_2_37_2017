@@ -1,0 +1,29 @@
+#MY_PATH=../../../DEV.16
+MY_PATH=/scratch2/betten/COMPILE/2016_01_10
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH)/ORBITER2/SRC2
+
+HYPEROVAL_PATH=$(SRC)/APPS/HYPEROVAL
+TOOLS_PATH=$(SRC)/APPS/TOOLS
+
+ORDER=37
+TARGET=38
+STARTER_SIZE=15
+RAD=50
+
+
+clean:
+	- rm -rf ISO
+	- rm arc_*
+	- rm hyperovals*
+
+
+arc:
+	$(HYPEROVAL_PATH)/hyperoval.out -v 4 -q $(ORDER) \
+		-target_size $(TARGET) \
+		-starter_size $(STARTER_SIZE) \
+		-compute_starter $(TARGET) ./ -W \
+		-lex
+
+
+
