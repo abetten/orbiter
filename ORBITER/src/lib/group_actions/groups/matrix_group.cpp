@@ -1492,9 +1492,9 @@ void matrix_group::GL_print_for_make_element(
 		int *Elt, ostream &ost)
 {
 	int i, j, a;
-	int w;
+	//int w;
 	
-	w = (int) GFq->log10_of_q;
+	//w = (int) GFq->log10_of_q;
 
 	int *D;
 	D = NEW_int(n * n);
@@ -1508,21 +1508,21 @@ void matrix_group::GL_print_for_make_element(
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {
 			a = D[i * n + j];
-			ost << setw(w) << a << ", ";
+			ost << a << ",";
 			}
 		}
 	if (f_affine) {
 		for (i = 0; i < n; i++) {
 			a = Elt[n * n + i];
-			ost << setw(w) << a << ", ";
+			ost << a << ",";
 			}
 		if (f_semilinear) {
-			ost << Elt[n * n + n] << ", ";
+			ost << Elt[n * n + n] << ",";
 			}
 		}
 	else {
 		if (f_semilinear) {
-			ost << Elt[n * n] << ", ";
+			ost << Elt[n * n] << ",";
 			}
 		}
 

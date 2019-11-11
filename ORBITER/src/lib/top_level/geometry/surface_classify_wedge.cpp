@@ -2062,6 +2062,21 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 }
 
 
+void surface_classify_wedge::generate_history(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_classify_wedge::generate_history" << endl;
+	}
+	Classify_double_sixes->Five_plus_one->generate_history(5, verbose_level - 2);
+	if (f_v) {
+		cout << "surface_classify_wedge::generate_history done" << endl;
+	}
+
+}
+
+
 }}
 
 

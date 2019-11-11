@@ -672,14 +672,10 @@ public:
 	void draw_poset_full(const char *fname_base, int depth, 
 		int data, int f_embedded, int f_sideways, 
 		double x_stretch, int verbose_level);
-	void draw_poset_fname_base_aux_poset(
-			char *fname, int depth);
-	void draw_poset_fname_base_poset_lvl(
-			char *fname, int depth);
-	void draw_poset_fname_base_tree_lvl(
-			char *fname, int depth);
-	void draw_poset_fname_base_poset_detailed_lvl(
-			char *fname, int depth);
+	void draw_poset_fname_base_aux_poset(char *fname, int depth);
+	void draw_poset_fname_base_poset_lvl(char *fname, int depth);
+	void draw_poset_fname_base_tree_lvl(char *fname, int depth);
+	void draw_poset_fname_base_poset_detailed_lvl(char *fname, int depth);
 	void draw_poset(const char *fname_base, int depth, 
 		int data1, int f_embedded, int f_sideways, 
 		int verbose_level);
@@ -808,7 +804,6 @@ public:
 		int max_depth);
 	void make_spreadsheet_of_level_info(spreadsheet *&Sp, 
 		int max_depth, int verbose_level);
-	void generate_source_code(int level, int verbose_level);
 	void create_schreier_tree_fname_mask_base(
 			char *fname_mask, int node);
 	void create_shallow_schreier_tree_fname_mask_base(
@@ -817,6 +812,11 @@ public:
 	void wedge_product_export_magma(
 			int n, int q, int vector_space_dimension,
 			int level, int verbose_level);
+
+	// poset_classification_export_source_code.cpp:
+	void generate_source_code(int level, int verbose_level);
+	void generate_history(int level, int verbose_level);
+
 
 	// poset_classification_recognize.cpp:
 	void recognize_start_over(

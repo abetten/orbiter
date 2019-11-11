@@ -535,6 +535,7 @@ int main(int argc, const char **argv)
 
 #if 1
 	SCW->generate_source_code(verbose_level);
+	SCW->generate_history(verbose_level);
 #endif
 
 
