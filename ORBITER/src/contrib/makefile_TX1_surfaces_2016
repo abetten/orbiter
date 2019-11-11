@@ -1,0 +1,312 @@
+#MY_PATH=../../DEV.16
+MY_PATH=/scratch2/betten/COMPILE/2016_09_17
+SRC=$(MY_PATH)/ORBITER/SRC
+SRC2=$(MY_PATH)/ORBITER2/SRC2
+
+
+OVOID_PATH=$(SRC)/APPS/OVOID
+SURFACE_PATH=$(SRC)/APPS/SURFACE
+PROJECTIVE_SPACE_PATH=$(SRC)/APPS/PROJECTIVE_SPACE
+
+
+clean:
+	- rm codes_*
+	- rm Golay*
+	- rm Hamming*
+	- rm log a x.log
+
+
+
+q2:
+	$(OVOID_PATH)/ovoid.out -v 3 \
+		-n 5 -q 2 -epsilon 1 \
+		-surface
+
+#nb_lines=35 nb_pts=18 nb_orbits=0
+
+q3:
+	$(OVOID_PATH)/ovoid.out -v 3 \
+		-n 5 -q 3 -epsilon 1 \
+		-surface \
+		-depth 5
+
+#nb_lines=130 nb_pts=48 nb_orbits=0
+
+q5:
+	$(OVOID_PATH)/ovoid.out -v 3 \
+		-n 5 -q 5 -epsilon 1 \
+		-surface \
+		-depth 5
+
+#nb_lines=806 nb_pts=180 nb_orbits=5 nb_good_orbits = 1
+#iso type 0 is orbit 0 ago=240
+#We found 1 isomorphism types of surfaces
+#nb_lines=806 nb_pts=180 nb_orbits=5
+#0:00
+
+
+QQ29: Q7 Q8 Q9 Q11 Q13 Q16 Q17 Q19 Q23 Q25 Q27 Q29 
+
+QQ59: Q31 Q32 Q37 Q41 Q43 Q47 Q49 Q53 Q59 
+
+QQ71: Q61 Q67 Q71 
+
+
+Q7:
+	$(SURFACE_PATH)/surface.out -v 3 -linear -PGL 4 7 -wedge -end 
+
+
+q7:
+	$(OVOID_PATH)/ovoid.out -v 3 \
+		-n 5 -q 7 -epsilon 1 \
+		-surface \
+		-depth 5 \
+		-identify Fermat_cubic  1 0 1 1 1 2 1 3 -1 \
+		-identify Clebsch_cubic 3 4 3 5 3 6 3 7 3 8 3 9 3 10 3 11 3 12 3 13 3 14 3 15 6 16 6 17 6 18 6 19 -1 \
+		-identify Cayleys_nodal_cubic 1 16 1 17 1 18 1 19 -1
+
+#nb_lines=2850 nb_pts=448 nb_orbits=14 nb_good_orbits = 5
+#one with 92 points and ago=24
+#another with 99 points and ago=1296
+#There are 5 orbits of double sixes.
+#For q=7, the cubic surface with 27 lines is equanharmonic and projectively
+#unique and group of projectivities is (Z_3 x Z_3 xZ_3)S_4 and the order
+#should be 648. The number of points on the surface  as you have found  is
+#99, and all the points are on the lines of the surface, none of the points
+#lie only one line, the number of points which is exactly on two of the 27
+#lines is 81, and 18 of the points are exactly on three lines. What about
+#ago=1296 in your calculation? 
+
+Q8:
+	$(SURFACE_PATH)/surface.out -v 3 -linear -PGGL 4 8 -wedge -end 
+
+
+q8:
+	$(OVOID_PATH)/ovoid.out -v 3 \
+		-n 5 -q 8 -epsilon 1 \
+		-surface \
+		-depth 5
+
+#iso type 0 is orbit 0 ago=36
+#iso type 1 is orbit 2 ago=1152
+#We found 2 isomorphism types of surfaces
+#nb_lines=4745 nb_pts=648 nb_orbits=14
+#0:5
+
+
+Q9:
+	$(SURFACE_PATH)/surface.out -v 3 -linear -PGGL 4 9 -wedge -end 
+
+
+q9:
+	$(OVOID_PATH)/ovoid.out -v 3 \
+		-n 5 -q 9 -epsilon 1 \
+		-surface \
+		-depth 5 \
+		-identify Fermat_cubic  1 0 1 1 1 2 1 3 -1 \
+		-identify Clebsch_cubic 3 4 3 5 3 6 3 7 3 8 3 9 3 10 3 11 3 12 3 13 3 14 3 15 6 16 6 17 6 18 6 19 -1 \
+		-identify Cayleys_nodal_cubic 1 16 1 17 1 18 1 19 -1
+
+#iso type 0 is orbit 0 ago=16
+#iso type 1 is orbit 1 ago=96
+#iso type 2 is orbit 6 ago=864
+#iso type 3 is orbit 7 ago=480
+#We found 4 isomorphism types of surfaces
+#nb_lines=7462 nb_pts=900 nb_orbits=30
+#0:11
+
+Q11:
+	$(SURFACE_PATH)/surface.out -v 3 -linear -PGL 4 11 -wedge -end 
+
+
+
+q11:
+	$(OVOID_PATH)/ovoid.out -v 3 \
+		-n 5 -q 11 -epsilon 1 \
+		-surface \
+		-depth 5\
+		-identify Fermat_cubic  1 0 1 1 1 2 1 3 -1 \
+		-identify Clebsch_cubic 3 4 3 5 3 6 3 7 3 8 3 9 3 10 3 11 3 12 3 13 3 14 3 15 6 16 6 17 6 18 6 19 -1 \
+		-identify Cayleys_nodal_cubic 1 16 1 17 1 18 1 19 -1
+
+
+#with orthogonal group:
+#nb_lines=16226 nb_pts=1584 nb_orbits=78 nb_good_orbits = 33
+#iso type 0 is orbit 0 ago=12
+#iso type 1 is orbit 2 ago=24
+#iso type 2 is orbit 3 ago=8
+#iso type 3 is orbit 4 ago=10
+#iso type 4 is orbit 16 ago=240
+#iso type 5 is orbit 17 ago=48
+#We found 6 isomorphism types of surfaces
+#nb_lines=16226 nb_pts=1584 nb_orbits=78
+#0:25
+
+
+
+
+Q13:
+	$(SURFACE_PATH)/surface.out -v 3 -linear -PGL 4 13 -wedge -end \
+		-identify Fermat_cubic  1 0 1 1 1 2 1 3 -1 \
+		-identify Clebsch_cubic 3 4 3 5 3 6 3 7 3 8 3 9 3 10 3 11 3 12 3 13 3 14 3 15 6 16 6 17 6 18 6 19 -1 \
+		-identify Cayleys_nodal_cubic 1 16 1 17 1 18 1 19 -1 \
+		-identify E4 7 4 2 7 6 12 6 15 12 16 3 17 -1 \
+		-identify E6t1 12 4 12 7 9 12 10 15 10 16 6 17 -1 \
+		-identify E6t2 9 4 1 7 5 12 9 15 9 16 6 17 11 18 9 19 -1 \
+		-identify E9 6 4 2 7 11 12 10 15 5 16 7 17 -1 \
+		-identify E18 1 0 1 1 1 2 1 3 -1 
+
+
+
+q13:
+	$(OVOID_PATH)/ovoid.out -v 3 \
+		-n 5 -q 13 -epsilon 1 \
+		-surface \
+		-depth 5 \
+		-identify Fermat_cubic  1 0 1 1 1 2 1 3 -1 \
+		-identify Clebsch_cubic 3 4 3 5 3 6 3 7 3 8 3 9 3 10 3 11 3 12 3 13 3 14 3 15 6 16 6 17 6 18 6 19 -1 \
+		-identify Cayleys_nodal_cubic 1 16 1 17 1 18 1 19 -1 \
+		-identify E4 7 4 2 7 6 12 6 15 12 16 3 17 -1 \
+		-identify E6t1 12 4 12 7 9 12 10 15 10 16 6 17 -1 \
+		-identify E6t2 9 4 1 7 5 12 9 15 9 16 6 17 11 18 9 19 -1 \
+		-identify E9 6 4 2 7 11 12 10 15 5 16 7 17 -1 \
+		-identify E18 1 0 1 1 1 2 1 3 -1 
+
+#nb_lines=31110 nb_pts=2548 nb_orbits=156 nb_good_orbits = 68
+#iso type 0 is orbit 0 ago=4
+#iso type 1 is orbit 2 ago=24
+#iso type 2 is orbit 3 ago=4
+#iso type 3 is orbit 4 ago=8
+#iso type 4 is orbit 7 ago=48
+#iso type 5 is orbit 29 ago=24
+#iso type 6 is orbit 30 ago=216
+#iso type 7 is orbit 31 ago=48
+#iso type 8 is orbit 66 ago=1296
+#We found 9 isomorphism types of surfaces
+#nb_lines=31110 nb_pts=2548 nb_orbits=156
+#1:10
+
+#0:34
+
+
+
+Q16:
+	$(SURFACE_PATH)/surface.out -v 3 -linear -PGGL 4 16 -wedge -end 
+
+
+
+
+q16:
+	$(OVOID_PATH)/ovoid.out -v 3 \
+		-n 5 -q 16 -epsilon 1 \
+		-surface \
+		-depth 5
+
+
+
+Q17:
+	$(SURFACE_PATH)/surface.out -v 3 -linear -PGL 4 17 -wedge -end 
+
+
+q17:
+	$(OVOID_PATH)/ovoid.out -v 3 \
+		-n 5 -q 17 -epsilon 1 \
+		-surface \
+		-depth 5
+
+
+Q19:
+	$(SURFACE_PATH)/surface.out -v 3 -linear -PGL 4 19 -wedge -end 
+
+
+q19:
+	$(OVOID_PATH)/ovoid.out -v 3 \
+		-n 5 -q 19 -epsilon 1 \
+		-surface \
+		-depth 5
+
+Q23:
+	$(SURFACE_PATH)/surface.out -v 3 -linear -PGL 4 23 -wedge -end 
+
+q23:
+	$(OVOID_PATH)/ovoid.out -v 3 \
+		-n 5 -q 23 -epsilon 1 \
+		-surface \
+		-depth 5
+
+Q25:
+	$(SURFACE_PATH)/surface.out -v 3 -linear -PGGL 4 25 -wedge -end 
+
+
+q25:
+	$(OVOID_PATH)/ovoid.out -v 3 \
+		-n 5 -q 25 -epsilon 1 \
+		-surface \
+		-depth 5
+
+
+Q27:
+	$(SURFACE_PATH)/surface.out -v 3 -linear -PGGL 4 27 -wedge -end 
+
+Q29:
+	$(SURFACE_PATH)/surface.out -v 3 -linear -PGL 4 29 -wedge -end 
+
+Q31:
+	$(SURFACE_PATH)/surface.out -v 4 -linear -PGL 4 31 -wedge -end 
+
+Q32:
+	$(SURFACE_PATH)/surface.out -v 4 -linear -PGGL 4 32 -wedge -end 
+
+Q37:
+	$(SURFACE_PATH)/surface.out -v 4 -linear -PGL 4 37 -wedge -end 
+
+Q41:
+	$(SURFACE_PATH)/surface.out -v 4 -linear -PGL 4 41 -wedge -end 
+
+Q43:
+	$(SURFACE_PATH)/surface.out -v 4 -linear -PGL 4 43 -wedge -end 
+
+Q47:
+	$(SURFACE_PATH)/surface.out -v 4 -linear -PGL 4 47 -wedge -end 
+
+Q49:
+	$(SURFACE_PATH)/surface.out -v 4 -linear -PGGL 4 49 -wedge -end 
+
+Q53:
+	$(SURFACE_PATH)/surface.out -v 4 -linear -PGL 4 53 -wedge -end 
+
+Q59:
+	$(SURFACE_PATH)/surface.out -v 4 -linear -PGL 4 59 -wedge -end 
+
+Q61:
+	$(SURFACE_PATH)/surface.out -v 4 -linear -PGL 4 61 -wedge -end 
+
+Q64:
+	$(SURFACE_PATH)/surface.out -v 4 -linear -PGGL 4 64 -wedge -end 
+
+Q67:
+	$(SURFACE_PATH)/surface.out -v 4 -linear -PGL 4 67 -wedge -end 
+
+Q71:
+	$(SURFACE_PATH)/surface.out -v 4 -linear -PGL 4 71 -wedge -end 
+
+Q73:
+	$(SURFACE_PATH)/surface.out -v 4 -linear -PGL 4 73 -wedge -end 
+
+Q79:
+	$(SURFACE_PATH)/surface.out -v 4 -linear -PGL 4 79 -wedge -end 
+
+Q81:
+	$(SURFACE_PATH)/surface.out -v 4 -linear -PGGL 4 81 -wedge -end 
+
+Q83:
+	$(SURFACE_PATH)/surface.out -v 4 -linear -PGL 4 83 -wedge -end 
+
+Q89:
+	$(SURFACE_PATH)/surface.out -v 4 -linear -PGL 4 89 -wedge -end 
+
+Q97:
+	$(SURFACE_PATH)/surface.out -v 4 -linear -PGL 4 97 -wedge -end 
+
+
+
