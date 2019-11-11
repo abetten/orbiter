@@ -236,6 +236,7 @@ MODULES= \
 		classification/poset_classification/poset_classification_classify.o \
 		classification/poset_classification/poset_classification_combinatorics.o \
 		classification/poset_classification/poset_classification_draw.o \
+		classification/poset_classification/poset_classification_export_source_code.o \
 		classification/poset_classification/poset_classification_init.o \
 		classification/poset_classification/poset_classification_io.o \
 		classification/poset_classification/poset_classification_recognize.o \

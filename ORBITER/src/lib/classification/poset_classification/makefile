@@ -11,6 +11,7 @@ MODULES = \
 	poset_classification_classify.o \
 	poset_classification_combinatorics.o \
 	poset_classification_draw.o \
+	poset_classification_export_source_code.o \
 	poset_classification_init.o \
 	poset_classification_io.o \
 	poset_classification_recognize.o \

@@ -2757,6 +2757,7 @@ public:
 	void report_surface(std::ostream &ost, int orbit_index, int verbose_level);
 	void generate_source_code(int verbose_level);
 		// no longer produces nb_E[] and single_six[]
+	void generate_history(int verbose_level);
 
 };
 
