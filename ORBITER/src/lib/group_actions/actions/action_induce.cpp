@@ -941,6 +941,9 @@ void action::induced_action_on_Galois_group(
 
 	allocate_element_data();
 
+	if (f_v) {
+		cout << "action::induced_action_on_Galois_group before induced_action_override_sims" << endl;
+		}
 	induced_action_override_sims(*A, old_G, verbose_level - 2);
 	if (f_v) {
 		cout << "action::induced_action_on_Galois_group "
@@ -2333,7 +2336,7 @@ void action::induce(action *old_action, sims *old_G,
 	action *fallback_action;
 	
 	if (f_v) {
-		cout << "action::induce" << endl;
+		cout << "action::induce verbose_level=" << verbose_level << endl;
 		}
 	if (f_v) {
 		cout << "inducing from action:" << endl;
@@ -2386,6 +2389,9 @@ void action::induce(action *old_action, sims *old_G,
 	
 	G = NEW_OBJECT(sims);
 	K = NEW_OBJECT(sims);
+	if (f_v) {
+		cout << "action::induce: before G->init_without_base(this);" << endl;
+		}
 	G->init_without_base(this, verbose_level - 2);
 	if (f_v) {
 		cout << "action::induce: after G->init_without_base(this);" << endl;
@@ -2430,28 +2436,38 @@ void action::induce(action *old_action, sims *old_G,
 					<< endl;
 			}
 		}
+	if (f_v) {
+		cout << "action::induce: before K->init" << endl;
+		}
 	K->init(fallback_action, verbose_level - 2);
+	if (f_v) {
+		cout << "action::induce: after K->init" << endl;
+		}
 
 	if (f_v) {
-		cout << "action::induce before init_trivial_group" << endl;
+		cout << "action::induce before G->init_trivial_group" << endl;
 		}
 		
 	G->init_trivial_group(verbose_level - 2);
+
+	if (f_v) {
+		cout << "action::induce before K->init_trivial_group" << endl;
+		}
 	K->init_trivial_group(verbose_level - 2);
 	if (f_v) {
 		cout << "action::induce "
 				"after init_trivial_group" << endl;
 		cout << "action::induce "
-				"calling build_up_group_random_process" << endl;
+				"before G->build_up_group_random_process" << endl;
 		}
 
 	G->build_up_group_random_process(K, old_G, go, 
 		FALSE /*f_override_chose_next_base_point*/,
 		NULL /*choose_next_base_point_method*/, 
-		verbose_level);
+		verbose_level - 3);
 	if (f_v) {
 		cout << "action::induce "
-				"after build_up_group_random_process" << endl;
+				"after G->build_up_group_random_process" << endl;
 		}
 
 	G->group_order(G_order);

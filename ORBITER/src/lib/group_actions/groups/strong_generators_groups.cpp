@@ -164,7 +164,7 @@ void strong_generators::projectivity_subgroup(sims *S, int verbose_level)
 		cout << "strong_generators::projectivity_subgroup "
 				"setting up action on Galois group" << endl;
 		}
-	A_on_Galois.induced_action_on_Galois_group(S, verbose_level);
+	A_on_Galois.induced_action_on_Galois_group(S, verbose_level - 2);
 	if (f_v) {
 		cout << "strong_generators::projectivity_subgroup "
 				"induced_action_on_Galois_group finished" << endl;
@@ -176,7 +176,15 @@ void strong_generators::projectivity_subgroup(sims *S, int verbose_level)
 		}
 
 
-	init_from_sims(A_on_Galois.Kernel, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::projectivity_subgroup "
+				"before init_from_sims" << endl;
+		}
+	init_from_sims(A_on_Galois.Kernel, verbose_level - 2);
+	if (f_v) {
+		cout << "strong_generators::projectivity_subgroup "
+				"after init_from_sims" << endl;
+		}
 
 	if (f_v) {
 		cout << "strong_generators::projectivity_subgroup "
