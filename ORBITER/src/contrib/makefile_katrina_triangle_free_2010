@@ -1,0 +1,193 @@
+WIDOR_PATH = .
+TDO_PATH = .
+INC_GEN_PATH = .
+INC_CAN_PATH = .
+#WIDOR_PATH = ../../SRC/WIDOR
+#TDO_PATH = ../../SRC/TDO
+#INC_GEN_PATH = ../../SRC/INC_GEN
+#INC_CAN_PATH = ../../SRC/INC_CAN
+
+
+15_3:
+	$(WIDOR_PATH)/widor.out -v 2 15_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 15_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -orderly -v 5 -lambda_LE -file 15_3.tdo -sol -girth 4
+
+
+
+# (720)
+
+
+
+#-allstarters 3
+#-rl 3 0
+
+
+15_3d:
+	$(WIDOR_PATH)/widor.out -v 2 15_3d.widor
+	$(TDO_PATH)/tdo_print.out -v 2 15_3d.tdo
+	$(INC_GEN_PATH)/inc_gen.out -v 5 -orderly -lambda_LE -file 15_3d.tdo -sol -allstarters 3
+
+
+17_3:
+	$(WIDOR_PATH)/widor.out -v 2 17_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 17_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -orderly -v 5 -lambda_LE -file 17_3.tdo -sol -girth 4
+
+# (12)
+
+
+
+18_3:
+	#$(WIDOR_PATH)/widor.out -v 2 18_3.widor
+	#$(TDO_PATH)/tdo_print.out -v 2 18_3.tdo
+	#$(INC_GEN_PATH)/inc_gen.out -orderly -v 2 -d 12 16 -lambda_LE -file 18_3.tdo -sol -girth 4
+	$(INC_CAN_PATH)/inc_can.out -v 3 -nauty 18_3.inc
+
+# (24^2, 18, 4)
+
+
+19_3:
+	#$(WIDOR_PATH)/widor.out -v 2 19_3.widor
+	#$(TDO_PATH)/tdo_print.out -v 2 19_3.tdo
+	#$(INC_GEN_PATH)/inc_gen.out -orderly -v 5 -d 13 17  -lambda_LE -file 19_3.tdo -sol -girth 4
+	$(INC_CAN_PATH)/inc_can.out -v 3 -nauty 19_3.inc
+
+# (24^4, 8^2, 6, 4^3, 2^4)
+
+20_3:
+	#$(WIDOR_PATH)/widor.out -v 2 20_3.widor
+	#$(TDO_PATH)/tdo_print.out -v 2 20_3.tdo
+	#$(INC_GEN_PATH)/inc_gen.out -orderly -v 5 -d 14 18  -lambda_LE -file 20_3.tdo -sol -girth 4
+	$(INC_CAN_PATH)/inc_can.out -v 3 -nauty 20_3.inc
+
+#(240, 16, 12^3, 10^4, 6^4, 4, 3, 2^{49}, 1^{98})
+
+
+21_3:
+	$(WIDOR_PATH)/widor.out -v 2 21_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 21_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -orderly -v 5 -d 15 19  -lambda_LE -file 21_3.tdo -sol -girth 4
+	$(INC_CAN_PATH)/inc_can.out -v 3 -nauty 21_3.inc
+
+# 7/12/2010  47:22 on MacBook
+#(72^2, 42^2, 36^2, 24^3, 18^2, 14^2, 12^6, 8^8, 7^2, 6^5, 4^{50}, 3^8, 2^{519}, 1^{4102})
+
+21_3_5:
+	$(WIDOR_PATH)/widor.out -v 2 21_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 21_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -orderly -v 5 -d 15 19  -lambda_LE -file 21_3.tdo -sol -girth 5
+	$(INC_CAN_PATH)/inc_can.out -v 3 -nauty 21_3.inc
+
+# nothing
+
+
+22_3:
+	$(WIDOR_PATH)/widor.out -v 2 22_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 22_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -orderly -v 2 -d 16 20  -lambda_LE -file 22_3.tdo -sol -girth 4
+	$(INC_CAN_PATH)/inc_can.out -v 3 -nauty 22_3.inc
+
+# 
+
+22_3_select:
+	$(INC_CAN_PATH)/inc_select.out -ago_non_trivial 22_3.inc 22_3_non_trivial.inc 
+
+22_3_5:
+	$(WIDOR_PATH)/widor.out -v 2 22_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 22_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -orderly -v 5 -d 16 20  -lambda_LE -file 22_3.tdo -sol -girth 5
+	$(INC_CAN_PATH)/inc_can.out -v 3 -nauty 22_3.inc
+
+# nothing
+
+
+23_3_5:
+	$(WIDOR_PATH)/widor.out -v 2 23_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 23_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -orderly -v 5 -d 17 21  -lambda_LE -file 23_3.tdo -sol -girth 5
+	$(INC_CAN_PATH)/inc_can.out -v 3 -nauty 23_3.inc
+
+# nothing
+
+24_3_5:
+	$(WIDOR_PATH)/widor.out -v 2 24_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 24_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -orderly -v 5 -d 18 22  -lambda_LE -file 24_3.tdo -sol -girth 5
+	$(INC_CAN_PATH)/inc_can.out -v 3 -nauty 24_3.inc
+
+# nothing
+
+25_3_5:
+	$(WIDOR_PATH)/widor.out -v 2 25_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 25_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -orderly -v 5 -d 19 23  -lambda_LE -file 25_3.tdo -sol -girth 5
+	$(INC_CAN_PATH)/inc_can.out -v 3 -nauty 25_3.inc
+
+# nothing
+
+
+26_3_5:
+	$(WIDOR_PATH)/widor.out -v 2 26_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 26_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -orderly -v 10 -d 20 24  -lambda_LE -file 26_3.tdo -sol -girth 5
+	$(INC_CAN_PATH)/inc_can.out -v 3 -nauty 26_3.inc
+
+# nothing
+
+
+27_3_5:
+	$(WIDOR_PATH)/widor.out -v 2 27_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 27_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -orderly -v 10 -d 21 25  -lambda_LE -file 27_3.tdo -sol -girth 5
+	$(INC_CAN_PATH)/inc_can.out -v 3 -nauty 27_3.inc
+
+# nothing
+
+28_3_5:
+	$(WIDOR_PATH)/widor.out -v 2 28_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 28_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -orderly -v 10 -d 22 26  -lambda_LE -file 28_3.tdo -sol -girth 5
+	$(INC_CAN_PATH)/inc_can.out -v 3 -nauty 28_3.inc
+
+# nothing
+
+29_3_5:
+	$(WIDOR_PATH)/widor.out -v 2 29_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 29_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -orderly -v 10 -d 23 27  -lambda_LE -file 29_3.tdo -sol -girth 5
+	$(INC_CAN_PATH)/inc_can.out -v 3 -nauty 29_3.inc
+
+# nothing
+
+30_3_5:
+	$(WIDOR_PATH)/widor.out -v 2 30_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 30_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -orderly -v 10 -d 24 28  -lambda_LE -file 30_3.tdo -sol -girth 5
+
+# nothing
+
+31_3_5:
+	$(WIDOR_PATH)/widor.out -v 2 31_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 31_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -orderly -v 10 -d 25 29  -lambda_LE -file 31_3.tdo -sol -girth 5
+
+# nothing
+
+32_3_5:
+	$(WIDOR_PATH)/widor.out -v 2 32_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 32_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -orderly -v 10 -d 26 30  -lambda_LE -file 32_3.tdo -sol -girth 5
+
+# nothing in 4:49
+
+
+33_3_5:
+	$(WIDOR_PATH)/widor.out -v 2 33_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 33_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -orderly -v 5 -d 22 31 -ri 22 100000000 0 -lambda_LE -file 33_3.tdo -sol -girth 5
+
+# difficult 
+
+
+

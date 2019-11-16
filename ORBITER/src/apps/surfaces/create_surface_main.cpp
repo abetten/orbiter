@@ -122,7 +122,7 @@ int main(int argc, const char **argv)
 		cout << "create_surface_main before Surf->init" << endl;
 		}
 	Surf = NEW_OBJECT(surface_domain);
-	Surf->init(F, verbose_level - 1);
+	Surf->init(F, 0/*verbose_level - 1*/);
 	if (f_v) {
 		cout << "create_surface_main after Surf->init" << endl;
 		}
@@ -132,7 +132,7 @@ int main(int argc, const char **argv)
 	if (f_v) {
 		cout << "create_surface_main before Surf_A->init" << endl;
 		}
-	Surf_A->init(Surf, f_semilinear, verbose_level);
+	Surf_A->init(Surf, f_semilinear, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "create_surface_main after Surf_A->init" << endl;
 		}

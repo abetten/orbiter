@@ -212,7 +212,15 @@ void surface_object_with_action::init(surface_with_action *Surf_A,
 				"testing Aut_gens done" << endl;
 	}
 
+	if (f_v) {
+		cout << "surface_object_with_action::init_surface_object "
+				"before compute_projectivity_group" << endl;
+	}
 	compute_projectivity_group(verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_action::init_surface_object "
+				"after compute_projectivity_group" << endl;
+	}
 
 
 	if (f_v) {
@@ -249,7 +257,13 @@ void surface_object_with_action::init_surface_object(
 	surface_object_with_action::SO = SO;
 	surface_object_with_action::Aut_gens = Aut_gens;
 	
-	compute_projectivity_group(verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_action::init_surface_object before compute_projectivity_group" << endl;
+	}
+	compute_projectivity_group(verbose_level - 5);
+	if (f_v) {
+		cout << "surface_object_with_action::init_surface_object after compute_projectivity_group" << endl;
+	}
 
 
 
@@ -278,6 +292,7 @@ void surface_object_with_action::compute_projectivity_group(
 
 	if (f_v) {
 		cout << "surface_object_with_action::compute_projectivity_group" << endl;
+		cout << "surface_object_with_action::compute_projectivity_group verbose_level=" << verbose_level << endl;
 	}
 	if (Surf_A->A->is_semilinear_matrix_group()) {
 		if (f_v) {
@@ -289,8 +304,24 @@ void surface_object_with_action::compute_projectivity_group(
 		{
 			sims *S;
 
+			if (f_v) {
+				cout << "surface_object_with_action::compute_projectivity_group "
+						"before Aut_gens->create_sims" << endl;
+			}
 			S = Aut_gens->create_sims(0 /*verbose_level */);
-			projectivity_group_gens->projectivity_subgroup(S, verbose_level);
+			if (f_v) {
+				cout << "surface_object_with_action::compute_projectivity_group "
+						"after Aut_gens->create_sims" << endl;
+			}
+			if (f_v) {
+				cout << "surface_object_with_action::compute_projectivity_group "
+						"before projectivity_group_gens->projectivity_subgroup" << endl;
+			}
+			projectivity_group_gens->projectivity_subgroup(S, verbose_level - 3);
+			if (f_v) {
+				cout << "surface_object_with_action::compute_projectivity_group "
+						"after projectivity_group_gens->projectivity_subgroup" << endl;
+			}
 			FREE_OBJECT(S);
 		}
 		if (f_v) {

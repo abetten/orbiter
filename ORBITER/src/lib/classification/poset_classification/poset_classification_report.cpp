@@ -397,7 +397,7 @@ void poset_classification::report(ostream &ost)
 		"-y_stretch 0.75 "
 		"-rad 20000 "
 		//"-nodes_empty "
-		"-corners "
+		//"-corners "
 		//"-embedded "
 		"-line_width 0.30 "
 		"-spanning_tree",

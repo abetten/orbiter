@@ -98,26 +98,44 @@ void sims::extend_base_orbit(int new_gen_idx, int lvl,
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	int f_vvv = FALSE; //(verbose_level >= 3);
+	int f_vvv = (verbose_level >= 3);
 	int i, cur, cur_pt, total, total0;
 	int next_pt, next_pt_loc, gen_idx, nbg;
 
 	if (f_v) {
-		cout << "sims::extend_base_orbit " << lvl << endl;
+		cout << "sims::extend_base_orbit " << lvl << " verbose_level = " << verbose_level << endl;
 	}
 	cur = 0;
 	total = total0 = orbit_len[lvl];
+	if (f_v) {
+		cout << "sims::extend_base_orbit " << lvl << " orbit_len[lvl] = " << orbit_len[lvl] << endl;
+	}
 	nbg = nb_gen[lvl];
+	if (f_v) {
+		cout << "sims::extend_base_orbit " << lvl << " nbg = " << nbg << endl;
+	}
+	if (orbit[lvl] == NULL) {
+		cout << "sims::extend_base_orbit orbit[lvl] == NULL" << endl;
+		exit(1);
+	}
 	while (cur < total) {
 		cur_pt = orbit[lvl][cur];
 		if (f_vvv) {
-			cout << "sims::extend_base_orbit: "
-					"applying generator to " << cur_pt << endl;
+			cout << "sims::extend_base_orbit: cur=" << cur << " total = " << total << " cur_pt=" << cur_pt << endl;
 		}
 		for (i = 0; i < nbg; i++) {
+			if (f_vvv) {
+				cout << "sims::extend_base_orbit: applying generator " << i << " / " << nbg << endl;
+			}
 			gen_idx = gen_perm[i];
 			next_pt = get_image(cur_pt, gen_idx);
+			if (f_vvv) {
+				cout << "sims::extend_base_orbit: next_pt = " << next_pt << endl;
+			}
 			next_pt_loc = orbit_inv[lvl][next_pt];
+			if (f_vvv) {
+				cout << "sims::extend_base_orbit: next_pt_loc = " << next_pt_loc << endl;
+			}
 			if (f_vvv) {
 				cout << "sims::extend_base_orbit "
 						"generator " << gen_idx << " maps "
@@ -530,7 +548,8 @@ void sims::add_generator_at_level(int *elt,
 	int i;
 
 	if (f_v) {
-		cout << "sims::add_generator_at_level adding generator at level " << lvl << endl;
+		cout << "sims::add_generator_at_level adding generator at "
+				"level " << lvl << " verbose_level = " << verbose_level<< endl;
 		print_generator_depth_and_perm();
 		if (FALSE) {
 			A->element_print_quick(elt, cout);
@@ -675,7 +694,7 @@ void sims::build_up_group_random_process(sims *K,
 	int *Elt;
 
 	if (f_v) {
-		cout << "sims::build_up_group_random_process" << endl;
+		cout << "sims::build_up_group_random_process verbose_level=" << verbose_level << endl;
 	}
 	GA = A;
 	KA = K->A;
@@ -785,7 +804,7 @@ void sims::build_up_group_random_process(sims *K,
 
 				if (f_vv) {
 					cout << "sims::build_up_group_random_process: "
-							"next suggested base point is " << b << endl;
+							"suggested next base point " << b << endl;
 				}
 				if (b == -1) {
 					if (f_vv) {
@@ -847,16 +866,18 @@ void sims::build_up_group_random_process(sims *K,
 							exit(1);
 						}
 					}
-					if (f_vv) {
-						cout << "sims::build_up_group_random_process before K->add_generator_at_level" << endl;
-					}
-					K->add_generator_at_level(GA->Elt3,
-							drop_out_level, 0/*verbose_level - 3*/);
-					if (f_vvv) {
-						cout << "sims::build_up_group_random_process: "
-								"the residue has been added as kernel "
-								"generator at level " << drop_out_level
-								<< endl;
+					else {
+						if (f_vv) {
+							cout << "sims::build_up_group_random_process before K->add_generator_at_level drop_out_level=" << drop_out_level << endl;
+						}
+						K->add_generator_at_level(GA->Elt3,
+								drop_out_level, verbose_level - 3);
+						if (f_vvv) {
+							cout << "sims::build_up_group_random_process: "
+									"the residue has been added as kernel "
+									"generator at level " << drop_out_level
+									<< endl;
+						}
 					}
 					//f_added = TRUE;
 				}
@@ -867,12 +888,12 @@ void sims::build_up_group_random_process(sims *K,
 					}
 					old_base_len = GA->base_len();
 					GA->Stabilizer_chain->reallocate_base(b);
-					if (f_vvv) {
-						//cout << "after reallocate_base 1" << endl;
+					if (f_v) {
+						cout << "sims::build_up_group_random_process before reallocate_base" << endl;
 					}
 					reallocate_base(old_base_len, verbose_level - 1);
-					if (f_vvv) {
-						//cout << "after reallocate_base 2" << endl;
+					if (f_v) {
+						cout << "sims::build_up_group_random_process after reallocate_base" << endl;
 					}
 					if (f_vv) {
 						cout << "sims::build_up_group_random_process: "
@@ -882,8 +903,14 @@ void sims::build_up_group_random_process(sims *K,
 						cout << "sims::build_up_group_random_process: "
 								"calling add_generator_at_level" << endl;
 					}
+					if (f_v) {
+						cout << "sims::build_up_group_random_process before add_generator_at_level" << endl;
+					}
 					add_generator_at_level(GA->Elt2,
-							GA->base_len() - 1, 0/*verbose_level - 3*/);
+							GA->base_len() - 1, verbose_level - 3);
+					if (f_v) {
+						cout << "sims::build_up_group_random_process after add_generator_at_level" << endl;
+					}
 					if (f_vv) {
 						cout << "sims::build_up_group_random_process: "
 								"the residue has been added at level "
@@ -982,12 +1009,12 @@ void sims::build_up_group_random_process(sims *K,
 						"overshooting the expected group after "
 						<< cnt << " iterations" << endl;
 				cout << "current group order is " << KG_order
-					<< " = " << G_order << " * " << K_order << endl;
+					<< " = |G| * |K| = " << G_order << " * " << K_order << ", target_go=" << target_go << endl;
 			}
 			//break;
 			exit(1);
 		}
-	}
+	} // while TRUE
 	FREE_int(Elt);
 	if (f_vv) {
 		cout << "sims::build_up_group_random_process finished: "
