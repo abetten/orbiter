@@ -471,7 +471,7 @@ void action::induced_action_on_grassmannian(action *A_old,
 			A->label, AG->n, AG->k, AG->q);
 	sprintf(label, "%s_Grassmann_%d_%d_%d",
 			A->label, AG->n, AG->k, AG->q);
-	sprintf(label_tex, "%s Grassmann_%d_%d_%d",
+	sprintf(label_tex, "%s {\\rm Gr}_{%d,%d}(%d)",
 			A->label_tex, AG->n, AG->k, AG->q);
 	if (f_v) {
 		cout << "action::induced_action_on_grassmannian "

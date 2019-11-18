@@ -72,6 +72,16 @@ void poset_orbit_node::get_stabilizer(
 		}
 }
 
+int poset_orbit_node::test_if_stabilizer_is_trivial()
+{
+	if (nb_strong_generators == 0) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
+
 void poset_orbit_node::get_stabilizer_generators(
 	poset_classification *gen,
 	strong_generators *&Strong_gens,

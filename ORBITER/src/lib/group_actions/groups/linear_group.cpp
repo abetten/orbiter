@@ -60,8 +60,7 @@ void linear_group::init(
 
 
 	if (f_v) {
-		cout << "linear_group::init initializing "
-				"projective group" << endl;
+		cout << "linear_group::init initializing projective group" << endl;
 		}
 
 
@@ -220,8 +219,9 @@ void linear_group::init(
 			}
 
 		A2 = A3;
-		sprintf(prefix + strlen(prefix), "OnGr_%d", description->on_k_subspaces_k);
-		sprintf(label_latex + strlen(label_latex), "{\\rm Gr}(%d)", description->on_k_subspaces_k);
+		sprintf(prefix + strlen(prefix), "_OnGr_%d", description->on_k_subspaces_k);
+		sprintf(label_latex + strlen(label_latex), " {\\rm Gr}_{%d,%d}(%d)",
+				n, description->on_k_subspaces_k, F->q);
 
 
 		cout << "linear_group::init creating induced "
@@ -617,7 +617,7 @@ void linear_group::init_symplectic_group(char *prefix, char *label_latex,
 
 	sprintf(prefix + strlen(prefix), "_Sp_%d_%d", n, q);
 	sprintf(label_latex + strlen(label_latex),
-			"{\\rm Sp}(%d,%d)", n, q);
+			" {\\rm Sp}(%d,%d)", n, q);
 	if (f_v) {
 		cout << "linear_group::init_symplectic_group "
 				"created group " << prefix << endl;
@@ -949,12 +949,32 @@ void linear_group::report(ostream &fp, int f_sylow, int verbose_level)
 			Strong_gens->print_generators_tex(fp);
 		}
 
+		if (f_v) {
+			cout << "linear_group::report before A2->report" << endl;
+		}
+
 		A2->report(fp, TRUE /*f_sims*/, H,
 				TRUE /* f_strong_gens */, Strong_gens, verbose_level);
 
+		if (f_v) {
+			cout << "linear_group::report after A2->report" << endl;
+		}
+
+		if (f_v) {
+			cout << "linear_group::report before A2->report_basic_orbits" << endl;
+		}
+
 		A2->report_basic_orbits(fp);
 
+		if (f_v) {
+			cout << "linear_group::report after A2->report_basic_orbits" << endl;
+		}
 		if (f_sylow) {
+
+			if (f_v) {
+				cout << "linear_group::report f_sylow is true" << endl;
+			}
+
 			sylow_structure *Syl;
 
 			Syl = NEW_OBJECT(sylow_structure);
@@ -963,6 +983,14 @@ void linear_group::report(ostream &fp, int f_sylow, int verbose_level)
 
 			A2->report_conjugacy_classes_and_normalizers(fp,
 					verbose_level);
+		}
+		else {
+
+			if (f_v) {
+				cout << "linear_group::report f_sylow is false" << endl;
+			}
+
+
 		}
 
 		//L.foot(fp);

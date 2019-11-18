@@ -156,6 +156,35 @@ void action_on_grassmannian::init_embedding(int big_n,
 }
 
 
+void action_on_grassmannian::unrank(long int i, int *v, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_on_grassmannian::unrank" << endl;
+	}
+	G->unrank_lint_here(v, i, verbose_level - 1);
+	if (f_v) {
+		cout << "action_on_grassmannian::unrank done" << endl;
+	}
+}
+
+long int action_on_grassmannian::rank(int *v, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int rk;
+
+	if (f_v) {
+		cout << "action_on_grassmannian::rank" << endl;
+	}
+	rk = G->rank_lint_here(v, verbose_level - 1);
+	if (f_v) {
+		cout << "action_on_grassmannian::rank done" << endl;
+	}
+	return rk;
+}
+
+
 void action_on_grassmannian::compute_image_longinteger(
 	action *A, int *Elt,
 	longinteger_object &i, longinteger_object &j,

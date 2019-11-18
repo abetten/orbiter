@@ -1073,15 +1073,14 @@ void strong_generators::generators_for_symplectic_group(
 	int n, q;
 	
 	if (f_v) {
-		cout << "strong_generators::generators_for_"
-				"symplectic_group" << endl;
-		}
+		cout << "strong_generators::generators_for_symplectic_group" << endl;
+	}
 	F = Mtx->GFq;
 	q = F->q;
 	n = Mtx->n;
 	if (f_v) {
 		cout << "n=" << n << " q=" << q << endl;
-		}
+	}
 
 	generators_symplectic_group *N;
 
@@ -1089,27 +1088,50 @@ void strong_generators::generators_for_symplectic_group(
 
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_"
-				"symplectic_group calling "
+		cout << "strong_generators::generators_for_symplectic_group calling "
 				"generators_symplectic_group::init" << endl;
-		}
+	}
 	N->init(F, n, verbose_level);
 	
-	vector_ge *nice_gens;
+		// warning, N->transversal_length[n]
+		// but A->base_len = n + 1
 
+	vector_ge *nice_gens;
+	int *t_len;
+	int i;
+
+	t_len = NEW_int(A->base_len());
+	for (i = 0; i < A->base_len(); i++) {
+		if (i < n) {
+			t_len[i] = N->transversal_length[i];
+		}
+		else {
+			t_len[i] = 1;
+		}
+	}
+	if (f_v) {
+		cout << "strong_generators::generators_for_symplectic_group t_len=";
+		int_vec_print(cout, t_len, A->base_len());
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "strong_generators::generators_for_symplectic_group calling "
+				"init_from_data" << endl;
+	}
 	init_from_data(A, N->Data, 
-		N->nb_gens, n * n, N->transversal_length, 
+		N->nb_gens, n * n, t_len,
 		nice_gens,
 		verbose_level);
 
 
+	FREE_int(t_len);
 	FREE_OBJECT(nice_gens);
 	FREE_OBJECT(N);
 	
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_"
-				"symplectic_group done" << endl;
-		}
+		cout << "strong_generators::generators_for_the_symplectic_group done" << endl;
+	}
 }
 
 void strong_generators::init_centralizer_of_matrix(

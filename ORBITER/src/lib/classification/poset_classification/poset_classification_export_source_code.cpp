@@ -223,27 +223,51 @@ void poset_classification::generate_history(int level, int verbose_level)
 				}
 			fp << "};" << endl;
 
+
+			int f_progress = FALSE;
+			long int L = 0;
+			long int L100 = 0;
+
+			if (nb_iso > ONE_MILLION) {
+				f_progress = TRUE;
+				L = nb_iso;
+				L100 = L / 100;
+			}
 			fp << "static const char *" << prefix << "_lvl_" << lvl << "_stab_order[] = {" << endl << "\t";
 			for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 				//rep = The_surface[iso_type]->coeff;
 
-				set_and_stabilizer *SaS;
 
-				SaS = get_set_and_stabilizer(lvl, iso_type,
-						0 /* verbose_level */);
+				if (test_if_stabilizer_is_trivial(lvl, iso_type,
+						0 /* verbose_level */)) {
+					fp << "\"1\",";
+
+				}
+				else {
+					set_and_stabilizer *SaS;
+
+					SaS = get_set_and_stabilizer(lvl, iso_type,
+							0 /* verbose_level */);
 
 
-				fp << "\"";
-				SaS->target_go.print_not_scientific(fp);
-				fp << "\",";
-				//fp << ",";
+					fp << "\"";
+					SaS->target_go.print_not_scientific(fp);
+					fp << "\",";
+					//fp << ",";
 
+					FREE_OBJECT(SaS);
+				}
 				if (((iso_type + 1) % 10) == 0) {
 					fp << endl << "\t";
 					}
 
+				if (f_progress) {
+					if ((iso_type % L100) == 0) {
+						cout << "poset_classification::generate_history first loop at " << iso_type / L100 << "%" << endl;
+					}
+				}
 
-				FREE_OBJECT(SaS);
+
 				}
 			fp << "};" << endl;
 
@@ -260,33 +284,43 @@ void poset_classification::generate_history(int level, int verbose_level)
 				for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 
 
-					set_and_stabilizer *SaS;
-
-
-					SaS = get_set_and_stabilizer(lvl,
-							iso_type, 0 /* verbose_level */);
-
-					stab_gens_first[iso_type] = fst;
-					stab_gens_len[iso_type] = SaS->Strong_gens->gens->len;
-					fst += stab_gens_len[iso_type];
-
-
-					for (j = 0; j < stab_gens_len[iso_type]; j++) {
-						if (f_vv) {
-							cout << "poset_classification::generate_source_code "
-									"before extract_strong_generators_in_order "
-									"poset_classification "
-									<< j << " / " << stab_gens_len[iso_type] << endl;
-							}
-						fp << "\t";
-						Poset->A->element_print_for_make_element(
-								SaS->Strong_gens->gens->ith(j), fp);
-						fp << endl;
-						}
-
-					FREE_OBJECT(SaS);
+					if (test_if_stabilizer_is_trivial(lvl, iso_type,
+							0 /* verbose_level */)) {
 
 					}
+					else {
+						set_and_stabilizer *SaS;
+
+
+						SaS = get_set_and_stabilizer(lvl,
+								iso_type, 0 /* verbose_level */);
+
+						stab_gens_first[iso_type] = fst;
+						stab_gens_len[iso_type] = SaS->Strong_gens->gens->len;
+						fst += stab_gens_len[iso_type];
+
+
+						for (j = 0; j < stab_gens_len[iso_type]; j++) {
+							if (f_vv) {
+								cout << "poset_classification::generate_source_code "
+										"before extract_strong_generators_in_order "
+										"poset_classification "
+										<< j << " / " << stab_gens_len[iso_type] << endl;
+								}
+							fp << "\t";
+							Poset->A->element_print_for_make_element(
+									SaS->Strong_gens->gens->ith(j), fp);
+							fp << endl;
+							}
+						FREE_OBJECT(SaS);
+					}
+
+					if (f_progress) {
+						if ((iso_type % L100) == 0) {
+							cout << "poset_classification::generate_history second loop at " << iso_type / L100 << "%" << endl;
+						}
+					}
+				}
 				fp << "};" << endl;
 
 

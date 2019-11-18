@@ -413,6 +413,8 @@ public:
 		long int *set2, int sz2, int verbose_level);
 	orbit_transversal *get_orbit_transversal(
 			int level, int verbose_level);
+	int test_if_stabilizer_is_trivial(
+			int level, int orbit_at_level, int verbose_level);
 	set_and_stabilizer *get_set_and_stabilizer(int level, 
 		int orbit_at_level, int verbose_level);
 	void get_set_by_level(int level, int node, long int *set);
@@ -972,6 +974,7 @@ public:
 	void get_stabilizer(poset_classification *gen,
 		group &G, longinteger_object &go_G,
 		int verbose_level);
+	int test_if_stabilizer_is_trivial();
 	void get_stabilizer_generators(poset_classification *gen,
 		strong_generators *&Strong_gens,
 		int verbose_level);

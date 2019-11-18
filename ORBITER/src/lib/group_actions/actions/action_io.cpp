@@ -491,20 +491,28 @@ void action::report(ostream &ost, int f_sims, sims *S,
 	}
 	ost << "Group action $" << label_tex
 			<< "$ of degree " << degree << "\\\\" << endl;
+
+
 	if (f_sims) {
+		if (f_v) {
+			cout << "action::report printing group order" << endl;
+		}
 		longinteger_object go;
 
 		S->group_order(go);
 		ost << "Group order " << go << "\\\\" << endl;
 		ost << "tl=$";
 		//int_vec_print(ost, S->orbit_len, base_len());
-		for (int t = 0; t < base_len(); t++) {
+		for (int t = 0; t < S->A->base_len(); t++) {
 			ost << S->get_orbit_length(t);
-			if (t < base_len()) {
+			if (t < S->A->base_len()) {
 				ost << ", ";
 			}
 		}
 		ost << "$\\\\" << endl;
+		if (f_v) {
+			cout << "action::report printing group order done" << endl;
+		}
 	}
 
 	if (Stabilizer_chain) {
@@ -523,7 +531,13 @@ void action::report(ostream &ost, int f_sims, sims *S,
 		}
 	}
 	if (f_sims) {
+		if (f_v) {
+			cout << "action::report before S->report" << endl;
+		}
 		S->report(ost, verbose_level);
+		if (f_v) {
+			cout << "action::report after S->report" << endl;
+		}
 	}
 	if (f_v) {
 		cout << "action::report done" << endl;

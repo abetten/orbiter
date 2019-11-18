@@ -559,6 +559,8 @@ public:
 	void init(action &A, grassmann *G, int verbose_level);
 	void init_embedding(int big_n, int *ambient_space, 
 		int verbose_level);
+	void unrank(long int i, int *v, int verbose_level);
+	long int rank(int *v, int verbose_level);
 	void compute_image_longinteger(action *A, int *Elt, 
 		longinteger_object &i, longinteger_object &j, 
 		int verbose_level);
