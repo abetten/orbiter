@@ -287,6 +287,9 @@ void poset_classification::generate_history(int level, int verbose_level)
 					if (test_if_stabilizer_is_trivial(lvl, iso_type,
 							0 /* verbose_level */)) {
 
+						stab_gens_first[iso_type] = fst;
+						stab_gens_len[iso_type] = 0;
+
 					}
 					else {
 						set_and_stabilizer *SaS;
