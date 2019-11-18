@@ -1907,21 +1907,9 @@ static void induced_action_unrank_point(action &A, long int rk, int *v)
 		if (FALSE) {
 			cout << "action_on_grassmannian_t" << endl;
 			}
-		//action_on_grassmannian *AG = A.G.AG;
+		action_on_grassmannian *AG = A.G.AG;
 
-#if 0
-		action *sub;
-
-		sub = A.subaction;
-		if (sub == NULL) {
-			cout << "induced_action_unrank_point "
-					"no subaction" << endl;
-			exit(1);
-			}
-		//ost << a;
-#endif
-		//AG->print_point(a, ost);
-		//b = AG->compute_image_int(sub, Elt, a, verbose_level - 1);
+		AG->unrank(rk, v, 0 /*verbose_level*/);
 		}
 	else if (A.type_G == action_on_spread_set_t) {
 		if (FALSE) {

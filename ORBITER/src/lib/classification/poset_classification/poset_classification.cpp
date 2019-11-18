@@ -174,6 +174,15 @@ orbit_transversal *poset_classification::get_orbit_transversal(
 	return T;
 }
 
+int poset_classification::test_if_stabilizer_is_trivial(
+		int level, int orbit_at_level, int verbose_level)
+{
+	poset_orbit_node *O;
+
+	O = get_node_ij(level, orbit_at_level);
+	return O->test_if_stabilizer_is_trivial();
+}
+
 set_and_stabilizer *poset_classification::get_set_and_stabilizer(
 		int level, int orbit_at_level, int verbose_level)
 {

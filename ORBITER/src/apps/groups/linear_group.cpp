@@ -38,6 +38,7 @@ int main(int argc, const char **argv)
 	int f_linear = FALSE;
 	//int q;
 	int f_orbits_on_points = FALSE;
+	int f_stabilizer = FALSE;
 	int f_orbits_on_subsets = FALSE;
 	int orbits_on_subsets_size = 0;
 	int f_draw_poset = FALSE;
@@ -91,6 +92,10 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-orbits_on_points") == 0) {
 			f_orbits_on_points = TRUE;
 			cout << "-orbits_on_points" << endl;
+			}
+		else if (strcmp(argv[i], "-stabilizer") == 0) {
+			f_stabilizer = TRUE;
+			cout << "-stabilizer" << endl;
 			}
 		else if (strcmp(argv[i], "-test_if_geometric") == 0) {
 			f_test_if_geometric = TRUE;
@@ -214,6 +219,8 @@ int main(int argc, const char **argv)
 	Sch = NEW_OBJECT(schreier);
 
 	cout << "Strong generators are:" << endl;
+	LG->Strong_gens->print_generators();
+	cout << "Strong generators in tex are:" << endl;
 	LG->Strong_gens->print_generators_tex(cout);
 	cout << "Strong generators as permutations are:" << endl;
 	LG->Strong_gens->print_generators_as_permutations();
@@ -828,6 +835,26 @@ int main(int argc, const char **argv)
 				LG->Strong_gens,
 				verbose_level);
 
+		longinteger_object go;
+		int orbit_idx;
+
+		LG->Strong_gens->group_order(go);
+		cout << "Computing stabilizers. Group order = " << go << endl;
+		if (f_stabilizer) {
+			for (orbit_idx = 0; orbit_idx < Sch->nb_orbits; orbit_idx++) {
+
+				strong_generators *SG;
+
+				SG = Sch->stabilizer_orbit_rep(
+						LG->A_linear /*default_action*/,
+						go,
+						orbit_idx, 0 /*verbose_level*/);
+
+				cout << "orbit " << orbit_idx << " / " << Sch->nb_orbits << ":" << endl;
+				SG->print_generators_tex(cout);
+
+			}
+		}
 
 
 		cout << "computing orbits on points done." << endl;
@@ -852,7 +879,7 @@ int main(int argc, const char **argv)
 				fname_tree_mask,
 				verbose_level - 1);
 
-		int orbit_idx = 0;
+		orbit_idx = 0;
 		schreier *shallow_tree;
 
 		cout << "computing shallow Schreier tree:" << endl;
