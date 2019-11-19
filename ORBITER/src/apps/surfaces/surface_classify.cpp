@@ -66,6 +66,7 @@ int main(int argc, const char **argv)
 	surface_create_description *surface_descr_isomorph2 = NULL;
 	int f_recognize = FALSE;
 	surface_create_description *surface_descr_recognize = NULL;
+	int f_generate_history = FALSE;
 
 
 	int i;
@@ -74,7 +75,7 @@ int main(int argc, const char **argv)
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-linear") == 0) {
 			f_linear = TRUE;
 			Descr = NEW_OBJECT(linear_group_description);
@@ -82,7 +83,7 @@ int main(int argc, const char **argv)
 				argv + i, verbose_level);
 
 			cout << "-linear" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-isomorph") == 0) {
 			f_isomorph = TRUE;
 			cout << "-isomorph reading description of first surface" << endl;
@@ -98,7 +99,7 @@ int main(int argc, const char **argv)
 					read_arguments(argc - (i - 1), argv + i,
 					verbose_level) - 1;
 			cout << "-isomorph" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-recognize") == 0) {
 			f_recognize = TRUE;
 			cout << "-recognize reading description of surface" << endl;
@@ -108,63 +109,63 @@ int main(int argc, const char **argv)
 					verbose_level) - 1;
 			i += 2;
 			cout << "-recognize" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			cout << "-report" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-report_5p1") == 0) {
 			f_report_5p1 = TRUE;
 			cout << "-report_5p1" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-read_double_sixes") == 0) {
 			f_read_double_sixes = TRUE;
 			cout << "-read_double_sixes" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-double_sixes_only") == 0) {
 			f_double_sixes_only = TRUE;
 			cout << "-double_sixes_only" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-read_surfaces") == 0) {
 			f_read_surfaces = TRUE;
 			cout << "-read_surfaces" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-draw_poset") == 0) {
 			f_draw_poset = TRUE;
 			cout << "-draw_poset" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-draw_poset_full") == 0) {
 			f_draw_poset_full = TRUE;
 			cout << "-draw_poset_full" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-memory_debug") == 0) {
 			f_memory_debug = TRUE;
 			cout << "-memory_debug" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-memory_debug_verbose_level") == 0) {
 			memory_debug_verbose_level = atoi(argv[++i]);
 			cout << "-memory_debug_verbose_level "
 					<< memory_debug_verbose_level << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-automatic_memory_dump") == 0) {
 			f_automatic_memory_dump = TRUE;
 			automatic_dump_interval = atoi(argv[++i]);
 			automatic_dump_mask = argv[++i];
 			cout << "-automatic_memory_dump " << automatic_dump_interval
 				<< " " << automatic_dump_mask << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-memory_dump_at_peak") == 0) {
 			f_memory_dump_at_peak = TRUE;
 			memory_dump_at_peak_fname = argv[++i];
 			cout << "-memory_dump_at_peak "
 					<< memory_dump_at_peak_fname << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-memory_dump_at_end") == 0) {
 			f_memory_dump_at_end = TRUE;
 			memory_dump_at_end_fname = argv[++i];
 			cout << "-memory_dump_at_end "
 					<< memory_dump_at_end_fname << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-memory_dump_cumulative") == 0) {
 			global_mem_object_registry.accumulate_and_ignore_duplicates(
 					verbose_level);
@@ -173,7 +174,11 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-identify_Sa") == 0) {
 			f_identify_Sa = TRUE;
 			cout << "-identify_Sa" << endl;
-			}
+		}
+		else if (strcmp(argv[i], "-generate_history") == 0) {
+			f_generate_history = TRUE;
+			cout << "-generate_history" << endl;
+		}
 	}
 
 
@@ -535,7 +540,10 @@ int main(int argc, const char **argv)
 
 #if 1
 	SCW->generate_source_code(verbose_level);
-	SCW->generate_history(verbose_level);
+
+	if (f_generate_history) {
+		SCW->generate_history(verbose_level);
+	}
 #endif
 
 
