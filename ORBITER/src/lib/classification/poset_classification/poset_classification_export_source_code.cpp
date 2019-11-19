@@ -231,7 +231,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 			if (nb_iso > ONE_MILLION) {
 				f_progress = TRUE;
 				L = nb_iso;
-				L100 = L / 100;
+				L100 = L / 100 + 1;
 			}
 			fp << "static const char *" << prefix << "_lvl_" << lvl << "_stab_order[] = {" << endl << "\t";
 			for (iso_type = 0; iso_type < nb_iso; iso_type++) {
