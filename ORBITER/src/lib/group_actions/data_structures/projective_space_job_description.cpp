@@ -126,7 +126,8 @@ projective_space_job_description::projective_space_job_description()
 	u_lines = NULL;
 	nb_u_lines = 0;
 
-
+	f_dualize_hyperplanes_to_points = FALSE;
+	f_dualize_points_to_hyperplanes = FALSE;
 }
 
 projective_space_job_description::~projective_space_job_description()
@@ -388,6 +389,14 @@ int projective_space_job_description::read_arguments(
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "projective_space_job_description::read_arguments -end" << endl;
 			break;
+		}
+		else if (strcmp(argv[i], "-dualize_hyperplanes_to_points") == 0) {
+			f_dualize_hyperplanes_to_points = TRUE;
+			cout << "projective_space_job_description::read_arguments -dualize_hyperplanes_to_points" << endl;
+		}
+		else if (strcmp(argv[i], "-dualize_points_to_hyperplanes") == 0) {
+			f_dualize_points_to_hyperplanes = TRUE;
+			cout << "projective_space_job_description::read_arguments -dualize_points_to_hyperplanes" << endl;
 		}
 		else {
 			cout << "projective_space_job_description::read_arguments "
@@ -1282,6 +1291,58 @@ void projective_space_job_description::perform_job_for_one_set(
 				<< Fio.file_size(fname_solutions) << endl;
 		FREE_lint(Sol);
 
+
+	}
+	else if (f_dualize_hyperplanes_to_points) {
+		if (f_v) {
+			cout << "projective_space_job_description::perform_job_for_one_set f_dualize_hyperplanes_to_points" << endl;
+		}
+		if (OiP->type != t_LNS) {
+			cout << "projective_space_job_description::perform_job_for_one_set OiP->type != t_LNS" << endl;
+			exit(1);
+		}
+		if (OiP->P->n != 2) {
+			cout << "projective_space_job_description::perform_job_for_one_set OiP->P->n != 2" << endl;
+			exit(1);
+		}
+
+		int i;
+		long int a;
+
+		set_size_out = set_size_in;
+		the_set_out = NEW_lint(set_size_in);
+		for (i = 0; i < set_size_in; i++) {
+			a = the_set_in[i];
+			the_set_out[i] = OiP->P->Polarity_hyperplane_to_point[a];
+		}
+
+		// only if n = 2:
+		//int *Polarity_point_to_hyperplane; // [N_points]
+		//int *Polarity_hyperplane_to_point; // [N_points]
+
+	}
+	else if (f_dualize_points_to_hyperplanes) {
+		if (f_v) {
+			cout << "projective_space_job_description::perform_job_for_one_set f_dualize_points_to_hyperplanes" << endl;
+		}
+		if (OiP->type != t_PTS) {
+			cout << "projective_space_job_description::perform_job_for_one_set OiP->type != t_PTS" << endl;
+			exit(1);
+		}
+		if (OiP->P->n != 2) {
+			cout << "projective_space_job_description::perform_job_for_one_set OiP->P->n != 2" << endl;
+			exit(1);
+		}
+
+		int i;
+		long int a;
+
+		set_size_out = set_size_in;
+		the_set_out = NEW_lint(set_size_in);
+		for (i = 0; i < set_size_in; i++) {
+			a = the_set_in[i];
+			the_set_out[i] = OiP->P->Polarity_point_to_hyperplane[a];
+		}
 
 	}
 	if (f_v) {
