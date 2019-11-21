@@ -445,6 +445,9 @@ public:
 	long int *u_lines;
 	int nb_u_lines;
 
+	int f_dualize_hyperplanes_to_points;
+	int f_dualize_points_to_hyperplanes;
+
 
 
 

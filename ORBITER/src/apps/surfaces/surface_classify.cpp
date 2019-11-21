@@ -189,7 +189,7 @@ int main(int argc, const char **argv)
 	if (!f_linear) {
 		cout << "please use option -linear ..." << endl;
 		exit(1);
-		}
+	}
 
 	if (f_automatic_memory_dump) {
 		global_mem_object_registry.set_automatic_dump(
@@ -209,33 +209,33 @@ int main(int argc, const char **argv)
 	
 	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
-		}
+	}
 	else {
 		f_semilinear = TRUE;
-		}
+	}
 
 
 	LG = NEW_OBJECT(linear_group);
 	if (f_v) {
 		cout << "surface_classify before LG->init, "
 				"creating the group" << endl;
-		}
+	}
 
 	LG->init(Descr, verbose_level - 1);
 	
 	if (f_v) {
 		cout << "surface_classify after LG->init" << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "surface_classify before Surf->init" << endl;
-		}
+	}
 	Surf = NEW_OBJECT(surface_domain);
 	Surf->init(F, verbose_level - 3);
 	if (f_v) {
 		cout << "surface_classify after Surf->init" << endl;
-		}
+	}
 
 
 	Surf_A = NEW_OBJECT(surface_with_action);
@@ -244,11 +244,11 @@ int main(int argc, const char **argv)
 
 	if (f_v) {
 		cout << "surface_classify before Surf_A->init" << endl;
-		}
+	}
 	Surf_A->init(Surf, f_semilinear, verbose_level - 3);
 	if (f_v) {
 		cout << "surface_classify after Surf_A->init" << endl;
-		}
+	}
 
 
 
@@ -259,7 +259,7 @@ int main(int argc, const char **argv)
 
 	if (f_v) {
 		cout << "surface_classify before SCW->init" << endl;
-		}
+	}
 	
 	SCW->init(F, LG,
 			f_semilinear, Surf_A,
@@ -268,7 +268,7 @@ int main(int argc, const char **argv)
 
 	if (f_v) {
 		cout << "surface_classify after SCW->init" << endl;
-		}
+	}
 
 
 	file_io Fio;
@@ -277,37 +277,37 @@ int main(int argc, const char **argv)
 
 
 		{
-		char fname[1000];
+			char fname[1000];
+
+			sprintf(fname, "Double_sixes_q%d.data", q);
+			cout << "Reading file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+			{
+
+				ifstream fp(fname);
 	
-		sprintf(fname, "Double_sixes_q%d.data", q);
-		cout << "Reading file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-		{
-
-		ifstream fp(fname);
-
-		if (f_v) {
-			cout << "surface_classify before SCW->Classify_"
-					"double_sixes->read_file" << endl;
-			}
-		SCW->Classify_double_sixes->read_file(fp, verbose_level - 1);
-		if (f_v) {
-			cout << "surface_classify after SCW->Classify_"
-					"double_sixes->read_file" << endl;
+				if (f_v) {
+					cout << "surface_classify before SCW->Classify_"
+							"double_sixes->read_file" << endl;
+				}
+				SCW->Classify_double_sixes->read_file(fp, verbose_level - 1);
+				if (f_v) {
+					cout << "surface_classify after SCW->Classify_"
+							"double_sixes->read_file" << endl;
+				}
 			}
 		}
-		}
 
 
 
-		}
+	}
 
 	else {
 	
 		if (f_v) {
 			cout << "surface_classify before SCW->Classify_"
 					"double_sixes->classify_partial_ovoids" << endl;
-			}
+		}
 		SCW->Classify_double_sixes->classify_partial_ovoids(
 			f_draw_poset,
 			f_draw_poset_full, 
@@ -316,17 +316,17 @@ int main(int argc, const char **argv)
 		if (f_v) {
 			cout << "surface_classify after SCW->Classify_"
 					"double_sixes->classify_partial_ovoids" << endl;
-			}
+		}
 
 		if (f_v) {
 			cout << "surface_classify before SCW->Classify_"
 					"double_sixes->classify" << endl;
-			}
+		}
 		SCW->Classify_double_sixes->classify(verbose_level - 1);
 		if (f_v) {
 			cout << "surface_classify after SCW->Classify_"
 					"double_sixes->classify" << endl;
-			}
+		}
 
 
 
@@ -404,34 +404,31 @@ int main(int argc, const char **argv)
 	if (f_double_sixes_only) {
 		cout << "f_double_sixes_only is true so we terminate now." << endl;
 		exit(0);
-		}
+	}
 
 
 	if (f_read_surfaces) {
-
-
 		{
-		char fname[1000];
-	
-		sprintf(fname, "Surfaces_q%d.data", q);
-		cout << "Reading file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-		{
+			char fname[1000];
 
-		ifstream fp(fname);
+			sprintf(fname, "Surfaces_q%d.data", q);
+			cout << "Reading file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+			{
+				ifstream fp(fname);
 
-		if (f_v) {
-			cout << "surface_classify before SCW->read_file" << endl;
-			}
-		SCW->read_file(fp, verbose_level - 1);
-		if (f_v) {
-			cout << "surface_classify after SCW->read_file" << endl;
+				if (f_v) {
+					cout << "surface_classify before SCW->read_file" << endl;
+					}
+				SCW->read_file(fp, verbose_level - 1);
+				if (f_v) {
+					cout << "surface_classify after SCW->read_file" << endl;
+				}
 			}
 		}
-		}
 
 
-		}
+	}
 	else {
 
 		cout << "surface_classify classifying surfaces" << endl;
@@ -439,35 +436,33 @@ int main(int argc, const char **argv)
 		if (f_v) {
 			cout << "surface_classify before SCW->classify_surfaces_"
 					"from_double_sixes" << endl;
-			}
+		}
 		SCW->classify_surfaces_from_double_sixes(verbose_level - 1);
 		if (f_v) {
 			cout << "surface_classify after SCW->classify_surfaces_"
 					"from_double_sixes" << endl;
-			}
+		}
 
 		{
-		char fname[1000];
+			char fname[1000];
+
+			sprintf(fname, "Surfaces_q%d.data", q);
+			{
 	
-		sprintf(fname, "Surfaces_q%d.data", q);
-		{
+				ofstream fp(fname);
 
-		ofstream fp(fname);
-
-		if (f_v) {
-			cout << "surface_classify before SCW->write_file" << endl;
+				if (f_v) {
+					cout << "surface_classify before SCW->write_file" << endl;
+				}
+				SCW->write_file(fp, verbose_level - 1);
+				if (f_v) {
+					cout << "surface_classify after SCW->write_file" << endl;
+				}
 			}
-		SCW->write_file(fp, verbose_level - 1);
-		if (f_v) {
-			cout << "surface_classify after SCW->write_file" << endl;
-			}
+			cout << "Written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
 		}
-		cout << "Written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-		}
-
-
-		}
+	}
 
 
 
@@ -529,13 +524,13 @@ int main(int argc, const char **argv)
 		if (f_v) {
 			cout << "surface_classify before SCW->"
 					"identify_surfaces" << endl;
-			}
+		}
 		SCW->identify_surfaces(verbose_level - 1);
 		if (f_v) {
 			cout << "surface_classify after SCW->"
 					"identify_surfaces" << endl;
-			}
 		}
+	}
 #endif
 
 #if 1
@@ -589,7 +584,8 @@ int main(int argc, const char **argv)
 			SCW->A->element_print(Elt_isomorphism_1to2, cout);
 			cout << "The surfaces belongs to iso type "
 					<< isomorphic_to1 << endl;
-		} else {
+		}
+		else {
 			cout << "The surfaces are NOT isomorphic." << endl;
 			cout << "surface 1 belongs to iso type "
 					<< isomorphic_to1 << endl;
@@ -644,20 +640,20 @@ int main(int argc, const char **argv)
 #if 0
 	if (f_v) {
 		cout << "surface_classify before SCW->print_surfaces" << endl;
-		}
+	}
 	SCW->print_surfaces();
 	if (f_v) {
 		cout << "surface_classify after SCW->print_surfaces" << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "surface_classify before SCW->derived_arcs" << endl;
-		}
+	}
 	SCW->derived_arcs(verbose_level - 1);
 	if (f_v) {
 		cout << "surface_classify after SCW->derived_arcs" << endl;
-		}
+	}
 #endif
 
 
