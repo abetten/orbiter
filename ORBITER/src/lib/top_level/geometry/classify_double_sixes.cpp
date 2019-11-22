@@ -1242,6 +1242,14 @@ void classify_double_sixes::downstep(int verbose_level)
 				"initializing flag orbits" << endl;
 		}
 
+	int f_process = FALSE;
+	int nb_100 = 0;
+
+	if (nb > 1000) {
+		f_process = TRUE;
+		nb_100 = nb / 100;
+	}
+
 	nb_flag_orbits = 0;
 	for (f = 0; f < nb; f++) {
 
@@ -1250,8 +1258,14 @@ void classify_double_sixes::downstep(int verbose_level)
 			cout << "classify_double_sixes::downstep "
 					"orbit " << f << " / " << nb
 					<< " with rank = 19 is orbit "
-					<< i << " / " << nb_orbits << endl;
+					<< i << " / " << nb_orbits << " " << f / nb_100 << "%" << endl;
 			}
+		if (f_process) {
+			if ((f % nb_100) == 0) {
+				cout << "classify_double_sixes::downstep orbit "
+					<< i << " / " << nb_orbits << ", progress at " << f / nb_100 << "%" << endl;
+			}
+		}
 
 		set_and_stabilizer *R;
 		longinteger_object ol;
@@ -1280,13 +1294,13 @@ void classify_double_sixes::downstep(int verbose_level)
 			cout << "5+1 lines = ";
 			lint_vec_print(cout, dataset + 5, 6);
 			cout << endl;
-			}
+		}
 
 		if (f_vv) {
 			cout << "classify_double_sixes::downstep before "
 					"create_double_six_from_five_lines_with_"
 					"a_common_transversal" << endl;
-			}
+		}
 
 		c = Surf_A->create_double_six_from_five_lines_with_a_common_transversal(
 				dataset + 5, pt0_line, double_six,
@@ -1405,7 +1419,8 @@ void classify_double_sixes::upstep(int verbose_level)
 				(double) Flag_orbits->nb_flag_orbits;
 
 		if (f_v) {
-			cout << "Defining n e w orbit "
+			cout << "classify_double_sixes::upstep "
+				"Defining n e w orbit "
 				<< Flag_orbits->nb_primary_orbits_upper
 				<< " from flag orbit " << f << " / "
 				<< Flag_orbits->nb_flag_orbits
