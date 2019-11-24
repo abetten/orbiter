@@ -5,9 +5,11 @@ CPPFLAGS = -Wall -I$(SRC)/lib
 LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
 
-#.PRECIOUS: %.o
 
-all: collect.out \
+
+
+TARGETS=\
+	collect.out \
 	concatenate_files.out \
 	create_file.out \
 	distribution.out \
@@ -28,6 +30,13 @@ all: collect.out \
 	scheduler.out \
 	split_spreadsheet.out \
 	split.out 
+
+
+all: $(TARGETS)
+
+install:
+	cp $(TARGETS) ../../../../bin
+
 
 
 #%.o: %.C %.cpp; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<

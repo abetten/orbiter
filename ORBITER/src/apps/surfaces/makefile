@@ -12,12 +12,21 @@ LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 
 
-all:  arc_lifting_main.out \
+
+
+TARGETS=\
+	arc_lifting_main.out \
 	create_surface_main.out \
 	intersection.out \
 	study_surface.out \
 	surface_classify.out \
 	surfaces_arc_lifting_main.out 
+
+all: $(TARGETS)
+
+install:
+	cp $(TARGETS) ../../../../bin
+
 
 
 arc_lifting_main.out:  arc_lifting_main.o  ;

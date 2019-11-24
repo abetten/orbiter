@@ -9,12 +9,19 @@ LFLAGS = -lm
 
 
 
-all: \
+
+
+TARGETS=\
 	blt_main.out \
 	plot_stats_on_graphs.out \
 	create_BLT_set_main.out
 
+all: $(TARGETS)
 
+
+
+install:
+	cp $(TARGETS) ../../../../bin
 
 
 blt_main.out:  blt_main.o ;

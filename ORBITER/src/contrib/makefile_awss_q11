@@ -1,0 +1,468 @@
+MY_PATH=~/DEV.19/GITHUB/orbiter
+MY_PATH2=~/DEV.19/GITHUB/orbiter2
+#MY_PATH=/scratch3/betten/COMPILE/2019_01_06
+ORBITER=$(MY_PATH)/ORBITER
+ORBITER2=$(MY_PATH2)/ORBITER2
+SRC=$(ORBITER)/src
+SRC2=$(ORBITER2)/src
+
+
+ARCS_PATH=$(SRC)/apps/arcs
+TOOLS_PATH=$(SRC)/apps/tools
+PROJECTIVE_SPACE_PATH=$(SRC)/apps/projective_space
+GROUPS_PATH=$(SRC)/apps/groups
+SOLVER_PATH=$(SRC)/apps/solver
+LINEAR_SPACES_PATH=$(SRC)/apps/linear_spaces
+GRAPH_THEORY_PATH=$(SRC)/apps/graph_theory
+
+
+ORDER=11
+DEPTH=5
+D=3
+N=2
+
+
+ARGUMENTS=  \
+		-input_prefix ./ARCS/ \
+		-output_prefix ./SYSTEMS/ \
+		-solution_prefix ./SOLUTIONS/ \
+		-base_fname arcs_q$(ORDER)_d$(D) \
+
+
+
+
+22_3:
+	- mkdir ARCS
+	$(ARCS_PATH)/arcs_main.out -v 4 \
+		-q 11 -d 3 -n 2 \
+		$(ARGUMENTS) \
+		-starter \
+		-read_data_file ARCS/arcs_q11_d3_8.data \
+		-starter_size 9 \
+		-base_fname arcs_q11_d3 \
+		-W -w 
+
+
+
+13_5:
+	- mkdir ARCS
+	$(ARCS_PATH)/arcs_main.out -v 4 \
+		-q 11 -d 5 -n 2 \
+		$(ARGUMENTS) \
+		-starter \
+		-starter_size 13
+
+3:
+	- mkdir ARCS
+	$(ARCS_PATH)/arcs_main.out -v 4 \
+		-q 11 -d 3 -n 2 \
+		$(ARGUMENTS) \
+		-starter \
+		-starter_size 100
+
+
+
+#		-list $(DEPTH) \
+
+#		-draw_poset \
+#		-W -T 
+
+#		-simeon 2 \
+
+
+
+draw_poset_detailed:
+	cp ARCS/arcs_$(ORDER)__poset_detailed_lvl_$(DEPTH).layered_graph arcs_poset_detailed.layered_graph
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 2 \
+		-file arcs_poset_detailed.layered_graph \
+		-xin 1000000 -yin 1000000 \
+		-xout 1000000 -yout 1000000 \
+		-y_stretch 1.1 \
+		-rad 2000 \
+		-nodes_empty \
+		-embedded 
+	pdflatex arcs_poset_detailed_draw.tex
+	open arcs_poset_detailed_draw.pdf
+
+draw_poset:
+	cp ARCS/arcs_$(ORDER)__poset_lvl_$(DEPTH).layered_graph arcs_poset.layered_graph
+	$(GRAPH_THEORY_PATH)/layered_graph_main.out -v 2 \
+		-file arcs_poset.layered_graph \
+		-draw \
+		-xin 1000000 -yin 1000000 \
+		-xout 1000000 -yout 1000000 \
+		-rad 800 \
+		-xin 1000000 \
+		-yin 1000000 \
+		-xout 1000000 \
+		-yout 1000000 \
+		-embedded \
+		-scale .44 \
+		-line_width 0.5 \
+		-y_stretch 0.8 \
+		-nodes_empty \
+		-spanning_tree
+	pdflatex arcs_poset_draw.tex
+	open arcs_poset_draw.pdf
+
+
+cheat:
+	$(PROJECTIVE_SPACE_PATH)/cheat_sheet_PG.out -n 2 -q $(ORDER)
+	pdflatex PG_2_$(ORDER).tex
+	open PG_2_$(ORDER).pdf
+
+
+r1:
+	$(ARCS_PATH)/arcs_main.out -v 4 $(ARGUMENTS) \
+		-starter \
+		-recognize "0,1,2,123,80,121,62" 
+
+
+lift:
+	$(ARCS_PATH)/k_arc_lifting.out -v 4 -q $(ORDER) \
+		-k 4 -sz 33 \
+		-arc "2,34,1,25,64,47,74,119,94,107,8,123,43,0,3,76" \
+		-McKay
+
+# no solution
+
+
+#		-arc "0,9,1,84,85,95,97,107,109,119,111,123,127,2,3,50"
+
+orderly:
+	$(ARCS_PATH)/k_arc_lifting.out -v 4 -q $(ORDER) \
+		-k 4 -sz 33 \
+		-arc "2,34,1,25,64,47,74,119,94,107,8,123,43,0,3,76"
+
+
+
+lift32:
+	$(ARCS_PATH)/k_arc_lifting.out -v 2 -q 11 \
+		-k 4 -sz 32 \
+		-arc "2,34,1,25,64,47,74,119,94,107,8,123,43,0,3,76" \
+		-McKay
+
+
+#		-Cook 
+# no solutions!
+
+
+lift31:
+	$(ARCS_PATH)/k_arc_lifting.out -v 2 -q 11 \
+		-k 4 -sz 31 \
+		-arc "2,34,1,25,64,47,74,119,94,107,8,123,43,0,3,76" \
+		-McKay
+
+lift21a:
+	$(ARCS_PATH)/k_arc_lifting.out -v 2 -q 11 \
+		-k 4 -sz 32 \
+		-arc "0, 1, 2, 3, 4, 15, 27, 35, 41, 54, 56, 64, 73, 76, 83, 86, 94, 99, 115, 118, 128" \
+		-McKay
+
+
+
+lift21b:
+	$(ARCS_PATH)/k_arc_lifting.out -v 2 -q 11 \
+		-k 4 -sz 32 \
+		-arc "0, 1, 2, 3, 4, 15, 28, 52, 53, 56, 71, 75, 82, 87, 91, 94, 103, 114, 117, 129, 131" \
+		-McKay
+
+
+lift20:
+	$(ARCS_PATH)/k_arc_lifting.out -v 2 -q 11 \
+		-k 4 -sz 32 \
+		-classification arcs_20_3.txt \
+		-Cook
+
+lift19:
+	$(ARCS_PATH)/k_arc_lifting.out -v 4 -q 11 \
+		-k 4 -sz 32 \
+		-classification arcs_11__lvl_19 \
+		-Cook
+
+
+
+#solve:
+#	$(TOOLS_PATH)/solve_diophant.out \
+#		-v 2 \
+#		-file system.diophant \
+#		-print
+
+
+#		-mckay \
+
+canon:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 20 -n 2 -q 7 \
+		-input -set_of_points "0,1,2,3,25,31,49,55" -end \
+		-classify_nauty \
+		-prefix PG_2_7_conic \
+		-save conic
+
+
+cubic1:
+	$(PROJECTIVE_SPACE_PATH)/determine_cubic.out -v 5 -q 11 \
+		-pts "0, 1, 2, 3, 4, 15, 27, 35, 41, 54, 56, 64, 73, 76, 83, 86, 94, 99, 115, 118, 128"
+
+
+cubic2:
+	$(PROJECTIVE_SPACE_PATH)/determine_cubic.out -v 5 -q 11 \
+		-pts "0, 1, 2, 3, 4, 15, 28, 52, 53, 56, 71, 75, 82, 87, 91, 94, 103, 114, 117, 129, 131"
+
+
+make_cubic:
+	$(PROJECTIVE_SPACE_PATH)/create_object.out -v 5 -q 11 -cubic
+
+
+cubic3:
+	$(PROJECTIVE_SPACE_PATH)/determine_cubic.out -v 5 -q 11 \
+		-pts "0, 2, 3, 38, 54, 61, 70, 81, 94, 109, 115, 123 "
+
+make_elliptic_curve:
+	$(PROJECTIVE_SPACE_PATH)/create_object.out -v 5 -q 11 \
+		-elliptic_curve 1 3
+
+# creates elliptic_curve_b1_c3_q11.txt
+
+
+
+lift_elliptic_curve:
+	$(ARCS_PATH)/k_arc_lifting.out -v 2 -q 11 \
+		-k 4 -sz 32 \
+		-arc "1, 67, 78, 57, 90, 16, 60, 93, 28, 127, 62,95,30,129,43,120,33,132" \
+		-McKay \
+		-save_system lift_EC.diophant
+
+
+EC_canon:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 -n 2 -q 11 \
+		-input \
+		-set_of_points "1, 67, 78, 57, 90, 16, 60, 93, 28, 127, 62,95,30,129,43,120,33,132" \
+		-end \
+		-classify_nauty \
+		-prefix PG_2_11_EC \
+		-save PG_2_11_EC_classified
+
+
+
+ec:
+	$(PROJECTIVE_SPACE_PATH)/determine_cubic.out -v 5 -q 11 \
+		-pts "1, 24, 122, 68, 79, 15, 48, 103, 71, 82, 73, 84, 42, 119"
+
+
+singer:
+	$(GROUPS_PATH)/linear_group.out -v 3 -linear -PGL 3 11 \
+		-singer 1 -end
+
+  
+7:
+	$(GROUPS_PATH)/linear_group.out -v 3 -linear -PGL 3 11 \
+		-singer 190 -end  
+
+
+21:
+	$(GROUPS_PATH)/linear_group.out -v 3 -linear -PGL 3 11 \
+		-singer_and_frobenius 190 -end  -orbits_on_points
+
+
+
+21_canon:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 2 -n 2 -q 11 \
+		-input \
+		-set_of_points "1, 31, 55, 119, 98, 109, 37, 21, 17, 97, 122, 60, 82, 42, 83, 71, 49, 77, 124, 106, 61" \
+		-set_of_points "2, 43, 51, 99, 118, 107, 32, 30, 10, 7, 127, 59, 81, 120, 6, 117, 23, 72, 91, 39, 33" \
+		-set_of_points "3, 115, 75, 9, 111, 86, 28, 103, 4, 54, 64, 11, 121, 126, 27, 8, 36, 29, 14, 96, 112" \
+		-set_of_points "5, 25, 89, 114, 104, 20, 45, 73, 129, 57, 38, 108, 53, 79, 40, 15, 70, 130, 63, 85, 93" \
+		-set_of_points "12, 26, 41, 113, 35, 95, 22, 92, 94, 34, 18, 84, 76, 19, 110, 46, 44, 62, 16, 90, 125" \
+		-set_of_points "13, 24, 131, 116, 52, 50, 123, 88, 102, 74, 101, 132, 105, 66, 56, 78, 65, 47, 87, 69, 68" \
+		-end \
+		-classify_nauty \
+		-prefix PG_2_11_orbits_21 \
+		-save PG_2_11_orbits_21_classified
+	pdflatex PG_2_11_orbits_21_classification.tex
+	open PG_2_11_orbits_21_classification.pdf
+
+# input 1 and 5 are 3-arcs; nonisomorphic, with a group of order 21.
+# orbit of 2 and orbit of 13
+#		-save conic
+
+
+fining_cook1:
+	$(ARCS_PATH)/k_arc_lifting.out -v 2 -q $(ORDER) \
+		-k 5 -sz 43 \
+		-fining_input \
+		-arc "1, 2, 5, 8, 13, 16, 17, 25, 28, 30, 33, 41, 48, 49, 53, 55, 58, 62, 64, 71, 75, 80, 81, 85, 87, 92, 98, 108, 114,  115, 116, 132" \
+		-McKay \
+		-save_system system.diophant
+
+
+# 2 solutions in solutions.txt
+
+
+print_system:
+	$(SOLVER_PATH)/solve_diophant.out  -v 2 \
+		-general_format \
+		-draw \
+		-file system.diophant -print \
+		-output_file solutions.txt
+
+
+#		-McKay \
+
+
+fining_cook1_cook:
+	$(ARCS_PATH)/k_arc_lifting.out -v 2 -q $(ORDER) \
+		-k 5 -sz 43 \
+		-fining_input \
+		-arc "1, 2, 5, 8, 13, 16, 17, 25, 28, 30, 33, 41, 48, 49, 53, 55, 58, 62, 64, 71, 75, 80, 81, 85, 87, 92, 98, 108, 114,  115, 116, 132" \
+		-Cook \
+		-save_system system.diophant
+
+
+
+fining_cook1_DLX:
+	$(ARCS_PATH)/k_arc_lifting.out -v 2 -q $(ORDER) \
+		-k 5 -sz 43 \
+		-fining_input \
+		-arc "1, 2, 5, 8, 13, 16, 17, 25, 28, 30, 33, 41, 48, 49, 53, 55, 58, 62, 64, 71, 75, 80, 81, 85, 87, 92, 98, 108, 114,  115, 116, 132" \
+		-DLX \
+		-save_system system.diophant
+
+fining_cook1_minus3_McKay:
+	$(ARCS_PATH)/k_arc_lifting.out -v 2 -q $(ORDER) \
+		-k 5 -sz 43 \
+		-fining_input \
+		-arc "1, 2, 5, 8, 13, 16, 17, 25, 28, 30, 33, 41, 48, 49, 53, 55, 58, 62, 64, 71, 75, 80, 81, 85, 87, 92, 98, 108, 114" \
+		-McKay \
+		-save_system system.diophant
+
+
+fining_cook1_minus3_Cook:
+	$(ARCS_PATH)/k_arc_lifting.out -v 2 -q $(ORDER) \
+		-k 5 -sz 43 \
+		-fining_input \
+		-arc "1, 2, 5, 8, 13, 16, 17, 25, 28, 30, 33, 41, 48, 49, 53, 55, 58, 62, 64, 71, 75, 80, 81, 85, 87, 92, 98, 108, 114" \
+		-Cook \
+		-save_system system.diophant
+
+
+#		-fining_output \
+
+cook1_iso:
+	$(PROJECTIVE_SPACE_PATH)/canonical_form.out -v 20 -n 2 -q 11 \
+		-input -file_of_points solutions.txt -end \
+		-classify_nauty \
+		-prefix cook1_lift \
+		-save cook1_lift_classified
+	pdflatex cook1_lift_classification.tex
+	open cook1_lift_classification.pdf
+
+
+
+solve_McKay:
+	$(SOLVER_PATH)/solve_diophant.out  -v 2 \
+		-general_format \
+		-file system.diophant -print \
+		-McKay \
+		-output_file solutions.txt
+
+
+solve_DLX:
+	$(SOLVER_PATH)/solve_diophant.out  -v 2 \
+		-general_format \
+		-file system.diophant -print \
+		-DLX \
+		-output_file solutions.txt
+
+
+
+lift_fining_13_1:
+	$(ARCS_PATH)/k_arc_lifting.out -v 2 -q $(ORDER) \
+		-k 5 -sz 18 \
+		-fining_input \
+		-arc "1, 2, 3, 4, 5, 13, 14, 15, 16, 17, 26, 27, 28" \
+		-McKay \
+		-save_system system.diophant
+
+
+simeon:
+	$(PROJECTIVE_SPACE_PATH)/simeon.out -v 2 
+
+
+
+
+simeon_iso:
+	$(PROJECTIVE_SPACE_PATH)/projective_space_main.out -v 2 -n 2 -q 11 \
+		-input -file_of_lines solution.txt -end \
+		-classify_nauty \
+		-prefix simeon_77_8_arcs \
+		-save simeon_77_8_arcs
+	pdflatex simeon_77_8_arcs_classification.tex
+	open simeon_77_8_arcs_classification.pdf
+
+
+# arc_lifting_simeon_q11_n2_d%d_k_solutions.txt
+
+lift_simeon_0:
+	$(ARCS_PATH)/k_arc_lifting.out -v 2 -q 11 \
+		-k 9 -sz 89 \
+		-arc "14,15,16,17,18,19,20,21,25,26,28,29,30,31,32,37,38,39,40,41,42,44,46,49,50,51,52,53,55,57,58,61,62,63,65,66,68,69,70,73,74,75,76,77,79,81,82,87,88,90,91,93,94,97,98,99,102,103,104,105,106,109,110,112,113,114,115,116,118,121,123,124,125,126,128,129,130" \
+		-McKay \
+		-dualize \
+		-save_system simeon_0.diophant
+
+# the first solution out of 134 from the simeon program:
+#14,15,16,17,18,19,20,21,25,26,28,29,30,31,32,37,38,39,40,41,42,44,46,49,50,51,52,53,55,57,58,61,62,63,65,66,68,69,70,73,74,75,76,77,79,81,82,87,88,90,91,93,94,97,98,99,102,103,104,105,106,109,110,112,113,114,115,116,118,121,123,124,125,126,128,129,130
+# this gives 55 (89,9)-arc
+
+
+widor45_5:
+	$(LINEAR_SPACES_PATH)/widor.out -v 5 45_5_arc.widor
+	$(LINEAR_SPACES_PATH)/tdo_refine.out -v 10 -nopacking -D1_upper_bound_x0 5 45_5_arc.tdo
+	#$(LINEAR_SPACES_PATH)/tdo_print.out -v 2 45_5_arcr.tdo
+	$(LINEAR_SPACES_PATH)/tdo_refine.out -v 10 -nopacking -mckay 45_5_arcr.tdo 
+
+
+#	$(LINEAR_SPACES_PATH)/tdo_refine.out -v 10 -nopacking -select 0.49  45_5_arcr.tdo 
+	#$(LINEAR_SPACES_PATH)/tdo_print.out -v 2 45_5_arcrr.tdo
+
+#45_5_arc.widor:
+#<HTDO type=pt ptanz=2 btanz=1 fuse=simple>
+# 133
+#45 12
+#88 12
+# 1
+# 1
+#</HTDO>
+
+
+dio:
+	$(SOLVER_PATH)/solve_diophant.out -file system_45_5.xml -McKay -v 10
+
+
+#-McKay
+
+
+dio2:
+	$(SOLVER_PATH)/solve_diophant.out -file system_reduced.xml -McKay -v 2 \
+		-output_file system_reduced_sol.txt
+
+dio3:
+	$(SOLVER_PATH)/solve_diophant.out -file system_45_5_at_least_95.xml -McKay -v 10
+
+#diophant::solve_all_mckay found 49 solutions in 71 backtrack nodes
+
+
+simeon89:
+	$(TOOLS_PATH)/run_lifting.out -v 2 -q 11 -k 9 -sz_in 77 -sz_out 89 \
+		-input_file simeon_77_8_arcs_iso.txt \
+		-output_prefix arcs_89_9
+
+
+
+simeon90:
+	$(TOOLS_PATH)/run_lifting.out -v 2 -q 11 -k 9 -sz_in 77 -sz_out 90 \
+		-input_file simeon_77_8_arcs_iso.txt \
+		-output_prefix arcs_90_9
+
+
+

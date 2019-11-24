@@ -7,7 +7,9 @@ LFLAGS = -lm
 
 
 
-all: arcs_main.out \
+
+TARGETS=\
+	 arcs_main.out \
 	arcs_orderly.out \
 	awss.out \
 	create_group.out \
@@ -17,6 +19,11 @@ all: arcs_main.out \
 	test_arc.out \
 	test_hyperoval.out 
 
+all: $(TARGETS)
+
+
+install:
+	cp $(TARGETS) ../../../../bin
 
 arcs_main.out:  arcs_main.o ;
 	$(DISCRETA_CPP)  arcs_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

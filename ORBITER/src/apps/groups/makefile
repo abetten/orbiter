@@ -15,13 +15,17 @@ LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 
 
 
-
 ALL_TARGETS=\
 	action_on_set_partitions.out \
 	exceptional_isomorphism_O4_main.out \
 	linear_group.out \
 	orthogonal_group.out \
 	wreath_product.out
+
+all: $(ALL_TARGETS)
+
+install:
+	cp $(ALL_TARGETS) ../../../../bin
 
 
 

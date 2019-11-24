@@ -411,9 +411,9 @@ public:
 		int verbose_level);
 	void init_group(int verbose_level);
 	void compute_orbits(int verbose_level);
-	void unrank_set_to_M(int len, long int *S);
-	void unrank_set_to_matrix(int len, long int *S, int *M);
-	void rank_set_from_matrix(int len, long int *S, int *M);
+	void unrank_set_to_M(int len, long int *S, int verbose_level);
+	void unrank_set_to_matrix(int len, long int *S, int *M, int verbose_level);
+	void rank_set_from_matrix(int len, long int *S, int *M, int verbose_level);
 	void Kramer_Mesner_matrix(int t, int k, int f_print_matrix, 
 		int f_read_solutions, const char *solution_fname, 
 		int verbose_level);

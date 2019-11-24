@@ -8,7 +8,10 @@ LFLAGS = -lm
 
 
 
-all: all_k_subsets.out \
+
+
+TARGETS=\
+		all_k_subsets.out \
 		bent.out \
 		burnside.out \
 		conjugacy_classes_sym_n.out \
@@ -31,6 +34,11 @@ all: all_k_subsets.out \
 		rank_subsets_lex.out \
 		tao.out \
 		unrank.out 
+
+all: $(TARGETS)
+
+install:
+	cp $(TARGETS) ../../../../bin
 
 
 all_k_subsets.out:  all_k_subsets.o;

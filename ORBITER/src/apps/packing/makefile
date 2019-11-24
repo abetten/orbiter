@@ -11,12 +11,18 @@ LFLAGS = -lm
 
 
 
-all: \
+
+
+TARGETS=\
 	packing_main.out \
 	packing_was_main.out 
 
 
 
+all: $(TARGETS)
+
+install:
+	cp $(TARGETS) ../../../../bin
 
 
 

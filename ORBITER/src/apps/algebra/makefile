@@ -7,7 +7,7 @@ LFLAGS = -lm
 
 
 
-all: \
+TARGETS=\
 	a5_in_PSL.out \
 	BN_pair.out \
 	borel.out \
@@ -31,6 +31,12 @@ all: \
 	subprimitive.out \
 	three_squares.out
 
+all: $(ALL_TARGETS)
+
+
+
+install:
+	cp $(TARGETS) ../../../../bin
 
 a5_in_PSL.out:  a5_in_PSL.o;
 	$(DISCRETA_CPP)  a5_in_PSL.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

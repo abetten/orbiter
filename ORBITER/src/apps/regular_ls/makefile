@@ -6,7 +6,15 @@ LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
 
 
-all: regular_ls.out transpose.out
+
+TARGETS=\
+	regular_ls.out transpose.out
+
+all: $(TARGETS)
+
+
+install:
+	cp $(TARGETS) ../../../../bin
 
 
 regular_ls.out:  regular_ls.o ;

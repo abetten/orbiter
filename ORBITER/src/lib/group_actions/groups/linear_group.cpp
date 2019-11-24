@@ -96,6 +96,7 @@ void linear_group::init(
 	strcpy(label_latex, A_linear->label_tex);
 
 	Mtx = A_linear->G.matrix_grp;
+	vector_space_dimension = n;
 
 	int f_OK = FALSE;
 
@@ -857,6 +858,7 @@ void linear_group::init_subgroup_Janko1(char *prefix, char *label_latex,
 				"Strong_gens->init_subgroup_by_generators" << endl;
 		}
 
+	f_has_nice_gens = FALSE;
 	f_has_strong_generators = TRUE;
 
 	A2 = A_linear;

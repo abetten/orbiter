@@ -6,7 +6,10 @@ LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
 
 
-all:  cc2widor.out \
+
+
+TARGETS=\
+		cc2widor.out \
 		maxfit.out \
 		packing.out \
 		parameters.out \
@@ -14,6 +17,12 @@ all:  cc2widor.out \
 		tdo_refine.out \
 		tdo_print.out \
 		widor.out
+
+all: $(TARGETS)
+
+install:
+	cp $(TARGETS) ../../../../bin
+
 
 cc2widor.out:  cc2widor.o 
 	$(DISCRETA_CPP)  cc2widor.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

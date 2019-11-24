@@ -6,11 +6,18 @@ LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
 
 
-all:  \
+
+
+TARGETS=\
 	linear_set_main.out \
 	long_orbit.out \
 	subspace_orbits_main.out 
 
+all: $(TARGETS)
+
+
+install:
+	cp $(TARGETS) ../../../../bin
 
 
 linear_set_main.out:  linear_set_main.o ;

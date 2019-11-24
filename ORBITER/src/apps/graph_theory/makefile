@@ -7,7 +7,10 @@ LFLAGS = -lm
 
 #.PRECIOUS: %.o
 
-all: all_cliques.out \
+
+
+TARGETS=\
+		all_cliques.out \
 		all_cycles.out \
 		all_rainbow_cliques.out \
 		cayley_sym_n.out \
@@ -30,6 +33,12 @@ all: all_cliques.out \
 		srg.out \
 		treedraw.out \
 		winnie_li.out
+
+all: $(TARGETS)
+
+install:
+	cp $(TARGETS) ../../../../bin
+
 
 
 

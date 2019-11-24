@@ -11,7 +11,10 @@ LFLAGS = -lm
 
 
 
-all: analyze_projective_code.out  \
+
+
+TARGETS=\
+	analyze_projective_code.out  \
 	analyze_q_designs.out  \
 	andre.out  \
 	canonical_form.out\
@@ -28,6 +31,11 @@ all: analyze_projective_code.out  \
 	polar.out \
 	process.out
 
+all: $(TARGETS)
+
+
+install:
+	cp $(TARGETS) ../../../../bin
 
 
 
