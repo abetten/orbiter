@@ -44,3 +44,26 @@ clean:
 	cd test; $(MAKE) clean
 	cd tools; $(MAKE) clean
 
+install: 
+	cd algebra; $(MAKE) install
+	cd arcs; $(MAKE) install
+	cd blt; $(MAKE) install
+	cd codes; $(MAKE) install
+	cd combinatorics; $(MAKE) install
+	cd graph_classify; $(MAKE) install
+	cd graph_theory; $(MAKE) install
+	cd groups; $(MAKE) install
+	cd linear_spaces; $(MAKE) install
+	#cd main; $(MAKE) install
+	cd ovoid; $(MAKE) install
+	cd packing; $(MAKE) install
+	cd projective_space; $(MAKE) install
+	cd regular_ls; $(MAKE) install
+	cd semifield; $(MAKE) install
+	cd solver; $(MAKE) install
+	cd spread; $(MAKE) install
+	cd subspace_orbits; $(MAKE) install
+	cd surfaces; $(MAKE) install
+	cd test; $(MAKE) install
+	cd tools; $(MAKE) install
+

@@ -5,13 +5,21 @@ CPPFLAGS = -Wall -I$(SRC)/lib
 LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
 
-#.PRECIOUS: %.o
 
-all: dio.out \
+
+
+TARGETS=\
+	dio.out \
 	dlx.out \
 	pentomino_5x5.out \
 	puzzle.out \
 	solve_diophant.out 
+
+
+all: $(TARGETS)
+
+install:
+	cp $(TARGETS) ../../../../bin
 
 
 

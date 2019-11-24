@@ -278,33 +278,61 @@ void subspace_orbits::compute_orbits(int verbose_level)
 }
 
 void subspace_orbits::unrank_set_to_M(
-		int len, long int *S)
+		int len, long int *S, int verbose_level)
 {
 	int i;
+	int f_v = (verbose_level >= 1);
 	
+	if (f_v) {
+		cout << "subspace_orbits::unrank_set_to_M set=";
+		lint_vec_print(cout, S, len);
+		cout << endl;
+	}
+
 	for (i = 0; i < len; i++) {
 		F->PG_element_unrank_modified_lint(tmp_M + i * n, 1, n, S[i]);
-		}
+	}
+	if (f_v) {
+		cout << "subspace_orbits::unrank_set_to_M done" << endl;
+	}
 }
 
 void subspace_orbits::unrank_set_to_matrix(
-		int len, long int *S, int *M)
+		int len, long int *S, int *M, int verbose_level)
 {
 	int i;
+	int f_v = (verbose_level >= 1);
 	
+	if (f_v) {
+		cout << "subspace_orbits::unrank_set_to_matrix set=";
+		lint_vec_print(cout, S, len);
+		cout << endl;
+	}
 	for (i = 0; i < len; i++) {
 		F->PG_element_unrank_modified_lint(M + i * n, 1, n, S[i]);
-		}
+	}
+	if (f_v) {
+		cout << "subspace_orbits::unrank_set_to_matrix done" << endl;
+	}
 }
 
 void subspace_orbits::rank_set_from_matrix(
-		int len, long int *S, int *M)
+		int len, long int *S, int *M, int verbose_level)
 {
 	int i;
+	int f_v = (verbose_level >= 1);
 	
+	if (f_v) {
+		cout << "subspace_orbits::rank_set_from_matrix" << endl;
+	}
 	for (i = 0; i < len; i++) {
 		F->PG_element_rank_modified_lint(M + i * n, 1, n, S[i]);
-		}
+	}
+	if (f_v) {
+		cout << "subspace_orbits::rank_set_from_matrix done, set=";
+		lint_vec_print(cout, S, len);
+		cout << endl;
+	}
 }
 
 void subspace_orbits::Kramer_Mesner_matrix(
@@ -671,7 +699,7 @@ int subspace_orbits::test_dim_C_cap_Cperp_property(
 	cout << endl;
 #endif
 
-	unrank_set_to_M(len, S);
+	unrank_set_to_M(len, S, 0 /* verbose_level */);
 
 #if 0
 	cout << "coordinate matrix:" << endl;
@@ -719,7 +747,7 @@ int subspace_orbits::compute_minimum_distance(int len, long int *S)
 	cout << endl;
 #endif
 
-	unrank_set_to_M(len, S);
+	unrank_set_to_M(len, S, 0 /* verbose_level */);
 
 #if 0
 	cout << "coordinate matrix:" << endl;
@@ -754,7 +782,7 @@ void subspace_orbits::print_set(ostream &ost, int len, long int *S)
 	lint_vec_print(ost, S, len);
 	ost << endl;
 
-	unrank_set_to_M(len, S);
+	unrank_set_to_M(len, S, 0 /* verbose_level */);
 
 	ost << "coordinate matrix after unrank:" << endl;
 	print_integer_matrix_width(ost,
@@ -816,7 +844,7 @@ void subspace_orbits::print_set(ostream &ost, int len, long int *S)
 	canonical_subset = NEW_lint(n - k);
 	transporter = NEW_int(Gen->Poset->A->elt_size_in_int);
 	M2 = NEW_int((n - k) * n);
-	rank_set_from_matrix(n - k, S1, tmp_M + k * n);
+	rank_set_from_matrix(n - k, S1, tmp_M + k * n, 0 /* verbose_level */);
 
 	ost << "ranks of rows of the dual:" << endl;
 	lint_vec_print(ost, S1, n - k);
@@ -839,7 +867,7 @@ void subspace_orbits::print_set(ostream &ost, int len, long int *S)
 		lint_vec_print(ost, canonical_subset, n - k);
 		ost << endl;
 
-		unrank_set_to_matrix(n - k, canonical_subset, M2);
+		unrank_set_to_matrix(n - k, canonical_subset, M2, 0 /* verbose_level */);
 		ost << "C perp canonical:" << endl;
 		print_integer_matrix_width(ost,
 				M2, n - k, n, n, F->log10_of_q);
@@ -884,8 +912,9 @@ int subspace_orbits::test_set(int len, long int *S, int verbose_level)
 		cout << "Testing set ";
 		lint_vec_print(cout, S, len);
 		cout << endl;
+		cout << "n=" << n << endl;
 		}
-	unrank_set_to_M(len, S);
+	unrank_set_to_M(len, S, verbose_level - 1);
 	if (f_vv) {
 		cout << "coordinate matrix:" << endl;
 		print_integer_matrix_width(cout,
@@ -939,7 +968,7 @@ int subspace_orbits::test_minimum_distance(
 		}
 	k = len;
 	M = tmp_M;
-	unrank_set_to_M(len, S);
+	unrank_set_to_M(len, S, verbose_level - 1);
 	if (f_vv) {
 		cout << "coordinate matrix:" << endl;
 		print_integer_matrix_width(cout,
@@ -993,7 +1022,7 @@ int subspace_orbits::test_if_self_orthogonal(
 		}
 	M = tmp_M;
 
-	unrank_set_to_M(len, S);
+	unrank_set_to_M(len, S, verbose_level - 1);
 	if (f_vv) {
 		cout << "coordinate matrix:" << endl;
 		print_integer_matrix_width(cout,

@@ -8,12 +8,21 @@ LFLAGS = -lm
 #LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 
 
-all:  deep_search.out \
+
+
+TARGETS=\
+	deep_search.out \
 	isomorph_testing.out \
 	read_solutions.out \
 	read_types.out \
 	semifield_classify_main.out \
 	semifield_main.out 
+
+all: $(TARGETS)
+
+install:
+	cp $(TARGETS) ../../../../bin
+
 
 
 deep_search.out:  deep_search.o  ;

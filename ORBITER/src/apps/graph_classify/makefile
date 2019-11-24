@@ -8,7 +8,16 @@ LFLAGS = -lm
 
 
 
-all: graph.out
+
+
+TARGETS=\
+	graph.out
+
+all: $(TARGETS)
+
+install:
+	cp $(TARGETS) ../../../../bin
+
 
 graph.out:  graph.o ;
 	$(DISCRETA_CPP)  graph.o \

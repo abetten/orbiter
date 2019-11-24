@@ -6,7 +6,13 @@ LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
 
 
-all: ovoid.out make_design.out
+
+
+TARGETS=\
+	ovoid.out \
+	make_design.out
+
+all: $(TARGETS)
 
 ovoid.out:  ovoid.o ;
 	$(DISCRETA_CPP)  ovoid.o \
@@ -15,6 +21,10 @@ ovoid.out:  ovoid.o ;
 make_design.out:  make_design.o;
 	$(DISCRETA_CPP)  make_design.o \
 		$(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+install:
+	cp $(TARGETS) ../../../../bin
+
 
 clean:
 	- rm *.o *.a *.out *~

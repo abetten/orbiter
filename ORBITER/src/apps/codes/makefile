@@ -6,11 +6,19 @@ LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
 
 
-all: codes.out 
+
+
+TARGETS=\
+	codes.out 
+
+all: $(TARGETS)
 
 codes.out:  codes.o  ;
 	$(DISCRETA_CPP)  codes.o \
 		$(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+install:
+	cp $(TARGETS) ../../../../bin
 
 
 

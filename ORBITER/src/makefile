@@ -8,3 +8,7 @@ clean:
 
 cleana: 
 	cd lib; $(MAKE) cleana
+
+install: 
+	cd apps; $(MAKE) install
+	

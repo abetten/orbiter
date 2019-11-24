@@ -6,8 +6,19 @@ LIB = $(SRC)/lib/liborbiter.a -L/usr/local/opt/readline/lib -lreadline -lm
 LFLAGS = -lm
 
 
-all:
-	g++ $(CPPFLAGS) $(LIB) readline.cpp -o orbiter
+
+
+TARGETS=\
+	orbiter.out
+	
+all: $(TARGETS)
+
+orbiter.out:
+	g++ $(CPPFLAGS) $(LIB) readline.cpp -o orbiter.out
+
+install:
+	cp $(TARGETS) ../../../../bin
+
 
 	
 clean:

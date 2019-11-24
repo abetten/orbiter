@@ -232,6 +232,7 @@ int main(int argc, const char **argv)
 	cout << "after LG->init, strong generators "
 			"for the group have been created" << endl;
 
+	cout << "LG->vector_space_dimension=" << LG->vector_space_dimension << endl;
 
 
 	SubOrb = NEW_OBJECT(subspace_orbits);
