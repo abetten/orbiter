@@ -202,7 +202,16 @@ int main(int argc, const char **argv)
 	
 
 	F = NEW_OBJECT(finite_field);
-	F->init(Descr->input_q, 0);
+	if (Descr->f_override_polynomial) {
+		cout << "creating finite field of order q=" << Descr->input_q
+				<< " using override polynomial " << Descr->override_polynomial << endl;
+		F->init_override_polynomial(Descr->input_q,
+				Descr->override_polynomial, verbose_level);
+	}
+	else {
+		cout << "creating finite field of order q=" << Descr->input_q << endl;
+		F->init(Descr->input_q, 0);
+	}
 
 	Descr->F = F;
 	q = Descr->input_q;

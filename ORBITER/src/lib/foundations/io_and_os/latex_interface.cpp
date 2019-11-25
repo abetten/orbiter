@@ -1462,7 +1462,102 @@ void latex_interface::lint_set_print_tex_for_inline_text(ostream &ost,
 	ost << " \\}";
 }
 
+void latex_interface::latexable_string(stringstream &str,
+		const char *p, int max_len, int line_skip)
+{
+	const char *q = p;
+	char c;
+	int len = 0;
 
+	while ((c = *q) != 0) {
+		if (c == '\t') {
+			str << "\\>";
+			len += 2;
+		}
+		else if (c == ' ') {
+			str << "\\ ";
+			len++;
+		}
+		else if (c == '\\') {
+			str << "\\symbol{92}";
+			len++;
+		}
+		else if (c == '\'') {
+			str << "\\symbol{19}";
+			len++;
+		}
+		else if (c == ',') {
+			str << "\\symbol{44}";
+			len++;
+		}
+		else if (c == '!') {
+			str << "\\symbol{33}";
+			len++;
+		}
+		else if (c == '"') {
+			str << "\\symbol{34}";
+			len++;
+		}
+		else if (c == '.') {
+			str << ".";
+			//str << "\\symbol{46}";
+			len++;
+		}
+		else if (c == '-') {
+			str << "\\symbol{45}";
+			len++;
+		}
+		else if (c == '#') {
+			str << "\\symbol{35}";
+			len++;
+		}
+		else if (c == '$') {
+			str << "\\symbol{36}";
+			len++;
+		}
+		else if (c == '&') {
+			str << "\\symbol{38}";
+			len++;
+		}
+		else if (c == '~') {
+			str << "\\symbol{126}";
+			len++;
+		}
+		else if (c == '_') {
+			str << "\\_";
+			len++;
+		}
+		else if (c == '^') {
+			str << "\\symbol{94}";
+			len++;
+		}
+		else if (c == '%') {
+			str << "\\symbol{37}";
+			len++;
+		}
+		else if (c == '{') {
+			str << "\\symbol{123}";
+			len++;
+		}
+		else if (c == '}') {
+			str << "\\symbol{125}";
+			len++;
+		}
+		else if (c == '\n') {
+			str << "\\\\[" << line_skip << "pt]\n";
+			len = 0;
+			}
+		else {
+			str << c;
+			len++;
+		}
+		if (len > max_len) {
+			str << "\n";
+			len = 0;
+		}
+		q++;
+	}
+}
 
 
 }}

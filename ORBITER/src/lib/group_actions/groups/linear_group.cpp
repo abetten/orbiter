@@ -813,10 +813,19 @@ void linear_group::init_subgroup_by_generators(char *prefix, char *label_latex,
 
 	A2 = A_linear;
 
+	stringstream str;
+	latex_interface L;
+	int max_len = 80;
+	int line_skip = 0;
+
+
+	L.latexable_string(str,
+			subgroup_label, max_len, line_skip);
+
 	sprintf(prefix + strlen(prefix), "_Subgroup_%s_%s",
 			subgroup_label, subgroup_order_text);
 	sprintf(label_latex + strlen(label_latex),
-			"{\\rm Subgroup %s}(%s)", subgroup_label, subgroup_order_text);
+			"{\\rm Subgroup %s}(%s)", str.str().c_str(), subgroup_order_text);
 	if (f_v) {
 		cout << "linear_group::init_subgroup_by_generators "
 				"created group " << prefix << endl;
@@ -877,7 +886,7 @@ void linear_group::init_subgroup_Janko1(char *prefix, char *label_latex,
 
 }
 
-void linear_group::report(ostream &fp, int f_sylow, int verbose_level)
+void linear_group::report(ostream &fp, int f_sylow, int f_group_table, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	sims *H;
@@ -971,6 +980,34 @@ void linear_group::report(ostream &fp, int f_sylow, int verbose_level)
 		if (f_v) {
 			cout << "linear_group::report after A2->report_basic_orbits" << endl;
 		}
+
+		if (f_group_table) {
+			if (f_v) {
+				cout << "linear_group::report f_group_table is true" << endl;
+			}
+
+			int *Table;
+			long int n;
+			H->create_group_table(Table, n, verbose_level);
+			cout << "linear_group::report The group table is:" << endl;
+			int_matrix_print(Table, n, n, 2);
+			{
+				latex_interface L;
+
+				fp << "\\begin{sidewaystable}" << endl;
+				fp << "$$" << endl;
+				L.int_matrix_print_tex(fp, Table, n, n);
+				fp << "$$" << endl;
+				fp << "\\end{sidewaystable}" << endl;
+
+				H->print_all_group_elements_tex(fp);
+
+			}
+			FREE_int(Table);
+
+
+		}
+
 		if (f_sylow) {
 
 			if (f_v) {
