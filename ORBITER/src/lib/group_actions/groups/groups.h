@@ -208,7 +208,7 @@ public:
 		int verbose_level);
 	void init_subgroup_Janko1(char *prefix, char *label_latex,
 		int verbose_level);
-	void report(std::ostream &fp, int f_sylow, int verbose_level);
+	void report(std::ostream &fp, int f_sylow, int f_group_table, int verbose_level);
 };
 
 
@@ -228,6 +228,8 @@ public:
 
 	int n;
 	int input_q;
+	int f_override_polynomial;
+	const char *override_polynomial;
 	finite_field *F;
 	int f_semilinear;
 	int f_special;

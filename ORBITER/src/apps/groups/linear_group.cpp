@@ -67,6 +67,7 @@ int main(int argc, const char **argv)
 	const char *inverse_a = NULL;
 	int f_order_of_products = FALSE;
 	const char *order_of_products_elements = NULL;
+	int f_group_table = FALSE;
 
 
 	int i;
@@ -75,7 +76,7 @@ int main(int argc, const char **argv)
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-linear") == 0) {
 			f_linear = TRUE;
 			Descr = NEW_OBJECT(linear_group_description);
@@ -83,60 +84,60 @@ int main(int argc, const char **argv)
 				argv + i + 1, verbose_level);
 
 			cout << "-linear" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-orbits_on_subsets") == 0) {
 			f_orbits_on_subsets = TRUE;
 			orbits_on_subsets_size = atoi(argv[++i]);
 			cout << "-orbits_on_subsets " << orbits_on_subsets_size << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-orbits_on_points") == 0) {
 			f_orbits_on_points = TRUE;
 			cout << "-orbits_on_points" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-stabilizer") == 0) {
 			f_stabilizer = TRUE;
 			cout << "-stabilizer" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-test_if_geometric") == 0) {
 			f_test_if_geometric = TRUE;
 			test_if_geometric_depth = atoi(argv[++i]);
 			cout << "-test_if_geometric" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-draw_poset") == 0) {
 			f_draw_poset = TRUE;
 			cout << "-draw_poset" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-classes") == 0) {
 			f_classes = TRUE;
 			cout << "-classes" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-normalizer") == 0) {
 			f_normalizer = TRUE;
 			cout << "-normalizer" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			cout << "-report" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-sylow") == 0) {
 			f_sylow = TRUE;
 			cout << "-sylow" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-f_draw_tree") == 0) {
 			f_draw_tree = TRUE;
 			cout << "-f_draw_tree " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-orbit_of") == 0) {
 			f_orbit_of = TRUE;
 			orbit_of_idx = atoi(argv[++i]);
 			cout << "-orbit_of " << orbit_of_idx << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-orbit_of_set_from_file") == 0) {
 			f_orbit_of_set_from_file = TRUE;
 			orbit_of_set_from_file_fname = argv[++i];
 			cout << "-orbit_of_set_from_file"
 					<< orbit_of_set_from_file_fname << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-orbits_on_set_system_from_file") == 0) {
 			f_orbits_on_set_system_from_file = TRUE;
 			orbits_on_set_system_from_file_fname = argv[++i];
@@ -146,35 +147,39 @@ int main(int argc, const char **argv)
 					<< orbits_on_set_system_from_file_fname
 					<< " " << orbits_on_set_system_first_column << " "
 					<< orbits_on_set_system_number_of_columns << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-search_subgroup") == 0) {
 			f_search_subgroup = TRUE;
 			cout << "-search_subgroup " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-print_elements") == 0) {
 			f_print_elements = TRUE;
 			cout << "-print_elements " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-print_elements_tex") == 0) {
 			f_print_elements_tex = TRUE;
 			cout << "-print_elements_tex " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-order_of_products") == 0) {
 			f_order_of_products = TRUE;
 			order_of_products_elements = argv[++i];
 			cout << "-order_of_products " << order_of_products_elements << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-multiply") == 0) {
 			f_multiply = TRUE;
 			multiply_a = argv[++i];
 			multiply_b = argv[++i];
 			cout << "-multiply " << multiply_a << " " << multiply_b << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-inverse") == 0) {
 			f_inverse = TRUE;
 			inverse_a = argv[++i];
 			cout << "-inverse " << inverse_a << endl;
-			}
+		}
+		else if (strcmp(argv[i], "-group_table") == 0) {
+			f_group_table = TRUE;
+			cout << "-group_table" << endl;
+		}
 	}
 
 
@@ -190,7 +195,17 @@ int main(int argc, const char **argv)
 
 
 	F = NEW_OBJECT(finite_field);
-	F->init(Descr->input_q, 0);
+
+	if (Descr->f_override_polynomial) {
+		cout << "creating finite field of order q=" << Descr->input_q
+				<< " using override polynomial " << Descr->override_polynomial << endl;
+		F->init_override_polynomial(Descr->input_q,
+				Descr->override_polynomial, verbose_level);
+	}
+	else {
+		cout << "creating finite field of order q=" << Descr->input_q << endl;
+		F->init(Descr->input_q, 0);
+	}
 
 	Descr->F = F;
 	//q = Descr->input_q;
@@ -413,7 +428,8 @@ int main(int argc, const char **argv)
 				TRUE /*f_enlarged_page*/, TRUE /* f_pagenumbers*/,
 				extras_for_preamble);
 
-			LG->report(fp, f_sylow, verbose_level);
+			LG->report(fp, f_sylow, f_group_table, verbose_level);
+
 			L.foot(fp);
 		}
 	}

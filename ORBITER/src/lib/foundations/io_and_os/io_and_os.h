@@ -310,6 +310,8 @@ public:
 			int *v, int len);
 	void lint_set_print_tex_for_inline_text(std::ostream &ost,
 			long int *v, int len);
+	void latexable_string(std::stringstream &str,
+			const char *p, int max_len, int line_skip);
 
 };
 

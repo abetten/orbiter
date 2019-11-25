@@ -90,7 +90,16 @@ int main(int argc, const char **argv)
 		cout << "arcs_main q=" << q << endl;
 		}
 
-	F->init(q, 0);
+	if (Descr->f_override_polynomial) {
+		cout << "creating finite field of order q=" << Descr->input_q
+				<< " using override polynomial " << Descr->override_polynomial << endl;
+		F->init_override_polynomial(Descr->input_q,
+				Descr->override_polynomial, verbose_level);
+	}
+	else {
+		cout << "creating finite field of order q=" << Descr->input_q << endl;
+		F->init(Descr->input_q, 0);
+	}
 	Descr->F = F;
 	//q = Descr->input_q;
 
@@ -260,7 +269,9 @@ int main(int argc, const char **argv)
 			Gen->P->cheat_sheet_points(fp, 0 /*verbose_level*/);
 
 
-			LG->report(fp, f_sylow, verbose_level);
+			int f_group_table = FALSE;
+
+			LG->report(fp, f_sylow, f_group_table, verbose_level);
 
 			fp << endl;
 			fp << "\\section{Poset Classification}" << endl;

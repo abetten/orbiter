@@ -15,20 +15,14 @@ namespace group_actions {
 
 linear_group_description::linear_group_description()
 {
-	null();
-}
-
-linear_group_description::~linear_group_description()
-{
-	freeself();
-}
-
-void linear_group_description::null()
-{
 	f_projective = FALSE;
 	f_general = FALSE;
 	f_affine = FALSE;
+
 	n = 0;
+	input_q = 0;
+	f_override_polynomial = FALSE;
+	override_polynomial = NULL;
 	F = NULL;
 	f_semilinear = FALSE;
 	f_special = FALSE;
@@ -43,10 +37,13 @@ void linear_group_description::null()
 	f_singer_group_and_frobenius = FALSE;
 	singer_power = 1;
 	f_subfield_structure_action = FALSE;
+	s = 1;
 	f_subgroup_from_file = FALSE;
 	f_borel_subgroup_upper = FALSE;
 	f_borel_subgroup_lower = FALSE;
 	f_identity_group = FALSE;
+	subgroup_fname = NULL;
+	subgroup_label = NULL;
 	f_orthogonal_group = FALSE;
 	orthogonal_group_epsilon = 0;
 
@@ -59,6 +56,16 @@ void linear_group_description::null()
 	subgroup_generators_as_string = NULL;
 
 	f_Janko1 = FALSE;
+	//null();
+}
+
+linear_group_description::~linear_group_description()
+{
+	freeself();
+}
+
+void linear_group_description::null()
+{
 }
 
 void linear_group_description::freeself()
@@ -248,6 +255,11 @@ int linear_group_description::read_arguments(
 			f_semilinear = TRUE;
 			f_special = TRUE;
 			cout << "-ASSL " << n << " " << input_q << endl;
+			}
+		else if (strcmp(argv[i], "-override_polynomial") == 0) {
+			f_override_polynomial = TRUE;
+			override_polynomial = argv[++i];
+			cout << "-override_polynomial" << override_polynomial << endl;
 			}
 
 		else if (strcmp(argv[i], "-wedge") == 0) {

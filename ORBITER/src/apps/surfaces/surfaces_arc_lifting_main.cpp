@@ -104,7 +104,16 @@ int main(int argc, const char **argv)
 
 	q = Descr4->input_q;
 	F = NEW_OBJECT(finite_field);
-	F->init(q, 0);
+	if (Descr4->f_override_polynomial) {
+		cout << "creating finite field of order q=" << Descr4->input_q
+				<< " using override polynomial " << Descr4->override_polynomial << endl;
+		F->init_override_polynomial(Descr4->input_q,
+				Descr4->override_polynomial, verbose_level);
+	}
+	else {
+		cout << "creating finite field of order q=" << Descr4->input_q << endl;
+		F->init(Descr4->input_q, 0);
+	}
 
 	Descr4->F = F;
 
@@ -145,6 +154,7 @@ int main(int argc, const char **argv)
 		cout << "the two groups need to have the same field" << endl;
 		exit(1);
 	}
+
 	Descr3->F = F;
 	LG3 = NEW_OBJECT(linear_group);
 	if (f_v) {
