@@ -72,7 +72,7 @@ int main(int argc, const char **argv)
 	HS->compute(depth, verbose_level);
 
 	cout << "Before delete HS" << endl;
-	delete HS;
+	FREE_OBJECT(HS);
 
 
 	Os.time_check(cout, t0);

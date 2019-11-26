@@ -30,55 +30,68 @@ void strong_generators::init_linear_group_from_scratch(
 
 	if (f_v) {
 		cout << "strong_generators::init_linear_group_from_scratch" << endl;
-		}
+	}
 
 
 	A = NEW_OBJECT(action);
 	strong_generators::A = A;
 
 	int f_basis = TRUE;
+	int f_init_sims = FALSE;
 	
 	if (f_projective) {
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
-					"projective group" << endl;
-			}
-		A->init_projective_group(n, F, f_semilinear, 
-			f_basis,
-			nice_gens,
-			verbose_level);
+					"before A->init_projective_group" << endl;
 		}
+		A->init_projective_group(n, F, f_semilinear, 
+			f_basis, f_init_sims,
+			nice_gens,
+			verbose_level - 1);
+		if (f_v) {
+			cout << "strong_generators::init_linear_group_from_scratch "
+					"after A->init_projective_group" << endl;
+		}
+	}
 	else if (f_general) {
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
-					"general linear group" << endl;
-			}
-		A->init_general_linear_group(n, F, f_semilinear, 
-			f_basis,
-			nice_gens,
-			verbose_level);
+					"before A->init_general_linear_group" << endl;
 		}
+		A->init_general_linear_group(n, F, f_semilinear, 
+			f_basis, f_init_sims,
+			nice_gens,
+			verbose_level - 1);
+		if (f_v) {
+			cout << "strong_generators::init_linear_group_from_scratch "
+					"after A->init_general_linear_group" << endl;
+		}
+	}
 	else if (f_affine) {
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
-					"affine group" << endl;
-			}
-		A->init_affine_group(n, F, f_semilinear, 
-			f_basis,
-			nice_gens,
-			verbose_level);
+					"before A->init_affine_group" << endl;
 		}
+		A->init_affine_group(n, F, f_semilinear, 
+			f_basis, f_init_sims,
+			nice_gens,
+			verbose_level - 1);
+		if (f_v) {
+			cout << "strong_generators::init_linear_group_from_scratch "
+					"after A->init_affine_group" << endl;
+		}
+	}
 	else {
 		cout << "strong_generators::init_linear_group_from_scratch "
 				"the type of group is not specified" << endl;
 		exit(1);
-		}
+	}
 
 
 	if (!A->f_has_strong_generators) {
 		cout << "strong_generators::init_linear_group_from_scratch "
 				"fatal: !A->f_has_strong_generators" << endl;
-		}
+	}
 
 	if (f_special) {
 
@@ -86,30 +99,44 @@ void strong_generators::init_linear_group_from_scratch(
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
 					"special linear group" << endl;
-			}
+		}
 
 		special_subgroup(verbose_level);
 		
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
 					"special linear group done" << endl;
-			}
 		}
+	}
 	else {
 
-		if (f_v) {
-			cout << "strong_generators::init_linear_group_from_scratch "
-					"creating sims and collecting generators" << endl;
+		if (f_init_sims) {
+			if (f_v) {
+				cout << "strong_generators::init_linear_group_from_scratch "
+						"creating sims and collecting generators" << endl;
 			}
-		sims *S;
-		S = A->Strong_gens->create_sims(0 /* verbose_level */);
-		init_from_sims(S, verbose_level);
-		FREE_OBJECT(S);
+			sims *S;
+			S = A->Strong_gens->create_sims(0 /* verbose_level */);
+			init_from_sims(S, verbose_level);
+			FREE_OBJECT(S);
 		}
+		else {
+			if (f_v) {
+				cout << "strong_generators::init_linear_group_from_scratch "
+						"before init_copy" << endl;
+			}
+			init_copy(A->Strong_gens, verbose_level);
+			if (f_v) {
+				cout << "strong_generators::init_linear_group_from_scratch "
+						"before init_copy" << endl;
+			}
+		}
+	}
 	if (f_v) {
 		cout << "strong_generators::init_linear_group_from_scratch "
 				"strong generators have been created" << endl;
 		}
+
 	if (f_vv) {
 		print_generators();
 		print_generators_tex();
@@ -119,7 +146,7 @@ void strong_generators::init_linear_group_from_scratch(
 	if (f_v) {
 		cout << "strong_generators::init_linear_group_from_scratch "
 				"done" << endl;
-		}
+	}
 }
 
 void strong_generators::special_subgroup(int verbose_level)
@@ -1293,7 +1320,7 @@ void strong_generators::field_reduction(
 	AQ->init_general_linear_group(m,
 			FQ,
 			FALSE /* f_semilinear */,
-			TRUE /* f_basis */,
+			TRUE /* f_basis */, FALSE /* f_init_sims */,
 			nice_gens,
 			verbose_level - 2);
 	if (f_v) {
@@ -1637,7 +1664,7 @@ void strong_generators::generators_for_the_stabilizer_of_two_components(
 
 	A_PGL_k_q = NEW_OBJECT(action);
 	A_PGL_k_q->init_projective_group(k,
-		F, FALSE /*f_semilinear */,
+		F, FALSE /*f_semilinear */, FALSE /* f_init_sims */,
 		TRUE /* f_basis */,
 		nice_gens,
 		0 /* verbose_level */);
@@ -1742,7 +1769,7 @@ void strong_generators::regulus_stabilizer(action *A_PGL_n_q,
 
 	A_PGL_k_q = NEW_OBJECT(action);
 	A_PGL_k_q->init_projective_group(k,
-		F, FALSE /*f_semilinear */,
+		F, FALSE /*f_semilinear */, FALSE /* f_init_sims */,
 		TRUE /* f_basis */,
 		nice_gens,
 		0 /* verbose_level */);

@@ -329,7 +329,7 @@ void translation_plane_via_andre_model::init(
 		}
 	An = NEW_OBJECT(action);
 	An->init_projective_group(n, F, f_semilinear,
-			f_basis,
+			f_basis, TRUE /* f_init_sims */,
 			nice_gens,
 			0 /* verbose_level */);
 	FREE_OBJECT(nice_gens);
@@ -340,7 +340,7 @@ void translation_plane_via_andre_model::init(
 		}
 	An1 = NEW_OBJECT(action);
 	An1->init_projective_group(n1, F, f_semilinear,
-			f_basis,
+			f_basis, TRUE /* f_init_sims */,
 			nice_gens,
 			0 /*verbose_level */);
 	FREE_OBJECT(nice_gens);

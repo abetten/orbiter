@@ -24,56 +24,72 @@ void action::init_linear_group(sims *&S,
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int f_basis = TRUE;
+	int f_init_sims = FALSE;
 
 	if (f_v) {
 		cout << "action::init_linear_group "
 				"m=" << m << " q=" << F->q << endl;
-		}
+	}
 
 	if (f_projective) {
 		if (f_v) {
 			cout << "action::init_linear_group before init_projective_group "
 					"m=" << m << " q=" << F->q
 					<< " f_semilinear=" << f_semilinear << endl;
-			}
+		}
 		init_projective_group(m, F, f_semilinear,
-			f_basis,
+			f_basis, f_init_sims,
 			nice_gens,
 			verbose_level);
+		if (f_v) {
+			cout << "action::init_linear_group after init_projective_group "
+					"m=" << m << " q=" << F->q
+					<< " f_semilinear=" << f_semilinear << endl;
 		}
+	}
 	else if (f_general) {
 		if (f_v) {
 			cout << "action::init_linear_group before init_general_linear_group "
 					"m=" << m << " q=" << F->q
 					<< " f_semilinear=" << f_semilinear << endl;
-			}
+		}
 		init_general_linear_group(m, F, f_semilinear,
-			f_basis,
+			f_basis, f_init_sims,
 			nice_gens,
 			verbose_level);
+		if (f_v) {
+			cout << "action::init_linear_group after init_general_linear_group "
+					"m=" << m << " q=" << F->q
+					<< " f_semilinear=" << f_semilinear << endl;
 		}
+	}
 	else if (f_affine) {
 		if (f_v) {
 			cout << "action::init_linear_group before init_affine_group "
 					"m=" << m << " q=" << F->q
 					<< " f_semilinear=" << f_semilinear << endl;
-			}
+		}
 		init_affine_group(m, F, f_semilinear,
-			f_basis,
+			f_basis, f_init_sims,
 			nice_gens,
 			verbose_level);
+		if (f_v) {
+			cout << "action::init_linear_group after init_affine_group "
+					"m=" << m << " q=" << F->q
+					<< " f_semilinear=" << f_semilinear << endl;
 		}
+	}
 	else {
 		cout << "action::init_linear_group "
 				"the type of group is not specified" << endl;
 		exit(1);
-		}
+	}
 
 
 	if (!f_has_strong_generators) {
 		cout << "action::init_linear_group "
 				"fatal: !f_has_strong_generators" << endl;
-		}
+	}
 
 
 
@@ -84,7 +100,7 @@ void action::init_linear_group(sims *&S,
 			cout << "action::init_linear_group "
 					"computing intersection with "
 					"special linear group" << endl;
-			}
+		}
 
 
 		action A_on_det;
@@ -150,7 +166,7 @@ void action::init_linear_group(sims *&S,
 
 
 void action::init_projective_group(int n, finite_field *F, 
-	int f_semilinear, int f_basis,
+	int f_semilinear, int f_basis, int f_init_sims,
 	vector_ge *&nice_gens,
 	int verbose_level)
 {
@@ -217,7 +233,7 @@ void action::init_projective_group(int n, finite_field *F,
 					<< endl;
 			}
 		setup_linear_group_from_strong_generators(M,
-				nice_gens,
+				nice_gens, f_init_sims,
 				verbose_level - 3);
 		if (f_v) {
 			cout << "action::init_projective_group "
@@ -240,7 +256,7 @@ void action::init_projective_group(int n, finite_field *F,
 
 void action::init_affine_group(int n, finite_field *F, 
 	int f_semilinear, 
-	int f_basis,
+	int f_basis, int f_init_sims,
 	vector_ge *&nice_gens,
 	int verbose_level)
 {
@@ -293,7 +309,7 @@ void action::init_affine_group(int n, finite_field *F,
 
 	if (f_basis) {
 		setup_linear_group_from_strong_generators(M,
-				nice_gens, verbose_level);
+				nice_gens, f_init_sims, verbose_level);
 		}
 	if (f_v) {
 		cout << "action::init_affine_group, finished setting up "
@@ -310,7 +326,7 @@ void action::init_affine_group(int n, finite_field *F,
 
 void action::init_general_linear_group(int n, finite_field *F, 
 	int f_semilinear, 
-	int f_basis,
+	int f_basis, int f_init_sims,
 	vector_ge *&nice_gens,
 	int verbose_level)
 {
@@ -366,7 +382,7 @@ void action::init_general_linear_group(int n, finite_field *F,
 
 	if (f_basis) {
 		setup_linear_group_from_strong_generators(M,
-				nice_gens, verbose_level);
+				nice_gens, f_init_sims, verbose_level);
 		}
 	if (f_v) {
 		cout << "action::init_general_linear_group, "
@@ -382,7 +398,7 @@ void action::init_general_linear_group(int n, finite_field *F,
 }
 
 void action::setup_linear_group_from_strong_generators(matrix_group *M, 
-	vector_ge *&nice_gens,
+	vector_ge *&nice_gens, int f_init_sims,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -393,7 +409,7 @@ void action::setup_linear_group_from_strong_generators(matrix_group *M,
 				"setting up a basis" << endl;
 		cout << "action::setup_linear_group_from_strong_generators "
 				"before init_matrix_group_strong_generators_builtin" << endl;
-		}
+	}
 	init_matrix_group_strong_generators_builtin(M,
 			nice_gens,
 			verbose_level - 2);
@@ -401,40 +417,50 @@ void action::setup_linear_group_from_strong_generators(matrix_group *M,
 	if (f_v) {
 		cout << "action::setup_linear_group_from_strong_generators "
 				"after init_matrix_group_strong_generators_builtin" << endl;
+	}
+
+
+
+	if (f_init_sims) {
+		sims *S;
+
+		S = NEW_OBJECT(sims);
+
+		S->init(this, verbose_level - 2);
+		if (f_v) {
+			cout << "action::setup_linear_group_from_strong_generators "
+					"before S->init_generators" << endl;
 		}
+		S->init_generators(*Strong_gens->gens, 0/*verbose_level*/);
+		if (f_v) {
+			cout << "action::setup_linear_group_from_strong_generators "
+					"after S->init_generators" << endl;
+		}
+		if (f_v) {
+			cout << "action::setup_linear_group_from_strong_generators "
+					"before S->compute_base_orbits_known_length" << endl;
+		}
+		S->compute_base_orbits_known_length(get_transversal_length(), verbose_level);
+		if (f_v) {
+			cout << "action::setup_linear_group_from_strong_generators "
+					"after S->compute_base_orbits_known_length" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "action::setup_linear_group_from_strong_generators "
+					"before init_sims" << endl;
+		}
+		init_sims_only(S, verbose_level);
+		if (f_v) {
+			cout << "action::setup_linear_group_from_strong_generators "
+					"after init_sims" << endl;
+		}
+	}
 
 	if (f_v) {
-		cout << "action::setup_linear_group_from_strong_generators "
-				"before S->compute_base_orbits_known_length" << endl;
-		}
-	sims *S;
-
-	S = NEW_OBJECT(sims);
-
-	S->init(this, verbose_level - 2);
-	S->init_generators(*Strong_gens->gens, 0/*verbose_level*/);
-	if (f_v) {
-		cout << "action::setup_linear_group_from_strong_generators "
-				"before S->compute_base_orbits_known_length" << endl;
-		}
-	S->compute_base_orbits_known_length(get_transversal_length(), verbose_level);
-	if (f_v) {
-		cout << "action::setup_linear_group_from_strong_generators "
-				"after S->compute_base_orbits_known_length" << endl;
-		}
-
-
-	if (f_v) {
-		cout << "action::setup_linear_group_from_strong_generators "
-				"before init_sims" << endl;
-		}
-
-	init_sims(S, verbose_level);
-
-	if (f_v) {
-		cout << "action::setup_linear_group_from_strong_generators "
-				"after init_sims" << endl;
-		}
+		cout << "action::setup_linear_group_from_strong_generators done" << endl;
+	}
 }
 
 void action::init_projective_special_group(
@@ -456,9 +482,10 @@ void action::init_projective_special_group(
 	}
 
 	vector_ge *nice_gens;
+	int f_init_sims = TRUE;
 
 	init_projective_group(n, F,
-			f_semilinear, f_basis,
+			f_semilinear, f_basis, f_init_sims,
 			nice_gens,
 			verbose_level);
 	if (f_v) {
@@ -494,7 +521,9 @@ void action::init_projective_special_group(
 		Sims2 = gens->create_sims(verbose_level - 1);
 
 		FREE_OBJECT(gens);
-		init_sims(Sims2, verbose_level);
+		init_sims_only(Sims2, verbose_level);
+
+		compute_strong_generators_from_sims(0/*verbose_level - 2*/);
 	}
 
 	if (f_v) {
@@ -515,7 +544,7 @@ void action::init_matrix_group_strong_generators_builtin(
 	
 	if (f_v) {
 		cout << "action::init_matrix_group_strong_generators_builtin" << endl;
-		}
+	}
 	F = M->GFq;
 	n = M->n;
 	q = F->q;
@@ -527,39 +556,56 @@ void action::init_matrix_group_strong_generators_builtin(
 		cout << "p=" << F->p << endl;
 		cout << "e=" << F->e << endl;
 		cout << "f_semilinear=" << M->f_semilinear << endl;
-		}
+	}
 
+	if (f_v) {
+		cout << "action::init_matrix_group_strong_generators_builtin "
+				"getting strong generators" << endl;
+	}
 	if (M->f_projective) {
 		F->strong_generators_for_projective_linear_group(n,
 			M->f_semilinear, 
 			data, size, nb_gens, 
 			0 /*verbose_level - 1*/);
-		}
+	}
 	else if (M->f_affine) {
 		F->strong_generators_for_affine_linear_group(n,
 			M->f_semilinear, 
 			data, size, nb_gens, 
 			0 /*verbose_level - 1*/);
-		}
+	}
 	else if (M->f_general_linear) {
 		F->strong_generators_for_general_linear_group(n,
 			M->f_semilinear, 
 			data, size, nb_gens, 
 			0 /*verbose_level - 1*/);
-		}
+	}
 	else {
 		cout << "action::init_matrix_group_strong_generators_builtin "
 				"unknown group type" << endl;
 		exit(1);
-		}
+	}
 
 
+	if (f_v) {
+		cout << "action::init_matrix_group_strong_generators_builtin "
+				"before Strong_gens->init_from_data" << endl;
+	}
 	f_has_strong_generators = TRUE;
 	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_from_data(this, data, nb_gens, size,
 			get_transversal_length(),
 			nice_gens,
 			verbose_level - 1);
+	if (f_v) {
+		cout << "action::init_matrix_group_strong_generators_builtin "
+				"after Strong_gens->init_from_data" << endl;
+	}
+	if (f_v) {
+		cout << "action::init_matrix_group_strong_generators_builtin "
+				"generators:" << endl;
+		Strong_gens->print_generators_tex(cout);
+	}
 
 	FREE_int(data);
 	
@@ -664,10 +710,12 @@ void action::init_permutation_group_from_generators(int degree,
 				"degree=" << degree << " nb_gens=" << nb_gens
 				<< " given_base_length=" << given_base_length << endl;
 		if (f_target_go) {
-			cout << "action::init_permutation_group_from_generators target group order is " << target_go << endl;
+			cout << "action::init_permutation_group_from_generators "
+					"target group order is " << target_go << endl;
 		}
 		else {
-			cout << "action::init_permutation_group_from_generators no target group order is given" << endl;
+			cout << "action::init_permutation_group_from_generators "
+					"no target group order is given" << endl;
 		}
 	}
 	sprintf(group_prefix, "Perm%d", degree);
@@ -766,7 +814,7 @@ void action::init_permutation_group_from_generators(int degree,
 		cout << "action::init_permutation_group_from_generators "
 				"before init_sims" << endl;
 		}
-	init_sims(G, verbose_level - 10);
+	init_sims_only(G, verbose_level - 10);
 
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
@@ -777,7 +825,7 @@ void action::init_permutation_group_from_generators(int degree,
 
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
-				"compute_strong_generators_from_sims" << endl;
+				"before compute_strong_generators_from_sims" << endl;
 		}
 	compute_strong_generators_from_sims(verbose_level - 10);
 	if (f_vv) {
@@ -888,7 +936,8 @@ void action::create_sims(int verbose_level)
 
 	S = Strong_gens->create_sims(verbose_level - 1);
 	
-	init_sims(S, verbose_level);
+	init_sims_only(S, verbose_level);
+	compute_strong_generators_from_sims(0/*verbose_level - 2*/);
 	if (f_v) {
 		cout << "action::create_sims done" << endl;
 		}
@@ -979,7 +1028,9 @@ void action::create_orthogonal_group(action *subaction,
 				"after ss.create_group" << endl;
 		}
 	
-	init_sims(ss.G, verbose_level);
+	init_sims_only(ss.G, verbose_level);
+	compute_strong_generators_from_sims(0/*verbose_level - 2*/);
+
 	f_has_kernel = TRUE;
 	Kernel = ss.K;
 
@@ -1195,15 +1246,17 @@ void action::init_direct_product_group(
 
 	if (f_v) {
 		cout << "action::init_direct_product_group "
-				"before init_sims" << endl;
+				"before init_sims_only" << endl;
 		}
 
-	init_sims(S, verbose_level);
+	init_sims_only(S, verbose_level);
 
 	if (f_v) {
 		cout << "action::init_direct_product_group "
-				"after init_sims" << endl;
+				"after init_sims_only" << endl;
 		}
+
+	compute_strong_generators_from_sims(0/*verbose_level - 2*/);
 
 	if (f_v) {
 		cout << "action::init_direct_product_group, finished setting up "
@@ -1436,16 +1489,18 @@ void action::init_wreath_product_group(int nb_factors, int n,
 
 		if (f_v) {
 			cout << "action::init_wreath_product_group "
-					"before init_sims" << endl;
+					"before init_sims_only" << endl;
 			}
 
-		init_sims(S, verbose_level);
+		init_sims_only(S, verbose_level);
 
 		if (f_v) {
 			cout << "action::init_wreath_product_group "
-					"after init_sims" << endl;
+					"after init_sims_only" << endl;
 			}
-	}
+
+		compute_strong_generators_from_sims(0/*verbose_level - 2*/);
+}
 	else {
 		cout << "action::init_wreath_product_group "
 				"because the degree is very large, "
@@ -1738,7 +1793,7 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 		}
 	vector_ge *nice_gens;
 	A->init_projective_group(O->n, O->F, f_semilinear,
-			TRUE /* f_basis */,
+			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
 			verbose_level - 2);
 	if (f_vv) {
@@ -2014,7 +2069,7 @@ void action::init_group_from_strong_generators(
 	if (f_vv) {
 		cout << "init_sims" << endl;
 		}
-	init_sims(G, 0/*verbose_level - 1*/);
+	init_sims_only(G, 0/*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "after init_sims" << endl;
 		}

@@ -692,44 +692,72 @@ void action::map_a_set_and_reorder(long int *set,
 
 
 
-void action::init_sims(sims *G, int verbose_level)
+void action::init_sims_only(sims *G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int i, k;
 
 	if (f_v) {
-		cout << "action::init_sims action " << label
+		cout << "action::init_sims_only action " << label
 				<< " base_len = " << base_len() << endl;
-		}
+	}
 	if (f_has_sims) {
 		FREE_OBJECT(Sims);
 		Sims = NULL;
 		f_has_sims = FALSE;
-		}
+	}
 	if (G->A != this) {
-		cout << "action::init_sims action " << label
+		cout << "action::init_sims_only action " << label
 				<< " sims object has different action "
 				<< G->A->label << endl;
 		exit(1);
-		}
+	}
 	Sims = G;
 	f_has_sims = TRUE;
 	Stabilizer_chain->init_base_from_sims(G, verbose_level);
 
-	compute_strong_generators_from_sims(0/*verbose_level - 2*/);
 #if 0
-	f_has_strong_generators = TRUE;
-	Strong_gens = NEW_OBJECT(strong_generators);
-	Strong_gens->init_from_sims(G, 0);
+	if (f_v) {
+		cout << "action::init_sims_only action " << label
+				<< " before compute_strong_generators_from_sims" << endl;
+	}
+	compute_strong_generators_from_sims(0/*verbose_level - 2*/);
+	if (f_v) {
+		cout << "action::init_sims_only action " << label
+				<< " after compute_strong_generators_from_sims" << endl;
+	}
 #endif
 	
 	if (f_v) {
-		cout << "action::init_sims done" << endl;
+		cout << "action::init_sims_only done" << endl;
+	}
+}
+
+void action::compute_strong_generators_from_sims(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action::compute_strong_generators_from_sims" << endl;
+		}
+	if (!f_has_sims) {
+		cout << "action::compute_strong_generators_from_sims need sims" << endl;
+		exit(1);
+		}
+	if (f_has_strong_generators) {
+		FREE_OBJECT(Strong_gens);
+		Strong_gens = NULL;
+		f_has_strong_generators = FALSE;
+		}
+	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens->init_from_sims(Sims, verbose_level - 2);
+	f_has_strong_generators = TRUE;
+	if (f_v) {
+		cout << "action::compute_strong_generators_from_sims done" << endl;
 		}
 }
 
-int action::element_has_order_two(int *E1,
-		int verbose_level)
+int action::element_has_order_two(int *E1, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret;
@@ -1570,29 +1598,6 @@ void action::find_strong_generators_at_level(
 		}
 }
 
-void action::compute_strong_generators_from_sims(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "action::compute_strong_generators_from_sims" << endl;
-		}
-	if (!f_has_sims) {
-		cout << "action::compute_strong_generators_from_sims need sims" << endl;
-		exit(1);
-		}
-	if (f_has_strong_generators) {
-		FREE_OBJECT(Strong_gens);
-		Strong_gens = NULL;
-		f_has_strong_generators = FALSE;
-		}
-	Strong_gens = NEW_OBJECT(strong_generators);
-	Strong_gens->init_from_sims(Sims, verbose_level - 2);
-	f_has_strong_generators = TRUE;
-	if (f_v) {
-		cout << "action::compute_strong_generators_from_sims done" << endl;
-		}
-}
 
 void action::make_element_from_permutation_representation(
 		int *Elt, int *data, int verbose_level)

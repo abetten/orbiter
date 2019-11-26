@@ -365,14 +365,14 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 		cout << "initializing projective groups:" << endl;
 
 		A1->init_projective_group(d1, F1,
-				FALSE /* f_semilinear */, TRUE /* f_basis */,
+				FALSE /* f_semilinear */, TRUE /* f_basis */, TRUE /* f_init_sims */,
 				nice_gens,
 				verbose_level - 1);
 		M1 = A1->G.matrix_grp;
 		FREE_OBJECT(nice_gens);
 
 		A2->init_projective_group(d2, F2,
-				FALSE /* f_semilinear */, TRUE /* f_basis */,
+				FALSE /* f_semilinear */, TRUE /* f_basis */, TRUE /* f_init_sims */,
 				nice_gens,
 				verbose_level - 1);
 		M2 = A1->G.matrix_grp;
@@ -715,7 +715,8 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 		compute_pair_orbit_table(verbose_level);
 		//write_pair_orbit_file(verbose_level);
 
-	} else {
+	}
+	else {
 		cout << "We don't have -subgroup, so orbits on pairs "
 				"are not computed" << endl;
 		//exit(1);

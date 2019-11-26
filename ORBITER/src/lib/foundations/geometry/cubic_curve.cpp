@@ -226,6 +226,8 @@ void cubic_curve::compute_singular_points(
 		long int *Pts_on_curve, int nb_pts_on_curve,
 		long int *Pts, int &nb_pts,
 		int verbose_level)
+// a singular point is a point where all partials vanish
+// We compute the set of singular points into Pts[nb_pts]
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);

@@ -370,7 +370,7 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 		F->init(q, 0);
 		A->init_affine_group(4, F,
 			FALSE /* f_semilinear */,
-			TRUE /* f_basis */,
+			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
 			verbose_level);
 		FREE_OBJECT(nice_gens);
@@ -631,7 +631,7 @@ void cayley_graph_search::init_group_level_5(int verbose_level)
 		F->init(q, 0);
 		A->init_affine_group(5, F,
 			FALSE /* f_semilinear */,
-			TRUE /* f_basis */,
+			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
 			verbose_level);
 		FREE_OBJECT(nice_gens);

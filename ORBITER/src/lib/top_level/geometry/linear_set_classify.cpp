@@ -259,7 +259,7 @@ void linear_set_classify::init(int argc, const char **argv,
 	Aq = NEW_OBJECT(action);
 	Aq->init_general_linear_group(n, Fq,
 		FALSE /* f_semilinear */,
-		TRUE /* f_basis */,
+		TRUE /* f_basis */, TRUE /* f_init_sims */,
 		nice_gens,
 		verbose_level - 2);
 	FREE_OBJECT(nice_gens);
@@ -278,7 +278,7 @@ void linear_set_classify::init(int argc, const char **argv,
 		}
 	AQ->init_general_linear_group(m, FQ,
 		FALSE /* f_semilinear */,
-		TRUE /* f_basis */,
+		TRUE /* f_basis */, TRUE /* f_init_sims */,
 		nice_gens,
 		verbose_level - 2);
 	FREE_OBJECT(nice_gens);
@@ -301,7 +301,7 @@ void linear_set_classify::init(int argc, const char **argv,
 		}
 	A_PGLQ->init_projective_group(m, FQ,
 		FALSE /* f_semilinear */,
-		TRUE /* f_basis */,
+		TRUE /* f_basis */, TRUE /* f_init_sims */,
 		nice_gens,
 		verbose_level - 2);
 	FREE_OBJECT(nice_gens);

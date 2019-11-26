@@ -152,7 +152,7 @@ void do_it(int q, int verbose_level)
 		cout << "do_it before A2->init_projective_group" << endl;
 	}
 	A2->init_projective_group(2, F, f_semilinear,
-		TRUE /*f_basis*/,
+		TRUE /*f_basis*/, TRUE /* f_init_sims */,
 		nice_gens,
 		verbose_level);
 
@@ -346,7 +346,7 @@ void do_2to4(int q, int nb_gens,
 		cout << "do_2to4 before A2->init_projective_group" << endl;
 	}
 	A2->init_projective_group(2, F, f_semilinear,
-		TRUE /*f_basis*/,
+		TRUE /*f_basis*/, TRUE /* f_init_sims */,
 		nice_gens,
 		verbose_level);
 

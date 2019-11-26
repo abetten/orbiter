@@ -245,7 +245,7 @@ void do_arc_lifting(projective_space *P, int k,
 		}
 	A_linear = NEW_OBJECT(action);
 	A_linear->init_projective_group(P->n + 1,
-			F, f_semilinear, TRUE /*f_basis */,
+			F, f_semilinear, TRUE /*f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
 			0 /*verbose_level*/);
 	FREE_OBJECT(nice_gens);

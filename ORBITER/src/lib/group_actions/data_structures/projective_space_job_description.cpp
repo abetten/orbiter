@@ -1386,7 +1386,7 @@ void projective_space_job_description::do_canonical_form(
 
 	A_linear = NEW_OBJECT(action);
 	A_linear->init_projective_group(n + 1, F, f_semilinear,
-			TRUE /* f_basis */,
+			TRUE /* f_basis */, FALSE /* f_init_sims */,
 			nice_gens,
 			verbose_level);
 

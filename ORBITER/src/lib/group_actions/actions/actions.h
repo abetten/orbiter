@@ -223,7 +223,8 @@ public:
 		int n, int *Elt, int verbose_level);
 	void print_all_elements();
 
-	void init_sims(sims *G, int verbose_level);
+	void init_sims_only(sims *G, int verbose_level);
+	void compute_strong_generators_from_sims(int verbose_level);
 	void init_base_from_sims(sims *G, int verbose_level);
 	int element_has_order_two(int *E1, int verbose_level);
 	int product_has_order_two(int *E1, int *E2, int verbose_level);
@@ -289,7 +290,6 @@ public:
 		long int *the_base, int level,
 		vector_ge &gens, vector_ge &subset_of_gens, 
 		int verbose_level);
-	void compute_strong_generators_from_sims(int verbose_level);
 	void make_element_from_permutation_representation(int *Elt, 
 		int *data, int verbose_level);
 	void make_element_from_base_image(int *Elt, int *data, 
@@ -430,7 +430,7 @@ public:
 
 	/** Create the projective linear (or semilinear) group PGL (or PGGL)*/
 	void init_projective_group(int n, finite_field *F, 
-		int f_semilinear, int f_basis,
+		int f_semilinear, int f_basis, int f_init_sims,
 		vector_ge *&nice_gens,
 		int verbose_level);
 
@@ -438,18 +438,18 @@ public:
 	/** Create the affine group AGL(n,q) */
 	void init_affine_group(int n, finite_field *F, 
 		int f_semilinear, 
-		int f_basis,
+		int f_basis, int f_init_sims,
 		vector_ge *&nice_gens,
 		int verbose_level);
 
 	/** Create the general linear group GL(n,q) */
 	void init_general_linear_group(int n, finite_field *F, 
-		int f_semilinear, int f_basis,
+		int f_semilinear, int f_basis, int f_init_sims,
 		vector_ge *&nice_gens,
 		int verbose_level);
 
 	void setup_linear_group_from_strong_generators(matrix_group *M, 
-		vector_ge *&nice_gens,
+		vector_ge *&nice_gens, int f_init_sims,
 		int verbose_level);
 
 	/** Create the projective special linear group PSL */

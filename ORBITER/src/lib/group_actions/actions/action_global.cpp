@@ -421,7 +421,7 @@ void compute_generators_GL_n_q(int *&Gens,
 
 	A->init_projective_group(n, F,
 			FALSE /* f_semilinear */,
-			TRUE /* f_basis */,
+			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
 			verbose_level - 2);
 
@@ -475,7 +475,7 @@ void order_of_PGGL_n_q(longinteger_object &go,
 	F->init(q, 0);
 	A->init_projective_group(n, F, 
 		f_semilinear, 
-		TRUE /* f_basis */,
+		TRUE /* f_basis */, TRUE /* f_init_sims */,
 		nice_gens,
 		verbose_level - 2);
 	A->group_order(go);
@@ -577,7 +577,7 @@ void test_matrix_group(int k, int q, int f_semilinear, int verbose_level)
 
 	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
-	A.init_projective_group(k, F, f_semilinear, f_basis,
+	A.init_projective_group(k, F, f_semilinear, f_basis, TRUE /* f_init_sims */,
 			nice_gens,
 			verbose_level);
 	FREE_OBJECT(nice_gens);
