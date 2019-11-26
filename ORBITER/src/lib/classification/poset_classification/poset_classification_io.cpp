@@ -856,6 +856,7 @@ void poset_classification::housekeeping(int i,
 	int j, nb_nodes;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+	int f_v5 = (verbose_level >= 5);
 	int f_embedded = TRUE;
 	
 	if (f_v) {
@@ -873,8 +874,10 @@ void poset_classification::housekeeping(int i,
 		print_problem_label();
 		cout << "Found " << nb_nodes << " orbits at depth " << i << endl;
 
-		cout << "orbits at level " << i << ":" << endl;
-		print_representatives_at_level(i);
+		if (f_v5) {
+			cout << "orbits at level " << i << ":" << endl;
+			print_representatives_at_level(i);
+		}
 
 		for (j = 0; j <= i; j++) {
 			cout << j << " : " << nb_orbits_at_level(j) << " orbits" << endl;
@@ -1046,6 +1049,7 @@ void poset_classification::housekeeping_no_data_file(int i,
 {
 	int j;
 	int f_v = (verbose_level >= 1);
+	int f_v5 = (verbose_level >= 5);
 	int f_embedded = TRUE;
 	
 	if (f_v) {
@@ -1060,8 +1064,10 @@ void poset_classification::housekeeping_no_data_file(int i,
 			<< nb_orbits_at_level(i) << " orbits" << endl;
 
 
-		cout << "orbits at level " << i << ":" << endl;
-		print_representatives_at_level(i);
+		if (f_v5) {
+			cout << "orbits at level " << i << ":" << endl;
+			print_representatives_at_level(i);
+		}
 
 
 
