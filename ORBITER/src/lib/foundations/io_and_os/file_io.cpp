@@ -2006,7 +2006,7 @@ void file_io::write_set_to_file(const char *fname,
 	{
 	ofstream f(fname);
 
-	f << set_size << endl;
+	f << set_size << " ";
 
 	for (i = 0; i < set_size; i++) {
 #if 0

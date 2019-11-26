@@ -15,7 +15,6 @@ LFLAGS = -lm
 
 TARGETS=\
 	analyze_projective_code.out  \
-	analyze_q_designs.out  \
 	andre.out  \
 	canonical_form.out\
 	cheat_sheet_PG.out \
@@ -24,7 +23,7 @@ TARGETS=\
 	determine_conic.out \
 	determine_cubic.out \
 	determine_quadric.out \
-	example_fano_plane.out \
+	hermitian_points.out \
 	hermitian_spreads_main.out \
 	orthogonal_points.out \
 	points.out \
@@ -40,14 +39,8 @@ install:
 
 
 
-analyze.out:  analyze.o;
-	$(DISCRETA_CPP)  analyze.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 analyze_projective_code.out:  analyze_projective_code.o;
 	$(DISCRETA_CPP)  analyze_projective_code.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-analyze_q_designs.out:  analyze_q_designs.o;
-	$(DISCRETA_CPP)  analyze_q_designs.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 andre.out:  andre.o;
 	$(DISCRETA_CPP)  andre.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
@@ -73,17 +66,11 @@ determine_cubic.out:  determine_cubic.o;
 determine_quadric.out:  determine_quadric.o;
 	$(DISCRETA_CPP)  determine_quadric.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-example_fano_plane.out:  example_fano_plane.o ;
-	$(DISCRETA_CPP)  example_fano_plane.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 hermitian_points.out:  hermitian_points.o ;
 	$(DISCRETA_CPP)  hermitian_points.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 hermitian_spreads_main.out:  hermitian_spreads_main.o ;
 	$(DISCRETA_CPP)  hermitian_spreads_main.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-hill.out:  hill.o;
-	$(DISCRETA_CPP)  hill.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 orthogonal_points.out:  orthogonal_points.o ;
 	$(DISCRETA_CPP)  orthogonal_points.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

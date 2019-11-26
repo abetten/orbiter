@@ -21,10 +21,13 @@ combinatorial_object_create::combinatorial_object_create()
 {
 	F = NULL;
 	//A = NULL;
-	set = NULL;
-	set_size = 0;
 	f_has_group = FALSE;
 	Sg = NULL;
+
+	//char fname[1000];
+	nb_pts = 0;
+	Pts = NULL;
+
 	null();
 }
 
@@ -42,8 +45,8 @@ void combinatorial_object_create::freeself()
 	if (F) {
 		delete F;
 		}
-	if (set) {
-		FREE_lint(set);
+	if (Pts) {
+		FREE_lint(Pts);
 		}
 	if (Sg) {
 		delete Sg;
@@ -73,9 +76,6 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 	F->init(q, 0);
 
 
-	char fname[1000];
-	int nb_pts;
-	long int *Pts = NULL;
 
 
 	if (Descr->f_hyperoval) {
@@ -370,11 +370,13 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 		cout << endl;
 		}
 
+#if 0
 	set = NEW_lint(nb_pts);
 	lint_vec_copy(Pts, set, nb_pts);
 	set_size = nb_pts;
 
 	FREE_lint(Pts);
+#endif
 
 	if (f_has_group) {
 		cout << "combinatorial_object_create::init the stabilizer is:" << endl;

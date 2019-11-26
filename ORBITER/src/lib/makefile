@@ -6,6 +6,7 @@ LFLAGS = -lm
 
 MODULES= \
 		foundations/algebra_and_number_theory/a_domain.o \
+		foundations/algebra_and_number_theory/algebra_global.o \
 		foundations/algebra_and_number_theory/finite_field_io.o \
 		foundations/algebra_and_number_theory/finite_field_linear_algebra.o \
 		foundations/algebra_and_number_theory/finite_field_linear_algebra2.o \

@@ -2710,6 +2710,7 @@ void int_vec_print(int *v, int len)
 	}
 }
 
+#if 0
 void test_unipoly()
 {
 	finite_field GFp;
@@ -2770,98 +2771,8 @@ void test_unipoly2()
 		}
 
 }
+#endif
 
-char *search_for_primitive_polynomial_of_given_degree(
-		int p, int degree, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	finite_field Fp;
-
-	Fp.init(p, 0 /*verbose_level*/);
-	unipoly_domain FX(&Fp);
-
-	unipoly_object m;
-	longinteger_object rk;
-
-	FX.create_object_by_rank(m, 0);
-
-	if (f_v) {
-		cout << "search_for_primitive_polynomial_of_given_degree "
-				"p=" << p << " degree=" << degree << endl;
-		}
-	FX.get_a_primitive_polynomial(m, degree, verbose_level - 1);
-	FX.rank_longinteger(m, rk);
-
-	char *s;
-	int i, j;
-	if (f_v) {
-		cout << "found a polynomial. It's rank is " << rk << endl;
-		}
-
-	s = NEW_char(rk.len() + 1);
-	for (i = rk.len() - 1, j = 0; i >= 0; i--, j++) {
-		s[j] = '0' + rk.rep()[i];
-		}
-	s[rk.len()] = 0;
-
-	if (f_v) {
-		cout << "created string " << s << endl;
-		}
-
-	return s;
-}
-
-
-void search_for_primitive_polynomials(
-		int p_min, int p_max, int n_min, int n_max,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int d, p;
-	number_theory_domain NT;
-
-
-	longinteger_f_print_scientific = FALSE;
-
-
-	if (f_v) {
-		cout << "search_for_primitive_polynomials "
-				"p_min=" << p_min << " p_max=" << p_max
-				<< " n_min=" << n_min << " n_max=" << n_max << endl;
-		}
-	for (p = p_min; p <= p_max; p++) {
-		if (!NT.is_prime(p)) {
-			continue;
-			}
-		if (f_v) {
-			cout << "considering the prime " << p << endl;
-			}
-
-			{
-			finite_field Fp;
-			Fp.init(p, 0 /*verbose_level*/);
-			unipoly_domain FX(&Fp);
-
-			unipoly_object m;
-			longinteger_object rk;
-
-			FX.create_object_by_rank(m, 0);
-
-			for (d = n_min; d <= n_max; d++) {
-				if (f_v) {
-					cout << "d=" << d << endl;
-					}
-				FX.get_a_primitive_polynomial(m, d, verbose_level - 1);
-				FX.rank_longinteger(m, rk);
-				//cout << d << " : " << rk << " : ";
-				cout << "\"" << rk << "\", // ";
-				FX.print_object(m, cout);
-				cout << endl;
-				}
-			FX.delete_object(m);
-			}
-		}
-}
 
 
 

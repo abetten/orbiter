@@ -7,6 +7,7 @@ LFLAGS = -lm
 
 MODULES = \
 	a_domain.o \
+	algebra_global.o \
 	finite_field_io.o \
 	finite_field_linear_algebra.o \
 	finite_field_linear_algebra2.o \

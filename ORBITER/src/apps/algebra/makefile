@@ -7,32 +7,28 @@ LFLAGS = -lm
 
 
 
+
 TARGETS=\
 	a5_in_PSL.out \
 	BN_pair.out \
 	borel.out \
+	burnside.out \
 	cheat_sheet_GF.out \
 	code_cosets.out \
-	counting_flags.out \
 	create_element_of_order.out \
 	create_element.out \
 	eigenstuff.out \
 	factor_cyclotomic.out \
 	field_plot.out \
 	find_element.out \
-	finite_field.out \
 	flag.out \
 	get_poly.out \
 	gl_classes.out \
-	pascal_matrix.out \
 	polynomial_orbits.out \
-	projective_group.out  \
 	reflection.out \
-	subprimitive.out \
-	three_squares.out
+	subprimitive.out 
 
-all: $(ALL_TARGETS)
-
+all: $(TARGETS)
 
 
 install:
@@ -47,14 +43,14 @@ BN_pair.out:  BN_pair.o;
 borel.out:  borel.o ;
 	$(DISCRETA_CPP)  borel.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
+burnside.out:  burnside.o;
+	$(DISCRETA_CPP)  burnside.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
 cheat_sheet_GF.out:  cheat_sheet_GF.o;
 	$(DISCRETA_CPP)  cheat_sheet_GF.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 code_cosets.out:  code_cosets.o ;
 	$(DISCRETA_CPP)  code_cosets.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-counting_flags.out:  counting_flags.o ;
-	$(DISCRETA_CPP)  counting_flags.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 create_element_of_order.out:  create_element_of_order.o;
 	$(DISCRETA_CPP)  create_element_of_order.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
@@ -74,9 +70,6 @@ field_plot.out:  field_plot.o;
 find_element.out:  find_element.o;
 	$(DISCRETA_CPP)  find_element.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-finite_field.out:  finite_field.o ;
-	$(DISCRETA_CPP)  finite_field.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 flag.out:  flag.o;
 	$(DISCRETA_CPP)  flag.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
@@ -86,14 +79,8 @@ get_poly.out:  get_poly.o ;
 gl_classes.out:  gl_classes.o ;
 	$(DISCRETA_CPP)  gl_classes.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-pascal_matrix.out:  pascal_matrix.o ;
-	$(DISCRETA_CPP)  pascal_matrix.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 polynomial_orbits.out:  polynomial_orbits.o ;
 	$(DISCRETA_CPP)  polynomial_orbits.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-projective_group.out:  projective_group.o ;
-	$(DISCRETA_CPP)  projective_group.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 reflection.out:  reflection.o;
 	$(DISCRETA_CPP)  reflection.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
@@ -101,8 +88,6 @@ reflection.out:  reflection.o;
 subprimitive.out:  subprimitive.o;
 	$(DISCRETA_CPP)  subprimitive.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-three_squares.out:  three_squares.o ;
-	$(DISCRETA_CPP)  three_squares.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 

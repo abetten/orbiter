@@ -33,6 +33,8 @@ int main(int argc, const char **argv)
 	int i;
 	int f_description = FALSE;
 	combinatorial_object_description *Descr;
+	int f_save = FALSE;
+	const char *save_fname;
 
 	os_interface Os;
 
@@ -55,6 +57,11 @@ int main(int argc, const char **argv)
 					argv + i, verbose_level) - 1;
 
 			cout << "-object" << endl;
+		}
+		else if (strcmp(argv[i], "-save") == 0) {
+			f_save = TRUE;
+			save_fname = argv[++i];
+			cout << "-save " << save_fname << endl;
 		}
 #if 0
 		else if (strcmp(argv[i], "-transform") == 0) {
@@ -90,27 +97,28 @@ int main(int argc, const char **argv)
 	cout << "after COC->init" << endl;
 	
 
-#if 0
-	cout << "we created a set of " << nb_pts << " points, "
-			"and we will write it to the file " << fname << endl;
+
+	cout << "we created a set of " << COC->nb_pts << " points, "
+			"and we will write it to the file " << save_fname << endl;
+
 	cout << "list of points:" << endl;
-	cout << nb_pts << endl;
-	for (i = 0; i < nb_pts; i++) {
-		cout << Pts[i] << " ";
+
+	cout << COC->nb_pts << endl;
+	for (i = 0; i < COC->nb_pts; i++) {
+		cout << COC->Pts[i] << " ";
 		}
 	cout << endl;
 
-	file_io Fio;
 
-	Fio.write_set_to_file(fname, Pts, nb_pts, verbose_level);
-	cout << "Written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
+	if (f_save) {
+		file_io Fio;
 
+		Fio.write_set_to_file(save_fname, COC->Pts, COC->nb_pts, verbose_level);
+		cout << "Written file " << save_fname << " of size "
+				<< Fio.file_size(save_fname) << endl;
+	}
 
-	if (Pts) {
-		FREE_lint(Pts);
-		}
-#endif
+	FREE_OBJECT(COC);
 
 
 	the_end(t0);

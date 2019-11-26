@@ -190,7 +190,7 @@ int main(int argc, char **argv)
 		A->init_projective_group(d /* n */,
 				F,
 				FALSE /* f_semilinear */,
-				TRUE /* f_basis */,
+				TRUE /* f_basis */, TRUE /* f_init_sims */,
 				nice_gens,
 				verbose_level);
 		FREE_OBJECT(nice_gens);
@@ -364,7 +364,7 @@ int main(int argc, char **argv)
 		A = NEW_OBJECT(action);
 		A->init_projective_group(d /* n */, F,
 				FALSE /* f_semilinear */,
-				TRUE /* f_basis */,
+				TRUE /* f_basis */, TRUE /* f_init_sims */,
 				nice_gens,
 				verbose_level);
 		FREE_OBJECT(nice_gens);
@@ -490,7 +490,7 @@ int main(int argc, char **argv)
 		A_PGL = new action;
 		A_PGL->init_projective_group(d /* n */, F, 
 			FALSE /* f_semilinear */,
-			TRUE /* f_basis */,
+			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
 			0 /*verbose_level*/);
 		FREE_OBJECT(nice_gens);
@@ -500,7 +500,7 @@ int main(int argc, char **argv)
 		A_GL = new action;
 		A_GL->init_general_linear_group(d /* n */, F, 
 			FALSE /* f_semilinear */, 
-			TRUE /* f_basis */,
+			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
 			0 /*verbose_level*/);
 		FREE_OBJECT(nice_gens);
@@ -562,7 +562,7 @@ int main(int argc, char **argv)
 		A = new action;
 		A->init_projective_group(d /* n */, F,
 				FALSE /* f_semilinear */,
-				TRUE /* f_basis */,
+				TRUE /* f_basis */, TRUE /* f_init_sims */,
 				nice_gens,
 				0 /*verbose_level*/);
 		FREE_OBJECT(nice_gens);
@@ -639,7 +639,7 @@ void do_GL(int q, int d, int f_no_eigenvalue_one, int verbose_level)
 	A = NEW_OBJECT(action);
 	A->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */,
-			TRUE /* f_basis */,
+			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
 			verbose_level);
 	FREE_OBJECT(nice_gens);
@@ -760,7 +760,7 @@ void do_identify_all(int q, int d,
 	A = new action;
 	A->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */,
-			TRUE /* f_basis */,
+			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
 			verbose_level);
 	FREE_OBJECT(nice_gens);
@@ -844,7 +844,7 @@ void do_identify_one(int q, int d,
 	A = NEW_OBJECT(action);
 	A->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */,
-			TRUE /* f_basis */,
+			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
 			verbose_level);
 	FREE_OBJECT(nice_gens);
@@ -932,7 +932,7 @@ void do_normal_form(int q, int d,
 		
 	A = NEW_OBJECT(action);
 	A->init_projective_group(d /* n */, F,
-			FALSE /* f_semilinear */, TRUE /* f_basis */,
+			FALSE /* f_semilinear */, TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
 			0 /*verbose_level*/);
 	FREE_OBJECT(nice_gens);
