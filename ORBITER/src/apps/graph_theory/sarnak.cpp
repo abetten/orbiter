@@ -122,7 +122,7 @@ void do_it(int p, int q, int verbose_level)
 		cout << "Creating projective linear group:" << endl; 
 		A->init_projective_group(2, F, 
 			f_semilinear, 
-			f_basis, 
+			f_basis, TRUE /* f_init_sims */,
 			nice_gens,
 			verbose_level - 2);		
 		FREE_OBJECT(nice_gens);

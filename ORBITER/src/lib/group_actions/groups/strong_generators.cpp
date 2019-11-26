@@ -1156,6 +1156,7 @@ void strong_generators::print_generators()
 	int i;
 	longinteger_object go;
 
+	cout << "strong_generators::print_generators computing group order" << endl;
 	group_order(go);
 	cout << "Strong generators for a group of order "
 			<< go << " tl=";

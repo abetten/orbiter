@@ -176,7 +176,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 	cout << "Creating linear group" << endl;
 	A = NEW_OBJECT(action);
 	A->init_general_linear_group(n + 1, F,
-			TRUE /* f_semilinear */, TRUE /* f_basis */,
+			TRUE /* f_semilinear */, TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
 			verbose_level - 2);
 	FREE_OBJECT(nice_gens);

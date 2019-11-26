@@ -329,7 +329,7 @@ void code_classify::init(int argc, const char **argv)
 
 		A->init_projective_group(nmk, F, 
 			f_semilinear, 
-			f_basis, 
+			f_basis, TRUE /* f_init_sims */,
 			nice_gens,
 			verbose_level - 2);
 		FREE_OBJECT(nice_gens);

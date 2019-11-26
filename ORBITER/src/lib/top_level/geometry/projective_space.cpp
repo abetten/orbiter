@@ -90,7 +90,7 @@ void Hill_cap56(
 	vector_ge *nice_gens;
 
 	An->init_projective_group(n, F, TRUE /* f_semilinear */, 
-		TRUE /* f_basis */,
+		TRUE /* f_basis */, TRUE /* f_init_sims */,
 		nice_gens,
 		verbose_level - 2);
 

@@ -314,7 +314,7 @@ void recoordinatize::stabilizer_of_first_three(
 		}
 	A0->init_projective_group(k, F, 
 		f_semilinear, 
-		TRUE /* f_basis */,
+		TRUE /* f_basis */, TRUE /* f_init_sims */,
 		nice_gens,
 		0 /* verbose_level */);
 	FREE_OBJECT(nice_gens);
@@ -330,7 +330,7 @@ void recoordinatize::stabilizer_of_first_three(
 
 	A0_linear->init_projective_group(k, F, 
 		FALSE /*f_semilinear*/, 
-		TRUE /*f_basis*/,
+		TRUE /*f_basis*/, TRUE /* f_init_sims */,
 		nice_gens,
 		0/*verbose_level - 2*/);
 	FREE_OBJECT(nice_gens);

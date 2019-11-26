@@ -2503,9 +2503,9 @@ void action::induce(action *old_action, sims *old_G,
 				"old group order" << endl;
 		}
 	if (f_vv) {
-		cout << "action::induce before init_sims" << endl;
+		cout << "action::induce before init_sims_only" << endl;
 		}
-	init_sims(G, verbose_level - 2);
+	init_sims_only(G, verbose_level - 2);
 	f_has_kernel = TRUE;
 	Kernel = K;
 	
@@ -2773,11 +2773,11 @@ void action::base_change_in_place(int size, long int *set, int verbose_level)
 		}
 
 	if (f_v5) {
-		cout << "action::base_change_in_place before init_sims" << endl;
+		cout << "action::base_change_in_place before init_sims_only" << endl;
 		}
-	init_sims(A->Sims, verbose_level);
+	init_sims_only(A->Sims, verbose_level);
 	if (f_v5) {
-		cout << "action::base_change_in_place after init_sims" << endl;
+		cout << "action::base_change_in_place after init_sims_only" << endl;
 		}
 
 	if (f_has_strong_generators) {

@@ -136,7 +136,7 @@ void action_by_subfield_structure::init(action &A,
 	vector_ge *nice_gens;
 
 	Aq->init_projective_group(m, Fq,
-			f_semilinear, f_basis,
+			f_semilinear, f_basis, FALSE /* f_init_sims */,
 			nice_gens,
 			verbose_level - 2);
 	Mq = Aq->G.matrix_grp;

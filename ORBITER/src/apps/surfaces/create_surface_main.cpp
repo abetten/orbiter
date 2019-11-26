@@ -311,7 +311,7 @@ int main(int argc, const char **argv)
 
 
 		A->init_projective_group(3, F,
-				f_semilinear, TRUE /*f_basis*/,
+				f_semilinear, TRUE /*f_basis*/, TRUE /* f_init_sims */,
 				nice_gens,
 				0 /*verbose_level*/);
 		FREE_OBJECT(nice_gens);

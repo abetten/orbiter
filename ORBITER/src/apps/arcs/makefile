@@ -12,7 +12,6 @@ TARGETS=\
 	 arcs_main.out \
 	arcs_orderly.out \
 	awss.out \
-	create_group.out \
 	k_arc_generator_main.out \
 	k_arc_lifting.out \
 	simeon.out \
@@ -33,9 +32,6 @@ arcs_orderly.out:  arcs_orderly.o;
 
 awss.out:  awss.o;
 	$(DISCRETA_CPP)  awss.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-create_group.out:  create_group.o;
-	$(DISCRETA_CPP)  create_group.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 k_arc_generator_main.out:  k_arc_generator_main.o;
 	$(DISCRETA_CPP)  k_arc_generator_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

@@ -203,7 +203,7 @@ void spread_classify::init(int order, int n, int k, int max_depth,
 	vector_ge *nice_gens;
 
 	A->init_projective_group(n, F, f_semilinear,
-			f_basis,
+			f_basis, TRUE /* f_init_sims */,
 			nice_gens,
 			0 /*verbose_level*/);
 	FREE_OBJECT(nice_gens);

@@ -1581,8 +1581,7 @@ void sims::compute_coset_rep_path(int i, int j, int &depth,
 	}
 }
 
-void sims::coset_rep_inv(int *Elt, int i, int j,
-		int verbose_level)
+void sims::coset_rep_inv(int *Elt, int i, int j, int verbose_level)
 // computes the inverse element of what coset_rep computes,
 // i.e. an element which maps the j-th point in the orbit to the 
 // i-th base point.
@@ -1601,7 +1600,8 @@ void sims::coset_rep_inv(int *Elt, int i, int j,
 	bi0 = get_orbit(i, 0);
 	bij = get_orbit(i, j);
 	if (f_v) {
-		cout << "sims::coset_rep_inv i=" << i << " j=" << j << " bi0=" << bi0 << " bij=" << bij << endl;
+		cout << "sims::coset_rep_inv i=" << i << " j=" << j
+				<< " bi0=" << bi0 << " bij=" << bij << endl;
 	}
 
 	if (f_v) {
@@ -1685,7 +1685,8 @@ void sims::extract_strong_generators_in_order(vector_ge &SG,
 	SG.allocate(gens.len, verbose_level - 2);
 	for (i = A->base_len() - 1; i >= 0; i--) {
 		if (f_v) {
-			cout << "sims::extract_strong_generators_in_order level i=" << i << endl;
+			cout << "sims::extract_strong_generators_in_order "
+					"level i=" << i << endl;
 		}
 		nbg = nb_gen[i];
 		nbg1 = nb_gen[i + 1];
@@ -1699,7 +1700,8 @@ void sims::extract_strong_generators_in_order(vector_ge &SG,
 			gen_idx = gen_perm[j];
 			//cout << "gen_idx=" << gen_idx << endl;
 			if (f_v) {
-				cout << "sims::extract_strong_generators_in_order the " << k << "-th strong generator "
+				cout << "sims::extract_strong_generators_in_order "
+						"the " << k << "-th strong generator "
 						"is generator "
 					<< j << " at position " << gen_idx << endl;
 				
@@ -1711,7 +1713,8 @@ void sims::extract_strong_generators_in_order(vector_ge &SG,
 			}
 			A->element_move(gens.ith(gen_idx), SG.ith(k), FALSE);
 			if (f_vv) {
-				cout << "sims::extract_strong_generators_in_order the " << k << "-th strong "
+				cout << "sims::extract_strong_generators_in_order "
+						"the " << k << "-th strong "
 						"generator is generator "
 					<< j << " at position " << gen_idx << endl;
 				A->element_print(SG.ith(k), cout);
@@ -1742,7 +1745,8 @@ void sims::extract_strong_generators_in_order(vector_ge &SG,
 			}
 		}
 		cout << endl;
-		cout << "sims::extract_strong_generators_in_order strong generators are:" << endl;
+		cout << "sims::extract_strong_generators_in_order "
+				"strong generators are:" << endl;
 		SG.print(cout);
 		cout << endl;
 	}

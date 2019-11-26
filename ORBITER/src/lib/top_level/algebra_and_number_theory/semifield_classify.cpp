@@ -222,7 +222,7 @@ void semifield_classify::init(int argc, const char **argv,
 
 	A0->init_projective_group(
 		k, F, f_semilinear,
-		TRUE /* f_basis */,
+		TRUE /* f_basis */, TRUE /* f_init_sims */,
 		nice_gens,
 		0 /* verbose_level */);
 	FREE_OBJECT(nice_gens);
@@ -252,7 +252,7 @@ void semifield_classify::init(int argc, const char **argv,
 
 	A0_linear->init_projective_group(k,
 		F, FALSE /*f_semilinear */,
-		TRUE /* f_basis */,
+		TRUE /* f_basis */, TRUE /* f_init_sims */,
 		nice_gens,
 		0 /* verbose_level */);
 	FREE_OBJECT(nice_gens);

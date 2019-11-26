@@ -221,7 +221,7 @@ void bent_function_classify::init_group(int verbose_level)
 				"before init_projective_group" << endl;
 	}
 	A->init_projective_group(degree, Fq,
-			FALSE /* f_semilinear */, TRUE /* f_basis */,
+			FALSE /* f_semilinear */, TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
 			verbose_level);
 

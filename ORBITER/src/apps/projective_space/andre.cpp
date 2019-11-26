@@ -142,7 +142,7 @@ void do_it(int q, int k, int no,
 	
 	An = NEW_OBJECT(action);
 	An->init_projective_group(n, F, f_semilinear, 
-		f_basis,
+		f_basis, TRUE /* f_init_sims */,
 		nice_gens,
 		0 /*verbose_level*/);
 	FREE_OBJECT(nice_gens);

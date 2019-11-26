@@ -4,7 +4,7 @@
 // November 11, 2011
 //
 // creates the graphs described in the paper:
-// Wen Ching Winnie Li: Character Sums and Abelian Ramanujan Graphs 1991
+// Wen Ching Winnie Li: Character Sums and Abelian Ramanujan Graphs 1992
 
 #include "orbiter.h"
 

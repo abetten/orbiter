@@ -69,9 +69,8 @@ void linear_group::init(
 
 	if (f_v) {
 		cout << "linear_group::init before "
-				"initial_strong_gens->init_linear_group_"
-				"from_scratch" << endl;
-		}
+				"initial_strong_gens->init_linear_group_from_scratch" << endl;
+	}
 	
 	initial_strong_gens->init_linear_group_from_scratch(
 		A_linear,
@@ -83,6 +82,11 @@ void linear_group::init(
 		description->f_special,
 		nice_gens,
 		verbose_level);
+
+	if (f_v) {
+		cout << "linear_group::init after "
+				"initial_strong_gens->init_linear_group_from_scratch" << endl;
+	}
 
 	f_has_nice_gens = TRUE;
 
