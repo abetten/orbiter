@@ -116,6 +116,34 @@ public:
 
 
 // #############################################################################
+// algebra_global.cpp
+// #############################################################################
+
+//! global functions related to finite fields, irreducible polynomials and such
+
+class algebra_global {
+public:
+	void cheat_sheet_GF(int q,
+			int f_override_polynomial,
+			char *my_override_polynomial,
+			int verbose_level);
+	char *search_for_primitive_polynomial_of_given_degree(int p,
+		int degree, int verbose_level);
+	void search_for_primitive_polynomials(int p_min, int p_max,
+		int n_min, int n_max, int verbose_level);
+	void factor_cyclotomic(int n, int q, int d,
+		int *coeffs, int f_poly, char *poly, int verbose_level);
+	void count_subprimitive(int Q_max, int H_max);
+	int Phi_of(int n, int verbose_level);
+	void formula_subprimitive(int d, int q,
+		longinteger_object &Rdq, int &g, int verbose_level);
+	void formula(int d, int q, longinteger_object &Rdq, int verbose_level);
+	int subprimitive(int q, int h);
+	int period_of_sequence(int *v, int l);
+	void subexponent(int q, int Q, int h, int f, int j, int k, int &s, int &c);
+};
+
+// #############################################################################
 // finite_field.cpp
 // #############################################################################
 

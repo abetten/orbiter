@@ -53,17 +53,22 @@ int main(int argc, char **argv)
 		}
 	
 	if (f_primitive_range) {
-		search_for_primitive_polynomials(p_min, p_max,
+
+		algebra_global AG;
+
+		AG.search_for_primitive_polynomials(p_min, p_max,
 				n_min, n_max, verbose_level);
 			// in GALOIS/galois_global.cpp
 		}
 	else if (f_primitive) {
 		char *poly;
 
+		algebra_global AG;
 
-		poly = search_for_primitive_polynomial_of_given_degree(
+
+		poly = AG.search_for_primitive_polynomial_of_given_degree(
 				q, deg, verbose_level);
-			// in GALOIS/galois_global.cpp
+
 		cout << "poly = " << poly << endl;
 		}
 	else if (f_irred) {

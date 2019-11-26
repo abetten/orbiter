@@ -366,7 +366,7 @@ void projective_group(int n, int q, int f_semilinear, int verbose_level)
 	F->init(q, 0);
 	A = NEW_OBJECT(action);
 	A->init_projective_group(n, F, 
-		f_semilinear, TRUE /* f_basis */,
+		f_semilinear, TRUE /* f_basis */, TRUE /* f_init_sims */,
 		nice_gens,
 		verbose_level);
 	FREE_OBJECT(nice_gens);

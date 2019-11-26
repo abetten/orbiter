@@ -752,12 +752,6 @@ const char *strip_directory(const char *p);
 int is_all_whitespace(const char *str);
 int is_all_digits(char *p);
 void int_vec_print(int *v, int len);
-void test_unipoly();
-void test_unipoly2();
-char *search_for_primitive_polynomial_of_given_degree(int p,
-	int degree, int verbose_level);
-void search_for_primitive_polynomials(int p_min, int p_max,
-	int n_min, int n_max, int verbose_level);
 void gl_random_matrix(int k, int q, int verbose_level);
 int is_diagonal_matrix(int *A, int n);
 int str2int(std::string &str);

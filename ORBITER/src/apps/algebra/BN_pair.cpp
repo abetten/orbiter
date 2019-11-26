@@ -32,9 +32,10 @@ void init_orthogonal(action *A, int epsilon, int n,
 		finite_field *F, int verbose_level);
 void compute_B(action *A, int epsilon, int n,
 		finite_field *F, int verbose_level);
+#if 0
 void compute_N(action *A, int epsilon, int n,
 		finite_field *F, int verbose_level);
-
+#endif
 
 
 int main(int argc, char **argv)

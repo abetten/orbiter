@@ -25,7 +25,6 @@ TARGETS=\
 	read_orbiter_file.out \
 	read_solutions.out \
 	read_vector_and_extract_set.out \
-	run_blt.out  \
 	run_lifting.out  \
 	scheduler.out \
 	split_spreadsheet.out \
@@ -96,9 +95,6 @@ read_solutions.out:  read_solutions.o
 
 read_vector_and_extract_set.out:  read_vector_and_extract_set.o 
 	$(DISCRETA_CPP)  read_vector_and_extract_set.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-run_blt.out:  run_blt.o
-	$(DISCRETA_CPP)  run_blt.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 run_lifting.out:  run_lifting.o
 	$(DISCRETA_CPP)  run_lifting.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

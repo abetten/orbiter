@@ -487,16 +487,16 @@ void object_in_projective_space::encoding_size_point_set(
 		cout << "object_in_projective_space::encoding_size_point_set" << endl;
 		}
 
-#if 0
+
 	C = NEW_OBJECT(classify);
 
-	C->init(set, sz, TRUE, 0);
+	C->init_lint(set, sz, TRUE, 0);
 	if (C->second_nb_types > 1) {
 		cout << "object_in_projective_space::encoding_size_point_set "
 				"The set is a multiset:" << endl;
 		C->print(FALSE /*f_backwards*/);
 		}
-#endif
+
 
 	if (f_v) {
 		cout << "The type of the set is:" << endl;
@@ -607,16 +607,16 @@ void object_in_projective_space::encode_point_set(
 	int i, j;
 	int f_vvv = (verbose_level >= 3);
 	
-#if 0
+
 	C = NEW_OBJECT(classify);
 
-	C->init(set, sz, TRUE, 0);
+	C->init_lint(set, sz, TRUE, 0);
 	if (C->second_nb_types > 1) {
 		cout << "object_in_projective_space::encode_point_set "
 				"The set is a multiset:" << endl;
 		C->print(FALSE /*f_backwards*/);
 		}
-#endif
+
 
 	if (f_v) {
 		cout << "The type of the set is:" << endl;

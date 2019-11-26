@@ -186,9 +186,12 @@ public:
 	int q;
 	finite_field *F;
 
+	char fname[1000];
+	int nb_pts;
+	long int *Pts;
 
-	long int *set;
-	int set_size;
+	//long int *set;
+	//int set_size;
 	int f_has_group;
 	strong_generators *Sg;
 

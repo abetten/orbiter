@@ -76,7 +76,7 @@ void find_element(int q, int *mtx, int verbose_level)
 	A = new action;
 	A->init_projective_group(2 /* n */, F, 
 		FALSE /* f_semilinear */,
-		TRUE /* f_basis */,
+		TRUE /* f_basis */, TRUE /* f_init_sims */,
 		nice_gens,
 		verbose_level);
 	FREE_OBJECT(nice_gens);

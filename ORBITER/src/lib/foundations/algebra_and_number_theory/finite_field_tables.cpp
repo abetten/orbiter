@@ -946,7 +946,10 @@ const char *get_primitive_polynomial(int p, int e, int verbose_level)
 	if (!Sorting.int_vec_search(finitefield_primes, finitefield_nb_primes, p, idx)) {
 		cout << "I don't have prime " << p << " in the tables" << endl;
 		cout << "searching for a polynomial of degree " << e << endl;
-		s = search_for_primitive_polynomial_of_given_degree(p, e, verbose_level);
+
+		algebra_global AG;
+
+		s = AG.search_for_primitive_polynomial_of_given_degree(p, e, verbose_level);
 		cout << "the search came up with a polynomial of degree " << e << ", coded as " << s << endl;
 		return s;
 		}

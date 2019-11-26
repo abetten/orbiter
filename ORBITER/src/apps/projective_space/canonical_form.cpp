@@ -54,7 +54,7 @@ int main(int argc, const char **argv)
 
 	int f_classify_nauty = FALSE;
 
-	int f_latex = FALSE;
+	int f_report = FALSE;
 
 	int f_max_TDO_depth = FALSE;
 	int max_TDO_depth = INT_MAX;
@@ -123,9 +123,9 @@ int main(int argc, const char **argv)
 			f_classify_nauty = TRUE;
 			cout << "-classify_nauty " << endl;
 			}
-		else if (strcmp(argv[i], "-latex") == 0) {
-			f_latex = TRUE;
-			cout << "-latex " << endl;
+		else if (strcmp(argv[i], "-report") == 0) {
+			f_report = TRUE;
+			cout << "-report " << endl;
 			}
 		else if (strcmp(argv[i], "-max_TDO_depth") == 0) {
 			f_max_TDO_depth = TRUE;
@@ -256,7 +256,7 @@ int main(int argc, const char **argv)
 
 	
 
-		if (f_latex) {
+		if (f_report) {
 
 			cout << "Producing a latex report:" << endl;
 
@@ -279,7 +279,7 @@ int main(int argc, const char **argv)
 					max_TDO_depth,
 					verbose_level);
 
-			}// f_latex
+			}// f_report
 
 		} // if (f_classify_nauty)
 

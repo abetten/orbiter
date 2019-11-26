@@ -22,11 +22,6 @@ int t0; // the system time when the program started
 
 
 
-void cheat_sheet_GF(int q,
-		int f_override_polynomial,
-		char *my_override_polynomial,
-		int verbose_level);
-
 
 int main(int argc, char **argv)
 {
@@ -61,63 +56,16 @@ int main(int argc, char **argv)
 		cout << "please use -q option to specify q" << endl;
 		exit(1);
 		}
-	cheat_sheet_GF(q, f_override_poly, my_override_poly, verbose_level);
 	
+	algebra_global AG;
+
+	AG.cheat_sheet_GF(q, f_override_poly, my_override_poly, verbose_level);
+
 	
 	the_end(t0);
 }
 
 
 
-void cheat_sheet_GF(int q,
-		int f_override_polynomial,
-		char *my_override_polynomial,
-		int verbose_level)
-{
-	const char *override_poly;
-	char fname[1000];
-	char title[1000];
-	char author[1000];
-	
-	sprintf(fname, "GF_%d.tex", q);
-	sprintf(title, "Cheat Sheet GF($%d$)", q);
-	//sprintf(author, "");
-	author[0] = 0;
-	if (f_override_polynomial) {
-		override_poly = my_override_polynomial;
-		}
-	else {
-		override_poly = NULL;
-		}
-	finite_field F;
-
-	{
-	ofstream f(fname);
-	latex_interface L;
-	
-	//F.init(q), verbose_level - 2);
-	F.init_override_polynomial(q, override_poly, verbose_level);
-	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
-		title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
-			TRUE /* f_12pt */, 
-			TRUE /* f_enlarged_page */, 	
-			TRUE /* f_pagenumbers */, 
-			NULL /* extra_praeamble */);
-
-
-	F.cheat_sheet(f, verbose_level);
-	
-	F.cheat_sheet_tables(f, verbose_level);
-
-	L.foot(f);
-	}
-
-	file_io Fio;
-
-	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-
-	//F.compute_subfields(verbose_level);
-}
 
 

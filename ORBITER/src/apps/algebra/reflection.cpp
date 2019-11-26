@@ -168,7 +168,7 @@ void do_it(int q, int type,
 		}
 	n = dimension + 1;
 	A->init_projective_group(n,  F, 
-		f_semilinear, f_basis,
+		f_semilinear, f_basis, TRUE /* f_init_sims */,
 		nice_gens,
 		verbose_level);
 	FREE_OBJECT(nice_gens);

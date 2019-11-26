@@ -75,7 +75,7 @@ void create_element(int q, int k, int verbose_level)
 	F->init(q, 0);	
 	A = new action;
 	A->init_projective_group(2 /* n */, F, 
-		FALSE /* f_semilinear */, TRUE /* f_basis */,
+		FALSE /* f_semilinear */, TRUE /* f_basis */, TRUE /* f_init_sims */,
 		nice_gens,
 		verbose_level);
 	FREE_OBJECT(nice_gens);
@@ -94,7 +94,7 @@ void create_element(int q, int k, int verbose_level)
 	A4 = new action;
 	A4->init_projective_group(4 /* n */, F, 
 		FALSE /* f_semilinear */,
-		TRUE /* f_basis */,
+		TRUE /* f_basis */, TRUE /* f_init_sims */,
 		nice_gens,
 		verbose_level);
 	FREE_OBJECT(nice_gens);
