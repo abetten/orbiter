@@ -664,7 +664,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 						"drawing the system" << endl;
 				}
 			Dio->draw_it(fname_system,
-					xmax_in, ymax_in, xmax_out, ymax_out);
+					xmax_in, ymax_in, xmax_out, ymax_out, verbose_level - 1);
 			if (f_v) {
 				cout << "exact_cover::compute_liftings_single_case_new "
 						"drawing the system done" << endl;

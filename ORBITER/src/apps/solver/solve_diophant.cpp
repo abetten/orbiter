@@ -308,7 +308,7 @@ int main(int argc, char **argv)
 		replace_extension_with(fname_base, "_drawing");
 		
 		CG->draw_it(fname_base,
-				xmax_in, ymax_in, xmax_out, ymax_out, scale, line_width);
+				xmax_in, ymax_in, xmax_out, ymax_out, scale, line_width, verbose_level - 1);
 
 		
 		FREE_OBJECT(CG);

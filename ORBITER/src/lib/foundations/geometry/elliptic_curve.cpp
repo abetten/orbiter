@@ -383,7 +383,7 @@ void elliptic_curve::draw_grid(char *fname,
 	sprintf(fname_full, "%s.mp", fname);
 	{
 	mp_graphics G(fname_full,
-			x_min, y_min, x_max, y_max, f_embedded, f_sideways);
+			x_min, y_min, x_max, y_max, f_embedded, f_sideways, verbose_level - 1);
 	G.out_xmin() = 0;
 	G.out_ymin() = 0;
 	G.out_xmax() = xmax;
@@ -460,7 +460,8 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 		0.5 /* x_tick_half_width */,
 		0.5 /* y_tick_half_width */,
 		TRUE /* f_v_lines */, 1 /* subdivide_v */,
-		TRUE /* f_h_lines */, 1 /* subdivide_h */);
+		TRUE /* f_h_lines */, 1 /* subdivide_h */,
+		verbose_level - 1);
 
 
 

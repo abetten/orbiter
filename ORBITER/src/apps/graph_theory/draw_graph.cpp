@@ -321,7 +321,7 @@ int main(int argc, char **argv)
 	int factor_1000 = 1000;
 
 	
-	mp_graphics G(fname2, x_min, y_min, xmax, ymax, f_embedded, f_sideways);
+	mp_graphics G(fname2, x_min, y_min, xmax, ymax, f_embedded, f_sideways, verbose_level - 1);
 	//G.setup(fname2, 0, 0, ONE_MILLION, ONE_MILLION, xmax, ymax, f_embedded, scale, line_width);
 	G.out_xmin() = 0;
 	G.out_ymin() = 0;

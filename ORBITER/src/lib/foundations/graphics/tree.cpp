@@ -162,8 +162,7 @@ void tree::draw(char *fname,
 			mp_graphics *G, int *v, int layer, tree_node *N,
 		int x, int y, int dx, int dy), 
 	int f_embedded, int f_sideways, int f_on_circle, 
-	double tikz_global_scale, double tikz_global_line_width
-	)
+	double tikz_global_scale, double tikz_global_line_width, int verbose_level)
 {
 	int x_min = 0, x_max = xmax_in;
 	int y_min = 0, y_max = ymax_in;
@@ -182,7 +181,7 @@ void tree::draw(char *fname,
 	strcat(fname_full, ".mp");
 	{
 	mp_graphics G(fname_full,
-			x_min, y_min, x_max, y_max, f_embedded, f_sideways);
+			x_min, y_min, x_max, y_max, f_embedded, f_sideways, verbose_level - 1);
 	G.out_xmin() = 0;
 	G.out_ymin() = 0;
 	G.out_xmax() = xmax;

@@ -874,7 +874,7 @@ void graph_theory_domain::draw_bitmatrix(const char *fname_base, int f_dots,
 	int f_bitmatrix, uchar *D, int *M,
 	int m, int n, int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 	double scale, double line_width,
-	int f_has_labels, int *labels)
+	int f_has_labels, int *labels, int verbose_level)
 {
 	mp_graphics G;
 	char fname_base2[1000];
@@ -892,7 +892,7 @@ void graph_theory_domain::draw_bitmatrix(const char *fname_base, int f_dots,
 		xmax_in /* ONE_MILLION */, ymax_in /* ONE_MILLION */,
 		xmax_out, ymax_out,
 		f_embedded, f_sideways,
-		scale, line_width);
+		scale, line_width, verbose_level - 1);
 
 	//G.frame(0.05);
 

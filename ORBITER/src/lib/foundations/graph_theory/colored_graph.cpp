@@ -1091,7 +1091,8 @@ void colored_graph::draw_on_circle(char *fname,
 	int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 	int f_radius, double radius, 
 	int f_labels, int f_embedded, int f_sideways, 
-	double tikz_global_scale, double tikz_global_line_width)
+	double tikz_global_scale, double tikz_global_line_width,
+	int verbose_level)
 {
 	char fname_full[1000];
 	file_io Fio;
@@ -1104,7 +1105,7 @@ void colored_graph::draw_on_circle(char *fname,
 		xmax_out, ymax_out, 
 		f_embedded, 
 		f_sideways, 
-		tikz_global_scale, tikz_global_line_width);
+		tikz_global_scale, tikz_global_line_width, verbose_level - 1);
 	
 
 	//G.header();
@@ -1257,7 +1258,7 @@ void colored_graph::draw(const char *fname,
 		nb_vertices, nb_vertices, 
 		xmax_in, ymax_in, xmax_out, ymax_out, 
 		scale, line_width, 
-		FALSE, NULL);
+		FALSE, NULL, verbose_level - 1);
 	
 
 	FREE_uchar(D);
@@ -1336,7 +1337,7 @@ void colored_graph::draw_Levi(const char *fname,
 		m, n, 
 		xmax_in, ymax_in, xmax_out, ymax_out, 
 		scale, line_width, 
-		f_draw_labels, labels);
+		f_draw_labels, labels, verbose_level - 1);
 	
 
 	FREE_uchar(D);
@@ -1407,7 +1408,7 @@ void colored_graph::draw_with_a_given_partition(
 		nb_points, nb_points, 
 		xmax_in, ymax_in, xmax_out, ymax_out, 
 		scale, line_width, 
-		FALSE /*f_has_labels*/, NULL /*labels*/);
+		FALSE /*f_has_labels*/, NULL /*labels*/, verbose_level - 1);
 
 
 	FREE_uchar(D);
@@ -1490,7 +1491,7 @@ void colored_graph::draw_partitioned(const char *fname,
 		nb_vertices, nb_vertices, 
 		xmax_in, ymax_in, xmax_out, ymax_out, 
 		scale, line_width, 
-		f_labels /*f_has_labels*/, C.sorting_perm_inv /*labels*/);
+		f_labels /*f_has_labels*/, C.sorting_perm_inv /*labels*/, verbose_level - 1);
 
 
 	FREE_uchar(D);
@@ -2212,7 +2213,7 @@ int colored_graph::is_cycle(int nb_e, long int *edges,
 
 void colored_graph::draw_it(const char *fname_base, 
 	int xmax_in, int ymax_in, int xmax_out, int ymax_out, 
-	double scale, double line_width)
+	double scale, double line_width, int verbose_level)
 {
 	int f_dots = FALSE;
 	int f_partition = FALSE;
@@ -2251,7 +2252,7 @@ void colored_graph::draw_it(const char *fname_base,
 		nb_points, nb_points,
 		xmax_in, ymax_in, xmax_out, ymax_out,
 		scale, line_width, 
-		FALSE, NULL);
+		FALSE, NULL, verbose_level - 1);
 
 	FREE_uchar(bitvec);
 	

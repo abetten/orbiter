@@ -333,7 +333,8 @@ public:
 		int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 		int f_radius, double radius, 
 		int f_labels, int f_embedded, int f_sideways, 
-		double tikz_global_scale, double tikz_global_line_width);
+		double tikz_global_scale, double tikz_global_line_width,
+		int verbose_level);
 	void draw_on_circle_2(mp_graphics &G, int f_labels, 
 		int f_radius, double radius);
 	void draw(const char *fname, 
@@ -390,7 +391,7 @@ public:
 	int is_cycle(int nb_e, long int *edges, int verbose_level);
 	void draw_it(const char *fname_base, 
 		int xmax_in, int ymax_in, int xmax_out, int ymax_out, 
-		double scale, double line_width);
+		double scale, double line_width, int verbose_level);
 	//int rainbow_cliques_nonrecursive(int &nb_backtrack_nodes, int verbose_level);
 	void create_Levi_graph_from_incidence_matrix(
 		int *M, int nb_rows, int nb_cols,
@@ -583,7 +584,8 @@ public:
 		int f_bitmatrix, uchar *D, int *M,
 		int m, int n, int xmax_in, int ymax_in, int xmax, int ymax,
 		double scale, double line_width,
-		int f_has_labels, int *labels);
+		int f_has_labels, int *labels,
+		int verbose_level);
 
 };
 

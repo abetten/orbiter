@@ -186,17 +186,17 @@ public:
 	mp_graphics();
 	mp_graphics(const char *file_name, 
 		int xmin, int ymin, int xmax, int ymax, 
-		int f_embedded, int f_sideways);
+		int f_embedded, int f_sideways, int verbose_level);
 	~mp_graphics();
 	void default_values();
 	void init(const char *file_name, 
 		int xmin, int ymin, int xmax, int ymax, 
-		int f_embedded, int f_sideways);
+		int f_embedded, int f_sideways, int verbose_level);
 	void exit(std::ostream &ost, int verbose_level);
 	void setup(const char *fname_base, 
 		int in_xmin, int in_ymin, int in_xmax, int in_ymax, 
 		int xmax, int ymax, int f_embedded, int f_sideways, 
-		double scale, double line_width);
+		double scale, double line_width, int verbose_level);
 	void set_parameters(double scale, double line_width);
 	void set_scale(double scale);
 	void frame(double move_out);
@@ -224,7 +224,8 @@ public:
 		double x_labels_offset, double y_labels_offset, 
 		double x_tick_half_width, double y_tick_half_width, 
 		int f_v_lines, int subdivide_v, 
-		int f_h_lines, int subdivide_h);
+		int f_h_lines, int subdivide_h,
+		int verbose_level);
 	void plot_curve(int N, int *f_DNE, 
 		double *Dx, double *Dy, double dx, double dy);
 	void nice_circle(int x, int y, int rad);
@@ -837,8 +838,7 @@ public:
 			int *v, int layer, tree_node *N, 
 			int x, int y, int dx, int dy), 
 		int f_embedded, int f_sideways, int f_on_circle, 
-		double tikz_global_scale, double tikz_global_line_width
-		);
+		double tikz_global_scale, double tikz_global_line_width, int verbose_level);
 	void circle_center_and_radii(int xmax, int ymax, int max_depth, 
 		int &x0, int &y0, int *&rad);
 	void compute_DFS_ranks(int &nb_nodes, int verbose_level);

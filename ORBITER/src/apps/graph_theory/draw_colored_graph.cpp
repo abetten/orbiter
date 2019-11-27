@@ -270,7 +270,7 @@ int main(int argc, char **argv)
 			xmax_in, ymax_in, xmax_out, ymax_out,
 			f_radius, radius, 
 			f_labels, f_embedded, f_sideways, 
-			scale, line_width);
+			scale, line_width, verbose_level - 1);
 		}
 	else if (f_bitmatrix) {
 

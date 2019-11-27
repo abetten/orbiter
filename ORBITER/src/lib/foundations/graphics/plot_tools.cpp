@@ -102,7 +102,7 @@ void plot_tools::draw_density(char *prefix, int *the_set, int set_size,
 	sprintf(fname_full, "%s_%d.mp", prefix, no);
 	{
 	mp_graphics G(fname_full,
-			x_min, y_min, x_max, y_max, f_embedded, f_sideways);
+			x_min, y_min, x_max, y_max, f_embedded, f_sideways, verbose_level - 1);
 	G.out_xmin() = 0;
 	G.out_ymin() = 0;
 	G.out_xmax() = xmax;
@@ -223,7 +223,7 @@ void plot_tools::draw_density_multiple_curves(char *prefix,
 	sprintf(fname_full, "%s_%d.mp", prefix, no);
 	{
 	mp_graphics G(fname_full,
-			x_min, y_min, x_max, y_max, f_embedded, f_sideways);
+			x_min, y_min, x_max, y_max, f_embedded, f_sideways, verbose_level - 1);
 	G.out_xmin() = 0;
 	G.out_ymin() = 0;
 	G.out_xmax() = xmax;
@@ -349,11 +349,12 @@ void plot_tools::projective_plane_draw_grid(const char *fname,
 	
 	if (f_v) {
 		cout << "plot_tools::projective_plane_draw_grid" << endl;
-		}
-	sprintf(fname_full, "%s.mp", fname);
+		cout << "plot_tools::projective_plane_draw_grid xmax=" << xmax << " ymax=" << ymax << endl;
+	}
+	sprintf(fname_full, "%s_draw.mp", fname);
 	{
 	mp_graphics G(fname_full, x_min, y_min, x_max, y_max,
-			f_embedded, f_sideways);
+			f_embedded, f_sideways, verbose_level - 1);
 	G.out_xmin() = 0;
 	G.out_ymin() = 0;
 	G.out_xmax() = xmax;
@@ -372,11 +373,11 @@ void plot_tools::projective_plane_draw_grid(const char *fname,
 		}
 	G.projective_plane_draw_grid2(q, Table, nb,
 			f_with_points, rad, f_point_labels, Point_labels,
-			verbose_level);
+			verbose_level - 1);
 	if (f_v) {
 		cout << "plot_tools::projective_plane_draw_grid "
 				"after projective_plane_draw_grid2" << endl;
-		}
+	}
 
 
 	G.end_figure();

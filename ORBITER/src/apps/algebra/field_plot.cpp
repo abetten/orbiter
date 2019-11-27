@@ -110,7 +110,7 @@ void draw_beginning(char *fname, mp_graphics *&G, int xmax, int ymax, int verbos
 	sprintf(fname_full, "%s.mp", fname);
 	//{
 	G = NEW_OBJECT(mp_graphics);
-	G->init(fname_full, x_min, y_min, x_max, y_max, f_embedded, f_sideways);
+	G->init(fname_full, x_min, y_min, x_max, y_max, f_embedded, f_sideways, verbose_level - 1);
 	G->out_xmin() = 0;
 	G->out_ymin() = 0;
 	G->out_xmax() = xmax;

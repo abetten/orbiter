@@ -24,17 +24,17 @@ mp_graphics::mp_graphics()
 
 mp_graphics::mp_graphics(const char *file_name,
 		int xmin, int ymin, int xmax, int ymax,
-		int f_embedded, int f_sideways)
+		int f_embedded, int f_sideways, int verbose_level)
 {
 	
 	default_values();
-	init(file_name, xmin, ymin, xmax, ymax, f_embedded, f_sideways);
+	init(file_name, xmin, ymin, xmax, ymax, f_embedded, f_sideways, verbose_level);
 }
 
 mp_graphics::~mp_graphics()
 {
 	// cout << "mp_graphics::~mp_graphics()" < endl;
-	exit(cout, FALSE);
+	exit(cout, 1);
 }
 
 void mp_graphics::default_values()
@@ -68,7 +68,7 @@ void mp_graphics::default_values()
 
 void mp_graphics::init(const char *file_name,
 	int xmin, int ymin, int xmax, int ymax,
-	int f_embedded, int f_sideways)
+	int f_embedded, int f_sideways, int verbose_level)
 {
 	mp_graphics::f_embedded = f_embedded;
 	mp_graphics::f_sideways = f_sideways;
@@ -102,6 +102,9 @@ void mp_graphics::exit(ostream &ost, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	file_io Fio;
 
+	if (f_v) {
+		cout << "mp_graphics::exit" << endl;
+	}
 	if (f_file_open) {
 		fp_mp.close();
 		fp_log.close();
@@ -114,15 +117,23 @@ void mp_graphics::exit(ostream &ost, int verbose_level)
 					<< " of size " << Fio.file_size(fname_log) << endl;
 			ost << "written file " << fname_tikz
 					<< " of size " << Fio.file_size(fname_tikz) << endl;
-			}
-		f_file_open = FALSE;
 		}
+		f_file_open = FALSE;
+	}
+	else {
+		if (f_v) {
+			cout << "mp_graphics::exit f_file_open is FALSE" << endl;
+		}
+	}
+	if (f_v) {
+		cout << "mp_graphics::exit done" << endl;
+	}
 }
 
 void mp_graphics::setup(const char *fname_base, 
 	int in_xmin, int in_ymin, int in_xmax, int in_ymax, 
 	int xmax, int ymax, int f_embedded, int f_sideways, 
-	double scale, double line_width)
+	double scale, double line_width, int verbose_level)
 {
 	//int x_min = 0, x_max = 1000;
 	//int y_min = 0, y_max = 1000;
@@ -131,7 +142,7 @@ void mp_graphics::setup(const char *fname_base,
 	
 	sprintf(fname_full, "%s.mp", fname_base);
 	init(fname_full, in_xmin, in_ymin,
-			in_xmax, in_ymax, f_embedded, f_sideways);
+			in_xmax, in_ymax, f_embedded, f_sideways, verbose_level);
 #if 0
 	out_xmin() = -(xmax >> 1);
 	out_ymin() = -(ymax >> 1);
@@ -341,12 +352,12 @@ void mp_graphics::frame_constant_aspect_ratio(double move_out)
 		adjust_y = (dx - dy) >> 1;
 		cout << "mp_graphics::frame_constant_aspect_ratio "
 				"adjust_y=" << adjust_y << endl;
-		}
+	}
 	else {
 		adjust_x = (dy - dx) >> 1;
 		cout << "mp_graphics::frame_constant_aspect_ratio "
 				"adjust_x=" << adjust_x << endl;
-		}
+	}
 	xmin -= adjust_x;
 	xmax += adjust_x;
 	ymin -= adjust_y;
@@ -552,15 +563,26 @@ void mp_graphics::draw_axes_and_grid(
 	int x_mod, int y_mod, int x_tick_mod, int y_tick_mod, 
 	double x_labels_offset, double y_labels_offset, 
 	double x_tick_half_width, double y_tick_half_width, 
-	int f_v_lines, int subdivide_v, int f_h_lines, int subdivide_h)
+	int f_v_lines, int subdivide_v, int f_h_lines, int subdivide_h,
+	int verbose_level)
 {
 	double *Dx, *Dy;
 	int *Px, *Py;
-	double dx = x_stretch;//ONE_MILLION * 50 * x_stretch;
-	double dy = y_stretch;//ONE_MILLION * 50 * y_stretch;
+	//double dx = x_stretch;//ONE_MILLION * 50 * x_stretch;
+	//double dy = y_stretch;//ONE_MILLION * 50 * y_stretch;
+	double dx = ONE_MILLION * 50 * x_stretch;
+	double dy = ONE_MILLION * 50 * y_stretch;
 	int N = 1000;
 	int n;
 	int i, j, h;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "mp_graphics::draw_axes_and_grid" << endl;
+		cout << "mp_graphics::draw_axes_and_grid dx=" << dx << " dy=" << dy << endl;
+		cout << "mp_graphics::draw_axes_and_grid x_min=" << x_min << " x_max=" << x_max << endl;
+		cout << "mp_graphics::draw_axes_and_grid y_min=" << y_min << " y_max=" << y_max << endl;
+	}
 
 	
 
@@ -578,16 +600,16 @@ void mp_graphics::draw_axes_and_grid(
 
 	if (f_x_axis_at_y_min) {
 		y0 = y_min;
-		}
+	}
 	else {
 		y0 = 0.;
-		}
+	}
 	if (f_y_axis_at_x_min) {
 		x0 = x_min;
-		}
+	}
 	else {
 		x0 = 0.;
-		}
+	}
 	// draw axes (with arrows):
 	Dx[0] = x_min;
 	Dy[0] = y0;
@@ -602,8 +624,12 @@ void mp_graphics::draw_axes_and_grid(
 
 	for (i = 0; i < 4; i++) {
 		Px[i] = Dx[i] * dx;
-		Py[i] = Dy[i] * dy;
+		if (f_v) {
+			cout << "mp_graphics::draw_axes_and_grid "
+					"Dx[i]=" << Dx[i] << " dx=" << dx << " Px[i]=" << Px[i] << endl;
 		}
+		Py[i] = Dy[i] * dy;
+	}
 	
 	sl_ends(0 /* line_beg_style */, 1 /* line_end_style */);
 	polygon2(Px, Py, 0, 1);
@@ -623,12 +649,12 @@ void mp_graphics::draw_axes_and_grid(
 		Dx[j] = i;
 		Dy[j] = y0 + 1 * x_tick_half_width;
 		j++;
-		}
+	}
 	n = j;
 	for (i = 0; i < n; i++) {
 		Px[i] = Dx[i] * dx;
 		Py[i] = Dy[i] * dy;
-		}
+	}
 	j = 0;
 	for (i = (int)x_min; i <= (int)x_max; i++) {
 		if ((i % x_tick_mod) && (i != (int)x_min) && (i != (int)x_max)) {
@@ -636,7 +662,7 @@ void mp_graphics::draw_axes_and_grid(
 			}
 		polygon2(Px, Py, j, j + 1);
 		j += 2;
-		}
+	}
 
 
 	// draw y_ticks:
@@ -644,14 +670,14 @@ void mp_graphics::draw_axes_and_grid(
 	for (i = (int)y_min; i <= (int)y_max; i++) {
 		if ((i % y_tick_mod) && (i != (int)y_min) && (i != (int)y_max)) {
 			continue;
-			}
+		}
 		Dx[j] = x0 + (-1) * y_tick_half_width;
 		Dy[j] = i;
 		j++;
 		Dx[j] = x0 + 1 * y_tick_half_width;
 		Dy[j] = i;
 		j++;
-		}
+	}
 	n = j;
 	for (i = 0; i < n; i++) {
 		Px[i] = Dx[i] * dx;
@@ -661,64 +687,64 @@ void mp_graphics::draw_axes_and_grid(
 	for (i = (int)y_min; i <= (int)y_max; i++) {
 		if ((i % y_tick_mod) && (i != (int)y_min) && (i != (int)y_max)) {
 			continue;
-			}
+		}
 		polygon2(Px, Py, j, j + 1);
 		j += 2;
-		}
+	}
 
 	// draw x_labels:
 	j = 0;
 	for (i = (int)x_min; i <= (int)x_max; i++) {
 		if ((i % x_tick_mod) && (i != (int)x_min) && (i != (int)x_max)) {
 			continue;
-			}
+		}
 		Dx[j] = i;
 		Dy[j] = y_min + x_labels_offset;
 		j++;
-		}
+	}
 	n = j;
 	for (i = 0; i < n; i++) {
 		Px[i] = Dx[i] * dx;
 		Py[i] = Dy[i] * dy;
-		}
+	}
 	j = 0;
 	for (i = (int)x_min; i <= (int)x_max; i++) {
 		if ((i % x_tick_mod) && (i != (int)x_min) && (i != (int)x_max)) {
 			continue;
-			}
+		}
 		char str[1000];
 		sprintf(str, "%d", i);
 		//cout << "str='" << str << "'" << endl;
 		aligned_text_array(Px, Py, j, "", str);
 		j += 1;
-		}
+	}
 
 	// draw y_labels:
 	j = 0;
 	for (i = (int)y_min; i <= (int)y_max; i++) {
 		if ((i % y_tick_mod) && (i != (int)y_min) && (i != (int)y_max)) {
 			continue;
-			}
+		}
 		Dy[j] = i;
 		Dx[j] = x_min + y_labels_offset;
 		j++;
-		}
+	}
 	n = j;
 	for (i = 0; i < n; i++) {
 		Px[i] = Dx[i] * dx;
 		Py[i] = Dy[i] * dy;
-		}
+	}
 	j = 0;
 	for (i = (int)y_min; i <= (int)y_max; i++) {
 		if ((i % y_tick_mod) && (i != (int)y_min) && (i != (int)y_max)) {
 			continue;
-			}
+		}
 		char str[1000];
 		sprintf(str, "%d", i);
 		//cout << "str='" << str << "'" << endl;
 		aligned_text_array(Px, Py, j, "", str);
 		j += 1;
-		}
+	}
 
 
 	if (f_v_lines) {
@@ -731,38 +757,38 @@ void mp_graphics::draw_axes_and_grid(
 		for (i = (int)x_min; i <= (int)x_max; i++) {
 			if ((i % x_mod) && (i != (int)x_min) && (i != (int)x_max)) {
 				continue;
-				}
+			}
 			for (j = 0; j <= subdivide_v; j++) {
 				if (j && i == (int)x_max) {
 					continue;
-					}
+				}
 				Dx[h] = i + (double) j * ddx;
 				Dy[h] = y_min;
 				h++;
 				Dx[h] = i + (double) j * ddx;
 				Dy[h] = y_max;
 				h++;
-				}
 			}
+		}
 		n = h;
 		for (i = 0; i < n; i++) {
 			Px[i] = Dx[i] * dx;
 			Py[i] = Dy[i] * dy;
-			}
+		}
 		h = 0;
 		for (i = (int)x_min; i <= (int)x_max; i++) {
 			if ((i % x_mod) && (i != (int)x_min) && (i != (int)x_max)) {
 				continue;
-				}
+			}
 			for (j = 0; j <= subdivide_v; j++) {
 				if (j && i == (int)x_max) {
 					continue;
-					}
+				}
 				polygon2(Px, Py, h, h + 1);
 				h += 2;
-				}
 			}
 		}
+	}
 
 	if (f_h_lines) {
 		// draw horizontal lines:
@@ -775,38 +801,38 @@ void mp_graphics::draw_axes_and_grid(
 		for (i = (int)y_min; i <= (int)y_max; i++) {
 			if ((i % y_mod) && (i != (int)y_min) && (i != (int)y_max)) {
 				continue;
-				}
+			}
 			for (j = 0; j <= subdivide_h; j++) {
 				if (j && i == (int)y_max) {
 					continue;
-					}
+				}
 				Dy[h] = i + (double) j * ddy;
 				Dx[h] = x_min;
 				h++;
 				Dy[h] = i + (double) j * ddy;
 				Dx[h] = x_max;
 				h++;
-				}
 			}
+		}
 		n = h;
 		for (i = 0; i < n; i++) {
 			Px[i] = Dx[i] * dx;
 			Py[i] = Dy[i] * dy;
-			}
+		}
 		h = 0;
 		for (i = (int)y_min; i <= (int)y_max; i++) {
 			if ((i % y_mod) && (i != (int)y_min) && (i != (int)y_max)) {
 				continue;
-				}
+			}
 			for (j = 0; j <= subdivide_h; j++) {
 				if (j && i == (int)y_max) {
 					continue;
-					}
+				}
 				polygon2(Px, Py, h, h + 1);
 				h += 2;
-				}
 			}
 		}
+	}
 
 	sl_thickness(100);	
 	FREE_int(Px);
@@ -847,11 +873,11 @@ void mp_graphics::plot_curve(int N, int *f_DNE,
 				L2 = Dx2 * Dx2 + Dy2 * Dy2;
 				if (L2 > 10 * L1) {
 					f_DNE[i] = TRUE;
-					}
 				}
-#endif
 			}
+#endif
 		}
+	}
 	N = j;
 
 #if 0
@@ -859,36 +885,36 @@ void mp_graphics::plot_curve(int N, int *f_DNE,
 		for (j = 0; j < 6; j++) {
 			if (i + j == N || f_DNE[i + j]) {
 				break;
-				}
 			}
+		}
 		
 		if (j == 6) {
 			polygon6(Px, Py, i + 0, i + 1, i + 2, i + 3, i + 4, i + 5);
-			}
+		}
 		else if (j == 5) {
 			polygon5(Px, Py, i + 0, i + 1, i + 2, i + 3, i + 4);
-			}
+		}
 		else if (j == 4) {
 			polygon4(Px, Py, i + 0, i + 1, i + 2, i + 3);
-			}
+		}
 		else if (j == 3) {
 			polygon3(Px, Py, i + 0, i + 1, i + 2);
-			}
+		}
 		else if (j == 2) {
 			polygon2(Px, Py, i + 0, i + 1);
-			}
 		}
+	}
 #else
 	for (i = 0; i < N - 1; i++) {
 #if 0
 		if (f_DNE[i] || f_DNE[i + 1]) {
-			}
+		}
 		else {
 			polygon2(Px, Py, i + 0, i + 1);
-			}
+		}
 #endif
 		polygon2(Px, Py, i + 0, i + 1);
-		}
+	}
 #endif
 	FREE_int(Px);
 	FREE_int(Py);
@@ -919,19 +945,19 @@ void mp_graphics::grid_polygon2(grid_frame *F,
 
 	for (i = 0; i < 2; i++) {
 		Idx[i] = i;
-		}
+	}
 	if (F->f_matrix_notation) {
 		Px[0] = (int)(F->origin_x + y0 * F->dx);
 		Py[0] = (int)(F->origin_y + (F->m - x0) * F->dy);
 		Px[1] = (int)(F->origin_x + y1 * F->dx);
 		Py[1] = (int)(F->origin_y + (F->m - x1) * F->dy);
-		}
+	}
 	else {
 		Px[0] = (int)(F->origin_x + x0 * F->dx);
 		Py[0] = (int)(F->origin_y + y0 * F->dy);
 		Px[1] = (int)(F->origin_x + x1 * F->dx);
 		Py[1] = (int)(F->origin_y + y1 * F->dy);
-		}
+	}
 	polygon_idx(Px, Py, Idx, 2);
 	FREE_int(Px);
 	FREE_int(Py);
@@ -951,7 +977,7 @@ void mp_graphics::grid_polygon4(grid_frame *F,
 
 	for (i = 0; i < 4; i++) {
 		Idx[i] = i;
-		}
+	}
 	if (F->f_matrix_notation) {
 		Px[0] = (int)(F->origin_x + y0 * F->dx);
 		Py[0] = (int)(F->origin_y + (F->m - x0) * F->dy);
@@ -961,7 +987,7 @@ void mp_graphics::grid_polygon4(grid_frame *F,
 		Py[2] = (int)(F->origin_y + (F->m - x2) * F->dy);
 		Px[3] = (int)(F->origin_x + y3 * F->dx);
 		Py[3] = (int)(F->origin_y + (F->m - x3) * F->dy);
-		}
+	}
 	else {
 		Px[0] = (int)(F->origin_x + x0 * F->dx);
 		Py[0] = (int)(F->origin_y + y0 * F->dy);
@@ -971,7 +997,7 @@ void mp_graphics::grid_polygon4(grid_frame *F,
 		Py[2] = (int)(F->origin_y + y2 * F->dy);
 		Px[3] = (int)(F->origin_x + x3 * F->dx);
 		Py[3] = (int)(F->origin_y + y3 * F->dy);
-		}
+	}
 	polygon_idx(Px, Py, Idx, 4);
 	FREE_int(Px);
 	FREE_int(Py);
@@ -2440,6 +2466,8 @@ void mp_graphics::polygon_idx_tikz(int *Px, int *Py,
 		int *Idx, int n, int f_cycle)
 {
 	int f_need_comma = FALSE;
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
 	int x, y, i;
 
 	fp_tikz << "\\draw [";
@@ -2475,8 +2503,14 @@ void mp_graphics::polygon_idx_tikz(int *Px, int *Py,
 	for (i = 0; i < n; i++) {
 		x = Px[Idx[i]];
 		y = Py[Idx[i]];
+		if (f_v) {
+			cout << "mp_graphics::polygon_idx_tikz x=" << x << " y=" << y << endl;
+		}
 		coords_min_max(x, y);
 		user2dev(x, y);
+		if (f_v) {
+			cout << "mp_graphics::polygon_idx_tikz x'=" << x << " y'=" << y << endl;
+		}
 
 		if (i) {
 			fp_tikz << " -- ";
@@ -3684,14 +3718,17 @@ void mp_graphics::projective_plane_draw_grid2(int q,
 
 	double *Dx, *Dy;
 	int *Px, *Py;
-	int dx = ONE_MILLION * 50 * x_stretch;
-	int dy = ONE_MILLION * 50 * y_stretch;
+	double dx = ONE_MILLION * 50 * x_stretch;
+	double dy = ONE_MILLION * 50 * y_stretch;
 	int N = 1000;
 
 
 	if (f_v) {
 		cout << "projective_plane_draw_grid2" << endl;
-		}
+		cout << "projective_plane_draw_grid2 q=" << q << endl;
+		cout << "projective_plane_draw_grid2 x_stretch=" << x_stretch << " y_stretch" << y_stretch << endl;
+		cout << "projective_plane_draw_grid2 dx=" << dx << " dy=" << dy << endl;
+	}
 
 
 	Px = NEW_int(N);
@@ -3717,7 +3754,8 @@ void mp_graphics::projective_plane_draw_grid2(int q,
 		-1. /* x_labels_offset */, -1. /* y_labels_offset */,
 		0.5 /* x_tick_half_width */, 0.5 /* y_tick_half_width */,
 		TRUE /* f_v_lines */, 1 /* subdivide_v */,
-		TRUE /* f_h_lines */, 1 /* subdivide_h */);
+		TRUE /* f_h_lines */, 1 /* subdivide_h */,
+		verbose_level - 1);
 
 
 	if (f_v) {

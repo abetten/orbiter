@@ -32,7 +32,7 @@ using namespace std;
 // 100000 is too big for Linux under gcc, but OK for Macintosh with LLVM
 
 
-#define MAXN 20000
+#define MAXN 22000
 
 #include "nauty.h"
 

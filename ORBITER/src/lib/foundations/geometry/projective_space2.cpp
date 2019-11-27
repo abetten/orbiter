@@ -2825,16 +2825,16 @@ void projective_space::draw_point_set_in_plane(
 
 	if (f_v) {
 		cout << "projective_space::draw_point_set_in_plane" << endl;
-		}
+	}
 	if (n != 2) {
 		cout << "projective_space::draw_point_set_in_plane n != 2" << endl;
 		exit(1);
-		}
+	}
 	q = F->q;
 	Table = NEW_int(nb_pts * 3);
 	for (i = 0; i < nb_pts; i++) {
 		unrank_point(Table + i * 3, Pts[i]);
-		}
+	}
 	if (f_point_labels) {
 		char str[1000];
 		char **Labels;
@@ -2844,11 +2844,11 @@ void projective_space::draw_point_set_in_plane(
 			sprintf(str, "%ld", Pts[i]);
 			Labels[i] = NEW_char(strlen(str) + 1);
 			strcpy(Labels[i], str);
-			}
+		}
 		if (f_v) {
 			cout << "projective_space::draw_point_set_in_plane "
 					"before projective_plane_draw_grid" << endl;
-			}
+		}
 		Pt.projective_plane_draw_grid(fname, xmax, ymax, f_with_points, rad,
 			q, Table, nb_pts, TRUE, Labels,
 			f_embedded, f_sideways,
@@ -2856,29 +2856,29 @@ void projective_space::draw_point_set_in_plane(
 		if (f_v) {
 			cout << "projective_space::draw_point_set_in_plane "
 					"after projective_plane_draw_grid" << endl;
-			}
+		}
 		for (i = 0; i < nb_pts; i++) {
 			FREE_char(Labels[i]);
-			}
-		FREE_pchar(Labels);
 		}
+		FREE_pchar(Labels);
+	}
 	else {
 		if (f_v) {
 			cout << "projective_space::draw_point_set_in_plane "
 					"before projective_plane_draw_grid" << endl;
-			}
+		}
 		Pt.projective_plane_draw_grid(fname, xmax, ymax, f_with_points, rad,
 			q, Table, nb_pts, FALSE, NULL,
 			f_embedded, f_sideways, verbose_level - 1);
 		if (f_v) {
 			cout << "projective_space::draw_point_set_in_plane "
 					"after projective_plane_draw_grid" << endl;
-			}
 		}
+	}
 	FREE_int(Table);
 	if (f_v) {
 		cout << "projective_space::draw_point_set_in_plane done" << endl;
-		}
+	}
 }
 
 void projective_space::line_plane_incidence_matrix_restricted(

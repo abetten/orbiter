@@ -180,7 +180,7 @@ public:
 	void delete_equation(int I);
 	void write_gurobi_binary_variables(const char *fname);
 	void draw_it(const char *fname_base, int xmax_in, int ymax_in, 
-		int xmax_out, int ymax_out);
+		int xmax_out, int ymax_out, int verbose_level);
 	void draw_partitioned(const char *fname_base, 
 		int xmax_in, int ymax_in, 
 		int xmax_out, int ymax_out, 
