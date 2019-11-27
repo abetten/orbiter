@@ -3455,7 +3455,8 @@ void diophant::write_gurobi_binary_variables(const char *fname)
 }
 
 void diophant::draw_it(const char *fname_base,
-		int xmax_in, int ymax_in, int xmax_out, int ymax_out)
+		int xmax_in, int ymax_in, int xmax_out, int ymax_out,
+		int verbose_level)
 {
 	int f_dots = FALSE;
 	int f_partition = FALSE;
@@ -3473,7 +3474,7 @@ void diophant::draw_it(const char *fname_base,
 		f_bitmatrix, NULL, A, 
 		m, n, xmax_in, ymax_in, xmax_out, ymax_out, 
 		scale, line_width, 
-		FALSE, NULL);
+		FALSE, NULL, verbose_level);
 }
 
 void diophant::draw_partitioned(const char *fname_base, 
@@ -3607,7 +3608,7 @@ void diophant::draw_partitioned(const char *fname_base,
 		f_bitmatrix, NULL, A2, 
 		m, n, xmax_in, ymax_in, xmax_out, ymax_out, 
 		scale, line_width, 
-		FALSE, NULL);
+		FALSE, NULL, verbose_level - 1);
 
 
 	FREE_int(T);
@@ -4281,7 +4282,7 @@ void solve_diophant(int *Inc,
 		if (f_v) {
 			cout << "solve_diophant drawing the system" << endl;
 		}
-		Dio->draw_it(fname_system, xmax_in, ymax_in, xmax_out, ymax_out);
+		Dio->draw_it(fname_system, xmax_in, ymax_in, xmax_out, ymax_out, verbose_level - 1);
 		if (f_v) {
 			cout << "solve_diophant drawing the system done" << endl;
 		}

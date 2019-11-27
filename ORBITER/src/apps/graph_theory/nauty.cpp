@@ -17,7 +17,7 @@ void canonical_form(int *Adj, int *Adj2, int n, int nb_edges, int *edges2,
 void make_graph_fname(char *fname_full,
 		char *fname_full_tex, int n, int *set, int sz);
 void draw_graph_to_file(const char *fname, int n,
-		long int *set, int sz, double scale, int f_embedded, int f_sideways);
+		long int *set, int sz, double scale, int f_embedded, int f_sideways, int verbose_level);
 
 int main(int argc, char **argv)
 {
@@ -151,7 +151,7 @@ int main(int argc, char **argv)
 
 			make_graph_fname(fname1, fname1_tex, n, set, sz);
 			draw_graph_to_file(fname1, n, set1, sz,
-					scale, f_embedded, f_sideways);
+					scale, f_embedded, f_sideways, verbose_level - 1);
 			
 			fp << " & \\mbox{ \\input GRAPHICS/G4/"
 					<< fname1_tex << " } ";
@@ -185,7 +185,7 @@ int main(int argc, char **argv)
 			L.int_set_print_tex(fp, edges2, sz);
 			make_graph_fname(fname2, fname2_tex, n, edges2, sz);
 			draw_graph_to_file(fname2, n,
-					Edges2, sz, scale, f_embedded, f_sideways);
+					Edges2, sz, scale, f_embedded, f_sideways, verbose_level - 1);
 			fp << " & \\mbox{ \\input GRAPHICS/G4/"
 					<< fname2_tex << " } ";
 			fp << " & $";
@@ -306,7 +306,7 @@ void make_graph_fname(char *fname_full,
 
 void draw_graph_to_file(const char *fname,
 		int n, long int *set, int sz, double scale,
-		int f_embedded, int f_sideways)
+		int f_embedded, int f_sideways, int verbose_level)
 {
 	int x_min = 0, x_max = 1000000;
 	int y_min = 0, y_max = 1000000;
@@ -319,7 +319,7 @@ void draw_graph_to_file(const char *fname,
 	dy = y;
 	{
 	mp_graphics G(fname, x_min, y_min, x_max, y_max,
-			f_embedded, f_sideways);
+			f_embedded, f_sideways, verbose_level - 1);
 	G.out_xmin() = 0;
 	G.out_ymin() = 0;
 	G.out_xmax() = 1000000;

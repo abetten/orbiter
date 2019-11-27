@@ -1185,7 +1185,7 @@ void schreier::draw_tree2(const char *fname,
 		}
 	sprintf(fname_full, "%s.mp", fname);
 	mp_graphics G(fname_full, x_min, y_min, x_max, y_max,
-		f_embedded, f_sideways);
+		f_embedded, f_sideways, verbose_level - 1);
 	G.out_xmin() = 0;
 	G.out_ymin() = 0;
 	G.out_xmax() = xmax;

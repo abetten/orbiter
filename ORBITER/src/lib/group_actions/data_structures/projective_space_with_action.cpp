@@ -1851,8 +1851,10 @@ void projective_space_with_action::classify_objects_using_nauty(
 	t0 = Os.os_ticks();
 
 	for (input_idx = 0; input_idx < Data->nb_inputs; input_idx++) {
-		cout << "projective_space_with_action::classify_objects_using_nauty input " << input_idx << " / " << Data->nb_inputs
-			<< " is:" << endl;
+		if (f_v) {
+			cout << "projective_space_with_action::classify_objects_using_nauty input " << input_idx << " / " << Data->nb_inputs
+					<< " is:" << endl;
+		}
 
 		if (Data->input_type[input_idx] == INPUT_TYPE_SET_OF_POINTS) {
 			cout << "projective_space_with_action::classify_objects_using_nauty input set of points "

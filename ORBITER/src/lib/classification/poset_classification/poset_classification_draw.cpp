@@ -273,7 +273,7 @@ void poset_classification::draw_tree_low_level(char *fname, int nb_nodes,
 #endif
 	mp_graphics G;
 	G.setup(fname, x_min, y_min, x_max, y_max, xmax, ymax,
-			f_embedded, f_sideways, scale, line_width);
+			f_embedded, f_sideways, scale, line_width, verbose_level - 1);
 	//G.frame(0.05);
 	
 	//G.header();

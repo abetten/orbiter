@@ -871,7 +871,7 @@ void graph_classify::draw_graphs(int level,
 		dy = y;
 		{
 		mp_graphics G(fname_full,
-				x_min, y_min, x_max, y_max, f_embedded, f_sideways);
+				x_min, y_min, x_max, y_max, f_embedded, f_sideways, verbose_level - 1);
 		G.out_xmin() = 0;
 		G.out_ymin() = 0;
 		G.out_xmax() = xmax;

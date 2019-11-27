@@ -217,21 +217,21 @@ int main(int argc, const char **argv)
 			xmax, ymax, xmax_out, ymax_out, rad, f_circle, f_circletext,
 			f_i, f_e, TRUE, draw_vertex_callback,
 			f_embedded, f_sideways, f_on_circle,
-			scale, line_width);
+			scale, line_width, verbose_level - 1);
 		}
 	else if (f_placeholder_labels) {
 		T.draw(fname_out,
 			xmax, ymax, xmax_out, ymax_out, rad, f_circle, f_circletext,
 			f_i, f_e, TRUE, draw_vertex_callback_placeholders,
 			f_embedded, f_sideways, f_on_circle,
-			scale, line_width);
+			scale, line_width, verbose_level - 1);
 		}
 	else {
 		T.draw(fname_out,
 			xmax, ymax, xmax_out, ymax_out, rad, f_circle, f_circletext,
 			f_i, f_e, TRUE, draw_vertex_callback_standard,
 			f_embedded, f_sideways, f_on_circle,
-			scale, line_width);
+			scale, line_width, verbose_level - 1);
 		}
 	
 	Os.time_check(cout, t0);

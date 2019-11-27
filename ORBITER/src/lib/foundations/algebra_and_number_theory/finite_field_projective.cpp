@@ -5221,7 +5221,7 @@ void finite_field::do_draw_points_in_plane(
 			fname_base, set, set_size,
 			TRUE /*f_with_points*/, f_point_labels,
 			f_embedded, f_sideways, rad,
-			0 /* verbose_level */);
+			verbose_level - 2);
 	FREE_OBJECT(P);
 
 	if (f_v) {

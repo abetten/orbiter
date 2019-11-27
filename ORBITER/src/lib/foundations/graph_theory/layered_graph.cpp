@@ -302,7 +302,7 @@ void layered_graph::draw_with_options(const char *fname,
 	{
 	mp_graphics G(fname_full, x_min, y_min,
 			O->x_max, O->y_max,
-			O->f_embedded, O->f_sideways);
+			O->f_embedded, O->f_sideways, verbose_level - 1);
 	G.out_xmin() = 0;
 	G.out_ymin() = 0;
 	G.out_xmax() = O->xmax;
