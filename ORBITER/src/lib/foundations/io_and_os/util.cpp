@@ -447,36 +447,6 @@ int lint_vec_hash_after_sorting(long int *data, int len)
 	return h;
 }
 
-const char *plus_minus_string(int epsilon)
-{
-	if (epsilon == 1) {
-		return "+";
-		}
-	if (epsilon == -1) {
-		return "-";
-		}
-	if (epsilon == 0) {
-		return "";
-		}
-	cout << "plus_minus_string epsilon=" << epsilon << endl;
-	exit(1);
-}
-
-const char *plus_minus_letter(int epsilon)
-{
-	if (epsilon == 1) {
-		return "p";
-		}
-	if (epsilon == -1) {
-		return "m";
-		}
-	if (epsilon == 0) {
-		return "";
-		}
-	cout << "plus_minus_letter epsilon=" << epsilon << endl;
-	exit(1);
-}
-
 void int_vec_complement(int *v, int n, int k)
 // computes the complement to v + k (v must be allocated to n lements)
 // the first k elements of v[] must be in increasing order.
@@ -1369,8 +1339,7 @@ static void test_swap()
 }
 
 // block_swap_chars:
-// switches the chars in the 
-// buffer pointed to by "ptr". 
+// switches the chars in the buffer pointed to by "ptr".
 // There are "no" intervals of size "size".
 // This routine is due to Roland Grund
 
@@ -2300,55 +2269,6 @@ void print_hex_digit(ostream &ost, int digit)
 }
 
 
-#if 0
-int test_if_sets_are_disjoint(int *set1, int *set2, int sz1, int sz2)
-{
-	int *S1, *S2;
-	int i, u, v, ret;
-	sorting Sorting;
-
-	S1 = NEW_int(sz1);
-	S2 = NEW_int(sz2);
-	for (i = 0; i < sz1; i++) {
-		S1[i] = set1[i];
-		}
-	for (i = 0; i < sz2; i++) {
-		S2[i] = set2[i];
-		}
-	Sorting.int_vec_heapsort(S1, sz1);
-	Sorting.int_vec_heapsort(S2, sz2);
-	u = v = 0;
-	while (u + v < sz1 + sz2) {
-		if (u < sz1 && v < sz2) {
-			if (S1[u] == S2[v]) {
-				ret = FALSE;
-				goto finish;
-				}
-			if (S1[u] < S2[v]) {
-				u++;
-				}
-			else {
-				v++;
-				}
-			}
-		if (u == sz1) {
-			ret = TRUE;
-			goto finish;
-			}
-		else if (v == sz2) {
-			ret = TRUE;
-			goto finish;
-			}
-		}
-	ret = TRUE;
-finish:
-	FREE_int(S1);
-	FREE_int(S2);
-	return ret;
-}
-#endif
-
-
 int test_if_sets_are_disjoint_assuming_sorted(int *set1, int *set2, int sz1, int sz2)
 {
 	int sz;
@@ -2409,36 +2329,6 @@ int test_if_sets_are_disjoint_assuming_sorted_lint(long int *set1, long int *set
 	return TRUE;
 }
 
-void make_graph_of_disjoint_sets_from_rows_of_matrix(
-	int *M, int m, int n, 
-	int *&Adj, int verbose_level)
-// assumes that the rows are sorted
-{
-	int f_v = (verbose_level >= 1);
-	int i, j, a;
-
-	if (f_v) {
-		cout << "make_graph_of_disjoint_sets_from_rows_of_matrix" << endl;
-		}
-	Adj = NEW_int(m * m);
-	for (i = 0; i < m * m; i++) {
-		Adj[i] = 0;
-		}
-
-	for (i = 0; i < m; i++) {
-		for (j = i + 1; j < m; j++) {
-			if (test_if_sets_are_disjoint_assuming_sorted(
-				M + i * n, M + j * n, n, n)) {
-				a = 1;
-				}
-			else {
-				a = 0;
-				}
-			Adj[i * m + j] = a;
-			Adj[j * m + i] = a;
-			}
-		}
-}
 
 void int_vec_print_to_str(char *str, int *data, int len)
 {
@@ -2527,36 +2417,6 @@ int is_xml_file(const char *fname)
 		}
 }
 
-
-void os_date_string(char *str, int sz)
-{
-	system("date >a");
-	{
-	ifstream f1("a");
-	f1.getline(str, sz);
-	}
-}
-
-int os_seconds_past_1970()
-{
-	int a;
-	
-	{
-	ofstream fp("b");
-	fp << "#!/bin/bash" << endl;
-	fp << "echo $(date +%s)" << endl;
-	}
-	system("chmod ugo+x b");
-	system("./b >a");
-	{
-	char str[1000];
-
-	ifstream f1("a");
-	f1.getline(str, sizeof(str));
-	sscanf(str, "%d", &a);
-	}
-	return a;
-}
 
 void test_typedefs()
 {
@@ -2778,52 +2638,6 @@ void test_unipoly2()
 
 
 
-void gl_random_matrix(int k, int q, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 1);
-	int *M;
-	int *M2;
-	finite_field F;
-	unipoly_object char_poly;
-
-	if (f_v) {
-		cout << "gl_random_matrix" << endl;
-		}
-	F.init(q, 0 /*verbose_level*/);
-	M = NEW_int(k * k);
-	M2 = NEW_int(k * k);
-
-	F.random_invertible_matrix(M, k, verbose_level - 2);
-
-	cout << "Random invertible matrix:" << endl;
-	int_matrix_print(M, k, k);
-
-
-	{
-	unipoly_domain U(&F);
-
-
-
-	U.create_object_by_rank(char_poly, 0);
-
-	U.characteristic_polynomial(M, k, char_poly, verbose_level - 2);
-
-	cout << "The characteristic polynomial is ";
-	U.print_object(char_poly, cout);
-	cout << endl;
-
-	U.substitute_matrix_in_polynomial(char_poly, M, M2, k, verbose_level);
-	cout << "After substitution, the matrix is " << endl;
-	int_matrix_print(M2, k, k);
-
-	U.delete_object(char_poly);
-
-	}
-	FREE_int(M);
-	FREE_int(M2);
-
-}
 
 int is_diagonal_matrix(int *A, int n)
 {

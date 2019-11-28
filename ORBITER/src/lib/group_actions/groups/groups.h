@@ -874,6 +874,7 @@ public:
 	void print_orbit_using_labels(int orbit_no, long int *labels);
 	void print_orbit(std::ostream &ost, int orbit_no);
 	void print_orbit_tex(std::ostream &ost, int orbit_no);
+	void print_orbit_sorted_tex(std::ostream &ost, int orbit_no, int f_truncate, int max_length);
 	void print_and_list_orbit_and_stabilizer_tex(int i,
 		action *default_action,
 		longinteger_object &full_group_order,

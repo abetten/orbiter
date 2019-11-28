@@ -72,6 +72,7 @@ int main(int argc, char **argv)
 	int t[10];
 	int dt[10];
 	int Mem[10];
+	os_interface Os;
 
 
 	system("rm -rf G ISO SOLUTIONS STARTER_DIR SYSTEMS");
@@ -138,54 +139,54 @@ int main(int argc, char **argv)
 	char fname[1000];
 
 	sprintf(fname, "memory_usage.csv");
-	t[0] = os_seconds_past_1970();
+	t[0] = Os.os_seconds_past_1970();
 	file_io Fio;
 
 
 	system(cmd1);
-	t[1] = os_seconds_past_1970();
+	t[1] = Os.os_seconds_past_1970();
 	Fio.int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
 	Mem[0] = M[0];
 	FREE_int(M);
 
 	system(cmd2);
-	t[2] = os_seconds_past_1970();
+	t[2] = Os.os_seconds_past_1970();
 	Fio.int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
 	Mem[1] = M[0];
 	FREE_int(M);
 
 	system(cmd3);
-	t[3] = os_seconds_past_1970();
+	t[3] = Os.os_seconds_past_1970();
 	Fio.int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
 	Mem[2] = M[0];
 	FREE_int(M);
 
 	system(cmd4);
-	t[4] = os_seconds_past_1970();
+	t[4] = Os.os_seconds_past_1970();
 	Fio.int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
 	Mem[3] = M[0];
 	FREE_int(M);
 
 	system(cmd5);
-	t[5] = os_seconds_past_1970();
+	t[5] = Os.os_seconds_past_1970();
 	Fio.int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
 	Mem[4] = M[0];
 	FREE_int(M);
 
 	system(cmd6);
-	t[6] = os_seconds_past_1970();
+	t[6] = Os.os_seconds_past_1970();
 	Fio.int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
 	Mem[5] = M[0];
 	FREE_int(M);
 
 	system(cmd7);
-	t[7] = os_seconds_past_1970();
+	t[7] = Os.os_seconds_past_1970();
 	Fio.int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
 	Mem[6] = M[0];
 	FREE_int(M);
 
 	system(cmd8);
-	t[8] = os_seconds_past_1970();
+	t[8] = Os.os_seconds_past_1970();
 	Fio.int_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
 	Mem[7] = M[0];
 	FREE_int(M);

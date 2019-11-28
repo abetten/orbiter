@@ -90,11 +90,11 @@ void finite_field::cheat_sheet_PG(int n,
 				FALSE /*f_embedded*/,
 				FALSE /*f_sideways*/,
 				rad,
-				0 /* verbose_level */);
+				verbose_level);
 		FREE_lint(set);
 		f << "{\\scriptsize" << endl;
 		f << "$$" << endl;
-		f << "\\input " << fname_base << ".tex" << endl;
+		f << "\\input " << fname_base << "_draw.tex" << endl;
 		f << "$$" << endl;
 		f << "}%%" << endl;
 		}
@@ -137,6 +137,35 @@ void finite_field::cheat_sheet_PG(int n,
 		f << "\\section{Line through point-pairs}" << endl;
 		P->cheat_sheet_line_through_pairs_of_points(f, verbose_level);
 		}
+
+	homogeneous_polynomial_domain *Poly2;
+	homogeneous_polynomial_domain *Poly3;
+	homogeneous_polynomial_domain *Poly4;
+
+	Poly2 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly3 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly4 = NEW_OBJECT(homogeneous_polynomial_domain);
+
+	Poly2->init(this,
+			n + 1 /* nb_vars */, 2 /* degree */,
+			FALSE /* f_init_incidence_structure */,
+			verbose_level);
+	Poly3->init(this,
+			n + 1 /* nb_vars */, 3 /* degree */,
+			FALSE /* f_init_incidence_structure */,
+			verbose_level);
+	Poly4->init(this,
+			n + 1 /* nb_vars */, 4 /* degree */,
+			FALSE /* f_init_incidence_structure */,
+			verbose_level);
+
+	Poly2->print_monomial_ordering(f);
+	Poly3->print_monomial_ordering(f);
+	Poly4->print_monomial_ordering(f);
+
+	FREE_OBJECT(Poly2);
+	FREE_OBJECT(Poly3);
+	FREE_OBJECT(Poly4);
 
 	if (f_surface) {
 		surface_domain *S;
@@ -786,7 +815,7 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 	f << "$$" << endl;
 	f << "\\begin{array}{|r|r|r|}" << endl;
 	f << "\\hline" << endl;
-	f << "\\mbox{order} & \\mbox{polynomial} & \\mbox{polynomial} \\\\"
+	f << "\\mbox{Subfield} & \\mbox{Polynomial} & \\mbox{Numerical Rank} \\\\"
 			<< endl;
 	f << "\\hline" << endl;
 	for (h = 2; h < e; h++) {
@@ -811,8 +840,9 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 				unipoly_object elt;
 
 				FX.create_object_by_rank(elt, poly);
-				f << NT.i_power_j(p, h) << " & " << poly << " & ";
+				f << "\\bbF_{" << NT.i_power_j(p, h) << "} & ";
 				Fq.print_object(elt, f);
+				f << " & " << poly;
 				f << "\\\\" << endl;
 				Fq.delete_object(elt);
 			}

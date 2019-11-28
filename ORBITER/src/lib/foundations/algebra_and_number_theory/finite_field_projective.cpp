@@ -3134,7 +3134,10 @@ void finite_field::create_orthogonal(int epsilon, int n,
 #endif
 
 	//char fname[1000];
-	sprintf(fname, "Q%s_%d_%d.txt", plus_minus_letter(epsilon), n, q);
+
+	algebra_global AG;
+
+	sprintf(fname, "Q%s_%d_%d.txt", AG.plus_minus_letter(epsilon), n, q);
 	//write_set_to_file(fname, L, N, verbose_level);
 
 

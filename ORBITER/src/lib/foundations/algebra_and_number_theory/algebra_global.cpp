@@ -670,6 +670,82 @@ void algebra_global::subexponent(int q, int Q, int h, int f, int j, int k, int &
 #endif
 }
 
+void algebra_global::gl_random_matrix(int k, int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 1);
+	int *M;
+	int *M2;
+	finite_field F;
+	unipoly_object char_poly;
+
+	if (f_v) {
+		cout << "gl_random_matrix" << endl;
+		}
+	F.init(q, 0 /*verbose_level*/);
+	M = NEW_int(k * k);
+	M2 = NEW_int(k * k);
+
+	F.random_invertible_matrix(M, k, verbose_level - 2);
+
+	cout << "Random invertible matrix:" << endl;
+	int_matrix_print(M, k, k);
+
+
+	{
+	unipoly_domain U(&F);
+
+
+
+	U.create_object_by_rank(char_poly, 0);
+
+	U.characteristic_polynomial(M, k, char_poly, verbose_level - 2);
+
+	cout << "The characteristic polynomial is ";
+	U.print_object(char_poly, cout);
+	cout << endl;
+
+	U.substitute_matrix_in_polynomial(char_poly, M, M2, k, verbose_level);
+	cout << "After substitution, the matrix is " << endl;
+	int_matrix_print(M2, k, k);
+
+	U.delete_object(char_poly);
+
+	}
+	FREE_int(M);
+	FREE_int(M2);
+
+}
+
+const char *algebra_global::plus_minus_string(int epsilon)
+{
+	if (epsilon == 1) {
+		return "+";
+		}
+	if (epsilon == -1) {
+		return "-";
+		}
+	if (epsilon == 0) {
+		return "";
+		}
+	cout << "algebra_global::plus_minus_string epsilon=" << epsilon << endl;
+	exit(1);
+}
+
+const char *algebra_global::plus_minus_letter(int epsilon)
+{
+	if (epsilon == 1) {
+		return "p";
+		}
+	if (epsilon == -1) {
+		return "m";
+		}
+	if (epsilon == 0) {
+		return "";
+		}
+	cout << "algebra_global::plus_minus_letter epsilon=" << epsilon << endl;
+	exit(1);
+}
 
 
 }}

@@ -240,7 +240,7 @@ public:
 // poset_classification.cpp
 // #############################################################################
 
-//! the poset classification algorithm (aka Snakes and Ladders)
+//! the poset classification algorithm
 
 
 class poset_classification {

@@ -2352,11 +2352,11 @@ void action::lexorder_test(long int *set, int set_sz,
 	int f_v = (verbose_level  >= 1);
 	int f_v5 = FALSE; //(verbose_level  >= 1);
 	schreier *Sch;
-	int i, /*loc,*/ orb, first, a, a0;
+	int i, orb, first, a, a0;
 
 	if (f_v) {
 		cout << "action::lexorder_test" << endl;
-		}
+	}
 
 	Sch = NEW_OBJECT(schreier);
 
@@ -2364,36 +2364,41 @@ void action::lexorder_test(long int *set, int set_sz,
 		cout << "action::lexorder_test computing orbits in action "
 				"of degree " << degree << ", max_starter="
 				<< max_starter << endl;
-		}
+	}
 	Sch->init(this, verbose_level - 2);
 	Sch->init_generators(*gens, verbose_level - 2);
 
 	//Sch->compute_all_point_orbits(0);
+	if (f_v) {
+		cout << "action::lexorder_test before compute_all_orbits_on_invariant_subset" << endl;
+	}
 	Sch->compute_all_orbits_on_invariant_subset(set_sz, 
 		set, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "action::lexorder_test after compute_all_orbits_on_invariant_subset" << endl;
+	}
 
 	if (f_v) {
 		cout << "action::lexorder_test: there are "
 				<< Sch->nb_orbits << " orbits on set" << endl;
 		Sch->print_orbit_length_distribution(cout);
-		}
+	}
 	if (f_v5) {
 		Sch->print_and_list_orbits(cout);
-		}
+	}
 
 	if (f_v) {
 		cout << "action::lexorder_test "
 				"max_starter=" << max_starter << endl;
-		}
+	}
 	set_sz_after_test = 0;
 	for (i = 0; i < set_sz; i++) {
 		a = set[i];
 		if (FALSE) {
 			cout << "action::lexorder_test "
 					"Looking at point " << a << endl;
-			}
-		//loc = Sch->orbit_inv[a];
-		orb = Sch->orbit_number(a); //Sch->orbit_no[loc];
+		}
+		orb = Sch->orbit_number(a);
 		first = Sch->orbit_first[orb];
 		a0 = Sch->orbit[first];
 		if (a0 < max_starter) {
@@ -2402,21 +2407,21 @@ void action::lexorder_test(long int *set, int set_sz,
 						<< " maps to " << a0 << " which is less than "
 						"max_starter = " << max_starter
 						<< " so we eliminate" << endl;
-				}
-			}
-		else {
-			set[set_sz_after_test++] = a;
 			}
 		}
+		else {
+			set[set_sz_after_test++] = a;
+		}
+	}
 	if (f_v) {
 		cout << "action::lexorder_test Of the " << set_sz
 				<< " points, we accept " << set_sz_after_test
 				<< " and we reject " << set_sz - set_sz_after_test << endl;
-		}
+	}
 	FREE_OBJECT(Sch);
 	if (f_v) {
 		cout << "action::lexorder_test done" << endl;
-		}
+	}
 	
 }
 

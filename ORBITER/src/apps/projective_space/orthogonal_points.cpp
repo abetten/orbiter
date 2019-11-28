@@ -143,8 +143,9 @@ int main(int argc, char **argv)
 	char fname[1000];
 
 	file_io Fio;
+	algebra_global AG;
 
-	sprintf(fname, "Q%s_%d_%d.txt", plus_minus_letter(epsilon), n, q);
+	sprintf(fname, "Q%s_%d_%d.txt", AG.plus_minus_letter(epsilon), n, q);
 	Fio.write_set_to_file(fname, L, N, verbose_level);
 
 

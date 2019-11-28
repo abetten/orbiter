@@ -1839,7 +1839,10 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 		sprintf(group_prefix, "PGO_%d_%d", O->n, q);
 		sprintf(label, "PGO_%d_%d", O->n, q);
 	}
-	sprintf(label_tex, "{\\rm PGO}^{%s}(%d,%d)", plus_minus_string(O->epsilon), O->n, q);
+
+	algebra_global AG;
+
+	sprintf(label_tex, "{\\rm PGO}^{%s}(%d,%d)", AG.plus_minus_string(O->epsilon), O->n, q);
 
 
 
@@ -2538,6 +2541,7 @@ void action::init_automorphism_group_from_group_table(
 	}
 
 }
+
 
 
 

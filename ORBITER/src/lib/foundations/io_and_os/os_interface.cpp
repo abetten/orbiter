@@ -283,6 +283,36 @@ int os_interface::random_integer(int p)
 	return n;
 }
 
+void os_interface::os_date_string(char *str, int sz)
+{
+	system("date >a");
+	{
+	ifstream f1("a");
+	f1.getline(str, sz);
+	}
+}
+
+int os_interface::os_seconds_past_1970()
+{
+	int a;
+
+	{
+	ofstream fp("b");
+	fp << "#!/bin/bash" << endl;
+	fp << "echo $(date +%s)" << endl;
+	}
+	system("chmod ugo+x b");
+	system("./b >a");
+	{
+	char str[1000];
+
+	ifstream f1("a");
+	f1.getline(str, sizeof(str));
+	sscanf(str, "%d", &a);
+	}
+	return a;
+}
+
 
 
 
