@@ -26,9 +26,15 @@ void schreier::latex(const char *fname)
 
 	print_generators_latex(fp);
 
+	fp << "Orbit lengths: $";
+	print_orbit_length_distribution(fp);
+	fp << "$\\\\" << endl;
+
 	print_and_list_orbits_tex(fp);
 
-	print_tables_latex(fp, f_with_cosetrep);
+	if (A->degree < 100) {
+		print_tables_latex(fp, f_with_cosetrep);
+	}
 
 	L.foot(fp);
 	}
@@ -230,9 +236,10 @@ void schreier::print_and_list_orbits_tex(ostream &ost)
 
 void schreier::print_and_list_orbit_tex(int i, ostream &ost)
 {
-	ost << " Orbit " << i << " / " << nb_orbits << " : ";
-	print_orbit_tex(ost, i);
-	ost << " of length " << orbit_len[i] << "\\\\" << endl;
+	ost << " Orbit " << i << " / " << nb_orbits << " of size " << orbit_len[i] << " : ";
+	//print_orbit_tex(ost, i);
+	print_orbit_sorted_tex(ost, i, TRUE, 10);
+	ost << "\\\\" << endl;
 }
 
 void schreier::print_and_list_orbit_and_stabilizer_tex(int i,
@@ -752,6 +759,33 @@ void schreier::print_orbit_tex(ostream &ost, int orbit_no)
 	//int_vec_heapsort(v, len);
 	//int_vec_print_fully(ost, v, len);
 	L.int_set_print_tex(ost, v, len);
+
+	FREE_int(v);
+}
+
+void schreier::print_orbit_sorted_tex(ostream &ost, int orbit_no, int f_truncate, int max_length)
+{
+	latex_interface L;
+	int i, first, len;
+	int *v;
+	sorting Sorting;
+
+	first = orbit_first[orbit_no];
+	len = orbit_len[orbit_no];
+	v = NEW_int(len);
+	for (i = 0; i < len; i++) {
+		v[i] = orbit[first + i];
+	}
+	//int_vec_print(ost, v, len);
+	Sorting.int_vec_heapsort(v, len);
+	//int_vec_print_fully(ost, v, len);
+	if (f_truncate && len > max_length) {
+		L.int_set_print_tex(ost, v, max_length);
+		ost << "truncated after " << max_length << " elements";
+	}
+	else {
+		L.int_set_print_tex(ost, v, len);
+	}
 
 	FREE_int(v);
 }

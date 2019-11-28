@@ -555,6 +555,8 @@ public:
 	void seed_random_generator_with_system_time();
 	void seed_random_generator(int seed);
 	int random_integer(int p);
+	void os_date_string(char *str, int sz);
+	int os_seconds_past_1970();
 
 };
 
@@ -615,8 +617,6 @@ uint32_t lint_vec_hash(long int *data, int len);
 uint32_t char_vec_hash(char *data, int len);
 int int_vec_hash_after_sorting(int *data, int len);
 int lint_vec_hash_after_sorting(long int *data, int len);
-const char *plus_minus_string(int epsilon);
-const char *plus_minus_letter(int epsilon);
 void int_vec_complement(int *v, int n, int k);
 // computes the complement to v + k (v must be allocated to n lements)
 void int_vec_complement(int *v, int *w, int n, int k);
@@ -732,10 +732,6 @@ int compare_sets(int *set1, int *set2, int sz1, int sz2);
 //int test_if_sets_are_disjoint(int *set1, int *set2, int sz1, int sz2);
 int test_if_sets_are_disjoint_assuming_sorted(int *set1, int *set2, int sz1, int sz2);
 int test_if_sets_are_disjoint_assuming_sorted_lint(long int *set1, long int *set2, int sz1, int sz2);
-void make_graph_of_disjoint_sets_from_rows_of_matrix(
-	int *M, int m, int n, 
-	int *&Adj, int verbose_level);
-// sol_length must be constant
 void int_vec_print_to_str(char *str, int *data, int len);
 void lint_vec_print_to_str(char *str, long int *data, int len);
 void int_vec_print_to_str_naked(char *str, int *data, int len);
@@ -743,16 +739,12 @@ void lint_vec_print_to_str_naked(char *str, long int *data, int len);
 int is_csv_file(const char *fname);
 int is_xml_file(const char *fname);
 
-void os_date_string(char *str, int sz);
-int os_seconds_past_1970();
-
 void test_typedefs();
 void chop_string(const char *str, int &argc, char **&argv);
 const char *strip_directory(const char *p);
 int is_all_whitespace(const char *str);
 int is_all_digits(char *p);
 void int_vec_print(int *v, int len);
-void gl_random_matrix(int k, int q, int verbose_level);
 int is_diagonal_matrix(int *A, int n);
 int str2int(std::string &str);
 void print_longinteger_after_multiplying(std::ostream &ost, int *factors, int len);

@@ -837,7 +837,6 @@ void exact_cover::lexorder_test(long int *live_blocks2,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vvv = (verbose_level >= 3);
 
 	if (f_v) {
 		cout << "exact_cover::lexorder_test" << endl;
@@ -847,7 +846,7 @@ void exact_cover::lexorder_test(long int *live_blocks2,
 	if (starter_size) {
 		max_starter = starter[starter_size - 1];
 	
-		if (f_vvv) {
+		if (f_v) {
 			cout << "exact_cover::lexorder_test "
 					"Before lexorder_test, "
 					"nb_live_blocks2=" << nb_live_blocks2 << endl;
@@ -855,7 +854,7 @@ void exact_cover::lexorder_test(long int *live_blocks2,
 		A_on_blocks->lexorder_test(live_blocks2, nb_live_blocks2, nb_accepted, 
 			stab_gens /*starter_stabilizer_gens */, max_starter, verbose_level);
 
-		if (f_vvv) {
+		if (f_v) {
 			cout << "exact_cover::lexorder_test "
 					"After lexorder_test, nb_live_blocks2=" << nb_accepted
 					<< " we reject " << nb_live_blocks2 - nb_accepted

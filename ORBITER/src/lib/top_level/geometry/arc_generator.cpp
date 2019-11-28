@@ -1044,18 +1044,18 @@ void arc_generator::lifting_prepare_function_new(
 	if (f_v) {
 		cout << "arc_generator::lifting_prepare_function_new "
 				"nb_candidates=" << nb_candidates << endl;
-		}
+	}
 
 	if (n != 2) {
 		cout << "arc_generator::lifting_prepare_function_new "
 				"needs n == 2" << endl;
 		exit(1);
-		}
+	}
 	if (d != 2) {
 		cout << "arc_generator::lifting_prepare_function_new "
 				"needs d == 2" << endl;
 		exit(1);
-		}
+	}
 	nb_needed = target_size - starter_size;
 	f_ruled_out = FALSE;
 
@@ -1073,7 +1073,7 @@ void arc_generator::lifting_prepare_function_new(
 				"line_type:" << endl;
 		C.print_naked(TRUE);
 		cout << endl;
-		}
+	}
 
 
 	// extract the tangent lines:
@@ -1097,25 +1097,25 @@ void arc_generator::lifting_prepare_function_new(
 		idx = C.sorting_perm_inv[fst];
 		if (line_type[idx] == 1) {
 			break;
-			}
 		}
+	}
 	if (i == C.nb_types) {
 		cout << "arc_generator::lifting_prepare_function_new "
 				"there are no tangent lines" << endl;
 		exit(1);
-		}
+	}
 	tangent_lines_fst = fst;
 	nb_tangent_lines = len;
 	tangent_lines = NEW_int(nb_tangent_lines);
 	tangent_line_idx = NEW_int(P->N_lines);
 	for (i = 0; i < P->N_lines; i++) {
 		tangent_line_idx[i] = -1;
-		}
+	}
 	for (i = 0; i < len; i++) {
 		j = C.sorting_perm_inv[tangent_lines_fst + i];
 		tangent_lines[i] = j;
 		tangent_line_idx[j] = i;
-		}
+	}
 
 
 	// find all external lines:
@@ -1125,25 +1125,25 @@ void arc_generator::lifting_prepare_function_new(
 		idx = C.sorting_perm_inv[fst];
 		if (line_type[idx] == 0) {
 			break;
-			}
 		}
+	}
 	if (i == C.nb_types) {
 		cout << "arc_generator::lifting_prepare_function_new "
 				"there are no external lines" << endl;
 		exit(1);
-		}
+	}
 	external_lines_fst = fst;
 	nb_external_lines = len;
 	external_lines = NEW_int(nb_external_lines);
 	external_line_idx = NEW_int(P->N_lines);
 	for (i = 0; i < P->N_lines; i++) {
 		external_line_idx[i] = -1;
-		}
+	}
 	for (i = 0; i < len; i++) {
 		j = C.sorting_perm_inv[external_lines_fst + i];
 		external_lines[i] = j;
 		external_line_idx[j] = i;
-		}
+	}
 
 
 	
@@ -1153,16 +1153,24 @@ void arc_generator::lifting_prepare_function_new(
 	lint_vec_copy(candidates, col_labels, nb_candidates);
 
 	if (E->f_lex) {
+		if (f_vv) {
+			cout << "arc_generator::lifting_prepare_function_new "
+					"before lexorder test" << endl;
+		}
 		E->lexorder_test(col_labels, nb_candidates, Strong_gens->gens, 
 			verbose_level - 2);
+		if (f_vv) {
+			cout << "arc_generator::lifting_prepare_function_new "
+					"after lexorder test" << endl;
 		}
+	}
 
 	if (f_vv) {
 		cout << "arc_generator::lifting_prepare_function_new "
 				"after lexorder test" << endl;
 		cout << "arc_generator::lifting_prepare_function_new "
 				"nb_candidates=" << nb_candidates << endl;
-		}
+	}
 
 	// compute the incidence matrix between
 	// tangent lines and candidate points as well as
@@ -1182,12 +1190,12 @@ void arc_generator::lifting_prepare_function_new(
 	for (i = 0; i < nb_tangent_lines; i++) {
 		Dio->type[i] = t_EQ;
 		Dio->RHS[i] = 1;
-		}
+	}
 
 	for (i = 0; i < nb_external_lines; i++) {
 		Dio->type[nb_tangent_lines + i] = t_ZOR;
 		Dio->RHS[nb_tangent_lines + i] = 2;
-		}
+	}
 
 	Dio->fill_coefficient_matrix_with(0);
 
@@ -1200,17 +1208,17 @@ void arc_generator::lifting_prepare_function_new(
 				cout << "arc_generator::lifting_prepare_function "
 						"candidate lies on a secant" << endl;
 				exit(1);
-				}
+			}
 			idx = tangent_line_idx[b];
 			if (idx >= 0) {
 				Dio->Aij(idx, i) = 1;
-				}
+			}
 			idx = external_line_idx[b];
 			if (idx >= 0) {
 				Dio->Aij(nb_tangent_lines + idx, i) = 1;
-				}
 			}
 		}
+	}
 
 
 	FREE_int(tangent_lines);
@@ -1221,7 +1229,7 @@ void arc_generator::lifting_prepare_function_new(
 	if (f_v) {
 		cout << "arc_generator::lifting_prepare_function_new "
 				"done" << endl;
-		}
+	}
 }
 
 

@@ -141,6 +141,9 @@ public:
 	int subprimitive(int q, int h);
 	int period_of_sequence(int *v, int l);
 	void subexponent(int q, int Q, int h, int f, int j, int k, int &s, int &c);
+	void gl_random_matrix(int k, int q, int verbose_level);
+	const char *plus_minus_string(int epsilon);
+	const char *plus_minus_letter(int epsilon);
 };
 
 // #############################################################################

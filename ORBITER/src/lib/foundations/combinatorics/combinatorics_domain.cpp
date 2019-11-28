@@ -2210,6 +2210,36 @@ void combinatorics_domain::compute_adjacency_matrix(
 		}
 }
 
+void combinatorics_domain::make_graph_of_disjoint_sets_from_rows_of_matrix(
+	int *M, int m, int n,
+	int *&Adj, int verbose_level)
+// assumes that the rows are sorted
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, a;
+
+	if (f_v) {
+		cout << "combinatorics_domain::make_graph_of_disjoint_sets_from_rows_of_matrix" << endl;
+		}
+	Adj = NEW_int(m * m);
+	for (i = 0; i < m * m; i++) {
+		Adj[i] = 0;
+		}
+
+	for (i = 0; i < m; i++) {
+		for (j = i + 1; j < m; j++) {
+			if (test_if_sets_are_disjoint_assuming_sorted(
+				M + i * n, M + j * n, n, n)) {
+				a = 1;
+				}
+			else {
+				a = 0;
+				}
+			Adj[i * m + j] = a;
+			Adj[j * m + i] = a;
+			}
+		}
+}
 
 
 //##############################################################################

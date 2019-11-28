@@ -183,6 +183,9 @@ public:
 			uchar *&bitvector_adjacency,
 			int &bitvector_length,
 			int verbose_level);
+	void make_graph_of_disjoint_sets_from_rows_of_matrix(
+		int *M, int m, int n,
+		int *&Adj, int verbose_level);
 };
 
 // combinatorics.cpp:

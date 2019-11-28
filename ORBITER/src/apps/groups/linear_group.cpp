@@ -38,6 +38,8 @@ int main(int argc, const char **argv)
 	int f_linear = FALSE;
 	//int q;
 	int f_orbits_on_points = FALSE;
+	int f_export_trees = FALSE;
+	int f_shallow_tree = FALSE;
 	int f_stabilizer = FALSE;
 	int f_orbits_on_subsets = FALSE;
 	int orbits_on_subsets_size = 0;
@@ -93,6 +95,14 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-orbits_on_points") == 0) {
 			f_orbits_on_points = TRUE;
 			cout << "-orbits_on_points" << endl;
+		}
+		else if (strcmp(argv[i], "-export_trees") == 0) {
+			f_export_trees = TRUE;
+			cout << "-export_trees" << endl;
+		}
+		else if (strcmp(argv[i], "-shallow_tree") == 0) {
+			f_shallow_tree = TRUE;
+			cout << "-shallow_tree" << endl;
 		}
 		else if (strcmp(argv[i], "-stabilizer") == 0) {
 			f_stabilizer = TRUE;
@@ -891,36 +901,43 @@ int main(int argc, const char **argv)
 
 		sprintf(fname_tree_mask, "%s_%%d.layered_graph", LG->prefix);
 
-		Sch->export_tree_as_layered_graph(0 /* orbit_no */,
-				fname_tree_mask,
-				verbose_level - 1);
+		if (f_export_trees) {
+			for (orbit_idx = 0; orbit_idx < Sch->nb_orbits; orbit_idx++) {
+				cout << "orbit " << orbit_idx << " / " <<  Sch->nb_orbits << " before Sch->export_tree_as_layered_graph" << endl;
+				Sch->export_tree_as_layered_graph(0 /* orbit_no */,
+						fname_tree_mask,
+						verbose_level - 1);
+			}
+		}
 
-		orbit_idx = 0;
-		schreier *shallow_tree;
+		if (f_shallow_tree) {
+			orbit_idx = 0;
+			schreier *shallow_tree;
 
-		cout << "computing shallow Schreier tree:" << endl;
+			cout << "computing shallow Schreier tree for orbit " << orbit_idx << endl;
 
 #if 0
-		enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy =
-				shallow_schreier_tree_standard;
-				//shallow_schreier_tree_Seress_deterministic;
-				//shallow_schreier_tree_Seress_randomized;
-				//shallow_schreier_tree_Sajeeb;
+			enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy =
+					shallow_schreier_tree_standard;
+					//shallow_schreier_tree_Seress_deterministic;
+					//shallow_schreier_tree_Seress_randomized;
+					//shallow_schreier_tree_Sajeeb;
 #endif
-		int f_randomized = TRUE;
+			int f_randomized = TRUE;
 
-		Sch->shallow_tree_generators(orbit_idx,
-				f_randomized,
-				shallow_tree,
-				verbose_level);
+			Sch->shallow_tree_generators(orbit_idx,
+					f_randomized,
+					shallow_tree,
+					verbose_level);
 
-		cout << "computing shallow Schreier tree done." << endl;
+			cout << "computing shallow Schreier tree done." << endl;
 
-		sprintf(fname_tree_mask, "%s_%%d_shallow.layered_graph", LG->prefix);
+			sprintf(fname_tree_mask, "%s_%%d_shallow.layered_graph", LG->prefix);
 
-		shallow_tree->export_tree_as_layered_graph(0 /* orbit_no */,
-				fname_tree_mask,
-				verbose_level - 1);
+			shallow_tree->export_tree_as_layered_graph(0 /* orbit_no */,
+					fname_tree_mask,
+					verbose_level - 1);
+		}
 	}
 
 	if (f_orbits_on_subsets) {
