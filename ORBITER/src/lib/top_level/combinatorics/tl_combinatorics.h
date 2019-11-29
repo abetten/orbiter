@@ -320,6 +320,87 @@ public:
 
 
 
+// #############################################################################
+// create_graph_description.cpp
+// #############################################################################
+
+
+//! a description of a graph read from the command line
+
+
+class create_graph_description {
+public:
+	int f_Johnson;
+	int Johnson_n;
+	int Johnson_k;
+	int Johnson_s;
+
+	int f_Paley;
+	int Paley_q;
+
+	int f_Sarnak;
+	int Sarnak_p;
+	int Sarnak_q;
+
+	int f_Schlaefli;
+	int Schlaefli_q;
+
+	int f_Shrikhande;
+
+	int f_Winnie_Li;
+	int Winnie_Li_q;
+	int Winnie_Li_index;
+
+	int f_Grassmann;
+	int Grassmann_n;
+	int Grassmann_k;
+	int Grassmann_q;
+	int Grassmann_r;
+
+	create_graph_description();
+	void read_arguments_from_string(
+			const char *str, int verbose_level);
+	int read_arguments(
+		int argc, const char **argv,
+		int verbose_level);
+
+
+};
+
+
+// #############################################################################
+// create_graph.cpp
+// #############################################################################
+
+
+//! creates a graph from a description with create_graph_description
+
+
+class create_graph {
+public:
+
+	create_graph_description *description;
+
+	int N;
+	int *Adj;
+
+	char label[1000];
+	char label_tex[1000];
+
+	void init(
+			create_graph_description *description,
+			int verbose_level);
+	void create_Johnson(int &N, int *&Adj, int n, int k, int s, int verbose_level);
+	void create_Paley(int &N, int *&Adj, int q, int verbose_level);
+	void create_Sarnak(int &N, int *&Adj, int p, int q, int verbose_level);
+	void create_Schlaefli(int &N, int *&Adj, int q, int verbose_level);
+	void create_Shrikhande(int &N, int *&Adj, int verbose_level);
+	void create_Winnie_Li(int &N, int *&Adj, int q, int index, int verbose_level);
+	void create_Grassmann(int &N, int *&Adj,
+			int n, int k, int q, int r, int verbose_level);
+
+};
+
 
 // #############################################################################
 // delandtsheer_doyen.cpp

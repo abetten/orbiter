@@ -294,6 +294,8 @@ MODULES= \
 		top_level/combinatorics/cayley_graph_search.o \
 		top_level/combinatorics/combinatorial_object_create.o \
 		top_level/combinatorics/combinatorial_object_description.o \
+		top_level/combinatorics/create_graph_description.o \
+		top_level/combinatorics/create_graph.o \
 		top_level/combinatorics/delandtsheer_doyen.o \
 		top_level/combinatorics/design_create_description.o \
 		top_level/combinatorics/design_create.o \
