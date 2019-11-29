@@ -12,6 +12,7 @@ using namespace std;
 
 
 using namespace orbiter;
+using namespace top_level;
 
 
 
@@ -21,7 +22,7 @@ int t0; // the system time when the program started
 
 
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	int i;
 	os_interface Os;
@@ -29,10 +30,15 @@ int main(int argc, char **argv)
 	int verbose_level = 0;
 	int f_save = FALSE;	
 	const char *save_fname = NULL;
+	int f_description = FALSE;
+	create_graph_description *Descr;
+
+#if 0
 	int f_nb_vertices = FALSE;
 	int nb_vertices = 0;
 	int f_adjacency = FALSE;
 	const char *adjacency_string = NULL;
+#endif
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -44,6 +50,16 @@ int main(int argc, char **argv)
 			save_fname = argv[++i];
 			cout << "-save " << save_fname << endl;
 			}
+		else if (strcmp(argv[i], "-graph") == 0) {
+			f_description = TRUE;
+			Descr = NEW_OBJECT(create_graph_description);
+			i += Descr->read_arguments(argc - (i - 1),
+					argv + i, verbose_level) - 1;
+
+			cout << "-graph" << endl;
+		}
+
+#if 0
 		else if (strcmp(argv[i], "-nb_vertices") == 0) {
 			f_nb_vertices = TRUE;
 			nb_vertices = atoi(argv[++i]);
@@ -54,7 +70,10 @@ int main(int argc, char **argv)
 			adjacency_string = argv[++i];
 			cout << "-adjacency " << adjacency_string << endl;
 			}
+#endif
 		}
+
+#if 0
 	if (!f_nb_vertices) {
 		cout << "please use option -nb_vertices <nb_vertices>" << endl;
 		exit(1);
@@ -63,10 +82,45 @@ int main(int argc, char **argv)
 		cout << "please use option -adjacency <adjacency>" << endl;
 		exit(1);
 	}
+#endif
 
 
 	int f_v = (verbose_level >= 1);
 
+	create_graph *Gr;
+
+	Gr = NEW_OBJECT(create_graph);
+
+	if (f_v) {
+		cout << "before Gr->init" << endl;
+	}
+	Gr->init(Descr, verbose_level);
+	if (f_v) {
+		cout << "after Gr->init" << endl;
+	}
+	if (f_v) {
+		cout << "Gr->N=" << Gr->N << endl;
+		cout << "Gr->label=" << Gr->label << endl;
+		cout << "Adj:" << endl;
+		int_matrix_print(Gr->Adj, Gr->N, Gr->N);
+	}
+
+
+
+	colored_graph *CG;
+	char fname[1000];
+
+	CG = NEW_OBJECT(colored_graph);
+	CG->init_adjacency_no_colors(Gr->N, Gr->Adj, verbose_level);
+
+	sprintf(fname, "%s.colored_graph", Gr->label);
+
+	CG->save(fname, verbose_level);
+
+	FREE_OBJECT(CG);
+
+
+#if 0
 	colored_graph CG;
 	int *Adjacency = NULL;
 	int adjacency_length = 0;
@@ -123,6 +177,8 @@ int main(int argc, char **argv)
 
 	FREE_int(labeling);
 	FREE_int(vertex_color);
+#endif
+
 
 	the_end(t0);
 	//the_end_quietly(t0);

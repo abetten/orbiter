@@ -133,6 +133,8 @@ class pentomino_puzzle;
 class character_table_burnside;
 class combinatorial_object_description;
 class combinatorial_object_create;
+class create_graph_description;
+class create_graph;
 
 
 // #############################################################################

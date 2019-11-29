@@ -18,6 +18,8 @@ namespace orbiter {
 namespace top_level {
 
 
+
+
 combinatorial_object_description::combinatorial_object_description()
 {
 	f_q = FALSE;
