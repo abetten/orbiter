@@ -979,6 +979,5 @@ const char *get_primitive_polynomial(int p, int e, int verbose_level)
 	return m; 
 }
 
-}
-}
+}}
 

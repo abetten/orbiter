@@ -1664,7 +1664,7 @@ void strong_generators::generators_for_the_stabilizer_of_two_components(
 
 	A_PGL_k_q = NEW_OBJECT(action);
 	A_PGL_k_q->init_projective_group(k,
-		F, FALSE /*f_semilinear */, FALSE /* f_init_sims */,
+		F, FALSE /*f_semilinear */, TRUE /* f_init_sims */,
 		TRUE /* f_basis */,
 		nice_gens,
 		0 /* verbose_level */);
@@ -1678,7 +1678,7 @@ void strong_generators::generators_for_the_stabilizer_of_two_components(
 				"of_two_components" << endl;
 		}
 	make_generators_stabilizer_of_two_components(A_PGL_n_q, A_PGL_k_q, 
-		k, my_gens, 0 /*verbose_level */);
+		k, my_gens, verbose_level - 1);
 	
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_stabilizer_"
@@ -1769,7 +1769,7 @@ void strong_generators::regulus_stabilizer(action *A_PGL_n_q,
 
 	A_PGL_k_q = NEW_OBJECT(action);
 	A_PGL_k_q->init_projective_group(k,
-		F, FALSE /*f_semilinear */, FALSE /* f_init_sims */,
+		F, FALSE /*f_semilinear */, TRUE /* f_init_sims */,
 		TRUE /* f_basis */,
 		nice_gens,
 		0 /* verbose_level */);

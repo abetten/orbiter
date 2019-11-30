@@ -17,7 +17,9 @@ void canonical_form(int *Adj, int *Adj2, int n, int nb_edges, int *edges2,
 void make_graph_fname(char *fname_full,
 		char *fname_full_tex, int n, int *set, int sz);
 void draw_graph_to_file(const char *fname, int n,
-		long int *set, int sz, double scale, int f_embedded, int f_sideways, int verbose_level);
+		long int *set, int sz, double scale,
+		int f_embedded, int f_sideways,
+		int verbose_level);
 
 int main(int argc, char **argv)
 {

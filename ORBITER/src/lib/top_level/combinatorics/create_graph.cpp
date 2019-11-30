@@ -99,6 +99,17 @@ void create_graph::init(
 			cout << "create_graph::init after create_Grassmann" << endl;
 		}
 	}
+	else if (description->f_coll_orthogonal) {
+		if (f_v) {
+			cout << "create_graph::init before create_coll_orthogonal" << endl;
+		}
+		create_coll_orthogonal(N, Adj, description->coll_orthogonal_epsilon,
+				description->coll_orthogonal_d,
+				description->coll_orthogonal_q, verbose_level);
+		if (f_v) {
+			cout << "create_graph::init after create_coll_orthogonal" << endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "create_graph::init done" << endl;
@@ -999,6 +1010,115 @@ void create_graph::create_Grassmann(int &N, int *&Adj,
 
 	if (f_v) {
 		cout << "create_graph::create_Grassmann done" << endl;
+	}
+}
+
+void create_graph::create_coll_orthogonal(int &N, int *&Adj,
+		int epsilon, int d, int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_graph::create_coll_orthogonal" << endl;
+	}
+
+	finite_field *F;
+	int i, j;
+	int n, a, nb_e, nb_inc;
+	int c1 = 0, c2 = 0, c3 = 0;
+	int *v, *v2;
+	int *Gram; // Gram matrix
+	geometry_global Gg;
+
+
+	n = d - 1; // projective dimension
+
+	v = NEW_int(d);
+	v2 = NEW_int(d);
+	Gram = NEW_int(d * d);
+
+	cout << "epsilon=" << epsilon << " n=" << n << " q=" << q << endl;
+
+	N = Gg.nb_pts_Qepsilon(epsilon, n, q);
+
+	cout << "number of points = " << N << endl;
+
+	F = NEW_OBJECT(finite_field);
+
+	F->init(q, verbose_level - 1);
+	F->print();
+
+	if (epsilon == 0) {
+		c1 = 1;
+		}
+	else if (epsilon == -1) {
+		F->choose_anisotropic_form(c1, c2, c3, verbose_level - 2);
+		//cout << "incma.cpp: epsilon == -1, need irreducible polynomial" << endl;
+		//exit(1);
+		}
+	F->Gram_matrix(epsilon, n, c1, c2, c3, Gram);
+	cout << "Gram matrix" << endl;
+	print_integer_matrix_width(cout, Gram, d, d, d, 2);
+
+#if 0
+	if (f_list_points) {
+		for (i = 0; i < N; i++) {
+			F->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
+			cout << i << " : ";
+			int_vec_print(cout, v, n + 1);
+			j = F->Q_epsilon_rank(v, 1, epsilon, n, c1, c2, c3, 0 /* verbose_level */);
+			cout << " : " << j << endl;
+
+			}
+		}
+#endif
+
+
+	cout << "allocating adjacency matrix" << endl;
+	Adj = NEW_int(N * N);
+	cout << "allocating adjacency matrix was successful" << endl;
+	nb_e = 0;
+	nb_inc = 0;
+	for (i = 0; i < N; i++) {
+		//cout << i << " : ";
+		F->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
+		for (j = i + 1; j < N; j++) {
+			F->Q_epsilon_unrank(v2, 1, epsilon, n, c1, c2, c3, j, 0 /* verbose_level */);
+			a = F->evaluate_bilinear_form(v, v2, n + 1, Gram);
+			if (a == 0) {
+				//cout << j << " ";
+				//k = ij2k(i, j, N);
+				//cout << k << ", ";
+				nb_e++;
+				//if ((nb_e % 50) == 0)
+					//cout << endl;
+				Adj[i * N + j] = 1;
+				Adj[j * N + i] = 1;
+				}
+			else {
+				Adj[i * N + j] = 0;
+				Adj[j * N + i] = 0;
+				; //cout << " 0";
+				nb_inc++;
+				}
+			}
+		//cout << endl;
+		Adj[i * N + i] = 0;
+		}
+	//cout << endl;
+	cout << "The adjacency matrix of the collinearity graph has been computed" << endl;
+
+
+	sprintf(label, "Coll_orthogonal_%d_%d_%d", epsilon, d, q);
+	sprintf(label_tex, "Coll_orthogonal\\_%d\\_%d\\_%d", epsilon, d, q);
+
+	FREE_int(v);
+	FREE_int(v2);
+	FREE_int(Gram);
+	FREE_OBJECT(F);
+
+	if (f_v) {
+		cout << "create_graph::create_coll_orthogonal done" << endl;
 	}
 }
 

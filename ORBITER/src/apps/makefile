@@ -4,12 +4,10 @@ all:
 	cd blt; $(MAKE) all
 	cd codes; $(MAKE) all
 	cd combinatorics; $(MAKE) all
-	cd graph_classify; $(MAKE) all
 	cd graph_theory; $(MAKE) all
 	cd groups; $(MAKE) all
 	cd linear_spaces; $(MAKE) all
 	#cd main; $(MAKE) all
-	cd ovoid; $(MAKE) all
 	cd packing; $(MAKE) all
 	cd projective_space; $(MAKE) all
 	cd regular_ls; $(MAKE) all
@@ -27,12 +25,10 @@ clean:
 	cd blt; $(MAKE) clean
 	cd codes; $(MAKE) clean
 	cd combinatorics; $(MAKE) clean
-	cd graph_classify; $(MAKE) clean
 	cd graph_theory; $(MAKE) clean
 	cd groups; $(MAKE) clean
 	cd linear_spaces; $(MAKE) clean
 	cd main; $(MAKE) clean
-	cd ovoid; $(MAKE) clean
 	cd packing; $(MAKE) clean
 	cd projective_space; $(MAKE) clean
 	cd regular_ls; $(MAKE) clean
@@ -50,12 +46,10 @@ install:
 	cd blt; $(MAKE) install
 	cd codes; $(MAKE) install
 	cd combinatorics; $(MAKE) install
-	cd graph_classify; $(MAKE) install
 	cd graph_theory; $(MAKE) install
 	cd groups; $(MAKE) install
 	cd linear_spaces; $(MAKE) install
 	#cd main; $(MAKE) install
-	cd ovoid; $(MAKE) install
 	cd packing; $(MAKE) install
 	cd projective_space; $(MAKE) install
 	cd regular_ls; $(MAKE) install

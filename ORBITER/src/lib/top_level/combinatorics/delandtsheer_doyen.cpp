@@ -378,13 +378,6 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 		M2 = A1->G.matrix_grp;
 		FREE_OBJECT(nice_gens);
 
-#if 0
-		M1->init_projective_group(d1, F1,
-				FALSE /* f_semilinear */, A1, verbose_level);
-
-		M2->init_projective_group(d2, F2,
-				FALSE /* f_semilinear */, A2, verbose_level);
-#endif
 		b = 0;
 
 	}

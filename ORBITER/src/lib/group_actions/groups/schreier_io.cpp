@@ -562,22 +562,28 @@ void schreier::print_tables(ostream &ost,
 	if (f_with_cosetrep)
 		ost << " : coset_rep";
 	ost << endl;
-	for (i = 0; i < A->degree; i++) {
-		coset_rep(i);
-		//coset_rep_inv(i);
-		ost << setw(w) << i << " : " << " : "
-			<< setw(w) << orbit[i] << " : "
-			<< setw(w) << orbit_inv[i] << " : "
-			<< setw(w) << prev[i] << " : "
-			<< setw(w) << label[i];
-		if (f_with_cosetrep) {
-			ost << " : ";
-			//A->element_print(Elt1, cout);
-			A->element_print_as_permutation(cosetrep, ost);
+
+	if (A->degree < 100) {
+		for (i = 0; i < A->degree; i++) {
+			coset_rep(i);
+			//coset_rep_inv(i);
+			ost << setw(w) << i << " : " << " : "
+				<< setw(w) << orbit[i] << " : "
+				<< setw(w) << orbit_inv[i] << " : "
+				<< setw(w) << prev[i] << " : "
+				<< setw(w) << label[i];
+			if (f_with_cosetrep) {
+				ost << " : ";
+				//A->element_print(Elt1, cout);
+				A->element_print_as_permutation(cosetrep, ost);
+				ost << endl;
+				A->element_print_quick(cosetrep, ost);
+			}
 			ost << endl;
-			A->element_print_quick(cosetrep, ost);
 		}
-		ost << endl;
+	}
+	else {
+		cout << "too large to print" << endl;
 	}
 	ost << endl;
 }

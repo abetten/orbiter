@@ -23,10 +23,7 @@ TARGETS=\
 		group_ring.out \
 		hadamard.out \
 		hall_system_main.out \
-		johnson_table.out \
 		kramer_mesner.out \
-		matrix_rank.out \
-		orthogonal.out \
 		poset_of_subsets.out \
 		random_permutation.out \
 		rank_anything.out \
@@ -76,17 +73,8 @@ hadamard.out:  hadamard.o;
 hall_system_main.out:  hall_system_main.o;
 	$(DISCRETA_CPP)  hall_system_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-johnson_table.out:  johnson_table.o;
-	$(DISCRETA_CPP)  johnson_table.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 kramer_mesner.out:  kramer_mesner.o;
 	$(DISCRETA_CPP)  kramer_mesner.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-matrix_rank.out:  matrix_rank.o;
-	$(DISCRETA_CPP)  matrix_rank.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-orthogonal.out:  orthogonal.o;
-	$(DISCRETA_CPP)  orthogonal.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 poset_of_subsets.out:  poset_of_subsets.o;
 	$(DISCRETA_CPP)  poset_of_subsets.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

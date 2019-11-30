@@ -26,6 +26,8 @@ TARGETS=\
 	hermitian_points.out \
 	hermitian_spreads_main.out \
 	orthogonal_points.out \
+	ovoid_classify_main.out \
+	ovoid_make_design.out \
 	points.out \
 	polar.out \
 	process.out
@@ -74,6 +76,12 @@ hermitian_spreads_main.out:  hermitian_spreads_main.o ;
 
 orthogonal_points.out:  orthogonal_points.o ;
 	$(DISCRETA_CPP)  orthogonal_points.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+ovoid_classify_main.out:  ovoid_classify_main.o ;
+	$(DISCRETA_CPP)  ovoid_classify_main.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+ovoid_make_design.out:  ovoid_make_design.o ;
+	$(DISCRETA_CPP)  ovoid_make_design.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 points.out:  points.o;
 	$(DISCRETA_CPP)  points.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

@@ -882,7 +882,7 @@ void graph_classify::draw_graphs(int level,
 		G.header();
 		G.begin_figure(1000 /*factor_1000*/);
 
-		G.sl_thickness(10); // 100 is normal
+		G.sl_thickness(50); // 100 is normal
 		//G.frame(0.05);
 
 
