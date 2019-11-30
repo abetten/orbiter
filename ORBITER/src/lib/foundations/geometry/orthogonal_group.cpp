@@ -60,7 +60,7 @@ void orthogonal::Siegel_map_between_singular_points(int *T,
 }
 
 void orthogonal::Siegel_map_between_singular_points_hyperbolic(int *T,
-	int rk_from, int rk_to, int root, int m, int verbose_level)
+	long int rk_from, long int rk_to, long int root, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Gram;
@@ -82,7 +82,7 @@ void orthogonal::Siegel_map_between_singular_points_hyperbolic(int *T,
 }
 
 void orthogonal::Siegel_Transformation(int *T,
-	int rk_from, int rk_to, int root,
+	long int rk_from, long int rk_to, long int root,
 	int verbose_level)
 // root is not perp to from and to.
 {
@@ -102,7 +102,7 @@ void orthogonal::Siegel_Transformation(int *T,
 }
 
 void orthogonal::Siegel_Transformation2(int *T,
-	int rk_from, int rk_to, int root,
+	long int rk_from, long int rk_to, long int root,
 	int *B, int *Bv, int *w, int *z, int *x,
 	int verbose_level)
 {
@@ -832,7 +832,7 @@ void orthogonal::make_Siegel_Transformation(int *M, int *v, int *u,
 }
 
 void orthogonal::Siegel_move_forward_by_index(
-		int rk1, int rk2, int *v, int *w, int verbose_level)
+		long int rk1, long int rk2, int *v, int *w, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -876,7 +876,7 @@ void orthogonal::Siegel_move_forward_by_index(
 }
 
 void orthogonal::Siegel_move_backward_by_index(
-		int rk1, int rk2, int *w, int *v, int verbose_level)
+		long int rk1, long int rk2, int *w, int *v, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -975,7 +975,9 @@ void orthogonal::Siegel_move_backward(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int rk1_subspace, rk2_subspace, root, i;
+	long int rk1_subspace, rk2_subspace;
+	long int root;
+	int i;
 
 	if (f_v) {
 		cout << "orthogonal::Siegel_move_backward" << endl;
@@ -1029,10 +1031,11 @@ void orthogonal::Siegel_move_backward(
 
 
 void orthogonal::move_points_by_ranks_in_place(
-	int pt_from, int pt_to,
-	int nb, int *ranks, int verbose_level)
+	long int pt_from, long int pt_to,
+	int nb, long int *ranks, int verbose_level)
 {
-	int *input_coords, *output_coords, i;
+	int *input_coords, *output_coords;
+	int i;
 
 	input_coords = NEW_int(nb * n);
 	output_coords = NEW_int(nb * n);
@@ -1054,11 +1057,12 @@ void orthogonal::move_points_by_ranks_in_place(
 	FREE_int(output_coords);
 }
 
-void orthogonal::move_points_by_ranks(int pt_from, int pt_to,
-	int nb, int *input_ranks, int *output_ranks,
+void orthogonal::move_points_by_ranks(long int pt_from, long int pt_to,
+	int nb, long int *input_ranks, long int *output_ranks,
 	int verbose_level)
 {
-	int *input_coords, *output_coords, i;
+	int *input_coords, *output_coords;
+	int i;
 
 	input_coords = NEW_int(nb * n);
 	output_coords = NEW_int(nb * n);
@@ -1079,11 +1083,12 @@ void orthogonal::move_points_by_ranks(int pt_from, int pt_to,
 	FREE_int(output_coords);
 }
 
-void orthogonal::move_points(int pt_from, int pt_to,
+void orthogonal::move_points(long int pt_from, long int pt_to,
 	int nb, int *input_coords, int *output_coords,
 	int verbose_level)
 {
-	int root, i;
+	long int root;
+	int i;
 	int *tmp_coords = NULL;
 	int *input_coords2;
 	int *T;

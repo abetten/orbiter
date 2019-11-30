@@ -386,10 +386,6 @@ int projective_space_job_description::read_arguments(
 			lint_vec_print(cout, u_lines, nb_u_lines);
 			cout << endl;
 		}
-		else if (strcmp(argv[i], "-end") == 0) {
-			cout << "projective_space_job_description::read_arguments -end" << endl;
-			break;
-		}
 		else if (strcmp(argv[i], "-dualize_hyperplanes_to_points") == 0) {
 			f_dualize_hyperplanes_to_points = TRUE;
 			cout << "projective_space_job_description::read_arguments -dualize_hyperplanes_to_points" << endl;
@@ -397,6 +393,10 @@ int projective_space_job_description::read_arguments(
 		else if (strcmp(argv[i], "-dualize_points_to_hyperplanes") == 0) {
 			f_dualize_points_to_hyperplanes = TRUE;
 			cout << "projective_space_job_description::read_arguments -dualize_points_to_hyperplanes" << endl;
+		}
+		else if (strcmp(argv[i], "-end") == 0) {
+			cout << "projective_space_job_description::read_arguments -end" << endl;
+			break;
 		}
 		else {
 			cout << "projective_space_job_description::read_arguments "

@@ -1652,15 +1652,15 @@ public:
 	int evaluate_bilinear_form_by_rank(int i, int j);
 	void points_on_line_by_line_rank(long int line_rk,
 		long int *line, int verbose_level);
-	void points_on_line(int pi, int pj, 
+	void points_on_line(long int pi, long int pj,
 			long int *line, int verbose_level);
-	void points_on_line_by_coordinates(int pi, int pj, 
+	void points_on_line_by_coordinates(long int pi, long int pj,
 		int *pt_coords, int verbose_level);
 	void lines_on_point(long int pt,
 		long int *line_pencil_point_ranks, int verbose_level);
-	void lines_on_point_by_line_rank_must_fit_into_int(int pt,
+	void lines_on_point_by_line_rank_must_fit_into_int(long int pt,
 			int *line_pencil_line_ranks, int verbose_level);
-	void lines_on_point_by_line_rank(int pt, 
+	void lines_on_point_by_line_rank(long int pt,
 		long int *line_pencil_line_ranks, int verbose_level);
 	void make_initial_partition(partitionstack &S, 
 		int verbose_level);
@@ -1714,13 +1714,14 @@ public:
 	void Siegel_map_between_singular_points(int *T,
 			long int rk_from, long int rk_to, long int root, int verbose_level);
 	void Siegel_map_between_singular_points_hyperbolic(int *T,
-		int rk_from, int rk_to, int root, int m, int verbose_level);
+		long int rk_from, long int rk_to, long int root,
+		int m, int verbose_level);
 	void Siegel_Transformation(int *T,
-		int rk_from, int rk_to, int root,
+		long int rk_from, long int rk_to, long int root,
 		int verbose_level);
 		// root is not perp to from and to.
 	void Siegel_Transformation2(int *T,
-		int rk_from, int rk_to, int root,
+		long int rk_from, long int rk_to, long int root,
 		int *B, int *Bv, int *w, int *z, int *x,
 		int verbose_level);
 	void Siegel_Transformation3(int *T,
@@ -1756,21 +1757,21 @@ public:
 		// is called the Siegel transform (see Taylor p. 148)
 		// Here Q is the quadratic form and
 		// \beta is the corresponding bilinear form
-	void Siegel_move_forward_by_index(int rk1, int rk2,
+	void Siegel_move_forward_by_index(long int rk1, long int rk2,
 		int *v, int *w, int verbose_level);
-	void Siegel_move_backward_by_index(int rk1, int rk2,
+	void Siegel_move_backward_by_index(long int rk1, long int rk2,
 		int *w, int *v, int verbose_level);
 	void Siegel_move_forward(int *v1, int *v2, int *v3, int *v4,
 		int verbose_level);
 	void Siegel_move_backward(int *v1, int *v2, int *v3, int *v4,
 		int verbose_level);
 	void move_points_by_ranks_in_place(
-		int pt_from, int pt_to,
-		int nb, int *ranks, int verbose_level);
-	void move_points_by_ranks(int pt_from, int pt_to,
-		int nb, int *input_ranks, int *output_ranks,
+		long int pt_from, long int pt_to,
+		int nb, long int *ranks, int verbose_level);
+	void move_points_by_ranks(long int pt_from, long int pt_to,
+		int nb, long int *input_ranks, long int *output_ranks,
 		int verbose_level);
-	void move_points(int pt_from, int pt_to,
+	void move_points(long int pt_from, long int pt_to,
 		int nb, int *input_coords, int *output_coords,
 		int verbose_level);
 	void test_Siegel(int index, int verbose_level);
