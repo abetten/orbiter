@@ -760,7 +760,7 @@ void projective_space::make_incidence_matrix(
 int projective_space::is_incident(int pt, int line)
 {
 	int f_v = FALSE;
-	int a, rk;
+	long int a, rk;
 
 	if (TRUE /*incidence_bitvec == NULL*/) {
 #if 0
@@ -796,20 +796,22 @@ int projective_space::is_incident(int pt, int line)
 			return TRUE;
 		}
 	}
-	a = pt * N_lines + line;
-	return bitvector_s_i(incidence_bitvec, a);
+	else {
+		a = (long int) pt * (long int) N_lines + (long int) line;
+		return bitvector_s_i(incidence_bitvec, a);
+	}
 }
 
 void projective_space::incidence_m_ii(int pt, int line, int a)
 {
-	int b;
+	long int b;
 
 	if (incidence_bitvec == 0) {
 		cout << "projective_space::incidence_m_ii "
 				"incidence_bitvec == 0" << endl;
 		exit(1);
 		}
-	b = pt * N_lines + line;
+	b = (long int) pt * (long int) N_lines + (long int) line;
 	bitvector_m_ii(incidence_bitvec, b, a);
 }
 
