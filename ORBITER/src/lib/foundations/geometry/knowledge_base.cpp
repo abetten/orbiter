@@ -61,6 +61,7 @@ namespace foundations {
 #include "./DATA/surface_89.cpp"
 #include "./DATA/surface_97.cpp"
 #include "./DATA/surface_101.cpp"
+#include "./DATA/surface_121.cpp"
 #include "./DATA/surface_128.cpp"
 
 #include "./DATA/data_DH.cpp"
@@ -191,6 +192,9 @@ int knowledge_base::cubic_surface_nb_reps(int q)
 		}
 	else if (q == 101) {
 		nb = surface_101_nb_reps;
+		}
+	else if (q == 121) {
+		nb = surface_121_nb_reps;
 		}
 	else if (q == 128) {
 		nb = surface_128_nb_reps;
@@ -371,6 +375,11 @@ int *knowledge_base::cubic_surface_representative(int q, int i)
 		p = surface_101_reps;
 		nb = surface_101_nb_reps;
 		sz = surface_101_size;
+		}
+	else if (q == 121) {
+		p = surface_121_reps;
+		nb = surface_121_nb_reps;
+		sz = surface_121_size;
 		}
 	else if (q == 128) {
 		p = surface_128_reps;
@@ -667,6 +676,14 @@ void knowledge_base::cubic_surface_stab_gens(int q, int i,
 		l = surface_101_stab_gens_len[i];
 		stab_order = surface_101_stab_order[i];
 		}
+	else if (q == 121) {
+		Reps = surface_121_stab_gens;
+		nb = surface_121_nb_reps;
+		make_element_size = surface_121_make_element_size;
+		f = surface_121_stab_gens_fst[i];
+		l = surface_121_stab_gens_len[i];
+		stab_order = surface_121_stab_order[i];
+		}
 	else if (q == 128) {
 		Reps = surface_128_stab_gens;
 		nb = surface_128_nb_reps;
@@ -863,6 +880,11 @@ int knowledge_base::cubic_surface_nb_Eckardt_points(int q, int i)
 		p = surface_101_nb_E;
 		nb = surface_101_nb_reps;
 		//sz = surface_101_size;
+		}
+	else if (q == 121) {
+		p = surface_121_nb_E;
+		nb = surface_121_nb_reps;
+		//sz = surface_121_size;
 		}
 	else if (q == 128) {
 		p = surface_128_nb_E;
@@ -1207,6 +1229,10 @@ long int *knowledge_base::cubic_surface_Lines(int q, int i)
 	else if (q == 101) {
 		p = surface_101_Lines;
 		nb = surface_101_nb_reps;
+		}
+	else if (q == 121) {
+		p = surface_121_Lines;
+		nb = surface_121_nb_reps;
 		}
 	else if (q == 128) {
 		p = surface_128_Lines;

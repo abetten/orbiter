@@ -44,6 +44,7 @@ int main(int argc, const char **argv)
 	int f_orbits_on_subsets = FALSE;
 	int orbits_on_subsets_size = 0;
 	int f_draw_poset = FALSE;
+	int f_draw_full_poset = FALSE;
 	int f_classes = FALSE;
 	int f_normalizer = FALSE;
 	int f_report = FALSE;
@@ -70,6 +71,9 @@ int main(int argc, const char **argv)
 	int f_order_of_products = FALSE;
 	const char *order_of_products_elements = NULL;
 	int f_group_table = FALSE;
+	int f_embedded = FALSE;
+	int f_sideways = FALSE;
+	double x_stretch = 1.;
 
 
 	int i;
@@ -116,6 +120,10 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-draw_poset") == 0) {
 			f_draw_poset = TRUE;
 			cout << "-draw_poset" << endl;
+		}
+		else if (strcmp(argv[i], "-draw_full_poset") == 0) {
+			f_draw_full_poset = TRUE;
+			cout << "-draw_full_poset" << endl;
 		}
 		else if (strcmp(argv[i], "-classes") == 0) {
 			f_classes = TRUE;
@@ -189,6 +197,18 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-group_table") == 0) {
 			f_group_table = TRUE;
 			cout << "-group_table" << endl;
+		}
+		else if (strcmp(argv[i], "-embedded") == 0) {
+			f_embedded = TRUE;
+			cout << "-embedded" << endl;
+		}
+		else if (strcmp(argv[i], "-sideways") == 0) {
+			f_sideways = TRUE;
+			cout << "-sideways" << endl;
+		}
+		else if (strcmp(argv[i], "-x_stretch") == 0) {
+			sscanf(argv[++i], "%lf", &x_stretch);
+			cout << "-x_stretch" << x_stretch << endl;
 		}
 	}
 
@@ -947,7 +967,7 @@ int main(int argc, const char **argv)
 
 		Poset = NEW_OBJECT(poset);
 		Poset->init_subset_lattice(A, A,
-				A->Strong_gens,
+				LG->Strong_gens,
 				verbose_level);
 		PC = Poset->orbits_on_k_sets_compute(
 				orbits_on_subsets_size, verbose_level);
@@ -958,7 +978,7 @@ int main(int argc, const char **argv)
 					<< " orbits on subsets of size " << depth << ":" << endl;
 
 			if (depth < orbits_on_subsets_size) {
-				continue;
+				//continue;
 			}
 			PC->list_all_orbits_at_level(depth,
 					FALSE /* f_has_print_function */,
@@ -981,6 +1001,17 @@ int main(int argc, const char **argv)
 					0 /* verbose_level */);
 			}
 		}
+		if (f_draw_full_poset) {
+			{
+			char fname_poset[1000];
+			sprintf(fname_poset, "%s_poset_%d", LG->prefix, orbits_on_subsets_size);
+			//double x_stretch = 0.4;
+			PC->draw_poset_full(fname_poset, orbits_on_subsets_size,
+				0 /* data1 */, f_embedded, f_sideways,
+				x_stretch, 0 /*verbose_level */);
+			}
+		}
+
 
 
 

@@ -357,6 +357,12 @@ public:
 	int Grassmann_q;
 	int Grassmann_r;
 
+	int f_coll_orthogonal;
+	int coll_orthogonal_epsilon;
+	int coll_orthogonal_d;
+	int coll_orthogonal_q;
+
+
 	create_graph_description();
 	void read_arguments_from_string(
 			const char *str, int verbose_level);
@@ -398,6 +404,8 @@ public:
 	void create_Winnie_Li(int &N, int *&Adj, int q, int index, int verbose_level);
 	void create_Grassmann(int &N, int *&Adj,
 			int n, int k, int q, int r, int verbose_level);
+	void create_coll_orthogonal(int &N, int *&Adj,
+			int epsilon, int d, int q, int verbose_level);
 
 };
 

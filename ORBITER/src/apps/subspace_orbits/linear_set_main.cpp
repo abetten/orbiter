@@ -202,7 +202,9 @@ int main(int argc, const char **argv)
 		if (f_draw_poset_full) {
 			double x_stretch = 0.4;
 			LS->Gen->draw_poset_full(LS->Gen->fname_base, 
-				draw_poset_full_level, 0 /* data */, f_embedded, f_sideways, x_stretch, 0 /*verbose_level*/);
+				draw_poset_full_level, 0 /* data */,
+				f_embedded, f_sideways, x_stretch,
+				0 /*verbose_level*/);
 			}
 		if (f_plesken) {
 			latex_interface L;
@@ -246,7 +248,8 @@ int main(int argc, const char **argv)
 
 	if (f_classify_secondary) {
 		if (strong_gens == NULL) {
-			cout << "in order to classify the secondary subspaces, we need the stabilizer computed first" << endl;
+			cout << "in order to classify the secondary subspaces, "
+					"we need the stabilizer computed first" << endl;
 			exit(1);
 			}
 		LS->classify_secondary(argc, argv, 
@@ -272,7 +275,8 @@ int main(int argc, const char **argv)
 		if (f_v) {
 			cout << "arc_generator::compute_starter before gen->draw_poset" << endl;
 			}
-		LS->Gen->draw_poset(LS->Gen->fname_base, depth, 0 /* data1 */, f_embedded, f_sideways, 0 /* gen->verbose_level */);
+		LS->Gen->draw_poset(LS->Gen->fname_base, depth, 0 /* data1 */,
+				f_embedded, f_sideways, 0 /* gen->verbose_level */);
 		}
 
 	

@@ -1,4 +1,4 @@
-// graph.cpp
+// graph_classify_main.cpp
 // 
 // Anton Betten
 // Nov 15 2007
@@ -142,10 +142,12 @@ int main(int argc, const char **argv)
 		int xmax = 1000000;
 		int ymax = 1000000;
 
+		cout << "before Gen.draw_graphs" << endl;
 		Gen.draw_graphs(Gen.level, Gen.scale,
 				xmax_in, ymax_in, xmax, ymax,
 				Gen.f_embedded, Gen.f_sideways,
-				Gen.gen->verbose_level);
+				verbose_level);
+		cout << "after Gen.draw_graphs" << endl;
 		}
 
 	if (Gen.f_draw_level_graph) {

@@ -370,7 +370,18 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 		G.SG->print_with_given_action(
 				cout, gen->Poset->A2);
 	}
+
+	if (f_v) {
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
+		cout << "poset_orbit_node::compute_point_stabilizer_"
+				"in_subspace_setting, before H.init()" << endl;
+	}
 	H.init(gen->Poset->A, verbose_level - 2);
+	if (f_v) {
+		gen->print_level_extension_info(size - 1, prev, prev_ex);
+		cout << "poset_orbit_node::compute_point_stabilizer_"
+				"in_subspace_setting, after H.init()" << endl;
+	}
 
 
 
@@ -787,33 +798,42 @@ void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
 				gen_hdl_first,
 				nb_strong_generators,
 				Shallow_schreier_tree_strategy,
-				verbose_level - 1);
+				0 /*verbose_level - 1*/);
 
 		if (f_vv) {
 			cout << "schreier vector before relabeling :" << endl;
-			int_vec_print(cout, Schreier_vector->points(),
-					Schreier_vector->get_number_of_points());
-			cout << endl;
+			if (Schreier_vector->get_number_of_points() < 100) {
+				int_vec_print(cout, Schreier_vector->points(),
+						Schreier_vector->get_number_of_points());
+				cout << endl;
 			}
+			else {
+				cout << "too large to print" << endl;
+			}
+		}
 		if (f_v) {
 			cout << "poset_orbit_node::create_schreier_vector_"
 					"wrapper_subspace_action "
 					"changing point labels:" << endl;
-			}
-		Schreier_vector->relabel_points(AF,
-				verbose_level - 4);
+		}
+		Schreier_vector->relabel_points(AF, 0 /*verbose_level - 4*/);
 		if (f_v) {
 			cout << "poset_orbit_node::create_schreier_vector_"
 					"wrapper_subspace_action "
 					"changing point labels done" << endl;
-			}
+		}
 		if (f_vv) {
 			cout << "schreier vector after relabeling :" << endl;
-			int_vec_print(cout, Schreier_vector->points(),
-					Schreier_vector->get_number_of_points());
-			cout << endl;
+			if (Schreier_vector->get_number_of_points() < 100) {
+				int_vec_print(cout, Schreier_vector->points(),
+						Schreier_vector->get_number_of_points());
+				cout << endl;
+			}
+			else {
+				cout << "too large to print" << endl;
 			}
 		}
+	}
 	else {
 		Schreier_vector = NULL;
 		}

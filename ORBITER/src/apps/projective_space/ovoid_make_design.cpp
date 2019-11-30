@@ -1,4 +1,4 @@
-// make_design.cpp
+// ovoid_make_design.cpp
 // 
 // Anton Betten
 // May 17, 2011

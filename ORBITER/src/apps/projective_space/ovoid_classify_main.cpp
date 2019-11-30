@@ -1,4 +1,4 @@
-// ovoid.cpp
+// ovoid_classify_main.cpp
 // 
 // Anton Betten
 // May 16, 2011

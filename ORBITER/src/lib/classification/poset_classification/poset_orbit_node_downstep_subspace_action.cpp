@@ -168,6 +168,10 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 		f_use_invariant_subset_if_available, 
 		f_using_invariant_subset, 
 		verbose_level - 2);
+	if (f_v) {
+		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
+				"after downstep_orbits_subspace_action" << endl;
+		}
 
 
 
@@ -454,17 +458,25 @@ void poset_orbit_node::setup_factor_space_action(
 		cout << "the set: ";
 		lint_vec_print(cout, the_set, lvl);
 		cout << endl;
-		cout << "poset_orbit_node::setup_factor_space_action "
-				"initializing action_on_factor_space "
-				"dimension=" << gen->Poset->VS->dimension << endl;
 		}
 	gen->unrank_basis(coordinates, the_set, lvl);
 
+
+	if (f_v) {
+		cout << "poset_orbit_node::setup_factor_space_action "
+				"initializing action_on_factor_space "
+				"dimension=" << gen->Poset->VS->dimension << " before AF.init_from_coordinate_vectors" << endl;
+	}
 	AF.init_from_coordinate_vectors(
 		gen->Poset->VS,
 		*gen->Poset->A, *gen->Poset->A2,
 		coordinates, lvl, f_compute_tables,
 		verbose_level);
+	if (f_v) {
+		cout << "poset_orbit_node::setup_factor_space_action "
+				"initializing action_on_factor_space "
+				"dimension=" << gen->Poset->VS->dimension << " after AF.init_from_coordinate_vectors" << endl;
+	}
 
 	if (f_v20) {
 		AF.list_all_elements();
@@ -487,6 +499,13 @@ void poset_orbit_node::setup_factor_space_action(
 
 	FREE_lint(the_set);
 	FREE_int(coordinates);
+	if (f_v) {
+		cout << "poset_orbit_node::setup_factor_space_action "
+				"lvl=" << lvl << endl;
+		cout << "poset_orbit_node::setup_factor_space_action "
+				"node=" << node << " prev=" << prev
+				<< " pt=" << pt << " done" << endl;
+	}
 }
 
 void poset_orbit_node::downstep_subspace_action_print_orbits(
@@ -554,7 +573,7 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
-	int f_v10 = (verbose_level >= 10);
+	//int f_v10 = (verbose_level >= 10);
 	action_on_factor_space *AF;
 
 	if (f_v) {
@@ -592,9 +611,11 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 		for (h = 0; h < Schreier.nb_orbits; h++) {
 			cout << setw(4) << h << " / " << Schreier.nb_orbits << " : ";
 
-			int first, rep;
+			int first, len, rep;
+
 
 			first = Schreier.orbit_first[h];
+			len = Schreier.orbit_len[h];
 			rep = AF->preimage_table[Schreier.orbit[first + 0]];
 
 			gen->unrank_point(gen->Poset->VS->v1, rep);
@@ -606,11 +627,16 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 			cout << " : " << setw(5) << Schreier.orbit_len[h];
 			//if (f_vvv) {
 			cout << " : ";
-			Schreier.print_orbit(cout, h);
-			cout << " : ";
-			Schreier.print_orbit_through_labels(cout,
-					h, AF->preimage_table);
-			//	}
+
+			if (len < 100) {
+				Schreier.print_orbit(cout, h);
+				cout << " : ";
+				Schreier.print_orbit_through_labels(cout,
+						h, AF->preimage_table);
+			}
+			else {
+				cout << "too large to print";
+			}
 			cout << endl;
 		}
 		cout << "the orbit elements are:" << endl;
@@ -623,25 +649,30 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 			first = Schreier.orbit_first[h];
 			len = Schreier.orbit_len[h];
 
-			for (j = 0; j < len; j++) {
-				rep = AF->preimage_table[Schreier.orbit[first + j]];
+			if (len < 100) {
+				for (j = 0; j < len; j++) {
+					rep = AF->preimage_table[Schreier.orbit[first + j]];
 
-				gen->unrank_point(gen->Poset->VS->v1, rep);
+					gen->unrank_point(gen->Poset->VS->v1, rep);
 
-				cout << setw(3) << j << " / " << setw(3) << len
-						<< " : " << rep << " = ";
-				int_vec_print(cout,
-						gen->Poset->VS->v1, gen->Poset->VS->dimension);
-				cout << " : ";
-				cout << Schreier.prev[first + j];
-				cout << " : ";
-				cout << Schreier.label[first + j];
-				cout << endl;
+					cout << setw(3) << j << " / " << setw(3) << len
+							<< " : " << rep << " = ";
+					int_vec_print(cout,
+							gen->Poset->VS->v1, gen->Poset->VS->dimension);
+					cout << " : ";
+					cout << Schreier.prev[first + j];
+					cout << " : ";
+					cout << Schreier.label[first + j];
+					cout << endl;
+				}
+			}
+			else {
+				cout << "too large to print" << endl;
 			}
 		}
 	}
 
-	if (f_v10) {
+	if (FALSE) {
 		cout << "Schreier structure generators:" << endl;
 		Schreier.list_elements_as_permutations_vertically(cout);
 

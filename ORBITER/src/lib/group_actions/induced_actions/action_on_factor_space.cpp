@@ -223,8 +223,13 @@ void action_on_factor_space::init_by_rank_table_mode(
 	}
 	if (f_vvv) {
 		print_coset_table();
-		print_projection_table(point_list, nb_points);
+		if (nb_points < 100) {
+			print_projection_table(point_list, nb_points);
 		}
+		else {
+			cout << "too large to print" << endl;
+		}
+	}
 	//large_degree = nb_points;
 	preimage_table = NEW_lint(nb_cosets);
 	for (i = 0; i < nb_cosets; i++) {
@@ -236,17 +241,23 @@ void action_on_factor_space::init_by_rank_table_mode(
 	if (f_vvv) {
 		cout << "action_on_factor_space::init_"
 				"by_rank_table_mode the preimage table:" << endl;
-		for (i = 0; i < nb_cosets; i++) {
-			cout << setw(5) << i << " : "
-					<< setw(7) << coset_reps_Gauss[i] << " : ";
-			unrank_in_large_space(Tmp1, coset_reps_Gauss[i]);
-			int_vec_print(cout, Tmp1, VS->dimension);
-			cout << setw(7) << preimage_table[i] << " : ";
-			unrank_in_large_space(Tmp1, preimage_table[i]);
-			int_vec_print(cout, Tmp1, VS->dimension);
-			cout << endl;
+
+		if (nb_cosets < 100) {
+			for (i = 0; i < nb_cosets; i++) {
+				cout << setw(5) << i << " : "
+						<< setw(7) << coset_reps_Gauss[i] << " : ";
+				unrank_in_large_space(Tmp1, coset_reps_Gauss[i]);
+				int_vec_print(cout, Tmp1, VS->dimension);
+				cout << setw(7) << preimage_table[i] << " : ";
+				unrank_in_large_space(Tmp1, preimage_table[i]);
+				int_vec_print(cout, Tmp1, VS->dimension);
+				cout << endl;
 			}
 		}
+		else {
+			cout << "too large to print" << endl;
+		}
+	}
 	if (f_v) {
 		cout << "action_on_factor_space::init_"
 				"by_rank_table_mode done" << endl;
@@ -257,15 +268,19 @@ void action_on_factor_space::print_coset_table()
 {
 	int i;
 
-	cout << "The Gauss-coset "
-			"representatives are:" << endl;
-	for (i = 0; i < nb_cosets; i++) {
-		cout << setw(5) << i << " : " << setw(7)
-				<< coset_reps_Gauss[i] << " : ";
-		unrank_in_large_space(Tmp1, coset_reps_Gauss[i]);
-		int_vec_print(cout, Tmp1, VS->dimension);
-		cout << endl;
+	cout << "The Gauss-coset representatives are:" << endl;
+	if (nb_cosets < 100) {
+		for (i = 0; i < nb_cosets; i++) {
+			cout << setw(5) << i << " : " << setw(7)
+					<< coset_reps_Gauss[i] << " : ";
+			unrank_in_large_space(Tmp1, coset_reps_Gauss[i]);
+			int_vec_print(cout, Tmp1, VS->dimension);
+			cout << endl;
 		}
+	}
+	else {
+		cout << "too large to print" << endl;
+	}
 }
 
 void action_on_factor_space::print_projection_table(
@@ -274,21 +289,27 @@ void action_on_factor_space::print_projection_table(
 	int i;
 
 	cout << "The projection_table is:" << endl;
-	cout << "i : pt : pt_coords : projection : "
-			"proj_coords" << endl;
-	for (i = 0; i < nb_points; i++) {
-		cout << setw(5) << i << " : "
-				<< setw(7) << point_list[i] << " : ";
-		unrank_in_large_space(Tmp1, point_list[i]);
-		int_vec_print(cout, Tmp1, VS->dimension);
-		cout << " : " << setw(7) << projection_table[i] << " : ";
-		if (projection_table[i] >= 0) {
-			unrank_in_large_space(Tmp1,
-					coset_reps_Gauss[projection_table[i]]);
+
+	if (nb_points < 100) {
+		cout << "i : pt : pt_coords : projection : "
+				"proj_coords" << endl;
+		for (i = 0; i < nb_points; i++) {
+			cout << setw(5) << i << " : "
+					<< setw(7) << point_list[i] << " : ";
+			unrank_in_large_space(Tmp1, point_list[i]);
 			int_vec_print(cout, Tmp1, VS->dimension);
-			}
-		cout << endl;
+			cout << " : " << setw(7) << projection_table[i] << " : ";
+			if (projection_table[i] >= 0) {
+				unrank_in_large_space(Tmp1,
+						coset_reps_Gauss[projection_table[i]]);
+				int_vec_print(cout, Tmp1, VS->dimension);
+				}
+			cout << endl;
 		}
+	}
+	else {
+		cout << "too big to print" << endl;
+	}
 }
 
 void action_on_factor_space::init_coset_table(
@@ -392,9 +413,8 @@ void action_on_factor_space::init_from_coordinate_vectors(
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "action_on_factor_space::init_"
-				"from_coordinate_vectors" << endl;
-		}
+		cout << "action_on_factor_space::init_from_coordinate_vectors" << endl;
+	}
 	action_on_factor_space::VS = VS;
 	action_on_factor_space::subspace_basis_size = subspace_basis_size;
 	action_on_factor_space::subspace_basis =
@@ -402,11 +422,16 @@ void action_on_factor_space::init_from_coordinate_vectors(
 	int_vec_copy(subspace_basis,
 			action_on_factor_space::subspace_basis,
 			subspace_basis_size * VS->dimension);
+	if (f_v) {
+		cout << "action_on_factor_space::init_from_coordinate_vectors before init2" << endl;
+	}
 	init2(A_base, A, f_compute_tables, verbose_level);
 	if (f_v) {
-		cout << "action_on_factor_space::init_from_"
-				"coordinate_vectors done" << endl;
-		}
+		cout << "action_on_factor_space::init_from_coordinate_vectors after init2" << endl;
+	}
+	if (f_v) {
+		cout << "action_on_factor_space::init_from_coordinate_vectors done" << endl;
+	}
 }
 
 
@@ -426,14 +451,16 @@ void action_on_factor_space::init2(action &A_base,
 				"verbose_level = " << verbose_level << endl;
 		cout << "action_on_factor_space::init2 "
 				"VS->dimension = " << VS->dimension << endl;
-		}
+		cout << "action_on_factor_space::init2 "
+				"f_compute_tables = " << f_compute_tables << endl;
+	}
 
 
 	base_cols = NEW_int(VS->dimension);
 	if (f_v) {
 		cout << "action_on_factor_space::init2 "
 				"after allocating base_cols" << endl;
-		}
+	}
 
 	tmp_w = NEW_int(VS->dimension);
 	tmp_w1 = NEW_int(subspace_basis_size);
@@ -446,7 +473,7 @@ void action_on_factor_space::init2(action &A_base,
 		print_integer_matrix_width(cout, subspace_basis,
 				subspace_basis_size,
 				VS->dimension, VS->dimension, VS->F->log10_of_q);
-		}
+	}
 	rk = VS->F->Gauss_simple(subspace_basis,
 			subspace_basis_size, VS->dimension, base_cols,
 			0/*verbose_level - 1*/);
@@ -456,14 +483,14 @@ void action_on_factor_space::init2(action &A_base,
 		print_integer_matrix_width(cout, subspace_basis,
 				subspace_basis_size,
 				VS->dimension, VS->dimension, VS->F->log10_of_q);
-		}
+	}
 	if (rk != subspace_basis_size) {
 		cout << "action_on_factor_space::init2 "
 				"rk != subspace_basis_size" << endl;
 		cout << "rk=" << rk << endl;
 		cout << "subspace_basis_size=" << subspace_basis_size << endl;
 		exit(1);
-		}
+	}
 	
 	factor_space_len = VS->dimension - subspace_basis_size;
 	embedding = NEW_int(factor_space_len);
@@ -475,42 +502,44 @@ void action_on_factor_space::init2(action &A_base,
 		if (!Sorting.int_vec_search(base_cols,
 				subspace_basis_size, i, idx)) {
 			embedding[j++] = i;
-			}
 		}
+	}
 	if (j != factor_space_len) {
 		cout << "j != factor_space_len" << endl;
 		cout << "j=" << j << endl;
 		cout << "factor_space_len=" << factor_space_len << endl;
 		exit(1);
-		}
+	}
 	if (FALSE /*f_v8*/) {
 		cout << "embedding: ";
 		int_vec_print(cout, embedding, factor_space_len);
 		cout << endl;
-		}
+	}
 	degree = compute_degree();
 	large_degree = compute_large_degree();
 	if (f_v) {
-		cout << "large_degree=" << large_degree << endl;
-		cout << "degree=" << degree << endl;
-		}
+		cout << "action_on_factor_space::init2 large_degree=" << large_degree << endl;
+		cout << "action_on_factor_space::init2 degree=" << degree << endl;
+	}
 
 	if (f_compute_tables) {
 		if (f_v) {
-			cout << "calling compute_projection_table" << endl;
-			}
-		compute_projection_table(verbose_level - 1);
+			cout << "action_on_factor_space::init2 before compute_projection_table" << endl;
 		}
+		compute_projection_table(verbose_level - 1);
+		if (f_v) {
+			cout << "action_on_factor_space::init2 after compute_projection_table" << endl;
+		}
+	}
 	else {
 		if (f_v) {
 			cout << "not calling compute_projection_table" << endl;
-			}
 		}
+	}
 	
 	if (f_v) {
 		cout << "action_on_factor_space::init2 done" << endl;
-		}
-	
+	}
 }
 
 void action_on_factor_space::compute_projection_table(
@@ -527,16 +556,16 @@ void action_on_factor_space::compute_projection_table(
 	preimage_table = NEW_lint(degree);
 	for (i = 0; i < degree; i++) {
 		preimage_table[i] = -1;
-		}
+	}
 	for (i = 0; i < large_degree; i++) {
-		a = project(i, 0);
+		a = project(i, verbose_level - 1);
 		projection_table[i] = a;
 		if (a == -1)
 			continue;
 		if (preimage_table[a] == -1) {
 			preimage_table[a] = i;
-			}
 		}
+	}
 	if (FALSE /*f_vv*/) {
 		cout << "projection_table: ";
 		lint_vec_print(cout, projection_table, large_degree);
@@ -544,10 +573,10 @@ void action_on_factor_space::compute_projection_table(
 		cout << "preimage_table: ";
 		lint_vec_print(cout, preimage_table, degree);
 		cout << endl;
-		}
+	}
 	if (FALSE /*f_v10*/) {
 		list_all_elements();
-		}
+	}
 	f_tables_have_been_computed = TRUE;
 }
 
@@ -572,38 +601,55 @@ void action_on_factor_space::list_all_elements()
 	int *v;
 
 	v = NEW_int(VS->dimension);
-	for (i = 0; i < degree; i++) {
-		unrank(v, i, 0);
-		cout << setw(5) << i <<  " : ";
-		int_vec_print(cout, v, VS->dimension);
-		j = rank(v, 0);
-		cout << " : " << setw(5) << j;
-		cout << endl;
-		}
-	cout << "project:" << endl;
-	for (i = 0; i < large_degree; i++) {
-		j = project(i, 0);
-		unrank_in_large_space(v, i);
-		cout << " : " << setw(5) << i <<  " : ";
-		int_vec_print(cout, v, VS->dimension);
-		cout << setw(5) << j << " : ";
-		if (j >= 0) {
-			unrank(v, j, 0);
+
+	if (degree < 100) {
+		for (i = 0; i < degree; i++) {
+			unrank(v, i, 0);
+			cout << setw(5) << i <<  " : ";
 			int_vec_print(cout, v, VS->dimension);
-			}
-		cout << endl;
+			j = rank(v, 0);
+			cout << " : " << setw(5) << j;
+			cout << endl;
 		}
-	cout << "preimage:" << endl;
-	for (i = 0; i < degree; i++) {
-		unrank(v, i, 0);
-		j = preimage(i, 0);
-		cout << setw(5) << i <<  " : ";
-		int_vec_print(cout, v, VS->dimension);
-		cout << setw(5) << j << " : ";
-		unrank_in_large_space(v, j);
-		int_vec_print(cout, v, VS->dimension);
-		cout << endl;
+	}
+	else {
+		cout << "action_on_factor_space::list_all_elements too big to print" << endl;
+	}
+
+	if (large_degree < 100) {
+		cout << "project:" << endl;
+		for (i = 0; i < large_degree; i++) {
+			j = project(i, 0);
+			unrank_in_large_space(v, i);
+			cout << " : " << setw(5) << i <<  " : ";
+			int_vec_print(cout, v, VS->dimension);
+			cout << setw(5) << j << " : ";
+			if (j >= 0) {
+				unrank(v, j, 0);
+				int_vec_print(cout, v, VS->dimension);
+				}
+			cout << endl;
 		}
+	}
+	else {
+		cout << "action_on_factor_space::list_all_elements too big to print" << endl;
+	}
+	if (degree < 100) {
+		cout << "preimage:" << endl;
+		for (i = 0; i < degree; i++) {
+			unrank(v, i, 0);
+			j = preimage(i, 0);
+			cout << setw(5) << i <<  " : ";
+			int_vec_print(cout, v, VS->dimension);
+			cout << setw(5) << j << " : ";
+			unrank_in_large_space(v, j);
+			int_vec_print(cout, v, VS->dimension);
+			cout << endl;
+		}
+	}
+	else {
+		cout << "action_on_factor_space::list_all_elements too big to print" << endl;
+	}
 	FREE_int(v);
 }
 
@@ -787,10 +833,14 @@ long int action_on_factor_space::project(
 		return projection_table[rk];
 		}
 #endif
+	int f_v = (verbose_level >= 1);
 	int i;
 	long int a;
 	int f_nonzero = FALSE;
 	
+	if (f_v) {
+		cout << "action_on_factor_space::project rk = " << rk << endl;
+	}
 	unrank_in_large_space(Tmp1, rk);
 	
 	reduce_mod_subspace(Tmp1, verbose_level - 1);
@@ -799,17 +849,26 @@ long int action_on_factor_space::project(
 		tmp[i] = Tmp1[embedding[i]];
 		if (tmp[i]) {
 			f_nonzero = TRUE;
-			}
 		}
+	}
 	if (f_nonzero) {
+		if (f_v) {
+			cout << "action_on_factor_space::project before rank_in_small_space" << endl;
+		}
 		a = rank_in_small_space(tmp);
 		//VS->F->PG_element_rank_modified(
 		//		tmp, 1, factor_space_len, a);
+		if (f_v) {
+			cout << "action_on_factor_space::project returns " << a << endl;
+		}
 		return a;
-		}
+	}
 	else {
-		return -1;
+		if (f_v) {
+			cout << "action_on_factor_space::project returns -1" << endl;
 		}
+		return -1;
+	}
 }
 
 long int action_on_factor_space::preimage(
@@ -937,16 +996,14 @@ long int action_on_factor_space::rank_in_large_space(int *v)
 void action_on_factor_space::unrank_in_small_space(
 		int *v, long int rk)
 {
-	VS->F->PG_element_unrank_modified_lint(
-			v, 1, factor_space_len, rk);
+	VS->F->PG_element_unrank_modified_lint(v, 1, factor_space_len, rk);
 }
 
 long int action_on_factor_space::rank_in_small_space(int *v)
 {
 	long int rk;
 
-	VS->F->PG_element_rank_modified_lint(
-			v, 1, factor_space_len, rk);
+	VS->F->PG_element_rank_modified_lint(v, 1, factor_space_len, rk);
 	return rk;
 }
 

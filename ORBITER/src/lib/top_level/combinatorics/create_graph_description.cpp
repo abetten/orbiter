@@ -44,6 +44,11 @@ create_graph_description::create_graph_description()
 	Grassmann_k = 0;
 	Grassmann_q = 0;
 	Grassmann_r = 0;
+
+	f_coll_orthogonal = FALSE;
+	coll_orthogonal_epsilon = 0;
+	coll_orthogonal_d = 0;
+	coll_orthogonal_q = 0;
 }
 
 
@@ -140,6 +145,15 @@ int create_graph_description::read_arguments(
 			Grassmann_r = atoi(argv[++i]);
 			cout << "-Grassmann " << Grassmann_n << " " << Grassmann_k
 					<< " " << Grassmann_q << " " << Grassmann_r << endl;
+			}
+		else if (strcmp(argv[i], "-coll_orthogonal") == 0) {
+			f_coll_orthogonal = TRUE;
+			coll_orthogonal_epsilon = atoi(argv[++i]);
+			coll_orthogonal_d = atoi(argv[++i]);
+			coll_orthogonal_q = atoi(argv[++i]);
+			cout << "-coll_orthogonal " << coll_orthogonal_epsilon
+					<< " " << coll_orthogonal_d
+					<< " " << coll_orthogonal_q << endl;
 			}
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
