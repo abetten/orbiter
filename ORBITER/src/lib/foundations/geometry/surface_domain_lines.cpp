@@ -453,10 +453,10 @@ void surface_domain::lines_meet3_and_skew3(
 		cout << endl;
 		}
 	for (i = 0; i < 3; i++) {
-		o_rank[i] = Klein->Line_to_point_on_quadric[lines_meet3[i]];
+		o_rank[i] = Klein->line_to_point_on_quadric(lines_meet3[i], 0 /* verbose_level*/);
 		}
 	for (i = 0; i < 3; i++) {
-		o_rank[3 + i] = Klein->Line_to_point_on_quadric[lines_skew3[i]];
+		o_rank[3 + i] = Klein->line_to_point_on_quadric(lines_skew3[i], 0 /* verbose_level*/);
 		}
 
 	O->perp_of_k_points(o_rank, 3, perp, perp_sz, verbose_level);
@@ -478,7 +478,7 @@ void surface_domain::lines_meet3_and_skew3(
 	FREE_lint(perp);
 
 	for (i = 0; i < nb_lines; i++) {
-		lines[i] = Klein->Point_on_quadric_to_line[lines[i]];
+		lines[i] = Klein->point_on_quadric_to_line(lines[i], 0 /* verbose_level*/);
 		}
 
 	if (f_v) {
@@ -500,12 +500,12 @@ void surface_domain::perp_of_three_lines(long int *three_lines,
 		cout << endl;
 		}
 	for (i = 0; i < 3; i++) {
-		o_rank[i] = Klein->Line_to_point_on_quadric[three_lines[i]];
+		o_rank[i] = Klein->line_to_point_on_quadric(three_lines[i], 0 /* verbose_level*/);
 		}
 	O->perp_of_k_points(o_rank, 3, perp, perp_sz, verbose_level);
 
 	for (i = 0; i < perp_sz; i++) {
-		perp[i] = Klein->Point_on_quadric_to_line[perp[i]];
+		perp[i] = Klein->point_on_quadric_to_line(perp[i], 0 /* verbose_level*/);
 		}
 
 	if (f_v) {
@@ -530,7 +530,7 @@ int surface_domain::perp_of_four_lines(
 		cout << endl;
 		}
 	for (i = 0; i < 4; i++) {
-		o_rank[i] = Klein->Line_to_point_on_quadric[four_lines[i]];
+		o_rank[i] = Klein->line_to_point_on_quadric(four_lines[i], 0 /* verbose_level*/);
 		}
 	//Perp = NEW_int(O->alpha * (O->q + 1));
 	O->perp_of_k_points(o_rank, 4, Perp, perp_sz, verbose_level);
@@ -542,8 +542,8 @@ int surface_domain::perp_of_four_lines(
 		goto finish;
 		}
 
-	trans12[0] = Klein->Point_on_quadric_to_line[Perp[0]];
-	trans12[1] = Klein->Point_on_quadric_to_line[Perp[1]];
+	trans12[0] = Klein->point_on_quadric_to_line(Perp[0], 0 /* verbose_level*/);
+	trans12[1] = Klein->point_on_quadric_to_line(Perp[1], 0 /* verbose_level*/);
 
 finish:
 	FREE_lint(Perp);
@@ -570,7 +570,7 @@ int surface_domain::rank_of_four_lines_on_Klein_quadric(
 		cout << endl;
 		}
 	for (i = 0; i < 4; i++) {
-		o_rank[i] = Klein->Line_to_point_on_quadric[four_lines[i]];
+		o_rank[i] = Klein->line_to_point_on_quadric(four_lines[i], 0 /* verbose_level*/);
 		}
 
 	coords = NEW_int(4 * 6);
@@ -603,7 +603,7 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 		cout << endl;
 		}
 	for (i = 0; i < 5; i++) {
-		o_rank[i] = Klein->Line_to_point_on_quadric[five_pts[i]];
+		o_rank[i] = Klein->line_to_point_on_quadric(five_pts[i], 0 /* verbose_level*/);
 		}
 	for (i = 0; i < 5; i++) {
 		for (j = i + 1; j < 5; j++) {
@@ -767,7 +767,7 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 		}
 
 	for (i = 0; i < 12; i++) {
-		double_six[i] = Klein->Point_on_quadric_to_line[o_rank[i]];
+		double_six[i] = Klein->point_on_quadric_to_line(o_rank[i], 0 /* verbose_level*/);
 		}
 	if (f_v) {
 		cout << "surface_domain::create_double_six_from_five_lines_with_"
@@ -828,7 +828,7 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 		cout << "surface_domain::create_double_six_from_six_disjoint_lines" << endl;
 		}
 	for (i = 0; i < 6; i++) {
-		o_rank[i] = Klein->Line_to_point_on_quadric[single_six[i]];
+		o_rank[i] = Klein->line_to_point_on_quadric(single_six[i], 0 /* verbose_level*/);
 		}
 
 	for (i = 0; i < 6; i++) {
@@ -969,7 +969,7 @@ int surface_domain::create_double_six_from_six_disjoint_lines(
 		o_rank[6 + i] = I5[6 - 1 - i][0];
 		}
 	for (i = 0; i < 12; i++) {
-		double_six[i] = Klein->Point_on_quadric_to_line[o_rank[i]];
+		double_six[i] = Klein->point_on_quadric_to_line(o_rank[i], 0 /* verbose_level*/);
 		}
 
 	ret = TRUE;
@@ -1247,7 +1247,7 @@ void surface_domain::compute_adjacency_matrix_of_line_intersection_graph(
 		exit(1);
 		}
 	for (i = 0; i < n; i++) {
-		o_rank[i] = Klein->Line_to_point_on_quadric[S[i]];
+		o_rank[i] = Klein->line_to_point_on_quadric(S[i], 0 /* verbose_level*/);
 		}
 
 	Adj = NEW_int(n * n);
@@ -1283,7 +1283,7 @@ void surface_domain::compute_adjacency_matrix_of_line_disjointness_graph(
 		exit(1);
 		}
 	for (i = 0; i < n; i++) {
-		o_rank[i] = Klein->Line_to_point_on_quadric[S[i]];
+		o_rank[i] = Klein->line_to_point_on_quadric(S[i], 0 /* verbose_level*/);
 		}
 
 	Adj = NEW_int(n * n);

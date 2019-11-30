@@ -373,7 +373,7 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 		AW->unrank_point(w, a);
 		Surf->wedge_to_klein(w, v);
 		b = Surf->O->rank_point(v, 1, 0 /* verbose_level*/);
-		c = Surf->Klein->Point_on_quadric_to_line[b];
+		c = Surf->Klein->point_on_quadric_to_line(b, 0 /* verbose_level*/);
 		Neighbor_to_line[i] = c;
 		Line_to_neighbor[c] = i;
 		}
@@ -382,10 +382,14 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 		cout << "classify_double_sixes::compute_neighbors "
 				"before int_vec_apply" << endl;
 	}
+	for (i = 0; i < nb_neighbors; i++) {
+		Neighbor_to_klein[i] = Surf->Klein->line_to_point_on_quadric(Neighbor_to_line[i], 0 /* verbose_level*/);
+	}
+#if 0
 	lint_vec_apply(Neighbor_to_line,
 			Surf->Klein->Line_to_point_on_quadric,
 			Neighbor_to_klein, nb_neighbors);
-
+#endif
 
 
 	if (f_v) {
@@ -1243,11 +1247,11 @@ void classify_double_sixes::downstep(int verbose_level)
 		}
 
 	int f_process = FALSE;
-	int nb_100 = 0;
+	int nb_100 = 1;
 
 	if (nb > 1000) {
 		f_process = TRUE;
-		nb_100 = nb / 100;
+		nb_100 = nb / 100 + 1;
 	}
 
 	nb_flag_orbits = 0;
@@ -1258,7 +1262,7 @@ void classify_double_sixes::downstep(int verbose_level)
 			cout << "classify_double_sixes::downstep "
 					"orbit " << f << " / " << nb
 					<< " with rank = 19 is orbit "
-					<< i << " / " << nb_orbits << " " << f / nb_100 << "%" << endl;
+					<< i << " / " << nb_orbits << endl;
 			}
 		if (f_process) {
 			if ((f % nb_100) == 0) {

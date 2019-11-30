@@ -1783,7 +1783,7 @@ long int surface_domain::line_to_wedge(long int line_rk)
 {
 	long int a, b;
 	
-	a = Klein->Line_to_point_on_quadric[line_rk];
+	a = Klein->line_to_point_on_quadric(line_rk, 0 /* verbose_level*/);
 	O->unrank_point(w2, 1, a, 0 /* verbose_level*/);
 	klein_to_wedge(w2, v2);
 	F->PG_element_rank_modified_lint(v2, 1, 6 /*wedge_dimension*/, b);
@@ -1813,7 +1813,7 @@ void surface_domain::line_to_klein_vec(
 	int i;
 
 	for (i = 0; i < len; i++) {
-		Klein_rk[i] = Klein->Line_to_point_on_quadric[Line_rk[i]];
+		Klein_rk[i] = Klein->line_to_point_on_quadric(Line_rk[i], 0 /* verbose_level*/);
 		}
 }
 

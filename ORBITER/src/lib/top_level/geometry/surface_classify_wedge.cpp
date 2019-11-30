@@ -1306,8 +1306,11 @@ void surface_classify_wedge::identify_surface(
 		cout << endl;
 	}
 
-
-	lint_vec_apply(S3, Surf->Klein->Line_to_point_on_quadric, K1, 6);
+	int i;
+	for (i = 0; i < 6; i++) {
+		K1[i] = Surf->Klein->line_to_point_on_quadric(S3[i], 0 /* verbose_level */);
+	}
+	//lint_vec_apply(S3, Surf->Klein->line_to_point_on_quadric, K1, 6);
 		// transform the five lines plus transversal 
 		// into points on the Klein quadric
 

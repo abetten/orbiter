@@ -204,6 +204,7 @@ public:
 	int is_zero(int i);
 	int is_one(int i);
 	int mult(int i, int j);
+	int a_over_b(int a, int b);
 	int mult3(int a1, int a2, int a3);
 	int product3(int a1, int a2, int a3);
 	int mult4(int a1, int a2, int a3, int a4);

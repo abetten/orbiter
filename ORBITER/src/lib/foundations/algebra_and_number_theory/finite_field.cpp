@@ -758,6 +758,19 @@ int finite_field::mult(int i, int j)
 		}
 }
 
+int finite_field::a_over_b(int a, int b)
+{
+	int bv, c;
+
+	if (b == 0) {
+		cout << "finite_field::a_over_b b == 0" << endl;
+		exit(1);
+	}
+	bv = inverse(b);
+	c = mult(a, bv);
+	return c;
+}
+
 int finite_field::mult3(int a1, int a2, int a3)
 {
 	int x;
