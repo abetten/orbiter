@@ -1302,11 +1302,11 @@ public:
 	
 	int *Form; // [d * d]
 
-	long int *Line_to_point_on_quadric; // [P3->N_lines]
-	long int *Point_on_quadric_to_line; // [P3->N_lines]
-	long int *Point_on_quadric_embedded_in_P5; // [P3->N_lines]
+	//long int *Line_to_point_on_quadric; // [P3->N_lines]
+	//long int *Point_on_quadric_to_line; // [P3->N_lines]
 
 	// too much storage:
+	//long int *Point_on_quadric_embedded_in_P5; // [P3->N_lines]
 	//int *coordinates_of_quadric_points; // [P3->N_lines * d]
 	//int *Pt_rk; // [P3->N_lines]
 
@@ -1323,6 +1323,9 @@ public:
 		int *&nb_pts_on_plane, 
 		int &nb_planes, 
 		int verbose_level);
+	long int point_on_quadric_embedded_in_P5(long int pt);
+	long int line_to_point_on_quadric(long int line_rk, int verbose_level);
+	long int point_on_quadric_to_line(long int point_rk, int verbose_level);
 };
 
 
