@@ -294,11 +294,6 @@ void orthogonal::init(int epsilon, int n,
 	T1 = NEW_int(n * n);
 	T2 = NEW_int(n * n);
 	T3 = NEW_int(n * n);
-#if 0
-	line1 = NEW_int(q + 1);
-	line2 = NEW_int(q + 1);
-	line3 = NEW_int(q + 1);
-#endif
 
 	rk_pt_v = NEW_int(n);
 
@@ -423,7 +418,7 @@ void orthogonal::init(int epsilon, int n,
 
 	if (epsilon == 1) {
 #if 1
-		int u;
+		long int u;
 
 		u = Gg.nb_pts_Qepsilon(epsilon, 2 * m - 1, q);
 		if (T1_m != u) {
@@ -739,7 +734,7 @@ void orthogonal::init_parabolic_even(int verbose_level)
 
 void orthogonal::init_parabolic_odd(int verbose_level)
 {
-	int a, b, c, i, j;
+	long int a, b, c, i, j;
 	int f_v = (verbose_level >= 1);
 	geometry_global Gg;
 
@@ -1183,7 +1178,7 @@ void orthogonal::points_on_line_by_line_rank(
 	points_on_line(p1, p2, line, verbose_level);
 }
 
-void orthogonal::points_on_line(int pi, int pj,
+void orthogonal::points_on_line(long int pi, long int pj,
 		long int *line, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1239,7 +1234,7 @@ void orthogonal::points_on_line(int pi, int pj,
 }
 
 void orthogonal::points_on_line_by_coordinates(
-		int pi, int pj, int *pt_coords, int verbose_level)
+		long int pi, long int pj, int *pt_coords, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1336,7 +1331,7 @@ void orthogonal::lines_on_point(long int pt,
 	}
 }
 
-void orthogonal::lines_on_point_by_line_rank_must_fit_into_int(int pt,
+void orthogonal::lines_on_point_by_line_rank_must_fit_into_int(long int pt,
 		int *line_pencil_line_ranks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1363,12 +1358,13 @@ void orthogonal::lines_on_point_by_line_rank_must_fit_into_int(int pt,
 	}
 }
 
-void orthogonal::lines_on_point_by_line_rank(int pt,
+void orthogonal::lines_on_point_by_line_rank(long int pt,
 		long int *line_pencil_line_ranks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int t, i, rk, rk1, root1, root2, pt2;
+	int t, i;
+	long int rk, rk1, root1, root2, pt2;
 	sorting Sorting;
 	
 	if (f_v) {
