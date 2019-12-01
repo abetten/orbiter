@@ -14,7 +14,7 @@ using namespace std;
 namespace orbiter {
 namespace group_actions {
 
-void action::init_linear_group(sims *&S,
+void action::init_linear_group(//sims *&S,
 	finite_field *F, int m,
 	int f_projective, int f_general, int f_affine,
 	int f_semilinear, int f_special,
@@ -128,9 +128,10 @@ void action::init_linear_group(sims *&S,
 			}
 
 		SG->init_from_sims(A_on_det.Kernel, 0 /* verbose_level */);
-		S = SG->create_sims(0 /* verbose_level */);
+		//S = SG->create_sims(0 /* verbose_level */);
 		FREE_OBJECT(SG);
 		}
+#if 0
 	else {
 		if (f_v) {
 			cout << "action::init_linear_group "
@@ -144,7 +145,7 @@ void action::init_linear_group(sims *&S,
 		cout << "action::init_linear_group "
 				"sims object has been created" << endl;
 		}
-
+#endif
 
 
 

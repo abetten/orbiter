@@ -138,7 +138,7 @@ void test_indexing(int n, int *type, int type_len,
 	action *A;
 	matrix_group *Mtx;
 	action *AF;
-	sims *S;
+	//sims *S;
 	int flag_n;
 	int *subspace;
 
@@ -162,7 +162,7 @@ void test_action(int n, int *type, int type_len,
 
 	A = NEW_OBJECT(action);
 
-	A->init_linear_group(S,
+	A->init_linear_group(//S,
 		F, n, 
 		f_projective, f_general, f_affine, 
 		f_semilinear, f_special, 

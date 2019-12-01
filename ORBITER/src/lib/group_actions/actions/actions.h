@@ -421,7 +421,7 @@ public:
 	// action_init.cpp
 
 	/** Create any linear group */
-	void init_linear_group(sims *&S,
+	void init_linear_group(//sims *&S,
 		finite_field *F, int m,
 		int f_projective, int f_general, int f_affine,
 		int f_semilinear, int f_special,
