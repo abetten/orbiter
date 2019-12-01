@@ -132,8 +132,12 @@ void action::init_linear_group(sims *&S,
 		FREE_OBJECT(SG);
 		}
 	else {
+		if (f_v) {
+			cout << "action::init_linear_group "
+					"before Strong_gens->create_sims" << endl;
+		}
 
-		S = Strong_gens->create_sims(0 /* verbose_level */);
+		S = Strong_gens->create_sims(verbose_level - 2);
 		}
 
 	if (f_v) {
