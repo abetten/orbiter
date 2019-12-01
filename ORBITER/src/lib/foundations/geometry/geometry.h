@@ -1668,7 +1668,7 @@ public:
 	void make_initial_partition(partitionstack &S, 
 		int verbose_level);
 	void point_to_line_map(int size, 
-		int *point_ranks, int *&line_vector, 
+		long int *point_ranks, int *&line_vector,
 		int verbose_level);
 	int test_if_minimal_on_line(int *v1, int *v2, int *v3);
 	void find_minimal_point_on_line(int *v1, int *v2, int *v3);
