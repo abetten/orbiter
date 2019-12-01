@@ -292,14 +292,14 @@ void classify_double_sixes::init(
 void classify_double_sixes::compute_neighbors(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, a, b, c;
+	long int i, a, b, c;
 	sorting Sorting;
 
 	if (f_v) {
 		cout << "classify_double_sixes::compute_neighbors" << endl;
 		}
 
-	nb_neighbors = (q + 1) * q * (q + 1);
+	nb_neighbors = (long int) (q + 1) * q * (q + 1);
 	if (f_v) {
 		cout << "classify_double_sixes::compute_neighbors "
 				"nb_neighbors = " << nb_neighbors << endl;

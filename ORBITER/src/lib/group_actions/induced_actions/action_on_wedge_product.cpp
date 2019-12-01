@@ -73,16 +73,16 @@ void action_on_wedge_product::init(action &A, int verbose_level)
 	wedge_v3 = NEW_int(wedge_dimension);
 }
 
-void action_on_wedge_product::unrank_point(int *v, int rk)
+void action_on_wedge_product::unrank_point(int *v, long int rk)
 {
-	F->PG_element_unrank_modified(v, 1, wedge_dimension, rk);
+	F->PG_element_unrank_modified_lint(v, 1, wedge_dimension, rk);
 }
 
-int action_on_wedge_product::rank_point(int *v)
+long int action_on_wedge_product::rank_point(int *v)
 {
-	int rk;
+	long int rk;
 
-	F->PG_element_rank_modified(v, 1, wedge_dimension, rk);
+	F->PG_element_rank_modified_lint(v, 1, wedge_dimension, rk);
 	return rk;
 }
 

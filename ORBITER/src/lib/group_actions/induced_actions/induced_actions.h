@@ -885,7 +885,7 @@ public:
 	matrix_group *M;
 	finite_field *F;
 	int low_level_point_size;
-	int degree;
+	long int degree;
 
 	// wedge product
 	int wedge_dimension; // {n \choose 2}
@@ -898,8 +898,8 @@ public:
 	void null();
 	void free();
 	void init(action &A, int verbose_level);
-	void unrank_point(int *v, int rk);
-	int rank_point(int *v);
+	void unrank_point(int *v, long int rk);
+	long int rank_point(int *v);
 	long int compute_image_int(
 		action &A, int *Elt, long int a, int verbose_level);
 	int element_entry_frobenius(action &A, int *Elt, 

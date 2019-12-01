@@ -615,7 +615,8 @@ void finite_field::PG_element_unrank_modified(
 void finite_field::PG_element_rank_modified_lint(
 		int *v, int stride, int len, long int &a)
 {
-	long int i, j, q_power_j, b, sqj;
+	int i, j;
+	long int q_power_j, b, sqj;
 	int f_v = FALSE;
 
 	if (len <= 0) {
@@ -805,9 +806,9 @@ void finite_field::PG_element_unrank_modified_lint(
 }
 
 void finite_field::PG_element_rank_modified_not_in_subspace(
-		int *v, int stride, int len, int m, int &a)
+		int *v, int stride, int len, int m, long int &a)
 {
-	int s, qq, i;
+	long int s, qq, i;
 
 	qq = 1;
 	s = qq;
@@ -817,7 +818,7 @@ void finite_field::PG_element_rank_modified_not_in_subspace(
 		}
 	s -= (m + 1);
 
-	PG_element_rank_modified(v, stride, len, a);
+	PG_element_rank_modified_lint(v, stride, len, a);
 	if (a > len + s) {
 		a -= s;
 		}
@@ -825,9 +826,9 @@ void finite_field::PG_element_rank_modified_not_in_subspace(
 }
 
 void finite_field::PG_element_unrank_modified_not_in_subspace(
-		int *v, int stride, int len, int m, int a)
+		int *v, int stride, int len, int m, long int a)
 {
-	int s, qq, i;
+	long int s, qq, i;
 
 	qq = 1;
 	s = qq;
@@ -842,7 +843,7 @@ void finite_field::PG_element_unrank_modified_not_in_subspace(
 		a += s;
 		}
 
-	PG_element_unrank_modified(v, stride, len, a);
+	PG_element_unrank_modified_lint(v, stride, len, a);
 }
 
 int finite_field::evaluate_conic_form(int *six_coeffs, int *v3)
@@ -2380,8 +2381,8 @@ void finite_field::display_all_PG_elements_not_in_subspace(int n, int m)
 {
 	int *v = NEW_int(n + 1);
 	geometry_global Gg;
-	int l = Gg.nb_PG_elements_not_in_subspace(n, m, q);
-	int i, j, a;
+	long int l = Gg.nb_PG_elements_not_in_subspace(n, m, q);
+	long int i, j, a;
 
 	for (i = 0; i < l; i++) {
 		PG_element_unrank_modified_not_in_subspace(v, 1, n + 1, m, i);
