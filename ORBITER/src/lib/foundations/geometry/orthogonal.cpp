@@ -1371,7 +1371,7 @@ void orthogonal::lines_on_point_by_line_rank(long int pt,
 		cout << "orthogonal::lines_on_point_by_line_rank pt=" << pt << " pt_P=" << pt_P << endl;
 	}
 	t = subspace_point_type;
-	if (f_v) {
+	if (f_vv) {
 		cout << "orthogonal::lines_on_point_by_line_rank subspace_point_type=" << subspace_point_type << endl;
 	}
 	for (i = 0; i < alpha; i++) {
@@ -1717,7 +1717,7 @@ void orthogonal::perp(long int pt,
 	if (f_v) {
 		cout << "orthogonal::perp before lines_on_point_by_line_rank" << endl;
 	}
-	lines_on_point_by_line_rank(pt, line_pencil, verbose_level - 3);
+	lines_on_point_by_line_rank(pt, line_pencil, 0 /*verbose_level - 3*/);
 	if (f_v) {
 		cout << "orthogonal::perp after lines_on_point_by_line_rank" << endl;
 	}
