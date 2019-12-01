@@ -853,7 +853,7 @@ public:
 	long int *Neighbor_to_klein; // [nb_neighbors]
 		// In orthogonal ranks (i.e., points on the Klein quadric).
 
-	long int *Line_to_neighbor; // [Surf->nb_lines_PG_3]
+	//long int *Line_to_neighbor; // [Surf->nb_lines_PG_3]
 	
 	longinteger_object go, stab_go;
 	sims *Stab;
@@ -943,7 +943,7 @@ public:
 		int *transporter, int &orbit_index, int verbose_level);
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp, int verbose_level);
-
+	int line_to_neighbor(long int line_rk, int verbose_level);
 };
 
 void callback_partial_ovoid_test_early(long int *S, int len,

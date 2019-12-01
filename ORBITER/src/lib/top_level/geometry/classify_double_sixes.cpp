@@ -47,7 +47,7 @@ void classify_double_sixes::null()
 	Neighbors = NULL;
 	Neighbor_to_line = NULL;
 	Neighbor_to_klein = NULL;
-	Line_to_neighbor = NULL;
+	//Line_to_neighbor = NULL;
 	Stab = NULL;
 	stab_gens = NULL;
 	orbit = NULL;
@@ -343,10 +343,13 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 		cout << "classify_double_sixes::compute_neighbors "
 				"allocating Line_to_neighbor, Surf->nb_lines_PG_3=" << Surf->nb_lines_PG_3 << endl;
 	}
+
+#if 0
 	Line_to_neighbor = NEW_lint(Surf->nb_lines_PG_3);
 	for (i = 0; i < Surf->nb_lines_PG_3; i++) {
 		Line_to_neighbor[i] = -1;
 		}
+#endif
 
 
 	// Convert Neighbors from points
@@ -398,7 +401,7 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 			cout << endl;
 		}
 		Neighbor_to_line[i] = c;
-		Line_to_neighbor[c] = i;
+		//Line_to_neighbor[c] = i;
 		}
 
 	if (f_v) {
@@ -1929,6 +1932,28 @@ void classify_double_sixes::read_file(ifstream &fp, int verbose_level)
 				"finished" << endl;
 		}
 }
+
+
+int classify_double_sixes::line_to_neighbor(long int line_rk, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int idx;
+	long int point_rk;
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "classify_double_sixes::line_to_neighbor" << endl;
+		}
+	point_rk = Surf->Klein->line_to_point_on_quadric(line_rk, 0 /* verbose_level*/);
+	if (!Sorting.lint_vec_search(Neighbors, nb_neighbors, point_rk,
+			idx, 0 /* verbose_level */)) {
+		cout << "classify_double_sixes::line_to_neighbor line " << line_rk << " = point " << point_rk << " not found in Neighbors[]" << endl;
+		exit(1);
+	}
+	return idx;
+}
+
+
 
 #if 0
 int callback_partial_ovoid_test(int len, int *S,
