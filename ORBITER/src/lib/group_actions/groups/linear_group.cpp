@@ -105,31 +105,87 @@ void linear_group::init(
 	int f_OK = FALSE;
 
 	if (description->f_PGL2OnConic) {
+		if (f_v) {
+			cout << "linear_group::init "
+					"before init_PGL2q_OnConic" << endl;
+		}
 		init_PGL2q_OnConic(prefix, label_latex, verbose_level);
+		if (f_v) {
+			cout << "linear_group::init "
+					"after init_PGL2q_OnConic" << endl;
+		}
 		f_OK = TRUE;
 		}
 	if (description->f_wedge_action) {
+		if (f_v) {
+			cout << "linear_group::init "
+					"before init_wedge_action" << endl;
+		}
 		init_wedge_action(prefix, label_latex, verbose_level);
+		if (f_v) {
+			cout << "linear_group::init "
+					"after init_wedge_action" << endl;
+		}
 		f_OK = TRUE;
 		}
 	if (description->f_monomial_group) {
+		if (f_v) {
+			cout << "linear_group::init "
+					"before init_monomial_group" << endl;
+		}
 		init_monomial_group(prefix, label_latex, verbose_level);
+		if (f_v) {
+			cout << "linear_group::init "
+					"after init_monomial_group" << endl;
+		}
 		f_OK = TRUE;
 		}
 	if (description->f_diagonal_group) {
+		if (f_v) {
+			cout << "linear_group::init "
+					"before init_diagonal_group" << endl;
+		}
 		init_diagonal_group(prefix, label_latex, verbose_level);
+		if (f_v) {
+			cout << "linear_group::init "
+					"after init_diagonal_group" << endl;
+		}
 		f_OK = TRUE;
 		}
 	if (description->f_null_polarity_group) {
+		if (f_v) {
+			cout << "linear_group::init "
+					"before init_null_polarity_group" << endl;
+		}
 		init_null_polarity_group(prefix, label_latex, verbose_level);
+		if (f_v) {
+			cout << "linear_group::init "
+					"after init_null_polarity_group" << endl;
+		}
 		f_OK = TRUE;
 		}
 	if (description->f_symplectic_group) {
+		if (f_v) {
+			cout << "linear_group::init "
+					"before init_symplectic_group" << endl;
+		}
 		init_symplectic_group(prefix, label_latex, verbose_level);
+		if (f_v) {
+			cout << "linear_group::init "
+					"after init_symplectic_group" << endl;
+		}
 		f_OK = TRUE;
 		}
 	if (description->f_borel_subgroup_upper) {
+		if (f_v) {
+			cout << "linear_group::init "
+					"before init_borel_subgroup_upper" << endl;
+		}
 		init_borel_subgroup_upper(prefix, label_latex, verbose_level);
+		if (f_v) {
+			cout << "linear_group::init "
+					"after init_borel_subgroup_upper" << endl;
+		}
 		f_OK = TRUE;
 		}
 	if (description->f_borel_subgroup_lower) {
@@ -138,49 +194,113 @@ void linear_group::init(
 		exit(1);
 		}
 	if (description->f_singer_group) {
+		if (f_v) {
+			cout << "linear_group::init "
+					"before init_singer_group" << endl;
+		}
 		init_singer_group(prefix, label_latex,
 				description->singer_power, verbose_level);
+		if (f_v) {
+			cout << "linear_group::init "
+					"after init_singer_group" << endl;
+		}
 		f_OK = TRUE;
 		}
 	if (description->f_singer_group_and_frobenius) {
+		if (f_v) {
+			cout << "linear_group::init "
+					"before init_singer_group_and_frobenius" << endl;
+		}
 		init_singer_group_and_frobenius(prefix, label_latex,
 				description->singer_power, verbose_level);
+		if (f_v) {
+			cout << "linear_group::init "
+					"after init_singer_group_and_frobenius" << endl;
+		}
 		f_OK = TRUE;
 		}
 	if (description->f_identity_group) {
+		if (f_v) {
+			cout << "linear_group::init "
+					"before init_identity_subgroup" << endl;
+		}
 		init_identity_subgroup(prefix, label_latex, verbose_level);
+		if (f_v) {
+			cout << "linear_group::init "
+					"after init_identity_subgroup" << endl;
+		}
 		f_OK = TRUE;
 		}
 	if (description->f_subfield_structure_action) {
+		if (f_v) {
+			cout << "linear_group::init "
+					"before init_subfield_structure_action" << endl;
+		}
 		init_subfield_structure_action(prefix, label_latex,
 				description->s, verbose_level);
+		if (f_v) {
+			cout << "linear_group::init "
+					"after init_subfield_structure_action" << endl;
+		}
 		f_OK = TRUE;
 		}
 	if (description->f_orthogonal_group) {
+		if (f_v) {
+			cout << "linear_group::init "
+					"before init_orthogonal_group" << endl;
+		}
 		init_orthogonal_group(prefix, label_latex,
 				description->orthogonal_group_epsilon,
 				verbose_level);
+		if (f_v) {
+			cout << "linear_group::init "
+					"after init_orthogonal_group" << endl;
+		}
 		f_OK = TRUE;
 		}
 	if (description->f_subgroup_from_file) {
+		if (f_v) {
+			cout << "linear_group::init "
+					"before init_subgroup_from_file" << endl;
+		}
 		init_subgroup_from_file(prefix, label_latex,
 			description->subgroup_fname,
 			description->subgroup_label,
 			verbose_level);
+		if (f_v) {
+			cout << "linear_group::init "
+					"after init_subgroup_from_file" << endl;
+		}
 		f_OK = TRUE;
 		}
 	if (description->f_subgroup_by_generators) {
+		if (f_v) {
+			cout << "linear_group::init "
+					"before init_subgroup_by_generators" << endl;
+		}
 		init_subgroup_by_generators(prefix, label_latex,
 			description->subgroup_label,
 			description->subgroup_order_text,
 			description->nb_subgroup_generators,
 			description->subgroup_generators_as_string,
 			verbose_level);
+		if (f_v) {
+			cout << "linear_group::init "
+					"after init_subgroup_by_generators" << endl;
+		}
 		f_OK = TRUE;
 	}
 	if (description->f_Janko1) {
+		if (f_v) {
+			cout << "linear_group::init "
+					"before init_subgroup_Janko1" << endl;
+		}
 		init_subgroup_Janko1(prefix, label_latex,
 			verbose_level);
+		if (f_v) {
+			cout << "linear_group::init "
+					"after init_subgroup_Janko1" << endl;
+		}
 		f_OK = TRUE;
 	}
 
@@ -294,11 +414,13 @@ void linear_group::init_wedge_action(char *prefix, char *label_latex,
 		cout << "linear_group::init_wedge_action "
 				"initializing wedge action" << endl;
 		}
+#if 0
 	if (!A_linear->f_has_sims) {
 		cout << "linear_group::init_wedge_action "
 				"A_linear does not have sims, so we create it" << endl;
 		A_linear->create_sims(verbose_level);
 		}
+#endif
 	if (!A_linear->f_has_strong_generators) {
 		cout << "linear_group::init_wedge_action "
 				"A_linear does not have strong generators" << endl;

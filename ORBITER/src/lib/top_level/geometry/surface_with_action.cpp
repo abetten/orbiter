@@ -100,12 +100,14 @@ void surface_with_action::init(surface_domain *Surf,
 	}
 	AonHPD_3_4->init(A, Surf->Poly3_4, verbose_level);
 	
+#if 0
 	Classify_trihedral_pairs = NEW_OBJECT(classify_trihedral_pairs);
 	if (f_v) {
 		cout << "surface_with_action::init "
 				"before Classify_trihedral_pairs->init" << endl;
 	}
 	Classify_trihedral_pairs->init(this, verbose_level);
+#endif
 
 	Recoordinatize = NEW_OBJECT(recoordinatize);
 

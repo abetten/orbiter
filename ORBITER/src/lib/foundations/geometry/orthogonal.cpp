@@ -1495,7 +1495,7 @@ void orthogonal::make_initial_partition(
 }
 
 void orthogonal::point_to_line_map(int size,
-		int *point_ranks, int *&line_vector, int verbose_level)
+		long int *point_ranks, int *&line_vector, int verbose_level)
 // this function is assuming that there are very few lines!
 {
 	int i, j, h;

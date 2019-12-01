@@ -168,7 +168,7 @@ void graph_classify::read_arguments(int argc, const char **argv)
 			f_tournament = TRUE;
 			cout << "-tournament " << endl;
 			}
-		else if (strcmp(argv[i], "-no_superking") == 0) {
+		else if (strcmp(argv[i], "-no_transmitter") == 0) {
 			f_no_superking = TRUE;
 			cout << "-no_superking " << endl;
 			}
