@@ -1005,8 +1005,17 @@ sims *strong_generators::create_sims(int verbose_level)
 				"gens == NULL" << endl;
 		exit(1);
 		}
+	if (f_v) {
+		cout << "strong_generators::create_sims before "
+				"create_sims_from_generators_with_target_group_order_factorized" << endl;
+		}
 	S = A->create_sims_from_generators_with_target_group_order_factorized(
 		gens, tl, A->base_len(), verbose_level - 2);
+
+	if (f_v) {
+		cout << "strong_generators::create_sims after "
+				"create_sims_from_generators_with_target_group_order_factorized" << endl;
+		}
 
 	if (f_v) {
 		cout << "strong_generators::create_sims done" << endl;
