@@ -546,6 +546,10 @@ long int klein_correspondence::point_on_quadric_to_line(long int point_rk, int v
 	if (f_v) {
 		cout << "klein_correspondence::point_on_quadric_to_line point_rk=" << point_rk << " line_rk=" << line_rk << " done" << endl;
 	}
+	if (line_rk >= P3->N_lines) {
+		cout << "klein_correspondence::point_on_quadric_to_line line_rk >= P3->N_lines" << endl;
+		exit(1);
+	}
 
 	return line_rk;
 }

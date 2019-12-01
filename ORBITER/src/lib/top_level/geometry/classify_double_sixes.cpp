@@ -341,7 +341,7 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 	
 	if (f_v) {
 		cout << "classify_double_sixes::compute_neighbors "
-				"allocating Line_to_neighbor" << endl;
+				"allocating Line_to_neighbor, Surf->nb_lines_PG_3=" << Surf->nb_lines_PG_3 << endl;
 	}
 	Line_to_neighbor = NEW_lint(Surf->nb_lines_PG_3);
 	for (i = 0; i < Surf->nb_lines_PG_3; i++) {
