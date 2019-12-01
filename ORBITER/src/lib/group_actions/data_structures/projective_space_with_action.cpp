@@ -37,7 +37,7 @@ void projective_space_with_action::null()
 	P = NULL;
 	A = NULL;
 	A_on_lines = NULL;
-	S = NULL;
+	//S = NULL;
 	Elt1 = NULL;
 }
 
@@ -52,9 +52,11 @@ void projective_space_with_action::freeself()
 	if (A_on_lines) {
 		FREE_OBJECT(A_on_lines);
 		}
+#if 0
 	if (S) {
 		FREE_OBJECT(S);
 		}
+#endif
 	if (Elt1) {
 		FREE_int(Elt1);
 		}
@@ -110,7 +112,7 @@ void projective_space_with_action::init_group(
 	vector_ge *nice_gens;
 
 	A = NEW_OBJECT(action);
-	A->init_linear_group(S,
+	A->init_linear_group(//S,
 		F, d, 
 		TRUE /*f_projective*/,
 		FALSE /* f_general*/,
@@ -123,6 +125,18 @@ void projective_space_with_action::init_group(
 		cout << "projective_space_with_action::init_group "
 				"creating linear group done" << endl;
 		}
+#if 0
+	if (f_v) {
+		cout << "projective_space_with_action::init_group "
+				"before create_sims" << endl;
+		}
+	S = A->Strong_gens->create_sims(verbose_level - 2);
+
+	if (f_v) {
+		cout << "projective_space_with_action::init_group "
+				"after create_sims" << endl;
+		}
+#endif
 	FREE_OBJECT(nice_gens);
 
 

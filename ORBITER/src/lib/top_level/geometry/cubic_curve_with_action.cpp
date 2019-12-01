@@ -99,11 +99,11 @@ void cubic_curve_with_action::init_group(int f_semilinear,
 		}
 
 	vector_ge *nice_gens;
-	sims *S;
+	//sims *S;
 
 	A = NEW_OBJECT(action);
 
-	A->init_linear_group(S,
+	A->init_linear_group(//S,
 		F, 3,
 		TRUE /*f_projective*/,
 		FALSE /* f_general*/,
@@ -113,7 +113,7 @@ void cubic_curve_with_action::init_group(int f_semilinear,
 		0 /* verbose_level*/);
 
 	FREE_OBJECT(nice_gens);
-	FREE_OBJECT(S);
+	//FREE_OBJECT(S);
 
 	if (f_v) {
 		cout << "cubic_curve_with_action::init_group "

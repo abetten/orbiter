@@ -186,7 +186,7 @@ public:
 	int f_affine;
 	int f_semilinear;
 	int f_special;
-	sims *S;
+	//sims *S;
 	action *A;
 	longinteger_object go;
 	int *Elt;
@@ -3039,7 +3039,7 @@ public:
 
 	action *A; // linear group PGGL(4,q)
 	action *A2; // linear group PGGL(4,q) acting on lines
-	sims *S; // linear group PGGL(4,q)
+	//sims *S; // linear group PGGL(4,q)
 
 	int *Elt1;
 	

@@ -89,7 +89,7 @@ void test_borel(int n, int q, int verbose_level)
 	vector_ge *nice_gens;
 
 	cout << "before init_linear_group" << endl;
-	A->init_linear_group(S,
+	A->init_linear_group(/*S,*/
 		F, n, 
 		FALSE /* f_projective */,
 		TRUE /* f_general */,
@@ -98,6 +98,7 @@ void test_borel(int n, int q, int verbose_level)
 		TRUE /* f_special */,
 		nice_gens,
 		verbose_level);
+	S = A->Strong_gens->create_sims(verbose_level - 2);
 	FREE_OBJECT(nice_gens);
 	cout << "after init_linear_group" << endl;
 

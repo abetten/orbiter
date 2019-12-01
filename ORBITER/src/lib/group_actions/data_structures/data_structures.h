@@ -504,7 +504,7 @@ public:
 
 	action *A; // linear group PGGL(d,q)
 	action *A_on_lines; // linear group PGGL(d,q) acting on lines
-	sims *S; // linear group PGGL(d,q)
+	//sims *S; // linear group PGGL(d,q)
 
 	int *Elt1;
 

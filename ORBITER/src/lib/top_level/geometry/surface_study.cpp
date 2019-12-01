@@ -67,7 +67,7 @@ void surface_study::init(int q, int nb, int verbose_level)
 
 	A = NEW_OBJECT(action);
 
-	A->init_linear_group(S,
+	A->init_linear_group(//S,
 		F, 4,
 		TRUE /*f_projective*/,
 		FALSE /* f_general*/,
@@ -75,6 +75,7 @@ void surface_study::init(int q, int nb, int verbose_level)
 		f_semilinear, FALSE /* f_special */,
 		nice_gens,
 		0 /*verbose_level*/);
+	S = A->Strong_gens->create_sims(verbose_level - 2);
 	FREE_OBJECT(nice_gens);
 	cout << "creating linear group done" << endl;
 

@@ -26,7 +26,7 @@ surface_with_action::surface_with_action()
 	Surf = NULL;
 	A = NULL;
 	A2 = NULL;
-	S = NULL;
+	//S = NULL;
 	Elt1 = NULL;
 	AonHPD_3_4 = NULL;
 
@@ -55,9 +55,11 @@ void surface_with_action::freeself()
 	if (A2) {
 		FREE_OBJECT(A2);
 	}
+#if 0
 	if (S) {
 		FREE_OBJECT(S);
 	}
+#endif
 	if (Elt1) {
 		FREE_int(Elt1);
 	}
@@ -160,7 +162,7 @@ void surface_with_action::init_group(int f_semilinear,
 
 	A = NEW_OBJECT(action);
 
-	A->init_linear_group(S,
+	A->init_linear_group(//S,
 		F, 4, 
 		TRUE /*f_projective*/,
 		FALSE /* f_general*/,

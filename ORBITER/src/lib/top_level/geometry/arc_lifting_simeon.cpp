@@ -34,7 +34,7 @@ arc_lifting_simeon::arc_lifting_simeon()
 	f_affine = FALSE;
 	f_semilinear = FALSE;
 	f_special = FALSE;
-	S = NULL;
+	//S = NULL;
 	A = NULL;
 	//longinteger_object go;
 	Elt = NULL;
@@ -82,7 +82,7 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 	vector_ge *nice_gens;
 
 	A = NEW_OBJECT(action);
-	A->init_linear_group(S,
+	A->init_linear_group(//S,
 		F, n + 1,
 		f_projective, f_general, f_affine,
 		f_semilinear, f_special,
