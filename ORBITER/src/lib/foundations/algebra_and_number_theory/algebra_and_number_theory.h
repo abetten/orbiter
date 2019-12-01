@@ -828,9 +828,9 @@ public:
 	void PG_element_unrank_modified_lint(
 			int *v, int stride, int len, long int a);
 	void PG_element_rank_modified_not_in_subspace(
-			int *v, int stride, int len, int m, int &a);
+			int *v, int stride, int len, int m, long int &a);
 	void PG_element_unrank_modified_not_in_subspace(
-			int *v, int stride, int len, int m, int a);
+			int *v, int stride, int len, int m, long int a);
 
 	int evaluate_conic_form(int *six_coeffs, int *v3);
 	int evaluate_quadric_form_in_PG_three(int *ten_coeffs, int *v4);

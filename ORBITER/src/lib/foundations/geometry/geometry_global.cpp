@@ -47,7 +47,7 @@ long int geometry_global::nb_PG_elements(int n, int q)
 long int geometry_global::nb_PG_elements_not_in_subspace(int n, int m, int q)
 // |PG_n(q)| - |PG_m(q)|
 {
-	int a, b;
+	long int a, b;
 
 	a = nb_PG_elements(n, q);
 	b = nb_PG_elements(m, q);
@@ -83,7 +83,8 @@ long int geometry_global::AG_element_rank(int q, int *v, int stride, int len)
 
 void geometry_global::AG_element_unrank(int q, int *v, int stride, int len, long int a)
 {
-	int i, b;
+	int i;
+	long int b;
 
 #if 1
 	if (len <= 0) {
@@ -677,11 +678,11 @@ long int geometry_global::nb_pts_N1(int n, int q)
 	if (n <= 0) {
 		cout << "nb_pts_N1 n <= 0" << endl;
 		exit(1);
-		}
+	}
 	if (n == 1) {
 		//cout << "gives " << q - 1 << endl;
 		return q - 1;
-		}
+	}
 	a = nb_pts_S(1, q) * nb_pts_N1(n - 1, q);
 	a += nb_pts_N1(1, q) * nb_pts_S(n - 1, q);
 	a += nb_pts_N1(1, q) * (q - 2) * nb_pts_N1(n - 1, q);
@@ -698,11 +699,11 @@ long int geometry_global::nb_pts_Sbar(int n, int q)
 	if (n <= 0) {
 		cout << "nb_pts_Sbar n <= 0" << endl;
 		exit(1);
-		}
+	}
 	if (n == 1) {
 		return 2;
 		// namely (0,1) and (1,0)
-		}
+	}
 	a = nb_pts_Sbar(n - 1, q);
 	a += nb_pts_Sbar(1, q) * nb_pts_S(n - 1, q);
 	a += nb_pts_Nbar(1, q) * nb_pts_N1(n - 1, q);
@@ -721,10 +722,10 @@ long int geometry_global::nb_pts_Nbar(int n, int q)
 	if (n <= 0) {
 		cout << "nb_pts_Nbar n <= 0" << endl;
 		exit(1);
-		}
+	}
 	if (n == 1) {
 		return (q - 1);
-		}
+	}
 	cout << "nb_pts_Nbar should only be called for n = 1" << endl;
 	exit(1);
 #if 0
@@ -743,8 +744,8 @@ void geometry_global::test_Orthogonal(int epsilon, int k, int q)
 {
 	finite_field GFq;
 	int *v;
-	int i, j, a, stride = 1, /*n,*/ len; //, h, wt;
-	int nb;
+	int stride = 1, /*n,*/ len; //, h, wt;
+	long int i, j, a, nb;
 	int c1 = 0, c2 = 0, c3 = 0;
 	int verbose_level = 0;
 
