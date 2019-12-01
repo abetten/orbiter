@@ -20,7 +20,7 @@ namespace foundations {
 
 
 void orthogonal::unrank_point(
-		int *v, int stride, int rk, int verbose_level)
+		int *v, int stride, long int rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -32,11 +32,11 @@ void orthogonal::unrank_point(
 			form_c1, form_c2, form_c3, rk, verbose_level);
 }
 
-int orthogonal::rank_point(int *v, int stride, int verbose_level)
+long int orthogonal::rank_point(int *v, int stride, int verbose_level)
 {
 	int i;
 	int f_v = (verbose_level >= 1);
-	int ret;
+	long int ret;
 
 	if (f_v) {
 		cout << "orthogonal::rank_point" << endl;
@@ -44,20 +44,21 @@ int orthogonal::rank_point(int *v, int stride, int verbose_level)
 	// copy the vector since Q_epsilon_rank has side effects
 	// (namely, Q_epsilon_rank damages its input vector)
 
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
 		rk_pt_v[i] = v[i * stride];
+	}
 
 	if (f_v) {
 		cout << "orthogonal::rank_point before F->Q_epsilon_rank" << endl;
-		}
+	}
 	ret = F->Q_epsilon_rank(rk_pt_v, 1, epsilon, n - 1,
 			form_c1, form_c2, form_c3, verbose_level);
 	if (f_v) {
 		cout << "orthogonal::rank_point after F->Q_epsilon_rank" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "orthogonal::rank_point done" << endl;
-		}
+	}
 	return ret;
 }
 
@@ -121,11 +122,11 @@ int orthogonal::line_type_given_point_types(
 		}
 }
 
-int orthogonal::type_and_index_to_point_rk(
+long int orthogonal::type_and_index_to_point_rk(
 		long int type, long int index, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int ret;
+	long int ret;
 
 	if (f_v) {
 		cout << "orthogonal::type_and_index_to_point_rk" << endl;
@@ -208,10 +209,10 @@ void orthogonal::unrank_S(int *v, int stride, int m, int rk)
 	F->S_unrank(v, stride, m, rk);
 }
 
-int orthogonal::rank_S(int *v, int stride, int m)
+long int orthogonal::rank_S(int *v, int stride, int m)
 // m = Witt index
 {
-	int rk;
+	long int rk;
 
 	if (m == 0) {
 		return 0;
@@ -220,46 +221,47 @@ int orthogonal::rank_S(int *v, int stride, int m)
 	return rk;
 }
 
-void orthogonal::unrank_N(int *v, int stride, int m, int rk)
+void orthogonal::unrank_N(int *v, int stride, int m, long int rk)
 // m = Witt index
 {
 	F->N_unrank(v, stride, m, rk);
 }
 
-int orthogonal::rank_N(int *v, int stride, int m)
+long int orthogonal::rank_N(int *v, int stride, int m)
 // m = Witt index
 {
-	int rk;
+	long int rk;
 
 	F->N_rank(v, stride, m, rk);
 	return rk;
 }
 
-void orthogonal::unrank_N1(int *v, int stride, int m, int rk)
+void orthogonal::unrank_N1(int *v, int stride, int m, long int rk)
 // m = Witt index
 {
 	F->N1_unrank(v, stride, m, rk);
 }
 
-int orthogonal::rank_N1(int *v, int stride, int m)
+long int orthogonal::rank_N1(int *v, int stride, int m)
 // m = Witt index
 {
-	int rk;
+	long int rk;
 
 	F->N1_rank(v, stride, m, rk);
 	return rk;
 }
 
-void orthogonal::unrank_Sbar(int *v, int stride, int m, int rk)
+void orthogonal::unrank_Sbar(int *v, int stride, int m, long int rk)
 // m = Witt index
 {
 	F->Sbar_unrank(v, stride, m, rk, 0 /* verbose_level */);
 }
 
-int orthogonal::rank_Sbar(int *v, int stride, int m)
+long int orthogonal::rank_Sbar(int *v, int stride, int m)
 // m = Witt index
 {
-	int rk, i;
+	long int rk;
+	int i;
 
 	for (i = 0; i < 2 * m; i++) {
 		v_tmp[i] = v[i * stride];
@@ -268,16 +270,16 @@ int orthogonal::rank_Sbar(int *v, int stride, int m)
 	return rk;
 }
 
-void orthogonal::unrank_Nbar(int *v, int stride, int m, int rk)
+void orthogonal::unrank_Nbar(int *v, int stride, int m, long int rk)
 // m = Witt index
 {
 	F->Nbar_unrank(v, stride, m, rk);
 }
 
-int orthogonal::rank_Nbar(int *v, int stride, int m)
+long int orthogonal::rank_Nbar(int *v, int stride, int m)
 // m = Witt index
 {
-	int rk;
+	long int rk;
 
 	F->Nbar_rank(v, stride, m, rk);
 	return rk;

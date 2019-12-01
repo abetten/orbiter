@@ -804,8 +804,9 @@ void geometry_global::test_orthogonal(int n, int q)
 {
 	int *v;
 	finite_field GFq;
-	int i, j, a, stride = 1;
-	int nb;
+	long int i, j, a;
+	int stride = 1;
+	long int nb;
 	int verbose_level = 0;
 
 	cout << "test_orthogonal" << endl;

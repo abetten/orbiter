@@ -1968,29 +1968,29 @@ public:
 
 	// orthogonal_rank_unrank.cpp
 	void unrank_point(int *v,
-		int stride, int rk, int verbose_level);
-	int rank_point(int *v, int stride, int verbose_level);
+		int stride, long int rk, int verbose_level);
+	long int rank_point(int *v, int stride, int verbose_level);
 	void unrank_line(long int &p1, long int &p2,
 		long int index, int verbose_level);
 	long int rank_line(long int p1, long int p2, int verbose_level);
 	int line_type_given_point_types(long int pt1, long int pt2,
 			long int pt1_type, long int pt2_type);
-	int type_and_index_to_point_rk(long int type,
+	long int type_and_index_to_point_rk(long int type,
 			long int index, int verbose_level);
 	void point_rk_to_type_and_index(long int rk,
 			long int &type, long int &index, int verbose_level);
 	void canonical_points_of_line(int line_type, long int pt1, long int pt2,
 			long int &cpt1, long int &cpt2, int verbose_level);
 	void unrank_S(int *v, int stride, int m, int rk);
-	int rank_S(int *v, int stride, int m);
-	void unrank_N(int *v, int stride, int m, int rk);
-	int rank_N(int *v, int stride, int m);
-	void unrank_N1(int *v, int stride, int m, int rk);
-	int rank_N1(int *v, int stride, int m);
-	void unrank_Sbar(int *v, int stride, int m, int rk);
-	int rank_Sbar(int *v, int stride, int m);
-	void unrank_Nbar(int *v, int stride, int m, int rk);
-	int rank_Nbar(int *v, int stride, int m);
+	long int rank_S(int *v, int stride, int m);
+	void unrank_N(int *v, int stride, int m, long int rk);
+	long int rank_N(int *v, int stride, int m);
+	void unrank_N1(int *v, int stride, int m, long int rk);
+	long int rank_N1(int *v, int stride, int m);
+	void unrank_Sbar(int *v, int stride, int m, long int rk);
+	long int rank_Sbar(int *v, int stride, int m);
+	void unrank_Nbar(int *v, int stride, int m, long int rk);
+	long int rank_Nbar(int *v, int stride, int m);
 
 
 
