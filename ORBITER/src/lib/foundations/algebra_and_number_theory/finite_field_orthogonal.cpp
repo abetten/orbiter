@@ -21,7 +21,7 @@ namespace foundations {
 
 void finite_field::Q_epsilon_unrank(
 	int *v, int stride, int epsilon, int k,
-	int c1, int c2, int c3, int a, int verbose_level)
+	int c1, int c2, int c3, long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -64,12 +64,12 @@ void finite_field::Q_epsilon_unrank(
 	}
 }
 
-int finite_field::Q_epsilon_rank(
+long int finite_field::Q_epsilon_rank(
 	int *v, int stride, int epsilon, int k,
 	int c1, int c2, int c3, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int a;
+	long int a;
 
 	if (f_v) {
 		cout << "finite_field::Q_epsilon_rank" << endl;
@@ -162,6 +162,8 @@ int Q_rank(finite_field &GFq, int *v, int stride, int k)
 }
 #endif
 
+
+#if 0
 vector_hashing *Hash_table_parabolic = NULL;
 int Hash_table_parabolic_q = 0;
 int Hash_table_parabolic_k = 0;
@@ -209,9 +211,12 @@ void finite_field::init_hash_table_parabolic(int k, int verbose_level)
 	Hash_table_parabolic->compute_tables(verbose_level - 1);
 
 }
+#endif
 
-void finite_field::Q_unrank(int *v, int stride, int k, int a, int verbose_level)
+void finite_field::Q_unrank(int *v, int stride, int k, long int a, int verbose_level)
 {
+
+#if 0
 	if (Hash_table_parabolic) {
 		if (Hash_table_parabolic_q == q &&
 				Hash_table_parabolic_k == k) {
@@ -224,11 +229,13 @@ void finite_field::Q_unrank(int *v, int stride, int k, int a, int verbose_level)
 			return;
 			}
 		}
+#endif
 	Q_unrank_directly(v, stride, k, a, verbose_level);
 }
 
-int finite_field::Q_rank(int *v, int stride, int k, int verbose_level)
+long int finite_field::Q_rank(int *v, int stride, int k, int verbose_level)
 {
+#if 0
 	if (Hash_table_parabolic) {
 		PG_element_normalize_from_front(v, stride, k + 1);
 		if (Hash_table_parabolic_q == q &&
@@ -241,14 +248,16 @@ int finite_field::Q_rank(int *v, int stride, int k, int verbose_level)
 			return Hash_table_parabolic->rank(v);
 			}
 		}
+#endif
 	return Q_rank_directly(v, stride, k, verbose_level);
 }
 
-void finite_field::Q_unrank_directly(int *v, int stride, int k, int a, int verbose_level)
+void finite_field::Q_unrank_directly(int *v, int stride, int k, long int a, int verbose_level)
 // parabolic quadric
 // k = projective dimension, must be even
 {
-	int n, x, i, minusone;
+	int n, i, minusone;
+	long int x;
 	geometry_global Gg;
 
 	n = Gg.Witt_index(0, k);
@@ -271,11 +280,13 @@ void finite_field::Q_unrank_directly(int *v, int stride, int k, int a, int verbo
 		}
 }
 
-int finite_field::Q_rank_directly(int *v, int stride, int k, int verbose_level)
+long int finite_field::Q_rank_directly(int *v, int stride, int k, int verbose_level)
 // parabolic quadric
 // k = projective dimension, must be even
 {
-	int n, x, a, b, i, minusone;
+	int n, i;
+	long int x, a, b;
+	int minusone;
 	geometry_global Gg;
 
 	n = Gg.Witt_index(0, k);
@@ -299,7 +310,7 @@ int finite_field::Q_rank_directly(int *v, int stride, int k, int verbose_level)
 	return a + b;
 }
 
-void finite_field::Qplus_unrank(int *v, int stride, int k, int a, int verbose_level)
+void finite_field::Qplus_unrank(int *v, int stride, int k, long int a, int verbose_level)
 // hyperbolic quadric
 // k = projective dimension, must be odd
 {
@@ -310,12 +321,13 @@ void finite_field::Qplus_unrank(int *v, int stride, int k, int a, int verbose_le
 	Sbar_unrank(v, stride, n, a, verbose_level);
 }
 
-int finite_field::Qplus_rank(int *v, int stride, int k, int verbose_level)
+long int finite_field::Qplus_rank(int *v, int stride, int k, int verbose_level)
 // hyperbolic quadric
 // k = projective dimension, must be odd
 {
 	int f_v = (verbose_level >= 1);
-	int n, a;
+	int n;
+	long int a;
 	geometry_global Gg;
 
 	if (f_v) {
@@ -327,7 +339,7 @@ int finite_field::Qplus_rank(int *v, int stride, int k, int verbose_level)
 }
 
 void finite_field::Qminus_unrank(int *v,
-		int stride, int k, int a,
+		int stride, int k, long int a,
 		int c1, int c2, int c3, int verbose_level)
 // elliptic quadric
 // k = projective dimension, must be odd
@@ -335,7 +347,8 @@ void finite_field::Qminus_unrank(int *v,
 // \sum_{i=0}^n x_{2i}x_{2i+1} + c1 x_{2n}^2 +
 // c2 x_{2n} x_{2n+1} + c3 x_{2n+1}^2
 {
-	int n, x, b, c, minusz, x1, x2, u, vv, w, z, i;
+	int n, z, minusz, u, vv, w, i;
+	long int x, b, c, x1, x2;
 	geometry_global Gg;
 
 	n = Gg.Witt_index(-1, k);
@@ -345,7 +358,7 @@ void finite_field::Qminus_unrank(int *v,
 		v[(2 * n + 1) * stride] = 0;
 		Sbar_unrank(v, stride, n, a, verbose_level);
 		return;
-		}
+	}
 	a -= x;
 	x = Gg.nb_pts_N1(n, q);
 	b = a / x;
@@ -354,7 +367,7 @@ void finite_field::Qminus_unrank(int *v,
 	if (b == 0) {
 		x1 = 1;
 		x2 = 0;
-		}
+	}
 	else {
 		b--;
 		x1 = b;
@@ -363,8 +376,8 @@ void finite_field::Qminus_unrank(int *v,
 			cout << "finite_field::Qminus_unrank "
 					"b >= q, the rank was too big" << endl;
 			exit(1);
-			}
 		}
+	}
 	v[2 * n * stride] = x1;
 	v[(2 * n + 1) * stride] = x2;
 	u = product3(c1, x1, x1);
@@ -383,17 +396,17 @@ void finite_field::Qminus_unrank(int *v,
 		cout << "vv=c2*x1*x2=" << vv << endl;
 		cout << "w=c3*x2*x2=" << w << endl;
 		exit(1);
-		}
+	}
 	N1_unrank(v, stride, n, c);
 	minusz = negate(z);
 	if (minusz != 1) {
 		for (i = 0; i < n; i++) {
 			v[2 * i * stride] = mult(v[2 * i * stride], minusz);
-			}
 		}
+	}
 }
 
-int finite_field::Qminus_rank(int *v,
+long int finite_field::Qminus_rank(int *v,
 		int stride, int k, int c1, int c2, int c3, int verbose_level)
 // elliptic quadric
 // k = projective dimension, must be odd
@@ -401,28 +414,27 @@ int finite_field::Qminus_rank(int *v,
 // \sum_{i=0}^n x_{2i}x_{2i+1} + c1 x_{2n}^2 +
 // c2 x_{2n} x_{2n+1} + c3 x_{2n+1}^2
 {
-	int a, n, x, b, c, minusz, minuszv;
-	int x1, x2, u, vv, w, z, i;
+	int n, minusz, minuszv;
+	long int a, b, c, x, x1, x2, u, vv, w, z, i;
 	geometry_global Gg;
 
 	n = Gg.Witt_index(-1, k);
 
 	{
-	int aa;
-	aa = evaluate_quadratic_form(v, stride, -1, k,
-			c1, c2, c3);
-	if (aa) {
-		cout << "Qminus_rank fatal: the vector "
-				"is not zero under the quadratic form" << endl;
-		cout << "value=" << aa << endl;
-		cout << "stride=" << stride << endl;
-		cout << "k=" << k << endl;
-		cout << "c1=" << c1 << endl;
-		cout << "c2=" << c2 << endl;
-		cout << "c3=" << c3 << endl;
-		int_vec_print(cout, v, k + 1);
-		cout << endl;
-		exit(1);
+		int aa;
+		aa = evaluate_quadratic_form(v, stride, -1, k, c1, c2, c3);
+		if (aa) {
+			cout << "Qminus_rank fatal: the vector "
+					"is not zero under the quadratic form" << endl;
+			cout << "value=" << aa << endl;
+			cout << "stride=" << stride << endl;
+			cout << "k=" << k << endl;
+			cout << "c1=" << c1 << endl;
+			cout << "c2=" << c2 << endl;
+			cout << "c3=" << c3 << endl;
+			int_vec_print(cout, v, k + 1);
+			cout << endl;
+			exit(1);
 		}
 	}
 	PG_element_normalize(v, stride, k + 1);
@@ -481,9 +493,9 @@ int finite_field::Qminus_rank(int *v,
 
 
 
-void finite_field::S_unrank(int *v, int stride, int n, int a)
+void finite_field::S_unrank(int *v, int stride, int n, long int a)
 {
-	int l, i, j, x, y, u;
+	long int l, i, j, x, y, u;
 	int alpha, beta;
 	geometry_global Gg;
 
@@ -544,9 +556,9 @@ void finite_field::S_unrank(int *v, int stride, int n, int a)
 		}
 }
 
-void finite_field::S_rank(int *v, int stride, int n, int &a)
+void finite_field::S_rank(int *v, int stride, int n, long int &a)
 {
-	int l, i, j, x, y, u;
+	long int l, i, j, x, y, u;
 	int alpha, beta, gamma, delta, epsilon;
 	geometry_global Gg;
 
@@ -606,9 +618,9 @@ void finite_field::S_rank(int *v, int stride, int n, int &a)
 		}
 }
 
-void finite_field::N_unrank(int *v, int stride, int n, int a)
+void finite_field::N_unrank(int *v, int stride, int n, long int a)
 {
-	int l, i, j, k, j1, x, y, z, yz, u;
+	long int l, i, j, k, j1, x, y, z, yz, u;
 	int alpha, beta, gamma, delta, epsilon;
 	geometry_global Gg;
 
@@ -684,9 +696,9 @@ void finite_field::N_unrank(int *v, int stride, int n, int a)
 		}
 }
 
-void finite_field::N_rank(int *v, int stride, int n, int &a)
+void finite_field::N_rank(int *v, int stride, int n, long int &a)
 {
-	int l, i, j, k, x, y, z, yz, u;
+	long int l, i, j, k, x, y, z, yz, u;
 	int alpha, beta, gamma, delta;
 	int epsilon, gamma2, epsilon_inv;
 	geometry_global Gg;
@@ -758,9 +770,9 @@ void finite_field::N_rank(int *v, int stride, int n, int &a)
 		}
 }
 
-void finite_field::N1_unrank(int *v, int stride, int n, int a)
+void finite_field::N1_unrank(int *v, int stride, int n, long int a)
 {
-	int l, i, j, k, j1, x, y, z, yz, u;
+	long int l, i, j, k, j1, x, y, z, yz, u;
 	int alpha, beta, gamma;
 	geometry_global Gg;
 
@@ -865,9 +877,9 @@ void finite_field::N1_unrank(int *v, int stride, int n, int a)
 		}
 }
 
-void finite_field::N1_rank(int *v, int stride, int n, int &a)
+void finite_field::N1_rank(int *v, int stride, int n, long int &a)
 {
-	int l, i, j, k, x, y, z, yz, u;
+	long int l, i, j, k, x, y, z, yz, u;
 	int alpha, alpha_inv, beta, gamma, gamma2, gamma_inv;
 	geometry_global Gg;
 
@@ -968,10 +980,10 @@ void finite_field::N1_rank(int *v, int stride, int n, int &a)
 		}
 }
 
-void finite_field::Sbar_unrank(int *v, int stride, int n, int a, int verbose_level)
+void finite_field::Sbar_unrank(int *v, int stride, int n, long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int l, i, j, x, y, u;
+	long int l, i, j, x, y, u;
 	int alpha, beta;
 	geometry_global Gg;
 
@@ -1071,10 +1083,10 @@ void finite_field::Sbar_unrank(int *v, int stride, int n, int a, int verbose_lev
 		}
 }
 
-void finite_field::Sbar_rank(int *v, int stride, int n, int &a, int verbose_level)
+void finite_field::Sbar_rank(int *v, int stride, int n, long int &a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int l, i, j, x, y, u;
+	long int l, i, j, x, y, u;
 	int alpha, beta, beta2, beta_inv;
 	geometry_global Gg;
 
@@ -1198,7 +1210,7 @@ void finite_field::Sbar_rank(int *v, int stride, int n, int &a, int verbose_leve
 		}
 }
 
-void finite_field::Nbar_unrank(int *v, int stride, int n, int a)
+void finite_field::Nbar_unrank(int *v, int stride, int n, long int a)
 {
 	int y, l;
 
@@ -1223,7 +1235,7 @@ void finite_field::Nbar_unrank(int *v, int stride, int n, int a)
 		}
 }
 
-void finite_field::Nbar_rank(int *v, int stride, int n, int &a)
+void finite_field::Nbar_rank(int *v, int stride, int n, long int &a)
 {
 	if (n == 1) {
 		if (v[1 * stride] != 1) {
@@ -1409,7 +1421,7 @@ void finite_field::Siegel_map_between_singular_points(int *T,
 		cout << "   rk_to=";
 		int_vec_print(cout, w, d);
 		cout << endl;
-		}
+	}
 
 	a = evaluate_bilinear_form(B, B + d, d, Gram_matrix);
 	b = evaluate_bilinear_form(B, w, d, Gram_matrix);
@@ -1418,7 +1430,7 @@ void finite_field::Siegel_map_between_singular_points(int *T,
 	for (i = 0; i < d; i++) {
 		B[d + i] = mult(B[d + i], av);
 		w[i] = mult(w[i], bv);
-		}
+	}
 	if (f_vv) {
 		cout << "after scaling:" << endl;
 		cout << " rk_from=";
@@ -1427,57 +1439,55 @@ void finite_field::Siegel_map_between_singular_points(int *T,
 		cout << "   rk_to=";
 		int_vec_print(cout, w, d);
 		cout << endl;
-		}
+	}
 	for (i = 2; i < d; i++) {
 		for (j = 0; j < d; j++) {
 			B[i * d + j] = 0;
-			}
 		}
+	}
 
 	if (f_vv) {
 		cout << "before perp, the matrix B is:" << endl;
 		print_integer_matrix(cout, B, d, d);
-		}
+	}
 	perp(d, 2, B, Gram_matrix);
 	if (f_vv) {
 		cout << "after perp, the matrix B is:" << endl;
 		print_integer_matrix(cout, B, d, d);
-		}
+	}
 	invert_matrix(B, Bv, d);
 	if (f_vv) {
 		cout << "the matrix Bv = B^{-1} is:" << endl;
 		print_integer_matrix(cout, B, d, d);
-		}
-	mult_matrix_matrix(w, Bv, z, 1, d, d,
-			0 /* verbose_level */);
+	}
+	mult_matrix_matrix(w, Bv, z, 1, d, d, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the coefficient vector z = w * Bv is:" << endl;
 		int_vec_print(cout, z, d);
 		cout << endl;
-		}
+	}
 	z[0] = 0;
 	z[1] = 0;
 	if (f_vv) {
 		cout << "we zero out the first two coordinates:" << endl;
 		int_vec_print(cout, z, d);
 		cout << endl;
-		}
-	mult_matrix_matrix(z, B, x, 1, d, d,
-			0 /* verbose_level */);
+	}
+	mult_matrix_matrix(z, B, x, 1, d, d, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the vector x = z * B is:" << endl;
 		int_vec_print(cout, x, d);
 		cout << endl;
-		}
+	}
 	minus_one = negate(1);
 	for (i = 0; i < d; i++) {
 		x[i] = mult(x[i], minus_one);
-		}
+	}
 	if (f_vv) {
 		cout << "the vector -x is:" << endl;
 		int_vec_print(cout, x, d);
 		cout << endl;
-		}
+	}
 	Siegel_Transformation(epsilon, d - 1,
 		form_c1, form_c2, form_c3, T, x, B,
 		verbose_level - 2);
@@ -1485,7 +1495,7 @@ void finite_field::Siegel_map_between_singular_points(int *T,
 		cout << "finite_field::Siegel_map_between_singular_points "
 				"the Siegel transformation is:" << endl;
 		print_integer_matrix(cout, T, d, d);
-		}
+	}
 	FREE_int(B);
 	FREE_int(Bv);
 	FREE_int(w);
@@ -1519,26 +1529,28 @@ void finite_field::Siegel_Transformation(
 		cout << " u=";
 		int_vec_print(cout, u, d);
 		cout << endl;
-		}
+	}
 	Gram_matrix(epsilon, k,
 			form_c1, form_c2, form_c3, Gram);
 	Qv = evaluate_quadratic_form(v, 1 /*stride*/,
 			epsilon, k, form_c1, form_c2, form_c3);
 	if (f_v) {
 		cout << "Qv=" << Qv << endl;
-		}
+	}
 	N1 = NEW_int(d * d);
 	N2 = NEW_int(d * d);
 	new_Gram = NEW_int(d * d);
 	w = NEW_int(d);
 	for (i = 0; i < d; i++) {
 		for (j = 0; j < d; j++) {
-			if (i == j)
+			if (i == j) {
 				M[i * d + j] = 1;
-			else
+			}
+			else {
 				M[i * d + j] = 0;
 			}
 		}
+	}
 	// compute w^T := Gram * v^T
 	for (i = 0; i < d; i++) {
 		a = 0;
@@ -1547,9 +1559,9 @@ void finite_field::Siegel_Transformation(
 			c = v[j];
 			e = mult(b, c);
 			a = add(a, e);
-			}
-		w[i] = a;
 		}
+		w[i] = a;
+	}
 	// M := M + w^T * u
 	for (i = 0; i < d; i++) {
 		b = w[i];
@@ -1557,8 +1569,8 @@ void finite_field::Siegel_Transformation(
 			c = u[j];
 			e = mult(b, c);
 			M[i * d + j] = add(M[i * d + j], e);
-			}
 		}
+	}
 	// compute w^T := Gram * u^T
 	for (i = 0; i < d; i++) {
 		a = 0;
@@ -1567,9 +1579,9 @@ void finite_field::Siegel_Transformation(
 			c = u[j];
 			e = mult(b, c);
 			a = add(a, e);
-			}
-		w[i] = a;
 		}
+		w[i] = a;
+	}
 	// M := M - w^T * v
 	for (i = 0; i < d; i++) {
 		b = w[i];
@@ -1577,18 +1589,17 @@ void finite_field::Siegel_Transformation(
 			c = v[j];
 			e = mult(b, c);
 			M[i * d + j] = add(M[i * d + j], negate(e));
-			}
 		}
+	}
 	// M := M - Q(v) * w^T * u
 	for (i = 0; i < d; i++) {
 		b = w[i];
 		for (j = 0; j < d; j++) {
 			c = u[j];
 			e = mult(b, c);
-			M[i * d + j] =
-					add(M[i * d + j], mult(negate(e), Qv));
-			}
+			M[i * d + j] = add(M[i * d + j], mult(negate(e), Qv));
 		}
+	}
 	if (f_v) {
 		cout << "finite_field::Siegel_Transformation "
 				"Siegel matrix:" << endl;
@@ -1597,7 +1608,7 @@ void finite_field::Siegel_Transformation(
 		//cout << "transformed Gram matrix:" << endl;
 		//print_integer_matrix_width(cout, new_Gram, d, d, d, 2);
 		//cout << endl;
-		}
+	}
 
 	FREE_int(Gram);
 	FREE_int(new_Gram);
@@ -1625,12 +1636,12 @@ long int finite_field::orthogonal_find_root(int rk2,
 	if (f_v) {
 		cout << "finite_field::orthogonal_find_root "
 				"rk2=" << rk2 << endl;
-		}
+	}
 	if (rk2 == 0) {
 		cout << "finite_field::orthogonal_find_root: "
 				"rk2 must not be 0" << endl;
 		exit(1);
-		}
+	}
 	//epsilon = orthogonal_epsilon;
 	//d = orthogonal_d;
 	//k = d - 1;
@@ -1643,7 +1654,7 @@ long int finite_field::orthogonal_find_root(int rk2,
 	for (i = 0; i < d; i++) {
 		x[i] = 0;
 		z[i] = 0;
-		}
+	}
 	x[0] = 1;
 
 	Q_epsilon_unrank(y, 1, epsilon, k,
@@ -1651,7 +1662,7 @@ long int finite_field::orthogonal_find_root(int rk2,
 	if (y[0]) {
 		z[1] = 1;
 		goto finish;
-		}
+	}
 	if (y[1] == 0) {
 		for (i = 2; i < d; i++) {
 			if (y[i]) {
@@ -1659,17 +1670,17 @@ long int finite_field::orthogonal_find_root(int rk2,
 					z[1] = 1;
 					z[i + 1] = 1;
 					goto finish;
-					}
+				}
 				else {
 					z[1] = 1;
 					z[i - 1] = 1;
 					goto finish;
-					}
 				}
 			}
+		}
 		cout << "finite_field::orthogonal_find_root "
 				"error: y is zero vector" << endl;
-		}
+	}
 	y2_minus_y3 = add(y[2], negate(y[3]));
 	minus_y1 = negate(y[1]);
 	if (minus_y1 != y2_minus_y3) {
@@ -1678,7 +1689,7 @@ long int finite_field::orthogonal_find_root(int rk2,
 		z[2] = negate(1);
 		z[3] = 1;
 		goto finish;
-		}
+	}
 	y3_minus_y2 = add(y[3], negate(y[2]));
 	if (minus_y1 != y3_minus_y2) {
 		z[0] = 1;
@@ -1686,23 +1697,23 @@ long int finite_field::orthogonal_find_root(int rk2,
 		z[2] = 1;
 		z[3] = negate(1);
 		goto finish;
-		}
+	}
 	// now we are in characteristic 2
 	if (q == 2) {
 		if (y[2] == 0) {
 			z[1] = 1;
 			z[2] = 1;
 			goto finish;
-			}
+		}
 		else if (y[3] == 0) {
 			z[1] = 1;
 			z[3] = 1;
 			goto finish;
-			}
+		}
 		cout << "finite_field::orthogonal_find_root "
 				"error neither y2 nor y3 is zero" << endl;
 		exit(1);
-		}
+	}
 	// now the field has at least 4 elements
 	a = 3;
 	a2 = mult(a, a);
@@ -1716,18 +1727,18 @@ finish:
 	if (u == 0) {
 		cout << "u=" << u << endl;
 		exit(1);
-		}
+	}
 	v = evaluate_bilinear_form(z, y, d, Gram_matrix);
 	if (v == 0) {
 		cout << "v=" << v << endl;
 		exit(1);
-		}
+	}
 	root = Q_epsilon_rank(z, 1, epsilon, k,
 			form_c1, form_c2, form_c3, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "finite_field::orthogonal_find_root "
 				"root=" << root << endl;
-		}
+	}
 
 	FREE_int(x);
 	FREE_int(y);
@@ -1752,7 +1763,7 @@ void finite_field::choose_anisotropic_form(
 		c1 = 1;
 		c2 = 0;
 		c3 = negate(primitive_element());
-		}
+	}
 	else {
 		FX.create_object_by_rank_string(m,
 				get_primitive_polynomial(q, 2, 0),
@@ -1765,14 +1776,14 @@ void finite_field::choose_anisotropic_form(
 			cout << "finite_field::choose_anisotropic_form "
 					"choosing the following primitive polynomial:" << endl;
 			FX.print_object(m, cout); cout << endl;
-			}
+		}
 
 		int *rep = (int *) m;
 		int *coeff = rep + 1;
 		c1 = coeff[2];
 		c2 = coeff[1];
 		c3 = coeff[0];
-		}
+	}
 
 #if 0
 	finite_field GFQ;
@@ -1801,7 +1812,7 @@ void finite_field::choose_anisotropic_form(
 		cout << "finite_field::choose_anisotropic_form "
 				"over GF(" << q << "): choosing c1=" << c1 << ", c2=" << c2
 				<< ", c3=" << c3 << endl;
-		}
+	}
 }
 
 
@@ -1809,10 +1820,12 @@ void finite_field::choose_anisotropic_form(
 void orthogonal_points_free_global_data()
 {
 	cout << "orthogonal_points_free_global_data" << endl;
+#if 0
 	if (Hash_table_parabolic) {
 		delete Hash_table_parabolic;
 		Hash_table_parabolic = NULL;
 		}
+#endif
 	cout << "orthogonal_points_free_global_data done" << endl;
 }
 

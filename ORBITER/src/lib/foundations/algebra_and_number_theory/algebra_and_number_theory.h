@@ -676,40 +676,40 @@ public:
 	// #########################################################################
 	void Q_epsilon_unrank(
 		int *v, int stride, int epsilon, int k,
-		int c1, int c2, int c3, int a, int verbose_level);
-	int Q_epsilon_rank(
+		int c1, int c2, int c3, long int a, int verbose_level);
+	long int Q_epsilon_rank(
 		int *v, int stride, int epsilon, int k,
 		int c1, int c2, int c3, int verbose_level);
-	void init_hash_table_parabolic(int k, int verbose_level);
-	void Q_unrank(int *v, int stride, int k, int a, int verbose_level);
-	int Q_rank(int *v, int stride, int k, int verbose_level);
-	void Q_unrank_directly(int *v, int stride, int k, int a, int verbose_level);
+	//void init_hash_table_parabolic(int k, int verbose_level);
+	void Q_unrank(int *v, int stride, int k, long int a, int verbose_level);
+	long int Q_rank(int *v, int stride, int k, int verbose_level);
+	void Q_unrank_directly(int *v, int stride, int k, long int a, int verbose_level);
 		// parabolic quadric
 		// k = projective dimension, must be even
-	int Q_rank_directly(int *v, int stride, int k, int verbose_level);
-	void Qplus_unrank(int *v, int stride, int k, int a, int verbose_level);
+	long int Q_rank_directly(int *v, int stride, int k, int verbose_level);
+	void Qplus_unrank(int *v, int stride, int k, long int a, int verbose_level);
 		// hyperbolic quadric
 		// k = projective dimension, must be odd
-	int Qplus_rank(int *v, int stride, int k, int verbose_level);
+	long int Qplus_rank(int *v, int stride, int k, int verbose_level);
 	void Qminus_unrank(int *v,
-			int stride, int k, int a,
+			int stride, int k, long int a,
 			int c1, int c2, int c3, int verbose_level);
 		// elliptic quadric
 		// k = projective dimension, must be odd
 		// the form is
 		// \sum_{i=0}^n x_{2i}x_{2i+1} + c1 x_{2n}^2 +
 		// c2 x_{2n} x_{2n+1} + c3 x_{2n+1}^2
-	int Qminus_rank(int *v, int stride, int k, int c1, int c2, int c3, int verbose_level);
-	void S_unrank(int *v, int stride, int n, int a);
-	void S_rank(int *v, int stride, int n, int &a);
-	void N_unrank(int *v, int stride, int n, int a);
-	void N_rank(int *v, int stride, int n, int &a);
-	void N1_unrank(int *v, int stride, int n, int a);
-	void N1_rank(int *v, int stride, int n, int &a);
-	void Sbar_unrank(int *v, int stride, int n, int a, int verbose_level);
-	void Sbar_rank(int *v, int stride, int n, int &a, int verbose_level);
-	void Nbar_unrank(int *v, int stride, int n, int a);
-	void Nbar_rank(int *v, int stride, int n, int &a);
+	long int Qminus_rank(int *v, int stride, int k, int c1, int c2, int c3, int verbose_level);
+	void S_unrank(int *v, int stride, int n, long int a);
+	void S_rank(int *v, int stride, int n, long int &a);
+	void N_unrank(int *v, int stride, int n, long int a);
+	void N_rank(int *v, int stride, int n, long int &a);
+	void N1_unrank(int *v, int stride, int n, long int a);
+	void N1_rank(int *v, int stride, int n, long int &a);
+	void Sbar_unrank(int *v, int stride, int n, long int a, int verbose_level);
+	void Sbar_rank(int *v, int stride, int n, long int &a, int verbose_level);
+	void Nbar_unrank(int *v, int stride, int n, long int a);
+	void Nbar_rank(int *v, int stride, int n, long int &a);
 	void Gram_matrix(int epsilon, int k,
 		int form_c1, int form_c2, int form_c3,
 		int *&Gram);

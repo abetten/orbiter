@@ -26,6 +26,7 @@ int t0; // the system time when the program started
 void orthogonal_points(int epsilon, int n, int q,
 		int f_lines,
 		int f_rank_single, const char *rank_single_string,
+		int f_lines_on_point_by_line_rank, long int lines_on_point_by_line_rank_pt,
 		int verbose_level);
 void orthogonal_lines(finite_field *F,
 		int epsilon, int n, int *c123, int verbose_level);
@@ -47,6 +48,8 @@ int main(int argc, char **argv)
 	int f_lines = FALSE;
 	int f_rank_single = FALSE;
 	const char *rank_single_string = NULL;
+	int f_lines_on_point_by_line_rank = FALSE;
+	long int lines_on_point_by_line_rank_pt = 0;
 	os_interface Os;
 
  	t0 = Os.os_ticks();
@@ -89,6 +92,12 @@ int main(int argc, char **argv)
 			rank_single_string = argv[++i];
 			cout << "-lines " << endl;
 		}
+		else if (strcmp(argv[i], "-lines_on_point_by_line_rank") == 0) {
+			f_lines_on_point_by_line_rank = TRUE;
+			lines_on_point_by_line_rank_pt = atol(argv[++i]);
+			cout << "-lines_on_point_by_line_rank " << lines_on_point_by_line_rank_pt << endl;
+		}
+
 	}
 	if (!f_d && !f_n) {
 		cout << "please use either the -d <d> "
@@ -116,6 +125,7 @@ int main(int argc, char **argv)
 		}
 		orthogonal_points(epsilon, n, q, f_lines,
 				f_rank_single, rank_single_string,
+				f_lines_on_point_by_line_rank, lines_on_point_by_line_rank_pt,
 				verbose_level);
 	}
 	else {
@@ -135,6 +145,7 @@ int main(int argc, char **argv)
 void orthogonal_points(int epsilon, int n, int q,
 		int f_lines,
 		int f_rank_single, const char *rank_single_string,
+		int f_lines_on_point_by_line_rank, long int lines_on_point_by_line_rank_pt,
 		int verbose_level)
 {
 	int i, j;
@@ -160,7 +171,7 @@ void orthogonal_points(int epsilon, int n, int q,
 	finite_field *F;
 	
 	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level - 1);
+	F->init(q, 0 /*verbose_level - 1*/);
 	F->print();
 	
 	if (epsilon == 0) {
@@ -175,7 +186,23 @@ void orthogonal_points(int epsilon, int n, int q,
 	cout << "Gram matrix" << endl;
 	print_integer_matrix_width(cout, G, d, d, d, 2);
 	
+	if (f_lines_on_point_by_line_rank) {
+		cout << "f_lines_on_point_by_line_rank" << endl;
+		cout << "creating orthogonal" << endl;
+		orthogonal *O;
+		long int *line_pencil_line_ranks;
 
+		O = NEW_OBJECT(orthogonal);
+		O->init(epsilon, d, F, 0 /*verbose_level*/);
+		cout << "creating orthogonal done" << endl;
+
+		line_pencil_line_ranks = NEW_lint(O->alpha);
+
+
+		cout << "creating orthogonal before lines_on_point_by_line_rank" << endl;
+		O->lines_on_point_by_line_rank(lines_on_point_by_line_rank_pt,
+				line_pencil_line_ranks, verbose_level);
+	}
 	if (f_rank_single) {
 		int *pt_coord;
 		int sz;

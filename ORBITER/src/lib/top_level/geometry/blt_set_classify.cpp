@@ -241,7 +241,8 @@ void blt_set_classify::init_orthogonal_hash(int verbose_level)
 		cout << "blt_set_classify::init_orthogonal_hash" << endl;
 	}
 
-	Blt_set_domain->O->F->init_hash_table_parabolic(4, 0/*verbose_level*/);
+	// ToDo:
+	//Blt_set_domain->O->F->init_hash_table_parabolic(4, 0/*verbose_level*/);
 
 	if (f_v) {
 		cout << "blt_set_classify::init_orthogonal_hash finished" << endl;
