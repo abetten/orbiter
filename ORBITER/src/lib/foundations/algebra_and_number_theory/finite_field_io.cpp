@@ -645,7 +645,7 @@ void finite_field::print_element_with_symbol_str(stringstream &ost,
 		}
 }
 
-void finite_field::int_vec_print(ostream &ost, int *v, int len)
+void finite_field::int_vec_print_field_elements(ostream &ost, int *v, int len)
 {
 	int i;
 	ost << "(";
@@ -663,6 +663,11 @@ void finite_field::int_vec_print_elements_exponential(ostream &ost,
 	int i;
 	ost << "(";
 	for (i = 0; i < len; i++) {
+		if (v[i] >= q) {
+			cout << "finite_field::int_vec_print_elements_exponential v[i] >= q" << endl;
+			cout << "v[i]=" << v[i] << endl;
+			exit(1);
+		}
 		print_element_with_symbol(ost, v[i],
 			TRUE /*f_print_as_exponentials*/,
 			10 /*width*/, symbol_for_print);
