@@ -148,17 +148,26 @@ void finite_field::projective_matrix_group_base_and_orbits(int n,
 
 	if (f_v) {
 		cout << "finite_field::projective_matrix_group_base_and_orbits base_len=" << base_len << endl;
-		}
+	}
 	for (i = 0; i < base_len; i++) {
 		base[i] = i;
-		}
+	}
+	for (i = 0; i < base_len; i++) {
+		transversal_length[i] = i;
+	}
+	if (f_v) {
+		cout << "projective_matrix_group_base_and_orbits "
+				"transversal_length: ";
+		int_vec_print(cout, transversal_length, base_len);
+		cout << endl;
+	}
 	if (f_semilinear) {
 		base[base_len - 1] = n + p;
 			// here was an error: the -1 was missing
 			// A.B. 11/11/05
 			// no that -1 needs to go
 			// A.B. 3/9/2006
-		}
+	}
 	//transversal_length[0] = nb_PG_elements(n - 1, q);
 	for (i = 0; i < n; i++) {
 		transversal_length[i] =
