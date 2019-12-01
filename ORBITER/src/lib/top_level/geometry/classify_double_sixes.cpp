@@ -366,9 +366,16 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 	// It is important that this be done after we sort Neighbors.
 	if (f_v) {
 		cout << "classify_double_sixes::compute_neighbors "
-				"Establish the bijection between Neighbors and Lines in PG(3,q)" << endl;
+				"Establish the bijection between Neighbors and Lines in PG(3,q), nb_neighbors=" << nb_neighbors << endl;
 	}
+	int N100;
+
+	N100 = nb_neighbors / 100 + 1;
+
 	for (i = 0; i < nb_neighbors; i++) {
+		if ((i % N100) == 0) {
+			cout << "classify_double_sixes::compute_neighbors i=" << i << " / " << nb_neighbors << " at " << (double)i / nb_neighbors << "%" << endl;
+		}
 		a = Neighbors[i];
 		AW->unrank_point(w, a);
 		Surf->wedge_to_klein(w, v);
