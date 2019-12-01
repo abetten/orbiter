@@ -1078,7 +1078,7 @@ public:
 		int a, int f_exponential, int width, const char *symbol);
 	void print_element_with_symbol_str(std::stringstream &ost,
 			int a, int f_exponential, int width, const char *symbol);
-	void int_vec_print(std::ostream &ost, int *v, int len);
+	void int_vec_print_field_elements(std::ostream &ost, int *v, int len);
 	void int_vec_print_elements_exponential(std::ostream &ost,
 		int *v, int len, const char *symbol_for_print);
 	void latex_addition_table(std::ostream &f,
