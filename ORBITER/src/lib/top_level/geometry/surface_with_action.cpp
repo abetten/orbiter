@@ -167,7 +167,7 @@ void surface_with_action::init_group(int f_semilinear,
 		FALSE /* f_affine */,
 		f_semilinear, FALSE /* f_special */, 
 		nice_gens,
-		0 /* verbose_level*/);
+		verbose_level - 2);
 
 	FREE_OBJECT(nice_gens);
 
