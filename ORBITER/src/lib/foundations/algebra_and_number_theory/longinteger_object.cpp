@@ -309,6 +309,15 @@ ostream& longinteger_object::print_not_scientific(ostream& ost)
 	return ost;
 }
 
+int longinteger_object::log10()
+{
+	int h;
+
+	h = l;
+	return h;
+}
+
+
 int longinteger_object::output_width()
 {
 	int h;
