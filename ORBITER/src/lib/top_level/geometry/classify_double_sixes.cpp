@@ -323,8 +323,8 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 		cout << "classify_double_sixes::compute_neighbors "
 				"after Surf->O->perp" << endl;
 
-		cout << "Neighbors:" << endl;
-		lint_matrix_print(Neighbors, (sz + 9) / 10, 10);
+		//cout << "Neighbors:" << endl;
+		//lint_matrix_print(Neighbors, (sz + 9) / 10, 10);
 		}
 	
 	if (sz != nb_neighbors) {
