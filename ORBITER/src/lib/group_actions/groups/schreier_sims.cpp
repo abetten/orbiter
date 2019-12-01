@@ -258,7 +258,7 @@ void schreier_sims::print_group_orders()
 	if (f_has_target_group_order) {
 		cout << " target group order is " << tgo;
 		}
-	cout << endl;
+	cout << " : in log base 10: " << G_order.log10() << " / " << tgo.log10() << endl;
 }
 
 void schreier_sims::get_generator_internal(

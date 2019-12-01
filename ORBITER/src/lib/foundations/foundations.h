@@ -514,6 +514,7 @@ public:
 	void swap_with(longinteger_object &b);
 	std::ostream& print(std::ostream& ost);
 	std::ostream& print_not_scientific(std::ostream& ost);
+	int log10();
 	int output_width();
 	void print_width(std::ostream& ost, int width);
 	void print_to_string(char *str);
