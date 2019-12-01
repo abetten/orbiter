@@ -147,7 +147,7 @@ void finite_field::projective_matrix_group_base_and_orbits(int n,
 
 
 	if (f_v) {
-		cout << "finite_field::projective_matrix_group_base_and_orbits" << endl;
+		cout << "finite_field::projective_matrix_group_base_and_orbits base_len=" << base_len << endl;
 		}
 	for (i = 0; i < base_len; i++) {
 		base[i] = i;
@@ -163,19 +163,19 @@ void finite_field::projective_matrix_group_base_and_orbits(int n,
 	for (i = 0; i < n; i++) {
 		transversal_length[i] =
 				Gg.nb_PG_elements_not_in_subspace(n - 1, i - 1, q);
-		if (f_vv) {
+		if (f_v) {
 			cout << "finite_field::projective_matrix_group_base_and_orbits "
 					"transversal " << i << " of length "
 					<< transversal_length[i] << endl;
 			}
-		if (f_vv) {
+		if (f_v) {
 			cout << "finite_field::projective_matrix_group_base_and_orbits "
 					"before PG_element_modified_not_in_subspace_perm" << endl;
 			}
 		PG_element_modified_not_in_subspace_perm(n - 1, i - 1,
 			orbit[i], orbit_inv[i], 0);
 
-		if (f_vv) {
+		if (f_v) {
 			cout << "finite_field::projective_matrix_group_base_and_orbits "
 					"after PG_element_modified_not_in_subspace_perm" << endl;
 			}
@@ -240,6 +240,12 @@ void finite_field::projective_matrix_group_base_and_orbits(int n,
 			}
 		i++;
 		}
+	if (i != base_len) {
+		cout << "finite_field::projective_matrix_group_base_and_orbits i != base_len" << endl;
+		cout << "i=" << i << endl;
+		cout << "base_len=" << base_len << endl;
+		exit(1);
+	}
 	if (f_v) {
 		cout << "finite_field::projective_matrix_group_base_and_orbits base: ";
 		lint_vec_print(cout, base, base_len);
