@@ -2591,7 +2591,7 @@ public:
 	projective_space *P2; // PG(2,q)
 	grassmann *Gr; // Gr_{4,2}
 	grassmann *Gr3; // Gr_{4,3}
-	int nb_lines_PG_3;
+	long int nb_lines_PG_3;
 	int nb_pts_on_surface; // q^2 + 7q + 1
 
 	orthogonal *O;

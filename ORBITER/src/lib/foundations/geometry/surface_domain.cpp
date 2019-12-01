@@ -375,7 +375,7 @@ void surface_domain::init(finite_field *F, int verbose_level)
 
 	Gr = NEW_OBJECT(grassmann);
 	Gr->init(n, 2, F, 0 /* verbose_level */);
-	nb_lines_PG_3 = Gr->nCkq.as_int();
+	nb_lines_PG_3 = Gr->nCkq.as_lint();
 	if (f_v) {
 		cout << "surface::init nb_lines_PG_3 = "
 				<< nb_lines_PG_3 << endl;
