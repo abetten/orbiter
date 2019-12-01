@@ -51,10 +51,10 @@ void projective_space::print_set(
 		a = set[i];
 		unrank_point(v, a);
 		cout << setw(3) << i << " : " << setw(5) << a << " : ";
-		F->int_vec_print(cout, v, n + 1);
+		F->int_vec_print_field_elements(cout, v, n + 1);
 		cout << "=";
 		F->PG_element_normalize_from_front(v, 1, n + 1);
-		F->int_vec_print(cout, v, n + 1);
+		F->int_vec_print_field_elements(cout, v, n + 1);
 		cout << endl;
 		}
 	FREE_int(v);

@@ -671,7 +671,7 @@ void buekenhout_metz::create_unital_tex(int verbose_level)
 				int_vec_print(cout, v, 3);
 				//cout << endl;
 				}
-			FQ->int_vec_print(cout, v, 3);
+			FQ->int_vec_print_field_elements(cout, v, 3);
 
 #if 0
 			cout << "(";
@@ -781,7 +781,7 @@ void buekenhout_metz::create_unital_Uab_tex(int verbose_level)
 			v[2] = 1;
 
 
-			FQ->int_vec_print(cout, v, 3);
+			FQ->int_vec_print_field_elements(cout, v, 3);
 #if 0
 			cout << "(";
 			FQ->print_element_with_symbol(cout, v[0],
