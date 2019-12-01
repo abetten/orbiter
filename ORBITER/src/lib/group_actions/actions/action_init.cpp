@@ -2091,12 +2091,28 @@ void action::init_group_from_strong_generators(
 sims *action::create_sims_from_generators_with_target_group_order_factorized(
 	vector_ge *gens, int *tl, int len, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	longinteger_object go;
 	longinteger_domain D;
+	sims *S;
 
+	if (f_v) {
+		cout << "action::create_sims_from_generators_with_target_group_order_factorized" << endl;
+	}
 	D.multiply_up(go, tl, len, 0 /* verbose_level */);
-	return create_sims_from_generators_randomized(
+	if (f_v) {
+		cout << "action::create_sims_from_generators_with_target_group_order_factorized go=" << go << endl;
+	}
+	if (f_v) {
+		cout << "action::create_sims_from_generators_with_target_group_order_factorized "
+				"before create_sims_from_generators_randomized" << endl;
+	}
+	S = create_sims_from_generators_randomized(
 		gens, TRUE /* f_target_go */, go, verbose_level);
+	if (f_v) {
+		cout << "action::create_sims_from_generators_with_target_group_order_factorized done" << endl;
+	}
+	return S;
 }
 
 sims *action::create_sims_from_generators_with_target_group_order_int(
