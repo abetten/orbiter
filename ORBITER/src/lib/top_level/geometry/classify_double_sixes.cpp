@@ -382,18 +382,18 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 		a = Neighbors[i];
 		AW->unrank_point(w, a);
 		Surf->wedge_to_klein(w, v);
-		if (f_v) {
+		if (FALSE) {
 			cout << i << " : ";
 			int_vec_print(cout, v, 6);
 			cout << endl;
 		}
 		b = Surf->O->rank_point(v, 1, 0 /* verbose_level*/);
-		if (f_v) {
+		if (FALSE) {
 			cout << " : " << b;
 			cout << endl;
 		}
 		c = Surf->Klein->point_on_quadric_to_line(b, 0 /* verbose_level*/);
-		if (f_v) {
+		if (FALSE) {
 			cout << " : " << c << endl;
 			cout << endl;
 		}
