@@ -2262,7 +2262,7 @@ void longinteger_domain::group_order_PGL(
 		longinteger_object &result,
 		int n, int q, int f_semilinear)
 {
-	int *x;
+	long int *x;
 	int i, l;
 	int p, e;
 	number_theory_domain NT;
@@ -2273,9 +2273,9 @@ void longinteger_domain::group_order_PGL(
 		l++;
 		}
 	
-	x = NEW_int(l);
+	x = NEW_lint(l);
 	for (i = 0; i < n; i++) {
-		x[i] = NT.i_power_j(q, n) - NT.i_power_j(q, i);
+		x[i] = NT.i_power_j_lint(q, n) - NT.i_power_j_lint(q, i);
 		if (i == 0) {
 			x[i] = x[i] / (q - 1);
 			}
@@ -2291,8 +2291,8 @@ void longinteger_domain::group_order_PGL(
 	cout << endl;
 #endif
 
-	multiply_up(result, x, l, 0 /* verbose_level */);
-	FREE_int(x);
+	multiply_up_lint(result, x, l, 0 /* verbose_level */);
+	FREE_lint(x);
 }
 
 int longinteger_domain::singleton_bound_for_d(
