@@ -322,6 +322,9 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 	if (f_v) {
 		cout << "classify_double_sixes::compute_neighbors "
 				"after Surf->O->perp" << endl;
+
+		cout << "Neighbors:" << endl;
+		lint_matrix_print(Neighbors, (sz + 9) / 10, 10);
 		}
 	
 	if (sz != nb_neighbors) {
@@ -379,8 +382,21 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 		a = Neighbors[i];
 		AW->unrank_point(w, a);
 		Surf->wedge_to_klein(w, v);
+		if (f_v) {
+			cout << i << " : ";
+			int_vec_print(cout, v, 6);
+			cout << endl;
+		}
 		b = Surf->O->rank_point(v, 1, 0 /* verbose_level*/);
+		if (f_v) {
+			cout << " : " << b;
+			cout << endl;
+		}
 		c = Surf->Klein->point_on_quadric_to_line(b, 0 /* verbose_level*/);
+		if (f_v) {
+			cout << " : " << c << endl;
+			cout << endl;
+		}
 		Neighbor_to_line[i] = c;
 		Line_to_neighbor[c] = i;
 		}

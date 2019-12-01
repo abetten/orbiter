@@ -1207,7 +1207,7 @@ void finite_field::Sbar_rank(int *v, int stride, int n, long int &a, int verbose
 		if (f_v) {
 			cout << "finite_field::Sbar_rank a = " << a << endl;
 		}
-		}
+	}
 }
 
 void finite_field::Nbar_unrank(int *v, int stride, int n, long int a)
