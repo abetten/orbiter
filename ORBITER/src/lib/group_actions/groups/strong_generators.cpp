@@ -997,7 +997,7 @@ sims *strong_generators::create_sims(int verbose_level)
 
 
 	if (f_v) {
-		cout << "strong_generators::create_sims" << endl;
+		cout << "strong_generators::create_sims verbose_level=" << verbose_level << endl;
 		}
 	
 	if (gens == NULL) {
