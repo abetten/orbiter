@@ -360,7 +360,7 @@ void projective_space::init_incidence_structure(int verbose_level)
 			cout << "point " << i << " : ";
 			int_vec_print(cout, v, n + 1);
 			cout << " = ";
-			F->int_vec_print(cout, v, n + 1);
+			F->int_vec_print_field_elements(cout, v, n + 1);
 
 			F->PG_element_normalize_from_front(v, 1, n + 1);
 			cout << " = ";
@@ -368,7 +368,7 @@ void projective_space::init_incidence_structure(int verbose_level)
 
 		
 			cout << " = ";
-			F->int_vec_print(cout, v, n + 1);
+			F->int_vec_print_field_elements(cout, v, n + 1);
 
 			
 			cout << endl;
