@@ -1,0 +1,182 @@
+MY_PATH=../..
+SRC=$(MY_PATH)/SRC
+
+WIDOR_PATH=$(SRC)/WIDOR
+MARUTA_PATH=$(SRC2)/MARUTA
+TDO_PATH=$(SRC)/TDO
+DIOPHANT_PATH=$(SRC)/DIOPHANT
+STABILIZER_PATH=$(SRC2)/STABILIZER
+PROJECTIVE_SPACE_PATH=$(SRC2)/PROJECTIVE_SPACE
+INCIDENCE_STRUCTURE_PATH=$(SRC)/INCIDENCE_STRUCTURE
+INC_CAN_PATH=$(SRC)/INC_CAN
+INC_GEN_PATH=$(SRC)/INC_GEN
+ORTHOGONAL_PATH=$(SRC2)/ORTHOGONAL
+KRAMER_MESNER_PATH=$(SRC2)/KRAMER_MESNER
+
+
+
+7_3:
+	$(WIDOR_PATH)/widor.out -v 2 7_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 7_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -v 5 -orderly -lambda_LE  -file 7_3.tdo -sol
+
+
+7_3_tda:
+	$(INC_CAN_PATH)/inc_can.out -v 3 \
+		-tdo -tdo_steps -tdo_files -tdo_with_scheme \
+		-tda -tda_files -tda_with_scheme -tda_with_group_order \
+		-unit_length "0.065mm" \
+		7_3.inc
+
+
+
+8_3:
+	$(WIDOR_PATH)/widor.out -v 2 8_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 8_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -v 5 -orderly -lambda_LE  -file 8_3.tdo -sol
+
+
+8_3_tda:
+	$(INC_CAN_PATH)/inc_can.out -v 3 \
+		-tdo \
+		-tda -tda_files -tda_with_group_order -tda_with_scheme \
+		8_3.inc
+
+
+
+9_3:
+	$(WIDOR_PATH)/widor.out -v 2 9_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 9_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -v 5 -orderly -lambda_LE  -file 9_3.tdo -sol
+
+
+9_3_sort:
+	$(INC_CAN_PATH)/inc_can.out -v 2 -classify_ago 9_3.inc
+
+
+9_3_tda:
+	$(INC_CAN_PATH)/inc_can.out -v 3 -tdo -tda -tda_files -tda_with_group_order -tda_with_scheme 9_3c.inc
+
+
+10_3:
+	$(WIDOR_PATH)/widor.out -v 2 10_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 10_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -v 5 -orderly -lambda_LE -file 10_3.tdo -sol
+
+10_3_sort:
+	$(INC_CAN_PATH)/inc_can.out -v 2 -classify_ago 10_3.inc
+
+10_3_tda:
+	$(INC_CAN_PATH)/inc_can.out -v 3 -tdo -tda -tda_files -tda_with_group_order -tda_with_scheme 10_3c.inc
+
+
+12_3:
+	$(WIDOR_PATH)/widor.out -v 2 12_3.widor
+	$(TDO_PATH)/tdo_print.out -v 2 12_3.tdo
+	$(INC_GEN_PATH)/inc_gen.out -v 2 -orderly -lambda_LE  -file 12_3.tdo -sol
+
+# Dec 15, 2011: 6 seconds on MacBook
+
+12_3_sort:
+	$(INC_CAN_PATH)/inc_can.out -v 2 -classify_ago 12_3.inc
+
+
+12_3_tda:
+	$(INC_CAN_PATH)/inc_can.out -v 2 -tdo -tda -tda_with_group_order  -tda_with_scheme 12_3c.inc
+
+
+
+
+14_4:
+	$(WIDOR_PATH)/widor.out -v 2 14_4.widor
+	$(TDO_PATH)/tdo_print.out -v 2 14_4.tdo
+	$(INC_GEN_PATH)/inc_gen.out -v 5 -orderly -lambda_LE -file 14_4.tdo -sol
+
+
+14_4_tda:
+	$(INC_CAN_PATH)/inc_can.out -v 2 -tdo -tda -tda_files -tda_with_group_order -tda_with_scheme 14_4.inc
+
+
+
+15_4:
+	$(WIDOR_PATH)/widor.out -v 2 15_4.widor
+	$(TDO_PATH)/tdo_print.out -v 2 15_4.tdo
+	$(INC_GEN_PATH)/inc_gen.out -v 5 -orderly -lambda_LE -file 15_4.tdo -sol
+
+15_4_sort:
+	$(INC_CAN_PATH)/inc_can.out -v 2 -classify_ago 15_4.inc
+
+
+15_4_tda:
+	$(INC_CAN_PATH)/inc_can.out -v 2 -tdo -tda -tda_files -tda_with_group_order -tda_with_scheme 15_4c.inc
+
+
+
+16_4:
+	$(WIDOR_PATH)/widor.out -v 2 16_4.widor
+	$(TDO_PATH)/tdo_print.out -v 2 16_4.tdo
+	$(INC_GEN_PATH)/inc_gen.out -v 5 -orderly -lambda_LE -file 16_4.tdo -sol
+
+# 19 solutions in 14:43 on MacBook
+
+
+16_4_sort:
+	$(INC_CAN_PATH)/inc_can.out -v 2 -classify_ago 16_4.inc
+
+16_4_tda:
+	$(INC_CAN_PATH)/inc_can.out -v 2 -tdo -tda -tda_files -tda_with_group_order -tda_with_scheme 16_4c.inc
+
+
+
+
+
+STS13:
+	$(WIDOR_PATH)/widor.out -v 2 STS13.widor
+	$(TDO_PATH)/tdo_print.out -v 2 STS13.tdo
+	$(INC_GEN_PATH)/inc_gen.out -v 5 -orderly -file STS13.tdo -sol
+
+STS13_sort:
+	$(INC_CAN_PATH)/inc_can.out -v 2 -classify_ago STS13.inc
+
+
+STS13_tda:
+	$(INC_CAN_PATH)/inc_can.out -v 2 -tdo -tda -tda_files -tda_with_group_order -tda_with_scheme STS13c.inc
+
+STS15:
+	$(WIDOR_PATH)/widor.out -v 2 STS15.widor
+	$(TDO_PATH)/tdo_print.out -v 2 STS15.tdo
+	$(INC_GEN_PATH)/inc_gen.out -v 3 -orderly -file STS15.tdo -sol
+
+# 3/23/11: 9 min 30 on MacBook
+
+STS15_sort:
+	$(INC_CAN_PATH)/inc_can.out -v 2 -classify_ago STS15.inc
+
+STS15_tda:
+	$(INC_CAN_PATH)/inc_can.out -v 2 -tdo -tda -tda_files -tda_with_group_order -tda_with_scheme STS15c.inc
+
+planes16_tda:
+	$(INC_CAN_PATH)/inc_can.out -v 3 -tdo -tda planes16.inc
+
+
+
+16_32_tda:
+	$(INC_CAN_PATH)/inc_can.out -v 6  \
+		-tdo -tdo_steps -tdo_files -tdo_with_scheme \
+		-tda -tda_files -tda_with_scheme -tda_with_group_order \
+		-unit_length "0.065mm" \
+		16_32_96.inc
+
+
+
+7_3d:
+	$(WIDOR_PATH)/widor.out -v 2 7_3d.widor
+	$(TDO_PATH)/tdo_print.out -v 2 7_3d.tdo
+	$(TDO_PATH)/tdo_refine.out -v 6 7_3d.tdo
+	$(TDO_PATH)/tdo_print.out -v 2 7_3dr.tdo
+	#$(INC_GEN_PATH)/inc_gen.out -v 5 -orderly -lambda_LE  -file 7_3.tdo -sol
+
+
+solve:
+	$(DIOPHANT_PATH)/solve.out test.diophant
+

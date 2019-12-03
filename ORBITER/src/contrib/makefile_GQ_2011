@@ -1,0 +1,90 @@
+SRC=../../SRC
+SRC2=../../SRC2
+MY_PATH=$(SRC)
+MY_PATH_GQ=$(SRC2)/GQ
+
+
+
+
+GQ_2_4:
+	$(MY_PATH_GQ)/gq.out -v 2 -q 3
+	$(MY_PATH)/INC_CAN/inc_can.out -v 2 -tdo -tda -anti_flag_numbers GQ_2_4_Hall.inc
+
+# 27 points, 45 lines
+# group of order 648
+
+
+GQ_3_5:
+	$(MY_PATH_GQ)/gq.out -v 2 -q 4
+	$(MY_PATH)/INC_CAN/inc_can.out -v 2 -tdo -tda -anti_flag_numbers GQ_3_5_Hall.inc
+
+
+# group of order 138240
+
+
+refine:
+	$(MY_PATH)/WIDOR/widor.out -v 2  GQ_3_5_32_dd.widor
+	$(MY_PATH)/TDO/tdo_print.out -v 2 -tex GQ_3_5_32_dd.tdo
+	$(MY_PATH)/TDO/tdo_refine.out -v 2 -nopacking  GQ_3_5_32_dd.tdo
+	$(MY_PATH)/TDO/tdo_print.out -v 2 -tex GQ_3_5_32_ddr.tdo
+	$(MY_PATH)/TDO/tdo_refine.out -v 2 -nopacking  GQ_3_5_32_ddr.tdo
+	$(MY_PATH)/TDO/tdo_print.out -v 2 -tex GQ_3_5_32_ddrr.tdo
+
+
+
+refine_d:
+	$(MY_PATH)/WIDOR/widor.out -v 2  GQ_3_5_32_d.widor
+	$(MY_PATH)/TDO/tdo_print.out -v 2 -tex GQ_3_5_32_d.tdo
+	$(MY_PATH)/TDO/tdo_refine.out -v 2 -nopacking  GQ_3_5_32_d.tdo
+	$(MY_PATH)/TDO/tdo_print.out -v 2 -tex GQ_3_5_32_dr.tdo
+	$(MY_PATH)/TDO/tdo_refine.out -v 2 -nopacking  GQ_3_5_32_dr.tdo
+	$(MY_PATH)/TDO/tdo_print.out -v 2 -tex GQ_3_5_32_drr.tdo
+	$(MY_PATH)/TDO/tdo_refine.out -v 2 -nopacking  GQ_3_5_32_drr.tdo
+	$(MY_PATH)/TDO/tdo_print.out -v 2 -tex GQ_3_5_32_drrr.tdo
+
+
+W3q:
+	$(MY_PATH_GQ)/symplectic.out -v 2 -q 3
+
+# 40 points, 40 lines
+
+
+
+Knarr_3_1:
+	$(MY_PATH_GQ)/knarr.out -v 2 -q 3 -no 1
+	$(MY_PATH)/INC_CAN/inc_can.out -v 2  GQ_Knarr_BLT_3_1.inc
+
+
+#-anti_flag_numbers
+# group order 233280
+
+
+
+Knarr_5_1:
+	$(MY_PATH_GQ)/knarr.out -v 1 -q 5 -no 1
+	#$(MY_PATH)/INC_CAN/inc_can.out -v 1 GQ_Knarr_BLT_5_1.inc
+
+# group order 58968000000
+
+
+
+Knarr_7_1:
+	$(MY_PATH_GQ)/knarr.out -v 1 -q 7 -no 1
+
+
+# group order 9324577382400 = 9.3 x 10^12
+
+
+
+BLT_3_1:
+	$(SRC)/INCIDENCE_STRUCTURE/tdo.out -v 8 \
+		-D 4 0 1 14 15 \
+		-orthogonal 0 5 3 -p
+
+BLT_3_1d:
+	$(SRC)/INCIDENCE_STRUCTURE/tdo.out -v 8 \
+		-D 4 0 1 14 15 \
+		-D 1 18 \
+		-orthogonal 0 5 3 -p
+
+

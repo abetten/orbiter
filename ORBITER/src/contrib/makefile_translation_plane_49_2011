@@ -1,0 +1,45 @@
+MY_PATH=../../..
+SRC=$(MY_PATH)/SRC
+SRC2=$(MY_PATH)/SRC2
+
+TRANSLATION_PLANE_PATH=$(SRC2)/TRANSLATION_PLANE
+GRASSMANN_PATH=$(SRC2)/GRASSMANN
+
+
+ORDER=49
+DEPTH=7
+POLY=
+
+
+
+
+all:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 5 \
+		-W -order $(ORDER) -dim_over_kernel 2
+
+
+# 126 partial spreads of size 5
+# 12338 partial spreads of size 6 (970 live pt at level 6)
+# Dec 11, 2011: 1596548 partial spreads of size 7 in 20 min 28 sec on MacBook
+# with around 800 live points (first one has 931 live points)
+
+
+search_lex:
+	$(TRANSLATION_PLANE_PATH)/tp_extend.out -v 6 -order $(ORDER)  -lex $(DEPTH) 0 1  
+
+
+
+
+
+search_lex_c:
+	$(TRANSLATION_PLANE_PATH)/tp_extend.out -v 6 \
+			-order $(ORDER) -dim_over_kernel 2 \
+			-lex \
+			-read_candidates_file spread_$(ORDER)_lvl_$(DEPTH)_candidates.txt \
+			$(DEPTH) 0 1000000
+
+#color classes: (  )
+
+#			-write_graph_file \
+
+

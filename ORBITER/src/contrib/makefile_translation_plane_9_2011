@@ -1,0 +1,49 @@
+MY_PATH=../../..
+SRC=$(MY_PATH)/SRC
+SRC2=$(MY_PATH)/SRC2
+
+TRANSLATION_PLANE_PATH=$(SRC2)/TRANSLATION_PLANE
+GRASSMANN_PATH=$(SRC2)/GRASSMANN
+
+
+
+ORDER=9
+DEPTH=6
+POLY=
+
+
+
+
+all:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 16 -W -order $(ORDER) -T -x 1000 -y 1200
+
+
+# June 20, 2011 on MacBook:
+#we found 2 orbits on 10-sets of 2-subspaces in PG(3,3) satisfying the partial spread condition
+#0:00
+
+
+## 10
+#10 0 129 16 32 41 57 73 79 95 111 5760 aaaaaaafaaaaaaaiaaaaaaciaaaaaaabaaaaaaceaaaaaaabaaaaaaaeacaibaeaacaecaeaabaibeibabaegckiacaecfejiccecaeaajafjafafcgiccii
+#10 0 129 16 32 41 59 69 79 99 109 1920 aaaaaaafaaaaaaaiaaaaaaciaaaaaaadaaaaaaaeaaaaaaabaaaaaaaeacaebaiaabaibaiaacaeiacaabaefajaacakeagagkkjgfkgfggkkgjkgekbgikc
+#-1 2 25 in 0:00
+#(5760, 1920)
+#done with generator_main
+#we found 2 orbits on 10-sets of 2-subspaces in PG(3,3) satisfying the partial spread condition
+#0:00
+# Sept 3, 2010 on MacBook
+
+
+test:
+	$(GRASSMANN_PATH)/grassmann.out -v 2 4 2 3 
+
+
+search_lex:
+	$(TRANSLATION_PLANE_PATH)/tp_extend.out -v 6 \
+		-order $(ORDER)  -lex \
+		-read_candidates_file spread_$(ORDER)_lvl_$(DEPTH)_candidates.txt \
+		-write_graph_file \
+		$(DEPTH) 0 1  
+
+
+

@@ -1,0 +1,98 @@
+MY_PATH=../..
+SRC=$(MY_PATH)/SRC
+SRC2=$(MY_PATH)/SRC2
+
+BLT_PATH = $(SRC2)/BLT
+BLT67_PATH = $(SRC2)/BLT67
+BLT_ANALYZE_PATH = $(SRC2)/BLT_ANALYZE
+TESTING_PATH = $(SRC2)/TESTING
+INC_CAN_PATH = $(SRC)/INC_CAN
+
+test:
+	$(BLT_PATH)/orbiting.out -v 3 -t 4 9 1 1 1 -1 
+
+singer:
+	$(BLT_PATH)/orbiting.out -v 2 -t 4 67 4 1 1 -1 
+
+eigenT2:
+	$(TESTING_PATH)/eigenstuff.out -v 2 -M 2 67 1 16 47 65
+
+eigenS2:
+	$(TESTING_PATH)/eigenstuff.out -v 2 -M 2 67 1 10 66 60
+
+eigenT3:
+	$(TESTING_PATH)/eigenstuff.out -v 2 -M 2 67 1 65 36 66
+
+eigenS3:
+	$(TESTING_PATH)/eigenstuff.out -v 2 -M 2 67 1 47 28 66
+
+
+eigen_19_5_A:
+	$(TESTING_PATH)/eigenstuff.out -v 2 -M 5 19    18 0 0 0 5 6 13 12 10 15 16 12 12 14 4 11 13 3 12 12 12 7 9 1 2
+
+
+eigen_19_5_B:
+	$(TESTING_PATH)/eigenstuff.out -v 2 -M 5 19    6 13 1 10 18 0 14 12 5 12 2 12 3 11 5 17 16 18 10 5 2 2 3 11 6 
+
+
+john19:
+	$(BLT67_PATH)/test_john.out -q 19 -m 2 -group >log19
+
+john41:
+	$(BLT67_PATH)/test_john.out -q 41 >log41
+# no group
+
+john67:
+	$(BLT67_PATH)/test_john.out -q 67 -m 4 -group >log67
+
+john83:
+	$(BLT67_PATH)/test_john.out -q 83 >log83
+
+john163:
+	$(BLT67_PATH)/test_john.out -q 163  >log163
+
+john211:
+	$(BLT67_PATH)/test_john.out -q 211 -m 23  >log211
+
+john243:
+	$(BLT67_PATH)/test_john.out -q 243 -m 11  >log243
+
+john499:
+	$(BLT67_PATH)/test_john.out -q 499 -m 57  >log499
+
+
+c19:
+	$(BLT67_PATH)/test_clique.out -v 2 -q 19 -s 4 -m 2 
+	$(INC_CAN_PATH)/inc_can.out -v 2 -tdo solutions.inc
+
+c41:
+	$(BLT67_PATH)/test_clique.out -v 2 -q 41 -s 2 -m 8
+	$(INC_CAN_PATH)/inc_can.out -v 2 -tdo solutions.inc
+
+c67:
+	$(BLT67_PATH)/test_clique.out -v 2 -q 67 -s 4 
+	$(INC_CAN_PATH)/inc_can.out -v 2 -tdo solutions.inc
+
+
+# for q=163, m = 9 is a square root of -1 mod 41:
+
+c163:
+	$(BLT67_PATH)/test_clique.out -v 2 -q 163 -s 4 -m 9 
+	$(INC_CAN_PATH)/inc_can.out -v 2 -tdo solutions.inc
+
+# Oct 6, 2010: nothing interesting in 2 min 3 sec on MacBook
+
+
+
+# for q=211, m = 23 is a square root of -1 mod 41:
+
+c211:
+	$(BLT67_PATH)/test_clique.out -v 2 -q 211 -s 4 -m 23 
+	$(INC_CAN_PATH)/inc_can.out -v 2 -tdo solutions.inc
+
+# Oct 6, 2010: nothing interesting in 5 min 18 sec on MacBook
+
+
+form:
+	$(BLT_ANALYZE_PATH)/evaluate_form.out 67 93544 272279 93715 -1
+
