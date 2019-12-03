@@ -1,0 +1,136 @@
+MY_PATH=../../..
+SRC=$(MY_PATH)/SRC
+SRC2=$(MY_PATH)/SRC2
+
+TRANSLATION_PLANE_PATH=$(SRC2)/TRANSLATION_PLANE
+GRASSMANN_PATH=$(SRC2)/GRASSMANN
+
+
+
+ORDER=25
+DEPTH=5
+POLY=
+
+
+#r10:
+#	$(TRANSLATION_PLANE_PATH)/tp.out -v 5 -W -order $(ORDER) -r spread_25_10.data
+
+
+
+
+starter:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 10 -starter -W -order $(ORDER) -depth $(DEPTH) -clique_level 5
+
+
+
+
+
+# without -clique_level:
+#Time 24:46 : Level 8 Node 78568 = 72538 / 72539 :  Upstep : Time 24:46 : Level 8
+#Found 628663 orbits at depth 9
+#0 : 1 orbits
+#1 : 1 orbits
+#2 : 1 orbits
+#3 : 1 orbits
+#4 : 6 orbits
+#5 : 29 orbits
+#6 : 355 orbits
+#7 : 5636 orbits
+#8 : 72539 orbits
+#9 : 628663 orbits
+#total: 707232
+## of calls to image_of/mult/invert/retrieve/store: 183260/53145641/31144907/38828294/5535755
+#(192, 96, 72^3, 48^3, 40^2, 36^7, 32, 24^{17}, 20^3, 16^{12}, 12^{84}, 10^8, 9, 8^{60}, 6^{215}, 5^3, 4^{626}, 3^{207}, 2^{12037}, 1^{615372})
+#nb_times_trace=5542406
+#nb_times_trace_was_saved=30396
+#f_write_files=1
+
+
+# Aug 23, 2011: level 8 in  24 Min 46 Sec
+# Oct 8, 2011: level 8 in 14 Min 12 Sec
+
+# Dec 8, 2011: 628663 at level 9 in 15 minutes on MacBook
+
+# 3.5 million at level 10 in around 4 hours in blaster.katrina
+
+
+
+# at level 6: 200 live points max, 150 average
+# at level 7: 145 live points max, 110 average
+# at level 8: 100 live points max, 80 average
+# at level 9: 60 live points average
+
+
+#Time 14:12 : Level 8 Node 78568 = 72538 / 72539 :  Upstep : progress: 100. 0 % 
+
+
+
+search_lex:
+	$(TRANSLATION_PLANE_PATH)/tp_extend.out -v 6 -order $(ORDER)  -lex $(DEPTH) 0 1
+
+
+# Dec 8, 2011: DEPTH=8 gives 1608 solutions in 8 min 58 on MacBook
+# Dec 8, 2011: DEPTH=7 gives 3025 solutions in 56 sec on MacBook
+# Dec 8, 2011: DEPTH=6 gives 9444 solutions in 5 sec on MacBook
+# Dec 8, 2011: DEPTH=5 gives 19541 solutions in 1 sec on MacBook
+# (the number of solutions can be seen from the extend...txt file)
+
+search_lex_0:
+	$(TRANSLATION_PLANE_PATH)/tp_extend.out -v 6 -order $(ORDER)  -lex $(DEPTH) 0 10000
+
+
+build_db:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 2 -build_db $(DEPTH) \
+		-order $(ORDER) 
+
+read:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 2 \
+		-read_solution_files $(DEPTH) extend_spread_$(ORDER)_$(DEPTH)_0_1.txt -1 \
+		-order $(ORDER) 
+
+orbits:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 2 \
+		-compute_orbits $(DEPTH) \
+		-order $(ORDER) 
+
+# DEPTH=5: 1176 orbits
+
+iso:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 4 \
+		-isomorph_testing $(DEPTH) \
+		-order $(ORDER) 
+
+#		-play_back event_save.txt \
+
+print:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 4 \
+		-print $(DEPTH) \
+		-order $(ORDER) 
+
+pdf:
+	pdflatex spread_$(ORDER)_1.tex
+	pdflatex spread_$(ORDER)_2.tex
+	pdflatex spread_$(ORDER)_3.tex
+	pdflatex spread_$(ORDER)_4.tex
+	pdflatex spread_$(ORDER)_5.tex
+	pdflatex spread_$(ORDER)_6.tex
+	pdflatex spread_$(ORDER)_7.tex
+	pdflatex spread_$(ORDER)_8.tex
+	pdflatex spread_$(ORDER)_9.tex
+	pdflatex spread_$(ORDER)_10.tex
+	pdflatex spread_$(ORDER)_11.tex
+	pdflatex spread_$(ORDER)_12.tex
+	pdflatex spread_$(ORDER)_13.tex
+	pdflatex spread_$(ORDER)_14.tex
+	pdflatex spread_$(ORDER)_15.tex
+	pdflatex spread_$(ORDER)_16.tex
+	pdflatex spread_$(ORDER)_17.tex
+	pdflatex spread_$(ORDER)_18.tex
+	pdflatex spread_$(ORDER)_19.tex
+	pdflatex spread_$(ORDER)_20.tex
+	pdflatex spread_$(ORDER)_21.tex
+
+
+e:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 5 -extend_simple 210 54 673 517 361 -1 -order $(ORDER) 
+

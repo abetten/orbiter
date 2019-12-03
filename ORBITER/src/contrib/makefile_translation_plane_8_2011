@@ -1,0 +1,25 @@
+MY_PATH=../../..
+SRC=$(MY_PATH)/SRC
+SRC2=$(MY_PATH)/SRC2
+
+TRANSLATION_PLANE_PATH=$(SRC2)/TRANSLATION_PLANE
+
+
+ORDER=8
+DEPTH=4
+POLY=
+
+
+
+all:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 3 -W -order $(ORDER) >log
+
+# June 20, 2011 on MacBook:
+#we found 1 orbits on 9-sets of 3-subspaces in PG(5,2) satisfying the partial spread condition
+#0:00
+
+
+search_lex:
+	$(TRANSLATION_PLANE_PATH)/tp_extend.out -v 6 -order $(ORDER)  -lex $(DEPTH) 0 1  
+
+

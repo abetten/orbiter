@@ -1,0 +1,42 @@
+MY_PATH=../../..
+SRC=$(MY_PATH)/SRC
+SRC2=$(MY_PATH)/SRC2
+
+TRANSLATION_PLANE_PATH=$(SRC2)/TRANSLATION_PLANE
+GRASSMANN_PATH=$(SRC2)/GRASSMANN
+
+
+
+ORDER=16
+DEPTH=5
+POLY=
+
+
+
+all:
+	$(TRANSLATION_PLANE_PATH)/tp.out -v 5 -W -order $(ORDER) -T -x 1000 -y 1200
+
+
+
+# Nov 17, 2009: 24 min 12 sec in fire.renci.org
+# Feb 18, 2010 17 min 51 sec on MacBook
+# Feb 21, 2010: 14 min 4 sec on MacBook
+# Feb 21, 2010: 13 min 55 sec on MacBook
+# Feb 22, 2010: 11 min 32 sec on MacBook
+# Feb 22, 2010: 4 min 46 sec on MacBook
+# June 20, 2011: 4 min 57 sec on MacBook
+# Oct 8, 2011: 2 min 43 on MacBook (after correcting an error in translation_plane::check_function_incremental)
+
+
+
+search_lex:
+	$(TRANSLATION_PLANE_PATH)/tp_extend.out -v 6 \
+		-order $(ORDER)  -lex \
+		-write_graph_file \
+		$(DEPTH) 0 1  
+
+
+# the first graph has 672 points and 1884 solutions.
+# Oct 14, 2011 on MacBook: 2 min 55 sec, permutation degree is 200787
+
+

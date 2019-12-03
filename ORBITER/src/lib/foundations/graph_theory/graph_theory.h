@@ -184,6 +184,7 @@ public:
 	const char *fname_graph;
 	int f_weighted;
 	const char *weights_string;
+	int f_Sajeeb;
 	int f_nonrecursive;
 	int f_output_solution_raw;
 	int f_output_file;
@@ -209,6 +210,9 @@ public:
 			int argc, const char **argv);
 	void all_cliques(
 		int verbose_level);
+	void do_Sajeeb(colored_graph *CG,
+			const char *fname_sol,
+			int verbose_level);
 	void all_cliques_weighted(colored_graph *CG,
 		const char *fname_sol,
 		int verbose_level);

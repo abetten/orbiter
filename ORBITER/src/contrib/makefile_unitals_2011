@@ -1,0 +1,753 @@
+MY_PATH=../..
+
+SRC=$(MY_PATH)/SRC
+SRC2=$(MY_PATH)/SRC2
+
+WIDOR_PATH=$(SRC)/WIDOR
+MARUTA_PATH=$(SRC2)/MARUTA
+TDO_PATH=$(SRC)/TDO
+DIOPHANT_PATH=$(SRC)/DIOPHANT
+STABILIZER_PATH=$(SRC2)/STABILIZER
+PROJECTIVE_SPACE_PATH=$(SRC2)/PROJECTIVE_SPACE
+INCIDENCE_STRUCTURE_PATH=$(SRC)/INCIDENCE_STRUCTURE
+INC_CAN_PATH=$(SRC)/INC_CAN
+ORTHOGONAL_PATH=$(SRC2)/ORTHOGONAL
+KRAMER_MESNER_PATH=$(SRC2)/KRAMER_MESNER
+HERMITIAN_PATH=$(SRC2)/HERMITIAN
+UNITALS_PATH=$(SRC2)/UNITALS
+
+
+u4dd:
+	$(WIDOR_PATH)/widor.out -v 2  unital4dd.widor
+	$(TDO_PATH)/tdo_print.out -v 2 -tex unital4dd.tdo
+	$(TDO_PATH)/tdo_refine.out -v 2 -nopacking  unital4dd.tdo
+	$(TDO_PATH)/tdo_print.out -v 2 -tex unital4ddr.tdo
+	$(TDO_PATH)/tdo_refine.out -v 2 -nopacking unital4ddr.tdo
+	$(TDO_PATH)/tdo_print.out -v 2 -tex unital4ddrr.tdo
+	$(TDO_PATH)/tdo_refine.out -v 2 -nopacking  unital4ddrr.tdo
+	$(TDO_PATH)/tdo_print.out -v 2 -tex unital4ddrrr.tdo
+	$(TDO_PATH)/tdo_refine.out -v 2 -nopacking -mckay  unital4ddrrr.tdo
+	$(TDO_PATH)/tdo_print.out -v 2 -tex unital4ddrrrr.tdo
+
+
+Ominus44_points:
+	$(PROJECTIVE_SPACE_PATH)/orthogonal_points.out -v 2 -1 4 4
+
+# creates the file Qm_3_4.txt
+
+
+#Ominus44_line_type:
+#	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 2 -n 3 -q 4 -switch 1 2 -set 0 1 12 21 18 28 37 31 43 52 46 60 66 63 76 82 79  -1
+
+Ominus44_line_type:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 2 -n 3 -q 4 -file Qm_3_4.txt
+
+
+# ( 0^136, 1^85, 2^136 )  17*5=85
+
+
+
+BM2:
+	$(UNITALS_PATH)/buekenhout_metz.out -v 2 -q 2
+
+# problem:
+#buekenhout_metz::init_ovoid
+#testing point 0
+#finite_field::mult() i = 2
+
+
+
+
+
+BM3:
+	$(UNITALS_PATH)/buekenhout_metz.out -v 2 -q 3 
+
+# writes file BM3.txt
+# writes file BM3_stab.txt
+
+testBM3:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 2 -n 2 -q 9  -file BM3.txt 
+
+tdoBM3:
+	$(INCIDENCE_STRUCTURE_PATH)/tdo.out -v 2 -PG 2 9   -p -save PG_2_9.inc
+	$(INC_CAN_PATH)/inc_can.out -v 6 -points_file BM3.txt \
+		-tdo -tdo_steps -tdo_files -tdo_with_scheme -pic \
+		-tda -tda_files -tda_with_scheme -tda_with_group_order \
+		-unit_length "0.035mm" \
+		PG_2_9.inc
+
+
+# group order 12096
+
+
+	#$(INCIDENCE_STRUCTURE_PATH)/tdo.out -v 5 -inc_file PG_2_9.inc 0   -D  28   2 55 73 38 83 3 39 84 21 42 87 24 44 89 26 67 31 49 68 32 50 70 34 52 72 36 54 1 -p 
+
+
+
+
+stabBM3:
+	$(STABILIZER_PATH)/stabilizer.out -v 7 -poly 14 -PGGL 3 9 -set 2 55 73 38 83 3 39 84 21 42 87 24 44 89 26 67 31 49 68 32 50 70 34 52 72 36 54 1 -1
+
+
+
+
+
+
+tdoBM4a:
+	$(INCIDENCE_STRUCTURE_PATH)/tdo.out -v 2 -PG 2 16   -p -save PG_2_16.inc
+	$(INCIDENCE_STRUCTURE_PATH)/tdo.out -v 5 -inc_file PG_2_16.inc 0   -D  6  3 34 214 223 78 152   -p 
+
+
+
+
+
+
+analyze_H4:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16 -poly 25 -file unital_H4.txt
+
+# intersection type: ( 1^65, 5^208 )
+# Baer classification of 5-lines: ( 1^208 )
+
+analyze_BM4:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16 -poly 25 -file unital_BM4.txt
+
+
+# intersection type: ( 1^65, 5^208 )
+# Baer classification of 5-lines: ( 0^192, 1^16 )
+
+
+stab_H4:
+	$(STABILIZER_PATH)/stabilizer.out -v 6 -poly 25 -PGGL 3 16 -file unital_H4.txt
+
+# order 249,600 in 30 minutes
+
+
+stab_BM4:
+	$(STABILIZER_PATH)/stabilizer.out -v 6 -poly 25 -PGGL 3 16 -file unital_BM4.txt
+
+
+# order 768 in 4:16
+
+
+andre3:
+	$(UNITALS_PATH)/andre.out -v 2 -q 3 -poly 14 0
+
+analyzeH3:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 2 -n 2 -q 9 -poly 14 -file unital_H3.txt
+
+analyzeH3_preimage:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 2 -n 4 -q 3  -file unital_H3_preimage.txt
+
+analyze_block:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 2 -n 3 -q 3  -set 3 21 24 26 -1
+
+stab_ovoid:
+	$(STABILIZER_PATH)/stabilizer.out -v 7  -PGGL 4 4 -set 2 3 4 23 26 28 32 44 45 49 52 55 56 64 66 67 78 -1
+
+# 3 transitive, order 16320 = 17 * 16 * 15 * 4
+
+
+
+andre4:
+	$(UNITALS_PATH)/andre.out -v 3 -q 4  -poly 25 7
+
+andre4_ic:
+	$(INC_CAN_PATH)/inc_can.out -v 8 -tdo conic_blocks_q4.inc 
+
+analyzeH4:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 2 -n 2 -q 16 -poly 25 -file unital_H4.txt
+
+#analyzeH4_preimage:
+#	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 2 -n 4 -q 4  -file unital_H4_preimage.txt
+
+analyze_H4_preimage:
+	$(UNITALS_PATH)/andre_map.out -v 1 -q 4 -poly 25 7 H4.txt H4_preimage.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 2 -n 4 -q 4 -planes -file H4_preimage.txt
+
+
+
+andre5:
+	$(UNITALS_PATH)/andre.out -v 3 -q 5 
+
+andre7:
+	$(UNITALS_PATH)/andre.out -v 3 -q 7 
+
+
+
+test_lines4:
+	$(UNITALS_PATH)/test_lines.out -v 3 -q 4 
+
+test_lines5:
+	$(UNITALS_PATH)/test_lines.out -v 3 -q 5 
+
+test_lines7:
+	$(UNITALS_PATH)/test_lines.out -v 3 -q 7 
+
+
+analyze_bad_conic:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 2 -n 2 -q 4  -set 2 7 10 16 19 -1
+
+analyze_ovoid:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 2 -n 3 -q 4 -planes  -file ovoid.txt
+
+
+
+
+
+
+pullback_q4:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 2 -n 4 -q 4  -set 2 3 39 55 71 4 102 154 164 165 156 153 170 179 180 171 169 255 247 258 257 254 271 263 274 273 270 310 314 320 316 317 326 330 336 332 333 201 211 212 203 200 185 195 196 187 184 134 118 294 298 304 300 301 278 282 288 284 285 239 231 242 241 238 223 215 226 225 222 -1
+
+pullback_q3:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 2 -n 4 -q 3  -set 2 3 24 33 4 51 52 55 57 62 63 65 67 69 70 73 75 80 5 82 84 85 97 98 100 102 103 113 114 117 119 -1
+
+
+Baer_q3:
+	$(UNITALS_PATH)/baer_subplane.out -v 2 -q 3
+
+
+Baer_q3_tdo:
+	$(MY_PATH2)/INCIDENCE_STRUCTURE/tdo.out -v 2 -PG 2 9   -p -save PG_2_9.inc
+	$(MY_PATH2)/INCIDENCE_STRUCTURE/tdo.out -v 5 -inc_file PG_2_9.inc 0   -D  13  0 1 2 3 4 5 12 13 20 21 28 29 30   -p 
+
+
+
+U4_test:
+	$(UNITALS_PATH)/unitals.out -v 3 -q 4 -select 1 -1 -poly 19 
+
+U4:
+	$(UNITALS_PATH)/unitals.out -v 3 -q 4 -poly 19 -solve_wassermann 200000 200000 
+
+U4s:
+	$(UNITALS_PATH)/unitals.out -v 3 -q 4 -poly 19 \
+		-select 1 0 -select 2 2 -select 3 0 -t1 0 \
+		-solve_wassermann 200000 200000 
+
+#unital::stage_seven cnt_stage[6]=70341 0/1 1/3 0/3 0/1 104/245 90/120 : { 0 }_62668800 = 6.2 x 10^7 { 0, 1, 4, 5, 9 }_15360 { 0, 1 }_7680 { 2 }_30 { 50, 84, 220 }_30 { 42, 109, 132 }_2 
+
+
+
+# 50 sec to create 199496 cases at depth 6
+
+# Dec 1, 2010 MacBook: 1:2  1778 cases on depth 5, average group order 16, average system size is 278 x 426
+# depth 6: 199496 cases, average group order 1, average system size is 269 x 359
+
+#-print_system 0 10000 
+#-select 2 2 -select 3 0 
+#-t1 0 
+#-solve_wassermann 
+#-solve_mckay
+#-gurobi -solve_mckay  
+
+U4_70:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -poly 19 -solve_wassermann 70341 200000 
+
+U4_141:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -poly 19 -solve_wassermann 141518 200000 
+
+U4_156:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -poly 19 -solve_wassermann 156661 200000 
+
+U4_197:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -poly 19 -solve_wassermann 197382 200000 
+
+
+
+recover_BM4a:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 \
+		-favorite 1 1 1  -select 1 0 \
+		-favorite 2 5 3 34 35 37 42  -select 2 1 \
+		-favorite 3 2 3 34 -select 3 0 \
+		-favorite 4 1 214 -select 4 0 \
+		-favorite 5 3 2 56 140 -select 5 27 \
+		-favorite 6 3 78 152 223 
+
+
+isotest_BM4a:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 \
+		-iso_test 1 1 1  -select 1 0 \
+		-iso_test 2 5 3 34 35 37 42 -select 2 1 \
+		-iso_test 3 2 3 34 -select 3 0 \
+		-iso_test 4 1 214 -select 4 0 \
+		-iso_test 5 3 2 56 140 -select 5 291 \
+		-iso_test 6 3 78 152 223 
+
+		
+# this is case 98742
+
+isotest_BM4b:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 \
+		-iso_test 1 1 1  -select 1 0 \
+		-iso_test 2 5 3 34 35 37 42 -select 2 1 \
+		-iso_test 3 2 34 35 -select 3 2 \
+		-iso_test 4 1 207 -select 4 0 \
+		-iso_test 5 3 110 141 227  -select 5 218 \
+		-iso_test 6 3 22 27 178 
+
+# this is case 194485
+
+
+isotest_BM4c:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 \
+		-iso_test 1 1 1  -select 1 0 \
+		-iso_test 2 5 3 34 35 37 42 -select 2 1 \
+		-iso_test 3 2 34 37 -select 3 1 \
+		-iso_test 4 1 250 -select 4 0 \
+		-iso_test 5 3 60 178 252 -select 5 352 \
+		-iso_test 6 3 107 160 169 
+
+
+# this is case 164550
+
+
+
+isotest_BM4d:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 \
+		-iso_test 1 1 17  -select 1 0 \
+		-iso_test 2 5 1 3 19 178 194 -select 2 2 \
+		-iso_test 3 2 1 3 -select 3 0 \
+		-iso_test 4 1 18 -select 4 0 \
+		-iso_test 5 3 32 41 141 -select 6 -1
+
+# this is case 197397
+
+
+isotest_BM4e:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 \
+		-iso_test 1 1 17  -select 1 0 \
+		-iso_test 2 5 1 3 19 178 194 -select 2 2 \
+		-iso_test 3 2 3 19 -select 3 0 \
+		-iso_test 4 1 18 -select 4 0 \
+		-iso_test 5 3 0 41 141 -select 6 -1
+
+# this is case 197397
+
+
+
+
+
+tdo_164_starter:
+	$(INCIDENCE_STRUCTURE_PATH)/tdo.out -v 2 -PG 2 16   -p -save PG_2_16.inc
+	$(INCIDENCE_STRUCTURE_PATH)/tdo.out -v 5 -inc_file PG_2_16.inc 0  -D 5  0 1 4 5 8  -D 1 2  -D 3 42 166 269    -p 
+
+
+
+
+analyze_98:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_98742_0.txt
+
+
+analyze_164:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_164550_0.txt
+
+analyze_194:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_194485_0.txt
+
+analyze_197:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_0.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_1.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_2.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_3.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_4.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_5.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_6.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_7.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_8.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_9.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_10.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_11.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_12.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_13.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_14.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_15.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_16.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_17.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_18.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_19.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_20.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_21.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_22.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_23.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_24.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_25.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_26.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_27.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_28.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_29.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_30.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_31.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_32.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_33.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_34.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_35.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_36.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_37.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_38.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_39.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_40.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_41.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_42.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_43.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_44.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_45.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_46.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_47.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_48.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_49.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_50.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_51.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_52.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_53.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_54.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_55.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_56.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_57.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_58.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_59.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_60.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_61.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_62.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_63.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_64.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_65.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_66.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_67.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_68.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_69.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_70.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_71.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_72.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_73.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_74.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_75.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_76.txt
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_77.txt
+
+
+analyze_197a:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 2 -n 2 -q 16  -file unital_4_197397_5.txt
+
+analyze_197b:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_36.txt
+
+analyze_197c:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 1 -n 2 -q 16  -file unital_4_197397_67.txt
+
+U3:
+	$(UNITALS_PATH)/unitals.out -v 2 -q 3  -print_system 0 1 
+
+# -t1 0
+
+# Dec 1, 2010 MacBook: 1:16, finds 18 solutions (considering 35 cases at depth 5)
+# Dec 3, 2010 MacBook: 0:6, finds 20 solutions 
+# (considering 134 cases at depth 6, 3 cases contain solutions)
+# average size of a system is 174 x 98
+# average stabilizer order is 2
+
+#-gurobi
+#-solve_mckay
+
+
+U2:
+	$(UNITALS_PATH)/unitals.out -v 4 -q 2 -solve_mckay -print_system 0 1
+
+# Dec 1, 2010 MacBook: 0:00, finds 1 solutions (considering 2 cases at depth 5)
+
+
+H4_top:
+	$(UNITALS_PATH)/unitals.out -v 3 -q 4 \
+		-select 3 -1
+
+#unital::stage_two first_block: choosing orbit 0 / 3 = { 0, 1, 4, 5, 6 }_30720
+#unital::stage_two first_block: choosing orbit 1 / 3 = { 0, 1, 4, 5, 8 }_15360
+#unital::stage_two first_block: choosing orbit 2 / 3 = { 0, 1, 4, 13, 14 }_921600
+
+line1:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 2 -n 2 -q 16 -poly 25 -set 0 1 4 5 6 -1
+
+#projective_space::circle_type_of_line_subset circle_type=
+#( 0, 0, 0, 10, 0 )
+
+
+line2:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 2 -n 2 -q 16 -poly 25 -set 0 1 4 5 8 -1
+
+#projective_space::circle_type_of_line_subset circle_type before fixing =
+#( 0, 0, 0, 6, 4 )
+#projective_space::circle_type_of_line_subset circle_type after fixing =
+#( 0, 0, 0, 6, 1 )
+
+
+line4:
+	$(PROJECTIVE_SPACE_PATH)/analyze.out -v 2 -n 2 -q 16 -poly 25 -set 34 3  35 42 37 -1
+
+conic:
+	$(PROJECTIVE_SPACE_PATH)/determine_conic.out -v 4 -q 4  0 7 14 12 20
+
+conic1:
+	$(PROJECTIVE_SPACE_PATH)/determine_conic.out -v 4 -q 4  0 4 7 14 12 
+
+
+iso_BM4a:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -poly 19 \
+		-iso_test 1 1 272  -select 1 0 \
+		-iso_test 2 5 1 2 34 113 129  -select 2 2 \
+		-iso_test 3 2 1 2 -select 3 0 \
+		-iso_test 4 1 0 -select 4 0 \
+		-iso_test 5 3 1 6 7 -select 5 11 
+
+# case 197,382
+
+
+iso_BM4b:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -poly 19 \
+		-iso_test 1 1 272  -select 1 0 \
+		-iso_test 2 5 1 2 34 113 129  -select 2 2 \
+		-iso_test 3 2 2 34 -select 3 0 \
+		-iso_test 4 1 0 -select 4 0 \
+		-iso_test 5 3 0 6 7 -select 5 11 
+
+# case 197,382
+
+
+
+
+iso_BM4c:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -poly 19 \
+		-iso_test 1 1 67  -select 1 0 \
+		-iso_test 2 5 2 66 94 213 235  -select 2 1 \
+		-iso_test 3 2 2 66 -select 3 0 \
+		-iso_test 4 1 20 -select 4 0 \
+		-iso_test 5 3 158 164 165 -select 5 104 \
+		-iso_test 6 3 187 78 229 
+
+
+# case 70,341
+
+
+
+iso_BM4d:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -poly 19 \
+		-iso_test 1 1 67  -select 1 0 \
+		-iso_test 2 5 2 66 94 213 235  -select 2 1 \
+		-iso_test 3 2 2 94 -select 3 1 \
+		-iso_test 4 1 28 -select 4 0 \
+		-iso_test 5 3 206 212 215 -select 5 427 \
+		-iso_test 6 3 247 256 63  
+
+# case 141,518
+
+
+iso_BM4e:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -poly 19 \
+		-iso_test 1 1 67  -select 1 0 \
+		-iso_test 2 5 2 66 94 213 235  -select 2 1 \
+		-iso_test 3 2 2 213 -select 3 2 \
+		-iso_test 4 1 27 -select 4 0 \
+		-iso_test 5 3 37 46 49 -select 5 156 \
+		-iso_test 6 3 265 216 243 
+
+
+# case 156,661
+
+
+
+U3g:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 3  -solve_mckay 0 1 -solve_gurobi 0 1
+
+
+
+
+U4_1262:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 1262 200000 
+
+#-poly 19 
+
+
+U4_197437:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197437 200000 
+
+# 0 sol in 7:23
+
+U4_197438:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197438 200000 
+
+
+# 0 sol in 11:21 (real time only ca 7 min)
+
+
+U4_197439:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197439 200000 
+
+# 0 sol in 7:54
+
+
+U4_197448:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197448 200000 
+
+
+# 0 sol in 6:57
+
+U4_197452:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197452 200000 
+
+# 0 sol in 10:6
+
+
+U4_197458:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197458 200000 
+
+# 0 sol in 7:24
+
+
+U4_197459:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197459 200000 
+
+# 0 sol in 8:33
+
+U4_197463:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197463 200000 
+
+
+# 0 sol in 8:10
+
+U4_197464:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197464 200000 
+
+# 0 sol in 7:51
+
+
+
+U4_197467:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197467 200000 
+
+# 0 sol in 7:22
+
+
+U4_197470:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197470 200000 
+
+# 0 sol in 11:51
+
+
+
+U4_197472:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197472 200000 
+
+# 0 sol in 7:1
+
+
+U4_197474:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197474 200000 
+
+# 0 sol in 10:24
+
+
+
+U4_197478:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197478 200000 
+
+# 0 sol in 14:21
+
+
+U4_197479:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197479 200000 
+
+# 0 sol in 6:33
+
+U4_197482:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197482 200000 
+
+# 0 sol in 8:01
+
+U4_197483:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197483 200000 
+
+
+# 0 sol in 11:11
+
+U4_197486:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197486 200000 
+
+# 0 sol in 8:33
+
+
+U4_197488:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197488 200000 
+
+# 0 sol in 19:14
+
+U4_197492:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197492 200000 
+
+# 0 sol in 7:17
+
+U4_197496:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197496 200000 
+
+# 0 sol in 9:27
+
+U4_197497:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197497 200000 
+
+# 0 solutions in 6:13
+
+
+U4_197501:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197501 200000 
+
+# 0 solutions in 7:33
+
+U4_197502:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197502 200000 
+
+# 0 solutions in 6:42
+
+
+U4_197506:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi 197506 200000 
+
+# 0 solutions in 8:00
+
+
+
+###########
+
+U4_list:
+	$(UNITALS_PATH)/unitals.out -v 1 -q 4 -solve_gurobi_case_list Alfred_not_done.txt
+
+#########
+
+
+H4:
+	$(UNITALS_PATH)/buekenhout_metz.out -v 2 -q 4 -poly_Q 19 -Uab 0 2  -line_reps 272 -1 
+
+
+#2 193 177 34 52 164 148 68 19 194 178 3 20 195 179 35 26 201 185 41 25 200 184 40 58 170 154 74 64 176 160 80 53 165 149 69 62 174 158 78 269 93 109 253 236 124 140 220 235 123 139 219 239 127 143 223 230 118 134 214 231 119 135 215 1 
+
+
+
+
+BM4:
+	$(UNITALS_PATH)/buekenhout_metz.out -v 2 -q 4 -poly_Q 19 -Uab 1 2 -line_reps 272 67 -1 
+
+
+
+
+H4_tdo:
+	$(INCIDENCE_STRUCTURE_PATH)/tdo.out -v 2 -poly 19  -PG 2 16 -save PG_2_16.inc
+	$(INC_CAN_PATH)/inc_can.out -v 6 -distinguishedsetfile U_0_2_4.txt \
+		-tdo -tdo_steps -tdo_files -tdo_with_scheme \
+		-tda -tda_files -tda_with_scheme -tda_with_group_order \
+		-unit_length "0.045mm" PG_2_16.inc
+
+BM4_tdo:
+	$(INCIDENCE_STRUCTURE_PATH)/tdo.out -v 2 -poly 19  -PG 2 16 -save PG_2_16.inc
+	$(INC_CAN_PATH)/inc_can.out -v 6 -distinguishedsetfile U_1_2_4.txt \
+		-distinguishedset 1 2 34 113 129 -1 \
+		-tdo -tdo_steps -tdo_files -tdo_with_scheme \
+		-tda -tda_files -tda_with_scheme -tda_with_group_order \
+		-unit_length "0.045mm" PG_2_16.inc
+
+
+

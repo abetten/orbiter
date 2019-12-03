@@ -1,0 +1,56 @@
+SRC=../../SRC
+SRC2=../../SRC2
+LSP_PATH=$(SRC)/LSP.99
+INC_CAN_PATH=$(SRC)/INC_CAN
+
+
+
+lsp4:
+	- rm lsp_4_*.inc
+	$(LSP_PATH)/linsp.out 4 0
+	#$(INC_CAN_PATH)/inc_can.out -v 2 -tdo -tda lsp_4_002.inc
+	#$(INC_CAN_PATH)/inc_can.out -v 2 -tdo -tda lsp_4_003.inc
+	$(INC_CAN_PATH)/inc_select.out -v 2 -tdo_neq_tda lsp_4_*.inc select_4.inc
+
+lsp5:
+	- rm lsp_5_*.inc
+	$(LSP_PATH)/linsp.out 5 0
+	$(INC_CAN_PATH)/inc_select.out -v 2 -tdo_neq_tda lsp_5_*.inc select_5.inc
+
+lsp6:
+	- rm lsp_6_*.inc
+	$(LSP_PATH)/linsp.out 6 0
+	$(INC_CAN_PATH)/inc_select.out -v 2 -tdo_neq_tda lsp_6_*.inc select_6.inc
+
+lsp7:
+	- rm lsp_7_*.inc
+	$(LSP_PATH)/linsp.out 7 0
+	$(INC_CAN_PATH)/inc_select.out -v 2 -tdo_neq_tda lsp_7_*.inc select_7.inc
+
+lsp8:
+	- rm lsp_8_*.inc
+	$(LSP_PATH)/linsp.out 8 0
+	$(INC_CAN_PATH)/inc_select.out -v 2 -tdo_neq_tda lsp_8_*.inc select_8.inc
+
+lsp9:
+	- rm lsp_9_*.inc
+	$(LSP_PATH)/linsp.out 9 0
+	$(INC_CAN_PATH)/inc_select.out -v 2 -tdo_neq_tda lsp_9_*.inc select_9.inc
+
+lsp10:
+	- rm lsp_10_*.inc
+	$(LSP_PATH)/linsp.out 10 0
+	$(INC_CAN_PATH)/inc_select.out -v 2 -tdo_neq_tda lsp_10_*.inc select_10.inc
+
+
+# need to modify the file select_9.inc by hand
+
+
+select9:
+	$(INC_CAN_PATH)/inc_can.out -v 2 -tdo -tda -tda_files -tda_with_group_order -tda_with_scheme  select_9.inc
+
+
+clean:
+	- rm lsp_*.inc
+	- rm lsp_*_gv.txt
+

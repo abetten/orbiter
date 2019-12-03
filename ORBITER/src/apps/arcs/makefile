@@ -16,7 +16,6 @@ TARGETS=\
 	k_arc_generator_main.out \
 	k_arc_lifting.out \
 	simeon.out \
-	test_arc.out \
 	test_hyperoval.out 
 
 all: $(TARGETS)
@@ -42,9 +41,6 @@ k_arc_lifting.out:  k_arc_lifting.o;
 
 simeon.out:  simeon.o;
 	$(DISCRETA_CPP)  simeon.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-test_arc.out:  test_arc.o;
-	$(DISCRETA_CPP)  test_arc.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 test_hyperoval.out:  test_hyperoval.o;
 	$(DISCRETA_CPP)  test_hyperoval.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

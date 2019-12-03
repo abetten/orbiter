@@ -6,7 +6,7 @@
  */
 
 
-#include "bitset.h"
+#include "BitSet/bitset.h"
 
 #ifndef ORBITER_SRC_LIB_FOUNDATIONS_GRAPH_THEORY_CLIQUE_GRAPH_H_
 #define ORBITER_SRC_LIB_FOUNDATIONS_GRAPH_THEORY_CLIQUE_GRAPH_H_

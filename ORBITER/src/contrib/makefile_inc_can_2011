@@ -1,0 +1,10 @@
+SRC=../../SRC
+
+TOOLS_PATH=$(SRC)/TOOLS
+INC_CAN_PATH=$(SRC)/INC_CAN
+
+
+can:
+	$(INC_CAN_PATH)/inc_can.out -v 2 -classify STS13_multiply.inc
+
+

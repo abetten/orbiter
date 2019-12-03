@@ -8,6 +8,7 @@
 
 
 #include "foundations.h"
+#include "Clique/RainbowClique.h"
 
 
 using namespace std;
@@ -22,6 +23,7 @@ clique_finder_control::clique_finder_control()
 	f_rainbow = FALSE;
 	f_weighted = FALSE;
 	weights_string = NULL;
+	f_Sajeeb = FALSE;
 	f_file = FALSE;
 	fname_graph = NULL;
 	f_nonrecursive = FALSE;
@@ -66,6 +68,10 @@ int clique_finder_control::parse_arguments(
 			f_weighted = TRUE;
 			weights_string = argv[++i];
 			cout << "-weighted " << weights_string << endl;
+		}
+		else if (strcmp(argv[i], "-Sajeeb") == 0) {
+			f_Sajeeb = TRUE;
+			cout << "-Sajeeb " << endl;
 		}
 		else if (strcmp(argv[i], "-nonrecursive") == 0) {
 			f_nonrecursive = TRUE;
@@ -164,6 +170,17 @@ void clique_finder_control::all_cliques(
 
 
 		}
+		else if (f_Sajeeb) {
+			if (f_v) {
+				cout << "clique_finder_control::all_cliques "
+						"before do_Sajeeb" << endl;
+			}
+			do_Sajeeb(&CG, fname_sol, verbose_level);
+			if (f_v) {
+				cout << "clique_finder_control::all_cliques "
+						"after do_Sajeeb" << endl;
+			}
+		}
 		else {
 			if (f_v) {
 				cout << "clique_finder_control::all_cliques "
@@ -193,6 +210,90 @@ void clique_finder_control::all_cliques(
 	if (f_v) {
 		cout << "clique_finder_control::all_cliques done" << endl;
 		}
+}
+
+void clique_finder_control::do_Sajeeb(colored_graph *CG,
+		const char *fname_sol,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "clique_finder_control::do_Sajeeb" << endl;
+	}
+	long int i, j, k;
+
+	Graph<> G (CG->nb_points, CG->nb_colors);
+
+	for (i = 0; i < CG->nb_points; i++) {
+		for (j = i + 1; j < CG->nb_points; j++) {
+			if (CG->is_adjacent(i, j)) {
+				G.set_edge(i, j);
+				G.set_edge(j, i);
+			}
+		}
+	}
+	for (i = 0; i < CG->nb_points; i++) {
+		G.vertex_label[0] = CG->points[i];
+		G.vertex_color[0] = CG->point_color[i];
+	}
+
+#if 0
+	// Here, for demonstration purposes, we are creating a graph with
+	// a star topology by setting the following edges:
+	// * node 0 is connected to nodes: 4,3,2,1
+	// * node 1 is connected to nodes: 0,4,3
+	// * node 2 is connected to nodes: 0,4
+	// * node 3 is connected to nodes: 0,1
+	// * node 4 is connected to nodes: 0,1,2
+	G.set_edge(0,4); G.set_edge(0,3); G.set_edge(0,2); G.set_edge(0,1);
+	G.set_edge(1,0); G.set_edge(1,4); G.set_edge(1,3);
+	G.set_edge(2,0); G.set_edge(2,4);
+	G.set_edge(3,0); G.set_edge(3,1);
+	G.set_edge(4,0); G.set_edge(4,1); G.set_edge(4,2);
+
+	// Print the adjacency matrix of the graph:
+	printf("Adjacency matrix of the current graph:\n");
+	G.print_adj_matrix();
+
+	// Set the vertex labels
+	G.vertex_label[0] = 0;
+	G.vertex_label[1] = 1;
+	G.vertex_label[2] = 2;
+	G.vertex_label[3] = 3;
+	G.vertex_label[4] = 4;
+
+
+	// Set the color of each vertex. note that the coloring has to
+	// be numerical in order to use the rainbow clique algorithm
+	G.vertex_color[0] = 0;
+	G.vertex_color[1] = 2;
+	G.vertex_color[2] = 2;
+	G.vertex_color[3] = 1;
+	G.vertex_color[4] = 1;
+#endif
+
+
+	// Create the solution storage. The base type of the solution
+	// storage must be the same as data type of the vertex label
+	// in the graph
+	std::vector<std::vector<unsigned int>> solutions;
+
+	// Call the Rainbow Clique finding algorithm
+	RainbowClique::find_cliques(G, solutions);
+
+	// Print the solutions
+	cout << "clique_finder_control::do_Sajeeb Found " << solutions.size() << " solution(s)." << endl;
+	for (size_t i=0; i<solutions.size(); ++i) {
+		for (size_t j=0; j<solutions[i].size(); ++j) {
+			cout << solutions[i][j] << " ";
+		} cout << endl;
+	}
+
+
+	if (f_v) {
+		cout << "clique_finder_control::do_Sajeeb done" << endl;
+	}
 }
 
 void clique_finder_control::all_cliques_weighted(colored_graph *CG,

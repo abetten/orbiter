@@ -1,0 +1,39 @@
+MY_PATH=../..
+SRC=$(MY_PATH)/SRC
+SRC2=../../SRC2
+
+
+COMBINATORICS_PATH=$(SRC2)/COMBINATORICS
+
+5_29:
+	$(COMBINATORICS_PATH)/sarnak.out -v 2 -q 5 -p 29
+
+5_13:
+	$(COMBINATORICS_PATH)/sarnak.out -v 1 -q 5 -p 13
+
+
+WL_9:
+	$(COMBINATORICS_PATH)/winnie_li.out -v 1 -q 9 -labels
+
+WL_16:
+	$(COMBINATORICS_PATH)/winnie_li.out -v 1 -q 16 -index 2 -labels
+
+WL_25:
+	$(COMBINATORICS_PATH)/winnie_li.out -v 1 -q 25 -labels
+
+WL_27:
+	$(COMBINATORICS_PATH)/winnie_li.out -v 1 -q 27 -labels 
+
+WL_49:
+	$(COMBINATORICS_PATH)/winnie_li.out -v 1 -q 49 -labels 
+
+WL_64_2:
+	$(COMBINATORICS_PATH)/winnie_li.out -v 1 -q 64 -index 2 -labels
+
+WL_64_3:
+	$(COMBINATORICS_PATH)/winnie_li.out -v 1 -q 64 -index 3 -labels
+
+WL_81_2:
+	$(COMBINATORICS_PATH)/winnie_li.out -v 1 -q 81 -index 2 -labels
+
+
