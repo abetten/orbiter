@@ -8,7 +8,7 @@
 
 
 #include "foundations.h"
-#include "Clique/RainbowClique.h"
+//#include "Clique/RainbowClique.h"
 
 
 using namespace std;
@@ -223,6 +223,7 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG,
 	}
 	long int i, j, k;
 
+#if 0
 	Graph<> G (CG->nb_points, CG->nb_colors);
 
 	for (i = 0; i < CG->nb_points; i++) {
@@ -237,41 +238,6 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG,
 		G.vertex_label[0] = CG->points[i];
 		G.vertex_color[0] = CG->point_color[i];
 	}
-
-#if 0
-	// Here, for demonstration purposes, we are creating a graph with
-	// a star topology by setting the following edges:
-	// * node 0 is connected to nodes: 4,3,2,1
-	// * node 1 is connected to nodes: 0,4,3
-	// * node 2 is connected to nodes: 0,4
-	// * node 3 is connected to nodes: 0,1
-	// * node 4 is connected to nodes: 0,1,2
-	G.set_edge(0,4); G.set_edge(0,3); G.set_edge(0,2); G.set_edge(0,1);
-	G.set_edge(1,0); G.set_edge(1,4); G.set_edge(1,3);
-	G.set_edge(2,0); G.set_edge(2,4);
-	G.set_edge(3,0); G.set_edge(3,1);
-	G.set_edge(4,0); G.set_edge(4,1); G.set_edge(4,2);
-
-	// Print the adjacency matrix of the graph:
-	printf("Adjacency matrix of the current graph:\n");
-	G.print_adj_matrix();
-
-	// Set the vertex labels
-	G.vertex_label[0] = 0;
-	G.vertex_label[1] = 1;
-	G.vertex_label[2] = 2;
-	G.vertex_label[3] = 3;
-	G.vertex_label[4] = 4;
-
-
-	// Set the color of each vertex. note that the coloring has to
-	// be numerical in order to use the rainbow clique algorithm
-	G.vertex_color[0] = 0;
-	G.vertex_color[1] = 2;
-	G.vertex_color[2] = 2;
-	G.vertex_color[3] = 1;
-	G.vertex_color[4] = 1;
-#endif
 
 
 	// Create the solution storage. The base type of the solution
@@ -289,6 +255,8 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG,
 			cout << solutions[i][j] << " ";
 		} cout << endl;
 	}
+#endif
+
 
 
 	if (f_v) {
