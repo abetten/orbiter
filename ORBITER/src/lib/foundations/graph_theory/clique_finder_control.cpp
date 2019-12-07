@@ -8,7 +8,8 @@
 
 
 #include "foundations.h"
-//#include "Clique/RainbowClique.h"
+#include "Clique/RainbowClique.h"
+#include "Clique/Graph.h"
 
 
 using namespace std;
@@ -223,7 +224,7 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG,
 	}
 	long int i, j, k;
 
-#if 0
+#if 1
 	Graph<> G (CG->nb_points, CG->nb_colors);
 
 	for (i = 0; i < CG->nb_points; i++) {
@@ -243,7 +244,7 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG,
 	// Create the solution storage. The base type of the solution
 	// storage must be the same as data type of the vertex label
 	// in the graph
-	std::vector<std::vector<unsigned int>> solutions;
+	std::vector<std::vector<unsigned int> > solutions;
 
 	// Call the Rainbow Clique finding algorithm
 	RainbowClique::find_cliques(G, solutions);
