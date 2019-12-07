@@ -28,15 +28,16 @@ public:
 		bitset color_satisfied;
 		T* color_frequency;	//
 		uint8_t n_threads;
-		std::vector<std::vector<T>> t_solutions;
+		std::vector<std::vector<T> > t_solutions;
 						// store the vertex label of the points in current_clique
 	};
 
 
 	template <typename T, typename U>
 	__forceinline__
-	static void find_cliques (Graph<T,U>& G, std::vector<std::vector<T>>& soln) {
-		const size_t nThreads = std::thread::hardware_concurrency();
+	static void find_cliques (Graph<T,U>& G, std::vector<std::vector<T> >& soln) {
+		const size_t nThreads =
+				std::thread::hardware_concurrency();
 		std::thread threads [nThreads];
 		PARAMS<T> params [nThreads];
 

@@ -486,8 +486,59 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 			}
 		}
 		else {
-			cout << "graph_theory_domain::load_colored_graph old file format no longer supported" << endl;
-			exit(1);
+			//cout << "graph_theory_domain::load_colored_graph old file format no longer supported" << endl;
+			//exit(1);
+			cout << "graph_theory_domain::load_colored_graph old file format detected, using compatibility mode" << endl;
+			nb_vertices = a;
+			fp.read((char *) &nb_colors, sizeof(int));
+			nb_colors_per_vertex = 1;
+			if (f_v) {
+				cout << "load_colored_graph nb_vertices=" << nb_vertices
+						<< " nb_colors=" << nb_colors
+						<< " nb_colors_per_vertex=" << nb_colors_per_vertex
+					<< endl;
+				}
+
+
+			L = ((long int) nb_vertices * (long int) (nb_vertices - 1)) >> 1;
+
+			bitvector_length = (L + 7) >> 3;
+			if (f_v) {
+				cout << "load_colored_graph bitvector_length="
+						<< bitvector_length << endl;
+				}
+
+			fp.read((char *) &user_data_size, sizeof(int));
+			if (f_v) {
+				cout << "load_colored_graph user_data_size="
+						<< user_data_size << endl;
+				}
+			user_data = NEW_lint(user_data_size);
+
+			for (i = 0; i < user_data_size; i++) {
+				fp.read((char *) &a, sizeof(int));
+				user_data[i] = a;
+				}
+
+			vertex_labels = NEW_lint(nb_vertices);
+			vertex_colors = NEW_int(nb_vertices * nb_colors_per_vertex);
+
+			for (i = 0; i < nb_vertices; i++) {
+				fp.read((char *) &a, sizeof(int));
+				vertex_labels[i] = a;
+				for (j = 0; j < nb_colors_per_vertex; j++) {
+					fp.read((char *) &vertex_colors[i * nb_colors_per_vertex + j], sizeof(int));
+					if (vertex_colors[i * nb_colors_per_vertex + j] >= nb_colors) {
+						cout << "load_colored_graph" << endl;
+						cout << "vertex_colors[i * nb_colors_per_vertex + j] >= nb_colors" << endl;
+						cout << "vertex_colors[i * nb_colors_per_vertex + j]=" << vertex_colors[i * nb_colors_per_vertex + j] << endl;
+						cout << "i=" << i << endl;
+						cout << "j=" << j << endl;
+						cout << "nb_colors=" << nb_colors << endl;
+						exit(1);
+						}
+				}
+			}
 		}
 
 		if (f_v) {
