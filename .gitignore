@@ -9,3 +9,5 @@ orbiter.tar.gz
 .settings/*
 .cproject
 .settings/language.settings.xml
+
+idea/
