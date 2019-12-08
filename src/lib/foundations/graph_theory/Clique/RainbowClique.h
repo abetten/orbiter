@@ -15,11 +15,11 @@ public:
     template <typename T, typename U>
     __forceinline__
     static void find_cliques (Graph<T,U>& G, std::vector<std::vector<T>>& soln) {
-        const size_t nThreads = std::thread::hardware_concurrency();
+        const size_t nThreads = 1; //std::thread::hardware_concurrency();
         std::thread threads [nThreads];
         PARAMS<T> params [nThreads];
 
-#pragma unroll
+        #pragma unroll
         for (size_t i=0; i<nThreads; ++i) {
             params[i].tid = i;
             params[i].live_pts = new T [G.nb_vertices] ();
@@ -33,20 +33,18 @@ public:
                                      std::ref(G));
         }
 
-#pragma unroll
+        #pragma unroll
         for (size_t i=0; i<nThreads; ++i) threads[i].join();
 
         // Find the total number of solutions
-        size_t nb_sols = 0, nb_failed_attempts = 0;
-#pragma unroll
+        size_t nb_sols = 0;
+        #pragma unroll
         for (size_t i=0; i<nThreads; ++i) {
             nb_sols += params[i].t_solutions.size();
-            nb_failed_attempts += params[i].nb_failed_attempts;
         }
         soln.reserve(nb_sols);
-        std::cout << "nb_failed_attempts = " << nb_failed_attempts << std::endl;
 
-#pragma unroll
+        #pragma unroll
         for (size_t i=0; i<nThreads; ++i) {
             // use std::move to avoid performing intermediate copy ops when
             // putting solutions into soln vector
@@ -75,8 +73,6 @@ private:
         T* color_frequency;	//
         uint8_t n_threads;
         std::vector<std::vector<T>> t_solutions;
-        // store the vertex label of the points in current_clique
-        uint nb_failed_attempts = 0;
     };
 
     template <typename T, typename U>
@@ -86,7 +82,8 @@ private:
         if (depth == G.nb_colors) {
             param.nb_sol += 1;
             param.t_solutions.emplace_back(std::vector<T>());
-#pragma unroll
+            param.t_solutions.at(param.t_solutions.size()-1).reserve(G.nb_colors);
+            #pragma unroll
             for (size_t i=0; i<depth; ++i)
                 param.t_solutions.at(param.t_solutions.size()-1).emplace_back(
                         G.get_label(param.current_cliques[i])
@@ -101,7 +98,7 @@ private:
             auto pt = param.current_cliques[depth-1];
             end_adj = clump_by_adjacency(G, param.live_pts, start, end, pt);
         } else {
-#pragma unroll
+            #pragma unroll
             for (size_t i=0; i<G.nb_vertices; ++i) param.live_pts[i] = i;
             end_adj = G.nb_vertices;
         }
@@ -118,24 +115,22 @@ private:
 
         // find how many points are there with the lowest value at current depth
         if (depth == 0) {
-#pragma unroll
+            #pragma unroll
             for (size_t i=start; i<end_color_class; ++i) {
+                printf("%ld\tof\t%ld\t", i, end_color_class);
+                printf("Progress: %.2f%      \r", i/double(end_color_class-start)*100);
+                fflush(stdout);
                 if ((i % param.n_threads) == param.tid) {
                     param.current_cliques[depth] = param.live_pts[i];
                     find_cliques_parallel(depth+1, end_color_class, end_adj, param, G);
-                    if (param.tid==0) {
-                        std::cout<<"Progress: "<<((double)i+1)/(end_color_class-start)<<"% \r";
-                        std::cout << std::flush;
-                    }
                 }
             }
         } else {
-#pragma unroll
+            #pragma unroll
             for (size_t i=start; i<end_color_class; ++i) {
                 param.current_cliques[depth] = param.live_pts[i];
                 find_cliques_parallel(depth+1, end_color_class, end_adj, param, G);
             }
-            if (start >= end_color_class) param.nb_failed_attempts += 1;
         }
 
         param.color_satisfied.unset(lowest_color);
@@ -146,7 +141,7 @@ private:
     __forceinline__
     static inline T clump_by_adjacency(Graph<T,U>& G, T* live_pts, T start,
                                        T end, T node) {
-#pragma unroll
+        #pragma unroll
         for (T i = start; i<end; ++i) {
             if (G.is_adjacent(node, live_pts[i])) {
                 if (start != i) std::swap(live_pts[i], live_pts[start]);
@@ -166,7 +161,7 @@ private:
         // reset color_frequency stats
         memset(color_frequency, 0, sizeof(T)*G.nb_colors);
 
-#pragma unroll
+        #pragma unroll
         for (size_t i = start; i < end; ++i) {
             const U point_color = G.vertex_color [live_pts[i]];
             color_frequency[point_color] += 1;
@@ -183,7 +178,7 @@ private:
         // returns index of the lowest value in t he array
         T min_element = std::numeric_limits<T>::max();
         U return_value = 0;
-#pragma unroll
+        #pragma unroll
         for (U i=0; i < G.nb_colors; ++i) {
             if (color_frequency[i] < min_element && !color_satisfied.at(i)) {
                 min_element = color_frequency[i];
@@ -198,7 +193,7 @@ private:
     __forceinline__
     static inline T clump_color_class(Graph<T,U>& G, T* live_pts, T start,
                                       T end, U color) {
-#pragma unroll
+        #pragma unroll
         for (size_t i = start; i<end; ++i) {
             if (G.get_color(live_pts[i]) == color) {
                 std::swap(live_pts[start], live_pts[i]);
