@@ -5,6 +5,10 @@
  * Created on October 26, 2017, 5:02 PM
  */
 
+/**
+ * This file returns the time in millieconds
+ */
+
 #ifndef CHRONO_H
 #define CHRONO_H
 
