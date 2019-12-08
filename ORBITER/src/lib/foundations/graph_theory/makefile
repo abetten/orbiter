@@ -1,9 +1,9 @@
 DISCRETA_CPP = g++
 DISCRETA_CC = gcc
-CPPFLAGS =-std=c++11 -Wall -O3 -march=native -funroll-loops -I.. -I./Clique -I../BitSet
+CPPFLAGS = -Wall -O3 -march=native -funroll-loops -I.. -I./Clique -I../BitSet -std=c++11 
 # -frename-registers
 LIB = 
-LFLAGS = -lm -lpthread
+LFLAGS = -lm
 
 MODULES = \
 	clique_finder.o \
