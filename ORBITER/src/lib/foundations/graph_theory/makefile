@@ -1,6 +1,14 @@
 DISCRETA_CPP = g++
 DISCRETA_CC = gcc
-CPPFLAGS = -Wall -O3 -march=native -funroll-loops -I.. -I./Clique -I../BitSet -std=c++11 
+CPPFLAGS = -Wall \
+            -O3 \
+            -march=native \
+            -funroll-loops \
+            -I.. \
+            -I./Clique \
+            -I../BitSet \
+            -I../../group_actions/groups \
+            -std=c++14
 # -frename-registers
 LIB = 
 LFLAGS = -lm
