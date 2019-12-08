@@ -9,3 +9,8 @@ orbiter.tar.gz
 .settings/*
 .cproject
 .settings/language.settings.xml
+
+idea/
+.idea/
+CMakeLists.txt
+cmake-build-debug/
