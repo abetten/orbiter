@@ -83,8 +83,7 @@ private:
 
         if (depth == G.nb_colors) {
             param.nb_sol += 1;
-            param.t_solutions.emplace_back(std::vector<T>());
-            param.t_solutions.at(param.t_solutions.size()-1).reserve(G.nb_colors);
+            param.t_solutions.emplace_back(std::vector<T>(G.nb_colors));
             #pragma unroll
             for (size_t i=0; i<depth; ++i)
                 param.t_solutions.at(param.t_solutions.size()-1).emplace_back(
