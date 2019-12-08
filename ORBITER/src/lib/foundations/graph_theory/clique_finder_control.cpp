@@ -4,8 +4,13 @@
 //
 // started:  October 11, 2018
 
+
+
+
 #include "foundations.h"
 #include "Clique/RainbowClique.h"
+#include "Clique/Graph.h"
+
 
 using namespace std;
 
@@ -217,21 +222,23 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG,
 	if (f_v) {
 		cout << "clique_finder_control::do_Sajeeb" << endl;
 	}
-	long int i, j, k;
 
 #if 1
 	Graph<> G (CG->nb_points, CG->nb_colors);
 
-	for (i = 0; i < CG->nb_points; i++) {
-		for (j = i + 1; j < CG->nb_points; j++) {
+	for (size_t i = 0; i < CG->nb_points; i++) {
+		for (size_t j = i + 1; j < CG->nb_points; j++) {
 			if (CG->is_adjacent(i, j)) {
 				G.set_edge(i, j);
 				G.set_edge(j, i);
 			}
 		}
 	}
-    memcpy(G.vertex_label, CG->points, sizeof(G.vertex_label[0])*CG->nb_points);
-    memcpy(G.vertex_color, CG->point_color, sizeof(G.vertex_color[0])*CG->nb_points);
+//	G.print_adj_matrix();
+	for (size_t i = 0; i < CG->nb_points; i++) {
+		G.vertex_label[i] = CG->points[i];
+		G.vertex_color[i] = CG->point_color[i];
+	}
 
 	// Create the solution storage. The base type of the solution
 	// storage must be the same as data type of the vertex label
