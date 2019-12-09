@@ -18,6 +18,8 @@ all:
 	cd surfaces; $(MAKE) all
 	cd test; $(MAKE) all
 	cd tools; $(MAKE) all
+	#cd ginac; $(MAKE) all
+		# ginac requires cln and ginac to be installed
 
 clean: 
 	cd algebra; $(MAKE) clean
@@ -25,6 +27,7 @@ clean:
 	cd blt; $(MAKE) clean
 	cd codes; $(MAKE) clean
 	cd combinatorics; $(MAKE) clean
+	cd ginac; $(MAKE) clean
 	cd graph_theory; $(MAKE) clean
 	cd groups; $(MAKE) clean
 	cd linear_spaces; $(MAKE) clean
