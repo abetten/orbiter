@@ -25,8 +25,8 @@ public:
             params[i].live_pts = new T [G.nb_vertices] ();
             params[i].current_cliques = new T [G.nb_colors] ();
             params[i].nb_sol = 0;
-//            params[i].color_satisfied.init(G.nb_colors);
-            params[i].color_satisfied = new bool [G.nb_colors] ();
+            params[i].color_satisfied.init(G.nb_colors);
+//            params[i].color_satisfied = new bool [G.nb_colors] ();
             params[i].color_frequency = new T [G.nb_colors] ();
             params[i].n_threads = nThreads;
 
@@ -64,14 +64,13 @@ private:
             if (live_pts) delete [] live_pts;
             if (current_cliques) delete [] current_cliques;
             if (color_frequency) delete [] color_frequency;
-            if (color_satisfied) delete [] color_satisfied;
         }
 
         uint8_t tid;	//
         T* live_pts;	// Store index of points in graph
         T* current_cliques;	// Index of current clique
         size_t nb_sol;
-        bool* color_satisfied;
+        bitset color_satisfied;
         T* color_frequency;	//
         uint8_t n_threads;
         std::vector<std::vector<T>> t_solutions;
@@ -111,7 +110,7 @@ private:
 
         end_color_class = clump_color_class(G, param.live_pts, start, end_adj, lowest_color);
 
-        param.color_satisfied[lowest_color] = true;
+        param.color_satisfied.set(lowest_color);
 
 
         // find how many points are there with the lowest value at current depth
@@ -134,7 +133,7 @@ private:
             }
         }
 
-        param.color_satisfied[lowest_color] = false;
+        param.color_satisfied.unset(lowest_color);
 
     }
 
@@ -172,7 +171,7 @@ private:
     template <typename T, typename U>
     __forceinline__
     static inline U get_color_with_lowest_frequency_(Graph<T,U>& G, T* live_pts,
-                                                     T* color_frequency, bool* color_satisfied, T start, T end) {
+                                                     T* color_frequency, bitset& color_satisfied, T start, T end) {
 
         create_color_freq_of_live_points(G, live_pts, color_frequency, start, end);
 
@@ -181,7 +180,7 @@ private:
         U return_value = 0;
         #pragma unroll
         for (U i=0; i < G.nb_colors; ++i) {
-            if (color_frequency[i] < min_element && !color_satisfied[i]) {
+            if (color_frequency[i] < min_element && !color_satisfied.at(i)) {
                 min_element = color_frequency[i];
                 return_value = i;
             }
