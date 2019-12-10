@@ -240,7 +240,7 @@ class longinteger;		// derived from base
 	// and a C array of chars containing 
 	// the decimal representation of the signless longinteger value 
 
-class matrix;			// derived from base
+class discreta_matrix;			// derived from base
 	// self is a pointer obtained from 
 	// calloc_m_times_n_objects().
 	// this means that we have an array of m * n + 2 objacts, 
@@ -379,9 +379,9 @@ void stirling_second(int n, int k, int f_ordered, discreta_base &res, int verbos
 void stirling_first(int n, int k, int f_signless, discreta_base &res, int verbose_level);
 void Catalan(int n, Vector &v, int verbose_level);
 void Catalan_n(int n, Vector &v, discreta_base &res, int verbose_level);
-void Catalan_nk_matrix(int n, matrix &Cnk, int verbose_level);
-void Catalan_nk_star_matrix(int n, matrix &Cnk, int verbose_level);
-void Catalan_nk_star(int n, int k, matrix &Cnk, discreta_base &res, int verbose_level);
+void Catalan_nk_matrix(int n, discreta_matrix &Cnk, int verbose_level);
+void Catalan_nk_star_matrix(int n, discreta_matrix &Cnk, int verbose_level);
+void Catalan_nk_star(int n, int k, discreta_matrix &Cnk, discreta_base &res, int verbose_level);
 
 void N_choose_K(discreta_base & n, int k, discreta_base & res);
 void Binomial(int n, int k, discreta_base & n_choose_k);
@@ -515,7 +515,7 @@ class discreta_base
 	permutation& as_permutation() { return *(permutation *)this; }
 	
 	number_partition& as_number_partition() { return *(number_partition *)this; }
-	matrix& as_matrix() { return *(matrix *)this; }
+	discreta_matrix& as_matrix() { return *(discreta_matrix *)this; }
 	//bitmatrix& as_bitmatrix() { return *(bitmatrix *)this; }
 	//pc_presentation& as_pc_presentation() { return *(pc_presentation *)this; }
 	//pc_subgroup& as_pc_subgroup() { return *(pc_subgroup *)this; }
@@ -541,7 +541,7 @@ class discreta_base
 	Vector& change_to_vector() { freeself(); c_kind(VECTOR); return as_vector(); }
 	permutation& change_to_permutation() { freeself(); c_kind(PERMUTATION); return as_permutation(); }
 	number_partition& change_to_number_partition() { freeself(); c_kind(NUMBER_PARTITION); return as_number_partition(); }
-	matrix& change_to_matrix() { freeself(); c_kind(MATRIX); return as_matrix(); }
+	discreta_matrix& change_to_matrix() { freeself(); c_kind(MATRIX); return as_matrix(); }
 	//bitmatrix& change_to_bitmatrix() { freeself(); c_kind(BITMATRIX); return as_bitmatrix(); }
 	//pc_presentation& change_to_pc_presentation() { freeself(); c_kind(PC_PRESENTATION); return as_pc_presentation(); }
 	//pc_subgroup& change_to_pc_subgroup() { freeself(); c_kind(PC_SUBGROUP); return as_pc_subgroup(); }
@@ -1189,7 +1189,7 @@ void signum_map(discreta_base & x, discreta_base &d);
 class matrix_access {
 public:
 	int i;
-	matrix *p;
+	discreta_matrix *p;
 	discreta_base & operator [] (int j);
 };
 
@@ -1197,20 +1197,20 @@ public:
 
 
 
-class matrix: public discreta_base
+class discreta_matrix: public discreta_base
 {
 	public:
-	matrix();
+	discreta_matrix();
 		// constructor, sets the matrix_pointer to NULL
-	matrix(const discreta_base& x);
+	discreta_matrix(const discreta_base& x);
 		// copy constructor
-	matrix& operator = (const discreta_base &x);
+	discreta_matrix& operator = (const discreta_base &x);
 		// copy assignment
 
 	void *operator new(size_t, void *p) { return p; } 
 	void settype_matrix();
 
-	~matrix();
+	~discreta_matrix();
 	void freeself_matrix();
 		// delete the matrix
 	kind s_virtual_kind();
@@ -1219,11 +1219,11 @@ class matrix: public discreta_base
 	std::ostream& print(std::ostream&);
 	int compare_with(discreta_base &a);
 
-	matrix& m_mn(int m, int n);
+	discreta_matrix& m_mn(int m, int n);
 		// make matrix of format m times n
 		// allocates the memory and sets the objects to type BASE
-	matrix& m_mn_n(int m, int n);
-	matrix& realloc(int m, int n);
+	discreta_matrix& m_mn_n(int m, int n);
+	discreta_matrix& realloc(int m, int n);
 
 
 	int s_m();
@@ -1241,7 +1241,7 @@ class matrix: public discreta_base
 		// overload access operator
 
 	void mult_to(discreta_base &x, discreta_base &y);
-	void matrix_mult_to(matrix &x, discreta_base &y);
+	void matrix_mult_to(discreta_matrix &x, discreta_base &y);
 	void vector_mult_to(Vector &x, discreta_base &y);
 	void multiply_vector_from_left(Vector &x, Vector &y);
 	int invert_to(discreta_base &x);
@@ -1254,10 +1254,10 @@ class matrix: public discreta_base
 
 
 	int Gauss(int f_special, int f_complete,
-			Vector& base_cols, int f_P, matrix& P, int verbose_level);
+			Vector& base_cols, int f_P, discreta_matrix& P, int verbose_level);
 	int rank();
-	int get_kernel(Vector& base_cols, matrix& kernel);
-	matrix& transpose();
+	int get_kernel(Vector& base_cols, discreta_matrix& kernel);
+	discreta_matrix& transpose();
 	int Asup2Ainf();
 	int Ainf2Asup();
 	int Asup2Acover();
@@ -1270,11 +1270,11 @@ class matrix: public discreta_base
 	void elements_to_unipoly();
 	void minus_X_times_id();
 	void X_times_id_minus_self();
-	void smith_normal_form(matrix& P, matrix& Pv,
-			matrix& Q, matrix& Qv, int verbose_level);
-	int smith_eliminate_column(matrix& P, matrix& Pv, int i,
+	void smith_normal_form(discreta_matrix& P, discreta_matrix& Pv,
+			discreta_matrix& Q, discreta_matrix& Qv, int verbose_level);
+	int smith_eliminate_column(discreta_matrix& P, discreta_matrix& Pv, int i,
 			int verbose_level);
-	int smith_eliminate_row(matrix& Q, matrix& Qv, int i,
+	int smith_eliminate_row(discreta_matrix& Q, discreta_matrix& Qv, int i,
 			int verbose_level);
 	void multiply_2by2_from_left(int i, int j, 
 		discreta_base& aii, discreta_base& aij,
@@ -1345,7 +1345,7 @@ class matrix: public discreta_base
 		int f_labelling_blocks, Vector &block_labels);
 	void calc_hash_key(int key_len, hollerith & hash_key, int f_v);
 	int is_in_center();
-	void power_mod(int r, integer &P, matrix &C);
+	void power_mod(int r, integer &P, discreta_matrix &C);
 	int proj_order_mod(integer &P);
 	void PG_rep(domain *dom, permutation &p, int f_action_from_right, int f_modified);
 	void PG_rep(permutation &p, int f_action_from_right, int f_modified);
@@ -1508,12 +1508,12 @@ class unipoly: public Vector
 	void evaluate_at(discreta_base& x, discreta_base& y);
 	void largest_divisor_prime_to(unipoly& q, unipoly& r);
 	void monic();
-	void normal_base(int p, matrix& F, matrix& N, int verbose_level);
+	void normal_base(int p, discreta_matrix& F, discreta_matrix& N, int verbose_level);
 	int first_irreducible_polynomial(int p,
-			unipoly& m, matrix& F, matrix& N, Vector &v,
+			unipoly& m, discreta_matrix& F, discreta_matrix& N, Vector &v,
 			int verbose_level);
 	int next_irreducible_polynomial(int p,
-			unipoly& m, matrix& F, matrix& N, Vector &v,
+			unipoly& m, discreta_matrix& F, discreta_matrix& N, Vector &v,
 			int verbose_level);
 	void normalize(discreta_base &p);
 	void Xnm1(int n);
@@ -1627,7 +1627,7 @@ class geometry: public Vector
 
 	int & number() { return Vector::s_i(0).as_integer().s_i(); }
 	hollerith & label() { return Vector::s_i(1).as_hollerith(); }
-	matrix & X() { return Vector::s_i(2).as_matrix(); }
+	discreta_matrix & X() { return Vector::s_i(2).as_matrix(); }
 	int & f_incidence_matrix() { return Vector::s_i(3).as_integer().s_i(); }
 	
 	Vector & point_labels() { return Vector::s_i(4).as_vector(); }
@@ -1663,10 +1663,10 @@ class geometry: public Vector
 #endif
 	void calc_canon_nauty(int f_v, int f_vv, int f_vvv);
 	//void calc_canon_tonchev(int f_v, int f_vv, int f_vvv);
-	void get_lexleast_X(matrix & X0);
+	void get_lexleast_X(discreta_matrix & X0);
 };
 
-int search_geo_file(matrix & X0, char *fname, int geo_nr, char *geo_label, int f_v);
+int search_geo_file(discreta_matrix & X0, char *fname, int geo_nr, char *geo_label, int f_v);
 
 
 #if 0
@@ -1992,7 +1992,7 @@ class solid: public Vector
 	void octahedron(int r);
 	void dodecahedron(int r);
 	void icosahedron(int r);
-	void make_placed_graph(matrix & incma, Vector& aut_gens, Vector& cycles);
+	void make_placed_graph(discreta_matrix & incma, Vector& aut_gens, Vector& cycles);
 		
 	void write_graphfile(char *fname);
 	void write_solidfile(char *fname);
@@ -2029,16 +2029,16 @@ struct design_data {
 	int nb_sol;
 	Vector S;
 
-	matrix P;
+	discreta_matrix P;
 };
 
 
 void write_KM_file(char *gsel, char *g_label, char *g_label_tex, char *km_fname, char *acting_on, 
 	Vector & G_gen, discreta_base & go, int deg,
-	matrix & M, int t, int k);
+	discreta_matrix & M, int t, int k);
 void write_KM_file2(char *gsel, char *g_label, char *g_label_tex, char *km_fname, char *acting_on, 
 	Vector & G_gen, discreta_base & go, int deg,
-	matrix & M, int t, int k, int f_right_hand_side_in_last_column_of_M);
+	discreta_matrix & M, int t, int k, int f_right_hand_side_in_last_column_of_M);
 void write_ascii_generators(char *km_fname, Vector & gen);
 void write_ascii_representatives(char *km_fname, Vector & R);
 void write_ascii_stabilizer_orders(char *km_fname, Vector & Ago);
@@ -2056,8 +2056,8 @@ void km_get_solutions_from_solver(char *KM_fname, int lambda);
 int km_nb_of_solutions(char *KM_fname, int lambda);
 void km_get_solutions(char *KM_fname, int lambda, int from, int len, Vector& S);
 void km_read_until_lambdaend(std::ifstream & f);
-void Mtk_via_Mtr_Mrk(int t, int r, int k, matrix & Mtr, matrix & Mrk, matrix & Mtk, int f_v);
-void Mtk_from_MM(Vector & MM, matrix & Mtk, int t, int k, int f_v);
+void Mtk_via_Mtr_Mrk(int t, int r, int k, discreta_matrix & Mtr, discreta_matrix & Mrk, discreta_matrix & Mtk, int f_v);
+void Mtk_from_MM(Vector & MM, discreta_matrix & Mtk, int t, int k, int f_v);
 
 DESIGN_DATA *prepare_for_intersection_numbers(char *KM_fname);
 void design_load_all_solutions(DESIGN_DATA *dd, int lambda);
@@ -2065,10 +2065,10 @@ void design_prepare_orbit_lengths(DESIGN_DATA *dd);
 void design_orbits_vector(Vector & X, Vector & orbits, int f_complement);
 
 void global_intersection_numbers_prepare_data(char *KM_fname, int lambda, int s_max, 
-	DESIGN_DATA *&dd, matrix& L, matrix& Z, matrix &Bv, matrix & S1t, matrix &D);
+	DESIGN_DATA *&dd, discreta_matrix& L, discreta_matrix& Z, discreta_matrix &Bv, discreta_matrix & S1t, discreta_matrix &D);
 void global_intersection_numbers_compute(char *KM_fname, int lambda, int s_max, 
-	DESIGN_DATA *&dd, matrix& L, matrix& Z, matrix &Bv, matrix & S1t, matrix &D, 
-	Vector& sol, matrix& As1, matrix& As2, Vector& inv);
+	DESIGN_DATA *&dd, discreta_matrix& L, discreta_matrix& Z, discreta_matrix &Bv, discreta_matrix & S1t, discreta_matrix &D,
+	Vector& sol, discreta_matrix& As1, discreta_matrix& As2, Vector& inv);
 void global_intersection_numbers(char *KM_fname, int lambda, int s_max);
 void extend_design_from_residual(char *KM_fname, int lambda);
 void get_group_to_file(int arg_length, char **group_arg_list, int f_v);
@@ -2578,7 +2578,7 @@ int design_parameters_admissible(int v, int t, int k, discreta_base &lambda);
 int calc_delta_lambda(int v, int t, int k, int f_v);
 void design_lambda_max(int t, int v, int k, discreta_base & lambda_max);
 void design_lambda_max_half(int t, int v, int k, discreta_base & lambda_max_half);
-void design_lambda_ijs_matrix(int t, int v, int k, discreta_base& lambda, int s, matrix & M);
+void design_lambda_ijs_matrix(int t, int v, int k, discreta_base& lambda, int s, discreta_matrix & M);
 void design_lambda_ijs(int t, int v, int k, discreta_base& lambda, int s, int i, int j, discreta_base & lambda_ijs);
 void design_lambda_ij(int t, int v, int k, discreta_base& lambda, int i, int j, discreta_base & lambda_ij);
 int is_trivial_clan(int t, int v, int k);
@@ -2590,7 +2590,7 @@ int is_ancestor(int t, int v, int k, int delta_lambda);
 int calc_redinv(int t, int v, int k, int delta_lambda, int &c, int &T, int &V, int &K, int &Delta_lambda);
 int calc_derinv(int t, int v, int k, int delta_lambda, int &c, int &T, int &V, int &K, int &Delta_lambda);
 int calc_resinv(int t, int v, int k, int delta_lambda, int &c, int &T, int &V, int &K, int &Delta_lambda);
-void design_mendelsohn_coefficient_matrix(int t, int m, matrix & M);
+void design_mendelsohn_coefficient_matrix(int t, int m, discreta_matrix & M);
 void design_mendelsohn_rhs(int v, int t, int k, discreta_base& lambda, int m, int s, Vector & rhs);
 int design_parameter_database_already_there(database &D, design_parameter &p, int& idx);
 void design_parameter_database_add_if_new(database &D, design_parameter &p, int& highest_id, int verbose_level);
@@ -2718,19 +2718,19 @@ void free_global_data();
 void the_end(int t0);
 void the_end_quietly(int t0);
 void calc_Kramer_Mesner_matrix_neighboring(poset_classification *gen,
-	int level, matrix &M, int verbose_level);
+	int level, discreta_matrix &M, int verbose_level);
 // we assume that we don't use implicit fusion nodes
-void Mtk_from_MM(Vector & MM, matrix & Mtk, int t, int k, 
+void Mtk_from_MM(Vector & MM, discreta_matrix & Mtk, int t, int k,
 	int f_subspaces, int q,  int verbose_level);
 void Mtk_via_Mtr_Mrk(int t, int r, int k, int f_subspaces, int q, 
-	matrix & Mtr, matrix & Mrk, matrix & Mtk, int verbose_level);
+		discreta_matrix & Mtr, discreta_matrix & Mrk, discreta_matrix & Mtk, int verbose_level);
 // Computes $M_{tk}$ via a recursion formula:
 // $M_{tk} = {{k - t} \choose {k - r}} \cdot M_{t,r} \cdot M_{r,k}$.
 void Mtk_sup_to_inf(poset_classification *gen,
-	int t, int k, matrix & Mtk_sup, matrix & Mtk_inf, int verbose_level);
+	int t, int k, discreta_matrix & Mtk_sup, discreta_matrix & Mtk_inf, int verbose_level);
 void compute_Kramer_Mesner_matrix(poset_classification *gen,
-	int t, int k, matrix &M, int f_subspaces, int q, int verbose_level);
-void matrix_to_diophant(matrix& M, diophant *&D, int verbose_level);
+	int t, int k, discreta_matrix &M, int f_subspaces, int q, int verbose_level);
+void matrix_to_diophant(discreta_matrix& M, diophant *&D, int verbose_level);
 
 
 }}

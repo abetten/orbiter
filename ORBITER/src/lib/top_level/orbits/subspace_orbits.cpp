@@ -349,7 +349,7 @@ void subspace_orbits::Kramer_Mesner_matrix(
 		}
 
 
-	matrix Mtk;
+	discreta_matrix Mtk;
 	int m, n;
 
 	compute_Kramer_Mesner_matrix(Gen, 

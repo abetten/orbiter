@@ -12,6 +12,7 @@ MODULES = \
 	design_parameter.o \
 	design_parameter_source.o \
 	discreta_global.o \
+	discreta_matrix.o \
 	domain.o \
 	geometry.o \
 	global.o \
@@ -19,7 +20,6 @@ MODULES = \
 	hollerith.o \
 	integer.o \
 	longinteger.o \
-	matrix.o \
 	memory.o \
 	number_partition.o \
 	page_table.o \

@@ -18,6 +18,7 @@ LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64 -lginac -lcln
 ALL_TARGETS=\
 	cra.out \
 	differentiation.out \
+	hilbert_cohn_vossen.out \
 	mersenne.out \
 	solve_linear.out 
 
@@ -32,6 +33,10 @@ cra.out:  cra.o  ;
 
 differentiation.out:  differentiation.o  ;
 	$(DISCRETA_CPP)  differentiation.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+
+hilbert_cohn_vossen.out:  hilbert_cohn_vossen.o  ;
+	$(DISCRETA_CPP)  hilbert_cohn_vossen.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 mersenne.out:  mersenne.o  ;

@@ -1114,7 +1114,7 @@ void vec_generators_GL_n_q_subgroup_as_matrices(Vector & gen,
 {
 	int f_v = (verbose_level >= 1);
 	with w(dom);
-	matrix A;
+	discreta_matrix A;
 	int i, j, alpha;
 	
 	if (f_v) {
@@ -1911,7 +1911,7 @@ void vec_generators_q1_q2_au1bv1_au2bv2(int q1, int q2, int u1, int v1, int u2, 
 		cout << "a^" << u2 << " = " << a2 << " = " << a2 << endl;
 		}
 	
-	matrix A;
+	discreta_matrix A;
 	
 	A.m_mn(1, 1);
 	A.m_iji(0, 0, a1);
@@ -1945,7 +1945,7 @@ void vec_generators_q1_q2_au1bv1_au2bv2(int q1, int q2, int u1, int v1, int u2, 
 	if (f_v) {
 		cout << "b^" << v2 << " = " << b2 << " = " << b2 << endl;
 		}
-	matrix A;
+	discreta_matrix A;
 	
 	A.m_mn(1, 1);
 	A.m_iji(0, 0, b1);

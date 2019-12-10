@@ -56,7 +56,7 @@ void the_end_quietly(int t0)
 
 void calc_Kramer_Mesner_matrix_neighboring(
 	poset_classification *gen,
-	int level, matrix &M, int verbose_level)
+	int level, discreta_matrix &M, int verbose_level)
 // we assume that we don't use implicit fusion nodes
 {
 	int f_v = (verbose_level >= 1);
@@ -187,18 +187,18 @@ void calc_Kramer_Mesner_matrix_neighboring(
 
 
 
-void Mtk_from_MM(Vector & MM, matrix & Mtk, int t, int k, 
+void Mtk_from_MM(Vector & MM, discreta_matrix & Mtk, int t, int k,
 	int f_subspaces, int q,  int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	matrix M, N;
+	discreta_matrix M, N;
 	int i;
 	
 	if (f_v) {
 		cout << "Mtk_from_MM t = " << t << ", k = " << k << endl;
 		}
 	if (k == t) {
-		matrix &M1 = MM[t - 1].as_matrix();
+		discreta_matrix &M1 = MM[t - 1].as_matrix();
 		int n = M1.s_n();
 		Mtk.m_mn_n(n, n);
 		Mtk.one();
@@ -218,7 +218,7 @@ void Mtk_from_MM(Vector & MM, matrix & Mtk, int t, int k,
 }
 
 void Mtk_via_Mtr_Mrk(int t, int r, int k, int f_subspaces, int q,  
-	matrix & Mtr, matrix & Mrk, matrix & Mtk, int verbose_level)
+		discreta_matrix & Mtr, discreta_matrix & Mrk, discreta_matrix & Mtk, int verbose_level)
 // Computes $M_{tk}$ via a recursion formula:
 // $M_{tk} = {{k - t} \choose {k - r}} \cdot M_{t,r} \cdot M_{r,k}$.
 {
@@ -257,7 +257,7 @@ void Mtk_via_Mtr_Mrk(int t, int r, int k, int f_subspaces, int q,
 }
 
 void Mtk_sup_to_inf(poset_classification *gen,
-	int t, int k, matrix & Mtk_sup, matrix & Mtk_inf, int verbose_level)
+	int t, int k, discreta_matrix & Mtk_sup, discreta_matrix & Mtk_inf, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int Nt, Nk, i, j, a;
@@ -308,7 +308,7 @@ void Mtk_sup_to_inf(poset_classification *gen,
 }
 
 void compute_Kramer_Mesner_matrix(poset_classification *gen,
-	int t, int k, matrix &Mtk, int f_subspaces, int q, int verbose_level)
+	int t, int k, discreta_matrix &Mtk, int f_subspaces, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	// compute Kramer Mesner matrices
@@ -349,7 +349,7 @@ void compute_Kramer_Mesner_matrix(poset_classification *gen,
 		}
 }
 
-void matrix_to_diophant(matrix& M, diophant *&D, int verbose_level)
+void matrix_to_diophant(discreta_matrix& M, diophant *&D, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

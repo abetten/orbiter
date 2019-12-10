@@ -470,7 +470,7 @@ int unipoly::is_squarefree(int verbose_level)
 int unipoly::is_irreducible_GFp(int p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	matrix B;
+	discreta_matrix B;
 	domain d(p);
 	with w(&d);
 	int l, r;
@@ -492,7 +492,7 @@ int unipoly::is_irreducible_GFp(int p, int verbose_level)
 int unipoly::is_irreducible(int q, int verbose_level)
 {
 	int f_v = (verbose_level = 1);
-	matrix B;
+	discreta_matrix B;
 	int l, r;
 	
 	if (!is_squarefree(verbose_level))
@@ -714,7 +714,7 @@ void unipoly::monic()
 		}
 }
 
-void unipoly::normal_base(int p, matrix& F, matrix& N, int verbose_level)
+void unipoly::normal_base(int p, discreta_matrix& F, discreta_matrix& N, int verbose_level)
 // compare Lueneburg~\cite{Lueneburg87a} p. 106.
 {
 	int f_v = (verbose_level >= 1);
@@ -794,7 +794,7 @@ void unipoly::normal_base(int p, matrix& F, matrix& N, int verbose_level)
 }
 
 int unipoly::first_irreducible_polynomial(int p,
-		unipoly& m, matrix& F, matrix& N, Vector &v, int verbose_level)
+		unipoly& m, discreta_matrix& F, discreta_matrix& N, Vector &v, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	domain d(p);
@@ -821,7 +821,7 @@ int unipoly::first_irreducible_polynomial(int p,
 }
 
 int unipoly::next_irreducible_polynomial(int p,
-		unipoly& m, matrix& F, matrix& N, Vector &v, int verbose_level)
+		unipoly& m, discreta_matrix& F, discreta_matrix& N, Vector &v, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	domain d(p);
@@ -1005,7 +1005,7 @@ void unipoly::charpoly(int q, int size, int *mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	matrix M;
+	discreta_matrix M;
 	int i, j, k, a, p, h;
 	finite_field Fq;
 	//unipoly_domain U;
@@ -1049,7 +1049,7 @@ void unipoly::charpoly(int q, int size, int *mtx, int verbose_level)
 		}
 #endif
 	
-	matrix M1, P, Pv, Q, Qv, S, T;
+	discreta_matrix M1, P, Pv, Q, Qv, S, T;
 	
 	M.elements_to_unipoly();
 	M.minus_X_times_id();

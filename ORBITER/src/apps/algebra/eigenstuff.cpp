@@ -109,7 +109,7 @@ int main(int argc, char **argv)
 void do_eigenstuff(int q, int size, int *Data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	matrix M;
+	discreta_matrix M;
 	int i, j, k, a, p, h;
 	finite_field Fq;
 	//unipoly_domain U;
@@ -163,7 +163,7 @@ void do_eigenstuff(int q, int size, int *Data, int verbose_level)
 	
 	// This part uses DISCRETA data structures:
 
-	matrix M1, P, Pv, Q, Qv, S, T;
+	discreta_matrix M1, P, Pv, Q, Qv, S, T;
 	
 	M.elements_to_unipoly();
 	M.minus_X_times_id();

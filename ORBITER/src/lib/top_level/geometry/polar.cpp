@@ -794,7 +794,7 @@ void polar::compute_Kramer_Mesner_matrix(int t, int k, int verbose_level)
 			}
 		}
 	
-	matrix Mtk, Mtk_inf;
+	discreta_matrix Mtk, Mtk_inf;
 	
 	Mtk_from_MM(V, Mtk, t, k, TRUE, q, verbose_level - 2);
 	cout << "M_{" << t << "," << k << "} sup:" << endl;
