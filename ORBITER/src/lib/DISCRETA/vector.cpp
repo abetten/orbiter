@@ -106,7 +106,7 @@ void Vector::copyobject_to(discreta_base &x)
 		}
 }
 
-#undef PRint_WITH_TYPE
+#undef PRINT_WITH_TYPE
 
 ostream& Vector::Print(ostream& ost)
 {
@@ -116,7 +116,7 @@ ostream& Vector::Print(ostream& ost)
 		ost << "vector not allocated";
 		}
 	l = s_l();
-#ifdef PRint_WITH_TYPE
+#ifdef PRINT_WITH_TYPE
 	ost << "(VECTOR of length " << l << ", \n";
 #endif
 	for (i = 0; i < l; i++) {
@@ -124,7 +124,7 @@ ostream& Vector::Print(ostream& ost)
 		if (i < l - 1)
 			ost << ", \n";
 		}
-#ifdef PRint_WITH_TYPE
+#ifdef PRINT_WITH_TYPE
 	ost << ")";
 #endif
 	ost << "\n";
@@ -150,7 +150,7 @@ ostream& Vector::print(ostream& ost)
 		ost << "]";
 		}
 	else {
-#ifdef PRint_WITH_TYPE
+#ifdef PRINT_WITH_TYPE
 		ost << "(VECTOR of length " << l << ", ";
 #else
 		ost << "(";

@@ -33,7 +33,7 @@ void presentation(action *A, sims *S, int goi, vector_ge *gens,
 class character_table_burnside {
 public:
 	void do_it(int n, int verbose_level);
-	void create_matrix(matrix &M, int i, int *S, int nb_classes,
+	void create_matrix(discreta_matrix &M, int i, int *S, int nb_classes,
 		int *character_degree, int *class_size,
 		int verbose_level);
 	void compute_character_table(a_domain *D, int nb_classes, int *Omega,

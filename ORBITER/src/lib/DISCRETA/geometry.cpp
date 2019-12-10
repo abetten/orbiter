@@ -669,7 +669,7 @@ void geometry::transpose()
 	aut_gens().m_l(0);
 }
 
-static int test_special_matrix(matrix &Y, int diag, int off_diag)
+static int test_special_matrix(discreta_matrix &Y, int diag, int off_diag)
 {
 	int v, y, i, j;
 	
@@ -692,7 +692,7 @@ static int test_special_matrix(matrix &Y, int diag, int off_diag)
 
 int geometry::is_2design(int &r, int &lambda, int f_v)
 {
-	matrix Xt, Y;
+	discreta_matrix Xt, Y;
 	int a, b;
 	
 	Xt = X();
@@ -898,7 +898,7 @@ void geometry::calc_canon_tonchev(int f_v, int f_vv, int f_vvv)
 }
 #endif
 
-void geometry::get_lexleast_X(matrix & X0)
+void geometry::get_lexleast_X(discreta_matrix & X0)
 {
 	if (!f_canonical_labelling_points() || !f_canonical_labelling_blocks()) {
 		cout << "geometry::get_lexleast_X() canonical labelling not available" << endl;
@@ -911,7 +911,7 @@ void geometry::get_lexleast_X(matrix & X0)
 
 // #define BUFSIZE 50000
 
-int search_geo_file(matrix & X0, char *fname, int geo_nr, char *geo_label, int f_v)
+int search_geo_file(discreta_matrix & X0, char *fname, int geo_nr, char *geo_label, int f_v)
 {
 	char buf[MYBUFSIZE];
 	ifstream f(fname);
@@ -947,7 +947,7 @@ int search_geo_file(matrix & X0, char *fname, int geo_nr, char *geo_label, int f
 		if (geo_nr1 == geo_nr && strcmp(geo_label1, geo_label) == 0) {
 			
 			G.scan_body(f, geo_nr, geo_label);
-			matrix Y0;
+			discreta_matrix Y0;
 			
 			G.get_lexleast_X(Y0);
 			if (X0.compare_with(Y0) == 0) {

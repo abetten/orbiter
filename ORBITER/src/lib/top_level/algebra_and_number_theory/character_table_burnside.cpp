@@ -269,7 +269,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 		cout << endl;
 
 
-		matrix M;
+		discreta_matrix M;
 
 		int /*n,*/ deg;
 
@@ -330,7 +330,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 	FREE_OBJECT(D);
 }
 
-void character_table_burnside::create_matrix(matrix &M, int i, int *S, int nb_classes,
+void character_table_burnside::create_matrix(discreta_matrix &M, int i, int *S, int nb_classes,
 	int *character_degree, int *class_size,
 	int verbose_level)
 {
@@ -980,7 +980,7 @@ void character_table_burnside::characteristic_poly(int *N, int size, unipoly &ch
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, k, a;
-	matrix M, M1, P, Pv, Q, Qv, S, T;
+	discreta_matrix M, M1, P, Pv, Q, Qv, S, T;
 
 	if (f_v) {
 		cout << "character_table_burnside::characteristic_poly" << endl;

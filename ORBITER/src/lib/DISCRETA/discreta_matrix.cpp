@@ -1,4 +1,4 @@
-// matrix.cpp
+// discreta_matrix.cpp
 //
 // Anton Betten
 // 10.11.1999
@@ -8,6 +8,9 @@
 // problems with gcd:
 // when the two elements x,y are constants, 
 // u should not be 0.
+//
+// renamed from matrix to discreta_matrix to avoid conflicts with ginac
+// Dec 9, 2019
 
 #include "orbiter.h"
 
@@ -25,52 +28,52 @@ namespace discreta {
 
 #undef DEBUG_CONTENT
 
-static int gfq_dep(int n, matrix& A, matrix& P,
+static int gfq_dep(int n, discreta_matrix& A, discreta_matrix& P,
 		Vector& v, int m, permutation& rho, int verbose_level);
 
 
 
 
 
-matrix::matrix()
+discreta_matrix::discreta_matrix()
 {
 	k = MATRIX;
 	self.matrix_pointer = NULL;
 }
 
-matrix::matrix(const discreta_base &x)
+discreta_matrix::discreta_matrix(const discreta_base &x)
 	// copy constructor:    this := x
 {
-	cout << "matrix::copy constructor for object: "
+	cout << "discreta_matrix::copy constructor for object: "
 			<< const_cast<discreta_base &>(x) << "\n";
 	clearself();
 	const_cast<discreta_base &>(x).copyobject_to(*this);
 }
 
-matrix& matrix::operator = (const discreta_base &x)
+discreta_matrix& discreta_matrix::operator = (const discreta_base &x)
 	// copy assignment
 {
-	cout << "matrix::operator = (copy assignment)" << endl;
+	cout << "discreta_matrix::operator = (copy assignment)" << endl;
 	copyobject(const_cast<discreta_base &>(x));
 	return *this;
 }
 
-void matrix::settype_matrix()
+void discreta_matrix::settype_matrix()
 {
 	OBJECTSELF s;
 	
 	s = self;
-	new(this) matrix;
+	new(this) discreta_matrix;
 	k = MATRIX;
 	self = s;
 }
 
-matrix::~matrix()
+discreta_matrix::~discreta_matrix()
 {
 	freeself_matrix();
 }
 
-void matrix::freeself_matrix()
+void discreta_matrix::freeself_matrix()
 {
 	if (self.matrix_pointer == NULL)
 		return;
@@ -78,22 +81,22 @@ void matrix::freeself_matrix()
 	self.matrix_pointer = NULL;
 }
 
-kind matrix::s_virtual_kind()
+kind discreta_matrix::s_virtual_kind()
 {
 	return MATRIX;
 }
 
-void matrix::copyobject_to(discreta_base &x)
+void discreta_matrix::copyobject_to(discreta_base &x)
 {
 	int i, j, m, n;
 	
 #ifdef MATRIX_COPY_VERBOSE
-	cout << "in matrix::copyobject_to()\n";
+	cout << "in discreta_matrix::copyobject_to()\n";
 #endif
 	x.freeself();
 	if (x.s_kind() != MATRIX) {
 #ifdef MATRIX_CHANGE_KIND_VERBOSE
-		cout << "waring: matrix::copyobject_to x not a vector\n";
+		cout << "waring: discreta_matrix::copyobject_to x not a vector\n";
 #endif
 		x.c_kind(MATRIX);
 		x.clearself();
@@ -101,7 +104,7 @@ void matrix::copyobject_to(discreta_base &x)
 		}
 	m = s_m();
 	n = s_n();
-	matrix & xx = x.as_matrix();
+	discreta_matrix & xx = x.as_matrix();
 	xx.m_mn(m, n);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
@@ -111,7 +114,7 @@ void matrix::copyobject_to(discreta_base &x)
 }
 
 
-ostream& matrix::print(ostream& ost)
+ostream& discreta_matrix::print(ostream& ost)
 {
 	int i, j, k, m, n, l1, l2, l3;
 	Vector col_width;
@@ -180,15 +183,15 @@ ostream& matrix::print(ostream& ost)
 	return ost;
 }
 
-int matrix::compare_with(discreta_base &a)
+int discreta_matrix::compare_with(discreta_base &a)
 {
 	int i, j, m1, n1, m2, n2, r;
 	
 	if (a.s_kind() != MATRIX) {
-		cout << "matrix::compare_with() a is not a matrix object" << endl;
+		cout << "discreta_matrix::compare_with() a is not a matrix object" << endl;
 		exit(1);
 		}
-	matrix &b = a.as_matrix();
+	discreta_matrix &b = a.as_matrix();
 	m1 = s_m();
 	n1 = s_n();
 	m2 = b.s_m();
@@ -211,14 +214,14 @@ int matrix::compare_with(discreta_base &a)
 	return 0;
 }
 
-matrix& matrix::m_mn(int m, int n)
+discreta_matrix& discreta_matrix::m_mn(int m, int n)
 {
 	freeself();
 	self.matrix_pointer = calloc_m_times_n_objects(m, n, BASE);
 	return *this;
 }
 
-matrix& matrix::m_mn_n(int m, int n)
+discreta_matrix& discreta_matrix::m_mn_n(int m, int n)
 {
 	int i, j;
 	
@@ -231,9 +234,9 @@ matrix& matrix::m_mn_n(int m, int n)
 	return *this;
 }
 
-matrix& matrix::realloc(int m, int n)
+discreta_matrix& discreta_matrix::realloc(int m, int n)
 {
-	matrix M;
+	discreta_matrix M;
 	int i, j, m1, n1;
 	
 	m1 = s_m();
@@ -248,39 +251,39 @@ matrix& matrix::realloc(int m, int n)
 	return *this;
 }
 
-int matrix::s_m()
+int discreta_matrix::s_m()
 {
 	if (self.matrix_pointer == NULL)
 		return 0;
 	return self.matrix_pointer[-2].s_i_i();
 }
 
-int matrix::s_n()
+int discreta_matrix::s_n()
 {
 	if (self.matrix_pointer == NULL)
 		return 0;
 	return self.matrix_pointer[-1].s_i_i();
 }
 
-discreta_base & matrix::s_ij(int i, int j)
+discreta_base & discreta_matrix::s_ij(int i, int j)
 {
 	int m, n;
 	
 #ifdef DEBUG_S_IJ
-	cout << "matrix::s_ij(" << i << ", " << j << ")" << endl;
+	cout << "discreta_matrix::s_ij(" << i << ", " << j << ")" << endl;
 #endif
 	if (self.matrix_pointer == NULL) {
-		cout << "matrix::s_ij() matrix_pointer == NULL\n";
+		cout << "discreta_matrix::s_ij() matrix_pointer == NULL\n";
 		exit(1);
 		}
 	m = self.matrix_pointer[-2].s_i_i();
 	n = self.matrix_pointer[-1].s_i_i();
 	if ( i < 0 || i >= m ) {
-		cout << "matrix::s_ij() addressing error, i = " << i << ", m = " << m << endl;
+		cout << "discreta_matrix::s_ij() addressing error, i = " << i << ", m = " << m << endl;
 		exit(1);		
 		}
 	if ( j < 0 || j >= n ) {
-		cout << "matrix::s_ij() addressing error, j = " << j << ", n = " << n << endl;
+		cout << "discreta_matrix::s_ij() addressing error, j = " << j << ", n = " << n << endl;
 		exit(1);		
 		}
 	return self.matrix_pointer[i * n + j];
@@ -293,10 +296,10 @@ discreta_base & matrix_access::operator [](int j)
 
 
 
-void matrix::mult_to(discreta_base &x, discreta_base &y)
+void discreta_matrix::mult_to(discreta_base &x, discreta_base &y)
 {
 	if (x.s_kind() == MATRIX) {
-		matrix& px = x.as_matrix();
+		discreta_matrix& px = x.as_matrix();
 		matrix_mult_to(px, y);
 		}
 	else if (x.s_kind() == VECTOR) {
@@ -304,28 +307,28 @@ void matrix::mult_to(discreta_base &x, discreta_base &y)
 		vector_mult_to(px, y);
 		}
 	else {
-		cout << "matrix::mult_to() object x is of bad type" << endl;
+		cout << "discreta_matrix::mult_to() object x is of bad type" << endl;
 		exit(1);
 		}
 }
 
-void matrix::matrix_mult_to(matrix &x, discreta_base &y)
+void discreta_matrix::matrix_mult_to(discreta_matrix &x, discreta_base &y)
 {
-	matrix py;
+	discreta_matrix py;
 	int i, j, k, m, n, l;
 	
 	if (s_kind() != MATRIX) {
-		cout << "matrix::matrix_mult_to() this is not a matrix" << endl;
+		cout << "discreta_matrix::matrix_mult_to() this is not a matrix" << endl;
 		exit(1);
 		}
 	if (x.s_kind() != MATRIX) {
-		cout << "matrix::matrix_mult_to() x is not a matrix" << endl;
+		cout << "discreta_matrix::matrix_mult_to() x is not a matrix" << endl;
 		exit(1);
 		}
 	m = s_m();
 	l = s_n();
 	if (l != x.s_m()) {
-		cout << "matrix::matrix_mult_to() l != x.s_m(), cannot multiply" << endl;
+		cout << "discreta_matrix::matrix_mult_to() l != x.s_m(), cannot multiply" << endl;
 		exit(1);
 		}
 	n = x.s_n();
@@ -349,23 +352,23 @@ void matrix::matrix_mult_to(matrix &x, discreta_base &y)
 	y.swap(py);
 }
 
-void matrix::vector_mult_to(Vector &x, discreta_base &y)
+void discreta_matrix::vector_mult_to(Vector &x, discreta_base &y)
 {
 	Vector py;
 	int i, j, m, l;
 	
 	if (s_kind() != MATRIX) {
-		cout << "matrix::vector_mult_to() this is not a matrix\n";
+		cout << "discreta_matrix::vector_mult_to() this is not a matrix\n";
 		exit(1);
 		}
 	if (x.s_kind() != VECTOR) {
-		cout << "matrix::vector_mult_to() x is not a vector\n";
+		cout << "discreta_matrix::vector_mult_to() x is not a vector\n";
 		exit(1);
 		}
 	m = s_m();
 	l = s_n();
 	if (l != x.s_l()) {
-		cout << "matrix::vector_mult_to() l != x.s_l(), cannot multiply\n";
+		cout << "discreta_matrix::vector_mult_to() l != x.s_l(), cannot multiply\n";
 		exit(1);
 		}
 	
@@ -386,7 +389,7 @@ void matrix::vector_mult_to(Vector &x, discreta_base &y)
 	y.swap(py);
 }
 
-void matrix::multiply_vector_from_left(Vector &x, Vector &y)
+void discreta_matrix::multiply_vector_from_left(Vector &x, Vector &y)
 {
 	int l, i, j, m, n;
 	
@@ -394,7 +397,7 @@ void matrix::multiply_vector_from_left(Vector &x, Vector &y)
 	m = s_m();
 	n = s_n();
 	if (l != m) {
-		cout << "matrix::multiply_vector_from_left() l != m, cannot multiply\n";
+		cout << "discreta_matrix::multiply_vector_from_left() l != m, cannot multiply\n";
 		exit(1);
 		}
 	if (y.s_l() != n)
@@ -414,20 +417,20 @@ void matrix::multiply_vector_from_left(Vector &x, Vector &y)
 		}	
 }
 
-int matrix::invert_to(discreta_base &x)
+int discreta_matrix::invert_to(discreta_base &x)
 {
 	int m, n, rank;
-	matrix P;
+	discreta_matrix P;
 	Vector base_cols;
 	
 	if (s_kind() != MATRIX) {
-		cout << "matrix::invert_to() this not a matrix\n";
+		cout << "discreta_matrix::invert_to() this not a matrix\n";
 		exit(1);
 		}
 	m = s_m();
 	n = s_n();
 	if (m != n) {
-		cout << "matrix::invert_to() m != n\n";
+		cout << "discreta_matrix::invert_to() m != n\n";
 		exit(1);
 		}
 	P = *this;
@@ -443,30 +446,30 @@ int matrix::invert_to(discreta_base &x)
 	return TRUE;
 }
 
-void matrix::add_to(discreta_base &x, discreta_base &y)
+void discreta_matrix::add_to(discreta_base &x, discreta_base &y)
 {
 	int i, j, m, n;
 	
 	y.freeself();
 	if (s_kind() != MATRIX) {
-		cout << "matrix::add_to() this is not a matrix\n";
+		cout << "discreta_matrix::add_to() this is not a matrix\n";
 		exit(1);
 		}
 	if (x.s_kind() != MATRIX) {
-		cout << "matrix::add_to() x is not a matrix\n";
+		cout << "discreta_matrix::add_to() x is not a matrix\n";
 		exit(1);
 		}
-	matrix& px = x.as_matrix();
-	matrix py;
+	discreta_matrix& px = x.as_matrix();
+	discreta_matrix py;
 	
 	m = s_m();
 	n = s_n();
 	if (m != px.s_m()) {
-		cout << "matrix::add_to() m != px.s_m()\n";
+		cout << "discreta_matrix::add_to() m != px.s_m()\n";
 		exit(1);
 		}
 	if (n != px.s_n()) {
-		cout << "matrix::add_to() n != px.s_n()\n";
+		cout << "discreta_matrix::add_to() n != px.s_n()\n";
 		exit(1);
 		}
 	py.m_mn(m, n);
@@ -478,15 +481,15 @@ void matrix::add_to(discreta_base &x, discreta_base &y)
 	py.swap(y);
 }
 
-void matrix::negate_to(discreta_base &x)
+void discreta_matrix::negate_to(discreta_base &x)
 {
 	int i, j, m, n;
 	
 	if (s_kind() != MATRIX) {
-		cout << "matrix::negate_to() this not a matrix\n";
+		cout << "discreta_matrix::negate_to() this not a matrix\n";
 		exit(1);
 		}
-	matrix py;
+	discreta_matrix py;
 	
 	m = s_m();
 	n = s_n();
@@ -501,14 +504,14 @@ void matrix::negate_to(discreta_base &x)
 }
 
 
-void matrix::one()
+void discreta_matrix::one()
 {
 	int i, j, m, n;
 	
 	m = s_m();
 	n = s_n();
 	if (m != n) {
-		cout << "matrix::one() m != n\n";
+		cout << "discreta_matrix::one() m != n\n";
 		exit(1);
 		}
 	for (i = 0; i < m; i++) {
@@ -521,7 +524,7 @@ void matrix::one()
 		}
 }
 
-void matrix::zero()
+void discreta_matrix::zero()
 {
 	int i, j, m, n;
 	
@@ -534,9 +537,9 @@ void matrix::zero()
 		}
 }
 
-int matrix::is_zero()
+int discreta_matrix::is_zero()
 {
-	matrix B;
+	discreta_matrix B;
 	int m, n;
 	
 	m = s_m();
@@ -549,9 +552,9 @@ int matrix::is_zero()
 	
 }
 
-int matrix::is_one()
+int discreta_matrix::is_one()
 {
-	matrix B;
+	discreta_matrix B;
 	int m, n, i, j;
 	
 	m = s_m();
@@ -573,8 +576,8 @@ int matrix::is_one()
 }
 
 
-int matrix::Gauss(int f_special, int f_complete, Vector& base_cols, 
-	int f_P, matrix& P, int verbose_level)
+int discreta_matrix::Gauss(int f_special, int f_complete, Vector& base_cols,
+	int f_P, discreta_matrix& P, int verbose_level)
 // returns the rank
 {
 	int f_v = (verbose_level >= 1);
@@ -586,7 +589,7 @@ int matrix::Gauss(int f_special, int f_complete, Vector& base_cols,
 	n = s_n();
 	if (f_P) {
 		if (m != P.s_m()) {
-			cout << "matrix::Gauss m != P.s_m()" << endl;
+			cout << "discreta_matrix::Gauss m != P.s_m()" << endl;
 			exit(1);
 			}
 		Pn = P.s_n();
@@ -732,15 +735,15 @@ int matrix::Gauss(int f_special, int f_complete, Vector& base_cols,
 	return rank;
 }
 
-int matrix::rank()
+int discreta_matrix::rank()
 {
 	Vector base_cols;
-	matrix P;
+	discreta_matrix P;
 	
 	return Gauss(FALSE, FALSE, base_cols, FALSE, P, FALSE);
 }
 
-int matrix::get_kernel(Vector& base_cols, matrix& kernel)
+int discreta_matrix::get_kernel(Vector& base_cols, discreta_matrix& kernel)
 {
 	int r, n, k, i, j, ii, iii, a, b;
 	Vector kcol;
@@ -771,7 +774,7 @@ int matrix::get_kernel(Vector& base_cols, matrix& kernel)
 			}
 		}
 	if (ii != k) {
-		cout << "matrix::get_kernel() ii != k" << endl;
+		cout << "discreta_matrix::get_kernel() ii != k" << endl;
 		exit(1);
 		}
 	//cout << "kcol = " << kcol << endl;
@@ -808,9 +811,9 @@ int matrix::get_kernel(Vector& base_cols, matrix& kernel)
 	return TRUE;
 }
 
-matrix& matrix::transpose()
+discreta_matrix& discreta_matrix::transpose()
 {
-	matrix A;
+	discreta_matrix A;
 	int i, j, m, n;
 	
 	m = s_m();
@@ -825,7 +828,7 @@ matrix& matrix::transpose()
 	return *this;
 }
 
-int matrix::Asup2Ainf()
+int discreta_matrix::Asup2Ainf()
 //Computes the Plesken matrix $A^\wedge$ (Ainf)  from $A^\vee$ (Asup).
 //Compare Plesken~\cite{Plesken82}.
 {
@@ -835,14 +838,14 @@ int matrix::Asup2Ainf()
 	m = s_m();
 	n = s_n();
 	if (m != n) {
-		cout << "matrix::Asup2Ainf() not rectangular\n";
+		cout << "discreta_matrix::Asup2Ainf() not rectangular\n";
 		exit(1);
 		}
 	orbit_size.m_l(m);
 	for (i = 0; i < m; i++) {
 		orbit_size[i] = s_ij(i, m - 1);
 		if (orbit_size[i].is_zero()) {
-			cout << "matrix::Asup2Ainf() orbit_size[i].is_zero()\n";
+			cout << "discreta_matrix::Asup2Ainf() orbit_size[i].is_zero()\n";
 			exit(1);
 			}
 		}
@@ -860,7 +863,7 @@ int matrix::Asup2Ainf()
 }
 
 
-int matrix::Ainf2Asup()
+int discreta_matrix::Ainf2Asup()
 {
 	transpose();
 	Asup2Ainf();
@@ -868,7 +871,7 @@ int matrix::Ainf2Asup()
 	return TRUE;
 }
 
-int matrix::Asup2Acover()
+int discreta_matrix::Asup2Acover()
 //Computes the cover relations of the poset defined by this (=Asup).
 //Assumes that Asup is upper triangular.
 {
@@ -902,7 +905,7 @@ int matrix::Asup2Acover()
 	return TRUE;
 }
 
-int matrix::Acover2nl(Vector& nl)
+int discreta_matrix::Acover2nl(Vector& nl)
 //Computes the \lq neighbour-list\rq of the poset whose cover relations are given 
 //in this (=Acover). This list nl is used as input for the lattice-placement 
 //program \lq vbp \rq.
@@ -937,7 +940,7 @@ int matrix::Acover2nl(Vector& nl)
 	return TRUE;
 }
 
-void matrix::Frobenius(unipoly& m, int p, int verbose_level)
+void discreta_matrix::Frobenius(unipoly& m, int p, int verbose_level)
 //computes a $d \times d$ matrix whose j-th column 
 //contains the coefficients of $x^{p^j} \mod m$. 
 //Here, $d = \deg m.$  
@@ -948,17 +951,17 @@ void matrix::Frobenius(unipoly& m, int p, int verbose_level)
 	
 	d = m.degree();
 	if (f_v) {
-		cout << "matrix::Frobenius() d=" << d << " p=" << p << endl;
+		cout << "discreta_matrix::Frobenius() d=" << d << " p=" << p << endl;
 		}
 	m_mn_n(d, d);
 	s_ij(0, 0).one();
 	a.x();
 	if (f_v) {
-		cout << "matrix::Frobenius() x=" << a << endl;
+		cout << "discreta_matrix::Frobenius() x=" << a << endl;
 		}
 	a.power_int_mod(p, m); // a := x^p mod m
 	if (f_v) {
-		cout << "matrix::Frobenius() a = x^p=" << a << endl;
+		cout << "discreta_matrix::Frobenius() a = x^p=" << a << endl;
 		}
 	b.one();
 	for (j = 1; j < d; j++) {
@@ -966,7 +969,7 @@ void matrix::Frobenius(unipoly& m, int p, int verbose_level)
 		b = c;
 		// now b = x^{p^j}
 		if (f_v) {
-			cout << "matrix::Frobenius() x^{p^" << j << "}=" << b << endl;
+			cout << "discreta_matrix::Frobenius() x^{p^" << j << "}=" << b << endl;
 			}
 		d1 = b.degree();
 		for (i = 0; i <= d1; i++) {
@@ -975,7 +978,7 @@ void matrix::Frobenius(unipoly& m, int p, int verbose_level)
 		}
 }
 
-void matrix::Berlekamp(unipoly& m, int p, int verbose_level)
+void discreta_matrix::Berlekamp(unipoly& m, int p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, l;
@@ -983,7 +986,7 @@ void matrix::Berlekamp(unipoly& m, int p, int verbose_level)
 	
 	Frobenius(m, p, FALSE);
 	if (f_v) {
-		cout << "Frobenius matrix=\n" << *this;
+		cout << "discreta_matrix matrix=\n" << *this;
 		}
 	l = s_m();
 	m1.m_one();
@@ -991,17 +994,17 @@ void matrix::Berlekamp(unipoly& m, int p, int verbose_level)
 		s_ij(i, i) += m1;
 		}
 	if (f_v) {
-		cout << "Berlekamp matrix=\n" << *this;
+		cout << "discreta_matrix Berlekamp matrix=\n" << *this;
 		}
 }
 
-void matrix::companion_matrix(unipoly& m, int verbose_level)
+void discreta_matrix::companion_matrix(unipoly& m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, d;
 	
 	if (f_v) {
-		cout << "companion_matrix() of the polynomial " << m << endl;
+		cout << "discreta_matrix::companion_matrix() of the polynomial " << m << endl;
 		}
 	d = m.degree();
 	m_mn_n(d, d);
@@ -1014,15 +1017,15 @@ void matrix::companion_matrix(unipoly& m, int verbose_level)
 		s_ij(i, d - 1).negate();
 		}
 	if (f_v) {
-		cout << "companion_matrix=\n" << *this;
+		cout << "discreta_matrix::companion_matrix=\n" << *this;
 		}
 }
 
-void matrix::elements_to_unipoly()
+void discreta_matrix::elements_to_unipoly()
 {
 	int i, j, m, n;
 	
-	// cout << "matrix::elements_to_unipoly()" << endl;
+	// cout << "discreta_matrix::elements_to_unipoly()" << endl;
 	m = s_m();
 	n = s_n();
 	for (i = 0; i < m; i++) {
@@ -1038,7 +1041,7 @@ void matrix::elements_to_unipoly()
 		}
 }
 
-void matrix::minus_X_times_id()
+void discreta_matrix::minus_X_times_id()
 {
 	unipoly a;
 	int i, m, n, l;
@@ -1054,7 +1057,7 @@ void matrix::minus_X_times_id()
 		}
 }
 
-void matrix::X_times_id_minus_self()
+void discreta_matrix::X_times_id_minus_self()
 {
 	unipoly a;
 	int i, j, m, n, l;
@@ -1075,15 +1078,15 @@ void matrix::X_times_id_minus_self()
 		}
 }
 
-void matrix::smith_normal_form(matrix& P, matrix& Pv,
-		matrix& Q, matrix& Qv, int verbose_level)
+void discreta_matrix::smith_normal_form(discreta_matrix& P, discreta_matrix& Pv,
+		discreta_matrix& Q, discreta_matrix& Qv, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int m, n, i, j, l, ii, jj, stable;
 	discreta_base a0, a1, am1;
 	
 	if (f_v) {
-		cout << "matrix::smith_normal_form" << endl;
+		cout << "discreta_matrix::smith_normal_form" << endl;
 		cout << *this;
 		}
 	m = s_m();
@@ -1124,7 +1127,7 @@ void matrix::smith_normal_form(matrix& P, matrix& Pv,
 	l = MINIMUM(m, n);
 	for (i = 0; i < l; i++) {
 		if (f_v) {
-			cout << "matrix::smith_normal_form "
+			cout << "discreta_matrix::smith_normal_form "
 					"pivot column is " << i << " / " << l << endl;
 			}
 		stable = FALSE;
@@ -1203,8 +1206,8 @@ void matrix::smith_normal_form(matrix& P, matrix& Pv,
 		}
 }
 
-int matrix::smith_eliminate_column(matrix& P,
-		matrix& Pv, int i, int verbose_level)
+int discreta_matrix::smith_eliminate_column(discreta_matrix& P,
+		discreta_matrix& Pv, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1212,7 +1215,7 @@ int matrix::smith_eliminate_column(matrix& P,
 	discreta_base x, y, u, v, g, x1, y1;
 	
 	if (f_v) {
-		cout << "matrix::smith_eliminate_column column " << i << endl;
+		cout << "discreta_matrix::smith_eliminate_column column " << i << endl;
 		cout << "this=" << endl << *this << endl;
 		}
 	m = s_m();
@@ -1275,8 +1278,8 @@ int matrix::smith_eliminate_column(matrix& P,
 	return action;
 }
 
-int matrix::smith_eliminate_row(matrix& Q,
-		matrix& Qv, int i, int verbose_level)
+int discreta_matrix::smith_eliminate_row(discreta_matrix& Q,
+		discreta_matrix& Qv, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1284,7 +1287,7 @@ int matrix::smith_eliminate_row(matrix& Q,
 	discreta_base x, y, u, v, g, x1, y1;
 	
 	if (f_v) {
-		cout << "matrix::smith_eliminate_row row " << i << endl;
+		cout << "discreta_matrix::smith_eliminate_row row " << i << endl;
 		}
 	n = s_n();
 	for (j = i + 1; j < n; j++) {
@@ -1330,7 +1333,7 @@ int matrix::smith_eliminate_row(matrix& Q,
 	return action;
 }
 
-void matrix::multiply_2by2_from_left(int i, int j, 
+void discreta_matrix::multiply_2by2_from_left(int i, int j,
 	discreta_base& aii, discreta_base& aij,
 	discreta_base& aji, discreta_base& ajj, int verbose_level)
 {
@@ -1357,7 +1360,7 @@ void matrix::multiply_2by2_from_left(int i, int j,
 		}
 }
 
-void matrix::multiply_2by2_from_right(int i, int j, 
+void discreta_matrix::multiply_2by2_from_right(int i, int j,
 	discreta_base& aii, discreta_base& aij,
 	discreta_base& aji, discreta_base& ajj, int verbose_level)
 {
@@ -1384,7 +1387,7 @@ void matrix::multiply_2by2_from_right(int i, int j,
 		}
 }
 
-void matrix::to_vector_of_rows(Vector& v)
+void discreta_matrix::to_vector_of_rows(Vector& v)
 {
 	Vector vv;
 	int i, j, m, n;
@@ -1401,13 +1404,13 @@ void matrix::to_vector_of_rows(Vector& v)
 		}
 }
 
-void matrix::from_vector_of_rows(Vector& v)
+void discreta_matrix::from_vector_of_rows(Vector& v)
 {
 	int i, j, m, n;
 	
 	m = v.s_l();
 	if (m <= 0) {
-		cout << "matrix::from_vector_of_rows() m <= 0\n";
+		cout << "discreta_matrix::from_vector_of_rows() m <= 0\n";
 		exit(1);
 		}
 	n = v[0].as_vector().s_l();
@@ -1421,7 +1424,7 @@ void matrix::from_vector_of_rows(Vector& v)
 		}
 }
 
-void matrix::to_vector_of_columns(Vector& v)
+void discreta_matrix::to_vector_of_columns(Vector& v)
 {
 	Vector vv;
 	int i, j, m, n;
@@ -1438,13 +1441,13 @@ void matrix::to_vector_of_columns(Vector& v)
 		}
 }
 
-void matrix::from_vector_of_columns(Vector& v)
+void discreta_matrix::from_vector_of_columns(Vector& v)
 {
 	int i, j, m, n;
 	
 	n = v.s_l();
 	if (n <= 0) {
-		cout << "matrix::from_vector_of_columns n <= 0" << endl;
+		cout << "discreta_matrix::from_vector_of_columns n <= 0" << endl;
 		exit(1);
 		}
 	m = v[0].as_vector().s_l();
@@ -1458,7 +1461,7 @@ void matrix::from_vector_of_columns(Vector& v)
 		}
 }
 
-void matrix::evaluate_at(discreta_base& x)
+void discreta_matrix::evaluate_at(discreta_base& x)
 {
 	int i, j, m, n;
 	discreta_base y;
@@ -1474,8 +1477,8 @@ void matrix::evaluate_at(discreta_base& x)
 }
 
 
-static int gfq_dep(int n, matrix& A,
-		matrix& P, Vector& v, int m, permutation& rho,
+static int gfq_dep(int n, discreta_matrix& A,
+		discreta_matrix& P, Vector& v, int m, permutation& rho,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1531,7 +1534,7 @@ static int gfq_dep(int n, matrix& A,
 	return f_null;
 }
 
-void matrix::KX_module_order_ideal(int i, unipoly& mue, int verbose_level)
+void discreta_matrix::KX_module_order_ideal(int i, unipoly& mue, int verbose_level)
 // Lueneburg~\cite{Lueneburg87a} p. 105
 // determines the order ideal of $e_i$, the $i$-th unit vector,
 // in the module over the polynomial ring $K[X]$ ($K$ a field), 
@@ -1540,7 +1543,7 @@ void matrix::KX_module_order_ideal(int i, unipoly& mue, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	matrix A, P;
+	discreta_matrix A, P;
 	Vector v, v1;
 	int n, m, f_null, j;
 	permutation rho;
@@ -1557,7 +1560,7 @@ void matrix::KX_module_order_ideal(int i, unipoly& mue, int verbose_level)
 	
 	m = 0;
 	if (f_v) {
-		cout << "matrix::KX_module_order_ideal() m=" << m << endl;
+		cout << "discreta_matrix::KX_module_order_ideal() m=" << m << endl;
 		cout << "v=\n" << v << endl;
 		}
 	f_null = gfq_dep(n, A, P, v, m, rho, verbose_level - 2);
@@ -1570,7 +1573,7 @@ void matrix::KX_module_order_ideal(int i, unipoly& mue, int verbose_level)
 		v = v1;
 		m++;
 		if (f_vv) {
-			cout << "matrix::KX_module_order_ideal m=" << m << endl;
+			cout << "discreta_matrix::KX_module_order_ideal m=" << m << endl;
 			cout << "v=\n" << v << endl;
 			}
 		f_null = gfq_dep(n, A, P, v, m, rho, verbose_level - 2);
@@ -1590,7 +1593,7 @@ void matrix::KX_module_order_ideal(int i, unipoly& mue, int verbose_level)
 		}
 
 	if (f_v) {
-		cout << "matrix::KX_module_order_ideal "
+		cout << "discreta_matrix::KX_module_order_ideal "
 				"order ideal of e_" << i << ": " << mue << endl;
 #if 0
 		v.m_l_n(n);
@@ -1601,7 +1604,7 @@ void matrix::KX_module_order_ideal(int i, unipoly& mue, int verbose_level)
 		}
 }
 
-void matrix::KX_module_apply(unipoly& p, Vector& v)
+void discreta_matrix::KX_module_apply(unipoly& p, Vector& v)
 {
 	int i, d;
 	Vector w, ww, vv;
@@ -1621,7 +1624,7 @@ void matrix::KX_module_apply(unipoly& p, Vector& v)
 	v.swap(w);
 }
 
-void matrix::KX_module_join(Vector& v1, unipoly& mue1, 
+void discreta_matrix::KX_module_join(Vector& v1, unipoly& mue1,
 	Vector& v2, unipoly& mue2, Vector& v3, unipoly& mue3,
 	int verbose_level)
 // compare Lueneburg~\cite{Lueneburg87a} p. 106.
@@ -1632,7 +1635,7 @@ void matrix::KX_module_join(Vector& v1, unipoly& mue1,
 	int dg, dm2;
 	
 	if (f_v) {
-		cout << "matrix::KX_module_join()" << endl;
+		cout << "discreta_matrix::KX_module_join()" << endl;
 		cout << "v1=" << v1 << " mue1=" << mue1 << endl;
 		cout << "v2=" << v2 << " mue2=" << mue2 << endl;
 		}
@@ -1679,7 +1682,7 @@ void matrix::KX_module_join(Vector& v1, unipoly& mue1,
 		v3.add(vv1, vv2);
 		mue3.mult(r, rrr);
 		if (f_v) {
-			cout << "matrix::KX_module_join()" << endl;
+			cout << "discreta_matrix::KX_module_join()" << endl;
 			cout << "v3=" << v3 << endl;
 			cout << "mue3=" << mue3 << endl;
 			vv1 = v3;
@@ -1693,7 +1696,7 @@ void matrix::KX_module_join(Vector& v1, unipoly& mue1,
 		}
 }
 
-void matrix::KX_cyclic_module_generator(Vector& v,
+void discreta_matrix::KX_cyclic_module_generator(Vector& v,
 		unipoly& mue, int verbose_level)
 {
 	int f_v = (verbose_level > 1);
@@ -1703,7 +1706,7 @@ void matrix::KX_cyclic_module_generator(Vector& v,
 	unipoly mue1, mue2, mue3;
 	
 	if (f_v) {
-		cout << "matrix::KX_cyclic_module_generator" << endl;
+		cout << "discreta_matrix::KX_cyclic_module_generator" << endl;
 		}
 	f = s_m();
 	v1.m_l_n(f);
@@ -1720,7 +1723,7 @@ void matrix::KX_cyclic_module_generator(Vector& v,
 		mue1 = mue3;
 		}
 	if (mue1.degree() < f) {
-		cout << "matrix::KX_cyclic_module_generator error: "
+		cout << "discreta_matrix::KX_cyclic_module_generator error: "
 				"mue1.degree < f" << endl;
 		exit(1);
 		}
@@ -1728,7 +1731,7 @@ void matrix::KX_cyclic_module_generator(Vector& v,
 	mue1.swap(mue);
 }
 
-void matrix::KX_module_minpol(unipoly& p,
+void discreta_matrix::KX_module_minpol(unipoly& p,
 		unipoly& m, unipoly& mue, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1739,7 +1742,7 @@ void matrix::KX_module_minpol(unipoly& p,
 	int i, j, d, f, l;
 	
 	if (f_v) {
-		cout << "matrix::KX_module_minpol" << endl;
+		cout << "discreta_matrix::KX_module_minpol" << endl;
 		}
 	f = s_m();
 	d = p.degree();
@@ -1821,7 +1824,7 @@ void matrix::KX_module_minpol(unipoly& p,
 		}
 }
 
-void matrix::binomial(int n_min, int n_max,
+void discreta_matrix::binomial(int n_min, int n_max,
 		int k_min, int k_max)
 {
 	int i, j, m, n;
@@ -1836,7 +1839,7 @@ void matrix::binomial(int n_min, int n_max,
 		}
 }
 
-void matrix::stirling_second(int n_min, int n_max,
+void discreta_matrix::stirling_second(int n_min, int n_max,
 		int k_min, int k_max, int f_ordered)
 {
 	int i, j, m, n;
@@ -1853,7 +1856,7 @@ void matrix::stirling_second(int n_min, int n_max,
 		}
 }
 
-void matrix::stirling_first(int n_min, int n_max,
+void discreta_matrix::stirling_first(int n_min, int n_max,
 		int k_min, int k_max, int f_signless)
 {
 	int i, j, m, n;
@@ -1870,7 +1873,7 @@ void matrix::stirling_first(int n_min, int n_max,
 		}
 }
 
-void matrix::binomial(int n_min, int n_max,
+void discreta_matrix::binomial(int n_min, int n_max,
 		int k_min, int k_max, int f_inverse)
 {
 	int i, j, m, n;
@@ -1887,7 +1890,7 @@ void matrix::binomial(int n_min, int n_max,
 		}
 }
 
-int matrix::hip()
+int discreta_matrix::hip()
 // homogeneous integer matrix predicate 
 {
 	int i, j, m, n;
@@ -1901,7 +1904,7 @@ int matrix::hip()
 	return TRUE;
 }
 
-int matrix::hip1()
+int discreta_matrix::hip1()
 // homogeneous integer matrix predicate, 
 // test for 1 char numbers; 
 // only to apply if hip TRUE. 
@@ -1913,7 +1916,7 @@ int matrix::hip1()
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			if (s_ij(i, j).s_kind() != INTEGER) {
-				cout << "matrix::hip1(): not INTEGER\n";
+				cout << "discreta_matrix::hip1(): not INTEGER\n";
 				exit(1);
 				}
 			k = s_iji(i, j);
@@ -1924,7 +1927,7 @@ int matrix::hip1()
 	return TRUE;
 }
 
-void matrix::write_mem(memory & M, int debug_depth)
+void discreta_matrix::write_mem(memory & M, int debug_depth)
 {
 	int i, j, m, n, k;
 	char f_hip = 0, f_hip1 = 0;
@@ -1974,7 +1977,7 @@ void matrix::write_mem(memory & M, int debug_depth)
 		}
 }
 
-void matrix::read_mem(memory & M, int debug_depth)
+void discreta_matrix::read_mem(memory & M, int debug_depth)
 {
 	int i, j, m, n, k;
 	char c, f_hip = 0, f_hip1 = 0;
@@ -2029,7 +2032,7 @@ void matrix::read_mem(memory & M, int debug_depth)
 		}
 }
 
-int matrix::csf()
+int discreta_matrix::csf()
 {
 	int size = 0;
 	int i, j, m, n;
@@ -2058,7 +2061,7 @@ int matrix::csf()
 	return size;
 }
 
-void matrix::calc_theX(int & nb_X, int *&theX)
+void discreta_matrix::calc_theX(int & nb_X, int *&theX)
 {
 	int m, n, i, j;
 	
@@ -2085,7 +2088,7 @@ void matrix::calc_theX(int & nb_X, int *&theX)
 }
 
 #if 0
-void matrix::lexleast_incidence_matrix(int f_on_rows, 
+void discreta_matrix::lexleast_incidence_matrix(int f_on_rows,
 	int f_row_decomp, Vector & row_decomp, 
 	int f_col_decomp, Vector & col_decomp, 
 	int f_ddp, Vector & DDp, 
@@ -2106,11 +2109,11 @@ void matrix::lexleast_incidence_matrix(int f_on_rows,
 		f_transposed = TRUE;
 	
 	if (f_v) {
-		cout << "matrix::lexleast_incidence_matrix()" << endl;
+		cout << "discreta_matrix::lexleast_incidence_matrix()" << endl;
 		}
 	calc_theX(nb_X, theX);
 	if (f_v) {
-		cout << "matrix::lexleast_incidence_matrix() calling geo_canon_with_initial_decomposition_and_ddp_ddb()" << endl;
+		cout << "discreta_matrix::lexleast_incidence_matrix() calling geo_canon_with_initial_decomposition_and_ddp_ddb()" << endl;
 		}
 	geo_canon_with_initial_decomposition_and_ddp_ddb(
 		f_maxtest, &back_to, 
@@ -2128,10 +2131,10 @@ void matrix::lexleast_incidence_matrix(int f_on_rows,
 }
 #endif
 
-void matrix::apply_perms(int f_row_perm, permutation &row_perm, 
+void discreta_matrix::apply_perms(int f_row_perm, permutation &row_perm,
 	int f_col_perm, permutation &col_perm)
 {
-	matrix M;
+	discreta_matrix M;
 	int m, n, i, ii, j, jj;
 	permutation rowperm, colperm;
 	
@@ -2160,9 +2163,9 @@ void matrix::apply_perms(int f_row_perm, permutation &row_perm,
 	swap(M);
 }
 
-void matrix::apply_col_row_perm(permutation &p)
+void discreta_matrix::apply_col_row_perm(permutation &p)
 {
-	matrix M;
+	discreta_matrix M;
 	int m, n, i, ii, j, jj;
 	
 	m = s_m();
@@ -2178,9 +2181,9 @@ void matrix::apply_col_row_perm(permutation &p)
 	swap(M);
 }
 
-void matrix::apply_row_col_perm(permutation &p)
+void discreta_matrix::apply_row_col_perm(permutation &p)
 {
-	matrix M;
+	discreta_matrix M;
 	int m, n, i, ii, j, jj;
 	
 	m = s_m();
@@ -2196,10 +2199,10 @@ void matrix::apply_row_col_perm(permutation &p)
 	swap(M);
 }
 
-void matrix::incma_print_ascii_permuted_and_decomposed(ostream &ost, int f_tex, 
+void discreta_matrix::incma_print_ascii_permuted_and_decomposed(ostream &ost, int f_tex,
 	Vector & decomp, permutation & p)
 {
-	matrix M;
+	discreta_matrix M;
 	int n;
 	Vector row_decomp, col_decomp;
 	int i, l1, l, ll;
@@ -2228,9 +2231,9 @@ void matrix::incma_print_ascii_permuted_and_decomposed(ostream &ost, int f_tex,
 	M.incma_print_ascii(ost, f_tex, TRUE, row_decomp, TRUE, col_decomp);
 }
 
-void matrix::print_decomposed(ostream &ost, Vector &row_decomp, Vector &col_decomp)
+void discreta_matrix::print_decomposed(ostream &ost, Vector &row_decomp, Vector &col_decomp)
 {
-	matrix T;
+	discreta_matrix T;
 	int m, n, M, N, i, j, i0, j0, v, h;
 	Vector hbar, vbar;
 
@@ -2301,11 +2304,11 @@ void matrix::print_decomposed(ostream &ost, Vector &row_decomp, Vector &col_deco
 	ost << T;
 }
 
-void matrix::incma_print_ascii(ostream &ost, int f_tex, 
+void discreta_matrix::incma_print_ascii(ostream &ost, int f_tex,
 	int f_row_decomp, Vector &row_decomp, 
 	int f_col_decomp, Vector &col_decomp)
 {
-	matrix T;
+	discreta_matrix T;
 	int m, n, M, N, i, j, i0, j0, v, h;
 	Vector hbar, vbar;
 	Vector S;
@@ -2413,7 +2416,7 @@ void matrix::incma_print_ascii(ostream &ost, int f_tex,
 		}
 }
 
-void matrix::incma_print_latex(ostream &f, 
+void discreta_matrix::incma_print_latex(ostream &f,
 	int f_row_decomp, Vector &row_decomp, 
 	int f_col_decomp, Vector &col_decomp, 
 	int f_labelling_points, Vector &point_labels, 
@@ -2433,7 +2436,7 @@ void matrix::incma_print_latex(ostream &f,
 		f_labelling_blocks, block_labels);
 }
 
-void matrix::incma_print_latex2(ostream &f, 
+void discreta_matrix::incma_print_latex2(ostream &f,
 	int width, int width_10, 
 	int f_outline_thin, const char *unit_length, 
 	const char *thick_lines, const char *thin_lines, const char *geo_line_width, 
@@ -2569,7 +2572,7 @@ void matrix::incma_print_latex2(ostream &f,
 	f << "\\end{picture}" << endl;
 }
 
-void matrix::calc_hash_key(int key_len, hollerith & hash_key, int f_v)
+void discreta_matrix::calc_hash_key(int key_len, hollerith & hash_key, int f_v)
 {
 	int al_len;
 	char *alphabet = NULL;
@@ -2654,17 +2657,17 @@ void matrix::calc_hash_key(int key_len, hollerith & hash_key, int f_v)
 	key[key_len - 1] = 0;
 	hash_key.init(key);
 	if (f_v) {
-		cout << "matrix::calc_hash_key() (len=" << key_len << ") hash=" << hash_key << endl;
+		cout << "discreta_matrix::calc_hash_key() (len=" << key_len << ") hash=" << hash_key << endl;
 		}
 	delete [] alphabet;
 	delete [] inc;
 	delete [] key;
 }
 
-int matrix::is_in_center()
+int discreta_matrix::is_in_center()
 {
 	int m, n, i, j;
-	matrix A;
+	discreta_matrix A;
 	integer c;
 	
 	m = s_m();
@@ -2691,9 +2694,9 @@ int matrix::is_in_center()
 	return 1;
 }
 
-void matrix::power_mod(int r, integer &P, matrix &C)
+void discreta_matrix::power_mod(int r, integer &P, discreta_matrix &C)
 {
-	matrix B;
+	discreta_matrix B;
 	int m, n, i, j, l;
 	int p = P.s_i();
 	
@@ -2701,7 +2704,7 @@ void matrix::power_mod(int r, integer &P, matrix &C)
 	n = s_n();
 	if (m != n)
 	{
-		cout << "matrix::power_mod(): m !=n" << endl;
+		cout << "discreta_matrix::power_mod(): m !=n" << endl;
 		exit(1);
 	}
 	B = *this;
@@ -2724,9 +2727,9 @@ void matrix::power_mod(int r, integer &P, matrix &C)
 	}
 }
 
-int matrix::proj_order_mod(integer &P)
+int discreta_matrix::proj_order_mod(integer &P)
 {
-	matrix B;
+	discreta_matrix B;
 	int m, n;
 	int p = P.s_i();
 	int ord = 0;
@@ -2736,7 +2739,7 @@ int matrix::proj_order_mod(integer &P)
 	B = *this;
 	if (m != n)
 	{
-		cout << "matrix::proj_order_mod() m != n" << endl;
+		cout << "discreta_matrix::proj_order_mod() m != n" << endl;
 		exit(1);
 	}
 	if (is_zero())
@@ -2762,13 +2765,13 @@ int matrix::proj_order_mod(integer &P)
 
 
 
-void matrix::PG_rep(domain *dom, permutation &p, int f_action_from_right, int f_modified)
+void discreta_matrix::PG_rep(domain *dom, permutation &p, int f_action_from_right, int f_modified)
 {
 	with ww(dom);
 	PG_rep(p, f_action_from_right, f_modified);
 }
 
-void matrix::PG_rep(permutation &p, int f_action_from_right, int f_modified)
+void discreta_matrix::PG_rep(permutation &p, int f_action_from_right, int f_modified)
 {
 	domain *d;
 	int m, q, l, i, j;
@@ -2777,7 +2780,7 @@ void matrix::PG_rep(permutation &p, int f_action_from_right, int f_modified)
 	
 	m = s_m();
 	if (!is_finite_field_domain(d)) {
-		cout << "matrix::PG_rep() no finite field domain" << endl;
+		cout << "discreta_matrix::PG_rep() no finite field domain" << endl;
 		exit(1);
 		}
 	q = finite_field_domain_order_int(d);
@@ -2801,13 +2804,13 @@ void matrix::PG_rep(permutation &p, int f_action_from_right, int f_modified)
 		}
 }
 
-void matrix::AG_rep(domain *dom, permutation &p, int f_action_from_right)
+void discreta_matrix::AG_rep(domain *dom, permutation &p, int f_action_from_right)
 {
 	with ww(dom);
 	AG_rep(p, f_action_from_right);
 }
 
-void matrix::AG_rep(permutation &p, int f_action_from_right)
+void discreta_matrix::AG_rep(permutation &p, int f_action_from_right)
 {
 	domain *d;
 	int m, q, l, i, j;
@@ -2816,7 +2819,7 @@ void matrix::AG_rep(permutation &p, int f_action_from_right)
 	
 	m = s_m();
 	if (!is_finite_field_domain(d)) {
-		cout << "matrix::AG_rep() no finite field domain" << endl;
+		cout << "discreta_matrix::AG_rep() no finite field domain" << endl;
 		exit(1);
 		}
 	q = finite_field_domain_order_int(d);
@@ -2834,7 +2837,7 @@ void matrix::AG_rep(permutation &p, int f_action_from_right)
 		}
 }
 
-void matrix::MacWilliamsTransform(int n, int q, int f_v)
+void discreta_matrix::MacWilliamsTransform(int n, int q, int f_v)
 {
 	int i, j;
 	
@@ -2845,12 +2848,12 @@ void matrix::MacWilliamsTransform(int n, int q, int f_v)
 			}
 		}
 	if (f_v) {
-		cout << "MacWilliamsTransform(" << n << ", " << q << ")" << endl;
+		cout << "discreta_matrix::MacWilliamsTransform(" << n << ", " << q << ")" << endl;
 		cout << *this;
 		}
 }
 
-void matrix::weight_enumerator_brute_force(domain *dom, Vector &v)
+void discreta_matrix::weight_enumerator_brute_force(domain *dom, Vector &v)
 {
 	with ww(dom);
 	domain *dom1 = NULL;
@@ -2876,7 +2879,7 @@ void matrix::weight_enumerator_brute_force(domain *dom, Vector &v)
 		}
 }
 
-void matrix::Simplex_code_generator_matrix(domain *dom, int k, int f_v)
+void discreta_matrix::Simplex_code_generator_matrix(domain *dom, int k, int f_v)
 {
 	with ww(dom);
 	domain *dom1 = NULL;
@@ -2895,12 +2898,12 @@ void matrix::Simplex_code_generator_matrix(domain *dom, int k, int f_v)
 			}
 		}
 	if (f_v) {
-		cout << "Simplex_code_generator_matrix(" << k << ", " << q << ")" << endl;
+		cout << "discreta_matrix::Simplex_code_generator_matrix(" << k << ", " << q << ")" << endl;
 		cout << *this;
 		}
 }
 
-void matrix::PG_design_point_vs_hyperplane(domain *dom, int k, int f_v)
+void discreta_matrix::PG_design_point_vs_hyperplane(domain *dom, int k, int f_v)
 {
 	with ww(dom);
 	int i, j, l;
@@ -2924,16 +2927,16 @@ void matrix::PG_design_point_vs_hyperplane(domain *dom, int k, int f_v)
 			}
 		}
 	if (f_v) {
-		cout << "PG_design_point_vs_hyperplane(" << k << ", " << q << ")" << endl;
+		cout << "discreta_matrix::PG_design_point_vs_hyperplane(" << k << ", " << q << ")" << endl;
 		cout << *this;
 		}
 }
 
-void matrix::PG_k_q_design(domain *dom, int k, int f_v, int f_vv)
+void discreta_matrix::PG_k_q_design(domain *dom, int k, int f_v, int f_vv)
 {
 	with ww(dom);
 	int ii, i, j, nb_pts, nb_lines, r;
-	matrix v, w, z;
+	discreta_matrix v, w, z;
 	discreta_base a;
 	geometry_global Gg;
 		
@@ -2990,18 +2993,18 @@ void matrix::PG_k_q_design(domain *dom, int k, int f_v, int f_vv)
 		}
 }
 
-void matrix::determinant(discreta_base &d, int verbose_level)
+void discreta_matrix::determinant(discreta_base &d, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int n, h, i, j, ii, jj;
-	matrix M1;
+	discreta_matrix M1;
 	discreta_base a;
 
 	if (f_v) {
-		cout << "matrix::determinant" << endl;
+		cout << "discreta_matrix::determinant" << endl;
 		}
 	if (s_m() != s_n()) {
-		cout << "matrix::determinant the matrix is not square" << endl;
+		cout << "discreta_matrix::determinant the matrix is not square" << endl;
 		exit(1);
 		}
 	n = s_n();
@@ -3015,7 +3018,7 @@ void matrix::determinant(discreta_base &d, int verbose_level)
 		M1.m_mn(n - 1, n - 1);
 		for (h = 0; h < n; h++) {
 			if (f_v) {
-				cout << "matrix::determinant h=" << h << " d=" << d << endl;
+				cout << "discreta_matrix::determinant h=" << h << " d=" << d << endl;
 				}
 			for (i = 0, ii = 0; i < n; i++) {
 				if (i == 0) {
@@ -3031,11 +3034,11 @@ void matrix::determinant(discreta_base &d, int verbose_level)
 				ii++;
 				}
 			if (f_v) {
-				cout << "matrix::determinant M1=" << endl << M1 << endl;
+				cout << "discreta_matrix::determinant M1=" << endl << M1 << endl;
 				}
 			M1.determinant(a, verbose_level);
 			if (f_v) {
-				cout << "matrix::determinant a=" << a << endl;
+				cout << "discreta_matrix::determinant a=" << a << endl;
 				}
 			if ((h % 2) == 1) {
 				a.negate();
@@ -3046,22 +3049,22 @@ void matrix::determinant(discreta_base &d, int verbose_level)
 		}
 }
 
-void matrix::det(discreta_base & d, int f_v, int f_vv)
+void discreta_matrix::det(discreta_base & d, int f_v, int f_vv)
 {
-	matrix A;
+	discreta_matrix A;
 	
 	A = *this;
 	A.det_modify_input_matrix(d, f_v, f_vv);
 }
 
-void matrix::det_modify_input_matrix(discreta_base & d, int f_v, int f_vv)
+void discreta_matrix::det_modify_input_matrix(discreta_base & d, int f_v, int f_vv)
 {
 	int rk, i;
 	int f_special = TRUE;
 	int f_complete = FALSE;
 	
 	Vector base_cols;
-	matrix P;
+	discreta_matrix P;
 	int f_P = FALSE;
 
 	if (f_v) {
@@ -3091,13 +3094,13 @@ void determinant_map(discreta_base & x, discreta_base &d)
 		cout << "determinant_map() x must be a MATRIX" << endl;
 		exit(1);
 		}
-	matrix & M = x.as_matrix();
+	discreta_matrix & M = x.as_matrix();
 	int f_v = FALSE;
 	int f_vv = FALSE;
 	M.det(d, f_v, f_vv);
 }
 
-void matrix::PG_line_rank(int &a, int f_v)
+void discreta_matrix::PG_line_rank(int &a, int f_v)
 {
 	domain *d;
 	int q, m, n, l, s, i, a1, a2, a3, nb, ql, pivot_row, pivot_row2 = 0;
@@ -3106,18 +3109,18 @@ void matrix::PG_line_rank(int &a, int f_v)
 	geometry_global Gg;
 	
 	if (!is_finite_field_domain(d)) {
-		cout << "matrix::PG_line_rank() no finite field domain" << endl;
+		cout << "discreta_matrix::PG_line_rank() no finite field domain" << endl;
 		exit(1);
 		}
 	q = finite_field_domain_order_int(d);
 	m = s_m();
 	n = s_n();
 	if (m <= 0) {
-		cout << "matrix::PG_line_rank() matrix not allocated()" << endl;
+		cout << "discreta_matrix::PG_line_rank() matrix not allocated()" << endl;
 		exit(1);
 		}
 	if (n != 2) {
-		cout << "matrix::PG_line_rank() matrix not allocated()" << endl;
+		cout << "discreta_matrix::PG_line_rank() matrix not allocated()" << endl;
 		exit(1);
 		}
 	
@@ -3167,7 +3170,7 @@ void matrix::PG_line_rank(int &a, int f_v)
 			}
 		}
 	if (i < 0) {
-		cout << "matrix::PG_line_rank() zero column" << endl;
+		cout << "discreta_matrix::PG_line_rank() zero column" << endl;
 		exit(1);
 		}
 	
@@ -3234,7 +3237,7 @@ void matrix::PG_line_rank(int &a, int f_v)
 		}
 }
 
-void matrix::PG_line_unrank(int a)
+void discreta_matrix::PG_line_unrank(int a)
 {
 	domain *d;
 	int q, m, n, l, s, k, a1, a2, a3, nb, ql;
@@ -3242,18 +3245,18 @@ void matrix::PG_line_unrank(int a)
 	geometry_global Gg;
 	
 	if (!is_finite_field_domain(d)) {
-		cout << "matrix::PG_line_unrank no finite field domain" << endl;
+		cout << "discreta_matrix::PG_line_unrank no finite field domain" << endl;
 		exit(1);
 		}
 	q = finite_field_domain_order_int(d);
 	m = s_m();
 	n = s_n();
 	if (m <= 0) {
-		cout << "matrix::PG_line_unrank matrix not allocated" << endl;
+		cout << "discreta_matrix::PG_line_unrank matrix not allocated" << endl;
 		exit(1);
 		}
 	if (n != 2) {
-		cout << "matrix::PG_line_unrank matrix not allocated" << endl;
+		cout << "discreta_matrix::PG_line_unrank matrix not allocated" << endl;
 		exit(1);
 		}
 	
@@ -3299,11 +3302,11 @@ void matrix::PG_line_unrank(int a)
 		PG_point_unrank(l + 1, 1, 1, 0, m - l - 1, a3);
 		return;
 		}
-	cout << "matrix::PG_line_unrank a too large" << endl;
+	cout << "discreta_matrix::PG_line_unrank a too large" << endl;
 	exit(1);
 }
 
-void matrix::PG_point_normalize(int i0, int j0,
+void discreta_matrix::PG_point_normalize(int i0, int j0,
 		int di, int dj, int length)
 {
 	int i, j;
@@ -3322,24 +3325,24 @@ void matrix::PG_point_normalize(int i0, int j0,
 			return;
 			}
 		}
-	cout << "matrix::PG_point_normalize zero vector" << endl;
+	cout << "discreta_matrix::PG_point_normalize zero vector" << endl;
 	exit(1);
 }
 
-void matrix::PG_point_unrank(int i0, int j0,
+void discreta_matrix::PG_point_unrank(int i0, int j0,
 		int di, int dj, int length, int a)
 {
 	domain *d;
 	int q, n, l, qhl, k, j, r, a1 = a;
 	
 	if (!is_finite_field_domain(d)) {
-		cout << "matrix::PG_point_unrank no finite field domain" << endl;
+		cout << "discreta_matrix::PG_point_unrank no finite field domain" << endl;
 		exit(1);
 		}
 	q = finite_field_domain_order_int(d);
 	n = length;
 	if (n <= 0) {
-		cout << "matrix::PG_point_unrank n <= 0" << endl;
+		cout << "discreta_matrix::PG_point_unrank n <= 0" << endl;
 		exit(1);
 		}
 	
@@ -3369,26 +3372,26 @@ void matrix::PG_point_unrank(int i0, int j0,
 			m_iji(i0 + j * di, j0 + j * dj, 0);
 		return;
 		}
-	cout << "matrix::PG_point_unrank() a too large" << endl;
+	cout << "discreta_matrix::PG_point_unrank() a too large" << endl;
 	cout << "length = " << length << endl;
 	cout << "a = " << a1 << endl;
 	exit(1);
 }
 
-void matrix::PG_point_rank(int i0, int j0,
+void discreta_matrix::PG_point_rank(int i0, int j0,
 		int di, int dj, int length, int &a)
 {
 	domain *d;
 	int i, j, q, q_power_j, b;
 	
 	if (!is_finite_field_domain(d)) {
-		cout << "matrix::PG_point_rank no finite field domain" << endl;
+		cout << "discreta_matrix::PG_point_rank no finite field domain" << endl;
 		exit(1);
 		}
 	q = finite_field_domain_order_int(d);
 	PG_point_normalize(i0, j0, di, dj, length);
 	if (length <= 0) {
-		cout << "matrix::PG_point_rank length <= 0" << endl;
+		cout << "discreta_matrix::PG_point_rank length <= 0" << endl;
 		exit(1);
 		}
 	for (i = length - 1; i >= 0; i--) {
@@ -3396,11 +3399,11 @@ void matrix::PG_point_rank(int i0, int j0,
 			break;
 		}
 	if (i < 0) {
-		cout << "matrix::PG_point_rank zero vector" << endl;
+		cout << "discreta_matrix::PG_point_rank zero vector" << endl;
 		exit(1);
 		}
 	if (!s_ij(i0 + i * di, j0 + i * dj).is_one()) {
-		cout << "matrix::PG_point_rank vector not normalized" << endl;
+		cout << "discreta_matrix::PG_point_rank vector not normalized" << endl;
 		exit(1);
 		}
 
@@ -3422,7 +3425,7 @@ void matrix::PG_point_rank(int i0, int j0,
 }
 
 
-void matrix::PG_element_normalize()
+void discreta_matrix::PG_element_normalize()
 // lowest element which is different from zero becomes one in each column
 {
 	int i, ii, j, m, n;
@@ -3444,25 +3447,25 @@ void matrix::PG_element_normalize()
 				}
 			}
 		if (i == -1) {
-			cout << "matrix::PG_element_normalize zero column" << endl;
+			cout << "discreta_matrix::PG_element_normalize zero column" << endl;
 			exit(1);
 			}
 		}
 }
 
-void matrix::AG_point_rank(int i0, int j0,
+void discreta_matrix::AG_point_rank(int i0, int j0,
 		int di, int dj, int length, int &a)
 {
 	domain *d;
 	int q, i;
 	
 	if (!is_finite_field_domain(d)) {
-		cout << "matrix::AG_point_rank no finite field domain" << endl;
+		cout << "discreta_matrix::AG_point_rank no finite field domain" << endl;
 		exit(1);
 		}
 	q = finite_field_domain_order_int(d);
 	if (length <= 0) {
-		cout << "matrix::AG_point_rank length <= 0" << endl;
+		cout << "discreta_matrix::AG_point_rank length <= 0" << endl;
 		exit(1);
 		}
 	a = 0;
@@ -3473,19 +3476,19 @@ void matrix::AG_point_rank(int i0, int j0,
 		}
 }
 
-void matrix::AG_point_unrank(int i0, int j0,
+void discreta_matrix::AG_point_unrank(int i0, int j0,
 		int di, int dj, int length, int a)
 {
 	domain *d;
 	int q, i, b;
 	
 	if (!is_finite_field_domain(d)) {
-		cout << "matrix::AG_point_unrank no finite field domain" << endl;
+		cout << "discreta_matrix::AG_point_unrank no finite field domain" << endl;
 		exit(1);
 		}
 	q = finite_field_domain_order_int(d);
 	if (length <= 0) {
-		cout << "matrix::AG_point_unrank length <= 0" << endl;
+		cout << "discreta_matrix::AG_point_unrank length <= 0" << endl;
 		exit(1);
 		}
 	for (i = 0; i < length; i++) {
@@ -3512,7 +3515,7 @@ int nb_PG_lines(int n, int q)
 }
 
 #if 0
-void matrix::canon(int f_row_decomp, Vector & row_decomp, 
+void discreta_matrix::canon(int f_row_decomp, Vector & row_decomp,
 	int f_col_decomp, Vector & col_decomp, 
 	int f_group, perm_group & G, 
 	permutation & p, permutation & q, 
@@ -3537,7 +3540,7 @@ void matrix::canon(int f_row_decomp, Vector & row_decomp,
 	
 }
 
-void matrix::canon_partition_backtrack(int f_row_decomp, Vector & row_decomp, 
+void discreta_matrix::canon_partition_backtrack(int f_row_decomp, Vector & row_decomp,
 	int f_col_decomp, Vector & col_decomp, 
 	int f_group, perm_group & G, 
 	permutation & p, permutation & q, 
@@ -3563,7 +3566,7 @@ void matrix::canon_partition_backtrack(int f_row_decomp, Vector & row_decomp,
 }
 #endif
 
-void matrix::canon_nauty(int f_row_decomp, Vector & row_decomp, 
+void discreta_matrix::canon_nauty(int f_row_decomp, Vector & row_decomp,
 	int f_col_decomp, Vector & col_decomp, 
 	int f_group, perm_group & G, 
 	permutation & p, permutation & q, 
@@ -3628,14 +3631,14 @@ void matrix::canon_nauty(int f_row_decomp, Vector & row_decomp,
 }
 
 #if 0
-void matrix::canon_tonchev(int f_row_decomp, Vector & row_decomp, 
+void discreta_matrix::canon_tonchev(int f_row_decomp, Vector & row_decomp,
 	int f_col_decomp, Vector & col_decomp, 
 	int f_group, perm_group & G, 
 	permutation & p, permutation & q, 
 	int f_get_aut_group, int f_aut_group_on_lexleast, Vector & aut_gens, 
 	int f_v, int f_vv, int f_vvv)
 {
-	cout << "matrix::canon_tonchev() tonchev program not accessible" << endl;
+	cout << "discreta_matrix::canon_tonchev() tonchev program not accessible" << endl;
 #if 0
 	int *M;
 	int m, n, i, j, a;
@@ -3657,7 +3660,7 @@ void matrix::canon_tonchev(int f_row_decomp, Vector & row_decomp,
 }
 #endif
 
-void matrix::save_as_geometry(int number, char *label)
+void discreta_matrix::save_as_geometry(int number, char *label)
 {
 	hollerith h;
 	geometry G;
@@ -3688,7 +3691,7 @@ void matrix::save_as_geometry(int number, char *label)
 }
 
 
-void matrix::save_as_inc_file(char *fname)
+void discreta_matrix::save_as_inc_file(char *fname)
 {
 	int i, j = 0, m, n, nb_X = 0;
 	m = s_m();
@@ -3705,7 +3708,7 @@ void matrix::save_as_inc_file(char *fname)
 	f << "-1 1" << endl;
 }
 
-void matrix::save_as_inc(ofstream &f)
+void discreta_matrix::save_as_inc(ofstream &f)
 {
 	int i, j, m, n;
 	m = s_m();

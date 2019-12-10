@@ -467,7 +467,7 @@ void kramer_mesner::orbits(
 				}
 			}
 	
-		matrix Mtk;
+		discreta_matrix Mtk;
 		int n, m;
 	
 		Mtk_from_MM(V, Mtk, orbits_t, orbits_k,

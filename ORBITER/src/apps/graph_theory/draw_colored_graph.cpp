@@ -799,7 +799,7 @@ void characteristic_polynomial(colored_graph *CG, int verbose_level)
 {
 	int q;
 	int size;
-	matrix M;
+	discreta_matrix M;
 	int i, j, sq;
 	finite_field Fq;
 
@@ -831,7 +831,7 @@ void characteristic_polynomial(colored_graph *CG, int verbose_level)
 	
 	// This part uses DISCRETA data structures:
 
-	matrix M1, P, Pv, Q, Qv, S, T;
+	discreta_matrix M1, P, Pv, Q, Qv, S, T;
 	
 	M.elements_to_unipoly();
 	M.X_times_id_minus_self();

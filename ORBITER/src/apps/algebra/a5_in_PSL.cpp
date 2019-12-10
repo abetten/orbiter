@@ -17,16 +17,16 @@ using namespace orbiter;
 
 void A5_in_PSL_(int q, int verbose_level);
 void A5_in_PSL_2_q(int q,
-		matrix & A, matrix & B, domain *dom_GFq, int verbose_level);
+		discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level);
 void A5_in_PSL_2_q_easy(int q,
-		matrix & A, matrix & B, domain *dom_GFq, int verbose_level);
+		discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level);
 void A5_in_PSL_2_q_hard(int q,
-		matrix & A, matrix & B, domain *dom_GFq, int verbose_level);
-int proj_order(matrix &A);
-void trace(matrix &A, discreta_base &tr);
-void elementwise_power_int(matrix &A, int k);
-int is_in_center(matrix &B);
-void matrix_convert_to_numerical(matrix &A, int *AA, int q);
+		discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level);
+int proj_order(discreta_matrix &A);
+void trace(discreta_matrix &A, discreta_base &tr);
+void elementwise_power_int(discreta_matrix &A, int k);
+int is_in_center(discreta_matrix &B);
+void matrix_convert_to_numerical(discreta_matrix &A, int *AA, int q);
 
 
 void print_usage()
@@ -82,7 +82,7 @@ void A5_in_PSL_(int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int p, f;
-	matrix A, B, D; //, B1, B2, C, D, A2, A3, A4;
+	discreta_matrix A, B, D; //, B1, B2, C, D, A2, A3, A4;
 	number_theory_domain NT;
 	
 	
@@ -135,7 +135,7 @@ void A5_in_PSL_(int q, int verbose_level)
 }
 
 void A5_in_PSL_2_q(int q,
-		matrix & A, matrix & B, domain *dom_GFq, int verbose_level)
+		discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level)
 {
 	if (((q - 1) % 5) == 0) {
 		A5_in_PSL_2_q_easy(q, A, B, dom_GFq, verbose_level);
@@ -150,7 +150,7 @@ void A5_in_PSL_2_q(int q,
 }
 
 void A5_in_PSL_2_q_easy(int q,
-		matrix & A, matrix & B, domain *dom_GFq, int verbose_level)
+		discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, r;
@@ -211,13 +211,13 @@ void A5_in_PSL_2_q_easy(int q,
 
 
 void A5_in_PSL_2_q_hard(int q,
-		matrix & A, matrix & B, domain *dom_GFq, int verbose_level)
+		discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	with w(dom_GFq);
 	unipoly m;
 	int i, q2;
-	matrix S, Sv, E, /*Sbart, SSbart,*/ AA, BB;
+	discreta_matrix S, Sv, E, /*Sbart, SSbart,*/ AA, BB;
 	integer a, b, m1;
 	int norm_alpha, l;
 	
@@ -413,9 +413,9 @@ void A5_in_PSL_2_q_hard(int q,
 		}
 }
 
-int proj_order(matrix &A)
+int proj_order(discreta_matrix &A)
 {
-	matrix B;
+	discreta_matrix B;
 	int m, n;
 	int ord;
 	
@@ -444,7 +444,7 @@ int proj_order(matrix &A)
 	return ord;
 }
 
-void trace(matrix &A, discreta_base &tr)
+void trace(discreta_matrix &A, discreta_base &tr)
 {
 	int i, m, n;
 	
@@ -462,7 +462,7 @@ void trace(matrix &A, discreta_base &tr)
 	}
 }
 
-void elementwise_power_int(matrix &A, int k)
+void elementwise_power_int(discreta_matrix &A, int k)
 {
 	int i, j, m, n;
 	
@@ -478,10 +478,10 @@ void elementwise_power_int(matrix &A, int k)
 	}
 }
 
-int is_in_center(matrix &B)
+int is_in_center(discreta_matrix &B)
 {
 	int m, n, i, j;
-	matrix A;
+	discreta_matrix A;
 	integer c;
 	
 	m = B.s_m();
@@ -509,7 +509,7 @@ int is_in_center(matrix &B)
 }
 
 
-void matrix_convert_to_numerical(matrix &A, int *AA, int q)
+void matrix_convert_to_numerical(discreta_matrix &A, int *AA, int q)
 {
 	int m, n, i, j, /*h, l,*/ val;
 	

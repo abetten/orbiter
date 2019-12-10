@@ -1890,7 +1890,7 @@ void solid::icosahedron(int r)
 	A.dual(*this);
 }
 
-void solid::make_placed_graph(matrix & incma, Vector& aut_gens, Vector& cycles)
+void solid::make_placed_graph(discreta_matrix & incma, Vector& aut_gens, Vector& cycles)
 {
 	double phi, phi0;
 	int i, j, k;

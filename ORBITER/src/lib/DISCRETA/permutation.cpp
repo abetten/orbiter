@@ -1151,7 +1151,7 @@ void permutation::induce_on_lines_of_PG_k_q(int k, int q,
 		cout << "permutation::induce_on_lines_of_PG_k_q" << endl;
 	}
 	dom = allocate_finite_field_domain(q, verbose_level - 2);
-	matrix L;
+	discreta_matrix L;
 	nb_pts = Gg.nb_PG_elements(k, q);
 	nb_lines = nb_PG_lines(k, q);
 	if (f_v) {
@@ -1206,7 +1206,7 @@ void permutation::singer_cycle_on_points_of_projective_plane(int p,
 {
 	int f_v = (verbose_level >= 1);
 	unipoly a;
-	matrix M;
+	discreta_matrix M;
 	int l;
 	int f_action_from_right = TRUE;
 	geometry_global Gg;

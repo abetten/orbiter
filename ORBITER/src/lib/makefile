@@ -261,6 +261,7 @@ MODULES= \
 		DISCRETA/design_parameter.o \
 		DISCRETA/design_parameter_source.o \
 		DISCRETA/discreta_global.o \
+		DISCRETA/discreta_matrix.o \
 		DISCRETA/domain.o \
 		DISCRETA/geometry.o \
 		DISCRETA/global.o \
@@ -268,7 +269,6 @@ MODULES= \
 		DISCRETA/hollerith.o \
 		DISCRETA/integer.o \
 		DISCRETA/longinteger.o \
-		DISCRETA/matrix.o \
 		DISCRETA/memory.o \
 		DISCRETA/number_partition.o \
 		DISCRETA/page_table.o \

@@ -41,7 +41,7 @@ const char *discreta_arch = NULL;
 
 /**** global functions ***/
 
-static void Binomial_using_table(int n, int k, matrix & T, discreta_base & res);
+static void Binomial_using_table(int n, int k, discreta_matrix & T, discreta_base & res);
 
 void discreta_init()
 {
@@ -1104,7 +1104,7 @@ void Catalan_n(int n, Vector &v, discreta_base &res, int verbose_level)
 	a.swap(res);
 }
 
-void Catalan_nk_matrix(int n, matrix &Cnk, int verbose_level)
+void Catalan_nk_matrix(int n, discreta_matrix &Cnk, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
 	int i, k;
@@ -1120,7 +1120,7 @@ void Catalan_nk_matrix(int n, matrix &Cnk, int verbose_level)
 		}
 }
 
-void Catalan_nk_star_matrix(int n, matrix &Cnk, int verbose_level)
+void Catalan_nk_star_matrix(int n, discreta_matrix &Cnk, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
 	int i, k;
@@ -1145,7 +1145,7 @@ void Catalan_nk_star_matrix(int n, matrix &Cnk, int verbose_level)
 		}
 }
 
-void Catalan_nk_star(int n, int k, matrix &Cnk, discreta_base &res, int verbose_level)
+void Catalan_nk_star(int n, int k, discreta_matrix &Cnk, discreta_base &res, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -1209,7 +1209,7 @@ void Binomial(int n, int k, discreta_base & n_choose_k)
 // previously computed values. This may speed up 
 // those computations where Binomial() is heavily involved !
 {
-	static matrix *T = NULL;
+	static discreta_matrix *T = NULL;
 	int tn, i, j;
 	
 	if (k < 0) {
@@ -1225,12 +1225,12 @@ void Binomial(int n, int k, discreta_base & n_choose_k)
 		return;
 		}
 	if (T == NULL) {
-		T = (matrix *) callocobject(MATRIX);
+		T = (discreta_matrix *) callocobject(MATRIX);
 		T->m_mn_n(10, 10);
 		}
 	tn = T->s_m();
 	if (tn < n + 1) {
-		matrix TT;
+		discreta_matrix TT;
 
 #if 0
 		cout << "reallocating table of binomial coefficients to length " << n + 1 << endl;
@@ -1246,7 +1246,7 @@ void Binomial(int n, int k, discreta_base & n_choose_k)
 	Binomial_using_table(n, k, *T, n_choose_k);
 }
 
-static void Binomial_using_table(int n, int k, matrix & T, discreta_base & res)
+static void Binomial_using_table(int n, int k, discreta_matrix & T, discreta_base & res)
 {
 	discreta_base tmp1, tmp2;
 	int m;

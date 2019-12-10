@@ -107,7 +107,7 @@ void design_lambda_max_half(int t, int v, int k,
 }
 
 void design_lambda_ijs_matrix(int t, int v, int k,
-		discreta_base& lambda, int s, matrix & M)
+		discreta_base& lambda, int s, discreta_matrix & M)
 {
 	int i, j;
 	
@@ -291,7 +291,7 @@ int calc_resinv(int t, int v, int k, int delta_lambda, int &c,
 	return TRUE;
 }
 
-void design_mendelsohn_coefficient_matrix(int t, int m, matrix & M)
+void design_mendelsohn_coefficient_matrix(int t, int m, discreta_matrix & M)
 //The Mendelsohn equations for any $t$-$(v,k,\lambda)$ design $\cD = (\cV, \cB)$  
 //and any $m$-subset $M \subseteq \cV$ are for $s \ge 1$:
 //\[
@@ -603,7 +603,7 @@ void design_parameter_database_read_design_txt(char *fname_design_txt,
 		// we check if the parameter set is admissible:
 		{
 		integer lambda_object(lambda);
-		matrix M;
+		discreta_matrix M;
 		
 		design_lambda_ijs_matrix(t, v, k, lambda_object, 1 /* s */, M);
 		}
@@ -1329,7 +1329,7 @@ void design_parameter_database_family_report(char *path_db, int t, int v, int k,
 		if (t - h < minimal_t)
 			continue;
 		// cout << "h=" << h << endl;
-		matrix &M = Layers[h].as_matrix();
+		discreta_matrix &M = Layers[h].as_matrix();
 		for (i = 0; i <= h; i++) {
 			for (j = 0; j <= h - i; j++) {
 				Vector entry;
@@ -1358,7 +1358,7 @@ void design_parameter_database_family_report(char *path_db, int t, int v, int k,
 	for (h = 0; h < t; h++) {
 		if (t - h < minimal_t)
 			continue;
-		matrix &M = Layers[h].as_matrix();
+		discreta_matrix &M = Layers[h].as_matrix();
 		cout << "h=" << h << endl;
 		for (i = 0; i <= h; i++) {
 			for (j = 0; j <= h; j++) {
@@ -1678,7 +1678,7 @@ static void family_report(database & D, ostream& fhtml, ostream &ftex,
 		if (t - h < minimal_t)
 			continue;
 		// cout << "h=" << h << endl;
-		matrix &M = Layers[h].as_matrix();
+		discreta_matrix &M = Layers[h].as_matrix();
 		for (i = 0; i <= h; i++) {
 			for (j = 0; j <= h - i; j++) {
 				Vector path;
@@ -1713,7 +1713,7 @@ static void family_report(database & D, ostream& fhtml, ostream &ftex,
 		// cout << "h=" << h << endl;
 		fhtml << "<li>" << endl;
 		ftex << "\\begin{tabular}{*{" << h + 1 << "}{l}}" << endl;
-		matrix &M = Layers[h].as_matrix();
+		discreta_matrix &M = Layers[h].as_matrix();
 		for (i = 0; i <= h; i++) {
 			for (j = 0; j <= h - i; j++) {
 				int id = M.s_iji(i, j);
