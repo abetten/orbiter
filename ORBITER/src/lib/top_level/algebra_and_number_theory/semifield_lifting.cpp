@@ -211,13 +211,13 @@ void semifield_lifting::print_representatives(
 			ost << "ol=" << Flag_orbits[i].downstep_orbit_len << "\\\\" << endl;
 
 			if (!Flag_orbits[i].f_fusion_node) {
-				ost << "Flag orbit stabilizer has order " << Flag_orbits[i].gens->group_order_as_lint() << "\\\\" << endl;
 				ost << "Defining node for orbit " << Flag_orbits[i].upstep_orbit << endl;
+				ost << "Flag orbit stabilizer has order " << Flag_orbits[i].gens->group_order_as_lint() << "\\\\" << endl;
+				Flag_orbits[i].gens->print_generators_tex(ost);
 			}
 			else {
 				ost << "Fusion node for orbit " << Flag_orbits[i].fusion_with << endl;
 			}
-			Flag_orbits[i].gens->print_generators_tex(ost);
 
 
 #if 0
