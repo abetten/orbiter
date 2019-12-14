@@ -300,7 +300,7 @@ void semifield_level_two::init(semifield_classify *SC,
 		cout << "semifield_level_two::init "
 				"before M->init_gl_classes M->n=" << M->n << endl;
 		}
-	M->init_gl_classes(verbose_level);
+	M->init_gl_classes(0 /*verbose_level*/);
 	if (f_v) {
 		cout << "semifield_level_two::init "
 				"after M->init_gl_classes" << endl;
@@ -486,7 +486,7 @@ void semifield_level_two::compute_level_two(int verbose_level)
 	downstep(verbose_level - 1);
 	if (f_v) {
 		cout << "semifield_level_two::compute_level_two "
-				"after downstep" << endl;
+				"after downstep, nb_flag_orbits=" << nb_flag_orbits << endl;
 		}
 
 	if (f_v) {
@@ -501,7 +501,7 @@ void semifield_level_two::compute_level_two(int verbose_level)
 		cout << "semifield_level_two::compute_level_two "
 				"before compute_stabilizers_downstep" << endl;
 		}
-	compute_stabilizers_downstep(verbose_level - 1);
+	compute_stabilizers_downstep(verbose_level - 2);
 	if (f_v) {
 		cout << "semifield_level_two::compute_level_two "
 				"after compute_stabilizers_downstep" << endl;
@@ -514,7 +514,7 @@ void semifield_level_two::compute_level_two(int verbose_level)
 	upstep(verbose_level - 1);
 	if (f_v) {
 		cout << "semifield_level_two::compute_level_two "
-				"after upstep" << endl;
+				"after upstep, nb_orbits=" << nb_orbits << endl;
 		}
 
 	if (f_v) {
@@ -567,7 +567,7 @@ void semifield_level_two::downstep(int verbose_level)
 		exit(1);
 		}
 	C->make_classes(R, nb_classes,
-			TRUE /* f_no_eigenvalue_one */, verbose_level - 1);
+			TRUE /* f_no_eigenvalue_one */, 0 /*verbose_level - 1*/);
 
 	if (f_v) {
 		cout << "semifield_level_two::downstep after "
@@ -746,11 +746,12 @@ void semifield_level_two::compute_stabilizers_downstep(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
 	int i, j, a, b;
 
 	if (f_v) {
-		cout << "semifield_level_two::compute_stabilizers_downstep" << endl;
-		}
+		cout << "semifield_level_two::compute_stabilizers_downstep, verbose_level=" << verbose_level << endl;
+	}
 
 	Flag_orbit_stabilizer = NEW_OBJECTS(strong_generators, nb_flag_orbits);
 	for (i = 0; i < nb_flag_orbits; i++) {
@@ -758,7 +759,7 @@ void semifield_level_two::compute_stabilizers_downstep(int verbose_level)
 		if (f_vv) {
 			cout << "semifield_level_two::compute_stabilizers_downstep "
 					"down orbit " << i << " / " << nb_flag_orbits << endl;
-			}
+		}
 
 		a = flag_orbit_classes[i * 2 + 0];
 		b = flag_orbit_classes[i * 2 + 1];
@@ -769,10 +770,10 @@ void semifield_level_two::compute_stabilizers_downstep(int verbose_level)
 
 		Flag_orbit_stabilizer[i].init_centralizer_of_matrix(
 				A_PGLk, Mtx, verbose_level - 3);
-		if (f_vv) {
+		if (f_vvv) {
 			cout << "centralizer:" << endl;
 			Flag_orbit_stabilizer[i].print_generators();
-			}
+		}
 
 		if (a == b) {
 
@@ -790,8 +791,8 @@ void semifield_level_two::compute_stabilizers_downstep(int verbose_level)
 					2 /* group_index */, verbose_level - 3);
 
 			FREE_OBJECT(R2);
-			}
 		}
+	}
 
 	if (f_v) {
 		cout << "semifield_level_two::compute_stabilizers_downstep "
@@ -802,18 +803,18 @@ void semifield_level_two::compute_stabilizers_downstep(int verbose_level)
 			Flag_orbit_stabilizer[i].group_order(go);
 			for (j = 0; j < 2; j++) {
 				cout << flag_orbit_classes[i * 2 + j] << " ";
-				}
+			}
 			cout << " : nb of matrices = "
 					<< flag_orbit_number_of_matrices[i]
 					<< " : length = " << flag_orbit_length[i]
 					<< " stab order = " << go;
 			cout << endl;
-			}
+		}
 		cout << "i : class_to_flag_orbit" << endl;
 		for (i = 0; i < nb_classes; i++) {
 			cout << i << " : " << class_to_flag_orbit[i] << endl;
-			}
 		}
+	}
 	if (f_vv) {
 		cout << "Stabilizers of middle object:" << endl;
 		for (i = 0; i < nb_flag_orbits; i++) {
@@ -822,13 +823,15 @@ void semifield_level_two::compute_stabilizers_downstep(int verbose_level)
 			Flag_orbit_stabilizer[i].group_order(go);
 			cout << "down orbit " << i << " / " << nb_flag_orbits
 				<< " has order " << go << endl;
-			Flag_orbit_stabilizer[i].print_generators();
+			if (f_vvv) {
+				Flag_orbit_stabilizer[i].print_generators();
 			}
 		}
+	}
 	if (f_v) {
 		cout << "semifield_level_two::compute_stabilizers_downstep "
 				"done" << endl;
-		}
+	}
 }
 
 

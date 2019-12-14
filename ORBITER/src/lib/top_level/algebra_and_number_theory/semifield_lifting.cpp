@@ -165,6 +165,136 @@ void semifield_lifting::init_level_three(
 }
 
 
+void semifield_lifting::print_representatives(
+	ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, ext, idx;
+	long int a; //, b;
+
+
+	if (f_v) {
+		cout << "semifield_lifting::print_representatives" << endl;
+	}
+
+	{
+		//const char *fname = "Reps_lvl_2.tex";
+		//ofstream fp(fname);
+		//latex_interface L;
+
+
+		int *Mtx;
+
+		Mtx = NEW_int(k2);
+
+
+		if (f_v) {
+			cout << "semifield_lifting::print_representatives before flag orbits" << endl;
+		}
+
+
+
+
+
+		ost << "\\begin{enumerate}[(1)]" << endl;
+
+		for (i = 0; i < nb_flag_orbits; i++) {
+
+
+			ost << "\\item" << endl;
+			ost << i << " / " << nb_flag_orbits << ":\\\\" << endl;
+
+
+			ost << "po=" << Flag_orbits[i].downstep_primary_orbit << ", ";
+			ost << "so=" << Flag_orbits[i].downstep_secondary_orbit << ", ";
+			ost << "pt=" << Flag_orbits[i].pt << ", ";
+			ost << "ol=" << Flag_orbits[i].downstep_orbit_len << "\\\\" << endl;
+			ost << "Flag orbit stabilizer has order " << Flag_orbits[i].gens->group_order_as_lint() << "\\\\" << endl;
+
+			if (!Flag_orbits[i].f_fusion_node) {
+				ost << "Defining node for orbit " << Flag_orbits[i].upstep_orbit << endl;
+			}
+			else {
+				ost << "Fusion node for orbit " << Flag_orbits[i].fusion_with << endl;
+			}
+			Flag_orbits[i].gens->print_generators_tex(ost);
+
+
+#if 0
+			int downstep_primary_orbit;
+			int downstep_secondary_orbit;
+			int pt_local;
+			long int pt;
+			int downstep_orbit_len;
+			int f_long_orbit;
+			int upstep_orbit; // if !f_fusion_node
+		 	int f_fusion_node;
+			int fusion_with;
+			int *fusion_elt;
+
+			longinteger_object go;
+			strong_generators *gens;
+#endif
+
+		}
+
+		ost << "\\end{enumerate}" << endl;
+
+		if (f_v) {
+			cout << "semifield_lifting::print_representatives before Orbits at level 3" << endl;
+		}
+		ost << "\\section{Orbits at level 3}" << endl;
+
+		ost << "\\begin{enumerate}[(1)]" << endl;
+		for (i = 0; i < nb_orbits; i++) {
+
+
+			ost << "\\item" << endl;
+			longinteger_object go;
+			//int *Elt1;
+
+			Stabilizer_gens[i].group_order(go);
+
+			ost << "go=" << go << ", ";
+			ost << "po=" << Po[i] << ", ";
+			ost << "so=" << So[i] << ", ";
+			ost << "mo=" << Mo[i] << ", ";
+			ost << "pt=" << Pt[i] << "\\\\" << endl;
+
+			SC->matrix_unrank(Pt[i], Mtx);
+
+			int f_elements_exponential = FALSE;
+			const char *symbol_for_print = "\\alpha";
+
+			ost << "$$" << endl;
+			ost << "\\left[" << endl;
+			SC->F->latex_matrix(ost, f_elements_exponential,
+					symbol_for_print, Mtx, k, k);
+			ost << "\\right]";
+			ost << "\\right\\}" << endl;
+			ost << "_{";
+			ost << go << "}" << endl;
+			ost << "$$" << endl;
+
+			Stabilizer_gens[i].print_generators_tex(ost);
+
+		}
+		ost << "\\end{enumerate}" << endl;
+		ost << endl;
+		if (f_v) {
+			cout << "semifield_level_two::print_representatives "
+					"after Orbits at level 3" << endl;
+		}
+
+
+		FREE_int(Mtx);
+	}
+	if (f_v) {
+		cout << "semifield_lifting::print_representatives done" << endl;
+	}
+}
+
+
 void semifield_lifting::recover_level_three_downstep(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -273,11 +403,21 @@ void semifield_lifting::compute_level_three(int verbose_level)
 				"before level_two_down" << endl;
 		}
 
-	level_two_down(verbose_level);
+	level_two_down(verbose_level - 2);
 
 	if (f_v) {
 		cout << "semifield_lifting::compute_level_three "
 				"after level_two_down" << endl;
+		}
+	if (f_v) {
+		int orbit;
+		cout << "semifield_lifting::level_two_down done, "
+				"we found the following candidate sets:" << endl;
+		cout << "Orbit : # candidates : # orbits" << endl;
+		for (orbit = 0; orbit < prev_level_nb_orbits; orbit++) {
+			cout << orbit << " : " << L2->Nb_candidates[orbit]
+				<< " : " << Downstep_nodes[orbit].Sch->nb_orbits << endl;
+			}
 		}
 
 	if (f_v) {
@@ -285,11 +425,11 @@ void semifield_lifting::compute_level_three(int verbose_level)
 				"before level_two_flag_orbits" << endl;
 		}
 
-	level_two_flag_orbits(verbose_level);
+	level_two_flag_orbits(verbose_level - 1);
 
 	if (f_v) {
 		cout << "semifield_lifting::compute_level_three "
-				"after level_two_flag_orbits" << endl;
+				"after level_two_flag_orbits, nb_flag_orbits=" << nb_flag_orbits << endl;
 		}
 
 	if (f_v) {
@@ -297,12 +437,20 @@ void semifield_lifting::compute_level_three(int verbose_level)
 				"before level_two_upstep" << endl;
 		}
 
-	level_two_upstep(verbose_level);
+	level_two_upstep(verbose_level - 1);
 
 	if (f_v) {
 		cout << "semifield_lifting::compute_level_three "
-				"after level_two_upstep" << endl;
+				"after level_two_upstep, nb_orbits=" << nb_orbits << endl;
 		}
+	if (f_v) {
+		int i;
+		for (i = 0; i < nb_orbits; i++) {
+			cout << i;
+			cout << "," << Stabilizer_gens[i].group_order_as_lint() << ","
+				<< Po[i] << "," << So[i] << "," << Mo[i] << "," << Pt[i] << endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "semifield_lifting::compute_level_three "
@@ -482,7 +630,7 @@ void semifield_lifting::downstep(
 
 		Downstep_nodes[orbit].init(this, level, orbit,
 			Candidates[orbit], Nb_candidates[orbit], first_flag_orbit,
-			verbose_level);
+			verbose_level - 2);
 
 		first_flag_orbit += Downstep_nodes[orbit].Sch->nb_orbits;
 
@@ -526,8 +674,7 @@ void semifield_lifting::downstep(
 		FREE_int(Nb_orbits);
 		}
 	if (f_v) {
-		cout << "semifield_lifting::downstep "
-				"done" << endl;
+		cout << "semifield_lifting::downstep done" << endl;
 		}
 }
 
@@ -771,6 +918,7 @@ void semifield_lifting::upstep(
 	long int pt;
 	//int trace_po, trace_so;
 	combinatorics_domain Combi;
+	int fo, class_idx;
 
 	transporter = NEW_int(SC->A->elt_size_in_int);
 
@@ -820,6 +968,19 @@ void semifield_lifting::upstep(
 		So[nb_orbits] = so;
 		Mo[nb_orbits] = f;
 		Pt[nb_orbits] = pt;
+
+		if (f_v) {
+			cout << "semifield_lifting::upstep Level "
+					<< level << " flag orbit " << f << " / "
+					<< nb_flag_orbits << ", before SC->matrix_unrank, pt = " << pt << endl;
+			}
+
+		// level two stuff:
+		fo = L2->Fo[po];
+		class_idx = L2->So[po];
+		SC->matrix_unrank(L2->class_rep_rank[class_idx], Mtx + 1 * k2);
+
+
 
 		//get_pivots(level - 1, po, Mtx, pivots, verbose_level - 3);
 		//int_vec_copy(SC->desired_pivots, pivots, level);
@@ -898,7 +1059,7 @@ void semifield_lifting::upstep(
 
 		Stabilizer_gens[nb_orbits].add_generators(
 				coset_reps, nb_aut_gens,
-				verbose_level - 1);
+				0 /*verbose_level - 1*/);
 
 		FREE_OBJECT(coset_reps);
 
@@ -973,11 +1134,14 @@ void semifield_lifting::upstep_loop_over_down_set(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int i, h;
+	int i;
+	long int h;
 	int trace_po, trace_so;
 
 	if (f_v) {
 		cout << "semifield_lifting::upstep_loop_over_down_set" << endl;
+		cout << "semifield_lifting::upstep_loop_over_down_set Mtx:" << endl;
+		int_matrix_print(Mtx, level, k2);
 		}
 
 
@@ -987,15 +1151,25 @@ void semifield_lifting::upstep_loop_over_down_set(
 			cout << "Level " << level << ": flag orbit "
 					<< f << " / " << nb_flag_orbits
 					<< " coset " << h << " / " << N << endl;
-			}
+		}
+		if (f_vvv) {
+			cout << "semifield_lifting::upstep_loop_over_down_set before Gr->unrank_lint_here_and_extend_basis" << endl;
+		}
 
 		Gr->unrank_lint_here_and_extend_basis(
 				base_change_matrix, h,
-				0 /* verbose_level */);
+				0 /*verbose_level*/);
 		if (f_vvv) {
-			cout << " base_change_matrix=" << endl;
+			cout << "semifield_lifting::upstep_loop_over_down_set base_change_matrix=" << endl;
 			int_matrix_print(base_change_matrix, level, level);
-			}
+		}
+		if (f_vvv) {
+			cout << "semifield_lifting::upstep_loop_over_down_set Mtx:" << endl;
+			int_matrix_print(Mtx, level, k2);
+		}
+		if (f_vvv) {
+			cout << "semifield_lifting::upstep_loop_over_down_set before SC->F->mult_matrix_matrix" << endl;
+		}
 		SC->F->mult_matrix_matrix(base_change_matrix,
 				Mtx, changed_space, level, level, k2,
 				0 /* verbose_level */);

@@ -653,6 +653,18 @@ void longinteger_domain::integral_division_by_int(
 	r = R.as_int();
 }
 
+void longinteger_domain::integral_division_by_lint(
+	longinteger_object &a,
+	long int b, longinteger_object &q, long int &r)
+{
+	longinteger_object B, R;
+	int verbose_level = 0;
+
+	B.create(b);
+	integral_division(a, B, q, R, verbose_level);
+	r = R.as_lint();
+}
+
 void longinteger_domain::extended_gcd(
 	longinteger_object &a,
 	longinteger_object &b, longinteger_object &g, 
@@ -1429,64 +1441,70 @@ int longinteger_domain::multiplicity_of_p(longinteger_object &a,
 	return n;
 }
 
-int longinteger_domain::smallest_primedivisor(
+long int longinteger_domain::smallest_primedivisor(
 	longinteger_object &a,
 	int p_min, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	longinteger_object n, n1, q, pp;
-	int p, r, cnt = 0;
+	long int p, r, cnt = 0;
 	
 	if (f_v) {
-		cout << "smallest_primedivisor " << a
+		cout << "longinteger_domain::smallest_primedivisor " << a
 				<< " p_min=" << p_min << endl;
 		}
 	a.assign_to(n);
 	
-	if (p_min == 0)
+	if (p_min == 0) {
 		p_min = 2;
-	if (p_min < 0)
+	}
+	if (p_min < 0) {
 		p_min = - p_min;
+	}
 	if (p_min <= 2) {
-		if (is_even(n))
+		if (is_even(n)) {
 			return 2;
+		}
 		p_min = 3;
 		}
 	if (p_min <= 3) {
-		if (remainder_mod_int(n, 3) == 0)
+		if (remainder_mod_int(n, 3) == 0) {
 			return 3;
+		}
 		p_min = 5;
 		}
-	if (EVEN(p_min))
+	if (EVEN(p_min)) {
 		p_min--;
+	}
 	p = p_min;
 	while (TRUE) {
 		cnt++;
 		if (f_vv) {
-			cout << "smallest_primedivisor:n=" << n
+			cout << "longinteger_domain::smallest_primedivisor n=" << n
 					<< " trying p=" << p << endl;
-			}
+		}
 		n.assign_to(n1);
-		integral_division_by_int(n1, p, q, r);
+		integral_division_by_lint(n1, p, q, r);
 		if (f_vv && (cnt % 1) == 0) {
-			cout << "smallest_primedivisor:n=" << n1
+			cout << "longinteger_domain::smallest_primedivisor n=" << n1
 				<< " trying p=" << p << " q=" << q
 				<< " r=" << r << endl;
 			cnt = 0;
-			}
-		if (r == 0)
+		}
+		if (r == 0) {
 			return p;
+		}
 		pp.create(p);
 		if (compare(q, pp) < 0) {
 			break;
-			}
+		}
 		p += 2;
-		}
+	}
 	if (f_v) {
-		cout << "smallest_primedivisor "
+		cout << "longinteger_domain::smallest_primedivisor "
 				"the number is prime" << endl;
-		}
+	}
 	return 0;
 }
 
@@ -1499,11 +1517,12 @@ void longinteger_domain::factor_into_longintegers(
 	//int f_vv = (verbose_level >= 2);
 	longinteger_object n, q, pp, r;
 	longinteger_domain D;
-	int p, last_prime = 0, i;
+	long int p, last_prime = 0;
+	int i;
 	number_theory_domain NT;
 	
 	if (f_v) {
-		cout << "factoring " << a << endl;
+		cout << "longinteger_domain::factor_into_longintegers factoring " << a << endl;
 		}
 	if (a.is_zero()) {
 		cout << "longinteger_domain::factor_into_longintegers "
@@ -1519,7 +1538,7 @@ void longinteger_domain::factor_into_longintegers(
 	a.assign_to(n);
 	p = smallest_primedivisor(n, last_prime, verbose_level);
 	if (p == 0) {
-		p = n.as_int();
+		p = n.as_lint();
 		}
 	pp.create(p);
 	primes = NEW_OBJECTS(longinteger_object, 1);
@@ -1536,13 +1555,13 @@ void longinteger_domain::factor_into_longintegers(
 	q.assign_to(n);
 	while (!n.is_one()) {
 		if (f_v) {
-			cout << "remaining factor: " << n << endl;
+			cout << "longinteger_domain::factor_into_longintegers remaining factor: " << n << endl;
 			}
 		p = smallest_primedivisor(n, last_prime, verbose_level);
 		// if p == 0: n is prime
 		
 		if (p == 0) {
-			p = n.as_int();
+			p = n.as_lint();
 			}
 		if (p == last_prime) {
 			exponents[nb_primes - 1]++;
@@ -1587,7 +1606,7 @@ void longinteger_domain::factor_into_longintegers(
 
 		}
 	if (f_v) {
-		cout << "factor(): " << a << " = ";
+		cout << "longinteger_domain::factor_into_longintegers prime factorization of " << a << " = ";
 		NT.print_longfactorization(nb_primes, primes, exponents);
 		cout << endl;
 		}

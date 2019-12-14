@@ -123,7 +123,7 @@ void algebra_global::search_for_primitive_polynomials(
 
 
 	if (f_v) {
-		cout << "search_for_primitive_polynomials "
+		cout << "algebra_global::search_for_primitive_polynomials "
 				"p_min=" << p_min << " p_max=" << p_max
 				<< " n_min=" << n_min << " n_max=" << n_max << endl;
 	}
@@ -132,10 +132,10 @@ void algebra_global::search_for_primitive_polynomials(
 			continue;
 		}
 		if (f_v) {
-			cout << "considering the prime " << p << endl;
+			cout << "algebra_global::search_for_primitive_polynomials considering the prime " << p << endl;
 		}
 
-			{
+		{
 			finite_field Fp;
 			Fp.init(p, 0 /*verbose_level*/);
 			unipoly_domain FX(&Fp);
@@ -149,15 +149,24 @@ void algebra_global::search_for_primitive_polynomials(
 				if (f_v) {
 					cout << "d=" << d << endl;
 				}
-				FX.get_a_primitive_polynomial(m, d, verbose_level - 1);
+				FX.get_a_primitive_polynomial(m, d, verbose_level);
 				FX.rank_longinteger(m, rk);
 				//cout << d << " : " << rk << " : ";
 				cout << "\"" << rk << "\", // ";
 				FX.print_object(m, cout);
 				cout << endl;
 			}
+			if (f_v) {
+				cout << "algebra_global::search_for_primitive_polynomials before FX.delete_object(m)" << endl;
+			}
 			FX.delete_object(m);
+			if (f_v) {
+				cout << "algebra_global::search_for_primitive_polynomials after FX.delete_object(m)" << endl;
+			}
 		}
+	}
+	if (f_v) {
+		cout << "algebra_global::search_for_primitive_polynomials done" << endl;
 	}
 }
 

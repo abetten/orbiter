@@ -133,7 +133,8 @@ void table_of_irreducible_polynomials::init(int k,
 		j += Nb_irred[d];
 		}
 	if (f_v) {
-		cout << "gl_classes k = " << k << " q = " << q << " Degree = ";
+		cout << "table_of_irreducible_polynomials::init "
+				"k = " << k << " q = " << q << " Degree = ";
 		int_vec_print(cout, Degree, nb_irred);
 		cout << endl;
 		}
@@ -144,6 +145,27 @@ void table_of_irreducible_polynomials::init(int k,
 		}
 
 }
+
+void table_of_irreducible_polynomials::print(ostream &ost)
+{
+	int d, f, l, i, j;
+
+	cout << "table_of_irreducible_polynomials::print "
+			"table of all irreducible polynomials:" << endl;
+	j = 0;
+	for (d = 1; d <= k; d++) {
+		f = First_irred[d];
+		l = Nb_irred[d];
+		ost << "There are " << l << " irreducible polynomials of degree " << d << ":" << endl;
+		for (i = 0; i < l; i++) {
+			ost << j << " : " << i << " : ";
+			int_vec_print(ost, Tables[d] + i * (d + 1), d + 1);
+			ost << endl;
+			j++;
+		}
+	}
+}
+
 
 void table_of_irreducible_polynomials::print_polynomials(ostream &ost)
 {
@@ -294,6 +316,11 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 		d_poly = U.degree(Poly);
 		d = Degree[i];
 
+		if (f_v) {
+			cout << "table_of_irreducible_polynomials::factorize_polynomial "
+					"trying irrducible poly " << i << " / " << nb_irred << " of degree " << d << endl;
+		}
+
 		if (d > d_poly) {
 			continue;
 			}
@@ -302,6 +329,11 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 		U.delete_object(P);
 		U.create_object_of_degree_with_coefficients(P, d,
 				Tables[d] + tt * (d + 1));
+		if (f_v) {
+			cout << "polynomial coefficients: ";
+			int_vec_print(cout, Tables[d] + tt * (d + 1), d + 1);
+			cout << endl;
+		}
 
 		if (f_v) {
 			cout << "table_of_irreducible_polynomials::factorize_polynomial "
@@ -309,10 +341,16 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 			U.print_object(P, cout);
 			cout << endl;
 			}
-		U.integral_division(Poly, P, Q, R, verbose_level);
+		U.integral_division(Poly, P, Q, R, 0 /*verbose_level*/);
 		if (f_v) {
 			cout << "table_of_irreducible_polynomials::factorize_polynomial "
 					"after U.integral_division" << endl;
+			cout << "Q = ";
+			U.print_object(Q, cout);
+			cout << endl;
+			cout << "R = ";
+			U.print_object(R, cout);
+			cout << endl;
 		}
 
 		if (U.is_zero(R)) {
@@ -356,6 +394,7 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 				"remaining polynomial = ";
 		U.print_object(Poly, cout);
 		cout << endl;
+		//print(cout);
 		}
 
 	U.delete_object(Poly);

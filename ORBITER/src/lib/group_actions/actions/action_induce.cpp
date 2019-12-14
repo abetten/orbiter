@@ -248,9 +248,9 @@ void action::induced_action_on_cosets(
 	sprintf(label_tex, "%s Cosets_%d",
 			A->label_tex, A_on_cosets->dimension_of_subspace);
 	if (f_v) {
-		cout << "the old_action " << A->label
-				<< " has base_length = " << A->base_len()
-			<< " and degree " << A->degree << endl;
+		cout << "the old_action is " << A->label << endl;
+		//		<< " has base_length = " << A->base_len()
+		//	<< " and degree " << A->degree << endl;
 		}
 	f_has_subaction = TRUE;
 	subaction = A;

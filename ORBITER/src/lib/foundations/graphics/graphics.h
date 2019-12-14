@@ -457,6 +457,12 @@ public:
 	void projective_plane_draw_grid2(int q, int *Table,
 		int nb, int f_with_points, int rad,
 		int f_point_labels, char **Point_labels, int verbose_level);
+	void draw_matrix_in_color(
+		int f_row_grid, int f_col_grid,
+		int *Table, int nb_colors,
+		int m, int n, int xmax, int ymax,
+		int *color_scale, int nb_colors_in_scale,
+		int f_has_labels, int *labels);
 };
 
 

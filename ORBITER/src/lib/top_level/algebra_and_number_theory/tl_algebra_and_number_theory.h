@@ -423,6 +423,19 @@ public:
 
 	long int *Pt; // [nb_orbits]
 	int *Go; // [nb_orbits]
+
+
+	//for (i = 0; i < nb_orbits; i++) {
+	//ext = defining_flag_orbit[i];
+	//idx = flag_orbit_classes[ext * 2 + 0];
+	//a = class_rep_rank[idx];
+	//b = class_rep_plus_I_rank[idx];
+	//Fo[i] = ext;
+	//So[i] = idx;
+	//Pt[i] = a;
+	//Go[i] = go.as_int();
+
+
 	strong_generators *Stabilizer_gens;
 		// stabilizer generators for the
 		// chosen orbit representatives at level two
@@ -575,6 +588,8 @@ public:
 	void init_level_three(semifield_level_two *L2,
 			int f_prefix, const char *prefix,
 			int verbose_level);
+	void print_representatives(
+		std::ostream &ost, int verbose_level);
 	void recover_level_three_downstep(int verbose_level);
 	void recover_level_three_from_file(int f_read_flag_orbits, int verbose_level);
 	void compute_level_three(int verbose_level);

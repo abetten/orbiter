@@ -1480,6 +1480,9 @@ public:
 	int *Monomials; // [nb_monomials * n]
 	char **symbols;
 	char **symbols_latex;
+	char **monomial_symbols;
+	char **monomial_symbols_latex;
+	char **monomial_symbols_easy;
 	int *Variables; // [nb_monomials * degree]
 		// Variables contains the monomials written out 
 		// as a sequence of length degree 
@@ -1610,6 +1613,9 @@ public:
 		int verbose_level);
 	void integral_division_by_int(longinteger_object &a, 
 		int b, longinteger_object &q, int &r);
+	void integral_division_by_lint(
+		longinteger_object &a,
+		long int b, longinteger_object &q, long int &r);
 	void extended_gcd(longinteger_object &a, longinteger_object &b, 
 		longinteger_object &g, longinteger_object &u, 
 		longinteger_object &v, int verbose_level);
@@ -1637,7 +1643,7 @@ public:
 	int remainder_mod_int(longinteger_object &a, int p);
 	int multiplicity_of_p(longinteger_object &a, 
 		longinteger_object &residue, int p);
-	int smallest_primedivisor(longinteger_object &a, int p_min, 
+	long int smallest_primedivisor(longinteger_object &a, int p_min,
 		int verbose_level);
 	void factor_into_longintegers(longinteger_object &a, 
 		int &nb_primes, longinteger_object *&primes, 
@@ -2021,6 +2027,7 @@ public:
 	table_of_irreducible_polynomials();
 	~table_of_irreducible_polynomials();
 	void init(int k, finite_field *F, int verbose_level);
+	void print(std::ostream &ost);
 	void print_polynomials(std::ostream &ost);
 	int select_polynomial_first(
 			int *Select, int verbose_level);
@@ -2044,6 +2051,8 @@ public:
 	int factor_degree;
 	int *factor_coeffs;
 	unipoly_object factor_poly;
+		// the coefficients of factor_poly are negated
+		// so that mult_mod is easier
 
 	unipoly_domain(finite_field *GFq);
 	unipoly_domain(finite_field *GFq, unipoly_object m);
