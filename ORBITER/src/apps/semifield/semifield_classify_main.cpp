@@ -202,9 +202,15 @@ int main(int argc, const char **argv)
 
 			cout << "before L2->C->report" << endl;
 			L2->C->report(fp, verbose_level);
+			cout << "after L2->C->report" << endl;
+
 			cout << "before L2->print_representatives" << endl;
 			L2->print_representatives(fp, verbose_level);
 			cout << "after L2->print_representatives" << endl;
+
+			cout << "before L3->print_representatives" << endl;
+			L3->print_representatives(fp, verbose_level);
+			cout << "after L3->print_representatives" << endl;
 
 			L.foot(fp);
 		}
