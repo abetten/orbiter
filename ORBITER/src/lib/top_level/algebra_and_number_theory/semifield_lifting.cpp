@@ -183,18 +183,35 @@ void semifield_lifting::print_representatives(
 		//latex_interface L;
 
 
-		int *Mtx;
+		int *Mtx_Id;
+		int *Mtx1;
+		int *Mtx2;
 
-		Mtx = NEW_int(k2);
+		Mtx_Id = NEW_int(k2);
+		Mtx1 = NEW_int(k2);
+		Mtx2 = NEW_int(k2);
+
+		SC->F->identity_matrix(Mtx_Id, k);
 
 
 		if (f_v) {
 			cout << "semifield_lifting::print_representatives before flag orbits" << endl;
 		}
 
+		ost << endl;
+		ost << "\\bigskip" << endl;
+		ost << endl;
 
 
 
+		ost << "\\section{Flag orbits at level 3}" << endl;
+
+
+		ost << endl;
+		ost << "There are " << nb_flag_orbits << " flag orbits at level 3" << endl;
+		ost << endl;
+		ost << "\\bigskip" << endl;
+		ost << endl;
 
 		ost << "\\begin{enumerate}[(1)]" << endl;
 
@@ -245,32 +262,56 @@ void semifield_lifting::print_representatives(
 		}
 		ost << "\\section{Orbits at level 3}" << endl;
 
+		ost << endl;
+		ost << "There are " << nb_orbits << " orbits at level 3" << endl;
+		ost << endl;
+		ost << "\\bigskip" << endl;
+		ost << endl;
+
+
 		ost << "\\begin{enumerate}[(1)]" << endl;
 		for (i = 0; i < nb_orbits; i++) {
 
 
 			ost << "\\item" << endl;
 			longinteger_object go;
-			//int *Elt1;
+			int po;
 
 			Stabilizer_gens[i].group_order(go);
 
+			po = Po[i];
 			ost << "go=" << go << ", ";
 			ost << "po=" << Po[i] << ", ";
 			ost << "so=" << So[i] << ", ";
 			ost << "mo=" << Mo[i] << ", ";
 			ost << "pt=" << Pt[i] << "\\\\" << endl;
 
-			SC->matrix_unrank(Pt[i], Mtx);
+			SC->matrix_unrank(Pt[i], Mtx2);
 
 			int f_elements_exponential = FALSE;
 			const char *symbol_for_print = "\\alpha";
 
+			SC->matrix_unrank(L2->Pt[po], Mtx1);
+
+
+
 			ost << "$$" << endl;
+			ost << "\\left\\{" << endl;
 			ost << "\\left[" << endl;
 			SC->F->latex_matrix(ost, f_elements_exponential,
-					symbol_for_print, Mtx, k, k);
+					symbol_for_print, Mtx_Id, k, k);
 			ost << "\\right]";
+			ost << ",";
+			ost << "\\left[" << endl;
+			SC->F->latex_matrix(ost, f_elements_exponential,
+					symbol_for_print, Mtx1, k, k);
+			ost << "\\right]";
+			ost << ",";
+			ost << "\\left[" << endl;
+			SC->F->latex_matrix(ost, f_elements_exponential,
+					symbol_for_print, Mtx2, k, k);
+			ost << "\\right]";
+			ost << "\\right\\}" << endl;
 			ost << endl;
 			ost << "_{";
 			ost << go << "}" << endl;
@@ -287,7 +328,9 @@ void semifield_lifting::print_representatives(
 		}
 
 
-		FREE_int(Mtx);
+		FREE_int(Mtx_Id);
+		FREE_int(Mtx1);
+		FREE_int(Mtx2);
 	}
 	if (f_v) {
 		cout << "semifield_lifting::print_representatives done" << endl;
