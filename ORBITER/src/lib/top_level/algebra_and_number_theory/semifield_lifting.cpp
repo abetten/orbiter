@@ -209,9 +209,9 @@ void semifield_lifting::print_representatives(
 			ost << "so=" << Flag_orbits[i].downstep_secondary_orbit << ", ";
 			ost << "pt=" << Flag_orbits[i].pt << ", ";
 			ost << "ol=" << Flag_orbits[i].downstep_orbit_len << "\\\\" << endl;
-			ost << "Flag orbit stabilizer has order " << Flag_orbits[i].gens->group_order_as_lint() << "\\\\" << endl;
 
 			if (!Flag_orbits[i].f_fusion_node) {
+				ost << "Flag orbit stabilizer has order " << Flag_orbits[i].gens->group_order_as_lint() << "\\\\" << endl;
 				ost << "Defining node for orbit " << Flag_orbits[i].upstep_orbit << endl;
 			}
 			else {
