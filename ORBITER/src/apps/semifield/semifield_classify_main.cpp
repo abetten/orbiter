@@ -53,6 +53,10 @@ int main(int argc, const char **argv)
 			verbose_level = atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
 			}
+		else if (strcmp(argv[i], "-memory_debug") == 0) {
+			f_memory_debug = TRUE;
+			cout << "-memory_debug " << endl;
+			}
 		else if (strcmp(argv[i], "-poly") == 0) {
 			f_poly = TRUE;
 			poly = argv[++i];
@@ -140,6 +144,9 @@ int main(int argc, const char **argv)
 		goto the_end;
 		}
 #endif
+
+
+
 
 	{
 	finite_field *F;

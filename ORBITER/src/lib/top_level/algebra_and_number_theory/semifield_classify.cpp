@@ -129,7 +129,7 @@ void semifield_classify::init(int argc, const char **argv,
 
 	if (f_v) {
 		cout << "semifield_classify::init" << endl;
-		}
+	}
 
 	semifield_classify::n = n;
 	semifield_classify::k = k;
@@ -141,7 +141,7 @@ void semifield_classify::init(int argc, const char **argv,
 		cout << "semifield_classify::init "
 				"order != i_power_j(q, k)" << endl;
 		exit(1);
-		}
+	}
 
 	if (sizeof(long int) * 8 - 1 < k2) {
 		cout << "sizeof(long int) * 8 - 1 < k2, overflow will happen" << endl;
@@ -155,20 +155,20 @@ void semifield_classify::init(int argc, const char **argv,
 		cout << "semifield_classify::init k=" << k << endl;
 		cout << "semifield_classify::init n=" << n << endl;
 		cout << "semifield_classify::init order=" << order << endl;
-		}
+	}
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-level2_prefix") == 0) {
 			f_level_two_prefix = TRUE;
 			level_two_prefix = argv[++i];
 			cout << "-level2_prefix " << level_two_prefix << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-level3_prefix") == 0) {
 			f_level_three_prefix = TRUE;
 			level_three_prefix = argv[++i];
 			cout << "-level3_prefix " << level_three_prefix << endl;
-			}
 		}
+	}
 
 	vector_space_dimension = k2;
 
@@ -188,7 +188,7 @@ void semifield_classify::init(int argc, const char **argv,
 	if (f_v) {
 		cout << "semifield_classify::init "
 				"before T->init" << endl;
-		}
+	}
 
 	int max_depth = k + 1;
 
@@ -196,19 +196,19 @@ void semifield_classify::init(int argc, const char **argv,
 		F, FALSE /* f_recoordinatize */,
 		"TP_STARTER", "TP", order + 1,
 		argc, argv,
-		verbose_level - 2);
+		0 /*verbose_level - 2*/);
 
 	if (f_v) {
 		cout << "semifield_classify::init "
 				"after T->init" << endl;
-		}
+	}
 
 	longinteger_object go1, go2;
 	int f_semilinear = TRUE;
 
 	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
-		}
+	}
 
 	A0 = NEW_OBJECT(action);
 	A0_linear = NEW_OBJECT(action);
@@ -216,7 +216,7 @@ void semifield_classify::init(int argc, const char **argv,
 	if (f_v) {
 		cout << "semifield_classify::init "
 				"before A0->init_projective_group" << endl;
-		}
+	}
 
 	vector_ge *nice_gens;
 
@@ -231,13 +231,13 @@ void semifield_classify::init(int argc, const char **argv,
 		cout << "semifield_classify::init "
 				"after init_projective_group, "
 				"checking group order of Sims of A0" << endl;
-		}
+	}
 	A0->Sims->group_order(go);
 	if (f_v) {
 		cout << "semifield_classify::init "
 				"after init_projective_group "
 				"group of order " << go << " has been created" <<  endl;
-		}
+	}
 
 
 
@@ -248,7 +248,7 @@ void semifield_classify::init(int argc, const char **argv,
 			<< " = order of PGGL(" << k << "," << q << ")" << endl;
 		cout << "action A0 created: ";
 		A0->print_info();
-		}
+	}
 
 	A0_linear->init_projective_group(k,
 		F, FALSE /*f_semilinear */,
@@ -261,13 +261,13 @@ void semifield_classify::init(int argc, const char **argv,
 		cout << "semifield_classify::init "
 				"after init_projective_group, "
 				"checking group order of Sims of A0_linear" << endl;
-		}
+	}
 	A0_linear->Sims->group_order(go);
 	if (f_v) {
 		cout << "semifield_classify::init "
 				"after init_projective_group "
 				"group of order " << go << " has been created" <<  endl;
-		}
+	}
 
 	A0_linear->group_order(go2);
 	if (f_v) {
@@ -275,7 +275,7 @@ void semifield_classify::init(int argc, const char **argv,
 				<< q << ") is " << go2 << endl;
 		cout << "action A0_linear created: ";
 		A0_linear->print_info();
-		}
+	}
 
 
 
@@ -294,7 +294,7 @@ void semifield_classify::init(int argc, const char **argv,
 	if (f_v) {
 		cout << "semifield_classify::init "
 				"before A_on_S->init" << endl;
-		}
+	}
 	A_on_S->init(T->A /* A_PGL_n_q */,
 		A0 /* A_PGL_k_q */,
 		A0_linear->Sims /* G_PGL_k_q */,
@@ -303,7 +303,7 @@ void semifield_classify::init(int argc, const char **argv,
 	if (f_v) {
 		cout << "semifield_classify::init "
 				"after A_on_S->init" << endl;
-		}
+	}
 
 
 
@@ -313,7 +313,7 @@ void semifield_classify::init(int argc, const char **argv,
 	if (f_v) {
 		cout << "semifield_classify::init "
 				"before induced_action_on_spread_set" << endl;
-		}
+	}
 	AS->induced_action_on_spread_set(T->A,
 		A_on_S,
 		FALSE /* f_induce_action */,
@@ -324,18 +324,18 @@ void semifield_classify::init(int argc, const char **argv,
 				"after induced_action_on_spread_set "
 				"the degree of the induced action "
 				"is " << AS->degree << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "semifield_classify::init "
 				"before list_points" << endl;
-		}
+	}
 	list_points();
 	if (f_v) {
 		cout << "semifield_classify::init "
 				"after list_points" << endl;
-		}
+	}
 
 
 
@@ -343,31 +343,47 @@ void semifield_classify::init(int argc, const char **argv,
 		cout << "semifield_classify::init "
 				"before Strong_gens->generators_for_"
 				"the_stabilizer_of_two_components" << endl;
-		}
+	}
 	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->generators_for_the_stabilizer_of_two_components(
 		T->A /* A_PGL_n_q */,
 		T->A->G.matrix_grp /* Mtx*/,
-		verbose_level);
+		0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "semifield_classify::init "
 				"after Strong_gens->generators_for_"
 				"the_stabilizer_of_two_components" << endl;
-		}
+	}
 
 
-	Symmetry_group = Strong_gens->create_sims(verbose_level);
+	if (f_v) {
+		cout << "semifield_classify::init "
+				"before Strong_gens->create_sims" << endl;
+	}
+	Symmetry_group = Strong_gens->create_sims(0 /*verbose_level*/);
+	if (f_v) {
+		cout << "semifield_classify::init "
+				"after Strong_gens->create_sims" << endl;
+	}
 
 
 
 
-	init_desired_pivots(verbose_level);
+	if (f_v) {
+		cout << "semifield_classify::init "
+				"before init_desired_pivots" << endl;
+	}
+	init_desired_pivots(verbose_level - 2);
+	if (f_v) {
+		cout << "semifield_classify::init "
+				"after init_desired_pivots" << endl;
+	}
 
 
 	if (f_v) {
 		cout << "semifield_classify::init done" << endl;
-		}
+	}
 }
 
 

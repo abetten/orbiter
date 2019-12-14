@@ -2615,7 +2615,7 @@ void mp_graphics::color_tikz(ofstream &fp, int color)
 		fp << "teal";
 	else if (color == 16)
 		fp << "violet";
-	else if (color == 16)
+	else if (color == 17)
 		fp << "darkgray";
 	else {
 		cout << "mp_graphics::color_tikz color = " << color 
@@ -3867,6 +3867,174 @@ void mp_graphics::projective_plane_draw_grid2(int q,
 		cout << "projective_plane_draw_grid2 done" << endl;
 		}
 }
+
+
+void mp_graphics::draw_matrix_in_color(
+	int f_row_grid, int f_col_grid,
+	int *Table, int nb_colors,
+	int m, int n, int xmax, int ymax,
+	int *color_scale, int nb_colors_in_scale,
+	int f_has_labels, int *labels)
+{
+	char str[1000];
+	grid_frame F;
+	int i, j, ii, jj, a, cnt, mn;
+	int indent = 0;
+
+	mn = MAXIMUM(m, n);
+	F.f_matrix_notation = TRUE;
+	F.m = m;
+	F.n = n;
+	F.origin_x = 0.;
+	F.origin_y = 0.;
+	F.dx = ONE_MILLION / (10 * mn);
+	F.dy = ONE_MILLION / (10 * mn);
+
+	cout << "mp_graphics::draw_matrix_in_color" << endl;
+	cout << "dx=" << F.dx << endl;
+	cout << "dy=" << F.dy << endl;
+
+	// draw a box around it:
+
+	sprintf(str, "box outline");
+	comment(str);
+
+	grid_polygon2(&F, 0, 0, 10 * m, 0);
+	grid_polygon2(&F, 10 * m, 0, 10 * m, 10 * n);
+	grid_polygon2(&F, 10 * m, 10 * n, 0, 10 * n);
+	grid_polygon2(&F, 0, 10 * n, 0, 0);
+
+	sf_interior(100);
+	sf_color(1); // black
+
+
+	//sl_thickness(20); // 100 is standard
+
+
+
+	sl_thickness(10); // 100 is standard
+
+	sf_interior(0);
+	sf_color(1);
+
+	if (f_row_grid) {
+		for (i = 0; i < m; i++) {
+			sprintf(str, "row_%d", i);
+			if (f_has_labels) {
+				sprintf(str + strlen(str), " label %d", labels[i]);
+				}
+			comment(str);
+			j = 0;
+			grid_fill_polygon5(&F,
+				10 * i + indent, 10 * j + indent,
+				10 * (i + 1) - indent, 10 * j + indent,
+				10 * (i + 1) - indent, 10 * n - indent,
+				10 * i + indent, 10 * n - indent,
+				10 * i + indent, 10 * j + indent);
+			}
+		}
+
+	if (f_col_grid) {
+		for (j = 0; j < n; j++) {
+			sprintf(str, "col_%d", j);
+			if (f_has_labels) {
+				sprintf(str + strlen(str), " label %d", labels[j]);
+				}
+			comment(str);
+			i = 0;
+			grid_fill_polygon5(&F,
+				10 * i + indent, 10 * j + indent,
+				10 * m - indent, 10 * j + indent,
+				10 * m - indent, 10 * (j + 1) - indent,
+				10 * i + indent, 10 * (j + 1) - indent,
+				10 * i + indent, 10 * j + indent);
+			}
+		}
+
+	if (f_has_labels) {
+		for (i = 0; i < m; i++) {
+			sprintf(str, "%d", labels[i]);
+			grid_aligned_text(&F, i * 10 + 5, -1 * 10, "", str);
+			}
+		for (j = 0; j < n; j++) {
+			sprintf(str, "%d", labels[m + j] - m);
+			grid_aligned_text(&F, -1 * 10, j * 10 + 5, "", str);
+			}
+		}
+
+
+	sl_thickness(10); // 100 is standard
+
+	sf_interior(100);
+
+	cnt = 0;
+
+
+	double color_step = (double) nb_colors / (double) (nb_colors_in_scale);
+	//double shade_step = (double) color_step * 100 / ((double) nb_colors / (double)nb_colors_in_scale);
+	double f_sufficiently_many_colors;
+	int c, a1, c1;
+
+	cout << "color_step=" << color_step << endl;
+	//cout << "shade_step=" << shade_step << endl;
+
+	if (nb_colors_in_scale > nb_colors) {
+		f_sufficiently_many_colors = TRUE;
+	}
+	else {
+		f_sufficiently_many_colors = FALSE;
+	}
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+
+
+			a = Table[i * n + j];
+
+			cnt++;
+
+			//if (cnt > 5000)  continue;
+			//grid_fill_polygon4(&F, i, j, i + 1, j, i + 1, j + 1, i, j + 1);
+
+
+
+
+			if (a) {
+
+				sprintf(str, "%d_%d", i, j);
+				comment(str);
+
+				c = (int)((double) a / (double) color_step) + 1;
+				if (f_sufficiently_many_colors) {
+					sf_interior(100);
+					sf_color(a);
+				}
+				else {
+					a1 = a - c * color_step;
+					c1 = a1 / color_step * 40 + 60;
+					sf_color(c);
+					sf_interior(c1);
+				}
+
+				grid_fill_polygon5(&F,
+					10 * i + indent, 10 * j + indent,
+					10 * (i + 1) - indent, 10 * j + indent,
+					10 * (i + 1) - indent, 10 * (j + 1) - indent,
+					10 * i + indent, 10 * (j + 1) - indent,
+					10 * i + indent, 10 * j + indent);
+			}
+
+			//grid_polygon2(&F, i, j, i + 1, j);
+			//grid_polygon2(&F, i + 1, j, i + 1, j + 1);
+			//grid_polygon2(&F, i + 1, j + 1, i, j + 1);
+			//grid_polygon2(&F, i, j + 1, i, j);
+		} // next j
+	} // next i
+	cout << "mp_graphics::draw_matrix_in_color done" << endl;
+}
+
+
+
 
 static void projective_plane_make_affine_point(
 		int q, int x1, int x2, int x3, double &a, double &b)

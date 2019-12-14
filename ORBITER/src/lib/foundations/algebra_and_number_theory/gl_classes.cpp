@@ -89,6 +89,7 @@ void gl_classes::init(int k, finite_field *F, int verbose_level)
 		cout << "gl_classes after Table_of_polynomials->init" << endl;
 		}
 
+	Table_of_polynomials->print(cout);
 
 	if (f_v) {
 		cout << "gl_classes::init making partitions" << endl;

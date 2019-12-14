@@ -18,7 +18,32 @@ namespace foundations {
 
 homogeneous_polynomial_domain::homogeneous_polynomial_domain()
 {
-	null();
+	q = 0;
+	n = 0;
+	degree = 0;
+	F = NULL;
+	nb_monomials = 0;
+	Monomials = NULL;
+	symbols = NULL;
+	symbols_latex = NULL;
+	monomial_symbols = NULL;
+	monomial_symbols_latex = NULL;
+	monomial_symbols_easy = NULL;
+	Variables = NULL;
+	nb_affine = 0;
+	Affine = NULL;
+	v = NULL;
+	Affine_to_monomial = NULL;
+	coeff2 = NULL;
+	coeff3 = NULL;
+	coeff4 = NULL;
+	factors = NULL;
+	my_affine = NULL;
+	P = NULL;
+	base_cols = NULL;
+	type1 = NULL;
+	type2 = NULL;
+	//null();
 }
 
 homogeneous_polynomial_domain::~homogeneous_polynomial_domain()
@@ -47,6 +72,24 @@ void homogeneous_polynomial_domain::freeself()
 			FREE_char(symbols_latex[i]);
 			}
 		FREE_pchar(symbols_latex);
+		}
+	if (monomial_symbols) {
+		for (i = 0; i < nb_monomials; i++) {
+			FREE_char(monomial_symbols[i]);
+			}
+		FREE_pchar(monomial_symbols);
+		}
+	if (monomial_symbols_latex) {
+		for (i = 0; i < nb_monomials; i++) {
+			FREE_char(monomial_symbols_latex[i]);
+			}
+		FREE_pchar(monomial_symbols_latex);
+		}
+	if (monomial_symbols_easy) {
+		for (i = 0; i < nb_monomials; i++) {
+			FREE_char(monomial_symbols_easy[i]);
+			}
+		FREE_pchar(monomial_symbols_easy);
 		}
 	if (Variables) {
 		FREE_int(Variables);
@@ -89,22 +132,6 @@ void homogeneous_polynomial_domain::freeself()
 
 void homogeneous_polynomial_domain::null()
 {
-	v = NULL;
-	Monomials = NULL;
-	symbols = NULL;
-	symbols_latex = NULL;
-	Variables = NULL;
-	Affine = NULL;
-	Affine_to_monomial = NULL;
-	coeff2 = NULL;
-	coeff3 = NULL;
-	coeff4 = NULL;
-	factors = NULL;
-	my_affine = NULL;
-	P = NULL;
-	base_cols = NULL;
-	type1 = NULL;
-	type2 = NULL;
 }
 
 void homogeneous_polynomial_domain::init(finite_field *F,
@@ -227,10 +254,11 @@ void homogeneous_polynomial_domain::make_monomials(int verbose_level)
 		}
 
 	char label[1000];
+	int l;
+
 	symbols = NEW_pchar(n);
 	for (i = 0; i < n; i++) {
 
-		int l;
 		
 		if (TRUE) {
 			label[0] = 'X';
@@ -265,6 +293,53 @@ void homogeneous_polynomial_domain::make_monomials(int verbose_level)
 		strcpy(symbols_latex[i], label);
 		}
 
+	int f_first = FALSE;
+
+	monomial_symbols = NEW_pchar(nb_monomials);
+	for (i = 0; i < nb_monomials; i++) {
+		label[0] = 0;
+		f_first = TRUE;
+		for (j = 0; j < n; j++) {
+			a = Monomials[i * n + j];
+			if (a) {
+				if (!f_first) {
+					strcat(label, "*");
+				}
+				else {
+					f_first = FALSE;
+				}
+				strcat(label, symbols[j]);
+				if (a > 1) {
+					sprintf(label + strlen(label), "^%d", a);
+				}
+			}
+		}
+		l = strlen(label);
+		monomial_symbols[i] = NEW_char(l + 1);
+		strcpy(monomial_symbols[i], label);
+	}
+
+	monomial_symbols_latex = NEW_pchar(nb_monomials);
+	for (i = 0; i < nb_monomials; i++) {
+		label[0] = 0;
+		for (j = 0; j < n; j++) {
+			a = Monomials[i * n + j];
+			if (a) {
+				strcat(label, symbols_latex[j]);
+				if (a > 1) {
+					if (a >= 10) {
+						sprintf(label + strlen(label), "^{%d}", a);
+					}
+					else {
+						sprintf(label + strlen(label), "^%d", a);
+					}
+				}
+			}
+		}
+		l = strlen(label);
+		monomial_symbols_latex[i] = NEW_char(l + 1);
+		strcpy(monomial_symbols_latex[i], label);
+	}
 
 	Variables = NEW_int(nb_monomials * degree);
 	for (i = 0; i < nb_monomials; i++) {
@@ -282,12 +357,28 @@ void homogeneous_polynomial_domain::make_monomials(int verbose_level)
 			exit(1);
 			}
 		}
+
+
+	monomial_symbols_easy = NEW_pchar(nb_monomials);
+	for (i = 0; i < nb_monomials; i++) {
+		label[0] = 'X';
+		label[1] = 0;
+		for (j = 0; j < degree; j++) {
+			a = Variables[i * degree + j];
+			sprintf(label + strlen(label), "%d", a);
+		}
+		l = strlen(label);
+		monomial_symbols_easy[i] = NEW_char(l + 1);
+		strcpy(monomial_symbols_easy[i], label);
+	}
+
+
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::make_monomials the "
 				"variable lists are:" << endl;
 		if (nb_monomials < 100) {
 			for (i = 0; i < nb_monomials; i++) {
-				cout << i << " : ";
+				cout << i << " : " << monomial_symbols[i] << " : ";
 				int_vec_print(cout, Variables + i * degree, degree);
 				cout << endl;
 				}
@@ -296,6 +387,9 @@ void homogeneous_polynomial_domain::make_monomials(int verbose_level)
 			cout << "too many to print" << endl;
 			}
 		}
+
+
+
 
 	nb_affine = NT.i_power_j(n, degree);
 

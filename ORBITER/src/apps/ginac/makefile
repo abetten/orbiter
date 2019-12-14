@@ -20,7 +20,8 @@ ALL_TARGETS=\
 	differentiation.out \
 	hilbert_cohn_vossen.out \
 	mersenne.out \
-	solve_linear.out 
+	solve_linear.out \
+	tutorial.out 
 
 
 all: $(ALL_TARGETS)
@@ -44,6 +45,9 @@ mersenne.out:  mersenne.o  ;
 
 solve_linear.out:  solve_linear.o  ;
 	$(DISCRETA_CPP)  solve_linear.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+tutorial.out:  tutorial.o  ;
+	$(DISCRETA_CPP)  tutorial.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 

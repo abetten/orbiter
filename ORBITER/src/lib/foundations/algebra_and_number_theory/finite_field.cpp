@@ -324,7 +324,7 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 	M = NEW_int(e * (e1 + 1));
 	for (i = 0; i < e * (e1 + 1); i++) {
 		M[i] = 0;
-		}
+	}
 	K = NEW_int(e);
 	base_cols = NEW_int(e);
 	q1 = NT.i_power_j(p, e1);
@@ -348,13 +348,13 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 			cout << "M=" << endl;
 			print_integer_matrix_width(cout, M, 
 				e, e1 + 1, e1 + 1, GFp.log10_of_q);
-			}
 		}
+	}
 	if (f_vv) {
 		cout << "M=" << endl;
 		print_integer_matrix_width(cout, M, 
 			e, e1 + 1, e1 + 1, GFp.log10_of_q);
-		}
+	}
 	rk = GFp.Gauss_simple(M, e, e1 + 1, 
 		base_cols, 0/*verbose_level*/);
 	if (f_vv) {
@@ -362,37 +362,37 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 		print_integer_matrix_width(cout, M, 
 			e, e1 + 1, e1 + 1, GFp.log10_of_q);
 		cout << "rk=" << rk << endl;
-		}
+	}
 	if (rk != e1) {
 		cout << "fatal: rk != e1" << endl;
 		cout << "rk=" << rk << endl;
 		exit(1);
-		}
+	}
 	GFp.matrix_get_kernel(M, e, e1 + 1, base_cols, rk, 
 		kernel_m, kernel_n, K);
 	if (f_vv) {
 		cout << "kernel_m=" << kernel_m << endl;
 		cout << "kernel_n=" << kernel_n << endl;
-		}
+	}
 	if (kernel_n != 1) {
 		cout << "kernel_n != 1" << endl;
 		exit(1);
-		}
+	}
 	if (K[e1] == 0) {
 		cout << "K[e1] == 0" << endl;
 		exit(1);
-		}
+	}
 	if (K[e1] != 1) {
 		a = GFp.inverse(K[e1]);
 		for (i = 0; i < e1 + 1; i++) {
 			K[i] = GFp.mult(a, K[i]);
-			}
 		}
+	}
 	if (f_vv) {
 		cout << "the relation is " << endl;
 		int_vec_print(cout, K, e1 + 1);
 		cout << endl;
-		}
+	}
 	a = Gg.AG_element_rank(p, K, 1, e1 + 1);
 	if (f_v) {
 		unipoly_object elt;
@@ -403,7 +403,7 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 		Fq.print_object(elt, cout);
 		cout << endl;
 		Fq.delete_object(elt);
-		}
+	}
 	FREE_int(M);
 	FREE_int(K);
 	FREE_int(base_cols);
@@ -485,7 +485,7 @@ void finite_field::create_alpha_table_extension_field(int verbose_level)
 	if (f_v) {
 		cout << "create_alpha_table_extension_field, "
 				"q=" << q << " p=" << p << " e=" << e << endl;
-		}
+	}
 
 	alpha = p;
 	log_alpha_table[0] = -1;
@@ -503,51 +503,51 @@ void finite_field::create_alpha_table_extension_field(int verbose_level)
 		cout << "m=";
 		FX.print_object(m, cout);
 		cout << endl;
-		}
+	}
 	{
-	unipoly_domain Fq(&GFp, m);
-	unipoly_object a, c, Alpha;
+		unipoly_domain Fq(&GFp, m);
+		unipoly_object a, c, Alpha;
+
+		Fq.create_object_by_rank(Alpha, alpha);
+		Fq.create_object_by_rank(a, 1);
+		Fq.create_object_by_rank(c, 1);
+
+		for (i = 0; i < q; i++) {
+
+			if (f_vv) {
+				cout << "i=" << i << endl;
+			}
+			k = Fq.rank(a);
+			if (f_vv) {
+				cout << "a=";
+				Fq.print_object(a, cout);
+				cout << " has rank " << k << endl;
+			}
+			if (k < 0 || k >= q) {
+				cout << "error in finite_field::create_alpha_table_"
+						"extension_field k = " << k << endl;
+			}
+
+			alpha_power_table[i] = k;
+			log_alpha_table[k] = i;
+
+			if (f_vv) {
+				cout << "alpha_power_table[" << i << "]=" << k << endl;
+			}
 	
-	Fq.create_object_by_rank(Alpha, alpha);
-	Fq.create_object_by_rank(a, 1);
-	Fq.create_object_by_rank(c, 1);
-
-	for (i = 0; i < q; i++) {
-		
-		if (f_vv) {
-			cout << "i=" << i << endl;
-			}
-		k = Fq.rank(a);
-		if (f_vv) {
-			cout << "a=";
-			Fq.print_object(a, cout);
-			cout << " has rank " << k << endl;
-			}
-		if (k < 0 || k >= q) {
-			cout << "error in finite_field::create_alpha_table_"
-					"extension_field k = " << k << endl;
-			}
-
-		alpha_power_table[i] = k;
-		log_alpha_table[k] = i;
-
-		if (f_vv) {
-			cout << "alpha_power_table[" << i << "]=" << k << endl;
-			}
-
-		Fq.mult(a, Alpha, c);
-		Fq.assign(c, a);
+			Fq.mult(a, Alpha, c);
+			Fq.assign(c, a);
 		}
-	Fq.delete_object(Alpha);
-	Fq.delete_object(a);
-	Fq.delete_object(c);
+		Fq.delete_object(Alpha);
+		Fq.delete_object(a);
+		Fq.delete_object(c);
 	}
 	FX.delete_object(m);
 
 	if (f_v) {
 		cout << "finished create_alpha_table_extension_field, "
 				"q=" << q << " p=" << p << " e=" << e << endl;
-		}
+	}
 }
 
 void finite_field::create_alpha_table_prime_field(int verbose_level)
@@ -611,22 +611,24 @@ void finite_field::create_tables_prime_field(int verbose_level)
 		for (j = 0; j < q; j++) {
 			k = (i + j) % q;
 			add_table[i * q + j] = k;
-			if (k == 0)
+			if (k == 0) {
 				negate_table[i] = j;
 			}
 		}
+	}
 	for (i = 0; i < q; i++) {
 		for (j = 0; j < q; j++) {
 			if (i == 0 || j == 0) {
 				mult_table[i * q + j] = 0;
 				continue;
-				}
+			}
 			k = (i * j) % q;
 			mult_table[i * q + j] = k;
-			if (k == 1)
+			if (k == 1) {
 				inv_table[i] = j;
 			}
 		}
+	}
 	inv_table[0] = -999999999;
 	if (f_v) {
 		cout << "finite_field::create_tables_prime_field finished" << endl;
@@ -642,20 +644,21 @@ void finite_field::create_tables_extension_field(int verbose_level)
 	
 	if (f_v) {
 		cout << "finite_field::create_tables_extension_field" << endl;
-		}
+	}
 	for (i = 0; i < q; i++) {
 		Gg.AG_element_unrank(p, v1, 1, e, i);
 		for (j = 0; j < q; j++) {
 			Gg.AG_element_unrank(p, v2, 1, e, j);
 			for (l = 0; l < e; l++) {
 				v3[l] = (v1[l] + v2[l]) % p;
-				}
+			}
 			k = Gg.AG_element_rank(p, v3, 1, e);
 			add_table[i * q + j] = k;
-			if (k == 0)
+			if (k == 0) {
 				negate_table[i] = j;
 			}
 		}
+	}
 	
 	for (i = 0; i < q; i++) {
 		mult_table[i * q + 0] = 0;
@@ -668,13 +671,14 @@ void finite_field::create_tables_extension_field(int verbose_level)
 			kk = (ii + jj) % (q - 1);
 			k = alpha_power_table[kk];
 			mult_table[i * q + j] = k;
-			if (k == 1)
+			if (k == 1) {
 				inv_table[i] = j;
 			}
 		}
+	}
 	if (f_v) {
 		cout << "finite_field::create_tables_extension_field finished" << endl;
-		}
+	}
 }
 
 int *finite_field::private_add_table()
@@ -683,7 +687,7 @@ int *finite_field::private_add_table()
 		cout << "error: finite_field::private_add_table  "
 				"tables not computed" << endl;
 		exit(1);
-		}
+	}
 	return add_table;
 }
 
@@ -693,7 +697,7 @@ int *finite_field::private_mult_table()
 		cout << "error: finite_field::private_mult_table  "
 				"tables not computed" << endl;
 		exit(1);
-		}
+	}
 	return mult_table;
 }
 
@@ -734,28 +738,29 @@ int finite_field::mult(int i, int j)
 	if (i < 0 || i >= q) {
 		cout << "finite_field::mult i = " << i << endl;
 		exit(1);
-		}
+	}
 	if (j < 0 || j >= q) {
 		cout << "finite_field::mult j = " << j << endl;
 		exit(1);
-		}
+	}
 	if (f_has_table) {
 		//cout << "with table" << endl;
 		return mult_table[i * q + j];
-		}
+	}
 	else {
 		int ii, jj, kk, k;
 		
 		//cout << "without table" << endl;
-		if (i == 0 || j == 0)
+		if (i == 0 || j == 0) {
 			return 0;
+		}
 		ii = log_alpha_table[i];
 		jj = log_alpha_table[j];
 		kk = (ii + jj) % (q - 1);
 		k = alpha_power_table[kk];
 		//cout << "mult: " << i << " * " << j << " = " << k << endl;
 		return k;
-		}
+	}
 }
 
 int finite_field::a_over_b(int a, int b)
@@ -830,7 +835,7 @@ int finite_field::product_n(int *a, int n)
 	x = a[0];
 	for (i = 1; i < n; i++) {
 		x = mult(x, a[i]);
-		}
+	}
 	return x;
 }
 
@@ -870,14 +875,14 @@ int finite_field::add(int i, int j)
 	if (i < 0 || i >= q) {
 		cout << "finite_field::add i = " << i << endl;
 		exit(1);
-		}
+	}
 	if (j < 0 || j >= q) {
 		cout << "finite_field::add j = " << j << endl;
 		exit(1);
-		}
+	}
 	if (f_has_table) {
 		return add_table[i * q + j];
-		}
+	}
 	else {
 		long int l, k;
 		
@@ -885,10 +890,10 @@ int finite_field::add(int i, int j)
 		Gg.AG_element_unrank(p, v2, 1, e, j);
 		for (l = 0; l < e; l++) {
 			v3[l] = (v1[l] + v2[l]) % p;
-			}
+		}
 		k = Gg.AG_element_rank(p, v3, 1, e);
 		return k;
-		}
+	}
 }
 
 int finite_field::add3(int i1, int i2, int i3)
@@ -968,20 +973,20 @@ int finite_field::negate(int i)
 	if (i < 0 || i >= q) {
 		cout << "finite_field::negate i = " << i << endl;
 		exit(1);
-		}
+	}
 	if (f_has_table) {
 		return negate_table[i];
-		}
+	}
 	else {
 		long int l, k;
 		
 		Gg.AG_element_unrank(p, v1, 1, e, i);
 		for (l = 0; l < e; l++) {
 			v2[l] = (p - v1[l]) % p;
-			}
+		}
 		k = Gg.AG_element_rank(p, v2, 1, e);
 		return k;
-		}
+	}
 }
 
 int finite_field::inverse(int i)
@@ -989,10 +994,10 @@ int finite_field::inverse(int i)
 	if (i <= 0 || i >= q) {
 		cout << "finite_field::inverse i = " << i << endl;
 		exit(1);
-		}
+	}
 	if (f_has_table) {
 		return inv_table[i];
-		}
+	}
 	else {
 		int ii, jj, j;
 		
@@ -1000,7 +1005,7 @@ int finite_field::inverse(int i)
 		jj = (q - 1 - ii) % (q - 1);
 		j = alpha_power_table[jj];
 		return j;
-		}
+	}
 }
 
 int finite_field::power(int a, int n)
@@ -1015,12 +1020,12 @@ int finite_field::power(int a, int n)
 			//cout << "finite_field::power: mult(" << b << "," << c << ")=";
 			c = mult(b, c);
 			//cout << c << endl;
-			}
+		}
 		b = mult(b, b);
 		n >>= 1;
 		//cout << "finite_field::power: " << b << "^"
 		//<< n << " * " << c << endl;
-		}
+	}
 	return c;
 }
 
@@ -1033,10 +1038,10 @@ int finite_field::frobenius_power(int a, int i)
 		cout << "finite_field::frobenius_power "
 				"frobenius_table == NULL" << endl;
 		exit(1);
-		}
+	}
 	for (j = 0; j < i; j++) {
 		a = frobenius_table[a];
-		}
+	}
 	return a;
 }
 
@@ -1050,11 +1055,11 @@ int finite_field::absolute_trace(int i)
 		ii = frobenius_table[ii];
 		//cout << ii << endl;
 		t = add(t, ii);
-		}
+	}
 	if (ii != i) {
 		cout << "finite_field::absolute_trace ii != i" << endl;
 		exit(1);
-		}
+	}
 	return t;
 }
 
@@ -1068,11 +1073,11 @@ int finite_field::absolute_norm(int i)
 		ii = frobenius_table[ii];
 		//cout << ii << endl;
 		t = mult(t, ii);
-		}
+	}
 	if (ii != i) {
 		cout << "finite_field::absolute_norm ii != i" << endl;
 		exit(1);
-		}
+	}
 	return t;
 }
 
@@ -1093,7 +1098,7 @@ int finite_field::square_root(int i, int &root)
 	r = log_alpha(i);
 	if (ODD(r)) {
 		return FALSE;
-		}
+	}
 	r >>= 1;
 	root = alpha_power(r);
 	return TRUE;
@@ -1114,7 +1119,7 @@ int finite_field::N2(int a)
 		cout << "finite_field::N2 field does not have a "
 				"quadratic subfield" << endl;
 		exit(1);
-		}
+	}
 	b = frobenius_power(a, r);
 	c = mult(a, b);
 	return c;
@@ -1130,7 +1135,7 @@ int finite_field::N3(int a)
 		cout << "finite_field::N3 field does not have a "
 				"cubic subfield" << endl;
 		exit(1);
-		}
+	}
 	b = frobenius_power(a, r);
 	c = mult(a, b);
 	b = frobenius_power(b, r);
@@ -1148,7 +1153,7 @@ int finite_field::T2(int a)
 		cout << "finite_field::T2 field does not have a "
 				"quadratic subfield" << endl;
 		exit(1);
-		}
+	}
 	b = frobenius_power(a, r);
 	c = add(a, b);
 	return c;
@@ -1164,7 +1169,7 @@ int finite_field::T3(int a)
 		cout << "finite_field::T3 field does not have a "
 				"cubic subfield" << endl;
 		exit(1);
-		}
+	}
 	b = frobenius_power(a, r);
 	c = add(a, b);
 	b = frobenius_power(b, r);
@@ -1182,7 +1187,7 @@ int finite_field::bar(int a)
 		cout << "finite_field::bar field does not have a "
 				"quadratic subfield" << endl;
 		exit(1);
-		}
+	}
 	b = frobenius_power(a, r);
 	return b;
 }
@@ -1205,11 +1210,11 @@ void finite_field::abc2xy(int a, int b, int c,
 				if (f_v) {
 					cout << "finite_field::abc2xy q=" << q
 							<< " x=" << x << " y=" << y << endl;
-					}
-				return;
 				}
+				return;
 			}
 		}
+	}
 	cout << "finite_field::abc2xy no solution" << endl;
 	cout << "a=" << a << endl;
 	cout << "b=" << b << endl;
@@ -1243,33 +1248,33 @@ void finite_field::retract_int_vec(finite_field &subfield,
 		cout << "finite_field::retract_int_vec subfield "
 				"order does not match" << endl;
 		exit(1);
-		}
+	}
 	idx = (q - 1) / (m - 1);
 	if (f_v) {
 		cout << "subfield " << p << "^" << n << " = " << n << endl;
 		cout << "idx = " << idx << endl;
-		}
+	}
 		
 	for (k = 0; k < len; k++) {
 		a = v_in[k];
 		if (a == 0) {
 			v_out[k] = 0;
 			continue;
-			}
+		}
 		i = log_alpha(a);
 		if (i % idx) {
 			cout << "finite_field::retract_int_vec index=" << index
 					<< " k=" << k << " a=" << a << endl;
 			cout << "element does not lie in the subfield" << endl;
 			exit(1);
-			}
+		}
 		j = i / idx;
 		b = subfield.alpha_power(j);
 		v_out[k] = b;
-		}
+	}
 	if (f_v) {
 		cout << "finite_field::retract_int_vec finished" << endl;
-		}
+	}
 }
 
 int finite_field::embed(finite_field &subfield,
@@ -1282,30 +1287,30 @@ int finite_field::embed(finite_field &subfield,
 	if (f_v) {
 		cout << "finite_field::embed index=" << index
 				<< " b=" << b << endl;
-		}
+	}
 	if (b == 0) {
 		a = 0;
 		goto finish;
-		}
+	}
 	j = subfield.log_alpha(b);
 	n = e / index;
 	m = NT.i_power_j(p, n);
 	if (m != subfield.q) {
 		cout << "finite_field::embed subfield order does not match" << endl;
 		exit(1);
-		}
+	}
 	idx = (q - 1) / (m - 1);
 	if (f_v) {
 		cout << "subfield " << p << "^" << n << " = " << n << endl;
 		cout << "idx = " << idx << endl;
-		}
+	}
 	i = j * idx;
 	a = alpha_power(i);
 finish:
 	if (f_v) {
 		cout << "finite_field::embed index=" << index
 				<< " b=" << b << " a=" << a << endl;
-		}
+	}
 	return a;
 }
 
@@ -1329,6 +1334,9 @@ void finite_field::subfield_embedding_2dimensional(
 	int f_vv = (verbose_level >= 1);
 	int alpha, i, j, I, J, x, q, Q;
 	
+	if (f_v) {
+		cout << "finite_field::subfield_embedding_2dimensional" << endl;
+	}
 	Q = finite_field::q;
 	q = subfield.q;
 	components = NEW_int(Q * 2);
@@ -1338,19 +1346,19 @@ void finite_field::subfield_embedding_2dimensional(
 	embedding[0] = 0;
 	for (i = 0; i < q * q; i++) {
 		pair_embedding[i] = -1;
-		}
+	}
 	for (i = 0; i < Q * 2; i++) {
 		components[i] = -1;
-		}
+	}
 	for (i = 1; i < q; i++) {
 		j = embed(subfield, 2, i, verbose_level - 2);
 		embedding[i] = j;
-		}
+	}
 	for (i = 0; i < q; i++) {
 		I = embed(subfield, 2, i, verbose_level - 4);
 		if (f_vv) {
 			cout << "i=" << i << " I=" << I << endl;
-			}
+		}
 		for (j = 0; j < q; j++) {
 			J = embed(subfield, 2, j, verbose_level - 4);
 			x = add(I, mult(alpha, J));
@@ -1359,24 +1367,24 @@ void finite_field::subfield_embedding_2dimensional(
 				cout << "element (" << i << "," << j << ") embeds "
 						"as (" << I << "," << J << ") = " << x << endl;
 				exit(1);
-				}
+			}
 			pair_embedding[i * q + j] = x;
 			components[x * 2 + 0] = i;
 			components[x * 2 + 1] = j;
 			if (f_vv) {
 				cout << "element (" << i << "," << j << ") embeds "
 						"as (" << I << "," << J << ") = " << x << endl;
-				}
 			}
 		}
+	}
 	if (f_vv) {
 		print_embedding(subfield, components,
 				embedding, pair_embedding);
-		}
+	}
 	if (f_v) {
 		cout << "finite_field::subfield_embedding_2dimensional "
 				"finished" << endl;
-		}
+	}
 }
 
 }

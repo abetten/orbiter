@@ -172,6 +172,8 @@ void semifield_downstep_node::init(
 		cout << "semifield_downstep_node::init "
 				"initializing A_on_cosets done, "
 				"the group order is " << go << endl;
+	}
+	if (f_vv) {
 		cout << "semifield_downstep_node::init the generators for "
 				"the stabilizer are:" << endl;
 		sg->print_generators_tex(cout);
