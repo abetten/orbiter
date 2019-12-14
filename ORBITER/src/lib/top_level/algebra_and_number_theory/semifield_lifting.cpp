@@ -312,7 +312,6 @@ void semifield_lifting::print_representatives(
 					symbol_for_print, Mtx2, k, k);
 			ost << "\\right]";
 			ost << "\\right\\}" << endl;
-			ost << endl;
 			ost << "_{";
 			ost << go << "}" << endl;
 			ost << "$$" << endl;
