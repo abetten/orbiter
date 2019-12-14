@@ -271,7 +271,7 @@ void semifield_lifting::print_representatives(
 			SC->F->latex_matrix(ost, f_elements_exponential,
 					symbol_for_print, Mtx, k, k);
 			ost << "\\right]";
-			ost << "\\right\\}" << endl;
+			ost << endl;
 			ost << "_{";
 			ost << go << "}" << endl;
 			ost << "$$" << endl;
