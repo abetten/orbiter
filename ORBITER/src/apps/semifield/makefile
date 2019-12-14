@@ -5,7 +5,7 @@ CPPFLAGS = -Wall -I$(SRC)/lib
 LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
 # specific for tx1:
-#LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
+LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 
 
 
