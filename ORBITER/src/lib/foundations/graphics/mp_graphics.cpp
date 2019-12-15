@@ -458,6 +458,26 @@ void mp_graphics::finish(ostream &ost, int verbose_level)
 	exit(cout, verbose_level - 1);
 }
 
+int& mp_graphics::in_xmin()
+{
+	return user[0];
+}
+
+int& mp_graphics::in_ymin()
+{
+	return user[1];
+}
+
+int& mp_graphics::in_xmax()
+{
+	return user[2];
+}
+
+int& mp_graphics::in_ymax()
+{
+	return user[3];
+}
+
 int& mp_graphics::out_xmin()
 {
 	return dev[0];
@@ -3878,7 +3898,7 @@ void mp_graphics::draw_matrix_in_color(
 {
 	char str[1000];
 	grid_frame F;
-	int i, j, ii, jj, a, cnt, mn;
+	int i, j, a, cnt, mn;
 	int indent = 0;
 
 	mn = MAXIMUM(m, n);

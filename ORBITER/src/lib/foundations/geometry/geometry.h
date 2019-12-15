@@ -695,9 +695,9 @@ public:
 		int y1, int y2, int y3,
 		int &z1, int &z2, int &z3, int verbose_level);
 	void draw_grid(char *fname, int xmax, int ymax,
-		int f_with_points, int verbose_level);
+			int f_with_grid, int f_with_points, int verbose_level);
 	void draw_grid2(mp_graphics &G,
-		int f_with_points, int verbose_level);
+			int f_with_grid, int f_with_points, int verbose_level);
 	void make_affine_point(int x1, int x2, int x3,
 		int &a, int &b, int verbose_level);
 	void compute_addition_table(int verbose_level);

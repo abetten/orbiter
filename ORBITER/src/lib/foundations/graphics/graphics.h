@@ -203,6 +203,10 @@ public:
 	void frame_constant_aspect_ratio(double move_out);
 	void finish(std::ostream &ost, int verbose_level);
 
+	int& in_xmin();
+	int& in_ymin();
+	int& in_xmax();
+	int& in_ymax();
 	int& out_xmin();
 	int& out_ymin();
 	int& out_xmax();
