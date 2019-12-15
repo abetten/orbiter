@@ -232,7 +232,7 @@ int main(int argc, char **argv)
 
 
 
-			U.create_object_by_rank(char_poly, 0);
+			U.create_object_by_rank(char_poly, 0, __FILE__, __LINE__, verbose_level);
 		
 			U.characteristic_polynomial(Elt,
 					d, char_poly, verbose_level - 2);

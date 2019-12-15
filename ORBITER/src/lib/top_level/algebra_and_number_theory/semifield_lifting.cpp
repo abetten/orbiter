@@ -165,7 +165,7 @@ void semifield_lifting::init_level_three(
 }
 
 
-void semifield_lifting::print_representatives(
+void semifield_lifting::report(
 	ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -174,7 +174,7 @@ void semifield_lifting::print_representatives(
 
 
 	if (f_v) {
-		cout << "semifield_lifting::print_representatives" << endl;
+		cout << "semifield_lifting::report" << endl;
 	}
 
 	{
@@ -195,7 +195,7 @@ void semifield_lifting::print_representatives(
 
 
 		if (f_v) {
-			cout << "semifield_lifting::print_representatives before flag orbits" << endl;
+			cout << "semifield_lifting::report before flag orbits" << endl;
 		}
 
 		ost << endl;
@@ -258,7 +258,7 @@ void semifield_lifting::print_representatives(
 		ost << "\\end{enumerate}" << endl;
 
 		if (f_v) {
-			cout << "semifield_lifting::print_representatives before Orbits at level 3" << endl;
+			cout << "semifield_lifting::report before Orbits at level 3" << endl;
 		}
 		ost << "\\section{Orbits at level 3}" << endl;
 
@@ -322,7 +322,7 @@ void semifield_lifting::print_representatives(
 		ost << "\\end{enumerate}" << endl;
 		ost << endl;
 		if (f_v) {
-			cout << "semifield_level_two::print_representatives "
+			cout << "semifield_lifting::report "
 					"after Orbits at level 3" << endl;
 		}
 
@@ -332,7 +332,7 @@ void semifield_lifting::print_representatives(
 		FREE_int(Mtx2);
 	}
 	if (f_v) {
-		cout << "semifield_lifting::print_representatives done" << endl;
+		cout << "semifield_lifting::report done" << endl;
 	}
 }
 

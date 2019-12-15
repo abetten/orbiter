@@ -825,6 +825,7 @@ public:
 	void free();
 	void init(action *A_PGL_n_q, action *A_PGL_k_q, sims *G_PGL_k_q, 
 		int k, finite_field *F, int verbose_level);
+	void report(std::ostream &ost, int verbose_level);
 	long int compute_image_int(int *Elt, long int rk, int verbose_level);
 	void matrix_to_subspace(int *mtx, int *subspace, int verbose_level);
 	void subspace_to_matrix(int *subspace, int *mtx, int verbose_level);

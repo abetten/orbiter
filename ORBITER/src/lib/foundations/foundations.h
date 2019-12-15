@@ -369,6 +369,7 @@ class algebra_global;
 
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)
+#define NEW_int_with_tracking(n, file, line) global_mem_object_registry.allocate_int(n, file, line)
 #define NEW_pint(n) global_mem_object_registry.allocate_pint(n, __FILE__, __LINE__)
 #define NEW_lint(n) global_mem_object_registry.allocate_lint(n, __FILE__, __LINE__)
 #define NEW_plint(n) global_mem_object_registry.allocate_plint(n, __FILE__, __LINE__)
@@ -396,6 +397,7 @@ class algebra_global;
 #define FREE_OBJECTS(p) {global_mem_object_registry.free_OBJECTS(p, __FILE__, __LINE__); delete [] p;}
 #else
 #define NEW_int(n) new int[n]
+#define NEW_int_with_tracking(n, file, line) new int[n]
 #define NEW_pint(n) new pint[n]
 #define NEW_lint(n) new long int[n]
 #define NEW_lint(n) new (long int *)[n]

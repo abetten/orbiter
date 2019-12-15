@@ -112,6 +112,15 @@ void action_on_spread_set::init(action *A_PGL_n_q,
 		}
 }
 
+void action_on_spread_set::report(std::ostream &ost, int verbose_level)
+{
+	ost << "Action on spread set has degree = " << degree << "\\\\" << endl;
+	ost << "Low-level point size = " << low_level_point_size << "\\\\" << endl;
+	longinteger_object go;
+	G_PGL_k_q->group_order(go);
+	ost << "PGL$(" << k << "," << q << ")$ has order " << go << "\\\\" << endl;
+}
+
 long int action_on_spread_set::compute_image_int(int *Elt,
 		long int rk, int verbose_level)
 {

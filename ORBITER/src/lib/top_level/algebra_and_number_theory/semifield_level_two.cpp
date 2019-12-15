@@ -2094,7 +2094,7 @@ void semifield_level_two::get_basis_and_pivots(int po,
 		}
 }
 
-void semifield_level_two::print_representatives(
+void semifield_level_two::report(
 	ofstream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2103,7 +2103,7 @@ void semifield_level_two::print_representatives(
 
 
 	if (f_v) {
-		cout << "semifield_level_two::print_representatives" << endl;
+		cout << "semifield_level_two::report" << endl;
 	}
 
 	{
@@ -2120,15 +2120,15 @@ void semifield_level_two::print_representatives(
 		F->identity_matrix(Mtx_Id, k);
 
 		if (f_v) {
-			cout << "semifield_level_two::print_representatives "
+			cout << "semifield_level_two::report "
 					"before Conjugacy classes" << endl;
 		}
 
-		ost << "\\section{Conjugacy classes}" << endl;
+		ost << "\\section{Conjugacy classes without eigenvalue one}" << endl;
 
-		ost << "There are " << nb_classes << " conjugacy classes:\\\\" << endl;
+		ost << "There are " << nb_classes << " conjugacy classes without eigenvalue one:\\\\" << endl;
 
-		ost << "\\begin{enumerate}[(1)]" << endl;
+		ost << "\\begin{enumerate}[(0)]" << endl;
 		for (i = 0; i < nb_classes; i++) {
 			ost << "\\item" << endl;
 
@@ -2187,7 +2187,7 @@ void semifield_level_two::print_representatives(
 		ost << endl;
 
 		if (f_v) {
-			cout << "semifield_level_two::print_representatives before flag orbits" << endl;
+			cout << "semifield_level_two::report before flag orbits" << endl;
 		}
 
 
@@ -2223,7 +2223,7 @@ void semifield_level_two::print_representatives(
 		ost << "\\end{enumerate}" << endl;
 
 		if (f_v) {
-			cout << "semifield_level_two::print_representatives before Orbits at level 2" << endl;
+			cout << "semifield_level_two::report before Orbits at level 2" << endl;
 		}
 		ost << "\\section{Orbits at level 2}" << endl;
 
@@ -2293,7 +2293,7 @@ void semifield_level_two::print_representatives(
 		ost << "\\end{enumerate}" << endl;
 		ost << endl;
 		if (f_v) {
-			cout << "semifield_level_two::print_representatives "
+			cout << "semifield_level_two::report "
 					"after Orbits at level 2" << endl;
 		}
 
@@ -2304,7 +2304,7 @@ void semifield_level_two::print_representatives(
 		//L.foot(fp);
 	}
 	if (f_v) {
-		cout << "semifield_level_two::print_representatives done" << endl;
+		cout << "semifield_level_two::report done" << endl;
 	}
 }
 

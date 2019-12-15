@@ -248,12 +248,13 @@ int *mem_object_registry::allocate_int(long int n,
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
-	if (f_v) {
-		cout << "mem_object_registry::allocate_int int[n], "
-				"n=" << n << " file=" << file << " line=" << line << endl;
-	}
 	int *p;
 	p = new int[n];
+
+	if (f_v) {
+		cout << "mem_object_registry::allocate_int cur_time=" << cur_time << " int[n], "
+				"n=" << n << " file=" << file << " line=" << line << " p=" << p << endl;
+	}
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_int, n, sizeof(int),
@@ -289,12 +290,12 @@ long int *mem_object_registry::allocate_lint(long int n,
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
-	if (f_v) {
-		cout << "mem_object_registry::allocate_lint int[n], "
-				"n=" << n << " file=" << file << " line=" << line << endl;
-	}
 	long int *p;
 	p = new long int[n];
+	if (f_v) {
+		cout << "mem_object_registry::allocate_lint cur_time=" << cur_time << " int[n], "
+				"n=" << n << " file=" << file << " line=" << line << " p=" << p << endl;
+	}
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_lint, n, sizeof(int),
@@ -330,12 +331,12 @@ int **mem_object_registry::allocate_pint(long int n,
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
-	if (f_v) {
-		cout << "mem_object_registry::allocate_pint pint[n], "
-				"n=" << n << " file=" << file << " line=" << line << endl;
-	}
 	int **p;
 	p = new pint[n];
+	if (f_v) {
+		cout << "mem_object_registry::allocate_pint cur_time=" << cur_time << " pint[n], "
+				"n=" << n << " file=" << file << " line=" << line << " p=" << p << endl;
+	}
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_pint, n, sizeof(int *),
@@ -372,12 +373,12 @@ long int **mem_object_registry::allocate_plint(long int n,
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
-	if (f_v) {
-		cout << "mem_object_registry::allocate_plint pint[n], "
-				"n=" << n << " file=" << file << " line=" << line << endl;
-	}
 	long int **p;
 	p = new plint[n];
+	if (f_v) {
+		cout << "mem_object_registry::allocate_plint cur_time=" << cur_time << " plint[n], "
+				"n=" << n << " file=" << file << " line=" << line << " p=" << p << endl;
+	}
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_plint, n, sizeof(long int *),
@@ -414,12 +415,12 @@ int ***mem_object_registry::allocate_ppint(long int n,
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
-	if (f_v) {
-		cout << "mem_object_registry::allocate_ppint ppint[n], "
-				"n=" << n << " file=" << file << " line=" << line << endl;
-	}
 	int ***p;
 	p = new ppint[n];
+	if (f_v) {
+		cout << "mem_object_registry::allocate_ppint cur_time=" << cur_time << " ppint[n], "
+				"n=" << n << " file=" << file << " line=" << line << " p=" << p << endl;
+	}
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_ppint, n, sizeof(int **),
@@ -455,12 +456,12 @@ long int ***mem_object_registry::allocate_pplint(long int n,
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
-	if (f_v) {
-		cout << "mem_object_registry::allocate_ppint ppint[n], "
-				"n=" << n << " file=" << file << " line=" << line << endl;
-	}
 	long int ***p;
 	p = new pplint[n];
+	if (f_v) {
+		cout << "mem_object_registry::allocate_ppint cur_time=" << cur_time << " pplint[n], "
+				"n=" << n << " file=" << file << " line=" << line << " p=" << p << endl;
+	}
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_pplint, n, sizeof(int **),
@@ -496,12 +497,12 @@ char *mem_object_registry::allocate_char(long int n,
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
-	if (f_v) {
-		cout << "mem_object_registry::allocate_char char[n], "
-				"n=" << n << " file=" << file << " line=" << line << endl;
-	}
 	char *p;
 	p = new char[n];
+	if (f_v) {
+		cout << "mem_object_registry::allocate_char cur_time=" << cur_time << " char[n], "
+				"n=" << n << " file=" << file << " line=" << line << " p=" << (int *) p << endl;
+	}
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_char, n, sizeof(char),
@@ -537,12 +538,12 @@ uchar *mem_object_registry::allocate_uchar(long int n,
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
-	if (f_v) {
-		cout << "mem_object_registry::allocate_uchar uchar[n], "
-				"n=" << n << " file=" << file << " line=" << line << endl;
-	}
 	uchar *p;
 	p = new uchar[n];
+	if (f_v) {
+		cout << "mem_object_registry::allocate_uchar cur_time=" << cur_time << " uchar[n], "
+				"n=" << n << " file=" << file << " line=" << line << " p=" << (int *) p << endl;
+	}
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_uchar, n, sizeof(uchar),
@@ -579,12 +580,12 @@ char **mem_object_registry::allocate_pchar(long int n,
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
-	if (f_v) {
-		cout << "mem_object_registry::allocate_pchar pchar[n], "
-				"n=" << n << " file=" << file << " line=" << line << endl;
-	}
 	char **p;
 	p = new pchar[n];
+	if (f_v) {
+		cout << "mem_object_registry::allocate_pchar cur_time=" << cur_time << " pchar[n], "
+				"n=" << n << " file=" << file << " line=" << line << " p=" << (int *) p << endl;
+	}
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_pchar, n, sizeof(char *),
@@ -621,12 +622,12 @@ uchar **mem_object_registry::allocate_puchar(long int n,
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
-	if (f_v) {
-		cout << "mem_object_registry::allocate_puchar puchar[n], "
-				"n=" << n << " file=" << file << " line=" << line << endl;
-	}
 	uchar **p;
 	p = new puchar[n];
+	if (f_v) {
+		cout << "mem_object_registry::allocate_puchar cur_time=" << cur_time << " puchar[n], "
+				"n=" << n << " file=" << file << " line=" << line << " p=" << (int *) p << endl;
+	}
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_puchar, n, sizeof(char *),
@@ -663,12 +664,12 @@ void **mem_object_registry::allocate_pvoid(long int n,
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
-	if (f_v) {
-		cout << "mem_object_registry::allocate_pvoid pvoid[n], "
-				"n=" << n << " file=" << file << " line=" << line << endl;
-	}
 	void **p;
 	p = new pvoid[n];
+	if (f_v) {
+		cout << "mem_object_registry::allocate_pvoid cur_time=" << cur_time << " pvoid[n], "
+				"n=" << n << " file=" << file << " line=" << line << " p=" << p << endl;
+	}
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_PVOID, n, sizeof(void *),
@@ -707,8 +708,8 @@ void *mem_object_registry::allocate_OBJECTS(void *p,
 	int f_v = (memory_debug_verbose_level >= 1);
 
 	if (f_v) {
-		cout << "mem_object_registry::allocate_OBJECTS char[n * size_of], "
-				"n=" << n << " file=" << file << " line=" << line << endl;
+		cout << "mem_object_registry::allocate_OBJECTS cur_time=" << cur_time << " char[n * size_of], "
+				"n=" << n << " file=" << file << " line=" << line << " p=" << p << endl;
 	}
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
@@ -747,8 +748,8 @@ void *mem_object_registry::allocate_OBJECT(void *p, std::size_t size_of,
 	int f_v = (memory_debug_verbose_level >= 1);
 
 	if (f_v) {
-		cout << "mem_object_registry::allocate_OBJECT char[size_of], "
-				" file=" << file << " line=" << line << endl;
+		cout << "mem_object_registry::allocate_OBJECT cur_time=" << cur_time << " char[size_of], "
+				" file=" << file << " line=" << line << " p=" << p << endl;
 	}
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
@@ -890,6 +891,7 @@ void mem_object_registry::add_to_registry(void *pointer,
 	entries[idx].source_line = source_line;
 
 
+
 	automatic_dump();
 	cur_time++;
 
@@ -925,7 +927,7 @@ void mem_object_registry::delete_from_registry(void *pointer, int verbose_level)
 		nb_entries_used--;
 	}
 	automatic_dump();
-	cur_time++;
+	//cur_time++;
 	if (f_v) {
 		cout << "mem_object_registry::delete_from_registry done, there are "
 				<< nb_entries_used << " entries in the registry" << endl;

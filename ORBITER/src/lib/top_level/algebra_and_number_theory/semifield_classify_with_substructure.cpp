@@ -749,7 +749,7 @@ void semifield_classify_with_substructure::latex_report(
 			cout << "semifield_classify_with_substructure::latex_report before L2->print_representatives" << endl;
 			}
 
-		L2->print_representatives(fp, verbose_level);
+		L2->report(fp, verbose_level);
 
 		if (f_v) {
 			cout << "semifield_classify_with_substructure::latex_report after L2->print_representatives" << endl;
