@@ -366,7 +366,7 @@ void elliptic_curve::addition(
 }
 
 void elliptic_curve::draw_grid(char *fname,
-		int xmax, int ymax, int f_with_points,
+		int xmax, int ymax, int f_with_grid, int f_with_points,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -393,7 +393,7 @@ void elliptic_curve::draw_grid(char *fname,
 	G.header();
 	G.begin_figure(factor_1000);
 	
-	draw_grid2(G, f_with_points, verbose_level);
+	draw_grid2(G, f_with_grid, f_with_points, verbose_level);
 
 
 	G.end_figure();
@@ -411,7 +411,7 @@ void elliptic_curve::draw_grid(char *fname,
 
 
 void elliptic_curve::draw_grid2(mp_graphics &G,
-		int f_with_points, int verbose_level)
+		int f_with_grid, int f_with_points, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int a, b;
@@ -419,15 +419,11 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 
 	int rad = 10000;
 	int i, h;
-	double x_stretch = 0.0010;
-	double y_stretch = 0.0010;
-	//double x_stretch = 0.01;
-	//double y_stretch = 0.01;
 
 	double *Dx, *Dy;
 	int *Px, *Py;
-	int dx = ONE_MILLION * 50 * x_stretch;
-	int dy = ONE_MILLION * 50 * y_stretch;
+	int dx = G.in_xmax() / q;
+	int dy = G.in_ymax() / q;
 	int N = 1000;
 
 
@@ -438,31 +434,71 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 
 	
 	if (f_v) {
-		cout << "draw_grid2" << endl;
+		cout << "elliptic_curve::draw_grid2" << endl;
+		cout << "dx=" << dx << " dy=" << dy << endl;
 		}
 
 
 
 
 	if (f_v) {
-		cout << "drawing grid" << endl;
+		cout << "elliptic_curve::draw_grid2 drawing grid" << endl;
 		}
 
 
-	G.draw_axes_and_grid(
-		0., (double)(q - 1), 0., (double)(q - 1),
-		x_stretch, y_stretch,
-		TRUE /* f_x_axis_at_y_min */,
-		TRUE /* f_y_axis_at_x_min */,
-		1 /* x_mod */, 1 /* y_mod */, 1, 1, 
-		-2. /* x_labels_offset */,
-		-2. /* y_labels_offset */,
-		0.5 /* x_tick_half_width */,
-		0.5 /* y_tick_half_width */,
-		TRUE /* f_v_lines */, 1 /* subdivide_v */,
-		TRUE /* f_h_lines */, 1 /* subdivide_h */,
-		verbose_level - 1);
+#if 0
+	if (f_with_grid) {
+		G.draw_axes_and_grid(
+			0., (double)(q - 1), 0., (double)(q - 1),
+			x_stretch, y_stretch,
+			TRUE /* f_x_axis_at_y_min */,
+			TRUE /* f_y_axis_at_x_min */,
+			1 /* x_mod */, 1 /* y_mod */, 1, 1,
+			-2. /* x_labels_offset */,
+			-2. /* y_labels_offset */,
+			0.5 /* x_tick_half_width */,
+			0.5 /* y_tick_half_width */,
+			TRUE /* f_v_lines */, 1 /* subdivide_v */,
+			TRUE /* f_h_lines */, 1 /* subdivide_h */,
+			verbose_level - 1);
+	}
+	else {
+		G.draw_axes_and_grid(
+			0., (double)(q - 1), 0., (double)(q - 1),
+			x_stretch, y_stretch,
+			TRUE /* f_x_axis_at_y_min */,
+			TRUE /* f_y_axis_at_x_min */,
+			1 /* x_mod */, 1 /* y_mod */, 1, 1,
+			-2. /* x_labels_offset */,
+			-2. /* y_labels_offset */,
+			0.5 /* x_tick_half_width */,
+			0.5 /* y_tick_half_width */,
+			TRUE /* f_v_lines */, q - 1 /* subdivide_v */,
+			TRUE /* f_h_lines */, q - 1 /* subdivide_h */,
+			verbose_level - 1);
 
+	}
+#endif
+
+	G.sl_thickness(1);
+	Dx[0] = 0;
+	Dy[0] = 0;
+	Dx[1] = q + 1;
+	Dy[1] = 0;
+	Dx[2] = q + 1;
+	Dy[2] = q + 1;
+	Dx[3] = 0;
+	Dy[3] = q + 1;
+	Dx[4] = 0;
+	Dy[4] = 0;
+
+	for (i = 0; i < 5; i++) {
+		Px[i] = Dx[i] * dx;
+		Py[i] = Dy[i] * dy;
+		}
+
+
+	G.polygon5(Px, Py, 0, 1, 2, 3, 4);
 
 
 	if (f_with_points) {
@@ -481,20 +517,29 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 			//get_ab(q, x1, x2, x3, a, b);
 			make_affine_point(x1, x2, x3, a, b, 0);
 
-			cout << "point " << h << " : "
-					<< x1 << ", " << x2 << ", " << x3
-					<< " : " << a << ", " << b << endl;
 			
 			Dx[0] = a;
 			Dy[0] = b;
+			Dx[1] = a + 1;
+			Dy[1] = b;
+			Dx[2] = a + 1;
+			Dy[2] = b + 1;
+			Dx[3] = a;
+			Dy[3] = b + 1;
+			Dx[4] = a;
+			Dy[4] = b;
 			
-			for (i = 0; i < 1; i++) {
+			for (i = 0; i < 5; i++) {
 				Px[i] = Dx[i] * dx;
 				Py[i] = Dy[i] * dy;
 				}
 
-			//G.nice_circle(Px[a * Q + b], Py[a * Q + b], rad);
-			G.nice_circle(Px[0], Py[0], rad);
+			cout << "point " << h << " : "
+					<< x1 << ", " << x2 << ", " << x3
+					<< " : " << a << ", " << b << " : " << Px[0] << "," << Py[0] << endl;
+
+			//G.nice_circle(Px[0], Py[0], rad);
+			G.fill_polygon5(Px, Py, 0, 1, 2, 3, 4);
 			}
 
 #if 0

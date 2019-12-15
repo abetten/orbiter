@@ -60,7 +60,7 @@ public:
 
 	// mindist.cpp:
 	int mindist(int n, int k, int q, int *G,
-		int f_v, int f_vv, int idx_zero, int idx_one,
+		int f_verbose_level, int idx_zero, int idx_one,
 		int *add_table, int *mult_table);
 	//Main routine for the code minimum distance computation.
 	//The tables are only needed if $q = p^f$ with $f > 1$.
