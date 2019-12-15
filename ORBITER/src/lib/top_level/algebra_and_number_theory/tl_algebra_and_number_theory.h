@@ -263,6 +263,7 @@ public:
 		int order, int n, int k,
 		finite_field *F,
 		int verbose_level);
+	void report(std::ostream &ost, int verbose_level);
 	void init_poset_classification(
 			int argc, const char **argv,
 			const char *prefix,
@@ -507,8 +508,7 @@ public:
 			int verbose_level);
 	void get_basis_and_pivots(int po,
 			int *basis, int *pivots, int verbose_level);
-	void print_representatives(std::ofstream &ost,
-		int verbose_level);
+	void report(std::ofstream &ost, int verbose_level);
 	void create_fname_level_info_file(char *fname);
 	void write_level_info_file(int verbose_level);
 	void read_level_info_file(int verbose_level);
@@ -588,8 +588,7 @@ public:
 	void init_level_three(semifield_level_two *L2,
 			int f_prefix, const char *prefix,
 			int verbose_level);
-	void print_representatives(
-		std::ostream &ost, int verbose_level);
+	void report(std::ostream &ost, int verbose_level);
 	void recover_level_three_downstep(int verbose_level);
 	void recover_level_three_from_file(int f_read_flag_orbits, int verbose_level);
 	void compute_level_three(int verbose_level);

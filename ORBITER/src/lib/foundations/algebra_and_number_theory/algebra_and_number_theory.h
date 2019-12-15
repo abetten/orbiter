@@ -1043,6 +1043,7 @@ public:
 	void cheat_sheet_PG(int n,
 			int f_surface, int verbose_level);
 	void cheat_sheet_tables(std::ostream &f, int verbose_level);
+	void report(std::ostream &ost, int verbose_level);
 	void print_minimum_polynomial(int p, const char *polynomial);
 	void print();
 	void print_detailed(int f_add_mult_table);
@@ -2049,22 +2050,26 @@ public:
 	finite_field *gfq;
 	int f_factorring;
 	int factor_degree;
-	int *factor_coeffs;
+	int *factor_coeffs; // [factor_degree + 1]
 	unipoly_object factor_poly;
 		// the coefficients of factor_poly are negated
 		// so that mult_mod is easier
 
 	unipoly_domain(finite_field *GFq);
-	unipoly_domain(finite_field *GFq, unipoly_object m);
+	unipoly_domain(finite_field *GFq, unipoly_object m, int verbose_level);
 	~unipoly_domain();
 	int &s_i(unipoly_object p, int i)
 		{ int *rep = (int *) p; return rep[i + 1]; };
 	void create_object_of_degree(unipoly_object &p, int d);
+	void create_object_of_degree_no_test(unipoly_object &p, int d);
 	void create_object_of_degree_with_coefficients(unipoly_object &p, 
 		int d, int *coeff);
-	void create_object_by_rank(unipoly_object &p, int rk);
+	void create_object_by_rank(unipoly_object &p, int rk,
+			const char *file, int line, int verbose_level);
 	void create_object_by_rank_longinteger(unipoly_object &p, 
-		longinteger_object &rank, int verbose_level);
+		longinteger_object &rank,
+		const char *file, int line,
+		int verbose_level);
 	void create_object_by_rank_string(unipoly_object &p, 
 		const char *rk, int verbose_level);
 	void create_Dickson_polynomial(unipoly_object &p, int *map);
@@ -2075,7 +2080,7 @@ public:
 	void rank_longinteger(unipoly_object p, longinteger_object &rank);
 	int degree(unipoly_object p);
 	std::ostream& print_object(unipoly_object p, std::ostream& ost);
-	void assign(unipoly_object a, unipoly_object &b);
+	void assign(unipoly_object a, unipoly_object &b, int verbose_level);
 	void one(unipoly_object p);
 	void m_one(unipoly_object p);
 	void zero(unipoly_object p);
@@ -2084,7 +2089,7 @@ public:
 	void negate(unipoly_object a);
 	void make_monic(unipoly_object &a);
 	void add(unipoly_object a, unipoly_object b, unipoly_object &c);
-	void mult(unipoly_object a, unipoly_object b, unipoly_object &c);
+	void mult(unipoly_object a, unipoly_object b, unipoly_object &c, int verbose_level);
 	void mult_easy(unipoly_object a, unipoly_object b, unipoly_object &c);
 	void mult_mod(unipoly_object a, unipoly_object b, unipoly_object &c, 
 		int factor_polynomial_degree, 
@@ -2153,7 +2158,7 @@ public:
 	void get_an_irreducible_polynomial(unipoly_object &m, 
 		int f, int verbose_level);
 	void power_int(unipoly_object &a, int n, int verbose_level);
-	void power_longinteger(unipoly_object &a, longinteger_object &n);
+	void power_longinteger(unipoly_object &a, longinteger_object &n, int verbose_level);
 	void power_coefficients(unipoly_object &a, int n);
 	void minimum_polynomial(unipoly_object &a, 
 		int alpha, int p, int verbose_level);

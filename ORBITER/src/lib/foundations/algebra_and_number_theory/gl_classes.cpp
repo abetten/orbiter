@@ -729,7 +729,7 @@ void gl_classes::identify_matrix(int *Mtx,
 
 
 
-	U.create_object_by_rank(char_poly, 0);
+	U.create_object_by_rank(char_poly, 0, __FILE__, __LINE__, verbose_level);
 		
 	U.characteristic_polynomial(Mtx, k, char_poly, verbose_level - 2);
 
@@ -948,7 +948,7 @@ void gl_classes::compute_generalized_kernels_for_each_block(
 	
 	M2 = NEW_int(k * k);
 
-	U.create_object_by_rank(P, 0);
+	U.create_object_by_rank(P, 0, __FILE__, __LINE__, verbose_level);
 	b0 = 0;
 	for (h = 0; h < nb_irreds; h++) {
 		if (f_vv) {
@@ -1365,7 +1365,7 @@ void gl_classes::generators_for_centralizer(
 
 
 
-	U.create_object_by_rank(char_poly, 0);
+	U.create_object_by_rank(char_poly, 0, __FILE__, __LINE__, verbose_level);
 		
 	U.characteristic_polynomial(Mtx, k, char_poly, verbose_level - 2);
 
@@ -1933,7 +1933,7 @@ void gl_classes::report(ostream &ost, int verbose_level)
 
 	int i;
 
-	ost << "\\section{Conjugacy Classes}" << endl;
+	ost << "\\section{All conjugacy Classes of GL$(" << k << "," << q << ")$}" << endl;
 	for (i = 0; i < nb_classes; i++) {
 		ost << "Representative " << i << " / "
 				<< nb_classes << "\\\\" << endl;

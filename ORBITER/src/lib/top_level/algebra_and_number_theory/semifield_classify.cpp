@@ -386,6 +386,48 @@ void semifield_classify::init(int argc, const char **argv,
 	}
 }
 
+void semifield_classify::report(std::ostream &ost,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	longinteger_object go;
+	int i;
+	number_theory_domain NT;
+
+	if (f_v) {
+		cout << "semifield_classify::report" << endl;
+	}
+
+	ost << "Semifields of order " << order << "\\\\" << endl;
+
+	F->report(ost, verbose_level);
+
+	ost << endl;
+	ost << "\\bigskip" << endl;
+	ost << endl;
+
+	A0_linear->report(ost, TRUE /* f_sims */, G,
+			TRUE /* f_strong_gens */, A0_linear->Strong_gens,
+			verbose_level);
+
+	ost << endl;
+	ost << "\\bigskip" << endl;
+	ost << endl;
+
+	A_on_S->report(ost, verbose_level);
+
+	ost << endl;
+	ost << "\\bigskip" << endl;
+	ost << endl;
+
+	ost << "Stabilizer of two components:\\\\" << endl;
+	Strong_gens->print_generators_tex(ost);
+
+	if (f_v) {
+		cout << "semifield_classify::report done" << endl;
+	}
+}
+
 
 void semifield_classify::init_poset_classification(
 		int argc, const char **argv,

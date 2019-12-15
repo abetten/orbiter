@@ -81,7 +81,7 @@ char *algebra_global::search_for_primitive_polynomial_of_given_degree(
 	unipoly_object m;
 	longinteger_object rk;
 
-	FX.create_object_by_rank(m, 0);
+	FX.create_object_by_rank(m, 0, __FILE__, __LINE__, verbose_level);
 
 	if (f_v) {
 		cout << "search_for_primitive_polynomial_of_given_degree "
@@ -143,7 +143,7 @@ void algebra_global::search_for_primitive_polynomials(
 			unipoly_object m;
 			longinteger_object rk;
 
-			FX.create_object_by_rank(m, 0);
+			FX.create_object_by_rank(m, 0, __FILE__, __LINE__, verbose_level);
 
 			for (d = n_min; d <= n_max; d++) {
 				if (f_v) {
@@ -709,7 +709,7 @@ void algebra_global::gl_random_matrix(int k, int q, int verbose_level)
 
 
 
-	U.create_object_by_rank(char_poly, 0);
+	U.create_object_by_rank(char_poly, 0, __FILE__, __LINE__, verbose_level);
 
 	U.characteristic_polynomial(M, k, char_poly, verbose_level - 2);
 

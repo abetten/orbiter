@@ -958,8 +958,8 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 		cout << endl;
 		}
 
-	FX.create_object_by_rank(g, 0);
-	FX.create_object_by_rank(minpol, 0);
+	FX.create_object_by_rank(g, 0, __FILE__, __LINE__, verbose_level);
+	FX.create_object_by_rank(minpol, 0, __FILE__, __LINE__, verbose_level);
 
 	int *Frobenius;
 	int *Normal_basis;
@@ -1119,8 +1119,8 @@ int finite_field::count_all_irreducible_polynomials_of_degree_d(
 		cout << endl;
 		}
 
-	FX.create_object_by_rank(g, 0);
-	FX.create_object_by_rank(minpol, 0);
+	FX.create_object_by_rank(g, 0, __FILE__, __LINE__, verbose_level);
+	FX.create_object_by_rank(minpol, 0, __FILE__, __LINE__, verbose_level);
 
 	int *Frobenius;
 	int *F2;

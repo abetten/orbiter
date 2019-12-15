@@ -206,6 +206,21 @@ void finite_field::cheat_sheet_PG(int n,
 			<< Fio.file_size(fname) << endl;
 }
 
+void finite_field::report(std::ostream &ost, int verbose_level)
+{
+	ost << "\\small" << endl;
+	ost << "\\arraycolsep=2pt" << endl;
+	ost << "\\parindent=0pt" << endl;
+	ost << "$q = " << q << "$\\\\" << endl;
+	ost << "$p = " << p << "$\\\\" << endl;
+	ost << "$e = " << e << "$\\\\" << endl;
+
+	ost << "\\clearpage" << endl << endl;
+	ost << "\\section{The Finite Field with $" << q << "$ Elements}" << endl;
+	cheat_sheet(ost, verbose_level);
+
+
+}
 
 void finite_field::print_minimum_polynomial(int p, const char *polynomial)
 {
@@ -219,7 +234,7 @@ void finite_field::print_minimum_polynomial(int p, const char *polynomial)
 	FX.create_object_by_rank_string(m, polynomial, 0);
 	FX.create_object_by_rank_string(n, polynomial, 0);
 	{
-	unipoly_domain Fq(&GFp, m);
+	unipoly_domain Fq(&GFp, m, 0 /* verbose_level */);
 
 	Fq.print_object(n, cout);
 	}
@@ -310,7 +325,7 @@ void finite_field::print_tables_extension_field(const char *poly)
 
 	FX.create_object_by_rank_string(m, poly, verbose_level);
 
-	unipoly_domain Fq(&GFp, m);
+	unipoly_domain Fq(&GFp, m, 0 /* verbose_level */);
 	unipoly_object elt;
 
 
@@ -333,7 +348,7 @@ void finite_field::print_tables_extension_field(const char *poly)
 			<< setw(4) << b << " : "
 			<< setw(4) << c << " : "
 			<< setw(4) << l << " : ";
-		Fq.create_object_by_rank(elt, i);
+		Fq.create_object_by_rank(elt, i, __FILE__, __LINE__, verbose_level);
 		Fq.print_object(elt, cout);
 		cout << endl;
 		Fq.delete_object(elt);
@@ -841,10 +856,10 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 
 				FX.create_object_by_rank_string(m, polynomial,
 						0/*verbose_level*/);
-				unipoly_domain Fq(&GFp, m);
+				unipoly_domain Fq(&GFp, m, 0 /* verbose_level */);
 				unipoly_object elt;
 
-				FX.create_object_by_rank(elt, poly);
+				FX.create_object_by_rank(elt, poly, __FILE__, __LINE__, verbose_level);
 				f << "\\bbF_{" << NT.i_power_j(p, h) << "} & ";
 				Fq.print_object(elt, f);
 				f << " & " << poly;

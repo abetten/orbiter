@@ -750,7 +750,7 @@ void strong_generators::generators_for_the_singer_cycle(
 	unipoly_object m;
 	longinteger_object rk;
 	
-	FX.create_object_by_rank(m, 0);
+	FX.create_object_by_rank(m, 0, __FILE__, __LINE__, verbose_level);
 	
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_"
@@ -928,7 +928,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	unipoly_object m;
 	longinteger_object rk;
 
-	FX.create_object_by_rank(m, 0);
+	FX.create_object_by_rank(m, 0, __FILE__, __LINE__, verbose_level);
 
 	if (f_v) {
 		cout << "search_for_primitive_polynomial_"
