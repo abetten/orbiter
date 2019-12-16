@@ -172,7 +172,6 @@ int main(int argc, const char **argv)
 	cout << "after L2->compute_level_two" << endl;
 
 
-#if 0
 	L3 = NEW_OBJECT(semifield_lifting);
 	cout << "before L3->compute_level_three" << endl;
 	L3->init_level_three(L2,
@@ -221,7 +220,6 @@ int main(int argc, const char **argv)
 		global_mem_object_registry.dump_to_csv_file("memory.csv");
 		cout << "after global_mem_object_registry.dump_to_csv_file" << endl;
 	}
-#endif
 
 	cout << "before FREE_OBJECT(L2)" << endl;
 	FREE_OBJECT(L2);
