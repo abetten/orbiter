@@ -50,7 +50,7 @@ void longinteger_object::freeself()
 		}
 }
 
-void longinteger_object::create(long int i)
+void longinteger_object::create(long int i, const char *file, int line)
 {
 	long int ii, j, dj;
 	int f_v = FALSE;
@@ -66,7 +66,7 @@ void longinteger_object::create(long int i)
 		sgn = FALSE;
 		}
 	if (i == 0) {
-		r = NEW_char(1);
+		r = NEW_char_with_tracking(1, file, line);
 		r[0] = 0;
 		l = 1;
 		return;
@@ -124,7 +124,7 @@ void longinteger_object::create_power_minus_one(int a, int e)
 	int *factors;
 	int i;
 
-	A.create(-1);
+	A.create(-1, __FILE__, __LINE__);
 	factors = NEW_int(e);
 	for (i = 0; i < e; i++) {
 		factors[i] = a;
@@ -144,10 +144,10 @@ void longinteger_object::create_from_base_b_representation(
 	int i;
 	
 	x.zero();
-	bb.create(b);
+	bb.create(b, __FILE__, __LINE__);
 	for (i = len - 1; i >= 0; i--) {
 		D.mult(x, bb, z);
-		y.create(rep[i]);
+		y.create(rep[i], __FILE__, __LINE__);
 		D.add(z, y, x);
 		}
 	x.assign_to(*this);
@@ -163,10 +163,10 @@ void longinteger_object::create_from_base_10_string(
 	
 	len = strlen(str);
 	x.zero();
-	bb.create(10);
+	bb.create(10, __FILE__, __LINE__);
 	for (i = len - 1; i >= 0; i--) {
 		D.mult(x, bb, z);
-		y.create(str[len - 1 - i] - '0');
+		y.create(str[len - 1 - i] - '0', __FILE__, __LINE__);
 		D.add(z, y, x);
 		}
 	if (f_v) {
@@ -416,7 +416,7 @@ int longinteger_object::is_zero()
 
 void longinteger_object::zero()
 {
-	create(0);
+	create(0, __FILE__, __LINE__);
 }
 
 int longinteger_object::is_one()
@@ -448,7 +448,7 @@ int longinteger_object::is_one_or_minus_one()
 
 void longinteger_object::one()
 {
-	create(1);
+	create(1, __FILE__, __LINE__);
 }
 
 void longinteger_object::increment()
@@ -456,7 +456,7 @@ void longinteger_object::increment()
 	longinteger_object b, c;
 	longinteger_domain D;
 	
-	b.create(1);
+	b.create(1, __FILE__, __LINE__);
 	D.add(*this, b, c);
 	swap_with(c);
 }
@@ -466,7 +466,7 @@ void longinteger_object::decrement()
 	longinteger_object b, c;
 	longinteger_domain D;
 	
-	b.create(-1);
+	b.create(-1, __FILE__, __LINE__);
 	D.add(*this, b, c);
 	swap_with(c);
 }
@@ -476,7 +476,7 @@ void longinteger_object::add_int(int a)
 	longinteger_object b, c;
 	longinteger_domain D;
 	
-	b.create(a);
+	b.create(a, __FILE__, __LINE__);
 	D.add(*this, b, c);
 	swap_with(c);
 }
@@ -485,7 +485,7 @@ void longinteger_object::create_i_power_j(int i, int j)
 {
 	longinteger_domain D;
 	
-	create(i);
+	create(i, __FILE__, __LINE__);
 	D.power_int(*this, j);
 }
 
@@ -503,7 +503,7 @@ int longinteger_object::compare_with_int(int a)
 	longinteger_domain D;
 	longinteger_object b;
 	
-	b.create(a);
+	b.create(a, __FILE__, __LINE__);
 	return D.compare(*this, b);
 }
 

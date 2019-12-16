@@ -852,6 +852,597 @@ void coding_theory_domain::make_tensor_code_9_dimensional(int q,
 }
 
 
+void coding_theory_domain::make_cyclic_code(int n, int q, int t,
+		int *roots, int nb_roots, int f_poly, char *poly,
+		int f_dual, char *fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int p, e, m, r, i;
+	longinteger_object Qm1, Index;
+	longinteger_domain D;
+	number_theory_domain NT;
+	file_io Fio;
+
+	NT.factor_prime_power(q, p, e);
+	if (f_v) {
+		cout << "make_cyclic_code q=" << q << " p=" << q
+				<< " e=" << e << " n=" << n << endl;
+		for (i = 0; i < nb_roots; i++) {
+			cout << roots[i] << " ";
+		}
+		cout << endl;
+		if (f_dual) {
+			cout << "dual code" << endl;
+		}
+	}
+	m = NT.order_mod_p(q, n);
+	if (f_v) {
+		cout << "order mod q is m=" << m << endl;
+	}
+	D.create_qnm1(Qm1, q, m);
+
+	// q = i_power_j(p, e);
+	// GF(q)=GF(p^e) has n-th roots of unity
+	D.integral_division_by_int(Qm1, n, Index, r);
+	//b = (q - 1) / n;
+	if (r != 0) {
+		cout << "make_cyclic_code n does not divide q^m-1" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "GF(" << q << "^" << m << ") has "
+				<< n << "-th roots of unity" << endl;
+		if (Index.is_one()) {
+			cout << "this is a primitive code" << endl;
+		}
+		else {
+			cout << "we take as " << n << "-th root \\beta = \\alpha^"
+			<< Index << ", where \\alpha is a primitive element of "
+					"the field" << endl;
+		}
+	}
+
+	int j, degree, field_degree;
+	int *taken;
+	int *transversal, tl = 0;
+
+	field_degree = m * e;
+	degree = 0;
+	taken = NEW_int(n);
+	transversal = NEW_int(n);
+	for (i = 0; i < n; i++) {
+		taken[i] = FALSE;
+	}
+
+
+	for (i = 0; i < nb_roots; i++) {
+		j = roots[i];
+		if (taken[j]) {
+			cout << q << "-cyclotomic coset of "
+					<< j << " already taken" << endl;
+			continue;
+		}
+		if (!taken[j]) {
+			transversal[tl++] = j;
+		}
+		taken[j] = TRUE;
+		degree++;
+		if (f_v) {
+			cout << q << "-cyclotomic coset of "
+					<< j << " : " << j;
+		}
+		while (TRUE) {
+			j = (q * j) % n;
+			if (taken[j]) {
+				break;
+			}
+			taken[j] = TRUE;
+			degree++;
+			if (f_v) {
+				cout << "," << j;
+			}
+		}
+		if (f_v) {
+			cout << " degree=" << degree << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "transversal: ";
+		for (i = 0; i < tl; i++) {
+			cout << transversal[i] << " ";
+		}
+		cout << endl;
+		cout << "exponents:";
+		for (i = 0; i < n; i++) {
+			if (!taken[i]) {
+				continue;
+			}
+			cout << i << ", ";
+		}
+		cout << endl;
+		cout << "degree=" << degree << endl;
+	}
+
+	if (f_dual) {
+		for (i = 0; i < n; i++) {
+			taken[i] = !taken[i];
+		}
+		degree = n - degree;
+		if (f_v) {
+			cout << "dually, exponents:";
+			for (i = 0; i < n; i++) {
+				if (!taken[i])
+					continue;
+				cout << i << ", ";
+			}
+			cout << endl;
+			cout << "degree=" << degree << endl;
+		}
+	}
+
+	finite_field Fp;
+	unipoly_object M;
+	unipoly_object beta, beta_i, c;
+
+	if (f_v) {
+		cout << "creating the finite field of order " << p << endl;
+	}
+	Fp.init(p, verbose_level - 1);
+
+	unipoly_domain FpX(&Fp);
+	FpX.create_object_by_rank_string(M,
+			get_primitive_polynomial(p, field_degree, 0),
+			verbose_level - 2);
+
+	if (f_v) {
+		cout << "choosing the following irreducible "
+				"and primitive polynomial:" << endl;
+		FpX.print_object(M, cout); cout << endl;
+	}
+
+	if (f_v) {
+		cout << "creating unipoly_domain Fq modulo M" << endl;
+	}
+	unipoly_domain Fq(&Fp, M, verbose_level);  // Fq = Fp[X] modulo factor polynomial M
+	if (f_vv) {
+		cout << "extension field created" << endl;
+	}
+
+	Fq.create_object_by_rank(c, 0, __FILE__, __LINE__, verbose_level);
+	Fq.create_object_by_rank(beta, p, __FILE__, __LINE__, verbose_level); // the element alpha
+	Fq.create_object_by_rank(beta_i, 1, __FILE__, __LINE__, verbose_level);
+	if (!Index.is_one()) {
+		//Fq.power_int(beta, b);
+		if (f_v) {
+			cout << "\\alpha = ";
+			Fq.print_object(beta, cout);
+			cout << endl;
+		}
+		if (f_v) {
+			cout << "before Fq.power_longinteger" << endl;
+		}
+		Fq.power_longinteger(beta, Index, verbose_level - 1);
+		if (f_v) {
+			cout << "\\beta = \\alpha^" << Index << " = ";
+			Fq.print_object(beta, cout);
+			cout << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "this is a primitive BCH code" << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "before allocating generator etc" << endl;
+	}
+
+	unipoly_object *generator = NEW_OBJECTS(unipoly_object, degree + 2);
+	unipoly_object *tmp = NEW_OBJECTS(unipoly_object, degree + 1);
+	unipoly_object *coeffs = NEW_OBJECTS(unipoly_object, 2);
+	unipoly_object Pc, Pd;
+
+
+	// create the polynomial X - a:
+	if (f_v) {
+		cout << "creating X-a" << endl;
+	}
+	for (i = 0; i < 2; i++) {
+		if (i == 1) {
+			Fq.create_object_by_rank(coeffs[i], 1, __FILE__, __LINE__, verbose_level);
+		}
+		else {
+			Fq.create_object_by_rank(coeffs[i], 0, __FILE__, __LINE__, verbose_level);
+		}
+	}
+	for (i = 0; i <= degree; i++) {
+		if (f_v) {
+			cout << "creating generator[" << i << "]" << endl;
+		}
+		Fq.create_object_by_rank(generator[i], 0, __FILE__, __LINE__, verbose_level);
+		Fq.create_object_by_rank(tmp[i], 0, __FILE__, __LINE__, verbose_level);
+	}
+	if (f_v) {
+		cout << "creating generator[0]" << endl;
+	}
+	Fq.create_object_by_rank(generator[0], 1, __FILE__, __LINE__, verbose_level);
+
+	// now coeffs has degree 1
+	// and generator has degree 0
+
+	if (f_vv) {
+		cout << "coeffs:" << endl;
+		print_polynomial(Fq, 1, coeffs);
+		cout << endl;
+		cout << "generator:" << endl;
+		print_polynomial(Fq, 0, generator);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "creating Pc" << endl;
+	}
+	Fq.create_object_by_rank(Pc, 0, __FILE__, __LINE__, verbose_level);
+	if (f_v) {
+		cout << "creating Pd" << endl;
+	}
+	Fq.create_object_by_rank(Pd, 0, __FILE__, __LINE__, verbose_level);
+
+	r = 0;
+	for (i = 0; i < n; i++) {
+		if (f_v) {
+			cout << "i=" << i << ", r=" << r << endl;
+		}
+		if (!taken[i]) {
+			continue;
+		}
+		if (f_v) {
+			cout << "working on root " << i << endl;
+		}
+		if (f_v) {
+			cout << "before Fq.assign beta" << endl;
+		}
+		Fq.assign(beta, beta_i, verbose_level);
+		if (f_v) {
+			cout << "before Fq.power_int" << endl;
+		}
+		Fq.power_int(beta_i, i, verbose_level);
+		if (f_v) {
+			cout << "before Fq.negate" << endl;
+		}
+		Fq.negate(beta_i);
+		if (f_v) {
+			cout << "before Fq.assign beta_i" << endl;
+		}
+		Fq.assign(beta_i, coeffs[0], verbose_level);
+		if (f_v) {
+			cout << "root: " << i << " : ";
+			Fq.print_object(beta_i, cout);
+			//cout << " : ";
+			//print_polynomial(Fq, 2, coeffs);
+			cout << endl;
+		}
+
+
+		if (f_v) {
+			cout << "before Fq.assign(generator[j], tmp[j])" << endl;
+		}
+		for (j = 0; j <= r; j++) {
+			Fq.assign(generator[j], tmp[j], verbose_level);
+		}
+
+		//cout << "tmp:" << endl;
+		//print_polynomial(Fq, r, tmp);
+		//cout << endl;
+
+		if (f_v) {
+			cout << "before Fq.assign(tmp[j], generator[j + 1])" << endl;
+		}
+		for (j = 0; j <= r; j++) {
+			Fq.assign(tmp[j], generator[j + 1], verbose_level);
+			}
+		Fq.delete_object(generator[0]);
+		Fq.create_object_by_rank(generator[0], 0, __FILE__, __LINE__, verbose_level);
+
+		//cout << "generator after shifting up:" << endl;
+		//print_polynomial(Fq, r + 1, generator);
+		//cout << endl;
+
+		for (j = 0; j <= r; j++) {
+			if (f_v) {
+				cout << "j=" << j << endl;
+			}
+			if (f_v) {
+				cout << "before Fq.mult(tmp[j], coeffs[0], Pc)" << endl;
+			}
+			Fq.mult(tmp[j], coeffs[0], Pc, verbose_level - 1);
+			if (f_v) {
+				cout << "before Fq.add()" << endl;
+			}
+			Fq.add(Pc, generator[j], Pd);
+			if (f_v) {
+				cout << "before Fq.assign()" << endl;
+			}
+			Fq.assign(Pd, generator[j], verbose_level);
+		}
+		r++;
+		if (f_v) {
+			cout << "r=" << r << endl;
+		}
+		if (f_v) {
+			cout << "current polynomial: ";
+			print_polynomial(Fq, r, generator);
+			cout << endl;
+		}
+
+	}
+	if (f_v) {
+		cout << "The generator polynomial is: ";
+		print_polynomial(Fq, r, generator);
+		cout << endl;
+	}
+
+	Fq.delete_object(c);
+	Fq.delete_object(beta);
+	Fq.delete_object(beta_i);
+
+
+	int *generator_subfield;
+	int *Genma;
+
+	if (f_v) {
+		cout << "before field_reduction" << endl;
+	}
+	field_reduction(n, q, p, e, m, Fp, Fq, r,
+		generator, generator_subfield, f_poly, poly, verbose_level);
+	cout << "generator polynomial:" << endl;
+	for (j = 0; j <= degree; j++) {
+		cout << generator_subfield[j] << " ";
+	}
+	cout << endl;
+
+	if (f_v) {
+		cout << "before generator_matrix_cyclic_code" << endl;
+	}
+	generator_matrix_cyclic_code(n, degree, generator_subfield, Genma);
+	cout << "generator matrix: " << endl;
+	print_integer_matrix_width(cout, Genma, n - degree, n, n, 3);
+
+
+	{
+	ofstream fp(fname);
+	int k = n - degree;
+
+
+	fp << n << " " << k << " " << t << " " << q << endl;
+	for (i = 0; i < k; i++) {
+		for (j = 0; j < n; j++) {
+			fp << Genma[i * n + j] << " ";
+			}
+		fp << endl;
+		}
+	fp << endl;
+	}
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+	//cout << "before FREE_int(taken)" << endl;
+	FREE_int(taken);
+	//cout << "before FREE_int(transversal)" << endl;
+	FREE_int(transversal);
+	//cout << "before FREE_int(generator_subfield)" << endl;
+	FREE_int(generator_subfield);
+	//cout << "before FREE_int(Genma)" << endl;
+	FREE_int(Genma);
+	//cout << "before FREE_OBJECTS(generator)" << endl;
+	for (i = 0; i <= degree; i++) {
+		Fq.delete_object(generator[i]);
+	}
+	//FREE_OBJECTS(generator);
+	cout << "before FREE_OBJECTS(tmp)" << endl;
+	for (i = 0; i <= degree; i++) {
+		Fq.delete_object(tmp[i]);
+	}
+	FREE_OBJECTS(tmp);
+	//cout << "before FREE_OBJECTS(coeffs)" << endl;
+	for (i = 0; i < 2; i++) {
+		Fq.delete_object(coeffs[i]);
+	}
+	FREE_OBJECTS(coeffs);
+
+}
+
+void coding_theory_domain::generator_matrix_cyclic_code(int n,
+		int degree, int *generator_polynomial, int *&M)
+{
+	int k = n - degree;
+	int i, j;
+
+	M = NEW_int(k * n);
+	for (i = 0; i < k * n; i++) {
+		M[i] = 0;
+	}
+	for (i = 0; i < k; i++) {
+		for (j = 0; j <= degree; j++) {
+			M[i * n + j + i] = generator_polynomial[j];
+		}
+	}
+}
+
+void coding_theory_domain::print_polynomial(unipoly_domain &Fq,
+		int degree, unipoly_object *coeffs)
+{
+	int i, f_first = TRUE;
+
+	for (i = 0; i <= degree; i++) {
+		if (Fq.is_zero(coeffs[i])) {
+			continue;
+		}
+		if (!f_first) {
+			cout << " + ";
+		}
+		f_first = FALSE;
+		if (!Fq.is_one(coeffs[i])) {
+			cout << "(";
+			Fq.print_object(coeffs[i], cout);
+			cout << ") * ";
+		}
+		cout << " Z^" << i;
+	}
+}
+
+
+void coding_theory_domain::field_reduction(int n, int q, int p, int e, int m,
+	finite_field &Fp, unipoly_domain &Fq,
+	int degree, unipoly_object *generator, int *&generator_subfield,
+	int f_poly, char *poly,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int r;
+	longinteger_object Qm1, Index;
+	longinteger_domain D;
+
+	if (f_v) {
+		cout << "coding_theory_domain::field_reduction" << endl;
+	}
+	D.create_qnm1(Qm1, q, m);
+
+	D.integral_division_by_int(Qm1, q - 1, Index, r);
+
+	if (r != 0) {
+		cout << "coding_theory_domain::field_reduction q - 1 "
+				"does not divide q^m - 1" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "considering the subfield GF(" << q
+				<< ") of GF(" << q << "^" << m << ")" << endl;
+		cout << "subgroup index = " << Index << endl;
+	}
+
+	unipoly_object c, beta, beta_i;
+	longinteger_object *beta_rk_table, rk;
+	int i, j;
+
+
+	beta_rk_table = NEW_OBJECTS(longinteger_object, q);
+
+	Fq.create_object_by_rank(c, 0, __FILE__, __LINE__, verbose_level);
+	Fq.create_object_by_rank(beta, p, __FILE__, __LINE__, verbose_level); // the element alpha
+	Fq.create_object_by_rank(beta_i, 1, __FILE__, __LINE__, verbose_level);
+	if (f_v) {
+		cout << "\\alpha = ";
+		Fq.print_object(beta, cout);
+		cout << endl;
+	}
+	Fq.power_longinteger(beta, Index, verbose_level - 1);
+	if (f_v) {
+		cout << "\\beta = \\alpha^" << Index << " = ";
+		Fq.print_object(beta, cout);
+		cout << endl;
+	}
+	for (i = 1; i <= q - 1; i++) {
+		Fq.assign(beta, beta_i, verbose_level);
+		Fq.power_int(beta_i, i, 0);
+		Fq.rank_longinteger(beta_i, beta_rk_table[i]);
+		if (f_v) {
+			cout << i << " : ";
+			Fq.print_object(beta_i, cout);
+			cout << " : " << beta_rk_table[i] << endl;
+		}
+	}
+
+	generator_subfield = NEW_int(degree + 1);
+
+	for (i = 0; i <= degree; i++) {
+		Fq.rank_longinteger(generator[i], rk);
+		if (f_v) {
+			cout << "coefficient " << i << " has rk " << rk << endl;
+		}
+		if (rk.is_zero()) {
+			generator_subfield[i] = 0;
+			continue;
+		}
+		for (j = 1; j <= q - 1; j++) {
+			if (D.compare(rk, beta_rk_table[j]) == 0) {
+				generator_subfield[i] = j;
+				break;
+			}
+		}
+		if (j == q) {
+			cout << "error, coefficient "
+					"does not lie in the subfield" << endl;
+			exit(1);
+		}
+	}
+	if (f_v) {
+		cout << "over the subfield, exponential notation:" << endl;
+		for (i = 0; i <= degree; i++) {
+			cout << " " << generator_subfield[i] << "Z^" << i;
+		}
+		cout << endl;
+	}
+	if (f_v) {
+		cout << "i : beta^i" << endl;
+	}
+	for (i = 0; i <= e; i++) {
+		Fq.assign(beta, beta_i, verbose_level);
+		Fq.power_int(beta_i, i, 0);
+		if (f_v) {
+			cout << i << " : ";
+			Fq.print_object(beta_i, cout);
+			cout << endl;
+		}
+	}
+
+	if (!f_poly) {
+		goto the_end;
+	}
+
+	{
+		finite_field fq;
+
+		fq.init_override_polynomial(q, poly, verbose_level);
+		cout << "q = " << q << " override polynomial = " << poly << endl;
+
+		for (i = 0; i <= degree; i++) {
+			j = generator_subfield[i];
+			if (j == 0) {
+				continue;
+			}
+			generator_subfield[i] = fq.alpha_power(j);
+		}
+		if (f_v) {
+			cout << "over the subfield:" << endl;
+			for (i = 0; i <= degree; i++) {
+				j = generator_subfield[i];
+				if (j == 0) {
+					continue;
+				}
+				cout << " + " << j << " x^" << i;
+			}
+			cout << endl;
+		}
+	}
+
+the_end:
+
+	Fq.delete_object(c);
+	Fq.delete_object(beta);
+	Fq.delete_object(beta_i);
+	FREE_OBJECTS(beta_rk_table);
+
+	if (f_v) {
+		cout << "coding_theory_domain::field_reduction done" << endl;
+	}
+
+}
+
 
 }}
 

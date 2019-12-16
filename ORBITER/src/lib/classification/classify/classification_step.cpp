@@ -170,7 +170,7 @@ void classification_step::print_latex(ostream &ost,
 	int i;
 	longinteger_domain D;
 	longinteger_object go1, ol, Ol;
-	Ol.create(0);
+	Ol.create(0, __FILE__, __LINE__);
 
 	ost << "The orbits are:" << endl;
 	ost << "\\begin{enumerate}[(1)]" << endl;

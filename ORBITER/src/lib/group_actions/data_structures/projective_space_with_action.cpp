@@ -504,7 +504,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		cout << "projective_space_with_action::set_stabilizer "
 				"before init_permutation_group_from_generators" << endl;
 		}
-	ago.create(Ago);
+	ago.create(Ago, __FILE__, __LINE__);
 	A_perm->init_permutation_group_from_generators(N, 
 		TRUE, ago, 
 		Aut_counter, Aut, 
@@ -1075,7 +1075,7 @@ strong_generators
 				"of_object before init_permutation_group_"
 				"from_generators" << endl;
 		}
-	ago.create(Ago);
+	ago.create(Ago, __FILE__, __LINE__);
 	A_perm->init_permutation_group_from_generators(N, 
 		TRUE, ago,
 		Aut_counter, Aut, 
@@ -1434,7 +1434,7 @@ void projective_space_with_action::report_orbits_in_PG_3_tex(
 	longinteger_object full_group_order;
 	order = A->element_order(Elt);
 
-	full_group_order.create(order);
+	full_group_order.create(order, __FILE__, __LINE__);
 
 	//P3 = P;
 
@@ -1529,7 +1529,7 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 	longinteger_object full_group_order;
 	order = A->element_order(Elt);
 
-	full_group_order.create(order);
+	full_group_order.create(order, __FILE__, __LINE__);
 
 	//P3 = P;
 

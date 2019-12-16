@@ -72,26 +72,54 @@ void semifield_classify::null()
 
 void semifield_classify::freeself()
 {
+	int verbose_level = 1;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "semifield_classify::freeself" << endl;
+	}
 	if (A0) {
 		FREE_OBJECT(A0);
 		}
+
+	if (f_v) {
+		cout << "semifield_classify::freeself before A0_linear" << endl;
+	}
 	if (A0_linear) {
 		FREE_OBJECT(A0_linear);
 		}
+	if (f_v) {
+		cout << "semifield_classify::freeself before T" << endl;
+	}
 	if (T) {
 		FREE_OBJECT(T);
 		}
+	if (f_v) {
+		cout << "semifield_classify::freeself before Elt1" << endl;
+	}
 	if (Elt1) {
 		FREE_int(Elt1);
 		}
+	if (f_v) {
+		cout << "semifield_classify::freeself before Symmetry_group" << endl;
+	}
 	if (Symmetry_group) {
 		FREE_OBJECT(Symmetry_group);
 		}
+	if (f_v) {
+		cout << "semifield_classify::freeself before Poset" << endl;
+	}
 	if (Poset) {
 		FREE_OBJECT(Poset);
 	}
+	if (f_v) {
+		cout << "semifield_classify::freeself before Gen" << endl;
+	}
 	if (Gen) {
 		FREE_OBJECT(Gen);
+	}
+	if (f_v) {
+		cout << "semifield_classify::freeself before test_base_cols" << endl;
 	}
 	if (test_base_cols) {
 		FREE_int(test_base_cols);
@@ -105,16 +133,25 @@ void semifield_classify::freeself()
 	if (test_Basis) {
 		FREE_int(test_Basis);
 		}
+	if (f_v) {
+		cout << "semifield_classify::freeself before Basis1" << endl;
+	}
 	if (Basis1) {
 		FREE_int(Basis1);
 		}
 	if (Basis2) {
 		FREE_int(Basis2);
 		}
+	if (f_v) {
+		cout << "semifield_classify::freeself before desired_pivots" << endl;
+	}
 	if (desired_pivots) {
 		FREE_int(desired_pivots);
 		}
 	null();
+	if (f_v) {
+		cout << "semifield_classify::freeself done" << endl;
+	}
 }
 
 void semifield_classify::init(int argc, const char **argv,

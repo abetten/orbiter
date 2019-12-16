@@ -243,7 +243,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type1(
 
 	longinteger_domain D;
 	longinteger_object ol, Ol;
-	Ol.create(0);
+	Ol.create(0, __FILE__, __LINE__);
 
 	ost << "The group of type 1 has " 
 		<< l 
@@ -303,7 +303,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type2(
 
 	longinteger_domain D;
 	longinteger_object ol, Ol;
-	Ol.create(0);
+	Ol.create(0, __FILE__, __LINE__);
 
 	ost << "The group of type 2 has " 
 		<< l 

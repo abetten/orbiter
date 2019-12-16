@@ -84,8 +84,13 @@ semifield_level_two::semifield_level_two()
 
 semifield_level_two::~semifield_level_two()
 {
+	int verbose_level = 1;
+	int f_v = (verbose_level >= 1);
 	int i;
 
+	if (f_v) {
+		cout << "semifield_level_two::~semifield_level_two" << endl;
+	}
 	if (R) {
 		FREE_OBJECTS(R);
 		}
@@ -93,6 +98,11 @@ semifield_level_two::~semifield_level_two()
 	if (desired_pivots) {
 		FREE_int(desired_pivots);
 		}
+
+	if (f_v) {
+		cout << "semifield_level_two::~semifield_level_two before Basis" << endl;
+	}
+
 
 
 
@@ -116,6 +126,10 @@ semifield_level_two::~semifield_level_two()
 		}
 
 
+
+	if (f_v) {
+		cout << "semifield_level_two::~semifield_level_two before class_rep_rank" << endl;
+	}
 
 
 
@@ -158,13 +172,27 @@ semifield_level_two::~semifield_level_two()
 		FREE_int(flag_orbit_length);
 		}
 
+	if (f_v) {
+		cout << "semifield_level_two::~semifield_level_two before f_Fusion" << endl;
+	}
 
 	if (f_Fusion) {
 		FREE_int(f_Fusion);
 		}
+
+	if (f_v) {
+		cout << "semifield_level_two::~semifield_level_two before Fusion_idx" << endl;
+	}
+
+
 	if (Fusion_idx) {
 		FREE_int(Fusion_idx);
 		}
+
+	if (f_v) {
+		cout << "semifield_level_two::~semifield_level_two before Fusion_elt" << endl;
+	}
+
 	if (Fusion_elt) {
 		for (i = 0; i < nb_flag_orbits; i++) {
 			if (Fusion_elt[i]) {
@@ -174,21 +202,51 @@ semifield_level_two::~semifield_level_two()
 		FREE_pint(Fusion_elt);
 		}
 
+	if (f_v) {
+		cout << "semifield_level_two::~semifield_level_two before defining_flag_orbit" << endl;
+	}
+
 	if (defining_flag_orbit) {
 		FREE_int(defining_flag_orbit);
 		}
+
+	if (f_v) {
+		cout << "semifield_level_two::~semifield_level_two before So" << endl;
+	}
+
 	if (So) {
 		FREE_int(So);
 		}
+
+	if (f_v) {
+		cout << "semifield_level_two::~semifield_level_two before Fo" << endl;
+	}
+
 	if (Fo) {
 		FREE_int(Fo);
 		}
+
+	if (f_v) {
+		cout << "semifield_level_two::~semifield_level_two before Pt" << endl;
+	}
+
+
 	if (Pt) {
 		FREE_lint(Pt);
 		}
+
+	if (f_v) {
+		cout << "semifield_level_two::~semifield_level_two before Go" << endl;
+	}
+
+
 	if (Go) {
-		FREE_int(Go);
+		FREE_lint(Go);
 		}
+
+	if (f_v) {
+		cout << "semifield_level_two::~semifield_level_two before Stabilizer_gens" << endl;
+	}
 
 	if (Stabilizer_gens) {
 		FREE_OBJECTS(Stabilizer_gens);
@@ -260,6 +318,9 @@ semifield_level_two::~semifield_level_two()
 		FREE_int(Nb_candidates);
 	}
 
+	if (f_v) {
+		cout << "semifield_level_two::~semifield_level_two done" << endl;
+	}
 
 	//freeself();
 }
@@ -273,7 +334,7 @@ void semifield_level_two::init(semifield_classify *SC,
 
 	if (f_v) {
 		cout << "semifield_level_two::init" << endl;
-		}
+	}
 	semifield_level_two::SC = SC;
 	k = SC->k;
 	n = 2 * k;
@@ -292,19 +353,19 @@ void semifield_level_two::init(semifield_classify *SC,
 		cout << "semifield_level_two::init "
 				"the order of GL(" << k << "," << q << ") "
 						"is " << Go << endl;
-		}
+	}
 
 	M = A_PGLk->G.matrix_grp;
 
 	if (f_v) {
 		cout << "semifield_level_two::init "
 				"before M->init_gl_classes M->n=" << M->n << endl;
-		}
+	}
 	M->init_gl_classes(0 /*verbose_level*/);
 	if (f_v) {
 		cout << "semifield_level_two::init "
 				"after M->init_gl_classes" << endl;
-		}
+	}
 	C = M->C;
 
 	Basis = NEW_int(k * k);
@@ -346,7 +407,7 @@ void semifield_level_two::init(semifield_classify *SC,
 
 	if (f_v) {
 		cout << "semifield_starter::init done" << endl;
-		}
+	}
 }
 
 
@@ -358,26 +419,26 @@ void semifield_level_two::init_desired_pivots(int verbose_level)
 
 	if (f_v) {
 		cout << "semifield_level_two::init_desired_pivots" << endl;
-		}
+	}
 	desired_pivots = NEW_int(k);
 
 	for (i = 0; i < k; i++) {
 		if (i < 2) {
 			desired_pivots[i] = i * k;
-			}
+		}
 		else {
 			desired_pivots[i] = (k - 1 - (i - 2)) * k;
-			}
 		}
+	}
 	if (f_vv) {
 		cout << "semifield_level_two::init_desired_pivots "
 				"desired_pivots: ";
 		int_vec_print(cout, desired_pivots, k);
 		cout << endl;
-		}
+	}
 	if (f_v) {
 		cout << "semifield_level_two::init_desired_pivots done" << endl;
-		}
+	}
 }
 
 void semifield_level_two::list_all_elements_in_conjugacy_class(
@@ -396,7 +457,7 @@ void semifield_level_two::list_all_elements_in_conjugacy_class(
 	if (f_v) {
 		cout << "semifield_starter::list_all_elements_in_conjugacy_class "
 				"c=" << c << endl;
-		}
+	}
 
 	Centralizer_gens = NEW_OBJECT(strong_generators);
 
@@ -409,7 +470,7 @@ void semifield_level_two::list_all_elements_in_conjugacy_class(
 
 	if (f_vv) {
 		cout << "creating sims:" << endl;
-		}
+	}
 	U = Centralizer_gens->create_sims(0 /* verbose_level */);
 	U->group_order(Co);
 
@@ -417,7 +478,7 @@ void semifield_level_two::list_all_elements_in_conjugacy_class(
 		cout << "Sims object for centralizer of order "
 				<< Co << " has been created, transversal lengths are ";
 		U->print_transversal_lengths();
-		}
+	}
 
 	G = A_PGLk->Sims;
 	G->group_order(Go);
@@ -425,7 +486,7 @@ void semifield_level_two::list_all_elements_in_conjugacy_class(
 
 	if (f_vv) {
 		cout << "Class " << c << " has length " << Cl << ":" << endl;
-		}
+	}
 	cl = Cl.as_int();
 
 	int *Ranks;
@@ -435,7 +496,7 @@ void semifield_level_two::list_all_elements_in_conjugacy_class(
 
 		if (f_v) {
 			cout << "element " << rk << " / " << cl << ":" << endl;
-			}
+		}
 
 		A_PGLk->coset_unrank(G, U, rk, E1, 0 /* verbose_level */);
 
@@ -449,15 +510,15 @@ void semifield_level_two::list_all_elements_in_conjugacy_class(
 		r = SC->matrix_rank(E4); // G->element_rank_int(E4);
 		if (f_v) {
 			cout << "Has rank " << r << endl;
-			}
+		}
 		Ranks[rk] = r;
 
 		if (f_v) {
 			cout << "Coset representative:" << endl;
 			A_PGLk->element_print(E1, cout);
 			cout << endl;
-			}
 		}
+	}
 
 	cout << "The elements of class " << c << " are: ";
 	int_vec_print(cout, Ranks, cl);
@@ -468,79 +529,76 @@ void semifield_level_two::list_all_elements_in_conjugacy_class(
 	FREE_OBJECT(Centralizer_gens);
 	if (f_v) {
 		cout << "semifield_level_two::list_all_elements_in_conjugacy_class done" << endl;
-		}
+	}
 }
 
-void semifield_level_two::compute_level_two(int verbose_level)
+void semifield_level_two::compute_level_two(int nb_stages, int verbose_level)
+// nb_stages = 4 for everything
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "semifield_level_two::compute_level_two" << endl;
-		}
+	}
 
-	if (f_v) {
-		cout << "semifield_level_two::compute_level_two "
-				"before downstep" << endl;
+	if (nb_stages >= 1) {
+		if (f_v) {
+			cout << "semifield_level_two::compute_level_two "
+					"before downstep" << endl;
 		}
-	downstep(verbose_level - 1);
-	if (f_v) {
-		cout << "semifield_level_two::compute_level_two "
-				"after downstep, nb_flag_orbits=" << nb_flag_orbits << endl;
+		downstep(verbose_level - 1);
+		if (f_v) {
+			cout << "semifield_level_two::compute_level_two "
+					"after downstep, nb_flag_orbits=" << nb_flag_orbits << endl;
 		}
-
-	if (f_v) {
-		cout << "semifield_level_two::compute_level_two "
-				"We found " << nb_flag_orbits << " down orbits. "
-				"Now, we compute the stabilizers." << endl;
-		}
+	}
 
 
-
-	if (f_v) {
-		cout << "semifield_level_two::compute_level_two "
-				"before compute_stabilizers_downstep" << endl;
-		}
-	compute_stabilizers_downstep(verbose_level - 2);
-	if (f_v) {
-		cout << "semifield_level_two::compute_level_two "
-				"after compute_stabilizers_downstep" << endl;
+	if (nb_stages >= 2) {
+		if (f_v) {
+			cout << "semifield_level_two::compute_level_two compute the stabilizers." << endl;
 		}
 
-	if (f_v) {
-		cout << "semifield_level_two::compute_level_two "
-				"before upstep" << endl;
-		}
-	upstep(verbose_level - 1);
-	if (f_v) {
-		cout << "semifield_level_two::compute_level_two "
-				"after upstep, nb_orbits=" << nb_orbits << endl;
-		}
 
-	if (f_v) {
-		cout << "semifield_level_two::compute_level_two "
-				"before write_level_info_file" << endl;
-		}
-	write_level_info_file(verbose_level);
-	if (f_v) {
-		cout << "semifield_level_two::compute_level_two "
-				"after write_level_info_file" << endl;
-		}
 
-#if 0
-	if (f_make_graphs) {
-		make_graph(2, verbose_level);
-		make_graph_auxiliary(2, verbose_level);
+		if (f_v) {
+			cout << "semifield_level_two::compute_level_two "
+					"before compute_stabilizers_downstep" << endl;
 		}
+		compute_stabilizers_downstep(verbose_level - 2);
+		if (f_v) {
+			cout << "semifield_level_two::compute_level_two "
+					"after compute_stabilizers_downstep" << endl;
+		}
+	}
 
-	if (f_save_strong_generators) {
-		save_strong_generators(2, verbose_level);
+	if (nb_stages >= 3) {
+		if (f_v) {
+			cout << "semifield_level_two::compute_level_two "
+					"before upstep" << endl;
 		}
-#endif
+		upstep(verbose_level - 1);
+		if (f_v) {
+			cout << "semifield_level_two::compute_level_two "
+					"after upstep, nb_orbits=" << nb_orbits << endl;
+		}
+	}
+
+	if (nb_stages >= 4) {
+		if (f_v) {
+			cout << "semifield_level_two::compute_level_two "
+					"before write_level_info_file" << endl;
+		}
+		write_level_info_file(verbose_level);
+		if (f_v) {
+			cout << "semifield_level_two::compute_level_two "
+					"after write_level_info_file" << endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "semifield_level_two::compute_level_two done" << endl;
-		}
+	}
 }
 
 
@@ -553,26 +611,26 @@ void semifield_level_two::downstep(int verbose_level)
 
 	if (f_v) {
 		cout << "semifield_level_two::downstep" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "semifield_level_two::downstep "
 				"before make_classes" << endl;
-		}
+	}
 
 
 	if (C == NULL) {
 		cout << "semifield_level_two::downstep "
 				"C == NULL" << endl;
 		exit(1);
-		}
+	}
 	C->make_classes(R, nb_classes,
 			TRUE /* f_no_eigenvalue_one */, 0 /*verbose_level - 1*/);
 
 	if (f_v) {
 		cout << "semifield_level_two::downstep after "
 				"C->make_classes nb_classes = " << nb_classes << endl;
-		}
+	}
 
 #if 0
 	if (f_write_class_reps) {
@@ -591,16 +649,16 @@ void semifield_level_two::downstep(int verbose_level)
 			fp << "Representative " << i << " / "
 					<< nb_classes << endl;
 			C->print_matrix_and_centralizer_order_latex(fp, R + i);
-			}
+		}
 		latex_foot(fp);
 #endif
-		}
+	}
 #endif
 
 	if (f_v) {
 		cout << "semifield_level_two::downstep "
 				"after make_classes" << endl;
-		}
+	}
 
 
 	class_rep_rank = NEW_lint(nb_classes);
@@ -614,14 +672,14 @@ void semifield_level_two::downstep(int verbose_level)
 		if (f_vv) {
 			cout << "semifield_level_two::downstep "
 					"class " << i << " / " << nb_classes << " :" << endl;
-			}
+		}
 
 		C->make_matrix_from_class_rep(Mtx, R + i, 0 /*verbose_level - 1 */);
 
 		if (f_vv) {
 			cout << "representative:" << endl;
 			int_matrix_print(Mtx, k, k);
-			}
+		}
 
 		class_rep_rank[i] = SC->matrix_rank(Mtx);
 		F->add_vector(Mtx, Mtx_Id, Mtx_2, k * k);
@@ -639,28 +697,28 @@ void semifield_level_two::downstep(int verbose_level)
 		if (FALSE) {
 			cout << "semifield_level_two::downstep "
 					"class " << i << " before identify_matrix" << endl;
-			}
+		}
 		C->identify_matrix(Mtx_2, R2,
 				class_rep_plus_I_Basis[i],
-				0 /*verbose_level - 3*/);
+				verbose_level - 1);
 		if (f_vv) {
 			cout << "class_rep_plus_I_Basis[i]" << endl;
 			int_matrix_print(class_rep_plus_I_Basis[i], k, k);
-			}
+		}
 
 		R_i_plus_I_class_idx[i] = C->find_class_rep(
 				R, nb_classes, R2, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "R_i_plus_I_class_idx[i]="
 					<< R_i_plus_I_class_idx[i] << endl;
-			}
+		}
 
 		F->matrix_inverse(class_rep_plus_I_Basis[i],
 				class_rep_plus_I_Basis_inv[i], k, 0 /*verbose_level */);
 		if (f_vv) {
 			cout << "class_rep_plus_I_Basis_inv[i]" << endl;
 			int_matrix_print(class_rep_plus_I_Basis_inv[i], k, k);
-			}
+		}
 
 		if (f_vv) {
 
@@ -689,11 +747,11 @@ void semifield_level_two::downstep(int verbose_level)
 			cout << "\\right]" << endl;
 			cout << "$$" << endl;
 
-			}
+		}
 
 		FREE_OBJECT(R2);
 
-		}
+	}
 
 
 
@@ -705,7 +763,7 @@ void semifield_level_two::downstep(int verbose_level)
 	for (i = 0; i < nb_classes; i++) {
 		if (R_i_plus_I_class_idx[i] < i) {
 			continue;
-			}
+		}
 		flag_orbit_classes[nb_flag_orbits * 2 + 0] = i;
 		flag_orbit_classes[nb_flag_orbits * 2 + 1] = R_i_plus_I_class_idx[i];
 		class_to_flag_orbit[i] = nb_flag_orbits;
@@ -718,7 +776,7 @@ void semifield_level_two::downstep(int verbose_level)
 					R[idx].class_length.as_int();
 			flag_orbit_length[nb_flag_orbits] =
 					R[idx].class_length.as_int() >> 1;
-			}
+		}
 		else {
 			// R_i+I belongs to a different conjugacy class than R_i:
 			flag_orbit_number_of_matrices[nb_flag_orbits] = 0;
@@ -726,19 +784,19 @@ void semifield_level_two::downstep(int verbose_level)
 				idx = flag_orbit_classes[nb_flag_orbits * 2 + j];
 				flag_orbit_number_of_matrices[nb_flag_orbits] +=
 						R[idx].class_length.as_int();
-				}
+			}
 			idx = flag_orbit_classes[nb_flag_orbits * 2 + 0];
 			flag_orbit_length[nb_flag_orbits] =
 					R[idx].class_length.as_int();
-			}
-		nb_flag_orbits++;
 		}
+		nb_flag_orbits++;
+	}
 
 
 
 	if (f_v) {
 		cout << "semifield_level_two::downstep done" << endl;
-		}
+	}
 }
 
 
@@ -768,14 +826,31 @@ void semifield_level_two::compute_stabilizers_downstep(int verbose_level)
 
 		//A_PGLk->make_element(Elt, Mtx, 0);
 
+		if (f_vv) {
+			cout << "semifield_level_two::compute_stabilizers_downstep "
+					"down orbit " << i << " / " << nb_flag_orbits
+					<< " before Flag_orbit_stabilizer[i].init_centralizer_of_matrix" << endl;
+		}
 		Flag_orbit_stabilizer[i].init_centralizer_of_matrix(
 				A_PGLk, Mtx, verbose_level - 3);
-		if (f_vvv) {
+
+		if (f_vv) {
+			cout << "semifield_level_two::compute_stabilizers_downstep "
+					"down orbit " << i << " / " << nb_flag_orbits
+					<< " after Flag_orbit_stabilizer[i].init_centralizer_of_matrix" << endl;
+		}
+
+		if (FALSE) {
 			cout << "centralizer:" << endl;
 			Flag_orbit_stabilizer[i].print_generators();
 		}
 
 		if (a == b) {
+			if (f_vv) {
+				cout << "semifield_level_two::compute_stabilizers_downstep "
+						"down orbit " << i << " / " << nb_flag_orbits
+						<< " a == b, extending Flag_orbit_stabilizer[i]" << endl;
+			}
 
 			gl_class_rep *R2;
 
@@ -791,6 +866,13 @@ void semifield_level_two::compute_stabilizers_downstep(int verbose_level)
 					2 /* group_index */, verbose_level - 3);
 
 			FREE_OBJECT(R2);
+
+			if (f_vv) {
+				cout << "semifield_level_two::compute_stabilizers_downstep "
+						"down orbit " << i << " / " << nb_flag_orbits
+						<< " a == b, extending Flag_orbit_stabilizer[i] done" << endl;
+			}
+
 		}
 	}
 
@@ -823,7 +905,7 @@ void semifield_level_two::compute_stabilizers_downstep(int verbose_level)
 			Flag_orbit_stabilizer[i].group_order(go);
 			cout << "down orbit " << i << " / " << nb_flag_orbits
 				<< " has order " << go << endl;
-			if (f_vvv) {
+			if (FALSE) {
 				Flag_orbit_stabilizer[i].print_generators();
 			}
 		}
@@ -840,13 +922,13 @@ void semifield_level_two::upstep(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int ext, coset, idx, i;
+	int f, coset, idx, i;
 	long int a, b;
 
 	if (f_v) {
 		cout << "semifield_level_two::upstep "
 				"verbose_level = " << verbose_level << endl;
-		}
+	}
 
 	f_Fusion = NEW_int(nb_flag_orbits);
 	Fusion_idx = NEW_int(nb_flag_orbits);
@@ -856,36 +938,45 @@ void semifield_level_two::upstep(int verbose_level)
 		f_Fusion[i] = FALSE;
 		Fusion_idx[i] = -1;
 		Fusion_elt[i] = NULL;
-		}
+	}
 
 	defining_flag_orbit = NEW_int(nb_flag_orbits);
 	nb_orbits = 0;
 
-	for (ext = 0; ext < nb_flag_orbits; ext++) {
+	if (f_vv) {
+		cout << "semifield_level_two::upstep "
+				" nb_flag_orbits = " << nb_flag_orbits << endl;
+	}
+
+	for (f = 0; f < nb_flag_orbits; f++) {
 
 		if (f_vv) {
 			cout << "semifield_level_two::upstep "
-					"working on ext " << ext << " / "
-					<< nb_flag_orbits << endl;
-			}
+					"working on flag orbit " << f << " / " << nb_flag_orbits << endl;
+		}
 
-		if (Fusion_idx[ext] >= 0) {
+		if (Fusion_idx[f] >= 0) {
 			continue;
-			}
+		}
 
-		Fusion_idx[ext] = nb_orbits;
+		Fusion_idx[f] = nb_orbits;
 
-		idx = flag_orbit_classes[ext * 2 + 0];
+		idx = flag_orbit_classes[f * 2 + 0];
 		a = class_rep_rank[idx];
 		b = class_rep_plus_I_rank[idx];
 
-		defining_flag_orbit[nb_orbits] = ext; // !!!
+		defining_flag_orbit[nb_orbits] = f; // !!!
 		if (f_vv) {
 			cout << "working on new up orbit " << nb_orbits
 					<< " copying stabilizer over idx=" << idx << endl;
-			}
+		}
 
-		setup_stabilizer(&Flag_orbit_stabilizer[ext],
+		if (f_vv) {
+			cout << "semifield_level_two::upstep "
+					"working on flag orbit " << f << " / " << nb_flag_orbits
+					<< " before setup_stabilizer" << endl;
+		}
+		setup_stabilizer(&Flag_orbit_stabilizer[f],
 				&Stabilizer_gens[nb_orbits],
 				verbose_level - 3);
 		// turns k x k matrices into n x n matrices
@@ -893,8 +984,15 @@ void semifield_level_two::upstep(int verbose_level)
 
 		if (f_vv) {
 			cout << "semifield_level_two::upstep "
-					"ext=" << ext << endl;
-			}
+					"working on flag orbit " << f << " / " << nb_flag_orbits
+					<< " after setup_stabilizer" << endl;
+		}
+
+
+		if (f_vv) {
+			cout << "semifield_level_two::upstep "
+					"f=" << f << endl;
+		}
 
 		int **Aut_gens;
 		int nb_aut_gens;
@@ -908,29 +1006,58 @@ void semifield_level_two::upstep(int verbose_level)
 
 			if (f_vv) {
 				cout << "semifield_level_two::upstep "
-						"ext=" << ext << " / " << nb_flag_orbits
+						"f=" << f << " / " << nb_flag_orbits
 						<< " coset=" << coset << " / " << 2 << endl;
-				}
+			}
 			if (coset == 0) {
-				trace(ext, coset, a, b,
-						f_automorphism, Aut, verbose_level - 3);
+				if (f_vv) {
+					cout << "semifield_level_two::upstep "
+							"f=" << f << " / " << nb_flag_orbits
+							<< " coset=" << coset << " / " << 2 << " before trace(a, b)" << endl;
 				}
-			else {
-				trace(ext, coset, b, a,
+				trace(f, coset, a, b,
 						f_automorphism, Aut, verbose_level - 3);
-				}
-			if (f_automorphism) {
-				Aut_gens[nb_aut_gens++] = Aut;
+				if (f_vv) {
+					cout << "semifield_level_two::upstep "
+							"f=" << f << " / " << nb_flag_orbits
+							<< " coset=" << coset << " / " << 2 << " after trace" << endl;
 				}
 			}
+			else {
+				if (f_vv) {
+					cout << "semifield_level_two::upstep "
+							"f=" << f << " / " << nb_flag_orbits
+							<< " coset=" << coset << " / " << 2 << " before trace(b, a)" << endl;
+				}
+				trace(f, coset, b, a,
+						f_automorphism, Aut, verbose_level - 3);
+				if (f_vv) {
+					cout << "semifield_level_two::upstep "
+							"f=" << f << " / " << nb_flag_orbits
+							<< " coset=" << coset << " / " << 2 << " after trace" << endl;
+				}
+			}
+			if (f_automorphism) {
+				if (f_vv) {
+					cout << "semifield_level_two::upstep "
+							"f=" << f << " / " << nb_flag_orbits
+							<< " coset=" << coset << " / " << 2 << " found automorphism" << endl;
+				}
+				Aut_gens[nb_aut_gens++] = Aut;
+			}
+		}
 
 		if (f_vv) {
-			cout << "After tracing, we found " << nb_aut_gens
+			cout << "semifield_level_two::upstep After tracing, we found " << nb_aut_gens
 					<< " automorphisms" << endl;
-			}
+		}
 
 		vector_ge *coset_reps;
 
+		if (f_vv) {
+			cout << "semifield_level_two::upstep After tracing, "
+					"creating coset reps" << endl;
+		}
 		coset_reps = NEW_OBJECT(vector_ge);
 		coset_reps->init(A, verbose_level - 2);
 		coset_reps->allocate(nb_aut_gens + 1, verbose_level - 2);
@@ -938,13 +1065,13 @@ void semifield_level_two::upstep(int verbose_level)
 		for (i = 0; i < nb_aut_gens; i++) {
 			A->element_move(Aut_gens[i], coset_reps->ith(i + 1), 0);
 			FREE_int(Aut_gens[i]);
-			}
+		}
 		FREE_pint(Aut_gens);
 
 		if (f_vv) {
-			cout << "We are now extending the group by a factor "
+			cout << "semifield_level_two::upstep We are now extending the group by a factor "
 					"of " << nb_aut_gens + 1 << ":" << endl;
-			}
+		}
 
 		Stabilizer_gens[nb_orbits].add_generators(
 				coset_reps, nb_aut_gens + 1, verbose_level - 3);
@@ -956,23 +1083,23 @@ void semifield_level_two::upstep(int verbose_level)
 
 		Stabilizer_gens[nb_orbits].group_order(go);
 		if (f_vv) {
-			cout << "The new group order is " << go << endl;
+			cout << "semifield_level_two::upstep The new group order is " << go << endl;
 		}
-		if (f_vvv) {
-			cout << "generators:" << endl;
+		if (FALSE) {
+			cout << "semifield_level_two::upstep generators:" << endl;
 			Stabilizer_gens[nb_orbits].print_generators();
 		}
 
 
 
 		nb_orbits++;
-		}
+	}
 
 	//Po = NEW_int(nb_orbits);
 	So = NEW_int(nb_orbits);
 	Fo = NEW_int(nb_orbits);
 	Pt = NEW_lint(nb_orbits);
-	Go = NEW_int(nb_orbits);
+	Go = NEW_lint(nb_orbits);
 
 
 	for (i = 0; i < nb_orbits; i++) {
@@ -980,14 +1107,14 @@ void semifield_level_two::upstep(int verbose_level)
 
 		Stabilizer_gens[i].group_order(go);
 
-		ext = defining_flag_orbit[i];
-		idx = flag_orbit_classes[ext * 2 + 0];
+		f = defining_flag_orbit[i];
+		idx = flag_orbit_classes[f * 2 + 0];
 		a = class_rep_rank[idx];
 		b = class_rep_plus_I_rank[idx];
-		Fo[i] = ext;
+		Fo[i] = f;
 		So[i] = idx;
 		Pt[i] = a;
-		Go[i] = go.as_int();
+		Go[i] = go.as_lint();
 	}
 
 
@@ -1005,23 +1132,23 @@ void semifield_level_two::upstep(int verbose_level)
 			Stabilizer_gens[i].group_order(go);
 			cout << i << " : " << defining_flag_orbit[i] << " : " << go << endl;
 
-			ext = defining_flag_orbit[i];
+			f = defining_flag_orbit[i];
 
-			idx = flag_orbit_classes[ext * 2 + 0];
+			idx = flag_orbit_classes[f * 2 + 0];
 			a = class_rep_rank[idx];
 			b = class_rep_plus_I_rank[idx];
 
 			Mtx = NEW_int(k2);
 			SC->matrix_unrank(a, Mtx);
-			cout << "The representative of class " << idx
+			cout << "semifield_level_two::upstep The representative of class " << idx
 					<< " is the following matrix of rank " << a << endl;
 			int_matrix_print(Mtx, k, k);
-			cout << "The stabilizer has order " << go << endl;
-			if (f_vvv) {
+			cout << "semifield_level_two::upstep The stabilizer has order " << go << endl;
+			if (FALSE) {
 				cout << "The stabilizer is generated by the "
 						"following matrices:" << endl;
 				Stabilizer_gens[i].print_generators();
-				}
+			}
 
 
 #if 0
@@ -1038,32 +1165,32 @@ void semifield_level_two::upstep(int verbose_level)
 #endif
 
 			FREE_int(Mtx);
-			}
 		}
+	}
 
 
 	if (f_v) {
 		cout << "semifield_level_two::upstep summary of "
 				"fusion:" << endl;
-		for (ext = 0; ext < nb_flag_orbits; ext++) {
-			if (f_Fusion[ext]) {
-				cout << "down orbit " << ext << " is fused to down "
-						"orbit " << Fusion_idx[ext] << " under "
+		for (f = 0; f < nb_flag_orbits; f++) {
+			if (f_Fusion[f]) {
+				cout << "down orbit " << f << " is fused to down "
+						"orbit " << Fusion_idx[f] << " under "
 						"the element" << endl;
 				if (FALSE) {
 					cout << "Fusion element:" << endl;
-					A->element_print(Fusion_elt[ext], cout);
-					}
-				}
-			else {
-				cout << "down orbit " << ext << " is associated "
-					"to new orbit " << Fusion_idx[ext] << endl;
+					A->element_print(Fusion_elt[f], cout);
 				}
 			}
+			else {
+				cout << "down orbit " << f << " is associated "
+					"to new orbit " << Fusion_idx[f] << endl;
+			}
 		}
+	}
 	if (f_v) {
 		cout << "semifield_level_two::upstep done" << endl;
-		}
+	}
 }
 
 void semifield_level_two::setup_stabilizer(
@@ -1090,12 +1217,15 @@ void semifield_level_two::setup_stabilizer(
 
 	if (f_v) {
 		cout << "semifield_level_two::setup_stabilizer" << endl;
-		}
+	}
 	Mtx = Mtx1;
 	gens = NEW_OBJECT(vector_ge);
 
 	gens->init(A, verbose_level - 2);
 	l = Sk->gens->len;
+	if (f_v) {
+		cout << "semifield_level_two::setup_stabilizer l=" << l << endl;
+	}
 	gens->allocate(l, verbose_level - 2);
 	for (h = 0; h < l; h++) {
 		Elt = Sk->gens->ith(h);
@@ -1105,27 +1235,47 @@ void semifield_level_two::setup_stabilizer(
 				a = Elt[i * k + j];
 				Mtx[i * n + j] = a;
 				Mtx[(k + i) * n + k + j] = a;
-				}
 			}
-		A->make_element(gens->ith(h), Mtx, 0);
 		}
+		A->make_element(gens->ith(h), Mtx, 0);
+	}
 	Sk->group_order(go);
+
+	if (f_v) {
+		cout << "semifield_level_two::setup_stabilizer "
+				"before A->create_sims_from_generators_with_target_group_order" << endl;
+	}
+
 	Sims = A->create_sims_from_generators_with_target_group_order(
-		gens, go, 0 /*verbose_level*/);
+		gens, go, verbose_level);
+	if (f_v) {
+		cout << "semifield_level_two::setup_stabilizer "
+				"after A->create_sims_from_generators_with_target_group_order" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "semifield_level_two::setup_stabilizer "
+				"before Sn->init_from_sims" << endl;
+	}
 	Sn->init_from_sims(Sims, verbose_level - 2);
+	if (f_v) {
+		cout << "semifield_level_two::setup_stabilizer "
+				"after Sn->init_from_sims" << endl;
+	}
 
 	FREE_OBJECT(gens);
 	FREE_OBJECT(Sims);
 
 	if (f_v) {
 		cout << "The old stabilizer has order " << go << endl;
-		}
+	}
 	if (f_v) {
 		cout << "semifield_level_two::setup_stabilizer end" << endl;
-		}
+	}
 }
 
-void semifield_level_two::trace(int ext, int coset,
+void semifield_level_two::trace(int f, int coset,
 		long int a, long int b, int &f_automorphism, int *&Aut,
 		int verbose_level)
 // a and b are the ranks of two matrices whose span we consider.
@@ -1139,20 +1289,20 @@ void semifield_level_two::trace(int ext, int coset,
 	int d1, d2, d, cc1, cc2;
 
 	if (f_v) {
-		cout << "semifield_level_two::trace" << endl;
-		}
+		cout << "semifield_level_two::trace a=" << a << " b=" << b << " f=" << f << endl;
+	}
 
 	f_automorphism = FALSE;
 
-	c1 = flag_orbit_classes[ext * 2 + 0];
-	c2 = flag_orbit_classes[ext * 2 + 1];
+	c1 = flag_orbit_classes[f * 2 + 0];
+	c2 = flag_orbit_classes[f * 2 + 1];
 	rk1 = class_rep_rank[c1];
 	rk2 = class_rep_plus_I_rank[c1];
 	if (f_vv) {
 		cout << "semifield_level_two::trace c1=" << c1 << " c2=" << c2
 			<< " rk1=" << rk1 << " rk2=" << rk2
 			<< " a=" << a << " b=" << b << endl;
-		}
+	}
 
 
 
@@ -1164,134 +1314,125 @@ void semifield_level_two::trace(int ext, int coset,
 	for (i = 0; i < k; i++) {
 		for (j = 0; j < k; j++) {
 			M1[i * n + j] = Mtx1[i * k + j];
-			}
 		}
+	}
 	for (i = k; i < n; i++) {
 		M1[i * n + i] = 1;
-		}
+	}
 	if (f_vv) {
-		cout << "transformation matrix Mtx1=" << endl;
+		cout << "semifield_level_two::trace transformation matrix Mtx1=" << endl;
 		int_matrix_print(Mtx1, k, k);
-		cout << "transformation matrix M1=" << endl;
+		cout << "semifield_level_two::trace transformation matrix M1=" << endl;
 		int_matrix_print(M1, n, n);
-		}
+	}
 
 	A->make_element(ELT1, M1, 0);
 	if (f_vv) {
-		cout << "ELT1=" << endl;
+		cout << "semifield_level_two::trace ELT1=" << endl;
 		A->print_quick(cout, ELT1);
-		}
+	}
 
-	SC->A_on_S->compute_image_low_level(ELT1,
-			Mtx1, Mtx4, 0 /* verbose_level */);
-	SC->A_on_S->compute_image_low_level(ELT1,
-			Mtx2, Mtx5, 0 /* verbose_level */);
-	SC->A_on_S->compute_image_low_level(ELT1,
-			Mtx3, Mtx6, 0 /* verbose_level */);
+	SC->A_on_S->compute_image_low_level(ELT1, Mtx1, Mtx4, 0 /* verbose_level */);
+	SC->A_on_S->compute_image_low_level(ELT1, Mtx2, Mtx5, 0 /* verbose_level */);
+	SC->A_on_S->compute_image_low_level(ELT1, Mtx3, Mtx6, 0 /* verbose_level */);
 	//cout << "transformation matrix Mtx4=" << endl;
 	//int_matrix_print(Mtx4, k, k);
 	if (!F->is_identity_matrix(Mtx4, k)) {
 		cout << "semifield_level_two::trace Mtx4 "
 				"is not the identity matrix" << endl;
 		exit(1);
-		}
+	}
 	if (f_vv) {
-		cout << "after transform Mtx4=" << endl;
+		cout << "semifield_level_two::trace after transform Mtx4=" << endl;
 		int_matrix_print(Mtx4, k, k);
-		cout << "after transform Mtx5=" << endl;
+		cout << "semifield_level_two::trace after transform Mtx5=" << endl;
 		int_matrix_print(Mtx5, k, k);
-		cout << "after transform Mtx6=" << endl;
+		cout << "semifield_level_two::trace after transform Mtx6=" << endl;
 		int_matrix_print(Mtx6, k, k);
-		}
+	}
 
 	if (f_v) {
-		cout << "before identify_matrix Mtx5" << endl;
+		cout << "semifield_level_two::trace before identify_matrix Mtx5" << endl;
 	}
 	C->identify_matrix(Mtx5, R1, Basis1, verbose_level);
 	if (f_v) {
-		cout << "before identify_matrix Mtx6" << endl;
+		cout << "semifield_level_two::trace before identify_matrix Mtx6" << endl;
 	}
 	C->identify_matrix(Mtx6, R2, Basis2, verbose_level);
 
 	if (f_v) {
-		cout << "before find_class_rep R1" << endl;
+		cout << "semifield_level_two::trace before find_class_rep R1" << endl;
 	}
 	idx1 = C->find_class_rep(R, nb_classes, R1, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "before find_class_rep R2" << endl;
+		cout << "semifield_level_two::trace before find_class_rep R2" << endl;
 	}
 	idx2 = C->find_class_rep(R, nb_classes, R2, 0 /* verbose_level */);
 
 	if (f_vv) {
-		cout << "semifield_level_two::trace ext=" << ext
+		cout << "semifield_level_two::trace f=" << f
 			<< " c1=" << c1 << " c2=" << c2 << " coset=" << coset
 			<< " rk1=" << rk1 << " rk2=" << rk2
 			<< " idx1 = " << idx1 << " idx2 = " << idx2 << endl;
-		}
+	}
 
 
 	if (idx1 == c1 || idx1 == c2) {
 		if (f_vv) {
-			cout << "automorphism" << endl;
-			}
+			cout << "semifield_level_two::trace automorphism" << endl;
+		}
 
 		multiply_to_the_right(ELT1,
 				Basis1, ELT2, ELT3, 0 /* verbose_level */);
 
 		// check
-		SC->A_on_S->compute_image_low_level(ELT3,
-				Mtx1, Mtx4, 0 /* verbose_level */);
-		SC->A_on_S->compute_image_low_level(ELT3,
-				Mtx2, Mtx5, 0 /* verbose_level */);
-		SC->A_on_S->compute_image_low_level(ELT3,
-				Mtx3, Mtx6, 0 /* verbose_level */);
+		SC->A_on_S->compute_image_low_level(ELT3, Mtx1, Mtx4, 0 /* verbose_level */);
+		SC->A_on_S->compute_image_low_level(ELT3, Mtx2, Mtx5, 0 /* verbose_level */);
+		SC->A_on_S->compute_image_low_level(ELT3, Mtx3, Mtx6, 0 /* verbose_level */);
 
 		if (f_vv) {
-			cout << "after transform (2) Mtx4=" << endl;
+			cout << "semifield_level_two::trace after transform (2) Mtx4=" << endl;
 			int_matrix_print(Mtx4, k, k);
-			cout << "after transform (2) Mtx5=" << endl;
+			cout << "semifield_level_two::trace after transform (2) Mtx5=" << endl;
 			int_matrix_print(Mtx5, k, k);
-			cout << "after transform (2) Mtx6=" << endl;
+			cout << "semifield_level_two::trace after transform (2) Mtx6=" << endl;
 			int_matrix_print(Mtx6, k, k);
-			}
+		}
 
 
 		if (c1 != c2 && idx1 == c2) {
 			if(f_vv) {
-				cout << "multiplying Basis_inv to the right" << endl;
-				}
+				cout << "semifield_level_two::trace multiplying Basis_inv to the right" << endl;
+			}
 			multiply_to_the_right(ELT3,
 					class_rep_plus_I_Basis_inv[c1],
 					ELT2, ELT1, 0 /* verbose_level */);
-			}
+		}
 		else {
 			A->element_move(ELT3, ELT1, 0);
-			}
+		}
 
 
 		// check
-		SC->A_on_S->compute_image_low_level(ELT1,
-				Mtx1, Mtx4, 0 /* verbose_level */);
-		SC->A_on_S->compute_image_low_level(ELT1,
-				Mtx2, Mtx5, 0 /* verbose_level */);
-		SC->A_on_S->compute_image_low_level(ELT1,
-				Mtx3, Mtx6, 0 /* verbose_level */);
+		SC->A_on_S->compute_image_low_level(ELT1, Mtx1, Mtx4, 0 /* verbose_level */);
+		SC->A_on_S->compute_image_low_level(ELT1, Mtx2, Mtx5, 0 /* verbose_level */);
+		SC->A_on_S->compute_image_low_level(ELT1, Mtx3, Mtx6, 0 /* verbose_level */);
 
 		if (f_vv) {
-			cout << "after transform (3) Mtx4=" << endl;
+			cout << "semifield_level_two::trace after transform (3) Mtx4=" << endl;
 			int_matrix_print(Mtx4, k, k);
-			cout << "after transform (3) Mtx5=" << endl;
+			cout << "semifield_level_two::trace after transform (3) Mtx5=" << endl;
 			int_matrix_print(Mtx5, k, k);
-			cout << "after transform (3) Mtx6=" << endl;
+			cout << "semifield_level_two::trace after transform (3) Mtx6=" << endl;
 			int_matrix_print(Mtx6, k, k);
-			}
+		}
 
 
 
 
 		if (f_vv) {
 			A->element_print_quick(ELT1, cout);
-			}
+		}
 
 
 
@@ -1320,17 +1461,17 @@ void semifield_level_two::trace(int ext, int coset,
 			cout << "Error: The automorphism does not stabilize "
 					"the subspace." << endl;
 			exit(1);
-			}
+		}
 #endif
 		f_automorphism = TRUE;
 		Aut = NEW_int(A->elt_size_in_int);
 		A->element_move(ELT1, Aut, 0);
 
-		}
+	}
 	else {
 		if (f_v) {
-			cout << "Fusion" << endl;
-			}
+			cout << "semifield_level_two::trace Fusion" << endl;
+		}
 		multiply_to_the_right(ELT1, Basis1,
 				ELT2, ELT3, 0 /* verbose_level */);
 		A->element_move(ELT3, ELT1, 0);
@@ -1340,32 +1481,33 @@ void semifield_level_two::trace(int ext, int coset,
 		if (d1 != d2) {
 			cout << "d1 != d2" << endl;
 			exit(1);
-			}
+		}
 		d = d1;
 		cc1 = flag_orbit_classes[d * 2 + 0];
 		cc2 = flag_orbit_classes[d * 2 + 1];
 		if (cc1 != cc2 && idx1 == cc2) {
 			if (f_vv) {
-				cout << "multiplying Basis_inv to the right" << endl;
+				cout << "semifield_level_two::trace "
+						"multiplying Basis_inv to the right" << endl;
 				}
 			multiply_to_the_right(ELT1,
 					class_rep_plus_I_Basis_inv[cc1],
 					ELT2, ELT3,
 					0 /* verbose_level */);
 			A->element_move(ELT3, ELT1, 0);
-			}
+		}
 		else {
-			}
+		}
 		A->element_invert(ELT1, ELT3, 0);
 		f_Fusion[d] = TRUE;
-		Fusion_idx[d] = ext;
+		Fusion_idx[d] = f;
 		Fusion_elt[d] = NEW_int(A->elt_size_in_int);
 		A->element_move(ELT3, Fusion_elt[d], 0);
-		}
+	}
 
 	if (f_v) {
 		cout << "semifield_level_two::trace done" << endl;
-		}
+	}
 }
 
 void semifield_level_two::multiply_to_the_right(
@@ -1384,7 +1526,7 @@ void semifield_level_two::multiply_to_the_right(
 
 	if (f_v) {
 		cout << "semifield_level_two::multiply_to_the_right" << endl;
-		}
+	}
 	M = Mnn;
 	int_vec_zero(M, n * n);
 	for (i = 0; i < k; i++) {
@@ -1392,14 +1534,14 @@ void semifield_level_two::multiply_to_the_right(
 			a = Mtx[i * k + j];
 			M[i * n + j] = a;
 			M[(k + i) * n + k + j] = a;
-			}
 		}
+	}
 	A->make_element(ELT2, M, 0);
 	A->element_mult(ELT1, ELT2, ELT3, 0);
 
 	if (f_v) {
 		cout << "semifield_level_two::multiply_to_the_right done" << endl;
-		}
+	}
 }
 
 void semifield_level_two::compute_candidates_at_level_two_case(
@@ -1407,58 +1549,46 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 	long int *&Candidates, int &nb_candidates, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
 	int *Mtx_A;
 	int **Mtx_stack;
-	int ext, idx;
 	int i;
 	long int a;
 	sims *G;
-	//int *Elt1;
-	//int total_nb_candidates;
-	longinteger_object Go;
-	int /*go,*/ alloc_length;
+	longinteger_object go_PGL;
+	int alloc_length;
 
 
 	if (f_v) {
-		cout << "semifield_level_two::compute_candidates_at_"
-				"level_two_case" << endl;
-		}
+		cout << "semifield_level_two::compute_candidates_at_level_two_case" << endl;
+	}
 	nb_candidates = 0;
 	alloc_length = 1024;
 	Candidates = NEW_lint(alloc_length);
 
-	//Elt1 = NEW_int(A_PGLk->elt_size_in_int);
 	Mtx_A = NEW_int(k * k);
 	Mtx_stack = NEW_pint(2);
 	for (i = 0; i < 2; i++) {
 		Mtx_stack[i] = NEW_int(k * k);
-		}
+	}
 
 	G = A_PGLk->Sims;
-	G->group_order(Go);
-	//go = Go.as_int();
+	G->group_order(go_PGL);
 
 	F->identity_matrix(Mtx_stack[0], k);
 
 	if (f_v) {
-		cout << "Level 2, Looking at orbit " << orbit << " / "
+		cout << "semifield_level_two::compute_candidates_at_level_two_case "
+				"Level 2, Looking at orbit " << orbit << " / "
 				<< nb_orbits << ":" << endl;
-		}
+	}
 
-	//total_nb_candidates = 0;
 
-	ext = defining_flag_orbit[orbit];
-
-	idx = flag_orbit_classes[ext * 2 + 0];
-	a = class_rep_rank[idx];
-
+	a = Pt[orbit];
 
 	if (FALSE) {
-		cout << "ext=" << ext << " idx=" << idx << " a=" << a << endl;
-		}
-
-
+		cout << "semifield_level_two::compute_candidates_at_level_two_case "
+				"a=" << a << endl;
+	}
 	SC->matrix_unrank(a, Mtx_stack[1]);
 
 	int nb_tested;
@@ -1489,10 +1619,10 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 
 	for (i = 0; i < N; i++) {
 		Gg.AG_element_unrank(q, Affine_k + i * k, 1, k, i);
-		}
+	}
 	for (i = 0; i < N1; i++) {
 		Gg.AG_element_unrank(q, Affine_2 + i * 2, 1, 2, i);
-		}
+	}
 	nb_tested = 0;
 	Cnt[0] = 0;
 	i = 0;
@@ -1515,13 +1645,13 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 				continue;
 					// we need zeroes in the first
 					// two entries in the first column
-				}
+			}
 			int_vec_copy(Mtx1, Mtx2, (i + 1) * k);
 			if (F->rank_of_rectangular_matrix_memory_given(
 					Mtx2, i + 1, k, B, base_cols,
 					0 /* verbose_level */) < i + 1) {
 				continue; // rank is bad
-				}
+			}
 			// now rank is OK
 			for (h = 1; h < N1; h++) {
 				int_vec_copy(Affine_2 + h * 2, v, 2);
@@ -1533,9 +1663,10 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 					b1 = F->mult(Mtx_stack[0][j], v[0]);
 					b2 = F->mult(Mtx_stack[1][j], v[1]);
 					Mtx2[j] = F->add(Mtx1[j], F->negate(F->add(b1, b2)));
-					}
+				}
 #if 0
-				cout << "testing linear combination ";
+				cout << "semifield_level_two::compute_candidates_at_level_two_case "
+						"testing linear combination ";
 				int_vec_print(cout, v, 2);
 				cout << endl;
 				int_matrix_print(Mtx2, i + 1, k);
@@ -1549,26 +1680,25 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 			if (h < N1) {
 				// failed the test
 				continue;
-				}
+			}
 			// we survived the tests:
 			break;
-			}
+		}
 		if (Cnt[i] == N) {
 			i--;
-			}
+		}
 		else {
 			i++;
 			Cnt[i] = 0;
-			}
+		}
 		nb_tested++;
 		if ((nb_tested & ((1 << 17) - 1)) == 0) {
-			cout << "semifield_level_two::compute_candidates_at_"
-					"level_two_case orbit " << orbit << " / "
-					<< nb_orbits << " Cnt=";
+			cout << "semifield_level_two::compute_candidates_at_level_two_case "
+					"orbit " << orbit << " / " << nb_orbits << " Cnt=";
 			int_vec_print(cout, Cnt, k);
 			cout << " number tested = " << nb_tested
 					<< " Number of candidates = " << nb_candidates << endl;
-			}
+		}
 		if (i == k) {
 #if 0
 			if (!test_candidate(Mtx_stack, 2, Mtx1, verbose_level - 2)) {
@@ -1576,13 +1706,13 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 						"test_candidate fails" << endl;
 				int_matrix_print(Mtx1, k, k);
 				exit(1);
-				}
+			}
 #endif
 
 			r = SC->matrix_rank(Mtx1);
 			if (r < 0) {
-				cout << "semifield_level_two::compute_candidates_at_"
-					"level_two_case orbit r < 0" << endl;
+				cout << "semifield_level_two::compute_candidates_at_level_two_case "
+						"orbit r < 0" << endl;
 				cout << "Mtx1:" << endl;
 				int_matrix_print(Mtx1, k, k);
 				exit(1);
@@ -1593,12 +1723,13 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 
 
 			i--;
-			}
-		} // while
+		}
+	} // while
 
 
 	if (f_v) {
-		cout << "Level 2: orbit " << orbit << " / " << nb_orbits
+		cout << "semifield_level_two::compute_candidates_at_level_two_case "
+				"Level 2: orbit " << orbit << " / " << nb_orbits
 				<< ": nb_tested = " << nb_tested << ", found "
 				<< nb_candidates << " candidates, sorting them now." << endl;
 		}
@@ -1619,7 +1750,6 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 	FREE_int(Mtx2);
 	FREE_int(B);
 	FREE_int(base_cols);
-	//FREE_int(Elt1);
 	if (FALSE) {
 		cout << "Level 2: orbit " << orbit << " / "
 				<< nb_orbits << ": found "
@@ -1627,8 +1757,8 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 		//SC->print_set_of_matrices_numeric(Candidates, nb_candidates);
 		}
 	if (f_v) {
-		cout << "semifield_level_two::compute_candidates_at_"
-				"level_two_case done" << endl;
+		cout << "semifield_level_two::compute_candidates_at_level_two_case "
+				"done" << endl;
 		}
 }
 
@@ -1888,6 +2018,7 @@ void semifield_level_two::read_candidates_at_level_two_case(
 			cout << "Reading candidates from file "
 					<< fname << " of size " << Fio.file_size(fname)
 					<< " done" << endl;
+			cout << "We found " << Nb_candidates << " candidates" << endl;
 			}
 		}
 	else {
@@ -2331,10 +2462,10 @@ void semifield_level_two::write_level_info_file(int verbose_level)
 	int i;
 	int nb_vecs = 5;
 	const char *column_label[] = {
-		"Go",
 		"Po",
 		"So",
 		"Fo",
+		"Go",
 		"Pt"
 		};
 	char fname[1000];
@@ -2352,14 +2483,17 @@ void semifield_level_two::write_level_info_file(int verbose_level)
 	f << endl;
 	for (i = 0; i < nb_orbits; i++) {
 		f << i;
-		f << "," << Go[i] << "," << 0 /* Po[i]*/ << "," << So[i] << "," << Fo[i] << "," << Pt[i] << endl;
+		f << "," << 0 /* Po[i]*/
+				<< "," << So[i]
+				<< "," << Fo[i]
+				<< "," << Go[i]
+				<< "," << Pt[i] << endl;
 		}
 	f << "END" << endl;
 	}
 
 	cout << "Written file " << fname << " of size"
 			<< Fio.file_size(fname) << endl;
-	FREE_int(Go);
 	if (f_v) {
 		cout << "semifield_level_two::write_level_info_file done" << endl;
 		}
@@ -2390,28 +2524,23 @@ void semifield_level_two::read_level_info_file(int verbose_level)
 		}
 
 	Fio.lint_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
-		// Row,Go,Po,So,Mo,Pt
+		// Row,Po,So,Mo,Go,Pt
 
 	nb_orbits = m;
 
 	//Po = NEW_int(m);
 	So = NEW_int(m);
 	Fo = NEW_int(m);
+	Go = NEW_lint(m);
 	Pt = NEW_lint(m);
 
-	//nb_flag_orbits = 0;
-
 	for (i = 0; i < m; i++) {
-		//tmp = M[i * n + 1]; // Po[i]
+		//Po[i] = M[i * n + 1];
 		So[i] = M[i * n + 2];
 		Fo[i] = M[i * n + 3];
-
-		//nb_flag_orbits = MAXIMUM(nb_flag_orbits, Mo[i]);
-
-		Pt[i] = M[i * n + 4];
+		Go[i] = M[i * n + 4];
+		Pt[i] = M[i * n + 5];
 		}
-
-	//nb_flag_orbits++;
 
 	FREE_lint(M);
 

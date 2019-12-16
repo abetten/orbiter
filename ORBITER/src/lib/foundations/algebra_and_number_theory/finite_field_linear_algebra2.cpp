@@ -1253,7 +1253,7 @@ void finite_field::adjust_basis(int *V, int *U,
 
 	if (f_v) {
 		cout << "finite_field::adjust_basis" << endl;
-		}
+	}
 	base_cols = NEW_int(n);
 	M = NEW_int(k * n);
 
@@ -1264,7 +1264,7 @@ void finite_field::adjust_basis(int *V, int *U,
 		cout << "finite_field::adjust_basis rank "
 				"of matrix is not d" << endl;
 		exit(1);
-		}
+	}
 	ii = 0;
 	for (i = 0; i < k; i++) {
 		int_vec_copy(V + i * n, M + (d + ii) * n, n);
@@ -1272,17 +1272,17 @@ void finite_field::adjust_basis(int *V, int *U,
 			b = base_cols[j];
 			Gauss_step(M + b * n, M + (d + ii) * n,
 					n, b, 0 /* verbose_level */);
-			}
+		}
 		if (Sorting.int_vec_is_zero(M + (d + ii) * n, n)) {
-			}
+		}
 		else {
 			ii++;
-			}
 		}
+	}
 	if (d + ii != k) {
 		cout << "finite_field::adjust_basis d + ii != k" << endl;
 		exit(1);
-		}
+	}
 	int_vec_copy(M, V, k * n);
 
 
@@ -1290,7 +1290,7 @@ void finite_field::adjust_basis(int *V, int *U,
 	FREE_int(base_cols);
 	if (f_v) {
 		cout << "finite_field::adjust_basis done" << endl;
-		}
+	}
 }
 
 void finite_field::choose_vector_in_here_but_not_in_here_column_spaces(
@@ -1307,53 +1307,53 @@ void finite_field::choose_vector_in_here_but_not_in_here_column_spaces(
 	if (f_v) {
 		cout << "finite_field::choose_vector_in_here_but_not_in_here_"
 				"column_spaces" << endl;
-		}
+	}
 	n = V->m;
 	if (V->m != W->m) {
 		cout << "finite_field::choose_vector_in_here_but_not_in_here_"
 				"column_spaces V->m != W->m" << endl;
 		exit(1);
-		}
+	}
 	k = V->n;
 	d = W->n;
 	if (d >= k) {
 		cout << "finite_field::choose_vector_in_here_but_not_in_here_"
 				"column_spaces W->n >= V->n" << endl;
 		exit(1);
-		}
+	}
 	Gen = NEW_int(k * n);
 	base_cols = NEW_int(n);
 
 	for (i = 0; i < d; i++) {
 		for (j = 0; j < n; j++) {
 			Gen[i * n + j] = W->s_ij(j, i);
-			}
 		}
+	}
 	if (Gauss_simple(Gen, d, n,
 			base_cols, 0 /* verbose_level */) != d) {
 		cout << "finite_field::choose_vector_in_here_but_not_in_here_"
 				"column_spaces rank of matrix is not d" << endl;
 		exit(1);
-		}
+	}
 	ii = 0;
 	for (i = 0; i < k; i++) {
 		for (j = 0; j < n; j++) {
 			Gen[(d + ii) * n + j] = V->s_ij(j, i);
-			}
+		}
 		b = base_cols[i];
 		Gauss_step(Gen + b * n, Gen + (d + ii) * n,
 				n, b, 0 /* verbose_level */);
 		if (Sorting.int_vec_is_zero(Gen + (d + ii) * n, n)) {
-			}
+		}
 		else {
 			ii++;
-			}
 		}
+	}
 	if (d + ii != k) {
 		cout << "finite_field::choose_vector_in_here_but_not_in_here_"
 				"column_spaces d + ii != k" << endl;
 		exit(1);
-		}
+	}
 	int_vec_copy(Gen + d * n, v, n);
 
 
@@ -1362,7 +1362,7 @@ void finite_field::choose_vector_in_here_but_not_in_here_column_spaces(
 	if (f_v) {
 		cout << "finite_field::choose_vector_in_here_but_not_in_here_"
 				"column_spaces done" << endl;
-		}
+	}
 }
 
 void finite_field::choose_vector_in_here_but_not_in_here_or_here_column_spaces(
@@ -1400,7 +1400,7 @@ int finite_field::choose_vector_in_here_but_not_in_here_or_here_column_spaces_co
 		cout << "finite_field::choose_vector_in_here_but_not_in_here_or_here_"
 				"column_spaces_coset coset=" << coset << endl;
 		cout << "verbose_level = " << verbose_level << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "finite_field::choose_vector_in_here_but_not_in_here_or_here_"
 				"column_spaces_coset" << endl;
@@ -1410,18 +1410,18 @@ int finite_field::choose_vector_in_here_but_not_in_here_or_here_column_spaces_co
 		W1->print();
 		cout << "W2=" << endl;
 		W2->print();
-		}
+	}
 	n = V->m;
 	if (V->m != W1->m) {
 		cout << "finite_field::choose_vector_in_here_but_not_in_here_or_here_"
 				"column_spaces_coset V->m != W1->m" << endl;
 		exit(1);
-		}
+	}
 	if (V->m != W2->m) {
 		cout << "finite_field::choose_vector_in_here_but_not_in_here_or_here_"
 				"column_spaces_coset V->m != W2->m" << endl;
 		exit(1);
-		}
+	}
 	k = V->n;
 	d1 = W1->n;
 	d2 = W2->n;
@@ -1429,7 +1429,7 @@ int finite_field::choose_vector_in_here_but_not_in_here_or_here_column_spaces_co
 		cout << "finite_field::choose_vector_in_here_but_not_in_here_or_here_"
 				"column_spaces_coset W1->n >= V->n" << endl;
 		exit(1);
-		}
+	}
 	Gen = NEW_int((d1 + d2 + k) * n);
 	base_cols = NEW_int(n);
 	w = NEW_int(k);
@@ -1438,13 +1438,13 @@ int finite_field::choose_vector_in_here_but_not_in_here_or_here_column_spaces_co
 	for (i = 0; i < d1; i++) {
 		for (j = 0; j < n; j++) {
 			Gen[i * n + j] = W1->s_ij(j, i);
-			}
 		}
+	}
 	for (i = 0; i < d2; i++) {
 		for (j = 0; j < n; j++) {
 			Gen[(d1 + i) * n + j] = W2->s_ij(j, i);
-			}
 		}
+	}
 	rk = Gauss_simple(Gen, d1 + d2, n, base_cols, 0 /* verbose_level */);
 
 
@@ -1455,17 +1455,17 @@ int finite_field::choose_vector_in_here_but_not_in_here_or_here_column_spaces_co
 			if (f_vv) {
 				cout << "coset = " << coset << " = " << NT.i_power_j(q, k)
 						<< " break" << endl;
-				}
+			}
 			ret = FALSE;
 			break;
-			}
+		}
 		Gg.AG_element_unrank(q, w, 1, k, coset);
 
 		if (f_vv) {
 			cout << "coset=" << coset << " w=";
 			int_vec_print(cout, w, k);
 			cout << endl;
-			}
+		}
 
 		coset++;
 
@@ -1475,35 +1475,35 @@ int finite_field::choose_vector_in_here_but_not_in_here_or_here_column_spaces_co
 			for (i = 0; i < k; i++) {
 				a = w[i];
 				Gen[rk * n + j] = add(Gen[rk * n + j], mult(a, V->s_ij(j, i)));
-				}
 			}
+		}
 		int_vec_copy(Gen + rk * n, z, n);
 		if (f_vv) {
 			cout << "before reduce=";
 			int_vec_print(cout, Gen + rk * n, n);
 			cout << endl;
-			}
+		}
 
 		// reduce modulo the subspace:
 		for (j = 0; j < rk; j++) {
 			b = base_cols[j];
 			Gauss_step(Gen + j * n, Gen + rk * n, n, b, 0 /* verbose_level */);
-			}
+		}
 
 		if (f_vv) {
 			cout << "after reduce=";
 			int_vec_print(cout, Gen + rk * n, n);
 			cout << endl;
-			}
+		}
 
 
 		// see if we got something nonzero:
 		if (!Sorting.int_vec_is_zero(Gen + rk * n, n)) {
 			break;
-			}
+		}
 		// keep moving on to the next vector
 
-		} // while
+	} // while
 
 	int_vec_copy(z, v, n);
 
@@ -1515,7 +1515,7 @@ int finite_field::choose_vector_in_here_but_not_in_here_or_here_column_spaces_co
 	if (f_v) {
 		cout << "finite_field::choose_vector_in_here_but_not_in_here_"
 				"or_here_column_spaces_coset done ret = " << ret << endl;
-		}
+	}
 	return ret;
 }
 
@@ -1525,7 +1525,7 @@ void finite_field::vector_add_apply(int *v, int *w, int c, int n)
 
 	for (i = 0; i < n; i++) {
 		v[i] = add(v[i], mult(c, w[i]));
-		}
+	}
 }
 
 void finite_field::vector_add_apply_with_stride(int *v, int *w,
@@ -1535,7 +1535,7 @@ void finite_field::vector_add_apply_with_stride(int *v, int *w,
 
 	for (i = 0; i < n; i++) {
 		v[i] = add(v[i], mult(c, w[i * stride]));
-		}
+	}
 }
 
 int finite_field::test_if_commute(int *A, int *B, int k, int verbose_level)
@@ -1546,7 +1546,7 @@ int finite_field::test_if_commute(int *A, int *B, int k, int verbose_level)
 
 	if (f_v) {
 		cout << "finite_field::test_if_commute" << endl;
-		}
+	}
 	M1 = NEW_int(k * k);
 	M2 = NEW_int(k * k);
 
@@ -1554,16 +1554,16 @@ int finite_field::test_if_commute(int *A, int *B, int k, int verbose_level)
 	mult_matrix_matrix(B, A, M2, k, k, k, 0 /* verbose_level */);
 	if (int_vec_compare(M1, M2, k * k) == 0) {
 		ret = TRUE;
-		}
+	}
 	else {
 		ret = FALSE;
-		}
+	}
 
 	FREE_int(M1);
 	FREE_int(M2);
 	if (f_v) {
 		cout << "finite_field::test_if_commute done" << endl;
-		}
+	}
 	return ret;
 }
 
@@ -1603,12 +1603,12 @@ void finite_field::Borel_decomposition(int n, int *M,
 
 	if (f_v) {
 		cout << "finite_field::Borel_decomposition" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "finite_field::Borel_decomposition input matrix:" << endl;
 		cout << "M:" << endl;
 		int_matrix_print(M, n, n);
-		}
+	}
 
 	identity_matrix(B1, n);
 	identity_matrix(B2, n);
@@ -1617,21 +1617,21 @@ void finite_field::Borel_decomposition(int n, int *M,
 	f_is_pivot = NEW_int(n);
 	for (i = 0; i < n; i++) {
 		f_is_pivot[i] = FALSE;
-		}
+	}
 	if (f_v) {
 		cout << "finite_field::Borel_decomposition going down "
 				"from the right" << endl;
-		}
+	}
 	for (j = n - 1; j >= 0; j--) {
 		for (i = 0; i < n; i++) {
 			if (f_is_pivot[i]) {
 				continue;
-				}
+			}
 			if (M[i * n + j]) {
 				if (f_v) {
 					cout << "finite_field::Borel_decomposition pivot "
 							"at (" << i << " " << j << ")" << endl;
-					}
+				}
 				f_is_pivot[i] = TRUE;
 				pivots[j] = i;
 				a = M[i * n + j];
@@ -1647,7 +1647,7 @@ void finite_field::Borel_decomposition(int n, int *M,
 							d = mult(M[i * n + k], mc);
 							e = add(M[h * n + k], d);
 							M[h * n + k] = e;
-							}
+						}
 						//mc = negate(c);
 						//cout << "finite_field::Borel_decomposition "
 						// "i=" << i << " h=" << h << " mc=" << mc << endl;
@@ -1657,18 +1657,18 @@ void finite_field::Borel_decomposition(int n, int *M,
 							d = mult(B1[k * n + h], c);
 							e = add(B1[k * n + i], d);
 							B1[k * n + i] = e;
-							}
+						}
 						//cout << "finite_field::Borel_decomposition B1:"
 						//<< endl;
 						//int_matrix_print(B1, n, n);
-						}
 					}
+				}
 				if (f_v) {
 					cout << "finite_field::Borel_decomposition after going "
 							"down in column " << j << endl;
 					cout << "M:" << endl;
 					int_matrix_print(M, n, n);
-					}
+				}
 
 				// now we go to the left from the pivot:
 				for (h = 0; h < j; h++) {
@@ -1680,7 +1680,7 @@ void finite_field::Borel_decomposition(int n, int *M,
 							d = mult(M[k * n + j], mc);
 							e = add(M[k * n + h], d);
 							M[k * n + h] = e;
-							}
+						}
 						//mc = negate(c);
 						//cout << "finite_field::Borel_decomposition "
 						// "j=" << j << " h=" << h << " mc=" << mc << endl;
@@ -1690,24 +1690,24 @@ void finite_field::Borel_decomposition(int n, int *M,
 							d = mult(B2[h * n + k], c);
 							e = add(B2[j * n + k], d);
 							B2[j * n + k] = e;
-							}
 						}
 					}
+				}
 				if (f_v) {
 					cout << "finite_field::Borel_decomposition after going "
 							"across to the left:" << endl;
 					cout << "M:" << endl;
 					int_matrix_print(M, n, n);
-					}
-				break;
 				}
-
+				break;
 			}
+
 		}
+	}
 	FREE_int(f_is_pivot);
 	if (f_v) {
 		cout << "finite_field::Borel_decomposition done" << endl;
-		}
+	}
 }
 
 void finite_field::map_to_standard_frame(int d, int *A,

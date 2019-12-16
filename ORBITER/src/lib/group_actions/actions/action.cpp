@@ -2145,7 +2145,7 @@ void action::group_order(longinteger_object &go)
 	
 	if (Stabilizer_chain == NULL) {
 		cout << "action::group_order Stabilizer_chain == NULL" << endl;
-		go.create(0);
+		go.create(0, __FILE__, __LINE__);
 	}
 	else {
 		Stabilizer_chain->group_order(go);

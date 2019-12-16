@@ -356,7 +356,7 @@ void poset_classification::Asup_to_Ainf(int t, int k,
 	for (i = 0; i < Nt; i++) {
 		for (j = 0; j < Nk; j++) {
 			a = M_sup[i * Nk + j];
-			aa.create(a);
+			aa.create(a, __FILE__, __LINE__);
 			D.mult(ol_t[i], aa, bb);
 			D.integral_division(bb, ol_k[j], cc, rem, 0);
 			if (!rem.is_zero()) {

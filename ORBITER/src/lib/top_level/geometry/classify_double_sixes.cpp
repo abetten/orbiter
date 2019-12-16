@@ -1715,7 +1715,7 @@ void classify_double_sixes::print_five_plus_ones(ostream &ost)
 
 	longinteger_domain D;
 	longinteger_object ol, Ol;
-	Ol.create(0);
+	Ol.create(0, __FILE__, __LINE__);
 
 	ost << "The group has " 
 		<< l 

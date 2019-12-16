@@ -883,7 +883,7 @@ void isomorph::load_strong_generators_oracle(int cur_level,
 	if (O->nb_strong_generators == 0) {
 		gens.init(gen->Poset->A, verbose_level - 2);
 		gens.allocate(0, verbose_level - 2);
-		go.create(1);
+		go.create(1, __FILE__, __LINE__);
 		goto finish;
 		}
 	tl = NEW_int(gen->Poset->A->base_len());
@@ -966,7 +966,7 @@ void isomorph::load_strong_generators_database(int cur_level,
 	if (nb_strong_generators == 0) {
 		gens.init(gen->Poset->A, verbose_level - 2);
 		gens.allocate(0, verbose_level - 2);
-		go.create(1);
+		go.create(1, __FILE__, __LINE__);
 		goto finish;
 		}
 	tl = NEW_int(gen->Poset->A->base_len());

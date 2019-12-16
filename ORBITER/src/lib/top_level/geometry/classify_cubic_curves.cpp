@@ -1294,7 +1294,7 @@ void classify_cubic_curves::report(ostream &ost, int verbose_level)
 	int i;
 	longinteger_domain D;
 	longinteger_object go1, ol, Ol;
-	Ol.create(0);
+	Ol.create(0, __FILE__, __LINE__);
 
 	vector<string> References;
 	int *Ago;

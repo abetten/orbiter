@@ -133,7 +133,7 @@ void bent_function_classify::init(int n, int verbose_level)
 	Q = 1 << n;
 	Q2 = 1 << n2;
 	//NN = 1 << Q;
-	NN.create(2);
+	NN.create(2, __FILE__, __LINE__);
 	D.power_int(NN, Q - 1);
 	N = Gg.nb_PG_elements(n, 2);
 	if (f_v) {
@@ -524,7 +524,7 @@ void bent_function_classify::search(int verbose_level)
 
 	poly = NEW_int(Poly[n].nb_monomials);
 
-	a.create(0);
+	a.create(0, __FILE__, __LINE__);
 	while (D.is_less_than(a, NN)) {
 
 		Gg.AG_element_unrank_longinteger(2, f, 1, Q, a);

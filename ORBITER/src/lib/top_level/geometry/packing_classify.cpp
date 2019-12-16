@@ -1362,7 +1362,7 @@ void packing_classify::read_conjugacy_classes(
 
 		FREE_OBJECT(nice_gens);
 
-		Class_size.create(class_size[i]);
+		Class_size.create(class_size[i], __FILE__, __LINE__);
 		
 		D.integral_division_exact(go, Class_size, centralizer_order);
 
@@ -1582,7 +1582,7 @@ void packing_classify::read_conjugacy_classes_and_normalizers(
 				"after gens->init_from_permutation_representation" << endl;
 		}
 
-		Class_size.create(class_size[i]);
+		Class_size.create(class_size[i], __FILE__, __LINE__);
 
 		D.integral_division_exact(go, Class_size, centralizer_order);
 

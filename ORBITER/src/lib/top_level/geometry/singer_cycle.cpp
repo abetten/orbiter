@@ -188,7 +188,7 @@ void singer_cycle::init(int n, finite_field *F, action *A, action *A2, int verbo
 
 	number_theory_domain NT;
 
-	target_go.create((NT.i_power_j(q, n) - 1) / (q - 1));
+	target_go.create((NT.i_power_j(q, n) - 1) / (q - 1), __FILE__, __LINE__);
 
 	SG = NEW_OBJECT(strong_generators);
 	SG->init_from_data_with_target_go(A,

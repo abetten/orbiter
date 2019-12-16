@@ -35,8 +35,8 @@ int main(int argc, char **argv)
 
 	longinteger_object A, B, G, U, V;
 
-	A.create(10);
-	B.create(23);
+	A.create(10, __FILE__, __LINE__);
+	B.create(23, __FILE__, __LINE__);
 
 	cout << "before D.extended_gcd" << endl;
 	D.extended_gcd(A, B,

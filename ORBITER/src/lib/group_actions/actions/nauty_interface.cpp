@@ -356,7 +356,7 @@ action *nauty_interface::create_automorphism_group_of_graph_with_partition_and_l
 
 	A = NEW_OBJECT(action);
 
-	ago.create(Ago);
+	ago.create(Ago, __FILE__, __LINE__);
 
 	A->init_permutation_group_from_generators(n,
 		FALSE, ago,
@@ -490,7 +490,7 @@ action *nauty_interface::create_automorphism_group_of_graph(
 	longinteger_object ago;
 
 
-	ago.create(Ago);
+	ago.create(Ago, __FILE__, __LINE__);
 	A = NEW_OBJECT(action);
 
 	if (f_v) {
@@ -585,7 +585,7 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_gra
 
 	A = NEW_OBJECT(action);
 
-	ago.create(Ago);
+	ago.create(Ago, __FILE__, __LINE__);
 	A->init_permutation_group_from_generators(n,
 		TRUE, ago,
 		Aut_counter, Aut,
@@ -899,7 +899,7 @@ action *nauty_interface::create_automorphism_group_of_incidence_structure_with_p
 
 	A = NEW_OBJECT(action);
 
-	ago.create(Ago);
+	ago.create(Ago, __FILE__, __LINE__);
 	A->init_permutation_group_from_generators(m + n,
 		TRUE, ago,
 		Aut_counter, Aut,
@@ -1104,7 +1104,7 @@ void nauty_interface::do_self_dual_self_polar(int input_no,
 
 
 
-	ago.create(Ago);
+	ago.create(Ago, __FILE__, __LINE__);
 	A.init_permutation_group_from_generators(m + n,
 		TRUE, ago,
 		Aut_counter, Aut,

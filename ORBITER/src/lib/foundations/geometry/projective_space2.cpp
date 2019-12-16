@@ -762,7 +762,7 @@ void projective_space::plane_intersection_type_slow(
 
 		Pts_on_plane[l] = pts_on_plane;
 		nb_pts_on_plane[l] = nb;
-		R[l].create(rk);
+		R[l].create(rk, __FILE__, __LINE__);
 		l++;
 		} // rk
 	len = l;

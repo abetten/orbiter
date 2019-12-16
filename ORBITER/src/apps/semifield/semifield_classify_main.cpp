@@ -40,7 +40,6 @@ int main(int argc, const char **argv)
 	int f_embedded = FALSE;
 	int f_sideways = FALSE;
 	int f_report = FALSE;
-	int f_memory_debug = FALSE;
 	os_interface Os;
 
 
@@ -55,7 +54,8 @@ int main(int argc, const char **argv)
 			}
 		else if (strcmp(argv[i], "-memory_debug") == 0) {
 			f_memory_debug = TRUE;
-			cout << "-memory_debug " << endl;
+			memory_debug_verbose_level = atoi(argv[++i]);
+			cout << "-memory_debug " << memory_debug_verbose_level << endl;
 			}
 		else if (strcmp(argv[i], "-poly") == 0) {
 			f_poly = TRUE;
@@ -107,10 +107,6 @@ int main(int argc, const char **argv)
 		exit(1);
 		}
 
-	if (f_memory_debug) {
-		cout << "before start_memory_debug" << endl;
-		start_memory_debug();
-	}
 
 	int p, e, e1, n, k, q;
 	number_theory_domain NT;
@@ -161,8 +157,9 @@ int main(int argc, const char **argv)
 	SC = NEW_OBJECT(semifield_classify);
 	cout << "before SC->init" << endl;
 	SC->init(argc, argv, order, n, k, F,
-			4 /* MINIMUM(verbose_level - 1, 2) */);
+			verbose_level - 1 /* MINIMUM(verbose_level - 1, 2) */);
 	cout << "after SC->init" << endl;
+
 
 	L2 = NEW_OBJECT(semifield_level_two);
 	cout << "before L2->init" << endl;
@@ -171,10 +168,11 @@ int main(int argc, const char **argv)
 
 
 	cout << "before L2->compute_level_two" << endl;
-	L2->compute_level_two(verbose_level);
+	L2->compute_level_two(3 /* nb_stages */, verbose_level);
 	cout << "after L2->compute_level_two" << endl;
 
 
+#if 0
 	L3 = NEW_OBJECT(semifield_lifting);
 	cout << "before L3->compute_level_three" << endl;
 	L3->init_level_three(L2,
@@ -223,9 +221,11 @@ int main(int argc, const char **argv)
 		global_mem_object_registry.dump_to_csv_file("memory.csv");
 		cout << "after global_mem_object_registry.dump_to_csv_file" << endl;
 	}
+#endif
 
 	cout << "before FREE_OBJECT(L2)" << endl;
 	FREE_OBJECT(L2);
+
 	cout << "before FREE_OBJECT(SC)" << endl;
 	FREE_OBJECT(SC);
 	cout << "before FREE_OBJECT(F)" << endl;
@@ -233,6 +233,9 @@ int main(int argc, const char **argv)
 	cout << "before leaving scope" << endl;
 	}
 	cout << "after leaving scope" << endl;
+
+	global_mem_object_registry.dump();
+
 #if 0
 	else if (f_break_symmetry) {
 		S.init_semifield_starter(f_orbits_light, verbose_level);

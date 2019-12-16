@@ -563,7 +563,7 @@ void poset_classification::compute_and_print_automorphism_group_orders(
 	
 	count_automorphism_group_orders(lvl, nb_agos, agos,
 			multiplicities, FALSE);
-	S.create(0);
+	S.create(0, __FILE__, __LINE__);
 	N = 0;
 	for (j = 0; j < nb_agos; j++) {
 		N += multiplicities[j];
@@ -604,7 +604,7 @@ void poset_classification::stabilizer_order(int node, longinteger_object &go)
 		go.create_product(Poset->A->base_len(), root[node].tl);
 		}
 	else {
-		go.create(1);
+		go.create(1, __FILE__, __LINE__);
 		}
 }
 
@@ -840,7 +840,7 @@ void poset_classification::find_automorphism_group_of_order(
 	for (i = 0; i < nb_nodes; i++) {
 		node = first_poset_orbit_node_at_level[level] + i;
 		if (root[node].nb_strong_generators == 0) {
-			ago.create(1);
+			ago.create(1, __FILE__, __LINE__);
 			}
 		else {
 			ago.create_product(Poset->A->base_len(), root[node].tl);
@@ -888,7 +888,7 @@ void poset_classification::get_stabilizer_order(int level,
 	O = root + nd;
 
 	if (O->nb_strong_generators == 0) {
-		go.create(1);
+		go.create(1, __FILE__, __LINE__);
 		}
 	else {
 		longinteger_domain D;
@@ -1429,7 +1429,7 @@ void poset_classification::list_whole_orbit(
 
 	orbit_length(orbit_idx, depth, Len);
 	len = orbit_length_as_int(orbit_idx, depth);
-	L.create(len);
+	L.create(len, __FILE__, __LINE__);
 	
 	get_stabilizer_order(depth, orbit_idx, go);
 
@@ -1536,7 +1536,7 @@ void poset_classification::get_whole_orbit(
 	}
 	poset_classification::orbit_length(orbit_idx, depth, Len);
 	orbit_length = orbit_length_as_int(orbit_idx, depth);
-	L.create(orbit_length);
+	L.create(orbit_length, __FILE__, __LINE__);
 
 	if (f_v) {
 		cout << "poset_classification::get_whole_orbit orbit_length=" << orbit_length << endl;

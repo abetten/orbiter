@@ -355,7 +355,7 @@ void gl_classes::centralizer_order_Kung_basic(int nb_irreds,
 	if (f_v) {
 		cout << "gl_classes::centralizer_order_Kung_basic" << endl;
 		}
-	co.create(1);
+	co.create(1, __FILE__, __LINE__);
 
 	for (a = 0; a < nb_irreds; a++) {
 
@@ -378,7 +378,7 @@ void gl_classes::centralizer_order_Kung_basic(int nb_irreds,
 			part = Partitions[m] + p * m;
 			
 			// here comes Kung's formula: 
-			co1.create(1);
+			co1.create(1, __FILE__, __LINE__);
 			for (i = 1; i <= m; i++) {
 				b = part[i - 1];
 				if (b == 0) {
@@ -390,7 +390,7 @@ void gl_classes::centralizer_order_Kung_basic(int nb_irreds,
 					aa = NT.i_power_j(q, d * mue_i);
 					bb = NT.i_power_j(q, d * (mue_i - j));
 					cc = aa - bb;
-					e.create(cc);
+					e.create(cc, __FILE__, __LINE__);
 					D.mult(e, co1, f);
 					f.assign_to(co1);
 					}
@@ -419,7 +419,7 @@ void gl_classes::centralizer_order_Kung(
 	number_theory_domain NT;
 	combinatorics_domain Combi;
 
-	co.create(1);
+	co.create(1, __FILE__, __LINE__);
 	for (a = Table_of_polynomials->nb_irred - 1; a >= 0; a--) {
 
 		// loop over all polynomials:
@@ -437,7 +437,7 @@ void gl_classes::centralizer_order_Kung(
 			part = Partitions[m] + p * m;
 			
 			// here comes Kung's formula: 
-			co1.create(1);
+			co1.create(1, __FILE__, __LINE__);
 			for (i = 1; i <= m; i++) {
 				b = part[i - 1];
 				if (b == 0) {
@@ -448,7 +448,7 @@ void gl_classes::centralizer_order_Kung(
 					aa = NT.i_power_j(q, d * mue_i);
 					bb = NT.i_power_j(q, d * (mue_i - j));
 					cc = aa - bb;
-					e.create(cc);
+					e.create(cc, __FILE__, __LINE__);
 					D.mult(e, co1, f);
 					f.assign_to(co1);
 					}
@@ -470,7 +470,7 @@ void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
 	int f_vvv = (verbose_level >= 3);
 	int cnt;
 	int *Mtx;
-	int a, b;
+	long int a, b;
 	longinteger_object go, co, f, g, cl, r, sum;
 	longinteger_domain D;
 	number_theory_domain NT;
@@ -479,7 +479,7 @@ void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
 	if (f_v) {
 		cout << "gl_classes::make_classes "
 				"k = " << k << " q = " << q << endl;
-		}
+	}
 	int *Select_polynomial;
 	int *Select_partition;
 	int i, m, p;
@@ -487,28 +487,28 @@ void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
 	if (f_v) {
 		cout << "gl_classes::make_classes "
 				"nb_irred = " << Table_of_polynomials->nb_irred << endl;
-		}
+	}
 	Mtx = NEW_int(k * k);
 	Select_polynomial = NEW_int(Table_of_polynomials->nb_irred);
 	Select_partition = NEW_int(Table_of_polynomials->nb_irred);
 
 
 
-	go.create(1);
+	go.create(1, __FILE__, __LINE__);
 	a = NT.i_power_j(q, k);
 	for (i = 0; i < k; i++) {
-		b = a - NT.i_power_j(q, i);
-		f.create(b);
+		b = a - NT.i_power_j_lint(q, i);
+		f.create(b, __FILE__, __LINE__);
 		D.mult(go, f, g);
 		g.assign_to(go);
-		}
+	}
 	if (f_vv) {
 		cout << "gl_classes::make_classes "
 				"The order of GL(k,q) is "
 				<< go << endl;
-		}
+	}
 
-	sum.create(0);
+	sum.create(0, __FILE__, __LINE__);
 
 
 
@@ -521,11 +521,11 @@ void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
 		if (f_no_eigenvalue_one) {
 			if (Select_polynomial[0]) {
 				goto loop1;
-				}
 			}
+		}
 
 		if (f_vv) {
-			cout << "The class " << cnt << " is:" << endl;
+			cout << "gl_classes::make_classes The class " << cnt << " is:" << endl;
 			int_vec_print(cout, Select_polynomial,
 					Table_of_polynomials->nb_irred);
 			cout << " : ";
@@ -537,45 +537,45 @@ void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
 				p = Select_partition[i];
 				if (m) {
 					if (f_vvv) {
-						cout << "i=" << i << " m=" << m << " p=" << p << endl;
-						}
+						cout << "gl_classes::make_classes i=" << i << " m=" << m << " p=" << p << endl;
+					}
 					if (!f_first) {
 						cout << ", ";
-						}
-					Combi.partition_print(cout, Partitions[m] + p * m, m);
 					}
-				f_first = FALSE;
+					Combi.partition_print(cout, Partitions[m] + p * m, m);
 				}
-			cout << endl;
+				f_first = FALSE;
 			}
+			cout << endl;
+		}
 
 		make_matrix_in_rational_normal_form(
 				Mtx, Select_polynomial, Select_partition,
 				verbose_level - 2);
 
 		if (f_vv) {
-			cout << "Representative:" << endl;
+			cout << "gl_classes::make_classes Representative:" << endl;
 			int_matrix_print(Mtx, k, k);
-			}
+		}
 
 
 		centralizer_order_Kung(Select_polynomial, Select_partition, co, 
 			verbose_level - 2);
 		if (f_vv) {
-			cout << "Centralizer order = " << co << endl;
-			}
+			cout << "gl_classes::make_classes Centralizer order = " << co << endl;
+		}
 	
 		D.integral_division(go, co, cl, r, 0 /* verbose_level */);
 
 		if (f_vv) {
-			cout << "Class length = " << cl << endl;
-			}
+			cout << "gl_classes::make_classes Class length = " << cl << endl;
+		}
 
 		D.add(sum, cl, g);
 		g.assign_to(sum);
 		if (f_vv) {
-			cout << "Total = " << sum << endl;
-			}
+			cout << "gl_classes::make_classes Total = " << sum << endl;
+		}
 
 
 
@@ -584,22 +584,22 @@ loop1:
 		
 		if (!next(Select_polynomial, Select_partition, verbose_level - 2)) {
 			break;
-			}
-		
 		}
+		
+	}
 
 	cout << endl;
 
 	nb_classes = cnt;
 
 	if (f_vv) {
-		cout << "Total = " << sum << " in " << nb_classes
+		cout << "gl_classes::make_classes Total = " << sum << " in " << nb_classes
 				<< " conjugacy classes" << endl;
-		}
+	}
 
 	R = NEW_OBJECTS(gl_class_rep, nb_classes);
 
-	sum.create(0);
+	sum.create(0, __FILE__, __LINE__);
 
 
 	cnt = 0;
@@ -609,11 +609,11 @@ loop1:
 		if (f_no_eigenvalue_one) {
 			if (Select_polynomial[0]) {
 				goto loop2;
-				}
 			}
+		}
 
 		if (f_vv) {
-			cout << "The class " << cnt << " is:" << endl;
+			cout << "gl_classes::make_classes The class " << cnt << " is:" << endl;
 			int_vec_print(cout, Select_polynomial,
 					Table_of_polynomials->nb_irred);
 			cout << " : ";
@@ -625,16 +625,16 @@ loop1:
 				if (m) {
 					if (f_vvv) {
 						cout << "i=" << i << " m=" << m << " p=" << p << endl;
-						}
+					}
 					if (!f_first) {
 						cout << ", ";
-						}
+					}
 					Combi.partition_print(cout, Partitions[m] + p * m, m);
 					f_first = FALSE;
-					}
 				}
-			cout << endl;
 			}
+			cout << endl;
+		}
 
 
 		R[cnt].init(Table_of_polynomials->nb_irred,
@@ -646,28 +646,28 @@ loop1:
 				verbose_level - 2);
 
 		if (f_vv) {
-			cout << "Representative:" << endl;
+			cout << "gl_classes::make_classes Representative:" << endl;
 			int_matrix_print(Mtx, k, k);
-			}
+		}
 
 
 		centralizer_order_Kung(Select_polynomial, Select_partition, co, 
 			verbose_level - 2);
 
 		if (f_vv) {
-			cout << "Centralizer order = " << co << endl;
-			}
+			cout << "gl_classes::make_classes Centralizer order = " << co << endl;
+		}
 
 		D.integral_division(go, co, cl, r, 0 /* verbose_level */);
 
 		if (f_vv) {
-			cout << "Class length = " << cl << endl;
-			}
+			cout << "gl_classes::make_classes Class length = " << cl << endl;
+		}
 		D.add(sum, cl, g);
 		g.assign_to(sum);
 		if (f_vv) {
-			cout << "Total = " << sum << endl;
-			}
+			cout << "gl_classes::make_classes Total = " << sum << endl;
+		}
 
 
 
@@ -679,9 +679,9 @@ loop2:
 		
 		if (!next(Select_polynomial, Select_partition, verbose_level - 2)) {
 			break;
-			}
-		
 		}
+		
+	}
 	
 	
 	FREE_int(Mtx);
@@ -691,7 +691,7 @@ loop2:
 	if (f_v) {
 		cout << "gl_classes::make_classes k = " << k << " q = " << q
 				<< " done" << endl;
-		}
+	}
 }
 
 void gl_classes::identify_matrix(int *Mtx,
@@ -1973,11 +1973,11 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 		}
 
 
-	go.create(1);
+	go.create(1, __FILE__, __LINE__);
 	a = NT.i_power_j(q, k);
 	for (i = 0; i < k; i++) {
 		b = a - NT.i_power_j(q, i);
-		f.create(b);
+		f.create(b, __FILE__, __LINE__);
 		D.mult(go, f, g);
 		g.assign_to(go);
 		}

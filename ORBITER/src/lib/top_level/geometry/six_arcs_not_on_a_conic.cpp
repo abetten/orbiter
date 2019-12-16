@@ -236,7 +236,7 @@ void six_arcs_not_on_a_conic::report_latex(ostream &ost)
 	}
 
 	longinteger_object ol, Ol;
-	Ol.create(0);
+	Ol.create(0, __FILE__, __LINE__);
 	for (h = 0; h < nb_arcs_not_on_conic; h++) {
 		set_and_stabilizer *R;
 

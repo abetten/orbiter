@@ -51,7 +51,7 @@ int main(int argc, char **argv)
 	make_partitions(n, Parts, cnt);
 	
 
-	S.create(0);
+	S.create(0, __FILE__, __LINE__);
 	
 	cout << "The conjugacy classes in Sym_" << n << " are:" << endl;
 	for (i = 0; i < cnt; i++) {
