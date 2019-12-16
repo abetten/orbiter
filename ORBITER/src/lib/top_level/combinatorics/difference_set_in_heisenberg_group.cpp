@@ -235,7 +235,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	N = NEW_OBJECT(action);
 	longinteger_object n_go;
 
-	n_go.create(N_go);
+	n_go.create(N_go, __FILE__, __LINE__);
 	N->init_permutation_group_from_generators(H->group_order /* degree */,
 		TRUE, n_go,
 		N_nb_gens, N_gens,

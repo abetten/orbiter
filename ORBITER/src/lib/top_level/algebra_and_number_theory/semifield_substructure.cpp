@@ -652,7 +652,7 @@ void semifield_substructure::do_classify(int verbose_level)
 
 		Aut_gens->group_order(go);
 		cl = coset_reps->len;
-		Cl.create(cl);
+		Cl.create(cl, __FILE__, __LINE__);
 		D.mult(go, Cl, ago);
 		if (f_v) {
 			cout << "Semifield "

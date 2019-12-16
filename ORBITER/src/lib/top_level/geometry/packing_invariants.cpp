@@ -120,7 +120,7 @@ void packing_invariants::init_klein_invariants(
 	Pts_on_plane = NEW_pint(nb_planes);
 	nb_pts_on_plane = NEW_int(nb_planes);
 	for (i = 0; i < nb_planes; i++) {
-		R[i].create(v.s_i(1).as_vector().s_ii(i));
+		R[i].create(v.s_i(1).as_vector().s_ii(i), __FILE__, __LINE__);
 		}
 	for (i = 0; i < nb_planes; i++) {
 		nb_pts_on_plane[i] =

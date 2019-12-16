@@ -317,11 +317,11 @@ void unipoly_domain::rank_longinteger(
 	longinteger_object q, rk, rk1, c;
 	longinteger_domain D;
 	
-	rk.create(0);
-	q.create(gfq->q);
+	rk.create(0, __FILE__, __LINE__);
+	q.create(gfq->q, __FILE__, __LINE__);
 	for (i = d; i >= 0; i--) {
 		D.mult(rk, q, rk1);
-		c.create(coeff[i]);
+		c.create(coeff[i], __FILE__, __LINE__);
 		D.add(rk1, c, rk);
 		//rk *= gfq->q;
 		//rk += coeff[i];
@@ -2207,8 +2207,8 @@ void unipoly_domain::get_a_primitive_polynomial(
 			" over GF(" << gfq->q << ")" << endl;
 	}
 	p = gfq->q;
-	q.create(p);
-	m1.create(-1);
+	q.create(p, __FILE__, __LINE__);
+	m1.create(-1, __FILE__, __LINE__);
 	D.power_int(q, f);
 	D.add(q, m1, qm1);
 	if (f_vv) {
@@ -2279,8 +2279,8 @@ void unipoly_domain::get_a_primitive_polynomial(
 		delete_object(x);
 	}
 
-	low.create(gfq->q);
-	one.create(1);
+	low.create(gfq->q, __FILE__, __LINE__);
+	one.create(1, __FILE__, __LINE__);
 	D.power_int(low, f);
 
 	D.mult(low, low, high); // only monic polynomials 
@@ -2367,8 +2367,8 @@ void unipoly_domain::get_an_irreducible_polynomial(
 			"of degree " << f <<
 			" over GF(" << gfq->q << ")" << endl;
 	}
-	low.create(gfq->q);
-	one.create(1);
+	low.create(gfq->q, __FILE__, __LINE__);
+	one.create(1, __FILE__, __LINE__);
 	D.power_int(low, f);
 
 	D.mult(low, low, high); // only monic polynomials 
@@ -2874,8 +2874,8 @@ void unipoly_domain::minimum_polynomial_factorring_longinteger(
 	
 	longinteger_object rk, r, p_object, rk1;
 	
-	rk.create(0);
-	p_object.create(p);
+	rk.create(0, __FILE__, __LINE__);
+	p_object.create(p, __FILE__, __LINE__);
 	for (j = i; j >= 0; j--) {
 		rank_longinteger(coeffs[j], r);
 		D.mult(rk, p_object, rk1);
@@ -2916,8 +2916,8 @@ void unipoly_domain::BCH_generator_polynomial(
 				<< designed_distance << " p=" << p << endl;
 	}
 	e = NT.order_mod_p(p, n);
-	q.create(p);
-	m1.create(-1);
+	q.create(p, __FILE__, __LINE__);
+	m1.create(-1, __FILE__, __LINE__);
 	D.power_int(q, e);
 	D.add(q, m1, qm1);
 	// q = i_power_j(p, e);
@@ -3434,7 +3434,7 @@ void unipoly_domain::characteristic_polynomial(
 
 	
 	if (f_vv) {
-		cout << "unipoly_domain::characteristic_polynomial M - X Id" << endl;
+		cout << "unipoly_domain::characteristic_polynomial M - X Id=" << endl;
 		print_matrix(M, k);
 	}
 

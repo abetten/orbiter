@@ -315,7 +315,7 @@ void cayley_graph_search::init_group_level_3(int verbose_level)
 		exit(1);
 		}
 	go_subgroup = go / 2;
-	target_go.create(go);
+	target_go.create(go, __FILE__, __LINE__);
 	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go,
 		gens, Strong_gens,
@@ -577,8 +577,8 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 		cout << "illegal group" << endl;
 		exit(1);
 		}
-	target_go.create(go);
-	target_go_subgroup.create(go_subgroup);
+	target_go.create(go, __FILE__, __LINE__);
+	target_go_subgroup.create(go_subgroup, __FILE__, __LINE__);
 
 	cout << "creating generators for the group:" << endl;
 	A->generators_to_strong_generators(
@@ -689,8 +689,8 @@ void cayley_graph_search::init_group_level_5(int verbose_level)
 		cout << "illegal group" << endl;
 		exit(1);
 		}
-	target_go.create(go);
-	target_go_subgroup.create(go_subgroup);
+	target_go.create(go, __FILE__, __LINE__);
+	target_go_subgroup.create(go_subgroup, __FILE__, __LINE__);
 
 	cout << "creating generators for the group:" << endl;
 	A->generators_to_strong_generators(

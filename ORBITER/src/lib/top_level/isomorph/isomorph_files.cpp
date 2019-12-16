@@ -1100,9 +1100,9 @@ void isomorph::evaluate_statistics(int verbose_level)
 	graph_size_max = graph_size_min = stats_graph_size[0];
 	time_max = time_min = stats_time[0];
 	
-	a.create(0);
-	b.create(0);
-	c.create(0);
+	a.create(0, __FILE__, __LINE__);
+	b.create(0, __FILE__, __LINE__);
+	c.create(0, __FILE__, __LINE__);
 	for (i = 0; i < nb_starter; i++) {
 		nb_backtrack_max =
 				MAXIMUM(nb_backtrack_max, stats_nb_backtrack[i]);
@@ -1116,9 +1116,9 @@ void isomorph::evaluate_statistics(int verbose_level)
 				MAXIMUM(time_max, stats_time[i]);
 		time_min =
 				MINIMUM(time_min, stats_time[i]);
-		a1.create(stats_nb_backtrack[i]);
-		b1.create(stats_graph_size[i]);
-		c1.create(stats_time[i]);
+		a1.create(stats_nb_backtrack[i], __FILE__, __LINE__);
+		b1.create(stats_graph_size[i], __FILE__, __LINE__);
+		c1.create(stats_time[i], __FILE__, __LINE__);
 		D.add(a, a1, d);
 		d.assign_to(a);
 		D.add(b, b1, d);
@@ -1137,7 +1137,7 @@ void isomorph::evaluate_statistics(int verbose_level)
 		cout << "sum nb_backtrack = " << a << endl;
 		cout << "sum graph_size = " << b << endl;
 		cout << "sum time = " << c << endl;
-		n.create(nb_starter);
+		n.create(nb_starter, __FILE__, __LINE__);
 		D.integral_division(a, n, q1, r1, 0);
 		D.integral_division(b, n, q2, r2, 0);
 		D.integral_division(c, n, q3, r3, 0);

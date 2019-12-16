@@ -136,9 +136,9 @@ int number_theory_domain::power_mod(int a, int n, int p)
 	longinteger_domain D;
 	longinteger_object A, N, M;
 	
-	A.create(a);
-	N.create(n);
-	M.create(p);
+	A.create(a, __FILE__, __LINE__);
+	N.create(n, __FILE__, __LINE__);
+	M.create(p, __FILE__, __LINE__);
 	D.power_longint_mod(A, N, M, 0 /* verbose_level */);
 	return A.as_int();
 }
@@ -149,8 +149,8 @@ int number_theory_domain::inverse_mod(int a, int p)
 	longinteger_object A, B, U, V, G;
 	int u;
 	
-	A.create(a);
-	B.create(p);
+	A.create(a, __FILE__, __LINE__);
+	B.create(p, __FILE__, __LINE__);
 	D.extended_gcd(A,B, G, U, V, 0 /* verbose_level */);
 	u = U.as_int();
 	while (u < 0) {
@@ -164,9 +164,9 @@ int number_theory_domain::mult_mod(int a, int b, int p)
 	longinteger_domain D;
 	longinteger_object A, B, C, P;
 	
-	A.create(a);
-	B.create(b);
-	P.create(p);
+	A.create(a, __FILE__, __LINE__);
+	B.create(b, __FILE__, __LINE__);
+	P.create(p, __FILE__, __LINE__);
 	D.mult_mod(A, B, C, P, 0 /* verbose_level */);
 	return C.as_int();
 }
@@ -177,9 +177,9 @@ int number_theory_domain::add_mod(int a, int b, int p)
 	longinteger_object A, B, C, P, Q;
 	int r;
 	
-	A.create(a);
-	B.create(b);
-	P.create(p);
+	A.create(a, __FILE__, __LINE__);
+	B.create(b, __FILE__, __LINE__);
+	P.create(p, __FILE__, __LINE__);
 	D.add(A, B, C);
 	D.integral_division_by_int(C, 
 		p, Q, r);
@@ -253,8 +253,8 @@ void number_theory_domain::extended_gcd_int(int m, int n, int &g, int &u, int &v
 	longinteger_object M, N, G, U, V;
 
 
-	M.create(m);
-	N.create(n);
+	M.create(m, __FILE__, __LINE__);
+	N.create(n, __FILE__, __LINE__);
 	D.extended_gcd(M, N, G, U, V, 0);
 	g = G.as_int();
 	u = U.as_int();
@@ -268,10 +268,10 @@ int number_theory_domain::i_power_j_safe(int i, int j)
 	longinteger_object a, b, c;
 	int res;
 
-	a.create(i);
+	a.create(i, __FILE__, __LINE__);
 	D.power_int(a, j);
 	res = a.as_int();
-	b.create(res);
+	b.create(res, __FILE__, __LINE__);
 	b.negate();
 	D.add(a, b, c);
 	if (!c.is_zero()) {
@@ -296,7 +296,7 @@ long int number_theory_domain::i_power_j_lint_safe(int i, int j, int verbose_lev
 		cout << "number_theory_domain::i_power_j_lint_safe "
 				"i=" << i << " j=" << j << endl;
 	}
-	a.create(i);
+	a.create(i, __FILE__, __LINE__);
 	D.power_int(a, j);
 	if (f_v) {
 		cout << "number_theory_domain::i_power_j_lint_safe "
@@ -307,7 +307,7 @@ long int number_theory_domain::i_power_j_lint_safe(int i, int j, int verbose_lev
 		cout << "number_theory_domain::i_power_j_lint_safe "
 				"as_lint=" << res << endl;
 	}
-	b.create(res);
+	b.create(res, __FILE__, __LINE__);
 	if (f_v) {
 		cout << "number_theory_domain::i_power_j_lint_safe "
 				"b=" << b << endl;

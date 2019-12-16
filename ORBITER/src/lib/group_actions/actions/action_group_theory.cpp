@@ -731,7 +731,7 @@ void action::read_conjugacy_classes_and_normalizers(
 				"representation" << endl;
 		}
 
-		Class_size.create(class_size[i]);
+		Class_size.create(class_size[i], __FILE__, __LINE__);
 
 		D.integral_division_exact(go, Class_size, centralizer_order);
 
@@ -943,7 +943,7 @@ void action::read_and_report_conjugacy_classes_and_normalizers(ostream &ost,
 				"representation" << endl;
 		}
 
-		Class_size.create(class_size[i]);
+		Class_size.create(class_size[i], __FILE__, __LINE__);
 
 		D.integral_division_exact(go, Class_size, centralizer_order);
 

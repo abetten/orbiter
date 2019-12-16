@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	algebra_global_with_action.o \
 	analyze_group.o \
 	character_table_burnside.o \
 	factor_group.o \

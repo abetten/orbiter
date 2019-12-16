@@ -247,7 +247,7 @@ void semifield_classify_with_substructure::init(int verbose_level)
 
 #if 1
 	cout << "before L2->compute_level_two" << endl;
-	L2->compute_level_two(verbose_level);
+	L2->compute_level_two(4, verbose_level);
 	cout << "after L2->compute_level_two" << endl;
 #else
 	L2->read_level_info_file(verbose_level);

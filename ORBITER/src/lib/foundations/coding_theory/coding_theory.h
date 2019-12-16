@@ -57,6 +57,18 @@ public:
 		int f_hyperoval,
 		int *&code, int &length,
 		int verbose_level);
+	void make_cyclic_code(int n, int q, int t,
+			int *roots, int nb_roots, int f_poly, char *poly,
+			int f_dual, char *fname, int verbose_level);
+	void generator_matrix_cyclic_code(int n,
+			int degree, int *generator_polynomial, int *&M);
+	void print_polynomial(unipoly_domain &Fq,
+			int degree, unipoly_object *coeffs);
+	void field_reduction(int n, int q, int p, int e, int m,
+		finite_field &Fp, unipoly_domain &Fq,
+		int degree, unipoly_object *generator, int *&generator_subfield,
+		int f_poly, char *poly,
+		int verbose_level);
 
 	// mindist.cpp:
 	int mindist(int n, int k, int q, int *G,

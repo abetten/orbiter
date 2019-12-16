@@ -323,7 +323,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		cout << "action::set_stabilizer_in_projective_space "
 				"before init_permutation_group_from_generators" << endl;
 		}
-	ago.create(Ago);
+	ago.create(Ago, __FILE__, __LINE__);
 	A_perm->init_permutation_group_from_generators(N,
 		TRUE, ago,
 		Aut_counter, Aut,

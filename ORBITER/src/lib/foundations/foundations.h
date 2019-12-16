@@ -376,6 +376,7 @@ class algebra_global;
 #define NEW_ppint(n) global_mem_object_registry.allocate_ppint(n, __FILE__, __LINE__)
 #define NEW_pplint(n) global_mem_object_registry.allocate_pplint(n, __FILE__, __LINE__)
 #define NEW_char(n) global_mem_object_registry.allocate_char(n, __FILE__, __LINE__)
+#define NEW_char_with_tracking(n, file, line) global_mem_object_registry.allocate_char(n, file, line)
 #define NEW_uchar(n) global_mem_object_registry.allocate_uchar(n, __FILE__, __LINE__)
 #define NEW_pchar(n) global_mem_object_registry.allocate_pchar(n, __FILE__, __LINE__)
 #define NEW_puchar(n) global_mem_object_registry.allocate_puchar(n, __FILE__, __LINE__)
@@ -404,6 +405,7 @@ class algebra_global;
 #define NEW_ppint(n) new ppint[n]
 #define NEW_pplint(n) new pplint[n]
 #define NEW_char(n) new char[n]
+#define NEW_char_with_tracking(n, file, line) new char[n]
 #define NEW_uchar(n) new uchar[n]
 #define NEW_pchar(n) new pchar[n]
 #define NEW_puchar(n) new puchar[n]
@@ -500,7 +502,7 @@ public:
 	char &sign() { return sgn; };
 	int &len() { return l; };
 	char *&rep() { return r; };
-	void create(long int i);
+	void create(long int i, const char *file, int line);
 	void create_product(int nb_factors, int *factors);
 	void create_power(int a, int e);
 		// creates a^e

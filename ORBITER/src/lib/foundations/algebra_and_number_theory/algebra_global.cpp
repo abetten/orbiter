@@ -281,8 +281,8 @@ void algebra_global::factor_cyclotomic(int n, int q, int d,
 	for (c = 0; c < n; c++) {
 		if (NT.gcd_lint(c, n) != 1)
 			continue;
-		C.create(c);
-		N.create(n);
+		C.create(c, __FILE__, __LINE__);
+		N.create(n, __FILE__, __LINE__);
 		D.extended_gcd(C, N, G, U, V, FALSE);
 		cv = U.as_int();
 		ccv= c * cv;
@@ -354,7 +354,7 @@ void algebra_global::count_subprimitive(int Q_max, int H_max)
 				cout << "#subprimitive " << r3 << endl;
 				l = (phi_g * (q - 1)) / g;
 				cout << "l=" << l << endl;
-				A.create(l);
+				A.create(l, __FILE__, __LINE__);
 				D.mult(r2, A, B);
 				cout << "#subprimitive from R_c(d,q)=" << B << endl;
 				cmp = D.compare_unsigned(r3, B);
@@ -394,16 +394,16 @@ int algebra_global::Phi_of(int n, int verbose_level)
 	longinteger_domain D;
 	longinteger_object N, R, A, B, C;
 
-	N.create(n);
+	N.create(n, __FILE__, __LINE__);
 	D.factor(N, nb_primes, primes, exponents, verbose_level);
-	R.create(1);
+	R.create(1, __FILE__, __LINE__);
 	for (i = 0; i < nb_primes; i++) {
 		p = primes[i];
 		e = exponents[i];
-		A.create(p);
+		A.create(p, __FILE__, __LINE__);
 		D.power_int(A, e);
 		cout << "p^e=" << A << endl;
-		B.create(p);
+		B.create(p, __FILE__, __LINE__);
 		D.power_int(B, e - 1);
 		cout << "p^{e-1}=" << A << endl;
 		B.negate();
@@ -428,9 +428,9 @@ void algebra_global::formula_subprimitive(int d, int q,
 	if (f_v) {
 		cout << "d=" << d << " q=" << q << endl;
 	}
-	Theta.create(q);
-	M1.create(-1);
-	Qm1.create(q-1);
+	Theta.create(q, __FILE__, __LINE__);
+	M1.create(-1, __FILE__, __LINE__);
+	Qm1.create(q-1, __FILE__, __LINE__);
 	D.power_int(Theta, d);
 	D.add(Theta, M1, A);
 	cout << "q^d-1 = " << A << endl;
@@ -445,7 +445,7 @@ void algebra_global::formula_subprimitive(int d, int q,
 		NT.print_factorization(nb_primes, primes, exponents);
 		cout << endl;
 	}
-	R.create(1);
+	R.create(1, __FILE__, __LINE__);
 	for (i = 0; i < nb_primes; i++) {
 		p = primes[i];
 		e = exponents[i];
@@ -453,10 +453,10 @@ void algebra_global::formula_subprimitive(int d, int q,
 			cout << "p=" << p << " e=" << e << endl;
 		}
 		//r = r * (i_power_j(p, e) - i_power_j(p, e - 1));
-		A.create(p);
+		A.create(p, __FILE__, __LINE__);
 		D.power_int(A, e);
 		cout << "p^e=" << A << endl;
-		B.create(p);
+		B.create(p, __FILE__, __LINE__);
 		D.power_int(B, e - 1);
 		cout << "p^{e-1}=" << A << endl;
 		B.negate();
@@ -497,9 +497,9 @@ void algebra_global::formula(int d, int q, longinteger_object &Rdq, int verbose_
 	if (f_v) {
 		cout << "d=" << d << " q=" << q << endl;
 	}
-	Theta.create(q);
-	M1.create(-1);
-	Qm1.create(q-1);
+	Theta.create(q, __FILE__, __LINE__);
+	M1.create(-1, __FILE__, __LINE__);
+	Qm1.create(q - 1, __FILE__, __LINE__);
 	D.power_int(Theta, d);
 	D.add(Theta, M1, A);
 	cout << "q^d-1 = " << A << endl;
@@ -515,7 +515,7 @@ void algebra_global::formula(int d, int q, longinteger_object &Rdq, int verbose_
 		NT.print_factorization(nb_primes, primes, exponents);
 		cout << endl;
 	}
-	R.create(1);
+	R.create(1, __FILE__, __LINE__);
 	for (i = 0; i < nb_primes; i++) {
 		p = primes[i];
 		e = exponents[i];
@@ -523,17 +523,17 @@ void algebra_global::formula(int d, int q, longinteger_object &Rdq, int verbose_
 			cout << "p=" << p << " e=" << e << endl;
 		}
 		if (((q - 1) % p) == 0) {
-			A.create(p);
+			A.create(p, __FILE__, __LINE__);
 			D.power_int(A, e);
 			D.mult(R, A, B);
 			B.assign_to(R);
 		}
 		else {
 			//r = r * (i_power_j(p, e) - i_power_j(p, e - 1));
-			A.create(p);
+			A.create(p, __FILE__, __LINE__);
 			D.power_int(A, e);
 			cout << "p^e=" << A << endl;
-			B.create(p);
+			B.create(p, __FILE__, __LINE__);
 			D.power_int(B, e - 1);
 			cout << "p^{e-1}=" << A << endl;
 			B.negate();

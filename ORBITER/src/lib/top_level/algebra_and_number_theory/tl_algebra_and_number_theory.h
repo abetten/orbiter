@@ -10,6 +10,34 @@
 namespace orbiter {
 namespace top_level {
 
+// #############################################################################
+// algebra_global_with_action.cpp
+// #############################################################################
+
+//! group thooretic stuff which requires action
+
+
+class algebra_global_with_action {
+public:
+	void classes_GL(int q, int d, int f_no_eigenvalue_one, int verbose_level);
+	void do_normal_form(int q, int d,
+			int f_no_eigenvalue_one, int *data, int data_sz,
+			int verbose_level);
+	void do_identify_one(int q, int d,
+			int f_no_eigenvalue_one, int elt_idx,
+			int verbose_level);
+	void do_identify_all(int q, int d,
+			int f_no_eigenvalue_one, int verbose_level);
+	void do_random(int q, int d, int f_no_eigenvalue_one, int verbose_level);
+	void group_table(int q, int d, int f_poly, const char *poly,
+			int f_no_eigenvalue_one, int verbose_level);
+	void centralizer_brute_force(int q, int d,
+			int elt_idx, int verbose_level);
+	void centralizer(int q, int d,
+			int elt_idx, int verbose_level);
+	void centralizer(int q, int d, int verbose_level);
+
+};
 
 // #############################################################################
 // analyze_group.cpp
@@ -412,6 +440,8 @@ public:
 		// There is only one orbit at level one,
 		// so there is no need to store Po
 
+	// it does not have a Po[]
+
 	int *So;
 		// [nb_orbits] So[i] is the index of the conjugacy class
 		// associated with the flag orbit Fo[i]
@@ -422,8 +452,8 @@ public:
 		// Fo[i] is the index of the flag orbit
 		// which let to the definition of orbit i
 
+	long int *Go; // [nb_orbits]
 	long int *Pt; // [nb_orbits]
-	int *Go; // [nb_orbits]
 
 
 	//for (i = 0; i < nb_orbits; i++) {
@@ -434,7 +464,7 @@ public:
 	//Fo[i] = ext;
 	//So[i] = idx;
 	//Pt[i] = a;
-	//Go[i] = go.as_int();
+	//Go[i] = go.as_lint();
 
 
 	strong_generators *Stabilizer_gens;
@@ -463,14 +493,14 @@ public:
 	void init_desired_pivots(int verbose_level);
 	void list_all_elements_in_conjugacy_class(
 			int c, int verbose_level);
-	void compute_level_two(int verbose_level);
+	void compute_level_two(int nb_stages, int verbose_level);
 	void downstep(int verbose_level);
 	void compute_stabilizers_downstep(int verbose_level);
 	void upstep(int verbose_level);
 	void setup_stabilizer(
 			strong_generators *Sk, strong_generators *Sn,
 			int verbose_level);
-	void trace(int ext, int coset,
+	void trace(int f, int coset,
 			long int a, long int b, int &f_automorphism, int *&Aut,
 			int verbose_level);
 	void multiply_to_the_right(
@@ -566,6 +596,7 @@ public:
 	int *Po; // [nb_orbits]
 	int *So; // [nb_orbits]
 	int *Mo; // [nb_orbits]
+	long int *Go; // [nb_orbits]
 	long int *Pt; // [nb_orbits]
 	strong_generators *Stabilizer_gens; // [nb_orbits]
 

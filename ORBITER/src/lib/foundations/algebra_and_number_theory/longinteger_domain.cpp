@@ -212,7 +212,7 @@ void longinteger_domain::mult(
 	int f_v = FALSE;
 	
 	if (a.is_zero() || b.is_zero()) {
-		c.create(0);
+		c.create(0, __FILE__, __LINE__);
 		return;
 		}
 	if ((a.sign() && !b.sign()) || (!a.sign() && b.sign())) {
@@ -289,7 +289,7 @@ void longinteger_domain::mult_integer_in_place(
 {
 	longinteger_object B, C;
 	
-	B.create(b);
+	B.create(b, __FILE__, __LINE__);
 	mult(a, B, C);
 	C.assign_to(a);
 }
@@ -324,7 +324,7 @@ void longinteger_domain::mult_mod(longinteger_object &a,
 				"a=" << a << " b=" << b << " m=" << m << endl;
 		}
 	if (a.is_zero() || b.is_zero()) {
-		c.create(0);
+		c.create(0, __FILE__, __LINE__);
 		return;
 		}
 	if (compare_unsigned(a, m) >= 0) {
@@ -469,7 +469,7 @@ void longinteger_domain::multiply_up(
 		if (x[i] == 1) {
 			continue;
 		}
-		b.create(x[i]);
+		b.create(x[i], __FILE__, __LINE__);
 		if (f_v) {
 			cout << "longinteger_domain::multiply_up "
 					"i=" << i << " x[i]=" << x[i]
@@ -513,7 +513,7 @@ void longinteger_domain::multiply_up_lint(
 		if (x[i] == 1) {
 			continue;
 		}
-		b.create(x[i]);
+		b.create(x[i], __FILE__, __LINE__);
 		if (f_v) {
 			cout << "longinteger_domain::multiply_up_lint "
 					"i=" << i << " x[i]=" << x[i]
@@ -591,7 +591,7 @@ void longinteger_domain::integral_division(
 		}
 	
 	for (i = 0; i < 10; i++) {
-		c.create(i);
+		c.create(i, __FILE__, __LINE__);
 		mult(b, c, table[i]);
 		}
 	q.freeself();
@@ -648,7 +648,7 @@ void longinteger_domain::integral_division_by_int(
 	longinteger_object B, R;
 	int verbose_level = 0;
 
-	B.create(b);
+	B.create(b, __FILE__, __LINE__);
 	integral_division(a, B, q, R, verbose_level);
 	r = R.as_int();
 }
@@ -660,7 +660,7 @@ void longinteger_domain::integral_division_by_lint(
 	longinteger_object B, R;
 	int verbose_level = 0;
 
-	B.create(b);
+	B.create(b, __FILE__, __LINE__);
 	integral_division(a, B, q, R, verbose_level);
 	r = R.as_lint();
 }
@@ -682,8 +682,8 @@ void longinteger_domain::extended_gcd(
 		}
 	if (a.is_zero()) {
 		b.assign_to(g);
-		u.create(0);
-		v.create(1);
+		u.create(0, __FILE__, __LINE__);
+		v.create(1, __FILE__, __LINE__);
 		if (g.sign()) {
 			g.negate();
 			u.negate();
@@ -693,8 +693,8 @@ void longinteger_domain::extended_gcd(
 		}
 	if (b.is_zero()) {
 		a.assign_to(g);
-		u.create(1);
-		v.create(0);
+		u.create(1, __FILE__, __LINE__);
+		v.create(0, __FILE__, __LINE__);
 		if (g.sign()) {
 			g.negate();
 			u.negate();
@@ -734,10 +734,10 @@ void longinteger_domain::extended_gcd(
 	// now a > 0, b > 0 and a >= b
 	a.assign_to(rm1);
 	b.assign_to(r);
-	sm1.create(1);
-	tm1.create(0);
-	s.create(0);
-	t.create(1);
+	sm1.create(1, __FILE__, __LINE__);
+	tm1.create(0, __FILE__, __LINE__);
+	s.create(0, __FILE__, __LINE__);
+	t.create(1, __FILE__, __LINE__);
 	while (TRUE) {
 		integral_division(rm1, r, q, rp1, verbose_level - 1);
 		if (rp1.is_zero()) {
@@ -914,9 +914,9 @@ void longinteger_domain::create_qnm1(
 {
 	longinteger_object b, c;
 	
-	b.create(q);
+	b.create(q, __FILE__, __LINE__);
 	power_int(b, n);
-	c.create(-1);
+	c.create(-1, __FILE__, __LINE__);
 	add(b, c, a);
 }
 
@@ -933,15 +933,15 @@ static void binomial_with_table(
 	longinteger_domain D;
 	
 	if (k < 0 || k > n) {
-		a.create(0);
+		a.create(0, __FILE__, __LINE__);
 		return;
 		}
 	if (k == n) {
-		a.create(1);
+		a.create(1, __FILE__, __LINE__);
 		return;
 		}
 	if (k == 0) {
-		a.create(1);
+		a.create(1, __FILE__, __LINE__);
 		return;
 		}
 
@@ -959,7 +959,7 @@ static void binomial_with_table(
 			}
 		for ( ; i <= n; i++) {
 			for (j = 0; j <= i; j++) {
-				tab_binomials2[i * (n + 1) + j].create(0);
+				tab_binomials2[i * (n + 1) + j].create(0, __FILE__, __LINE__);
 				}
 			}
 		if (tab_binomials) {
@@ -987,7 +987,7 @@ static void binomial_with_table(
 		//b.print(cout);
 		//cout << endl;
 		
-		c.create(n - k + 1);
+		c.create(n - k + 1, __FILE__, __LINE__);
 		D.mult(b, c, d);
 		D.integral_division_by_int(d, k, a, r);
 		if (r != 0) {
@@ -1019,15 +1019,15 @@ void longinteger_domain::binomial(
 				"n=" << n << " k=" << k << endl;
 		}
 	if (k < 0 || k > n) {
-		a.create(0);
+		a.create(0, __FILE__, __LINE__);
 		return;
 		}
 	if (k == n) {
-		a.create(1);
+		a.create(1, __FILE__, __LINE__);
 		return;
 		}
 	if (k == 0) {
-		a.create(1);
+		a.create(1, __FILE__, __LINE__);
 		return;
 		}
 	if (n < TABLE_BINOMIALS_MAX) {
@@ -1041,7 +1041,7 @@ void longinteger_domain::binomial(
 	else {
 		binomial(b, n, k - 1, verbose_level);
 		}
-	c.create(n - k + 1);
+	c.create(n - k + 1, __FILE__, __LINE__);
 	mult(b, c, d);
 	integral_division_by_int(d, k, a, r);
 	if (r != 0) {
@@ -1065,7 +1065,7 @@ void longinteger_domain::size_of_conjugacy_class_in_sym_n(
 	factorial(b, n);
 	for (i = 1; i <= n; i++) {
 		ai = part[i - 1];
-		c.create(1);
+		c.create(1, __FILE__, __LINE__);
 		for (j = 0; j < ai; j++) {
 			mult_integer_in_place(c, i);
 			}
@@ -1095,15 +1095,15 @@ static void q_binomial_with_table(longinteger_object &a,
 	//cout << "q_binomial_with_table n=" << n
 	// << " k=" << k << " q=" << q << endl;
 	if (k < 0 || k > n) {
-		a.create(0);
+		a.create(0, __FILE__, __LINE__);
 		return;
 		}
 	if (k == n) {
-		a.create(1);
+		a.create(1, __FILE__, __LINE__);
 		return;
 		}
 	if (k == 0) {
-		a.create(1);
+		a.create(1, __FILE__, __LINE__);
 		return;
 		}
 
@@ -1136,7 +1136,7 @@ static void q_binomial_with_table(longinteger_object &a,
 			}
 		for ( ; i <= n; i++) {
 			for (j = 0; j <= i; j++) {
-				tab_q_binomials2[i * (n + 1) + j].create(0);
+				tab_q_binomials2[i * (n + 1) + j].create(0, __FILE__, __LINE__);
 				}
 			}
 		if (tab_q_binomials) {
@@ -1183,15 +1183,15 @@ void longinteger_domain::q_binomial(
 				"n=" << n << " k=" << k << " q=" << q << endl;
 		}
 	if (k < 0 || k > n) {
-		a.create(0);
+		a.create(0, __FILE__, __LINE__);
 		return;
 		}
 	if (k == n) {
-		a.create(1);
+		a.create(1, __FILE__, __LINE__);
 		return;
 		}
 	if (k == 0) {
-		a.create(1);
+		a.create(1, __FILE__, __LINE__);
 		return;
 		}
 	//cout << "longinteger_domain::q_binomial
@@ -1221,15 +1221,15 @@ void longinteger_domain::q_binomial_no_table(
 			"n=" << n << " k=" << k << " q=" << q << endl;
 		}
 	if (k < 0 || k > n) {
-		a.create(0);
+		a.create(0, __FILE__, __LINE__);
 		return;
 		}
 	if (k == n) {
-		a.create(1);
+		a.create(1, __FILE__, __LINE__);
 		return;
 		}
 	if (k == 0) {
-		a.create(1);
+		a.create(1, __FILE__, __LINE__);
 		return;
 		}
 	q_binomial_no_table(b, n - 1, k - 1, q, verbose_level);
@@ -1289,7 +1289,7 @@ static void krawtchouk_with_table(longinteger_object &a,
 		for (i = 0; i < kx; i++) {
 			for (j = 0; j < kx; j++) {
 				tab_krawtchouk_entry_computed2[i * kx + j] = FALSE;
-				tab_krawtchouk2[i * kx + j].create(0);
+				tab_krawtchouk2[i * kx + j].create(0, __FILE__, __LINE__);
 				}
 			}
 		for (i = 0; i < tab_krawtchouk_size; i++) {
@@ -1337,7 +1337,7 @@ static void krawtchouk_with_table(longinteger_object &a,
 		if (x == 0) {
 			D.binomial(n_choose_k, n, k, FALSE);
 			if (q != 1) {
-				b.create(q - 1);
+				b.create(q - 1, __FILE__, __LINE__);
 				D.power_int(b, k);
 				D.mult(n_choose_k, b, a);
 				}
@@ -1346,12 +1346,12 @@ static void krawtchouk_with_table(longinteger_object &a,
 				}
 			}
 		else if (k == 0) {
-			a.create(1);
+			a.create(1, __FILE__, __LINE__);
 			}
 		else {
 			krawtchouk_with_table(b, n, q, k, x - 1);
 			//cout << "K_" << k << "(" << x - 1 << ")=" << b << endl;
-			c.create(-q + 1);
+			c.create(-q + 1, __FILE__, __LINE__);
 			krawtchouk_with_table(d, n, q, k - 1, x);
 			//cout << "K_" << k - 1<< "(" << x << ")=" << d << endl;
 			D.mult(c, d, e);
@@ -1360,7 +1360,7 @@ static void krawtchouk_with_table(longinteger_object &a,
 			D.add(b, e, c);
 			//cout << " c=";
 			//c.print(cout);
-			d.create(-1);
+			d.create(-1, __FILE__, __LINE__);
 			krawtchouk_with_table(e, n, q, k - 1, x - 1);
 			//cout << "K_" << k - 1<< "(" << x - 1 << ")=" << e << endl;
 			D.mult(d, e, f);
@@ -1495,7 +1495,7 @@ long int longinteger_domain::smallest_primedivisor(
 		if (r == 0) {
 			return p;
 		}
-		pp.create(p);
+		pp.create(p, __FILE__, __LINE__);
 		if (compare(q, pp) < 0) {
 			break;
 		}
@@ -1540,7 +1540,7 @@ void longinteger_domain::factor_into_longintegers(
 	if (p == 0) {
 		p = n.as_lint();
 		}
-	pp.create(p);
+	pp.create(p, __FILE__, __LINE__);
 	primes = NEW_OBJECTS(longinteger_object, 1);
 	exponents = NEW_int(1);
 	nb_primes = 1;
@@ -1565,7 +1565,7 @@ void longinteger_domain::factor_into_longintegers(
 			}
 		if (p == last_prime) {
 			exponents[nb_primes - 1]++;
-			pp.create(p);
+			pp.create(p, __FILE__, __LINE__);
 			}
 		else {
 			longinteger_object *pr = NEW_OBJECTS(
@@ -1580,7 +1580,7 @@ void longinteger_domain::factor_into_longintegers(
 			primes = pr;
 			exponents = ex;
 			if (p) {
-				pp.create(p);
+				pp.create(p, __FILE__, __LINE__);
 				}
 			else {
 				n.assign_to(pp);
@@ -1715,7 +1715,7 @@ int longinteger_domain::jacobi(longinteger_object &a,
 	m.assign_to(m1);
 	r1 = 1;
 	
-	minus_one.create(-1);
+	minus_one.create(-1, __FILE__, __LINE__);
 	extended_gcd(a1, m1, g, u, v, verbose_level - 2);
 	if (!g.is_one_or_minus_one()) {
 		return 0;
@@ -1810,7 +1810,7 @@ void longinteger_domain::find_probable_prime_above(
 	if (f_v) {
 		cout << "longinteger_domain::find_probable_prime_above" << endl;
 		}
-	one.create(1);
+	one.create(1, __FILE__, __LINE__);
 	while (TRUE) {
 		if (f_vv) {
 			cout << "considering " << a << endl;
@@ -1880,8 +1880,8 @@ int longinteger_domain::solovay_strassen_is_prime_single_test(
 		cout << "longinteger_domain::solovay_strassen_"
 				"is_prime_single_test" << endl;
 		}
-	one.create(1);
-	m_one.create(-1);
+	one.create(1, __FILE__, __LINE__);
+	m_one.create(-1, __FILE__, __LINE__);
 	add(n, m_one, n_minus_one);
 	random_number_less_than_n(n_minus_one, a);
 	add(a, one, b);
@@ -1909,8 +1909,8 @@ int longinteger_domain::solovay_strassen_test(
 	if (f_v) {
 		cout << "longinteger_domain::solovay_strassen_test" << endl;
 		}
-	one.create(1);
-	m_one.create(-1);
+	one.create(1, __FILE__, __LINE__);
+	m_one.create(-1, __FILE__, __LINE__);
 	add(n, m_one, n_minus_one);
 	if (f_vv) {
 		cout << "longinteger_domain::solovay_strassen_test "
@@ -1984,8 +1984,8 @@ int longinteger_domain::miller_rabin_test(
 		cout << "longinteger_domain::miller_rabin_test "
 				"for " << n << endl;
 		}
-	one.create(1);
-	m_one.create(-1);
+	one.create(1, __FILE__, __LINE__);
+	m_one.create(-1, __FILE__, __LINE__);
 	add(n, m_one, n_minus_one);
 	
 #if 0
@@ -1994,7 +1994,7 @@ int longinteger_domain::miller_rabin_test(
 	add(a, one, b);
 	b.assign_to(a);
 #else
-	a.create(2);
+	a.create(2, __FILE__, __LINE__);
 #endif
 	if (f_vv) {
 		cout << "longinteger_domain::miller_rabin_test "
@@ -2067,7 +2067,7 @@ void longinteger_domain::get_k_bit_random_pseudoprime(
 			"trying to get a " << k << " bit, " << kk
 			<< " decimals random pseudoprime" << endl;
 		}
-	a.create(10);
+	a.create(10, __FILE__, __LINE__);
 	D.power_int(a, kk);
 	random_number_less_than_n(a, b);
 	if (f_v) {
@@ -2103,7 +2103,7 @@ void longinteger_domain::RSA_setup(
 			<< " nb_tests_solovay_strassen=" << nb_tests_solovay_strassen 
 			<< " f_miller_rabin_test=" << f_miller_rabin_test << endl;
 		}
-	m1.create(-1);
+	m1.create(-1, __FILE__, __LINE__);
 	D.get_k_bit_random_pseudoprime(p, half_bits, 
 		nb_tests_solovay_strassen,
 		f_miller_rabin_test, verbose_level - 2);
@@ -2167,7 +2167,7 @@ void longinteger_domain::matrix_product(
 	
 	for (i = 0; i < Am; i++) {
 		for (j = 0; j < Bn; j++) {
-			c.create(0);
+			c.create(0, __FILE__, __LINE__);
 			for (k = 0; k < An; k++) {
 				mult(A[i * An + k], B[k * Bn + j], a);
 				add(a, c, b);
@@ -2339,11 +2339,11 @@ int longinteger_domain::hamming_bound_for_d(
 	if (f_v) {
 		cout << "longinteger_domain::hamming_bound_for_d" << endl;
 		}
-	qnmk.create(q);
-	qm1.create(q - 1);
+	qnmk.create(q, __FILE__, __LINE__);
+	qm1.create(q - 1, __FILE__, __LINE__);
 	power_int(qnmk, n - k);
-	qm1_power.create(1);
-	B.create(0);
+	qm1_power.create(1, __FILE__, __LINE__);
+	B.create(0, __FILE__, __LINE__);
 	if (f_vv) {
 		cout << "longinteger_domain::hamming_bound_for_d: "
 			"q=" << q << " n=" << n << " k=" << k << " "
@@ -2389,22 +2389,22 @@ int longinteger_domain::plotkin_bound_for_d(
 
 	// d \le \frac{n q^{k-1}}{q^k-1}
 
-	qkm1.create(q);
+	qkm1.create(q, __FILE__, __LINE__);
 	power_int(qkm1, k - 1);
-	a.create(n);
+	a.create(n, __FILE__, __LINE__);
 	mult(a, qkm1, b);
 		// now b = n q^{k-1}
 
-	a.create(q - 1);
+	a.create(q - 1, __FILE__, __LINE__);
 	mult(b, a, c);
 		// now c = n q^{k-1} (q - 1)
 		
 
-	a.create(q);
+	a.create(q, __FILE__, __LINE__);
 	mult(a, qkm1, qk);
 		// now qk = q^k
 
-	a.create(-1);
+	a.create(-1, __FILE__, __LINE__);
 	add(qk, a, b);
 		// now b = 2^k - 1
 
@@ -2456,11 +2456,11 @@ int longinteger_domain::griesmer_bound_for_n(
 	if (f_v) {
 		cout << "longinteger_domain::griesmer_bound_for_n" << endl;
 		}
-	one.create(1);
-	d1.create(d);
-	qq.create(q);
-	qi.create(1);
-	S.create(0);
+	one.create(1, __FILE__, __LINE__);
+	d1.create(d, __FILE__, __LINE__);
+	qq.create(q, __FILE__, __LINE__);
+	qi.create(1, __FILE__, __LINE__);
+	S.create(0, __FILE__, __LINE__);
 	if (f_vv) {
 		cout << "griesmer_bound_for_n: q=" << q
 				<< " d=" << d << " k=" << k << endl;
