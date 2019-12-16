@@ -41,6 +41,11 @@ int main(int argc, char **argv)
 			verbose_level = atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
 		}
+		else if (strcmp(argv[i], "-memory_debug") == 0) {
+			f_memory_debug = TRUE;
+			memory_debug_verbose_level = atoi(argv[++i]);
+			cout << "-memory_debug " << memory_debug_verbose_level << endl;
+			}
 		else if (strcmp(argv[i], "-poly") == 0) {
 			f_poly = TRUE;
 			poly = argv[++i];
@@ -233,6 +238,7 @@ int main(int argc, char **argv)
 
 	}
 
+	global_mem_object_registry.dump();
 
 	
 	Os.time_check(cout, t0);

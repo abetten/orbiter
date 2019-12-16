@@ -804,7 +804,7 @@ void semifield_level_two::compute_stabilizers_downstep(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
+	//int f_vvv = (verbose_level >= 3);
 	int i, j, a, b;
 
 	if (f_v) {
@@ -921,13 +921,14 @@ void semifield_level_two::upstep(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
+	//int f_vvv = (verbose_level >= 3);
 	int f, coset, idx, i;
 	long int a, b;
 
 	if (f_v) {
 		cout << "semifield_level_two::upstep "
-				"verbose_level = " << verbose_level << endl;
+				"nb_flag_orbits = " << nb_flag_orbits
+				<< " verbose_level = " << verbose_level << endl;
 	}
 
 	f_Fusion = NEW_int(nb_flag_orbits);
@@ -1095,11 +1096,11 @@ void semifield_level_two::upstep(int verbose_level)
 		nb_orbits++;
 	}
 
-	//Po = NEW_int(nb_orbits);
+	//Po = NEW_int(nb_orbits); // level two does not have Po[]
 	So = NEW_int(nb_orbits);
 	Fo = NEW_int(nb_orbits);
-	Pt = NEW_lint(nb_orbits);
 	Go = NEW_lint(nb_orbits);
+	Pt = NEW_lint(nb_orbits);
 
 
 	for (i = 0; i < nb_orbits; i++) {
@@ -1113,8 +1114,8 @@ void semifield_level_two::upstep(int verbose_level)
 		b = class_rep_plus_I_rank[idx];
 		Fo[i] = f;
 		So[i] = idx;
-		Pt[i] = a;
 		Go[i] = go.as_lint();
+		Pt[i] = a;
 	}
 
 
@@ -1218,7 +1219,7 @@ void semifield_level_two::setup_stabilizer(
 	if (f_v) {
 		cout << "semifield_level_two::setup_stabilizer" << endl;
 	}
-	Mtx = Mtx1;
+	Mtx = Mnn;
 	gens = NEW_OBJECT(vector_ge);
 
 	gens->init(A, verbose_level - 2);
@@ -2259,7 +2260,7 @@ void semifield_level_two::report(
 
 		ost << "There are " << nb_classes << " conjugacy classes without eigenvalue one:\\\\" << endl;
 
-		ost << "\\begin{enumerate}[(0)]" << endl;
+		ost << "\\begin{enumerate}[(1)]" << endl;
 		for (i = 0; i < nb_classes; i++) {
 			ost << "\\item" << endl;
 

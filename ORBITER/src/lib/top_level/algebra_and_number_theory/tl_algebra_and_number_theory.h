@@ -36,19 +36,15 @@ public:
 	void centralizer(int q, int d,
 			int elt_idx, int verbose_level);
 	void centralizer(int q, int d, int verbose_level);
+	void analyze_group(action *A, sims *S, vector_ge *SG,
+		vector_ge *gens2, int verbose_level);
+	void compute_regular_representation(action *A, sims *S,
+		vector_ge *SG, int *&perm, int verbose_level);
+	void presentation(action *A, sims *S, int goi, vector_ge *gens,
+		int *primes, int verbose_level);
 
 };
 
-// #############################################################################
-// analyze_group.cpp
-// #############################################################################
-
-void analyze_group(action *A, sims *S, vector_ge *SG, 
-	vector_ge *gens2, int verbose_level);
-void compute_regular_representation(action *A, sims *S, 
-	vector_ge *SG, int *&perm, int verbose_level);
-void presentation(action *A, sims *S, int goi, vector_ge *gens, 
-	int *primes, int verbose_level);
 
 
 // #############################################################################
