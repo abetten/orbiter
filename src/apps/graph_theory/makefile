@@ -31,7 +31,7 @@ TARGETS=\
 all: $(TARGETS)
 
 install:
-	cp $(TARGETS) ../../../../bin
+	cp $(TARGETS) ../../../bin
 
 
 

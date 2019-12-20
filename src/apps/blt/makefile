@@ -23,7 +23,7 @@ all: $(TARGETS)
 
 
 install:
-	cp $(TARGETS) ../../../../bin
+	cp $(TARGETS) ../../../bin
 
 
 blt_main.out:  blt_main.o ;

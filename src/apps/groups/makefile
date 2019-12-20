@@ -25,7 +25,7 @@ ALL_TARGETS=\
 all: $(ALL_TARGETS)
 
 install:
-	cp $(ALL_TARGETS) ../../../../bin
+	cp $(ALL_TARGETS) ../../../bin
 
 
 
