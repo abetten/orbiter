@@ -34,7 +34,7 @@ TARGETS=\
 all: $(TARGETS)
 
 install:
-	cp $(TARGETS) ../../../../bin
+	cp $(TARGETS) ../../../bin
 
 
 all_k_subsets.out:  all_k_subsets.o;

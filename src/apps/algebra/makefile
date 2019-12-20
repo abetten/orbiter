@@ -32,7 +32,7 @@ all: $(TARGETS)
 
 
 install:
-	cp $(TARGETS) ../../../../bin
+	cp $(TARGETS) ../../../bin
 
 a5_in_PSL.out:  a5_in_PSL.o;
 	$(DISCRETA_CPP)  a5_in_PSL.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

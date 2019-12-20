@@ -14,7 +14,7 @@ all: $(TARGETS)
 
 
 install:
-	cp $(TARGETS) ../../../../bin
+	cp $(TARGETS) ../../../bin
 
 
 regular_ls.out:  regular_ls.o ;

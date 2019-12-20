@@ -18,7 +18,7 @@ test_longinteger.out:  test_longinteger.o ;
 
 
 install:
-	cp $(TARGETS) ../../../../bin
+	cp $(TARGETS) ../../../bin
 
 
 

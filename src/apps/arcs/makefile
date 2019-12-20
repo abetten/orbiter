@@ -22,7 +22,7 @@ all: $(TARGETS)
 
 
 install:
-	cp $(TARGETS) ../../../../bin
+	cp $(TARGETS) ../../../bin
 
 arcs_main.out:  arcs_main.o ;
 	$(DISCRETA_CPP)  arcs_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

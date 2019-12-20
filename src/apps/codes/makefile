@@ -18,7 +18,7 @@ codes.out:  codes.o  ;
 		$(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 install:
-	cp $(TARGETS) ../../../../bin
+	cp $(TARGETS) ../../../bin
 
 
 

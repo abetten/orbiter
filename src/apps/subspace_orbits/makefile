@@ -17,7 +17,7 @@ all: $(TARGETS)
 
 
 install:
-	cp $(TARGETS) ../../../../bin
+	cp $(TARGETS) ../../../bin
 
 
 linear_set_main.out:  linear_set_main.o ;

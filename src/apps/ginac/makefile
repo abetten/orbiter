@@ -52,7 +52,7 @@ tutorial.out:  tutorial.o  ;
 
 
 install:
-	cp $(ALL_TARGETS) ../../../../bin
+	cp $(ALL_TARGETS) ../../../bin
 
 
 
