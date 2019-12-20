@@ -1,5 +1,9 @@
 all: ;
-	cd ORBITER; $(MAKE) all
+	cd src; $(MAKE) all
 
 clean: ;
-	cd ORBITER; $(MAKE) clean
+	cd src; $(MAKE) clean
+	#cd RUN; $(MAKE) clean
+
+install: ;
+	cd src; $(MAKE) install
