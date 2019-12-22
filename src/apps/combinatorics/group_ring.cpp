@@ -149,13 +149,13 @@ void do_it_for_sym_n(int n, int verbose_level)
 
 	int *elt1, *elt2, *h_alpha, *elt4, *elt5, *elt6, *elt7;
 	
-	group_ring_element_create(Y->A, Y->S, elt1);
-	group_ring_element_create(Y->A, Y->S, elt2);
-	group_ring_element_create(Y->A, Y->S, h_alpha);
-	group_ring_element_create(Y->A, Y->S, elt4);
-	group_ring_element_create(Y->A, Y->S, elt5);
-	group_ring_element_create(Y->A, Y->S, elt6);
-	group_ring_element_create(Y->A, Y->S, elt7);
+	Y->group_ring_element_create(Y->A, Y->S, elt1);
+	Y->group_ring_element_create(Y->A, Y->S, elt2);
+	Y->group_ring_element_create(Y->A, Y->S, h_alpha);
+	Y->group_ring_element_create(Y->A, Y->S, elt4);
+	Y->group_ring_element_create(Y->A, Y->S, elt5);
+	Y->group_ring_element_create(Y->A, Y->S, elt6);
+	Y->group_ring_element_create(Y->A, Y->S, elt7);
 
 
 
@@ -215,15 +215,15 @@ void do_it_for_sym_n(int n, int verbose_level)
 
 		
 		cout << "h_alpha =" << endl;
-		group_ring_element_print(Y->A, Y->S, h_alpha);
+		Y->group_ring_element_print(Y->A, Y->S, h_alpha);
 		cout << endl;
 
 
-		group_ring_element_copy(Y->A, Y->S, h_alpha, elt4);
-		group_ring_element_mult(Y->A, Y->S, elt4, elt4, elt5);
+		Y->group_ring_element_copy(Y->A, Y->S, h_alpha, elt4);
+		Y->group_ring_element_mult(Y->A, Y->S, elt4, elt4, elt5);
 
 		cout << "h_alpha * h_alpha=" << endl;
-		group_ring_element_print(Y->A, Y->S, elt5);
+		Y->group_ring_element_print(Y->A, Y->S, elt5);
 		cout << endl;
 
 		int *Module_Base;
@@ -298,13 +298,13 @@ void do_it_for_sym_4(int n, int verbose_level)
 
 	int *elt1, *elt2, *h_alpha, *elt4, *elt5, *elt6, *elt7;
 	
-	group_ring_element_create(Y->A, Y->S, elt1);
-	group_ring_element_create(Y->A, Y->S, elt2);
-	group_ring_element_create(Y->A, Y->S, h_alpha);
-	group_ring_element_create(Y->A, Y->S, elt4);
-	group_ring_element_create(Y->A, Y->S, elt5);
-	group_ring_element_create(Y->A, Y->S, elt6);
-	group_ring_element_create(Y->A, Y->S, elt7);
+	Y->group_ring_element_create(Y->A, Y->S, elt1);
+	Y->group_ring_element_create(Y->A, Y->S, elt2);
+	Y->group_ring_element_create(Y->A, Y->S, h_alpha);
+	Y->group_ring_element_create(Y->A, Y->S, elt4);
+	Y->group_ring_element_create(Y->A, Y->S, elt5);
+	Y->group_ring_element_create(Y->A, Y->S, elt6);
+	Y->group_ring_element_create(Y->A, Y->S, elt7);
 
 
 
@@ -376,15 +376,15 @@ void do_it_for_sym_4(int n, int verbose_level)
 
 		
 		cout << "h_alpha =" << endl;
-		group_ring_element_print(Y->A, Y->S, h_alpha);
+		Y->group_ring_element_print(Y->A, Y->S, h_alpha);
 		cout << endl;
 
 
-		group_ring_element_copy(Y->A, Y->S, h_alpha, elt4);
-		group_ring_element_mult(Y->A, Y->S, elt4, elt4, elt5);
+		Y->group_ring_element_copy(Y->A, Y->S, h_alpha, elt4);
+		Y->group_ring_element_mult(Y->A, Y->S, elt4, elt4, elt5);
 
 		cout << "h_alpha * h_alpha=" << endl;
-		group_ring_element_print(Y->A, Y->S, elt5);
+		Y->group_ring_element_print(Y->A, Y->S, elt5);
 		cout << endl;
 
 		int *Module_Base;

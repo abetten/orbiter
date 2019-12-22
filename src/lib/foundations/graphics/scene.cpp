@@ -824,30 +824,56 @@ int scene::quadric(double *coeff)
 }
 
 
+int scene::cubic_in_orbiter_ordering(double *coeff)
+{
+	double eqn[20];
+
+	eqn[0] = coeff[0];
+	eqn[1] = coeff[4];
+	eqn[2] = coeff[5];
+	eqn[3] = coeff[6];
+	eqn[4] = coeff[7];
+	eqn[5] = coeff[16];
+	eqn[6] = coeff[17];
+	eqn[7] = coeff[10];
+	eqn[8] = coeff[18];
+	eqn[9] = coeff[13];
+	eqn[10] = coeff[1];
+	eqn[11] = coeff[8];
+	eqn[12] = coeff[9];
+	eqn[13] = coeff[11];
+	eqn[14] = coeff[19];
+	eqn[15] = coeff[14];
+	eqn[16] = coeff[2];
+	eqn[17] = coeff[12];
+	eqn[18] = coeff[15];
+	eqn[19] = coeff[3];
+	return cubic(eqn);
+}
 
 int scene::cubic(double *coeff)
 // povray ordering of monomials:
 // http://www.povray.org/documentation/view/3.6.1/298/
-// 1: x^3
-// 2: x^2y
-// 3: x^2z
-// 4: x^2
-// 5: xy^2
-// 6: xyz
-// 7: xy
-// 8: xz^2
-// 9: xz
-// 10: x
-// 11: y^3
-// 12: y^2z
-// 13: y^2
-// 14: yz^2
-// 15: yz
-// 16: y
-// 17: z^3
-// 18: z^2
-// 19: z
-// 20: 1
+// 0: x^3
+// 1: x^2y
+// 2: x^2z
+// 3: x^2
+// 4: xy^2
+// 5: xyz
+// 6: xy
+// 7: xz^2
+// 8: xz
+// 9: x
+// 10: y^3
+// 11: y^2z
+// 12: y^2
+// 13: yz^2
+// 14: yz
+// 15: y
+// 16: z^3
+// 17: z^2
+// 18: z
+// 19: 1
 {
 	int i;
 	

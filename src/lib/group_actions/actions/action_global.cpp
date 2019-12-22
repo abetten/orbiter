@@ -461,6 +461,7 @@ void compute_generators_GL_n_q(int *&Gens,
 		}
 }
 
+#if 0
 void order_of_PGGL_n_q(longinteger_object &go,
 		int n, int q, int f_semilinear)
 {
@@ -484,6 +485,7 @@ void order_of_PGGL_n_q(longinteger_object &go,
 	FREE_OBJECT(F);
 	FREE_OBJECT(A);
 }
+#endif
 
 
 // callbacks for Schreier Sims:
@@ -829,74 +831,6 @@ void lift_generators_to_subfield_structure(
 		cout << "lift_generators_to_subfield_structure done" << endl;
 		}
 
-}
-
-
-long int group_ring_element_size(action *A, sims *S)
-{
-	long int goi;
-
-	goi = S->group_order_lint();
-	return goi;
-}
-
-void group_ring_element_create(action *A, sims *S, int *&elt)
-{
-	long int goi;
-
-	goi = S->group_order_lint();
-	elt = NEW_int(goi);
-	group_ring_element_zero(A, S, elt);
-}
-
-void group_ring_element_free(action *A, sims *S, int *elt)
-{
-	FREE_int(elt);
-}
-
-void group_ring_element_print(action *A, sims *S, int *elt)
-{
-	long int goi;
-
-	goi = S->group_order_lint();
-	int_vec_print(cout, elt, goi);
-}
-
-void group_ring_element_copy(action *A, sims *S,
-		int *elt_from, int *elt_to)
-{
-	long int goi;
-
-	goi = S->group_order_lint();
-	int_vec_copy(elt_from, elt_to, goi);
-}
-
-void group_ring_element_zero(action *A, sims *S, int *elt)
-{
-	long int goi;
-
-	goi = S->group_order_lint();
-	int_vec_zero(elt, goi);
-}
-
-void group_ring_element_mult(action *A,
-		sims *S, int *elt1, int *elt2, int *elt3)
-{
-	long int goi;
-	int i, j, k;
-	int a, b, c;
-
-	goi = S->group_order_lint();
-	int_vec_zero(elt3, goi);
-	for (i = 0; i < goi; i++) {
-		a = elt1[i];
-		for (j = 0; j < goi; j++) {
-			b = elt2[j];
-			c = a * b;
-			k = S->mult_by_rank(i, j, 0 /* verbose_level */);
-			elt3[k] += c;
-			}
-		}
 }
 
 

@@ -697,6 +697,7 @@ public:
 	// 8: z^2
 	// 9: z
 	// 10: 1
+	int cubic_in_orbiter_ordering(double *coeff);
 	int cubic(double *coeff);
 	// povray ordering of monomials:
 	// http://www.povray.org/documentation/view/3.6.1/298/
