@@ -38,11 +38,21 @@ ex my_lsolve(ostream &ost, const ex &eqns, const ex &symbols, unsigned options);
 matrix solve(matrix *M, const matrix & vars,
                      const matrix & rhs,
                      unsigned algo);
+void row_operation_add(matrix *M, int r1, int r2, ex factor);
+// Row[r2] += Row[r1] * factor
+void row_operation_multiply(matrix *M, int r1, ex factor);
+// Row[r1] = Row[r1] * factor
+void right_normalize_row(matrix *M, int r);
 matrix right_nullspace(matrix *M);
 int pivot(matrix *M, unsigned ro, unsigned co, bool symbolic);
 
 // the function which computes the equation of the Hilbert, Cohn-Vossen surface:
-void surface();
+void surface(int argc, const char **argv);
+void draw_frame_HCV(
+	animate *Anim, int h, int nb_frames, int round,
+	ostream &fp,
+	int verbose_level);
+matrix make_cij(matrix **AB, int i, int j, ostream &ost, int verbose_level);
 
 
 // ginac stuff:
@@ -252,6 +262,49 @@ matrix solve(matrix *M, const matrix & vars,
 #endif
 }
 
+void row_operation_add(matrix *M, int r1, int r2, ex factor)
+// Row[r2] += Row[r1] * factor
+{
+	//const unsigned m = M->rows();
+	const unsigned n = M->cols();
+	for (unsigned c=0; c<n; ++c) {
+		M->m[r2*n+c] += factor * M->m[r1*n+c];
+	}
+
+}
+
+void row_operation_multiply(matrix *M, int r1, ex factor)
+// Row[r1] = Row[r1] * factor
+{
+	//const unsigned m = M->rows();
+	const unsigned n = M->cols();
+	for (unsigned c=0; c<n; ++c) {
+		M->m[r1*n+c] *= factor;
+	}
+
+}
+
+void right_normalize_row(matrix *M, int r)
+{
+	//const unsigned m = M->rows();
+	const unsigned n = M->cols();
+	int j;
+	for (j = n - 1; j >= 0; j--) {
+		if (!M->m[r*n+j].expand().is_zero()) {
+			break;
+		}
+	}
+	if (j == -1) {
+		cout << "right_normalize_row zero row" << endl;
+		exit(1);
+	}
+	ex factor = 1 / M->m[r*n+j];
+	for (unsigned c = 0; c < n; ++c) {
+		M->m[r*n+c] *= factor;
+		//M->m[r*n+c].expand(1);
+	}
+
+}
 
 matrix right_nullspace(matrix *M)
 {
@@ -457,9 +510,77 @@ int pivot(matrix *M, unsigned ro, unsigned co, bool symbolic)
 	return k;
 }
 
-void surface()
+void surface(int argc, const char **argv)
 // Computes the equation of the Hilbert, Cohn-Vossen surface
 {
+	int verbose_level = 0;
+	int f_output_mask = FALSE;
+	const char *output_mask = NULL;
+	int f_nb_frames_default = FALSE;
+	int nb_frames_default;
+	int f_round = FALSE;
+	int round;
+	int f_rounds = FALSE;
+	const char *rounds_as_string = NULL;
+	video_draw_options *Opt = NULL;
+
+	int i;
+
+	for (i = 1; i < argc; i++) {
+		if (strcmp(argv[i], "-v") == 0) {
+			verbose_level = atoi(argv[++i]);
+			cout << "-v " << verbose_level << endl;
+			}
+		else if (strcmp(argv[i], "-video_options") == 0) {
+			Opt = NEW_OBJECT(video_draw_options);
+			i += Opt->read_arguments(argc - (i - 1),
+				argv + i, verbose_level);
+
+			cout << "-linear" << endl;
+			}
+		else if (strcmp(argv[i], "-round") == 0) {
+			f_round = TRUE;
+			round = atoi(argv[++i]);
+			cout << "-round " << round << endl;
+			}
+
+		else if (strcmp(argv[i], "-rounds") == 0) {
+			f_rounds = TRUE;
+			rounds_as_string = argv[++i];
+			cout << "-rounds " << rounds_as_string << endl;
+			}
+		else if (strcmp(argv[i], "-nb_frames_default") == 0) {
+			f_nb_frames_default = TRUE;
+			nb_frames_default = atoi(argv[++i]);
+			cout << "-nb_frames_default " << nb_frames_default << endl;
+			}
+		else if (strcmp(argv[i], "-output_mask") == 0) {
+			f_output_mask = TRUE;
+			output_mask = argv[++i];
+			cout << "-output_mask " << output_mask << endl;
+			}
+		else {
+			cout << "unrecognized option " << argv[i] << endl;
+		}
+		}
+
+	if (Opt == NULL) {
+		cout << "Please use option -video_options .." << endl;
+		exit(1);
+		}
+	if (!f_output_mask) {
+		cout << "Please use option -output_mask <output_mask>" << endl;
+		exit(1);
+		}
+	if (!f_nb_frames_default) {
+		cout << "Please use option -nb_frames_default <nb_frames>" << endl;
+		exit(1);
+		}
+	if (!f_round && !f_rounds ) {
+		cout << "Please use option -round <round> or "
+				"-rounds <first_round> <nb_rounds>" << endl;
+		exit(1);
+		}
 
 
 
@@ -559,7 +680,7 @@ void surface()
 		// the 6 blue lines, in pairs of two:
 		int blue_idx[] = {14, 17, 15, 18, 13, 19, 11, 20, 9, 12, 10, 16};
 
-		int i, j;
+		int j;
 
 		// subtract one so that the indices work for C-code:
 		for (i = 0; i < 12; i++) {
@@ -721,7 +842,7 @@ void surface()
 		fp << "$P_{19}=" << P19 << "$\\\\" << endl;
 
 		// make an array of pointers so that we can access the 19 points
-		// though this indexed array in loops later one:
+		// though this indexed array in loops later on:
 
 		P[0] = &P1;
 		P[1] = &P2;
@@ -889,6 +1010,7 @@ void surface()
 		fp << "solution " << endl << "$$" << endl << sol << endl << "$$" << endl;
 
 		int f_first;
+		double Eqn[20];
 
 		f_first = TRUE;
 		fp << "The equation of the surface is" << endl;
@@ -896,7 +1018,13 @@ void surface()
 		for (j = 0; j < 20; j++) {
 			ex solj = sol.op(j);  // solution for j-th variable
 
+			Eqn[j] = 0;
+
 			if (!solj.is_zero()) {
+				numeric value = ex_to<numeric>(evalf(solj));
+
+				Eqn[j] = value.to_double();
+
 				if (f_first) {
 					f_first = FALSE;
 				}
@@ -913,16 +1041,437 @@ void surface()
 		fp << "$$" << endl;
 		cout << endl;
 
+		matrix A1(2,3);
+		matrix A2(2,3);
+		matrix A3(2,3);
+		matrix A4(2,3);
+		matrix A5(2,3);
+		matrix A6(2,3);
+		matrix B1(2,3);
+		matrix B2(2,3);
+		matrix B3(2,3);
+		matrix B4(2,3);
+		matrix B5(2,3);
+		matrix B6(2,3);
+
+
+		idx1 = red_idx[0 * 2 + 0];
+		idx2 = red_idx[0 * 2 + 1];
+		A1 = matrix{
+			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
+			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
+			};
+		fp << "$A_1=" << A1 << "$\\\\" << endl;
+		idx1 = red_idx[1 * 2 + 0];
+		idx2 = red_idx[1 * 2 + 1];
+		A2 = matrix{
+			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
+			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
+			};
+		fp << "$A_2=" << A2 << "$\\\\" << endl;
+		idx1 = red_idx[2 * 2 + 0];
+		idx2 = red_idx[2 * 2 + 1];
+		A3 = matrix{
+			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
+			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
+			};
+		fp << "$A_3=" << A3 << "$\\\\" << endl;
+		idx1 = red_idx[3 * 2 + 0];
+		idx2 = red_idx[3 * 2 + 1];
+		A4 = matrix{
+			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
+			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
+			};
+		fp << "$A_4=" << A4 << "$\\\\" << endl;
+		idx1 = red_idx[4 * 2 + 0];
+		idx2 = red_idx[4 * 2 + 1];
+		A5 = matrix{
+			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
+			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
+			};
+		fp << "$A_5=" << A5 << "$\\\\" << endl;
+		idx1 = red_idx[5 * 2 + 0];
+		idx2 = red_idx[5 * 2 + 1];
+		A6 = matrix{
+			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
+			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
+			};
+		fp << "$A_6=" << A6 << "$\\\\" << endl;
+
+
+		idx1 = blue_idx[0 * 2 + 0];
+		idx2 = blue_idx[0 * 2 + 1];
+		B1 = matrix{
+			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
+			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
+			};
+		fp << "$B_1=" << B1 << "$\\\\" << endl;
+		idx1 = blue_idx[1 * 2 + 0];
+		idx2 = blue_idx[1 * 2 + 1];
+		B2 = matrix{
+			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
+			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
+			};
+		fp << "$B_2=" << B2 << "$\\\\" << endl;
+		idx1 = blue_idx[2 * 2 + 0];
+		idx2 = blue_idx[2 * 2 + 1];
+		B3 = matrix{
+			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
+			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
+			};
+		fp << "$B_3=" << B3 << "$\\\\" << endl;
+		idx1 = blue_idx[3 * 2 + 0];
+		idx2 = blue_idx[3 * 2 + 1];
+		B4 = matrix{
+			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
+			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
+			};
+		fp << "$B_4=" << B4 << "$\\\\" << endl;
+		idx1 = blue_idx[4 * 2 + 0];
+		idx2 = blue_idx[4 * 2 + 1];
+		B5 = matrix{
+			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
+			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
+			};
+		fp << "$B_5=" << B5 << "$\\\\" << endl;
+		idx1 = blue_idx[5 * 2 + 0];
+		idx2 = blue_idx[5 * 2 + 1];
+		B6 = matrix{
+			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
+			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
+			};
+		fp << "$B_6=" << B6 << "$\\\\" << endl;
+
+		matrix *AB[27];
+		AB[0] = &A1;
+		AB[1] = &A2;
+		AB[2] = &A3;
+		AB[3] = &A4;
+		AB[4] = &A5;
+		AB[5] = &A6;
+		AB[6] = &B1;
+		AB[7] = &B2;
+		AB[8] = &B3;
+		AB[9] = &B4;
+		AB[10] = &B5;
+		AB[11] = &B6;
+
+		int h;
+
+		for (h = 0; h < 12; h++) {
+			row_operation_add(AB[h], 0, 1, -1);
+			for (j = 2; j >= 0; j--) {
+				if (!AB[h]->m[1*4+j].expand().is_zero()) {
+					break;
+				}
+			}
+			if (j < 0) {
+				cout << "error, second row is zero" << endl;
+				exit(1);
+			}
+			ex factor = 1/AB[h]->m[1*4+j];
+			row_operation_multiply(AB[h], 1, factor);
+			row_operation_add(AB[h], 1, 0, -1 * AB[h]->m[0*4+j]);
+
+		}
+
+		fp << endl;
+		fp << "\\bigskip" << endl;
+		fp << endl;
+
+		for (h = 0; h < 12; h++) {
+			fp << "$L_{" << h << "}=" << *AB[h] << "$\\\\" << endl;
+		}
+
+		//int i, j;
+
+		matrix C[15];
+
+		h = 0;
+		for (i = 0; i < 6; i++) {
+			for (j = i + 1; j < 6; j++, h++) {
+				C[h] = make_cij(AB, i, j, fp, verbose_level);
+
+				fp << endl;
+				fp << "\\bigskip" << endl;
+				fp << endl;
+
+				fp << "$C_{" << i + 1 << "," << j + 1 << "}=" << *C << "$\\\\" << endl;
+				AB[12 + h] = &C[h];
+			}
+		}
+
+
+		fp << endl;
+		fp << "\\bigskip" << endl;
+		fp << endl;
+		fp << "Substituting $u=1,$ $v=2:$" << endl;
+		fp << endl;
+
+		double D[27 * 8];
+
+		for (h = 0; h < 27; h++) {
+			matrix L(2,4);
+
+			L = matrix{
+				{AB[h]->m[0].subs(lst{u, v}, lst{1, 2}),
+				AB[h]->m[1].subs(lst{u, v}, lst{1, 2}),
+				AB[h]->m[2].subs(lst{u, v}, lst{1, 2}),
+				AB[h]->m[3].subs(lst{u, v}, lst{1, 2})},
+				{AB[h]->m[4].subs(lst{u, v}, lst{1, 2}),
+				AB[h]->m[5].subs(lst{u, v}, lst{1, 2}),
+				AB[h]->m[6].subs(lst{u, v}, lst{1, 2}),
+				AB[h]->m[7].subs(lst{u, v}, lst{1, 2})}
+			};
+
+			for (i = 0; i < 8; i++) {
+				numeric value = ex_to<numeric>(evalf(L.m[i]));
+
+				D[h * 8 + i] = value.to_double();
+			}
+			fp << "$L_{" << h << "}=" << L << "$ " << endl;
+			fp << "value = ";
+			for (i = 0; i < 8; i++) {
+				fp << D[h * 8 + i] << ",";
+			}
+			fp << "\\\\" << endl;
+		}
+
+		{
+			scene *S;
+
+			S = NEW_OBJECT(scene);
+
+			S->init(verbose_level);
+
+
+
+			for (h = 0; h < 27; h++) {
+				double z6[6];
+
+				if (ABS(D[h * 8 + 3] - 1) < 0.1) {
+
+					z6[0] = D[h * 8 + 0];
+					z6[1] = D[h * 8 + 1];
+					z6[2] = D[h * 8 + 2];
+					z6[3] = D[h * 8 + 0] + D[h * 8 + 4 + 0];
+					z6[4] = D[h * 8 + 1] + D[h * 8 + 4 + 1];
+					z6[5] = D[h * 8 + 2] + D[h * 8 + 4 + 2];
+
+					S->line_through_two_pts(z6, 3);
+				}
+			}
+
+			S->cubic_in_orbiter_ordering(Eqn);
+
+			//scene_create_target_model(S, nb_frames_default, TARGET_NB_LINES, TF, verbose_level - 2);
+
+
+
+			animate *A;
+
+			A = NEW_OBJECT(animate);
+
+			A->init(S, output_mask, nb_frames_default, Opt,
+					NULL /* extra_data */,
+					verbose_level);
+
+
+			A->draw_frame_callback = draw_frame_HCV;
+
+
+
+
+
+
+
+			//char fname_makefile[1000];
+
+
+			//sprintf(fname_makefile, "makefile_animation");
+
+			{
+			ofstream fpm(A->fname_makefile);
+
+			A->fpm = &fpm;
+
+			fpm << "all:" << endl;
+
+			if (f_rounds) {
+
+				int *rounds;
+				int nb_rounds;
+
+				int_vec_scan(rounds_as_string, rounds, nb_rounds);
+
+				cout << "Doing the following " << nb_rounds << " rounds: ";
+				int_vec_print(cout, rounds, nb_rounds);
+				cout << endl;
+
+				int r;
+
+				for (r = 0; r < nb_rounds; r++) {
+
+
+					round = rounds[r];
+
+					cout << "round " << r << " / " << nb_rounds
+							<< " is " << round << endl;
+
+					//round = first_round + r;
+
+					A->animate_one_round(
+							round,
+							verbose_level);
+
+					}
+				}
+			else {
+				cout << "round " << round << endl;
+
+
+				A->animate_one_round(
+						round,
+						verbose_level);
+
+				}
+
+			fpm << endl;
+			}
+			file_io Fio;
+
+			cout << "Written file " << A->fname_makefile << " of size "
+					<< Fio.file_size(A->fname_makefile) << endl;
+
+
+
+			FREE_OBJECT(S);
+		}
+
+
+
+
+
 		L.foot(fp);
 	}
 
 }
 
+void draw_frame_HCV(
+	animate *Anim, int h, int nb_frames, int round,
+	ostream &fp,
+	int verbose_level)
+{
+	int i;
+	povray_interface Pov;
 
 
 
-int main() {
+	double my_clipping_radius;
 
-	surface();
+	my_clipping_radius = Anim->Opt->clipping_radius;
+
+	Pov.union_start(fp);
+
+	for (i = 0; i < Anim->Opt->nb_clipping; i++) {
+		if (Anim->Opt->clipping_round[i] == round) {
+			my_clipping_radius = Anim->Opt->clipping_value[i];
+			}
+		}
+
+
+	if (round == 0) {
+
+		Anim->S->line_radius = 0.02;
+
+		Anim->S->draw_lines_ai(fp);
+		Anim->S->draw_lines_bj(fp);
+
+		{
+		int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11};
+
+		Anim->S->draw_lines_cij_with_selection(selection, 12, fp);
+		}
+		//Anim->S->draw_lines_cij(fp);
+
+		Pov.rotate_111(h, nb_frames, fp);
+	}
+	else if (round == 1) {
+
+		Anim->S->line_radius = 0.02;
+
+		Anim->S->draw_lines_ai(fp);
+		Anim->S->draw_lines_bj(fp);
+
+		{
+		int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11};
+
+		Anim->S->draw_lines_cij_with_selection(selection, 12, fp);
+		}
+		//Anim->S->draw_lines_cij(fp);
+
+		{
+			int selection[] = {0};
+			Anim->S->draw_cubic_with_selection(selection, 1,
+					Pov.color_white, fp);
+		}
+
+		Pov.rotate_111(h, nb_frames, fp);
+
+	}
+
+	Pov.union_end(fp, 1.0, my_clipping_radius);
+
+}
+
+
+
+matrix make_cij(matrix **AB, int i, int j, ostream &ost, int verbose_level)
+// i and j are between 0 and 5
+{
+	int f_v = (verbose_level >= 1);
+	matrix AiBj(4, 4);
+	matrix AjBi(4, 4);
+	matrix N1, N2, N3;
+	matrix N(4, 4);
+	matrix C(2, 4);
+
+	if (f_v) {
+		cout << "make_cij i=" << i << " j=" << j << endl;
+	}
+	AiBj = {
+			{AB[i]->m[0 * 4 + 3], AB[i]->m[0 * 4 + 2], AB[i]->m[0 * 4 + 1], AB[i]->m[0 * 4 + 0] },
+			{AB[i]->m[1 * 4 + 3], AB[i]->m[1 * 4 + 2], AB[i]->m[1 * 4 + 1], AB[i]->m[1 * 4 + 0] },
+			{AB[6 + j]->m[0 * 4 + 3], AB[6 + j]->m[0 * 4 + 2], AB[6 + j]->m[0 * 4 + 1], AB[6 + j]->m[0 * 4 + 0] },
+			{AB[6 + j]->m[1 * 4 + 3], AB[6 + j]->m[1 * 4 + 2], AB[6 + j]->m[1 * 4 + 1], AB[6 + j]->m[1 * 4 + 0] }
+	};
+	//ost << "$A_{" << i + 1 << "}B_{" << j + 1 << "}=" << AiBj << "$\\\\" << endl;
+	AjBi = {
+			{AB[j]->m[0 * 4 + 3], AB[j]->m[0 * 4 + 2], AB[j]->m[0 * 4 + 1], AB[j]->m[0 * 4 + 0] },
+			{AB[j]->m[1 * 4 + 3], AB[j]->m[1 * 4 + 2], AB[j]->m[1 * 4 + 1], AB[j]->m[1 * 4 + 0] },
+			{AB[6 + i]->m[0 * 4 + 3], AB[6 + i]->m[0 * 4 + 2], AB[6 + i]->m[0 * 4 + 1], AB[6 + i]->m[0 * 4 + 0] },
+			{AB[6 + i]->m[1 * 4 + 3], AB[6 + i]->m[1 * 4 + 2], AB[6 + i]->m[1 * 4 + 1], AB[6 + i]->m[1 * 4 + 0] }
+	};
+	N1 = right_nullspace(&AiBj);
+	N2 = right_nullspace(&AjBi);
+	N = {
+			{N1(3,0), N1(2,0), N1(1,0), N1(0,0) },
+			{N2(3,0), N2(2,0), N2(1,0), N2(0,0) },
+	};
+	N3 = right_nullspace(&N);
+	C = {
+			{N3(0,1), N3(1,1), N3(2,1), N3(3,1) },
+			{N3(0,0), N3(1,0), N3(2,0), N3(3,0) }
+	};
+	right_normalize_row(&C, 0);
+	right_normalize_row(&C, 1);
+	return C;
+}
+
+
+int main(int argc, const char **argv)
+{
+
+	surface(argc, argv);
 
 }

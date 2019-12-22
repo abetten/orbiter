@@ -68,6 +68,7 @@ void animate::animate_one_round(
 	int round,
 	int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	numerics N;
 	int h, i, j;
 	int f_has_camera = FALSE;
@@ -104,6 +105,10 @@ void animate::animate_one_round(
 	double zz, szz;
 	double pan_alpha, pan_delta;
 
+	if (f_v) {
+		cout << "animate::animate_one_round" << endl;
+		cout << "nb_frames=" << nb_frames << endl;
+	}
 	nb_frames_this_round = nb_frames;
 	for (i = 0; i < Opt->nb_camera; i++) {
 		if (Opt->camera_round[i] == round) {

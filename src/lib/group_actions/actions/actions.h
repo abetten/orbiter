@@ -932,8 +932,8 @@ void compute_generators_GL_n_q(int *&Gens, int &nb_gens,
 	int &elt_size, int n, finite_field *F,
 	vector_ge *&nice_gens,
 	int verbose_level);
-void order_of_PGGL_n_q(longinteger_object &go, int n, int q, 
-	int f_semilinear);
+//void order_of_PGGL_n_q(longinteger_object &go, int n, int q,
+//	int f_semilinear);
 void set_orthogonal_group_type(int f_siegel, 
 	int f_reflection, int f_similarity, int f_semisimilarity);
 int get_orthogonal_group_type_f_reflection();
@@ -953,16 +953,6 @@ void lift_generators_to_subfield_structure(
 	action *Aq, action *AQ, 
 	strong_generators *&Strong_gens, 
 	int verbose_level);
-long int group_ring_element_size(action *A, sims *S);
-void group_ring_element_create(action *A, sims *S, int *&elt);
-void group_ring_element_free(action *A, sims *S, int *elt);
-void group_ring_element_print(action *A, sims *S, int *elt);
-void group_ring_element_copy(action *A, sims *S, 
-	int *elt_from, int *elt_to);
-void group_ring_element_zero(action *A, sims *S, 
-	int *elt);
-void group_ring_element_mult(action *A, sims *S, 
-	int *elt1, int *elt2, int *elt3);
 void perm_print_cycles_sorted_by_length(std::ostream &ost,
 	int degree, int *perm, int verbose_level);
 void perm_print_cycles_sorted_by_length_offset(std::ostream &ost,

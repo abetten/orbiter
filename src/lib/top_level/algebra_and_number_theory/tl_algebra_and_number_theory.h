@@ -1030,6 +1030,16 @@ public:
 		int dim_of_module, int dim_of_submodule, 
 		int *&Mu, 
 		int verbose_level);
+	long int group_ring_element_size(action *A, sims *S);
+	void group_ring_element_create(action *A, sims *S, int *&elt);
+	void group_ring_element_free(action *A, sims *S, int *elt);
+	void group_ring_element_print(action *A, sims *S, int *elt);
+	void group_ring_element_copy(action *A, sims *S,
+		int *elt_from, int *elt_to);
+	void group_ring_element_zero(action *A, sims *S,
+		int *elt);
+	void group_ring_element_mult(action *A, sims *S,
+		int *elt1, int *elt2, int *elt3);
 };
 
 
