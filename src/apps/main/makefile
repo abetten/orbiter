@@ -1,4 +1,4 @@
-SRC=../../../../ORBITER/src
+SRC=../../../src
 DISCRETA_CPP = g++
 DISCRETA_CC = gcc
 CPPFLAGS = -Wall -I$(SRC)/lib -I/usr/local/opt/readline/include 

@@ -33,7 +33,7 @@ install:
 #-------------------------------------------------------------
 # vars required by the CUDA compiler
 #-------------------------------------------------------------
-CSTD=-std=c++11
+CSTD=-std=c++14
 CUDA_LIB=-lcudart -lcudadevrt -L/scratch/cuda10/lib64
 CUDA_FLAGS= -gencode arch=compute_50,code=sm_50 \
 			-gencode arch=compute_52,code=sm_52 \
