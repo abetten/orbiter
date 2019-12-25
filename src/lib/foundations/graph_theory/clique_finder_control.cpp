@@ -9,7 +9,6 @@
 
 #include "foundations.h"
 #include "Clique/RainbowClique.h"
-#include "chrono.h"
 
 using namespace std;
 
@@ -246,10 +245,8 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG,
 	// in the graph
 	std::vector<std::vector<unsigned int> > solutions;
 
-    chrono_ C0;
-	// Call the Rainbow Clique finding algorithm
+    // Call the Rainbow Clique finding algorithm
 	RainbowClique::find_cliques(G, solutions);
-	printf("took: %ld milliseconds\n", C0.calculateDuration(chrono_()));
 
 	// Print the solutions
 	cout << "clique_finder_control::do_Sajeeb Found " << solutions.size() << " solution(s)." << endl;
