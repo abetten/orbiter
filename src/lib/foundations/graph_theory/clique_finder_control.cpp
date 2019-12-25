@@ -9,8 +9,6 @@
 
 #include "foundations.h"
 #include "Clique/RainbowClique.h"
-#include "Clique/Graph.h"
-
 
 using namespace std;
 
@@ -226,7 +224,9 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG,
 #if 1
 	Graph<> G (CG->nb_points, CG->nb_colors);
 
+    #pragma unroll
 	for (size_t i = 0; i < CG->nb_points; i++) {
+        #pragma unroll
 		for (size_t j = i + 1; j < CG->nb_points; j++) {
 			if (CG->is_adjacent(i, j)) {
 				G.set_edge(i, j);
@@ -245,16 +245,16 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG,
 	// in the graph
 	std::vector<std::vector<unsigned int> > solutions;
 
-	// Call the Rainbow Clique finding algorithm
+    // Call the Rainbow Clique finding algorithm
 	RainbowClique::find_cliques(G, solutions);
 
 	// Print the solutions
 	cout << "clique_finder_control::do_Sajeeb Found " << solutions.size() << " solution(s)." << endl;
-	for (size_t i=0; i<solutions.size(); ++i) {
-		for (size_t j=0; j<solutions[i].size(); ++j) {
-			cout << solutions[i][j] << " ";
-		} cout << endl;
-	}
+//	for (size_t i=0; i<solutions.size(); ++i) {
+//		for (size_t j=0; j<solutions[i].size(); ++j) {
+//			cout << solutions[i][j] << " ";
+//		} cout << endl;
+//	}
 #endif
 
 
