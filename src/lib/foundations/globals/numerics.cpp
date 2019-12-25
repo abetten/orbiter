@@ -1625,6 +1625,7 @@ int numerics::line_centered(double *pt1_in, double *pt2_in,
 	d = b * b * 0.25 - c;
 	if (d < 0) {
 		cout << "line_centered d < 0" << endl;
+		cout << "r=" << r << endl;
 		cout << "d=" << d << endl;
 		cout << "a=" << a << endl;
 		cout << "b=" << b << endl;
@@ -1638,7 +1639,8 @@ int numerics::line_centered(double *pt1_in, double *pt2_in,
 		cout << "v=";
 		vec_print(v, 3);
 		cout << endl;
-		return FALSE;
+		exit(1);
+		//return FALSE;
 		}
 	e = sqrt(d);
 	lambda1 = -b * 0.5 + e;
