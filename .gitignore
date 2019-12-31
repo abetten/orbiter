@@ -17,3 +17,6 @@ cmake-build-debug/
 
 ./.cproject
 ./.settings/language.settings.xml
+
+.cproject
+.settings/language.settings.xml
