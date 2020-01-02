@@ -23,14 +23,15 @@ public:
     }
 
     __forceinline__
-    void init (size_t _nb_vertices_, size_t _nb_colors_=0) {
+    void init (size_t _nb_vertices_, size_t _nb_colors_=0, size_t _nb_colors_per_vertex_=1) {
         nb_vertices = _nb_vertices_;
         nb_colors = _nb_colors_;
+        nb_colors_per_vertex = _nb_colors_per_vertex_;
 
-        adjacency.init(nb_vertices*nb_vertices);
+        adjacency.init(nb_vertices * nb_vertices);
 
         vertex_label = new T [nb_vertices];
-        if (_nb_colors_!=0) vertex_color = new U [nb_vertices];
+        if (_nb_colors_!=0) vertex_color = new U [nb_vertices * nb_colors_per_vertex];
     }
 
     ~Graph () {
@@ -39,8 +40,8 @@ public:
     }
 
 
-    __forceinline__ U get_color(size_t vertex) const {
-        return vertex_color[vertex];
+    __forceinline__ U get_color(size_t vertex, size_t j=0) const {
+        return vertex_color [vertex * nb_colors_per_vertex + j];
     }
 
     __forceinline__ T get_label(size_t vertex) const {
@@ -53,6 +54,14 @@ public:
 
     __forceinline__ void unset_edge (size_t i, size_t j) {
         adjacency.unset(i*nb_vertices+j);
+    }
+
+    __forceinline__ void set_vertex_color (U color, size_t i, size_t j=0) {
+    	vertex_color [i * nb_colors_per_vertex + j] = color;
+    }
+
+    __forceinline__ void set_vertex_label (T label, size_t i) {
+    	vertex_label [i] = label;
     }
 
     __forceinline__ bool is_adjacent (size_t i, size_t j) const {
@@ -71,6 +80,7 @@ public:
 
 
     size_t nb_colors = 0;
+    size_t nb_colors_per_vertex = 0;
     size_t nb_vertices = 0;
     bitset adjacency;
     T* vertex_label = NULL;
