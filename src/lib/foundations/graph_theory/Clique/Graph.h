@@ -7,6 +7,7 @@
 
 
 #include "bitset.h"
+#include <fstream>
 
 #ifndef ORBITER_SRC_LIB_FOUNDATIONS_GRAPH_THEORY_CLIQUE_GRAPH_H_
 #define ORBITER_SRC_LIB_FOUNDATIONS_GRAPH_THEORY_CLIQUE_GRAPH_H_
@@ -78,6 +79,38 @@ public:
         }
     }
 
+    void dump(const char* filename) {
+    	std::ofstream file;
+    	file.open (filename);
+
+    	// nb_vertices, nb_colors_per_vertex, nb_colors
+    	file << nb_vertices << " " << nb_colors_per_vertex << " " << nb_colors << "\n";
+
+    	// dump adjacency matrix bitset
+    	for (size_t i=0; i < adjacency.data_size(); ++i) {
+    		file << adjacency.data(i);
+    		if (i+1 < adjacency.data_size()) file << " ";
+    	}
+    	file << "\n";
+
+    	// dump vertex label
+    	for (size_t i=0; i < nb_vertices; ++i) {
+    		file << vertex_label[i];
+    		if (i+1 < nb_vertices) file << " ";
+    	}
+    	file << "\n";
+
+    	// dump vertex color
+    	for (size_t i=0; i < nb_vertices; ++i) {
+    		for (size_t j=0; j < nb_colors_per_vertex; ++j) {
+    			file << vertex_color[i*nb_vertices + j];
+    			if (j+1 < nb_colors_per_vertex) file << " ";
+    		}
+    		file << "\n";
+    	}
+
+    	file.close();
+    }
 
     size_t nb_colors = 0;
     size_t nb_colors_per_vertex = 0;
