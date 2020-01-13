@@ -211,9 +211,7 @@ void clique_finder_control::all_cliques(
 		}
 }
 
-void clique_finder_control::do_Sajeeb(colored_graph *CG,
-		const char *fname_sol,
-		int verbose_level)
+void clique_finder_control::do_Sajeeb(colored_graph *CG, const char *fname_sol, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -236,8 +234,8 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG,
 	}
 //	G.print_adj_matrix();
 	for (size_t i = 0; i < CG->nb_points; i++) {
-		G.vertex_label[i] = CG->points[i];
-		G.vertex_color[i] = CG->point_color[i];
+		G.set_vertex_label(CG->points[i], i);
+		G.set_vertex_color(CG->point_color[i], i);
 	}
 
 	// Create the solution storage. The base type of the solution
@@ -246,7 +244,7 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG,
 	std::vector<std::vector<unsigned int> > solutions;
 
     // Call the Rainbow Clique finding algorithm
-	RainbowClique::find_cliques(G, solutions);
+	RainbowClique::find_cliques(G, solutions, 1);
 
 	// Print the solutions
 	cout << "clique_finder_control::do_Sajeeb Found " << solutions.size() << " solution(s)." << endl;
@@ -255,6 +253,8 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG,
 //			cout << solutions[i][j] << " ";
 //		} cout << endl;
 //	}
+
+	this->nb_sol = solutions.size();
 #endif
 
 
