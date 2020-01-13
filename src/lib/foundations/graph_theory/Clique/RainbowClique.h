@@ -14,8 +14,8 @@ public:
 
     template <typename T, typename U>
     __forceinline__
-    static void find_cliques (Graph<T,U>& G, std::vector<std::vector<T>>& soln) {
-        const size_t nThreads = 1; //std::thread::hardware_concurrency();
+    static void find_cliques (Graph<T,U>& G, std::vector<std::vector<T>>& soln, size_t n_threads=0) {
+        const size_t nThreads = (n_threads == 0) ? std::thread::hardware_concurrency() : n_threads;
         std::thread threads [nThreads];
         PARAMS<T> params [nThreads];
 
@@ -25,7 +25,6 @@ public:
             params[i].live_pts = new T [G.nb_vertices] ();
             params[i].current_cliques = new T [G.nb_colors] ();
             params[i].nb_sol = 0;
-//            params[i].color_satisfied.init(G.nb_colors);
             params[i].color_satisfied = new bool [G.nb_colors] ();
             params[i].color_frequency = new T [G.nb_colors] ();
             params[i].n_threads = nThreads;
@@ -78,10 +77,9 @@ private:
     };
 
     template <typename T, typename U>
-    static void find_cliques_parallel (size_t depth, T start, T end,
-                                       PARAMS<T>& param, Graph<T,U>& G) {
+    static void find_cliques_parallel (size_t depth, T start, T end, PARAMS<T>& param, Graph<T,U>& G) {
 
-        if (depth == G.nb_colors) {
+        if (depth == G.nb_colors/G.nb_colors_per_vertex) {
             param.nb_sol += 1;
             param.t_solutions.emplace_back(std::vector<T>(G.nb_colors));
             #pragma unroll
@@ -111,31 +109,49 @@ private:
 
         end_color_class = clump_color_class(G, param.live_pts, start, end_adj, lowest_color);
 
-        param.color_satisfied[lowest_color] = true;
+//        param.color_satisfied[lowest_color] = true;
 
 
         // find how many points are there with the lowest value at current depth
         if (depth == 0) {
             #pragma unroll
             for (size_t i=start; i<end_color_class; ++i) {
-                printf("%ld\tof\t%ld\t", i, end_color_class);
-                printf("Progress: %.2f%      \r", i/double(end_color_class-start)*100);
-                fflush(stdout);
+            	if (param.tid == 0) {
+					printf("%ld\tof\t%ld\t", i, end_color_class);
+					printf("Progress: %.2f%      \r", i/double(end_color_class-start)*100);
+					fflush(stdout);
+            	}
                 if ((i % param.n_threads) == param.tid) {
+                    satisfy_color(G, param, i, true);
                     param.current_cliques[depth] = param.live_pts[i];
                     find_cliques_parallel(depth+1, end_color_class, end_adj, param, G);
+                    satisfy_color(G, param, i, false);
                 }
             }
         } else {
             #pragma unroll
             for (size_t i=start; i<end_color_class; ++i) {
+            	satisfy_color(G, param, i, true);
                 param.current_cliques[depth] = param.live_pts[i];
                 find_cliques_parallel(depth+1, end_color_class, end_adj, param, G);
+                satisfy_color(G, param, i, false);
             }
         }
 
-        param.color_satisfied[lowest_color] = false;
+//        param.color_satisfied[lowest_color] = false;
 
+    }
+
+    /**
+     * Mark all the colors associated with node i in the graph as satisfied
+     */
+    template <typename T, typename U>
+	__forceinline__
+	static inline void satisfy_color (Graph<T,U>& G, PARAMS<T>& param, size_t i, bool value) {
+		#pragma unroll
+		for (size_t j=0; j < G.nb_colors_per_vertex; ++j) {
+			param.color_satisfied[G.get_color(param.live_pts[i], j)] = value;
+		}
     }
 
     template <typename T, typename U>
@@ -164,15 +180,17 @@ private:
 
         #pragma unroll
         for (size_t i = start; i < end; ++i) {
-            const U point_color = G.vertex_color [live_pts[i]];
-            color_frequency[point_color] += 1;
+        	for (size_t j=0; j < G.nb_colors_per_vertex; ++j) {
+        		const U point_color = G.get_color(live_pts[i], j);
+        		color_frequency[point_color] += 1;
+        	}
         }
     }
 
     template <typename T, typename U>
     __forceinline__
-    static inline U get_color_with_lowest_frequency_(Graph<T,U>& G, T* live_pts,
-                                                     T* color_frequency, bool* color_satisfied, T start, T end) {
+    static inline U get_color_with_lowest_frequency_(Graph<T,U>& G, T* live_pts, T* color_frequency,
+													 	 	 bool* color_satisfied, T start, T end) {
 
         create_color_freq_of_live_points(G, live_pts, color_frequency, start, end);
 
@@ -192,13 +210,15 @@ private:
 
     template <typename T, typename U>
     __forceinline__
-    static inline T clump_color_class(Graph<T,U>& G, T* live_pts, T start,
-                                      T end, U color) {
+    static inline T clump_color_class(Graph<T,U>& G, T* live_pts, T start, T end, U color) {
         #pragma unroll
-        for (size_t i = start; i<end; ++i) {
-            if (G.get_color(live_pts[i]) == color) {
-                std::swap(live_pts[start], live_pts[i]);
-                start += 1;
+        for (size_t i=start; i<end; ++i) {
+            for (size_t j=0; j < G.nb_colors_per_vertex; ++j) {
+            	if (G.get_color(live_pts[i], j) == color) {
+					std::swap(live_pts[start], live_pts[i]);
+					start += 1;
+					break;
+				}
             }
         }
         return start;
