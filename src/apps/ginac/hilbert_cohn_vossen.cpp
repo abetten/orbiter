@@ -31,20 +31,21 @@ using namespace GiNaC;
 using namespace std;
 // use namespace std which countains things like cout
 
+#include "ginac_linear_algebra.cpp"
 
-// local functions copied from ginac:
 
-ex my_lsolve(ostream &ost, const ex &eqns, const ex &symbols, unsigned options);
-matrix solve(matrix *M, const matrix & vars,
-                     const matrix & rhs,
-                     unsigned algo);
-void row_operation_add(matrix *M, int r1, int r2, ex factor);
-// Row[r2] += Row[r1] * factor
-void row_operation_multiply(matrix *M, int r1, ex factor);
-// Row[r1] = Row[r1] * factor
-void right_normalize_row(matrix *M, int r);
-matrix right_nullspace(matrix *M);
-int pivot(matrix *M, unsigned ro, unsigned co, bool symbolic);
+
+int f_transformed = FALSE;
+int *line_idx1 = NULL;
+int *surface_idx1 = NULL;
+int *line_idx2 = NULL;
+int *surface_idx2 = NULL;
+int *line_idx3 = NULL;
+int *surface_idx3 = NULL;
+
+
+
+
 
 // the function which computes the equation of the Hilbert, Cohn-Vossen surface:
 void surface(int argc, const char **argv);
@@ -53,462 +54,20 @@ void draw_frame_HCV(
 	ostream &fp,
 	int verbose_level);
 matrix make_cij(matrix **AB, int i, int j, ostream &ost, int verbose_level);
+void create_specific_lines_uv(surface_domain *Surf,
+		matrix **AB, double *D,
+		symbol u, symbol v, ostream &ost,
+		int verbose_level);
+void create_family_of_surfaces_and_lines_uv(surface_domain *Surf,
+		matrix **AB,
+		int nb_steps, double theta1, double theta2,
+		scene *S,
+		int *&line_idx, int *&surface_idx,
+		symbol u, symbol v,
+		int verbose_level);
 
 
-// ginac stuff:
-class my_symbolset {
-	exset s;
-	void insert_symbols(const ex &e)
-	{
-		if (is_a<symbol>(e)) {
-			s.insert(e);
-		} else {
-			for (const ex &sube : e) {
-				insert_symbols(sube);
-			}
-		}
-	}
-public:
-	explicit my_symbolset(const ex &e)
-	{
-		insert_symbols(e);
-	}
-	bool has(const ex &e) const
-	{
-		return s.find(e) != s.end();
-	}
-};
 
-
-
-ex my_lsolve(ostream &ost, const ex &eqns, const ex &symbols, unsigned options = solve_algo::gauss)
-{
-	// solve a system of linear equations
-	if (eqns.info(info_flags::relation_equal)) {
-		if (!symbols.info(info_flags::symbol))
-			throw(std::invalid_argument("lsolve(): 2nd argument must be a symbol"));
-		const ex sol = lsolve(lst{eqns}, lst{symbols});
-
-		GINAC_ASSERT(sol.nops()==1);
-		GINAC_ASSERT(is_exactly_a<relational>(sol.op(0)));
-
-		return sol.op(0).op(1); // return rhs of first solution
-	}
-
-	// syntax checks
-	if (!(eqns.info(info_flags::list) || eqns.info(info_flags::exprseq))) {
-		throw(std::invalid_argument("lsolve(): 1st argument must be a list, a sequence, or an equation"));
-	}
-	for (size_t i=0; i<eqns.nops(); i++) {
-		if (!eqns.op(i).info(info_flags::relation_equal)) {
-			throw(std::invalid_argument("lsolve(): 1st argument must be a list of equations"));
-		}
-	}
-	if (!(symbols.info(info_flags::list) || symbols.info(info_flags::exprseq))) {
-		throw(std::invalid_argument("lsolve(): 2nd argument must be a list, a sequence, or a symbol"));
-	}
-	for (size_t i=0; i<symbols.nops(); i++) {
-		if (!symbols.op(i).info(info_flags::symbol)) {
-			throw(std::invalid_argument("lsolve(): 2nd argument must be a list or a sequence of symbols"));
-		}
-	}
-
-	// build matrix from equation system
-	matrix sys(eqns.nops(),symbols.nops());
-	matrix rhs(eqns.nops(),1);
-	matrix vars(symbols.nops(),1);
-
-	for (size_t r=0; r<eqns.nops(); r++) {
-		const ex eq = eqns.op(r).op(0)-eqns.op(r).op(1); // lhs-rhs==0
-		const my_symbolset syms(eq);
-		ex linpart = eq;
-		for (size_t c=0; c<symbols.nops(); c++) {
-			if (!syms.has(symbols.op(c)))
-				continue;
-			const ex co = eq.coeff(ex_to<symbol>(symbols.op(c)),1);
-			linpart -= co*symbols.op(c);
-			sys(r,c) = co;
-		}
-		linpart = linpart.expand();
-		rhs(r,0) = -linpart;
-	}
-
-#if 0
-	ost << "\\begin{sidewaysfigure}" << endl;
-	ost << "$$" << endl << sys << endl << "$$" << endl;
-	ost << "\\end{sidewaysfigure}" << endl;
-	ost << "\\begin{figure}" << endl;
-	ost << "$$" << endl << rhs << endl << "$$" << endl;
-	ost << "\\end{figure}" << endl;
-#endif
-
-
-	// test if system is linear and fill vars matrix
-	const my_symbolset sys_syms(sys);
-	const my_symbolset rhs_syms(rhs);
-	for (size_t i=0; i<symbols.nops(); i++) {
-		vars(i,0) = symbols.op(i);
-		if (sys_syms.has(symbols.op(i)))
-			throw(std::logic_error("lsolve: system is not linear"));
-		if (rhs_syms.has(symbols.op(i)))
-			throw(std::logic_error("lsolve: system is not linear"));
-	}
-
-	matrix solution;
-	try {
-		solution = solve(&sys, vars,rhs,options);
-	} catch (const std::runtime_error & e) {
-		// Probably singular matrix or otherwise overdetermined system:
-		// It is consistent to return an empty list
-		return lst{};
-	}
-	GINAC_ASSERT(solution.cols()==1);
-	GINAC_ASSERT(solution.rows()==symbols.nops());
-
-#if 0
-	// return list of equations of the form lst{var1==sol1,var2==sol2,...}
-	lst sollist;
-	for (size_t i=0; i<symbols.nops(); i++)
-		sollist.append(symbols.op(i)==solution(i,0));
-
-	return sollist;
-#endif
-	return solution;
-}
-
-matrix solve(matrix *M, const matrix & vars,
-                     const matrix & rhs,
-                     unsigned algo)
-{
-	const unsigned m = M->rows();
-	const unsigned n = M->cols();
-	const unsigned p = rhs.cols();
-
-	cout << "solve M=" << endl;
-	//cout << *M << endl;
-
-	cout << "solve rhs=" << endl;
-	//cout << rhs << endl;
-
-	// syntax checks
-	if ((rhs.rows() != m) || (vars.rows() != n) || (vars.cols() != p))
-		throw (std::logic_error("matrix::solve(): incompatible matrices"));
-	for (unsigned ro=0; ro<n; ++ro)
-		for (unsigned co=0; co<p; ++co)
-			if (!vars(ro,co).info(info_flags::symbol))
-				throw (std::invalid_argument("matrix::solve(): 1st argument must be matrix of symbols"));
-
-#if 0
-	// build the augmented matrix of *this with rhs attached to the right
-	matrix aug(m,n+p);
-	for (unsigned r=0; r<m; ++r) {
-		for (unsigned c=0; c<n; ++c)
-			aug.m[r*(n+p)+c] = M->m[r*n+c];
-		for (unsigned c=0; c<p; ++c)
-			aug.m[r*(n+p)+c+n] = rhs.m[r*p+c];
-	}
-#endif
-
-	//cout << "solve before gauss_elimination, M=" << endl;
-	//cout << *M << endl;
-
-
-	// Eliminate the augmented matrix:
-	//auto colid = aug.echelon_form(algo, n);
-
-	matrix K;
-
-	K = right_nullspace(M);
-
-	//cout << "solve after gauss_elimination, M=" << endl;
-	//cout << *M << endl;
-	cout << "solve after gauss_elimination, K=" << endl;
-	cout << K << endl;
-
-	return K;
-#if 0
-	// assemble the solution matrix:
-	matrix sol(n,p);
-	for (unsigned co=0; co<p; ++co) {
-		unsigned last_assigned_sol = n+1;
-		for (int r=m-1; r>=0; --r) {
-			unsigned fnz = 1;    // first non-zero in row
-			while ((fnz<=n) && (aug.m[r*(n+p)+(fnz-1)].normal().is_zero()))
-				++fnz;
-			if (fnz>n) {
-				// row consists only of zeros, corresponding rhs must be 0, too
-				if (!aug.m[r*(n+p)+n+co].normal().is_zero()) {
-					throw (std::runtime_error("matrix::solve(): inconsistent linear system"));
-				}
-			} else {
-				// assign solutions for vars between fnz+1 and
-				// last_assigned_sol-1: free parameters
-				for (unsigned c=fnz; c<last_assigned_sol-1; ++c)
-					sol(colid[c],co) = vars.m[colid[c]*p+co];
-				ex e = aug.m[r*(n+p)+n+co];
-				for (unsigned c=fnz; c<n; ++c)
-					e -= aug.m[r*(n+p)+c]*sol.m[colid[c]*p+co];
-				sol(colid[fnz-1],co) = (e/(aug.m[r*(n+p)+fnz-1])).normal();
-				last_assigned_sol = fnz;
-			}
-		}
-		// assign solutions for vars between 1 and
-		// last_assigned_sol-1: free parameters
-		for (unsigned ro=0; ro<last_assigned_sol-1; ++ro)
-			sol(colid[ro],co) = vars(colid[ro],co);
-	}
-
-	return sol;
-#endif
-}
-
-void row_operation_add(matrix *M, int r1, int r2, ex factor)
-// Row[r2] += Row[r1] * factor
-{
-	//const unsigned m = M->rows();
-	const unsigned n = M->cols();
-	for (unsigned c=0; c<n; ++c) {
-		M->m[r2*n+c] += factor * M->m[r1*n+c];
-	}
-
-}
-
-void row_operation_multiply(matrix *M, int r1, ex factor)
-// Row[r1] = Row[r1] * factor
-{
-	//const unsigned m = M->rows();
-	const unsigned n = M->cols();
-	for (unsigned c=0; c<n; ++c) {
-		M->m[r1*n+c] *= factor;
-	}
-
-}
-
-void right_normalize_row(matrix *M, int r)
-{
-	//const unsigned m = M->rows();
-	const unsigned n = M->cols();
-	int j;
-	for (j = n - 1; j >= 0; j--) {
-		if (!M->m[r*n+j].expand().is_zero()) {
-			break;
-		}
-	}
-	if (j == -1) {
-		cout << "right_normalize_row zero row" << endl;
-		exit(1);
-	}
-	ex factor = 1 / M->m[r*n+j];
-	for (unsigned c = 0; c < n; ++c) {
-		M->m[r*n+c] *= factor;
-		//M->m[r*n+c].expand(1);
-	}
-
-}
-
-matrix right_nullspace(matrix *M)
-{
-	//ensure_if_modifiable();
-	const unsigned m = M->rows();
-	const unsigned n = M->cols();
-	GINAC_ASSERT(!det || n==m);
-	int sign = 1;
-	int *base_cols;
-	int *kernel_cols;
-
-	base_cols = NEW_int(n);
-	kernel_cols = NEW_int(n);
-
-	unsigned r0 = 0;
-	for (unsigned c0=0; c0<n; ++c0) {
-
-
-		cout << "right_nullspace, c0=" << c0 << " / " << n << " r0=" << r0 << endl;
-		//cout << "right_nullspace, M=" << endl;
-		//cout << *M << endl;
-
-
-
-		int indx = pivot(M, r0, c0, true);
-
-		cout << "right_nullspace, after pivot, c0=" << c0 << " r0=" << r0 << " indx=" << indx << endl;
-		//cout << "right_nullspace, M=" << endl;
-		//cout << *M << endl;
-
-
-		if (indx == -1) {
-			cout << "right_nullspace, did not find pivot element" << endl;
-			sign = 0;
-		}
-		if (indx>=0) {
-
-			base_cols[r0] = c0;
-
-			if (indx > 0)
-				sign = -sign;
-			{
-				ex piv = 1 / M->m[r0*n+c0];
-				cout << "piv=" << piv << endl;
-				for (unsigned c=c0/*+1*/; c<n; ++c) {
-					M->m[r0*n+c] *= piv;
-
-				}
-			}
-			for (unsigned r2=r0+1; r2<m; ++r2) {
-				if (!M->m[r2*n+c0].is_zero()) {
-					cout << "right_nullspace, cleaning c0=" << c0 << " r0=" << r0 << " r2=" << r2 << endl;
-					// yes, there is something to do in this row
-					ex piv = M->m[r2*n+c0];
-					cout << "piv=" << piv << endl;
-					for (unsigned c=c0/*+1*/; c<n; ++c) {
-						M->m[r2*n+c] -= piv * M->m[r0*n+c];
-					}
-				}
-
-			}
-			cout << "right_nullspace after cleaning column " << c0 << ", M=" << endl;
-			//cout << *M << endl;
-			++r0;
-		}
-	} // next c0
-
-	cout << "right_nullspace, rank = " << r0 << endl;
-	cout << "right_nullspace, base_cols=";
-	int_vec_print(cout, base_cols, r0);
-	cout << endl;
-	//cout << "right_nullspace, M=" << endl;
-	//cout << *M << endl;
-	cout << "right_nullspace, second part" << endl;
-
-	int i, j, c;
-	for (i = r0 - 1; i >= 0; i--) {
-		c = base_cols[i];
-		cout << "i=" << i << " c=" << c << " piv=" << M->m[i*n+c] << endl;
-		for (int r2 = i - 1; r2 >= 0; r2--) {
-			ex entry = M->m[r2*n+c];
-			cout << "cleaning row " << r2 << " entry=" << entry << endl;
-			if (!M->m[r2*n+c].is_zero()) {
-				for (j = c; j < n; j++) {
-					cout << "j=" << j << endl;
-					M->m[r2*n+j] -= entry * M->m[i*n+j];
-					cout << "done" << endl;
-				}
-			}
-		}
-		//cout << "right_nullspace after cleaning column " << c << ", M=" << endl;
-		//cout << *M << endl;
-
-	}
-	cout << "right_nullspace finished, M=" << endl;
-	//cout << *M << endl;
-
-	int_vec_complement(base_cols, kernel_cols, n, r0 /* nb_base_cols */);
-
-	int r, k, ii, b, iii, a;
-	int kernel_n, kernel_m;
-	r = r0;
-	k = n - r;
-
-	cout << "right_nullspace, kernel_cols=";
-	int_vec_print(cout, kernel_cols, k);
-	cout << endl;
-
-	kernel_m = n;
-	kernel_n = k;
-
-	matrix K(kernel_m, kernel_n);
-
-
-	ii = 0;
-	j = 0;
-	if (j < r) {
-		b = base_cols[j];
-		}
-	else {
-		b = -1;
-		}
-	for (i = 0; i < n; i++) {
-		cout << "i=" << i << " / " << n << endl;
-		if (i == b) {
-			for (iii = 0; iii < k; iii++) {
-				a = kernel_cols[iii];
-				K(i, iii) = M->m[j * n + a];
-				}
-			j++;
-			if (j < r) {
-				b = base_cols[j];
-				}
-			else {
-				b = -1;
-				}
-			}
-		else {
-			for (iii = 0; iii < k; iii++) {
-				if (iii == ii) {
-					K(i, iii) = -1;
-					}
-				else {
-					K(i, iii) = 0;
-					}
-				}
-			ii++;
-			}
-		}
-
-	cout << "right_nullspace finished, K=" << endl;
-	cout << K << endl;
-
-	FREE_int(base_cols);
-	FREE_int(kernel_cols);
-#if 0
-	// clear remaining rows
-	for (unsigned r=r0+1; r<m; ++r) {
-		for (unsigned c=0; c<n; ++c)
-			M->m[r*n+c] = _ex0;
-	}
-#endif
-
-	//return sign;
-	return K;
-}
-
-int pivot(matrix *M, unsigned ro, unsigned co, bool symbolic)
-{
-	unsigned k = ro;
-	if (symbolic) {
-		// search first non-zero element in column co beginning at row ro
-		while ((k<M->row) && (M->m[k*M->col+co].expand().is_zero()))
-			++k;
-	} else {
-		// search largest element in column co beginning at row ro
-		GINAC_ASSERT(is_exactly_a<numeric>(this->m[k*col+co]));
-		unsigned kmax = k+1;
-		numeric mmax = abs(ex_to<numeric>(M->m[kmax*M->col+co]));
-		while (kmax<M->row) {
-			GINAC_ASSERT(is_exactly_a<numeric>(M->m[kmax*col+co]));
-			numeric tmp = ex_to<numeric>(M->m[kmax*M->col+co]);
-			if (abs(tmp) > mmax) {
-				mmax = tmp;
-				k = kmax;
-			}
-			++kmax;
-		}
-		if (!mmax.is_zero())
-			k = kmax;
-	}
-	if (k==M->row)
-		// all elements in column co below row ro vanish
-		return -1;
-	if (k==ro)
-		// matrix needs no pivoting
-		return 0;
-	// matrix needs pivoting, so swap rows k and ro
-	//ensure_if_modifiable();
-	for (unsigned c=0; c<M->col; ++c)
-		M->m[k*M->col+c].swap(M->m[ro*M->col+c]);
-
-	return k;
-}
 
 void surface(int argc, const char **argv)
 // Computes the equation of the Hilbert, Cohn-Vossen surface
@@ -531,6 +90,10 @@ void surface(int argc, const char **argv)
 			verbose_level = atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
 			}
+		else if (strcmp(argv[i], "-transformed") == 0) {
+			f_transformed = TRUE;
+			cout << "-transformed " << endl;
+		}
 		else if (strcmp(argv[i], "-video_options") == 0) {
 			Opt = NEW_OBJECT(video_draw_options);
 			i += Opt->read_arguments(argc - (i - 1),
@@ -880,7 +443,15 @@ void surface(int argc, const char **argv)
 		F = NEW_OBJECT(finite_field);
 		F->init(2);
 
-		// create the homogeneous polynomial ring
+
+		surface_domain *Surf;
+
+		Surf = NEW_OBJECT(surface_domain);
+
+		Surf->init(F, verbose_level);
+		//void init_polynomial_domains(int verbose_level);
+
+			// create the homogeneous polynomial ring
 		// of degree 3 in X0,X1,X2,X3:
 		// Orbiter will create the 20 monomials
 
@@ -917,7 +488,7 @@ void surface(int argc, const char **argv)
 
 		// Create the coefficient matrix which forces
 		// the surface to pass through the 19 points:
-		matrix S(19, 20);
+		matrix Suv(19, 20);
 		for (j = 0; j < HPD->nb_monomials; j++) {
 			for (i = 0; i < 19; i++) {
 
@@ -931,11 +502,45 @@ void surface(int argc, const char **argv)
 
 				// And now we specify u=1, v = 2:
 
-				ex e2 = e.subs(lst{u, v}, lst{1, 2});
+				//ex e2 = e.subs(lst{u, v}, lst{1, 2});
 
 				// produce latex output:
 				ostringstream s;
 				s << latex << e;
+				cout << "M[" << i << "," << j << "]=" << s.str() << endl;
+
+				Suv(i, j) = e;
+				//S(i, j) = e;
+			}
+		}
+
+
+		// typeset the coefficient matrix in latex:
+		fp << "\\begin{sidewaysfigure}" << endl;
+		fp << "{\\small \\arraycolsep=1pt" << endl;
+		fp << "$$" << endl << Suv << endl << "$$" << endl;
+		fp << "}" << endl;
+		fp << "\\end{sidewaysfigure}" << endl;
+
+
+		matrix S(19, 20);
+		for (j = 0; j < HPD->nb_monomials; j++) {
+			for (i = 0; i < 19; i++) {
+
+				// the (i,j)-entry of S
+				// is the j-th monomial evaluated at the i-th point P[i].
+				// Note that we are in the affine chart X3 \neq 0, so
+				// we put X3=1:
+
+				ex e = Suv.m[i * 20 + j];
+
+				// And now we specify u=1, v = 2:
+
+				ex e2 = e.subs(lst{u, v}, lst{1, 2});
+
+				// produce latex output:
+				ostringstream s;
+				s << latex << e2;
 				cout << "M[" << i << "," << j << "]=" << s.str() << endl;
 
 				S(i, j) = e2;
@@ -943,10 +548,16 @@ void surface(int argc, const char **argv)
 			}
 		}
 
+
+
+
 		// typeset the coefficient matrix in latex:
+		fp << "substituting $u=1, v=2$\\\\" << endl;
 		fp << "\\begin{sidewaysfigure}" << endl;
 		fp << "$$" << endl << S << endl << "$$" << endl;
 		fp << "\\end{sidewaysfigure}" << endl;
+
+
 
 		// create 20 variables in ginac representing the monomials in the ring:
 		// We are using labels such as Xijk,
@@ -1061,42 +672,42 @@ void surface(int argc, const char **argv)
 			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
 			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
 			};
-		fp << "$A_1=" << A1 << "$\\\\" << endl;
+		fp << "$a_1=" << A1 << "$\\\\" << endl;
 		idx1 = red_idx[1 * 2 + 0];
 		idx2 = red_idx[1 * 2 + 1];
 		A2 = matrix{
 			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
 			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
 			};
-		fp << "$A_2=" << A2 << "$\\\\" << endl;
+		fp << "$a_2=" << A2 << "$\\\\" << endl;
 		idx1 = red_idx[2 * 2 + 0];
 		idx2 = red_idx[2 * 2 + 1];
 		A3 = matrix{
 			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
 			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
 			};
-		fp << "$A_3=" << A3 << "$\\\\" << endl;
+		fp << "$a_3=" << A3 << "$\\\\" << endl;
 		idx1 = red_idx[3 * 2 + 0];
 		idx2 = red_idx[3 * 2 + 1];
 		A4 = matrix{
 			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
 			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
 			};
-		fp << "$A_4=" << A4 << "$\\\\" << endl;
+		fp << "$a_4=" << A4 << "$\\\\" << endl;
 		idx1 = red_idx[4 * 2 + 0];
 		idx2 = red_idx[4 * 2 + 1];
 		A5 = matrix{
 			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
 			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
 			};
-		fp << "$A_5=" << A5 << "$\\\\" << endl;
+		fp << "$a_5=" << A5 << "$\\\\" << endl;
 		idx1 = red_idx[5 * 2 + 0];
 		idx2 = red_idx[5 * 2 + 1];
 		A6 = matrix{
 			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
 			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
 			};
-		fp << "$A_6=" << A6 << "$\\\\" << endl;
+		fp << "$a_6=" << A6 << "$\\\\" << endl;
 
 
 		idx1 = blue_idx[0 * 2 + 0];
@@ -1105,42 +716,42 @@ void surface(int argc, const char **argv)
 			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
 			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
 			};
-		fp << "$B_1=" << B1 << "$\\\\" << endl;
+		fp << "$b_1=" << B1 << "$\\\\" << endl;
 		idx1 = blue_idx[1 * 2 + 0];
 		idx2 = blue_idx[1 * 2 + 1];
 		B2 = matrix{
 			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
 			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
 			};
-		fp << "$B_2=" << B2 << "$\\\\" << endl;
+		fp << "$b_2=" << B2 << "$\\\\" << endl;
 		idx1 = blue_idx[2 * 2 + 0];
 		idx2 = blue_idx[2 * 2 + 1];
 		B3 = matrix{
 			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
 			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
 			};
-		fp << "$B_3=" << B3 << "$\\\\" << endl;
+		fp << "$b_3=" << B3 << "$\\\\" << endl;
 		idx1 = blue_idx[3 * 2 + 0];
 		idx2 = blue_idx[3 * 2 + 1];
 		B4 = matrix{
 			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
 			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
 			};
-		fp << "$B_4=" << B4 << "$\\\\" << endl;
+		fp << "$b_4=" << B4 << "$\\\\" << endl;
 		idx1 = blue_idx[4 * 2 + 0];
 		idx2 = blue_idx[4 * 2 + 1];
 		B5 = matrix{
 			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
 			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
 			};
-		fp << "$B_5=" << B5 << "$\\\\" << endl;
+		fp << "$b_5=" << B5 << "$\\\\" << endl;
 		idx1 = blue_idx[5 * 2 + 0];
 		idx2 = blue_idx[5 * 2 + 1];
 		B6 = matrix{
 			{V(idx1, 0), V(idx1, 1), V(idx1, 2), 1},
 			{V(idx2, 0), V(idx2, 1), V(idx2, 2), 1},
 			};
-		fp << "$B_6=" << B6 << "$\\\\" << endl;
+		fp << "$b_6=" << B6 << "$\\\\" << endl;
 
 		matrix *AB[27];
 		AB[0] = &A1;
@@ -1180,7 +791,7 @@ void surface(int argc, const char **argv)
 		fp << endl;
 
 		for (h = 0; h < 12; h++) {
-			fp << "$L_{" << h << "}=" << *AB[h] << "$\\\\" << endl;
+			fp << "$" << Surf->Line_label_tex[h] << "=" << *AB[h] << "$\\\\" << endl;
 		}
 
 		//int i, j;
@@ -1196,7 +807,7 @@ void surface(int argc, const char **argv)
 				fp << "\\bigskip" << endl;
 				fp << endl;
 
-				fp << "$C_{" << i + 1 << "," << j + 1 << "}=" << *C << "$\\\\" << endl;
+				fp << "$c_{" << i + 1 << "," << j + 1 << "}=" << C[h] << "$\\\\" << endl;
 				AB[12 + h] = &C[h];
 			}
 		}
@@ -1210,32 +821,101 @@ void surface(int argc, const char **argv)
 
 		double D[27 * 8];
 
+
+		create_specific_lines_uv(Surf, AB, D, u, v, fp, verbose_level);
+
+
+
+		numerics Num;
+		matrix Trans(4, 4);
+		double Transform_mtx[] = {
+				1,1,1,1,
+				-1,-1,1,1,
+				1,-1,-1,1,
+				-1,1,-1,1
+		};
+		double Transform_mtx_inv[] = {
+				1,-1,1,-1,
+				1,-1,-1,1,
+				1,1,-1,-1,
+				1,1,1,1
+		};
+
+		Trans = matrix{
+			{1,1,1,1},
+			{-1,-1,1,1},
+			{1,-1,-1,1},
+			{-1,1,-1,1}
+		};
+
+		matrix TL[27];
+
 		for (h = 0; h < 27; h++) {
+			TL[h] = AB[h]->mul(Trans);
+		}
+
+		fp << endl;
+		fp << "\\bigskip" << endl;
+		fp << endl;
+
+		for (h = 0; h < 27; h++) {
+			fp << "$" << Surf->Line_label_tex[h] << "=" << TL[h] << "$\\\\" << endl;
+		}
+
+
+
+		double TD[27 * 8];
+
+		for (h = 0; h < 27; h++) {
+
 			matrix L(2,4);
 
 			L = matrix{
-				{AB[h]->m[0].subs(lst{u, v}, lst{1, 2}),
-				AB[h]->m[1].subs(lst{u, v}, lst{1, 2}),
-				AB[h]->m[2].subs(lst{u, v}, lst{1, 2}),
-				AB[h]->m[3].subs(lst{u, v}, lst{1, 2})},
-				{AB[h]->m[4].subs(lst{u, v}, lst{1, 2}),
-				AB[h]->m[5].subs(lst{u, v}, lst{1, 2}),
-				AB[h]->m[6].subs(lst{u, v}, lst{1, 2}),
-				AB[h]->m[7].subs(lst{u, v}, lst{1, 2})}
+				{TL[h].m[0].subs(lst{u, v}, lst{1, 2}),
+				TL[h].m[1].subs(lst{u, v}, lst{1, 2}),
+				TL[h].m[2].subs(lst{u, v}, lst{1, 2}),
+				TL[h].m[3].subs(lst{u, v}, lst{1, 2})},
+				{TL[h].m[4].subs(lst{u, v}, lst{1, 2}),
+				TL[h].m[5].subs(lst{u, v}, lst{1, 2}),
+				TL[h].m[6].subs(lst{u, v}, lst{1, 2}),
+				TL[h].m[7].subs(lst{u, v}, lst{1, 2})}
 			};
 
 			for (i = 0; i < 8; i++) {
 				numeric value = ex_to<numeric>(evalf(L.m[i]));
 
-				D[h * 8 + i] = value.to_double();
+				TD[h * 8 + i] = value.to_double();
 			}
-			fp << "$L_{" << h << "}=" << L << "$ " << endl;
+
+			Num.vec_normalize_from_back(&TD[h * 8 + 0], 4);
+			Num.vec_normalize_from_back(&TD[h * 8 + 4], 4);
+			if (ABS(TD[h * 8 + 7]) > ABS(TD[h * 8 + 3])) {
+				double c;
+				for (j = 0; j < 4; j++) {
+					c = TD[h * 8 + 4 + j];
+					TD[h * 8 + 4 + j] = TD[h * 8 + j];
+					TD[h * 8 + j] = c;
+				}
+
+			}
+			if (ABS(TD[h * 8 + 7]) > 0.000001) {
+				double c = -TD[h * 8 + 7];
+				for (j = 0; j < 4; j++) {
+					TD[h * 8 + 4 + j] += c * TD[h * 8 + j];
+				}
+			}
+			fp << "$" << Surf->Line_label_tex[h] << "=" << TL[h] << "$ " << endl;
 			fp << "value = ";
 			for (i = 0; i < 8; i++) {
-				fp << D[h * 8 + i] << ",";
+				fp << TD[h * 8 + i] << ",";
 			}
 			fp << "\\\\" << endl;
+
 		}
+
+
+
+
 
 		{
 			scene *S;
@@ -1245,26 +925,152 @@ void surface(int argc, const char **argv)
 			S->init(verbose_level);
 
 
-
-			for (h = 0; h < 27; h++) {
-				double z6[6];
-
-				if (ABS(D[h * 8 + 3] - 1) < 0.1) {
-
-					z6[0] = D[h * 8 + 0];
-					z6[1] = D[h * 8 + 1];
-					z6[2] = D[h * 8 + 2];
-					z6[3] = D[h * 8 + 0] + D[h * 8 + 4 + 0];
-					z6[4] = D[h * 8 + 1] + D[h * 8 + 4 + 1];
-					z6[5] = D[h * 8 + 2] + D[h * 8 + 4 + 2];
-
-					S->line_through_two_pts(z6, 3);
-				}
-			}
-
 			S->cubic_in_orbiter_ordering(Eqn);
 
+
+			if (f_transformed) {
+
+				double Eqn_transformed[20];
+
+
+				Num.substitute_cubic_linear_using_povray_ordering(
+						S->Cubic_coords + 0 * 20, Eqn_transformed,
+						Transform_mtx_inv, verbose_level);
+
+				S->cubic(Eqn_transformed);
+
+
+				double z6[6];
+
+				for (h = 0; h < 27; h++) {
+					if (ABS(TD[h * 8 + 3] - 1) < 0.1) {
+
+						z6[0] = TD[h * 8 + 0];
+						z6[1] = TD[h * 8 + 1];
+						z6[2] = TD[h * 8 + 2];
+						z6[3] = TD[h * 8 + 0] + TD[h * 8 + 4 + 0];
+						z6[4] = TD[h * 8 + 1] + TD[h * 8 + 4 + 1];
+						z6[5] = TD[h * 8 + 2] + TD[h * 8 + 4 + 2];
+
+						cout << "creating line " << h << " : ";
+						Num.vec_print(z6, 6);
+						cout << endl;
+
+						S->line_through_two_pts(z6, 10);
+					}
+					else {
+						cout << "Line " << h << " pivot does not exist" << endl;
+						exit(1);
+					}
+				}
+
+				double plane[4];
+				double one_over_sqrt_three;
+
+				one_over_sqrt_three = 1. / sqrt(3.);
+
+				plane[0] = -1 * one_over_sqrt_three;
+				plane[1] = 1 * one_over_sqrt_three;
+				plane[2] = -1 * one_over_sqrt_three;
+				plane[3] = -1 * one_over_sqrt_three;
+
+				S->plane(plane[0], plane[1], plane[2], plane[3]);
+						// A plane is called a polynomial shape because
+						// it is defined by a first order polynomial equation.
+						// Given a plane: plane { <A, B, C>, D }
+						// it can be represented by the equation
+						// A*x + B*y + C*z - D*sqrt(A^2 + B^2 + C^2) = 0.
+						// see http://www.povray.org/documentation/view/3.6.1/297/
+
+			}
+			else {
+
+				double z6[6];
+				for (h = 0; h < 27; h++) {
+
+					if (ABS(D[h * 8 + 3] - 1) < 0.1) {
+
+						z6[0] = D[h * 8 + 0];
+						z6[1] = D[h * 8 + 1];
+						z6[2] = D[h * 8 + 2];
+						z6[3] = D[h * 8 + 0] + D[h * 8 + 4 + 0];
+						z6[4] = D[h * 8 + 1] + D[h * 8 + 4 + 1];
+						z6[5] = D[h * 8 + 2] + D[h * 8 + 4 + 2];
+
+						S->line_through_two_pts(z6, 4);
+					}
+				}
+				// create three more fake lines so that the next line starts at 27:
+				S->line_through_two_pts(z6, 4);
+				S->line_through_two_pts(z6, 4);
+				S->line_through_two_pts(z6, 4);
+
+			}
+
+
+
+
 			//scene_create_target_model(S, nb_frames_default, TARGET_NB_LINES, TF, verbose_level - 2);
+
+			S->create_Cayleys_nodal_cubic(verbose_level);
+
+			double theta1, theta2;
+
+			theta2 = atan(2.);
+			theta1 = atan(1.);
+
+
+			create_family_of_surfaces_and_lines_uv(Surf,
+					AB, nb_frames_default /* nb_steps */, theta1, theta2,
+					S,
+					line_idx1, surface_idx1,
+					u, v,
+					verbose_level);
+
+			cout << "line_idx1=" << endl;
+			int_matrix_print(line_idx1, nb_frames_default, 27);
+
+			cout << "surface_idx1=" << endl;
+			int_matrix_print(surface_idx1, nb_frames_default, 1);
+
+
+			theta2 = M_PI * .5;
+			theta1 = atan(2.);
+
+
+			create_family_of_surfaces_and_lines_uv(Surf,
+					AB, nb_frames_default /* nb_steps */, theta1, theta2,
+					S,
+					line_idx2, surface_idx2,
+					u, v,
+					verbose_level);
+
+			cout << "line_idx2=" << endl;
+			int_matrix_print(line_idx2, nb_frames_default, 27);
+
+			cout << "surface_idx2=" << endl;
+			int_matrix_print(surface_idx2, nb_frames_default, 1);
+
+
+			theta1 = M_PI * .5;
+			theta2 = atan(1.) + M_PI;
+			//theta2 = atan(1.) + 2 * M_PI;
+
+
+			create_family_of_surfaces_and_lines_uv(Surf,
+					AB, nb_frames_default /* nb_steps */, theta1, theta2,
+					S,
+					line_idx3, surface_idx3,
+					u, v,
+					verbose_level);
+
+			cout << "line_idx3=" << endl;
+			int_matrix_print(line_idx3, nb_frames_default, 27);
+
+			cout << "surface_idx3=" << endl;
+			int_matrix_print(surface_idx3, nb_frames_default, 1);
+
+
 
 
 
@@ -1351,7 +1157,6 @@ void surface(int argc, const char **argv)
 
 
 
-
 		L.foot(fp);
 	}
 
@@ -1382,45 +1187,340 @@ void draw_frame_HCV(
 
 	if (round == 0) {
 
-		Anim->S->line_radius = 0.02;
+		Anim->S->line_radius = 0.04;
 
 		Anim->S->draw_lines_ai(fp);
 		Anim->S->draw_lines_bj(fp);
 
-		{
-		int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11};
+		if (f_transformed) {
+			{
+			int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
 
-		Anim->S->draw_lines_cij_with_selection(selection, 12, fp);
+			Anim->S->draw_lines_cij_with_selection(selection, 15, fp);
+			}
 		}
+		else {
+			{
+			int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11};
+
+			Anim->S->draw_lines_cij_with_selection(selection, 12, fp);
+			}
 		//Anim->S->draw_lines_cij(fp);
+		}
 
 		Pov.rotate_111(h, nb_frames, fp);
 	}
 	else if (round == 1) {
 
-		Anim->S->line_radius = 0.02;
+		Anim->S->line_radius = 0.04;
 
 		Anim->S->draw_lines_ai(fp);
 		Anim->S->draw_lines_bj(fp);
 
-		{
-		int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11};
+		if (f_transformed) {
+			{
+				int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
 
-		Anim->S->draw_lines_cij_with_selection(selection, 12, fp);
-		}
-		//Anim->S->draw_lines_cij(fp);
+			Anim->S->draw_lines_cij_with_selection(selection, 15, fp);
+			}
+			//Anim->S->draw_lines_cij(fp);
 
-		{
-			int selection[] = {0};
-			Anim->S->draw_cubic_with_selection(selection, 1,
-					Pov.color_white, fp);
+			{
+				int selection[] = {1};
+				Anim->S->draw_cubic_with_selection(selection, 1,
+						Pov.color_white, fp);
+			}
 		}
+		else {
+			{
+				int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11};
+
+				Anim->S->draw_lines_cij_with_selection(selection, 12, fp);
+			}
+			//Anim->S->draw_lines_cij(fp);
+
+			{
+				int selection[] = {0};
+				Anim->S->draw_cubic_with_selection(selection, 1,
+						Pov.color_white, fp);
+			}
+		}
+
 
 		Pov.rotate_111(h, nb_frames, fp);
 
 	}
 
-	Pov.union_end(fp, 1.0, my_clipping_radius);
+	else if (round == 2) {
+
+		Anim->S->line_radius = 0.04;
+
+		Anim->S->draw_lines_ai(fp);
+		Anim->S->draw_lines_bj(fp);
+
+		if (f_transformed) {
+			{
+				int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
+
+				Anim->S->draw_lines_cij_with_selection(selection, 15, fp);
+			}
+			//Anim->S->draw_lines_cij(fp);
+
+			{
+				int selection[] = {1};
+				Anim->S->draw_cubic_with_selection(selection, 1,
+						Pov.color_white, fp);
+			}
+
+			{
+				int selection[] = {0};
+				Anim->S->draw_planes_with_selection(selection, 1,
+						Pov.color_orange_transparent, fp);
+			}
+		}
+		else {
+			{
+				int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11};
+
+				Anim->S->draw_lines_cij_with_selection(selection, 12, fp);
+			}
+			//Anim->S->draw_lines_cij(fp);
+
+			{
+				int selection[] = {0};
+				Anim->S->draw_cubic_with_selection(selection, 1,
+						Pov.color_white, fp);
+			}
+		}
+		Pov.rotate_111(h, nb_frames, fp);
+	}
+
+
+	else if (round == 3) {
+
+		Anim->S->line_radius = 0.04;
+
+		Anim->S->draw_lines_ai(fp);
+		Anim->S->draw_lines_bj(fp);
+
+		if (f_transformed) {
+			{
+				int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
+
+				Anim->S->draw_lines_cij_with_selection(selection, 15, fp);
+			}
+			//Anim->S->draw_lines_cij(fp);
+
+			{
+				//int selection[] = {1};
+				//Anim->S->draw_cubic_with_selection(selection, 1,
+				//		Pov.color_white, fp);
+			}
+
+			{
+				int selection[] = {0};
+				Anim->S->draw_planes_with_selection(selection, 1,
+						Pov.color_orange_transparent, fp);
+			}
+		}
+		else {
+			{
+				int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11};
+
+				Anim->S->draw_lines_cij_with_selection(selection, 12, fp);
+			}
+			//Anim->S->draw_lines_cij(fp);
+
+			{
+				//int selection[] = {0};
+				//Anim->S->draw_cubic_with_selection(selection, 1,
+				//		Pov.color_white, fp);
+			}
+		}
+		if (h > 25) {
+			Pov.rotate_111(25, nb_frames, fp);
+		}
+		else {
+			Pov.rotate_111(h, nb_frames, fp);
+		}
+
+	}
+	else if (round == 4) {
+
+		Anim->S->line_radius = 0.04;
+
+		Anim->S->draw_lines_ai(fp);
+		Anim->S->draw_lines_bj(fp);
+
+		Pov.rotate_111(h, nb_frames, fp);
+	}
+	else if (round == 5) {
+
+		Anim->S->line_radius = 0.04;
+
+		//Anim->S->draw_lines_ai(fp);
+		//Anim->S->draw_lines_bj(fp);
+
+#if 0
+		{
+			int selection[] = {27,28,29,30,31,32};
+
+			Anim->S->draw_lines_with_selection(selection, sizeof(selection) / sizeof(int),
+					Pov.color_red, fp);
+		}
+#endif
+
+		{
+			int selection[] = {1};
+			Anim->S->draw_cubic_with_selection(selection, 1,
+					Pov.color_white, fp);
+		}
+
+
+		Pov.rotate_111(h, nb_frames, fp);
+	}
+	else if (round == 6) {
+		{
+			int selection[27];
+			int n, idx;
+
+			n = 0;
+			for (i = 0; i < 6; i++) {
+				idx = line_idx1[h * 27 + i];
+				if (idx != -1) {
+					selection[n++] = idx;
+				}
+			}
+			Anim->S->draw_lines_with_selection(selection, n,
+					Pov.color_red, fp);
+			n = 0;
+			for (i = 0; i < 6; i++) {
+				idx = line_idx1[h * 27 + 6 + i];
+				if (idx != -1) {
+					selection[n++] = idx;
+				}
+			}
+			Anim->S->draw_lines_with_selection(selection, n,
+					Pov.color_blue, fp);
+			n = 0;
+			for (i = 0; i < 15; i++) {
+				idx = line_idx1[h * 27 + 12 + i];
+				if (idx != -1) {
+					selection[n++] = idx;
+				}
+			}
+			Anim->S->draw_lines_with_selection(selection, n,
+					Pov.color_yellow, fp);
+
+
+		}
+		{
+			int selection[1];
+
+			selection[0] = surface_idx1[h];
+			Anim->S->draw_cubic_with_selection(selection, 1,
+					Pov.color_white, fp);
+		}
+		// no rotation here!
+	}
+	else if (round == 7) {
+		{
+			int selection[27];
+			int n, idx;
+
+			n = 0;
+			for (i = 0; i < 6; i++) {
+				idx = line_idx2[h * 27 + i];
+				if (idx != -1) {
+					selection[n++] = idx;
+				}
+			}
+			Anim->S->draw_lines_with_selection(selection, n,
+					Pov.color_red, fp);
+			n = 0;
+			for (i = 0; i < 6; i++) {
+				idx = line_idx2[h * 27 + 6 + i];
+				if (idx != -1) {
+					selection[n++] = idx;
+				}
+			}
+			Anim->S->draw_lines_with_selection(selection, n,
+					Pov.color_blue, fp);
+			n = 0;
+			for (i = 0; i < 15; i++) {
+				idx = line_idx2[h * 27 + 12 + i];
+				if (idx != -1) {
+					selection[n++] = idx;
+				}
+			}
+			Anim->S->draw_lines_with_selection(selection, n,
+					Pov.color_yellow, fp);
+
+
+		}
+		{
+			int selection[1];
+
+			selection[0] = surface_idx2[h];
+			Anim->S->draw_cubic_with_selection(selection, 1,
+					Pov.color_white, fp);
+		}
+		// no rotation here!
+	}
+	else if (round == 8) {
+		{
+			int selection[27];
+			int n, idx;
+
+			n = 0;
+			for (i = 0; i < 6; i++) {
+				idx = line_idx3[h * 27 + i];
+				if (idx != -1) {
+					selection[n++] = idx;
+				}
+			}
+			Anim->S->draw_lines_with_selection(selection, n,
+					Pov.color_red, fp);
+			n = 0;
+			for (i = 0; i < 6; i++) {
+				idx = line_idx3[h * 27 + 6 + i];
+				if (idx != -1) {
+					selection[n++] = idx;
+				}
+			}
+			Anim->S->draw_lines_with_selection(selection, n,
+					Pov.color_blue, fp);
+			n = 0;
+			for (i = 0; i < 15; i++) {
+				idx = line_idx3[h * 27 + 12 + i];
+				if (idx != -1) {
+					selection[n++] = idx;
+				}
+			}
+			Anim->S->draw_lines_with_selection(selection, n,
+					Pov.color_yellow, fp);
+
+
+		}
+		{
+			int selection[1];
+
+			selection[0] = surface_idx3[h];
+			Anim->S->draw_cubic_with_selection(selection, 1,
+					Pov.color_white, fp);
+		}
+		// no rotation here!
+	}
+
+
+	if (Anim->Opt->f_has_global_picture_scale) {
+		cout << "scale=" << Anim->Opt->global_picture_scale << endl;
+		Pov.union_end(fp, Anim->Opt->global_picture_scale, my_clipping_radius);
+	}
+	else {
+		Pov.union_end(fp, 1.0, my_clipping_radius);
+
+	}
 
 }
 
@@ -1468,6 +1568,150 @@ matrix make_cij(matrix **AB, int i, int j, ostream &ost, int verbose_level)
 	return C;
 }
 
+void create_specific_lines_uv(surface_domain *Surf,
+		matrix **AB, double *D,
+		symbol u, symbol v, ostream &ost,
+		int verbose_level)
+{
+	int i, h;
+
+	for (h = 0; h < 27; h++) {
+		matrix L(2,4);
+
+		L = matrix{
+			{AB[h]->m[0].subs(lst{u, v}, lst{1, 2}),
+			AB[h]->m[1].subs(lst{u, v}, lst{1, 2}),
+			AB[h]->m[2].subs(lst{u, v}, lst{1, 2}),
+			AB[h]->m[3].subs(lst{u, v}, lst{1, 2})},
+			{AB[h]->m[4].subs(lst{u, v}, lst{1, 2}),
+			AB[h]->m[5].subs(lst{u, v}, lst{1, 2}),
+			AB[h]->m[6].subs(lst{u, v}, lst{1, 2}),
+			AB[h]->m[7].subs(lst{u, v}, lst{1, 2})}
+		};
+
+		for (i = 0; i < 8; i++) {
+			numeric value = ex_to<numeric>(evalf(L.m[i]));
+
+			D[h * 8 + i] = value.to_double();
+		}
+
+		ost << "$" << Surf->Line_label_tex[h] << "=" << L << "$ " << endl;
+		ost << "value = ";
+		for (i = 0; i < 8; i++) {
+			ost << D[h * 8 + i] << ",";
+		}
+		ost << "\\\\" << endl;
+	}
+
+}
+
+void create_family_of_surfaces_and_lines_uv(surface_domain *Surf,
+		matrix **AB,
+		int nb_steps, double theta1, double theta2,
+		scene *S,
+		int *&line_idx, int *&surface_idx,
+		symbol u, symbol v,
+		int verbose_level)
+{
+	int i, j, h;
+	double theta;
+	double theta_step;
+	double u_value = 1;
+	double v_value = 0;
+	double D[27 * 8];
+
+
+	theta_step = (theta2 - theta1) / (double) (nb_steps - 1);
+
+	line_idx = NEW_int(nb_steps * 27);
+	surface_idx = NEW_int(nb_steps);
+
+	for (h = 0; h < nb_steps; h++) {
+
+		cout << "creating lines and surfaces of step h=" << h << " / " << nb_steps << endl;
+
+		theta = (double) h * theta_step + theta1;
+		v_value = tan(theta);
+#if 0
+		if (cos(theta) < 0) {
+			v_value = -1 * v_value;
+		}
+#endif
+
+		if (ABS(v_value) < 0.001 || isnan(v_value)) {
+
+			for (i = 0; i < 27; i++) {
+				line_idx[h * 27 + i] = -1;
+			}
+			surface_idx[h] = -1;
+
+		}
+		else {
+			for (i = 0; i < 27; i++) {
+				matrix L(2,4);
+
+				cout << "creating lines and surfaces of instance "
+						"step " << h << " / " << nb_steps << " i=" << i
+						<< " theta=" << theta << " v_value=" << v_value << endl;
+
+				L = matrix{
+					{AB[i]->m[0].subs(lst{u, v}, lst{u_value, v_value}),
+					AB[i]->m[1].subs(lst{u, v}, lst{u_value, v_value}),
+					AB[i]->m[2].subs(lst{u, v}, lst{u_value, v_value}),
+					AB[i]->m[3].subs(lst{u, v}, lst{u_value, v_value})},
+					{AB[i]->m[4].subs(lst{u, v}, lst{u_value, v_value}),
+					AB[i]->m[5].subs(lst{u, v}, lst{u_value, v_value}),
+					AB[i]->m[6].subs(lst{u, v}, lst{u_value, v_value}),
+					AB[i]->m[7].subs(lst{u, v}, lst{u_value, v_value})}
+				};
+
+				for (j = 0; j < 8; j++) {
+					numeric value = ex_to<numeric>(evalf(L.m[j]));
+
+					D[i * 8 + j] = value.to_double();
+				}
+
+
+
+				if (ABS(D[i * 8 + 3] - 1) < 0.1) {
+					double z6[6];
+
+					z6[0] = D[i * 8 + 0];
+					z6[1] = D[i * 8 + 1];
+					z6[2] = D[i * 8 + 2];
+					z6[3] = D[i * 8 + 0] + D[i * 8 + 4 + 0];
+					z6[4] = D[i * 8 + 1] + D[i * 8 + 4 + 1];
+					z6[5] = D[i * 8 + 2] + D[i * 8 + 4 + 2];
+
+					line_idx[h * 27 + i] = S->line_through_two_pts(z6, 4);
+				}
+				else {
+					line_idx[h * 27 + i] = -1;
+				}
+
+			} // next i
+
+			double Eqn[20];
+
+			for (i = 0; i < 20; i++) {
+				Eqn[i] = 0;
+			}
+
+			// X3^3 - 1/(u^2) * (X0^2+X1^2+X2^2)*X3 + (u^2+v^2)/(u^4*v) X0X1X2 = 0
+			Eqn[3] = 1.; // X3^3
+			Eqn[6] = -1.; // X0^2*X3
+			Eqn[9] = -1.; // X1^2*X3
+			Eqn[12] = -1.; // X2^2*X3
+			Eqn[16] = (1. + v_value * v_value) / (v_value); // X0X1X2
+
+			surface_idx[h] = S->cubic_in_orbiter_ordering(Eqn);
+
+		} // else ABS(v_value)
+
+
+	} // next h
+
+}
 
 int main(int argc, const char **argv)
 {

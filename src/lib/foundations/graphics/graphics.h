@@ -800,6 +800,7 @@ public:
 	double distance_between_two_points(int pt1, int pt2);
 	void create_five_plus_one();
 	void create_Hilbert_model(int verbose_level);
+	void create_Cayleys_nodal_cubic(int verbose_level);
 	void create_Hilbert_cube(int verbose_level);
 	void create_cube(int verbose_level);
 	void create_cube_and_tetrahedra(int verbose_level);
