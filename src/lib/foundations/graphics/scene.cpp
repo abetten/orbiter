@@ -479,10 +479,10 @@ int scene::line_through_two_pts(double *x6, double rad)
 			cout << "too many lines" << endl;
 			exit(1);
 			}
-		return TRUE;
+		return nb_lines - 1;
 		}
 	else {
-		return FALSE;
+		return -1;
 		}
 }
 
@@ -3159,6 +3159,111 @@ void scene::create_Hilbert_model(int verbose_level)
 
 	if (f_v) {
 		cout << "scene::create_Hilbert_model done" << endl;
+	}
+}
+
+void scene::create_Cayleys_nodal_cubic(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	numerics Num;
+	int idx;
+
+	if (f_v) {
+		cout << "scene::create_Cayleys_nodal_cubic" << endl;
+	}
+
+	// Cayley's nodal cubic, 6,7,9,15 (starting from 1)
+	{
+	//double a = 0.2;
+	double coeff_in[20] = {0,0,0,0,0,1,1,0,1,0,0,0,0,0,1,0,0,0,0,0};
+	double coeff_out[20];
+#if 0
+	for (i = 0; i < 20; i++) {
+		if (coeff[i]) {
+			coeff[i] = a;
+			}
+		}
+#endif
+	//cubic(coeff);
+
+	double A4[] = {
+		1.,1.,1.,1.,
+		-1.,-1.,1,1,
+		1.,-1.,-1.,1,
+		-1.,1.,-1.,1
+		};
+	double A4_inv[16];
+
+	Num.matrix_double_inverse(A4, A4_inv, 4, 0 /* verbose_level*/);
+
+	Num.substitute_cubic_linear_using_povray_ordering(
+			coeff_in, coeff_out,
+			A4_inv, 0 /*verbose_level*/);
+
+	if (f_v) {
+		int i;
+
+		cout << "i : coeff_in[i] : coeff_out[i]" << endl;
+		for (i = 0; i < 20; i++) {
+			cout << i << " : " << coeff_in[i] << " : " << coeff_out[i] << endl;
+		}
+	}
+
+#if 0
+0 : 0 : 0
+1 : 0 : 0
+2 : 0 : 0
+3 : 0 : -0.0625 : x^2
+4 : 0 : 0
+5 : 1 : 0.125 : xyz
+6 : 1 : 0
+7 : 0 : 0
+8 : 1 : 0
+9 : 0 : 0
+10 : 0 : 0
+11 : 0 : 0
+12 : 0 : -0.0625 : y^2
+13 : 0 : 0
+14 : 1 : 0
+15 : 0 : 0
+16 : 0 : 0
+17 : 0 : -0.0625 : z^2
+18 : 0 : 0
+19 : 0 : 0.0625 : 1
+#endif
+	idx = cubic(coeff_out); // cubic 1
+	cout << "created cubic " << idx << endl;
+
+	// pts of the tetrahedron: 0,6,3,5
+	int pts[4] = {0, 6, 3, 5};
+	double rad = 5.;
+
+
+	// create lines 27-32 on Cayley's nodal cubic  (previously: 15,16,17,18,19,20)
+	idx = line_through_two_points(pts[0], pts[1], rad); // line 27
+	cout << "created line " << idx << endl;
+	idx = line_through_two_points(pts[0], pts[2], rad);
+	cout << "created line " << idx << endl;
+	idx = line_through_two_points(pts[0], pts[3], rad);
+	cout << "created line " << idx << endl;
+	idx = line_through_two_points(pts[1], pts[2], rad);
+	cout << "created line " << idx << endl;
+	idx = line_through_two_points(pts[1], pts[3], rad);
+	cout << "created line " << idx << endl;
+	idx = line_through_two_points(pts[2], pts[3], rad);
+	cout << "created line " << idx << endl;
+
+#if 0
+	pts[4];
+	for (i = 0; i < 4; i++) {
+		pts[0] = point(A4[0 * 4 + 0], A4[0 * 4 + 1], A4[0 * 4 + 2]);
+		}
+#endif
+
+	}
+
+	if (f_v) {
+		cout << "scene::create_Cayleys_nodal_cubic done" << endl;
 	}
 }
 

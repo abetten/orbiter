@@ -120,6 +120,14 @@ void grassmann::print_single_generator_matrix_tex(
 	//print_integer_matrix_tex(ost, M, k, n);
 }
 
+void grassmann::print_single_generator_matrix_tex_numerical(
+		std::ostream &ost, long int a)
+{
+	unrank_lint(a, 0 /*verbose_level*/);
+	latex_matrix_numerical(ost, M);
+	//print_integer_matrix_tex(ost, M, k, n);
+}
+
 void grassmann::print_set(long int *v, int len)
 {
 	int i;
@@ -1092,6 +1100,25 @@ void grassmann::latex_matrix(ostream &ost, int *p)
 	for (i = 0; i < k; i++) {
 		for (j = 0; j < n; j++) {
 			F->print_element(ost, p[i * n + j]);
+			if (j < n - 1) {
+				ost << "  & ";
+				}
+			}
+		ost << "\\\\" << endl;
+		}
+	ost << "\\end{array}" << endl;
+	ost << "\\right]" << endl;
+}
+
+void grassmann::latex_matrix_numerical(ostream &ost, int *p)
+{
+	int i, j;
+
+	ost << "\\left[" << endl;
+	ost << "\\begin{array}{*{" << n << "}c}" << endl;
+	for (i = 0; i < k; i++) {
+		for (j = 0; j < n; j++) {
+			ost << p[i * n + j];
 			if (j < n - 1) {
 				ost << "  & ";
 				}

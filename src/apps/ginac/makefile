@@ -21,6 +21,7 @@ ALL_TARGETS=\
 	hilbert_cohn_vossen.out \
 	mersenne.out \
 	solve_linear.out \
+	thirteen_eckardt_points.out \
 	tutorial.out 
 
 
@@ -35,9 +36,12 @@ cra.out:  cra.o  ;
 differentiation.out:  differentiation.o  ;
 	$(DISCRETA_CPP)  differentiation.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
+ginac_linear_algebra.o:  ginac_linear_algebra.cpp  ;
+	$(DISCRETA_CPP)  ginac_linear_algebra.cpp $(CPPFLAGS) -o $@
+
 
 hilbert_cohn_vossen.out:  hilbert_cohn_vossen.o  ;
-	$(DISCRETA_CPP)  hilbert_cohn_vossen.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+	$(DISCRETA_CPP)  hilbert_cohn_vossen.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 mersenne.out:  mersenne.o  ;
@@ -45,6 +49,10 @@ mersenne.out:  mersenne.o  ;
 
 solve_linear.out:  solve_linear.o  ;
 	$(DISCRETA_CPP)  solve_linear.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+thirteen_eckardt_points.out:  thirteen_eckardt_points.o  ;
+	$(DISCRETA_CPP)  thirteen_eckardt_points.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
 
 tutorial.out:  tutorial.o  ;
 	$(DISCRETA_CPP)  tutorial.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
