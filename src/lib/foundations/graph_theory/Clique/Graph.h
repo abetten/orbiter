@@ -19,8 +19,8 @@ public:
     Graph() {}
 
     __forceinline__
-    Graph (size_t _nb_vertices_, size_t _nb_colors_=0) {
-        this->init(_nb_vertices_, _nb_colors_);
+    Graph (size_t _nb_vertices_, size_t _nb_colors_=0, size_t nb_colors_per_vertex=1) {
+        this->init(_nb_vertices_, _nb_colors_, nb_colors_per_vertex);
     }
 
     __forceinline__
@@ -40,31 +40,54 @@ public:
         if (vertex_color) delete [] vertex_color;
     }
 
-
+    /**
+     * get the jth color of vertex
+     */
     __forceinline__ U get_color(size_t vertex, size_t j=0) const {
         return vertex_color [vertex * nb_colors_per_vertex + j];
     }
 
+    /**
+     * get the label of vertex
+     */
     __forceinline__ T get_label(size_t vertex) const {
         return vertex_label[vertex];
     }
 
+    /**
+     * create an edge between vertex i and j
+     */
     __forceinline__ void set_edge (size_t i, size_t j) {
         adjacency.set(i*nb_vertices+j);
     }
 
+    /**
+     * remove the edge between vertex i and j 
+     */
     __forceinline__ void unset_edge (size_t i, size_t j) {
         adjacency.unset(i*nb_vertices+j);
     }
 
+    /**
+     * i -> vertex
+     * j -> the jth color of the vertex i
+     * color -> jth color of vertex i
+     */
     __forceinline__ void set_vertex_color (U color, size_t i, size_t j=0) {
     	vertex_color [i * nb_colors_per_vertex + j] = color;
     }
 
+    /**
+     * label -> label of the ith vertex
+     * i -> the ith vertex in the graph
+     */ 
     __forceinline__ void set_vertex_label (T label, size_t i) {
     	vertex_label [i] = label;
     }
 
+    /**
+     * check if vertex i is adjacent to vertex j
+     */
     __forceinline__ bool is_adjacent (size_t i, size_t j) const {
         return adjacency[i*nb_vertices+j];
     }
@@ -79,6 +102,9 @@ public:
         }
     }
 
+    /**
+     * dump the contents of this class in a file 
+     */
     void dump(const char* filename) {
     	std::ofstream file;
     	file.open (filename);
