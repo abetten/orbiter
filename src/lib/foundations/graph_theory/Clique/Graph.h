@@ -7,6 +7,7 @@
 
 
 #include "bitset.h"
+#include <fstream>
 
 #ifndef ORBITER_SRC_LIB_FOUNDATIONS_GRAPH_THEORY_CLIQUE_GRAPH_H_
 #define ORBITER_SRC_LIB_FOUNDATIONS_GRAPH_THEORY_CLIQUE_GRAPH_H_
@@ -18,19 +19,20 @@ public:
     Graph() {}
 
     __forceinline__
-    Graph (size_t _nb_vertices_, size_t _nb_colors_=0) {
-        this->init(_nb_vertices_, _nb_colors_);
+    Graph (size_t _nb_vertices_, size_t _nb_colors_=0, size_t nb_colors_per_vertex=1) {
+        this->init(_nb_vertices_, _nb_colors_, nb_colors_per_vertex);
     }
 
     __forceinline__
-    void init (size_t _nb_vertices_, size_t _nb_colors_=0) {
+    void init (size_t _nb_vertices_, size_t _nb_colors_=0, size_t _nb_colors_per_vertex_=1) {
         nb_vertices = _nb_vertices_;
         nb_colors = _nb_colors_;
+        nb_colors_per_vertex = _nb_colors_per_vertex_;
 
-        adjacency.init(nb_vertices*nb_vertices);
+        adjacency.init(nb_vertices * nb_vertices);
 
         vertex_label = new T [nb_vertices];
-        if (_nb_colors_!=0) vertex_color = new U [nb_vertices];
+        if (_nb_colors_!=0) vertex_color = new U [nb_vertices * nb_colors_per_vertex];
     }
 
     ~Graph () {
@@ -38,23 +40,54 @@ public:
         if (vertex_color) delete [] vertex_color;
     }
 
-
-    __forceinline__ U get_color(size_t vertex) const {
-        return vertex_color[vertex];
+    /**
+     * get the jth color of vertex
+     */
+    __forceinline__ U get_color(size_t vertex, size_t j=0) const {
+        return vertex_color [vertex * nb_colors_per_vertex + j];
     }
 
+    /**
+     * get the label of vertex
+     */
     __forceinline__ T get_label(size_t vertex) const {
         return vertex_label[vertex];
     }
 
+    /**
+     * create an edge between vertex i and j
+     */
     __forceinline__ void set_edge (size_t i, size_t j) {
         adjacency.set(i*nb_vertices+j);
     }
 
+    /**
+     * remove the edge between vertex i and j 
+     */
     __forceinline__ void unset_edge (size_t i, size_t j) {
         adjacency.unset(i*nb_vertices+j);
     }
 
+    /**
+     * i -> vertex
+     * j -> the jth color of the vertex i
+     * color -> jth color of vertex i
+     */
+    __forceinline__ void set_vertex_color (U color, size_t i, size_t j=0) {
+    	vertex_color [i * nb_colors_per_vertex + j] = color;
+    }
+
+    /**
+     * label -> label of the ith vertex
+     * i -> the ith vertex in the graph
+     */ 
+    __forceinline__ void set_vertex_label (T label, size_t i) {
+    	vertex_label [i] = label;
+    }
+
+    /**
+     * check if vertex i is adjacent to vertex j
+     */
     __forceinline__ bool is_adjacent (size_t i, size_t j) const {
         return adjacency[i*nb_vertices+j];
     }
@@ -69,8 +102,44 @@ public:
         }
     }
 
+    /**
+     * dump the contents of this class in a file 
+     */
+    void dump(const char* filename) {
+    	std::ofstream file;
+    	file.open (filename);
+
+    	// nb_vertices, nb_colors_per_vertex, nb_colors
+    	file << nb_vertices << " " << nb_colors_per_vertex << " " << nb_colors << "\n";
+
+    	// dump adjacency matrix bitset
+    	for (size_t i=0; i < adjacency.data_size(); ++i) {
+    		file << adjacency.data(i);
+    		if (i+1 < adjacency.data_size()) file << " ";
+    	}
+    	file << "\n";
+
+    	// dump vertex label
+    	for (size_t i=0; i < nb_vertices; ++i) {
+    		file << vertex_label[i];
+    		if (i+1 < nb_vertices) file << " ";
+    	}
+    	file << "\n";
+
+    	// dump vertex color
+    	for (size_t i=0; i < nb_vertices; ++i) {
+    		for (size_t j=0; j < nb_colors_per_vertex; ++j) {
+    			file << vertex_color[i*nb_vertices + j];
+    			if (j+1 < nb_colors_per_vertex) file << " ";
+    		}
+    		file << "\n";
+    	}
+
+    	file.close();
+    }
 
     size_t nb_colors = 0;
+    size_t nb_colors_per_vertex = 0;
     size_t nb_vertices = 0;
     bitset adjacency;
     T* vertex_label = NULL;
