@@ -378,8 +378,8 @@ void graph_theory_domain::save_colored_graph(const char *fname,
 	{
 		ofstream fp(fname, ios::binary);
 
-		a = -1;
-		b = 1;
+		a = -1; // marker for new file format
+		b = 1; // file format version number
 
 		fp.write((char *) &a, sizeof(int));
 		fp.write((char *) &b, sizeof(int));
@@ -432,10 +432,22 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 
 		fp.read((char *) &a, sizeof(int));
 		if (a == -1) {
+
+			// new file format
+			// the new format allows for multiple colors per vertex
+			// (must be constant across all vertices)
+			// The nb_colors_per_vertex tells how many colors each vertex has.
+			// So, vertex_colors[] is now a two-dimensional array:
+			// vertex_colors[nb_vertices * nb_colors_per_vertex]
+			// Also, vertex_labels[] is now long int.
+
+			// read the version number:
+
 			fp.read((char *) &b, sizeof(int));
 			if (f_v) {
 				cout << "load_colored_graph version=" << b << endl;
 			}
+
 			fp.read((char *) &nb_vertices, sizeof(int));
 			fp.read((char *) &nb_colors, sizeof(int));
 			fp.read((char *) &nb_colors_per_vertex, sizeof(int));
@@ -486,6 +498,9 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 			}
 		}
 		else {
+
+			// old file format is still supported:
+
 			//cout << "graph_theory_domain::load_colored_graph old file format no longer supported" << endl;
 			//exit(1);
 			cout << "graph_theory_domain::load_colored_graph old file format detected, using compatibility mode" << endl;
