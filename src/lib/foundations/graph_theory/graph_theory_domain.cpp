@@ -521,14 +521,6 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 		fp.read((char *) bitvector_adjacency, bitvector_length);
 	}
 
-		if (f_v) {
-			cout
-					<< "graph_theory_domain::load_colored_graph before allocating bitvector_adjacency"
-					<< endl;
-		}
-		bitvector_adjacency = NEW_uchar(bitvector_length);
-		fp.read((char*) bitvector_adjacency, bitvector_length);
-	}
 
 	if (f_v) {
 		cout << "graph_theory_domain::load_colored_graph done" << endl;
