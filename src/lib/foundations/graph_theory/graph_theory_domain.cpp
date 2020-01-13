@@ -425,13 +425,18 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 
 	if (f_v) {
 		cout << "graph_theory_domain::load_colored_graph" << endl;
-		}
+	}
 
 	{
 		ifstream fp(fname, ios::binary);
 
 		fp.read((char *) &a, sizeof(int));
 		if (a == -1) {
+
+
+			if (f_v) {
+				cout << "graph_theory_domain::load_colored_graph detected new file format" << endl;
+			}
 
 			// new file format
 			// the new format allows for multiple colors per vertex
@@ -499,6 +504,9 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 		}
 		else {
 
+			if (f_v) {
+				cout << "graph_theory_domain::load_colored_graph detected old file format" << endl;
+			}
 			// old file format is still supported:
 
 			//cout << "graph_theory_domain::load_colored_graph old file format no longer supported" << endl;
