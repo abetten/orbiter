@@ -1256,12 +1256,19 @@ void surface_object::print_tritangent_planes(ostream &ost)
 		//ost << "\\left[" << endl;
 		Surf->Gr3->print_single_generator_matrix_tex(ost, plane_rk);
 		//ost << "\\right]" << endl;
+		ost << " = ";
+		Surf->Gr3->print_single_generator_matrix_tex_numerical(ost, plane_rk);
 
 		Surf->Gr3->unrank_lint_here_and_compute_perp(Mtx, plane_rk,
 			0 /*verbose_level */);
 		F->PG_element_normalize(Mtx + 12, 1, 4);
+		ost << "$$" << endl;
+		ost << "$$" << endl;
 		ost << "=V\\big(" << endl;
 		Surf->Poly1_4->print_equation(ost, Mtx + 12);
+		ost << "\\big)" << endl;
+		ost << "=V\\big(" << endl;
+		Surf->Poly1_4->print_equation_numerical(ost, Mtx + 12);
 		ost << "\\big)" << endl;
 		ost << "$$" << endl;
 		ost << "dual pt rank = $" << b << "$ ";
@@ -1635,7 +1642,7 @@ void surface_object::print_points(ostream &ost)
 			TRUE /* f_tex */);
 	ost << "$$" << endl;
 	ost << "%%\\clearpage" << endl;
-	ost << "The Eckardt points on the surface are:\\\\" << endl;
+	ost << "The Eckardt points are:\\\\" << endl;
 	//ost << "\\begin{multicols}{2}" << endl;
 	ost << "\\begin{align*}" << endl;
 	for (i = 0; i < nb_Eckardt_points; i++) {
@@ -1667,7 +1674,7 @@ void surface_object::print_points(ostream &ost)
 
 
 	ost << "%%\\clearpage" << endl;
-	ost << "The Eckardt points on the surface are:\\\\" << endl;
+	ost << "The Eckardt points are:\\\\" << endl;
 	//ost << "\\begin{multicols}{2}" << endl;
 	ost << "\\begin{align*}" << endl;
 	for (i = 0; i < nb_Eckardt_points; i++) {
@@ -1677,6 +1684,14 @@ void surface_object::print_points(ostream &ost)
 		//int_vec_print_fully(ost, v, 4);
 		for (j = 0; j < 4; j++) {
 			F->print_element(ost, v[j]);
+			if (j < 4 - 1) {
+				ost << ", ";
+			}
+		}
+		ost << ")";
+		ost << " = \\bP(";
+		for (j = 0; j < 4; j++) {
+			ost << v[j];
 			if (j < 4 - 1) {
 				ost << ", ";
 			}
