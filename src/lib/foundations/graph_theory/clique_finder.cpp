@@ -305,7 +305,7 @@ void clique_finder::backtrack_search(int depth, int verbose_level)
 		decision_step_counter++;
 	}
 	if ((counter & ((1 << 23) - 1)) == 0) {
-		my_verbose_level = verbose_level + 1;
+		my_verbose_level = 1;
 	}
 	else {
 		my_verbose_level = verbose_level;

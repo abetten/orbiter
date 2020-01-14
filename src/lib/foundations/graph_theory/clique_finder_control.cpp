@@ -10,6 +10,7 @@
 #include "foundations.h"
 #include "Clique/RainbowClique.h"
 
+
 using namespace std;
 
 
@@ -222,6 +223,10 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG, const char *fname_sol, 
 #if 1
 	Graph<> G (CG->nb_points, CG->nb_colors, CG->nb_colors_per_vertex);
 
+
+#if 1
+	memcpy(G.adjacency.bitarray, CG->bitvector_adjacency, CG->L);
+#else
     #pragma unroll
 	for (size_t i = 0; i < CG->nb_points; i++) {
         #pragma unroll
@@ -232,6 +237,8 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG, const char *fname_sol, 
 			}
 		}
 	}
+#endif
+
 //	G.print_adj_matrix();
 	for (size_t i = 0; i < CG->nb_points; i++) {
 		G.set_vertex_label(CG->points[i], i);
