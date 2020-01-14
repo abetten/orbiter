@@ -37,8 +37,9 @@ using std::endl;
 
 
 class bitset {
+public:
 
-    typedef uint32_t TYPE;
+    typedef char TYPE;
 
     size_t nb_bits_ = 0; /* Number of bits in the bitset */
     size_t nb_bytes_ = 0; /* Number of bytes in the bit array */
@@ -87,8 +88,6 @@ class bitset {
     }
 
     /*------------------------------------------------------------------------*/
-
-public:
 
 #if defined(__clang__)
     size_t _MAX_STACK_ALLOC_LIMIT = 0; /* bits */
