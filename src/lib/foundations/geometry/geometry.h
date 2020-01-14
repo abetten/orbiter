@@ -873,6 +873,8 @@ public:
 	void init(int n, int k, finite_field *F, int verbose_level);
 	long int nb_of_subspaces(int verbose_level);
 	void print_single_generator_matrix_tex(std::ostream &ost, long int a);
+	void print_single_generator_matrix_tex_numerical(
+			std::ostream &ost, long int a);
 	void print_set(long int *v, int len);
 	void print_set_tex(std::ostream &ost, long int *v, int len);
 	int nb_points_covered(int verbose_level);
@@ -907,6 +909,7 @@ public:
 	void compute_dual_spread(int *spread, int *dual_spread, 
 		int spread_size, int verbose_level);
 	void latex_matrix(std::ostream &ost, int *p);
+	void latex_matrix_numerical(std::ostream &ost, int *p);
 };
 
 

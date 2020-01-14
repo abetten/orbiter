@@ -332,8 +332,8 @@ void graph_theory_domain::save_colored_graph(const char *fname, int nb_vertices,
 	{
 		ofstream fp(fname, ios::binary);
 
-		a = -1;
-		b = 1;
+		a = -1; // marker for new file format
+		b = 1; // file format version number
 
 		fp.write((char*) &a, sizeof(int));
 		fp.write((char*) &b, sizeof(int));
@@ -380,21 +380,39 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 	{
 		ifstream fp(fname, ios::binary);
 
-		fp.read((char*) &a, sizeof(int));
+		fp.read((char *) &a, sizeof(int));
 		if (a == -1) {
-			fp.read((char*) &b, sizeof(int));
+
+
+			if (f_v) {
+				cout << "graph_theory_domain::load_colored_graph detected new file format" << endl;
+			}
+
+			// new file format
+			// the new format allows for multiple colors per vertex
+			// (must be constant across all vertices)
+			// The nb_colors_per_vertex tells how many colors each vertex has.
+			// So, vertex_colors[] is now a two-dimensional array:
+			// vertex_colors[nb_vertices * nb_colors_per_vertex]
+			// Also, vertex_labels[] is now long int.
+
+			// read the version number:
+
+			fp.read((char *) &b, sizeof(int));
 			if (f_v) {
 				cout << "load_colored_graph version=" << b << endl;
 			}
-			fp.read((char*) &nb_vertices, sizeof(int));
-			fp.read((char*) &nb_colors, sizeof(int));
-			fp.read((char*) &nb_colors_per_vertex, sizeof(int));
+
+			fp.read((char *) &nb_vertices, sizeof(int));
+			fp.read((char *) &nb_colors, sizeof(int));
+			fp.read((char *) &nb_colors_per_vertex, sizeof(int));
 			if (f_v) {
 				cout << "load_colored_graph nb_vertices=" << nb_vertices
 						<< " nb_colors=" << nb_colors
 						<< " nb_colors_per_vertex=" << nb_colors_per_vertex
-						<< endl;
-			}
+					<< endl;
+				}
+
 
 			L = ((long int) nb_vertices * (long int) (nb_vertices - 1)) >> 1;
 
@@ -402,58 +420,58 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 			if (f_v) {
 				cout << "load_colored_graph bitvector_length="
 						<< bitvector_length << endl;
-			}
+				}
 
-			fp.read((char*) &user_data_size, sizeof(int));
+			fp.read((char *) &user_data_size, sizeof(int));
 			if (f_v) {
-				cout << "load_colored_graph user_data_size=" << user_data_size
-						<< endl;
-			}
+				cout << "load_colored_graph user_data_size="
+						<< user_data_size << endl;
+				}
 			user_data = NEW_lint(user_data_size);
 
 			for (i = 0; i < user_data_size; i++) {
-				fp.read((char*) &user_data[i], sizeof(long int));
-			}
+				fp.read((char *) &user_data[i], sizeof(long int));
+				}
 
 			vertex_labels = NEW_lint(nb_vertices);
 			vertex_colors = NEW_int(nb_vertices * nb_colors_per_vertex);
 
 			for (i = 0; i < nb_vertices; i++) {
-				fp.read((char*) &vertex_labels[i], sizeof(long int));
+				fp.read((char *) &vertex_labels[i], sizeof(long int));
 				for (j = 0; j < nb_colors_per_vertex; j++) {
-					fp.read(
-							(char*) &vertex_colors[i * nb_colors_per_vertex + j],
-							sizeof(int));
+					fp.read((char *) &vertex_colors[i * nb_colors_per_vertex + j], sizeof(int));
 					if (vertex_colors[i * nb_colors_per_vertex + j] >= nb_colors) {
 						cout << "load_colored_graph" << endl;
-						cout
-								<< "vertex_colors[i * nb_colors_per_vertex + j] >= nb_colors"
-								<< endl;
-						cout << "vertex_colors[i * nb_colors_per_vertex + j]="
-								<< vertex_colors[i * nb_colors_per_vertex + j]
-								<< endl;
+						cout << "vertex_colors[i * nb_colors_per_vertex + j] >= nb_colors" << endl;
+						cout << "vertex_colors[i * nb_colors_per_vertex + j]=" << vertex_colors[i * nb_colors_per_vertex + j] << endl;
 						cout << "i=" << i << endl;
 						cout << "j=" << j << endl;
 						cout << "nb_colors=" << nb_colors << endl;
 						exit(1);
-					}
+						}
 				}
 			}
-		} else {
+		}
+		else {
+
+			if (f_v) {
+				cout << "graph_theory_domain::load_colored_graph detected old file format" << endl;
+			}
+			// old file format is still supported:
+
 			//cout << "graph_theory_domain::load_colored_graph old file format no longer supported" << endl;
 			//exit(1);
-			cout
-					<< "graph_theory_domain::load_colored_graph old file format detected, using compatibility mode"
-					<< endl;
+			cout << "graph_theory_domain::load_colored_graph old file format detected, using compatibility mode" << endl;
 			nb_vertices = a;
-			fp.read((char*) &nb_colors, sizeof(int));
+			fp.read((char *) &nb_colors, sizeof(int));
 			nb_colors_per_vertex = 1;
 			if (f_v) {
 				cout << "load_colored_graph nb_vertices=" << nb_vertices
 						<< " nb_colors=" << nb_colors
 						<< " nb_colors_per_vertex=" << nb_colors_per_vertex
-						<< endl;
-			}
+					<< endl;
+				}
+
 
 			L = ((long int) nb_vertices * (long int) (nb_vertices - 1)) >> 1;
 
@@ -461,47 +479,47 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 			if (f_v) {
 				cout << "load_colored_graph bitvector_length="
 						<< bitvector_length << endl;
-			}
+				}
 
-			fp.read((char*) &user_data_size, sizeof(int));
+			fp.read((char *) &user_data_size, sizeof(int));
 			if (f_v) {
-				cout << "load_colored_graph user_data_size=" << user_data_size
-						<< endl;
-			}
+				cout << "load_colored_graph user_data_size="
+						<< user_data_size << endl;
+				}
 			user_data = NEW_lint(user_data_size);
 
 			for (i = 0; i < user_data_size; i++) {
-				fp.read((char*) &a, sizeof(int));
+				fp.read((char *) &a, sizeof(int));
 				user_data[i] = a;
-			}
+				}
 
 			vertex_labels = NEW_lint(nb_vertices);
 			vertex_colors = NEW_int(nb_vertices * nb_colors_per_vertex);
 
 			for (i = 0; i < nb_vertices; i++) {
-				fp.read((char*) &a, sizeof(int));
+				fp.read((char *) &a, sizeof(int));
 				vertex_labels[i] = a;
 				for (j = 0; j < nb_colors_per_vertex; j++) {
-					fp.read(
-							(char*) &vertex_colors[i * nb_colors_per_vertex + j],
-							sizeof(int));
-					if (vertex_colors[i * nb_colors_per_vertex + j]
-							>= nb_colors) {
+					fp.read((char *) &vertex_colors[i * nb_colors_per_vertex + j], sizeof(int));
+					if (vertex_colors[i * nb_colors_per_vertex + j] >= nb_colors) {
 						cout << "load_colored_graph" << endl;
-						cout
-								<< "vertex_colors[i * nb_colors_per_vertex + j] >= nb_colors"
-								<< endl;
-						cout << "vertex_colors[i * nb_colors_per_vertex + j]="
-								<< vertex_colors[i * nb_colors_per_vertex + j]
-								<< endl;
+						cout << "vertex_colors[i * nb_colors_per_vertex + j] >= nb_colors" << endl;
+						cout << "vertex_colors[i * nb_colors_per_vertex + j]=" << vertex_colors[i * nb_colors_per_vertex + j] << endl;
 						cout << "i=" << i << endl;
 						cout << "j=" << j << endl;
 						cout << "nb_colors=" << nb_colors << endl;
 						exit(1);
-					}
+						}
 				}
 			}
 		}
+
+		if (f_v) {
+			cout << "graph_theory_domain::load_colored_graph before allocating bitvector_adjacency" << endl;
+			}
+		bitvector_adjacency = NEW_uchar(bitvector_length);
+		fp.read((char *) bitvector_adjacency, bitvector_length);
+	}
 
 		if (f_v) {
 			cout

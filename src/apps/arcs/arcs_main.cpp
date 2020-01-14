@@ -37,13 +37,15 @@ int main(int argc, const char **argv)
 	linear_group_description *Descr = NULL;
 	linear_group *LG = NULL;
 	int f_sylow = FALSE;
+	int f_recognize = FALSE;
+	const char *recognize_set_ascii = NULL;
 
 	
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-linear") == 0) {
 			f_linear = TRUE;
 			Descr = NEW_OBJECT(linear_group_description);
@@ -51,23 +53,28 @@ int main(int argc, const char **argv)
 				argv + i + 1, verbose_level);
 
 			cout << "-linear" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-draw_poset") == 0) {
 			f_draw_poset = TRUE;
 			cout << "-draw_poset " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-embedded") == 0) {
 			f_embedded = TRUE;
 			cout << "-embedded " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			cout << "-report" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-sylow") == 0) {
 			f_sylow = TRUE;
 			cout << "-sylow " << endl;
-			}
+		}
+		else if (strcmp(argv[i], "-recognize") == 0) {
+			f_recognize = TRUE;
+			recognize_set_ascii = argv[++i];
+			cout << "-recognize " << recognize_set_ascii << endl;
+		}
 	}
 
 
@@ -289,6 +296,38 @@ int main(int argc, const char **argv)
 			}
 		cout << "Written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
+		}
+		if (f_recognize) {
+			cout << "recognizing the set " << recognize_set_ascii << endl;
+			long int *recognize_set;
+			int recognize_set_sz;
+			int *transporter;
+			int *transporter_inv;
+			int f_implicit_fusion = TRUE;
+			int final_node = 0;
+
+			lint_vec_scan(recognize_set_ascii, recognize_set, recognize_set_sz);
+			cout << "set=";
+			lint_vec_print(cout, recognize_set, recognize_set_sz);
+			cout << endl;
+
+			transporter = NEW_int(A->elt_size_in_int);
+			transporter_inv = NEW_int(A->elt_size_in_int);
+			Gen->gen->recognize(
+					recognize_set, recognize_set_sz, transporter, f_implicit_fusion,
+					final_node, verbose_level);
+			cout << "final_node = " << final_node << endl;
+
+			A->element_invert(transporter, transporter_inv, 0);
+
+			cout << "transporter=" << endl;
+			A->element_print(transporter, cout);
+			cout << endl;
+
+			cout << "transporter_inv=" << endl;
+			A->element_print(transporter_inv, cout);
+			cout << endl;
+
 		}
 	}
 
