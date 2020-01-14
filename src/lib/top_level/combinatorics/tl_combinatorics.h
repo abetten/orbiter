@@ -1104,9 +1104,10 @@ public:
 			long int *set, int set_sz,
 			int verbose_level);
 	int designs_are_disjoint(int i, int j);
-	void process_starter_case(set_and_stabilizer *Rep,
+	void process_starter_case(
+			long int *starter_set, int starter_set_sz,
 			strong_generators *SG, const char *prefix,
-			char *group_label, int orbit_length,
+			const char *group_label, int orbit_length,
 			int f_read_solution_file, const char *solution_file_name,
 			long int *&Large_sets, int &nb_large_sets,
 			int verbose_level);

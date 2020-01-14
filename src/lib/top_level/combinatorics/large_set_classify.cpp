@@ -395,7 +395,7 @@ void large_set_classify::read_classification_single_case(set_and_stabilizer *&Re
 	}
 	*Rep = T->Reps[case_nr];
 	if (f_v) {
-		cout << "large_set_classify::read_classification_single_case before null()" << endl;
+		cout << "large_set_classify::read_classification_single_case before null" << endl;
 	}
 	T->Reps[case_nr].null();
 
@@ -529,9 +529,10 @@ int large_set_classify::designs_are_disjoint(int i, int j)
 
 
 
-void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
+void large_set_classify::process_starter_case(
+		long int *starter_set, int starter_set_sz,
 		strong_generators *SG, const char *prefix,
-		char *group_label, int orbit_length,
+		const char *group_label, int orbit_length,
 		int f_read_solution_file, const char *solution_file_name,
 		long int *&Large_sets, int &nb_large_sets,
 		int verbose_level)
@@ -545,7 +546,7 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 		cout << "large_set_classify::process_starter_case before make_reduced_design_table" << endl;
 	}
 	make_reduced_design_table(
-			Rep->data, Rep->sz,
+			starter_set, starter_set_sz,
 			Design_table_reduced, Design_table_reduced_idx, nb_reduced,
 			verbose_level);
 	if (f_v) {
@@ -559,7 +560,7 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 	if (f_v) {
 		cout << "large_set_classify::process_starter_case before compute_reduced_colors" << endl;
 	}
-	compute_reduced_colors(Rep->data, Rep->sz, verbose_level);
+	compute_reduced_colors(starter_set, starter_set_sz, verbose_level);
 	if (f_v) {
 		cout << "large_set_classify::process_starter_case after compute_reduced_colors" << endl;
 	}
@@ -634,30 +635,32 @@ void large_set_classify::process_starter_case(set_and_stabilizer *Rep,
 		cout << "Number of solutions = " << nb_solutions << endl;
 		cout << "solution_size = " << solution_size << endl;
 
-		int sz = Rep->sz + solution_size * orbit_length;
+		int sz = starter_set_sz + solution_size * orbit_length;
 
 		if (sz != size_of_large_set) {
 			cout << "large_set_classify::process_starter_case sz != size_of_large_set" << endl;
 			exit(1);
 		}
+
+
 		nb_large_sets = nb_solutions;
 		Large_sets = NEW_lint(nb_solutions * sz);
 		int i, j, a, b, l;
 		for (i = 0; i < nb_solutions; i++) {
-			lint_vec_copy(Rep->data, Large_sets + i * sz, Rep->sz);
+			lint_vec_copy(starter_set, Large_sets + i * sz, starter_set_sz);
 			for (j = 0; j < solution_size; j++) {
 				a = Solutions[i * solution_size + j];
 				b = OoS->Orbits_classified->Sets[selected_type_idx][a];
-				OoS->Sch->get_orbit(b, Large_sets + i * sz + Rep->sz + j * orbit_length, l, 0 /* verbose_level*/);
+				OoS->Sch->get_orbit(b, Large_sets + i * sz + starter_set_sz + j * orbit_length, l, 0 /* verbose_level*/);
 				if (l != orbit_length) {
 					cout << "large_set_classify::process_starter_case l != orbit_length" << endl;
 					exit(1);
 				}
 			}
 			for (j = 0; j < solution_size * orbit_length; j++) {
-				a = Large_sets[i * sz + Rep->sz + j];
+				a = Large_sets[i * sz + starter_set_sz + j];
 				b = Design_table_reduced_idx[a];
-				Large_sets[i * sz + Rep->sz + j] = b;
+				Large_sets[i * sz + starter_set_sz + j] = b;
 			}
 		}
 
