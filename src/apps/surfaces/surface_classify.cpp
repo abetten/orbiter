@@ -91,6 +91,7 @@ int main(int argc, const char **argv)
 			i += surface_descr_isomorph1->
 					read_arguments(argc - (i - 1), argv + i,
 					verbose_level) - 1;
+			cout << "-isomorph after reading description of first surface" << endl;
 			i += 2;
 			cout << "the current argument is " << argv[i] << endl;
 			cout << "-isomorph reading description of second surface" << endl;

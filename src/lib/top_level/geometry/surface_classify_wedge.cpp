@@ -1157,6 +1157,10 @@ int surface_classify_wedge::isomorphism_test_pairwise(
 			cout << endl;
 		}
 		A->element_invert(Elt_isomorphism_1to2, Elt1, 0);
+		if (f_v) {
+			cout << "the inverse element is" << endl;
+			A->element_print(Elt1, cout);
+		}
 		int coeff3[20];
 		int coeff4[20];
 		mtx->substitute_surface_equation(Elt1,

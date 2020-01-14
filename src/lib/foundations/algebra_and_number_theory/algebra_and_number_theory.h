@@ -1526,6 +1526,7 @@ public:
 	void print_monomial(char *str, int i);
 	void print_monomial_str(std::stringstream &ost, int i);
 	void print_equation(std::ostream &ost, int *coeffs);
+	void print_equation_numerical(std::ostream &ost, int *coeffs);
 	void print_equation_lint(std::ostream &ost, long int *coeffs);
 	void print_equation_str(std::stringstream &ost, int *coeffs);
 	void print_equation_with_line_breaks_tex(std::ostream &ost,
