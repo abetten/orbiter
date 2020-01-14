@@ -220,7 +220,7 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG, const char *fname_sol, 
 	}
 
 #if 1
-	Graph<> G (CG->nb_points, CG->nb_colors);
+	Graph<> G (CG->nb_points, CG->nb_colors, CG->nb_colors_per_vertex);
 
     #pragma unroll
 	for (size_t i = 0; i < CG->nb_points; i++) {
@@ -235,7 +235,9 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG, const char *fname_sol, 
 //	G.print_adj_matrix();
 	for (size_t i = 0; i < CG->nb_points; i++) {
 		G.set_vertex_label(CG->points[i], i);
-		G.set_vertex_color(CG->point_color[i], i);
+		for (size_t j = 0; j < CG->nb_colors_per_vertex; j++) {
+			G.set_vertex_color(CG->point_color[i * CG->nb_colors_per_vertex + j], i, j);
+		}
 	}
 
 	// Create the solution storage. The base type of the solution
@@ -244,7 +246,9 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG, const char *fname_sol, 
 	std::vector<std::vector<unsigned int> > solutions;
 
     // Call the Rainbow Clique finding algorithm
-	RainbowClique::find_cliques(G, solutions, 1);
+	RainbowClique::find_cliques(G, solutions, 0 /* nb_threads */);
+		// nb_threads = 0 automatically detects the number of threads
+
 
 	// Print the solutions
 	cout << "clique_finder_control::do_Sajeeb Found " << solutions.size() << " solution(s)." << endl;

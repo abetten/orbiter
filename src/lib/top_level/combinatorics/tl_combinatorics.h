@@ -1029,9 +1029,9 @@ void hall_system_early_test_function(long int *S, int len,
 class large_set_classify {
 public:
 	design_create *DC;
-	int design_size;
-	int nb_points;
-	int nb_lines;
+	int design_size; // = DC->sz
+	int nb_points; // = DC->A->degree
+	int nb_lines; // = DC->A2->degree
 	int search_depth;
 
 	char starter_directory_name[1000];
@@ -1041,14 +1041,14 @@ public:
 
 
 	int f_lexorder_test;
-	int size_of_large_set;
+	int size_of_large_set; // = nb_lines / design_size
 
 
-	long int *Design_table;
+	long int *Design_table; // [nb_designs * design_size]
 	const char *design_table_prefix;
-	int nb_designs;
-	int nb_colors;
-	int *design_color_table;
+	int nb_designs; // = SetOrb->used_length;
+	int nb_colors; // = DC->get_nb_colors_as_two_design(0 /* verbose_level */);
+	int *design_color_table; // [nb_designs]
 
 	action *A_on_designs;
 
@@ -1065,8 +1065,8 @@ public:
 	long int *Design_table_reduced;
 	long int *Design_table_reduced_idx;
 	int nb_reduced;
-	int nb_remaining_colors;
-	int *reduced_design_color_table;
+	int nb_remaining_colors; // = nb_colors - set_sz; // we assume that k = 4
+	int *reduced_design_color_table; // [nb_reduced]
 
 	action *A_reduced;
 	schreier *Orbits_on_reduced;
