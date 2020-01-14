@@ -33,6 +33,8 @@ public:
                                      std::ref(G));
         }
 
+        printf("%s:%d Starting threads: %d\n", __FILE__, __LINE__, n_threads);
+
         #pragma unroll
         for (size_t i=0; i<nThreads; ++i) threads[i].join();
 
@@ -107,7 +109,8 @@ private:
                                                           param.color_satisfied,
                                                           start, end_adj);
 
-        end_color_class = clump_color_class(G, param.live_pts, start, end_adj, lowest_color);
+        end_color_class = clump_color_class(G, param.live_pts, start, 
+                                            end_adj, lowest_color, param.color_satisfied);
 
 //        param.color_satisfied[lowest_color] = true;
 
@@ -208,21 +211,52 @@ private:
 
     }
 
+    #if 1
     template <typename T, typename U>
     __forceinline__
-    static inline T clump_color_class(Graph<T,U>& G, T* live_pts, T start, T end, U color) {
+    static inline T clump_color_class(Graph<T,U>& G, T* live_pts, T start, T end, U color, 
+                                                                        bool* color_satisfied) {
         #pragma unroll
         for (size_t i=start; i<end; ++i) {
-            for (size_t j=0; j < G.nb_colors_per_vertex; ++j) {
-            	if (G.get_color(live_pts[i], j) == color) {
-					std::swap(live_pts[start], live_pts[i]);
-					start += 1;
-					break;
-				}
+            const T pt = live_pts[i];
+            bool pick_vertex = false;
+            #pragma unroll
+            for (size_t j=0; j<G.nb_colors_per_vertex; ++j) {
+                const U pt_color = G.get_color(pt, j);
+            	if (pt_color == color) {
+                    pick_vertex = true;
+				} else if (color_satisfied[pt_color]) {
+                    pick_vertex = false;
+                    break;
+                }
+            }
+            if (pick_vertex) {
+                std::swap(live_pts[start], live_pts[i]);
+                start += 1;
             }
         }
         return start;
     }
+    #else
+    template <typename T, typename U>
+    __forceinline__
+    static inline T clump_color_class(Graph<T,U>& G, T* live_pts, T start, T end, U color, 
+                                                                        bool* color_satisfied) {
+        #pragma unroll
+        for (size_t i=start; i<end; ++i) {
+            const T pt = live_pts[i];
+            #pragma unroll
+            for (size_t j=0; j<G.nb_colors_per_vertex; ++j) {
+            	if (G.get_color(pt, j) == color) {
+                    std::swap(live_pts[start], live_pts[i]);
+                    start += 1;
+                    break;
+                }
+            }
+        }
+        return start;
+    }
+    #endif
 
 };
 

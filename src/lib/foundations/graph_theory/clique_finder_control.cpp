@@ -221,23 +221,24 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG, const char *fname_sol, 
 	}
 
 #if 1
+	cout << __FILE__ << ":" << __LINE__ << endl;
 	Graph<> G (CG->nb_points, CG->nb_colors, CG->nb_colors_per_vertex);
+	cout << __FILE__ << ":" << __LINE__ << endl;
 
+    // #pragma unroll
+	// for (size_t i = 0; i < CG->nb_points; i++) {
+    //     #pragma unroll
+	// 	for (size_t j = i + 1; j < CG->nb_points; j++) {
+	// 		if (CG->is_adjacent(i, j)) {
+	// 			G.set_edge(i, j);
+	// 			G.set_edge(j, i);
+	// 		}
+	// 	}
+	// }
 
-#if 1
-	memcpy(G.adjacency.bitarray, CG->bitvector_adjacency, CG->L);
-#else
-    #pragma unroll
-	for (size_t i = 0; i < CG->nb_points; i++) {
-        #pragma unroll
-		for (size_t j = i + 1; j < CG->nb_points; j++) {
-			if (CG->is_adjacent(i, j)) {
-				G.set_edge(i, j);
-				G.set_edge(j, i);
-			}
-		}
-	}
-#endif
+	memcpy(G.adjacency.bit_array, CG->bitvector_adjacency, CG->L);	
+
+	cout << __FILE__ << ":" << __LINE__ << endl;
 
 //	G.print_adj_matrix();
 	for (size_t i = 0; i < CG->nb_points; i++) {
@@ -246,16 +247,18 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG, const char *fname_sol, 
 			G.set_vertex_color(CG->point_color[i * CG->nb_colors_per_vertex + j], i, j);
 		}
 	}
+	cout << __FILE__ << ":" << __LINE__ << endl;
 
 	// Create the solution storage. The base type of the solution
 	// storage must be the same as data type of the vertex label
 	// in the graph
 	std::vector<std::vector<unsigned int> > solutions;
+	cout << __FILE__ << ":" << __LINE__ << endl;
 
     // Call the Rainbow Clique finding algorithm
 	RainbowClique::find_cliques(G, solutions, 0 /* nb_threads */);
 		// nb_threads = 0 automatically detects the number of threads
-
+	cout << __FILE__ << ":" << __LINE__ << endl;
 
 	// Print the solutions
 	cout << "clique_finder_control::do_Sajeeb Found " << solutions.size() << " solution(s)." << endl;
