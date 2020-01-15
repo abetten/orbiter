@@ -39,7 +39,7 @@ using std::endl;
 class bitset {
 public:
 
-    typedef char TYPE;
+    typedef unsigned char TYPE;
 
     size_t nb_bits_ = 0; /* Number of bits in the bitset */
     size_t nb_bytes_ = 0; /* Number of bytes in the bit array */
@@ -489,7 +489,7 @@ public:
     }
 
     inline bool at (const size_t i) const {
-        return bit_array[i/WORD_LEN] & (1 << (i % WORD_LEN));
+        return bit_array[i/WORD_LEN] & (1UL << (i % WORD_LEN));
     }
 
     void print() const {
@@ -502,7 +502,7 @@ public:
     void value_print() const {
     	printf("[ ");
 		for (size_t i=0; i<bit_array_size; ++i) {
-			cout << bit_array[i] << " " ;
+			cout << int(bit_array[i]) << " " ;
 		}
 		printf("]\n");
     }
