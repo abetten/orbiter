@@ -33,8 +33,6 @@ public:
                                      std::ref(G));
         }
 
-        printf("%s:%d Starting threads: %d\n", __FILE__, __LINE__, n_threads);
-
         #pragma unroll
         for (size_t i=0; i<nThreads; ++i) threads[i].join();
 
