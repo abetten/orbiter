@@ -227,31 +227,38 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG, const char *fname_sol, 
 
     
 
-	const size_t nThreads = std::thread::hardware_concurrency();
-	std::thread threads [nThreads];
-	#pragma unroll
-	for (size_t tID=0; tID<nThreads; ++tID) {
-		threads[tID] = std::thread([tID, nThreads, &CG, &G]{
-			#pragma unroll
-			for (size_t i = 0, k = 0; i < CG->nb_points; i++) {
-				if ((i % nThreads) != tID) continue;
-				#pragma unroll
-				for (size_t j = i + 1; j < CG->nb_points; j++, k++) {
-					// if (CG->is_adjacent(i, j)) {
-					// 	G.set_edge(i, j);
-					// 	G.set_edge(j, i);
-					// }
-					const int aij = bitvector_s_i(CG->bitvector_adjacency, k);
-					if (aij) {
-						G.set_edge(i, j);
-						G.set_edge(j, i);
-					}
-				}
+	// const size_t nThreads = std::thread::hardware_concurrency();
+	// std::thread threads [nThreads];
+	// #pragma unroll
+	// for (size_t tID=0; tID<nThreads; ++tID) {
+	// 	threads[tID] = std::thread([tID, nThreads, &CG, &G]{
+	// 		#pragma unroll
+	// 		for (size_t i = 0, k = 0; i < CG->nb_points; i++) {
+	// 			if ((i % nThreads) != tID) continue;
+	// 			#pragma unroll
+	// 			for (size_t j = i + 1; j < CG->nb_points; j++, k++) {
+	// 				const int aij = bitvector_s_i(CG->bitvector_adjacency, k);
+	// 				if (aij) {
+	// 					G.set_edge(i, j);
+	// 					G.set_edge(j, i);
+	// 				}
+	// 			}
+	// 		}
+	// 	});
+	// }
+	// #pragma unroll
+	// for (size_t i=0; i<nThreads; ++i) threads[i].join();
+
+	for (size_t i = 0, k = 0; i < CG->nb_points; i++) {
+		#pragma unroll
+		for (size_t j = i + 1; j < CG->nb_points; j++, k++) {
+			const int aij = bitvector_s_i(CG->bitvector_adjacency, k);
+			if (aij) {
+				G.set_edge(i, j);
+				G.set_edge(j, i);
 			}
-		});
+		}
 	}
-	#pragma unroll
-	for (size_t i=0; i<nThreads; ++i) threads[i].join();
 
 
 	// G.adjacency.value_print();
