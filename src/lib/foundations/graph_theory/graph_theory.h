@@ -159,6 +159,9 @@ public:
 	int s_ij(int i, int j);
 	void delinearize_adjacency_list(int verbose_level);
 	void allocate_bitmatrix(int verbose_level);
+
+private:
+	void parallel_delinearize_adjacency_list();
 };
 
 void all_cliques_of_given_size(int *Adj, int nb_pts, int clique_sz, 
