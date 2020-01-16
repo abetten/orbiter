@@ -2795,6 +2795,8 @@ public:
 	long int Lines[27];
 	int f_has_group;
 	strong_generators *Sg;
+	int f_has_nice_gens;
+	vector_ge *nice_gens;
 	
 
 
@@ -2873,6 +2875,9 @@ public:
 	strong_generators *Aut_gens; 
 		// generators for the automorphism group
 
+	int f_has_nice_gens;
+	vector_ge *nice_gens;
+
 	strong_generators *projectivity_group_gens;
 	sylow_structure *Syl;
 
@@ -2907,6 +2912,7 @@ public:
 		long int *Lines, int *eqn,
 		strong_generators *Aut_gens, 
 		int f_find_double_six_and_rearrange_lines, 
+		int f_has_nice_gens, vector_ge *nice_gens,
 		int verbose_level);
 	void init_surface_object(surface_with_action *Surf_A, 
 		surface_object *SO, 

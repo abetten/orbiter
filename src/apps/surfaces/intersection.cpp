@@ -405,7 +405,8 @@ int main(int argc, const char **argv)
 			SC->coeffs,
 			SC->Sg,
 			FALSE /*f_find_double_six_and_rearrange_lines*/,
-			verbose_level);
+			SC->f_has_nice_gens, SC->nice_gens,
+		verbose_level);
 		}
 	else {
 		cout << "creating surface from equation only "

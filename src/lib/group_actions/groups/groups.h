@@ -1710,6 +1710,7 @@ public:
 	void generators_for_the_stabilizer_of_the_cubic_surface_family_24(
 		action *A, 
 		finite_field *F, int f_with_normalizer, int f_semilinear, 
+		vector_ge *&nice_gens,
 		int verbose_level);
 	void BLT_set_from_catalogue_stabilizer(action *A, 
 		finite_field *F, int iso, 

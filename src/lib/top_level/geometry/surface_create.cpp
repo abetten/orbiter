@@ -26,6 +26,8 @@ surface_create::surface_create()
 	f_has_lines = FALSE;
 	f_has_group = FALSE;
 	Sg = NULL;
+	f_has_nice_gens = FALSE;
+	nice_gens = NULL;
 	null();
 }
 
@@ -53,6 +55,9 @@ void surface_create::freeself()
 	}
 	if (Sg) {
 		FREE_OBJECT(Sg);
+	}
+	if (nice_gens) {
+		FREE_OBJECT(nice_gens);
 	}
 	null();
 }
@@ -189,16 +194,21 @@ void surface_create::init2(int verbose_level)
 			cout << "surface_create::init2 before Sg->generators_"
 					"for_the_stabilizer_of_the_cubic_surface" << endl;
 		}
+
+
+
 		Sg->generators_for_the_stabilizer_of_the_cubic_surface_family_24(
 			Surf_A->A,
 			F, FALSE /* f_with_normalizer */,
 			f_semilinear,
+			nice_gens,
 			verbose_level);
 		if (f_v) {
 			cout << "surface_create::init2 after Sg->generators_for_"
 					"the_stabilizer_of_the_cubic_surface" << endl;
 		}
 		f_has_group = TRUE;
+		f_has_nice_gens = TRUE;
 
 		sprintf(prefix, "family_q%d_a%d", F->q, Descr->parameter_a);
 		sprintf(label_txt, "family_q%d_a%d", F->q, Descr->parameter_a);
@@ -600,6 +610,9 @@ void surface_create::apply_transformations(
 				Sg, Elt2, verbose_level);
 		FREE_OBJECT(Sg);
 		Sg = SG2;
+
+		f_has_nice_gens = FALSE;
+		// ToDo: need to conjugate nice_gens
 
 
 		if (f_has_lines) {

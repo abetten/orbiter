@@ -3113,7 +3113,10 @@ public:
 	void print_affine_points_in_source_code(std::ostream &ost);
 	void print_points(std::ostream &ost);
 	void print_double_sixes(std::ostream &ost);
+	void print_half_double_sixes(std::ostream &ost);
+	void print_half_double_sixes_numerically(std::ostream &ost);
 	void print_trihedral_pairs(std::ostream &ost);
+	void print_trihedral_pairs_numerically(std::ostream &ost);
 	void latex_table_of_trihedral_pairs_and_clebsch_system(std::ostream &ost,
 		int *T, int nb_T);
 	void latex_table_of_trihedral_pairs(std::ostream &ost, int *T, int nb_T);

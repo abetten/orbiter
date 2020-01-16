@@ -1704,6 +1704,7 @@ void create_family_of_surfaces_and_lines_uv(surface_domain *Surf,
 			Eqn[12] = -1.; // X2^2*X3
 			Eqn[16] = (1. + v_value * v_value) / (v_value); // X0X1X2
 
+			cout << "h=" << h << " / " << nb_steps << " Eqn[16]=" << Eqn[16] << endl;
 			surface_idx[h] = S->cubic_in_orbiter_ordering(Eqn);
 
 		} // else ABS(v_value)

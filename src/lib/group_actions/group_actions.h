@@ -252,6 +252,8 @@ public:
 	int test_if_all_elements_stabilize_a_point(action *A2, int pt);
 	int test_if_all_elements_stabilize_a_set(action *A2, 
 		long int *set, int sz, int verbose_level);
+	schreier *orbits_on_points_schreier(
+			action *A_given, int verbose_level);
 };
 
 }}
