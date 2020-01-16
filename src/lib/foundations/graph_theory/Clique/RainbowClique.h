@@ -88,6 +88,14 @@ private:
                 param.t_solutions.at(param.t_solutions.size()-1).emplace_back(
                         G.get_label(param.current_cliques[i])
                 );
+            if (param.tid == 0) {
+                printf("                                                        ");
+                fflush(stdout);
+                size_t ns = 0;
+                for (size_t j=0; j<param.n_threads; ++j) ns += params[j].nb_sol;
+                printf("\rnb_sol: %ld                                         \r", ns);
+                fflush(stdout);
+            }
             return;
         }
 
