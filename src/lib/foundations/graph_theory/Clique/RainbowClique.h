@@ -30,7 +30,7 @@ public:
             params[i].n_threads = nThreads;
 
             threads[i] = std::thread(find_cliques_parallel<T,U>, 0, 0, 0, std::ref(params[i]),
-                                     std::ref(G));
+                                     &(params[0]), std::ref(G));
         }
 
         #pragma unroll
@@ -77,7 +77,8 @@ private:
     };
 
     template <typename T, typename U>
-    static void find_cliques_parallel (size_t depth, T start, T end, PARAMS<T>& param, Graph<T,U>& G) {
+    static void find_cliques_parallel (size_t depth, T start, T end, 
+                                        PARAMS<T>& param, PARAMS<T>* params, Graph<T,U>& G) {
 
         if (depth == G.nb_colors/G.nb_colors_per_vertex) {
             param.nb_sol += 1;
@@ -118,14 +119,22 @@ private:
             #pragma unroll
             for (size_t i=start; i<end_color_class; ++i) {
             	if (param.tid == 0) {
+                    size_t ns = 0;
+                    for (size_t j=0; j<param.n_threads; ++j) ns += params[j].nb_sol;
 					printf("%ld\tof\t%ld\t", i, end_color_class);
-					printf("Progress: %.2f%      \r", i/double(end_color_class-start)*100);
-					fflush(stdout);
+					printf("Progress: %.2f%", i/double(end_color_class-start)*100);
+                    
+                    if (i == 0)
+                        printf("\t\tn_sol: %ld                    \r", 0);
+                    else
+                        printf("\t\tn_sol: %ld                    \r", ns);
+					
+                    fflush(stdout);
             	}
                 if ((i % param.n_threads) == param.tid) {
                     satisfy_color(G, param, i, true);
                     param.current_cliques[depth] = param.live_pts[i];
-                    find_cliques_parallel(depth+1, end_color_class, end_adj, param, G);
+                    find_cliques_parallel(depth+1, end_color_class, end_adj, param, params, G);
                     satisfy_color(G, param, i, false);
                 }
             }
@@ -134,7 +143,7 @@ private:
             for (size_t i=start; i<end_color_class; ++i) {
             	satisfy_color(G, param, i, true);
                 param.current_cliques[depth] = param.live_pts[i];
-                find_cliques_parallel(depth+1, end_color_class, end_adj, param, G);
+                find_cliques_parallel(depth+1, end_color_class, end_adj, param, params, G);
                 satisfy_color(G, param, i, false);
             }
         }
