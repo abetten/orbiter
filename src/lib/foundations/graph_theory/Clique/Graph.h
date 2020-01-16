@@ -125,10 +125,7 @@ public:
             });
         }
         for (size_t i=0; i<nThreads; ++i) threads[i].join();
-        for (size_t i=0; i<nThreads; ++i) {
-            adjacency |= adj[i];
-        }
-        adjacency.value_print();
+        for (size_t i=0; i<nThreads; ++i) adjacency |= adj[i];
     }
 
     void print_adj_matrix () const {
