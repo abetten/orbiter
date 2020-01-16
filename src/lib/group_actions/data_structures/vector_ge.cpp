@@ -790,6 +790,40 @@ int vector_ge::test_if_all_elements_stabilize_a_set(action *A2,
 	return TRUE;
 }
 
+
+schreier *vector_ge::orbits_on_points_schreier(
+		action *A_given, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	schreier *Sch;
+
+	if (f_v) {
+		cout << "strong_generators::orbits_on_points_schreier "
+				"degree = " << A_given->degree << endl;
+		}
+	if (f_v) {
+		cout << "strong_generators::orbits_on_points_schreier "
+				"action ";
+		A_given->print_info();
+		cout << endl;
+		}
+
+	Sch = NEW_OBJECT(schreier);
+
+	Sch->init(A_given, verbose_level - 2);
+	Sch->initialize_tables();
+	Sch->init_generators(*this, verbose_level - 2);
+	Sch->compute_all_point_orbits(verbose_level);
+
+	if (f_v) {
+		cout << "strong_generators::orbits_on_points_schreier "
+				"done, we found " << Sch->nb_orbits << " orbits" << endl;
+		}
+	return Sch;
+}
+
+
+
 }}
 
 

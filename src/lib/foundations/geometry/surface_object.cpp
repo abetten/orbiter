@@ -1883,6 +1883,84 @@ void surface_object::print_double_sixes(ostream &ost)
 	ost << "\\end{array}" << endl;
 	ost << "$$" << endl;
 	//ost << "\\clearpage" << endl;
+
+
+}
+
+void surface_object::print_half_double_sixes(ostream &ost)
+{
+	int h, i, j, a;
+	latex_interface L;
+
+
+	ost << "\\subsection*{Half Double sixes}" << endl;
+
+
+	ost << "The half double sixes are:\\\\" << endl;
+	ost << "$$" << endl;
+	L.print_lint_matrix_with_standard_labels(ost,
+		Surf->Double_six, 36, 6, TRUE /* f_tex */);
+	ost << "$$" << endl;
+
+	ost << "$$" << endl;
+	L.print_lint_matrix_with_standard_labels(ost,
+		Surf->Double_six + 36 * 6, 36, 6, TRUE /* f_tex */);
+	ost << "$$" << endl;
+
+
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|r||*{6}{c|}}" << endl;
+	ost << "\\hline" << endl;
+	for (j = 0; j < 6; j++) {
+		ost << " & " << j;
+		}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (h = 0; h < 18; h++) {
+		for (i = 0; i < 2; i++) {
+			ost << 2 * h + i;
+			for (j = 0; j < 6; j++) {
+				a = Surf->Double_six[h * 12 + i * 6 + j];
+				ost << " & " << Surf->Line_label_tex[a];
+				}
+			ost << "\\\\" << endl;
+		}
+	}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$" << endl;
+
+
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|r||*{6}{c|}}" << endl;
+	ost << "\\hline" << endl;
+	for (j = 0; j < 6; j++) {
+		ost << " & " << j;
+		}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (h = 18; h < 36; h++) {
+		for (i = 0; i < 2; i++) {
+			ost << 2 * h + i;
+			for (j = 0; j < 6; j++) {
+				a = Surf->Double_six[h * 12 + i * 6 + j];
+				ost << " & " << Surf->Line_label_tex[a];
+				}
+			ost << "\\\\" << endl;
+		}
+	}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$" << endl;
+
+	//ost << "\\clearpage" << endl;
+
+}
+
+void surface_object::print_half_double_sixes_numerically(ostream &ost)
+{
+	latex_interface L;
+
 	ost << "The half double sixes are:\\\\" << endl;
 	ost << "$$" << endl;
 	L.print_lint_matrix_with_standard_labels(ost,
@@ -1890,12 +1968,119 @@ void surface_object::print_double_sixes(ostream &ost)
 	ost << "$$" << endl;
 	ost << "$$" << endl;
 	L.print_lint_matrix_with_standard_labels_and_offset(ost,
-		Surf->Half_double_sixes + 36 * 6, 
+		Surf->Half_double_sixes + 36 * 6,
 		36, 6, 36, 0, TRUE /* f_tex */);
 	ost << "$$" << endl;
 }
 
 void surface_object::print_trihedral_pairs(ostream &ost)
+{
+	latex_interface L;
+	int i, j, a;
+
+	//ost << "\\clearpage" << endl;
+	ost << "\\subsection*{Trihedral pairs}" << endl;
+	ost << "The 120 trihedral pairs are:\\\\" << endl;
+	ost << "{\\renewcommand{\\arraystretch}{1.3}" << endl;
+	ost << "$$" << endl;
+
+	int n = 6;
+	int n_offset = 0;
+	int m = 40;
+	int m_offset = 0;
+	int *p = Surf->Trihedral_to_Eckardt;
+
+	ost << "\\begin{array}{|r|r|*{" << n << "}r|}" << endl;
+	ost << "\\hline" << endl;
+	ost << " & ";
+	for (j = 0; j < n; j++) {
+		ost << " & " << n_offset + j;
+		}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < m; i++) {
+		ost << m_offset + i << " & S_{";
+		ost << Surf->Trihedral_pair_labels[m_offset + i] << "}";
+		for (j = 0; j < n; j++) {
+			a = p[i * n + j];
+			ost << " & \\pi_{" << Surf->Eckard_point_label_tex[a] << "}";
+			}
+		ost << "\\\\";
+		ost << endl;
+		}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+
+	//L.print_integer_matrix_with_standard_labels(ost,
+	//	Surf->Trihedral_to_Eckardt, 40, 6, TRUE /* f_tex */);
+	ost << "$$" << endl;
+
+
+	ost << "$$" << endl;
+
+	m_offset = 40;
+	p = Surf->Trihedral_to_Eckardt + 40 * 6;
+
+	ost << "\\begin{array}{|r|r|*{" << n << "}r|}" << endl;
+	ost << "\\hline" << endl;
+	ost << " & ";
+	for (j = 0; j < n; j++) {
+		ost << " & " << n_offset + j;
+		}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < m; i++) {
+		ost << m_offset + i << " & S_{";
+		ost << Surf->Trihedral_pair_labels[m_offset + i] << "}";
+		for (j = 0; j < n; j++) {
+			a = p[i * n + j];
+			ost << " & \\pi_{" << Surf->Eckard_point_label_tex[a] << "}";
+			}
+		ost << "\\\\";
+		ost << endl;
+		}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+
+
+	//L.print_integer_matrix_with_standard_labels_and_offset(ost,
+	//	Surf->Trihedral_to_Eckardt + 40 * 6, 40, 6, 40, 0,
+	//	TRUE /* f_tex */);
+	ost << "$$" << endl;
+	ost << "$$" << endl;
+
+	m_offset = 80;
+	p = Surf->Trihedral_to_Eckardt + 80 * 6;
+
+	ost << "\\begin{array}{|r|r|*{" << n << "}r|}" << endl;
+	ost << "\\hline" << endl;
+	ost << " & ";
+	for (j = 0; j < n; j++) {
+		ost << " & " << n_offset + j;
+		}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < m; i++) {
+		ost << m_offset + i << " & S_{";
+		ost << Surf->Trihedral_pair_labels[m_offset + i] << "}";
+		for (j = 0; j < n; j++) {
+			a = p[i * n + j];
+			ost << " & \\pi_{" << Surf->Eckard_point_label_tex[a] << "}";
+			}
+		ost << "\\\\";
+		ost << endl;
+		}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+
+
+	//L.print_integer_matrix_with_standard_labels_and_offset(ost,
+	//	Surf->Trihedral_to_Eckardt + 80 * 6, 40, 6, 80, 0,
+	//	TRUE /* f_tex */);
+	ost << "$$}" << endl;
+}
+
+void surface_object::print_trihedral_pairs_numerically(ostream &ost)
 {
 	latex_interface L;
 
@@ -1918,6 +2103,7 @@ void surface_object::print_trihedral_pairs(ostream &ost)
 		TRUE /* f_tex */);
 	ost << "$$" << endl;
 }
+
 
 
 #if 1
