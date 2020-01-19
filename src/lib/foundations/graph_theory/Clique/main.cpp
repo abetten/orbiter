@@ -57,7 +57,7 @@ int main () {
 	std::vector<std::vector<unsigned int>> solutions;
 
 	// Call the Rainbow Clique finding algorithm
-	RainbowClique::find_cliques(G, solutions);
+	RainbowClique::find_cliques(G, solutions, 0);
 
 	// Print the solutions
 	printf("Found %ld solution(s).\n", solutions.size());

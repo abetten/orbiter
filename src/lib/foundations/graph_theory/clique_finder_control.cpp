@@ -245,7 +245,7 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG, const char *fname_sol, 
 	cout << __FILE__ << ":" << __LINE__ << endl;
 
     // Call the Rainbow Clique finding algorithm
-	RainbowClique::find_cliques(G, solutions, 0 /* nb_threads */);
+	RainbowClique::find_cliques(G, solutions, 1 /* nb_threads */);
 		// nb_threads = 0 automatically detects the number of threads
 	cout << __FILE__ << ":" << __LINE__ << endl;
 

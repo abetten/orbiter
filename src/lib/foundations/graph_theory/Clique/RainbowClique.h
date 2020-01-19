@@ -1,4 +1,5 @@
 #include "Graph.h"
+#include "chrono.h"
 #include <thread>
 #include <vector>
 #include <algorithm>
@@ -8,6 +9,7 @@
 #ifndef _RAINBOW_CLIQUE_
 #define _RAINBOW_CLIQUE_
 
+#define COLLECT_RUNTIME_STATS 
 
 class RainbowClique {
 public:
@@ -52,6 +54,10 @@ public:
                       std::back_inserter(soln));
             params[i].t_solutions.clear();
         }
+
+        #ifdef COLLECT_RUNTIME_STATS
+        RainbowClique::dump_runtime_stats("runtime_stats.bin", &params[0], nThreads);
+        #endif
     }
 
 private:
@@ -74,6 +80,15 @@ private:
         T* color_frequency;	//
         uint8_t n_threads;
         std::vector<std::vector<T>> t_solutions;
+
+        #ifdef COLLECT_RUNTIME_STATS
+        std::vector<uint64_t> satisfy_color;
+        std::vector<uint64_t> adjacency_cluster;
+        std::vector<uint64_t> live_pt_color_frequency;
+        std::vector<uint64_t> lowest_color_frequency;
+        std::vector<uint64_t> cluster_color;
+        #endif
+
     };
 
     template <typename T, typename U>
@@ -103,21 +118,17 @@ private:
         T end_color_class = 0;
 
         if (depth > 0) {
-            auto pt = param.current_cliques[depth-1];
-            end_adj = clump_by_adjacency(G, param.live_pts, start, end, pt);
+            T pt = param.current_cliques[depth-1];
+            end_adj = clump_by_adjacency(G, param, start, end, pt);
         } else {
             #pragma unroll
             for (size_t i=0; i<G.nb_vertices; ++i) param.live_pts[i] = i;
             end_adj = G.nb_vertices;
         }
 
-        U lowest_color = get_color_with_lowest_frequency_(G, param.live_pts,
-                                                          param.color_frequency,
-                                                          param.color_satisfied,
-                                                          start, end_adj);
+        U lowest_color = get_color_with_lowest_frequency_(G, param, start, end_adj);
 
-        end_color_class = clump_color_class(G, param.live_pts, start, 
-                                            end_adj, lowest_color, param.color_satisfied);
+        end_color_class = clump_color_class(G, param, start, end_adj, lowest_color);
 
 //        param.color_satisfied[lowest_color] = true;
 
@@ -144,6 +155,7 @@ private:
                     param.current_cliques[depth] = param.live_pts[i];
                     find_cliques_parallel(depth+1, end_color_class, end_adj, param, params, G);
                     satisfy_color(G, param, i, false);
+                    return;
                 }
             }
         } else {
@@ -166,16 +178,30 @@ private:
     template <typename T, typename U>
 	__forceinline__
 	static inline void satisfy_color (Graph<T,U>& G, PARAMS<T>& param, size_t i, bool value) {
-		#pragma unroll
+		
+        #ifdef COLLECT_RUNTIME_STATS
+        chrono_ C;
+        #endif
+        
+        #pragma unroll
 		for (size_t j=0; j < G.nb_colors_per_vertex; ++j) {
 			param.color_satisfied[G.get_color(param.live_pts[i], j)] = value;
 		}
+
+        #ifdef COLLECT_RUNTIME_STATS
+        param.satisfy_color.emplace_back(C.calculateDuration(chrono_()));
+        #endif        
     }
 
     template <typename T, typename U>
     __forceinline__
-    static inline T clump_by_adjacency(Graph<T,U>& G, T* live_pts, T start,
-                                       T end, T node) {
+    static inline T clump_by_adjacency(Graph<T,U>& G, PARAMS<T>& param, T start, T end, T node) {
+        T* live_pts = param.live_pts;
+
+        #ifdef COLLECT_RUNTIME_STATS
+        chrono_ C;
+        #endif
+
         #pragma unroll
         for (T i = start; i<end; ++i) {
             if (G.is_adjacent(node, live_pts[i])) {
@@ -183,15 +209,26 @@ private:
                 start++;
             }
         }
+
+        #ifdef COLLECT_RUNTIME_STATS
+        param.adjacency_cluster.emplace_back(C.calculateDuration(chrono_()));
+        #endif
+
         return start;
     }
 
     template <typename T, typename U>
     __forceinline__
-    static inline void create_color_freq_of_live_points(Graph<T,U>& G, T* live_pts,
-                                                        T* color_frequency, T start, T end) {
+    static inline void create_color_freq_of_live_points(Graph<T,U>& G, PARAMS<T>& param, T start, T end) {
         // any point in the graph that is dead will have a negative value in the
         // live_point array
+
+        T* live_pts = param.live_pts;
+        T* color_frequency = param.color_frequency;
+
+        #ifdef COLLECT_RUNTIME_STATS
+        chrono_ C;
+        #endif
 
         // reset color_frequency stats
         memset(color_frequency, 0, sizeof(T)*G.nb_colors);
@@ -203,14 +240,25 @@ private:
         		color_frequency[point_color] += 1;
         	}
         }
+
+        #ifdef COLLECT_RUNTIME_STATS
+        param.live_pt_color_frequency.emplace_back(C.calculateDuration(chrono_()));
+        #endif
     }
 
     template <typename T, typename U>
     __forceinline__
-    static inline U get_color_with_lowest_frequency_(Graph<T,U>& G, T* live_pts, T* color_frequency,
-													 	 	 bool* color_satisfied, T start, T end) {
+    static inline U get_color_with_lowest_frequency_(Graph<T,U>& G, PARAMS<T>& param, T start, T end) {
 
-        create_color_freq_of_live_points(G, live_pts, color_frequency, start, end);
+        T* live_pts = param.live_pts;
+        T* color_frequency = param.color_frequency;
+        bool* color_satisfied = param.color_satisfied; 
+
+        create_color_freq_of_live_points(G, param, start, end);
+
+        #ifdef COLLECT_RUNTIME_STATS
+        chrono_ C;
+        #endif
 
         // returns index of the lowest value in t he array
         T min_element = std::numeric_limits<T>::max();
@@ -222,15 +270,26 @@ private:
                 return_value = i;
             }
         }
-        return return_value;
 
+        #ifdef COLLECT_RUNTIME_STATS
+        param.lowest_color_frequency.emplace_back(C.calculateDuration(chrono_()));
+        #endif
+
+        return return_value;
     }
 
     #if 1
     template <typename T, typename U>
     __forceinline__
-    static inline T clump_color_class(Graph<T,U>& G, T* live_pts, T start, T end, U color, 
-                                                                        bool* color_satisfied) {
+    static inline T clump_color_class(Graph<T,U>& G, PARAMS<T>& param, T start, T end, U color) {
+        
+        T* live_pts = param.live_pts;
+        bool* color_satisfied = param.color_satisfied;
+
+        #ifdef COLLECT_RUNTIME_STATS
+        chrono_ C;
+        #endif
+
         #pragma unroll
         for (size_t i=start; i<end; ++i) {
             const T pt = live_pts[i];
@@ -250,6 +309,11 @@ private:
                 start += 1;
             }
         }
+
+        #ifdef COLLECT_RUNTIME_STATS
+        param.cluster_color.emplace_back(C.calculateDuration(chrono_()));
+        #endif
+
         return start;
     }
     #else
@@ -272,6 +336,80 @@ private:
         return start;
     }
     #endif
+
+    template<typename T>
+    static void dump_runtime_stats(char* filename, PARAMS<T>* params, size_t nThreads) {
+        cout << __FILE__ << ":dump_runtime_stats:" << __LINE__ << endl;
+        std::ofstream file;
+    	file.open (filename);
+
+        // cout << "------------------------------------" << endl;
+        // cout << "nThreads: " << nThreads << endl;
+        // for (size_t i=0; i<nThreads; ++i) {
+        //     printf("Thread %-10ld", i);
+        //     printf("%-10ld", params[i].satisfy_color.size());
+        //     printf("%-10ld", params[i].adjacency_cluster.size());
+        //     printf("%-10ld", params[i].live_pt_color_frequency.size());
+        //     printf("%-10ld", params[i].lowest_color_frequency.size());
+        //     printf("%-10ld", params[i].cluster_color.size());
+        //     printf("\n");
+        //     fflush(stdout);
+        // }
+        // cout << "------------------------------------" << endl;
+
+        // satisfy_color
+        for (size_t i=0; i<nThreads; ++i) {
+            for (size_t j=0; j<params[i].satisfy_color.size(); ++j) {
+                file << params[i].satisfy_color[j];
+                if (j+1 < params[i].satisfy_color.size()) file << " ";
+            }
+            if (i+1 < nThreads) file << " ";
+        }
+        file << "\n";
+
+        // adjacency_cluster
+        for (size_t i=0; i<nThreads; ++i) {
+            for (size_t j=0; j<params[i].adjacency_cluster.size(); ++j) {
+                file << params[i].adjacency_cluster[j];
+                if (j+1 < params[i].adjacency_cluster.size()) file << " ";
+            }
+            if (i+1 < nThreads) file << " ";
+        }
+        file << "\n";
+
+        // live_pt_color_frequency
+        for (size_t i=0; i<nThreads; ++i) {
+            for (size_t j=0; j<params[i].live_pt_color_frequency.size(); ++j) {
+                file << params[i].live_pt_color_frequency[j];
+                if (j+1 < params[i].live_pt_color_frequency.size()) file << " ";
+            }
+            if (i+1 < nThreads) file << " ";
+        }
+        file << "\n";
+
+        // lowest_color_frequency
+        for (size_t i=0; i<nThreads; ++i) {
+            for (size_t j=0; j<params[i].lowest_color_frequency.size(); ++j) {
+                file << params[i].lowest_color_frequency[j];
+                if (j+1 < params[i].lowest_color_frequency.size()) file << " ";
+            }
+            if (i+1 < nThreads) file << " ";
+        }
+        file << "\n";
+
+        // cluster_color
+        for (size_t i=0; i<nThreads; ++i) {
+            for (size_t j=0; j<params[i].cluster_color.size(); ++j) {
+                file << params[i].cluster_color[j];
+                if (j+1 < params[i].cluster_color.size()) file << " ";
+            }
+            if (i+1 < nThreads) file << " ";
+        }
+        file << "\n";
+
+        file.close();
+        cout << __FILE__ << ":dump_runtime_stats:" << __LINE__ << " Done." << endl;
+    }
 
 };
 
