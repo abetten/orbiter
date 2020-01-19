@@ -2,7 +2,7 @@ CC=g++
 CFLAGS=-Wall -pthread
 CSTD=-std=c++14
 OPTFLAGS=-O3 -march=native -mtune=native -funroll-loops
-INCLUDES=-I../../BitSet -I../../../
+INCLUDES=-I../../BitSet -I../../../ -I../../../group_actions/groups/
 
 
 all: Graph.o RainbowClique.o main.o
