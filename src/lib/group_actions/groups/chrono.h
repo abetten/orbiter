@@ -23,9 +23,9 @@ public:
     }
     void start() {
     	auto now = std::chrono::system_clock::now();
-		auto now_ns = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
+		auto now_ns = std::chrono::time_point_cast<std::chrono::nanoseconds>(now);
 		auto epoch = now_ns.time_since_epoch();
-		auto value = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
+		auto value = std::chrono::duration_cast<std::chrono::nanoseconds>(epoch);
 		timestamp = value.count();
     }
     long calculateDuration(const chrono_& c) {
