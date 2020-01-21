@@ -221,15 +221,10 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG, const char *fname_sol, 
 	}
 
 #if 1
-	cout << __FILE__ << ":" << __LINE__ << endl;
 	Graph<> G (CG->nb_points, CG->nb_colors, CG->nb_colors_per_vertex);
-	cout << __FILE__ << ":" << __LINE__ << endl;
 
-	G.set_edge_from_bitvector_adjacency(CG->bitvector_adjacency);
-
-	cout << __FILE__ << ":" << __LINE__ << endl;
-
-//	G.print_adj_matrix();
+	G.set_edge_from_bitvector_adjacency(CG->bitvector_adjacency, verbose_level);
+	
 	for (size_t i = 0; i < CG->nb_points; i++) {
 		G.set_vertex_label(CG->points[i], i);
 		for (size_t j = 0; j < CG->nb_colors_per_vertex; j++) {
@@ -245,7 +240,7 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG, const char *fname_sol, 
 	cout << __FILE__ << ":" << __LINE__ << endl;
 
     // Call the Rainbow Clique finding algorithm
-	RainbowClique::find_cliques(G, solutions, 1 /* nb_threads */);
+	RainbowClique::find_cliques(G, solutions, 0 /* nb_threads */);
 		// nb_threads = 0 automatically detects the number of threads
 	cout << __FILE__ << ":" << __LINE__ << endl;
 

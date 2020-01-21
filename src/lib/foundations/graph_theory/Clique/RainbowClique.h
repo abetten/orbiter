@@ -9,7 +9,8 @@
 #ifndef _RAINBOW_CLIQUE_
 #define _RAINBOW_CLIQUE_
 
-#define COLLECT_RUNTIME_STATS 
+// #define COLLECT_RUNTIME_STATS 
+#define COLLECT_RUNTIME_STATS_LIMIT 99999999 // number of sample data points
 
 class RainbowClique {
 public:
@@ -133,11 +134,18 @@ private:
 //        param.color_satisfied[lowest_color] = true;
 
 
+        #ifdef COLLECT_RUNTIME_STATS
+        if (param.satisfy_color.size() > COLLECT_RUNTIME_STATS_LIMIT) {
+            return;
+        }
+        #endif
+
+
         // find how many points are there with the lowest value at current depth
         if (depth == 0) {
             #pragma unroll
             for (size_t i=start; i<end_color_class; ++i) {
-            	if (param.tid == 0) {
+            	if (param.tid == 0 && false) {
                     size_t ns = 0;
                     for (size_t j=0; j<param.n_threads; ++j) ns += params[j].nb_sol;
 					printf("%ld\tof\t%ld\t", i, end_color_class);
@@ -155,7 +163,13 @@ private:
                     param.current_cliques[depth] = param.live_pts[i];
                     find_cliques_parallel(depth+1, end_color_class, end_adj, param, params, G);
                     satisfy_color(G, param, i, false);
-                    return;
+                    #ifdef COLLECT_RUNTIME_STATS
+                    if (param.satisfy_color.size() > COLLECT_RUNTIME_STATS_LIMIT) {
+                        if (param.tid == 0)
+                            RainbowClique::dump_runtime_stats("runtime_stats.bin", params, param.n_threads);
+                        return;
+                    }
+                    #endif
                 }
             }
         } else {
@@ -165,6 +179,11 @@ private:
                 param.current_cliques[depth] = param.live_pts[i];
                 find_cliques_parallel(depth+1, end_color_class, end_adj, param, params, G);
                 satisfy_color(G, param, i, false);
+                #ifdef COLLECT_RUNTIME_STATS
+                if (param.satisfy_color.size() > COLLECT_RUNTIME_STATS_LIMIT) {
+                    return;
+                }
+                #endif
             }
         }
 
@@ -338,24 +357,20 @@ private:
     #endif
 
     template<typename T>
+    __forceinline__
     static void dump_runtime_stats(char* filename, PARAMS<T>* params, size_t nThreads) {
-        cout << __FILE__ << ":dump_runtime_stats:" << __LINE__ << endl;
         std::ofstream file;
     	file.open (filename);
 
-        // cout << "------------------------------------" << endl;
-        // cout << "nThreads: " << nThreads << endl;
-        // for (size_t i=0; i<nThreads; ++i) {
-        //     printf("Thread %-10ld", i);
-        //     printf("%-10ld", params[i].satisfy_color.size());
-        //     printf("%-10ld", params[i].adjacency_cluster.size());
-        //     printf("%-10ld", params[i].live_pt_color_frequency.size());
-        //     printf("%-10ld", params[i].lowest_color_frequency.size());
-        //     printf("%-10ld", params[i].cluster_color.size());
-        //     printf("\n");
-        //     fflush(stdout);
-        // }
-        // cout << "------------------------------------" << endl;
+        for (size_t i=0; i<nThreads; ++i) {
+            printf("%-10ld", params[i].satisfy_color.size());
+            printf("%-10ld", params[i].adjacency_cluster.size());
+            printf("%-10ld", params[i].live_pt_color_frequency.size());
+            printf("%-10ld", params[i].lowest_color_frequency.size());
+            printf("%-10ld", params[i].cluster_color.size());
+            printf("                                    \r");
+            fflush(stdout);
+        }
 
         // satisfy_color
         for (size_t i=0; i<nThreads; ++i) {
@@ -408,7 +423,6 @@ private:
         file << "\n";
 
         file.close();
-        cout << __FILE__ << ":dump_runtime_stats:" << __LINE__ << " Done." << endl;
     }
 
 };

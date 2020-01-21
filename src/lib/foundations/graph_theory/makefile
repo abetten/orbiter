@@ -1,7 +1,8 @@
 DISCRETA_CPP = g++
 DISCRETA_CC = gcc
 CPPFLAGS = -Wall -O3 -march=native -funroll-loops -I.. \
-			-I./Clique -I../BitSet -I../../ -std=c++11 -I/usr/local/include/ginac
+			-I./Clique -I../BitSet -I../../ -I../../../lib/group_actions/groups/ \
+			-std=c++11 -I/usr/local/include/ginac
 
 # -frename-registers
 LIB = 
@@ -22,7 +23,7 @@ MODULES = \
 all : $(MODULES)
 	cd ./Clique; $(MAKE)
 
-%.o: %.cpp %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
+%.o: %.cpp %.c %.h; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
 
 clean:
 	- rm *.o *.a *~

@@ -98,7 +98,12 @@ public:
         return adjacency[i*nb_vertices+j];
     }
 
-    __forceinline__ void set_edge_from_bitvector_adjacency(uchar* bitvector) {
+    /**
+     * The following function sets the edges in the graph from the bitvector
+     * adjacency. 'vl' is the verbose level.
+     */
+    __forceinline__ void set_edge_from_bitvector_adjacency(uchar* bitvector, int vl) {
+        if (vl - 2) printf("%s: %d: set_edge_from_bitvector_adjacency\n", __FILE__, __LINE__);
         const size_t nThreads = std::thread::hardware_concurrency();
         const size_t n = this->nb_vertices;
 	    std::thread threads [nThreads];
@@ -119,13 +124,13 @@ public:
                         }
                     } else {
                         k += n - (i+1);
-                        // for (size_t j = i + 1; j < n; j++, k++) ;;
                     }
                 }
             });
         }
         for (size_t i=0; i<nThreads; ++i) threads[i].join();
         for (size_t i=0; i<nThreads; ++i) adjacency |= adj[i];
+        if (vl - 2) printf("%s: %d: set_edge_from_bitvector_adjacency Done.\n", __FILE__, __LINE__);
     }
 
     void print_adj_matrix () const {
