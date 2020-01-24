@@ -416,6 +416,7 @@ void large_set_classify::make_reduced_design_table(
 		long int *set, int set_sz,
 		long int *&Design_table_out, long int *&Design_table_out_idx, int &nb_out,
 		int verbose_level)
+// Design_table_out[nb_designs * design_size]
 {
 	int f_v = (verbose_level >= 1);
 	long int i, j, a;
@@ -683,6 +684,14 @@ void large_set_classify::process_starter_case(
 			this /* *test_function_data */,
 			verbose_level);
 
+		if (f_v) {
+			cout << "large_set_classify::process_starter_case "
+					"after OoS->create_graph_on_orbits_of_a_certain_length" << endl;
+		}
+		if (f_v) {
+			cout << "large_set_classify::process_starter_case "
+					"before CG->save" << endl;
+		}
 
 		CG->save(fname, verbose_level);
 
@@ -725,53 +734,6 @@ void large_set_classify::process_starter_case(
 
 	FREE_int(reduced_design_color);
 
-
-#if 0
-	if (f_v) {
-		cout << "large_set_classify::process_starter_case "
-				"computing coloring of reduced orbits:" << endl;
-	}
-	Orbits_on_reduced->compute_orbit_invariant(color_of_reduced_orbits,
-				large_set_compute_color_of_reduced_orbits_callback,
-				this /* compute_orbit_invariant_data */,
-				verbose_level);
-
-
-	int **Invariant;
-	int i;
-	sorting Sorting;
-
-	Invariant = NEW_pint(Orbits_on_reduced->nb_orbits);
-	for (i = 0; i < Orbits_on_reduced->nb_orbits; i++) {
-		Invariant[i] = NEW_int(3);
-		Invariant[i][0] = color_of_reduced_orbits[i];
-		Invariant[i][1] = Orbits_on_reduced->orbit_len[i];
-		Invariant[i][2] = i;
-	}
-	Sorting.Heapsort_general(Invariant, Orbits_on_reduced->nb_orbits,
-			large_set_design_compare_func_for_invariants,
-			large_set_swap_func_for_invariants,
-			Invariant /* extra_data */);
-
-	int f;
-	int f_continue;
-
-	f = 0;
-	for (i = 0; i < Orbits_on_reduced->nb_orbits; i++) {
-		f_continue = TRUE;
-		if (i < Orbits_on_reduced->nb_orbits - 1) {
-			if (int_vec_compare(Invariant[i], Invariant[i + 1], 2)) {
-				f_continue = FALSE;
-			}
-		}
-		if (f_continue) {
-			continue;
-		}
-		cout << "block of " << i + 1 - f << " orbits of color "
-				<< Invariant[i][0] << " and of length " << Invariant[i][1] << endl;
-		f = i + 1;
-	}
-#endif
 
 
 

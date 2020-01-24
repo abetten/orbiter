@@ -205,7 +205,7 @@ void finite_field::semilinear_matrix_mult(int *A, int *B, int *AB, int n)
 	B2 = NEW_int(n * n);
 	f1 = A[n * n];
 	f2 = B[n * n];
-	f1inv = NT.irem(-f1, e);
+	f1inv = NT.mod(-f1, e);
 	int_vec_copy(B, B2, n * n);
 	vector_frobenius_power_in_place(B2, n * n, f1inv);
 	for (i = 0; i < n; i++) {
@@ -223,7 +223,7 @@ void finite_field::semilinear_matrix_mult(int *A, int *B, int *AB, int n)
 			AB[i * n + j] = c;
 			}
 		}
-	AB[n * n] = NT.irem(f1 + f2, e);
+	AB[n * n] = NT.mod(f1 + f2, e);
 	//vector_frobenius_power_in_place(B, n * n, f1);
 	FREE_int(B2);
 }
@@ -239,7 +239,7 @@ void finite_field::semilinear_matrix_mult_memory_given(
 	//B2 = NEW_int(n * n);
 	f1 = A[n * n];
 	f2 = B[n * n];
-	f1inv = NT.irem(-f1, e);
+	f1inv = NT.mod(-f1, e);
 	int_vec_copy(B, B2, n * n);
 	vector_frobenius_power_in_place(B2, n * n, f1inv);
 	for (i = 0; i < n; i++) {
@@ -257,7 +257,7 @@ void finite_field::semilinear_matrix_mult_memory_given(
 			AB[i * n + j] = c;
 			}
 		}
-	AB[n * n] = NT.irem(f1 + f2, e);
+	AB[n * n] = NT.mod(f1 + f2, e);
 	//vector_frobenius_power_in_place(B, n * n, f1);
 	//FREE_int(B2);
 }
@@ -330,8 +330,8 @@ void finite_field::semilinear_matrix_mult_affine(
 	
 	f1 = A[n * n + n];
 	f2 = B[n * n + n];
-	f12 = NT.irem(f1 + f2, e);
-	f1inv = NT.irem(-f1, e);
+	f12 = NT.mod(f1 + f2, e);
+	f1inv = NT.mod(-f1, e);
 	
 	int_vec_copy(A2, T, n * n);
 	vector_frobenius_power_in_place(T, n * n, f1inv);
@@ -562,7 +562,7 @@ void finite_field::semilinear_matrix_invert(int *A,
 	matrix_invert(A, Tmp, Tmp_basecols, Ainv, n, verbose_level - 1);
 	f = A[n * n];
 	vector_frobenius_power_in_place(Ainv, n * n, f);
-	finv = NT.irem(-f, e);
+	finv = NT.mod(-f, e);
 	Ainv[n * n] = finv;
 	if (f_v) {
 		cout << "the inverse is" << endl;
@@ -594,7 +594,7 @@ void finite_field::semilinear_matrix_invert_affine(int *A,
 	b2 = Ainv + n * n;
 	matrix_invert(A, Tmp, Tmp_basecols, Ainv, n, verbose_level - 1);
 	f = A[n * n + n];
-	finv = NT.irem(-f, e);
+	finv = NT.mod(-f, e);
 	vector_frobenius_power_in_place(Ainv, n * n, f);
 
 	mult_matrix_matrix(b1, Ainv, b2, 1, n, n, 0 /* verbose_level */);

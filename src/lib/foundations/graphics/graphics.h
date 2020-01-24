@@ -754,6 +754,7 @@ public:
 			std::ostream &ost, int verbose_level);
 	void draw_planes_with_selection(int *selection, int nb_select, 
 		const char *options, std::ostream &ost);
+	void draw_plane(int idx, const char *options, std::ostream &ost);
 	void draw_points_with_selection(int *selection, int nb_select, 
 		double rad, const char *options, std::ostream &ost);
 	void draw_cubic_with_selection(int *selection, int nb_select, 

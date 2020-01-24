@@ -1447,6 +1447,33 @@ void scene::draw_planes_with_selection(
 	ost << "	}" << endl;
 }
 
+void scene::draw_plane(
+	int idx,
+	const char *options, ostream &ost)
+// for instance color = "Orange transmit 0.5 "
+{
+	int h;
+	numerics N;
+
+	ost << endl;
+	ost << endl;
+	ost << "	object{" << endl;
+	ost << "		plane{<";
+	for (h = 0; h < 3; h++) {
+		N.output_double(Plane_coords[idx * 4 + h], ost);
+		if (h < 2) {
+			ost << ", ";
+			}
+		}
+	ost << ">, ";
+	N.output_double(Plane_coords[idx * 4 + 3], ost);
+	ost << "}" << endl;
+	ost << "		 " << options << " " << endl;
+	//ost << "		texture{ pigment{ color " << color << "}}" << endl;
+	ost << "	}" << endl;
+}
+
+
 void scene::draw_points_with_selection(
 	int *selection, int nb_select,
 	double rad, const char *options, ostream &ost)

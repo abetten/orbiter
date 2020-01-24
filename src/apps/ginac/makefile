@@ -19,6 +19,7 @@ ALL_TARGETS=\
 	cra.out \
 	differentiation.out \
 	hilbert_cohn_vossen.out \
+	linear_system.out \
 	mersenne.out \
 	solve_linear.out \
 	thirteen_eckardt_points.out \
@@ -42,6 +43,9 @@ ginac_linear_algebra.o:  ginac_linear_algebra.cpp  ;
 
 hilbert_cohn_vossen.out:  hilbert_cohn_vossen.o  ;
 	$(DISCRETA_CPP)  hilbert_cohn_vossen.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+linear_system.out:  linear_system.o  ;
+	$(DISCRETA_CPP)  linear_system.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 mersenne.out:  mersenne.o  ;

@@ -295,7 +295,9 @@ int main(int argc, const char **argv)
 		cout << "processing starter case done" << endl;
 
 		FREE_OBJECT(SG);
+		FREE_OBJECT(nice_gens);
 
+		cout << "lifting a given set with a given group done" << endl;
 	}
 	else if (f_lift_case) {
 		cout << "lifting a single case" << endl;
