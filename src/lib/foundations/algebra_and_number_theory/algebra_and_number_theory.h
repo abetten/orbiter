@@ -1830,19 +1830,24 @@ class number_theory_domain {
 public:
 	number_theory_domain();
 	~number_theory_domain();
-	int power_mod(int a, int n, int p);
-	int inverse_mod(int a, int p);
-	int mult_mod(int a, int b, int p);
-	int add_mod(int a, int b, int p);
-	int int_abs(int a);
-	long int irem(long int a, long int m);
+	long int mod(long int a, long int p);
+	long int int_negate(long int a, long int p);
+	long int power_mod(long int a, long int n, long int p);
+	long int inverse_mod(long int a, long int p);
+	long int mult_mod(long int a, long int b, long int p);
+	long int add_mod(long int a, long int b, long int p);
+	long int int_abs(long int a);
 	long int gcd_lint(long int m, long int n);
 	void extended_gcd_int(int m, int n, int &g, int &u, int &v);
+	void extended_gcd_lint(long int m, long int n,
+			long int &g, long int &u, long int &v);
+	long int gcd_with_key_in_latex(std::ostream &ost,
+			long int a, long int b, int f_key, int verbose_level);
 	int i_power_j_safe(int i, int j);
 	long int i_power_j_lint_safe(int i, int j, int verbose_level);
-	long int i_power_j_lint(int i, int j);
+	long int i_power_j_lint(long int i, long int j);
 	int i_power_j(int i, int j);
-	int order_mod_p(int a, int p);
+	long int order_mod_p(long int a, long int p);
 	int int_log2(int n);
 	int int_log10(int n);
 	int lint_log10(long int n);
@@ -1860,19 +1865,18 @@ public:
 	int sp_ge(int n, int p_min);
 	int factor_int(int a, int *&primes, int *&exponents);
 	void factor_prime_power(int q, int &p, int &e);
-	int primitive_root(int p, int verbose_level);
-	int Legendre(int a, int p, int verbose_level);
-	int Jacobi(int a, int m, int verbose_level);
-	int Jacobi_with_key_in_latex(std::ostream &ost, int a, int m, int verbose_level);
-	int gcd_with_key_in_latex(std::ostream &ost,
-			int a, int b, int f_key, int verbose_level);
+	long int primitive_root(long int p, int verbose_level);
+	int Legendre(long int a, long int p, int verbose_level);
+	int Jacobi(long int a, long int m, int verbose_level);
+	int Jacobi_with_key_in_latex(std::ostream &ost,
+			long int a, long int m, int verbose_level);
 	int ny2(long int x, long int &x1);
-	int ny_p(int n, int p);
-	int sqrt_mod_simple(int a, int p);
+	int ny_p(long int n, long int p);
+	long int sqrt_mod_simple(long int a, long int p);
 	void print_factorization(int nb_primes, int *primes, int *exponents);
 	void print_longfactorization(int nb_primes,
 		longinteger_object *primes, int *exponents);
-	int euler_function(int n);
+	int euler_function(long int n);
 	void int_add_fractions(int at, int ab, int bt, int bb,
 		int &ct, int &cb, int verbose_level);
 	void int_mult_fractions(int at, int ab, int bt, int bb,
@@ -1883,9 +1887,9 @@ public:
 	int random_integer_in_interval(int lower_bound, int upper_bound);
 	int nb_primes_available();
 	int get_prime_from_table(int idx);
-	int int_negate(int a, int p);
-	int ChineseRemainder2(int a1, int a2, int p1, int p2, int verbose_level);
-	void do_babystep_giantstep(int p, int g, int h,
+	long int ChineseRemainder2(long int a1, long int a2,
+			long int p1, long int p2, int verbose_level);
+	void do_babystep_giantstep(long int p, long int g, long int h,
 			int f_latex, std::ostream &ost, int verbose_level);
 };
 

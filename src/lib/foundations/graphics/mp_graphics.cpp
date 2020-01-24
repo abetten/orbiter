@@ -1833,6 +1833,7 @@ void mp_graphics::circle(int x, int y, int rad)
 {
 	//fp_log << "Circle " << x << " " << y << " " << rad << endl;
 
+	cout << "mp_graphics::circle x=" << x << " y=" << y << " rad=" << rad << endl;
 	coords_min_max(x, y);
 	user2dev(x, y);
 	user2dev_dist_x(rad);
@@ -2441,6 +2442,7 @@ void mp_graphics::text_tikz(int x1, int y1, const char *p)
 
 void mp_graphics::circle_tikz(int x, int y, int rad)
 {
+	cout << "mp_graphics::circle_tikz x=" << x << " y=" << y << " rad=" << rad << endl;
 	if (fill_interior > 0) {
 		fp_tikz << "\\filldraw[color=";
 		color_tikz(fp_tikz, fill_color);
