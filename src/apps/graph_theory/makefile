@@ -3,7 +3,8 @@ DISCRETA_CPP = g++
 DISCRETA_CC = gcc
 CPPFLAGS = -Wall -I$(SRC)/lib 
 LIB = $(SRC)/lib/liborbiter.a
-LFLAGS = -lm -lpthread
+#LFLAGS = -lm 
+LFLAGS = -lm -lpthread -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 
 #.PRECIOUS: %.o
 
