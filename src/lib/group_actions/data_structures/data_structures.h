@@ -23,6 +23,7 @@ namespace group_actions {
 #define INPUT_TYPE_FILE_OF_PACKINGS 6
 #define INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE 7
 #define INPUT_TYPE_FILE_OF_POINT_SET 8
+#define INPUT_TYPE_FILE_OF_DESIGNS 9
 
 
 
@@ -35,6 +36,12 @@ public:
 	int input_type[1000];
 	const char *input_string[1000];
 	const char *input_string2[1000];
+
+	// for INPUT_TYPE_FILE_OF_DESIGNS:
+	int input_data1[1000]; // N_points
+	int input_data2[1000]; // b = number of blocks
+	int input_data3[1000]; // k = block size
+	int input_data4[1000]; // partition class size
 
 	data_input_stream();
 	~data_input_stream();

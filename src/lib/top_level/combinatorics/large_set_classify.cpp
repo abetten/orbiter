@@ -462,7 +462,8 @@ void large_set_classify::compute_colors(
 	for (i = 0; i < nb_designs; i++) {
 		design_color_table[i] =
 				DC->get_color_as_two_design_assume_sorted(
-						Design_table + i * design_size, 0 /* verbose_level */);
+						Design_table + i * design_size,
+						0 /* verbose_level */);
 	}
 
 	if (f_v) {
@@ -471,42 +472,43 @@ void large_set_classify::compute_colors(
 }
 
 void large_set_classify::compute_reduced_colors(
-		long int *set, int set_sz,
+		long int *chosen_set, int chosen_set_sz,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, idx, c, s;
-	int *set_color;
+	int *chosen_set_color;
 
 	if (f_v) {
 		cout << "large_set_classify::compute_reduced_colors" << endl;
 	}
-	set_color = NEW_int(set_sz);
-	for (i = 0; i < set_sz; i++) {
-		set_color[i] = design_color_table[set[i]];
+	chosen_set_color = NEW_int(chosen_set_sz);
+	for (i = 0; i < chosen_set_sz; i++) {
+		chosen_set_color[i] = design_color_table[chosen_set[i]];
 	}
 
 	if (DC->k != 4) {
 		cout << "large_set_classify::compute_reduced_colors DC->k != 4" << endl;
 		exit(1);
 	}
-	nb_remaining_colors = nb_colors - set_sz; // we assume that k = 4
+	nb_remaining_colors = nb_colors - chosen_set_sz; // we assume that k = 4
 	if (f_v) {
-		cout << "large_set_classify::compute_reduced_colors nb_remaining_colors=" << nb_remaining_colors << endl;
+		cout << "large_set_classify::compute_reduced_colors "
+				"nb_remaining_colors=" << nb_remaining_colors << endl;
 	}
 	reduced_design_color_table = NEW_int(nb_reduced);
 	for (i = 0; i < nb_reduced; i++) {
 		idx = Design_table_reduced_idx[i];
 		c = design_color_table[idx];
 		s = 0;
-		for (j = 0; j < set_sz; j++) {
-			if (c > set_color[j]) {
+		for (j = 0; j < chosen_set_sz; j++) {
+			if (c > chosen_set_color[j]) {
 				s++;
 			}
 		}
 		reduced_design_color_table[i] = c - s;
 	}
-	FREE_int(set_color);
+	FREE_int(chosen_set_color);
 	if (f_v) {
 		cout << "large_set_classify::compute_reduced_colors done" << endl;
 	}
@@ -536,6 +538,7 @@ void large_set_classify::process_starter_case(
 		const char *group_label, int orbit_length,
 		int f_read_solution_file, const char *solution_file_name,
 		long int *&Large_sets, int &nb_large_sets,
+		int f_compute_normalizer_orbits, strong_generators *N_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -544,14 +547,16 @@ void large_set_classify::process_starter_case(
 		cout << "large_set_classify::process_starter_case" << endl;
 	}
 	if (f_v) {
-		cout << "large_set_classify::process_starter_case before make_reduced_design_table" << endl;
+		cout << "large_set_classify::process_starter_case "
+				"before make_reduced_design_table" << endl;
 	}
 	make_reduced_design_table(
 			starter_set, starter_set_sz,
 			Design_table_reduced, Design_table_reduced_idx, nb_reduced,
 			verbose_level);
 	if (f_v) {
-		cout << "large_set_classify::process_starter_case after make_reduced_design_table" << endl;
+		cout << "large_set_classify::process_starter_case "
+				"after make_reduced_design_table" << endl;
 	}
 	if (f_v) {
 		cout << "large_set_classify::process_starter_case "
@@ -559,11 +564,13 @@ void large_set_classify::process_starter_case(
 	}
 
 	if (f_v) {
-		cout << "large_set_classify::process_starter_case before compute_reduced_colors" << endl;
+		cout << "large_set_classify::process_starter_case "
+				"before compute_reduced_colors" << endl;
 	}
 	compute_reduced_colors(starter_set, starter_set_sz, verbose_level);
 	if (f_v) {
-		cout << "large_set_classify::process_starter_case after compute_reduced_colors" << endl;
+		cout << "large_set_classify::process_starter_case "
+				"after compute_reduced_colors" << endl;
 	}
 
 
@@ -590,6 +597,18 @@ void large_set_classify::process_starter_case(
 				prefix,
 				verbose_level);
 
+	// computes all orbits and classifies the orbits by their length
+
+
+
+	if (f_v) {
+		cout << "large_set_classify::process_starter_case "
+				"orbits on the reduced set of designs are:" << endl;
+		OoS->report_classified_orbit_lengths(cout);
+	}
+
+
+
 	colored_graph *CG;
 	char fname[1000];
 	int f_has_user_data = FALSE;
@@ -609,6 +628,7 @@ void large_set_classify::process_starter_case(
 			large_set_design_test_orbit,
 			this /* *test_function_data*/,
 			verbose_level);
+
 	if (f_v) {
 		cout << "large_set_classify::process_starter_case "
 				"after OoS->test_orbits_of_a_certain_length "
@@ -617,11 +637,80 @@ void large_set_classify::process_starter_case(
 	}
 
 
+	//Orbits_classified->Set_size[type_idx] = j;
+
+	if (f_compute_normalizer_orbits) {
+		if (f_v) {
+			cout << "large_set_classify::process_starter_case computing orbits "
+					"of normalizer on orbits of index " << selected_type_idx << endl;
+		}
+
+		action *A_on_orbits;
+		action *A_on_orbits_restricted;
+		schreier *Sch;
+
+		A_on_orbits = NEW_OBJECT(action);
+		A_on_orbits->induced_action_on_orbits(A_reduced,
+				OoS->Sch /* H_orbits_on_spreads*/,
+				TRUE /*f_play_it_safe*/, verbose_level - 1);
+
+		A_on_orbits_restricted = A_on_orbits->restricted_action(
+				OoS->Orbits_classified->Sets[selected_type_idx],
+				OoS->Orbits_classified->Set_size[selected_type_idx],
+				verbose_level);
+
+		if (f_v) {
+			cout << "large_set_classify::process_starter_case before "
+					"compute_orbits_on_points for the restricted action "
+					"on the good orbits" << endl;
+		}
+		A_on_orbits_restricted->compute_orbits_on_points(Sch, N_gens->gens, verbose_level - 1);
+
+		if (f_v) {
+			cout << "large_set_classify::process_starter_case "
+					"the number of orbits of the normalizer on the "
+					"good orbits is " << Sch->nb_orbits << endl;
+			Sch->print_and_list_orbits_tex(cout);
+		}
+
+		{
+		long int *Orbits_under_N;
+		file_io Fio;
+		char fname_out[1000];
+		int i, a, l;
+
+
+		Orbits_under_N = NEW_lint(Sch->nb_orbits * 2);
+
+		sprintf(fname_out, "%s_graph_%s_N_orbit_reps.csv", prefix, group_label);
+
+		for (i = 0; i < Sch->nb_orbits; i++) {
+			l = Sch->orbit_len[i];
+			a = Sch->orbit[Sch->orbit_first[i]];
+			Orbits_under_N[2 * i + 0] = a;
+			Orbits_under_N[2 * i + 1] = l;
+		}
+		Fio.lint_matrix_write_csv(fname_out, Orbits_under_N, Sch->nb_orbits, 2);
+
+		FREE_lint(Orbits_under_N);
+		}
+
+		FREE_OBJECT(Sch);
+		FREE_OBJECT(A_on_orbits_restricted);
+		FREE_OBJECT(A_on_orbits);
+		if (f_v) {
+			cout << "large_set_classify::process_starter_case "
+					"computing orbits of normalizer done" << endl;
+		}
+	}
+
+
 	if (f_read_solution_file) {
 		if (f_v) {
 			cout << "large_set_classify::process_starter_case "
 					"trying to read solution file " << solution_file_name << endl;
 		}
+		int i, j, a, b, l, h;
 
 		file_io Fio;
 		int nb_solutions;
@@ -646,13 +735,14 @@ void large_set_classify::process_starter_case(
 
 		nb_large_sets = nb_solutions;
 		Large_sets = NEW_lint(nb_solutions * sz);
-		int i, j, a, b, l;
 		for (i = 0; i < nb_solutions; i++) {
 			lint_vec_copy(starter_set, Large_sets + i * sz, starter_set_sz);
 			for (j = 0; j < solution_size; j++) {
 				a = Solutions[i * solution_size + j];
 				b = OoS->Orbits_classified->Sets[selected_type_idx][a];
-				OoS->Sch->get_orbit(b, Large_sets + i * sz + starter_set_sz + j * orbit_length, l, 0 /* verbose_level*/);
+				OoS->Sch->get_orbit(b,
+						Large_sets + i * sz + starter_set_sz + j * orbit_length,
+						l, 0 /* verbose_level*/);
 				if (l != orbit_length) {
 					cout << "large_set_classify::process_starter_case l != orbit_length" << endl;
 					exit(1);
@@ -664,6 +754,39 @@ void large_set_classify::process_starter_case(
 				Large_sets[i * sz + starter_set_sz + j] = b;
 			}
 		}
+		{
+		file_io Fio;
+		char fname_out[1000];
+
+		sprintf(fname_out, "%s", solution_file_name);
+		replace_extension_with(fname_out, "_packings.csv");
+
+		Fio.lint_matrix_write_csv(fname_out, Large_sets, nb_solutions, sz);
+		}
+		long int *Packings_explicit;
+		int Sz = sz * design_size;
+
+		Packings_explicit = NEW_lint(nb_solutions * Sz);
+		for (i = 0; i < nb_solutions; i++) {
+			for (j = 0; j < sz; j++) {
+				a = Large_sets[i * sz + j];
+				for (h = 0; h < design_size; h++) {
+					b = Design_table[a * design_size + h];
+					Packings_explicit[i * Sz + j * design_size + h] = b;
+				}
+			}
+		}
+		{
+		file_io Fio;
+		char fname_out[1000];
+
+		sprintf(fname_out, "%s", solution_file_name);
+		replace_extension_with(fname_out, "_packings_explicit.csv");
+
+		Fio.lint_matrix_write_csv(fname_out, Packings_explicit, nb_solutions, Sz);
+		}
+		FREE_lint(Large_sets);
+		FREE_lint(Packings_explicit);
 
 	}
 	else {
@@ -723,7 +846,8 @@ void large_set_classify::process_starter_case(
 	reduced_design_color = NEW_int(nb_reduced);
 	for (i = 0; i < nb_reduced; i++) {
 		reduced_design_color[i] = DC->get_color_as_two_design_assume_sorted(
-			Design_table_reduced + i * design_size, 0 /* verbose_level */);
+			Design_table_reduced + i * design_size,
+			0 /* verbose_level */);
 	}
 	classify C;
 

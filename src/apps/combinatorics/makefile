@@ -13,6 +13,7 @@ LFLAGS = -lm
 TARGETS=\
 		all_k_subsets.out \
 		bent.out \
+		canonical_form_of_design.out \
 		conjugacy_classes_sym_n.out \
 		costas.out \
 		create_object.out \
@@ -42,6 +43,9 @@ all_k_subsets.out:  all_k_subsets.o;
 
 bent.out:  bent.o;
 	$(DISCRETA_CPP)  bent.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+canonical_form_of_design.out:  canonical_form_of_design.o;
+	$(DISCRETA_CPP)  canonical_form_of_design.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 conjugacy_classes_sym_n.out:  conjugacy_classes_sym_n.o;
 	$(DISCRETA_CPP)  conjugacy_classes_sym_n.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

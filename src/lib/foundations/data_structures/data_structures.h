@@ -62,7 +62,7 @@ public:
 		// Type_data[i][rep_len]
 	int *Type_rep;
 		// Type_rep[N]
-		// Type_rep[i] is the index of the canidate which
+		// Type_rep[i] is the index of the candidate which
 		// has been chosen as representative
 		// for the i-th isomorphism type
 	int *Type_mult;
