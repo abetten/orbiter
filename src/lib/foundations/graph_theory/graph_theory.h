@@ -265,6 +265,7 @@ public:
 	void compute_edges(int verbose_level);
 	int is_adjacent(int i, int j);
 	void set_adjacency(int i, int j, int a);
+	void set_adjacency_k(long int k, int a);
 	void partition_by_color_classes(
 		int *&partition, int *&partition_first, 
 		int &partition_length, 

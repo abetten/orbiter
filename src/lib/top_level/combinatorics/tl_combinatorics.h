@@ -640,7 +640,7 @@ public:
 	int degree;
 
 	long int *set;
-	int sz;
+	int sz; // = b, the number of blocks
 
 	int f_has_group;
 	strong_generators *Sg;
@@ -1029,7 +1029,7 @@ void hall_system_early_test_function(long int *S, int len,
 class large_set_classify {
 public:
 	design_create *DC;
-	int design_size; // = DC->sz
+	int design_size; // = DC->sz = b, the number of blocks in the design
 	int nb_points; // = DC->A->degree
 	int nb_lines; // = DC->A2->degree
 	int search_depth;
@@ -1050,7 +1050,7 @@ public:
 	int nb_colors; // = DC->get_nb_colors_as_two_design(0 /* verbose_level */);
 	int *design_color_table; // [nb_designs]
 
-	action *A_on_designs;
+	action *A_on_designs; // action on designs in Design_table
 
 
 	uchar *bitvector_adjacency;
@@ -1062,17 +1062,24 @@ public:
 
 	int nb_needed;
 
-	long int *Design_table_reduced;
-	long int *Design_table_reduced_idx;
+	// reduced designs are those which are compatible
+	// with all the designs in the chosen set
+	long int *Design_table_reduced; // [nb_reduced * design_size]
+	long int *Design_table_reduced_idx; // [nb_reduced], index into Design_table[]
 	int nb_reduced;
 	int nb_remaining_colors; // = nb_colors - set_sz; // we assume that k = 4
 	int *reduced_design_color_table; // [nb_reduced]
+		// colors of the reduced designs after throwing away
+		// the colors covered by the designs in the chosen set.
+		// The remaining colors are relabeled consecutively.
 
 	action *A_reduced;
+		// reduced action A_on_designs based on Design_table_reduced_idx[]
 	schreier *Orbits_on_reduced;
 	int *color_of_reduced_orbits;
 
 	orbits_on_something *OoS;
+		// in action A_reduced
 	int selected_type_idx;
 
 
@@ -1101,7 +1108,7 @@ public:
 			long int *Design_table, int nb_designs, int *&design_color_table,
 			int verbose_level);
 	void compute_reduced_colors(
-			long int *set, int set_sz,
+			long int *chosen_set, int chosen_set_sz,
 			int verbose_level);
 	int designs_are_disjoint(int i, int j);
 	void process_starter_case(
@@ -1110,6 +1117,7 @@ public:
 			const char *group_label, int orbit_length,
 			int f_read_solution_file, const char *solution_file_name,
 			long int *&Large_sets, int &nb_large_sets,
+			int f_compute_normalizer_orbits, strong_generators *N_gens,
 			int verbose_level);
 	int test_orbit(long int *orbit, int orbit_length);
 	int test_pair_of_orbits(

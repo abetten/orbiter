@@ -148,6 +148,23 @@ int data_input_stream::read_arguments(
 			cout << "data_input_stream::read_arguments -file_of_point_set " << input_string[nb_inputs] << endl;
 			nb_inputs++;
 			}
+		else if (strcmp(argv[i], "-file_of_designs") == 0) {
+			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_DESIGNS;
+			input_string[nb_inputs] = argv[++i];
+			input_data1[nb_inputs] = atoi(argv[++i]); // N_points
+			input_data2[nb_inputs] = atoi(argv[++i]); // b = number of blocks
+			input_data3[nb_inputs] = atoi(argv[++i]); // k = block size
+			input_data4[nb_inputs] = atoi(argv[++i]); // partition class size
+
+			cout << "data_input_stream::read_arguments "
+					"-file_of_point_set " << input_string[nb_inputs]
+					<< " " << input_data1[nb_inputs]
+					<< " " << input_data2[nb_inputs]
+					<< " " << input_data3[nb_inputs]
+					<< " " << input_data4[nb_inputs]
+					<< endl;
+			nb_inputs++;
+			}
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "data_input_stream::read_arguments -end" << endl;
 			return i;
@@ -269,6 +286,35 @@ int data_input_stream::count_number_of_objects_to_test(
 						<< input_string[input_idx] << ":" << endl;
 				}
 			nb_obj = 1;
+			if (f_v) {
+				cout << "The file " << input_string[input_idx]
+					<< " has " << nb_obj << " objects" << endl;
+				}
+
+			nb_objects_to_test += nb_obj;
+			}
+		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_DESIGNS) {
+			if (f_v) {
+				cout << "input designs from file "
+						<< input_string[input_idx] << ":" << endl;
+			}
+			{
+			set_of_sets *SoS;
+			int nck;
+			combinatorics_domain Combi;
+
+			nck = Combi.int_n_choose_k(input_data1[input_idx], input_data3[input_idx]);
+			SoS = NEW_OBJECT(set_of_sets);
+
+			cout << "classify_objects_using_nauty Reading the file " << input_string[input_idx]
+				<<  " which contains designs on " << input_data1[input_idx] << " points, nck=" << nck << endl;
+			SoS->init_from_file(
+					nck /* underlying_set_size */,
+					input_string[input_idx], verbose_level);
+			cout << "Read the file " << input_string[input_idx] << endl;
+			nb_obj = SoS->nb_sets;
+			FREE_OBJECT(SoS);
+			}
 			if (f_v) {
 				cout << "The file " << input_string[input_idx]
 					<< " has " << nb_obj << " objects" << endl;
