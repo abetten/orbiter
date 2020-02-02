@@ -166,6 +166,7 @@ MODULES= \
 		group_actions/actions/stabilizer_chain_base_data.o \
 		group_actions/data_structures/data_input_stream.o \
 		group_actions/data_structures/group.o \
+		group_actions/data_structures/incidence_structure_with_group.o \
 		group_actions/data_structures/object_in_projective_space_with_action.o \
 		group_actions/data_structures/orbit_rep.o \
 		group_actions/data_structures/orbit_transversal.o \

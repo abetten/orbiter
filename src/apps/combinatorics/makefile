@@ -19,6 +19,7 @@ TARGETS=\
 		costas.out \
 		create_object.out \
 		delandtsheer_doyen_main.out \
+		design_apply.out \
 		design_create_main.out \
 		design.out \
 		ferdinand.out \
@@ -56,6 +57,9 @@ costas.out:  costas.o;
 
 create_object.out:  create_object.o;
 	$(DISCRETA_CPP)  create_object.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+design_apply.out:  design_apply.o;
+	$(DISCRETA_CPP)  design_apply.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 design_create_main.out:  design_create_main.o;
 	$(DISCRETA_CPP)  design_create_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

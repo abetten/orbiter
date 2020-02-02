@@ -86,12 +86,21 @@ int main(int argc, char **argv)
 
 	for (i = 0; i < N; i++) {
 		char fname[1000];
+		//int *Solutions;
+		//int solution_size, nb_solutions;
 
 		sprintf(fname, file_mask, i, i, i, i, i);
 		
 		cout << "Reading file " << fname << endl;
+
+#if 0
+		Fio.read_solutions_from_file(fname,
+				nb_solutions, Solutions, solution_size,
+				verbose_level);
+#endif
 		Fio.read_set_from_file(fname,
-				Sets[i], Set_sz[i], 0 /* verbose_level */);
+				Sets[i], Set_sz[i], verbose_level - 1);
+		cout << "Reading file " << fname << " done" << endl;
 
 		M += Set_sz[i];
 		}

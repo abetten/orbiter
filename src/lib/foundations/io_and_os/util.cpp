@@ -1660,8 +1660,19 @@ void lint_vec_scan_from_stream(istream & is, long int *&v, int &len)
 void scan_permutation_from_string(const char *s, 
 	int *&perm, int &degree, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "scan_permutation_from_string s = " << s << endl;
+	}
 	istringstream ins(s);
+	if (f_v) {
+		cout << "scan_permutation_from_string before scan_permutation_from_stream" << endl;
+	}
 	scan_permutation_from_stream(ins, perm, degree, verbose_level);
+	if (f_v) {
+		cout << "scan_permutation_from_string done" << endl;
+	}
 }
 
 void scan_permutation_from_stream(istream & is, 
@@ -1669,14 +1680,19 @@ void scan_permutation_from_stream(istream & is,
 // Scans a permutation from a stream.
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "scan_permutation_from_string" << endl;
+	}
+
 	int l = 20;
 	int *cycle; // [l]
 	//int *perm; // [l]
 	int i, a_last, a, dig, ci;
-	char s[10000], c;
+	char s[1000], c;
 	int si, largest_point = 0;
 	combinatorics_domain Combi;
-	
+
 	cycle = NEW_int(l);
 	perm = NEW_int(l);
 	degree = l;

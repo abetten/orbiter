@@ -8,6 +8,7 @@ LFLAGS = -lm
 MODULES = \
 	data_input_stream.o \
 	group.o \
+	incidence_structure_with_group.o \
 	object_in_projective_space_with_action.o \
 	orbit_rep.o \
 	orbit_transversal.o \

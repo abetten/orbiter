@@ -127,15 +127,15 @@ int classify_bitvectors::search(uchar *data,
 	return ret;
 }
 
-int classify_bitvectors::add(uchar *data,
-		void *extra_data, int verbose_level)
+void classify_bitvectors::search_and_add_if_new(uchar *data,
+		void *extra_data, int &f_found, int &idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int idx, i, ret;
+	int i;
 	sorting Sorting;
 	
 	if (f_v) {
-		cout << "classify_bitvectors::add" << endl;
+		cout << "classify_bitvectors::add rep_len=" << rep_len << endl;
 		}
 
 	if (n >= N) {
@@ -146,12 +146,18 @@ int classify_bitvectors::add(uchar *data,
 		}
 	if (Sorting.vec_search((void **) Type_data,
 			compare_func_for_bitvectors, (void *) this,
-		nb_types, data, idx, 0 /*verbose_level */)) {
+			nb_types, data, idx, 0 /*verbose_level */)) {
+		if (f_v) {
+			cout << "classify_bitvectors::add vec_search returns TRUE" << endl;
+			}
 		type_of[n] = idx;
 		Type_mult[idx]++;
-		ret = FALSE;
+		f_found = TRUE;
 		}
 	else {
+		if (f_v) {
+			cout << "classify_bitvectors::add vec_search returns FALSE, new bitvector" << endl;
+			}
 		for (i = nb_types; i > idx; i--) {
 			Type_data[i] = Type_data[i - 1];
 			Type_extra_data[i] = Type_extra_data[i - 1];
@@ -169,16 +175,15 @@ int classify_bitvectors::add(uchar *data,
 				}
 			}
 		type_of[n] = idx;
-		ret = TRUE;
+		f_found = FALSE;
 		}
 	n++;
 
 
 	if (f_v) {
 		cout << "classify_bitvectors::add done, nb_types="
-				<< nb_types << " ret=" << ret << endl;
+				<< nb_types << endl;
 		}
-	return ret;
 }
 
 void classify_bitvectors::finalize(int verbose_level)

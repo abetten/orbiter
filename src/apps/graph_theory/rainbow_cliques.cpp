@@ -38,7 +38,7 @@ int main(int argc, const char **argv)
 			}
 		else if (strcmp(argv[i], "-clique_finder") == 0) {
 			f_clique_finder_control = TRUE;
-			CFC.parse_arguments(argc, argv);
+			CFC.parse_arguments(argc - i, argv + i);
 		}
 	}
 	if (!f_clique_finder_control) {

@@ -738,8 +738,15 @@ void large_set_classify::process_starter_case(
 		for (i = 0; i < nb_solutions; i++) {
 			lint_vec_copy(starter_set, Large_sets + i * sz, starter_set_sz);
 			for (j = 0; j < solution_size; j++) {
+#if 0
 				a = Solutions[i * solution_size + j];
 				b = OoS->Orbits_classified->Sets[selected_type_idx][a];
+#else
+				b = Solutions[i * solution_size + j];
+					// the labels in the graph are set according to
+					// OoS->Orbits_classified->Sets[selected_type_idx][]
+				//b = OoS->Orbits_classified->Sets[selected_type_idx][a];
+#endif
 				OoS->Sch->get_orbit(b,
 						Large_sets + i * sz + starter_set_sz + j * orbit_length,
 						l, 0 /* verbose_level*/);

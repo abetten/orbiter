@@ -30,6 +30,7 @@ public:
 
 	void concatenate_files(const char *fname_in_mask, int N,
 		const char *fname_out, const char *EOF_marker, int f_title_line,
+		int &cnt_total,
 		int verbose_level);
 	void poset_classification_read_candidates_of_orbit(
 		const char *fname, int orbit_at_level,

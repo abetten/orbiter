@@ -1698,6 +1698,8 @@ public:
 	int plotkin_bound_for_d(int n, int k, int q, int verbose_level);
 	int griesmer_bound_for_d(int n, int k, int q, int verbose_level);
 	int griesmer_bound_for_n(int k, int d, int q, int verbose_level);
+	void square_root_floor(longinteger_object &a,
+			longinteger_object &x, int verbose_level);
 };
 
 #if 0
