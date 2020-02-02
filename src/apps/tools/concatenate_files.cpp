@@ -87,9 +87,11 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 	file_io Fio;
+	int cnt_total = 0;
 
 	if (f_loop) {
 		int h;
+		int cnt;
 
 		for (h = loop_from; h <= loop_to; h++) {
 			char fname_in_mask_processed[1000];
@@ -101,14 +103,18 @@ int main(int argc, char **argv)
 					<< fname_in_mask_processed << endl;
 			Fio.concatenate_files(fname_in_mask_processed, N,
 				fname_out_processed, EOF_marker, f_title_line, 
+				cnt,
 				verbose_level);
+			cnt_total += cnt;
 			}
 		}
 	else {
 		Fio.concatenate_files(fname_in_mask, N,
 			fname_out, EOF_marker, f_title_line, 
+			cnt_total,
 			verbose_level);
 		}
+	cout << "We found a total of " << cnt_total << " solutions" << endl;
 	the_end(t0);
 }
 

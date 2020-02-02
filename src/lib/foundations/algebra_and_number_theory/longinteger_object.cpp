@@ -1,4 +1,4 @@
-// longinteger.cpp
+// longinteger_object.cpp
 //
 // Anton Betten
 //
@@ -40,14 +40,14 @@ void longinteger_object::freeself()
 			longinteger_print_digits(rep(), len());
 			cout << endl;
 			//print(cout);
-			}
+		}
 
 		FREE_char(r);
 		r = NULL;
-		}
+	}
 	if (f_v) {
 		cout << "longinteger_object::freeself" << endl;
-		}
+	}
 }
 
 void longinteger_object::create(long int i, const char *file, int line)
@@ -61,21 +61,21 @@ void longinteger_object::create(long int i, const char *file, int line)
 	if (i < 0) {
 		sgn = TRUE;
 		i = -i;
-		}
+	}
 	else {
 		sgn = FALSE;
-		}
+	}
 	if (i == 0) {
 		r = NEW_char_with_tracking(1, file, line);
 		r[0] = 0;
 		l = 1;
 		return;
-		}
+	}
 	l = NT.lint_log10(i);
 	if (f_v) {
 		cout << "longinteger_object::create "
 				"i=" << i << " log =  " << l << endl;
-		}
+	}
 	r = NEW_char(l);
 	j = 0;
 	while (i) {
@@ -83,13 +83,13 @@ void longinteger_object::create(long int i, const char *file, int line)
 		r[j] = dj;
 		i /= 10;
 		j++;
-		}
+	}
 	if (f_v) {
 		cout << "longinteger_object::create "
 				"i=" << ii << " created ";
 		longinteger_print_digits(rep(), len());
 		cout << " with j=" << j << " digits" << endl;
-		}
+	}
 }
 
 void longinteger_object::create_product(int nb_factors, int *factors)
@@ -109,7 +109,7 @@ void longinteger_object::create_power(int a, int e)
 	factors = NEW_int(e);
 	for (i = 0; i < e; i++) {
 		factors[i] = a;
-		}
+	}
 	
 	D.multiply_up(*this, factors, e, 0 /* verbose_level */);
 
@@ -128,7 +128,7 @@ void longinteger_object::create_power_minus_one(int a, int e)
 	factors = NEW_int(e);
 	for (i = 0; i < e; i++) {
 		factors[i] = a;
-		}
+	}
 	
 	D.multiply_up(*this, factors, e, 0 /* verbose_level */);
 	D.add_in_place(*this, A);
@@ -149,7 +149,7 @@ void longinteger_object::create_from_base_b_representation(
 		D.mult(x, bb, z);
 		y.create(rep[i], __FILE__, __LINE__);
 		D.add(z, y, x);
-		}
+	}
 	x.assign_to(*this);
 }
 
@@ -168,12 +168,12 @@ void longinteger_object::create_from_base_10_string(
 		D.mult(x, bb, z);
 		y.create(str[len - 1 - i] - '0', __FILE__, __LINE__);
 		D.add(z, y, x);
-		}
+	}
 	if (f_v) {
 		cout << "longinteger_object::create_from_base_10_string "
 				"str = " << str << endl;
 		cout << "object = " << x << endl;
-		}
+	}
 	x.assign_to(*this);
 }
 
@@ -189,10 +189,10 @@ int longinteger_object::as_int()
 	for (i = l - 1; i >= 0; i--) {
 		x *= 10;
 		x += r[i];
-		}
+	}
 	if (sgn) {
 		x = -x;
-		}
+	}
 	return x;
 }
 
@@ -204,10 +204,10 @@ long int longinteger_object::as_lint()
 	for (i = l - 1; i >= 0; i--) {
 		x *= 10;
 		x += r[i];
-		}
+	}
 	if (sgn) {
 		x = -x;
-		}
+	}
 	return x;
 }
 
@@ -223,25 +223,25 @@ void longinteger_object::assign_to(longinteger_object &b)
 			cout << "this is what we free: ";
 			longinteger_print_digits(b.rep(), b.len());
 			cout << endl;
-			}
 		}
+	}
 	b.freeself();
 	if (f_v) {
 		cout << "longinteger_object::assign_to "
 				"after b.freeself" << endl;
-		}
+	}
 	b.sgn = sgn;
 	b.l = l;
 	b.r = NEW_char(b.l);
 	for (i = 0; i < l; i++) {
 		b.r[i] = r[i];
-		}
+	}
 	if (f_v) {
 		cout << "after assign: ";
 		longinteger_print_digits(b.rep(), b.len());
 		cout << endl;
 		cout << "longinteger_object::assign_to done" << endl;
-		}
+	}
 }
 
 void longinteger_object::swap_with(longinteger_object &b)
@@ -268,25 +268,25 @@ ostream& longinteger_object::print(ostream& ost)
 		
 	if (r == NULL) {
 		ost << "NULL";
-		}
+	}
 	else {
-		if (sgn)
+		if (sgn) {
 			ost << "-";
+		}
 		for (i = l - 1; i >= 0; i--) {
 			c = '0' + r[i];
 			ost << c;
-			}
+		}
 		if (longinteger_f_print_scientific) {
 			if (l > 5) {
 				char c1, c2;
 
 				c1 = '0' + r[l - 1];
 				c2 = '0' + r[l - 2];
-				ost << " = " << c1 << "." << c2
-						<< " x 10^" << l - 1;
-				}
+				ost << " = " << c1 << "." << c2 << " x 10^" << l - 1;
 			}
 		}
+	}
 	return ost;
 }
 
@@ -297,15 +297,16 @@ ostream& longinteger_object::print_not_scientific(ostream& ost)
 		
 	if (r == NULL) {
 		ost << "NULL";
-		}
+	}
 	else {
-		if (sgn)
+		if (sgn) {
 			ost << "-";
+		}
 		for (i = l - 1; i >= 0; i--) {
 			c = '0' + r[i];
 			ost << c;
-			}
 		}
+	}
 	return ost;
 }
 
@@ -323,8 +324,9 @@ int longinteger_object::output_width()
 	int h;
 	
 	h = l;
-	if (sgn)
+	if (sgn) {
 		h++;
+	}
 	return h;
 }
 
@@ -335,29 +337,33 @@ void longinteger_object::print_width(ostream& ost, int width)
 		
 	if (r == NULL) {
 		len = width - 4;
-		for (i = 0; i < len; i++)
+		for (i = 0; i < len; i++) {
 			ost << " ";
+		}
 		ost << "NULL";
 		return;
-		}
+	}
 	w = output_width();
 	if (w > width) {
 		len = width - 5;
-		for (i = 0; i < len; i++)
+		for (i = 0; i < len; i++) {
 			ost << " ";
-		ost << "large";
 		}
+		ost << "large";
+	}
 	else {
 		len = width - w;
-		for (i = 0; i < len; i++)
+		for (i = 0; i < len; i++) {
 			ost << " ";
-		if (sgn)
+		}
+		if (sgn) {
 			ost << "-";
+		}
 		for (i = l - 1; i >= 0; i--) {
 			c = '0' + r[i];
 			ost << c;
-			}
 		}
+	}
 }
 
 void longinteger_object::print_to_string(char *str)
@@ -367,16 +373,16 @@ void longinteger_object::print_to_string(char *str)
 		
 	if (r == NULL) {
 		str[0] = 0;
-		}
+	}
 	else {
 		if (sgn) {
 			str[j++] = '-';
-			}
+		}
 		for (i = l - 1; i >= 0; i--) {
 			c = '0' + r[i];
 			str[j++] = c;
-			}
 		}
+	}
 	str[j] = 0;
 }
 
@@ -385,33 +391,39 @@ void longinteger_object::normalize()
 	int i;
 	
 	for (i = l - 1; i > 0; i--) {
-		if (r[i] != 0)
+		if (r[i] != 0) {
 			break;
 		}
+	}
 	l = (int) i + 1;
 	if (l == 1 && r[0] == 0) {
 		sgn = FALSE;
-		}
+	}
 }
 
 void longinteger_object::negate()
 {
-	if (is_zero())
+	if (is_zero()) {
 		return;
-	if (sign())
+	}
+	if (sign()) {
 		sign() = FALSE;
-	else
+	}
+	else {
 		sign() = TRUE;
+	}
 	
 }
 
 int longinteger_object::is_zero()
 {
 	normalize();
-	if (l == 1 && r[0] == 0)
+	if (l == 1 && r[0] == 0) {
 		return TRUE;
-	else
+	}
+	else {
 		return FALSE;
+	}
 }
 
 void longinteger_object::zero()
@@ -422,28 +434,34 @@ void longinteger_object::zero()
 int longinteger_object::is_one()
 {
 	normalize();
-	if (!sgn && l == 1 && r[0] == 1)
+	if (!sgn && l == 1 && r[0] == 1) {
 		return TRUE;
-	else
+	}
+	else {
 		return FALSE;
+	}
 }
 
 int longinteger_object::is_mone()
 {
 	normalize();
-	if (sgn && l == 1 && r[0] == 1)
+	if (sgn && l == 1 && r[0] == 1) {
 		return TRUE;
-	else
+	}
+	else {
 		return FALSE;
+	}
 }
 
 int longinteger_object::is_one_or_minus_one()
 {
 	normalize();
-	if (l == 1 && r[0] == 1)
+	if (l == 1 && r[0] == 1) {
 		return TRUE;
-	else
+	}
+	else {
 		return FALSE;
+	}
 }
 
 void longinteger_object::one()

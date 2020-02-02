@@ -20,8 +20,10 @@ using namespace orbiter;
 void create_files(int N, 
 	const char **lines, int nb_lines, 
 	const char *file_mask, 
-	int f_repeat, int repeat_N, const char *repeat_mask, 
+	int f_repeat, int repeat_N, int repeat_start, int repeat_increment, const char *repeat_mask,
+	int f_command, const char *command,
 	int f_split, int split_m, 
+	int nb_final_lines, const char **final_lines,
 	int verbose_level);
 void create_files_list_of_cases(spreadsheet *S, 
 	int read_cases_column_of_case, int read_cases_column_of_fname, 
@@ -51,6 +53,8 @@ int main(int argc, char **argv)
 	const char *command = NULL;
 	int f_repeat = FALSE;
 	int repeat_N = 0;
+	int repeat_start = 0;
+	int repeat_increment = 0;
 	const char *repeat_mask;
 	int f_split = FALSE;
 	int split_m = 0;
@@ -68,22 +72,22 @@ int main(int argc, char **argv)
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-file_mask") == 0) {
 			f_file_mask = TRUE;
 			file_mask = argv[++i];
 			cout << "-file_mask " << file_mask << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-N") == 0) {
 			f_N = TRUE;
 			N = atoi(argv[++i]);
 			cout << "-N " << N << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-read_cases") == 0) {
 			f_read_cases = TRUE;
 			read_cases_fname = argv[++i];
 			cout << "-read_cases " << read_cases_fname << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-read_cases_text") == 0) {
 			f_read_cases_text = TRUE;
 			read_cases_fname = argv[++i];
@@ -92,49 +96,55 @@ int main(int argc, char **argv)
 			cout << "-read_cases_text " << read_cases_fname << " "
 					<< read_cases_column_of_case << " "
 					<< read_cases_column_of_fname << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-line") == 0) {
 			lines[nb_lines] = argv[++i];
 			cout << "-line " << lines[nb_lines] << endl;
 			nb_lines++;
-			}
+		}
 		else if (strcmp(argv[i], "-final_line") == 0) {
 			final_lines[nb_final_lines] = argv[++i];
 			cout << "-final_line " << final_lines[nb_final_lines] << endl;
 			nb_final_lines++;
-			}
+		}
 		else if (strcmp(argv[i], "-command") == 0) {
 			f_command = TRUE;
 			command = argv[++i];
 			cout << "-command " << command << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-repeat") == 0) {
 			f_repeat = TRUE;
 			repeat_N = atoi(argv[++i]);
+			repeat_start = atoi(argv[++i]);
+			repeat_increment = atoi(argv[++i]);
 			repeat_mask = argv[++i];
-			cout << "-repeat " << repeat_N << " " << repeat_mask << endl;
-			}
+			cout << "-repeat " << repeat_N
+					<< " " << repeat_start
+					<< " " << repeat_increment
+					<< " " << repeat_mask
+					<< endl;
+		}
 		else if (strcmp(argv[i], "-split") == 0) {
 			f_split = TRUE;
 			split_m = atoi(argv[++i]);
 			cout << "-split " << split_m << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-tasks") == 0) {
 			f_tasks = TRUE;
 			nb_tasks = atoi(argv[++i]);
 			tasks_line = argv[++i];
 			cout << "-tasks " << nb_tasks << " " << tasks_line << endl;
-			}
 		}
+	}
 	if (!f_file_mask) {
 		cout << "please use -file_mask <file_mask>" << endl;
 		exit(1);
-		}
+	}
 #if 0
 	if (!f_N && !f_read_cases) {
 		cout << "please use -N <N> or -read_cases <fname>" << endl;
 		exit(1);
-		}
+	}
 #endif
 
 	file_io Fio;
@@ -153,53 +163,53 @@ int main(int argc, char **argv)
 		if (n != 1) {
 			cout << "read cases, n != 1" << endl;
 			exit(1);
-			}
+		}
 		cout << "We found " << nb_cases << " cases to do:" << endl;
 		int_vec_print(cout, Cases, nb_cases);
 		cout << endl;
 
-			const char *log_fname = "log_file.txt";
-			const char *log_mask = "\tsbatch job%04ld";
+		const char *log_fname = "log_file.txt";
+		const char *log_mask = "\tsbatch job%04ld";
+		{
+		ofstream fp_log(log_fname);
+
+		for (c = 0; c < nb_cases; c++) {
+
+			i = Cases[c];
+			sprintf(fname, file_mask, i);
+
+
 			{
-			ofstream fp_log(log_fname);
+				ofstream fp(fname);
 
-			for (c = 0; c < nb_cases; c++) {
-
-				i = Cases[c];
-				sprintf(fname, file_mask, i);
-		
-
-					{
-					ofstream fp(fname);
-		
-					for (j = 0; j < nb_lines; j++) {
-						sprintf(str, lines[j], i);
-						fp << str << endl;
-						}
-					}
-				cout << "Written file " << fname << " of size "
-						<< Fio.file_size(fname) << endl;
-
-				char log_entry[1000];
-				
-				sprintf(log_entry, log_mask, i);
-				fp_log << log_entry << endl;
+				for (j = 0; j < nb_lines; j++) {
+					sprintf(str, lines[j], i);
+					fp << str << endl;
 				}
 			}
-			cout << "Written file " << log_fname << " of size "
-					<< Fio.file_size(log_fname) << endl;
+			cout << "Written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+
+			char log_entry[1000];
+
+			sprintf(log_entry, log_mask, i);
+			fp_log << log_entry << endl;
+			}
 		}
+		cout << "Written file " << log_fname << " of size "
+				<< Fio.file_size(log_fname) << endl;
+	}
 	else if (f_read_cases_text) {
 		cout << "read_cases_text" << endl;
 		
 		if (!f_N) {
 			cout << "please use option -N <N>" << endl;
 			exit(1);
-			}
+		}
 		if (!f_command) {
 			cout << "please use option -command <command>" << endl;
 			exit(1);
-			}
+		}
 
 		cout << "Reading file " << read_cases_fname << endl;
 
@@ -216,13 +226,13 @@ int main(int argc, char **argv)
 			cout << "row " << row << " : ";
 			S->print_table_row(row,
 					FALSE /* f_enclose_in_parentheses */, cout);
-			}
+		}
 		cout << "..." << endl;
 		for (row = MAXIMUM(S->nb_rows - 10, 0); row < S->nb_rows; row++) {
 			cout << "row " << row << " : ";
 			S->print_table_row(row,
 					FALSE /* f_enclose_in_parentheses */, cout);
-			}
+		}
 
 
 
@@ -236,22 +246,26 @@ int main(int argc, char **argv)
 			file_mask, 
 			verbose_level);
 		
-		}
+	}
 	else if (f_N) {
 		create_files(N, 
 			lines, nb_lines, 
 			file_mask, 
-			f_repeat, repeat_N, repeat_mask, 
+			f_repeat, repeat_N, repeat_start, repeat_increment, repeat_mask,
+			f_command, command,
 			f_split, split_m, 
+			nb_final_lines, final_lines,
 			verbose_level);
-		}
+	}
 }
 
 void create_files(int N, 
 	const char **lines, int nb_lines, 
 	const char *file_mask, 
-	int f_repeat, int repeat_N, const char *repeat_mask, 
+	int f_repeat, int repeat_N, int repeat_start, int repeat_increment, const char *repeat_mask,
+	int f_command, const char *command,
 	int f_split, int split_m, 
+	int nb_final_lines, const char **final_lines,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -264,7 +278,7 @@ void create_files(int N,
 
 	if (f_v) {
 		cout << "create_files" << endl;
-		}
+	}
 	
 	const char *makefile_fname = "makefile_submit";
 	{
@@ -276,25 +290,41 @@ void create_files(int N,
 	
 		fp_makefile << "\tsbatch " << fname << endl;
 		{
-		ofstream fp(fname);
-	
-		for (j = 0; j < nb_lines; j++) {
-			sprintf(str, lines[j], i, i, i, i, i, i, i, i);
-			fp << str << endl;
+			ofstream fp(fname);
+
+			for (j = 0; j < nb_lines; j++) {
+				sprintf(str, lines[j], i, i, i, i, i, i, i, i);
+				fp << str << endl;
 			}
-		if (f_repeat) {
-			if (f_split) {
-				for (r = 0; r < split_m; r++) {
-					for (j = 0; j < repeat_N; j++) {
-						if ((j % split_m) == r) {
-							sprintf(str, repeat_mask, j);
-							fp << str << endl;
+			if (f_repeat) {
+				if (f_split) {
+					for (r = 0; r < split_m; r++) {
+						for (j = 0; j < repeat_N; j++) {
+							if ((j % split_m) == r) {
+								sprintf(str, repeat_mask, j);
+								fp << str << endl;
 							}
 						}
-					fp << endl;
+						fp << endl;
 					}
 				}
-			else {
+				else {
+					int c;
+
+					sprintf(str, repeat_mask, repeat_N);
+					fp << str << endl;
+					if (!f_command) {
+						cout << "please use option -command when using -repeat" << endl;
+						exit(1);
+					}
+					for (j = 0; j < repeat_N; j++) {
+						c = repeat_start + j * repeat_increment;
+						sprintf(str, command, i, i, c, c);
+						fp << str << endl;
+					}
+				}
+				for (j = 0; j < nb_final_lines; j++) {
+					fp << final_lines[j] << endl;
 				}
 			}
 		}
@@ -310,7 +340,7 @@ void create_files(int N,
 
 	if (f_v) {
 		cout << "create_files done" << endl;
-		}
+	}
 }
 
 void create_files_list_of_cases(spreadsheet *S, 
@@ -332,7 +362,7 @@ void create_files_list_of_cases(spreadsheet *S,
 
 	if (f_v) {
 		cout << "create_files_list_of_cases" << endl;
-		}
+	}
 	
 	int nb_cases = S->nb_rows - 1;
 	cout << "nb_cases=" << nb_cases << endl;
@@ -357,7 +387,7 @@ void create_files_list_of_cases(spreadsheet *S,
 				for (j = 0; j < nb_lines; j++) {
 					sprintf(str, lines[j], i, i, i, i, i, i, i, i);
 					fp << str << endl;
-					}
+				}
 
 				if (f_tasks) {
 					char str[1000];
@@ -373,10 +403,10 @@ void create_files_list_of_cases(spreadsheet *S,
 						for (j = 0; j < nb_cases; j++) {
 							if ((j % N) != i) {
 								continue;
-								}
+							}
 							if (((j - i) / N) % nb_tasks != t) {
 								continue;
-								}
+							}
 							char *entry;
 							int case_number;
 
@@ -386,14 +416,15 @@ void create_files_list_of_cases(spreadsheet *S,
 
 							if (j < nb_cases - N) {
 								fp << ", "; // << endl;
-							} else {
+							}
+							else {
 								fp << ")\"\\" << endl;
 							}
-							}
+						}
 						fp << " & " << endl;
 						//fp << "\t\t" << -1 << " &" << endl;
-						}
-					} // if
+					}
+				} // if
 				else {
 					sprintf(str, command, i);
 					fp << str << " \\" << endl;
@@ -401,7 +432,7 @@ void create_files_list_of_cases(spreadsheet *S,
 					for (j = 0; j < nb_cases; j++) {
 						if ((j % N) != i) {
 							continue;
-							}
+						}
 						char *entry;
 						int case_number;
 
@@ -411,19 +442,20 @@ void create_files_list_of_cases(spreadsheet *S,
 #if 0
 						if (j < nb_cases - N) {
 							fp << ", "; // << endl;
-						} else {
+						}
+						else {
 							fp << ")\"\\" << endl;
 						}
 #endif
-						}
+					}
 					fp << " & " << endl;
 					//fp << "\t\t" << -1 << " &" << endl;
-					} // else
+				} // else
 
 				for (j = 0; j < nb_final_lines; j++) {
 					sprintf(str, final_lines[j], i, i, i, i, i, i, i, i);
 					fp << str << endl;
-					} // next j
+				} // next j
 	
 			} // close fp(fname)
 
@@ -455,7 +487,8 @@ void create_files_list_of_cases(spreadsheet *S,
 				fp_submit_script << "sbatch " << fname;
 				if (i < N1 - 1) {
 					fp_submit_script << "; ";
-				} else {
+				}
+				else {
 					fp_submit_script << endl;
 				}
 			}
@@ -467,7 +500,7 @@ void create_files_list_of_cases(spreadsheet *S,
 	}
 	if (f_v) {
 		cout << "create_files_list_of_cases done" << endl;
-		}
+	}
 }
 
 

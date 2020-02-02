@@ -3669,10 +3669,144 @@ void incidence_structure::compute_extended_matrix(
 }
 
 
+uchar *incidence_structure::encode_as_bitvector(int &encoding_length_in_uchar)
+{
+	int i, j, a;
+	uchar *bitvec;
+
+	bitvec = bitvector_allocate_and_coded_length(
+			nb_rows * nb_cols, encoding_length_in_uchar);
+	for (i = 0; i < nb_rows; i++) {
+		for (j = 0; j < nb_cols; j++) {
+			if (M[i * nb_cols + j]) {
+				a = i * nb_cols + j;
+				bitvector_set_bit(bitvec, a);
+			}
+		}
+	}
+	return bitvec;
+}
+
+incidence_structure *incidence_structure::apply_canonical_labeling(
+		long int *canonical_labeling, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *Incma_out;
+	int i, j, ii, jj;
+
+	if (f_v) {
+		cout << "incidence_structure::apply_canonical_labeling" << endl;
+	}
+
+	if (f_vv) {
+		cout << "incidence_structure::apply_canonical_labeling labeling:" << endl;
+		lint_vec_print(cout, canonical_labeling, nb_rows + nb_cols);
+		cout << endl;
+		}
+
+	Incma_out = NEW_int(nb_rows * nb_cols);
+	for (i = 0; i < nb_rows; i++) {
+		ii = canonical_labeling[i];
+		for (j = 0; j < nb_cols; j++) {
+			jj = canonical_labeling[nb_rows + j] - nb_rows;
+			//cout << "i=" << i << " j=" << j << " ii=" << ii
+			//<< " jj=" << jj << endl;
+			Incma_out[i * nb_cols + j] = M[ii * nb_cols + jj];
+			}
+		}
 
 
+	incidence_structure *Inc_out;
+
+	Inc_out = NEW_OBJECT(incidence_structure);
+
+	Inc_out->init_by_matrix(nb_rows, nb_cols, Incma_out, verbose_level);
+
+	FREE_int(Incma_out);
+	if (f_v) {
+		cout << "incidence_structure::apply_canonical_labeling done" << endl;
+	}
+	return Inc_out;
+}
+
+void incidence_structure::save_as_csv(const char *fname_csv, int verbose_level)
+{
+	file_io Fio;
+
+	Fio.int_matrix_write_csv(fname_csv, M, nb_rows, nb_cols);
+}
+
+void incidence_structure::save_as_Levi_graph(const char *fname_bin,
+		int f_point_labels, long int *point_labels,
+		int verbose_level)
+{
+	file_io Fio;
+	colored_graph *CG;
+
+	CG = NEW_OBJECT(colored_graph);
+
+	CG->create_Levi_graph_from_incidence_matrix(
+			M, nb_rows, nb_cols,
+			f_point_labels, point_labels,
+			verbose_level);
+	CG->save(fname_bin, verbose_level);
+
+	FREE_OBJECT(CG);
+}
+
+void incidence_structure::init_large_set(
+		long int *blocks,
+		int N_points, int design_b, int design_k, int partition_class_size,
+		int *&partition, int verbose_level)
+{
+	int *block;
+	int *Incma;
+	int nb_classes;
+	int nb_rows;
+	int nb_cols;
+	int N;
+	int u, i, j, t, a;
+	combinatorics_domain Combi;
 
 
+	nb_classes = design_b / partition_class_size;
+	nb_rows = N_points + nb_classes;
+	nb_cols = design_b + 1;
+	N = nb_rows + nb_cols;
+
+	Incma = NEW_int(nb_rows * nb_cols);
+	int_vec_zero(Incma, nb_rows * nb_cols);
+	block = NEW_int(design_k);
+
+	for (u = 0; u < nb_classes; u++) {
+		for (j = 0; j < partition_class_size; j++) {
+			a = blocks[u * partition_class_size + j];
+			Combi.unrank_k_subset(a, block, N_points, design_k);
+			for (t = 0; t < design_k; t++) {
+				i = block[t];
+				Incma[i * nb_cols + u * partition_class_size + j] = 1;
+			}
+			Incma[(N_points + u) * nb_cols + u * partition_class_size + j] = 1;
+		}
+		Incma[(N_points + u) * nb_cols + nb_cols - 1] = 1;
+	}
+
+	init_by_matrix(nb_rows, nb_cols, Incma, verbose_level);
+
+
+	partition = NEW_int(N);
+	for (i = 0; i < N; i++) {
+		partition[i] = 1;
+		}
+	partition[N_points - 1] = 0;
+	partition[nb_rows - 1] = 0;
+	partition[nb_rows + design_b - 1] = 0;
+	partition[nb_rows + nb_cols - 1] = 0;
+
+	FREE_int(Incma);
+	FREE_int(block);
+}
 
 }
 }

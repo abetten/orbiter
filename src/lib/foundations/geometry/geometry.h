@@ -1274,6 +1274,17 @@ class incidence_structure {
 		int **distinguished_line_sets, 
 		int *distinguished_line_set_size, 
 		int verbose_level);
+	uchar *encode_as_bitvector(int &encoding_length_in_uchar);
+	incidence_structure *apply_canonical_labeling(
+			long int *canonical_labeling, int verbose_level);
+	void save_as_csv(const char *fname_csv, int verbose_level);
+	void save_as_Levi_graph(const char *fname_bin,
+			int f_point_labels, long int *point_labels,
+			int verbose_level);
+	void init_large_set(
+			long int *blocks,
+			int N_points, int design_b, int design_k, int partition_class_size,
+			int *&partition, int verbose_level);
 };
 
 

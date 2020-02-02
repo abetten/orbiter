@@ -499,6 +499,7 @@ public:
 	~longinteger_object();
 	void freeself();
 	
+	char &ith(int i) { return r[i]; };
 	char &sign() { return sgn; };
 	int &len() { return l; };
 	char *&rep() { return r; };

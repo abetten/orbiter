@@ -36,6 +36,7 @@ file_io::~file_io()
 
 void file_io::concatenate_files(const char *fname_in_mask, int N,
 	const char *fname_out, const char *EOF_marker, int f_title_line,
+	int &cnt_total,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -46,58 +47,58 @@ void file_io::concatenate_files(const char *fname_in_mask, int N,
 	if (f_v) {
 		cout << "concatenate_files " << fname_in_mask
 			<< " N=" << N << " fname_out=" << fname_out << endl;
-		}
+	}
 
 	buf = NEW_char(MY_OWN_BUFSIZE);
-
+	cnt_total = 0;
 	{
-	ofstream fp_out(fname_out);
-	for (h = 0; h < N; h++) {
-		sprintf(fname, fname_in_mask, h);
-		if (file_size(fname) < 0) {
-			cout << "concatenate_files input file does not exist" << endl;
-			exit(1);
+		ofstream fp_out(fname_out);
+		for (h = 0; h < N; h++) {
+			sprintf(fname, fname_in_mask, h);
+			if (file_size(fname) < 0) {
+				cout << "concatenate_files input file does not exist" << endl;
+				exit(1);
 			}
 
 			{
-			ifstream fp(fname);
+				ifstream fp(fname);
 
-			cnt = 0;
-			while (TRUE) {
-				if (fp.eof()) {
-					cout << "Encountered End-of-file without having seem EOF "
-							"marker, perhaps the file is corrupt. "
-							"I was trying to read the file " << fname << endl;
-					//exit(1);
-					break;
+				cnt = 0;
+				while (TRUE) {
+					if (fp.eof()) {
+						cout << "Encountered End-of-file without having seem EOF "
+								"marker, perhaps the file is corrupt. "
+								"I was trying to read the file " << fname << endl;
+						exit(1);
+						break;
 					}
 
-				fp.getline(buf, MY_OWN_BUFSIZE, '\n');
-				cout << "Read: " << buf << endl;
-				if (strncmp(buf, EOF_marker, strlen(EOF_marker)) == 0) {
-					break;
+					fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+					cout << "Read: " << buf << endl;
+					if (strncmp(buf, EOF_marker, strlen(EOF_marker)) == 0) {
+						break;
 					}
-				if (f_title_line) {
-					if (h == 0 || cnt) {
-						fp_out << buf << endl;
+					if (f_title_line) {
+						if (h == 0 || cnt) {
+							fp_out << buf << endl;
 						}
 					}
-				else {
-					fp_out << buf << endl;
+					else {
+						fp_out << buf << endl;
 					}
-				cnt++;
+					cnt++;
 				}
 			}
+			cnt_total += cnt;
 		} // next h
-	fp_out << EOF_marker << endl;
+		fp_out << EOF_marker << " " << cnt_total << endl;
 	}
 	cout << "Written file " << fname_out << " of size "
 		<< file_size(fname_out) << endl;
 	FREE_char(buf);
 	if (f_v) {
 		cout << "concatenate_files done" << endl;
-		}
-
+	}
 }
 
 void file_io::poset_classification_read_candidates_of_orbit(
@@ -113,13 +114,13 @@ void file_io::poset_classification_read_candidates_of_orbit(
 		cout << "poset_classification_read_candidates_of_orbit" << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		cout << "orbit_at_level=" << orbit_at_level << endl;
-		}
+	}
 
 	if (file_size(fname) <= 0) {
 		cout << "poset_classification_read_candidates_of_orbit file "
 				<< fname << " does not exist" << endl;
 		exit(1);
-		}
+	}
 
 	{
 		ifstream fp(fname, ios::binary);
@@ -130,20 +131,20 @@ void file_io::poset_classification_read_candidates_of_orbit(
 			cout << "orbit_at_level=" << orbit_at_level << endl;
 			cout << "nb=" << nb << endl;
 			exit(1);
-			}
+		}
 		if (f_vv) {
 			cout << "seeking position "
 					<< (1 + orbit_at_level * 2) * sizeof(int) << endl;
-			}
+		}
 		fp.seekg((1 + orbit_at_level * 2) * sizeof(int), ios::beg);
 		fp.read((char *) &nb_candidates, sizeof(int));
 		if (f_vv) {
 			cout << "nb_candidates=" << nb_candidates << endl;
-			}
+		}
 		fp.read((char *) &cand_first, sizeof(int));
 		if (f_v) {
 			cout << "cand_first=" << cand_first << endl;
-			}
+		}
 		candidates = NEW_lint(nb_candidates);
 		fp.seekg((1 + nb * 2 + cand_first) * sizeof(int), ios::beg);
 		for (i = 0; i < nb_candidates; i++) {
@@ -156,7 +157,7 @@ void file_io::poset_classification_read_candidates_of_orbit(
 	if (f_v) {
 		cout << "poset_classification_read_candidates_of_orbit "
 				"done" << endl;
-		}
+	}
 }
 
 
@@ -197,7 +198,7 @@ void file_io::read_candidates_for_one_orbit_from_file(char *prefix,
 	if (f_v) {
 		cout << "read_orbit_rep_and_candidates_from_files "
 				"before generator_read_candidates_of_orbit" << endl;
-		}
+	}
 	char fname2[1000];
 	sprintf(fname2, "%s_lvl_%d_candidates.bin",
 			prefix, level_of_candidates_file);
@@ -215,7 +216,7 @@ void file_io::read_candidates_for_one_orbit_from_file(char *prefix,
 			cout << "read_orbit_rep_and_candidates_from_files_"
 					"and_process testing candidates at level " << h
 					<< " number of candidates = " << nb_candidates1 << endl;
-			}
+		}
 		candidates2 = NEW_lint(nb_candidates1);
 
 		(*early_test_func_callback)(S, h + 1,
@@ -229,13 +230,13 @@ void file_io::read_candidates_for_one_orbit_from_file(char *prefix,
 					<< h + 1 << " reduced from " << nb_candidates1
 					<< " to " << nb_candidates2 << " by "
 					<< nb_candidates1 - nb_candidates2 << endl;
-			}
+		}
 
 		lint_vec_copy(candidates2, candidates1, nb_candidates2);
 		nb_candidates1 = nb_candidates2;
 
 		FREE_lint(candidates2);
-		}
+	}
 
 	candidates = candidates1;
 	nb_candidates = nb_candidates1;
@@ -265,7 +266,7 @@ int file_io::find_orbit_index_in_data_file(const char *prefix,
 		cout << "find_orbit_index_in_data_file file "
 				<< fname << " does not exist" << endl;
 		exit(1);
-		}
+	}
 	ifstream f(fname);
 	int a, i, cnt;
 	long int *S;
@@ -283,7 +284,7 @@ int file_io::find_orbit_index_in_data_file(const char *prefix,
 	while (TRUE) {
 		if (f.eof()) {
 			break;
-			}
+		}
 		f.getline(buf, MY_OWN_BUFSIZE, '\n');
 		//cout << "Read line " << cnt << "='" << buf << "'" << endl;
 		str_len = strlen(buf);
@@ -291,7 +292,7 @@ int file_io::find_orbit_index_in_data_file(const char *prefix,
 			cout << "read_orbit_rep_and_candidates_from_files "
 					"str_len == 0" << endl;
 			exit(1);
-			}
+		}
 
 		// check for comment line:
 		if (buf[0] == '#')
@@ -301,7 +302,7 @@ int file_io::find_orbit_index_in_data_file(const char *prefix,
 		s_scan_int(&p_buf, &a);
 		if (a == -1) {
 			break;
-			}
+		}
 		len = a;
 		if (a != level_of_candidates_file) {
 			cout << "a != level_of_candidates_file" << endl;
@@ -309,24 +310,24 @@ int file_io::find_orbit_index_in_data_file(const char *prefix,
 			cout << "level_of_candidates_file="
 					<< level_of_candidates_file << endl;
 			exit(1);
-			}
+		}
 		for (i = 0; i < len; i++) {
 			s_scan_lint(&p_buf, &S[i]);
-			}
+		}
 		for (i = 0; i < level_of_candidates_file; i++) {
 			if (S[i] != starter[i]) {
 				break;
-				}
 			}
+		}
 		if (i == level_of_candidates_file) {
 			// We found the representative that matches the prefix:
 			orbit_idx = cnt;
 			break;
-			}
+		}
 		else {
 			cnt++;
-			}
 		}
+	}
 	FREE_lint(S);
 	if (f_v) {
 		cout << "find_orbit_index_in_data_file done" << endl;
@@ -341,22 +342,22 @@ void file_io::write_exact_cover_problem_to_file(int *Inc,
 	int i, j, d;
 
 	{
-	ofstream fp(fname);
-	fp << nb_rows << " " << nb_cols << endl;
-	for (i = 0; i < nb_rows; i++) {
-		d = 0;
-		for (j = 0; j < nb_cols; j++) {
-			if (Inc[i * nb_cols + j]) {
-				d++;
+		ofstream fp(fname);
+		fp << nb_rows << " " << nb_cols << endl;
+		for (i = 0; i < nb_rows; i++) {
+			d = 0;
+			for (j = 0; j < nb_cols; j++) {
+				if (Inc[i * nb_cols + j]) {
+					d++;
 				}
 			}
-		fp << d;
-		for (j = 0; j < nb_cols; j++) {
-			if (Inc[i * nb_cols + j]) {
-				fp << " " << j;
+			fp << d;
+			for (j = 0; j < nb_cols; j++) {
+				if (Inc[i * nb_cols + j]) {
+					fp << " " << j;
 				}
 			}
-		fp << endl;
+			fp << endl;
 		}
 	}
 	cout << "write_exact_cover_problem_to_file written file "
@@ -383,13 +384,13 @@ void file_io::read_solution_file(char *fname,
 	if (f_v) {
 		cout << "file_io::read_solution_file reading file " << fname
 			<< " of size " << file_size(fname) << endl;
-		}
+	}
 	if (file_size(fname) <= 0) {
 		cout << "file_io::read_solution_file "
 				"There is something wrong with the file "
 			<< fname << endl;
 		exit(1);
-		}
+	}
 	char *buf;
 	char *p_buf;
 	buf = NEW_char(BUFSIZE_READ_SOLUTION_FILE);
@@ -404,28 +405,28 @@ void file_io::read_solution_file(char *fname,
 			if (strlen(buf)) {
 				for (j = 0; j < nb_cols; j++) {
 					x[j] = 0;
-					}
+				}
 				s_scan_int(&p_buf, &nb);
 				if (nb_sol == 0) {
 					nb_max = nb;
-					}
+				}
 				else {
 					if (nb != nb_max) {
 						cout << "file_io::read_solution_file "
 								"solutions have different length" << endl;
 						exit(1);
-						}
 					}
+				}
 				//cout << "buf='" << buf << "' nb=" << nb << endl;
 
 				for (i = 0; i < nb_rows; i++) {
 					y[i] = 0;
-					}
+				}
 				for (i = 0; i < nb_rows; i++) {
 					for (j = 0; j < nb_cols; j++) {
 						y[i] += Inc[i * nb_cols + j] * x[j];
-						}
 					}
+				}
 				for (i = 0; i < nb_rows; i++) {
 					if (y[i] != 1) {
 						cout << "file_io::read_solution_file "
@@ -433,17 +434,17 @@ void file_io::read_solution_file(char *fname,
 						int_vec_print_fully(cout, y, nb_rows);
 						cout << endl;
 						exit(1);
-						}
 					}
-				nb_sol++;
 				}
+				nb_sol++;
 			}
+		}
 	}
 	if (f_v) {
 		cout << "file_io::read_solution_file: Counted " << nb_sol
 			<< " solutions in " << fname
 			<< " starting to read now." << endl;
-		}
+	}
 	sol_length = nb_max;
 	Solutions = NEW_int(nb_sol * sol_length);
 	nb_sol1 = 0;
@@ -456,28 +457,28 @@ void file_io::read_solution_file(char *fname,
 			if (strlen(buf)) {
 				for (j = 0; j < nb_cols; j++) {
 					x[j] = 0;
-					}
+				}
 				s_scan_int(&p_buf, &nb);
 				//cout << "buf='" << buf << "' nb=" << nb << endl;
 
 				for (i = 0; i < sol_length; i++) {
 					s_scan_int(&p_buf, &a);
 					Solutions[nb_sol1 * sol_length + i] = a;
-					}
-				nb_sol1++;
 				}
+				nb_sol1++;
 			}
+		}
 	}
 	if (f_v) {
 		cout << "file_io::read_solution_file: Read " << nb_sol
 			<< " solutions from file " << fname << endl;
-		}
+	}
 	FREE_int(x);
 	FREE_int(y);
 	FREE_char(buf);
 	if (f_v) {
 		cout << "file_io::read_solution_file done" << endl;
-		}
+	}
 }
 
 void file_io::count_number_of_solutions_in_file_and_get_solution_size(
@@ -493,7 +494,7 @@ void file_io::count_number_of_solutions_in_file_and_get_solution_size(
 		cout << "file_io::count_number_of_solutions_in_file_and_get_solution_size " << fname << endl;
 		cout << "trying to read file " << fname << " of size "
 			<< file_size(fname) << endl;
-		}
+	}
 
 	nb_solutions = 0;
 	if (file_size(fname) < 0) {
@@ -501,7 +502,7 @@ void file_io::count_number_of_solutions_in_file_and_get_solution_size(
 			<< fname <<  " does not exist" << endl;
 		exit(1);
 		//return;
-		}
+	}
 
 	buf = NEW_char(MY_OWN_BUFSIZE);
 
@@ -509,52 +510,52 @@ void file_io::count_number_of_solutions_in_file_and_get_solution_size(
 
 	solution_size = -1;
 	{
-	ifstream fp(fname);
-	char *p_buf;
+		ifstream fp(fname);
+		char *p_buf;
 
 
-	while (TRUE) {
-		if (fp.eof()) {
-			cout << "file_io::count_number_of_solutions_in_file_and_get_solution_size "
-					"eof, break" << endl;
-			break;
+		while (TRUE) {
+			if (fp.eof()) {
+				cout << "file_io::count_number_of_solutions_in_file_and_get_solution_size "
+						"eof, break" << endl;
+				break;
 			}
-		fp.getline(buf, MY_OWN_BUFSIZE, '\n');
-		//cout << "read line '" << buf << "'" << endl;
-		if (strlen(buf) == 0) {
-			cout << "file_io::count_number_of_solutions_in_file_and_get_solution_size "
-					"empty line" << endl;
-			exit(1);
+			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+			//cout << "read line '" << buf << "'" << endl;
+			if (strlen(buf) == 0) {
+				cout << "file_io::count_number_of_solutions_in_file_and_get_solution_size "
+						"empty line" << endl;
+				exit(1);
 			}
 
-		p_buf = buf;
-		s_scan_int(&p_buf, &s);
-		if (solution_size == -1) {
-			solution_size = s;
-		}
-		else {
-			if (s != -1) {
-				if (solution_size != s) {
-					cout << "file_io::count_number_of_solutions_in_file_and_get_solution_size "
-							"solution_size is not constant" << endl;
-					cout << "solution_size=" << solution_size << endl;
-					cout << "s=" << s << endl;
-					exit(1);
+			p_buf = buf;
+			s_scan_int(&p_buf, &s);
+			if (solution_size == -1) {
+				solution_size = s;
+			}
+			else {
+				if (s != -1) {
+					if (solution_size != s) {
+						cout << "file_io::count_number_of_solutions_in_file_and_get_solution_size "
+								"solution_size is not constant" << endl;
+						cout << "solution_size=" << solution_size << endl;
+						cout << "s=" << s << endl;
+						exit(1);
+					}
 				}
 			}
-		}
 
-		if (strncmp(buf, "-1", 2) == 0) {
-			break;
+			if (strncmp(buf, "-1", 2) == 0) {
+				break;
 			}
-		nb_solutions++;
+			nb_solutions++;
 		}
 	}
 	FREE_char(buf);
 	if (f_v) {
 		cout << "file_io::count_number_of_solutions_in_file_and_get_solution_size " << fname << endl;
 		cout << "nb_solutions = " << nb_solutions << endl;
-		}
+	}
 }
 
 void file_io::count_number_of_solutions_in_file(const char *fname,
@@ -568,7 +569,7 @@ void file_io::count_number_of_solutions_in_file(const char *fname,
 		cout << "count_number_of_solutions_in_file " << fname << endl;
 		cout << "trying to read file " << fname << " of size "
 			<< file_size(fname) << endl;
-		}
+	}
 
 	nb_solutions = 0;
 	if (file_size(fname) < 0) {
@@ -576,41 +577,41 @@ void file_io::count_number_of_solutions_in_file(const char *fname,
 			<< fname <<  " does not exist" << endl;
 		exit(1);
 		//return;
-		}
+	}
 
 	buf = NEW_char(MY_OWN_BUFSIZE);
 
 
 
 	{
-	ifstream fp(fname);
+		ifstream fp(fname);
 
 
-	while (TRUE) {
-		if (fp.eof()) {
-			cout << "count_number_of_solutions_in_file "
-					"eof, break" << endl;
-			break;
+		while (TRUE) {
+			if (fp.eof()) {
+				cout << "count_number_of_solutions_in_file "
+						"eof, break" << endl;
+				break;
 			}
-		fp.getline(buf, MY_OWN_BUFSIZE, '\n');
-		//cout << "read line '" << buf << "'" << endl;
-		if (strlen(buf) == 0) {
-			cout << "count_number_of_solutions_in_file "
-					"empty line" << endl;
-			exit(1);
+			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+			//cout << "read line '" << buf << "'" << endl;
+			if (strlen(buf) == 0) {
+				cout << "count_number_of_solutions_in_file "
+						"empty line" << endl;
+				exit(1);
 			}
 
-		if (strncmp(buf, "-1", 2) == 0) {
-			break;
+			if (strncmp(buf, "-1", 2) == 0) {
+				break;
 			}
-		nb_solutions++;
+			nb_solutions++;
 		}
 	}
 	FREE_char(buf);
 	if (f_v) {
 		cout << "count_number_of_solutions_in_file " << fname << endl;
 		cout << "nb_solutions = " << nb_solutions << endl;
-		}
+	}
 }
 
 void file_io::count_number_of_solutions_in_file_by_case(const char *fname,
@@ -630,7 +631,7 @@ void file_io::count_number_of_solutions_in_file_by_case(const char *fname,
 			<< fname << endl;
 		cout << "trying to read file " << fname << " of size "
 			<< file_size(fname) << endl;
-		}
+	}
 
 	nb_solutions = NEW_int(N);
 	case_nb = NEW_int(N);
@@ -640,65 +641,65 @@ void file_io::count_number_of_solutions_in_file_by_case(const char *fname,
 			<< fname <<  " does not exist" << endl;
 		exit(1);
 		//return;
-		}
+	}
 
 	buf = NEW_char(MY_OWN_BUFSIZE);
 
 
 
 	{
-	ifstream fp(fname);
+		ifstream fp(fname);
 
 
-	//nb_sol = 0;
-	the_case = -1;
-	while (TRUE) {
-		if (fp.eof()) {
-			cout << "count_number_of_solutions_in_file_by_case "
-					"eof, break" << endl;
-			break;
+		//nb_sol = 0;
+		the_case = -1;
+		while (TRUE) {
+			if (fp.eof()) {
+				cout << "count_number_of_solutions_in_file_by_case "
+						"eof, break" << endl;
+				break;
 			}
-		fp.getline(buf, MY_OWN_BUFSIZE, '\n');
-		//cout << "read line '" << buf << "'" << endl;
-		if (strlen(buf) == 0) {
-			cout << "count_number_of_solutions_in_file_by_case "
-					"empty line, break" << endl;
-			break;
+			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+			//cout << "read line '" << buf << "'" << endl;
+			if (strlen(buf) == 0) {
+				cout << "count_number_of_solutions_in_file_by_case "
+						"empty line, break" << endl;
+				break;
 			}
 
-		if (strncmp(buf, "# start case", 12) == 0) {
-			the_case = atoi(buf + 13);
-			the_case_count = 0;
-			cout << "count_number_of_solutions_in_file_by_case "
-					"read start case " << the_case << endl;
+			if (strncmp(buf, "# start case", 12) == 0) {
+				the_case = atoi(buf + 13);
+				the_case_count = 0;
+				cout << "count_number_of_solutions_in_file_by_case "
+						"read start case " << the_case << endl;
 			}
-		else if (strncmp(buf, "# end case", 10) == 0) {
-			if (nb_cases == N) {
-				int *nb_solutions1;
-				int *case_nb1;
+			else if (strncmp(buf, "# end case", 10) == 0) {
+				if (nb_cases == N) {
+					int *nb_solutions1;
+					int *case_nb1;
 
-				nb_solutions1 = NEW_int(N + 1000);
-				case_nb1 = NEW_int(N + 1000);
-				for (i = 0; i < N; i++) {
-					nb_solutions1[i] = nb_solutions[i];
-					case_nb1[i] = case_nb[i];
+					nb_solutions1 = NEW_int(N + 1000);
+					case_nb1 = NEW_int(N + 1000);
+					for (i = 0; i < N; i++) {
+						nb_solutions1[i] = nb_solutions[i];
+						case_nb1[i] = case_nb[i];
 					}
-				FREE_int(nb_solutions);
-				FREE_int(case_nb);
-				nb_solutions = nb_solutions1;
-				case_nb = case_nb1;
-				N += 1000;
+					FREE_int(nb_solutions);
+					FREE_int(case_nb);
+					nb_solutions = nb_solutions1;
+					case_nb = case_nb1;
+					N += 1000;
 				}
-			nb_solutions[nb_cases] = the_case_count;
-			case_nb[nb_cases] = the_case;
-			nb_cases++;
-			//cout << "count_number_of_solutions_in_file_by_case "
-			//"read end case " << the_case << endl;
-			the_case = -1;
+				nb_solutions[nb_cases] = the_case_count;
+				case_nb[nb_cases] = the_case;
+				nb_cases++;
+				//cout << "count_number_of_solutions_in_file_by_case "
+				//"read end case " << the_case << endl;
+				the_case = -1;
 			}
-		else {
-			if (the_case >= 0) {
-				the_case_count++;
+			else {
+				if (the_case >= 0) {
+					the_case_count++;
 				}
 			}
 
@@ -709,7 +710,7 @@ void file_io::count_number_of_solutions_in_file_by_case(const char *fname,
 		cout << "count_number_of_solutions_in_file_by_case "
 			<< fname << endl;
 		cout << "nb_cases = " << nb_cases << endl;
-		}
+	}
 }
 
 
@@ -729,7 +730,7 @@ void file_io::read_solutions_from_file_and_get_solution_size(const char *fname,
 		cout << "file_io::read_solutions_from_file_and_get_solution_size "
 				"the file " << fname << " does not exist" << endl;
 		return;
-		}
+	}
 
 	count_number_of_solutions_in_file_and_get_solution_size(fname,
 		nb_solutions, solution_size,
@@ -759,24 +760,24 @@ void file_io::read_solutions_from_file_and_get_solution_size(const char *fname,
 
 			if (a == -1) {
 				break;
-				}
+			}
 			if (a != solution_size) {
 				cout << "file_io::read_solutions_from_file_and_get_solution_size "
 						"a != solution_size" << endl;
 				exit(1);
-				}
+			}
 			for (i = 0; i < solution_size; i++) {
 				s_scan_int(&p_buf, &a);
 				Solutions[nb_sol * solution_size + i] = a;
-				}
-			nb_sol++;
 			}
+			nb_sol++;
+		}
 	}
 	if (nb_sol != nb_solutions) {
 		cout << "file_io::read_solutions_from_file_and_get_solution_size "
 				"nb_sol != nb_solutions" << endl;
 		exit(1);
-		}
+	}
 	FREE_char(buf);
 
 	if (f_v) {
@@ -800,12 +801,12 @@ void file_io::read_solutions_from_file(const char *fname,
 			<< fname << " of size " << file_size(fname) << endl;
 		cout << "read_solutions_from_file solution_size="
 			<< solution_size << endl;
-		}
+	}
 
 	if (file_size(fname) < 0) {
 		cout << "file_io::read_solutions_from_file the file " << fname << " does not exist" << endl;
 		return;
-		}
+	}
 
 	buf = NEW_char(MY_OWN_BUFSIZE);
 
@@ -815,7 +816,7 @@ void file_io::read_solutions_from_file(const char *fname,
 	if (f_v) {
 		cout << "read_solutions_from_file, reading "
 			<< nb_solutions << " solutions" << endl;
-		}
+	}
 
 
 
@@ -833,28 +834,28 @@ void file_io::read_solutions_from_file(const char *fname,
 
 			if (a == -1) {
 				break;
-				}
+			}
 			if (a != solution_size) {
 				cout << "read_solutions_from_file "
 						"a != solution_size" << endl;
 				exit(1);
-				}
+			}
 			for (i = 0; i < solution_size; i++) {
 				s_scan_int(&p_buf, &a);
 				Solutions[nb_sol * solution_size + i] = a;
-				}
-			nb_sol++;
 			}
+			nb_sol++;
+		}
 	}
 	if (nb_sol != nb_solutions) {
 		cout << "read_solutions_from_file "
 				"nb_sol != nb_solutions" << endl;
 		exit(1);
-		}
+	}
 	FREE_char(buf);
 	if (f_v) {
 		cout << "read_solutions_from_file done" << endl;
-		}
+	}
 }
 
 void file_io::read_solutions_from_file_by_case(const char *fname,
@@ -876,88 +877,87 @@ void file_io::read_solutions_from_file_by_case(const char *fname,
 			<< fname << " of size " << file_size(fname) << endl;
 		cout << "read_solutions_from_file_by_case solution_size="
 			<< solution_size << endl;
-		}
+	}
 
 	if (file_size(fname) < 0) {
 		return;
-		}
+	}
 
 	buf = NEW_char(MY_OWN_BUFSIZE);
 
 	Solutions = NEW_pint(nb_cases);
 
 	{
-	ifstream fp(fname);
+		ifstream fp(fname);
 
 
-	//nb_sol = 0;
-	nb_case1 = 0;
-	the_case = -1;
-	while (TRUE) {
-		if (fp.eof()) {
-			break;
+		//nb_sol = 0;
+		nb_case1 = 0;
+		the_case = -1;
+		while (TRUE) {
+			if (fp.eof()) {
+				break;
 			}
-		fp.getline(buf, MY_OWN_BUFSIZE, '\n');
-		//cout << "read line '" << buf << "'" << endl;
-		if (strlen(buf) == 0) {
-			cout << "read_solutions_from_file_by_case "
-					"empty line, break" << endl;
-			break;
-			}
-
-		if (strncmp(buf, "# start case", 12) == 0) {
-			the_case = atoi(buf + 13);
-			the_case_count = 0;
-			if (the_case != case_nb[nb_case1]) {
+			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+			//cout << "read line '" << buf << "'" << endl;
+			if (strlen(buf) == 0) {
 				cout << "read_solutions_from_file_by_case "
-						"the_case != case_nb[nb_case1]" << endl;
-				exit(1);
-				}
-			Solutions[nb_case1] =
-					NEW_int(nb_solutions[nb_case1] * solution_size);
-			cout << "read_solutions_from_file_by_case "
-					"read start case " << the_case << endl;
+						"empty line, break" << endl;
+				break;
 			}
-		else if (strncmp(buf, "# end case", 10) == 0) {
-			if (the_case_count != nb_solutions[nb_case1]) {
-				cout << "read_solutions_from_file_by_case "
-						"the_case_count != nb_solutions[nb_case1]" << endl;
-				exit(1);
-				}
-			cout << "read_solutions_from_file_by_case "
-					"read end case " << the_case << endl;
-			nb_case1++;
-			the_case = -1;
-			}
-		else {
-			if (the_case >= 0) {
-				char *p_buf;
-				int sz, a;
 
-				//cout << "read_solutions_from_file_by_case "
-				//"reading solution " << the_case_count
-				//<< " for case " << the_case << endl;
-				p_buf = buf;
-				s_scan_int(&p_buf, &sz);
-				if (sz != solution_size) {
+			if (strncmp(buf, "# start case", 12) == 0) {
+				the_case = atoi(buf + 13);
+				the_case_count = 0;
+				if (the_case != case_nb[nb_case1]) {
 					cout << "read_solutions_from_file_by_case "
-							"sz != solution_size" << endl;
+							"the_case != case_nb[nb_case1]" << endl;
 					exit(1);
+				}
+				Solutions[nb_case1] =
+						NEW_int(nb_solutions[nb_case1] * solution_size);
+				cout << "read_solutions_from_file_by_case "
+						"read start case " << the_case << endl;
+			}
+			else if (strncmp(buf, "# end case", 10) == 0) {
+				if (the_case_count != nb_solutions[nb_case1]) {
+					cout << "read_solutions_from_file_by_case "
+							"the_case_count != nb_solutions[nb_case1]" << endl;
+					exit(1);
+				}
+				cout << "read_solutions_from_file_by_case "
+						"read end case " << the_case << endl;
+				nb_case1++;
+				the_case = -1;
+			}
+			else {
+				if (the_case >= 0) {
+					char *p_buf;
+					int sz, a;
+
+					//cout << "read_solutions_from_file_by_case "
+					//"reading solution " << the_case_count
+					//<< " for case " << the_case << endl;
+					p_buf = buf;
+					s_scan_int(&p_buf, &sz);
+					if (sz != solution_size) {
+						cout << "read_solutions_from_file_by_case "
+								"sz != solution_size" << endl;
+						exit(1);
 					}
-				for (i = 0; i < sz; i++) {
-					s_scan_int(&p_buf, &a);
-					Solutions[nb_case1][the_case_count * solution_size + i] = a;
+					for (i = 0; i < sz; i++) {
+						s_scan_int(&p_buf, &a);
+						Solutions[nb_case1][the_case_count * solution_size + i] = a;
 					}
-				the_case_count++;
+					the_case_count++;
 				}
 			}
-
 		}
 	}
 	FREE_char(buf);
 	if (f_v) {
 		cout << "read_solutions_from_file_by_case done" << endl;
-		}
+	}
 }
 
 void file_io::copy_file_to_ostream(ostream &ost, char *fname)
@@ -965,31 +965,31 @@ void file_io::copy_file_to_ostream(ostream &ost, char *fname)
 	//char buf[MY_OWN_BUFSIZE];
 
 	{
-	ifstream fp(fname);
+		ifstream fp(fname);
 
 #if 0
-	while (TRUE) {
-		if (fp.eof()) {
-			break;
-			}
-		fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+		while (TRUE) {
+			if (fp.eof()) {
+				break;
+				}
+			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
 
 #if 0
-		// check for comment line:
-		if (buf[0] == '#')
-			continue;
+			// check for comment line:
+			if (buf[0] == '#')
+				continue;
 #endif
 
-		ost << buf << endl;
-		}
-#endif
-	while (TRUE) {
-		char c;
-		fp.get(c);
-		if (fp.eof()) {
-			break;
+			ost << buf << endl;
 			}
-		ost << c;
+#endif
+		while (TRUE) {
+			char c;
+			fp.get(c);
+			if (fp.eof()) {
+				break;
+			}
+			ost << c;
 		}
 	}
 
@@ -1001,13 +1001,13 @@ void file_io::int_vec_write_csv(int *v, int len,
 	int i;
 
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
-	f << "Case," << label << endl;
-	for (i = 0; i < len; i++) {
-		f << i << "," << v[i] << endl;
+		f << "Case," << label << endl;
+		for (i = 0; i < len; i++) {
+			f << i << "," << v[i] << endl;
 		}
-	f << "END" << endl;
+		f << "END" << endl;
 	}
 }
 
@@ -1017,13 +1017,13 @@ void file_io::lint_vec_write_csv(long int *v, int len,
 	int i;
 
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
-	f << "Case," << label << endl;
-	for (i = 0; i < len; i++) {
-		f << i << "," << v[i] << endl;
+		f << "Case," << label << endl;
+		for (i = 0; i < len; i++) {
+			f << i << "," << v[i] << endl;
 		}
-	f << "END" << endl;
+		f << "END" << endl;
 	}
 }
 
@@ -1033,13 +1033,13 @@ void file_io::int_vecs_write_csv(int *v1, int *v2, int len,
 	int i;
 
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
-	f << "Case," << label1 << "," << label2 << endl;
-	for (i = 0; i < len; i++) {
-		f << i << "," << v1[i] << "," << v2[i] << endl;
+		f << "Case," << label1 << "," << label2 << endl;
+		for (i = 0; i < len; i++) {
+			f << i << "," << v1[i] << "," << v2[i] << endl;
 		}
-	f << "END" << endl;
+		f << "END" << endl;
 	}
 }
 
@@ -1050,13 +1050,13 @@ void file_io::int_vecs3_write_csv(int *v1, int *v2, int *v3, int len,
 	int i;
 
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
-	f << "Case," << label1 << "," << label2 << "," << label3 << endl;
-	for (i = 0; i < len; i++) {
-		f << i << "," << v1[i] << "," << v2[i] << "," << v3[i] << endl;
+		f << "Case," << label1 << "," << label2 << "," << label3 << endl;
+		for (i = 0; i < len; i++) {
+			f << i << "," << v1[i] << "," << v2[i] << "," << v3[i] << endl;
 		}
-	f << "END" << endl;
+		f << "END" << endl;
 	}
 }
 
@@ -1072,21 +1072,21 @@ void file_io::int_vec_array_write_csv(int nb_vecs, int **Vec, int len,
 		}
 
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
-	f << "Row";
-	for (j = 0; j < nb_vecs; j++) {
-		f << "," << column_label[j];
-		}
-	f << endl;
-	for (i = 0; i < len; i++) {
-		f << i;
+		f << "Row";
 		for (j = 0; j < nb_vecs; j++) {
-			f << "," << Vec[j][i];
-			}
-		f << endl;
+			f << "," << column_label[j];
 		}
-	f << "END" << endl;
+		f << endl;
+		for (i = 0; i < len; i++) {
+			f << i;
+			for (j = 0; j < nb_vecs; j++) {
+				f << "," << Vec[j][i];
+			}
+			f << endl;
+		}
+		f << "END" << endl;
 	}
 }
 
@@ -1099,24 +1099,24 @@ void file_io::lint_vec_array_write_csv(int nb_vecs, long int **Vec, int len,
 	cout << "column labels:" << endl;
 	for (j = 0; j < nb_vecs; j++) {
 		cout << j << " : " << column_label[j] << endl;
-		}
+	}
 
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
-	f << "Row";
-	for (j = 0; j < nb_vecs; j++) {
-		f << "," << column_label[j];
-		}
-	f << endl;
-	for (i = 0; i < len; i++) {
-		f << i;
+		f << "Row";
 		for (j = 0; j < nb_vecs; j++) {
-			f << "," << Vec[j][i];
-			}
-		f << endl;
+			f << "," << column_label[j];
 		}
-	f << "END" << endl;
+		f << endl;
+		for (i = 0; i < len; i++) {
+			f << i;
+			for (j = 0; j < nb_vecs; j++) {
+				f << "," << Vec[j][i];
+			}
+			f << endl;
+		}
+		f << "END" << endl;
 	}
 }
 
@@ -1125,21 +1125,21 @@ void file_io::int_matrix_write_csv(const char *fname, int *M, int m, int n)
 	int i, j;
 
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
-	f << "Row";
-	for (j = 0; j < n; j++) {
-		f << ",C" << j;
-		}
-	f << endl;
-	for (i = 0; i < m; i++) {
-		f << i;
+		f << "Row";
 		for (j = 0; j < n; j++) {
-			f << "," << M[i * n + j];
-			}
-		f << endl;
+			f << ",C" << j;
 		}
-	f << "END" << endl;
+		f << endl;
+		for (i = 0; i < m; i++) {
+			f << i;
+			for (j = 0; j < n; j++) {
+				f << "," << M[i * n + j];
+			}
+			f << endl;
+		}
+		f << "END" << endl;
 	}
 }
 
@@ -1148,21 +1148,21 @@ void file_io::lint_matrix_write_csv(const char *fname, long int *M, int m, int n
 	int i, j;
 
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
-	f << "Row";
-	for (j = 0; j < n; j++) {
-		f << ",C" << j;
-		}
-	f << endl;
-	for (i = 0; i < m; i++) {
-		f << i;
+		f << "Row";
 		for (j = 0; j < n; j++) {
-			f << "," << M[i * n + j];
-			}
-		f << endl;
+			f << ",C" << j;
 		}
-	f << "END" << endl;
+		f << endl;
+		for (i = 0; i < m; i++) {
+			f << i;
+			for (j = 0; j < n; j++) {
+				f << "," << M[i * n + j];
+			}
+			f << endl;
+		}
+		f << "END" << endl;
 	}
 }
 
@@ -1172,21 +1172,21 @@ void file_io::double_matrix_write_csv(
 	int i, j;
 
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
-	f << "Row";
-	for (j = 0; j < n; j++) {
-		f << ",C" << j;
-		}
-	f << endl;
-	for (i = 0; i < m; i++) {
-		f << i;
+		f << "Row";
 		for (j = 0; j < n; j++) {
-			f << "," << M[i * n + j];
-			}
-		f << endl;
+			f << ",C" << j;
 		}
-	f << "END" << endl;
+		f << endl;
+		for (i = 0; i < m; i++) {
+			f << i;
+			for (j = 0; j < n; j++) {
+				f << "," << M[i * n + j];
+			}
+			f << endl;
+		}
+		f << "END" << endl;
 	}
 }
 
@@ -1196,21 +1196,21 @@ void file_io::int_matrix_write_csv_with_labels(const char *fname,
 	int i, j;
 
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
-	f << "Row";
-	for (j = 0; j < n; j++) {
-		f << "," << column_label[j];
-		}
-	f << endl;
-	for (i = 0; i < m; i++) {
-		f << i;
+		f << "Row";
 		for (j = 0; j < n; j++) {
-			f << "," << M[i * n + j];
-			}
-		f << endl;
+			f << "," << column_label[j];
 		}
-	f << "END" << endl;
+		f << endl;
+		for (i = 0; i < m; i++) {
+			f << i;
+			for (j = 0; j < n; j++) {
+				f << "," << M[i * n + j];
+			}
+			f << endl;
+		}
+		f << "END" << endl;
 	}
 }
 
@@ -1220,21 +1220,21 @@ void file_io::lint_matrix_write_csv_with_labels(const char *fname,
 	int i, j;
 
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
-	f << "Row";
-	for (j = 0; j < n; j++) {
-		f << "," << column_label[j];
-		}
-	f << endl;
-	for (i = 0; i < m; i++) {
-		f << i;
+		f << "Row";
 		for (j = 0; j < n; j++) {
-			f << "," << M[i * n + j];
-			}
-		f << endl;
+			f << "," << column_label[j];
 		}
-	f << "END" << endl;
+		f << endl;
+		for (i = 0; i < m; i++) {
+			f << i;
+			for (j = 0; j < n; j++) {
+				f << "," << M[i * n + j];
+			}
+			f << endl;
+		}
+		f << "END" << endl;
 	}
 }
 
@@ -1246,32 +1246,31 @@ void file_io::int_matrix_read_csv(const char *fname,
 
 	if (f_v) {
 		cout << "int_matrix_read_csv reading file " << fname << endl;
-		}
+	}
 	if (file_size(fname) <= 0) {
 		cout << "int_matrix_read_csv file " << fname
 			<< " does not exist or is empty" << endl;
 		cout << "file_size(fname)=" << file_size(fname) << endl;
 		exit(1);
-		}
+	}
 	{
-	spreadsheet S;
+		spreadsheet S;
 
-	S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
+		S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
 
-	m = S.nb_rows - 1;
-	n = S.nb_cols - 1;
-	M = NEW_int(m * n);
-	for (i = 0; i < m; i++) {
-		for (j = 0; j < n; j++) {
-			a = my_atoi(S.get_string(i + 1, j + 1));
-			M[i * n + j] = a;
+		m = S.nb_rows - 1;
+		n = S.nb_cols - 1;
+		M = NEW_int(m * n);
+		for (i = 0; i < m; i++) {
+			for (j = 0; j < n; j++) {
+				a = my_atoi(S.get_string(i + 1, j + 1));
+				M[i * n + j] = a;
 			}
 		}
 	}
 	if (f_v) {
 		cout << "int_matrix_read_csv done" << endl;
-		}
-
+	}
 }
 
 void file_io::lint_matrix_read_csv(const char *fname,
@@ -1283,31 +1282,31 @@ void file_io::lint_matrix_read_csv(const char *fname,
 
 	if (f_v) {
 		cout << "lint_matrix_read_csv reading file " << fname << endl;
-		}
+	}
 	if (file_size(fname) <= 0) {
 		cout << "int_matrix_read_csv file " << fname
 			<< " does not exist or is empty" << endl;
 		cout << "file_size(fname)=" << file_size(fname) << endl;
 		exit(1);
-		}
+	}
 	{
-	spreadsheet S;
+		spreadsheet S;
 
-	S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
+		S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
 
-	m = S.nb_rows - 1;
-	n = S.nb_cols - 1;
-	M = NEW_lint(m * n);
-	for (i = 0; i < m; i++) {
-		for (j = 0; j < n; j++) {
-			a = my_atol(S.get_string(i + 1, j + 1));
-			M[i * n + j] = a;
+		m = S.nb_rows - 1;
+		n = S.nb_cols - 1;
+		M = NEW_lint(m * n);
+		for (i = 0; i < m; i++) {
+			for (j = 0; j < n; j++) {
+				a = my_atol(S.get_string(i + 1, j + 1));
+				M[i * n + j] = a;
 			}
 		}
 	}
 	if (f_v) {
 		cout << "lint_matrix_read_csv done" << endl;
-		}
+	}
 
 }
 
@@ -1320,33 +1319,32 @@ void file_io::double_matrix_read_csv(const char *fname,
 	if (f_v) {
 		cout << "double_matrix_read_csv reading file "
 			<< fname << endl;
-		}
+	}
 	if (file_size(fname) <= 0) {
 		cout << "double_matrix_read_csv file " << fname
 			<< " does not exist or is empty" << endl;
 		cout << "file_size(fname)=" << file_size(fname) << endl;
 		exit(1);
-		}
+	}
 	{
-	spreadsheet S;
-	double d;
+		spreadsheet S;
+		double d;
 
-	S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
+		S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
 
-	m = S.nb_rows - 1;
-	n = S.nb_cols - 1;
-	M = new double [m * n];
-	for (i = 0; i < m; i++) {
-		for (j = 0; j < n; j++) {
-			sscanf(S.get_string(i + 1, j + 1), "%lf", &d);
-			M[i * n + j] = d;
+		m = S.nb_rows - 1;
+		n = S.nb_cols - 1;
+		M = new double [m * n];
+		for (i = 0; i < m; i++) {
+			for (j = 0; j < n; j++) {
+				sscanf(S.get_string(i + 1, j + 1), "%lf", &d);
+				M[i * n + j] = d;
 			}
 		}
 	}
 	if (f_v) {
 		cout << "double_matrix_read_csv done" << endl;
-		}
-
+	}
 }
 
 void file_io::int_matrix_write_text(const char *fname, int *M, int m, int n)
@@ -1354,14 +1352,14 @@ void file_io::int_matrix_write_text(const char *fname, int *M, int m, int n)
 	int i, j;
 
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
-	f << m << " " << n << endl;
-	for (i = 0; i < m; i++) {
-		for (j = 0; j < n; j++) {
-			f << M[i * n + j] << " ";
+		f << m << " " << n << endl;
+		for (i = 0; i < m; i++) {
+			for (j = 0; j < n; j++) {
+				f << M[i * n + j] << " ";
 			}
-		f << endl;
+			f << endl;
 		}
 	}
 }
@@ -1371,14 +1369,14 @@ void file_io::lint_matrix_write_text(const char *fname, long int *M, int m, int 
 	int i, j;
 
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
-	f << m << " " << n << endl;
-	for (i = 0; i < m; i++) {
-		for (j = 0; j < n; j++) {
-			f << M[i * n + j] << " ";
+		f << m << " " << n << endl;
+		for (i = 0; i < m; i++) {
+			for (j = 0; j < n; j++) {
+				f << M[i * n + j] << " ";
 			}
-		f << endl;
+			f << endl;
 		}
 	}
 }
@@ -1391,15 +1389,15 @@ void file_io::int_matrix_read_text(const char *fname, int *&M, int &m, int &n)
 		cout << "int_matrix_read_text The file "
 			<< fname << " does not exist" << endl;
 		exit(1);
-		}
+	}
 	{
-	ifstream f(fname);
+		ifstream f(fname);
 
-	f >> m >> n;
-	M = NEW_int(m * n);
-	for (i = 0; i < m; i++) {
-		for (j = 0; j < n; j++) {
-			f >> M[i * n + j];
+		f >> m >> n;
+		M = NEW_int(m * n);
+		for (i = 0; i < m; i++) {
+			for (j = 0; j < n; j++) {
+				f >> M[i * n + j];
 			}
 		}
 	}
@@ -1420,7 +1418,7 @@ void file_io::parse_sets(int nb_cases, char **data, int f_casenumbers,
 	if (f_v) {
 		cout << "parse_sets f_casenumbers=" << f_casenumbers
 			<< " nb_cases = " << nb_cases << endl;
-		}
+	}
 
 	ago_ascii = NEW_char(MY_OWN_BUFSIZE);
 	aut_ascii = NEW_char(MY_OWN_BUFSIZE);
@@ -1439,10 +1437,10 @@ void file_io::parse_sets(int nb_cases, char **data, int f_casenumbers,
 		p_buf = data[h];
 		if (f_casenumbers) {
 			s_scan_int(&p_buf, &casenumber);
-			}
+		}
 		else {
 			casenumber = h;
-			}
+		}
 
 		parse_line(p_buf, Set_sizes[h], Sets[h],
 			ago_ascii, aut_ascii);
@@ -1485,14 +1483,14 @@ void file_io::parse_line(char *line, int &len,
 	set = NEW_lint(len);
 	for (i = 0; i < len; i++) {
 		s_scan_lint(&p_buf, &set[i]);
-		}
+	}
 	s_scan_token(&p_buf, ago_ascii);
 	if (strcmp(ago_ascii, "1") == 0) {
 		aut_ascii[0] = 0;
-		}
+	}
 	else {
 		s_scan_token(&p_buf, aut_ascii);
-		}
+	}
 }
 
 
@@ -1509,58 +1507,59 @@ int file_io::count_number_of_orbits_in_file(
 		cout << "count_number_of_orbits_in_file "
 				"trying to read file "
 			<< fname << " of size " << file_size(fname) << endl;
-		}
+	}
 
 	if (file_size(fname) < 0) {
 		cout << "count_number_of_orbits_in_file "
 				"file size is -1" << endl;
 		return -1;
-		}
+	}
 
 	buf = NEW_char(MY_OWN_BUFSIZE);
 
 
 
 	{
-	ifstream fp(fname);
+		ifstream fp(fname);
 
 
-	nb_sol = 0;
-	while (TRUE) {
-		if (fp.eof()) {
-			break;
+		nb_sol = 0;
+		while (TRUE) {
+			if (fp.eof()) {
+				break;
 			}
 
-		//cout << "count_number_of_orbits_in_file "
-		//"reading line, nb_sol = " << nb_sol << endl;
-		fp.getline(buf, MY_OWN_BUFSIZE, '\n');
-		if (strlen(buf) == 0) {
-			cout << "count_number_of_orbits_in_file "
-					"reading an empty line" << endl;
-			break;
-			}
-
-		// check for comment line:
-		if (buf[0] == '#')
-			continue;
-
-		p_buf = buf;
-		s_scan_int(&p_buf, &len);
-		if (len == -1) {
-			if (f_v) {
+			//cout << "count_number_of_orbits_in_file "
+			//"reading line, nb_sol = " << nb_sol << endl;
+			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+			if (strlen(buf) == 0) {
 				cout << "count_number_of_orbits_in_file "
-						"found a complete file with " << nb_sol
-						<< " solutions" << endl;
-				}
-			break;
+						"reading an empty line" << endl;
+				break;
 			}
-		else {
-			if (FALSE) {
-				cout << "count_number_of_orbits_in_file "
-						"found a set of size " << len << endl;
+
+			// check for comment line:
+			if (buf[0] == '#') {
+				continue;
+			}
+
+			p_buf = buf;
+			s_scan_int(&p_buf, &len);
+			if (len == -1) {
+				if (f_v) {
+					cout << "count_number_of_orbits_in_file "
+							"found a complete file with " << nb_sol
+							<< " solutions" << endl;
+				}
+				break;
+			}
+			else {
+				if (FALSE) {
+					cout << "count_number_of_orbits_in_file "
+							"found a set of size " << len << endl;
 				}
 			}
-		nb_sol++;
+			nb_sol++;
 		}
 	}
 	ret = nb_sol;
@@ -1581,31 +1580,31 @@ int file_io::count_number_of_lines_in_file(const char *fname, int verbose_level)
 		cout << "count_number_of_lines_in_file " << fname << endl;
 		cout << "trying to read file " << fname << " of size "
 			<< file_size(fname) << endl;
-		}
+	}
 
 	if (file_size(fname) < 0) {
 		cout << "count_number_of_lines_in_file file size is -1" << endl;
 		return 0;
-		}
+	}
 
 	buf = NEW_char(MY_OWN_BUFSIZE);
 
 
 
 	{
-	ifstream fp(fname);
+		ifstream fp(fname);
 
 
-	nb_lines = 0;
-	while (TRUE) {
-		if (fp.eof()) {
-			break;
+		nb_lines = 0;
+		while (TRUE) {
+			if (fp.eof()) {
+				break;
 			}
 
-		//cout << "count_number_of_lines_in_file "
-		// "reading line, nb_sol = " << nb_sol << endl;
-		fp.getline(buf, MY_OWN_BUFSIZE, '\n');
-		nb_lines++;
+			//cout << "count_number_of_lines_in_file "
+			// "reading line, nb_sol = " << nb_sol << endl;
+			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+			nb_lines++;
 		}
 	}
 	FREE_char(buf);
@@ -1624,110 +1623,113 @@ int file_io::try_to_read_file(const char *fname,
 	if (f_v) {
 		cout << "try_to_read_file trying to read file " << fname
 			<< " of size " << file_size(fname) << endl;
-		}
+	}
 	buf = NEW_char(MY_OWN_BUFSIZE);
 
 
-	if (file_size(fname) <= 0)
+	if (file_size(fname) <= 0) {
 		goto return_false;
+	}
 
 	{
-	ifstream fp(fname);
+		ifstream fp(fname);
 
 #if 0
-	if (fp.eof()) {
-		goto return_false;
-		}
-	fp.getline(buf, MY_OWN_BUFSIZE, '\n');
-	if (strlen(buf) == 0) {
-		goto return_false;
-		}
-	sscanf(buf + 1, "%d", &n1);
-	cout << "n1=" << n1;
-	if (n1 != n) {
-		cout << "try_to_read_file() n1 != n" << endl;
-		exit(1);
-		}
-#endif
-
-	nb_sol = 0;
-	while (TRUE) {
 		if (fp.eof()) {
-			break;
-			}
+			goto return_false;
+		}
 		fp.getline(buf, MY_OWN_BUFSIZE, '\n');
 		if (strlen(buf) == 0) {
 			goto return_false;
+		}
+		sscanf(buf + 1, "%d", &n1);
+		cout << "n1=" << n1;
+		if (n1 != n) {
+			cout << "try_to_read_file() n1 != n" << endl;
+			exit(1);
+		}
+#endif
+
+		nb_sol = 0;
+		while (TRUE) {
+			if (fp.eof()) {
+				break;
+			}
+			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+			if (strlen(buf) == 0) {
+				goto return_false;
 			}
 
-		// check for comment line:
-		if (buf[0] == '#')
-			continue;
+			// check for comment line:
+			if (buf[0] == '#') {
+				continue;
+			}
 
-		p_buf = buf;
-		s_scan_int(&p_buf, &len);
-		if (len == -1) {
-			if (f_v) {
-				cout << "found a complete file with "
-					<< nb_sol << " solutions" << endl;
+			p_buf = buf;
+			s_scan_int(&p_buf, &len);
+			if (len == -1) {
+				if (f_v) {
+					cout << "found a complete file with "
+						<< nb_sol << " solutions" << endl;
 				}
-			break;
+				break;
 			}
-		nb_sol++;
+			nb_sol++;
 		}
 	}
 	nb_cases = nb_sol;
 	data = NEW_pchar(nb_cases);
 	{
-	ifstream fp(fname);
+		ifstream fp(fname);
 
 #if 0
-	if (fp.eof()) {
-		goto return_false;
+		if (fp.eof()) {
+			goto return_false;
 		}
-	fp.getline(buf, MY_BUFSIZE, '\n');
-	if (strlen(buf) == 0) {
-		goto return_false;
+		fp.getline(buf, MY_BUFSIZE, '\n');
+		if (strlen(buf) == 0) {
+			goto return_false;
 		}
-	sscanf(buf + 1, "%d", &n1);
-	if (n1 != n) {
-		cout << "try_to_read_file() n1 != n" << endl;
-		exit(1);
+		sscanf(buf + 1, "%d", &n1);
+		if (n1 != n) {
+			cout << "try_to_read_file() n1 != n" << endl;
+			exit(1);
 		}
 #endif
 
-	nb_sol = 0;
-	while (TRUE) {
-		if (fp.eof()) {
-			break;
+		nb_sol = 0;
+		while (TRUE) {
+			if (fp.eof()) {
+				break;
 			}
-		fp.getline(buf, MY_OWN_BUFSIZE, '\n');
-		len = strlen(buf);
-		if (len == 0) {
-			goto return_false;
+			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+			len = strlen(buf);
+			if (len == 0) {
+				goto return_false;
 			}
 
-		// check for comment line:
-		if (buf[0] == '#')
-			continue;
+			// check for comment line:
+			if (buf[0] == '#') {
+				continue;
+			}
 
-		p_buf = buf;
-		s_scan_int(&p_buf, &a);
-		if (a == -1) {
-			if (f_v) {
-				cout << "read " << nb_sol
-					<< " solutions" << endl;
+			p_buf = buf;
+			s_scan_int(&p_buf, &a);
+			if (a == -1) {
+				if (f_v) {
+					cout << "read " << nb_sol
+						<< " solutions" << endl;
 				}
-			break;
+				break;
 			}
 
 
-		data[nb_sol] = NEW_char(len + 1);
-		strcpy(data[nb_sol], buf);
+			data[nb_sol] = NEW_char(len + 1);
+			strcpy(data[nb_sol], buf);
 
-		//cout << nb_sol << " : " << data[nb_sol] << endl;
+			//cout << nb_sol << " : " << data[nb_sol] << endl;
 
-		nb_sol++;
+			nb_sol++;
 		}
 	}
 
@@ -1750,29 +1752,29 @@ void file_io::read_and_parse_data_file(
 	if (f_v) {
 		cout << "read_and_parse_data_file: reading file "
 			<< fname << endl;
-		}
+	}
 	if (try_to_read_file(fname, nb_cases, data, verbose_level)) {
 		if (f_vv) {
 			cout << "file read containing " << nb_cases
 				<< " cases" << endl;
-			}
 		}
+	}
 	else {
 		cout << "read_and_parse_data_file couldn't read file "
 			<< fname << endl;
 		exit(1);
-		}
+	}
 
 #if 0
 	for (i = 0; i < nb_cases; i++) {
 		cout << i << " : " << data[i] << endl;
-		}
+	}
 #endif
 
 
 	if (f_v) {
 		cout << "read_and_parse_data_file: parsing sets" << endl;
-		}
+	}
 	//parse_sets(nb_cases, data, set_sizes, sets);
 
 	char **Ago_ascii;
@@ -1789,18 +1791,17 @@ void file_io::read_and_parse_data_file(
 
 	for (i = 0; i < nb_cases; i++) {
 		strcpy(data[i], Aut_ascii[i]);
-		}
+	}
 
 	for (i = 0; i < nb_cases; i++) {
 		FREE_char(Ago_ascii[i]);
 		FREE_char(Aut_ascii[i]);
-		}
+	}
 	FREE_pchar(Ago_ascii);
 	FREE_pchar(Aut_ascii);
 	if (f_v) {
 		cout << "read_and_parse_data_file done" << endl;
-		}
-
+	}
 }
 
 void file_io::parse_sets_and_check_sizes_easy(int len, int nb_cases,
@@ -1821,8 +1822,8 @@ void file_io::parse_sets_and_check_sizes_easy(int len, int nb_cases,
 			cout << "parse_sets_and_check_sizes_easy "
 					"set_sizes[i] != len" << endl;
 			exit(1);
-			}
 		}
+	}
 
 
 	FREE_int(set_sizes);
@@ -1831,13 +1832,13 @@ void file_io::parse_sets_and_check_sizes_easy(int len, int nb_cases,
 #if 1
 	for (i = 0; i < nb_cases; i++) {
 		strcpy(data[i], Aut_ascii[i]);
-		}
+	}
 #endif
 
 	for (i = 0; i < nb_cases; i++) {
 		FREE_char(Ago_ascii[i]);
 		FREE_char(Aut_ascii[i]);
-		}
+	}
 	FREE_pchar(Ago_ascii);
 	FREE_pchar(Aut_ascii);
 
@@ -1854,27 +1855,27 @@ void file_io::free_data_fancy(int nb_cases,
 	if (Ago_ascii) {
 		for (i = 0; i < nb_cases; i++) {
 			FREE_char(Ago_ascii[i]);
-			}
-		FREE_pchar(Ago_ascii);
 		}
+		FREE_pchar(Ago_ascii);
+	}
 	if (Aut_ascii) {
 		for (i = 0; i < nb_cases; i++) {
 			FREE_char(Aut_ascii[i]);
-			}
-		FREE_pchar(Aut_ascii);
 		}
+		FREE_pchar(Aut_ascii);
+	}
 	if (Sets) {
 		for (i = 0; i < nb_cases; i++) {
 			FREE_lint(Sets[i]);
-			}
-		FREE_plint(Sets);
 		}
+		FREE_plint(Sets);
+	}
 	if (Set_sizes) {
 		FREE_int(Set_sizes);
-		}
+	}
 	if (Casenumbers) {
 		FREE_int(Casenumbers);
-		}
+	}
 }
 
 void file_io::read_and_parse_data_file_fancy(
@@ -1896,39 +1897,39 @@ void file_io::read_and_parse_data_file_fancy(
 		cout << "read_and_parse_data_file_fancy "
 				"reading file "
 			<< fname << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "read_and_parse_data_file_fancy "
 				"before try_to_read_file" << endl;
-		}
+	}
 	if (try_to_read_file(fname, nb_cases, data, verbose_level - 1)) {
 		if (f_vv) {
 			cout << "read_and_parse_data_file_fancy "
 					"file read containing "
 				<< nb_cases << " cases" << endl;
-			}
 		}
+	}
 	else {
 		cout << "read_and_parse_data_file_fancy "
 				"couldn't read file fname="
 			<< fname << endl;
 		exit(1);
-		}
+	}
 
 #if 0
 	if (f_vv) {
 		cout << "after try_to_read_file" << endl;
 		for (i = 0; i < nb_cases; i++) {
 			cout << i << " : " << data[i] << endl;
-			}
 		}
+	}
 #endif
 
 
 	if (f_vv) {
 		cout << "read_and_parse_data_file_fancy "
 				"parsing sets" << endl;
-		}
+	}
 	parse_sets(nb_cases, data, f_casenumbers,
 		Set_sizes, Sets, Ago_ascii, Aut_ascii,
 		Casenumbers,
@@ -1937,60 +1938,74 @@ void file_io::read_and_parse_data_file_fancy(
 	if (f_vv) {
 		cout << "read_and_parse_data_file_fancy "
 				"freeing temporary data" << endl;
-		}
+	}
 	for (i = 0; i < nb_cases; i++) {
 		FREE_char(data[i]);
-		}
+	}
 	FREE_pchar(data);
 	if (f_vv) {
 		cout << "read_and_parse_data_file_fancy done" << endl;
-		}
+	}
 }
 
 void file_io::read_set_from_file(const char *fname,
 	long int *&the_set, int &set_size, int verbose_level)
+// if the file is empty, set_size cannot be determined and is set to 0
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, a;
 
 	if (f_v) {
-		cout << "read_set_from_file opening file " << fname
+		cout << "file_io::read_set_from_file opening file " << fname
 			<< " of size " << file_size(fname)
 			<< " for reading" << endl;
-		}
+	}
 	ifstream f(fname);
 
 	f >> set_size;
-	if (f_v) {
-		cout << "read_set_from_file allocating set of size "
-			<< set_size << endl;
-		}
-	the_set = NEW_lint(set_size);
 
+	if (set_size == -1) {
+		if (f_v) {
+			cout << "file_io::read_set_from_file the file is empty, "
+					"set_size cannot be determined" << endl;
+		}
+		set_size = 0;
+	}
+	else {
+		if (f_v) {
+			cout << "file_io::read_set_from_file allocating set of size "
+				<< set_size << endl;
+		}
+		the_set = NEW_lint(set_size);
+
+		if (f_v) {
+			cout << "file_io::read_set_from_file reading set of size "
+				<< set_size << endl;
+		}
+		for (i = 0; i < set_size; i++) {
+			f >> a;
+			//if (f_v) {
+				//cout << "read_set_from_file: the " << i
+				//<< "-th number is " << a << endl;
+				//}
+			if (a == -1)
+				break;
+			the_set[i] = a;
+		}
+		if (f_v) {
+			cout << "file_io::read_set_from_file read a set of size " << set_size
+				<< " from file " << fname << endl;
+		}
+		if (f_vv) {
+			cout << "file_io::read_set_from_file the set is:" << endl;
+			lint_vec_print(cout, the_set, set_size);
+			cout << endl;
+		}
+	}
 	if (f_v) {
-		cout << "read_set_from_file reading set of size "
-			<< set_size << endl;
-		}
-	for (i = 0; i < set_size; i++) {
-		f >> a;
-		//if (f_v) {
-			//cout << "read_set_from_file: the " << i
-			//<< "-th number is " << a << endl;
-			//}
-		if (a == -1)
-			break;
-		the_set[i] = a;
-		}
-	if (f_v) {
-		cout << "read a set of size " << set_size
-			<< " from file " << fname << endl;
-		}
-	if (f_vv) {
-		cout << "the set is:" << endl;
-		lint_vec_print(cout, the_set, set_size);
-		cout << endl;
-		}
+		cout << "file_io::read_set_from_file done" << endl;
+	}
 }
 
 void file_io::write_set_to_file(const char *fname,
@@ -2036,39 +2051,40 @@ void file_io::read_set_from_file_lint(const char *fname,
 		cout << "read_set_from_file_lint opening file " << fname
 			<< " of size " << file_size(fname)
 			<< " for reading" << endl;
-		}
+	}
 	ifstream f(fname);
 
 	f >> set_size;
 	if (f_v) {
 		cout << "read_set_from_file_lint allocating set of size "
 			<< set_size << endl;
-		}
+	}
 	the_set = NEW_lint(set_size);
 
 	if (f_v) {
 		cout << "read_set_from_file_lint reading set of size "
 			<< set_size << endl;
-		}
+	}
 	for (i = 0; i < set_size; i++) {
 		f >> a;
 		//if (f_v) {
 			//cout << "read_set_from_file: the " << i
 			//<< "-th number is " << a << endl;
 			//}
-		if (a == -1)
+		if (a == -1) {
 			break;
-		the_set[i] = a;
 		}
+		the_set[i] = a;
+	}
 	if (f_v) {
 		cout << "read a set of size " << set_size
 			<< " from file " << fname << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "the set is:" << endl;
 		lint_vec_print(cout, the_set, set_size);
 		cout << endl;
-		}
+	}
 }
 
 void file_io::write_set_to_file_lint(const char *fname,
@@ -2080,26 +2096,26 @@ void file_io::write_set_to_file_lint(const char *fname,
 	if (f_v) {
 		cout << "write_set_to_file_lint opening file "
 			<< fname << " for writing" << endl;
-		}
+	}
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
-	f << set_size << endl;
+		f << set_size << endl;
 
-	for (i = 0; i < set_size; i++) {
+		for (i = 0; i < set_size; i++) {
 #if 0
-		if (i && ((i % 10) == 0)) {
-			f << endl;
-			}
+			if (i && ((i % 10) == 0)) {
+				f << endl;
+				}
 #endif
-		f << the_set[i] << " ";
+			f << the_set[i] << " ";
 		}
-	f << endl << -1 << endl;
+		f << endl << -1 << endl;
 	}
 	if (f_v) {
 		cout << "Written file " << fname << " of size "
 			<< file_size(fname) << endl;
-		}
+	}
 }
 
 void file_io::read_set_from_file_int4(const char *fname,
@@ -2114,7 +2130,7 @@ void file_io::read_set_from_file_int4(const char *fname,
 		cout << "read_set_from_file_int4 opening file " << fname
 			<< " of size " << file_size(fname)
 			<< " for reading" << endl;
-		}
+	}
 	ifstream f(fname, ios::binary);
 
 	f.read((char *) &a, sizeof(int_4));
@@ -2128,19 +2144,20 @@ void file_io::read_set_from_file_int4(const char *fname,
 			//cout << "read_set_from_file: the " << i
 			//<< "-th number is " << a << endl;
 			//}
-		if (b == -1)
+		if (b == -1) {
 			break;
-		the_set[i] = b;
 		}
+		the_set[i] = b;
+	}
 	if (f_v) {
 		cout << "read a set of size " << set_size
 			<< " from file " << fname << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "the set is:" << endl;
 		lint_vec_print(cout, the_set, set_size);
 		cout << endl;
-		}
+	}
 }
 
 void file_io::read_set_from_file_int8(const char *fname,
@@ -2156,7 +2173,7 @@ void file_io::read_set_from_file_int8(const char *fname,
 		cout << "read_set_from_file_int8 opening file " << fname
 			<< " of size " << file_size(fname)
 			<< " for reading" << endl;
-		}
+	}
 	ifstream f(fname, ios::binary);
 
 	f.read((char *) &a, sizeof(int_8));
@@ -2170,19 +2187,20 @@ void file_io::read_set_from_file_int8(const char *fname,
 			//cout << "read_set_from_file: the " << i
 			//<< "-th number is " << a << endl;
 			//}
-		if (b == -1)
+		if (b == -1) {
 			break;
-		the_set[i] = b;
 		}
+		the_set[i] = b;
+	}
 	if (f_v) {
 		cout << "read a set of size " << set_size
 			<< " from file " << fname << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "the set is:" << endl;
 		lint_vec_print(cout, the_set, set_size);
 		cout << endl;
-		}
+	}
 }
 
 void file_io::write_set_to_file_as_int4(const char *fname,
@@ -2196,40 +2214,40 @@ void file_io::write_set_to_file_as_int4(const char *fname,
 	if (f_v) {
 		cout << "write_set_to_file_as_int4 opening file "
 			<< fname << " for writing" << endl;
-		}
+	}
 	{
-	ofstream f(fname, ios::binary);
+		ofstream f(fname, ios::binary);
 
 
-	a = (int_4) set_size;
-	f.write((char *) &a, sizeof(int_4));
-	b = a;
-	if (b != set_size) {
-		cout << "write_set_to_file_as_int4 "
-				"data loss regarding set_size" << endl;
-		cout << "set_size=" << set_size << endl;
-		cout << "a=" << a << endl;
-		cout << "b=" << b << endl;
-		exit(1);
-		}
-	for (i = 0; i < set_size; i++) {
-		a = (int_4) the_set[i];
+		a = (int_4) set_size;
 		f.write((char *) &a, sizeof(int_4));
 		b = a;
-		if (b != the_set[i]) {
-			cout << "write_set_to_file_as_int4 data loss" << endl;
-			cout << "i=" << i << endl;
-			cout << "the_set[i]=" << the_set[i] << endl;
+		if (b != set_size) {
+			cout << "write_set_to_file_as_int4 "
+					"data loss regarding set_size" << endl;
+			cout << "set_size=" << set_size << endl;
 			cout << "a=" << a << endl;
 			cout << "b=" << b << endl;
 			exit(1);
+		}
+		for (i = 0; i < set_size; i++) {
+			a = (int_4) the_set[i];
+			f.write((char *) &a, sizeof(int_4));
+			b = a;
+			if (b != the_set[i]) {
+				cout << "write_set_to_file_as_int4 data loss" << endl;
+				cout << "i=" << i << endl;
+				cout << "the_set[i]=" << the_set[i] << endl;
+				cout << "a=" << a << endl;
+				cout << "b=" << b << endl;
+				exit(1);
 			}
 		}
 	}
 	if (f_v) {
 		cout << "Written file " << fname
 			<< " of size " << file_size(fname) << endl;
-		}
+	}
 }
 
 void file_io::write_set_to_file_as_int8(const char *fname,
@@ -2242,40 +2260,40 @@ void file_io::write_set_to_file_as_int8(const char *fname,
 	if (f_v) {
 		cout << "write_set_to_file_as_int8 opening file "
 			<< fname << " for writing" << endl;
-		}
+	}
 	{
-	ofstream f(fname, ios::binary);
+		ofstream f(fname, ios::binary);
 
 
-	a = (int_8) set_size;
-	f.write((char *) &a, sizeof(int_8));
-	b = a;
-	if (b != set_size) {
-		cout << "write_set_to_file_as_int8 "
-				"data loss regarding set_size" << endl;
-		cout << "set_size=" << set_size << endl;
-		cout << "a=" << a << endl;
-		cout << "b=" << b << endl;
-		exit(1);
-		}
-	for (i = 0; i < set_size; i++) {
-		a = (int_8) the_set[i];
+		a = (int_8) set_size;
 		f.write((char *) &a, sizeof(int_8));
 		b = a;
-		if (b != the_set[i]) {
-			cout << "write_set_to_file_as_int8 data loss" << endl;
-			cout << "i=" << i << endl;
-			cout << "the_set[i]=" << the_set[i] << endl;
+		if (b != set_size) {
+			cout << "write_set_to_file_as_int8 "
+					"data loss regarding set_size" << endl;
+			cout << "set_size=" << set_size << endl;
 			cout << "a=" << a << endl;
 			cout << "b=" << b << endl;
 			exit(1);
+		}
+		for (i = 0; i < set_size; i++) {
+			a = (int_8) the_set[i];
+			f.write((char *) &a, sizeof(int_8));
+			b = a;
+			if (b != the_set[i]) {
+				cout << "write_set_to_file_as_int8 data loss" << endl;
+				cout << "i=" << i << endl;
+				cout << "the_set[i]=" << the_set[i] << endl;
+				cout << "a=" << a << endl;
+				cout << "b=" << b << endl;
+				exit(1);
 			}
 		}
 	}
 	if (f_v) {
 		cout << "Written file " << fname
 			<< " of size " << file_size(fname) << endl;
-		}
+	}
 }
 
 void file_io::read_k_th_set_from_file(const char *fname, int k,
@@ -2289,7 +2307,7 @@ void file_io::read_k_th_set_from_file(const char *fname, int k,
 		cout << "read_k_th_set_from_file opening file "
 			<< fname << " of size " << file_size(fname)
 			<< " for reading" << endl;
-		}
+	}
 	ifstream f(fname);
 
 	f >> set_size;
@@ -2302,21 +2320,21 @@ void file_io::read_k_th_set_from_file(const char *fname, int k,
 				cout << "read_k_th_set_from_file: h="
 					<< h << " the " << i
 					<< "-th number is " << a << endl;
-				}
+			}
 			//if (a == -1)
 				//break;
 			the_set[i] = a;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "read a set of size " << set_size
 			<< " from file " << fname << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "the set is:" << endl;
 		int_vec_print(cout, the_set, set_size);
 		cout << endl;
-		}
+	}
 }
 
 
@@ -2329,31 +2347,31 @@ void file_io::write_incidence_matrix_to_file(char *fname,
 	if (f_v) {
 		cout << "write_incidence_matrix_to_file opening file "
 			<< fname << " for writing" << endl;
-		}
+	}
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
-	nb_inc = 0;
-	for (i = 0; i < m * n; i++) {
-		if (Inc[i]) {
-			nb_inc++;
+		nb_inc = 0;
+		for (i = 0; i < m * n; i++) {
+			if (Inc[i]) {
+				nb_inc++;
 			}
 		}
-	f << m << " " << n << " " << nb_inc << endl;
+		f << m << " " << n << " " << nb_inc << endl;
 
-	for (i = 0; i < m * n; i++) {
-		if (Inc[i]) {
-			f << i << " ";
+		for (i = 0; i < m * n; i++) {
+			if (Inc[i]) {
+				f << i << " ";
 			}
 		}
-	f << " 0" << endl; // no group order
+		f << " 0" << endl; // no group order
 
-	f << -1 << endl;
+		f << -1 << endl;
 	}
 	if (f_v) {
 		cout << "Written file " << fname << " of size "
 			<< file_size(fname) << endl;
-		}
+	}
 }
 
 #define READ_INCIDENCE_BUFSIZE 1000000
@@ -2373,81 +2391,82 @@ void file_io::read_incidence_matrix_from_inc_file(int *&M, int &m, int &n,
 	if (f_v) {
 		cout << "read_incidence_matrix_from_inc_file "
 			<< inc_file_name << " no " << inc_file_idx << endl;
-		}
+	}
 	{
-	ifstream f(inc_file_name);
+		ifstream f(inc_file_name);
 
-	if (f.eof()) {
-		exit(1);
-		}
-	f.getline(buf, READ_INCIDENCE_BUFSIZE, '\n');
-	if (strlen(buf) == 0) {
-		exit(1);
-		}
-	sscanf(buf, "%d %d %d", &m, &n, &nb_inc);
-	if (f_vv) {
-		cout << "m=" << m;
-		cout << " n=" << n;
-		cout << " nb_inc=" << nb_inc << endl;
-		}
-	X = NEW_int(nb_inc);
-	cnt = 0;
-	while (TRUE) {
 		if (f.eof()) {
-			break;
-			}
+			exit(1);
+		}
 		f.getline(buf, READ_INCIDENCE_BUFSIZE, '\n');
 		if (strlen(buf) == 0) {
-			continue;
-			}
-
-		// check for comment line:
-		if (buf[0] == '#')
-			continue;
-
-		p_buf = buf;
-
-		s_scan_int(&p_buf, &a);
+			exit(1);
+		}
+		sscanf(buf, "%d %d %d", &m, &n, &nb_inc);
 		if (f_vv) {
-			//cout << cnt << " : " << a << " ";
+			cout << "m=" << m;
+			cout << " n=" << n;
+			cout << " nb_inc=" << nb_inc << endl;
+		}
+		X = NEW_int(nb_inc);
+		cnt = 0;
+		while (TRUE) {
+			if (f.eof()) {
+				break;
 			}
-		if (a == -1) {
-			cout << "\nread_incidence_matrix_from_inc_file: "
-					"found a complete file with "
-				<< cnt << " solutions" << endl;
-			break;
+			f.getline(buf, READ_INCIDENCE_BUFSIZE, '\n');
+			if (strlen(buf) == 0) {
+				continue;
 			}
-		X[0] = a;
 
-		//cout << "reading " << nb_inc << " incidences" << endl;
-		for (h = 1; h < nb_inc; h++) {
+			// check for comment line:
+			if (buf[0] == '#') {
+				continue;
+			}
+
+			p_buf = buf;
+
 			s_scan_int(&p_buf, &a);
-			if (a < 0 || a >= m * n) {
-				cout << "attention, read " << a
-					<< " h=" << h << endl;
-				exit(1);
-				}
-			X[h] = a;
-			//M[a] = 1;
-			}
-		//f >> a; // skip aut group order
-		if (cnt == inc_file_idx) {
-			M = NEW_int(m * n);
-			for (h = 0; h < m * n; h++) {
-				M[h] = 0;
-				}
-			for (h = 0; h < nb_inc; h++) {
-				M[X[h]] = 1;
-				}
 			if (f_vv) {
-				cout << "read_incidence_matrix_from_inc_file: "
-						"found the following incidence matrix:" << endl;
-				print_integer_matrix_width(cout,
-					M, m, n, n, 1);
-				}
-			break;
+				//cout << cnt << " : " << a << " ";
 			}
-		cnt++;
+			if (a == -1) {
+				cout << "\nread_incidence_matrix_from_inc_file: "
+						"found a complete file with "
+					<< cnt << " solutions" << endl;
+				break;
+			}
+			X[0] = a;
+
+			//cout << "reading " << nb_inc << " incidences" << endl;
+			for (h = 1; h < nb_inc; h++) {
+				s_scan_int(&p_buf, &a);
+				if (a < 0 || a >= m * n) {
+					cout << "attention, read " << a
+						<< " h=" << h << endl;
+					exit(1);
+				}
+				X[h] = a;
+				//M[a] = 1;
+			}
+			//f >> a; // skip aut group order
+			if (cnt == inc_file_idx) {
+				M = NEW_int(m * n);
+				for (h = 0; h < m * n; h++) {
+					M[h] = 0;
+				}
+				for (h = 0; h < nb_inc; h++) {
+					M[X[h]] = 1;
+				}
+				if (f_vv) {
+					cout << "read_incidence_matrix_from_inc_file: "
+							"found the following incidence matrix:" << endl;
+					print_integer_matrix_width(cout,
+						M, m, n, n, 1);
+				}
+				break;
+			}
+			cnt++;
 		}
 	}
 	FREE_int(X);
@@ -2469,65 +2488,66 @@ int file_io::inc_file_get_number_of_geometries(
 	if (f_v) {
 		cout << "inc_file_get_number_of_geometries "
 			<< inc_file_name << endl;
-		}
+	}
 	{
-	ifstream f(inc_file_name);
+		ifstream f(inc_file_name);
 
-	if (f.eof()) {
-		exit(1);
-		}
-	f.getline(buf, READ_INCIDENCE_BUFSIZE, '\n');
-	if (strlen(buf) == 0) {
-		exit(1);
-		}
-	sscanf(buf, "%d %d %d", &m, &n, &nb_inc);
-	if (f_vv) {
-		cout << "m=" << m;
-		cout << " n=" << n;
-		cout << " nb_inc=" << nb_inc << endl;
-		}
-	X = NEW_int(nb_inc);
-	cnt = 0;
-	while (TRUE) {
 		if (f.eof()) {
-			break;
-			}
+			exit(1);
+		}
 		f.getline(buf, READ_INCIDENCE_BUFSIZE, '\n');
 		if (strlen(buf) == 0) {
-			continue;
-			}
-
-		// check for comment line:
-		if (buf[0] == '#')
-			continue;
-
-		p_buf = buf;
-
-		s_scan_int(&p_buf, &a);
+			exit(1);
+		}
+		sscanf(buf, "%d %d %d", &m, &n, &nb_inc);
 		if (f_vv) {
-			//cout << cnt << " : " << a << " ";
+			cout << "m=" << m;
+			cout << " n=" << n;
+			cout << " nb_inc=" << nb_inc << endl;
+		}
+		X = NEW_int(nb_inc);
+		cnt = 0;
+		while (TRUE) {
+			if (f.eof()) {
+				break;
 			}
-		if (a == -1) {
-			cout << "\nread_incidence_matrix_from_inc_file: "
-					"found a complete file with " << cnt
-					<< " solutions" << endl;
-			break;
+			f.getline(buf, READ_INCIDENCE_BUFSIZE, '\n');
+			if (strlen(buf) == 0) {
+				continue;
 			}
-		X[0] = a;
 
-		//cout << "reading " << nb_inc << " incidences" << endl;
-		for (h = 1; h < nb_inc; h++) {
-			s_scan_int(&p_buf, &a);
-			if (a < 0 || a >= m * n) {
-				cout << "attention, read " << a
-					<< " h=" << h << endl;
-				exit(1);
-				}
-			X[h] = a;
-			//M[a] = 1;
+			// check for comment line:
+			if (buf[0] == '#') {
+				continue;
 			}
-		//f >> a; // skip aut group order
-		cnt++;
+
+			p_buf = buf;
+
+			s_scan_int(&p_buf, &a);
+			if (f_vv) {
+				//cout << cnt << " : " << a << " ";
+			}
+			if (a == -1) {
+				cout << "\nread_incidence_matrix_from_inc_file: "
+						"found a complete file with " << cnt
+						<< " solutions" << endl;
+				break;
+			}
+			X[0] = a;
+
+			//cout << "reading " << nb_inc << " incidences" << endl;
+			for (h = 1; h < nb_inc; h++) {
+				s_scan_int(&p_buf, &a);
+				if (a < 0 || a >= m * n) {
+					cout << "attention, read " << a
+						<< " h=" << h << endl;
+					exit(1);
+				}
+				X[h] = a;
+				//M[a] = 1;
+			}
+			//f >> a; // skip aut group order
+			cnt++;
 		}
 	}
 	FREE_int(X);
@@ -2615,7 +2635,7 @@ void file_io::read_numbers_from_file(const char *fname,
 	if (f_v) {
 		cout << "read_numbers_from_file opening file " << fname
 				<< " of size " << file_size(fname) << " for reading" << endl;
-		}
+	}
 	ifstream f(fname);
 
 	set_size = 1000;
@@ -2624,32 +2644,33 @@ void file_io::read_numbers_from_file(const char *fname,
 	for (i = 0; TRUE; i++) {
 		if (f.eof()) {
 			break;
-			}
+		}
 		f >> d;
 		a = (int) d;
 		if (f_vv) {
 			cout << "read_set_from_file: the " << i
 					<< "-th number is " << d << " which becomes "
 					<< a << endl;
-			}
-		if (a == -1)
+		}
+		if (a == -1) {
 			break;
+		}
 		the_set[i] = a;
 		if (i >= set_size) {
 			cout << "i >= set_size" << endl;
 			exit(1);
-			}
 		}
+	}
 	set_size = i;
 	if (f_v) {
 		cout << "read a set of size " << set_size
 				<< " from file " << fname << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "the set is:" << endl;
 		int_vec_print(cout, the_set, set_size);
 		cout << endl;
-		}
+	}
 }
 
 void file_io::read_ascii_set_of_sets_constant_size(
@@ -2660,7 +2681,7 @@ void file_io::read_ascii_set_of_sets_constant_size(
 	if (f_v) {
 		cout << "file_io::read_ascii_set_of_sets_constant_size "
 				"reading ascii file " << fname_ascii << endl;
-		}
+	}
 	sorting Sorting;
 	int N;
 	int i;

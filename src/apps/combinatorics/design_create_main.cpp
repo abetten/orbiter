@@ -119,7 +119,8 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-cyclic_subgroup_with_n_fixpoints") == 0) {
 			f_cyclic_subgroup_with_n_fixpoints = TRUE;
 			cyclic_subgroup_with_n_fixpoints = atoi(argv[++i]);
-			cout << "-cyclic_subgroup_with_n_fixpoints " << cyclic_subgroup_with_n_fixpoints << endl;
+			cout << "-cyclic_subgroup_with_n_fixpoints "
+					<< cyclic_subgroup_with_n_fixpoints << endl;
 		}
 	}
 	if (!f_design) {
@@ -212,7 +213,8 @@ int main(int argc, const char **argv)
 	LS->init_designs(SetOrb, verbose_level);
 
 	if (f_read_classification) {
-		cout << "reading classification at level " << read_classification_level << endl;
+		cout << "reading classification at level "
+				<< read_classification_level << endl;
 
 		orbit_transversal *T;
 

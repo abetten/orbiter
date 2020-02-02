@@ -2489,6 +2489,62 @@ int longinteger_domain::griesmer_bound_for_n(
 }
 
 
+void longinteger_domain::square_root_floor(longinteger_object &a,
+		longinteger_object &x, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "longinteger_domain::square_root_floor" << endl;
+	}
+	x.freeself();
+	longinteger_object Y, YY;
+	int la, l, len;
+	char c1;
+
+	a.normalize();
+	if (a.sign()) {
+		cout << "longinteger_domain::square_root_floor "
+				"no square root, the number is negative" << endl;
+		exit(1);
+	}
+	if (a.is_zero()) {
+		x.create(0, __FILE__, __LINE__);
+		return;
+	}
+
+	la = a.len();
+	if (ODD(la)) {
+		la++;
+	}
+	len = (la >> 1) + 1;
+	Y.sign() = FALSE;
+	Y.len() = len;
+	Y.rep() = NEW_char(len);
+
+	//Y.allocate_empty(len);
+	//Y.s_sign() = FALSE;
+	for (l = 0; l < len; l++) {
+		Y.ith(l) = (char) 0;
+	}
+
+	for (l = len - 1; l >= 0; l--) {
+		for (c1 = 9; c1 >= 0; c1--) {
+			Y.ith(l) = c1;
+			mult(Y, Y, YY);
+
+			if (compare_unsigned(YY, a) <= 0) {
+				break;
+			}
+		}
+	}
+	Y.normalize();
+	Y.swap_with(x);
+	if (f_v) {
+		cout << "longinteger_domain::square_root_floor done" << endl;
+	}
+}
+
 
 
 
