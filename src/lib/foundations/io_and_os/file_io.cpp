@@ -37,6 +37,7 @@ file_io::~file_io()
 void file_io::concatenate_files(const char *fname_in_mask, int N,
 	const char *fname_out, const char *EOF_marker, int f_title_line,
 	int &cnt_total,
+	vector<int> missing_idx,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -49,6 +50,7 @@ void file_io::concatenate_files(const char *fname_in_mask, int N,
 			<< " N=" << N << " fname_out=" << fname_out << endl;
 	}
 
+	//missing_idx = NEW_int(N);
 	buf = NEW_char(MY_OWN_BUFSIZE);
 	cnt_total = 0;
 	{
@@ -56,11 +58,11 @@ void file_io::concatenate_files(const char *fname_in_mask, int N,
 		for (h = 0; h < N; h++) {
 			sprintf(fname, fname_in_mask, h);
 			if (file_size(fname) < 0) {
-				cout << "concatenate_files input file does not exist" << endl;
-				exit(1);
+				cout << "concatenate_files input file does not exist: " << fname << " skipping" << endl;
+				//missing_idx[nb_missing++] = h;
+				missing_idx.push_back(h);
 			}
-
-			{
+			else {
 				ifstream fp(fname);
 
 				cnt = 0;
@@ -69,7 +71,7 @@ void file_io::concatenate_files(const char *fname_in_mask, int N,
 						cout << "Encountered End-of-file without having seem EOF "
 								"marker, perhaps the file is corrupt. "
 								"I was trying to read the file " << fname << endl;
-						exit(1);
+						missing_idx.push_back(h);
 						break;
 					}
 
@@ -88,16 +90,100 @@ void file_io::concatenate_files(const char *fname_in_mask, int N,
 					}
 					cnt++;
 				}
+				cnt_total += cnt;
 			}
-			cnt_total += cnt;
 		} // next h
 		fp_out << EOF_marker << " " << cnt_total << endl;
 	}
 	cout << "Written file " << fname_out << " of size "
 		<< file_size(fname_out) << endl;
 	FREE_char(buf);
+	cout << "There are " << missing_idx.size() << " missing files, they are:" << endl;
+	for (h = 0; h < missing_idx.size(); h++) {
+		sprintf(fname, fname_in_mask, missing_idx[h]);
+		cout << h << " : " << missing_idx[h] << " : " << fname << endl;
+	}
+
 	if (f_v) {
 		cout << "concatenate_files done" << endl;
+	}
+}
+
+void file_io::concatenate_files_into(const char *fname_in_mask, int N,
+	ofstream &fp_out, const char *EOF_marker, int f_title_line,
+	int &cnt_total,
+	vector<int> &missing_idx,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	char fname[1000];
+	char *buf;
+	int h, cnt;
+
+	if (f_v) {
+		cout << "file_io::concatenate_files_into " << fname_in_mask
+			<< " N=" << N << " into an open file" << endl;
+	}
+
+	//missing_idx = NEW_int(N);
+	buf = NEW_char(MY_OWN_BUFSIZE);
+	cnt_total = 0;
+	{
+		//ofstream fp_out(fname_out);
+		for (h = 0; h < N; h++) {
+			sprintf(fname, fname_in_mask, h);
+
+			fp_out << "# start of file " << fname << endl;
+
+			if (file_size(fname) < 0) {
+				cout << "file_io::concatenate_files_into "
+						"input file does not exist: " << fname << " skipping" << endl;
+				//missing_idx[nb_missing++] = h;
+				missing_idx.push_back(h);
+			}
+			else {
+				ifstream fp(fname);
+
+				cnt = 0;
+				while (TRUE) {
+					if (fp.eof()) {
+						cout << "Encountered End-of-file without having seem EOF "
+								"marker, perhaps the file is corrupt. "
+								"I was trying to read the file " << fname << endl;
+						missing_idx.push_back(h);
+						break;
+					}
+
+					fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+					//cout << "Read: " << buf << endl;
+					if (strncmp(buf, EOF_marker, strlen(EOF_marker)) == 0) {
+						break;
+					}
+					if (f_title_line) {
+						if (h == 0 || cnt) {
+							fp_out << buf << endl;
+						}
+					}
+					else {
+						fp_out << buf << endl;
+					}
+					cnt++;
+				}
+				cnt_total += cnt;
+			}
+			fp_out << "# end of file " << fname << endl;
+		} // next h
+		//fp_out << EOF_marker << " " << cnt_total << endl;
+	}
+	FREE_char(buf);
+	cout << "There are " << missing_idx.size() << " missing files, they are:" << endl;
+	for (h = 0; h < missing_idx.size(); h++) {
+		sprintf(fname, fname_in_mask, missing_idx[h]);
+		cout << h << " : " << missing_idx[h] << " : " << fname << endl;
+	}
+
+	if (f_v) {
+		cout << "file_io::concatenate_files_into done" << endl;
 	}
 }
 
@@ -512,6 +598,7 @@ void file_io::count_number_of_solutions_in_file_and_get_solution_size(
 	{
 		ifstream fp(fname);
 		char *p_buf;
+		int line_number = 1;
 
 
 		while (TRUE) {
@@ -524,7 +611,7 @@ void file_io::count_number_of_solutions_in_file_and_get_solution_size(
 			//cout << "read line '" << buf << "'" << endl;
 			if (strlen(buf) == 0) {
 				cout << "file_io::count_number_of_solutions_in_file_and_get_solution_size "
-						"empty line" << endl;
+						"line " << line_number << " empty line" << endl;
 				exit(1);
 			}
 
@@ -540,6 +627,7 @@ void file_io::count_number_of_solutions_in_file_and_get_solution_size(
 								"solution_size is not constant" << endl;
 						cout << "solution_size=" << solution_size << endl;
 						cout << "s=" << s << endl;
+						cout << "line " << line_number << endl;
 						exit(1);
 					}
 				}
@@ -549,6 +637,7 @@ void file_io::count_number_of_solutions_in_file_and_get_solution_size(
 				break;
 			}
 			nb_solutions++;
+			line_number++;
 		}
 	}
 	FREE_char(buf);
@@ -584,6 +673,7 @@ void file_io::count_number_of_solutions_in_file(const char *fname,
 
 
 	{
+
 		ifstream fp(fname);
 
 

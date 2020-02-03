@@ -671,6 +671,9 @@ void large_set_classify::process_starter_case(
 					"the number of orbits of the normalizer on the "
 					"good orbits is " << Sch->nb_orbits << endl;
 			Sch->print_and_list_orbits_tex(cout);
+			cout << "printing orbits through Design_table_reduced_idx:" << endl;
+			Sch->print_and_list_orbits_using_labels(
+					cout, Design_table_reduced_idx);
 		}
 
 		{

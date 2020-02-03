@@ -444,8 +444,7 @@ int main(int argc, const char **argv)
 	}
 	else {
 		if (f_depth) {
-			cout << "classification of starter" << endl;
-			cout << "depth = " << depth << endl;
+			cout << "classification of subsets of size " << depth << endl;
 			LS->gen->depth = depth;
 
 			LS->compute(verbose_level);
