@@ -38,82 +38,106 @@ int main(int argc, char **argv)
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-N") == 0) {
 			f_N = TRUE;
 			N = atoi(argv[++i]);
 			cout << "-N " << N << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-fname_in_mask") == 0) {
 			f_fname_in_mask = TRUE;
 			fname_in_mask = argv[++i];
 			cout << "-fname_in_mask " << fname_in_mask << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-save") == 0) {
 			f_save = TRUE;
 			fname_out = argv[++i];
 			cout << "-save " << fname_out << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-EOF_marker") == 0) {
 			f_EOF_marker = TRUE;
 			EOF_marker = argv[++i];
 			cout << "-EOF_marker " << EOF_marker << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-title_line") == 0) {
 			f_title_line = TRUE;
 			cout << "-title_line " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-loop") == 0) {
 			f_loop = TRUE;
 			loop_from = atoi(argv[++i]);
 			loop_to = atoi(argv[++i]);
 			cout << "-loop " << loop_from << " " << loop_to << endl;
-			}
 		}
+	}
 	if (!f_N) {
 		cout << "Please use option -N <N>" << endl;
 		exit(1);
-		}
+	}
 	if (!f_fname_in_mask) {
 		cout << "Please use option -fname_in_mask <mask>" << endl;
 		exit(1);
-		}
+	}
 	if (!f_save) {
 		cout << "Please use option -save <fname>" << endl;
 		exit(1);
-		}
+	}
 	if (!f_EOF_marker) {
 		cout << "Please use option -EOF_marker <EOF_marker>" << endl;
 		exit(1);
-		}
+	}
 	file_io Fio;
 	int cnt_total = 0;
 
 	if (f_loop) {
-		int h;
+		int h, i, j;
 		int cnt;
+		vector<pair<int,int>> Missing;
 
-		for (h = loop_from; h <= loop_to; h++) {
-			char fname_in_mask_processed[1000];
-			char fname_out_processed[1000];
+		{
+			ofstream fp_out(fname_out);
 
-			sprintf(fname_in_mask_processed, fname_in_mask, h);
-			sprintf(fname_out_processed, fname_out, h);
-			cout << "h=" << h << " fname_in_mask_processed="
-					<< fname_in_mask_processed << endl;
-			Fio.concatenate_files(fname_in_mask_processed, N,
-				fname_out_processed, EOF_marker, f_title_line, 
-				cnt,
-				verbose_level);
-			cnt_total += cnt;
+			for (h = loop_from; h <= loop_to; h++) {
+				char fname_in_mask_processed[1000];
+				char fname_out_processed[1000];
+				vector<int> missing;
+
+				sprintf(fname_in_mask_processed, fname_in_mask, h);
+				sprintf(fname_out_processed, fname_out, h);
+				cout << "h=" << h << " fname_in_mask_processed="
+						<< fname_in_mask_processed << endl;
+				Fio.concatenate_files_into(fname_in_mask_processed, N,
+					fp_out, EOF_marker, f_title_line,
+					cnt,
+					missing,
+					verbose_level);
+
+				cnt_total += cnt;
+				for (i = 0; i < missing.size(); i++) {
+					Missing.push_back(make_pair(h, missing[i]));
+				}
 			}
+			fp_out << EOF_marker << " " << cnt_total << endl;
+		} // fp_out
+
+		cout << "There are " << Missing.size() << " missing files. They are:" << endl;
+		for (i = 0; i < Missing.size(); i++) {
+			h = Missing[i].first;
+			j = Missing[i].second;
+			cout << i << " : " << h << " : " << j << endl;
 		}
+		cout << "Written file " << fname_out << " with " << cnt_total << " solutions" << endl;
+
+	}
 	else {
+		vector<int> missing;
+
 		Fio.concatenate_files(fname_in_mask, N,
 			fname_out, EOF_marker, f_title_line, 
 			cnt_total,
+			missing,
 			verbose_level);
-		}
+	}
 	cout << "We found a total of " << cnt_total << " solutions" << endl;
 	the_end(t0);
 }
