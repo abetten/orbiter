@@ -1744,14 +1744,14 @@ int projective_space_with_action::process_object(
 	strong_generators *&SG,
 	long int *canonical_labeling,
 	int verbose_level)
+// returns f_found, which is TRUE if the object is rejected
 {
 	int f_v = (verbose_level >= 1);
-	int ret;
 
 	if (f_v) {
 		cout << "projective_space_with_action::process_object "
 				"n=" << CB->n << endl;
-		}
+	}
 
 	longinteger_object go;
 	//int *Extra_data;
@@ -1759,7 +1759,7 @@ int projective_space_with_action::process_object(
 
 	if (f_save_incma_in_and_out) {
 		sprintf(save_incma_in_and_out_prefix, "%s_%d_", prefix, CB->n);
-		}
+	}
 
 
 	uchar *canonical_form;
@@ -1769,7 +1769,7 @@ int projective_space_with_action::process_object(
 	if (f_v) {
 		cout << "projective_space_with_action::process_object "
 				"before PA->set_stabilizer_of_object" << endl;
-		}
+	}
 
 	SG = set_stabilizer_of_object(
 		OiP,
@@ -1783,7 +1783,7 @@ int projective_space_with_action::process_object(
 	if (f_v) {
 		cout << "projective_space_with_action::process_object "
 				"after PA->set_stabilizer_of_object" << endl;
-		}
+	}
 
 
 	SG->group_order(go);
@@ -1797,8 +1797,8 @@ int projective_space_with_action::process_object(
 		cout << (int)canonical_form[i];
 		if (i < canonical_form_len - 1) {
 			cout << ", ";
-			}
 		}
+	}
 #endif
 	//cout << endl;
 
@@ -1809,30 +1809,33 @@ int projective_space_with_action::process_object(
 	if (CB->n == 0) {
 		CB->init(nb_objects_to_test, canonical_form_len, verbose_level);
 		sz = OiP->sz;
-		}
+	}
 	else {
 		if (OiP->sz != sz) {
 			cout << "projective_space_with_action::process_object "
 					"OiP->sz != sz" << endl;
 			exit(1);
-			}
 		}
+	}
 	if (!CB->add(canonical_form, Extra_data, verbose_level)) {
 		FREE_int(Extra_data);
-		}
+	}
 #endif
 	if (CB->n == 0) {
 		CB->init(nb_objects_to_test, canonical_form_len, verbose_level);
-		}
-	ret = CB->add(canonical_form, OiP, verbose_level);
+	}
+	int f_found;
+	int idx;
+
+	CB->search_and_add_if_new(canonical_form, OiP, f_found, idx, verbose_level);
 
 
 	//delete SG;
 
 	if (f_v) {
 		cout << "projective_space_with_action::process_object done" << endl;
-		}
-	return ret;
+	}
+	return f_found;
 }
 
 void projective_space_with_action::classify_objects_using_nauty(
@@ -1844,7 +1847,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int input_idx, ret;
+	int input_idx, f_found;
 	int t0, t1, dt;
 	file_io Fio;
 	os_interface Os;
@@ -1895,7 +1898,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 					verbose_level);
 			canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
-			ret = process_object(CB, OiP,
+			f_found = process_object(CB, OiP,
 					f_save_incma_in_and_out, prefix,
 					nb_objects_to_test,
 					SG,
@@ -1905,11 +1908,11 @@ void projective_space_with_action::classify_objects_using_nauty(
 
 			if (f_v) {
 				cout << "projective_space_with_action::classify_objects_using_nauty "
-						"after process_object INPUT_TYPE_SET_OF_POINTS, ret=" << ret << endl;
+						"after process_object INPUT_TYPE_SET_OF_POINTS, f_found=" << f_found << endl;
 				}
 
 
-			if (!ret) {
+			if (f_found) {
 				cout << "before FREE_OBJECT(SG)" << endl;
 				FREE_OBJECT(SG);
 				cout << "before FREE_OBJECT(OiP)" << endl;
@@ -1971,7 +1974,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 				cout << "projective_space_with_action::classify_objects_using_nauty "
 						"before process_object" << endl;
 				}
-			ret = process_object(CB, OiP,
+			f_found = process_object(CB, OiP,
 					f_save_incma_in_and_out, prefix,
 					nb_objects_to_test,
 					SG,
@@ -1981,11 +1984,11 @@ void projective_space_with_action::classify_objects_using_nauty(
 
 			if (f_v) {
 				cout << "projective_space_with_action::classify_objects_using_nauty "
-						"after process_object INPUT_TYPE_FILE_OF_POINT_SET, ret=" << ret << endl;
+						"after process_object INPUT_TYPE_FILE_OF_POINT_SET, f_found=" << f_found << endl;
 				}
 
 
-			if (!ret) {
+			if (f_found) {
 				FREE_OBJECT(SG);
 				FREE_OBJECT(OiP);
 				//FREE_int(canonical_labeling);
@@ -2031,7 +2034,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 			canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
 
-			if (!process_object(CB, OiP,
+			if (process_object(CB, OiP,
 				f_save_incma_in_and_out, prefix,
 				nb_objects_to_test,
 				SG,
@@ -2081,7 +2084,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 					verbose_level);
 			canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
-			if (!process_object(CB, OiP,
+			if (process_object(CB, OiP,
 				f_save_incma_in_and_out, prefix,
 				nb_objects_to_test,
 				SG,
@@ -2244,7 +2247,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 				canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
 
-				if (!process_object(CB, OiP,
+				if (process_object(CB, OiP,
 					f_save_incma_in_and_out, prefix,
 					nb_objects_to_test,
 					SG,
@@ -2630,7 +2633,7 @@ void projective_space_with_action::merge_packings(
 			OiP->set_as_string = NEW_char(l + 1);
 			strcpy(OiP->set_as_string, text);
 
-			int i, j, ii, jj, a, ret;
+			int i, j, ii, jj, a;
 			int L = nb_rows * nb_cols;
 
 			Incma_out = NEW_int(L);
@@ -2669,19 +2672,22 @@ void projective_space_with_action::merge_packings(
 				cout << "projective_space_with_action::merge_packings "
 						"before CB->add" << endl;
 			}
-			ret = CB->add(canonical_form, OiP, 0 /*verbose_level*/);
-			if (ret == 0) {
+			int idx;
+			int f_found;
+
+			CB->search_and_add_if_new(canonical_form, OiP, f_found, idx, 0 /*verbose_level*/);
+			if (f_found) {
 				nb_reject++;
 			}
 			if (f_v) {
 				cout << "projective_space_with_action::merge_packings "
-						"CB->add returns " << ret
+						"CB->add returns f_found = " << f_found
 						<< " nb iso = " << CB->nb_types
 						<< " nb_reject=" << nb_reject << endl;
 			}
 
 
-			int idx;
+			//int idx;
 
 			object_in_projective_space_with_action *OiPA;
 
@@ -3008,7 +3014,7 @@ void projective_space_with_action::select_packings(
 			OiP->set_as_string = NEW_char(l + 1);
 			strcpy(OiP->set_as_string, text);
 
-			int i, j, ii, jj, a, ret;
+			int i, j, ii, jj, a;
 			int L = nb_rows * nb_cols;
 
 			Incma_out = NEW_int(L);
@@ -3051,14 +3057,17 @@ void projective_space_with_action::select_packings(
 						"before CB->add" << endl;
 			}
 
-			ret = CB->add(canonical_form, OiP, verbose_level);
-			if (ret == 0) {
+			int idx;
+			int f_found;
+
+			CB->search_and_add_if_new(canonical_form, OiP, f_found, idx, 0 /*verbose_level*/);
+			if (f_found) {
 				cout << "reject" << endl;
 				nb_reject++;
 			}
 			if (f_v) {
 				cout << "projective_space_with_action::select_packings "
-						"CB->add returns " << ret
+						"CB->add returns f_found = " << f_found
 						<< " nb iso = " << CB->nb_types
 						<< " nb_reject=" << nb_reject
 						<< " nb_accept=" << nb_accept
@@ -3068,7 +3077,7 @@ void projective_space_with_action::select_packings(
 			}
 
 
-			int idx;
+			//int idx;
 
 			object_in_projective_space_with_action *OiPA;
 
@@ -3385,7 +3394,7 @@ void projective_space_with_action::select_packings_self_dual(
 			OiP->set_as_string = NEW_char(l + 1);
 			strcpy(OiP->set_as_string, text);
 
-			int i, j, ii, jj, a, ret;
+			int i, j, ii, jj, a;
 			int L = nb_rows * nb_cols;
 
 			Incma_out = NEW_int(L);
@@ -3431,15 +3440,18 @@ void projective_space_with_action::select_packings_self_dual(
 						"before CB->add" << endl;
 			}
 
-			ret = CB->add(canonical_form, OiP, 0 /*verbose_level*/);
-			if (ret == 0) {
+			int idx;
+			int f_found;
+
+			CB->search_and_add_if_new(canonical_form, OiP, f_found, idx, 0 /*verbose_level*/);
+			if (f_found) {
 				cout << "reject" << endl;
 				nb_reject++;
 			}
 			if (FALSE) {
 				cout << "projective_space_with_action::"
 						"select_packings_self_dual "
-						"CB->add returns " << ret
+						"CB->add f_found = " << f_found
 						<< " nb iso = " << CB->nb_types
 						<< " nb_reject=" << nb_reject
 						<< " nb_accept=" << nb_accept
@@ -3449,7 +3461,7 @@ void projective_space_with_action::select_packings_self_dual(
 			}
 
 
-			int idx;
+			//int idx;
 
 			object_in_projective_space_with_action *OiPA;
 
