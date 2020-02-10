@@ -674,7 +674,7 @@ public:
 	int b, c; // the equation of the curve is Y^2 = X^3 + bX + c mod p
 	int nb; // number of points
 	int *T; // [nb * 3] point coordinates
-		// the point at inifinity is last
+		// the point at infinity is last
 	int *A; // [nb * nb] addition table
 	finite_field *F;
 
@@ -694,6 +694,7 @@ public:
 		int x1, int x2, int x3,
 		int y1, int y2, int y3,
 		int &z1, int &z2, int &z3, int verbose_level);
+	void save_incidence_matrix(char *fname, int verbose_level);
 	void draw_grid(char *fname, int xmax, int ymax,
 			int f_with_grid, int f_with_points, int verbose_level);
 	void draw_grid2(mp_graphics &G,
@@ -2225,6 +2226,7 @@ public:
 		partitionstack *&Stack,
 		int verbose_level);
 	long int nb_rk_k_subspaces_as_lint(int k);
+	void print_set_of_points(std::ostream &ost, long int *Pts, int nb_pts);
 	void print_all_points();
 	long int rank_point(int *v);
 	void unrank_point(int *v, long int rk);
@@ -2342,7 +2344,7 @@ public:
 		int verbose_level);
 
 	// projective_space2.cpp:
-	void print_set_numerical(long int *set, int set_size);
+	void print_set_numerical(std::ostream &ost, long int *set, int set_size);
 	void print_set(long int *set, int set_size);
 	void print_line_set_numerical(long int *set, int set_size);
 	int determine_hermitian_form_in_plane(int *pts, int nb_pts, 

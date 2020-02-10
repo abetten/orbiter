@@ -5291,7 +5291,7 @@ void finite_field::do_ideal(int n,
 		cout << "They are : ";
 		lint_vec_print(cout, Pts, nb_pts);
 		cout << endl;
-		HPD->P->print_set_numerical(Pts, nb_pts);
+		HPD->P->print_set_numerical(cout, Pts, nb_pts);
 
 
 		if (h == 0) {

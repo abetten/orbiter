@@ -1027,6 +1027,31 @@ long int projective_space::nb_rk_k_subspaces_as_lint(int k)
 	return N;
 }
 
+void projective_space::print_set_of_points(ostream &ost, long int *Pts, int nb_pts)
+{
+	int h;
+	int *v;
+
+	v = NEW_int(n + 1);
+
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|r|r|r|}" << endl;
+	ost << "\\hline" << endl;
+	ost << "i & \\mbox{Rank} & \\mbox{Point} \\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\hline" << endl;
+	for (h = 0; h < nb_pts; h++) {
+		unrank_point(v, Pts[h]);
+		ost << h << " & " << Pts[h] << " & ";
+		int_vec_print(ost, v, n + 1);
+		ost << "\\\\" << endl;
+		}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$" << endl;
+	FREE_int(v);
+}
+
 void projective_space::print_all_points()
 {
 	int *v;
@@ -1039,7 +1064,8 @@ void projective_space::print_all_points()
 		cout << setw(3) << i << " : ";
 		int_vec_print(cout, v, n + 1);
 		cout << endl;
-		}
+	}
+	FREE_int(v);
 }
 
 long int projective_space::rank_point(int *v)

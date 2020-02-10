@@ -38,6 +38,8 @@ MODULES= \
 		foundations/coding_theory/coding_theory_domain.o \
 		foundations/coding_theory/mindist.o \
 		foundations/combinatorics/brick_domain.o \
+		foundations/combinatorics/combinatorial_object_create.o \
+		foundations/combinatorics/combinatorial_object_description.o \
 		foundations/combinatorics/combinatorics_domain.o \
 		foundations/combinatorics/geo_parameter.o \
 		foundations/combinatorics/tdo_data.o \
@@ -293,8 +295,6 @@ MODULES= \
 		top_level/algebra_and_number_theory/young.o \
 		top_level/combinatorics/bent_function_classify.o \
 		top_level/combinatorics/cayley_graph_search.o \
-		top_level/combinatorics/combinatorial_object_create.o \
-		top_level/combinatorics/combinatorial_object_description.o \
 		top_level/combinatorics/create_graph_description.o \
 		top_level/combinatorics/create_graph.o \
 		top_level/combinatorics/delandtsheer_doyen.o \

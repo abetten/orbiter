@@ -9,20 +9,21 @@
 
 
 
-#include "orbiter.h"
+#include "foundations.h"
 
 using namespace std;
 
+
 namespace orbiter {
-namespace top_level {
+namespace foundations {
 
 
 combinatorial_object_create::combinatorial_object_create()
 {
 	F = NULL;
 	//A = NULL;
-	f_has_group = FALSE;
-	Sg = NULL;
+	//f_has_group = FALSE;
+	//Sg = NULL;
 
 	//char fname[1000];
 	nb_pts = 0;
@@ -48,9 +49,11 @@ void combinatorial_object_create::freeself()
 	if (Pts) {
 		FREE_lint(Pts);
 		}
+#if 0
 	if (Sg) {
 		delete Sg;
 		}
+#endif
 	null();
 }
 
@@ -249,11 +252,13 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 			fname, nb_pts, Pts,
 			verbose_level);
 	}
+#if 0
 	else if (Descr->f_Hill_cap_56) {
 		Hill_cap56(
 			fname, nb_pts, Pts,
 			verbose_level);
 	}
+#endif
 	else if (Descr->f_ttp_code) {
 
 		if (!Descr->f_Q) {
@@ -376,12 +381,12 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 	set_size = nb_pts;
 
 	FREE_lint(Pts);
-#endif
 
 	if (f_has_group) {
 		cout << "combinatorial_object_create::init the stabilizer is:" << endl;
 		Sg->print_generators_tex(cout);
 		}
+#endif
 
 
 
@@ -390,6 +395,7 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 		}
 }
 
+#if 0
 void combinatorial_object_create::apply_transformations(const char **transform_coeffs,
 	int *f_inverse_transform, int nb_transform, int verbose_level)
 {
@@ -399,6 +405,7 @@ void combinatorial_object_create::apply_transformations(const char **transform_c
 		cout << "combinatorial_object_create::apply_transformations done" << endl;
 		}
 }
+#endif
 
 
 }}

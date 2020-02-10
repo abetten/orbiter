@@ -528,7 +528,7 @@ void spread_classify::plane_intersection_type_of_klein_image(
 		cout << endl;
 		}
 	if (f_v3) {
-		P5->print_set_numerical(the_set_out, size);
+		P5->print_set_numerical(cout, the_set_out, size);
 		}
 
 
