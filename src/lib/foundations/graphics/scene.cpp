@@ -1520,6 +1520,11 @@ void scene::draw_cubic_with_selection(int *selection, int nb_select,
 	for (i = 0; i < nb_select; i++) {
 		s = selection[i];
 		j = s;
+
+		cout << "scene::draw_cubic_with_selection j=" << j << ":" << endl;
+		for (h = 0; h < 20; h++) {
+			cout << h << " : " << Cubic_coords[j * 20 + h] << endl;
+		}
 		ost << "		poly{3, <";
 
 		for (h = 0; h < 20; h++) {

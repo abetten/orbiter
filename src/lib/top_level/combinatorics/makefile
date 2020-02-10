@@ -8,8 +8,6 @@ LFLAGS = -lm
 MODULES = \
 	bent_function_classify.o \
 	cayley_graph_search.o \
-	combinatorial_object_create.o \
-	combinatorial_object_description.o \
 	create_graph_description.o \
 	create_graph.o \
 	delandtsheer_doyen.o \

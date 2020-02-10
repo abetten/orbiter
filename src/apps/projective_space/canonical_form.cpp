@@ -68,22 +68,22 @@ int main(int argc, const char **argv)
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
 			q = atoi(argv[++i]);
 			cout << "-q " << q << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-n") == 0) {
 			f_n = TRUE;
 			n = atoi(argv[++i]);
 			cout << "-n " << n << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-poly") == 0) {
 			f_poly = TRUE;
 			poly = argv[++i];
 			cout << "-poly " << poly << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-input") == 0) {
 			f_input = TRUE;
 			Data_input_stream = NEW_OBJECT(data_input_stream);
@@ -91,48 +91,48 @@ int main(int argc, const char **argv)
 				argv + i + 1, verbose_level);
 
 			cout << "-input" << endl;
-			}
+		}
 
 
 		else if (strcmp(argv[i], "-all_k_subsets") == 0) {
 			f_all_k_subsets = TRUE;
 			k = atoi(argv[++i]);
 			cout << "-all_k_subsets " << k << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-save_incma_in_and_out") == 0) {
 			f_save_incma_in_and_out = TRUE;
 			cout << "-save_incma_in_and_out" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-prefix") == 0) {
 			f_prefix = TRUE;
 			prefix = argv[++i];
 			cout << "-prefix " << prefix << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-save") == 0) {
 			f_save = TRUE;
 			output_prefix = argv[++i];
 			cout << "-save " << output_prefix << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-fixed_structure_of_element_of_order") == 0) {
 			fixed_structure_order_list[fixed_structure_order_list_sz] = atoi(argv[++i]);
 			cout << "-fixed_structure_of_element_of_order "
 					<< fixed_structure_order_list[fixed_structure_order_list_sz] << endl;
 			fixed_structure_order_list_sz++;
-			}
+		}
 		else if (strcmp(argv[i], "-classify_nauty") == 0) {
 			f_classify_nauty = TRUE;
 			cout << "-classify_nauty " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			cout << "-report " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-max_TDO_depth") == 0) {
 			f_max_TDO_depth = TRUE;
 			max_TDO_depth = atoi(argv[++i]);
 			cout << "-max_TDO_depth " << max_TDO_depth << endl;
-			}
 		}
+	}
 
 
 	//int f_v = (verbose_level >= 1);
@@ -140,15 +140,15 @@ int main(int argc, const char **argv)
 	if (!f_q) {
 		cout << "please use option -q <q>" << endl;
 		exit(1);
-		}
+	}
 	if (!f_n) {
 		cout << "please use option -n <n>" << endl;
 		exit(1);
-		}
+	}
 	if (!f_input) {
 		cout << "please use option -input ... -end" << endl;
 		exit(1);
-		}
+	}
 
 	finite_field *F;
 
@@ -161,10 +161,10 @@ int main(int argc, const char **argv)
 
 	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
-		}
+	}
 	else {
 		f_semilinear = TRUE;
-		}
+	}
 
 
 	projective_space_with_action *PA;
@@ -218,7 +218,7 @@ int main(int argc, const char **argv)
 			OiP = OiPA->OiP;
 			if (OiP->type != t_PAC) {
 				OiP->print(cout);
-				}
+			}
 
 #if 0
 			for (j = 0; j < rep_len; j++) {
@@ -229,7 +229,7 @@ int main(int argc, const char **argv)
 				}
 #endif
 			cout << endl;
-			}
+		}
 
 
 

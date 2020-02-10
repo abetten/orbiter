@@ -39,10 +39,10 @@ void elliptic_curve::freeself()
 {
 	if (T) {
 		FREE_int(T);
-		}
+	}
 	if (A) {
 		FREE_int(A);
-		}
+	}
 }
 
 
@@ -54,7 +54,7 @@ void elliptic_curve::init(finite_field *F, int b, int c,
 	if (f_v) {
 		cout << "elliptic_curve::init q=" << F->q
 				<< " b=" << b << " c=" << c << endl;
-		}
+	}
 	elliptic_curve::F = F;
 	q = F->q;
 	p = F->p;
@@ -65,13 +65,13 @@ void elliptic_curve::init(finite_field *F, int b, int c,
 
 	if (f_v) {
 		cout << "elliptic_curve::init before compute_points" << endl;
-		}
+	}
 
 	compute_points(verbose_level);
 
 	if (f_v) {
 		cout << "elliptic_curve::init after compute_points" << endl;
-		}
+	}
 
 #if 0
 	if (E.nb < 20) {
@@ -106,7 +106,7 @@ void elliptic_curve::init(finite_field *F, int b, int c,
 #endif
 	if (f_v) {
 		cout << "elliptic_curve::init done" << endl;
-		}
+	}
 }
 
 
@@ -119,7 +119,7 @@ void elliptic_curve::compute_points(int verbose_level)
 
 	if (f_v) {
 		cout << "elliptic_curve::compute_points" << endl;
-		}
+	}
 	bound = q + 1 + 2 * ((int)(sqrt(q)) + 1); // Hasse Weil bound
 	
 
@@ -139,9 +139,9 @@ void elliptic_curve::compute_points(int verbose_level)
 			if (nb == bound) {
 				cout << "The number of points exceeds the bound" << endl;
 				exit(1);
-				}
-			//cout << nb++ << " : (" << x << "," << 0 << ",1)" << endl;
 			}
+			//cout << nb++ << " : (" << x << "," << 0 << ",1)" << endl;
+		}
 		else {
 			if (F->square_root(r, y)) {
 				y1 = y;
@@ -152,30 +152,30 @@ void elliptic_curve::compute_points(int verbose_level)
 						cout << "The number of points "
 								"exceeds the bound" << endl;
 						exit(1);
-						}
 					}
+				}
 				else {
 					if (y2 < y1) {
 						y1 = y2;
 						y2 = y;
-						}
+					}
 					add_point_to_table(x, y1, 1);
 					if (nb == bound) {
 						cout << "The number of points "
 								"exceeds the bound" << endl;
 						exit(1);
-						}
+					}
 					add_point_to_table(x, y2, 1);
 					if (nb == bound) {
 						cout << "The number of points "
 								"exceeds the bound" << endl;
 						exit(1);
-						}
 					}
 				}
+			}
 			else {
 				// no point for this x coordinate
-				}
+			}
 
 #if 0
 			if (p != 2) {
@@ -189,31 +189,31 @@ void elliptic_curve::compute_points(int verbose_level)
 						cout << "There is a problem "
 								"with the square root" << endl;
 						exit(1);
-						}
+					}
 					y1 = y;
 					y2 = F->negate(y);
 					if (y2 < y1) {
 						y1 = y2;
 						y2 = y;
-						}
+					}
 					add_point_to_table(x, y1, 1);
 					if (nb == bound) {
 						cout << "The number of points "
 								"exceeds the bound" << endl;
 						exit(1);
-						}
+					}
 					add_point_to_table(x, y2, 1);
 					if (nb == bound) {
 						cout << "The number of points "
 								"exceeds the bound" << endl;
 						exit(1);
-						}
+					}
 					//cout << nb++ << " : (" << x << ","
 					// << y << ",1)" << endl;
 					//cout << nb++ << " : (" << x << ","
 					// << F.negate(y) << ",1)" << endl;
-					}
 				}
+			}
 			else {
 				y = F->frobenius_power(r, e - 1);
 				add_point_to_table(x, y, 1);
@@ -221,26 +221,26 @@ void elliptic_curve::compute_points(int verbose_level)
 					cout << "The number of points exceeds "
 							"the bound" << endl;
 					exit(1);
-					}
+				}
 				//cout << nb++ << " : (" << x << ","
 				// << y << ",1)" << endl;
-				}
+			}
 #endif
 
-			}
 		}
+	}
 
 
 	if (nb == bound) {
 		cout << "The number of points exceeds the bound" << endl;
 		exit(1);
-		}
+	}
 
 
 	if (f_v) {
 		cout << "elliptic_curve::compute_points done, "
 				"we found " << nb << " points" << endl;
-		}
+	}
 }
 
 void elliptic_curve::add_point_to_table(int x, int y, int z)
@@ -271,7 +271,7 @@ void elliptic_curve::print_points()
 	for (i = 0; i < nb; i++) {
 		cout << setw(4) << i << " & " << T[i * 3 + 0] << ","
 				<< T[i * 3 + 1] << "," << T[i * 3 + 2] << "\\\\" << endl;
-		}
+	}
 }
 
 void elliptic_curve::print_points_affine()
@@ -283,12 +283,12 @@ void elliptic_curve::print_points_affine()
 		cout << setw(4) << i << " & ";
 		if (T[i * 3 + 2] == 0) {
 			cout << "\\cO";
-			}
+		}
 		else {
 			cout << "(" << T[i * 3 + 0] << "," << T[i * 3 + 1] << ")";
-			}
-		cout << "\\\\" << endl;
 		}
+		cout << "\\\\" << endl;
+	}
 }
 
 
@@ -306,45 +306,45 @@ void elliptic_curve::addition(
 		cout << " + ";
 		cout << "(" << y1 << "," << y2 << "," << y3 << ")";
 		cout << endl;
-		}
+	}
 	if (x3 == 0) {
 		z1 = y1;
 		z2 = y2;
 		z3 = y3;
 		return;
-		}
+	}
 	if (y3 == 0) {
 		z1 = x1;
 		z2 = x2;
 		z3 = x3;
 		return;
-		}
+	}
 	if (x3 != 1) {
 		a = F->inverse(x3);
 		x1 = F->mult(x1, a);
 		x2 = F->mult(x2, a);
-		}
+	}
 	if (y3 != 1) {
 		a = F->inverse(y3);
 		y1 = F->mult(y1, a);
 		y2 = F->mult(y2, a);
-		}
+	}
 	if (x1 == y1 && x2 != y2) {
 		if (F->negate(x2) != y2) {
 			cout << "x1 == y1 && x2 != y2 && F.negate(x2) != y2" << endl;
 			exit(1);
-			}
+		}
 		z1 = 0;
 		z2 = 1;
 		z3 = 0;
 		return;
-		}
+	}
 	if (x1 == y1 && x2 == 0 && y2 == 0) {
 		z1 = 0;
 		z2 = 1;
 		z3 = 0;
 		return;
-		}
+	}
 	if (x1 == y1 && x2 == y2) {
 		two = F->add(1, 1);
 		three = F->add(two, 1);
@@ -353,16 +353,50 @@ void elliptic_curve::addition(
 		a = F->inverse(bottom);
 			// this does not work in characteristic two !!!
 		m = F->mult(top, a);
-		}
+	}
 	else {
 		top = F->add(y2, F->negate(x2));
 		bottom = F->add(y1, F->negate(x1));
 		a = F->inverse(bottom);
 		m = F->mult(top, a);
-		}
+	}
 	z1 = F->add(F->add(F->mult(m, m), F->negate(x1)), F->negate(y1));
 	z2 = F->add(F->mult(m, F->add(x1, F->negate(z1))), F->negate(x2));
 	z3 = 1;
+}
+
+void elliptic_curve::save_incidence_matrix(char *fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *M;
+	int i, x, y, z;
+	file_io Fio;
+
+	if (f_v) {
+		cout << "elliptic_curve::save_incidence_matrix" << endl;
+	}
+	M = NEW_int(q * q);
+	int_vec_zero(M, q * q);
+	for (i = 0; i < nb; i++) {
+		x = T[i * 3 + 0];
+		y = T[i * 3 + 1];
+		z = T[i * 3 + 2];
+		if (z == 0) {
+			continue;
+		}
+		if (z != 1) {
+			cout << "elliptic_curve::save_incidence_matrix point is not normalized" << endl;
+			exit(1);
+		}
+		M[(q - 1 - y) * q + x] = 1;
+	}
+	Fio.int_matrix_write_csv(fname, M, q, q);
+	cout << "elliptic_curve::save_incidence_matrix written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	FREE_int(M);
+	if (f_v) {
+		cout << "elliptic_curve::save_incidence_matrix done" << endl;
+	}
 }
 
 void elliptic_curve::draw_grid(char *fname,
@@ -379,25 +413,25 @@ void elliptic_curve::draw_grid(char *fname,
 	
 	if (f_v) {
 		cout << "draw_grid" << endl;
-		}
+	}
 	sprintf(fname_full, "%s.mp", fname);
 	{
-	mp_graphics G(fname_full,
-			x_min, y_min, x_max, y_max, f_embedded, f_sideways, verbose_level - 1);
-	G.out_xmin() = 0;
-	G.out_ymin() = 0;
-	G.out_xmax() = xmax;
-	G.out_ymax() = ymax;
-	cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
-	
-	G.header();
-	G.begin_figure(factor_1000);
-	
-	draw_grid2(G, f_with_grid, f_with_points, verbose_level);
+		mp_graphics G(fname_full,
+				x_min, y_min, x_max, y_max, f_embedded, f_sideways, verbose_level - 1);
+		G.out_xmin() = 0;
+		G.out_ymin() = 0;
+		G.out_xmax() = xmax;
+		G.out_ymax() = ymax;
+		cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
 
+		G.header();
+		G.begin_figure(factor_1000);
 
-	G.end_figure();
-	G.footer();
+		draw_grid2(G, f_with_grid, f_with_points, verbose_level);
+	
+	
+		G.end_figure();
+		G.footer();
 	}
 	file_io Fio;
 
@@ -405,7 +439,7 @@ void elliptic_curve::draw_grid(char *fname,
 			<< Fio.file_size(fname_full) << endl;
 	if (f_v) {
 		cout << "draw_grid done" << endl;
-		}
+	}
 	
 }
 
@@ -417,7 +451,7 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 	int a, b;
 	int x1, x2, x3;
 
-	int rad = 10000;
+	//int rad = 10000;
 	int i, h;
 
 	double *Dx, *Dy;
@@ -436,14 +470,14 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 	if (f_v) {
 		cout << "elliptic_curve::draw_grid2" << endl;
 		cout << "dx=" << dx << " dy=" << dy << endl;
-		}
+	}
 
 
 
 
 	if (f_v) {
 		cout << "elliptic_curve::draw_grid2 drawing grid" << endl;
-		}
+	}
 
 
 #if 0
@@ -495,7 +529,7 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 	for (i = 0; i < 5; i++) {
 		Px[i] = Dx[i] * dx;
 		Py[i] = Dy[i] * dy;
-		}
+	}
 
 
 	G.polygon5(Px, Py, 0, 1, 2, 3, 4);
@@ -505,11 +539,11 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 
 		if (f_v) {
 			cout << "drawing points, nb=" << nb << endl;
-			}
+		}
 
 		if (nb >= 40) {
-			rad = 2000;
-			}
+			//rad = 2000;
+		}
 		for (h = 0; h < nb; h++) {
 			x1 = T[3 * h + 0];
 			x2 = T[3 * h + 1];
@@ -532,7 +566,7 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 			for (i = 0; i < 5; i++) {
 				Px[i] = Dx[i] * dx;
 				Py[i] = Dy[i] * dy;
-				}
+			}
 
 			cout << "point " << h << " : "
 					<< x1 << ", " << x2 << ", " << x3
@@ -540,7 +574,7 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 
 			//G.nice_circle(Px[0], Py[0], rad);
 			G.fill_polygon5(Px, Py, 0, 1, 2, 3, 4);
-			}
+		}
 
 #if 0
 
@@ -561,10 +595,10 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 			}
 #endif
 
-		}
+	}
 	else {
 		cout << "elliptic_curve::draw_grid2 not drawing any points" << endl;
-		}
+	}
 
 
 
@@ -650,7 +684,7 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 
 	if (f_v) {
 		cout << "draw_grid2 done" << endl;
-		}
+	}
 }
 
 void elliptic_curve::make_affine_point(int x1, int x2, int x3,
@@ -659,11 +693,11 @@ void elliptic_curve::make_affine_point(int x1, int x2, int x3,
 	if (x3 == 0) {
 		a = q >> 1;
 		b = q;
-		}
+	}
 	else {
 		a = x1;
 		b = x2;
-		}
+	}
 }
 
 
@@ -692,7 +726,7 @@ void elliptic_curve::compute_addition_table(int verbose_level)
 
 	if (f_v) {
 		cout << "elliptic_curve::compute_addition_table" << endl;
-		}
+	}
 	
 	A = NEW_int(nb * nb);
 	for (i = 0; i < nb; i++) {
@@ -705,7 +739,7 @@ void elliptic_curve::compute_addition_table(int verbose_level)
 			y3 = T[3 * j + 2];
 			if (FALSE) {
 				cout << "add " << i << " " << j << endl;
-				}
+			}
 			addition(
 				x1, x2, x3, 
 				y1, y2, y3,
@@ -714,11 +748,11 @@ void elliptic_curve::compute_addition_table(int verbose_level)
 			
 			k = index_of_point(z1, z2, z3);
 			A[i * nb + j] = k;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "elliptic_curve::compute_addition_table done" << endl;
-		}
+	}
 }
 
 void elliptic_curve::print_addition_table()
@@ -770,17 +804,17 @@ int elliptic_curve::index_of_point(int x1, int x2, int x3)
 		cout << "elliptic_curve::index_of_point "
 				"nb == 0" << endl;
 		exit(1);
-		}
+	}
 
 	if (x3 == 0) {
 		return 0;
-		}
+	}
 	if (x3 != 1) {
 		a = F->inverse(x3);
 		x1 = F->mult(x1, a);
 		x2 = F->mult(x2, a);
 		x3 = 1;
-		}
+	}
 
 	l = 1;
 	r = nb;
@@ -794,28 +828,28 @@ int elliptic_curve::index_of_point(int x1, int x2, int x3)
 		// we examine the element above the middle
 		if (T[3 * m + 0] > x1) {
 			res = 1;
-			}
+		}
 		else if (T[3 * m + 0] < x1) {
 			res = -1;
-			}
+		}
 		else {
 			if (T[3 * m + 1] > x2) {
 				res = 1;
-				}
+			}
 			else if (T[3 * m + 1] < x2) {
 				res = -1;
-				}
+			}
 			else {
 				res = 0;
-				}
 			}
+		}
 		//res = v[m] - a;
 		if (f_v) {
 			cout << "l=" << l << " r=" << r<< " m=" << m
 					<< " T[3 * m + 0]=" << T[3 * m + 0]
 					<< " T[3 * m + 1]=" << T[3 * m + 1]
 											 << " res=" << res << endl;
-			}
+		}
 		//cout << "search l=" << l << " m=" << m << " r=" 
 		//	<< r << "a=" << a << " v[m]=" << v[m]
 		// << " res=" << res << endl;
@@ -828,19 +862,19 @@ int elliptic_curve::index_of_point(int x1, int x2, int x3)
 			if (f_v) {
 				cout << "elliptic_curve::index_of_point "
 						"moving to the right" << endl;
-				}
+			}
 			if (res == 0) {
 				f_found = TRUE;
-				}
 			}
+		}
 		else {
 			if (f_v) {
 				cout << "elliptic_curve::index_of_point "
 						"moving to the left" << endl;
-				}
-			r = m;
 			}
+			r = m;
 		}
+	}
 	// now: l == r; 
 	// and f_found is set accordingly */
 	if (!f_found) {
@@ -848,11 +882,11 @@ int elliptic_curve::index_of_point(int x1, int x2, int x3)
 				"did not find point" << endl;
 		cout << "x1=" << x1 << " x2=" << x2 << " x3=" << x3 << endl;
 		exit(1);
-		}
+	}
 #if 1
 	if (f_found) {
 		l--;
-		}
+	}
 #endif
 	return l;
 }
@@ -867,7 +901,7 @@ int elliptic_curve::order_of_point(int i)
 	while (j != 0) {
 		j = A[i * nb + j];
 		ord++;
-		}
+	}
 	return ord;
 }
 
@@ -884,7 +918,7 @@ void elliptic_curve::print_all_powers(int i)
 			<< ")\\\\" << endl;
 		j = A[i * nb + j];
 		ord++;
-		}
+	}
 }
 
 }

@@ -43,6 +43,7 @@ int *surface_idx2 = NULL;
 int *line_idx3 = NULL;
 int *surface_idx3 = NULL;
 
+int idx_eqn2;
 
 
 
@@ -652,6 +653,28 @@ void surface(int argc, const char **argv)
 		fp << "$$" << endl;
 		cout << endl;
 
+		double Eqn2[20];
+		for (j = 0; j < 20; j++) {
+			Eqn2[j] = 0.;
+		}
+
+		Eqn2[6 - 1] = 125. / 4.;
+		Eqn2[4 - 1] = 25. / 2.;
+		Eqn2[13 - 1] = 25. / 2.;
+		Eqn2[18 - 1] = 25. / 2.;
+		Eqn2[20 - 1] = -8.;
+		cout << "Eqn2:" << endl;
+		for (j = 0; j < 20; j++) {
+			cout << j << " : " << Eqn2[j] << endl;
+		}
+
+#if 0
+		double Eqn3[20];
+		for (j = 0; j < 20; j++) {
+			Eqn3[j] = Eqn2[j] - Eqn[j];
+		}
+#endif
+
 		matrix A1(2,3);
 		matrix A2(2,3);
 		matrix A3(2,3);
@@ -1070,6 +1093,12 @@ void surface(int argc, const char **argv)
 			cout << "surface_idx3=" << endl;
 			int_matrix_print(surface_idx3, nb_frames_default, 1);
 
+
+				int idx_eqn2;
+
+				idx_eqn2 = S->cubic(Eqn2);
+				//S->cubic(Eqn3);
+			cout << "idx(Eqn2) = " << idx_eqn2 << endl;
 
 
 
@@ -1510,6 +1539,52 @@ void draw_frame_HCV(
 					Pov.color_white, fp);
 		}
 		// no rotation here!
+	}
+	else if (round == 9) {
+
+		Anim->S->line_radius = 0.04;
+
+		Anim->S->draw_lines_ai(fp);
+		Anim->S->draw_lines_bj(fp);
+
+		if (f_transformed) {
+			{
+				int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
+
+			Anim->S->draw_lines_cij_with_selection(selection, 15, fp);
+			}
+			//Anim->S->draw_lines_cij(fp);
+
+			{
+				int selection[] = {1};
+				Anim->S->draw_cubic_with_selection(selection, 1,
+						Pov.color_white, fp);
+			}
+		}
+		else {
+			{
+				int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11};
+
+				Anim->S->draw_lines_cij_with_selection(selection, 12, fp);
+			}
+			//Anim->S->draw_lines_cij(fp);
+
+			{
+				int selection[2];
+				selection[0] = 0; //idx_eqn2;
+				Anim->S->draw_cubic_with_selection(selection, 1,
+						Pov.color_white, fp);
+
+				selection[0] = 272; //idx_eqn2;
+				cout << "drawing cubic " << idx_eqn2 << endl;
+				Anim->S->draw_cubic_with_selection(selection, 1,
+						Pov.color_pink_transparent, fp);
+			}
+		}
+
+
+		Pov.rotate_111(h, nb_frames, fp);
+
 	}
 
 

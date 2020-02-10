@@ -1409,19 +1409,25 @@ void strong_generators::print_with_given_action(
 	int i;
 	
 	for (i = 0; i < gens->len; i++) {
-		cout << "Generator " << i << " / "
+		ost << "Generator " << i << " / "
 				<< gens->len << " is:" << endl;
-		A2->element_print(gens->ith(i), cout);
-		cout << endl;
-		cout << "as permutation:" << endl;
+		ost << "$$" << endl;
+		A2->element_print_latex(gens->ith(i), ost);
+		//ost << endl;
+		ost << "$$" << endl;
+		ost << "as permutation:" << endl;
+		ost << "$$" << endl;
 		if (A->degree < 1000) {
-			A2->element_print_as_permutation(gens->ith(i), cout);
-		} else {
+			A2->element_print_as_permutation(gens->ith(i), ost);
+		}
+		else {
 			cout << "strong_generators::print_with_given_action "
 					"the degree is too large, we won't print "
 					"the permutation representation" << endl;
 		}
-		cout << endl;
+		ost << endl;
+		ost << "$$" << endl;
+		//ost << "\\\\" << endl;
 		}
 }
 

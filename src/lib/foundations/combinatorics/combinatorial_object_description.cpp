@@ -10,12 +10,13 @@
 
 
 
-#include "orbiter.h"
+#include "foundations.h"
 
 using namespace std;
 
+
 namespace orbiter {
-namespace top_level {
+namespace foundations {
 
 
 
@@ -71,7 +72,7 @@ combinatorial_object_description::combinatorial_object_description()
 	elliptic_curve_b = 0;
 	elliptic_curve_c = 0;
 
-	f_Hill_cap_56 = FALSE;
+	//f_Hill_cap_56 = FALSE;
 
 	f_ttp_code = FALSE;
 	f_ttp_construction_A = FALSE;
@@ -244,10 +245,12 @@ int combinatorial_object_description::read_arguments(int argc, const char **argv
 			cout << "-elliptic_curve " << elliptic_curve_b
 					<< " " << elliptic_curve_c << endl;
 		}
+#if 0
 		else if (strcmp(argv[i], "-Hill_cap_56") == 0) {
 			f_Hill_cap_56 = TRUE;
 			cout << "-Hill_cap_56 " << endl;
 		}
+#endif
 		else if (strcmp(argv[i], "-ttp_construction_A") == 0) {
 			f_ttp_code = TRUE;
 			f_ttp_construction_A = TRUE;

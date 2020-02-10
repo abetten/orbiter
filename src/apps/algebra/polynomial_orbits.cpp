@@ -298,7 +298,7 @@ int main(int argc, const char **argv)
 				cout << "They are : ";
 				lint_vec_print(cout, Pts, nb_pts);
 				cout << endl;
-				HPD->P->print_set_numerical(Pts, nb_pts);
+				HPD->P->print_set_numerical(cout, Pts, nb_pts);
 
 				F->display_table_of_projective_points(
 					f, Pts, nb_pts, n);
@@ -378,7 +378,7 @@ int main(int argc, const char **argv)
 		cout << "They are : ";
 		lint_vec_print(cout, Pts, nb_pts);
 		cout << endl;
-		HPD->P->print_set_numerical(Pts, nb_pts);
+		HPD->P->print_set_numerical(cout, Pts, nb_pts);
 
 		HPD->P->line_intersection_type(Pts, nb_pts,
 				line_type, 0 /* verbose_level */);
@@ -528,7 +528,7 @@ int main(int argc, const char **argv)
 			cout << "They are : ";
 			lint_vec_print(cout, Pts, nb_pts);
 			cout << endl;
-			HPD->P->print_set_numerical(Pts, nb_pts);
+			HPD->P->print_set_numerical(cout, Pts, nb_pts);
 
 			char fname[1000];
 
@@ -746,7 +746,7 @@ int main(int argc, const char **argv)
 		cout << "They are : ";
 		lint_vec_print(cout, Pts, nb_pts);
 		cout << endl;
-		HPD->P->print_set_numerical(Pts, nb_pts);
+		HPD->P->print_set_numerical(cout, Pts, nb_pts);
 
 		//r = random_integer(l);
 		//cout << "Picking random integer " << r << endl;
@@ -778,7 +778,7 @@ int main(int argc, const char **argv)
 			cout << "They are : ";
 			lint_vec_print(cout, Pts2, nb_pts2);
 			cout << endl;
-			HPD->P->print_set_numerical(Pts2, nb_pts2);
+			HPD->P->print_set_numerical(cout, Pts2, nb_pts2);
 			if (nb_pts2 != nb_pts) {
 				cout << "nb_pts2 != nb_pts" << endl;
 				exit(1);

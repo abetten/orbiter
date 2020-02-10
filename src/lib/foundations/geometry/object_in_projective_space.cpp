@@ -88,7 +88,9 @@ void object_in_projective_space::print_tex(ostream &ost)
 	if (type == t_PTS) {
 		ost << "set of points of size " << sz << ": $\\{";
 		lint_vec_print(ost, set, sz);
-		ost << "\\}$" << endl;
+		ost << "\\}$\\\\" << endl;
+		//P->print_set_numerical(ost, set, sz);
+		P->print_set_of_points(ost, set, sz);
 		}
 	else if (type == t_LNS) {
 		ost << "set of lines of size " << sz << ": $\\{";

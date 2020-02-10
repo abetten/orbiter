@@ -21,7 +21,7 @@ namespace foundations {
 
 
 
-void projective_space::print_set_numerical(long int *set, int set_size)
+void projective_space::print_set_numerical(std::ostream &ost, long int *set, int set_size)
 {
 	long int i, a;
 	int *v;
@@ -30,12 +30,12 @@ void projective_space::print_set_numerical(long int *set, int set_size)
 	for (i = 0; i < set_size; i++) {
 		a = set[i];
 		unrank_point(v, a);
-		cout << setw(3) << i << " : " << setw(5) << a << " : ";
-		int_vec_print(cout, v, n + 1);
-		cout << "=";
+		ost << setw(3) << i << " : " << setw(5) << a << " : ";
+		int_vec_print(ost, v, n + 1);
+		ost << "=";
 		F->PG_element_normalize_from_front(v, 1, n + 1);
-		int_vec_print(cout, v, n + 1);
-		cout << endl;
+		int_vec_print(ost, v, n + 1);
+		ost << "\\\\" << endl;
 		}
 	FREE_int(v);
 }
@@ -701,7 +701,7 @@ void projective_space::plane_intersection_type_slow(
 		cout << "projective_space::plane_intersection_type_slow" << endl;
 		}
 	if (f_vv) {
-		print_set_numerical(set, set_size);
+		print_set_numerical(cout, set, set_size);
 		}
 	if (!Sorting.test_if_set_with_return_value_lint(set, set_size)) {
 		cout << "projective_space::plane_intersection_type_slow "
@@ -806,7 +806,7 @@ void projective_space::plane_intersection_type_fast(
 		cout << "projective_space::plane_intersection_type_fast" << endl;
 		}
 	if (f_vv) {
-		print_set_numerical(set, set_size);
+		print_set_numerical(cout, set, set_size);
 		}
 
 	if (!Sorting.test_if_set_with_return_value_lint(set, set_size)) {
@@ -1065,7 +1065,7 @@ void projective_space::find_planes_which_intersect_in_at_least_s_points(
 				"in_at_least_s_points" << endl;
 		}
 	if (f_vv) {
-		print_set_numerical(set, set_size);
+		print_set_numerical(cout, set, set_size);
 		}
 	if (!Sorting.test_if_set_with_return_value_lint(set, set_size)) {
 		cout << "projective_space::find_planes_which_intersect_"
@@ -1837,7 +1837,7 @@ void projective_space::conic_type_randomized(int nb_times,
 		exit(1);
 		}
 	if (f_vv) {
-		print_set_numerical(set, set_size);
+		print_set_numerical(cout, set, set_size);
 		}
 
 	if (!Sorting.test_if_set_with_return_value_lint(set, set_size)) {
@@ -2177,7 +2177,7 @@ void projective_space::conic_type(
 		exit(1);
 		}
 	if (f_vv) {
-		print_set_numerical(set, set_size);
+		print_set_numerical(cout, set, set_size);
 		}
 
 	if (!Sorting.test_if_set_with_return_value_lint(set, set_size)) {
