@@ -387,9 +387,9 @@ int compare_func_for_bitvectors(void *a, void *b, void *data)
 	uchar *B = (uchar *) b;
 	int i;
 	
-	cout << "compare_func_for_bitvectors CB->rep_len=" << CB->rep_len << endl;
+	//cout << "compare_func_for_bitvectors CB->rep_len=" << CB->rep_len << endl;
 	for (i = 0; i < CB->rep_len; i++) {
-		cout << "i = " << i << " A[i]=" << (int) A[i] << " B[i]=" << (int) B[i] << endl;
+		//cout << "i = " << i << " A[i]=" << (int) A[i] << " B[i]=" << (int) B[i] << endl;
 		if (A[i] < B[i]) {
 			return -1;
 		}
