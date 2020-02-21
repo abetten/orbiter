@@ -97,8 +97,11 @@ void incidence_structure_with_group::print_canonical_form(ostream &ost)
 	int i;
 
 	for (i = 0; i < canonical_form_len; i++) {
-		ost << canonical_form[i];
+		ost << (int) canonical_form[i];
+		if (i < canonical_form_len - 1) {
+			ost << ", ";
 		}
+	}
 	ost << endl;
 }
 
