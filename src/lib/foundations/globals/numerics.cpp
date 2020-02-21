@@ -1387,11 +1387,11 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 		3,3,3,
 		};
 	int *Monomials;
-	int Affine_to_monomial[64];
+	int Affine_to_monomial[64]; // n^degree
 	int *V;
 	int nb_monomials = 20;
 	int degree = 3;
-	int n = 4;
+	int n = 4; // number of variables
 	double coeff2[20];
 	double coeff3[20];
 	double b, c;
@@ -1422,7 +1422,7 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 		}
 	if (FALSE) {
 		cout << "Monomials:" << endl;
-		int_matrix_print(Monomials, 20, 4);
+		int_matrix_print(Monomials, nb_monomials, n);
 		}
 
 	for (i = 0; i < nb_affine; i++) {
@@ -1432,17 +1432,17 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 			a = A[j];
 			v[a]++;
 			}
-		for (idx = 0; idx < 20; idx++) {
-			if (int_vec_compare(v, Monomials + idx * 4, 4) == 0) {
+		for (idx = 0; idx < nb_monomials; idx++) {
+			if (int_vec_compare(v, Monomials + idx * n, n) == 0) {
 				break;
 				}
 			}
-		if (idx == 20) {
+		if (idx == nb_monomials) {
 			cout << "could not determine Affine_to_monomial" << endl;
 			cout << "Monomials:" << endl;
-			int_matrix_print(Monomials, 20, 4);
+			int_matrix_print(Monomials, nb_monomials, n);
 			cout << "v=";
-			int_vec_print(cout, v, 4);
+			int_vec_print(cout, v, n);
 			exit(1);
 			}
 		Affine_to_monomial[i] = idx;	
@@ -1508,6 +1508,210 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 		}
 }
 
+void numerics::substitute_quartic_linear_using_povray_ordering(
+	double *coeff_in, double *coeff_out,
+	double *A4_inv, int verbose_level)
+// uses povray ordering of monomials
+// http://www.povray.org/documentation/view/3.6.1/298/
+// 1: x^4
+// 2: x^3y
+// 3: x^3z
+// 4: x^3
+// 5: x^2y^2
+// 6: x^2yz
+// 7: x^2y
+// 8: x^2z^2
+// 9: x^2z
+// 10: x^2
+// 11: xy^3
+// 12: xy^2z
+// 13: xy^2
+// 14: xyz^2
+// 15: xyz
+// 16: xy
+// 17: xz^3
+// 18: xz^2
+// 19: xz
+// 20: x
+// 21: y^4
+// 22: y^3z
+// 23: y^3
+// 24: y^2z^2
+// 25: y^2z
+// 26: y^2
+// 27: yz^3
+// 28: yz^2
+// 29: yz
+// 30: y
+// 31: z^4
+// 32: z^3
+// 33: z^2
+// 34: z
+// 35: 1
+{
+	int f_v = (verbose_level >= 1);
+	int Variables[] = {
+			// 1:
+		0,0,0,0,
+		0,0,0,1,
+		0,0,0,2,
+		0,0,0,3,
+		0,0,1,1,
+		0,0,1,2,
+		0,0,1,3,
+		0,0,2,2,
+		0,0,2,3,
+		0,0,3,3,
+		//11:
+		0,1,1,1,
+		0,1,1,2,
+		0,1,1,3,
+		0,1,2,2,
+		0,1,2,3,
+		0,1,3,3,
+		0,2,2,2,
+		0,2,2,3,
+		0,2,3,3,
+		0,3,3,3,
+		// 21:
+		1,1,1,1,
+		1,1,1,2,
+		1,1,1,3,
+		1,1,2,2,
+		1,1,2,3,
+		1,1,3,3,
+		1,2,2,2,
+		1,2,2,3,
+		1,2,3,3,
+		1,3,3,3,
+		// 31:
+		2,2,2,2,
+		2,2,2,3,
+		2,2,3,3,
+		2,3,3,3,
+		3,3,3,3,
+		};
+	int *Monomials; // [nb_monomials * n]
+	int Affine_to_monomial[256]; // 4^4
+	int *V;
+	int nb_monomials = 35;
+	int degree = 4;
+	int n = 4;
+	double coeff2[35];
+	double coeff3[35];
+	double b, c;
+	int h, i, j, a, nb_affine, idx;
+	int A[4];
+	int v[4];
+	number_theory_domain NT;
+	geometry_global Gg;
+
+	if (f_v) {
+		cout << "numerics::substitute_quartic_linear_using_povray_ordering" << endl;
+		}
+
+	nb_affine = NT.i_power_j(n, degree);
+
+
+	if (FALSE) {
+		cout << "Variables:" << endl;
+		int_matrix_print(Variables, 35, 4);
+		}
+	Monomials = NEW_int(nb_monomials * n);
+	int_vec_zero(Monomials, nb_monomials * n);
+	for (i = 0; i < nb_monomials; i++) {
+		for (j = 0; j < degree; j++) {
+			a = Variables[i * degree + j];
+			Monomials[i * n + a]++;
+			}
+		}
+	if (FALSE) {
+		cout << "Monomials:" << endl;
+		int_matrix_print(Monomials, nb_monomials, n);
+		}
+
+	for (i = 0; i < nb_affine; i++) {
+		Gg.AG_element_unrank(n /* q */, A, 1, degree, i);
+		int_vec_zero(v, n);
+		for (j = 0; j < degree; j++) {
+			a = A[j];
+			v[a]++;
+			}
+		for (idx = 0; idx < nb_monomials; idx++) {
+			if (int_vec_compare(v, Monomials + idx * n, n) == 0) {
+				break;
+				}
+			}
+		if (idx == nb_monomials) {
+			cout << "could not determine Affine_to_monomial" << endl;
+			cout << "Monomials:" << endl;
+			int_matrix_print(Monomials, nb_monomials, n);
+			cout << "v=";
+			int_vec_print(cout, v, n);
+			exit(1);
+			}
+		Affine_to_monomial[i] = idx;
+		}
+
+	if (FALSE) {
+		cout << "Affine_to_monomial:";
+		int_vec_print(cout, Affine_to_monomial, nb_affine);
+		cout << endl;
+		}
+
+
+	for (i = 0; i < nb_monomials; i++) {
+		coeff3[i] = 0.;
+		}
+	for (h = 0; h < nb_monomials; h++) {
+		c = coeff_in[h];
+		if (c == 0) {
+			continue;
+			}
+
+		V = Variables + h * degree;
+			// a list of the indices of the variables
+			// which appear in the monomial
+			// (possibly with repeats)
+			// Example: the monomial x_0^3 becomes 0,0,0
+
+
+		for (i = 0; i < nb_monomials; i++) {
+			coeff2[i] = 0.;
+			}
+		for (a = 0; a < nb_affine; a++) {
+
+			Gg.AG_element_unrank(n /* q */, A, 1, degree, a);
+				// sequence of length degree
+				// over the alphabet  0,...,n-1.
+			b = 1.;
+			for (j = 0; j < degree; j++) {
+				//factors[j] = Mtx_inv[V[j] * n + A[j]];
+				b *= A4_inv[A[j] * n + V[j]];
+				}
+			idx = Affine_to_monomial[a];
+
+			coeff2[idx] += b;
+			}
+		for (j = 0; j < nb_monomials; j++) {
+			coeff2[j] *= c;
+			}
+
+		for (j = 0; j < nb_monomials; j++) {
+			coeff3[j] += coeff2[j];
+			}
+		}
+
+	for (j = 0; j < nb_monomials; j++) {
+		coeff_out[j] = coeff3[j];
+		}
+
+	FREE_int(Monomials);
+
+	if (f_v) {
+		cout << "numerics::substitute_quartic_linear_using_povray_ordering done" << endl;
+		}
+}
 void numerics::make_transform_t_varphi_u_double(int n,
 	double *varphi, 
 	double *u, double *A, double *Av, 
@@ -1857,6 +2061,19 @@ void numerics::vec_copy(double *from, double *to, int len)
 
 	for (p = from, q = to, i = 0; i < len; p++, q++, i++) {
 		*q = *p;
+		}
+}
+
+void numerics::vec_swap(double *from, double *to, int len)
+{
+	int i;
+	double *p, *q;
+	double a;
+
+	for (p = from, q = to, i = 0; i < len; p++, q++, i++) {
+		a = *q;
+		*q = *p;
+		*p = a;
 		}
 }
 

@@ -126,6 +126,9 @@ public:
 	void substitute_cubic_linear_using_povray_ordering(
 			double *coeff_in, double *coeff_out,
 			double *A4_inv, int verbose_level);
+	void substitute_quartic_linear_using_povray_ordering(
+		double *coeff_in, double *coeff_out,
+		double *A4_inv, int verbose_level);
 	void make_transform_t_varphi_u_double(int n, double *varphi, double *u,
 		double *A, double *Av, int verbose_level);
 	// varphi are the dual coordinates of a plane.
@@ -140,6 +143,7 @@ public:
 			int n, double *lambda, int verbose_level);
 	double rad2deg(double phi);
 	void vec_copy(double *from, double *to, int len);
+	void vec_swap(double *from, double *to, int len);
 	void vec_print(std::ostream &ost, double *v, int len);
 	void vec_scan(const char *s, double *&v, int &len);
 	void vec_scan_from_stream(std::istream & is, double *&v, int &len);

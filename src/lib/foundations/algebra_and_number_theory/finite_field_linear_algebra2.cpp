@@ -571,9 +571,11 @@ void finite_field::Kronecker_product_square_but_arbitrary(
 				<< endl;
 		cout << "na=" << na << endl;
 		cout << "nb=" << nb << endl;
-		cout << "N=" << N << endl;
 		}
 	N = na * nb;
+	if (f_v) {
+		cout << "N=" << N << endl;
+	}
 	for (I = 0; I < nb; I++) {
 		for (J = 0; J < nb; J++) {
 			b = B[I * nb + J];

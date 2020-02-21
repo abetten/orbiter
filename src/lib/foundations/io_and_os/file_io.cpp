@@ -489,6 +489,9 @@ void file_io::read_solution_file(char *fname,
 			f.getline(buf, BUFSIZE_READ_SOLUTION_FILE, '\n');
 			p_buf = buf;
 			if (strlen(buf)) {
+				if (buf[0] == '#') {
+					continue;
+				}
 				for (j = 0; j < nb_cols; j++) {
 					x[j] = 0;
 				}
@@ -614,6 +617,10 @@ void file_io::count_number_of_solutions_in_file_and_get_solution_size(
 						"line " << line_number << " empty line" << endl;
 				exit(1);
 			}
+			if (buf[0] == '#') {
+				line_number++;
+				continue;
+			}
 
 			p_buf = buf;
 			s_scan_int(&p_buf, &s);
@@ -689,6 +696,9 @@ void file_io::count_number_of_solutions_in_file(const char *fname,
 				cout << "count_number_of_solutions_in_file "
 						"empty line" << endl;
 				exit(1);
+			}
+			if (buf[0] == '#') {
+				continue;
 			}
 
 			if (strncmp(buf, "-1", 2) == 0) {
@@ -844,6 +854,9 @@ void file_io::read_solutions_from_file_and_get_solution_size(const char *fname,
 
 		while (!f.eof()) {
 			f.getline(buf, MY_OWN_BUFSIZE, '\n');
+			if (strlen(buf) && buf[0] == '#') {
+				continue;
+			}
 			p_buf = buf;
 			//cout << "buf='" << buf << "' nb=" << nb << endl;
 			s_scan_int(&p_buf, &a);
@@ -1353,7 +1366,10 @@ void file_io::int_matrix_read_csv(const char *fname,
 		M = NEW_int(m * n);
 		for (i = 0; i < m; i++) {
 			for (j = 0; j < n; j++) {
-				a = my_atoi(S.get_string(i + 1, j + 1));
+				char *p;
+				p = S.get_string(i + 1, j + 1);
+				a = my_atoi(p);
+				FREE_char(p);
 				M[i * n + j] = a;
 			}
 		}
@@ -1389,7 +1405,11 @@ void file_io::lint_matrix_read_csv(const char *fname,
 		M = NEW_lint(m * n);
 		for (i = 0; i < m; i++) {
 			for (j = 0; j < n; j++) {
-				a = my_atol(S.get_string(i + 1, j + 1));
+				char *p;
+
+				p = S.get_string(i + 1, j + 1);
+				a = my_atol(p);
+				FREE_char(p);
 				M[i * n + j] = a;
 			}
 		}
@@ -1427,13 +1447,41 @@ void file_io::double_matrix_read_csv(const char *fname,
 		M = new double [m * n];
 		for (i = 0; i < m; i++) {
 			for (j = 0; j < n; j++) {
-				sscanf(S.get_string(i + 1, j + 1), "%lf", &d);
+				char *p;
+				p = S.get_string(i + 1, j + 1);
+				sscanf(p, "%lf", &d);
+				FREE_char(p);
 				M[i * n + j] = d;
 			}
 		}
 	}
 	if (f_v) {
 		cout << "double_matrix_read_csv done" << endl;
+	}
+}
+
+void file_io::int_matrix_write_cas_friendly(const char *fname, int *M, int m, int n)
+{
+	int i, j;
+
+	{
+		ofstream f(fname);
+
+		f << "[";
+		for (i = 0; i < m; i++) {
+			f << "[";
+			for (j = 0; j < n; j++) {
+				f << M[i * n + j];
+				if (j < n - 1) {
+					f << ", ";
+				}
+			}
+			f << "]";
+			if (i < m - 1) {
+				f << ", " << endl;
+			}
+		}
+		f << "]" << endl;
 	}
 }
 

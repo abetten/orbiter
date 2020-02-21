@@ -44,6 +44,18 @@ incidence_structure_with_group::~incidence_structure_with_group()
 
 void incidence_structure_with_group::null()
 {
+	Inc = NULL;
+	N = 0;
+	partition = NULL;
+
+	f_has_canonical_form = FALSE;
+	canonical_form = NULL;
+	canonical_form_len = 0;
+
+	f_has_canonical_labeling = FALSE;
+	canonical_labeling = NULL;
+
+	A_perm = NULL;
 }
 
 void incidence_structure_with_group::freeself()
@@ -195,7 +207,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 
 	if (f_vvv) {
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form Incma Out:" << endl;
-		if (Inc->nb_rows < 20) {
+		if (Inc->nb_rows < 10) {
 			print_integer_matrix_width(cout,
 					Inc_out->M, Inc->nb_rows, Inc->nb_cols, Inc->nb_cols, 1);
 			}
