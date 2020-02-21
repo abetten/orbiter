@@ -524,6 +524,12 @@ void process_object(
 				"IG->canonical_form_len=" << IG->canonical_form_len << endl;
 		CB->init(nb_objects_to_test, IG->canonical_form_len, verbose_level);
 	}
+	if (f_v) {
+		cout << "process_object before CB->search_and_add_if_new" << endl;
+		cout << "canonical_form=";
+		IG->print_canonical_form(cout);
+
+	}
 	CB->search_and_add_if_new(IG->canonical_form, NULL /*IG*/, f_found, idx, verbose_level);
 
 

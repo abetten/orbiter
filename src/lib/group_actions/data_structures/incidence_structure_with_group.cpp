@@ -92,6 +92,15 @@ void incidence_structure_with_group::init(incidence_structure *Inc,
 		}
 }
 
+void incidence_structure_with_group::print_canonical_form(ostream &ost)
+{
+	int i;
+
+	for (i = 0; i < canonical_form_len; i++) {
+		ost << canonical_form[i];
+		}
+	ost << endl;
+}
 
 void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 		int f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix,
