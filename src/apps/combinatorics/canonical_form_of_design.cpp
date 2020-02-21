@@ -520,6 +520,8 @@ void process_object(
 
 
 	if (CB->n == 0) {
+		cout << "process_object CB->n == 0, calling CB->init with "
+				"IG->canonical_form_len=" << IG->canonical_form_len << endl;
 		CB->init(nb_objects_to_test, IG->canonical_form_len, verbose_level);
 	}
 	CB->search_and_add_if_new(IG->canonical_form, NULL /*IG*/, f_found, idx, verbose_level);
