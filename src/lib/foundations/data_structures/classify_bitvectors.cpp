@@ -165,7 +165,10 @@ void classify_bitvectors::search_and_add_if_new(uchar *data,
 			Type_rep[i] = Type_rep[i - 1];
 			Type_mult[i] = Type_mult[i - 1];
 		}
-		Type_data[idx] = data;
+		Type_data[idx] = NEW_uchar(rep_len);
+		for (i = 0; i < rep_len; i++) {
+			Type_data[idx][i] = data[i];
+		}
 		Type_extra_data[idx] = extra_data;
 		Type_rep[idx] = n;
 		Type_mult[idx] = 1;
