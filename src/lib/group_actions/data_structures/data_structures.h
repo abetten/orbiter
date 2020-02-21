@@ -163,6 +163,7 @@ public:
 	void init(incidence_structure *Inc,
 		int *partition,
 		int verbose_level);
+	void print_canonical_form(std::ostream &ost);
 	void set_stabilizer_and_canonical_form(
 			int f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix,
 			int f_compute_canonical_form,
