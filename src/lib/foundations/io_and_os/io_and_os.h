@@ -110,6 +110,7 @@ public:
 		long int *&M, int &m, int &n, int verbose_level);
 	void double_matrix_read_csv(const char *fname, double *&M,
 		int &m, int &n, int verbose_level);
+	void int_matrix_write_cas_friendly(const char *fname, int *M, int m, int n);
 	void int_matrix_write_text(const char *fname,
 		int *M, int m, int n);
 	void lint_matrix_write_text(const char *fname, long int *M, int m, int n);

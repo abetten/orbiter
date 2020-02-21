@@ -108,6 +108,8 @@ void scene::init(int verbose_level)
 	nb_quadrics = 0;
 	Cubic_coords = new double [SCENE_MAX_CUBICS * 20];
 	nb_cubics = 0;
+	Quartic_coords = new double [SCENE_MAX_QUARTICS * 35];
+	nb_quartics = 0;
 	Face_points = NEW_pint(SCENE_MAX_FACES);
 	Nb_face_points = NEW_int(SCENE_MAX_FACES);
 	nb_faces = 0;
@@ -393,6 +395,39 @@ void scene::transform_cubics(scene *S, double *A4, double *A4_inv,
 
 	if (f_v) {
 		cout << "scene::transform_cubics done" << endl;
+		}
+
+}
+
+void scene::transform_quartics(scene *S, double *A4, double *A4_inv,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "scene::transform_quartics" << endl;
+		}
+
+	cout << "scene::transform_quartics not yet implemented" << endl;
+
+	double coeff_in[35];
+	double coeff_out[35];
+	int i;
+	numerics N;
+
+
+	for (i = 0; i < nb_quartics; i++) {
+		N.vec_copy(Quartic_coords + i * 35, coeff_in, 35);
+
+		N.substitute_quartic_linear_using_povray_ordering(coeff_in, coeff_out,
+			A4_inv, verbose_level);
+
+		S->quartic(coeff_out);
+		}
+
+	if (f_v) {
+		cout << "scene::transform_quartics done" << endl;
 		}
 
 }
@@ -888,6 +923,23 @@ int scene::cubic(double *coeff)
 	return nb_cubics - 1;
 }
 
+int scene::quartic(double *coeff)
+// povray ordering of monomials:
+// http://www.povray.org/documentation/view/3.6.1/298/
+{
+	int i;
+
+	for (i = 0; i < 35; i++) {
+		Quartic_coords[nb_quartics * 35 + i] = coeff[i];
+		}
+	nb_quartics++;
+	if (nb_quartics >= SCENE_MAX_QUARTICS) {
+		cout << "too many quartics" << endl;
+		exit(1);
+		}
+	return nb_quartics - 1;
+}
+
 int scene::face(int *pts, int nb_pts)
 {
 	Face_points[nb_faces] = NEW_int(nb_pts);
@@ -1051,6 +1103,17 @@ void scene::draw_lines_cij(ostream &ost)
 	draw_lines_cij_with_selection(selection, 15, ost);
 } 
 
+void scene::draw_lines_cij_with_offset(int offset, int number_of_lines, ostream &ost)
+{
+	int selection[15];
+	int i;
+
+	for (i = 0; i < number_of_lines; i++) {
+		selection[i] = offset + i;
+	}
+	draw_lines_cij_with_selection(selection, number_of_lines, ost);
+}
+
 void scene::draw_lines_ai_with_selection(int *selection, int nb_select, 
 	ostream &ost)
 {
@@ -1094,6 +1157,17 @@ void scene::draw_lines_ai(ostream &ost)
 	draw_lines_ai_with_selection(selection, 6, ost);
 } 
 
+void scene::draw_lines_ai_with_offset(int offset, ostream &ost)
+{
+	int selection[6];
+	int i;
+
+	for (i = 0; i < 6; i++) {
+		selection[i] = offset + i;
+	}
+	draw_lines_ai_with_selection(selection, 6, ost);
+}
+
 void scene::draw_lines_bj_with_selection(int *selection, int nb_select, 
 	ostream &ost)
 {
@@ -1136,6 +1210,18 @@ void scene::draw_lines_bj(ostream &ost)
 	
 	draw_lines_bj_with_selection(selection, 6, ost);
 } 
+
+void scene::draw_lines_bj_with_offset(int offset, ostream &ost)
+{
+	int selection[6];
+	int i;
+
+	for (i = 0; i < 6; i++) {
+		selection[i] = offset + i;
+	}
+	draw_lines_bj_with_selection(selection, 6, ost);
+}
+
 
 
 
@@ -1533,6 +1619,43 @@ void scene::draw_cubic_with_selection(int *selection, int nb_select,
 				ost << ", ";
 				}
 			}	
+		ost << ">";
+		}
+	ost << endl;
+	ost << "		" << options << " " << endl;
+	//ost << "		pigment{" << color << "}" << endl;
+	//ost << "		pigment{Cyan*1.3}" << endl;
+	//ost << "		finish {ambient 0.4 diffuse 0.5 roughness 0.001 "
+	//"reflection 0.1 specular .8} " << endl;
+	ost << "		}" << endl;
+	ost << "	}" << endl;
+}
+
+void scene::draw_quartic_with_selection(int *selection, int nb_select,
+	const char *options, ostream &ost)
+{
+	int i, j, h, s;
+	numerics N;
+
+	ost << endl;
+	ost << "	union{ // quartics" << endl;
+	ost << endl;
+	for (i = 0; i < nb_select; i++) {
+		s = selection[i];
+		j = s;
+
+		cout << "scene::draw_quartic_with_selection j=" << j << ":" << endl;
+		for (h = 0; h < 35; h++) {
+			cout << h << " : " << Quartic_coords[j * 35 + h] << endl;
+		}
+		ost << "		poly{4, <";
+
+		for (h = 0; h < 35; h++) {
+			N.output_double(Quartic_coords[j * 35 + h], ost);
+			if (h < 35 - 1) {
+				ost << ", ";
+				}
+			}
 		ost << ">";
 		}
 	ost << endl;
@@ -2192,163 +2315,6 @@ int scene::map_a_point(int line1, int line2,
 	return TRUE;
 }
 
-void scene::lines_a()
-{
-        double t1 = 10;
-        double t2 = -10;
-
-	line(
-		(-sqrt(5)-3) * t1 + (3*sqrt(5)+7)/2 , t1 , -sqrt(5) * t1 +(sqrt(5)+3)/2 ,
-		(-sqrt(5)-3) * t2 + (3*sqrt(5)+7)/2 , t2 , -sqrt(5) * t2 +(sqrt(5)+3)/2);
-		// the line \ell_{0,5} = a_1
-
-	line( 
-		-sqrt(5) * t1 +(sqrt(5)+3)/2, (-sqrt(5)-3) * t1 + (3*sqrt(5)+7)/2 , t1  ,
-		-sqrt(5) * t2 +(sqrt(5)+3)/2, (-sqrt(5)-3) * t2 + (3*sqrt(5)+7)/2 , t2);
-		// the line \ell_{1,5} = a_2
-
-	line(
-		t1, -sqrt(5) * t1 +(sqrt(5)+3)/2, (-sqrt(5)-3) * t1 + (3*sqrt(5)+7)/2   ,
-		t2, -sqrt(5) * t2 +(sqrt(5)+3)/2, (-sqrt(5)-3) * t2 + (3*sqrt(5)+7)/2);
-		// the line \ell_{2,5} = a_3
-
-	line(
-		-(sqrt(5)+3)/4 * t1 + (-sqrt(5)+3)/4 , t1 , (sqrt(5)+1)/4 + (-3*sqrt(5)-5)/4 * t1 ,
-		-(sqrt(5)+3)/4 * t2 + (-sqrt(5)+3)/4 , t2 , (sqrt(5)+1)/4 + (-3*sqrt(5)-5)/4 * t2);
-		// the line \ell_{0,7} = a_4
-
-	line(
-		(sqrt(5)+1)/4 + (-3*sqrt(5)-5)/4 * t1, -(sqrt(5)+3)/4 * t1 + (-sqrt(5)+3)/4 , t1  ,
-		(sqrt(5)+1)/4 + (-3*sqrt(5)-5)/4 * t2, -(sqrt(5)+3)/4 * t2 + (-sqrt(5)+3)/4 , t2);
-		// the line a_5
-
-	line(
-		t1, (sqrt(5)+1)/4 + (-3*sqrt(5)-5)/4 * t1, -(sqrt(5)+3)/4 * t1 + (-sqrt(5)+3)/4   ,
-		t2, (sqrt(5)+1)/4 + (-3*sqrt(5)-5)/4 * t2, -(sqrt(5)+3)/4 * t2 + (-sqrt(5)+3)/4);
-		// the line a_6
-}
-
-
-void scene::lines_b()
-{
-        double t1 = 10;
-        double t2 = -10;
-
-	line(
-		(sqrt(5)-3) * t1 + (-3*sqrt(5)+7)/2 , t1 , (-sqrt(5)+3)/2 + sqrt(5) * t1 ,
-		(sqrt(5)-3) * t2 + (-3*sqrt(5)+7)/2 , t2 , (-sqrt(5)+3)/2 + sqrt(5) * t2);
-		// the line \ell_{0,8} = b_1
-
-	line(
-		(-sqrt(5)+3)/2 + sqrt(5) * t1, (sqrt(5)-3) * t1 + (-3*sqrt(5)+7)/2 , t1  ,
-		(-sqrt(5)+3)/2 + sqrt(5) * t2, (sqrt(5)-3) * t2 + (-3*sqrt(5)+7)/2 , t2);
-		// the line \ell_{1,8} = b_2
-	
-	line(
-		t1, (-sqrt(5)+3)/2 + sqrt(5) * t1, (sqrt(5)-3) * t1 + (-3*sqrt(5)+7)/2   ,
-		t2, (-sqrt(5)+3)/2 + sqrt(5) * t2, (sqrt(5)-3) * t2 + (-3*sqrt(5)+7)/2);
-		// the line \ell_{2,8} = b_2
-
-	line(
-		(sqrt(5)-3)/4 * t1 + (sqrt(5)+3)/4 , t1 , (-sqrt(5)+1)/4 + (3*sqrt(5)-5)/4 * t1 ,
-		(sqrt(5)-3)/4 * t2 + (sqrt(5)+3)/4 , t2 , (-sqrt(5)+1)/4 + (3*sqrt(5)-5)/4 * t2);
-		// the line \ell_{0,6} = b_4
-
-	line(
-		(-sqrt(5)+1)/4 + (3*sqrt(5)-5)/4 * t1, (sqrt(5)-3)/4 * t1 + (sqrt(5)+3)/4 , t1  ,
-		(-sqrt(5)+1)/4 + (3*sqrt(5)-5)/4 * t2, (sqrt(5)-3)/4 * t2 + (sqrt(5)+3)/4 , t2);
-		// the line \ell_{1,6} = b_5
-
-	line(
-		t1, (-sqrt(5)+1)/4 + (3*sqrt(5)-5)/4 * t1, (sqrt(5)-3)/4 * t1 + (sqrt(5)+3)/4   ,
-		t2, (-sqrt(5)+1)/4 + (3*sqrt(5)-5)/4 * t2, (sqrt(5)-3)/4 * t2 + (sqrt(5)+3)/4);
-		// the line \ell_{2,6} = b_6
-
-}
-
-void scene::lines_cij()
-{
-	double b = 4.;
-
-	// 12 = c_12   3
-	line(-1. * b, -3. * b - 1, 0., b, 3. * b - 1, 0.);
-	//cylinder{< -1.*b,-3.*b-1,0. >,<b,3.*b-1,0. > ,r }   //c_12
-	//c_{12} & (t, 3t-1, 0) 
-
-	// 13 = c_13  4
-	line(-3. * b -1, 0, -1. * b, 3. * b - 1, 0, b);
-	//cylinder{< -3.*b-1,0,-1.*b >,<3.*b-1,0,b > ,r }   //c_13
-	//c_{13} & (3t-1, 0,t)  
-
-	// 14 = c_14  12 bottom
-	line(b, -1. * b, -1., -1. * b, b, -1.);
-	//cylinder{< b,-1.*b,-1. >,<-1.*b,b,-1. > ,r }   //c_14 bottom plane 
-	//c_{14} & (-t,t,-1) 
-
-	//  15 = c_15  7 top
-	line(2. + b, 1, -1. * b, 2. -1. * b, 1, b);
-	//cylinder{< 2.+b,1,-1.*b >,<2.-1.*b,1,b > ,r }   //c_15top plane 
-	//c_{15} & (2-t, 1, t)
-
-
-	// 16 = c_16 15 middle
-	line(0, b + 1, -1. * b , 0, -1.*b + 1, b);
-	//cylinder{< 0,b+1,-1.*b >,<0,-1.*b+1,b > ,r } //c_16 middle
-	//c_{16} & (0, t,1-t) 
-
-	// 17 = c_23 11
-	line(0, -1. * b, -3. * b -1., 0, b, 3. * b - 1.);
-	//cylinder{< 0,-1.*b,-3.*b-1. >,<0,b,3.*b-1. > ,r } //c_23
-	//c_{23} & (0,t,3t-1)  
-
-	// 18 = c_24  10 middle
-	line(b + 1, 0, -1. * b, -1. * b + 1, 0, b);
-	//cylinder{< b+1,0,-1.*b >,<-1.*b+1,0,b > ,r }   //c_24 middle
-	//c_{24} & (1-t, 0, t)  
-
-	//  19 = c_25 8 bottom
-	line(-1, b, -1. * b, -1, -1. * b, b);
-	//cylinder{< -1,b,-1.*b >,<-1,-1.*b,b > ,r }   //c_25 bottom plane 
-	//c_{25} & (-1,t,-t)  
-
-	// 20 = c_26  6 top
-	line(2. + b, -1. * b, 1., 2. -1. * b, b, 1.);
-	//cylinder{< 2.+b,-1.*b,1. >,<2.-1.*b,b,1. > ,r }  //c_26 top plane 
-	//c_{26} & (t,2-t,1)
-
-	// 21 = c_34   1 top
-	line(1, 2. + b, -1. * b, 1, 2. -1. * b, b);
-	//cylinder{< 1,2.+b,-1.*b >,<1,2.-1.*b,b > ,r }   //c_34 top plane 
-	//c_{34} & (1, t,2-t)  
-
-	//22  = c_35  middle
-	line(b + 1, -1. * b, 0., -1. * b + 1, b, 0.);
-	//cylinder{< b+1,-1.*b,0. >,<-1.*b+1,b,0. > ,r }   //c_35 middle
-	//c_{35} & (t,1-t,0)   
-
-	// 23 = c_36  2 bottom
-	line(b, -1, -1. * b, -1. * b, -1, b);
-	//cylinder{< b,-1,-1.*b >,<-1.*b,-1,b > ,r } //c_36 bottom plane 
-	//c_{36} & (t,-1,-t)  
-
-	// 24 = c_45  9
-	line(0, -3. * b - 1, -1. * b, 0, 3. * b - 1, b);
-	//cylinder{< 0,-3.*b-1,-1.*b >,<0,3.*b-1,b > ,r }   //c_45 
-	//c_{45}  & (0, 3t-1, t)
-
-	// 25 = c_46  13
-	line(-3. * b - 1, -1. * b, 0., 3. * b - 1, b, 0.);
-	//cylinder{< -3.*b-1,-1.*b,0. >,<3.*b-1,b,0. > ,r }   //c_46
-	//c_{46} & (3t-1, t,0)  
-
-	// 26 = c_56  5
-	line(-1. * b, 0, -3. * b - 1., b, 0, 3. * b - 1.);
-	//cylinder{< -1.*b,0,-3.*b-1. >,<b,0,3.*b-1. > ,r }   //c_56
-	//c_{56} & (t,0,3t-1)  
-
-
-}
-
 void scene::fourD_cube(double rad_desired)
 {
 	int r, i, j, k, h;
@@ -2556,17 +2522,6 @@ void scene::hypercube(int n, double rad_desired)
 }
 
 
-void scene::Eckardt_points()
-{
-	point(1,1,1. ); //0
-	point(0,-1,0. ); //1 
-	point(.5,.5,0. ); //2 
-	point(0,.5,.5 ); //3
-	point(0,0,-1. ); //4 
-	point(.5,0,.5 ); //5 
-	point(-1,0,0. ); //6 
-}
-
 void scene::Dodecahedron_points()
 {
 	double zero;
@@ -2684,6 +2639,11 @@ void scene::tritangent_planes()
 	plane(1/sqrt(3),1/sqrt(3),1/sqrt(3), -1*1/sqrt(3));
 }
 
+
+//##############################################################################
+// Clebsch cubic, version 1
+//##############################################################################
+
 void scene::clebsch_cubic()
 {
 	double coeff[20] = {-3,7,7,1,7,-2,-14,7,-14,3,-3,7,1,7,-14,3,-3,1,3,-1.};
@@ -2691,6 +2651,358 @@ void scene::clebsch_cubic()
 	cubic(coeff);
 }
 
+void scene::clebsch_cubic_lines_a()
+{
+        double t1 = 10;
+        double t2 = -10;
+
+	line(
+		(-sqrt(5)-3) * t1 + (3*sqrt(5)+7)/2 , t1 , -sqrt(5) * t1 +(sqrt(5)+3)/2 ,
+		(-sqrt(5)-3) * t2 + (3*sqrt(5)+7)/2 , t2 , -sqrt(5) * t2 +(sqrt(5)+3)/2);
+		// the line \ell_{0,5} = a_1
+
+	line(
+		-sqrt(5) * t1 +(sqrt(5)+3)/2, (-sqrt(5)-3) * t1 + (3*sqrt(5)+7)/2 , t1  ,
+		-sqrt(5) * t2 +(sqrt(5)+3)/2, (-sqrt(5)-3) * t2 + (3*sqrt(5)+7)/2 , t2);
+		// the line \ell_{1,5} = a_2
+
+	line(
+		t1, -sqrt(5) * t1 +(sqrt(5)+3)/2, (-sqrt(5)-3) * t1 + (3*sqrt(5)+7)/2   ,
+		t2, -sqrt(5) * t2 +(sqrt(5)+3)/2, (-sqrt(5)-3) * t2 + (3*sqrt(5)+7)/2);
+		// the line \ell_{2,5} = a_3
+
+	line(
+		-(sqrt(5)+3)/4 * t1 + (-sqrt(5)+3)/4 , t1 , (sqrt(5)+1)/4 + (-3*sqrt(5)-5)/4 * t1 ,
+		-(sqrt(5)+3)/4 * t2 + (-sqrt(5)+3)/4 , t2 , (sqrt(5)+1)/4 + (-3*sqrt(5)-5)/4 * t2);
+		// the line \ell_{0,7} = a_4
+
+	line(
+		(sqrt(5)+1)/4 + (-3*sqrt(5)-5)/4 * t1, -(sqrt(5)+3)/4 * t1 + (-sqrt(5)+3)/4 , t1  ,
+		(sqrt(5)+1)/4 + (-3*sqrt(5)-5)/4 * t2, -(sqrt(5)+3)/4 * t2 + (-sqrt(5)+3)/4 , t2);
+		// the line a_5
+
+	line(
+		t1, (sqrt(5)+1)/4 + (-3*sqrt(5)-5)/4 * t1, -(sqrt(5)+3)/4 * t1 + (-sqrt(5)+3)/4   ,
+		t2, (sqrt(5)+1)/4 + (-3*sqrt(5)-5)/4 * t2, -(sqrt(5)+3)/4 * t2 + (-sqrt(5)+3)/4);
+		// the line a_6
+}
+
+
+void scene::clebsch_cubic_lines_b()
+{
+        double t1 = 10;
+        double t2 = -10;
+
+	line(
+		(sqrt(5)-3) * t1 + (-3*sqrt(5)+7)/2 , t1 , (-sqrt(5)+3)/2 + sqrt(5) * t1 ,
+		(sqrt(5)-3) * t2 + (-3*sqrt(5)+7)/2 , t2 , (-sqrt(5)+3)/2 + sqrt(5) * t2);
+		// the line \ell_{0,8} = b_1
+
+	line(
+		(-sqrt(5)+3)/2 + sqrt(5) * t1, (sqrt(5)-3) * t1 + (-3*sqrt(5)+7)/2 , t1  ,
+		(-sqrt(5)+3)/2 + sqrt(5) * t2, (sqrt(5)-3) * t2 + (-3*sqrt(5)+7)/2 , t2);
+		// the line \ell_{1,8} = b_2
+
+	line(
+		t1, (-sqrt(5)+3)/2 + sqrt(5) * t1, (sqrt(5)-3) * t1 + (-3*sqrt(5)+7)/2   ,
+		t2, (-sqrt(5)+3)/2 + sqrt(5) * t2, (sqrt(5)-3) * t2 + (-3*sqrt(5)+7)/2);
+		// the line \ell_{2,8} = b_2
+
+	line(
+		(sqrt(5)-3)/4 * t1 + (sqrt(5)+3)/4 , t1 , (-sqrt(5)+1)/4 + (3*sqrt(5)-5)/4 * t1 ,
+		(sqrt(5)-3)/4 * t2 + (sqrt(5)+3)/4 , t2 , (-sqrt(5)+1)/4 + (3*sqrt(5)-5)/4 * t2);
+		// the line \ell_{0,6} = b_4
+
+	line(
+		(-sqrt(5)+1)/4 + (3*sqrt(5)-5)/4 * t1, (sqrt(5)-3)/4 * t1 + (sqrt(5)+3)/4 , t1  ,
+		(-sqrt(5)+1)/4 + (3*sqrt(5)-5)/4 * t2, (sqrt(5)-3)/4 * t2 + (sqrt(5)+3)/4 , t2);
+		// the line \ell_{1,6} = b_5
+
+	line(
+		t1, (-sqrt(5)+1)/4 + (3*sqrt(5)-5)/4 * t1, (sqrt(5)-3)/4 * t1 + (sqrt(5)+3)/4   ,
+		t2, (-sqrt(5)+1)/4 + (3*sqrt(5)-5)/4 * t2, (sqrt(5)-3)/4 * t2 + (sqrt(5)+3)/4);
+		// the line \ell_{2,6} = b_6
+
+}
+
+void scene::clebsch_cubic_lines_cij()
+{
+	double b = 4.;
+
+	// 12 = c_12   3
+	line(-1. * b, -3. * b - 1, 0., b, 3. * b - 1, 0.);
+	//cylinder{< -1.*b,-3.*b-1,0. >,<b,3.*b-1,0. > ,r }   //c_12
+	//c_{12} & (t, 3t-1, 0)
+
+	// 13 = c_13  4
+	line(-3. * b -1, 0, -1. * b, 3. * b - 1, 0, b);
+	//cylinder{< -3.*b-1,0,-1.*b >,<3.*b-1,0,b > ,r }   //c_13
+	//c_{13} & (3t-1, 0,t)
+
+	// 14 = c_14  12 bottom
+	line(b, -1. * b, -1., -1. * b, b, -1.);
+	//cylinder{< b,-1.*b,-1. >,<-1.*b,b,-1. > ,r }   //c_14 bottom plane
+	//c_{14} & (-t,t,-1)
+
+	//  15 = c_15  7 top
+	line(2. + b, 1, -1. * b, 2. -1. * b, 1, b);
+	//cylinder{< 2.+b,1,-1.*b >,<2.-1.*b,1,b > ,r }   //c_15top plane
+	//c_{15} & (2-t, 1, t)
+
+
+	// 16 = c_16 15 middle
+	line(0, b + 1, -1. * b , 0, -1.*b + 1, b);
+	//cylinder{< 0,b+1,-1.*b >,<0,-1.*b+1,b > ,r } //c_16 middle
+	//c_{16} & (0, t,1-t)
+
+	// 17 = c_23 11
+	line(0, -1. * b, -3. * b -1., 0, b, 3. * b - 1.);
+	//cylinder{< 0,-1.*b,-3.*b-1. >,<0,b,3.*b-1. > ,r } //c_23
+	//c_{23} & (0,t,3t-1)
+
+	// 18 = c_24  10 middle
+	line(b + 1, 0, -1. * b, -1. * b + 1, 0, b);
+	//cylinder{< b+1,0,-1.*b >,<-1.*b+1,0,b > ,r }   //c_24 middle
+	//c_{24} & (1-t, 0, t)
+
+	//  19 = c_25 8 bottom
+	line(-1, b, -1. * b, -1, -1. * b, b);
+	//cylinder{< -1,b,-1.*b >,<-1,-1.*b,b > ,r }   //c_25 bottom plane
+	//c_{25} & (-1,t,-t)
+
+	// 20 = c_26  6 top
+	line(2. + b, -1. * b, 1., 2. -1. * b, b, 1.);
+	//cylinder{< 2.+b,-1.*b,1. >,<2.-1.*b,b,1. > ,r }  //c_26 top plane
+	//c_{26} & (t,2-t,1)
+
+	// 21 = c_34   1 top
+	line(1, 2. + b, -1. * b, 1, 2. -1. * b, b);
+	//cylinder{< 1,2.+b,-1.*b >,<1,2.-1.*b,b > ,r }   //c_34 top plane
+	//c_{34} & (1, t,2-t)
+
+	//22  = c_35  middle
+	line(b + 1, -1. * b, 0., -1. * b + 1, b, 0.);
+	//cylinder{< b+1,-1.*b,0. >,<-1.*b+1,b,0. > ,r }   //c_35 middle
+	//c_{35} & (t,1-t,0)
+
+	// 23 = c_36  2 bottom
+	line(b, -1, -1. * b, -1. * b, -1, b);
+	//cylinder{< b,-1,-1.*b >,<-1.*b,-1,b > ,r } //c_36 bottom plane
+	//c_{36} & (t,-1,-t)
+
+	// 24 = c_45  9
+	line(0, -3. * b - 1, -1. * b, 0, 3. * b - 1, b);
+	//cylinder{< 0,-3.*b-1,-1.*b >,<0,3.*b-1,b > ,r }   //c_45
+	//c_{45}  & (0, 3t-1, t)
+
+	// 25 = c_46  13
+	line(-3. * b - 1, -1. * b, 0., 3. * b - 1, b, 0.);
+	//cylinder{< -3.*b-1,-1.*b,0. >,<3.*b-1,b,0. > ,r }   //c_46
+	//c_{46} & (3t-1, t,0)
+
+	// 26 = c_56  5
+	line(-1. * b, 0, -3. * b - 1., b, 0, 3. * b - 1.);
+	//cylinder{< -1.*b,0,-3.*b-1. >,<b,0,3.*b-1. > ,r }   //c_56
+	//c_{56} & (t,0,3t-1)
+
+
+}
+
+void scene::Clebsch_Eckardt_points()
+{
+	point(1,1,1. ); //0
+	point(0,-1,0. ); //1
+	point(.5,.5,0. ); //2
+	point(0,.5,.5 ); //3
+	point(0,0,-1. ); //4
+	point(.5,0,.5 ); //5
+	point(-1,0,0. ); //6
+}
+
+//##############################################################################
+// Clebsch cubic, version 2
+//##############################################################################
+
+void scene::clebsch_cubic_version2()
+{
+	// this is X0^3+X1^3+X2^3+X3^3-(X0+X1+X2+X3)^3
+	// = -3*x^2*y - 3*x^2*z - 3*x*y^2 - 6*x*y*z - 3*x*z^2 - 3*y^2*z
+	// - 3*y*z^2 - 3*x^2 - 6*x*y - 6*x*z - 3*y^2 - 6*y*z - 3*z^2 - 3*x - 3*y - 3*z
+
+
+	double Eqn[20] = {
+			0, // 1 x^3
+			-3, // 2 x^2y
+			-3, // 3 x^2z
+			-3, // 4 x^2
+			-3, // 5 xy^2
+			-6, // 6 xyz
+			-6, // 7 xy
+			-3, // 8 xz^2
+			-6, // 9 xz
+			-3, // 10 x
+			0, // 11 y^3
+			-3, // 12 y^2z
+			-3, // 13 y^2
+			-3, // 14 yz^2
+			-6, // 15 yz
+			-3, // 16 y
+			0, // 17 z^3
+			-3, // 18 z^2
+			-3, // 19 z
+			0, // 20 1
+	};
+
+	cubic(Eqn);
+}
+
+void scene::clebsch_cubic_version2_Hessian()
+{
+
+	double Eqn[20] = {
+			0, // 1 x^3
+			1, // 2 x^2y
+			1, // 3 x^2z
+			0, // 4 x^2
+			1, // 5 xy^2
+			0, // 6 xyz
+			1, // 7 xy
+			1, // 8 xz^2
+			0, // 9 xz
+			0, // 10 x
+			0, // 11 y^3
+			1, // 12 y^2z
+			0, // 13 y^2
+			1, // 14 yz^2
+			1, // 15 yz
+			0, // 16 y
+			0, // 17 z^3
+			0, // 18 z^2
+			0, // 19 z
+			0, // 20 1
+	};
+
+	cubic(Eqn);
+}
+
+#define alpha ((1. + sqrt(5)) * .5)
+#define beta ((-1. + sqrt(5)) * .5)
+
+void scene::clebsch_cubic_version2_lines_a()
+{
+	double A[] = {beta, -1, 0, 1, -1, beta, 1, 0,
+		beta, -1, 1, -beta, -1, beta, 0, -beta,
+		beta, -1, -beta, 0, -1, beta, -beta, 1,
+		-1, -alpha, 0, 1, -alpha, -1, 1, 0,
+		-1, -alpha, 1, alpha, -alpha, -1, 0, alpha,
+		-1, -alpha, alpha, 0, -alpha, -1, alpha, 1};
+	int i, j;
+	double L[8];
+	double a, av;
+	numerics N;
+
+	for (i = 0; i < 6; i++) {
+		N.vec_copy(A + i * 8, L, 8);
+		if (ABS(L[3]) < 0.001 && ABS(L[7]) < 0.001) {
+			cout << "scene::clebsch_cubic_version2_lines_a line A" << i << " lies at infinity" << endl;
+			exit(1);
+		}
+		if (ABS(L[7]) > ABS(L[3])) {
+			N.vec_swap(L, L + 4, 4);
+		}
+		a = L[3];
+		av = 1. / a;
+		N.vec_scalar_multiple(L, av, 4);
+		a = -L[7];
+		for (j = 0; j < 4; j++) {
+			L[4 + j] += L[j] * a;
+		}
+		line_extended(L[0], L[1], L[2], L[0] + L[4], L[1] + L[5], L[2] + L[6], 10.);
+	}
+}
+
+void scene::clebsch_cubic_version2_lines_b()
+{
+	double B[] = {-1, -alpha, 1, 0, -alpha, -1, 0, 1,
+			-1, -alpha, 0, alpha, -alpha, -1, 1, alpha,
+        	-1, -alpha, alpha, 1, -alpha, -1, alpha, 0,
+        	-1, beta, 0, 1, beta, -1, 1, 0,
+        	-1, beta, 1, -beta, beta, -1, 0, -beta,
+        	-1, beta, -beta, 0, beta, -1, -beta, 1};
+	int i, j;
+	double L[8];
+	double a, av;
+	numerics N;
+
+	for (i = 0; i < 6; i++) {
+		N.vec_copy(B + i * 8, L, 8);
+		if (ABS(L[3]) < 0.001 && ABS(L[7]) < 0.001) {
+			cout << "scene::clebsch_cubic_version2_lines_b line B" << i << " lies at infinity" << endl;
+			exit(1);
+		}
+		if (ABS(L[7]) > ABS(L[3])) {
+			N.vec_swap(L, L + 4, 4);
+		}
+		a = L[3];
+		av = 1. / a;
+		N.vec_scalar_multiple(L, av, 4);
+		a = -L[7];
+		for (j = 0; j < 4; j++) {
+			L[4 + j] += L[j] * a;
+		}
+		line_extended(L[0], L[1], L[2], L[0] + L[4], L[1] + L[5], L[2] + L[6], 10.);
+	}
+
+}
+
+void scene::clebsch_cubic_version2_lines_c()
+{
+	double C[] = {
+		-1,0,0,0,0,-1,0,1,
+		-1,0,1,0,0,-1,0,0,
+		1,-1,0,0,0,0,1,-1,
+		0,0,0,-1,0,1,-1,0,
+		0,0,1,0,1,0,0,-1,
+		-1,0,0,1,0,-1,1,0,
+		0,0,0,-1,1,0,-1,0,
+		1,-1,0,0,0,0,1,0,
+
+		0,0,-1,1,0,1,0,0,
+		0,0,1,0,0,1,0,-1,
+		0,0,-1,1,1,0,0,0,
+		1,-1,0,0,0,0,0,1,
+		0,-1,0,0,-1,0,0,1,
+		0,-1,1,0,-1,0,0,0,
+		0,-1,0,1,-1,0,1,0,
+		};
+	int i, j, h;
+	double L[8];
+	double a, av;
+	numerics N;
+
+	h = 0;
+	for (i = 0; i < 15; i++) {
+		N.vec_copy(C + i * 8, L, 8);
+		if (ABS(L[3]) < 0.001 && ABS(L[7]) < 0.001) {
+			cout << "scene::clebsch_cubic_version2_lines_c line C" << i << " lies at infinity" << endl;
+			continue;
+		}
+		if (ABS(L[7]) > ABS(L[3])) {
+			N.vec_swap(L, L + 4, 4);
+		}
+		a = L[3];
+		av = 1. / a;
+		N.vec_scalar_multiple(L, av, 4);
+		a = -L[7];
+		for (j = 0; j < 4; j++) {
+			L[4 + j] += L[j] * a;
+		}
+		line_extended(L[0], L[1], L[2], L[0] + L[4], L[1] + L[5], L[2] + L[6], 10.);
+		h++;
+	}
+
+
+}
 
 double scene::distance_between_two_points(int pt1, int pt2)
 {
@@ -3059,9 +3371,9 @@ void scene::create_Hilbert_model(int verbose_level)
 	}
 	clebsch_cubic(); // cubic 2
 	// lines 33-59   (previously: 21, 21+1, ... 21+26=47)
-	lines_a();
-	lines_b();
-	lines_cij();
+	clebsch_cubic_lines_a();
+	clebsch_cubic_lines_b();
+	clebsch_cubic_lines_cij();
 
 
 	double coeff_fermat[20] = {1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1};

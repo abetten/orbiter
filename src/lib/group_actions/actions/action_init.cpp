@@ -812,6 +812,10 @@ void action::init_permutation_group_from_generators(int degree,
 				"after init_permutation_group" << endl;
 		}
 
+	if (Stabilizer_chain) {
+		FREE_OBJECT(Stabilizer_chain);
+	}
+
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
 				"calling allocate_base_data" << endl;

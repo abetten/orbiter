@@ -16,6 +16,7 @@ LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64 -lginac -lcln
 
 
 ALL_TARGETS=\
+	clebsch.out \
 	cra.out \
 	differentiation.out \
 	hilbert_cohn_vossen.out \
@@ -29,6 +30,9 @@ ALL_TARGETS=\
 all: $(ALL_TARGETS)
 
 
+
+clebsch.out:  clebsch.o  ;
+	$(DISCRETA_CPP)  clebsch.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 cra.out:  cra.o  ;
 	$(DISCRETA_CPP)  cra.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

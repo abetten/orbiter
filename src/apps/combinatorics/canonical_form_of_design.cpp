@@ -29,10 +29,11 @@ void classify_objects_using_nauty(
 	int verbose_level);
 void handle_input_file(classify_bitvectors *CB,
 		int nb_objects_to_test, int t0,
-		const char *fname,
+		const char *fname, int input_file_idx, int nb_input_files,
 		int N_points, int design_b, int design_k, int partition_class_size,
 		int f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix,
 		const char **test_perm, int nb_test_perm,
+		long int *Ago,
 		int verbose_level);
 void process_object(
 	classify_bitvectors *CB,
@@ -40,6 +41,7 @@ void process_object(
 	int f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix,
 	int nb_objects_to_test,
 	int &f_found, int &idx,
+	longinteger_object &go,
 	int verbose_level);
 
 
@@ -73,6 +75,7 @@ int main(int argc, const char **argv)
 
 	t0 = Os.os_ticks();
 
+	//f_memory_debug = TRUE;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -144,7 +147,9 @@ int main(int argc, const char **argv)
 
 	}
 
+	//global_mem_object_registry.dump_to_csv_file("memory_dump.csv");
 
+	//global_mem_object_registry.sort_by_location_and_get_frequency(0 /* verbose_level*/);
 
 
 	the_end(t0);
@@ -179,6 +184,11 @@ void classify_objects_using_nauty(
 
 	t0 = Os.os_ticks();
 
+	long int *Ago;
+
+	Ago = NEW_lint(nb_objects_to_test);
+
+
 	for (input_idx = 0; input_idx < Data->nb_inputs; input_idx++) {
 		if (f_v) {
 			cout << "classify_objects_using_nauty input "
@@ -200,10 +210,11 @@ void classify_objects_using_nauty(
 			int partition_class_size = Data->input_data4[input_idx];
 
 			handle_input_file(CB, nb_objects_to_test, t0,
-					Data->input_string[input_idx],
+					Data->input_string[input_idx], input_idx, Data->nb_inputs,
 					N_points, design_b, design_k, partition_class_size,
 					f_save_incma_in_and_out, save_incma_in_and_out_prefix,
 					test_perm, nb_test_perm,
+					Ago,
 					verbose_level);
 
 			if (f_v) {
@@ -217,6 +228,17 @@ void classify_objects_using_nauty(
 			cout << "classify_objects_using_nauty unknown input type" << endl;
 			exit(1);
 		}
+
+		if (f_v) {
+			cout << "distribution of automorphism group orders of new isomorphism types after file "
+				<< input_idx << " / " << Data->nb_inputs << " is:" << endl;
+			classify C;
+
+			C.init_lint(Ago, CB->nb_types, FALSE, 0);
+			C.print_naked(TRUE);
+			cout << endl;
+		}
+
 	} // next input_idx
 
 
@@ -268,10 +290,11 @@ void classify_objects_using_nauty(
 
 void handle_input_file(classify_bitvectors *CB,
 		int nb_objects_to_test, int t0,
-		const char *fname,
+		const char *fname, int input_file_idx, int nb_input_files,
 		int N_points, int design_b, int design_k, int partition_class_size,
 		int f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix,
 		const char **test_perm, int nb_test_perm,
+		long int *Ago,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -313,24 +336,18 @@ void handle_input_file(classify_bitvectors *CB,
 	}
 
 	int h;
-	long int *Ago;
 
 
 	if (f_v) {
-		cout << "classify_objects_using_nauty processing "
+		cout << "handle_input_file processing "
 			<< SoS->nb_sets << " objects" << endl;
 	}
-
-	Ago = NEW_lint(SoS->nb_sets);
-
-	int nb_types0;
-
-	nb_types0 = CB->nb_types;
 
 	for (h = 0; h < SoS->nb_sets; h++) {
 
 		if (f_v) {
-			cout << "Input set " << h << " / " << SoS->nb_sets << ":" << endl;
+			cout << "Input set " << h << " / " << SoS->nb_sets << ", "
+					<< input_file_idx << " / " << nb_input_files << ":" << endl;
 		}
 
 		long int *the_set_in;
@@ -343,22 +360,23 @@ void handle_input_file(classify_bitvectors *CB,
 
 
 		if (set_size_in != design_b) {
-			cout << "classify_objects_using_nauty "
+			cout << "handle_input_file "
 					"set_size_in != design_b" << endl;
 			exit(1);
 		}
 
-		if (f_v) {
+		if (FALSE) {
 			lint_matrix_print(the_set_in, nb_classes, partition_class_size);
 		}
 		if (f_vv || ((h % 1024) == 0)) {
-			cout << "classify_objects_using_nauty "
-					"The input set " << h << " / " << SoS->nb_sets
+			cout << "handle_input_file "
+					"The input set " << h << " / " << SoS->nb_sets << ", "
+					<< input_file_idx << " / " << nb_input_files << " : "
 				<< " has size " << set_size_in << ":" << endl;
 		}
 
 		if (f_vvv) {
-			cout << "classify_objects_using_nauty "
+			cout << "handle_input_file "
 					"The input set is:" << endl;
 			lint_vec_print(cout, the_set_in, set_size_in);
 			cout << endl;
@@ -374,7 +392,7 @@ void handle_input_file(classify_bitvectors *CB,
 		Inc->init_large_set(
 				the_set_in /* blocks */,
 				N_points, design_b, design_k, partition_class_size,
-				partition, verbose_level);
+				partition, 0 /*verbose_level*/);
 
 		incidence_structure_with_group *IG;
 
@@ -385,6 +403,7 @@ void handle_input_file(classify_bitvectors *CB,
 
 		int f_found;
 		int idx;
+		longinteger_object go;
 
 		process_object(
 					CB,
@@ -392,7 +411,13 @@ void handle_input_file(classify_bitvectors *CB,
 					f_save_incma_in_and_out, save_incma_in_and_out_prefix,
 					nb_objects_to_test,
 					f_found, idx,
+					go,
 					verbose_level - 2);
+
+		FREE_OBJECT(IG);
+		FREE_OBJECT(Inc);
+		FREE_int(partition);
+
 
 		if (f_found) {
 
@@ -401,10 +426,6 @@ void handle_input_file(classify_bitvectors *CB,
 					<< ", corresponding to input object " << CB->Type_rep[idx]
 					<< " and hence is skipped" << endl;
 			}
-			FREE_OBJECT(IG);
-			FREE_OBJECT(Inc);
-			FREE_int(partition);
-
 		}
 		else {
 			t1 = Os.os_ticks();
@@ -418,23 +439,24 @@ void handle_input_file(classify_bitvectors *CB,
 				Os.time_check_delta(cout, dt);
 			}
 
-			longinteger_object go;
+			//longinteger_object go;
 
-			IG->A_perm->group_order(go);
+			//IG->A_perm->group_order(go);
 
 			if (f_v) {
 				cout << " --- New isomorphism type! input set " << h
-					<< " / " << SoS->nb_sets << " The n e w number of "
+					<< " / " << SoS->nb_sets << ", " << input_file_idx << " / " << nb_input_files << " : "
+					<< " The n e w number of "
 					"isomorphism types is " << CB->nb_types << " go=" << go << endl;
 			}
 
-			Ago[CB->nb_types - 1 - nb_types0] = go.as_lint();
+			Ago[CB->nb_types - 1] = go.as_lint();
 
 		}
 
 		if (f_vv) {
 			cout << "classify_objects_using_nauty after input set " << h << " / "
-					<< SoS->nb_sets
+					<< SoS->nb_sets << ", " << input_file_idx << " / " << nb_input_files
 					<< ", we have " << CB->nb_types
 					<< " isomorphism types of objects" << endl;
 		}
@@ -442,17 +464,10 @@ void handle_input_file(classify_bitvectors *CB,
 	} // next h
 	FREE_OBJECT(SoS);
 
-	if (f_v) {
-		cout << "distribution of automorphism group orders of new isomorphism types in this file:" << endl;
-		classify C;
-
-		C.init_lint(Ago, CB->nb_types - nb_types0, FALSE, 0);
-		C.print_naked(TRUE);
-		cout << endl;
-	}
 
 	if (f_v) {
-		cout << "handle_input_file fname=" << fname << " done" << endl;
+		cout << "handle_input_file fname=" << fname << ", "
+			<< input_file_idx << " / " << nb_input_files << " done" << endl;
 	}
 
 }
@@ -464,7 +479,9 @@ void process_object(
 	int f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix,
 	int nb_objects_to_test,
 	int &f_found, int &idx,
+	longinteger_object &go,
 	int verbose_level)
+// does not store IG
 {
 	int f_v = (verbose_level >= 1);
 
@@ -472,7 +489,7 @@ void process_object(
 		cout << "process_object n=" << CB->n << endl;
 	}
 
-	longinteger_object go;
+
 
 
 
@@ -505,7 +522,7 @@ void process_object(
 	if (CB->n == 0) {
 		CB->init(nb_objects_to_test, IG->canonical_form_len, verbose_level);
 	}
-	CB->search_and_add_if_new(IG->canonical_form, IG, f_found, idx, verbose_level);
+	CB->search_and_add_if_new(IG->canonical_form, NULL /*IG*/, f_found, idx, verbose_level);
 
 
 	if (f_v) {

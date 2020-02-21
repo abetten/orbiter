@@ -78,6 +78,8 @@ void animate::animate_one_round(
 	int f_has_zoom = FALSE;
 	int zoom_start = 0;
 	int zoom_end = 0;
+	double zoom_clipping_start = 0.;
+	double zoom_clipping_end = 0.;
 	int f_has_zoom_sequence = FALSE;
 	double *zoom_sequence = NULL;
 	int zoom_sequence_length = 0;
@@ -86,7 +88,9 @@ void animate::animate_one_round(
 	int *zoom_sequence_len = NULL;
 	int zoom_sequence_l;
 	double angle;
+	double clipping_radius;
 	double zoom_increment;
+	double zoom_clipping_increment;
 	int nb_frames_this_round;
 	int f_has_pan = FALSE;
 	int pan_f_reverse = FALSE;
@@ -128,7 +132,11 @@ void animate::animate_one_round(
 			f_has_zoom = TRUE;
 			zoom_start = Opt->zoom_start[i];
 			zoom_end = Opt->zoom_end[i];
+			zoom_clipping_start = Opt->zoom_clipping_start[i];
+			zoom_clipping_end = Opt->zoom_clipping_end[i];
 			zoom_increment = (double)(zoom_end - zoom_start) /
+					(double) nb_frames_this_round;
+			zoom_clipping_increment = (double)(zoom_clipping_end - zoom_clipping_start) /
 					(double) nb_frames_this_round;
 			}
 		}
@@ -311,8 +319,22 @@ void animate::animate_one_round(
 		{
 		ofstream fp(fname_pov);
 
+
+		if (Opt->f_clipping_radius) {
+			clipping_radius = Opt->clipping_radius;
+		}
+		else {
+			clipping_radius = 2.7; // default
+		}
+		for (i = 0; i < Opt->nb_clipping; i++) {
+			if (Opt->clipping_round[i] == round) {
+				clipping_radius = Opt->clipping_value[i];
+				}
+			}
+
 		if (f_has_zoom) {
 			angle = ((double)zoom_start + (double) h * zoom_increment);
+			clipping_radius = zoom_clipping_start + (double) h * zoom_clipping_increment;
 		}
 		else {
 			if (f_has_zoom_sequence) {
@@ -435,6 +457,7 @@ void animate::animate_one_round(
 		}
 		(*draw_frame_callback)(this, h /* frame */,
 							nb_frames_this_round, round,
+							clipping_radius,
 							fp,
 							verbose_level);
 
@@ -794,6 +817,7 @@ void animate::draw_Hilbert_tetrahedron_faces(ostream &fp)
 
 void animate::draw_frame_Hilbert(
 	int h, int nb_frames, int round,
+	double clipping_radius,
 	ostream &fp,
 	int verbose_level)
 {
@@ -803,19 +827,9 @@ void animate::draw_frame_Hilbert(
 
 	cout << "draw_frame_Hilbert round=" << round << endl;
 
-	double my_clipping_radius;
-	double scale_factor;
-
-	my_clipping_radius = Opt->clipping_radius;
-	scale_factor = Opt->scale_factor;
+	double scale_factor = Opt->scale_factor;
 
 	Pov->union_start(fp);
-
-	for (i = 0; i < Opt->nb_clipping; i++) {
-		if (Opt->clipping_round[i] == round) {
-			my_clipping_radius = Opt->clipping_value[i];
-			}
-		}
 
 
 	if (round == 0) {
@@ -1617,10 +1631,10 @@ void animate::draw_frame_Hilbert(
 		//draw_Hilbert_cube_faces(S,fp);
 
 		Pov->rotate_111(h, nb_frames, fp);
-		Pov->union_end(fp, scale_factor, my_clipping_radius);
+		Pov->union_end(fp, scale_factor, clipping_radius);
 		Pov->union_start(fp);
 
-		my_clipping_radius = 5 * my_clipping_radius;
+		//my_clipping_radius = 5 * my_clipping_radius;
 
 
 #if 0
@@ -1666,10 +1680,10 @@ void animate::draw_frame_Hilbert(
 		//draw_Hilbert_cube_faces(S,fp);
 
 		Pov->rotate_111(h, nb_frames, fp);
-		Pov->union_end(fp, scale_factor, my_clipping_radius);
+		Pov->union_end(fp, scale_factor, clipping_radius);
 		Pov->union_start(fp);
 
-		my_clipping_radius = 5 * my_clipping_radius;
+		//my_clipping_radius = 5 * my_clipping_radius;
 
 #if 0
 		// ToDo
@@ -1923,7 +1937,7 @@ void animate::draw_frame_Hilbert(
 
 
 	Pov->rotate_111(h, nb_frames, fp);
-	Pov->union_end(fp, scale_factor, my_clipping_radius);
+	Pov->union_end(fp, scale_factor, clipping_radius);
 
 	cout << "animate::draw_frame_Hilbert done" << endl;
 
@@ -2314,6 +2328,7 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 
 void animate::draw_frame_HCV_surface(
 	int h, int nb_frames, int round,
+	double clipping_radius,
 	ostream &fp,
 	int verbose_level)
 {
@@ -2323,19 +2338,12 @@ void animate::draw_frame_HCV_surface(
 
 	cout << "animate::draw_frame_HCV_surface" << endl;
 
-	double my_clipping_radius;
 	double scale_factor;
 
-	my_clipping_radius = Opt->clipping_radius;
 	scale_factor = Opt->scale_factor;
 
 	Pov->union_start(fp);
 
-	for (i = 0; i < Opt->nb_clipping; i++) {
-		if (Opt->clipping_round[i] == round) {
-			my_clipping_radius = Opt->clipping_value[i];
-			}
-		}
 
 
 	if (round == 0) {
@@ -2503,32 +2511,23 @@ void animate::draw_frame_HCV_surface(
 	}
 
 	Pov->rotate_111(h, nb_frames, fp);
-	Pov->union_end(fp, scale_factor, my_clipping_radius);
+	Pov->union_end(fp, scale_factor, clipping_radius);
 
 }
 
 void animate::draw_frame_E4_surface(
 	int h, int nb_frames, int round,
+	double clipping_radius,
 	ostream &fp,
 	int verbose_level)
 {
-	int i;
-
 	cout << "animate::draw_frame_E4_surface" << endl;
 
-	double my_clipping_radius;
 	double scale_factor;
 
-	my_clipping_radius = Opt->clipping_radius;
 	scale_factor = Opt->scale_factor;
 
 	Pov->union_start(fp);
-
-	for (i = 0; i < Opt->nb_clipping; i++) {
-		if (Opt->clipping_round[i] == round) {
-			my_clipping_radius = Opt->clipping_value[i];
-			}
-		}
 
 
 	if (round == 0) {
@@ -2553,33 +2552,22 @@ void animate::draw_frame_E4_surface(
 	}
 
 	Pov->rotate_111(h, nb_frames, fp);
-	Pov->union_end(fp, scale_factor, my_clipping_radius);
+	Pov->union_end(fp, scale_factor, clipping_radius);
 
 }
 
 void animate::draw_frame_triangulation_of_cube(
 	int h, int nb_frames, int round,
+	double clipping_radius,
 	ostream &fp,
 	int verbose_level)
 {
-	int i;
-
-
-
-	double my_clipping_radius;
 	double scale_factor;
 
-	my_clipping_radius = Opt->clipping_radius;
 	scale_factor = Opt->scale_factor;
 
 
 	Pov->union_start(fp);
-
-	for (i = 0; i < Opt->nb_clipping; i++) {
-		if (Opt->clipping_round[i] == round) {
-			my_clipping_radius = Opt->clipping_value[i];
-			}
-		}
 
 
 	if (round == 0) {
@@ -2614,12 +2602,13 @@ void animate::draw_frame_triangulation_of_cube(
 	}
 
 	Pov->rotate_111(h, nb_frames, fp);
-	Pov->union_end(fp, scale_factor, my_clipping_radius);
+	Pov->union_end(fp, scale_factor, clipping_radius);
 
 }
 
 void animate::draw_frame_twisted_cubic(
 	int h, int nb_frames, int round,
+	double clipping_radius,
 	ostream &fp,
 	int verbose_level)
 {
@@ -2698,12 +2687,13 @@ void animate::draw_frame_twisted_cubic(
 	}
 
 	Pov->rotate_111(h, nb_frames, fp);
-	Pov->union_end(fp, scale_factor, my_clipping_radius);
+	Pov->union_end(fp, scale_factor, clipping_radius);
 
 }
 
 void animate::draw_frame_five_plus_one(
 	int h, int nb_frames, int round,
+	double clipping_radius,
 	ostream &fp,
 	int verbose_level)
 {
@@ -2764,6 +2754,7 @@ void animate::draw_frame_five_plus_one(
 
 void animate::draw_frame_windy(
 	int h, int nb_frames, int round,
+	double clipping_radius,
 	ostream &fp,
 	int verbose_level)
 {

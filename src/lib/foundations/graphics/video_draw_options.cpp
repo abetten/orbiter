@@ -178,13 +178,26 @@ int video_draw_options::read_arguments(
 			cnt_nb_frames++;
 			}
 		else if (strcmp(argv[i], "-zoom") == 0) {
-			zoom_round[nb_zoom] = atoi(argv[++i]);
-			zoom_start[nb_zoom] = atoi(argv[++i]);
-			zoom_end[nb_zoom] = atoi(argv[++i]);
+			i++;
+			zoom_round[nb_zoom] = atoi(argv[i]);
+			i++;
+			zoom_start[nb_zoom] = atoi(argv[i]);
+			i++;
+			zoom_end[nb_zoom] = atoi(argv[i]);
+			double d;
+			i++;
+			sscanf(argv[i], "%lf", &d);
+			zoom_clipping_start[nb_zoom] = d;
+			i++;
+			sscanf(argv[i], "%lf", &d);
+			zoom_clipping_end[nb_zoom] = d;
 			cout << "video_draw_options::read_arguments -zoom "
 				<< zoom_round[nb_zoom] << " "
 				<< zoom_start[nb_zoom] << " "
-				<< zoom_end[nb_zoom] << endl;
+				<< zoom_end[nb_zoom] << " "
+				<< zoom_clipping_start[nb_zoom] << " "
+				<< zoom_clipping_end[nb_zoom] << " "
+				<< endl;
 			nb_zoom++;
 			}
 		else if (strcmp(argv[i], "-zoom_sequence") == 0) {

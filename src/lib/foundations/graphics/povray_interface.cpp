@@ -17,6 +17,8 @@ namespace foundations {
 
 povray_interface::povray_interface()
 {
+	//color_white_simple = "pigment{White*0.5 }";
+	color_white_simple = "texture{ pigment{ White*0.5 transmit 0.2 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }";
 	color_white = "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }";
 	color_white_very_transparent = "texture{ pigment{ White*0.5 transmit 0.75 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }";
 	color_black = "texture{ pigment{ color Black } finish { diffuse 0.9 phong 1}}";
@@ -259,6 +261,20 @@ void povray_interface::animation_rotate_around_origin_and_given_vector(
 	ost << "	0,0,0>" << endl;
 	ost << endl;
 	ost << endl;
+}
+
+void povray_interface::animation_rotate_xyz(
+	double angle_x_deg, double angle_y_deg, double angle_z_deg, ostream &ost)
+{
+	numerics N;
+
+	ost << "	rotate <";
+	N.output_double(angle_x_deg, ost);
+	ost << ",";
+	N.output_double(angle_y_deg, ost);
+	ost << ",";
+	N.output_double(angle_z_deg, ost);
+	ost << ">" << endl;
 }
 
 void povray_interface::animation_rotate_around_origin_and_given_vector_by_a_given_angle(

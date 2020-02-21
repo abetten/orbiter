@@ -29,6 +29,7 @@ public:
 	std::ofstream *fpm;
 	void (*draw_frame_callback)(animate *A, int frame,
 					int nb_frames_this_round, int round,
+					double clipping,
 					std::ostream &fp,
 					int verbose_level);
 	void *extra_data;
@@ -64,6 +65,7 @@ public:
 	void draw_Hilbert_tetrahedron_faces(std::ostream &fp);
 	void draw_frame_Hilbert(
 		int h, int nb_frames, int round,
+		double clipping_radius,
 		std::ostream &fp,
 		int verbose_level);
 	void draw_surface_13_1(std::ostream &fp);
@@ -73,26 +75,32 @@ public:
 			int verbose_level);
 	void draw_frame_HCV_surface(
 		int h, int nb_frames, int round,
+		double clipping_radius,
 		std::ostream &fp,
 		int verbose_level);
 	void draw_frame_E4_surface(
 		int h, int nb_frames, int round,
+		double clipping_radius,
 		std::ostream &fp,
 		int verbose_level);
 	void draw_frame_triangulation_of_cube(
 		int h, int nb_frames, int round,
+		double clipping_radius,
 		std::ostream &fp,
 		int verbose_level);
 	void draw_frame_twisted_cubic(
 		int h, int nb_frames, int round,
+		double clipping_radius,
 		std::ostream &fp,
 		int verbose_level);
 	void draw_frame_five_plus_one(
 		int h, int nb_frames, int round,
+		double clipping_radius,
 		std::ostream &fp,
 		int verbose_level);
 	void draw_frame_windy(
 		int h, int nb_frames, int round,
+		double clipping_radius,
 		std::ostream &fp,
 		int verbose_level);
 
@@ -527,6 +535,7 @@ class povray_interface {
 public:
 
 
+	const char *color_white_simple;
 	const char *color_white;
 	const char *color_white_very_transparent;
 	const char *color_black;
@@ -561,6 +570,8 @@ public:
 	void animation_rotate_around_origin_and_1_1_1(std::ostream &ost);
 	void animation_rotate_around_origin_and_given_vector(double *v,
 			std::ostream &ost);
+	void animation_rotate_xyz(
+		double angle_x_deg, double angle_y_deg, double angle_z_deg, std::ostream &ost);
 	void animation_rotate_around_origin_and_given_vector_by_a_given_angle(
 		double *v, double angle_zero_one, std::ostream &ost);
 	void union_start(std::ostream &ost);
@@ -584,6 +595,7 @@ public:
 #define SCENE_MAX_POINTS 100000
 #define SCENE_MAX_PLANES 10000
 #define SCENE_MAX_QUADRICS 10000
+#define SCENE_MAX_QUARTICS 1000
 #define SCENE_MAX_CUBICS 10000
 #define SCENE_MAX_FACES 10000
 
@@ -623,6 +635,10 @@ public:
 	double *Cubic_coords;
 		// [nb_cubics * 20]
 
+	int nb_quartics;
+	double *Quartic_coords;
+		// [nb_quartics * 35]
+
 	int nb_faces;
 	int *Nb_face_points; // [nb_faces]
 	int **Face_points; // [nb_faces]
@@ -655,6 +671,8 @@ public:
 	void transform_quadrics(scene *S, double *A4, double *A4_inv, 
 		int verbose_level);
 	void transform_cubics(scene *S, double *A4, double *A4_inv, 
+		int verbose_level);
+	void transform_quartics(scene *S, double *A4, double *A4_inv,
 		int verbose_level);
 	void copy_faces(scene *S, double *A4, double *A4_inv, 
 		int verbose_level);
@@ -721,6 +739,7 @@ public:
 	// 18: z^2
 	// 19: z
 	// 20: 1
+	int quartic(double *coeff);
 	int face(int *pts, int nb_pts);
 	int face3(int pt1, int pt2, int pt3);
 	int face4(int pt1, int pt2, int pt3, int pt4);
@@ -732,12 +751,15 @@ public:
 	void draw_lines_cij_with_selection(int *selection, int nb_select, 
 			std::ostream &ost);
 	void draw_lines_cij(std::ostream &ost);
+	void draw_lines_cij_with_offset(int offset, int number_of_lines, std::ostream &ost);
 	void draw_lines_ai_with_selection(int *selection, int nb_select, 
 			std::ostream &ost);
 	void draw_lines_ai(std::ostream &ost);
+	void draw_lines_ai_with_offset(int offset, std::ostream &ost);
 	void draw_lines_bj_with_selection(int *selection, int nb_select, 
 			std::ostream &ost);
 	void draw_lines_bj(std::ostream &ost);
+	void draw_lines_bj_with_offset(int offset, std::ostream &ost);
 	void draw_edges_with_selection(int *selection, int nb_select, 
 		const char *options, std::ostream &ost);
 	void draw_faces_with_selection(int *selection, int nb_select, 
@@ -758,6 +780,8 @@ public:
 	void draw_points_with_selection(int *selection, int nb_select, 
 		double rad, const char *options, std::ostream &ost);
 	void draw_cubic_with_selection(int *selection, int nb_select, 
+		const char *options, std::ostream &ost);
+	void draw_quartic_with_selection(int *selection, int nb_select,
 		const char *options, std::ostream &ost);
 	void draw_quadric_with_selection(int *selection, int nb_select, 
 		const char *options, std::ostream &ost);
@@ -783,10 +807,6 @@ public:
 		int plane_idx, double pt_in[3], 
 		int &new_line_idx, int &new_pt_idx, 
 		int verbose_level);
-	void lines_a();
-	void lines_b();
-	void lines_cij();
-	void Eckardt_points();
 	void fourD_cube(double rad_desired);
 	void rescale(int first_pt_idx, double rad_desired);
 	double euclidean_distance(int pt1, int pt2);
@@ -797,7 +817,21 @@ public:
 	void Dodecahedron_edges(int first_pt_idx);
 	void Dodecahedron_planes(int first_pt_idx);
 	void tritangent_planes();
+
+	// Clebsch version 1:
 	void clebsch_cubic();
+	void clebsch_cubic_lines_a();
+	void clebsch_cubic_lines_b();
+	void clebsch_cubic_lines_cij();
+	void Clebsch_Eckardt_points();
+
+	// Clebsch version 2:
+	void clebsch_cubic_version2();
+	void clebsch_cubic_version2_Hessian();
+	void clebsch_cubic_version2_lines_a();
+	void clebsch_cubic_version2_lines_b();
+	void clebsch_cubic_version2_lines_c();
+
 	double distance_between_two_points(int pt1, int pt2);
 	void create_five_plus_one();
 	void create_Hilbert_model(int verbose_level);
@@ -976,6 +1010,8 @@ public:
 	int zoom_round[1000];
 	int zoom_start[1000];
 	int zoom_end[1000];
+	double zoom_clipping_start[1000];
+	double zoom_clipping_end[1000];
 
 	int nb_zoom_sequence;
 	int zoom_sequence_round[1000];

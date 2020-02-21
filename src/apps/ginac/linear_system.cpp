@@ -38,6 +38,7 @@ using namespace std;
 void linear_system(int argc, const char **argv);
 void draw_frame_linear_system(
 	animate *Anim, int h, int nb_frames, int round,
+	double clipping_radius,
 	ostream &fp,
 	int verbose_level);
 int main(int argc, const char **argv);
@@ -269,6 +270,7 @@ void linear_system(int argc, const char **argv)
 
 void draw_frame_linear_system(
 	animate *Anim, int h, int nb_frames, int round,
+	double clipping_radius,
 	ostream &fp,
 	int verbose_level)
 {
@@ -277,17 +279,7 @@ void draw_frame_linear_system(
 
 
 
-	double my_clipping_radius;
-
-	my_clipping_radius = Anim->Opt->clipping_radius;
-
 	Pov.union_start(fp);
-
-	for (i = 0; i < Anim->Opt->nb_clipping; i++) {
-		if (Anim->Opt->clipping_round[i] == round) {
-			my_clipping_radius = Anim->Opt->clipping_value[i];
-			}
-		}
 
 
 	if (round == 0) {
@@ -302,10 +294,10 @@ void draw_frame_linear_system(
 
 	if (Anim->Opt->f_has_global_picture_scale) {
 		cout << "scale=" << Anim->Opt->global_picture_scale << endl;
-		Pov.union_end(fp, Anim->Opt->global_picture_scale, my_clipping_radius);
+		Pov.union_end(fp, Anim->Opt->global_picture_scale, clipping_radius);
 	}
 	else {
-		Pov.union_end(fp, 1.0, my_clipping_radius);
+		Pov.union_end(fp, 1.0, clipping_radius);
 
 	}
 

@@ -52,6 +52,7 @@ int idx_eqn2;
 void surface(int argc, const char **argv);
 void draw_frame_HCV(
 	animate *Anim, int h, int nb_frames, int round,
+	double clipping_radius,
 	ostream &fp,
 	int verbose_level);
 matrix make_cij(matrix **AB, int i, int j, ostream &ost, int verbose_level);
@@ -1094,12 +1095,46 @@ void surface(int argc, const char **argv)
 			int_matrix_print(surface_idx3, nb_frames_default, 1);
 
 
+			// define the Hessian surface:
+
 				int idx_eqn2;
 
 				idx_eqn2 = S->cubic(Eqn2);
 				//S->cubic(Eqn3);
 			cout << "idx(Eqn2) = " << idx_eqn2 << endl;
 
+
+			// create the quartic Hessian:
+
+			double Quartic_Hessian[35];
+
+
+			for (j = 0; j < 35; j++) {
+				Quartic_Hessian[j] = 0.;
+			}
+
+			Quartic_Hessian[1 - 1] = 25.;
+			Quartic_Hessian[21 - 1] = 25.;
+			Quartic_Hessian[31 - 1] = 25.;
+
+			Quartic_Hessian[5 - 1] = -50.;
+			Quartic_Hessian[8 - 1] = -50.;
+			Quartic_Hessian[24 - 1] = -50.;
+
+			Quartic_Hessian[15 - 1] = 135./2.;
+
+			Quartic_Hessian[10 - 1] = 59.;
+			Quartic_Hessian[26 - 1] = 59.;
+			Quartic_Hessian[33 - 1] = 59.;
+
+			Quartic_Hessian[35 - 1] = -48.;
+
+			cout << "Quartic_Hessian:" << endl;
+			for (j = 0; j < 35; j++) {
+				cout << j << " : " << Quartic_Hessian[j] << endl;
+			}
+
+			S->quartic(Quartic_Hessian);
 
 
 
@@ -1193,6 +1228,7 @@ void surface(int argc, const char **argv)
 
 void draw_frame_HCV(
 	animate *Anim, int h, int nb_frames, int round,
+	double clipping_radius,
 	ostream &fp,
 	int verbose_level)
 {
@@ -1201,17 +1237,7 @@ void draw_frame_HCV(
 
 
 
-	double my_clipping_radius;
-
-	my_clipping_radius = Anim->Opt->clipping_radius;
-
 	Pov.union_start(fp);
-
-	for (i = 0; i < Anim->Opt->nb_clipping; i++) {
-		if (Anim->Opt->clipping_round[i] == round) {
-			my_clipping_radius = Anim->Opt->clipping_value[i];
-			}
-		}
 
 
 	if (round == 0) {
@@ -1587,13 +1613,65 @@ void draw_frame_HCV(
 
 	}
 
+	else if (round == 10) {
+
+		Anim->S->line_radius = 0.04;
+
+		//Anim->S->draw_lines_ai(fp);
+		//Anim->S->draw_lines_bj(fp);
+
+		if (f_transformed) {
+			{
+				int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
+
+			//Anim->S->draw_lines_cij_with_selection(selection, 15, fp);
+			}
+
+			{
+				int selection[] = {1};
+				//Anim->S->draw_cubic_with_selection(selection, 1,
+				//		Pov.color_white, fp);
+			}
+		}
+		else {
+			{
+				int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11};
+
+				//Anim->S->draw_lines_cij_with_selection(selection, 12, fp);
+			}
+			//Anim->S->draw_lines_cij(fp);
+
+			{
+				int selection[2];
+				selection[0] = 0; //idx_eqn2;
+				//Anim->S->draw_cubic_with_selection(selection, 1,
+				//		Pov.color_white, fp);
+
+#if 0
+				selection[0] = 272; //idx_eqn2;
+				cout << "drawing cubic " << idx_eqn2 << endl;
+				Anim->S->draw_cubic_with_selection(selection, 1,
+						Pov.color_pink_transparent, fp);
+#endif
+				selection[0] = 0;
+				cout << "drawing quartic " << endl;
+				Anim->S->draw_quartic_with_selection(selection, 1,
+						Pov.color_pink_transparent, fp);
+			}
+		}
+
+
+		Pov.rotate_111(h, nb_frames, fp);
+
+	}
+
 
 	if (Anim->Opt->f_has_global_picture_scale) {
 		cout << "scale=" << Anim->Opt->global_picture_scale << endl;
-		Pov.union_end(fp, Anim->Opt->global_picture_scale, my_clipping_radius);
+		Pov.union_end(fp, Anim->Opt->global_picture_scale, clipping_radius);
 	}
 	else {
-		Pov.union_end(fp, 1.0, my_clipping_radius);
+		Pov.union_end(fp, 1.0, clipping_radius);
 
 	}
 
