@@ -931,12 +931,13 @@ int sorting::vec_search(void **v,
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "vec_search len=" << len << endl;
-		}
+		cout << "sorting::vec_search len=" << len << endl;
+	}
+	idx = 0;
 	if (len == 0) {
 		idx = 0;
 		return FALSE;
-		}
+	}
 	l = 0;
 	r = len;
 	// invariant:
@@ -945,15 +946,15 @@ int sorting::vec_search(void **v,
 	// r - l is the length of the area to search in.
 	while (l < r) {
 		if (f_v) {
-			cout << "vec_search l=" << l << " r=" << r << endl;
-			}
+			cout << "sorting::vec_search l=" << l << " r=" << r << endl;
+		}
 		m = (l + r) >> 1;
 		// if the length of the search area is even
 		// we examine the element above the middle
 		res = (*compare_func)(a, v[m], data_for_compare);
 		if (f_v) {
-			cout << "m=" << m << " res=" << res << endl;
-			}
+			cout << "sorting::vec_search m=" << m << " res=" << res << endl;
+		}
 		//res = v[m] - a;
 		//cout << "search l=" << l << " m=" << m << " r=" 
 		//	<< r << "a=" << a << " v[m]=" << v[m] << " res=" << res << endl;
@@ -961,18 +962,22 @@ int sorting::vec_search(void **v,
 			l = m + 1;
 			if (res == 0) {
 				f_found = TRUE;
-				}
-			}
-		else {
-			r = m;
 			}
 		}
+		else {
+			r = m;
+		}
+	}
 	// now: l == r; 
 	// and f_found is set accordingly */
 	if (f_found) {
 		l--;
-		}
+	}
 	idx = l;
+	if (f_v) {
+		cout << "sorting::vec_search done, "
+				"f_found=" << f_found << " idx=" << idx << endl;
+	}
 	return f_found;
 }
 
