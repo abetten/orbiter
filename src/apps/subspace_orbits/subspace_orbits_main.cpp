@@ -62,6 +62,8 @@ int main(int argc, const char **argv)
 	int f_print_generators = FALSE;
 	int f_exportmagma = FALSE;
 	int f_draw_poset = FALSE;
+	int f_draw_full_poset = FALSE;
+	int f_flag_orbits = FALSE;
 	int f_embedded = FALSE;
 	int f_sideways = FALSE;
 	int f_table_of_nodes = FALSE;
@@ -162,6 +164,14 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-draw_poset") == 0) {
 			f_draw_poset = TRUE;
 			cout << "-draw_poset " << endl;
+			}
+		else if (strcmp(argv[i], "-draw_full_poset") == 0) {
+			f_draw_full_poset = TRUE;
+			cout << "-draw_full_poset " << endl;
+			}
+		else if (strcmp(argv[i], "-flag_orbits") == 0) {
+			f_flag_orbits = TRUE;
+			cout << "-flag_orbits " << endl;
 			}
 		else if (strcmp(argv[i], "-embedded") == 0) {
 			f_embedded = TRUE;
@@ -375,7 +385,28 @@ int main(int argc, const char **argv)
 			depth,
 			0 /* data1 */, f_embedded, f_sideways,
 			0 /* gen->verbose_level */);
-		}
+	}
+
+	if (f_draw_full_poset) {
+		if (f_v) {
+			cout << "before gen->draw_full_poset" << endl;
+			}
+		SubOrb->Gen->draw_poset_full(
+			SubOrb->Gen->fname_base,
+			depth,
+			0 /* data1 */, f_embedded, f_sideways,
+			1.0 /* x_stretch*/, 0 /* gen->verbose_level */);
+	}
+	if (f_flag_orbits) {
+		const char *fname_prefix = "flag_orbits";
+
+		if (f_v) {
+			cout << "before gen->make_flag_orbits_on_relations" << endl;
+			}
+		SubOrb->Gen->make_flag_orbits_on_relations(
+				depth, fname_prefix, verbose_level);
+	}
+
 	file_io Fio;
 
 

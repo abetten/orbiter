@@ -2675,6 +2675,426 @@ void numerics::local_coordinates_wrt_triangle(double *pt,
 
 }
 
+
+int numerics::intersect_line_and_line(
+		double *line1_pt1_coords, 	double *line1_pt2_coords,
+		double *line2_pt1_coords, 	double *line2_pt2_coords,
+		double &lambda,
+		double *pt_coords,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; // (verbose_level >= 2);
+	//double B[3];
+	double M[9];
+	int i;
+	double v[3];
+	numerics N;
+
+	if (f_v) {
+		cout << "numerics::intersect_line_and_line" << endl;
+		}
+
+
+	// equation of the form:
+	// P_0 + \lambda * v = Q_0 + \mu * u
+
+	// where P_0 is a point on the line,
+	// Q_0 is a point on the plane,
+	// v is a direction vector of line 1
+	// u is a direction vector of line 2
+
+	// M is the matrix whose columns are
+	// v, -u, -P_0 + Q_0
+
+	// point on line 1, brought over on the other side, hence the minus:
+	// -P_0
+	M[0 * 3 + 2] = -1. * line1_pt1_coords[0]; //Line_coords[line1_idx * 6 + 0];
+	M[1 * 3 + 2] = -1. * line1_pt1_coords[1]; //Line_coords[line1_idx * 6 + 1];
+	M[2 * 3 + 2] = -1. * line1_pt1_coords[2]; //Line_coords[line1_idx * 6 + 2];
+	// +P_1
+	M[0 * 3 + 2] += line2_pt1_coords[0]; //Line_coords[line2_idx * 6 + 0];
+	M[1 * 3 + 2] += line2_pt1_coords[1]; //Line_coords[line2_idx * 6 + 1];
+	M[2 * 3 + 2] += line2_pt1_coords[2]; //Line_coords[line2_idx * 6 + 2];
+
+	// v = direction vector of line 1:
+	for (i = 0; i < 3; i++) {
+		v[i] = line1_pt2_coords[i] - line1_pt1_coords[i];
+	}
+	// we will need v[] later, hence we store this vector
+	for (i = 0; i < 3; i++) {
+		//v[i] = line1_pt2_coords[i] - line1_pt1_coords[i];
+		//v[i] = Line_coords[line1_idx * 6 + 3 + i] -
+		//		Line_coords[line1_idx * 6 + i];
+		M[i * 3 + 0] = v[i];
+		}
+
+	// negative direction vector of line 2:
+	for (i = 0; i < 3; i++) {
+		M[i * 3 + 1] = -1. * (line2_pt2_coords[i] - line2_pt1_coords[i]);
+		//M[i * 3 + 1] = -1. * (Line_coords[line2_idx * 6 + 3 + i] -
+		//		Line_coords[line2_idx * 6 + i]);
+		}
+
+
+	// solve M:
+	int rk;
+	int base_cols[3];
+
+	if (f_vv) {
+		cout << "numerics::intersect_line_and_line "
+				"before Gauss elimination:" << endl;
+		N.print_system(M, 3, 3);
+		}
+
+	rk = N.Gauss_elimination(M, 3, 3,
+			base_cols, TRUE /* f_complete */,
+			0 /* verbose_level */);
+
+	if (f_vv) {
+		cout << "numerics::intersect_line_and_line "
+				"after Gauss elimination:" << endl;
+		N.print_system(M, 3, 3);
+		}
+
+
+	if (rk < 2) {
+		cout << "numerics::intersect_line_and_line "
+				"the matrix M does not have full rank" << endl;
+		return FALSE;
+		}
+	lambda = M[0 * 3 + 2];
+	for (i = 0; i < 3; i++) {
+		pt_coords[i] = line1_pt1_coords[i] + lambda * v[i];
+		//B[i] = Line_coords[line1_idx * 6 + i] + lambda * v[i];
+		}
+
+	if (f_vv) {
+		cout << "numerics::intersect_line_and_line "
+				"The intersection point is "
+				<< pt_coords[0] << ", " << pt_coords[1] << ", " << pt_coords[2] << endl;
+		}
+	//point(B[0], B[1], B[2]);
+
+
+	if (f_v) {
+		cout << "numerics::intersect_line_and_line done" << endl;
+		}
+	return TRUE;
+}
+
+void numerics::clebsch_map_up(
+		double *line1_pt1_coords, 	double *line1_pt2_coords,
+		double *line2_pt1_coords, 	double *line2_pt2_coords,
+	double *pt_in, double *pt_out,
+	double *Cubic_coords_povray_ordering,
+	int line1_idx, int line2_idx,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+	int rk;
+	numerics Num;
+
+	double M[16];
+	double L[16];
+	double Pts[16];
+	double N[16];
+	double C[20];
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"line1_idx=" << line1_idx
+				<< " line2_idx=" << line2_idx << endl;
+		}
+
+	if (line1_idx == line2_idx) {
+		cout << "numerics::clebsch_map_up "
+				"line1_idx == line2_idx, line1_idx=" << line1_idx << endl;
+		exit(1);
+		}
+
+	Num.vec_copy(line1_pt1_coords, M, 3);
+	M[3] = 1.;
+	Num.vec_copy(line1_pt2_coords, M + 4, 3);
+	M[7] = 1.;
+	Num.vec_copy(pt_in, M + 8, 3);
+	M[11] = 1.;
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"system for plane 1=" << endl;
+		Num.print_system(M, 3, 4);
+		}
+
+	rk = Num.Null_space(M, 3, 4, L, 0 /* verbose_level */);
+	if (rk != 1) {
+		cout << "numerics::clebsch_map_up "
+				"system for plane 1 does not have nullity 1" << endl;
+		cout << "numerics::clebsch_map_up "
+				"nullity=" << rk << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"perp for plane 1=" << endl;
+		Num.print_system(L, 1, 4);
+		}
+
+	Num.vec_copy(line2_pt1_coords, M, 3);
+	M[3] = 1.;
+	Num.vec_copy(line2_pt2_coords, M + 4, 3);
+	M[7] = 1.;
+	Num.vec_copy(pt_in, M + 8, 3);
+	M[11] = 1.;
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"system for plane 2=" << endl;
+		Num.print_system(M, 3, 4);
+		}
+
+	rk = Num.Null_space(M, 3, 4, L + 4, 0 /* verbose_level */);
+	if (rk != 1) {
+		cout << "numerics::clebsch_map_up "
+				"system for plane 2 does not have nullity 1" << endl;
+		cout << "numerics::clebsch_map_up "
+				"nullity=" << rk << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"perp for plane 2=" << endl;
+		Num.print_system(L + 4, 1, 4);
+		}
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"system for line=" << endl;
+		Num.print_system(L, 2, 4);
+		}
+	rk = Num.Null_space(L, 2, 4, L + 8, 0 /* verbose_level */);
+	if (rk != 2) {
+		cout << "numerics::clebsch_map_up "
+				"system for line does not have nullity 2" << endl;
+		cout << "numerics::clebsch_map_up "
+				"nullity=" << rk << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"perp for Line=" << endl;
+		Num.print_system(L + 8, 2, 4);
+		}
+
+	Num.vec_normalize_from_back(L + 8, 4);
+	Num.vec_normalize_from_back(L + 12, 4);
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"perp for Line normalized=" << endl;
+		Num.print_system(L + 8, 2, 4);
+		}
+
+	if (ABS(L[11]) < 0.0001) {
+		Num.vec_copy(L + 12, Pts, 4);
+		Num.vec_add(L + 8, L + 12, Pts + 4, 4);
+
+		if (f_v) {
+			cout << "numerics::clebsch_map_up "
+					"two affine points on the line=" << endl;
+			Num.print_system(Pts, 2, 4);
+			}
+
+		}
+	else {
+		cout << "numerics::clebsch_map_up "
+				"something is wrong with the line" << endl;
+		exit(1);
+		}
+
+
+	Num.line_centered(Pts, Pts + 4, N, N + 4, 10);
+	N[3] = 1.;
+	N[7] = 0.;
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"line centered=" << endl;
+		Num.print_system(N, 2, 4);
+		}
+
+	//int l_idx;
+	double line3_pt1_coords[3];
+	double line3_pt2_coords[3];
+
+	// create a line:
+	//l_idx = S->line(N[0], N[1], N[2], N[4], N[5], N[6]);
+	//Line_idx[nb_line_idx++] = S->nb_lines - 1;
+	for (i = 0; i < 3; i++) {
+		line3_pt1_coords[i] = N[i];
+	}
+	for (i = 0; i < 3; i++) {
+		line3_pt2_coords[i] = N[4 + i];
+	}
+
+	for (i = 0; i < 3; i++) {
+		N[4 + i] = N[4 + i] - N[i];
+		}
+	for (i = 8; i < 16; i++) {
+		N[i] = 0.;
+		}
+
+	if (f_v) {
+		cout << "N=" << endl;
+		Num.print_system(N, 4, 4);
+		}
+
+
+	Num.substitute_cubic_linear_using_povray_ordering(Cubic_coords_povray_ordering, C,
+		N, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"transformed cubic=" << endl;
+		Num.print_system(C, 1, 20);
+		}
+
+	double a, b, c, d, tr, t1, t2, t3;
+
+	a = C[10];
+	b = C[4];
+	c = C[1];
+	d = C[0];
+
+
+	tr = -1 * b / a;
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"a=" << a << " b=" << b
+				<< " c=" << c << " d=" << d << endl;
+		cout << "clebsch_scene::create_point_up "
+				"tr = " << tr << endl;
+		}
+
+	double pt1_coords[3];
+	double pt2_coords[3];
+
+	// creates a point:
+	if (!intersect_line_and_line(
+			line3_pt1_coords, line3_pt2_coords,
+			line1_pt1_coords, line1_pt2_coords,
+			t1 /* lambda */,
+			pt1_coords,
+			0 /*verbose_level*/)) {
+		cout << "numerics::clebsch_map_up "
+				"problem computing intersection with line 1" << endl;
+		exit(1);
+		}
+
+	double P1[3];
+
+	for (i = 0; i < 3; i++) {
+		P1[i] = N[i] + t1 * (N[4 + i] - N[i]);
+		}
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up t1=" << t1 << endl;
+		cout << "numerics::clebsch_map_up P1=";
+		Num.print_system(P1, 1, 3);
+		cout << "numerics::clebsch_map_up point: ";
+		Num.print_system(pt1_coords, 1, 3);
+		}
+
+
+	double eval_t1;
+
+	eval_t1 = (((a * t1 + b) * t1) + c) * t1 + d;
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"eval_t1=" << eval_t1 << endl;
+		}
+
+	// creates a point:
+	if (!intersect_line_and_line(
+			line3_pt1_coords, line3_pt2_coords,
+			line1_pt2_coords, line2_pt2_coords,
+			t2 /* lambda */,
+			pt2_coords,
+			0 /*verbose_level*/)) {
+		cout << "numerics::clebsch_map_up "
+				"problem computing intersection with line 2" << endl;
+		exit(1);
+		}
+
+	double P2[3];
+
+	for (i = 0; i < 3; i++) {
+		P2[i] = N[i] + t2 * (N[4 + i] - N[i]);
+		}
+	if (f_v) {
+		cout << "numerics::clebsch_map_up t2=" << t2 << endl;
+		cout << "numerics::clebsch_map_up P2=";
+		Num.print_system(P2, 1, 3);
+		cout << "numerics::clebsch_map_up point: ";
+		Num.print_system(pt2_coords, 1, 3);
+		}
+
+
+	double eval_t2;
+
+	eval_t2 = (((a * t2 + b) * t2) + c) * t2 + d;
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"eval_t2=" << eval_t2 << endl;
+		}
+
+
+
+	t3 = tr - t1 - t2;
+
+
+	double eval_t3;
+
+	eval_t3 = (((a * t3 + b) * t3) + c) * t3 + d;
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"eval_t3=" << eval_t3 << endl;
+		}
+
+
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"tr=" << tr << " t1=" << t1
+				<< " t2=" << t2 << " t3=" << t3 << endl;
+		}
+
+	double Q[3];
+
+	for (i = 0; i < 3; i++) {
+		Q[i] = N[i] + t3 * N[4 + i];
+		}
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up Q=";
+		Num.print_system(Q, 1, 3);
+		}
+
+	// delete two points:
+	//S->nb_points -= 2;
+
+	Num.vec_copy(Q, pt_out, 3);
+
+
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up done" << endl;
+		}
+}
+
 }}
 
 

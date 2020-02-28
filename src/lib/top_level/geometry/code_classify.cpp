@@ -166,6 +166,10 @@ void code_classify::read_arguments(int argc, const char **argv)
 			f_draw_poset = TRUE;
 			cout << "-draw_poset " << endl;
 			}
+		else if (strcmp(argv[i], "-draw_full_poset") == 0) {
+			f_draw_full_poset = TRUE;
+			cout << "-draw_full_poset " << endl;
+			}
 		else if (strcmp(argv[i], "-print_data_structure") == 0) {
 			f_print_data_structure = TRUE;
 			cout << "-print_data_structure " << endl;
@@ -569,6 +573,16 @@ void code_classify::main(int verbose_level)
 		gen->draw_poset(gen->fname_base, depth, 
 			0 /* data1 */, f_embedded, f_sideways, 
 			verbose_level);
+		}
+	if (f_draw_full_poset) {
+		gen->draw_poset_full(gen->fname_base, depth,
+				0 /* data1 */, f_embedded, f_sideways,
+				1 /* x_stretch */, verbose_level);
+
+			const char *fname_prefix = "flag_orbits";
+
+			gen->make_flag_orbits_on_relations(
+					depth, fname_prefix, verbose_level);
 		}
 	if (f_print_data_structure) {
 		gen->print_data_structure_tex(depth, verbose_level);

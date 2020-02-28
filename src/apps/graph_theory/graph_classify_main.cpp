@@ -71,9 +71,15 @@ int main(int argc, const char **argv)
 
 	if (Gen.f_draw_full_poset) {
 		//double x_stretch = 0.4;
+		cout << "Gen.f_draw_full_poset" << endl;
 		Gen.gen->draw_poset_full(Gen.gen->fname_base, depth, 
 			Gen.n /* data1 */, f_embedded, f_sideways, 
 			Gen.x_stretch, Gen.gen->verbose_level);
+
+		const char *fname_prefix = "flag_orbits";
+
+		Gen.gen->make_flag_orbits_on_relations(
+				depth, fname_prefix, verbose_level);
 		}
 
 	//Gen.gen->print_data_structure_tex(depth, Gen.gen->verbose_level);

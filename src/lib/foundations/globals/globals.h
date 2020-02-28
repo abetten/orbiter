@@ -193,6 +193,19 @@ public:
 	void local_coordinates_wrt_triangle(double *pt,
 			double *triangle_points, double &x, double &y,
 			int verbose_level);
+	int intersect_line_and_line(
+			double *line1_pt1_coords, 	double *line1_pt2_coords,
+			double *line2_pt1_coords, 	double *line2_pt2_coords,
+			double &lambda,
+			double *pt_coords,
+			int verbose_level);
+	void clebsch_map_up(
+			double *line1_pt1_coords, 	double *line1_pt2_coords,
+			double *line2_pt1_coords, 	double *line2_pt2_coords,
+		double *pt_in, double *pt_out,
+		double *Cubic_coords_povray_ordering,
+		int line1_idx, int line2_idx,
+		int verbose_level);
 
 };
 

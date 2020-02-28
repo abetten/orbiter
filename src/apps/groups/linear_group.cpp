@@ -1016,6 +1016,12 @@ int main(int argc, const char **argv)
 			PC->draw_poset_full(fname_poset, orbits_on_subsets_size,
 				0 /* data1 */, f_embedded, f_sideways,
 				x_stretch, 0 /*verbose_level */);
+
+			const char *fname_prefix = "flag_orbits";
+
+			PC->make_flag_orbits_on_relations(
+					orbits_on_subsets_size, fname_prefix, verbose_level);
+
 			}
 		}
 
