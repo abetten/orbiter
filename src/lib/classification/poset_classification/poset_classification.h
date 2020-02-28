@@ -684,6 +684,8 @@ public:
 	void draw_level_graph(const char *fname_base, int depth, 
 		int data, int level, int f_embedded, int f_sideways, 
 		int verbose_level);
+	void make_flag_orbits_on_relations(
+			int depth, const char *fname_prefix, int verbose_level);
 	void make_full_poset_graph(int depth, layered_graph *&LG, 
 		int data1, double x_stretch, 
 		int verbose_level);

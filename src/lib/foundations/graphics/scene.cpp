@@ -1989,17 +1989,28 @@ int scene::intersect_line_and_line(int line1_idx, int line2_idx,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; // (verbose_level >= 2);
-	double B[3];
-	double M[9];
-	int i;
-	double v[3];
+	//int f_vv = FALSE; // (verbose_level >= 2);
 	numerics N;
 
 	if (f_v) {
 		cout << "scene::intersect_line_and_line" << endl;
 		}
 
+#if 1
+	double pt_coords[3];
+
+	N.intersect_line_and_line(
+			&Line_coords[line1_idx * 6 + 0], &Line_coords[line1_idx * 6 + 3],
+			&Line_coords[line2_idx * 6 + 0], &Line_coords[line2_idx * 6 + 3],
+			lambda,
+			pt_coords,
+			verbose_level - 2);
+	point(pt_coords[0], pt_coords[1], pt_coords[2]);
+#else
+	double B[3];
+	double M[9];
+	int i;
+	double v[3];
 
 	// equation of the form:
 	// P_0 + \lambda * v = Q_0 + \mu * u
@@ -2074,7 +2085,7 @@ int scene::intersect_line_and_line(int line1_idx, int line2_idx,
 				<< B[0] << ", " << B[1] << ", " << B[2] << endl;
 		}
 	point(B[0], B[1], B[2]);
-
+#endif
 	
 	if (f_v) {
 		cout << "scene::intersect_line_and_line done" << endl;
@@ -2865,10 +2876,10 @@ void scene::clebsch_cubic_version2_Hessian()
 			1, // 3 x^2z
 			0, // 4 x^2
 			1, // 5 xy^2
-			0, // 6 xyz
+			2, // 6 xyz
 			1, // 7 xy
 			1, // 8 xz^2
-			0, // 9 xz
+			1, // 9 xz
 			0, // 10 x
 			0, // 11 y^3
 			1, // 12 y^2z

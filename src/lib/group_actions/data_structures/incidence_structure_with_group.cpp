@@ -81,7 +81,7 @@ void incidence_structure_with_group::init(incidence_structure *Inc,
 
 	if (f_v) {
 		cout << "incidence_structure_with_group::init" << endl;
-		}
+	}
 
 	incidence_structure_with_group::Inc = Inc;
 	N = Inc->nb_rows + Inc->nb_cols;
@@ -89,7 +89,7 @@ void incidence_structure_with_group::init(incidence_structure *Inc,
 	canonical_labeling = NEW_lint(N);
 	if (f_v) {
 		cout << "incidence_structure_with_group::init done" << endl;
-		}
+	}
 }
 
 void incidence_structure_with_group::print_canonical_form(ostream &ost)
@@ -125,7 +125,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	if (f_v) {
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form" << endl;
 		cout << "verbose_level = " << verbose_level << endl;
-		}
+	}
 
 
 	if (verbose_level > 5) {
@@ -136,7 +136,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	//canonical_labeling = NEW_int(nb_rows + nb_cols);
 	for (i = 0; i < Inc->nb_rows + Inc->nb_cols; i++) {
 		canonical_labeling[i] = i;
-		}
+	}
 
 
 	if (f_save_incma_in_and_out) {
@@ -154,7 +154,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 				TRUE, canonical_labeling,
 				verbose_level);
 
-		}
+	}
 
 
 
@@ -163,7 +163,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form "
 				"initializing Aut, Base, "
 				"Transversal_length" << endl;
-		}
+	}
 	Aut = NEW_int(N * N);
 	Base = NEW_int(N);
 	Base_lint = NEW_lint(N);
@@ -172,7 +172,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	if (f_v) {
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form "
 				"calling nauty_interface_matrix_int" << endl;
-		}
+	}
 
 
 	int *can_labeling;
@@ -180,7 +180,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	can_labeling = NEW_int(Inc->nb_rows + Inc->nb_cols);
 
 	nauty_interface_matrix_int(
-			Inc->M, Inc->nb_rows, Inc->nb_cols,
+		Inc->M, Inc->nb_rows, Inc->nb_cols,
 		can_labeling, partition,
 		Aut, Aut_counter,
 		Base, Base_length,
@@ -188,7 +188,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 
 	for (i = 0; i < N; i++) {
 		canonical_labeling[i] = can_labeling[i];
-		}
+	}
 	FREE_int(can_labeling);
 
 	int_vec_copy_to_lint(Base, Base_lint, Base_length);
@@ -197,7 +197,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form "
 				"done with nauty_interface_matrix_int, "
 				"Ago=" << ago << endl;
-		}
+	}
 	if (verbose_level > 5) {
 		int h;
 		int degree = N;
@@ -222,11 +222,11 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 		if (Inc->nb_rows < 10) {
 			print_integer_matrix_width(cout,
 					Inc_out->M, Inc->nb_rows, Inc->nb_cols, Inc->nb_cols, 1);
-			}
+		}
 		else {
 			cout << "set_stabilizer_of_incma_object too large to print" << endl;
-			}
 		}
+	}
 
 
 	if (f_save_incma_in_and_out) {
@@ -244,8 +244,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 		Inc_out->save_as_Levi_graph(fname_bin,
 				TRUE, canonical_labeling,
 				verbose_level);
-
-		}
+	}
 
 
 
@@ -253,7 +252,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 
 		canonical_form = Inc_out->encode_as_bitvector(canonical_form_len);
 
-		}
+	}
 
 
 
@@ -266,7 +265,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 
 	if (f_v) {
 		cout << "set_stabilizer_of_incma_object before init_permutation_group_from_generators" << endl;
-		}
+	}
 	Ago.create(ago, __FILE__, __LINE__);
 	A_perm->init_permutation_group_from_generators(N,
 		TRUE, Ago,
@@ -278,7 +277,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form created action ";
 		A_perm->print_info();
 		cout << endl;
-		}
+	}
 	FREE_int(Aut);
 	FREE_int(Base);
 	FREE_lint(Base_lint);
@@ -287,7 +286,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 
 	if (f_v) {
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form done" << endl;
-		}
+	}
 }
 
 }}

@@ -1702,27 +1702,6 @@ public:
 			longinteger_object &x, int verbose_level);
 };
 
-#if 0
-void test_longinteger();
-void test_longinteger2();
-void test_longinteger3();
-void test_longinteger4();
-void test_longinteger5();
-void test_longinteger6();
-void test_longinteger7();
-void test_longinteger8();
-void mac_williams_equations(longinteger_object *&M, int n, int k, int q);
-void determine_weight_enumerator();
-void longinteger_collect_setup(int &nb_agos, 
-	longinteger_object *&agos, int *&multiplicities);
-void longinteger_collect_free(int &nb_agos, 
-	longinteger_object *&agos, int *&multiplicities);
-void longinteger_collect_add(int &nb_agos, 
-	longinteger_object *&agos, int *&multiplicities, 
-	longinteger_object &ago);
-void longinteger_collect_print(std::ostream &ost, int &nb_agos,
-	longinteger_object *&agos, int *&multiplicities);
-#endif
 void longinteger_free_global_data();
 void longinteger_print_digits(char *rep, int len);
 void longinteger_domain_free_tab_q_binomials();

@@ -31,6 +31,7 @@ int main(int argc, const char **argv)
 	int i;
 	int verbose_level = 0;
 	int f_draw_poset = FALSE;
+	int f_draw_full_poset = FALSE;
 	int f_embedded = FALSE;
 	int f_report = FALSE;
 	int f_linear = FALSE;
@@ -57,6 +58,10 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-draw_poset") == 0) {
 			f_draw_poset = TRUE;
 			cout << "-draw_poset " << endl;
+		}
+		else if (strcmp(argv[i], "-draw_full_poset") == 0) {
+			f_draw_full_poset = TRUE;
+			cout << "-draw_full_poset " << endl;
 		}
 		else if (strcmp(argv[i], "-embedded") == 0) {
 			f_embedded = TRUE;
@@ -227,6 +232,18 @@ int main(int argc, const char **argv)
 				f_embedded /* f_embedded */,
 				FALSE /* f_sideways */,
 				verbose_level);
+		}
+	}
+	if (f_draw_full_poset) {
+		cout << "f_draw_full_poset verbose_level=" << verbose_level << endl;
+		{
+		char fname_flag_orbits[1000];
+
+		Gen->gen->draw_poset_fname_base_poset_lvl(fname_flag_orbits, Gen->ECA->starter_size);
+		strcat(fname_flag_orbits, "_flag_orbits");
+
+		Gen->gen->make_flag_orbits_on_relations(
+				Gen->ECA->starter_size, fname_flag_orbits, verbose_level);
 		}
 	}
 	if (f_report) {

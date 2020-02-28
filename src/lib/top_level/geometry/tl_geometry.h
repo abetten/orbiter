@@ -1100,6 +1100,7 @@ public:
 	//int f_lex; // = FALSE;
 
 	int f_draw_poset;
+	int f_draw_full_poset;
 	int f_print_data_structure;
 	int f_draw_schreier_trees;
 
