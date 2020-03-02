@@ -475,6 +475,34 @@ public:
 		int m, int n, int xmax, int ymax,
 		int *color_scale, int nb_colors_in_scale,
 		int f_has_labels, int *labels);
+	void domino_draw1(int M,
+			int i, int j, int dx, int dy, int rad, int f_horizontal);
+	void domino_draw2(int M,
+			int i, int j, int dx, int dy, int rad, int f_horizontal);
+	void domino_draw3(int M,
+			int i, int j, int dx, int dy, int rad, int f_horizontal);
+	void domino_draw4(int M,
+			int i, int j, int dx, int dy, int rad, int f_horizontal);
+	void domino_draw5(int M,
+			int i, int j, int dx, int dy, int rad, int f_horizontal);
+	void domino_draw6(int M,
+			int i, int j, int dx, int dy, int rad, int f_horizontal);
+	void domino_draw7(int M,
+			int i, int j, int dx, int dy, int rad, int f_horizontal);
+	void domino_draw8(int M,
+			int i, int j, int dx, int dy, int rad, int f_horizontal);
+	void domino_draw9(int M,
+			int i, int j, int dx, int dy, int rad, int f_horizontal);
+	void domino_draw_assignment_East(int Ap, int Aq, int M,
+			int i, int j, int dx, int dy, int rad);
+	void domino_draw_assignment_South(int Ap, int Aq, int M,
+			int i, int j, int dx, int dy, int rad);
+	void domino_draw_assignment(int *A, int *matching, int *B,
+			int M, int N,
+			int dx, int dy,
+			int rad, int edge,
+			int f_grid, int f_gray, int f_numbers, int f_frame,
+			int f_cost, int cost);
 };
 
 
