@@ -2530,6 +2530,74 @@ finish:
 }
 
 
+void sorting::d_partition(double *v, int left, int right, int *middle)
+{
+	int l, r, m, len, m1, pivot;
+	double vv;
+
+	//cout << "partition: from " << left << " to " << right << endl;
+	// pivot strategy: take the element in the middle:
+	len = right + 1 - left;
+	m1 = len >> 1;
+	pivot = left;
+	if (m1) {
+		vv = v[pivot];
+		v[pivot] = v[left + m1];
+		v[left + m1] = vv;
+		}
+	l = left;
+	r = right;
+	while (l < r) {
+		while (TRUE) {
+			if (l > right)
+				break;
+			if (v[l] < v[pivot])
+				break;
+			l++;
+			}
+		while (TRUE) {
+			if (r < left)
+				break;
+			if (v[r] >= v[pivot])
+				break;
+			r--;
+			}
+		// now v[l] > v[pivot] and v[r] <= v[pivot]
+		if (l < r) {
+			vv = v[l];
+			v[l] = v[r];
+			v[r] = vv;
+			}
+		}
+	m = r;
+	if (left != m) {
+		vv = v[left];
+		v[left] = v[m];
+		v[m] = vv;
+		}
+	*middle = m;
+}
+
+void sorting::d_quicksort(double *v, int left, int right)
+{
+	int middle;
+
+	if (left < right) {
+		d_partition(v, left, right, &middle);
+		d_quicksort(v, left, middle - 1);
+		d_quicksort(v, middle + 1, right);
+		}
+}
+
+void sorting::d_quicksort_array(int len, double *v)
+{
+	if (len <= 1)
+		return;
+	d_quicksort(v, 0, len - 1);
+}
+
+
+
 
 //##############################################################################
 // global functions:
@@ -2818,6 +2886,7 @@ int int_vec_compare_stride(int *p, int *q, int len, int stride)
 		}
 	return 0;
 }
+
 
 
 

@@ -181,6 +181,13 @@ long int number_theory_domain::inverse_mod(long int a, long int p)
 	A.create(a, __FILE__, __LINE__);
 	B.create(p, __FILE__, __LINE__);
 	D.extended_gcd(A,B, G, U, V, 0 /* verbose_level */);
+	if (!G.is_one() && !G.is_mone()) {
+		cout << "number_theory_domain::inverse_mod a and p are not coprime" << endl;
+		cout << "a=" << a << endl;
+		cout << "p=" << p << endl;
+		cout << "gcd=" << G << endl;
+		exit(1);
+	}
 	u = U.as_lint();
 	while (u < 0) {
 		u += p;

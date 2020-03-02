@@ -812,6 +812,9 @@ public:
 		int verbose_level);
 	int compare_sets(int *set1, int *set2, int sz1, int sz2);
 	int compare_sets_lint(long int *set1, long int *set2, int sz1, int sz2);
+	void d_partition(double *v, int left, int right, int *middle);
+	void d_quicksort(double *v, int left, int right);
+	void d_quicksort_array(int len, double *v);
 };
 
 int int_compare_increasingly(void *a, void *b, void *data);
