@@ -20,7 +20,7 @@ ALL_TARGETS=\
 	exceptional_isomorphism_O4_main.out \
 	linear_group.out \
 	orthogonal_group.out \
-	wreath_product.out
+	wreath_product_main.out
 
 all: $(ALL_TARGETS)
 
@@ -91,12 +91,12 @@ orthogonal_group.out:  orthogonal_group.o;
 	$(DISCRETA_CPP)  orthogonal_group.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
-wreath_product.out:  wreath_product.o;
+wreath_product_main.out:  wreath_product_main.o;
 ifeq ($(TRUE), $(COMPILE_ON_GPU))
-	@echo "wreath_product.out"
-	$(DISCRETA_CPP) wreath_product.o wreath_product_gpuCode.o $(CPPFLAGS) $(LFLAGS) $(LIB) $(CUDA_LIB) -o $@
+	@echo "wreath_product_main.out"
+	$(DISCRETA_CPP) wreath_product_main.o wreath_product_gpuCode.o $(CPPFLAGS) $(LFLAGS) $(LIB) $(CUDA_LIB) -o $@
 else
-	$(DISCRETA_CPP)  wreath_product.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+	$(DISCRETA_CPP)  wreath_product_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 endif
 
 ## CUDA
@@ -105,14 +105,14 @@ cuda_all: $(ALL_TARGETS)
 	@echo "Done with cuda_all"
 
 
-wreath_product.o: wreath_product.cpp
+wreath_product_main.o: wreath_product_main.cpp
 ifeq ($(TRUE), $(COMPILE_ON_GPU))
 	@echo "----------------------------------------"
-	@echo -n "compiling with CUDA wreath_product.o: "
+	@echo -n "compiling with CUDA wreath_product_main.o: "
 	@echo $<
 	@echo "----------------------------------------"
 	nvcc -x cu -c $(CUDA_FLAGS) $(INCLUDES) -rdc=true $< -o $@ $(CUDA_LIB)
-	nvcc $(CUDA_FLAGS) -I. -dlink $(CUDA_LIB) wreath_product.o -o wreath_product_gpuCode.o
+	nvcc $(CUDA_FLAGS) -I. -dlink $(CUDA_LIB) wreath_product_main.o -o wreath_product_gpuCode.o
 	@echo "----------------------------------------"
 else
 	@echo "----------------------------------------"

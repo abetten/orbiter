@@ -1343,7 +1343,7 @@ void action::init_direct_product_group(
 
 void action::init_wreath_product_group_and_restrict(
 		int nb_factors, int n,
-		finite_field *F, int f_tensor_ranks,
+		finite_field *F,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1364,7 +1364,7 @@ void action::init_wreath_product_group_and_restrict(
 		cout << "action::init_wreath_product_group_and_restrict "
 				"before A_wreath->init_wreath_product_group" << endl;
 	}
-	A_wreath->init_wreath_product_group(nb_factors, n, F, f_tensor_ranks,
+	A_wreath->init_wreath_product_group(nb_factors, n, F,
 			verbose_level);
 	if (f_v) {
 		cout << "action::init_wreath_product_group_and_restrict "
@@ -1397,7 +1397,7 @@ void action::init_wreath_product_group_and_restrict(
 
 
 void action::init_wreath_product_group(int nb_factors, int n,
-		finite_field *F, int f_tensor_ranks,
+		finite_field *F,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1437,7 +1437,7 @@ void action::init_wreath_product_group(int nb_factors, int n,
 		cout << "action::init_wreath_product_group "
 				"before W->init_tensor_wreath_product" << endl;
 		}
-	W->init_tensor_wreath_product(M, A_mtx, nb_factors, f_tensor_ranks,
+	W->init_tensor_wreath_product(M, A_mtx, nb_factors,
 			verbose_level);
 	if (f_v) {
 		cout << "action::init_wreath_product_group "

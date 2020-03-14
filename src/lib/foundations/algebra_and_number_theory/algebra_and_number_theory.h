@@ -1594,6 +1594,9 @@ public:
 		// a := a - b, assuming a > b
 	void add(longinteger_object &a, 
 		longinteger_object &b, longinteger_object &c);
+	void add_mod(longinteger_object &a,
+		longinteger_object &b, longinteger_object &c,
+		longinteger_object &m, int verbose_level);
 	void add_in_place(longinteger_object &a, longinteger_object &b);
 		// a := a + b
 	void mult(longinteger_object &a, 
@@ -1630,7 +1633,42 @@ public:
 	void power_longint_mod(longinteger_object &a, 
 		longinteger_object &n, longinteger_object &m, 
 		int verbose_level);
+	void square_root(
+			longinteger_object &a, longinteger_object &sqrt_a,
+			int verbose_level);
+	int square_root_mod(int a, int p, int verbose_level);
+		// solves x^2 = a mod p. Returns x
+	void calc_roots(longinteger_object &M,
+		longinteger_object &sqrtM,
+		std::vector<int> &primes, std::vector<int> &R1, std::vector<int> &R2,
+		int verbose_level);
+	void Quadratic_Sieve(
+		int factorbase,
+		int f_mod, int mod_n, int mod_r, int x0,
+		int n, longinteger_object &M, longinteger_object &sqrtM,
+		std::vector<int> &primes, std::vector<int> &primes_log2,
+		std::vector<int> &R1, std::vector<int> &R2,
+		std::vector<int> &X,
+		int verbose_level);
+	int quadratic_sieve(
+		longinteger_object& M, longinteger_object& sqrtM,
+		std::vector<int> &primes, std::vector<int> &primes_log2,
+		std::vector<int> &R1, std::vector<int> &R2,
+		int from, int to,
+		int ll, std::vector<int> &X, int verbose_level);
+	int factor_over_factor_base(longinteger_object &x,
+			std::vector<int> &primes,
+			std::vector<int> &factor_idx, std::vector<int> &factor_exp,
+			int verbose_level);
+	int factor_over_factor_base2(
+			longinteger_object &x,
+			std::vector<int> &primes, std::vector<int> &exponents,
+			int verbose_level);
 	void create_qnm1(longinteger_object &a, int q, int n);
+	void create_Mersenne(longinteger_object &M, int n);
+	// $M_n = 2^n - 1$
+	void create_Fermat(longinteger_object &F, int n);
+	// $F_n = 2^{2^n} + 1$
 	void binomial(longinteger_object &a, int n, int k, 
 		int verbose_level);
 	void size_of_conjugacy_class_in_sym_n(longinteger_object &a, 
@@ -1872,6 +1910,11 @@ public:
 			long int p1, long int p2, int verbose_level);
 	void do_babystep_giantstep(long int p, long int g, long int h,
 			int f_latex, std::ostream &ost, int verbose_level);
+	void sieve(std::vector<int> &primes,
+			int factorbase, int verbose_level);
+	void sieve_primes(std::vector<int> &v,
+			int from, int to, int limit, int verbose_level);
+	int nb_primes(int n);
 };
 
 // #############################################################################

@@ -53,7 +53,8 @@ int main(int argc, char **argv)
 			extract_value_from = atoi(argv[++i]);
 			extract_value_to = atoi(argv[++i]);
 			extract_fname_mask = argv[++i];
-			cout << "-extract_values " << extract_value_from << " " << extract_value_to << " " << extract_fname_mask << endl;
+			cout << "-extract_values " << extract_value_from
+					<< " " << extract_value_to << " " << extract_fname_mask << endl;
 		}
 	}
 	if (!f_file) {
@@ -107,7 +108,9 @@ int main(int argc, char **argv)
 		if (f_extract_values) {
 			int extract_value;
 
-			for (extract_value = extract_value_from; extract_value <= extract_value_to; extract_value++) {
+			for (extract_value = extract_value_from;
+					extract_value <= extract_value_to;
+					extract_value++) {
 
 				cout << "extracting value " << extract_value << endl;
 

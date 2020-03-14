@@ -192,6 +192,29 @@ void longinteger_domain::add(
 	c.normalize();
 }
 
+void longinteger_domain::add_mod(longinteger_object &a,
+	longinteger_object &b, longinteger_object &c,
+	longinteger_object &m, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	longinteger_object d, q;
+
+	if (f_v ) {
+		cout << "longinteger_domain::add_mod "
+				"a=" << a << " b=" << b << " m=" << m << endl;
+	}
+	add(a, b, d);
+	integral_division(
+		d, m,
+		q, c,
+		0 /*verbose_level*/);
+	if (f_v ) {
+		cout << "longinteger_domain::add_mod "
+				"a=" << a << " +  b=" << b << " mod m=" << m << " is " << c << endl;
+	}
+
+}
+
 void longinteger_domain::add_in_place(
 		longinteger_object &a, longinteger_object &b)
 // a := a + b
@@ -214,20 +237,20 @@ void longinteger_domain::mult(
 	if (a.is_zero() || b.is_zero()) {
 		c.create(0, __FILE__, __LINE__);
 		return;
-		}
+	}
 	if ((a.sign() && !b.sign()) || (!a.sign() && b.sign())) {
 		c.sign() = TRUE;
-		}
+	}
 	else {
 		c.sign() = FALSE;
-		}
+	}
 	
 	c.freeself();
 	c.len() = a.len() + b.len() + 2;
 	c.rep() = NEW_char(c.len());
 	for (i = 0; i < c.len(); i++) {
 		c.rep()[i] = 0;
-		}
+	}
 	
 	if (f_v) {
 		cout << "longinteger_domain::mult a=";
@@ -235,7 +258,7 @@ void longinteger_domain::mult(
 		cout << "b=";
 		longinteger_print_digits(b.rep(), b.len());
 		cout << endl;
-		}
+	}
 	for (j = 0; j < b.len(); j++) {
 		bj = b.rep()[j];
 		carry = 0;
@@ -245,33 +268,33 @@ void longinteger_domain::mult(
 			if (d >= 100) {
 				cout << "longinteger:mult error: d >= 100" << endl;
 				exit(1);
-				}
+			}
 			carry = d / 10;
 			c.rep()[i + j] = d % 10;
 			if (f_v) {
 				cout << "c[" << i + j << "]=" << d % 10 << "="
 						<< (char)('0' + c.rep()[i + j]) << endl;
-				}
 			}
+		}
 		if (carry) {
 			c.rep()[j + a.len()] = carry;
 			if (f_v) {
 				cout << "c[" << j + a.len() << "]=" << carry << "="
 						<< (char)('0' + carry) << endl;
-				}
 			}
 		}
+	}
 	if (f_v) {
 		cout << "longinteger_domain::mult c=";
 		longinteger_print_digits(c.rep(), c.len());
 		cout << endl;
-		}
+	}
 	c.normalize();
 	if (f_v) {
 		cout << "longinteger_domain::mult after normalize, c=";
 		longinteger_print_digits(c.rep(), c.len());
 		cout << endl;
-		}
+	}
 }
 
 void longinteger_domain::mult_in_place(
@@ -361,21 +384,24 @@ void longinteger_domain::mult_mod(longinteger_object &a,
 	l = m.len();
 	c.len() = (int) (l + 2);
 	c.rep() = NEW_char(c.len());
-	for (i = 0; i < c.len(); i++)
+	for (i = 0; i < c.len(); i++) {
 		c.rep()[i] = 0;
+	}
 	c.assign_to(c0);
 	
 	for (j = b.len() - 1; j >= 0; j--) {
 		if (f_vv) {
 			cout << "j=" << j << endl;
-			}
+		}
 		bj = b.rep()[j];
 		carry = 0;
 		for (i = 0; i < l; i++) {
-			if (i < a.len())
+			if (i < a.len()) {
 				ai = a.rep()[i];
-			else 
+			}
+			else {
 				ai = 0;
+			}
 			d = ai * bj + carry + c.rep()[i];
 			//cout << (int) ai << " * " << (int) bj << " + "
 			// << (int)carry << " + " << (int) c.rep()[i]
@@ -386,13 +412,13 @@ void longinteger_domain::mult_mod(longinteger_object &a,
 				}
 			carry = d / 10;
 			c.rep()[i] = d % 10;
-			}
+		}
 		if (carry) {
 			d = c.rep()[i] + carry;
 			carry = d / 10;
 			c.rep()[i] = d % 10;
 			i++;
-			}
+		}
 		if (carry) {
 			d = c.rep()[i] + carry;
 			carry = d / 10;
@@ -401,53 +427,55 @@ void longinteger_domain::mult_mod(longinteger_object &a,
 				cout << "longinteger_domain::mult_mod "
 						"error: carry" << endl;
 				exit(1);
-				}
 			}
+		}
 		if (f_vv) {
 			cout << "longinteger_domain::mult_mod "
 					"c=" << c << " len " << c.len() << endl;
-			}
+		}
 		integral_division(c, m, q, r, 0/*verbose_level - 1*/);
 		//h = do_division(*this, c, table);
 		//subtract_signless_in_place(c, table[h]);
 		if (f_vv) {
 			cout << "longinteger_domain::mult_mod "
 					"r=" << r << " len " << r.len() << endl;
-			}
+		}
 		c0.assign_to(c);
 		if (f_vv) {
 			cout << "longinteger_domain::mult_mod"
 					"c=c0=" << c << " len " << c.len() << endl;
-			}
+		}
 		if (j) {
 			c.rep()[0] = 0;
 			for (i = 0; i < r.len(); i++) {
 				if (i + 1 < c.len()) {
 					c.rep()[i + 1] = r.rep()[i];
-					}
 				}
+			}
 			i++;
-			for (; i < c.len(); i++)
+			for (; i < c.len(); i++) {
 				c.rep()[i] = 0;
 			}
+		}
 		else {
 			for (i = 0; i < r.len(); i++) {
 				if (i < c.len()) {
 					c.rep()[i] = r.rep()[i];
-					}
 				}
-			for (; i < c.len(); i++)
+			}
+			for (; i < c.len(); i++) {
 				c.rep()[i] = 0;
 			}
+		}
 		if (f_vv) {
 			cout << "c=" << c << " len " << c.len() << endl;
-			}
 		}
+	}
 	c.normalize();
 	if (f_v) {
 		cout << "longinteger_domain::mult_mod " << a << " * " << b
 				<< " = " << c << " mod " << m << endl;
-		}
+	}
 }
 
 void longinteger_domain::multiply_up(
@@ -459,12 +487,12 @@ void longinteger_domain::multiply_up(
 
 	if (f_v) {
 		cout << "longinteger_domain::multiply_up" << endl;
-		}
+	}
 	a.one();
 	if (f_v) {
 		cout << "longinteger_domain::multiply_up "
 				"a=" << a << endl;
-		}
+	}
 	for (i = 0; i < len; i++) {
 		if (x[i] == 1) {
 			continue;
@@ -474,24 +502,24 @@ void longinteger_domain::multiply_up(
 			cout << "longinteger_domain::multiply_up "
 					"i=" << i << " x[i]=" << x[i]
 					<< " b=" << b << endl;
-			}
+		}
 		mult(a, b, c);
 		if (f_v) {
 			cout << "longinteger_domain::multiply_up "
 					"i=" << i << " x[i]=" << x[i]
 					<< " c=" << c << endl;
-			}
+		}
 		c.assign_to(a);
 		if (f_v) {
 			cout << "longinteger_domain::multiply_up "
 					"i=" << i << " x[i]=" << x[i]
 					<< " a=" << a << endl;
-			}
-		//cout << "*" << x[i] << "=" << a << endl;
 		}
+		//cout << "*" << x[i] << "=" << a << endl;
+	}
 	if (f_v) {
 		cout << "longinteger_domain::multiply_up done" << endl;
-		}
+	}
 }
 
 void longinteger_domain::multiply_up_lint(
@@ -908,6 +936,694 @@ void longinteger_domain::power_longint_mod(
 	c.assign_to(a);
 }
 
+
+
+
+
+
+void longinteger_domain::square_root(
+		longinteger_object &a, longinteger_object &sqrt_a,
+		int verbose_level)
+{
+	int i, la, len;
+	char c1;
+	int f_v = (verbose_level >= 1);
+	longinteger_object a2;
+
+	if (a.is_zero()) {
+		sqrt_a.create(0, __FILE__, __LINE__);
+		return;
+	}
+	if (a.sign()) {
+		cout << "longinteger_domain::square_root a is negative" << endl;
+		exit(1);
+	}
+
+	la = a.len();
+	if (ODD(la)) {
+		la++;
+	}
+	len = (la >> 1) + 1;
+
+	sqrt_a.freeself();
+	sqrt_a.len() = len;
+	sqrt_a.rep() = NEW_char(sqrt_a.len());
+	for (i = 0; i < sqrt_a.len(); i++) {
+		sqrt_a.rep()[i] = 0;
+	}
+
+	if (f_v) {
+		cout << "longinteger_domain::square_root a=";
+		longinteger_print_digits(a.rep(), a.len());
+	}
+
+	for (i = len - 1; i >= 0; i--) {
+		for (c1 = 9; c1 >= 0; c1--) {
+			if (f_v) {
+				cout << "trying a[" << i << "]=" << (int) c1 << endl;
+			}
+			sqrt_a.rep()[i] = c1;
+			if (f_v) {
+				cout << "sqrt_a = " << sqrt_a << endl;
+			}
+			if (c1) {
+				mult(sqrt_a, sqrt_a, a2);
+				if (f_v) {
+					cout << "a2 = " << a2 << endl;
+				}
+				if (compare_unsigned(a2, a) <= 0) {
+					if (f_v) {
+						cout << "success with digit " << i << " : sqrt_a=" << sqrt_a << endl;
+					}
+					break;
+				}
+			}
+		}
+		if (f_v) {
+			cout << "sqrt_a[" << i << "]=" << sqrt_a.rep()[i] << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "longinteger_domain::square_root c=";
+		longinteger_print_digits(sqrt_a.rep(), sqrt_a.len());
+		cout << endl;
+	}
+	sqrt_a.normalize();
+	if (f_v) {
+		cout << "longinteger_domain::square_root after normalize, sqrt_a=";
+		longinteger_print_digits(sqrt_a.rep(), sqrt_a.len());
+		cout << endl;
+	}
+}
+
+
+
+int longinteger_domain::square_root_mod(int a, int p, int verbose_level)
+// solves x^2 = a mod p. Returns x
+{
+	int f_v = (verbose_level >= 1);
+	longinteger_object P;
+	longinteger_object A, X, a2, a4, b, X2, Four, Two, mOne;
+	int round;
+	number_theory_domain NT;
+
+	if (f_v) {
+		cout << "longinteger_domain::square_root_mod" << endl;
+	}
+	a = a % p;
+	if (NT.Jacobi(a, p, 0 /* verbose_level*/) == -1) {
+		cout << "longinteger_domain::square_root_mod a is not a square modulo p" << endl;
+		cout << "a=" << a << endl;
+		cout << "p=" << p << endl;
+		exit(1);
+	}
+	Two.create(2, __FILE__, __LINE__);
+	Four.create(4, __FILE__, __LINE__);
+	A.create(a, __FILE__, __LINE__);
+	P.create(p, __FILE__, __LINE__);
+	mOne.create(p - 1, __FILE__, __LINE__);
+	if (f_v) {
+		cout << "longinteger_domain::square_root_mod A=" << A << endl;
+		cout << "longinteger_domain::square_root_mod P=" << P << endl;
+		cout << "longinteger_domain::square_root_mod mOne=" << mOne << endl;
+	}
+	if (p % 4 == 3) {
+		A.assign_to(X);
+		power_int_mod(X, (p + 1) >> 2, P);
+		return X.as_int();
+		}
+	if (p % 8 == 5) {
+		if (f_v) {
+			cout << "longinteger_domain::square_root_mod p % 8 == 5" << endl;
+		}
+		A.assign_to(b);
+		power_int_mod(b, (p - 1) >> 2, P);
+		if (f_v) {
+			cout << "longinteger_domain::square_root_mod a^((p-1)/4)=" << b << endl;
+		}
+		// cout << "A = " << A << endl;
+		// cout << "b = A^(p-1)/4=" << b << endl;
+		if (b.is_one()) {
+			if (f_v) {
+				cout << "longinteger_domain::square_root_mod a^((p-1)/4)=1" << endl;
+			}
+			A.assign_to(X);
+			power_int_mod(X, (p + 3) >> 3, P);
+			if (f_v) {
+				cout << "longinteger_domain::square_root_mod done" << endl;
+			}
+			return X.as_int();
+			}
+		if (compare_unsigned(b, mOne) == 0) {
+			if (f_v) {
+				cout << "longinteger_domain::square_root_mod a^((p-1)/4)=1" << endl;
+			}
+
+			//a2.add_mod(A, A, P);
+			//a4.add_mod(a2, a2, P);
+			//a4.power_int_mod((p - 5) >> 3, P);
+			//X.mult_mod(a2, a4, P);
+
+			add_mod(A, A, a2, P, 0 /* verbose_level */);
+			add_mod(a2, a2, a4, P, 0 /* verbose_level */);
+			power_int_mod(a4, (p - 5) >> 3, P);
+			mult_mod(a2, a4, X, P, 0 /* verbose_level */);
+			if (f_v) {
+				cout << "longinteger_domain::square_root_mod done" << endl;
+			}
+			return X.as_int();
+			}
+		else {
+			cout << "longinteger_domain::square_root_mod p % 8 = 5 and power neq +-1" << endl;
+			cout << "power = " << b << endl;
+			exit(1);
+			}
+		}
+	if (f_v) {
+		cout << "longinteger_domain::square_root_mod p % 8 == 1" << endl;
+	}
+	// now p % 8 == 1
+	// Tonelli / Shanks algorithm:
+	int n, r = 0, q, e, m;
+	longinteger_object Z, N, Y, B, T, d, AB, Ypower, Bpower, Tmp1;
+
+	if (f_v) {
+		cout << "longinteger_domain::square_root_mod, Tonelli / Shanks:" << endl;
+	}
+	q = p - 1;
+	if (f_v) {
+		cout << "longinteger_domain::square_root_mod q=" << q << endl;
+	}
+	e = 0;
+	while (EVEN(q)) {
+		q >>= 1;
+		e++;
+		}
+	if (f_v) {
+		cout << "p - 1 = 2^" << e << " * " << q << endl;
+	}
+
+	// pick n to be a nonsquare mod p:
+	for (n = 1; n < p - 1; n++) {
+		r = NT.Legendre(n, p, verbose_level - 1);
+		if (r == -1) {
+			break;
+		}
+	}
+
+	if (f_v) {
+		cout << "n=" << n << " p=" << p << " Legendre(n,p)=" << r<< endl;
+	}
+	N.create(n, __FILE__, __LINE__);
+	if (f_v) {
+		cout << "longinteger_domain::square_root_mod N=" << N << endl;
+	}
+	N.assign_to(Z);
+	power_int_mod(Z, q, P);
+	Z.assign_to(Y);
+	if (f_v) {
+		cout << "longinteger_domain::square_root_mod Y=N^q=" << Y << endl;
+	}
+	r = e;
+	A.assign_to(X);
+	power_int_mod(X, (q - 1) >> 1, P);
+	if (f_v) {
+		cout << "longinteger_domain::square_root_mod X=" << X << endl;
+	}
+	mult_mod(X, X, d, P, 0 /* verbose_level */);
+	mult_mod(A, d, B, P, 0 /* verbose_level */);
+	mult_mod(A, X, Tmp1, P, 0 /* verbose_level */);
+	Tmp1.assign_to(X);
+	if (f_v) {
+		cout << "initialization:" << endl;
+	}
+	round = 0;
+	while (TRUE) {
+		if (f_v) {
+			cout << "Y=" << Y << endl;
+			cout << "r=" << r << endl;
+			cout << "X=" << X << endl;
+			cout << "B=" << B << endl;
+		}
+
+
+		mult_mod(X, X, X2, P, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "longinteger_domain::square_root_mod X2=" << X2 << endl;
+		}
+		mult_mod(A, B, AB, P, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "longinteger_domain::square_root_mod AB=" << AB << endl;
+			cout << "B=" << B << endl;
+		}
+
+		if (compare_unsigned(AB, X2) != 0) {
+			cout << "loop invariant violated: ab != x^2" << endl;
+			cout << "ab=" << d << endl;
+			cout << "x^2=" << X2 << endl;
+			exit(1);
+			}
+
+		Y.assign_to(Ypower);
+		power_int_mod(Ypower, 1 << (r - 1), P);
+		if (f_v) {
+			cout << "longinteger_domain::square_root_mod Ypower=" << Ypower << endl;
+		}
+
+		if (compare_unsigned(Ypower, mOne)) {
+			cout << "loop invariant violated: Y^{2^{r-1}} != -1" << endl;
+			exit(1);
+			}
+
+
+
+		B.assign_to(Bpower);
+		if (f_v) {
+			cout << "longinteger_domain::square_root_mod Bpower (before)=" << Bpower << endl;
+		}
+		power_int_mod(Bpower, 1 << (r - 1), P);
+		if (f_v) {
+			cout << "longinteger_domain::square_root_mod Bpower=" << Bpower << endl;
+		}
+		if (!Bpower.is_one()) {
+			cout << "loop invariant violated: B^{2^{r-1}} != 1" << endl;
+			exit(1);
+			}
+
+
+
+
+
+		if (remainder_mod_int(B, p) == 1) {
+			m = -1;
+			}
+		else {
+			for (m = 1; ; m++) {
+				B.assign_to(d);
+				power_int_mod(d, 1 << m, P);
+				if (d.is_one())
+					break;
+				if (m >= r) {
+					cout << "sqrt_mod(), Tonelli / Shanks:" << endl;
+					cout << "error: a is not a quadratic residue mod p" << endl;
+					exit(1);
+					}
+				}
+			}
+
+
+		if (f_v) {
+			cout << round << " & " << A << " & " << B << " & " << X << " & "
+				<< X2 << " & " << Y << " & " << r << " & " << AB
+				<< " & " << Ypower << " & " << Bpower << " & ";
+		}
+
+		if (m == -1) {
+			if (f_v) {
+				cout << " & & & & \\\\" << endl;
+			}
+		}
+		else {
+			if (f_v) {
+				cout << m;
+			}
+		}
+
+		//cout << "m=" << m << endl;
+
+		if (m == -1) {
+			if (f_v) {
+				cout << "longinteger_domain::square_root_mod done" << endl;
+			}
+			return X.as_int();
+			}
+
+		if (f_v) {
+			cout << "m=" << m << endl;
+		}
+		Y.assign_to(T);
+		power_int_mod(T, 1 << (r - m - 1), P);
+		mult_mod(T, T, Y, P, 0 /* verbose_level */);
+		r = m; // integers
+
+		mult_mod(X, T, Tmp1, P, 0 /* verbose_level */);
+		Tmp1.assign_to(X);
+
+		mult_mod(B, Y, Tmp1, P, 0 /* verbose_level */);
+		Tmp1.assign_to(B);
+
+		if (f_v) {
+			cout << " & " << Y << " & " << X << " & " << B << " & " << r;
+			cout << "\\\\" << endl;
+		}
+		round++;
+		}
+	if (f_v) {
+		cout << "longinteger_domain::square_root_mod done" << endl;
+	}
+}
+
+void longinteger_domain::calc_roots(longinteger_object &M,
+	longinteger_object &sqrtM,
+	vector<int> &primes, vector<int> &R1, vector<int> &R2,
+	int verbose_level)
+// computes the root of the polynomial
+// $X^2 + a X + b$ over $GF(p)$
+// here, $a = 2 \cdot \lfloor \sqrt{M} \rfloor$
+// and $b= {\lfloor \sqrt{M} \rfloor }^2 - M$
+// which is equal to
+// (X + \lfloor \sqrt{M} \rfloor)^2 - M.
+// If $x$ is a root of this polynomial mod p then
+// (x + \lfloor \sqrt{M} \rfloor)^2 = M mod p
+// and M is a square mod p.
+// Due to reduce prime, only such p are considered.
+// The polynomial factors as
+// $(X - r_1)(X - r_1)= X^2 - (r_1 + r_2) X + r_1 r_2$
+// Due to reduce primes, the polynomial factors mod p.
+{
+	int f_v = (verbose_level >= 1);
+	int i, l, p, Mmodp, sqrtMmodp, a, b;
+	int r1, r2, c, c2, s;
+	longinteger_object P, l1, l2, l3;
+
+	if (f_v) {
+		cout << "longinteger_domain::calc_roots, verbose_level=" << verbose_level << endl;
+		cout << "longinteger_domain::calc_roots, M=" << M << endl;
+		cout << "longinteger_domain::calc_roots, sqrtM=" << sqrtM << endl;
+	}
+	l = primes.size();
+	for (i = 0; i < l; i++) {
+		p = primes[i];
+		if (f_v) {
+			cout << "longinteger_domain::calc_roots i=" << i << " / " << l << " p=" << p << endl;
+		}
+		P.create(p, __FILE__, __LINE__);
+
+		if (f_v) {
+			cout << "longinteger_domain::calc_roots before remainder_mod_int" << endl;
+		}
+		Mmodp = remainder_mod_int(M, p);
+		if (f_v) {
+			cout << "longinteger_domain::calc_roots after remainder_mod_int Mmodp=" << Mmodp << endl;
+		}
+		if (f_v) {
+			cout << "longinteger_domain::calc_roots before remainder_mod_int" << endl;
+		}
+		sqrtMmodp = remainder_mod_int(sqrtM, p);
+		if (f_v) {
+			cout << "longinteger_domain::calc_roots after remainder_mod_int, sqrtMmodp=" << sqrtMmodp << endl;
+		}
+
+		// a = 2 * sqrtMmodp mod p
+		a = (sqrtMmodp << 1) % p;
+
+		// b = (sqrtMmodp * sqrtMmodp) % p;
+		l1.create(sqrtMmodp, __FILE__, __LINE__);
+		mult_mod(l1, l1, l2, P, 0 /* verbose_level */);
+		b = l2.as_int();
+
+		b = b - Mmodp;
+		if (b < 0) {
+			b += p;
+			}
+		else
+			b = b % p;
+
+
+		// use the quadratic formula to compute the roots:
+		// sqrtMmodp = a / 2.
+
+		l1.create(sqrtMmodp, __FILE__, __LINE__);
+		mult_mod(l1, l1, l2, P, 0 /* verbose_level */);
+		c2 = l2.as_int();
+		c2 -= b;
+		while (c2 < 0) {
+			c2 += p;
+		}
+		// c2 = discriminant
+
+
+		if (f_v) {
+			cout << "longinteger_domain::calc_roots computing square root of discriminant c2=" << c2 << endl;
+		}
+		s = square_root_mod(c2, p, 0 /* verbose_level*/);
+		if (f_v) {
+			cout << "longinteger_domain::calc_roots c2=" << c2 << " s=" << s << endl;
+		}
+
+
+		c = - sqrtMmodp;
+		if (c < 0)
+			c += p;
+
+		r1 = (c + s) % p;
+
+		r2 = c - s;
+		if (r2 < 0) {
+			r2 += p;
+		}
+		r2 = r2 % p;
+
+
+		if (f_v) {
+			cout << "longinteger_domain::calc_roots r1=" << r1 << " r2=" << r2 << endl;
+		}
+
+
+		R1.push_back(r1);
+		R2.push_back(r2);
+		// cout << "i=" << i << " p=" << p
+		//<< " r1=" << r1 << " r2=" << r2 << endl;
+
+	} // next i
+
+	if (f_v) {
+		cout << "longinteger_domain::calc_roots done" << endl;
+	}
+}
+
+void longinteger_domain::Quadratic_Sieve(
+	int factorbase,
+	int f_mod, int mod_n, int mod_r, int x0,
+	int n, longinteger_object &M, longinteger_object &sqrtM,
+	std::vector<int> &primes, std::vector<int> &primes_log2,
+	std::vector<int> &R1, std::vector<int> &R2,
+	std::vector<int> &X,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//char buf[1024];
+	ostringstream ff;
+	string s;
+
+	if (f_v) {
+		cout << "longinteger_domain::Quadratic_Sieve" << endl;
+	}
+	ff << "X_M_" << n << "_FB_" << factorbase;
+	if (f_mod) {
+		ff << "_mod_" << mod_n << "_" << mod_r;
+		}
+	ff << ".txt";
+	ff << ends;
+	s = ff.str();
+
+	int l = primes.size();
+	int ll = l + 10;
+	int from = x0, to = x0, count = -1, step_size = 50000;
+
+	if (f_mod)
+		ll = ll / mod_n + 1;
+	//X.m_l(0);
+
+
+
+
+	while (TRUE) {
+		from = to;
+		to = from + step_size;
+		count++;
+
+		if (f_mod) {
+			if (count % mod_n != mod_r) {
+				continue;
+			}
+		}
+		if (quadratic_sieve(M, sqrtM,
+			primes, primes_log2, R1, R2, from, to, ll, X, verbose_level)) {
+			break;
+		}
+	}
+
+	if (f_v) {
+		cout << "found " << ll << " x_i" << endl;
+	}
+
+	{
+		ofstream f(s.c_str());
+
+#if 1
+		int i;
+
+		for (i = 0; i < ll; i++) {
+			f << X[i] << " ";
+			if ((i + 1) % 10 == 0)
+				f << endl;
+			}
+#endif
+		f << endl << "-1" << endl;
+	}
+}
+
+int longinteger_domain::quadratic_sieve(
+	longinteger_object& M, longinteger_object& sqrtM,
+	std::vector<int> &primes, std::vector<int> &primes_log2,
+	std::vector<int> &R1, std::vector<int> &R2,
+	int from, int to,
+	int ll, std::vector<int> &X,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int x, j;
+	longinteger_object Z, zero, a, b, c, d;
+	int i, l;
+	vector<int> factor_idx, factor_exp;
+
+	if (f_v) {
+		cout << "longinteger_domain::quadratic_sieve" << endl;
+	}
+	zero.create(0, __FILE__, __LINE__);
+	l = primes.size();
+	j = X.size();
+	if (f_v) {
+		cout << "quadratic sieve from=" << from
+				<< " to=" << to << " j=" << j << endl;
+		cout << "searching for " << ll << " numbers" << endl;
+	}
+	for (x = from; x < to; x++) {
+		if (x == 0)
+			continue;
+		a.create(x, __FILE__, __LINE__);
+		add(a, sqrtM, c);
+		mult(c, a, d);
+		d.assign_to(a);
+		M.assign_to(b);
+		b.negate();
+		add(a, b, c);
+		c.assign_to(a);
+		if (compare_unsigned(a, zero) <= 0) {
+			continue;
+		}
+		a.normalize();
+
+#if 1
+		int xmodp, log2a, sumlog2;
+		log2a = 3 * (a.len() - 1);
+		sumlog2 = 0;
+		for (i = 0; i < l; i++) {
+			xmodp = x % primes[i];
+			if (xmodp == R1[i])
+				sumlog2 += primes_log2[i] + 0;
+			if (xmodp == R2[i])
+				sumlog2 += primes_log2[i] + 0;
+			}
+		// cout << "sieve x=" << x << " log2=" << log2a
+		//<< " sumlog2=" << sumlog2 << endl;
+		if (sumlog2 < log2a)
+			continue;
+#endif
+		if (!factor_over_factor_base(a,
+				primes, factor_idx, factor_exp,
+				verbose_level - 1)) {
+			continue;
+		}
+		//f << x << endl;
+		if (f_v) {
+			cout << "found solution " << j << " which is " << x << ", need " << ll - j << " more" << endl;
+		}
+		X.push_back(x);
+		j++;
+		if (j >= ll) {
+			if (f_v) {
+				cout << "sieve: found enough numbers "
+						"(enough = " << ll << ")" << endl;
+			}
+			if (f_v) {
+				cout << "longinteger_domain::quadratic_sieve done" << endl;
+			}
+			return TRUE;
+		}
+	} // next x
+	if (f_v) {
+		cout << "longinteger_domain::quadratic_sieve done" << endl;
+	}
+	return FALSE;
+}
+
+int longinteger_domain::factor_over_factor_base(longinteger_object &x,
+		std::vector<int> &primes,
+		std::vector<int> &factor_idx, std::vector<int> &factor_exp,
+		int verbose_level)
+{
+	longinteger_object y, z1, residue;
+	int i, l, n, p;
+
+	x.assign_to(y);
+	z1.create(1, __FILE__, __LINE__);
+	l = primes.size();
+	//factor_idx.m_l(0);
+	//factor_exp.m_l(0);
+	for (i = 0; i < l; i++) {
+		if (compare(y, z1) <= 0) {
+			break;
+		}
+		p = primes[i];
+		n = multiplicity_of_p(y, residue, p);
+		residue.assign_to(y);
+		if (n) {
+			factor_idx.push_back(i);
+			factor_exp.push_back(n);
+			}
+		}
+	if (compare_unsigned(y, z1) == 0)
+		return TRUE;
+	else
+		return FALSE;
+}
+
+int longinteger_domain::factor_over_factor_base2(
+		longinteger_object &x,
+		vector<int> &primes, vector<int> &exponents,
+		int verbose_level)
+{
+	longinteger_object y, z1, residue;
+	int i, l, n, nn, p;
+
+	x.assign_to(y);
+	z1.create(1, __FILE__, __LINE__);
+	l = primes.size();
+	for (i = 0; i < l; i++) {
+		if (compare(x, z1) <= 0) {
+			break;
+		}
+		p = primes[i];
+		n = multiplicity_of_p(x, residue, p);
+		residue.assign_to(x);
+		//n = x.ny_p(p);
+		// cout << "p=" << p << " ny_p=" << n << endl;
+		if (n) {
+			nn = exponents[i] + n;
+			exponents[i] = nn;
+			}
+		}
+	if (compare_unsigned(x, z1) == 0) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
+
 void longinteger_domain::create_qnm1(
 		longinteger_object &a, int q, int n)
 // create (q^n - 1)
@@ -919,6 +1635,34 @@ void longinteger_domain::create_qnm1(
 	c.create(-1, __FILE__, __LINE__);
 	add(b, c, a);
 }
+
+void longinteger_domain::create_Mersenne(longinteger_object &M, int n)
+// $M_n = 2^n - 1$
+{
+	longinteger_object a, b;
+
+	a.create(2, __FILE__, __LINE__);
+	b.create(-1, __FILE__, __LINE__);
+	power_int(a, n);
+	add(a, b, M);
+	// cout << "Mersenne number M_" << n << "=" << a << endl;
+}
+
+void longinteger_domain::create_Fermat(longinteger_object &F, int n)
+// $F_n = 2^{2^n} + 1$
+{
+	longinteger_object a, b;
+	int l;
+
+	a.create(2, __FILE__, __LINE__);
+	b.create(1, __FILE__, __LINE__);
+	l = 1 << n;
+	// cout << "l=" << l << endl;
+	power_int(a, l);
+	add(a, b, F);
+	// cout << "Fermat number F_" << n << "=" << a << endl;
+}
+
 
 #define TABLE_BINOMIALS_MAX 1000
 

@@ -7156,7 +7156,7 @@ void wreath_product::freeself()
 }
 
 void wreath_product::init_tensor_wreath_product(matrix_group *M,
-		action *A_mtx, int nb_factors, int f_tensor_ranks,
+		action *A_mtx, int nb_factors,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -7350,16 +7350,21 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 
 	save_rank_one_tensors(verbose_level);
 
-	if (f_tensor_ranks) {
-
-		compute_tensor_ranks(TR, Prev, verbose_level);
-
-	}
 
 
 	if (f_v) {
 		cout << "wreath_product::init_tensor_wreath_product done" << endl;
 	}
+}
+
+void wreath_product::compute_tensor_ranks(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "wreath_product::compute_tensor_ranks" << endl;
+	}
+	compute_tensor_ranks(TR, Prev, verbose_level);
 }
 
 long int wreath_product::element_image_of(int *Elt, long int a, int verbose_level)
@@ -7999,7 +8004,8 @@ void wreath_product::make_strong_generators_data(int *&data,
 					int_vec_copy(GL_data + g * GL_size,
 							dat + nb_factors + k * M->elt_size_int_half,
 							GL_size);
-				} else {
+				}
+				else {
 					F->identity_matrix(
 							dat + nb_factors + k * M->elt_size_int_half,
 							dimension_of_matrix_group);

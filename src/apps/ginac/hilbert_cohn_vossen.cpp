@@ -1034,8 +1034,6 @@ void surface(int argc, const char **argv)
 
 
 
-			//scene_create_target_model(S, nb_frames_default, TARGET_NB_LINES, TF, verbose_level - 2);
-
 			S->create_Cayleys_nodal_cubic(verbose_level);
 
 			double theta1, theta2;

@@ -46,15 +46,9 @@ tensor_classify::~tensor_classify()
 
 void tensor_classify::init(int argc, const char **argv,
 		int nb_factors, int n, int q, int depth,
-		int f_permutations, int f_orbits, int f_tensor_ranks,
-		int f_orbits_restricted, const char *orbits_restricted_fname,
-		int f_orbits_restricted_compute,
-		int f_report,
-		int f_poset_classify, int poset_classify_depth,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, a;
 	os_interface Os;
 
 	if (f_v) {
@@ -94,13 +88,16 @@ void tensor_classify::init(int argc, const char **argv,
 
 	W = A0->G.wreath_product_group;
 #else
-	cout << "tensor_classify::init before "
-			"A->init_wreath_product_group" << endl;
-	A->init_wreath_product_group(nb_factors, n,
-			F, f_tensor_ranks,
+	if (f_v) {
+		cout << "tensor_classify::init before "
+				"A->init_wreath_product_group" << endl;
+	}
+	A->init_wreath_product_group(nb_factors, n, F,
 			verbose_level);
-	cout << "tensor_classify::init after "
-			"A->init_wreath_product_group" << endl;
+	if (f_v) {
+		cout << "tensor_classify::init after "
+				"A->init_wreath_product_group" << endl;
+	}
 
 	A0 = A;
 	W = A0->G.wreath_product_group;
@@ -142,11 +139,11 @@ void tensor_classify::init(int argc, const char **argv,
 	SG = A0->Strong_gens;
 	SG->group_order(go);
 
-	cout << "tensor_classify::init The group " << A->label
-			<< " has order " << go
-			<< " and permutation degree " << A->degree << endl;
-
-
+	if (f_v) {
+		cout << "tensor_classify::init The group " << A->label
+				<< " has order " << go
+				<< " and permutation degree " << A->degree << endl;
+	}
 
 
 #if 0
@@ -171,7 +168,38 @@ void tensor_classify::init(int argc, const char **argv,
 	cout << endl;
 #endif
 
-	cout << "tensor_classify::init Generators are:" << endl;
+	if (f_v) {
+		print_generators();
+	}
+
+#if 0
+	cout << "tensor_classify::init Generators in ASCII format are:" << endl;
+		cout << SG->gens->len << endl;
+		for (i = 0; i < SG->gens->len; i++) {
+			A->element_print_for_make_element(
+					SG->gens->ith(i), cout);
+				cout << endl;
+		}
+		cout << -1 << endl;
+#endif
+
+	if (f_v) {
+		print_generators_gap();
+	}
+
+
+
+	if (f_v) {
+		cout << "tensor_classify::init done" << endl;
+	}
+
+}
+
+void tensor_classify::print_generators()
+{
+	int i;
+
+	cout << "tensor_classify::print_generators Generators are:" << endl;
 	for (i = 0; i < SG->gens->len; i++) {
 		cout << "generator " << i << " / "
 				<< SG->gens->len << " is: " << endl;
@@ -190,7 +218,8 @@ void tensor_classify::init(int argc, const char **argv,
 			cout << "too big to print" << endl;
 		}
 	}
-	cout << "tensor_classify::init Generators as permutations are:" << endl;
+
+	cout << "tensor_classify::print_generators Generators as permutations are:" << endl;
 
 
 
@@ -203,19 +232,13 @@ void tensor_classify::init(int argc, const char **argv,
 	else {
 		cout << "too big to print" << endl;
 	}
+}
 
-#if 0
-	cout << "tensor_classify::init Generators in ASCII format are:" << endl;
-		cout << SG->gens->len << endl;
-		for (i = 0; i < SG->gens->len; i++) {
-			A->element_print_for_make_element(
-					SG->gens->ith(i), cout);
-				cout << endl;
-		}
-		cout << -1 << endl;
-#endif
+void tensor_classify::print_generators_gap()
+{
+	int i, j, a;
 
-	cout << "tensor_classify::init Generators in GAP format are:" << endl;
+	cout << "tensor_classify::print_generators_gap Generators in GAP format are:" << endl;
 	if (A->degree < 200) {
 		cout << "G := Group([";
 		for (i = 0; i < SG->gens->len; i++) {
@@ -234,7 +257,7 @@ void tensor_classify::init(int argc, const char **argv,
 	else {
 		cout << "too big to print" << endl;
 	}
-	cout << "tensor_classify::init "
+	cout << "tensor_classify::print_generators_gap "
 			"Generators in compact permutation form are:" << endl;
 	if (A->degree < 200) {
 		cout << SG->gens->len << " " << A->degree << endl;
@@ -251,246 +274,7 @@ void tensor_classify::init(int argc, const char **argv,
 	else {
 		cout << "too big to print" << endl;
 	}
-
-	if (f_poset_classify) {
-		classify_poset(poset_classify_depth, verbose_level + 10);
-	}
-
-	if (f_report) {
-		cout << "report:" << endl;
-
-
-		file_io Fio;
-		latex_interface L;
-
-		{
-		char fname[1000];
-		char title[1000];
-		char author[1000];
-		//int f_with_stabilizers = TRUE;
-
-		sprintf(title, "Wreath product $%s$", W->label_tex);
-		sprintf(author, "Orbiter");
-		sprintf(fname, "WreathProduct_q%d_n%d.tex", W->q, W->nb_factors);
-
-			{
-			ofstream fp(fname);
-			latex_interface L;
-
-			//latex_head_easy(fp);
-			L.head(fp,
-				FALSE /* f_book */,
-				TRUE /* f_title */,
-				title, author,
-				FALSE /*f_toc */,
-				FALSE /* f_landscape */,
-				FALSE /* f_12pt */,
-				TRUE /*f_enlarged_page */,
-				TRUE /* f_pagenumbers*/,
-				NULL /* extra_praeamble */);
-
-			fp << "\\section{The field of order " << q << "}" << endl;
-			fp << "\\noindent The field ${\\mathbb F}_{"
-					<< W->q
-					<< "}$ :\\\\" << endl;
-			W->F->cheat_sheet(fp, verbose_level);
-
-
-			W->report(fp, verbose_level);
-
-			fp << "\\section{Generators}" << endl;
-			for (i = 0; i < SG->gens->len; i++) {
-				fp << "$$" << endl;
-				A->element_print_latex(SG->gens->ith(i), fp);
-				if (i < SG->gens->len - 1) {
-					fp << ", " << endl;
-				}
-				fp << "$$" << endl;
-			}
-
-
-			fp << "\\section{The Group}" << endl;
-			A->report(fp, A->f_has_sims, A->Sims, A->f_has_strong_generators, A->Strong_gens, verbose_level);
-
-
-			if (f_poset_classify) {
-
-
-				{
-				char fname_poset[1000];
-
-				Gen->draw_poset_fname_base_poset_lvl(fname_poset, poset_classify_depth);
-				Gen->draw_poset(fname_poset,
-						poset_classify_depth /*depth*/,
-						0 /* data1 */,
-						FALSE /* f_embedded */,
-						FALSE /* f_sideways */,
-						verbose_level);
-				}
-
-
-				fp << endl;
-				fp << "\\section{Poset Classification}" << endl;
-				fp << endl;
-
-
-				Gen->report(fp);
-				fp << "\\subsection*{Orbits at level " << poset_classify_depth << "}" << endl;
-				int nb_orbits, orbit_idx;
-
-				nb_orbits = Gen->nb_orbits_at_level(poset_classify_depth);
-				for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
-					fp << "\\subsubsection*{Orbit " << orbit_idx << " / " << nb_orbits << "}" << endl;
-
-					long int *Orbit; // orbit_length * depth
-					int orbit_length;
-
-					cout << "before get_whole_orbit orbit_idx=" << orbit_idx << endl;
-
-					Gen->get_whole_orbit(
-							poset_classify_depth, orbit_idx,
-							Orbit, orbit_length, verbose_level);
-
-					long int *data;
-
-					data = NEW_lint(orbit_length);
-
-					for (i = 0; i < orbit_length; i++) {
-
-						fp << "set " << i << " / " << orbit_length << " is: ";
-
-
-						uint32_t a, b;
-
-						a = 0;
-						for (j = 0; j < poset_classify_depth; j++) {
-							b = W->rank_one_tensors[Orbit[i * poset_classify_depth + j]];
-							a ^= b;
-						}
-
-						for (j = 0; j < poset_classify_depth; j++) {
-							fp << Orbit[i * poset_classify_depth + j];
-							if (j < poset_classify_depth - 1) {
-								fp << ", ";
-							}
-						}
-						fp << "= ";
-						for (j = 0; j < poset_classify_depth; j++) {
-							b = W->rank_one_tensors[Orbit[i * poset_classify_depth + j]];
-							fp << b;
-							if (j < poset_classify_depth - 1) {
-								fp << ", ";
-							}
-						}
-						fp << " = " << a;
-						data[i] = a;
-						fp << "\\\\" << endl;
-					}
-					sorting Sorting;
-
-					Sorting.lint_vec_heapsort(data, orbit_length);
-
-					fp << "$$" << endl;
-					L.print_lint_matrix_tex(fp, data, (orbit_length + 9)/ 10, 10);
-					fp << "$$" << endl;
-
-					classify C;
-
-					C.init_lint(data, orbit_length, TRUE, 0);
-					fp << "$$";
-					C.print_naked_tex(fp, TRUE /* f_backwards */);
-					fp << "$$";
-					FREE_lint(data);
-				}
-			}
-
-			L.foot(fp);
-			}
-		cout << "Written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-		}
-
-
-		cout << "report done" << endl;
-	}
-
-
-
-
-
-	int *result = NULL;
-
-	cout << "time check: ";
-	Os.time_check(cout, t0);
-	cout << endl;
-
-	cout << "tensor_classify::init "
-			"before wreath_product_orbits_CUDA:" << endl;
-	cout << __FILE__ << ":" << __LINE__ << endl;
-
-	int nb_gens, degree;
-
-	if (f_permutations) {
-		W->compute_permutations(SG, A, result, nb_gens, degree, nb_factors, verbose_level);
-	}
-	//wreath_product_orbits_CUDA(W, SG, A, result, nb_gens, degree, nb_factors, verbose_level);
-
-	if (f_orbits) {
-		W->orbits(SG, A, result, nb_gens, degree, nb_factors, verbose_level);
-	}
-	if (f_orbits_restricted) {
-		W->orbits_restricted(SG, A, result, nb_gens, degree, nb_factors, orbits_restricted_fname, verbose_level);
-
-	}
-	if (f_orbits_restricted_compute) {
-		W->orbits_restricted_compute(SG, A, result, nb_gens, degree, nb_factors, orbits_restricted_fname, verbose_level);
-
-	}
-
-	cout << "time check: ";
-	Os.time_check(cout, t0);
-	cout << endl;
-
-	cout << "tensor_classify::init "
-			"after wreath_product_orbits_CUDA:" << endl;
-	cout << __FILE__ << ":" << __LINE__ << endl;
-	cout << "we found " << nb_gens << " generators of degree " << degree << endl;
-
-
-
-//	schreier *Sch;
-//
-//	Sch = NEW_OBJECT(schreier);
-//
-//	cout << "before Sch->init_images_only" << endl;
-//	Sch->init_images_only(nb_gens,
-//			degree, result, verbose_level);
-//
-//	cout << "nb_gens: " << nb_gens << endl;
-//
-//	cout << "computing point orbits from image table:" << endl;
-//	Sch->compute_all_point_orbits(0);
-//
-//	Sch->print_orbit_lengths(cout);
-//
-//	cout << "time check: ";
-//	time_check(cout, t0);
-//	cout << endl;
-//
-//
-//	cout << "computing point orbits from image table done" << endl;
-//	cout << "We found " << Sch->nb_orbits << " orbits" << endl;
-//
-//
-//#if 0
-//	A->perform_tests(SG, verbose_level);
-//#endif
-//
-//	exit(0);
-//
-//
 }
-
 
 void tensor_classify::classify_poset(int depth,
 		int verbose_level)
@@ -718,6 +502,178 @@ void tensor_classify::early_test_func(long int *S, int len,
 		cout << "tensor_classify::early_test_func done" << endl;
 	}
 }
+
+
+
+void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	//int f_OK;
+	int i, j; //, c;
+
+	if (f_v) {
+		cout << "tensor_classify::report" << endl;
+	}
+
+
+
+	file_io Fio;
+	latex_interface L;
+
+	char fname[1000];
+	char title[1000];
+	char author[1000];
+	//int f_with_stabilizers = TRUE;
+
+	sprintf(title, "Wreath product $%s$", W->label_tex);
+	sprintf(author, "Orbiter");
+	sprintf(fname, "WreathProduct_q%d_n%d.tex", W->q, W->nb_factors);
+
+	{
+		ofstream fp(fname);
+		latex_interface L;
+
+		//latex_head_easy(fp);
+		L.head(fp,
+			FALSE /* f_book */,
+			TRUE /* f_title */,
+			title, author,
+			FALSE /*f_toc */,
+			FALSE /* f_landscape */,
+			FALSE /* f_12pt */,
+			TRUE /*f_enlarged_page */,
+			TRUE /* f_pagenumbers*/,
+			NULL /* extra_praeamble */);
+
+		fp << "\\section{The field of order " << q << "}" << endl;
+		fp << "\\noindent The field ${\\mathbb F}_{"
+				<< W->q
+				<< "}$ :\\\\" << endl;
+		W->F->cheat_sheet(fp, verbose_level);
+
+
+		W->report(fp, verbose_level);
+
+		fp << "\\section{Generators}" << endl;
+		for (i = 0; i < SG->gens->len; i++) {
+			fp << "$$" << endl;
+			A->element_print_latex(SG->gens->ith(i), fp);
+			if (i < SG->gens->len - 1) {
+				fp << ", " << endl;
+			}
+			fp << "$$" << endl;
+		}
+
+
+		fp << "\\section{The Group}" << endl;
+		A->report(fp, A->f_has_sims, A->Sims, A->f_has_strong_generators, A->Strong_gens, verbose_level);
+
+
+		if (f_poset_classify) {
+
+
+			{
+			char fname_poset[1000];
+
+			Gen->draw_poset_fname_base_poset_lvl(fname_poset, poset_classify_depth);
+			Gen->draw_poset(fname_poset,
+					poset_classify_depth /*depth*/,
+					0 /* data1 */,
+					FALSE /* f_embedded */,
+					FALSE /* f_sideways */,
+					verbose_level);
+			}
+
+
+			fp << endl;
+			fp << "\\section{Poset Classification}" << endl;
+			fp << endl;
+
+
+			Gen->report(fp);
+			fp << "\\subsection*{Orbits at level " << poset_classify_depth << "}" << endl;
+			int nb_orbits, orbit_idx;
+
+			nb_orbits = Gen->nb_orbits_at_level(poset_classify_depth);
+			for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
+				fp << "\\subsubsection*{Orbit " << orbit_idx << " / " << nb_orbits << "}" << endl;
+
+				long int *Orbit; // orbit_length * depth
+				int orbit_length;
+
+				cout << "before get_whole_orbit orbit_idx=" << orbit_idx << endl;
+
+				Gen->get_whole_orbit(
+						poset_classify_depth, orbit_idx,
+						Orbit, orbit_length, verbose_level);
+
+				long int *data;
+
+				data = NEW_lint(orbit_length);
+
+				for (i = 0; i < orbit_length; i++) {
+
+					fp << "set " << i << " / " << orbit_length << " is: ";
+
+
+					uint32_t a, b;
+
+					a = 0;
+					for (j = 0; j < poset_classify_depth; j++) {
+						b = W->rank_one_tensors[Orbit[i * poset_classify_depth + j]];
+						a ^= b;
+					}
+
+					for (j = 0; j < poset_classify_depth; j++) {
+						fp << Orbit[i * poset_classify_depth + j];
+						if (j < poset_classify_depth - 1) {
+							fp << ", ";
+						}
+					}
+					fp << "= ";
+					for (j = 0; j < poset_classify_depth; j++) {
+						b = W->rank_one_tensors[Orbit[i * poset_classify_depth + j]];
+						fp << b;
+						if (j < poset_classify_depth - 1) {
+							fp << ", ";
+						}
+					}
+					fp << " = " << a;
+					data[i] = a;
+					fp << "\\\\" << endl;
+				}
+				sorting Sorting;
+
+				Sorting.lint_vec_heapsort(data, orbit_length);
+
+				fp << "$$" << endl;
+				L.print_lint_matrix_tex(fp, data, (orbit_length + 9)/ 10, 10);
+				fp << "$$" << endl;
+
+				classify C;
+
+				C.init_lint(data, orbit_length, TRUE, 0);
+				fp << "$$";
+				C.print_naked_tex(fp, TRUE /* f_backwards */);
+				fp << "$$";
+				FREE_lint(data);
+			}
+		}
+
+		L.foot(fp);
+	}
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+	if (f_v) {
+		cout << "tensor_classify::report done" << endl;
+	}
+}
+
+
+
 
 
 int wreath_rank_point_func(int *v, void *data)

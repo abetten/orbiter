@@ -1476,6 +1476,111 @@ void number_theory_domain::do_babystep_giantstep(
 	}
 }
 
+void number_theory_domain::sieve(std::vector<int> &primes,
+		int factorbase, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, from, to, l, unit_size = 1000;
+
+	if (f_v) {
+		cout << "number_theory_domain::sieve" << endl;
+	}
+	//primes.m_l(0);
+	for (i = 0; ; i++) {
+		from = i * unit_size + 1;
+		to = from + unit_size - 1;
+		sieve_primes(primes, from, to, factorbase, FALSE);
+		l = primes.size();
+		cout << "[" << from << "," << to
+			<< "], total number of primes = "
+			<< l << endl;
+		if (l >= factorbase) {
+			break;
+		}
+	}
+
+	if (f_v) {
+		cout << "number_theory_domain::sieve done" << endl;
+	}
+}
+
+void number_theory_domain::sieve_primes(std::vector<int> &v,
+		int from, int to, int limit, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int x, y, l, k, p, f_prime;
+
+	if (f_v) {
+		cout << "number_theory_domain::sieve_primes" << endl;
+	}
+	l = v.size();
+	if (ODD(from)) {
+		x = from;
+	}
+	else {
+		x = from + 1;
+	}
+	for (; x <= to; x++, x++) {
+		if (x <= 1) {
+			continue;
+		}
+		f_prime = TRUE;
+		for (k = 0; k < l; k++) {
+			p = v[k];
+			y = x / p;
+			// cout << "x=" << x << " p=" << p << " y=" << y << endl;
+			if ((x - y * p) == 0) {
+				f_prime = FALSE;
+				break;
+			}
+			if (y < p) {
+				break;
+			}
+#if 0
+			if ((x % p) == 0)
+				break;
+#endif
+			}
+		if (!f_prime) {
+			continue;
+		}
+		if (nb_primes(x) != 1) {
+			cout << "error: " << x << " is not prime!" << endl;
+			}
+		v.push_back(x);
+		if (f_v) {
+			cout << v.size() << " " << x << endl;
+		}
+		l++;
+		if (l >= limit) {
+			return;
+		}
+	}
+	if (f_v) {
+		cout << "number_theory_domain::sieve_primes done" << endl;
+	}
+}
+
+int number_theory_domain::nb_primes(int n)
+//Returns the number of primes in the prime factorization
+//of $n$ (including multiplicities).
+{
+	int i = 0;
+	int d;
+
+	if (n < 0)
+		n = -n;
+	while (n != 1) {
+		d = smallest_primedivisor(n);
+		i++;
+		n /= d;
+		}
+	return i;
+}
+
+
+
+
 }
 }
 
