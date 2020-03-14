@@ -508,14 +508,13 @@ public:
 	 * in wreath product action
 	 * and restrict the action to the tensor space. */
 	void init_wreath_product_group_and_restrict(int nb_factors, int n,
-			finite_field *F, int f_tensor_ranks,
+			finite_field *F,
 			int verbose_level);
 
 	/** Create the wreath product group AGL(n,q) wreath Sym(nb_factors)
 	 * in wreath product action
 	 */
 	void init_wreath_product_group(int nb_factors, int n, finite_field *F,
-			int f_tensor_ranks,
 			int verbose_level);
 
 

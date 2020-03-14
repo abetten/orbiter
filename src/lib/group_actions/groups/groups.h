@@ -1873,8 +1873,9 @@ public:
 	void null();
 	void freeself();
 	void init_tensor_wreath_product(matrix_group *M,
-			action *A_mtx, int nb_factors, int f_tensor_ranks,
+			action *A_mtx, int nb_factors,
 			int verbose_level);
+	void compute_tensor_ranks(int verbose_level);
 	long int element_image_of(int *Elt, long int a, int verbose_level);
 	void element_image_of_low_level(int *Elt,
 			int *input, int *output, int verbose_level);

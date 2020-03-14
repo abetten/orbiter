@@ -3260,12 +3260,9 @@ public:
 	~tensor_classify();
 	void init(int argc, const char **argv,
 			int nb_factors, int n, int q, int depth,
-			int f_permutations, int f_orbits, int f_tensor_ranks,
-			int f_orbits_restricted, const char *orbits_restricted_fname,
-			int f_orbits_restricted_compute,
-			int f_report,
-			int f_poset_classify, int poset_classify_depth,
 			int verbose_level);
+	void print_generators();
+	void print_generators_gap();
 	void classify_poset(int depth,
 			int verbose_level);
 	void create_restricted_action_on_rank_one_tensors(
@@ -3274,6 +3271,8 @@ public:
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
+	void report(int f_poset_classify, int poset_classify_depth,
+			int verbose_level);
 };
 
 int wreath_rank_point_func(int *v, void *data);

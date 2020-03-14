@@ -1363,6 +1363,7 @@ void file_io::int_matrix_read_csv(const char *fname,
 
 		m = S.nb_rows - 1;
 		n = S.nb_cols - 1;
+		cout << "The spreadsheet has " << S.nb_cols << " columns" << endl;
 		M = NEW_int(m * n);
 		for (i = 0; i < m; i++) {
 			for (j = 0; j < n; j++) {

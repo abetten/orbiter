@@ -664,7 +664,8 @@ void large_set_classify::process_starter_case(
 					"compute_orbits_on_points for the restricted action "
 					"on the good orbits" << endl;
 		}
-		A_on_orbits_restricted->compute_orbits_on_points(Sch, N_gens->gens, verbose_level - 1);
+		A_on_orbits_restricted->compute_orbits_on_points(
+				Sch, N_gens->gens, verbose_level - 1);
 
 		if (f_v) {
 			cout << "large_set_classify::process_starter_case "
