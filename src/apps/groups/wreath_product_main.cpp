@@ -166,10 +166,12 @@ int main(int argc, const char **argv)
 			//f_permutations, f_orbits, f_tensor_ranks,
 			//f_orbits_restricted, orbits_restricted_fname,
 			//f_orbits_restricted_compute,
-			verbose_level);
+			0/*verbose_level*/);
 
 	if (f_tensor_ranks) {
+		cout << "before T->W->compute_tensor_ranks" << endl;
 		T->W->compute_tensor_ranks(verbose_level);
+		cout << "after T->W->compute_tensor_ranks" << endl;
 	}
 
 	{
@@ -184,28 +186,34 @@ int main(int argc, const char **argv)
 		int nb_gens, degree;
 
 		if (f_permutations) {
-			T->W->compute_permutations(T->SG, T->A, result,
+			cout << "before T->W->compute_permutations_and_write_to_file" << endl;
+			T->W->compute_permutations_and_write_to_file(T->SG, T->A, result,
 					nb_gens, degree, nb_factors,
 					verbose_level);
+			cout << "after T->W->compute_permutations_and_write_to_file" << endl;
 		}
 		//wreath_product_orbits_CUDA(W, SG, A,
 		// result, nb_gens, degree, nb_factors, verbose_level);
 
 		if (f_orbits) {
-			T->W->orbits(T->SG, T->A, result, nb_gens, degree, nb_factors,
+			cout << "before T->W->orbits_using_files_and_union_find" << endl;
+			T->W->orbits_using_files_and_union_find(T->SG, T->A, result, nb_gens, degree, nb_factors,
 					verbose_level);
+			cout << "after T->W->orbits_using_files_and_union_find" << endl;
 		}
 		if (f_orbits_restricted) {
+			cout << "before T->W->orbits_restricted" << endl;
 			T->W->orbits_restricted(T->SG, T->A, result,
 					nb_gens, degree, nb_factors, orbits_restricted_fname,
 					verbose_level);
-
+			cout << "after T->W->orbits_restricted" << endl;
 		}
 		if (f_orbits_restricted_compute) {
+			cout << "before T->W->orbits_restricted_compute" << endl;
 			T->W->orbits_restricted_compute(T->SG, T->A, result,
 					nb_gens, degree, nb_factors, orbits_restricted_fname,
 					verbose_level);
-
+			cout << "after T->W->orbits_restricted_compute" << endl;
 		}
 	}
 
@@ -214,14 +222,17 @@ int main(int argc, const char **argv)
 	cout << endl;
 
 
+	if (f_poset_classify) {
+		cout << "before T->classify_poset" << endl;
+		T->classify_poset(poset_classify_depth, verbose_level);
+		cout << "after T->classify_poset" << endl;
+	}
+
 	if (f_report) {
+		cout << "before T->report" << endl;
 		T->report(f_poset_classify, poset_classify_depth,
 				verbose_level);
-	}
-	else {
-		if (f_poset_classify) {
-			T->classify_poset(poset_classify_depth, verbose_level);
-		}
+		cout << "after T->report" << endl;
 	}
 
 	the_end_quietly(t0);

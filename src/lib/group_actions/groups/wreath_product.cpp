@@ -8295,7 +8295,8 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 		}
 		cout << "reading Prev from file done" << endl;
 
-	} else {
+	}
+	else {
 		cout << "computing tensor ranks:" << endl;
 
 		for (i = 0; i < degree_of_tensor_action + 1; i++) {
@@ -8397,19 +8398,23 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 	}
 
 
-	cout << "computing maximum tensor rank:" << endl;
+	if (f_v) {
+		cout << "computing maximum tensor rank:" << endl;
+	}
 	int m;
 
 	m = 0;
 	for (i = 0; i < degree_of_tensor_action + 1; i++) {
 		m = MAXIMUM(m, (int) TR[i]);
 	}
-	if (f_vv) {
+	if (f_v) {
 		cout << "wreath_product::compute_tensor_ranks max tensor rank = " << m << endl;
 	}
 	long int *Nb_by_rank;
 
-	cout << "computing Nb_by_rank:" << endl;
+	if (f_v) {
+		cout << "computing Nb_by_rank:" << endl;
+	}
 	Nb_by_rank = NEW_lint(m + 1);
 	for (i = 0; i <= m; i++) {
 		Nb_by_rank[i] = 0;
@@ -8418,15 +8423,21 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 		r = (int) TR[i];
 		Nb_by_rank[r]++;
 	}
-	cout << "number of tensors by rank:" << endl;
-	for (i = 0; i <= m; i++) {
-		cout << i << " : " << Nb_by_rank[i] << endl;
+	if (f_v) {
+		cout << "number of tensors by rank:" << endl;
+		for (i = 0; i <= m; i++) {
+			cout << i << " : " << Nb_by_rank[i] << endl;
+		}
 	}
 
 
 
 
 	if (q == 2 && nb_factors == 5) {
+
+		if (f_v) {
+			cout << "q == 2 && nb_factors == 5" << endl;
+		}
 
 		int N = nb_w5_reps;
 		int *R;
@@ -8516,6 +8527,10 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 
 	else if (q == 2 && nb_factors == 4) {
 
+		if (f_v) {
+			cout << "q == 2 && nb_factors == 4" << endl;
+		}
+
 		int N = nb_w4_reps;
 		int *R;
 		int *L;
@@ -8604,7 +8619,7 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 		FREE_int(v);
 	}
 
-	exit(1);
+	//exit(1);
 
 
 
@@ -8634,7 +8649,11 @@ void wreath_product::report(ostream &ost, int verbose_level)
 	ost << "Make element size: " << make_element_size << "\\\\" << endl;
 	ost << "Number of rank one tensors: " << nb_rank_one_tensors << "\\\\" << endl;
 
-	ost << "Rank one tensors: \\\\" << endl;
+	ost << "\\bigskip" << endl << endl;
+
+	ost << "\\section*{Rank One Tensors}" << endl << endl;
+
+	//ost << "Rank one tensors: \\\\" << endl;
 
 	int i;
 	uint32_t a, b;
@@ -8663,7 +8682,7 @@ void wreath_product::report(ostream &ost, int verbose_level)
 	}
 }
 
-void wreath_product::compute_permutations(
+void wreath_product::compute_permutations_and_write_to_file(
 		strong_generators* SG,
 		action* A,
 		int*& result,
@@ -8671,11 +8690,17 @@ void wreath_product::compute_permutations(
 		int nb_factors,
 		int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
 	int *generator_stack;
 	int **generators_transposed;
 	int *perms;
 	int mtx_n;
 	int mtx_n2;
+
+	if (f_v) {
+		cout << "wreath_product::compute_permutations_and_write_to_file" << endl;
+	}
 
 	nb_gens = SG->gens->len;
 	degree = degree_of_tensor_action;
@@ -8686,14 +8711,20 @@ void wreath_product::compute_permutations(
 	generators_transposed = NEW_pint(SG->gens->len);
 	perms = NEW_int(SG->gens->len * mtx_n);
 	for (size_t h = 0; h < SG->gens->len; h++) {
-		cout << "generator " << h << " / "
-				<< SG->gens->len << " is: " << endl;
-		A->element_print_quick(SG->gens->ith(h), cout);
-		A->element_print_as_permutation(SG->gens->ith(h), cout);
+		if (f_v) {
+			cout << "generator " << h << " / "
+					<< SG->gens->len << " is: " << endl;
+			A->element_print_quick(SG->gens->ith(h), cout);
+			A->element_print_as_permutation(SG->gens->ith(h), cout);
+		}
+
 		create_matrix(SG->gens->ith(h), generator_stack + h * mtx_n2,
 				0 /* verbose_level */);
-		cout << "matrix:" << endl;
-		int_matrix_print(generator_stack + h * mtx_n2, mtx_n, mtx_n);
+
+		if (f_v) {
+			cout << "wreath_product::compute_permutations_and_write_to_file matrix:" << endl;
+			int_matrix_print(generator_stack + h * mtx_n2, mtx_n, mtx_n);
+		}
 		generators_transposed[h] = NEW_int(mtx_n2);
 
 		F->transpose_matrix(
@@ -8703,19 +8734,23 @@ void wreath_product::compute_permutations(
 		compute_induced_permutation(SG->gens->ith(h), perms + h * mtx_n);
 	}
 
-	cout << "generator_stack:" << endl;
-	int_matrix_print(generator_stack, SG->gens->len, mtx_n * mtx_n);
+	if (f_v) {
+		cout << "wreath_product::compute_permutations_and_write_to_file generator_stack:" << endl;
+		int_matrix_print(generator_stack, SG->gens->len, mtx_n * mtx_n);
+	}
 
 #if 0
-	cout << "generators transposed:" << endl;
+	cout << "wreath_product::compute_permutations_and_write_to_file generators transposed:" << endl;
 	for (size_t h = 0; h < SG->gens->len; h++) {
 		int_matrix_print(generators_transposed[h], mtx_n, mtx_n);
 	}
 #endif
-	cout << "perms:" << endl;
-	int_matrix_print(perms, SG->gens->len, mtx_n);
-	cout << "mtx_n=" << mtx_n << endl;
-	cout << "SG->gens->len * mtx_n=" << SG->gens->len * mtx_n << endl;
+	if (f_v) {
+		cout << "wreath_product::compute_permutations_and_write_to_file perms:" << endl;
+		int_matrix_print(perms, SG->gens->len, mtx_n);
+		cout << "mtx_n=" << mtx_n << endl;
+		cout << "SG->gens->len * mtx_n=" << SG->gens->len * mtx_n << endl;
+	}
 
 #if 0
 	linalg::Matrix<int> v (mtx_n, 1);
@@ -8769,18 +8804,24 @@ void wreath_product::compute_permutations(
 		exit(1);
 	}
 	else {
-		cout << "W->degree_of_tensor_action fits into a unsigned int, this is good" << endl;
+		if (f_v) {
+			cout << "W->degree_of_tensor_action fits into a unsigned int, this is good" << endl;
+		}
 	}
 
 
 
 	int block_size = 1L << 28; // pow(2, 28) ints = 1024 MB
 
-	cout << "block_size=" << block_size << endl;
+	if (f_v) {
+		cout << "wreath_product::compute_permutations_and_write_to_file block_size=" << block_size << endl;
+	}
 
 	int nb_blocks = (degree_of_tensor_action + block_size - 1) / block_size;
 
-	cout << "nb_blocks=" << nb_blocks << endl;
+	if (f_v) {
+		cout << "wreath_product::compute_permutations_and_write_to_file nb_blocks=" << nb_blocks << endl;
+	}
 
 
 	//cout << "allocating S, an unsigned int array of size " << W->degree_of_tensor_action << endl;
@@ -8790,23 +8831,34 @@ void wreath_product::compute_permutations(
 	//for (unsigned int i=0; i<W->degree_of_tensor_action; ++i) S[i] = i;
 
 
-	cout << "allocating T, an unsigned int array of size " << block_size << endl;
+	if (f_v) {
+		cout << "wreath_product::compute_permutations_and_write_to_file before allocating T, "
+				"an unsigned int array of size " << block_size << endl;
+	}
 
 	unsigned int* T = new unsigned int [block_size];
 
 //	memset(S, -1, sizeof(S)*W->degree_of_tensor_action);
+	if (f_v) {
+		cout << "wreath_product::compute_permutations_and_write_to_file after allocating T, "
+				"an unsigned int array of size " << block_size << endl;
+	}
 
 
 
 
 
-	for (size_t b=0; b<nb_blocks; ++b) {
-		cout << "block b=" << b << " / " << nb_blocks << endl;
+	for (size_t b = 0; b < nb_blocks; ++b) {
+		if (f_v) {
+			cout << "wreath_product::compute_permutations_and_write_to_file block b=" << b << " / " << nb_blocks << endl;
+		}
 
 
 		int l = std::min((b + 1) * block_size,
-				(unsigned long)degree_of_tensor_action) - b*block_size;
-		cout << "l=" << l << endl;
+				(unsigned long)degree_of_tensor_action) - b * block_size;
+		if (f_v) {
+			cout << "wreath_product::compute_permutations_and_write_to_file l=" << l << endl;
+		}
 
 		//linalg::Matrix<char> M  (l, mtx_n);
 
@@ -8815,14 +8867,17 @@ void wreath_product::compute_permutations(
 		M = NEW_OBJECT(bitmatrix);
 		M->init(mtx_n, l, 0 /*verbose_level*/);
 
-		cout << "unranking the elements of the PG to the bitmatrix" << endl;
+		if (f_v) {
+			cout << "wreath_product::compute_permutations "
+					"unranking the elements of the PG to the bitmatrix" << endl;
+		}
 		M->unrank_PG_elements_in_columns_consecutively(
 				F, (long int) b * (long int) block_size,
 				0 /* verbose_level */);
 
 
 #if 0
-		cout << "unranking the elements of the PG" << endl;
+		cout << "wreath_product::compute_permutations_and_write_to_file unranking the elements of the PG" << endl;
 
 		int l1 = l / 100;
 		for (size_t i=0; i<l; ++i) {
@@ -8836,7 +8891,10 @@ void wreath_product::compute_permutations(
 		}
 #endif
 
-		cout << "unranking the elements of the PG done" << endl;
+		if (f_v) {
+			cout << "wreath_product::compute_permutations_and_write_to_file "
+					"unranking the elements of the PG done" << endl;
+		}
 
 		//M->print();
 
@@ -8848,8 +8906,11 @@ void wreath_product::compute_permutations(
 		NM->init(mtx_n, l, 0 /*verbose_level*/);
 
 
-		for (size_t h=0; h < SG->gens->len; ++h) {
-			cout << "generator h=" << h << " / " << SG->gens->len << endl;
+		for (size_t h = 0; h < SG->gens->len; ++h) {
+			if (f_v) {
+				cout << "wreath_product::compute_permutations_and_write_to_file "
+						"generator h=" << h << " / " << SG->gens->len << endl;
+			}
 
 
 			if (!test_if_file_exists(nb_factors, h, b)) {
@@ -8869,7 +8930,10 @@ void wreath_product::compute_permutations(
 				//MN.UninitializeOnGPU();
 
 
-				cout << "CPU multiplication" << endl;
+				if (f_v) {
+					cout << "wreath_product::compute_permutations_and_write_to_file "
+							"before CPU multiplication" << endl;
+				}
 				int t0, t1, dt;
 				os_interface Os;
 				t0 = Os.os_ticks();
@@ -8877,18 +8941,24 @@ void wreath_product::compute_permutations(
 				M->mult_int_matrix_from_the_left(
 						generators_transposed[h], mtx_n, mtx_n,
 						NM, verbose_level);
-				cout << "CPU multiplication done" << endl;
-				t1 = Os.os_ticks();
-				dt = t1 - t0;
-				cout << "the multiplication took ";
-				Os.time_check_delta(cout, dt);
-				cout << endl;
+				if (f_v) {
+					cout << "wreath_product::compute_permutations_and_write_to_file "
+							"after CPU multiplication" << endl;
+					t1 = Os.os_ticks();
+					dt = t1 - t0;
+					cout << "the multiplication took ";
+					Os.time_check_delta(cout, dt);
+					cout << endl;
+				}
 
 				//cout << "NM:" << endl;
 				//NM->print();
 
 
-				cout << "ranking the elements of the PG" << endl;
+				if (f_v) {
+					cout << "wreath_product::compute_permutations_and_write_to_file "
+							"before ranking the elements of the PG" << endl;
+				}
 				NM->rank_PG_elements_in_columns(
 						F, perms + h * mtx_n, T,
 						verbose_level);
@@ -8908,10 +8978,16 @@ void wreath_product::compute_permutations(
 					T [i] = (unsigned int) res;
 				}
 #endif
-				cout << "ranking the elements of the PG done" << endl;
+				if (f_v) {
+					cout << "wreath_product::compute_permutations_and_write_to_file "
+							"after ranking the elements of the PG" << endl;
+				}
 
 
-				cout << "writing to file:" << endl;
+				if (f_v) {
+					cout << "wreath_product::compute_permutations_and_write_to_file "
+							"writing to file:" << endl;
+				}
 				char fname[1000];
 
 				make_fname(fname, nb_factors, h, b);
@@ -8925,12 +9001,20 @@ void wreath_product::compute_permutations(
 				}
 				//file_io Fio;
 
-				cout << "written file " << fname << endl; //" of size " << Fio.file_size(fname) << endl;
+				if (f_v) {
+					cout << "wreath_product::compute_permutations_and_write_to_file "
+							"written file " << fname << endl;
+					//" of size " << Fio.file_size(fname) << endl;
+				}
 
 
 			}
 			else {
-				cout << "the case h=" << h << ", b=" << b << " has already been done" << endl;
+				if (f_v) {
+					cout << "wreath_product::compute_permutations_and_write_to_file "
+							"the case h=" << h << ", b=" << b
+							<< " has already been done" << endl;
+				}
 			}
 
 		} // next h
@@ -8971,7 +9055,6 @@ void wreath_product::compute_permutations(
 	}
 #endif
 
-	return;
 
 
 //	combinatorics_domain Combi;
@@ -9003,6 +9086,11 @@ void wreath_product::compute_permutations(
 //	nb_gens = 0;
 //	degree = 0;
 //#endif
+
+	if (f_v) {
+		cout << "wreath_product::compute_permutations done" << endl;
+	}
+
 }
 
 void wreath_product::make_fname(char *fname, int nb_factors, int h, int b)
@@ -9024,7 +9112,7 @@ int wreath_product::test_if_file_exists(int nb_factors, int h, int b)
 	}
 }
 
-void wreath_product::orbits(
+void wreath_product::orbits_using_files_and_union_find(
 		strong_generators* SG,
 		action* A,
 		int*& result,
@@ -9032,6 +9120,11 @@ void wreath_product::orbits(
 		int nb_factors,
 		int verbosity)
 {
+	int f_v = (verbosity >= 1);
+
+	if (f_v) {
+		cout << "wreath_product::orbits_using_files_and_union_find" << endl;
+	}
 
 	int mtx_n;
 
@@ -9041,21 +9134,33 @@ void wreath_product::orbits(
 
 	int block_size = 1L << 28; // pow(2, 28) ints = 1024 MB
 
-	cout << "block_size=" << block_size << endl;
+	if (f_v) {
+		cout << "block_size=" << block_size << endl;
+	}
 
 	int nb_blocks = (degree_of_tensor_action + block_size - 1) / block_size;
 
-	cout << "nb_blocks=" << nb_blocks << endl;
+	if (f_v) {
+		cout << "nb_blocks=" << nb_blocks << endl;
+	}
 
 
-	cout << "allocating S, an unsigned int array of size " << degree_of_tensor_action << endl;
+	if (f_v) {
+		cout << "allocating S, an unsigned int array of size "
+				<< degree_of_tensor_action << endl;
+	}
 
 	unsigned int* S = new unsigned int [degree_of_tensor_action];
 
-	for (unsigned int i=0; i < degree_of_tensor_action; ++i) S[i] = i;
+	for (unsigned int i=0; i < degree_of_tensor_action; ++i) {
+		S[i] = i;
+	}
 
 
-	cout << "allocating T, an unsigned int array of size " << degree_of_tensor_action << endl;
+	if (f_v) {
+		cout << "allocating T, an unsigned int array of size "
+				<< degree_of_tensor_action << endl;
+	}
 
 	unsigned int* T = new unsigned int [degree_of_tensor_action];
 
@@ -9064,17 +9169,25 @@ void wreath_product::orbits(
 
 
 
-	for (size_t h=0; h < SG->gens->len; ++h) {
-		cout << "generator h=" << h << " / " << SG->gens->len << endl;
+	for (size_t h = 0; h < SG->gens->len; ++h) {
+		if (f_v) {
+			cout << "wreath_product::orbits_using_files_and_union_find "
+					"generator h=" << h << " / " << SG->gens->len << endl;
+		}
 
 		for (size_t b=0; b<nb_blocks; ++b) {
-			cout << "block b=" << b << " / " << nb_blocks << endl;
+			if (f_v) {
+				cout << "wreath_product::orbits_using_files_and_union_find "
+						"block b=" << b << " / " << nb_blocks << endl;
+			}
 
 
 			int l = std::min((b + 1) * block_size,
 					(unsigned long)degree_of_tensor_action) - b*block_size;
-			cout << "l=" << l << endl;
-
+			if (f_v) {
+				cout << "wreath_product::orbits_using_files_and_union_find "
+						"l=" << l << endl;
+			}
 
 
 
@@ -9087,7 +9200,10 @@ void wreath_product::orbits(
 				char fname[1000];
 
 				make_fname(fname, nb_factors, h, b);
-				cout << "reading from file " << fname << endl;
+				if (f_v) {
+					cout << "wreath_product::orbits_using_files_and_union_find "
+							"reading from file " << fname << endl;
+				}
 				{
 					ifstream fp(fname, ios::binary);
 
@@ -9102,13 +9218,21 @@ void wreath_product::orbits(
 				}
 				//file_io Fio;
 
-				cout << "read file " << fname << endl; //" of size " << Fio.file_size(fname) << endl;
+				if (f_v) {
+					cout << "wreath_product::orbits_using_files_and_union_find "
+							"read file " << fname << endl;
+					//" of size " << Fio.file_size(fname) << endl;
+				}
 
 
 			} // else
 		} // next b
 
-		cout << "performing the union-find for generator " << h << " / " << SG->gens->len << ":" << endl;
+		if (f_v) {
+			cout << "wreath_product::orbits_using_files_and_union_find "
+					"performing the union-find for generator " << h
+					<< " / " << SG->gens->len << ":" << endl;
+		}
 
 		for (unsigned int i=0; i < degree_of_tensor_action; ++i) {
 			int l1;
@@ -9136,9 +9260,10 @@ void wreath_product::orbits(
 	} // next h
 
 
-	cout << "Done with the loop" << endl;
-	cout << "Computing the orbit representatives" << endl;
-
+	if (f_v) {
+		cout << "wreath_product::orbits_using_files_and_union_find Done with the loop" << endl;
+		cout << "wreath_product::orbits_using_files_and_union_find Computing the orbit representatives" << endl;
+	}
 
 
 	int nb_orbits = 0;
@@ -9147,7 +9272,9 @@ void wreath_product::orbits(
 			nb_orbits++;
 		}
 	}
-	cout << "nb_orbits: " << nb_orbits << endl;
+	if (f_v) {
+		cout << "wreath_product::orbits_using_files_and_union_find nb_orbits: " << nb_orbits << endl;
+	}
 
 	long int *orbit_length;
 	long int *orbit_rep;
@@ -9166,16 +9293,22 @@ void wreath_product::orbits(
 		}
 	}
 
-	cout << "the orbit representatives are: " << endl;
-	for (int i = 0; i < nb_orbits; i++) {
-		cout << i << ", " << orbit_rep[i] << ", " << endl;
+	if (f_v) {
+		cout << "wreath_product::orbits_using_files_and_union_find the orbit representatives are: " << endl;
+		for (int i = 0; i < nb_orbits; i++) {
+			cout << i << ", " << orbit_rep[i] << ", " << endl;
+		}
 	}
-	cout << "Path compression:" << endl;
+	if (f_v) {
+		cout << "wreath_product::orbits_using_files_and_union_find Path compression:" << endl;
+	}
 	for (unsigned int i=0; i < degree_of_tensor_action; ++i) {
 		unsigned int r = root_of_tree_uint32_t(S, i);
 		S[i] = r;
 	}
-	cout << "Path compression done" << endl;
+	if (f_v) {
+		cout << "wreath_product::orbits_using_files_and_union_find Path compression done" << endl;
+	}
 
 	uint32_t *Orbit;
 	int goi;
@@ -9185,29 +9318,44 @@ void wreath_product::orbits(
 	SG->group_order(go);
 	goi = go.as_int();
 
-	cout << "goi=" << goi << endl;
+	if (f_v) {
+		cout << "wreath_product::orbits_using_files_and_union_find "
+				"goi=" << goi << endl;
+	}
 
 
 	Orbit = (uint32_t *) NEW_int(goi);
 
-	cout << "determining the orbits: " << endl;
+	if (f_v) {
+		cout << "wreath_product::orbits_using_files_and_union_find "
+				"determining the orbits: " << endl;
+	}
 	for (int orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
 
 		unsigned int rep = orbit_rep[orbit_idx];
 		uint32_t len = 0;
 
-		cout << "determining orbit " << orbit_idx << " / " << nb_orbits << " with rep " << rep << endl;
+		if (f_v) {
+			cout << "wreath_product::orbits_using_files_and_union_find "
+					"determining orbit " << orbit_idx << " / " << nb_orbits
+					<< " with rep " << rep << endl;
+		}
 		for (unsigned int j=0; j < degree_of_tensor_action; ++j) {
 			if (S[j] == rep) {
 				Orbit[len++] = j;
 			}
 		}
 		orbit_length[orbit_idx] = len;
-		cout << "orbit " << orbit_idx << " / " << nb_orbits << " has length " << len << endl;
+		if (f_v) {
+			cout << "wreath_product::orbits_using_files_and_union_find "
+					"orbit " << orbit_idx << " / " << nb_orbits << " has length " << len << endl;
+		}
 		char fname_orbit[1000];
 
 		sprintf(fname_orbit, "wreath_q%d_w%d_orbit_%d.bin", q, nb_factors, orbit_idx);
-		cout << "Writing the file " << fname_orbit << endl;
+		if (f_v) {
+			cout << "Writing the file " << fname_orbit << endl;
+		}
 		{
 			ofstream fp(fname_orbit, ios::binary);
 
@@ -9216,13 +9364,21 @@ void wreath_product::orbits(
 				fp.write((char *) &Orbit[i], sizeof(uint32_t));
 			}
 		}
-		cout << "We are done writing the file " << fname_orbit << endl;
+		if (f_v) {
+			cout << "We are done writing the file " << fname_orbit << endl;
+		}
 
 	}
 	FREE_int((int *) Orbit);
-	cout << "the orbits are: " << endl;
-	for (int orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
-		cout << orbit_idx << ", " << orbit_rep[orbit_idx] << ", " << orbit_length[orbit_idx] << ", " << endl;
+	if (f_v) {
+		cout << "wreath_product::orbits_using_files_and_union_find the orbits are: " << endl;
+		for (int orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
+			cout << orbit_idx << ", " << orbit_rep[orbit_idx] << ", " << orbit_length[orbit_idx] << ", " << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "wreath_product::orbits_using_files_and_union_find done" << endl;
 	}
 }
 
@@ -9238,7 +9394,6 @@ void wreath_product::orbits_restricted(
 {
 	int f_v = (verbose_level >= 1);
 
-	int mtx_n;
 
 	if (f_v) {
 		cout << "wreath_product::orbits_restricted "
@@ -9248,6 +9403,7 @@ void wreath_product::orbits_restricted(
 	file_io Fio;
 	sorting Sorting;
 
+	int mtx_n;
 	long int *Set;
 	long int *Set_in_PG;
 	int set_m, set_n;
@@ -9263,8 +9419,10 @@ void wreath_product::orbits_restricted(
 		cout << "orbits_restricted set_n != 1" << endl;
 		exit(1);
 	}
-	cout << "Restricting to a set of size " << set_m << endl;
-	cout << "converting points to PG point labels" << endl;
+	if (f_v) {
+		cout << "Restricting to a set of size " << set_m << endl;
+		cout << "converting points to PG point labels" << endl;
+	}
 
 	int *v;
 	long int s;
@@ -9276,9 +9434,11 @@ void wreath_product::orbits_restricted(
 	}
 	//FREE_int(v);
 	Sorting.lint_vec_heapsort(Set_in_PG, set_m);
-	cout << "after sorting, Set_in_PG:" << endl;
-	for (i = 0; i < set_m; i++) {
-		cout << i << " : " << Set_in_PG[i] << endl;
+	if (f_v) {
+		cout << "after sorting, Set_in_PG:" << endl;
+		for (i = 0; i < set_m; i++) {
+			cout << i << " : " << Set_in_PG[i] << endl;
+		}
 	}
 
 
@@ -9289,18 +9449,24 @@ void wreath_product::orbits_restricted(
 
 	int block_size = 1L << 28; // pow(2, 28) ints = 1024 MB
 
-	cout << "block_size=" << block_size << endl;
+	if (f_v) {
+		cout << "block_size=" << block_size << endl;
+	}
 
 	nb_blocks = (degree_of_tensor_action + block_size - 1) / block_size;
 
-	cout << "nb_blocks=" << nb_blocks << endl;
+	if (f_v) {
+		cout << "nb_blocks=" << nb_blocks << endl;
+	}
 
 	restr_first = NEW_int(nb_blocks);
 	restr_length = NEW_int(nb_blocks);
 
 	for (size_t b = 0; b < nb_blocks; b++) {
 
-		cout << "block b=" << b << " / " << nb_blocks << endl;
+		if (f_v) {
+			cout << "block b=" << b << " / " << nb_blocks << endl;
+		}
 
 
 		int idx;
@@ -9315,7 +9481,9 @@ void wreath_product::orbits_restricted(
 	}
 
 	for (int b = nb_blocks - 1; b >= 0; b--) {
-		cout << "b=" << b << endl;
+		if (f_v) {
+			cout << "b=" << b << endl;
+		}
 		if (b == nb_blocks - 1) {
 			restr_length[b] = set_m - restr_first[b];
 		}
@@ -9334,7 +9502,9 @@ void wreath_product::orbits_restricted(
 
 
 
-	cout << "allocating T, an unsigned int array of size " << block_size << endl;
+	if (f_v) {
+		cout << "allocating T, an unsigned int array of size " << block_size << endl;
+	}
 
 	unsigned int* T = new unsigned int [block_size];
 
@@ -9343,15 +9513,21 @@ void wreath_product::orbits_restricted(
 
 
 	for (int h = 0; h < SG->gens->len; ++h) {
-		cout << "generator h=" << h << " / " << SG->gens->len << endl;
+		if (f_v) {
+			cout << "generator h=" << h << " / " << SG->gens->len << endl;
+		}
 
 		for (int b = 0; b < nb_blocks; ++b) {
-			cout << "block b=" << b << " / " << nb_blocks << endl;
+			if (f_v) {
+				cout << "block b=" << b << " / " << nb_blocks << endl;
+			}
 
 
 			int l = MINIMUM((b + 1) * block_size,
 					(unsigned long)degree_of_tensor_action) - b * block_size;
-			cout << "l=" << l << endl;
+			if (f_v) {
+				cout << "l=" << l << endl;
+			}
 
 
 
@@ -9364,7 +9540,9 @@ void wreath_product::orbits_restricted(
 			char fname[1000];
 
 			make_fname(fname, nb_factors, h, b);
-			cout << "reading from file " << fname << endl;
+			if (f_v) {
+				cout << "reading from file " << fname << endl;
+			}
 			{
 				ifstream fp(fname, ios::binary);
 
@@ -9377,7 +9555,10 @@ void wreath_product::orbits_restricted(
 					fp.read((char *) &T [i], sizeof(int));
 				}
 			}
-			cout << "read file " << fname << endl; //" of size " << Fio.file_size(fname) << endl;
+			if (f_v) {
+				cout << "read file " << fname << endl;
+				//" of size " << Fio.file_size(fname) << endl;
+			}
 
 			long int x, y;
 			for (long int u = 0; u < restr_length[b]; u++) {
@@ -9434,6 +9615,9 @@ void wreath_product::orbits_restricted(
 	Fio.lint_matrix_write_csv(fname,
 			Perms, set_m, SG->gens->len);
 
+	if (f_v) {
+		cout << "wreath_product::orbits_restricted done" << endl;
+	}
 }
 
 void wreath_product::orbits_restricted_compute(
@@ -9448,7 +9632,8 @@ void wreath_product::orbits_restricted_compute(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "wreath_product::orbits_restricted_compute orbits_restricted_fname=" << orbits_restricted_fname << endl;
+		cout << "wreath_product::orbits_restricted_compute "
+				"orbits_restricted_fname=" << orbits_restricted_fname << endl;
 	}
 
 	file_io Fio;
@@ -9466,8 +9651,10 @@ void wreath_product::orbits_restricted_compute(
 		cout << "orbits_restricted set_n != 1" << endl;
 		exit(1);
 	}
-	cout << "Restricting to a set of size " << set_m << endl;
-	cout << "converting points to PG point labels" << endl;
+	if (f_v) {
+		cout << "Restricting to a set of size " << set_m << endl;
+		cout << "converting points to PG point labels" << endl;
+	}
 
 	int *v;
 	long int s;
@@ -9479,7 +9666,9 @@ void wreath_product::orbits_restricted_compute(
 	}
 	//FREE_int(v);
 	Sorting.lint_vec_heapsort(Set_in_PG, set_m);
-	cout << "after sorting, Set_in_PG:" << endl;
+	if (f_v) {
+		cout << "after sorting, Set_in_PG:" << endl;
+	}
 #if 0
 	for (i = 0; i < set_m; i++) {
 		cout << i << " : " << Set_in_PG[i] << endl;
@@ -9524,7 +9713,9 @@ void wreath_product::orbits_restricted_compute(
 			SG->gens,
 			Perms, degree,
 			verbose_level);
-	cout << "created A_perm = " << A_perm->label << endl;
+	if (f_v) {
+		cout << "created A_perm = " << A_perm->label << endl;
+	}
 
 	A_perm_matrix = NEW_OBJECT(action);
 	A_perm_matrix->init_permutation_representation(A,
@@ -9532,7 +9723,9 @@ void wreath_product::orbits_restricted_compute(
 			SG->gens,
 			Perms, degree,
 			verbose_level);
-	cout << "created A_perm_matrix = " << A_perm_matrix->label << endl;
+	if (f_v) {
+		cout << "created A_perm_matrix = " << A_perm_matrix->label << endl;
+	}
 
 	permutation_representation *Permutation_representation;
 
@@ -9562,9 +9755,13 @@ void wreath_product::orbits_restricted_compute(
 	Sch->initialize_tables();
 	Sch->init_generators(*Gens, verbose_level - 2);
 
-	cout << "before Sch->compute_all_point_orbits" << endl;
+	if (f_v) {
+		cout << "before Sch->compute_all_point_orbits" << endl;
+	}
 	Sch->compute_all_point_orbits(0 /*verbose_level - 5*/);
-	cout << "after Sch->compute_all_point_orbits" << endl;
+	if (f_v) {
+		cout << "after Sch->compute_all_point_orbits" << endl;
+	}
 
 	Sch->print_orbit_lengths_tex(cout);
 	Sch->print_and_list_orbits_tex(cout);
@@ -9573,14 +9770,21 @@ void wreath_product::orbits_restricted_compute(
 	Sch->orbits_as_set_of_sets(Orbits, verbose_level);
 
 	A->group_order(go);
-	cout << "Action " << A->label << endl;
-	cout << "group order " << go << endl;
-	cout << "computing stabilizers:" << endl;
+	if (f_v) {
+		cout << "Action " << A->label << endl;
+		cout << "group order " << go << endl;
+		cout << "computing stabilizers:" << endl;
+	}
 
+	if (f_v) {
+		cout << "wreath_product::orbits_restricted_compute looping over all orbits" << endl;
+	}
 
 
 	for (orbit_idx = 0; orbit_idx < Sch->nb_orbits; orbit_idx++) {
-		cout << "computing point stabilizer for orbit " << orbit_idx << ":" << endl;
+		if (f_v) {
+			cout << "computing point stabilizer for orbit " << orbit_idx << ":" << endl;
+		}
 
 		int orb_rep;
 		long int orbit_rep_in_PG;
@@ -9598,16 +9802,22 @@ void wreath_product::orbits_restricted_compute(
 
 		tensor_PG_unrank(tensor, orbit_rep_in_PG);
 
-		cout << "orbit representative is " << orb_rep << " = " << orbit_rep_in_PG << " = " << orbit_rep_in_PG_uint << endl;
-		cout << "tensor: ";
-		int_vec_print(cout, tensor, dimension_of_tensor_action);
-		cout << endl;
+		if (f_v) {
+			cout << "orbit representative is " << orb_rep << " = " << orbit_rep_in_PG << " = " << orbit_rep_in_PG_uint << endl;
+			cout << "tensor: ";
+			int_vec_print(cout, tensor, dimension_of_tensor_action);
+			cout << endl;
+		}
 		sims *Stab;
 
-		cout << "before Sch->point_stabilizer in action " << A_perm_matrix->label << endl;
+		if (f_v) {
+			cout << "before Sch->point_stabilizer in action " << A_perm_matrix->label << endl;
+		}
 		Sch->point_stabilizer(A_perm_matrix, go,
 				Stab, orbit_idx, verbose_level - 5);
-		cout << "after Sch->point_stabilizer in action " << A_perm_matrix->label << endl;
+		if (f_v) {
+			cout << "after Sch->point_stabilizer in action " << A_perm_matrix->label << endl;
+		}
 
 		strong_generators *gens;
 
@@ -9616,17 +9826,23 @@ void wreath_product::orbits_restricted_compute(
 		gens->init_from_sims(Stab, verbose_level);
 
 
-		gens->print_generators_tex(cout);
+		if (f_v) {
+			gens->print_generators_tex(cout);
+		}
 
 #if 1
 		action *A_on_orbit;
 
-		cout << "computing restricted action on the orbit:" << endl;
+		if (f_v) {
+			cout << "computing restricted action on the orbit:" << endl;
+		}
 		A_on_orbit = A_perm->restricted_action(Orbits->Sets[orbit_idx] + 1, Orbits->Set_size[orbit_idx] - 1,
 				verbose_level);
 
-		cout << "generators restricted to the orbit of degree " << Orbits->Set_size[orbit_idx] - 1 << ":" << endl;
-		gens->print_generators_MAGMA(A_on_orbit, cout);
+		if (f_v) {
+			cout << "generators restricted to the orbit of degree " << Orbits->Set_size[orbit_idx] - 1 << ":" << endl;
+			gens->print_generators_MAGMA(A_on_orbit, cout);
+		}
 
 
 		sims *derived_group;
@@ -9634,7 +9850,9 @@ void wreath_product::orbits_restricted_compute(
 
 		derived_group = NEW_OBJECT(sims);
 
-		cout << "computing the derived subgroup:" << endl;
+		if (f_v) {
+			cout << "computing the derived subgroup:" << endl;
+		}
 
 		derived_group->init(A_perm_matrix, verbose_level - 2);
 		derived_group->init_trivial_group(verbose_level - 1);
@@ -9643,7 +9861,9 @@ void wreath_product::orbits_restricted_compute(
 				0 /*verbose_level*/);
 
 		derived_group->group_order(d_go);
-		cout << "the derived subgroup has order: " << d_go << endl;
+		if (f_v) {
+			cout << "the derived subgroup has order: " << d_go << endl;
+		}
 
 		strong_generators *d_gens;
 
@@ -9657,21 +9877,31 @@ void wreath_product::orbits_restricted_compute(
 		schreier *Sch_orbit;
 
 		Sch_orbit = NEW_OBJECT(schreier);
-		cout << "computing orbits of stabilizer on the rest of the orbit:" << endl;
+		if (f_v) {
+			cout << "computing orbits of stabilizer on the rest of the orbit:" << endl;
+		}
 
 		A_on_orbit->all_point_orbits_from_generators(
 				*Sch_orbit,
 				gens,
 				0 /* verbose_level */);
 
-		cout << "Found " << Sch_orbit->nb_orbits << " orbits" << endl;
-		Sch_orbit->print_orbit_lengths_tex(cout);
-		Sch_orbit->print_and_list_orbits_tex(cout);
+		if (f_v) {
+			cout << "Found " << Sch_orbit->nb_orbits << " orbits" << endl;
+			Sch_orbit->print_orbit_lengths_tex(cout);
+			Sch_orbit->print_and_list_orbits_tex(cout);
+		}
 #endif
 
 		FREE_OBJECT(gens);
 		FREE_OBJECT(Stab);
 	}
+
+
+	if (f_v) {
+		cout << "wreath_product::orbits_restricted_compute done" << endl;
+	}
+
 }
 
 
