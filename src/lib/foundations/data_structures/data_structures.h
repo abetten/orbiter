@@ -594,6 +594,8 @@ public:
 	int largest_set_size();
 	void save_csv(const char *fname, 
 		int f_make_heading, int verbose_level);
+	void save_constant_size_csv(const char *fname,
+			int verbose_level);
 	int find_common_element_in_two_sets(int idx1, int idx2, 
 		int &common_elt);
 	void sort();

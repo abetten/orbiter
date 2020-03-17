@@ -1917,7 +1917,7 @@ public:
 	void save_rank_one_tensors(int verbose_level);
 	void compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
-	void compute_permutations(
+	void compute_permutations_and_write_to_file(
 			strong_generators* SG,
 			action* A,
 			int*& result,
@@ -1926,7 +1926,7 @@ public:
 			int verbose_level);
 	void make_fname(char *fname, int nb_factors, int h, int b);
 	int test_if_file_exists(int nb_factors, int h, int b);
-	void orbits(
+	void orbits_using_files_and_union_find(
 			strong_generators* SG,
 			action* A,
 			int*& result,

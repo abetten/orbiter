@@ -553,8 +553,15 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 				<< "}$ :\\\\" << endl;
 		W->F->cheat_sheet(fp, verbose_level);
 
+		if (f_v) {
+			cout << "tensor_classify::report before W->report" << endl;
+		}
 
 		W->report(fp, verbose_level);
+
+		if (f_v) {
+			cout << "tensor_classify::report after W->report" << endl;
+		}
 
 		fp << "\\section{Generators}" << endl;
 		for (i = 0; i < SG->gens->len; i++) {
@@ -569,6 +576,10 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 
 		fp << "\\section{The Group}" << endl;
 		A->report(fp, A->f_has_sims, A->Sims, A->f_has_strong_generators, A->Strong_gens, verbose_level);
+
+		if (f_v) {
+			cout << "tensor_classify::report after A->report" << endl;
+		}
 
 
 		if (f_poset_classify) {

@@ -25,6 +25,7 @@ void classify_objects_using_nauty(
 	data_input_stream *Data,
 	classify_bitvectors *CB,
 	int f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix,
+	int f_save, const char *save_fname,
 	const char **test_perm, int nb_test_perm,
 	int verbose_level);
 void handle_input_file(classify_bitvectors *CB,
@@ -33,7 +34,7 @@ void handle_input_file(classify_bitvectors *CB,
 		int N_points, int design_b, int design_k, int partition_class_size,
 		int f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix,
 		const char **test_perm, int nb_test_perm,
-		long int *Ago,
+		long int *Ago, vector<vector<long int>> &Reps,
 		int verbose_level);
 void process_object(
 	classify_bitvectors *CB,
@@ -59,7 +60,7 @@ int main(int argc, const char **argv)
 	const char *save_incma_in_and_out_prefix = "";
 
 	int f_save = FALSE;
-	const char *output_prefix = "";
+	const char *save_fname = NULL;
 
 	int f_classify_nauty = FALSE;
 
@@ -99,8 +100,8 @@ int main(int argc, const char **argv)
 		}
 		else if (strcmp(argv[i], "-save") == 0) {
 			f_save = TRUE;
-			output_prefix = argv[++i];
-			cout << "-save " << output_prefix << endl;
+			save_fname = argv[++i];
+			cout << "-save " << save_fname << endl;
 		}
 		else if (strcmp(argv[i], "-classify_nauty") == 0) {
 			f_classify_nauty = TRUE;
@@ -141,6 +142,7 @@ int main(int argc, const char **argv)
 			Data_input_stream,
 			CB,
 			f_save_incma_in_and_out, save_incma_in_and_out_prefix,
+			f_save, save_fname,
 			test_perm, nb_test_perm,
 			verbose_level);
 
@@ -160,6 +162,7 @@ void classify_objects_using_nauty(
 	data_input_stream *Data,
 	classify_bitvectors *CB,
 	int f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix,
+	int f_save, const char *save_fname,
 	const char **test_perm, int nb_test_perm,
 	int verbose_level)
 {
@@ -168,12 +171,15 @@ void classify_objects_using_nauty(
 	int t0;
 	file_io Fio;
 	os_interface Os;
+	int nb_objects_to_test;
+	long int *Ago;
+	vector<vector<long int>> Reps;
+
 
 	if (f_v) {
 		cout << "classify_objects_using_nauty" << endl;
 	}
 
-	int nb_objects_to_test;
 
 	if (f_v) {
 		cout << "classify_objects_using_nauty "
@@ -184,10 +190,13 @@ void classify_objects_using_nauty(
 
 	t0 = Os.os_ticks();
 
-	long int *Ago;
 
 	Ago = NEW_lint(nb_objects_to_test);
 
+	int N_points = -1;
+	int design_b = -1;
+	int design_k = -1;
+	int partition_class_size = -1;
 
 	for (input_idx = 0; input_idx < Data->nb_inputs; input_idx++) {
 		if (f_v) {
@@ -204,17 +213,33 @@ void classify_objects_using_nauty(
 					<< ":" << endl;
 			}
 
-			int N_points = Data->input_data1[input_idx];
-			int design_b = Data->input_data2[input_idx];
-			int design_k = Data->input_data3[input_idx];
-			int partition_class_size = Data->input_data4[input_idx];
+			if (N_points == -1) {
+				N_points = Data->input_data1[input_idx];
+				design_b = Data->input_data2[input_idx];
+				design_k = Data->input_data3[input_idx];
+				partition_class_size = Data->input_data4[input_idx];
+			}
+			else {
+				if (Data->input_data1[input_idx] != N_points) {
+					cout << "N_points is not constant" << endl;
+					exit(1);
+				}
+				if (Data->input_data2[input_idx] != design_b) {
+					cout << "design_b is not constant" << endl;
+					exit(1);
+				}
+				if (Data->input_data3[input_idx] != design_k) {
+					cout << "design_k is not constant" << endl;
+					exit(1);
+				}
+			}
 
 			handle_input_file(CB, nb_objects_to_test, t0,
 					Data->input_string[input_idx], input_idx, Data->nb_inputs,
 					N_points, design_b, design_k, partition_class_size,
 					f_save_incma_in_and_out, save_incma_in_and_out_prefix,
 					test_perm, nb_test_perm,
-					Ago,
+					Ago, Reps,
 					verbose_level);
 
 			if (f_v) {
@@ -258,6 +283,32 @@ void classify_objects_using_nauty(
 		}
 	}
 
+	if (N_points == -1) {
+		cout << "N_points == -1" << endl;
+		exit(1);
+	}
+
+	if (f_save) {
+		set_of_sets *SoS;
+		int i, j;
+
+		SoS = NEW_OBJECT(set_of_sets);
+
+		cout << "saving" << endl;
+		cout << "allocating set of sets of size " << Reps.size() << " each of size " << design_b << endl;
+		SoS->init_basic_constant_size(N_points, Reps.size(), design_b, 0 /* verbose_level */);
+
+		for (i = 0; i < Reps.size(); i++) {
+			vector<long int> rep;
+
+			rep = Reps[i];
+			for (j = 0; j < design_b; j++) {
+				SoS->Sets[i][j] = rep[j];
+			}
+		}
+
+		SoS->save_constant_size_csv(save_fname, verbose_level);
+	}
 
 #if 0
 	if (f_v) {
@@ -294,7 +345,7 @@ void handle_input_file(classify_bitvectors *CB,
 		int N_points, int design_b, int design_k, int partition_class_size,
 		int f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix,
 		const char **test_perm, int nb_test_perm,
-		long int *Ago,
+		long int *Ago, vector<vector<long int>> &Reps,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -428,6 +479,19 @@ void handle_input_file(classify_bitvectors *CB,
 			}
 		}
 		else {
+			if (f_v) {
+				cout << "new isomorphism type: ";
+				lint_vec_print(cout, the_set_in, set_size_in);
+				cout << endl;
+			}
+			vector<long int> rep;
+			int i;
+
+			for (i = 0; i < set_size_in; i++) {
+				rep.push_back(the_set_in[i]);
+			}
+			Reps.push_back(rep);
+
 			t1 = Os.os_ticks();
 			//cout << "poset_classification::print_level_info t0=" << t0 << endl;
 			//cout << "poset_classification::print_level_info t1=" << t1 << endl;

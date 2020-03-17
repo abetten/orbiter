@@ -1,7 +1,7 @@
 SRC=../../../src
 DISCRETA_CPP = g++
 DISCRETA_CC = gcc
-CPPFLAGS = -Wall -I$(SRC)/lib 
+CPPFLAGS = -Wall -I$(SRC)/lib -std=c++14
 LIB = $(SRC)/lib/liborbiter.a
 #LFLAGS = -lm 
 LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
