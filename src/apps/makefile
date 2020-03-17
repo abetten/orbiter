@@ -4,6 +4,7 @@ all:
 	cd blt; $(MAKE) all
 	cd codes; $(MAKE) all
 	cd combinatorics; $(MAKE) all
+	cd cryptography; $(MAKE) all
 	cd graph_theory; $(MAKE) all
 	cd groups; $(MAKE) all
 	cd linear_spaces; $(MAKE) all
@@ -27,6 +28,7 @@ clean:
 	cd blt; $(MAKE) clean
 	cd codes; $(MAKE) clean
 	cd combinatorics; $(MAKE) clean
+	cd cryptography; $(MAKE) clean
 	cd ginac; $(MAKE) clean
 	cd graph_theory; $(MAKE) clean
 	cd groups; $(MAKE) clean
@@ -49,6 +51,7 @@ install:
 	cd blt; $(MAKE) install
 	cd codes; $(MAKE) install
 	cd combinatorics; $(MAKE) install
+	cd cryptography; $(MAKE) install
 	cd graph_theory; $(MAKE) install
 	cd groups; $(MAKE) install
 	cd linear_spaces; $(MAKE) install

@@ -131,9 +131,16 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 			cout << "BLT_set_create::init before "
 					"Surf->create_surface_family family_name="
 					<< Descr->family_name << endl;
+		}
+
+		if (strcmp(Descr->family_name, "linear") == 0) {
+			if (f_v) {
+				cout << "BLT_set_create::init creating object of family linear" << endl;
 			}
 
 		}
+
+	}
 
 
 	else if (Descr->f_catalogue) {

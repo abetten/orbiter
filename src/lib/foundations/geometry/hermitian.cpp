@@ -313,6 +313,7 @@ void hermitian::list_all_Sbar(int verbose_level)
 
 
 int hermitian::evaluate_hermitian_form(int *v, int len)
+// \sum_{i=0}^{len-1} X_i^{q+1}
 {
 	int i, a, b;
 

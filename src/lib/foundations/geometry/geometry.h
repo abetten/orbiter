@@ -824,6 +824,7 @@ public:
 	long int nb_pts_Nbar(int n, int q);
 	void test_Orthogonal(int epsilon, int k, int q);
 	void test_orthogonal(int n, int q);
+#if 0
 	void create_BLT(int f_embedded, finite_field *FQ, finite_field *Fq,
 		int f_Linear,
 		int f_Fisher,
@@ -831,6 +832,7 @@ public:
 		int f_FTWKB,
 		char *fname, int &nb_pts, int *&Pts,
 		int verbose_level);
+#endif
 	int &TDO_upper_bound(int i, int j);
 	int &TDO_upper_bound_internal(int i, int j);
 	int &TDO_upper_bound_source(int i, int j);
@@ -967,6 +969,9 @@ public:
 class hermitian {
 
 public:
+
+	// The hermitian form is \sum_{i=0}^{k-1} X_i^{q+1}
+
 	finite_field *F; // only a reference, not to be freed
 	int Q;
 	int q;
@@ -1302,6 +1307,18 @@ class incidence_structure {
 
 class klein_correspondence {
 public:
+
+	// Pluecker coordinates of a line in PG(3,q) are:
+	// (p_1,p_2,p_3,p_4,p_5,p_6) =
+	// (Pluecker_12, Pluecker_34, Pluecker_13,
+	//    Pluecker_42, Pluecker_14, Pluecker_23)
+	// satisfying the quadratic form p_1p_2 + p_3p_4 + p_5p_6 = 0
+	// Here, the line is given as the rowspan of the matrix
+	// x_1 x_2 x_3 x_4
+	// y_1 y_2 y_3 y_4
+	// and
+	// Pluecker_ij is the determinant of the 2 x 2 submatrix
+	// formed by restricting the generator matrix to columns i and j.
 
 	projective_space *P3;
 	projective_space *P5;
