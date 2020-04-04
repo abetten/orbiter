@@ -341,7 +341,7 @@ void hadamard_classify::init(int n, int f_draw,
 			cout << "is a clique" << endl;
 			}
 		else {
-			cout << "is not a cliqe, this should not happen" << endl;
+			cout << "is not a clique, this should not happen" << endl;
 			exit(1);
 			}
 
@@ -357,7 +357,7 @@ void hadamard_classify::init(int n, int f_draw,
 				a >>= 1;
 				}
 			}
-		cout << "The hadamard matrix " << h << " is:" << endl;
+		cout << "The Hadamard matrix " << h << " is:" << endl;
 		int_matrix_print(H, n, n);
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {

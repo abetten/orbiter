@@ -293,7 +293,7 @@ MODULES= \
 		top_level/algebra_and_number_theory/semifield_trace.o \
 		top_level/algebra_and_number_theory/trace_record.o \
 		top_level/algebra_and_number_theory/young.o \
-		top_level/combinatorics/bent_function_classify.o \
+		top_level/combinatorics/boolean_function.o \
 		top_level/combinatorics/cayley_graph_search.o \
 		top_level/combinatorics/create_graph_description.o \
 		top_level/combinatorics/create_graph.o \
@@ -324,6 +324,7 @@ MODULES= \
 		top_level/geometry/code_classify.o \
 		top_level/geometry/cubic_curve_with_action.o \
 		top_level/geometry/hermitian_spreads_classify.o \
+		top_level/geometry/hill_cap.o \
 		top_level/geometry/invariants_packing.o \
 		top_level/geometry/k_arc_generator.o \
 		top_level/geometry/linear_set_classify.o \
@@ -334,7 +335,6 @@ MODULES= \
 		top_level/geometry/packing_long_orbits.o \
 		top_level/geometry/packing_was.o \
 		top_level/geometry/polar.o \
-		top_level/geometry/projective_space.o \
 		top_level/geometry/recoordinatize.o \
 		top_level/geometry/search_blocking_set.o \
 		top_level/geometry/singer_cycle.o \
@@ -367,7 +367,9 @@ MODULES= \
 		top_level/orbits/orbit_of_subspaces.o \
 		top_level/orbits/subspace_orbits.o \
 		top_level/solver/exact_cover.o \
-		top_level/solver/exact_cover_arguments.o
+		top_level/solver/exact_cover_arguments.o \
+		interfaces/interface_coding_theory.o \
+		interfaces/interface_cryptography.o
 
 
 all:
@@ -376,6 +378,7 @@ all:
 	cd classification; $(MAKE)
 	cd DISCRETA; $(MAKE)
 	cd top_level; $(MAKE)
+	cd interfaces; $(MAKE)
 	ar ruvs liborbiter.a $(MODULES)
 
 
@@ -385,6 +388,7 @@ clean:
 	cd classification; $(MAKE) clean
 	cd DISCRETA; $(MAKE) clean
 	cd top_level; $(MAKE) clean
+	cd interfaces; $(MAKE) clean
 	- rm *.o *.a 
 
 

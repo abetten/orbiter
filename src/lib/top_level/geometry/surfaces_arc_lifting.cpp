@@ -188,10 +188,18 @@ void surfaces_arc_lifting::init(
 				"after downstep" << endl;
 		}
 
+
+	exit(1);
+
+
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init "
 				"before upstep" << endl;
 		}
+
+
+
+
 	upstep(verbose_level - 2);
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init "
@@ -277,6 +285,12 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 			arc_idx < Six_arcs->nb_arcs_not_on_conic;
 			arc_idx++) {
 
+#if 0
+		if (arc_idx != 2 && arc_idx != 19) {
+			continue;
+		}
+#endif
+
 		set_and_stabilizer *The_arc;
 
 		if (f_v) {
@@ -322,6 +336,13 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 						<< nb_orbits_on_pairs << endl;
 			}
 
+#if 0
+			if (arc_idx == 2 || arc_idx == 19) {
+				if (orbit_on_pairs_idx) {
+					continue;
+				}
+			}
+#endif
 
 
 			set_and_stabilizer *pair_orbit;
@@ -365,6 +386,16 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 							<< orbit_on_partition_idx << " / "
 							<< nb_partition_orbits << endl;
 				}
+
+#if 0
+				if (arc_idx == 2 || arc_idx == 19) {
+					if (orbit_on_partition_idx) {
+						continue;
+					}
+				}
+#endif
+
+
 				int f, l, partition_rk, p0, p1;
 
 				f = Sch->orbit_first[orbit_on_partition_idx];
@@ -482,7 +513,7 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 					Arc6, p0, p1, partition_rk,
 					line1, line2,
 					coeff20, lines27,
-					verbose_level - 2);
+					verbose_level + 5);
 				if (f_v) {
 					cout << "surfaces_arc_lifting::downstep "
 							"after Surf->do_arc_lifting_with_two_lines" << endl;

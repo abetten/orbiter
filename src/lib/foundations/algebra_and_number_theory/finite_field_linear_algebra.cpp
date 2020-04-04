@@ -2172,33 +2172,36 @@ int finite_field::perp_standard_with_temporary_data(
 
 	int_vec_copy(A, B, k * n);
 	if (f_v) {
-		cout << "finite_field::perp_standard" << endl;
+		cout << "finite_field::perp_standard_temporary_data" << endl;
 		cout << "B=" << endl;
 		int_matrix_print(B, k, n);
-		cout << "finite_field::perp_standard before Gauss_int" << endl;
+		cout << "finite_field::perp_standard_temporary_data before Gauss_int" << endl;
 		}
 	nb_base_cols = Gauss_int(B,
 		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
 		FALSE /* f_P */, NULL /*P*/, k, n, n,
-		verbose_level);
+		0 /*verbose_level*/);
 	if (f_v) {
-		cout << "finite_field::perp_standard after Gauss_int" << endl;
+		cout << "finite_field::perp_standard_temporary_data after Gauss_int" << endl;
 		}
 	matrix_get_kernel(B, k, n, base_cols, nb_base_cols, 
 		kernel_m, kernel_n, K);
 	if (f_v) {
-		cout << "finite_field::perp_standard "
+		cout << "finite_field::perp_standard_temporary_data "
 				"after matrix_get_kernel" << endl;
 		cout << "kernel_m = " << kernel_m << endl;
 		cout << "kernel_n = " << kernel_n << endl;
 		}
+
+	int_vec_copy(B, A, nb_base_cols * n);
+
 	for (j = 0; j < kernel_n; j++) {
 		for (i = 0; i < n; i++) {
-			A[(k + j) * n + i] = K[i * kernel_n + j];
+			A[(nb_base_cols + j) * n + i] = K[i * kernel_n + j];
 			}
 		}
 	if (f_v) {
-		cout << "finite_field::perp_standard" << endl;
+		cout << "finite_field::perp_standard_temporary_data" << endl;
 		cout << "A=" << endl;
 		int_matrix_print(A, n, n);
 		}

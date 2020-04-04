@@ -102,7 +102,7 @@ void surface_with_action::init(surface_domain *Surf,
 	}
 	AonHPD_3_4->init(A, Surf->Poly3_4, verbose_level);
 	
-#if 0
+#if 1
 	Classify_trihedral_pairs = NEW_OBJECT(classify_trihedral_pairs);
 	if (f_v) {
 		cout << "surface_with_action::init "
@@ -597,7 +597,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	return TRUE;
 }
 
-void surface_with_action::arc_lifting_and_classify(
+void surface_with_action::arc_lifting_and_classify_using_trihedral_pairs(
 	int f_log_fp, ofstream &fp, 
 	long int *Arc6,
 	const char *arc_label, const char *arc_label_short, 
@@ -615,7 +615,7 @@ void surface_with_action::arc_lifting_and_classify(
 
 
 	if (f_v) {
-		cout << "surface_with_action::arc_lifting_and_classify "
+		cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 				"arc = " << arc_label
 				<< " nb_surfaces = " << nb_surfaces
 				<< endl;
@@ -634,7 +634,7 @@ void surface_with_action::arc_lifting_and_classify(
 	AL = NEW_OBJECT(arc_lifting);
 
 
-	AL->create_surface(this, Arc6, verbose_level);
+	AL->create_surface_and_group(this, Arc6, verbose_level);
 
 	if (f_log_fp) {
 		AL->print(fp);
@@ -666,7 +666,7 @@ void surface_with_action::arc_lifting_and_classify(
 	SOA = NEW_OBJECT(surface_object_with_action);
 
 	if (f_v) {
-		cout << "surface_with_action::arc_lifting_and_classify "
+		cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 				"before SOA->init" << endl;
 	}
 
@@ -677,7 +677,7 @@ void surface_with_action::arc_lifting_and_classify(
 		FALSE, NULL,
 		verbose_level);
 	if (f_v) {
-		cout << "surface_with_action::arc_lifting_and_classify "
+		cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 				"after SOA->init" << endl;
 	}
 
@@ -688,7 +688,7 @@ void surface_with_action::arc_lifting_and_classify(
 
 	if (f_log_fp) {
 		if (f_v) {
-			cout << "surface_with_action::arc_lifting_and_classify "
+			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 					"before Surf->print_equation_in_trihedral_form" << endl;
 		}
 		Surf->print_equation_in_trihedral_form(fp,
@@ -698,7 +698,7 @@ void surface_with_action::arc_lifting_and_classify(
 		//Surf->print_equation_in_trihedral_form(fp,
 		//AL->the_equation, AL->t_idx0, lambda);
 		if (f_v) {
-			cout << "surface_with_action::arc_lifting_and_classify "
+			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 					"after Surf->print_equation_in_trihedral_form" << endl;
 		}
 	}
@@ -717,34 +717,34 @@ void surface_with_action::arc_lifting_and_classify(
 		AL->Aut_gens->print_generators_tex(fp);
 
 		if (f_v) {
-			cout << "surface_with_action::arc_lifting_and_classify "
+			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 					"before SOA->SO->print_general" << endl;
 		}
 		SOA->SO->print_general(fp);
 
 
 		if (f_v) {
-			cout << "surface_with_action::arc_lifting_and_classify "
+			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 					"before SOA->SO->print_lines" << endl;
 		}
 		SOA->SO->print_lines(fp);
 
 		if (f_v) {
-			cout << "surface_with_action::arc_lifting_and_classify "
+			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 					"before SOA->SO->print_points" << endl;
 		}
 		SOA->SO->print_points(fp);
 
 
 		if (f_v) {
-			cout << "surface_with_action::arc_lifting_and_classify "
+			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 					"before SOA->SO->print_tritangent_planes" << endl;
 		}
 		SOA->SO->print_tritangent_planes(fp);
 
 
 		if (f_v) {
-			cout << "surface_with_action::arc_lifting_and_classify "
+			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 					"before SOA->SO->print_Steiner_and_Eckardt" << endl;
 		}
 		SOA->SO->print_Steiner_and_Eckardt(fp);
@@ -752,7 +752,7 @@ void surface_with_action::arc_lifting_and_classify(
 		//SOA->SO->print_planes_in_trihedral_pairs(fp);
 
 		if (f_v) {
-			cout << "surface_with_action::arc_lifting_and_classify "
+			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 					"before SOA->SO->print_generalized_quadrangle" << endl;
 		}
 		SOA->SO->print_generalized_quadrangle(fp);
@@ -781,7 +781,7 @@ void surface_with_action::arc_lifting_and_classify(
 		//fp, AL->T_idx, AL->nb_T);
 
 		if (f_v) {
-			cout << "surface_with_action::arc_lifting_and_classify "
+			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 				"before SOA->print_automorphism_group" << endl;
 		}
 
@@ -796,7 +796,7 @@ void surface_with_action::arc_lifting_and_classify(
 
 	
 	if (f_v) {
-		cout << "surface_with_action::arc_lifting_and_classify "
+		cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 				"arc " << arc_label << " yields a surface with "
 			<< AL->E->nb_E << " Eckardt points and a stabilizer "
 				"of order " << go << " with "
@@ -818,7 +818,7 @@ void surface_with_action::arc_lifting_and_classify(
 	int f, l, k;
 
 	if (f_v) {
-		cout << "surface_with_action::arc_lifting_and_classify "
+		cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 				"performing isomorph rejection" << endl;
 	}
 	
@@ -827,7 +827,7 @@ void surface_with_action::arc_lifting_and_classify(
 		int line1, line2, transversal;
 
 		if (f_v) {
-			cout << "surface_with_action::arc_lifting_and_classify orbit "
+			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs orbit "
 				"on single sixes " << j << " / "
 				<< SOA->Orbits_on_single_sixes->nb_orbits << ":" << endl;
 		}
@@ -877,18 +877,18 @@ void surface_with_action::arc_lifting_and_classify(
 		}
 
 		if (f_v) {
-			cout << "surface_with_action::arc_lifting_and_classify "
+			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 					"before Surf->prepare_clebsch_map" << endl;
 		}
 		Surf->prepare_clebsch_map(ds, ds_row, line1, line2,
 				transversal, verbose_level);
 		if (f_v) {
-			cout << "surface_with_action::arc_lifting_and_classify "
+			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 					"after Surf->prepare_clebsch_map" << endl;
 		}
 
 		if (f_v) {
-			cout << "surface_with_action::arc_lifting_and_classify "
+			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 				"line1=" << line1
 				<< " = " << Surf->Line_label_tex[line1] 
 				<< " line2=" << line2 
@@ -948,7 +948,7 @@ void surface_with_action::arc_lifting_and_classify(
 
 		
 		if (f_v) {
-			cout << "surface_with_action::arc_lifting_and_classify "
+			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 				"intersecting blow up lines with plane:" << endl;
 		}
 		int intersection_points[6];
@@ -975,7 +975,7 @@ void surface_with_action::arc_lifting_and_classify(
 
 
 		if (f_v) {
-			cout << "surface_with_action::arc_lifting_and_classify "
+			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 					"Lines with points on them:" << endl;
 			SOA->SO->print_lines_with_points_on_them(cout);
 			cout << "The half double six is no " << k
@@ -996,12 +996,12 @@ void surface_with_action::arc_lifting_and_classify(
 		for (u = 0; u < 6; u++) {
 
 			if (f_v) {
-				cout << "surface_with_action::arc_lifting_and_classify u="
+				cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs u="
 						<< u << " / 6" << endl;
 			}
 			a = SOA->SO->Lines[Surf->Half_double_sixes[k * 6 + u]];
 			if (f_v) {
-				cout << "surface_with_action::arc_lifting_and_classify "
+				cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 						"intersecting line " << a << " and plane "
 						<< plane_rk_global << endl;
 			}
@@ -1010,12 +1010,12 @@ void surface_with_action::arc_lifting_and_classify(
 							a, plane_rk_global,
 							0 /* verbose_level */);
 			if (f_v) {
-				cout << "surface_with_action::arc_lifting_and_classify "
+				cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 						"intersection point " << intersection_points[u] << endl;
 			}
 			Surf->P->unrank_point(v, intersection_points[u]);
 			if (f_v) {
-				cout << "surface_with_action::arc_lifting_and_classify "
+				cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 						"which is ";
 				int_vec_print(cout, v, 4);
 				cout << endl;
@@ -1025,7 +1025,7 @@ void surface_with_action::arc_lifting_and_classify(
 				v, coefficients,
 				0 /* verbose_level */);
 			if (f_v) {
-				cout << "surface_with_action::arc_lifting_and_classify "
+				cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 						"local coefficients ";
 				int_vec_print(cout, coefficients, 3);
 				cout << endl;
@@ -1084,14 +1084,14 @@ void surface_with_action::arc_lifting_and_classify(
 
 
 		if (f_v) {
-			cout << "surface_with_action::arc_lifting_and_classify "
+			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 					"after clebsch_map_find_arc_and_lines" << endl;
 		}
 		//clebsch_map_find_arc(Clebsch_map, Pts, nb_pts, Arc,
 		//0 /* verbose_level */);
 
 		if (f_v) {
-			cout << "surface_with_action::arc_lifting_and_classify "
+			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
 					"Clebsch map for lines " << line1 << ", "
 					<< line2 << " yields arc = ";
 			lint_vec_print(cout, Arc, 6);
@@ -1188,7 +1188,7 @@ void surface_with_action::arc_lifting_and_classify(
 	FREE_int(transporter);
 
 	if (f_v) {
-		cout << "surface_with_action::arc_lifting_and_classify done" << endl;
+		cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs done" << endl;
 	}
 
 }

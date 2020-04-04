@@ -300,7 +300,7 @@ public:
 	~arc_lifting();
 	void null();
 	void freeself();
-	void create_surface(surface_with_action *Surf_A, long int *Arc6,
+	void create_surface_and_group(surface_with_action *Surf_A, long int *Arc6,
 		int verbose_level);
 	void lift_prepare(int verbose_level);
 	void loop_over_trihedral_pairs(vector_ge *cosets, 
@@ -1214,6 +1214,17 @@ int disjoint_sets(long int *v, long int *w, int len);
 void projective_space_init_line_action(projective_space *P,
 		action *A_points, action *&A_on_lines, int verbose_level);
 
+// #############################################################################
+// hill_cap.cpp
+// #############################################################################
+
+
+void Hill_cap56(
+	char *fname, int &nb_Pts, long int *&Pts,
+	int verbose_level);
+void append_orbit_and_adjust_size(schreier *Orb, int idx, int *set, int &sz);
+
+
 
 // #############################################################################
 // invariants_packing.cpp
@@ -2118,16 +2129,6 @@ void polar_callback_early_test_func(long int *S, int len,
 
 
 // #############################################################################
-// projective_space.cpp
-// #############################################################################
-
-
-void Hill_cap56(
-	char *fname, int &nb_Pts, long int *&Pts,
-	int verbose_level);
-void append_orbit_and_adjust_size(schreier *Orb, int idx, int *set, int &sz);
-
-// #############################################################################
 // recoordinatize.cpp
 // #############################################################################
 
@@ -2249,10 +2250,6 @@ public:
 	void restore_line_intersection_size(int level);
 };
 
-#if 0
-int callback_check_partial_blocking_set(int len, int *S, 
-	void *data, int verbose_level);
-#endif
 
 // #############################################################################
 // singer_cycle.cpp
@@ -2536,6 +2533,8 @@ void spread_callback_make_quotients(isomorph *Iso, void *data,
 	int verbose_level);
 void callback_spread_print(std::ostream &ost, int len, long int *S, void *data);
 
+
+
 // #############################################################################
 // spread_create.cpp
 // #############################################################################
@@ -2580,13 +2579,12 @@ public:
 		int *f_inverse_transform, int nb_transform, int verbose_level);
 };
 
+
 // #############################################################################
 // spread_create_description.cpp
 // #############################################################################
 
 //! to describe the construction of a known spread from the command line
-
-
 
 class spread_create_description {
 
@@ -3072,7 +3070,8 @@ public:
 	int create_double_six_from_five_lines_with_a_common_transversal(
 		long int *five_lines, long int transversal_line,
 		long int *double_six, int verbose_level);
-	void arc_lifting_and_classify(int f_log_fp, std::ofstream &fp,
+	void arc_lifting_and_classify_using_trihedral_pairs(
+		int f_log_fp, std::ofstream &fp,
 		long int *Arc6,
 		const char *arc_label, const char *arc_label_short, 
 		int nb_surfaces, 

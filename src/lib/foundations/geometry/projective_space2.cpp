@@ -1690,41 +1690,47 @@ void projective_space::cheat_sheet_subspaces(
 	f << "PG$(" << n << ", " << q << ")$ has "
 			<< nb_k_subspaces << " $" << k
 			<< "$-subspaces:\\\\" << endl;
-	f << "\\begin{multicols}{5}" << endl;
-	for (u = 0; u < nb_k_subspaces; u++) {
-		Gr->unrank_lint(u, 0 /* verbose_level*/);
-		f << "$L_{" << u << "}=";
-		f << "\\left[" << endl;
-		f << "\\begin{array}{c}" << endl;
-		for (i = 0; i < k1; i++) {
-			for (j = 0; j < n1; j++) {
-				f << Gr->M[i * n1 + j];
-				if (f_need_comma && j < n1 - 1) {
-					f << ", ";
+
+	if (nb_k_subspaces > 1000) {
+		f << "Too many to print \\\\" << endl;
+	}
+	else {
+		f << "\\begin{multicols}{5}" << endl;
+		for (u = 0; u < nb_k_subspaces; u++) {
+			Gr->unrank_lint(u, 0 /* verbose_level*/);
+			f << "$L_{" << u << "}=";
+			f << "\\left[" << endl;
+			f << "\\begin{array}{c}" << endl;
+			for (i = 0; i < k1; i++) {
+				for (j = 0; j < n1; j++) {
+					f << Gr->M[i * n1 + j];
+					if (f_need_comma && j < n1 - 1) {
+						f << ", ";
+						}
 					}
+				f << "\\\\" << endl;
 				}
-			f << "\\\\" << endl;
+			f << "\\end{array}" << endl;
+			f << "\\right]" << endl;
+
+			if (n == 3 && k == 1) {
+				int v6[6];
+
+				Pluecker_coordinates(u, v6, 0 /* verbose_level */);
+				f << "Pl=(" << v6[0] << "," << v6[1] << ","
+						<< v6[2] << "," << v6[3] << "," << v6[4]
+						<< "," << v6[5] << " ";
+				f << ")" << endl;
+
+				}
+			f << "$\\\\" << endl;
+
+			if (((u + 1) % 1000) == 0) {
+				f << "\\clearpage" << endl << endl;
+				}
 			}
-		f << "\\end{array}" << endl;
-		f << "\\right]" << endl;
-
-		if (n == 3 && k == 1) {
-			int v6[6];
-
-			Pluecker_coordinates(u, v6, 0 /* verbose_level */);
-			f << "Pl=(" << v6[0] << "," << v6[1] << ","
-					<< v6[2] << "," << v6[3] << "," << v6[4]
-					<< "," << v6[5] << " ";
-			f << ")" << endl;
-
-			}
-		f << "$\\\\" << endl;
-
-		if (((u + 1) % 1000) == 0) {
-			f << "\\clearpage" << endl << endl;
-			}
-		}
-	f << "\\end{multicols}" << endl;
+		f << "\\end{multicols}" << endl;
+	}
 
 	f << "\\clearpage" << endl << endl;
 

@@ -6,7 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	bent_function_classify.o \
+	boolean_function.o \
 	cayley_graph_search.o \
 	create_graph_description.o \
 	create_graph.o \

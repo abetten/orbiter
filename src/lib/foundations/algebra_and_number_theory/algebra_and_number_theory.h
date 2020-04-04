@@ -1034,14 +1034,31 @@ public:
 		long int *orbit, long int *orbit_inv,
 		int verbose_level);
 	void print_set_in_affine_plane(int len, long int *S);
+	void elliptic_curve_addition(int b, int c,
+		int x1, int x2, int x3,
+		int y1, int y2, int y3,
+		int &z1, int &z2, int &z3, int verbose_level);
+	void elliptic_curve_point_multiple(int b, int c, int n,
+		int x1, int y1, int z1,
+		int &x3, int &y3, int &z3,
+		int verbose_level);
+	int elliptic_curve_evaluate_RHS(int x, int b, int c);
+	void elliptic_curve_points(
+			int b, int c, int &nb, int *&T, int verbose_level);
+	void elliptic_curve_all_point_multiples(int b, int c, int &order,
+		int x1, int y1, int z1,
+		std::vector<std::vector<int> > &Pts,
+		int verbose_level);
+	int elliptic_curve_discrete_log(int b, int c,
+		int x1, int y1, int z1,
+		int x3, int y3, int z3,
+		int verbose_level);
 
 
 	// #########################################################################
 	// finite_field_io.cpp
 	// #########################################################################
 
-	void cheat_sheet_PG(int n,
-			int f_surface, int verbose_level);
 	void cheat_sheet_tables(std::ostream &f, int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
 	void print_minimum_polynomial(int p, const char *polynomial);
@@ -1090,6 +1107,7 @@ public:
 		const char *symbol_for_print, int *M, int m, int n);
 	void power_table(int t, int *power_table, int len);
 	void cheat_sheet(std::ostream &f, int verbose_level);
+	void report_subfields(std::ostream &f, int verbose_level);
 	void cheat_sheet_top(std::ostream &f, int nb_cols);
 	void cheat_sheet_bottom(std::ostream &f);
 	void display_table_of_projective_points(
@@ -1534,6 +1552,7 @@ public:
 		const char *new_line_text);
 	void algebraic_set(int *Eqns, int nb_eqns,
 			long int *Pts, int &nb_pts, int verbose_level);
+	void polynomial_function(int *coeff, int *f, int verbose_level);
 	void enumerate_points(int *coeff, long int *Pts, int &nb_pts,
 		int verbose_level);
 	int evaluate_at_a_point_by_rank(int *coeff, int pt);
@@ -1677,6 +1696,8 @@ public:
 		int n, int k, int q, int verbose_level);
 	void q_binomial_no_table(longinteger_object &a, 
 		int n, int k, int q, int verbose_level);
+	void make_mac_williams_equations(longinteger_object *&M,
+			int n, int k, int q, int verbose_level);
 	void krawtchouk(longinteger_object &a, int n, int q, int k, int x);
 	int is_even(longinteger_object &a);
 	int is_odd(longinteger_object &a);
@@ -1695,6 +1716,8 @@ public:
 		int verbose_level);
 	void random_number_less_than_n(longinteger_object &n, 
 		longinteger_object &r);
+	void random_number_with_n_decimals(
+		longinteger_object &R, int n, int verbose_level);
 	void find_probable_prime_above(
 		longinteger_object &a, 
 		int nb_solovay_strassen_tests, int f_miller_rabin_test, 
@@ -1703,11 +1726,30 @@ public:
 		longinteger_object &n, int nb_tests, int verbose_level);
 	int solovay_strassen_is_prime_single_test(
 		longinteger_object &n, int verbose_level);
+	int fermat_test_iterated_with_latex_key(std::ostream &ost,
+			longinteger_object &P, int nb_times,
+			int verbose_level);
+	int fermat_test_with_latex_key(std::ostream &ost,
+		longinteger_object &n, longinteger_object &a,
+		int verbose_level);
 	int solovay_strassen_test(
 		longinteger_object &n, longinteger_object &a, 
 		int verbose_level);
+	int solovay_strassen_test_with_latex_key(std::ostream &ost,
+		longinteger_object &n, longinteger_object &a,
+		int verbose_level);
+	int solovay_strassen_test_iterated_with_latex_key(std::ostream &ost,
+			longinteger_object &P, int nb_times,
+			int verbose_level);
+	// returns TRUE is the test is conclusive, i.e. if the number is not prime.
 	int miller_rabin_test(
 		longinteger_object &n, int verbose_level);
+	int miller_rabin_test_with_latex_key(std::ostream &ost,
+		longinteger_object &n, int iteration, int verbose_level);
+	int miller_rabin_test_iterated_with_latex_key(std::ostream &ost,
+			longinteger_object &P, int nb_times,
+			int verbose_level);
+	// returns TRUE is the test is conclusive, i.e. if the number is not prime.
 	void get_k_bit_random_pseudoprime(
 		longinteger_object &n, int k, 
 		int nb_tests_solovay_strassen, 
@@ -1800,7 +1842,7 @@ public:
 // null_polarity_generator.cpp:
 // #############################################################################
 
-//! all null polarities
+//! construct all null polarities
 
 class null_polarity_generator {
 public:
@@ -1883,7 +1925,9 @@ public:
 	//The algorithm is based on Lueneburg~\cite{Lueneburg87a}.
 	int sp_ge(int n, int p_min);
 	int factor_int(int a, int *&primes, int *&exponents);
+	void factor_lint(long int a, std::vector<long int> &primes, std::vector<int> &exponents);
 	void factor_prime_power(int q, int &p, int &e);
+	long int primitive_root_randomized(long int p, int verbose_level);
 	long int primitive_root(long int p, int verbose_level);
 	int Legendre(long int a, long int p, int verbose_level);
 	int Jacobi(long int a, long int m, int verbose_level);
@@ -1891,7 +1935,7 @@ public:
 			long int a, long int m, int verbose_level);
 	int ny2(long int x, long int &x1);
 	int ny_p(long int n, long int p);
-	long int sqrt_mod_simple(long int a, long int p);
+	//long int sqrt_mod_simple(long int a, long int p);
 	void print_factorization(int nb_primes, int *primes, int *exponents);
 	void print_longfactorization(int nb_primes,
 		longinteger_object *primes, int *exponents);

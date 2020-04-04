@@ -55,22 +55,22 @@ int main(int argc, const char **argv)
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
 			cout << "-verbose_level " << verbose_level << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
 			q = atoi(argv[++i]);
 			cout << "-q " << q << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-arc") == 0) {
 			f_arc = TRUE;
 			the_arc_text = argv[++i];
 			cout << "-arc " << the_arc_text << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-classify") == 0) {
 			f_classify = TRUE;
 			cout << "-classify " << endl;
-			}
 		}
+	}
 
 
 	int f_v = (verbose_level >= 1);
@@ -79,53 +79,53 @@ int main(int argc, const char **argv)
 
 	if (f_v) {
 		cout << "before Surf->init" << endl;
-		}
+	}
 	Surf->init(F, verbose_level - 5);
 	if (f_v) {
 		cout << "after Surf->init" << endl;
-		}
+	}
 
 	int f_semilinear;
 	number_theory_domain NT;
 
 	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
-		}
+	}
 	else {
 		f_semilinear = TRUE;
-		}
+	}
 
 
 #if 0
 	if (f_v) {
 		cout << "before Surf->init_large_polynomial_domains" << endl;
-		}
+	}
 	Surf->init_large_polynomial_domains(0 /*verbose_level*/);
 	if (f_v) {
 		cout << "after Surf->init_large_polynomial_domains" << endl;
-		}
+	}
 #endif
 
 
 	if (f_v) {
 		cout << "before Surf_A->init" << endl;
-		}
+	}
 	Surf_A->init(Surf, f_semilinear, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "after Surf_A->init" << endl;
-		}
+	}
 	
 
 
 	if (f_v) {
 		cout << "before Surf_A->Classify_trihedral_"
 				"pairs->classify" << endl;
-		}
+	}
 	Surf_A->Classify_trihedral_pairs->classify(0 /*verbose_level*/);
 	if (f_v) {
 		cout << "after Surf_A->Classify_trihedral_"
 				"pairs->classify" << endl;
-		}
+	}
 
 
 	
@@ -142,8 +142,8 @@ int main(int argc, const char **argv)
 		lift_single_arc(arc, arc_size, Surf_A, verbose_level);
 		if (f_v) {
 			cout << "after lift_single_arc" << endl;
-			}
 		}
+	}
 	
 	if (f_classify) {
 		if (f_v) {
@@ -151,7 +151,7 @@ int main(int argc, const char **argv)
 			}
 		classify_arcs_and_do_arc_lifting(argc, argv,
 				Surf_A, verbose_level);
-		}
+	}
 
 	the_end(t0);
 	//the_end_quietly(t0);
@@ -253,11 +253,11 @@ void lift_single_arc(long int *arc, int arc_size,
 
 
 	if (f_v) {
-		cout << "lift_single_arc before AL->create_surface" << endl;
+		cout << "lift_single_arc before AL->create_surface_and_group" << endl;
 		}
-	AL->create_surface(Surf_A, arc, verbose_level);
+	AL->create_surface_and_group(Surf_A, arc, verbose_level);
 	if (f_v) {
-		cout << "lift_single_arc after AL->create_surface" << endl;
+		cout << "lift_single_arc after AL->create_surface_and_group" << endl;
 		}
 
 	AL->print(fp);
@@ -302,14 +302,21 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv,
 
 	if (NT.is_prime(F->q)) {
 		f_semilinear = FALSE;
-		}
+	}
 
 
+	if (f_v) {
+		cout << "before A->init_projective_group" << endl;
+	}
 	A->init_projective_group(3, F,
-			f_semilinear, TRUE /*f_basis*/, TRUE /* f_init_sims */,
+			f_semilinear,
+			TRUE /*f_basis*/, TRUE /* f_init_sims */,
 			nice_gens,
 			0 /*verbose_level*/);
 	FREE_OBJECT(nice_gens);
+	if (f_v) {
+		cout << "after A->init_projective_group" << endl;
+	}
 
 
 	six_arcs_not_on_a_conic *Six_arcs;
@@ -321,267 +328,257 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv,
 
 	if (f_v) {
 		cout << "before Six_arcs->init" << endl;
-		}
+	}
 	Six_arcs->init(F,
 			A,
 			Surf->P2,
 		argc, argv, 
-		verbose_level);
+		verbose_level - 2);
 	if (f_v) {
 		cout << "after Six_arcs->init" << endl;
-		}
+	}
 
 
 
+	if (f_v) {
+		cout << "before report" << endl;
+	}
 	{
-	char title[10000];
-	char author[10000];
-	sprintf(title, "Arc lifting over GF(%d) ", q);
-	sprintf(author, "");
+		char title[10000];
+		char author[10000];
+		sprintf(title, "Arc lifting over GF(%d) ", q);
+		sprintf(author, "");
 
-	sprintf(fname_arc_lifting, "arc_lifting_q%d.tex", q);
-	ofstream fp(fname_arc_lifting);
-	latex_interface L;
-
-
-	L.head(fp,
-		FALSE /* f_book */,
-		TRUE /* f_title */,
-		title, author, 
-		FALSE /*f_toc */,
-		FALSE /* f_landscape */,
-		FALSE /* f_12pt */,
-		TRUE /*f_enlarged_page */,
-		TRUE /* f_pagenumbers*/,
-		NULL /* extra_praeamble */);
+		sprintf(fname_arc_lifting, "arc_lifting_q%d.tex", q);
+		ofstream fp(fname_arc_lifting);
+		latex_interface L;
 
 
-	if (f_v) {
-		cout << "do_arc_lifting q=" << q << endl;
+		L.head(fp,
+			FALSE /* f_book */,
+			TRUE /* f_title */,
+			title, author,
+			FALSE /*f_toc */,
+			FALSE /* f_landscape */,
+			FALSE /* f_12pt */,
+			TRUE /*f_enlarged_page */,
+			TRUE /* f_pagenumbers*/,
+			NULL /* extra_praeamble */);
+
+
+		if (f_v) {
+			cout << "do_arc_lifting q=" << q << endl;
 		}
 
 
 
-	Six_arcs->report_latex(fp);
+		Six_arcs->report_latex(fp);
 
-	if (f_v) {
-		Surf->print_polynomial_domains(fp);
-		Surf->print_line_labelling(fp);
+		if (f_v) {
+			Surf->print_polynomial_domains(fp);
+			Surf->print_line_labelling(fp);
 
 
-		cout << "classify_arcs_and_do_arc_lifting "
-				"before Surf->print_Steiner_and_Eckardt" << endl;
-		Surf->print_Steiner_and_Eckardt(fp);
-		cout << "classify_arcs_and_do_arc_lifting "
-				"after Surf->print_Steiner_and_Eckardt" << endl;
+			cout << "classify_arcs_and_do_arc_lifting "
+					"before Surf->print_Steiner_and_Eckardt" << endl;
+			Surf->print_Steiner_and_Eckardt(fp);
+			cout << "classify_arcs_and_do_arc_lifting "
+					"after Surf->print_Steiner_and_Eckardt" << endl;
 
-		cout << "classify_arcs_and_do_arc_lifting "
-				"before Surf->print_clebsch_P" << endl;
-		Surf->print_clebsch_P(fp);
-		cout << "classify_arcs_and_do_arc_lifting "
-				"after Surf->print_clebsch_P" << endl;
+			cout << "classify_arcs_and_do_arc_lifting "
+					"before Surf->print_clebsch_P" << endl;
+			Surf->print_clebsch_P(fp);
+			cout << "classify_arcs_and_do_arc_lifting "
+					"after Surf->print_clebsch_P" << endl;
+
+
+
+			cout << "classify_arcs_and_do_arc_lifting "
+					"before Surf_A->list_orbits_on_trihedra_type1" << endl;
+			Surf_A->Classify_trihedral_pairs->list_orbits_on_trihedra_type1(fp);
+
+			cout << "classify_arcs_and_do_arc_lifting "
+					"before Surf_A->list_orbits_on_trihedra_type2" << endl;
+			Surf_A->Classify_trihedral_pairs->list_orbits_on_trihedra_type2(fp);
+
+			cout << "classify_arcs_and_do_arc_lifting "
+					"before Surf_A->print_trihedral_pairs no stabs" << endl;
+			Surf_A->Classify_trihedral_pairs->print_trihedral_pairs(fp,
+					FALSE /* f_with_stabilizers */);
+
+			cout << "classify_arcs_and_do_arc_lifting "
+					"before Surf_A->print_trihedral_pairs with stabs" << endl;
+			Surf_A->Classify_trihedral_pairs->print_trihedral_pairs(fp,
+					TRUE /* f_with_stabilizers */);
+
+		}
 	
 
 
-		cout << "classify_arcs_and_do_arc_lifting "
-				"before Surf_A->list_orbits_on_trihedra_type1" << endl;
-		Surf_A->Classify_trihedral_pairs->list_orbits_on_trihedra_type1(fp);
+		char fname_base[1000];
+		sprintf(fname_base, "arcs_q%d", q);
 
-		cout << "classify_arcs_and_do_arc_lifting "
-				"before Surf_A->list_orbits_on_trihedra_type2" << endl;
-		Surf_A->Classify_trihedral_pairs->list_orbits_on_trihedra_type2(fp);
-
-		cout << "classify_arcs_and_do_arc_lifting "
-				"before Surf_A->print_trihedral_pairs no stabs" << endl;
-		Surf_A->Classify_trihedral_pairs->print_trihedral_pairs(fp,
-				FALSE /* f_with_stabilizers */);
-
-		cout << "classify_arcs_and_do_arc_lifting "
-				"before Surf_A->print_trihedral_pairs with stabs" << endl;
-		Surf_A->Classify_trihedral_pairs->print_trihedral_pairs(fp,
-				TRUE /* f_with_stabilizers */);
-
+		if (q < 20) {
+			cout << "before Gen->gen->draw_poset_full" << endl;
+			Six_arcs->Gen->gen->draw_poset(
+				fname_base,
+				6 /* depth */, 0 /* data */,
+				TRUE /* f_embedded */,
+				FALSE /* f_sideways */,
+				verbose_level);
 		}
 
 
+		int *f_deleted; // [Six_arcs->nb_arcs_not_on_conic]
+		int *Arc_identify; //[Six_arcs->nb_arcs_not_on_conic *
+					// Six_arcs->nb_arcs_not_on_conic]
+		int *Arc_identify_nb; // [Six_arcs->nb_arcs_not_on_conic]
+		long int Arc6[6];
+		int nb_surfaces;
 
-	char fname_base[1000];
-	sprintf(fname_base, "arcs_q%d", q);
+		nb_surfaces = 0;
 
-	if (q < 20) {
-		cout << "before Gen->gen->draw_poset_full" << endl;
-		Six_arcs->Gen->gen->draw_poset(
-			fname_base,
-			6 /* depth */, 0 /* data */,
-			TRUE /* f_embedded */,
-			FALSE /* f_sideways */,
-			verbose_level);
-		}
+		f_deleted = NEW_int(Six_arcs->nb_arcs_not_on_conic);
+		Arc_identify = NEW_int(Six_arcs->nb_arcs_not_on_conic *
+				Six_arcs->nb_arcs_not_on_conic);
+		Arc_identify_nb = NEW_int(Six_arcs->nb_arcs_not_on_conic);
 
+		int_vec_zero(f_deleted, Six_arcs->nb_arcs_not_on_conic);
+		int_vec_zero(Arc_identify_nb, Six_arcs->nb_arcs_not_on_conic);
 
-	int *f_deleted; // [Six_arcs->nb_arcs_not_on_conic]
-	int *Arc_identify; //[Six_arcs->nb_arcs_not_on_conic *
-				// Six_arcs->nb_arcs_not_on_conic]
-	int *Arc_identify_nb; // [Six_arcs->nb_arcs_not_on_conic]
-	long int Arc6[6];
-	int nb_surfaces;
-
-	nb_surfaces = 0;
-
-	f_deleted = NEW_int(Six_arcs->nb_arcs_not_on_conic);
-	Arc_identify = NEW_int(Six_arcs->nb_arcs_not_on_conic *
-			Six_arcs->nb_arcs_not_on_conic);
-	Arc_identify_nb = NEW_int(Six_arcs->nb_arcs_not_on_conic);
-
-	int_vec_zero(f_deleted, Six_arcs->nb_arcs_not_on_conic);
-	int_vec_zero(Arc_identify_nb, Six_arcs->nb_arcs_not_on_conic);
-
-	for (arc_idx = 0;
-			arc_idx < Six_arcs->nb_arcs_not_on_conic;
-			arc_idx++) {
+		for (arc_idx = 0;
+				arc_idx < Six_arcs->nb_arcs_not_on_conic;
+				arc_idx++) {
 
 
-		if (f_deleted[arc_idx]) {
-			continue;
-			}
-		
-
-		if (f_v) {
-			cout << "classify_arcs_and_do_arc_lifting extending arc "
-					<< arc_idx << " / "
-					<< Six_arcs->nb_arcs_not_on_conic << ":" << endl;
+			if (f_deleted[arc_idx]) {
+				continue;
 			}
 
-		fp << "\\clearpage\n\\section{Extending arc " << arc_idx
-				<< " / " << Six_arcs->nb_arcs_not_on_conic << "}" << endl;
 
-		Six_arcs->Gen->gen->get_set_by_level(
-				6 /* level */,
-				Six_arcs->Not_on_conic_idx[arc_idx],
-				Arc6);
-		
-		{
-		set_and_stabilizer *The_arc;
-
-		The_arc = Six_arcs->Gen->gen->get_set_and_stabilizer(
-				6 /* level */,
-				Six_arcs->Not_on_conic_idx[arc_idx],
-				0 /* verbose_level */);
-		
-		
-		fp << "Arc " << arc_idx << " / "
-				<< Six_arcs->nb_arcs_not_on_conic << " is: ";
-		fp << "$$" << endl;
-		//int_vec_print(fp, Arc6, 6);
-		The_arc->print_set_tex(fp);
-		fp << "$$" << endl;
-
-		F->display_table_of_projective_points(fp,
-			The_arc->data, 6, 3);
-
-
-		fp << "The stabilizer is the following group:\\\\" << endl;
-		The_arc->Strong_gens->print_generators_tex(fp);
-
-		FREE_OBJECT(The_arc);
-		}
-
-		char arc_label[1000];
-		char arc_label_short[1000];
-		
-		sprintf(arc_label, "%d / %d",
-				arc_idx, Six_arcs->nb_arcs_not_on_conic);
-		sprintf(arc_label_short, "Arc%d", arc_idx);
-		
-		if (f_v) {
-			cout << "classify_arcs_and_do_arc_lifting "
-					"before do_arc_lifting" << endl;
+			if (f_v) {
+				cout << "classify_arcs_and_do_arc_lifting extending arc "
+						<< arc_idx << " / "
+						<< Six_arcs->nb_arcs_not_on_conic << ":" << endl;
 			}
 
-		Surf_A->arc_lifting_and_classify(
-			TRUE /* f_log_fp */,
-			fp,
-			Arc6,
-			arc_label,
-			arc_label_short,
-			nb_surfaces, 
-			Six_arcs, 
-			Arc_identify_nb, 
-			Arc_identify, 
-			f_deleted, 
-			verbose_level);
+			fp << "\\clearpage\n\\section{Extending arc " << arc_idx
+					<< " / " << Six_arcs->nb_arcs_not_on_conic << "}" << endl;
 
-#if 0
-		void surface_with_action::arc_lifting_and_classify(
-			int f_log_fp, ofstream &fp,
-			long int *Arc6,
-			const char *arc_label, const char *arc_label_short,
-			int nb_surfaces,
-			six_arcs_not_on_a_conic *Six_arcs,
-			int *Arc_identify_nb,
-			int *Arc_identify,
-			int *f_deleted,
-			int verbose_level)
-#endif
+			Six_arcs->Gen->gen->get_set_by_level(
+					6 /* level */,
+					Six_arcs->Not_on_conic_idx[arc_idx],
+					Arc6);
 
-		if (f_v) {
-			cout << "classify_arcs_and_do_arc_lifting "
-					"after do_arc_lifting" << endl;
+			{
+				set_and_stabilizer *The_arc;
+		
+				The_arc = Six_arcs->Gen->gen->get_set_and_stabilizer(
+						6 /* level */,
+						Six_arcs->Not_on_conic_idx[arc_idx],
+						0 /* verbose_level */);
+
+
+				fp << "Arc " << arc_idx << " / "
+						<< Six_arcs->nb_arcs_not_on_conic << " is: ";
+				fp << "$$" << endl;
+				//int_vec_print(fp, Arc6, 6);
+				The_arc->print_set_tex(fp);
+				fp << "$$" << endl;
+		
+				F->display_table_of_projective_points(fp,
+					The_arc->data, 6, 3);
+		
+		
+				fp << "The stabilizer is the following group:\\\\" << endl;
+				The_arc->Strong_gens->print_generators_tex(fp);
+		
+				FREE_OBJECT(The_arc);
 			}
-		
 
-		
-		nb_surfaces++;
+			char arc_label[1000];
+			char arc_label_short[1000];
+
+			sprintf(arc_label, "%d / %d",
+					arc_idx, Six_arcs->nb_arcs_not_on_conic);
+			sprintf(arc_label_short, "Arc%d", arc_idx);
+
+			if (f_v) {
+				cout << "classify_arcs_and_do_arc_lifting "
+						"before arc_lifting_and_classify_using_trihedral_pairs" << endl;
+			}
+
+			Surf_A->arc_lifting_and_classify_using_trihedral_pairs(
+				TRUE /* f_log_fp */,
+				fp,
+				Arc6,
+				arc_label,
+				arc_label_short,
+				nb_surfaces,
+				Six_arcs,
+				Arc_identify_nb,
+				Arc_identify,
+				f_deleted,
+				verbose_level);
+
+			if (f_v) {
+				cout << "classify_arcs_and_do_arc_lifting "
+						"after arc_lifting_and_classify_using_trihedral_pairs" << endl;
+			}
+
+
+
+			nb_surfaces++;
 		} // next arc_idx
 
-	cout << "We found " << nb_surfaces << " surfaces" << endl;
+		cout << "We found " << nb_surfaces << " surfaces" << endl;
 
 
-	cout << "decomposition matrix:" << endl;
-	for (i = 0; i < nb_surfaces; i++) {
-		for (j = 0; j < Arc_identify_nb[i]; j++) {
-			cout << Arc_identify[i * Six_arcs->nb_arcs_not_on_conic + j];
-			if (j < Arc_identify_nb[i] - 1) {
-				cout << ", ";
+		cout << "decomposition matrix:" << endl;
+		for (i = 0; i < nb_surfaces; i++) {
+			for (j = 0; j < Arc_identify_nb[i]; j++) {
+				cout << Arc_identify[i * Six_arcs->nb_arcs_not_on_conic + j];
+				if (j < Arc_identify_nb[i] - 1) {
+					cout << ", ";
 				}
 			}
-		cout << endl;
+			cout << endl;
 		}
-	int *Decomp;
-	int a;
+		int *Decomp;
+		int a;
 
-	Decomp = NEW_int(Six_arcs->nb_arcs_not_on_conic * nb_surfaces);
-	int_vec_zero(Decomp, Six_arcs->nb_arcs_not_on_conic * nb_surfaces);
-	for (i = 0; i < nb_surfaces; i++) {
-		for (j = 0; j < Arc_identify_nb[i]; j++) {
-			a = Arc_identify[i * Six_arcs->nb_arcs_not_on_conic + j];
-			Decomp[a * nb_surfaces + i]++;
+		Decomp = NEW_int(Six_arcs->nb_arcs_not_on_conic * nb_surfaces);
+		int_vec_zero(Decomp, Six_arcs->nb_arcs_not_on_conic * nb_surfaces);
+		for (i = 0; i < nb_surfaces; i++) {
+			for (j = 0; j < Arc_identify_nb[i]; j++) {
+				a = Arc_identify[i * Six_arcs->nb_arcs_not_on_conic + j];
+				Decomp[a * nb_surfaces + i]++;
 			}
 		}
-
-	cout << "decomposition matrix:" << endl;
-	cout << "$$" << endl;
-	L.print_integer_matrix_with_standard_labels(cout, Decomp,
-			Six_arcs->nb_arcs_not_on_conic, nb_surfaces,
-			TRUE /* f_tex */);
-	cout << "$$" << endl;
 	
-	fp << "Decomposition matrix:" << endl;
-	//fp << "$$" << endl;
-	//print_integer_matrix_with_standard_labels(fp, Decomp,
-	//nb_arcs_not_on_conic, nb_surfaces, TRUE /* f_tex */);
-	L.print_integer_matrix_tex_block_by_block(fp, Decomp,
-			Six_arcs->nb_arcs_not_on_conic, nb_surfaces, 25);
-	//fp << "$$" << endl;
+		cout << "decomposition matrix:" << endl;
+		cout << "$$" << endl;
+		L.print_integer_matrix_with_standard_labels(cout, Decomp,
+				Six_arcs->nb_arcs_not_on_conic, nb_surfaces,
+				TRUE /* f_tex */);
+		cout << "$$" << endl;
+
+		fp << "Decomposition matrix:" << endl;
+		//fp << "$$" << endl;
+		//print_integer_matrix_with_standard_labels(fp, Decomp,
+		//nb_arcs_not_on_conic, nb_surfaces, TRUE /* f_tex */);
+		L.print_integer_matrix_tex_block_by_block(fp, Decomp,
+				Six_arcs->nb_arcs_not_on_conic, nb_surfaces, 25);
+		//fp << "$$" << endl;
 
 
 
-	FREE_int(Decomp);
-	FREE_int(f_deleted);
-	FREE_int(Arc_identify);
-	FREE_int(Arc_identify_nb);
+		FREE_int(Decomp);
+		FREE_int(f_deleted);
+		FREE_int(Arc_identify);
+		FREE_int(Arc_identify_nb);
 
-	L.foot(fp);
+		L.foot(fp);
 	} // fp
 
 	file_io Fio;

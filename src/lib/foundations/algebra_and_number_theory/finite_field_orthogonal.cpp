@@ -1819,14 +1819,14 @@ void finite_field::choose_anisotropic_form(
 
 void orthogonal_points_free_global_data()
 {
-	cout << "orthogonal_points_free_global_data" << endl;
+	//cout << "orthogonal_points_free_global_data" << endl;
 #if 0
 	if (Hash_table_parabolic) {
 		delete Hash_table_parabolic;
 		Hash_table_parabolic = NULL;
 		}
 #endif
-	cout << "orthogonal_points_free_global_data done" << endl;
+	//cout << "orthogonal_points_free_global_data done" << endl;
 }
 
 

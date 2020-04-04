@@ -454,21 +454,23 @@ long int number_theory_domain::order_mod_p(long int a, long int p)
 	long int o, b;
 	
 	if (a < 0) {
-		cout << "order_mod_p a < 0" << endl;
+		cout << "number_theory_domain::order_mod_p a < 0" << endl;
 		exit(1);
-		}
+	}
 	a %= p;
-	if (a == 0)
+	if (a == 0) {
 		return 0;
-	if (a == 1)
+	}
+	if (a == 1) {
 		return 1;
+	}
 	o = 1;
 	b = a;
 	while (b != 1) {
 		b *= a;
 		b %= p;
 		o++;
-		}
+	}
 	return o;
 }
 
@@ -733,6 +735,33 @@ int number_theory_domain::factor_int(int a, int *&primes, int *&exponents)
 	return len;
 }
 
+void number_theory_domain::factor_lint(long int a, vector<long int> &primes, vector<int> &exponents)
+{
+	int p, p0;
+
+	if (a == 1) {
+		cout << "number_theory_domain::factor_lint, the number is one" << endl;
+		exit(1);
+		}
+	if (a <= 0) {
+		cout << "number_theory_domain::factor_lint, the number is <= 0" << endl;
+		exit(1);
+		}
+	p0 = -1;
+	while (a > 1) {
+		p = smallest_primedivisor(a);
+		a /= p;
+		if (p == p0) {
+			exponents[exponents.size()]++;
+		}
+		else {
+			primes.push_back(p);
+			exponents.push_back(1);
+			p0 = p;
+		}
+	}
+}
+
 void number_theory_domain::factor_prime_power(int q, int &p, int &e)
 {
 	if (q == 1) {
@@ -750,6 +779,71 @@ void number_theory_domain::factor_prime_power(int q, int &p, int &e)
 		q /= p;
 		e++;
 		}
+}
+
+long int number_theory_domain::primitive_root_randomized(long int p, int verbose_level)
+// Computes a primitive element for $\bbZ_p$, i.~e. an integer $k$
+// with $2 \le k \le p - 1$ s. th. the order of $k$ mod $p$ is $p-1$.
+{
+	int f_v = (verbose_level >= 1);
+	long int i, pm1, a, n, b;
+	vector<long int> primes;
+	vector<int> exponents;
+	os_interface Os;
+	int cnt = 0;
+
+	if (f_v) {
+		cout << "number_theory_domain::primitive_root_randomized p=" << p << endl;
+	}
+	if (p < 2) {
+		cout << "number_theory_domain::primitive_root_randomized: p < 2" << endl;
+		exit(1);
+	}
+
+	pm1 = p - 1;
+	if (f_v) {
+		cout << "number_theory_domain::primitive_root_randomized before factor_lint " << pm1 << endl;
+	}
+	factor_lint(pm1, primes, exponents);
+	if (f_v) {
+		cout << "number_theory_domain::primitive_root_randomized after factor_lint " << pm1 << endl;
+		cout << "number_theory_domain::primitive_root_randomized number of factors is " << primes.size() << endl;
+	}
+	while (TRUE) {
+		cnt++;
+		a = Os.random_integer(pm1);
+		if (a == 0) {
+			continue;
+		}
+		if (f_v) {
+			cout << "number_theory_domain::primitive_root_randomized iteration " << cnt << " : trying " << a << endl;
+		}
+		for (i = 0; i < primes.size(); i++) {
+			n = pm1 / primes[i];
+			if (f_v) {
+				cout << "number_theory_domain::primitive_root_randomized iteration " << cnt << " : trying " << a
+						<< " : prime factor " << i << " / " << primes.size() << " raising to the power " << n << endl;
+			}
+			b = power_mod(a, n, p);
+			if (f_v) {
+				cout << "number_theory_domain::primitive_root_randomized iteration " << cnt
+						<< " : trying " << a << " : prime factor " << i << " / " << primes.size()
+						<< " raising to the power " << n << " yields " << b << endl;
+			}
+			if (b == 1) {
+				// fail
+				break;
+			}
+		}
+		if (i == primes.size()) {
+			break;
+		}
+	}
+
+	if (f_v) {
+		cout << "number_theory_domain::primitive_root_randomized done after " << cnt << " trials" << endl;
+	}
+	return a;
 }
 
 long int number_theory_domain::primitive_root(long int p, int verbose_level)
@@ -882,6 +976,12 @@ int number_theory_domain::Jacobi_with_key_in_latex(ostream &ost,
 	if (f_v) {
 		cout << "number_theory_domain::Jacobi(" << a << ", " << m << ")" << endl;
 	}
+
+
+	ost << "$\\Big( \\frac{" << a << " }{ "
+			<< m << "}\\Big)$\\\\" << endl;
+
+
 	a1 = a;
 	m1 = m;
 	r1 = 1;
@@ -900,12 +1000,12 @@ int number_theory_domain::Jacobi_with_key_in_latex(ostream &ost,
 		}
 		if (a1 % m1 < a1) {
 
-			ost << "=";
+			ost << "$=";
 			if (r1 == -1) {
 				ost << "(-1) \\cdot ";
 			}
 			ost << " \\Big( \\frac{" << a1 % m1 << " }{ "
-					<< m1 << "}\\Big)\\\\" << endl;
+					<< m1 << "}\\Big)$\\\\" << endl;
 
 		}
 
@@ -920,22 +1020,22 @@ int number_theory_domain::Jacobi_with_key_in_latex(ostream &ost,
 		/* a1 jetzt immer noch != 0 */
 		if (f_negative) {
 
-			ost << "=";
+			ost << "$=";
 			if (r1 == -1) {
 				ost << "(-1) \\cdot ";
 			}
 			ost << "\\Big( \\frac{-1 }{ " << m1
 					<< "}\\Big) \\cdot \\Big( \\frac{"
 					<< a1 * i_power_j(2, ord2) << " }{ "
-					<< m1 << "}\\Big)\\\\" << endl;
-			ost << "=";
+					<< m1 << "}\\Big)$\\\\" << endl;
+			ost << "$=";
 			if (r1 == -1) {
 				ost << "(-1) \\cdot ";
 			}
 			ost << "(-1)^{\\frac{" << m1
 					<< "-1}{2}} \\cdot \\Big( \\frac{"
 					<< a1 * i_power_j(2, ord2) << " }{ "
-					<< m1 << "}\\Big)\\\\" << endl;
+					<< m1 << "}\\Big)$\\\\" << endl;
 
 
 
@@ -947,13 +1047,13 @@ int number_theory_domain::Jacobi_with_key_in_latex(ostream &ost,
 			/* und a1 wieder positiv machen: */
 			a1 = -a1;
 
-			ost << "=";
+			ost << "$=";
 			if (r1 == -1) {
 				ost << "(-1) \\cdot ";
 			}
 			ost << " \\Big( \\frac{"
 					<< a1 * i_power_j(2, ord2)
-			<< " }{ " << m1 << "}\\Big)\\\\" << endl;
+			<< " }{ " << m1 << "}\\Big)$\\\\" << endl;
 
 
 			}
@@ -963,77 +1063,77 @@ int number_theory_domain::Jacobi_with_key_in_latex(ostream &ost,
 			/* Ranmultiplizieren von (-1) hoch t an r1: */
 
 			if (ord2 > 1) {
-				ost << "=";
+				ost << "$=";
 				if (r1 == -1) {
 					ost << "(-1) \\cdot ";
 				}
 				ost << "\\Big( \\frac{2}{ " << m1
 						<< "}\\Big)^{" << ord2
 						<< "} \\cdot \\Big( \\frac{" << a1
-						<< " }{ " << m1 << "}\\Big)\\\\" << endl;
-				ost << "=";
+						<< " }{ " << m1 << "}\\Big)$\\\\" << endl;
+				ost << "$=";
 				if (r1 == -1) {
 					ost << "(-1) \\cdot ";
 				}
 				ost << "\\Big( (-1)^{\\frac{" << m1
 						<< "^2-1}{8}} \\Big)^{" << ord2
 						<< "} \\cdot \\Big( \\frac{" << a1 << " }{ "
-						<< m1 << "}\\Big)\\\\" << endl;
+						<< m1 << "}\\Big)$\\\\" << endl;
 			}
 			else {
-				ost << "=";
+				ost << "$=";
 				if (r1 == -1) {
 					ost << "(-1) \\cdot ";
 				}
 				ost << "\\Big( \\frac{2}{ " << m1
 						<< "}\\Big) \\cdot \\Big( \\frac{" << a1
-						<< " }{ " << m1 << "}\\Big)\\\\" << endl;
-				ost << "=";
+						<< " }{ " << m1 << "}\\Big)$\\\\" << endl;
+				ost << "$=";
 				if (r1 == -1) {
 					ost << "(-1) \\cdot ";
 				}
 				ost << "(-1)^{\\frac{" << m1
 						<< "^2-1}{8}} \\cdot \\Big( \\frac{" << a1
-						<< " }{ " << m1 << "}\\Big)\\\\" << endl;
+						<< " }{ " << m1 << "}\\Big)$\\\\" << endl;
 			}
 
 			if (m1 % 8 == 3 || m1 % 8 == 5) {
 				r1 = -r1; /* Beachte ABS(r1) == 1L */
 			}
 
-			ost << "=";
+			ost << "$=";
 			if (r1 == -1) {
 				ost << "(-1) \\cdot ";
 			}
 			ost << "\\Big( \\frac{" << a1 << " }{ " << m1
-					<< "}\\Big)\\\\" << endl;
+					<< "}\\Big)$\\\\" << endl;
 
 
 		}
 		else {
 			if (ord2) {
-				ost << "=";
+				ost << "$=";
 				if (r1 == -1) {
 					ost << "(-1) \\cdot ";
 				}
 				ost << "\\Big( \\frac{2}{ " << m1 << "}\\Big)^{"
 						<< ord2 << "} \\cdot \\Big( \\frac{" << a1
-						<< " }{ " << m1 << "}\\Big)\\\\" << endl;
+						<< " }{ " << m1 << "}\\Big)$\\\\" << endl;
 
-				ost << "=";
+				ost << "$=";
 				if (r1 == -1) {
 					ost << "(-1) \\cdot ";
 				}
 				ost << "\\Big( (-1)^{\\frac{" << m1
 						<< "^2-1}{8}} \\Big)^{" << ord2
 						<< "} \\cdot \\Big( \\frac{" << a1 << " }{ "
-						<< m1 << "}\\Big)\\\\" << endl;
-				ost << "=";
+						<< m1 << "}\\Big)$\\\\" << endl;
+				ost << "$=";
 				if (r1 == -1) {
 					ost << "(-1) \\cdot ";
 				}
 				ost << "\\Big( \\frac{" << a1 << " }{ " << m1
-						<< "}\\Big)\\\\" << endl;
+						<< "}\\Big)$\\\\" << endl;
 			}
 		}
 		if (ABS(a1) <= 1) {
@@ -1046,14 +1146,14 @@ int number_theory_domain::Jacobi_with_key_in_latex(ostream &ost,
 		a1 = t;
 
 
-		ost << "=";
+		ost << "$=";
 		if (r1 == -1) {
 			ost << "(-1) \\cdot ";
 		}
 		ost << "\\Big( \\frac{" << a1 << " }{ " << m1
 				<< "}\\Big) \\cdot (-1)^{\\frac{" << m1
 				<< "-1}{2} \\cdot \\frac{" << a1
-				<< " - 1}{2}}\\\\" << endl;
+				<< " - 1}{2}}$\\\\" << endl;
 
 
 		/* Reziprozitaet: */
@@ -1063,12 +1163,12 @@ int number_theory_domain::Jacobi_with_key_in_latex(ostream &ost,
 			r1 = -r1; /* Beachte ABS(r1) == 1 */
 		}
 
-		ost << "=";
+		ost << "$=";
 		if (r1 == -1) {
 			ost << "(-1) \\cdot ";
 		}
 		ost << "\\Big( \\frac{" << a1 << " }{ " << m1
-				<< "}\\Big)\\\\" << endl;
+				<< "}\\Big)$\\\\" << endl;
 
 		if (f_v) {
 			cout << "number_theory_domain::Jacobi = " << r1 << " * Jacobi(" << a1
@@ -1076,6 +1176,7 @@ int number_theory_domain::Jacobi_with_key_in_latex(ostream &ost,
 		}
 	}
 	if (a1 == 1) {
+		ost << "$=" << r1 << "$\\\\" << endl;
 		return r1;
 	}
 	if (a1 <= 0) {
@@ -1145,6 +1246,8 @@ int number_theory_domain::ny_p(long int n, long int p)
 	return ny_p;
 }
 
+#if 0
+// now use longinteger_domain::square_root_mod(int a, int p, int verbose_level)
 long int number_theory_domain::sqrt_mod_simple(long int a, long int p)
 // solves x^2 = a mod p. Returns x
 {
@@ -1156,11 +1259,12 @@ long int number_theory_domain::sqrt_mod_simple(long int a, long int p)
 			return x;
 		}
 	}
-	cout << "number_theory_domain::sqrt_mod_simple a not a quadratic residue" << endl;
+	cout << "number_theory_domain::sqrt_mod_simple the number a is "
+			"not a quadratic residue mod p" << endl;
 	cout << "a = " << a << " p=" << p << endl;
 	exit(1);
 }
-
+#endif
 void number_theory_domain::print_factorization(int nb_primes, int *primes, int *exponents)
 {
 	int i;

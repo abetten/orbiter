@@ -25,8 +25,7 @@ TARGETS=\
 	get_poly.out \
 	gl_classes.out \
 	polynomial_orbits.out \
-	reflection.out \
-	subprimitive.out 
+	reflection.out
 
 all: $(TARGETS)
 
@@ -38,59 +37,6 @@ install:
 %.out: %.o;
 	$(DISCRETA_CPP) $< $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-# a5_in_PSL.out:  a5_in_PSL.o;
-# 	$(DISCRETA_CPP)  a5_in_PSL.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-#
-# BN_pair.out:  BN_pair.o;
-# 	$(DISCRETA_CPP)  BN_pair.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-#
-# borel.out:  borel.o ;
-# 	$(DISCRETA_CPP)  borel.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-#
-# burnside.out:  burnside.o;
-# 	$(DISCRETA_CPP)  burnside.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-#
-# cheat_sheet_GF.out:  cheat_sheet_GF.o;
-# 	$(DISCRETA_CPP)  cheat_sheet_GF.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-#
-# code_cosets.out:  code_cosets.o ;
-# 	$(DISCRETA_CPP)  code_cosets.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-#
-# create_element_of_order.out:  create_element_of_order.o;
-# 	$(DISCRETA_CPP)  create_element_of_order.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-#
-# create_element.out:  create_element.o;
-# 	$(DISCRETA_CPP)  create_element.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-#
-# eigenstuff.out:  eigenstuff.o;
-# 	$(DISCRETA_CPP)  eigenstuff.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-#
-# factor_cyclotomic.out:  factor_cyclotomic.o;
-# 	$(DISCRETA_CPP)  factor_cyclotomic.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-#
-# field_plot.out:  field_plot.o;
-# 	$(DISCRETA_CPP)  field_plot.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-#
-# find_element.out:  find_element.o;
-# 	$(DISCRETA_CPP)  find_element.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-#
-# flag.out:  flag.o;
-# 	$(DISCRETA_CPP)  flag.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-#
-# get_poly.out:  get_poly.o ;
-# 	$(DISCRETA_CPP)  get_poly.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-#
-# gl_classes.out:  gl_classes.o ;
-# 	$(DISCRETA_CPP)  gl_classes.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-#
-# polynomial_orbits.out:  polynomial_orbits.o ;
-# 	$(DISCRETA_CPP)  polynomial_orbits.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-#
-# reflection.out:  reflection.o;
-# 	$(DISCRETA_CPP)  reflection.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-#
-# subprimitive.out:  subprimitive.o;
-# 	$(DISCRETA_CPP)  subprimitive.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 

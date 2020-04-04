@@ -3905,7 +3905,124 @@ void projective_space::Baer_subline(long int *pts3,
 }
 
 
+void projective_space::report(ostream &ost)
+{
+	int verbose_level = 0;
 
+	ost << "\\small" << endl;
+	ost << "\\arraycolsep=2pt" << endl;
+	ost << "\\parindent=0pt" << endl;
+	ost << "$q = " << F->q << "$\\\\" << endl;
+	ost << "$p = " << F->p << "$\\\\" << endl;
+	ost << "$e = " << F->e << "$\\\\" << endl;
+	ost << "$n = " << n << "$\\\\" << endl;
+	ost << "Number of points = " << N_points << "\\\\" << endl;
+	ost << "Number of lines = " << N_lines << "\\\\" << endl;
+	ost << "Number of lines on a point = " << r << "\\\\" << endl;
+	ost << "Number of points on a line = " << k << "\\\\" << endl;
+
+	ost<< "\\clearpage" << endl << endl;
+	ost << "\\section{The Finite Field with $" << q << "$ Elements}" << endl;
+	F->cheat_sheet(ost, verbose_level);
+
+	if (n == 2) {
+		ost << "\\clearpage" << endl << endl;
+		ost << "\\section{The Plane}" << endl;
+		char fname_base[1000];
+		long int *set;
+		int i;
+		int rad = 17000;
+
+		set = NEW_lint(N_points);
+		for (i = 0; i < N_points; i++) {
+			set[i] = i;
+			}
+		sprintf(fname_base, "plane_of_order_%d", q);
+		draw_point_set_in_plane(fname_base,
+				set, N_points,
+				TRUE /*f_with_points*/,
+				TRUE /*f_point_labels*/,
+				FALSE /*f_embedded*/,
+				FALSE /*f_sideways*/,
+				rad,
+				verbose_level);
+		FREE_lint(set);
+		ost << "{\\scriptsize" << endl;
+		ost << "$$" << endl;
+		ost << "\\input " << fname_base << "_draw.tex" << endl;
+		ost << "$$" << endl;
+		ost << "}%%" << endl;
+		}
+
+	ost << "\\clearpage" << endl << endl;
+	ost << "\\section{Points and Lines}" << endl;
+	cheat_sheet_points(ost, verbose_level);
+
+	cheat_sheet_point_table(ost, verbose_level);
+
+
+
+	ost << "\\clearpage" << endl << endl;
+	cheat_sheet_points_on_lines(ost, verbose_level);
+
+	ost << "\\clearpage" << endl << endl;
+	cheat_sheet_lines_on_points(ost, verbose_level);
+
+
+	// report subspaces:
+	int k;
+
+	for (k = 1; k < n; k++) {
+		ost << "\\clearpage" << endl << endl;
+		ost << "\\section{Subspaces of dimension " << k << "}" << endl;
+		cheat_sheet_subspaces(ost, k, verbose_level);
+		}
+
+
+
+	if (n >= 2 && N_lines < 25) {
+		ost << "\\clearpage" << endl << endl;
+		ost << "\\section{Line intersections}" << endl;
+		cheat_sheet_line_intersection(ost, verbose_level);
+		}
+
+
+	if (n >= 2 && N_points < 25) {
+		ost << "\\clearpage" << endl << endl;
+		ost << "\\section{Line through point-pairs}" << endl;
+		cheat_sheet_line_through_pairs_of_points(ost, verbose_level);
+		}
+
+	homogeneous_polynomial_domain *Poly2;
+	homogeneous_polynomial_domain *Poly3;
+	homogeneous_polynomial_domain *Poly4;
+
+	Poly2 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly3 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly4 = NEW_OBJECT(homogeneous_polynomial_domain);
+
+	Poly2->init(F,
+			n + 1 /* nb_vars */, 2 /* degree */,
+			FALSE /* f_init_incidence_structure */,
+			verbose_level);
+	Poly3->init(F,
+			n + 1 /* nb_vars */, 3 /* degree */,
+			FALSE /* f_init_incidence_structure */,
+			verbose_level);
+	Poly4->init(F,
+			n + 1 /* nb_vars */, 4 /* degree */,
+			FALSE /* f_init_incidence_structure */,
+			verbose_level);
+
+	Poly2->print_monomial_ordering(ost);
+	Poly3->print_monomial_ordering(ost);
+	Poly4->print_monomial_ordering(ost);
+
+	FREE_OBJECT(Poly2);
+	FREE_OBJECT(Poly3);
+	FREE_OBJECT(Poly4);
+
+}
 
 
 

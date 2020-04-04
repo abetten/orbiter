@@ -19,6 +19,7 @@ geometry : geometry2 ;
 isomorph : isomorph2 ; 
 orbits : orbits2 ; 
 solver : solver2 ; 
+interfaces : interfaces2 ; 
 
 algebra_and_number_theory2 :  ; cd algebra_and_number_theory; $(MAKE)
 combinatorics2 :  ; cd combinatorics; $(MAKE)
@@ -26,7 +27,6 @@ geometry2 :  ; cd geometry; $(MAKE)
 isomorph2 :  ; cd isomorph; $(MAKE)
 orbits2 :  ; cd orbits; $(MAKE)
 solver2 :  ; cd solver; $(MAKE)
-
 
 
 

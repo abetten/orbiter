@@ -810,6 +810,21 @@ void homogeneous_polynomial_domain::algebraic_set(int *Eqns, int nb_eqns,
 		}
 }
 
+void homogeneous_polynomial_domain::polynomial_function(int *coeff, int *f, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int rk, a;
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::polynomial_function "
+				"P->N_points=" << P->N_points << endl;
+	}
+	for (rk = 0; rk < P->N_points; rk++) {
+		unrank_point(v, rk);
+		a = evaluate_at_a_point(coeff, v);
+		f[rk] = a;
+	}
+}
 void homogeneous_polynomial_domain::enumerate_points(int *coeff,
 		long int *Pts, int &nb_pts, int verbose_level)
 {

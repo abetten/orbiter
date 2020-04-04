@@ -1,20 +1,20 @@
 SRC=../../../src
 DISCRETA_CPP = g++
 DISCRETA_CC = gcc
-CPPFLAGS = -Wall -I$(SRC)/lib 
+CPPFLAGS = -Wall -I$(SRC)/lib -std=c++14
 LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
 
 
 
 TARGETS=\
-		cipher.out 
+		orbiter.out 
 
 all: $(TARGETS)
 
 
-cipher.out:  cipher.o ;
-	$(DISCRETA_CPP)  cipher.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+orbiter.out:  orbiter.o ;
+	$(DISCRETA_CPP)  orbiter.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 install:

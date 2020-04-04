@@ -1,5 +1,5 @@
 /*
- * bent_function_classify.cpp
+ * boolean_function.cpp
  *
  *  Created on: Nov 06, 2019
  *      Author: betten
@@ -17,7 +17,7 @@ namespace top_level {
 
 
 
-bent_function_classify::bent_function_classify()
+boolean_function::boolean_function()
 {
 	n = n2 = Q = Q2 = N = 0;
 	Fq = NULL;
@@ -37,7 +37,7 @@ bent_function_classify::bent_function_classify()
 	v = v1 = w = f = f2 = F = T = W = f_proj = f_proj2 = NULL;
 }
 
-bent_function_classify::~bent_function_classify()
+boolean_function::~boolean_function()
 {
 	int degree;
 
@@ -111,24 +111,26 @@ bent_function_classify::~bent_function_classify()
 	}
 }
 
-void bent_function_classify::init(int n, int verbose_level)
+void boolean_function::init(int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	geometry_global Gg;
 	longinteger_domain D;
 
 	if (f_v) {
-		cout << "bent_function_classify::init" << endl;
+		cout << "boolean_function::init" << endl;
 	}
 
 	if (f_v) {
 		cout << "do_it n=" << n << endl;
 	}
+#if 0
 	if (ODD(n)) {
 		cout << "n must be even" << endl;
 		exit(1);
 	}
-	bent_function_classify::n = n;
+#endif
+	boolean_function::n = n;
 	n2 = n >> 1;
 	Q = 1 << n;
 	Q2 = 1 << n2;
@@ -137,6 +139,8 @@ void bent_function_classify::init(int n, int verbose_level)
 	D.power_int(NN, Q - 1);
 	N = Gg.nb_PG_elements(n, 2);
 	if (f_v) {
+		cout << "do_it n=" << n << endl;
+		cout << "do_it n2=" << n2 << endl;
 		cout << "do_it Q=" << Q << endl;
 		cout << "do_it Q2=" << Q2 << endl;
 		cout << "do_it NN=" << NN << endl;
@@ -167,8 +171,7 @@ void bent_function_classify::init(int n, int verbose_level)
 	for (i = 0; i < Q; i++) {
 		Gg.AG_element_unrank(2, v1, 1, n, i);
 		v1[n] = 1;
-		Fq->PG_element_rank_modified(
-					v1, 1, n + 1, a);
+		Fq->PG_element_rank_modified(v1, 1, n + 1, a);
 		affine_points[i] = a;
 	}
 	if (f_v) {
@@ -180,6 +183,8 @@ void bent_function_classify::init(int n, int verbose_level)
 			cout << endl;
 		}
 	}
+
+	// setup the Wash matrix:
 	for (i = 0; i < Q; i++) {
 		Gg.AG_element_unrank(2, v, 1, n, i);
 		for (j = 0; j < Q; j++) {
@@ -200,16 +205,16 @@ void bent_function_classify::init(int n, int verbose_level)
 
 
 	if (f_v) {
-		cout << "bent_function_classify::init done" << endl;
+		cout << "boolean_function::init done" << endl;
 	}
 }
 
-void bent_function_classify::init_group(int verbose_level)
+void boolean_function::init_group(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "bent_function_classify::init_group" << endl;
+		cout << "boolean_function::init_group" << endl;
 	}
 
 	int degree = n + 1;
@@ -217,22 +222,23 @@ void bent_function_classify::init_group(int verbose_level)
 	A = NEW_OBJECT(action);
 
 	if (f_v) {
-		cout << "bent_function_classify::init_group "
+		cout << "boolean_function::init_group "
 				"before init_projective_group" << endl;
 	}
 	A->init_projective_group(degree, Fq,
-			FALSE /* f_semilinear */, TRUE /* f_basis */, TRUE /* f_init_sims */,
+			FALSE /* f_semilinear */,
+			TRUE /* f_basis */, TRUE /* f_init_sims */,
 			nice_gens,
 			verbose_level);
 
 	AonHPD = NEW_OBJECT(action_on_homogeneous_polynomials);
 	if (f_v) {
-		cout << "bent_function_classify::init_group "
+		cout << "boolean_function::init_group "
 				"before AonHPD->init" << endl;
 	}
 	AonHPD->init(A, &Poly[n], verbose_level);
 	if (f_v) {
-		cout << "bent_function_classify::init_group "
+		cout << "boolean_function::init_group "
 				"after AonHPD->init" << endl;
 	}
 
@@ -244,13 +250,13 @@ void bent_function_classify::init_group(int verbose_level)
 	Mtx = A->get_matrix_group();
 
 	if (f_v) {
-		cout << "bent_function_classify::init_group "
+		cout << "boolean_function::init_group "
 				"before generators_for_parabolic_subgroup" << endl;
 	}
 	SG->generators_for_parabolic_subgroup(A,
 			Mtx, degree - 1, verbose_level);
 	if (f_v) {
-		cout << "bent_function_classify::init_group "
+		cout << "boolean_function::init_group "
 				"after generators_for_parabolic_subgroup" << endl;
 	}
 
@@ -258,18 +264,18 @@ void bent_function_classify::init_group(int verbose_level)
 
 	SG->group_order(go);
 	if (f_v) {
-		cout << "bent_function_classify::init_group "
+		cout << "boolean_function::init_group "
 				"go=" << go << endl;
 	}
 
 	if (f_v) {
-		cout << "bent_function_classify::init_group "
+		cout << "boolean_function::init_group "
 				"before A->restricted_action" << endl;
 	}
 	A_affine = A->restricted_action(affine_points, Q,
 			verbose_level);
 	if (f_v) {
-		cout << "bent_function_classify::init_group "
+		cout << "boolean_function::init_group "
 				"after A->restricted_action" << endl;
 	}
 
@@ -280,34 +286,38 @@ void bent_function_classify::init_group(int verbose_level)
 	}
 
 
-	#if 0
+#if 0
 	SG->init(A);
 	if (f_v) {
-		cout << "bent_function_classify::init_group "
+		cout << "boolean_function::init_group "
 				"before init_transposed_group" << endl;
 	}
 	SG->init_transposed_group(SGt, verbose_level);
 	if (f_v) {
-		cout << "bent_function_classify::init_group "
+		cout << "boolean_function::init_group "
 				"after init_transposed_group" << endl;
 	}
 #endif
 
 	if (f_v) {
-		cout << "bent_function_classify::init_group done" << endl;
+		cout << "boolean_function::init_group done" << endl;
 	}
 }
 
-void bent_function_classify::setup_polynomial_rings(int verbose_level)
+void boolean_function::setup_polynomial_rings(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int nb_vars;
 	int degree;
 
 	if (f_v) {
-		cout << "bent_function_classify::setup_polynomial_rings" << endl;
+		cout << "boolean_function::setup_polynomial_rings" << endl;
 	}
 	nb_vars = n + 1;
+		// We need one more variable to capture the constants
+		// So, we are really making homogeneous polynomials
+		// for projective space PG(n,2) with n+1 variables.
+
 	Poly = NEW_OBJECTS(homogeneous_polynomial_domain, n + 1);
 
 	A_poly = NEW_pint(n + 1);
@@ -329,14 +339,15 @@ void bent_function_classify::setup_polynomial_rings(int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "bent_function_classify::setup_polynomial_rings done" << endl;
+		cout << "boolean_function::setup_polynomial_rings done" << endl;
 	}
 }
 
-void bent_function_classify::compute_polynomial_representation(
+void boolean_function::compute_polynomial_representation(
 		int *func, int *coeff, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	geometry_global Gg;
 	int s, i, u, v, a, b, c, h, idx;
 	int N;
@@ -345,21 +356,66 @@ void bent_function_classify::compute_polynomial_representation(
 	int *mon;
 
 	if (f_v) {
-		cout << "bent_function_classify::compute_polynomial_representation" << endl;
+		cout << "boolean_function::compute_polynomial_representation" << endl;
+	}
+	N = 1 << n;
+	if (f_v) {
+		cout << "func=" << endl;
+		for (s = 0; s < N; s++) {
+			cout << s << " : " << func[s] << endl;
+		}
+		cout << "Poly[n].nb_monomials=" << Poly[n].nb_monomials << endl;
 	}
 	vec = NEW_int(n);
 	mon = NEW_int(degree);
-	N = 1 << n;
 	int_vec_zero(coeff, Poly[n].nb_monomials);
 	for (s = 0; s < N; s++) {
+
+		// we are making the complement of the function,
+		// so we are skipping all entries which are zero!
+
 		if (func[s]) {
 			continue;
 		}
+
+		if (f_vv) {
+			cout << "the function value at s=" << s << " is " << func[s] << endl;
+			cout << "func=" << endl;
+			for (h = 0; h < N; h++) {
+				cout << h << " : " << func[h] << endl;
+			}
+		}
 		Gg.AG_element_unrank(2, vec, 1, n, s);
+
+
+		// create the polynomial
+		// \prod_{i=0}^{n-1} (x_i+(vec[i]+1)*x_n)
+		// which is one exacly if x_i = vec[i] for i=0..n-1 and x_n = 1.
+		// and zero otherwise.
+		// So this polynomial agrees with the boolean function
+		// on the affine space x_n = 1.
+
 		for (i = 0; i < n; i++) {
+
+
+			if (f_vv) {
+				cout << "s=" << s << " i=" << i << endl;
+			}
+
+			// create the polynomial (x_i+(vec[i]+1)*x_n)
+			// note that x_n stands for the constants
+			// because we are in affine space
 			int_vec_zero(A_poly[1], Poly[1].nb_monomials);
 			A_poly[1][n] = Fq->add(1, vec[i]);
 			A_poly[1][i] = 1;
+
+			if (f_v) {
+				cout << "created the polynomial ";
+				Poly[1].print_equation(cout, A_poly[1]);
+				cout << endl;
+			}
+
+
 			if (i == 0) {
 				int_vec_copy(A_poly[1], B_poly[1], Poly[1].nb_monomials);
 			}
@@ -402,6 +458,26 @@ void bent_function_classify::compute_polynomial_representation(
 		cout << "preliminary result : ";
 		Poly[n].print_equation(cout, coeff);
 		cout << endl;
+
+		int *f;
+		int f_error = FALSE;
+
+		f = NEW_int(Q);
+		evaluate(coeff, f);
+
+		for (h = 0; h < Q; h++) {
+			cout << h << " : " << func[h] << " : " << f[h];
+			if (func[h] == f[h]) {
+				cout << "error";
+				f_error = TRUE;
+			}
+			cout << endl;
+		}
+		if (f_error) {
+			cout << "an error has occured" << endl;
+			exit(1);
+		}
+		FREE_int(f);
 	}
 
 	int_vec_zero(mon, n + 1);
@@ -413,17 +489,40 @@ void bent_function_classify::compute_polynomial_representation(
 		cout << "result : ";
 		Poly[n].print_equation(cout, coeff);
 		cout << endl;
+
+
+		int *f;
+		int f_error = FALSE;
+
+		f = NEW_int(Q);
+		evaluate(coeff, f);
+
+		for (h = 0; h < Q; h++) {
+			cout << h << " : " << func[h] << " : " << f[h];
+			if (func[h] != f[h]) {
+				cout << "error";
+				f_error = TRUE;
+			}
+			cout << endl;
+		}
+		if (f_error) {
+			cout << "an error has occured" << endl;
+			exit(1);
+		}
+		FREE_int(f);
+
+
 	}
 
 	FREE_int(vec);
 	FREE_int(mon);
 
 	if (f_v) {
-		cout << "bent_function_classify::compute_polynomial_representation done" << endl;
+		cout << "boolean_function::compute_polynomial_representation done" << endl;
 	}
 }
 
-void bent_function_classify::evaluate_projectively(int *coeff, int *f)
+void boolean_function::evaluate_projectively(int *coeff, int *f)
 {
 	int i;
 
@@ -433,7 +532,7 @@ void bent_function_classify::evaluate_projectively(int *coeff, int *f)
 
 }
 
-void bent_function_classify::evaluate(int *coeff, int *f)
+void boolean_function::evaluate(int *coeff, int *f)
 {
 	int i;
 	geometry_global Gg;
@@ -446,7 +545,7 @@ void bent_function_classify::evaluate(int *coeff, int *f)
 
 }
 
-void bent_function_classify::raise(int *in, int *out)
+void boolean_function::raise(int *in, int *out)
 {
 	int i;
 
@@ -460,7 +559,7 @@ void bent_function_classify::raise(int *in, int *out)
 	}
 }
 
-void bent_function_classify::apply_Walsh_transform(int *in, int *out)
+void boolean_function::apply_Walsh_transform(int *in, int *out)
 {
 	int i, j;
 
@@ -472,7 +571,7 @@ void bent_function_classify::apply_Walsh_transform(int *in, int *out)
 	}
 }
 
-int bent_function_classify::is_bent(int *T)
+int boolean_function::is_bent(int *T)
 {
 	int i;
 
@@ -489,7 +588,7 @@ int bent_function_classify::is_bent(int *T)
 	}
 }
 
-void bent_function_classify::search(int verbose_level)
+void boolean_function::search_for_bent_functions(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *poly;
@@ -517,7 +616,7 @@ void bent_function_classify::search(int verbose_level)
 
 
 	if (f_v) {
-		cout << "bent_function_classify::search" << endl;
+		cout << "bent_function_classify::search_for_bent_functions" << endl;
 	}
 
 
@@ -584,11 +683,11 @@ void bent_function_classify::search(int verbose_level)
 				Orb = NEW_OBJECT(orbit_of_equations);
 
 				Orb->f_has_print_function = TRUE;
-				Orb->print_function = bent_function_classify_print_function;
+				Orb->print_function = boolean_function_print_function;
 				Orb->print_function_data = this;
 
 				Orb->f_has_reduction = TRUE;
-				Orb->reduction_function = bent_function_classify_reduction_function;
+				Orb->reduction_function = boolean_function_reduction_function;
 				Orb->reduction_function_data = this;
 
 				cout << "orbit " << nb_orbits << ", computing orbit of bent function:" << endl;
@@ -741,15 +840,15 @@ void bent_function_classify::search(int verbose_level)
 	FREE_int(poly);
 
 	if (f_v) {
-		cout << "bent_function_classify::search done" << endl;
+		cout << "boolean_function::search_for_bent_functions done" << endl;
 	}
 }
 
 
 
-void bent_function_classify_print_function(int *poly, int sz, void *data)
+void boolean_function_print_function(int *poly, int sz, void *data)
 {
-	bent_function_classify *BFC = (bent_function_classify *) data;
+	boolean_function *BFC = (boolean_function *) data;
 	geometry_global Gg;
 	longinteger_object a;
 
@@ -763,9 +862,9 @@ void bent_function_classify_print_function(int *poly, int sz, void *data)
 
 }
 
-void bent_function_classify_reduction_function(int *poly, void *data)
+void boolean_function_reduction_function(int *poly, void *data)
 {
-	bent_function_classify *BFC = (bent_function_classify *) data;
+	boolean_function *BFC = (boolean_function *) data;
 
 	if (BFC->dim_kernel) {
 		int i, i1, i2;

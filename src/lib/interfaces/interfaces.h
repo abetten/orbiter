@@ -1,0 +1,274 @@
+/*
+ * interfaces.h
+ *
+ *  Created on: Apr 3, 2020
+ *      Author: betten
+ */
+
+#ifndef SRC_LIB_INTERFACES_INTERFACES_H_
+#define SRC_LIB_INTERFACES_INTERFACES_H_
+
+
+using namespace orbiter::foundations;
+using namespace orbiter::group_actions;
+using namespace orbiter::classification;
+using namespace orbiter::discreta;
+using namespace orbiter::top_level;
+
+
+namespace orbiter {
+
+//! classes for combinatorial objects and their classification
+
+namespace interfaces {
+
+class interface_cryptography;
+class interface_coding_theory;
+
+
+// #############################################################################
+// interface_coding_theory.cpp
+// #############################################################################
+
+//! interface to the coding theory module
+
+
+class interface_coding_theory {
+	int f_make_macwilliams_system;
+	int q;
+	int n;
+	int k;
+public:
+	interface_coding_theory();
+	void print_help(int argc, const char **argv, int i, int verbose_level);
+	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
+	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
+	void worker(int verbose_level);
+	void do_make_macwilliams_system(int q, int n, int k, int verbose_level);
+};
+
+// #############################################################################
+// interface_cryptography.cpp
+// #############################################################################
+
+//! interface to the cryptography module
+
+enum cipher_type { no_cipher_type, substitution, vigenere, affine };
+
+typedef enum cipher_type cipher_type;
+
+class interface_cryptography {
+
+	int f_cipher;
+	cipher_type t;
+	int f_decipher;
+	int f_analyze;
+	int f_kasiski;
+	int f_avk;
+	int key_length, threshold;
+	int affine_a;
+	int affine_b;
+	char ptext[10000];
+	char ctext[10000];
+	char guess[10000];
+	char key[1000];
+	int f_RSA;
+	long int RSA_d;
+	long int RSA_m;
+	const char *RSA_text;
+	int f_primitive_root;
+	int primitive_root_p;
+	int f_inverse_mod;
+	int inverse_mod_a;
+	int inverse_mod_n;
+	int f_power_mod;
+	int power_mod_a;
+	int power_mod_k;
+	int power_mod_n;
+	int f_discrete_log;
+	long int discrete_log_y;
+	long int discrete_log_a;
+	long int discrete_log_m;
+	int f_RSA_setup;
+	int RSA_setup_nb_bits;
+	int RSA_setup_nb_tests_solovay_strassen;
+	int RSA_setup_f_miller_rabin_test;
+	int f_RSA_encrypt_text;
+	int RSA_block_size;
+	const char *RSA_encrypt_text;
+	int f_sift_smooth;
+	int sift_smooth_from;
+	int sift_smooth_len;
+	const char *sift_smooth_factor_base;
+	int f_square_root;
+	const char *square_root_number;
+	int f_square_root_mod;
+	const char *square_root_mod_a;
+	const char *square_root_mod_m;
+	int f_quadratic_sieve;
+	int quadratic_sieve_n;
+	int quadratic_sieve_factorbase;
+	int quadratic_sieve_x0;
+	int f_jacobi;
+	int jacobi_top;
+	int jacobi_bottom;
+	int f_solovay_strassen;
+	int solovay_strassen_p;
+	int solovay_strassen_a;
+	int f_miller_rabin;
+	int miller_rabin_p;
+	int miller_rabin_nb_times;
+	int f_fermat_test;
+	int fermat_test_p;
+	int fermat_test_nb_times;
+	int f_find_pseudoprime;
+	int find_pseudoprime_nb_digits;
+	int find_pseudoprime_nb_fermat;
+	int find_pseudoprime_nb_miller_rabin;
+	int find_pseudoprime_nb_solovay_strassen;
+	int f_find_strong_pseudoprime;
+	int f_miller_rabin_text;
+	int miller_rabin_text_nb_times;
+	const char *miller_rabin_number_text;
+	int f_random;
+	int random_nb;
+	const char *random_fname_csv;
+	int f_random_last;
+	int random_last_nb;
+	int f_affine_sequence;
+	int affine_sequence_a;
+	int affine_sequence_c;
+	int affine_sequence_m;
+	int f_EC_cyclic_subgroup;
+	int EC_q;
+	int EC_b;
+	int EC_c;
+	const char *EC_pt_text;
+	int f_EC_multiple_of;
+	int EC_multiple_of_n;
+	int f_EC_discrete_log;
+	const char *EC_discrete_log_pt_text;
+	int f_nullspace;
+	int nullspace_q;
+	int nullspace_m;
+	int nullspace_n;
+	const char *nullspace_text;
+	int f_RREF;
+	int RREF_q;
+	int RREF_m;
+	int RREF_n;
+	const char *RREF_text;
+	int f_weight_enumerator;
+	int f_normalize_from_the_right;
+	int f_normalize_from_the_left;
+	int f_transversal;
+	int transversal_q;
+	const char *transversal_line_1_basis;
+	const char *transversal_line_2_basis;
+	const char *transversal_point;
+	int f_intersection_of_two_lines;
+	int intersection_of_two_lines_q;
+	const char *line_1_basis;
+	const char *line_2_basis;
+	int f_trace;
+	int trace_q;
+	int f_norm;
+	int norm_q;
+	int f_count_subprimitive;
+	int count_subprimitive_Q_max;
+	int count_subprimitive_H_max;
+
+public:
+	interface_cryptography();
+	void print_help(int argc, const char **argv, int i, int verbose_level);
+	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
+	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
+	void worker(int verbose_level);
+
+	void do_trace(int q, int verbose_level);
+	void do_norm(int q, int verbose_level);
+	void do_intersection_of_two_lines(int q,
+			const char *line_1_basis,
+			const char *line_2_basis,
+			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int verbose_level);
+	void do_transversal(int q,
+			const char *line_1_basis,
+			const char *line_2_basis,
+			const char *point,
+			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int verbose_level);
+	void do_nullspace(int q, int m, int n, const char *text,
+			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int verbose_level);
+	void do_RREF(int q, int m, int n, const char *text,
+			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int verbose_level);
+	void do_weight_enumerator(int q, int m, int n, const char *text,
+			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int verbose_level);
+	void do_EC_cyclic_subgroup(int q, int EC_b, int EC_c, const char *pt_text, int verbose_level);
+	void do_EC_multiple_of(int q, int EC_b, int EC_c, const char *pt_text, int n, int verbose_level);
+	void do_EC_discrete_log(int q, int EC_b, int EC_c,
+			const char *base_pt_text, const char *pt_text, int verbose_level);
+	void make_affine_sequence(int a, int c, int m, int verbose_level);
+	void make_2D_plot(int *orbit, int orbit_len, int cnt, int m, int a, int c, int verbose_level);
+	void do_random_last(int random_nb, int verbose_level);
+	void do_random(int random_nb, const char *fname_csv, int verbose_level);
+	void do_jacobi(int jacobi_top, int jacobi_bottom, int verbose_level);
+	void do_solovay_strassen(int p, int a, int verbose_level);
+	void do_miller_rabin(int p, int nb_times, int verbose_level);
+	void do_fermat_test(int p, int nb_times, int verbose_level);
+	void do_find_pseudoprime(int nb_digits, int nb_fermat, int nb_miller_rabin, int nb_solovay_strassen, int verbose_level);
+	void do_find_strong_pseudoprime(int nb_digits, int nb_fermat, int nb_miller_rabin, int verbose_level);
+	void do_miller_rabin_text(const char *number_text, int nb_miller_rabin, int verbose_level);
+	void quadratic_sieve(int n, int factorbase, int x0, int verbose_level);
+	void calc_log2(std::vector<int> &primes, std::vector<int> &primes_log2, int verbose_level);
+	void square_root(const char *square_root_number, int verbose_level);
+	void square_root_mod(const char *square_root_number, const char *mod_number, int verbose_level);
+	void reduce_primes(std::vector<int> &primes,
+			longinteger_object &M,
+			int &f_found_small_factor, int &small_factor,
+			int verbose_level);
+	void do_sift_smooth(int sift_smooth_from,
+			int sift_smooth_len,
+			const char *sift_smooth_factor_base, int verbose_level);
+	void do_discrete_log(long int y, long int a, long int p, int verbose_level);
+	void do_primitive_root(long int p, int verbose_level);
+	void do_inverse_mod(long int a, long int n, int verbose_level);
+	void do_power_mod(long int a, long int k, long int n, int verbose_level);
+	void do_RSA_encrypt_text(long int RSA_d, long int RSA_m,
+			int RSA_block_size, const char * RSA_encrypt_text, int verbose_level);
+	void do_RSA(long int RSA_d, long int RSA_m, const char *RSA_text, int verbose_level);
+	void affine_cipher(char *ptext, char *ctext, int a, int b);
+	void affine_decipher(char *ctext, char *ptext, char *guess);
+	void vigenere_cipher(char *ptext, char *ctext, char *key);
+	void vigenere_decipher(char *ctext, char *ptext, char *key);
+	void vigenere_analysis(char *ctext);
+	void vigenere_analysis2(char *ctext, int key_length);
+	int kasiski_test(char *ctext, int threshold);
+	void print_candidates(char *ctext,
+			int i, int h, int nb_candidates, int *candidates);
+	void print_set(int l, int *s);
+	void print_on_top(char *text1, char *text2);
+	void decipher(char *ctext, char *ptext, char *guess);
+	void analyze(char *text);
+	double friedman_index(int *mult, int n);
+	double friedman_index_shifted(int *mult, int n, int shift);
+	void print_frequencies(int *mult);
+	void single_frequencies(char *text, int *mult);
+	void single_frequencies2(char *text, int stride, int n, int *mult);
+	void double_frequencies(char *text, int *mult);
+	void substition_cipher(char *ptext, char *ctext, char *key);
+	char lower_case(char c);
+	char upper_case(char c);
+	char is_alnum(char c);
+	void get_random_permutation(char *p);
+
+};
+
+
+}}
+
+
+#endif /* SRC_LIB_INTERFACES_INTERFACES_H_ */

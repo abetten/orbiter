@@ -912,6 +912,55 @@ int main(int argc, const char **argv)
 
 		cout << "computing orbits on points done." << endl;
 
+
+		{
+			int *M;
+			int *O;
+			int h, x, y;
+			int idx, m;
+
+			m = Sch->A->degree;
+
+			M = NEW_int(m * m);
+			O = NEW_int(m);
+
+
+			for (idx = 0; idx < Sch->nb_orbits; idx++) {
+				int_vec_zero(M, m * m);
+				for (h = 0; h < Sch->orbit_len[idx] - 1; h++) {
+					x = Sch->orbit[Sch->orbit_first[idx] + h];
+					y = Sch->orbit[Sch->orbit_first[idx] + h + 1];
+					M[x * m + y] = 1;
+				}
+				for (h = 0; h < Sch->orbit_len[idx] - 1; h++) {
+					x = Sch->orbit[Sch->orbit_first[idx] + h];
+					O[h] = x;
+				}
+				{
+				char fname[1000];
+				file_io Fio;
+
+				sprintf(fname, "orbit_%d_transition.csv", idx);
+				Fio.int_matrix_write_csv(fname, M, m, m);
+
+				cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+				}
+				{
+				char fname[1000];
+				file_io Fio;
+
+				sprintf(fname, "orbit_%d_elts.csv", idx);
+				Fio.int_vec_write_csv(O, Sch->orbit_len[idx],
+						fname, "Elt");
+
+				cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+				}
+			}
+			FREE_int(M);
+			FREE_int(O);
+
+		}
+
 		Sch->print_and_list_orbits(cout);
 
 		char fname_orbits[1000];
@@ -973,6 +1022,8 @@ int main(int argc, const char **argv)
 		poset *Poset;
 
 		Poset = NEW_OBJECT(poset);
+
+
 		Poset->init_subset_lattice(A, A,
 				LG->Strong_gens,
 				verbose_level);
