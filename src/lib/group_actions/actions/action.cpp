@@ -2702,6 +2702,18 @@ int action::is_matrix_group()
 	}
 }
 
+int action::matrix_group_dimension()
+{
+	if (type_G != matrix_group_t) {
+			cout << "action::matrix_group_dimension not a matrix group" << endl;
+			exit(1);
+	}
+	matrix_group *M;
+
+	M = get_matrix_group();
+	return M->n;
+}
+
 int action::is_semilinear_matrix_group()
 {
 	if (!is_matrix_group()) {

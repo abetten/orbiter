@@ -43,15 +43,15 @@ int main(int argc, char **argv)
 		exit(1);
 	}
 
-	bent_function_classify *BFC;
+	boolean_function *BF;
 
-	BFC = NEW_OBJECT(bent_function_classify);
+	BF = NEW_OBJECT(boolean_function);
 
-	BFC->init(n, verbose_level);
+	BF->init(n, verbose_level);
 
-	BFC->search(verbose_level);
+	BF->search_for_bent_functions(verbose_level);
 
-	FREE_OBJECT(BFC);
+	FREE_OBJECT(BF);
 }
 
 

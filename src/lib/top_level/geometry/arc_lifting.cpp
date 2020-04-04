@@ -171,7 +171,7 @@ void arc_lifting::freeself()
 }
 
 
-void arc_lifting::create_surface(surface_with_action *Surf_A, 
+void arc_lifting::create_surface_and_group(surface_with_action *Surf_A,
 	long int *Arc6, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -179,7 +179,7 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 	surface_domain *Surf;
 
 	if (f_v) {
-		cout << "arc_lifting::create_surface" << endl;
+		cout << "arc_lifting::create_surface_and_group" << endl;
 		}
 
 	q = Surf_A->F->q;
@@ -187,13 +187,13 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 
 
 	if (f_v) {
-		cout << "arc_lifting::create_surface "
+		cout << "arc_lifting::create_surface_and_group "
 				"before init" << endl;
 		}
 	init(Surf_A, Arc6, 6, verbose_level);
 		// calls find_Eckardt_points and find_trihedral_pairs
 	if (f_v) {
-		cout << "arc_lifting::create_surface "
+		cout << "arc_lifting::create_surface_and_group "
 				"after init" << endl;
 		}
 
@@ -205,22 +205,22 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 
 
 	if (f_v) {
-		cout << "arc_lifting::create_surface "
+		cout << "arc_lifting::create_surface_and_group "
 				"before lift_prepare" << endl;
 		}
 	lift_prepare(verbose_level - 2);
 	if (f_v) {
-		cout << "arc_lifting::create_surface "
+		cout << "arc_lifting::create_surface_and_group "
 				"after lift_prepare" << endl;
 		}
 
 	if (f_v) {
-		cout << "arc_lifting::create_surface "
+		cout << "arc_lifting::create_surface_and_group "
 				"before print_Eckardt_point_data" << endl;
 		}
 	print_Eckardt_point_data(cout);
 	if (f_v) {
-		cout << "arc_lifting::create_surface "
+		cout << "arc_lifting::create_surface_and_group "
 				"after print_Eckardt_point_data" << endl;
 		}
 
@@ -229,7 +229,7 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 	The_surface_equations = NEW_int((q + 1) * 20);
 	
 	if (f_v) {
-		cout << "arc_lifting::create_surface before "
+		cout << "arc_lifting::create_surface_and_group before "
 				"create_surface_from_trihedral_pair_and_arc"
 				<< endl;
 		}
@@ -240,7 +240,7 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 		lambda, lambda_rk,
 		verbose_level);
 	if (f_v) {
-		cout << "arc_lifting::create_surface after "
+		cout << "arc_lifting::create_surface_and_group after "
 				"create_surface_from_trihedral_pair_and_arc"
 				<< endl;
 		}
@@ -251,7 +251,7 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 
 	
 	if (f_v) {
-		cout << "arc_lifting::create_surface "
+		cout << "arc_lifting::create_surface_and_group "
 				"before create_clebsch_system" << endl;
 		}
 	create_clebsch_system(
@@ -259,14 +259,14 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 		lambda, 
 		0 /* verbose_level */);
 	if (f_v) {
-		cout << "arc_lifting::create_surface "
+		cout << "arc_lifting::create_surface_and_group "
 				"after create_clebsch_system" << endl;
 		}
 
 
 
 	if (f_v) {
-		cout << "arc_lifting::create_surface before "
+		cout << "arc_lifting::create_surface_and_group before "
 				"create_stabilizer_of_trihedral_pair" << endl;
 		}
 	stab_gens = create_stabilizer_of_trihedral_pair(
@@ -274,13 +274,13 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 		trihedral_pair_orbit_index, 
 		verbose_level - 2);
 	if (f_v) {
-		cout << "arc_lifting::create_surface after "
+		cout << "arc_lifting::create_surface_and_group after "
 				"create_stabilizer_of_trihedral_pair" << endl;
 		}
 
 	stab_gens->group_order(stabilizer_of_trihedral_pair_go);
 	if (f_v) {
-		cout << "arc_lifting::create_surface the stabilizer of "
+		cout << "arc_lifting::create_surface_and_group the stabilizer of "
 				"the trihedral pair has order "
 				<< stabilizer_of_trihedral_pair_go << endl;
 		}
@@ -288,7 +288,7 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 
 
 	if (f_v) {
-		cout << "arc_lifting::create_surface before "
+		cout << "arc_lifting::create_surface_and_group before "
 				"create_action_on_equations_and_compute_orbits" << endl;
 		}
 	create_action_on_equations_and_compute_orbits(
@@ -298,13 +298,13 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 		A_on_equations, Orb, 
 		verbose_level - 2);
 	if (f_v) {
-		cout << "arc_lifting::create_surface after "
+		cout << "arc_lifting::create_surface_and_group after "
 				"create_action_on_equations_and_compute_orbits" << endl;
 		}
 
 	
 	if (f_v) {
-		cout << "arc_lifting::create_surface the orbits "
+		cout << "arc_lifting::create_surface_and_group the orbits "
 				"on the pencil of surfaces are:" << endl;
 		}
 	Orb->print_and_list_orbits(cout);
@@ -315,7 +315,7 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 
 
 	if (f_v) {
-		cout << "arc_lifting::create_surface before "
+		cout << "arc_lifting::create_surface_and_group before "
 				"Orb->stabilizer_any_point_plus_cosets" << endl;
 		}
 	gens_subgroup = 
@@ -327,12 +327,12 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 			verbose_level - 2);
 
 	if (f_v) {
-		cout << "arc_lifting::create_surface after "
+		cout << "arc_lifting::create_surface_and_group after "
 				"Orb->stabilizer_any_point_plus_cosets" << endl;
 		}
 
 	if (f_v) {
-		cout << "arc_lifting::create_surface we found the "
+		cout << "arc_lifting::create_surface_and_group we found the "
 				"following coset representatives:" << endl;
 		cosets->print(cout);
 		}
@@ -341,25 +341,25 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 
 
 	if (f_v) {
-		cout << "arc_lifting::create_surface after "
+		cout << "arc_lifting::create_surface_and_group after "
 				"Orb->stabilizer_any_point" << endl;
 		}
 	gens_subgroup->group_order(stab_order);
 	if (f_v) {
-		cout << "arc_lifting::create_surface "
+		cout << "arc_lifting::create_surface_and_group "
 				"The stabilizer of the trihedral pair inside "
 				"the group of the surface has order "
 				<< stab_order << endl;
 		}
 
 	if (f_v) {
-		cout << "arc_lifting::create_surface elements "
+		cout << "arc_lifting::create_surface_and_group elements "
 				"in the stabilizer:" << endl;
 		gens_subgroup->print_elements_ost(cout);
 		}
 
 	if (f_v) {
-		cout << "arc_lifting::create_surface The stabilizer of "
+		cout << "arc_lifting::create_surface_and_group The stabilizer of "
 				"the trihedral pair inside the stabilizer of the "
 				"surface is generated by:" << endl;
 		gens_subgroup->print_generators_tex(cout);
@@ -377,7 +377,7 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 		0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "arc_lifting::create_surface before "
+		cout << "arc_lifting::create_surface_and_group before "
 				"loop_over_trihedral_pairs" << endl;
 		}
 	loop_over_trihedral_pairs(cosets, 
@@ -386,7 +386,7 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 		aut_coset_index, 
 		verbose_level);
 	if (f_v) {
-		cout << "arc_lifting::create_surface after "
+		cout << "arc_lifting::create_surface_and_group after "
 				"loop_over_trihedral_pairs" << endl;
 		cout << "arc_lifting::create_surface we found an "
 				"orbit of length " << coset_reps->len << endl;
@@ -399,7 +399,7 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 	longinteger_object ago;
 	
 	if (f_v) {
-		cout << "arc_lifting::create_surface "
+		cout << "arc_lifting::create_surface_and_group "
 				"Extending the group:" << endl;
 		}
 	Aut_gens = NEW_OBJECT(strong_generators);
@@ -408,16 +408,16 @@ void arc_lifting::create_surface(surface_with_action *Surf_A,
 
 	Aut_gens->group_order(ago);
 	if (f_v) {
-		cout << "arc_lifting::create_surface "
+		cout << "arc_lifting::create_surface_and_group "
 				"The automorphism group has order " << ago << endl;
-		cout << "arc_lifting::create_surface "
+		cout << "arc_lifting::create_surface_and_group "
 				"The automorphism group is:" << endl;
 		Aut_gens->print_generators_tex(cout);
 		}
 	}
 	
 	if (f_v) {
-		cout << "arc_lifting::create_surface done" << endl;
+		cout << "arc_lifting::create_surface_and_group done" << endl;
 		}
 }
 

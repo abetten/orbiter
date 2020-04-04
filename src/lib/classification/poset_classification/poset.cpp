@@ -423,6 +423,8 @@ poset_classification *poset::orbits_on_k_sets_compute(
 
 	Gen->depth = k;
 
+	Gen->f_W = TRUE;
+
 	if (f_v) {
 		cout << "poset::orbits_on_k_sets_compute calling Gen->init" << endl;
 		}

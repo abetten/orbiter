@@ -351,6 +351,7 @@ public:
 	void make_element_which_moves_a_line_in_PG3q(grassmann *Gr,
 		long int line_rk, int *Elt, int verbose_level);
 	int is_matrix_group();
+	int matrix_group_dimension();
 	int is_semilinear_matrix_group();
 	int is_projective();
 	int is_affine();

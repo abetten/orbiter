@@ -267,7 +267,7 @@ void elliptic_curve::print_points()
 {
 	int i;
 	
-	cout << "i : point (x,y,x)" << endl;
+	cout << "i : point (x,y,z)" << endl;
 	for (i = 0; i < nb; i++) {
 		cout << setw(4) << i << " & " << T[i * 3 + 0] << ","
 				<< T[i * 3 + 1] << "," << T[i * 3 + 2] << "\\\\" << endl;
@@ -278,7 +278,7 @@ void elliptic_curve::print_points_affine()
 {
 	int i;
 	
-	cout << "i : point (x,y,x)" << endl;
+	cout << "i : point (x,y,z)" << endl;
 	for (i = 0; i < nb; i++) {
 		cout << setw(4) << i << " & ";
 		if (T[i * 3 + 2] == 0) {
@@ -293,76 +293,26 @@ void elliptic_curve::print_points_affine()
 
 
 void elliptic_curve::addition(
-	int x1, int x2, int x3, 
-	int y1, int y2, int y3, 
-	int &z1, int &z2, int &z3, int verbose_level)
+	int x1, int y1, int z1,
+	int x2, int y2, int z2,
+	int &x3, int &y3, int &z3, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int a, two, three, top, bottom, m;
 	
 	if (f_v) {
 		cout << "elliptic_curve::addition: ";
-		cout << "(" << x1 << "," << x2 << "," << x3 << ")";
+		cout << "(" << x1 << "," << y1 << "," << z1 << ")";
 		cout << " + ";
-		cout << "(" << y1 << "," << y2 << "," << y3 << ")";
+		cout << "(" << x2 << "," << y2 << "," << z2 << ")";
 		cout << endl;
 	}
-	if (x3 == 0) {
-		z1 = y1;
-		z2 = y2;
-		z3 = y3;
-		return;
+	F->elliptic_curve_addition(b, c,
+			x1, y1, z1,
+			x2, y2, z2,
+			x3, y3, z3, verbose_level);
+	if (f_v) {
+		cout << "elliptic_curve::addition done";
 	}
-	if (y3 == 0) {
-		z1 = x1;
-		z2 = x2;
-		z3 = x3;
-		return;
-	}
-	if (x3 != 1) {
-		a = F->inverse(x3);
-		x1 = F->mult(x1, a);
-		x2 = F->mult(x2, a);
-	}
-	if (y3 != 1) {
-		a = F->inverse(y3);
-		y1 = F->mult(y1, a);
-		y2 = F->mult(y2, a);
-	}
-	if (x1 == y1 && x2 != y2) {
-		if (F->negate(x2) != y2) {
-			cout << "x1 == y1 && x2 != y2 && F.negate(x2) != y2" << endl;
-			exit(1);
-		}
-		z1 = 0;
-		z2 = 1;
-		z3 = 0;
-		return;
-	}
-	if (x1 == y1 && x2 == 0 && y2 == 0) {
-		z1 = 0;
-		z2 = 1;
-		z3 = 0;
-		return;
-	}
-	if (x1 == y1 && x2 == y2) {
-		two = F->add(1, 1);
-		three = F->add(two, 1);
-		top = F->add(F->mult(three, F->mult(x1, x1)), b);
-		bottom = F->mult(two, x2);
-		a = F->inverse(bottom);
-			// this does not work in characteristic two !!!
-		m = F->mult(top, a);
-	}
-	else {
-		top = F->add(y2, F->negate(x2));
-		bottom = F->add(y1, F->negate(x1));
-		a = F->inverse(bottom);
-		m = F->mult(top, a);
-	}
-	z1 = F->add(F->add(F->mult(m, m), F->negate(x1)), F->negate(y1));
-	z2 = F->add(F->mult(m, F->add(x1, F->negate(z1))), F->negate(x2));
-	z3 = 1;
 }
 
 void elliptic_curve::save_incidence_matrix(char *fname,
@@ -392,7 +342,10 @@ void elliptic_curve::save_incidence_matrix(char *fname,
 		M[(q - 1 - y) * q + x] = 1;
 	}
 	Fio.int_matrix_write_csv(fname, M, q, q);
-	cout << "elliptic_curve::save_incidence_matrix written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "elliptic_curve::save_incidence_matrix written file "
+				<< fname << " of size " << Fio.file_size(fname) << endl;
+	}
 	FREE_int(M);
 	if (f_v) {
 		cout << "elliptic_curve::save_incidence_matrix done" << endl;
@@ -400,7 +353,9 @@ void elliptic_curve::save_incidence_matrix(char *fname,
 }
 
 void elliptic_curve::draw_grid(char *fname,
-		int xmax, int ymax, int f_with_grid, int f_with_points,
+		double tikz_global_scale, double tikz_global_line_width,
+		int xmax, int ymax, int f_with_grid, int f_with_points, int point_density,
+		int f_path, int start_idx, int nb_steps,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -417,17 +372,23 @@ void elliptic_curve::draw_grid(char *fname,
 	sprintf(fname_full, "%s.mp", fname);
 	{
 		mp_graphics G(fname_full,
-				x_min, y_min, x_max, y_max, f_embedded, f_sideways, verbose_level - 1);
+				x_min, y_min, x_max, y_max, f_embedded, f_sideways,
+				verbose_level - 1);
 		G.out_xmin() = 0;
 		G.out_ymin() = 0;
 		G.out_xmax() = xmax;
 		G.out_ymax() = ymax;
 		cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
 
+		G.tikz_global_scale = tikz_global_scale; // .45;
+		G.tikz_global_line_width = tikz_global_line_width; // 1.5;
+
 		G.header();
 		G.begin_figure(factor_1000);
 
-		draw_grid2(G, f_with_grid, f_with_points, verbose_level);
+		draw_grid2(G, f_with_grid, f_with_points, point_density,
+				f_path, start_idx, nb_steps,
+				verbose_level);
 	
 	
 		G.end_figure();
@@ -445,10 +406,12 @@ void elliptic_curve::draw_grid(char *fname,
 
 
 void elliptic_curve::draw_grid2(mp_graphics &G,
-		int f_with_grid, int f_with_points, int verbose_level)
+		int f_with_grid, int f_with_points, int point_density,
+		int f_path, int start_idx, int nb_steps,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int a, b;
+	int a, b, c, d;
 	int x1, x2, x3;
 
 	//int rad = 10000;
@@ -514,29 +477,11 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 	}
 #endif
 
-	G.sl_thickness(1);
-	Dx[0] = 0;
-	Dy[0] = 0;
-	Dx[1] = q + 1;
-	Dy[1] = 0;
-	Dx[2] = q + 1;
-	Dy[2] = q + 1;
-	Dx[3] = 0;
-	Dy[3] = q + 1;
-	Dx[4] = 0;
-	Dy[4] = 0;
-
-	for (i = 0; i < 5; i++) {
-		Px[i] = Dx[i] * dx;
-		Py[i] = Dy[i] * dy;
-	}
-
-
-	G.polygon5(Px, Py, 0, 1, 2, 3, 4);
-
 
 	if (f_with_points) {
 
+		G.sf_color(1 /* fill_color*/);
+		G.sf_interior(point_density /* fill_interior */);
 		if (f_v) {
 			cout << "drawing points, nb=" << nb << endl;
 		}
@@ -570,9 +515,11 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 
 			cout << "point " << h << " : "
 					<< x1 << ", " << x2 << ", " << x3
-					<< " : " << a << ", " << b << " : " << Px[0] << "," << Py[0] << endl;
+					<< " : " << a << ", " << b
+					<< " : " << Px[0] << "," << Py[0]
+					<< endl;
 
-			//G.nice_circle(Px[0], Py[0], rad);
+			//G.circle(Px[0], Py[0], rad);
 			G.fill_polygon5(Px, Py, 0, 1, 2, 3, 4);
 		}
 
@@ -602,38 +549,67 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 
 
 
-#if 0
-	if (start_idx < 0) {
-		goto done;
-		}
-	G.sl_ends(0 /* line_beg_style */, 1 /* line_end_style*/);
-	
-	int ord;
+	if (f_path) {
+		G.sl_ends(0 /* line_beg_style */, 1 /* line_end_style*/);
+		G.sl_thickness(100 /* line_thickness*/);
 
-	if (f_v) {
-		cout << "drawing multiples of point" << endl;
-		}
-	i = start_idx;
-	ord = 1;
-	while (TRUE) {
-		x1 = E->T[3 * i + 0];
-		x2 = E->T[3 * i + 1];
-		x3 = E->T[3 * i + 2];
-		j = E->A[i * E->nb + start_idx];
-		ord++;
-		y1 = E->T[3 * j + 0];
-		y2 = E->T[3 * j + 1];
-		y3 = E->T[3 * j + 2];
-		get_ab(q, x1, x2, x3, a, b);
-		get_ab(q, y1, y2, y3, c, d);
-		G.polygon2(Px, Py, a * Q + b, c * Q + d);
-		if (j == E->nb - 1) {
-			cout << "point P_" << start_idx << " has order " << ord << endl;
-			break;
+		int h, j;
+		int y1, y2, y3;
+	
+		if (f_v) {
+			cout << "drawing multiples of point" << endl;
 			}
-		i = j;
+		i = start_idx;
+		for (h = 0; h < nb_steps; h++) {
+			x1 = T[3 * i + 0];
+			x2 = T[3 * i + 1];
+			x3 = T[3 * i + 2];
+			j = A[i * nb + start_idx];
+			y1 = T[3 * j + 0];
+			y2 = T[3 * j + 1];
+			y3 = T[3 * j + 2];
+			make_affine_point(x1, x2, x3, a, b, 0);
+			make_affine_point(y1, y2, y3, c, d, 0);
+
+			Dx[0] = a;
+			Dy[0] = b;
+			Dx[1] = c;
+			Dy[1] = d;
+
+			for (i = 0; i < 2; i++) {
+				Px[i] = Dx[i] * dx + dx / 2;
+				Py[i] = Dy[i] * dy + dy / 2;
+			}
+
+			G.polygon2(Px, Py, 0, 1);
+			i = j;
 		}
-#endif
+	}
+
+
+	// draw the outline box last, so it overlaps all other elements:
+
+	G.sl_ends(0 /* line_beg_style */, 0 /* line_end_style*/);
+
+	G.sl_thickness(100);
+	Dx[0] = 0;
+	Dy[0] = 0;
+	Dx[1] = q + 1;
+	Dy[1] = 0;
+	Dx[2] = q + 1;
+	Dy[2] = q + 1;
+	Dx[3] = 0;
+	Dy[3] = q + 1;
+	Dx[4] = 0;
+	Dy[4] = 0;
+
+	for (i = 0; i < 5; i++) {
+		Px[i] = Dx[i] * dx;
+		Py[i] = Dy[i] * dy;
+	}
+
+
+	G.polygon5(Px, Py, 0, 1, 2, 3, 4);
 
 
 
@@ -695,6 +671,10 @@ void elliptic_curve::make_affine_point(int x1, int x2, int x3,
 		b = q;
 	}
 	else {
+		if (x3 != 1) {
+			cout << "x3 != 1" << endl;
+			exit(1);
+		}
 		a = x1;
 		b = x2;
 	}
@@ -890,6 +870,68 @@ int elliptic_curve::index_of_point(int x1, int x2, int x3)
 #endif
 	return l;
 }
+
+void elliptic_curve::latex_points_with_order(ostream &ost)
+{
+	vector<int> Ord;
+	int *p;
+	int i;
+	latex_interface L;
+
+	order_of_all_points(Ord);
+	p = NEW_int(Ord.size());
+	for (i = 0; i < Ord.size(); i++) {
+		p[i] = Ord[i];
+	}
+
+
+	ost << "\\begin{array}{|r|r|r|}" << endl;
+
+	ost << "\\hline" << endl;
+	for (i = 0; i < nb; i++) {
+		ost <<  i << " & ";
+		if (i) {
+			ost << "(" << T[3 * i + 0] << "," << T[3 * i + 1] << ")";
+		}
+		else {
+			ost << "{\\cal O}";
+		}
+		ost << " & " << p[i];
+		ost << "\\\\";
+		ost << endl;
+		}
+	ost << "\\end{array}" << endl;
+}
+
+
+void elliptic_curve::latex_order_of_all_points(ostream &ost)
+{
+	vector<int> Ord;
+	int *p;
+	int i;
+	latex_interface L;
+
+	order_of_all_points(Ord);
+	p = NEW_int(Ord.size());
+	for (i = 0; i < Ord.size(); i++) {
+		p[i] = Ord[i];
+	}
+	L.print_integer_matrix_with_standard_labels(ost,
+			p, Ord.size(), 1, TRUE /* f_tex */);
+	FREE_int(p);
+}
+
+void elliptic_curve::order_of_all_points(vector<int> &Ord)
+{
+	int i;
+	int ord;
+
+	for (i = 0; i < nb; i++) {
+		ord = order_of_point(i);
+		Ord.push_back(ord);
+	}
+}
+
 
 int elliptic_curve::order_of_point(int i)
 {

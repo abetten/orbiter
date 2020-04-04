@@ -1,4 +1,4 @@
-// projective_space.cpp
+// hill_cap.cpp
 // 
 // Anton Betten
 //

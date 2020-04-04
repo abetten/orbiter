@@ -14,14 +14,14 @@ namespace top_level {
 
 
 // #############################################################################
-// bent_function_classify.cpp
+// boolean_function.cpp
 // #############################################################################
 
 
-//! classification of bent functions
+//! boolean function
 
 
-class bent_function_classify {
+class boolean_function {
 public:
 	int n;
 	int n2; // n / 2
@@ -35,6 +35,8 @@ public:
 	finite_field *FQ; // the field of order 2^n
 
 	homogeneous_polynomial_domain *Poly;
+		// Poly[i] = polynomial of degree i in n + 1 variables.
+		// i = 1,..,n
 	int **A_poly;
 	int **B_poly;
 	int *Kernel;
@@ -64,8 +66,8 @@ public:
 
 
 
-	bent_function_classify();
-	~bent_function_classify();
+	boolean_function();
+	~boolean_function();
 	void init(int n, int verbose_level);
 	void init_group(int verbose_level);
 	void setup_polynomial_rings(int verbose_level);
@@ -75,12 +77,12 @@ public:
 	void raise(int *in, int *out);
 	void apply_Walsh_transform(int *in, int *out);
 	int is_bent(int *T);
-	void search(int verbose_level);
+	void search_for_bent_functions(int verbose_level);
 };
 
 
-void bent_function_classify_print_function(int *poly, int sz, void *data);
-void bent_function_classify_reduction_function(int *poly, void *data);
+void boolean_function_print_function(int *poly, int sz, void *data);
+void boolean_function_reduction_function(int *poly, void *data);
 
 
 // #############################################################################

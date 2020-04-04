@@ -348,7 +348,7 @@ void surface_create::init2(int verbose_level)
 			cout << "surface_create::init2 before "
 					"AL->create_surface" << endl;
 		}
-		AL->create_surface(Surf_A, arc, verbose_level);
+		AL->create_surface_and_group(Surf_A, arc, verbose_level);
 		if (f_v) {
 			cout << "surface_create::init2 after "
 					"AL->create_surface" << endl;
@@ -438,10 +438,11 @@ void surface_create::init2(int verbose_level)
 		}
 
 		int_vec_copy(AL->coeff, coeffs, 20);
+		lint_vec_copy(AL->lines27, Lines, 27);
 
 		//Sg = AL->Aut_gens->create_copy();
 		f_has_group = FALSE;
-		f_has_lines = FALSE;
+		f_has_lines = TRUE;
 		sprintf(prefix, "arc_q%d", F->q);
 		sprintf(label_txt, "arc_q%d", F->q);
 		sprintf(label_tex, "arc\\_q%d", F->q);

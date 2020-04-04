@@ -126,7 +126,7 @@ class cayley_graph_search;
 class hadamard_classify;
 class linear_set_classify;
 class delandtsheer_doyen;
-class bent_function_classify;
+class boolean_function;
 class hermitian_spread_classify;
 class surface_study;
 class pentomino_puzzle;

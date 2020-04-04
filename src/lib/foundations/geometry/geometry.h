@@ -691,19 +691,28 @@ public:
 	void print_points();
 	void print_points_affine();
 	void addition(
-		int x1, int x2, int x3,
-		int y1, int y2, int y3,
-		int &z1, int &z2, int &z3, int verbose_level);
+		int x1, int y1, int z1,
+		int x2, int y2, int z2,
+		int &x3, int &y3, int &z3, int verbose_level);
 	void save_incidence_matrix(char *fname, int verbose_level);
-	void draw_grid(char *fname, int xmax, int ymax,
-			int f_with_grid, int f_with_points, int verbose_level);
+	void draw_grid(char *fname,
+			double tikz_global_scale, double tikz_global_line_width,
+			int xmax, int ymax,
+			int f_with_grid, int f_with_points, int point_density,
+			int f_path, int start_idx, int nb_steps,
+			int verbose_level);
 	void draw_grid2(mp_graphics &G,
-			int f_with_grid, int f_with_points, int verbose_level);
+			int f_with_grid, int f_with_points, int point_density,
+			int f_path, int start_idx, int nb_steps,
+			int verbose_level);
 	void make_affine_point(int x1, int x2, int x3,
 		int &a, int &b, int verbose_level);
 	void compute_addition_table(int verbose_level);
 	void print_addition_table();
 	int index_of_point(int x1, int x2, int x3);
+	void latex_points_with_order(std::ostream &ost);
+	void latex_order_of_all_points(std::ostream &ost);
+	void order_of_all_points(std::vector<int> &Ord);
 	int order_of_point(int i);
 	void print_all_powers(int i);
 };
@@ -2359,6 +2368,7 @@ public:
 		int verbose_level);
 	int is_contained_in_Baer_subline(long int *pts, int nb_pts,
 		int verbose_level);
+	void report(std::ostream &ost);
 
 	// projective_space2.cpp:
 	void print_set_numerical(std::ostream &ost, long int *set, int set_size);

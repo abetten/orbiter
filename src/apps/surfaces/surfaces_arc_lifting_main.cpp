@@ -55,7 +55,7 @@ int main(int argc, const char **argv)
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
 			cout << "-verbose_level " << verbose_level << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-linear4") == 0) {
 			f_linear4 = TRUE;
 			Descr4 = NEW_OBJECT(linear_group_description);
@@ -63,7 +63,7 @@ int main(int argc, const char **argv)
 				argv + i, verbose_level);
 
 			cout << "-linear4" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-linear3") == 0) {
 			f_linear3 = TRUE;
 			Descr3 = NEW_OBJECT(linear_group_description);
@@ -71,33 +71,33 @@ int main(int argc, const char **argv)
 				argv + i, verbose_level);
 
 			cout << "-linear3" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-draw_poset_of_six_arcs") == 0) {
 			f_draw_poset_of_six_arcs = TRUE;
 			cout << "-draw_poset_of_six_arcs" << endl;
-			}
+		}
 #if 0
 		else if (strcmp(argv[i], "-draw_poset_full") == 0) {
 			f_draw_poset_full = TRUE;
 			cout << "-draw_poset_full" << endl;
-			}
+		}
 #endif
 		else if (strcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			cout << "-report" << endl;
-			}
 		}
+	}
 
 
 	if (!f_linear4) {
 		cout << "please use option -linear4 ..." << endl;
 		exit(1);
-		}
+	}
 
 	if (!f_linear3) {
 		cout << "please use option -linear3 ..." << endl;
 		exit(1);
-		}
+	}
 
 
 	int f_v = (verbose_level >= 1);
@@ -124,17 +124,17 @@ int main(int argc, const char **argv)
 
 	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
-		}
+	}
 	else {
 		f_semilinear = TRUE;
-		}
+	}
 #endif
 
 	LG4 = NEW_OBJECT(linear_group);
 	if (f_v) {
 		cout << "surface_classify before LG4->init, "
 				"creating the group" << endl;
-		}
+	}
 
 	LG4->init(Descr4, verbose_level - 10);
 
@@ -215,6 +215,7 @@ int main(int argc, const char **argv)
 
 
 #if 0
+	Classify_trihedral_pairs = NEW_OBJECT(classify_trihedral_pairs);
 	if (f_v) {
 		cout << "before Surf_A->Classify_trihedral_"
 				"pairs->classify" << endl;
