@@ -369,7 +369,8 @@ MODULES= \
 		top_level/solver/exact_cover.o \
 		top_level/solver/exact_cover_arguments.o \
 		interfaces/interface_coding_theory.o \
-		interfaces/interface_cryptography.o
+		interfaces/interface_cryptography.o \
+		interfaces/interface_povray.o
 
 
 all:

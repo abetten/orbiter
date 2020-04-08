@@ -10,8 +10,10 @@
 #include "orbiter.h"
 
 using namespace std;
-using namespace orbiter;
-using namespace orbiter::interfaces;
+
+
+namespace orbiter {
+namespace interfaces {
 
 
 interface_cryptography::interface_cryptography()
@@ -3539,4 +3541,6 @@ void interface_cryptography::get_random_permutation(char *p)
 		l--;
 	}
 }
+
+}}
 

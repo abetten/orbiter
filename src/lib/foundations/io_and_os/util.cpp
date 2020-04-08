@@ -1969,6 +1969,44 @@ int s_scan_lint(char **s, long int *i)
 	return TRUE;
 }
 
+int s_scan_double(char **s, double *d)
+{
+	char str1[512];
+	char c;
+	int len;
+
+	//cout << "s_scan_double input='" << *s << "'" << endl;
+	while (TRUE) {
+		c = **s;
+		if (c == 0) {
+			return(FALSE);
+			}
+		if (c == ' ' || c == '\t' ||
+			c == '\r' || c == 10 || c == 13) {
+			(*s)++;
+			continue;
+			}
+		break;
+		}
+	len = 0;
+	c = **s;
+	if (isdigit(c)) {
+		//cout << "s_scan_double character '" << c << "'" << endl;
+		while (isdigit(c) || c == '.' || c == 'e' || c == '-') {
+			str1[len] = c;
+			len++;
+			(*s)++;
+			c = **s;
+			//cout << "character '" << c << "'" << endl;
+			//<< *s << "'" << endl;
+			}
+		str1[len] = 0;
+		}
+	//cout << "s_scan_double token = " << str1 << endl;
+	sscanf(str1, "%lf", d);
+	return TRUE;
+}
+
 int s_scan_token(char **s, char *str)
 {
 	char c;

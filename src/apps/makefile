@@ -2,7 +2,6 @@ all:
 	cd algebra; $(MAKE) all
 	cd arcs; $(MAKE) all
 	cd blt; $(MAKE) all
-	cd codes; $(MAKE) all
 	cd combinatorics; $(MAKE) all
 	cd graph_theory; $(MAKE) all
 	cd groups; $(MAKE) all
@@ -26,7 +25,6 @@ clean:
 	cd algebra; $(MAKE) clean
 	cd arcs; $(MAKE) clean
 	cd blt; $(MAKE) clean
-	cd codes; $(MAKE) clean
 	cd combinatorics; $(MAKE) clean
 	cd ginac; $(MAKE) clean
 	cd graph_theory; $(MAKE) clean
@@ -49,7 +47,6 @@ install:
 	cd algebra; $(MAKE) install
 	cd arcs; $(MAKE) install
 	cd blt; $(MAKE) install
-	cd codes; $(MAKE) install
 	cd combinatorics; $(MAKE) install
 	cd graph_theory; $(MAKE) install
 	cd groups; $(MAKE) install

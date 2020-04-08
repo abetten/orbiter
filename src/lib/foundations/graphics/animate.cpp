@@ -2262,9 +2262,9 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
-		S->Point_coords[idx * 3 + 0],
-		S->Point_coords[idx * 3 + 1],
-		S->Point_coords[idx * 3 + 2],
+		S->point_coords(idx, 0),
+		S->point_coords(idx, 1),
+		S->point_coords(idx, 2),
 		up_x, up_y, up_z,
 		view[0], view[1], view[2],
 		fp, verbose_level - 1);
@@ -2273,9 +2273,9 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
-		S->Point_coords[idx * 3 + 0],
-		S->Point_coords[idx * 3 + 1],
-		S->Point_coords[idx * 3 + 2],
+		S->point_coords(idx, 0),
+		S->point_coords(idx, 1),
+		S->point_coords(idx, 2),
 		up_x, up_y, up_z,
 		view[0], view[1], view[2],
 		fp, verbose_level - 1);
@@ -2284,9 +2284,9 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
-		S->Point_coords[idx * 3 + 0],
-		S->Point_coords[idx * 3 + 1],
-		S->Point_coords[idx * 3 + 2],
+		S->point_coords(idx, 0),
+		S->point_coords(idx, 1),
+		S->point_coords(idx, 2),
 		up_x, up_y, up_z,
 		view[0], view[1], view[2],
 		fp, verbose_level - 1);
@@ -2295,9 +2295,9 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
-		S->Point_coords[idx * 3 + 0],
-		S->Point_coords[idx * 3 + 1],
-		S->Point_coords[idx * 3 + 2],
+		S->point_coords(idx, 0),
+		S->point_coords(idx, 1),
+		S->point_coords(idx, 2),
 		up_x, up_y, up_z,
 		view[0], view[1], view[2],
 		fp, verbose_level - 1);
@@ -2306,9 +2306,9 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
-		S->Point_coords[idx * 3 + 0],
-		S->Point_coords[idx * 3 + 1],
-		S->Point_coords[idx * 3 + 2],
+		S->point_coords(idx, 0),
+		S->point_coords(idx, 1),
+		S->point_coords(idx, 2),
 		up_x, up_y, up_z,
 		view[0], view[1], view[2],
 		fp, verbose_level - 1);
@@ -2317,9 +2317,9 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
-		S->Point_coords[idx * 3 + 0],
-		S->Point_coords[idx * 3 + 1],
-		S->Point_coords[idx * 3 + 2],
+		S->point_coords(idx, 0),
+		S->point_coords(idx, 1),
+		S->point_coords(idx, 2),
 		up_x, up_y, up_z,
 		view[0], view[1], view[2],
 		fp, verbose_level - 1);
@@ -2792,7 +2792,11 @@ void animate::draw_frame_windy(
 
 	// let varphi be the dual coordinates of the bottom plane
 	// (which is plane 2)
-	N.vec_copy(S->Plane_coords + 2 * 4, varphi, 4);
+	varphi[0] = S->plane_coords(2, 0);
+	varphi[1] = S->plane_coords(2, 1);
+	varphi[2] = S->plane_coords(2, 2);
+	varphi[3] = S->plane_coords(2, 3);
+	//N.vec_copy(S->Plane_coords + 2 * 4, varphi, 4);
 
 	// change from povray coordinates to homogeneous coordinates in PG(3,q):
 	varphi[3] *= -1.;

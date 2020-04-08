@@ -24,6 +24,7 @@ namespace interfaces {
 
 class interface_cryptography;
 class interface_coding_theory;
+class interface_povray;
 
 
 // #############################################################################
@@ -34,10 +35,15 @@ class interface_coding_theory;
 
 
 class interface_coding_theory {
+	int argc;
+	const char **argv;
+
 	int f_make_macwilliams_system;
 	int q;
 	int n;
 	int k;
+	int f_codes_classify;
+
 public:
 	interface_coding_theory();
 	void print_help(int argc, const char **argv, int i, int verbose_level);
@@ -45,6 +51,7 @@ public:
 	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
 	void worker(int verbose_level);
 	void do_make_macwilliams_system(int q, int n, int k, int verbose_level);
+	void do_codes_classify(int verbose_level);
 };
 
 // #############################################################################
@@ -266,6 +273,46 @@ public:
 	void get_random_permutation(char *p);
 
 };
+
+// #############################################################################
+// interface_povray.cpp
+// #############################################################################
+
+//! interface to the povray rendering module
+
+
+class interface_povray {
+	int argc;
+	const char **argv;
+
+	int f_output_mask;
+	const char *output_mask;
+	int f_nb_frames_default;
+	int nb_frames_default;
+	int f_round;
+	int round;
+	int f_rounds;
+	const char *rounds_as_string;
+	video_draw_options *Opt;
+
+	// for povray_worker:
+	scene *S;
+	animate *A;
+
+public:
+	interface_povray();
+	void print_help(int argc, const char **argv, int i, int verbose_level);
+	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
+	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
+	void worker(int verbose_level);
+};
+
+void interface_povray_draw_frame(
+	animate *Anim, int h, int nb_frames, int round,
+	double clipping_radius,
+	std::ostream &fp,
+	int verbose_level);
+
 
 
 }}

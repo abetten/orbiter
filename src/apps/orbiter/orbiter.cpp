@@ -2,7 +2,7 @@
 //
 // by Anton Betten
 //
-// startedL 4/3/2020
+// started: 4/3/2020
 //
 
 #include "orbiter.h"
@@ -51,11 +51,31 @@ int main(int argc, const char **argv)
 		srand(the_seed);
 	}
 
-	interface_cryptography Interface_cryptography;
+	{
+		interface_cryptography Interface_cryptography;
 
-	if (Interface_cryptography.recognize_keyword(argc, argv, i, verbose_level)) {
-		Interface_cryptography.read_arguments(argc, argv, i, verbose_level);
-		Interface_cryptography.worker(verbose_level);
+		if (Interface_cryptography.recognize_keyword(argc, argv, i, verbose_level)) {
+			Interface_cryptography.read_arguments(argc, argv, i, verbose_level);
+			Interface_cryptography.worker(verbose_level);
+		}
+	}
+
+	{
+		interface_coding_theory Interface_coding_theory;
+
+		if (Interface_coding_theory.recognize_keyword(argc, argv, i, verbose_level)) {
+			Interface_coding_theory.read_arguments(argc, argv, i, verbose_level);
+			Interface_coding_theory.worker(verbose_level);
+		}
+	}
+
+	{
+		interface_povray Interface_povray;
+
+		if (Interface_povray.recognize_keyword(argc, argv, i, verbose_level)) {
+			Interface_povray.read_arguments(argc, argv, i, verbose_level);
+			Interface_povray.worker(verbose_level);
+		}
 	}
 
 

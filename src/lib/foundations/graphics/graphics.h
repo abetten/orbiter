@@ -618,14 +618,14 @@ public:
 // scene.cpp
 // #############################################################################
 
-#define SCENE_MAX_LINES 100000
-#define SCENE_MAX_EDGES 100000
-#define SCENE_MAX_POINTS 100000
-#define SCENE_MAX_PLANES 10000
-#define SCENE_MAX_QUADRICS 10000
-#define SCENE_MAX_QUARTICS 1000
-#define SCENE_MAX_CUBICS 10000
-#define SCENE_MAX_FACES 10000
+#define SCENE_MAX_LINES    100000
+#define SCENE_MAX_EDGES    100000
+#define SCENE_MAX_POINTS   100000
+#define SCENE_MAX_PLANES    10000
+#define SCENE_MAX_QUADRICS  10000
+#define SCENE_MAX_QUARTICS   1000
+#define SCENE_MAX_CUBICS    10000
+#define SCENE_MAX_FACES    100000
 
 
 //! a collection of 3D geometry objects
@@ -633,43 +633,54 @@ public:
 
 
 class scene {
-public:
 	
-	double line_radius;
+private:
 
-	int nb_lines;
 	double *Line_coords;
 		// [nb_lines * 6] a line is given by two points
-	
-	int nb_edges;
+
 	int *Edge_points;
 		// [nb_edges * 2]
 
-	int nb_points;
 	double *Point_coords;
 		// [nb_points * 3]
 
-	int nb_planes;
 	double *Plane_coords;
 		// [nb_planes * 4]
 		// the four parameters A,B,C,D as needed for the povray command
 		// plane{<A,B,C>, D}
 
-	int nb_quadrics;
 	double *Quadric_coords;
 		// [nb_quadrics * 10]
 
-	int nb_cubics;
 	double *Cubic_coords;
 		// [nb_cubics * 20]
 
-	int nb_quartics;
 	double *Quartic_coords;
 		// [nb_quartics * 35]
 
-	int nb_faces;
 	int *Nb_face_points; // [nb_faces]
 	int **Face_points; // [nb_faces]
+
+public:
+
+	double line_radius;
+
+	int nb_lines;
+
+	int nb_edges;
+
+	int nb_points;
+
+	int nb_planes;
+
+	int nb_quadrics;
+
+	int nb_cubics;
+
+	int nb_quartics;
+
+	int nb_faces;
 
 
 	
@@ -684,6 +695,15 @@ public:
 	~scene();
 	void null();
 	void freeself();
+	double point_coords(int idx, int j);
+	double line_coords(int idx, int j);
+	double plane_coords(int idx, int j);
+	double cubic_coords(int idx, int j);
+	int edge_points(int idx, int j);
+	void print_point_coords(int idx);
+	double point_distance_euclidean(int pt_idx, double *y);
+	double point_distance_from_origin(int pt_idx);
+	double distance_euclidean_point_to_point(int pt1_idx, int pt2_idx);
 	void init(int verbose_level);
 	scene *transformed_copy(double *A4, double *A4_inv, 
 		double rad, int verbose_level);
@@ -876,7 +896,7 @@ public:
 	void print_a_line(int line_idx);
 	void print_a_plane(int plane_idx);
 	void print_a_face(int face_idx);
-
+	void read_obj_file(const char *fname, int verbose_level);
 };
 
 
