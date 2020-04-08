@@ -89,6 +89,118 @@ void scene::freeself()
 	null();
 }
 
+double scene::point_coords(int idx, int j)
+{
+	if (idx >= nb_points) {
+		cout << "scene::point_coords idx >= nb_points, "
+				"idx=" << idx << " nb_points=" << nb_points << endl;
+		exit(1);
+	}
+	if (j >= 3) {
+		cout << "scene::point_coords j >= 3, "
+				"j=" << j << endl;
+		exit(1);
+	}
+	return Point_coords[idx * 3 + j];
+}
+
+double scene::line_coords(int idx, int j)
+{
+	if (idx >= nb_lines) {
+		cout << "scene::line_coords idx >= nb_lines, "
+				"idx=" << idx << " nb_lines=" << nb_lines << endl;
+		exit(1);
+	}
+	if (j >= 6) {
+		cout << "scene::line_coords j >= 6, "
+				"j=" << j << endl;
+		exit(1);
+	}
+	return Line_coords[idx * 6 + j];
+}
+
+double scene::plane_coords(int idx, int j)
+{
+	if (idx >= nb_planes) {
+		cout << "scene::plane_coords idx >= nb_planes, "
+				"idx=" << idx << " nb_planes=" << nb_planes << endl;
+		exit(1);
+	}
+	if (j >= 3) {
+		cout << "scene::plane_coords j >= 4, "
+				"j=" << j << endl;
+		exit(1);
+	}
+	return Plane_coords[idx * 4 + j];
+}
+
+double scene::cubic_coords(int idx, int j)
+{
+	if (idx >= nb_cubics) {
+		cout << "scene::cubic_coords idx >= nb_cubics, "
+				"idx=" << idx << " nb_cubics=" << nb_cubics << endl;
+		exit(1);
+	}
+	if (j >= 20) {
+		cout << "scene::cubic_coords j >= 20, "
+				"j=" << j << endl;
+		exit(1);
+	}
+	return Cubic_coords[idx * 20 + j];
+}
+
+int scene::edge_points(int idx, int j)
+{
+	if (idx >= nb_planes) {
+		cout << "scene::edge_points idx >= nb_edges, "
+				"idx=" << idx << " nb_edges=" << nb_edges << endl;
+		exit(1);
+	}
+	if (j >= 2) {
+		cout << "scene::edge_points j >= 2, "
+				"j=" << j << endl;
+		exit(1);
+	}
+	return Edge_points[idx * 2 + j];
+}
+
+void scene::print_point_coords(int idx)
+{
+	int j;
+
+	for (j = 0; j < 3; j++) {
+		cout << Point_coords[idx * 3 + j] << "\t";
+	}
+	cout << endl;
+}
+
+double scene::point_distance_euclidean(int pt_idx, double *y)
+{
+	numerics Num;
+	double d;
+
+	d = Num.distance_euclidean(y, Point_coords + pt_idx * 3, 3);
+	return d;
+}
+
+double scene::point_distance_from_origin(int pt_idx)
+{
+	numerics Num;
+	double d;
+
+	d = Num.distance_from_origin(Point_coords + pt_idx * 3, 3);
+	return d;
+}
+
+double scene::distance_euclidean_point_to_point(int pt1_idx, int pt2_idx)
+{
+	numerics Num;
+	double d;
+
+	d = Num.distance_euclidean(Point_coords + pt1_idx * 3, Point_coords + pt2_idx * 3, 3);
+	return d;
+}
+
 void scene::init(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4535,7 +4647,149 @@ void scene::print_a_face(int face_idx)
 
 }
 
+#define MY_OWN_BUFSIZE ONE_MILLION
 
+void scene::read_obj_file(const char *fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	char *buf;
+	char *p_buf;
+	double x, y, z;
+	double x0, y0, z0;
+	double x1, y1, z1;
+	double sx = 0, sy = 0, sz = 0;
+	int line_nb = -1;
+	char str[1000];
+	int a, l, h;
+	int *w;
+	int nb_points0;
+	int nb_pts = 0;
+	int nb_faces_read = 0;
+
+	if (f_v) {
+		cout << "scene::read_obj_file" << endl;
+	}
+
+	buf = NEW_char(MY_OWN_BUFSIZE);
+
+	nb_points0 = nb_points;
+
+
+	{
+		ifstream fp(fname);
+
+
+		while (TRUE) {
+			if (fp.eof()) {
+				break;
+			}
+			line_nb++;
+			fp.getline(buf, MY_OWN_BUFSIZE, '\n');
+			//cout << "read line " << line << " : '" << buf << "'" << endl;
+			if (strlen(buf) == 0) {
+				//cout << "scene::read_obj_file empty line, skipping" << endl;
+				continue;
+			}
+
+			if (strncmp(buf, "#", 1) == 0) {
+				continue;
+			}
+			else if (strncmp(buf, "v ", 2) == 0) {
+				p_buf = buf + 2;
+				s_scan_double(&p_buf, &x);
+				s_scan_double(&p_buf, &y);
+				s_scan_double(&p_buf, &z);
+				if (nb_pts == 0) {
+					x0 = x;
+					x1 = x;
+					y0 = y;
+					y1 = y;
+					z0 = z;
+					z1 = z;
+				}
+				else {
+					x0 = min(x0, x);
+					x1 = max(x1, x);
+					y0 = min(y0, y);
+					y1 = max(y1, y);
+					z0 = min(z0, z);
+					z1 = max(z1, z);
+				}
+				if (ABS(x) > ONE_MILLION) {
+					cout << "x coordinate out of range, skipping: " << x << endl;
+					cout << "read line " << line_nb << " : '" << buf << "'" << endl;
+					continue;
+				}
+				if (ABS(y) > ONE_MILLION) {
+					cout << "y coordinate out of range, skipping: " << y << endl;
+					cout << "read line " << line_nb << " : '" << buf << "'" << endl;
+					continue;
+				}
+				if (ABS(z) > ONE_MILLION) {
+					cout << "z coordinate out of range, skipping: " << z << endl;
+					cout << "read line " << line_nb << " : '" << buf << "'" << endl;
+					continue;
+				}
+				sx += x;
+				sy += y;
+				sz += z;
+				nb_pts++;
+				cout << "point : " << x << "," << y << "," << z << endl;
+				point(x, y, z);
+			}
+			else if (strncmp(buf, "f ", 2) == 0) {
+
+				nb_faces_read++;
+				//cout << "reading face: " << buf << endl;
+				p_buf = buf + 2;
+				vector<int> v;
+				while (strlen(p_buf)) {
+					s_scan_token_arbitrary(&p_buf, str);
+					//cout << "read token: " << str << endl;
+					if (strlen(str) == 0) {
+						continue;
+					}
+					l = strlen(str);
+					for (h = 0; h < l; h++) {
+						if (str[h] == '/') {
+							str[h] = 0;
+							a = atoi(str);
+							break;
+						}
+					}
+					if (h == l) {
+						a = atoi(str);
+					}
+					//cout << "reading it as " << a << endl;
+					v.push_back(a);
+				}
+				l = v.size();
+				w = NEW_int(l + 1);
+				for (h = 0; h < l; h++) {
+					w[h] = v[h] - 1 + nb_points0;
+				}
+				if (w[l - 1] != w[0]) {
+					w[l] = w[0];
+					l++;
+				}
+				cout << "read face : ";
+				int_vec_print(cout, w, l);
+				cout << endl;
+				face(w, l);
+				FREE_int(w);
+			}
+		}
+		cout << "midpoint: " << sx / nb_pts << ", " << sy / nb_pts << ", " << sz / nb_pts << endl;
+		cout << "x-interval: [" << x0 << ", " << x1 << "]" << endl;
+		cout << "y-interval: [" << y0 << ", " << y1 << "]" << endl;
+		cout << "z-interval: [" << z0 << ", " << z1 << "]" << endl;
+		cout << "number points read: " << nb_pts << endl;
+		cout << "number faces read: " << nb_faces_read << endl;
+	}
+	if (f_v) {
+		cout << "scene::read_obj_file done" << endl;
+	}
+}
 
 
 }}

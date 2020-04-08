@@ -725,6 +725,7 @@ void get_extension_if_present(const char *p, char *ext);
 void get_extension_if_present_and_chop_off(char *p, char *ext);
 int s_scan_int(char **s, int *i);
 int s_scan_lint(char **s, long int *i);
+int s_scan_double(char **s, double *d);
 int s_scan_token(char **s, char *str);
 int s_scan_token_arbitrary(char **s, char *str);
 int s_scan_str(char **s, char *str);
