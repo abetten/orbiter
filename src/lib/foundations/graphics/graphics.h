@@ -108,6 +108,52 @@ public:
 
 
 // #############################################################################
+// drawable_set_of_objects.cpp
+// #############################################################################
+
+
+
+//! a specific description of a set of objects that should be drawn
+
+
+
+class drawable_set_of_objects {
+
+public:
+
+	int group_idx;
+
+	int type;
+
+
+	double d;
+
+	const char *properties;
+
+	drawable_set_of_objects();
+	~drawable_set_of_objects();
+	void init_spheres(int group_idx, double rad,
+			const char *properties, int verbose_level);
+	void init_cylinders(int group_idx,
+			double rad, const char *properties, int verbose_level);
+	void init_prisms(int group_idx,
+			double thickness, const char *properties, int verbose_level);
+	void init_planes(int group_idx,
+			const char *properties, int verbose_level);
+	void init_lines(int group_idx,
+			double rad, const char *properties, int verbose_level);
+	void init_cubics(int group_idx,
+			const char *properties, int verbose_level);
+	void init_quadrics(int group_idx,
+			const char *properties, int verbose_level);
+	void init_quartics(int group_idx,
+			const char *properties, int verbose_level);
+	void draw(scene *S, std::ostream &ost, int verbose_level);
+
+};
+
+
+// #############################################################################
 // mp_graphics.cpp
 // #############################################################################
 
@@ -606,12 +652,10 @@ public:
 	void union_end(std::ostream &ost, double scale_factor, double clipping_radius);
 	void bottom_plane(std::ostream &ost);
 	void rotate_111(int h, int nb_frames, std::ostream &fp);
+	void rotate_around_z_axis(int h, int nb_frames, std::ostream &fp);
 	void ini(std::ostream &ost, const char *fname_pov, int first_frame,
 		int last_frame);
 };
-
-
-
 
 
 // #############################################################################
@@ -662,6 +706,7 @@ private:
 	int *Nb_face_points; // [nb_faces]
 	int **Face_points; // [nb_faces]
 
+
 public:
 
 	double line_radius;
@@ -682,6 +727,11 @@ public:
 
 	int nb_faces;
 
+	int nb_groups;
+	std::vector<std::vector<int> > group_of_things;
+
+	std::vector<drawable_set_of_objects> Drawables;
+
 
 	
 	void *extra_data;
@@ -699,6 +749,7 @@ public:
 	double line_coords(int idx, int j);
 	double plane_coords(int idx, int j);
 	double cubic_coords(int idx, int j);
+	double quadric_coords(int idx, int j);
 	int edge_points(int idx, int j);
 	void print_point_coords(int idx);
 	double point_distance_euclidean(int pt_idx, double *y);
@@ -729,6 +780,8 @@ public:
 	int line6(double *x6);
 	int line(double x1, double x2, double x3, 
 		double y1, double y2, double y3);
+	int line_after_recentering(double x1, double x2, double x3,
+		double y1, double y2, double y3, double rad);
 	int line_through_two_points(int pt1, int pt2, 
 		double rad);
 	int edge(int pt1, int pt2);
@@ -897,6 +950,8 @@ public:
 	void print_a_plane(int plane_idx);
 	void print_a_face(int face_idx);
 	void read_obj_file(const char *fname, int verbose_level);
+	void add_a_group_of_things(int *Idx, int sz, int verbose_level);
+	void create_regulus(int idx, int nb_lines, int verbose_level);
 };
 
 

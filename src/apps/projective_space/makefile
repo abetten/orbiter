@@ -16,8 +16,6 @@ LFLAGS = -lm
 TARGETS=\
 	analyze_projective_code.out  \
 	andre.out  \
-	canonical_form.out\
-	cheat_sheet_PG.out \
 	classify_cubic_curves.out \
 	desarguesian_spread.out \
 	determine_conic.out \
@@ -29,8 +27,7 @@ TARGETS=\
 	ovoid_classify_main.out \
 	ovoid_make_design.out \
 	points.out \
-	polar.out \
-	process.out
+	polar.out 
 
 all: $(TARGETS)
 
@@ -46,12 +43,6 @@ analyze_projective_code.out:  analyze_projective_code.o;
 
 andre.out:  andre.o;
 	$(DISCRETA_CPP)  andre.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-canonical_form.out:  canonical_form.o ;
-	$(DISCRETA_CPP)  canonical_form.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-cheat_sheet_PG.out:  cheat_sheet_PG.o;
-	$(DISCRETA_CPP)  cheat_sheet_PG.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 classify_cubic_curves.out:  classify_cubic_curves.o;
 	$(DISCRETA_CPP)  classify_cubic_curves.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
@@ -88,9 +79,6 @@ points.out:  points.o;
 
 polar.out:  polar.o;
 	$(DISCRETA_CPP)  polar.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-process.out:  process.o ;
-	$(DISCRETA_CPP)  process.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 

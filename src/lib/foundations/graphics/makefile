@@ -1,12 +1,13 @@
 DISCRETA_CPP = g++
 DISCRETA_CC = gcc
-CPPFLAGS = -Wall -O3 -march=native -funroll-loops -I..
+CPPFLAGS = -Wall -O3 -march=native -funroll-loops -I.. -std=c++14
 # -frename-registers
 LIB = 
 LFLAGS = -lm
 
 MODULES = \
 	animate.o \
+	drawable_set_of_objects.o \
 	mp_graphics.o \
 	plot_tools.o \
 	povray_interface.o \

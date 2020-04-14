@@ -448,6 +448,19 @@ void povray_interface::rotate_111(int h, int nb_frames, ostream &fp)
 		v, angle_zero_one, fp);
 }
 
+void povray_interface::rotate_around_z_axis(int h, int nb_frames, ostream &fp)
+{
+	//int nb_frames_per_rotation;
+	//nb_frames_per_rotation = nb_frames;
+	double angle_zero_one = 1. - (h * 1. / (double) nb_frames);
+		// rotate in the opposite direction
+
+	double v[3] = {0,0,1.};
+
+	animation_rotate_around_origin_and_given_vector_by_a_given_angle(
+		v, angle_zero_one, fp);
+}
+
 
 void povray_interface::ini(ostream &ost, const char *fname_pov,
 	int first_frame, int last_frame)

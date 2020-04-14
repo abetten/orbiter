@@ -2099,7 +2099,7 @@ void numerics::vec_scan(const char *s, double *&v, int &len)
 
 void numerics::vec_scan_from_stream(istream & is, double *&v, int &len)
 {
-	int verbose_level = 1;
+	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 	double a;
 	char s[10000], c;

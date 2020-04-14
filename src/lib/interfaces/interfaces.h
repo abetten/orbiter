@@ -22,9 +22,11 @@ namespace orbiter {
 
 namespace interfaces {
 
-class interface_cryptography;
 class interface_coding_theory;
+class interface_combinatorics;
+class interface_cryptography;
 class interface_povray;
+class interface_projective;
 
 
 // #############################################################################
@@ -53,6 +55,44 @@ public:
 	void do_make_macwilliams_system(int q, int n, int k, int verbose_level);
 	void do_codes_classify(int verbose_level);
 };
+
+
+// #############################################################################
+// interface_combinatorics.cpp
+// #############################################################################
+
+//! interface to the coding theory module
+
+
+class interface_combinatorics {
+	int argc;
+	const char **argv;
+
+	int f_create_combinatorial_object;
+	combinatorial_object_description *Descr;
+	int f_save;
+	const char *fname_prefix;
+	int f_process_combinatorial_objects;
+	projective_space_job_description *Job;
+	int f_bent;
+	int bent_n;
+	int f_random_permutation;
+	int random_permutation_degree;
+	const char *random_permutation_fname_csv;
+
+
+public:
+	interface_combinatorics();
+	void print_help(int argc, const char **argv, int i, int verbose_level);
+	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
+	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
+	void worker(int verbose_level);
+	void do_create_combinatorial_object(int verbose_level);
+	void do_process_combinatorial_object(int verbose_level);
+	void do_bent(int n, int verbose_level);
+	void do_random_permutation(int deg, const char *fname_csv, int verbose_level);
+};
+
 
 // #############################################################################
 // interface_cryptography.cpp
@@ -304,6 +344,7 @@ public:
 	void print_help(int argc, const char **argv, int i, int verbose_level);
 	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
 	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
+	int read_scene_objects(int argc, const char **argv, int i0, int verbose_level);
 	void worker(int verbose_level);
 };
 
@@ -313,6 +354,58 @@ void interface_povray_draw_frame(
 	std::ostream &fp,
 	int verbose_level);
 
+
+
+// #############################################################################
+// interface_projective.cpp
+// #############################################################################
+
+//! interface to the povray rendering module
+
+
+class interface_projective {
+	int argc;
+	const char **argv;
+
+	int f_cheat_sheet_PG;
+	int n;
+	int q;
+	int f_canonical_form_PG;
+
+	int f_input;
+	data_input_stream *Data_input_stream;
+
+	int f_all_k_subsets;
+	int k;
+
+	int f_save_incma_in_and_out;
+
+	int f_prefix;
+	const char *prefix;
+
+	int f_save;
+	const char *output_prefix;
+
+	int fixed_structure_order_list_sz;
+	int fixed_structure_order_list[1000];
+
+	int f_report;
+
+	int f_max_TDO_depth;
+	int max_TDO_depth;
+
+
+
+public:
+	interface_projective();
+	void print_help(int argc, const char **argv, int i, int verbose_level);
+	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
+	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
+	int read_canonical_form_arguments(int argc, const char **argv, int i0, int verbose_level);
+	void worker(int verbose_level);
+	void do_cheat_sheet_PG(int n, int q, int verbose_level);
+	void do_canonical_form_PG(int n, int q, int verbose_level);
+};
 
 
 }}
