@@ -13,11 +13,9 @@ LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 
 TARGETS=\
 		all_k_subsets.out \
-		bent.out \
 		canonical_form_of_design.out \
 		conjugacy_classes_sym_n.out \
 		costas.out \
-		create_object.out \
 		delandtsheer_doyen_main.out \
 		design_apply.out \
 		design_create_main.out \
@@ -28,7 +26,6 @@ TARGETS=\
 		hall_system_main.out \
 		kramer_mesner.out \
 		poset_of_subsets.out \
-		random_permutation.out \
 		rank_anything.out \
 		rank_subsets_lex.out \
 		tao.out \
@@ -43,9 +40,6 @@ install:
 all_k_subsets.out:  all_k_subsets.o;
 	$(DISCRETA_CPP)  all_k_subsets.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-bent.out:  bent.o;
-	$(DISCRETA_CPP)  bent.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 canonical_form_of_design.out:  canonical_form_of_design.o;
 	$(DISCRETA_CPP)  canonical_form_of_design.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
@@ -54,9 +48,6 @@ conjugacy_classes_sym_n.out:  conjugacy_classes_sym_n.o;
 
 costas.out:  costas.o;
 	$(DISCRETA_CPP)  costas.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-create_object.out:  create_object.o;
-	$(DISCRETA_CPP)  create_object.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 design_apply.out:  design_apply.o;
 	$(DISCRETA_CPP)  design_apply.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
@@ -88,9 +79,6 @@ kramer_mesner.out:  kramer_mesner.o;
 poset_of_subsets.out:  poset_of_subsets.o;
 	$(DISCRETA_CPP)  poset_of_subsets.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-random_permutation.out:  random_permutation.o;
-	$(DISCRETA_CPP)  random_permutation.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 rank_anything.out:  rank_anything.o;
 	$(DISCRETA_CPP)  rank_anything.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
@@ -99,9 +87,6 @@ rank_subsets_lex.out:  rank_subsets_lex.o;
 
 tao.out:  tao.o;
 	$(DISCRETA_CPP)  tao.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-test_group.out:  test_group.o;
-	$(DISCRETA_CPP)  test_group.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 unrank.out:  unrank.o;
 	$(DISCRETA_CPP)  unrank.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

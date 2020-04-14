@@ -7,8 +7,10 @@ LFLAGS = -lm
 
 MODULES = \
 	interface_coding_theory.o \
+	interface_combinatorics.o \
 	interface_cryptography.o \
-	interface_povray.o
+	interface_povray.o \
+	interface_projective.o
 
 
 all : $(MODULES)

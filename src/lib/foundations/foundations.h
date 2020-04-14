@@ -368,6 +368,7 @@ class tdo_refinement;
 class algebra_global;
 class combinatorial_object_description;
 class combinatorial_object_create;
+class drawable_set_of_objects;
 
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)

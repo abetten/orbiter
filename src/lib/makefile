@@ -124,6 +124,7 @@ MODULES= \
 		foundations/graph_theory_nauty/nauty_interface.o \
 		foundations/graph_theory_nauty/schreier.o \
 		foundations/graphics/animate.o \
+		foundations/graphics/drawable_set_of_objects.o \
 		foundations/graphics/mp_graphics.o \
 		foundations/graphics/plot_tools.o \
 		foundations/graphics/povray_interface.o \
@@ -369,8 +370,10 @@ MODULES= \
 		top_level/solver/exact_cover.o \
 		top_level/solver/exact_cover_arguments.o \
 		interfaces/interface_coding_theory.o \
+		interfaces/interface_combinatorics.o \
 		interfaces/interface_cryptography.o \
-		interfaces/interface_povray.o
+		interfaces/interface_povray.o \
+		interfaces/interface_projective.o
 
 
 all:

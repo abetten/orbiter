@@ -785,6 +785,20 @@ void projective_space_job_description::perform_job_for_one_set(
 		fp_tex << back_end_counter << ": ";
 		C.print_file_tex(fp_tex, TRUE);
 		fp_tex << "\\\\" << endl;
+
+		set_of_sets *SoS;
+		int *types;
+		int nb_types;
+		int i;
+
+		SoS = C.get_set_partition_and_types(
+				types, nb_types, verbose_level);
+		SoS->print_table();
+		for (i = 0; i < nb_types; i++) {
+			cout << i << " : " << types[i] << endl;
+		}
+		FREE_int(types);
+		FREE_OBJECT(SoS);
 	}
 	else if (f_plane_type) {
 		if (f_v) {

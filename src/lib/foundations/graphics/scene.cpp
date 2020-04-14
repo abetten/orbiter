@@ -54,6 +54,8 @@ void scene::null()
 	f_has_affine_space = FALSE;
 	affine_space_q = 0;
 	affine_space_starting_point = 0;
+
+	nb_groups = 0;
 }
 
 void scene::freeself()
@@ -147,6 +149,21 @@ double scene::cubic_coords(int idx, int j)
 		exit(1);
 	}
 	return Cubic_coords[idx * 20 + j];
+}
+
+double scene::quadric_coords(int idx, int j)
+{
+	if (idx >= nb_quadrics) {
+		cout << "scene::quadric_coords idx >= nb_quadrics, "
+				"idx=" << idx << " nb_quadrics=" << nb_quadrics << endl;
+		exit(1);
+	}
+	if (j >= 10) {
+		cout << "scene::quadric_coords j >= 10, "
+				"j=" << j << endl;
+		exit(1);
+	}
+	return Quadric_coords[idx * 10 + j];
 }
 
 int scene::edge_points(int idx, int j)
@@ -658,6 +675,36 @@ int scene::line(double x1, double x2, double x3,
 	Line_coords[nb_lines * 6 + 3] = y1;
 	Line_coords[nb_lines * 6 + 4] = y2;
 	Line_coords[nb_lines * 6 + 5] = y3;
+	nb_lines++;
+	if (nb_lines >= SCENE_MAX_LINES) {
+		cout << "too many lines" << endl;
+		exit(1);
+		}
+	return nb_lines - 1;
+}
+
+int scene::line_after_recentering(double x1, double x2, double x3,
+	double y1, double y2, double y3, double rad)
+{
+	double x[3], y[3];
+	double xx[3], yy[3];
+	numerics N;
+
+	x[0] = x1;
+	x[1] = x2;
+	x[2] = x3;
+	y[0] = y1;
+	y[1] = y2;
+	y[2] = y3;
+
+	N.line_centered(x, y, xx, yy, rad);
+
+	Line_coords[nb_lines * 6 + 0] = xx[0];
+	Line_coords[nb_lines * 6 + 1] = xx[1];
+	Line_coords[nb_lines * 6 + 2] = xx[2];
+	Line_coords[nb_lines * 6 + 3] = yy[0];
+	Line_coords[nb_lines * 6 + 4] = yy[1];
+	Line_coords[nb_lines * 6 + 5] = yy[2];
 	nb_lines++;
 	if (nb_lines >= SCENE_MAX_LINES) {
 		cout << "too many lines" << endl;
@@ -4788,6 +4835,313 @@ void scene::read_obj_file(const char *fname, int verbose_level)
 	}
 	if (f_v) {
 		cout << "scene::read_obj_file done" << endl;
+	}
+}
+
+void scene::add_a_group_of_things(int *Idx, int sz, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	vector<int> v;
+	int i;
+
+	if (f_v) {
+		cout << "scene::add_a_group_of_things" << endl;
+	}
+	for (i = 0; i < sz; i++) {
+		v.push_back(Idx[i]);
+	}
+	group_of_things.push_back(v);
+	if (f_v) {
+		cout << "scene::add_a_group_of_things done" << endl;
+	}
+}
+
+void scene::create_regulus(int idx, int nb_lines, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	double coeff[10];
+	numerics Num;
+	int k, i, j;
+
+	if (f_v) {
+		cout << "scene::create_regulus" << endl;
+	}
+
+
+	double axx;
+	double ayy;
+	double azz;
+	double axy;
+	double axz;
+	double ayz;
+	double ax;
+	double ay;
+	double az;
+	double a1;
+
+	double A[9];
+	double lambda[3];
+	double Basis[9];
+	double Basis_t[9];
+	double B[9];
+	double C[9];
+	double D[9];
+	double E[9];
+	double F[9];
+	double R[9];
+
+	double vec_a[3];
+	double vec_c[3];
+	double vec_d[3];
+	double vec_e[1];
+	double vec_f[1];
+	double c1;
+
+	double x6[6];
+	double w6[6];
+	double y6[6];
+	double z6[6];
+
+	int *line_idx;
+	int axis_of_symmetry_idx;
+
+	axx = quadric_coords(idx, 0);
+	axy = quadric_coords(idx, 1);
+	axz = quadric_coords(idx, 2);
+	ax = quadric_coords(idx, 3);
+	ayy = quadric_coords(idx, 4);
+	ayz = quadric_coords(idx, 5);
+	ay = quadric_coords(idx, 6);
+	azz = quadric_coords(idx, 7);
+	az = quadric_coords(idx, 8);
+	a1 = quadric_coords(idx, 9);
+
+	coeff[0] = axx;
+	coeff[1] = axy;
+	coeff[2] = axz;
+	coeff[3] = ax;
+	coeff[4] = ayy;
+	coeff[5] = ayz;
+	coeff[6] = ay;
+	coeff[7] = azz;
+	coeff[8] = az;
+	coeff[9] = a1;
+
+	if (f_v) {
+		cout << "scene::create_regulus coeff=" << endl;
+		Num.print_system(coeff, 10, 1);
+	}
+
+
+	//quadric1_idx = S->quadric(coeff); // Q(2 * h + 0)
+
+	// A is the 3 x 3 symmetric coefficient matrix
+	// of the quadratic terms:
+	A[0] = axx;
+	A[4] = ayy;
+	A[8] = azz;
+	A[1] = A[3] = axy * 0.5;
+	A[2] = A[6] = axz * 0.5;
+	A[5] = A[7] = ayz * 0.5;
+
+	// vec_a is the linear terms:
+	vec_a[0] = ax;
+	vec_a[1] = ay;
+	vec_a[2] = az;
+	if (f_v) {
+		cout << "scene::create_regulus A=" << endl;
+		Num.print_system(A, 3, 3);
+		cout << "scene::create_regulus a=" << endl;
+		Num.print_system(vec_a, 1, 3);
+	}
+
+
+	if (f_v) {
+		cout << "scene::create_regulus" << endl;
+	}
+	Num.eigenvalues(A, 3, lambda, verbose_level - 2);
+	Num.eigenvectors(A, Basis,
+			3, lambda, verbose_level - 2);
+
+	if (f_v) {
+		cout << "scene::create_regulus Basis=" << endl;
+		Num.print_system(Basis, 3, 3);
+	}
+	Num.transpose_matrix_nxn(Basis, Basis_t, 3);
+
+	Num.mult_matrix_matrix(Basis_t, A, B, 3, 3, 3);
+	Num.mult_matrix_matrix(B, Basis, C, 3, 3, 3);
+		// C = Basis_t * A * Basis = diagonal matrix
+
+	if (f_v) {
+		cout << "scene::create_regulus diagonalized matrix is" << endl;
+	}
+	Num.print_system(C, 3, 3);
+
+	for (i = 0; i < 3; i++) {
+		for (j = 0; j < 3; j++) {
+			D[i * 3 + j] = 0;
+
+			if (i == j) {
+				if (ABS(C[i * 3 + i]) > 0.0001) {
+					D[i * 3 + i] = 1. / C[i * 3 + i]; // 1 / lambda_i
+				}
+				else {
+					cout << "Warning zero eigenvalue" << endl;
+					D[i * 3 + i] = 0;
+				}
+			}
+		}
+	}
+	if (f_v) {
+		cout << "scene::create_regulus D=" << endl;
+		Num.print_system(D, 3, 3);
+	}
+
+	Num.mult_matrix_matrix(Basis, D, E, 3, 3, 3);
+	Num.mult_matrix_matrix(E, Basis_t, F, 3, 3, 3);
+		// F = Basis * D * Basis_t
+	Num.mult_matrix_matrix(F, vec_a, vec_c, 3, 3, 1);
+	for (i = 0; i < 3; i++) {
+		vec_c[i] *= 0.5;
+	}
+	// c = 1/2 * Basis * D * Basis_t * a
+
+	if (f_v) {
+		cout << "scene::create_regulus c=" << endl;
+		Num.print_system(vec_c, 3, 1);
+	}
+
+
+	Num.mult_matrix_matrix(vec_c, A, vec_d, 1, 3, 3);
+	Num.mult_matrix_matrix(vec_d, vec_c, vec_e, 1, 3, 1);
+	// e = c^\top * A * c
+
+	Num.mult_matrix_matrix(vec_a, vec_c, vec_f, 1, 3, 1);
+	// f = a^\top * c
+
+	c1 = vec_e[0] - vec_f[0] + a1;
+	// e - f + a1
+
+	if (f_v) {
+		cout << "scene::create_regulus e=" << vec_e[0] << endl;
+		cout << "scene::create_regulus f=" << vec_f[0] << endl;
+		cout << "scene::create_regulus a1=" << a1 << endl;
+		cout << "scene::create_regulus c1=" << c1 << endl;
+	}
+
+	coeff[0] = C[0 * 3 + 0]; // x^2
+	coeff[1] = 0;
+	coeff[2] = 0;
+	coeff[3] = 0;
+	coeff[4] = C[1 * 3 + 1]; // y^2
+	coeff[5] = 0;
+	coeff[6] = 0;
+	coeff[7] = C[2 * 3 + 2]; // z^2
+	coeff[8] = 0;
+	coeff[9] = c1;
+
+	if (f_v) {
+		cout << "scene::create_regulus coeff=" << endl;
+		Num.print_system(coeff, 10, 1);
+	}
+
+
+	//quadric2_idx = S->quadric(coeff); // Q(2 * h + 1)
+
+	// the axis of symmetry:
+	x6[0] = 0;
+	x6[1] = 0;
+	x6[2] = -1;
+	x6[3] = 0;
+	x6[4] = 0;
+	x6[5] = 1;
+
+
+
+	// mapping x \mapsto Basis * x - c
+	Num.mult_matrix_matrix(Basis, x6, y6, 3, 3, 1);
+	Num.mult_matrix_matrix(Basis, x6 + 3, y6 + 3, 3, 3, 1);
+
+	Num.vec_linear_combination(1, y6,
+			-1, vec_c, z6, 3);
+	Num.vec_linear_combination(1, y6 + 3,
+			-1, vec_c, z6 + 3, 3);
+
+	// create the axis of symmetry inside the scene
+	axis_of_symmetry_idx = line_through_two_pts(z6, sqrt(3) * 100.); // Line h * (TARGET_NB_LINES + 1) + 0
+
+
+	// create a line on the cone:
+	x6[0] = 0;
+	x6[1] = 0;
+	x6[2] = 0;
+	if (lambda[2] < 0) {
+		x6[3] = sqrt(-lambda[2]);
+		x6[4] = 0;
+		x6[5] = sqrt(lambda[0]);
+	}
+	else {
+		x6[3] = sqrt(lambda[2]);
+		x6[4] = 0;
+		x6[5] = sqrt(-lambda[0]);
+	}
+	x6[0] = - x6[3];
+	x6[1] = - x6[4];
+	x6[2] = - x6[5];
+
+	// mapping x \mapsto Basis * x - c
+	Num.mult_matrix_matrix(Basis, x6, y6, 3, 3, 1);
+	Num.mult_matrix_matrix(Basis, x6 + 3, y6 + 3, 3, 3, 1);
+
+	Num.vec_linear_combination(1, y6,
+			-1, vec_c, z6, 3);
+	Num.vec_linear_combination(1, y6 + 3,
+			-1, vec_c, z6 + 3, 3);
+
+
+	line_idx = NEW_int(nb_lines);
+
+
+	line_idx[0] = line_through_two_pts(z6, sqrt(3) * 100.);
+		// Line h * (TARGET_NB_LINES + 1) + 1
+
+	// create the remaining lines on the cone using symmetry:
+
+	double phi;
+
+	phi = 2. * M_PI / (double) nb_lines;
+	for (k = 1; k < nb_lines; k++) {
+		Num.make_Rz(R, (double) k * phi);
+		Num.mult_matrix_matrix(R, x6, w6, 3, 3, 1);
+		Num.mult_matrix_matrix(R, x6 + 3, w6 + 3, 3, 3, 1);
+
+
+		// mapping x \mapsto Basis * x - c
+		Num.mult_matrix_matrix(Basis, w6, y6, 3, 3, 1);
+		Num.mult_matrix_matrix(Basis, w6 + 3, y6 + 3, 3, 3, 1);
+
+		Num.vec_linear_combination(1, y6,
+				-1, vec_c, z6, 3);
+		Num.vec_linear_combination(1, y6 + 3,
+				-1, vec_c, z6 + 3, 3);
+
+		line_idx[k] = line_through_two_pts(z6, sqrt(3) * 100.);
+			// Line h * (TARGET_NB_LINES + 1) + 1 + k
+
+	}
+
+	cout << "adding group for axis of symmetry:" << endl;
+	add_a_group_of_things(&axis_of_symmetry_idx, 1, verbose_level);
+
+	cout << "adding group for lines of the regulus:" << endl;
+	add_a_group_of_things(line_idx, nb_lines, verbose_level);
+
+	FREE_int(line_idx);
+
+
+	if (f_v) {
+		cout << "scene::create_regulus done" << endl;
 	}
 }
 

@@ -61,6 +61,15 @@ int main(int argc, const char **argv)
 	}
 
 	{
+		interface_combinatorics Interface_combinatorics;
+
+		if (Interface_combinatorics.recognize_keyword(argc, argv, i, verbose_level)) {
+			Interface_combinatorics.read_arguments(argc, argv, i, verbose_level);
+			Interface_combinatorics.worker(verbose_level);
+		}
+	}
+
+	{
 		interface_coding_theory Interface_coding_theory;
 
 		if (Interface_coding_theory.recognize_keyword(argc, argv, i, verbose_level)) {
@@ -75,6 +84,15 @@ int main(int argc, const char **argv)
 		if (Interface_povray.recognize_keyword(argc, argv, i, verbose_level)) {
 			Interface_povray.read_arguments(argc, argv, i, verbose_level);
 			Interface_povray.worker(verbose_level);
+		}
+	}
+
+	{
+		interface_projective Interface_projective;
+
+		if (Interface_projective.recognize_keyword(argc, argv, i, verbose_level)) {
+			Interface_projective.read_arguments(argc, argv, i, verbose_level);
+			Interface_projective.worker(verbose_level);
 		}
 	}
 
