@@ -126,6 +126,8 @@ MODULES= \
 		foundations/graphics/animate.o \
 		foundations/graphics/drawable_set_of_objects.o \
 		foundations/graphics/mp_graphics.o \
+		foundations/graphics/parametric_curve_point.o \
+		foundations/graphics/parametric_curve.o \
 		foundations/graphics/plot_tools.o \
 		foundations/graphics/povray_interface.o \
 		foundations/graphics/scene.o \

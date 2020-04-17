@@ -146,7 +146,7 @@ void povray_interface::beginning(ostream &ost,
 	ost << "//Place a light" << endl;
 	//ost << "light_source { <4,4,4> color White }  " << endl;
 	//ost << "light_source { <-5,0,5> color White }" << endl;
-	ost << "light_source { <1,1,1>*120 color White }  " << endl;
+	ost << "light_source { " << sky << " * 120 color White parallel }  " << endl;
 	ost << "light_source { " << location << " color White }" << endl;
 	ost << endl;
 
@@ -202,9 +202,9 @@ void povray_interface::animation_rotate_around_origin_and_given_vector(
 		A, Av, 0 /* verbose_level */);
 
 	ost << "	// the next three steps will perform a rotation" << endl;
-	ost << "	// around the axis of symmetry 1,1,1:" << endl;
+	ost << "	// around the axis of symmetry (" << v[0] << ", " << v[1] << "," << v[2] << "):" << endl;
 	ost << endl;
-	ost << "	// move 1,1,1 to sqrt(3),0,0:" << endl;
+	ost << "	// move axis of symmetry to 1,0,0:" << endl;
 	ost << "	matrix<" << endl;
 	ost << "	";
 	N.output_double(A[0], ost);
@@ -233,7 +233,7 @@ void povray_interface::animation_rotate_around_origin_and_given_vector(
 	ost << endl;
 	ost << "        rotate <360*clock,0,0> " << endl;
 	ost << endl;
-	ost << "	// move sqrt(3),0,0 back to 1,1,1:" << endl;
+	ost << "	// move 1,0,0 back to axis of symmetry:" << endl;
 	ost << endl;
 	ost << "	matrix<" << endl;
 	ost << "	";
@@ -287,9 +287,9 @@ void povray_interface::animation_rotate_around_origin_and_given_vector_by_a_give
 		A, Av, 0 /* verbose_level */);
 
 	ost << "	// the next three steps will perform a rotation" << endl;
-	ost << "	// around the axis of symmetry 1,1,1:" << endl;
+	ost << "	// around the axis of symmetry (" << v[0] << ", " << v[1] << "," << v[2] << "):" << endl;
 	ost << endl;
-	ost << "	// move 1,1,1 to sqrt(3),0,0:" << endl;
+	ost << "	// move axis of symmetry to 1,0,0:" << endl;
 	ost << "	matrix<" << endl;
 	ost << "	";
 	N.output_double(A[0], ost);
@@ -318,7 +318,7 @@ void povray_interface::animation_rotate_around_origin_and_given_vector_by_a_give
 	ost << endl;
 	ost << "        rotate <" << angle_zero_one * 360. << ",0,0> " << endl;
 	ost << endl;
-	ost << "	// move sqrt(3),0,0 back to 1,1,1:" << endl;
+	ost << "	// move 1,0,0 back to axis:" << endl;
 	ost << endl;
 	ost << "	matrix<" << endl;
 	ost << "	";
@@ -379,8 +379,21 @@ void povray_interface::union_end(ostream &ost, double scale_factor, double clipp
 	ost << " 	scale  " << scale_factor << endl;
 	//ost << " 	scale  1.0" << endl;
 	ost << endl;
-	ost << "	clipped_by { sphere{ < 0.,0.,0. > , "
-		<< clipping_radius << "  } }" << endl;
+	ost << "	clipped_by { sphere{ < 0.,0.,0. > , " << clipping_radius << "  } }" << endl;
+	ost << "	bounded_by { clipped_by }" << endl;
+	ost << endl;
+	ost << "} // union" << endl;
+}
+
+void povray_interface::union_end_box_clipping(ostream &ost, double scale_factor,
+		double box_x, double box_y, double box_z)
+{
+	ost << endl;
+	ost << " 	scale  " << scale_factor << endl;
+	//ost << " 	scale  1.0" << endl;
+	ost << endl;
+	ost << "	clipped_by { box{ < " << -1 * box_x << ", " << -1 * box_y << ", " << -1 * box_z << " > * " << scale_factor << ", "
+			" < " << box_x << ", " << box_y << ", " << box_z << " > * " << scale_factor << " } }" << endl;
 	ost << "	bounded_by { clipped_by }" << endl;
 	ost << endl;
 	ost << "} // union" << endl;

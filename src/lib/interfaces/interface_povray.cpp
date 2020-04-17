@@ -229,6 +229,33 @@ int interface_povray::read_scene_objects(int argc, const char **argv, int i0, in
 			cout << "created point " << idx << endl;
 			delete [] coeff;
 		}
+		else if (strcmp(argv[i], "-point_list_from_csv_file") == 0) {
+			cout << "-point_list_from_csv_file" << endl;
+			const char *fname;
+			double *M;
+			int m, n, h;
+			file_io Fio;
+
+			fname = argv[++i];
+			Fio.double_matrix_read_csv(fname, M,
+					m, n, verbose_level);
+			cout << "The file " << fname << " contains " << m << " point coordiunates, each with " << n << " coordinates" << endl;
+			if (n == 2) {
+				for (h = 0; h < m; h++) {
+					S->point(M[h * 2 + 0], M[h * 2 + 1], 0);
+				}
+			}
+			else if (n == 3) {
+				for (h = 0; h < m; h++) {
+					S->point(M[h * 3 + 0], M[h * 3 + 1], M[h * 3 + 2]);
+				}
+			}
+			else {
+				cout << "The file " << fname << " should have either 2 or three columns" << endl;
+				exit(1);
+			}
+			delete [] M;
+		}
 		else if (strcmp(argv[i], "-point_as_intersection_of_two_lines") == 0) {
 			cout << "-point_as_intersection_of_two_lines" << endl;
 			const char *Idx_text;
@@ -405,6 +432,97 @@ int interface_povray::read_scene_objects(int argc, const char **argv, int i0, in
 			int_vec_scan(Idx_text, Idx, Idx_sz);
 			S->add_a_group_of_things(Idx, Idx_sz, verbose_level);
 			FREE_int(Idx);
+		}
+		else if (strcmp(argv[i], "-group_of_things_with_offset") == 0) {
+			cout << "-group_of_things" << endl;
+			const char *Idx_text;
+			int *Idx;
+			int Idx_sz;
+			int offset, h;
+
+			offset = atoi(argv[++i]);
+			Idx_text = argv[++i];
+			int_vec_scan(Idx_text, Idx, Idx_sz);
+			for (h = 0; h < Idx_sz; h++) {
+				Idx[h] += offset;
+			}
+			S->add_a_group_of_things(Idx, Idx_sz, verbose_level);
+			FREE_int(Idx);
+		}
+		else if (strcmp(argv[i], "-group_of_things_as_interval") == 0) {
+			cout << "-group_of_things_as_interval" << endl;
+			int start;
+			int len;
+			int h;
+			int *Idx;
+
+			start = atoi(argv[++i]);
+			len = atoi(argv[++i]);
+			Idx = NEW_int(len);
+			for (h = 0; h < len; h++) {
+				Idx[h] = start + h;
+			}
+			S->add_a_group_of_things(Idx, len, verbose_level);
+			FREE_int(Idx);
+		}
+		else if (strcmp(argv[i], "-group_of_all_points") == 0) {
+			cout << "-group_of_all_points" << endl;
+			int *Idx;
+			int Idx_sz;
+			int h;
+
+			Idx_sz = S->nb_points;
+			Idx = NEW_int(Idx_sz);
+			for (h = 0; h < Idx_sz; h++) {
+				Idx[h] = h;
+			}
+			S->add_a_group_of_things(Idx, Idx_sz, verbose_level);
+			FREE_int(Idx);
+		}
+		else if (strcmp(argv[i], "-group_of_all_faces") == 0) {
+			cout << "-group_of_all_faces" << endl;
+			int *Idx;
+			int Idx_sz;
+			int h;
+
+			Idx_sz = S->nb_faces;
+			Idx = NEW_int(Idx_sz);
+			for (h = 0; h < Idx_sz; h++) {
+				Idx[h] = h;
+			}
+			S->add_a_group_of_things(Idx, Idx_sz, verbose_level);
+			FREE_int(Idx);
+		}
+		else if (strcmp(argv[i], "-group_subset_at_random") == 0) {
+			cout << "-group_subset_at_random" << endl;
+			int group_idx;
+			double percentage;
+			int *Selection;
+			int sz_old;
+			int sz;
+			int j, r;
+			os_interface Os;
+			sorting Sorting;
+
+			group_idx = atoi(argv[++i]);
+			percentage = atof(argv[++i]);
+
+
+			sz_old = S->group_of_things[group_idx].size();
+			if (f_v) {
+				cout << "sz_old" << sz_old << endl;
+			}
+			sz = sz_old * percentage;
+			Selection = NEW_int(sz);
+			for (j = 0; j < sz; j++) {
+				r = Os.random_integer(sz_old);
+				Selection[j] = S->group_of_things[group_idx][r];
+			}
+			Sorting.int_vec_sort_and_remove_duplicates(Selection, sz);
+
+			S->add_a_group_of_things(Selection, sz, verbose_level);
+
+			FREE_int(Selection);
 		}
 		else if (strcmp(argv[i], "-create_regulus") == 0) {
 			cout << "-create_regulus" << endl;
@@ -678,10 +796,15 @@ void interface_povray_draw_frame(
 
 	if (Anim->Opt->f_has_global_picture_scale) {
 		cout << "scale=" << Anim->Opt->global_picture_scale << endl;
-		Pov.union_end(fp, Anim->Opt->global_picture_scale, clipping_radius);
+		//Pov.union_end(fp, Anim->Opt->global_picture_scale, clipping_radius);
+		Pov.union_end_box_clipping(fp, Anim->Opt->global_picture_scale,
+				clipping_radius, clipping_radius, clipping_radius);
+
 	}
 	else {
-		Pov.union_end(fp, 1.0, clipping_radius);
+		//Pov.union_end(fp, 1.0, clipping_radius);
+		Pov.union_end_box_clipping(fp, 1.0,
+				clipping_radius, clipping_radius, clipping_radius);
 
 	}
 

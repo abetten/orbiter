@@ -16,7 +16,6 @@ LFLAGS = -lm
 TARGETS=\
 	analyze_projective_code.out  \
 	andre.out  \
-	classify_cubic_curves.out \
 	desarguesian_spread.out \
 	determine_conic.out \
 	determine_cubic.out \
@@ -43,9 +42,6 @@ analyze_projective_code.out:  analyze_projective_code.o;
 
 andre.out:  andre.o;
 	$(DISCRETA_CPP)  andre.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-classify_cubic_curves.out:  classify_cubic_curves.o;
-	$(DISCRETA_CPP)  classify_cubic_curves.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 desarguesian_spread.out:  desarguesian_spread.o ;
 	$(DISCRETA_CPP)  desarguesian_spread.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

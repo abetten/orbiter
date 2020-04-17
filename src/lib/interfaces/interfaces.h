@@ -394,7 +394,10 @@ class interface_projective {
 	int f_max_TDO_depth;
 	int max_TDO_depth;
 
+	int f_classify_cubic_curves;
 
+	int f_create_points_on_quartic;
+	double desired_distance;
 
 public:
 	interface_projective();
@@ -405,6 +408,8 @@ public:
 	void worker(int verbose_level);
 	void do_cheat_sheet_PG(int n, int q, int verbose_level);
 	void do_canonical_form_PG(int n, int q, int verbose_level);
+	void do_classify_cubic_curves(int q, int verbose_level);
+	void do_create_points_on_quartic(double desired_distance, int verbose_level);
 };
 
 
