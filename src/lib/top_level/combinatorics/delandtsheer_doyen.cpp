@@ -582,8 +582,7 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 		int_vec_scan(subgroup_gens_text, data, sz);
 		nb_gens = sz / A->make_element_size;
 		if (f_v) {
-			cout << "before Strong_gens->init_from_data_"
-					"with_target_go_ascii" << endl;
+			cout << "before Strong_gens->init_from_data_with_target_go_ascii" << endl;
 			}
 		cout << "nb_gens=" << nb_gens << endl;
 		Strong_gens->init_from_data_with_target_go_ascii(A0,
@@ -595,8 +594,7 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 		FREE_OBJECT(nice_gens);
 		if (f_v) {
 			cout << "delandtsheer_doyen "
-					"after Strong_gens->init_from_data_"
-					"with_target_go_ascii" << endl;
+					"after Strong_gens->init_from_data_with_target_go_ascii" << endl;
 			}
 		Pairs = NEW_OBJECT(poset_classification);
 
@@ -1132,8 +1130,7 @@ void delandtsheer_doyen::compute_pair_orbit_table(
 
 
 	if (f_v) {
-		cout << "delandtsheer_doyen::compute_pair_"
-				"orbit_table" << endl;
+		cout << "delandtsheer_doyen::compute_pair_orbit_table" << endl;
 	}
 	pair_orbit = NEW_int(V * V);
 	int_vec_zero(pair_orbit, V * V);
@@ -1149,8 +1146,7 @@ void delandtsheer_doyen::compute_pair_orbit_table(
 		}
 	}
 	if (f_v) {
-		cout << "delandtsheer_doyen::compute_pair_"
-				"orbit_table done" << endl;
+		cout << "delandtsheer_doyen::compute_pair_orbit_table done" << endl;
 	}
 }
 
@@ -1164,8 +1160,7 @@ void delandtsheer_doyen::write_pair_orbit_file(
 
 
 	if (f_v) {
-		cout << "delandtsheer_doyen::write_pair_"
-				"orbit_file" << endl;
+		cout << "delandtsheer_doyen::write_pair_orbit_file" << endl;
 	}
 	sprintf(fname, "%s.2orbits", group_label);
 	cout << "writing pair-orbit file " << fname << endl;
@@ -1176,8 +1171,7 @@ void delandtsheer_doyen::write_pair_orbit_file(
 		n = Pairs->first_poset_orbit_node_at_level[2] + i;
 		Pairs->get_set(n, set, size);
 		if (size != 2) {
-			cout << "delandtsheer_doyen::write_pair_"
-					"orbit_file "
+			cout << "delandtsheer_doyen::write_pair_orbit_file "
 					"size != 2" << endl;
 			exit(1);
 			}
@@ -1200,8 +1194,7 @@ void delandtsheer_doyen::write_pair_orbit_file(
 	cout << "written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 	if (f_v) {
-		cout << "delandtsheer_doyen::write_pair_"
-				"orbit_file done" << endl;
+		cout << "delandtsheer_doyen::write_pair_orbit_file done" << endl;
 	}
 
 }

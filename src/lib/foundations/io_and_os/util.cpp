@@ -1990,7 +1990,7 @@ int s_scan_double(char **s, double *d)
 		}
 	len = 0;
 	c = **s;
-	if (isdigit(c)) {
+	if (isdigit(c) || c == '-') {
 		//cout << "s_scan_double character '" << c << "'" << endl;
 		while (isdigit(c) || c == '.' || c == 'e' || c == '-') {
 			str1[len] = c;

@@ -18,6 +18,10 @@ namespace orbiter {
 namespace interfaces {
 
 
+static int do_create_points_on_quartic_compute_point_function(double t,
+		double *pt, void *extra_data);
+
+
 interface_projective::interface_projective()
 {
 	argc = 0;
@@ -51,6 +55,11 @@ interface_projective::interface_projective()
 	f_max_TDO_depth = FALSE;
 	max_TDO_depth = INT_MAX;
 
+	f_classify_cubic_curves = FALSE;
+
+	f_create_points_on_quartic = FALSE;
+	desired_distance = 0;
+
 }
 
 
@@ -62,6 +71,12 @@ void interface_projective::print_help(int argc, const char **argv, int i, int ve
 	else if (strcmp(argv[i], "-canonical_form_PG") == 0) {
 		cout << "-canonical_form_PG" << endl;
 	}
+	else if (strcmp(argv[i], "-classify_cubic_curves") == 0) {
+		cout << "-classify_cubic_curves" << endl;
+	}
+	else if (strcmp(argv[i], "-create_points_on_quartic") == 0) {
+		cout << "-create_points_on_quartic <double : desired_distance>" << endl;
+	}
 }
 
 int interface_projective::recognize_keyword(int argc, const char **argv, int i, int verbose_level)
@@ -70,6 +85,12 @@ int interface_projective::recognize_keyword(int argc, const char **argv, int i, 
 		return true;
 	}
 	else if (strcmp(argv[i], "-canonical_form_PG <int : n> < int : q >") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-classify_cubic_curves < int : q >") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-create_points_on_quartic") == 0) {
 		return true;
 	}
 	return false;
@@ -101,6 +122,20 @@ void interface_projective::read_arguments(int argc, const char **argv, int i0, i
 			i++;
 			i = read_canonical_form_arguments(argc, argv, i, verbose_level);
 
+		}
+		else if (strcmp(argv[i], "-classify_cubic_curves") == 0) {
+			f_classify_cubic_curves = TRUE;
+			q = atoi(argv[++i]);
+			cout << "-classify_cubic_curves " <<  q << endl;
+			i++;
+			i = read_canonical_form_arguments(argc, argv, i, verbose_level);
+
+		}
+		else if (strcmp(argv[i], "-create_points_on_quartic") == 0) {
+			f_create_points_on_quartic = TRUE;
+			desired_distance = atof(argv[++i]);
+			cout << "-create_points_on_quartic " << desired_distance << endl;
+			i++;
 		}
 	}
 	cout << "interface_projective::read_arguments done" << endl;
@@ -190,6 +225,12 @@ void interface_projective::worker(int verbose_level)
 	}
 	else if (f_canonical_form_PG) {
 		do_canonical_form_PG(n, q, verbose_level);
+	}
+	else if (f_classify_cubic_curves) {
+		do_classify_cubic_curves(q, verbose_level);
+	}
+	else if (f_create_points_on_quartic) {
+		do_create_points_on_quartic(desired_distance, verbose_level);
 	}
 	if (f_v) {
 		cout << "interface_projective::worker done" << endl;
@@ -453,6 +494,350 @@ void interface_projective::do_canonical_form_PG(int n, int q, int verbose_level)
 	if (f_v) {
 		cout << "interface_projective::do_canonical_form_PG done" << endl;
 	}
+}
+
+void interface_projective::do_classify_cubic_curves(int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_projective::do_classify_cubic_curves" << endl;
+	}
+
+	const char *starter_directory_name = "";
+	char base_fname[1000];
+
+	sprintf(base_fname, "cubic_curves_%d", q);
+
+
+	int f_semilinear = FALSE;
+	number_theory_domain NT;
+
+	if (!NT.is_prime(q)) {
+		f_semilinear = TRUE;
+	}
+	finite_field *F;
+
+	F = NEW_OBJECT(finite_field);
+	F->init(q, 0);
+
+	cubic_curve *CC;
+
+	CC = NEW_OBJECT(cubic_curve);
+
+	CC->init(F, verbose_level);
+
+
+	cubic_curve_with_action *CCA;
+
+	CCA = NEW_OBJECT(cubic_curve_with_action);
+
+	CCA->init(CC, f_semilinear, verbose_level);
+
+	classify_cubic_curves *CCC;
+
+	CCC = NEW_OBJECT(classify_cubic_curves);
+
+
+	CCC->init(CCA,
+			starter_directory_name,
+			base_fname,
+			argc, argv,
+			verbose_level);
+
+	CCC->compute_starter(verbose_level);
+
+	CCC->test_orbits(verbose_level);
+
+	CCC->do_classify(verbose_level);
+
+
+	char fname[1000];
+	char title[1000];
+	char author[1000];
+	sprintf(title, "Cubic Curves in PG$(2,%d)$", q);
+	sprintf(author, "");
+	sprintf(fname, "Cubic_curves_q%d.tex", q);
+
+	{
+		ofstream fp(fname);
+		latex_interface L;
+
+		//latex_head_easy(fp);
+		L.head(fp,
+			FALSE /* f_book */,
+			TRUE /* f_title */,
+			title, author,
+			FALSE /*f_toc */,
+			FALSE /* f_landscape */,
+			FALSE /* f_12pt */,
+			TRUE /*f_enlarged_page */,
+			TRUE /* f_pagenumbers*/,
+			NULL /* extra_praeamble */);
+
+		fp << "\\subsection*{" << title << "}" << endl;
+
+		CCC->report(fp, verbose_level);
+
+		L.foot(fp);
+	}
+
+	file_io Fio;
+
+	cout << "Written file " << fname << " of size "
+		<< Fio.file_size(fname) << endl;
+
+	if (f_v) {
+		cout << "classify_cubic_curves writing cheat sheet on "
+				"cubic curves done" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "interface_projective::do_classify_cubic_curves done" << endl;
+	}
+}
+
+
+#if 0
+static void print_point(ostream &ost, double x, double y)
+{
+	ost << "\t-point \"" << x << "," << y << ",0\" \\" << endl;
+}
+#endif
+
+void interface_projective::do_create_points_on_quartic(double desired_distance, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_projective::do_create_points_on_quartic" << endl;
+	}
+
+	double amin, amid, amax;
+	//double epsilon = 0.001;
+	int N = 200;
+	int i;
+
+	//a0 = 16. / 25.;
+	//b0 = 16. / 25.;
+
+	amin = 0;
+	amid = 16. / 25.;
+	amax = 100;
+
+	int nb;
+
+	{
+		parametric_curve C1;
+		parametric_curve C2;
+
+		C1.init(2 /* nb_dimensions */,
+				desired_distance,
+				amin, amid,
+				do_create_points_on_quartic_compute_point_function,
+				this /* extra_data */,
+				100. /* boundary */,
+				N,
+				verbose_level);
+
+		cout << "after parametric_curve::init, C1.Pts.size()=" << C1.Pts.size() << endl;
+
+
+		C2.init(2 /* nb_dimensions */,
+				desired_distance,
+				amid, amax,
+				do_create_points_on_quartic_compute_point_function,
+				this /* extra_data */,
+				100. /* boundary */,
+				N,
+				verbose_level);
+
+		cout << "after parametric_curve::init, C2.Pts.size()=" << C2.Pts.size() << endl;
+
+
+		for (i = 0; i < C1.Pts.size(); i++) {
+			cout << C1.Pts[i].t << " : " << C1.Pts[i].coords[0] << ", " << C1.Pts[i].coords[1] << endl;
+		}
+
+		double *Pts;
+		int nb_pts;
+
+		nb_pts = 4 * (C1.Pts.size() + C2.Pts.size());
+		Pts = new double[nb_pts * 2];
+		nb = 0;
+		for (i = 0; i < C1.Pts.size(); i++) {
+			Pts[nb * 2 + 0] = C1.Pts[i].coords[0];
+			Pts[nb * 2 + 1] = C1.Pts[i].coords[1];
+			nb++;
+		}
+		for (i = 0; i < C1.Pts.size(); i++) {
+			Pts[nb * 2 + 0] = -1 * C1.Pts[i].coords[0];
+			Pts[nb * 2 + 1] = C1.Pts[i].coords[1];
+			nb++;
+		}
+		for (i = 0; i < C1.Pts.size(); i++) {
+			Pts[nb * 2 + 0] = C1.Pts[i].coords[0];
+			Pts[nb * 2 + 1] = -1 * C1.Pts[i].coords[1];
+			nb++;
+		}
+		for (i = 0; i < C1.Pts.size(); i++) {
+			Pts[nb * 2 + 0] = -1 * C1.Pts[i].coords[0];
+			Pts[nb * 2 + 1] = -1 * C1.Pts[i].coords[1];
+			nb++;
+		}
+		for (i = 0; i < C2.Pts.size(); i++) {
+			Pts[nb * 2 + 0] = C2.Pts[i].coords[0];
+			Pts[nb * 2 + 1] = C2.Pts[i].coords[1];
+			nb++;
+		}
+		for (i = 0; i < C2.Pts.size(); i++) {
+			Pts[nb * 2 + 0] = -1 * C2.Pts[i].coords[0];
+			Pts[nb * 2 + 1] = C2.Pts[i].coords[1];
+			nb++;
+		}
+		for (i = 0; i < C2.Pts.size(); i++) {
+			Pts[nb * 2 + 0] = C2.Pts[i].coords[0];
+			Pts[nb * 2 + 1] = -1 * C2.Pts[i].coords[1];
+			nb++;
+		}
+		for (i = 0; i < C2.Pts.size(); i++) {
+			Pts[nb * 2 + 0] = -1 * C2.Pts[i].coords[0];
+			Pts[nb * 2 + 1] = -1 * C2.Pts[i].coords[1];
+			nb++;
+		}
+		file_io Fio;
+
+		Fio.double_matrix_write_csv("points.csv", Pts, nb, 2);
+
+#if 0
+		{
+		ofstream fp("points.txt");
+		nb = 0;
+		for (i = 0; i < C1.Pts.size(); i++) {
+			print_point(fp, C1.Pts[i].coords[0], C1.Pts[i].coords[1]);
+			nb++;
+		}
+		for (i = 0; i < C1.Pts.size(); i++) {
+			print_point(fp, -1 * C1.Pts[i].coords[0], C1.Pts[i].coords[1]);
+			nb++;
+		}
+		for (i = 0; i < C1.Pts.size(); i++) {
+			print_point(fp, C1.Pts[i].coords[0], -1 * C1.Pts[i].coords[1]);
+			nb++;
+		}
+		for (i = 0; i < C1.Pts.size(); i++) {
+			print_point(fp, -1 * C1.Pts[i].coords[0], -1 * C1.Pts[i].coords[1]);
+			nb++;
+		}
+		for (i = 0; i < C2.Pts.size(); i++) {
+			print_point(fp, C2.Pts[i].coords[0], C2.Pts[i].coords[1]);
+			nb++;
+		}
+		for (i = 0; i < C2.Pts.size(); i++) {
+			print_point(fp, -1 * C2.Pts[i].coords[0], C2.Pts[i].coords[1]);
+			nb++;
+		}
+		for (i = 0; i < C2.Pts.size(); i++) {
+			print_point(fp, C2.Pts[i].coords[0], -1 * C2.Pts[i].coords[1]);
+			nb++;
+		}
+		for (i = 0; i < C2.Pts.size(); i++) {
+			print_point(fp, -1 * C2.Pts[i].coords[0], -1 * C2.Pts[i].coords[1]);
+			nb++;
+		}
+		}
+#endif
+		cout << "created curve 1 with " << C1.Pts.size() << " many points" << endl;
+		cout << "created curve 2 with " << C2.Pts.size() << " many points" << endl;
+	}
+	cout << "created 4  curves with " << nb << " many points" << endl;
+
+
+#if 0
+
+	double a, b;
+	double a0, da, amin, amax;
+	double b0, db, bmin, bmax;
+	double sa, sb;
+	double epsilon = 0.00001;
+
+	da = (amax - amin) / (N - 1);
+	for (i = 0; i < N; i++) {
+		a = amin + (double) i * da;
+		if (ABS(a - a0) < epsilon) {
+			continue;
+		}
+		b = (4. - 4. * a) / (4. - 25. * a * 0.25);
+		if (ABS(b) > 5) {
+			continue;
+		}
+		if (b < 0) {
+			continue;
+		}
+		sa = sqrt(a);
+		sb = sqrt(b);
+		print_point(sa, sb);
+		print_point(sa, -sb);
+		print_point(-sa, sb);
+		print_point(-sa, -sb);
+	}
+
+	bmin = 0;
+	bmax = sqrt(5.);
+	db = (bmax - bmin) / (N - 1);
+	for (i = 0; i < N; i++) {
+		b = bmin + (double) i * db;
+		if (ABS(b - b0) < epsilon) {
+			continue;
+		}
+		a = (4. - 4. * b) / (4. - 25. * b * 0.25);
+		if (ABS(a) > 5) {
+			continue;
+		}
+		if (a < 0) {
+			continue;
+		}
+		sa = sqrt(a);
+		sb = sqrt(b);
+		print_point(sa, sb);
+		print_point(sa, -sb);
+		print_point(-sa, sb);
+		print_point(-sa, -sb);
+	}
+#endif
+
+
+
+	if (f_v) {
+		cout << "interface_projective::do_create_points_on_quartic done" << endl;
+	}
+}
+
+
+static int do_create_points_on_quartic_compute_point_function(double t,
+		double *pt, void *extra_data)
+{
+	double num, denom, b;
+	double epsilon = 0.00001;
+
+	num = 4. - 4. * t;
+	denom = 4. - 25. * t * 0.25;
+	if (ABS(denom) < epsilon) {
+		return FALSE;
+	}
+	else {
+		b = num / denom;
+		if (b < 0) {
+			return FALSE;
+		}
+		else {
+			pt[0] = sqrt(t);
+			pt[1] = sqrt(b);
+		}
+	}
+	cout << "created point " << pt[0] << ", " << pt[1] << endl;
+	return TRUE;
 }
 
 

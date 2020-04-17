@@ -9,6 +9,8 @@ MODULES = \
 	animate.o \
 	drawable_set_of_objects.o \
 	mp_graphics.o \
+	parametric_curve_point.o \
+	parametric_curve.o \
 	plot_tools.o \
 	povray_interface.o \
 	scene.o \

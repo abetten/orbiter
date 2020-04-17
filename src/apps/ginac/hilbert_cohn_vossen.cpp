@@ -34,6 +34,7 @@ using namespace std;
 #include "ginac_linear_algebra.cpp"
 
 
+#define EPSILON 0.001
 
 int f_transformed = FALSE;
 int *line_idx1 = NULL;
@@ -848,6 +849,47 @@ void surface(int argc, const char **argv)
 
 		create_specific_lines_uv(Surf, AB, D, u, v, fp, verbose_level);
 
+		double D_projected[27 * 6];
+		double da, db, dc;
+		double dx, dy, dux, duy;
+
+		for (i = 0; i < 27; i++) {
+			if (i == 0) {
+				cout << "ai:" << endl;
+			}
+			else if (i == 6) {
+				cout << "bj:" << endl;
+			}
+			else if (i == 12) {
+				cout << "cij:" << endl;
+			}
+			for (j = 0; j < 3; j++) {
+				D_projected[i * 6 + 0 * 3 + j] = D[i * 8 + 0 * 4 + 1 + j];
+				D_projected[i * 6 + 1 * 3 + j] = D[i * 8 + 1 * 4 + 1 + j];
+			}
+			if (ABS(D_projected[i * 6 + 0 * 3 + 2]) > EPSILON || ABS(D_projected[i * 6 + 1 * 3 + 2]) > EPSILON) {
+				if (ABS(D_projected[i * 6 + 0 * 3 + 2]) > EPSILON) {
+					dc = D_projected[i * 6 + 0 * 3 + 2];
+					da = D_projected[i * 6 + 0 * 3 + 0];
+					db = D_projected[i * 6 + 0 * 3 + 1];
+					dx = da / dc;
+					dy = db / dc;
+					dux = D_projected[i * 6 + 1 * 3 + 0];
+					duy = D_projected[i * 6 + 1 * 3 + 1];
+				}
+				else {
+					dc = D_projected[i * 6 + 1 * 3 + 2];
+					da = D_projected[i * 6 + 1 * 3 + 0];
+					db = D_projected[i * 6 + 1 * 3 + 1];
+					dx = da / dc;
+					dy = db / dc;
+					dux = D_projected[i * 6 + 0 * 3 + 0];
+					duy = D_projected[i * 6 + 0 * 3 + 1];
+
+				}
+				cout << "\t\t\t-line_through_two_points \"" << dx << "," << dy << ",0," << dx + dux << "," << dy + duy << ",0\" \\" << endl;
+			}
+		}
 
 
 		numerics Num;
@@ -954,11 +996,14 @@ void surface(int argc, const char **argv)
 
 			if (f_transformed) {
 
+				double Eqn_orig[20];
 				double Eqn_transformed[20];
 
-
+				for (h = 0; h < 20; h++) {
+					Eqn_orig[h] = S->cubic_coords(0, h);
+				}
 				Num.substitute_cubic_linear_using_povray_ordering(
-						S->Cubic_coords + 0 * 20, Eqn_transformed,
+						Eqn_orig, Eqn_transformed,
 						Transform_mtx_inv, verbose_level);
 
 				S->cubic(Eqn_transformed);
@@ -1620,20 +1665,20 @@ void draw_frame_HCV(
 
 		if (f_transformed) {
 			{
-				int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
+				//int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
 
 			//Anim->S->draw_lines_cij_with_selection(selection, 15, fp);
 			}
 
 			{
-				int selection[] = {1};
+				//int selection[] = {1};
 				//Anim->S->draw_cubic_with_selection(selection, 1,
 				//		Pov.color_white, fp);
 			}
 		}
 		else {
 			{
-				int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11};
+				//int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11};
 
 				//Anim->S->draw_lines_cij_with_selection(selection, 12, fp);
 			}

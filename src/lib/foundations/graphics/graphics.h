@@ -124,6 +124,14 @@ public:
 	int group_idx;
 
 	int type;
+	// 1 = sphere
+	// 2 = cylinder
+	// 3 = prisms (faces)
+	// 4 = planes
+	// 5 = lines
+	// 6 = cubics
+	// 7 = quadrics
+	// 8 = quartics
 
 
 	double d;
@@ -553,6 +561,57 @@ public:
 
 
 // #############################################################################
+// parametric_curve_point.cpp
+// #############################################################################
+
+//! an individual point on a continuous curve, sampled through parametric_curve
+
+class parametric_curve_point {
+public:
+
+	double t;
+	int f_is_valid;
+	std::vector<double> coords;
+
+	parametric_curve_point();
+	~parametric_curve_point();
+	void init2(double t, int f_is_valid, double x0, double x1);
+
+};
+
+// #############################################################################
+// parametric_curve.cpp
+// #############################################################################
+
+//! a continuous curve sampled by individual points
+
+class parametric_curve {
+public:
+
+	int nb_dimensions;
+	double desired_distance;
+	double t0, t1; // parameter interval
+	int (*compute_point_function)(double t, double *pt, void *extra_data);
+	void *extra_data;
+	double boundary;
+
+	int nb_pts;
+	std::vector<parametric_curve_point> Pts;
+
+	parametric_curve();
+	~parametric_curve();
+	void init(int nb_dimensions,
+			double desired_distance,
+			double t0, double t1,
+			int (*compute_point_function)(double t, double *pt, void *extra_data),
+			void *extra_data,
+			double boundary,
+			int N,
+			int verbose_level);
+
+};
+
+// #############################################################################
 // plot_tools.cpp
 // #############################################################################
 
@@ -650,6 +709,8 @@ public:
 		double *v, double angle_zero_one, std::ostream &ost);
 	void union_start(std::ostream &ost);
 	void union_end(std::ostream &ost, double scale_factor, double clipping_radius);
+	void union_end_box_clipping(std::ostream &ost, double scale_factor,
+			double box_x, double box_y, double box_z);
 	void bottom_plane(std::ostream &ost);
 	void rotate_111(int h, int nb_frames, std::ostream &fp);
 	void rotate_around_z_axis(int h, int nb_frames, std::ostream &fp);
@@ -664,12 +725,12 @@ public:
 
 #define SCENE_MAX_LINES    100000
 #define SCENE_MAX_EDGES    100000
-#define SCENE_MAX_POINTS   100000
+#define SCENE_MAX_POINTS   200000
 #define SCENE_MAX_PLANES    10000
 #define SCENE_MAX_QUADRICS  10000
 #define SCENE_MAX_QUARTICS   1000
 #define SCENE_MAX_CUBICS    10000
-#define SCENE_MAX_FACES    100000
+#define SCENE_MAX_FACES    200000
 
 
 //! a collection of 3D geometry objects

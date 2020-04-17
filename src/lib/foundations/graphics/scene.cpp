@@ -1435,6 +1435,7 @@ void scene::draw_faces_with_selection(int *selection, int nb_select,
 	for (i = 0; i < nb_select; i++) {
 		s = selection[i];
 		j = s;
+		ost << "\t\t// face " << j << ":" << endl;
 		draw_face(j, thickness_half, options, ost);
 		}
 	ost << endl;
@@ -4712,6 +4713,7 @@ void scene::read_obj_file(const char *fname, int verbose_level)
 	int nb_points0;
 	int nb_pts = 0;
 	int nb_faces_read = 0;
+	int idx, pt_idx;
 
 	if (f_v) {
 		cout << "scene::read_obj_file" << endl;
@@ -4781,7 +4783,7 @@ void scene::read_obj_file(const char *fname, int verbose_level)
 				sy += y;
 				sz += z;
 				nb_pts++;
-				cout << "point : " << x << "," << y << "," << z << endl;
+				//cout << "point : " << x << "," << y << "," << z << endl;
 				point(x, y, z);
 			}
 			else if (strncmp(buf, "f ", 2) == 0) {
@@ -4819,10 +4821,23 @@ void scene::read_obj_file(const char *fname, int verbose_level)
 					w[l] = w[0];
 					l++;
 				}
-				cout << "read face : ";
-				int_vec_print(cout, w, l);
-				cout << endl;
-				face(w, l);
+				//cout << "read face : ";
+				//int_vec_print(cout, w, l);
+				//cout << endl;
+				idx = face(w, l);
+				if (FALSE && idx == 2920) {
+					cout << "added face " << idx << ": ";
+					int_vec_print(cout, w, l);
+					cout << endl;
+					for (h = 0; h < l; h++) {
+						pt_idx = w[h];
+						double x, y, z;
+						x = point_coords(pt_idx, 0);
+						y = point_coords(pt_idx, 0);
+						z = point_coords(pt_idx, 0);
+						cout << "Point " << pt_idx << " : x=" << x << " y=" << y << " z=" << z << endl;
+					}
+				}
 				FREE_int(w);
 			}
 		}

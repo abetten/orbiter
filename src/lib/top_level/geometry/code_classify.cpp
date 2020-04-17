@@ -1,4 +1,4 @@
-// code_generator.cpp
+// code_classify.cpp
 //
 // Anton Betten
 //
@@ -48,8 +48,9 @@ code_classify::code_classify()
 	f_use_invariant_subset_if_available = TRUE;
 	f_debug = FALSE;
 	f_draw_poset = FALSE;
-	f_print_data_structure = FALSE;
+	f_draw_full_poset = FALSE;
 	f_draw_schreier_trees = FALSE;
+	f_print_data_structure = FALSE;
 	null();
 }
 
@@ -477,6 +478,9 @@ void code_classify::main(int verbose_level)
 		}
 	if (f_read_data_file) {
 		int target_depth;
+		if (f_v) {
+			cout << "code_classify::main f_read_data_file" << endl;
+			}
 		if (gen->f_max_depth) {
 			target_depth = gen->max_depth;
 			}
@@ -485,7 +489,11 @@ void code_classify::main(int verbose_level)
 			}
 		depth = gen->compute_orbits(depth_completed, target_depth,
 				verbose_level);
-	} else {
+	}
+	else {
+		if (f_v) {
+			cout << "code_classify::main before gen->main" << endl;
+			}
 		depth = gen->main(t0,
 			schreier_depth,
 			f_use_invariant_subset_if_available,
@@ -495,6 +503,9 @@ void code_classify::main(int verbose_level)
 	cout << "code_classify::main depth = " << depth << endl;
 
 	if (f_table_of_nodes) {
+		if (f_v) {
+			cout << "code_classify::main f_table_of_nodes" << endl;
+		}
 		long int *Table;
 		int nb_rows, nb_cols;
 		file_io Fio;
@@ -509,14 +520,25 @@ void code_classify::main(int verbose_level)
 		}
 
 	if (f_list) {
+		if (f_v) {
+			cout << "code_classify::main f_list" << endl;
+		}
 
 		{
-		spreadsheet *Sp;
-		gen->make_spreadsheet_of_orbit_reps(Sp, depth);
-		char fname_csv[1000];
-		sprintf(fname_csv, "orbits_%d.csv", depth);
-		Sp->save(fname_csv, verbose_level);
-		delete Sp;
+			spreadsheet *Sp;
+
+			if (f_v) {
+				cout << "code_classify::main before gen->make_spreadsheet_of_orbit_reps" << endl;
+			}
+
+			gen->make_spreadsheet_of_orbit_reps(Sp, depth);
+			char fname_csv[1000];
+			sprintf(fname_csv, "orbits_%d.csv", depth);
+			Sp->save(fname_csv, verbose_level);
+			delete Sp;
+			if (f_v) {
+				cout << "code_classify::main after gen->make_spreadsheet_of_orbit_reps" << endl;
+			}
 		}
 
 #if 1
@@ -525,6 +547,9 @@ void code_classify::main(int verbose_level)
 		int f_save_stab = TRUE;
 		int f_show_whole_orbit = FALSE;
 		
+		if (f_v) {
+			cout << "code_classify::main before gen->list_all_orbits_at_level" << endl;
+		}
 		gen->list_all_orbits_at_level(depth, 
 			TRUE, 
 			print_code, 
@@ -533,6 +558,10 @@ void code_classify::main(int verbose_level)
 			f_show_stab, 
 			f_save_stab, 
 			f_show_whole_orbit);
+
+		if (f_v) {
+			cout << "code_classify::main after gen->list_all_orbits_at_level" << endl;
+		}
 
 #if 0
 		int d;
@@ -544,37 +573,53 @@ void code_classify::main(int verbose_level)
 		}
 
 
-	cout << "preparing level spreadsheet" << endl;
-	{
-	spreadsheet *Sp;
-	gen->make_spreadsheet_of_level_info(
-			Sp, depth, verbose_level);
-	char fname_csv[1000];
-	sprintf(fname_csv, "levels_%d.csv", depth);
-	Sp->save(fname_csv, verbose_level);
-	delete Sp;
+	if (f_v) {
+		cout << "code_classify::main preparing level spreadsheet" << endl;
 	}
-	cout << "preparing orbit spreadsheet" << endl;
 	{
-	spreadsheet *Sp;
-	gen->make_spreadsheet_of_orbit_reps(
-			Sp, depth);
-	char fname_csv[1000];
-	sprintf(fname_csv, "orbits_%d.csv",
-			depth);
-	Sp->save(fname_csv, verbose_level);
-	delete Sp;
+		spreadsheet *Sp;
+		gen->make_spreadsheet_of_level_info(
+				Sp, depth, verbose_level);
+		char fname_csv[1000];
+		sprintf(fname_csv, "levels_%d.csv", depth);
+		Sp->save(fname_csv, verbose_level);
+		delete Sp;
 	}
-	cout << "preparing orbit spreadsheet done" << endl;
+	if (f_v) {
+		cout << "code_classify::main preparing level spreadsheet done" << endl;
+	}
+
+	if (f_v) {
+		cout << "code_classify::main preparing orbit spreadsheet" << endl;
+	}
+	{
+		spreadsheet *Sp;
+		gen->make_spreadsheet_of_orbit_reps(
+				Sp, depth);
+		char fname_csv[1000];
+		sprintf(fname_csv, "orbits_%d.csv",
+				depth);
+		Sp->save(fname_csv, verbose_level);
+		delete Sp;
+	}
+	if (f_v) {
+		cout << "code_classify::main preparing orbit spreadsheet done" << endl;
+	}
 
 
 
 	if (f_draw_poset) {
+		if (f_v) {
+			cout << "code_classify::main f_draw_poset" << endl;
+		}
 		gen->draw_poset(gen->fname_base, depth, 
 			0 /* data1 */, f_embedded, f_sideways, 
 			verbose_level);
 		}
 	if (f_draw_full_poset) {
+		if (f_v) {
+			cout << "code_classify::main f_draw_full_poset" << endl;
+		}
 		gen->draw_poset_full(gen->fname_base, depth,
 				0 /* data1 */, f_embedded, f_sideways,
 				1 /* x_stretch */, verbose_level);
@@ -585,9 +630,15 @@ void code_classify::main(int verbose_level)
 					depth, fname_prefix, verbose_level);
 		}
 	if (f_print_data_structure) {
+		if (f_v) {
+			cout << "code_classify::main f_print_data_structure" << endl;
+		}
 		gen->print_data_structure_tex(depth, verbose_level);
 		}
 	if (f_report_schreier_trees) {
+		if (f_v) {
+			cout << "code_classify::main f_report_schreier_trees" << endl;
+		}
 		char fname_base[1000];
 		//char fname_report[1000];
 		if (f_linear) {
@@ -611,6 +662,9 @@ void code_classify::main(int verbose_level)
 #endif
 	}
 	if (f_report) {
+		if (f_v) {
+			cout << "code_classify::main f_report" << endl;
+		}
 		char fname_base[1000];
 		char fname_report[1000];
 		char title[10000];

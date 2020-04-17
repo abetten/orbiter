@@ -30,12 +30,12 @@ drawable_set_of_objects::drawable_set_of_objects()
 	type = 0;
 		// 1 = sphere
 		// 2 = cylinder
-		// 3 = primes (faces)
-	// 4 = planes
-	// 5 = lines
-	// 6 = cubics
-	// 7 = quadrics
-	// 8 = quartics
+		// 3 = prisms (faces)
+		// 4 = planes
+		// 5 = lines
+		// 6 = cubics
+		// 7 = quadrics
+		// 8 = quartics
 
 	d = 0.;
 
