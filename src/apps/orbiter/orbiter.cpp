@@ -63,6 +63,9 @@ int main(int argc, const char **argv)
 	{
 		interface_cryptography Interface_cryptography;
 
+		if (f_v) {
+			cout << "before Interface_cryptography.recognize_keyword" << endl;
+		}
 		if (Interface_cryptography.recognize_keyword(argc, argv, i, verbose_level)) {
 			Interface_cryptography.read_arguments(argc, argv, i, verbose_level);
 			Interface_cryptography.worker(verbose_level);

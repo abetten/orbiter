@@ -115,9 +115,9 @@ class interface_cryptography {
 	int key_length, threshold;
 	int affine_a;
 	int affine_b;
-	char ptext[10000];
-	char ctext[10000];
-	char guess[10000];
+	char ptext[1000];
+	char ctext[1000];
+	char guess[1000];
 	char key[1000];
 	int f_RSA;
 	long int RSA_d;
