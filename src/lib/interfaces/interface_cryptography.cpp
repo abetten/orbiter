@@ -21,6 +21,7 @@ interface_cryptography::interface_cryptography()
 	cout << "interface_cryptography::interface_cryptography" << endl;
 	f_cipher = FALSE;
 	t = no_cipher_type;
+	cout << "interface_cryptography::interface_cryptography 0" << endl;
 	f_decipher = FALSE;
 	f_analyze = FALSE;
 	f_kasiski = FALSE;
@@ -60,6 +61,7 @@ interface_cryptography::interface_cryptography()
 	f_sift_smooth = FALSE;
 	sift_smooth_from = 0;
 	sift_smooth_len = 0;
+	cout << "interface_cryptography::interface_cryptography 1" << endl;
 	sift_smooth_factor_base = NULL;
 	f_square_root = FALSE;
 	square_root_number = NULL;
@@ -98,6 +100,7 @@ interface_cryptography::interface_cryptography()
 	random_last_nb = 0;
 	f_affine_sequence = FALSE;
 	affine_sequence_a = 0;
+	cout << "interface_cryptography::interface_cryptography 2" << endl;
 	affine_sequence_c = 0;
 	affine_sequence_m = 0;
 	f_EC_Koblitz_encoding = FALSE;
@@ -125,6 +128,7 @@ interface_cryptography::interface_cryptography()
 	RREF_q = 0;
 	RREF_m = 0;
 	RREF_n = 0;
+	cout << "interface_cryptography::interface_cryptography 3" << endl;
 	RREF_text = NULL;
 	f_weight_enumerator = FALSE;
 	f_normalize_from_the_right = FALSE;
