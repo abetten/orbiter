@@ -18,6 +18,7 @@ namespace interfaces {
 
 interface_cryptography::interface_cryptography()
 {
+	cout << "interface_cryptography::interface_cryptography" << endl;
 	f_cipher = FALSE;
 	t = no_cipher_type;
 	f_decipher = FALSE;
@@ -144,6 +145,7 @@ interface_cryptography::interface_cryptography()
 	f_count_subprimitive = FALSE;
 	count_subprimitive_Q_max = 0;
 	count_subprimitive_H_max = 0;
+	cout << "interface_cryptography::interface_cryptography done" << endl;
 
 }
 
