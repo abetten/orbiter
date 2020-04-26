@@ -34,6 +34,7 @@ interface_cryptography::interface_cryptography()
 	//char ctext[10000];
 	//char guess[10000];
 	//char key[1000];
+	cout << "interface_cryptography::interface_cryptography 0a" << endl;
 	f_RSA = FALSE;
 	RSA_d = 0;
 	RSA_m = 0;
@@ -48,6 +49,7 @@ interface_cryptography::interface_cryptography()
 	power_mod_k = 0;
 	power_mod_n = 0;
 	f_discrete_log = FALSE;
+	cout << "interface_cryptography::interface_cryptography 0b" << endl;
 	discrete_log_y = 0;
 	discrete_log_a = 0;
 	discrete_log_m = 0;
