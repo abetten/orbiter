@@ -328,6 +328,11 @@ void interface_cryptography::print_help(int argc, const char **argv, int i, int 
 
 int interface_cryptography::recognize_keyword(int argc, const char **argv, int i, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_cryptography::recognize_keyword" << endl;
+	}
 	if (strcmp(argv[i], "-cs") == 0) {
 		return true;
 	}
@@ -475,8 +480,11 @@ int interface_cryptography::recognize_keyword(int argc, const char **argv, int i
 void interface_cryptography::read_arguments(int argc, const char **argv, int i0, int verbose_level)
 {
 	int i;
+	int f_v = (verbose_level >= 1);
 
-	cout << "interface_cryptography::read_arguments" << endl;
+	if (f_v) {
+		cout << "interface_cryptography::read_arguments" << endl;
+	}
 	//return 0;
 
 	for (i = i0; i < argc; i++) {
