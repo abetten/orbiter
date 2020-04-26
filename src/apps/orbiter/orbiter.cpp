@@ -47,6 +47,8 @@ int main(int argc, const char **argv)
 		}
 	}
 
+	int f_v = (verbose_level > 1);
+
 	if (f_seed) {
 		os_interface Os;
 
@@ -55,6 +57,9 @@ int main(int argc, const char **argv)
 		Os.random_integer(1000);
 	}
 
+	if (f_v) {
+		cout << "before Interface_cryptography" << endl;
+	}
 	{
 		interface_cryptography Interface_cryptography;
 
@@ -64,6 +69,9 @@ int main(int argc, const char **argv)
 		}
 	}
 
+	if (f_v) {
+		cout << "before Interface_combinatorics" << endl;
+	}
 	{
 		interface_combinatorics Interface_combinatorics;
 
@@ -73,6 +81,9 @@ int main(int argc, const char **argv)
 		}
 	}
 
+	if (f_v) {
+		cout << "before Interface_coding_theory" << endl;
+	}
 	{
 		interface_coding_theory Interface_coding_theory;
 
@@ -82,6 +93,9 @@ int main(int argc, const char **argv)
 		}
 	}
 
+	if (f_v) {
+		cout << "before Interface_povray" << endl;
+	}
 	{
 		interface_povray Interface_povray;
 
@@ -91,6 +105,9 @@ int main(int argc, const char **argv)
 		}
 	}
 
+	if (f_v) {
+		cout << "before Interface_projective" << endl;
+	}
 	{
 		interface_projective Interface_projective;
 
