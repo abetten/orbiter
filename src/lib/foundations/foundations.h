@@ -371,6 +371,9 @@ class combinatorial_object_create;
 class drawable_set_of_objects;
 class parametric_curve;
 class parametric_curve_entry;
+class function_command;
+class function_polish_description;
+class function_polish;
 
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)

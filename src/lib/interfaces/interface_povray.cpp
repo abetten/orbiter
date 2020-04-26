@@ -179,6 +179,22 @@ int interface_povray::read_scene_objects(int argc, const char **argv, int i0, in
 			S->cubic_in_orbiter_ordering(coeff);
 			delete [] coeff;
 		}
+		else if (strcmp(argv[i], "-cubic_Goursat") == 0) {
+			cout << "-cubic_Goursat" << endl;
+			const char *coeff_text;
+			double *coeff;
+			int coeff_sz;
+			numerics Numerics;
+
+			coeff_text = argv[++i];
+			Numerics.vec_scan(coeff_text, coeff, coeff_sz);
+			if (coeff_sz != 3) {
+				cout << "For -cubic_Goursat, number of coefficients must be 3; is " << coeff_sz << endl;
+				exit(1);
+			}
+			S->cubic_Goursat_ABC(coeff[0], coeff[1], coeff[2]);
+			delete [] coeff;
+		}
 		else if (strcmp(argv[i], "-quadric_lex_10") == 0) {
 			cout << "-quadric_lex_10" << endl;
 			const char *coeff_text;
@@ -250,9 +266,54 @@ int interface_povray::read_scene_objects(int argc, const char **argv, int i0, in
 					S->point(M[h * 3 + 0], M[h * 3 + 1], M[h * 3 + 2]);
 				}
 			}
+			else if (n == 4) {
+				for (h = 0; h < m; h++) {
+					S->point(M[h * 4 + 0], M[h * 4 + 1], M[h * 4 + 2]);
+				}
+			}
 			else {
 				cout << "The file " << fname << " should have either 2 or three columns" << endl;
 				exit(1);
+			}
+			delete [] M;
+		}
+		else if (strcmp(argv[i], "-line_through_two_points_recentered_from_csv_file") == 0) {
+			cout << "-line_through_two_points_recentered_from_csv_file" << endl;
+			const char *fname;
+			double *M;
+			int m, n, h;
+			file_io Fio;
+
+			fname = argv[++i];
+			Fio.double_matrix_read_csv(fname, M,
+					m, n, verbose_level);
+			cout << "The file " << fname << " contains " << m << " point coordiunates, each with " << n << " coordinates" << endl;
+			if (n != 6) {
+				cout << "The file " << fname << " should have 6 columns" << endl;
+				exit(1);
+			}
+			for (h = 0; h < m; h++) {
+				S->line_after_recentering(M[h * 6 + 0], M[h * 6 + 1], M[h * 6 + 2], M[h * 6 + 3], M[h * 6 + 4], M[h * 6 + 5], 10);
+			}
+			delete [] M;
+		}
+		else if (strcmp(argv[i], "-line_through_two_points_from_csv_file") == 0) {
+			cout << "-line_through_two_points_from_csv_file" << endl;
+			const char *fname;
+			double *M;
+			int m, n, h;
+			file_io Fio;
+
+			fname = argv[++i];
+			Fio.double_matrix_read_csv(fname, M,
+					m, n, verbose_level);
+			cout << "The file " << fname << " contains " << m << " point coordiunates, each with " << n << " coordinates" << endl;
+			if (n != 6) {
+				cout << "The file " << fname << " should have 6 columns" << endl;
+				exit(1);
+			}
+			for (h = 0; h < m; h++) {
+				S->line(M[h * 6 + 0], M[h * 6 + 1], M[h * 6 + 2], M[h * 6 + 3], M[h * 6 + 4], M[h * 6 + 5]);
 			}
 			delete [] M;
 		}
@@ -348,6 +409,23 @@ int interface_povray::read_scene_objects(int argc, const char **argv, int i0, in
 			S->plane_through_three_points(Idx[0], Idx[1], Idx[2]);
 			FREE_int(Idx);
 		}
+		else if (strcmp(argv[i], "-line_through_two_points_recentered") == 0) {
+			cout << "-line_through_two_points_recentered" << endl;
+			const char *coeff_text;
+			double *coeff;
+			int coeff_sz;
+			numerics Numerics;
+
+			coeff_text = argv[++i];
+			Numerics.vec_scan(coeff_text, coeff, coeff_sz);
+			if (coeff_sz != 6) {
+				cout << "For -line_through_two_points_recentered, the number of coefficients must be 6; is " << coeff_sz << endl;
+				exit(1);
+			}
+			//S->line(coeff[0], coeff[1], coeff[2], coeff[3], coeff[4], coeff[5]);
+			S->line_after_recentering(coeff[0], coeff[1], coeff[2], coeff[3], coeff[4], coeff[5], 10);
+			delete [] coeff;
+		}
 		else if (strcmp(argv[i], "-line_through_two_points") == 0) {
 			cout << "-line_through_two_points" << endl;
 			const char *coeff_text;
@@ -361,8 +439,8 @@ int interface_povray::read_scene_objects(int argc, const char **argv, int i0, in
 				cout << "For -line_through_two_points, the number of coefficients must be 6; is " << coeff_sz << endl;
 				exit(1);
 			}
-			//S->line(coeff[0], coeff[1], coeff[2], coeff[3], coeff[4], coeff[5]);
-			S->line_after_recentering(coeff[0], coeff[1], coeff[2], coeff[3], coeff[4], coeff[5], 10);
+			S->line(coeff[0], coeff[1], coeff[2], coeff[3], coeff[4], coeff[5]);
+			//S->line_after_recentering(coeff[0], coeff[1], coeff[2], coeff[3], coeff[4], coeff[5], 10);
 			delete [] coeff;
 		}
 		else if (strcmp(argv[i], "-line_through_two_existing_points") == 0) {
@@ -412,6 +490,23 @@ int interface_povray::read_scene_objects(int argc, const char **argv, int i0, in
 			}
 			S->plane_from_dual_coordinates(coeff);
 			delete [] coeff;
+		}
+		else if (strcmp(argv[i], "-dodecahedron") == 0) {
+			cout << "-dodecahedron" << endl;
+
+			int first_pt_idx;
+
+			first_pt_idx = S->nb_points;
+
+			S->Dodecahedron_points();
+			S->Dodecahedron_edges(first_pt_idx);
+			//cout << "Found " << S->nb_edges << " edges of the Dodecahedron" << endl;
+			S->Dodecahedron_planes(first_pt_idx);
+
+			// 20 points
+			// 30 edges
+			// 12 faces
+
 		}
 		else if (strcmp(argv[i], "-obj_file") == 0) {
 			cout << "-obj_file" << endl;
@@ -768,12 +863,11 @@ void interface_povray_draw_frame(
 	ostream &fp,
 	int verbose_level)
 {
-	povray_interface Pov;
 	int i;
 
 
 
-	Pov.union_start(fp);
+	Anim->Pov->union_start(fp);
 
 
 	if (round == 0) {
@@ -788,25 +882,15 @@ void interface_povray_draw_frame(
 		}
 
 
-
-		//Pov.rotate_111(h, nb_frames, fp);
-		Pov.rotate_around_z_axis(h, nb_frames, fp);
 	}
 
+	//Anim->S->clipping_by_cylinder(0, 1.7 /* r */, fp);
 
-	if (Anim->Opt->f_has_global_picture_scale) {
-		cout << "scale=" << Anim->Opt->global_picture_scale << endl;
-		//Pov.union_end(fp, Anim->Opt->global_picture_scale, clipping_radius);
-		Pov.union_end_box_clipping(fp, Anim->Opt->global_picture_scale,
-				clipping_radius, clipping_radius, clipping_radius);
-
-	}
-	else {
-		//Pov.union_end(fp, 1.0, clipping_radius);
-		Pov.union_end_box_clipping(fp, 1.0,
-				clipping_radius, clipping_radius, clipping_radius);
-
-	}
+	Anim->rotation(h, nb_frames, round, fp);
+	Anim->union_end(
+			h, nb_frames, round,
+			clipping_radius,
+			fp);
 
 }
 

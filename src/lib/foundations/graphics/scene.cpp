@@ -363,7 +363,7 @@ void scene::transform_lines(scene *S,
 					"point yy is not an affine point" << endl;
 			exit(1);
 			}
-		if (N.line_centered(xx, yy, xxx, yyy, 10.)) {
+		if (N.line_centered(xx, yy, xxx, yyy, 10., verbose_level - 1)) {
 			S->line(xxx[0], xxx[1], xxx[2], yyy[0], yyy[1], yyy[2]);
 			}
 		}
@@ -584,21 +584,26 @@ void scene::copy_faces(scene *S, double *A4, double *A4_inv,
 }
 
 
-int scene::line_pt_and_dir(double *x6, double rad)
+int scene::line_pt_and_dir(double *x6, double rad, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	double pt[6];
 	double pt2[6];
 	numerics N;
+	int ret;
 
+	if (f_v) {
+		cout << "scene::line_pt_and_dir" << endl;
+	}
 	pt[0] = x6[0];
 	pt[1] = x6[1];
 	pt[2] = x6[2];
 	pt[3] = x6[0] + x6[3];
 	pt[4] = x6[1] + x6[4];
 	pt[5] = x6[2] + x6[5];
-	if (N.line_centered(pt, pt + 3,
+	if (N.line_centered_tolerant(pt, pt + 3,
 		pt2, pt2 + 3, 
-		rad)) {
+		rad, verbose_level)) {
 		Line_coords[nb_lines * 6 + 0] = pt2[0];
 		Line_coords[nb_lines * 6 + 1] = pt2[1];
 		Line_coords[nb_lines * 6 + 2] = pt2[2];
@@ -610,11 +615,15 @@ int scene::line_pt_and_dir(double *x6, double rad)
 			cout << "too many lines" << endl;
 			exit(1);
 			}
-		return TRUE;
+		ret = TRUE;
 		}
 	else {
-		return FALSE;
+		ret = FALSE;
 		}
+	if (f_v) {
+		cout << "scene::line_pt_and_dir done" << endl;
+	}
+	return ret;
 }
 
 int scene::line_through_two_pts(double *x6, double rad)
@@ -622,6 +631,7 @@ int scene::line_through_two_pts(double *x6, double rad)
 	double pt[6];
 	double pt2[6];
 	numerics N;
+	int verbose_level = 0;
 
 	pt[0] = x6[0];
 	pt[1] = x6[1];
@@ -631,7 +641,7 @@ int scene::line_through_two_pts(double *x6, double rad)
 	pt[5] = x6[5];
 	if (N.line_centered(pt, pt + 3,
 		pt2, pt2 + 3,
-		rad)) {
+		rad, verbose_level)) {
 		Line_coords[nb_lines * 6 + 0] = pt2[0];
 		Line_coords[nb_lines * 6 + 1] = pt2[1];
 		Line_coords[nb_lines * 6 + 2] = pt2[2];
@@ -689,6 +699,7 @@ int scene::line_after_recentering(double x1, double x2, double x3,
 	double x[3], y[3];
 	double xx[3], yy[3];
 	numerics N;
+	int verbose_level = 0;
 
 	x[0] = x1;
 	x[1] = x2;
@@ -697,7 +708,7 @@ int scene::line_after_recentering(double x1, double x2, double x3,
 	y[1] = y2;
 	y[2] = y3;
 
-	N.line_centered(x, y, xx, yy, rad);
+	N.line_centered(x, y, xx, yy, rad, verbose_level);
 
 	Line_coords[nb_lines * 6 + 0] = xx[0];
 	Line_coords[nb_lines * 6 + 1] = xx[1];
@@ -718,11 +729,12 @@ int scene::line_through_two_points(int pt1, int pt2, double rad)
 	double x[3], y[3];
 	double xx[3], yy[3];
 	numerics N;
+	int verbose_level = 0;
 
 	N.vec_copy(Point_coords + pt1 * 3, x, 3);
 	N.vec_copy(Point_coords + pt2 * 3, y, 3);
 
-	N.line_centered(x, y, xx, yy, 10.);
+	N.line_centered(x, y, xx, yy, 10., verbose_level);
 
 	Line_coords[nb_lines * 6 + 0] = xx[0];
 	Line_coords[nb_lines * 6 + 1] = xx[1];
@@ -1080,6 +1092,22 @@ int scene::cubic(double *coeff)
 		exit(1);
 		}
 	return nb_cubics - 1;
+}
+
+int scene::cubic_Goursat_ABC(double A, double B, double C)
+{
+	double coeffs[20];
+	int i;
+
+	for (i = 0; i < 20; i++) {
+		coeffs[i] = 0;
+	}
+	coeffs[5] = A; // xyz
+	coeffs[3] = B; // x^2
+	coeffs[12] = B; // y^2
+	coeffs[17] = B; // z^2
+	coeffs[19] = C; // 1
+	return cubic(coeffs);
 }
 
 int scene::quartic(double *coeff)
@@ -2326,7 +2354,7 @@ void scene::map_a_line(int line1, int line2,
 	N.vec_copy(Line_coords + line_idx * 6, line_pt1_in, 3);
 	N.vec_copy(Line_coords + line_idx * 6 + 3, line_pt2_in, 3);
 	N.line_centered(line_pt1_in, line_pt2_in,
-			line_pt1, line_pt2, spread /* r */);
+			line_pt1, line_pt2, spread /* r */, verbose_level - 1);
 	
 	for (i = 0; i < 3; i++) {
 		direction[i] = line_pt2[i] - line_pt1[i];
@@ -2733,6 +2761,17 @@ void scene::Dodecahedron_points()
 	point(minus_phi,phi_inv,zero); //18
 	point(minus_phi,minus_phi_inv,zero); //19
 
+	// opposite pairs are :
+	// 0, 7
+	// 1, 6
+	// 2, 5
+	// 3, 4
+	// 8, 11
+	// 9, 10
+	// 12, 15
+	// 13, 14
+	// 16, 19
+	// 17, 18
 
 }
 
@@ -3218,10 +3257,19 @@ void scene::create_Hilbert_model(int verbose_level)
 	if (f_v) {
 		cout << "scene::create_Hilbert_model" << endl;
 	}
+
+	verbose_level += 2;
+
 	numerics N;
 	int i;
 
+	if (f_v) {
+		cout << "scene::create_Hilbert_model before create_Hilbert_cube" << endl;
+	}
 	create_Hilbert_cube(verbose_level);
+	if (f_v) {
+		cout << "scene::create_Hilbert_model after create_Hilbert_cube" << endl;
+	}
 
 #if 0
 	double p = 1.;
@@ -3282,6 +3330,9 @@ void scene::create_Hilbert_model(int verbose_level)
 	edge(6, 7); // 11
 #endif
 	
+	if (f_v) {
+		cout << "scene::create_Hilbert_model creating edges for double six" << endl;
+	}
 	// the double six:
 	// there is a symmetry (a1,a2,a3)(a4,a5,a6)(b1,b2,b3)(b4,b5,b6)
 	// also, a_i^\perp = b_i
@@ -3305,6 +3356,9 @@ void scene::create_Hilbert_model(int verbose_level)
 	point(-6,1,-3); // 22
 	point(-10,1,-5); // 23
 
+	if (f_v) {
+		cout << "scene::create_Hilbert_model creating the terahedron" << endl;
+	}
 	// the tetrahedron:
 	face3(0, 6, 3 ); // 6, left
 	face3(0, 6, 5 ); // 7, right
@@ -3449,9 +3503,18 @@ void scene::create_Hilbert_model(int verbose_level)
 		-3./5., 0., 4./5., 1., 1., 0., // 25, 13 c46
 		3./5., 4./5., 0., 1., 0., 1.,  // 26, 14 c56
 		};
+
+	if (f_v) {
+		cout << "scene::create_Hilbert_model creating lines" << endl;
+	}
+
 	double r = sqrt(5);
 	for (i = 0; i < 27; i++) {
-		line_pt_and_dir(Lines + i * 6, r);
+
+		if (f_v) {
+			cout << "scene::create_Hilbert_model creating line" << i << endl;
+		}
+		line_pt_and_dir(Lines + i * 6, r, verbose_level - 1);
 		}
 
 	{
@@ -3486,6 +3549,9 @@ void scene::create_Hilbert_model(int verbose_level)
 
 	N.matrix_double_inverse(A4, A4_inv, 4, 0 /* verbose_level*/);
 
+	if (f_v) {
+		cout << "scene::create_Hilbert_model before substitute_cubic_linear_using_povray_ordering" << endl;
+	}
 	N.substitute_cubic_linear_using_povray_ordering(
 			coeff_in, coeff_out,
 			A4_inv, 0 /*verbose_level*/);
@@ -3525,6 +3591,9 @@ void scene::create_Hilbert_model(int verbose_level)
 	int pts[4] = {0, 6, 3, 5};
 	double rad = 5.;
 
+	if (f_v) {
+		cout << "scene::create_Hilbert_model lines on Cayley's nodal" << endl;
+	}
 	// create lines 27-32 on Cayley's nodal cubic  (previously: 15,16,17,18,19,20)
 	line_through_two_points(pts[0], pts[1], rad);
 	line_through_two_points(pts[0], pts[2], rad);
@@ -3547,6 +3616,9 @@ void scene::create_Hilbert_model(int verbose_level)
 	clebsch_cubic_lines_cij();
 
 
+	if (f_v) {
+		cout << "scene::create_Hilbert_model fermat" << endl;
+	}
 	double coeff_fermat[20] = {1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1};
 	cubic(coeff_fermat); // cubic 3, Fermat
 	{
@@ -3558,7 +3630,7 @@ void scene::create_Hilbert_model(int verbose_level)
 	double r = 3.6; //sqrt(5);
 	// lines 60-62 (previously 48,49,50)
 	for (i = 0; i < 3; i++) {
-		line_pt_and_dir(Lines + i * 6, r);
+		line_pt_and_dir(Lines + i * 6, r, verbose_level - 1);
 		}
 	}
 	// Cayleys ruled surface:
@@ -3578,6 +3650,9 @@ void scene::create_Hilbert_model(int verbose_level)
 	cubic(coeff_cayley_ruled3); // cubic 6, Cayley / Chasles ruled
 
 
+	if (f_v) {
+		cout << "scene::create_Hilbert_model create lines on Cayley's ruled surface" << endl;
+	}
 	// create lines on Cayley's ruled surface:
 	double Line[6];
 	double s0, s1;
@@ -3604,7 +3679,7 @@ void scene::create_Hilbert_model(int verbose_level)
 				N.vec_print(Line, 6);
 				cout << endl;
 			}
-			if (line_pt_and_dir(Line, r)) {
+			if (line_pt_and_dir(Line, r, verbose_level - 1)) {
 				nb_lines_actual++;
 				}
 			else {
@@ -3619,8 +3694,11 @@ void scene::create_Hilbert_model(int verbose_level)
 	}
 	point(0,0,0); // 38
 
+	if (f_v) {
+		cout << "scene::create_Hilbert_model create osculating_tangent_line" << endl;
+	}
 	double osculating_tangent_line[6] = {0,0,0,1,0,0};
-	line_pt_and_dir(osculating_tangent_line, r); // 
+	line_pt_and_dir(osculating_tangent_line, r, verbose_level - 1); //
 
 	{ // the quadric determined by b1, b2, b3: 
 	double coeff[10] = {2,5,5,5,2,5,5,2,5,3};
@@ -3639,6 +3717,9 @@ void scene::create_Hilbert_model(int verbose_level)
 	quadric(coeff); // quadric 4 B126
 	}
 
+	if (f_v) {
+		cout << "scene::create_Hilbert_model create coeff_surf_lifted" << endl;
+	}
 	{
 	double coeff_surf_lifted[20] = {0, 0, 0, -4/(double)25, 
 		0, -1, 1, 0, 1, -41/(double)25, 
@@ -3655,13 +3736,16 @@ void scene::create_Hilbert_model(int verbose_level)
 	cubic(coeff_surf_lifted); // cubic 8, arc_lifting
 	}
 
+	if (f_v) {
+		cout << "scene::create_Hilbert_model create long lines" << endl;
+	}
 
 
 	// the lines in long:
 	cout << "the long lines start at " << nb_lines << endl;
 	r = 3.6;
 	for (i = 0; i < 27; i++) {
-		line_pt_and_dir(Lines + i * 6, r);
+		line_pt_and_dir(Lines + i * 6, r, verbose_level - 1);
 		}
 
 
@@ -3797,7 +3881,13 @@ void scene::create_Hilbert_cube(int verbose_level)
 	double mx = m - 1;
 
 
+	if (f_v) {
+		cout << "scene::create_Hilbert_cube before create_cube" << endl;
+	}
 	create_cube(verbose_level);
+	if (f_v) {
+		cout << "scene::create_Hilbert_cube after create_cube" << endl;
+	}
 
 #if 0
 	point(p,p,p); // 0
@@ -3850,6 +3940,9 @@ void scene::create_Hilbert_cube(int verbose_level)
 	edge(4, 6); // 9
 	edge(5, 7); // 10
 	edge(6, 7); // 11
+	if (f_v) {
+		cout << "scene::create_Hilbert_cube done" << endl;
+	}
 }
 
 void scene::create_cube(int verbose_level)
@@ -3881,6 +3974,9 @@ void scene::create_cube(int verbose_level)
 	face4(2, 3, 7, 6); // 5, back left
 
 
+	if (f_v) {
+		cout << "scene::create_cube done" << endl;
+	}
 }
 
 void scene::create_cube_and_tetrahedra(int verbose_level)
@@ -4489,7 +4585,7 @@ void scene::create_HCV_surface(int N, int verbose_level)
 	};
 	double r = 10;
 	for (i = 0; i < 27; i++) {
-		line_pt_and_dir(Lines + i * 6, r);
+		line_pt_and_dir(Lines + i * 6, r, verbose_level - 1);
 		}
 
 	//S->line6(lines); // line 0
@@ -5160,6 +5256,29 @@ void scene::create_regulus(int idx, int nb_lines, int verbose_level)
 	}
 }
 
+void scene::clipping_by_cylinder(int line_idx, double r, ostream &ost)
+{
+	int h;
+	numerics N;
+
+	ost << "	clipped_by { 	cylinder{<";
+	for (h = 0; h < 3; h++) {
+		N.output_double(Line_coords[line_idx * 6 + h], ost);
+		if (h < 2) {
+			ost << ", ";
+			}
+		}
+	ost << ">,<";
+	for (h = 0; h < 3; h++) {
+		N.output_double(Line_coords[line_idx * 6 + 3 + h], ost);
+		if (h < 2) {
+			ost << ", ";
+			}
+		}
+	ost << ">, " << r << " } } // line " << line_idx << endl;
+	ost << "	bounded_by { clipped_by }" << endl;
+
+}
 
 }}
 

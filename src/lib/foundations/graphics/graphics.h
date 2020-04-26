@@ -73,6 +73,7 @@ public:
 			int h, int nb_frames, int round,
 			std::ostream &fp,
 			int verbose_level);
+		// tritangent plane, 6 arc points, 2 blue lines, 6 red lines
 	void draw_frame_HCV_surface(
 		int h, int nb_frames, int round,
 		double clipping_radius,
@@ -103,7 +104,13 @@ public:
 		double clipping_radius,
 		std::ostream &fp,
 		int verbose_level);
-
+	void rotation(
+			int h, int nb_frames, int round,
+			std::ostream &fp);
+	void union_end(
+			int h, int nb_frames, int round,
+			double clipping_radius,
+			std::ostream &fp);
 };
 
 
@@ -575,8 +582,8 @@ public:
 
 	parametric_curve_point();
 	~parametric_curve_point();
-	void init2(double t, int f_is_valid, double x0, double x1);
-
+	void init(double t, int f_is_valid, double *x,
+			int nb_dimensions, int verbose_level);
 };
 
 // #############################################################################
@@ -591,7 +598,7 @@ public:
 	int nb_dimensions;
 	double desired_distance;
 	double t0, t1; // parameter interval
-	int (*compute_point_function)(double t, double *pt, void *extra_data);
+	int (*compute_point_function)(double t, double *pt, void *extra_data, int verbose_level);
 	void *extra_data;
 	double boundary;
 
@@ -603,7 +610,7 @@ public:
 	void init(int nb_dimensions,
 			double desired_distance,
 			double t0, double t1,
-			int (*compute_point_function)(double t, double *pt, void *extra_data),
+			int (*compute_point_function)(double t, double *pt, void *extra_data, int verbose_level),
 			void *extra_data,
 			double boundary,
 			int N,
@@ -711,6 +718,7 @@ public:
 	void union_end(std::ostream &ost, double scale_factor, double clipping_radius);
 	void union_end_box_clipping(std::ostream &ost, double scale_factor,
 			double box_x, double box_y, double box_z);
+	void union_end_no_clipping(std::ostream &ost, double scale_factor);
 	void bottom_plane(std::ostream &ost);
 	void rotate_111(int h, int nb_frames, std::ostream &fp);
 	void rotate_around_z_axis(int h, int nb_frames, std::ostream &fp);
@@ -836,7 +844,7 @@ public:
 		int verbose_level);
 	void copy_faces(scene *S, double *A4, double *A4_inv, 
 		int verbose_level);
-	int line_pt_and_dir(double *x6, double rad);
+	int line_pt_and_dir(double *x6, double rad, int verbose_level);
 	int line_through_two_pts(double *x6, double rad);
 	int line6(double *x6);
 	int line(double x1, double x2, double x3, 
@@ -901,6 +909,7 @@ public:
 	// 18: z^2
 	// 19: z
 	// 20: 1
+	int cubic_Goursat_ABC(double A, double B, double C);
 	int quartic(double *coeff);
 	int face(int *pts, int nb_pts);
 	int face3(int pt1, int pt2, int pt3);
@@ -1013,6 +1022,7 @@ public:
 	void read_obj_file(const char *fname, int verbose_level);
 	void add_a_group_of_things(int *Idx, int sz, int verbose_level);
 	void create_regulus(int idx, int nb_lines, int verbose_level);
+	void clipping_by_cylinder(int line_idx, double r, std::ostream &ost);
 };
 
 
@@ -1136,6 +1146,15 @@ int tree_node_calc_y_coordinate(int ymax, int l, int max_depth);
 class video_draw_options {
 public:
 
+	int f_rotate;
+	int rotation_axis_type;
+		// 1 = 1,1,1
+		// 2 = 0,0,1
+		// 3 = custom
+	double rotation_axis_custom[3];
+	int boundary_type;
+		// 1 = sphere
+		// 2 = box
 
 	int f_has_global_picture_scale;
 	double global_picture_scale;

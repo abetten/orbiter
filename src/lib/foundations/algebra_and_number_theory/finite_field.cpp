@@ -46,6 +46,8 @@ void finite_field::null()
 	nb_calls_to_mult_matrix_matrix = 0;
 	nb_calls_to_PG_element_rank_modified = 0;
 	nb_calls_to_PG_element_unrank_modified = 0;
+
+	my_nb_calls_to_elliptic_curve_addition = 0;
 }
 
 finite_field::~finite_field()
@@ -96,6 +98,11 @@ void finite_field::print_call_stats(ostream &ost)
 			<< nb_calls_to_PG_element_rank_modified << endl;
 	cout << "nb_calls_to_PG_element_unrank_modified="
 			<< nb_calls_to_PG_element_unrank_modified << endl;
+}
+
+int &finite_field::nb_calls_to_elliptic_curve_addition()
+{
+	return my_nb_calls_to_elliptic_curve_addition;
 }
 
 void finite_field::init(int q)
