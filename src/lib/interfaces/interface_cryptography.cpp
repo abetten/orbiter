@@ -19,25 +19,27 @@ namespace interfaces {
 interface_cryptography::interface_cryptography()
 {
 	cout << "interface_cryptography::interface_cryptography" << endl;
+	cout << "sizeof(interface_cryptography)=" << sizeof(interface_cryptography) << endl;
 	f_cipher = FALSE;
 	t = no_cipher_type;
 	cout << "interface_cryptography::interface_cryptography 0" << endl;
 	f_decipher = FALSE;
-	f_analyze = FALSE;
 	cout << "interface_cryptography::interface_cryptography 00a" << endl;
+	f_analyze = FALSE;
+	cout << "interface_cryptography::interface_cryptography 00b" << endl;
 	f_kasiski = FALSE;
 	f_avk = FALSE;
 	key_length = 0;
 	threshold = 0;
-	cout << "interface_cryptography::interface_cryptography 00b" << endl;
-	affine_a = 0;
 	cout << "interface_cryptography::interface_cryptography 00c" << endl;
+	affine_a = 0;
+	cout << "interface_cryptography::interface_cryptography 00d" << endl;
 	affine_b = 0;
 	//char ptext[10000];
 	//char ctext[10000];
 	//char guess[10000];
 	//char key[1000];
-	cout << "interface_cryptography::interface_cryptography 0a" << endl;
+	cout << "interface_cryptography::interface_cryptography 0e" << endl;
 	f_RSA = FALSE;
 	RSA_d = 0;
 	RSA_m = 0;
