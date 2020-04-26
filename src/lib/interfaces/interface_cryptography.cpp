@@ -24,11 +24,14 @@ interface_cryptography::interface_cryptography()
 	cout << "interface_cryptography::interface_cryptography 0" << endl;
 	f_decipher = FALSE;
 	f_analyze = FALSE;
+	cout << "interface_cryptography::interface_cryptography 00a" << endl;
 	f_kasiski = FALSE;
 	f_avk = FALSE;
 	key_length = 0;
 	threshold = 0;
+	cout << "interface_cryptography::interface_cryptography 00b" << endl;
 	affine_a = 0;
+	cout << "interface_cryptography::interface_cryptography 00c" << endl;
 	affine_b = 0;
 	//char ptext[10000];
 	//char ctext[10000];
