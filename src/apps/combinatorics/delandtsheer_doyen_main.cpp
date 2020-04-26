@@ -69,40 +69,40 @@ int main(int argc, const char **argv)
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-h") == 0) {
 			usage(argc, argv);
 			exit(1);
-			}
+		}
 		else if (strcmp(argv[i], "-help") == 0) {
 			usage(argc, argv);
 			exit(1);
-			}
+		}
 		else if (strcmp(argv[i], "-d1") == 0) {
 			f_d1 = TRUE;
 			d1 = atoi(argv[++i]);
 			cout << "-d1 " << d1 << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-d2") == 0) {
 			f_d2 = TRUE;
 			d2 = atoi(argv[++i]);
 			cout << "-d2 " << d2 << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-q1") == 0) {
 			f_q1 = TRUE;
 			q1 = atoi(argv[++i]);
 			cout << "-q1 " << q1 << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-q2") == 0) {
 			f_q2 = TRUE;
 			q2 = atoi(argv[++i]);
 			cout << "-q2 " << q2 << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-depth") == 0) {
 			f_depth = TRUE;
 			depth = atoi(argv[++i]);
 			cout << "-depth " << depth << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-subgroup") == 0) {
 			f_subgroup = TRUE;
 			subgroup_gens_text = argv[++i];
@@ -111,8 +111,8 @@ int main(int argc, const char **argv)
 			cout << "-subgroup " << subgroup_gens_text
 					<< " " << subgroup_order_text
 					<< " " << group_label << endl;
-			}
 		}
+	}
 	if (!f_d1) {
 		cout << "please use -d1 <d1>" << endl;
 		usage(argc, argv);

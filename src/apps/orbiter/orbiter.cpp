@@ -48,7 +48,11 @@ int main(int argc, const char **argv)
 	}
 
 	if (f_seed) {
+		os_interface Os;
+
+		cout << "seeding random number generator with " << the_seed << endl;
 		srand(the_seed);
+		Os.random_integer(1000);
 	}
 
 	{

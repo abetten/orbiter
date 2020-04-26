@@ -820,6 +820,50 @@ void animate::draw_frame_Hilbert(
 	double clipping_radius,
 	ostream &fp,
 	int verbose_level)
+// round 0: cube + faces
+// round 1: cube + faces + extended edges + red lines + blue lines
+// round 2: red lines + blue lines + surface
+// round 3: three blue lines
+// round 4: three blue lines + quadric
+// round 5: four blue lines + 1 red line + quadric
+// round 6: four blue lines + 2 red lines + quadric
+// round 7: four blue lines + 2 red lines
+// round 8: double six (6 red + 6 blue)
+// round 9, 11, 12: surface
+// round 10: nothing
+// round 13: cube + tetrahedron
+// round 14: cube + tetrahedron + extended edges
+// round 15: cube + tetrahedron + extended edges + double six
+// round 16: 5 blue lines + 1 red (5 + 1)
+// round 17: red + blue + tetrahedron
+// round 18: red + blue + surface + tritangent plane + 3 yellow lines in it
+// round 19: surface + plane
+// round 20: cube + some red lines appearing
+// round 21: cube + some blue lines appearing
+// round 23: red + blue + surface + tritangent plane + 3 yellow lines in it + point appearing
+// round 24: all yellow lines (not at infinity)
+// round 25: red lines + blue lines + all yellow lines (not at infinity)
+// round 26: red lines + blue lines + all yellow lines (not at infinity) + surface
+// round 27, 28, 30, 31: empty
+// round 29: cube + 1 red line + 1 blue line
+// round 32: tritangent plane + 6 arc points
+// round 33-38, 40: nothing
+// round 39: surface 1 (transformed HCV)
+// round 41,42: Cayley's nodal surface + 6 lines
+// round 43: Clebsch surface
+// round 44: Clebsch surface with lines
+// round 45: Fermat surface
+// round 46: Fermat surface with lines
+// round 48-55: Cayley's ruled surface
+// round 72: all tritangent planes one-by-one
+// round 73: all red lines, 2 blue lines, surface, tritangent plane + 3 yellow lines, 6 arc points
+// round 74: surface, tritangent plane + 3 yellow lines
+// round 75: all red, 2 blue lines, tritangent plane + 3 yellow lines, 6 arc points (no surface)
+// round 76: tritangent plane, 6 point, 2 blue lines, 6 red lines
+// round 77: all red, 2 blue lines, tritangent plane + 3 yellow lines, 6 arc points, with surface
+// round 78: all red, 2 blue lines, tritangent plane + 3 yellow lines, 6 arc points, with surface, trying to plot points under the Clebsch map
+// round 79: like round 76
+// round 80: tarun
 {
 	int i;
 	//povray_interface Pov;
@@ -1935,14 +1979,18 @@ void animate::draw_frame_Hilbert(
 
 	}
 
+	rotation(h, nb_frames, round, fp);
 
-	Pov->rotate_111(h, nb_frames, fp);
-	Pov->union_end(fp, scale_factor, clipping_radius);
+	union_end(
+			h, nb_frames, round,
+			clipping_radius,
+			fp);
 
 	cout << "animate::draw_frame_Hilbert done" << endl;
 
 
 }
+
 
 void animate::draw_surface_13_1(ostream &fp)
 {
@@ -2204,6 +2252,7 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 		int h, int nb_frames, int round,
 		ostream &fp,
 		int verbose_level)
+// tritangent plane, 6 point, 2 blue lines, 6 red lines
 {
 	int i;
 
@@ -2475,7 +2524,7 @@ void animate::draw_frame_HCV_surface(
 	}
 	else if (round == 8) {
 
-		// only the yellow lines:
+		// yellow lines only:
 
 		int selection[27];
 		int nb_select;
@@ -2510,7 +2559,7 @@ void animate::draw_frame_HCV_surface(
 
 	}
 
-	Pov->rotate_111(h, nb_frames, fp);
+	rotation(h, nb_frames, round, fp);
 	Pov->union_end(fp, scale_factor, clipping_radius);
 
 }
@@ -2551,8 +2600,11 @@ void animate::draw_frame_E4_surface(
 
 	}
 
-	Pov->rotate_111(h, nb_frames, fp);
-	Pov->union_end(fp, scale_factor, clipping_radius);
+	rotation(h, nb_frames, round, fp);
+	union_end(
+			h, nb_frames, round,
+			clipping_radius,
+			fp);
 
 }
 
@@ -2601,8 +2653,11 @@ void animate::draw_frame_triangulation_of_cube(
 
 	}
 
-	Pov->rotate_111(h, nb_frames, fp);
-	Pov->union_end(fp, scale_factor, clipping_radius);
+	rotation(h, nb_frames, round, fp);
+	union_end(
+			h, nb_frames, round,
+			clipping_radius,
+			fp);
 
 }
 
@@ -2686,8 +2741,12 @@ void animate::draw_frame_twisted_cubic(
 
 	}
 
-	Pov->rotate_111(h, nb_frames, fp);
-	Pov->union_end(fp, scale_factor, clipping_radius);
+	rotation(h, nb_frames, round, fp);
+	union_end(
+			h, nb_frames, round,
+			clipping_radius,
+			fp);
+
 
 }
 
@@ -2747,6 +2806,11 @@ void animate::draw_frame_five_plus_one(
 	}
 
 
+	rotation(h, nb_frames, round, fp);
+	union_end(
+			h, nb_frames, round,
+			clipping_radius,
+			fp);
 
 
 }
@@ -2866,10 +2930,75 @@ void animate::draw_frame_windy(
 	}
 	delete S1;
 
+	rotation(h, nb_frames, round, fp);
+	union_end(
+			h, nb_frames, round,
+			clipping_radius,
+			fp);
+
+}
+
+void animate::rotation(
+		int h, int nb_frames, int round,
+		ostream &fp)
+{
+	if (Opt->f_rotate) {
+		if (Opt->rotation_axis_type == 1) {
+			Pov->rotate_111(h, nb_frames, fp);
+		}
+		else if (Opt->rotation_axis_type == 2) {
+			Pov->rotate_around_z_axis(h, nb_frames, fp);
+		}
+		else if (Opt->rotation_axis_type == 2) {
+
+			double angle_zero_one = 1. - (h * 1. / (double) nb_frames);
+				// rotate in the opposite direction
+
+			double v[3];
+
+			v[0]= Opt->rotation_axis_custom[0];
+			v[1]= Opt->rotation_axis_custom[1];
+			v[2]= Opt->rotation_axis_custom[2];
+
+			Pov->animation_rotate_around_origin_and_given_vector_by_a_given_angle(
+				v, angle_zero_one, fp);
+		}
+
+	}
+
 
 }
 
 
+void animate::union_end(
+		int h, int nb_frames, int round,
+		double clipping_radius,
+		ostream &fp)
+{
+	double scale;
+
+	if (Opt->f_has_global_picture_scale) {
+
+		scale = Opt->global_picture_scale;
+	}
+	else {
+		scale = 1.0;
+	}
+
+	if (Opt->boundary_type == 1) {
+		Pov->union_end(fp, scale, clipping_radius);
+	}
+	else if (Opt->boundary_type == 2) {
+		Pov->union_end_box_clipping(fp, scale,
+				clipping_radius, clipping_radius, clipping_radius);
+	}
+	else if (Opt->boundary_type == 3) {
+		Pov->union_end_no_clipping(fp, scale);
+	}
+	else {
+		cout << "animate::union_end boundary_type unrecognized" << endl;
+	}
+}
 
 }}
 

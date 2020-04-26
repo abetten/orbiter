@@ -11,6 +11,104 @@ namespace orbiter {
 namespace foundations {
 
 
+// #############################################################################
+// function_command.cpp
+// #############################################################################
+
+//! an individual command in function expressed in reverse polish notation
+
+class function_command {
+public:
+
+	double type;
+	// 1 = push labeled constant
+	// 2 = push immediate constant
+	// 3 = push variable
+	// 4 = store variable
+	// 5 = mult
+	// 6 = add
+	// 7 = cos
+	// 8 = sin
+	// 9 = return
+	// 10 = sqrt
+
+	int f_has_argument;
+	int arg;
+	double val; // for push immediate constant
+
+	function_command();
+	~function_command();
+	void init_with_argument(int type, int arg);
+	void init_push_immediate_constant(double val);
+	void init_simple(int type);
+
+};
+
+// #############################################################################
+// function_polish_description.cpp
+// #############################################################################
+
+//! description of a function in reverse polish notation from the command line
+
+
+class function_polish_description {
+public:
+	int nb_constants;
+	char **const_names;
+	char **const_values;
+	int nb_variables;
+	char **variable_names;
+	int code_sz;
+	char **code;
+
+	function_polish_description();
+	~function_polish_description();
+	void null();
+	void freeself();
+	void read_arguments_from_string(
+			const char *str, int verbose_level);
+	int read_arguments(int argc, const char **argv,
+		int verbose_level);
+};
+
+
+// #############################################################################
+// function_polish.cpp
+// #############################################################################
+
+//! a set of functions in reverse polish notation
+
+class function_polish {
+public:
+
+	function_polish_description *Descr;
+
+	std::vector<std::string > Variables;
+
+	std::vector<std::pair<std::string, double> > Constants;
+
+	std::vector<int> Entry;
+	std::vector<int> Len;
+
+	std::vector<function_command> Code;
+
+
+	function_polish();
+	~function_polish();
+	void init_from_description(
+			function_polish_description *Descr,
+			int verbose_level);
+	void init(
+			int nb_variables, char **variable_names,
+			int nb_constants, char **constant_names, char **constant_values,
+			int nb_commands, char **cmds,
+			int verbose_level);
+	void evaluate(
+			double *variable_values,
+			double *output_values,
+			int verbose_level);
+
+};
 
 // #############################################################################
 // magma_interface.cpp
@@ -136,7 +234,9 @@ public:
 	// A = I + varphi * u.
 	void matrix_double_inverse(double *A, double *Av, int n, int verbose_level);
 	int line_centered(double *pt1_in, double *pt2_in,
-		double *pt1_out, double *pt2_out, double r);
+		double *pt1_out, double *pt2_out, double r, int verbose_level);
+	int line_centered_tolerant(double *pt1_in, double *pt2_in,
+		double *pt1_out, double *pt2_out, double r, int verbose_level);
 	int sign_of(double a);
 	void eigenvalues(double *A, int n, double *lambda, int verbose_level);
 	void eigenvectors(double *A, double *Basis,

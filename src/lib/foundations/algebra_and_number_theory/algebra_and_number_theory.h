@@ -169,6 +169,8 @@ private:
 	int *v1, *v2, *v3; // vectors of length e.
 	char *symbol_for_print;
 
+	int my_nb_calls_to_elliptic_curve_addition;
+
 public:
 	const char *override_poly;
 	char *polynomial;
@@ -178,11 +180,15 @@ public:
 	int alpha; // primitive element
 	int log10_of_q; // needed for printing purposes
 	int f_print_as_exponentials;
+	long int nb_calls_to_mult_matrix_matrix;
+	long int nb_calls_to_PG_element_rank_modified;
+	long int nb_calls_to_PG_element_unrank_modified;
 	
 	finite_field();
 	void null();
 	~finite_field();
 	void print_call_stats(std::ostream &ost);
+	int &nb_calls_to_elliptic_curve_addition();
 	void init(int q);
 	void init(int q, int verbose_level);
 	void init_symbol_for_print(const char *symbol);
@@ -277,7 +283,6 @@ public:
 		int *Av, int m, int n);
 		// A[m][n], v[n], Av[m]
 
-	long int nb_calls_to_mult_matrix_matrix;
 	void mult_matrix_matrix(int *A, int *B,
 		int *C, int m, int n, int o, int verbose_level);
 		// matrix multiplication C := A * B,
@@ -805,8 +810,6 @@ public:
 			int *v, int stride, int len);
 	// first non zero element made one
 
-	long int nb_calls_to_PG_element_rank_modified;
-	long int nb_calls_to_PG_element_unrank_modified;
 
 	void PG_elements_embed(
 			long int *set_in, long int *set_out, int sz,

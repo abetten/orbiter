@@ -5432,6 +5432,8 @@ void finite_field::elliptic_curve_addition(int b, int c,
 	if (f_v) {
 		cout << "finite_field::elliptic_curve_addition" << endl;
 	}
+
+	my_nb_calls_to_elliptic_curve_addition++;
 	if (x3 == 0) {
 		z1 = y1;
 		z2 = y2;

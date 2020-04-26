@@ -39,7 +39,7 @@ parametric_curve::~parametric_curve()
 void parametric_curve::init(int nb_dimensions,
 		double desired_distance,
 		double t0, double t1,
-		int (*compute_point_function)(double t, double *pt, void *extra_data),
+		int (*compute_point_function)(double t, double *pt, void *extra_data, int verbose_level),
 		void *extra_data,
 		double boundary,
 		int N,
@@ -51,6 +51,7 @@ void parametric_curve::init(int nb_dimensions,
 	double *coords;
 	numerics Num;
 	int f_is_valid;
+	double epsilon = 0.0001;
 
 	if (f_v) {
 		cout << "parametric_curve::init" << endl;
@@ -74,21 +75,29 @@ void parametric_curve::init(int nb_dimensions,
 	if (f_v) {
 		cout << "parametric_curve::init dt=" << dt << endl;
 	}
+#if 0
 	if (nb_dimensions != 2) {
 		cout << "parametric_curve::init nb_dimensions != 2" << endl;
 		exit(1);
 	}
+#endif
 
 	coords = new double[nb_dimensions];
 	coords0 = new double[nb_dimensions];
 
 	t = t0;
 
-	f_is_valid = (*compute_point_function)(t, coords, extra_data);
+	if (f_v) {
+		cout << "parametric_curve::init computing value at t=" << setw(8) << t << endl;
+	}
+	f_is_valid = (*compute_point_function)(t, coords, extra_data, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "parametric_curve::init computing value at t=" << setw(8) << t << " done" << endl;
+	}
 	if (f_is_valid) {
 		d = Num.distance_from_origin(coords, nb_dimensions);
 		if (f_v) {
-			cout << "created point t=" << t << " = (" << coords[0] << "," << coords[1] << ")" << endl;
+			cout << "created point t=" << setw(8) << t << " = (" << coords[0] << "," << coords[1] << ")" << endl;
 		}
 	}
 	else {
@@ -101,6 +110,8 @@ void parametric_curve::init(int nb_dimensions,
 	if (!f_is_valid || d > boundary) {
 		if (f_v) {
 			cout << "parametric_curve::init d > boundary, performing a search for the starting value of t" << endl;
+			cout << "d=" << d << endl;
+			cout << "boundary=" << boundary << endl;
 		}
 		double tl, tr, tm;
 		double epsilon = 0.0001;
@@ -108,7 +119,14 @@ void parametric_curve::init(int nb_dimensions,
 		tr = t;
 		while (TRUE) {
 			tr = tr + dt;
-			f_is_valid = (*compute_point_function)(tr, coords, extra_data);
+
+			if (f_v) {
+				cout << "parametric_curve::init computing value at tr=" << setw(8) << tr << endl;
+			}
+			f_is_valid = (*compute_point_function)(tr, coords, extra_data, 0 /*verbose_level*/);
+			if (f_v) {
+				cout << "parametric_curve::init computing value at tr=" << setw(8) << tr << " done" << endl;
+			}
 
 			if (f_is_valid) {
 				d = Num.distance_from_origin(coords, nb_dimensions);
@@ -126,7 +144,15 @@ void parametric_curve::init(int nb_dimensions,
 
 		while (ABS(tr - tl) > epsilon) {
 			tm = (tl + tr) * 0.5;
-			f_is_valid = (*compute_point_function)(tm, coords, extra_data);
+
+
+			if (f_v) {
+				cout << "parametric_curve::init computing value at tm=" << setw(8) << tm << endl;
+			}
+			f_is_valid = (*compute_point_function)(tm, coords, extra_data, 0 /*verbose_level*/);
+			if (f_v) {
+				cout << "parametric_curve::init computing value at tm=" << setw(8) << tm << " done" << endl;
+			}
 
 			if (f_is_valid) {
 				d = Num.distance_from_origin(coords, nb_dimensions);
@@ -143,11 +169,17 @@ void parametric_curve::init(int nb_dimensions,
 		}
 		t = tr;
 		if (f_v) {
-			cout << "created starting value t=" << t << endl;
+			cout << "created starting value t=" << setw(8) << t << endl;
 		}
 	}
 
-	f_is_valid = (*compute_point_function)(t, coords, extra_data);
+	if (f_v) {
+		cout << "parametric_curve::init computing value at t=" << setw(8) << t << endl;
+	}
+	f_is_valid = (*compute_point_function)(t, coords, extra_data, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "parametric_curve::init computing value at t=" << setw(8) << t << " done" << endl;
+	}
 
 	if (f_is_valid) {
 		d = Num.distance_from_origin(coords, nb_dimensions);
@@ -158,54 +190,87 @@ void parametric_curve::init(int nb_dimensions,
 	}
 
 	if (f_v) {
-		cout << "created point t=" << t << " = (" << coords[0] << "," << coords[1] << ")" << endl;
+		cout << "created point t=" << setw(8) << t << " = (" << coords[0] << "," << coords[1] << ")" << endl;
 	}
 
 
-	parametric_curve_point Pt;
 
 	vector<parametric_curve_point> Future;
 
-	Pt.init2(t, f_is_valid, coords[0], coords[1]);
-	Pts.push_back(Pt);
+	{
+		parametric_curve_point Pt;
+		if (f_v) {
+			cout << "adding point " << Pts.size() << endl;
+		}
+		Pt.init(t, f_is_valid, coords, nb_dimensions, verbose_level);
+		Pts.push_back(Pt);
+	}
 
-	//double epsilon = 0.01;
 	int f_success;
 
 	while (t < t1) {
 		t_last = t;
 
 		if (f_v) {
-			cout << "t_last = " << t_last << " Future.size() = " << Future.size() << endl;
+			cout << "t_last = " << setw(8) << t_last << " Future.size() = " << Future.size() << endl;
 		}
-		f_success = FALSE;
-		while (Future.size()) {
-			if (!Future[Future.size() - 1].f_is_valid) {
-				break;
-			}
-			tf = Future[Future.size() - 1].t;
-			Future.pop_back();
-			if (tf > t_last) {
-				t = (t_last + tf) * 0.5;
-				f_success = TRUE;
-				if (f_v) {
-					cout << "t_last = " << t_last << " tf = " << tf << " t = " << t << " popped from Future" << endl;
+		if (Future.size()) {
+			f_success = FALSE;
+			while (Future.size()) {
+				if (!Future[Future.size() - 1].f_is_valid) {
+					break;
 				}
-				break;
+				tf = Future[Future.size() - 1].t;
+				Future.pop_back();
+				if (tf > t_last) {
+					t = (t_last + tf) * 0.5;
+					if (f_v) {
+						cout << "t_last = " << setw(8) << t_last << " t = " << setw(8) << t << " tf=" << setw(8) << tf << endl;
+					}
+					f_success = TRUE;
+					if (f_v) {
+						cout << "t_last = " << setw(8) << t_last << " tf = " << setw(8) << tf << " t = " << setw(8) << t << " popped from Future" << endl;
+					}
+					break;
+				}
+			}
+			if (!f_success) {
+				if (f_v) {
+					cout << "no success, moving on by dt, clearing Future" << endl;
+				}
+				t += dt;
+				while (Future.size()) {
+					Future.pop_back();
+				}
+				if (f_v) {
+					cout << "t_last = " << setw(8) << t_last << " t = " << setw(8) << t << endl;
+				}
 			}
 		}
-		if (t <= t_last) {
+		else {
+			t += dt;
+			f_success = TRUE;
+		}
+
+		if (ABS(t_last - t) < epsilon) {
+			cout << "t_last == t" << endl;
+			cout << "t_last = " << setw(8) << t_last << endl;
+			cout << "adding dt" << endl;
+			t += dt;
 			f_success = FALSE;
 		}
-		if (!f_success) {
-			t += dt;
+#if 0
+		if (ABS(t - t_last) < epsilon) {
 			if (f_v) {
-				cout << "t_last = " << t_last << " t = " << t << endl;
+				cout << "no success, ABS(t - t_last) < epsilon, ABS(t - t_last)=" << ABS(t - t_last) << endl;
 			}
+			f_success = FALSE;
 		}
+#endif
 		if (f_v) {
-			cout << "t = " << t << " t1 = " << t1 << endl;
-			cout << "t1 - t = " << t1 - t << endl;
+			cout << "t_last = " << setw(8) << t_last << " t = " << setw(8) << t << endl;
+			cout << "t = " << setw(8) << t << " t1 = " << t1 << endl;
+			cout << "t - t_last = " << setw(8) << t - t_last << endl;
 		}
 		if (t > t1) {
 			if (f_v) {
@@ -213,33 +278,44 @@ void parametric_curve::init(int nb_dimensions,
 			}
 			break;
 		}
-		else {
-			if (f_v) {
-				cout << "t <= t1, keep going" << endl;
-			}
+
+		if (f_v) {
+			cout << "parametric_curve::init computing value at t=" << setw(8) << t << endl;
+		}
+		f_is_valid = (*compute_point_function)(t, coords, extra_data, 0 /*verbose_level*/);
+		if (f_v) {
+			cout << "parametric_curve::init computing value at t=" << setw(8) << t << " done" << endl;
 		}
 
-		f_is_valid = (*compute_point_function)(t, coords, extra_data);
-
 		if (f_is_valid) {
-			coords0[0] = Pts[Pts.size() - 1].coords[0];
-			coords0[1] = Pts[Pts.size() - 1].coords[1];
+			int h;
+
+			for (h = 0; h < nb_dimensions; h++) {
+				coords0[h] = Pts[Pts.size() - 1].coords[h];
+			}
 			if (f_v) {
-				cout << "t_last = " << t_last << " : (" << coords0[0] << "," << coords0[1] << ")" << endl;
+				cout << "t_last = " << setw(8) << t_last << " : (" << coords0[0] << "," << coords0[1] << ")" << endl;
 			}
 			d = Num.distance_euclidean(coords0, coords, nb_dimensions);
 			if (f_v) {
-				cout << "t = " << t << " d = " << d << endl;
+				cout << "t = " << setw(8) << t << " d = " << d << endl;
 			}
 		}
-		if (!f_is_valid || d > desired_distance) {
-			cout << "t=" << t << " d > desired_distance, pushing to Future, moving back to t_last" << endl;
+		if (f_success && (!f_is_valid || d > desired_distance)) {
 
-			Pt.init2(t, f_is_valid, coords[0], coords[1]);
-			if (Future.size()) {
-				cout << "top element of Future stack is t=" << Future[Future.size() - 1].t << " we are pushing " << t << endl;
+
+			if (f_v) {
+				cout << "t=" << setw(8) << t << " d > desired_distance, pushing to Future, moving back to t_last" << setw(8) << t_last << endl;
 			}
-			Future.push_back(Pt);
+
+			{
+				parametric_curve_point Pt;
+				Pt.init(t, f_is_valid, coords, nb_dimensions, verbose_level);
+				if (Future.size()) {
+					cout << "top element of Future stack is t=" << setw(8) << Future[Future.size() - 1].t << " we are pushing " << t << endl;
+				}
+				Future.push_back(Pt);
+			}
 
 			t = t_last;
 
@@ -251,7 +327,7 @@ void parametric_curve::init(int nb_dimensions,
 				while (Future.size() > 0) {
 					Future.pop_back();
 				}
-				cout << "after popping stack, Future.size() = " << Future.size() << ", t = " << t << endl;
+				cout << "after popping stack, Future.size() = " << Future.size() << ", t = " << setw(8) << t << endl;
 				if (t < t_last) {
 					t = t_last;
 				}
@@ -259,30 +335,42 @@ void parametric_curve::init(int nb_dimensions,
 
 		}
 		else {
-			cout << "t=" << t << " d < desired_distance, valid point" << endl;
+			if (f_v) {
+				cout << "t=" << setw(8) << t << " d < desired_distance, valid point" << endl;
+			}
 
 			d = Num.distance_from_origin(coords, nb_dimensions);
 
 			if (f_v) {
-				cout << "created point t=" << t << " = (" << coords[0] << "," << coords[1] << ") with distance from origin " << d << endl;
+				cout << "created point t=" << setw(8) << t << " = (" << coords[0] << "," << coords[1] << ") with distance from origin " << d << endl;
 			}
 
 			if (d < boundary) {
-				parametric_curve_point Pt;
+				int h;
 
-				Pt.init2(t, f_is_valid, coords[0], coords[1]);
-				Pts.push_back(Pt);
+				{
+					parametric_curve_point Pt;
+					if (f_v) {
+						cout << "adding point " << Pts.size() << endl;
+					}
+					Pt.init(t, f_is_valid, coords, nb_dimensions, verbose_level);
+					Pts.push_back(Pt);
+				}
 
-				coords0[0] = Pts[Pts.size() - 1].coords[0];
-				coords0[1] = Pts[Pts.size() - 1].coords[1];
+				for (h = 0; h < nb_dimensions; h++) {
+					coords0[h] = Pts[Pts.size() - 1].coords[h];
+				}
 				cout << "created point " << coords0[0] << "," << coords0[1] << endl;
 			}
 			else {
 				cout << "skipping" << endl;
 			}
 			if (Future.size()) {
-				coords0[0] = Future[Future.size() - 1].coords[0];
-				coords0[1] = Future[Future.size() - 1].coords[1];
+				int h;
+
+				for (h = 0; h < nb_dimensions; h++) {
+					coords0[h] = Future[Future.size() - 1].coords[h];
+				}
 				d = Num.distance_euclidean(coords0, coords, nb_dimensions);
 				if (d < desired_distance) {
 					Future.pop_back();

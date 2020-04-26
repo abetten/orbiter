@@ -102,6 +102,9 @@ MODULES= \
 		foundations/geometry/surface_object.o \
 		foundations/geometry/unusual.o \
 		foundations/geometry/w3q.o \
+		foundations/globals/function_command.o \
+		foundations/globals/function_polish_description.o \
+		foundations/globals/function_polish.o \
 		foundations/globals/magma_interface.o \
 		foundations/globals/numerics.o \
 		foundations/globals/polynomial_double_domain.o \

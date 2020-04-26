@@ -38,7 +38,8 @@ interface_combinatorics::interface_combinatorics()
 }
 
 
-void interface_combinatorics::print_help(int argc, const char **argv, int i, int verbose_level)
+void interface_combinatorics::print_help(int argc,
+		const char **argv, int i, int verbose_level)
 {
 	if (strcmp(argv[i], "-create_combinatorial_object") == 0) {
 		cout << "-create_combinatorial_object " << endl;
@@ -54,7 +55,8 @@ void interface_combinatorics::print_help(int argc, const char **argv, int i, int
 	}
 }
 
-int interface_combinatorics::recognize_keyword(int argc, const char **argv, int i, int verbose_level)
+int interface_combinatorics::recognize_keyword(int argc,
+		const char **argv, int i, int verbose_level)
 {
 	if (strcmp(argv[i], "-create_combinatorial_object") == 0) {
 		return true;
@@ -71,7 +73,8 @@ int interface_combinatorics::recognize_keyword(int argc, const char **argv, int 
 	return false;
 }
 
-void interface_combinatorics::read_arguments(int argc, const char **argv, int i0, int verbose_level)
+void interface_combinatorics::read_arguments(int argc,
+		const char **argv, int i0, int verbose_level)
 {
 	int i;
 
@@ -131,7 +134,8 @@ void interface_combinatorics::worker(int verbose_level)
 		do_bent(bent_n, verbose_level);
 	}
 	else if (f_random_permutation) {
-		do_random_permutation(random_permutation_degree, random_permutation_fname_csv, verbose_level);
+		do_random_permutation(random_permutation_degree,
+				random_permutation_fname_csv, verbose_level);
 	}
 }
 
@@ -250,7 +254,8 @@ void interface_combinatorics::do_bent(int n, int verbose_level)
 	}
 }
 
-void interface_combinatorics::do_random_permutation(int deg, const char *fname_csv, int verbose_level)
+void interface_combinatorics::do_random_permutation(int deg,
+		const char *fname_csv, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

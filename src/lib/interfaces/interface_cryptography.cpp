@@ -99,6 +99,13 @@ interface_cryptography::interface_cryptography()
 	affine_sequence_a = 0;
 	affine_sequence_c = 0;
 	affine_sequence_m = 0;
+	f_EC_Koblitz_encoding = FALSE;
+	EC_s = 0;
+	EC_message = NULL;
+	f_EC_points = FALSE;
+	f_EC_add = FALSE;
+	EC_pt1_text = NULL;
+	EC_pt2_text = NULL;
 	f_EC_cyclic_subgroup = FALSE;
 	EC_q = 0;
 	EC_b = 0;
@@ -269,6 +276,15 @@ void interface_cryptography::print_help(int argc, const char **argv, int i, int 
 	else if (strcmp(argv[i], "-affine_sequence") == 0) {
 		cout << "-affine_sequence <int : a> <int : c> <int : m>" << endl;
 	}
+	else if (strcmp(argv[i], "-EC_Koblitz_encoding") == 0) {
+		cout << "-EC_points <int : q> <int : b> <int : c> <int : s> <string : pt_G> <string : message> " << endl;
+	}
+	else if (strcmp(argv[i], "-EC_points") == 0) {
+		cout << "-EC_points <int : q> <int : b> <int : c>" << endl;
+	}
+	else if (strcmp(argv[i], "-EC_add") == 0) {
+		cout << "-EC_add <int : q> <int : b> <int : c> <string : pt1> <string : pt2>" << endl;
+	}
 	else if (strcmp(argv[i], "-EC_cyclic_subgroup") == 0) {
 		cout << "-EC_cyclic_subgroup <int : q> <int : b> <int : c> <string : pt>" << endl;
 	}
@@ -403,6 +419,15 @@ int interface_cryptography::recognize_keyword(int argc, const char **argv, int i
 		return true;
 	}
 	else if (strcmp(argv[i], "-affine_sequence") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-EC_Koblitz_encoding") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-EC_points") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-EC_add") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-EC_cyclic_subgroup") == 0) {
@@ -684,6 +709,36 @@ void interface_cryptography::read_arguments(int argc, const char **argv, int i0,
 			cout << "-affine_sequence " << affine_sequence_a
 					<< " " << affine_sequence_c << " " << affine_sequence_m << endl;
 		}
+		else if (strcmp(argv[i], "-EC_Koblitz_encoding") == 0) {
+			f_EC_Koblitz_encoding = TRUE;
+			EC_q = atoi(argv[++i]);
+			EC_b = atoi(argv[++i]);
+			EC_c = atoi(argv[++i]);
+			EC_s = atoi(argv[++i]);
+			EC_pt_text = argv[++i];
+			EC_message = argv[++i];
+			cout << "-EC_Koblitz_encoding " << EC_q
+					<< " " << EC_b << " " << EC_c << " " << EC_s << " "
+					<< EC_pt_text << " " << EC_message << endl;
+		}
+		else if (strcmp(argv[i], "-EC_points") == 0) {
+			f_EC_points = TRUE;
+			EC_q = atoi(argv[++i]);
+			EC_b = atoi(argv[++i]);
+			EC_c = atoi(argv[++i]);
+			cout << "-EC_points " << EC_q
+					<< " " << EC_b << " " << EC_c << endl;
+		}
+		else if (strcmp(argv[i], "-EC_add") == 0) {
+			f_EC_add = TRUE;
+			EC_q = atoi(argv[++i]);
+			EC_b = atoi(argv[++i]);
+			EC_c = atoi(argv[++i]);
+			EC_pt1_text = argv[++i];
+			EC_pt2_text = argv[++i];
+			cout << "-EC_add " << EC_q
+					<< " " << EC_b << " " << EC_c << " " << EC_pt1_text << " " << EC_pt2_text << endl;
+		}
 		else if (strcmp(argv[i], "-EC_cyclic_subgroup") == 0) {
 			f_EC_cyclic_subgroup = TRUE;
 			EC_q = atoi(argv[++i]);
@@ -953,23 +1008,38 @@ void interface_cryptography::worker(int verbose_level)
 		make_affine_sequence(affine_sequence_a,
 				affine_sequence_c, affine_sequence_m, verbose_level);
 	}
+	else if (f_EC_Koblitz_encoding) {
+		do_EC_Koblitz_encoding(EC_q, EC_b, EC_c, EC_s, EC_pt_text, EC_message, verbose_level);
+	}
+	else if (f_EC_points) {
+		do_EC_points(EC_q, EC_b, EC_c, verbose_level);
+	}
+	else if (f_EC_add) {
+		do_EC_add(EC_q, EC_b, EC_c, EC_pt1_text, EC_pt2_text, verbose_level);
+	}
 	else if (f_EC_cyclic_subgroup) {
 		do_EC_cyclic_subgroup(EC_q, EC_b, EC_c, EC_pt_text, verbose_level);
 	}
 	else if (f_EC_multiple_of) {
-		do_EC_multiple_of(EC_q, EC_b, EC_c, EC_pt_text, EC_multiple_of_n, verbose_level);
+		do_EC_multiple_of(EC_q, EC_b, EC_c,
+				EC_pt_text, EC_multiple_of_n, verbose_level);
 	}
 	else if (f_EC_discrete_log) {
-		do_EC_discrete_log(EC_q, EC_b, EC_c, EC_pt_text, EC_discrete_log_pt_text, verbose_level);
+		do_EC_discrete_log(EC_q, EC_b, EC_c, EC_pt_text,
+				EC_discrete_log_pt_text, verbose_level);
 	}
 	else if (f_nullspace) {
-		do_nullspace(nullspace_q, nullspace_m, nullspace_n, nullspace_text, f_normalize_from_the_left, f_normalize_from_the_right, verbose_level);
+		do_nullspace(nullspace_q, nullspace_m, nullspace_n,
+				nullspace_text, f_normalize_from_the_left,
+				f_normalize_from_the_right, verbose_level);
 	}
 	else if (f_RREF) {
-		do_RREF(RREF_q, RREF_m, RREF_n, RREF_text, f_normalize_from_the_left, f_normalize_from_the_right, verbose_level);
+		do_RREF(RREF_q, RREF_m, RREF_n, RREF_text,
+				f_normalize_from_the_left, f_normalize_from_the_right, verbose_level);
 	}
 	else if (f_weight_enumerator) {
-		do_weight_enumerator(RREF_q, RREF_m, RREF_n, RREF_text, f_normalize_from_the_left, f_normalize_from_the_right, verbose_level);
+		do_weight_enumerator(RREF_q, RREF_m, RREF_n, RREF_text,
+				f_normalize_from_the_left, f_normalize_from_the_right, verbose_level);
 	}
 	else if (f_transversal) {
 		do_transversal(transversal_q,
@@ -1042,12 +1112,14 @@ void interface_cryptography::do_trace(int q, int verbose_level)
 	sprintf(fname_csv, "F_q%d_trace_0.csv", q);
 	Fio.int_vec_write_csv(T0, nb_T0,
 			fname_csv, "Trace_0");
-	cout << "written file " << fname_csv << " of size " << Fio.file_size(fname_csv) << endl;
+	cout << "written file " << fname_csv << " of size "
+			<< Fio.file_size(fname_csv) << endl;
 
 	sprintf(fname_csv, "F_q%d_trace_1.csv", q);
 	Fio.int_vec_write_csv(T1, nb_T1,
 			fname_csv, "Trace_1");
-	cout << "written file " << fname_csv << " of size " << Fio.file_size(fname_csv) << endl;
+	cout << "written file " << fname_csv << " of size "
+			<< Fio.file_size(fname_csv) << endl;
 
 
 	FREE_OBJECT(F);
@@ -1330,7 +1402,8 @@ void interface_cryptography::do_transversal(int q,
 	}
 }
 
-void interface_cryptography::do_nullspace(int q, int m, int n, const char *text,
+void interface_cryptography::do_nullspace(int q,
+		int m, int n, const char *text,
 		int f_normalize_from_the_left, int f_normalize_from_the_right,
 		int verbose_level)
 {
@@ -1440,7 +1513,8 @@ void interface_cryptography::do_nullspace(int q, int m, int n, const char *text,
 	}
 }
 
-void interface_cryptography::do_RREF(int q, int m, int n, const char *text,
+void interface_cryptography::do_RREF(int q,
+		int m, int n, const char *text,
 		int f_normalize_from_the_left, int f_normalize_from_the_right,
 		int verbose_level)
 {
@@ -1527,7 +1601,8 @@ void interface_cryptography::do_RREF(int q, int m, int n, const char *text,
 	}
 }
 
-void interface_cryptography::do_weight_enumerator(int q, int m, int n, const char *text,
+void interface_cryptography::do_weight_enumerator(int q,
+		int m, int n, const char *text,
 		int f_normalize_from_the_left, int f_normalize_from_the_right,
 		int verbose_level)
 {
@@ -1665,7 +1740,449 @@ void interface_cryptography::do_weight_enumerator(int q, int m, int n, const cha
 	}
 }
 
-void interface_cryptography::do_EC_cyclic_subgroup(int q, int EC_b, int EC_c, const char *pt_text, int verbose_level)
+void interface_cryptography::do_EC_Koblitz_encoding(int q,
+		int EC_b, int EC_c, int EC_s,
+		const char *pt_text, const char *EC_message,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	finite_field *F;
+	int x0, x, y;
+
+	if (f_v) {
+		cout << "do_EC_Koblitz_encoding" << endl;
+	}
+	if (f_v) {
+		cout << "do_EC_Koblitz_encoding b = " << EC_b << endl;
+		cout << "do_EC_Koblitz_encoding c = " << EC_c << endl;
+		cout << "do_EC_Koblitz_encoding s = " << EC_s << endl;
+	}
+
+	vector<vector<int>> Encoding;
+	vector<int> J;
+
+	int u, i, j, r;
+
+	u = q / 27;
+	if (f_v) {
+		cout << "do_EC_Koblitz_encoding u = " << u << endl;
+	}
+
+
+	F = NEW_OBJECT(finite_field);
+	F->init(q, 0 /*verbose_level*/);
+	for (i = 1; i <= 26; i++) {
+		x0 = i * u;
+		for (j = 0; j < u; j++) {
+			x = x0 + j;
+			r = EC_evaluate_RHS(F, EC_b, EC_c, x);
+			if (F->square_root(r, y)) {
+				break;
+			}
+		}
+		if (j < u) {
+			{
+				vector<int> pt;
+
+				J.push_back(j);
+				pt.push_back(x);
+				pt.push_back(y);
+				pt.push_back(1);
+				Encoding.push_back(pt);
+			}
+		}
+		else {
+			cout << "failure to encode letter " << i << endl;
+			exit(1);
+		}
+	}
+	for (i = 0; i < 26; i++) {
+
+
+		x = (i + 1) * u + J[i];
+
+		r = EC_evaluate_RHS(F, EC_b, EC_c, x);
+
+		F->square_root(r, y);
+
+		cout << (char)('A' + i) << " & " << i + 1 << " & " << J[i] << " & " << x
+				<< " & " << r
+				<< " & " << y
+				<< " & $(" << Encoding[i][0] << "," << Encoding[i][1] << ")$ "
+				<< "\\\\" << endl;
+
+	}
+
+	cout << "without j:" << endl;
+	for (i = 0; i < 26; i++) {
+		cout << (char)('A' + i) << " & $(" << Encoding[i][0] << "," << Encoding[i][1] << ")$ \\\\" << endl;
+
+	}
+
+
+
+	vector<vector<int>> Pts;
+	int order;
+	int *v;
+	int len;
+	int Gx, Gy, Gz;
+	int Mx, My, Mz;
+	int Rx, Ry, Rz;
+	int Ax, Ay, Az;
+	int Cx, Cy, Cz;
+	int Tx, Ty, Tz;
+	int Dx, Dy, Dz;
+	int msRx, msRy, msRz;
+	int m, k, plain;
+	os_interface Os;
+
+	int_vec_scan(pt_text, v, len);
+	if (len != 2) {
+		cout << "point should have just two coordinates" << endl;
+		exit(1);
+	}
+	Gx = v[0];
+	Gy = v[1];
+	Gz = 1;
+	FREE_int(v);
+	cout << "G = (" << Gx << "," << Gy << "," << Gz << ")" << endl;
+
+
+	F->elliptic_curve_all_point_multiples(
+			EC_b, EC_c, order,
+			Gx, Gy, Gz,
+			Pts,
+			verbose_level);
+
+
+	int minus_s;
+
+	minus_s = order - EC_s;
+
+	cout << "order = " << order << endl;
+	cout << "minus_s = " << minus_s << endl;
+
+	Ax = Pts[EC_s - 1][0];
+	Ay = Pts[EC_s - 1][1];
+	Az = 1;
+	cout << "A = (" << Ax << "," << Ay << "," << Az << ")" << endl;
+
+	len = strlen(EC_message);
+
+	F->nb_calls_to_elliptic_curve_addition() = 0;
+
+	for (i = 0; i < len; i++) {
+		if (EC_message[i] < 'A' || EC_message[i] > 'Z') {
+			continue;
+		}
+		m = EC_message[i] - 'A' + 1;
+		k = 1 + Os.random_integer(order - 1);
+
+		Mx = Encoding[m - 1][0];
+		My = Encoding[m - 1][1];
+		Mz = 1;
+
+		// R := k * G
+		F->elliptic_curve_point_multiple(
+					EC_b, EC_c, k,
+					Gx, Gy, Gz,
+					Rx, Ry, Rz,
+					0 /*verbose_level*/);
+
+		// C := k * A
+		F->elliptic_curve_point_multiple(
+					EC_b, EC_c, k,
+					Ax, Ay, Az,
+					Cx, Cy, Cz,
+					0 /*verbose_level*/);
+
+		// T := C + M
+		F->elliptic_curve_addition(EC_b, EC_c,
+				Cx, Cy, Cz,
+				Mx, My, Mz,
+				Tx, Ty, Tz,
+				0 /*verbose_level*/);
+
+		// msR := -s * R
+		F->elliptic_curve_point_multiple(
+					EC_b, EC_c, minus_s,
+					Rx, Ry, Rz,
+					msRx, msRy, msRz,
+					0 /*verbose_level*/);
+
+		// D := msR + T
+		F->elliptic_curve_addition(EC_b, EC_c,
+				msRx, msRy, msRz,
+				Tx, Ty, Tz,
+				Dx, Dy, Dz,
+				0 /*verbose_level*/);
+
+		plain = Dx / u;
+
+		cout << setw(4) << i << " & " << EC_message[i] << " & " << setw(4) << m << " & " << setw(4) << k
+				<< "& (" << setw(4) << Mx << "," << setw(4) << My << "," << setw(4) << Mz << ") "
+				<< "& (" << setw(4) << Rx << "," << setw(4) << Ry << "," << setw(4) << Rz << ") "
+				<< "& (" << setw(4) << Cx << "," << setw(4) << Cy << "," << setw(4) << Cz << ") "
+				<< "& (" << setw(4) << Tx << "," << setw(4) << Ty << "," << setw(4) << Tz << ") "
+				<< "& (" << setw(4) << msRx << "," << setw(4) << msRy << "," << setw(4) << msRz << ") "
+				<< "& (" << setw(4) << Dx << "," << setw(4) << Dy << "," << setw(4) << Dz << ") "
+				<< " & " << plain << " & " << (char)('A' + plain)
+				<< "\\\\"
+				<< endl;
+
+	}
+
+	cout << "nb_calls_to_elliptic_curve_addition="
+			<< F->nb_calls_to_elliptic_curve_addition() << endl;
+
+
+	if (f_v) {
+		cout << "do_EC_Koblitz_encoding done" << endl;
+	}
+}
+
+void interface_cryptography::do_EC_points(int q,
+		int EC_b, int EC_c, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	finite_field *F;
+	int x, y, r, y1, y2;
+
+	if (f_v) {
+		cout << "do_EC_points" << endl;
+	}
+	vector<vector<int>> Pts;
+
+	F = NEW_OBJECT(finite_field);
+	F->init(q, verbose_level);
+
+	for (x = 0; x < q; x++) {
+		r = EC_evaluate_RHS(F, EC_b, EC_c, x);
+		if (r == 0) {
+
+			{
+				vector<int> pt;
+
+				pt.push_back(x);
+				pt.push_back(0);
+				pt.push_back(1);
+				Pts.push_back(pt);
+			}
+		}
+		else {
+			if (F->square_root(r, y)) {
+				y1 = y;
+				y2 = F->negate(y);
+				if (y2 == y1) {
+					{
+						vector<int> pt;
+
+						pt.push_back(x);
+						pt.push_back(y1);
+						pt.push_back(1);
+						Pts.push_back(pt);
+					}
+				}
+				else {
+					if (y2 < y1) {
+						y1 = y2;
+						y2 = y;
+					}
+					{
+						vector<int> pt;
+
+						pt.push_back(x);
+						pt.push_back(y1);
+						pt.push_back(1);
+						Pts.push_back(pt);
+					}
+					{
+						vector<int> pt;
+
+						pt.push_back(x);
+						pt.push_back(y2);
+						pt.push_back(1);
+						Pts.push_back(pt);
+					}
+				}
+			}
+			else {
+				// no point for this x coordinate
+			}
+
+#if 0
+			if (p != 2) {
+				l = Legendre(r, q, 0);
+
+				if (l == 1) {
+					y = sqrt_mod_involved(r, q);
+						// DISCRETA/global.cpp
+
+					if (F->mult(y, y) != r) {
+						cout << "There is a problem "
+								"with the square root" << endl;
+						exit(1);
+					}
+					y1 = y;
+					y2 = F->negate(y);
+					if (y2 < y1) {
+						y1 = y2;
+						y2 = y;
+					}
+					add_point_to_table(x, y1, 1);
+					if (nb == bound) {
+						cout << "The number of points "
+								"exceeds the bound" << endl;
+						exit(1);
+					}
+					add_point_to_table(x, y2, 1);
+					if (nb == bound) {
+						cout << "The number of points "
+								"exceeds the bound" << endl;
+						exit(1);
+					}
+					//cout << nb++ << " : (" << x << ","
+					// << y << ",1)" << endl;
+					//cout << nb++ << " : (" << x << ","
+					// << F.negate(y) << ",1)" << endl;
+				}
+			}
+			else {
+				y = F->frobenius_power(r, e - 1);
+				add_point_to_table(x, y, 1);
+				if (nb == bound) {
+					cout << "The number of points exceeds "
+							"the bound" << endl;
+					exit(1);
+				}
+				//cout << nb++ << " : (" << x << ","
+				// << y << ",1)" << endl;
+			}
+#endif
+
+		}
+	}
+	{
+		vector<int> pt;
+
+		pt.push_back(0);
+		pt.push_back(1);
+		pt.push_back(0);
+		Pts.push_back(pt);
+	}
+	int i;
+	cout << "We found " << Pts.size() << " points:" << endl;
+
+	for (i = 0; i < Pts.size(); i++) {
+		if (i == Pts.size()) {
+
+			cout << i << " : {\\cal O} : 1\\\\" << endl;
+
+		}
+		else {
+			{
+			vector<vector<int>> Multiples;
+			int order;
+
+
+			F->elliptic_curve_all_point_multiples(
+					EC_b, EC_c, order,
+					Pts[i][0], Pts[i][1], 1,
+					Multiples,
+					0 /*verbose_level*/);
+
+			//cout << "we found that the point has order " << order << endl;
+
+			cout << i << " : $(" << Pts[i][0] << "," << Pts[i][1] << ")$ : " << order << "\\\\" << endl;
+			}
+		}
+	}
+
+
+	if (f_v) {
+		cout << "do_EC_points done" << endl;
+	}
+}
+
+int interface_cryptography::EC_evaluate_RHS(finite_field *F,
+		int EC_b, int EC_c, int x)
+// evaluates x^3 + bx + c
+{
+	int x2, x3, t;
+
+	x2 = F->mult(x, x);
+	x3 = F->mult(x2, x);
+	t = F->add(x3, F->mult(EC_b, x));
+	t = F->add(t, EC_c);
+	return t;
+}
+
+
+void interface_cryptography::do_EC_add(int q,
+		int EC_b, int EC_c,
+		const char *pt1_text, const char *pt2_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	finite_field *F;
+	int x1, y1, z1;
+	int x2, y2, z2;
+	int x3, y3, z3;
+	int *v;
+	int len;
+	//sscanf(p1, "(%d,%d,%d)", &x1, &y1, &z1);
+
+	if (f_v) {
+		cout << "do_EC_add" << endl;
+	}
+	vector<vector<int>> Pts;
+
+	F = NEW_OBJECT(finite_field);
+	F->init(q, verbose_level);
+
+	int_vec_scan(pt1_text, v, len);
+	if (len != 2) {
+		cout << "point should have just two ccordinates" << endl;
+		exit(1);
+	}
+	x1 = v[0];
+	y1 = v[1];
+	z1 = 1;
+	FREE_int(v);
+
+	int_vec_scan(pt2_text, v, len);
+	if (len != 2) {
+		cout << "point should have just two ccordinates" << endl;
+		exit(1);
+	}
+	x2 = v[0];
+	y2 = v[1];
+	z2 = 1;
+	FREE_int(v);
+
+
+	F->elliptic_curve_addition(EC_b, EC_c,
+			x1, y1, z1,
+			x2, y2, z2,
+			x3, y3, z3,
+			verbose_level);
+	cout << "(" << x1 << "," << y1 << "," << z1 << ")";
+	cout << " + ";
+	cout << "(" << x2 << "," << y2 << "," << z2 << ")";
+	cout << " = ";
+	cout << "(" << x3 << "," << y3 << "," << z3 << ")";
+	cout << endl;
+
+
+	FREE_OBJECT(F);
+
+	if (f_v) {
+		cout << "do_EC_add done" << endl;
+	}
+}
+
+void interface_cryptography::do_EC_cyclic_subgroup(int q,
+		int EC_b, int EC_c, const char *pt_text, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	finite_field *F;
@@ -1702,14 +2219,22 @@ void interface_cryptography::do_EC_cyclic_subgroup(int q, int EC_b, int EC_c, co
 
 	cout << "we found that the point has order " << order << endl;
 	cout << "The multiples are:" << endl;
-	cout << "i : i x (" << x1 << "," << y1 << "," << z1 << ")" << endl;
+	cout << "i : (" << x1 << "," << y1 << ")" << endl;
 	for (i = 0; i < Pts.size(); i++) {
 
 		vector<int> pts = Pts[i];
 
-		cout << setw(3) << i + 1 << " : ";
-		cout << "(" << pts[0] << "," << pts[1] << "," << pts[2] << ")";
-		cout << endl;
+		if (i < Pts.size() - 1) {
+			cout << setw(3) << i + 1 << " : ";
+			cout << "$(" << pts[0] << "," << pts[1] << ")$";
+			cout << "\\\\" << endl;
+		}
+		else {
+			cout << setw(3) << i + 1 << " : ";
+			cout << "${\\cal O}$";
+			cout << "\\\\" << endl;
+
+		}
 	}
 
 	FREE_OBJECT(F);
@@ -1719,7 +2244,8 @@ void interface_cryptography::do_EC_cyclic_subgroup(int q, int EC_b, int EC_c, co
 	}
 }
 
-void interface_cryptography::do_EC_multiple_of(int q, int EC_b, int EC_c, const char *pt_text, int n, int verbose_level)
+void interface_cryptography::do_EC_multiple_of(int q,
+		int EC_b, int EC_c, const char *pt_text, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	finite_field *F;
@@ -1771,7 +2297,8 @@ void interface_cryptography::do_EC_multiple_of(int q, int EC_b, int EC_c, const 
 	}
 }
 
-void interface_cryptography::do_EC_discrete_log(int q, int EC_b, int EC_c,
+void interface_cryptography::do_EC_discrete_log(int q,
+		int EC_b, int EC_c,
 		const char *base_pt_text, const char *pt_text, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1885,7 +2412,9 @@ void interface_cryptography::make_affine_sequence(int a, int c, int m, int verbo
 
 }
 
-void interface_cryptography::make_2D_plot(int *orbit, int orbit_len, int cnt, int m, int a, int c, int verbose_level)
+void interface_cryptography::make_2D_plot(
+		int *orbit, int orbit_len, int cnt, int m, int a, int c,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

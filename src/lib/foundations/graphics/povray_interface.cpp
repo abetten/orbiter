@@ -348,6 +348,7 @@ void povray_interface::animation_rotate_around_origin_and_given_vector_by_a_give
 	ost << endl;
 }
 
+
 void povray_interface::union_start(ostream &ost)
 {
 	ost << "union{ " << endl;
@@ -395,6 +396,16 @@ void povray_interface::union_end_box_clipping(ostream &ost, double scale_factor,
 	ost << "	clipped_by { box{ < " << -1 * box_x << ", " << -1 * box_y << ", " << -1 * box_z << " > * " << scale_factor << ", "
 			" < " << box_x << ", " << box_y << ", " << box_z << " > * " << scale_factor << " } }" << endl;
 	ost << "	bounded_by { clipped_by }" << endl;
+	ost << endl;
+	ost << "} // union" << endl;
+}
+
+void povray_interface::union_end_no_clipping(ostream &ost, double scale_factor)
+{
+	ost << endl;
+	ost << " 	scale  " << scale_factor << endl;
+	//ost << " 	scale  1.0" << endl;
+	ost << endl;
 	ost << endl;
 	ost << "} // union" << endl;
 }

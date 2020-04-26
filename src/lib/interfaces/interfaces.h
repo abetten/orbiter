@@ -186,6 +186,13 @@ class interface_cryptography {
 	int affine_sequence_a;
 	int affine_sequence_c;
 	int affine_sequence_m;
+	int f_EC_Koblitz_encoding;
+	const char *EC_message;
+	int EC_s;
+	int f_EC_points;
+	int f_EC_add;
+	const char *EC_pt1_text;
+	const char *EC_pt2_text;
 	int f_EC_cyclic_subgroup;
 	int EC_q;
 	int EC_b;
@@ -254,6 +261,14 @@ public:
 	void do_weight_enumerator(int q, int m, int n, const char *text,
 			int f_normalize_from_the_left, int f_normalize_from_the_right,
 			int verbose_level);
+	void do_EC_Koblitz_encoding(int q,
+			int EC_b, int EC_c, int EC_s,
+			const char *pt_text, const char *EC_message,
+			int verbose_level);
+	void do_EC_points(int q, int EC_b, int EC_c, int verbose_level);
+	int EC_evaluate_RHS(finite_field *F, int EC_b, int EC_c, int x);
+	// evaluates x^3 + bx + c
+	void do_EC_add(int q, int EC_b, int EC_c, const char *pt1_text, const char *pt2_text, int verbose_level);
 	void do_EC_cyclic_subgroup(int q, int EC_b, int EC_c, const char *pt_text, int verbose_level);
 	void do_EC_multiple_of(int q, int EC_b, int EC_c, const char *pt_text, int n, int verbose_level);
 	void do_EC_discrete_log(int q, int EC_b, int EC_c,
@@ -399,7 +414,38 @@ class interface_projective {
 	int f_create_points_on_quartic;
 	double desired_distance;
 
+	int f_create_points_on_parabola;
+
+	int f_smooth_curve;
+
 public:
+
+	int parabola_N;
+	double parabola_a;
+	double parabola_b;
+	double parabola_c;
+
+	int smooth_curve_N;
+	function_polish_description *FP_descr;
+	double smooth_curve_t_min;
+	double smooth_curve_t_max;
+	double smooth_curve_boundary;
+	function_polish *smooth_curve_Polish;
+	const char *smooth_curve_label;
+	int f_create_BLT_set;
+	BLT_set_create_description *BLT_set_descr;
+	int nb_transform;
+	const char *transform_coeffs[1000];
+	int f_inverse_transform[1000];
+
+	int f_create_surface;
+	surface_create_description *surface_description;
+	int f_surface_quartic;
+	int f_surface_clebsch;
+	int f_surface_codes;
+
+
+
 	interface_projective();
 	void print_help(int argc, const char **argv, int i, int verbose_level);
 	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
@@ -410,6 +456,14 @@ public:
 	void do_canonical_form_PG(int n, int q, int verbose_level);
 	void do_classify_cubic_curves(int q, int verbose_level);
 	void do_create_points_on_quartic(double desired_distance, int verbose_level);
+	void do_create_points_on_parabola(double desired_distance, int N,
+			double a, double b, double c, int verbose_level);
+	void do_smooth_curve(const char *curve_label,
+			double desired_distance, int N,
+			double t_min, double t_max, double boundary,
+			function_polish_description *FP_descr, int verbose_level);
+	void do_create_BLT_set(BLT_set_create_description *Descr, int verbose_level);
+	void do_create_surface(surface_create_description *Descr, int verbose_level);
 };
 
 

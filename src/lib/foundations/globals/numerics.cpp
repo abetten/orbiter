@@ -1795,13 +1795,25 @@ void numerics::matrix_double_inverse(double *A, double *Av, int n,
 
 
 int numerics::line_centered(double *pt1_in, double *pt2_in,
-	double *pt1_out, double *pt2_out, double r)
+	double *pt1_out, double *pt2_out, double r, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	double v[3];
 	double x1, x2, x3, y1, y2, y3;
 	double a, b, c, av, d, e;
 	double lambda1, lambda2;
 
+
+	if (f_v) {
+		cout << "numerics::line_centered" << endl;
+		cout << "r=" << r << endl;
+		cout << "pt1_in=";
+		vec_print(pt1_in, 3);
+		cout << endl;
+		cout << "pt2_in=";
+		vec_print(pt2_in, 3);
+		cout << endl;
+	}
 	x1 = pt1_in[0];
 	x2 = pt1_in[1];
 	x3 = pt1_in[2];
@@ -1813,6 +1825,11 @@ int numerics::line_centered(double *pt1_in, double *pt2_in,
 	v[0] = y1 - x1;
 	v[1] = y2 - x2;
 	v[2] = y3 - x3;
+	if (f_v) {
+		cout << "v=";
+		vec_print(v, 3);
+		cout << endl;
+	}
 	// solve 
 	// (x1+\lambda*v[0])^2 + (x2+\lambda*v[1])^2 + (x3+\lambda*v[2])^2 = r^2
 	// which gives the quadratic
@@ -1821,12 +1838,18 @@ int numerics::line_centered(double *pt1_in, double *pt2_in,
 	// + x1^2 + x2^2 + x3^2 - r^2 
 	// = 0
 	a = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
-	b = 2 * (x1 * v[0] + x2 * v[1] + x3 * v[2]);
+	b = 2. * (x1 * v[0] + x2 * v[1] + x3 * v[2]);
 	c = x1 * x1 + x2 * x2 + x3 * x3 - r * r;
+	if (f_v) {
+		cout << "a=" << a << " b=" << b << " c=" << c << endl;
+	}
 	av = 1. / a;
 	b = b * av;
 	c = c * av;
 	d = b * b * 0.25 - c;
+	if (f_v) {
+		cout << "a=" << a << " b=" << b << " c=" << c << " d=" << d << endl;
+	}
 	if (d < 0) {
 		cout << "line_centered d < 0" << endl;
 		cout << "r=" << r << endl;
@@ -1855,6 +1878,99 @@ int numerics::line_centered(double *pt1_in, double *pt2_in,
 	pt2_out[0] = x1 + lambda2 * v[0];
 	pt2_out[1] = x2 + lambda2 * v[1];
 	pt2_out[2] = x3 + lambda2 * v[2];
+	if (f_v) {
+		cout << "numerics::line_centered done" << endl;
+	}
+	return TRUE;
+}
+
+int numerics::line_centered_tolerant(double *pt1_in, double *pt2_in,
+	double *pt1_out, double *pt2_out, double r, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	double v[3];
+	double x1, x2, x3, y1, y2, y3;
+	double a, b, c, av, d, e;
+	double lambda1, lambda2;
+
+
+	if (f_v) {
+		cout << "numerics::line_centered_tolerant" << endl;
+		cout << "r=" << r << endl;
+		cout << "pt1_in=";
+		vec_print(pt1_in, 3);
+		cout << endl;
+		cout << "pt2_in=";
+		vec_print(pt2_in, 3);
+		cout << endl;
+	}
+	x1 = pt1_in[0];
+	x2 = pt1_in[1];
+	x3 = pt1_in[2];
+
+	y1 = pt2_in[0];
+	y2 = pt2_in[1];
+	y3 = pt2_in[2];
+
+	v[0] = y1 - x1;
+	v[1] = y2 - x2;
+	v[2] = y3 - x3;
+	if (f_v) {
+		cout << "v=";
+		vec_print(v, 3);
+		cout << endl;
+	}
+	// solve
+	// (x1+\lambda*v[0])^2 + (x2+\lambda*v[1])^2 + (x3+\lambda*v[2])^2 = r^2
+	// which gives the quadratic
+	// (v[0]^2+v[1]^2+v[2]^2) * \lambda^2
+	// + (2*x1*v[0] + 2*x2*v[1] + 2*x3*v[2]) * \lambda
+	// + x1^2 + x2^2 + x3^2 - r^2
+	// = 0
+	a = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+	b = 2. * (x1 * v[0] + x2 * v[1] + x3 * v[2]);
+	c = x1 * x1 + x2 * x2 + x3 * x3 - r * r;
+	if (f_v) {
+		cout << "a=" << a << " b=" << b << " c=" << c << endl;
+	}
+	av = 1. / a;
+	b = b * av;
+	c = c * av;
+	d = b * b * 0.25 - c;
+	if (f_v) {
+		cout << "a=" << a << " b=" << b << " c=" << c << " d=" << d << endl;
+	}
+	if (d < 0) {
+		cout << "line_centered d < 0" << endl;
+		cout << "r=" << r << endl;
+		cout << "d=" << d << endl;
+		cout << "a=" << a << endl;
+		cout << "b=" << b << endl;
+		cout << "c=" << c << endl;
+		cout << "pt1_in=";
+		vec_print(pt1_in, 3);
+		cout << endl;
+		cout << "pt2_in=";
+		vec_print(pt2_in, 3);
+		cout << endl;
+		cout << "v=";
+		vec_print(v, 3);
+		cout << endl;
+		//exit(1);
+		return FALSE;
+		}
+	e = sqrt(d);
+	lambda1 = -b * 0.5 + e;
+	lambda2 = -b * 0.5 - e;
+	pt1_out[0] = x1 + lambda1 * v[0];
+	pt1_out[1] = x2 + lambda1 * v[1];
+	pt1_out[2] = x3 + lambda1 * v[2];
+	pt2_out[0] = x1 + lambda2 * v[0];
+	pt2_out[1] = x2 + lambda2 * v[1];
+	pt2_out[2] = x3 + lambda2 * v[2];
+	if (f_v) {
+		cout << "numerics::line_centered_tolerant done" << endl;
+	}
 	return TRUE;
 }
 
@@ -2912,7 +3028,7 @@ void numerics::clebsch_map_up(
 		}
 
 
-	Num.line_centered(Pts, Pts + 4, N, N + 4, 10);
+	Num.line_centered(Pts, Pts + 4, N, N + 4, 10, verbose_level - 1);
 	N[3] = 1.;
 	N[7] = 0.;
 

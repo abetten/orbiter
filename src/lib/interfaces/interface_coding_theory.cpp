@@ -30,7 +30,8 @@ interface_coding_theory::interface_coding_theory()
 }
 
 
-void interface_coding_theory::print_help(int argc, const char **argv, int i, int verbose_level)
+void interface_coding_theory::print_help(int argc,
+		const char **argv, int i, int verbose_level)
 {
 	if (strcmp(argv[i], "-make_macwilliams_system") == 0) {
 		cout << "-make_macwilliams_system <int : q> <int : n> <int k>" << endl;
@@ -40,7 +41,8 @@ void interface_coding_theory::print_help(int argc, const char **argv, int i, int
 	}
 }
 
-int interface_coding_theory::recognize_keyword(int argc, const char **argv, int i, int verbose_level)
+int interface_coding_theory::recognize_keyword(int argc,
+		const char **argv, int i, int verbose_level)
 {
 	if (strcmp(argv[i], "-make_macwilliams_system") == 0) {
 		return true;
@@ -51,7 +53,8 @@ int interface_coding_theory::recognize_keyword(int argc, const char **argv, int 
 	return false;
 }
 
-void interface_coding_theory::read_arguments(int argc, const char **argv, int i0, int verbose_level)
+void interface_coding_theory::read_arguments(int argc,
+		const char **argv, int i0, int verbose_level)
 {
 	int i;
 
@@ -87,7 +90,8 @@ void interface_coding_theory::worker(int verbose_level)
 	}
 }
 
-void interface_coding_theory::do_make_macwilliams_system(int q, int n, int k, int verbose_level)
+void interface_coding_theory::do_make_macwilliams_system(
+		int q, int n, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	longinteger_domain D;
