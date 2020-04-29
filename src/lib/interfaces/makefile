@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	interface_algebra.o \
 	interface_coding_theory.o \
 	interface_combinatorics.o \
 	interface_cryptography.o \
@@ -16,6 +17,10 @@ MODULES = \
 all : $(MODULES)
 
 %.o: %.cpp %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
+
+%.out: %.o;
+	$(DISCRETA_CPP) $< $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
 
 clean:
 	- rm *.o *.a *~

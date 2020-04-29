@@ -536,7 +536,7 @@ void poset_classification::write_file(
 		}
 	size0 = calc_size_on_file(depth_completed, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "size on file = " << size0 << endl;
+		cout << "poset_classification::write_file size on file = " << size0 << endl;
 		}
 
 	if (size0 > 1000 * ONE_MILLION) {
@@ -571,6 +571,13 @@ void poset_classification::write_file(
 	long int size;
 	size = m->used_length;
 
+	if (size != size0) {
+		cout << "poset_classification::write_file size != size0" << endl;
+		cout << "poset_classification::write_file size = " << size << endl;
+		cout << "poset_classification::write_file size0 = " << size0 << endl;
+		exit(1);
+
+	}
 
 	if (f_v) {
 		cout << "poset_classification::write_file "

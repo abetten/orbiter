@@ -369,7 +369,7 @@ int linear_group_description::read_arguments(
 			}
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
-			return i;
+			break;
 			}
 		else {
 			cout << "linear_group_description::read_arguments "
@@ -377,7 +377,7 @@ int linear_group_description::read_arguments(
 		}
 	} // next i
 	cout << "linear_group_description::read_arguments done" << endl;
-	return i;
+	return i + 1;
 }
 
 }}

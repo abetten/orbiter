@@ -22,11 +22,88 @@ namespace orbiter {
 
 namespace interfaces {
 
+class interface_algebra;
 class interface_coding_theory;
 class interface_combinatorics;
 class interface_cryptography;
 class interface_povray;
 class interface_projective;
+
+
+// #############################################################################
+// interface_coding_theory.cpp
+// #############################################################################
+
+//! interface to the algebra module
+
+
+class interface_algebra {
+	int argc;
+	const char **argv;
+
+	int f_linear_group;
+	linear_group_description *Linear_group_description;
+	finite_field *F;
+	linear_group *LG;
+	int f_group_theoretic_activity;
+	group_theoretic_activity_description *Group_theoretic_activity_description;
+	int f_cheat_sheet_GF;
+	int q;
+	int f_search_for_primitive_polynomial_in_range;
+	int p_min, p_max, deg_min, deg_max;
+	int f_make_table_of_irreducible_polynomials;
+	int deg;
+	int f_make_character_table_symmetric_group;
+	int f_make_A5_in_PSL_2_q;
+	int f_eigenstuff_matrix_direct;
+	int f_eigenstuff_matrix_from_file;
+	int eigenstuff_n;
+	int eigenstuff_q;
+	const char *eigenstuff_coeffs;
+	const char *eigenstuff_fname;
+	int f_surface_classify;
+	int f_surface_report;
+	int f_surface_identify_Sa;
+	int f_surface_isomorphism_testing;
+		surface_create_description *surface_descr_isomorph1;
+		surface_create_description *surface_descr_isomorph2;
+	int f_surface_recognize;
+		surface_create_description *surface_descr;
+
+public:
+	interface_algebra();
+	void print_help(int argc, const char **argv, int i, int verbose_level);
+	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
+	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
+	void worker(int verbose_level);
+	void do_eigenstuff_matrix_direct(
+			int n, int q, const char *coeffs_text, int verbose_level);
+	void do_eigenstuff_matrix_from_file(
+			int n, int q, const char *fname, int verbose_level);
+	void do_linear_group(
+			linear_group_description *Descr, int verbose_level);
+	void perform_group_theoretic_activity(finite_field *F, linear_group *LG,
+			group_theoretic_activity_description *Group_theoretic_activity_description,
+			int verbose_level);
+	void do_cheat_sheet_GF(int q, int verbose_level);
+	void do_search_for_primitive_polynomial_in_range(int p_min, int p_max,
+			int deg_min, int deg_max, int verbose_level);
+	void do_make_table_of_irreducible_polynomials(int deg, int q, int verbose_level);
+	void do_make_character_table_symmetric_group(int deg, int verbose_level);
+	void do_make_A5_in_PSL_2_q(int q, int verbose_level);
+	void do_surface_classify(int verbose_level);
+	void do_surface_report(int verbose_level);
+	void do_surface_identify_Sa(int verbose_level);
+	void do_surface_isomorphism_testing(
+			surface_create_description *surface_descr_isomorph1,
+			surface_create_description *surface_descr_isomorph2,
+			int verbose_level);
+	void do_surface_recognize(
+			surface_create_description *surface_descr,
+			int verbose_level);
+
+};
+
 
 
 // #############################################################################
@@ -79,7 +156,21 @@ class interface_combinatorics {
 	int f_random_permutation;
 	int random_permutation_degree;
 	const char *random_permutation_fname_csv;
-
+	int f_create_graph;
+	colored_graph *CG;
+	char fname_graph[1000];
+	create_graph_description *Create_graph_description;
+	int f_read_poset_file;
+	const char *read_poset_file_fname;
+	int f_grouping;
+	double x_stretch;
+	int f_graph_theoretic_activity_description;
+	graph_theoretic_activity_description *Graph_theoretic_activity_description;
+	int f_list_parameters_of_SRG;
+	int v_max;
+	int f_conjugacy_classes_Sym_n;
+	int n;
+	int f_Kramer_Mesner;
 
 public:
 	interface_combinatorics();
@@ -87,10 +178,18 @@ public:
 	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
 	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
 	void worker(int verbose_level);
+	void do_graph_theoretic_activity(
+			graph_theoretic_activity_description *Descr, int verbose_level);
+	void do_create_graph(
+			create_graph_description *Create_graph_description, int verbose_level);
+	void do_read_poset_file(const char *fname,
+			int f_grouping, double x_stretch, int verbose_level);
 	void do_create_combinatorial_object(int verbose_level);
 	void do_process_combinatorial_object(int verbose_level);
 	void do_bent(int n, int verbose_level);
 	void do_random_permutation(int deg, const char *fname_csv, int verbose_level);
+	void do_conjugacy_classes_Sym_n(int n, int verbose_level);
+	void do_Kramer_Mesner(int verbose_level);
 };
 
 
@@ -98,11 +197,12 @@ public:
 // interface_cryptography.cpp
 // #############################################################################
 
-//! interface to the cryptography module
 
 enum cipher_type { no_cipher_type, substitution, vigenere, affine };
 
 typedef enum cipher_type cipher_type;
+
+//! interface to the cryptography module
 
 class interface_cryptography {
 
@@ -268,26 +368,36 @@ public:
 	void do_EC_points(int q, int EC_b, int EC_c, int verbose_level);
 	int EC_evaluate_RHS(finite_field *F, int EC_b, int EC_c, int x);
 	// evaluates x^3 + bx + c
-	void do_EC_add(int q, int EC_b, int EC_c, const char *pt1_text, const char *pt2_text, int verbose_level);
-	void do_EC_cyclic_subgroup(int q, int EC_b, int EC_c, const char *pt_text, int verbose_level);
-	void do_EC_multiple_of(int q, int EC_b, int EC_c, const char *pt_text, int n, int verbose_level);
+	void do_EC_add(int q, int EC_b, int EC_c,
+			const char *pt1_text, const char *pt2_text, int verbose_level);
+	void do_EC_cyclic_subgroup(int q, int EC_b, int EC_c,
+			const char *pt_text, int verbose_level);
+	void do_EC_multiple_of(int q, int EC_b, int EC_c,
+			const char *pt_text, int n, int verbose_level);
 	void do_EC_discrete_log(int q, int EC_b, int EC_c,
 			const char *base_pt_text, const char *pt_text, int verbose_level);
 	void make_affine_sequence(int a, int c, int m, int verbose_level);
-	void make_2D_plot(int *orbit, int orbit_len, int cnt, int m, int a, int c, int verbose_level);
+	void make_2D_plot(int *orbit, int orbit_len, int cnt,
+			int m, int a, int c, int verbose_level);
 	void do_random_last(int random_nb, int verbose_level);
 	void do_random(int random_nb, const char *fname_csv, int verbose_level);
 	void do_jacobi(int jacobi_top, int jacobi_bottom, int verbose_level);
 	void do_solovay_strassen(int p, int a, int verbose_level);
 	void do_miller_rabin(int p, int nb_times, int verbose_level);
 	void do_fermat_test(int p, int nb_times, int verbose_level);
-	void do_find_pseudoprime(int nb_digits, int nb_fermat, int nb_miller_rabin, int nb_solovay_strassen, int verbose_level);
-	void do_find_strong_pseudoprime(int nb_digits, int nb_fermat, int nb_miller_rabin, int verbose_level);
-	void do_miller_rabin_text(const char *number_text, int nb_miller_rabin, int verbose_level);
-	void quadratic_sieve(int n, int factorbase, int x0, int verbose_level);
-	void calc_log2(std::vector<int> &primes, std::vector<int> &primes_log2, int verbose_level);
+	void do_find_pseudoprime(int nb_digits, int nb_fermat,
+			int nb_miller_rabin, int nb_solovay_strassen, int verbose_level);
+	void do_find_strong_pseudoprime(int nb_digits,
+			int nb_fermat, int nb_miller_rabin, int verbose_level);
+	void do_miller_rabin_text(const char *number_text,
+			int nb_miller_rabin, int verbose_level);
+	void quadratic_sieve(int n, int factorbase,
+			int x0, int verbose_level);
+	void calc_log2(std::vector<int> &primes,
+			std::vector<int> &primes_log2, int verbose_level);
 	void square_root(const char *square_root_number, int verbose_level);
-	void square_root_mod(const char *square_root_number, const char *mod_number, int verbose_level);
+	void square_root_mod(const char *square_root_number,
+			const char *mod_number, int verbose_level);
 	void reduce_primes(std::vector<int> &primes,
 			longinteger_object &M,
 			int &f_found_small_factor, int &small_factor,
@@ -418,6 +528,14 @@ class interface_projective {
 
 	int f_smooth_curve;
 
+	int f_create_spread;
+	spread_create_description *Spread_create_description;
+
+	int f_study_surface;
+	int study_surface_q;
+	int study_surface_nb;
+
+
 public:
 
 	int parabola_N;
@@ -463,7 +581,9 @@ public:
 			double t_min, double t_max, double boundary,
 			function_polish_description *FP_descr, int verbose_level);
 	void do_create_BLT_set(BLT_set_create_description *Descr, int verbose_level);
+	void do_create_spread(spread_create_description *Descr, int verbose_level);
 	void do_create_surface(surface_create_description *Descr, int verbose_level);
+	void do_study_surface(int q, int nb, int verbose_level);
 };
 
 

@@ -177,6 +177,18 @@ public:
 
 class create_graph_description {
 public:
+
+	int f_load_from_file;
+	const char *fname;
+
+	int f_edge_list;
+	int n;
+	const char *edge_list_text;
+
+	int f_edges_as_pairs;
+	const char *edges_as_pairs_text;
+
+
 	int f_Johnson;
 	int Johnson_n;
 	int Johnson_k;
@@ -234,12 +246,17 @@ public:
 
 	create_graph_description *description;
 
+	int f_has_CG;
+	colored_graph *CG;
+
 	int N;
 	int *Adj;
 
 	char label[1000];
 	char label_tex[1000];
 
+	create_graph();
+	~create_graph();
 	void init(
 			create_graph_description *description,
 			int verbose_level);
@@ -717,6 +734,40 @@ void graph_classify_test_function(long int *S, int len,
 void graph_classify_print_set(std::ostream &ost,
 		int len, long int *S, void *data);
 
+
+// #############################################################################
+// graph_theoretic_activity_description.cpp
+// #############################################################################
+
+//! description of an activity for graphs
+
+
+class graph_theoretic_activity_description {
+
+public:
+
+	int f_find_cliques;
+	clique_finder_control *Clique_finder_control;
+	int f_export_magma;
+	int f_export_maple;
+	int f_print;
+	int f_sort_by_colors;
+	int f_split;
+	const char *split_file;
+
+
+	graph_theoretic_activity_description();
+	~graph_theoretic_activity_description();
+	void null();
+	void freeself();
+	void read_arguments_from_string(
+			const char *str, int verbose_level);
+	int read_arguments(
+		int argc, const char **argv,
+		int verbose_level);
+
+
+};
 
 
 // #############################################################################

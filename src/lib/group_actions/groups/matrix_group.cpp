@@ -1354,7 +1354,18 @@ void matrix_group::GL_unpack(uchar *elt, int *Elt, int verbose_level)
 	
 	if (f_v) {
 		cout << "matrix_group::GL_unpack" << endl;
+		cout << "matrix_group::GL_unpack f_projective=" << f_projective << endl;
+		cout << "matrix_group::GL_unpack f_affine=" << f_affine << endl;
+		cout << "matrix_group::GL_unpack f_general_linear=" << f_general_linear << endl;
+		cout << "matrix_group::GL_unpack f_semilinear=" << f_semilinear << endl;
+		cout << "matrix_group::GL_unpack n=" << n << endl;
+		cout << "matrix_group::GL_unpack bits_per_digit=" << bits_per_digit << endl;
+		cout << "matrix_group::GL_unpack bits_per_elt=" << bits_per_elt << endl;
+		cout << "matrix_group::GL_unpack bits_extension_degree=" << bits_extension_degree << endl;
+		cout << "matrix_group::GL_unpack char_per_elt=" << char_per_elt << endl;
 		}
+
+
 	if (f_projective) {
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {

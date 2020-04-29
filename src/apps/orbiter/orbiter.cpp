@@ -19,6 +19,8 @@ int main(int argc, const char **argv)
 	int verbose_level = 0;
 	int f_seed = FALSE;
 	int the_seed = TRUE;
+	int f_memory_debug = FALSE;
+	int memory_debug_verbose_level = 0;
 	os_interface Os;
 
 	t0 = Os.os_ticks();
@@ -42,6 +44,11 @@ int main(int argc, const char **argv)
 			the_seed = atoi(argv[++i]);
 			cout << "-seed " << the_seed << endl;
 		}
+		else if (strcmp(argv[i], "-memory_debug") == 0) {
+			f_memory_debug = TRUE;
+			memory_debug_verbose_level = atoi(argv[++i]);
+			cout << "-memory_debug " << memory_debug_verbose_level << endl;
+			}
 		else {
 			break;
 		}
@@ -55,6 +62,21 @@ int main(int argc, const char **argv)
 		cout << "seeding random number generator with " << the_seed << endl;
 		srand(the_seed);
 		Os.random_integer(1000);
+	}
+
+	if (f_v) {
+		cout << "before Interface_algebra" << endl;
+	}
+	{
+		interface_algebra Interface_algebra;
+
+		if (f_v) {
+			cout << "before Interface_algebra.recognize_keyword" << endl;
+		}
+		if (Interface_algebra.recognize_keyword(argc, argv, i, verbose_level)) {
+			Interface_algebra.read_arguments(argc, argv, i, verbose_level);
+			Interface_algebra.worker(verbose_level);
+		}
 	}
 
 	if (f_v) {
@@ -120,7 +142,9 @@ int main(int argc, const char **argv)
 		}
 	}
 
-
+	if (f_memory_debug) {
+		global_mem_object_registry.dump();
+	}
 
 	the_end(t0);
 

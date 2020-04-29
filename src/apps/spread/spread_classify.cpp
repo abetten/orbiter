@@ -37,8 +37,10 @@ int main(int argc, const char **argv)
 	int order = 0;
 	int f_dim_over_kernel = FALSE;
 	int dim_over_kernel = 0;
-	int f_make_spread = FALSE;
-	int type_of_spread = 0;
+
+
+	//int f_make_spread = FALSE;
+	//int type_of_spread = 0;
 	int f_recoordinatize = FALSE;
 	int f_starter = FALSE;
 
@@ -102,6 +104,7 @@ int main(int argc, const char **argv)
 			}
 
 
+#if 0
 		else if (strcmp(argv[i], "-FTWKB") == 0) {
 			f_make_spread = TRUE;
 			type_of_spread = SPREAD_OF_TYPE_FTWKB;
@@ -137,6 +140,7 @@ int main(int argc, const char **argv)
 			type_of_spread = SPREAD_OF_TYPE_LAW_PENTTILA;
 			cout << "-Law_Penttila" << endl;
 			}
+#endif
 
 
 		else if (strcmp(argv[i], "-starter") == 0) {
@@ -297,14 +301,16 @@ int main(int argc, const char **argv)
 		verbose_level - 1);
 	cout << "spread_classify.cpp after IA.init" << endl;
 
-
+#if 0
 	if (f_make_spread) {
 		cout << "spread_classify.cpp f_make_spread" << endl;
 		cout << "spread_classify.cpp before T.write_spread_to_file" << endl;
 		T.write_spread_to_file(type_of_spread, verbose_level);
 		cout << "spread_classify.cpp after T.write_spread_to_file" << endl;
 		}
-	else if (f_starter) {
+#endif
+
+	if (f_starter) {
 
 
 		cout << "spread_classify.cpp f_starter" << endl;

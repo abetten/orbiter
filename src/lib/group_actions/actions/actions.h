@@ -350,12 +350,12 @@ public:
 		int verbose_level);
 	void make_element_which_moves_a_line_in_PG3q(grassmann *Gr,
 		long int line_rk, int *Elt, int verbose_level);
-	int is_matrix_group();
 	int matrix_group_dimension();
 	int is_semilinear_matrix_group();
 	int is_projective();
 	int is_affine();
 	int is_general_linear();
+	int is_matrix_group();
 	matrix_group *get_matrix_group();
 	void perform_tests(strong_generators *SG, int verbose_level);
 

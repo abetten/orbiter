@@ -1867,12 +1867,12 @@ void classify_double_sixes::write_file(ofstream &fp, int verbose_level)
 
 
 	Five_plus_one->write_file(fp,
-			5 /* depth_completed */, verbose_level);
+			5 /* depth_completed */, 0 /*verbose_level*/);
 
 
-	Flag_orbits->write_file(fp, verbose_level);
+	Flag_orbits->write_file(fp, 0 /*verbose_level*/);
 
-	Double_sixes->write_file(fp, verbose_level);
+	Double_sixes->write_file(fp, 0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "classify_double_sixes::write_file finished" << endl;
@@ -1893,6 +1893,14 @@ void classify_double_sixes::read_file(ifstream &fp, int verbose_level)
 	fp.read((char *) &nb, sizeof(int));
 	fp.read((char *) &nb_flag_orbits, sizeof(int));
 
+	if (f_v) {
+		cout << "classify_double_sixes::read_file q=" << q << endl;
+		cout << "classify_double_sixes::read_file nb_neighbors=" << nb_neighbors << endl;
+		cout << "classify_double_sixes::read_file len=" << len << endl;
+		cout << "classify_double_sixes::read_file nb=" << nb << endl;
+		cout << "classify_double_sixes::read_file nb_flag_orbits=" << nb_flag_orbits << endl;
+		}
+
 	Idx = NEW_int(nb);
 	for (i = 0; i < nb; i++) {
 		fp.read((char *) &Idx[i], sizeof(int));
@@ -1906,8 +1914,13 @@ void classify_double_sixes::read_file(ifstream &fp, int verbose_level)
 
 	int depth_completed;
 
-	Five_plus_one->read_file(fp,
-			depth_completed, verbose_level);
+	if (f_v) {
+		cout << "classify_double_sixes::read_file before Five_plus_one->read_file" << endl;
+		}
+	Five_plus_one->read_file(fp, depth_completed, 0/*verbose_level*/);
+	if (f_v) {
+		cout << "classify_double_sixes::read_file after Five_plus_one->read_file" << endl;
+		}
 	if (depth_completed != 5) {
 		cout << "classify_double_sixes::read_file "
 				"depth_completed != 5" << endl;
@@ -1918,7 +1931,13 @@ void classify_double_sixes::read_file(ifstream &fp, int verbose_level)
 	Flag_orbits = NEW_OBJECT(flag_orbits);
 	//Flag_orbits->A = A;
 	//Flag_orbits->A2 = A;
-	Flag_orbits->read_file(fp, A, A2, verbose_level);
+	if (f_v) {
+		cout << "classify_double_sixes::read_file before Flag_orbits->read_file" << endl;
+		}
+	Flag_orbits->read_file(fp, A, A2, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "classify_double_sixes::read_file after Flag_orbits->read_file" << endl;
+		}
 
 	Double_sixes = NEW_OBJECT(classification_step);
 	//Double_sixes->A = A;
@@ -1928,7 +1947,13 @@ void classify_double_sixes::read_file(ifstream &fp, int verbose_level)
 	A->group_order(go);
 	//A->group_order(Double_sixes->go);
 
-	Double_sixes->read_file(fp, A, A2, go, verbose_level);
+	if (f_v) {
+		cout << "classify_double_sixes::read_file before Double_sixes->read_file" << endl;
+		}
+	Double_sixes->read_file(fp, A, A2, go, 0/*verbose_level*/);
+	if (f_v) {
+		cout << "classify_double_sixes::read_file after Double_sixes->read_file" << endl;
+		}
 
 	if (f_v) {
 		cout << "classify_double_sixes::read_file "

@@ -289,6 +289,7 @@ MODULES= \
 		top_level/algebra_and_number_theory/algebra_global_with_action.o \
 		top_level/algebra_and_number_theory/character_table_burnside.o \
 		top_level/algebra_and_number_theory/factor_group.o \
+		top_level/algebra_and_number_theory/group_theoretic_activity_description.o \
 		top_level/algebra_and_number_theory/semifield_classify_with_substructure.o \
 		top_level/algebra_and_number_theory/semifield_classify.o \
 		top_level/algebra_and_number_theory/semifield_downstep_node.o \
@@ -308,6 +309,7 @@ MODULES= \
 		top_level/combinatorics/design_create.o \
 		top_level/combinatorics/difference_set_in_heisenberg_group.o \
 		top_level/combinatorics/graph_classify.o \
+		top_level/combinatorics/graph_theoretic_activity_description.o \
 		top_level/combinatorics/hadamard_classify.o \
 		top_level/combinatorics/hall_system_classify.o \
 		top_level/combinatorics/large_set_classify.o \
@@ -374,6 +376,7 @@ MODULES= \
 		top_level/orbits/subspace_orbits.o \
 		top_level/solver/exact_cover.o \
 		top_level/solver/exact_cover_arguments.o \
+		interfaces/interface_algebra.o \
 		interfaces/interface_coding_theory.o \
 		interfaces/interface_combinatorics.o \
 		interfaces/interface_cryptography.o \

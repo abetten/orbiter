@@ -14,7 +14,6 @@ LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 TARGETS=\
 		all_k_subsets.out \
 		canonical_form_of_design.out \
-		conjugacy_classes_sym_n.out \
 		costas.out \
 		delandtsheer_doyen_main.out \
 		design_apply.out \
@@ -24,7 +23,6 @@ TARGETS=\
 		group_ring.out \
 		hadamard.out \
 		hall_system_main.out \
-		kramer_mesner.out \
 		poset_of_subsets.out \
 		rank_anything.out \
 		rank_subsets_lex.out \
@@ -42,9 +40,6 @@ all_k_subsets.out:  all_k_subsets.o;
 
 canonical_form_of_design.out:  canonical_form_of_design.o;
 	$(DISCRETA_CPP)  canonical_form_of_design.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-conjugacy_classes_sym_n.out:  conjugacy_classes_sym_n.o;
-	$(DISCRETA_CPP)  conjugacy_classes_sym_n.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 costas.out:  costas.o;
 	$(DISCRETA_CPP)  costas.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
@@ -72,9 +67,6 @@ hadamard.out:  hadamard.o;
 
 hall_system_main.out:  hall_system_main.o;
 	$(DISCRETA_CPP)  hall_system_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-kramer_mesner.out:  kramer_mesner.o;
-	$(DISCRETA_CPP)  kramer_mesner.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 poset_of_subsets.out:  poset_of_subsets.o;
 	$(DISCRETA_CPP)  poset_of_subsets.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

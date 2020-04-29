@@ -183,8 +183,8 @@ class clique_finder_control {
 
 public:
 	int f_rainbow;
-	int f_file;
-	const char *fname_graph;
+	//int f_file;
+	//const char *fname_graph;
 	int f_weighted;
 	const char *weights_string;
 	int f_Sajeeb;
@@ -211,8 +211,9 @@ public:
 	~clique_finder_control();
 	int parse_arguments(
 			int argc, const char **argv);
-	void all_cliques(
-		int verbose_level);
+	void all_cliques(colored_graph *CG,
+			char *fname_graph,
+			int verbose_level);
 	void do_Sajeeb(colored_graph *CG,
 			const char *fname_sol,
 			int verbose_level);
@@ -595,6 +596,7 @@ public:
 		double scale, double line_width,
 		int f_has_labels, int *labels,
 		int verbose_level);
+	void list_parameters_of_SRG(int v_max, int verbose_level);
 
 };
 
@@ -657,6 +659,8 @@ public:
 		double radius_factor, int verbose_level);
 	void make_subset_lattice(int n, int depth, int f_tree,
 		int f_depth_first, int f_breadth_first, int verbose_level);
+	void init_poset_from_file(const char *fname,
+			int f_grouping, double x_stretch, int verbose_level);
 };
 
 // #############################################################################

@@ -238,20 +238,34 @@ void classification_step::print_latex(ostream &ost,
 void classification_step::write_file(ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 1);
 	int i;
 	
 	if (f_v) {
 		cout << "classification_step::write_file" << endl;
 		}
+	if (f_v) {
+		cout << "classification_step::write_file nb_orbits=" << nb_orbits << endl;
+		cout << "classification_step::write_file representation_sz=" << representation_sz << endl;
+		}
 	fp.write((char *) &nb_orbits, sizeof(int));
 	fp.write((char *) &representation_sz, sizeof(int));
 
-	for (i = 0; i < nb_orbits * representation_sz; i++) {
-		fp.write((char *) &Rep[i], sizeof(int));
+
+	if (f_vv) {
+		cout << "classification_step::write_file Rep matrix:" << endl;
+		lint_matrix_print(Rep, nb_orbits, representation_sz);
 		}
 
+	for (i = 0; i < nb_orbits * representation_sz; i++) {
+		fp.write((char *) &Rep[i], sizeof(long int));
+		}
+
+	if (f_v) {
+		cout << "classification_step::write_file writing " << nb_orbits << " orbits" << endl;
+		}
 	for (i = 0; i < nb_orbits; i++) {
-		Orbit[i].write_file(fp, 0/*verbose_level*/);
+		Orbit[i].write_file(fp, 0 /*verbose_level*/);
 		}
 
 	if (f_v) {
@@ -264,6 +278,7 @@ void classification_step::read_file(ifstream &fp,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 1);
 	int i;
 	
 	if (f_v) {
@@ -275,13 +290,26 @@ void classification_step::read_file(ifstream &fp,
 	fp.read((char *) &nb_orbits, sizeof(int));
 	fp.read((char *) &representation_sz, sizeof(int));
 
+	if (f_v) {
+		cout << "classification_step::read_file nb_orbits=" << nb_orbits << endl;
+		cout << "classification_step::read_file representation_sz=" << representation_sz << endl;
+		}
+
 	Rep = NEW_lint(nb_orbits * representation_sz);
 	for (i = 0; i < nb_orbits * representation_sz; i++) {
 		fp.read((char *) &Rep[i], sizeof(long int));
 		}
 	
+	if (f_vv) {
+		cout << "classification_step::read_file Rep matrix:" << endl;
+		lint_matrix_print(Rep, nb_orbits, representation_sz);
+		}
+
 	max_orbits = nb_orbits;
 	Orbit = NEW_OBJECTS(orbit_node, nb_orbits);
+	if (f_v) {
+		cout << "classification_step::read_file reading " << nb_orbits << " orbits" << endl;
+		}
 	for (i = 0; i < nb_orbits; i++) {
 		Orbit[i].C = this;
 		Orbit[i].orbit_index = i;
