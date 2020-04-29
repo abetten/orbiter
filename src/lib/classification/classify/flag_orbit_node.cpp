@@ -44,12 +44,24 @@ void flag_orbit_node::null()
 
 void flag_orbit_node::freeself()
 {
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "flag_orbit_node::freeself" << endl;
+	}
 	if (fusion_elt) {
 		FREE_int(fusion_elt);
 		}
+	if (f_v) {
+		cout << "flag_orbit_node::freeself before FREE_OBJECT(gens)" << endl;
+	}
 	if (gens) {
 		FREE_OBJECT(gens);
 		}
+	if (f_v) {
+		cout << "flag_orbit_node::freeself done" << endl;
+	}
 	null();
 }
 
@@ -129,8 +141,15 @@ void flag_orbit_node::write_file(ofstream &fp, int verbose_level)
 	fp.write((char *) &upstep_secondary_orbit, sizeof(int));
 	fp.write((char *) &f_fusion_node, sizeof(int));
 	if (f_fusion_node) {
+		if (f_v) {
+			cout << "flag_orbit_node::write_file f_fusion_node" << endl;
+			}
 		fp.write((char *) &fusion_with, sizeof(int));
 		Flag_orbits->A->element_write_to_file_binary(fusion_elt, fp, 0);
+		}
+	if (f_v) {
+		cout << "flag_orbit_node::write_file "
+				"before gens->write_to_file_binary" << endl;
 		}
 	gens->write_to_file_binary(fp, 0 /* verbose_level */);
 
@@ -154,12 +173,15 @@ void flag_orbit_node::read_file(ifstream &fp, int verbose_level)
 	fp.read((char *) &upstep_secondary_orbit, sizeof(int));
 	fp.read((char *) &f_fusion_node, sizeof(int));
 	if (f_fusion_node) {
+		if (f_v) {
+			cout << "flag_orbit_node::read_file f_fusion_node" << endl;
+			}
 		fp.read((char *) &fusion_with, sizeof(int));
 		fusion_elt = NEW_int(Flag_orbits->A->elt_size_in_int);
 		Flag_orbits->A->element_read_from_file_binary(fusion_elt, fp, 0);
 		}
 
-	if (FALSE) {
+	if (f_v) {
 		cout << "flag_orbit_node::read_file "
 				"before gens->read_from_file_binary" << endl;
 		}

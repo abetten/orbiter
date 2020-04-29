@@ -18,7 +18,6 @@ LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 ALL_TARGETS=\
 	action_on_set_partitions.out \
 	exceptional_isomorphism_O4_main.out \
-	linear_group.out \
 	orthogonal_group.out \
 	wreath_product_main.out
 
@@ -82,9 +81,6 @@ action_on_set_partitions.out:  action_on_set_partitions.o;
 exceptional_isomorphism_O4_main.out:  exceptional_isomorphism_O4_main.o;
 	$(DISCRETA_CPP)  exceptional_isomorphism_O4_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-
-linear_group.out:  linear_group.o;
-	$(DISCRETA_CPP)  linear_group.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 orthogonal_group.out:  orthogonal_group.o;

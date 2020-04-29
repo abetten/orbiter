@@ -343,6 +343,9 @@ public:
 	void make_graph_of_disjoint_sets_from_rows_of_matrix(
 		int *M, int m, int n,
 		int *&Adj, int verbose_level);
+	void make_partitions(int n, int *Part, int cnt);
+	int count_partitions(int n);
+	int next_partition(int n, int *part);
 };
 
 // combinatorics.cpp:

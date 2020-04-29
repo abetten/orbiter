@@ -1,5 +1,4 @@
 all: 
-	cd algebra; $(MAKE) all
 	cd arcs; $(MAKE) all
 	cd blt; $(MAKE) all
 	cd combinatorics; $(MAKE) all
@@ -22,7 +21,6 @@ all:
 		# ginac requires cln and ginac to be installed
 
 clean: 
-	cd algebra; $(MAKE) clean
 	cd arcs; $(MAKE) clean
 	cd blt; $(MAKE) clean
 	cd combinatorics; $(MAKE) clean
@@ -44,7 +42,6 @@ clean:
 	cd tools; $(MAKE) clean
 
 install: 
-	cd algebra; $(MAKE) install
 	cd arcs; $(MAKE) install
 	cd blt; $(MAKE) install
 	cd combinatorics; $(MAKE) install

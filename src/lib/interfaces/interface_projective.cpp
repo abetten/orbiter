@@ -96,7 +96,12 @@ interface_projective::interface_projective()
 	f_surface_quartic = FALSE;
 	f_surface_clebsch = FALSE;
 	f_surface_codes = FALSE;
+	f_create_spread = FALSE;
+	Spread_create_description = FALSE;
 
+	f_study_surface = FALSE;
+	study_surface_q = 0;
+	study_surface_nb = 0;
 }
 
 
@@ -127,18 +132,24 @@ void interface_projective::print_help(int argc,
 	else if (strcmp(argv[i], "-create_surface") == 0) {
 		cout << "-create_surface <description>" << endl;
 	}
+	else if (strcmp(argv[i], "-create_spread") == 0) {
+		cout << "-create_spread <description>" << endl;
+	}
+	else if (strcmp(argv[i], "-study_surface") == 0) {
+		cout << "-study_surface <int : q> <int : nb>" << endl;
+	}
 }
 
 int interface_projective::recognize_keyword(int argc,
 		const char **argv, int i, int verbose_level)
 {
-	if (strcmp(argv[i], "-cheat_sheet_PG <int : n> < int : q >") == 0) {
+	if (strcmp(argv[i], "-cheat_sheet_PG") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-canonical_form_PG <int : n> < int : q >") == 0) {
+	else if (strcmp(argv[i], "-canonical_form_PG") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-classify_cubic_curves < int : q >") == 0) {
+	else if (strcmp(argv[i], "-classify_cubic_curves") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-create_points_on_quartic") == 0) {
@@ -154,6 +165,12 @@ int interface_projective::recognize_keyword(int argc,
 		return true;
 	}
 	else if (strcmp(argv[i], "-create_surface") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-create_spread") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-study_surface") == 0) {
 		return true;
 	}
 	return false;
@@ -182,9 +199,10 @@ void interface_projective::read_arguments(int argc,
 			f_canonical_form_PG = TRUE;
 			n = atoi(argv[++i]);
 			q = atoi(argv[++i]);
-			cout << "-canonical_form_PG " << n << " " <<  q << endl;
+			cout << "-canonical_form_PG " << n << " " <<  q << ", reading extra arguments" << endl;
 			i++;
 			i = read_canonical_form_arguments(argc, argv, i, verbose_level);
+			cout << "-canonical_form_PG " << n << " " <<  q << endl;
 
 		}
 		else if (strcmp(argv[i], "-classify_cubic_curves") == 0) {
@@ -192,8 +210,6 @@ void interface_projective::read_arguments(int argc,
 			q = atoi(argv[++i]);
 			cout << "-classify_cubic_curves " <<  q << endl;
 			i++;
-			i = read_canonical_form_arguments(argc, argv, i, verbose_level);
-
 		}
 		else if (strcmp(argv[i], "-create_points_on_quartic") == 0) {
 			f_create_points_on_quartic = TRUE;
@@ -246,6 +262,15 @@ void interface_projective::read_arguments(int argc,
 
 			cout << "-create_BLT_set" << endl;
 		}
+		else if (strcmp(argv[i], "-create_spread") == 0) {
+			f_create_spread = TRUE;
+			Spread_create_description = NEW_OBJECT(spread_create_description);
+			i += Spread_create_description->read_arguments(
+					argc - (i - 1),
+					argv + i, verbose_level) - 1;
+
+			cout << "-create_spread" << endl;
+		}
 		else if (strcmp(argv[i], "-create_surface") == 0) {
 			f_create_surface = TRUE;
 			surface_description = NEW_OBJECT(surface_create_description);
@@ -280,6 +305,16 @@ void interface_projective::read_arguments(int argc,
 			f_surface_codes = TRUE;
 			cout << "-surface_codes" << endl;
 		}
+		else if (strcmp(argv[i], "-study_surface") == 0) {
+			f_study_surface = TRUE;
+			study_surface_q = atoi(argv[++i]);
+			study_surface_nb = atoi(argv[++i]);
+			cout << "-study_surface" << study_surface_q << " " << study_surface_nb << endl;
+		}
+		else {
+			cout << "interface_projective::read_arguments: unrecognized option " << argv[i] << ", skipping" << endl;
+			//exit(1);
+		}
 	}
 	cout << "interface_projective::read_arguments done" << endl;
 }
@@ -301,7 +336,6 @@ int interface_projective::read_canonical_form_arguments(int argc,
 			Data_input_stream = NEW_OBJECT(data_input_stream);
 			i += Data_input_stream->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
-
 			cout << "-input" << endl;
 		}
 
@@ -346,8 +380,8 @@ int interface_projective::read_canonical_form_arguments(int argc,
 			break;
 		}
 		else {
-			cout << "-canonical_form_PG: unrecognized option " << argv[i] << endl;
-			exit(1);
+			cout << "-canonical_form_PG: unrecognized option " << argv[i] << ", skipping" << endl;
+			//exit(1);
 		}
 	}
 	if (f_v) {
@@ -389,8 +423,14 @@ void interface_projective::worker(int verbose_level)
 	else if (f_create_BLT_set) {
 		do_create_BLT_set(BLT_set_descr, verbose_level);
 	}
+	else if (f_create_spread) {
+		do_create_spread(Spread_create_description, verbose_level);
+	}
 	else if (f_create_surface) {
 		do_create_surface(surface_description, verbose_level);
+	}
+	else if (f_study_surface) {
+		do_study_surface(study_surface_q, study_surface_nb, verbose_level);
 	}
 	if (f_v) {
 		cout << "interface_projective::worker done" << endl;
@@ -455,7 +495,7 @@ void interface_projective::do_cheat_sheet_PG(int n, int q, int verbose_level)
 
 	P->report(f);
 
-	if (n == 3) {
+	if (FALSE && n == 3) {
 		surface_domain *S;
 
 		S = NEW_OBJECT(surface_domain);
@@ -1256,6 +1296,66 @@ void interface_projective::do_create_BLT_set(BLT_set_create_description *Descr, 
 
 }
 
+void interface_projective::do_create_spread(spread_create_description *Descr, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_projective::do_create_spread" << endl;
+	}
+
+
+	spread_create *SC;
+
+	SC = NEW_OBJECT(spread_create);
+
+	cout << "before SC->init" << endl;
+	SC->init(Descr, verbose_level);
+	cout << "after SC->init" << endl;
+
+
+	if (nb_transform) {
+		cout << "before SC->apply_transformations" << endl;
+		SC->apply_transformations(transform_coeffs,
+				f_inverse_transform, nb_transform, verbose_level);
+		cout << "after SC->apply_transformations" << endl;
+		}
+
+	action *A;
+	//int *Elt1;
+	int *Elt2;
+
+	A = SC->A;
+
+	Elt2 = NEW_int(A->elt_size_in_int);
+
+	latex_interface L;
+
+	cout << "We have created the following spread set:" << endl;
+	cout << "$$" << endl;
+	L.lint_set_print_tex(cout, SC->set, SC->sz);
+	cout << endl;
+	cout << "$$" << endl;
+
+	if (SC->f_has_group) {
+		cout << "The stabilizer is generated by:" << endl;
+		SC->Sg->print_generators_tex(cout);
+		}
+
+
+
+
+
+	FREE_int(Elt2);
+
+	FREE_OBJECT(SC);
+
+	if (f_v) {
+		cout << "interface_projective::do_create_spread done" << endl;
+	}
+
+}
+
 void interface_projective::do_create_surface(
 		surface_create_description *Descr, int verbose_level)
 {
@@ -2032,6 +2132,55 @@ void interface_projective::do_create_surface(
 
 	if (f_v) {
 		cout << "interface_projective::do_create_surface done" << endl;
+	}
+}
+
+void interface_projective::do_study_surface(int q, int nb, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_projective::do_study_surface" << endl;
+	}
+
+	surface_study *study;
+
+	study = NEW_OBJECT(surface_study);
+
+	cout << "before study->init" << endl;
+	study->init(q, nb, verbose_level);
+	cout << "after study->init" << endl;
+
+	cout << "before study->study_intersection_points" << endl;
+	study->study_intersection_points(verbose_level);
+	cout << "after study->study_intersection_points" << endl;
+
+	cout << "before study->study_line_orbits" << endl;
+	study->study_line_orbits(verbose_level);
+	cout << "after study->study_line_orbits" << endl;
+
+	cout << "before study->study_group" << endl;
+	study->study_group(verbose_level);
+	cout << "after study->study_group" << endl;
+
+	cout << "before study->study_orbits_on_lines" << endl;
+	study->study_orbits_on_lines(verbose_level);
+	cout << "after study->study_orbits_on_lines" << endl;
+
+	cout << "before study->study_find_eckardt_points" << endl;
+	study->study_find_eckardt_points(verbose_level);
+	cout << "after study->study_find_eckardt_points" << endl;
+
+#if 0
+	if (study->nb_Eckardt_pts == 6) {
+		cout << "before study->study_surface_with_6_eckardt_points" << endl;
+		study->study_surface_with_6_eckardt_points(verbose_level);
+		cout << "after study->study_surface_with_6_eckardt_points" << endl;
+		}
+#endif
+
+	if (f_v) {
+		cout << "interface_projective::do_study_surface done" << endl;
 	}
 }
 

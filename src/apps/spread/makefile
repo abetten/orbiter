@@ -16,8 +16,7 @@ LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 
 
 TARGETS=\
-	spread_classify.out \
-	spread_create.out
+	spread_classify.out
 
 all: $(TARGETS)
 
@@ -29,8 +28,6 @@ install:
 spread_classify.out: spread_classify.o  ;
 	$(DISCRETA_CPP) spread_classify.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-spread_create.out: spread_create.o ;
-	$(DISCRETA_CPP) spread_create.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 clean:
 	- rm *.o *.a *.out *~

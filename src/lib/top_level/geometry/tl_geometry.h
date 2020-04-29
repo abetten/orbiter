@@ -2725,9 +2725,14 @@ public:
 		int f_semilinear, surface_with_action *Surf_A,
 		int argc, const char **argv, 
 		int verbose_level);
+	void do_classify_double_sixes(int verbose_level);
+	void do_classify_surfaces(int verbose_level);
 	void classify_surfaces_from_double_sixes(int verbose_level);
 	void downstep(int verbose_level);
 	void upstep(int verbose_level);
+	void derived_arcs(int verbose_level);
+	void starter_configurations_which_are_involved(int iso_type,
+		int *&Starter_configuration_idx, int &nb_starter_conf, int verbose_level);
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp, int verbose_level);
 
@@ -2757,6 +2762,22 @@ public:
 	void generate_source_code(int verbose_level);
 		// no longer produces nb_E[] and single_six[]
 	void generate_history(int verbose_level);
+	int test_if_surfaces_have_been_computed_already();
+	void write_surfaces(int verbose_level);
+	void read_surfaces(int verbose_level);
+	int test_if_double_sixes_have_been_computed_already();
+	void write_double_sixes(int verbose_level);
+	void read_double_sixes(int verbose_level);
+	void create_report(int f_with_stabilizers, int verbose_level);
+	void report(std::ostream &ost, int f_with_stabilizers, int verbose_level);
+	void create_report_double_sixes(int verbose_level);
+	void test_isomorphism(
+			surface_create_description *Descr1,
+			surface_create_description *Descr2,
+			int verbose_level);
+	void recognition(
+			surface_create_description *Descr,
+			int verbose_level);
 
 };
 

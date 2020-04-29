@@ -14,7 +14,7 @@ namespace top_level {
 // algebra_global_with_action.cpp
 // #############################################################################
 
-//! group thooretic stuff which requires action
+//! group theoretic stuff which requires action
 
 
 class algebra_global_with_action {
@@ -42,6 +42,24 @@ public:
 		vector_ge *SG, int *&perm, int verbose_level);
 	void presentation(action *A, sims *S, int goi, vector_ge *gens,
 		int *primes, int verbose_level);
+	void do_eigenstuff(int q, int size, int *Data, int verbose_level);
+	void A5_in_PSL_(int q, int verbose_level);
+	void A5_in_PSL_2_q(int q,
+			discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level);
+	void A5_in_PSL_2_q_easy(int q,
+			discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level);
+	void A5_in_PSL_2_q_hard(int q,
+			discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level);
+	int proj_order(discreta_matrix &A);
+	void trace(discreta_matrix &A, discreta_base &tr);
+	void elementwise_power_int(discreta_matrix &A, int k);
+	int is_in_center(discreta_matrix &B);
+	void matrix_convert_to_numerical(discreta_matrix &A, int *AA, int q);
+	void classify_surfaces(int argc, const char **argv,
+			finite_field *F, linear_group *LG,
+			surface_domain *&Surf, surface_with_action *&Surf_A,
+			surface_classify_wedge *&SCW,
+			int verbose_level);
 
 };
 
@@ -123,6 +141,67 @@ struct factor_group {
 void create_factor_group(action *A, sims *S, long int goi,
 	int size_subgroup, int *subgroup, factor_group *F, int verbose_level);
 
+
+// #############################################################################
+// group_theoretic_activity_description.cpp
+// #############################################################################
+
+
+//! description of a group theoretic actvity
+
+class group_theoretic_activity_description {
+public:
+
+	int f_orbits_on_points;
+	int f_export_trees;
+	int f_shallow_tree;
+	int f_stabilizer;
+	int f_orbits_on_subsets;
+	int orbits_on_subsets_size;
+	int f_draw_poset;
+	int f_draw_full_poset;
+	int f_classes;
+	int f_normalizer;
+	int f_report;
+	int f_sylow;
+	int f_test_if_geometric;
+	int test_if_geometric_depth;
+	int f_draw_tree;
+	int f_orbit_of;
+	int orbit_of_idx;
+	int f_orbits_on_set_system_from_file;
+	const char *orbits_on_set_system_from_file_fname;
+	int orbits_on_set_system_first_column;
+	int orbits_on_set_system_number_of_columns;
+	int f_orbit_of_set_from_file;
+	const char *orbit_of_set_from_file_fname;
+	int f_search_subgroup;
+	int f_print_elements;
+	int f_print_elements_tex;
+	int f_multiply;
+	const char *multiply_a;
+	const char *multiply_b;
+	int f_inverse;
+	const char *inverse_a;
+	int f_order_of_products;
+	const char *order_of_products_elements;
+	int f_group_table;
+	int f_embedded;
+	int f_sideways;
+	double x_stretch;
+
+
+	group_theoretic_activity_description();
+	~group_theoretic_activity_description();
+	void null();
+	void freeself();
+	void read_arguments_from_string(
+			const char *str, int verbose_level);
+	int read_arguments(
+		int argc, const char **argv,
+		int verbose_level);
+
+};
 
 
 // #############################################################################

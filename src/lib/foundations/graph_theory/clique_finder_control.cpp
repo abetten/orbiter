@@ -24,8 +24,8 @@ clique_finder_control::clique_finder_control()
 	f_weighted = FALSE;
 	weights_string = NULL;
 	f_Sajeeb = FALSE;
-	f_file = FALSE;
-	fname_graph = NULL;
+	//f_file = FALSE;
+	//fname_graph = NULL;
 	f_nonrecursive = FALSE;
 	f_output_solution_raw = FALSE;
 	f_output_file = FALSE;
@@ -55,12 +55,14 @@ int clique_finder_control::parse_arguments(
 
 	cout << "clique_finder_control::parse_arguments" << endl;
 	for (i = 0; i < argc; i++) {
+#if 0
 		if (strcmp(argv[i], "-file") == 0) {
 			f_file = TRUE;
 			fname_graph = argv[++i];
 			cout << "-file " << fname_graph << endl;
 		}
-		else if (strcmp(argv[i], "-rainbow") == 0) {
+#endif
+		if (strcmp(argv[i], "-rainbow") == 0) {
 			f_rainbow = TRUE;
 			cout << "-rainbow " << endl;
 		}
@@ -132,23 +134,25 @@ int clique_finder_control::parse_arguments(
 }
 
 
-void clique_finder_control::all_cliques(
+void clique_finder_control::all_cliques(colored_graph *CG,
+	char *fname_graph,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	colored_graph CG;
+
+	//colored_graph CG;
 	char fname_sol[1000];
 
 	if (f_v) {
 		cout << "clique_finder_control::all_cliques" << endl;
 		}
-	CG.load(fname_graph, verbose_level - 1);
+	//CG.load(fname_graph, verbose_level - 1);
 	if (f_output_file) {
 		sprintf(fname_sol, "%s", output_file);
-		}
+	}
 	else {
-		sprintf(fname_sol, "%s_sol.txt", CG.fname_base);
-		}
+		sprintf(fname_sol, "%s_sol.txt", fname_graph);
+	}
 
 	//CG.print();
 
@@ -164,7 +168,7 @@ void clique_finder_control::all_cliques(
 						"weighted cliques" << endl;
 			}
 
-			all_cliques_weighted(&CG, fname_sol, verbose_level);
+			all_cliques_weighted(CG, fname_sol, verbose_level);
 
 
 
@@ -175,7 +179,7 @@ void clique_finder_control::all_cliques(
 				cout << "clique_finder_control::all_cliques "
 						"before do_Sajeeb" << endl;
 			}
-			do_Sajeeb(&CG, fname_sol, verbose_level);
+			do_Sajeeb(CG, fname_sol, verbose_level);
 			if (f_v) {
 				cout << "clique_finder_control::all_cliques "
 						"after do_Sajeeb" << endl;
@@ -186,7 +190,7 @@ void clique_finder_control::all_cliques(
 				cout << "clique_finder_control::all_cliques "
 						"before CG.all_rainbow_cliques" << endl;
 				}
-			CG.all_rainbow_cliques(&fp,
+			CG->all_rainbow_cliques(&fp,
 				f_output_solution_raw,
 				f_maxdepth, maxdepth,
 				f_restrictions, restrictions,

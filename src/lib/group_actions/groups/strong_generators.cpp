@@ -1999,8 +1999,7 @@ void strong_generators::orbits_light(action *A_given,
 				}
 			}
 		if (j != Nb_per_generator[i]) {
-			cout << "strong_generators::orbits_light j != "
-					"Nb_per_generator[i]" << endl;
+			cout << "strong_generators::orbits_light j != Nb_per_generator[i]" << endl;
 			exit(1);
 			}
 		Pts_per_generator[i] = v;
@@ -2058,7 +2057,7 @@ void strong_generators::write_to_file_binary(
 		cout << "strong_generators::write_to_file_binary "
 				"before gens->write_to_file_binary" << endl;
 		}
-	gens->write_to_file_binary(fp, verbose_level - 1);
+	gens->write_to_file_binary(fp, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "strong_generators::write_to_file_binary "
 				"after gens->write_to_file_binary" << endl;
@@ -2078,11 +2077,19 @@ void strong_generators::read_from_file_binary(
 		cout << "strong_generators::read_from_file_binary" << endl;
 		}
 	init(A, 0);
+	if (f_v) {
+		cout << "strong_generators::read_from_file_binary action A=" << A->label << endl;
+		}
 	fp.read((char *) &l, sizeof(int));
 	if (l != A->base_len()) {
 		cout << "strong_generators::read_from_file_binary "
-				"l != A->base_len" << endl;
+				"l != A->base_len()" << endl;
+		cout << "l=" << l << endl;
+		cout << "A->base_len()=" << A->base_len() << endl;
 		exit(1);
+		}
+	if (f_v) {
+		cout << "strong_generators::read_from_file_binary A->base_len()=" << A->base_len() << endl;
 		}
 	tl = NEW_int(A->base_len());
 	for (i = 0; i < A->base_len(); i++) {
@@ -2090,7 +2097,10 @@ void strong_generators::read_from_file_binary(
 		}
 	gens = NEW_OBJECT(vector_ge);
 	gens->init(A, verbose_level - 2);
-	gens->read_from_file_binary(fp, verbose_level - 1);
+	if (f_v) {
+		cout << "strong_generators::read_from_file_binary before gens->read_from_file_binary" << endl;
+		}
+	gens->read_from_file_binary(fp, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "strong_generators::read_from_file_binary done" << endl;
 		}

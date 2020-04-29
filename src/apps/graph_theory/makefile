@@ -16,17 +16,11 @@ TARGETS=\
 		all_rainbow_cliques.out \
 		cayley_sym_n.out \
 		cayley.out \
-		colored_graph.out \
-		create_graph.out \
-		create_layered_graph_file.out \
 		draw_colored_graph.out \
 		draw_graph.out \
 		graph_classify_main.out \
-		graph.out \
 		layered_graph_main.out \
 		nauty.out \
-		rainbow_cliques.out \
-		srg.out \
 		treedraw.out 
 
 all: $(TARGETS)
@@ -64,15 +58,6 @@ cayley_sym_n.out:  cayley_sym_n.o;
 cayley.out:  cayley.o;
 	$(DISCRETA_CPP)  cayley.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-colored_graph.out:  colored_graph.o 
-	$(DISCRETA_CPP)  colored_graph.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-create_graph.out:  create_graph.o 
-	$(DISCRETA_CPP)  create_graph.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-create_layered_graph_file.out:  create_layered_graph_file.o ;
-	$(DISCRETA_CPP)  create_layered_graph_file.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 draw_colored_graph.out:  draw_colored_graph.o 
 	$(DISCRETA_CPP)  draw_colored_graph.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
@@ -82,20 +67,11 @@ draw_graph.out:  draw_graph.o
 graph_classify_main.out:  graph_classify_main.o 
 	$(DISCRETA_CPP)  graph_classify_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-graph.out:  graph.o 
-	$(DISCRETA_CPP)  graph.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 layered_graph_main.out:  layered_graph_main.o 
 	$(DISCRETA_CPP)  layered_graph_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 nauty.out:  nauty.o 
 	$(DISCRETA_CPP)  nauty.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-rainbow_cliques.out:  rainbow_cliques.o 
-	$(DISCRETA_CPP)  rainbow_cliques.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-srg.out:  srg.o;
-	$(DISCRETA_CPP)  srg.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 treedraw.out:  treedraw.o 
 	$(DISCRETA_CPP)  treedraw.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

@@ -118,13 +118,11 @@ int main(int argc, const char **argv)
 
 
 	if (f_v) {
-		cout << "before Surf_A->Classify_trihedral_"
-				"pairs->classify" << endl;
+		cout << "before Surf_A->Classify_trihedral_pairs->classify" << endl;
 	}
 	Surf_A->Classify_trihedral_pairs->classify(0 /*verbose_level*/);
 	if (f_v) {
-		cout << "after Surf_A->Classify_trihedral_"
-				"pairs->classify" << endl;
+		cout << "after Surf_A->Classify_trihedral_pairs->classify" << endl;
 	}
 
 

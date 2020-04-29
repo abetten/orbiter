@@ -2692,15 +2692,6 @@ void action::make_element_which_moves_a_line_in_PG3q(
 }
 
 
-int action::is_matrix_group()
-{
-	if (type_G == matrix_group_t) {
-			return TRUE;
-	}
-	else {
-		return FALSE;
-	}
-}
 
 int action::matrix_group_dimension()
 {
@@ -2791,6 +2782,19 @@ int action::is_general_linear()
 		else {
 			return FALSE;
 		}
+	}
+}
+
+int action::is_matrix_group()
+{
+	if (type_G == matrix_group_t) {
+			return TRUE;
+	}
+	else {
+		if (f_has_subaction) {
+			return subaction->is_matrix_group();
+		}
+		return FALSE;
 	}
 }
 

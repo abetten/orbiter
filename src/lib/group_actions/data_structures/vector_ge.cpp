@@ -678,7 +678,10 @@ void vector_ge::write_to_file_binary(ofstream &fp, int verbose_level)
 		}
 	fp.write((char *) &len, sizeof(int));
 	for (i = 0; i < len; i++) {
-		A->element_write_to_file_binary(ith(i), fp, 0);
+		if (f_v) {
+			cout << "vector_ge::write_to_file_binary writing element " << i << " / " << len << endl;
+			}
+		A->element_write_to_file_binary(ith(i), fp, verbose_level);
 		}
 }
 
@@ -693,7 +696,10 @@ void vector_ge::read_from_file_binary(ifstream &fp, int verbose_level)
 	fp.read((char *) &l, sizeof(int));
 	allocate(l, verbose_level);
 	for (i = 0; i < len; i++) {
-		A->element_read_from_file_binary(ith(i), fp, 0);
+		if (f_v) {
+			cout << "vector_ge::read_from_file_binary reading element " << i << " / " << len << endl;
+			}
+		A->element_read_from_file_binary(ith(i), fp, verbose_level);
 		}
 }
 

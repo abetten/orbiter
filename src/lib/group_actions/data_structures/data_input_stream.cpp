@@ -167,7 +167,7 @@ int data_input_stream::read_arguments(
 			}
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "data_input_stream::read_arguments -end" << endl;
-			return i;
+			break;
 			}
 		else {
 			cout << "data_input_stream::read_arguments unrecognized option " << argv[i] << endl;
