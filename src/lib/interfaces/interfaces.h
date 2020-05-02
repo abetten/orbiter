@@ -69,6 +69,9 @@ class interface_algebra {
 		surface_create_description *surface_descr_isomorph2;
 	int f_surface_recognize;
 		surface_create_description *surface_descr;
+	int f_young_symmetrizer;
+	int young_symmetrizer_n;
+	int f_young_symmetrizer_sym_4;
 
 public:
 	interface_algebra();
@@ -171,6 +174,19 @@ class interface_combinatorics {
 	int f_conjugacy_classes_Sym_n;
 	int n;
 	int f_Kramer_Mesner;
+	int f_tree_of_all_k_subsets;
+	int tree_n, tree_k;
+	int f_Delandtsheer_Doyen;
+	int DD_d1;
+	int DD_q1;
+	int DD_d2;
+	int DD_q2;
+	int DD_depth;
+	int f_Delandtsheer_Doyen_with_subgroup;
+	const char *subgroup_gens_text;
+	const char *subgroup_order_text;
+	const char *group_label;
+	int f_graph_classify;
 
 public:
 	interface_combinatorics();
@@ -190,6 +206,14 @@ public:
 	void do_random_permutation(int deg, const char *fname_csv, int verbose_level);
 	void do_conjugacy_classes_Sym_n(int n, int verbose_level);
 	void do_Kramer_Mesner(int verbose_level);
+	void do_make_tree_of_all_k_subsets(int n, int k, int verbose_level);
+	void do_Delandtsheer_Doyen(int n1, int q1, int n2, int q2, int depth, int verbose_level);
+	void do_Delandtsheer_Doyen_with_subgroup(
+			int d1, int q1, int d2, int q2, int depth,
+			const char *subgroup_gens_text,
+			const char *subgroup_order_text, const char *group_label,
+			int verbose_level);
+	void do_graph_classify(int verbose_level);
 };
 
 

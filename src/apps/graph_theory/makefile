@@ -18,7 +18,6 @@ TARGETS=\
 		cayley.out \
 		draw_colored_graph.out \
 		draw_graph.out \
-		graph_classify_main.out \
 		layered_graph_main.out \
 		nauty.out \
 		treedraw.out 
@@ -63,9 +62,6 @@ draw_colored_graph.out:  draw_colored_graph.o
 
 draw_graph.out:  draw_graph.o 
 	$(DISCRETA_CPP)  draw_graph.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-graph_classify_main.out:  graph_classify_main.o 
-	$(DISCRETA_CPP)  graph_classify_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 layered_graph_main.out:  layered_graph_main.o 
 	$(DISCRETA_CPP)  layered_graph_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

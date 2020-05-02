@@ -109,6 +109,15 @@ int graph_theoretic_activity_description::read_arguments(
 			cout << "-end" << endl;
 			return i;
 			}
+		else if (strcmp(argv[i], "-sort_by_colors") == 0) {
+			f_sort_by_colors = TRUE;
+			cout << "-sort_by_colors " << endl;
+		}
+		else if (strcmp(argv[i], "-split") == 0) {
+			f_split = TRUE;
+			split_file = argv[++i];
+			cout << "-split " << endl;
+		}
 		else {
 			cout << "graph_theoretic_activity_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;

@@ -225,21 +225,17 @@ void lift_single_arc(long int *arc, int arc_size,
 
 
 
-	cout << "classify_arcs_and_do_arc_lifting before Surf_A->list_"
-			"orbits_on_trihedra_type1" << endl;
+	cout << "classify_arcs_and_do_arc_lifting before Surf_A->list_orbits_on_trihedra_type1" << endl;
 	Surf_A->Classify_trihedral_pairs->list_orbits_on_trihedra_type1(fp);
 
-	cout << "classify_arcs_and_do_arc_lifting before Surf_A->list_"
-			"orbits_on_trihedra_type2" << endl;
+	cout << "classify_arcs_and_do_arc_lifting before Surf_A->list_orbits_on_trihedra_type2" << endl;
 	Surf_A->Classify_trihedral_pairs->list_orbits_on_trihedra_type2(fp);
 
-	cout << "classify_arcs_and_do_arc_lifting before Surf_A->print_"
-			"trihedral_pairs no stabs" << endl;
+	cout << "classify_arcs_and_do_arc_lifting before Surf_A->print_trihedral_pairs no stabs" << endl;
 	Surf_A->Classify_trihedral_pairs->print_trihedral_pairs(fp,
 			FALSE /* f_with_stabilizers */);
 
-	cout << "classify_arcs_and_do_arc_lifting before Surf_A->print_"
-			"trihedral_pairs with stabs" << endl;
+	cout << "classify_arcs_and_do_arc_lifting before Surf_A->print_trihedral_pairs with stabs" << endl;
 	Surf_A->Classify_trihedral_pairs->print_trihedral_pairs(fp,
 			TRUE /* f_with_stabilizers */);
 

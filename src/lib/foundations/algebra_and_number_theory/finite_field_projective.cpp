@@ -5547,6 +5547,66 @@ void finite_field::elliptic_curve_point_multiple(int b, int c, int n,
 	}
 }
 
+void finite_field::elliptic_curve_point_multiple_with_log(int b, int c, int n,
+	int x1, int y1, int z1,
+	int &x3, int &y3, int &z3,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int bx, by, bz;
+	int cx, cy, cz;
+	int tx, ty, tz;
+
+	if (f_v) {
+		cout << "finite_field::elliptic_curve_point_multiple_with_log" << endl;
+	}
+	bx = x1;
+	by = y1;
+	bz = z1;
+	cx = 0;
+	cy = 1;
+	cz = 0;
+	cout << "ECMultiple$\\Big((" << bx << "," << by << "," << bz << "),";
+	cout << "(" << cx << "," << cy << "," << cz << "),"
+			<< n << "," << b << "," << c << "," << p << "\\Big)$\\\\" << endl;
+
+	while (n) {
+		if (n % 2) {
+			//cout << "finite_field::power: mult(" << b << "," << c << ")=";
+
+			elliptic_curve_addition(b, c,
+				bx, by, bz,
+				cx, cy, cz,
+				tx, ty, tz, verbose_level - 1);
+			cx = tx;
+			cy = ty;
+			cz = tz;
+			//c = mult(b, c);
+			//cout << c << endl;
+		}
+		elliptic_curve_addition(b, c,
+			bx, by, bz,
+			bx, by, bz,
+			tx, ty, tz, verbose_level - 1);
+		bx = tx;
+		by = ty;
+		bz = tz;
+		//b = mult(b, b);
+		n >>= 1;
+		cout << "=ECMultiple$\\Big((" << bx << "," << by << "," << bz << "),";
+		cout << "(" << cx << "," << cy << "," << cz << "),"
+				<< n << "," << b << "," << c << "," << p << "\\Big)$\\\\" << endl;
+		//cout << "finite_field::power: " << b << "^" << n << " * " << c << endl;
+	}
+	x3 = cx;
+	y3 = cy;
+	z3 = cz;
+	cout << "$=(" << x3 << "," << y3 << "," << z3 << ")$\\\\" << endl;
+	if (f_v) {
+		cout << "finite_field::elliptic_curve_point_multiple_with_log done" << endl;
+	}
+}
+
 int finite_field::elliptic_curve_evaluate_RHS(int x, int b, int c)
 {
 	int x2, x3, e;

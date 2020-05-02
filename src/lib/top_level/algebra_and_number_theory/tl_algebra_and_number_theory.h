@@ -60,6 +60,8 @@ public:
 			surface_domain *&Surf, surface_with_action *&Surf_A,
 			surface_classify_wedge *&SCW,
 			int verbose_level);
+	void young_symmetrizer(int n, int verbose_level);
+	void young_symmetrizer_sym_4(int verbose_level);
 
 };
 

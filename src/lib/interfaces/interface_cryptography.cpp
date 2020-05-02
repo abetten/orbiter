@@ -1904,6 +1904,8 @@ void interface_cryptography::do_EC_Koblitz_encoding(int q,
 
 	F->nb_calls_to_elliptic_curve_addition() = 0;
 
+	vector<vector<int>> Ciphertext;
+
 	for (i = 0; i < len; i++) {
 		if (EC_message[i] < 'A' || EC_message[i] > 'Z') {
 			continue;
@@ -1916,18 +1918,23 @@ void interface_cryptography::do_EC_Koblitz_encoding(int q,
 		Mz = 1;
 
 		// R := k * G
-		F->elliptic_curve_point_multiple(
+		cout << "$R=" << k << "*G$\\\\" << endl;
+
+		F->elliptic_curve_point_multiple_with_log(
 					EC_b, EC_c, k,
 					Gx, Gy, Gz,
 					Rx, Ry, Rz,
 					0 /*verbose_level*/);
+		cout << "$R=" << k << "*G=(" << Rx << "," << Ry << "," << Rz << ")$\\\\" << endl;
 
 		// C := k * A
-		F->elliptic_curve_point_multiple(
+		cout << "$C=" << k << "*A$\\\\" << endl;
+		F->elliptic_curve_point_multiple_with_log(
 					EC_b, EC_c, k,
 					Ax, Ay, Az,
 					Cx, Cy, Cz,
 					0 /*verbose_level*/);
+		cout << "$C=" << k << "*A=(" << Cx << "," << Cy << "," << Cz << ")$\\\\" << endl;
 
 		// T := C + M
 		F->elliptic_curve_addition(EC_b, EC_c,
@@ -1935,6 +1942,40 @@ void interface_cryptography::do_EC_Koblitz_encoding(int q,
 				Mx, My, Mz,
 				Tx, Ty, Tz,
 				0 /*verbose_level*/);
+		cout << "$T=C+M=(" << Tx << "," << Ty << "," << Tz << ")$\\\\" << endl;
+		{
+		vector<int> cipher;
+
+		cipher.push_back(Rx);
+		cipher.push_back(Ry);
+		cipher.push_back(Tx);
+		cipher.push_back(Ty);
+		Ciphertext.push_back(cipher);
+		}
+
+		cout << setw(4) << i << " & " << EC_message[i] << " & " << setw(4) << m << " & " << setw(4) << k
+				<< "& (" << setw(4) << Mx << "," << setw(4) << My << "," << setw(4) << Mz << ") "
+				<< "& (" << setw(4) << Rx << "," << setw(4) << Ry << "," << setw(4) << Rz << ") "
+				<< "& (" << setw(4) << Cx << "," << setw(4) << Cy << "," << setw(4) << Cz << ") "
+				<< "& (" << setw(4) << Tx << "," << setw(4) << Ty << "," << setw(4) << Tz << ") "
+				<< "\\\\"
+				<< endl;
+
+	}
+
+	cout << "Ciphertext:\\\\" << endl;
+	for (i = 0; i < Ciphertext.size(); i++) {
+		cout << Ciphertext[i][0] << ",";
+		cout << Ciphertext[i][1] << ",";
+		cout << Ciphertext[i][2] << ",";
+		cout << Ciphertext[i][3] << "\\\\" << endl;
+	}
+
+	for (i = 0; i < Ciphertext.size(); i++) {
+		Rx = Ciphertext[i][0];
+		Ry = Ciphertext[i][1];
+		Tx = Ciphertext[i][2];
+		Ty = Ciphertext[i][3];
 
 		// msR := -s * R
 		F->elliptic_curve_point_multiple(
@@ -1952,14 +1993,10 @@ void interface_cryptography::do_EC_Koblitz_encoding(int q,
 
 		plain = Dx / u;
 
-		cout << setw(4) << i << " & " << EC_message[i] << " & " << setw(4) << m << " & " << setw(4) << k
-				<< "& (" << setw(4) << Mx << "," << setw(4) << My << "," << setw(4) << Mz << ") "
-				<< "& (" << setw(4) << Rx << "," << setw(4) << Ry << "," << setw(4) << Rz << ") "
-				<< "& (" << setw(4) << Cx << "," << setw(4) << Cy << "," << setw(4) << Cz << ") "
-				<< "& (" << setw(4) << Tx << "," << setw(4) << Ty << "," << setw(4) << Tz << ") "
+		cout << setw(4) << i << " & (" << Rx << "," << Ry << "," << Tx << "," << Ty << ") "
 				<< "& (" << setw(4) << msRx << "," << setw(4) << msRy << "," << setw(4) << msRz << ") "
 				<< "& (" << setw(4) << Dx << "," << setw(4) << Dy << "," << setw(4) << Dz << ") "
-				<< " & " << plain << " & " << (char)('A' + plain)
+				<< " & " << plain << " & " << (char)('A' - 1 + plain)
 				<< "\\\\"
 				<< endl;
 

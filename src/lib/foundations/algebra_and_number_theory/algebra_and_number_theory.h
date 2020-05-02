@@ -1045,6 +1045,10 @@ public:
 		int x1, int y1, int z1,
 		int &x3, int &y3, int &z3,
 		int verbose_level);
+	void elliptic_curve_point_multiple_with_log(int b, int c, int n,
+		int x1, int y1, int z1,
+		int &x3, int &y3, int &z3,
+		int verbose_level);
 	int elliptic_curve_evaluate_RHS(int x, int b, int c);
 	void elliptic_curve_points(
 			int b, int c, int &nb, int *&T, int verbose_level);

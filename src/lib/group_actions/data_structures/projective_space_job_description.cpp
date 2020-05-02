@@ -217,6 +217,11 @@ int projective_space_job_description::read_arguments(
 			i += Data->read_arguments(argc - i,
 				argv + i + 1, verbose_level) + 1;
 			cout << "projective_space_job_description::read_arguments finished reading -input" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
 			}
 		else if (strcmp(argv[i], "-fname_base_out") == 0) {
 			f_fname_base_out = TRUE;
@@ -403,6 +408,7 @@ int projective_space_job_description::read_arguments(
 					"unrecognized option " << argv[i] << endl;
 			exit(1);
 		}
+		cout << "projective_space_job_description::read_arguments looping, i=" << i << endl;
 	} // next i
 	cout << "projective_space_job_description::read_arguments done" << endl;
 	return i;
