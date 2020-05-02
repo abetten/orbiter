@@ -55,6 +55,9 @@ interface_algebra::interface_algebra()
 		surface_descr_isomorph2 = NULL;
 	f_surface_recognize = FALSE;
 		surface_descr = NULL;
+	f_young_symmetrizer = FALSE;
+	young_symmetrizer_n = 0;
+	f_young_symmetrizer_sym_4 = FALSE;
 }
 
 
@@ -103,6 +106,12 @@ void interface_algebra::print_help(int argc,
 	else if (strcmp(argv[i], "-surface_recognize") == 0) {
 		cout << "-surface_recognize " << endl;
 	}
+	else if (strcmp(argv[i], "-young_symmetrizer") == 0) {
+		cout << "-young_symmetrizer <int : n>" << endl;
+	}
+	else if (strcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
+		cout << "-young_symmetrizer_sym_4 " << endl;
+	}
 }
 
 int interface_algebra::recognize_keyword(int argc,
@@ -150,6 +159,12 @@ int interface_algebra::recognize_keyword(int argc,
 	else if (strcmp(argv[i], "-surface_recognize") == 0) {
 		return true;
 	}
+	else if (strcmp(argv[i], "-young_symmetrizer") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
+		return true;
+	}
 	return false;
 }
 
@@ -172,14 +187,24 @@ void interface_algebra::read_arguments(int argc,
 				argv + i + 1, verbose_level);
 
 			cout << "-linear_group" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
 		}
-		else if (strcmp(argv[i], "-group_theoretic_activity") == 0) {
+		else if (strcmp(argv[i], "-group_theoretic_activities") == 0) {
 			f_group_theoretic_activity = TRUE;
 			Group_theoretic_activity_description = NEW_OBJECT(group_theoretic_activity_description);
 			i += Group_theoretic_activity_description->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
 			cout << "-group_theoretic_activity" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
 		}
 		else if (strcmp(argv[i], "-cheat_sheet_GF") == 0) {
 			f_cheat_sheet_GF = TRUE;
@@ -263,6 +288,15 @@ void interface_algebra::read_arguments(int argc,
 			i += 2;
 			cout << "-surface_recognize " << endl;
 		}
+		else if (strcmp(argv[i], "-young_symmetrizer") == 0) {
+			f_young_symmetrizer = TRUE;
+			young_symmetrizer_n = atoi(argv[++i]);
+			cout << "-young_symmetrizer " << young_symmetrizer_n << endl;
+		}
+		else if (strcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
+			f_young_symmetrizer_sym_4 = TRUE;
+			cout << "-young_symmetrizer_sym_4 " << endl;
+		}
 	}
 }
 
@@ -327,7 +361,18 @@ void interface_algebra::worker(int verbose_level)
 			cout << "need a linear group to do recognition for surfaces" << endl;
 			exit(1);
 		}
+
 		do_surface_recognize(surface_descr, verbose_level);
+	}
+	else if (f_young_symmetrizer) {
+		algebra_global_with_action Algebra;
+
+		Algebra.young_symmetrizer(young_symmetrizer_n, verbose_level);
+	}
+	else if (f_young_symmetrizer_sym_4) {
+		algebra_global_with_action Algebra;
+
+		Algebra.young_symmetrizer_sym_4(verbose_level);
 	}
 }
 

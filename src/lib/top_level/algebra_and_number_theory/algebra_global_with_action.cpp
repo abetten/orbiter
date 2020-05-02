@@ -2022,12 +2022,12 @@ void algebra_global_with_action::classify_surfaces(int argc, const char **argv,
 
 
 	if (f_v) {
-		cout << "surface_classify before Surf->init" << endl;
+		cout << "algebra_global_with_action::classify_surfaces before Surf->init" << endl;
 	}
 	Surf = NEW_OBJECT(surface_domain);
 	Surf->init(F, verbose_level - 3);
 	if (f_v) {
-		cout << "surface_classify after Surf->init" << endl;
+		cout << "algebra_global_with_action::classify_surfaces after Surf->init" << endl;
 	}
 
 
@@ -2039,11 +2039,11 @@ void algebra_global_with_action::classify_surfaces(int argc, const char **argv,
 	f_semilinear = LG->A2->is_semilinear_matrix_group();
 
 	if (f_v) {
-		cout << "surface_classify before Surf_A->init" << endl;
+		cout << "algebra_global_with_action::classify_surfaces before Surf_A->init" << endl;
 	}
 	Surf_A->init(Surf, f_semilinear, verbose_level - 3);
 	if (f_v) {
-		cout << "surface_classify after Surf_A->init" << endl;
+		cout << "algebra_global_with_action::classify_surfaces after Surf_A->init" << endl;
 	}
 
 
@@ -2051,7 +2051,7 @@ void algebra_global_with_action::classify_surfaces(int argc, const char **argv,
 	SCW = NEW_OBJECT(surface_classify_wedge);
 
 	if (f_v) {
-		cout << "surface_classify before SCW->init" << endl;
+		cout << "algebra_global_with_action::classify_surfaces before SCW->init" << endl;
 	}
 
 	SCW->init(F, LG,
@@ -2060,24 +2060,24 @@ void algebra_global_with_action::classify_surfaces(int argc, const char **argv,
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "surface_classify after SCW->init" << endl;
+		cout << "algebra_global_with_action::classify_surfaces after SCW->init" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "surface_classify before SCW->do_classify_double_sixes" << endl;
+		cout << "algebra_global_with_action::classify_surfaces before SCW->do_classify_double_sixes" << endl;
 	}
 	SCW->do_classify_double_sixes(verbose_level);
 	if (f_v) {
-		cout << "surface_classify after SCW->do_classify_double_sixes" << endl;
+		cout << "algebra_global_with_action::classify_surfaces after SCW->do_classify_double_sixes" << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_classify before SCW->do_classify_surfaces" << endl;
+		cout << "algebra_global_with_action::classify_surfaces before SCW->do_classify_surfaces" << endl;
 	}
 	SCW->do_classify_surfaces(verbose_level);
 	if (f_v) {
-		cout << "surface_classify after SCW->do_classify_surfaces" << endl;
+		cout << "algebra_global_with_action::classify_surfaces after SCW->do_classify_surfaces" << endl;
 	}
 
 	if (f_v) {
@@ -2086,6 +2086,327 @@ void algebra_global_with_action::classify_surfaces(int argc, const char **argv,
 
 }
 
+
+void algebra_global_with_action::young_symmetrizer(int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::young_symmetrizer" << endl;
+	}
+
+	young *Y;
+
+	Y = NEW_OBJECT(young);
+
+	Y->init(n, verbose_level);
+
+
+
+	int *elt1, *elt2, *h_alpha, *elt4, *elt5, *elt6, *elt7;
+
+	Y->group_ring_element_create(Y->A, Y->S, elt1);
+	Y->group_ring_element_create(Y->A, Y->S, elt2);
+	Y->group_ring_element_create(Y->A, Y->S, h_alpha);
+	Y->group_ring_element_create(Y->A, Y->S, elt4);
+	Y->group_ring_element_create(Y->A, Y->S, elt5);
+	Y->group_ring_element_create(Y->A, Y->S, elt6);
+	Y->group_ring_element_create(Y->A, Y->S, elt7);
+
+
+
+	int *part;
+	int *parts;
+
+	int *Base;
+	int *Base_inv;
+	int *Fst;
+	int *Len;
+	int cnt, s, i, j;
+	combinatorics_domain Combi;
+
+
+	part = NEW_int(n);
+	parts = NEW_int(n);
+	Fst = NEW_int(Y->goi);
+	Len = NEW_int(Y->goi);
+	Base = NEW_int(Y->goi * Y->goi * Y->D->size_of_instance_in_int);
+	Base_inv = NEW_int(Y->goi * Y->goi * Y->D->size_of_instance_in_int);
+	s = 0;
+	Fst[0] = 0;
+
+		// create the first partition in exponential notation:
+	Combi.partition_first(part, n);
+	cnt = 0;
+
+
+	while (TRUE) {
+		int nb_parts;
+
+		// turn the partition from exponential notation into the list of parts:
+		// the large parts come first.
+		nb_parts = 0;
+		for (i = n - 1; i >= 0; i--) {
+			for (j = 0; j < part[i]; j++) {
+				parts[nb_parts++] = i + 1;
+				}
+			}
+
+		cout << "partition ";
+		int_vec_print(cout, parts, nb_parts);
+		cout << endl;
+
+
+			// Create the young symmetrizer based on the partition.
+			// We do the very first tableau for this partition.
+
+		int *tableau;
+
+		tableau = NEW_int(n);
+		for (i = 0; i < n; i++) {
+			tableau[i] = i;
+			}
+		Y->young_symmetrizer(parts, nb_parts, tableau, elt1, elt2, h_alpha, verbose_level);
+		FREE_int(tableau);
+
+
+		cout << "h_alpha =" << endl;
+		Y->group_ring_element_print(Y->A, Y->S, h_alpha);
+		cout << endl;
+
+
+		Y->group_ring_element_copy(Y->A, Y->S, h_alpha, elt4);
+		Y->group_ring_element_mult(Y->A, Y->S, elt4, elt4, elt5);
+
+		cout << "h_alpha * h_alpha=" << endl;
+		Y->group_ring_element_print(Y->A, Y->S, elt5);
+		cout << endl;
+
+		int *Module_Base;
+		int *base_cols;
+		int rk;
+
+
+		Y->create_module(h_alpha,
+			Module_Base, base_cols, rk,
+			verbose_level);
+
+		cout << "Module_Basis=" << endl;
+		Y->D->print_matrix(Module_Base, rk, Y->goi);
+
+
+		for (i = 0; i < rk; i++) {
+			for (j = 0; j < Y->goi; j++) {
+				Y->D->copy(Y->D->offset(Module_Base, i * Y->goi + j), Y->D->offset(Base, s * Y->goi + j), 0);
+				}
+			s++;
+			}
+		Len[cnt] = s - Fst[cnt];
+		Fst[cnt + 1] = s;
+
+		Y->create_representations(Module_Base, base_cols, rk, verbose_level);
+
+
+		FREE_int(Module_Base);
+		FREE_int(base_cols);
+
+
+			// create the next partition in exponential notation:
+		if (!Combi.partition_next(part, n)) {
+			break;
+			}
+		cnt++;
+		}
+
+	cout << "Basis of submodule=" << endl;
+	Y->D->print_matrix(Base, s, Y->goi);
+
+
+	FREE_int(part);
+	FREE_int(parts);
+	FREE_int(Fst);
+	FREE_int(Len);
+	cout << "before freeing Base" << endl;
+	FREE_int(Base);
+	FREE_int(Base_inv);
+	cout << "before freeing Y" << endl;
+	FREE_OBJECT(Y);
+	cout << "before freeing elt1" << endl;
+	FREE_int(elt1);
+	FREE_int(elt2);
+	FREE_int(h_alpha);
+	FREE_int(elt4);
+	FREE_int(elt5);
+	FREE_int(elt6);
+	FREE_int(elt7);
+	if (f_v) {
+		cout << "algebra_global_with_action::young_symmetrizer done" << endl;
+	}
+}
+
+void algebra_global_with_action::young_symmetrizer_sym_4(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::young_symmetrizer_sym_4" << endl;
+	}
+	young *Y;
+	int n = 4;
+
+	Y = NEW_OBJECT(young);
+
+	Y->init(n, verbose_level);
+
+
+
+	int *elt1, *elt2, *h_alpha, *elt4, *elt5, *elt6, *elt7;
+
+	Y->group_ring_element_create(Y->A, Y->S, elt1);
+	Y->group_ring_element_create(Y->A, Y->S, elt2);
+	Y->group_ring_element_create(Y->A, Y->S, h_alpha);
+	Y->group_ring_element_create(Y->A, Y->S, elt4);
+	Y->group_ring_element_create(Y->A, Y->S, elt5);
+	Y->group_ring_element_create(Y->A, Y->S, elt6);
+	Y->group_ring_element_create(Y->A, Y->S, elt7);
+
+
+
+	int *part;
+	int *parts;
+
+	int *Base;
+	int *Base_inv;
+	int *Fst;
+	int *Len;
+	int cnt, s, i, j;
+
+	part = NEW_int(n);
+	parts = NEW_int(n);
+	Fst = NEW_int(Y->goi);
+	Len = NEW_int(Y->goi);
+	Base = NEW_int(Y->goi * Y->goi * Y->D->size_of_instance_in_int);
+	Base_inv = NEW_int(Y->goi * Y->goi * Y->D->size_of_instance_in_int);
+	s = 0;
+	Fst[0] = 0;
+
+		// create the first partition in exponential notation:
+	//partition_first(part, n);
+	cnt = 0;
+
+	int Part[10][5] = {
+		{4, -1, 0, 0, 0},
+		{3, 1, -1, 0, 0},
+		{3, 1, -1, 0, 0},
+		{3, 1, -1, 0, 0},
+		{2, 2, -1, 0, 0},
+		{2, 2, -1, 0, 0},
+		{2, 1, 1, -1, 0},
+		{2, 1, 1, -1, 0},
+		{2, 1, 1, -1, 0},
+		{1, 1, 1, 1, -1},
+			};
+	int Tableau[10][4] = {
+		{0,1,2,3},
+		{0,1,2,3}, {0,1,3,2}, {0,2,3,1},
+		{0,1,2,3}, {0,2,1,3},
+		{0,1,2,3}, {0,2,1,3}, {0,3,1,2},
+		{0,1,2,3}
+		};
+
+	for(cnt = 0; cnt < 10; cnt++) {
+		int nb_parts;
+
+		// turn the partition from exponential notation into the list of parts:
+		// the large parts come first.
+		nb_parts = 0;
+		for (i = 0; i < 4; i++) {
+			parts[nb_parts] = Part[cnt][i];
+			if (parts[nb_parts] == -1) {
+				break;
+				}
+			nb_parts++;
+			}
+
+		cout << "partition ";
+		int_vec_print(cout, parts, nb_parts);
+		cout << endl;
+
+
+			// Create the young symmetrizer based on the partition.
+			// We do the very first tableau for this partition.
+
+		Y->young_symmetrizer(parts, nb_parts, Tableau[cnt], elt1, elt2, h_alpha, verbose_level);
+
+
+		cout << "h_alpha =" << endl;
+		Y->group_ring_element_print(Y->A, Y->S, h_alpha);
+		cout << endl;
+
+
+		Y->group_ring_element_copy(Y->A, Y->S, h_alpha, elt4);
+		Y->group_ring_element_mult(Y->A, Y->S, elt4, elt4, elt5);
+
+		cout << "h_alpha * h_alpha=" << endl;
+		Y->group_ring_element_print(Y->A, Y->S, elt5);
+		cout << endl;
+
+		int *Module_Base;
+		int *base_cols;
+		int rk;
+
+
+		Y->create_module(h_alpha,
+			Module_Base, base_cols, rk,
+			verbose_level);
+
+		cout << "Module_Basis=" << endl;
+		Y->D->print_matrix(Module_Base, rk, Y->goi);
+
+
+		for (i = 0; i < rk; i++) {
+			for (j = 0; j < Y->goi; j++) {
+				Y->D->copy(Y->D->offset(Module_Base, i * Y->goi + j), Y->D->offset(Base, s * Y->goi + j), 0);
+				}
+			s++;
+			}
+		Len[cnt] = s - Fst[cnt];
+		Fst[cnt + 1] = s;
+
+		Y->create_representations(Module_Base, base_cols, rk, verbose_level);
+
+
+		FREE_int(Module_Base);
+		FREE_int(base_cols);
+
+
+		}
+
+	cout << "Basis of submodule=" << endl;
+	//Y->D->print_matrix(Base, s, Y->goi);
+	Y->D->print_matrix_for_maple(Base, s, Y->goi);
+
+	FREE_int(part);
+	FREE_int(parts);
+	FREE_int(Fst);
+	FREE_int(Len);
+	cout << "before freeing Base" << endl;
+	FREE_int(Base);
+	FREE_int(Base_inv);
+	cout << "before freeing Y" << endl;
+	FREE_OBJECT(Y);
+	cout << "before freeing elt1" << endl;
+	FREE_int(elt1);
+	FREE_int(elt2);
+	FREE_int(h_alpha);
+	FREE_int(elt4);
+	FREE_int(elt5);
+	FREE_int(elt6);
+	FREE_int(elt7);
+	if (f_v) {
+		cout << "algebra_global_with_action::young_symmetrizer_sym_4 done" << endl;
+	}
+}
 
 
 

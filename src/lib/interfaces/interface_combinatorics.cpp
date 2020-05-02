@@ -50,6 +50,20 @@ interface_combinatorics::interface_combinatorics()
 	f_conjugacy_classes_Sym_n = FALSE;
 	n = 0;
 	f_Kramer_Mesner = FALSE;
+	f_tree_of_all_k_subsets = FALSE;
+	tree_n = 0;
+	tree_k = 0;
+	f_Delandtsheer_Doyen = FALSE;
+	DD_d1 = 0;
+	DD_q1 = 0;
+	DD_d2 = 0;
+	DD_q2 = 0;
+	DD_depth = 0;
+	f_Delandtsheer_Doyen_with_subgroup = FALSE;
+	subgroup_gens_text = NULL;
+	subgroup_order_text = NULL;
+	group_label = NULL;
+	f_graph_classify = FALSE;
 }
 
 
@@ -89,6 +103,20 @@ void interface_combinatorics::print_help(int argc,
 	else if (strcmp(argv[i], "-Kramer_Mesner") == 0) {
 		cout << "-Kramer_Mesner <description>" << endl;
 	}
+	else if (strcmp(argv[i], "-tree_of_all_k_subsets") == 0) {
+		cout << "-tree_of_all_k_subsets <int : n> <int : k>" << endl;
+	}
+	else if (strcmp(argv[i], "-Delandtsheer_Doyen") == 0) {
+			cout << "-Delandtsheer_Doyen <int : d1> <int : q1> <int : d2> <int : q2> <int : depth>" << endl;
+	}
+	else if (strcmp(argv[i], "-Delandtsheer_Doyen_with_subgroup") == 0) {
+			cout << "-Delandtsheer_Doyen_with_subgroup <int : d1> <int : q1> "
+					"<int : d2> <int : q2> <int : depth> "
+					"<string : gens> <string : order> <string : label>" << endl;
+	}
+	else if (strcmp(argv[i], "-graph_classify") == 0) {
+		cout << "-graph_classify <options>" << endl;
+	}
 }
 
 int interface_combinatorics::recognize_keyword(int argc,
@@ -127,6 +155,18 @@ int interface_combinatorics::recognize_keyword(int argc,
 	else if (strcmp(argv[i], "-Kramer_Mesner") == 0) {
 		return true;
 	}
+	else if (strcmp(argv[i], "-tree_of_all_k_subsets") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-Delandtsheer_Doyen") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-Delandtsheer_Doyen_with_subgroup") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-graph_classify") == 0) {
+		return true;
+	}
 	return false;
 }
 
@@ -145,8 +185,14 @@ void interface_combinatorics::read_arguments(int argc,
 			f_create_combinatorial_object = TRUE;
 			cout << "-create_combinatorial_object " << endl;
 			Descr = NEW_OBJECT(combinatorial_object_description);
-			i += Descr->read_arguments(argc - (i - 1),
-					argv + i, verbose_level) - 1;
+			i += Descr->read_arguments(argc - i - 1,
+					argv + i + 1, verbose_level) - 1;
+			cout << "interface_combinatorics::read_arguments finished reading -create_combinatorial_object" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
 		}
 		else if (strcmp(argv[i], "-save") == 0) {
 			f_save = TRUE;
@@ -159,9 +205,14 @@ void interface_combinatorics::read_arguments(int argc,
 			cout << "-process_combinatorial_objects " << endl;
 
 			Job = NEW_OBJECT(projective_space_job_description);
-
-			i += Job->read_arguments(argc - i,
+			i += Job->read_arguments(argc - i - 1,
 				argv + i + 1, verbose_level) + 1;
+			cout << "interface_combinatorics::read_arguments finished reading -process_combinatorial_objects" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
 		}
 		else if (strcmp(argv[i], "-bent") == 0) {
 			f_bent = TRUE;
@@ -217,6 +268,43 @@ void interface_combinatorics::read_arguments(int argc,
 			f_Kramer_Mesner = TRUE;
 			cout << "-Kramer_Mesner " << endl;
 		}
+		else if (strcmp(argv[i], "-tree_of_all_k_subsets") == 0) {
+			f_tree_of_all_k_subsets = TRUE;
+			tree_n = atoi(argv[++i]);
+			tree_k = atoi(argv[++i]);
+			cout << "-tree_of_all_k_subsets " << tree_n << " " << tree_k << endl;
+		}
+		else if (strcmp(argv[i], "-Delandtsheer_Doyen") == 0) {
+			f_Delandtsheer_Doyen = TRUE;
+			DD_d1 = atoi(argv[++i]);
+			DD_q1 = atoi(argv[++i]);
+			DD_d2 = atoi(argv[++i]);
+			DD_q2 = atoi(argv[++i]);
+			DD_depth = atoi(argv[++i]);
+			cout << "-Delandtsheer_Doyen " << DD_d1 << " " << DD_q1 << " "
+					<< DD_d2 << " " << DD_q2 << " " << DD_depth << endl;
+		}
+		else if (strcmp(argv[i], "-Delandtsheer_Doyen_with_subgroup") == 0) {
+			f_Delandtsheer_Doyen_with_subgroup = TRUE;
+			DD_d1 = atoi(argv[++i]);
+			DD_q1 = atoi(argv[++i]);
+			DD_d2 = atoi(argv[++i]);
+			DD_q2 = atoi(argv[++i]);
+			DD_depth = atoi(argv[++i]);
+			subgroup_gens_text = argv[++i];
+			subgroup_order_text = argv[++i];
+			group_label = argv[++i];
+			cout << "-Delandtsheer_Doyen_with_subgroup "
+					<< DD_d1 << " " << DD_q1 << " " << DD_d2 << " " << DD_q2 << " " << " " << DD_depth
+					<< subgroup_gens_text << " "
+					<< subgroup_order_text << " "
+					<< group_label << " "
+					<< endl;
+		}
+		else if (strcmp(argv[i], "-graph_classify") == 0) {
+			f_graph_classify = TRUE;
+			cout << "-graph_classify " << endl;
+		}
 	}
 	cout << "interface_combinatorics::read_arguments done" << endl;
 }
@@ -266,6 +354,25 @@ void interface_combinatorics::worker(int verbose_level)
 	else if (f_Kramer_Mesner) {
 
 		do_Kramer_Mesner(verbose_level);
+	}
+	else if (f_tree_of_all_k_subsets) {
+
+		do_make_tree_of_all_k_subsets(tree_n, tree_k, verbose_level);
+	}
+	else if (f_Delandtsheer_Doyen) {
+
+		do_Delandtsheer_Doyen(DD_d1, DD_q1, DD_d2, DD_q2, DD_depth, verbose_level);
+	}
+	else if (f_Delandtsheer_Doyen_with_subgroup) {
+
+		do_Delandtsheer_Doyen_with_subgroup(DD_d1, DD_q1, DD_d2, DD_q2, DD_depth,
+				subgroup_gens_text,
+				subgroup_order_text,
+				group_label, verbose_level);
+	}
+	else if (f_graph_classify) {
+
+		do_graph_classify(verbose_level);
 	}
 }
 
@@ -697,6 +804,274 @@ void interface_combinatorics::do_Kramer_Mesner(int verbose_level)
 	if (f_v) {
 		cout << "interface_combinatorics::do_Kramer_Mesner done" << endl;
 	}
+}
+
+
+void interface_combinatorics::do_make_tree_of_all_k_subsets(int n, int k, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_make_tree_of_all_k_subsets" << endl;
+	}
+
+	combinatorics_domain Combi;
+	int *set;
+	int N;
+	int h, i;
+	char fname[1000];
+
+
+	sprintf(fname, "all_k_subsets_%d_%d.tree", n, k);
+	set = NEW_int(k);
+	N = Combi.int_n_choose_k(n, k);
+
+
+	{
+	ofstream fp(fname);
+
+	for (h = 0; h < N; h++) {
+		Combi.unrank_k_subset(h, set, n, k);
+		fp << k;
+		for (i = 0; i < k; i++) {
+			fp << " " << set[i];
+			}
+		fp << endl;
+		}
+	fp << "-1" << endl;
+	}
+	FREE_int(set);
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_make_tree_of_all_k_subsets done" << endl;
+	}
+}
+
+void interface_combinatorics::do_Delandtsheer_Doyen(int d1, int q1, int d2, int q2, int depth, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_Delandtsheer_Doyen" << endl;
+	}
+
+	delandtsheer_doyen *T;
+
+	T = NEW_OBJECT(delandtsheer_doyen);
+
+	T->init(argc, argv, d1, q1, d2, q2,
+			FALSE /*f_subgroup */, NULL /*subgroup_gens_text*/,
+			NULL /*subgroup_order_text*/, NULL /*group_label*/,
+			depth, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_Delandtsheer_Doyen done" << endl;
+	}
+}
+
+void interface_combinatorics::do_Delandtsheer_Doyen_with_subgroup(
+		int d1, int q1, int d2, int q2, int depth,
+		const char *subgroup_gens_text,
+		const char *subgroup_order_text, const char *group_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_Delandtsheer_Doyen_with_subgroup" << endl;
+	}
+
+	delandtsheer_doyen *T;
+
+	T = NEW_OBJECT(delandtsheer_doyen);
+
+	T->init(argc, argv, d1, q1, d2, q2,
+			FALSE /*f_subgroup */, NULL /*subgroup_gens_text*/,
+			NULL /*subgroup_order_text*/, NULL /*group_label*/,
+			depth, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_Delandtsheer_Doyen_with_subgroup done" << endl;
+	}
+}
+
+void interface_combinatorics::do_graph_classify(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_graph_classify" << endl;
+	}
+	{
+	graph_classify Gen;
+	int schreier_depth = 10000;
+	int f_use_invariant_subset_if_available = TRUE;
+	int f_debug = FALSE;
+	int depth;
+	int f_embedded = TRUE;
+	int f_sideways = FALSE;
+
+	os_interface Os;
+	int t0 = Os.os_ticks();
+
+
+	Gen.init(argc, argv);
+
+	int verbose_level = Gen.gen->verbose_level;
+
+	depth = Gen.gen->main(t0,
+		schreier_depth,
+		f_use_invariant_subset_if_available,
+		f_debug,
+		Gen.gen->verbose_level);
+	cout << "Gen.gen->main returns depth=" << depth << endl;
+
+	if (Gen.f_tournament) {
+		Gen.print_score_sequences(depth, verbose_level);
+		}
+
+	//Gen.gen->draw_poset(Gen.gen->fname_base, depth,
+	//Gen.n /* data1 */, f_embedded, Gen.gen->verbose_level);
+
+	if (Gen.f_draw_poset) {
+		Gen.gen->draw_poset(Gen.gen->fname_base, depth,
+			Gen.n /* data1 */, f_embedded, f_sideways,
+			Gen.gen->verbose_level);
+		}
+
+
+	if (Gen.f_draw_full_poset) {
+		//double x_stretch = 0.4;
+		cout << "Gen.f_draw_full_poset" << endl;
+		Gen.gen->draw_poset_full(Gen.gen->fname_base, depth,
+			Gen.n /* data1 */, f_embedded, f_sideways,
+			Gen.x_stretch, Gen.gen->verbose_level);
+
+		const char *fname_prefix = "flag_orbits";
+
+		Gen.gen->make_flag_orbits_on_relations(
+				depth, fname_prefix, verbose_level);
+		}
+
+	//Gen.gen->print_data_structure_tex(depth, Gen.gen->verbose_level);
+
+	if (Gen.f_plesken) {
+		latex_interface L;
+		int *P;
+		int N;
+		Gen.gen->Plesken_matrix_up(depth, P, N, Gen.gen->verbose_level);
+		cout << "Plesken matrix up:" << endl;
+		L.int_matrix_print_tex(cout, P, N, N);
+
+		FREE_int(P);
+		Gen.gen->Plesken_matrix_down(depth, P, N, Gen.gen->verbose_level);
+		cout << "Plesken matrix down:" << endl;
+		L.int_matrix_print_tex(cout, P, N, N);
+
+		FREE_int(P);
+		}
+
+	if (Gen.f_list) {
+		int f_show_orbit_decomposition = FALSE;
+		int f_show_stab = FALSE;
+		int f_save_stab = FALSE;
+		int f_show_whole_orbit = FALSE;
+
+		Gen.gen->list_all_orbits_at_level(Gen.gen->depth,
+			FALSE, NULL, NULL,
+			f_show_orbit_decomposition,
+			f_show_stab, f_save_stab, f_show_whole_orbit);
+		}
+
+	if (Gen.f_list_all) {
+		int f_show_orbit_decomposition = FALSE;
+		int f_show_stab = FALSE;
+		int f_save_stab = FALSE;
+		int f_show_whole_orbit = FALSE;
+		int j;
+
+		for (j = 0; j <= Gen.gen->depth; j++) {
+			Gen.gen->list_all_orbits_at_level(j,
+				FALSE, NULL, NULL,
+				f_show_orbit_decomposition,
+				f_show_stab, f_save_stab, f_show_whole_orbit);
+			}
+		}
+
+	if (Gen.f_draw_graphs) {
+		int xmax_in = 1000000;
+		int ymax_in = 1000000;
+		int xmax = 1000000;
+		int ymax = 1000000;
+		int level;
+
+		for (level = 0; level <= Gen.gen->depth; level++) {
+			Gen.draw_graphs(level, Gen.scale,
+					xmax_in, ymax_in, xmax, ymax,
+					Gen.f_embedded, Gen.f_sideways,
+					Gen.gen->verbose_level);
+			}
+		}
+
+	if (Gen.f_draw_graphs_at_level) {
+		int xmax_in = 1000000;
+		int ymax_in = 1000000;
+		int xmax = 1000000;
+		int ymax = 1000000;
+
+		cout << "before Gen.draw_graphs" << endl;
+		Gen.draw_graphs(Gen.level, Gen.scale,
+				xmax_in, ymax_in, xmax, ymax,
+				Gen.f_embedded, Gen.f_sideways,
+				verbose_level);
+		cout << "after Gen.draw_graphs" << endl;
+		}
+
+	if (Gen.f_draw_level_graph) {
+		Gen.gen->draw_level_graph(Gen.gen->fname_base,
+				Gen.gen->depth, Gen.n /* data1 */,
+				Gen.level_graph_level,
+				f_embedded, f_sideways,
+				Gen.gen->verbose_level - 3);
+		}
+
+	if (Gen.f_test_multi_edge) {
+		Gen.gen->test_for_multi_edge_in_classification_graph(
+				depth, Gen.gen->verbose_level);
+		}
+	if (Gen.f_identify) {
+		int *transporter;
+		int orbit_at_level;
+
+		transporter = NEW_int(Gen.gen->Poset->A->elt_size_in_int);
+
+		Gen.gen->identify(Gen.identify_data, Gen.identify_data_sz,
+				transporter, orbit_at_level, Gen.gen->verbose_level);
+
+		FREE_int(transporter);
+		}
+
+	int N, F, level;
+
+	N = 0;
+	F = 0;
+	for (level = 0; level <= Gen.gen->depth; level++) {
+		N += Gen.gen->nb_orbits_at_level(level);
+		}
+	for (level = 0; level < Gen.gen->depth; level++) {
+		F += Gen.gen->nb_flag_orbits_up_at_level(level);
+		}
+	cout << "N=" << N << endl;
+	cout << "F=" << F << endl;
+	} // clean up graph_generator
+	if (f_v) {
+		cout << "interface_combinatorics::do_graph_classify done" << endl;
+	}
+
 }
 
 

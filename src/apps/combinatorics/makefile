@@ -12,15 +12,12 @@ LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 
 
 TARGETS=\
-		all_k_subsets.out \
 		canonical_form_of_design.out \
 		costas.out \
-		delandtsheer_doyen_main.out \
 		design_apply.out \
 		design_create_main.out \
 		design.out \
 		ferdinand.out \
-		group_ring.out \
 		hadamard.out \
 		hall_system_main.out \
 		poset_of_subsets.out \
@@ -35,9 +32,6 @@ install:
 	cp $(TARGETS) ../../../bin
 
 
-all_k_subsets.out:  all_k_subsets.o;
-	$(DISCRETA_CPP)  all_k_subsets.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 canonical_form_of_design.out:  canonical_form_of_design.o;
 	$(DISCRETA_CPP)  canonical_form_of_design.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
@@ -50,17 +44,11 @@ design_apply.out:  design_apply.o;
 design_create_main.out:  design_create_main.o;
 	$(DISCRETA_CPP)  design_create_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-delandtsheer_doyen_main.out:  delandtsheer_doyen_main.o;
-	$(DISCRETA_CPP)  delandtsheer_doyen_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
 design.out:  design.o;
 	$(DISCRETA_CPP)  design.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 ferdinand.out:  ferdinand.o;
 	$(DISCRETA_CPP)  ferdinand.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-group_ring.out:  group_ring.o;
-	$(DISCRETA_CPP)  group_ring.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 hadamard.out:  hadamard.o;
 	$(DISCRETA_CPP)  hadamard.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
