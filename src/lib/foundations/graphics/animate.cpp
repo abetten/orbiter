@@ -72,9 +72,9 @@ void animate::animate_one_round(
 	numerics N;
 	int h, i, j;
 	int f_has_camera = FALSE;
-	const char *camera_sky = NULL;
-	const char *camera_location = NULL;
-	const char *camera_look_at = NULL;
+	double camera_sky[3];
+	double camera_location[3];
+	double camera_look_at[3];
 	int f_has_zoom = FALSE;
 	int zoom_start = 0;
 	int zoom_end = 0;
@@ -117,9 +117,11 @@ void animate::animate_one_round(
 	for (i = 0; i < Opt->nb_camera; i++) {
 		if (Opt->camera_round[i] == round) {
 			f_has_camera = TRUE;
-			camera_sky = Opt->camera_sky[i];
-			camera_location = Opt->camera_location[i];
-			camera_look_at = Opt->camera_look_at[i];
+			for (j = 0; j < 3; j++) {
+				camera_sky[j] = Opt->camera_sky[i * 3 + j];
+				camera_location[j] = Opt->camera_location[i * 3 + j];
+				camera_look_at[j] = Opt->camera_look_at[i * 3 + j];
+			}
 			}
 		}
 	for (i = 0; i < Opt->cnt_nb_frames; i++) {
@@ -373,9 +375,9 @@ void animate::animate_one_round(
 			double location[3];
 			double direction_of_view[3];
 			double beta;
-			char sky_string[1000];
-			char location_string[1000];
-			char look_at_string[1000];
+			//char sky_string[1000];
+			//char location_string[1000];
+			//char look_at_string[1000];
 
 			if (pan_f_reverse) {
 				beta = pan_alpha - pan_delta *
@@ -404,9 +406,9 @@ void animate::animate_one_round(
 					1., pan_center,
 					location, 3);
 
-			sprintf(location_string, "<%lf,%lf,%lf>",
-					location[0], location[1], location[2]);
-			cout << "location_string=" << location_string << endl;
+			//sprintf(location_string, "<%lf,%lf,%lf>",
+			//		location[0], location[1], location[2]);
+			//cout << "location_string=" << location_string << endl;
 
 
 
@@ -416,20 +418,23 @@ void animate::animate_one_round(
 					direction_of_view, 3);
 
 			N.cross_product(direction_of_view, pan_normal_uv, sky);
-			sprintf(sky_string, "<%lf,%lf,%lf>",
-					sky[0], sky[1], sky[2]);
-			cout << "sky_string=" << sky_string << endl;
+			//sprintf(sky_string, "<%lf,%lf,%lf>",
+			//		sky[0], sky[1], sky[2]);
+			//cout << "sky_string=" << sky_string << endl;
 
-			sprintf(look_at_string, "<%lf,%lf,%lf>",
-					pan_center[0], pan_center[1], pan_center[2]);
-			cout << "look_at_string=" << look_at_string << endl;
+			//sprintf(look_at_string, "<%lf,%lf,%lf>",
+			//		pan_center[0], pan_center[1], pan_center[2]);
+			//cout << "look_at_string=" << look_at_string << endl;
 
 
 			Pov->beginning(fp,
 					angle,
-					sky_string,
-					location_string,
-					look_at_string,
+					sky,
+					location,
+					pan_center /* look_at*/,
+					//sky_string,
+					//location_string,
+					//look_at_string,
 					f_with_background);
 
 		} else {
@@ -2252,7 +2257,7 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 		int h, int nb_frames, int round,
 		ostream &fp,
 		int verbose_level)
-// tritangent plane, 6 point, 2 blue lines, 6 red lines
+// tritangent plane, 6 point, 2 blue lines, 6 red lines, text
 {
 	int i;
 
@@ -2283,7 +2288,7 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 	double extra_spacing = 0;
 	const char *color_options = "pigment { Black } ";
 	//const char *color_options = "pigment { BrightGold } finish { reflection .25 specular 1 }";
-	double up_x = 1.,up_y = 1., up_z = 1.;
+	//double up_x = 1.,up_y = 1., up_z = 1.;
 	double view[3];
 
 	double location[3] = {-3,1,3};
@@ -2307,70 +2312,58 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 	double off_z = -0.1;
 
 	idx = 36;
-	S->draw_text("1", thickness_half, extra_spacing,
+	draw_text("1", thickness_half, extra_spacing,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
-		S->point_coords(idx, 0),
-		S->point_coords(idx, 1),
-		S->point_coords(idx, 2),
-		up_x, up_y, up_z,
-		view[0], view[1], view[2],
+		idx,
+		//up_x, up_y, up_z,
+		//view[0], view[1], view[2],
 		fp, verbose_level - 1);
 	idx = 31;
-	S->draw_text("2", thickness_half, extra_spacing,
+	draw_text("2", thickness_half, extra_spacing,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
-		S->point_coords(idx, 0),
-		S->point_coords(idx, 1),
-		S->point_coords(idx, 2),
-		up_x, up_y, up_z,
-		view[0], view[1], view[2],
+		idx,
+		//up_x, up_y, up_z,
+		//view[0], view[1], view[2],
 		fp, verbose_level - 1);
 	idx = 32;
-	S->draw_text("3", thickness_half, extra_spacing,
+	draw_text("3", thickness_half, extra_spacing,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
-		S->point_coords(idx, 0),
-		S->point_coords(idx, 1),
-		S->point_coords(idx, 2),
-		up_x, up_y, up_z,
-		view[0], view[1], view[2],
+		idx,
+		//up_x, up_y, up_z,
+		//view[0], view[1], view[2],
 		fp, verbose_level - 1);
 	idx = 33;
-	S->draw_text("4", thickness_half, extra_spacing,
+	draw_text("4", thickness_half, extra_spacing,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
-		S->point_coords(idx, 0),
-		S->point_coords(idx, 1),
-		S->point_coords(idx, 2),
-		up_x, up_y, up_z,
-		view[0], view[1], view[2],
+		idx,
+		//up_x, up_y, up_z,
+		//view[0], view[1], view[2],
 		fp, verbose_level - 1);
 	idx = 34;
-	S->draw_text("5", thickness_half, extra_spacing,
+	draw_text("5", thickness_half, extra_spacing,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
-		S->point_coords(idx, 0),
-		S->point_coords(idx, 1),
-		S->point_coords(idx, 2),
-		up_x, up_y, up_z,
-		view[0], view[1], view[2],
+		idx,
+		//up_x, up_y, up_z,
+		//view[0], view[1], view[2],
 		fp, verbose_level - 1);
 	idx = 37;
-	S->draw_text("6", thickness_half, extra_spacing,
+	draw_text("6", thickness_half, extra_spacing,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
-		S->point_coords(idx, 0),
-		S->point_coords(idx, 1),
-		S->point_coords(idx, 2),
-		up_x, up_y, up_z,
-		view[0], view[1], view[2],
+		idx,
+		//up_x, up_y, up_z,
+		//view[0], view[1], view[2],
 		fp, verbose_level - 1);
 }
 
@@ -2999,6 +2992,189 @@ void animate::union_end(
 		cout << "animate::union_end boundary_type unrecognized" << endl;
 	}
 }
+
+
+void animate::draw_text(const char *text,
+		double thickness_half, double extra_spacing,
+		double scale,
+		double off_x, double off_y, double off_z,
+		const char *color_options,
+		int idx_point,
+		//double x, double y, double z,
+		//double up_x, double up_y, double up_z,
+		//double view_x, double view_y, double view_z,
+		ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	double P1[3];
+	double P2[3];
+	double P3[3];
+	double abc3[3];
+	double angles3[3];
+	double T3[3];
+	double u[3];
+	double view[3];
+	double up[3];
+	double x, y, z;
+
+
+	numerics N;
+	int i;
+
+	if (f_v) {
+		cout << "animate::draw_text" << endl;
+		}
+
+	x = S->point_coords(idx_point, 0);
+	y = S->point_coords(idx_point, 1);
+	z = S->point_coords(idx_point, 2);
+
+	if (f_v) {
+		cout << "x,y,z=" << x << ", " << y << " , " << z << endl;
+		}
+
+	for (i = 0; i < 3; i++) {
+		view[i] = Pov->look_at[i] - Pov->location[i];
+		}
+	for (i = 0; i < 3; i++) {
+		up[i] = Pov->sky[i];
+		}
+
+
+	if (f_v) {
+		cout << "view_x,view_y,view_z=" << view[0] << ", "
+				<< view[1] << " , " << view[2] << endl;
+		}
+	if (f_v) {
+		cout << "up_x,up_y,up_z=" << up[0] << ", " << up[1]
+				<< " , " << up[2] << endl;
+		}
+	u[0] = view[1] * up[2] - view[2] * up[1];
+	u[1] = -1 *(view[0] * up[2] - up[0] * view[2]);
+	u[2] = view[0] * up[1] - up[0] * view[1];
+	if (f_v) {
+		cout << "u=" << u[0] << ", " << u[1] << " , " << u[2] << endl;
+		}
+	P1[0] = x;
+	P1[1] = y;
+	P1[2] = z;
+	P2[0] = x + u[0];
+	P2[1] = y + u[1];
+	P2[2] = z + u[2];
+	P3[0] = x + up[0];
+	P3[1] = y + up[1];
+	P3[2] = z + up[2];
+
+	N.triangular_prism(P1, P2, P3,
+		abc3, angles3, T3,
+		verbose_level);
+	double offset[3];
+	//double up[3];
+	//double view[3];
+#if 0
+	up[0] = up_x;
+	up[1] = up_y;
+	up[2] = up_z;
+	view[0] = view_x;
+	view[1] = view_y;
+	view[2] = view_z;
+#endif
+	N.make_unit_vector(u, 3);
+	N.make_unit_vector(up, 3);
+	N.make_unit_vector(view, 3);
+	if (f_v) {
+		cout << "up normalized: ";
+		N.vec_print(up, 3);
+		cout << endl;
+		cout << "u normalized: ";
+		N.vec_print(u, 3);
+		cout << endl;
+		cout << "view normalized: ";
+		N.vec_print(view, 3);
+		cout << endl;
+		}
+
+	offset[0] = off_x * u[0] + off_y * up[0] + off_z * view[0];
+	offset[1] = off_x * u[1] + off_y * up[1] + off_z * view[1];
+	offset[2] = off_x * u[2] + off_y * up[2] + off_z * view[2];
+
+	if (f_v) {
+		cout << "offset: ";
+		N.vec_print(offset, 3);
+		cout << endl;
+		}
+
+	ost << "\ttext {" << endl;
+		ost << "\t\tttf \"timrom.ttf\", \"" << text << "\", "
+				<< thickness_half << ", " << extra_spacing << " ";
+		ost << color_options << endl;
+		ost << "\t\tscale " << scale << endl;
+		ost << "\t\trotate<0,180,0>" << endl;
+		ost << "\t\trotate<90,0,0>" << endl;
+		ost << "\t\trotate<";
+		N.output_double(N.rad2deg(angles3[0]), ost);
+		ost << ",0,0>" << endl;
+		ost << "\t\trotate<0, ";
+		N.output_double(N.rad2deg(angles3[1]), ost);
+		ost << ",0>" << endl;
+		ost << "\t\trotate<0,0, ";
+		N.output_double(N.rad2deg(angles3[2]), ost);
+		ost << ">" << endl;
+		ost << "\t\ttranslate<";
+		N.output_double(T3[0] + offset[0], ost);
+		ost << ", ";
+		N.output_double(T3[1] + offset[1], ost);
+		ost << ", ";
+		N.output_double(T3[2] + offset[2], ost);
+		ost << ">" << endl;
+	ost << "\t}" << endl;
+		//pigment { BrightGold }
+		//finish { reflection .25 specular 1 }
+		//translate <0,0,0>
+	if (f_v) {
+		cout << "animate::draw_text done" << endl;
+		}
+}
+
+void animate::draw_text_with_selection(int *selection, int nb_select,
+	double thickness_half, double extra_spacing,
+	double scale,
+	double off_x, double off_y, double off_z,
+	const char *options, const char *group_options,
+	ostream &ost, int verbose_level)
+{
+	int i, s;
+	numerics N;
+
+	ost << endl;
+	//ost << "	union{ // labels" << endl;
+	//ost << endl;
+	//ost << "	        #declare r=" << line_radius << "; " << endl;
+	ost << endl;
+	for (i = 0; i < nb_select; i++) {
+		s = selection[i];
+
+		int idx_point;
+		string text;
+
+		idx_point = S->Labels[s].first;
+		text = S->Labels[s].second;
+
+
+		draw_text(text.c_str(),
+				thickness_half, extra_spacing,
+				scale,
+				off_x, off_y, off_z,
+				options,
+				idx_point,
+				ost, verbose_level);
+		}
+	ost << endl;
+	//ost << "		" << group_options << "" << endl;
+	//ost << "	}" << endl;
+}
+
+
 
 }}
 

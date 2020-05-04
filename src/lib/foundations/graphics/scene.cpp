@@ -20,6 +20,90 @@ namespace foundations {
 
 
 
+static double Hilbert_Cohn_Vossen_Lines[] = {
+	0,1,0,-2,0,-1, // 0 a1
+	0,0,1,-1,-2,0, // 1 a2
+	1,0,0,0,-1,-2, // 2 a3
+	0,-1,0,2,0,-1, // 3 a4
+	0,0,-1,-1,2,0, // 4 a5
+	-1,0,0,0,1,-2, // 5 a6
+	0,-1,0,1,0,-2, // 6 b1
+	0,0,-1,-2,1,0, // 7 b2
+	-1,0,0,0,2,-1, // 8 b3
+	0,1,0,-1,0,-2, // 9 b4
+	0,0,1,-2,-1,0, // 10 b5
+	1,0,0,0,-2,-1, // 11 b6
+	4./5., 3./5., 0, 0., 1., 1., // 12, 0, c12
+	3./5., 0., 4./5., 1, 1., 0., // 13, 1, c13
+	0.,0.,1., 1.,0.,0., // 14, 2 c14 at infinity
+	-4./5., 3./5., 0., 0., -1., 1., // 15, 3 c15
+	-3./5., 0., -4./5., -1., 1., 0., // 16, 4 c16
+	-3./5., 4./5., 0., 1., 0., 1., // 17, 5 c23
+	-4./5., -3./5., 0., 0., -1., 1., // 18, 6 c24
+	0., 1., 0., 1., 0., 0., // 19, 7 c25 at infinity
+	3./5., -4./5., 0., -1., 0., 1., // 20, 8 c26
+	3./5., 0., -4./5., -1., 1., 0., // 21, 9 c34
+	-3./5., -4./5., 0., -1., 0., 1., // 22, 10 c35
+	0., 0., 1., 0., 1., 0., // 23, 11 c36 at infinity
+	4./5., -3./5., 0., 0., 1., 1., // 24, 12 c45
+	-3./5., 0., 4./5., 1., 1., 0., // 25, 13 c46
+	3./5., 4./5., 0., 1., 0., 1.,  // 26, 14 c56
+	};
+
+
+static double Hilbert_Cohn_Vossen_tritangent_planes[] = {
+	// tritangent planes in dual coordinates, computed using Maple:
+
+	-1, -2, 2, 2, // 0 = start of tritangent planes
+	-2, 1, -1, 1,
+	1, -1, -2, 1,
+	-2, 2, -1, 2,
+	0, -1, 0, 1,
+	0, 1, 0, 1,
+	1, -2, -2, 2,
+	2, 1, 1, 1,
+	-1, -1, 2, 1,
+	2, 2, 1, 2,
+	2, -1, -2, 2,
+	-1, -2, 1, 1,
+	2, -1, -1, 1,
+	1, 2, 2, 2,
+	0, 0, -1, 1,
+	0, 0, 1, 1,
+	-2, 1, -2, 2,
+	1, 2, 1, 1,
+	 -2, -2, 1, 2,
+	1, 1, 2, 1,
+	-1, 2, -1, 1,
+	2, 1, 2, 2,
+	-1, 0, 0, 1,
+	1, 0, 0, 1,
+	-1, 2, -2, 2,
+	-2, -1, 1, 1,
+	-1, 1, -2, 1,
+	2, -2, -1, 2,
+	-2, -1, 2, 2,
+	1, -2, -1, 1,
+	-5, -5, 5, 7,
+	-5, 5, -5, 1,
+	-5, 0, 0, 4,
+	5, -5, -5, 1,
+	0, 0, -5, 4,
+	-5, 5, -5, 7,
+	0, -5, 0, 4,
+	0, 0, 0, 1,
+	0, 5, 0, 4,
+	5, -5, -5, 7,
+	5, 0, 0, 4,
+	5, 5, 5, 1,
+	-5, -5, 5, 1,
+	5, 5, 5, 7,
+	0, 0, 5, 4
+	// end of tritangent planes
+
+
+	};
+
 scene::scene()
 {
 	null();
@@ -89,6 +173,21 @@ void scene::freeself()
 		FREE_pint(Face_points);
 		}
 	null();
+}
+
+double scene::label(int idx, const char *txt)
+{
+	if (idx >= nb_points) {
+		cout << "scene::label idx >= nb_points, "
+				"idx=" << idx << " nb_points=" << nb_points << endl;
+		exit(1);
+	}
+
+	{
+	pair<int, string> P(idx, txt);
+	Labels.push_back(P);
+	}
+	return Labels.size() - 1;
 }
 
 double scene::point_coords(int idx, int j)
@@ -625,6 +724,51 @@ int scene::line_pt_and_dir(double *x6, double rad, int verbose_level)
 	}
 	return ret;
 }
+
+int scene::line_pt_and_dir_and_copy_points(double *x6, double rad, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	double pt[6];
+	double pt2[6];
+	numerics N;
+	int ret;
+
+	if (f_v) {
+		cout << "scene::line_pt_and_dir_and_copy_points" << endl;
+	}
+	pt[0] = x6[0];
+	pt[1] = x6[1];
+	pt[2] = x6[2];
+	pt[3] = x6[0] + x6[3];
+	pt[4] = x6[1] + x6[4];
+	pt[5] = x6[2] + x6[5];
+	if (N.line_centered_tolerant(pt, pt + 3,
+		pt2, pt2 + 3,
+		rad, verbose_level)) {
+		Line_coords[nb_lines * 6 + 0] = pt2[0];
+		Line_coords[nb_lines * 6 + 1] = pt2[1];
+		Line_coords[nb_lines * 6 + 2] = pt2[2];
+		Line_coords[nb_lines * 6 + 3] = pt2[3];
+		Line_coords[nb_lines * 6 + 4] = pt2[4];
+		Line_coords[nb_lines * 6 + 5] = pt2[5];
+		nb_lines++;
+		if (nb_lines >= SCENE_MAX_LINES) {
+			cout << "too many lines" << endl;
+			exit(1);
+			}
+		points(pt2, 2);
+		ret = TRUE;
+		}
+	else {
+		cout << "line_pt_and_dir_and_copy_points could not create points" << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "scene::line_pt_and_dir_and_copy_points done" << endl;
+	}
+	return ret;
+}
+
 
 int scene::line_through_two_pts(double *x6, double rad)
 {
@@ -1567,126 +1711,6 @@ void scene::draw_face(int idx, double thickness_half, const char *options,
 	delete [] Pts_in;
 	delete [] Pts_out;
 }
-
-void scene::draw_text(const char *text,
-		double thickness_half, double extra_spacing,
-		double scale, 
-		double off_x, double off_y, double off_z, 
-		const char *color_options, 
-		double x, double y, double z, 
-		double up_x, double up_y, double up_z, 
-		double view_x, double view_y, double view_z, 
-		ostream &ost, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	double P1[3];
-	double P2[3];
-	double P3[3];
-	double abc3[3];
-	double angles3[3];
-	double T3[3];
-	double u[3];
-	numerics N;
-
-	if (f_v) {
-		cout << "scene::draw_text" << endl;
-		}
-	if (f_v) {
-		cout << "x,y,z=" << x << ", " << y << " , " << z << endl;
-		}
-	if (f_v) {
-		cout << "view_x,view_y,view_z=" << view_x << ", "
-				<< view_y << " , " << view_z << endl;
-		}
-	if (f_v) {
-		cout << "up_x,up_y,up_z=" << up_x << ", " << up_y
-				<< " , " << up_z << endl;
-		}
-	u[0] = view_y * up_z - view_z * up_y;
-	u[1] = -1 *(view_x * up_z - up_x * view_z);
-	u[2] = view_x * up_y - up_x * view_y;
-	if (f_v) {
-		cout << "u=" << u[0] << ", " << u[1] << " , " << u[2] << endl;
-		}
-	P1[0] = x;
-	P1[1] = y;
-	P1[2] = z;
-	P2[0] = x + u[0];
-	P2[1] = y + u[1];
-	P2[2] = z + u[2];
-	P3[0] = x + up_x;
-	P3[1] = y + up_y;
-	P3[2] = z + up_z;
-	
-	N.triangular_prism(P1, P2, P3,
-		abc3, angles3, T3, 
-		verbose_level);
-	double offset[3];
-	double up[3];
-	double view[3];
-	up[0] = up_x;
-	up[1] = up_y;
-	up[2] = up_z;
-	view[0] = view_x;
-	view[1] = view_y;
-	view[2] = view_z;
-	N.make_unit_vector(u, 3);
-	N.make_unit_vector(up, 3);
-	N.make_unit_vector(view, 3);
-	if (f_v) {
-		cout << "up normalized: ";
-		N.vec_print(up, 3);
-		cout << endl;
-		cout << "u normalized: ";
-		N.vec_print(u, 3);
-		cout << endl;
-		cout << "view normalized: ";
-		N.vec_print(view, 3);
-		cout << endl;
-		}
-	
-	offset[0] = off_x * u[0] + off_y * up[0] + off_z * view[0]; 
-	offset[1] = off_x * u[1] + off_y * up[1] + off_z * view[1]; 
-	offset[2] = off_x * u[2] + off_y * up[2] + off_z * view[2]; 
-
-	if (f_v) {
-		cout << "offset: ";
-		N.vec_print(offset, 3);
-		cout << endl;
-		}
-
-	ost << "\t\ttext {" << endl;
-		ost << "\t\tttf \"timrom.ttf\" \"" << text << "\" "
-				<< thickness_half << ", " << extra_spacing << " " << endl;
-		ost << "\t\t" << color_options << endl;
-		ost << "\t\tscale " << scale << endl;
-		ost << "\t\trotate<0,180,0>" << endl;
-		ost << "\t\trotate<90,0,0>" << endl;
-		ost << "\t\trotate<";
-		N.output_double(N.rad2deg(angles3[0]), ost);
-		ost << ",0,0>" << endl;
-		ost << "\t\trotate<0, ";
-		N.output_double(N.rad2deg(angles3[1]), ost);
-		ost << ",0>" << endl;
-		ost << "\t\trotate<0,0, ";
-		N.output_double(N.rad2deg(angles3[2]), ost);
-		ost << ">" << endl;
-		ost << "\t\ttranslate<";
-		N.output_double(T3[0] + offset[0], ost);
-		ost << ", ";
-		N.output_double(T3[1] + offset[1], ost);
-		ost << ", ";
-		N.output_double(T3[2] + offset[2], ost);
-		ost << ">" << endl;
-	ost << "\t\t}" << endl;
-		//pigment { BrightGold }
-		//finish { reflection .25 specular 1 }
-		//translate <0,0,0>
-	if (f_v) {
-		cout << "scene::draw_text done" << endl;
-		}
-}
-
 
 
 void scene::draw_planes_with_selection(
@@ -3248,6 +3272,50 @@ void scene::create_five_plus_one()
 		5. ); // a3'
 }
 
+void scene::create_Hilbert_Cohn_Vossen_surface(int verbose_level)
+// 1 cubic, 27 lines, 54 points, 45 planes
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "scene::create_Hilbert_Cohn_Vossen_surface" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "scene::create_Hilbert_Cohn_Vossen_surface creating lines" << endl;
+	}
+
+	int i;
+	double r = sqrt(5);
+	for (i = 0; i < 27; i++) {
+
+		if (f_v) {
+			cout << "scene::create_Hilbert_Cohn_Vossen_surface creating line" << i << endl;
+		}
+		line_pt_and_dir_and_copy_points(Hilbert_Cohn_Vossen_Lines + i * 6, r, verbose_level - 1);
+		}
+
+	{
+	double coeff[20] = {0,0,0,-1,0,5./2.,0,0,0,0,0,0,-1,0,0,0,0,-1,0,1};
+	cubic(coeff);  // cubic 0
+	}
+
+
+	for (i = 0; i < 45; i++) {
+		plane_from_dual_coordinates(Hilbert_Cohn_Vossen_tritangent_planes + i * 4);
+		}
+
+
+
+
+
+	if (f_v) {
+		cout << "scene::create_Hilbert_Cohn_Vossen_surface done" << endl;
+	}
+}
+
 
 void scene::create_Hilbert_model(int verbose_level)
 {
@@ -3474,35 +3542,6 @@ void scene::create_Hilbert_model(int verbose_level)
 		}
 
 
-	double Lines[] = {
-		0,1,0,-2,0,-1, // 0 a1
-		0,0,1,-1,-2,0, // 1 a2
-		1,0,0,0,-1,-2, // 2 a3
-		0,-1,0,2,0,-1, // 3 a4
-		0,0,-1,-1,2,0, // 4 a5
-		-1,0,0,0,1,-2, // 5 a6
-		0,-1,0,1,0,-2, // 6 b1
-		0,0,-1,-2,1,0, // 7 b2
-		-1,0,0,0,2,-1, // 8 b3
-		0,1,0,-1,0,-2, // 9 b4
-		0,0,1,-2,-1,0, // 10 b5
-		1,0,0,0,-2,-1, // 11 b6
-		4./5., 3./5., 0, 0., 1., 1., // 12, 0, c12
-		3./5., 0., 4./5., 1, 1., 0., // 13, 1, c13
-		0.,0.,1., 1.,0.,0., // 14, 2 c14 at infinity
-		-4./5., 3./5., 0., 0., -1., 1., // 15, 3 c15
-		-3./5., 0., -4./5., -1., 1., 0., // 16, 4 c16
-		-3./5., 4./5., 0., 1., 0., 1., // 17, 5 c23
-		-4./5., -3./5., 0., 0., -1., 1., // 18, 6 c24
-		0., 1., 0., 1., 0., 0., // 19, 7 c25 at infinity
-		3./5., -4./5., 0., -1., 0., 1., // 20, 8 c26
-		3./5., 0., -4./5., -1., 1., 0., // 21, 9 c34
-		-3./5., -4./5., 0., -1., 0., 1., // 22, 10 c35
-		0., 0., 1., 0., 1., 0., // 23, 11 c36 at infinity
-		4./5., -3./5., 0., 0., 1., 1., // 24, 12 c45
-		-3./5., 0., 4./5., 1., 1., 0., // 25, 13 c46
-		3./5., 4./5., 0., 1., 0., 1.,  // 26, 14 c56
-		};
 
 	if (f_v) {
 		cout << "scene::create_Hilbert_model creating lines" << endl;
@@ -3514,7 +3553,7 @@ void scene::create_Hilbert_model(int verbose_level)
 		if (f_v) {
 			cout << "scene::create_Hilbert_model creating line" << i << endl;
 		}
-		line_pt_and_dir(Lines + i * 6, r, verbose_level - 1);
+		line_pt_and_dir(Hilbert_Cohn_Vossen_Lines + i * 6, r, verbose_level - 1);
 		}
 
 	{
@@ -3745,7 +3784,7 @@ void scene::create_Hilbert_model(int verbose_level)
 	cout << "the long lines start at " << nb_lines << endl;
 	r = 3.6;
 	for (i = 0; i < 27; i++) {
-		line_pt_and_dir(Lines + i * 6, r, verbose_level - 1);
+		line_pt_and_dir(Hilbert_Cohn_Vossen_Lines + i * 6, r, verbose_level - 1);
 		}
 
 

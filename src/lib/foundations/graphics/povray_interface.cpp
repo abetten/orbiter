@@ -41,6 +41,10 @@ povray_interface::povray_interface()
 	color_red_wine_transparent = "texture{ pigment{ color rgb<1, 0,0.25> transmit 0.5 } finish {diffuse 0.9 phong 0.6} }";
 	color_yellow_lemon_transparent = "texture{ pigment{ color rgb< 0.35, 0.6, 0.0> transmit 0.5 } finish {diffuse 0.9 phong 0.6} }";
 
+	//double sky[3];
+	//double location[3];
+	//double look_at[3];
+
 }
 
 povray_interface::~povray_interface()
@@ -51,9 +55,9 @@ povray_interface::~povray_interface()
 
 void povray_interface::beginning(ostream &ost,
 		double angle,
-		const char *sky,
-		const char *location,
-		const char *look_at,
+		double *sky,
+		double *location,
+		double *look_at,
 		int f_with_background)
 // angle = 22
 // sky <1,1,1>
@@ -72,6 +76,13 @@ void povray_interface::beginning(ostream &ost,
 	ost << "#include \"textures.inc\"" << endl;
 	ost << endl;
 
+	int i;
+
+	for (i = 0; i < 3; i++) {
+		povray_interface::sky[i] = sky[i];
+		povray_interface::location[i] = location[i];
+		povray_interface::look_at[i] = look_at[i];
+	}
 
 #if 0
 	ost << "//Place the camera" << endl;
@@ -130,11 +141,13 @@ void povray_interface::beginning(ostream &ost,
 #else
 	ost << "//Place the camera" << endl;
 	ost << "camera {" << endl;
-	ost << "   sky " << sky << endl;
+	ost << "   sky  <" << sky[0] << "," << sky[1] << "," << sky[2] << ">" << endl;
+	//ost << "   sky " << sky << endl;
 	ost << "   //direction <1,0,0>" << endl;
 	ost << "   //right <1,1,0> " << endl;
-	ost << "   location  " << location << endl;
-	ost << "   look_at  " << look_at << endl;
+	ost << "   location  <" << location[0] << "," << location[1] << "," << location[2] << ">" << endl;
+	ost << "   look_at  <" << look_at[0] << "," << look_at[1] << "," << look_at[2] << ">" << endl;
+	//ost << "   look_at  " << look_at << endl;
 	ost << "   angle " << angle << "      //Angle of the view" << endl;
 	ost << "	// smaller numbers are closer. Must be less than 180" << endl;
 	ost << "}" << endl;
@@ -146,8 +159,8 @@ void povray_interface::beginning(ostream &ost,
 	ost << "//Place a light" << endl;
 	//ost << "light_source { <4,4,4> color White }  " << endl;
 	//ost << "light_source { <-5,0,5> color White }" << endl;
-	ost << "light_source { " << sky << " * 120 color White parallel }  " << endl;
-	ost << "light_source { " << location << " color White }" << endl;
+	ost << "light_source { <" << sky[0] * 120 << "," << sky[1] * 120 << "," << sky[2] * 120 << "> color White parallel }  " << endl;
+	ost << "light_source { <" << location[0] << "," << location[1] << "," << location[2] << "> color White }" << endl;
 	ost << endl;
 
 	if (f_with_background) {
