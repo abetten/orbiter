@@ -131,9 +131,18 @@ video_draw_options::video_draw_options()
 	latex_file_count = 0;
 	f_omit_bottom_plane = FALSE;
 
-	sky = "<1,1,1>";
-	location = "<-3,1,3>";
-	look_at = "<0,0,0>";
+	//sky = "<1,1,1>";
+	//location = "<-3,1,3>";
+	//look_at = "<0,0,0>";
+	sky[0] = 1;
+	sky[1] = 1;
+	sky[2] = 1;
+	location[0] = -3;
+	location[1] = 1;
+	location[2] = 3;
+	look_at[0] = 0;
+	look_at[1] = 0;
+	look_at[2] = 0;
 
 	scale_factor = 1.;
 
@@ -321,14 +330,69 @@ int video_draw_options::read_arguments(
 		}
 		else if (strcmp(argv[i], "-camera") == 0) {
 			camera_round[nb_camera] = atoi(argv[++i]);
-			camera_sky[nb_camera] = argv[++i];
-			camera_location[nb_camera] = argv[++i];
-			camera_look_at[nb_camera] = argv[++i];
+
+			const char *txt;
+			double *data;
+			int data_sz;
+			numerics Num;
+
+			{
+				txt = argv[++i];
+				Num.vec_scan(txt, data, data_sz);
+				if (data_sz != 3) {
+					cout << "For -camera sky, the number of coefficients must be 3; is " << data_sz << endl;
+					exit(1);
+				}
+
+
+				camera_sky[nb_camera * 3 + 0] = data[0];
+				camera_sky[nb_camera * 3 + 1] = data[1];
+				camera_sky[nb_camera * 3 + 2] = data[2];
+				delete [] data;
+			}
+
+			{
+				txt = argv[++i];
+				Num.vec_scan(txt, data, data_sz);
+				if (data_sz != 3) {
+					cout << "For -camera location, the number of coefficients must be 3; is " << data_sz << endl;
+					exit(1);
+				}
+
+
+				camera_location[nb_camera * 3 + 0] = data[0];
+				camera_location[nb_camera * 3 + 1] = data[1];
+				camera_location[nb_camera * 3 + 2] = data[2];
+				delete [] data;
+			}
+
+			{
+				txt = argv[++i];
+				Num.vec_scan(txt, data, data_sz);
+				if (data_sz != 3) {
+					cout << "For -camera look_at, the number of coefficients must be 3; is " << data_sz << endl;
+					exit(1);
+				}
+
+
+				camera_look_at[nb_camera * 3 + 0] = data[0];
+				camera_look_at[nb_camera * 3 + 1] = data[1];
+				camera_look_at[nb_camera * 3 + 2] = data[2];
+				delete [] data;
+			}
+
 			cout << "video_draw_options::read_arguments -camera "
 					<< camera_round[nb_camera] << " "
-					<< camera_sky[nb_camera] << " "
-					<< camera_location[nb_camera] << " "
-					<< camera_look_at[nb_camera] << endl;
+					<< camera_sky[nb_camera * 3 + 0] << " "
+					<< camera_sky[nb_camera * 3 + 1] << " "
+					<< camera_sky[nb_camera * 3 + 2] << " "
+					<< camera_location[nb_camera * 3 + 0] << " "
+					<< camera_location[nb_camera * 3 + 1] << " "
+					<< camera_location[nb_camera * 3 + 2] << " "
+					<< camera_look_at[nb_camera * 3 + 0] << " "
+					<< camera_look_at[nb_camera * 3 + 1] << " "
+					<< camera_look_at[nb_camera * 3 + 2] << " "
+					<< endl;
 			nb_camera++;
 
 			   //sky <1,1,1>
@@ -414,8 +478,32 @@ int video_draw_options::read_arguments(
 			nb_picture++;
 		}
 		else if (strcmp(argv[i], "-look_at") == 0) {
-			look_at = argv[++i];
-			cout << "video_draw_options::read_arguments -look_at " << look_at << endl;
+			//look_at = argv[++i];
+
+			const char *txt;
+			double *data;
+			int data_sz;
+			numerics Num;
+
+			txt = argv[++i];
+			{
+				txt = argv[++i];
+				Num.vec_scan(txt, data, data_sz);
+				if (data_sz != 3) {
+					cout << "For -look_at location, the number of coefficients must be 3; is " << data_sz << endl;
+					exit(1);
+				}
+
+
+				look_at[0] = data[0];
+				look_at[1] = data[1];
+				look_at[2] = data[2];
+				delete [] data;
+			}
+
+
+			cout << "video_draw_options::read_arguments -look_at "
+					<< look_at[0] << " " << look_at[1] << " " << look_at[2] << " " << endl;
 		}
 
 		else if (strcmp(argv[i], "-default_angle") == 0) {

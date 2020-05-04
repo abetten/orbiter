@@ -80,6 +80,12 @@ void interface_povray::read_arguments(int argc, const char **argv, int i0, int v
 						argv + i, verbose_level);
 
 					cout << "-video_options" << endl;
+					cout << "done with -video_options " << endl;
+					cout << "i = " << i << endl;
+					cout << "argc = " << argc << endl;
+					if (i < argc) {
+						cout << "next argument is " << argv[i] << endl;
+					}
 				}
 				else if (strcmp(argv[i], "-round") == 0) {
 					f_round = TRUE;
@@ -106,6 +112,12 @@ void interface_povray::read_arguments(int argc, const char **argv, int i0, int v
 					cout << "-scene_objects " << endl;
 					i++;
 					i = read_scene_objects(argc, argv, i, verbose_level);
+					cout << "done with -scene_objects " << endl;
+					cout << "i = " << i << endl;
+					cout << "argc = " << argc << endl;
+					if (i < argc) {
+						cout << "next argument is " << argv[i] << endl;
+					}
 				}
 				else if (strcmp(argv[i], "-povray_end") == 0) {
 					cout << "-povray_end " << endl;
@@ -349,6 +361,16 @@ int interface_povray::read_scene_objects(int argc, const char **argv, int i0, in
 			S->edge(Idx[0], Idx[1]);
 			FREE_int(Idx);
 		}
+		else if (strcmp(argv[i], "-label") == 0) {
+			cout << "-label" << endl;
+			int pt_idx;
+			const char *text;
+			//numerics Numerics;
+
+			pt_idx = atoi(argv[++i]);
+			text = argv[++i];
+			S->label(pt_idx, text);
+		}
 		else if (strcmp(argv[i], "-triangular_face_given_by_three_lines") == 0) {
 			cout << "-triangular_face_given_by_three_lines" << endl;
 			const char *Idx_text;
@@ -508,6 +530,16 @@ int interface_povray::read_scene_objects(int argc, const char **argv, int i0, in
 			// 12 faces
 
 		}
+		else if (strcmp(argv[i], "-Hilbert_Cohn_Vossen_surface") == 0) {
+			cout << "-Hilbert_Cohn_Vossen_surface" << endl;
+
+			S->create_Hilbert_Cohn_Vossen_surface(verbose_level);
+
+			// 1 cubic surface
+			// 45 planes
+			// 27 lines
+
+		}
 		else if (strcmp(argv[i], "-obj_file") == 0) {
 			cout << "-obj_file" << endl;
 			const char *fname;
@@ -560,6 +592,42 @@ int interface_povray::read_scene_objects(int argc, const char **argv, int i0, in
 			S->add_a_group_of_things(Idx, len, verbose_level);
 			FREE_int(Idx);
 		}
+		else if (strcmp(argv[i], "-group_of_things_as_interval_with_exceptions") == 0) {
+			cout << "-group_of_things_as_interval_with_exceptions" << endl;
+			int start;
+			int len;
+			const char *exceptions_text;
+			int h;
+			int *Idx;
+			int *exceptions;
+			int exceptions_sz;
+			sorting Sorting;
+
+			start = atoi(argv[++i]);
+			len = atoi(argv[++i]);
+			exceptions_text = argv[++i];
+
+			int_vec_scan(exceptions_text, exceptions, exceptions_sz);
+
+			Idx = NEW_int(len);
+			for (h = 0; h < len; h++) {
+				Idx[h] = start + h;
+			}
+
+			for (h = 0; h < exceptions_sz; h++) {
+				if (!Sorting.int_vec_search_and_remove_if_found(Idx, len, exceptions[h])) {
+					cout << "-group_of_things_as_interval_with_exceptions exception not found, value = " << exceptions[h] << endl;
+					exit(1);
+				}
+			}
+
+			FREE_int(exceptions);
+
+			cout << "creating a group of things of size " << len << endl;
+
+			S->add_a_group_of_things(Idx, len, verbose_level);
+			FREE_int(Idx);
+		}
 		else if (strcmp(argv[i], "-group_of_all_points") == 0) {
 			cout << "-group_of_all_points" << endl;
 			int *Idx;
@@ -586,6 +654,7 @@ int interface_povray::read_scene_objects(int argc, const char **argv, int i0, in
 				Idx[h] = h;
 			}
 			S->add_a_group_of_things(Idx, Idx_sz, verbose_level);
+			cout << "created group " << S->group_of_things.size() - 1 << " consisting of " << Idx_sz << " faces" << endl;
 			FREE_int(Idx);
 		}
 		else if (strcmp(argv[i], "-group_subset_at_random") == 0) {
@@ -747,9 +816,25 @@ int interface_povray::read_scene_objects(int argc, const char **argv, int i0, in
 			D.init_quartics(group_idx, properties, verbose_level);
 			S->Drawables.push_back(D);
 		}
+		else if (strcmp(argv[i], "-texts") == 0) {
+			cout << "-texts" << endl;
+			int group_idx;
+			double thickness_half;
+			double scale;
+			const char *properties;
+
+			group_idx = atoi(argv[++i]);
+			thickness_half = atof(argv[++i]);
+			scale = atof(argv[++i]);
+			properties = argv[++i];
+
+			drawable_set_of_objects D;
+
+			D.init_labels(group_idx, thickness_half, scale, properties, verbose_level);
+			S->Drawables.push_back(D);
+		}
 		else if (strcmp(argv[i], "-scene_objects_end") == 0) {
 			cout << "-scene_object_end " << endl;
-			i++;
 			break;
 		}
 		else {
@@ -878,7 +963,7 @@ void interface_povray_draw_frame(
 
 			cout << "drawable " << i << ":" << endl;
 			D = Anim->S->Drawables[i];
-			D.draw(Anim->S, fp, verbose_level);
+			D.draw(Anim, fp, verbose_level);
 		}
 
 

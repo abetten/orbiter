@@ -73,7 +73,7 @@ public:
 			int h, int nb_frames, int round,
 			std::ostream &fp,
 			int verbose_level);
-		// tritangent plane, 6 arc points, 2 blue lines, 6 red lines
+		// tritangent plane, 6 arc points, 2 blue lines, 6 red lines, text
 	void draw_frame_HCV_surface(
 		int h, int nb_frames, int round,
 		double clipping_radius,
@@ -111,6 +111,22 @@ public:
 			int h, int nb_frames, int round,
 			double clipping_radius,
 			std::ostream &fp);
+	void draw_text(const char *text,
+			double thickness_half, double extra_spacing,
+			double scale,
+			double off_x, double off_y, double off_z,
+			const char *color_options,
+			int idx_point,
+			//double x, double y, double z,
+			//double up_x, double up_y, double up_z,
+			//double view_x, double view_y, double view_z,
+			std::ostream &ost, int verbose_level);
+	void draw_text_with_selection(int *selection, int nb_select,
+		double thickness_half, double extra_spacing,
+		double scale,
+		double off_x, double off_y, double off_z,
+		const char *options, const char *group_options,
+		std::ostream &ost, int verbose_level);
 };
 
 
@@ -139,9 +155,11 @@ public:
 	// 6 = cubics
 	// 7 = quadrics
 	// 8 = quartics
+	// 9 = label
 
 
 	double d;
+	double d2; // for text: scale
 
 	const char *properties;
 
@@ -163,7 +181,9 @@ public:
 			const char *properties, int verbose_level);
 	void init_quartics(int group_idx,
 			const char *properties, int verbose_level);
-	void draw(scene *S, std::ostream &ost, int verbose_level);
+	void init_labels(int group_idx,
+			double thickness_half, double scale, const char *properties, int verbose_level);
+	void draw(animate *Anim, std::ostream &ost, int verbose_level);
 
 };
 
@@ -622,7 +642,7 @@ public:
 // plot_tools.cpp
 // #############################################################################
 
-//! fnctions for plotting (graphing)
+//! utility functions for plotting (graphing)
 
 
 class plot_tools {
@@ -698,14 +718,18 @@ public:
 	const char *color_red_wine_transparent;
 	const char *color_yellow_lemon_transparent;
 
+	double sky[3];
+	double location[3];
+	double look_at[3];
+
 
 	povray_interface();
 	~povray_interface();
 	void beginning(std::ostream &ost,
 			double angle,
-			const char *sky,
-			const char *location,
-			const char *look_at,
+			double *sky,
+			double *location,
+			double *look_at,
 			int f_with_background);
 	void animation_rotate_around_origin_and_1_1_1(std::ostream &ost);
 	void animation_rotate_around_origin_and_given_vector(double *v,
@@ -775,8 +799,11 @@ private:
 	int *Nb_face_points; // [nb_faces]
 	int **Face_points; // [nb_faces]
 
-
 public:
+
+
+	std::vector<std::pair<int, std::string> > Labels;
+
 
 	double line_radius;
 
@@ -814,6 +841,7 @@ public:
 	~scene();
 	void null();
 	void freeself();
+	double label(int idx, const char *txt);
 	double point_coords(int idx, int j);
 	double line_coords(int idx, int j);
 	double plane_coords(int idx, int j);
@@ -845,6 +873,7 @@ public:
 	void copy_faces(scene *S, double *A4, double *A4_inv, 
 		int verbose_level);
 	int line_pt_and_dir(double *x6, double rad, int verbose_level);
+	int line_pt_and_dir_and_copy_points(double *x6, double rad, int verbose_level);
 	int line_through_two_pts(double *x6, double rad);
 	int line6(double *x6);
 	int line(double x1, double x2, double x3, 
@@ -937,14 +966,6 @@ public:
 		double thickness_half, const char *options, std::ostream &ost);
 	void draw_face(int idx, double thickness_half, const char *options, 
 			std::ostream &ost);
-	void draw_text(const char *text, double thickness_half, double extra_spacing, 
-			double scale, 
-			double off_x, double off_y, double off_z, 
-			const char *color_options, 
-			double x, double y, double z, 
-			double up_x, double up_y, double up_z, 
-			double view_x, double view_y, double view_z, 
-			std::ostream &ost, int verbose_level);
 	void draw_planes_with_selection(int *selection, int nb_select, 
 		const char *options, std::ostream &ost);
 	void draw_plane(int idx, const char *options, std::ostream &ost);
@@ -1005,6 +1026,8 @@ public:
 
 	double distance_between_two_points(int pt1, int pt2);
 	void create_five_plus_one();
+	void create_Hilbert_Cohn_Vossen_surface(int verbose_level);
+		// 1 cubic, 27 lines, 54 points, 45 planes
 	void create_Hilbert_model(int verbose_level);
 	void create_Cayleys_nodal_cubic(int verbose_level);
 	void create_Hilbert_cube(int verbose_level);
@@ -1185,9 +1208,12 @@ public:
 
 	int nb_camera;
 	int camera_round[1000];
-	const char *camera_sky[1000];
-	const char *camera_location[1000];
-	const char *camera_look_at[1000];
+	double camera_sky[1000 * 3];
+	double camera_location[1000 * 3];
+	double camera_look_at[1000 * 3];
+	//const char *camera_sky[1000];
+	//const char *camera_location[1000];
+	//const char *camera_look_at[1000];
 
 	int nb_zoom;
 	int zoom_round[1000];
@@ -1255,9 +1281,12 @@ public:
 	int latex_file_count;
 	int f_omit_bottom_plane;
 
-	const char *sky;
-	const char *location;
-	const char *look_at;
+	//const char *sky;
+	//const char *location;
+	//const char *look_at;
+	double sky[3];
+	double location[3];
+	double look_at[3];
 
 	double scale_factor;
 
