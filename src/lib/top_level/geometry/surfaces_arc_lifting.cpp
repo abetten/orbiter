@@ -124,7 +124,7 @@ void surfaces_arc_lifting::init(
 	Six_arcs->init(F,
 		A3,
 		Surf->P2,
-		argc, argv,
+		//argc, argv,
 		verbose_level - 10);
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init "
