@@ -2344,7 +2344,7 @@ public:
 	void init(finite_field *F,
 		action *A,
 		projective_space *P2,
-		int argc, const char **argv, 
+		//int argc, const char **argv,
 		int verbose_level);
 	void recognize(long int *arc6, int *transporter,
 			int &orbit_not_on_conic_idx, int verbose_level);

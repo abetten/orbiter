@@ -1598,7 +1598,7 @@ void interface_projective::do_create_surface(
 		Six_arcs->init(SC->F,
 				A,
 			SC->Surf->P2,
-			argc, argv,
+			//argc, argv,
 			verbose_level);
 		transporter = NEW_int(Six_arcs->Gen->A->elt_size_in_int);
 

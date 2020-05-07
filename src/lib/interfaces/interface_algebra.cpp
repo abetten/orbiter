@@ -50,6 +50,7 @@ interface_algebra::interface_algebra()
 	f_young_symmetrizer = FALSE;
 	young_symmetrizer_n = 0;
 	f_young_symmetrizer_sym_4 = FALSE;
+	f_classify_surfaces_through_arcs_and_trihedral_pairs = FALSE;
 }
 
 
@@ -83,28 +84,14 @@ void interface_algebra::print_help(int argc,
 	else if (strcmp(argv[i], "-eigenstuff_matrix_from_file") == 0) {
 		cout << "-eigenstuff_matrix_from_file <int : m> <int : q>  <string : fname> " << endl;
 	}
-#if 0
-	else if (strcmp(argv[i], "-surface_classify") == 0) {
-		cout << "-surface_classify " << endl;
-	}
-	else if (strcmp(argv[i], "-surface_report") == 0) {
-		cout << "-surface_report " << endl;
-	}
-	else if (strcmp(argv[i], "-surface_identify_Sa") == 0) {
-		cout << "-surface_identify_Sa " << endl;
-	}
-	else if (strcmp(argv[i], "-surface_isomorphism_testing") == 0) {
-		cout << "-surface_isomorphism_testing " << endl;
-	}
-	else if (strcmp(argv[i], "-surface_recognize") == 0) {
-		cout << "-surface_recognize " << endl;
-	}
-#endif
 	else if (strcmp(argv[i], "-young_symmetrizer") == 0) {
 		cout << "-young_symmetrizer <int : n>" << endl;
 	}
 	else if (strcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
 		cout << "-young_symmetrizer_sym_4 " << endl;
+	}
+	else if (strcmp(argv[i], "-classify_surfaces_through_arcs_and_trihedral_pairs") == 0) {
+		cout << "-classify_surfaces_through_arcs_and_trihedral_pairs <int : q>" << endl;
 	}
 }
 
@@ -138,27 +125,13 @@ int interface_algebra::recognize_keyword(int argc,
 	else if (strcmp(argv[i], "-eigenstuff_matrix_from_file") == 0) {
 		return true;
 	}
-#if 0
-	else if (strcmp(argv[i], "-surface_classify") == 0) {
-		return true;
-	}
-	else if (strcmp(argv[i], "-surface_report") == 0) {
-		return true;
-	}
-	else if (strcmp(argv[i], "-surface_identify_Sa") == 0) {
-		return true;
-	}
-	else if (strcmp(argv[i], "-surface_isomorphism_testing") == 0) {
-		return true;
-	}
-	else if (strcmp(argv[i], "-surface_recognize") == 0) {
-		return true;
-	}
-#endif
 	else if (strcmp(argv[i], "-young_symmetrizer") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-classify_surfaces_through_arcs_and_trihedral_pairs") == 0) {
 		return true;
 	}
 	return false;
@@ -255,6 +228,11 @@ void interface_algebra::read_arguments(int argc,
 			f_young_symmetrizer_sym_4 = TRUE;
 			cout << "-young_symmetrizer_sym_4 " << endl;
 		}
+		else if (strcmp(argv[i], "-classify_surfaces_through_arcs_and_trihedral_pairs") == 0) {
+			f_classify_surfaces_through_arcs_and_trihedral_pairs = TRUE;
+			q = atoi(argv[++i]);
+			cout << "-classify_surfaces_through_arcs_and_trihedral_pairs " << q << endl;
+		}
 	}
 }
 
@@ -295,6 +273,9 @@ void interface_algebra::worker(int verbose_level)
 		algebra_global_with_action Algebra;
 
 		Algebra.young_symmetrizer_sym_4(verbose_level);
+	}
+	else if (f_classify_surfaces_through_arcs_and_trihedral_pairs) {
+		classify_surfaces_through_arcs_and_trihedral_pairs(q, verbose_level);
 	}
 }
 
@@ -688,6 +669,90 @@ void interface_algebra::do_make_A5_in_PSL_2_q(int q, int verbose_level)
 		cout << "interface_algebra::do_make_A5_in_PSL_2_q done" << endl;
 	}
 }
+
+void interface_algebra::classify_surfaces_through_arcs_and_trihedral_pairs(int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_algebra::classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
+		cout << "q=" << q << endl;
+	}
+
+	algebra_global_with_action A;
+	surface_with_action *Surf_A;
+	surface_domain *Surf;
+	finite_field *F;
+	number_theory_domain NT;
+
+	F = NEW_OBJECT(finite_field);
+	Surf = NEW_OBJECT(surface_domain);
+	Surf_A = NEW_OBJECT(surface_with_action);
+
+	F->init(q, 0);
+
+	if (f_v) {
+		cout << "before Surf->init" << endl;
+	}
+	Surf->init(F, verbose_level - 5);
+	if (f_v) {
+		cout << "after Surf->init" << endl;
+	}
+
+	int f_semilinear;
+
+	if (NT.is_prime(q)) {
+		f_semilinear = FALSE;
+	}
+	else {
+		f_semilinear = TRUE;
+	}
+
+
+#if 0
+	if (f_v) {
+		cout << "before Surf->init_large_polynomial_domains" << endl;
+	}
+	Surf->init_large_polynomial_domains(0 /*verbose_level*/);
+	if (f_v) {
+		cout << "after Surf->init_large_polynomial_domains" << endl;
+	}
+#endif
+
+
+	if (f_v) {
+		cout << "before Surf_A->init" << endl;
+	}
+	Surf_A->init(Surf, f_semilinear, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "after Surf_A->init" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "before Surf_A->Classify_trihedral_pairs->classify" << endl;
+	}
+	Surf_A->Classify_trihedral_pairs->classify(0 /*verbose_level*/);
+	if (f_v) {
+		cout << "after Surf_A->Classify_trihedral_pairs->classify" << endl;
+	}
+
+	if (f_v) {
+		cout << "before A.classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
+	}
+	A.classify_surfaces_through_arcs_and_trihedral_pairs(
+			Surf_A, verbose_level);
+	if (f_v) {
+		cout << "after A.classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "interface_algebra::classify_surfaces_through_arcs_and_trihedral_pairs done" << endl;
+	}
+}
+
 
 
 

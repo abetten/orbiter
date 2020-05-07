@@ -62,6 +62,8 @@ public:
 			int verbose_level);
 	void young_symmetrizer(int n, int verbose_level);
 	void young_symmetrizer_sym_4(int verbose_level);
+	void classify_surfaces_through_arcs_and_trihedral_pairs(
+			surface_with_action *Surf_A, int verbose_level);
 
 };
 
