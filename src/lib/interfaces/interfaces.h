@@ -61,14 +61,6 @@ class interface_algebra {
 	int eigenstuff_q;
 	const char *eigenstuff_coeffs;
 	const char *eigenstuff_fname;
-	int f_surface_classify;
-	int f_surface_report;
-	int f_surface_identify_Sa;
-	int f_surface_isomorphism_testing;
-		surface_create_description *surface_descr_isomorph1;
-		surface_create_description *surface_descr_isomorph2;
-	int f_surface_recognize;
-		surface_create_description *surface_descr;
 	int f_young_symmetrizer;
 	int young_symmetrizer_n;
 	int f_young_symmetrizer_sym_4;
@@ -94,16 +86,6 @@ public:
 	void do_make_table_of_irreducible_polynomials(int deg, int q, int verbose_level);
 	void do_make_character_table_symmetric_group(int deg, int verbose_level);
 	void do_make_A5_in_PSL_2_q(int q, int verbose_level);
-	void do_surface_classify(int verbose_level);
-	void do_surface_report(int verbose_level);
-	void do_surface_identify_Sa(int verbose_level);
-	void do_surface_isomorphism_testing(
-			surface_create_description *surface_descr_isomorph1,
-			surface_create_description *surface_descr_isomorph2,
-			int verbose_level);
-	void do_surface_recognize(
-			surface_create_description *surface_descr,
-			int verbose_level);
 
 };
 
@@ -326,6 +308,13 @@ class interface_cryptography {
 	int EC_multiple_of_n;
 	int f_EC_discrete_log;
 	const char *EC_discrete_log_pt_text;
+	int f_EC_baby_step_giant_step;
+	const char *EC_bsgs_G;
+	int EC_bsgs_N;
+	const char *EC_bsgs_cipher_text;
+	int f_EC_baby_step_giant_step_decode;
+	const char *EC_bsgs_A;
+	const char *EC_bsgs_keys;
 	int f_nullspace;
 	int nullspace_q;
 	int nullspace_m;
@@ -400,6 +389,13 @@ public:
 			const char *pt_text, int n, int verbose_level);
 	void do_EC_discrete_log(int q, int EC_b, int EC_c,
 			const char *base_pt_text, const char *pt_text, int verbose_level);
+	void do_EC_baby_step_giant_step(int EC_q, int EC_b, int EC_c,
+			const char *EC_bsgs_G, int EC_bsgs_N, const char *EC_bsgs_cipher_text,
+			int verbose_level);
+	void do_EC_baby_step_giant_step_decode(int EC_q, int EC_b, int EC_c,
+			const char *EC_bsgs_A, int EC_bsgs_N,
+			const char *EC_bsgs_cipher_text_T, const char *EC_bsgs_keys,
+			int verbose_level);
 	void make_affine_sequence(int a, int c, int m, int verbose_level);
 	void make_2D_plot(int *orbit, int orbit_len, int cnt,
 			int m, int a, int c, int verbose_level);

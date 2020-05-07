@@ -21,6 +21,7 @@ namespace top_level {
 
 ovoid_classify::ovoid_classify()
 {
+	Control = NULL;
 	Poset = NULL;
 	gen = NULL;
 	F = NULL;
@@ -120,13 +121,14 @@ void ovoid_classify::init(int argc, const char **argv,
 
 	F = NEW_OBJECT(finite_field);
 	A = NEW_OBJECT(action);
+	Control = NEW_OBJECT(poset_classification_control);
 	gen = NEW_OBJECT(poset_classification);
 
 	read_arguments(argc, argv, verbose_level);
 
 
 
-	gen->read_arguments(argc, argv, 0);
+	//gen->read_arguments(argc, argv, 0);
 
 	
 	int f_v = (verbose_level >= 1);
@@ -245,7 +247,7 @@ void ovoid_classify::init(int argc, const char **argv,
 				this /* void *data */,
 				verbose_level);
 
-	gen->init(Poset,
+	gen->init(Control, Poset,
 		gen->depth /* sz */,
 		verbose_level - 1);
 
@@ -276,7 +278,7 @@ void ovoid_classify::init(int argc, const char **argv,
 		cout << "after calling init_root_node" << endl;
 		}
 	
-	gen->root[0].init_root_node(gen, gen->verbose_level);
+	gen->root[0].init_root_node(gen, gen->Control->verbose_level);
 
 
 	if (epsilon == 1 && d == 6) {

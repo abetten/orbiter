@@ -655,7 +655,7 @@ void interface_combinatorics::do_process_combinatorial_object(int verbose_level)
 		exit(1);
 	}
 	if (!Job->f_n) {
-		cout << "please use option -n <n> to specify the projective dimension  within the job description" << endl;
+		cout << "please use option -n <n> to specify the projective dimension within the job description" << endl;
 		exit(1);
 	}
 	if (!Job->f_fname_base_out) {
@@ -796,7 +796,7 @@ void interface_combinatorics::do_Kramer_Mesner(int verbose_level)
 
 
 	cout << "interface_combinatorics::do_Kramer_Mesner before orbits" << endl;
-	KM.orbits(argc, argv, S, verbose_level);
+	KM.orbits(S, verbose_level);
 
 	delete S;
 	}
@@ -919,15 +919,15 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 	int t0 = Os.os_ticks();
 
 
-	Gen.init(argc, argv);
+	Gen.init(argc, argv, verbose_level);
 
-	int verbose_level = Gen.gen->verbose_level;
+	int verbose_level = Gen.gen->Control->verbose_level;
 
 	depth = Gen.gen->main(t0,
 		schreier_depth,
 		f_use_invariant_subset_if_available,
 		f_debug,
-		Gen.gen->verbose_level);
+		Gen.gen->Control->verbose_level);
 	cout << "Gen.gen->main returns depth=" << depth << endl;
 
 	if (Gen.f_tournament) {
@@ -937,19 +937,20 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 	//Gen.gen->draw_poset(Gen.gen->fname_base, depth,
 	//Gen.n /* data1 */, f_embedded, Gen.gen->verbose_level);
 
-	if (Gen.f_draw_poset) {
+
+	if (Gen.Control->f_draw_poset) {
 		Gen.gen->draw_poset(Gen.gen->fname_base, depth,
 			Gen.n /* data1 */, f_embedded, f_sideways,
-			Gen.gen->verbose_level);
+			verbose_level);
 		}
 
 
-	if (Gen.f_draw_full_poset) {
+	if (Gen.Control->f_draw_full_poset) {
 		//double x_stretch = 0.4;
 		cout << "Gen.f_draw_full_poset" << endl;
 		Gen.gen->draw_poset_full(Gen.gen->fname_base, depth,
 			Gen.n /* data1 */, f_embedded, f_sideways,
-			Gen.x_stretch, Gen.gen->verbose_level);
+			Gen.x_stretch, verbose_level);
 
 		const char *fname_prefix = "flag_orbits";
 
@@ -959,23 +960,23 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 
 	//Gen.gen->print_data_structure_tex(depth, Gen.gen->verbose_level);
 
-	if (Gen.f_plesken) {
+	if (Gen.Control->f_plesken) {
 		latex_interface L;
 		int *P;
 		int N;
-		Gen.gen->Plesken_matrix_up(depth, P, N, Gen.gen->verbose_level);
+		Gen.gen->Plesken_matrix_up(depth, P, N, verbose_level);
 		cout << "Plesken matrix up:" << endl;
 		L.int_matrix_print_tex(cout, P, N, N);
 
 		FREE_int(P);
-		Gen.gen->Plesken_matrix_down(depth, P, N, Gen.gen->verbose_level);
+		Gen.gen->Plesken_matrix_down(depth, P, N, verbose_level);
 		cout << "Plesken matrix down:" << endl;
 		L.int_matrix_print_tex(cout, P, N, N);
 
 		FREE_int(P);
 		}
 
-	if (Gen.f_list) {
+	if (Gen.Control->f_list) {
 		int f_show_orbit_decomposition = FALSE;
 		int f_show_stab = FALSE;
 		int f_save_stab = FALSE;
@@ -987,7 +988,7 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 			f_show_stab, f_save_stab, f_show_whole_orbit);
 		}
 
-	if (Gen.f_list_all) {
+	if (Gen.Control->f_list_all) {
 		int f_show_orbit_decomposition = FALSE;
 		int f_show_stab = FALSE;
 		int f_save_stab = FALSE;
@@ -1010,10 +1011,10 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 		int level;
 
 		for (level = 0; level <= Gen.gen->depth; level++) {
-			Gen.draw_graphs(level, Gen.scale,
+			Gen.draw_graphs(level, Gen.Control->scale,
 					xmax_in, ymax_in, xmax, ymax,
-					Gen.f_embedded, Gen.f_sideways,
-					Gen.gen->verbose_level);
+					Gen.Control->f_embedded, Gen.Control->f_sideways,
+					verbose_level);
 			}
 		}
 
@@ -1024,9 +1025,9 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 		int ymax = 1000000;
 
 		cout << "before Gen.draw_graphs" << endl;
-		Gen.draw_graphs(Gen.level, Gen.scale,
+		Gen.draw_graphs(Gen.level, Gen.Control->scale,
 				xmax_in, ymax_in, xmax, ymax,
-				Gen.f_embedded, Gen.f_sideways,
+				Gen.Control->f_embedded, Gen.Control->f_sideways,
 				verbose_level);
 		cout << "after Gen.draw_graphs" << endl;
 		}
@@ -1036,12 +1037,12 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 				Gen.gen->depth, Gen.n /* data1 */,
 				Gen.level_graph_level,
 				f_embedded, f_sideways,
-				Gen.gen->verbose_level - 3);
+				verbose_level - 3);
 		}
 
 	if (Gen.f_test_multi_edge) {
 		Gen.gen->test_for_multi_edge_in_classification_graph(
-				depth, Gen.gen->verbose_level);
+				depth, verbose_level);
 		}
 	if (Gen.f_identify) {
 		int *transporter;
@@ -1050,7 +1051,7 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 		transporter = NEW_int(Gen.gen->Poset->A->elt_size_in_int);
 
 		Gen.gen->identify(Gen.identify_data, Gen.identify_data_sz,
-				transporter, orbit_at_level, Gen.gen->verbose_level);
+				transporter, orbit_at_level, verbose_level);
 
 		FREE_int(transporter);
 		}

@@ -18,16 +18,6 @@ namespace top_level {
 
 spread_classify::spread_classify()
 {
-	null();
-}
-
-spread_classify::~spread_classify()
-{
-	freeself();
-}
-
-void spread_classify::null()
-{
 	f_override_schreier_depth = FALSE;
 	f_print_generators = FALSE;
 
@@ -46,6 +36,7 @@ void spread_classify::null()
 	tmp_M2 = NULL;
 	tmp_M3 = NULL;
 	tmp_M4 = NULL;
+	Control = NULL;
 	Poset = NULL;
 	gen = NULL;
 	Sing = NULL;
@@ -55,6 +46,15 @@ void spread_classify::null()
 	Data1 = NULL;
 	Data2 = NULL;
 	//Data3 = NULL;
+}
+
+spread_classify::~spread_classify()
+{
+	freeself();
+}
+
+void spread_classify::null()
+{
 }
 
 void spread_classify::freeself()
@@ -167,7 +167,7 @@ void spread_classify::init(int order, int n, int k, int max_depth,
 	tmp_M4 = NEW_int(n * n);
 	
 	gen = NEW_OBJECT(poset_classification);
-	gen->read_arguments(argc, argv, 1);
+	//gen->read_arguments(argc, argv, 1);
 
 
 	f_projective = TRUE;
@@ -569,6 +569,7 @@ void spread_classify::init2(int verbose_level)
 		}
 	//depth = order + 1;
 
+	Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A2,
 			A->Strong_gens,
@@ -584,7 +585,7 @@ void spread_classify::init2(int verbose_level)
 			cout << "spread_classify::init2 "
 					"before gen->initialize_with_starter" << endl;
 			}
-		gen->initialize_with_starter(Poset,
+		gen->initialize_with_starter(Control, Poset,
 			order + 1, 
 			starter_directory_name, 
 			prefix, 
@@ -606,7 +607,7 @@ void spread_classify::init2(int verbose_level)
 			cout << "spread_classify::init2 "
 					"before gen->initialize" << endl;
 			}
-		gen->initialize(Poset,
+		gen->initialize(Control, Poset,
 			order + 1, 
 			starter_directory_name, prefix, 
 			verbose_level - 2);
@@ -653,8 +654,8 @@ void spread_classify::compute(int verbose_level)
 		cout << "spread_classify::compute calling generator_main" << endl;
 		}
 
-	gen->f_max_depth = TRUE;
-	gen->max_depth = starter_size;
+	gen->Control->f_max_depth = TRUE;
+	gen->Control->max_depth = starter_size;
 	
 	t0 = Os.os_ticks();
 	gen->main(t0, 
@@ -668,10 +669,10 @@ void spread_classify::compute(int verbose_level)
 	if (f_v) {
 		cout << "spread_classify::compute done with generator_main" << endl;
 		}
-	length = gen->nb_orbits_at_level(gen->max_depth);
+	length = gen->nb_orbits_at_level(gen->Control->max_depth);
 	if (f_v) {
 		cout << "spread_classify::compute We found " << length << " orbits on "
-			<< gen->max_depth << "-sets of " << k 
+			<< gen->Control->max_depth << "-sets of " << k
 			<< "-subspaces in PG(" << n - 1 << "," << q << ")" 
 			<< " satisfying the partial spread condition" << endl;
 		}

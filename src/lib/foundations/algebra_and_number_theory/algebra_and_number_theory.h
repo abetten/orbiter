@@ -290,7 +290,7 @@ public:
 	void semilinear_matrix_mult(int *A, int *B, int *AB, int n);
 		// (A,f1) * (B,f2) = (A*B^{\varphi^{-f1}},f1+f2)
 	void semilinear_matrix_mult_memory_given(int *A, int *B, 
-		int *AB, int *tmp_B, int n);
+		int *AB, int *tmp_B, int n, int verbose_level);
 		// (A,f1) * (B,f2) = (A*B^{\varphi^{-f1}},f1+f2)
 	void matrix_mult_affine(int *A, int *B, int *AB, 
 		int n, int verbose_level);

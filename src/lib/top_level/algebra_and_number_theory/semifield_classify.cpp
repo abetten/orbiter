@@ -611,6 +611,7 @@ void semifield_classify::init_poset_classification(
 	}
 
 	Poset = NEW_OBJECT(poset);
+	Control = NEW_OBJECT(poset_classification_control);
 	vector_space *VS;
 	VS = NEW_OBJECT(vector_space);
 	VS->init(F, vector_space_dimension,
@@ -644,7 +645,7 @@ void semifield_classify::init_poset_classification(
 
 	Gen = NEW_OBJECT(poset_classification);
 
-	Gen->read_arguments(argc, argv, 0);
+	//Gen->read_arguments(argc, argv, 0);
 
 	//Gen->prefix[0] = 0;
 	sprintf(Gen->fname_base, "%s", prefix);
@@ -655,7 +656,7 @@ void semifield_classify::init_poset_classification(
 	if (f_v) {
 		cout << "semifield_classify::init before Gen->init" << endl;
 	}
-	Gen->init(Poset,
+	Gen->init(Control, Poset,
 			Gen->depth /* sz */,
 			verbose_level - 2);
 	if (f_v) {

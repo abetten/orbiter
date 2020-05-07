@@ -86,7 +86,7 @@ void six_arcs_not_on_a_conic::init(finite_field *F,
 		"" /* Gen->ECA->input_prefix */, 
 		"" /* Gen->ECA->base_fname */,
 		6 /* Gen->ECA->starter_size */, 
-		argc, argv, 
+		//argc, argv,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::init "

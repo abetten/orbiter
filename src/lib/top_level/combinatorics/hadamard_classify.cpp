@@ -299,7 +299,9 @@ void hadamard_classify::init(int n, int f_draw,
 				"target_depth = " << n << " prefix=" << prefix << endl;
 		}
 
+	poset_classification_control *Control;
 	poset *Poset;
+
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A,
 			A->Strong_gens,
@@ -310,11 +312,14 @@ void hadamard_classify::init(int n, int f_draw,
 			verbose_level);
 
 	gen = NEW_OBJECT(poset_classification);
+	Control = NEW_OBJECT(poset_classification_control);
+	Control->f_W = TRUE;
 
 	gen->compute_orbits_on_subsets(
 		n /* target_depth */,
 		prefix,
-		TRUE /* f_W */, FALSE /* f_w */,
+		//TRUE /* f_W */, FALSE /* f_w */,
+		Control,
 		Poset,
 		verbose_level_clique);
 

@@ -122,7 +122,7 @@ void k_arc_generator::init(
 		"ARCS/" /* Gen->ECA->input_prefix */,
 		base_fname /* Gen->ECA->base_fname */,
 		sz /* Gen->ECA->starter_size */, 
-		argc, argv, 
+		//argc, argv,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "k_arc_generator::init "

@@ -112,61 +112,9 @@ void surface_classify_wedge::freeself()
 	null();
 }
 
-void surface_classify_wedge::read_arguments(
-	int argc, const char **argv,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j;
-
-	if (f_v) {
-		cout << "surface_classify_wedge::read_arguments" << endl;
-		}
-	for (i = 1; i < argc; i++) {
-		if (strcmp(argv[i], "-identify") == 0) {
-			if (nb_identify == 0) {
-				Identify_label = NEW_pchar(1000);
-				Identify_coeff = NEW_pint(1000);
-				Identify_monomial = NEW_pint(1000);
-				Identify_length = NEW_int(1000);
-			}
-			int coeff[1000];
-			int monomial[1000];
-			int nb_terms = 0;
-			cout << "-identify " << endl;
-			const char *label = argv[++i];
-			cout << "-identify " << label << endl;
-			Identify_label[nb_identify] = NEW_char(strlen(label) + 1);
-			strcpy(Identify_label[nb_identify], label);
-			for (j = 0; ; j++) {
-				coeff[j] = atoi(argv[++i]);
-				if (coeff[j] == -1) {
-					break;
-				}
-				monomial[j] = atoi(argv[++i]);
-			}
-			nb_terms = j;
-			Identify_coeff[nb_identify] = NEW_int(nb_terms);
-			Identify_monomial[nb_identify] = NEW_int(nb_terms);
-			Identify_length[nb_identify] = nb_terms;
-			int_vec_copy(coeff, Identify_coeff[nb_identify], nb_terms);
-			int_vec_copy(monomial, Identify_monomial[nb_identify], nb_terms);
-			cout << "-identify " << Identify_label[nb_identify] << " ";
-			for (j = 0; j < Identify_length[nb_identify]; j++) {
-				cout << Identify_coeff[nb_identify][j] << " ";
-				cout << Identify_monomial[nb_identify][j] << " ";
-			}
-			cout << "-1" << endl;
-			nb_identify++;
-			
-		}
-	}
-}
-
 void surface_classify_wedge::init(
 	finite_field *F, linear_group *LG,
 	int f_semilinear, surface_with_action *Surf_A,
-	int argc, const char **argv, 
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -184,7 +132,7 @@ void surface_classify_wedge::init(
 
 	sprintf(fname_base, "surface_%d", q);
 	
-	read_arguments(argc, argv, verbose_level);
+	//read_arguments(argc, argv, verbose_level);
 	
 	A = LG->A_linear;
 	A2 = LG->A2;
@@ -202,7 +150,7 @@ void surface_classify_wedge::init(
 		cout << "surface_classify_wedge::init "
 				"before Classify_double_sixes->init" << endl;
 	}
-	Classify_double_sixes->init(Surf_A, LG, argc, argv, verbose_level);
+	Classify_double_sixes->init(Surf_A, LG, verbose_level);
 	if (f_v) {
 		cout << "surface_classify_wedge::init "
 				"after Classify_double_sixes->init" << endl;

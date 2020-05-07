@@ -17,47 +17,51 @@ namespace classification {
 
 poset_classification::poset_classification()
 {
-	null();
-}
+	t0 = 0;
 
-poset_classification::~poset_classification()
-{
-	freeself();
-}
+	Control = NULL;
 
-void poset_classification::null()
-{
 	problem_label[0] = 0;
 	
-	//f_candidate_check_func = FALSE;
-	//f_candidate_incremental_check_func = FALSE;
 	f_print_function = FALSE;
 	Elt_memory = NULL;
 
-	//A = NULL;
-	//Strong_gens = NULL;
 	Poset = NULL;
 
 	Schreier_vector_handler = NULL;
-	//SG0 = NULL;
-	//transversal_length = NULL;
 	S = NULL;
+	sz = 0;
+
+	Elt_memory = NULL;
+	Elt1 = NULL;
+	Elt2 = NULL;
+	Elt3 = NULL;
+	Elt4 = NULL;
+	Elt5 = NULL;
+	Elt6 = NULL;
+
 
 	tmp_set_apply_fusion = NULL;
 	tmp_find_node_for_subspace_by_rank1 = NULL;
 	tmp_find_node_for_subspace_by_rank2 = NULL;
-	//tmp_find_node_for_subspace_by_rank3 = NULL;
 
+
+	f_print_function = FALSE;;
+	print_function = NULL;
+	print_function_data = NULL;
 
 	nb_times_trace = 0;
 	nb_times_trace_was_saved = 0;
 	
-	sz = 0;
 	transporter = NULL;
 	set = NULL;
 	
 	
 	nb_poset_orbit_nodes_used = 0;
+	nb_poset_orbit_nodes_allocated = 0;
+	poset_orbit_nodes_increment = 0;
+	poset_orbit_nodes_increment_last = 0;
+
 	root = NULL;
 	first_poset_orbit_node_at_level = NULL;
 	set0 = NULL;
@@ -69,49 +73,25 @@ void poset_classification::null()
 	nb_unprocessed_nodes_at_level = NULL;
 
 
-	//f_prefix = FALSE;
-	//prefix[0] = 0;
-	
-	f_lex = FALSE;
-	f_max_depth = FALSE;
-	
-	f_extend = FALSE;
-	f_recover = FALSE;
-		
-	f_w = FALSE;
-	f_W = FALSE;
-	f_write_data_files = FALSE;
-	f_t = FALSE;
-	f_T = FALSE;
-	f_log = FALSE;
-	f_Log = FALSE;
-	f_print_only = FALSE;
-	f_find_group_order = FALSE;
-
-	f_has_tools_path = FALSE;
-	tools_path = NULL;
 
 	f_has_invariant_subset_for_root_node = FALSE;
 	invariant_subset_for_root_node = NULL;
+	invariant_subset_for_root_node_size = 0;
 	
-	verbose_level = 0;
-	verbose_level_group_theory = 0;
 	
 	fname_base[0] = 0;
 	
-	xmax = 1000000;
-	ymax = 1000000;
-	radius = 300;
-	
 	f_starter = FALSE;
-#if 0
-	f_downstep_split = FALSE;
-	f_upstep_split = FALSE;
-	f_downstep_collate = FALSE;
-	f_upstep_collate = FALSE;
-	split_mod = 0;
-	split_case = 0;
-#endif
+	starter_size = 0;
+	starter = NULL;
+	starter_strong_gens = NULL;
+	starter_live_points = NULL;
+	starter_nb_live_points = 0;
+	starter_canonize_data = 0;
+	starter_canonize = NULL;
+	starter_canonize_Elt = NULL;
+
+
 	
 	f_do_group_extension_in_upstep = TRUE;
 
@@ -119,36 +99,30 @@ void poset_classification::null()
 	downstep_orbits_print_max_orbits = 25;
 	downstep_orbits_print_max_points_per_orbit = 50;
 
-#if 0
-	f_on_subspaces = FALSE;
-	rank_point_func = NULL;
-	unrank_point_func = NULL;
-	tmp_v1 = NULL;
-#endif
+	nb_times_image_of_called0 = 0;
+	nb_times_mult_called0 = 0;
+	nb_times_invert_called0 = 0;
+	nb_times_retrieve_called0 = 0;
+	nb_times_store_called0 = 0;
 
-#if 0
-	f_early_test_func = FALSE;
-	early_test_func = NULL;
-	f_its_OK_to_not_have_an_early_test_func = FALSE;
-#endif
+	progress_last_time = 0.;
+	progress_epsilon = 0.;
+
 
 	depth = 0;
-
-	f_export_schreier_trees = FALSE;
-	f_draw_schreier_trees = FALSE;
-	schreier_tree_prefix[0] = 0;
-	schreier_tree_xmax = 1000000;
-	schreier_tree_ymax =  500000;
-	schreier_tree_f_circletext = TRUE;
-	schreier_tree_rad = 25000;
-	schreier_tree_f_embedded = TRUE;
-	schreier_tree_f_sideways = FALSE;
-	schreier_tree_scale = 0.3;
-	schreier_tree_line_width = 1.;
 
 	os_interface Os;
 
 	t0 = Os.os_ticks();
+}
+
+poset_classification::~poset_classification()
+{
+	freeself();
+}
+
+void poset_classification::null()
+{
 }
 
 void poset_classification::freeself()
@@ -220,6 +194,8 @@ void poset_classification::freeself()
 		}
 	null();
 }
+
+#if 0
 
 void poset_classification::usage()
 {
@@ -451,8 +427,12 @@ void poset_classification::read_arguments(int argc,
 		cout << "poset_classification::read_arguments done" << endl;
 		}
 }
+#endif
 
-void poset_classification::init(poset *Poset,
+
+void poset_classification::init(
+	poset_classification_control *PC_control,
+	poset *Poset,
 	int sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -464,6 +444,7 @@ void poset_classification::init(poset *Poset,
 		cout << "poset_classification::init" << endl;
 		}
 	
+	Control = PC_control;
 	poset_classification::Poset = Poset;
 	//poset_classification::A = A;
 	//poset_classification::A2 = A2;
@@ -600,6 +581,7 @@ void poset_classification::init(poset *Poset,
 
 
 void poset_classification::initialize(
+	poset_classification_control *PC_control,
 	poset *Poset,
 	int depth, 
 	const char *path, const char *prefix, int verbose_level)
@@ -629,7 +611,8 @@ void poset_classification::initialize(
 		cout << "poset_classification::initialize "
 				"calling gen->init" << endl;
 		}
-	init(Poset,
+	init(PC_control,
+		Poset,
 		depth, verbose_level - 2);
 	
 	int nb_poset_orbit_nodes = 1000;
@@ -653,6 +636,7 @@ void poset_classification::initialize(
 
 
 void poset_classification::initialize_with_starter(
+	poset_classification_control *PC_control,
 	poset *Poset,
 	int depth, 
 	char *path, 
@@ -678,7 +662,7 @@ void poset_classification::initialize_with_starter(
 	strcpy(poset_classification::prefix, prefix);
 	sprintf(fname_base, "%s%s", path, prefix);
 
-
+	Control = PC_control;
 	poset_classification::depth = depth;
 	downstep_orbits_print_max_orbits = 50;
 	downstep_orbits_print_max_points_per_orbit = INT_MAX;
@@ -691,7 +675,7 @@ void poset_classification::initialize_with_starter(
 		cout << "poset_classification::initialize_with_starter "
 				"calling gen->init" << endl;
 		}
-	init(Poset,
+	init(PC_control, Poset,
 		depth, verbose_level - 2);
 	
 

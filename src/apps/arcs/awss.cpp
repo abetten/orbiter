@@ -184,6 +184,7 @@ void do_it(finite_field *F, linear_group *LG,
 	}
 
 	action *A_on_conics;
+	poset_classification_control *Control;
 	poset *Poset;
 	strong_generators *SG;
 	poset_classification *PC;
@@ -218,6 +219,7 @@ void do_it(finite_field *F, linear_group *LG,
 
 
 
+	Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(LG->A2, A_on_conics,
 			SG,
@@ -225,7 +227,7 @@ void do_it(finite_field *F, linear_group *LG,
 
 	cout << "before Poset->orbits_on_k_sets_compute" << endl;
 
-	PC = Poset->orbits_on_k_sets_compute(3 /* k */, verbose_level - 1);
+	PC = Poset->orbits_on_k_sets_compute(Control, 3 /* k */, verbose_level - 1);
 
 	cout << "after Poset->orbits_on_k_sets_compute" << endl;
 	cout << "nb_orbits at level 1 = " << PC->nb_orbits_at_level(1) << endl;

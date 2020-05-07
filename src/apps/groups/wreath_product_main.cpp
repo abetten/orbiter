@@ -162,10 +162,7 @@ int main(int argc, const char **argv)
 
 	T = NEW_OBJECT(tensor_classify);
 
-	T->init(argc, argv, nb_factors, d, q, depth,
-			//f_permutations, f_orbits, f_tensor_ranks,
-			//f_orbits_restricted, orbits_restricted_fname,
-			//f_orbits_restricted_compute,
+	T->init(nb_factors, d, q, depth,
 			0/*verbose_level*/);
 
 	if (f_tensor_ranks) {

@@ -55,6 +55,23 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_embedded = FALSE;
 	f_sideways = FALSE;
 	x_stretch = 1.;
+	f_classify_arcs = FALSE;
+	classify_arcs_target_size = 0;
+	f_classify_arcs_d = FALSE;
+	classify_arcs_d = 0;
+	f_not_on_conic = FALSE;
+	f_exact_cover = FALSE;
+	ECA = NULL;
+	f_isomorph_arguments = FALSE;
+	IA = NULL;
+	f_surface_classify = FALSE;
+	f_surface_report = FALSE;
+	f_surface_identify_Sa = FALSE;
+	f_surface_isomorphism_testing = FALSE;
+		surface_descr_isomorph1 = NULL;
+		surface_descr_isomorph2 = NULL;
+	f_surface_recognize = FALSE;
+		surface_descr = NULL;
 }
 
 group_theoretic_activity_description::~group_theoretic_activity_description()
@@ -239,14 +256,96 @@ int group_theoretic_activity_description::read_arguments(
 			cout << "-end" << endl;
 			return i;
 			}
+		else if (strcmp(argv[i], "-classify_arcs") == 0) {
+			f_classify_arcs = TRUE;
+			classify_arcs_target_size = atoi(argv[++i]);
+			cout << "-classify_arcs" << endl;
+		}
+		else if (strcmp(argv[i], "-classify_arcs_d") == 0) {
+			f_classify_arcs_d = TRUE;
+			classify_arcs_d = atoi(argv[++i]);
+			cout << "-classify_arcs_d " << classify_arcs_d << endl;
+		}
+		else if (strcmp(argv[i], "-not_on_conic") == 0) {
+			f_not_on_conic = TRUE;
+			cout << "-not_on_conic" << endl;
+		}
+		else if (strcmp(argv[i], "-exact_cover") == 0) {
+			f_exact_cover = TRUE;
+			ECA = NEW_OBJECT(exact_cover_arguments);
+			i += ECA->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done with -exact_cover" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+		else if (strcmp(argv[i], "-isomorph_arguments") == 0) {
+			f_isomorph_arguments = TRUE;
+			IA = NEW_OBJECT(isomorph_arguments);
+			i += IA->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done with -isomorph_arguments" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+		else if (strcmp(argv[i], "-surface_classify") == 0) {
+			f_surface_classify = TRUE;
+			cout << "-surface_classify " << endl;
+		}
+		else if (strcmp(argv[i], "-surface_report") == 0) {
+			f_surface_report = TRUE;
+			cout << "-surface_report " << endl;
+		}
+		else if (strcmp(argv[i], "-surface_identify_Sa") == 0) {
+			f_surface_identify_Sa = TRUE;
+			cout << "-surface_identify_Sa " << endl;
+		}
+		else if (strcmp(argv[i], "-surface_isomorphism_testing") == 0) {
+			f_surface_isomorphism_testing = TRUE;
+			cout << "-surface_isomorphism_testing reading description of first surface" << endl;
+			surface_descr_isomorph1 = NEW_OBJECT(surface_create_description);
+			i += surface_descr_isomorph1->
+					read_arguments(argc - (i - 1), argv + i,
+					verbose_level) - 1;
+			cout << "-isomorph after reading description of first surface" << endl;
+			i += 2;
+			cout << "the current argument is " << argv[i] << endl;
+			cout << "-isomorph reading description of second surface" << endl;
+			surface_descr_isomorph2 = NEW_OBJECT(surface_create_description);
+			i += surface_descr_isomorph2->
+					read_arguments(argc - (i - 1), argv + i,
+					verbose_level) - 1;
+			cout << "-surface_isomorphism_testing " << endl;
+		}
+		else if (strcmp(argv[i], "-surface_recognize") == 0) {
+			f_surface_recognize = TRUE;
+			cout << "-surface_recognize reading description of surface" << endl;
+			surface_descr = NEW_OBJECT(surface_create_description);
+			i += surface_descr->
+					read_arguments(argc - (i - 1), argv + i,
+					verbose_level) - 1;
+			i += 2;
+			cout << "-surface_recognize " << endl;
+		}
+		else if (strcmp(argv[i], "-end") == 0) {
+			cout << "-end" << endl;
+			break;
+			}
 		else {
 			cout << "group_theoretic_activity_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
 		}
-
 	} // next i
 	cout << "group_theoretic_activity_description::read_arguments done" << endl;
-	return i;
+	return i + 1;
 }
 
 

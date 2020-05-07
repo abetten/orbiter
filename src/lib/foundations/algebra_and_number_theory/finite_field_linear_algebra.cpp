@@ -229,17 +229,27 @@ void finite_field::semilinear_matrix_mult(int *A, int *B, int *AB, int n)
 }
 
 void finite_field::semilinear_matrix_mult_memory_given(
-		int *A, int *B, int *AB, int *tmp_B, int n)
+		int *A, int *B, int *AB, int *tmp_B, int n, int verbose_level)
 // (A,f1) * (B,f2) = (A*B^{\varphi^{-f1}},f1+f2)
 {
+	int f_v = (verbose_level >= 1);
 	int i, j, k, a, b, ab, c, f1, f2, f1inv;
 	int *B2 = tmp_B;
 	number_theory_domain NT;
 	
+	if (f_v) {
+		cout << "finite_field::semilinear_matrix_mult_memory_given" << endl;
+	}
 	//B2 = NEW_int(n * n);
 	f1 = A[n * n];
 	f2 = B[n * n];
 	f1inv = NT.mod(-f1, e);
+	if (f_v) {
+		cout << "finite_field::semilinear_matrix_mult_memory_given f1=" << f1 << endl;
+		cout << "finite_field::semilinear_matrix_mult_memory_given f2=" << f2 << endl;
+		cout << "finite_field::semilinear_matrix_mult_memory_given f1inv=" << f1inv << endl;
+	}
+
 	int_vec_copy(B, B2, n * n);
 	vector_frobenius_power_in_place(B2, n * n, f1inv);
 	for (i = 0; i < n; i++) {
@@ -260,6 +270,9 @@ void finite_field::semilinear_matrix_mult_memory_given(
 	AB[n * n] = NT.mod(f1 + f2, e);
 	//vector_frobenius_power_in_place(B, n * n, f1);
 	//FREE_int(B2);
+	if (f_v) {
+		cout << "finite_field::semilinear_matrix_mult_memory_given done" << endl;
+	}
 }
 
 void finite_field::matrix_mult_affine(int *A, int *B, int *AB,

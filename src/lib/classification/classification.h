@@ -26,6 +26,7 @@ class classification_step;
 class orbit_node;
 class poset;
 class poset_description;
+class poset_classification_control;
 
 
 enum trace_result { 

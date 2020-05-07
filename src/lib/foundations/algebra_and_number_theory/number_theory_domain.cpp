@@ -136,7 +136,7 @@ long int number_theory_domain::mod(long int a, long int p)
 	long int r;
 
 	if (a < 0) {
-		a = -1;
+		a = -1 * a; // 5/6/2020: here was an error: it was a = -1;
 		f_negative = TRUE;
 	}
 	r = a % p;

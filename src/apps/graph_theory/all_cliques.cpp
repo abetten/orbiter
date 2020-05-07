@@ -239,6 +239,7 @@ void use_group(const char *fname, colored_graph *CG,
 
 
 	char prefix[1000];
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen;
 	int nb_orbits, depth;
@@ -274,11 +275,13 @@ void use_group(const char *fname, colored_graph *CG,
 
 		}
 
+	Control = NEW_OBJECT(poset_classification_control);
 	gen = NEW_OBJECT(poset_classification);
 	gen->compute_orbits_on_subsets(
 		CG->nb_points /* target_depth */,
 		prefix,
-		FALSE /* f_W */, FALSE /* f_w */,
+		//FALSE /* f_W */, FALSE /* f_w */,
+		Control,
 		Poset,
 		verbose_level);
 

@@ -55,7 +55,7 @@ public:
 	void elementwise_power_int(discreta_matrix &A, int k);
 	int is_in_center(discreta_matrix &B);
 	void matrix_convert_to_numerical(discreta_matrix &A, int *AA, int q);
-	void classify_surfaces(int argc, const char **argv,
+	void classify_surfaces(
 			finite_field *F, linear_group *LG,
 			surface_domain *&Surf, surface_with_action *&Surf_A,
 			surface_classify_wedge *&SCW,
@@ -192,6 +192,27 @@ public:
 	int f_sideways;
 	double x_stretch;
 
+	// classification of arcs in projective spaces:
+	int f_classify_arcs;
+	int classify_arcs_target_size;
+	int f_classify_arcs_d;
+	int classify_arcs_d;
+	int f_not_on_conic;
+	int f_exact_cover;
+	exact_cover_arguments *ECA;
+	int f_isomorph_arguments;
+	isomorph_arguments *IA;
+
+
+	int f_surface_classify;
+	int f_surface_report;
+	int f_surface_identify_Sa;
+	int f_surface_isomorphism_testing;
+		surface_create_description *surface_descr_isomorph1;
+		surface_create_description *surface_descr_isomorph2;
+	int f_surface_recognize;
+		surface_create_description *surface_descr;
+
 
 	group_theoretic_activity_description();
 	~group_theoretic_activity_description();
@@ -204,6 +225,54 @@ public:
 		int verbose_level);
 
 };
+
+
+// #############################################################################
+// group_theoretic_activity.cpp
+// #############################################################################
+
+
+//! perform a group theoretic actvity
+
+class group_theoretic_activity {
+public:
+	group_theoretic_activity_description *Descr;
+	finite_field *F;
+	linear_group *LG;
+	action *A;
+
+	group_theoretic_activity();
+	~group_theoretic_activity();
+	void init(group_theoretic_activity_description *Descr,
+			finite_field *F, linear_group *LG,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+	void classes(int verbose_level);
+	void multiply(int verbose_level);
+	void inverse(int verbose_level);
+	void normalizer(int verbose_level);
+	void report(int verbose_level);
+	void print_elements(int verbose_level);
+	void print_elements_tex(int verbose_level);
+	void search_subgroup(int verbose_level);
+	void orbits_on_set_system_from_file(int verbose_level);
+	void orbits_on_set_from_file(int verbose_level);
+	void orbit_of(int verbose_level);
+	void orbits_on_points(int verbose_level);
+	void orbits_on_subsets(int verbose_level);
+	void do_classify_arcs(int verbose_level);
+	void do_surface_classify(int verbose_level);
+	void do_surface_report(int verbose_level);
+	void do_surface_identify_Sa(int verbose_level);
+	void do_surface_isomorphism_testing(
+			surface_create_description *surface_descr_isomorph1,
+			surface_create_description *surface_descr_isomorph2,
+			int verbose_level);
+	void do_surface_recognize(
+			surface_create_description *surface_descr,
+			int verbose_level);
+};
+
 
 
 // #############################################################################
@@ -340,6 +409,8 @@ public:
 
 
 	poset *Poset;
+	poset_classification_control *Control;
+
 	poset_classification *Gen;
 	sims *Symmetry_group;
 

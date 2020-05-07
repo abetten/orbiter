@@ -18,8 +18,6 @@ namespace top_level {
 
 tensor_classify::tensor_classify()
 {
-	argc = 0;
-	argv = NULL;
 	nb_factors = 0;
 	vector_space_dimension = 0;
 	v = NULL;
@@ -34,6 +32,7 @@ tensor_classify::tensor_classify()
 	points = NULL;
 	W = NULL;
 	VS = NULL;
+	Control = NULL;
 	Poset = NULL;
 	Gen = NULL;
 	t0 = 0;
@@ -44,7 +43,7 @@ tensor_classify::~tensor_classify()
 
 }
 
-void tensor_classify::init(int argc, const char **argv,
+void tensor_classify::init(
 		int nb_factors, int n, int q, int depth,
 		int verbose_level)
 {
@@ -56,8 +55,6 @@ void tensor_classify::init(int argc, const char **argv,
 	}
 	t0 = Os.os_ticks();
 
-	tensor_classify::argc = argc;
-	tensor_classify::argv = argv;
 	tensor_classify::nb_factors = nb_factors;
 	tensor_classify::n = n;
 	tensor_classify::q = q;
@@ -286,13 +283,11 @@ void tensor_classify::classify_poset(int depth,
 	}
 	Gen = NEW_OBJECT(poset_classification);
 
-	Gen->read_arguments(argc, argv, 0);
+	//Gen->read_arguments(argc, argv, 0);
 
 	//Gen->prefix[0] = 0;
 	sprintf(Gen->fname_base, "wreath_%d_%d_%d", nb_factors, n, q);
 
-	Gen->f_max_depth = TRUE;
-	Gen->max_depth = depth;
 	Gen->depth = depth;
 
 	if (f_v) {
@@ -303,25 +298,7 @@ void tensor_classify::classify_poset(int depth,
 		cout << "tensor_classify::classify_poset after create_restricted_action_on_rank_one_tensors" << endl;
 	}
 
-#if 0
-	VS = NEW_OBJECT(vector_space);
-	VS->init(F,
-			vector_space_dimension /* dimension */,
-			verbose_level - 1);
-	VS->init_rank_functions(
-			wreath_rank_point_func,
-			wreath_unrank_point_func,
-			this,
-			verbose_level - 1);
-
-
-	Poset = NEW_OBJECT(poset);
-	Poset->init_subspace_lattice(
-			A0, A,
-			SG,
-			VS,
-			verbose_level);
-#else
+	Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, Ar,
 			SG,
@@ -335,15 +312,16 @@ void tensor_classify::classify_poset(int depth,
 			wreath_product_rank_one_early_test_func_callback,
 			this /* void *data */,
 			verbose_level);
-#endif
 
 	if (f_v) {
 		cout << "tensor_classify::classify_poset before Gen->init" << endl;
 		}
-	Gen->init(Poset, depth /* sz */, verbose_level);
+	Gen->init(Control, Poset, depth /* sz */, verbose_level);
 	if (f_v) {
 		cout << "tensor_classify::classify_poset after Gen->init" << endl;
 		}
+	Gen->Control->f_max_depth = TRUE;
+	Gen->Control->max_depth = depth;
 
 
 	Gen->f_print_function = TRUE;

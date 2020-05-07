@@ -190,9 +190,11 @@ public:
 	void unrank_point(int *v, long int rk);
 	long int rank_point(int *v);
 	void orbits_on_k_sets(
-		int k, long int *&orbit_reps, int &nb_orbits, int verbose_level);
+			poset_classification_control *Control,
+			int k, long int *&orbit_reps, int &nb_orbits, int verbose_level);
 	poset_classification *orbits_on_k_sets_compute(
-		int k, int verbose_level);
+			poset_classification_control *Control,
+			int k, int verbose_level);
 };
 
 int callback_test_independence_condition(orbit_based_testing *Obt,
@@ -234,6 +236,83 @@ public:
 
 
 
+// #############################################################################
+// poset_classification_control.cpp
+// #############################################################################
+
+//! to control the bahavior of the poset classification algorithm
+
+
+class poset_classification_control {
+
+public:
+	int verbose_level;
+	int verbose_level_group_theory;
+
+	int f_lex;
+	int f_w; // write output in level files (only last level)
+	int f_W; // write output in level files (each level)
+	int f_write_data_files;
+	int f_T; // draw tree file (each level)
+	int f_t; // draw tree file (only last level)
+	int f_Log; // log nodes (each level)
+	int f_log; // log nodes (only last level)
+	int f_print_only;
+	int f_find_group_order;
+	int find_group_order;
+
+	int f_has_tools_path;
+	const char *tools_path;
+
+
+	int xmax, ymax, radius;
+
+	int f_recover;
+	const char *recover_fname;
+
+	int f_extend;
+	int extend_from, extend_to;
+	int extend_r, extend_m;
+	char extend_fname[1000];
+
+	int f_max_depth;
+	int max_depth;
+
+
+	int f_draw_poset;
+	int f_draw_full_poset;
+	int f_plesken;
+	int f_print_data_structure;
+	int f_list;
+	int f_list_all;
+	int f_table_of_nodes;
+
+	double scale;
+	int f_embedded;
+	int f_sideways;
+
+
+	int f_export_schreier_trees;
+	int f_draw_schreier_trees;
+		char schreier_tree_prefix[1000];
+		int schreier_tree_xmax; // = 1000000;
+		int schreier_tree_ymax; // =  500000;
+		int schreier_tree_f_circletext; // = TRUE;
+		int schreier_tree_rad; // = 25000;
+		int schreier_tree_f_embedded;
+		int schreier_tree_f_sideways;
+		double schreier_tree_scale;
+		double schreier_tree_line_width;
+
+
+	poset_classification_control();
+	~poset_classification_control();
+	int read_arguments(
+		int argc, const char **argv,
+		int verbose_level);
+
+};
+
 
 
 // #############################################################################
@@ -247,6 +326,8 @@ class poset_classification {
 
 public:
 	int t0;
+
+	poset_classification_control *Control;
 
 	char problem_label[1000];
 	
@@ -321,36 +402,6 @@ public:
 
 
 	int depth; // search depth
-	int f_w; // write output in level files (only last level)
-	int f_W; // write output in level files (each level)
-	int f_write_data_files;
-	int f_T; // draw tree file (each level)
-	int f_t; // draw tree file (only last level)
-	int f_Log; // log nodes (each level)
-	int f_log; // log nodes (only last level)
-	int f_print_only;
-	int f_find_group_order;
-	int find_group_order;
-	
-	int f_has_tools_path;
-	const char *tools_path;
-
-	int verbose_level;
-	int verbose_level_group_theory;
-	
-	int xmax, ymax, radius;
-	
-	int f_recover;
-	const char *recover_fname;
-
-	int f_extend;
-	int extend_from, extend_to;
-	int extend_r, extend_m;
-	char extend_fname[1000];
-
-	int f_lex;
-	int f_max_depth;
-	int max_depth;
 
 	char fname_base[1000]; // = path + prefix
 	char prefix[1000]; // = fname_base without prefix
@@ -391,17 +442,6 @@ public:
 	double progress_last_time;
 	double progress_epsilon;
 
-	int f_export_schreier_trees;
-	int f_draw_schreier_trees;
-		char schreier_tree_prefix[1000];
-		int schreier_tree_xmax; // = 1000000;
-		int schreier_tree_ymax; // =  500000;
-		int schreier_tree_f_circletext; // = TRUE;
-		int schreier_tree_rad; // = 25000;
-		int schreier_tree_f_embedded;
-		int schreier_tree_f_sideways;
-		double schreier_tree_scale;
-		double schreier_tree_line_width;
 
 
 
@@ -536,27 +576,30 @@ public:
 	~poset_classification();
 	void null();
 	void freeself();
-	void usage();
-	void read_arguments(int argc, const char **argv, 
-		int verbose_level);
-	void init(poset *Poset,
+	void init(
+		poset_classification_control *PC_control,
+		poset *Poset,
 		int sz, int verbose_level);
-	void initialize(poset *Poset,
+	void initialize(
+		poset_classification_control *PC_control,
+		poset *Poset,
 		int depth, 
 		const char *path, const char *prefix, int verbose_level);
-	void initialize_with_starter(poset *Poset,
-		int depth, 
-		char *path, 
-		char *prefix, 
-		int starter_size, 
-		long int *starter,
-		strong_generators *Starter_Strong_gens, 
-		long int *starter_live_points,
-		int starter_nb_live_points, 
-		void *starter_canonize_data, 
-		int (*starter_canonize)(long int *Set, int len, int *Elt,
-			void *data, int verbose_level), 
-		int verbose_level);
+	void initialize_with_starter(
+			poset_classification_control *PC_control,
+			poset *Poset,
+			int depth,
+			char *path,
+			char *prefix,
+			int starter_size,
+			long int *starter,
+			strong_generators *Starter_Strong_gens,
+			long int *starter_live_points,
+			int starter_nb_live_points,
+			void *starter_canonize_data,
+			int (*starter_canonize)(long int *Set, int len, int *Elt,
+				void *data, int verbose_level),
+			int verbose_level);
 	void init_root_node_invariant_subset(
 		int *invariant_subset, int invariant_subset_size, 
 		int verbose_level);
@@ -582,7 +625,8 @@ public:
 	void compute_orbits_on_subsets(
 		int target_depth,
 		const char *prefix,
-		int f_W, int f_w,
+		//int f_W, int f_w,
+		poset_classification_control *PC_control,
 		poset *Poset,
 		int verbose_level);
 	int compute_orbits(int from_level, int to_level, 

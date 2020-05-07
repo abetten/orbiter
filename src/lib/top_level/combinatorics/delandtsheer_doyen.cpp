@@ -51,6 +51,9 @@ delandtsheer_doyen::delandtsheer_doyen()
 	A = NULL;
 	A0 = NULL;
 	P = NULL;
+	Control_pairs = NULL;
+	Control_search = NULL;
+
 	Poset_pairs = NULL;
 	Poset_search = NULL;
 	Pairs = NULL;
@@ -596,9 +599,10 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 			cout << "delandtsheer_doyen "
 					"after Strong_gens->init_from_data_with_target_go_ascii" << endl;
 			}
+		Control_pairs = NEW_OBJECT(poset_classification_control);
 		Pairs = NEW_OBJECT(poset_classification);
 
-		Pairs->read_arguments(argc, argv, 0);
+		//Pairs->read_arguments(argc, argv, 0);
 
 		//Pairs->prefix[0] = 0;
 		sprintf(Pairs->fname_base, "pairs_%s_%d_%d",
@@ -616,7 +620,7 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 			cout << "delandtsheer_doyen::init "
 					"before Pairs->init" << endl;
 			}
-		Pairs->init(Poset_pairs,
+		Pairs->init(Control_pairs, Poset_pairs,
 				Pairs->depth /* sz */, verbose_level);
 		if (f_v) {
 			cout << "direct_product_action::init "
@@ -656,7 +660,7 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 
 		//Pairs->f_allowed_to_show_group_elements = TRUE;
 
-		Pairs->f_max_depth = FALSE;
+		Control_pairs->f_max_depth = FALSE;
 		Pairs->depth = 2;
 		Pairs->main(t0,
 			Pairs->depth /* schreier_depth */,
@@ -904,7 +908,7 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 
 		Gen = NEW_OBJECT(poset_classification);
 
-		Gen->read_arguments(argc, argv, 0);
+		//Gen->read_arguments(argc, argv, 0);
 
 		//Gen->prefix[0] = 0;
 
@@ -920,6 +924,7 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 
 
 		Gen->depth = depth;
+		Control_search = NEW_OBJECT(poset_classification_control);
 		Poset_search = NEW_OBJECT(poset);
 		Poset_search->init_subset_lattice(A0, A, SG,
 				verbose_level);
@@ -937,7 +942,7 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 			cout << "delandtsheer_doyen::init "
 					"before Gen->init" << endl;
 			}
-		Gen->init(Poset_search,
+		Gen->init(Control_search, Poset_search,
 				Gen->depth /* sz */, verbose_level);
 		if (f_v) {
 			cout << "delandtsheer_doyen::init "
@@ -974,7 +979,7 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 
 		//Gen->f_allowed_to_show_group_elements = TRUE;
 
-		Gen->f_max_depth = FALSE;
+		Gen->Control->f_max_depth = FALSE;
 		Gen->depth = depth;
 		Gen->main(t0,
 			Gen->depth /* schreier_depth */,

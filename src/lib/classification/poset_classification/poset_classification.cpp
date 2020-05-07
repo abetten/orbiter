@@ -1488,7 +1488,7 @@ void poset_classification::list_whole_orbit(
 				fname_base, depth, orbit_idx);
 		cout << "saving stabilizer poset_classifications "
 				"to file " << fname << endl;
-		Strong_gens->write_file(fname, verbose_level);
+		Strong_gens->write_file(fname, Control->verbose_level);
 		}
 
 

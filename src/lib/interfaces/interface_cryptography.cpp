@@ -138,6 +138,13 @@ interface_cryptography::interface_cryptography()
 	EC_multiple_of_n = 0;
 	f_EC_discrete_log = FALSE;
 	EC_discrete_log_pt_text = NULL;
+	f_EC_baby_step_giant_step = FALSE;
+	EC_bsgs_G = NULL;
+	EC_bsgs_N = 0;
+	EC_bsgs_cipher_text = NULL;
+	f_EC_baby_step_giant_step_decode = FALSE;
+	EC_bsgs_A = NULL;
+	EC_bsgs_keys = NULL;
 	f_nullspace = FALSE;
 	nullspace_q = 0;
 	nullspace_m = 0;
@@ -319,6 +326,12 @@ void interface_cryptography::print_help(int argc, const char **argv, int i, int 
 	else if (strcmp(argv[i], "-EC_discrete_log") == 0) {
 		cout << "-EC_discrete_log <int : q> <int : b> <int : c> <string : base_pt> <int : n> <string : pt>" << endl;
 	}
+	else if (strcmp(argv[i], "-EC_baby_step_giant_step") == 0) {
+		cout << "-EC_baby_step_giant_step <int : q> <int : b> <int : c> <string : G> <int : N> <string : cipher_text_R>" << endl;
+	}
+	else if (strcmp(argv[i], "-EC_baby_step_giant_step_decode") == 0) {
+		cout << "-EC_baby_step_giant_step_decode <int : q> <int : b> <int : c> <string : A> <int : N> <string : cipher_text_T> <string : keys> " << endl;
+	}
 	else if (strcmp(argv[i], "-nullspace") == 0) {
 		cout << "-nullspace <int : q> <int : m> <int : n> <string : coeff_matrix>" << endl;
 	}
@@ -467,6 +480,12 @@ int interface_cryptography::recognize_keyword(int argc, const char **argv, int i
 		return true;
 	}
 	else if (strcmp(argv[i], "-EC_discrete_log") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-EC_baby_step_giant_step") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-EC_baby_step_giant_step_decode") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-nullspace") == 0) {
@@ -803,6 +822,37 @@ void interface_cryptography::read_arguments(int argc, const char **argv, int i0,
 					<< " " << EC_b << " " << EC_c << " " << EC_pt_text << " "
 					<< EC_discrete_log_pt_text << endl;
 		}
+		else if (strcmp(argv[i], "-EC_baby_step_giant_step") == 0) {
+			f_EC_baby_step_giant_step = TRUE;
+			EC_q = atoi(argv[++i]);
+			EC_b = atoi(argv[++i]);
+			EC_c = atoi(argv[++i]);
+			EC_bsgs_G = argv[++i];
+			EC_bsgs_N = atoi(argv[++i]);
+			EC_bsgs_cipher_text = argv[++i];
+			cout << "-EC_baby_step_giant_step " << EC_q
+					<< " " << EC_b << " " << EC_c << " "
+					<< EC_bsgs_G << " "
+					<< EC_bsgs_N << " "
+					<< EC_bsgs_cipher_text << endl;
+		}
+		else if (strcmp(argv[i], "-EC_baby_step_giant_step_decode") == 0) {
+			f_EC_baby_step_giant_step_decode = TRUE;
+			EC_q = atoi(argv[++i]);
+			EC_b = atoi(argv[++i]);
+			EC_c = atoi(argv[++i]);
+			EC_bsgs_A = argv[++i];
+			EC_bsgs_N = atoi(argv[++i]);
+			EC_bsgs_cipher_text = argv[++i];
+			EC_bsgs_keys = argv[++i];
+			cout << "-EC_baby_step_giant_step_decode " << EC_q
+					<< " " << EC_b << " " << EC_c << " "
+					<< EC_bsgs_A << " "
+					<< EC_bsgs_N << " "
+					<< EC_bsgs_cipher_text << " "
+					<< EC_bsgs_keys << " "
+					<< endl;
+		}
 		else if (strcmp(argv[i], "-nullspace") == 0) {
 			f_nullspace = TRUE;
 			nullspace_q = atoi(argv[++i]);
@@ -1060,6 +1110,16 @@ void interface_cryptography::worker(int verbose_level)
 	else if (f_EC_discrete_log) {
 		do_EC_discrete_log(EC_q, EC_b, EC_c, EC_pt_text,
 				EC_discrete_log_pt_text, verbose_level);
+	}
+	else if (f_EC_baby_step_giant_step) {
+		do_EC_baby_step_giant_step(EC_q, EC_b, EC_c,
+				EC_bsgs_G, EC_bsgs_N, EC_bsgs_cipher_text,
+				verbose_level);
+	}
+	else if (f_EC_baby_step_giant_step_decode) {
+		do_EC_baby_step_giant_step_decode(EC_q, EC_b, EC_c,
+				EC_bsgs_A, EC_bsgs_N, EC_bsgs_cipher_text, EC_bsgs_keys,
+				verbose_level);
 	}
 	else if (f_nullspace) {
 		do_nullspace(nullspace_q, nullspace_m, nullspace_n,
@@ -1918,23 +1978,23 @@ void interface_cryptography::do_EC_Koblitz_encoding(int q,
 		Mz = 1;
 
 		// R := k * G
-		cout << "$R=" << k << "*G$\\\\" << endl;
+		//cout << "$R=" << k << "*G$\\\\" << endl;
 
-		F->elliptic_curve_point_multiple_with_log(
+		F->elliptic_curve_point_multiple /*_with_log*/(
 					EC_b, EC_c, k,
 					Gx, Gy, Gz,
 					Rx, Ry, Rz,
 					0 /*verbose_level*/);
-		cout << "$R=" << k << "*G=(" << Rx << "," << Ry << "," << Rz << ")$\\\\" << endl;
+		//cout << "$R=" << k << "*G=(" << Rx << "," << Ry << "," << Rz << ")$\\\\" << endl;
 
 		// C := k * A
-		cout << "$C=" << k << "*A$\\\\" << endl;
-		F->elliptic_curve_point_multiple_with_log(
+		//cout << "$C=" << k << "*A$\\\\" << endl;
+		F->elliptic_curve_point_multiple /*_with_log*/(
 					EC_b, EC_c, k,
 					Ax, Ay, Az,
 					Cx, Cy, Cz,
 					0 /*verbose_level*/);
-		cout << "$C=" << k << "*A=(" << Cx << "," << Cy << "," << Cz << ")$\\\\" << endl;
+		//cout << "$C=" << k << "*A=(" << Cx << "," << Cy << "," << Cz << ")$\\\\" << endl;
 
 		// T := C + M
 		F->elliptic_curve_addition(EC_b, EC_c,
@@ -1942,7 +2002,7 @@ void interface_cryptography::do_EC_Koblitz_encoding(int q,
 				Mx, My, Mz,
 				Tx, Ty, Tz,
 				0 /*verbose_level*/);
-		cout << "$T=C+M=(" << Tx << "," << Ty << "," << Tz << ")$\\\\" << endl;
+		//cout << "$T=C+M=(" << Tx << "," << Ty << "," << Tz << ")$\\\\" << endl;
 		{
 		vector<int> cipher;
 
@@ -2430,6 +2490,240 @@ void interface_cryptography::do_EC_discrete_log(int q,
 
 	if (f_v) {
 		cout << "do_EC_multiple_of done" << endl;
+	}
+}
+
+void interface_cryptography::do_EC_baby_step_giant_step(int EC_q, int EC_b, int EC_c,
+		const char *EC_bsgs_G, int EC_bsgs_N, const char *EC_bsgs_cipher_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	finite_field *F;
+	int Gx, Gy, Gz;
+	int nGx, nGy, nGz;
+	int Cx, Cy, Cz;
+	int Mx, My, Mz;
+	int Ax, Ay, Az;
+	int *v;
+	int len;
+	int n;
+
+	if (f_v) {
+		cout << "interface_cryptography::do_EC_baby_step_giant_step" << endl;
+	}
+
+	F = NEW_OBJECT(finite_field);
+	F->init(EC_q, 0 /*verbose_level*/);
+
+
+	int_vec_scan(EC_bsgs_G, v, len);
+	if (len != 2) {
+		cout << "point should have just two coordinates" << endl;
+		exit(1);
+	}
+	Gx = v[0];
+	Gy = v[1];
+	Gz = 1;
+	FREE_int(v);
+
+	n = (int) sqrt((double) EC_bsgs_N) + 1;
+	if (f_v) {
+		cout << "interface_cryptography::do_EC_baby_step_giant_step N = " << EC_bsgs_N << endl;
+		cout << "interface_cryptography::do_EC_baby_step_giant_step n = " << n << endl;
+	}
+
+	int_vec_scan(EC_bsgs_cipher_text, v, len);
+
+	int cipher_text_length = len >> 1;
+	int h, i;
+
+	if (f_v) {
+		cout << "interface_cryptography::do_EC_baby_step_giant_step "
+				"cipher_text_length = " << cipher_text_length << endl;
+	}
+
+	F->elliptic_curve_point_multiple(
+			EC_b, EC_c, n,
+			Gx, Gy, Gz,
+			nGx, nGy, nGz,
+			0 /*verbose_level*/);
+
+	cout << "$" << n << " * G = (" << nGx << "," << nGy << ")$\\\\" << endl;
+
+	cout << " & ";
+	for (h = 0; h < cipher_text_length; h++) {
+		Cx = v[2 * h + 0];
+		Cy = v[2 * h + 1];
+		Cz = 1;
+		cout << " & (" << Cx << "," << Cy << ")";
+	}
+	cout << endl;
+
+	for (i = 1; i <= n + 1; i++) {
+
+		F->elliptic_curve_point_multiple(
+				EC_b, EC_c, i,
+				Gx, Gy, Gz,
+				Mx, My, Mz,
+				0 /*verbose_level*/);
+
+		cout << i << " & (" << Mx << "," << My << ")";
+
+		for (h = 0; h < cipher_text_length; h++) {
+			Cx = v[2 * h + 0];
+			Cy = v[2 * h + 1];
+			Cz = 1;
+
+			F->elliptic_curve_point_multiple(
+					EC_b, EC_c, i,
+					nGx, nGy, nGz,
+					Mx, My, Mz,
+					0 /*verbose_level*/);
+
+			My = F->negate(My);
+
+
+
+			F->elliptic_curve_addition(EC_b, EC_c,
+					Cx, Cy, Cz,
+					Mx, My, Mz,
+					Ax, Ay, Az,
+					0 /*verbose_level*/);
+
+			cout << " & (" << Ax << "," << Ay << ")";
+
+		}
+		cout << "\\\\" << endl;
+	}
+
+
+
+	FREE_int(v);
+
+	if (f_v) {
+		cout << "interface_cryptography::do_EC_baby_step_giant_step done" << endl;
+	}
+}
+
+void interface_cryptography::do_EC_baby_step_giant_step_decode(
+		int EC_q, int EC_b, int EC_c,
+		const char *EC_bsgs_A, int EC_bsgs_N,
+		const char *EC_bsgs_cipher_text_T, const char *EC_bsgs_keys,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	finite_field *F;
+	int Ax, Ay, Az;
+	int Tx, Ty, Tz;
+	int Cx, Cy, Cz;
+	int Mx, My, Mz;
+	int *v;
+	int len;
+	int n;
+	int *keys;
+	int nb_keys;
+	int u, plain;
+
+	if (f_v) {
+		cout << "interface_cryptography::do_EC_baby_step_giant_step_decode" << endl;
+	}
+
+	F = NEW_OBJECT(finite_field);
+	F->init(EC_q, 0 /*verbose_level*/);
+
+	u = EC_q / 27;
+	if (f_v) {
+		cout << "interface_cryptography::do_EC_baby_step_giant_step_decode u = " << u << endl;
+	}
+
+
+	int_vec_scan(EC_bsgs_A, v, len);
+	if (len != 2) {
+		cout << "point should have just two coordinates" << endl;
+		exit(1);
+	}
+	Ax = v[0];
+	Ay = v[1];
+	Az = 1;
+	FREE_int(v);
+
+	int_vec_scan(EC_bsgs_keys, keys, nb_keys);
+
+
+	n = (int) sqrt((double) EC_bsgs_N) + 1;
+	if (f_v) {
+		cout << "interface_cryptography::do_EC_baby_step_giant_step_decode N = " << EC_bsgs_N << endl;
+		cout << "interface_cryptography::do_EC_baby_step_giant_step_decode n = " << n << endl;
+	}
+
+	int_vec_scan(EC_bsgs_cipher_text, v, len);
+
+	int cipher_text_length = len >> 1;
+	int h;
+
+	if (f_v) {
+		cout << "interface_cryptography::do_EC_baby_step_giant_step_decode "
+				"cipher_text_length = " << cipher_text_length << endl;
+		cout << "interface_cryptography::do_EC_baby_step_giant_step_decode "
+				"nb_keys = " << nb_keys << endl;
+	}
+	if (nb_keys != cipher_text_length) {
+		cout << "nb_keys != cipher_text_length" << endl;
+		exit(1);
+	}
+
+
+	for (h = 0; h < cipher_text_length; h++) {
+		Tx = v[2 * h + 0];
+		Ty = v[2 * h + 1];
+		Tz = 1;
+		cout << h << " & (" << Tx << "," << Ty << ")\\\\" << endl;;
+	}
+	cout << endl;
+
+
+	for (h = 0; h < cipher_text_length; h++) {
+
+
+
+		Tx = v[2 * h + 0];
+		Ty = v[2 * h + 1];
+		Tz = 1;
+
+
+		F->elliptic_curve_point_multiple(
+				EC_b, EC_c, keys[h],
+				Ax, Ay, Az,
+				Cx, Cy, Cz,
+				0 /*verbose_level*/);
+
+		Cy = F->negate(Cy);
+
+
+		cout << h << " & " << keys[h]
+			<< " & (" << Tx << "," << Ty << ")"
+			<< " & (" << Cx << "," << Cy << ")";
+
+
+		F->elliptic_curve_addition(EC_b, EC_c,
+				Tx, Ty, Tz,
+				Cx, Cy, Cz,
+				Mx, My, Mz,
+				0 /*verbose_level*/);
+
+		cout << " & (" << Mx << "," << My << ")";
+
+		plain = Mx / u;
+		cout << " & " << plain << " & " << (char)('A' - 1 + plain) << "\\\\" << endl;
+
+	}
+
+
+	FREE_int(v);
+	FREE_int(keys);
+
+	if (f_v) {
+		cout << "interface_cryptography::do_EC_baby_step_giant_step_decode done" << endl;
 	}
 }
 

@@ -10,6 +10,7 @@ MODULES = \
 	orbit_based_testing.o \
 	poset_classification_classify.o \
 	poset_classification_combinatorics.o \
+	poset_classification_control.o \
 	poset_classification_draw.o \
 	poset_classification_export_source_code.o \
 	poset_classification_init.o \

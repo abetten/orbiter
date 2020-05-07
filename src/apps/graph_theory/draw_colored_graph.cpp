@@ -634,6 +634,7 @@ int main(int argc, char **argv)
 		strcpy(prefix, fname);
 		replace_extension_with(prefix, "_cliques");
 
+		poset_classification_control *Control;
 		poset *Poset;
 
 		Poset = NEW_OBJECT(poset);
@@ -659,12 +660,14 @@ int main(int argc, char **argv)
 
 			}
 
+		Control = NEW_OBJECT(poset_classification_control);
 		gen = NEW_OBJECT(poset_classification);
 
 		gen->compute_orbits_on_subsets(
 			CG->nb_points /* target_depth */,
 			prefix,
-			TRUE /* f_W */, FALSE /* f_w */,
+			//TRUE /* f_W */, FALSE /* f_w */,
+			Control,
 			Poset,
 			verbose_level);
 

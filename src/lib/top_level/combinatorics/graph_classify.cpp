@@ -32,29 +32,33 @@ graph_classify::graph_classify()
 	
 	f_n = FALSE;
 	f_regular = FALSE;
+
+	f_control = FALSE;
+	Control = NULL;
+
 	f_girth = FALSE;
 	f_tournament = FALSE;
 	f_no_superking = FALSE;
 	
-	f_list = FALSE;
-	f_list_all = FALSE;
+	//f_list = FALSE;
+	//f_list_all = FALSE;
 	f_draw_level_graph = FALSE;
 	f_draw_graphs = FALSE;
 	f_draw_graphs_at_level = FALSE;
-	f_embedded = FALSE;
-	f_sideways = FALSE;
+	//f_embedded = FALSE;
+	//f_sideways = FALSE;
 	f_x_stretch = FALSE;
 	x_stretch = 0.4;
 
-	scale = 0.2;
+	//scale = 0.2;
 
 	f_depth = FALSE;
 	S1 = NULL;
 	
 	f_test_multi_edge = FALSE;
-	f_draw_poset = FALSE;
-	f_draw_full_poset = FALSE;
-	f_plesken = FALSE;
+	//f_draw_poset = FALSE;
+	//f_draw_full_poset = FALSE;
+	//f_plesken = FALSE;
 	f_identify = FALSE;
 
 	regularity = 0;
@@ -99,7 +103,7 @@ graph_classify::~graph_classify()
 	
 }
 
-void graph_classify::read_arguments(int argc, const char **argv)
+void graph_classify::read_arguments(int argc, const char **argv, int verbose_level)
 {
 	int i;
 	
@@ -113,82 +117,99 @@ void graph_classify::read_arguments(int argc, const char **argv)
 		//printf("%s\n", argv[i]);
 		//}
 
-	gen->read_arguments(argc, argv, 0);
+	//gen->read_arguments(argc, argv, 0);
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-regular") == 0) {
 			f_regular = TRUE;
 			sscanf(argv[++i], "%d", &regularity);
 			cout << "-regular " << regularity << endl;
+		}
+		else if (strcmp(argv[i], "-poset_classification_control") == 0) {
+			f_control = TRUE;
+			Control = NEW_OBJECT(poset_classification_control);
+			i += Control->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done with -poset_classification_control" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
 			}
+		}
 		else if (strcmp(argv[i], "-n") == 0) {
 			f_n = TRUE;
 			sscanf(argv[++i], "%d", &n);
 			cout << "-n " << n << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-girth") == 0) {
 			f_girth = TRUE;
 			sscanf(argv[++i], "%d", &girth);
 			cout << "-girth " << girth << endl;
-			}
-		else if (strcmp(argv[i], "-list") == 0) {
-			f_list = TRUE;
-			cout << "-list " << endl;
-			}
-		else if (strcmp(argv[i], "-list_all") == 0) {
-			f_list_all = TRUE;
-			cout << "-list_all " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-draw_graphs") == 0) {
 			f_draw_graphs = TRUE;
 			cout << "-draw_graphs " << endl;
-			}
-		else if (strcmp(argv[i], "-draw_poset") == 0) {
-			f_draw_poset = TRUE;
-			cout << "-draw_poset " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-draw_graphs_at_level") == 0) {
 			f_draw_graphs_at_level = TRUE;
 			level = atoi(argv[++i]);
 			cout << "-draw_graphs_at_level " << level << endl;
-			}
-		else if (strcmp(argv[i], "-scale") == 0) {
-			sscanf(argv[++i], "%lf", &scale);
-			cout << "-scale " << scale << endl;
-			}
-		else if (strcmp(argv[i], "-embedded") == 0) {
-			f_embedded = TRUE;
-			cout << "-embedded " << endl;
-			}
-		else if (strcmp(argv[i], "-sideways") == 0) {
-			f_sideways = TRUE;
-			cout << "-sideways " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-tournament") == 0) {
 			f_tournament = TRUE;
 			cout << "-tournament " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-no_transmitter") == 0) {
 			f_no_superking = TRUE;
 			cout << "-no_superking " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-test_multi_edge") == 0) {
 			f_test_multi_edge = TRUE;
 			cout << "-test_multi_edge " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-draw_level_graph") == 0) {
 			f_draw_level_graph = TRUE;
 			sscanf(argv[++i], "%d", &level_graph_level);
 			cout << "-draw_level_graph " << level_graph_level << endl;
-			}
+		}
+
+#if 0
+		else if (strcmp(argv[i], "-list") == 0) {
+			f_list = TRUE;
+			cout << "-list " << endl;
+		}
+		else if (strcmp(argv[i], "-list_all") == 0) {
+			f_list_all = TRUE;
+			cout << "-list_all " << endl;
+		}
+		else if (strcmp(argv[i], "-draw_poset") == 0) {
+			f_draw_poset = TRUE;
+			cout << "-draw_poset " << endl;
+		}
+		else if (strcmp(argv[i], "-scale") == 0) {
+			sscanf(argv[++i], "%lf", &scale);
+			cout << "-scale " << scale << endl;
+		}
+		else if (strcmp(argv[i], "-embedded") == 0) {
+			f_embedded = TRUE;
+			cout << "-embedded " << endl;
+		}
+		else if (strcmp(argv[i], "-sideways") == 0) {
+			f_sideways = TRUE;
+			cout << "-sideways " << endl;
+		}
 		else if (strcmp(argv[i], "-plesken") == 0) {
 			f_plesken = TRUE;
 			cout << "-plesken" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-draw_full_poset") == 0) {
 			f_draw_full_poset = TRUE;
 			cout << "-draw_full_poset" << endl;
-			}
+		}
+#endif
+
 		else if (strcmp(argv[i], "-identify") == 0) {
 			int a, j;
 			
@@ -198,33 +219,33 @@ void graph_classify::read_arguments(int argc, const char **argv)
 				a = atoi(argv[++i]);
 				if (a == -1) {
 					break;
-					}
-				identify_data[j++] = a;
 				}
+				identify_data[j++] = a;
+			}
 			identify_data_sz = j;
 			cout << "-identify ";
 			lint_vec_print(cout, identify_data, identify_data_sz);
 			cout << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-depth") == 0) {
 			f_depth = TRUE;
 			sscanf(argv[++i], "%d", &depth);
 			cout << "-depth " << depth << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-x_stretch") == 0) {
 			f_x_stretch = TRUE;
 			sscanf(argv[++i], "%lf", &x_stretch);
 			cout << "-x_stretch " << endl;
-			}
 		}
+	}
 	if (!f_n) {
 		cout << "please use option -n <n> "
 				"to specify the number of vertices" << endl;
 		exit(1);
-		}
+	}
 }
 
-void graph_classify::init(int argc, const char **argv)
+void graph_classify::init(int argc, const char **argv, int verbose_level)
 {
 	int N;
 	int target_depth;
@@ -235,9 +256,8 @@ void graph_classify::init(int argc, const char **argv)
 	A_on_edges = NEW_OBJECT(action);
 	gen = NEW_OBJECT(poset_classification);
 	
-	read_arguments(argc, argv);
+	read_arguments(argc, argv, verbose_level);
 	
-	int verbose_level = gen->verbose_level;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
@@ -373,12 +393,18 @@ void graph_classify::init(int argc, const char **argv)
 		}
 
 
+	if (f_control) {
+
+	}
+	else {
+		Control = NEW_OBJECT(poset_classification_control);
+	}
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A_base, A_on_edges,
 			A_base->Strong_gens,
 			verbose_level);
 
-	gen->initialize(Poset,
+	gen->initialize(Control, Poset,
 		target_depth, 
 		"", prefix, verbose_level - 1);
 	

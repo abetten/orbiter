@@ -160,7 +160,7 @@ int main(int argc, const char **argv)
 		Blt_set->init_basic(O,
 			f_semilinear,
 			ECA->input_prefix, ECA->base_fname, ECA->starter_size,
-			argc, argv, verbose_level);
+			verbose_level);
 
 
 		Blt_set->init_group(f_semilinear, verbose_level);
@@ -191,14 +191,14 @@ int main(int argc, const char **argv)
 			depth = Blt_set->gen->main(t0, schreier_depth,
 				f_use_invariant_subset_if_available,
 				f_debug,
-				Blt_set->gen->verbose_level);
+				verbose_level);
 			cout << "Blt_set->gen->main returns depth=" << depth << endl;
 			//Gen.gen->print_data_structure_tex(depth,
 			//Gen.gen->verbose_level);
 			if (f_draw_poset) {
 				Blt_set->gen->draw_poset(Blt_set->prefix_with_directory,
 						ECA->starter_size, 0 /* data1 */,
-						f_embedded, f_sideways, Blt_set->gen->verbose_level);
+						f_embedded, f_sideways, verbose_level);
 				}
 			if (f_list) {
 					{
