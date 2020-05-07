@@ -58,6 +58,7 @@ void classify_double_sixes::null()
 	Pts_wedge_to_line = NULL;
 	line_to_pts_wedge = NULL;
 	A_on_neighbors = NULL;
+	Control = NULL;
 	Poset = NULL;
 	Five_plus_one = NULL;
 	u = NULL;
@@ -115,7 +116,7 @@ void classify_double_sixes::freeself()
 
 void classify_double_sixes::init(
 	surface_with_action *Surf_A, linear_group *LG,
-	int argc, const char **argv, 
+	//int argc, const char **argv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -222,9 +223,10 @@ void classify_double_sixes::init(
 
 
 	Five_plus_one = NEW_OBJECT(poset_classification);
-	Five_plus_one->read_arguments(argc, argv, 0);
+	//Five_plus_one->read_arguments(argc, argv, 0);
 
 
+	Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A_on_neighbors,
 			SG_line_stab,
@@ -242,7 +244,7 @@ void classify_double_sixes::init(
 
 	cout << "classify_double_sixes::init "
 			"before Five_plus_one->init" << endl;
-	Five_plus_one->init(Poset,
+	Five_plus_one->init(Control, Poset,
 		5 /* sz */, 
 		verbose_level - 1);
 	cout << "classify_double_sixes::init "
@@ -281,7 +283,7 @@ void classify_double_sixes::init(
 		}
 	
 	Five_plus_one->root[0].init_root_node(Five_plus_one,
-			Five_plus_one->verbose_level);
+			Five_plus_one->Control->verbose_level);
 
 	if (f_v) {
 		cout << "classify_double_sixes::init done" << endl;

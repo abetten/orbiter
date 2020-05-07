@@ -136,6 +136,7 @@ class create_graph;
 class algebra_global_with_action;
 class group_theoretic_activity_description;
 class graph_theoretic_activity_description;
+class group_theoretic_activity;
 
 
 // #############################################################################

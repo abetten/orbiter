@@ -20,16 +20,6 @@ namespace top_level {
 
 linear_set_classify::linear_set_classify()
 {
-	null();
-}
-
-linear_set_classify::~linear_set_classify()
-{
-	freeself();
-}
-
-void linear_set_classify::null()
-{
 	f_has_extra_test_func = FALSE;
 	extra_test_func = NULL;
 	extra_test_func_data = NULL;
@@ -49,12 +39,23 @@ void linear_set_classify::null()
 	Gen = NULL;
 	Basis = NULL;
 	base_cols = NULL;
+	Control_stab = NULL;
 	Poset_stab = NULL;
+	Control2 = NULL;
 	Poset2 = NULL;
 	Gen2 = NULL;
 	is_allowed = NULL;
 	f_identify = FALSE;
 	T = NULL;
+}
+
+linear_set_classify::~linear_set_classify()
+{
+	freeself();
+}
+
+void linear_set_classify::null()
+{
 }
 
 void linear_set_classify::freeself()
@@ -390,10 +391,11 @@ void linear_set_classify::init(int argc, const char **argv,
 			verbose_level - 1);
 
 
+	Control1 = NEW_OBJECT(poset_classification_control);
 	Poset1 = NEW_OBJECT(poset);
 	Gen = NEW_OBJECT(poset_classification);
 
-	Gen->read_arguments(argc, argv, 0);
+	//Gen->read_arguments(argc, argv, 0);
 
 	//Gen->prefix[0] = 0;
 	sprintf(Gen->fname_base, "subspaces_%d_%d_%d", n, q, s);
@@ -407,7 +409,7 @@ void linear_set_classify::init(int argc, const char **argv,
 	if (f_v) {
 		cout << "linear_set_classify::init before Gen->init" << endl;
 		}
-	Gen->init(Poset1, Gen->depth /* sz */, verbose_level);
+	Gen->init(Control1, Poset1, Gen->depth /* sz */, verbose_level);
 	if (f_v) {
 		cout << "linear_set_classify::init after Gen->init" << endl;
 		}
@@ -951,10 +953,11 @@ void linear_set_classify::init_secondary(int argc, const char **argv,
 	secondary_candidates = candidates;
 	secondary_nb_candidates = nb_candidates;
 
+	Control2 = NEW_OBJECT(poset_classification_control);
 	Poset2 = NEW_OBJECT(poset);
 	Gen2 = NEW_OBJECT(poset_classification);
 
-	Gen2->read_arguments(argc, argv, 0);
+	//Gen2->read_arguments(argc, argv, 0);
 
 	//Gen2->prefix[0] = 0;
 	sprintf(Gen2->fname_base, "subspaces_%d_%d_%d_secondary_%d_%d", n, q, s,
@@ -981,12 +984,12 @@ void linear_set_classify::init_secondary(int argc, const char **argv,
 	Poset2->init_subspace_lattice(Aq, Aq,
 			Strong_gens_previous, VS,
 			verbose_level);
-	Gen2->init(Poset2,
+	Gen2->init(Control2, Poset2,
 			Gen2->depth /* sz */,
 			verbose_level);
 	cout << "linear_set_classify::init_secondary after Gen2->init" << endl;
 
-	Gen2->f_max_depth = FALSE;
+	Gen2->Control->f_max_depth = FALSE;
 		// could have been set to true because of -depth option
 
 #if 0
@@ -1360,10 +1363,11 @@ void linear_set_classify::init_compute_stabilizer(int argc, const char **argv,
 		cout << "linear_set_classify::init_compute_stabilizer" << endl;
 		}
 
+	Control_stab = NEW_OBJECT(poset_classification_control);
 	Poset_stab = NEW_OBJECT(poset);
 	Gen_stab = NEW_OBJECT(poset_classification);
 
-	Gen_stab->read_arguments(argc, argv, 0);
+	//Gen_stab->read_arguments(argc, argv, 0);
 
 	//Gen_stab->prefix[0] = 0;
 	sprintf(Gen_stab->fname_base,
@@ -1390,13 +1394,14 @@ void linear_set_classify::init_compute_stabilizer(int argc, const char **argv,
 	Poset_stab->init_subspace_lattice(Aq, Aq,
 			Strong_gens_previous, VS,
 			verbose_level);
-	Gen_stab->init(Poset_stab,
+	Gen_stab->init(Control_stab,
+			Poset_stab,
 			Gen_stab->depth /* sz */,
 			verbose_level);
 	cout << "linear_set_classify::init_compute_stabilizer "
 			"after Gen_stab->init" << endl;
 
-	Gen_stab->f_max_depth = FALSE; // could have been set to true because of -depth option
+	Gen_stab->Control->f_max_depth = FALSE; // could have been set to true because of -depth option
 
 #if 0
 	Gen_stab->init_check_func(

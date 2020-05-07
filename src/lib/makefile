@@ -245,6 +245,7 @@ MODULES= \
 		classification/poset_classification/poset_classification.o \
 		classification/poset_classification/poset_classification_classify.o \
 		classification/poset_classification/poset_classification_combinatorics.o \
+		classification/poset_classification/poset_classification_control.o \
 		classification/poset_classification/poset_classification_draw.o \
 		classification/poset_classification/poset_classification_export_source_code.o \
 		classification/poset_classification/poset_classification_init.o \
@@ -290,6 +291,7 @@ MODULES= \
 		top_level/algebra_and_number_theory/character_table_burnside.o \
 		top_level/algebra_and_number_theory/factor_group.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity_description.o \
+		top_level/algebra_and_number_theory/group_theoretic_activity.o \
 		top_level/algebra_and_number_theory/semifield_classify_with_substructure.o \
 		top_level/algebra_and_number_theory/semifield_classify.o \
 		top_level/algebra_and_number_theory/semifield_downstep_node.o \

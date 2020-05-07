@@ -34,6 +34,8 @@ code_classify::code_classify()
 	f_nmk = FALSE;
 	f_linear = FALSE;
 	f_nonlinear = FALSE;
+	f_control = FALSE;
+	Control = NULL;
 	Poset = NULL;
 	gen = NULL;
 	F = NULL;
@@ -43,14 +45,8 @@ code_classify::code_classify()
 	description = NULL;
 	L = NULL;
 	schreier_depth = 1000;
-	f_list = FALSE;
-	f_table_of_nodes = FALSE;
 	f_use_invariant_subset_if_available = TRUE;
 	f_debug = FALSE;
-	f_draw_poset = FALSE;
-	f_draw_full_poset = FALSE;
-	f_draw_schreier_trees = FALSE;
-	f_print_data_structure = FALSE;
 	null();
 }
 
@@ -67,6 +63,9 @@ void code_classify::freeself()
 {
 	if (A) {
 		FREE_OBJECT(A);
+		}
+	if (Control) {
+		FREE_OBJECT(Control);
 		}
 	if (Poset) {
 		FREE_OBJECT(Poset);
@@ -102,83 +101,81 @@ void code_classify::read_arguments(int argc, const char **argv)
 	int f_N = FALSE;
 	
 	
-	gen->read_arguments(argc, argv, 0);
+	//gen->read_arguments(argc, argv, 0);
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-debug") == 0) {
 			f_debug = TRUE;
 			cout << "-debug " << endl;
+		}
+		else if (strcmp(argv[i], "-poset_classification_control") == 0) {
+			f_control = TRUE;
+			Control = NEW_OBJECT(poset_classification_control);
+			i += Control->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done with -poset_classification_control" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
 			}
+		}
 		else if (strcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			cout << "-report " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-read_data_file") == 0) {
 			f_read_data_file = TRUE;
 			fname_data_file = argv[++i];
 			cout << "-read_data_file " << fname_data_file << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-report_schreier_trees") == 0) {
 			f_report_schreier_trees = TRUE;
 			cout << "-report_schreier_trees " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-schreier_depth") == 0) {
 			schreier_depth = atoi(argv[++i]);
 			cout << "-schreier_depth " << schreier_depth << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-n") == 0) {
 			f_n = TRUE;
 			n = atoi(argv[++i]);
 			cout << "-n " << n << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-k") == 0) {
 			f_k = TRUE;
 			f_linear = TRUE;
 			k = atoi(argv[++i]);
 			cout << "-k " << k << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-nmk") == 0) {
 			f_nmk = TRUE;
 			f_linear = TRUE;
 			nmk = atoi(argv[++i]);
 			cout << "-nmk " << nmk << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-N") == 0) {
 			f_N = TRUE;
 			f_nonlinear = TRUE;
 			N = atoi(argv[++i]);
 			cout << "-N " << N << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
 			q = atoi(argv[++i]);
 			cout << "-q " << q << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-d") == 0) {
 			f_d = TRUE;
 			d = atoi(argv[++i]);
 			cout << "-d " << d << endl;
-			}
-		else if (strcmp(argv[i], "-draw_poset") == 0) {
-			f_draw_poset = TRUE;
-			cout << "-draw_poset " << endl;
-			}
-		else if (strcmp(argv[i], "-draw_full_poset") == 0) {
-			f_draw_full_poset = TRUE;
-			cout << "-draw_full_poset " << endl;
-			}
-		else if (strcmp(argv[i], "-print_data_structure") == 0) {
-			f_print_data_structure = TRUE;
-			cout << "-print_data_structure " << endl;
-			}
-		else if (strcmp(argv[i], "-list") == 0) {
-			f_list = TRUE;
-			cout << "-list" << endl;
-			}
+		}
+#if 0
 		else if (strcmp(argv[i], "-draw_schreier_trees") == 0) {
 			gen->f_draw_schreier_trees = TRUE;
 			strcpy(gen->schreier_tree_prefix, argv[++i]);
@@ -200,10 +197,7 @@ void code_classify::read_arguments(int argc, const char **argv)
 				<< " " << gen->schreier_tree_line_width 
 				<< endl;
 			}
-		else if (strcmp(argv[i], "-table_of_nodes") == 0) {
-			f_table_of_nodes = TRUE;
-			cout << "-table_of_nodes" << endl;
-			}
+#endif
 		}
 	
 	if (f_linear && f_nonlinear) {
@@ -269,11 +263,15 @@ void code_classify::init(int argc, const char **argv)
 {
 	F = NEW_OBJECT(finite_field);
 	A = NEW_OBJECT(action);
+	//Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset);
 	gen = NEW_OBJECT(poset_classification);
 	int f_basis = TRUE;
 	
 
+	if (!f_control) {
+		Control = NEW_OBJECT(poset_classification_control);
+	}
 	read_arguments(argc, argv);
 	
 	//int verbose_level = gen->verbose_level;
@@ -402,7 +400,7 @@ void code_classify::init(int argc, const char **argv)
 			independence_value,
 			verbose_level);
 
-	gen->init(Poset, gen->depth /* sz */, verbose_level);
+	gen->init(Control, Poset, gen->depth /* sz */, verbose_level);
 
 
 
@@ -432,7 +430,7 @@ void code_classify::init(int argc, const char **argv)
 				"calling gen->root[0].init_root_node" << endl;
 		}
 
-	gen->root[0].init_root_node(gen, gen->verbose_level - 2);
+	gen->root[0].init_root_node(gen, gen->Control->verbose_level - 2);
 	if (f_read_data_file) {
 		if (f_v) {
 			cout << "code_classify::init reading data file "
@@ -481,8 +479,8 @@ void code_classify::main(int verbose_level)
 		if (f_v) {
 			cout << "code_classify::main f_read_data_file" << endl;
 			}
-		if (gen->f_max_depth) {
-			target_depth = gen->max_depth;
+		if (gen->Control->f_max_depth) {
+			target_depth = gen->Control->max_depth;
 			}
 		else {
 			target_depth = gen->depth;
@@ -502,7 +500,7 @@ void code_classify::main(int verbose_level)
 	}
 	cout << "code_classify::main depth = " << depth << endl;
 
-	if (f_table_of_nodes) {
+	if (Control->f_table_of_nodes) {
 		if (f_v) {
 			cout << "code_classify::main f_table_of_nodes" << endl;
 		}
@@ -519,7 +517,7 @@ void code_classify::main(int verbose_level)
 		FREE_lint(Table);
 		}
 
-	if (f_list) {
+	if (Control->f_list) {
 		if (f_v) {
 			cout << "code_classify::main f_list" << endl;
 		}
@@ -608,7 +606,7 @@ void code_classify::main(int verbose_level)
 
 
 
-	if (f_draw_poset) {
+	if (Control->f_draw_poset) {
 		if (f_v) {
 			cout << "code_classify::main f_draw_poset" << endl;
 		}
@@ -616,7 +614,7 @@ void code_classify::main(int verbose_level)
 			0 /* data1 */, f_embedded, f_sideways, 
 			verbose_level);
 		}
-	if (f_draw_full_poset) {
+	if (Control->f_draw_full_poset) {
 		if (f_v) {
 			cout << "code_classify::main f_draw_full_poset" << endl;
 		}
@@ -629,7 +627,7 @@ void code_classify::main(int verbose_level)
 			gen->make_flag_orbits_on_relations(
 					depth, fname_prefix, verbose_level);
 		}
-	if (f_print_data_structure) {
+	if (Control->f_print_data_structure) {
 		if (f_v) {
 			cout << "code_classify::main f_print_data_structure" << endl;
 		}

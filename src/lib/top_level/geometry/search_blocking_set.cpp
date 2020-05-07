@@ -19,18 +19,9 @@ namespace top_level {
 
 search_blocking_set::search_blocking_set()
 {
-	null();
-}
-
-search_blocking_set::~search_blocking_set()
-{
-	freeself();
-}
-
-void search_blocking_set::null()
-{
 	Inc = NULL;
 	A = NULL;
+	Control = NULL;
 	Poset = NULL;
 	gen = NULL;
 	Line_intersections = NULL;
@@ -49,12 +40,24 @@ void search_blocking_set::null()
 	blocking_set_size_desired = 0;
 }
 
+search_blocking_set::~search_blocking_set()
+{
+	freeself();
+}
+
+void search_blocking_set::null()
+{
+}
+
 void search_blocking_set::freeself()
 {
 	int i;
 	
 	if (Line_intersections) {
 		FREE_OBJECTS(Line_intersections);
+		}
+	if (Control) {
+		FREE_OBJECT(Control);
 		}
 	if (Poset) {
 		FREE_OBJECT(Poset);
@@ -154,11 +157,12 @@ void search_blocking_set::find_partial_blocking_sets(int depth, int verbose_leve
 		cout << "find_partial_blocking_sets !A->f_has_strong_generators" << endl;
 		exit(1);
 		}
+	Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A,
 			A->Strong_gens,
 			verbose_level);
-	gen->init(Poset,
+	gen->init(Control, Poset,
 		//*A->strong_generators, A->tl, 
 		gen->depth, verbose_level);
 
@@ -197,8 +201,8 @@ void search_blocking_set::find_partial_blocking_sets(int depth, int verbose_leve
 	//int f_implicit_fusion = FALSE;
 	int f_debug = FALSE;
 	
-	gen->f_max_depth = TRUE;
-	gen->max_depth = depth;
+	gen->Control->f_max_depth = TRUE;
+	gen->Control->max_depth = depth;
 	
 	if (f_v) {
 		cout << "find_partial_blocking_sets: calling generator_main" << endl;

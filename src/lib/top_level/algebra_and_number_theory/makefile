@@ -10,6 +10,7 @@ MODULES = \
 	character_table_burnside.o \
 	factor_group.o \
 	group_theoretic_activity_description.o \
+	group_theoretic_activity.o \
 	semifield_classify_with_substructure.o \
 	semifield_classify.o \
 	semifield_downstep_node.o \

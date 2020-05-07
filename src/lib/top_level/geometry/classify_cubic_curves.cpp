@@ -94,7 +94,7 @@ void classify_cubic_curves::init(cubic_curve_with_action *CCA,
 		cout << "classify_cubic_curves::init before Arc_gen->init" << endl;
 		}
 
-	Arc_gen->read_arguments(argc, argv);
+	//Arc_gen->read_arguments(argc, argv);
 
 
 
@@ -103,7 +103,7 @@ void classify_cubic_curves::init(cubic_curve_with_action *CCA,
 			starter_directory_name,
 			base_fname,
 			9 /* starter_size */,
-			argc, argv,
+			//argc, argv,
 			verbose_level);
 
 

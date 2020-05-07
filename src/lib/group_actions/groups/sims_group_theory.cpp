@@ -169,7 +169,7 @@ int sims::transitive_extension_tolerant(schreier &O,
 				break;
 			}
 
-		O.coset_rep(j);
+		O.coset_rep(j, 0 /* verbose_level */);
 
 		random_element(Elt2, verbose_level - 1);
 
@@ -444,7 +444,13 @@ void sims::point_stabilizer_stabchain_with_action(action *A2,
 
 	O.init(A2, verbose_level - 2);
 
+	if (f_v) {
+		cout << "sims::point_stabilizer_stabchain_with_action before O.init_generators" << endl;
+	}
 	O.init_generators(gens, verbose_level - 2);
+	if (f_v) {
+		cout << "sims::point_stabilizer_stabchain_with_action after O.init_generators" << endl;
+	}
 
 	if (f_vvv && A2->degree < 150) {
 		O.print_generators();
@@ -459,19 +465,19 @@ void sims::point_stabilizer_stabchain_with_action(action *A2,
 		}
 	}
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "sims::point_stabilizer_stabchain_with_action "
 				"computing point orbit" << endl;
 	}
 	O.compute_point_orbit(pt, 0/*verbose_level - 1*/);
-	if (f_vv) {
+	if (f_v) {
 		cout << "sims::point_stabilizer_stabchain_with_action "
 				"computing point orbit done" << endl;
 	}
 
 
 	orbit_len = O.orbit_len[0];
-	if (f_vv) {
+	if (f_v) {
 		cout << "sims::point_stabilizer_stabchain_with_action "
 				"found orbit of length " << orbit_len << endl;
 	}
@@ -515,8 +521,20 @@ void sims::point_stabilizer_stabchain_with_action(action *A2,
 	//int drop_out_level, image;
 	//int *p_schreier_gen;
 
+	if (f_v) {
+		cout << "sims::point_stabilizer_stabchain_with_action "
+				"before S.init" << endl;
+	}
 	S.init(A, verbose_level - 2);
+	if (f_v) {
+		cout << "sims::point_stabilizer_stabchain_with_action "
+				"before S.init_generators" << endl;
+	}
 	S.init_generators(stab_gens, verbose_level - 2);
+	if (f_v) {
+		cout << "sims::point_stabilizer_stabchain_with_action "
+				"after S.init_generators" << endl;
+	}
 	S.compute_base_orbits(verbose_level - 1);
 	if (FALSE) {
 		cout << "sims::point_stabilizer_stabchain_with_action "
@@ -552,7 +570,7 @@ void sims::point_stabilizer_stabchain_with_action(action *A2,
 			//O.non_trivial_random_schreier_generator(A2, Elt, verbose_level - 1);
 			// A Betten 9/1/2019
 			// this may get stuck in a forever loop, therefore we do this:
-			O.random_schreier_generator(Elt, 0 /*verbose_level - 1*/);
+			O.random_schreier_generator(Elt, verbose_level - 1);
 			//p_schreier_gen = O.schreier_gen;
 		}
 		else {
@@ -561,7 +579,7 @@ void sims::point_stabilizer_stabchain_with_action(action *A2,
 						"creating random generator no " << cnt + 1
 						<< " using the Sims chain" << endl;
 			}
-			S.random_schreier_generator(Elt, 0 /*verbose_level - 5*/);
+			S.random_schreier_generator(Elt, verbose_level - 1);
 			//p_schreier_gen = Elt; //S.schreier_gen;
 		}
 		cnt++;
@@ -729,8 +747,7 @@ void sims::point_stabilizer_with_action(action *A2,
 		cout << "sims::point_stabilizer_with_action "
 				"before point_stabilizer_stabchain_with_action" << endl;
 	}
-	point_stabilizer_stabchain_with_action(A2, S, pt,
-			verbose_level);
+	point_stabilizer_stabchain_with_action(A2, S, pt, verbose_level);
 	if (f_v) {
 		cout << "sims::point_stabilizer_with_action "
 				"after point_stabilizer_stabchain_with_action" << endl;
@@ -739,11 +756,9 @@ void sims::point_stabilizer_with_action(action *A2,
 		cout << "sims::point_stabilizer_with_action "
 				"before extract_strong_generators_in_order" << endl;
 	}
-	S.extract_strong_generators_in_order(SG, tl,
-			verbose_level - 2);
+	S.extract_strong_generators_in_order(SG, tl, verbose_level - 2);
 	if (f_v) {
-		cout << "sims::point_stabilizer_with_action "
-				"done" << endl;
+		cout << "sims::point_stabilizer_with_action done" << endl;
 	}
 }
 

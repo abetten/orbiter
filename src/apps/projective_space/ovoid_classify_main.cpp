@@ -197,7 +197,7 @@ int main(int argc, const char **argv)
 			Gen.gen->depth, 0 /* data1 */, 
 			Gen.f_embedded, 
 			Gen.f_sideways, 
-			Gen.gen->verbose_level);
+			verbose_level);
 			}
 		if (Gen.f_list) {
 			Gen.gen->list_all_orbits_at_level(Gen.gen->depth, 
@@ -227,9 +227,9 @@ void usage(int argc, const char **argv)
 	cout << "   Use the polynomial m to create the field GF(q) "
 			"(m is a number)" << endl;
 
-	poset_classification gen;
+	//poset_classification gen;
 	
-	gen.usage();
+	//gen.usage();
 
 }
 

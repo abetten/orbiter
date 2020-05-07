@@ -39,6 +39,7 @@ drawable_set_of_objects::drawable_set_of_objects()
 		// 9 = label
 
 	d = 0.;
+	d2 = 0.;
 
 	properties = NULL;
 }
@@ -309,7 +310,6 @@ void drawable_set_of_objects::draw(animate *Anim, ostream &ost, int verbose_leve
 		if (f_v) {
 			cout << "type == 9 labels" << endl;
 		}
-
 		Anim->draw_text_with_selection(Selection, sz,
 				d /* thickness_half */, 0. /* extra_spacing */,
 				d2 /* scale */,

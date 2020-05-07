@@ -1819,7 +1819,7 @@ void semifield_lifting::trace_very_general(
 				"trace_so = " << trace_so << endl;
 	}
 
-	Downstep_nodes[trace_po].Sch->coset_rep_inv(pos);
+	Downstep_nodes[trace_po].Sch->coset_rep_inv(pos, 0 /* verbose_level */);
 	A->element_mult(transporter,
 			Downstep_nodes[trace_po].Sch->cosetrep,
 			ELT3,

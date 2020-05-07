@@ -23,11 +23,9 @@ class arc_generator {
 public:
 
 	int q;
-	//int f_poly;
-	//const char *poly;
 	finite_field *F;
-	int argc;
-	const char **argv;
+	//int argc;
+	//const char **argv;
 
 	exact_cover_arguments *ECA;
 	isomorph_arguments *IA;
@@ -78,6 +76,7 @@ public:
 	action_on_grassmannian *AG;
 	action *A_on_lines;
 	
+	poset_classification_control *Control;
 	poset *Poset;
 
 	projective_space *P; // projective n-space
@@ -113,7 +112,7 @@ public:
 		const char *starter_directory_name,
 		const char *base_fname,
 		int starter_size,  
-		int argc, const char **argv, 
+		//int argc, const char **argv,
 		int verbose_level);
 	void prepare_generator(int verbose_level);
 	void compute_starter(int verbose_level);
@@ -369,6 +368,7 @@ public:
 
 	int arc_idx;
 	poset *Poset;
+	poset_classification_control *Control;
 	poset_classification *Orbits_on_pairs;
 
 	int nb_orbits_on_pairs;
@@ -462,6 +462,7 @@ public:
 	char prefix_with_directory[1000];
 	int starter_size;
 
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen;
 	action *A; // orthogonal group
@@ -481,7 +482,7 @@ public:
 		const char *input_prefix,
 		const char *base_fname,
 		int starter_size,
-		int argc, const char **argv,
+		//int argc, const char **argv,
 		int verbose_level);
 	void init_group(int f_semilinear, int verbose_level);
 	//void init_orthogonal(int verbose_level);
@@ -683,6 +684,7 @@ public:
 	int (*check_function)(int len, long int *S, void *data, int verbose_level);
 
 	poset_classification *gen;
+	poset_classification_control *Control;
 	poset *Poset;
 
 	int nb_orbits;
@@ -882,6 +884,7 @@ public:
 	action *A_on_neighbors; 
 		// restricted action A2 on the set Neighbors[]
 
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *Five_plus_one;
 		// orbits on five-plus-one configurations
@@ -914,7 +917,7 @@ public:
 	void null();
 	void freeself();
 	void init(surface_with_action *Surf_A, linear_group *LG, 
-		int argc, const char **argv, 
+		//int argc, const char **argv,
 		int verbose_level);
 	void compute_neighbors(int verbose_level);
 	void make_spreadsheet_of_neighbors(spreadsheet *&Sp, 
@@ -973,6 +976,8 @@ public:
 	strong_generators *gens_type1;
 	strong_generators *gens_type2;
 
+	poset_classification_control *Control1;
+	poset_classification_control *Control2;
 	poset *Poset1;
 	poset *Poset2;
 	poset_classification *orbits_on_trihedra_type1;
@@ -1084,14 +1089,15 @@ public:
 	strong_generators *Strong_gens;
 	action *A; // PGL(n - k, q) if f_linear
 
+	int f_control;
+	poset_classification_control *Control;
+
 	poset *Poset;
 	poset_classification *gen;
 
 
 	int f_irreducibility_test;
 	int f_semilinear;
-	int f_list;
-	int f_table_of_nodes;
 
 
 	int schreier_depth; // = 1000;
@@ -1099,10 +1105,12 @@ public:
 	int f_debug; // = FALSE;
 	//int f_lex; // = FALSE;
 
-	int f_draw_poset;
-	int f_draw_full_poset;
-	int f_print_data_structure;
-	int f_draw_schreier_trees;
+	//int f_draw_poset;
+	//int f_draw_full_poset;
+	//int f_print_data_structure;
+	//int f_list;
+	//int f_table_of_nodes;
+	//int f_draw_schreier_trees;
 
 	code_classify();
 	~code_classify();
@@ -1187,6 +1195,7 @@ public:
 	action *A2;
 	action *A2r;
 
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen;
 
@@ -1350,6 +1359,7 @@ public:
 	action *AQ;
 	action *A_PGLQ;
 	vector_space *VS;
+	poset_classification_control *Control1;
 	poset *Poset1;
 	poset_classification *Gen;
 	int vector_space_dimension; // = n
@@ -1373,8 +1383,12 @@ public:
 	long int *secondary_candidates;
 	int secondary_nb_candidates;
 	int secondary_schreier_depth;
+
+	poset_classification_control *Control_stab;
 	poset *Poset_stab;
 	poset_classification *Gen_stab;
+
+	poset_classification_control *Control2;
 	poset *Poset2;
 	poset_classification *Gen2;
 	int *is_allowed;
@@ -1450,6 +1464,7 @@ class ovoid_classify {
 
 public:
 
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen;
 
@@ -1587,6 +1602,7 @@ public:
 	long int bitvector_length;
 	int *degree;
 
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen;
 
@@ -1967,6 +1983,7 @@ public:
 
 	int clique_size;
 	colored_graph *fixpoint_graph;
+	poset_classification_control *Control;
 	poset *Poset_fixpoint_cliques;
 	poset_classification *fixpoint_clique_gen;
 	long int *Cliques;
@@ -2063,6 +2080,7 @@ public:
 	int *base_cols; // [n]
 
 	vector_space *VS;
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *Gen;
 
@@ -2208,6 +2226,7 @@ class search_blocking_set {
 public:
 	incidence_structure *Inc; // do not free
 	action *A; // do not free
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen;
 
@@ -2406,6 +2425,7 @@ public:
 	int *tmp_M3;
 	int *tmp_M4;
 
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen; // allocated in init()
 
@@ -2719,11 +2739,9 @@ public:
 	~surface_classify_wedge();
 	void null();
 	void freeself();
-	void read_arguments(int argc, const char **argv, 
-		int verbose_level);
 	void init(finite_field *F, linear_group *LG, 
 		int f_semilinear, surface_with_action *Surf_A,
-		int argc, const char **argv, 
+		//int argc, const char **argv,
 		int verbose_level);
 	void do_classify_double_sixes(int verbose_level);
 	void do_classify_surfaces(int verbose_level);
@@ -3252,8 +3270,8 @@ public:
 class tensor_classify {
 public:
 	int t0;
-	int argc;
-	const char **argv;
+	//int argc;
+	//const char **argv;
 	int nb_factors;
 	int n;
 	int q;
@@ -3271,6 +3289,7 @@ public:
 	longinteger_object go;
 	wreath_product *W;
 	vector_space *VS;
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *Gen;
 	int vector_space_dimension;
@@ -3278,7 +3297,7 @@ public:
 
 	tensor_classify();
 	~tensor_classify();
-	void init(int argc, const char **argv,
+	void init(
 			int nb_factors, int n, int q, int depth,
 			int verbose_level);
 	void print_generators();
@@ -3344,6 +3363,7 @@ public:
 	incidence_structure *Inc;
 	partitionstack *Stack;
 
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *arcs;
 

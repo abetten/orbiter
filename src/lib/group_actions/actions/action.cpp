@@ -1149,7 +1149,7 @@ int action::least_image_of_point(vector_ge &strong_generators,
 	len = Schreier.orbit_len[0];
 	image = int_vec_minimum(Schreier.orbit, len);
 	pos = Schreier.orbit_inv[image];
-	Schreier.coset_rep(pos);
+	Schreier.coset_rep(pos, 0 /* verbose_level */);
 	element_move(Schreier.cosetrep, transporter, 0);
 	// we check it:
 	i = element_image_of(pt, transporter, 0);

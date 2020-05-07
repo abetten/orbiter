@@ -48,6 +48,7 @@ large_set_classify::large_set_classify()
 	bitvector_length = 0;
 	degree = 0;
 
+	Control = NULL;
 	Poset = NULL;
 	gen = NULL;
 
@@ -273,17 +274,18 @@ void large_set_classify::init_designs(orbit_of_sets *SetOrb,
 				verbose_level);
 
 
+	Control = NEW_OBJECT(poset_classification_control);
 	gen = NEW_OBJECT(poset_classification);
 
-	gen->f_T = TRUE;
-	gen->f_W = TRUE;
+	Control->f_T = TRUE;
+	Control->f_W = TRUE;
 
 	if (f_v) {
 		cout << "large_set_classify::init_designs "
 				"calling gen->initialize" << endl;
 	}
 
-	gen->initialize(Poset,
+	gen->initialize(Control, Poset,
 		search_depth,
 		path, prefix,
 		verbose_level - 1);

@@ -748,14 +748,14 @@ public:
 		int &orbit_idx, int *Elt, int verbose_level);
 	void transporter_from_point_to_orbit_rep(int pt, 
 		int &orbit_idx, int *Elt, int verbose_level);
-	void coset_rep(int j);
+	void coset_rep(int j, int verbose_level);
 		// j is a coset, not a point
 		// result is in cosetrep
 		// determines an element in the group 
 		// that moves the orbit representative 
 		// to the j-th point in the orbit.
 	void coset_rep_with_verbosity(int j, int verbose_level);
-	void coset_rep_inv(int j);
+	void coset_rep_inv(int j, int verbose_level);
 	void extend_orbit(int *elt, int verbose_level);
 	void compute_all_point_orbits(int verbose_level);
 	void compute_all_point_orbits_with_prefered_reps(
@@ -1431,6 +1431,7 @@ public:
 		int verbose_level);
 	void print_all_group_elements();
 	void print_all_group_elements_tex(std::ostream &ost);
+	void print_all_group_elements_with_permutations_tex(std::ostream &ost);
 	void print_all_group_elements_as_permutations();
 	void print_all_group_elements_as_permutations_in_special_action(
 		action *A_special);

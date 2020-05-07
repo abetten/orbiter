@@ -100,7 +100,7 @@ int main(int argc, const char **argv)
 
 	if (f_v) {
 		cout << "arcs_main q=" << q << endl;
-		}
+	}
 
 	if (Descr->f_override_polynomial) {
 		cout << "creating finite field of order q=" << Descr->input_q
@@ -121,13 +121,13 @@ int main(int argc, const char **argv)
 	if (f_v) {
 		cout << "arcs_main before LG->init, "
 				"creating the group" << endl;
-		}
+	}
 
 	LG->init(Descr, verbose_level - 1);
 
 	if (f_v) {
 		cout << "arcs_main after LG->init" << endl;
-		}
+	}
 
 	action *A;
 
@@ -180,7 +180,7 @@ int main(int argc, const char **argv)
 		Gen->ECA->input_prefix, 
 		Gen->ECA->base_fname,
 		Gen->ECA->starter_size, 
-		argc, argv, 
+		//argc, argv,
 		Gen->verbose_level);
 	cout << "after Gen->init" << endl;
 	

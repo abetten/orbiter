@@ -1356,12 +1356,17 @@ void packing_was::compute_cliques_on_fixpoint_graph(
 					this /* void *data */,
 					verbose_level);
 
+		Control = NEW_OBJECT(poset_classification_control);
 		fixpoint_clique_gen = NEW_OBJECT(poset_classification);
+
+		Control->f_W = TRUE;
+		Control->f_w = TRUE;
 
 		fixpoint_clique_gen->compute_orbits_on_subsets(
 				clique_size /* int target_depth */,
 				my_prefix /* const char *prefix */,
-				TRUE /* f_W */, TRUE /* f_w */,
+				//TRUE /* f_W */, TRUE /* f_w */,
+				Control,
 				Poset_fixpoint_cliques,
 				verbose_level);
 

@@ -34,6 +34,7 @@ subspace_orbits::subspace_orbits()
 	weights = NULL;
 
 	VS = NULL;
+	Control = NULL;
 	Poset = NULL;
 	Gen = NULL;
 	
@@ -119,17 +120,6 @@ void subspace_orbits::init(
 	weights = NEW_int(n + 1);
 	Gen = NEW_OBJECT(poset_classification);
 
-	if (f_v) {
-		cout << "subspace_orbits::init "
-				"before Gen->read_arguments" << endl;
-		}
-
-	Gen->read_arguments(argc, argv, 0);
-
-	if (f_v) {
-		cout << "subspace_orbits::init "
-				"after Gen->read_arguments" << endl;
-		}
 
 	if (f_v) {
 		cout << "subspace_orbits::init "
@@ -200,6 +190,7 @@ void subspace_orbits::init_group(int verbose_level)
 			this,
 			verbose_level - 1);
 
+	Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subspace_lattice(LG->A_linear,
 			LG->A2, LG->Strong_gens,
@@ -210,7 +201,7 @@ void subspace_orbits::init_group(int verbose_level)
 				this /* void *data */,
 				verbose_level);
 	
-	Gen->init(Poset, Gen->depth, verbose_level);
+	Gen->init(Control, Poset, Gen->depth, verbose_level);
 
 
 #if 0

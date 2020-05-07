@@ -26,6 +26,7 @@ arc_orbits_on_pairs::arc_orbits_on_pairs()
 
 	arc_idx = -1;
 	Poset = NULL;
+	Control = NULL;
 	Orbits_on_pairs = NULL;
 
 	nb_orbits_on_pairs = -1;
@@ -50,6 +51,9 @@ void arc_orbits_on_pairs::freeself()
 {
 	if (Poset) {
 		FREE_OBJECT(Poset);
+	}
+	if (Control) {
+		FREE_OBJECT(Control);
 	}
 	if (Orbits_on_pairs) {
 		FREE_OBJECT(Orbits_on_pairs);
@@ -114,12 +118,13 @@ void arc_orbits_on_pairs::init(
 				"creating poset" << endl;
 		}
 	Poset = NEW_OBJECT(poset);
+	Control = NEW_OBJECT(poset_classification_control);
 	Poset->init_subset_lattice(A, A_on_arc,
 			The_arc->Strong_gens,
 			verbose_level);
 
 	Orbits_on_pairs = NEW_OBJECT(poset_classification);
-	Orbits_on_pairs->init(Poset,
+	Orbits_on_pairs->init(Control, Poset,
 		2 /* sz */, verbose_level);
 
 

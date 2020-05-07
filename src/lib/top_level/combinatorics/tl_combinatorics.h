@@ -141,6 +141,7 @@ public:
 	action *Aut;
 	action *A2;
 	poset *Poset;
+	poset_classification_control *Control;
 	poset_classification *gen;
 
 
@@ -328,6 +329,8 @@ public:
 	strong_generators *SG;
 	longinteger_object go;
 	direct_product *P;
+	poset_classification_control *Control_pairs;
+	poset_classification_control *Control_search;
 	poset *Poset_pairs;
 	poset *Poset_search;
 	poset_classification *Pairs;
@@ -660,6 +663,10 @@ public:
 	//int f_lex;
 
 	int f_regular;
+
+	int f_control;
+	poset_classification_control *Control;
+
 	int regularity;
 	int *degree_sequence; // [n]
 
@@ -669,14 +676,14 @@ public:
 	int *neighbor_idx; // [n]
 	int *distance; // [n]
 
-	int f_list; // list whole orbits in the end
-	int f_list_all; // list whole orbits in the end
+	//int f_list; // list whole orbits in the end
+	//int f_list_all; // list whole orbits in the end
 	int f_draw_graphs;
-	int f_embedded;
-	int f_sideways;
+	//int f_embedded;
+	//int f_sideways;
 	int f_draw_graphs_at_level;
 	int level;
-	double scale;
+	//double scale;
 	int f_x_stretch;
 	double x_stretch;
 
@@ -693,9 +700,9 @@ public:
 	int level_graph_level;
 	int f_test_multi_edge;
 
-	int f_draw_poset;
-	int f_draw_full_poset;
-	int f_plesken;
+	//int f_draw_poset;
+	//int f_draw_full_poset;
+	//int f_plesken;
 
 	int f_identify;
 	long int identify_data[1000];
@@ -706,8 +713,8 @@ public:
 
 	graph_classify();
 	~graph_classify();
-	void read_arguments(int argc, const char **argv);
-	void init(int argc, const char **argv);
+	void read_arguments(int argc, const char **argv, int verbose_level);
+	void init(int argc, const char **argv, int verbose_level);
 	int check_conditions(int len, long int *S, int verbose_level);
 	int check_conditions_tournament(int len, long int *S,
 			int verbose_level);
@@ -884,6 +891,7 @@ public:
 		// on the orbit of the reflection group.
 	int f_play_it_safe;
 
+	poset_classification_control *Control;
 	poset *Poset;
 		// subset lattice for action A_on_orbits
 	poset_classification *PC;
@@ -955,6 +963,7 @@ public:
 	int bitvector_length;
 	int *degree;
 
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen;
 
@@ -1139,6 +1148,7 @@ public:
 	int m2;
 	int *v1; // [k]
 
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen;
 	action *A;
