@@ -247,7 +247,7 @@ int main(int argc, const char **argv)
 
 	SubOrb = NEW_OBJECT(subspace_orbits);
 
-	SubOrb->init(argc, argv, 
+	SubOrb->init(
 		LG, depth, 
 		verbose_level);
 	

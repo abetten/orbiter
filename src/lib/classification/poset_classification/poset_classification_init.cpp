@@ -196,7 +196,6 @@ void poset_classification::freeself()
 }
 
 #if 0
-
 void poset_classification::usage()
 {
 	cout << "poset_classification options:" << endl;
@@ -441,13 +440,11 @@ void poset_classification::init(
 	int i;
 	
 	if (f_v) {
-		cout << "poset_classification::init" << endl;
+		cout << "poset_classification::init, sz=" << sz << endl;
 		}
 	
 	Control = PC_control;
 	poset_classification::Poset = Poset;
-	//poset_classification::A = A;
-	//poset_classification::A2 = A2;
 	poset_classification::sz = sz;
 
 	if (Poset == NULL) {
@@ -526,7 +523,7 @@ void poset_classification::init(
 	S = NEW_lint(sz);
 	for (i = 0; i < sz; i++) {
 		S[i] = i;
-		}
+	}
 
 	tmp_set_apply_fusion = NEW_lint(sz + 1);
 

@@ -729,6 +729,26 @@ void finite_field::PG_element_rank_modified_lint(
 	a += len;
 }
 
+void finite_field::PG_elements_unrank_lint(
+		int *M, int k, int n, long int *rank_vec)
+{
+	int i;
+
+	for (i = 0; i < k; i++) {
+		PG_element_unrank_modified_lint(M + i * n, 1, n, rank_vec[i]);
+	}
+}
+
+void finite_field::PG_elements_rank_lint(
+		int *M, int k, int n, long int *rank_vec)
+{
+	int i;
+
+	for (i = 0; i < k; i++) {
+		PG_element_rank_modified_lint(M + i * n, 1, n, rank_vec[i]);
+	}
+}
+
 void finite_field::PG_element_unrank_modified_lint(
 		int *v, int stride, int len, long int a)
 {

@@ -828,6 +828,10 @@ public:
 			int *v, int stride, int len, int a);
 	void PG_element_rank_modified_lint(
 			int *v, int stride, int len, long int &a);
+	void PG_elements_unrank_lint(
+			int *M, int k, int n, long int *rank_vec);
+	void PG_elements_rank_lint(
+			int *M, int k, int n, long int *rank_vec);
 	void PG_element_unrank_modified_lint(
 			int *v, int stride, int len, long int a);
 	void PG_element_rank_modified_not_in_subspace(

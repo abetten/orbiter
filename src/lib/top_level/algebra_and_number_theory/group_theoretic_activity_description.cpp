@@ -55,6 +55,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_embedded = FALSE;
 	f_sideways = FALSE;
 	x_stretch = 1.;
+	f_print_generators = FALSE;
 	f_classify_arcs = FALSE;
 	classify_arcs_target_size = 0;
 	f_classify_arcs_d = FALSE;
@@ -72,6 +73,12 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 		surface_descr_isomorph2 = NULL;
 	f_surface_recognize = FALSE;
 		surface_descr = NULL;
+	f_orbits_on_subspaces = FALSE;
+	orbits_on_subspaces_depth = 0;
+	f_mindist = FALSE;
+	mindist = 0;
+	f_self_orthogonal = FALSE;
+	f_doubly_even = FALSE;
 }
 
 group_theoretic_activity_description::~group_theoretic_activity_description()
@@ -252,9 +259,9 @@ int group_theoretic_activity_description::read_arguments(
 			sscanf(argv[++i], "%lf", &x_stretch);
 			cout << "-x_stretch" << x_stretch << endl;
 		}
-		else if (strcmp(argv[i], "-end") == 0) {
-			cout << "-end" << endl;
-			return i;
+		else if (strcmp(argv[i], "-print_generators") == 0) {
+			f_print_generators = TRUE;
+			cout << "-print_generators" << endl;
 			}
 		else if (strcmp(argv[i], "-classify_arcs") == 0) {
 			f_classify_arcs = TRUE;
@@ -335,10 +342,28 @@ int group_theoretic_activity_description::read_arguments(
 			i += 2;
 			cout << "-surface_recognize " << endl;
 		}
+		else if (strcmp(argv[i], "-orbits_on_subspaces") == 0) {
+			f_orbits_on_subspaces = TRUE;
+			orbits_on_subspaces_depth = atoi(argv[++i]);
+			cout << "-orbits_on_subspaces " << orbits_on_subspaces_depth << endl;
+		}
+		else if (strcmp(argv[i], "-mindist") == 0) {
+			f_mindist = TRUE;
+			mindist = atoi(argv[++i]);
+			cout << "-mindist" << mindist << endl;
+		}
+		else if (strcmp(argv[i], "-self_orthogonal") == 0) {
+			f_self_orthogonal = TRUE;
+			cout << "-self_orthogonal" << endl;
+		}
+		else if (strcmp(argv[i], "-doubly_even") == 0) {
+			f_doubly_even = TRUE;
+			cout << "-doubly_even" << endl;
+		}
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
-			}
+		}
 		else {
 			cout << "group_theoretic_activity_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
