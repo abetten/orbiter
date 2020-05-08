@@ -768,14 +768,14 @@ void poset_classification::draw_poset(
 	int ymax = 1000000;
 	int x_max = 10000;
 	int y_max = 10000;
-	int rad = 50;
+	int rad = 600;
 	int f_circle = TRUE;
 	int f_corners = FALSE;
 	int f_nodes_empty = FALSE;
 	int f_show_level_info = FALSE;
 	int f_label_edges = FALSE;
 	int f_rotated = FALSE;
-	double scale = .45;
+	double scale = .20;
 	double line_width = 1.5;
 
 	draw_poset_fname_base_aux_poset(fname_base1, depth);

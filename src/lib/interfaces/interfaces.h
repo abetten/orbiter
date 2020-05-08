@@ -236,6 +236,9 @@ class interface_cryptography {
 	int f_inverse_mod;
 	int inverse_mod_a;
 	int inverse_mod_n;
+	int f_extended_gcd;
+	int extended_gcd_a;
+	int extended_gcd_b;
 	int f_power_mod;
 	int power_mod_a;
 	int power_mod_k;
@@ -430,6 +433,7 @@ public:
 	void do_discrete_log(long int y, long int a, long int p, int verbose_level);
 	void do_primitive_root(long int p, int verbose_level);
 	void do_inverse_mod(long int a, long int n, int verbose_level);
+	void do_extended_gcd(int a, int b, int verbose_level);
 	void do_power_mod(long int a, long int k, long int n, int verbose_level);
 	void do_RSA_encrypt_text(long int RSA_d, long int RSA_m,
 			int RSA_block_size, const char * RSA_encrypt_text, int verbose_level);

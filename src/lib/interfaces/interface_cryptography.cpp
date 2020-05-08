@@ -51,6 +51,9 @@ interface_cryptography::interface_cryptography()
 	inverse_mod_a = 0;
 	inverse_mod_n = 0;
 	//cout << "interface_cryptography::interface_cryptography 00g" << endl;
+	f_extended_gcd = FALSE;
+	extended_gcd_a = 0;
+	extended_gcd_b = 0;
 	f_power_mod = FALSE;
 	power_mod_a = 0;
 	power_mod_k = 0;
@@ -260,6 +263,9 @@ void interface_cryptography::print_help(int argc, const char **argv, int i, int 
 	else if (strcmp(argv[i], "-inverse_mod") == 0) {
 		cout << "-primitive_root <int : a> <int : n>" << endl;
 	}
+	else if (strcmp(argv[i], "-extended_gcd") == 0) {
+		cout << "-extended_gcd <int : a> <int : b>" << endl;
+	}
 	else if (strcmp(argv[i], "-power_mod") == 0) {
 		cout << "-power_mod <int : a> <int : k> <int : n>" << endl;
 	}
@@ -414,6 +420,9 @@ int interface_cryptography::recognize_keyword(int argc, const char **argv, int i
 		return true;
 	}
 	else if (strcmp(argv[i], "-inverse_mod") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-extended_gcd") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-power_mod") == 0) {
@@ -646,6 +655,12 @@ void interface_cryptography::read_arguments(int argc, const char **argv, int i0,
 			inverse_mod_a = atol(argv[++i]);
 			inverse_mod_n = atol(argv[++i]);
 			cout << "-inverse_mod " << inverse_mod_a << " " << inverse_mod_n << endl;
+		}
+		else if (strcmp(argv[i], "-extended_gcd") == 0) {
+			f_extended_gcd = TRUE;
+			extended_gcd_a = atol(argv[++i]);
+			extended_gcd_b = atol(argv[++i]);
+			cout << "-extended_gcd " << extended_gcd_a << " " << extended_gcd_b << endl;
 		}
 		else if (strcmp(argv[i], "-power_mod") == 0) {
 			f_power_mod = TRUE;
@@ -1008,6 +1023,9 @@ void interface_cryptography::worker(int verbose_level)
 	}
 	else if (f_inverse_mod) {
 		do_inverse_mod(inverse_mod_a, inverse_mod_n, verbose_level);
+	}
+	else if (f_extended_gcd) {
+		do_extended_gcd(extended_gcd_a, extended_gcd_b, verbose_level);
 	}
 	else if (f_power_mod) {
 		do_power_mod(power_mod_a, power_mod_k, power_mod_n, verbose_level);
@@ -3686,6 +3704,26 @@ void interface_cryptography::do_inverse_mod(long int a, long int n, int verbose_
 	Os.time_check_delta(cout, dt);
 	cout << endl;
 }
+
+void interface_cryptography::do_extended_gcd(int a, int b, int verbose_level)
+{
+	{
+	longinteger_domain D;
+
+	longinteger_object A, B, G, U, V;
+
+	A.create(a, __FILE__, __LINE__);
+	B.create(b, __FILE__, __LINE__);
+
+	cout << "before D.extended_gcd" << endl;
+	D.extended_gcd(A, B,
+			G, U, V, verbose_level);
+	cout << "after D.extended_gcd" << endl;
+
+	}
+
+}
+
 
 void interface_cryptography::do_power_mod(long int a, long int k, long int n, int verbose_level)
 {

@@ -24,6 +24,13 @@ group_theoretic_activity::group_theoretic_activity()
 	F = NULL;
 	LG = NULL;
 	A = NULL;
+
+	orbits_on_subspaces_Poset = NULL;
+	orbits_on_subspaces_PC = NULL;
+	orbits_on_subspaces_VS = NULL;
+	orbits_on_subspaces_M = NULL;
+	orbits_on_subspaces_base_cols = NULL;
+
 }
 
 group_theoretic_activity::~group_theoretic_activity()
@@ -120,10 +127,6 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		orbits_on_points(verbose_level);
 	}
 
-	if (Descr->f_orbits_on_subsets) {
-		orbits_on_subsets(verbose_level);
-	}
-
 	if (Descr->f_classify_arcs) {
 		do_classify_arcs(verbose_level);
 	}
@@ -142,6 +145,14 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_surface_recognize) {
 		do_surface_recognize(Descr->surface_descr, verbose_level);
+	}
+
+	if (Descr->f_orbits_on_subsets) {
+		orbits_on_subsets(verbose_level);
+	}
+
+	else if (Descr->f_orbits_on_subspaces) {
+		orbits_on_subspaces(verbose_level);
 	}
 
 	if (f_v) {
@@ -1002,7 +1013,6 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 	}
 }
 
-
 void group_theoretic_activity::orbits_on_subsets(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1010,7 +1020,6 @@ void group_theoretic_activity::orbits_on_subsets(int verbose_level)
 	if (f_v) {
 		cout << "group_theoretic_activity::orbits_on_subsets" << endl;
 	}
-	cout << "computing orbits on subsets:" << endl;
 	poset_classification *PC;
 	poset_classification_control *Control;
 	poset *Poset;
@@ -1022,19 +1031,186 @@ void group_theoretic_activity::orbits_on_subsets(int verbose_level)
 	Poset->init_subset_lattice(A, A,
 			LG->Strong_gens,
 			verbose_level);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::orbits_on_subsets before Poset->orbits_on_k_sets_compute" << endl;
+	}
 	PC = Poset->orbits_on_k_sets_compute(
 			Control,
 			Descr->orbits_on_subsets_size, verbose_level);
+	if (f_v) {
+		cout << "group_theoretic_activity::orbits_on_subsets after Poset->orbits_on_k_sets_compute" << endl;
+	}
+
+	if (f_v) {
+		cout << "group_theoretic_activity::orbits_on_subsets before orbits_on_poset_post_processing" << endl;
+	}
+	orbits_on_poset_post_processing(
+			PC, Descr->orbits_on_subsets_size, verbose_level);
 
 
-	for (int depth = 0; depth <= Descr->orbits_on_subsets_size; depth++) {
-		cout << "There are " << PC->nb_orbits_at_level(depth)
-				<< " orbits on subsets of size " << depth << ":" << endl;
+	if (f_v) {
+		cout << "group_theoretic_activity::orbits_on_subsets done" << endl;
+	}
+}
 
-		if (depth < Descr->orbits_on_subsets_size) {
+void group_theoretic_activity::orbits_on_subspaces(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::orbits_on_subspaces" << endl;
+	}
+
+
+	poset_classification_control *Control;
+	Control = NEW_OBJECT(poset_classification_control);
+
+	Control->f_max_depth = TRUE;
+	Control->max_depth = Descr->orbits_on_subspaces_depth;
+	if (f_v) {
+		cout << "group_theoretic_activity::orbits_on_subspaces Control->max_depth=" << Control->max_depth << endl;
+	}
+
+	int n;
+
+	n = LG->n;
+
+	orbits_on_subspaces_PC = NEW_OBJECT(poset_classification);
+	orbits_on_subspaces_Poset = NEW_OBJECT(poset);
+
+
+
+	orbits_on_subspaces_M = NEW_int(n * n);
+	orbits_on_subspaces_base_cols = NEW_int(n);
+
+	orbits_on_subspaces_VS = NEW_OBJECT(vector_space);
+	orbits_on_subspaces_VS->init(LG->F, n /* dimension */, verbose_level - 1);
+	orbits_on_subspaces_VS->init_rank_functions(
+			gta_subspace_orbits_rank_point_func,
+			gta_subspace_orbits_unrank_point_func,
+			this,
+			verbose_level - 1);
+
+
+
+	if (Descr->f_print_generators) {
+		int f_print_as_permutation = FALSE;
+		int f_offset = TRUE;
+		int offset = 1;
+		int f_do_it_anyway_even_for_big_degree = TRUE;
+		int f_print_cycles_of_length_one = TRUE;
+
+		cout << "group_theoretic_activity::orbits_on_subspaces "
+				"printing generators "
+				"for the group:" << endl;
+		LG->Strong_gens->gens->print(cout,
+			f_print_as_permutation,
+			f_offset, offset,
+			f_do_it_anyway_even_for_big_degree,
+			f_print_cycles_of_length_one);
+	}
+
+	orbits_on_subspaces_Poset = NEW_OBJECT(poset);
+	orbits_on_subspaces_Poset->init_subspace_lattice(LG->A_linear,
+			LG->A2, LG->Strong_gens,
+			orbits_on_subspaces_VS,
+			verbose_level);
+	orbits_on_subspaces_Poset->add_testing_without_group(
+			gta_subspace_orbits_early_test_func,
+				this /* void *data */,
+				verbose_level);
+
+
+
+	if (f_v) {
+		cout << "group_theoretic_activity::orbits_on_subspaces "
+				"LG->prefix=" << LG->prefix << endl;
+	}
+
+	sprintf(orbits_on_subspaces_PC->fname_base, "%s", LG->prefix);
+
+	orbits_on_subspaces_PC->init(Control, orbits_on_subspaces_Poset,
+			Control->max_depth, verbose_level);
+
+
+
+	int nb_poset_orbit_nodes = 1000;
+
+	if (f_v) {
+		cout << "subspace_orbits->init_subspace_lattice "
+				"before Gen->init_poset_orbit_node" << endl;
+	}
+	orbits_on_subspaces_PC->init_poset_orbit_node(
+			nb_poset_orbit_nodes, verbose_level - 1);
+	if (f_v) {
+		cout << "subspace_orbits->init_subspace_lattice "
+				"calling Gen->init_root_node" << endl;
+	}
+	orbits_on_subspaces_PC->root[0].init_root_node(orbits_on_subspaces_PC, verbose_level - 1);
+
+	int schreier_depth = Control->max_depth;
+	int f_use_invariant_subset_if_available = FALSE;
+	int f_debug = FALSE;
+	int nb_orbits;
+
+	os_interface Os;
+	int t0 = Os.os_ticks();
+
+	if (f_v) {
+		cout << "group_theoretic_activity::orbits_on_subspaces "
+				"calling generator_main" << endl;
+		cout << "A=";
+		orbits_on_subspaces_PC->Poset->A->print_info();
+		cout << "A2=";
+		orbits_on_subspaces_PC->Poset->A2->print_info();
+	}
+	orbits_on_subspaces_PC->main(t0,
+		schreier_depth,
+		f_use_invariant_subset_if_available,
+		f_debug,
+		verbose_level - 1);
+
+
+	if (f_v) {
+		cout << "group_theoretic_activity::orbits_on_subspaces "
+				"done with generator_main" << endl;
+	}
+	nb_orbits = orbits_on_subspaces_PC->nb_orbits_at_level(orbits_on_subspaces_PC->depth);
+	if (f_v) {
+		cout << "group_theoretic_activity::orbits_on_subspaces we found "
+				<< nb_orbits << " orbits at depth " << orbits_on_subspaces_PC->depth << endl;
+	}
+
+	orbits_on_poset_post_processing(
+			orbits_on_subspaces_PC, Control->max_depth, verbose_level);
+
+
+	if (f_v) {
+		cout << "group_theoretic_activity::orbits_on_subspaces done" << endl;
+	}
+}
+
+void group_theoretic_activity::orbits_on_poset_post_processing(
+		poset_classification *PC,
+		int depth,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::orbits_on_poset_post_processing" << endl;
+	}
+
+
+	for (int d = 0; d <= depth; d++) {
+		cout << "There are " << PC->nb_orbits_at_level(d)
+				<< " orbits on subsets of size " << d << ":" << endl;
+
+		if (d < Descr->orbits_on_subsets_size) {
 			//continue;
 		}
-		PC->list_all_orbits_at_level(depth,
+		PC->list_all_orbits_at_level(d,
 				FALSE /* f_has_print_function */,
 				NULL /* void (*print_function)(ostream &ost, int len, int *S, void *data)*/,
 				NULL /* void *print_function_data*/,
@@ -1047,27 +1223,28 @@ void group_theoretic_activity::orbits_on_subsets(int verbose_level)
 	if (Descr->f_draw_poset) {
 		{
 		char fname_poset[1000];
-		sprintf(fname_poset, "%s_poset_%d", LG->prefix, Descr->orbits_on_subsets_size);
+		sprintf(fname_poset, "%s_poset_%d", LG->prefix, depth);
 		PC->draw_poset(fname_poset,
-				Descr->orbits_on_subsets_size /*depth*/, 0 /* data1 */,
+				depth /*depth*/, 0 /* data1 */,
 				TRUE /* f_embedded */,
 				FALSE /* f_sideways */,
 				0 /* verbose_level */);
 		}
 	}
+
 	if (Descr->f_draw_full_poset) {
 		{
 		char fname_poset[1000];
-		sprintf(fname_poset, "%s_poset_%d", LG->prefix, Descr->orbits_on_subsets_size);
+		sprintf(fname_poset, "%s_poset_%d", LG->prefix, depth);
 		//double x_stretch = 0.4;
-		PC->draw_poset_full(fname_poset, Descr->orbits_on_subsets_size,
+		PC->draw_poset_full(fname_poset, depth,
 			0 /* data1 */, Descr->f_embedded, Descr->f_sideways,
 			Descr->x_stretch, 0 /*verbose_level */);
 
 		const char *fname_prefix = "flag_orbits";
 
 		PC->make_flag_orbits_on_relations(
-				Descr->orbits_on_subsets_size, fname_prefix, verbose_level);
+				depth, fname_prefix, verbose_level);
 
 		}
 	}
@@ -1076,12 +1253,12 @@ void group_theoretic_activity::orbits_on_subsets(int verbose_level)
 
 
 	if (Descr->f_test_if_geometric) {
-		int depth = Descr->test_if_geometric_depth;
+		int d = Descr->test_if_geometric_depth;
 
 		//for (depth = 0; depth <= orbits_on_subsets_size; depth++) {
 
-		cout << "Orbits on subsets of size " << depth << ":" << endl;
-		PC->list_all_orbits_at_level(depth,
+		cout << "Orbits on subsets of size " << d << ":" << endl;
+		PC->list_all_orbits_at_level(d,
 				FALSE /* f_has_print_function */,
 				NULL /* void (*print_function)(ostream &ost, int len, int *S, void *data)*/,
 				NULL /* void *print_function_data*/,
@@ -1091,22 +1268,22 @@ void group_theoretic_activity::orbits_on_subsets(int verbose_level)
 				TRUE /* f_show_whole_orbit*/);
 		int nb_orbits, orbit_idx;
 
-		nb_orbits = PC->nb_orbits_at_level(depth);
+		nb_orbits = PC->nb_orbits_at_level(d);
 		for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
 
 			int orbit_length;
 			long int *Orbit;
 
-			cout << "before PC->get_whole_orbit depth " << depth
+			cout << "before PC->get_whole_orbit depth " << d
 					<< " orbit " << orbit_idx
 					<< " / " << nb_orbits << ":" << endl;
 			PC->get_whole_orbit(
-					depth, orbit_idx,
+					d, orbit_idx,
 					Orbit, orbit_length, verbose_level);
-			cout << "depth " << depth << " orbit " << orbit_idx
+			cout << "depth " << d << " orbit " << orbit_idx
 					<< " / " << nb_orbits << " has length "
 					<< orbit_length << ":" << endl;
-			lint_matrix_print(Orbit, orbit_length, depth);
+			lint_matrix_print(Orbit, orbit_length, d);
 
 			action *Aut;
 			longinteger_object ago;
@@ -1133,24 +1310,24 @@ void group_theoretic_activity::orbits_on_subsets(int verbose_level)
 			long int *Orbit2;
 			int orbit_length2;
 
-			cout << "before PC->get_whole_orbit depth " << depth
+			cout << "before PC->get_whole_orbit depth " << d
 					<< " orbit " << orbit_idx
 					<< " / " << nb_orbits << ":" << endl;
 			PC->get_whole_orbit(
 					depth, 0 /* orbit_idx*/,
 					Orbit1, orbit_length1, verbose_level);
-			cout << "depth " << depth << " orbit " << 0
+			cout << "depth " << d << " orbit " << 0
 					<< " / " << nb_orbits << " has length "
 					<< orbit_length1 << ":" << endl;
-			lint_matrix_print(Orbit1, orbit_length1, depth);
+			lint_matrix_print(Orbit1, orbit_length1, d);
 
 			PC->get_whole_orbit(
 					depth, 1 /* orbit_idx*/,
 					Orbit2, orbit_length2, verbose_level);
-			cout << "depth " << depth << " orbit " << 1
+			cout << "depth " << d << " orbit " << 1
 					<< " / " << nb_orbits << " has length "
 					<< orbit_length2 << ":" << endl;
-			lint_matrix_print(Orbit2, orbit_length2, depth);
+			lint_matrix_print(Orbit2, orbit_length2, d);
 
 			action *Aut;
 			longinteger_object ago;
@@ -1175,21 +1352,14 @@ void group_theoretic_activity::orbits_on_subsets(int verbose_level)
 	} // if (f_test_if_geometric)
 
 
-	if (Descr->f_draw_poset) {
-		{
-		char fname_poset[1000];
-		sprintf(fname_poset, "%s_%d", LG->prefix, Descr->orbits_on_subsets_size);
-		PC->draw_poset(fname_poset,
-				Descr->orbits_on_subsets_size /*depth*/, 0 /* data1 */,
-				TRUE /* f_embedded */,
-				FALSE /* f_sideways */,
-				0 /* verbose_level */);
-		}
-	}
 	if (f_v) {
-		cout << "group_theoretic_activity::orbits_on_subsets done" << endl;
+		cout << "group_theoretic_activity::orbits_on_poset_post_processing done" << endl;
 	}
 }
+
+
+
+
 
 void group_theoretic_activity::do_classify_arcs(int verbose_level)
 {
@@ -1685,6 +1855,141 @@ void group_theoretic_activity::do_surface_recognize(
 		cout << "group_theoretic_activity::do_surface_recognize done" << endl;
 	}
 }
+
+
+
+int group_theoretic_activity::subspace_orbits_test_set(
+		int len, long int *S, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int ret = TRUE;
+	int rk;
+	int n;
+	finite_field *F;
+
+	if (f_v) {
+		cout << "group_theoretic_activity::subspace_orbits_test_set" << endl;
+		cout << "Testing set ";
+		lint_vec_print(cout, S, len);
+		cout << endl;
+		cout << "LG->n=" << LG->n << endl;
+	}
+	n = LG->n;
+	F = LG->F;
+
+	F->PG_elements_unrank_lint(
+			orbits_on_subspaces_M, len, n, S);
+
+	if (f_vv) {
+		cout << "coordinate matrix:" << endl;
+		print_integer_matrix_width(cout,
+				orbits_on_subspaces_M, len, n, n, F->log10_of_q);
+	}
+
+	rk = F->Gauss_simple(orbits_on_subspaces_M, len, n,
+			orbits_on_subspaces_base_cols, 0 /*verbose_level - 2*/);
+
+	if (f_v) {
+		cout << "the matrix has rank " << rk << endl;
+	}
+
+	if (rk < len) {
+		ret = FALSE;
+	}
+
+#if 0
+	if (ret) {
+		if (f_has_extra_test_func) {
+			ret = (*extra_test_func)(this,
+					len, S, extra_test_func_data, verbose_level);
+		}
+	}
+#endif
+
+	if (ret) {
+		if (f_v) {
+			cout << "group_theoretic_activity::subspace_orbits_test_set OK" << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "group_theoretic_activity::subspace_orbits_test_set not OK" << endl;
+		}
+	}
+	return ret;
+}
+
+
+// #############################################################################
+// global functions:
+// #############################################################################
+
+
+long int gta_subspace_orbits_rank_point_func(int *v, void *data)
+{
+	group_theoretic_activity *G;
+	poset_classification *gen;
+	long int rk;
+
+	G = (group_theoretic_activity *) data;
+	gen = G->orbits_on_subspaces_PC;
+	gen->Poset->VS->F->PG_element_rank_modified_lint(v, 1,
+			gen->Poset->VS->dimension, rk);
+	return rk;
+}
+
+void gta_subspace_orbits_unrank_point_func(int *v, long int rk, void *data)
+{
+	group_theoretic_activity *G;
+	poset_classification *gen;
+
+	G = (group_theoretic_activity *) data;
+	gen = G->orbits_on_subspaces_PC;
+	gen->Poset->VS->F->PG_element_unrank_modified(v, 1,
+			gen->Poset->VS->dimension, rk);
+}
+
+void gta_subspace_orbits_early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level)
+{
+	//verbose_level = 1;
+
+	group_theoretic_activity *G;
+	//poset_classification *gen;
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	G = (group_theoretic_activity *) data;
+
+	//gen = G->orbits_on_subspaces_PC;
+
+	if (f_v) {
+		cout << "gta_subspace_orbits_early_test_func" << endl;
+		cout << "testing " << nb_candidates << " candidates" << endl;
+	}
+	nb_good_candidates = 0;
+	for (i = 0; i < nb_candidates; i++) {
+		S[len] = candidates[i];
+		if (G->subspace_orbits_test_set(len + 1, S, verbose_level - 1)) {
+			good_candidates[nb_good_candidates++] = candidates[i];
+		}
+	}
+	if (f_v) {
+		cout << "gta_subspace_orbits_early_test_func" << endl;
+		cout << "Out of " << nb_candidates << " candidates, "
+				<< nb_good_candidates << " survive" << endl;
+	}
+}
+
+
+
+
+
+
+
 
 }}
 

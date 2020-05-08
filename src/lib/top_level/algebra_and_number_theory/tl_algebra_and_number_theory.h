@@ -193,6 +193,7 @@ public:
 	int f_embedded;
 	int f_sideways;
 	double x_stretch;
+	int f_print_generators;
 
 	// classification of arcs in projective spaces:
 	int f_classify_arcs;
@@ -206,6 +207,7 @@ public:
 	isomorph_arguments *IA;
 
 
+	// for cubic surfaces:
 	int f_surface_classify;
 	int f_surface_report;
 	int f_surface_identify_Sa;
@@ -215,6 +217,13 @@ public:
 	int f_surface_recognize;
 		surface_create_description *surface_descr;
 
+		// subspace orbits:
+		int f_orbits_on_subspaces;
+		int orbits_on_subspaces_depth;
+		int f_mindist;
+		int mindist;
+		int f_self_orthogonal;
+		int f_doubly_even;
 
 	group_theoretic_activity_description();
 	~group_theoretic_activity_description();
@@ -243,6 +252,14 @@ public:
 	linear_group *LG;
 	action *A;
 
+	// local data for orbits on subspaces:
+	poset *orbits_on_subspaces_Poset;
+	poset_classification *orbits_on_subspaces_PC;
+	vector_space *orbits_on_subspaces_VS;
+	int *orbits_on_subspaces_M;
+	int *orbits_on_subspaces_base_cols;
+
+
 	group_theoretic_activity();
 	~group_theoretic_activity();
 	void init(group_theoretic_activity_description *Descr,
@@ -262,6 +279,11 @@ public:
 	void orbit_of(int verbose_level);
 	void orbits_on_points(int verbose_level);
 	void orbits_on_subsets(int verbose_level);
+	void orbits_on_subspaces(int verbose_level);
+	void orbits_on_poset_post_processing(
+			poset_classification *PC,
+			int depth,
+			int verbose_level);
 	void do_classify_arcs(int verbose_level);
 	void do_surface_classify(int verbose_level);
 	void do_surface_report(int verbose_level);
@@ -273,8 +295,16 @@ public:
 	void do_surface_recognize(
 			surface_create_description *surface_descr,
 			int verbose_level);
+	int subspace_orbits_test_set(
+			int len, long int *S, int verbose_level);
 };
 
+long int gta_subspace_orbits_rank_point_func(int *v, void *data);
+void gta_subspace_orbits_unrank_point_func(int *v, long int rk, void *data);
+void gta_subspace_orbits_early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
 
 
 // #############################################################################
