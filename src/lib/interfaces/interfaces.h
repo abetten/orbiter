@@ -65,6 +65,8 @@ class interface_algebra {
 	int young_symmetrizer_n;
 	int f_young_symmetrizer_sym_4;
 	int f_classify_surfaces_through_arcs_and_trihedral_pairs;
+	int f_poset_classification_control;
+	poset_classification_control *Control;
 
 public:
 	interface_algebra();
@@ -87,7 +89,9 @@ public:
 	void do_make_table_of_irreducible_polynomials(int deg, int q, int verbose_level);
 	void do_make_character_table_symmetric_group(int deg, int verbose_level);
 	void do_make_A5_in_PSL_2_q(int q, int verbose_level);
-	void classify_surfaces_through_arcs_and_trihedral_pairs(int q, int verbose_level);
+	void classify_surfaces_through_arcs_and_trihedral_pairs(int q,
+			int f_control, poset_classification_control *Control,
+			int verbose_level);
 
 };
 

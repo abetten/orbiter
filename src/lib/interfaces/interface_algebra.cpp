@@ -51,6 +51,8 @@ interface_algebra::interface_algebra()
 	young_symmetrizer_n = 0;
 	f_young_symmetrizer_sym_4 = FALSE;
 	f_classify_surfaces_through_arcs_and_trihedral_pairs = FALSE;
+	f_poset_classification_control = FALSE;
+	Control = NULL;
 }
 
 
@@ -93,6 +95,9 @@ void interface_algebra::print_help(int argc,
 	else if (strcmp(argv[i], "-classify_surfaces_through_arcs_and_trihedral_pairs") == 0) {
 		cout << "-classify_surfaces_through_arcs_and_trihedral_pairs <int : q>" << endl;
 	}
+	else if (strcmp(argv[i], "-poset_classification_control") == 0) {
+		cout << "-poset_classification_control <description>" << endl;
+	}
 }
 
 int interface_algebra::recognize_keyword(int argc,
@@ -134,6 +139,9 @@ int interface_algebra::recognize_keyword(int argc,
 	else if (strcmp(argv[i], "-classify_surfaces_through_arcs_and_trihedral_pairs") == 0) {
 		return true;
 	}
+	else if (strcmp(argv[i], "-poset_classification_control") == 0) {
+		return true;
+	}
 	return false;
 }
 
@@ -169,6 +177,19 @@ void interface_algebra::read_arguments(int argc,
 				argv + i + 1, verbose_level);
 
 			cout << "-group_theoretic_activities" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+		else if (strcmp(argv[i], "-poset_classification_control") == 0) {
+			f_poset_classification_control = TRUE;
+			Control = NEW_OBJECT(poset_classification_control);
+			i += Control->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -poset_classification_control " << endl;
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -275,7 +296,9 @@ void interface_algebra::worker(int verbose_level)
 		Algebra.young_symmetrizer_sym_4(verbose_level);
 	}
 	else if (f_classify_surfaces_through_arcs_and_trihedral_pairs) {
-		classify_surfaces_through_arcs_and_trihedral_pairs(q, verbose_level);
+		classify_surfaces_through_arcs_and_trihedral_pairs(q,
+				f_poset_classification_control, Control,
+				verbose_level);
 	}
 }
 
@@ -670,7 +693,10 @@ void interface_algebra::do_make_A5_in_PSL_2_q(int q, int verbose_level)
 	}
 }
 
-void interface_algebra::classify_surfaces_through_arcs_and_trihedral_pairs(int q, int verbose_level)
+void interface_algebra::classify_surfaces_through_arcs_and_trihedral_pairs(
+		int q,
+		int f_control, poset_classification_control *Control,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -683,8 +709,16 @@ void interface_algebra::classify_surfaces_through_arcs_and_trihedral_pairs(int q
 	surface_with_action *Surf_A;
 	surface_domain *Surf;
 	finite_field *F;
+	poset_classification_control *my_control;
 	number_theory_domain NT;
 
+
+	if (f_control) {
+		my_control = Control;
+	}
+	else {
+		my_control = NEW_OBJECT(poset_classification_control);
+	}
 	F = NEW_OBJECT(finite_field);
 	Surf = NEW_OBJECT(surface_domain);
 	Surf_A = NEW_OBJECT(surface_with_action);
@@ -733,7 +767,7 @@ void interface_algebra::classify_surfaces_through_arcs_and_trihedral_pairs(int q
 	if (f_v) {
 		cout << "before Surf_A->Classify_trihedral_pairs->classify" << endl;
 	}
-	Surf_A->Classify_trihedral_pairs->classify(0 /*verbose_level*/);
+	Surf_A->Classify_trihedral_pairs->classify(my_control, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "after Surf_A->Classify_trihedral_pairs->classify" << endl;
 	}

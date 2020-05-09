@@ -26,14 +26,7 @@ int main(int argc, const char **argv)
 	t0 = Os.os_ticks();
 	
 	cout << "Welcome to Orbiter!" << endl;
-	//return 0;
 
-#if 0
-	if (argc <= 1) {
-		print_usage();
-		exit(1);
-	}
-#endif
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
@@ -48,7 +41,7 @@ int main(int argc, const char **argv)
 			f_memory_debug = TRUE;
 			memory_debug_verbose_level = atoi(argv[++i]);
 			cout << "-memory_debug " << memory_debug_verbose_level << endl;
-			}
+		}
 		else {
 			break;
 		}

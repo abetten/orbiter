@@ -232,8 +232,12 @@ public:
 		int i7, int i8);
 	int negate(int i);
 	int inverse(int i);
-	int power(int a, int n); // computes a^n
-	int frobenius_power(int a, int i); // computes a^{p^i}
+	int power(int a, int n);
+		// computes a^n
+	void frobenius_power_vec(int *v, int len, int frob_power);
+	void frobenius_power_vec_to_vec(int *v_in, int *v_out, int len, int frob_power);
+	int frobenius_power(int a, int frob_power);
+		// computes a^{p^frob_power}
 	int absolute_trace(int i);
 	int absolute_norm(int i);
 	int alpha_power(int i);
