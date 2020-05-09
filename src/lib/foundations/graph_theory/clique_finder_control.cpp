@@ -224,7 +224,7 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG, const char *fname_sol, 
 		cout << "clique_finder_control::do_Sajeeb" << endl;
 	}
 
-#if 1
+#if 0
 	cout << __FILE__ << ":" << __LINE__ << endl;
 	Graph<> G (CG->nb_points, CG->nb_colors, CG->nb_colors_per_vertex);
 	cout << __FILE__ << ":" << __LINE__ << endl;
