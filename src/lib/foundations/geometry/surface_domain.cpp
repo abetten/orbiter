@@ -1089,41 +1089,41 @@ int surface_domain::test_special_form_alpha_beta(int *coeff,
 	
 	if (f_v) {
 		cout << "surface_domain::test_special_form_alpha_beta" << endl;
-		}
+	}
 	if (!int_vec_is_constant_on_subset(coeff, 
 		zeroes, sizeof(zeroes) / sizeof(int), a)) {
 		cout << "surface_domain::test_special_form_alpha_beta "
 				"not constant on zero set" << endl;
 		return FALSE;
-		}
+	}
 	if (a != 0) {
 		cout << "surface_domain::test_special_form_alpha_beta "
 				"not zero on zero set" << endl;
 		return FALSE;
-		}
+	}
 	if (coeff[3] != 1) {
 		cout << "surface_domain::test_special_form_alpha_beta "
 				"not normalized" << endl;
 		exit(1);
-		}
+	}
 	if (!int_vec_is_constant_on_subset(coeff, 
 		alphas, sizeof(alphas) / sizeof(int), a)) {
 		cout << "surface_domain::test_special_form_alpha_beta "
 				"not constant on alpha set" << endl;
 		return FALSE;
-		}
+	}
 	alpha = a;
 	if (!int_vec_is_constant_on_subset(coeff, 
 		betas, sizeof(betas) / sizeof(int), a)) {
 		cout << "surface_domain::test_special_form_alpha_beta "
 				"not constant on beta set" << endl;
 		return FALSE;
-		}
+	}
 	beta = a;
 
 	if (f_v) {
 		cout << "surface_domain::test_special_form_alpha_beta done" << endl;
-		}
+	}
 	return ret;
 }
 

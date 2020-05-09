@@ -2009,6 +2009,7 @@ void algebra_global_with_action::matrix_convert_to_numerical(discreta_matrix &A,
 
 void algebra_global_with_action::classify_surfaces(
 		finite_field *F, linear_group *LG,
+		poset_classification_control *Control,
 		surface_domain *&Surf, surface_with_action *&Surf_A,
 		surface_classify_wedge *&SCW,
 		int verbose_level)
@@ -2056,6 +2057,7 @@ void algebra_global_with_action::classify_surfaces(
 
 	SCW->init(F, LG,
 			f_semilinear, Surf_A,
+			Control,
 			verbose_level - 1);
 
 	if (f_v) {

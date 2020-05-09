@@ -979,15 +979,21 @@ void matrix_group::substitute_surface_equation(int *Elt,
 		cout << "matrix_group::substitute_surface_equation" << endl;
 	}
 	if (f_semilinear) {
+		number_theory_domain NT;
+		int me;
+
+		me = NT.int_negate(Elt[n * n], GFq->e);
+		 // (GFq->e - Elt[n * n]) % GFq->e
 		Surf->substitute_semilinear(coeff_in,
 							coeff_out,
 							TRUE /* f_semilinear */,
-							(GFq->e - Elt[n * n]) % GFq->e,
+							me,
 							Elt,
 							0 /*verbose_level*/);
 
 		GFq->PG_element_normalize(coeff_out, 1, 20);
-	} else {
+	}
+	else {
 		Surf->substitute_semilinear(coeff_in,
 							coeff_out,
 							FALSE /* f_semilinear */,

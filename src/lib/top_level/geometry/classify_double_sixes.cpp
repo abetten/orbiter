@@ -116,7 +116,7 @@ void classify_double_sixes::freeself()
 
 void classify_double_sixes::init(
 	surface_with_action *Surf_A, linear_group *LG,
-	//int argc, const char **argv,
+	poset_classification_control *Control,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -226,7 +226,7 @@ void classify_double_sixes::init(
 	//Five_plus_one->read_arguments(argc, argv, 0);
 
 
-	Control = NEW_OBJECT(poset_classification_control);
+	//Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A_on_neighbors,
 			SG_line_stab,

@@ -162,6 +162,10 @@ int main(int argc, const char **argv)
 
 	{
 	arc_generator *Gen;
+	int f_poset_classification_control = TRUE;
+	poset_classification_control *Control;
+
+	Control = NEW_OBJECT(poset_classification_control);
 
 	//finite_field *F;
 	//action *A;
@@ -175,7 +179,8 @@ int main(int argc, const char **argv)
 	
 
 	cout << "before Gen->init" << endl;
-	Gen->init(F, 
+	Gen->init(f_poset_classification_control, Control,
+			F,
 		A, LG->Strong_gens,
 		Gen->ECA->input_prefix, 
 		Gen->ECA->base_fname,

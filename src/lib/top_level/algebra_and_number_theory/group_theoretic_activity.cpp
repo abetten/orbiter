@@ -1025,7 +1025,14 @@ void group_theoretic_activity::orbits_on_subsets(int verbose_level)
 	poset *Poset;
 
 	Poset = NEW_OBJECT(poset);
-	Control = NEW_OBJECT(poset_classification_control);
+
+
+	if (Descr->f_poset_classification_control) {
+		Control = Descr->Control;
+	}
+	else {
+		Control = NEW_OBJECT(poset_classification_control);
+	}
 
 
 	Poset->init_subset_lattice(A, A,
@@ -1062,9 +1069,14 @@ void group_theoretic_activity::orbits_on_subspaces(int verbose_level)
 		cout << "group_theoretic_activity::orbits_on_subspaces" << endl;
 	}
 
-
 	poset_classification_control *Control;
-	Control = NEW_OBJECT(poset_classification_control);
+
+	if (Descr->f_poset_classification_control) {
+		Control = Descr->Control;
+	}
+	else {
+		Control = NEW_OBJECT(poset_classification_control);
+	}
 
 	Control->f_max_depth = TRUE;
 	Control->max_depth = Descr->orbits_on_subspaces_depth;
@@ -1432,13 +1444,14 @@ void group_theoretic_activity::do_classify_arcs(int verbose_level)
 	if (f_v) {
 		cout << "group_theoretic_activity::do_classify_arcs before Gen->init" << endl;
 	}
-	Gen->init(LG->F,
-		A, LG->Strong_gens,
-		input_prefix,
-		base_fname,
-		Gen->target_size,
-		//argc, argv,
-		verbose_level);
+	Gen->init(Descr->f_poset_classification_control, Descr->Control,
+			LG->F,
+			A, LG->Strong_gens,
+			input_prefix,
+			base_fname,
+			Gen->target_size,
+			//argc, argv,
+			verbose_level);
 
 	if (f_v) {
 		cout << "group_theoretic_activity::do_classify_arcs after Gen->init" << endl;
@@ -1637,12 +1650,22 @@ void group_theoretic_activity::do_surface_classify(int verbose_level)
 	surface_with_action *Surf_A;
 	surface_classify_wedge *SCW;
 
+	poset_classification_control *Control;
+
+	if (Descr->f_poset_classification_control) {
+		Control = Descr->Control;
+	}
+	else {
+		Control = NEW_OBJECT(poset_classification_control);
+	}
+
 
 	if (f_v) {
 		cout << "group_theoretic_activity::do_surface_classify before Algebra.classify_surfaces" << endl;
 	}
 	Algebra.classify_surfaces(
 			F, LG,
+			Control,
 			Surf, Surf_A,
 			SCW,
 			verbose_level - 1);
@@ -1681,6 +1704,14 @@ void group_theoretic_activity::do_surface_report(int verbose_level)
 	surface_domain *Surf;
 	surface_with_action *Surf_A;
 	surface_classify_wedge *SCW;
+	poset_classification_control *Control;
+
+	if (Descr->f_poset_classification_control) {
+		Control = Descr->Control;
+	}
+	else {
+		Control = NEW_OBJECT(poset_classification_control);
+	}
 
 
 	if (f_v) {
@@ -1688,6 +1719,7 @@ void group_theoretic_activity::do_surface_report(int verbose_level)
 	}
 	Algebra.classify_surfaces(
 			F, LG,
+			Control,
 			Surf, Surf_A,
 			SCW,
 			verbose_level - 1);
@@ -1727,6 +1759,14 @@ void group_theoretic_activity::do_surface_identify_Sa(int verbose_level)
 	surface_domain *Surf;
 	surface_with_action *Surf_A;
 	surface_classify_wedge *SCW;
+	poset_classification_control *Control;
+
+	if (Descr->f_poset_classification_control) {
+		Control = Descr->Control;
+	}
+	else {
+		Control = NEW_OBJECT(poset_classification_control);
+	}
 
 
 	if (f_v) {
@@ -1734,6 +1774,7 @@ void group_theoretic_activity::do_surface_identify_Sa(int verbose_level)
 	}
 	Algebra.classify_surfaces(
 			F, LG,
+			Control,
 			Surf, Surf_A,
 			SCW,
 			verbose_level - 1);
@@ -1774,6 +1815,14 @@ void group_theoretic_activity::do_surface_isomorphism_testing(
 	surface_domain *Surf;
 	surface_with_action *Surf_A;
 	surface_classify_wedge *SCW;
+	poset_classification_control *Control;
+
+	if (Descr->f_poset_classification_control) {
+		Control = Descr->Control;
+	}
+	else {
+		Control = NEW_OBJECT(poset_classification_control);
+	}
 
 
 	if (f_v) {
@@ -1781,6 +1830,7 @@ void group_theoretic_activity::do_surface_isomorphism_testing(
 	}
 	Algebra.classify_surfaces(
 			F, LG,
+			Control,
 			Surf, Surf_A,
 			SCW,
 			verbose_level - 1);
@@ -1823,6 +1873,14 @@ void group_theoretic_activity::do_surface_recognize(
 	surface_domain *Surf;
 	surface_with_action *Surf_A;
 	surface_classify_wedge *SCW;
+	poset_classification_control *Control;
+
+	if (Descr->f_poset_classification_control) {
+		Control = Descr->Control;
+	}
+	else {
+		Control = NEW_OBJECT(poset_classification_control);
+	}
 
 
 	if (f_v) {
@@ -1830,6 +1888,7 @@ void group_theoretic_activity::do_surface_recognize(
 	}
 	Algebra.classify_surfaces(
 			F, LG,
+			Control,
 			Surf, Surf_A,
 			SCW,
 			verbose_level - 1);

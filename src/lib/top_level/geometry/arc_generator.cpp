@@ -337,12 +337,13 @@ void arc_generator::main(int verbose_level)
 }
 
 
-void arc_generator::init(finite_field *F,
+void arc_generator::init(int f_poset_classification_control,
+	poset_classification_control *Control,
+	finite_field *F,
 	action *A, strong_generators *SG,
 	const char *starter_directory_name,
 	const char *base_fname,
 	int starter_size,  
-	//int argc, const char **argv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -481,7 +482,16 @@ void arc_generator::init(finite_field *F,
 	if (f_v) {
 		cout << "arc_generator::init before prepare_generator" << endl;
 	}
-	prepare_generator(verbose_level - 2);
+
+	if (f_poset_classification_control) {
+		prepare_generator(Control, verbose_level - 2);
+	}
+	else {
+		poset_classification_control *Control;
+
+		Control = NEW_OBJECT(poset_classification_control);
+		prepare_generator(Control, verbose_level - 2);
+	}
 	if (f_v) {
 		cout << "arc_generator::init after prepare_generator" << endl;
 	}
@@ -514,7 +524,8 @@ void arc_generator::init(finite_field *F,
 }
 
 
-void arc_generator::prepare_generator(int verbose_level)
+void arc_generator::prepare_generator(poset_classification_control *Control,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -540,8 +551,7 @@ void arc_generator::prepare_generator(int verbose_level)
 					verbose_level);
 	}
 
-
-	Control = NEW_OBJECT(poset_classification_control);
+	arc_generator::Control = Control;
 	gen = NEW_OBJECT(poset_classification);
 
 

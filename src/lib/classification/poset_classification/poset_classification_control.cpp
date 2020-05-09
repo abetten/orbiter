@@ -243,31 +243,31 @@ int poset_classification_control::read_arguments(
 		else if (strcmp(argv[i], "-draw_poset") == 0) {
 			f_draw_poset = TRUE;
 			cout << "-draw_poset " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-draw_full_poset") == 0) {
 			f_draw_full_poset = TRUE;
 			cout << "-draw_full_poset " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-plesken") == 0) {
 			f_plesken = TRUE;
 			cout << "-plesken " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-print_data_structure") == 0) {
 			f_print_data_structure = TRUE;
 			cout << "-print_data_structure " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-list") == 0) {
 			f_list = TRUE;
 			cout << "-list" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-list_all") == 0) {
 			f_list_all = TRUE;
 			cout << "-list_all" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-table_of_nodes") == 0) {
 			f_table_of_nodes = TRUE;
 			cout << "-table_of_nodes" << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-export_schreier_trees") == 0) {
 			f_export_schreier_trees = TRUE;
 			cout << "poset_classification_control::read_arguments -export_schreier_trees" << endl;
@@ -325,6 +325,64 @@ int poset_classification_control::read_arguments(
 	return i + 1;
 }
 
+void poset_classification_control::print()
+{
+	cout << "poset_classification_control::print:" << endl;
+	if (f_lex) {
+		cout << "-lex" << endl;
+	}
+	if (f_w) {
+		cout << "-w" << endl;
+	}
+	if (f_W) {
+		cout << "-W" << endl;
+	}
+	if (f_write_data_files) {
+		cout << "-write_data_files" << endl;
+	}
+	if (f_T) {
+		cout << "-T" << endl;
+	}
+	if (f_t) {
+		cout << "-t" << endl;
+	}
+	if (f_Log) {
+		cout << "-Log" << endl;
+	}
+	if (f_log) {
+		cout << "-log" << endl;
+	}
+	if (f_log) {
+		cout << "-log" << endl;
+	}
+	if (f_print_only) {
+		cout << "-print_only" << endl;
+	}
+	if (f_draw_poset) {
+		cout << "-draw_poset" << endl;
+	}
+	if (f_draw_full_poset) {
+		cout << "-draw_full_poset" << endl;
+	}
+	if (f_plesken) {
+		cout << "-plesken" << endl;
+	}
+	if (f_print_data_structure) {
+		cout << "-print_data_structure" << endl;
+	}
+	if (f_list) {
+		cout << "-list" << endl;
+	}
+	if (f_list_all) {
+		cout << "-list_all" << endl;
+	}
+	if (f_table_of_nodes) {
+		cout << "-table_of_nodes" << endl;
+	}
+	if (f_export_schreier_trees) {
+		cout << "-export_schreier_trees" << endl;
+	}
+}
 
 
 }}

@@ -115,6 +115,7 @@ void surface_classify_wedge::freeself()
 void surface_classify_wedge::init(
 	finite_field *F, linear_group *LG,
 	int f_semilinear, surface_with_action *Surf_A,
+	poset_classification_control *Control,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -150,7 +151,7 @@ void surface_classify_wedge::init(
 		cout << "surface_classify_wedge::init "
 				"before Classify_double_sixes->init" << endl;
 	}
-	Classify_double_sixes->init(Surf_A, LG, verbose_level);
+	Classify_double_sixes->init(Surf_A, LG, Control, verbose_level);
 	if (f_v) {
 		cout << "surface_classify_wedge::init "
 				"after Classify_double_sixes->init" << endl;

@@ -18,6 +18,8 @@ namespace top_level {
 
 group_theoretic_activity_description::group_theoretic_activity_description()
 {
+	f_poset_classification_control = FALSE;
+	Control = NULL;
 	f_orbits_on_points = FALSE;
 	f_export_trees = FALSE;
 	f_shallow_tree = FALSE;
@@ -144,6 +146,19 @@ int group_theoretic_activity_description::read_arguments(
 			f_orbits_on_subsets = TRUE;
 			orbits_on_subsets_size = atoi(argv[++i]);
 			cout << "-orbits_on_subsets " << orbits_on_subsets_size << endl;
+		}
+		else if (strcmp(argv[i], "-poset_classification_control") == 0) {
+			f_poset_classification_control = TRUE;
+			Control = NEW_OBJECT(poset_classification_control);
+			i += Control->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -poset_classification_control " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
 		}
 		else if (strcmp(argv[i], "-orbits_on_points") == 0) {
 			f_orbits_on_points = TRUE;

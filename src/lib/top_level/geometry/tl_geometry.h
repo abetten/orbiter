@@ -107,14 +107,16 @@ public:
 	void freeself();
 	void read_arguments(int argc, const char **argv);
 	void main(int verbose_level);
-	void init(finite_field *F,
+	void init(int f_poset_classification_control,
+		poset_classification_control *Control,
+		finite_field *F,
 		action *A, strong_generators *SG,
 		const char *starter_directory_name,
 		const char *base_fname,
 		int starter_size,  
-		//int argc, const char **argv,
 		int verbose_level);
-	void prepare_generator(int verbose_level);
+	void prepare_generator(poset_classification_control *Control,
+			int verbose_level);
 	void compute_starter(int verbose_level);
 
 	int conic_test(long int *S, int len, int pt, int verbose_level);
@@ -917,8 +919,8 @@ public:
 	void null();
 	void freeself();
 	void init(surface_with_action *Surf_A, linear_group *LG, 
-		//int argc, const char **argv,
-		int verbose_level);
+			poset_classification_control *Control,
+			int verbose_level);
 	void compute_neighbors(int verbose_level);
 	void make_spreadsheet_of_neighbors(spreadsheet *&Sp, 
 		int verbose_level);
@@ -976,8 +978,8 @@ public:
 	strong_generators *gens_type1;
 	strong_generators *gens_type2;
 
-	poset_classification_control *Control1;
-	poset_classification_control *Control2;
+	//poset_classification_control *Control1;
+	//poset_classification_control *Control2;
 	poset *Poset1;
 	poset *Poset2;
 	poset_classification *orbits_on_trihedra_type1;
@@ -1001,7 +1003,9 @@ public:
 	void freeself();
 	void init(surface_with_action *Surf_A, int verbose_level);
 
-	void classify_orbits_on_trihedra(int verbose_level);
+	void classify_orbits_on_trihedra(
+			poset_classification_control *Control,
+			int verbose_level);
 	void list_orbits_on_trihedra_type1(std::ostream &ost);
 	void list_orbits_on_trihedra_type2(std::ostream &ost);
 	void early_test_func_type1(long int *S, int len,
@@ -1014,7 +1018,9 @@ public:
 		int verbose_level);
 	void identify_three_planes(int p1, int p2, int p3, 
 		int &type, int *transporter, int verbose_level);
-	void classify(int verbose_level);
+	void classify(
+			poset_classification_control *Control,
+			int verbose_level);
 	void downstep(int verbose_level);
 	void upstep(int verbose_level);
 	void print_trihedral_pairs(std::ostream &ost,
@@ -2741,7 +2747,7 @@ public:
 	void freeself();
 	void init(finite_field *F, linear_group *LG, 
 		int f_semilinear, surface_with_action *Surf_A,
-		//int argc, const char **argv,
+		poset_classification_control *Control,
 		int verbose_level);
 	void do_classify_double_sixes(int verbose_level);
 	void do_classify_surfaces(int verbose_level);

@@ -117,7 +117,14 @@ void k_arc_generator::init(
 		cout << "k_arc_generator::init "
 				"before Gen->init" << endl;
 		}
-	Gen->init(F, 
+
+	int f_poset_classification_control = TRUE;
+	poset_classification_control *Control;
+
+	Control = NEW_OBJECT(poset_classification_control);
+
+	Gen->init(f_poset_classification_control, Control,
+			F,
 		A, A->Strong_gens,
 		"ARCS/" /* Gen->ECA->input_prefix */,
 		base_fname /* Gen->ECA->base_fname */,

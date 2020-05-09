@@ -57,6 +57,7 @@ public:
 	void matrix_convert_to_numerical(discreta_matrix &A, int *AA, int q);
 	void classify_surfaces(
 			finite_field *F, linear_group *LG,
+			poset_classification_control *Control,
 			surface_domain *&Surf, surface_with_action *&Surf_A,
 			surface_classify_wedge *&SCW,
 			int verbose_level);
@@ -156,6 +157,8 @@ void create_factor_group(action *A, sims *S, long int goi,
 class group_theoretic_activity_description {
 public:
 
+	int f_poset_classification_control;
+	poset_classification_control *Control;
 	int f_orbits_on_points;
 	int f_export_trees;
 	int f_shallow_tree;

@@ -204,6 +204,7 @@ int poset_classification::main(int t0,
 		cout << "f_W = " << Control->f_W << endl;
 		cout << "f_w = " << Control->f_w << endl;
 		cout << "verbose_level = " << verbose_level << endl;
+		Control->print();
 		}
 	if (Control->f_recover) {
 		if (f_v) {

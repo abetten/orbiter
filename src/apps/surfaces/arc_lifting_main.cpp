@@ -118,7 +118,13 @@ int main(int argc, const char **argv)
 	if (f_v) {
 		cout << "before Surf_A->Classify_trihedral_pairs->classify" << endl;
 	}
-	Surf_A->Classify_trihedral_pairs->classify(0 /*verbose_level*/);
+
+	poset_classification_control *Control;
+
+	Control = NEW_OBJECT(poset_classification_control);
+
+	Surf_A->Classify_trihedral_pairs->classify(Control, 0 /*verbose_level*/);
+
 	if (f_v) {
 		cout << "after Surf_A->Classify_trihedral_pairs->classify" << endl;
 	}

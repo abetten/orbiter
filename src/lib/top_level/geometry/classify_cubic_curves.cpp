@@ -96,9 +96,13 @@ void classify_cubic_curves::init(cubic_curve_with_action *CCA,
 
 	//Arc_gen->read_arguments(argc, argv);
 
+	int f_poset_classification_control = TRUE;
+	poset_classification_control *Control;
 
+	Control = NEW_OBJECT(poset_classification_control);
 
-	Arc_gen->init(F,
+	Arc_gen->init(f_poset_classification_control, Control,
+			F,
 			A, A->Strong_gens,
 			starter_directory_name,
 			base_fname,
