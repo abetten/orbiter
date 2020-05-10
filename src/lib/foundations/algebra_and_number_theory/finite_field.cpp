@@ -1030,7 +1030,7 @@ int finite_field::power(int a, int n)
 
 void finite_field::frobenius_power_vec(int *v, int len, int frob_power)
 {
-	int h, a;
+	int h;
 
 	for (h = 0; h < len; h++) {
 		v[h] = frobenius_power(v[h], frob_power);
@@ -1039,7 +1039,7 @@ void finite_field::frobenius_power_vec(int *v, int len, int frob_power)
 
 void finite_field::frobenius_power_vec_to_vec(int *v_in, int *v_out, int len, int frob_power)
 {
-	int h, a;
+	int h;
 
 	for (h = 0; h < len; h++) {
 		v_out[h] = frobenius_power(v_in[h], frob_power);

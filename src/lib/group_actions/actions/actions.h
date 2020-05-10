@@ -1052,16 +1052,16 @@ public:
 
 
 // #############################################################################
-// nauty_interface.cpp:
+// nauty_interface_with_group.cpp:
 // #############################################################################
 
 //! Interface to the graph canonization software Nauty
 
 
-class nauty_interface {
+class nauty_interface_with_group {
 public:
-	nauty_interface();
-	~nauty_interface();
+	nauty_interface_with_group();
+	~nauty_interface_with_group();
 	action *create_automorphism_group_of_colored_graph_object(
 		colored_graph *CG, int verbose_level);
 	action *create_automorphism_group_and_canonical_labeling_of_colored_graph_object(

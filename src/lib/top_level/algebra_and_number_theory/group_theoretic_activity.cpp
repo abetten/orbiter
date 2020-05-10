@@ -1299,7 +1299,7 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 
 			action *Aut;
 			longinteger_object ago;
-			nauty_interface Nauty;
+			nauty_interface_with_group Nauty;
 
 			Aut = Nauty.create_automorphism_group_of_block_system(
 				A->degree /* nb_points */,
@@ -1343,7 +1343,7 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 
 			action *Aut;
 			longinteger_object ago;
-			nauty_interface Nauty;
+			nauty_interface_with_group Nauty;
 
 			Aut = Nauty.create_automorphism_group_of_collection_of_two_block_systems(
 				A->degree /* nb_points */,

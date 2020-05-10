@@ -176,10 +176,11 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 
 
 	int *can_labeling;
+	nauty_interface Nau;
 
 	can_labeling = NEW_int(Inc->nb_rows + Inc->nb_cols);
 
-	nauty_interface_matrix_int(
+	Nau.nauty_interface_matrix_int(
 		Inc->M, Inc->nb_rows, Inc->nb_cols,
 		can_labeling, partition,
 		Aut, Aut_counter,

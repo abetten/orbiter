@@ -121,7 +121,7 @@ int main(int argc, char **argv)
 
 	int *M;
 	int nb_rows, nb_cols;
-	nauty_interface Nauty;
+	nauty_interface_with_group Nauty;
 	
 	Nauty.create_incidence_matrix_of_graph(Adj,
 			CG->nb_points, M, nb_rows, nb_cols, verbose_level);

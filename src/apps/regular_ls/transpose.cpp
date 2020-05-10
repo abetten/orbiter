@@ -247,7 +247,7 @@ int main(int argc, const char **argv)
 
 		labeling = NEW_int(vb);
 
-		nauty_interface Nauty;
+		nauty_interface_with_group Nauty;
 
 		At = Nauty.create_automorphism_group_of_graph_with_partition_and_labeling(
 			vb, FALSE, NULL, Adj, 

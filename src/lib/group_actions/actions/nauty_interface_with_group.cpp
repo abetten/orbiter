@@ -1,5 +1,5 @@
 /*
- * nauty_interface.cpp
+ * nauty_interface_with_group.cpp
  *
  *  Created on: Feb 18, 2019
  *      Author: betten
@@ -19,17 +19,17 @@ namespace orbiter {
 namespace group_actions {
 
 
-nauty_interface::nauty_interface()
+nauty_interface_with_group::nauty_interface_with_group()
 {
 
 }
 
-nauty_interface::~nauty_interface()
+nauty_interface_with_group::~nauty_interface_with_group()
 {
 
 }
 
-action *nauty_interface::create_automorphism_group_of_colored_graph_object(
+action *nauty_interface_with_group::create_automorphism_group_of_colored_graph_object(
 		colored_graph *CG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -37,7 +37,7 @@ action *nauty_interface::create_automorphism_group_of_colored_graph_object(
 	int *labeling;
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_colored_graph" << endl;
+		cout << "nauty_interface_with_group::create_automorphism_group_of_colored_graph" << endl;
 		}
 
 	labeling = NEW_int(CG->nb_points);
@@ -53,19 +53,19 @@ action *nauty_interface::create_automorphism_group_of_colored_graph_object(
 	FREE_int(labeling);
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_colored_graph done" << endl;
+		cout << "nauty_interface_with_group::create_automorphism_group_of_colored_graph done" << endl;
 		}
 	return A;
 }
 
-action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_colored_graph_object(
+action *nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_colored_graph_object(
 		colored_graph *CG, int *labeling, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_and_"
+		cout << "nauty_interface_with_group::create_automorphism_group_and_"
 				"canonical_labeling_of_colored_graph_object" << endl;
 		}
 
@@ -77,13 +77,13 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_col
 		verbose_level);
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_and_"
+		cout << "nauty_interface_with_group::create_automorphism_group_and_"
 				"canonical_labeling_of_colored_graph_object done" << endl;
 		}
 	return A;
 }
 
-action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_colored_graph(
+action *nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_colored_graph(
 	int n, int f_bitvec, uchar *Adj_bitvec, int *Adj,
 	int *vertex_colors,
 	int *labeling,
@@ -101,7 +101,7 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_col
 	//labeling = NEW_int(n);
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_"
+		cout << "nauty_interface_with_group::create_automorphism_group_"
 				"and_canonical_labeling_of_colored_graph" << endl;
 		}
 
@@ -111,7 +111,7 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_col
 
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_"
+		cout << "nauty_interface_with_group::create_automorphism_group_"
 				"and_canonical_labeling_of_colored_graph "
 				"nb_types = " << C.nb_types << endl;
 		}
@@ -120,7 +120,7 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_col
 	n1 = n + C.nb_types;
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_"
+		cout << "nauty_interface_with_group::create_automorphism_group_"
 				"and_canonical_labeling_of_colored_graph "
 				"n1 = " << n1 << endl;
 		}
@@ -170,7 +170,7 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_col
 
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_"
+		cout << "nauty_interface_with_group::create_automorphism_group_"
 				"and_canonical_labeling_of_colored_graph "
 				"before create_automorphism_group_of_graph_with_"
 				"partition_and_labeling" << endl;
@@ -199,7 +199,7 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_col
 			n1, TRUE, Adj1, NULL,
 			nb_parts, parts, labeling, verbose_level);
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_"
+		cout << "nauty_interface_with_group::create_automorphism_group_"
 				"and_canonical_labeling_of_colored_graph done" << endl;
 		}
 
@@ -209,7 +209,7 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_col
 	return A;
 }
 
-action *nauty_interface::create_automorphism_group_of_graph_bitvec(
+action *nauty_interface_with_group::create_automorphism_group_of_graph_bitvec(
 	int n, uchar *Adj_bitvec,
 	int verbose_level)
 {
@@ -222,19 +222,19 @@ action *nauty_interface::create_automorphism_group_of_graph_bitvec(
 	labeling = NEW_int(n);
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_graph_bitvec" << endl;
+		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_bitvec" << endl;
 		}
 	A = create_automorphism_group_of_graph_with_partition_and_labeling(
 			n, TRUE, Adj_bitvec, NULL,
 			1, parts, labeling, verbose_level);
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_graph_bitvec done" << endl;
+		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_bitvec done" << endl;
 		}
 	FREE_int(labeling);
 	return A;
 }
 
-action *nauty_interface::create_automorphism_group_of_graph_with_partition_and_labeling(
+action *nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling(
 	int n,
 	int f_bitvector, uchar *Adj_bitvec, int *Adj,
 	int nb_parts, int *parts,
@@ -251,6 +251,7 @@ action *nauty_interface::create_automorphism_group_of_graph_with_partition_and_l
 	int Aut_counter = 0, Base_length = 0, Ago = 0;
 	int i, u, a;
 	longinteger_object ago;
+	nauty_interface Nau;
 
 
 	//m = # rows
@@ -263,7 +264,7 @@ action *nauty_interface::create_automorphism_group_of_graph_with_partition_and_l
 	partitions = NEW_int(n);
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_graph_with_"
+		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_with_"
 				"partition_and_labeling" << endl;
 		}
 	for (i = 0; i < n; i++) {
@@ -276,7 +277,7 @@ action *nauty_interface::create_automorphism_group_of_graph_with_partition_and_l
 		partitions[u - 1] = 0;
 		}
 	if (u != n) {
-		cout << "nauty_interface::create_automorphism_group_of_graph_with_"
+		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_with_"
 				"partition_and_labeling "
 				"partition does not add up" << endl;
 		exit(1);
@@ -289,18 +290,18 @@ action *nauty_interface::create_automorphism_group_of_graph_with_partition_and_l
 
 	if (f_bitvector) {
 		if (f_v) {
-			cout << "nauty_interface::create_automorphism_group_of_graph_with_"
+			cout << "nauty_interface_with_group::create_automorphism_group_of_graph_with_"
 					"partition_and_labeling "
 					"before nauty_interface_graph_bitvec" << endl;
 			}
-		nauty_interface_graph_bitvec(n, Adj_bitvec,
+		Nau.nauty_interface_graph_bitvec(n, Adj_bitvec,
 			labeling, partitions,
 			Aut, Aut_counter,
 			Base, Base_length,
 			Transversal_length, Ago, verbose_level);
 		}
 	else {
-		nauty_interface_graph_int(n, Adj,
+		Nau.nauty_interface_graph_int(n, Adj,
 			labeling, partitions,
 			Aut, Aut_counter,
 			Base, Base_length,
@@ -309,7 +310,7 @@ action *nauty_interface::create_automorphism_group_of_graph_with_partition_and_l
 
 	if (f_v) {
 		if (TRUE /*(input_no % 500) == 0*/) {
-			cout << "nauty_interface::create_automorphism_group_of_graph_with_"
+			cout << "nauty_interface_with_group::create_automorphism_group_of_graph_with_"
 					"partition_and_labeling: "
 					"The group order is = " << Ago << endl;
 			cout << "transversal length: ";
@@ -328,7 +329,7 @@ action *nauty_interface::create_automorphism_group_of_graph_with_partition_and_l
 #endif
 
 	if (f_v10) {
-		cout << "nauty_interface::create_automorphism_group_of_graph_with_"
+		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_with_"
 				"partition_and_labeling: "
 				"labeling:" << endl;
 		int_vec_print(cout, labeling, n);
@@ -337,13 +338,13 @@ action *nauty_interface::create_automorphism_group_of_graph_with_partition_and_l
 		//int_vec_print(cout, labeling_inv, n);
 		//cout << endl;
 
-		cout << "nauty_interface::create_automorphism_group_of_graph_with_"
+		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_with_"
 				"partition_and_labeling: "
 				"Base:" << endl;
 		int_vec_print(cout, Base, Base_length);
 		cout << endl;
 
-		cout << "nauty_interface::create_automorphism_group_of_graph_with_"
+		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_with_"
 				"partition_and_labeling: "
 				"generators:" << endl;
 		print_integer_matrix_width(cout, Aut, Aut_counter, n, n, 2);
@@ -365,7 +366,7 @@ action *nauty_interface::create_automorphism_group_of_graph_with_partition_and_l
 		verbose_level - 2);
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_graph_with_"
+		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_with_"
 				"partition_and_labeling: "
 				"created action ";
 		A->print_info();
@@ -382,7 +383,7 @@ action *nauty_interface::create_automorphism_group_of_graph_with_partition_and_l
 	return A;
 }
 
-void nauty_interface::create_incidence_matrix_of_graph(int *Adj, int n,
+void nauty_interface_with_group::create_incidence_matrix_of_graph(int *Adj, int n,
 		int *&M, int &nb_rows, int &nb_cols,
 		int verbose_level)
 {
@@ -390,7 +391,7 @@ void nauty_interface::create_incidence_matrix_of_graph(int *Adj, int n,
 	int i, j, u;
 
 	if (f_v) {
-		cout << "nauty_interface::create_incidence_matrix_of_graph" << endl;
+		cout << "nauty_interface_with_group::create_incidence_matrix_of_graph" << endl;
 		}
 	nb_rows = n;
 	nb_cols = 0;
@@ -414,19 +415,19 @@ void nauty_interface::create_incidence_matrix_of_graph(int *Adj, int n,
 			}
 		}
 	if (f_v) {
-		cout << "nauty_interface::create_incidence_matrix_of_graph done" << endl;
+		cout << "nauty_interface_with_group::create_incidence_matrix_of_graph done" << endl;
 		}
 
 }
 
 
-action *nauty_interface::create_automorphism_group_of_graph(
+action *nauty_interface_with_group::create_automorphism_group_of_graph(
 		int *Adj, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_graph n=" << n << endl;
+		cout << "nauty_interface_with_group::create_automorphism_group_of_graph n=" << n << endl;
 		}
 
 #if 0
@@ -453,6 +454,7 @@ action *nauty_interface::create_automorphism_group_of_graph(
 	long int *Base_lint;
 	int Aut_counter = 0, Base_length = 0, Ago = 0;
 	int i;
+	nauty_interface Nau;
 
 
 	Aut = NEW_int(n * n);
@@ -463,7 +465,7 @@ action *nauty_interface::create_automorphism_group_of_graph(
 	labeling = NEW_int(n);
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_graph" << endl;
+		cout << "nauty_interface_with_group::create_automorphism_group_of_graph" << endl;
 		}
 	for (i = 0; i < n; i++) {
 		partition[i] = 1;
@@ -471,16 +473,16 @@ action *nauty_interface::create_automorphism_group_of_graph(
 	partition[n - 1] = 0;
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_graph "
+		cout << "nauty_interface_with_group::create_automorphism_group_of_graph "
 				"before nauty_interface_graph_int" << endl;
 		}
-	nauty_interface_graph_int(n, Adj,
+	Nau.nauty_interface_graph_int(n, Adj,
 		labeling, partition,
 		Aut, Aut_counter,
 		Base, Base_length,
 		Transversal_length, Ago, verbose_level);
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_graph "
+		cout << "nauty_interface_with_group::create_automorphism_group_of_graph "
 				"after nauty_interface_graph_int Ago=" << Ago << endl;
 		}
 
@@ -494,7 +496,7 @@ action *nauty_interface::create_automorphism_group_of_graph(
 	A = NEW_OBJECT(action);
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_graph "
+		cout << "nauty_interface_with_group::create_automorphism_group_of_graph "
 				"before A->init_permutation_group_from_generators" << endl;
 		}
 	A->init_permutation_group_from_generators(n,
@@ -503,12 +505,12 @@ action *nauty_interface::create_automorphism_group_of_graph(
 		Base_length, Base_lint,
 		0 /*verbose_level - 2*/);
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_graph "
+		cout << "nauty_interface_with_group::create_automorphism_group_of_graph "
 				"after A->init_permutation_group_from_generators" << endl;
 		}
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_graph: "
+		cout << "nauty_interface_with_group::create_automorphism_group_of_graph: "
 				"created action ";
 		A->print_info();
 		cout << endl;
@@ -522,13 +524,13 @@ action *nauty_interface::create_automorphism_group_of_graph(
 	FREE_int(labeling);
 #endif
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_graph done" << endl;
+		cout << "nauty_interface_with_group::create_automorphism_group_of_graph done" << endl;
 		}
 	return A;
 }
 
 
-action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_graph(
+action *nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_graph(
 		int *Adj, int n, int *labeling,
 		int verbose_level)
 // labeling[n]
@@ -536,7 +538,7 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_gra
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_and_canonical_labeling_of_graph "
+		cout << "nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_graph "
 				"n=" << n << endl;
 		}
 
@@ -546,6 +548,7 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_gra
 	long int *Base_lint;
 	int Aut_counter = 0, Base_length = 0, Ago = 0;
 	int i;
+	nauty_interface Nau;
 
 
 	Aut = NEW_int(n * n);
@@ -556,7 +559,7 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_gra
 	//labeling = NEW_int(n);
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_and_canonical_labeling_of_graph"
+		cout << "nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_graph"
 				<< endl;
 		}
 	for (i = 0; i < n; i++) {
@@ -565,16 +568,16 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_gra
 	partition[n - 1] = 0;
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_and_canonical_labeling_of_graph "
+		cout << "nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_graph "
 				"before nauty_interface_graph_int" << endl;
 		}
-	nauty_interface_graph_int(n, Adj,
+	Nau.nauty_interface_graph_int(n, Adj,
 		labeling, partition,
 		Aut, Aut_counter,
 		Base, Base_length,
 		Transversal_length, Ago, verbose_level);
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_and_canonical_labeling_of_graph "
+		cout << "nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_graph "
 				"after nauty_interface_graph_int" << endl;
 		}
 
@@ -593,7 +596,7 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_gra
 		0 /*verbose_level - 2*/);
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_and_canonical_labeling_of_graph: "
+		cout << "nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_graph: "
 				"created action ";
 		A->print_info();
 		cout << endl;
@@ -606,14 +609,14 @@ action *nauty_interface::create_automorphism_group_and_canonical_labeling_of_gra
 	FREE_int(partition);
 	//FREE_int(labeling);
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_and_canonical_labeling_of_graph "
+		cout << "nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_graph "
 				"done" << endl;
 		}
 	return A;
 }
 
 
-action *nauty_interface::create_automorphism_group_of_block_system(
+action *nauty_interface_with_group::create_automorphism_group_of_block_system(
 	int nb_points, int nb_blocks, int block_size, long int *Blocks,
 	int verbose_level)
 {
@@ -623,7 +626,7 @@ action *nauty_interface::create_automorphism_group_of_block_system(
 	int i, j, h;
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_block_system" << endl;
+		cout << "nauty_interface_with_group::create_automorphism_group_of_block_system" << endl;
 		}
 	M = NEW_int(nb_points * nb_blocks);
 	int_vec_zero(M, nb_points * nb_blocks);
@@ -638,12 +641,12 @@ action *nauty_interface::create_automorphism_group_of_block_system(
 
 	FREE_int(M);
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_block_system done" << endl;
+		cout << "nauty_interface_with_group::create_automorphism_group_of_block_system done" << endl;
 		}
 	return A;
 }
 
-action *nauty_interface::create_automorphism_group_of_collection_of_two_block_systems(
+action *nauty_interface_with_group::create_automorphism_group_of_collection_of_two_block_systems(
 	int nb_points,
 	int nb_blocks1, int block_size1, long int *Blocks1,
 	int nb_blocks2, int block_size2, long int *Blocks2,
@@ -657,7 +660,7 @@ action *nauty_interface::create_automorphism_group_of_collection_of_two_block_sy
 	int nb_rows;
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_collection_"
+		cout << "nauty_interface_with_group::create_automorphism_group_of_collection_"
 				"of_two_block_systems" << endl;
 		}
 	nb_cols = nb_blocks1 + nb_blocks2 + 1;
@@ -694,13 +697,13 @@ action *nauty_interface::create_automorphism_group_of_collection_of_two_block_sy
 
 	FREE_int(M);
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_collection_"
+		cout << "nauty_interface_with_group::create_automorphism_group_of_collection_"
 				"of_two_block_systems done" << endl;
 		}
 	return A;
 }
 
-action *nauty_interface::create_automorphism_group_of_incidence_matrix(
+action *nauty_interface_with_group::create_automorphism_group_of_incidence_matrix(
 	int m, int n, int *Mtx,
 	int verbose_level)
 {
@@ -711,7 +714,7 @@ action *nauty_interface::create_automorphism_group_of_incidence_matrix(
 	int i, j, h;
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_incidence_matrix" << endl;
+		cout << "nauty_interface_with_group::create_automorphism_group_of_incidence_matrix" << endl;
 		}
 	nb_inc = 0;
 	for (i = 0; i < m; i++) {
@@ -735,12 +738,12 @@ action *nauty_interface::create_automorphism_group_of_incidence_matrix(
 
 	FREE_int(X);
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_incidence_matrix done" << endl;
+		cout << "nauty_interface_with_group::create_automorphism_group_of_incidence_matrix done" << endl;
 		}
 	return A;
 }
 
-action *nauty_interface::create_automorphism_group_of_incidence_structure(
+action *nauty_interface_with_group::create_automorphism_group_of_incidence_structure(
 	incidence_structure *Inc,
 	int verbose_level)
 {
@@ -753,7 +756,7 @@ action *nauty_interface::create_automorphism_group_of_incidence_structure(
 	int i, j, h, a;
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_incidence_structure" << endl;
+		cout << "nauty_interface_with_group::create_automorphism_group_of_incidence_structure" << endl;
 		}
 	m = Inc->nb_points();
 	n = Inc->nb_lines();
@@ -769,7 +772,7 @@ action *nauty_interface::create_automorphism_group_of_incidence_structure(
 			}
 		}
 	if (h != nb_inc) {
-		cout << "nauty_interface::create_automorphism_group_of_incidence_structure "
+		cout << "nauty_interface_with_group::create_automorphism_group_of_incidence_structure "
 				"h != nb_inc" << endl;
 		exit(1);
 		}
@@ -783,7 +786,7 @@ action *nauty_interface::create_automorphism_group_of_incidence_structure(
 	return A;
 }
 
-action *nauty_interface::create_automorphism_group_of_incidence_structure_low_level(
+action *nauty_interface_with_group::create_automorphism_group_of_incidence_structure_low_level(
 	int m, int n, int nb_inc, int *X,
 	int verbose_level)
 {
@@ -793,7 +796,7 @@ action *nauty_interface::create_automorphism_group_of_incidence_structure_low_le
 	action *A;
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_"
+		cout << "nauty_interface_with_group::create_automorphism_group_"
 				"of_incidence_structure_low_level" << endl;
 		}
 
@@ -810,13 +813,13 @@ action *nauty_interface::create_automorphism_group_of_incidence_structure_low_le
 
 	FREE_int(partition);
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_"
+		cout << "nauty_interface_with_group::create_automorphism_group_"
 				"of_incidence_structure_low_level done" << endl;
 		}
 	return A;
 }
 
-action *nauty_interface::create_automorphism_group_of_incidence_structure_with_partition(
+action *nauty_interface_with_group::create_automorphism_group_of_incidence_structure_with_partition(
 	int m, int n, int nb_inc, int *X, int *partition,
 	int verbose_level)
 {
@@ -827,6 +830,7 @@ action *nauty_interface::create_automorphism_group_of_incidence_structure_with_p
 	int *Base, *Transversal_length;
 	long int *Base_lint;
 	int Aut_counter = 0, Base_length = 0, Ago = 0;
+	nauty_interface Nau;
 
 
 	//m = # rows
@@ -838,14 +842,14 @@ action *nauty_interface::create_automorphism_group_of_incidence_structure_with_p
 	Transversal_length = NEW_int(m + n);
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_"
+		cout << "nauty_interface_with_group::create_automorphism_group_of_"
 				"incidence_structure_with_partition" << endl;
 		}
 
 	labeling = NEW_int(m + n);
 	//labeling_inv = NEW_int(m + n);
 
-	nauty_interface_int(m, n, X, nb_inc,
+	Nau.nauty_interface_int(m, n, X, nb_inc,
 		labeling, partition,
 		Aut, Aut_counter,
 		Base, Base_length,
@@ -853,7 +857,7 @@ action *nauty_interface::create_automorphism_group_of_incidence_structure_with_p
 
 	if (f_v) {
 		if (TRUE /*(input_no % 500) == 0*/) {
-			cout << "nauty_interface::create_automorphism_group_of_"
+			cout << "nauty_interface_with_group::create_automorphism_group_of_"
 					"incidence_structure_with_partition: "
 					"The group order is = " << Ago << endl;
 			}
@@ -869,7 +873,7 @@ action *nauty_interface::create_automorphism_group_of_incidence_structure_with_p
 #endif
 
 	if (f_v10) {
-		cout << "nauty_interface::create_automorphism_group_of_"
+		cout << "nauty_interface_with_group::create_automorphism_group_of_"
 				"incidence_structure_with_partition: "
 				"labeling:" << endl;
 		int_vec_print(cout, labeling, m + n);
@@ -878,13 +882,13 @@ action *nauty_interface::create_automorphism_group_of_incidence_structure_with_p
 		//int_vec_print(cout, labeling_inv, m + n);
 		//cout << endl;
 
-		cout << "nauty_interface::create_automorphism_group_of_"
+		cout << "nauty_interface_with_group::create_automorphism_group_of_"
 				"incidence_structure_with_partition: "
 				"Base:" << endl;
 		lint_vec_print(cout, Base_lint, Base_length);
 		cout << endl;
 
-		cout << "nauty_interface::create_automorphism_group_of_"
+		cout << "nauty_interface_with_group::create_automorphism_group_of_"
 				"incidence_structure_with_partition: "
 				"generators:" << endl;
 		print_integer_matrix_width(cout,
@@ -907,7 +911,7 @@ action *nauty_interface::create_automorphism_group_of_incidence_structure_with_p
 		verbose_level - 2);
 
 	if (f_v) {
-		cout << "nauty_interface::create_automorphism_group_of_"
+		cout << "nauty_interface_with_group::create_automorphism_group_of_"
 				"incidence_structure_with_partition: "
 				"created action ";
 		A->print_info();
@@ -923,7 +927,7 @@ action *nauty_interface::create_automorphism_group_of_incidence_structure_with_p
 	return A;
 }
 
-void nauty_interface::test_self_dual_self_polar(int input_no,
+void nauty_interface_with_group::test_self_dual_self_polar(int input_no,
 	int m, int n, int nb_inc, int *X,
 	int &f_self_dual, int &f_self_polar,
 	int verbose_level)
@@ -972,7 +976,7 @@ void nauty_interface::test_self_dual_self_polar(int input_no,
 }
 
 
-void nauty_interface::do_self_dual_self_polar(int input_no,
+void nauty_interface_with_group::do_self_dual_self_polar(int input_no,
 	int m, int n, int nb_inc, int *X,
 	int &f_self_dual, int &f_self_polar,
 	int verbose_level)
@@ -985,6 +989,7 @@ void nauty_interface::do_self_dual_self_polar(int input_no,
 	long int *Base_lint;
 	int Aut_counter = 0, Base_length = 0, Ago = 0;
 	int i; //, j;
+	nauty_interface Nau;
 
 	//m = # rows
 	//n = # cols
@@ -1001,7 +1006,7 @@ void nauty_interface::do_self_dual_self_polar(int input_no,
 
 	if (f_v) {
 		if ((input_no % 500) == 0) {
-			cout << "nauty_interface::do_self_dual_self_polar input_no=" << input_no << endl;
+			cout << "nauty_interface_with_group::do_self_dual_self_polar input_no=" << input_no << endl;
 			}
 		}
 	for (i = 0; i < m + n; i++) {
@@ -1032,7 +1037,7 @@ void nauty_interface::do_self_dual_self_polar(int input_no,
 	labeling = NEW_int(m + n);
 	//labeling_inv = NEW_int(m + n);
 
-	nauty_interface_int(m, n, X, nb_inc,
+	Nau.nauty_interface_int(m, n, X, nb_inc,
 			labeling, partitions, Aut, Aut_counter,
 			Base, Base_length, Transversal_length, Ago);
 
@@ -1170,7 +1175,7 @@ void nauty_interface::do_self_dual_self_polar(int input_no,
 	//FREE_int(BASE);
 }
 
-void nauty_interface::add_configuration_graph(ofstream &g,
+void nauty_interface_with_group::add_configuration_graph(ofstream &g,
 		int m, int n, int nb_inc, int *X, int f_first,
 		int verbose_level)
 {

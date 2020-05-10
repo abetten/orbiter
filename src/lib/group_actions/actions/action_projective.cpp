@@ -205,12 +205,13 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	Base = NEW_int(N);
 	Base_lint = NEW_lint(N);
 	Transversal_length = NEW_int(N);
+	nauty_interface Nau;
 
 	if (f_v) {
 		cout << "set_stabilizer_in_projective_space, "
 				"calling nauty_interface_matrix_int" << endl;
 		}
-	nauty_interface_matrix_int(Incma, nb_rows, nb_cols,
+	Nau.nauty_interface_matrix_int(Incma, nb_rows, nb_cols,
 		labeling, partition,
 		Aut, Aut_counter,
 		Base, Base_length,
