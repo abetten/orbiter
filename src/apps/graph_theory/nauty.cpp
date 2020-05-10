@@ -240,7 +240,7 @@ void canonical_form(int *Adj, int *Adj2,
 {
 	//action *A;
 	int i, j, ii, jj, e, nb_e;
-	nauty_interface Nauty;
+	nauty_interface_with_group Nauty;
 	combinatorics_domain Combi;
 	
 

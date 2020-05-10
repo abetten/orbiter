@@ -73,7 +73,7 @@ class action_on_set_partitions;
 class object_in_projective_space_with_action;
 class data_input_stream;
 class action_pointer_table;
-class nauty_interface;
+class nauty_interface_with_group;
 class exceptional_isomorphism_O4;
 class orbit_rep;
 class projective_space_with_action;

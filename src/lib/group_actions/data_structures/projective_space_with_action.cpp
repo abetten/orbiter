@@ -363,11 +363,12 @@ strong_generators *projective_space_with_action::set_stabilizer(
 	int t0, t1, dt, tps;
 	double delta_t_in_sec;
 	os_interface Os;
+	nauty_interface Nau;
 
 	tps = Os.os_ticks_per_second();
 	t0 = Os.os_ticks();
 
-	nauty_interface_matrix_int(Incma, nb_rows, nb_cols, 
+	Nau.nauty_interface_matrix_int(Incma, nb_rows, nb_cols,
 		labeling, partition, 
 		Aut, Aut_counter, 
 		Base, Base_length, 
@@ -711,6 +712,7 @@ void projective_space_with_action::canonical_labeling(
 	int *Base, Base_length;
 	int *Transversal_length, Ago;
 	int N, i, L;
+	nauty_interface Nau;
 
 	A_linear = A;
 
@@ -775,7 +777,7 @@ void projective_space_with_action::canonical_labeling(
 	tps = Os.os_ticks_per_second();
 	t0 = Os.os_ticks();
 
-	nauty_interface_matrix_int(
+	Nau.nauty_interface_matrix_int(
 		Incma, nb_rows, nb_cols,
 		canonical_labeling, partition,
 		Aut, Aut_counter,
@@ -843,6 +845,7 @@ strong_generators
 	int N, i, j, a, L;
 	combinatorics_domain Combi;
 	file_io Fio;
+	nauty_interface Nau;
 
 	A_linear = A;
 
@@ -942,7 +945,7 @@ strong_generators
 
 	can_labeling = NEW_int(nb_rows + nb_cols);
 
-	nauty_interface_matrix_int(
+	Nau.nauty_interface_matrix_int(
 		Incma, nb_rows, nb_cols,
 		can_labeling, partition,
 		Aut, Aut_counter, 

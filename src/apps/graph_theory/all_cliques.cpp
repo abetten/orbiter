@@ -177,7 +177,7 @@ void use_group(const char *fname, colored_graph *CG,
 	int *Adj;
 	action *Aut;
 	longinteger_object ago;
-	nauty_interface Nauty;
+	nauty_interface_with_group Nauty;
 
 	cout << "computing automorphism group of the graph:" << endl;
 	//Aut = create_automorphism_group_of_colored_graph_object(
