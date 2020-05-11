@@ -20,9 +20,17 @@ namespace top_level {
 
 linear_set_classify::linear_set_classify()
 {
+	s = n = m = q = Q = depth = 0;
+	f_semilinear = FALSE;
+	schreier_depth = 0;
+	f_use_invariant_subset_if_available = FALSE;
+	f_debug = FALSE;
 	f_has_extra_test_func = FALSE;
 	extra_test_func = NULL;
 	extra_test_func_data = NULL;
+	Basis = NULL;
+	base_cols = NULL;
+
 	Fq = NULL;
 	FQ = NULL;
 	SubS = NULL;
@@ -30,23 +38,39 @@ linear_set_classify::linear_set_classify()
 	Aq = NULL;
 	AQ = NULL;
 	A_PGLQ = NULL;
-	Strong_gens = NULL;
-	D = NULL;
-	D1 = NULL;
-	spread_embedding = NULL;
 	VS = NULL;
+	Control1 = NULL;
 	Poset1 = NULL;
 	Gen = NULL;
-	Basis = NULL;
-	base_cols = NULL;
+	vector_space_dimension = 0;
+	Strong_gens = NULL;
+	D = NULL;
+	n1 = 0;
+	m1 = 0;
+	D1 = NULL;
+	spread_embedding = NULL;
+
+	f_identify = FALSE;
+	k = 0;
+	order = 0;
+	T = NULL;
+
+	secondary_level = 0;
+	secondary_orbit_at_level = 0;
+	secondary_depth = 0;
+	secondary_candidates = NULL;
+	secondary_nb_candidates = 0;
+	secondary_schreier_depth = 0;
+
+
 	Control_stab = NULL;
 	Poset_stab = NULL;
+	Gen_stab = NULL;
 	Control2 = NULL;
 	Poset2 = NULL;
 	Gen2 = NULL;
 	is_allowed = NULL;
-	f_identify = FALSE;
-	T = NULL;
+
 }
 
 linear_set_classify::~linear_set_classify()

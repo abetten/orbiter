@@ -332,11 +332,11 @@ void interface_cryptography::print_help(int argc, const char **argv, int i, int 
 	else if (strcmp(argv[i], "-EC_discrete_log") == 0) {
 		cout << "-EC_discrete_log <int : q> <int : b> <int : c> <string : base_pt> <int : n> <string : pt>" << endl;
 	}
-	else if (strcmp(argv[i], "-EC_baby_step_giant_step") == 0) {
-		cout << "-EC_baby_step_giant_step <int : q> <int : b> <int : c> <string : G> <int : N> <string : cipher_text_R>" << endl;
+	else if (strcmp(argv[i], "-EC_bsgs") == 0) {
+		cout << "-EC_bsgs <int : q> <int : b> <int : c> <string : G> <int : N> <string : cipher_text_R>" << endl;
 	}
-	else if (strcmp(argv[i], "-EC_baby_step_giant_step_decode") == 0) {
-		cout << "-EC_baby_step_giant_step_decode <int : q> <int : b> <int : c> <string : A> <int : N> <string : cipher_text_T> <string : keys> " << endl;
+	else if (strcmp(argv[i], "-EC_bsgs_decode") == 0) {
+		cout << "-EC_bsgs_decode <int : q> <int : b> <int : c> <string : A> <int : N> <string : cipher_text_T> <string : keys> " << endl;
 	}
 	else if (strcmp(argv[i], "-nullspace") == 0) {
 		cout << "-nullspace <int : q> <int : m> <int : n> <string : coeff_matrix>" << endl;
@@ -491,10 +491,10 @@ int interface_cryptography::recognize_keyword(int argc, const char **argv, int i
 	else if (strcmp(argv[i], "-EC_discrete_log") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-EC_baby_step_giant_step") == 0) {
+	else if (strcmp(argv[i], "-EC_bsgs") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-EC_baby_step_giant_step_decode") == 0) {
+	else if (strcmp(argv[i], "-EC_bsgs_decode") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-nullspace") == 0) {
@@ -837,7 +837,7 @@ void interface_cryptography::read_arguments(int argc, const char **argv, int i0,
 					<< " " << EC_b << " " << EC_c << " " << EC_pt_text << " "
 					<< EC_discrete_log_pt_text << endl;
 		}
-		else if (strcmp(argv[i], "-EC_baby_step_giant_step") == 0) {
+		else if (strcmp(argv[i], "-EC_bsgs") == 0) {
 			f_EC_baby_step_giant_step = TRUE;
 			EC_q = atoi(argv[++i]);
 			EC_b = atoi(argv[++i]);
@@ -851,7 +851,7 @@ void interface_cryptography::read_arguments(int argc, const char **argv, int i0,
 					<< EC_bsgs_N << " "
 					<< EC_bsgs_cipher_text << endl;
 		}
-		else if (strcmp(argv[i], "-EC_baby_step_giant_step_decode") == 0) {
+		else if (strcmp(argv[i], "-EC_bsgs_decode") == 0) {
 			f_EC_baby_step_giant_step_decode = TRUE;
 			EC_q = atoi(argv[++i]);
 			EC_b = atoi(argv[++i]);
