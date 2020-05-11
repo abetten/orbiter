@@ -33,7 +33,6 @@ packing_was::packing_was()
 	//select_spread[1000];
 	select_spread_nb = 0;
 	f_spreads_invariant_under_H = FALSE;
-
 	f_cliques_on_fixpoint_graph = FALSE;
 	clique_size_on_fixpoint_graph = 0;
 	f_process_long_orbits = FALSE;
@@ -51,6 +50,8 @@ packing_was::packing_was()
 	spread_tables_prefix = "";
 	f_output_path = FALSE;
 	output_path = "";
+
+
 
 	ECA = new exact_cover_arguments;
 	IA = new isomorph_arguments;
@@ -70,8 +71,9 @@ packing_was::packing_was()
 
 
 	H_gens = NULL;
-	//longinteger_object H_go;
 	H_goi = 0;
+
+
 	A = NULL;
 	f_semilinear = FALSE;
 	M = NULL;
@@ -81,8 +83,6 @@ packing_was::packing_was()
 	// N_go;
 	N_goi = 0;
 
-
-	Spread_type = NULL;
 
 	//char prefix_line_orbits[1000];
 	Line_orbits_under_H = NULL;
@@ -115,6 +115,7 @@ packing_was::packing_was()
 
 	clique_size = 0;
 	fixpoint_graph = NULL;
+	Control = NULL;
 	Poset_fixpoint_cliques = NULL;
 	fixpoint_clique_gen = NULL;
 	Cliques = NULL;

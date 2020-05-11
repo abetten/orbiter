@@ -24,20 +24,27 @@ search_blocking_set::search_blocking_set()
 	Control = NULL;
 	Poset = NULL;
 	gen = NULL;
+
+
 	Line_intersections = NULL;
 	blocking_set = NULL;
+	blocking_set_len = 0;
 	sz = NULL;
 	
 	active_set = NULL;
 	sz_active_set = NULL;
 	
+
+	nb_solutions = 0;
+	f_find_only_one = FALSE;
+	f_blocking_set_size_desired = FALSE;
+	blocking_set_size_desired = 0;
+
+	max_search_depth = 0;
 	search_nb_candidates = NULL;
 	search_cur = NULL;
 	search_candidates = NULL;
 	save_sz = NULL;
-	f_find_only_one = FALSE;
-	f_blocking_set_size_desired = FALSE;
-	blocking_set_size_desired = 0;
 }
 
 search_blocking_set::~search_blocking_set()

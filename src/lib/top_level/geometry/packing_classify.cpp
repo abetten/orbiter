@@ -58,6 +58,7 @@ packing_classify::packing_classify()
 	bitvector_length = 0;
 	degree = NULL;
 
+	Control = NULL;
 	Poset = NULL;
 	gen = NULL;
 

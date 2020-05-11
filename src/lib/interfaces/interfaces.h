@@ -113,6 +113,10 @@ class interface_coding_theory {
 	int n;
 	int k;
 	int f_codes_classify;
+	int f_BCH;
+	int f_BCH_dual;
+	int BCH_t;
+	//int BCH_b;
 
 public:
 	interface_coding_theory();
@@ -122,6 +126,7 @@ public:
 	void worker(int verbose_level);
 	void do_make_macwilliams_system(int q, int n, int k, int verbose_level);
 	void do_codes_classify(int verbose_level);
+	void make_BCH_codes(int n, int q, int t, int b, int f_dual, int verbose_level);
 };
 
 
