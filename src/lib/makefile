@@ -336,7 +336,6 @@ MODULES= \
 		top_level/geometry/hermitian_spreads_classify.o \
 		top_level/geometry/hill_cap.o \
 		top_level/geometry/invariants_packing.o \
-		top_level/geometry/k_arc_generator.o \
 		top_level/geometry/linear_set_classify.o \
 		top_level/geometry/ovoid_classify.o \
 		top_level/geometry/packing_classify.o \

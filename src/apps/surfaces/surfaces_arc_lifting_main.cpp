@@ -181,7 +181,6 @@ int main(int argc, const char **argv)
 		exit(1);
 	}
 
-	int f_semilinear = f_semilinear4;
 
 	if (f_v) {
 		cout << "surface_classify before Surf->init" << endl;
@@ -208,7 +207,7 @@ int main(int argc, const char **argv)
 	if (f_v) {
 		cout << "before Surf_A->init" << endl;
 	}
-	Surf_A->init(Surf, f_semilinear, 0 /*verbose_level*/);
+	Surf_A->init(Surf, LG4, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "after Surf_A->init" << endl;
 	}
@@ -229,15 +228,17 @@ int main(int argc, const char **argv)
 
 
 	surfaces_arc_lifting *SAL;
+	group_theoretic_activity *GTA;
 
 	SAL = NEW_OBJECT(surfaces_arc_lifting);
+	GTA = NEW_OBJECT(group_theoretic_activity);
 
 	if (f_v) {
 		cout << "before SAL->init" << endl;
 	}
-	SAL->init(F, LG4, LG3,
-			f_semilinear, Surf_A,
-			argc, argv,
+
+	SAL->init(GTA, F, LG4, LG3,
+			f_semilinear4, Surf_A,
 			verbose_level);
 	if (f_v) {
 		cout << "after SAL->init" << endl;

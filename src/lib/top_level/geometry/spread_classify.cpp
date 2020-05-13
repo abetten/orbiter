@@ -65,7 +65,7 @@ spread_classify::spread_classify()
 	tmp_M3 = NULL;
 	tmp_M4 = NULL;
 
-	Control = NULL;
+	//Control = NULL;
 	Poset = NULL;
 	gen = NULL;
 	Sing = NULL;
@@ -570,6 +570,7 @@ void spread_classify::print_elements_and_points()
 	FREE_int(Line);
 }
 
+#if 0
 void spread_classify::read_arguments(int argc, const char **argv)
 {
 	int i;
@@ -586,8 +587,9 @@ void spread_classify::read_arguments(int argc, const char **argv)
 		}
 	}
 }
+#endif
 
-void spread_classify::init2(int verbose_level)
+void spread_classify::init2(poset_classification_control *Control, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -598,7 +600,7 @@ void spread_classify::init2(int verbose_level)
 	}
 	//depth = order + 1;
 
-	Control = NEW_OBJECT(poset_classification_control);
+	//Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A2,
 			A->Strong_gens,

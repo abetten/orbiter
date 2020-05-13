@@ -28,8 +28,9 @@ arc_generator::arc_generator()
 	//argc = 0;
 	//argv = NULL;
 	
-	ECA = NULL;
-	IA = NULL;
+	GTA = NULL;
+	//ECA = NULL;
+	//IA = NULL;
 	verbose_level = 0;
 	f_starter = FALSE;
 	f_draw_poset = FALSE;
@@ -103,12 +104,14 @@ void arc_generator::null()
 
 void arc_generator::freeself()
 {
+#if 0
 	if (ECA) {
 		FREE_OBJECT(ECA);
 		}
 	if (IA) {
 		FREE_OBJECT(IA);
 		}
+#endif
 	if (gen) {
 		FREE_OBJECT(gen);
 		}
@@ -137,6 +140,7 @@ void arc_generator::freeself()
 	null();
 }
 
+#if 0
 void arc_generator::read_arguments(int argc, const char **argv)
 {
 	int i;
@@ -255,6 +259,7 @@ void arc_generator::read_arguments(int argc, const char **argv)
 	}
 
 }
+#endif
 
 
 void arc_generator::main(int verbose_level)
@@ -284,39 +289,40 @@ void arc_generator::main(int verbose_level)
 
 
 
-	if (ECA->f_lift) {
+	if (GTA->Descr->ECA) {
+		if (GTA->Descr->ECA->f_lift) {
+
+			if (f_v) {
+				cout << "arc_generator::main before lift" << endl;
+			}
+
+			GTA->Descr->ECA->target_size = target_size;
+			GTA->Descr->ECA->user_data = (void *) this;
+			GTA->Descr->ECA->A = A;
+			GTA->Descr->ECA->A2 = A;
+			GTA->Descr->ECA->prepare_function_new =
+					arc_generator_lifting_prepare_function_new;
+			GTA->Descr->ECA->early_test_function =
+					arc_generator_early_test_function;
+			GTA->Descr->ECA->early_test_function_data = (void *) this;
+
+			GTA->Descr->ECA->compute_lifts(verbose_level);
+
+			if (f_v) {
+				cout << "arc_generator::main "
+						"after lift" << endl;
+			}
 	
-		if (f_v) {
-			cout << "arc_generator::main "
-					"before lift" << endl;
 		}
-		
-		ECA->target_size = target_size;
-		ECA->user_data = (void *) this;
-		ECA->A = A;
-		ECA->A2 = A;
-		ECA->prepare_function_new =
-				arc_generator_lifting_prepare_function_new;
-		ECA->early_test_function =
-				arc_generator_early_test_function;
-		ECA->early_test_function_data = (void *) this;
-		
-		ECA->compute_lifts(verbose_level);
-
-		if (f_v) {
-			cout << "arc_generator::main "
-					"after lift" << endl;
-		}
-
 	}
 
 
-	if (IA) {
+	if (GTA->Descr->IA) {
 		if (f_v) {
 			cout << "arc_generator::main before IA->execute" << endl;
 		}
 
-		IA->execute(verbose_level);
+		GTA->Descr->IA->execute(verbose_level);
 
 		if (f_v) {
 			cout << "arc_generator::main after IA->execute" << endl;
@@ -337,8 +343,8 @@ void arc_generator::main(int verbose_level)
 }
 
 
-void arc_generator::init(int f_poset_classification_control,
-	poset_classification_control *Control,
+void arc_generator::init(
+	group_theoretic_activity *GTA,
 	finite_field *F,
 	action *A, strong_generators *SG,
 	const char *starter_directory_name,
@@ -355,6 +361,7 @@ void arc_generator::init(int f_poset_classification_control,
 		cout << "arc_generator::init d=" << d << endl;
 		}
 	
+	arc_generator::GTA = GTA;
 	arc_generator::F = F;
 	q = F->q;
 	//arc_generator::argc = argc;
@@ -483,8 +490,8 @@ void arc_generator::init(int f_poset_classification_control,
 		cout << "arc_generator::init before prepare_generator" << endl;
 	}
 
-	if (f_poset_classification_control) {
-		prepare_generator(Control, verbose_level - 2);
+	if (GTA->Descr->f_poset_classification_control) {
+		prepare_generator(GTA->Descr->Control, verbose_level - 2);
 	}
 	else {
 		poset_classification_control *Control;
@@ -497,24 +504,24 @@ void arc_generator::init(int f_poset_classification_control,
 	}
 
 
-	if (IA) {
+	if (GTA->Descr->IA) {
 		if (f_v) {
-			cout << "arc_generator::init before IA->init" << endl;
+			cout << "arc_generator::init before GTA->Descr->IA->init" << endl;
 		}
 
-		IA->init(A, A, gen,
-			target_size, prefix_with_directory, ECA,
+		GTA->Descr->IA->init(A, A, gen,
+			target_size, prefix_with_directory, GTA->Descr->ECA,
 			arc_generator_report,
 			NULL /* callback_subset_orbits */,
 			this,
 			verbose_level);
 		if (f_v) {
-			cout << "arc_generator::init after IA->init" << endl;
+			cout << "arc_generator::init after GTA->Descr->IA->init" << endl;
 		}
 	}
 	else {
 		if (f_v) {
-			cout << "arc_generator::init no IA" << endl;
+			cout << "arc_generator::init no GTA->Descr->IA" << endl;
 		}
 	}
 

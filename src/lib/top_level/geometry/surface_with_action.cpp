@@ -79,7 +79,8 @@ void surface_with_action::freeself()
 }
 
 void surface_with_action::init(surface_domain *Surf,
-		int f_semilinear, int verbose_level)
+		linear_group *LG,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -87,11 +88,27 @@ void surface_with_action::init(surface_domain *Surf,
 		cout << "surface_with_action::init" << endl;
 	}
 	surface_with_action::Surf = Surf;
-	surface_with_action::f_semilinear = f_semilinear;
 	F = Surf->F;
 	q = F->q;
 	
-	init_group(f_semilinear, verbose_level);
+	//init_group(f_semilinear, verbose_level);
+	A = LG->A_linear;
+	f_semilinear = A->is_semilinear_matrix_group();
+	if (f_v) {
+		cout << "surface_with_action::init f_semilinear=" << f_semilinear << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_with_action::init "
+				"creating action on lines" << endl;
+	}
+	A2 = A->induced_action_on_grassmannian(2, verbose_level);
+	if (f_v) {
+		cout << "surface_with_action::init "
+				"creating action on lines done" << endl;
+	}
+
+
 	
 	Elt1 = NEW_int(A->elt_size_in_int);
 
@@ -145,6 +162,7 @@ void surface_with_action::init(surface_domain *Surf,
 	}
 }
 
+#if 0
 void surface_with_action::init_group(int f_semilinear,
 		int verbose_level)
 {
@@ -194,6 +212,7 @@ void surface_with_action::init_group(int f_semilinear,
 		cout << "surface_with_action::init_group done" << endl;
 	}
 }
+#endif
 
 int surface_with_action::create_double_six_safely(
 	long int *five_lines, long int transversal_line, long int *double_six,

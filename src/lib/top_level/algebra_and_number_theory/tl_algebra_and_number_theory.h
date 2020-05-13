@@ -64,6 +64,7 @@ public:
 	void young_symmetrizer(int n, int verbose_level);
 	void young_symmetrizer_sym_4(int verbose_level);
 	void classify_surfaces_through_arcs_and_trihedral_pairs(
+			group_theoretic_activity *GTA,
 			surface_with_action *Surf_A, int verbose_level);
 
 };
@@ -219,6 +220,16 @@ public:
 		surface_create_description *surface_descr_isomorph2;
 	int f_surface_recognize;
 		surface_create_description *surface_descr;
+	int f_classify_surfaces_through_arcs_and_trihedral_pairs;
+	int f_create_surface;
+	surface_create_description *surface_description;
+	int f_surface_quartic;
+	int f_surface_clebsch;
+	int f_surface_codes;
+
+	int nb_transform;
+	const char *transform_coeffs[1000];
+	int f_inverse_transform[1000];
 
 		// subspace orbits:
 		int f_orbits_on_subspaces;
@@ -227,6 +238,7 @@ public:
 		int mindist;
 		int f_self_orthogonal;
 		int f_doubly_even;
+
 
 	group_theoretic_activity_description();
 	~group_theoretic_activity_description();
@@ -300,6 +312,9 @@ public:
 			int verbose_level);
 	int subspace_orbits_test_set(
 			int len, long int *S, int verbose_level);
+	void do_classify_surfaces_through_arcs_and_trihedral_pairs(int verbose_level);
+	void do_create_surface(
+			surface_create_description *Descr, int verbose_level);
 };
 
 long int gta_subspace_orbits_rank_point_func(int *v, void *data);

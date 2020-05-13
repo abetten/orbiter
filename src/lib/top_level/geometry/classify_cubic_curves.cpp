@@ -70,10 +70,11 @@ void classify_cubic_curves::freeself()
 	null();
 }
 
-void classify_cubic_curves::init(cubic_curve_with_action *CCA,
+void classify_cubic_curves::init(
+		group_theoretic_activity *GTA,
+		cubic_curve_with_action *CCA,
 		const char *starter_directory_name,
 		const char *base_fname,
-		int argc, const char **argv,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -96,12 +97,7 @@ void classify_cubic_curves::init(cubic_curve_with_action *CCA,
 
 	//Arc_gen->read_arguments(argc, argv);
 
-	int f_poset_classification_control = TRUE;
-	poset_classification_control *Control;
-
-	Control = NEW_OBJECT(poset_classification_control);
-
-	Arc_gen->init(f_poset_classification_control, Control,
+	Arc_gen->init(GTA,
 			F,
 			A, A->Strong_gens,
 			starter_directory_name,

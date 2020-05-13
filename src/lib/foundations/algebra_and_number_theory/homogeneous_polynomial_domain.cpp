@@ -1422,6 +1422,52 @@ void homogeneous_polynomial_domain_swap_monomial(
 }
 
 
+
+void HPD_callback_print_function(
+		stringstream &ost, void *data, void *callback_data)
+{
+	homogeneous_polynomial_domain *HPD =
+			(homogeneous_polynomial_domain *) callback_data;
+
+	int *coeff;
+	int *i_data = (int *) data;
+
+	coeff = NEW_int(HPD->nb_monomials);
+	HPD->unrank_coeff_vector(coeff, i_data[0]);
+	//int_vec_print(cout, coeff, HPD->nb_monomials);
+	//cout << " = ";
+	HPD->print_equation_str(ost, coeff);
+	//ost << endl;
+	FREE_int(coeff);
+}
+
+void HPD_callback_print_function2(
+		stringstream &ost, void *data, void *callback_data)
+{
+	homogeneous_polynomial_domain *HPD =
+			(homogeneous_polynomial_domain *) callback_data;
+
+	int *coeff;
+	int *i_data = (int *) data;
+	long int *Pts;
+	int nb_pts;
+
+	Pts = NEW_lint(HPD->P->N_points);
+	coeff = NEW_int(HPD->nb_monomials);
+	HPD->unrank_coeff_vector(coeff, i_data[0]);
+	HPD->enumerate_points(coeff, Pts, nb_pts,  0 /*verbose_level*/);
+	ost << nb_pts;
+	//int_vec_print(cout, coeff, HPD->nb_monomials);
+	//cout << " = ";
+	//HPD->print_equation_str(ost, coeff);
+	//ost << endl;
+	FREE_int(coeff);
+	FREE_lint(Pts);
+}
+
+
+
+
 }}
 
 

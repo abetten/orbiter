@@ -10,10 +10,8 @@ LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 
 
 TARGETS=\
-	 arcs_main.out \
 	arcs_orderly.out \
 	awss.out \
-	k_arc_generator_main.out \
 	k_arc_lifting.out \
 	simeon.out \
 	test_hyperoval.out 
@@ -27,17 +25,11 @@ install:
 %.out: %.o;
 	$(DISCRETA_CPP) $< $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-# arcs_main.out:  arcs_main.o ;
-# 	$(DISCRETA_CPP)  arcs_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-#
 # arcs_orderly.out:  arcs_orderly.o;
 # 	$(DISCRETA_CPP)  arcs_orderly.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 #
 # awss.out:  awss.o;
 # 	$(DISCRETA_CPP)  awss.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-#
-# k_arc_generator_main.out:  k_arc_generator_main.o;
-# 	$(DISCRETA_CPP)  k_arc_generator_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 #
 # k_arc_lifting.out:  k_arc_lifting.o;
 # 	$(DISCRETA_CPP)  k_arc_lifting.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

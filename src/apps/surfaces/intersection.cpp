@@ -123,12 +123,48 @@ int main(int argc, const char **argv)
 		cout << "create_surface_main after Surf->init" << endl;
 		}
 
+
+	// create the other group:
+	linear_group *LG;
+
+	LG = NEW_OBJECT(linear_group);
+
+
+	//F = NEW_OBJECT(finite_field);
+	//F->init(Descr->input_q, 0);
+
+	Descr_group->F = F;
+
+
+	if (f_v) {
+		cout << "linear_group before LG->init, "
+				"creating the group" << endl;
+		}
+
+	LG->init(Descr_group, verbose_level - 1);
+
+	if (f_v) {
+		cout << "linear_group after LG->init" << endl;
+		}
+
+	action *A;
+
+	A = LG->A2;
+
+	cout << "created group " << LG->prefix << endl;
+
+
+
+
 	Surf_A = NEW_OBJECT(surface_with_action);
+
+
+
 
 	if (f_v) {
 		cout << "create_surface_main before Surf_A->init" << endl;
 		}
-	Surf_A->init(Surf, f_semilinear, verbose_level);
+	Surf_A->init(Surf, LG, verbose_level);
 	if (f_v) {
 		cout << "create_surface_main after Surf_A->init" << endl;
 		}
@@ -163,35 +199,6 @@ int main(int argc, const char **argv)
 		exit(1);
 	}
 
-
-	// create the other group:
-	linear_group *LG;
-
-	LG = NEW_OBJECT(linear_group);
-
-
-	//F = NEW_OBJECT(finite_field);
-	//F->init(Descr->input_q, 0);
-
-	Descr_group->F = F;
-
-
-	if (f_v) {
-		cout << "linear_group before LG->init, "
-				"creating the group" << endl;
-		}
-
-	LG->init(Descr_group, verbose_level - 1);
-
-	if (f_v) {
-		cout << "linear_group after LG->init" << endl;
-		}
-
-	action *A;
-
-	A = LG->A2;
-
-	cout << "created group " << LG->prefix << endl;
 
 	schreier *Sch;
 	Sch = NEW_OBJECT(schreier);

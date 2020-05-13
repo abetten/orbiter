@@ -84,7 +84,7 @@ class spread_create;
 	// added March 22, 2018
 class spread_lifting;
 	// added April 1, 2018
-class k_arc_generator;
+//class k_arc_generator;
 class arc_lifting_simeon;
 	// added Jan 6, 2019
 class blt_set_classify;
