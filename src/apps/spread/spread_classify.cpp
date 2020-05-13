@@ -70,9 +70,11 @@ int main(int argc, const char **argv)
 
 	exact_cover_arguments *ECA = NULL;
 	isomorph_arguments *IA = NULL;
+	poset_classification_control *Control;
 
 	ECA = NEW_OBJECT(exact_cover_arguments);
 	IA = NEW_OBJECT(isomorph_arguments);
+	Control = NEW_OBJECT(poset_classification_control);
 
 
 
@@ -269,8 +271,8 @@ int main(int argc, const char **argv)
 	cout << "spread_classify.cpp before F->init_override_polynomial" << endl;
 	F->init_override_polynomial(q, poly, 0 /* verbose_level */);
 
-	cout << "spread_classify.cpp before T.read_arguments" << endl;
-	T.read_arguments(argc, argv);
+	//cout << "spread_classify.cpp before T.read_arguments" << endl;
+	//T.read_arguments(argc, argv);
 	
 	int max_depth = NT.i_power_j(F->q, k) + 1;
 
@@ -283,7 +285,7 @@ int main(int argc, const char **argv)
 	cout << "spread_classify.cpp after T.init" << endl;
 	
 	cout << "spread_classify.cpp before T.init2" << endl;
-	T.init2(verbose_level - 1);
+	T.init2(Control, verbose_level - 1);
 	cout << "spread_classify.cpp after T.init2" << endl;
 
 

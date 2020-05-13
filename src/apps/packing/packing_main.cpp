@@ -273,7 +273,7 @@ int main(int argc, const char **argv)
 
 	T = NEW_OBJECT(spread_classify);
 
-	T->read_arguments(argc, argv);
+	//T->read_arguments(argc, argv);
 	
 	int max_depth = order + 1;
 	
@@ -285,8 +285,11 @@ int main(int argc, const char **argv)
 		MINIMUM(verbose_level - 1, 2));
 	cout << "after T->init" << endl;
 	
+	poset_classification_control *Control;
+	Control = NEW_OBJECT(poset_classification_control);
+
 	cout << "before T->init2" << endl;
-	T->init2(verbose_level);
+	T->init2(Control, verbose_level);
 	cout << "after T->init2" << endl;
 
 

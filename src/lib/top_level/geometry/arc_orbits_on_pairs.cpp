@@ -79,7 +79,7 @@ void arc_orbits_on_pairs::freeself()
 void arc_orbits_on_pairs::init(
 	surfaces_arc_lifting *SAL, int arc_idx,
 	action *A,
-	int argc, const char **argv,
+	//int argc, const char **argv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -209,7 +209,7 @@ void arc_orbits_on_pairs::init(
 			}
 		Table_orbits_on_partition[pair_orbit_idx].init(this, pair_orbit_idx,
 				A, A_on_arc,
-				argc, argv,
+				//argc, argv,
 				verbose_level);
 
 		nb = Table_orbits_on_partition[pair_orbit_idx].nb_orbits_on_partition;

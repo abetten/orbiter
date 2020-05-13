@@ -75,6 +75,17 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 		surface_descr_isomorph2 = NULL;
 	f_surface_recognize = FALSE;
 		surface_descr = NULL;
+	f_classify_surfaces_through_arcs_and_trihedral_pairs = FALSE;
+	f_create_surface = FALSE;
+	surface_description = NULL;
+	f_surface_quartic = FALSE;
+	f_surface_clebsch = FALSE;
+	f_surface_codes = FALSE;
+	nb_transform = 0;
+	//const char *transform_coeffs[1000];
+	//int f_inverse_transform[1000];
+
+
 	f_orbits_on_subspaces = FALSE;
 	orbits_on_subspaces_depth = 0;
 	f_mindist = FALSE;
@@ -357,6 +368,46 @@ int group_theoretic_activity_description::read_arguments(
 			i += 2;
 			cout << "-surface_recognize " << endl;
 		}
+		else if (strcmp(argv[i], "-classify_surfaces_through_arcs_and_trihedral_pairs") == 0) {
+			f_classify_surfaces_through_arcs_and_trihedral_pairs = TRUE;
+			//q = atoi(argv[++i]);
+			cout << "-classify_surfaces_through_arcs_and_trihedral_pairs " << endl;
+		}
+		else if (strcmp(argv[i], "-create_surface") == 0) {
+			f_create_surface = TRUE;
+			surface_description = NEW_OBJECT(surface_create_description);
+			i += surface_description->read_arguments(
+					argc - (i - 1), argv + i,
+					verbose_level) - 1;
+
+			cout << "-create_surface" << endl;
+		}
+		else if (strcmp(argv[i], "-surface_quartic") == 0) {
+			f_surface_quartic = TRUE;
+			cout << "-surface_quartic" << endl;
+		}
+		else if (strcmp(argv[i], "-surface_clebsch") == 0) {
+			f_surface_clebsch = TRUE;
+			cout << "=surface_clebsch" << endl;
+		}
+		else if (strcmp(argv[i], "-surface_codes") == 0) {
+			f_surface_codes = TRUE;
+			cout << "-surface_codes" << endl;
+		}
+		else if (strcmp(argv[i], "-transform") == 0) {
+			transform_coeffs[nb_transform] = argv[++i];
+			f_inverse_transform[nb_transform] = FALSE;
+			cout << "-transform " << transform_coeffs[nb_transform] << endl;
+			nb_transform++;
+		}
+		else if (strcmp(argv[i], "-transform_inverse") == 0) {
+			transform_coeffs[nb_transform] = argv[++i];
+			f_inverse_transform[nb_transform] = TRUE;
+			cout << "-transform_inverse "
+					<< transform_coeffs[nb_transform] << endl;
+			nb_transform++;
+		}
+
 		else if (strcmp(argv[i], "-orbits_on_subspaces") == 0) {
 			f_orbits_on_subspaces = TRUE;
 			orbits_on_subspaces_depth = atoi(argv[++i]);

@@ -89,9 +89,9 @@ void surfaces_arc_lifting::freeself()
 }
 
 void surfaces_arc_lifting::init(
+	group_theoretic_activity *GTA,
 	finite_field *F, linear_group *LG4, linear_group *LG3,
 	int f_semilinear, surface_with_action *Surf_A,
-	int argc, const char **argv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -121,7 +121,8 @@ void surfaces_arc_lifting::init(
 		cout << "surfaces_arc_lifting::init "
 				"before Six_arcs->init" << endl;
 		}
-	Six_arcs->init(F,
+	Six_arcs->init(GTA,
+			F,
 		A3,
 		Surf->P2,
 		//argc, argv,
@@ -158,7 +159,7 @@ void surfaces_arc_lifting::init(
 			}
 		Table_orbits_on_pairs[arc_idx].init(this, arc_idx,
 				A3,
-				argc, argv,
+				//argc, argv,
 				verbose_level - 5);
 
 		nb_flag_orbits += Table_orbits_on_pairs[arc_idx].

@@ -38,10 +38,15 @@ semifield_classify::semifield_classify()
 
 	A0 = NULL;
 	A0_linear = NULL;
+
 	A_on_S = NULL;
 	AS = NULL;
+
 	Strong_gens = NULL;
+
 	Poset = NULL;
+	Control = NULL;
+
 	Gen = NULL;
 	Symmetry_group = NULL;
 
@@ -57,6 +62,7 @@ semifield_classify::semifield_classify()
 	Basis2 = NULL;
 	desired_pivots = NULL;
 	//null();
+
 }
 
 semifield_classify::~semifield_classify()
@@ -220,7 +226,7 @@ void semifield_classify::init(int argc, const char **argv,
 
 	T = NEW_OBJECT(spread_classify);
 
-	T->read_arguments(argc, argv);
+	//T->read_arguments(argc, argv);
 
 	if (f_v) {
 		cout << "semifield_classify::init "

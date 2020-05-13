@@ -27,8 +27,9 @@ public:
 	//int argc;
 	//const char **argv;
 
-	exact_cover_arguments *ECA;
-	isomorph_arguments *IA;
+	//exact_cover_arguments *ECA;
+	//isomorph_arguments *IA;
+	group_theoretic_activity *GTA;
 
 	int verbose_level;
 	int f_starter;
@@ -105,10 +106,10 @@ public:
 	~arc_generator();
 	void null();
 	void freeself();
-	void read_arguments(int argc, const char **argv);
+	//void read_arguments(int argc, const char **argv);
 	void main(int verbose_level);
-	void init(int f_poset_classification_control,
-		poset_classification_control *Control,
+	void init(
+		group_theoretic_activity *GTA,
 		finite_field *F,
 		action *A, strong_generators *SG,
 		const char *starter_directory_name,
@@ -390,7 +391,7 @@ public:
 	void init(
 		surfaces_arc_lifting *SAL, int arc_idx,
 		action *A,
-		int argc, const char **argv,
+		//int argc, const char **argv,
 		int verbose_level);
 	void recognize(long int *pair, int *transporter,
 			int &orbit_idx, int verbose_level);
@@ -433,7 +434,7 @@ public:
 	void init(
 		arc_orbits_on_pairs *OP, int pair_orbit_idx,
 		action *A, action *A_on_arc,
-		int argc, const char **argv,
+		//int argc, const char **argv,
 		int verbose_level);
 	void recognize(int *partition, int *transporter,
 			int &orbit_idx, int verbose_level);
@@ -778,10 +779,11 @@ public:
 	~classify_cubic_curves();
 	void null();
 	void freeself();
-	void init(cubic_curve_with_action *CCA,
+	void init(
+			group_theoretic_activity *GTA,
+			cubic_curve_with_action *CCA,
 			const char *starter_directory_name,
 			const char *base_fname,
-			int argc, const char **argv,
 			int verbose_level);
 	void compute_starter(int verbose_level);
 	void test_orbits(int verbose_level);
@@ -1285,6 +1287,7 @@ public:
 int packing_types_compare_function(void *a, void *b, void *data);
 
 
+#if 0
 // #############################################################################
 // k_arc_generator.cpp
 // #############################################################################
@@ -1323,6 +1326,7 @@ public:
 		int verbose_level);
 	void compute_line_type(long int *set, int len, int verbose_level);
 };
+#endif
 
 
 
@@ -2347,10 +2351,11 @@ public:
 	~six_arcs_not_on_a_conic();
 	void null();
 	void freeself();
-	void init(finite_field *F,
+	void init(
+		group_theoretic_activity *GTA,
+		finite_field *F,
 		action *A,
 		projective_space *P2,
-		//int argc, const char **argv,
 		int verbose_level);
 	void recognize(long int *arc6, int *transporter,
 			int &orbit_not_on_conic_idx, int verbose_level);
@@ -2431,7 +2436,7 @@ public:
 	int *tmp_M3;
 	int *tmp_M4;
 
-	poset_classification_control *Control;
+	//poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen; // allocated in init()
 
@@ -2471,8 +2476,8 @@ public:
 	void print_points(long int *pts, int len);
 	void print_elements();
 	void print_elements_and_points();
-	void read_arguments(int argc, const char **argv);
-	void init2(int verbose_level);
+	//void read_arguments(int argc, const char **argv);
+	void init2(poset_classification_control *Control, int verbose_level);
 	void compute(int verbose_level);
 	void early_test_func(long int *S, int len,
 		long int *candidates, int nb_candidates,
@@ -3107,8 +3112,10 @@ public:
 	~surface_with_action();
 	void null();
 	void freeself();
-	void init(surface_domain *Surf, int f_semilinear, int verbose_level);
-	void init_group(int f_semilinear, int verbose_level);
+	void init(surface_domain *Surf,
+			linear_group *LG,
+			int verbose_level);
+	//void init_group(int f_semilinear, int verbose_level);
 	int create_double_six_safely(
 		long int *five_lines, long int transversal_line,
 		long int *double_six, int verbose_level);
@@ -3175,9 +3182,9 @@ public:
 	void null();
 	void freeself();
 	void init(
+		group_theoretic_activity *GTA,
 		finite_field *F, linear_group *LG4, linear_group *LG3,
 		int f_semilinear, surface_with_action *Surf_A,
-		int argc, const char **argv,
 		int verbose_level);
 	void draw_poset_of_six_arcs(int verbose_level);
 	void downstep(int verbose_level);

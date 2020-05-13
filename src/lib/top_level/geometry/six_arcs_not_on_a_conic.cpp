@@ -42,10 +42,11 @@ void six_arcs_not_on_a_conic::freeself()
 	null();
 }
 
-void six_arcs_not_on_a_conic::init(finite_field *F,
+void six_arcs_not_on_a_conic::init(
+	group_theoretic_activity *GTA,
+	finite_field *F,
 	action *A,
 	projective_space *P2,
-	//int argc, const char **argv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -69,6 +70,7 @@ void six_arcs_not_on_a_conic::init(finite_field *F,
 	Gen->d = 2; // we will classify two-arcs
 
 
+#if 0
 	Gen->ECA = NEW_OBJECT(exact_cover_arguments);
 	Gen->IA = NEW_OBJECT(isomorph_arguments);
 
@@ -77,19 +79,16 @@ void six_arcs_not_on_a_conic::init(finite_field *F,
 
 	Gen->ECA->f_has_base_fname = TRUE;
 	Gen->ECA->base_fname = base_fname;
+#endif
 	
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::init "
 				"before Gen->init" << endl;
 	}
 
-	int f_poset_classification_control = TRUE;
-	poset_classification_control *Control;
-
-	Control = NEW_OBJECT(poset_classification_control);
 
 	Gen->init(
-			f_poset_classification_control, Control,
+			GTA,
 			F,
 		A, A->Strong_gens,
 		"" /* Gen->ECA->input_prefix */, 

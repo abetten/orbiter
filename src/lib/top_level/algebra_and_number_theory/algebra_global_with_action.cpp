@@ -2042,7 +2042,7 @@ void algebra_global_with_action::classify_surfaces(
 	if (f_v) {
 		cout << "algebra_global_with_action::classify_surfaces before Surf_A->init" << endl;
 	}
-	Surf_A->init(Surf, f_semilinear, verbose_level - 3);
+	Surf_A->init(Surf, LG, verbose_level - 3);
 	if (f_v) {
 		cout << "algebra_global_with_action::classify_surfaces after Surf_A->init" << endl;
 	}
@@ -2410,6 +2410,7 @@ void algebra_global_with_action::young_symmetrizer_sym_4(int verbose_level)
 }
 
 void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs(
+		group_theoretic_activity *GTA,
 		surface_with_action *Surf_A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2465,7 +2466,8 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 	if (f_v) {
 		cout << "before Six_arcs->init" << endl;
 	}
-	Six_arcs->init(F,
+	Six_arcs->init(GTA,
+			F,
 			A,
 			Surf->P2,
 		//argc, argv,

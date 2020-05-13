@@ -484,7 +484,7 @@ void packing_was::init(int argc, const char **argv)
 
 	T = NEW_OBJECT(spread_classify);
 
-	T->read_arguments(argc, argv);
+	//T->read_arguments(argc, argv);
 
 	int max_depth = order + 1;
 
@@ -503,7 +503,11 @@ void packing_was::init(int argc, const char **argv)
 	if (f_v) {
 		cout << "packing_was::init before T->init2" << endl;
 	}
-	T->init2(verbose_level);
+	poset_classification_control *Control;
+
+	Control = NEW_OBJECT(poset_classification_control);
+
+	T->init2(Control, verbose_level);
 	if (f_v) {
 		cout << "packing_was::init after T->init2" << endl;
 	}

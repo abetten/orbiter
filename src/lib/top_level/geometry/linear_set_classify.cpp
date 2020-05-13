@@ -509,9 +509,12 @@ void linear_set_classify::init(int argc, const char **argv,
 			argc, argv,
 			MINIMUM(verbose_level - 1, 2));
 
-		T->read_arguments(argc, argv);
+		//T->read_arguments(argc, argv);
+		poset_classification_control *Control;
 
-		T->init2(verbose_level);
+		Control = NEW_OBJECT(poset_classification_control);
+
+		T->init2(Control, verbose_level);
 
 		if (f_v) {
 			cout << "Classifying spreads planes of order "

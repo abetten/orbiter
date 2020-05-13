@@ -1603,6 +1603,10 @@ int homogeneous_polynomial_domain_compare_monomial(void *data,
 	int i, int j, void *extra_data);
 void homogeneous_polynomial_domain_swap_monomial(void *data, 
 	int i, int j, void *extra_data);
+void HPD_callback_print_function(
+		std::stringstream &ost, void *data, void *callback_data);
+void HPD_callback_print_function2(
+		std::stringstream &ost, void *data, void *callback_data);
 
 
 
