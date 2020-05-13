@@ -571,7 +571,7 @@ void strong_generators::init_transposed_group(
 	
 	if (f_v) {
 		cout << "strong_generators::init_transposed_group" << endl;
-		}
+	}
 
 	SG->group_order(go);
 	gens = NEW_OBJECT(vector_ge);
@@ -583,22 +583,28 @@ void strong_generators::init_transposed_group(
 			cout << "before element_transpose " << i << " / "
 					<< SG->gens->len << ":" << endl;
 			A->element_print_quick(SG->gens->ith(i), cout);
-			}
+		}
 		A->element_transpose(SG->gens->ith(i), gens->ith(i),
-				0 /* verbose_level */);
+				0 /* verbose_level*/);
 		if (f_v) {
 			cout << "after element_transpose " << i << " / "
 					<< SG->gens->len << ":" << endl;
 			A->element_print_quick(gens->ith(i), cout);
-			}
 		}
+	}
 
 	strong_generators *SG1;
 	
+	if (f_v) {
+		cout << "strong_generators::init_transposed_group before A->generators_to_strong_generators" << endl;
+	}
 	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, go, 
 		gens, SG1, 
-		0 /*verbose_level*/);
+		verbose_level);
+	if (f_v) {
+		cout << "strong_generators::init_transposed_group after A->generators_to_strong_generators" << endl;
+	}
 
 	swap_with(SG1);
 	FREE_OBJECT(gens);
@@ -606,7 +612,7 @@ void strong_generators::init_transposed_group(
 	
 	if (f_v) {
 		cout << "strong_generators::init_transposed_group done" << endl;
-		}
+	}
 }
 
 void strong_generators::init_group_extension(
