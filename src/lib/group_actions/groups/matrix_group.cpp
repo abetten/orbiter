@@ -1254,8 +1254,9 @@ void matrix_group::GL_transpose(int *A, int *At, int verbose_level)
 		cout << "matrix_group::GL_transpose" << endl;
 		}
 	GL_transpose_internal(A, At, verbose_level);
-	GL_transpose_internal(A + elt_size_int_half,
-			At + elt_size_int_half, verbose_level);
+	//GL_transpose_internal(A + elt_size_int_half,
+	//		At + elt_size_int_half, verbose_level);
+	GL_invert_internal(At, At + elt_size_int_half, verbose_level - 2);
 	if (f_v) {
 		cout << "matrix_group::GL_transpose done" << endl;
 		}
@@ -1274,7 +1275,9 @@ void matrix_group::GL_transpose_internal(
 				"not yet implemented for affine groups" << endl;
 		exit(1);
 		}
-	GFq->transpose_matrix(A, At, n, n);
+	GFq->matrix_invert(A, Elt4,
+			base_cols, At, n, verbose_level - 2);
+	GFq->transpose_matrix_in_place(At, n);
 	if (f_semilinear) {
 		At[n * n] = A[n * n];
 		}

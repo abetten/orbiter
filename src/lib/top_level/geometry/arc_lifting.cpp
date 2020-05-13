@@ -645,7 +645,7 @@ void arc_lifting::loop_over_trihedral_pairs(
 	int orbit_index0;
 	int orbit_index;
 	int orbit_length;
-	int Tt[4 * 4 + 1];
+	//int Tt[4 * 4 + 1];
 	long int Nine_lines0[9];
 	long int Nine_lines[9];
 	long int *v;
@@ -792,14 +792,17 @@ void arc_lifting::loop_over_trihedral_pairs(
 
 			mtx = Surf_A->A->G.matrix_grp;
 
+			Surf_A->A->element_transpose(
+					Elt2, Elt3, 0 /* verbose_level*/);
+#if 0
 			F->transpose_matrix(Elt2, Tt, 4, 4);
 			if (mtx->f_semilinear) {
 				// if we are doing semilinear:
 				Tt[4 * 4] = Elt2[4 * 4]; 
 			}
 
-
 			Surf_A->A->make_element(Elt3, Tt, 0);
+#endif
 			Surf_A->A->element_invert(cosets->ith(j), Elt5, 0);
 			Surf_A->A->element_mult(Elt3, Elt5, Elt4, 0);
 	
@@ -1443,9 +1446,9 @@ void arc_lifting::print_bisecants(ostream &ost)
 		Combi.k2ij(h, i, j, 6);
 		ost << h << " & P_{" << i + 1 << "}P_{" << j + 1
 				<< "} & " << a << " & " << endl;
-		ost << "\\left[ " << endl;
+		//ost << "\\left[ " << endl;
 		Surf->P2->Grass_lines->print_single_generator_matrix_tex(ost, a);
-		ost << "\\right] ";
+		//ost << "\\right] ";
 
 		Surf->P2->Grass_lines->unrank_lint_here_and_compute_perp(Mtx, a,
 			0 /*verbose_level */);
@@ -1470,6 +1473,7 @@ void arc_lifting::print_intersections(ostream &ost)
 	len[0] = 15;
 	int i;
 	
+	ost << "The intersections of bisecants are:\\\\" << endl;
 	for (i = 0; i < 15; i++) {
 		labels[i] = i;
 	}
