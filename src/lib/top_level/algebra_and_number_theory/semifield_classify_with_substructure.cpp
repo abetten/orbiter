@@ -19,11 +19,15 @@ namespace top_level {
 
 semifield_classify_with_substructure::semifield_classify_with_substructure()
 {
+
+	F = NULL;
+	LG = NULL;
+	Control = NULL;
 	t0 = 0;
-	argc = 0;
-	argv = NULL;
-	f_poly = FALSE;
-	poly = NULL;
+	//argc = 0;
+	//argv = NULL;
+	//f_poly = FALSE;
+	//poly = NULL;
 	f_order = FALSE;
 	order = 0;
 	f_dim_over_kernel = FALSE;
@@ -53,7 +57,6 @@ semifield_classify_with_substructure::semifield_classify_with_substructure()
 
 	p = e = e1 = n = k = q = k2 = 0;
 
-	F = NULL;
 	Sub = NULL;
 	L2 = NULL;
 
@@ -79,6 +82,7 @@ semifield_classify_with_substructure::~semifield_classify_with_substructure()
 
 }
 
+#if 0
 void semifield_classify_with_substructure::read_arguments(
 		int argc, const char **argv, int &verbose_level)
 {
@@ -164,8 +168,12 @@ void semifield_classify_with_substructure::read_arguments(
 		}
 
 }
+#endif
 
-void semifield_classify_with_substructure::init(int verbose_level)
+void semifield_classify_with_substructure::init(
+		finite_field *F, linear_group *LG,
+		poset_classification_control *Control,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -173,6 +181,10 @@ void semifield_classify_with_substructure::init(int verbose_level)
 		cout << "semifield_classify_with_substructure::init" << endl;
 	}
 	number_theory_domain NT;
+
+	semifield_classify_with_substructure::F = F;
+	semifield_classify_with_substructure::LG = LG;
+	semifield_classify_with_substructure::Control = Control;
 
 	NT.factor_prime_power(order, p, e);
 	cout << "order = " << order << " = " << p << "^" << e << endl;
@@ -200,9 +212,6 @@ void semifield_classify_with_substructure::init(int verbose_level)
 
 
 
-	F = NEW_OBJECT(finite_field);
-	F->init_override_polynomial(q, poly, 0 /* verbose_level */);
-
 
 	Sub = NEW_OBJECT(semifield_substructure);
 
@@ -212,9 +221,14 @@ void semifield_classify_with_substructure::init(int verbose_level)
 
 	Sub->SC = NEW_OBJECT(semifield_classify);
 	cout << "before SC->init" << endl;
-	Sub->SC->init(argc, argv, order, n, k, F,
-			4 /* MINIMUM(verbose_level - 1, 2) */);
+
+	Sub->SC->init(F, LG, k, Control,
+			"L2" /* level_two_prefix */,
+			"L3" /* level_three_prefix */,
+			verbose_level - 1);
 	cout << "after SC->init" << endl;
+
+
 
 
 	if (f_test_semifield) {
@@ -257,7 +271,7 @@ void semifield_classify_with_substructure::init(int verbose_level)
 
 	cout << "before L3->init_level_three" << endl;
 	Sub->L3->init_level_three(L2,
-			Sub->SC->f_level_three_prefix, Sub->SC->level_three_prefix,
+			true /* f_prefix */, Sub->SC->level_three_prefix,
 			verbose_level);
 	cout << "after L3->init_level_three" << endl;
 

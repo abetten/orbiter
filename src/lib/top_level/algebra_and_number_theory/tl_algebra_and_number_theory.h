@@ -350,11 +350,15 @@ public:
 
 	int t0;
 
-	int argc;
-	const char **argv;
+	finite_field *F;
+	linear_group *LG;
+	poset_classification_control *Control;
 
-	int f_poly;
-	const char *poly;
+	//int argc;
+	//const char **argv;
+
+	//int f_poly;
+	//const char *poly;
 	int f_order;
 	int order;
 	int f_dim_over_kernel;
@@ -385,7 +389,6 @@ public:
 
 	int p, e, e1, n, k, q, k2;
 
-	finite_field *F;
 	semifield_substructure *Sub;
 	semifield_level_two *L2;
 
@@ -408,8 +411,11 @@ public:
 
 	semifield_classify_with_substructure();
 	~semifield_classify_with_substructure();
-	void read_arguments(int argc, const char **argv, int &verbose_level);
-	void init(int verbose_level);
+	//void read_arguments(int argc, const char **argv, int &verbose_level);
+	void init(
+			finite_field *F, linear_group *LG,
+			poset_classification_control *Control,
+			int verbose_level);
 	void read_data(int verbose_level);
 	void create_fname_for_classification(char *fname);
 	void create_fname_for_flag_orbits(char *fname);
