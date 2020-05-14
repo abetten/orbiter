@@ -66,6 +66,15 @@ public:
 	void classify_surfaces_through_arcs_and_trihedral_pairs(
 			group_theoretic_activity *GTA,
 			surface_with_action *Surf_A, int verbose_level);
+	void investigate_surface_and_write_report(
+			action *A,
+			surface_create *SC,
+			six_arcs_not_on_a_conic *Six_arcs,
+			surface_object_with_action *SoA,
+			int f_surface_clebsch,
+			int f_surface_codes,
+			int f_surface_quartic,
+			int verbose_level);
 
 };
 
@@ -239,6 +248,9 @@ public:
 		int f_self_orthogonal;
 		int f_doubly_even;
 
+		int f_spread_classify;
+		int spread_classify_k;
+
 
 	group_theoretic_activity_description();
 	~group_theoretic_activity_description();
@@ -315,6 +327,7 @@ public:
 	void do_classify_surfaces_through_arcs_and_trihedral_pairs(int verbose_level);
 	void do_create_surface(
 			surface_create_description *Descr, int verbose_level);
+	void do_spread_classify(int k, int verbose_level);
 };
 
 long int gta_subspace_orbits_rank_point_func(int *v, void *data);
@@ -425,18 +438,22 @@ void semifield_print_function_callback(std::ostream &ost, int orbit_idx,
 
 class semifield_classify {
 public:
+
 	int n;
 	int k;
 	int k2; // = k * k
 	finite_field *F;
+	linear_group *LG;
+	int f_semilinear;
+
 	int q;
 	int order; // q^k
 
 
-	int f_level_two_prefix;
+	//int f_level_two_prefix;
 	const char *level_two_prefix;
 
-	int f_level_three_prefix;
+	//int f_level_three_prefix;
 	const char *level_three_prefix;
 
 
@@ -485,10 +502,12 @@ public:
 	~semifield_classify();
 	void null();
 	void freeself();
-	void init(int argc, const char **argv,
-		int order, int n, int k,
-		finite_field *F,
-		int verbose_level);
+	void init(
+			finite_field *F, linear_group *LG,
+			int k, poset_classification_control *Control,
+			const char *level_two_prefix,
+			const char *level_three_prefix,
+			int verbose_level);
 	void report(std::ostream &ost, int level,
 			semifield_level_two *L2,
 			semifield_lifting *L3,

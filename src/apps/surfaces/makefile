@@ -15,7 +15,6 @@ LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 
 
 TARGETS=\
-	intersection.out \
 	surfaces_arc_lifting_main.out 
 
 all: $(TARGETS)
@@ -24,8 +23,6 @@ install:
 	cp $(TARGETS) ../../../bin
 
 
-intersection.out:  intersection.o   ;
-	$(DISCRETA_CPP)  intersection.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 surfaces_arc_lifting_main.out:  surfaces_arc_lifting_main.o ;
 	$(DISCRETA_CPP)  surfaces_arc_lifting_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

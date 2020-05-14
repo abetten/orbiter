@@ -502,19 +502,29 @@ void linear_set_classify::init(int argc, const char **argv,
 			}
 
 		int max_depth = order + 1;
+		poset_classification_control *Control;
+		linear_group *LG;
 
+		Control = NEW_OBJECT(poset_classification_control);
+		LG = NEW_OBJECT(linear_group); // hack !!! ToDo
+
+		T->init(Fq, LG, k, Control,
+			//Fq, f_recoordinatize,
+			//"SPREADS_STARTER", "Spreads", order + 1,
+			//argc, argv,
+			MINIMUM(verbose_level - 1, 2));
+
+#if 0
 		T->init(order, n, k, max_depth,
 			Fq, f_recoordinatize,
 			"SPREADS_STARTER", "Spreads", order + 1,
 			argc, argv,
 			MINIMUM(verbose_level - 1, 2));
+#endif
 
 		//T->read_arguments(argc, argv);
-		poset_classification_control *Control;
 
-		Control = NEW_OBJECT(poset_classification_control);
-
-		T->init2(Control, verbose_level);
+		//T->init2(Control, verbose_level);
 
 		if (f_v) {
 			cout << "Classifying spreads planes of order "

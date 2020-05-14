@@ -275,22 +275,35 @@ int main(int argc, const char **argv)
 
 	//T->read_arguments(argc, argv);
 	
-	int max_depth = order + 1;
+	//int max_depth = order + 1;
 	
 	cout << "before T->init" << endl;
+	poset_classification_control *Control;
+	linear_group *LG;
+
+	Control = NEW_OBJECT(poset_classification_control);
+	LG = NEW_OBJECT(linear_group); // hack !!! ToDo
+
+	T->init(F, LG, k, Control,
+		//Fq, f_recoordinatize,
+		//"SPREADS_STARTER", "Spreads", order + 1,
+		//argc, argv,
+		MINIMUM(verbose_level - 1, 2));
+#if 0
 	T->init(order, n, k, max_depth, 
 		F, f_recoordinatize, 
 		"TP_STARTER", "TP", order + 1, 
 		argc, argv, 
 		MINIMUM(verbose_level - 1, 2));
+#endif
 	cout << "after T->init" << endl;
 	
-	poset_classification_control *Control;
-	Control = NEW_OBJECT(poset_classification_control);
+	//poset_classification_control *Control;
+	//Control = NEW_OBJECT(poset_classification_control);
 
-	cout << "before T->init2" << endl;
-	T->init2(Control, verbose_level);
-	cout << "after T->init2" << endl;
+	//cout << "before T->init2" << endl;
+	//T->init2(Control, verbose_level);
+	//cout << "after T->init2" << endl;
 
 
 	P = NEW_OBJECT(packing_classify);

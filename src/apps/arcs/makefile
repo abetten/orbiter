@@ -13,8 +13,7 @@ TARGETS=\
 	arcs_orderly.out \
 	awss.out \
 	k_arc_lifting.out \
-	simeon.out \
-	test_hyperoval.out 
+	simeon.out 
 
 all: $(TARGETS)
 
@@ -37,8 +36,6 @@ install:
 # simeon.out:  simeon.o;
 # 	$(DISCRETA_CPP)  simeon.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 #
-# test_hyperoval.out:  test_hyperoval.o;
-# 	$(DISCRETA_CPP)  test_hyperoval.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 
