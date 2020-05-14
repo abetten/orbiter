@@ -596,6 +596,7 @@ class eckardt_point_info {
 
 public:
 
+	surface_domain *Surf;
 	projective_space *P;
 	long int arc6[6];
 
@@ -614,8 +615,12 @@ public:
 	~eckardt_point_info();
 	void null();
 	void freeself();
-	void init(projective_space *P,
+	void init(surface_domain *Surf, projective_space *P,
 			long int *arc6, int verbose_level);
+	void print_bisecants(std::ostream &ost, int verbose_level);
+	void print_intersections(std::ostream &ost, int verbose_level);
+	void print_conics(std::ostream &ost, int verbose_level);
+	void print_Eckardt_points(std::ostream &ost, int verbose_level);
 
 };
 
@@ -2299,7 +2304,7 @@ public:
 		// bisecants[15 * 3]
 		// conics[6 * 6]
 	eckardt_point_info *compute_eckardt_point_info(
-		long int *arc6,
+			surface_domain *Surf, long int *arc6,
 		int verbose_level);
 	void PG_2_8_create_conic_plus_nucleus_arc_1(long int *the_arc, int &size,
 		int verbose_level);
@@ -2876,11 +2881,6 @@ public:
 		long int *&Lines_in_tritangent_plane,
 		long int *&Line_in_unitangent_plane,
 		int verbose_level);
-#if 0
-	void compute_external_lines_on_three_tritangent_planes(long int *Lines,
-		long int *&External_lines, int &nb_external_lines,
-		int verbose_level);
-#endif
 	void init_double_sixes(int verbose_level);
 	void create_half_double_sixes(int verbose_level);
 	int find_half_double_six(long int *half_double_six);
@@ -3139,6 +3139,7 @@ public:
 	void compute_tritangent_planes_by_rank(int verbose_level);
 	void compute_tritangent_planes(int verbose_level);
 	void compute_planes_and_dual_point_ranks(int verbose_level);
+	void report_properties(std::ostream &ost, int verbose_level);
 	void print_line_intersection_graph(std::ostream &ost);
 	void print_adjacency_matrix(std::ostream &ost);
 	void print_adjacency_matrix_with_intersection_points(std::ostream &ost);

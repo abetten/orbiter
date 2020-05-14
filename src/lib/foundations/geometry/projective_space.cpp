@@ -1942,7 +1942,7 @@ void projective_space::compute_bisecants_and_conics(
 }
 
 eckardt_point_info *projective_space::compute_eckardt_point_info(
-	long int *arc6,
+	surface_domain *Surf, long int *arc6,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1965,7 +1965,7 @@ eckardt_point_info *projective_space::compute_eckardt_point_info(
 		}
 
 	E = NEW_OBJECT(eckardt_point_info);
-	E->init(this, arc6, verbose_level);
+	E->init(Surf, this, arc6, verbose_level);
 
 	if (f_v) {
 		cout << "projective_space::compute_eckardt_point_info done" << endl;

@@ -656,7 +656,7 @@ void surface_with_action::arc_lifting_and_classify_using_trihedral_pairs(
 	AL->create_surface_and_group(this, Arc6, verbose_level);
 
 	if (f_log_fp) {
-		AL->print(fp);
+		AL->print(fp, verbose_level);
 	}
 
 	
@@ -737,44 +737,13 @@ void surface_with_action::arc_lifting_and_classify_using_trihedral_pairs(
 
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
-					"before SOA->SO->print_general" << endl;
+					"before report_properties" << endl;
 		}
-		SOA->SO->print_general(fp);
-
-
+		SOA->SO->report_properties(fp, verbose_level);
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
-					"before SOA->SO->print_lines" << endl;
+					"after report_properties" << endl;
 		}
-		SOA->SO->print_lines(fp);
-
-		if (f_v) {
-			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
-					"before SOA->SO->print_points" << endl;
-		}
-		SOA->SO->print_points(fp);
-
-
-		if (f_v) {
-			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
-					"before SOA->SO->print_tritangent_planes" << endl;
-		}
-		SOA->SO->print_tritangent_planes(fp);
-
-
-		if (f_v) {
-			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
-					"before SOA->SO->print_Steiner_and_Eckardt" << endl;
-		}
-		SOA->SO->print_Steiner_and_Eckardt(fp);
-
-		//SOA->SO->print_planes_in_trihedral_pairs(fp);
-
-		if (f_v) {
-			cout << "surface_with_action::arc_lifting_and_classify_using_trihedral_pairs "
-					"before SOA->SO->print_generalized_quadrangle" << endl;
-		}
-		SOA->SO->print_generalized_quadrangle(fp);
 	}
 
 

@@ -325,13 +325,17 @@ void surface_create::init2(int verbose_level)
 			cout << endl;
 		}
 
-#if 0
+		poset_classification_control *Control;
+
+		Control = NEW_OBJECT(poset_classification_control);
+
+#if 1
 		// classifying the trihedral pairs is expensive:
 		if (f_v) {
 			cout << "surface_create::init2 before Surf_A->"
 					"Classify_trihedral_pairs->classify" << endl;
 		}
-		Surf_A->Classify_trihedral_pairs->classify(0 /*verbose_level*/);
+		Surf_A->Classify_trihedral_pairs->classify(Control, 0 /*verbose_level*/);
 		if (f_v) {
 			cout << "surface_create::init2 after Surf_A->"
 					"Classify_trihedral_pairs->classify" << endl;
@@ -354,7 +358,7 @@ void surface_create::init2(int verbose_level)
 					"AL->create_surface" << endl;
 		}
 
-		AL->print_Eckardt_point_data(cout);
+		AL->print_Eckardt_point_data(cout, verbose_level);
 
 		int_vec_copy(AL->The_surface_equations
 				+ AL->lambda_rk * 20, coeffs, 20);
@@ -378,6 +382,7 @@ void surface_create::init2(int verbose_level)
 
 
 		FREE_OBJECT(AL);
+		FREE_OBJECT(Control);
 		
 
 		FREE_lint(arc);

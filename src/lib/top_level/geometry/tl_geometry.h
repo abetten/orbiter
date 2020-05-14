@@ -332,12 +332,8 @@ public:
 		int verbose_level);
 	void create_clebsch_system(int *The_six_plane_equations, 
 		int lambda, int verbose_level);
-	void print(std::ostream &ost);
-	void print_Eckardt_point_data(std::ostream &ost);
-	void print_bisecants(std::ostream &ost);
-	void print_intersections(std::ostream &ost);
-	void print_conics(std::ostream &ost);
-	void print_Eckardt_points(std::ostream &ost);
+	void print(std::ostream &ost, int verbose_level);
+	void print_Eckardt_point_data(std::ostream &ost, int verbose_level);
 	void print_web_of_cubic_curves(std::ostream &ost);
 	void print_trihedral_plane_equations(std::ostream &ost);
 	void print_lines(std::ostream &ost);
@@ -2382,9 +2378,9 @@ class spread_classify {
 public:
 
 	finite_field *F;
-
-	int argc;
-	const char **argv;
+	linear_group *LG;
+	int f_semilinear;
+	poset_classification_control *Control;
 
 	int order;
 	int spread_size; // = order + 1
@@ -2396,15 +2392,7 @@ public:
 	int r, nb_pts;
 	int nb_points_total; // = nb_pts = {n choose 1}_q
 	int block_size; // = r = {k choose 1}_q
-	int max_depth;
 
-	int f_print_generators;
-	int f_projective;
-	int f_semilinear;
-	int f_basis;
-	int f_induce_action;
-	int f_override_schreier_depth;
-	int override_schreier_depth;
 
 	char starter_directory_name[1000];
 	char prefix[1000];
@@ -2461,13 +2449,11 @@ public:
 	~spread_classify();
 	void null();
 	void freeself();
-	void init(int order, int n, int k, int max_depth, 
-		finite_field *F, int f_recoordinatize, 
-		const char *input_prefix, 
-		const char *base_fname,
-		int starter_size,  
-		int argc, const char **argv, 
-		int verbose_level);
+	void init(
+			finite_field *F, linear_group *LG,
+			int k, poset_classification_control *Control,
+			int verbose_level);
+	void init2(int verbose_level);
 	void unrank_point(int *v, long int a);
 	long int rank_point(int *v);
 	void unrank_subspace(int *M, long int a);
@@ -2476,8 +2462,6 @@ public:
 	void print_points(long int *pts, int len);
 	void print_elements();
 	void print_elements_and_points();
-	//void read_arguments(int argc, const char **argv);
-	void init2(poset_classification_control *Control, int verbose_level);
 	void compute(int verbose_level);
 	void early_test_func(long int *S, int len,
 		long int *candidates, int nb_candidates,
@@ -2485,7 +2469,6 @@ public:
 		int verbose_level);
 	int check_function(int len, long int *S, int verbose_level);
 	int incremental_check_function(int len, long int *S, int verbose_level);
-	//int check_function_pair(int rk1, int rk2, int verbose_level);
 	void lifting_prepare_function_new(exact_cover *E, int starter_case, 
 		long int *candidates, int nb_candidates,
 		strong_generators *Strong_gens, 

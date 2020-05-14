@@ -151,10 +151,10 @@ int main(int argc, const char **argv)
 		}
 		if (f_poly) {
 			F->init_override_polynomial(q, poly, 0 /* verbose_level */);
-			}
+		}
 		else {
 			F->init(q, 0 /* verbose_level */);
-			}
+		}
 		O->init(0 /*epsilon*/, 5 /* n */, F, 0 /*verbose_level*/);
 
 		Blt_set->init_basic(O,

@@ -92,6 +92,9 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	mindist = 0;
 	f_self_orthogonal = FALSE;
 	f_doubly_even = FALSE;
+
+	f_spread_classify = FALSE;
+	spread_classify_k = 0;
 }
 
 group_theoretic_activity_description::~group_theoretic_activity_description()
@@ -429,6 +432,11 @@ int group_theoretic_activity_description::read_arguments(
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
+		}
+		else if (strcmp(argv[i], "-spread_classify") == 0) {
+			f_spread_classify = TRUE;
+			spread_classify_k = atoi(argv[++i]);
+			cout << "-spread_classify " << spread_classify_k << endl;
 		}
 		else {
 			cout << "group_theoretic_activity_description::read_arguments "

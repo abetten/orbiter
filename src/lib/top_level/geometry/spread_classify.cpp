@@ -19,9 +19,9 @@ namespace top_level {
 spread_classify::spread_classify()
 {
 	F = NULL;
-
-	argc = 0;
-	argv = NULL;
+	LG = NULL;
+	f_semilinear = FALSE;
+	Control = NULL;
 
 	order = 0;
 	spread_size = 0;
@@ -34,15 +34,7 @@ spread_classify::spread_classify()
 	nb_pts = 0;
 	nb_points_total = 0;
 	block_size = 0;
-	max_depth = 0;
 
-	f_print_generators = FALSE;
-	f_projective = FALSE;
-	f_semilinear = FALSE;
-	f_basis = FALSE;
-	f_induce_action = FALSE;
-	f_override_schreier_depth = FALSE;
-	override_schreier_depth = 0;
 
 	//char starter_directory_name[1000];
 	//char prefix[1000];
@@ -65,7 +57,6 @@ spread_classify::spread_classify()
 	tmp_M3 = NULL;
 	tmp_M4 = NULL;
 
-	//Control = NULL;
 	Poset = NULL;
 	gen = NULL;
 	Sing = NULL;
@@ -88,9 +79,11 @@ void spread_classify::null()
 
 void spread_classify::freeself()
 {
+#if 0
 	if (A) {
 		FREE_OBJECT(A);
 		}
+#endif
 	if (A2) {
 		FREE_OBJECT(A2);
 		}
@@ -149,45 +142,62 @@ void spread_classify::freeself()
 	null();
 }
 
-void spread_classify::init(int order, int n, int k, int max_depth,
-	finite_field *F, int f_recoordinatize, 
-	const char *input_prefix, 
-	const char *base_fname,
-	int starter_size,  
-	int argc, const char **argv, 
-	int verbose_level)
+void spread_classify::init(
+		finite_field *F, linear_group *LG,
+		int k, poset_classification_control *Control,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	longinteger_object go;
 	number_theory_domain NT;
 	combinatorics_domain Combi;
 	
+	int f_recoordinatize = TRUE;
+	const char *input_prefix = "";
+	const char *base_fname = "";
 	
 	if (f_v) {
-		cout << "spread::init" << endl;
-		cout << "n=" << n << endl;
+		cout << "spread_classify::init" << endl;
 		cout << "k=" << k << endl;
-		cout << "q=" << F->q << endl;
 	}
-	spread_classify::argc = argc;
-	spread_classify::argv = argv;
 	
-	spread_classify::order = order;
-	spread_size = order + 1;
-	spread_classify::n = n;
 	spread_classify::k = k;
-	spread_classify::max_depth = max_depth;
-	kn = k * n;
+	spread_classify::Control = Control;
+
 	spread_classify::F = F;
-	spread_classify::f_recoordinatize = f_recoordinatize;
+	spread_classify::LG = LG;
+	A = LG->A2;
+	n = A->matrix_group_dimension();
+	f_semilinear = A->is_semilinear_matrix_group();
 	q = F->q;
+	order = NT.i_power_j(q, k);
+	spread_size = order + 1;
+	if (f_v) {
+		cout << "spread_classify::init" << endl;
+		cout << "q=" << q << endl;
+		cout << "n=" << n << endl;
+		cout << "order=" << order << endl;
+		cout << "spread_size=" << spread_size << endl;
+	}
+
+	Control->f_max_depth = TRUE;
+	Control->max_depth = spread_size;
+	if (f_v) {
+		cout << "spread_classify::init" << endl;
+		cout << "Control->max_depth=" << Control->max_depth << endl;
+	}
+
+	kn = k * n;
+	spread_classify::f_recoordinatize = f_recoordinatize;
 	
 	strcpy(starter_directory_name, input_prefix);
 	strcpy(prefix, base_fname);
 	//sprintf(prefix_with_directory, "%s%s",
 	//starter_directory_name, base_fname);
-	spread_classify::starter_size = starter_size;
+	//spread_classify::starter_size = starter_size;
+
+
+
 
 
 	tmp_M1 = NEW_int(n * n);
@@ -199,56 +209,18 @@ void spread_classify::init(int order, int n, int k, int max_depth,
 	//gen->read_arguments(argc, argv, 1);
 
 
-	f_projective = TRUE;
-	f_semilinear = TRUE;
-	f_basis = TRUE;
-	f_induce_action = FALSE;
 
-	if (NT.is_prime(q)) {
-		if (f_v) {
-			cout << "spread::init q=" << q << " is a prime, "
-					"putting f_semilinear = FALSE" << endl;
-		}
-		f_semilinear = FALSE;
-	}
-	else {
-		if (f_v) {
-			cout << "spread::init q=" << q
-					<< " is not a prime" << endl;
-		}
-	}
-
-
-	A = NEW_OBJECT(action);
+	//A = NEW_OBJECT(action);
 	A2 = NEW_OBJECT(action);
 	AG = NEW_OBJECT(action_on_grassmannian);
 
-
-	if (f_v) {
-		cout << "spread::init "
-				"before init_projective_group" << endl;
-	}
-
-	vector_ge *nice_gens;
-
-	A->init_projective_group(n, F, f_semilinear,
-			f_basis, TRUE /* f_init_sims */,
-			nice_gens,
-			0 /*verbose_level*/);
-	FREE_OBJECT(nice_gens);
-	
-	if (f_v) {
-		cout << "spread::init "
-				"after init_projective_group, "
-				"checking group order" << endl;
-	}
+#if 0
+	longinteger_object go;
 	A->Sims->group_order(go);
 	if (f_v) {
-		cout << "spread::init "
-				"after init_projective_group "
-				"group of order " << go
-				<< " has been created" <<  endl;
+		cout << "spread_classify::init go = " << go <<  endl;
 	}
+#endif
 
 
 	if (f_vv) {
@@ -266,32 +238,32 @@ void spread_classify::init(int order, int n, int k, int max_depth,
 	nb_points_total = nb_pts = Combi.generalized_binomial(n, 1, q);
 	
 	if (f_v) {
-		cout << "spread::init "
+		cout << "spread_classify::init "
 				"nCkq = {n \\choose k}_q = " << nCkq << endl;
-		cout << "spread::init "
+		cout << "spread_classify::init "
 				"r = {k \\choose 1}_q = " << r << endl;
-		cout << "spread::init "
+		cout << "spread_classify::init "
 				"nb_pts = {n \\choose 1}_q = " << nb_pts << endl;
 	}
 
 
 
 	if (f_v) {
-		cout << "spread::init before AG->init" <<  endl;
+		cout << "spread_classify::init before AG->init" <<  endl;
 	}
 	
 	AG->init(*A, Grass, 0 /*verbose_level - 2*/);
 	
 	if (f_v) {
-		cout << "spread::init after AG->init" <<  endl;
+		cout << "spread_classify::init after AG->init" <<  endl;
 	}
 
 	A2->induced_action_on_grassmannian(A, AG, 
-		f_induce_action, NULL /*sims *old_G */, 
-		MINIMUM(verbose_level - 2, 2));
+		FALSE /*f_induce_action*/, NULL /*sims *old_G */,
+		0 /*verbose_level - 2*/);
 	
 	if (f_v) {
-		cout << "spread::init after "
+		cout << "spread_classify::init after "
 				"A2->induced_action_on_grassmannian" <<  endl;
 	}
 
@@ -311,7 +283,7 @@ void spread_classify::init(int order, int n, int k, int max_depth,
 	
 
 
-	if (f_print_generators) {
+	if (TRUE) {
 		int f_print_as_permutation = TRUE;
 		int f_offset = FALSE;
 		int offset = 1;
@@ -323,7 +295,7 @@ void spread_classify::init(int order, int n, int k, int max_depth,
 			f_offset, offset, 
 			f_do_it_anyway_even_for_big_degree, 
 			f_print_cycles_of_length_one);
-		}
+	}
 
 
 #if 0
@@ -356,24 +328,24 @@ void spread_classify::init(int order, int n, int k, int max_depth,
 		longinteger_object go;
 		
 		A->Strong_gens->group_order(go);
-		cout << "spread::init The order "
+		cout << "spread_classify::init The order "
 				"of PGGL(n,q) is " << go << endl;
 	}
 
 	
 	if (f_recoordinatize) {
 		if (f_v) {
-			cout << "spread::init before "
+			cout << "spread_classify::init before "
 					"recoordinatize::init" << endl;
 		}
 		R = NEW_OBJECT(recoordinatize);
 		R->init(n, k, F, Grass, A, A2, 
-			f_projective, f_semilinear, 
+			TRUE /*f_projective*/, f_semilinear,
 			callback_incremental_check_function, (void *) this,
 			verbose_level);
 
 		if (f_v) {
-			cout << "spread::init before "
+			cout << "spread_classify::init before "
 					"recoordinatize::compute_starter" << endl;
 		}
 		R->compute_starter(Starter, Starter_size, 
@@ -382,7 +354,7 @@ void spread_classify::init(int order, int n, int k, int max_depth,
 		longinteger_object go;
 		Starter_Strong_gens->group_order(go);
 		if (TRUE /*f_v*/) {
-			cout << "spread::init The stabilizer of the "
+			cout << "spread_classify::init The stabilizer of the "
 					"first three components has order " << go << endl;
 		}
 
@@ -391,7 +363,7 @@ void spread_classify::init(int order, int n, int k, int max_depth,
 	}
 	else {
 		if (f_v) {
-			cout << "spread::init we are not using "
+			cout << "spread_classify::init we are not using "
 					"recoordinatization, please use option "
 					"-recoordinatize" << endl;
 			//exit(1);
@@ -400,14 +372,14 @@ void spread_classify::init(int order, int n, int k, int max_depth,
 	}
 
 	if (f_v) {
-		cout << "spread::init Nb = " << Nb << endl;
-		cout << "spread::init kn = " << kn << endl;
-		cout << "spread::init n = " << n << endl;
-		cout << "spread::init k = " << k << endl;
-		cout << "spread::init allocating Data1 and Data2" << endl;
+		cout << "spread_classify::init Nb = " << Nb << endl;
+		cout << "spread_classify::init kn = " << kn << endl;
+		cout << "spread_classify::init n = " << n << endl;
+		cout << "spread_classify::init k = " << k << endl;
+		cout << "spread_classify::init allocating Data1 and Data2" << endl;
 	}
 	
-	Data1 = NEW_int(max_depth * kn);
+	Data1 = NEW_int(spread_size * kn);
 	Data2 = NEW_int(n * n);
 	//Data3 = NEW_int(n * n);
 	
@@ -416,7 +388,7 @@ void spread_classify::init(int order, int n, int k, int max_depth,
 	if (k == 2 && is_prime(q)) {
 		Sing = NEW_OBJECT(singer_cycle);
 		if (f_v) {
-			cout << "spread::init "
+			cout << "spread_classify::init "
 					"before singer_cycle::init" << endl;
 		}
 		Sing->init(4, F, A, A2, 0 /*verbose_level*/);
@@ -427,7 +399,7 @@ void spread_classify::init(int order, int n, int k, int max_depth,
 	if (k == 2) {
 		
 		if (f_v) {
-			cout << "spread::init k = 2, "
+			cout << "spread_classify::init k = 2, "
 					"initializing klein correspondence" << endl;
 		}
 		Klein = NEW_OBJECT(klein_correspondence);
@@ -438,7 +410,7 @@ void spread_classify::init(int order, int n, int k, int max_depth,
 	}
 	else {
 		if (f_v) {
-			cout << "spread::init we are not "
+			cout << "spread_classify::init we are not "
 					"initializing klein correspondence" << endl;
 		}
 		O = NULL;
@@ -446,7 +418,89 @@ void spread_classify::init(int order, int n, int k, int max_depth,
 	}
 	
 	if (f_v) {
-		cout << "spread::init done" << endl;
+		cout << "spread_classify::init before init2" << endl;
+	}
+	init2(verbose_level - 1);
+	if (f_v) {
+		cout << "spread_classify::init after init2" << endl;
+	}
+
+	if (f_v) {
+		cout << "spread_classify::init done" << endl;
+	}
+}
+
+void spread_classify::init2(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	//int depth;
+
+	if (f_v) {
+		cout << "spread_classify::init2" << endl;
+	}
+	//depth = order + 1;
+
+	//Control = NEW_OBJECT(poset_classification_control);
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(A, A2,
+			A->Strong_gens,
+			verbose_level);
+	Poset->add_testing_without_group(
+			spread_early_test_func_callback,
+				this /* void *data */,
+				verbose_level);
+
+
+	if (f_recoordinatize) {
+		if (f_v) {
+			cout << "spread_classify::init2 "
+					"before gen->initialize_with_starter" << endl;
+		}
+		gen->initialize_with_starter(Control, Poset,
+			spread_size,
+			starter_directory_name,
+			prefix,
+			Starter_size,
+			Starter,
+			Starter_Strong_gens,
+			R->live_points,
+			R->nb_live_points,
+			this /*starter_canonize_data*/,
+			starter_canonize_callback,
+			verbose_level - 2);
+		if (f_v) {
+			cout << "spread_classify::init2 "
+					"after gen->initialize_with_starter" << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "spread_classify::init2 "
+					"before gen->initialize" << endl;
+		}
+		gen->initialize(Control, Poset,
+			spread_size,
+			starter_directory_name, prefix,
+			verbose_level - 2);
+		if (f_v) {
+			cout << "spread_classify::init2 "
+					"after gen->initialize" << endl;
+		}
+	}
+
+	gen->f_allowed_to_show_group_elements = TRUE;
+
+
+#if 0
+	gen->f_print_function = TRUE;
+	gen->print_function = callback_spread_print;
+	gen->print_function_data = this;
+#endif
+
+
+	if (f_v) {
+		cout << "spread_classify::init2 done" << endl;
 	}
 }
 
@@ -570,103 +624,12 @@ void spread_classify::print_elements_and_points()
 	FREE_int(Line);
 }
 
-#if 0
-void spread_classify::read_arguments(int argc, const char **argv)
-{
-	int i;
-	
-	for (i = 1; i < argc; i++) {
-		if (strcmp(argv[i], "-schreier") == 0) {
-			f_override_schreier_depth = TRUE;
-			override_schreier_depth = atoi(argv[++i]);
-			cout << "-schreier " << override_schreier_depth << endl;
-		}
-		else if (strcmp(argv[i], "-print_generators") == 0) {
-			f_print_generators = TRUE;
-			cout << "-print_generators " << endl;
-		}
-	}
-}
-#endif
 
-void spread_classify::init2(poset_classification_control *Control, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
-	//int depth;
-	
-	if (f_v) {
-		cout << "spread_classify::init2" << endl;
-	}
-	//depth = order + 1;
-
-	//Control = NEW_OBJECT(poset_classification_control);
-	Poset = NEW_OBJECT(poset);
-	Poset->init_subset_lattice(A, A2,
-			A->Strong_gens,
-			verbose_level);
-	Poset->add_testing_without_group(
-			spread_early_test_func_callback,
-				this /* void *data */,
-				verbose_level);
-
-	
-	if (f_recoordinatize) {
-		if (f_v) {
-			cout << "spread_classify::init2 "
-					"before gen->initialize_with_starter" << endl;
-		}
-		gen->initialize_with_starter(Control, Poset,
-			order + 1, 
-			starter_directory_name, 
-			prefix, 
-			Starter_size, 
-			Starter, 
-			Starter_Strong_gens, 
-			R->live_points, 
-			R->nb_live_points, 
-			this /*starter_canonize_data*/, 
-			starter_canonize_callback, 
-			verbose_level - 2);
-		if (f_v) {
-			cout << "spread_classify::init2 "
-					"after gen->initialize_with_starter" << endl;
-		}
-	}
-	else {
-		if (f_v) {
-			cout << "spread_classify::init2 "
-					"before gen->initialize" << endl;
-		}
-		gen->initialize(Control, Poset,
-			order + 1, 
-			starter_directory_name, prefix, 
-			verbose_level - 2);
-		if (f_v) {
-			cout << "spread_classify::init2 "
-					"after gen->initialize" << endl;
-		}
-	}
-
-	gen->f_allowed_to_show_group_elements = TRUE;
-
-
-#if 0
-	gen->f_print_function = TRUE;
-	gen->print_function = callback_spread_print;
-	gen->print_function_data = this;
-#endif	
-
-
-	if (f_v) {
-		cout << "spread_classify::init2 done" << endl;
-	}
-}
 
 void spread_classify::compute(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int schreier_depth = gen->depth;
+	int schreier_depth;
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;
 	int t0;
@@ -674,19 +637,17 @@ void spread_classify::compute(int verbose_level)
 
 
 	if (f_v) {
-		cout << "spread_classify::compute starter_size=" << starter_size << endl;
+		cout << "spread_classify::compute" << endl;
+		cout << "spread_classify::compute Control->max_depth=" << Control->max_depth << endl;
 	}
-
+	schreier_depth = Control->max_depth;
 	
-	if (f_override_schreier_depth) {
-		schreier_depth = override_schreier_depth;
-	}
 	if (f_v) {
 		cout << "spread_classify::compute calling generator_main" << endl;
 	}
 
-	gen->Control->f_max_depth = TRUE;
-	gen->Control->max_depth = starter_size;
+	//gen->Control->f_max_depth = TRUE;
+	//gen->Control->max_depth = starter_size;
 	
 	t0 = Os.os_ticks();
 	gen->main(t0, 
@@ -753,8 +714,10 @@ void spread_classify::early_test_func(long int *S, int len,
 		}
 	}
 
-	if (len + 1 > max_depth) {
-		cout << "spread_classify::early_test_func len + 1 > max_depth" << endl;
+	if (len + 1 > spread_size) {
+		cout << "spread_classify::early_test_func len + 1 > spread_size" << endl;
+		cout << "spread_classify::early_test_func len = " << len << endl;
+		cout << "spread_classify::early_test_func spread_size = " << spread_size << endl;
 		exit(1);
 	}
 	M = Data2; // [n * n]
@@ -972,48 +935,6 @@ finish:
 	}
 
 }
-
-#if 0
-int spread_classify::check_function_pair(int rk1, int rk2, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int rk;
-	int *M;
-	int *B, *base_cols;
-		
-	if (f_v) {
-		cout << "spread_classify::check_function_pair "
-				"checking (" << rk1 << "," << rk2 << ")" << endl;
-		}
-	M = tmp_M1; // [n * n]
-	B = tmp_M3;
-	base_cols = tmp_M4;
-	
-	unrank_subspace(M, rk1);
-	unrank_subspace(M + kn, rk2);
-
-	if (f_vv) {
-		cout << "testing (" << rk1 <<  "," << rk2 << ")" << endl;
-		print_integer_matrix_width(cout, M,
-				n, n, n, F->log10_of_q + 1);
-		}
-	rk = F->rank_of_matrix_memory_given(M, n, B, base_cols, 0);
-
-	if (rk < n) {
-		if (f_v) {
-			cout << "rank is " << rk << " which is bad" << endl;
-			}
-		return FALSE;
-		}
-	else {
-		if (f_v) {
-			cout << "rank is " << rk << " which is OK" << endl;
-			}
-		return TRUE;
-		}
-}
-#endif
 
 void spread_classify::lifting_prepare_function_new(
 	exact_cover *E, int starter_case,

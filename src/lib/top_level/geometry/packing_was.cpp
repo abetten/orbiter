@@ -491,11 +491,25 @@ void packing_was::init(int argc, const char **argv)
 	if (f_v) {
 		cout << "packing_was::init before T->init" << endl;
 	}
+	//int max_depth = order + 1;
+	poset_classification_control *Control;
+	linear_group *LG;
+
+	Control = NEW_OBJECT(poset_classification_control);
+	LG = NEW_OBJECT(linear_group); // hack !!! ToDo
+
+	T->init(F, LG, k, Control,
+		//Fq, f_recoordinatize,
+		//"SPREADS_STARTER", "Spreads", order + 1,
+		//argc, argv,
+		MINIMUM(verbose_level - 1, 2));
+#if 0
 	T->init(order, n, k, max_depth,
 		F, f_recoordinatize,
 		"TP_STARTER", "TP", order + 1,
 		argc, argv,
 		MINIMUM(verbose_level - 1, 2));
+#endif
 	if (f_v) {
 		cout << "packing_was::init after T->init" << endl;
 	}
@@ -503,11 +517,11 @@ void packing_was::init(int argc, const char **argv)
 	if (f_v) {
 		cout << "packing_was::init before T->init2" << endl;
 	}
-	poset_classification_control *Control;
+	//poset_classification_control *Control;
 
-	Control = NEW_OBJECT(poset_classification_control);
+	//Control = NEW_OBJECT(poset_classification_control);
 
-	T->init2(Control, verbose_level);
+	//T->init2(Control, verbose_level);
 	if (f_v) {
 		cout << "packing_was::init after T->init2" << endl;
 	}

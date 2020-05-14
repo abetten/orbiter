@@ -118,17 +118,6 @@ int main(int argc, const char **argv)
 	Descr4->F = F;
 
 
-#if 0
-	int f_semilinear;
-	number_theory_domain NT;
-
-	if (NT.is_prime(q)) {
-		f_semilinear = FALSE;
-	}
-	else {
-		f_semilinear = TRUE;
-	}
-#endif
 
 	LG4 = NEW_OBJECT(linear_group);
 	if (f_v) {
