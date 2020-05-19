@@ -227,6 +227,10 @@ public:
 	int f_projective;
 	int f_general;
 	int f_affine;
+	int f_GL_d_q_wr_Sym_n;
+	int GL_wreath_Sym_d;
+	int GL_wreath_Sym_n;
+
 
 	int n;
 	int input_q;
@@ -258,6 +262,9 @@ public:
 
 	int f_on_k_subspaces;
 	int on_k_subspaces_k;
+
+	int f_on_tensors;
+	int f_on_rank_one_tensors;
 
 	int f_subgroup_by_generators;
 	const char *subgroup_order_text;
@@ -1640,6 +1647,8 @@ public:
 		finite_field *F, int n, 
 		int f_projective, int f_general, int f_affine, 
 		int f_semilinear, int f_special, 
+		int f_GL_d_wreath_Sym_n,
+		int GL_wreath_Sym_d, int GL_wreath_Sym_n,
 		vector_ge *&nice_gens,
 		int verbose_level);
 	void special_subgroup(int verbose_level);
@@ -1829,20 +1838,23 @@ public:
 		// dimension_of_matrix_group * dimension_of_matrix_group;
 	perm_group *P;
 	int elt_size_int;
+		// = M->elt_size_int * nb_factors + P->elt_size_int;
 
-	int *perm_offset_i;
+	int *perm_offset_i; // [nb_factors + 1]
+		// perm_offset_i[0] = nb_factors
+		// perm_offset_i[nb_factors] = beginning of tensor domain
 	int *mtx_size;
 	int *index_set1;
 	int *index_set2;
 	int *u; // [dimension_of_tensor_action]
 	int *v; // [dimension_of_tensor_action]
 	int *w; // [dimension_of_tensor_action]
-	int *A1;
-	int *A2;
-	int *A3;
-	int *tmp_Elt1;
-	int *tmp_perm1;
-	int *tmp_perm2;
+	int *A1; // [dimension_of_tensor_action * dimension_of_tensor_action]
+	int *A2; // [dimension_of_tensor_action * dimension_of_tensor_action]
+	int *A3; // [dimension_of_tensor_action * dimension_of_tensor_action]
+	int *tmp_Elt1; // [elt_size_int]
+	int *tmp_perm1; // [P->elt_size_int]
+	int *tmp_perm2; // [P->elt_size_int]
 	int *induced_perm; // [dimension_of_tensor_action]
 
 	int bits_per_digit;
@@ -1861,9 +1873,10 @@ public:
 
 	page_storage *Elts;
 
-	uint32_t *rank_one_tensors;
-	int *rank_one_tensors_in_PG;
-	int *rank_one_tensors_in_PG_sorted;
+	uint32_t *rank_one_tensors; // [nb_rank_one_tensors]
+	long int *rank_one_tensors_in_PG; // [nb_rank_one_tensors]
+		// rank_one_tensors_in_PG[i] = affine_rank_to_PG_rank(rank_one_tensors[i]);
+	long int *rank_one_tensors_in_PG_sorted; // [nb_rank_one_tensors]
 	int nb_rank_one_tensors;
 
 	char *TR; // [degree_of_tensor_action + 1]
@@ -1906,15 +1919,17 @@ public:
 	void compute_base_and_transversals(int verbose_level);
 	void make_strong_generators_data(int *&data,
 			int &size, int &nb_gens, int verbose_level);
+	void report_rank_one_tensors(
+			std::ostream &ost, int verbose_level);
 	void create_all_rank_one_tensors(
 			uint32_t *&rank_one_tensors,
 			int &nb_rank_one_tensors, int verbose_level);
 	uint32_t tensor_affine_rank(int *tensor);
 	void tensor_affine_unrank(int *tensor, uint32_t rk);
-	uint32_t tensor_PG_rank(int *tensor);
-	void tensor_PG_unrank(int *tensor, uint32_t PG_rk);
-	uint32_t affine_rank_to_PG_rank(uint32_t affine_rk);
-	uint32_t PG_rank_to_affine_rank(uint32_t PG_rk);
+	long int tensor_PG_rank(int *tensor);
+	void tensor_PG_unrank(int *tensor, long int PG_rk);
+	long int affine_rank_to_PG_rank(uint32_t affine_rk);
+	uint32_t PG_rank_to_affine_rank(long int PG_rk);
 	void save_rank_one_tensors(int verbose_level);
 	void compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbose_level);
 	void report(std::ostream &ost, int verbose_level);

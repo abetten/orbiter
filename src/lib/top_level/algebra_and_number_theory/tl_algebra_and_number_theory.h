@@ -251,6 +251,10 @@ public:
 		int f_spread_classify;
 		int spread_classify_k;
 
+		int f_tensor_classify;
+		int tensor_classify_depth;
+		int f_tensor_permutations;
+
 
 	group_theoretic_activity_description();
 	~group_theoretic_activity_description();
@@ -277,7 +281,8 @@ public:
 	group_theoretic_activity_description *Descr;
 	finite_field *F;
 	linear_group *LG;
-	action *A;
+	action *A1;
+	action *A2;
 
 	// local data for orbits on subspaces:
 	poset *orbits_on_subspaces_Poset;
@@ -328,6 +333,14 @@ public:
 	void do_create_surface(
 			surface_create_description *Descr, int verbose_level);
 	void do_spread_classify(int k, int verbose_level);
+	void do_packing_classify(int k,
+			const char *spread_selection_text,
+			const char *spread_tables_prefix,
+			const char *input_prefix, const char *base_fname,
+			int starter_size,
+			int verbose_level);
+	void do_tensor_classify(int depth, int verbose_level);
+	void do_tensor_permutations(int verbose_level);
 };
 
 long int gta_subspace_orbits_rank_point_func(int *v, void *data);

@@ -20,6 +20,81 @@ namespace orbiter {
 namespace group_actions {
 
 
+void action::report(ostream &ost, int f_sims, sims *S,
+		int f_strong_gens, strong_generators *SG, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action::report" << endl;
+	}
+	ost << "Group action $" << label_tex
+			<< "$ of degree " << degree << "\\\\" << endl;
+
+
+	if (type_G == wreath_product_t) {
+		wreath_product *W;
+
+		W = G.wreath_product_group;
+		if (f_v) {
+			cout << "action::report before W->report" << endl;
+		}
+		W->report(ost, verbose_level);
+		if (f_v) {
+			cout << "action::report after W->report" << endl;
+		}
+	}
+
+	if (f_sims) {
+		if (f_v) {
+			cout << "action::report printing group order" << endl;
+		}
+		longinteger_object go;
+
+		S->group_order(go);
+		ost << "Group order " << go << "\\\\" << endl;
+		ost << "tl=$";
+		//int_vec_print(ost, S->orbit_len, base_len());
+		for (int t = 0; t < S->A->base_len(); t++) {
+			ost << S->get_orbit_length(t);
+			if (t < S->A->base_len()) {
+				ost << ", ";
+			}
+		}
+		ost << "$\\\\" << endl;
+		if (f_v) {
+			cout << "action::report printing group order done" << endl;
+		}
+	}
+
+	if (Stabilizer_chain) {
+		if (base_len()) {
+			ost << "Base: $";
+			lint_vec_print(ost, get_base(), base_len());
+			ost << "$\\\\" << endl;
+		}
+		if (f_strong_gens) {
+			ost << "{\\small\\arraycolsep=2pt" << endl;
+			SG->print_generators_tex(ost);
+			ost << "}" << endl;
+		}
+		else {
+			ost << "Does not have strong generators.\\\\" << endl;
+		}
+	}
+	if (f_sims) {
+		if (f_v) {
+			cout << "action::report before S->report" << endl;
+		}
+		S->report(ost, verbose_level);
+		if (f_v) {
+			cout << "action::report after S->report" << endl;
+		}
+	}
+	if (f_v) {
+		cout << "action::report done" << endl;
+	}
+}
 
 void action::read_orbit_rep_and_candidates_from_files_and_process(
 	char *prefix,
@@ -481,68 +556,6 @@ void action::print_symmetry_group_type(ostream &ost)
 
 }
 
-void action::report(ostream &ost, int f_sims, sims *S,
-		int f_strong_gens, strong_generators *SG, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "action::report" << endl;
-	}
-	ost << "Group action $" << label_tex
-			<< "$ of degree " << degree << "\\\\" << endl;
-
-
-	if (f_sims) {
-		if (f_v) {
-			cout << "action::report printing group order" << endl;
-		}
-		longinteger_object go;
-
-		S->group_order(go);
-		ost << "Group order " << go << "\\\\" << endl;
-		ost << "tl=$";
-		//int_vec_print(ost, S->orbit_len, base_len());
-		for (int t = 0; t < S->A->base_len(); t++) {
-			ost << S->get_orbit_length(t);
-			if (t < S->A->base_len()) {
-				ost << ", ";
-			}
-		}
-		ost << "$\\\\" << endl;
-		if (f_v) {
-			cout << "action::report printing group order done" << endl;
-		}
-	}
-
-	if (Stabilizer_chain) {
-		if (base_len()) {
-			ost << "Base: $";
-			lint_vec_print(ost, get_base(), base_len());
-			ost << "$\\\\" << endl;
-		}
-		if (f_strong_gens) {
-			ost << "{\\small\\arraycolsep=2pt" << endl;
-			SG->print_generators_tex(ost);
-			ost << "}" << endl;
-		}
-		else {
-			ost << "Does not have strong generators.\\\\" << endl;
-		}
-	}
-	if (f_sims) {
-		if (f_v) {
-			cout << "action::report before S->report" << endl;
-		}
-		S->report(ost, verbose_level);
-		if (f_v) {
-			cout << "action::report after S->report" << endl;
-		}
-	}
-	if (f_v) {
-		cout << "action::report done" << endl;
-	}
-}
 
 void action::print_info()
 {

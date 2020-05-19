@@ -22,6 +22,8 @@ void strong_generators::init_linear_group_from_scratch(
 	finite_field *F, int n, 
 	int f_projective, int f_general, int f_affine, 
 	int f_semilinear, int f_special, 
+	int f_GL_d_wreath_Sym_n,
+	int GL_wreath_Sym_d, int GL_wreath_Sym_n,
 	vector_ge *&nice_gens,
 	int verbose_level)
 {
@@ -79,6 +81,20 @@ void strong_generators::init_linear_group_from_scratch(
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
 					"after A->init_affine_group" << endl;
+		}
+	}
+	else if (f_GL_d_wreath_Sym_n) {
+		if (f_v) {
+			cout << "strong_generators::init_linear_group_from_scratch "
+					"before init_wreath_product_group" << endl;
+		}
+		A->init_wreath_product_group(
+				GL_wreath_Sym_n /* nb_factors */,
+				GL_wreath_Sym_d /* n */, F, nice_gens,
+				verbose_level);
+		if (f_v) {
+			cout << "strong_generators::init_linear_group_from_scratch "
+					"after init_wreath_product_group" << endl;
 		}
 	}
 	else {

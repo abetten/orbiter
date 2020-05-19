@@ -95,6 +95,10 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	f_spread_classify = FALSE;
 	spread_classify_k = 0;
+
+	f_tensor_classify = FALSE;
+	tensor_classify_depth = 0;
+	f_tensor_permutations = FALSE;
 }
 
 group_theoretic_activity_description::~group_theoretic_activity_description()
@@ -437,6 +441,15 @@ int group_theoretic_activity_description::read_arguments(
 			f_spread_classify = TRUE;
 			spread_classify_k = atoi(argv[++i]);
 			cout << "-spread_classify " << spread_classify_k << endl;
+		}
+		else if (strcmp(argv[i], "-tensor_classify") == 0) {
+			f_tensor_classify = TRUE;
+			tensor_classify_depth = atoi(argv[++i]);
+			cout << "-tensor_classify " << tensor_classify_depth << endl;
+		}
+		else if (strcmp(argv[i], "-tensor_permutations") == 0) {
+			f_tensor_permutations = TRUE;
+			cout << "-tensor_permutations " << endl;
 		}
 		else {
 			cout << "group_theoretic_activity_description::read_arguments "

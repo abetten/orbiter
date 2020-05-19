@@ -73,6 +73,8 @@ namespace foundations {
 
 #include "./DATA/data_spreads.cpp"
 
+#include "./DATA/data_tensor.cpp"
+
 #include "./DATA/data_BLT.cpp"
 
 #include "./DATA/planes_16.cpp"
@@ -2549,6 +2551,65 @@ void knowledge_base::get_projective_plane_list_of_lines(
 		cout << "knowledge_base::get_projective_plane_list_of_lines done" << endl;
 	}
 }
+
+
+// #############################################################################
+// tensor orbits:
+// #############################################################################
+
+
+int knowledge_base::tensor_orbits_nb_reps(int n)
+{
+	int nb;
+
+	if (n == 4) {
+		nb = data_tensor_nb_w4_reps;
+	}
+	else if (n == 5) {
+		nb = data_tensor_nb_w5_reps;
+	}
+	else {
+		cout << "knowledge_base::tensor_orbits_nb_reps n=" << n
+				<< " I don't have information for this case" << endl;
+		exit(1);
+	}
+	return nb;
+}
+
+long int *knowledge_base::tensor_orbits_rep(int n, int idx)
+// idx starts from 0
+{
+	long int *p;
+	int nb, sz = 3;
+
+	if (n == 4) {
+		p = data_tensor_w4_reps;
+		nb = data_tensor_nb_w4_reps;
+	}
+	else if (n == 5) {
+		p = data_tensor_w5_reps;
+		nb = data_tensor_nb_w5_reps;
+	}
+	else {
+		cout << "knowledge_base::tensor_orbits_rep n=" << n
+				<< " I don't have information for this case" << endl;
+		exit(1);
+	}
+	if (idx < 0) {
+		cout << "knowledge_base::tensor_orbits_rep n=" << n << " idx=" << idx
+				<< " but idx must be at least 0 (numbering starts at 0)" << endl;
+		exit(1);
+	}
+	if (idx >= nb) {
+		cout << "knowledge_base::tensor_orbits_rep n=" << n << " idx=" << idx
+				<< " but I have only " << nb << " representatives" << endl;
+		exit(1);
+	}
+	p += idx * sz;
+	return p;
+}
+
+
 
 }
 }

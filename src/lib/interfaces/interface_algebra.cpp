@@ -365,7 +365,7 @@ void interface_algebra::do_linear_group(
 				Descr->override_polynomial, verbose_level);
 	}
 	else {
-		cout << "creating finite field of order q=" << Descr->input_q << endl;
+		cout << "interface_algebra::do_linear_group creating finite field of order q=" << Descr->input_q << endl;
 		F->init(Descr->input_q, 0);
 	}
 
@@ -376,26 +376,26 @@ void interface_algebra::do_linear_group(
 
 	LG = NEW_OBJECT(linear_group);
 	if (f_v) {
-		cout << "linear_group before LG->init, "
+		cout << "interface_algebra::do_linear_group before LG->init, "
 				"creating the group" << endl;
 		}
 
 	LG->init(Descr, verbose_level - 1);
 
 	if (f_v) {
-		cout << "linear_group after LG->init" << endl;
+		cout << "interface_algebra::do_linear_group after LG->init" << endl;
 		}
 
 	action *A;
 
 	A = LG->A2;
 
-	cout << "created group " << LG->prefix << endl;
+	cout << "interface_algebra::do_linear_group created group " << A->label << endl;
 
 
 
 	if (LG->f_has_nice_gens) {
-		cout << "we have nice generators, they are:" << endl;
+		cout << "interface_algebra::do_linear_group we have nice generators, they are:" << endl;
 		LG->nice_gens->print(cout);
 		cout << "$$" << endl;
 
@@ -419,7 +419,11 @@ void interface_algebra::do_linear_group(
 
 
 
-	cout << "The group acts on the points of PG(" << Descr->n - 1
+	int n;
+
+	n = A->matrix_group_dimension();
+
+	cout << "interface_algebra::do_linear_group The group acts on the points of PG(" << n - 1
 			<< "," << Descr->input_q << ")" << endl;
 
 	if (A->degree < 1000) {
@@ -463,7 +467,7 @@ void interface_algebra::perform_group_theoretic_activity(
 
 	A = LG->A2;
 
-	cout << "created group " << LG->prefix << endl;
+	cout << "created group " << A->label << endl;
 
 	{
 	group_theoretic_activity Activity;
