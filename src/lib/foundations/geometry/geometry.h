@@ -1475,6 +1475,9 @@ public:
 			int &order, int &nb_lines, int &line_size,
 			const char *label, int verbose_level);
 
+	int tensor_orbits_nb_reps(int n);
+	long int *tensor_orbits_rep(int n, int idx);
+
 };
 
 

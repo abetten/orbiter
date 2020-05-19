@@ -44,7 +44,8 @@ tensor_classify::~tensor_classify()
 }
 
 void tensor_classify::init(
-		int nb_factors, int n, int q, int depth,
+		finite_field *F, linear_group *LG,
+		//int nb_factors, int n, int q, int depth,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -55,36 +56,18 @@ void tensor_classify::init(
 	}
 	t0 = Os.os_ticks();
 
-	tensor_classify::nb_factors = nb_factors;
-	tensor_classify::n = n;
-	tensor_classify::q = q;
+	q = F->q;
 
-	A = NEW_OBJECT(action);
+	//A = NEW_OBJECT(action);
+	//A = LG->A_linear;
+	A = LG->A2;
 
 
-
+#if 0
 	F = NEW_OBJECT(finite_field);
 
 	F->init(q, 0);
 
-#if 0
-	cout << "tensor_classify::init before "
-			"A->init_wreath_product_group_and_restrict" << endl;
-	A->init_wreath_product_group_and_restrict(nb_factors, n,
-			F, f_tensor_ranks,
-			verbose_level);
-	cout << "tensor_classify::init after "
-			"A->init_wreath_product_group_and_restrict" << endl;
-
-	if (!A->f_has_subaction) {
-		cout << "tensor_classify::init action "
-				"A does not have a subaction" << endl;
-		exit(1);
-	}
-	A0 = A->subaction;
-
-	W = A0->G.wreath_product_group;
-#else
 	if (f_v) {
 		cout << "tensor_classify::init before "
 				"A->init_wreath_product_group" << endl;
@@ -95,34 +78,15 @@ void tensor_classify::init(
 		cout << "tensor_classify::init after "
 				"A->init_wreath_product_group" << endl;
 	}
+#endif
 
-	A0 = A;
+
+	A0 = LG->A_linear;
 	W = A0->G.wreath_product_group;
 
-#if 0
-	int nb_points;
-	int *points;
-	action *Awr;
-
-	cout << "W->degree_of_tensor_action=" << W->degree_of_tensor_action << endl;
-	nb_points = W->degree_of_tensor_action;
-	points = NEW_int(nb_points);
-	for (i = 0; i < nb_points; i++) {
-		points[i] = W->perm_offset_i[nb_factors] + i;
-	}
-
-	if (f_v) {
-		cout << "tensor_classify "
-				"before A_wreath->restricted_action" << endl;
-	}
-	Awr = A->restricted_action(points, nb_points,
-			verbose_level);
-	Awr->f_is_linear = TRUE;
-#endif
-
-#endif
-
 	vector_space_dimension = W->dimension_of_tensor_action;
+	nb_factors = W->nb_factors;
+	n = W->dimension_of_matrix_group;
 
 
 	if (!A0->f_has_strong_generators) {
@@ -211,7 +175,8 @@ void tensor_classify::print_generators()
 					0 /* verbose_level*/);
 			//A->element_print_as_permutation(SG->gens->ith(i), cout);
 			cout << endl;
-		} else {
+		}
+		else {
 			cout << "too big to print" << endl;
 		}
 	}
@@ -274,6 +239,7 @@ void tensor_classify::print_generators_gap()
 }
 
 void tensor_classify::classify_poset(int depth,
+		poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -291,14 +257,16 @@ void tensor_classify::classify_poset(int depth,
 	Gen->depth = depth;
 
 	if (f_v) {
-		cout << "tensor_classify::classify_poset before create_restricted_action_on_rank_one_tensors" << endl;
+		cout << "tensor_classify::classify_poset "
+				"before create_restricted_action_on_rank_one_tensors" << endl;
 	}
 	create_restricted_action_on_rank_one_tensors(verbose_level);
 	if (f_v) {
-		cout << "tensor_classify::classify_poset after create_restricted_action_on_rank_one_tensors" << endl;
+		cout << "tensor_classify::classify_poset "
+				"after create_restricted_action_on_rank_one_tensors" << endl;
 	}
 
-	Control = NEW_OBJECT(poset_classification_control);
+	//Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, Ar,
 			SG,
@@ -398,7 +366,7 @@ void tensor_classify::create_restricted_action_on_rank_one_tensors(
 		a = W->rank_one_tensors[i];
 		b = W->affine_rank_to_PG_rank(a);
 
-		points[i] = W->perm_offset_i[nb_factors] + b;
+		points[i] = /*W->perm_offset_i[nb_factors] +*/ b;
 	}
 
 	if (f_v) {

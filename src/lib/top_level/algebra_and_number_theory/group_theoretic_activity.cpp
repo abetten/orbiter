@@ -23,7 +23,8 @@ group_theoretic_activity::group_theoretic_activity()
 	Descr = NULL;
 	F = NULL;
 	LG = NULL;
-	A = NULL;
+	A1 = NULL;
+	A2 = NULL;
 
 	orbits_on_subspaces_Poset = NULL;
 	orbits_on_subspaces_PC = NULL;
@@ -55,11 +56,12 @@ void group_theoretic_activity::init(group_theoretic_activity_description *Descr,
 	group_theoretic_activity::LG = LG;
 
 
-	A = LG->A2;
+	A1 = LG->A_linear;
+	A2 = LG->A2;
 
 	if (f_v) {
-		cout << "group_theoretic_activity::init group = " << LG->prefix << endl;
-		cout << "group_theoretic_activity::init action = " << A->label << endl;
+		cout << "group_theoretic_activity::init group = " << A1->label << endl;
+		cout << "group_theoretic_activity::init action = " << A2->label << endl;
 	}
 	//cout << "created group " << LG->prefix << endl;
 
@@ -161,11 +163,19 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	else if (Descr->f_spread_classify) {
 		do_spread_classify(Descr->spread_classify_k, verbose_level);
 	}
+	else if (Descr->f_tensor_classify) {
+		do_tensor_classify(Descr->tensor_classify_depth, verbose_level);
+	}
+	else if (Descr->f_tensor_permutations) {
+		do_tensor_permutations(verbose_level);
+	}
 
 	if (f_v) {
 		cout << "group_theoretic_activity::perform_activity done" << endl;
 	}
 }
+
+
 
 void group_theoretic_activity::classes(int verbose_level)
 {
@@ -178,7 +188,7 @@ void group_theoretic_activity::classes(int verbose_level)
 
 	G = LG->Strong_gens->create_sims(verbose_level);
 
-	A->conjugacy_classes_and_normalizers(G,
+	A2->conjugacy_classes_and_normalizers(G,
 			LG->prefix, LG->label_latex, verbose_level);
 
 	FREE_OBJECT(G);
@@ -195,43 +205,10 @@ void group_theoretic_activity::multiply(int verbose_level)
 	if (f_v) {
 		cout << "group_theoretic_activity::multiply" << endl;
 	}
-	if (f_v) {
-		cout << "multiplying" << endl;
-		cout << "A=" << Descr->multiply_a << endl;
-		cout << "B=" << Descr->multiply_b << endl;
-	}
-	int *Elt1;
-	int *Elt2;
-	int *Elt3;
 
-	Elt1 = NEW_int(A->elt_size_in_int);
-	Elt2 = NEW_int(A->elt_size_in_int);
-	Elt3 = NEW_int(A->elt_size_in_int);
-
-	A->make_element_from_string(Elt1,
-			Descr->multiply_a, verbose_level);
-	if (f_v) {
-		cout << "A=" << endl;
-		A->element_print_quick(Elt1, cout);
-	}
-
-	A->make_element_from_string(Elt2,
+	A1->multiply_based_on_text(Descr->multiply_a,
 			Descr->multiply_b, verbose_level);
-	if (f_v) {
-		cout << "B=" << endl;
-		A->element_print_quick(Elt2, cout);
-	}
 
-	A->element_mult(Elt1, Elt2, Elt3, 0);
-	if (f_v) {
-		cout << "A*B=" << endl;
-		A->element_print_quick(Elt3, cout);
-		A->element_print_for_make_element(Elt3, cout);
-		cout << endl;
-	}
-	FREE_int(Elt1);
-	FREE_int(Elt2);
-	FREE_int(Elt3);
 	if (f_v) {
 		cout << "group_theoretic_activity::multiply done" << endl;
 	}
@@ -244,32 +221,9 @@ void group_theoretic_activity::inverse(int verbose_level)
 	if (f_v) {
 		cout << "group_theoretic_activity::inverse" << endl;
 	}
-	if (f_v) {
-		cout << "computing the inverse" << endl;
-		cout << "A=" << Descr->inverse_a << endl;
-	}
-	int *Elt1;
-	int *Elt2;
 
-	Elt1 = NEW_int(A->elt_size_in_int);
-	Elt2 = NEW_int(A->elt_size_in_int);
+	A1->inverse_based_on_text(Descr->inverse_a, verbose_level);
 
-	A->make_element_from_string(Elt1,
-			Descr->inverse_a, verbose_level);
-	if (f_v) {
-		cout << "A=" << endl;
-		A->element_print_quick(Elt1, cout);
-	}
-
-	A->element_invert(Elt1, Elt2, 0);
-	if (f_v) {
-		cout << "A^-1=" << endl;
-		A->element_print_quick(Elt2, cout);
-		A->element_print_for_make_element(Elt2, cout);
-		cout << endl;
-	}
-	FREE_int(Elt1);
-	FREE_int(Elt2);
 	if (f_v) {
 		cout << "group_theoretic_activity::inverse done" << endl;
 	}
@@ -295,11 +249,11 @@ void group_theoretic_activity::normalizer(int verbose_level)
 	H = LG->Strong_gens->create_sims(verbose_level);
 
 	if (f_v) {
-	cout << "group order G = " << G->group_order_lint() << endl;
-		cout << "group order H = " << H->group_order_lint() << endl;
-		cout << "before A->normalizer_using_MAGMA" << endl;
+		cout << "group order G = " << G->group_order_lint() << endl;
+			cout << "group order H = " << H->group_order_lint() << endl;
+			cout << "before A->normalizer_using_MAGMA" << endl;
 	}
-	A->normalizer_using_MAGMA(fname_magma_prefix,
+	A2->normalizer_using_MAGMA(fname_magma_prefix,
 			G, H, gens_N, verbose_level);
 
 	if (f_v) {
@@ -418,7 +372,7 @@ void group_theoretic_activity::print_elements(int verbose_level)
 	longinteger_object go;
 	int i, cnt;
 
-	Elt = NEW_int(A->elt_size_in_int);
+	Elt = NEW_int(A1->elt_size_in_int);
 	H->group_order(go);
 
 
@@ -428,9 +382,9 @@ void group_theoretic_activity::print_elements(int verbose_level)
 
 		cout << "Element " << setw(5) << i << " / "
 				<< go.as_int() << ":" << endl;
-		A->element_print(Elt, cout);
+		A1->element_print(Elt, cout);
 		cout << endl;
-		A->element_print_as_permutation(Elt, cout);
+		A1->element_print_as_permutation(Elt, cout);
 		cout << endl;
 
 
@@ -460,7 +414,7 @@ void group_theoretic_activity::print_elements_tex(int verbose_level)
 	int *Elt;
 	longinteger_object go;
 
-	Elt = NEW_int(A->elt_size_in_int);
+	Elt = NEW_int(A1->elt_size_in_int);
 	H->group_order(go);
 
 #if 0
@@ -506,9 +460,9 @@ void group_theoretic_activity::print_elements_tex(int verbose_level)
 			int j;
 			int *Elt1, *Elt2, *Elt3;
 
-			Elt1 = NEW_int(A->elt_size_in_int);
-			Elt2 = NEW_int(A->elt_size_in_int);
-			Elt3 = NEW_int(A->elt_size_in_int);
+			Elt1 = NEW_int(A1->elt_size_in_int);
+			Elt2 = NEW_int(A1->elt_size_in_int);
+			Elt3 = NEW_int(A1->elt_size_in_int);
 
 			order_table = NEW_int(nb_elements * nb_elements);
 			for (i = 0; i < nb_elements; i++) {
@@ -520,9 +474,9 @@ void group_theoretic_activity::print_elements_tex(int verbose_level)
 
 					H->element_unrank_lint(elements[j], Elt2);
 
-					A->element_mult(Elt1, Elt2, Elt3, 0);
+					A1->element_mult(Elt1, Elt2, Elt3, 0);
 
-					order_table[i * nb_elements + j] = A->element_order(Elt3);
+					order_table[i * nb_elements + j] = A2->element_order(Elt3);
 
 				}
 			}
@@ -566,7 +520,7 @@ void group_theoretic_activity::search_subgroup(int verbose_level)
 	longinteger_object go;
 	int i, cnt;
 
-	Elt = NEW_int(A->elt_size_in_int);
+	Elt = NEW_int(A1->elt_size_in_int);
 	H->group_order(go);
 
 	cnt = 0;
@@ -587,7 +541,7 @@ void group_theoretic_activity::search_subgroup(int verbose_level)
 				Elt[22] == 0 && Elt[23] == 0) {
 			cout << "Element " << setw(5) << i << " / "
 					<< go.as_int() << " = " << cnt << ":" << endl;
-			A->element_print(Elt, cout);
+			A2->element_print(Elt, cout);
 			cout << endl;
 			//A->element_print_as_permutation(Elt, cout);
 			//cout << endl;
@@ -639,7 +593,7 @@ void group_theoretic_activity::orbits_on_set_system_from_file(int verbose_level)
 	set_size = Descr->orbits_on_set_system_number_of_columns;
 
 	cout << "creating action on sets:" << endl;
-	A_on_sets = A->create_induced_action_on_sets(m /* nb_sets */,
+	A_on_sets = A2->create_induced_action_on_sets(m /* nb_sets */,
 			set_size, Table,
 			verbose_level);
 
@@ -714,7 +668,7 @@ void group_theoretic_activity::orbits_on_set_from_file(int verbose_level)
 
 	OS = NEW_OBJECT(orbit_of_sets);
 
-	OS->init(A, A, the_set, set_sz,
+	OS->init(A1, A2, the_set, set_sz,
 			LG->Strong_gens->gens, verbose_level);
 
 	//OS->compute(verbose_level);
@@ -792,8 +746,8 @@ void group_theoretic_activity::orbit_of(int verbose_level)
 
 	//A->all_point_orbits(*Sch, verbose_level);
 
-	Sch->init(A, verbose_level - 2);
-	if (!A->f_has_strong_generators) {
+	Sch->init(A2, verbose_level - 2);
+	if (!A2->f_has_strong_generators) {
 		cout << "action::all_point_orbits !f_has_strong_generators" << endl;
 		exit(1);
 		}
@@ -849,7 +803,7 @@ void group_theoretic_activity::orbit_of(int verbose_level)
 
 	cout << "computing shallow Schreier tree done." << endl;
 
-	sprintf(fname_tree_mask, "%s_%%d_shallow.layered_graph", LG->prefix);
+	sprintf(fname_tree_mask, "%s_%%d_shallow.layered_graph", A2->label);
 
 	shallow_tree->export_tree_as_layered_graph(0 /* orbit_no */,
 			fname_tree_mask,
@@ -883,7 +837,7 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 
 
 	//A->all_point_orbits(*Sch, verbose_level);
-	A->all_point_orbits_from_generators(*Sch,
+	A2->all_point_orbits_from_generators(*Sch,
 			LG->Strong_gens,
 			verbose_level);
 
@@ -913,6 +867,56 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 
 
 	{
+	char fname[1000];
+	file_io Fio;
+	int *orbit_reps;
+	int i;
+
+
+	sprintf(fname, "%s_orbit_reps.csv", A2->label);
+
+	orbit_reps = NEW_int(Sch->nb_orbits);
+
+
+	for (i = 0; i < Sch->nb_orbits; i++) {
+		orbit_reps[i] = Sch->orbit[Sch->orbit_first[i]];
+	}
+
+
+	Fio.int_vec_write_csv(orbit_reps, Sch->nb_orbits,
+			fname, "OrbRep");
+
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+	{
+	char fname[1000];
+	file_io Fio;
+	int *orbit_reps;
+	int i;
+
+
+	sprintf(fname, "%s_orbit_length.csv", A2->label);
+
+	orbit_reps = NEW_int(Sch->nb_orbits);
+
+
+	for (i = 0; i < Sch->nb_orbits; i++) {
+		orbit_reps[i] = Sch->orbit_len[i];
+	}
+
+
+	Fio.int_vec_write_csv(orbit_reps, Sch->nb_orbits,
+			fname, "OrbLen");
+
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+
+#if 0
+	{
 		int *M;
 		int *O;
 		int h, x, y;
@@ -939,7 +943,7 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 			char fname[1000];
 			file_io Fio;
 
-			sprintf(fname, "orbit_%d_transition.csv", idx);
+			sprintf(fname, "%s_orbit_%d_transition.csv", A->label, idx);
 			Fio.int_matrix_write_csv(fname, M, m, m);
 
 			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -948,8 +952,8 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 			char fname[1000];
 			file_io Fio;
 
-			sprintf(fname, "orbit_%d_elts.csv", idx);
-			Fio.int_vec_write_csv(O, Sch->orbit_len[idx],
+			sprintf(fname, "%s_orbit_%d_elts.csv", A->label, idx);
+			Fio.int_vec_write_csv(idx, Sch->orbit_len[idx],
 					fname, "Elt");
 
 			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -959,13 +963,15 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 		FREE_int(O);
 
 	}
+#endif
 
+	cout << "before Sch->print_and_list_orbits." << endl;
 	Sch->print_and_list_orbits(cout);
 
 	char fname_orbits[1000];
 	file_io Fio;
 
-	sprintf(fname_orbits, "%s_orbits.tex", LG->prefix);
+	sprintf(fname_orbits, "%s_orbits.tex", A2->label);
 
 
 	Sch->latex(fname_orbits);
@@ -973,11 +979,12 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 			<< Fio.file_size(fname_orbits) << endl;
 
 
-	char fname_tree_mask[1000];
-
-	sprintf(fname_tree_mask, "%s_%%d.layered_graph", LG->prefix);
 
 	if (Descr->f_export_trees) {
+		char fname_tree_mask[1000];
+
+		sprintf(fname_tree_mask, "%s_%%d.layered_graph", A2->label);
+
 		for (orbit_idx = 0; orbit_idx < Sch->nb_orbits; orbit_idx++) {
 			cout << "orbit " << orbit_idx << " / " <<  Sch->nb_orbits
 					<< " before Sch->export_tree_as_layered_graph" << endl;
@@ -990,6 +997,7 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 	if (Descr->f_shallow_tree) {
 		orbit_idx = 0;
 		schreier *shallow_tree;
+		char fname_schreier_tree_mask[1000];
 
 		cout << "computing shallow Schreier tree for orbit " << orbit_idx << endl;
 
@@ -1009,10 +1017,10 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 
 		cout << "computing shallow Schreier tree done." << endl;
 
-		sprintf(fname_tree_mask, "%s_%%d_shallow.layered_graph", LG->prefix);
+		sprintf(fname_schreier_tree_mask, "%s_%%d_shallow.layered_graph", A2->label);
 
 		shallow_tree->export_tree_as_layered_graph(0 /* orbit_no */,
-				fname_tree_mask,
+				fname_schreier_tree_mask,
 				verbose_level - 1);
 	}
 	if (f_v) {
@@ -1042,22 +1050,25 @@ void group_theoretic_activity::orbits_on_subsets(int verbose_level)
 	}
 
 
-	Poset->init_subset_lattice(A, A,
+	Poset->init_subset_lattice(A1, A2,
 			LG->Strong_gens,
 			verbose_level);
 
 	if (f_v) {
-		cout << "group_theoretic_activity::orbits_on_subsets before Poset->orbits_on_k_sets_compute" << endl;
+		cout << "group_theoretic_activity::orbits_on_subsets "
+				"before Poset->orbits_on_k_sets_compute" << endl;
 	}
 	PC = Poset->orbits_on_k_sets_compute(
 			Control,
 			Descr->orbits_on_subsets_size, verbose_level);
 	if (f_v) {
-		cout << "group_theoretic_activity::orbits_on_subsets after Poset->orbits_on_k_sets_compute" << endl;
+		cout << "group_theoretic_activity::orbits_on_subsets "
+				"after Poset->orbits_on_k_sets_compute" << endl;
 	}
 
 	if (f_v) {
-		cout << "group_theoretic_activity::orbits_on_subsets before orbits_on_poset_post_processing" << endl;
+		cout << "group_theoretic_activity::orbits_on_subsets "
+				"before orbits_on_poset_post_processing" << endl;
 	}
 	orbits_on_poset_post_processing(
 			PC, Descr->orbits_on_subsets_size, verbose_level);
@@ -1088,7 +1099,8 @@ void group_theoretic_activity::orbits_on_subspaces(int verbose_level)
 	Control->f_max_depth = TRUE;
 	Control->max_depth = Descr->orbits_on_subspaces_depth;
 	if (f_v) {
-		cout << "group_theoretic_activity::orbits_on_subspaces Control->max_depth=" << Control->max_depth << endl;
+		cout << "group_theoretic_activity::orbits_on_subspaces "
+				"Control->max_depth=" << Control->max_depth << endl;
 	}
 
 	int n;
@@ -1166,7 +1178,8 @@ void group_theoretic_activity::orbits_on_subspaces(int verbose_level)
 		cout << "subspace_orbits->init_subspace_lattice "
 				"calling Gen->init_root_node" << endl;
 	}
-	orbits_on_subspaces_PC->root[0].init_root_node(orbits_on_subspaces_PC, verbose_level - 1);
+	orbits_on_subspaces_PC->root[0].init_root_node(
+			orbits_on_subspaces_PC, verbose_level - 1);
 
 	int schreier_depth = Control->max_depth;
 	int f_use_invariant_subset_if_available = FALSE;
@@ -1198,7 +1211,8 @@ void group_theoretic_activity::orbits_on_subspaces(int verbose_level)
 	nb_orbits = orbits_on_subspaces_PC->nb_orbits_at_level(orbits_on_subspaces_PC->depth);
 	if (f_v) {
 		cout << "group_theoretic_activity::orbits_on_subspaces we found "
-				<< nb_orbits << " orbits at depth " << orbits_on_subspaces_PC->depth << endl;
+				<< nb_orbits << " orbits at depth "
+				<< orbits_on_subspaces_PC->depth << endl;
 	}
 
 	orbits_on_poset_post_processing(
@@ -1237,6 +1251,24 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 				TRUE /* f_show_stab */,
 				FALSE /* f_save_stab */,
 				FALSE /* f_show_whole_orbit*/);
+	}
+
+	if (Descr->f_report) {
+		{
+			char fname_report[1000];
+			sprintf(fname_report, "%s_poset.tex", LG->prefix);
+			latex_interface L;
+			file_io Fio;
+
+			{
+				ofstream ost(fname_report);
+				L.head_easy(ost);
+				LG->A_linear->report(ost, TRUE /* f_sims */, LG->A_linear->Sims,
+						TRUE /* f_strong_gens */, LG->A_linear->Strong_gens, verbose_level - 1);
+				L.foot(ost);
+			}
+			cout << "Written file " << fname_report << " of size " << Fio.file_size(fname_report) << endl;
+		}
 	}
 
 	if (Descr->f_draw_poset) {
@@ -1309,7 +1341,7 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 			nauty_interface_with_group Nauty;
 
 			Aut = Nauty.create_automorphism_group_of_block_system(
-				A->degree /* nb_points */,
+				A2->degree /* nb_points */,
 				orbit_length /* nb_blocks */,
 				depth /* block_size */, Orbit,
 				verbose_level);
@@ -1353,7 +1385,7 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 			nauty_interface_with_group Nauty;
 
 			Aut = Nauty.create_automorphism_group_of_collection_of_two_block_systems(
-				A->degree /* nb_points */,
+				A2->degree /* nb_points */,
 				orbit_length1 /* nb_blocks */,
 				depth /* block_size */, Orbit1,
 				orbit_length2 /* nb_blocks */,
@@ -1460,7 +1492,6 @@ void group_theoretic_activity::do_classify_arcs(int verbose_level)
 			input_prefix,
 			base_fname,
 			Gen->target_size,
-			//argc, argv,
 			verbose_level);
 
 	if (f_v) {
@@ -1671,7 +1702,8 @@ void group_theoretic_activity::do_surface_classify(int verbose_level)
 
 
 	if (f_v) {
-		cout << "group_theoretic_activity::do_surface_classify before Algebra.classify_surfaces" << endl;
+		cout << "group_theoretic_activity::do_surface_classify "
+				"before Algebra.classify_surfaces" << endl;
 	}
 	Algebra.classify_surfaces(
 			F, LG,
@@ -1681,16 +1713,19 @@ void group_theoretic_activity::do_surface_classify(int verbose_level)
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "group_theoretic_activity::do_surface_classify after Algebra.classify_surfaces" << endl;
+		cout << "group_theoretic_activity::do_surface_classify "
+				"after Algebra.classify_surfaces" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "group_theoretic_activity::do_surface_classify before SCW->generate_source_code" << endl;
+		cout << "group_theoretic_activity::do_surface_classify "
+				"before SCW->generate_source_code" << endl;
 	}
 	SCW->generate_source_code(verbose_level);
 	if (f_v) {
-		cout << "group_theoretic_activity::do_surface_classify after SCW->generate_source_code" << endl;
+		cout << "group_theoretic_activity::do_surface_classify "
+				"after SCW->generate_source_code" << endl;
 	}
 
 
@@ -1725,7 +1760,8 @@ void group_theoretic_activity::do_surface_report(int verbose_level)
 
 
 	if (f_v) {
-		cout << "group_theoretic_activity::do_surface_report before Algebra.classify_surfaces" << endl;
+		cout << "group_theoretic_activity::do_surface_report "
+				"before Algebra.classify_surfaces" << endl;
 	}
 	Algebra.classify_surfaces(
 			F, LG,
@@ -1735,17 +1771,20 @@ void group_theoretic_activity::do_surface_report(int verbose_level)
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "group_theoretic_activity::do_surface_report after Algebra.classify_surfaces" << endl;
+		cout << "group_theoretic_activity::do_surface_report "
+				"after Algebra.classify_surfaces" << endl;
 	}
 
 	int f_with_stabilizers = TRUE;
 
 	if (f_v) {
-		cout << "group_theoretic_activity::do_surface_report before SCW->create_report" << endl;
+		cout << "group_theoretic_activity::do_surface_report "
+				"before SCW->create_report" << endl;
 	}
 	SCW->create_report(f_with_stabilizers, verbose_level - 1);
 	if (f_v) {
-		cout << "group_theoretic_activity::do_surface_report after SCW->create_report" << endl;
+		cout << "group_theoretic_activity::do_surface_report "
+				"after SCW->create_report" << endl;
 	}
 
 
@@ -1780,7 +1819,8 @@ void group_theoretic_activity::do_surface_identify_Sa(int verbose_level)
 
 
 	if (f_v) {
-		cout << "group_theoretic_activity::do_surface_identify_Sa before Algebra.classify_surfaces" << endl;
+		cout << "group_theoretic_activity::do_surface_identify_Sa "
+				"before Algebra.classify_surfaces" << endl;
 	}
 	Algebra.classify_surfaces(
 			F, LG,
@@ -1790,15 +1830,18 @@ void group_theoretic_activity::do_surface_identify_Sa(int verbose_level)
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "group_theoretic_activity::do_surface_identify_Sa after Algebra.classify_surfaces" << endl;
+		cout << "group_theoretic_activity::do_surface_identify_Sa "
+				"after Algebra.classify_surfaces" << endl;
 	}
 
 	if (f_v) {
-		cout << "group_theoretic_activity::do_surface_identify_Sa before SCW->identify_Sa_and_print_table" << endl;
+		cout << "group_theoretic_activity::do_surface_identify_Sa "
+				"before SCW->identify_Sa_and_print_table" << endl;
 	}
 	SCW->identify_Sa_and_print_table(verbose_level);
 	if (f_v) {
-		cout << "group_theoretic_activity::do_surface_identify_Sa after SCW->identify_Sa_and_print_table" << endl;
+		cout << "group_theoretic_activity::do_surface_identify_Sa "
+				"after SCW->identify_Sa_and_print_table" << endl;
 	}
 
 
@@ -1836,7 +1879,8 @@ void group_theoretic_activity::do_surface_isomorphism_testing(
 
 
 	if (f_v) {
-		cout << "group_theoretic_activity::do_surface_isomorphism_testing before Algebra.classify_surfaces" << endl;
+		cout << "group_theoretic_activity::do_surface_isomorphism_testing "
+				"before Algebra.classify_surfaces" << endl;
 	}
 	Algebra.classify_surfaces(
 			F, LG,
@@ -1846,18 +1890,21 @@ void group_theoretic_activity::do_surface_isomorphism_testing(
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "group_theoretic_activity::do_surface_isomorphism_testing after Algebra.classify_surfaces" << endl;
+		cout << "group_theoretic_activity::do_surface_isomorphism_testing "
+				"after Algebra.classify_surfaces" << endl;
 	}
 
 	if (f_v) {
-		cout << "group_theoretic_activity::do_surface_isomorphism_testing before SCW->test_isomorphism" << endl;
+		cout << "group_theoretic_activity::do_surface_isomorphism_testing "
+				"before SCW->test_isomorphism" << endl;
 	}
 	SCW->test_isomorphism(
 			surface_descr_isomorph1,
 			surface_descr_isomorph2,
 			verbose_level);
 	if (f_v) {
-		cout << "group_theoretic_activity::do_surface_isomorphism_testing after SCW->test_isomorphism" << endl;
+		cout << "group_theoretic_activity::do_surface_isomorphism_testing "
+				"after SCW->test_isomorphism" << endl;
 	}
 
 
@@ -1894,7 +1941,8 @@ void group_theoretic_activity::do_surface_recognize(
 
 
 	if (f_v) {
-		cout << "group_theoretic_activity::do_surface_recognize before Algebra.classify_surfaces" << endl;
+		cout << "group_theoretic_activity::do_surface_recognize "
+				"before Algebra.classify_surfaces" << endl;
 	}
 	Algebra.classify_surfaces(
 			F, LG,
@@ -1904,17 +1952,20 @@ void group_theoretic_activity::do_surface_recognize(
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "group_theoretic_activity::do_surface_recognize after Algebra.classify_surfaces" << endl;
+		cout << "group_theoretic_activity::do_surface_recognize "
+				"after Algebra.classify_surfaces" << endl;
 	}
 
 	if (f_v) {
-		cout << "group_theoretic_activity::do_surface_recognize before SCW->recognition" << endl;
+		cout << "group_theoretic_activity::do_surface_recognize "
+				"before SCW->recognition" << endl;
 	}
 	SCW->recognition(
 			surface_descr,
 			verbose_level);
 	if (f_v) {
-		cout << "group_theoretic_activity::do_surface_recognize after SCW->recognition" << endl;
+		cout << "group_theoretic_activity::do_surface_recognize "
+				"after SCW->recognition" << endl;
 	}
 
 	FREE_OBJECT(SCW);
@@ -2403,6 +2454,241 @@ void group_theoretic_activity::do_spread_classify(int k, int verbose_level)
 	}
 }
 
+void group_theoretic_activity::do_packing_classify(int k,
+		const char *spread_selection_text,
+		const char *spread_tables_prefix,
+		const char *input_prefix, const char *base_fname,
+		int starter_size,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_packing_classify" << endl;
+	}
+
+	poset_classification_control *Control;
+
+	if (Descr->f_poset_classification_control) {
+		Control = Descr->Control;
+	}
+	else {
+		Control = NEW_OBJECT(poset_classification_control);
+	}
+
+
+	spread_classify *SC;
+
+	SC = NEW_OBJECT(spread_classify);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_packing_classify before SC->init" << endl;
+	}
+
+	SC->init(
+			F, LG,
+			k,
+			Control,
+			verbose_level - 1);
+
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_packing_classify after SC->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_packing_classify before SC->compute" << endl;
+	}
+
+	SC->compute(verbose_level);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_packing_classify after SC->compute" << endl;
+	}
+
+	packing_classify *P;
+	int *select_spread;
+	int select_spread_nb;
+
+	int_vec_scan(spread_selection_text, select_spread, select_spread_nb);
+
+	P = NEW_OBJECT(packing_classify);
+
+
+	cout << "before P->init" << endl;
+	P->init(SC,
+		TRUE /* f_select_spread */,
+		select_spread,
+		select_spread_nb,
+		input_prefix, base_fname,
+		starter_size,
+		TRUE /* ECA->f_lex */,
+		spread_tables_prefix,
+		verbose_level);
+	cout << "after P->init" << endl;
+
+#if 0
+	cout << "before IA->init" << endl;
+	IA->init(T->A, P->A_on_spreads, P->gen,
+		P->size_of_packing, P->prefix_with_directory, ECA,
+		callback_packing_report,
+		NULL /*callback_subset_orbits*/,
+		P,
+		verbose_level);
+	cout << "after IA->init" << endl;
+#endif
+
+	FREE_OBJECT(P);
+	FREE_OBJECT(SC);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_packing_classify done" << endl;
+	}
+}
+
+void group_theoretic_activity::do_tensor_classify(int depth, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_tensor_classify" << endl;
+	}
+
+	poset_classification_control *Control;
+
+	if (Descr->f_poset_classification_control) {
+		Control = Descr->Control;
+	}
+	else {
+		Control = NEW_OBJECT(poset_classification_control);
+	}
+
+
+
+	tensor_classify *T;
+
+	T = NEW_OBJECT(tensor_classify);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_tensor_classify before T->init" << endl;
+	}
+	T->init(F, LG, verbose_level - 1);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_tensor_classify after T->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_tensor_classify before classify_poset" << endl;
+	}
+	T->classify_poset(depth,
+			Control,
+			verbose_level);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_tensor_classify after classify_poset" << endl;
+	}
+
+
+
+	FREE_OBJECT(T);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_tensor_classify done" << endl;
+	}
+}
+
+
+void group_theoretic_activity::do_tensor_permutations(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_tensor_permutations" << endl;
+	}
+
+	poset_classification_control *Control;
+
+	if (Descr->f_poset_classification_control) {
+		Control = Descr->Control;
+	}
+	else {
+		Control = NEW_OBJECT(poset_classification_control);
+	}
+
+
+
+	tensor_classify *T;
+
+	T = NEW_OBJECT(tensor_classify);
+
+	T->init(F, LG, verbose_level - 1);
+
+
+	FREE_OBJECT(T);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_tensor_permutations done" << endl;
+	}
+}
+
+#if 0
+
+tensor_classify *T;
+
+T = NEW_OBJECT(tensor_classify);
+
+T->init(nb_factors, d, q, depth,
+		0/*verbose_level*/);
+
+if (f_tensor_ranks) {
+	cout << "before T->W->compute_tensor_ranks" << endl;
+	T->W->compute_tensor_ranks(verbose_level);
+	cout << "after T->W->compute_tensor_ranks" << endl;
+}
+
+{
+	int *result = NULL;
+
+	cout << "time check: ";
+	Os.time_check(cout, t0);
+	cout << endl;
+
+	cout << "tensor_classify::init " << __FILE__ << ":" << __LINE__ << endl;
+
+	int nb_gens, degree;
+
+	if (f_permutations) {
+		cout << "before T->W->compute_permutations_and_write_to_file" << endl;
+		T->W->compute_permutations_and_write_to_file(T->SG, T->A, result,
+				nb_gens, degree, nb_factors,
+				verbose_level);
+		cout << "after T->W->compute_permutations_and_write_to_file" << endl;
+	}
+	//wreath_product_orbits_CUDA(W, SG, A,
+	// result, nb_gens, degree, nb_factors, verbose_level);
+
+	if (f_orbits) {
+		cout << "before T->W->orbits_using_files_and_union_find" << endl;
+		T->W->orbits_using_files_and_union_find(T->SG, T->A, result, nb_gens, degree, nb_factors,
+				verbose_level);
+		cout << "after T->W->orbits_using_files_and_union_find" << endl;
+	}
+	if (f_orbits_restricted) {
+		cout << "before T->W->orbits_restricted" << endl;
+		T->W->orbits_restricted(T->SG, T->A, result,
+				nb_gens, degree, nb_factors, orbits_restricted_fname,
+				verbose_level);
+		cout << "after T->W->orbits_restricted" << endl;
+	}
+	if (f_orbits_restricted_compute) {
+		cout << "before T->W->orbits_restricted_compute" << endl;
+		T->W->orbits_restricted_compute(T->SG, T->A, result,
+				nb_gens, degree, nb_factors, orbits_restricted_fname,
+				verbose_level);
+		cout << "after T->W->orbits_restricted_compute" << endl;
+	}
+}
+
+#endif
 
 
 // #############################################################################

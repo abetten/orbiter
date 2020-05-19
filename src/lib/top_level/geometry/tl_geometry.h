@@ -3294,11 +3294,13 @@ public:
 	tensor_classify();
 	~tensor_classify();
 	void init(
-			int nb_factors, int n, int q, int depth,
+			finite_field *F, linear_group *LG,
+			//int nb_factors, int n, int q, int depth,
 			int verbose_level);
 	void print_generators();
 	void print_generators_gap();
 	void classify_poset(int depth,
+			poset_classification_control *Control,
 			int verbose_level);
 	void create_restricted_action_on_rank_one_tensors(
 			int verbose_level);

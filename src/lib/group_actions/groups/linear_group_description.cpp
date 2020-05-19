@@ -18,6 +18,9 @@ linear_group_description::linear_group_description()
 	f_projective = FALSE;
 	f_general = FALSE;
 	f_affine = FALSE;
+	f_GL_d_q_wr_Sym_n = FALSE;
+	GL_wreath_Sym_d = 0;
+	GL_wreath_Sym_n = 0;
 
 	n = 0;
 	input_q = 0;
@@ -49,6 +52,9 @@ linear_group_description::linear_group_description()
 
 	f_on_k_subspaces = FALSE;
 	on_k_subspaces_k = 0;
+
+	f_on_tensors = FALSE;
+	f_on_rank_one_tensors = FALSE;
 
 	f_subgroup_by_generators = FALSE;
 	subgroup_order_text = NULL;
@@ -261,6 +267,15 @@ int linear_group_description::read_arguments(
 			override_polynomial = argv[++i];
 			cout << "-override_polynomial" << override_polynomial << endl;
 		}
+		else if (strcmp(argv[i], "-GL_d_q_wr_Sym_n") == 0) {
+			f_GL_d_q_wr_Sym_n = TRUE;
+			GL_wreath_Sym_d = atoi(argv[++i]);
+			input_q = atoi(argv[++i]);
+			GL_wreath_Sym_n = atoi(argv[++i]);
+			cout << "-GL_d_q_wr_Sym_n " << GL_wreath_Sym_d << " " << input_q << " " << GL_wreath_Sym_n << endl;
+		}
+
+
 
 		else if (strcmp(argv[i], "-wedge") == 0) {
 			f_wedge_action = TRUE;
@@ -308,13 +323,13 @@ int linear_group_description::read_arguments(
 			cout << "-subgroup_from_file " << subgroup_fname
 					<< " " << subgroup_label << endl;
 		}
-		else if (strcmp(argv[i], "-borel_subgroup_upper") == 0) {
+		else if (strcmp(argv[i], "-borel_upper") == 0) {
 			f_borel_subgroup_upper = TRUE;
-			cout << "-borel_subgroup_upper" << endl;
+			cout << "-borel_upper" << endl;
 		}
-		else if (strcmp(argv[i], "-borel_subgroup_lower") == 0) {
+		else if (strcmp(argv[i], "-borel_lower") == 0) {
 			f_borel_subgroup_lower = TRUE;
-			cout << "-borel_subgroup_lower" << endl;
+			cout << "-borel_lower" << endl;
 		}
 		else if (strcmp(argv[i], "-identity_group") == 0) {
 			f_identity_group = TRUE;
@@ -324,6 +339,14 @@ int linear_group_description::read_arguments(
 			f_on_k_subspaces = TRUE;
 			on_k_subspaces_k = atoi(argv[++i]);
 			cout << "-on_k_subspaces " << on_k_subspaces_k << endl;
+		}
+		else if (strcmp(argv[i], "-on_tensors") == 0) {
+			f_on_tensors = TRUE;
+			cout << "-on_tensors " << endl;
+		}
+		else if (strcmp(argv[i], "-on_rank_one_tensors") == 0) {
+			f_on_rank_one_tensors = TRUE;
+			cout << "-on_rank_one_tensors " << endl;
 		}
 		else if (strcmp(argv[i], "-orthogonal") == 0) {
 			f_orthogonal_group = TRUE;

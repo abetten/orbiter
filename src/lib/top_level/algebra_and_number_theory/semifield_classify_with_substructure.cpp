@@ -311,7 +311,7 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 	if (sizeof(long int) < 8) {
 		cout << "sizeof(long int) < 8" << endl;
 		exit(1);
-		}
+	}
 	Fio.int_matrix_read_csv(fname_FstLen,
 		Sub->FstLen, Sub->nb_orbits_at_level_3, mtx_n, verbose_level);
 	Sub->Len = NEW_int(Sub->nb_orbits_at_level_3);
