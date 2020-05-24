@@ -492,7 +492,7 @@ void linear_set_classify::init(int argc, const char **argv,
 	if (f_identify) {
 		T = NEW_OBJECT(spread_classify);
 
-		int f_recoordinatize = TRUE;
+		//int f_recoordinatize = TRUE;
 
 		k = n >> 1;
 		order = NT.i_power_j(q, k);
@@ -501,7 +501,7 @@ void linear_set_classify::init(int argc, const char **argv,
 			cout << "Classifying spreads of order " << order << endl;
 			}
 
-		int max_depth = order + 1;
+		//int max_depth = order + 1;
 		poset_classification_control *Control;
 		linear_group *LG;
 

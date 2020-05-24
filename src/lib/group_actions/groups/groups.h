@@ -273,6 +273,8 @@ public:
 
 	int f_Janko1;
 
+	int f_export_magma;
+
 
 	linear_group_description();
 	~linear_group_description();
@@ -1561,6 +1563,7 @@ public:
 	const char *fname);
 	void print_generators_even_odd();
 	void print_generators_MAGMA(action *A, std::ostream &ost);
+	void export_magma(action *A, std::ostream &ost);
 	void print_generators_tex();
 	void print_generators_tex(std::ostream &ost);
 	void print_generators_tex_with_print_point_function(

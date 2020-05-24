@@ -432,9 +432,17 @@ void linear_group::init(
 				"action on k-subspaces done" << endl;
 		
 		}
+
+	if (description->f_export_magma) {
+		if (f_v) {
+			cout << "linear_group::init f_export_magma" << endl;
+		}
+		Strong_gens->export_magma(A_linear, cout);
+	}
+
 	if (f_v) {
 		cout << "linear_group::init done" << endl;
-		}
+	}
 }
 
 void linear_group::init_PGL2q_OnConic(char *prefix, char *label_latex,
