@@ -45,6 +45,7 @@ class interface_algebra {
 	linear_group_description *Linear_group_description;
 	finite_field *F;
 	linear_group *LG;
+
 	int f_group_theoretic_activity;
 	group_theoretic_activity_description *Group_theoretic_activity_description;
 	int f_cheat_sheet_GF;

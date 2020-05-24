@@ -486,7 +486,7 @@ void packing_was::init(int argc, const char **argv)
 
 	//T->read_arguments(argc, argv);
 
-	int max_depth = order + 1;
+	//int max_depth = order + 1;
 
 	if (f_v) {
 		cout << "packing_was::init before T->init" << endl;

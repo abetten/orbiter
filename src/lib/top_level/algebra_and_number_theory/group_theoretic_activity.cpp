@@ -966,7 +966,12 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 #endif
 
 	cout << "before Sch->print_and_list_orbits." << endl;
-	Sch->print_and_list_orbits(cout);
+	if (A2->degree < 1000) {
+		Sch->print_and_list_orbits(cout);
+	}
+	else {
+		cout << "The degree is too large." << endl;
+	}
 
 	char fname_orbits[1000];
 	file_io Fio;

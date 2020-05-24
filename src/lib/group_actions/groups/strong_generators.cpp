@@ -1282,6 +1282,92 @@ void strong_generators::print_generators_MAGMA(action *A, ostream &ost)
 		}
 }
 
+void strong_generators::export_magma(action *A, ostream &ost)
+{
+	cout << "strong_generators::export_magma" << endl;
+	A->print_info();
+	if (A->type_G == matrix_group_t) {
+		matrix_group *M;
+		int *Elt;
+		int h, i, j;
+
+		M = A->get_matrix_group();
+		if (M->f_semilinear) {
+			cout << "cannot export to magma if semilinear" << endl;
+			return;
+		}
+		finite_field *F;
+
+		F = M->GFq;
+		if (F->e > 1) {
+			int a;
+
+			cout << "strong_generators::export_magma extendion field" << endl;
+			ost << "F<w>:=GF(" << F->q << ");" << endl;
+			ost << "G := GeneralLinearGroup(" << M->n << ", F);" << endl;
+			ost << "H := sub< G | ";
+			for (h = 0; h < gens->len; h++) {
+				Elt = gens->ith(h);
+				ost << "[";
+				for (i = 0; i < M->n; i++) {
+					for (j = 0; j < M->n; j++) {
+						a = Elt[i * M->n + j];
+						if (a < F->p) {
+							ost << a;
+						}
+						else {
+							ost << "w^" << F->log_alpha(a);
+						}
+						if (j < M->n - 1) {
+							ost << ",";
+						}
+					}
+					if (i < M->n - 1) {
+						ost << ", ";
+					}
+				}
+				ost << "]";
+				if (h < gens->len - 1) {
+					ost << ", " << endl;
+				}
+			}
+			ost << " >;" << endl;
+
+		}
+		else {
+			ost << "G := GeneralLinearGroup(" << M->n << ", GF(" << F->q << "));" << endl;
+			ost << "H := sub< G | ";
+			for (h = 0; h < gens->len; h++) {
+				Elt = gens->ith(h);
+				ost << "[";
+				for (i = 0; i < M->n; i++) {
+					for (j = 0; j < M->n; j++) {
+						ost << Elt[i * M->n + j];
+						if (j < M->n - 1) {
+							ost << ",";
+						}
+					}
+					if (i < M->n - 1) {
+						ost << ", ";
+					}
+				}
+				ost << "]";
+				if (h < gens->len - 1) {
+					ost << ", " << endl;
+				}
+			}
+			ost << " >;" << endl;
+		}
+	}
+}
+
+
+//GL42 := GeneralLinearGroup(4, GF(2));
+//> Ominus42 := sub< GL42 | [1,0,0,0, 1,1,0,1, 1,0,1,0, 0,0,0,1 ],
+//>                               [0,1,0,0, 1,0,0,0, 0,0,1,0, 0,0,0,1 ],
+//>                               [0,1,0,0, 1,0,0,0, 0,0,1,0, 0,0,1,1 ] >;
+
+
 void strong_generators::print_generators_tex()
 {
 	print_generators_tex(cout);

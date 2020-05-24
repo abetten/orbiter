@@ -62,6 +62,7 @@ linear_group_description::linear_group_description()
 	subgroup_generators_as_string = NULL;
 
 	f_Janko1 = FALSE;
+	f_export_magma = FALSE;
 	//null();
 }
 
@@ -389,6 +390,10 @@ int linear_group_description::read_arguments(
 		else if (strcmp(argv[i], "-Janko1") == 0) {
 			f_Janko1 = TRUE;
 			cout << "-Janko1" << endl;
+		}
+		else if (strcmp(argv[i], "-export_magma") == 0) {
+			f_export_magma = TRUE;
+			cout << "-export_magma" << endl;
 		}
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
