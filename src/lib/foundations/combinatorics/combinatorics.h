@@ -485,12 +485,55 @@ public:
 		int *classes_len, int f_scale, int scaling,
 		int *&line_types, int &nb_line_types,
 		int *&distributions, int &nb_distributions,
-		char *solution_file_name);
+		const char *solution_file_name);
 	void solve_second_system(int verbose_level,
 		int f_use_mckay_solver, int f_once,
 		int *classes_len, int f_scale, int scaling,
 		int *&line_types, int &nb_line_types,
 		int *&distributions, int &nb_distributions);
+};
+
+// #############################################################################
+// tdo_refinement_description.cpp
+// #############################################################################
+
+
+
+//! refinement of the parameters of a linear space
+
+class tdo_refinement_description {
+	public:
+
+	int f_lambda3;
+	int lambda3, block_size;
+	int f_scale;
+	int scaling;
+	int f_range;
+	int range_first, range_len;
+	int f_select;
+	const char *select_label;
+	int f_omit1;
+	int omit1;
+	int f_omit2;
+	int omit2;
+	int f_D1_upper_bound_x0;
+	int D1_upper_bound_x0;
+	int f_reverse;
+	int f_reverse_inverse;
+	int f_use_packing_numbers;
+	int f_dual_is_linear_space;
+	int f_do_the_geometric_test;
+	int f_once;
+	int f_use_mckay_solver;
+	int f_input_file;
+	const char *fname_in;
+
+	solution_file_data *Sol;
+
+	tdo_refinement_description();
+	~tdo_refinement_description();
+	int read_arguments(int argc, const char **argv, int verbose_level);
+
 };
 
 
@@ -507,6 +550,16 @@ class tdo_refinement {
 
 	int t0;
 	int cnt;
+
+	tdo_refinement_description *Descr;
+
+	char *p_buf;
+	char str[1000];
+	char ext[1000];
+	char fname_out[1000];
+
+
+#if 0
 	char *p_buf;
 	char str[1000];
 	char ext[1000];
@@ -533,6 +586,7 @@ class tdo_refinement {
 	int f_do_the_geometric_test;
 	int f_once;
 	int f_use_mckay_solver;
+#endif
 
 
 	geo_parameter GP;
@@ -544,11 +598,10 @@ class tdo_refinement {
 	int f_doit;
 	int nb_written, nb_written_tactical, nb_tactical;
 	int cnt_second_system;
-	solution_file_data *Sol;
 
 	tdo_refinement();
 	~tdo_refinement();
-	void init(int verbose_level);
+	void init(tdo_refinement_description *Descr, int verbose_level);
 	void read_arguments(int argc, char **argv);
 	void main_loop(int verbose_level);
 	void do_it(std::ofstream &g, int verbose_level);
@@ -604,7 +657,7 @@ void distribution_reverse_sorting(int f_increasing,
 struct solution_file_data {
 	int nb_solution_files;
 	int system_no[MAX_SOLUTION_FILE];
-	char *solution_file[MAX_SOLUTION_FILE];
+	const char *solution_file[MAX_SOLUTION_FILE];
 };
 
 //! canonical tactical decomposition of an incidence structure

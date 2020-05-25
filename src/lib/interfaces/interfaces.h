@@ -167,6 +167,8 @@ class interface_combinatorics {
 	int f_tree_of_all_k_subsets;
 	int tree_n, tree_k;
 	int f_Delandtsheer_Doyen;
+	delandtsheer_doyen_description *Delandtsheer_Doyen_description;
+#if 0
 	int DD_d1;
 	int DD_q1;
 	int DD_d2;
@@ -176,7 +178,12 @@ class interface_combinatorics {
 	const char *subgroup_gens_text;
 	const char *subgroup_order_text;
 	const char *group_label;
+#endif
 	int f_graph_classify;
+	int f_tdo_refinement;
+	tdo_refinement_description *Tdo_refinement_descr;
+	int f_create_design;
+	design_create_description *Design_create_description;
 
 public:
 	interface_combinatorics();
@@ -197,13 +204,10 @@ public:
 	void do_conjugacy_classes_Sym_n(int n, int verbose_level);
 	void do_Kramer_Mesner(int verbose_level);
 	void do_make_tree_of_all_k_subsets(int n, int k, int verbose_level);
-	void do_Delandtsheer_Doyen(int n1, int q1, int n2, int q2, int depth, int verbose_level);
-	void do_Delandtsheer_Doyen_with_subgroup(
-			int d1, int q1, int d2, int q2, int depth,
-			const char *subgroup_gens_text,
-			const char *subgroup_order_text, const char *group_label,
-			int verbose_level);
+	void do_Delandtsheer_Doyen(delandtsheer_doyen_description *Descr, int verbose_level);
 	void do_graph_classify(int verbose_level);
+	void do_tdo_refinement(tdo_refinement_description *Descr, int verbose_level);
+	void do_create_design(design_create_description *Descr, int verbose_level);
 };
 
 

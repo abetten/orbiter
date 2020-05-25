@@ -18,23 +18,17 @@ namespace top_level {
 
 delandtsheer_doyen::delandtsheer_doyen()
 {
-	argc= 0;
-	argv = NULL;
-	d1 = 0;
-	d2 = 0;
-	q1 = 0;
-	q2 = 0;
+	//argc= 0;
+	//argv = NULL;
 
-	group_label = NULL;
-
-	DELANDTSHEER_DOYEN_X = -1;
-	DELANDTSHEER_DOYEN_Y = -1;
-	K = 0;
-	V = 0;
-	b = 0;
+	Descr = NULL;
 
 	Xsize = 0; // = D = q1 = # of rows
 	Ysize = 0; // = C = q2 = # of cols
+
+	V = 0;
+	b = 0;
+
 
 	line = NULL;        // [K];
 	row_sum = NULL;
@@ -51,15 +45,12 @@ delandtsheer_doyen::delandtsheer_doyen()
 	A = NULL;
 	A0 = NULL;
 	P = NULL;
-	Control_pairs = NULL;
-	Control_search = NULL;
 
 	Poset_pairs = NULL;
 	Poset_search = NULL;
 	Pairs = NULL;
 	Gen = NULL;
 
-	f_subgroup = FALSE;
 	pair_orbit = NULL;
 	nb_orbits = 0;
 	transporter = NULL;
@@ -77,22 +68,14 @@ delandtsheer_doyen::delandtsheer_doyen()
 	inner_pairs_in_cols = 0;
 
 	// row intersection type
-	f_R = FALSE;
-	nb_row_types = 0;
-	row_type = NULL;     		// [nb_row_types + 1]
 	row_type_cur = NULL; 		// [nb_row_types + 1]
 	row_type_this_or_bigger = NULL; 	// [nb_row_types + 1]
 
 	// col intersection type
-	f_C = FALSE;
-	nb_col_types = 0;
-	col_type = NULL;     		// [nb_col_types + 1]
 	col_type_cur = NULL; 		// [nb_col_types + 1]
 	col_type_this_or_bigger = NULL; 	// [nb_col_types + 1]
 
 
-	// mask related test:
-	nb_mask_tests = 0;
 
 	// for testing the mask:
 	f_row_used = NULL; // [Xsize];
@@ -146,17 +129,11 @@ delandtsheer_doyen::~delandtsheer_doyen()
 	if (orbits_covered) {
 		FREE_int(orbits_covered);
 	}
-	if (row_type) {
-		FREE_int(row_type);
-	}
 	if (row_type_cur) {
 		FREE_int(row_type_cur);
 	}
 	if (row_type_this_or_bigger) {
 		FREE_int(row_type_this_or_bigger);
-	}
-	if (col_type) {
-		FREE_int(col_type);
 	}
 	if (col_type_cur) {
 		FREE_int(col_type_cur);
@@ -190,161 +167,81 @@ delandtsheer_doyen::~delandtsheer_doyen()
 	}
 }
 
-void delandtsheer_doyen::init(int argc, const char **argv,
-		int d1, int q1, int d2, int q2,
-		int f_subgroup, const char *subgroup_gens_text,
-		const char *subgroup_order_text,
-		const char *group_label,
-		int depth,
+#if 0
+int d1, int q1, int d2, int q2,
+int f_subgroup, const char *subgroup_gens_text,
+const char *subgroup_order_text,
+const char *group_label,
+int depth,
+#endif
+
+void delandtsheer_doyen::init(delandtsheer_doyen_description *Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a;
-	int f_K = FALSE;
-	int f_singletons = FALSE;
 	os_interface Os;
 
 	if (f_v) {
 		cout << "delandtsheer_doyen::init" << endl;
 	}
-	delandtsheer_doyen::argc = argc;
-	delandtsheer_doyen::argv = argv;
-	delandtsheer_doyen::d1 = d1;
-	delandtsheer_doyen::d2 = d2;
-	delandtsheer_doyen::q1 = q1;
-	delandtsheer_doyen::q2 = q2;
-	delandtsheer_doyen::group_label = group_label;
-	delandtsheer_doyen::f_subgroup = f_subgroup;
 
-	A = NEW_OBJECT(action);
-	A1 = NEW_OBJECT(action);
-	A2 = NEW_OBJECT(action);
 
-	nb_mask_tests = 0;
+	delandtsheer_doyen::Descr = Descr;
 
-	for (i = 1; i < argc; i++) {
-		if (strcmp(argv[i], "-DDx") == 0) {
-			DELANDTSHEER_DOYEN_X = atoi(argv[++i]);
-			cout << "-DDx " << DELANDTSHEER_DOYEN_X << endl;
-		}
-		else if (strcmp(argv[i], "-DDy") == 0) {
-			DELANDTSHEER_DOYEN_Y = atoi(argv[++i]);
-			cout << "-DDy " << DELANDTSHEER_DOYEN_Y << endl;
-		}
-		else if (strcmp(argv[i], "-K") == 0) {
-			f_K = TRUE;
-			K = atoi(argv[++i]);
-			cout << "-K " << K << endl;
-		}
-		else if (strcmp(argv[i], "-R") == 0) {
-			f_R = TRUE;
-			nb_row_types = atoi(argv[++i]);
-			row_type = NEW_int(nb_row_types + 1);
-			row_type_cur = NEW_int(nb_row_types + 1);
-			row_type_this_or_bigger = NEW_int(nb_row_types + 1);
-			row_type[0] = 0;
-			for (j = 1; j <= nb_row_types; j++) {
-				row_type[j] = atoi(argv[++i]);
-				row_type_cur[j] = 0;
-				}
-			cout << "-R ";
-			int_vec_print(cout, row_type + 1, nb_row_types);
-			cout << endl;
-		}
-		else if (strcmp(argv[i], "-C") == 0) {
-			f_C = TRUE;
-			nb_col_types = atoi(argv[++i]);
-			col_type = NEW_int(nb_col_types + 1);
-			col_type_cur = NEW_int(nb_col_types + 1);
-			col_type_this_or_bigger = NEW_int(nb_col_types + 1);
-			col_type[0] = 0;
-			for (j = 1; j <= nb_col_types; j++) {
-				col_type[j] = atoi(argv[++i]);
-				col_type_cur[j] = 0;
-				}
-			cout << "-C ";
-			int_vec_print(cout, col_type + 1, nb_col_types);
-			cout << endl;
-		}
-		else if (strcmp(argv[i], "-masktest") == 0) {
-			const char *who;
-			const char *what;
 
-			mask_test_level[nb_mask_tests] = atoi(argv[++i]);
-			who = argv[++i];
-			what = argv[++i];
-			mask_test_value[nb_mask_tests] = atoi(argv[++i]);
 
-			if (strcmp(who, "x") == 0)
-				mask_test_who[nb_mask_tests] = 1;
-			else if (strcmp(who, "y") == 0)
-				mask_test_who[nb_mask_tests] = 2;
-			else if (strcmp(who, "x+y") == 0)
-				mask_test_who[nb_mask_tests] = 3;
-			else if (strcmp(who, "s") == 0)
-				mask_test_who[nb_mask_tests] = 4;
-			else {
-				cout << "masktest: unknown 'who' option: " << who << endl;
-				cout << "must be one of 'x', 'y', 'x+y' or 's'" << endl;
-				exit(1);
-				}
-			if (strcmp(what, "eq") == 0)
-				mask_test_what[nb_mask_tests] = 1;
-			else if (strcmp(what, "ge") == 0)
-				mask_test_what[nb_mask_tests] = 2;
-			else if (strcmp(what, "le") == 0)
-				mask_test_what[nb_mask_tests] = 3;
-			else {
-				cout << "masktest: unknown 'what' option: " << who << endl;
-				cout << "must be one of 'eq', 'ge' or 'le'" << endl;
-				exit(1);
-				}
-			cout << "-masktest "
-				<< mask_test_level[nb_mask_tests] << " "
-				<< mask_test_who[nb_mask_tests] << " "
-				<< mask_test_what[nb_mask_tests] << " "
-				<< mask_test_value[nb_mask_tests] << endl;
-			nb_mask_tests++;
-			cout << "nb_mask_tests=" << nb_mask_tests << endl;
-		}
-		else if (strcmp(argv[i], "-singletons") == 0) {
-			f_singletons = TRUE;
-			cout << "-singletons" << endl;
-		}
-	}
+
 
 	int t0 = Os.os_ticks();
 
-	if (!f_K) {
+	if (!Descr->f_K) {
 		cout << "please use -K <K> to specify K" << endl;
 		exit(1);
 	}
-	if (q1 == 1) {
-		Xsize = d1;
-		Ysize = d2;
+	if (!Descr->f_depth) {
+		cout << "please use -depth <depth> to specify depth" << endl;
+		exit(1);
+	}
+
+	if (Descr->f_R) {
+		row_type_cur = NEW_int(Descr->nb_row_types + 1);
+		int_vec_zero(row_type_cur, Descr->nb_row_types + 1);
+		row_type_this_or_bigger = NEW_int(Descr->nb_row_types + 1);
+	}
+
+	if (Descr->f_C) {
+		col_type_cur = NEW_int(Descr->nb_col_types + 1);
+		int_vec_zero(col_type_cur, Descr->nb_col_types + 1);
+		col_type_this_or_bigger = NEW_int(Descr->nb_col_types + 1);
+	}
+
+	if (Descr->q1 == 1) {
+		Xsize = Descr->d1;
+		Ysize = Descr->d2;
 	}
 	else {
-		Xsize = q1; // = D = q1 = # of rows
-		Ysize = q2; // = C = q2 = # of cols
+		Xsize = Descr->q1; // = D = q1 = # of rows
+		Ysize = Descr->q2; // = C = q2 = # of cols
 	}
 
 	V = Xsize * Ysize;
 
-	cout << "depth=" << depth << endl;
+	//cout << "depth=" << depth << endl;
 	cout << "V=" << V << endl;
-	cout << "K=" << K << endl;
+	cout << "K=" << Descr->K << endl;
 	cout << "Xsize=" << Xsize << endl;
 	cout << "Ysize=" << Ysize << endl;
 	cout << "V=" << V << endl;
 
-	line = NEW_lint(K);
+	line = NEW_lint(Descr->K);
 	row_sum = NEW_int(Xsize);
 	col_sum = NEW_int(Ysize);
 	live_points = NEW_lint(V);
 
 
-	cout << "DELANDTSHEER_DOYEN_X=" << DELANDTSHEER_DOYEN_X << endl;
-	cout << "DELANDTSHEER_DOYEN_Y=" << DELANDTSHEER_DOYEN_Y << endl;
+	cout << "DELANDTSHEER_DOYEN_X=" << Descr->DELANDTSHEER_DOYEN_X << endl;
+	cout << "DELANDTSHEER_DOYEN_Y=" << Descr->DELANDTSHEER_DOYEN_Y << endl;
 
 	int_vec_zero(row_sum, Xsize);
 	int_vec_zero(col_sum, Ysize);
@@ -358,7 +255,11 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 
 
 
-	if (q1 == 1) {
+	A = NEW_OBJECT(action);
+	A1 = NEW_OBJECT(action);
+	A2 = NEW_OBJECT(action);
+
+	if (Descr->q1 == 1) {
 
 		vector_ge *nice_gens;
 
@@ -367,14 +268,14 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 
 		cout << "initializing projective groups:" << endl;
 
-		A1->init_projective_group(d1, F1,
+		A1->init_projective_group(Descr->d1, F1,
 				FALSE /* f_semilinear */, TRUE /* f_basis */, TRUE /* f_init_sims */,
 				nice_gens,
 				verbose_level - 1);
 		M1 = A1->G.matrix_grp;
 		FREE_OBJECT(nice_gens);
 
-		A2->init_projective_group(d2, F2,
+		A2->init_projective_group(Descr->d2, F2,
 				FALSE /* f_semilinear */, TRUE /* f_basis */, TRUE /* f_init_sims */,
 				nice_gens,
 				verbose_level - 1);
@@ -388,9 +289,9 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 
 
 
-		b = (V * (V - 1)) / (K * (K - 1));
+		b = (V * (V - 1)) / (Descr->K * (Descr->K - 1));
 
-		if (b * (K * (K - 1)) != (V * (V - 1))) {
+		if (b * (Descr->K * (Descr->K - 1)) != (V * (V - 1))) {
 			cout << "integrality conditions violated" << endl;
 			exit(1);
 		}
@@ -399,17 +300,17 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 
 
 
-		F1->init(q1, 0);
-		F2->init(q2, 0);
+		F1->init(Descr->q1, 0);
+		F2->init(Descr->q2, 0);
 
 
 
 		cout << "initializing affine groups:" << endl;
 
-		M1->init_affine_group(d1, F1,
+		M1->init_affine_group(Descr->d1, F1,
 				FALSE /* f_semilinear */, A1, verbose_level);
 
-		M2->init_affine_group(d2, F2,
+		M2->init_affine_group(Descr->d2, F2,
 				FALSE /* f_semilinear */, A2, verbose_level);
 	}
 
@@ -435,7 +336,7 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 
 
 
-	if (q1 == 1) {
+	if (Descr->q1 == 1) {
 
 		strong_generators *SG1;
 		strong_generators *SG2;
@@ -491,11 +392,11 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 		int nb_points;
 		int h;
 
-		nb_points = d1 * d2;
+		nb_points = Descr->d1 * Descr->d2;
 		points = NEW_lint(nb_points);
 		h = 0;
-		for (i = 0; i < d1; i++) {
-			for (j = 0; j < d2; j++) {
+		for (i = 0; i < Descr->d1; i++) {
+			for (j = 0; j < Descr->d2; j++) {
 				a = i * A2->degree + j;
 				points[h++] = a;
 			}
@@ -575,14 +476,14 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 
 	strong_generators *Strong_gens;
 
-	if (f_subgroup) {
+	if (Descr->f_subgroup) {
 		Strong_gens = NEW_OBJECT(strong_generators);
 		int *data;
 		int sz;
 		int nb_gens;
 		vector_ge *nice_gens;
 
-		int_vec_scan(subgroup_gens_text, data, sz);
+		int_vec_scan(Descr->subgroup_gens, data, sz);
 		nb_gens = sz / A->make_element_size;
 		if (f_v) {
 			cout << "before Strong_gens->init_from_data_with_target_go_ascii" << endl;
@@ -591,7 +492,7 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 		Strong_gens->init_from_data_with_target_go_ascii(A0,
 				data,
 				nb_gens, A0->make_element_size,
-				subgroup_order_text,
+				Descr->subgroup_order,
 				nice_gens,
 				verbose_level + 2);
 		FREE_OBJECT(nice_gens);
@@ -599,14 +500,13 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 			cout << "delandtsheer_doyen "
 					"after Strong_gens->init_from_data_with_target_go_ascii" << endl;
 			}
-		Control_pairs = NEW_OBJECT(poset_classification_control);
 		Pairs = NEW_OBJECT(poset_classification);
 
 		//Pairs->read_arguments(argc, argv, 0);
 
 		//Pairs->prefix[0] = 0;
 		sprintf(Pairs->fname_base, "pairs_%s_%d_%d",
-				group_label, q1, q2);
+				Descr->group_label, Descr->q1, Descr->q2);
 
 
 		Pairs->depth = 2;
@@ -620,7 +520,7 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 			cout << "delandtsheer_doyen::init "
 					"before Pairs->init" << endl;
 			}
-		Pairs->init(Control_pairs, Poset_pairs,
+		Pairs->init(Descr->Pair_search_control, Poset_pairs,
 				Pairs->depth /* sz */, verbose_level);
 		if (f_v) {
 			cout << "direct_product_action::init "
@@ -660,7 +560,7 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 
 		//Pairs->f_allowed_to_show_group_elements = TRUE;
 
-		Control_pairs->f_max_depth = FALSE;
+		Descr->Pair_search_control->f_max_depth = FALSE;
 		Pairs->depth = 2;
 		Pairs->main(t0,
 			Pairs->depth /* schreier_depth */,
@@ -688,7 +588,7 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 		orbit_length = NEW_int(nb_orbits);
 		orbit_covered = NEW_int(nb_orbits);
 		orbit_covered_max = NEW_int(nb_orbits);
-		orbits_covered = NEW_int(K * K);
+		orbits_covered = NEW_int(Descr->K * Descr->K);
 
 		int_vec_zero(orbit_covered, nb_orbits);
 
@@ -723,26 +623,26 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 	f_col_used = NEW_int(Ysize);
 	row_idx = NEW_int(Xsize);
 	col_idx = NEW_int(Ysize);
-	singletons = NEW_int(K);
+	singletons = NEW_int(Descr->K);
 
 	// temporary data
 	row_col_idx = NEW_int(Xsize);
 	col_row_idx = NEW_int(Ysize);
 
 
-	if (f_singletons) {
+	if (Descr->f_singletons) {
 		cout << "searching singletons" << endl;
 
 		int target_depth;
-		target_depth = K - depth;
+		target_depth = Descr->K - Descr->depth;
 		cout << "target_depth=" << target_depth << endl;
 
 		orbiter_data_file *ODF;
 		char fname[1000];
 		//int i, j;
-		int level = depth;
+		int level = Descr->depth;
 
-		sprintf(fname, "design_%s_%d_%d_lvl_%d", group_label, q1, q2, level);
+		sprintf(fname, "design_%s_%d_%d_lvl_%d", Descr->group_label, Descr->q1, Descr->q2, level);
 
 		ODF = NEW_OBJECT(orbiter_data_file);
 		ODF->load(fname, verbose_level);
@@ -859,7 +759,7 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 				lint_vec_copy(line0, line, level);
 				lint_vec_copy(live_points, line + level, target_depth);
 				if (check_orbit_covering(line,
-					K, 0 /* verbose_level */)) {
+						Descr->K, 0 /* verbose_level */)) {
 					cout << "found a solution in orbit " << orbit_idx << endl;
 					nb_sol++;
 				}
@@ -888,7 +788,7 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 					int_vec_apply_lint(subset, live_points, line + level, target_depth);
 
 					if (check_orbit_covering(line,
-						K, 0 /* verbose_level */)) {
+							Descr->K, 0 /* verbose_level */)) {
 						cout << "found a solution, subset " << l
 								<< " / " << nCk << " in orbit "
 								<< orbit_idx << endl;
@@ -912,19 +812,19 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 
 		//Gen->prefix[0] = 0;
 
-		if (f_subgroup) {
+		if (Descr->f_subgroup) {
 			sprintf(Gen->fname_base, "design_%s_%d_%d",
-					group_label, q1, q2);
+					Descr->group_label, Descr->q1, Descr->q2);
 		}
 		else {
 			sprintf(Gen->fname_base, "design_no_group_%d_%d",
-					d1, d2);
+					Descr->d1, Descr->d2);
 
 		}
 
 
-		Gen->depth = depth;
-		Control_search = NEW_OBJECT(poset_classification_control);
+		Gen->depth = Descr->depth;
+		//Control_search = NEW_OBJECT(poset_classification_control);
 		Poset_search = NEW_OBJECT(poset);
 		Poset_search->init_subset_lattice(A0, A, SG,
 				verbose_level);
@@ -942,7 +842,7 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 			cout << "delandtsheer_doyen::init "
 					"before Gen->init" << endl;
 			}
-		Gen->init(Control_search, Poset_search,
+		Gen->init(Descr->Search_control, Poset_search,
 				Gen->depth /* sz */, verbose_level);
 		if (f_v) {
 			cout << "delandtsheer_doyen::init "
@@ -980,7 +880,7 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 		//Gen->f_allowed_to_show_group_elements = TRUE;
 
 		Gen->Control->f_max_depth = FALSE;
-		Gen->depth = depth;
+		Gen->depth = Descr->depth;
 		Gen->main(t0,
 			Gen->depth /* schreier_depth */,
 			f_use_invariant_subset_if_available,
@@ -997,7 +897,7 @@ void delandtsheer_doyen::init(int argc, const char **argv,
 			cout << "delandtsheer_doyen::init "
 					"before Gen->draw_poset" << endl;
 		}
-		Gen->draw_poset(Gen->fname_base, depth,
+		Gen->draw_poset(Gen->fname_base, Descr->depth,
 				0 /* data1 */, TRUE /* f_embedded */, TRUE /* f_sideways */,
 				verbose_level);
 	} // else
@@ -1167,7 +1067,7 @@ void delandtsheer_doyen::write_pair_orbit_file(
 	if (f_v) {
 		cout << "delandtsheer_doyen::write_pair_orbit_file" << endl;
 	}
-	sprintf(fname, "%s.2orbits", group_label);
+	sprintf(fname, "%s.2orbits", Descr->group_label);
 	cout << "writing pair-orbit file " << fname << endl;
 	{
 	ofstream f(fname);
@@ -1209,9 +1109,9 @@ void delandtsheer_doyen::print_mask_test_i(
 {
 	int who, what;
 
-	ost << "mask test at level " << mask_test_level[i] << " : ";
-	who = mask_test_who[i];
-	what = mask_test_what[i];
+	ost << "mask test at level " << Descr->mask_test_level[i] << " : ";
+	who = Descr->mask_test_who[i];
+	what = Descr->mask_test_what[i];
 	if (who == 1) {
 		ost << "x ";
 		}
@@ -1233,7 +1133,7 @@ void delandtsheer_doyen::print_mask_test_i(
 	else if (what == 3) {
 		ost << "<= ";
 		}
-	ost << mask_test_value[i];
+	ost << Descr->mask_test_value[i];
 	ost << endl;
 }
 
@@ -1317,7 +1217,7 @@ int delandtsheer_doyen::check_conditions(
 		}
 		return FALSE;
 	}
-	if (f_subgroup) {
+	if (Descr->f_subgroup) {
 		if (!check_orbit_covering(S, len, verbose_level)) {
 			f_bad_orbit = TRUE;
 			f_OK = FALSE;
@@ -1418,8 +1318,8 @@ int delandtsheer_doyen::check_row_sums(long int *line,
 
 	inner_pairs_in_rows = 0;
 	int_vec_zero(row_sum, Xsize);
-	if (f_R) {
-		for (i = 1; i <= nb_row_types; i++) {
+	if (Descr->f_R) {
+		for (i = 1; i <= Descr->nb_row_types; i++) {
 			row_type_cur[i] = 0;
 			}
 		}
@@ -1429,16 +1329,16 @@ int delandtsheer_doyen::check_row_sums(long int *line,
 		//y = p % Ysize;
 		inner_pairs_in_rows += row_sum[x];
 		row_sum[x]++;
-		if (DELANDTSHEER_DOYEN_X != -1) {
-			if (inner_pairs_in_rows > DELANDTSHEER_DOYEN_X) {
+		if (Descr->DELANDTSHEER_DOYEN_X != -1) {
+			if (inner_pairs_in_rows > Descr->DELANDTSHEER_DOYEN_X) {
 				f_OK = FALSE;
 				f_DD_problem = TRUE;
 				break;
 				}
 			}
-		if (f_R) {
+		if (Descr->f_R) {
 			s = row_sum[x];
-			if (s > nb_row_types) {
+			if (s > Descr->nb_row_types) {
 				f_OK = FALSE;
 				break;
 				}
@@ -1462,17 +1362,17 @@ int delandtsheer_doyen::check_row_sums(long int *line,
 							"inner_pairs_in_rows = "
 						<< inner_pairs_in_rows
 						<< " > DELANDTSHEER_DOYEN_X = "
-						<< DELANDTSHEER_DOYEN_X
+						<< Descr->DELANDTSHEER_DOYEN_X
 						<< ", not OK" << endl;
 					}
 				else {
 					cout << "delandtsheer_doyen::check_row_sums"
 							"problem with row-type:" << endl;
-					for (i = 1; i <= nb_row_types; i++) {
+					for (i = 1; i <= Descr->nb_row_types; i++) {
 						cout << row_type_cur[i] << " ";
 						}
 					cout << endl;
-					for (i = 1; i <= nb_row_types; i++) {
+					for (i = 1; i <= Descr->nb_row_types; i++) {
 						cout << row_type_this_or_bigger[i] << " ";
 						}
 					cout << endl;
@@ -1493,8 +1393,8 @@ int delandtsheer_doyen::check_col_sums(long int *line,
 
 	inner_pairs_in_cols = 0;
 	int_vec_zero(col_sum, Ysize);
-	if (f_C) {
-		for (i = 1; i <= nb_col_types; i++) {
+	if (Descr->f_C) {
+		for (i = 1; i <= Descr->nb_col_types; i++) {
 			col_type_cur[i] = 0;
 			}
 		}
@@ -1504,16 +1404,16 @@ int delandtsheer_doyen::check_col_sums(long int *line,
 		y = p % Ysize;
 		inner_pairs_in_cols += col_sum[y];
 		col_sum[y]++;
-		if (DELANDTSHEER_DOYEN_Y != -1) {
-			if (inner_pairs_in_cols > DELANDTSHEER_DOYEN_Y) {
+		if (Descr->DELANDTSHEER_DOYEN_Y != -1) {
+			if (inner_pairs_in_cols > Descr->DELANDTSHEER_DOYEN_Y) {
 				f_OK = FALSE;
 				f_DD_problem = TRUE;
 				break;
 				}
 			}
-		if (f_C) {
+		if (Descr->f_C) {
 			s = col_sum[y];
-			if (s > nb_col_types) {
+			if (s > Descr->nb_col_types) {
 				f_OK = FALSE;
 				break;
 				}
@@ -1537,17 +1437,17 @@ int delandtsheer_doyen::check_col_sums(long int *line,
 							"inner_pairs_in_cols = "
 						<< inner_pairs_in_cols
 						<< " > DELANDTSHEER_DOYEN_Y = "
-						<< DELANDTSHEER_DOYEN_Y
+						<< Descr->DELANDTSHEER_DOYEN_Y
 						<< ", not OK" << endl;
 					}
 				else {
 					cout << "delandtsheer_doyen::check_col_sums "
 							"problem with col-type:" << endl;
-					for (i = 1; i <= nb_col_types; i++) {
+					for (i = 1; i <= Descr->nb_col_types; i++) {
 						cout << col_type_cur[i] << " ";
 						}
 					cout << endl;
-					for (i = 1; i <= nb_col_types; i++) {
+					for (i = 1; i <= Descr->nb_col_types; i++) {
 						cout << col_type_this_or_bigger[i] << " ";
 						}
 					cout << endl;
@@ -1577,44 +1477,44 @@ int delandtsheer_doyen::check_mask(long int *line,
 			nb_rows_used, nb_cols_used,
 			nb_singletons, verbose_level);
 
-	for (k = 0; k < nb_mask_tests; k++) {
-		if (mask_test_level[k] != len)
+	for (k = 0; k < Descr->nb_mask_tests; k++) {
+		if (Descr->mask_test_level[k] != len)
 			continue;
-		if (mask_test_who[k] == 1) {
+		if (Descr->mask_test_who[k] == 1) {
 			who = inner_pairs_in_rows;
 			}
-		else if (mask_test_who[k] == 2) {
+		else if (Descr->mask_test_who[k] == 2) {
 			who = inner_pairs_in_cols;
 			}
-		else if (mask_test_who[k] == 3) {
+		else if (Descr->mask_test_who[k] == 3) {
 			who = inner_pairs_in_rows + inner_pairs_in_cols;
 			}
-		else if (mask_test_who[k] == 4) {
+		else if (Descr->mask_test_who[k] == 4) {
 			who = nb_singletons;
 			}
 		else {
 			cout << "delandtsheer_doyen::check_mask: "
 					"unknown mask_test_who value "
-					<< mask_test_who[k] << " in test " << k << endl;
+					<< Descr->mask_test_who[k] << " in test " << k << endl;
 			exit(1);
 			}
-		if (mask_test_what[k] == 1) {
+		if (Descr->mask_test_what[k] == 1) {
 			// eq
-			if (who != mask_test_value[k]) {
+			if (who != Descr->mask_test_value[k]) {
 				f_OK = FALSE;
 				break;
 				}
 			}
-		else if (mask_test_what[k] == 2) {
+		else if (Descr->mask_test_what[k] == 2) {
 			// ge
-			if (who < mask_test_value[k]) {
+			if (who < Descr->mask_test_value[k]) {
 				f_OK = FALSE;
 				break;
 				}
 			}
-		else if (mask_test_what[k] == 3) {
+		else if (Descr->mask_test_what[k] == 3) {
 			// le
-			if (who > mask_test_value[k]) {
+			if (who > Descr->mask_test_value[k]) {
 				f_OK = FALSE;
 				break;
 				}
@@ -1622,7 +1522,7 @@ int delandtsheer_doyen::check_mask(long int *line,
 		else {
 			cout << "delandtsheer_doyen::check_mask: "
 					"unknown mask_test_what value "
-					<< mask_test_what[k] << " in test " << k << endl;
+					<< Descr->mask_test_what[k] << " in test " << k << endl;
 			exit(1);
 			}
 		}

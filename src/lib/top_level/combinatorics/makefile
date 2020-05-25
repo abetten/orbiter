@@ -10,6 +10,7 @@ MODULES = \
 	cayley_graph_search.o \
 	create_graph_description.o \
 	create_graph.o \
+	delandtsheer_doyen_description.o \
 	delandtsheer_doyen.o \
 	design_create_description.o \
 	design_create.o \

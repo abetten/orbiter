@@ -68,11 +68,11 @@ int design_create_description::read_arguments(int argc, const char **argv,
 			cout << "-family " << family_name << endl;
 			}
 		else if (strcmp(argv[i], "-end") == 0) {
-			return i;
+			break;
 			}
 		} // next i
 	cout << "design_create_description::read_arguments done" << endl;
-	return i;
+	return i + 1;
 }
 
 
