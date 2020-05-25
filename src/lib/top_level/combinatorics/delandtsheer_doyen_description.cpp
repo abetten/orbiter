@@ -35,6 +35,9 @@ delandtsheer_doyen_description::delandtsheer_doyen_description()
 	f_group_label = FALSE;
 	group_label = NULL;
 
+	f_mask_label = FALSE;
+	mask_label = NULL;
+
 	DELANDTSHEER_DOYEN_X = -1;
 	DELANDTSHEER_DOYEN_Y = -1;
 	f_K = FALSE;
@@ -74,6 +77,12 @@ delandtsheer_doyen_description::~delandtsheer_doyen_description()
 	if (col_type) {
 		FREE_int(col_type);
 	}
+	if (Pair_search_control) {
+		FREE_OBJECT(Pair_search_control);
+	}
+	if (Search_control) {
+		FREE_OBJECT(Search_control);
+	}
 }
 
 
@@ -102,6 +111,11 @@ int delandtsheer_doyen_description::read_arguments(
 			f_group_label = TRUE;
 			group_label = argv[++i];
 			cout << "-group_label " << group_label << endl;
+		}
+		else if (strcmp(argv[i], "-mask_label") == 0) {
+			f_mask_label = TRUE;
+			mask_label = argv[++i];
+			cout << "-mask_label " << mask_label << endl;
 		}
 		else if (strcmp(argv[i], "-depth") == 0) {
 			f_depth = TRUE;
@@ -216,7 +230,7 @@ int delandtsheer_doyen_description::read_arguments(
 			f_subgroup = TRUE;
 			subgroup_gens = argv[++i];
 			subgroup_order = argv[++i];
-			cout << "-subgroup" << subgroup_gens << " " << subgroup_order << endl;
+			cout << "-subgroup " << subgroup_gens << " " << subgroup_order << endl;
 		}
 		else if (strcmp(argv[i], "-pair_search_control") == 0) {
 			f_pair_search_control = TRUE;
@@ -262,7 +276,11 @@ int delandtsheer_doyen_description::read_arguments(
 		Search_control = NEW_OBJECT(poset_classification_control);
 	}
 	if (!f_group_label) {
-		cout << "please use -group_label <label> to specify a label";
+		cout << "please use -group_label <label> to specify a label for the group used";
+		exit(1);
+	}
+	if (!f_mask_label) {
+		cout << "please use -mask_label <label> to specify a label for the mask used";
 		exit(1);
 	}
 

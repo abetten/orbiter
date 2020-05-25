@@ -25,7 +25,7 @@ interface_combinatorics::interface_combinatorics()
 	argv = NULL;
 
 	f_create_combinatorial_object = FALSE;
-	Descr = NULL;
+	Combinatorial_object_description = NULL;
 	f_save = FALSE;
 	fname_prefix = FALSE;
 	f_process_combinatorial_objects = FALSE;
@@ -184,8 +184,8 @@ void interface_combinatorics::read_arguments(int argc,
 		if (strcmp(argv[i], "-create_combinatorial_object") == 0) {
 			f_create_combinatorial_object = TRUE;
 			cout << "-create_combinatorial_object " << endl;
-			Descr = NEW_OBJECT(combinatorial_object_description);
-			i += Descr->read_arguments(argc - i - 1,
+			Combinatorial_object_description = NEW_OBJECT(combinatorial_object_description);
+			i += Combinatorial_object_description->read_arguments(argc - i - 1,
 					argv + i + 1, verbose_level) - 1;
 			cout << "interface_combinatorics::read_arguments finished reading -create_combinatorial_object" << endl;
 			cout << "i = " << i << endl;
@@ -602,7 +602,7 @@ void interface_combinatorics::do_create_combinatorial_object(int verbose_level)
 	if (f_v) {
 		cout << "before COC->init" << endl;
 	}
-	COC->init(Descr, verbose_level);
+	COC->init(Combinatorial_object_description, verbose_level);
 	if (f_v) {
 		cout << "after COC->init" << endl;
 	}

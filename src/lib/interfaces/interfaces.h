@@ -139,7 +139,7 @@ class interface_combinatorics {
 	const char **argv;
 
 	int f_create_combinatorial_object;
-	combinatorial_object_description *Descr;
+	combinatorial_object_description *Combinatorial_object_description;
 	int f_save;
 	const char *fname_prefix;
 	int f_process_combinatorial_objects;
