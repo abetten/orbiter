@@ -168,17 +168,6 @@ class interface_combinatorics {
 	int tree_n, tree_k;
 	int f_Delandtsheer_Doyen;
 	delandtsheer_doyen_description *Delandtsheer_Doyen_description;
-#if 0
-	int DD_d1;
-	int DD_q1;
-	int DD_d2;
-	int DD_q2;
-	int DD_depth;
-	int f_Delandtsheer_Doyen_with_subgroup;
-	const char *subgroup_gens_text;
-	const char *subgroup_order_text;
-	const char *group_label;
-#endif
 	int f_graph_classify;
 	int f_tdo_refinement;
 	tdo_refinement_description *Tdo_refinement_descr;
