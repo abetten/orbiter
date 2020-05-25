@@ -305,6 +305,10 @@ public:
 	int f_group_label;
 	const char *group_label;
 
+	int f_mask_label;
+	const char *mask_label;
+
+
 
 	int DELANDTSHEER_DOYEN_X;
 	int DELANDTSHEER_DOYEN_Y;
@@ -449,10 +453,15 @@ public:
 
 	delandtsheer_doyen();
 	~delandtsheer_doyen();
-	void init(delandtsheer_doyen_description *Descr,
-			int verbose_level);
-	void create_graph(
-			long int *line0, int len, int verbose_level);
+	void init(delandtsheer_doyen_description *Descr, int verbose_level);
+	void show_generators(int verbose_level);
+	void search_singletons(int verbose_level);
+	void search_starter(int verbose_level);
+	void compute_orbits_on_pairs(strong_generators *Strong_gens, int verbose_level);
+	strong_generators *scan_subgroup_generators(int verbose_level);
+	void create_monomial_group(int verbose_level);
+	void create_action(int verbose_level);
+	void create_graph(long int *line0, int len, int verbose_level);
 	int find_pair_orbit(int i, int j, int verbose_level);
 	int find_pair_orbit_by_tracing(int i, int j, int verbose_level);
 	void compute_pair_orbit_table(int verbose_level);
@@ -463,14 +472,10 @@ public:
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	int check_conditions(long int *S, int len, int verbose_level);
-	int check_orbit_covering(long int *line,
-			int len, int verbose_level);
-	int check_row_sums(long int *line,
-			int len, int verbose_level);
-	int check_col_sums(long int *line,
-			int len, int verbose_level);
-	int check_mask(long int *line,
-			int len, int verbose_level);
+	int check_orbit_covering(long int *line, int len, int verbose_level);
+	int check_row_sums(long int *line, int len, int verbose_level);
+	int check_col_sums(long int *line, int len, int verbose_level);
+	int check_mask(long int *line, int len, int verbose_level);
 	void get_mask_core_and_singletons(
 		long int *line, int len,
 		int &nb_rows_used, int &nb_cols_used,
