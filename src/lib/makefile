@@ -43,6 +43,7 @@ MODULES= \
 		foundations/combinatorics/combinatorics_domain.o \
 		foundations/combinatorics/geo_parameter.o \
 		foundations/combinatorics/tdo_data.o \
+		foundations/combinatorics/tdo_refinement_description.o \
 		foundations/combinatorics/tdo_refinement.o \
 		foundations/combinatorics/tdo_scheme.o \
 		foundations/data_structures/bitmatrix.o \
@@ -306,6 +307,7 @@ MODULES= \
 		top_level/combinatorics/cayley_graph_search.o \
 		top_level/combinatorics/create_graph_description.o \
 		top_level/combinatorics/create_graph.o \
+		top_level/combinatorics/delandtsheer_doyen_description.o \
 		top_level/combinatorics/delandtsheer_doyen.o \
 		top_level/combinatorics/design_create_description.o \
 		top_level/combinatorics/design_create.o \

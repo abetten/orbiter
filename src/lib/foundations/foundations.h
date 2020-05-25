@@ -364,6 +364,7 @@ class bitmatrix;
 class override_double;
 class os_interface;
 class plot_tools;
+class tdo_refinement_description;
 class tdo_refinement;
 class algebra_global;
 class combinatorial_object_description;

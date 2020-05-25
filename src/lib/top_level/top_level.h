@@ -125,6 +125,7 @@ class difference_set_in_heisenberg_group;
 class cayley_graph_search;
 class hadamard_classify;
 class linear_set_classify;
+class delandtsheer_doyen_description;
 class delandtsheer_doyen;
 class boolean_function;
 class hermitian_spread_classify;

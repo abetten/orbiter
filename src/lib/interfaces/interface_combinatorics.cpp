@@ -54,16 +54,12 @@ interface_combinatorics::interface_combinatorics()
 	tree_n = 0;
 	tree_k = 0;
 	f_Delandtsheer_Doyen = FALSE;
-	DD_d1 = 0;
-	DD_q1 = 0;
-	DD_d2 = 0;
-	DD_q2 = 0;
-	DD_depth = 0;
-	f_Delandtsheer_Doyen_with_subgroup = FALSE;
-	subgroup_gens_text = NULL;
-	subgroup_order_text = NULL;
-	group_label = NULL;
+	Delandtsheer_Doyen_description = NULL;
 	f_graph_classify = FALSE;
+	f_tdo_refinement = FALSE;
+	Tdo_refinement_descr = NULL;
+	f_create_design = FALSE;
+	Design_create_description = NULL;
 }
 
 
@@ -107,15 +103,16 @@ void interface_combinatorics::print_help(int argc,
 		cout << "-tree_of_all_k_subsets <int : n> <int : k>" << endl;
 	}
 	else if (strcmp(argv[i], "-Delandtsheer_Doyen") == 0) {
-			cout << "-Delandtsheer_Doyen <int : d1> <int : q1> <int : d2> <int : q2> <int : depth>" << endl;
-	}
-	else if (strcmp(argv[i], "-Delandtsheer_Doyen_with_subgroup") == 0) {
-			cout << "-Delandtsheer_Doyen_with_subgroup <int : d1> <int : q1> "
-					"<int : d2> <int : q2> <int : depth> "
-					"<string : gens> <string : order> <string : label>" << endl;
+			cout << "-Delandtsheer_Doyen <description>" << endl;
 	}
 	else if (strcmp(argv[i], "-graph_classify") == 0) {
 		cout << "-graph_classify <options>" << endl;
+	}
+	else if (strcmp(argv[i], "-tdo_refinement") == 0) {
+		cout << "-tdo_refinement <options>" << endl;
+	}
+	else if (strcmp(argv[i], "-create_design") == 0) {
+		cout << "-create_design <options>" << endl;
 	}
 }
 
@@ -161,10 +158,13 @@ int interface_combinatorics::recognize_keyword(int argc,
 	else if (strcmp(argv[i], "-Delandtsheer_Doyen") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-Delandtsheer_Doyen_with_subgroup") == 0) {
+	else if (strcmp(argv[i], "-graph_classify") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-graph_classify") == 0) {
+	else if (strcmp(argv[i], "-tdo_refinement") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-create_design") == 0) {
 		return true;
 	}
 	return false;
@@ -276,34 +276,39 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 		else if (strcmp(argv[i], "-Delandtsheer_Doyen") == 0) {
 			f_Delandtsheer_Doyen = TRUE;
-			DD_d1 = atoi(argv[++i]);
-			DD_q1 = atoi(argv[++i]);
-			DD_d2 = atoi(argv[++i]);
-			DD_q2 = atoi(argv[++i]);
-			DD_depth = atoi(argv[++i]);
-			cout << "-Delandtsheer_Doyen " << DD_d1 << " " << DD_q1 << " "
-					<< DD_d2 << " " << DD_q2 << " " << DD_depth << endl;
-		}
-		else if (strcmp(argv[i], "-Delandtsheer_Doyen_with_subgroup") == 0) {
-			f_Delandtsheer_Doyen_with_subgroup = TRUE;
-			DD_d1 = atoi(argv[++i]);
-			DD_q1 = atoi(argv[++i]);
-			DD_d2 = atoi(argv[++i]);
-			DD_q2 = atoi(argv[++i]);
-			DD_depth = atoi(argv[++i]);
-			subgroup_gens_text = argv[++i];
-			subgroup_order_text = argv[++i];
-			group_label = argv[++i];
-			cout << "-Delandtsheer_Doyen_with_subgroup "
-					<< DD_d1 << " " << DD_q1 << " " << DD_d2 << " " << DD_q2 << " " << " " << DD_depth
-					<< subgroup_gens_text << " "
-					<< subgroup_order_text << " "
-					<< group_label << " "
-					<< endl;
+			Delandtsheer_Doyen_description = NEW_OBJECT(delandtsheer_doyen_description);
+			i += Delandtsheer_Doyen_description->read_arguments(argc - (i - 1),
+					argv + i, verbose_level) - 1;
+
+			cout << "-Delandtsheer_Doyen" << endl;
 		}
 		else if (strcmp(argv[i], "-graph_classify") == 0) {
 			f_graph_classify = TRUE;
 			cout << "-graph_classify " << endl;
+		}
+		if (strcmp(argv[i], "-tdo_refinement") == 0) {
+			f_tdo_refinement = TRUE;
+			cout << "-tdo_refinement " << endl;
+			Tdo_refinement_descr = NEW_OBJECT(tdo_refinement_description);
+			i += Tdo_refinement_descr->read_arguments(argc - i - 1,
+					argv + i + 1, verbose_level) - 1;
+			cout << "interface_combinatorics::read_arguments finished reading -tdo_refinement" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+		else if (strcmp(argv[i], "-create_design") == 0) {
+			f_create_design = TRUE;
+			Design_create_description = NEW_OBJECT(design_create_description);
+			i += Design_create_description->read_arguments(argc - (i - 1),
+					argv + i, verbose_level) - 1;
+
+			cout << "-create_design" << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
 		}
 	}
 	cout << "interface_combinatorics::read_arguments done" << endl;
@@ -361,18 +366,19 @@ void interface_combinatorics::worker(int verbose_level)
 	}
 	else if (f_Delandtsheer_Doyen) {
 
-		do_Delandtsheer_Doyen(DD_d1, DD_q1, DD_d2, DD_q2, DD_depth, verbose_level);
-	}
-	else if (f_Delandtsheer_Doyen_with_subgroup) {
-
-		do_Delandtsheer_Doyen_with_subgroup(DD_d1, DD_q1, DD_d2, DD_q2, DD_depth,
-				subgroup_gens_text,
-				subgroup_order_text,
-				group_label, verbose_level);
+		do_Delandtsheer_Doyen(Delandtsheer_Doyen_description, verbose_level);
 	}
 	else if (f_graph_classify) {
 
 		do_graph_classify(verbose_level);
+	}
+	else if (f_tdo_refinement) {
+
+		do_tdo_refinement(Tdo_refinement_descr, verbose_level);
+	}
+	else if (f_create_design) {
+
+		do_create_design(Design_create_description, verbose_level);
 	}
 }
 
@@ -847,7 +853,7 @@ void interface_combinatorics::do_make_tree_of_all_k_subsets(int n, int k, int ve
 	}
 }
 
-void interface_combinatorics::do_Delandtsheer_Doyen(int d1, int q1, int d2, int q2, int depth, int verbose_level)
+void interface_combinatorics::do_Delandtsheer_Doyen(delandtsheer_doyen_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -855,15 +861,13 @@ void interface_combinatorics::do_Delandtsheer_Doyen(int d1, int q1, int d2, int 
 		cout << "interface_combinatorics::do_Delandtsheer_Doyen" << endl;
 	}
 
-	delandtsheer_doyen *T;
+	delandtsheer_doyen *DD;
 
-	T = NEW_OBJECT(delandtsheer_doyen);
+	DD = NEW_OBJECT(delandtsheer_doyen);
 
-	T->init(argc, argv, d1, q1, d2, q2,
-			FALSE /*f_subgroup */, NULL /*subgroup_gens_text*/,
-			NULL /*subgroup_order_text*/, NULL /*group_label*/,
-			depth, verbose_level);
+	DD->init(Descr, verbose_level);
 
+	FREE_OBJECT(DD);
 
 
 	if (f_v) {
@@ -871,33 +875,6 @@ void interface_combinatorics::do_Delandtsheer_Doyen(int d1, int q1, int d2, int 
 	}
 }
 
-void interface_combinatorics::do_Delandtsheer_Doyen_with_subgroup(
-		int d1, int q1, int d2, int q2, int depth,
-		const char *subgroup_gens_text,
-		const char *subgroup_order_text, const char *group_label,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_Delandtsheer_Doyen_with_subgroup" << endl;
-	}
-
-	delandtsheer_doyen *T;
-
-	T = NEW_OBJECT(delandtsheer_doyen);
-
-	T->init(argc, argv, d1, q1, d2, q2,
-			FALSE /*f_subgroup */, NULL /*subgroup_gens_text*/,
-			NULL /*subgroup_order_text*/, NULL /*group_label*/,
-			depth, verbose_level);
-
-
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_Delandtsheer_Doyen_with_subgroup done" << endl;
-	}
-}
 
 void interface_combinatorics::do_graph_classify(int verbose_level)
 {
@@ -1074,6 +1051,162 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 	}
 
 }
+
+
+void interface_combinatorics::do_tdo_refinement(tdo_refinement_description *Descr, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_tdo_refinement" << endl;
+	}
+
+	tdo_refinement *R;
+
+	R = NEW_OBJECT(tdo_refinement);
+
+	R->init(Descr, verbose_level);
+	R->main_loop(verbose_level);
+
+	FREE_OBJECT(R);
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_tdo_refinement done" << endl;
+	}
+}
+
+
+void interface_combinatorics::do_create_design(design_create_description *Descr, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_create_design" << endl;
+	}
+
+	design_create *DC;
+	latex_interface L;
+	//int j;
+
+	DC = NEW_OBJECT(design_create);
+
+	cout << "before DC->init" << endl;
+	DC->init(Descr, verbose_level);
+	cout << "after DC->init" << endl;
+
+
+
+	action *A;
+	//int *Elt1;
+	int *Elt2;
+
+	A = DC->A;
+
+	Elt2 = NEW_int(A->elt_size_in_int);
+
+
+
+
+	cout << "We have created the following design:" << endl;
+	cout << "$$" << endl;
+	L.lint_set_print_tex(cout, DC->set, DC->sz);
+	cout << endl;
+	cout << "$$" << endl;
+
+	if (DC->f_has_group) {
+		cout << "The stabilizer is generated by:" << endl;
+		DC->Sg->print_generators_tex(cout);
+	}
+
+
+	{
+		int nb_pts = DC->P->N_points;
+		int nb_blocks = DC->sz;
+		int *Incma;
+		int h, i, j, a;
+		int pts_per_element = DC->k;
+
+
+		Incma = NEW_int(nb_pts * nb_blocks);
+		int_vec_zero(Incma, nb_pts * nb_blocks);
+
+		for (j = 0; j < nb_blocks; j++) {
+			//cout << "j=" << j << " / " << set_size
+			//<< " the_set[j]=" << the_set[j] << endl;
+			//Grass->unrank_int(the_set[j], 0/*verbose_level - 4*/);
+
+			a = DC->set[j];
+			DC->unrank_block_in_PG_2_q(DC->block,
+					DC->set[j], 0 /* verbose_level*/);
+			for (h = 0; h < pts_per_element; h++) {
+				//PG_element_unrank_modified(*F, v, 1, k, h);
+				//F->mult_vector_from_the_left(v, Grass->M, w, k, n);
+				//PG_element_rank_modified(*F, w, 1, n, i);
+				i = DC->block[h];
+				Incma[i * nb_blocks + j] = 1;
+				}
+			}
+
+		cout << "Computing incidence matrix done" << endl;
+
+
+
+		incidence_structure *Inc;
+		partitionstack *Stack;
+
+
+		cout << "Opening incidence data structure:" << endl;
+
+		Inc = NEW_OBJECT(incidence_structure);
+		Inc->init_by_matrix(nb_pts, nb_blocks, Incma, 0 /* verbose_level */);
+		Stack = NEW_OBJECT(partitionstack);
+		Stack->allocate(nb_pts + nb_blocks, 0 /* verbose_level */);
+		Stack->subset_continguous(nb_pts, nb_blocks);
+		Stack->split_cell(0 /* verbose_level */);
+		Stack->sort_cells();
+
+
+		if (f_v) {
+			cout << "Initial scheme:" << endl;
+			Inc->get_and_print_row_tactical_decomposition_scheme_tex(
+				cout, FALSE /* f_enter_math */, TRUE /* f_print_subscripts */, *Stack);
+			Stack->print_classes_points_and_lines(cout);
+			//print_decomposition(Grass, Stack, the_set);
+		}
+		Inc->refine_row_partition_safe(*Stack, 0/*verbose_level - 3*/);
+		if (f_v) {
+			cout << "Row-scheme:" << endl;
+			Inc->get_and_print_row_tactical_decomposition_scheme_tex(
+				cout, FALSE /* f_enter_math */, TRUE /* f_print_subscripts */, *Stack);
+			Stack->print_classes_points_and_lines(cout);
+			//print_decomposition(Grass, Stack, the_set);
+		}
+		Inc->refine_column_partition_safe(*Stack, 0/*verbose_level - 3*/);
+		if (f_v) {
+			cout << "Column-scheme:" << endl;
+			Inc->get_and_print_column_tactical_decomposition_scheme_tex(
+				cout, FALSE /* f_enter_math */, TRUE /* f_print_subscripts */, *Stack);
+			Stack->print_classes_points_and_lines(cout);
+			//print_decomposition(Grass, Stack, the_set);
+		}
+		Inc->refine_row_partition_safe(*Stack, 0/*verbose_level - 3*/);
+		if (f_v) {
+			cout << "Row-scheme:" << endl;
+			Inc->get_and_print_row_tactical_decomposition_scheme_tex(
+				cout, FALSE /* f_enter_math */, TRUE /* f_print_subscripts */, *Stack);
+			Stack->print_classes_points_and_lines(cout);
+			//print_decomposition(Grass, Stack, the_set);
+		}
+	}
+
+
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_create_design done" << endl;
+	}
+
+}
+
 
 
 }}

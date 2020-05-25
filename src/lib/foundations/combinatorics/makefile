@@ -12,6 +12,7 @@ MODULES = \
 		combinatorics_domain.o \
 		geo_parameter.o \
 		tdo_data.o \
+		tdo_refinement_description.o \
 		tdo_refinement.o \
 		tdo_scheme.o 
 
