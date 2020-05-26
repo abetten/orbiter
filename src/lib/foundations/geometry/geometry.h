@@ -596,6 +596,7 @@ class eckardt_point_info {
 
 public:
 
+	surface_domain *Surf;
 	projective_space *P;
 	long int arc6[6];
 
@@ -614,8 +615,12 @@ public:
 	~eckardt_point_info();
 	void null();
 	void freeself();
-	void init(projective_space *P,
+	void init(surface_domain *Surf, projective_space *P,
 			long int *arc6, int verbose_level);
+	void print_bisecants(std::ostream &ost, int verbose_level);
+	void print_intersections(std::ostream &ost, int verbose_level);
+	void print_conics(std::ostream &ost, int verbose_level);
+	void print_Eckardt_points(std::ostream &ost, int verbose_level);
 
 };
 
@@ -674,7 +679,7 @@ public:
 	int b, c; // the equation of the curve is Y^2 = X^3 + bX + c mod p
 	int nb; // number of points
 	int *T; // [nb * 3] point coordinates
-		// the point at inifinity is last
+		// the point at infinity is last
 	int *A; // [nb * nb] addition table
 	finite_field *F;
 
@@ -691,18 +696,28 @@ public:
 	void print_points();
 	void print_points_affine();
 	void addition(
-		int x1, int x2, int x3,
-		int y1, int y2, int y3,
-		int &z1, int &z2, int &z3, int verbose_level);
-	void draw_grid(char *fname, int xmax, int ymax,
-			int f_with_grid, int f_with_points, int verbose_level);
+		int x1, int y1, int z1,
+		int x2, int y2, int z2,
+		int &x3, int &y3, int &z3, int verbose_level);
+	void save_incidence_matrix(char *fname, int verbose_level);
+	void draw_grid(char *fname,
+			double tikz_global_scale, double tikz_global_line_width,
+			int xmax, int ymax,
+			int f_with_grid, int f_with_points, int point_density,
+			int f_path, int start_idx, int nb_steps,
+			int verbose_level);
 	void draw_grid2(mp_graphics &G,
-			int f_with_grid, int f_with_points, int verbose_level);
+			int f_with_grid, int f_with_points, int point_density,
+			int f_path, int start_idx, int nb_steps,
+			int verbose_level);
 	void make_affine_point(int x1, int x2, int x3,
 		int &a, int &b, int verbose_level);
 	void compute_addition_table(int verbose_level);
 	void print_addition_table();
 	int index_of_point(int x1, int x2, int x3);
+	void latex_points_with_order(std::ostream &ost);
+	void latex_order_of_all_points(std::ostream &ost);
+	void order_of_all_points(std::vector<int> &Ord);
 	int order_of_point(int i);
 	void print_all_powers(int i);
 };
@@ -823,6 +838,7 @@ public:
 	long int nb_pts_Nbar(int n, int q);
 	void test_Orthogonal(int epsilon, int k, int q);
 	void test_orthogonal(int n, int q);
+#if 0
 	void create_BLT(int f_embedded, finite_field *FQ, finite_field *Fq,
 		int f_Linear,
 		int f_Fisher,
@@ -830,6 +846,7 @@ public:
 		int f_FTWKB,
 		char *fname, int &nb_pts, int *&Pts,
 		int verbose_level);
+#endif
 	int &TDO_upper_bound(int i, int j);
 	int &TDO_upper_bound_internal(int i, int j);
 	int &TDO_upper_bound_source(int i, int j);
@@ -966,6 +983,9 @@ public:
 class hermitian {
 
 public:
+
+	// The hermitian form is \sum_{i=0}^{k-1} X_i^{q+1}
+
 	finite_field *F; // only a reference, not to be freed
 	int Q;
 	int q;
@@ -1274,6 +1294,17 @@ class incidence_structure {
 		int **distinguished_line_sets, 
 		int *distinguished_line_set_size, 
 		int verbose_level);
+	uchar *encode_as_bitvector(int &encoding_length_in_uchar);
+	incidence_structure *apply_canonical_labeling(
+			long int *canonical_labeling, int verbose_level);
+	void save_as_csv(const char *fname_csv, int verbose_level);
+	void save_as_Levi_graph(const char *fname_bin,
+			int f_point_labels, long int *point_labels,
+			int verbose_level);
+	void init_large_set(
+			long int *blocks,
+			int N_points, int design_b, int design_k, int partition_class_size,
+			int *&partition, int verbose_level);
 };
 
 
@@ -1290,6 +1321,18 @@ class incidence_structure {
 
 class klein_correspondence {
 public:
+
+	// Pluecker coordinates of a line in PG(3,q) are:
+	// (p_1,p_2,p_3,p_4,p_5,p_6) =
+	// (Pluecker_12, Pluecker_34, Pluecker_13,
+	//    Pluecker_42, Pluecker_14, Pluecker_23)
+	// satisfying the quadratic form p_1p_2 + p_3p_4 + p_5p_6 = 0
+	// Here, the line is given as the rowspan of the matrix
+	// x_1 x_2 x_3 x_4
+	// y_1 y_2 y_3 y_4
+	// and
+	// Pluecker_ij is the determinant of the 2 x 2 submatrix
+	// formed by restricting the generator matrix to columns i and j.
 
 	projective_space *P3;
 	projective_space *P5;
@@ -1431,6 +1474,9 @@ public:
 	void get_projective_plane_list_of_lines(int *&list_of_lines,
 			int &order, int &nb_lines, int &line_size,
 			const char *label, int verbose_level);
+
+	int tensor_orbits_nb_reps(int n);
+	long int *tensor_orbits_rep(int n, int idx);
 
 };
 
@@ -2214,6 +2260,7 @@ public:
 		partitionstack *&Stack,
 		int verbose_level);
 	long int nb_rk_k_subspaces_as_lint(int k);
+	void print_set_of_points(std::ostream &ost, long int *Pts, int nb_pts);
 	void print_all_points();
 	long int rank_point(int *v);
 	void unrank_point(int *v, long int rk);
@@ -2260,7 +2307,7 @@ public:
 		// bisecants[15 * 3]
 		// conics[6 * 6]
 	eckardt_point_info *compute_eckardt_point_info(
-		long int *arc6,
+			surface_domain *Surf, long int *arc6,
 		int verbose_level);
 	void PG_2_8_create_conic_plus_nucleus_arc_1(long int *the_arc, int &size,
 		int verbose_level);
@@ -2329,9 +2376,10 @@ public:
 		int verbose_level);
 	int is_contained_in_Baer_subline(long int *pts, int nb_pts,
 		int verbose_level);
+	void report(std::ostream &ost);
 
 	// projective_space2.cpp:
-	void print_set_numerical(long int *set, int set_size);
+	void print_set_numerical(std::ostream &ost, long int *set, int set_size);
 	void print_set(long int *set, int set_size);
 	void print_line_set_numerical(long int *set, int set_size);
 	int determine_hermitian_form_in_plane(int *pts, int nb_pts, 
@@ -2836,11 +2884,6 @@ public:
 		long int *&Lines_in_tritangent_plane,
 		long int *&Line_in_unitangent_plane,
 		int verbose_level);
-#if 0
-	void compute_external_lines_on_three_tritangent_planes(long int *Lines,
-		long int *&External_lines, int &nb_external_lines,
-		int verbose_level);
-#endif
 	void init_double_sixes(int verbose_level);
 	void create_half_double_sixes(int verbose_level);
 	int find_half_double_six(long int *half_double_six);
@@ -3099,6 +3142,7 @@ public:
 	void compute_tritangent_planes_by_rank(int verbose_level);
 	void compute_tritangent_planes(int verbose_level);
 	void compute_planes_and_dual_point_ranks(int verbose_level);
+	void report_properties(std::ostream &ost, int verbose_level);
 	void print_line_intersection_graph(std::ostream &ost);
 	void print_adjacency_matrix(std::ostream &ost);
 	void print_adjacency_matrix_with_intersection_points(std::ostream &ost);
@@ -3113,7 +3157,10 @@ public:
 	void print_affine_points_in_source_code(std::ostream &ost);
 	void print_points(std::ostream &ost);
 	void print_double_sixes(std::ostream &ost);
+	void print_half_double_sixes(std::ostream &ost);
+	void print_half_double_sixes_numerically(std::ostream &ost);
 	void print_trihedral_pairs(std::ostream &ost);
+	void print_trihedral_pairs_numerically(std::ostream &ost);
 	void latex_table_of_trihedral_pairs_and_clebsch_system(std::ostream &ost,
 		int *T, int nb_T);
 	void latex_table_of_trihedral_pairs(std::ostream &ost, int *T, int nb_T);

@@ -22,8 +22,8 @@ MODULES = \
 	code_classify.o \
 	cubic_curve_with_action.o \
 	hermitian_spreads_classify.o \
+	hill_cap.o \
 	invariants_packing.o \
-	k_arc_generator.o \
 	linear_set_classify.o \
 	ovoid_classify.o \
 	packing_classify.o \
@@ -32,7 +32,6 @@ MODULES = \
 	packing_long_orbits.o \
 	packing_was.o \
 	polar.o \
-	projective_space.o \
 	recoordinatize.o \
 	search_blocking_set.o \
 	singer_cycle.o \

@@ -565,7 +565,7 @@ void schreier::print_tables(ostream &ost,
 
 	if (A->degree < 100) {
 		for (i = 0; i < A->degree; i++) {
-			coset_rep(i);
+			coset_rep(i, 0 /* verbose_level */);
 			//coset_rep_inv(i);
 			ost << setw(w) << i << " : " << " : "
 				<< setw(w) << orbit[i] << " : "
@@ -623,7 +623,7 @@ void schreier::print_tables_latex(ostream &ost,
 	ost << "\\hline" << endl;
 	ost << "\\hline" << endl;
 	for (i = 0; i < A->degree; i++) {
-		coset_rep(i);
+		coset_rep(i, 0 /* verbose_level */);
 		//coset_rep_inv(i);
 		ost << i << " & "
 			<< setw(w) << orbit[i] << " & "

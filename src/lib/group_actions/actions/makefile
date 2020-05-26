@@ -23,7 +23,7 @@ MODULES = \
 	interface_perm_group.o \
 	interface_permutation_representation.o \
 	interface_wreath_product.o \
-	nauty_interface.o \
+	nauty_interface_with_group.o \
 	stabilizer_chain_base_data.o 
 	
 

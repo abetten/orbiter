@@ -19,7 +19,8 @@ namespace classification {
 void poset_classification::compute_orbits_on_subsets(
 	int target_depth,
 	const char *prefix,
-	int f_W, int f_w,
+	//int f_W, int f_w,
+	poset_classification_control *PC_control,
 	poset *Poset,
 	int verbose_level)
 {
@@ -39,7 +40,7 @@ void poset_classification::compute_orbits_on_subsets(
 	//gen = NEW_OBJECT(poset_classification);
 
 
-	poset_classification::f_W = f_W;
+	//poset_classification::f_W = f_W;
 	depth = target_depth;
 	downstep_orbits_print_max_orbits = 50;
 	downstep_orbits_print_max_points_per_orbit = INT_MAX;
@@ -52,7 +53,8 @@ void poset_classification::compute_orbits_on_subsets(
 		cout << "poset_classification::compute_orbits_on_subsets "
 				"calling gen->init" << endl;
 		}
-	init(Poset,
+	init(PC_control,
+		Poset,
 		target_depth, verbose_level - 1);
 
 	strcpy(fname_base, prefix);
@@ -104,7 +106,7 @@ int poset_classification::compute_orbits(int from_level, int to_level,
 	if (f_v) {
 		cout << "poset_classification::compute_orbits from "
 				<< from_level << " to " << to_level << endl;
-		cout << "f_lex=" << f_lex << endl;
+		cout << "f_lex=" << Control->f_lex << endl;
 		cout << "fname_base=" << fname_base << endl;
 		}
 
@@ -120,11 +122,11 @@ int poset_classification::compute_orbits(int from_level, int to_level,
 		int f_write_candidate_file = FALSE;
 
 #if 1
-		if (f_W && level) {
+		if (Control->f_W && level) {
 			f_write_candidate_file = TRUE;
 			}
 
-		if (f_w && level == to_level - 1) {
+		if (Control->f_w && level == to_level - 1) {
 			f_write_candidate_file = TRUE;
 			}
 #endif
@@ -137,11 +139,11 @@ int poset_classification::compute_orbits(int from_level, int to_level,
 			verbose_level - 2);
 		
 		
-		f_write_files = (f_W || (f_w && level == to_level - 1));
+		f_write_files = (Control->f_W || (Control->f_w && level == to_level - 1));
 	
 		
 
-		if (f_write_data_files) {
+		if (Control->f_write_data_files) {
 			housekeeping(level + 1, f_write_files,
 					Os.os_ticks(), verbose_level - 1);
 		}
@@ -199,14 +201,15 @@ int poset_classification::main(int t0,
 		cout << "poset_classification::main ";
 		print_problem_label();
 		cout << " depth = " << depth << endl;
-		cout << "f_W = " << f_W << endl;
-		cout << "f_w = " << f_w << endl;
+		cout << "f_W = " << Control->f_W << endl;
+		cout << "f_w = " << Control->f_w << endl;
 		cout << "verbose_level = " << verbose_level << endl;
+		Control->print();
 		}
-	if (f_recover) {
+	if (Control->f_recover) {
 		if (f_v) {
 			cout << "poset_classification::main: recovering from file "
-					<< recover_fname << endl;
+					<< Control->recover_fname << endl;
 			}
 
 
@@ -219,7 +222,7 @@ int poset_classification::main(int t0,
 		cout << endl;
 
 
-		recover(recover_fname, depth_completed, verbose_level - 1);
+		recover(Control->recover_fname, depth_completed, verbose_level - 1);
 		
 		if (f_v) {
 			cout << "depth_completed = " << depth_completed << endl;
@@ -231,12 +234,12 @@ int poset_classification::main(int t0,
 		recreate_schreier_vectors_up_to_level(depth_completed - 1, 
 			verbose_level /*MINIMUM(verbose_level, 1)*/);
 		}
-	if (f_print_only) {
+	if (Control->f_print_only) {
 		print_tree();
 		write_treefile_and_draw_tree(
 			fname_base, depth_completed, 
-			xmax, ymax, 
-			radius, f_embedded, verbose_level - 1);
+			Control->xmax, Control->ymax,
+			Control->radius, f_embedded, verbose_level - 1);
 
 		return 0;
 		}
@@ -245,8 +248,8 @@ int poset_classification::main(int t0,
 		}
 		
 	
-	if (f_max_depth) {
-		target_depth = max_depth;
+	if (Control->f_max_depth) {
+		target_depth = Control->max_depth;
 		}
 	else {
 		target_depth = depth;
@@ -266,11 +269,11 @@ int poset_classification::main(int t0,
 		int f_write_candidate_file = FALSE;
 
 #if 1
-		if (f_W && size) {
+		if (Control->f_W && size) {
 			f_write_candidate_file = TRUE;
 			}
 
-		if (f_w && size == target_depth - 1) {
+		if (Control->f_w && size == target_depth - 1) {
 			f_write_candidate_file = TRUE;
 			}
 #endif
@@ -318,10 +321,10 @@ int poset_classification::main(int t0,
 			vl = verbose_level - 1;
 			}
 
-		f_write_files = (f_W || (f_w && size == target_depth - 1));
+		f_write_files = (Control->f_W || (Control->f_w && size == target_depth - 1));
 	
 		
-		if (f_write_data_files) {
+		if (Control->f_write_data_files) {
 			housekeeping(size + 1, f_write_files,
 					Os.os_ticks(), verbose_level - 1);
 		}
@@ -473,7 +476,7 @@ void poset_classification::compute_flag_orbits(int size,
 			root[prev].compute_flag_orbits_subspace_action(this, size,
 				f_create_schreier_vector,
 				f_use_invariant_subset_if_available, 
-				f_lex, 
+				Control->f_lex,
 				verbose_level - 1);
 			if (f_v) {
 				cout << "poset_classification::compute_flag_orbits after compute_flag_orbits_subspace_action" << endl;
@@ -486,7 +489,7 @@ void poset_classification::compute_flag_orbits(int size,
 			root[prev].compute_flag_orbits(this, size,
 				f_create_schreier_vector,
 				f_use_invariant_subset_if_available, 
-				f_lex, 
+				Control->f_lex,
 				verbose_level - 1);
 			if (f_v4) {
 				cout << "poset_classification::compute_flag_orbits after compute_flag_orbits" << endl;
@@ -543,7 +546,7 @@ void poset_classification::upstep(int size,
 // calls extend_node
 {
 	int f_v = (verbose_level >= 1);
-	int f_v4 = (verbose_level >= 4);
+	int f_vv = (verbose_level >= 2);
 	int f, cur, l, prev, u;
 	int f_indicate_not_canonicals = FALSE;
 	int f_print = f_v;
@@ -578,7 +581,7 @@ void poset_classification::upstep(int size,
 		}
 	for (u = 0; u < l; u++) {
 
-		if (f_v4) {
+		if (f_vv) {
 			cout << "poset_classification::upstep "
 					"case " << u << " / " << l << endl;
 			}
@@ -599,13 +602,17 @@ void poset_classification::upstep(int size,
 			}
 #endif
 
+		if (f_vv) {
+			cout << "poset_classification::upstep "
+					"case " << u << " / " << l << " before extend_node" << endl;
+			}
 		extend_node(size, prev, cur, 
 			f_debug, 
 			f_indicate_not_canonicals, 
 			verbose_level - 2);
 
 #if 1
-		if (f_v4) {
+		if (f_vv) {
 			cout << "poset_classification::upstep "
 					"after extend_node, size="
 					<< size << endl;
@@ -766,7 +773,7 @@ void poset_classification::extend_node(
 #endif
 		//verbose_level_down = verbose_level - 4;
 
-		if (FALSE) {
+		if (f_vv) {
 			print_level_info(size, prev);
 			cout << "poset_classification::extend_node "
 					"working on extension "
@@ -776,11 +783,11 @@ void poset_classification::extend_node(
 
 		Work.init(this, size, prev, prev_ex, cur, 
 			f_debug, 
-			f_lex, 
+			Control->f_lex,
 			f_indicate_not_canonicals,
-			verbose_level - 4);
+			verbose_level - 2);
 
-		if (FALSE) {
+		if (f_vv) {
 			print_level_info(size, prev);
 			cout << "poset_classification::extend_node "
 					"working on extension "

@@ -364,8 +364,18 @@ class bitmatrix;
 class override_double;
 class os_interface;
 class plot_tools;
+class tdo_refinement_description;
 class tdo_refinement;
 class algebra_global;
+class combinatorial_object_description;
+class combinatorial_object_create;
+class drawable_set_of_objects;
+class parametric_curve;
+class parametric_curve_entry;
+class function_command;
+class function_polish_description;
+class function_polish;
+class nauty_interface;
 
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)
@@ -499,6 +509,7 @@ public:
 	~longinteger_object();
 	void freeself();
 	
+	char &ith(int i) { return r[i]; };
 	char &sign() { return sgn; };
 	int &len() { return l; };
 	char *&rep() { return r; };
@@ -539,8 +550,8 @@ public:
 
 std::ostream& operator<<(std::ostream& ost, longinteger_object& p);
 
-}
-}
+}}
+
 
 #include "./algebra_and_number_theory/algebra_and_number_theory.h"
 #include "./coding_theory/coding_theory.h"
@@ -555,4 +566,8 @@ std::ostream& operator<<(std::ostream& ost, longinteger_object& p);
 #include "./solvers/solvers.h"
 #include "./statistics/statistics.h"
 
+
+
 #endif
+
+

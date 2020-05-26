@@ -20,7 +20,57 @@ namespace top_level {
 
 linear_set_classify::linear_set_classify()
 {
-	null();
+	s = n = m = q = Q = depth = 0;
+	f_semilinear = FALSE;
+	schreier_depth = 0;
+	f_use_invariant_subset_if_available = FALSE;
+	f_debug = FALSE;
+	f_has_extra_test_func = FALSE;
+	extra_test_func = NULL;
+	extra_test_func_data = NULL;
+	Basis = NULL;
+	base_cols = NULL;
+
+	Fq = NULL;
+	FQ = NULL;
+	SubS = NULL;
+	P = NULL;
+	Aq = NULL;
+	AQ = NULL;
+	A_PGLQ = NULL;
+	VS = NULL;
+	Control1 = NULL;
+	Poset1 = NULL;
+	Gen = NULL;
+	vector_space_dimension = 0;
+	Strong_gens = NULL;
+	D = NULL;
+	n1 = 0;
+	m1 = 0;
+	D1 = NULL;
+	spread_embedding = NULL;
+
+	f_identify = FALSE;
+	k = 0;
+	order = 0;
+	T = NULL;
+
+	secondary_level = 0;
+	secondary_orbit_at_level = 0;
+	secondary_depth = 0;
+	secondary_candidates = NULL;
+	secondary_nb_candidates = 0;
+	secondary_schreier_depth = 0;
+
+
+	Control_stab = NULL;
+	Poset_stab = NULL;
+	Gen_stab = NULL;
+	Control2 = NULL;
+	Poset2 = NULL;
+	Gen2 = NULL;
+	is_allowed = NULL;
+
 }
 
 linear_set_classify::~linear_set_classify()
@@ -30,31 +80,6 @@ linear_set_classify::~linear_set_classify()
 
 void linear_set_classify::null()
 {
-	f_has_extra_test_func = FALSE;
-	extra_test_func = NULL;
-	extra_test_func_data = NULL;
-	Fq = NULL;
-	FQ = NULL;
-	SubS = NULL;
-	P = NULL;
-	Aq = NULL;
-	AQ = NULL;
-	A_PGLQ = NULL;
-	Strong_gens = NULL;
-	D = NULL;
-	D1 = NULL;
-	spread_embedding = NULL;
-	VS = NULL;
-	Poset1 = NULL;
-	Gen = NULL;
-	Basis = NULL;
-	base_cols = NULL;
-	Poset_stab = NULL;
-	Poset2 = NULL;
-	Gen2 = NULL;
-	is_allowed = NULL;
-	f_identify = FALSE;
-	T = NULL;
 }
 
 void linear_set_classify::freeself()
@@ -390,10 +415,11 @@ void linear_set_classify::init(int argc, const char **argv,
 			verbose_level - 1);
 
 
+	Control1 = NEW_OBJECT(poset_classification_control);
 	Poset1 = NEW_OBJECT(poset);
 	Gen = NEW_OBJECT(poset_classification);
 
-	Gen->read_arguments(argc, argv, 0);
+	//Gen->read_arguments(argc, argv, 0);
 
 	//Gen->prefix[0] = 0;
 	sprintf(Gen->fname_base, "subspaces_%d_%d_%d", n, q, s);
@@ -407,7 +433,7 @@ void linear_set_classify::init(int argc, const char **argv,
 	if (f_v) {
 		cout << "linear_set_classify::init before Gen->init" << endl;
 		}
-	Gen->init(Poset1, Gen->depth /* sz */, verbose_level);
+	Gen->init(Control1, Poset1, Gen->depth /* sz */, verbose_level);
 	if (f_v) {
 		cout << "linear_set_classify::init after Gen->init" << endl;
 		}
@@ -466,7 +492,7 @@ void linear_set_classify::init(int argc, const char **argv,
 	if (f_identify) {
 		T = NEW_OBJECT(spread_classify);
 
-		int f_recoordinatize = TRUE;
+		//int f_recoordinatize = TRUE;
 
 		k = n >> 1;
 		order = NT.i_power_j(q, k);
@@ -475,17 +501,30 @@ void linear_set_classify::init(int argc, const char **argv,
 			cout << "Classifying spreads of order " << order << endl;
 			}
 
-		int max_depth = order + 1;
+		//int max_depth = order + 1;
+		poset_classification_control *Control;
+		linear_group *LG;
 
+		Control = NEW_OBJECT(poset_classification_control);
+		LG = NEW_OBJECT(linear_group); // hack !!! ToDo
+
+		T->init(Fq, LG, k, Control,
+			//Fq, f_recoordinatize,
+			//"SPREADS_STARTER", "Spreads", order + 1,
+			//argc, argv,
+			MINIMUM(verbose_level - 1, 2));
+
+#if 0
 		T->init(order, n, k, max_depth,
 			Fq, f_recoordinatize,
 			"SPREADS_STARTER", "Spreads", order + 1,
 			argc, argv,
 			MINIMUM(verbose_level - 1, 2));
+#endif
 
-		T->read_arguments(argc, argv);
+		//T->read_arguments(argc, argv);
 
-		T->init2(verbose_level);
+		//T->init2(Control, verbose_level);
 
 		if (f_v) {
 			cout << "Classifying spreads planes of order "
@@ -951,10 +990,11 @@ void linear_set_classify::init_secondary(int argc, const char **argv,
 	secondary_candidates = candidates;
 	secondary_nb_candidates = nb_candidates;
 
+	Control2 = NEW_OBJECT(poset_classification_control);
 	Poset2 = NEW_OBJECT(poset);
 	Gen2 = NEW_OBJECT(poset_classification);
 
-	Gen2->read_arguments(argc, argv, 0);
+	//Gen2->read_arguments(argc, argv, 0);
 
 	//Gen2->prefix[0] = 0;
 	sprintf(Gen2->fname_base, "subspaces_%d_%d_%d_secondary_%d_%d", n, q, s,
@@ -981,12 +1021,12 @@ void linear_set_classify::init_secondary(int argc, const char **argv,
 	Poset2->init_subspace_lattice(Aq, Aq,
 			Strong_gens_previous, VS,
 			verbose_level);
-	Gen2->init(Poset2,
+	Gen2->init(Control2, Poset2,
 			Gen2->depth /* sz */,
 			verbose_level);
 	cout << "linear_set_classify::init_secondary after Gen2->init" << endl;
 
-	Gen2->f_max_depth = FALSE;
+	Gen2->Control->f_max_depth = FALSE;
 		// could have been set to true because of -depth option
 
 #if 0
@@ -1360,10 +1400,11 @@ void linear_set_classify::init_compute_stabilizer(int argc, const char **argv,
 		cout << "linear_set_classify::init_compute_stabilizer" << endl;
 		}
 
+	Control_stab = NEW_OBJECT(poset_classification_control);
 	Poset_stab = NEW_OBJECT(poset);
 	Gen_stab = NEW_OBJECT(poset_classification);
 
-	Gen_stab->read_arguments(argc, argv, 0);
+	//Gen_stab->read_arguments(argc, argv, 0);
 
 	//Gen_stab->prefix[0] = 0;
 	sprintf(Gen_stab->fname_base,
@@ -1390,13 +1431,14 @@ void linear_set_classify::init_compute_stabilizer(int argc, const char **argv,
 	Poset_stab->init_subspace_lattice(Aq, Aq,
 			Strong_gens_previous, VS,
 			verbose_level);
-	Gen_stab->init(Poset_stab,
+	Gen_stab->init(Control_stab,
+			Poset_stab,
 			Gen_stab->depth /* sz */,
 			verbose_level);
 	cout << "linear_set_classify::init_compute_stabilizer "
 			"after Gen_stab->init" << endl;
 
-	Gen_stab->f_max_depth = FALSE; // could have been set to true because of -depth option
+	Gen_stab->Control->f_max_depth = FALSE; // could have been set to true because of -depth option
 
 #if 0
 	Gen_stab->init_check_func(

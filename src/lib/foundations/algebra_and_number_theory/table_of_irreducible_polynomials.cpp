@@ -148,13 +148,13 @@ void table_of_irreducible_polynomials::init(int k,
 
 void table_of_irreducible_polynomials::print(ostream &ost)
 {
-	int d, f, l, i, j;
+	int d, l, i, j;
 
 	cout << "table_of_irreducible_polynomials::print "
 			"table of all irreducible polynomials:" << endl;
 	j = 0;
 	for (d = 1; d <= k; d++) {
-		f = First_irred[d];
+		//f = First_irred[d];
 		l = Nb_irred[d];
 		ost << "There are " << l << " irreducible polynomials of degree " << d << ":" << endl;
 		for (i = 0; i < l; i++) {

@@ -392,8 +392,7 @@ void surface_domain::compute_intersection_points_and_indices(int *Adj,
 	sorting Sorting;
 
 	if (f_v) {
-		cout << "surface_domain::compute_intersection_points_"
-				"and_indices" << endl;
+		cout << "surface_domain::compute_intersection_points_and_indices" << endl;
 		}
 	Intersection_pt = NEW_int(nb_lines * nb_lines);
 	Intersection_pt_idx = NEW_int(nb_lines * nb_lines);
@@ -406,9 +405,8 @@ void surface_domain::compute_intersection_points_and_indices(int *Adj,
 				pt = P->intersection_of_two_lines(a1, a2);
 				if (!Sorting.lint_vec_search(Points, nb_points,
 					pt, idx, 0)) {
-					cout << "surface_domain::compute_intersection_points_"
-							"and_indices cannot find point "
-							"in Points" << endl;
+					cout << "surface_domain::compute_intersection_points_and_indices "
+							"cannot find point in Points" << endl;
 					cout << "Points:";
 					lint_vec_print_fully(cout, Points, nb_points);
 					cout << endl;
@@ -427,8 +425,7 @@ void surface_domain::compute_intersection_points_and_indices(int *Adj,
 			}
 		}
 	if (f_v) {
-		cout << "surface_domain::compute_intersection_points_"
-				"and_indices done" << endl;
+		cout << "surface_domain::compute_intersection_points_and_indices done" << endl;
 		}
 }
 
@@ -453,10 +450,12 @@ void surface_domain::lines_meet3_and_skew3(
 		cout << endl;
 		}
 	for (i = 0; i < 3; i++) {
-		o_rank[i] = Klein->line_to_point_on_quadric(lines_meet3[i], 0 /* verbose_level*/);
+		o_rank[i] = Klein->line_to_point_on_quadric(
+				lines_meet3[i], 0 /* verbose_level*/);
 		}
 	for (i = 0; i < 3; i++) {
-		o_rank[3 + i] = Klein->line_to_point_on_quadric(lines_skew3[i], 0 /* verbose_level*/);
+		o_rank[3 + i] = Klein->line_to_point_on_quadric(
+				lines_skew3[i], 0 /* verbose_level*/);
 		}
 
 	O->perp_of_k_points(o_rank, 3, perp, perp_sz, verbose_level);
@@ -500,12 +499,14 @@ void surface_domain::perp_of_three_lines(long int *three_lines,
 		cout << endl;
 		}
 	for (i = 0; i < 3; i++) {
-		o_rank[i] = Klein->line_to_point_on_quadric(three_lines[i], 0 /* verbose_level*/);
+		o_rank[i] = Klein->line_to_point_on_quadric(
+				three_lines[i], 0 /* verbose_level*/);
 		}
 	O->perp_of_k_points(o_rank, 3, perp, perp_sz, verbose_level);
 
 	for (i = 0; i < perp_sz; i++) {
-		perp[i] = Klein->point_on_quadric_to_line(perp[i], 0 /* verbose_level*/);
+		perp[i] = Klein->point_on_quadric_to_line(
+				perp[i], 0 /* verbose_level*/);
 		}
 
 	if (f_v) {
@@ -530,7 +531,8 @@ int surface_domain::perp_of_four_lines(
 		cout << endl;
 		}
 	for (i = 0; i < 4; i++) {
-		o_rank[i] = Klein->line_to_point_on_quadric(four_lines[i], 0 /* verbose_level*/);
+		o_rank[i] = Klein->line_to_point_on_quadric(
+				four_lines[i], 0 /* verbose_level*/);
 		}
 	//Perp = NEW_int(O->alpha * (O->q + 1));
 	O->perp_of_k_points(o_rank, 4, Perp, perp_sz, verbose_level);
@@ -570,7 +572,8 @@ int surface_domain::rank_of_four_lines_on_Klein_quadric(
 		cout << endl;
 		}
 	for (i = 0; i < 4; i++) {
-		o_rank[i] = Klein->line_to_point_on_quadric(four_lines[i], 0 /* verbose_level*/);
+		o_rank[i] = Klein->line_to_point_on_quadric(
+				four_lines[i], 0 /* verbose_level*/);
 		}
 
 	coords = NEW_int(4 * 6);
@@ -596,29 +599,27 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 	int ret = TRUE;
 
 	if (f_v) {
-		cout << "surface_domain::create_double_six_from_five_lines_with_"
-				"a_common_transversal" << endl;
+		cout << "surface_domain::create_double_six_from_five_lines_with_a_common_transversal" << endl;
 		cout << "The five lines are ";
 		lint_vec_print(cout, five_pts, 5);
 		cout << endl;
 		}
 	for (i = 0; i < 5; i++) {
-		o_rank[i] = Klein->line_to_point_on_quadric(five_pts[i], 0 /* verbose_level*/);
+		o_rank[i] = Klein->line_to_point_on_quadric(
+				five_pts[i], 0 /* verbose_level*/);
 		}
 	for (i = 0; i < 5; i++) {
 		for (j = i + 1; j < 5; j++) {
 			if (O->evaluate_bilinear_form_by_rank(
 					o_rank[i], o_rank[j]) == 0) {
-				cout << "surface_domain::create_double_six_from_five_lines_with_"
-						"a_common_transversal two of the given lines "
+				cout << "surface_domain::create_double_six_from_five_lines_with_a_common_transversal two of the given lines "
 						"intersect, error" << endl;
 				exit(1);
 				}
 			}
 		}
 	if (f_v) {
-		cout << "surface_domain::create_double_six_from_five_lines_with_"
-				"a_common_transversal" << endl;
+		cout << "surface_domain::create_double_six_from_five_lines_with_a_common_transversal" << endl;
 		cout << "The five lines as orthogonal points are ";
 		lint_vec_print(cout, o_rank, 5);
 		cout << endl;
@@ -662,9 +663,8 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 			cout << endl;
 			}
 		if (Perp_sz[rk] != 2) {
-			cout << "surface_domain::create_double_six_from_five_lines_with_"
-					"a_common_transversal Perp_opp_sz != 2, "
-					"something is wrong" << endl;
+			cout << "surface_domain::create_double_six_from_five_lines_with_a_common_transversal "
+					"Perp_opp_sz != 2, something is wrong" << endl;
 			cout << "subset " << rk << " / " << nb_subsets << endl;
 			exit(1);
 			ret = FALSE;
@@ -706,8 +706,7 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 			}
 		}
 	if (f_v) {
-		cout << "surface_domain::create_double_six_from_five_lines_with_"
-				"a_common_transversal" << endl;
+		cout << "surface_domain::create_double_six_from_five_lines_with_a_common_transversal" << endl;
 		cout << "opposites ";
 		lint_vec_print(cout, opposites, 5);
 		cout << endl;
@@ -734,8 +733,7 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 		}
 	if (Perp_opp_sz != 2) {
 		ret = FALSE;
-		cout << "surface_domain::create_double_six_from_five_lines_with_"
-				"a_common_transversal Perp_opp_sz != 2, "
+		cout << "surface_domain::create_double_six_from_five_lines_with_a_common_transversal Perp_opp_sz != 2, "
 				"something is wrong" << endl;
 		exit(1);
 		FREE_lint(Perp_opp);
@@ -750,8 +748,7 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 		transversal_opp = Perp_opp[0];
 		}
 	else {
-		cout << "surface_domain::create_double_six_from_five_lines_with_"
-				"a_common_transversal something is wrong "
+		cout << "surface_domain::create_double_six_from_five_lines_with_a_common_transversal something is wrong "
 				"with Perp_opp" << endl;
 		exit(1);
 		}
@@ -759,8 +756,7 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 	o_rank[5] = transversal_opp;
 
 	if (f_v) {
-		cout << "surface_domain::create_double_six_from_five_lines_with_"
-				"a_common_transversal" << endl;
+		cout << "surface_domain::create_double_six_from_five_lines_with_a_common_transversal" << endl;
 		cout << "o_rank ";
 		lint_vec_print(cout, o_rank, 12);
 		cout << endl;
@@ -770,8 +766,7 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 		double_six[i] = Klein->point_on_quadric_to_line(o_rank[i], 0 /* verbose_level*/);
 		}
 	if (f_v) {
-		cout << "surface_domain::create_double_six_from_five_lines_with_"
-				"a_common_transversal" << endl;
+		cout << "surface_domain::create_double_six_from_five_lines_with_a_common_transversal" << endl;
 		cout << "double_six ";
 		lint_vec_print(cout, double_six, 12);
 		cout << endl;
@@ -806,8 +801,7 @@ finish:
 	FREE_int(Perp_sz);
 
 	if (f_v) {
-		cout << "surface_domain::create_double_six_from_five_lines_with_"
-				"a_common_transversal done" << endl;
+		cout << "surface_domain::create_double_six_from_five_lines_with_a_common_transversal done" << endl;
 		}
 	return ret;
 }

@@ -30,7 +30,7 @@ static int registry_key_pair_compare_by_location(void *K1v, void *K2v);
 
 mem_object_registry::mem_object_registry()
 {
-	int verbose_level = 1;
+	int verbose_level = 0;
 
 	f_automatic_dump = FALSE;
 	automatic_dump_interval = 0;

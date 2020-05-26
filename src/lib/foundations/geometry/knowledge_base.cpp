@@ -66,11 +66,14 @@ namespace foundations {
 #include "./DATA/surface_109.cpp"
 #include "./DATA/surface_113.cpp"
 #include "./DATA/surface_121.cpp"
+#include "./DATA/surface_127.cpp"
 #include "./DATA/surface_128.cpp"
 
 #include "./DATA/data_DH.cpp"
 
 #include "./DATA/data_spreads.cpp"
+
+#include "./DATA/data_tensor.cpp"
 
 #include "./DATA/data_BLT.cpp"
 
@@ -417,6 +420,11 @@ int *knowledge_base::cubic_surface_representative(int q, int i)
 		nb = surface_121_nb_reps;
 		sz = surface_121_size;
 		}
+	else if (q == 127) {
+		p = surface_127_reps;
+		nb = surface_127_nb_reps;
+		sz = surface_127_size;
+		}
 	else if (q == 128) {
 		p = surface_128_reps;
 		nb = surface_128_nb_reps;
@@ -752,6 +760,14 @@ void knowledge_base::cubic_surface_stab_gens(int q, int i,
 		l = surface_121_stab_gens_len[i];
 		stab_order = surface_121_stab_order[i];
 		}
+	else if (q == 127) {
+		Reps = surface_127_stab_gens;
+		nb = surface_127_nb_reps;
+		make_element_size = surface_127_make_element_size;
+		f = surface_127_stab_gens_fst[i];
+		l = surface_127_stab_gens_len[i];
+		stab_order = surface_127_stab_order[i];
+		}
 	else if (q == 128) {
 		Reps = surface_128_stab_gens;
 		nb = surface_128_nb_reps;
@@ -973,6 +989,11 @@ int knowledge_base::cubic_surface_nb_Eckardt_points(int q, int i)
 		p = surface_121_nb_E;
 		nb = surface_121_nb_reps;
 		//sz = surface_121_size;
+		}
+	else if (q == 127) {
+		p = surface_127_nb_E;
+		nb = surface_127_nb_reps;
+		//sz = surface_127_size;
 		}
 	else if (q == 128) {
 		p = surface_128_nb_E;
@@ -1318,9 +1339,29 @@ long int *knowledge_base::cubic_surface_Lines(int q, int i)
 		p = surface_101_Lines;
 		nb = surface_101_nb_reps;
 		}
+	else if (q == 103) {
+		p = surface_103_Lines;
+		nb = surface_103_nb_reps;
+		}
+	else if (q == 107) {
+		p = surface_107_Lines;
+		nb = surface_107_nb_reps;
+		}
+	else if (q == 109) {
+		p = surface_109_Lines;
+		nb = surface_109_nb_reps;
+		}
+	else if (q == 113) {
+		p = surface_113_Lines;
+		nb = surface_113_nb_reps;
+		}
 	else if (q == 121) {
 		p = surface_121_Lines;
 		nb = surface_121_nb_reps;
+		}
+	else if (q == 127) {
+		p = surface_127_Lines;
+		nb = surface_127_nb_reps;
 		}
 	else if (q == 128) {
 		p = surface_128_Lines;
@@ -2510,6 +2551,65 @@ void knowledge_base::get_projective_plane_list_of_lines(
 		cout << "knowledge_base::get_projective_plane_list_of_lines done" << endl;
 	}
 }
+
+
+// #############################################################################
+// tensor orbits:
+// #############################################################################
+
+
+int knowledge_base::tensor_orbits_nb_reps(int n)
+{
+	int nb;
+
+	if (n == 4) {
+		nb = data_tensor_nb_w4_reps;
+	}
+	else if (n == 5) {
+		nb = data_tensor_nb_w5_reps;
+	}
+	else {
+		cout << "knowledge_base::tensor_orbits_nb_reps n=" << n
+				<< " I don't have information for this case" << endl;
+		exit(1);
+	}
+	return nb;
+}
+
+long int *knowledge_base::tensor_orbits_rep(int n, int idx)
+// idx starts from 0
+{
+	long int *p;
+	int nb, sz = 3;
+
+	if (n == 4) {
+		p = data_tensor_w4_reps;
+		nb = data_tensor_nb_w4_reps;
+	}
+	else if (n == 5) {
+		p = data_tensor_w5_reps;
+		nb = data_tensor_nb_w5_reps;
+	}
+	else {
+		cout << "knowledge_base::tensor_orbits_rep n=" << n
+				<< " I don't have information for this case" << endl;
+		exit(1);
+	}
+	if (idx < 0) {
+		cout << "knowledge_base::tensor_orbits_rep n=" << n << " idx=" << idx
+				<< " but idx must be at least 0 (numbering starts at 0)" << endl;
+		exit(1);
+	}
+	if (idx >= nb) {
+		cout << "knowledge_base::tensor_orbits_rep n=" << n << " idx=" << idx
+				<< " but I have only " << nb << " representatives" << endl;
+		exit(1);
+	}
+	p += idx * sz;
+	return p;
+}
+
+
 
 }
 }

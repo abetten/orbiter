@@ -19,8 +19,13 @@ namespace foundations {
 
 tdo_refinement::tdo_refinement()
 {
+	Descr = NULL;
+
 	t0 = 0;
 	cnt = 0;
+	p_buf = NULL;
+
+#if 0
 	p_buf = NULL;
 	fname_in = NULL;
 	f_lambda3 = FALSE;
@@ -46,7 +51,7 @@ tdo_refinement::tdo_refinement()
 	f_do_the_geometric_test = FALSE;
 	f_once = FALSE;
 	f_use_mckay_solver = FALSE;
-
+#endif
 
 	//geo_parameter GP;
 
@@ -58,19 +63,15 @@ tdo_refinement::tdo_refinement()
 	nb_written_tactical = 0;
 	nb_tactical = 0;
 	cnt_second_system = 0;
-	Sol = NULL;
+	//Sol = NULL;
 
 }
 
 tdo_refinement::~tdo_refinement()
 {
-
-	if (Sol) {
-		FREE_OBJECT(Sol);
-	}
 }
 
-void tdo_refinement::init(int verbose_level)
+void tdo_refinement::init(tdo_refinement_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	os_interface Os;
@@ -81,107 +82,18 @@ void tdo_refinement::init(int verbose_level)
 
 	t0 = Os.os_ticks();
 
-
-	Sol = NEW_OBJECT(solution_file_data);
-	Sol->nb_solution_files = 0;
+	tdo_refinement::Descr = Descr;
 
 	GP2.part_nb_alloc = 10000;
 	GP2.entries_nb_alloc = 1000000;
-	GP2.part = new int[GP2.part_nb_alloc];
-	GP2.entries = new int[GP2.entries_nb_alloc];
+	GP2.part = NEW_int(GP2.part_nb_alloc);
+	GP2.entries = NEW_int(GP2.entries_nb_alloc);
 
 	if (f_v) {
 		cout << "tdo_refinement::init done" << endl;
 	}
 }
 
-void tdo_refinement::read_arguments(int argc, char **argv)
-{
-	int i;
-
-#if 0
-	if (argc <= 1) {
-		print_usage();
-		exit(1);
-		}
-#endif
-	for (i = 1; i < argc - 1; i++) {
-		if (strcmp(argv[i], "-lambda3") == 0) {
-			f_lambda3 = TRUE;
-			lambda3 = atoi(argv[++i]);
-			block_size = atoi(argv[++i]);
-			cout << "-lambda3 " << lambda3 << " " << block_size << endl;
-			}
-		if (strcmp(argv[i], "-scale") == 0) {
-			f_scale = TRUE;
-			scaling = atoi(argv[++i]);
-			cout << "-scale " << scaling << endl;
-			}
-		if (strcmp(argv[i], "-solution") == 0) {
-			//f_solution = TRUE;
-			Sol->system_no[Sol->nb_solution_files] = atoi(argv[++i]);
-			Sol->solution_file[Sol->nb_solution_files] = argv[++i];
-			cout << "-solution " << Sol->system_no[Sol->nb_solution_files]
-				<< " " << Sol->solution_file[Sol->nb_solution_files] << endl;
-			Sol->nb_solution_files++;
-			}
-		else if (strcmp(argv[i], "-range") == 0) {
-			f_range = TRUE;
-			range_first = atoi(argv[++i]);
-			range_len = atoi(argv[++i]);
-			cout << "-range " << range_first << " " << range_len << endl;
-			}
-		else if (strcmp(argv[i], "-select") == 0) {
-			f_select = TRUE;
-			select_label = argv[++i];
-			cout << "-select " << select_label << endl;
-			}
-		else if (strcmp(argv[i], "-o1") == 0) {
-			f_omit1 = TRUE;
-			omit1 = atoi(argv[++i]);
-			cout << "-o1 " << omit1 << endl;
-			}
-		else if (strcmp(argv[i], "-o2") == 0) {
-			f_omit2 = TRUE;
-			omit2 = atoi(argv[++i]);
-			cout << "-o2 " << omit2 << endl;
-			}
-		if (strcmp(argv[i], "-D1_upper_bound_x0") == 0) {
-			f_D1_upper_bound_x0 = TRUE;
-			D1_upper_bound_x0 = atoi(argv[++i]);
-			cout << "-D1_upper_bound_x0 " << D1_upper_bound_x0 << endl;
-			}
-		else if (strcmp(argv[i], "-reverse") == 0) {
-			f_reverse = TRUE;
-			cout << "-reverse" << endl;
-			}
-		else if (strcmp(argv[i], "-reverse_inverse") == 0) {
-			f_reverse_inverse = TRUE;
-			cout << "-reverse_inverse" << endl;
-			}
-		else if (strcmp(argv[i], "-nopacking") == 0) {
-			f_use_packing_numbers = FALSE;
-			cout << "-nopacking" << endl;
-			}
-		else if (strcmp(argv[i], "-dual_is_linear_space") == 0) {
-			f_dual_is_linear_space = TRUE;
-			cout << "-dual_is_linear_space" << endl;
-			}
-		else if (strcmp(argv[i], "-geometric_test") == 0) {
-			f_do_the_geometric_test = TRUE;
-			cout << "-geometric_test" << endl;
-			}
-		else if (strcmp(argv[i], "-once") == 0) {
-			f_once = TRUE;
-			cout << "-once" << endl;
-			}
-		else if (strcmp(argv[i], "-mckay") == 0) {
-			f_use_mckay_solver = TRUE;
-			cout << "-mckay" << endl;
-			}
-		}
-	fname_in = argv[argc - 1];
-}
 
 void tdo_refinement::main_loop(int verbose_level)
 {
@@ -190,22 +102,31 @@ void tdo_refinement::main_loop(int verbose_level)
 	//int f_vvv = (verbose_level >= 3);
 
 	if (f_v) {
-		cout << "tdo_refinement::main_loop "
-			"opening file " << fname_in << " for reading" << endl;
+		cout << "tdo_refinement::main_loop" << endl;
 	}
-	ifstream f(fname_in);
 
-	strcpy(str, fname_in);
+	if (!Descr->f_input_file) {
+		cout << "please use option -fname_in <fanme>" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "tdo_refinement::main_loop "
+			"opening file " << Descr->fname_in << " for reading" << endl;
+	}
+	ifstream f(Descr->fname_in);
+
+	strcpy(str, Descr->fname_in);
 	get_extension_if_present(str, ext);
 	chop_off_extension_if_present(str, ext);
 
 
 	sprintf(fname_out, "%s", str);
-	if (f_range) {
-		sprintf(fname_out + strlen(fname_out), "_r%d_%d", range_first, range_len);
+	if (Descr->f_range) {
+		sprintf(fname_out + strlen(fname_out), "_r%d_%d", Descr->range_first, Descr->range_len);
 		}
-	if (f_select) {
-		sprintf(fname_out + strlen(fname_out), "_S%s", select_label);
+	if (Descr->f_select) {
+		sprintf(fname_out + strlen(fname_out), "_S%s", Descr->select_label);
 		}
 	sprintf(fname_out + strlen(fname_out), "r.tdo");
 	{
@@ -246,12 +167,12 @@ void tdo_refinement::main_loop(int verbose_level)
 			}
 
 			f_doit = TRUE;
-			if (f_range) {
-				if (cnt + 1 < range_first || cnt + 1 >= range_first + range_len)
+			if (Descr->f_range) {
+				if (cnt + 1 < Descr->range_first || cnt + 1 >= Descr->range_first + Descr->range_len)
 					f_doit = FALSE;
 				}
-			if (f_select) {
-				if (strcmp(GP.label, select_label))
+			if (Descr->f_select) {
+				if (strcmp(GP.label, Descr->select_label))
 					continue;
 				}
 			if (f_doit) {
@@ -376,13 +297,13 @@ void tdo_refinement::do_row_refinement(
 	int *distributions, nb_distributions;
 	int f_success;
 
-	if (f_lambda3) {
+	if (Descr->f_lambda3) {
 		if (f_v) {
 			cout << "tdo_refinement::do_row_refinement "
 					"before G.td3_refine_rows" << endl;
 			}
-		f_success = G.td3_refine_rows(verbose_level - 1, f_once,
-			lambda3, block_size,
+		f_success = G.td3_refine_rows(verbose_level - 1, Descr->f_once,
+				Descr->lambda3, Descr->block_size,
 			point_types, nb_point_types, point_type_len,
 			distributions, nb_distributions);
 		if (f_v) {
@@ -396,14 +317,14 @@ void tdo_refinement::do_row_refinement(
 					"before G.refine_rows" << endl;
 			}
 		f_success = G.refine_rows(verbose_level - 1,
-			f_use_mckay_solver, f_once, P,
+				Descr->f_use_mckay_solver, Descr->f_once, P,
 			point_types, nb_point_types, point_type_len,
 			distributions, nb_distributions,
-			cnt_second_system, Sol,
-			f_omit1, omit1, f_omit2, omit2,
-			f_use_packing_numbers,
-			f_dual_is_linear_space,
-			f_do_the_geometric_test);
+			cnt_second_system, Descr->Sol,
+			Descr->f_omit1, Descr->omit1, Descr->f_omit2, Descr->omit2,
+			Descr->f_use_packing_numbers,
+			Descr->f_dual_is_linear_space,
+			Descr->f_do_the_geometric_test);
 		if (f_v) {
 			cout << "tdo_refinement::do_row_refinement "
 					"after G.refine_rows" << endl;
@@ -411,8 +332,8 @@ void tdo_refinement::do_row_refinement(
 		}
 
 	if (f_success) {
-		if (f_reverse || f_reverse_inverse) {
-			distribution_reverse_sorting(f_reverse_inverse,
+		if (Descr->f_reverse || Descr->f_reverse_inverse) {
+			distribution_reverse_sorting(Descr->f_reverse_inverse,
 				point_types, nb_point_types, point_type_len,
 				distributions, nb_distributions);
 			}
@@ -470,13 +391,13 @@ void tdo_refinement::do_col_refinement(
 		cout << "tdo_refinement::do_col_refinement "
 				"col_level < row_level" << endl;
 		}
-	if (f_lambda3) {
+	if (Descr->f_lambda3) {
 		if (f_v) {
 			cout << "tdo_refinement::do_col_refinement "
 					"before G.td3_refine_columns" << endl;
 			}
-		f_success = G.td3_refine_columns(verbose_level - 1, f_once,
-			lambda3, block_size, f_scale, scaling,
+		f_success = G.td3_refine_columns(verbose_level - 1, Descr->f_once,
+				Descr->lambda3, Descr->block_size, Descr->f_scale, Descr->scaling,
 			line_types, nb_line_types, line_type_len,
 			distributions, nb_distributions);
 		if (f_v) {
@@ -489,26 +410,26 @@ void tdo_refinement::do_col_refinement(
 			cout << "tdo_refinement::do_col_refinement "
 					"before G.refine_columns" << endl;
 			}
-		f_success = G.refine_columns(verbose_level - 1, f_once, P,
+		f_success = G.refine_columns(verbose_level - 1, Descr->f_once, P,
 			line_types, nb_line_types, line_type_len,
 			distributions, nb_distributions,
-			cnt_second_system, Sol,
-			f_omit1, omit1, f_omit2, omit2,
-			f_D1_upper_bound_x0, D1_upper_bound_x0,
-			f_use_mckay_solver,
-			f_use_packing_numbers);
+			cnt_second_system, Descr->Sol,
+			Descr->f_omit1, Descr->omit1, Descr->f_omit2, Descr->omit2,
+			Descr->f_D1_upper_bound_x0, Descr->D1_upper_bound_x0,
+			Descr->f_use_mckay_solver,
+			Descr->f_use_packing_numbers);
 		if (f_v) {
 			cout << "tdo_refinement::do_col_refinement "
 					"after G.refine_columns" << endl;
 			}
 		}
 	if (f_success) {
-		if (f_reverse || f_reverse_inverse) {
+		if (Descr->f_reverse || Descr->f_reverse_inverse) {
 			if (f_v) {
 				cout << "tdo_refinement::do_col_refinement "
 						"before G.distribution_reverse_sorting" << endl;
 				}
-			distribution_reverse_sorting(f_reverse_inverse,
+			distribution_reverse_sorting(Descr->f_reverse_inverse,
 				line_types, nb_line_types, line_type_len,
 				distributions, nb_distributions);
 			if (f_v) {
@@ -892,7 +813,7 @@ int tdo_refinement::do_column_refinement(
 	{
 		tdo_scheme *G2;
 
-		G2 = new tdo_scheme;
+		G2 = NEW_OBJECT(tdo_scheme);
 
 		G2->init_part_and_entries_int(GP2.part, GP2.entries, verbose_level - 2);
 
@@ -966,7 +887,7 @@ int tdo_refinement::do_column_refinement(
 			f_tactical = TRUE;
 		else
 			f_tactical = FALSE;
-		delete G2;
+		FREE_OBJECT(G2);
 		}
 
 	FREE_int(type_index);
@@ -1092,8 +1013,8 @@ void distribution_reverse_sorting(int f_increasing,
 	int **P;
 	sorting Sorting;
 
-	D = new int[nb_distributions * nb_types];
-	P = new pint[nb_distributions];
+	D = NEW_int(nb_distributions * nb_types);
+	P = NEW_pint(nb_distributions);
 
 	for (i = 0; i < nb_distributions; i++) {
 		P[i] = D + i * nb_types;
@@ -1120,11 +1041,10 @@ void distribution_reverse_sorting(int f_increasing,
 			distributions[i * nb_types + j] = P[i][nb_types - 1 - j];
 			}
 		}
-	delete [] D;
-	delete [] P;
+	FREE_int(D);
+	FREE_pint(P);
+
 }
-
-
 
 
 }}

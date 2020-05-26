@@ -43,12 +43,27 @@ void flag_orbits::null()
 
 void flag_orbits::freeself()
 {
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "flag_orbits::freeself" << endl;
+	}
 	if (Flag_orbit_node) {
+		if (f_v) {
+			cout << "flag_orbits::freeself before FREE_OBJECTS(Flag_orbit_node)" << endl;
+		}
 		FREE_OBJECTS(Flag_orbit_node);
 		}
 	if (Pt) {
+		if (f_v) {
+			cout << "flag_orbits::freeself before FREE_lint(Pt)" << endl;
+		}
 		FREE_lint(Pt);
 		}
+	if (f_v) {
+		cout << "flag_orbits::freeself done" << endl;
+	}
 	null();
 }
 
@@ -156,6 +171,7 @@ int flag_orbits::find_node_by_po_so(int po, int so, int &idx,
 void flag_orbits::write_file(ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 1);
 	int i;
 	
 	if (f_v) {
@@ -166,9 +182,16 @@ void flag_orbits::write_file(ofstream &fp, int verbose_level)
 	fp.write((char *) &nb_flag_orbits, sizeof(int));
 	fp.write((char *) &pt_representation_sz, sizeof(int));
 
+	if (f_vv) {
+		cout << "flag_orbits::write_file Pt matrix:" << endl;
+		lint_matrix_print(Pt, nb_flag_orbits, pt_representation_sz);
+		}
 	for (i = 0; i < nb_flag_orbits * pt_representation_sz; i++) {
 		fp.write((char *) &Pt[i], sizeof(long int));
 	}
+	if (f_v) {
+		cout << "flag_orbits::write_file writing " << nb_flag_orbits << " nodes" << endl;
+		}
 	for (i = 0; i < nb_flag_orbits; i++) {
 		Flag_orbit_node[i].write_file(fp, 0 /*verbose_level*/);
 		}
@@ -183,6 +206,7 @@ void flag_orbits::read_file(ifstream &fp,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 1);
 	int i;
 	
 	if (f_v) {
@@ -199,16 +223,23 @@ void flag_orbits::read_file(ifstream &fp,
 	for (i = 0; i < nb_flag_orbits * pt_representation_sz; i++) {
 		fp.read((char *) &Pt[i], sizeof(long int));
 		}
+	if (f_vv) {
+		cout << "flag_orbits::read_file Pt matrix:" << endl;
+		lint_matrix_print(Pt, nb_flag_orbits, pt_representation_sz);
+		}
 
+	if (f_v) {
+		cout << "flag_orbits::read_file reading " << nb_flag_orbits << " nodes" << endl;
+		}
 	Flag_orbit_node = NEW_OBJECTS(flag_orbit_node, nb_flag_orbits);
 	for (i = 0; i < nb_flag_orbits; i++) {
-		if (FALSE) {
+		if (f_vv) {
 			cout << "flag_orbits::read_file "
 					"node " << i << " / " << nb_flag_orbits << endl;
 			}
 		Flag_orbit_node[i].Flag_orbits = this;
 		Flag_orbit_node[i].flag_orbit_index = i;
-		Flag_orbit_node[i].read_file(fp, 0 /*verbose_level */);
+		Flag_orbit_node[i].read_file(fp, 0 /*verbose_level*/);
 		}
 
 	if (f_v) {

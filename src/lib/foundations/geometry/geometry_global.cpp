@@ -223,7 +223,7 @@ void geometry_global::print_quadratic_form_list_coded(int form_nb_terms,
 	for (k = 0; k < form_nb_terms; k++) {
 		cout << "i=" << form_i[k] << " j=" << form_j[k]
 			<< " coeff=" << form_coeff[k] << endl;
-		}
+	}
 }
 
 void geometry_global::make_Gram_matrix_from_list_coded_quadratic_form(
@@ -233,20 +233,16 @@ void geometry_global::make_Gram_matrix_from_list_coded_quadratic_form(
 	int k, i, j, c;
 
 	int_vec_zero(Gram, n * n);
-#if 0
-	for (i = 0; i < n * n; i++)
-		Gram[i] = 0;
-#endif
 	for (k = 0; k < nb_terms; k++) {
 		i = form_i[k];
 		j = form_j[k];
 		c = form_coeff[k];
 		if (c == 0) {
 			continue;
-			}
+		}
 		Gram[i * n + j] = F.add(Gram[i * n + j], c);
 		Gram[j * n + i] = F.add(Gram[j * n + i], c);
-		}
+	}
 }
 
 void geometry_global::add_term(int n, finite_field &F,
@@ -259,11 +255,11 @@ void geometry_global::add_term(int n, finite_field &F,
 	form_coeff[nb_terms] = coeff;
 	if (i == j) {
 		Gram[i * n + j] = F.mult(2, coeff);
-		}
+	}
 	else {
 		Gram[i * n + j] = coeff;
 		Gram[j * n + i] = coeff;
-		}
+	}
 	nb_terms++;
 }
 
@@ -522,35 +518,35 @@ long int geometry_global::nb_pts_Qepsilon(int epsilon, int k, int q)
 {
 	if (epsilon == 0) {
 		return nb_pts_Q(k, q);
-		}
+	}
 	else if (epsilon == 1) {
 		return nb_pts_Qplus(k, q);
-		}
+	}
 	else if (epsilon == -1) {
 		return nb_pts_Qminus(k, q);
-		}
+	}
 	else {
 		cout << "nb_pts_Qepsilon epsilon must be one of 0,1,-1" << endl;
 		exit(1);
-		}
+	}
 }
 
 int geometry_global::dimension_given_Witt_index(int epsilon, int n)
 {
 	if (epsilon == 0) {
 		return 2 * n + 1;
-		}
+	}
 	else if (epsilon == 1) {
 		return 2 * n;
-		}
+	}
 	else if (epsilon == -1) {
 		return 2 * n + 2;
-		}
+	}
 	else {
 		cout << "dimension_given_Witt_index "
 				"epsilon must be 0,1,-1" << endl;
 		exit(1);
-		}
+	}
 }
 
 int geometry_global::Witt_index(int epsilon, int k)
@@ -566,7 +562,7 @@ int geometry_global::Witt_index(int epsilon, int k)
 			exit(1);
 			}
 		n = k >> 1; // Witt index
-		}
+	}
 	else if (epsilon == 1) {
 		if (!ODD(k)) {
 			cout << "Witt_index dimension k must be odd" << endl;
@@ -575,7 +571,7 @@ int geometry_global::Witt_index(int epsilon, int k)
 			exit(1);
 			}
 		n = (k >> 1) + 1; // Witt index
-		}
+	}
 	else if (epsilon == -1) {
 		if (!ODD(k)) {
 			cout << "Witt_index dimension k must be odd" << endl;
@@ -584,11 +580,11 @@ int geometry_global::Witt_index(int epsilon, int k)
 			exit(1);
 			}
 		n = k >> 1; // Witt index
-		}
+	}
 	else {
 		cout << "Witt_index epsilon must be one of 0,1,-1" << endl;
 		exit(1);
-		}
+	}
 	return n;
 }
 
@@ -632,14 +628,14 @@ long int geometry_global::nb_pts_S(int n, int q)
 	if (n <= 0) {
 		cout << "nb_pts_S n <= 0" << endl;
 		exit(1);
-		}
+	}
 	if (n == 1) {
 		// q-1 vectors of the form (x,0) for x \neq 0,
 		// q-1 vectors of the form (0,x) for x \neq 0
 		// 1 vector of the form (0,0)
 		// for a total of 2 * q - 1 vectors
 		return 2 * q - 1;
-		}
+	}
 	a = nb_pts_S(1, q) * nb_pts_S(n - 1, q);
 	a += nb_pts_N(1, q) * nb_pts_N1(n - 1, q);
 	return a;
@@ -655,10 +651,10 @@ long int geometry_global::nb_pts_N(int n, int q)
 	if (n <= 0) {
 		cout << "nb_pts_N n <= 0" << endl;
 		exit(1);
-		}
+	}
 	if (n == 1) {
 		return (long int) (q - 1) * (long int) (q - 1);
-		}
+	}
 	a = nb_pts_S(1, q) * nb_pts_N(n - 1, q);
 	a += nb_pts_N(1, q) * nb_pts_S(n - 1, q);
 	a += nb_pts_N(1, q) * (q - 2) * nb_pts_N1(n - 1, q);
@@ -838,6 +834,7 @@ void geometry_global::test_orthogonal(int n, int q)
 
 
 
+#if 0
 void geometry_global::create_BLT(int f_embedded,
 	finite_field *FQ, finite_field *Fq,
 	int f_Linear,
@@ -946,7 +943,7 @@ void geometry_global::create_BLT(int f_embedded,
 	FREE_OBJECT(O);
 #endif
 }
-
+#endif
 
 
 //static int TDO_upper_bounds_v_max_init = 12;

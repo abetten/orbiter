@@ -73,7 +73,7 @@ class action_on_set_partitions;
 class object_in_projective_space_with_action;
 class data_input_stream;
 class action_pointer_table;
-class nauty_interface;
+class nauty_interface_with_group;
 class exceptional_isomorphism_O4;
 class orbit_rep;
 class projective_space_with_action;
@@ -82,6 +82,7 @@ class stabilizer_chain_base_data;
 class orbits_on_something;
 class orbit_type_repository;
 class permutation_representation;
+class incidence_structure_with_group;
 
 //! enumeration to distinguish between the various types of group actions
 
@@ -252,6 +253,8 @@ public:
 	int test_if_all_elements_stabilize_a_point(action *A2, int pt);
 	int test_if_all_elements_stabilize_a_set(action *A2, 
 		long int *set, int sz, int verbose_level);
+	schreier *orbits_on_points_schreier(
+			action *A_given, int verbose_level);
 };
 
 }}

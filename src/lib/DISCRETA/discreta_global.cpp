@@ -13,7 +13,12 @@ namespace discreta {
 
 void free_global_data()
 {
-	cout << "discreta_global free_global_data freeing global data" << endl;
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "discreta_global free_global_data freeing global data" << endl;
+	}
 	orthogonal_points_free_global_data();
 	longinteger_free_global_data();
 	longinteger_domain_free_tab_q_binomials();
@@ -21,27 +26,35 @@ void free_global_data()
 
 void the_end(int t0)
 {
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
 	file_io Fio;
 	os_interface Os;
 
-	cout << "***************** The End **********************" << endl;
-	cout << "nb_calls_to_finite_field_init="
-			<< nb_calls_to_finite_field_init << endl;
+	if (f_v) {
+		cout << "***************** The End **********************" << endl;
+		cout << "nb_calls_to_finite_field_init="
+				<< nb_calls_to_finite_field_init << endl;
+	}
 	free_global_data();
-	if (f_memory_debug) {
-		//registry_dump();
-		//registry_dump_sorted();
-		}
+	if (f_v) {
+		if (f_memory_debug) {
+			//registry_dump();
+			//registry_dump_sorted();
+			}
+	}
 	Os.time_check(cout, t0);
 	cout << endl;
 
 
-	int mem_usage;
-	char fname[1000];
+	if (f_v) {
+		int mem_usage;
+		char fname[1000];
 
-	mem_usage = Os.os_memory_usage();
-	sprintf(fname, "memory_usage.csv");
-	Fio.int_matrix_write_csv(fname, &mem_usage, 1, 1);
+		mem_usage = Os.os_memory_usage();
+		sprintf(fname, "memory_usage.csv");
+		Fio.int_matrix_write_csv(fname, &mem_usage, 1, 1);
+	}
 }
 
 void the_end_quietly(int t0)

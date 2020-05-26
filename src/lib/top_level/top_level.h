@@ -84,7 +84,7 @@ class spread_create;
 	// added March 22, 2018
 class spread_lifting;
 	// added April 1, 2018
-class k_arc_generator;
+//class k_arc_generator;
 class arc_lifting_simeon;
 	// added Jan 6, 2019
 class blt_set_classify;
@@ -125,17 +125,19 @@ class difference_set_in_heisenberg_group;
 class cayley_graph_search;
 class hadamard_classify;
 class linear_set_classify;
+class delandtsheer_doyen_description;
 class delandtsheer_doyen;
-class bent_function_classify;
+class boolean_function;
 class hermitian_spread_classify;
 class surface_study;
 class pentomino_puzzle;
 class character_table_burnside;
-class combinatorial_object_description;
-class combinatorial_object_create;
 class create_graph_description;
 class create_graph;
 class algebra_global_with_action;
+class group_theoretic_activity_description;
+class graph_theoretic_activity_description;
+class group_theoretic_activity;
 
 
 // #############################################################################

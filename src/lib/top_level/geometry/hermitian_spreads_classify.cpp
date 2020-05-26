@@ -294,6 +294,7 @@ void hermitian_spreads_classify::read_arguments(int argc, const char **argv)
 {
 	int i;
 
+	Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset);
 	gen = NEW_OBJECT(poset_classification);
 
@@ -302,21 +303,22 @@ void hermitian_spreads_classify::read_arguments(int argc, const char **argv)
 		cout << argv[i] << endl;
 		}
 #endif
-	gen->read_arguments(argc, argv, 1);
+	//gen->read_arguments(argc, argv, 1);
 
 
-	for (i = 1; i < argc; i++) {
-#if 0
-		if (strcmp(argv[i], "-schreier") == 0) {
-			f_override_schreier_depth = TRUE;
-			override_schreier_depth = atoi(argv[++i]);
-			cout << "-schreier " << override_schreier_depth << endl;
+	for (i = 0; i < argc; i++) {
+		if (strcmp(argv[i], "-poset_classification_control") == 0) {
+			Control = NEW_OBJECT(poset_classification_control);
+			i += Control->read_arguments(argc - (i + 1),
+				argv + i + 1, 0 /*verbose_level*/);
+
+			cout << "done with -poset_classification_control" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
 			}
-		else if (strcmp(argv[i], "-print_generators") == 0) {
-			f_print_generators = TRUE;
-			cout << "-print_generators " << endl;
-			}
-#endif
+		}
 		}
 }
 
@@ -348,7 +350,7 @@ void hermitian_spreads_classify::init2(int verbose_level)
 				verbose_level);
 
 
-	gen->initialize(Poset,
+	gen->initialize(Control, Poset,
 		nb_pts / sz,
 		"", prefix, verbose_level - 2);
 
@@ -412,8 +414,8 @@ void hermitian_spreads_classify::compute(int depth, int verbose_level)
 		cout << "hermitian_spreads_classify::compute calling generator_main" << endl;
 		}
 
-	gen->f_max_depth = TRUE;
-	gen->max_depth = depth;
+	gen->Control->f_max_depth = TRUE;
+	gen->Control->max_depth = depth;
 
 	t0 = Os.os_ticks();
 	gen->main(t0,
@@ -434,8 +436,8 @@ void hermitian_spreads_classify::compute(int depth, int verbose_level)
 	int f_sideways = FALSE;
 
 	gen->draw_poset(gen->fname_base, depth, 0 /* data1 */,
-			f_embedded, f_sideways, gen->verbose_level);
-	gen->print_data_structure_tex(depth, gen->verbose_level);
+			f_embedded, f_sideways, gen->Control->verbose_level);
+	gen->print_data_structure_tex(depth, gen->Control->verbose_level);
 
 	if (f_v) {
 		cout << "hermitian_spreads_classify::compute "

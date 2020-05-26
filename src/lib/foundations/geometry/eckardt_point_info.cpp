@@ -11,6 +11,9 @@ using namespace std;
 namespace orbiter {
 namespace foundations {
 
+static void intersection_matrix_entry_print(int *p,
+	int m, int n, int i, int j, int val,
+	char *output, void *data);
 
 eckardt_point_info::eckardt_point_info()
 {
@@ -63,7 +66,7 @@ void eckardt_point_info::freeself()
 	null();
 }
 
-void eckardt_point_info::init(projective_space *P,
+void eckardt_point_info::init(surface_domain *Surf, projective_space *P,
 		long int *arc6, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -81,6 +84,7 @@ void eckardt_point_info::init(projective_space *P,
 	if (f_v) {
 		cout << "eckardt_point_info::init" << endl;
 		}
+	eckardt_point_info::Surf = Surf;
 	eckardt_point_info::P = P;
 	lint_vec_copy(arc6, eckardt_point_info::arc6, 6);
 
@@ -325,7 +329,164 @@ void eckardt_point_info::init(projective_space *P,
 		}
 }
 
+
+void eckardt_point_info::print_bisecants(ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, h, a;
+	int Mtx[9];
+	combinatorics_domain Combi;
+
+	if (f_v) {
+		cout << "eckardt_point_info::print_bisecants" << endl;
+	}
+	ost << "The 15 bisecants are:\\\\" << endl;
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|r|r|r|r|r|}" << endl;
+	ost << "\\hline" << endl;
+	ost << "h & P_iP_j & \\mbox{rank} & \\mbox{line} "
+			"& \\mbox{equation}\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\hline" << endl;
+	for (h = 0; h < 15; h++) {
+		a = bisecants[h];
+		Combi.k2ij(h, i, j, 6);
+		ost << h << " & P_{" << i + 1 << "}P_{" << j + 1
+				<< "} & " << a << " & " << endl;
+		//ost << "\\left[ " << endl;
+		Surf->P2->Grass_lines->print_single_generator_matrix_tex(ost, a);
+		//ost << "\\right] ";
+
+		Surf->P2->Grass_lines->unrank_lint_here_and_compute_perp(Mtx, a,
+			0 /*verbose_level */);
+		Surf->F->PG_element_normalize(Mtx + 6, 1, 3);
+
+		ost << " & ";
+		Surf->Poly1->print_equation(ost, Mtx + 6);
+		ost << "\\\\" << endl;
+	}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$" << endl;
+	if (f_v) {
+		cout << "eckardt_point_info::print_bisecants done" << endl;
+	}
 }
+
+void eckardt_point_info::print_intersections(ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	latex_interface L;
+	int labels[15];
+	int fst[1];
+	int len[1];
+	fst[0] = 0;
+	len[0] = 15;
+	int i;
+
+	if (f_v) {
+		cout << "eckardt_point_info::print_intersections" << endl;
+	}
+	ost << "The intersections of bisecants are:\\\\" << endl;
+	for (i = 0; i < 15; i++) {
+		labels[i] = i;
+	}
+	ost << "{\\small \\arraycolsep=1pt" << endl;
+	ost << "$$" << endl;
+	L.int_matrix_print_with_labels_and_partition(ost,
+		Intersections, 15, 15,
+		labels, labels,
+		fst, len, 1,
+		fst, len, 1,
+		intersection_matrix_entry_print, (void *) this,
+		TRUE /* f_tex */);
+	ost << "$$}" << endl;
+	if (f_v) {
+		cout << "eckardt_point_info::print_intersections done" << endl;
+	}
 }
+
+void eckardt_point_info::print_conics(ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int h;
+
+	if (f_v) {
+		cout << "eckardt_point_info::print_conics" << endl;
+	}
+	ost << "The 6 conics are:\\\\" << endl;
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|r|r|r|}" << endl;
+	ost << "\\hline" << endl;
+	ost << "i & C_i & \\mbox{equation}\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\hline" << endl;
+	for (h = 0; h < 6; h++) {
+		ost << h + 1 << " & C_" << h + 1 << " & " << endl;
+		Surf->Poly2->print_equation(ost,
+				conic_coefficients + h * 6);
+		ost << "\\\\" << endl;
+	}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$" << endl;
+	if (f_v) {
+		cout << "eckardt_point_info::print_conics done" << endl;
+	}
+}
+
+void eckardt_point_info::print_Eckardt_points(ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int s;
+
+	if (f_v) {
+		cout << "eckardt_point_info::print_Eckardt_points" << endl;
+	}
+	ost << "We found " << nb_E << " Eckardt points:\\\\" << endl;
+	for (s = 0; s < nb_E; s++) {
+		ost << s << " / " << nb_E << " : $";
+		E[s].latex(ost);
+		ost << "= E_{" << E[s].rank() << "}$\\\\" << endl;
+	}
+	//ost << "by rank: ";
+	//int_vec_print(ost, E_idx, nb_E);
+	//ost << "\\\\" << endl;
+	if (f_v) {
+		cout << "eckardt_point_info::print_Eckardt_points done" << endl;
+	}
+}
+
+
+static void intersection_matrix_entry_print(int *p,
+	int m, int n, int i, int j, int val,
+	char *output, void *data)
+{
+	//eckardt_point_info *E;
+	//E = (eckardt_point_info *) data;
+	int a, b;
+	combinatorics_domain Combi;
+
+	if (i == -1) {
+		Combi.k2ij(j, a, b, 6);
+		sprintf(output, "P_%dP_%d", a + 1, b + 1);
+	}
+	else if (j == -1) {
+		Combi.k2ij(i, a, b, 6);
+		sprintf(output, "P_%dP_%d", a + 1, b + 1);
+	}
+	else {
+		if (val == -1) {
+			strcpy(output, ".");
+		}
+		else {
+			sprintf(output, "%d", val);
+		}
+	}
+}
+
+
+
+}}
 
 

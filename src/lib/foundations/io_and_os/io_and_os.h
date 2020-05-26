@@ -30,6 +30,13 @@ public:
 
 	void concatenate_files(const char *fname_in_mask, int N,
 		const char *fname_out, const char *EOF_marker, int f_title_line,
+		int &cnt_total,
+		std::vector<int> missing_idx,
+		int verbose_level);
+	void concatenate_files_into(const char *fname_in_mask, int N,
+		std::ofstream &fp_out, const char *EOF_marker, int f_title_line,
+		int &cnt_total,
+		std::vector<int> &missing_idx,
 		int verbose_level);
 	void poset_classification_read_candidates_of_orbit(
 		const char *fname, int orbit_at_level,
@@ -103,6 +110,7 @@ public:
 		long int *&M, int &m, int &n, int verbose_level);
 	void double_matrix_read_csv(const char *fname, double *&M,
 		int &m, int &n, int verbose_level);
+	void int_matrix_write_cas_friendly(const char *fname, int *M, int m, int n);
 	void int_matrix_write_text(const char *fname,
 		int *M, int m, int n);
 	void lint_matrix_write_text(const char *fname, long int *M, int m, int n);
@@ -717,6 +725,7 @@ void get_extension_if_present(const char *p, char *ext);
 void get_extension_if_present_and_chop_off(char *p, char *ext);
 int s_scan_int(char **s, int *i);
 int s_scan_lint(char **s, long int *i);
+int s_scan_double(char **s, double *d);
 int s_scan_token(char **s, char *str);
 int s_scan_token_arbitrary(char **s, char *str);
 int s_scan_str(char **s, char *str);

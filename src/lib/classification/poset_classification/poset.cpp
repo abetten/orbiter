@@ -374,7 +374,8 @@ long int poset::rank_point(int *v)
 }
 
 void poset::orbits_on_k_sets(
-	int k, long int *&orbit_reps, int &nb_orbits, int verbose_level)
+		poset_classification_control *Control,
+		int k, long int *&orbit_reps, int &nb_orbits, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	poset_classification *Gen;
@@ -383,7 +384,7 @@ void poset::orbits_on_k_sets(
 		cout << "poset::orbits_on_k_sets" << endl;
 		}
 
-	Gen = orbits_on_k_sets_compute(
+	Gen = orbits_on_k_sets_compute(Control,
 		k, verbose_level);
 	if (f_v) {
 		cout << "poset::orbits_on_k_sets "
@@ -407,7 +408,8 @@ void poset::orbits_on_k_sets(
 }
 
 poset_classification *poset::orbits_on_k_sets_compute(
-	int k, int verbose_level)
+		poset_classification_control *Control,
+		int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	poset_classification *Gen;
@@ -423,12 +425,15 @@ poset_classification *poset::orbits_on_k_sets_compute(
 
 	Gen->depth = k;
 
+	//Gen->f_W = TRUE;
+
 	if (f_v) {
 		cout << "poset::orbits_on_k_sets_compute calling Gen->init" << endl;
 		}
 	Gen->init(
-		this,
-		Gen->depth /* sz */, verbose_level - 1);
+			Control,
+			this,
+			Gen->depth /* sz */, verbose_level - 1);
 	//Gen->init_check_func(
 	//	check_zero_lines,
 	//	this /* candidate_check_data */);

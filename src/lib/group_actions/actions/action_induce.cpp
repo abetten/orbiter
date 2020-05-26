@@ -1817,18 +1817,14 @@ void action::induced_action_on_orbits(action *old_action,
 		cout << "the old_action " << old_action->label
 				<< " has base_length = " << old_action->base_len()
 			<< " and degree " << old_action->degree << endl;
-		}
-	sprintf(group_prefix, "%s_on_orbits",
-			old_action->label);
-	sprintf(label, "%s_on_orbits",
-			old_action->label);
-	sprintf(label_tex, "%s\\_on\\_orbits",
-			old_action->label_tex);
+	}
+	sprintf(group_prefix, "%s_on_orbits%d", old_action->label, Sch->nb_orbits);
+	sprintf(label, "%s_on_orbits%d", old_action->label, Sch->nb_orbits);
+	sprintf(label_tex, "%s\\_on\\_orbits%d", old_action->label_tex, Sch->nb_orbits);
 
 
 	On_orbits = NEW_OBJECT(action_on_orbits);
-	On_orbits->init(old_action, Sch,
-			f_play_it_safe, verbose_level);
+	On_orbits->init(old_action, Sch, f_play_it_safe, verbose_level);
 
 
 	f_has_subaction = TRUE;
@@ -1858,7 +1854,7 @@ void action::induced_action_on_orbits(action *old_action,
 		cout << "action::induced_action_on_orbits "
 				"finished, created action " << label << endl;
 		print_info();
-		}
+	}
 }
 
 void action::induced_action_on_flags(action *old_action,

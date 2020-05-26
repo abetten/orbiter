@@ -1070,6 +1070,7 @@ void spreadsheet::get_value_double_or_NA(int i, int j,
 }
 
 char *spreadsheet::get_string(int i, int j)
+// the caller needs to free the returned pointer
 {
 	int t;
 	char *str;

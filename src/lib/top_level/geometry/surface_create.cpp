@@ -26,6 +26,8 @@ surface_create::surface_create()
 	f_has_lines = FALSE;
 	f_has_group = FALSE;
 	Sg = NULL;
+	f_has_nice_gens = FALSE;
+	nice_gens = NULL;
 	null();
 }
 
@@ -53,6 +55,9 @@ void surface_create::freeself()
 	}
 	if (Sg) {
 		FREE_OBJECT(Sg);
+	}
+	if (nice_gens) {
+		FREE_OBJECT(nice_gens);
 	}
 	null();
 }
@@ -189,16 +194,21 @@ void surface_create::init2(int verbose_level)
 			cout << "surface_create::init2 before Sg->generators_"
 					"for_the_stabilizer_of_the_cubic_surface" << endl;
 		}
+
+
+
 		Sg->generators_for_the_stabilizer_of_the_cubic_surface_family_24(
 			Surf_A->A,
 			F, FALSE /* f_with_normalizer */,
 			f_semilinear,
+			nice_gens,
 			verbose_level);
 		if (f_v) {
 			cout << "surface_create::init2 after Sg->generators_for_"
 					"the_stabilizer_of_the_cubic_surface" << endl;
 		}
 		f_has_group = TRUE;
+		f_has_nice_gens = TRUE;
 
 		sprintf(prefix, "family_q%d_a%d", F->q, Descr->parameter_a);
 		sprintf(label_txt, "family_q%d_a%d", F->q, Descr->parameter_a);
@@ -315,13 +325,17 @@ void surface_create::init2(int verbose_level)
 			cout << endl;
 		}
 
-#if 0
+		poset_classification_control *Control;
+
+		Control = NEW_OBJECT(poset_classification_control);
+
+#if 1
 		// classifying the trihedral pairs is expensive:
 		if (f_v) {
 			cout << "surface_create::init2 before Surf_A->"
 					"Classify_trihedral_pairs->classify" << endl;
 		}
-		Surf_A->Classify_trihedral_pairs->classify(0 /*verbose_level*/);
+		Surf_A->Classify_trihedral_pairs->classify(Control, 0 /*verbose_level*/);
 		if (f_v) {
 			cout << "surface_create::init2 after Surf_A->"
 					"Classify_trihedral_pairs->classify" << endl;
@@ -338,13 +352,13 @@ void surface_create::init2(int verbose_level)
 			cout << "surface_create::init2 before "
 					"AL->create_surface" << endl;
 		}
-		AL->create_surface(Surf_A, arc, verbose_level);
+		AL->create_surface_and_group(Surf_A, arc, verbose_level);
 		if (f_v) {
 			cout << "surface_create::init2 after "
 					"AL->create_surface" << endl;
 		}
 
-		AL->print_Eckardt_point_data(cout);
+		AL->print_Eckardt_point_data(cout, verbose_level);
 
 		int_vec_copy(AL->The_surface_equations
 				+ AL->lambda_rk * 20, coeffs, 20);
@@ -368,6 +382,7 @@ void surface_create::init2(int verbose_level)
 
 
 		FREE_OBJECT(AL);
+		FREE_OBJECT(Control);
 		
 
 		FREE_lint(arc);
@@ -428,10 +443,11 @@ void surface_create::init2(int verbose_level)
 		}
 
 		int_vec_copy(AL->coeff, coeffs, 20);
+		lint_vec_copy(AL->lines27, Lines, 27);
 
 		//Sg = AL->Aut_gens->create_copy();
 		f_has_group = FALSE;
-		f_has_lines = FALSE;
+		f_has_lines = TRUE;
 		sprintf(prefix, "arc_q%d", F->q);
 		sprintf(label_txt, "arc_q%d", F->q);
 		sprintf(label_tex, "arc\\_q%d", F->q);
@@ -600,6 +616,9 @@ void surface_create::apply_transformations(
 				Sg, Elt2, verbose_level);
 		FREE_OBJECT(Sg);
 		Sg = SG2;
+
+		f_has_nice_gens = FALSE;
+		// ToDo: need to conjugate nice_gens
 
 
 		if (f_has_lines) {

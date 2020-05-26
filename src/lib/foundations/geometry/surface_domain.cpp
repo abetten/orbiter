@@ -1089,41 +1089,41 @@ int surface_domain::test_special_form_alpha_beta(int *coeff,
 	
 	if (f_v) {
 		cout << "surface_domain::test_special_form_alpha_beta" << endl;
-		}
+	}
 	if (!int_vec_is_constant_on_subset(coeff, 
 		zeroes, sizeof(zeroes) / sizeof(int), a)) {
 		cout << "surface_domain::test_special_form_alpha_beta "
 				"not constant on zero set" << endl;
 		return FALSE;
-		}
+	}
 	if (a != 0) {
 		cout << "surface_domain::test_special_form_alpha_beta "
 				"not zero on zero set" << endl;
 		return FALSE;
-		}
+	}
 	if (coeff[3] != 1) {
 		cout << "surface_domain::test_special_form_alpha_beta "
 				"not normalized" << endl;
 		exit(1);
-		}
+	}
 	if (!int_vec_is_constant_on_subset(coeff, 
 		alphas, sizeof(alphas) / sizeof(int), a)) {
 		cout << "surface_domain::test_special_form_alpha_beta "
 				"not constant on alpha set" << endl;
 		return FALSE;
-		}
+	}
 	alpha = a;
 	if (!int_vec_is_constant_on_subset(coeff, 
 		betas, sizeof(betas) / sizeof(int), a)) {
 		cout << "surface_domain::test_special_form_alpha_beta "
 				"not constant on beta set" << endl;
 		return FALSE;
-		}
+	}
 	beta = a;
 
 	if (f_v) {
 		cout << "surface_domain::test_special_form_alpha_beta done" << endl;
-		}
+	}
 	return ret;
 }
 
@@ -1899,6 +1899,7 @@ void surface_domain::make_trihedral_pairs(int *&T,
 	int subset[6];
 	int second_subset[6];
 	int complement[6];
+	int subset_complement[6];
 	int size_complement;
 	char label[1000];
 	combinatorics_domain Combi;
@@ -1913,19 +1914,25 @@ void surface_domain::make_trihedral_pairs(int *&T,
 
 	idx = 0;
 
-	// the first type (20 of them):
+	// the first type (20 of them, 6 choose 3):
 	for (h = 0; h < 20; h++, idx++) {
 		Combi.unrank_k_subset(h, subset, 6, 3);
-		sprintf(label, "%d%d%d", subset[0] + 1, subset[1] + 1, subset[2] + 1);
+		Combi.set_complement(subset, 3, complement,
+			size_complement, 6);
+		sprintf(label, "%d%d%d;%d%d%d",
+				subset[0] + 1, subset[1] + 1, subset[2] + 1,
+				complement[0] + 1, complement[1] + 1, complement[2] + 1);
 
 		make_Tijk(T + idx * 9, subset[0], subset[1], subset[2]);
 		T_label[idx] = NEW_char(strlen(label) + 1);
 		strcpy(T_label[idx], label);
 		}
 
-	// the second type (90 of them):
+	// the second type (90 of them, (6 choose 2) times (4 choose 2)):
 	for (h = 0; h < 15; h++) {
 		Combi.unrank_k_subset(h, subset, 6, 4);
+		Combi.set_complement(subset, 4, subset_complement,
+			size_complement, 6);
 		for (s = 0; s < 6; s++, idx++) {
 			Combi.unrank_k_subset(s, second_subset, 4, 2);
 			Combi.set_complement(second_subset, 2, complement,
@@ -1935,17 +1942,19 @@ void surface_domain::make_trihedral_pairs(int *&T,
 				subset[second_subset[1]], 
 				subset[complement[0]], 
 				subset[complement[1]]);
-			sprintf(label, "%d%d,%d%d",
+			sprintf(label, "%d%d;%d%d;%d%d",
 				subset[second_subset[0]] + 1, 
 				subset[second_subset[1]] + 1, 
 				subset[complement[0]] + 1, 
-				subset[complement[1]] + 1);
+				subset[complement[1]] + 1,
+				subset_complement[0] + 1,
+				subset_complement[1] + 1);
 			T_label[idx] = NEW_char(strlen(label) + 1);
 			strcpy(T_label[idx], label);
 			}
 		}
 
-	// the third type (10 of them):
+	// the third type (10 of them, (6 choose 3) divide by 2):
 	for (h = 0; h < 10; h++, idx++) {
 		Combi.unrank_k_subset(h, subset + 1, 5, 2);
 		subset[0] = 0;
