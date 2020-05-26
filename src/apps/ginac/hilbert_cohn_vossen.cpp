@@ -34,6 +34,7 @@ using namespace std;
 #include "ginac_linear_algebra.cpp"
 
 
+#define EPSILON 0.001
 
 int f_transformed = FALSE;
 int *line_idx1 = NULL;
@@ -43,6 +44,7 @@ int *surface_idx2 = NULL;
 int *line_idx3 = NULL;
 int *surface_idx3 = NULL;
 
+int idx_eqn2;
 
 
 
@@ -51,6 +53,7 @@ int *surface_idx3 = NULL;
 void surface(int argc, const char **argv);
 void draw_frame_HCV(
 	animate *Anim, int h, int nb_frames, int round,
+	double clipping_radius,
 	ostream &fp,
 	int verbose_level);
 matrix make_cij(matrix **AB, int i, int j, ostream &ost, int verbose_level);
@@ -652,6 +655,28 @@ void surface(int argc, const char **argv)
 		fp << "$$" << endl;
 		cout << endl;
 
+		double Eqn2[20];
+		for (j = 0; j < 20; j++) {
+			Eqn2[j] = 0.;
+		}
+
+		Eqn2[6 - 1] = 125. / 4.;
+		Eqn2[4 - 1] = 25. / 2.;
+		Eqn2[13 - 1] = 25. / 2.;
+		Eqn2[18 - 1] = 25. / 2.;
+		Eqn2[20 - 1] = -8.;
+		cout << "Eqn2:" << endl;
+		for (j = 0; j < 20; j++) {
+			cout << j << " : " << Eqn2[j] << endl;
+		}
+
+#if 0
+		double Eqn3[20];
+		for (j = 0; j < 20; j++) {
+			Eqn3[j] = Eqn2[j] - Eqn[j];
+		}
+#endif
+
 		matrix A1(2,3);
 		matrix A2(2,3);
 		matrix A3(2,3);
@@ -824,6 +849,47 @@ void surface(int argc, const char **argv)
 
 		create_specific_lines_uv(Surf, AB, D, u, v, fp, verbose_level);
 
+		double D_projected[27 * 6];
+		double da, db, dc;
+		double dx, dy, dux, duy;
+
+		for (i = 0; i < 27; i++) {
+			if (i == 0) {
+				cout << "ai:" << endl;
+			}
+			else if (i == 6) {
+				cout << "bj:" << endl;
+			}
+			else if (i == 12) {
+				cout << "cij:" << endl;
+			}
+			for (j = 0; j < 3; j++) {
+				D_projected[i * 6 + 0 * 3 + j] = D[i * 8 + 0 * 4 + 1 + j];
+				D_projected[i * 6 + 1 * 3 + j] = D[i * 8 + 1 * 4 + 1 + j];
+			}
+			if (ABS(D_projected[i * 6 + 0 * 3 + 2]) > EPSILON || ABS(D_projected[i * 6 + 1 * 3 + 2]) > EPSILON) {
+				if (ABS(D_projected[i * 6 + 0 * 3 + 2]) > EPSILON) {
+					dc = D_projected[i * 6 + 0 * 3 + 2];
+					da = D_projected[i * 6 + 0 * 3 + 0];
+					db = D_projected[i * 6 + 0 * 3 + 1];
+					dx = da / dc;
+					dy = db / dc;
+					dux = D_projected[i * 6 + 1 * 3 + 0];
+					duy = D_projected[i * 6 + 1 * 3 + 1];
+				}
+				else {
+					dc = D_projected[i * 6 + 1 * 3 + 2];
+					da = D_projected[i * 6 + 1 * 3 + 0];
+					db = D_projected[i * 6 + 1 * 3 + 1];
+					dx = da / dc;
+					dy = db / dc;
+					dux = D_projected[i * 6 + 0 * 3 + 0];
+					duy = D_projected[i * 6 + 0 * 3 + 1];
+
+				}
+				cout << "\t\t\t-line_through_two_points \"" << dx << "," << dy << ",0," << dx + dux << "," << dy + duy << ",0\" \\" << endl;
+			}
+		}
 
 
 		numerics Num;
@@ -930,11 +996,14 @@ void surface(int argc, const char **argv)
 
 			if (f_transformed) {
 
+				double Eqn_orig[20];
 				double Eqn_transformed[20];
 
-
+				for (h = 0; h < 20; h++) {
+					Eqn_orig[h] = S->cubic_coords(0, h);
+				}
 				Num.substitute_cubic_linear_using_povray_ordering(
-						S->Cubic_coords + 0 * 20, Eqn_transformed,
+						Eqn_orig, Eqn_transformed,
 						Transform_mtx_inv, verbose_level);
 
 				S->cubic(Eqn_transformed);
@@ -1010,8 +1079,6 @@ void surface(int argc, const char **argv)
 
 
 
-			//scene_create_target_model(S, nb_frames_default, TARGET_NB_LINES, TF, verbose_level - 2);
-
 			S->create_Cayleys_nodal_cubic(verbose_level);
 
 			double theta1, theta2;
@@ -1071,6 +1138,46 @@ void surface(int argc, const char **argv)
 			int_matrix_print(surface_idx3, nb_frames_default, 1);
 
 
+			// define the Hessian surface:
+
+				int idx_eqn2;
+
+				idx_eqn2 = S->cubic(Eqn2);
+				//S->cubic(Eqn3);
+			cout << "idx(Eqn2) = " << idx_eqn2 << endl;
+
+
+			// create the quartic Hessian:
+
+			double Quartic_Hessian[35];
+
+
+			for (j = 0; j < 35; j++) {
+				Quartic_Hessian[j] = 0.;
+			}
+
+			Quartic_Hessian[1 - 1] = 25.;
+			Quartic_Hessian[21 - 1] = 25.;
+			Quartic_Hessian[31 - 1] = 25.;
+
+			Quartic_Hessian[5 - 1] = -50.;
+			Quartic_Hessian[8 - 1] = -50.;
+			Quartic_Hessian[24 - 1] = -50.;
+
+			Quartic_Hessian[15 - 1] = 135./2.;
+
+			Quartic_Hessian[10 - 1] = 59.;
+			Quartic_Hessian[26 - 1] = 59.;
+			Quartic_Hessian[33 - 1] = 59.;
+
+			Quartic_Hessian[35 - 1] = -48.;
+
+			cout << "Quartic_Hessian:" << endl;
+			for (j = 0; j < 35; j++) {
+				cout << j << " : " << Quartic_Hessian[j] << endl;
+			}
+
+			S->quartic(Quartic_Hessian);
 
 
 
@@ -1164,6 +1271,7 @@ void surface(int argc, const char **argv)
 
 void draw_frame_HCV(
 	animate *Anim, int h, int nb_frames, int round,
+	double clipping_radius,
 	ostream &fp,
 	int verbose_level)
 {
@@ -1172,17 +1280,7 @@ void draw_frame_HCV(
 
 
 
-	double my_clipping_radius;
-
-	my_clipping_radius = Anim->Opt->clipping_radius;
-
 	Pov.union_start(fp);
-
-	for (i = 0; i < Anim->Opt->nb_clipping; i++) {
-		if (Anim->Opt->clipping_round[i] == round) {
-			my_clipping_radius = Anim->Opt->clipping_value[i];
-			}
-		}
 
 
 	if (round == 0) {
@@ -1511,14 +1609,112 @@ void draw_frame_HCV(
 		}
 		// no rotation here!
 	}
+	else if (round == 9) {
+
+		Anim->S->line_radius = 0.04;
+
+		Anim->S->draw_lines_ai(fp);
+		Anim->S->draw_lines_bj(fp);
+
+		if (f_transformed) {
+			{
+				int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
+
+			Anim->S->draw_lines_cij_with_selection(selection, 15, fp);
+			}
+			//Anim->S->draw_lines_cij(fp);
+
+			{
+				int selection[] = {1};
+				Anim->S->draw_cubic_with_selection(selection, 1,
+						Pov.color_white, fp);
+			}
+		}
+		else {
+			{
+				int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11};
+
+				Anim->S->draw_lines_cij_with_selection(selection, 12, fp);
+			}
+			//Anim->S->draw_lines_cij(fp);
+
+			{
+				int selection[2];
+				selection[0] = 0; //idx_eqn2;
+				Anim->S->draw_cubic_with_selection(selection, 1,
+						Pov.color_white, fp);
+
+				selection[0] = 272; //idx_eqn2;
+				cout << "drawing cubic " << idx_eqn2 << endl;
+				Anim->S->draw_cubic_with_selection(selection, 1,
+						Pov.color_pink_transparent, fp);
+			}
+		}
+
+
+		Pov.rotate_111(h, nb_frames, fp);
+
+	}
+
+	else if (round == 10) {
+
+		Anim->S->line_radius = 0.04;
+
+		//Anim->S->draw_lines_ai(fp);
+		//Anim->S->draw_lines_bj(fp);
+
+		if (f_transformed) {
+			{
+				//int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
+
+			//Anim->S->draw_lines_cij_with_selection(selection, 15, fp);
+			}
+
+			{
+				//int selection[] = {1};
+				//Anim->S->draw_cubic_with_selection(selection, 1,
+				//		Pov.color_white, fp);
+			}
+		}
+		else {
+			{
+				//int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11};
+
+				//Anim->S->draw_lines_cij_with_selection(selection, 12, fp);
+			}
+			//Anim->S->draw_lines_cij(fp);
+
+			{
+				int selection[2];
+				selection[0] = 0; //idx_eqn2;
+				//Anim->S->draw_cubic_with_selection(selection, 1,
+				//		Pov.color_white, fp);
+
+#if 0
+				selection[0] = 272; //idx_eqn2;
+				cout << "drawing cubic " << idx_eqn2 << endl;
+				Anim->S->draw_cubic_with_selection(selection, 1,
+						Pov.color_pink_transparent, fp);
+#endif
+				selection[0] = 0;
+				cout << "drawing quartic " << endl;
+				Anim->S->draw_quartic_with_selection(selection, 1,
+						Pov.color_pink_transparent, fp);
+			}
+		}
+
+
+		Pov.rotate_111(h, nb_frames, fp);
+
+	}
 
 
 	if (Anim->Opt->f_has_global_picture_scale) {
 		cout << "scale=" << Anim->Opt->global_picture_scale << endl;
-		Pov.union_end(fp, Anim->Opt->global_picture_scale, my_clipping_radius);
+		Pov.union_end(fp, Anim->Opt->global_picture_scale, clipping_radius);
 	}
 	else {
-		Pov.union_end(fp, 1.0, my_clipping_radius);
+		Pov.union_end(fp, 1.0, clipping_radius);
 
 	}
 
@@ -1704,6 +1900,7 @@ void create_family_of_surfaces_and_lines_uv(surface_domain *Surf,
 			Eqn[12] = -1.; // X2^2*X3
 			Eqn[16] = (1. + v_value * v_value) / (v_value); // X0X1X2
 
+			cout << "h=" << h << " / " << nb_steps << " Eqn[16]=" << Eqn[16] << endl;
 			surface_idx[h] = S->cubic_in_orbiter_ordering(Eqn);
 
 		} // else ABS(v_value)

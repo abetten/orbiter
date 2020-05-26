@@ -19,6 +19,21 @@ namespace top_level {
 
 classify_trihedral_pairs::classify_trihedral_pairs()
 {
+	q = 0;
+	F = NULL;
+	Surf_A = NULL;
+	Surf = NULL;
+	gens_type1 = NULL;
+	gens_type2 = NULL;
+	//Control1 = NULL;
+	//Control2 = NULL;
+	Poset1 = NULL;
+	Poset2 = NULL;
+	orbits_on_trihedra_type1 = NULL;
+	orbits_on_trihedra_type2 = NULL;
+	Flag_orbits = NULL;
+	nb_orbits_trihedral_pairs = 0;
+	Trihedral_pairs = NULL;
 	null();
 }
 
@@ -29,29 +44,24 @@ classify_trihedral_pairs::~classify_trihedral_pairs()
 
 void classify_trihedral_pairs::null()
 {
-	q = 0;
-	F = NULL;
-	Surf_A = NULL;
-	Surf = NULL;
-	gens_type1 = NULL;
-	gens_type2 = NULL;
-	Poset1 = NULL;
-	Poset2 = NULL;
-	orbits_on_trihedra_type1 = NULL;
-	orbits_on_trihedra_type2 = NULL;
-	Flag_orbits = NULL;
-	nb_orbits_trihedral_pairs = 0;
-	Trihedral_pairs = NULL;
 }
 
 void classify_trihedral_pairs::freeself()
 {
 	if (gens_type1) {
 		FREE_OBJECT(gens_type1);
-		}
+	}
 	if (gens_type2) {
 		FREE_OBJECT(gens_type2);
-		}
+	}
+#if 0
+	if (Control1) {
+		FREE_OBJECT(Control1);
+	}
+	if (Control2) {
+		FREE_OBJECT(Control2);
+	}
+#endif
 	if (Poset1) {
 		FREE_OBJECT(Poset1);
 	}
@@ -60,16 +70,16 @@ void classify_trihedral_pairs::freeself()
 	}
 	if (orbits_on_trihedra_type1) {
 		FREE_OBJECT(orbits_on_trihedra_type1);
-		}
+	}
 	if (orbits_on_trihedra_type2) {
 		FREE_OBJECT(orbits_on_trihedra_type2);
-		}
+	}
 	if (Flag_orbits) {
 		FREE_OBJECT(Flag_orbits);
-		}
+	}
 	if (Trihedral_pairs) {
 		FREE_OBJECT(Trihedral_pairs);
-		}
+	}
 	null();
 }
 
@@ -80,7 +90,7 @@ void classify_trihedral_pairs::init(surface_with_action *Surf_A,
 
 	if (f_v) {
 		cout << "classify_trihedral_pairs::init" << endl;
-		}
+	}
 	classify_trihedral_pairs::Surf_A = Surf_A;
 	F = Surf_A->F;
 	q = F->q;
@@ -88,10 +98,19 @@ void classify_trihedral_pairs::init(surface_with_action *Surf_A,
 	Surf = Surf_A->Surf;
 	
 	
+	if (f_v) {
+		cout << "classify_trihedral_pairs::init computing stabilizer "
+				"of three collinear points" << endl;
+	}
 	gens_type1 = NEW_OBJECT(strong_generators);
 	gens_type1->generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 		A,
 		A->G.matrix_grp, verbose_level - 1);
+
+	if (f_v) {
+		cout << "classify_trihedral_pairs::init computing stabilizer "
+				"of a triangle of points" << endl;
+	}
 	gens_type2 = NEW_OBJECT(strong_generators);
 	gens_type2->generators_for_stabilizer_of_triangle_in_PGL4(A, 
 		A->G.matrix_grp, verbose_level - 1);
@@ -107,22 +126,28 @@ void classify_trihedral_pairs::init(surface_with_action *Surf_A,
 		cout << "The group 1 has order " ;
 		go1.print_not_scientific(cout); 
 		cout << "\\\\" << endl;
+		cout << "generators:" << endl;
+		gens_type1->print_generators_tex(cout);
+
 		cout << "The group 2 has order " ;
 		go2.print_not_scientific(cout); 
 		cout << "\\\\" << endl;
-		}
+		cout << "generators:" << endl;
+		gens_type2->print_generators_tex(cout);
+	}
 
 
 
 
 	if (f_v) {
 		cout << "classify_trihedral_pairs::init done" << endl;
-		}
+	}
 }
 
 
 
 void classify_trihedral_pairs::classify_orbits_on_trihedra(
+		poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -132,9 +157,11 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 		}
 
 	if (f_v) {
-		cout << "computing orbits on 3-subsets of points (type 1):" << endl;
+		cout << "classify_trihedral_pairs::classify_orbits_on_trihedra "
+				"computing orbits on 3-subsets of points (type 1):" << endl;
 		}
 
+	//Control1 = NEW_OBJECT(poset_classification_control);
 	Poset1 = NEW_OBJECT(poset);
 	Poset1->init_subset_lattice(A, A, gens_type1,
 			verbose_level);
@@ -150,7 +177,7 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 	orbits_on_trihedra_type1->compute_orbits_on_subsets(
 		3, /* target_depth */
 		"", /* const char *prefix, */
-		FALSE /* int f_W */, FALSE /* f_w */,
+		Control,
 		Poset1,
 #if 0
 		classify_trihedral_pairs_early_test_function_type1
@@ -166,13 +193,19 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 		0 /*verbose_level*/);
 
 	if (f_v) {
-		cout << "computing orbits on 3-subsets of points (type 1) done. "
+		cout << "classify_trihedral_pairs::classify_orbits_on_trihedra "
+				"computing orbits on 3-subsets of points (type 1) done. "
 				"We found "
 			<< orbits_on_trihedra_type1->nb_orbits_at_level(3)
 			<< " orbits on 3-subsets" << endl;
 		}
 
+	if (f_v) {
+		cout << "classify_trihedral_pairs::classify_orbits_on_trihedra "
+				"computing orbits on 3-subsets of points (type 2):" << endl;
+		}
 	
+	//Control2 = NEW_OBJECT(poset_classification_control);
 	Poset2 = NEW_OBJECT(poset);
 	Poset2->init_subset_lattice(A, A, gens_type2,
 			verbose_level);
@@ -187,7 +220,7 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 	orbits_on_trihedra_type2->compute_orbits_on_subsets(
 		3, /* target_depth */
 		"", /* const char *prefix, */
-		FALSE /* int f_W */, FALSE /* f_w */,
+		Control,
 		Poset2,
 #if 0
 		classify_trihedral_pairs_early_test_function_type2
@@ -203,7 +236,8 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 		0 /*verbose_level*/);
 
 	if (f_v) {
-		cout << "computing orbits on 3-subsets of points (type 2) done. "
+		cout << "classify_trihedral_pairs::classify_orbits_on_trihedra "
+				"computing orbits on 3-subsets of points (type 2) done. "
 				"We found "
 			<< orbits_on_trihedra_type2->nb_orbits_at_level(3)
 			<< " orbits on 3-subsets" << endl;
@@ -717,7 +751,9 @@ void classify_trihedral_pairs::identify_three_planes(
 }
 
 
-void classify_trihedral_pairs::classify(int verbose_level)
+void classify_trihedral_pairs::classify(
+		poset_classification_control *Control,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -729,7 +765,7 @@ void classify_trihedral_pairs::classify(int verbose_level)
 		cout << "classify_trihedral_pairs::classify "
 				"before classify_orbits_on_trihedra" << endl;
 		}
-	classify_orbits_on_trihedra(verbose_level - 1);
+	classify_orbits_on_trihedra(Control, verbose_level - 1);
 	if (f_v) {
 		cout << "classify_trihedral_pairs::classify "
 				"before after classify_orbits_on_trihedra" << endl;

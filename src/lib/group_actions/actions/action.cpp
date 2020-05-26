@@ -1149,7 +1149,7 @@ int action::least_image_of_point(vector_ge &strong_generators,
 	len = Schreier.orbit_len[0];
 	image = int_vec_minimum(Schreier.orbit, len);
 	pos = Schreier.orbit_inv[image];
-	Schreier.coset_rep(pos);
+	Schreier.coset_rep(pos, 0 /* verbose_level */);
 	element_move(Schreier.cosetrep, transporter, 0);
 	// we check it:
 	i = element_image_of(pt, transporter, 0);
@@ -2692,14 +2692,35 @@ void action::make_element_which_moves_a_line_in_PG3q(
 }
 
 
-int action::is_matrix_group()
+
+int action::matrix_group_dimension()
 {
+#if 0
 	if (type_G == matrix_group_t) {
-			return TRUE;
+		matrix_group *M;
+
+		M = get_matrix_group();
+		return M->n;
+	}
+	else if (type_G == wreath_product_t) {
+		wreath_product *W;
+
+		W = G.wreath_product_group;
+		int vector_space_dimension;
+
+		vector_space_dimension = W->dimension_of_tensor_action;
+		return vector_space_dimension;
 	}
 	else {
-		return FALSE;
+		cout << "action::matrix_group_dimension not a matrix group" << endl;
+		cout << "type_G=";
+		action_print_symmetry_group_type(cout, type_G);
+		cout << endl;
+		exit(1);
 	}
+#else
+	return dimension;
+#endif
 }
 
 int action::is_semilinear_matrix_group()
@@ -2779,6 +2800,19 @@ int action::is_general_linear()
 		else {
 			return FALSE;
 		}
+	}
+}
+
+int action::is_matrix_group()
+{
+	if (type_G == matrix_group_t) {
+			return TRUE;
+	}
+	else {
+		if (f_has_subaction) {
+			return subaction->is_matrix_group();
+		}
+		return FALSE;
 	}
 }
 
@@ -3165,6 +3199,95 @@ void action::perform_tests(strong_generators *SG, int verbose_level)
 	FREE_int(perm4);
 	FREE_int(perm5);
 }
+
+
+void action::multiply_based_on_text(const char *data_A, const char *data_B, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action::multiply_based_on_text" << endl;
+	}
+	if (f_v) {
+		cout << "multiplying" << endl;
+		cout << "A=" << data_A << endl;
+		cout << "B=" << data_B << endl;
+	}
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+
+	Elt1 = NEW_int(elt_size_in_int);
+	Elt2 = NEW_int(elt_size_in_int);
+	Elt3 = NEW_int(elt_size_in_int);
+
+	make_element_from_string(Elt1, data_A, verbose_level);
+	if (f_v) {
+		cout << "A=" << endl;
+		element_print_quick(Elt1, cout);
+	}
+
+	make_element_from_string(Elt2, data_B, verbose_level);
+	if (f_v) {
+		cout << "B=" << endl;
+		element_print_quick(Elt2, cout);
+	}
+
+	element_mult(Elt1, Elt2, Elt3, 0);
+	if (f_v) {
+		cout << "A*B=" << endl;
+		element_print_quick(Elt3, cout);
+		element_print_for_make_element(Elt3, cout);
+		cout << endl;
+	}
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	if (f_v) {
+		cout << "action::multiply_based_on_text" << endl;
+	}
+}
+
+void action::inverse_based_on_text(const char *data_A, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action::inverse_based_on_text" << endl;
+	}
+
+	if (f_v) {
+		cout << "computing the inverse" << endl;
+		cout << "A=" << data_A << endl;
+	}
+	int *Elt1;
+	int *Elt2;
+
+	Elt1 = NEW_int(elt_size_in_int);
+	Elt2 = NEW_int(elt_size_in_int);
+
+	make_element_from_string(Elt1, data_A, verbose_level);
+	if (f_v) {
+		cout << "A=" << endl;
+		element_print_quick(Elt1, cout);
+	}
+
+	element_invert(Elt1, Elt2, 0);
+	if (f_v) {
+		cout << "A^-1=" << endl;
+		element_print_quick(Elt2, cout);
+		element_print_for_make_element(Elt2, cout);
+		cout << endl;
+	}
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+
+
+	if (f_v) {
+		cout << "action::inverse_based_on_text done" << endl;
+	}
+}
+
 
 
 }}

@@ -1129,7 +1129,7 @@ void sims::build_up_group_from_generators(sims *K,
 			if (FALSE) {
 				cout << "sims::build_up_group_from_generators level " << level << " coset rep " << j << endl;
 			}
-			O.coset_rep(j);
+			O.coset_rep(j, 0 /* verbose_level */);
 			if (FALSE) {
 				GA->element_print(O.cosetrep, cout);
 				cout << endl;

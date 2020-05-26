@@ -24,8 +24,8 @@ clique_finder_control::clique_finder_control()
 	f_weighted = FALSE;
 	weights_string = NULL;
 	f_Sajeeb = FALSE;
-	f_file = FALSE;
-	fname_graph = NULL;
+	//f_file = FALSE;
+	//fname_graph = NULL;
 	f_nonrecursive = FALSE;
 	f_output_solution_raw = FALSE;
 	f_output_file = FALSE;
@@ -55,12 +55,14 @@ int clique_finder_control::parse_arguments(
 
 	cout << "clique_finder_control::parse_arguments" << endl;
 	for (i = 0; i < argc; i++) {
+#if 0
 		if (strcmp(argv[i], "-file") == 0) {
 			f_file = TRUE;
 			fname_graph = argv[++i];
 			cout << "-file " << fname_graph << endl;
 		}
-		else if (strcmp(argv[i], "-rainbow") == 0) {
+#endif
+		if (strcmp(argv[i], "-rainbow") == 0) {
 			f_rainbow = TRUE;
 			cout << "-rainbow " << endl;
 		}
@@ -132,23 +134,25 @@ int clique_finder_control::parse_arguments(
 }
 
 
-void clique_finder_control::all_cliques(
+void clique_finder_control::all_cliques(colored_graph *CG,
+	char *fname_graph,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	colored_graph CG;
+
+	//colored_graph CG;
 	char fname_sol[1000];
 
 	if (f_v) {
 		cout << "clique_finder_control::all_cliques" << endl;
 		}
-	CG.load(fname_graph, verbose_level - 1);
+	//CG.load(fname_graph, verbose_level - 1);
 	if (f_output_file) {
 		sprintf(fname_sol, "%s", output_file);
-		}
+	}
 	else {
-		sprintf(fname_sol, "%s_sol.txt", CG.fname_base);
-		}
+		sprintf(fname_sol, "%s_sol.txt", fname_graph);
+	}
 
 	//CG.print();
 
@@ -164,7 +168,7 @@ void clique_finder_control::all_cliques(
 						"weighted cliques" << endl;
 			}
 
-			all_cliques_weighted(&CG, fname_sol, verbose_level);
+			all_cliques_weighted(CG, fname_sol, verbose_level);
 
 
 
@@ -175,7 +179,7 @@ void clique_finder_control::all_cliques(
 				cout << "clique_finder_control::all_cliques "
 						"before do_Sajeeb" << endl;
 			}
-			do_Sajeeb(&CG, fname_sol, verbose_level);
+			do_Sajeeb(CG, fname_sol, verbose_level);
 			if (f_v) {
 				cout << "clique_finder_control::all_cliques "
 						"after do_Sajeeb" << endl;
@@ -186,7 +190,7 @@ void clique_finder_control::all_cliques(
 				cout << "clique_finder_control::all_cliques "
 						"before CG.all_rainbow_cliques" << endl;
 				}
-			CG.all_rainbow_cliques(&fp,
+			CG->all_rainbow_cliques(&fp,
 				f_output_solution_raw,
 				f_maxdepth, maxdepth,
 				f_restrictions, restrictions,
@@ -220,11 +224,58 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG, const char *fname_sol, 
 		cout << "clique_finder_control::do_Sajeeb" << endl;
 	}
 
-#if 1
+#if 0
+	cout << __FILE__ << ":" << __LINE__ << endl;
 	Graph<> G (CG->nb_points, CG->nb_colors, CG->nb_colors_per_vertex);
+	cout << __FILE__ << ":" << __LINE__ << endl;
 
-	G.set_edge_from_bitvector_adjacency(CG->bitvector_adjacency, verbose_level);
-	
+
+
+	// const size_t nThreads = std::thread::hardware_concurrency();
+	// std::thread threads [nThreads];
+	// #pragma unroll
+	// for (size_t tID=0; tID<nThreads; ++tID) {
+	// 	threads[tID] = std::thread([tID, nThreads, &CG, &G]{
+	// 		#pragma unroll
+	// 		for (size_t i = 0, k = 0; i < CG->nb_points; i++) {
+	// 			if ((i % nThreads) != tID) continue;
+	// 			#pragma unroll
+	// 			for (size_t j = i + 1; j < CG->nb_points; j++, k++) {
+	// 				const int aij = bitvector_s_i(CG->bitvector_adjacency, k);
+	// 				if (aij) {
+	// 					G.set_edge(i, j);
+	// 					G.set_edge(j, i);
+	// 				}
+	// 			}
+	// 		}
+	// 	});
+	// }
+	// #pragma unroll
+	// for (size_t i=0; i<nThreads; ++i) threads[i].join();
+
+	for (size_t i = 0, k = 0; i < CG->nb_points; i++) {
+		#pragma unroll
+		for (size_t j = i + 1; j < CG->nb_points; j++, k++) {
+			const int aij = bitvector_s_i(CG->bitvector_adjacency, k);
+			if (aij) {
+				G.set_edge(i, j);
+				G.set_edge(j, i);
+			}
+		}
+	}
+
+
+	// G.adjacency.value_print();
+	// for (size_t i=0; i<CG->bitvector_length; ++i) {
+	// 	cout << (int)CG->bitvector_adjacency[i] << " ";
+	// }
+	// cout << endl;
+
+	// memcpy(G.adjacency.bit_array, CG->bitvector_adjacency, CG->L);
+
+	cout << __FILE__ << ":" << __LINE__ << endl;
+
+//	G.print_adj_matrix();
 	for (size_t i = 0; i < CG->nb_points; i++) {
 		G.set_vertex_label(CG->points[i], i);
 		for (size_t j = 0; j < CG->nb_colors_per_vertex; j++) {

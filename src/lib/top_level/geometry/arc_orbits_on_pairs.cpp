@@ -26,6 +26,7 @@ arc_orbits_on_pairs::arc_orbits_on_pairs()
 
 	arc_idx = -1;
 	Poset = NULL;
+	Control = NULL;
 	Orbits_on_pairs = NULL;
 
 	nb_orbits_on_pairs = -1;
@@ -51,6 +52,9 @@ void arc_orbits_on_pairs::freeself()
 	if (Poset) {
 		FREE_OBJECT(Poset);
 	}
+	if (Control) {
+		FREE_OBJECT(Control);
+	}
 	if (Orbits_on_pairs) {
 		FREE_OBJECT(Orbits_on_pairs);
 	}
@@ -75,7 +79,7 @@ void arc_orbits_on_pairs::freeself()
 void arc_orbits_on_pairs::init(
 	surfaces_arc_lifting *SAL, int arc_idx,
 	action *A,
-	int argc, const char **argv,
+	//int argc, const char **argv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -114,12 +118,13 @@ void arc_orbits_on_pairs::init(
 				"creating poset" << endl;
 		}
 	Poset = NEW_OBJECT(poset);
+	Control = NEW_OBJECT(poset_classification_control);
 	Poset->init_subset_lattice(A, A_on_arc,
 			The_arc->Strong_gens,
 			verbose_level);
 
 	Orbits_on_pairs = NEW_OBJECT(poset_classification);
-	Orbits_on_pairs->init(Poset,
+	Orbits_on_pairs->init(Control, Poset,
 		2 /* sz */, verbose_level);
 
 
@@ -204,7 +209,7 @@ void arc_orbits_on_pairs::init(
 			}
 		Table_orbits_on_partition[pair_orbit_idx].init(this, pair_orbit_idx,
 				A, A_on_arc,
-				argc, argv,
+				//argc, argv,
 				verbose_level);
 
 		nb = Table_orbits_on_partition[pair_orbit_idx].nb_orbits_on_partition;

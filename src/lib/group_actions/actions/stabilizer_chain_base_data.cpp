@@ -43,41 +43,44 @@ void stabilizer_chain_base_data::free_base_data()
 
 	if (f_v) {
 		cout << "stabilizer_chain_base_data::free_base_data" << endl;
-		}
+	}
 	if (base) {
 		FREE_lint(base);
 		base = NULL;
-		}
+	}
 	if (transversal_length) {
 		FREE_int(transversal_length);
 		transversal_length = NULL;
-		}
+	}
 	if (orbit) {
+		if (f_v) {
+			cout << "stabilizer_chain_base_data::free_base_data freeing " << base_len << " orbits" << endl;
+		}
 		for (i = 0; i < base_len; i++) {
 			if (f_v) {
 				cout << "deleting orbit " << i << endl;
-				}
+			}
 			FREE_lint(orbit[i]);
 			orbit[i] = NULL;
 			if (f_v) {
 				cout << "deleting orbit_inv " << i << endl;
-				}
+			}
 			FREE_lint(orbit_inv[i]);
 			orbit_inv[i] = NULL;
-			}
+		}
 		FREE_plint(orbit);
 		orbit = NULL;
 		FREE_plint(orbit_inv);
 		orbit_inv = NULL;
-		}
+	}
 	if (path) {
 		FREE_int(path);
 		path = NULL;
-		}
+	}
 	f_has_base = FALSE;
 	if (f_v) {
 		cout << "stabilizer_chain_base_data::free_base_data finished" << endl;
-		}
+	}
 }
 
 
@@ -185,14 +188,14 @@ void stabilizer_chain_base_data::init_base_from_sims(sims *G, int verbose_level)
 		cout << "stabilizer_chain_base_data::init_base_from_sims, "
 				"base length " << base_len << endl;
 		//G->print(TRUE);
-		}
+	}
 	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
 		int i, j, k, l;
 
 		for (i = 0; i < base_len; i++) {
 			k = G->get_orbit_length(i);
 			transversal_length[i] = k;
-			}
+		}
 		for (i = 0; i < base_len; i++) {
 			//cout << "i = " << i << " base[i]="
 			// << base[i] << " tl[i]=" << tl[i] << endl;
@@ -202,7 +205,7 @@ void stabilizer_chain_base_data::init_base_from_sims(sims *G, int verbose_level)
 			for (j = 0; j < A->degree; j++) {
 				orbit[i][j] = -1;
 				orbit_inv[i][j] = -1;
-				}
+			}
 			k = transversal_length[i];
 			//cout << "b: bi=" << bi << " k=" << k << endl;
 			for (j = 0; j < k; j++) {
@@ -210,7 +213,7 @@ void stabilizer_chain_base_data::init_base_from_sims(sims *G, int verbose_level)
 				//cout << G->orbit[i][j] << " " << endl;
 				orbit[i][j] = l = G->get_orbit(i, j);
 				orbit_inv[i][l] = j;
-				}
+			}
 			//cout << endl;
 			//cout << "c" << endl;
 			for (j = 0; j < A->degree; j++) {
@@ -219,22 +222,22 @@ void stabilizer_chain_base_data::init_base_from_sims(sims *G, int verbose_level)
 					orbit[i][k] = j;
 					orbit_inv[i][j] = k;
 					k++;
-					}
 				}
+			}
 			if (k != A->degree) {
 				cout << "k != degree" << endl;
 				cout << "transversal " << i << " k = " << k << endl;
 				exit(1);
-				}
-
 			}
+
+		}
 	}
 	else {
 		cout << "stabilizer_chain_base_data::init_base_from_sims degree is too large" << endl;
 	}
 	if (f_v) {
 		cout << "stabilizer_chain_base_data::init_base_from_sims done" << endl;
-		}
+	}
 }
 
 int &stabilizer_chain_base_data::get_f_has_base()

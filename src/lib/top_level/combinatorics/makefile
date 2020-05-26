@@ -6,17 +6,17 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	bent_function_classify.o \
+	boolean_function.o \
 	cayley_graph_search.o \
-	combinatorial_object_create.o \
-	combinatorial_object_description.o \
 	create_graph_description.o \
 	create_graph.o \
+	delandtsheer_doyen_description.o \
 	delandtsheer_doyen.o \
 	design_create_description.o \
 	design_create.o \
 	difference_set_in_heisenberg_group.o \
 	graph_classify.o \
+	graph_theoretic_activity_description.o \
 	hadamard_classify.o \
 	hall_system_classify.o \
 	large_set_classify.o \

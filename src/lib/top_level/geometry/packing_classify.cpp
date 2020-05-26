@@ -58,6 +58,7 @@ packing_classify::packing_classify()
 	bitvector_length = 0;
 	degree = NULL;
 
+	Control = NULL;
 	Poset = NULL;
 	gen = NULL;
 
@@ -721,17 +722,18 @@ void packing_classify::prepare_generator(
 				verbose_level);
 
 
+	Control = NEW_OBJECT(poset_classification_control);
 	gen = NEW_OBJECT(poset_classification);
 	
-	gen->f_T = TRUE;
-	gen->f_W = TRUE;
+	Control->f_T = TRUE;
+	Control->f_W = TRUE;
 
 	if (f_v) {
 		cout << "packing_classify::prepare_generator "
 				"calling gen->initialize" << endl;
 		}
 
-	gen->initialize(Poset,
+	gen->initialize(Control, Poset,
 		search_depth, 
 		"", prefix_with_directory,
 		verbose_level - 1);

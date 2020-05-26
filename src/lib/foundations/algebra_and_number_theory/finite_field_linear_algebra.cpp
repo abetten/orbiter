@@ -29,8 +29,8 @@ void finite_field::reverse_matrix(int *A, int *B, int m, int n)
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			B[i * n + j] = A[(m - 1 - i) * n + (n - 1 - j)];
-			}
 		}
+	}
 }
 
 void finite_field::identity_matrix(int *A, int n)
@@ -41,12 +41,12 @@ void finite_field::identity_matrix(int *A, int n)
 		for (j = 0; j < n; j++) {
 			if (i == j) {
 				A[i * n + j] = 1;
-				}
+			}
 			else {
 				A[i * n + j] = 0;
-				}
 			}
 		}
+	}
 }
 
 int finite_field::is_identity_matrix(int *A, int n)
@@ -58,15 +58,15 @@ int finite_field::is_identity_matrix(int *A, int n)
 			if (i == j) {
 				if (A[i * n + j] != 1) {
 					return FALSE;
-					}
 				}
+			}
 			else {
 				if (A[i * n + j]) {
 					return FALSE;
-					}
 				}
 			}
 		}
+	}
 	return TRUE;
 }
 
@@ -101,13 +101,13 @@ int finite_field::is_scalar_multiple_of_identity_matrix(
 	
 	if (!is_diagonal_matrix(A, n)) {
 		return FALSE;
-		}
+	}
 	scalar = A[0 * n + 0];
 	for (i = 1; i < n; i++) {
 		if (A[i * n + i] != scalar) {
 			return FALSE;
-			}
 		}
+	}
 	return TRUE;
 }
 
@@ -119,12 +119,12 @@ void finite_field::diagonal_matrix(int *A, int n, int alpha)
 		for (j = 0; j < n; j++) {
 			if (i == j) {
 				A[i * n + j] = alpha;
-				}
+			}
 			else {
 				A[i * n + j] = 0;
-				}
 			}
 		}
+	}
 }
 
 void finite_field::matrix_minor(int f_semilinear,
@@ -137,15 +137,15 @@ void finite_field::matrix_minor(int f_semilinear,
 	if (f + l > n) {
 		cout << "finite_field::matrix_minor f + l > n" << endl;
 		exit(1);
-		}
+	}
 	for (i = 0; i < l; i++) {
 		for (j = 0; j < l; j++) {
 			B[i * l + j] = A[(f + i) * n + (f + j)];
-			}
 		}
+	}
 	if (f_semilinear) {
 		B[l * l] = A[n * n];
-		}
+	}
 }
 
 void finite_field::mult_vector_from_the_left(int *v,
@@ -181,7 +181,7 @@ void finite_field::mult_matrix_matrix(
 		int_matrix_print(A, m, n);
 		cout << "B=" << endl;
 		int_matrix_print(B, n, o);
-		}
+	}
 	nb_calls_to_mult_matrix_matrix++;
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < o; j++) {
@@ -189,10 +189,10 @@ void finite_field::mult_matrix_matrix(
 			for (k = 0; k < n; k++) {
 				b = mult(A[i * n + k], B[k * o + j]);
 				a = add(a, b);
-				}
-			C[i * o + j] = a;
 			}
+			C[i * o + j] = a;
 		}
+	}
 }
 
 void finite_field::semilinear_matrix_mult(int *A, int *B, int *AB, int n)
@@ -205,7 +205,7 @@ void finite_field::semilinear_matrix_mult(int *A, int *B, int *AB, int n)
 	B2 = NEW_int(n * n);
 	f1 = A[n * n];
 	f2 = B[n * n];
-	f1inv = NT.irem(-f1, e);
+	f1inv = NT.mod(-f1, e);
 	int_vec_copy(B, B2, n * n);
 	vector_frobenius_power_in_place(B2, n * n, f1inv);
 	for (i = 0; i < n; i++) {
@@ -219,27 +219,37 @@ void finite_field::semilinear_matrix_mult(int *A, int *B, int *AB, int n)
 				ab = mult(a, b);
 				c = add(c, ab);
 				//cout << "b=" << b << "ab=" << ab << "c=" << c << endl;
-				}
-			AB[i * n + j] = c;
 			}
+			AB[i * n + j] = c;
 		}
-	AB[n * n] = NT.irem(f1 + f2, e);
+	}
+	AB[n * n] = NT.mod(f1 + f2, e);
 	//vector_frobenius_power_in_place(B, n * n, f1);
 	FREE_int(B2);
 }
 
 void finite_field::semilinear_matrix_mult_memory_given(
-		int *A, int *B, int *AB, int *tmp_B, int n)
+		int *A, int *B, int *AB, int *tmp_B, int n, int verbose_level)
 // (A,f1) * (B,f2) = (A*B^{\varphi^{-f1}},f1+f2)
 {
+	int f_v = (verbose_level >= 1);
 	int i, j, k, a, b, ab, c, f1, f2, f1inv;
 	int *B2 = tmp_B;
 	number_theory_domain NT;
 	
+	if (f_v) {
+		cout << "finite_field::semilinear_matrix_mult_memory_given" << endl;
+	}
 	//B2 = NEW_int(n * n);
 	f1 = A[n * n];
 	f2 = B[n * n];
-	f1inv = NT.irem(-f1, e);
+	f1inv = NT.mod(-f1, e);
+	if (f_v) {
+		cout << "finite_field::semilinear_matrix_mult_memory_given f1=" << f1 << endl;
+		cout << "finite_field::semilinear_matrix_mult_memory_given f2=" << f2 << endl;
+		cout << "finite_field::semilinear_matrix_mult_memory_given f1inv=" << f1inv << endl;
+	}
+
 	int_vec_copy(B, B2, n * n);
 	vector_frobenius_power_in_place(B2, n * n, f1inv);
 	for (i = 0; i < n; i++) {
@@ -253,13 +263,16 @@ void finite_field::semilinear_matrix_mult_memory_given(
 				ab = mult(a, b);
 				c = add(c, ab);
 				//cout << "b=" << b << "ab=" << ab << "c=" << c << endl;
-				}
-			AB[i * n + j] = c;
 			}
+			AB[i * n + j] = c;
 		}
-	AB[n * n] = NT.irem(f1 + f2, e);
+	}
+	AB[n * n] = NT.mod(f1 + f2, e);
 	//vector_frobenius_power_in_place(B, n * n, f1);
 	//FREE_int(B2);
+	if (f_v) {
+		cout << "finite_field::semilinear_matrix_mult_memory_given done" << endl;
+	}
 }
 
 void finite_field::matrix_mult_affine(int *A, int *B, int *AB,
@@ -288,27 +301,27 @@ void finite_field::matrix_mult_affine(int *A, int *B, int *AB,
 		int_matrix_print(A2, n, n);
 		cout << "b2=" << endl;
 		int_matrix_print(b2, 1, n);
-		}
+	}
 	
 	mult_matrix_matrix(A1, A2, A3, n, n, n, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "A3=" << endl;
 		int_matrix_print(A3, n, n);
-		}
+	}
 	mult_matrix_matrix(b1, A2, b3, 1, n, n, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "b3=" << endl;
 		int_matrix_print(b3, 1, n);
-		}
+	}
 	add_vector(b3, b2, b3, n);
 	if (f_vv) {
 		cout << "b3 after adding b2=" << endl;
 		int_matrix_print(b3, 1, n);
-		}
+	}
 	
 	if (f_v) {
 		cout << "finite_field::matrix_mult_affine done" << endl;
-		}
+	}
 }
 
 void finite_field::semilinear_matrix_mult_affine(
@@ -330,8 +343,8 @@ void finite_field::semilinear_matrix_mult_affine(
 	
 	f1 = A[n * n + n];
 	f2 = B[n * n + n];
-	f12 = NT.irem(f1 + f2, e);
-	f1inv = NT.irem(-f1, e);
+	f12 = NT.mod(f1 + f2, e);
+	f1inv = NT.mod(-f1, e);
 	
 	int_vec_copy(A2, T, n * n);
 	vector_frobenius_power_in_place(T, n * n, f1inv);
@@ -562,7 +575,7 @@ void finite_field::semilinear_matrix_invert(int *A,
 	matrix_invert(A, Tmp, Tmp_basecols, Ainv, n, verbose_level - 1);
 	f = A[n * n];
 	vector_frobenius_power_in_place(Ainv, n * n, f);
-	finv = NT.irem(-f, e);
+	finv = NT.mod(-f, e);
 	Ainv[n * n] = finv;
 	if (f_v) {
 		cout << "the inverse is" << endl;
@@ -594,7 +607,7 @@ void finite_field::semilinear_matrix_invert_affine(int *A,
 	b2 = Ainv + n * n;
 	matrix_invert(A, Tmp, Tmp_basecols, Ainv, n, verbose_level - 1);
 	f = A[n * n + n];
-	finv = NT.irem(-f, e);
+	finv = NT.mod(-f, e);
 	vector_frobenius_power_in_place(Ainv, n * n, f);
 
 	mult_matrix_matrix(b1, Ainv, b2, 1, n, n, 0 /* verbose_level */);
@@ -2172,33 +2185,36 @@ int finite_field::perp_standard_with_temporary_data(
 
 	int_vec_copy(A, B, k * n);
 	if (f_v) {
-		cout << "finite_field::perp_standard" << endl;
+		cout << "finite_field::perp_standard_temporary_data" << endl;
 		cout << "B=" << endl;
 		int_matrix_print(B, k, n);
-		cout << "finite_field::perp_standard before Gauss_int" << endl;
+		cout << "finite_field::perp_standard_temporary_data before Gauss_int" << endl;
 		}
 	nb_base_cols = Gauss_int(B,
 		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
 		FALSE /* f_P */, NULL /*P*/, k, n, n,
-		verbose_level);
+		0 /*verbose_level*/);
 	if (f_v) {
-		cout << "finite_field::perp_standard after Gauss_int" << endl;
+		cout << "finite_field::perp_standard_temporary_data after Gauss_int" << endl;
 		}
 	matrix_get_kernel(B, k, n, base_cols, nb_base_cols, 
 		kernel_m, kernel_n, K);
 	if (f_v) {
-		cout << "finite_field::perp_standard "
+		cout << "finite_field::perp_standard_temporary_data "
 				"after matrix_get_kernel" << endl;
 		cout << "kernel_m = " << kernel_m << endl;
 		cout << "kernel_n = " << kernel_n << endl;
 		}
+
+	int_vec_copy(B, A, nb_base_cols * n);
+
 	for (j = 0; j < kernel_n; j++) {
 		for (i = 0; i < n; i++) {
-			A[(k + j) * n + i] = K[i * kernel_n + j];
+			A[(nb_base_cols + j) * n + i] = K[i * kernel_n + j];
 			}
 		}
 	if (f_v) {
-		cout << "finite_field::perp_standard" << endl;
+		cout << "finite_field::perp_standard_temporary_data" << endl;
 		cout << "A=" << endl;
 		int_matrix_print(A, n, n);
 		}

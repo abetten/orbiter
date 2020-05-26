@@ -190,7 +190,7 @@ void action::coset_unrank(sims *G, sims *U,
 				G_orb.print_and_list_orbits(cout);
 				}
 			//G->coset_rep(base_idx, G->orbit_inv[base_idx][elt_k], 0/* verbose_level*/);
-			G_orb.coset_rep(G_orb.orbit_inv[elt_k]);
+			G_orb.coset_rep(G_orb.orbit_inv[elt_k], 0 /* verbose_level */);
 			element_move(G_orb.cosetrep, Elt_gk, 0);
 
 			if (f_v) {
@@ -459,7 +459,7 @@ long int action::coset_rank(sims *G, sims *U, int *Elt, int verbose_level)
 		}
 
 
-	G_orb.coset_rep(G_orb.orbit_inv[elt_k]);
+	G_orb.coset_rep(G_orb.orbit_inv[elt_k], 0 /* verbose_level */);
 	element_move(G_orb.cosetrep, Elt_gk, 0);
 
 	if (element_image_of(base_pt, Elt_gk, 0) != elt_k) {
@@ -555,7 +555,7 @@ long int action::coset_rank(sims *G, sims *U, int *Elt, int verbose_level)
 					"from the right so that elt_k is fixed" << endl;
 			}
 		
-		U_orb.coset_rep_inv(U_orb.orbit_inv[im]);
+		U_orb.coset_rep_inv(U_orb.orbit_inv[im], 0 /* verbose_level */);
 		element_move(U_orb.cosetrep, Elt_u, 0);
 		if (f_v) {
 			cout << "Elt_u =" << endl;

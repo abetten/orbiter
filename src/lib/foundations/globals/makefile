@@ -6,6 +6,9 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	function_command.o \
+	function_polish_description.o \
+	function_polish.o \
 	magma_interface.o \
 	numerics.o \
 	polynomial_double_domain.o \

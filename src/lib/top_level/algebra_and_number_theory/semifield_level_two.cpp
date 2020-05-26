@@ -2443,12 +2443,7 @@ void semifield_level_two::report(
 
 void semifield_level_two::create_fname_level_info_file(char *fname)
 {
-	if (SC->f_level_two_prefix) {
 		sprintf(fname, "%sLevel_2_info.csv", SC->level_two_prefix);
-		}
-	else {
-		sprintf(fname, "Level_2_info.csv");
-		}
 }
 
 

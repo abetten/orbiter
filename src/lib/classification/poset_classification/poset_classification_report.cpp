@@ -401,7 +401,7 @@ void poset_classification::report(ostream &ost)
 		//"-embedded "
 		"-line_width 0.30 "
 		"-spanning_tree",
-		tools_path);
+		Control->tools_path);
 	cout << "executing: " << cmd << endl;
 	system(cmd);
 
@@ -449,7 +449,7 @@ void poset_classification::report(ostream &ost)
 			strong_generators *gens;
 
 			get_stabilizer_generators(gens,
-					level, orbit_at_level, verbose_level);
+					level, orbit_at_level, Control->verbose_level);
 			get_orbit_length_and_stabilizer_order(orbit_at_level, level,
 				stab_order, orbit_length);
 
@@ -542,7 +542,7 @@ void poset_classification::report(ostream &ost)
 					sprintf(fname_mp, "%s_draw_tree.mp", fname_base);
 					sprintf(fname_1, "%s_draw_tree.1", fname_base);
 
-					if (!f_has_tools_path) {
+					if (!Control->f_has_tools_path) {
 						cout << "please set tools path using "
 								"-tools_path <tools_path>" << endl;
 						exit(1);
@@ -558,7 +558,7 @@ void poset_classification::report(ostream &ost)
 						//"-embedded "
 						"-line_width 0.30 "
 						"-spanning_tree",
-						tools_path, fname_layered_graph);
+						Control->tools_path, fname_layered_graph);
 					cout << "executing: " << cmd << endl;
 					system(cmd);
 

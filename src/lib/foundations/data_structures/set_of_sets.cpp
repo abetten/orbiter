@@ -1249,6 +1249,36 @@ void set_of_sets::save_csv(const char *fname,
 		}
 }
 
+void set_of_sets::save_constant_size_csv(const char *fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int nb_cols;
+	long int *M;
+	int i, j;
+	file_io Fio;
+
+	if (f_v) {
+		cout << "set_of_sets::save_constant_size_csv" << endl;
+		}
+	if (!has_constant_size_property()) {
+		cout << "set_of_sets::save_constant_size_csv !has_constant_size_property()" << endl;
+		exit(1);
+	}
+	nb_cols = Set_size[0];
+	M = NEW_lint(nb_sets * nb_cols);
+	for (i = 0; i < nb_sets; i++) {
+		for (j = 0; j < nb_cols; j++) {
+			M[i * nb_cols + j] = Sets[i][j];
+		}
+	}
+	Fio.lint_matrix_write_csv(fname, M, nb_sets, nb_cols);
+	FREE_lint(M);
+	if (f_v) {
+		cout << "set_of_sets::save_constant_size_csv done" << endl;
+	}
+}
+
 int set_of_sets::find_common_element_in_two_sets(
 		int idx1, int idx2, int &common_elt)
 {

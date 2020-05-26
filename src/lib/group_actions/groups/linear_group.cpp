@@ -80,6 +80,8 @@ void linear_group::init(
 		description->f_affine,
 		description->f_semilinear,
 		description->f_special,
+		description->f_GL_d_q_wr_Sym_n,
+		description->GL_wreath_Sym_d, description->GL_wreath_Sym_n,
 		nice_gens,
 		verbose_level);
 
@@ -88,13 +90,18 @@ void linear_group::init(
 				"initial_strong_gens->init_linear_group_from_scratch" << endl;
 	}
 
-	f_has_nice_gens = TRUE;
-
 
 	if (f_v) {
 		cout << "linear_group::init initializing "
 				"initial_strong_gens done" << endl;
-		}
+	}
+	if (f_v) {
+		cout << "linear_group::init degreee=" << A_linear->degree << endl;
+		cout << "linear_group::init go=";
+		longinteger_object go;
+		A_linear->Strong_gens->group_order(go);
+		cout << go << endl;
+	}
 
 	strcpy(prefix, A_linear->label);
 	strcpy(label_latex, A_linear->label_tex);
@@ -303,6 +310,78 @@ void linear_group::init(
 		}
 		f_OK = TRUE;
 	}
+	if (description->f_on_tensors) {
+		if (f_v) {
+			cout << "linear_group::init "
+					"f_on_tensors" << endl;
+		}
+		wreath_product *W;
+		long int *points;
+		int nb_points;
+		int i;
+
+		W = A_linear->G.wreath_product_group;
+		nb_points = W->degree_of_tensor_action;
+		points = NEW_lint(nb_points);
+		for (i = 0; i < nb_points; i++) {
+			points[i] = W->perm_offset_i[W->nb_factors] + i;
+		}
+
+		if (f_v) {
+			cout << "action::init_wreath_product_group_and_restrict "
+					"before A_wreath->restricted_action" << endl;
+		}
+		A2 = A_linear->restricted_action(points, nb_points,
+				verbose_level);
+		A2->f_is_linear = TRUE;
+		A2->dimension = W->dimension_of_tensor_action;
+		f_OK = TRUE;
+		Strong_gens = initial_strong_gens;
+		if (f_v) {
+			cout << "action::init_wreath_product_group_and_restrict "
+					"after A_linear->restricted_action" << endl;
+		}
+		if (f_v) {
+			cout << "linear_group::init "
+					"f_on_tensors done" << endl;
+		}
+
+	}
+	if (description->f_on_rank_one_tensors) {
+		if (f_v) {
+			cout << "linear_group::init f_on_rank_one_tensors" << endl;
+		}
+		wreath_product *W;
+		long int *points;
+		int nb_points;
+		int i;
+
+		W = A_linear->G.wreath_product_group;
+		nb_points = W->nb_rank_one_tensors;
+		points = NEW_lint(nb_points);
+		for (i = 0; i < nb_points; i++) {
+			points[i] = W->perm_offset_i[W->nb_factors] + W->rank_one_tensors_in_PG[i];
+		}
+
+		if (f_v) {
+			cout << "action::init_wreath_product_group_and_restrict "
+					"before A_wreath->restricted_action" << endl;
+		}
+		A2 = A_linear->restricted_action(points, nb_points,
+				verbose_level);
+		A2->f_is_linear = TRUE;
+		A2->dimension = W->dimension_of_tensor_action;
+		f_OK = TRUE;
+		Strong_gens = initial_strong_gens;
+		if (f_v) {
+			cout << "action::init_wreath_product_group_and_restrict "
+					"after A_linear->restricted_action" << endl;
+		}
+
+		if (f_v) {
+			cout << "linear_group::init f_on_rank_one_tensors done" << endl;
+		}
+	}
 
 	if (!f_OK) {
 		A2 = A_linear;
@@ -353,9 +432,17 @@ void linear_group::init(
 				"action on k-subspaces done" << endl;
 		
 		}
+
+	if (description->f_export_magma) {
+		if (f_v) {
+			cout << "linear_group::init f_export_magma" << endl;
+		}
+		Strong_gens->export_magma(A_linear, cout);
+	}
+
 	if (f_v) {
 		cout << "linear_group::init done" << endl;
-		}
+	}
 }
 
 void linear_group::init_PGL2q_OnConic(char *prefix, char *label_latex,
@@ -1030,7 +1117,7 @@ void linear_group::report(ostream &fp, int f_sylow, int f_group_table,
 	if (f_v) {
 		cout << "linear_group::report before Strong_gens->create_sims" << endl;
 	}
-	H = Strong_gens->create_sims(verbose_level);
+	H = Strong_gens->create_sims(0 /*verbose_level*/);
 
 	//cout << "group order G = " << G->group_order_int() << endl;
 	cout << "group order H = " << H->group_order_lint() << endl;
@@ -1067,16 +1154,24 @@ void linear_group::report(ostream &fp, int f_sylow, int f_group_table,
 		fp << "\\noindent The field ${\\mathbb F}_{"
 				<< F->q
 				<< "}$ :\\\\" << endl;
+		if (f_v) {
+			cout << "linear_group::report before F->cheat_sheet" << endl;
+		}
 		F->cheat_sheet(fp, verbose_level);
+		if (f_v) {
+			cout << "linear_group::report after F->cheat_sheet" << endl;
+		}
 
 
 		fp << "\\noindent The group acts on a set of size "
 				<< A->degree << "\\\\" << endl;
 
+#if 0
 		if (A->degree < 1000) {
 
 			A->print_points(fp);
 		}
+#endif
 
 		//cout << "Order H = " << H->group_order_int() << "\\\\" << endl;
 

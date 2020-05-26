@@ -551,22 +551,25 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
+	//int f_vvv = (verbose_level >= 3);
 	int r;
 	longinteger_object go_H;
 	longinteger_domain D;
 
+	if (f_v) {
+		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting, "
+				"verbose_level = " << verbose_level << endl;
+	}
 
 	D.integral_division_by_int(go_G, pt_orbit_len, go_H, r);
 	if (r != 0) {
-		cout << "poset_orbit_node::compute_point_stabilizer_"
-				"in_standard_setting "
+		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting "
 				"r != 0" << endl;
 		cout << "go_G=" << go_G << endl;
 		cout << "pt_orbit_len=" << pt_orbit_len << endl;
 		cout << "go_H=" << go_H << endl;
 		exit(1);
-		}
+	}
 
 	H.init(gen->Poset->A, verbose_level - 2);
 
@@ -574,41 +577,35 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 
 
 	if (f_v) {
-		cout << "poset_orbit_node::compute_point_stabilizer_"
-				"in_standard_setting, "
+		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting, "
 				"verbose_level = " << verbose_level << endl;
-		cout << "poset_orbit_node::compute_point_stabilizer_"
-				"in_standard_setting, "
+		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting, "
 				"go_G = " << go_G << endl;
-		cout << "poset_orbit_node::compute_point_stabilizer_"
-				"in_standard_setting, "
+		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting, "
 				"pt_orbit_len = " << pt_orbit_len << endl;
-		cout << "poset_orbit_node::compute_point_stabilizer_"
-				"in_standard_setting, "
+		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting, "
 				"go_H = " << go_H << endl;
-		}
+	}
 
 	if (Op->Schreier_vector) {
-		if (f_vvv) {
+		if (f_v) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
-			cout << " poset_orbit_node::compute_point_stabilizer_"
-					"in_standard_setting "
+			cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting "
 					"setting up restricted action from the previous "
 					"schreier vector:" << endl;
-			}
+		}
 		action AR;
 
 
 		if (Op->nb_strong_generators) {
 			// if G is non-trivial
 
-			if (f_vvv) {
+			if (f_v) {
 				gen->print_level_extension_info(size - 1, prev, prev_ex);
-				cout << " poset_orbit_node::compute_point_stabilizer_"
-						"in_standard_setting "
+				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting "
 						"calling AR.induced_action_by_restriction_"
 						"on_orbit_with_schreier_vector" << endl;
-				}
+			}
 			AR.induced_action_by_restriction_on_orbit_with_schreier_vector(
 				*gen->Poset->A2,
 				FALSE /* f_induce_action */,
@@ -616,49 +613,44 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 				Op->Schreier_vector /* Op->sv*/,
 				pt,
 				verbose_level - 1);
-			if (f_vvv) {
+			if (f_v) {
 				gen->print_level_extension_info(size - 1, prev, prev_ex);
-				cout << " poset_orbit_node::compute_point_stabilizer_"
-						"in_standard_setting created action of degree "
+				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting created action of degree "
 						<< AR.degree << endl;
-				}
-			if (f_vvv) {
+			}
+			if (f_v) {
 				gen->print_level_extension_info(size - 1, prev, prev_ex);
-				cout << " poset_orbit_node::compute_point_stabilizer_"
-						"in_standard_setting calling "
+				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting calling "
 						"G.point_stabilizer_with_action"
 						<< endl;
-				}
-			G.point_stabilizer_with_action(&AR,
-					H, 0 /*pt */, verbose_level - 3);
-			if (f_vvv) {
+			}
+			G.point_stabilizer_with_action(&AR, H, 0 /*pt */, verbose_level - 3);
+			if (f_v) {
 				gen->print_level_extension_info(size - 1, prev, prev_ex);
-				cout << " poset_orbit_node::compute_point_stabilizer_"
-						"in_standard_setting after "
+				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting after "
 						"G.point_stabilizer_with_action"
 						<< endl;
-				}
+			}
 
 			longinteger_object go_H1;
 			H.group_order(go_H1);
 			longinteger_domain D;
 			if (D.compare(go_H, go_H1) != 0) {
-				cout << "poset_orbit_node::compute_point_stabilizer_"
-						"in_standard_setting "
+				cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting "
 						"go_H is incorrect" << endl;
 				cout << "go_H=" << go_H << endl;
 				cout << "go_H1=" << go_H1 << endl;
 				exit(1);
-				}
+			}
 
-			if (f_vvv) {
+			if (f_v) {
 				gen->print_level_extension_info(size - 1, prev, prev_ex);
 				cout << " poset_orbit_node::compute_point_stabilizer_"
 						"in_standard_setting "
 						"G.point_stabilizer_with_action done"
 						<< endl;
-				}
 			}
+		}
 		else {
 			// do nothing, the stabilizer is trivial (since G is trivial)
 			vector_ge stab_gens;
@@ -670,25 +662,24 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 			tl = NEW_int(gen->Poset->A->base_len());
 			for (i = 0; i < gen->Poset->A->base_len(); i++) {
 				tl[i] = 1;
-				}
+			}
 
 			H.init(gen->Poset->A, verbose_level - 2);
 			H.init_strong_generators(stab_gens, tl, verbose_level - 2);
 			FREE_int(tl);
-			}
 		}
+	}
 	else {
-		if (f_vvv) {
+		if (f_v) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
-			cout << " previous schreier vector not available:" << endl;
-			}
-		G.point_stabilizer_with_action(gen->Poset->A2, H, pt, 0);
+			cout << " previous schreier vector not available. Before G.point_stabilizer_with_action" << endl;
 		}
+		G.point_stabilizer_with_action(gen->Poset->A2, H, pt, 0);
+	}
 
 	if (f_v) {
-		cout << "poset_orbit_node::compute_point_stabilizer_"
-				"in_standard_setting done" << endl;
-		}
+		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting done" << endl;
+	}
 
 }
 

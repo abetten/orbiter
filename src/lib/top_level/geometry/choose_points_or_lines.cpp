@@ -33,6 +33,7 @@ void choose_points_or_lines::null()
 	transporter = NULL;
 	transporter_inv = NULL;
 	gen = NULL;
+	Control = NULL;
 	Poset = NULL;
 	f_has_favorite = FALSE;
 	f_iso_test_only = FALSE;
@@ -60,6 +61,9 @@ void choose_points_or_lines::freeself()
 		}
 	if (gen) {
 		FREE_OBJECT(gen);
+		}
+	if (Control) {
+		FREE_OBJECT(Control);
 		}
 	if (Poset) {
 		FREE_OBJECT(Poset);
@@ -192,10 +196,11 @@ void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens,
 				<< label << " calling gen->init" << endl;
 		}
 
+	Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A2, Strong_gens, verbose_level);
 
-	gen->init(Poset,
+	gen->init(Control, Poset,
 		gen->depth /* sz */, verbose_level - 2);
 	if (f_vv) {
 		cout << "choose_points_or_lines::compute_orbits "

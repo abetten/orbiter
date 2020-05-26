@@ -16,8 +16,7 @@ int action::image_of(
 		void *elt, int a)
 {
 	ptr->nb_times_image_of_called++;
-	return (*ptr->ptr_element_image_of)(
-			*this, a, elt, 0);
+	return (*ptr->ptr_element_image_of)(*this, a, elt, 0);
 }
 
 void action::image_of_low_level(
@@ -34,15 +33,13 @@ void action::image_of_low_level(
 int action::linear_entry_ij(
 		void *elt, int i, int j)
 {
-	return (*ptr->ptr_element_linear_entry_ij)(
-			*this, elt, i, j, 0);
+	return (*ptr->ptr_element_linear_entry_ij)(*this, elt, i, j, 0);
 }
 
 int action::linear_entry_frobenius(
 		void *elt)
 {
-	return (*ptr->ptr_element_linear_entry_frobenius)(
-			*this, elt, 0);
+	return (*ptr->ptr_element_linear_entry_frobenius)(*this, elt, 0);
 }
 
 void action::one(void *elt)
@@ -59,104 +56,87 @@ int action::is_one(void *elt)
 void action::unpack(void *elt, void *Elt)
 {
 	ptr->nb_times_unpack_called++;
-	(*ptr->ptr_element_unpack)(
-			*this, elt, Elt, 0);
+	(*ptr->ptr_element_unpack)(*this, elt, Elt, 0);
 }
 
 void action::pack(void *Elt, void *elt)
 {
 	ptr->nb_times_pack_called++;
-	(*ptr->ptr_element_pack)(
-			*this, Elt, elt, 0);
+	(*ptr->ptr_element_pack)(*this, Elt, elt, 0);
 }
 
 void action::retrieve(void *elt, int hdl)
 {
 	ptr->nb_times_retrieve_called++;
-	(*ptr->ptr_element_retrieve)(
-			*this, hdl, elt, 0);
+	(*ptr->ptr_element_retrieve)(*this, hdl, elt, 0);
 }
 
 int action::store(void *elt)
 {
 	ptr->nb_times_store_called++;
-	return (*ptr->ptr_element_store)(
-			*this, elt, 0);
+	return (*ptr->ptr_element_store)(*this, elt, 0);
 }
 
 void action::mult(
 		void *a, void *b, void *ab)
 {
 	ptr->nb_times_mult_called++;
-	(*ptr->ptr_element_mult)(
-			*this, a, b, ab, 0);
+	(*ptr->ptr_element_mult)(*this, a, b, ab, 0);
 }
 
 void action::mult_apply_from_the_right(
 		void *a, void *b)
 // a := a * b
 {
-	(*ptr->ptr_element_mult)(
-			*this, a, b, elt_mult_apply, 0);
-	(*ptr->ptr_element_move)(
-			*this, elt_mult_apply, a, 0);
+	(*ptr->ptr_element_mult)(*this, a, b, elt_mult_apply, 0);
+	(*ptr->ptr_element_move)(*this, elt_mult_apply, a, 0);
 }
 
 void action::mult_apply_from_the_left(
 		void *a, void *b)
 // b := a * b
 {
-	(*ptr->ptr_element_mult)(
-			*this, a, b, elt_mult_apply, 0);
-	(*ptr->ptr_element_move)(
-			*this, elt_mult_apply, b, 0);
+	(*ptr->ptr_element_mult)(*this, a, b, elt_mult_apply, 0);
+	(*ptr->ptr_element_move)(*this, elt_mult_apply, b, 0);
 }
 
 void action::invert(void *a, void *av)
 {
 	ptr->nb_times_invert_called++;
-	(*ptr->ptr_element_invert)(
-			*this, a, av, 0);
+	(*ptr->ptr_element_invert)(*this, a, av, 0);
 }
 
 void action::invert_in_place(void *a)
 {
-	(*ptr->ptr_element_invert)(
-			*this, a, elt_mult_apply, 0);
-	(*ptr->ptr_element_move)(
-			*this, elt_mult_apply, a, 0);
+	(*ptr->ptr_element_invert)(*this, a, elt_mult_apply, 0);
+	(*ptr->ptr_element_move)(*this, elt_mult_apply, a, 0);
 }
 
 void action::transpose(void *a, void *at)
 {
-	(*ptr->ptr_element_transpose)(
-			*this, a, at, 0);
+	(*ptr->ptr_element_transpose)(*this, a, at, 0);
 }
 
 void action::move(void *a, void *b)
 {
-	(*ptr->ptr_element_move)(
-			*this, a, b, 0);
+	(*ptr->ptr_element_move)(*this, a, b, 0);
 }
 
 void action::dispose(int hdl)
 {
-	(*ptr->ptr_element_dispose)(
-			*this, hdl, 0);
+	(*ptr->ptr_element_dispose)(*this, hdl, 0);
 }
 
 void action::print(
 		ostream &ost, void *elt)
 {
-	(*ptr->ptr_element_print)(
-			*this, elt, ost);
+	(*ptr->ptr_element_print)(*this, elt, ost);
 }
 
 void action::print_quick(
 		ostream &ost, void *elt)
 {
-	(*ptr->ptr_element_print_quick)(
-			*this, elt, ost);
+	(*ptr->ptr_element_print_quick)(*this, elt, ost);
 }
 
 void action::print_as_permutation(
@@ -236,8 +216,7 @@ void action::element_image_of_low_level(
 void action::element_one(
 		void *elt, int verbose_level)
 {
-	(*ptr->ptr_element_one)(
-			*this, elt, verbose_level);
+	(*ptr->ptr_element_one)(*this, elt, verbose_level);
 }
 
 int action::element_linear_entry_ij(
@@ -301,69 +280,60 @@ void action::element_unpack(
 		void *elt, void *Elt, int verbose_level)
 {
 	ptr->nb_times_unpack_called++;
-	(*ptr->ptr_element_unpack)(
-			*this, elt, Elt, verbose_level);
+	(*ptr->ptr_element_unpack)(*this, elt, Elt, verbose_level);
 }
 
 void action::element_pack(
 		void *Elt, void *elt, int verbose_level)
 {
 	ptr->nb_times_pack_called++;
-	(*ptr->ptr_element_pack)(
-			*this, Elt, elt, verbose_level);
+	(*ptr->ptr_element_pack)(*this, Elt, elt, verbose_level);
 }
 
 void action::element_retrieve(
 		int hdl, void *elt, int verbose_level)
 {
 	ptr->nb_times_retrieve_called++;
-	(*ptr->ptr_element_retrieve)(
-			*this, hdl, elt, verbose_level);
+	(*ptr->ptr_element_retrieve)(*this, hdl, elt, verbose_level);
 }
 
 int action::element_store(
 		void *elt, int verbose_level)
 {
 	ptr->nb_times_store_called++;
-	return (*ptr->ptr_element_store)(
-			*this, elt, verbose_level);
+	return (*ptr->ptr_element_store)(*this, elt, verbose_level);
 }
 
 void action::element_mult(
 		void *a, void *b, void *ab, int verbose_level)
 {
 	ptr->nb_times_mult_called++;
-	(*ptr->ptr_element_mult)(
-			*this, a, b, ab, verbose_level);
+	(*ptr->ptr_element_mult)(*this, a, b, ab, verbose_level);
 }
 
 void action::element_invert(
 		void *a, void *av, int verbose_level)
 {
 	ptr->nb_times_invert_called++;
-	(*ptr->ptr_element_invert)(
-			*this, a, av, verbose_level);
+	(*ptr->ptr_element_invert)(*this, a, av, verbose_level);
 }
 
 void action::element_transpose(
 		void *a, void *at, int verbose_level)
 {
-	(*ptr->ptr_element_transpose)(
-			*this, a, at, verbose_level);
+	(*ptr->ptr_element_transpose)(*this, a, at, verbose_level);
 }
 
 void action::element_move(
 		void *a, void *b, int verbose_level)
 {
-	(*ptr->ptr_element_move)(
-			*this, a, b, verbose_level);
+	(*ptr->ptr_element_move)(*this, a, b, verbose_level);
 }
 
 void action::element_dispose(
 		int hdl, int verbose_level)
 {
-	(*ptr->ptr_element_dispose)(
-			*this, hdl, verbose_level);
+	(*ptr->ptr_element_dispose)(*this, hdl, verbose_level);
 }
 
 void action::element_print(
@@ -381,15 +351,13 @@ void action::element_print_quick(
 				"ptr_element_print_quick == NULL" << endl;
 		exit(1);
 		}
-	(*ptr->ptr_element_print_quick)(
-			*this, elt, ost);
+	(*ptr->ptr_element_print_quick)(*this, elt, ost);
 }
 
 void action::element_print_latex(
 		void *elt, ostream &ost)
 {
-	(*ptr->ptr_element_print_latex)(
-			*this, elt, ost);
+	(*ptr->ptr_element_print_latex)(*this, elt, ost);
 }
 
 void action::element_print_latex_with_print_point_function(
@@ -404,29 +372,25 @@ void action::element_print_latex_with_print_point_function(
 void action::element_print_verbose(
 		void *elt, ostream &ost)
 {
-	(*ptr->ptr_element_print_verbose)(
-			*this, elt, ost);
+	(*ptr->ptr_element_print_verbose)(*this, elt, ost);
 }
 
 void action::element_code_for_make_element(
 		void *elt, int *data)
 {
-	(*ptr->ptr_element_code_for_make_element)(
-			*this, elt, data);
+	(*ptr->ptr_element_code_for_make_element)(*this, elt, data);
 }
 
 void action::element_print_for_make_element(
 		void *elt, ostream &ost)
 {
-	(*ptr->ptr_element_print_for_make_element)(
-			*this, elt, ost);
+	(*ptr->ptr_element_print_for_make_element)(*this, elt, ost);
 }
 
 void action::element_print_for_make_element_no_commas(
 		void *elt, ostream &ost)
 {
-	(*ptr->ptr_element_print_for_make_element_no_commas)(
-			*this, elt, ost);
+	(*ptr->ptr_element_print_for_make_element_no_commas)(*this, elt, ost);
 }
 
 void action::element_print_as_permutation(
@@ -725,6 +689,9 @@ void action::element_write_to_file_binary(int *Elt,
 	if (f_v) {
 		cout << "action::element_write_to_file_binary" << endl;
 		}
+	if (f_v) {
+		cout << "action::element_write_to_file_binary coded_elt_size_in_char=" << coded_elt_size_in_char << endl;
+		}
 	if (coded_elt_size_in_char == 0) {
 		cout << "action::element_write_to_file_binary "
 				"coded_elt_size_in_char == 0" << endl;
@@ -734,9 +701,12 @@ void action::element_write_to_file_binary(int *Elt,
 		// memory allocation should be avoided in a low-level function
 	elt = element_rw_memory_object;
 
-	element_pack(Elt, elt, FALSE);
+	element_pack(Elt, elt, verbose_level);
 	fp.write(elt, coded_elt_size_in_char);
 	//FREE_char(elt);
+	if (f_v) {
+		cout << "action::element_write_to_file_binary done" << endl;
+		}
 }
 
 void action::element_read_from_file_binary(int *Elt,
@@ -747,15 +717,21 @@ void action::element_read_from_file_binary(int *Elt,
 
 	
 	if (f_v) {
-		cout << "action::element_read_from_memory_object" << endl;
+		cout << "action::element_read_from_file_binary" << endl;
 		}
 	//elt = NEW_char(coded_elt_size_in_char);
 		// memory allocation should be avoided in a low-level function
 	elt = element_rw_memory_object;
 
+	if (f_v) {
+		cout << "action::element_read_from_file_binary coded_elt_size_in_char=" << coded_elt_size_in_char << endl;
+		}
 	fp.read(elt, coded_elt_size_in_char);
-	element_unpack(elt, Elt, FALSE);
+	element_unpack(elt, Elt, verbose_level);
 	//FREE_char(elt);
+	if (f_v) {
+		cout << "action::element_read_from_file_binary done" << endl;
+		}
 }
 
 void action::random_element(sims *S, int *Elt, int verbose_level)

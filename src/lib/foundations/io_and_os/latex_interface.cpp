@@ -982,7 +982,7 @@ void latex_interface::print_integer_matrix_with_standard_labels_and_offset_tex(
 {
 	int i, j;
 
-	ost << "\\begin{array}{r|*{" << n << "}r}" << endl;
+	ost << "\\begin{array}{r|*{" << n << "}{r}}" << endl;
 
 	for (j = 0; j < n; j++) {
 		ost << " & " << n_offset + j;
@@ -1006,7 +1006,7 @@ void latex_interface::print_lint_matrix_with_standard_labels_and_offset_tex(
 {
 	int i, j;
 
-	ost << "\\begin{array}{r|*{" << n << "}r}" << endl;
+	ost << "\\begin{array}{r|*{" << n << "}{r}}" << endl;
 
 	for (j = 0; j < n; j++) {
 		ost << " & " << n_offset + j;

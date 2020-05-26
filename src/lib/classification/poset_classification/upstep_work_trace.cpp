@@ -59,8 +59,8 @@ trace_result upstep_work::recognize(
 		if (gen->f_print_function) {
 			(*gen->print_function)(cout, size,
 					gen->set[0], gen->print_function_data);
-			}
 		}
+	}
 	if (len >= gen->sz) {
 		cout << "upstep_work::recognize "
 				"len >= sz, "
@@ -69,7 +69,7 @@ trace_result upstep_work::recognize(
 		cout << "len=" << len << endl;
 		cout << "gen->sz=" << gen->sz << endl;
 		exit(1);
-		}
+	}
 
 	gen->nb_times_trace++;
 
@@ -79,7 +79,7 @@ trace_result upstep_work::recognize(
 		cout << "nb_times_trace=" << gen->nb_times_trace << endl;
 		cout << "nb_times_trace_was_saved="
 				<< gen->nb_times_trace_was_saved << endl;
-		}
+	}
 #endif
 	
 	lint_vec_copy(gen->set[0], gen->set0, size);
@@ -91,7 +91,7 @@ trace_result upstep_work::recognize(
 		cout << "upstep_work::recognize "
 				"before recognize_recursion"
 				<< endl;
-		}
+	}
 	r = recognize_recursion(
 		0, 0,  // start from the very first node
 		final_node, final_ex, 
@@ -102,13 +102,13 @@ trace_result upstep_work::recognize(
 		cout << "upstep_work::recognize "
 				"after recognize_recursion"
 				<< endl;
-		}
+	}
 	if (f_v) {
 		cout << "upstep_work::recognize "
 				"after recognize_recursion" << endl;
 		print_level_extension_coset_info();
 		cout << " returning " << trace_result_as_text(r) << endl;
-		}
+	}
 	return r;
 }
 
@@ -230,7 +230,7 @@ trace_result upstep_work::recognize_recursion(
 		cout << "upstep_work::recognize_recursion lvl=" << lvl
 				<< " current_node=" << current_node
 				<< " calling O->trace_next_point_wrapper" << endl;
-		}
+	}
 	if (!O->trace_next_point_wrapper(
 		gen,
 		lvl,
@@ -265,12 +265,12 @@ trace_result upstep_work::recognize_recursion(
 					"after start_over" << endl;
 		}
 		return r;
-		}
+	}
 
 	if (f_v4) {
 		cout << "upstep_work::recognize_recursion "
 				"after trace_next_point_wrapper" << endl;
-		}
+	}
 	
 	if (f_failure_to_find_point) {
 		if (f_v) {
@@ -278,7 +278,7 @@ trace_result upstep_work::recognize_recursion(
 					"failure to find point" << endl;
 			}
 		return no_result_extension_not_found;
-		}
+	}
 
 	pt0 = gen->set[lvl + 1][lvl];
 	current_extension =
@@ -320,12 +320,12 @@ trace_result upstep_work::recognize_recursion(
 					"gen->set[0][lvl]=" << gen->set[0][lvl]
 					<< ", we return not_canonical" << endl;
 			return not_canonical;
-			}
+		}
 #if 0
 		if (gen->f_print_function) {
 			(*gen->print_function)(cout, lvl,
 					gen->set3, gen->print_function_data);
-			}
+		}
 		gen->print_tree();
 		exit(1);
 #else
@@ -340,7 +340,7 @@ trace_result upstep_work::recognize_recursion(
 		// in the full automorphism group of the set in this case.
 		return no_result_extension_not_found;
 #endif
-		}
+	}
 
 
 
@@ -348,7 +348,7 @@ trace_result upstep_work::recognize_recursion(
 		cout << "upstep_work::recognize_recursion "
 				"point " << pt0 << " is extension no "
 				<< current_extension << endl;
-		}
+	}
 	if (gen->f_allowed_to_show_group_elements
 			&& f_v4) {
 		int *transporter = gen->transporter->ith(lvl + 1);
@@ -357,7 +357,7 @@ trace_result upstep_work::recognize_recursion(
 		gen->Poset->A2->element_print_quick(transporter, cout);
 		//gen->A2->element_print_as_permutation(transporter, cout);
 		cout << endl;
-		}
+	}
 	
 	
 	if (lvl == len) {
@@ -368,13 +368,13 @@ trace_result upstep_work::recognize_recursion(
 			cout << "The element \\alpha is equal to " << endl;
 			gen->Poset->A2->element_print_quick(
 					gen->transporter->ith(lvl + 1), cout);
-			}
+		}
 		trace_result r;
 		if (f_v) {
 			print_level_extension_coset_info();
 			cout << "upstep_work::recognize_recursion "
 					"before handle_last_level" << endl;
-			}
+		}
 		r = handle_last_level(
 			lvl,
 			current_node,
@@ -387,9 +387,9 @@ trace_result upstep_work::recognize_recursion(
 			print_level_extension_coset_info();
 			cout << "upstep_work::recognize_recursion "
 					"after handle_last_level" << endl;
-			}
-		return r;
 		}
+		return r;
+	}
 	
 	// now lvl < len
 	
@@ -403,7 +403,7 @@ trace_result upstep_work::recognize_recursion(
 			cout << "(" << current_node
 					<< "/" << current_extension << ")";
 			cout << " fusion node " << O->node << endl;
-			}
+		}
 		next_node = O->apply_isomorphism(
 			gen,
 			lvl,
@@ -422,11 +422,11 @@ trace_result upstep_work::recognize_recursion(
 					<< "/" << current_extension << ")";
 			cout << " fusion from " << O->node
 					<< " to " << next_node << endl;
-			}
+		}
 		if (next_node == -1) {
 			cout << "We return no_result_extension_not_found" << endl;
 			return no_result_extension_not_found;
-			}
+		}
 		if (f_v5) {
 			print_level_extension_coset_info();
 			cout << "upstep_work::find_automorphism_by_"
@@ -435,7 +435,7 @@ trace_result upstep_work::recognize_recursion(
 					<< current_extension << ")";
 			cout << " after apply_isomorphism, "
 					"next_node=" << next_node << endl;
-			}
+		}
 		if (next_node < path[lvl + 1]) {
 			if (f_v) {
 				print_level_extension_coset_info();
@@ -444,15 +444,15 @@ trace_result upstep_work::recognize_recursion(
 						<< " not canonical" << endl;
 				cout << "next_node=" << next_node << endl;
 				cout << "path[lvl + 1]=" << path[lvl + 1] << endl;
-				}
-			return not_canonical;
 			}
+			return not_canonical;
+		}
 		
 		if (f_v) {
 			print_level_extension_coset_info();
 			cout << "upstep_work::recognize_recursion "
 					"calling recognize_recursion" << endl;
-			}
+		}
 		trace_result r;
 
 		r = recognize_recursion(
@@ -467,16 +467,16 @@ trace_result upstep_work::recognize_recursion(
 			print_level_extension_coset_info();
 			cout << "upstep_work::recognize_recursion "
 					"after recognize_recursion" << endl;
-			}
+		}
 		return r;
 
-		}
+	}
 	else if (O->E[current_extension].type == EXTENSION_TYPE_EXTENSION) {
 		int next_node;
 		
 		if (f_v4) {
 			cout << "extension node" << endl;
-			}
+		}
 		next_node = O->E[current_extension].data;
 		if (f_v) {
 			print_level_extension_coset_info();
@@ -485,11 +485,11 @@ trace_result upstep_work::recognize_recursion(
 			cout << "(" << current_node << "/" << current_extension << ")";
 			cout << " extension from " << O->node << " to "
 					<< next_node << endl;
-			}
+		}
 		if (f_v) {
 			cout << "upstep_work::recognize_recursion "
 					"calling recognize_recursion" << endl;
-			}
+		}
 		trace_result r;
 		r = recognize_recursion(
 			lvl + 1,
@@ -502,19 +502,19 @@ trace_result upstep_work::recognize_recursion(
 			print_level_extension_coset_info();
 			cout << "upstep_work::recognize_recursion "
 					"after recognize_recursion" << endl;
-			}
-		return r;
 		}
+		return r;
+	}
 	else if (O->E[current_extension].type == EXTENSION_TYPE_UNPROCESSED) {
 		cout << "unprocessed node at level len, "
 				"this should not happen" << endl;
 		exit(1);
-		}
+	}
 	else if (O->E[current_extension].type == EXTENSION_TYPE_PROCESSING) {
 		cout << "processing node at level len, "
 				"this should not happen" << endl;
 		exit(1);
-		}
+	}
 	cout << "unknown type of extension" << endl;
 	exit(1);
 }
@@ -541,7 +541,7 @@ trace_result upstep_work::handle_last_level(
 			<< " current_extension=" << current_extension 
 			<< " pt0=" << pt0 
 			<< endl;
-		}
+	}
 	if (current_node < path[size - 1]) {
 		if (f_v) {
 			print_level_extension_coset_info();
@@ -549,16 +549,16 @@ trace_result upstep_work::handle_last_level(
 					"current_node=" << current_node
 				<< " < " << path[size - 1]
 				<< ", i.e. not canonical" << endl;
-			}
-		return not_canonical;
 		}
+		return not_canonical;
+	}
 	//my_current_node = gen->root[my_node].E[my_extension].data;
 	my_current_node = cur;
 	if (f_v) {
 		print_level_extension_coset_info();
 		cout << "upstep_work::handle_last_level "
 				"my_current_node=" << my_current_node << endl;
-		}
+	}
 	
 	if (O->E[current_extension].type == EXTENSION_TYPE_UNPROCESSED) {
 		if (f_vv) {
@@ -567,7 +567,7 @@ trace_result upstep_work::handle_last_level(
 					"calling install_fusion_node at ";
 			cout << "(" << current_node << "/"
 					<< current_extension << ")" << endl;
-			}
+		}
 
 		O->install_fusion_node(
 			gen,
@@ -588,14 +588,14 @@ trace_result upstep_work::handle_last_level(
 					"after install_fusion_node at ";
 			cout << "(" << current_node << "/"
 					<< current_extension << ")" << endl;
-			}
+		}
 
 		if (f_v) {
 			print_level_extension_coset_info();
 			cout << "install fusion node (" << current_node
 					<< "/" << current_extension << ") -> ("
 					<< prev << "/" << prev_ex << ")" << endl;
-			}
+		}
 		if (f_vv) {
 			print_level_extension_coset_info();
 			cout << "upstep_work::handle_last_level "
@@ -604,12 +604,12 @@ trace_result upstep_work::handle_last_level(
 					<< current_extension << ")";
 			cout << " done, returning no_result_fusion_"
 					"node_installed" << endl;
-			}
+		}
 		final_node = current_node;
 		final_ex = current_extension;
 
 		return no_result_fusion_node_installed;
-		}
+	}
 	else if (O->E[current_extension].type == EXTENSION_TYPE_FUSION) {
 		if (f_vv) {
 			print_level_extension_coset_info();
@@ -617,13 +617,13 @@ trace_result upstep_work::handle_last_level(
 			cout << "(" << current_node << "/" << current_extension
 					<< ") fusion node already installed, "
 					"returning no_result" << endl;
-			}
+		}
 		final_node = current_node;
 		final_ex = current_extension;
 		// fusion node is already installed
 		return no_result_fusion_node_already_installed;
 
-		}
+	}
 	else if (O->E[current_extension].type == EXTENSION_TYPE_PROCESSING) {
 		if (f_v) {
 			print_level_extension_coset_info();
@@ -636,13 +636,13 @@ trace_result upstep_work::handle_last_level(
 				gen->Poset->A->element_print_quick(
 						gen->transporter->ith(lvl + 1), cout);
 				cout << endl;
-				}
 			}
+		}
 		final_node = current_node;
 		final_ex = current_extension;
 		
 		return found_automorphism;
-		}
+	}
 	else if (O->E[current_extension].type == EXTENSION_TYPE_EXTENSION) {
 #if 1
 		print_level_extension_coset_info();
@@ -665,14 +665,14 @@ trace_result upstep_work::handle_last_level(
 #else
 		return no_result_extension_not_found; // A Betten Dec 17, 2011 !!!
 #endif
-		}
+	}
 	else if (O->E[current_extension].type == EXTENSION_TYPE_NOT_CANONICAL) {
 		print_level_extension_coset_info();
 		cout << "upstep_work::handle_last_level "
 				"reached EXTENSION_TYPE_NOT_CANONICAL, "
 				"returning not_canonical" << endl;
 		return not_canonical;
-		}
+	}
 	cout << "upstep_work::handle_last_level: "
 			"fatal: unknown type of extension" << endl;
 	exit(1);
@@ -700,11 +700,11 @@ trace_result upstep_work::start_over(
 			print_level_extension_coset_info();
 			cout << "upstep_work::start_over lvl == size - 1, "
 					"so we return not_canonical" << endl;
-			}
+		}
 		final_node = current_node;
 		final_ex = -1;
 		return not_canonical;
-		}
+	}
 
 
 	Sorting.lint_vec_heapsort(gen->set[lvl + 1], size - 1);
@@ -714,7 +714,7 @@ trace_result upstep_work::start_over(
 	if (f_vv) {
 		lint_set_print(cout, gen->set[0], size);
 		cout << endl;
-		}
+	}
 	gen->Poset->A->element_move(
 		gen->transporter->ith(lvl + 1),
 		gen->transporter->ith(0),

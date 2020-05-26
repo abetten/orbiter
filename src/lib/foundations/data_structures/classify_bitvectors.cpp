@@ -127,38 +127,48 @@ int classify_bitvectors::search(uchar *data,
 	return ret;
 }
 
-int classify_bitvectors::add(uchar *data,
-		void *extra_data, int verbose_level)
+void classify_bitvectors::search_and_add_if_new(uchar *data,
+		void *extra_data, int &f_found, int &idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int idx, i, ret;
+	int i;
 	sorting Sorting;
 	
 	if (f_v) {
-		cout << "classify_bitvectors::add" << endl;
-		}
+		cout << "classify_bitvectors::add rep_len=" << rep_len << endl;
+	}
 
 	if (n >= N) {
 		cout << "classify_bitvectors::add n >= N" << endl;
 		cout << "n=" << n << endl;
 		cout << "N=" << N << endl;
 		exit(1);
-		}
+	}
 	if (Sorting.vec_search((void **) Type_data,
 			compare_func_for_bitvectors, (void *) this,
-		nb_types, data, idx, 0 /*verbose_level */)) {
+			nb_types, data, idx,
+			verbose_level - 2)) {
+		if (f_v) {
+			cout << "classify_bitvectors::add vec_search returns TRUE, idx=" << idx << endl;
+		}
 		type_of[n] = idx;
 		Type_mult[idx]++;
-		ret = FALSE;
-		}
+		f_found = TRUE;
+	}
 	else {
+		if (f_v) {
+			cout << "classify_bitvectors::add vec_search returns FALSE, new bitvector" << endl;
+		}
 		for (i = nb_types; i > idx; i--) {
 			Type_data[i] = Type_data[i - 1];
 			Type_extra_data[i] = Type_extra_data[i - 1];
 			Type_rep[i] = Type_rep[i - 1];
 			Type_mult[i] = Type_mult[i - 1];
-			}
-		Type_data[idx] = data;
+		}
+		Type_data[idx] = NEW_uchar(rep_len);
+		for (i = 0; i < rep_len; i++) {
+			Type_data[idx][i] = data[i];
+		}
 		Type_extra_data[idx] = extra_data;
 		Type_rep[idx] = n;
 		Type_mult[idx] = 1;
@@ -166,19 +176,18 @@ int classify_bitvectors::add(uchar *data,
 		for (i = 0; i < n; i++) {
 			if (type_of[i] >= idx) {
 				type_of[i]++;
-				}
 			}
-		type_of[n] = idx;
-		ret = TRUE;
 		}
+		type_of[n] = idx;
+		f_found = FALSE;
+	}
 	n++;
 
 
 	if (f_v) {
 		cout << "classify_bitvectors::add done, nb_types="
-				<< nb_types << " ret=" << ret << endl;
-		}
-	return ret;
+				<< nb_types << endl;
+	}
 }
 
 void classify_bitvectors::finalize(int verbose_level)
@@ -378,14 +387,16 @@ int compare_func_for_bitvectors(void *a, void *b, void *data)
 	uchar *B = (uchar *) b;
 	int i;
 	
+	//cout << "compare_func_for_bitvectors CB->rep_len=" << CB->rep_len << endl;
 	for (i = 0; i < CB->rep_len; i++) {
+		//cout << "i = " << i << " A[i]=" << (int) A[i] << " B[i]=" << (int) B[i] << endl;
 		if (A[i] < B[i]) {
 			return -1;
-			}
+		}
 		if (A[i] > B[i]) {
 			return 1;
-			}
 		}
+	}
 	return 0;
 }
 

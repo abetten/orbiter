@@ -2242,6 +2242,89 @@ void combinatorics_domain::make_graph_of_disjoint_sets_from_rows_of_matrix(
 }
 
 
+void combinatorics_domain::make_partitions(int n, int *Part, int cnt)
+{
+	int *part;
+	int cnt1;
+
+	cnt1 = 0;
+
+
+	part = NEW_int(n + 1);
+
+	int_vec_zero(part, n + 1);
+	part[n] = 1;
+	int_vec_copy(part + 1, Part + cnt1 * n, n);
+
+	cnt1 = 1;
+	while (TRUE) {
+
+
+
+		if (!next_partition(n, part))
+			break;
+		int_vec_copy(part + 1, Part + cnt1 * n, n);
+		cnt1++;
+		}
+	if (cnt1 != cnt) {
+		cout << "make_partitions cnt1 != cnt" << endl;
+		exit(1);
+		}
+}
+
+int combinatorics_domain::count_partitions(int n)
+{
+	int cnt;
+	int *part;
+
+	cnt = 0;
+
+
+	part = NEW_int(n + 1);
+
+	int_vec_zero(part, n + 1);
+	part[n] = 1;
+
+
+	cnt = 1;
+
+	while (TRUE) {
+
+		if (!next_partition(n, part))
+			break;
+		cnt++;
+		}
+
+	return cnt;
+}
+
+int combinatorics_domain::next_partition(int n, int *part)
+{
+	int s, i, j, q, r;
+
+	s = part[1];
+	for (i = 2; i <= n; i++) {
+		if (part[i]) {
+			s += i;
+			part[i]--;
+			break;
+			}
+		}
+	if (i == n + 1) {
+		return FALSE;
+		}
+	for (j = i - 1; j >= 1; j--) {
+		q = s / j;
+		r = s - q * j;
+		part[j] = q;
+		s = r;
+		}
+	return TRUE;
+}
+
+
+
+
 //##############################################################################
 // global functions, for instance for nauty_interface.cpp:
 //##############################################################################

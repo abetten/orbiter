@@ -763,13 +763,14 @@ void cayley_graph_search::classify_subsets(int verbose_level)
 
 
 
-	int f_W = TRUE;
-	int f_w = TRUE;
 
 	sprintf(prefix, "Ferdinand%d_%d", level, group);
 
 	cout << "classifying subsets:" << endl;
 
+	Control = NEW_OBJECT(poset_classification_control);
+	Control->f_W = TRUE;
+	Control->f_w = TRUE;
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(Aut, Aut,
 			Aut_gens,
@@ -780,7 +781,8 @@ void cayley_graph_search::classify_subsets(int verbose_level)
 	gen->compute_orbits_on_subsets(
 		target_depth,
 		prefix,
-		f_W, f_w,
+		//f_W, f_w,
+		Control,
 		Poset,
 		// ToDo
 		//NULL /* ferdinand3_early_test_func */,

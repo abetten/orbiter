@@ -1023,7 +1023,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 		if ((j % 1000) == 0) {
 			cout << "coset " << j << " / " << l << ":" << endl;
 			}
-		Orb_six_points->coset_rep(j);
+		Orb_six_points->coset_rep(j, 0 /* verbose_level */);
 		A->element_move(Orb_six_points->cosetrep, Elt, 0);
 
 		set_and_stabilizer *SaS2;
@@ -1095,7 +1095,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 
 	if (j >= 0) {
 		cout << "coset " << j << " / " << l << ":" << endl;
-		Orb_six_points->coset_rep(j);
+		Orb_six_points->coset_rep(j, 0 /* verbose_level */);
 		A->element_move(Orb_six_points->cosetrep, Elt, 0);
 
 		set_and_stabilizer *SaS2;
@@ -1475,11 +1475,12 @@ void move_point_set(action *A2,
 	if (f_v) {
 		cout << "move_point_set" << endl;
 		}
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen;
 	char prefix[1000];
-	int f_W = FALSE;
-	int f_w = FALSE;
+	//int f_W = FALSE;
+	//int f_w = FALSE;
 	long int *data_in;
 	long int *data_out;
 	long int *data2;
@@ -1494,6 +1495,7 @@ void move_point_set(action *A2,
 				"on subsets of size " << nb_pts << endl;
 		}
 
+	Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(
 			Universe->A, A2,
@@ -1507,7 +1509,8 @@ void move_point_set(action *A2,
 	gen->compute_orbits_on_subsets(
 		nb_pts,
 		prefix,
-		f_W, f_w,
+		//f_W, f_w,
+		Control,
 		Poset,
 		verbose_level - 2);
 
@@ -1570,6 +1573,7 @@ void move_point_set(action *A2,
 	FREE_lint(data2);
 	FREE_OBJECT(gen);
 	FREE_OBJECT(Poset);
+	FREE_OBJECT(Control);
 
 	if (f_v) {
 		cout << "move_point_set done" << endl;
