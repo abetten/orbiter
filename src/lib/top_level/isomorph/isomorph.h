@@ -733,7 +733,7 @@ public:
 	~isomorph_arguments();
 	void null();
 	void freeself();
-	void read_arguments(int argc, const char **argv, 
+	int read_arguments(int argc, const char **argv,
 		int verbose_level);
 	void init(action *A, action *A2, poset_classification *gen,
 		int target_size, const char *prefix_with_directory, 

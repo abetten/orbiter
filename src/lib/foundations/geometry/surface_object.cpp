@@ -496,8 +496,7 @@ void surface_object::find_double_six_and_rearrange_lines(
 
 
 	if (f_v) {
-		cout << "surface_object::find_double_six_and_"
-				"rearrange_lines" << endl;
+		cout << "surface_object::find_double_six_and_rearrange_lines" << endl;
 		}
 	lint_vec_copy(Lines, Lines0, 27);
 
@@ -514,8 +513,7 @@ void surface_object::find_double_six_and_rearrange_lines(
 
 
 	if (nb_starter != 432) {
-		cout << "surface_object::find_double_six_and_rearrange_"
-				"lines nb_starter != 432" << endl;
+		cout << "surface_object::find_double_six_and_rearrange_lines nb_starter != 432" << endl;
 		exit(1);
 		}
 	l = 0;
@@ -530,35 +528,33 @@ void surface_object::find_double_six_and_rearrange_lines(
 
 
 	if (f_v) {
-		cout << "surface_object::find_double_six_and_rearrange_"
-				"lines before Surf->create_double_six_from_five_"
-				"lines_with_a_common_transversal" << endl;
+		cout << "surface_object::find_double_six_and_rearrange_lines "
+				"before Surf->create_double_six_from_five_lines_with_a_common_transversal" << endl;
 		}
 	if (!Surf->create_double_six_from_five_lines_with_a_common_transversal(
 		S3, double_six, verbose_level)) {
-		cout << "surface_object::find_double_six_and_rearrange_"
-				"lines The starter configuration is bad, there "
+		cout << "surface_object::find_double_six_and_rearrange_lines "
+				"The starter configuration is bad, there "
 				"is no double six" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "surface_object::find_double_six_and_rearrange_"
-				"lines after Surf->create_double_six_from_five_"
-				"lines_with_a_common_transversal" << endl;
+		cout << "surface_object::find_double_six_and_rearrange_lines after "
+				"Surf->create_double_six_from_five_lines_with_a_common_transversal" << endl;
 		}
 
 
 	lint_vec_copy(double_six, Lines1, 12);
 	
 	if (f_v) {
-		cout << "surface_object::find_double_six_and_rearrange_"
-				"lines before Surf->create_remaining_fifteen_lines" << endl;
+		cout << "surface_object::find_double_six_and_rearrange_lines "
+				"before Surf->create_remaining_fifteen_lines" << endl;
 		}
 	Surf->create_remaining_fifteen_lines(double_six, 
 		Lines1 + 12, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "surface_object::find_double_six_and_rearrange_"
-				"lines after Surf->create_remaining_fifteen_lines" << endl;
+		cout << "surface_object::find_double_six_and_rearrange_lines "
+				"after Surf->create_remaining_fifteen_lines" << endl;
 		}
 
 	lint_vec_copy(Lines1, Lines, 27);
@@ -568,8 +564,8 @@ void surface_object::find_double_six_and_rearrange_lines(
 	int i;
 	for (i = 0; i < 27; i++) {
 		if (Lines0[i] != Lines1[i]) {
-			cout << "surface_object::find_double_six_and_rearrange_"
-					"lines Lines0[i] != Lines1[i]" << endl;
+			cout << "surface_object::find_double_six_and_rearrange_lines "
+					"Lines0[i] != Lines1[i]" << endl;
 			exit(1);
 			}
 		}
@@ -579,8 +575,7 @@ void surface_object::find_double_six_and_rearrange_lines(
 	FREE_OBJECT(line_intersections);
 	
 	if (f_v) {
-		cout << "surface_object::find_double_six_and_rearrange_"
-				"lines done" << endl;
+		cout << "surface_object::find_double_six_and_rearrange_lines done" << endl;
 		}
 }
 
@@ -1020,15 +1015,13 @@ void surface_object::compute_tritangent_planes(int verbose_level)
 		}
 }
 
-void surface_object::compute_planes_and_dual_point_ranks(
-		int verbose_level)
+void surface_object::compute_planes_and_dual_point_ranks(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
 	
 	if (f_v) {
-		cout << "surface_object::compute_planes_and_dual_"
-				"point_ranks" << endl;
+		cout << "surface_object::compute_planes_and_dual_point_ranks" << endl;
 		}
 	
 	All_Planes = NEW_lint(Surf->nb_trihedral_pairs * 6);
@@ -1051,9 +1044,59 @@ void surface_object::compute_planes_and_dual_point_ranks(
 
 		}
 	if (f_v) {
-		cout << "surface_object::compute_planes_and_dual_"
-				"point_ranks done" << endl;
+		cout << "surface_object::compute_planes_and_dual_point_ranks done" << endl;
 		}
+}
+
+void surface_object::report_properties(ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object::report_properties" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_object::report_properties before print_general" << endl;
+	}
+	print_general(ost);
+
+
+	if (f_v) {
+		cout << "surface_object::report_properties before print_lines" << endl;
+	}
+	print_lines(ost);
+
+	if (f_v) {
+		cout << "surface_object::report_properties before print_points" << endl;
+	}
+	print_points(ost);
+
+
+	if (f_v) {
+		cout << "surface_object::report_properties print_tritangent_planes" << endl;
+	}
+	print_tritangent_planes(ost);
+
+
+	if (f_v) {
+		cout << "surface_object::report_properties "
+				"before print_Steiner_and_Eckardt" << endl;
+	}
+	print_Steiner_and_Eckardt(ost);
+
+	//SOA->SO->print_planes_in_trihedral_pairs(fp);
+
+	if (f_v) {
+		cout << "surface_object::report_properties "
+				"before print_generalized_quadrangle" << endl;
+	}
+	print_generalized_quadrangle(ost);
+
+	if (f_v) {
+		cout << "surface_object::report_properties done" << endl;
+	}
 }
 
 void surface_object::print_line_intersection_graph(ostream &ost)
@@ -1883,6 +1926,84 @@ void surface_object::print_double_sixes(ostream &ost)
 	ost << "\\end{array}" << endl;
 	ost << "$$" << endl;
 	//ost << "\\clearpage" << endl;
+
+
+}
+
+void surface_object::print_half_double_sixes(ostream &ost)
+{
+	int h, i, j, a;
+	latex_interface L;
+
+
+	ost << "\\subsection*{Half Double sixes}" << endl;
+
+
+	ost << "The half double sixes are:\\\\" << endl;
+	ost << "$$" << endl;
+	L.print_lint_matrix_with_standard_labels(ost,
+		Surf->Double_six, 36, 6, TRUE /* f_tex */);
+	ost << "$$" << endl;
+
+	ost << "$$" << endl;
+	L.print_lint_matrix_with_standard_labels(ost,
+		Surf->Double_six + 36 * 6, 36, 6, TRUE /* f_tex */);
+	ost << "$$" << endl;
+
+
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|r||*{6}{c|}}" << endl;
+	ost << "\\hline" << endl;
+	for (j = 0; j < 6; j++) {
+		ost << " & " << j;
+		}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (h = 0; h < 18; h++) {
+		for (i = 0; i < 2; i++) {
+			ost << 2 * h + i;
+			for (j = 0; j < 6; j++) {
+				a = Surf->Double_six[h * 12 + i * 6 + j];
+				ost << " & " << Surf->Line_label_tex[a];
+				}
+			ost << "\\\\" << endl;
+		}
+	}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$" << endl;
+
+
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|r||*{6}{c|}}" << endl;
+	ost << "\\hline" << endl;
+	for (j = 0; j < 6; j++) {
+		ost << " & " << j;
+		}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (h = 18; h < 36; h++) {
+		for (i = 0; i < 2; i++) {
+			ost << 2 * h + i;
+			for (j = 0; j < 6; j++) {
+				a = Surf->Double_six[h * 12 + i * 6 + j];
+				ost << " & " << Surf->Line_label_tex[a];
+				}
+			ost << "\\\\" << endl;
+		}
+	}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$" << endl;
+
+	//ost << "\\clearpage" << endl;
+
+}
+
+void surface_object::print_half_double_sixes_numerically(ostream &ost)
+{
+	latex_interface L;
+
 	ost << "The half double sixes are:\\\\" << endl;
 	ost << "$$" << endl;
 	L.print_lint_matrix_with_standard_labels(ost,
@@ -1890,12 +2011,119 @@ void surface_object::print_double_sixes(ostream &ost)
 	ost << "$$" << endl;
 	ost << "$$" << endl;
 	L.print_lint_matrix_with_standard_labels_and_offset(ost,
-		Surf->Half_double_sixes + 36 * 6, 
+		Surf->Half_double_sixes + 36 * 6,
 		36, 6, 36, 0, TRUE /* f_tex */);
 	ost << "$$" << endl;
 }
 
 void surface_object::print_trihedral_pairs(ostream &ost)
+{
+	latex_interface L;
+	int i, j, a;
+
+	//ost << "\\clearpage" << endl;
+	ost << "\\subsection*{Trihedral pairs}" << endl;
+	ost << "The 120 trihedral pairs are:\\\\" << endl;
+	ost << "{\\renewcommand{\\arraystretch}{1.3}" << endl;
+	ost << "$$" << endl;
+
+	int n = 6;
+	int n_offset = 0;
+	int m = 40;
+	int m_offset = 0;
+	int *p = Surf->Trihedral_to_Eckardt;
+
+	ost << "\\begin{array}{|r|r|*{" << n << "}r|}" << endl;
+	ost << "\\hline" << endl;
+	ost << " & ";
+	for (j = 0; j < n; j++) {
+		ost << " & " << n_offset + j;
+		}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < m; i++) {
+		ost << m_offset + i << " & S_{";
+		ost << Surf->Trihedral_pair_labels[m_offset + i] << "}";
+		for (j = 0; j < n; j++) {
+			a = p[i * n + j];
+			ost << " & \\pi_{" << Surf->Eckard_point_label_tex[a] << "}";
+			}
+		ost << "\\\\";
+		ost << endl;
+		}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+
+	//L.print_integer_matrix_with_standard_labels(ost,
+	//	Surf->Trihedral_to_Eckardt, 40, 6, TRUE /* f_tex */);
+	ost << "$$" << endl;
+
+
+	ost << "$$" << endl;
+
+	m_offset = 40;
+	p = Surf->Trihedral_to_Eckardt + 40 * 6;
+
+	ost << "\\begin{array}{|r|r|*{" << n << "}r|}" << endl;
+	ost << "\\hline" << endl;
+	ost << " & ";
+	for (j = 0; j < n; j++) {
+		ost << " & " << n_offset + j;
+		}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < m; i++) {
+		ost << m_offset + i << " & S_{";
+		ost << Surf->Trihedral_pair_labels[m_offset + i] << "}";
+		for (j = 0; j < n; j++) {
+			a = p[i * n + j];
+			ost << " & \\pi_{" << Surf->Eckard_point_label_tex[a] << "}";
+			}
+		ost << "\\\\";
+		ost << endl;
+		}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+
+
+	//L.print_integer_matrix_with_standard_labels_and_offset(ost,
+	//	Surf->Trihedral_to_Eckardt + 40 * 6, 40, 6, 40, 0,
+	//	TRUE /* f_tex */);
+	ost << "$$" << endl;
+	ost << "$$" << endl;
+
+	m_offset = 80;
+	p = Surf->Trihedral_to_Eckardt + 80 * 6;
+
+	ost << "\\begin{array}{|r|r|*{" << n << "}r|}" << endl;
+	ost << "\\hline" << endl;
+	ost << " & ";
+	for (j = 0; j < n; j++) {
+		ost << " & " << n_offset + j;
+		}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < m; i++) {
+		ost << m_offset + i << " & S_{";
+		ost << Surf->Trihedral_pair_labels[m_offset + i] << "}";
+		for (j = 0; j < n; j++) {
+			a = p[i * n + j];
+			ost << " & \\pi_{" << Surf->Eckard_point_label_tex[a] << "}";
+			}
+		ost << "\\\\";
+		ost << endl;
+		}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+
+
+	//L.print_integer_matrix_with_standard_labels_and_offset(ost,
+	//	Surf->Trihedral_to_Eckardt + 80 * 6, 40, 6, 80, 0,
+	//	TRUE /* f_tex */);
+	ost << "$$}" << endl;
+}
+
+void surface_object::print_trihedral_pairs_numerically(ostream &ost)
 {
 	latex_interface L;
 
@@ -1918,6 +2146,7 @@ void surface_object::print_trihedral_pairs(ostream &ost)
 		TRUE /* f_tex */);
 	ost << "$$" << endl;
 }
+
 
 
 #if 1

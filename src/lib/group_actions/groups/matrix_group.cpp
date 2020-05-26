@@ -979,15 +979,21 @@ void matrix_group::substitute_surface_equation(int *Elt,
 		cout << "matrix_group::substitute_surface_equation" << endl;
 	}
 	if (f_semilinear) {
+		number_theory_domain NT;
+		int me;
+
+		me = NT.int_negate(Elt[n * n], GFq->e);
+		 // (GFq->e - Elt[n * n]) % GFq->e
 		Surf->substitute_semilinear(coeff_in,
 							coeff_out,
 							TRUE /* f_semilinear */,
-							(GFq->e - Elt[n * n]) % GFq->e,
+							me,
 							Elt,
 							0 /*verbose_level*/);
 
 		GFq->PG_element_normalize(coeff_out, 1, 20);
-	} else {
+	}
+	else {
 		Surf->substitute_semilinear(coeff_in,
 							coeff_out,
 							FALSE /* f_semilinear */,
@@ -1131,23 +1137,29 @@ void matrix_group::GL_mult(int *A, int *B, int *AB, int verbose_level)
 
 	if (f_v) {
 		cout << "matrix_group::GL_mult" << endl;
-		}
+		cout << "verbose_level=" << verbose_level << endl;
+		cout << "A=" << endl;
+		GL_print_easy(A, cout);
+		cout << "B=" << endl;
+		GL_print_easy(B, cout);
+	}
 	if (f_v) {
 		cout << "matrix_group::GL_mult_verbose "
 				"before GL_mult_internal (1)" << endl;
-		}
+	}
 	GL_mult_internal(A, B, AB, verbose_level - 1);
 	if (f_v) {
 		cout << "matrix_group::GL_mult_verbose "
 				"before GL_mult_internal (2)" << endl;
-		}
+	}
 	GL_mult_internal(B + elt_size_int_half,
 			A + elt_size_int_half,
 			AB + elt_size_int_half, verbose_level - 1);
 	if (f_v) {
+		cout << "AB=" << endl;
+		GL_print_easy(AB, cout);
 		cout << "matrix_group::GL_mult done" << endl;
-		}
-	
+	}
 }
 
 void matrix_group::GL_mult_internal(
@@ -1157,67 +1169,71 @@ void matrix_group::GL_mult_internal(
 
 	if (f_v) {
 		cout << "matrix_group::GL_mult_internal" << endl;
-		}
+		cout << "f_projective=" << f_projective << endl;
+		cout << "f_affine=" << f_affine << endl;
+		cout << "f_general_linear=" << f_general_linear << endl;
+		cout << "f_semilinear=" << f_semilinear << endl;
+	}
 
 	if (f_projective) {
 		if (f_semilinear) {
 			if (f_v) {
 				cout << "matrix_group::GL_mult_internal "
 						"before GFq->semilinear_matrix_mult" << endl;
-				}
-			//GFq->semilinear_matrix_mult(A, B, AB, n);
-			GFq->semilinear_matrix_mult_memory_given(A, B, AB, tmp_M, n);
 			}
+			//GFq->semilinear_matrix_mult(A, B, AB, n);
+			GFq->semilinear_matrix_mult_memory_given(A, B, AB, tmp_M, n, verbose_level - 1);
+		}
 		else {
 			if (f_v) {
 				cout << "matrix_group::GL_mult_internal "
 						"before GFq->mult_matrix_matrix" << endl;
-				}
+			}
 			GFq->mult_matrix_matrix(A, B, AB, n, n, n,
 					0 /* verbose_level */);
-			}
 		}
+	}
 	else if (f_affine) {
 		if (f_semilinear) {
 			if (f_v) {
 				cout << "matrix_group::GL_mult_internal "
 						"before GFq->semilinear_matrix_mult_affine" << endl;
-				}
-			GFq->semilinear_matrix_mult_affine(A, B, AB, n);
 			}
+			GFq->semilinear_matrix_mult_affine(A, B, AB, n);
+		}
 		else {
 			if (f_v) {
 				cout << "matrix_group::GL_mult_internal "
 						"before GFq->matrix_mult_affine" << endl;
-				}
-			GFq->matrix_mult_affine(A, B, AB, n, verbose_level - 1);
 			}
+			GFq->matrix_mult_affine(A, B, AB, n, verbose_level - 1);
 		}
+	}
 	else if (f_general_linear) {
 		if (f_semilinear) {
 			if (f_v) {
 				cout << "matrix_group::GL_mult_internal "
 						"before GFq->semilinear_matrix_mult" << endl;
-				}
-			//GFq->semilinear_matrix_mult(A, B, AB, n);
-			GFq->semilinear_matrix_mult_memory_given(A, B, AB, tmp_M, n);
 			}
+			//GFq->semilinear_matrix_mult(A, B, AB, n);
+			GFq->semilinear_matrix_mult_memory_given(A, B, AB, tmp_M, n, verbose_level - 1);
+		}
 		else {
 			if (f_v) {
 				cout << "matrix_group::GL_mult_internal "
 						"before GFq->mult_matrix_matrix" << endl;
-				}
+			}
 			GFq->mult_matrix_matrix(A, B, AB, n, n, n,
 					0 /* verbose_level */);
-			}
 		}
+	}
 	else {
 		cout << "matrix_group::GL_mult_internal unknown group type" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "matrix_group::GL_mult_internal done" << endl;
-		}
+	}
 }
 
 void matrix_group::GL_copy(int *A, int *B)
@@ -1238,8 +1254,9 @@ void matrix_group::GL_transpose(int *A, int *At, int verbose_level)
 		cout << "matrix_group::GL_transpose" << endl;
 		}
 	GL_transpose_internal(A, At, verbose_level);
-	GL_transpose_internal(A + elt_size_int_half,
-			At + elt_size_int_half, verbose_level);
+	//GL_transpose_internal(A + elt_size_int_half,
+	//		At + elt_size_int_half, verbose_level);
+	GL_invert_internal(At, At + elt_size_int_half, verbose_level - 2);
 	if (f_v) {
 		cout << "matrix_group::GL_transpose done" << endl;
 		}
@@ -1258,7 +1275,9 @@ void matrix_group::GL_transpose_internal(
 				"not yet implemented for affine groups" << endl;
 		exit(1);
 		}
-	GFq->transpose_matrix(A, At, n, n);
+	GFq->matrix_invert(A, Elt4,
+			base_cols, At, n, verbose_level - 2);
+	GFq->transpose_matrix_in_place(At, n);
 	if (f_semilinear) {
 		At[n * n] = A[n * n];
 		}
@@ -1354,7 +1373,18 @@ void matrix_group::GL_unpack(uchar *elt, int *Elt, int verbose_level)
 	
 	if (f_v) {
 		cout << "matrix_group::GL_unpack" << endl;
+		cout << "matrix_group::GL_unpack f_projective=" << f_projective << endl;
+		cout << "matrix_group::GL_unpack f_affine=" << f_affine << endl;
+		cout << "matrix_group::GL_unpack f_general_linear=" << f_general_linear << endl;
+		cout << "matrix_group::GL_unpack f_semilinear=" << f_semilinear << endl;
+		cout << "matrix_group::GL_unpack n=" << n << endl;
+		cout << "matrix_group::GL_unpack bits_per_digit=" << bits_per_digit << endl;
+		cout << "matrix_group::GL_unpack bits_per_elt=" << bits_per_elt << endl;
+		cout << "matrix_group::GL_unpack bits_extension_degree=" << bits_extension_degree << endl;
+		cout << "matrix_group::GL_unpack char_per_elt=" << char_per_elt << endl;
 		}
+
+
 	if (f_projective) {
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {

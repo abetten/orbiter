@@ -729,6 +729,26 @@ void finite_field::PG_element_rank_modified_lint(
 	a += len;
 }
 
+void finite_field::PG_elements_unrank_lint(
+		int *M, int k, int n, long int *rank_vec)
+{
+	int i;
+
+	for (i = 0; i < k; i++) {
+		PG_element_unrank_modified_lint(M + i * n, 1, n, rank_vec[i]);
+	}
+}
+
+void finite_field::PG_elements_rank_lint(
+		int *M, int k, int n, long int *rank_vec)
+{
+	int i;
+
+	for (i = 0; i < k; i++) {
+		PG_element_rank_modified_lint(M + i * n, 1, n, rank_vec[i]);
+	}
+}
+
 void finite_field::PG_element_unrank_modified_lint(
 		int *v, int stride, int len, long int a)
 {
@@ -5291,7 +5311,7 @@ void finite_field::do_ideal(int n,
 		cout << "They are : ";
 		lint_vec_print(cout, Pts, nb_pts);
 		cout << endl;
-		HPD->P->print_set_numerical(Pts, nb_pts);
+		HPD->P->print_set_numerical(cout, Pts, nb_pts);
 
 
 		if (h == 0) {
@@ -5421,6 +5441,400 @@ void finite_field::print_set_in_affine_plane(int len, long int *S)
 	FREE_int(A);
 }
 
+void finite_field::elliptic_curve_addition(int b, int c,
+	int x1, int x2, int x3,
+	int y1, int y2, int y3,
+	int &z1, int &z2, int &z3, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int a, two, three, top, bottom, m;
+
+	if (f_v) {
+		cout << "finite_field::elliptic_curve_addition" << endl;
+	}
+
+	my_nb_calls_to_elliptic_curve_addition++;
+	if (x3 == 0) {
+		z1 = y1;
+		z2 = y2;
+		z3 = y3;
+		goto done;
+	}
+	if (y3 == 0) {
+		z1 = x1;
+		z2 = x2;
+		z3 = x3;
+		goto done;
+	}
+	if (x3 != 1) {
+		a = inverse(x3);
+		x1 = mult(x1, a);
+		x2 = mult(x2, a);
+	}
+	if (y3 != 1) {
+		a = inverse(y3);
+		y1 = mult(y1, a);
+		y2 = mult(y2, a);
+	}
+	if (x1 == y1 && x2 != y2) {
+		if (negate(x2) != y2) {
+			cout << "x1 == y1 && x2 != y2 && negate(x2) != y2" << endl;
+			exit(1);
+		}
+		z1 = 0;
+		z2 = 1;
+		z3 = 0;
+		goto done;
+	}
+	if (x1 == y1 && x2 == 0 && y2 == 0) {
+		z1 = 0;
+		z2 = 1;
+		z3 = 0;
+		goto done;
+	}
+	if (x1 == y1 && x2 == y2) {
+		two = add(1, 1);
+		three = add(two, 1);
+		top = add(mult(three, mult(x1, x1)), b);
+		bottom = mult(two, x2);
+		a = inverse(bottom);
+		m = mult(top, a);
+	}
+	else {
+		top = add(y2, negate(x2));
+		bottom = add(y1, negate(x1));
+		a = inverse(bottom);
+		m = mult(top, a);
+	}
+	z1 = add(add(mult(m, m), negate(x1)), negate(y1));
+	z2 = add(mult(m, add(x1, negate(z1))), negate(x2));
+	z3 = 1;
+done:
+	if (f_v) {
+		cout << "finite_field::elliptic_curve_addition done" << endl;
+	}
+}
+
+void finite_field::elliptic_curve_point_multiple(int b, int c, int n,
+	int x1, int y1, int z1,
+	int &x3, int &y3, int &z3,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int bx, by, bz;
+	int cx, cy, cz;
+	int tx, ty, tz;
+
+	if (f_v) {
+		cout << "finite_field::elliptic_curve_point_multiple" << endl;
+	}
+	bx = x1;
+	by = y1;
+	bz = z1;
+	cx = 0;
+	cy = 1;
+	cz = 0;
+	while (n) {
+		if (n % 2) {
+			//cout << "finite_field::power: mult(" << b << "," << c << ")=";
+
+			elliptic_curve_addition(b, c,
+				bx, by, bz,
+				cx, cy, cz,
+				tx, ty, tz, verbose_level - 1);
+			cx = tx;
+			cy = ty;
+			cz = tz;
+			//c = mult(b, c);
+			//cout << c << endl;
+		}
+		elliptic_curve_addition(b, c,
+			bx, by, bz,
+			bx, by, bz,
+			tx, ty, tz, verbose_level - 1);
+		bx = tx;
+		by = ty;
+		bz = tz;
+		//b = mult(b, b);
+		n >>= 1;
+		//cout << "finite_field::power: " << b << "^" << n << " * " << c << endl;
+	}
+	x3 = cx;
+	y3 = cy;
+	z3 = cz;
+	if (f_v) {
+		cout << "finite_field::elliptic_curve_point_multiple done" << endl;
+	}
+}
+
+void finite_field::elliptic_curve_point_multiple_with_log(int b, int c, int n,
+	int x1, int y1, int z1,
+	int &x3, int &y3, int &z3,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int bx, by, bz;
+	int cx, cy, cz;
+	int tx, ty, tz;
+
+	if (f_v) {
+		cout << "finite_field::elliptic_curve_point_multiple_with_log" << endl;
+	}
+	bx = x1;
+	by = y1;
+	bz = z1;
+	cx = 0;
+	cy = 1;
+	cz = 0;
+	cout << "ECMultiple$\\Big((" << bx << "," << by << "," << bz << "),";
+	cout << "(" << cx << "," << cy << "," << cz << "),"
+			<< n << "," << b << "," << c << "," << p << "\\Big)$\\\\" << endl;
+
+	while (n) {
+		if (n % 2) {
+			//cout << "finite_field::power: mult(" << b << "," << c << ")=";
+
+			elliptic_curve_addition(b, c,
+				bx, by, bz,
+				cx, cy, cz,
+				tx, ty, tz, verbose_level - 1);
+			cx = tx;
+			cy = ty;
+			cz = tz;
+			//c = mult(b, c);
+			//cout << c << endl;
+		}
+		elliptic_curve_addition(b, c,
+			bx, by, bz,
+			bx, by, bz,
+			tx, ty, tz, verbose_level - 1);
+		bx = tx;
+		by = ty;
+		bz = tz;
+		//b = mult(b, b);
+		n >>= 1;
+		cout << "=ECMultiple$\\Big((" << bx << "," << by << "," << bz << "),";
+		cout << "(" << cx << "," << cy << "," << cz << "),"
+				<< n << "," << b << "," << c << "," << p << "\\Big)$\\\\" << endl;
+		//cout << "finite_field::power: " << b << "^" << n << " * " << c << endl;
+	}
+	x3 = cx;
+	y3 = cy;
+	z3 = cz;
+	cout << "$=(" << x3 << "," << y3 << "," << z3 << ")$\\\\" << endl;
+	if (f_v) {
+		cout << "finite_field::elliptic_curve_point_multiple_with_log done" << endl;
+	}
+}
+
+int finite_field::elliptic_curve_evaluate_RHS(int x, int b, int c)
+{
+	int x2, x3, e;
+
+	x2 = mult(x, x);
+	x3 = mult(x2, x);
+	e = add(x3, mult(b, x));
+	e = add(e, c);
+	return e;
+}
+
+void finite_field::elliptic_curve_points(
+		int b, int c, int &nb, int *&T, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//finite_field F;
+	int x, y, n;
+	int r, l;
+	number_theory_domain NT;
+	longinteger_domain D;
+
+	if (f_v) {
+		cout << "finite_field::elliptic_curve_points" << endl;
+	}
+	nb = 0;
+	//F.init(p, verbose_level);
+	for (x = 0; x < p; x++) {
+		r = elliptic_curve_evaluate_RHS(x, b, c);
+		if (r == 0) {
+			if (f_v) {
+				cout << nb << " : (" << x << "," << 0 << ",1)" << endl;
+			}
+			nb++;
+		}
+		else {
+			if (p != 2) {
+				if (e > 1) {
+					cout << "finite_field::elliptic_curve_points odd characteristic and e > 1" << endl;
+					exit(1);
+				}
+				l = NT.Legendre(r, p, verbose_level - 1);
+				if (l == 1) {
+					//y = sqrt_mod_involved(r, p);
+					y = D.square_root_mod(r, p, 0 /* verbose_level*/);
+					//y = NT.sqrt_mod_simple(r, p);
+					if (f_v) {
+						cout << nb << " : (" << x << "," << y << ",1)" << endl;
+						cout << nb + 1 << " : (" << x << "," << negate(y) << ",1)" << endl;
+					}
+					nb += 2;
+				}
+			}
+			else {
+				y = frobenius_power(r, e - 1);
+				if (f_v) {
+					cout << nb << " : (" << x << "," << y << ",1)" << endl;
+				}
+				nb += 1;
+			}
+		}
+	}
+	if (f_v) {
+		cout << nb << " : (0,1,0)" << endl;
+	}
+	nb++;
+	if (f_v) {
+		cout << "the curve has " << nb << " points" << endl;
+	}
+	T = NEW_int(nb * 3);
+	n = 0;
+	for (x = 0; x < p; x++) {
+		r = elliptic_curve_evaluate_RHS(x, b, c);
+		if (r == 0) {
+			T[n * 3 + 0] = x;
+			T[n * 3 + 1] = 0;
+			T[n * 3 + 2] = 1;
+			n++;
+			//cout << nb++ << " : (" << x << "," << 0 << ",1)" << endl;
+		}
+		else {
+			if (p != 2) {
+				// odd characteristic:
+				l = NT.Legendre(r, p, verbose_level - 1);
+				if (l == 1) {
+					//y = sqrt_mod_involved(r, p);
+					//y = NT.sqrt_mod_simple(r, p);
+					y = D.square_root_mod(r, p, 0 /* verbose_level*/);
+					T[n * 3 + 0] = x;
+					T[n * 3 + 1] = y;
+					T[n * 3 + 2] = 1;
+					n++;
+					T[n * 3 + 0] = x;
+					T[n * 3 + 1] = negate(y);
+					T[n * 3 + 2] = 1;
+					n++;
+					//cout << nb++ << " : (" << x << "," << y << ",1)" << endl;
+					//cout << nb++ << " : (" << x << "," << F.negate(y) << ",1)" << endl;
+				}
+			}
+			else {
+				// even characteristic
+				y = frobenius_power(r, e - 1);
+				T[n * 3 + 0] = x;
+				T[n * 3 + 1] = y;
+				T[n * 3 + 2] = 1;
+				n++;
+				//cout << nb++ << " : (" << x << "," << y << ",1)" << endl;
+			}
+		}
+	}
+	T[n * 3 + 0] = 0;
+	T[n * 3 + 1] = 1;
+	T[n * 3 + 2] = 0;
+	n++;
+	//print_integer_matrix_width(cout, T, nb, 3, 3, log10_of_q);
+	if (f_v) {
+		cout << "finite_field::elliptic_curve_points done" << endl;
+		cout << "the curve has " << nb << " points" << endl;
+	}
+}
+
+void finite_field::elliptic_curve_all_point_multiples(int b, int c, int &order,
+	int x1, int y1, int z1,
+	std::vector<std::vector<int> > &Pts,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int x2, y2, z2;
+	int x3, y3, z3;
+
+	if (f_v) {
+		cout << "finite_field::elliptic_curve_all_point_multiples" << endl;
+	}
+	order = 1;
+
+	x2 = x1;
+	y2 = y1;
+	z2 = z1;
+	while (TRUE) {
+		{
+			vector<int> pts;
+
+			pts.push_back(x2);
+			pts.push_back(y2);
+			pts.push_back(z2);
+
+			Pts.push_back(pts);
+		}
+		if (z2 == 0) {
+			return;
+		}
+
+		elliptic_curve_addition(b, c,
+			x1, y1, z1,
+			x2, y2, z2,
+			x3, y3, z3, 0 /*verbose_level */);
+
+		x2 = x3;
+		y2 = y3;
+		z2 = z3;
+
+		order++;
+	}
+	if (f_v) {
+		cout << "finite_field::elliptic_curve_all_point_multiples done" << endl;
+	}
+}
+
+int finite_field::elliptic_curve_discrete_log(int b, int c,
+	int x1, int y1, int z1,
+	int x3, int y3, int z3,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int x2, y2, z2;
+	int a3, b3, c3;
+	int n;
+
+	if (f_v) {
+		cout << "finite_field::elliptic_curve_discrete_log" << endl;
+	}
+	n = 1;
+
+	x2 = x1;
+	y2 = y1;
+	z2 = z1;
+	while (TRUE) {
+		if (x2 == x3 && y2 == y3 && z2 == z3) {
+			break;
+		}
+
+		elliptic_curve_addition(b, c,
+			x1, y1, z1,
+			x2, y2, z2,
+			a3, b3, c3, 0 /*verbose_level */);
+
+		n++;
+
+		x2 = a3;
+		y2 = b3;
+		z2 = c3;
+
+	}
+	if (f_v) {
+		cout << "finite_field::elliptic_curve_discrete_log done" << endl;
+	}
+	return n;
+}
 
 
 

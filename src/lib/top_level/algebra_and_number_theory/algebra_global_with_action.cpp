@@ -1313,6 +1313,1962 @@ void algebra_global_with_action::presentation(action *A, sims *S, int goi,
 }
 
 
+void algebra_global_with_action::do_eigenstuff(int q, int size, int *Data, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	discreta_matrix M;
+	int i, j, k, a, p, h;
+	finite_field Fq;
+	//unipoly_domain U;
+	//unipoly_object char_poly;
+	number_theory_domain NT;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::do_eigenstuff" << endl;
+	}
+	M.m_mn(size, size);
+	k = 0;
+	for (i = 0; i < size; i++) {
+		for (j = 0; j < size; j++) {
+			a = Data[k++];
+			M.m_iji(i, j, a);
+		}
+	}
+
+	if (f_v) {
+		cout << "M=" << endl;
+		cout << M << endl;
+	}
+
+	if (!NT.is_prime_power(q, p, h)) {
+		cout << "q is not prime power, we need a prime power" << endl;
+		exit(1);
+	}
+#if 0
+	if (h > 1) {
+		cout << "prime powers are not implemented yet" << endl;
+		exit(1);
+	}
+#endif
+	Fq.init(q, verbose_level);
+
+	//domain d(q);
+	domain d(&Fq);
+	with w(&d);
+
+#if 0
+
+	matrix M2;
+	M2 = M;
+	for (i = 0; i < size; i++) {
+		unipoly mue;
+		M2.KX_module_order_ideal(i, mue, verbose_level - 1);
+		cout << "order ideal " << i << ":" << endl;
+		cout << mue << endl;
+		}
+#endif
+
+	// This part uses DISCRETA data structures:
+
+	discreta_matrix M1, P, Pv, Q, Qv, S, T;
+
+	M.elements_to_unipoly();
+	M.minus_X_times_id();
+	M1 = M;
+	cout << "M - x * Id has been computed" << endl;
+	//cout << "M - x * Id =" << endl << M << endl;
+
+	if (f_v) {
+		cout << "M - x * Id = " << endl;
+		cout << M << endl;
+	}
+
+
+	cout << "before M.smith_normal_form" << endl;
+	M.smith_normal_form(P, Pv, Q, Qv, verbose_level);
+	cout << "after M.smith_normal_form" << endl;
+
+	cout << "the Smith normal form is:" << endl;
+	cout << M << endl;
+
+	S.mult(P, Pv);
+	cout << "P * Pv=" << endl << S << endl;
+
+	S.mult(Q, Qv);
+	cout << "Q * Qv=" << endl << S << endl;
+
+	S.mult(P, M1);
+	cout << "T.mult(S, Q):" << endl;
+	T.mult(S, Q);
+	cout << "T=" << endl << T << endl;
+
+
+	unipoly charpoly;
+	int deg;
+	int l, lv, b, c;
+
+	charpoly = M.s_ij(size - 1, size - 1);
+
+	cout << "characteristic polynomial:" << charpoly << endl;
+	deg = charpoly.degree();
+	cout << "has degree " << deg << endl;
+	l = charpoly.s_ii(deg);
+	cout << "leading coefficient " << l << endl;
+	lv = Fq.inverse(l);
+	cout << "leading coefficient inverse " << lv << endl;
+	for (i = 0; i <= deg; i++) {
+		b = charpoly.s_ii(i);
+		c = Fq.mult(b, lv);
+		charpoly.m_ii(i, c);
+	}
+	cout << "monic characteristic polynomial:" << charpoly << endl;
+
+	integer x, y;
+	int *roots;
+	int nb_roots = 0;
+
+	roots = new int[q];
+
+	for (a = 0; a < q; a++) {
+		x.m_i(a);
+		charpoly.evaluate_at(x, y);
+		if (y.s_i() == 0) {
+			cout << "root " << a << endl;
+			roots[nb_roots++] = a;
+		}
+	}
+	cout << "we found the following eigenvalues: ";
+	int_vec_print(cout, roots, nb_roots);
+	cout << endl;
+
+	int eigenvalue, eigenvalue_negative;
+
+	for (h = 0; h < nb_roots; h++) {
+		eigenvalue = roots[h];
+		cout << "looking at eigenvalue " << eigenvalue << endl;
+		int *A, *B, *Bt;
+		eigenvalue_negative = Fq.negate(eigenvalue);
+		A = new int[size * size];
+		B = new int[size * size];
+		Bt = new int[size * size];
+		for (i = 0; i < size; i++) {
+			for (j = 0; j < size; j++) {
+				A[i * size + j] = Data[i * size + j];
+			}
+		}
+		cout << "A:" << endl;
+		print_integer_matrix_width(cout, A,
+				size, size, size, Fq.log10_of_q);
+		for (i = 0; i < size; i++) {
+			for (j = 0; j < size; j++) {
+				a = A[i * size + j];
+				if (j == i) {
+					a = Fq.add(a, eigenvalue_negative);
+				}
+				B[i * size + j] = a;
+			}
+		}
+		cout << "B = A - eigenvalue * I:" << endl;
+		print_integer_matrix_width(cout, B,
+				size, size, size, Fq.log10_of_q);
+
+		cout << "B transposed:" << endl;
+		Fq.transpose_matrix(B, Bt, size, size);
+		print_integer_matrix_width(cout, Bt,
+				size, size, size, Fq.log10_of_q);
+
+		int f_special = FALSE;
+		int f_complete = TRUE;
+		int *base_cols;
+		int nb_base_cols;
+		int f_P = FALSE;
+		int kernel_m, kernel_n, *kernel;
+
+		base_cols = new int[size];
+		kernel = new int[size * size];
+
+		nb_base_cols = Fq.Gauss_int(Bt,
+			f_special, f_complete, base_cols,
+			f_P, NULL, size, size, size,
+			verbose_level - 1);
+		cout << "rank = " << nb_base_cols << endl;
+
+		Fq.matrix_get_kernel(Bt, size, size, base_cols, nb_base_cols,
+			kernel_m, kernel_n, kernel);
+		cout << "kernel = left eigenvectors:" << endl;
+		print_integer_matrix_width(cout, kernel,
+				size, kernel_n, kernel_n, Fq.log10_of_q);
+
+		int *vec1, *vec2;
+		vec1 = new int[size];
+		vec2 = new int[size];
+		for (i = 0; i < size; i++) {
+			vec1[i] = kernel[i * kernel_n + 0];
+			}
+		int_vec_print(cout, vec1, size);
+		cout << endl;
+		Fq.PG_element_normalize_from_front(vec1, 1, size);
+		int_vec_print(cout, vec1, size);
+		cout << endl;
+		Fq.PG_element_rank_modified(vec1, 1, size, a);
+		cout << "has rank " << a << endl;
+
+
+		cout << "computing xA" << endl;
+
+		Fq.mult_vector_from_the_left(vec1, A, vec2, size, size);
+		int_vec_print(cout, vec2, size);
+		cout << endl;
+		Fq.PG_element_normalize_from_front(vec2, 1, size);
+		int_vec_print(cout, vec2, size);
+		cout << endl;
+		Fq.PG_element_rank_modified(vec2, 1, size, a);
+		cout << "has rank " << a << endl;
+
+		delete [] vec1;
+		delete [] vec2;
+
+		delete [] A;
+		delete [] B;
+		delete [] Bt;
+	}
+}
+
+
+// a5_in_PSL.cpp
+//
+// Anton Betten, Evi Haberberger
+// 10.06.2000
+//
+// moved here from D2: 3/18/2010
+
+void algebra_global_with_action::A5_in_PSL_(int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int p, f;
+	discreta_matrix A, B, D; //, B1, B2, C, D, A2, A3, A4;
+	number_theory_domain NT;
+
+
+	NT.factor_prime_power(q, p, f);
+	domain *dom;
+
+	if (f_v) {
+		cout << "a5_in_psl.out: "
+				"q=" << q << ", p=" << p << ", f=" << f << endl;
+		}
+	dom = allocate_finite_field_domain(q, verbose_level);
+
+	A5_in_PSL_2_q(q, A, B, dom, verbose_level);
+
+	{
+	with w(dom);
+	D.mult(A, B);
+
+	if (f_v) {
+		cout << "finished with A5_in_PSL_2_q()" << endl;
+		cout << "A=\n" << A << endl;
+		cout << "B=\n" << B << endl;
+		cout << "AB=\n" << D << endl;
+		int AA[4], BB[4], DD[4];
+		matrix_convert_to_numerical(A, AA, q);
+		matrix_convert_to_numerical(B, BB, q);
+		matrix_convert_to_numerical(D, DD, q);
+		cout << "A=" << endl;
+		print_integer_matrix_width(cout, AA, 2, 2, 2, 7);
+		cout << "B=" << endl;
+		print_integer_matrix_width(cout, BB, 2, 2, 2, 7);
+		cout << "AB=" << endl;
+		print_integer_matrix_width(cout, DD, 2, 2, 2, 7);
+		}
+
+	int oA, oB, oD;
+
+	oA = proj_order(A);
+	oB = proj_order(B);
+	oD = proj_order(D);
+	if (f_v) {
+		cout << "projective order of A = " << oA << endl;
+		cout << "projective order of B = " << oB << endl;
+		cout << "projective order of AB = " << oD << endl;
+		}
+
+
+	}
+	free_finite_field_domain(dom);
+}
+
+void algebra_global_with_action::A5_in_PSL_2_q(int q,
+		discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level)
+{
+	if (((q - 1) % 5) == 0) {
+		A5_in_PSL_2_q_easy(q, A, B, dom_GFq, verbose_level);
+		}
+	else if (((q + 1) % 5) == 0) {
+		A5_in_PSL_2_q_hard(q, A, B, dom_GFq, verbose_level);
+		}
+	else {
+		cout << "either q + 1 or q - 1 must be divisible by 5!" << endl;
+		exit(1);
+		}
+}
+
+void algebra_global_with_action::A5_in_PSL_2_q_easy(int q,
+		discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, r;
+	integer zeta5, zeta5v, b, c, d, b2, e;
+
+	if (f_v) {
+		cout << "A5_in_PSL_2_q_easy verbose_level=" << verbose_level << endl;
+		}
+	with w(dom_GFq);
+
+	i = (q - 1) / 5;
+	r = finite_field_domain_primitive_root();
+	zeta5.m_i(r);
+	zeta5.power_int(i);
+	zeta5v = zeta5;
+	zeta5v.power_int(4);
+
+	if (f_v) {
+		cout << "zeta5=" << zeta5 << endl;
+		cout << "zeta5v=" << zeta5v << endl;
+		}
+
+	A.m_mn_n(2, 2);
+	B.m_mn_n(2, 2);
+	A[0][0] = zeta5;
+	A[0][1].zero();
+	A[1][0].zero();
+	A[1][1] = zeta5v;
+
+	if (f_v) {
+		cout << "A=\n" << A << endl;
+		}
+
+	// b := (zeta5 - zeta5^{-1})^{-1}:
+	b = zeta5v;
+	b.negate();
+	b += zeta5;
+	b.invert();
+
+	// determine c, d such that $-b^2 -cd = 1$:
+	b2 = b;
+	b2 *= b;
+	b2.negate();
+	e.m_one();
+	e += b2;
+	c.one();
+	d = e;
+	B[0][0] = b;
+	B[0][1] = c;
+	B[1][0] = d;
+	B[1][1] = b;
+	B[1][1].negate();
+
+	if (f_v) {
+		cout << "B=\n" << B << endl;
+		}
+}
+
+
+void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
+		discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	with w(dom_GFq);
+	unipoly m;
+	int i, q2;
+	discreta_matrix S, Sv, E, /*Sbart, SSbart,*/ AA, BB;
+	integer a, b, m1;
+	int norm_alpha, l;
+
+#if 0
+	m.get_an_irreducible_polynomial(2, verbose_level);
+#else
+	m.Singer(q, 2, verbose_level);
+#endif
+	cout << "m=" << m << endl;
+	norm_alpha = m.s_ii(0);
+	cout << "norm_alpha=" << norm_alpha << endl;
+
+	domain GFq2(&m, dom_GFq);
+	with ww(&GFq2);
+	q2 = q * q;
+
+	if (f_v) {
+		cout << "searching for element of norm -1:" << endl;
+		}
+	S.m_mn_n(2, 2);
+	m1.m_one();
+	if (f_v) {
+		cout << "-1=" << m1 << endl;
+		}
+#if 0
+	for (i = q; i < q2; i++) {
+		// cout << "i=" << i;
+		a.m_i(i);
+		b = a;
+		b.power_int(q + 1);
+		cout << i << ": (" << a << ")^" << q + 1 << " = " << b << endl;
+		if (b.is_m_one())
+			break;
+		}
+	if (i == q2) {
+		cout << "A5_in_PSL_2_q_hard() couldn't find element of norm -1" << endl;
+		exit(1);
+		}
+#else
+	a.m_i(q); // alpha
+	a.power_int((q - 1) >> 1);
+	b = a;
+	b.power_int(q + 1);
+	cout << "(" << a << ")^" << q + 1 << " = " << b << endl;
+	if (!b.is_m_one()) {
+		cout << "fatal: element a does not have norm -1" << endl;
+		exit(1);
+		}
+#endif
+	if (f_v) {
+		cout << "element of norm -1:" << a << endl;
+		}
+#if 1
+	S[0][0] = a;
+	S[0][1].one();
+	S[1][0].one();
+	S[1][0].negate();
+	S[1][1] = a;
+#else
+	// Huppert I page 105 (does not work!)
+	S[0][0].one();
+	S[0][1] = a;
+	S[1][0].one();
+	S[1][1] = a;
+	S[1][1].negate();
+#endif
+	if (f_v) {
+		cout << "S=\n" << S << endl;
+		}
+	Sv = S;
+	Sv.invert();
+	E.mult(S, Sv);
+	if (f_v) {
+		cout << "S^{-1}=\n" << Sv << endl;
+		cout << "S \\cdot S^{-1}=\n" << E << endl;
+		}
+
+#if 0
+	Sbart = S;
+	elementwise_power_int(Sbart, q);
+	Sbart.transpose();
+	SSbart.mult(S, Sbart);
+	if (f_v) {
+		cout << "\\bar{S}^\\top=\n" << Sbart << endl;
+		cout << "S \\cdot \\bar{S}^\\top=\n" << SSbart << endl;
+		}
+#endif
+
+	int r;
+	integer zeta5, zeta5v;
+
+	i = (q2 - 1) / 5;
+	r = finite_field_domain_primitive_root();
+	zeta5.m_i(r);
+	zeta5.power_int(i);
+	zeta5v = zeta5;
+	zeta5v.power_int(4);
+
+	if (f_v) {
+		cout << "zeta5=" << zeta5 << endl;
+		cout << "zeta5v=" << zeta5v << endl;
+		}
+
+	AA.m_mn_n(2, 2);
+	BB.m_mn_n(2, 2);
+	AA[0][0] = zeta5;
+	AA[0][1].zero();
+	AA[1][0].zero();
+	AA[1][1] = zeta5v;
+
+	if (f_v) {
+		cout << "AA=\n" << AA << endl;
+		}
+
+	integer bb, c, d, e, f, c1, b1;
+
+	// b := (zeta5 - zeta5^{-1})^{-1}:
+	b = zeta5v;
+	b.negate();
+	b += zeta5;
+	b.invert();
+
+	if (f_v) {
+		cout << "b=" << b << endl;
+		}
+
+	// compute $c$ with $N(c) = c \cdot \bar{c} = 1 - N(b) = 1 - b \cdot \bar{b}$:
+	b1 = b;
+	b1.power_int(q);
+
+	bb.mult(b, b1);
+	bb.negate();
+	e.one();
+	e += bb;
+	if (f_v) {
+		cout << "1 - b \\cdot \\bar{b}=" << e << endl;
+		}
+#if 1
+	for (l = 0; l < q; l++) {
+		c.m_i(norm_alpha);
+		f = c;
+		f.power_int(l);
+		if (f.compare_with(e) == 0)
+			break;
+		}
+	if (f_v) {
+		cout << "the discrete log with respect to " << norm_alpha << " is " << l << endl;
+		}
+	c.m_i(q);
+	c.power_int(l);
+
+	f = c;
+	f.power_int(q + 1);
+	if (f.compare_with(e) != 0) {
+		cout << "fatal: norm of " << c << " is not " << e << endl;
+		exit(1);
+		}
+#else
+	for (i = q; i < q2; i++) {
+		c.m_i(i);
+		f = c;
+		f.power_int(q + 1);
+		if (f.compare_with(e) == 0)
+			break;
+		}
+	if (i == q2) {
+		cout << "A5_in_PSL_2_q_hard() couldn't find element c" << endl;
+		exit(1);
+		}
+#endif
+	if (f_v) {
+		cout << "element c=" << c << endl;
+		}
+	c1 = c;
+	c1.power_int(q);
+
+	BB[0][0] = b;
+	BB[0][1] = c;
+	BB[1][0] = c1;
+	BB[1][0].negate();
+	BB[1][1] = b1;
+	if (f_v) {
+		cout << "BB=\n" << BB << endl;
+		}
+	A.mult(S, AA);
+	A *= Sv;
+	B.mult(S, BB);
+	B *= Sv;
+
+	if (f_v) {
+		cout << "A=\n" << A << endl;
+		cout << "B=\n" << B << endl;
+		}
+}
+
+int algebra_global_with_action::proj_order(discreta_matrix &A)
+{
+	discreta_matrix B;
+	int m, n;
+	int ord;
+
+	m = A.s_m();
+	n = A.s_n();
+	if (m != n)
+	{
+		cout << "matrix::proj_order_mod() m != n" << endl;
+		exit(1);
+	}
+	if (A.is_zero())
+	{
+		ord = 0;
+		cout << "is zero matrix!" << endl;
+	}
+	else
+	{
+		B = A;
+		ord = 1;
+		while (is_in_center(B) == FALSE)
+		{
+			ord++;
+			B *= A;
+		}
+	}
+	return ord;
+}
+
+void algebra_global_with_action::trace(discreta_matrix &A, discreta_base &tr)
+{
+	int i, m, n;
+
+	m = A.s_m();
+	n = A.s_n();
+	if (m != n)
+	{
+		cout << "ERROR: matrix::trace(): no square matrix!" << endl;
+		exit(1);
+	}
+	tr = A[0][0];
+	for (i = 1; i < m; i++)
+	{
+		tr += A[i][i];
+	}
+}
+
+void algebra_global_with_action::elementwise_power_int(discreta_matrix &A, int k)
+{
+	int i, j, m, n;
+
+	m = A.s_m();
+	n = A.s_n();
+
+	for (i=0; i < m; i++)
+	{
+		for (j=0; j < n; j++)
+		{
+			A[i][j].power_int(k);
+		}
+	}
+}
+
+int algebra_global_with_action::is_in_center(discreta_matrix &B)
+{
+	int m, n, i, j;
+	discreta_matrix A;
+	integer c;
+
+	m = B.s_m();
+	n = B.s_n();
+	A = B;
+	c = A[0][0];
+	for (i = 0; i < m; i++)
+	{
+		for (j = 0; j < n; j++)
+		{
+			integer e;
+
+			e = A[i][j];
+			if (i != j && !e.is_zero())
+			{
+				return FALSE;
+			}
+			if (i == j && e.s_i() != c.s_i())
+			{
+				return FALSE;
+			}
+		}
+	}
+	return TRUE;
+}
+
+
+void algebra_global_with_action::matrix_convert_to_numerical(discreta_matrix &A, int *AA, int q)
+{
+	int m, n, i, j, /*h, l,*/ val;
+
+	m = A.s_m();
+	n = A.s_n();
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+
+			//cout << "i=" << i << " j=" << j << endl;
+			discreta_base a;
+
+			A[i][j].copyobject_to(a);
+
+			//cout << "a=" << a << endl;
+			//a.printobjectkindln(cout);
+
+			val = a.s_i_i();
+#if 0
+			l = a.as_unipoly().s_l();
+			cout << "degree=" << l << endl;
+			for (h = l - 1; h >= 0; h--) {
+				val *= q;
+				cout << "coeff=" << a.as_unipoly().s_ii(h) << endl;
+				val += a.as_unipoly().s_ii(h);
+				}
+#endif
+			//cout << "val=" << val << endl;
+			AA[i * n + j] = val;
+			}
+		}
+}
+
+
+void algebra_global_with_action::classify_surfaces(
+		finite_field *F, linear_group *LG,
+		poset_classification_control *Control,
+		surface_domain *&Surf, surface_with_action *&Surf_A,
+		surface_classify_wedge *&SCW,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::classify_surfaces" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::classify_surfaces before Surf->init" << endl;
+	}
+	Surf = NEW_OBJECT(surface_domain);
+	Surf->init(F, verbose_level - 3);
+	if (f_v) {
+		cout << "algebra_global_with_action::classify_surfaces after Surf->init" << endl;
+	}
+
+
+	Surf_A = NEW_OBJECT(surface_with_action);
+
+
+	int f_semilinear;
+
+	f_semilinear = LG->A2->is_semilinear_matrix_group();
+
+	if (f_v) {
+		cout << "algebra_global_with_action::classify_surfaces before Surf_A->init" << endl;
+	}
+	Surf_A->init(Surf, LG, verbose_level - 3);
+	if (f_v) {
+		cout << "algebra_global_with_action::classify_surfaces after Surf_A->init" << endl;
+	}
+
+
+
+	SCW = NEW_OBJECT(surface_classify_wedge);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::classify_surfaces before SCW->init" << endl;
+	}
+
+	SCW->init(F, LG,
+			f_semilinear, Surf_A,
+			Control,
+			verbose_level - 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::classify_surfaces after SCW->init" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::classify_surfaces before SCW->do_classify_double_sixes" << endl;
+	}
+	SCW->do_classify_double_sixes(verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::classify_surfaces after SCW->do_classify_double_sixes" << endl;
+	}
+
+	if (f_v) {
+		cout << "algebra_global_with_action::classify_surfaces before SCW->do_classify_surfaces" << endl;
+	}
+	SCW->do_classify_surfaces(verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::classify_surfaces after SCW->do_classify_surfaces" << endl;
+	}
+
+	if (f_v) {
+		cout << "algebra_global_with_action::classify_surfaces done" << endl;
+	}
+
+}
+
+
+void algebra_global_with_action::young_symmetrizer(int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::young_symmetrizer" << endl;
+	}
+
+	young *Y;
+
+	Y = NEW_OBJECT(young);
+
+	Y->init(n, verbose_level);
+
+
+
+	int *elt1, *elt2, *h_alpha, *elt4, *elt5, *elt6, *elt7;
+
+	Y->group_ring_element_create(Y->A, Y->S, elt1);
+	Y->group_ring_element_create(Y->A, Y->S, elt2);
+	Y->group_ring_element_create(Y->A, Y->S, h_alpha);
+	Y->group_ring_element_create(Y->A, Y->S, elt4);
+	Y->group_ring_element_create(Y->A, Y->S, elt5);
+	Y->group_ring_element_create(Y->A, Y->S, elt6);
+	Y->group_ring_element_create(Y->A, Y->S, elt7);
+
+
+
+	int *part;
+	int *parts;
+
+	int *Base;
+	int *Base_inv;
+	int *Fst;
+	int *Len;
+	int cnt, s, i, j;
+	combinatorics_domain Combi;
+
+
+	part = NEW_int(n);
+	parts = NEW_int(n);
+	Fst = NEW_int(Y->goi);
+	Len = NEW_int(Y->goi);
+	Base = NEW_int(Y->goi * Y->goi * Y->D->size_of_instance_in_int);
+	Base_inv = NEW_int(Y->goi * Y->goi * Y->D->size_of_instance_in_int);
+	s = 0;
+	Fst[0] = 0;
+
+		// create the first partition in exponential notation:
+	Combi.partition_first(part, n);
+	cnt = 0;
+
+
+	while (TRUE) {
+		int nb_parts;
+
+		// turn the partition from exponential notation into the list of parts:
+		// the large parts come first.
+		nb_parts = 0;
+		for (i = n - 1; i >= 0; i--) {
+			for (j = 0; j < part[i]; j++) {
+				parts[nb_parts++] = i + 1;
+				}
+			}
+
+		cout << "partition ";
+		int_vec_print(cout, parts, nb_parts);
+		cout << endl;
+
+
+			// Create the young symmetrizer based on the partition.
+			// We do the very first tableau for this partition.
+
+		int *tableau;
+
+		tableau = NEW_int(n);
+		for (i = 0; i < n; i++) {
+			tableau[i] = i;
+			}
+		Y->young_symmetrizer(parts, nb_parts, tableau, elt1, elt2, h_alpha, verbose_level);
+		FREE_int(tableau);
+
+
+		cout << "h_alpha =" << endl;
+		Y->group_ring_element_print(Y->A, Y->S, h_alpha);
+		cout << endl;
+
+
+		Y->group_ring_element_copy(Y->A, Y->S, h_alpha, elt4);
+		Y->group_ring_element_mult(Y->A, Y->S, elt4, elt4, elt5);
+
+		cout << "h_alpha * h_alpha=" << endl;
+		Y->group_ring_element_print(Y->A, Y->S, elt5);
+		cout << endl;
+
+		int *Module_Base;
+		int *base_cols;
+		int rk;
+
+
+		Y->create_module(h_alpha,
+			Module_Base, base_cols, rk,
+			verbose_level);
+
+		cout << "Module_Basis=" << endl;
+		Y->D->print_matrix(Module_Base, rk, Y->goi);
+
+
+		for (i = 0; i < rk; i++) {
+			for (j = 0; j < Y->goi; j++) {
+				Y->D->copy(Y->D->offset(Module_Base, i * Y->goi + j), Y->D->offset(Base, s * Y->goi + j), 0);
+				}
+			s++;
+			}
+		Len[cnt] = s - Fst[cnt];
+		Fst[cnt + 1] = s;
+
+		Y->create_representations(Module_Base, base_cols, rk, verbose_level);
+
+
+		FREE_int(Module_Base);
+		FREE_int(base_cols);
+
+
+			// create the next partition in exponential notation:
+		if (!Combi.partition_next(part, n)) {
+			break;
+			}
+		cnt++;
+		}
+
+	cout << "Basis of submodule=" << endl;
+	Y->D->print_matrix(Base, s, Y->goi);
+
+
+	FREE_int(part);
+	FREE_int(parts);
+	FREE_int(Fst);
+	FREE_int(Len);
+	cout << "before freeing Base" << endl;
+	FREE_int(Base);
+	FREE_int(Base_inv);
+	cout << "before freeing Y" << endl;
+	FREE_OBJECT(Y);
+	cout << "before freeing elt1" << endl;
+	FREE_int(elt1);
+	FREE_int(elt2);
+	FREE_int(h_alpha);
+	FREE_int(elt4);
+	FREE_int(elt5);
+	FREE_int(elt6);
+	FREE_int(elt7);
+	if (f_v) {
+		cout << "algebra_global_with_action::young_symmetrizer done" << endl;
+	}
+}
+
+void algebra_global_with_action::young_symmetrizer_sym_4(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::young_symmetrizer_sym_4" << endl;
+	}
+	young *Y;
+	int n = 4;
+
+	Y = NEW_OBJECT(young);
+
+	Y->init(n, verbose_level);
+
+
+
+	int *elt1, *elt2, *h_alpha, *elt4, *elt5, *elt6, *elt7;
+
+	Y->group_ring_element_create(Y->A, Y->S, elt1);
+	Y->group_ring_element_create(Y->A, Y->S, elt2);
+	Y->group_ring_element_create(Y->A, Y->S, h_alpha);
+	Y->group_ring_element_create(Y->A, Y->S, elt4);
+	Y->group_ring_element_create(Y->A, Y->S, elt5);
+	Y->group_ring_element_create(Y->A, Y->S, elt6);
+	Y->group_ring_element_create(Y->A, Y->S, elt7);
+
+
+
+	int *part;
+	int *parts;
+
+	int *Base;
+	int *Base_inv;
+	int *Fst;
+	int *Len;
+	int cnt, s, i, j;
+
+	part = NEW_int(n);
+	parts = NEW_int(n);
+	Fst = NEW_int(Y->goi);
+	Len = NEW_int(Y->goi);
+	Base = NEW_int(Y->goi * Y->goi * Y->D->size_of_instance_in_int);
+	Base_inv = NEW_int(Y->goi * Y->goi * Y->D->size_of_instance_in_int);
+	s = 0;
+	Fst[0] = 0;
+
+		// create the first partition in exponential notation:
+	//partition_first(part, n);
+	cnt = 0;
+
+	int Part[10][5] = {
+		{4, -1, 0, 0, 0},
+		{3, 1, -1, 0, 0},
+		{3, 1, -1, 0, 0},
+		{3, 1, -1, 0, 0},
+		{2, 2, -1, 0, 0},
+		{2, 2, -1, 0, 0},
+		{2, 1, 1, -1, 0},
+		{2, 1, 1, -1, 0},
+		{2, 1, 1, -1, 0},
+		{1, 1, 1, 1, -1},
+			};
+	int Tableau[10][4] = {
+		{0,1,2,3},
+		{0,1,2,3}, {0,1,3,2}, {0,2,3,1},
+		{0,1,2,3}, {0,2,1,3},
+		{0,1,2,3}, {0,2,1,3}, {0,3,1,2},
+		{0,1,2,3}
+		};
+
+	for(cnt = 0; cnt < 10; cnt++) {
+		int nb_parts;
+
+		// turn the partition from exponential notation into the list of parts:
+		// the large parts come first.
+		nb_parts = 0;
+		for (i = 0; i < 4; i++) {
+			parts[nb_parts] = Part[cnt][i];
+			if (parts[nb_parts] == -1) {
+				break;
+				}
+			nb_parts++;
+			}
+
+		cout << "partition ";
+		int_vec_print(cout, parts, nb_parts);
+		cout << endl;
+
+
+			// Create the young symmetrizer based on the partition.
+			// We do the very first tableau for this partition.
+
+		Y->young_symmetrizer(parts, nb_parts, Tableau[cnt], elt1, elt2, h_alpha, verbose_level);
+
+
+		cout << "h_alpha =" << endl;
+		Y->group_ring_element_print(Y->A, Y->S, h_alpha);
+		cout << endl;
+
+
+		Y->group_ring_element_copy(Y->A, Y->S, h_alpha, elt4);
+		Y->group_ring_element_mult(Y->A, Y->S, elt4, elt4, elt5);
+
+		cout << "h_alpha * h_alpha=" << endl;
+		Y->group_ring_element_print(Y->A, Y->S, elt5);
+		cout << endl;
+
+		int *Module_Base;
+		int *base_cols;
+		int rk;
+
+
+		Y->create_module(h_alpha,
+			Module_Base, base_cols, rk,
+			verbose_level);
+
+		cout << "Module_Basis=" << endl;
+		Y->D->print_matrix(Module_Base, rk, Y->goi);
+
+
+		for (i = 0; i < rk; i++) {
+			for (j = 0; j < Y->goi; j++) {
+				Y->D->copy(Y->D->offset(Module_Base, i * Y->goi + j), Y->D->offset(Base, s * Y->goi + j), 0);
+				}
+			s++;
+			}
+		Len[cnt] = s - Fst[cnt];
+		Fst[cnt + 1] = s;
+
+		Y->create_representations(Module_Base, base_cols, rk, verbose_level);
+
+
+		FREE_int(Module_Base);
+		FREE_int(base_cols);
+
+
+		}
+
+	cout << "Basis of submodule=" << endl;
+	//Y->D->print_matrix(Base, s, Y->goi);
+	Y->D->print_matrix_for_maple(Base, s, Y->goi);
+
+	FREE_int(part);
+	FREE_int(parts);
+	FREE_int(Fst);
+	FREE_int(Len);
+	cout << "before freeing Base" << endl;
+	FREE_int(Base);
+	FREE_int(Base_inv);
+	cout << "before freeing Y" << endl;
+	FREE_OBJECT(Y);
+	cout << "before freeing elt1" << endl;
+	FREE_int(elt1);
+	FREE_int(elt2);
+	FREE_int(h_alpha);
+	FREE_int(elt4);
+	FREE_int(elt5);
+	FREE_int(elt6);
+	FREE_int(elt7);
+	if (f_v) {
+		cout << "algebra_global_with_action::young_symmetrizer_sym_4 done" << endl;
+	}
+}
+
+void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs(
+		group_theoretic_activity *GTA,
+		surface_with_action *Surf_A, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int q;
+	surface_domain *Surf;
+	finite_field *F;
+	action *A;
+	int i, j, arc_idx;
+
+	char fname_arc_lifting[10000];
+
+
+	if (f_v) {
+		cout << "classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
+	}
+	F = Surf_A->F;
+	q = F->q;
+	Surf = Surf_A->Surf;
+
+	A = NEW_OBJECT(action);
+
+	vector_ge *nice_gens;
+
+	int f_semilinear = TRUE;
+	number_theory_domain NT;
+
+	if (NT.is_prime(F->q)) {
+		f_semilinear = FALSE;
+	}
+
+
+	if (f_v) {
+		cout << "before A->init_projective_group" << endl;
+	}
+	A->init_projective_group(3, F,
+			f_semilinear,
+			TRUE /*f_basis*/, TRUE /* f_init_sims */,
+			nice_gens,
+			0 /*verbose_level*/);
+	FREE_OBJECT(nice_gens);
+	if (f_v) {
+		cout << "after A->init_projective_group" << endl;
+	}
+
+
+	six_arcs_not_on_a_conic *Six_arcs;
+
+	Six_arcs = NEW_OBJECT(six_arcs_not_on_a_conic);
+
+
+	// classify six arcs not on a conic:
+
+	if (f_v) {
+		cout << "before Six_arcs->init" << endl;
+	}
+	Six_arcs->init(GTA,
+			F,
+			A,
+			Surf->P2,
+		//argc, argv,
+		verbose_level - 2);
+	if (f_v) {
+		cout << "after Six_arcs->init" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "before report" << endl;
+	}
+	{
+		char title[10000];
+		char author[10000];
+		sprintf(title, "Arc lifting over GF(%d) ", q);
+		sprintf(author, "");
+
+		sprintf(fname_arc_lifting, "arc_lifting_q%d.tex", q);
+		ofstream fp(fname_arc_lifting);
+		latex_interface L;
+
+
+		L.head(fp,
+			FALSE /* f_book */,
+			TRUE /* f_title */,
+			title, author,
+			FALSE /*f_toc */,
+			FALSE /* f_landscape */,
+			FALSE /* f_12pt */,
+			TRUE /*f_enlarged_page */,
+			TRUE /* f_pagenumbers*/,
+			NULL /* extra_praeamble */);
+
+
+		if (f_v) {
+			cout << "classify_surfaces_through_arcs_and_trihedral_pairs q=" << q << endl;
+		}
+
+
+
+		Six_arcs->report_latex(fp);
+
+		if (f_v) {
+			Surf->print_polynomial_domains(fp);
+			Surf->print_line_labelling(fp);
+
+
+			cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+					"before Surf->print_Steiner_and_Eckardt" << endl;
+			Surf->print_Steiner_and_Eckardt(fp);
+			cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+					"after Surf->print_Steiner_and_Eckardt" << endl;
+
+			cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+					"before Surf->print_clebsch_P" << endl;
+			Surf->print_clebsch_P(fp);
+			cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+					"after Surf->print_clebsch_P" << endl;
+
+
+
+			cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+					"before Surf_A->list_orbits_on_trihedra_type1" << endl;
+			Surf_A->Classify_trihedral_pairs->list_orbits_on_trihedra_type1(fp);
+
+			cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+					"before Surf_A->list_orbits_on_trihedra_type2" << endl;
+			Surf_A->Classify_trihedral_pairs->list_orbits_on_trihedra_type2(fp);
+
+			cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+					"before Surf_A->print_trihedral_pairs no stabs" << endl;
+			Surf_A->Classify_trihedral_pairs->print_trihedral_pairs(fp,
+					FALSE /* f_with_stabilizers */);
+
+			cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+					"before Surf_A->print_trihedral_pairs with stabs" << endl;
+			Surf_A->Classify_trihedral_pairs->print_trihedral_pairs(fp,
+					TRUE /* f_with_stabilizers */);
+
+		}
+
+
+
+		char fname_base[1000];
+		sprintf(fname_base, "arcs_q%d", q);
+
+		if (q < 20) {
+			cout << "before Gen->gen->draw_poset_full" << endl;
+			Six_arcs->Gen->gen->draw_poset(
+				fname_base,
+				6 /* depth */, 0 /* data */,
+				TRUE /* f_embedded */,
+				FALSE /* f_sideways */,
+				verbose_level);
+		}
+
+
+		int *f_deleted; // [Six_arcs->nb_arcs_not_on_conic]
+		int *Arc_identify; //[Six_arcs->nb_arcs_not_on_conic *
+					// Six_arcs->nb_arcs_not_on_conic]
+		int *Arc_identify_nb; // [Six_arcs->nb_arcs_not_on_conic]
+		long int Arc6[6];
+		int nb_surfaces;
+
+		nb_surfaces = 0;
+
+		f_deleted = NEW_int(Six_arcs->nb_arcs_not_on_conic);
+		Arc_identify = NEW_int(Six_arcs->nb_arcs_not_on_conic *
+				Six_arcs->nb_arcs_not_on_conic);
+		Arc_identify_nb = NEW_int(Six_arcs->nb_arcs_not_on_conic);
+
+		int_vec_zero(f_deleted, Six_arcs->nb_arcs_not_on_conic);
+		int_vec_zero(Arc_identify_nb, Six_arcs->nb_arcs_not_on_conic);
+
+		for (arc_idx = 0;
+				arc_idx < Six_arcs->nb_arcs_not_on_conic;
+				arc_idx++) {
+
+
+			if (f_deleted[arc_idx]) {
+				continue;
+			}
+
+
+			if (f_v) {
+				cout << "classify_surfaces_through_arcs_and_trihedral_pairs extending arc "
+						<< arc_idx << " / "
+						<< Six_arcs->nb_arcs_not_on_conic << ":" << endl;
+			}
+
+			fp << "\\clearpage\n\\section{Extending arc " << arc_idx
+					<< " / " << Six_arcs->nb_arcs_not_on_conic << "}" << endl;
+
+			Six_arcs->Gen->gen->get_set_by_level(
+					6 /* level */,
+					Six_arcs->Not_on_conic_idx[arc_idx],
+					Arc6);
+
+			{
+				set_and_stabilizer *The_arc;
+
+				The_arc = Six_arcs->Gen->gen->get_set_and_stabilizer(
+						6 /* level */,
+						Six_arcs->Not_on_conic_idx[arc_idx],
+						0 /* verbose_level */);
+
+
+				fp << "Arc " << arc_idx << " / "
+						<< Six_arcs->nb_arcs_not_on_conic << " is: ";
+				fp << "$$" << endl;
+				//int_vec_print(fp, Arc6, 6);
+				The_arc->print_set_tex(fp);
+				fp << "$$" << endl;
+
+				F->display_table_of_projective_points(fp,
+					The_arc->data, 6, 3);
+
+
+				fp << "The stabilizer is the following group:\\\\" << endl;
+				The_arc->Strong_gens->print_generators_tex(fp);
+
+				FREE_OBJECT(The_arc);
+			}
+
+			char arc_label[1000];
+			char arc_label_short[1000];
+
+			sprintf(arc_label, "%d / %d",
+					arc_idx, Six_arcs->nb_arcs_not_on_conic);
+			sprintf(arc_label_short, "Arc%d", arc_idx);
+
+			if (f_v) {
+				cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+						"before arc_lifting_and_classify_using_trihedral_pairs" << endl;
+			}
+
+			Surf_A->arc_lifting_and_classify_using_trihedral_pairs(
+				TRUE /* f_log_fp */,
+				fp,
+				Arc6,
+				arc_label,
+				arc_label_short,
+				nb_surfaces,
+				Six_arcs,
+				Arc_identify_nb,
+				Arc_identify,
+				f_deleted,
+				verbose_level);
+
+			if (f_v) {
+				cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+						"after arc_lifting_and_classify_using_trihedral_pairs" << endl;
+			}
+
+
+
+			nb_surfaces++;
+		} // next arc_idx
+
+		cout << "We found " << nb_surfaces << " surfaces" << endl;
+
+
+		cout << "decomposition matrix:" << endl;
+		for (i = 0; i < nb_surfaces; i++) {
+			for (j = 0; j < Arc_identify_nb[i]; j++) {
+				cout << Arc_identify[i * Six_arcs->nb_arcs_not_on_conic + j];
+				if (j < Arc_identify_nb[i] - 1) {
+					cout << ", ";
+				}
+			}
+			cout << endl;
+		}
+		int *Decomp;
+		int a;
+
+		Decomp = NEW_int(Six_arcs->nb_arcs_not_on_conic * nb_surfaces);
+		int_vec_zero(Decomp, Six_arcs->nb_arcs_not_on_conic * nb_surfaces);
+		for (i = 0; i < nb_surfaces; i++) {
+			for (j = 0; j < Arc_identify_nb[i]; j++) {
+				a = Arc_identify[i * Six_arcs->nb_arcs_not_on_conic + j];
+				Decomp[a * nb_surfaces + i]++;
+			}
+		}
+
+		cout << "decomposition matrix:" << endl;
+		cout << "$$" << endl;
+		L.print_integer_matrix_with_standard_labels(cout, Decomp,
+				Six_arcs->nb_arcs_not_on_conic, nb_surfaces,
+				TRUE /* f_tex */);
+		cout << "$$" << endl;
+
+		fp << "Decomposition matrix:" << endl;
+		//fp << "$$" << endl;
+		//print_integer_matrix_with_standard_labels(fp, Decomp,
+		//nb_arcs_not_on_conic, nb_surfaces, TRUE /* f_tex */);
+		L.print_integer_matrix_tex_block_by_block(fp, Decomp,
+				Six_arcs->nb_arcs_not_on_conic, nb_surfaces, 25);
+		//fp << "$$" << endl;
+
+
+
+		FREE_int(Decomp);
+		FREE_int(f_deleted);
+		FREE_int(Arc_identify);
+		FREE_int(Arc_identify_nb);
+
+		L.foot(fp);
+	} // fp
+
+	file_io Fio;
+
+	cout << "Written file " << fname_arc_lifting << " of size "
+			<< Fio.file_size(fname_arc_lifting) << endl;
+	//delete Gen;
+	//delete F;
+
+	if (f_v) {
+		cout << "classify_surfaces_through_arcs_and_trihedral_pairs done" << endl;
+	}
+}
+
+
+void algebra_global_with_action::investigate_surface_and_write_report(
+		action *A,
+		surface_create *SC,
+		six_arcs_not_on_a_conic *Six_arcs,
+		surface_object_with_action *SoA,
+		int f_surface_clebsch,
+		int f_surface_codes,
+		int f_surface_quartic,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::investigate_surface_and_write_report" << endl;
+	}
+
+	//action *A;
+	surface_with_action *Surf_A;
+
+	Surf_A = SC->Surf_A;
+	//A = Surf_A->A;
+
+	char fname[1000];
+	char fname_mask[1000];
+	char label[1000];
+	char label_tex[1000];
+
+	sprintf(fname, "surface_%s.tex", SC->prefix);
+	sprintf(label, "surface_%s", SC->label_txt);
+	sprintf(label_tex, "surface %s", SC->label_tex);
+	sprintf(fname_mask, "surface_%s_orbit_%%d", SC->prefix);
+	{
+		ofstream fp(fname);
+		latex_interface L;
+
+		L.head_easy(fp);
+
+
+		fp << "\\section{The Finite Field $\\mathbb F_{" << SC->F->q << "}$}" << endl;
+		SC->F->cheat_sheet(fp, verbose_level);
+
+		fp << "\\bigskip" << endl;
+
+		SoA->cheat_sheet(fp,
+			label,
+			label_tex,
+			TRUE /* f_print_orbits */,
+			fname_mask /* const char *fname_mask*/,
+			verbose_level);
+
+		fp << "\\setlength{\\parindent}{0pt}" << endl;
+
+		if (f_surface_clebsch) {
+
+			surface_object *SO;
+			SO = SoA->SO;
+
+			fp << endl;
+			fp << "\\bigskip" << endl;
+			fp << endl;
+			fp << "\\section{Points on the surface}" << endl;
+			fp << endl;
+
+			SO->print_affine_points_in_source_code(fp);
+
+
+			fp << endl;
+			fp << "\\bigskip" << endl;
+			fp << endl;
+
+			fp << "\\section{Clebsch maps}" << endl;
+
+			SC->Surf->latex_table_of_clebsch_maps(fp);
+
+
+			fp << endl;
+			fp << "\\clearpage" << endl;
+			fp << endl;
+
+
+
+			fp << "\\section{Six-arcs not on a conic}" << endl;
+			fp << endl;
+
+
+			//fp << "The six-arcs not on a conic are:\\\\" << endl;
+			Six_arcs->report_latex(fp);
+
+
+			if (f_surface_codes) {
+
+				homogeneous_polynomial_domain *HPD;
+
+				HPD = NEW_OBJECT(homogeneous_polynomial_domain);
+
+				HPD->init(SC->F, 3, 2 /* degree */,
+						TRUE /* f_init_incidence_structure */,
+						verbose_level);
+
+				action *A_on_poly;
+
+				A_on_poly = NEW_OBJECT(action);
+				A_on_poly->induced_action_on_homogeneous_polynomials(A,
+					HPD,
+					FALSE /* f_induce_action */, NULL,
+					verbose_level);
+
+				cout << "created action A_on_poly" << endl;
+				A_on_poly->print_info();
+
+				schreier *Sch;
+				longinteger_object full_go;
+
+				//Sch = new schreier;
+				//A2->all_point_orbits(*Sch, verbose_level);
+
+				cout << "computing orbits:" << endl;
+
+				Sch = A->Strong_gens->orbits_on_points_schreier(A_on_poly, verbose_level);
+
+				//SC->Sg->
+				//Sch = SC->Sg->orbits_on_points_schreier(A_on_poly, verbose_level);
+
+				orbit_transversal *T;
+
+				A->group_order(full_go);
+				T = NEW_OBJECT(orbit_transversal);
+
+				cout << "before T->init_from_schreier" << endl;
+
+				T->init_from_schreier(
+						Sch,
+						A,
+						full_go,
+						verbose_level);
+
+				cout << "after T->init_from_schreier" << endl;
+
+				Sch->print_orbit_reps(cout);
+
+				cout << "orbit reps:" << endl;
+
+				fp << "\\section{Orbits on conics}" << endl;
+				fp << endl;
+
+				T->print_table_latex(
+						fp,
+						TRUE /* f_has_callback */,
+						HPD_callback_print_function2,
+						HPD /* callback_data */,
+						TRUE /* f_has_callback */,
+						HPD_callback_print_function,
+						HPD /* callback_data */,
+						verbose_level);
+
+
+			}
+
+
+	#if 0
+
+			int *Arc_iso; // [72]
+			int *Clebsch_map; // [nb_pts]
+			int *Clebsch_coeff; // [nb_pts * 4]
+			//int line_a, line_b;
+			//int transversal_line;
+			int tritangent_plane_rk;
+			int plane_rk_global;
+			int ds, ds_row;
+
+			fp << endl;
+			fp << "\\clearpage" << endl;
+			fp << endl;
+
+			fp << "\\section{Clebsch maps in detail}" << endl;
+			fp << endl;
+
+
+
+
+			Arc_iso = NEW_int(72);
+			Clebsch_map = NEW_int(SO->nb_pts);
+			Clebsch_coeff = NEW_int(SO->nb_pts * 4);
+
+			for (ds = 0; ds < 36; ds++) {
+				for (ds_row = 0; ds_row < 2; ds_row++) {
+					SC->Surf->prepare_clebsch_map(
+							ds, ds_row,
+							line_a, line_b,
+							transversal_line,
+							0 /*verbose_level */);
+
+
+					fp << endl;
+					fp << "\\bigskip" << endl;
+					fp << endl;
+					fp << "\\subsection{Clebsch map for double six "
+							<< ds << ", row " << ds_row << "}" << endl;
+					fp << endl;
+
+
+
+					cout << "computing clebsch map:" << endl;
+					SO->compute_clebsch_map(line_a, line_b,
+						transversal_line,
+						tritangent_plane_rk,
+						Clebsch_map,
+						Clebsch_coeff,
+						verbose_level);
+
+
+					plane_rk_global = SO->Tritangent_planes[
+						SO->Eckardt_to_Tritangent_plane[
+							tritangent_plane_rk]];
+
+					int Arc[6];
+					int Arc2[6];
+					int Blown_up_lines[6];
+					int perm[6];
+
+					SO->clebsch_map_find_arc_and_lines(
+							Clebsch_map,
+							Arc,
+							Blown_up_lines,
+							0 /* verbose_level */);
+
+					for (j = 0; j < 6; j++) {
+						perm[j] = j;
+						}
+
+					int_vec_heapsort_with_log(Blown_up_lines, perm, 6);
+					for (j = 0; j < 6; j++) {
+						Arc2[j] = Arc[perm[j]];
+						}
+
+
+					fp << endl;
+					fp << "\\bigskip" << endl;
+					fp << endl;
+					//fp << "\\section{Clebsch map}" << endl;
+					//fp << endl;
+					fp << "Line 1 = $";
+					fp << SC->Surf->Line_label_tex[line_a];
+					fp << "$\\\\" << endl;
+					fp << "Line 2 = $";
+					fp << SC->Surf->Line_label_tex[line_b];
+					fp << "$\\\\" << endl;
+					fp << "Transversal line $";
+					fp << SC->Surf->Line_label_tex[transversal_line];
+					fp << "$\\\\" << endl;
+					fp << "Image plane $\\pi_{" << tritangent_plane_rk
+							<< "}=" << plane_rk_global << "=$\\\\" << endl;
+					fp << "$$" << endl;
+
+					fp << "\\left[" << endl;
+					SC->Surf->Gr3->print_single_generator_matrix_tex(
+							fp, plane_rk_global);
+					fp << "\\right]," << endl;
+
+					fp << "$$" << endl;
+					fp << "Arc $";
+					int_set_print_tex(fp, Arc2, 6);
+					fp << "$\\\\" << endl;
+					fp << "Half double six: $";
+					int_set_print_tex(fp, Blown_up_lines, 6);
+					fp << "=\\{";
+					for (j = 0; j < 6; j++) {
+						fp << SC->Surf->Line_label_tex[Blown_up_lines[j]];
+						fp << ", ";
+						}
+					fp << "\\}$\\\\" << endl;
+
+					fp << "The arc consists of the following "
+							"points:\\\\" << endl;
+					display_table_of_projective_points(fp,
+							SC->F, Arc2, 6, 3);
+
+					int orbit_at_level, idx;
+					Six_arcs->Gen->gen->identify(Arc2, 6,
+							transporter, orbit_at_level,
+							0 /*verbose_level */);
+
+
+					if (!int_vec_search(Six_arcs->Not_on_conic_idx,
+						Six_arcs->nb_arcs_not_on_conic,
+						orbit_at_level,
+						idx)) {
+						cout << "could not find orbit" << endl;
+						exit(1);
+						}
+
+					fp << "The arc is isomorphic to arc " << orbit_at_level
+							<< " in the original classification.\\\\" << endl;
+					fp << "The arc is isomorphic to arc " << idx
+							<< " in the list.\\\\" << endl;
+					Arc_iso[2 * ds + ds_row] = idx;
+
+
+
+					SO->clebsch_map_latex(fp, Clebsch_map, Clebsch_coeff);
+
+					//SO->clebsch_map_print_fibers(Clebsch_map);
+					}
+				}
+
+
+
+			fp << "The isomorphism type of arc associated with "
+					"each half-double six is:" << endl;
+			fp << "$$" << endl;
+			print_integer_matrix_with_standard_labels(fp,
+					Arc_iso, 36, 2, TRUE);
+			fp << "$$" << endl;
+
+			FREE_int(Arc_iso);
+			FREE_int(Clebsch_map);
+			FREE_int(Clebsch_coeff);
+	#endif
+
+
+	#if 0
+			fp << endl;
+			fp << "\\clearpage" << endl;
+			fp << endl;
+
+
+			fp << "\\section{Clebsch maps in detail by orbits "
+					"on half-double sixes}" << endl;
+			fp << endl;
+
+
+
+			fp << "There are " << SoA->Orbits_on_single_sixes->nb_orbits
+					<< "orbits on half double sixes\\\\" << endl;
+
+			Arc_iso = NEW_int(SoA->Orbits_on_single_sixes->nb_orbits);
+			Clebsch_map = NEW_int(SO->nb_pts);
+			Clebsch_coeff = NEW_int(SO->nb_pts * 4);
+
+			int j, f, l, k;
+
+			for (j = 0; j < SoA->Orbits_on_single_sixes->nb_orbits; j++) {
+
+				int line1, line2, transversal_line;
+
+				if (f_v) {
+					cout << "surface_with_action::arc_lifting_and_classify "
+						"orbit on single sixes " << j << " / "
+						<< SoA->Orbits_on_single_sixes->nb_orbits << ":" << endl;
+				}
+
+				fp << "\\subsection*{Orbit on single sixes " << j << " / "
+					<< SoA->Orbits_on_single_sixes->nb_orbits << "}" << endl;
+
+				f = SoA->Orbits_on_single_sixes->orbit_first[j];
+				l = SoA->Orbits_on_single_sixes->orbit_len[j];
+				if (f_v) {
+					cout << "orbit f=" << f <<  " l=" << l << endl;
+					}
+				k = SoA->Orbits_on_single_sixes->orbit[f];
+
+				if (f_v) {
+					cout << "The half double six is no " << k << " : ";
+					int_vec_print(cout, SoA->Surf->Half_double_sixes + k * 6, 6);
+					cout << endl;
+					}
+
+				int h;
+
+				fp << "The half double six is no " << k << "$ = "
+						<< Surf->Half_double_six_label_tex[k] << "$ : $";
+				int_vec_print(fp, Surf->Half_double_sixes + k * 6, 6);
+				fp << " = \\{" << endl;
+				for (h = 0; h < 6; h++) {
+					fp << Surf->Line_label_tex[
+							Surf->Half_double_sixes[k * 6 + h]];
+					if (h < 6 - 1) {
+						fp << ", ";
+						}
+					}
+				fp << "\\}$\\\\" << endl;
+
+				ds = k / 2;
+				ds_row = k % 2;
+
+				SC->Surf->prepare_clebsch_map(
+						ds, ds_row,
+						line1, line2,
+						transversal_line,
+						0 /*verbose_level */);
+
+				fp << endl;
+				fp << "\\bigskip" << endl;
+				fp << endl;
+				fp << "\\subsection{Clebsch map for double six "
+						<< ds << ", row " << ds_row << "}" << endl;
+				fp << endl;
+
+
+
+				cout << "computing clebsch map:" << endl;
+				SO->compute_clebsch_map(line1, line2,
+					transversal_line,
+					tritangent_plane_rk,
+					Clebsch_map,
+					Clebsch_coeff,
+					verbose_level);
+
+
+				plane_rk_global = SO->Tritangent_planes[
+					SO->Eckardt_to_Tritangent_plane[
+						tritangent_plane_rk]];
+
+				int Arc[6];
+				int Arc2[6];
+				int Blown_up_lines[6];
+				int perm[6];
+
+				SO->clebsch_map_find_arc_and_lines(
+						Clebsch_map,
+						Arc,
+						Blown_up_lines,
+						0 /* verbose_level */);
+
+				for (h = 0; h < 6; h++) {
+					perm[h] = h;
+					}
+
+				Sorting.int_vec_heapsort_with_log(Blown_up_lines, perm, 6);
+				for (h = 0; h < 6; h++) {
+					Arc2[h] = Arc[perm[h]];
+					}
+
+
+				fp << endl;
+				fp << "\\bigskip" << endl;
+				fp << endl;
+				//fp << "\\section{Clebsch map}" << endl;
+				//fp << endl;
+				fp << "Line 1 = $";
+				fp << SC->Surf->Line_label_tex[line1];
+				fp << "$\\\\" << endl;
+				fp << "Line 2 = $";
+				fp << SC->Surf->Line_label_tex[line2];
+				fp << "$\\\\" << endl;
+				fp << "Transversal line $";
+				fp << SC->Surf->Line_label_tex[transversal_line];
+				fp << "$\\\\" << endl;
+				fp << "Image plane $\\pi_{" << tritangent_plane_rk
+						<< "}=" << plane_rk_global << "=$\\\\" << endl;
+				fp << "$$" << endl;
+
+				fp << "\\left[" << endl;
+				SC->Surf->Gr3->print_single_generator_matrix_tex(
+						fp, plane_rk_global);
+				fp << "\\right]," << endl;
+
+				fp << "$$" << endl;
+				fp << "Arc $";
+				int_set_print_tex(fp, Arc2, 6);
+				fp << "$\\\\" << endl;
+				fp << "Half double six: $";
+				int_set_print_tex(fp, Blown_up_lines, 6);
+				fp << "=\\{";
+				for (h = 0; h < 6; h++) {
+					fp << SC->Surf->Line_label_tex[Blown_up_lines[h]];
+					fp << ", ";
+					}
+				fp << "\\}$\\\\" << endl;
+
+				fp << "The arc consists of the following "
+						"points:\\\\" << endl;
+				SC->F->display_table_of_projective_points(fp,
+						Arc2, 6, 3);
+
+				int orbit_at_level, idx;
+				Six_arcs->Gen->gen->identify(Arc2, 6,
+						transporter, orbit_at_level,
+						0 /*verbose_level */);
+
+
+				if (!Sorting.int_vec_search(Six_arcs->Not_on_conic_idx,
+					Six_arcs->nb_arcs_not_on_conic,
+					orbit_at_level,
+					idx)) {
+					cout << "could not find orbit" << endl;
+					exit(1);
+					}
+
+				fp << "The arc is isomorphic to arc " << orbit_at_level
+						<< " in the original classification.\\\\" << endl;
+				fp << "The arc is isomorphic to arc " << idx
+						<< " in the list.\\\\" << endl;
+				Arc_iso[j] = idx;
+
+
+
+				SO->clebsch_map_latex(fp, Clebsch_map, Clebsch_coeff);
+
+			} // next j
+
+			fp << "The isomorphism type of arc associated with "
+					"each half-double six is:" << endl;
+			fp << "$$" << endl;
+			int_vec_print(fp,
+					Arc_iso, SoA->Orbits_on_single_sixes->nb_orbits);
+			fp << "$$" << endl;
+
+
+
+			FREE_int(Arc_iso);
+			FREE_int(Clebsch_map);
+			FREE_int(Clebsch_coeff);
+
+	#endif
+
+
+
+			if (f_surface_quartic) {
+				SoA->quartic(fp, verbose_level);
+				}
+
+
+		}
+
+
+		L.foot(fp);
+	}
+	file_io Fio;
+
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+
+}
+
 
 
 }}

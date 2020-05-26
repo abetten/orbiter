@@ -571,7 +571,7 @@ void strong_generators::init_transposed_group(
 	
 	if (f_v) {
 		cout << "strong_generators::init_transposed_group" << endl;
-		}
+	}
 
 	SG->group_order(go);
 	gens = NEW_OBJECT(vector_ge);
@@ -583,22 +583,28 @@ void strong_generators::init_transposed_group(
 			cout << "before element_transpose " << i << " / "
 					<< SG->gens->len << ":" << endl;
 			A->element_print_quick(SG->gens->ith(i), cout);
-			}
+		}
 		A->element_transpose(SG->gens->ith(i), gens->ith(i),
-				0 /* verbose_level */);
+				0 /* verbose_level*/);
 		if (f_v) {
 			cout << "after element_transpose " << i << " / "
 					<< SG->gens->len << ":" << endl;
 			A->element_print_quick(gens->ith(i), cout);
-			}
 		}
+	}
 
 	strong_generators *SG1;
 	
+	if (f_v) {
+		cout << "strong_generators::init_transposed_group before A->generators_to_strong_generators" << endl;
+	}
 	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, go, 
 		gens, SG1, 
-		0 /*verbose_level*/);
+		verbose_level);
+	if (f_v) {
+		cout << "strong_generators::init_transposed_group after A->generators_to_strong_generators" << endl;
+	}
 
 	swap_with(SG1);
 	FREE_OBJECT(gens);
@@ -606,7 +612,7 @@ void strong_generators::init_transposed_group(
 	
 	if (f_v) {
 		cout << "strong_generators::init_transposed_group done" << endl;
-		}
+	}
 }
 
 void strong_generators::init_group_extension(
@@ -1276,6 +1282,92 @@ void strong_generators::print_generators_MAGMA(action *A, ostream &ost)
 		}
 }
 
+void strong_generators::export_magma(action *A, ostream &ost)
+{
+	cout << "strong_generators::export_magma" << endl;
+	A->print_info();
+	if (A->type_G == matrix_group_t) {
+		matrix_group *M;
+		int *Elt;
+		int h, i, j;
+
+		M = A->get_matrix_group();
+		if (M->f_semilinear) {
+			cout << "cannot export to magma if semilinear" << endl;
+			return;
+		}
+		finite_field *F;
+
+		F = M->GFq;
+		if (F->e > 1) {
+			int a;
+
+			cout << "strong_generators::export_magma extendion field" << endl;
+			ost << "F<w>:=GF(" << F->q << ");" << endl;
+			ost << "G := GeneralLinearGroup(" << M->n << ", F);" << endl;
+			ost << "H := sub< G | ";
+			for (h = 0; h < gens->len; h++) {
+				Elt = gens->ith(h);
+				ost << "[";
+				for (i = 0; i < M->n; i++) {
+					for (j = 0; j < M->n; j++) {
+						a = Elt[i * M->n + j];
+						if (a < F->p) {
+							ost << a;
+						}
+						else {
+							ost << "w^" << F->log_alpha(a);
+						}
+						if (j < M->n - 1) {
+							ost << ",";
+						}
+					}
+					if (i < M->n - 1) {
+						ost << ", ";
+					}
+				}
+				ost << "]";
+				if (h < gens->len - 1) {
+					ost << ", " << endl;
+				}
+			}
+			ost << " >;" << endl;
+
+		}
+		else {
+			ost << "G := GeneralLinearGroup(" << M->n << ", GF(" << F->q << "));" << endl;
+			ost << "H := sub< G | ";
+			for (h = 0; h < gens->len; h++) {
+				Elt = gens->ith(h);
+				ost << "[";
+				for (i = 0; i < M->n; i++) {
+					for (j = 0; j < M->n; j++) {
+						ost << Elt[i * M->n + j];
+						if (j < M->n - 1) {
+							ost << ",";
+						}
+					}
+					if (i < M->n - 1) {
+						ost << ", ";
+					}
+				}
+				ost << "]";
+				if (h < gens->len - 1) {
+					ost << ", " << endl;
+				}
+			}
+			ost << " >;" << endl;
+		}
+	}
+}
+
+
+//GL42 := GeneralLinearGroup(4, GF(2));
+//> Ominus42 := sub< GL42 | [1,0,0,0, 1,1,0,1, 1,0,1,0, 0,0,0,1 ],
+//>                               [0,1,0,0, 1,0,0,0, 0,0,1,0, 0,0,0,1 ],
+//>                               [0,1,0,0, 1,0,0,0, 0,0,1,0, 0,0,1,1 ] >;
+
+
 void strong_generators::print_generators_tex()
 {
 	print_generators_tex(cout);
@@ -1409,19 +1501,25 @@ void strong_generators::print_with_given_action(
 	int i;
 	
 	for (i = 0; i < gens->len; i++) {
-		cout << "Generator " << i << " / "
+		ost << "Generator " << i << " / "
 				<< gens->len << " is:" << endl;
-		A2->element_print(gens->ith(i), cout);
-		cout << endl;
-		cout << "as permutation:" << endl;
+		ost << "$$" << endl;
+		A2->element_print_latex(gens->ith(i), ost);
+		//ost << endl;
+		ost << "$$" << endl;
+		ost << "as permutation:" << endl;
+		ost << "$$" << endl;
 		if (A->degree < 1000) {
-			A2->element_print_as_permutation(gens->ith(i), cout);
-		} else {
+			A2->element_print_as_permutation(gens->ith(i), ost);
+		}
+		else {
 			cout << "strong_generators::print_with_given_action "
 					"the degree is too large, we won't print "
 					"the permutation representation" << endl;
 		}
-		cout << endl;
+		ost << endl;
+		ost << "$$" << endl;
+		//ost << "\\\\" << endl;
 		}
 }
 
@@ -1993,8 +2091,7 @@ void strong_generators::orbits_light(action *A_given,
 				}
 			}
 		if (j != Nb_per_generator[i]) {
-			cout << "strong_generators::orbits_light j != "
-					"Nb_per_generator[i]" << endl;
+			cout << "strong_generators::orbits_light j != Nb_per_generator[i]" << endl;
 			exit(1);
 			}
 		Pts_per_generator[i] = v;
@@ -2052,7 +2149,7 @@ void strong_generators::write_to_file_binary(
 		cout << "strong_generators::write_to_file_binary "
 				"before gens->write_to_file_binary" << endl;
 		}
-	gens->write_to_file_binary(fp, verbose_level - 1);
+	gens->write_to_file_binary(fp, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "strong_generators::write_to_file_binary "
 				"after gens->write_to_file_binary" << endl;
@@ -2072,11 +2169,19 @@ void strong_generators::read_from_file_binary(
 		cout << "strong_generators::read_from_file_binary" << endl;
 		}
 	init(A, 0);
+	if (f_v) {
+		cout << "strong_generators::read_from_file_binary action A=" << A->label << endl;
+		}
 	fp.read((char *) &l, sizeof(int));
 	if (l != A->base_len()) {
 		cout << "strong_generators::read_from_file_binary "
-				"l != A->base_len" << endl;
+				"l != A->base_len()" << endl;
+		cout << "l=" << l << endl;
+		cout << "A->base_len()=" << A->base_len() << endl;
 		exit(1);
+		}
+	if (f_v) {
+		cout << "strong_generators::read_from_file_binary A->base_len()=" << A->base_len() << endl;
 		}
 	tl = NEW_int(A->base_len());
 	for (i = 0; i < A->base_len(); i++) {
@@ -2084,7 +2189,10 @@ void strong_generators::read_from_file_binary(
 		}
 	gens = NEW_OBJECT(vector_ge);
 	gens->init(A, verbose_level - 2);
-	gens->read_from_file_binary(fp, verbose_level - 1);
+	if (f_v) {
+		cout << "strong_generators::read_from_file_binary before gens->read_from_file_binary" << endl;
+		}
+	gens->read_from_file_binary(fp, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "strong_generators::read_from_file_binary done" << endl;
 		}

@@ -331,21 +331,21 @@ static void matrix_group_element_mult(action &A,
 
 	if (f_v) {
 		cout << "matrix_group_element_mult" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "A=" << endl;
 		G.GL_print_easy(AA, cout);
 		cout << "B=" << endl;
 		G.GL_print_easy(BB, cout);
-		}
+	}
 	G.GL_mult(AA, BB, AB, verbose_level - 2);
 	if (f_v) {
 		cout << "matrix_group_element_mult done" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "AB=" << endl;
 		G.GL_print_easy(AB, cout);
-		}
+	}
 }
 
 static void matrix_group_element_invert(action &A,

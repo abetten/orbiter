@@ -1387,11 +1387,11 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 		3,3,3,
 		};
 	int *Monomials;
-	int Affine_to_monomial[64];
+	int Affine_to_monomial[64]; // n^degree
 	int *V;
 	int nb_monomials = 20;
 	int degree = 3;
-	int n = 4;
+	int n = 4; // number of variables
 	double coeff2[20];
 	double coeff3[20];
 	double b, c;
@@ -1422,7 +1422,7 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 		}
 	if (FALSE) {
 		cout << "Monomials:" << endl;
-		int_matrix_print(Monomials, 20, 4);
+		int_matrix_print(Monomials, nb_monomials, n);
 		}
 
 	for (i = 0; i < nb_affine; i++) {
@@ -1432,17 +1432,17 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 			a = A[j];
 			v[a]++;
 			}
-		for (idx = 0; idx < 20; idx++) {
-			if (int_vec_compare(v, Monomials + idx * 4, 4) == 0) {
+		for (idx = 0; idx < nb_monomials; idx++) {
+			if (int_vec_compare(v, Monomials + idx * n, n) == 0) {
 				break;
 				}
 			}
-		if (idx == 20) {
+		if (idx == nb_monomials) {
 			cout << "could not determine Affine_to_monomial" << endl;
 			cout << "Monomials:" << endl;
-			int_matrix_print(Monomials, 20, 4);
+			int_matrix_print(Monomials, nb_monomials, n);
 			cout << "v=";
-			int_vec_print(cout, v, 4);
+			int_vec_print(cout, v, n);
 			exit(1);
 			}
 		Affine_to_monomial[i] = idx;	
@@ -1508,6 +1508,210 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 		}
 }
 
+void numerics::substitute_quartic_linear_using_povray_ordering(
+	double *coeff_in, double *coeff_out,
+	double *A4_inv, int verbose_level)
+// uses povray ordering of monomials
+// http://www.povray.org/documentation/view/3.6.1/298/
+// 1: x^4
+// 2: x^3y
+// 3: x^3z
+// 4: x^3
+// 5: x^2y^2
+// 6: x^2yz
+// 7: x^2y
+// 8: x^2z^2
+// 9: x^2z
+// 10: x^2
+// 11: xy^3
+// 12: xy^2z
+// 13: xy^2
+// 14: xyz^2
+// 15: xyz
+// 16: xy
+// 17: xz^3
+// 18: xz^2
+// 19: xz
+// 20: x
+// 21: y^4
+// 22: y^3z
+// 23: y^3
+// 24: y^2z^2
+// 25: y^2z
+// 26: y^2
+// 27: yz^3
+// 28: yz^2
+// 29: yz
+// 30: y
+// 31: z^4
+// 32: z^3
+// 33: z^2
+// 34: z
+// 35: 1
+{
+	int f_v = (verbose_level >= 1);
+	int Variables[] = {
+			// 1:
+		0,0,0,0,
+		0,0,0,1,
+		0,0,0,2,
+		0,0,0,3,
+		0,0,1,1,
+		0,0,1,2,
+		0,0,1,3,
+		0,0,2,2,
+		0,0,2,3,
+		0,0,3,3,
+		//11:
+		0,1,1,1,
+		0,1,1,2,
+		0,1,1,3,
+		0,1,2,2,
+		0,1,2,3,
+		0,1,3,3,
+		0,2,2,2,
+		0,2,2,3,
+		0,2,3,3,
+		0,3,3,3,
+		// 21:
+		1,1,1,1,
+		1,1,1,2,
+		1,1,1,3,
+		1,1,2,2,
+		1,1,2,3,
+		1,1,3,3,
+		1,2,2,2,
+		1,2,2,3,
+		1,2,3,3,
+		1,3,3,3,
+		// 31:
+		2,2,2,2,
+		2,2,2,3,
+		2,2,3,3,
+		2,3,3,3,
+		3,3,3,3,
+		};
+	int *Monomials; // [nb_monomials * n]
+	int Affine_to_monomial[256]; // 4^4
+	int *V;
+	int nb_monomials = 35;
+	int degree = 4;
+	int n = 4;
+	double coeff2[35];
+	double coeff3[35];
+	double b, c;
+	int h, i, j, a, nb_affine, idx;
+	int A[4];
+	int v[4];
+	number_theory_domain NT;
+	geometry_global Gg;
+
+	if (f_v) {
+		cout << "numerics::substitute_quartic_linear_using_povray_ordering" << endl;
+		}
+
+	nb_affine = NT.i_power_j(n, degree);
+
+
+	if (FALSE) {
+		cout << "Variables:" << endl;
+		int_matrix_print(Variables, 35, 4);
+		}
+	Monomials = NEW_int(nb_monomials * n);
+	int_vec_zero(Monomials, nb_monomials * n);
+	for (i = 0; i < nb_monomials; i++) {
+		for (j = 0; j < degree; j++) {
+			a = Variables[i * degree + j];
+			Monomials[i * n + a]++;
+			}
+		}
+	if (FALSE) {
+		cout << "Monomials:" << endl;
+		int_matrix_print(Monomials, nb_monomials, n);
+		}
+
+	for (i = 0; i < nb_affine; i++) {
+		Gg.AG_element_unrank(n /* q */, A, 1, degree, i);
+		int_vec_zero(v, n);
+		for (j = 0; j < degree; j++) {
+			a = A[j];
+			v[a]++;
+			}
+		for (idx = 0; idx < nb_monomials; idx++) {
+			if (int_vec_compare(v, Monomials + idx * n, n) == 0) {
+				break;
+				}
+			}
+		if (idx == nb_monomials) {
+			cout << "could not determine Affine_to_monomial" << endl;
+			cout << "Monomials:" << endl;
+			int_matrix_print(Monomials, nb_monomials, n);
+			cout << "v=";
+			int_vec_print(cout, v, n);
+			exit(1);
+			}
+		Affine_to_monomial[i] = idx;
+		}
+
+	if (FALSE) {
+		cout << "Affine_to_monomial:";
+		int_vec_print(cout, Affine_to_monomial, nb_affine);
+		cout << endl;
+		}
+
+
+	for (i = 0; i < nb_monomials; i++) {
+		coeff3[i] = 0.;
+		}
+	for (h = 0; h < nb_monomials; h++) {
+		c = coeff_in[h];
+		if (c == 0) {
+			continue;
+			}
+
+		V = Variables + h * degree;
+			// a list of the indices of the variables
+			// which appear in the monomial
+			// (possibly with repeats)
+			// Example: the monomial x_0^3 becomes 0,0,0
+
+
+		for (i = 0; i < nb_monomials; i++) {
+			coeff2[i] = 0.;
+			}
+		for (a = 0; a < nb_affine; a++) {
+
+			Gg.AG_element_unrank(n /* q */, A, 1, degree, a);
+				// sequence of length degree
+				// over the alphabet  0,...,n-1.
+			b = 1.;
+			for (j = 0; j < degree; j++) {
+				//factors[j] = Mtx_inv[V[j] * n + A[j]];
+				b *= A4_inv[A[j] * n + V[j]];
+				}
+			idx = Affine_to_monomial[a];
+
+			coeff2[idx] += b;
+			}
+		for (j = 0; j < nb_monomials; j++) {
+			coeff2[j] *= c;
+			}
+
+		for (j = 0; j < nb_monomials; j++) {
+			coeff3[j] += coeff2[j];
+			}
+		}
+
+	for (j = 0; j < nb_monomials; j++) {
+		coeff_out[j] = coeff3[j];
+		}
+
+	FREE_int(Monomials);
+
+	if (f_v) {
+		cout << "numerics::substitute_quartic_linear_using_povray_ordering done" << endl;
+		}
+}
 void numerics::make_transform_t_varphi_u_double(int n,
 	double *varphi, 
 	double *u, double *A, double *Av, 
@@ -1591,13 +1795,25 @@ void numerics::matrix_double_inverse(double *A, double *Av, int n,
 
 
 int numerics::line_centered(double *pt1_in, double *pt2_in,
-	double *pt1_out, double *pt2_out, double r)
+	double *pt1_out, double *pt2_out, double r, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	double v[3];
 	double x1, x2, x3, y1, y2, y3;
 	double a, b, c, av, d, e;
 	double lambda1, lambda2;
 
+
+	if (f_v) {
+		cout << "numerics::line_centered" << endl;
+		cout << "r=" << r << endl;
+		cout << "pt1_in=";
+		vec_print(pt1_in, 3);
+		cout << endl;
+		cout << "pt2_in=";
+		vec_print(pt2_in, 3);
+		cout << endl;
+	}
 	x1 = pt1_in[0];
 	x2 = pt1_in[1];
 	x3 = pt1_in[2];
@@ -1609,6 +1825,11 @@ int numerics::line_centered(double *pt1_in, double *pt2_in,
 	v[0] = y1 - x1;
 	v[1] = y2 - x2;
 	v[2] = y3 - x3;
+	if (f_v) {
+		cout << "v=";
+		vec_print(v, 3);
+		cout << endl;
+	}
 	// solve 
 	// (x1+\lambda*v[0])^2 + (x2+\lambda*v[1])^2 + (x3+\lambda*v[2])^2 = r^2
 	// which gives the quadratic
@@ -1617,12 +1838,18 @@ int numerics::line_centered(double *pt1_in, double *pt2_in,
 	// + x1^2 + x2^2 + x3^2 - r^2 
 	// = 0
 	a = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
-	b = 2 * (x1 * v[0] + x2 * v[1] + x3 * v[2]);
+	b = 2. * (x1 * v[0] + x2 * v[1] + x3 * v[2]);
 	c = x1 * x1 + x2 * x2 + x3 * x3 - r * r;
+	if (f_v) {
+		cout << "a=" << a << " b=" << b << " c=" << c << endl;
+	}
 	av = 1. / a;
 	b = b * av;
 	c = c * av;
 	d = b * b * 0.25 - c;
+	if (f_v) {
+		cout << "a=" << a << " b=" << b << " c=" << c << " d=" << d << endl;
+	}
 	if (d < 0) {
 		cout << "line_centered d < 0" << endl;
 		cout << "r=" << r << endl;
@@ -1651,6 +1878,99 @@ int numerics::line_centered(double *pt1_in, double *pt2_in,
 	pt2_out[0] = x1 + lambda2 * v[0];
 	pt2_out[1] = x2 + lambda2 * v[1];
 	pt2_out[2] = x3 + lambda2 * v[2];
+	if (f_v) {
+		cout << "numerics::line_centered done" << endl;
+	}
+	return TRUE;
+}
+
+int numerics::line_centered_tolerant(double *pt1_in, double *pt2_in,
+	double *pt1_out, double *pt2_out, double r, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	double v[3];
+	double x1, x2, x3, y1, y2, y3;
+	double a, b, c, av, d, e;
+	double lambda1, lambda2;
+
+
+	if (f_v) {
+		cout << "numerics::line_centered_tolerant" << endl;
+		cout << "r=" << r << endl;
+		cout << "pt1_in=";
+		vec_print(pt1_in, 3);
+		cout << endl;
+		cout << "pt2_in=";
+		vec_print(pt2_in, 3);
+		cout << endl;
+	}
+	x1 = pt1_in[0];
+	x2 = pt1_in[1];
+	x3 = pt1_in[2];
+
+	y1 = pt2_in[0];
+	y2 = pt2_in[1];
+	y3 = pt2_in[2];
+
+	v[0] = y1 - x1;
+	v[1] = y2 - x2;
+	v[2] = y3 - x3;
+	if (f_v) {
+		cout << "v=";
+		vec_print(v, 3);
+		cout << endl;
+	}
+	// solve
+	// (x1+\lambda*v[0])^2 + (x2+\lambda*v[1])^2 + (x3+\lambda*v[2])^2 = r^2
+	// which gives the quadratic
+	// (v[0]^2+v[1]^2+v[2]^2) * \lambda^2
+	// + (2*x1*v[0] + 2*x2*v[1] + 2*x3*v[2]) * \lambda
+	// + x1^2 + x2^2 + x3^2 - r^2
+	// = 0
+	a = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+	b = 2. * (x1 * v[0] + x2 * v[1] + x3 * v[2]);
+	c = x1 * x1 + x2 * x2 + x3 * x3 - r * r;
+	if (f_v) {
+		cout << "a=" << a << " b=" << b << " c=" << c << endl;
+	}
+	av = 1. / a;
+	b = b * av;
+	c = c * av;
+	d = b * b * 0.25 - c;
+	if (f_v) {
+		cout << "a=" << a << " b=" << b << " c=" << c << " d=" << d << endl;
+	}
+	if (d < 0) {
+		cout << "line_centered d < 0" << endl;
+		cout << "r=" << r << endl;
+		cout << "d=" << d << endl;
+		cout << "a=" << a << endl;
+		cout << "b=" << b << endl;
+		cout << "c=" << c << endl;
+		cout << "pt1_in=";
+		vec_print(pt1_in, 3);
+		cout << endl;
+		cout << "pt2_in=";
+		vec_print(pt2_in, 3);
+		cout << endl;
+		cout << "v=";
+		vec_print(v, 3);
+		cout << endl;
+		//exit(1);
+		return FALSE;
+		}
+	e = sqrt(d);
+	lambda1 = -b * 0.5 + e;
+	lambda2 = -b * 0.5 - e;
+	pt1_out[0] = x1 + lambda1 * v[0];
+	pt1_out[1] = x2 + lambda1 * v[1];
+	pt1_out[2] = x3 + lambda1 * v[2];
+	pt2_out[0] = x1 + lambda2 * v[0];
+	pt2_out[1] = x2 + lambda2 * v[1];
+	pt2_out[2] = x3 + lambda2 * v[2];
+	if (f_v) {
+		cout << "numerics::line_centered_tolerant done" << endl;
+	}
 	return TRUE;
 }
 
@@ -1860,6 +2180,19 @@ void numerics::vec_copy(double *from, double *to, int len)
 		}
 }
 
+void numerics::vec_swap(double *from, double *to, int len)
+{
+	int i;
+	double *p, *q;
+	double a;
+
+	for (p = from, q = to, i = 0; i < len; p++, q++, i++) {
+		a = *q;
+		*q = *p;
+		*p = a;
+		}
+}
+
 void numerics::vec_print(ostream &ost, double *v, int len)
 {
 	int i;
@@ -1882,7 +2215,7 @@ void numerics::vec_scan(const char *s, double *&v, int &len)
 
 void numerics::vec_scan_from_stream(istream & is, double *&v, int &len)
 {
-	int verbose_level = 1;
+	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 	double a;
 	char s[10000], c;
@@ -2456,6 +2789,426 @@ void numerics::local_coordinates_wrt_triangle(double *pt,
 		cout << "numerics::local_coordinates_wrt_triangle done" << endl;
 	}
 
+}
+
+
+int numerics::intersect_line_and_line(
+		double *line1_pt1_coords, 	double *line1_pt2_coords,
+		double *line2_pt1_coords, 	double *line2_pt2_coords,
+		double &lambda,
+		double *pt_coords,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; // (verbose_level >= 2);
+	//double B[3];
+	double M[9];
+	int i;
+	double v[3];
+	numerics N;
+
+	if (f_v) {
+		cout << "numerics::intersect_line_and_line" << endl;
+		}
+
+
+	// equation of the form:
+	// P_0 + \lambda * v = Q_0 + \mu * u
+
+	// where P_0 is a point on the line,
+	// Q_0 is a point on the plane,
+	// v is a direction vector of line 1
+	// u is a direction vector of line 2
+
+	// M is the matrix whose columns are
+	// v, -u, -P_0 + Q_0
+
+	// point on line 1, brought over on the other side, hence the minus:
+	// -P_0
+	M[0 * 3 + 2] = -1. * line1_pt1_coords[0]; //Line_coords[line1_idx * 6 + 0];
+	M[1 * 3 + 2] = -1. * line1_pt1_coords[1]; //Line_coords[line1_idx * 6 + 1];
+	M[2 * 3 + 2] = -1. * line1_pt1_coords[2]; //Line_coords[line1_idx * 6 + 2];
+	// +P_1
+	M[0 * 3 + 2] += line2_pt1_coords[0]; //Line_coords[line2_idx * 6 + 0];
+	M[1 * 3 + 2] += line2_pt1_coords[1]; //Line_coords[line2_idx * 6 + 1];
+	M[2 * 3 + 2] += line2_pt1_coords[2]; //Line_coords[line2_idx * 6 + 2];
+
+	// v = direction vector of line 1:
+	for (i = 0; i < 3; i++) {
+		v[i] = line1_pt2_coords[i] - line1_pt1_coords[i];
+	}
+	// we will need v[] later, hence we store this vector
+	for (i = 0; i < 3; i++) {
+		//v[i] = line1_pt2_coords[i] - line1_pt1_coords[i];
+		//v[i] = Line_coords[line1_idx * 6 + 3 + i] -
+		//		Line_coords[line1_idx * 6 + i];
+		M[i * 3 + 0] = v[i];
+		}
+
+	// negative direction vector of line 2:
+	for (i = 0; i < 3; i++) {
+		M[i * 3 + 1] = -1. * (line2_pt2_coords[i] - line2_pt1_coords[i]);
+		//M[i * 3 + 1] = -1. * (Line_coords[line2_idx * 6 + 3 + i] -
+		//		Line_coords[line2_idx * 6 + i]);
+		}
+
+
+	// solve M:
+	int rk;
+	int base_cols[3];
+
+	if (f_vv) {
+		cout << "numerics::intersect_line_and_line "
+				"before Gauss elimination:" << endl;
+		N.print_system(M, 3, 3);
+		}
+
+	rk = N.Gauss_elimination(M, 3, 3,
+			base_cols, TRUE /* f_complete */,
+			0 /* verbose_level */);
+
+	if (f_vv) {
+		cout << "numerics::intersect_line_and_line "
+				"after Gauss elimination:" << endl;
+		N.print_system(M, 3, 3);
+		}
+
+
+	if (rk < 2) {
+		cout << "numerics::intersect_line_and_line "
+				"the matrix M does not have full rank" << endl;
+		return FALSE;
+		}
+	lambda = M[0 * 3 + 2];
+	for (i = 0; i < 3; i++) {
+		pt_coords[i] = line1_pt1_coords[i] + lambda * v[i];
+		//B[i] = Line_coords[line1_idx * 6 + i] + lambda * v[i];
+		}
+
+	if (f_vv) {
+		cout << "numerics::intersect_line_and_line "
+				"The intersection point is "
+				<< pt_coords[0] << ", " << pt_coords[1] << ", " << pt_coords[2] << endl;
+		}
+	//point(B[0], B[1], B[2]);
+
+
+	if (f_v) {
+		cout << "numerics::intersect_line_and_line done" << endl;
+		}
+	return TRUE;
+}
+
+void numerics::clebsch_map_up(
+		double *line1_pt1_coords, 	double *line1_pt2_coords,
+		double *line2_pt1_coords, 	double *line2_pt2_coords,
+	double *pt_in, double *pt_out,
+	double *Cubic_coords_povray_ordering,
+	int line1_idx, int line2_idx,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+	int rk;
+	numerics Num;
+
+	double M[16];
+	double L[16];
+	double Pts[16];
+	double N[16];
+	double C[20];
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"line1_idx=" << line1_idx
+				<< " line2_idx=" << line2_idx << endl;
+		}
+
+	if (line1_idx == line2_idx) {
+		cout << "numerics::clebsch_map_up "
+				"line1_idx == line2_idx, line1_idx=" << line1_idx << endl;
+		exit(1);
+		}
+
+	Num.vec_copy(line1_pt1_coords, M, 3);
+	M[3] = 1.;
+	Num.vec_copy(line1_pt2_coords, M + 4, 3);
+	M[7] = 1.;
+	Num.vec_copy(pt_in, M + 8, 3);
+	M[11] = 1.;
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"system for plane 1=" << endl;
+		Num.print_system(M, 3, 4);
+		}
+
+	rk = Num.Null_space(M, 3, 4, L, 0 /* verbose_level */);
+	if (rk != 1) {
+		cout << "numerics::clebsch_map_up "
+				"system for plane 1 does not have nullity 1" << endl;
+		cout << "numerics::clebsch_map_up "
+				"nullity=" << rk << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"perp for plane 1=" << endl;
+		Num.print_system(L, 1, 4);
+		}
+
+	Num.vec_copy(line2_pt1_coords, M, 3);
+	M[3] = 1.;
+	Num.vec_copy(line2_pt2_coords, M + 4, 3);
+	M[7] = 1.;
+	Num.vec_copy(pt_in, M + 8, 3);
+	M[11] = 1.;
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"system for plane 2=" << endl;
+		Num.print_system(M, 3, 4);
+		}
+
+	rk = Num.Null_space(M, 3, 4, L + 4, 0 /* verbose_level */);
+	if (rk != 1) {
+		cout << "numerics::clebsch_map_up "
+				"system for plane 2 does not have nullity 1" << endl;
+		cout << "numerics::clebsch_map_up "
+				"nullity=" << rk << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"perp for plane 2=" << endl;
+		Num.print_system(L + 4, 1, 4);
+		}
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"system for line=" << endl;
+		Num.print_system(L, 2, 4);
+		}
+	rk = Num.Null_space(L, 2, 4, L + 8, 0 /* verbose_level */);
+	if (rk != 2) {
+		cout << "numerics::clebsch_map_up "
+				"system for line does not have nullity 2" << endl;
+		cout << "numerics::clebsch_map_up "
+				"nullity=" << rk << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"perp for Line=" << endl;
+		Num.print_system(L + 8, 2, 4);
+		}
+
+	Num.vec_normalize_from_back(L + 8, 4);
+	Num.vec_normalize_from_back(L + 12, 4);
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"perp for Line normalized=" << endl;
+		Num.print_system(L + 8, 2, 4);
+		}
+
+	if (ABS(L[11]) < 0.0001) {
+		Num.vec_copy(L + 12, Pts, 4);
+		Num.vec_add(L + 8, L + 12, Pts + 4, 4);
+
+		if (f_v) {
+			cout << "numerics::clebsch_map_up "
+					"two affine points on the line=" << endl;
+			Num.print_system(Pts, 2, 4);
+			}
+
+		}
+	else {
+		cout << "numerics::clebsch_map_up "
+				"something is wrong with the line" << endl;
+		exit(1);
+		}
+
+
+	Num.line_centered(Pts, Pts + 4, N, N + 4, 10, verbose_level - 1);
+	N[3] = 1.;
+	N[7] = 0.;
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"line centered=" << endl;
+		Num.print_system(N, 2, 4);
+		}
+
+	//int l_idx;
+	double line3_pt1_coords[3];
+	double line3_pt2_coords[3];
+
+	// create a line:
+	//l_idx = S->line(N[0], N[1], N[2], N[4], N[5], N[6]);
+	//Line_idx[nb_line_idx++] = S->nb_lines - 1;
+	for (i = 0; i < 3; i++) {
+		line3_pt1_coords[i] = N[i];
+	}
+	for (i = 0; i < 3; i++) {
+		line3_pt2_coords[i] = N[4 + i];
+	}
+
+	for (i = 0; i < 3; i++) {
+		N[4 + i] = N[4 + i] - N[i];
+		}
+	for (i = 8; i < 16; i++) {
+		N[i] = 0.;
+		}
+
+	if (f_v) {
+		cout << "N=" << endl;
+		Num.print_system(N, 4, 4);
+		}
+
+
+	Num.substitute_cubic_linear_using_povray_ordering(Cubic_coords_povray_ordering, C,
+		N, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"transformed cubic=" << endl;
+		Num.print_system(C, 1, 20);
+		}
+
+	double a, b, c, d, tr, t1, t2, t3;
+
+	a = C[10];
+	b = C[4];
+	c = C[1];
+	d = C[0];
+
+
+	tr = -1 * b / a;
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"a=" << a << " b=" << b
+				<< " c=" << c << " d=" << d << endl;
+		cout << "clebsch_scene::create_point_up "
+				"tr = " << tr << endl;
+		}
+
+	double pt1_coords[3];
+	double pt2_coords[3];
+
+	// creates a point:
+	if (!intersect_line_and_line(
+			line3_pt1_coords, line3_pt2_coords,
+			line1_pt1_coords, line1_pt2_coords,
+			t1 /* lambda */,
+			pt1_coords,
+			0 /*verbose_level*/)) {
+		cout << "numerics::clebsch_map_up "
+				"problem computing intersection with line 1" << endl;
+		exit(1);
+		}
+
+	double P1[3];
+
+	for (i = 0; i < 3; i++) {
+		P1[i] = N[i] + t1 * (N[4 + i] - N[i]);
+		}
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up t1=" << t1 << endl;
+		cout << "numerics::clebsch_map_up P1=";
+		Num.print_system(P1, 1, 3);
+		cout << "numerics::clebsch_map_up point: ";
+		Num.print_system(pt1_coords, 1, 3);
+		}
+
+
+	double eval_t1;
+
+	eval_t1 = (((a * t1 + b) * t1) + c) * t1 + d;
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"eval_t1=" << eval_t1 << endl;
+		}
+
+	// creates a point:
+	if (!intersect_line_and_line(
+			line3_pt1_coords, line3_pt2_coords,
+			line1_pt2_coords, line2_pt2_coords,
+			t2 /* lambda */,
+			pt2_coords,
+			0 /*verbose_level*/)) {
+		cout << "numerics::clebsch_map_up "
+				"problem computing intersection with line 2" << endl;
+		exit(1);
+		}
+
+	double P2[3];
+
+	for (i = 0; i < 3; i++) {
+		P2[i] = N[i] + t2 * (N[4 + i] - N[i]);
+		}
+	if (f_v) {
+		cout << "numerics::clebsch_map_up t2=" << t2 << endl;
+		cout << "numerics::clebsch_map_up P2=";
+		Num.print_system(P2, 1, 3);
+		cout << "numerics::clebsch_map_up point: ";
+		Num.print_system(pt2_coords, 1, 3);
+		}
+
+
+	double eval_t2;
+
+	eval_t2 = (((a * t2 + b) * t2) + c) * t2 + d;
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"eval_t2=" << eval_t2 << endl;
+		}
+
+
+
+	t3 = tr - t1 - t2;
+
+
+	double eval_t3;
+
+	eval_t3 = (((a * t3 + b) * t3) + c) * t3 + d;
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"eval_t3=" << eval_t3 << endl;
+		}
+
+
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up "
+				"tr=" << tr << " t1=" << t1
+				<< " t2=" << t2 << " t3=" << t3 << endl;
+		}
+
+	double Q[3];
+
+	for (i = 0; i < 3; i++) {
+		Q[i] = N[i] + t3 * N[4 + i];
+		}
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up Q=";
+		Num.print_system(Q, 1, 3);
+		}
+
+	// delete two points:
+	//S->nb_points -= 2;
+
+	Num.vec_copy(Q, pt_out, 3);
+
+
+
+	if (f_v) {
+		cout << "numerics::clebsch_map_up done" << endl;
+		}
 }
 
 }}

@@ -536,7 +536,7 @@ void poset_classification::write_file(
 		}
 	size0 = calc_size_on_file(depth_completed, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "size on file = " << size0 << endl;
+		cout << "poset_classification::write_file size on file = " << size0 << endl;
 		}
 
 	if (size0 > 1000 * ONE_MILLION) {
@@ -571,6 +571,13 @@ void poset_classification::write_file(
 	long int size;
 	size = m->used_length;
 
+	if (size != size0) {
+		cout << "poset_classification::write_file size != size0" << endl;
+		cout << "poset_classification::write_file size = " << size << endl;
+		cout << "poset_classification::write_file size0 = " << size0 << endl;
+		exit(1);
+
+	}
 
 	if (f_v) {
 		cout << "poset_classification::write_file "
@@ -905,8 +912,8 @@ void poset_classification::housekeeping(int i,
 		cout << "average word length=" <<
 				(double) nb2 / (double) nb1 << endl;
 		}
-	if (f_find_group_order) {
-		find_automorphism_group_of_order(i, find_group_order);
+	if (Control->f_find_group_order) {
+		find_automorphism_group_of_order(i, Control->find_group_order);
 		}
 	if (f_vv) {
 		if (nb_nodes < 1000) {
@@ -988,7 +995,7 @@ void poset_classification::housekeeping(int i,
 			}
 		}
 
-	if (f_Log) {
+	if (Control->f_Log) {
 		int verbose_level = 1;
 		int f = first_poset_orbit_node_at_level[i];
 		int len = nb_orbits_at_level(i);
@@ -1000,7 +1007,7 @@ void poset_classification::housekeeping(int i,
 			}
 		}
 
-	if (f_log && i == sz) {
+	if (Control->f_log && i == sz) {
 		int verbose_level = 1;
 		int ii;
 
@@ -1016,14 +1023,14 @@ void poset_classification::housekeeping(int i,
 			}
 		}
 
-	if (f_T || (f_t && i == sz)) {
+	if (Control->f_T || (Control->f_t && i == sz)) {
 		if (f_v) {
 			cout << "poset_classification::housekeeping "
 					"before write_treefile_and_draw_tree" << endl;
 			}
 
 		write_treefile_and_draw_tree(fname_base, i, 
-			xmax, ymax, radius, f_embedded, 0 /*verbose_level - 1*/);
+				Control->xmax, Control->ymax, Control->radius, f_embedded, 0 /*verbose_level - 1*/);
 			// in poset_classification_draw.cpp
 
 		if (f_v) {
@@ -1079,7 +1086,7 @@ void poset_classification::housekeeping_no_data_file(int i,
 		compute_and_print_automorphism_group_orders(i, cout);
 		}
 
-	if (f_W || (f_w && i == sz)) {
+	if (Control->f_W || (Control->f_w && i == sz)) {
 #if 0
 		char fname_base2[1000];
 		
@@ -1102,9 +1109,10 @@ void poset_classification::housekeeping_no_data_file(int i,
 
 		}
 
-	if (f_T || (f_t && i == sz)) {
+	if (Control->f_T || (Control->f_t && i == sz)) {
 		write_treefile_and_draw_tree(fname_base, i, 
-			xmax, ymax, radius, f_embedded, verbose_level - 1);
+				Control->xmax, Control->ymax, Control->radius,
+				f_embedded, verbose_level - 1);
 		}
 	if (f_v) {
 		cout << "poset_classification::"
@@ -2297,7 +2305,7 @@ void poset_classification::create_schreier_tree_fname_mask_base(
 {
 
 	sprintf(fname_mask, "%sschreier_tree_node_%d_%%d",
-			schreier_tree_prefix, node);
+			Control->schreier_tree_prefix, node);
 }
 
 void poset_classification::create_shallow_schreier_tree_fname_mask_base(
@@ -2305,7 +2313,7 @@ void poset_classification::create_shallow_schreier_tree_fname_mask_base(
 {
 
 	sprintf(fname_mask, "%sshallow_schreier_tree_node_%d_%%d",
-			schreier_tree_prefix, node);
+			Control->schreier_tree_prefix, node);
 }
 
 void poset_classification::make_fname_candidates_file_default(

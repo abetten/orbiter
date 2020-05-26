@@ -350,13 +350,16 @@ public:
 		int verbose_level);
 	void make_element_which_moves_a_line_in_PG3q(grassmann *Gr,
 		long int line_rk, int *Elt, int verbose_level);
-	int is_matrix_group();
+	int matrix_group_dimension();
 	int is_semilinear_matrix_group();
 	int is_projective();
 	int is_affine();
 	int is_general_linear();
+	int is_matrix_group();
 	matrix_group *get_matrix_group();
 	void perform_tests(strong_generators *SG, int verbose_level);
+	void multiply_based_on_text(const char *data_A, const char *data_B, int verbose_level);
+	void inverse_based_on_text(const char *data_A, int verbose_level);
 
 
 	// action_group_theory.cpp:
@@ -508,14 +511,14 @@ public:
 	 * in wreath product action
 	 * and restrict the action to the tensor space. */
 	void init_wreath_product_group_and_restrict(int nb_factors, int n,
-			finite_field *F, int f_tensor_ranks,
+			finite_field *F, vector_ge *&nice_gens,
 			int verbose_level);
 
 	/** Create the wreath product group AGL(n,q) wreath Sym(nb_factors)
 	 * in wreath product action
 	 */
-	void init_wreath_product_group(int nb_factors, int n, finite_field *F,
-			int f_tensor_ranks,
+	void init_wreath_product_group(int nb_factors, int n,
+			finite_field *F, vector_ge *&nice_gens,
 			int verbose_level);
 
 
@@ -724,6 +727,8 @@ public:
 		action *&A_on_equations, schreier *&Orb, int verbose_level);
 
 	// action_io.cpp:
+	void report(std::ostream &ost, int f_sims, sims *S,
+			int f_strong_gens, strong_generators *SG, int verbose_level);
 	void read_orbit_rep_and_candidates_from_files_and_process(
 		char *prefix,
 		int level, int orbit_at_level, int level_of_candidates_file,
@@ -766,8 +771,6 @@ public:
 	void list_elements_as_permutations_vertically(vector_ge *gens,
 			std::ostream &ost);
 	void print_symmetry_group_type(std::ostream &ost);
-	void report(std::ostream &ost, int f_sims, sims *S,
-			int f_strong_gens, strong_generators *SG, int verbose_level);
 	void print_info();
 	void report_basic_orbits(std::ostream &ost);
 	void print_base();
@@ -1052,16 +1055,16 @@ public:
 
 
 // #############################################################################
-// nauty_interface.cpp:
+// nauty_interface_with_group.cpp:
 // #############################################################################
 
 //! Interface to the graph canonization software Nauty
 
 
-class nauty_interface {
+class nauty_interface_with_group {
 public:
-	nauty_interface();
-	~nauty_interface();
+	nauty_interface_with_group();
+	~nauty_interface_with_group();
 	action *create_automorphism_group_of_colored_graph_object(
 		colored_graph *CG, int verbose_level);
 	action *create_automorphism_group_and_canonical_labeling_of_colored_graph_object(

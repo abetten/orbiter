@@ -616,7 +616,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	CG->init_with_point_labels(nb_points, number_colors, orbit_length,
 		point_color,
 		bitvector_adjacency, FALSE,
-		Orbits_classified->Sets[type_idx],
+		Orbits_classified->Sets[type_idx] /* point_labels */,
 		verbose_level - 2);
 		// the adjacency becomes part of the colored_graph object
 

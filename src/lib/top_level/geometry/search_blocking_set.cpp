@@ -19,7 +19,32 @@ namespace top_level {
 
 search_blocking_set::search_blocking_set()
 {
-	null();
+	Inc = NULL;
+	A = NULL;
+	Control = NULL;
+	Poset = NULL;
+	gen = NULL;
+
+
+	Line_intersections = NULL;
+	blocking_set = NULL;
+	blocking_set_len = 0;
+	sz = NULL;
+	
+	active_set = NULL;
+	sz_active_set = NULL;
+	
+
+	nb_solutions = 0;
+	f_find_only_one = FALSE;
+	f_blocking_set_size_desired = FALSE;
+	blocking_set_size_desired = 0;
+
+	max_search_depth = 0;
+	search_nb_candidates = NULL;
+	search_cur = NULL;
+	search_candidates = NULL;
+	save_sz = NULL;
 }
 
 search_blocking_set::~search_blocking_set()
@@ -29,24 +54,6 @@ search_blocking_set::~search_blocking_set()
 
 void search_blocking_set::null()
 {
-	Inc = NULL;
-	A = NULL;
-	Poset = NULL;
-	gen = NULL;
-	Line_intersections = NULL;
-	blocking_set = NULL;
-	sz = NULL;
-	
-	active_set = NULL;
-	sz_active_set = NULL;
-	
-	search_nb_candidates = NULL;
-	search_cur = NULL;
-	search_candidates = NULL;
-	save_sz = NULL;
-	f_find_only_one = FALSE;
-	f_blocking_set_size_desired = FALSE;
-	blocking_set_size_desired = 0;
 }
 
 void search_blocking_set::freeself()
@@ -55,6 +62,9 @@ void search_blocking_set::freeself()
 	
 	if (Line_intersections) {
 		FREE_OBJECTS(Line_intersections);
+		}
+	if (Control) {
+		FREE_OBJECT(Control);
 		}
 	if (Poset) {
 		FREE_OBJECT(Poset);
@@ -154,11 +164,12 @@ void search_blocking_set::find_partial_blocking_sets(int depth, int verbose_leve
 		cout << "find_partial_blocking_sets !A->f_has_strong_generators" << endl;
 		exit(1);
 		}
+	Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A,
 			A->Strong_gens,
 			verbose_level);
-	gen->init(Poset,
+	gen->init(Control, Poset,
 		//*A->strong_generators, A->tl, 
 		gen->depth, verbose_level);
 
@@ -197,8 +208,8 @@ void search_blocking_set::find_partial_blocking_sets(int depth, int verbose_leve
 	//int f_implicit_fusion = FALSE;
 	int f_debug = FALSE;
 	
-	gen->f_max_depth = TRUE;
-	gen->max_depth = depth;
+	gen->Control->f_max_depth = TRUE;
+	gen->Control->max_depth = depth;
 	
 	if (f_v) {
 		cout << "find_partial_blocking_sets: calling generator_main" << endl;

@@ -270,7 +270,7 @@ void hadamard_classify::init(int n, int f_draw,
 				"uncolored graph:" << endl;
 		}
 
-	nauty_interface Nauty;
+	nauty_interface_with_group Nauty;
 
 
 	A = Nauty.create_automorphism_group_of_graph_bitvec(
@@ -299,7 +299,9 @@ void hadamard_classify::init(int n, int f_draw,
 				"target_depth = " << n << " prefix=" << prefix << endl;
 		}
 
+	poset_classification_control *Control;
 	poset *Poset;
+
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A,
 			A->Strong_gens,
@@ -310,11 +312,14 @@ void hadamard_classify::init(int n, int f_draw,
 			verbose_level);
 
 	gen = NEW_OBJECT(poset_classification);
+	Control = NEW_OBJECT(poset_classification_control);
+	Control->f_W = TRUE;
 
 	gen->compute_orbits_on_subsets(
 		n /* target_depth */,
 		prefix,
-		TRUE /* f_W */, FALSE /* f_w */,
+		//TRUE /* f_W */, FALSE /* f_w */,
+		Control,
 		Poset,
 		verbose_level_clique);
 
@@ -341,7 +346,7 @@ void hadamard_classify::init(int n, int f_draw,
 			cout << "is a clique" << endl;
 			}
 		else {
-			cout << "is not a cliqe, this should not happen" << endl;
+			cout << "is not a clique, this should not happen" << endl;
 			exit(1);
 			}
 
@@ -357,7 +362,7 @@ void hadamard_classify::init(int n, int f_draw,
 				a >>= 1;
 				}
 			}
-		cout << "The hadamard matrix " << h << " is:" << endl;
+		cout << "The Hadamard matrix " << h << " is:" << endl;
 		int_matrix_print(H, n, n);
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {

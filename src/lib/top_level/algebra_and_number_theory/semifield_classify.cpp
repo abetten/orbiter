@@ -17,17 +17,20 @@ namespace top_level {
 
 semifield_classify::semifield_classify()
 {
+	F = NULL;
+	LG = NULL;
+	f_semilinear = FALSE;
+
 	n = 0;
 	k = 0;
 	k2 = 0;
-	F = NULL;
 	q = 0;
 	order = 0;
 
-	f_level_two_prefix = FALSE;
+	//f_level_two_prefix = FALSE;
 	level_two_prefix = NULL;
 
-	f_level_three_prefix = FALSE;
+	//f_level_three_prefix = FALSE;
 	level_three_prefix = NULL;
 
 	T = NULL;
@@ -38,10 +41,15 @@ semifield_classify::semifield_classify()
 
 	A0 = NULL;
 	A0_linear = NULL;
+
 	A_on_S = NULL;
 	AS = NULL;
+
 	Strong_gens = NULL;
+
 	Poset = NULL;
+	Control = NULL;
+
 	Gen = NULL;
 	Symmetry_group = NULL;
 
@@ -57,6 +65,7 @@ semifield_classify::semifield_classify()
 	Basis2 = NULL;
 	desired_pivots = NULL;
 	//null();
+
 }
 
 semifield_classify::~semifield_classify()
@@ -154,26 +163,38 @@ void semifield_classify::freeself()
 	}
 }
 
-void semifield_classify::init(int argc, const char **argv,
-	int order, int n, int k,
-	finite_field *F,
-	int verbose_level)
+void semifield_classify::init(
+		finite_field *F, linear_group *LG,
+		int k, poset_classification_control *Control,
+		const char *level_two_prefix,
+		const char *level_three_prefix,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	longinteger_object go;
-	int i;
 	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "semifield_classify::init" << endl;
 	}
 
-	semifield_classify::n = n;
+	//semifield_classify::n = n;
 	semifield_classify::k = k;
+
+	semifield_classify::Control = Control;
+
+	semifield_classify::F = F;
+	semifield_classify::LG = LG;
+	A = LG->A2;
+	n = A->matrix_group_dimension();
+	f_semilinear = A->is_semilinear_matrix_group();
+	q = F->q;
+	order = NT.i_power_j(q, k);
+
 	k2 = k * k;
 	semifield_classify::F = F;
 	semifield_classify::q = F->q;
-	semifield_classify::order = order;
+	//semifield_classify::order = order;
 	if (order != NT.i_power_j(q, k)) {
 		cout << "semifield_classify::init "
 				"order != i_power_j(q, k)" << endl;
@@ -194,6 +215,7 @@ void semifield_classify::init(int argc, const char **argv,
 		cout << "semifield_classify::init order=" << order << endl;
 	}
 
+#if 0
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-level2_prefix") == 0) {
 			f_level_two_prefix = TRUE;
@@ -206,6 +228,7 @@ void semifield_classify::init(int argc, const char **argv,
 			cout << "-level3_prefix " << level_three_prefix << endl;
 		}
 	}
+#endif
 
 	vector_space_dimension = k2;
 
@@ -220,19 +243,19 @@ void semifield_classify::init(int argc, const char **argv,
 
 	T = NEW_OBJECT(spread_classify);
 
-	T->read_arguments(argc, argv);
+	//T->read_arguments(argc, argv);
 
 	if (f_v) {
 		cout << "semifield_classify::init "
 				"before T->init" << endl;
 	}
 
-	int max_depth = k + 1;
+	//int max_depth = k + 1;
 
-	T->init(order, n, k, max_depth,
-		F, FALSE /* f_recoordinatize */,
-		"TP_STARTER", "TP", order + 1,
-		argc, argv,
+	T->init(F, LG, k, Control,
+		//max_depth,
+		//F, FALSE /* f_recoordinatize */,
+		//"TP_STARTER", "TP", order + 1,
 		0 /*verbose_level - 2*/);
 
 	if (f_v) {
@@ -611,6 +634,7 @@ void semifield_classify::init_poset_classification(
 	}
 
 	Poset = NEW_OBJECT(poset);
+	Control = NEW_OBJECT(poset_classification_control);
 	vector_space *VS;
 	VS = NEW_OBJECT(vector_space);
 	VS->init(F, vector_space_dimension,
@@ -644,7 +668,7 @@ void semifield_classify::init_poset_classification(
 
 	Gen = NEW_OBJECT(poset_classification);
 
-	Gen->read_arguments(argc, argv, 0);
+	//Gen->read_arguments(argc, argv, 0);
 
 	//Gen->prefix[0] = 0;
 	sprintf(Gen->fname_base, "%s", prefix);
@@ -655,7 +679,7 @@ void semifield_classify::init_poset_classification(
 	if (f_v) {
 		cout << "semifield_classify::init before Gen->init" << endl;
 	}
-	Gen->init(Poset,
+	Gen->init(Control, Poset,
 			Gen->depth /* sz */,
 			verbose_level - 2);
 	if (f_v) {
@@ -1388,49 +1412,29 @@ void semifield_classify::candidates_classify_by_first_column(
 void semifield_classify::make_fname_candidates_at_level_two_orbit(
 	char *fname, int orbit)
 {
-	if (f_level_two_prefix) {
 		sprintf(fname, "%sL2_orbit%d_cand_int8.bin",
 				level_two_prefix, orbit);
-	}
-	else {
-		sprintf(fname, "L2_orbit%d_cand_int8.bin", orbit);
-	}
 }
 
 void semifield_classify::make_fname_candidates_at_level_two_orbit_txt(
 	char *fname, int orbit)
 {
-	if (f_level_two_prefix) {
 		sprintf(fname, "%sL2_orbit%d_cand.txt",
 				level_two_prefix, orbit);
-	}
-	else {
-		sprintf(fname, "L2_orbit%d_cand.txt", orbit);
-	}
 }
 
 void semifield_classify::make_fname_candidates_at_level_three_orbit(
 	char *fname, int orbit)
 {
-	if (f_level_three_prefix) {
 		sprintf(fname, "%sL3_orbit%d_cand_int8",
 				level_three_prefix, orbit);
-	}
-	else {
-		sprintf(fname, "L3_orbit%d_cand_int8", orbit);
-	}
 }
 
 void semifield_classify::make_fname_candidates_at_level_two_orbit_by_type(
 	char *fname, int orbit, int h)
 {
-	if (f_level_two_prefix) {
 		sprintf(fname, "%sL2_orbit%d_type%d_cand_int8.bin",
 				level_two_prefix, orbit, h);
-	}
-	else {
-		sprintf(fname, "L2_orbit%d_type%d_cand_int8.bin", orbit, h);
-	}
 }
 
 

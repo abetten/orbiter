@@ -130,8 +130,37 @@ number_theory_domain::~number_theory_domain()
 
 }
 
+long int number_theory_domain::mod(long int a, long int p)
+{
+	int f_negative = FALSE;
+	long int r;
 
-int number_theory_domain::power_mod(int a, int n, int p)
+	if (a < 0) {
+		a = -1 * a; // 5/6/2020: here was an error: it was a = -1;
+		f_negative = TRUE;
+	}
+	r = a % p;
+	if (f_negative && r) {
+		r = p - r;
+	}
+	return r;
+}
+
+long int number_theory_domain::int_negate(long int a, long int p)
+{
+	long int b;
+
+	b = a % p;
+	if (b == 0) {
+		return 0;
+	}
+	else {
+		return p - b;
+	}
+}
+
+
+long int number_theory_domain::power_mod(long int a, long int n, long int p)
 {
 	longinteger_domain D;
 	longinteger_object A, N, M;
@@ -140,26 +169,33 @@ int number_theory_domain::power_mod(int a, int n, int p)
 	N.create(n, __FILE__, __LINE__);
 	M.create(p, __FILE__, __LINE__);
 	D.power_longint_mod(A, N, M, 0 /* verbose_level */);
-	return A.as_int();
+	return A.as_lint();
 }
 
-int number_theory_domain::inverse_mod(int a, int p)
+long int number_theory_domain::inverse_mod(long int a, long int p)
 {
 	longinteger_domain D;
 	longinteger_object A, B, U, V, G;
-	int u;
+	long int u;
 	
 	A.create(a, __FILE__, __LINE__);
 	B.create(p, __FILE__, __LINE__);
 	D.extended_gcd(A,B, G, U, V, 0 /* verbose_level */);
-	u = U.as_int();
+	if (!G.is_one() && !G.is_mone()) {
+		cout << "number_theory_domain::inverse_mod a and p are not coprime" << endl;
+		cout << "a=" << a << endl;
+		cout << "p=" << p << endl;
+		cout << "gcd=" << G << endl;
+		exit(1);
+	}
+	u = U.as_lint();
 	while (u < 0) {
 		u += p;
 		}
 	return u;
 }
 
-int number_theory_domain::mult_mod(int a, int b, int p)
+long int number_theory_domain::mult_mod(long int a, long int b, long int p)
 {
 	longinteger_domain D;
 	longinteger_object A, B, C, P;
@@ -171,22 +207,21 @@ int number_theory_domain::mult_mod(int a, int b, int p)
 	return C.as_int();
 }
 
-int number_theory_domain::add_mod(int a, int b, int p)
+long int number_theory_domain::add_mod(long int a, long int b, long int p)
 {
 	longinteger_domain D;
 	longinteger_object A, B, C, P, Q;
-	int r;
+	long int r;
 	
 	A.create(a, __FILE__, __LINE__);
 	B.create(b, __FILE__, __LINE__);
 	P.create(p, __FILE__, __LINE__);
 	D.add(A, B, C);
-	D.integral_division_by_int(C, 
-		p, Q, r);
+	D.integral_division_by_lint(C, p, Q, r);
 	return r;
 }
 
-int number_theory_domain::int_abs(int a)
+long int number_theory_domain::int_abs(long int a)
 {
 	if (a < 0) {
 		return -a;
@@ -194,17 +229,6 @@ int number_theory_domain::int_abs(int a)
 	else {
 		return a;
 		}
-}
-
-long int number_theory_domain::irem(long int a, long int m)
-{
-	long int b;
-	
-	if (a < 0) {
-		b = irem(-a, m);
-		return (m - b) % m;
-		}
-	return a % m;
 }
 
 long int number_theory_domain::gcd_lint(long int m, long int n)
@@ -231,19 +255,19 @@ long int number_theory_domain::gcd_lint(long int m, long int n)
 		r = m;
 		m = n;
 		n = r;
-		}
+	}
 	if (n == 0) {
 		return m;
-		}
+	}
 	while (TRUE) {
 		s = m / n;
 		r = m - (s * n);
 		if (r == 0) {
 			return n;
-			}
+		}
 		m = n;
 		n = r;
-		}
+	}
 #endif
 }
 
@@ -259,6 +283,73 @@ void number_theory_domain::extended_gcd_int(int m, int n, int &g, int &u, int &v
 	g = G.as_int();
 	u = U.as_int();
 	v = V.as_int();
+}
+
+void number_theory_domain::extended_gcd_lint(long int m, long int n,
+		long int &g, long int &u, long int &v)
+{
+	longinteger_domain D;
+	longinteger_object M, N, G, U, V;
+
+
+	M.create(m, __FILE__, __LINE__);
+	N.create(n, __FILE__, __LINE__);
+	D.extended_gcd(M, N, G, U, V, 0);
+	g = G.as_lint();
+	u = U.as_lint();
+	v = V.as_lint();
+}
+
+long int number_theory_domain::gcd_with_key_in_latex(ostream &ost,
+		long int a, long int b, int f_key, int verbose_level)
+//Computes gcd(a,b)
+{
+	int f_v = (verbose_level >= 1);
+	long int a1, b1, q1, r1;
+
+	if (f_v) {
+		cout << "number_theory_domain::gcd_with_key_in_latex "
+				"a=" << a << ", b=" << b << ":" << endl;
+	}
+	if (a > b) {
+		a1 = a;
+		b1 = b;
+	}
+	else {
+		a1 = b;
+		b1 = a;
+	}
+
+	while (TRUE) {
+
+
+		r1 = a1 % b1;
+		q1 = (a1 - r1) / b1;
+		if (f_key) {
+			ost << "=";
+			ost << " \\gcd\\big( " << b1 << ", " << r1 << "\\big) "
+					"\\qquad \\mbox{b/c} \\; " << a1 << " = " << q1
+					<< " \\cdot " << b1 << " + " << r1 << "\\\\" << endl;
+		}
+		if (f_v) {
+			cout << "number_theory_domain::gcd_with_key_in_latex "
+					"a1=" << a1 << " b1=" << b1
+					<< " r1=" << r1 << " q1=" << q1
+					<< endl;
+			}
+		if (r1 == 0) {
+			break;
+		}
+		a1 = b1;
+		b1 = r1;
+	}
+	if (f_key) {
+		ost << "= " << b1 << "\\\\" << endl;
+	}
+	if (f_v) {
+		cout << "number_theory_domain::gcd_with_key_in_latex done" << endl;
+	}
+	return b1;
 }
 
 int number_theory_domain::i_power_j_safe(int i, int j)
@@ -328,7 +419,7 @@ long int number_theory_domain::i_power_j_lint_safe(int i, int j, int verbose_lev
 	return res;
 }
 
-long int number_theory_domain::i_power_j_lint(int i, int j)
+long int number_theory_domain::i_power_j_lint(long int i, long int j)
 //Computes $i^j$ as integer.
 //There is no checking for overflow.
 {
@@ -356,28 +447,30 @@ int number_theory_domain::i_power_j(int i, int j)
 	return r;
 }
 
-int number_theory_domain::order_mod_p(int a, int p)
+long int number_theory_domain::order_mod_p(long int a, long int p)
 //Computes the order of $a$ mod $p$, i.~e. the smallest $k$ 
 //s.~th. $a^k \equiv 1$ mod $p$.
 {
-	int o, b;
+	long int o, b;
 	
 	if (a < 0) {
-		cout << "order_mod_p a < 0" << endl;
+		cout << "number_theory_domain::order_mod_p a < 0" << endl;
 		exit(1);
-		}
+	}
 	a %= p;
-	if (a == 0)
+	if (a == 0) {
 		return 0;
-	if (a == 1)
+	}
+	if (a == 1) {
 		return 1;
+	}
 	o = 1;
 	b = a;
 	while (b != 1) {
 		b *= a;
 		b %= p;
 		o++;
-		}
+	}
 	return o;
 }
 
@@ -504,24 +597,30 @@ int number_theory_domain::smallest_primedivisor(int n)
 {
 	int flag, i, q;
 	
-	if (EVEN(n))
+	if (EVEN(n)) {
 		return(2);
-	if ((n % 3) == 0)
+	}
+	if ((n % 3) == 0) {
 		return(3);
+	}
 	i = 5;
 	flag = 0;
 	while (TRUE) {
 		q = n / i;
-		if (n == q * i)
+		if (n == q * i) {
 			return(i);
-		if (q < i)
-			return(n);
-		if (flag)
-			i += 4;
-		else
-			i += 2;
-		flag = !flag;
 		}
+		if (q < i) {
+			return(n);
+		}
+		if (flag) {
+			i += 4;
+		}
+		else {
+			i += 2;
+		}
+		flag = !flag;
+	}
 }
 
 int number_theory_domain::sp_ge(int n, int p_min)
@@ -636,6 +735,33 @@ int number_theory_domain::factor_int(int a, int *&primes, int *&exponents)
 	return len;
 }
 
+void number_theory_domain::factor_lint(long int a, vector<long int> &primes, vector<int> &exponents)
+{
+	int p, p0;
+
+	if (a == 1) {
+		cout << "number_theory_domain::factor_lint, the number is one" << endl;
+		exit(1);
+		}
+	if (a <= 0) {
+		cout << "number_theory_domain::factor_lint, the number is <= 0" << endl;
+		exit(1);
+		}
+	p0 = -1;
+	while (a > 1) {
+		p = smallest_primedivisor(a);
+		a /= p;
+		if (p == p0) {
+			exponents[exponents.size()]++;
+		}
+		else {
+			primes.push_back(p);
+			exponents.push_back(1);
+			p0 = p;
+		}
+	}
+}
+
 void number_theory_domain::factor_prime_power(int q, int &p, int &e)
 {
 	if (q == 1) {
@@ -655,46 +781,112 @@ void number_theory_domain::factor_prime_power(int q, int &p, int &e)
 		}
 }
 
-int number_theory_domain::primitive_root(int p, int verbose_level)
+long int number_theory_domain::primitive_root_randomized(long int p, int verbose_level)
+// Computes a primitive element for $\bbZ_p$, i.~e. an integer $k$
+// with $2 \le k \le p - 1$ s. th. the order of $k$ mod $p$ is $p-1$.
+{
+	int f_v = (verbose_level >= 1);
+	long int i, pm1, a, n, b;
+	vector<long int> primes;
+	vector<int> exponents;
+	os_interface Os;
+	int cnt = 0;
+
+	if (f_v) {
+		cout << "number_theory_domain::primitive_root_randomized p=" << p << endl;
+	}
+	if (p < 2) {
+		cout << "number_theory_domain::primitive_root_randomized: p < 2" << endl;
+		exit(1);
+	}
+
+	pm1 = p - 1;
+	if (f_v) {
+		cout << "number_theory_domain::primitive_root_randomized before factor_lint " << pm1 << endl;
+	}
+	factor_lint(pm1, primes, exponents);
+	if (f_v) {
+		cout << "number_theory_domain::primitive_root_randomized after factor_lint " << pm1 << endl;
+		cout << "number_theory_domain::primitive_root_randomized number of factors is " << primes.size() << endl;
+	}
+	while (TRUE) {
+		cnt++;
+		a = Os.random_integer(pm1);
+		if (a == 0) {
+			continue;
+		}
+		if (f_v) {
+			cout << "number_theory_domain::primitive_root_randomized iteration " << cnt << " : trying " << a << endl;
+		}
+		for (i = 0; i < primes.size(); i++) {
+			n = pm1 / primes[i];
+			if (f_v) {
+				cout << "number_theory_domain::primitive_root_randomized iteration " << cnt << " : trying " << a
+						<< " : prime factor " << i << " / " << primes.size() << " raising to the power " << n << endl;
+			}
+			b = power_mod(a, n, p);
+			if (f_v) {
+				cout << "number_theory_domain::primitive_root_randomized iteration " << cnt
+						<< " : trying " << a << " : prime factor " << i << " / " << primes.size()
+						<< " raising to the power " << n << " yields " << b << endl;
+			}
+			if (b == 1) {
+				// fail
+				break;
+			}
+		}
+		if (i == primes.size()) {
+			break;
+		}
+	}
+
+	if (f_v) {
+		cout << "number_theory_domain::primitive_root_randomized done after " << cnt << " trials" << endl;
+	}
+	return a;
+}
+
+long int number_theory_domain::primitive_root(long int p, int verbose_level)
 // Computes a primitive element for $\bbZ_p$, i.~e. an integer $k$ 
 // with $2 \le k \le p - 1$ s.~th. the order of $k$ mod $p$ is $p-1$.
 {
 	int f_v = (verbose_level >= 1);
-	int i, o;
+	long int i, o;
 
 	if (p < 2) {
 		cout << "primitive_root: p < 2" << endl;
 		exit(1);
 		}
-	if (p == 2)
+	if (p == 2) {
 		return 1;
+	}
 	for (i = 2; i < p; i++) {
 		o = order_mod_p(i, p);
 		if (o == p - 1) {
 			if (f_v) {
 				cout << i << " is primitive root mod " << p << endl;
-				}
-			return i;
 			}
+			return i;
 		}
+	}
 	cout << "no primitive root found" << endl;
 	exit(1);
 }
 
-int number_theory_domain::Legendre(int a, int p, int verbose_level)
+int number_theory_domain::Legendre(long int a, long int p, int verbose_level)
 // Computes the Legendre symbol $\left( \frac{a}{p} \right)$.
 {
 	return Jacobi(a, p, verbose_level);
 }
 
-int number_theory_domain::Jacobi(int a, int m, int verbose_level)
+int number_theory_domain::Jacobi(long int a, long int m, int verbose_level)
 //Computes the Jacobi symbol $\left( \frac{a}{m} \right)$.
 {
 	int f_v = (verbose_level >= 1);
 	long int a1, m1, ord2, r1;
 	long int g;
 	int f_negative = FALSE;
-	int t, t1, t2;
+	long int t, t1, t2;
 	
 	if (f_v) {
 		cout << "Jacobi(" << a << ", " << m << ")" << endl;
@@ -772,89 +964,96 @@ int number_theory_domain::Jacobi(int a, int m, int verbose_level)
 }
 
 int number_theory_domain::Jacobi_with_key_in_latex(ostream &ost,
-		int a, int m, int verbose_level)
+		long int a, long int m, int verbose_level)
 //Computes the Jacobi symbol $\left( \frac{a}{m} \right)$.
 {
 	int f_v = (verbose_level >= 1);
 	long int a1, m1, ord2, r1;
 	long int g;
 	int f_negative = FALSE;
-	int t, t1, t2;
+	long int t, t1, t2;
 	
 	if (f_v) {
-		cout << "Jacobi(" << a << ", " << m << ")" << endl;
-		}
+		cout << "number_theory_domain::Jacobi(" << a << ", " << m << ")" << endl;
+	}
+
+
+	ost << "$\\Big( \\frac{" << a << " }{ "
+			<< m << "}\\Big)$\\\\" << endl;
+
+
 	a1 = a;
 	m1 = m;
 	r1 = 1;
 	g = gcd_lint(a1, m1);
 	if (ABS(g) != 1) {
 		return 0;
-		}
+	}
 	while (TRUE) {
 		/* Invariante: 
 		 * r1 enthaelt bereits ausgerechnete Faktoren.
 		 * ABS(r1) == 1.
 		 * Jacobi(a, m) = r1 * Jacobi(a1, m1) und ggT(a1, m1) == 1. */
 		if (a1 == 0) {
-			cout << "Jacobi a1 == 0" << endl;
+			cout << "number_theory_domain::Jacobi a1 == 0" << endl;
 			exit(1);
-			}
+		}
 		if (a1 % m1 < a1) {
 
-			ost << "=";
+			ost << "$=";
 			if (r1 == -1) {
 				ost << "(-1) \\cdot ";
-				}
-			ost << " \\Big( \\frac{" << a1 % m1 << " }{ "
-					<< m1 << "}\\Big)\\\\" << endl;
-
 			}
+			ost << " \\Big( \\frac{" << a1 % m1 << " }{ "
+					<< m1 << "}\\Big)$\\\\" << endl;
+
+		}
 
 		a1 = a1 % m1;
 
 		if (f_v) {
 			cout << "Jacobi = " << r1 << " * Jacobi("
 					<< a1 << ", " << m1 << ")" << endl;
-			}
+		}
 		ord2 = ny2(a1, a1);
 		
 		/* a1 jetzt immer noch != 0 */
 		if (f_negative) {
 
-			ost << "=";
+			ost << "$=";
 			if (r1 == -1) {
 				ost << "(-1) \\cdot ";
-				}
+			}
 			ost << "\\Big( \\frac{-1 }{ " << m1
 					<< "}\\Big) \\cdot \\Big( \\frac{"
 					<< a1 * i_power_j(2, ord2) << " }{ "
-					<< m1 << "}\\Big)\\\\" << endl;
-			ost << "=";
+					<< m1 << "}\\Big)$\\\\" << endl;
+			ost << "$=";
 			if (r1 == -1) {
 				ost << "(-1) \\cdot ";
-				}
+			}
 			ost << "(-1)^{\\frac{" << m1
 					<< "-1}{2}} \\cdot \\Big( \\frac{"
 					<< a1 * i_power_j(2, ord2) << " }{ "
-					<< m1 << "}\\Big)\\\\" << endl;
+					<< m1 << "}\\Big)$\\\\" << endl;
 
 
 
 			t = (m1 - 1) >> 1; /* t := (m1 - 1) / 2 */
 			/* Ranmultiplizieren von (-1) hoch t an r1: */
-			if (t % 2)
+			if (t % 2) {
 				r1 = -r1; /* Beachte ABS(r1) == 1 */
+			}
 			/* und a1 wieder positiv machen: */
 			a1 = -a1;
 
-			ost << "=";
+			ost << "$=";
 			if (r1 == -1) {
 				ost << "(-1) \\cdot ";
-				}
+			}
 			ost << " \\Big( \\frac{"
 					<< a1 * i_power_j(2, ord2)
-			<< " }{ " << m1 << "}\\Big)\\\\" << endl;
+			<< " }{ " << m1 << "}\\Big)$\\\\" << endl;
 
 
 			}
@@ -864,80 +1063,82 @@ int number_theory_domain::Jacobi_with_key_in_latex(ostream &ost,
 			/* Ranmultiplizieren von (-1) hoch t an r1: */
 
 			if (ord2 > 1) {
-				ost << "=";
+				ost << "$=";
 				if (r1 == -1) {
 					ost << "(-1) \\cdot ";
-					}
+				}
 				ost << "\\Big( \\frac{2}{ " << m1
 						<< "}\\Big)^{" << ord2
 						<< "} \\cdot \\Big( \\frac{" << a1
-						<< " }{ " << m1 << "}\\Big)\\\\" << endl;
-				ost << "=";
+						<< " }{ " << m1 << "}\\Big)$\\\\" << endl;
+				ost << "$=";
 				if (r1 == -1) {
 					ost << "(-1) \\cdot ";
-					}
+				}
 				ost << "\\Big( (-1)^{\\frac{" << m1
 						<< "^2-1}{8}} \\Big)^{" << ord2
 						<< "} \\cdot \\Big( \\frac{" << a1 << " }{ "
-						<< m1 << "}\\Big)\\\\" << endl;
-				}
+						<< m1 << "}\\Big)$\\\\" << endl;
+			}
 			else {
-				ost << "=";
+				ost << "$=";
 				if (r1 == -1) {
 					ost << "(-1) \\cdot ";
-					}
+				}
 				ost << "\\Big( \\frac{2}{ " << m1
 						<< "}\\Big) \\cdot \\Big( \\frac{" << a1
-						<< " }{ " << m1 << "}\\Big)\\\\" << endl;
-				ost << "=";
+						<< " }{ " << m1 << "}\\Big)$\\\\" << endl;
+				ost << "$=";
 				if (r1 == -1) {
 					ost << "(-1) \\cdot ";
-					}
+				}
 				ost << "(-1)^{\\frac{" << m1
 						<< "^2-1}{8}} \\cdot \\Big( \\frac{" << a1
-						<< " }{ " << m1 << "}\\Big)\\\\" << endl;
-				}
+						<< " }{ " << m1 << "}\\Big)$\\\\" << endl;
+			}
 
-			if (m1 % 8 == 3 || m1 % 8 == 5)
+			if (m1 % 8 == 3 || m1 % 8 == 5) {
 				r1 = -r1; /* Beachte ABS(r1) == 1L */
+			}
 
-			ost << "=";
+			ost << "$=";
 			if (r1 == -1) {
 				ost << "(-1) \\cdot ";
-				}
-			ost << "\\Big( \\frac{" << a1 << " }{ " << m1
-					<< "}\\Big)\\\\" << endl;
-
-
 			}
+			ost << "\\Big( \\frac{" << a1 << " }{ " << m1
+					<< "}\\Big)$\\\\" << endl;
+
+
+		}
 		else {
 			if (ord2) {
-				ost << "=";
+				ost << "$=";
 				if (r1 == -1) {
 					ost << "(-1) \\cdot ";
-					}
+				}
 				ost << "\\Big( \\frac{2}{ " << m1 << "}\\Big)^{"
 						<< ord2 << "} \\cdot \\Big( \\frac{" << a1
-						<< " }{ " << m1 << "}\\Big)\\\\" << endl;
+						<< " }{ " << m1 << "}\\Big)$\\\\" << endl;
 
-				ost << "=";
+				ost << "$=";
 				if (r1 == -1) {
 					ost << "(-1) \\cdot ";
-					}
+				}
 				ost << "\\Big( (-1)^{\\frac{" << m1
 						<< "^2-1}{8}} \\Big)^{" << ord2
 						<< "} \\cdot \\Big( \\frac{" << a1 << " }{ "
-						<< m1 << "}\\Big)\\\\" << endl;
-				ost << "=";
+						<< m1 << "}\\Big)$\\\\" << endl;
+				ost << "$=";
 				if (r1 == -1) {
 					ost << "(-1) \\cdot ";
-					}
-				ost << "\\Big( \\frac{" << a1 << " }{ " << m1
-						<< "}\\Big)\\\\" << endl;
 				}
+				ost << "\\Big( \\frac{" << a1 << " }{ " << m1
+						<< "}\\Big)$\\\\" << endl;
 			}
-		if (ABS(a1) <= 1)
+		}
+		if (ABS(a1) <= 1) {
 			break;
+		}
 
 
 		t = m1;
@@ -945,94 +1146,47 @@ int number_theory_domain::Jacobi_with_key_in_latex(ostream &ost,
 		a1 = t;
 
 
-		ost << "=";
+		ost << "$=";
 		if (r1 == -1) {
 			ost << "(-1) \\cdot ";
-			}
+		}
 		ost << "\\Big( \\frac{" << a1 << " }{ " << m1
 				<< "}\\Big) \\cdot (-1)^{\\frac{" << m1
 				<< "-1}{2} \\cdot \\frac{" << a1
-				<< " - 1}{2}}\\\\" << endl;
+				<< " - 1}{2}}$\\\\" << endl;
 
 
 		/* Reziprozitaet: */
 		t1 = (m1 - 1) >> 1; /* t1 = (m1 - 1) / 2 */
 		t2 = (a1 - 1) >> 1; /* t1 = (a1 - 1) / 2 */
-		if ((t1 % 2) && (t2 % 2)) /* t1 und t2 ungerade */
+		if ((t1 % 2) && (t2 % 2)) /* t1 und t2 ungerade */ {
 			r1 = -r1; /* Beachte ABS(r1) == 1 */
+		}
 
-
-		ost << "=";
+		ost << "$=";
 		if (r1 == -1) {
 			ost << "(-1) \\cdot ";
-			}
+		}
 		ost << "\\Big( \\frac{" << a1 << " }{ " << m1
-				<< "}\\Big)\\\\" << endl;
+				<< "}\\Big)$\\\\" << endl;
 
 		if (f_v) {
-			cout << "Jacobi() = " << r1 << " * Jacobi(" << a1
+			cout << "number_theory_domain::Jacobi = " << r1 << " * Jacobi(" << a1
 					<< ", " << m1 << ")" << endl;
-			}
 		}
+	}
 	if (a1 == 1) {
+		ost << "$=" << r1 << "$\\\\" << endl;
 		return r1;
-		}
+	}
 	if (a1 <= 0) {
-		cout << "Jacobi() a1 == -1 || a1 == 0" << endl;
+		cout << "number_theory_domain::Jacobi a1 == -1 || a1 == 0" << endl;
 		exit(1);
-		}
-	cout << "Jacobi() wrong termination" << endl;
+	}
+	cout << "number_theory_domain::Jacobi wrong termination" << endl;
 	exit(1);
 }
 
-int number_theory_domain::gcd_with_key_in_latex(ostream &ost,
-		int a, int b, int f_key, int verbose_level)
-//Computes gcd(a,b)
-{
-	int f_v = (verbose_level >= 1);
-	int a1, b1, q1, r1;
-
-	if (f_v) {
-		cout << "gcd_with_key_in_latex a=" << a << ", b=" << b << ":" << endl;
-		}
-	if (a > b) {
-		a1 = a;
-		b1 = b;
-	}
-	else {
-		a1 = b;
-		b1 = a;
-	}
-
-	while (TRUE) {
-
-
-		r1 = a1 % b1;
-		q1 = (a1 - r1) / b1;
-		if (f_key) {
-			ost << "=";
-			ost << " \\gcd\\big( " << b1 << ", " << r1 << "\\big) "
-					"\\qquad \\mbox{b/c} \\; " << a1 << " = " << q1
-					<< " \\cdot " << b1 << " + " << r1 << "\\\\" << endl;
-		}
-		if (f_v) {
-			cout << "gcd_with_key_in_latex "
-					"a1=" << a1 << " b1=" << b1
-					<< " r1=" << r1 << " q1=" << q1
-					<< endl;
-			}
-		if (r1 == 0) {
-			break;
-		}
-		a1 = b1;
-		b1 = r1;
-	}
-	ost << "= " << b1 << "\\\\" << endl;
-	if (f_v) {
-		cout << "gcd_with_key_in_latex done" << endl;
-	}
-	return b1;
-}
 
 int number_theory_domain::ny2(long int x, long int &x1)
 //returns $n = \ny_2(x).$ 
@@ -1044,64 +1198,73 @@ int number_theory_domain::ny2(long int x, long int &x1)
 	
 	n1 = 0;
 	if (xx == 0) {
-		cout << "ny2 x == 0" << endl;
+		cout << "number_theory_domain::ny2 x == 0" << endl;
 		exit(1);
-		}
+	}
 	if (xx < 0) {
 		xx = -xx;
 		f_negative = TRUE;
-		}
-	else
+	}
+	else {
 		f_negative = FALSE;
+	}
 	while (TRUE) {
 		// while xx congruent 0 mod 2:
-		if (ODD(xx))
+		if (ODD(xx)) {
 			break;
+		}
 		n1++;
 		xx >>= 1;
-		}
-	if (f_negative)
+	}
+	if (f_negative) {
 		xx = -xx;
+	}
 	x1 = xx;
 	return n1;
 }
 
-int number_theory_domain::ny_p(int n, int p)
+int number_theory_domain::ny_p(long int n, long int p)
 //Returns $\nu_p(n),$ the integer $k$ with $n=p^k n'$ and $p \nmid n'$.
 {
 	int ny_p;
 	
 	if (n == 0) {
-		cout << "ny_p n == 0" << endl;
+		cout << "number_theory_domain::ny_p n == 0" << endl;
 		exit(1);
 		}
-	if (n < 0)
+	if (n < 0) {
 		n = -n;
+	}
 	ny_p = 0;
 	while (n != 1) {
-		if ((n % p) != 0)
+		if ((n % p) != 0) {
 			break;
+		}
 		n /= p;
 		ny_p++;
-		}
+	}
 	return ny_p;
 }
 
-int number_theory_domain::sqrt_mod_simple(int a, int p)
+#if 0
+// now use longinteger_domain::square_root_mod(int a, int p, int verbose_level)
+long int number_theory_domain::sqrt_mod_simple(long int a, long int p)
 // solves x^2 = a mod p. Returns x
 {
-	int a1, x;
+	long int a1, x;
 	
 	a1 = a % p;
 	for (x = 0; x < p; x++) {
-		if ((x * x) % p == a1)
+		if ((x * x) % p == a1) {
 			return x;
 		}
-	cout << "sqrt_mod_simple a not a quadratic residue" << endl;
+	}
+	cout << "number_theory_domain::sqrt_mod_simple the number a is "
+			"not a quadratic residue mod p" << endl;
 	cout << "a = " << a << " p=" << p << endl;
 	exit(1);
 }
-
+#endif
 void number_theory_domain::print_factorization(int nb_primes, int *primes, int *exponents)
 {
 	int i;
@@ -1129,14 +1292,14 @@ void number_theory_domain::print_longfactorization(int nb_primes,
 		}
 }
 
-int number_theory_domain::euler_function(int n)
+int number_theory_domain::euler_function(long int n)
 //Computes Eulers $\varphi$-function for $n$.
 //Uses the prime factorization of $n$. before: eulerfunc
 {
 	int *primes;
 	int *exponents;
 	int len;
-	int i, k, p1, e1;
+	long int i, k, p1, e1;
 			
 	len = factor_int(n, primes, exponents);
 	
@@ -1164,32 +1327,32 @@ void number_theory_domain::int_add_fractions(int at, int ab,
 	if (at == 0) {
 		ct = bt;
 		cb = bb;
-		}
+	}
 	else if (bt == 0) {
 		ct = at;
 		cb = ab;
-		}
+	}
 	else {
 		g = gcd_lint(ab, bb);
 		a1 = ab / g;
 		b1 = bb / g;
 		cb = ab * b1;
 		ct = at * b1 + bt * a1;
-		}
+	}
 	if (cb < 0) {
 		cb *= -1;
 		ct *= -1;
-		}
+	}
 	g = gcd_lint(int_abs(ct), cb);
 	if (g > 1) {
 		ct /= g;
 		cb /= g;
-		}
+	}
 	if (f_v) {
 		cout << "int_add_fractions " << at <<  "/"
 				<< ab << " + " << bt << "/" << bb << " = "
 				<< ct << "/" << cb << endl;
-		}
+	}
 }
 
 void number_theory_domain::int_mult_fractions(int at, int ab,
@@ -1201,44 +1364,44 @@ void number_theory_domain::int_mult_fractions(int at, int ab,
 	if (at == 0) {
 		ct = 0;
 		cb = 1;
-		}
+	}
 	else if (bt == 0) {
 		ct = 0;
 		cb = 1;
-		}
+	}
 	else {
 		g = gcd_lint(at, ab);
 		if (g != 1 && g != -1) {
 			at /= g;
 			ab /= g;
-			}
+		}
 		g = gcd_lint(bt, bb);
 		if (g != 1 && g != -1) {
 			bt /= g;
 			bb /= g;
-			}
+		}
 		g = gcd_lint(at, bb);
 		if (g != 1 && g != -1) {
 			at /= g;
 			bb /= g;
-			}
+		}
 		g = gcd_lint(bt, ab);
 		if (g != 1 && g != -1) {
 			bt /= g;
 			ab /= g;
-			}
+		}
 		ct = at * bt;
 		cb = ab * bb;
-		}
+	}
 	if (cb < 0) {
 		cb *= -1;
 		ct *= -1;
-		}
+	}
 	g = gcd_lint(int_abs(ct), cb);
 	if (g > 1) {
 		ct /= g;
 		cb /= g;
-		}
+	}
 }
 
 
@@ -1253,8 +1416,8 @@ int number_theory_domain::choose_a_prime_greater_than(int lower_bound)
 		p = the_first_thousand_primes[r];
 		if (p > lower_bound) {
 			return p;
-			}
 		}
+	}
 }
 
 int number_theory_domain::choose_a_prime_in_interval(int lower_bound, int upper_bound)
@@ -1268,8 +1431,8 @@ int number_theory_domain::choose_a_prime_in_interval(int lower_bound, int upper_
 		p = the_first_thousand_primes[r];
 		if (p > lower_bound && p < upper_bound) {
 			return p;
-			}
 		}
+	}
 }
 
 int number_theory_domain::random_integer_greater_than(int n, int lower_bound)
@@ -1281,8 +1444,8 @@ int number_theory_domain::random_integer_greater_than(int n, int lower_bound)
 		r = Os.random_integer(n);
 		if (r > lower_bound) {
 			return r;
-			}
 		}
+	}
 }
 
 int number_theory_domain::random_integer_in_interval(int lower_bound, int upper_bound)
@@ -1293,7 +1456,7 @@ int number_theory_domain::random_integer_in_interval(int lower_bound, int upper_
 	if (upper_bound <= lower_bound) {
 		cout << "random_integer_in_interval upper_bound <= lower_bound" << endl;
 		exit(1);
-		}
+	}
 	n = upper_bound - lower_bound;
 	r = lower_bound + Os.random_integer(n);
 	return r;
@@ -1309,22 +1472,10 @@ int number_theory_domain::get_prime_from_table(int idx)
 	return the_first_thousand_primes[idx];
 }
 
-int number_theory_domain::int_negate(int a, int p)
+long int number_theory_domain::ChineseRemainder2(long int a1, long int a2,
+		long int p1, long int p2, int verbose_level)
 {
-	int b;
-
-	b = a % p;
-	if (b == 0) {
-		return 0;
-	}
-	else {
-		return p - b;
-	}
-}
-
-int number_theory_domain::ChineseRemainder2(int a1, int a2, int p1, int p2, int verbose_level)
-{
-	int k, ma1, p1v, x;
+	long int k, ma1, p1v, x;
 	number_theory_domain NT;
 
 	ma1 = int_negate(a1, p2);
@@ -1334,20 +1485,25 @@ int number_theory_domain::ChineseRemainder2(int a1, int a2, int p1, int p2, int 
 	return x;
 }
 
-void number_theory_domain::do_babystep_giantstep(int p, int g, int h,
+void number_theory_domain::do_babystep_giantstep(
+		long int p, long int g, long int h,
 		int f_latex, ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int N, n;
+	long int N, n;
 	double sqrtN;
-	int *Table1;
-	int *Table2;
-	int *data;
-	int gn, gmn, hgmn;
-	int i, r;
+	long int *Table1;
+	long int *Table2;
+	long int *data;
+	long int gn, gmn, hgmn;
+	long int i, r;
 	number_theory_domain NT;
 	sorting Sorting;
 
+	if (f_v) {
+		cout << "number_theory_domain::do_babystep_giantstep "
+				"p=" << p << " g=" << g << " h=" << h << endl;
+	}
 	r = NT.primitive_root(p, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "a primitive root modulo " << p << " is " << r << endl;
@@ -1363,9 +1519,9 @@ void number_theory_domain::do_babystep_giantstep(int p, int g, int h,
 				<< " h=" << h
 				<< " n=" << n << endl;
 	}
-	Table1 = NEW_int(n);
-	Table2 = NEW_int(n);
-	data = NEW_int(2 * n);
+	Table1 = NEW_lint(n);
+	Table2 = NEW_lint(n);
+	data = NEW_lint(2 * n);
 	gn = NT.power_mod(g, n, p);
 	if (f_v) {
 		cout << "g^n=" << gn << endl;
@@ -1384,9 +1540,9 @@ void number_theory_domain::do_babystep_giantstep(int p, int g, int h,
 		Table1[i] = NT.mult_mod(Table1[i - 1], g, p);
 		Table2[i] = NT.mult_mod(Table2[i - 1], gmn, p);
 		}
-	int_vec_copy(Table1, data, n);
-	int_vec_copy(Table2, data + n, n);
-	Sorting.int_vec_heapsort(data, 2 * n);
+	lint_vec_copy(Table1, data, n);
+	lint_vec_copy(Table2, data + n, n);
+	Sorting.lint_vec_heapsort(data, 2 * n);
 	if (f_v) {
 		cout << "duplicates:" << endl;
 		for (i = 1; i < 2 * n; i++) {
@@ -1423,6 +1579,111 @@ void number_theory_domain::do_babystep_giantstep(int p, int g, int h,
 		ost << "$$" << endl;
 	}
 }
+
+void number_theory_domain::sieve(std::vector<int> &primes,
+		int factorbase, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, from, to, l, unit_size = 1000;
+
+	if (f_v) {
+		cout << "number_theory_domain::sieve" << endl;
+	}
+	//primes.m_l(0);
+	for (i = 0; ; i++) {
+		from = i * unit_size + 1;
+		to = from + unit_size - 1;
+		sieve_primes(primes, from, to, factorbase, FALSE);
+		l = primes.size();
+		cout << "[" << from << "," << to
+			<< "], total number of primes = "
+			<< l << endl;
+		if (l >= factorbase) {
+			break;
+		}
+	}
+
+	if (f_v) {
+		cout << "number_theory_domain::sieve done" << endl;
+	}
+}
+
+void number_theory_domain::sieve_primes(std::vector<int> &v,
+		int from, int to, int limit, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int x, y, l, k, p, f_prime;
+
+	if (f_v) {
+		cout << "number_theory_domain::sieve_primes" << endl;
+	}
+	l = v.size();
+	if (ODD(from)) {
+		x = from;
+	}
+	else {
+		x = from + 1;
+	}
+	for (; x <= to; x++, x++) {
+		if (x <= 1) {
+			continue;
+		}
+		f_prime = TRUE;
+		for (k = 0; k < l; k++) {
+			p = v[k];
+			y = x / p;
+			// cout << "x=" << x << " p=" << p << " y=" << y << endl;
+			if ((x - y * p) == 0) {
+				f_prime = FALSE;
+				break;
+			}
+			if (y < p) {
+				break;
+			}
+#if 0
+			if ((x % p) == 0)
+				break;
+#endif
+			}
+		if (!f_prime) {
+			continue;
+		}
+		if (nb_primes(x) != 1) {
+			cout << "error: " << x << " is not prime!" << endl;
+			}
+		v.push_back(x);
+		if (f_v) {
+			cout << v.size() << " " << x << endl;
+		}
+		l++;
+		if (l >= limit) {
+			return;
+		}
+	}
+	if (f_v) {
+		cout << "number_theory_domain::sieve_primes done" << endl;
+	}
+}
+
+int number_theory_domain::nb_primes(int n)
+//Returns the number of primes in the prime factorization
+//of $n$ (including multiplicities).
+{
+	int i = 0;
+	int d;
+
+	if (n < 0)
+		n = -n;
+	while (n != 1) {
+		d = smallest_primedivisor(n);
+		i++;
+		n /= d;
+		}
+	return i;
+}
+
+
+
 
 }
 }

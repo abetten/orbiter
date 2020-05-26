@@ -14,7 +14,7 @@ namespace top_level {
 // algebra_global_with_action.cpp
 // #############################################################################
 
-//! group thooretic stuff which requires action
+//! group theoretic stuff which requires action
 
 
 class algebra_global_with_action {
@@ -42,6 +42,39 @@ public:
 		vector_ge *SG, int *&perm, int verbose_level);
 	void presentation(action *A, sims *S, int goi, vector_ge *gens,
 		int *primes, int verbose_level);
+	void do_eigenstuff(int q, int size, int *Data, int verbose_level);
+	void A5_in_PSL_(int q, int verbose_level);
+	void A5_in_PSL_2_q(int q,
+			discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level);
+	void A5_in_PSL_2_q_easy(int q,
+			discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level);
+	void A5_in_PSL_2_q_hard(int q,
+			discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level);
+	int proj_order(discreta_matrix &A);
+	void trace(discreta_matrix &A, discreta_base &tr);
+	void elementwise_power_int(discreta_matrix &A, int k);
+	int is_in_center(discreta_matrix &B);
+	void matrix_convert_to_numerical(discreta_matrix &A, int *AA, int q);
+	void classify_surfaces(
+			finite_field *F, linear_group *LG,
+			poset_classification_control *Control,
+			surface_domain *&Surf, surface_with_action *&Surf_A,
+			surface_classify_wedge *&SCW,
+			int verbose_level);
+	void young_symmetrizer(int n, int verbose_level);
+	void young_symmetrizer_sym_4(int verbose_level);
+	void classify_surfaces_through_arcs_and_trihedral_pairs(
+			group_theoretic_activity *GTA,
+			surface_with_action *Surf_A, int verbose_level);
+	void investigate_surface_and_write_report(
+			action *A,
+			surface_create *SC,
+			six_arcs_not_on_a_conic *Six_arcs,
+			surface_object_with_action *SoA,
+			int f_surface_clebsch,
+			int f_surface_codes,
+			int f_surface_quartic,
+			int verbose_level);
 
 };
 
@@ -124,6 +157,199 @@ void create_factor_group(action *A, sims *S, long int goi,
 	int size_subgroup, int *subgroup, factor_group *F, int verbose_level);
 
 
+// #############################################################################
+// group_theoretic_activity_description.cpp
+// #############################################################################
+
+
+//! description of a group theoretic actvity
+
+class group_theoretic_activity_description {
+public:
+
+	int f_poset_classification_control;
+	poset_classification_control *Control;
+	int f_orbits_on_points;
+	int f_export_trees;
+	int f_shallow_tree;
+	int f_stabilizer;
+	int f_orbits_on_subsets;
+	int orbits_on_subsets_size;
+	int f_draw_poset;
+	int f_draw_full_poset;
+	int f_classes;
+	int f_normalizer;
+	int f_report;
+	int f_sylow;
+	int f_test_if_geometric;
+	int test_if_geometric_depth;
+	int f_draw_tree;
+	int f_orbit_of;
+	int orbit_of_idx;
+	int f_orbits_on_set_system_from_file;
+	const char *orbits_on_set_system_from_file_fname;
+	int orbits_on_set_system_first_column;
+	int orbits_on_set_system_number_of_columns;
+	int f_orbit_of_set_from_file;
+	const char *orbit_of_set_from_file_fname;
+	int f_search_subgroup;
+	int f_print_elements;
+	int f_print_elements_tex;
+	int f_multiply;
+	const char *multiply_a;
+	const char *multiply_b;
+	int f_inverse;
+	const char *inverse_a;
+	int f_order_of_products;
+	const char *order_of_products_elements;
+	int f_group_table;
+	int f_embedded;
+	int f_sideways;
+	double x_stretch;
+	int f_print_generators;
+
+	// classification of arcs in projective spaces:
+	int f_classify_arcs;
+	int classify_arcs_target_size;
+	int f_classify_arcs_d;
+	int classify_arcs_d;
+	int f_not_on_conic;
+	int f_exact_cover;
+	exact_cover_arguments *ECA;
+	int f_isomorph_arguments;
+	isomorph_arguments *IA;
+
+
+	// for cubic surfaces:
+	int f_surface_classify;
+	int f_surface_report;
+	int f_surface_identify_Sa;
+	int f_surface_isomorphism_testing;
+		surface_create_description *surface_descr_isomorph1;
+		surface_create_description *surface_descr_isomorph2;
+	int f_surface_recognize;
+		surface_create_description *surface_descr;
+	int f_classify_surfaces_through_arcs_and_trihedral_pairs;
+	int f_create_surface;
+	surface_create_description *surface_description;
+	int f_surface_quartic;
+	int f_surface_clebsch;
+	int f_surface_codes;
+
+	int nb_transform;
+	const char *transform_coeffs[1000];
+	int f_inverse_transform[1000];
+
+		// subspace orbits:
+		int f_orbits_on_subspaces;
+		int orbits_on_subspaces_depth;
+		int f_mindist;
+		int mindist;
+		int f_self_orthogonal;
+		int f_doubly_even;
+
+		int f_spread_classify;
+		int spread_classify_k;
+
+		int f_tensor_classify;
+		int tensor_classify_depth;
+		int f_tensor_permutations;
+
+
+	group_theoretic_activity_description();
+	~group_theoretic_activity_description();
+	void null();
+	void freeself();
+	void read_arguments_from_string(
+			const char *str, int verbose_level);
+	int read_arguments(
+		int argc, const char **argv,
+		int verbose_level);
+
+};
+
+
+// #############################################################################
+// group_theoretic_activity.cpp
+// #############################################################################
+
+
+//! perform a group theoretic actvity
+
+class group_theoretic_activity {
+public:
+	group_theoretic_activity_description *Descr;
+	finite_field *F;
+	linear_group *LG;
+	action *A1;
+	action *A2;
+
+	// local data for orbits on subspaces:
+	poset *orbits_on_subspaces_Poset;
+	poset_classification *orbits_on_subspaces_PC;
+	vector_space *orbits_on_subspaces_VS;
+	int *orbits_on_subspaces_M;
+	int *orbits_on_subspaces_base_cols;
+
+
+	group_theoretic_activity();
+	~group_theoretic_activity();
+	void init(group_theoretic_activity_description *Descr,
+			finite_field *F, linear_group *LG,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+	void classes(int verbose_level);
+	void multiply(int verbose_level);
+	void inverse(int verbose_level);
+	void normalizer(int verbose_level);
+	void report(int verbose_level);
+	void print_elements(int verbose_level);
+	void print_elements_tex(int verbose_level);
+	void search_subgroup(int verbose_level);
+	void orbits_on_set_system_from_file(int verbose_level);
+	void orbits_on_set_from_file(int verbose_level);
+	void orbit_of(int verbose_level);
+	void orbits_on_points(int verbose_level);
+	void orbits_on_subsets(int verbose_level);
+	void orbits_on_subspaces(int verbose_level);
+	void orbits_on_poset_post_processing(
+			poset_classification *PC,
+			int depth,
+			int verbose_level);
+	void do_classify_arcs(int verbose_level);
+	void do_surface_classify(int verbose_level);
+	void do_surface_report(int verbose_level);
+	void do_surface_identify_Sa(int verbose_level);
+	void do_surface_isomorphism_testing(
+			surface_create_description *surface_descr_isomorph1,
+			surface_create_description *surface_descr_isomorph2,
+			int verbose_level);
+	void do_surface_recognize(
+			surface_create_description *surface_descr,
+			int verbose_level);
+	int subspace_orbits_test_set(
+			int len, long int *S, int verbose_level);
+	void do_classify_surfaces_through_arcs_and_trihedral_pairs(int verbose_level);
+	void do_create_surface(
+			surface_create_description *Descr, int verbose_level);
+	void do_spread_classify(int k, int verbose_level);
+	void do_packing_classify(int k,
+			const char *spread_selection_text,
+			const char *spread_tables_prefix,
+			const char *input_prefix, const char *base_fname,
+			int starter_size,
+			int verbose_level);
+	void do_tensor_classify(int depth, int verbose_level);
+	void do_tensor_permutations(int verbose_level);
+};
+
+long int gta_subspace_orbits_rank_point_func(int *v, void *data);
+void gta_subspace_orbits_unrank_point_func(int *v, long int rk, void *data);
+void gta_subspace_orbits_early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+
 
 // #############################################################################
 // semifield_classify_with_substructure.cpp
@@ -137,11 +363,15 @@ public:
 
 	int t0;
 
-	int argc;
-	const char **argv;
+	finite_field *F;
+	linear_group *LG;
+	poset_classification_control *Control;
 
-	int f_poly;
-	const char *poly;
+	//int argc;
+	//const char **argv;
+
+	//int f_poly;
+	//const char *poly;
 	int f_order;
 	int order;
 	int f_dim_over_kernel;
@@ -172,7 +402,6 @@ public:
 
 	int p, e, e1, n, k, q, k2;
 
-	finite_field *F;
 	semifield_substructure *Sub;
 	semifield_level_two *L2;
 
@@ -195,8 +424,11 @@ public:
 
 	semifield_classify_with_substructure();
 	~semifield_classify_with_substructure();
-	void read_arguments(int argc, const char **argv, int &verbose_level);
-	void init(int verbose_level);
+	//void read_arguments(int argc, const char **argv, int &verbose_level);
+	void init(
+			finite_field *F, linear_group *LG,
+			poset_classification_control *Control,
+			int verbose_level);
 	void read_data(int verbose_level);
 	void create_fname_for_classification(char *fname);
 	void create_fname_for_flag_orbits(char *fname);
@@ -225,18 +457,22 @@ void semifield_print_function_callback(std::ostream &ost, int orbit_idx,
 
 class semifield_classify {
 public:
+
 	int n;
 	int k;
 	int k2; // = k * k
 	finite_field *F;
+	linear_group *LG;
+	int f_semilinear;
+
 	int q;
 	int order; // q^k
 
 
-	int f_level_two_prefix;
+	//int f_level_two_prefix;
 	const char *level_two_prefix;
 
-	int f_level_three_prefix;
+	//int f_level_three_prefix;
 	const char *level_three_prefix;
 
 
@@ -259,6 +495,8 @@ public:
 
 
 	poset *Poset;
+	poset_classification_control *Control;
+
 	poset_classification *Gen;
 	sims *Symmetry_group;
 
@@ -283,10 +521,12 @@ public:
 	~semifield_classify();
 	void null();
 	void freeself();
-	void init(int argc, const char **argv,
-		int order, int n, int k,
-		finite_field *F,
-		int verbose_level);
+	void init(
+			finite_field *F, linear_group *LG,
+			int k, poset_classification_control *Control,
+			const char *level_two_prefix,
+			const char *level_three_prefix,
+			int verbose_level);
 	void report(std::ostream &ost, int level,
 			semifield_level_two *L2,
 			semifield_lifting *L3,

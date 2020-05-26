@@ -87,7 +87,7 @@ void orbit_node::write_file(ofstream &fp, int verbose_level)
 	if (f_v) {
 		cout << "orbit_node::write_file" << endl;
 		}
-	gens->write_to_file_binary(fp, 0 /* verbose_level */);
+	gens->write_to_file_binary(fp, verbose_level);
 
 	if (f_v) {
 		cout << "orbit_node::write_file finished" << endl;
@@ -102,7 +102,7 @@ void orbit_node::read_file(ifstream &fp, int verbose_level)
 		cout << "orbit_node::read_file" << endl;
 		}
 	gens = NEW_OBJECT(strong_generators);
-	gens->read_from_file_binary(C->A, fp, 0 /* verbose_level */);
+	gens->read_from_file_binary(C->A, fp, verbose_level);
 
 	if (f_v) {
 		cout << "orbit_node::read_file finished" << endl;

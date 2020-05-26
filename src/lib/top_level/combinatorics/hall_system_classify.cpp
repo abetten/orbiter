@@ -52,6 +52,7 @@ void hall_system_classify::null()
 	prefix[0] = 0;
 	fname_orbits_on_triples[0] = 0;
 	Poset = NULL;
+	Control = NULL;
 	PC = NULL;
 }
 
@@ -89,6 +90,9 @@ void hall_system_classify::freeself()
 	}
 	if (S) {
 		FREE_OBJECT(S);
+	}
+	if (Control) {
+		FREE_OBJECT(Control);
 	}
 	if (Poset) {
 		FREE_OBJECT(Poset);
@@ -254,12 +258,13 @@ void hall_system_classify::init(
 				verbose_level);
 
 
+	Control = NEW_OBJECT(poset_classification_control);
 	PC = NEW_OBJECT(poset_classification);
-	PC->read_arguments(argc, argv, 0);
+	//PC->read_arguments(argc, argv, 0);
 	if (f_v) {
 		cout << "hall_system_classify::init before PC->init" << endl;
 		}
-	PC->init(Poset, depth, verbose_level - 3);
+	PC->init(Control, Poset, depth, verbose_level - 3);
 	if (f_v) {
 		cout << "hall_system_classify::init after PC->init" << endl;
 		}

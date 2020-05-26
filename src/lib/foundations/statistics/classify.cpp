@@ -134,6 +134,9 @@ void classify::init_lint(long int *data,
 		data_int[i] = (int) data[i];
 		if (data_int[i] != data[i]) {
 			cout << "classify::init_lint data loss" << endl;
+			cout << "i=" << i << endl;
+			cout << "data[i]=" << data[i] << endl;
+			cout << "data_int[i]=" << data_int[i] << endl;
 			exit(1);
 		}
 	}

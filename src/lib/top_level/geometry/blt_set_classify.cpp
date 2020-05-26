@@ -23,6 +23,7 @@ blt_set_classify::blt_set_classify()
 {
 	Blt_set_domain = NULL;
 	f_semilinear = FALSE;
+	Control = NULL;
 	Poset = NULL;
 	gen = NULL;
 	q = 0;
@@ -40,15 +41,6 @@ blt_set_classify::~blt_set_classify()
 
 void blt_set_classify::null()
 {
-	Blt_set_domain = NULL;
-	f_semilinear = FALSE;
-	Poset = NULL;
-	gen = NULL;
-	q = 0;
-	degree = 0;
-	target_size = 0;
-	starter_size = 0;
-	A = NULL;
 }
 
 void blt_set_classify::freeself()
@@ -68,6 +60,10 @@ void blt_set_classify::freeself()
 	}
 	if (f_v) {
 		cout << "blt_set_classify::freeself before gen" << endl;
+	}
+	if (Control) {
+		FREE_OBJECT(Control);
+		Control = NULL;
 	}
 	if (Poset) {
 		FREE_OBJECT(Poset);
@@ -90,7 +86,7 @@ void blt_set_classify::init_basic(orthogonal *O,
 	const char *input_prefix, 
 	const char *base_fname,
 	int starter_size,  
-	int argc, const char **argv,
+	//int argc, const char **argv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -104,14 +100,6 @@ void blt_set_classify::init_basic(orthogonal *O,
 
 	gen = NEW_OBJECT(poset_classification);
 
-
-	if (f_v) {
-		cout << "blt_set_classify::init_basic before gen->read_arguments" << endl;
-	}
-	gen->read_arguments(argc, argv, verbose_level);
-	if (f_v) {
-		cout << "blt_set_classify::init_basic after gen->read_arguments" << endl;
-	}
 	
 
 	Blt_set_domain = NEW_OBJECT(blt_set_domain);
@@ -260,17 +248,12 @@ void blt_set_classify::init2(int verbose_level)
 		}
 
 
-	if (gen->f_max_depth) {
-		gen->depth = gen->max_depth;
-		}
-	else {
-		gen->depth = starter_size;
-		}
 	
 	if (f_v) {
 		cout << "blt_set_classify::init2 depth = " << gen->depth << endl;
 		}
 
+	Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A,
 			A->Strong_gens,
@@ -285,9 +268,15 @@ void blt_set_classify::init2(int verbose_level)
 				this /* void *data */,
 				verbose_level);
 
-	gen->init(Poset,
+	gen->init(Control, Poset,
 		gen->depth /* sz */, verbose_level);
 	
+	if (gen->Control->f_max_depth) {
+		gen->depth = gen->Control->max_depth;
+		}
+	else {
+		gen->depth = starter_size;
+		}
 
 
 

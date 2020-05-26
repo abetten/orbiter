@@ -61,7 +61,7 @@ void isomorph_arguments::freeself()
 	null();
 }
 
-void isomorph_arguments::read_arguments(int argc, const char **argv, 
+int isomorph_arguments::read_arguments(int argc, const char **argv,
 	int verbose_level)
 {
 	int i;
@@ -141,7 +141,17 @@ void isomorph_arguments::read_arguments(int argc, const char **argv,
 			prefix_iso = argv[++i];
 			cout << "-prefix_iso " << prefix_iso << endl;
 			}
+		else if (strcmp(argv[i], "-end") == 0) {
+			cout << "-end" << endl;
+			break;
+			}
+		else {
+			cout << "isomorph_arguments::read_arguments "
+					"unrecognized option " << argv[i] << endl;
 		}
+	} // next i
+	cout << "isomorph_arguments::read_arguments done" << endl;
+	return i + 1;
 }
 
 

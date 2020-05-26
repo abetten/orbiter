@@ -217,6 +217,11 @@ int projective_space_job_description::read_arguments(
 			i += Data->read_arguments(argc - i,
 				argv + i + 1, verbose_level) + 1;
 			cout << "projective_space_job_description::read_arguments finished reading -input" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
 			}
 		else if (strcmp(argv[i], "-fname_base_out") == 0) {
 			f_fname_base_out = TRUE;
@@ -403,6 +408,7 @@ int projective_space_job_description::read_arguments(
 					"unrecognized option " << argv[i] << endl;
 			exit(1);
 		}
+		cout << "projective_space_job_description::read_arguments looping, i=" << i << endl;
 	} // next i
 	cout << "projective_space_job_description::read_arguments done" << endl;
 	return i;
@@ -785,6 +791,20 @@ void projective_space_job_description::perform_job_for_one_set(
 		fp_tex << back_end_counter << ": ";
 		C.print_file_tex(fp_tex, TRUE);
 		fp_tex << "\\\\" << endl;
+
+		set_of_sets *SoS;
+		int *types;
+		int nb_types;
+		int i;
+
+		SoS = C.get_set_partition_and_types(
+				types, nb_types, verbose_level);
+		SoS->print_table();
+		for (i = 0; i < nb_types; i++) {
+			cout << i << " : " << types[i] << endl;
+		}
+		FREE_int(types);
+		FREE_OBJECT(SoS);
 	}
 	else if (f_plane_type) {
 		if (f_v) {

@@ -931,12 +931,13 @@ int sorting::vec_search(void **v,
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "vec_search len=" << len << endl;
-		}
+		cout << "sorting::vec_search len=" << len << endl;
+	}
+	idx = 0;
 	if (len == 0) {
 		idx = 0;
 		return FALSE;
-		}
+	}
 	l = 0;
 	r = len;
 	// invariant:
@@ -945,15 +946,15 @@ int sorting::vec_search(void **v,
 	// r - l is the length of the area to search in.
 	while (l < r) {
 		if (f_v) {
-			cout << "vec_search l=" << l << " r=" << r << endl;
-			}
+			cout << "sorting::vec_search l=" << l << " r=" << r << endl;
+		}
 		m = (l + r) >> 1;
 		// if the length of the search area is even
 		// we examine the element above the middle
 		res = (*compare_func)(a, v[m], data_for_compare);
 		if (f_v) {
-			cout << "m=" << m << " res=" << res << endl;
-			}
+			cout << "sorting::vec_search m=" << m << " res=" << res << endl;
+		}
 		//res = v[m] - a;
 		//cout << "search l=" << l << " m=" << m << " r=" 
 		//	<< r << "a=" << a << " v[m]=" << v[m] << " res=" << res << endl;
@@ -961,18 +962,22 @@ int sorting::vec_search(void **v,
 			l = m + 1;
 			if (res == 0) {
 				f_found = TRUE;
-				}
-			}
-		else {
-			r = m;
 			}
 		}
+		else {
+			r = m;
+		}
+	}
 	// now: l == r; 
 	// and f_found is set accordingly */
 	if (f_found) {
 		l--;
-		}
+	}
 	idx = l;
+	if (f_v) {
+		cout << "sorting::vec_search done, "
+				"f_found=" << f_found << " idx=" << idx << endl;
+	}
 	return f_found;
 }
 
@@ -2525,6 +2530,74 @@ finish:
 }
 
 
+void sorting::d_partition(double *v, int left, int right, int *middle)
+{
+	int l, r, m, len, m1, pivot;
+	double vv;
+
+	//cout << "partition: from " << left << " to " << right << endl;
+	// pivot strategy: take the element in the middle:
+	len = right + 1 - left;
+	m1 = len >> 1;
+	pivot = left;
+	if (m1) {
+		vv = v[pivot];
+		v[pivot] = v[left + m1];
+		v[left + m1] = vv;
+		}
+	l = left;
+	r = right;
+	while (l < r) {
+		while (TRUE) {
+			if (l > right)
+				break;
+			if (v[l] < v[pivot])
+				break;
+			l++;
+			}
+		while (TRUE) {
+			if (r < left)
+				break;
+			if (v[r] >= v[pivot])
+				break;
+			r--;
+			}
+		// now v[l] > v[pivot] and v[r] <= v[pivot]
+		if (l < r) {
+			vv = v[l];
+			v[l] = v[r];
+			v[r] = vv;
+			}
+		}
+	m = r;
+	if (left != m) {
+		vv = v[left];
+		v[left] = v[m];
+		v[m] = vv;
+		}
+	*middle = m;
+}
+
+void sorting::d_quicksort(double *v, int left, int right)
+{
+	int middle;
+
+	if (left < right) {
+		d_partition(v, left, right, &middle);
+		d_quicksort(v, left, middle - 1);
+		d_quicksort(v, middle + 1, right);
+		}
+}
+
+void sorting::d_quicksort_array(int len, double *v)
+{
+	if (len <= 1)
+		return;
+	d_quicksort(v, 0, len - 1);
+}
+
+
+
 
 //##############################################################################
 // global functions:
@@ -2813,6 +2886,7 @@ int int_vec_compare_stride(int *p, int *q, int len, int stride)
 		}
 	return 0;
 }
+
 
 
 

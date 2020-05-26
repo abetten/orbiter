@@ -72,12 +72,14 @@ void animate::animate_one_round(
 	numerics N;
 	int h, i, j;
 	int f_has_camera = FALSE;
-	const char *camera_sky = NULL;
-	const char *camera_location = NULL;
-	const char *camera_look_at = NULL;
+	double camera_sky[3];
+	double camera_location[3];
+	double camera_look_at[3];
 	int f_has_zoom = FALSE;
 	int zoom_start = 0;
 	int zoom_end = 0;
+	double zoom_clipping_start = 0.;
+	double zoom_clipping_end = 0.;
 	int f_has_zoom_sequence = FALSE;
 	double *zoom_sequence = NULL;
 	int zoom_sequence_length = 0;
@@ -86,7 +88,9 @@ void animate::animate_one_round(
 	int *zoom_sequence_len = NULL;
 	int zoom_sequence_l;
 	double angle;
+	double clipping_radius;
 	double zoom_increment;
+	double zoom_clipping_increment;
 	int nb_frames_this_round;
 	int f_has_pan = FALSE;
 	int pan_f_reverse = FALSE;
@@ -113,9 +117,11 @@ void animate::animate_one_round(
 	for (i = 0; i < Opt->nb_camera; i++) {
 		if (Opt->camera_round[i] == round) {
 			f_has_camera = TRUE;
-			camera_sky = Opt->camera_sky[i];
-			camera_location = Opt->camera_location[i];
-			camera_look_at = Opt->camera_look_at[i];
+			for (j = 0; j < 3; j++) {
+				camera_sky[j] = Opt->camera_sky[i * 3 + j];
+				camera_location[j] = Opt->camera_location[i * 3 + j];
+				camera_look_at[j] = Opt->camera_look_at[i * 3 + j];
+			}
 			}
 		}
 	for (i = 0; i < Opt->cnt_nb_frames; i++) {
@@ -128,7 +134,11 @@ void animate::animate_one_round(
 			f_has_zoom = TRUE;
 			zoom_start = Opt->zoom_start[i];
 			zoom_end = Opt->zoom_end[i];
+			zoom_clipping_start = Opt->zoom_clipping_start[i];
+			zoom_clipping_end = Opt->zoom_clipping_end[i];
 			zoom_increment = (double)(zoom_end - zoom_start) /
+					(double) nb_frames_this_round;
+			zoom_clipping_increment = (double)(zoom_clipping_end - zoom_clipping_start) /
 					(double) nb_frames_this_round;
 			}
 		}
@@ -311,8 +321,22 @@ void animate::animate_one_round(
 		{
 		ofstream fp(fname_pov);
 
+
+		if (Opt->f_clipping_radius) {
+			clipping_radius = Opt->clipping_radius;
+		}
+		else {
+			clipping_radius = 2.7; // default
+		}
+		for (i = 0; i < Opt->nb_clipping; i++) {
+			if (Opt->clipping_round[i] == round) {
+				clipping_radius = Opt->clipping_value[i];
+				}
+			}
+
 		if (f_has_zoom) {
 			angle = ((double)zoom_start + (double) h * zoom_increment);
+			clipping_radius = zoom_clipping_start + (double) h * zoom_clipping_increment;
 		}
 		else {
 			if (f_has_zoom_sequence) {
@@ -351,9 +375,9 @@ void animate::animate_one_round(
 			double location[3];
 			double direction_of_view[3];
 			double beta;
-			char sky_string[1000];
-			char location_string[1000];
-			char look_at_string[1000];
+			//char sky_string[1000];
+			//char location_string[1000];
+			//char look_at_string[1000];
 
 			if (pan_f_reverse) {
 				beta = pan_alpha - pan_delta *
@@ -382,9 +406,9 @@ void animate::animate_one_round(
 					1., pan_center,
 					location, 3);
 
-			sprintf(location_string, "<%lf,%lf,%lf>",
-					location[0], location[1], location[2]);
-			cout << "location_string=" << location_string << endl;
+			//sprintf(location_string, "<%lf,%lf,%lf>",
+			//		location[0], location[1], location[2]);
+			//cout << "location_string=" << location_string << endl;
 
 
 
@@ -394,20 +418,23 @@ void animate::animate_one_round(
 					direction_of_view, 3);
 
 			N.cross_product(direction_of_view, pan_normal_uv, sky);
-			sprintf(sky_string, "<%lf,%lf,%lf>",
-					sky[0], sky[1], sky[2]);
-			cout << "sky_string=" << sky_string << endl;
+			//sprintf(sky_string, "<%lf,%lf,%lf>",
+			//		sky[0], sky[1], sky[2]);
+			//cout << "sky_string=" << sky_string << endl;
 
-			sprintf(look_at_string, "<%lf,%lf,%lf>",
-					pan_center[0], pan_center[1], pan_center[2]);
-			cout << "look_at_string=" << look_at_string << endl;
+			//sprintf(look_at_string, "<%lf,%lf,%lf>",
+			//		pan_center[0], pan_center[1], pan_center[2]);
+			//cout << "look_at_string=" << look_at_string << endl;
 
 
 			Pov->beginning(fp,
 					angle,
-					sky_string,
-					location_string,
-					look_at_string,
+					sky,
+					location,
+					pan_center /* look_at*/,
+					//sky_string,
+					//location_string,
+					//look_at_string,
 					f_with_background);
 
 		} else {
@@ -435,6 +462,7 @@ void animate::animate_one_round(
 		}
 		(*draw_frame_callback)(this, h /* frame */,
 							nb_frames_this_round, round,
+							clipping_radius,
 							fp,
 							verbose_level);
 
@@ -794,8 +822,53 @@ void animate::draw_Hilbert_tetrahedron_faces(ostream &fp)
 
 void animate::draw_frame_Hilbert(
 	int h, int nb_frames, int round,
+	double clipping_radius,
 	ostream &fp,
 	int verbose_level)
+// round 0: cube + faces
+// round 1: cube + faces + extended edges + red lines + blue lines
+// round 2: red lines + blue lines + surface
+// round 3: three blue lines
+// round 4: three blue lines + quadric
+// round 5: four blue lines + 1 red line + quadric
+// round 6: four blue lines + 2 red lines + quadric
+// round 7: four blue lines + 2 red lines
+// round 8: double six (6 red + 6 blue)
+// round 9, 11, 12: surface
+// round 10: nothing
+// round 13: cube + tetrahedron
+// round 14: cube + tetrahedron + extended edges
+// round 15: cube + tetrahedron + extended edges + double six
+// round 16: 5 blue lines + 1 red (5 + 1)
+// round 17: red + blue + tetrahedron
+// round 18: red + blue + surface + tritangent plane + 3 yellow lines in it
+// round 19: surface + plane
+// round 20: cube + some red lines appearing
+// round 21: cube + some blue lines appearing
+// round 23: red + blue + surface + tritangent plane + 3 yellow lines in it + point appearing
+// round 24: all yellow lines (not at infinity)
+// round 25: red lines + blue lines + all yellow lines (not at infinity)
+// round 26: red lines + blue lines + all yellow lines (not at infinity) + surface
+// round 27, 28, 30, 31: empty
+// round 29: cube + 1 red line + 1 blue line
+// round 32: tritangent plane + 6 arc points
+// round 33-38, 40: nothing
+// round 39: surface 1 (transformed HCV)
+// round 41,42: Cayley's nodal surface + 6 lines
+// round 43: Clebsch surface
+// round 44: Clebsch surface with lines
+// round 45: Fermat surface
+// round 46: Fermat surface with lines
+// round 48-55: Cayley's ruled surface
+// round 72: all tritangent planes one-by-one
+// round 73: all red lines, 2 blue lines, surface, tritangent plane + 3 yellow lines, 6 arc points
+// round 74: surface, tritangent plane + 3 yellow lines
+// round 75: all red, 2 blue lines, tritangent plane + 3 yellow lines, 6 arc points (no surface)
+// round 76: tritangent plane, 6 point, 2 blue lines, 6 red lines
+// round 77: all red, 2 blue lines, tritangent plane + 3 yellow lines, 6 arc points, with surface
+// round 78: all red, 2 blue lines, tritangent plane + 3 yellow lines, 6 arc points, with surface, trying to plot points under the Clebsch map
+// round 79: like round 76
+// round 80: tarun
 {
 	int i;
 	//povray_interface Pov;
@@ -803,19 +876,9 @@ void animate::draw_frame_Hilbert(
 
 	cout << "draw_frame_Hilbert round=" << round << endl;
 
-	double my_clipping_radius;
-	double scale_factor;
-
-	my_clipping_radius = Opt->clipping_radius;
-	scale_factor = Opt->scale_factor;
+	double scale_factor = Opt->scale_factor;
 
 	Pov->union_start(fp);
-
-	for (i = 0; i < Opt->nb_clipping; i++) {
-		if (Opt->clipping_round[i] == round) {
-			my_clipping_radius = Opt->clipping_value[i];
-			}
-		}
 
 
 	if (round == 0) {
@@ -1617,10 +1680,10 @@ void animate::draw_frame_Hilbert(
 		//draw_Hilbert_cube_faces(S,fp);
 
 		Pov->rotate_111(h, nb_frames, fp);
-		Pov->union_end(fp, scale_factor, my_clipping_radius);
+		Pov->union_end(fp, scale_factor, clipping_radius);
 		Pov->union_start(fp);
 
-		my_clipping_radius = 5 * my_clipping_radius;
+		//my_clipping_radius = 5 * my_clipping_radius;
 
 
 #if 0
@@ -1666,10 +1729,10 @@ void animate::draw_frame_Hilbert(
 		//draw_Hilbert_cube_faces(S,fp);
 
 		Pov->rotate_111(h, nb_frames, fp);
-		Pov->union_end(fp, scale_factor, my_clipping_radius);
+		Pov->union_end(fp, scale_factor, clipping_radius);
 		Pov->union_start(fp);
 
-		my_clipping_radius = 5 * my_clipping_radius;
+		//my_clipping_radius = 5 * my_clipping_radius;
 
 #if 0
 		// ToDo
@@ -1921,14 +1984,18 @@ void animate::draw_frame_Hilbert(
 
 	}
 
+	rotation(h, nb_frames, round, fp);
 
-	Pov->rotate_111(h, nb_frames, fp);
-	Pov->union_end(fp, scale_factor, my_clipping_radius);
+	union_end(
+			h, nb_frames, round,
+			clipping_radius,
+			fp);
 
 	cout << "animate::draw_frame_Hilbert done" << endl;
 
 
 }
+
 
 void animate::draw_surface_13_1(ostream &fp)
 {
@@ -2190,6 +2257,7 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 		int h, int nb_frames, int round,
 		ostream &fp,
 		int verbose_level)
+// tritangent plane, 6 point, 2 blue lines, 6 red lines, text
 {
 	int i;
 
@@ -2220,7 +2288,7 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 	double extra_spacing = 0;
 	const char *color_options = "pigment { Black } ";
 	//const char *color_options = "pigment { BrightGold } finish { reflection .25 specular 1 }";
-	double up_x = 1.,up_y = 1., up_z = 1.;
+	//double up_x = 1.,up_y = 1., up_z = 1.;
 	double view[3];
 
 	double location[3] = {-3,1,3};
@@ -2244,76 +2312,65 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 	double off_z = -0.1;
 
 	idx = 36;
-	S->draw_text("1", thickness_half, extra_spacing,
+	draw_text("1", thickness_half, extra_spacing,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
-		S->Point_coords[idx * 3 + 0],
-		S->Point_coords[idx * 3 + 1],
-		S->Point_coords[idx * 3 + 2],
-		up_x, up_y, up_z,
-		view[0], view[1], view[2],
+		idx,
+		//up_x, up_y, up_z,
+		//view[0], view[1], view[2],
 		fp, verbose_level - 1);
 	idx = 31;
-	S->draw_text("2", thickness_half, extra_spacing,
+	draw_text("2", thickness_half, extra_spacing,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
-		S->Point_coords[idx * 3 + 0],
-		S->Point_coords[idx * 3 + 1],
-		S->Point_coords[idx * 3 + 2],
-		up_x, up_y, up_z,
-		view[0], view[1], view[2],
+		idx,
+		//up_x, up_y, up_z,
+		//view[0], view[1], view[2],
 		fp, verbose_level - 1);
 	idx = 32;
-	S->draw_text("3", thickness_half, extra_spacing,
+	draw_text("3", thickness_half, extra_spacing,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
-		S->Point_coords[idx * 3 + 0],
-		S->Point_coords[idx * 3 + 1],
-		S->Point_coords[idx * 3 + 2],
-		up_x, up_y, up_z,
-		view[0], view[1], view[2],
+		idx,
+		//up_x, up_y, up_z,
+		//view[0], view[1], view[2],
 		fp, verbose_level - 1);
 	idx = 33;
-	S->draw_text("4", thickness_half, extra_spacing,
+	draw_text("4", thickness_half, extra_spacing,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
-		S->Point_coords[idx * 3 + 0],
-		S->Point_coords[idx * 3 + 1],
-		S->Point_coords[idx * 3 + 2],
-		up_x, up_y, up_z,
-		view[0], view[1], view[2],
+		idx,
+		//up_x, up_y, up_z,
+		//view[0], view[1], view[2],
 		fp, verbose_level - 1);
 	idx = 34;
-	S->draw_text("5", thickness_half, extra_spacing,
+	draw_text("5", thickness_half, extra_spacing,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
-		S->Point_coords[idx * 3 + 0],
-		S->Point_coords[idx * 3 + 1],
-		S->Point_coords[idx * 3 + 2],
-		up_x, up_y, up_z,
-		view[0], view[1], view[2],
+		idx,
+		//up_x, up_y, up_z,
+		//view[0], view[1], view[2],
 		fp, verbose_level - 1);
 	idx = 37;
-	S->draw_text("6", thickness_half, extra_spacing,
+	draw_text("6", thickness_half, extra_spacing,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
-		S->Point_coords[idx * 3 + 0],
-		S->Point_coords[idx * 3 + 1],
-		S->Point_coords[idx * 3 + 2],
-		up_x, up_y, up_z,
-		view[0], view[1], view[2],
+		idx,
+		//up_x, up_y, up_z,
+		//view[0], view[1], view[2],
 		fp, verbose_level - 1);
 }
 
 
 void animate::draw_frame_HCV_surface(
 	int h, int nb_frames, int round,
+	double clipping_radius,
 	ostream &fp,
 	int verbose_level)
 {
@@ -2323,19 +2380,12 @@ void animate::draw_frame_HCV_surface(
 
 	cout << "animate::draw_frame_HCV_surface" << endl;
 
-	double my_clipping_radius;
 	double scale_factor;
 
-	my_clipping_radius = Opt->clipping_radius;
 	scale_factor = Opt->scale_factor;
 
 	Pov->union_start(fp);
 
-	for (i = 0; i < Opt->nb_clipping; i++) {
-		if (Opt->clipping_round[i] == round) {
-			my_clipping_radius = Opt->clipping_value[i];
-			}
-		}
 
 
 	if (round == 0) {
@@ -2467,7 +2517,7 @@ void animate::draw_frame_HCV_surface(
 	}
 	else if (round == 8) {
 
-		// only the yellow lines:
+		// yellow lines only:
 
 		int selection[27];
 		int nb_select;
@@ -2502,33 +2552,24 @@ void animate::draw_frame_HCV_surface(
 
 	}
 
-	Pov->rotate_111(h, nb_frames, fp);
-	Pov->union_end(fp, scale_factor, my_clipping_radius);
+	rotation(h, nb_frames, round, fp);
+	Pov->union_end(fp, scale_factor, clipping_radius);
 
 }
 
 void animate::draw_frame_E4_surface(
 	int h, int nb_frames, int round,
+	double clipping_radius,
 	ostream &fp,
 	int verbose_level)
 {
-	int i;
-
 	cout << "animate::draw_frame_E4_surface" << endl;
 
-	double my_clipping_radius;
 	double scale_factor;
 
-	my_clipping_radius = Opt->clipping_radius;
 	scale_factor = Opt->scale_factor;
 
 	Pov->union_start(fp);
-
-	for (i = 0; i < Opt->nb_clipping; i++) {
-		if (Opt->clipping_round[i] == round) {
-			my_clipping_radius = Opt->clipping_value[i];
-			}
-		}
 
 
 	if (round == 0) {
@@ -2552,34 +2593,26 @@ void animate::draw_frame_E4_surface(
 
 	}
 
-	Pov->rotate_111(h, nb_frames, fp);
-	Pov->union_end(fp, scale_factor, my_clipping_radius);
+	rotation(h, nb_frames, round, fp);
+	union_end(
+			h, nb_frames, round,
+			clipping_radius,
+			fp);
 
 }
 
 void animate::draw_frame_triangulation_of_cube(
 	int h, int nb_frames, int round,
+	double clipping_radius,
 	ostream &fp,
 	int verbose_level)
 {
-	int i;
-
-
-
-	double my_clipping_radius;
 	double scale_factor;
 
-	my_clipping_radius = Opt->clipping_radius;
 	scale_factor = Opt->scale_factor;
 
 
 	Pov->union_start(fp);
-
-	for (i = 0; i < Opt->nb_clipping; i++) {
-		if (Opt->clipping_round[i] == round) {
-			my_clipping_radius = Opt->clipping_value[i];
-			}
-		}
 
 
 	if (round == 0) {
@@ -2613,13 +2646,17 @@ void animate::draw_frame_triangulation_of_cube(
 
 	}
 
-	Pov->rotate_111(h, nb_frames, fp);
-	Pov->union_end(fp, scale_factor, my_clipping_radius);
+	rotation(h, nb_frames, round, fp);
+	union_end(
+			h, nb_frames, round,
+			clipping_radius,
+			fp);
 
 }
 
 void animate::draw_frame_twisted_cubic(
 	int h, int nb_frames, int round,
+	double clipping_radius,
 	ostream &fp,
 	int verbose_level)
 {
@@ -2697,13 +2734,18 @@ void animate::draw_frame_twisted_cubic(
 
 	}
 
-	Pov->rotate_111(h, nb_frames, fp);
-	Pov->union_end(fp, scale_factor, my_clipping_radius);
+	rotation(h, nb_frames, round, fp);
+	union_end(
+			h, nb_frames, round,
+			clipping_radius,
+			fp);
+
 
 }
 
 void animate::draw_frame_five_plus_one(
 	int h, int nb_frames, int round,
+	double clipping_radius,
 	ostream &fp,
 	int verbose_level)
 {
@@ -2757,6 +2799,11 @@ void animate::draw_frame_five_plus_one(
 	}
 
 
+	rotation(h, nb_frames, round, fp);
+	union_end(
+			h, nb_frames, round,
+			clipping_radius,
+			fp);
 
 
 }
@@ -2764,6 +2811,7 @@ void animate::draw_frame_five_plus_one(
 
 void animate::draw_frame_windy(
 	int h, int nb_frames, int round,
+	double clipping_radius,
 	ostream &fp,
 	int verbose_level)
 {
@@ -2801,7 +2849,11 @@ void animate::draw_frame_windy(
 
 	// let varphi be the dual coordinates of the bottom plane
 	// (which is plane 2)
-	N.vec_copy(S->Plane_coords + 2 * 4, varphi, 4);
+	varphi[0] = S->plane_coords(2, 0);
+	varphi[1] = S->plane_coords(2, 1);
+	varphi[2] = S->plane_coords(2, 2);
+	varphi[3] = S->plane_coords(2, 3);
+	//N.vec_copy(S->Plane_coords + 2 * 4, varphi, 4);
 
 	// change from povray coordinates to homogeneous coordinates in PG(3,q):
 	varphi[3] *= -1.;
@@ -2871,7 +2923,255 @@ void animate::draw_frame_windy(
 	}
 	delete S1;
 
+	rotation(h, nb_frames, round, fp);
+	union_end(
+			h, nb_frames, round,
+			clipping_radius,
+			fp);
 
+}
+
+void animate::rotation(
+		int h, int nb_frames, int round,
+		ostream &fp)
+{
+	if (Opt->f_rotate) {
+		if (Opt->rotation_axis_type == 1) {
+			Pov->rotate_111(h, nb_frames, fp);
+		}
+		else if (Opt->rotation_axis_type == 2) {
+			Pov->rotate_around_z_axis(h, nb_frames, fp);
+		}
+		else if (Opt->rotation_axis_type == 2) {
+
+			double angle_zero_one = 1. - (h * 1. / (double) nb_frames);
+				// rotate in the opposite direction
+
+			double v[3];
+
+			v[0]= Opt->rotation_axis_custom[0];
+			v[1]= Opt->rotation_axis_custom[1];
+			v[2]= Opt->rotation_axis_custom[2];
+
+			Pov->animation_rotate_around_origin_and_given_vector_by_a_given_angle(
+				v, angle_zero_one, fp);
+		}
+
+	}
+
+
+}
+
+
+void animate::union_end(
+		int h, int nb_frames, int round,
+		double clipping_radius,
+		ostream &fp)
+{
+	double scale;
+
+	if (Opt->f_has_global_picture_scale) {
+
+		scale = Opt->global_picture_scale;
+	}
+	else {
+		scale = 1.0;
+	}
+
+	if (Opt->boundary_type == 1) {
+		Pov->union_end(fp, scale, clipping_radius);
+	}
+	else if (Opt->boundary_type == 2) {
+		Pov->union_end_box_clipping(fp, scale,
+				clipping_radius, clipping_radius, clipping_radius);
+	}
+	else if (Opt->boundary_type == 3) {
+		Pov->union_end_no_clipping(fp, scale);
+	}
+	else {
+		cout << "animate::union_end boundary_type unrecognized" << endl;
+	}
+}
+
+
+void animate::draw_text(const char *text,
+		double thickness_half, double extra_spacing,
+		double scale,
+		double off_x, double off_y, double off_z,
+		const char *color_options,
+		int idx_point,
+		//double x, double y, double z,
+		//double up_x, double up_y, double up_z,
+		//double view_x, double view_y, double view_z,
+		ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	double P1[3];
+	double P2[3];
+	double P3[3];
+	double abc3[3];
+	double angles3[3];
+	double T3[3];
+	double u[3];
+	double view[3];
+	double up[3];
+	double x, y, z;
+
+
+	numerics N;
+	int i;
+
+	if (f_v) {
+		cout << "animate::draw_text" << endl;
+		}
+
+	x = S->point_coords(idx_point, 0);
+	y = S->point_coords(idx_point, 1);
+	z = S->point_coords(idx_point, 2);
+
+	if (f_v) {
+		cout << "x,y,z=" << x << ", " << y << " , " << z << endl;
+		}
+
+	for (i = 0; i < 3; i++) {
+		view[i] = Pov->look_at[i] - Pov->location[i];
+		}
+	for (i = 0; i < 3; i++) {
+		up[i] = Pov->sky[i];
+		}
+
+
+	if (f_v) {
+		cout << "view_x,view_y,view_z=" << view[0] << ", "
+				<< view[1] << " , " << view[2] << endl;
+		}
+	if (f_v) {
+		cout << "up_x,up_y,up_z=" << up[0] << ", " << up[1]
+				<< " , " << up[2] << endl;
+		}
+	u[0] = view[1] * up[2] - view[2] * up[1];
+	u[1] = -1 *(view[0] * up[2] - up[0] * view[2]);
+	u[2] = view[0] * up[1] - up[0] * view[1];
+	if (f_v) {
+		cout << "u=" << u[0] << ", " << u[1] << " , " << u[2] << endl;
+		}
+	P1[0] = x;
+	P1[1] = y;
+	P1[2] = z;
+	P2[0] = x + u[0];
+	P2[1] = y + u[1];
+	P2[2] = z + u[2];
+	P3[0] = x + up[0];
+	P3[1] = y + up[1];
+	P3[2] = z + up[2];
+
+	N.triangular_prism(P1, P2, P3,
+		abc3, angles3, T3,
+		verbose_level);
+	double offset[3];
+	//double up[3];
+	//double view[3];
+#if 0
+	up[0] = up_x;
+	up[1] = up_y;
+	up[2] = up_z;
+	view[0] = view_x;
+	view[1] = view_y;
+	view[2] = view_z;
+#endif
+	N.make_unit_vector(u, 3);
+	N.make_unit_vector(up, 3);
+	N.make_unit_vector(view, 3);
+	if (f_v) {
+		cout << "up normalized: ";
+		N.vec_print(up, 3);
+		cout << endl;
+		cout << "u normalized: ";
+		N.vec_print(u, 3);
+		cout << endl;
+		cout << "view normalized: ";
+		N.vec_print(view, 3);
+		cout << endl;
+		}
+
+	offset[0] = off_x * u[0] + off_y * up[0] + off_z * view[0];
+	offset[1] = off_x * u[1] + off_y * up[1] + off_z * view[1];
+	offset[2] = off_x * u[2] + off_y * up[2] + off_z * view[2];
+
+	if (f_v) {
+		cout << "offset: ";
+		N.vec_print(offset, 3);
+		cout << endl;
+		}
+
+	ost << "\ttext {" << endl;
+		ost << "\t\tttf \"timrom.ttf\", \"" << text << "\", "
+				<< thickness_half << ", " << extra_spacing << " ";
+		ost << color_options << endl;
+		ost << "\t\tscale " << scale << endl;
+		ost << "\t\trotate<0,180,0>" << endl;
+		ost << "\t\trotate<90,0,0>" << endl;
+		ost << "\t\trotate<";
+		N.output_double(N.rad2deg(angles3[0]), ost);
+		ost << ",0,0>" << endl;
+		ost << "\t\trotate<0, ";
+		N.output_double(N.rad2deg(angles3[1]), ost);
+		ost << ",0>" << endl;
+		ost << "\t\trotate<0,0, ";
+		N.output_double(N.rad2deg(angles3[2]), ost);
+		ost << ">" << endl;
+		ost << "\t\ttranslate<";
+		N.output_double(T3[0] + offset[0], ost);
+		ost << ", ";
+		N.output_double(T3[1] + offset[1], ost);
+		ost << ", ";
+		N.output_double(T3[2] + offset[2], ost);
+		ost << ">" << endl;
+	ost << "\t}" << endl;
+		//pigment { BrightGold }
+		//finish { reflection .25 specular 1 }
+		//translate <0,0,0>
+	if (f_v) {
+		cout << "animate::draw_text done" << endl;
+		}
+}
+
+void animate::draw_text_with_selection(int *selection, int nb_select,
+	double thickness_half, double extra_spacing,
+	double scale,
+	double off_x, double off_y, double off_z,
+	const char *options, const char *group_options,
+	ostream &ost, int verbose_level)
+{
+	int i, s;
+	numerics N;
+
+	ost << endl;
+	//ost << "	union{ // labels" << endl;
+	//ost << endl;
+	//ost << "	        #declare r=" << line_radius << "; " << endl;
+	ost << endl;
+	for (i = 0; i < nb_select; i++) {
+		s = selection[i];
+
+		int idx_point;
+		string text;
+
+		idx_point = S->Labels[s].first;
+		text = S->Labels[s].second;
+
+
+		draw_text(text.c_str(),
+				thickness_half, extra_spacing,
+				scale,
+				off_x, off_y, off_z,
+				options,
+				idx_point,
+				ost, verbose_level);
+		}
+	ost << endl;
+	//ost << "		" << group_options << "" << endl;
+	//ost << "	}" << endl;
 }
 
 

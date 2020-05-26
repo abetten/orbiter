@@ -42,10 +42,11 @@ void six_arcs_not_on_a_conic::freeself()
 	null();
 }
 
-void six_arcs_not_on_a_conic::init(finite_field *F,
+void six_arcs_not_on_a_conic::init(
+	group_theoretic_activity *GTA,
+	finite_field *F,
 	action *A,
 	projective_space *P2,
-	int argc, const char **argv, 
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -53,7 +54,7 @@ void six_arcs_not_on_a_conic::init(finite_field *F,
 
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::init" << endl;
-		}
+	}
 
 	six_arcs_not_on_a_conic::F = F;
 	six_arcs_not_on_a_conic::P2 = P2;
@@ -65,9 +66,11 @@ void six_arcs_not_on_a_conic::init(finite_field *F,
 
 	//Gen->f_poly = FALSE;
 
+	Gen->f_d = TRUE;
 	Gen->d = 2; // we will classify two-arcs
 
 
+#if 0
 	Gen->ECA = NEW_OBJECT(exact_cover_arguments);
 	Gen->IA = NEW_OBJECT(isomorph_arguments);
 
@@ -76,22 +79,27 @@ void six_arcs_not_on_a_conic::init(finite_field *F,
 
 	Gen->ECA->f_has_base_fname = TRUE;
 	Gen->ECA->base_fname = base_fname;
+#endif
 	
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::init "
 				"before Gen->init" << endl;
-		}
-	Gen->init(F, 
+	}
+
+
+	Gen->init(
+			GTA,
+			F,
 		A, A->Strong_gens,
 		"" /* Gen->ECA->input_prefix */, 
 		"" /* Gen->ECA->base_fname */,
 		6 /* Gen->ECA->starter_size */, 
-		argc, argv, 
+		//argc, argv,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::init "
 				"after Gen->init" << endl;
-		}
+	}
 
 
 
@@ -102,7 +110,7 @@ void six_arcs_not_on_a_conic::init(finite_field *F,
 		cout << "six_arcs_not_on_a_conic::init "
 				"Classifying 6-arcs for q=" << F->q << endl;
 		cout << "six_arcs_not_on_a_conic::init before Gen->compute_starter" << endl;
-		}
+	}
 	
 	Gen->compute_starter(verbose_level - 1);
 
@@ -113,7 +121,7 @@ void six_arcs_not_on_a_conic::init(finite_field *F,
 		cout << "six_arcs_not_on_a_conic::init "
 				"We found " << nb_orbits << " isomorphism types "
 				"of 6-arcs" << endl;
-		}
+	}
 
 
 	
@@ -128,7 +136,7 @@ void six_arcs_not_on_a_conic::init(finite_field *F,
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::init "
 				"testing the arcs" << endl;
-		}
+	}
 
 	for (h = 0; h < nb_orbits; h++) {
 
@@ -158,31 +166,31 @@ void six_arcs_not_on_a_conic::init(finite_field *F,
 		if (f_v) {
 			cout << "The arc intersects " << len1
 					<< " conics in 6 or more points. " << endl;
-			}
+		}
 
 		if (len1 == 0) {
 			Not_on_conic_idx[nb_arcs_not_on_conic++] = h;
-			}
+		}
 
 		for (j = 0; j < len1; j++) {
 			FREE_lint(Pts_on_conic[j]);
-			}
+		}
 		FREE_plint(Pts_on_conic);
 		FREE_int(nb_pts_on_conic);
-		}
+	}
 
 	if (f_v) {
 		cout << "We found " << nb_arcs_not_on_conic << " isomorphism types "
 				"of 6-arcs not on a conic, out of a total of "
 				<< nb_orbits << " isomorphism types of arcs" << endl;
-		}
+	}
 	
 
 
 
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::done" << endl;
-		}
+	}
 
 }
 

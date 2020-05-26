@@ -33,7 +33,6 @@ packing_was::packing_was()
 	//select_spread[1000];
 	select_spread_nb = 0;
 	f_spreads_invariant_under_H = FALSE;
-
 	f_cliques_on_fixpoint_graph = FALSE;
 	clique_size_on_fixpoint_graph = 0;
 	f_process_long_orbits = FALSE;
@@ -51,6 +50,8 @@ packing_was::packing_was()
 	spread_tables_prefix = "";
 	f_output_path = FALSE;
 	output_path = "";
+
+
 
 	ECA = new exact_cover_arguments;
 	IA = new isomorph_arguments;
@@ -70,8 +71,9 @@ packing_was::packing_was()
 
 
 	H_gens = NULL;
-	//longinteger_object H_go;
 	H_goi = 0;
+
+
 	A = NULL;
 	f_semilinear = FALSE;
 	M = NULL;
@@ -81,8 +83,6 @@ packing_was::packing_was()
 	// N_go;
 	N_goi = 0;
 
-
-	Spread_type = NULL;
 
 	//char prefix_line_orbits[1000];
 	Line_orbits_under_H = NULL;
@@ -115,6 +115,7 @@ packing_was::packing_was()
 
 	clique_size = 0;
 	fixpoint_graph = NULL;
+	Control = NULL;
 	Poset_fixpoint_cliques = NULL;
 	fixpoint_clique_gen = NULL;
 	Cliques = NULL;
@@ -483,18 +484,32 @@ void packing_was::init(int argc, const char **argv)
 
 	T = NEW_OBJECT(spread_classify);
 
-	T->read_arguments(argc, argv);
+	//T->read_arguments(argc, argv);
 
-	int max_depth = order + 1;
+	//int max_depth = order + 1;
 
 	if (f_v) {
 		cout << "packing_was::init before T->init" << endl;
 	}
+	//int max_depth = order + 1;
+	poset_classification_control *Control;
+	linear_group *LG;
+
+	Control = NEW_OBJECT(poset_classification_control);
+	LG = NEW_OBJECT(linear_group); // hack !!! ToDo
+
+	T->init(F, LG, k, Control,
+		//Fq, f_recoordinatize,
+		//"SPREADS_STARTER", "Spreads", order + 1,
+		//argc, argv,
+		MINIMUM(verbose_level - 1, 2));
+#if 0
 	T->init(order, n, k, max_depth,
 		F, f_recoordinatize,
 		"TP_STARTER", "TP", order + 1,
 		argc, argv,
 		MINIMUM(verbose_level - 1, 2));
+#endif
 	if (f_v) {
 		cout << "packing_was::init after T->init" << endl;
 	}
@@ -502,7 +517,11 @@ void packing_was::init(int argc, const char **argv)
 	if (f_v) {
 		cout << "packing_was::init before T->init2" << endl;
 	}
-	T->init2(verbose_level);
+	//poset_classification_control *Control;
+
+	//Control = NEW_OBJECT(poset_classification_control);
+
+	//T->init2(Control, verbose_level);
 	if (f_v) {
 		cout << "packing_was::init after T->init2" << endl;
 	}
@@ -1356,12 +1375,17 @@ void packing_was::compute_cliques_on_fixpoint_graph(
 					this /* void *data */,
 					verbose_level);
 
+		Control = NEW_OBJECT(poset_classification_control);
 		fixpoint_clique_gen = NEW_OBJECT(poset_classification);
+
+		Control->f_W = TRUE;
+		Control->f_w = TRUE;
 
 		fixpoint_clique_gen->compute_orbits_on_subsets(
 				clique_size /* int target_depth */,
 				my_prefix /* const char *prefix */,
-				TRUE /* f_W */, TRUE /* f_w */,
+				//TRUE /* f_W */, TRUE /* f_w */,
+				Control,
 				Poset_fixpoint_cliques,
 				verbose_level);
 
