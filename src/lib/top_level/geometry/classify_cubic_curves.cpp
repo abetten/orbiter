@@ -70,10 +70,11 @@ void classify_cubic_curves::freeself()
 	null();
 }
 
-void classify_cubic_curves::init(cubic_curve_with_action *CCA,
+void classify_cubic_curves::init(
+		group_theoretic_activity *GTA,
+		cubic_curve_with_action *CCA,
 		const char *starter_directory_name,
 		const char *base_fname,
-		int argc, const char **argv,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -94,16 +95,15 @@ void classify_cubic_curves::init(cubic_curve_with_action *CCA,
 		cout << "classify_cubic_curves::init before Arc_gen->init" << endl;
 		}
 
-	Arc_gen->read_arguments(argc, argv);
+	//Arc_gen->read_arguments(argc, argv);
 
-
-
-	Arc_gen->init(F,
+	Arc_gen->init(GTA,
+			F,
 			A, A->Strong_gens,
 			starter_directory_name,
 			base_fname,
 			9 /* starter_size */,
-			argc, argv,
+			//argc, argv,
 			verbose_level);
 
 

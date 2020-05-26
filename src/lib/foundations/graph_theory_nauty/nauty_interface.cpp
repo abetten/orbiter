@@ -21,6 +21,15 @@ using namespace std;
 
 
 
+#include "nauty.h"
+#include "foundations.h"
+
+
+
+namespace orbiter {
+namespace foundations {
+
+
 #define HAS_NAUTY 1
 
 
@@ -34,13 +43,8 @@ using namespace std;
 
 #define MAXN 22000
 
-#include "nauty.h"
-
 #define MAX_WORKSPACE 50000
 
-
-namespace orbiter {
-namespace foundations {
 
 static graph g[MAXN * MAXM];
 static graph canong[MAXN * MAXM];
@@ -63,7 +67,7 @@ static void nauty_interface_free_data();
 typedef unsigned char uchar;
 
 
-void nauty_interface_graph_bitvec(int v, uchar *bitvector_adjacency, 
+void nauty_interface::nauty_interface_graph_bitvec(int v, unsigned char *bitvector_adjacency,
 	int *labeling, int *partition, 
 	int *Aut, int &Aut_counter, 
 	int *Base, int &Base_length, 
@@ -163,7 +167,7 @@ void nauty_interface_graph_bitvec(int v, uchar *bitvector_adjacency,
 #endif
 }
 
-void nauty_interface_graph_int(int v, int *Adj, 
+void nauty_interface::nauty_interface_graph_int(int v, int *Adj,
 	int *labeling, int *partition, 
 	int *Aut, int &Aut_counter, 
 	int *Base, int &Base_length, 
@@ -253,7 +257,7 @@ void nauty_interface_graph_int(int v, int *Adj,
 }
 
 
-void nauty_interface_int(int v, int b, int *X, int nb_inc, 
+void nauty_interface::nauty_interface_int(int v, int b, int *X, int nb_inc,
 	int *labeling, int *partition, 
 	int *Aut, int &Aut_counter, 
 	int *Base, int &Base_length, 
@@ -346,7 +350,7 @@ void nauty_interface_int(int v, int b, int *X, int nb_inc,
 #endif
 }
 
-void nauty_interface_low_level(int v, int b, int *X, int nb_inc,
+void nauty_interface::nauty_interface_low_level(int v, int b, int *X, int nb_inc,
 	int *labeling, int *partition, 
 	int *Aut, int &Aut_counter, 
 	int *Base, int &Base_length, 
@@ -440,7 +444,7 @@ void nauty_interface_low_level(int v, int b, int *X, int nb_inc,
 #endif
 }
 
-void nauty_interface_matrix(int *M, int v, int b,
+void nauty_interface::nauty_interface_matrix(int *M, int v, int b,
 	int *labeling, int *partition, 
 	int *Aut, int &Aut_counter, 
 	int *Base, int &Base_length, 
@@ -523,7 +527,7 @@ void nauty_interface_matrix(int *M, int v, int b,
 #endif
 }
 
-void nauty_interface_matrix_int(int *M, int v, int b, 
+void nauty_interface::nauty_interface_matrix_int(int *M, int v, int b,
 	int *labeling, int *partition, 
 	int *Aut, int &Aut_counter, 
 	int *Base, int &Base_length, 

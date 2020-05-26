@@ -62,7 +62,7 @@ public:
 		// Type_data[i][rep_len]
 	int *Type_rep;
 		// Type_rep[N]
-		// Type_rep[i] is the index of the canidate which
+		// Type_rep[i] is the index of the candidate which
 		// has been chosen as representative
 		// for the i-th isomorphism type
 	int *Type_mult;
@@ -98,7 +98,9 @@ public:
 	void freeself();
 	void init(int N, int rep_len, int verbose_level);
 	int search(uchar *data, int &idx, int verbose_level);
-	int add(uchar *data, void *extra_data, int verbose_level);
+	void search_and_add_if_new(uchar *data,
+			void *extra_data, int &f_found, int &idx, int verbose_level);
+	//int add(uchar *data, void *extra_data, int verbose_level);
 	void finalize(int verbose_level);
 	void print_reps();
 	void print_table();
@@ -592,6 +594,8 @@ public:
 	int largest_set_size();
 	void save_csv(const char *fname, 
 		int f_make_heading, int verbose_level);
+	void save_constant_size_csv(const char *fname,
+			int verbose_level);
 	int find_common_element_in_two_sets(int idx1, int idx2, 
 		int &common_elt);
 	void sort();
@@ -810,6 +814,9 @@ public:
 		int verbose_level);
 	int compare_sets(int *set1, int *set2, int sz1, int sz2);
 	int compare_sets_lint(long int *set1, long int *set2, int sz1, int sz2);
+	void d_partition(double *v, int left, int right, int *middle);
+	void d_quicksort(double *v, int left, int right);
+	void d_quicksort_array(int len, double *v);
 };
 
 int int_compare_increasingly(void *a, void *b, void *data);

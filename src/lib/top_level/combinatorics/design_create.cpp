@@ -29,6 +29,8 @@ design_create::design_create()
 
 	A = NULL;
 	A2 = NULL;
+	Aut = NULL;
+	Aut_on_lines = NULL;
 
 	degree = 0;
 
@@ -38,6 +40,7 @@ design_create::design_create()
 	f_has_group = FALSE;
 	Sg = NULL;
 
+	PA = NULL;
 	P = NULL;
 	block = NULL;
 
@@ -64,8 +67,8 @@ void design_create::freeself()
 	if (Sg) {
 		FREE_OBJECT(Sg);
 		}
-	if (P) {
-		FREE_OBJECT(P);
+	if (PA) {
+		FREE_OBJECT(PA);
 	}
 	if (block) {
 		FREE_int(block);
@@ -203,14 +206,30 @@ void design_create::create_design_PG_2_q(finite_field *F,
 	combinatorics_domain Combi;
 	sorting Sorting;
 	int j;
+	int f_semilinear;
 	//int *block;
+
+	if (F->e > 1) {
+		f_semilinear = TRUE;
+	}
+	else {
+		f_semilinear = FALSE;
+	}
+	PA = NEW_OBJECT(projective_space_with_action);
+	PA->init(F, 2 /* n */, f_semilinear,
+			TRUE /*f_init_incidence_structure*/, verbose_level);
+
+	P = PA->P;
+
 
 	design_create::k = q + 1;
 	k = q + 1;
+#if 0
 	P = NEW_OBJECT(projective_space);
 	P->init(2, F,
 			TRUE /* f_init_incidence_structure */,
 			verbose_level);
+#endif
 	degree = P->N_points;
 
 	block = NEW_int(k);
@@ -241,6 +260,12 @@ void design_create::create_design_PG_2_q(finite_field *F,
 
 	A2 = NEW_OBJECT(action);
 	A2->induced_action_on_k_subsets(*A, k, verbose_level);
+
+	Aut = PA->A;
+	Aut_on_lines = PA->A_on_lines;
+	f_has_group = TRUE;
+	Sg = Aut->Strong_gens;
+
 
 	//Aonk = A2->G.on_k_subsets;
 

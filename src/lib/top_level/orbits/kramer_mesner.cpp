@@ -48,6 +48,7 @@ kramer_mesner::kramer_mesner()
 
 	final_A = NULL;
 	F = NULL;
+	Control = NULL;
 	Poset = NULL;
 	gen = NULL;
 	
@@ -270,7 +271,7 @@ void kramer_mesner::init_group(sims *&S, int verbose_level)
 }
 
 void kramer_mesner::orbits(
-		int argc, const char **argv,
+		//int argc, const char **argv,
 		sims *S, int verbose_level)
 // the group is in A->strong_generators, A->transversal_length
 {
@@ -286,7 +287,7 @@ void kramer_mesner::orbits(
 		cout << "computing orbits up to depth " << orbits_k << endl;
 		}
 	gen = NEW_OBJECT(poset_classification);
-	gen->read_arguments(argc, argv, verbose_level);
+	//gen->read_arguments(argc, argv, verbose_level);
 	
 	if (!f_orbits_t) {
 		cout << "kramer_mesner::orbits please specify t" << endl;
@@ -323,6 +324,7 @@ void kramer_mesner::orbits(
 		cout << "kramer_mesner::orbits before gen->init:" << endl;
 		}
 
+	Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A2,
 			Strong_gens,
@@ -340,7 +342,7 @@ void kramer_mesner::orbits(
 				verbose_level);
 #endif
 
-	gen->init(Poset,
+	gen->init(Control, Poset,
 		gen->depth /* sz */, verbose_level - 2);
 
 
@@ -367,7 +369,7 @@ void kramer_mesner::orbits(
 				"init_root_node:" << endl;
 		}
 
-	gen->root[0].init_root_node(gen, gen->verbose_level);
+	gen->root[0].init_root_node(gen, gen->Control->verbose_level);
 
 	if (f_v) {
 		cout << "kramer_mesner::orbits "

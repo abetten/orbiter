@@ -22,6 +22,8 @@ void strong_generators::init_linear_group_from_scratch(
 	finite_field *F, int n, 
 	int f_projective, int f_general, int f_affine, 
 	int f_semilinear, int f_special, 
+	int f_GL_d_wreath_Sym_n,
+	int GL_wreath_Sym_d, int GL_wreath_Sym_n,
 	vector_ge *&nice_gens,
 	int verbose_level)
 {
@@ -79,6 +81,20 @@ void strong_generators::init_linear_group_from_scratch(
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
 					"after A->init_affine_group" << endl;
+		}
+	}
+	else if (f_GL_d_wreath_Sym_n) {
+		if (f_v) {
+			cout << "strong_generators::init_linear_group_from_scratch "
+					"before init_wreath_product_group" << endl;
+		}
+		A->init_wreath_product_group(
+				GL_wreath_Sym_n /* nb_factors */,
+				GL_wreath_Sym_d /* n */, F, nice_gens,
+				verbose_level);
+		if (f_v) {
+			cout << "strong_generators::init_linear_group_from_scratch "
+					"after init_wreath_product_group" << endl;
 		}
 	}
 	else {
@@ -2719,6 +2735,7 @@ void
 strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24(
 	action *A,
 	finite_field *F, int f_with_normalizer, int f_semilinear, 
+	vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2750,16 +2767,16 @@ strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24(
 	//cubic_surface_stab_gens(F->q, iso,
 	// data, nb_gens, data_size, ascii_target_go);
 
-	vector_ge *gens;
+	//vector_ge *gens;
 
-	gens = NEW_OBJECT(vector_ge);
-	gens->init(A, verbose_level - 2);
+	nice_gens = NEW_OBJECT(vector_ge);
+	nice_gens->init(A, verbose_level - 2);
 	target_go.create(group_order, __FILE__, __LINE__);
 
 
-	gens->allocate(nb_gens, verbose_level - 2);
+	nice_gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
-		A->make_element(gens->ith(i), data + i * data_size, 0);
+		A->make_element(nice_gens->ith(i), data + i * data_size, 0);
 		}
 
 
@@ -2773,7 +2790,7 @@ strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24(
 		}
 	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
-		gens, Strong_gens2, 
+		nice_gens, Strong_gens2,
 		0 /* verbose_level */);
 
 	if (f_v) {
@@ -2786,7 +2803,7 @@ strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24(
 
 	FREE_int(data);
 	FREE_OBJECT(Strong_gens2);
-	FREE_OBJECT(gens);
+	//FREE_OBJECT(gens);
 
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_stabilizer_"

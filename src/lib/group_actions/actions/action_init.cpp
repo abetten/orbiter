@@ -812,6 +812,10 @@ void action::init_permutation_group_from_generators(int degree,
 				"after init_permutation_group" << endl;
 		}
 
+	if (Stabilizer_chain) {
+		FREE_OBJECT(Stabilizer_chain);
+	}
+
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
 				"calling allocate_base_data" << endl;
@@ -1339,7 +1343,7 @@ void action::init_direct_product_group(
 
 void action::init_wreath_product_group_and_restrict(
 		int nb_factors, int n,
-		finite_field *F, int f_tensor_ranks,
+		finite_field *F, vector_ge *&nice_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1360,7 +1364,7 @@ void action::init_wreath_product_group_and_restrict(
 		cout << "action::init_wreath_product_group_and_restrict "
 				"before A_wreath->init_wreath_product_group" << endl;
 	}
-	A_wreath->init_wreath_product_group(nb_factors, n, F, f_tensor_ranks,
+	A_wreath->init_wreath_product_group(nb_factors, n, F, nice_gens,
 			verbose_level);
 	if (f_v) {
 		cout << "action::init_wreath_product_group_and_restrict "
@@ -1393,7 +1397,7 @@ void action::init_wreath_product_group_and_restrict(
 
 
 void action::init_wreath_product_group(int nb_factors, int n,
-		finite_field *F, int f_tensor_ranks,
+		finite_field *F, vector_ge *&nice_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1405,7 +1409,7 @@ void action::init_wreath_product_group(int nb_factors, int n,
 		cout << "action::init_wreath_product_group" << endl;
 		cout << "nb_factors=" << nb_factors
 				<< " n=" << n << " q=" << F->q << endl;
-		}
+	}
 
 	A_mtx = NEW_OBJECT(action);
 	M = NEW_OBJECT(matrix_group);
@@ -1420,25 +1424,25 @@ void action::init_wreath_product_group(int nb_factors, int n,
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
 				"before M->init_general_linear_group" << endl;
-		}
+	}
 	M->init_general_linear_group(n,
 			F, FALSE /* f_semilinear */, A_mtx,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
 				"after M->init_general_linear_group" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
 				"before W->init_tensor_wreath_product" << endl;
-		}
-	W->init_tensor_wreath_product(M, A_mtx, nb_factors, f_tensor_ranks,
+	}
+	W->init_tensor_wreath_product(M, A_mtx, nb_factors,
 			verbose_level);
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
 				"after W->init_tensor_wreath_product" << endl;
-		}
+	}
 
 	f_is_linear = TRUE;
 	dimension = W->dimension_of_tensor_action;
@@ -1449,13 +1453,13 @@ void action::init_wreath_product_group(int nb_factors, int n,
 		cout << "action::init_wreath_product_group "
 			"low_level_point_size="
 			<< low_level_point_size<< endl;
-		}
+	}
 	strcpy(label, W->label);
 	strcpy(label_tex, W->label_tex);
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
 				"label=" << label << endl;
-		}
+	}
 
 	degree = W->degree_overall;
 	make_element_size = W->make_element_size;
@@ -1474,20 +1478,20 @@ void action::init_wreath_product_group(int nb_factors, int n,
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
 				"degree=" << degree << endl;
-		}
+	}
 
 	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
 				"before Stabilizer_chain->allocate_base_data" << endl;
-		}
+	}
 	Stabilizer_chain->allocate_base_data(this, W->base_length, verbose_level);
 	//allocate_base_data(base_len);
 	//Stabilizer_chain->base_len = W->base_length;
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
 				"base_len=" << base_len() << endl;
-		}
+	}
 
 	lint_vec_copy(W->the_base, get_base(), base_len());
 	int_vec_copy(W->the_transversal_length,
@@ -1500,20 +1504,20 @@ void action::init_wreath_product_group(int nb_factors, int n,
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
 				"before W->make_strong_generators_data" << endl;
-		}
+	}
 	W->make_strong_generators_data(gens_data,
 			gens_size, gens_nb, verbose_level - 10);
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
 				"after W->make_strong_generators_data" << endl;
-		}
+	}
 	Strong_gens = NEW_OBJECT(strong_generators);
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
 				"before Strong_gens->init_from_data" << endl;
-		}
+	}
 
-	vector_ge *nice_gens;
+
 	Strong_gens->init_from_data(this, gens_data, gens_nb, gens_size,
 			get_transversal_length(),
 			nice_gens,
@@ -1521,8 +1525,7 @@ void action::init_wreath_product_group(int nb_factors, int n,
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
 				"after Strong_gens->init_from_data" << endl;
-		}
-	FREE_OBJECT(nice_gens);
+	}
 	f_has_strong_generators = TRUE;
 	FREE_int(gens_data);
 
@@ -1536,37 +1539,37 @@ void action::init_wreath_product_group(int nb_factors, int n,
 		if (f_v) {
 			cout << "action::init_wreath_product_group "
 					"before S->init_generators" << endl;
-			}
+		}
 		S->init_generators(*Strong_gens->gens, verbose_level);
 		if (f_v) {
 			cout << "action::init_wreath_product_group "
 					"after S->init_generators" << endl;
-			}
+		}
 		if (f_v) {
 			cout << "action::init_wreath_product_group "
 					"before S->compute_base_orbits_known_length" << endl;
-			}
+		}
 		S->compute_base_orbits_known_length(get_transversal_length(), verbose_level);
 		if (f_v) {
 			cout << "action::init_wreath_product_group "
 					"after S->compute_base_orbits_known_length" << endl;
-			}
+		}
 
 
 		if (f_v) {
 			cout << "action::init_wreath_product_group "
 					"before init_sims_only" << endl;
-			}
+		}
 
 		init_sims_only(S, verbose_level);
 
 		if (f_v) {
 			cout << "action::init_wreath_product_group "
 					"after init_sims_only" << endl;
-			}
+		}
 
 		compute_strong_generators_from_sims(0/*verbose_level - 2*/);
-}
+	}
 	else {
 		cout << "action::init_wreath_product_group "
 				"because the degree is very large, "
@@ -1583,7 +1586,7 @@ void action::init_wreath_product_group(int nb_factors, int n,
 		//cout << "make_element_size=" << make_element_size << endl;
 		//cout << "base_len=" << base_len << endl;
 		//cout << "f_semilinear=" << f_semilinear << endl;
-		}
+	}
 }
 
 void action::init_permutation_representation(action *A_original,

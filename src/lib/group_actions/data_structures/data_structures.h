@@ -23,6 +23,7 @@ namespace group_actions {
 #define INPUT_TYPE_FILE_OF_PACKINGS 6
 #define INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE 7
 #define INPUT_TYPE_FILE_OF_POINT_SET 8
+#define INPUT_TYPE_FILE_OF_DESIGNS 9
 
 
 
@@ -35,6 +36,12 @@ public:
 	int input_type[1000];
 	const char *input_string[1000];
 	const char *input_string2[1000];
+
+	// for INPUT_TYPE_FILE_OF_DESIGNS:
+	int input_data1[1000]; // N_points
+	int input_data2[1000]; // b = number of blocks
+	int input_data3[1000]; // k = block size
+	int input_data4[1000]; // partition class size
 
 	data_input_stream();
 	~data_input_stream();
@@ -119,6 +126,48 @@ public:
 	void print_strong_generators_with_different_action_verbose(
 			std::ostream &ost, action *A2, int verbose_level);
 
+};
+
+
+// #############################################################################
+// incidence_structure_with_group.cpp
+// #############################################################################
+
+
+
+//! to represent an incidence structure and its group
+
+
+class incidence_structure_with_group {
+
+public:
+
+	incidence_structure *Inc;
+	int N; // Inc->nb_rows + Inc->nb_cols;
+
+	int *partition;
+
+	int f_has_canonical_form;
+	uchar *canonical_form; // [canonical_form_len]
+	int canonical_form_len;
+
+	int f_has_canonical_labeling;
+	long int *canonical_labeling;  // [nb_rows + nb_cols]
+
+	action *A_perm; // degree = N
+
+	incidence_structure_with_group();
+	~incidence_structure_with_group();
+	void null();
+	void freeself();
+	void init(incidence_structure *Inc,
+		int *partition,
+		int verbose_level);
+	void print_canonical_form(std::ostream &ost);
+	void set_stabilizer_and_canonical_form(
+			int f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix,
+			int f_compute_canonical_form,
+			int verbose_level);
 };
 
 // #############################################################################

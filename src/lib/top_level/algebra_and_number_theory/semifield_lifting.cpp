@@ -170,8 +170,8 @@ void semifield_lifting::report(
 	ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, ext, idx;
-	long int a; //, b;
+	int i; //, j, ext, idx;
+	//long int a; //, b;
 
 
 	if (f_v) {
@@ -1819,7 +1819,7 @@ void semifield_lifting::trace_very_general(
 				"trace_so = " << trace_so << endl;
 	}
 
-	Downstep_nodes[trace_po].Sch->coset_rep_inv(pos);
+	Downstep_nodes[trace_po].Sch->coset_rep_inv(pos, 0 /* verbose_level */);
 	A->element_mult(transporter,
 			Downstep_nodes[trace_po].Sch->cosetrep,
 			ELT3,
@@ -2322,7 +2322,7 @@ void semifield_lifting::deep_search_at_level_three(
 void semifield_lifting::print_stabilizer_orders()
 {
 	//long int *Go;
-	int i;
+	//int i;
 #if 0
 	Go = NEW_lint(nb_orbits);
 	for (i = 0; i < nb_orbits; i++) {

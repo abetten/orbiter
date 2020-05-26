@@ -15,6 +15,7 @@ namespace foundations {
 
 static void projective_plane_make_affine_point(int q, int x1, int x2, int x3,
 	double &a, double &b);
+static int compute_dd(int dx);
 
 
 mp_graphics::mp_graphics()
@@ -1833,6 +1834,7 @@ void mp_graphics::circle(int x, int y, int rad)
 {
 	//fp_log << "Circle " << x << " " << y << " " << rad << endl;
 
+	//cout << "mp_graphics::circle x=" << x << " y=" << y << " rad=" << rad << endl;
 	coords_min_max(x, y);
 	user2dev(x, y);
 	user2dev_dist_x(rad);
@@ -2441,6 +2443,7 @@ void mp_graphics::text_tikz(int x1, int y1, const char *p)
 
 void mp_graphics::circle_tikz(int x, int y, int rad)
 {
+	//cout << "mp_graphics::circle_tikz x=" << x << " y=" << y << " rad=" << rad << endl;
 	if (fill_interior > 0) {
 		fp_tikz << "\\filldraw[color=";
 		color_tikz(fp_tikz, fill_color);
@@ -4107,8 +4110,537 @@ static void projective_plane_make_affine_point(
 		}
 }
 
+void mp_graphics::domino_draw1(int M,
+		int i, int j, int dx, int dy, int rad, int f_horizontal)
+{
+	int Px[100], Py[100];
+
+	Px[0] = j * dx + (dx >> 1);
+	Py[0] = (M - i) * dy - (dy >> 1);
+
+	circle(Px[0], Py[0], rad);
+}
 
 
+void mp_graphics::domino_draw2(int M,
+		int i, int j, int dx, int dy, int rad, int f_horizontal)
+{
+	int Px[100], Py[100];
+	int ddx = compute_dd(dx);
+	int ddy = compute_dd(dy);
+
+	Px[0] = j * dx + (dx >> 1);
+	Py[0] = (M - i) * dy - (dy >> 1);
+	if (f_horizontal) {
+		Px[1] = Px[0] - ddx;
+		Py[1] = Py[0] + ddy;
+		Px[2] = Px[0] + ddx;
+		Py[2] = Py[0] - ddy;
+		}
+	else {
+		Px[1] = Px[0] + ddx;
+		Py[1] = Py[0] + ddy;
+		Px[2] = Px[0] - ddx;
+		Py[2] = Py[0] - ddy;
+		}
+
+	circle(Px[1], Py[1], rad);
+	circle(Px[2], Py[2], rad);
+}
+
+void mp_graphics::domino_draw3(int M,
+		int i, int j, int dx, int dy, int rad, int f_horizontal)
+{
+	int Px[100], Py[100];
+	int ddx = compute_dd(dx);
+	int ddy = compute_dd(dy);
+
+	Px[0] = j * dx + (dx >> 1);
+	Py[0] = (M - i) * dy - (dy >> 1);
+	if (f_horizontal) {
+		Px[1] = Px[0] - ddx;
+		Py[1] = Py[0] + ddy;
+		Px[2] = Px[0] + ddx;
+		Py[2] = Py[0] - ddy;
+		}
+	else {
+		Px[1] = Px[0] + ddx;
+		Py[1] = Py[0] + ddy;
+		Px[2] = Px[0] - ddx;
+		Py[2] = Py[0] - ddy;
+		}
+
+	circle(Px[0], Py[0], rad);
+	circle(Px[1], Py[1], rad);
+	circle(Px[2], Py[2], rad);
+}
+
+void mp_graphics::domino_draw4(int M,
+		int i, int j, int dx, int dy, int rad, int f_horizontal)
+{
+	int Px[100], Py[100];
+	int ddx = compute_dd(dx);
+	int ddy = compute_dd(dy);
+
+	Px[0] = j * dx + (dx >> 1);
+	Py[0] = (M - i) * dy - (dy >> 1);
+
+	Px[1] = Px[0] - ddx;
+	Py[1] = Py[0] + ddy;
+	Px[2] = Px[0] + ddx;
+	Py[2] = Py[0] + ddy;
+	Px[3] = Px[0] + ddx;
+	Py[3] = Py[0] - ddy;
+	Px[4] = Px[0] - ddx;
+	Py[4] = Py[0] - ddy;
+
+	circle(Px[1], Py[1], rad);
+	circle(Px[2], Py[2], rad);
+	circle(Px[3], Py[3], rad);
+	circle(Px[4], Py[4], rad);
+}
+
+void mp_graphics::domino_draw5(int M,
+		int i, int j, int dx, int dy, int rad, int f_horizontal)
+{
+	int Px[100], Py[100];
+	int ddx = compute_dd(dx);
+	int ddy = compute_dd(dy);
+
+	Px[0] = j * dx + (dx >> 1);
+	Py[0] = (M - i) * dy - (dy >> 1);
+
+	Px[1] = Px[0] - ddx;
+	Py[1] = Py[0] + ddy;
+	Px[2] = Px[0] + ddx;
+	Py[2] = Py[0] + ddy;
+	Px[3] = Px[0] + ddx;
+	Py[3] = Py[0] - ddy;
+	Px[4] = Px[0] - ddx;
+	Py[4] = Py[0] - ddy;
+
+	circle(Px[0], Py[0], rad);
+	circle(Px[1], Py[1], rad);
+	circle(Px[2], Py[2], rad);
+	circle(Px[3], Py[3], rad);
+	circle(Px[4], Py[4], rad);
+}
+
+void mp_graphics::domino_draw6(int M,
+		int i, int j, int dx, int dy, int rad, int f_horizontal)
+{
+	int Px[100], Py[100];
+	int ddx = compute_dd(dx);
+	int ddy = compute_dd(dy);
+
+	Px[0] = j * dx + (dx >> 1);
+	Py[0] = (M - i) * dy - (dy >> 1);
+
+	Px[1] = Px[0] - ddx;
+	Py[1] = Py[0] + ddy;
+	Px[2] = Px[0] + ddx;
+	Py[2] = Py[0] + ddy;
+	Px[3] = Px[0] + ddx;
+	Py[3] = Py[0] - ddy;
+	Px[4] = Px[0] - ddx;
+	Py[4] = Py[0] - ddy;
+
+	if (f_horizontal) {
+		Px[5] = Px[0];
+		Py[5] = Py[0] + ddy;
+		Px[6] = Px[0];
+		Py[6] = Py[0] - ddy;
+		}
+	else {
+		Px[5] = Px[0] - ddx;
+		Py[5] = Py[0];
+		Px[6] = Px[0] + ddx;
+		Py[6] = Py[0];
+		}
+
+	circle(Px[1], Py[1], rad);
+	circle(Px[2], Py[2], rad);
+	circle(Px[3], Py[3], rad);
+	circle(Px[4], Py[4], rad);
+	circle(Px[5], Py[5], rad);
+	circle(Px[6], Py[6], rad);
+}
+
+void mp_graphics::domino_draw7(int M,
+		int i, int j, int dx, int dy, int rad, int f_horizontal)
+{
+	int Px[100], Py[100];
+	int ddx = compute_dd(dx);
+	int ddy = compute_dd(dy);
+
+	Px[0] = j * dx + (dx >> 1);
+	Py[0] = (M - i) * dy - (dy >> 1);
+
+	Px[1] = Px[0] - ddx;
+	Py[1] = Py[0] + ddy;
+	Px[2] = Px[0] + ddx;
+	Py[2] = Py[0] + ddy;
+	Px[3] = Px[0] + ddx;
+	Py[3] = Py[0] - ddy;
+	Px[4] = Px[0] - ddx;
+	Py[4] = Py[0] - ddy;
+
+	if (f_horizontal) {
+		Px[5] = Px[0];
+		Py[5] = Py[0] + ddy;
+		Px[6] = Px[0];
+		Py[6] = Py[0] - ddy;
+		Px[7] = Px[0];
+		Py[7] = Py[0];
+		}
+	else {
+		Px[5] = Px[0] - ddx;
+		Py[5] = Py[0];
+		Px[6] = Px[0] + ddx;
+		Py[6] = Py[0];
+		Px[7] = Px[0];
+		Py[7] = Py[0];
+		}
+
+	circle(Px[1], Py[1], rad);
+	circle(Px[2], Py[2], rad);
+	circle(Px[3], Py[3], rad);
+	circle(Px[4], Py[4], rad);
+	circle(Px[5], Py[5], rad);
+	circle(Px[6], Py[6], rad);
+	circle(Px[7], Py[7], rad);
+}
+
+void mp_graphics::domino_draw8(int M,
+		int i, int j, int dx, int dy, int rad, int f_horizontal)
+{
+	int Px[100], Py[100];
+	int ddx = compute_dd(dx);
+	int ddy = compute_dd(dy);
+
+	Px[0] = j * dx + (dx >> 1);
+	Py[0] = (M - i) * dy - (dy >> 1);
+
+	Px[1] = Px[0] - ddx;
+	Py[1] = Py[0] + ddy;
+	Px[2] = Px[0] + ddx;
+	Py[2] = Py[0] + ddy;
+	Px[3] = Px[0] + ddx;
+	Py[3] = Py[0] - ddy;
+	Px[4] = Px[0] - ddx;
+	Py[4] = Py[0] - ddy;
+
+	if (f_horizontal) {
+		Px[5] = Px[0];
+		Py[5] = Py[0] + ddy;
+		Px[6] = Px[0];
+		Py[6] = Py[0] - ddy;
+		Px[7] = Px[0];
+		Py[7] = Py[0];
+		Px[8] = Px[0] - ddx;
+		Py[8] = Py[0];
+		Px[9] = Px[0] + ddx;
+		Py[9] = Py[0];
+		}
+	else {
+		Px[5] = Px[0] - ddx;
+		Py[5] = Py[0];
+		Px[6] = Px[0] + ddx;
+		Py[6] = Py[0];
+		Px[7] = Px[0];
+		Py[7] = Py[0];
+		Px[8] = Px[0];
+		Py[8] = Py[0] + ddy;
+		Px[9] = Px[0];
+		Py[9] = Py[0] - ddy;
+		}
+
+	circle(Px[1], Py[1], rad);
+	circle(Px[2], Py[2], rad);
+	circle(Px[3], Py[3], rad);
+	circle(Px[4], Py[4], rad);
+	circle(Px[5], Py[5], rad);
+	circle(Px[6], Py[6], rad);
+	//circle(Px[7], Py[7], rad);
+	circle(Px[8], Py[8], rad);
+	circle(Px[9], Py[9], rad);
+}
+
+void mp_graphics::domino_draw9(int M,
+		int i, int j, int dx, int dy, int rad, int f_horizontal)
+{
+	int Px[100], Py[100];
+	int ddx = compute_dd(dx);
+	int ddy = compute_dd(dy);
+
+	Px[0] = j * dx + (dx >> 1);
+	Py[0] = (M - i) * dy - (dy >> 1);
+
+	Px[1] = Px[0] - ddx;
+	Py[1] = Py[0] + ddy;
+	Px[2] = Px[0] + ddx;
+	Py[2] = Py[0] + ddy;
+	Px[3] = Px[0] + ddx;
+	Py[3] = Py[0] - ddy;
+	Px[4] = Px[0] - ddx;
+	Py[4] = Py[0] - ddy;
+
+	if (f_horizontal) {
+		Px[5] = Px[0];
+		Py[5] = Py[0] + ddy;
+		Px[6] = Px[0];
+		Py[6] = Py[0] - ddy;
+		Px[7] = Px[0];
+		Py[7] = Py[0];
+		Px[8] = Px[0] - ddx;
+		Py[8] = Py[0];
+		Px[9] = Px[0] + ddx;
+		Py[9] = Py[0];
+		}
+	else {
+		Px[5] = Px[0] - ddx;
+		Py[5] = Py[0];
+		Px[6] = Px[0] + ddx;
+		Py[6] = Py[0];
+		Px[7] = Px[0];
+		Py[7] = Py[0];
+		Px[8] = Px[0];
+		Py[8] = Py[0] + ddy;
+		Px[9] = Px[0];
+		Py[9] = Py[0] - ddy;
+		}
+
+	circle(Px[1], Py[1], rad);
+	circle(Px[2], Py[2], rad);
+	circle(Px[3], Py[3], rad);
+	circle(Px[4], Py[4], rad);
+	circle(Px[5], Py[5], rad);
+	circle(Px[6], Py[6], rad);
+	circle(Px[7], Py[7], rad);
+	circle(Px[8], Py[8], rad);
+	circle(Px[9], Py[9], rad);
+}
+
+
+#define DD_MULTIPLIER 8.5
+
+
+static int compute_dd(int dx)
+{
+	return (int)(((double) dx) / 32 * DD_MULTIPLIER);
+}
+
+void mp_graphics::domino_draw_assignment_East(int Ap, int Aq, int M,
+		int i, int j, int dx, int dy, int rad)
+{
+	if (Ap == 1)
+		domino_draw1(M, i, j, dx, dy, rad, TRUE /* f_horizontal */);
+	if (Aq == 1)
+		domino_draw1(M, i, j + 1, dx, dy, rad, TRUE /* f_horizontal */);
+	if (Ap == 2)
+		domino_draw2(M, i, j, dx, dy, rad, TRUE /* f_horizontal */);
+	if (Aq == 2)
+		domino_draw2(M, i, j + 1, dx, dy, rad, TRUE /* f_horizontal */);
+	if (Ap == 3)
+		domino_draw3(M, i, j, dx, dy, rad, TRUE /* f_horizontal */);
+	if (Aq == 3)
+		domino_draw3(M, i, j + 1, dx, dy, rad, TRUE /* f_horizontal */);
+	if (Ap == 4)
+		domino_draw4(M, i, j, dx, dy, rad, TRUE /* f_horizontal */);
+	if (Aq == 4)
+		domino_draw4(M, i, j + 1, dx, dy, rad, TRUE /* f_horizontal */);
+	if (Ap == 5)
+		domino_draw5(M, i, j, dx, dy, rad, TRUE /* f_horizontal */);
+	if (Aq == 5)
+		domino_draw5(M, i, j + 1, dx, dy, rad, TRUE /* f_horizontal */);
+	if (Ap == 6)
+		domino_draw6(M, i, j, dx, dy, rad, TRUE /* f_horizontal */);
+	if (Aq == 6)
+		domino_draw6(M, i, j + 1, dx, dy, rad, TRUE /* f_horizontal */);
+	if (Ap == 7)
+		domino_draw7(M, i, j, dx, dy, rad, TRUE /* f_horizontal */);
+	if (Aq == 7)
+		domino_draw7(M, i, j + 1, dx, dy, rad, TRUE /* f_horizontal */);
+	if (Ap == 8)
+		domino_draw8(M, i, j, dx, dy, rad, TRUE /* f_horizontal */);
+	if (Aq == 8)
+		domino_draw8(M, i, j + 1, dx, dy, rad, TRUE /* f_horizontal */);
+	if (Ap == 9)
+		domino_draw9(M, i, j, dx, dy, rad, TRUE /* f_horizontal */);
+	if (Aq == 9)
+		domino_draw9(M, i, j + 1, dx, dy, rad, TRUE /* f_horizontal */);
+}
+
+void mp_graphics::domino_draw_assignment_South(int Ap, int Aq, int M,
+		int i, int j, int dx, int dy, int rad)
+{
+	if (Ap == 1)
+		domino_draw1(M, i, j, dx, dy, rad, FALSE /* f_horizontal */);
+	if (Aq == 1)
+		domino_draw1(M, i + 1, j, dx, dy, rad, FALSE /* f_horizontal */);
+	if (Ap == 2)
+		domino_draw2(M, i, j, dx, dy, rad, FALSE /* f_horizontal */);
+	if (Aq == 2)
+		domino_draw2(M, i + 1, j, dx, dy, rad, FALSE /* f_horizontal */);
+	if (Ap == 3)
+		domino_draw3(M, i, j, dx, dy, rad, FALSE /* f_horizontal */);
+	if (Aq == 3)
+		domino_draw3(M, i + 1, j, dx, dy, rad, FALSE /* f_horizontal */);
+	if (Ap == 4)
+		domino_draw4(M, i, j, dx, dy, rad, FALSE /* f_horizontal */);
+	if (Aq == 4)
+		domino_draw4(M, i + 1, j, dx, dy, rad, FALSE /* f_horizontal */);
+	if (Ap == 5)
+		domino_draw5(M, i, j, dx, dy, rad, FALSE /* f_horizontal */);
+	if (Aq == 5)
+		domino_draw5(M, i + 1, j, dx, dy, rad, FALSE /* f_horizontal */);
+	if (Ap == 6)
+		domino_draw6(M, i, j, dx, dy, rad, FALSE /* f_horizontal */);
+	if (Aq == 6)
+		domino_draw6(M, i + 1, j, dx, dy, rad, FALSE /* f_horizontal */);
+	if (Ap == 7)
+		domino_draw7(M, i, j, dx, dy, rad, FALSE /* f_horizontal */);
+	if (Aq == 7)
+		domino_draw7(M, i + 1, j, dx, dy, rad, FALSE /* f_horizontal */);
+	if (Ap == 8)
+		domino_draw8(M, i, j, dx, dy, rad, FALSE /* f_horizontal */);
+	if (Aq == 8)
+		domino_draw8(M, i + 1, j, dx, dy, rad, FALSE /* f_horizontal */);
+	if (Ap == 9)
+		domino_draw9(M, i, j, dx, dy, rad, FALSE /* f_horizontal */);
+	if (Aq == 9)
+		domino_draw9(M, i + 1, j, dx, dy, rad, FALSE /* f_horizontal */);
+}
+
+
+void mp_graphics::domino_draw_assignment(int *A, int *matching, int *B,
+		int M, int N,
+		int dx, int dy,
+		int rad, int edge,
+		int f_grid, int f_gray, int f_numbers, int f_frame,
+		int f_cost, int cost)
+{
+	int Px[100], Py[100];
+	char str[1000];
+	int i, j, a, p, q;
+
+	if (f_cost) {
+		Px[0] = (N * dx) / 2;
+		Py[0] = (M + 1) * dy;
+		sprintf(str, "${%d}$", cost);
+		aligned_text(Px[0], Py[0], "", str);
+	}
+
+
+	for (i = 0; i < M; i++) {
+		for (j = 0; j < N; j++) {
+			Px[0] = j * dx;
+			Py[0] = (M - i) * dy;
+			Px[1] = (j + 1) * dx;
+			Py[1] = (M - i) * dy;
+			Px[2] = (j + 1) * dx;
+			Py[2] = (M - i - 1) * dy;
+			Px[3] = j * dx;
+			Py[3] = (M - i - 1) * dy;
+
+			if (f_grid)
+				polygon5(Px, Py, 0, 1, 2, 3, 0);
+			if (f_gray) {
+				a = B[i * N + j];
+				if (a < 0)
+					a = -a;
+				sf_interior(100 - 10 * a);
+				sf_color(0);
+				fill_polygon5(Px, Py, 0, 1, 2, 3, 0);
+				}
+			if (f_numbers) {
+				//Px[4] = j * dx + (dx >> 1);
+				//Py[4] = (M - i) * dy - (dy >> 1);
+				sprintf(str, "$%d$", B[i * N + j]);
+				aligned_text(Px[2], Py[2], "br", str);
+				}
+			//cout << "i=" << i << "j=" << j << "p=" << p << endl;
+			}
+		}
+
+	sf_interior(100 /* fill_interior */);
+	sf_color(1 /* fill_color */);
+
+	for (i = 0; i < M; i++) {
+		for (j = 0; j < N; j++) {
+			p = i * N + j;
+			//cout << "i=" << i << "j=" << j << "p=" << p << endl;
+			if (matching[p] == 3) {
+				//cout << "East" << endl;
+				Px[0] = j * dx;
+				Py[0] = (M - i) * dy;
+				Px[1] = (j + 2) * dx;
+				Py[1] = (M - i) * dy;
+				Px[2] = (j + 2) * dx;
+				Py[2] = (M - i - 1) * dy;
+				Px[3] = j * dx;
+				Py[3] = (M - i - 1) * dy;
+
+				Px[4] = Px[0] + edge;
+				Py[4] = Py[0] - edge;
+				Px[5] = Px[1] - edge;
+				Py[5] = Py[1] - edge;
+				Px[6] = Px[2] - edge;
+				Py[6] = Py[2] + edge;
+				Px[7] = Px[3] + edge;
+				Py[7] = Py[3] + edge;
+
+
+				polygon5(Px, Py, 4, 5, 6, 7, 4);
+				q = i * N + j + 1;
+
+				domino_draw_assignment_East(A[p], A[q], M,
+							i, j, dx, dy, rad);
+				}
+			else if (matching[p] == 6) {
+				//cout << "South" << endl;
+				Px[0] = j * dx;
+				Py[0] = (M - i) * dy;
+				Px[1] = (j + 1) * dx;
+				Py[1] = (M - i) * dy;
+				Px[2] = (j + 1) * dx;
+				Py[2] = (M - i - 2) * dy;
+				Px[3] = j * dx;
+				Py[3] = (M - i - 2) * dy;
+
+
+				Px[4] = Px[0] + edge;
+				Py[4] = Py[0] - edge;
+				Px[5] = Px[1] - edge;
+				Py[5] = Py[1] - edge;
+				Px[6] = Px[2] - edge;
+				Py[6] = Py[2] + edge;
+				Px[7] = Px[3] + edge;
+				Py[7] = Py[3] + edge;
+
+
+				polygon5(Px, Py, 4, 5, 6, 7, 4);
+				q = (i + 1) * N + j;
+
+				domino_draw_assignment_South(A[p], A[q], M,
+						i, j, dx, dy, rad);
+				}
+			}
+		}
+
+	if (f_frame) {
+		sl_udsty(50);
+		Px[0] = 0 * dx;
+		Py[0] = M * dy;
+		Px[1] = 0 * dx;
+		Py[1] = 0 * dy;
+		Px[2] = N * dx;
+		Py[2] = 0 * dy;
+		Px[3] = N * dx;
+		Py[3] = M * dy;
+		polygon5(Px, Py, 0, 1, 2, 3, 0);
+		}
+}
 
 }
 }

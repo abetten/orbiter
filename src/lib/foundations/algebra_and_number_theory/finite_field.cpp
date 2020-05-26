@@ -46,6 +46,8 @@ void finite_field::null()
 	nb_calls_to_mult_matrix_matrix = 0;
 	nb_calls_to_PG_element_rank_modified = 0;
 	nb_calls_to_PG_element_unrank_modified = 0;
+
+	my_nb_calls_to_elliptic_curve_addition = 0;
 }
 
 finite_field::~finite_field()
@@ -96,6 +98,11 @@ void finite_field::print_call_stats(ostream &ost)
 			<< nb_calls_to_PG_element_rank_modified << endl;
 	cout << "nb_calls_to_PG_element_unrank_modified="
 			<< nb_calls_to_PG_element_unrank_modified << endl;
+}
+
+int &finite_field::nb_calls_to_elliptic_curve_addition()
+{
+	return my_nb_calls_to_elliptic_curve_addition;
 }
 
 void finite_field::init(int q)
@@ -1021,7 +1028,25 @@ int finite_field::power(int a, int n)
 	return c;
 }
 
-int finite_field::frobenius_power(int a, int i)
+void finite_field::frobenius_power_vec(int *v, int len, int frob_power)
+{
+	int h;
+
+	for (h = 0; h < len; h++) {
+		v[h] = frobenius_power(v[h], frob_power);
+	}
+}
+
+void finite_field::frobenius_power_vec_to_vec(int *v_in, int *v_out, int len, int frob_power)
+{
+	int h;
+
+	for (h = 0; h < len; h++) {
+		v_out[h] = frobenius_power(v_in[h], frob_power);
+	}
+}
+
+int finite_field::frobenius_power(int a, int frob_power)
 // computes a^{p^i}
 {
 	int j;
@@ -1031,7 +1056,7 @@ int finite_field::frobenius_power(int a, int i)
 				"frobenius_table == NULL" << endl;
 		exit(1);
 	}
-	for (j = 0; j < i; j++) {
+	for (j = 0; j < frob_power; j++) {
 		a = frobenius_table[a];
 	}
 	return a;
@@ -1193,6 +1218,10 @@ void finite_field::abc2xy(int a, int b, int c,
 	int f_v = (verbose_level >= 1);
 	int xx, yy, cc;
 	
+	if (f_v) {
+		cout << "finite_field::abc2xy q=" << q
+				<< " a=" << a << " b=" << b << " c=" << c << endl;
+	}
 	for (x = 0; x < q; x++) {
 		xx = mult(x, x);
 		for (y = 0; y < q; y++) {
@@ -1201,7 +1230,7 @@ void finite_field::abc2xy(int a, int b, int c,
 			if (cc == c) {
 				if (f_v) {
 					cout << "finite_field::abc2xy q=" << q
-							<< " x=" << x << " y=" << y << endl;
+							<< " x=" << x << " y=" << y << " done" << endl;
 				}
 				return;
 			}

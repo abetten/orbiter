@@ -1176,6 +1176,159 @@ void layered_graph::make_subset_lattice(int n, int depth, int f_tree,
 }
 
 
+void layered_graph::init_poset_from_file(const char *fname,
+		int f_grouping, double x_stretch, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int nb_layer;
+	int *Nb;
+	int *Nb_orbits;
+	int **Orbit_length;
+	int i, l1, n1, l2, n2, nb_v = 0, c = 0, a;
+
+	if (f_v) {
+		cout << "layered_graph::init_poset_from_file" << endl;
+	}
+	{
+		ifstream fp(fname);
+		fp >> nb_layer;
+		Nb = NEW_int(nb_layer);
+		Nb_orbits = NEW_int(nb_layer);
+		Orbit_length = NEW_pint(nb_layer);
+		nb_v = 0;
+		for (i = 0; i < nb_layer; i++) {
+			fp >> Nb[i];
+			nb_v += Nb[i];
+		}
+		add_data1(0, 0/*verbose_level*/);
+		init(nb_layer, Nb, "", 0);
+		place(0 /*verbose_level*/);
+
+
+		for (l1 = 0; l1 < nb_layer; l1++) {
+			for (n1 = 0; n1 < Nb[l1]; n1++) {
+				fp >> a;
+
+				char text[1000];
+
+				sprintf(text, "%d", a);
+				add_text(l1, n1, text, 0/*verbose_level*/);
+			}
+		}
+
+		for (l1 = 0; l1 < nb_layer; l1++) {
+			fp >> Nb_orbits[l1];
+			Orbit_length[l1] = NEW_int(Nb_orbits[l1]);
+			for (i = 0; i < Nb_orbits[l1]; i++) {
+				fp >> Orbit_length[l1][i];
+			}
+		}
+
+		while (TRUE) {
+			fp >> l1;
+			if (l1 == -1) {
+				break;
+				}
+			fp >> n1;
+			fp >> l2;
+			fp >> n2;
+			add_edge(l1, n1, l2, n2, 0 /*verbose_level*/);
+			c++;
+		}
+	}
+	if (f_grouping) {
+		place_with_grouping(Orbit_length,
+				Nb_orbits, x_stretch, 0 /*verbose_level*/);
+		}
+	if (f_v) {
+		cout << "created a graph with " << nb_v
+				<< " vertices and " << c << " edges" << endl;
+	}
+
+	if (f_v) {
+		cout << "layered_graph::init_poset_from_file done" << endl;
+	}
+}
+
+// example file created in DISCRETA/sgls2.cpp for the subgroup lattice of Sym(4):
+#if 0
+5
+1 13 11 4 1
+1 2 2 2 2 2 2 3 3 3 3 2 2 2 4 4 4 6 6 6 6 4 4 4 4 8 8 8 12 24
+1 1
+3 6 4 3
+4 3 4 3 1
+2 3 1
+1 1
+0 0 1 0
+0 0 1 1
+0 0 1 2
+0 0 1 3
+0 0 1 4
+0 0 1 5
+0 0 1 6
+0 0 1 7
+0 0 1 8
+0 0 1 9
+0 0 1 10
+0 0 1 11
+0 0 1 12
+1 0 2 0
+1 0 2 3
+1 0 2 4
+1 1 2 1
+1 1 2 3
+1 1 2 5
+1 2 2 2
+1 2 2 3
+1 2 2 6
+1 3 2 0
+1 3 2 5
+1 3 2 6
+1 4 2 2
+1 4 2 4
+1 4 2 5
+1 5 2 1
+1 5 2 4
+1 5 2 6
+1 6 2 3
+1 6 3 3
+1 7 2 5
+1 7 3 3
+1 8 2 6
+1 8 3 3
+1 9 2 4
+1 9 3 3
+1 10 2 0
+1 10 2 7
+1 10 2 10
+1 11 2 2
+1 11 2 8
+1 11 2 10
+1 12 2 1
+1 12 2 9
+1 12 2 10
+2 0 3 0
+2 1 3 1
+2 2 3 2
+2 3 4 0
+2 4 4 0
+2 5 4 0
+2 6 4 0
+2 7 3 0
+2 8 3 2
+2 9 3 1
+2 10 3 0
+2 10 3 1
+2 10 3 2
+2 10 3 3
+3 0 4 0
+3 1 4 0
+3 2 4 0
+3 3 4 0
+-1
+#endif
+
 
 
 

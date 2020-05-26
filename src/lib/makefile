@@ -38,9 +38,12 @@ MODULES= \
 		foundations/coding_theory/coding_theory_domain.o \
 		foundations/coding_theory/mindist.o \
 		foundations/combinatorics/brick_domain.o \
+		foundations/combinatorics/combinatorial_object_create.o \
+		foundations/combinatorics/combinatorial_object_description.o \
 		foundations/combinatorics/combinatorics_domain.o \
 		foundations/combinatorics/geo_parameter.o \
 		foundations/combinatorics/tdo_data.o \
+		foundations/combinatorics/tdo_refinement_description.o \
 		foundations/combinatorics/tdo_refinement.o \
 		foundations/combinatorics/tdo_scheme.o \
 		foundations/data_structures/bitmatrix.o \
@@ -100,6 +103,9 @@ MODULES= \
 		foundations/geometry/surface_object.o \
 		foundations/geometry/unusual.o \
 		foundations/geometry/w3q.o \
+		foundations/globals/function_command.o \
+		foundations/globals/function_polish_description.o \
+		foundations/globals/function_polish.o \
 		foundations/globals/magma_interface.o \
 		foundations/globals/numerics.o \
 		foundations/globals/polynomial_double_domain.o \
@@ -122,7 +128,10 @@ MODULES= \
 		foundations/graph_theory_nauty/nauty_interface.o \
 		foundations/graph_theory_nauty/schreier.o \
 		foundations/graphics/animate.o \
+		foundations/graphics/drawable_set_of_objects.o \
 		foundations/graphics/mp_graphics.o \
+		foundations/graphics/parametric_curve_point.o \
+		foundations/graphics/parametric_curve.o \
 		foundations/graphics/plot_tools.o \
 		foundations/graphics/povray_interface.o \
 		foundations/graphics/scene.o \
@@ -162,10 +171,11 @@ MODULES= \
 		group_actions/actions/interface_perm_group.o \
 		group_actions/actions/interface_permutation_representation.o \
 		group_actions/actions/interface_wreath_product.o \
-		group_actions/actions/nauty_interface.o \
+		group_actions/actions/nauty_interface_with_group.o \
 		group_actions/actions/stabilizer_chain_base_data.o \
 		group_actions/data_structures/data_input_stream.o \
 		group_actions/data_structures/group.o \
+		group_actions/data_structures/incidence_structure_with_group.o \
 		group_actions/data_structures/object_in_projective_space_with_action.o \
 		group_actions/data_structures/orbit_rep.o \
 		group_actions/data_structures/orbit_transversal.o \
@@ -236,6 +246,7 @@ MODULES= \
 		classification/poset_classification/poset_classification.o \
 		classification/poset_classification/poset_classification_classify.o \
 		classification/poset_classification/poset_classification_combinatorics.o \
+		classification/poset_classification/poset_classification_control.o \
 		classification/poset_classification/poset_classification_draw.o \
 		classification/poset_classification/poset_classification_export_source_code.o \
 		classification/poset_classification/poset_classification_init.o \
@@ -280,6 +291,8 @@ MODULES= \
 		top_level/algebra_and_number_theory/algebra_global_with_action.o \
 		top_level/algebra_and_number_theory/character_table_burnside.o \
 		top_level/algebra_and_number_theory/factor_group.o \
+		top_level/algebra_and_number_theory/group_theoretic_activity_description.o \
+		top_level/algebra_and_number_theory/group_theoretic_activity.o \
 		top_level/algebra_and_number_theory/semifield_classify_with_substructure.o \
 		top_level/algebra_and_number_theory/semifield_classify.o \
 		top_level/algebra_and_number_theory/semifield_downstep_node.o \
@@ -290,17 +303,17 @@ MODULES= \
 		top_level/algebra_and_number_theory/semifield_trace.o \
 		top_level/algebra_and_number_theory/trace_record.o \
 		top_level/algebra_and_number_theory/young.o \
-		top_level/combinatorics/bent_function_classify.o \
+		top_level/combinatorics/boolean_function.o \
 		top_level/combinatorics/cayley_graph_search.o \
-		top_level/combinatorics/combinatorial_object_create.o \
-		top_level/combinatorics/combinatorial_object_description.o \
 		top_level/combinatorics/create_graph_description.o \
 		top_level/combinatorics/create_graph.o \
+		top_level/combinatorics/delandtsheer_doyen_description.o \
 		top_level/combinatorics/delandtsheer_doyen.o \
 		top_level/combinatorics/design_create_description.o \
 		top_level/combinatorics/design_create.o \
 		top_level/combinatorics/difference_set_in_heisenberg_group.o \
 		top_level/combinatorics/graph_classify.o \
+		top_level/combinatorics/graph_theoretic_activity_description.o \
 		top_level/combinatorics/hadamard_classify.o \
 		top_level/combinatorics/hall_system_classify.o \
 		top_level/combinatorics/large_set_classify.o \
@@ -323,8 +336,8 @@ MODULES= \
 		top_level/geometry/code_classify.o \
 		top_level/geometry/cubic_curve_with_action.o \
 		top_level/geometry/hermitian_spreads_classify.o \
+		top_level/geometry/hill_cap.o \
 		top_level/geometry/invariants_packing.o \
-		top_level/geometry/k_arc_generator.o \
 		top_level/geometry/linear_set_classify.o \
 		top_level/geometry/ovoid_classify.o \
 		top_level/geometry/packing_classify.o \
@@ -333,7 +346,6 @@ MODULES= \
 		top_level/geometry/packing_long_orbits.o \
 		top_level/geometry/packing_was.o \
 		top_level/geometry/polar.o \
-		top_level/geometry/projective_space.o \
 		top_level/geometry/recoordinatize.o \
 		top_level/geometry/search_blocking_set.o \
 		top_level/geometry/singer_cycle.o \
@@ -366,7 +378,13 @@ MODULES= \
 		top_level/orbits/orbit_of_subspaces.o \
 		top_level/orbits/subspace_orbits.o \
 		top_level/solver/exact_cover.o \
-		top_level/solver/exact_cover_arguments.o
+		top_level/solver/exact_cover_arguments.o \
+		interfaces/interface_algebra.o \
+		interfaces/interface_coding_theory.o \
+		interfaces/interface_combinatorics.o \
+		interfaces/interface_cryptography.o \
+		interfaces/interface_povray.o \
+		interfaces/interface_projective.o
 
 
 all:
@@ -375,6 +393,7 @@ all:
 	cd classification; $(MAKE)
 	cd DISCRETA; $(MAKE)
 	cd top_level; $(MAKE)
+	cd interfaces; $(MAKE)
 	ar ruvs liborbiter.a $(MODULES)
 
 
@@ -384,6 +403,7 @@ clean:
 	cd classification; $(MAKE) clean
 	cd DISCRETA; $(MAKE) clean
 	cd top_level; $(MAKE) clean
+	cd interfaces; $(MAKE) clean
 	- rm *.o *.a 
 
 

@@ -678,7 +678,10 @@ void vector_ge::write_to_file_binary(ofstream &fp, int verbose_level)
 		}
 	fp.write((char *) &len, sizeof(int));
 	for (i = 0; i < len; i++) {
-		A->element_write_to_file_binary(ith(i), fp, 0);
+		if (f_v) {
+			cout << "vector_ge::write_to_file_binary writing element " << i << " / " << len << endl;
+			}
+		A->element_write_to_file_binary(ith(i), fp, verbose_level);
 		}
 }
 
@@ -693,7 +696,10 @@ void vector_ge::read_from_file_binary(ifstream &fp, int verbose_level)
 	fp.read((char *) &l, sizeof(int));
 	allocate(l, verbose_level);
 	for (i = 0; i < len; i++) {
-		A->element_read_from_file_binary(ith(i), fp, 0);
+		if (f_v) {
+			cout << "vector_ge::read_from_file_binary reading element " << i << " / " << len << endl;
+			}
+		A->element_read_from_file_binary(ith(i), fp, verbose_level);
 		}
 }
 
@@ -789,6 +795,40 @@ int vector_ge::test_if_all_elements_stabilize_a_set(action *A2,
 		}
 	return TRUE;
 }
+
+
+schreier *vector_ge::orbits_on_points_schreier(
+		action *A_given, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	schreier *Sch;
+
+	if (f_v) {
+		cout << "strong_generators::orbits_on_points_schreier "
+				"degree = " << A_given->degree << endl;
+		}
+	if (f_v) {
+		cout << "strong_generators::orbits_on_points_schreier "
+				"action ";
+		A_given->print_info();
+		cout << endl;
+		}
+
+	Sch = NEW_OBJECT(schreier);
+
+	Sch->init(A_given, verbose_level - 2);
+	Sch->initialize_tables();
+	Sch->init_generators(*this, verbose_level - 2);
+	Sch->compute_all_point_orbits(verbose_level);
+
+	if (f_v) {
+		cout << "strong_generators::orbits_on_points_schreier "
+				"done, we found " << Sch->nb_orbits << " orbits" << endl;
+		}
+	return Sch;
+}
+
+
 
 }}
 

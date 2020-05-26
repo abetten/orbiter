@@ -1145,23 +1145,26 @@ static void induced_action_element_mult(action &A,
 	
 	if (f_v) {
 		cout << "induced_action_element_mult" << endl;
-		}
+	}
 	if (A.type_G == product_action_t) {
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
 		PA->element_mult((int *)a, (int *)b,
 				(int *)ab, verbose_level);
-		}
+	}
 	else {
 		sub = A.subaction;
 		if (sub == NULL) {
 			cout << "induced_action_element_mult "
 					"no subaction" << endl;
 			exit(1);
-			}
-		sub->element_mult(a, b, ab, f_v);
 		}
+		sub->element_mult(a, b, ab, verbose_level);
+	}
+	if (f_v) {
+		cout << "induced_action_element_mult done" << endl;
+	}
 }
 
 static void induced_action_element_invert(action &A,

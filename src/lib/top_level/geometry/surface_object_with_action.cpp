@@ -25,6 +25,11 @@ surface_object_with_action::surface_object_with_action()
 	Surf_A = NULL;
 	SO = NULL;
 	Aut_gens = NULL;
+
+	f_has_nice_gens = FALSE;
+	nice_gens = NULL;
+
+
 	projectivity_group_gens = NULL;
 	Syl = NULL;
 
@@ -173,6 +178,7 @@ void surface_object_with_action::init(surface_with_action *Surf_A,
 	long int *Lines, int *eqn,
 	strong_generators *Aut_gens,
 	int f_find_double_six_and_rearrange_lines,
+	int f_has_nice_gens, vector_ge *nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -182,6 +188,8 @@ void surface_object_with_action::init(surface_with_action *Surf_A,
 	}
 
 	surface_object_with_action::Surf_A = Surf_A;
+	surface_object_with_action::f_has_nice_gens = f_has_nice_gens;
+	surface_object_with_action::nice_gens = nice_gens;
 	Surf = Surf_A->Surf;
 	F = Surf->F;
 	q = F->q;
@@ -452,13 +460,11 @@ void surface_object_with_action::init_orbits_on_points(
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_"
-				"on_points" << endl;
+		cout << "surface_object_with_action::init_orbits_on_points" << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_object_with_action action "
-				"on points:" << endl;
+		cout << "surface_object_with_action action on points:" << endl;
 	}
 	A_on_points = Surf_A->A->restricted_action(
 			SO->Pts, SO->nb_pts, 0 /*verbose_level*/);
@@ -469,18 +475,30 @@ void surface_object_with_action::init_orbits_on_points(
 
 
 	if (f_v) {
-		cout << "computing orbits on points:" << endl;
+		cout << "surface_object_with_action::init_orbits_on_points "
+				"computing orbits on points:" << endl;
 	}
-	Orbits_on_points = Aut_gens->orbits_on_points_schreier(
-			A_on_points, 0 /*verbose_level*/);
+	if (f_has_nice_gens) {
+		if (f_v) {
+			cout << "surface_object_with_action::init_orbits_on_points "
+					"computing orbits on points using nice gens:" << endl;
+		}
+		Orbits_on_points = nice_gens->orbits_on_points_schreier(
+				A_on_points, 0 /*verbose_level*/);
+
+	}
+	else {
+		Orbits_on_points = Aut_gens->orbits_on_points_schreier(
+				A_on_points, 0 /*verbose_level*/);
+	}
 	if (f_v) {
-		cout << "We found " << Orbits_on_points->nb_orbits
+		cout << "surface_object_with_action::init_orbits_on_points "
+				"We found " << Orbits_on_points->nb_orbits
 				<< " orbits on points" << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_"
-				"on_points done" << endl;
+		cout << "surface_object_with_action::init_orbits_on_points done" << endl;
 	}
 }
 
@@ -490,8 +508,7 @@ void surface_object_with_action::init_orbits_on_Eckardt_points(
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_"
-				"on_Eckardt_points" << endl;
+		cout << "surface_object_with_action::init_orbits_on_Eckardt_points" << endl;
 	}
 
 	if (f_v) {
@@ -507,16 +524,25 @@ void surface_object_with_action::init_orbits_on_Eckardt_points(
 	if (f_v) {
 		cout << "computing orbits on Eckardt points:" << endl;
 	}
-	Orbits_on_Eckardt_points = Aut_gens->orbits_on_points_schreier(
-			A_on_Eckardt_points, 0 /*verbose_level*/);
+	if (f_has_nice_gens) {
+		if (f_v) {
+			cout << "surface_object_with_action::init_orbits_on_Eckardt_points "
+					"computing orbits on points using nice gens:" << endl;
+		}
+		Orbits_on_Eckardt_points = nice_gens->orbits_on_points_schreier(
+				A_on_Eckardt_points, 0 /*verbose_level*/);
+	}
+	else {
+		Orbits_on_Eckardt_points = Aut_gens->orbits_on_points_schreier(
+				A_on_Eckardt_points, 0 /*verbose_level*/);
+	}
 	if (f_v) {
 		cout << "We found " << Orbits_on_Eckardt_points->nb_orbits
 				<< " orbits on Eckardt points" << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_"
-				"on_Eckardt_points done" << endl;
+		cout << "surface_object_with_action::init_orbits_on_Eckardt_points done" << endl;
 	}
 }
 
@@ -544,8 +570,14 @@ void surface_object_with_action::init_orbits_on_Double_points(
 	if (f_v) {
 		cout << "computing orbits on Double points:" << endl;
 	}
-	Orbits_on_Double_points = Aut_gens->orbits_on_points_schreier(
-			A_on_Double_points, 0 /*verbose_level*/);
+	if (f_has_nice_gens) {
+		Orbits_on_Double_points = nice_gens->orbits_on_points_schreier(
+				A_on_Double_points, 0 /*verbose_level*/);
+	}
+	else {
+		Orbits_on_Double_points = Aut_gens->orbits_on_points_schreier(
+				A_on_Double_points, 0 /*verbose_level*/);
+	}
 	if (f_v) {
 		cout << "We found " << Orbits_on_Double_points->nb_orbits
 				<< " orbits on Double points" << endl;
@@ -580,8 +612,14 @@ void surface_object_with_action::init_orbits_on_lines(
 	if (f_v) {
 		cout << "computing orbits on lines:" << endl;
 	}
-	Orbits_on_lines = Aut_gens->orbits_on_points_schreier(
-			A_on_the_lines, 0 /*verbose_level*/);
+	if (f_has_nice_gens) {
+		Orbits_on_lines = nice_gens->orbits_on_points_schreier(
+				A_on_the_lines, 0 /*verbose_level*/);
+	}
+	else {
+		Orbits_on_lines = Aut_gens->orbits_on_points_schreier(
+				A_on_the_lines, 0 /*verbose_level*/);
+	}
 	if (f_v) {
 		cout << "We found " << Orbits_on_lines->nb_orbits
 				<< " orbits on lines" << endl;
@@ -616,8 +654,14 @@ void surface_object_with_action::init_orbits_on_half_double_sixes(
 	if (f_v) {
 		cout << "computing orbits on single sixes:" << endl;
 	}
-	Orbits_on_single_sixes = Aut_gens->orbits_on_points_schreier(
-			A_single_sixes, 0 /*verbose_level*/);
+	if (f_has_nice_gens) {
+		Orbits_on_single_sixes = nice_gens->orbits_on_points_schreier(
+				A_single_sixes, 0 /*verbose_level*/);
+	}
+	else {
+		Orbits_on_single_sixes = Aut_gens->orbits_on_points_schreier(
+				A_single_sixes, 0 /*verbose_level*/);
+	}
 	if (f_v) {
 		cout << "computing orbits on single sixes done" << endl;
 	}
@@ -656,8 +700,14 @@ void surface_object_with_action::init_orbits_on_tritangent_planes(
 		cout << "action on tritangent planes done" << endl;
 	}
 
-	Orbits_on_tritangent_planes = Aut_gens->orbits_on_points_schreier(
-			A_on_tritangent_planes, 0 /*verbose_level*/);
+	if (f_has_nice_gens) {
+		Orbits_on_tritangent_planes = nice_gens->orbits_on_points_schreier(
+				A_on_tritangent_planes, 0 /*verbose_level*/);
+	}
+	else {
+		Orbits_on_tritangent_planes = Aut_gens->orbits_on_points_schreier(
+				A_on_tritangent_planes, 0 /*verbose_level*/);
+	}
 	if (f_v) {
 		cout << "We found " << Orbits_on_tritangent_planes->nb_orbits
 				<< " orbits on the set of " << SO->nb_tritangent_planes
@@ -693,8 +743,14 @@ void surface_object_with_action::init_orbits_on_trihedral_pairs(
 		cout << "action on trihedral pairs created" << endl;
 	}
 
-	Orbits_on_trihedral_pairs = Aut_gens->orbits_on_points_schreier(
-			A_on_trihedral_pairs, 0 /*verbose_level*/);
+	if (f_has_nice_gens) {
+		Orbits_on_trihedral_pairs = nice_gens->orbits_on_points_schreier(
+				A_on_trihedral_pairs, 0 /*verbose_level*/);
+	}
+	else {
+		Orbits_on_trihedral_pairs = Aut_gens->orbits_on_points_schreier(
+				A_on_trihedral_pairs, 0 /*verbose_level*/);
+	}
 	if (f_v) {
 		cout << "We found " << Orbits_on_trihedral_pairs->nb_orbits
 				<< " orbits on trihedral pairs" << endl;
@@ -728,9 +784,16 @@ void surface_object_with_action::init_orbits_on_points_not_on_lines(
 		cout << "creating action on points not on lines done" << endl;
 	}
 
-	Orbits_on_points_not_on_lines =
-			Aut_gens->orbits_on_points_schreier(
-					A_on_pts_not_on_lines,  0 /*verbose_level*/);
+	if (f_has_nice_gens) {
+		Orbits_on_points_not_on_lines =
+				nice_gens->orbits_on_points_schreier(
+						A_on_pts_not_on_lines,  0 /*verbose_level*/);
+	}
+	else {
+		Orbits_on_points_not_on_lines =
+				Aut_gens->orbits_on_points_schreier(
+						A_on_pts_not_on_lines,  0 /*verbose_level*/);
+	}
 	if (f_v) {
 		cout << "We found " << Orbits_on_points_not_on_lines->nb_orbits
 				<< " orbits on points not on lines" << endl;
@@ -1366,6 +1429,14 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 	}
 	Aut_gens->print_generators_tex(ost);
 
+
+	if (f_has_nice_gens) {
+		ost << "The stabilizer is generated by the following nice generators:\\\\" << endl;
+		nice_gens->print_tex(ost);
+
+	}
+
+
 	if (projectivity_group_gens) {
 		longinteger_object go;
 		projectivity_group_gens->group_order(go);
@@ -1482,7 +1553,32 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 		cout << "surface_object_with_action::cheat_sheet "
 				"before SO->print_trihedral_pairs" << endl;
 	}
+
+	if (f_v) {
+		cout << "surface_object_with_action::cheat_sheet "
+				"before SO->print_half_double_sixes" << endl;
+	}
+	SO->print_half_double_sixes(ost);
+
+	if (f_v) {
+		cout << "surface_object_with_action::cheat_sheet "
+				"before SO->print_half_double_sixes_numerically" << endl;
+	}
+	SO->print_half_double_sixes_numerically(ost);
+
+	if (f_v) {
+		cout << "surface_object_with_action::cheat_sheet "
+				"before SO->print_trihedral_pairs" << endl;
+	}
+
 	SO->print_trihedral_pairs(ost);
+
+	if (f_v) {
+		cout << "surface_object_with_action::cheat_sheet "
+				"before SO->print_trihedral_pairs_numerically" << endl;
+	}
+
+	SO->print_trihedral_pairs_numerically(ost);
 
 	//SO->latex_table_of_trihedral_pairs_and_clebsch_system(
 	//*Clebsch->ost, AL->T_idx, AL->nb_T);

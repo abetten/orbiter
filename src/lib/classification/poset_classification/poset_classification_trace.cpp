@@ -428,7 +428,7 @@ int poset_classification::trace_set_recursion(
 		cur_level, cur_node, size, 
 		canonical_set, tmp_set1,
 		Elt_transporter, tmp_Elt1, 
-		f_lex, 
+		Control->f_lex,
 		f_failure_to_find_point, 
 		verbose_level - 1)) {
 		
@@ -647,7 +647,7 @@ int poset_classification::trace_set(long int *set, int size, int level,
 		cout << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		cout << "level=" << level << endl;
-		cout << "f_lex=" << f_lex << endl;
+		cout << "f_lex=" << Control->f_lex << endl;
 		}
 	
 	lint_vec_copy(set, canonical_set, size);

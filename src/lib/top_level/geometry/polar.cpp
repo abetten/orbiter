@@ -38,6 +38,7 @@ polar::polar()
 	base_cols = NULL; // [n]
 
 	VS = NULL;
+	Control = NULL;
 	Poset = NULL;
 	Gen = NULL;
 
@@ -65,6 +66,9 @@ polar::~polar()
 	if (VS) {
 		FREE_OBJECT(VS);
 	}
+	if (Control) {
+		FREE_OBJECT(Control);
+		}
 	if (Poset) {
 		FREE_OBJECT(Poset);
 		}
@@ -159,7 +163,7 @@ void polar::init(
 	
 	
 	Gen->depth = depth;
-	Gen->verbose_level = verbose_level - 2;
+	//Gen->Control->verbose_level = verbose_level - 2;
 	
 }
 
@@ -214,6 +218,7 @@ void polar::init2(int verbose_level)
 			this,
 			verbose_level - 1);
 
+	Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subspace_lattice(A, A,
 			gens,
@@ -223,7 +228,7 @@ void polar::init2(int verbose_level)
 			polar_callback_early_test_func,
 				this /* void *data */,
 				verbose_level);
-	Gen->init(Poset,
+	Gen->init(Control, Poset,
 			Gen->depth /* sz */, verbose_level);
 
 #if 0

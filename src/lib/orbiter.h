@@ -14,5 +14,6 @@
 #include "classification/classification.h"
 #include "DISCRETA/discreta.h"
 #include "top_level/top_level.h"
+#include "interfaces/interfaces.h"
 
 

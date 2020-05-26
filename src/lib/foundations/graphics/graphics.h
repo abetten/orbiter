@@ -29,6 +29,7 @@ public:
 	std::ofstream *fpm;
 	void (*draw_frame_callback)(animate *A, int frame,
 					int nb_frames_this_round, int round,
+					double clipping,
 					std::ostream &fp,
 					int verbose_level);
 	void *extra_data;
@@ -64,6 +65,7 @@ public:
 	void draw_Hilbert_tetrahedron_faces(std::ostream &fp);
 	void draw_frame_Hilbert(
 		int h, int nb_frames, int round,
+		double clipping_radius,
 		std::ostream &fp,
 		int verbose_level);
 	void draw_surface_13_1(std::ostream &fp);
@@ -71,30 +73,117 @@ public:
 			int h, int nb_frames, int round,
 			std::ostream &fp,
 			int verbose_level);
+		// tritangent plane, 6 arc points, 2 blue lines, 6 red lines, text
 	void draw_frame_HCV_surface(
 		int h, int nb_frames, int round,
+		double clipping_radius,
 		std::ostream &fp,
 		int verbose_level);
 	void draw_frame_E4_surface(
 		int h, int nb_frames, int round,
+		double clipping_radius,
 		std::ostream &fp,
 		int verbose_level);
 	void draw_frame_triangulation_of_cube(
 		int h, int nb_frames, int round,
+		double clipping_radius,
 		std::ostream &fp,
 		int verbose_level);
 	void draw_frame_twisted_cubic(
 		int h, int nb_frames, int round,
+		double clipping_radius,
 		std::ostream &fp,
 		int verbose_level);
 	void draw_frame_five_plus_one(
 		int h, int nb_frames, int round,
+		double clipping_radius,
 		std::ostream &fp,
 		int verbose_level);
 	void draw_frame_windy(
 		int h, int nb_frames, int round,
+		double clipping_radius,
 		std::ostream &fp,
 		int verbose_level);
+	void rotation(
+			int h, int nb_frames, int round,
+			std::ostream &fp);
+	void union_end(
+			int h, int nb_frames, int round,
+			double clipping_radius,
+			std::ostream &fp);
+	void draw_text(const char *text,
+			double thickness_half, double extra_spacing,
+			double scale,
+			double off_x, double off_y, double off_z,
+			const char *color_options,
+			int idx_point,
+			//double x, double y, double z,
+			//double up_x, double up_y, double up_z,
+			//double view_x, double view_y, double view_z,
+			std::ostream &ost, int verbose_level);
+	void draw_text_with_selection(int *selection, int nb_select,
+		double thickness_half, double extra_spacing,
+		double scale,
+		double off_x, double off_y, double off_z,
+		const char *options, const char *group_options,
+		std::ostream &ost, int verbose_level);
+};
+
+
+// #############################################################################
+// drawable_set_of_objects.cpp
+// #############################################################################
+
+
+
+//! a specific description of a set of objects that should be drawn
+
+
+
+class drawable_set_of_objects {
+
+public:
+
+	int group_idx;
+
+	int type;
+	// 1 = sphere
+	// 2 = cylinder
+	// 3 = prisms (faces)
+	// 4 = planes
+	// 5 = lines
+	// 6 = cubics
+	// 7 = quadrics
+	// 8 = quartics
+	// 9 = label
+
+
+	double d;
+	double d2; // for text: scale
+
+	const char *properties;
+
+	drawable_set_of_objects();
+	~drawable_set_of_objects();
+	void init_spheres(int group_idx, double rad,
+			const char *properties, int verbose_level);
+	void init_cylinders(int group_idx,
+			double rad, const char *properties, int verbose_level);
+	void init_prisms(int group_idx,
+			double thickness, const char *properties, int verbose_level);
+	void init_planes(int group_idx,
+			const char *properties, int verbose_level);
+	void init_lines(int group_idx,
+			double rad, const char *properties, int verbose_level);
+	void init_cubics(int group_idx,
+			const char *properties, int verbose_level);
+	void init_quadrics(int group_idx,
+			const char *properties, int verbose_level);
+	void init_quartics(int group_idx,
+			const char *properties, int verbose_level);
+	void init_labels(int group_idx,
+			double thickness_half, double scale, const char *properties, int verbose_level);
+	void draw(animate *Anim, std::ostream &ost, int verbose_level);
 
 };
 
@@ -467,14 +556,93 @@ public:
 		int m, int n, int xmax, int ymax,
 		int *color_scale, int nb_colors_in_scale,
 		int f_has_labels, int *labels);
+	void domino_draw1(int M,
+			int i, int j, int dx, int dy, int rad, int f_horizontal);
+	void domino_draw2(int M,
+			int i, int j, int dx, int dy, int rad, int f_horizontal);
+	void domino_draw3(int M,
+			int i, int j, int dx, int dy, int rad, int f_horizontal);
+	void domino_draw4(int M,
+			int i, int j, int dx, int dy, int rad, int f_horizontal);
+	void domino_draw5(int M,
+			int i, int j, int dx, int dy, int rad, int f_horizontal);
+	void domino_draw6(int M,
+			int i, int j, int dx, int dy, int rad, int f_horizontal);
+	void domino_draw7(int M,
+			int i, int j, int dx, int dy, int rad, int f_horizontal);
+	void domino_draw8(int M,
+			int i, int j, int dx, int dy, int rad, int f_horizontal);
+	void domino_draw9(int M,
+			int i, int j, int dx, int dy, int rad, int f_horizontal);
+	void domino_draw_assignment_East(int Ap, int Aq, int M,
+			int i, int j, int dx, int dy, int rad);
+	void domino_draw_assignment_South(int Ap, int Aq, int M,
+			int i, int j, int dx, int dy, int rad);
+	void domino_draw_assignment(int *A, int *matching, int *B,
+			int M, int N,
+			int dx, int dy,
+			int rad, int edge,
+			int f_grid, int f_gray, int f_numbers, int f_frame,
+			int f_cost, int cost);
 };
 
+
+// #############################################################################
+// parametric_curve_point.cpp
+// #############################################################################
+
+//! an individual point on a continuous curve, sampled through parametric_curve
+
+class parametric_curve_point {
+public:
+
+	double t;
+	int f_is_valid;
+	std::vector<double> coords;
+
+	parametric_curve_point();
+	~parametric_curve_point();
+	void init(double t, int f_is_valid, double *x,
+			int nb_dimensions, int verbose_level);
+};
+
+// #############################################################################
+// parametric_curve.cpp
+// #############################################################################
+
+//! a continuous curve sampled by individual points
+
+class parametric_curve {
+public:
+
+	int nb_dimensions;
+	double desired_distance;
+	double t0, t1; // parameter interval
+	int (*compute_point_function)(double t, double *pt, void *extra_data, int verbose_level);
+	void *extra_data;
+	double boundary;
+
+	int nb_pts;
+	std::vector<parametric_curve_point> Pts;
+
+	parametric_curve();
+	~parametric_curve();
+	void init(int nb_dimensions,
+			double desired_distance,
+			double t0, double t1,
+			int (*compute_point_function)(double t, double *pt, void *extra_data, int verbose_level),
+			void *extra_data,
+			double boundary,
+			int N,
+			int verbose_level);
+
+};
 
 // #############################################################################
 // plot_tools.cpp
 // #############################################################################
 
-//! fnctions for plotting (graphing)
+//! utility functions for plotting (graphing)
 
 
 class plot_tools {
@@ -527,6 +695,7 @@ class povray_interface {
 public:
 
 
+	const char *color_white_simple;
 	const char *color_white;
 	const char *color_white_very_transparent;
 	const char *color_black;
@@ -549,43 +718,51 @@ public:
 	const char *color_red_wine_transparent;
 	const char *color_yellow_lemon_transparent;
 
+	double sky[3];
+	double location[3];
+	double look_at[3];
+
 
 	povray_interface();
 	~povray_interface();
 	void beginning(std::ostream &ost,
 			double angle,
-			const char *sky,
-			const char *location,
-			const char *look_at,
+			double *sky,
+			double *location,
+			double *look_at,
 			int f_with_background);
 	void animation_rotate_around_origin_and_1_1_1(std::ostream &ost);
 	void animation_rotate_around_origin_and_given_vector(double *v,
 			std::ostream &ost);
+	void animation_rotate_xyz(
+		double angle_x_deg, double angle_y_deg, double angle_z_deg, std::ostream &ost);
 	void animation_rotate_around_origin_and_given_vector_by_a_given_angle(
 		double *v, double angle_zero_one, std::ostream &ost);
 	void union_start(std::ostream &ost);
 	void union_end(std::ostream &ost, double scale_factor, double clipping_radius);
+	void union_end_box_clipping(std::ostream &ost, double scale_factor,
+			double box_x, double box_y, double box_z);
+	void union_end_no_clipping(std::ostream &ost, double scale_factor);
 	void bottom_plane(std::ostream &ost);
 	void rotate_111(int h, int nb_frames, std::ostream &fp);
+	void rotate_around_z_axis(int h, int nb_frames, std::ostream &fp);
 	void ini(std::ostream &ost, const char *fname_pov, int first_frame,
 		int last_frame);
 };
-
-
-
 
 
 // #############################################################################
 // scene.cpp
 // #############################################################################
 
-#define SCENE_MAX_LINES 100000
-#define SCENE_MAX_EDGES 100000
-#define SCENE_MAX_POINTS 100000
-#define SCENE_MAX_PLANES 10000
-#define SCENE_MAX_QUADRICS 10000
-#define SCENE_MAX_CUBICS 10000
-#define SCENE_MAX_FACES 10000
+#define SCENE_MAX_LINES    100000
+#define SCENE_MAX_EDGES    100000
+#define SCENE_MAX_POINTS   200000
+#define SCENE_MAX_PLANES    10000
+#define SCENE_MAX_QUADRICS  10000
+#define SCENE_MAX_QUARTICS   1000
+#define SCENE_MAX_CUBICS    10000
+#define SCENE_MAX_FACES    200000
 
 
 //! a collection of 3D geometry objects
@@ -593,39 +770,63 @@ public:
 
 
 class scene {
-public:
 	
-	double line_radius;
+private:
 
-	int nb_lines;
 	double *Line_coords;
 		// [nb_lines * 6] a line is given by two points
-	
-	int nb_edges;
+
 	int *Edge_points;
 		// [nb_edges * 2]
 
-	int nb_points;
 	double *Point_coords;
 		// [nb_points * 3]
 
-	int nb_planes;
 	double *Plane_coords;
 		// [nb_planes * 4]
 		// the four parameters A,B,C,D as needed for the povray command
 		// plane{<A,B,C>, D}
 
-	int nb_quadrics;
 	double *Quadric_coords;
 		// [nb_quadrics * 10]
 
-	int nb_cubics;
 	double *Cubic_coords;
 		// [nb_cubics * 20]
 
-	int nb_faces;
+	double *Quartic_coords;
+		// [nb_quartics * 35]
+
 	int *Nb_face_points; // [nb_faces]
 	int **Face_points; // [nb_faces]
+
+public:
+
+
+	std::vector<std::pair<int, std::string> > Labels;
+
+
+	double line_radius;
+
+	int nb_lines;
+
+	int nb_edges;
+
+	int nb_points;
+
+	int nb_planes;
+
+	int nb_quadrics;
+
+	int nb_cubics;
+
+	int nb_quartics;
+
+	int nb_faces;
+
+	int nb_groups;
+	std::vector<std::vector<int> > group_of_things;
+
+	std::vector<drawable_set_of_objects> Drawables;
 
 
 	
@@ -640,6 +841,17 @@ public:
 	~scene();
 	void null();
 	void freeself();
+	double label(int idx, const char *txt);
+	double point_coords(int idx, int j);
+	double line_coords(int idx, int j);
+	double plane_coords(int idx, int j);
+	double cubic_coords(int idx, int j);
+	double quadric_coords(int idx, int j);
+	int edge_points(int idx, int j);
+	void print_point_coords(int idx);
+	double point_distance_euclidean(int pt_idx, double *y);
+	double point_distance_from_origin(int pt_idx);
+	double distance_euclidean_point_to_point(int pt1_idx, int pt2_idx);
 	void init(int verbose_level);
 	scene *transformed_copy(double *A4, double *A4_inv, 
 		double rad, int verbose_level);
@@ -656,13 +868,18 @@ public:
 		int verbose_level);
 	void transform_cubics(scene *S, double *A4, double *A4_inv, 
 		int verbose_level);
+	void transform_quartics(scene *S, double *A4, double *A4_inv,
+		int verbose_level);
 	void copy_faces(scene *S, double *A4, double *A4_inv, 
 		int verbose_level);
-	int line_pt_and_dir(double *x6, double rad);
+	int line_pt_and_dir(double *x6, double rad, int verbose_level);
+	int line_pt_and_dir_and_copy_points(double *x6, double rad, int verbose_level);
 	int line_through_two_pts(double *x6, double rad);
 	int line6(double *x6);
 	int line(double x1, double x2, double x3, 
 		double y1, double y2, double y3);
+	int line_after_recentering(double x1, double x2, double x3,
+		double y1, double y2, double y3, double rad);
 	int line_through_two_points(int pt1, int pt2, 
 		double rad);
 	int edge(int pt1, int pt2);
@@ -721,6 +938,8 @@ public:
 	// 18: z^2
 	// 19: z
 	// 20: 1
+	int cubic_Goursat_ABC(double A, double B, double C);
+	int quartic(double *coeff);
 	int face(int *pts, int nb_pts);
 	int face3(int pt1, int pt2, int pt3);
 	int face4(int pt1, int pt2, int pt3, int pt4);
@@ -732,31 +951,29 @@ public:
 	void draw_lines_cij_with_selection(int *selection, int nb_select, 
 			std::ostream &ost);
 	void draw_lines_cij(std::ostream &ost);
+	void draw_lines_cij_with_offset(int offset, int number_of_lines, std::ostream &ost);
 	void draw_lines_ai_with_selection(int *selection, int nb_select, 
 			std::ostream &ost);
 	void draw_lines_ai(std::ostream &ost);
+	void draw_lines_ai_with_offset(int offset, std::ostream &ost);
 	void draw_lines_bj_with_selection(int *selection, int nb_select, 
 			std::ostream &ost);
 	void draw_lines_bj(std::ostream &ost);
+	void draw_lines_bj_with_offset(int offset, std::ostream &ost);
 	void draw_edges_with_selection(int *selection, int nb_select, 
 		const char *options, std::ostream &ost);
 	void draw_faces_with_selection(int *selection, int nb_select, 
 		double thickness_half, const char *options, std::ostream &ost);
 	void draw_face(int idx, double thickness_half, const char *options, 
 			std::ostream &ost);
-	void draw_text(const char *text, double thickness_half, double extra_spacing, 
-			double scale, 
-			double off_x, double off_y, double off_z, 
-			const char *color_options, 
-			double x, double y, double z, 
-			double up_x, double up_y, double up_z, 
-			double view_x, double view_y, double view_z, 
-			std::ostream &ost, int verbose_level);
 	void draw_planes_with_selection(int *selection, int nb_select, 
 		const char *options, std::ostream &ost);
+	void draw_plane(int idx, const char *options, std::ostream &ost);
 	void draw_points_with_selection(int *selection, int nb_select, 
 		double rad, const char *options, std::ostream &ost);
 	void draw_cubic_with_selection(int *selection, int nb_select, 
+		const char *options, std::ostream &ost);
+	void draw_quartic_with_selection(int *selection, int nb_select,
 		const char *options, std::ostream &ost);
 	void draw_quadric_with_selection(int *selection, int nb_select, 
 		const char *options, std::ostream &ost);
@@ -782,10 +999,6 @@ public:
 		int plane_idx, double pt_in[3], 
 		int &new_line_idx, int &new_pt_idx, 
 		int verbose_level);
-	void lines_a();
-	void lines_b();
-	void lines_cij();
-	void Eckardt_points();
 	void fourD_cube(double rad_desired);
 	void rescale(int first_pt_idx, double rad_desired);
 	double euclidean_distance(int pt1, int pt2);
@@ -796,9 +1009,25 @@ public:
 	void Dodecahedron_edges(int first_pt_idx);
 	void Dodecahedron_planes(int first_pt_idx);
 	void tritangent_planes();
+
+	// Clebsch version 1:
 	void clebsch_cubic();
+	void clebsch_cubic_lines_a();
+	void clebsch_cubic_lines_b();
+	void clebsch_cubic_lines_cij();
+	void Clebsch_Eckardt_points();
+
+	// Clebsch version 2:
+	void clebsch_cubic_version2();
+	void clebsch_cubic_version2_Hessian();
+	void clebsch_cubic_version2_lines_a();
+	void clebsch_cubic_version2_lines_b();
+	void clebsch_cubic_version2_lines_c();
+
 	double distance_between_two_points(int pt1, int pt2);
 	void create_five_plus_one();
+	void create_Hilbert_Cohn_Vossen_surface(int verbose_level);
+		// 1 cubic, 27 lines, 54 points, 45 planes
 	void create_Hilbert_model(int verbose_level);
 	void create_Cayleys_nodal_cubic(int verbose_level);
 	void create_Hilbert_cube(int verbose_level);
@@ -813,7 +1042,10 @@ public:
 	void print_a_line(int line_idx);
 	void print_a_plane(int plane_idx);
 	void print_a_face(int face_idx);
-
+	void read_obj_file(const char *fname, int verbose_level);
+	void add_a_group_of_things(int *Idx, int sz, int verbose_level);
+	void create_regulus(int idx, int nb_lines, int verbose_level);
+	void clipping_by_cylinder(int line_idx, double r, std::ostream &ost);
 };
 
 
@@ -937,6 +1169,15 @@ int tree_node_calc_y_coordinate(int ymax, int l, int max_depth);
 class video_draw_options {
 public:
 
+	int f_rotate;
+	int rotation_axis_type;
+		// 1 = 1,1,1
+		// 2 = 0,0,1
+		// 3 = custom
+	double rotation_axis_custom[3];
+	int boundary_type;
+		// 1 = sphere
+		// 2 = box
 
 	int f_has_global_picture_scale;
 	double global_picture_scale;
@@ -967,14 +1208,19 @@ public:
 
 	int nb_camera;
 	int camera_round[1000];
-	const char *camera_sky[1000];
-	const char *camera_location[1000];
-	const char *camera_look_at[1000];
+	double camera_sky[1000 * 3];
+	double camera_location[1000 * 3];
+	double camera_look_at[1000 * 3];
+	//const char *camera_sky[1000];
+	//const char *camera_location[1000];
+	//const char *camera_look_at[1000];
 
 	int nb_zoom;
 	int zoom_round[1000];
 	int zoom_start[1000];
 	int zoom_end[1000];
+	double zoom_clipping_start[1000];
+	double zoom_clipping_end[1000];
 
 	int nb_zoom_sequence;
 	int zoom_sequence_round[1000];
@@ -1035,9 +1281,12 @@ public:
 	int latex_file_count;
 	int f_omit_bottom_plane;
 
-	const char *sky;
-	const char *location;
-	const char *look_at;
+	//const char *sky;
+	//const char *location;
+	//const char *look_at;
+	double sky[3];
+	double location[3];
+	double look_at[3];
 
 	double scale_factor;
 

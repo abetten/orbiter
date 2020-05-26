@@ -169,6 +169,8 @@ private:
 	int *v1, *v2, *v3; // vectors of length e.
 	char *symbol_for_print;
 
+	int my_nb_calls_to_elliptic_curve_addition;
+
 public:
 	const char *override_poly;
 	char *polynomial;
@@ -178,11 +180,15 @@ public:
 	int alpha; // primitive element
 	int log10_of_q; // needed for printing purposes
 	int f_print_as_exponentials;
+	long int nb_calls_to_mult_matrix_matrix;
+	long int nb_calls_to_PG_element_rank_modified;
+	long int nb_calls_to_PG_element_unrank_modified;
 	
 	finite_field();
 	void null();
 	~finite_field();
 	void print_call_stats(std::ostream &ost);
+	int &nb_calls_to_elliptic_curve_addition();
 	void init(int q);
 	void init(int q, int verbose_level);
 	void init_symbol_for_print(const char *symbol);
@@ -226,8 +232,12 @@ public:
 		int i7, int i8);
 	int negate(int i);
 	int inverse(int i);
-	int power(int a, int n); // computes a^n
-	int frobenius_power(int a, int i); // computes a^{p^i}
+	int power(int a, int n);
+		// computes a^n
+	void frobenius_power_vec(int *v, int len, int frob_power);
+	void frobenius_power_vec_to_vec(int *v_in, int *v_out, int len, int frob_power);
+	int frobenius_power(int a, int frob_power);
+		// computes a^{p^frob_power}
 	int absolute_trace(int i);
 	int absolute_norm(int i);
 	int alpha_power(int i);
@@ -277,7 +287,6 @@ public:
 		int *Av, int m, int n);
 		// A[m][n], v[n], Av[m]
 
-	long int nb_calls_to_mult_matrix_matrix;
 	void mult_matrix_matrix(int *A, int *B,
 		int *C, int m, int n, int o, int verbose_level);
 		// matrix multiplication C := A * B,
@@ -285,7 +294,7 @@ public:
 	void semilinear_matrix_mult(int *A, int *B, int *AB, int n);
 		// (A,f1) * (B,f2) = (A*B^{\varphi^{-f1}},f1+f2)
 	void semilinear_matrix_mult_memory_given(int *A, int *B, 
-		int *AB, int *tmp_B, int n);
+		int *AB, int *tmp_B, int n, int verbose_level);
 		// (A,f1) * (B,f2) = (A*B^{\varphi^{-f1}},f1+f2)
 	void matrix_mult_affine(int *A, int *B, int *AB, 
 		int n, int verbose_level);
@@ -805,8 +814,6 @@ public:
 			int *v, int stride, int len);
 	// first non zero element made one
 
-	long int nb_calls_to_PG_element_rank_modified;
-	long int nb_calls_to_PG_element_unrank_modified;
 
 	void PG_elements_embed(
 			long int *set_in, long int *set_out, int sz,
@@ -825,6 +832,10 @@ public:
 			int *v, int stride, int len, int a);
 	void PG_element_rank_modified_lint(
 			int *v, int stride, int len, long int &a);
+	void PG_elements_unrank_lint(
+			int *M, int k, int n, long int *rank_vec);
+	void PG_elements_rank_lint(
+			int *M, int k, int n, long int *rank_vec);
 	void PG_element_unrank_modified_lint(
 			int *v, int stride, int len, long int a);
 	void PG_element_rank_modified_not_in_subspace(
@@ -1034,14 +1045,35 @@ public:
 		long int *orbit, long int *orbit_inv,
 		int verbose_level);
 	void print_set_in_affine_plane(int len, long int *S);
+	void elliptic_curve_addition(int b, int c,
+		int x1, int x2, int x3,
+		int y1, int y2, int y3,
+		int &z1, int &z2, int &z3, int verbose_level);
+	void elliptic_curve_point_multiple(int b, int c, int n,
+		int x1, int y1, int z1,
+		int &x3, int &y3, int &z3,
+		int verbose_level);
+	void elliptic_curve_point_multiple_with_log(int b, int c, int n,
+		int x1, int y1, int z1,
+		int &x3, int &y3, int &z3,
+		int verbose_level);
+	int elliptic_curve_evaluate_RHS(int x, int b, int c);
+	void elliptic_curve_points(
+			int b, int c, int &nb, int *&T, int verbose_level);
+	void elliptic_curve_all_point_multiples(int b, int c, int &order,
+		int x1, int y1, int z1,
+		std::vector<std::vector<int> > &Pts,
+		int verbose_level);
+	int elliptic_curve_discrete_log(int b, int c,
+		int x1, int y1, int z1,
+		int x3, int y3, int z3,
+		int verbose_level);
 
 
 	// #########################################################################
 	// finite_field_io.cpp
 	// #########################################################################
 
-	void cheat_sheet_PG(int n,
-			int f_surface, int verbose_level);
 	void cheat_sheet_tables(std::ostream &f, int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
 	void print_minimum_polynomial(int p, const char *polynomial);
@@ -1090,6 +1122,7 @@ public:
 		const char *symbol_for_print, int *M, int m, int n);
 	void power_table(int t, int *power_table, int len);
 	void cheat_sheet(std::ostream &f, int verbose_level);
+	void report_subfields(std::ostream &f, int verbose_level);
 	void cheat_sheet_top(std::ostream &f, int nb_cols);
 	void cheat_sheet_bottom(std::ostream &f);
 	void display_table_of_projective_points(
@@ -1534,6 +1567,7 @@ public:
 		const char *new_line_text);
 	void algebraic_set(int *Eqns, int nb_eqns,
 			long int *Pts, int &nb_pts, int verbose_level);
+	void polynomial_function(int *coeff, int *f, int verbose_level);
 	void enumerate_points(int *coeff, long int *Pts, int &nb_pts,
 		int verbose_level);
 	int evaluate_at_a_point_by_rank(int *coeff, int pt);
@@ -1569,6 +1603,10 @@ int homogeneous_polynomial_domain_compare_monomial(void *data,
 	int i, int j, void *extra_data);
 void homogeneous_polynomial_domain_swap_monomial(void *data, 
 	int i, int j, void *extra_data);
+void HPD_callback_print_function(
+		std::stringstream &ost, void *data, void *callback_data);
+void HPD_callback_print_function2(
+		std::stringstream &ost, void *data, void *callback_data);
 
 
 
@@ -1594,6 +1632,9 @@ public:
 		// a := a - b, assuming a > b
 	void add(longinteger_object &a, 
 		longinteger_object &b, longinteger_object &c);
+	void add_mod(longinteger_object &a,
+		longinteger_object &b, longinteger_object &c,
+		longinteger_object &m, int verbose_level);
 	void add_in_place(longinteger_object &a, longinteger_object &b);
 		// a := a + b
 	void mult(longinteger_object &a, 
@@ -1630,7 +1671,42 @@ public:
 	void power_longint_mod(longinteger_object &a, 
 		longinteger_object &n, longinteger_object &m, 
 		int verbose_level);
+	void square_root(
+			longinteger_object &a, longinteger_object &sqrt_a,
+			int verbose_level);
+	int square_root_mod(int a, int p, int verbose_level);
+		// solves x^2 = a mod p. Returns x
+	void calc_roots(longinteger_object &M,
+		longinteger_object &sqrtM,
+		std::vector<int> &primes, std::vector<int> &R1, std::vector<int> &R2,
+		int verbose_level);
+	void Quadratic_Sieve(
+		int factorbase,
+		int f_mod, int mod_n, int mod_r, int x0,
+		int n, longinteger_object &M, longinteger_object &sqrtM,
+		std::vector<int> &primes, std::vector<int> &primes_log2,
+		std::vector<int> &R1, std::vector<int> &R2,
+		std::vector<int> &X,
+		int verbose_level);
+	int quadratic_sieve(
+		longinteger_object& M, longinteger_object& sqrtM,
+		std::vector<int> &primes, std::vector<int> &primes_log2,
+		std::vector<int> &R1, std::vector<int> &R2,
+		int from, int to,
+		int ll, std::vector<int> &X, int verbose_level);
+	int factor_over_factor_base(longinteger_object &x,
+			std::vector<int> &primes,
+			std::vector<int> &factor_idx, std::vector<int> &factor_exp,
+			int verbose_level);
+	int factor_over_factor_base2(
+			longinteger_object &x,
+			std::vector<int> &primes, std::vector<int> &exponents,
+			int verbose_level);
 	void create_qnm1(longinteger_object &a, int q, int n);
+	void create_Mersenne(longinteger_object &M, int n);
+	// $M_n = 2^n - 1$
+	void create_Fermat(longinteger_object &F, int n);
+	// $F_n = 2^{2^n} + 1$
 	void binomial(longinteger_object &a, int n, int k, 
 		int verbose_level);
 	void size_of_conjugacy_class_in_sym_n(longinteger_object &a, 
@@ -1639,6 +1715,8 @@ public:
 		int n, int k, int q, int verbose_level);
 	void q_binomial_no_table(longinteger_object &a, 
 		int n, int k, int q, int verbose_level);
+	void make_mac_williams_equations(longinteger_object *&M,
+			int n, int k, int q, int verbose_level);
 	void krawtchouk(longinteger_object &a, int n, int q, int k, int x);
 	int is_even(longinteger_object &a);
 	int is_odd(longinteger_object &a);
@@ -1657,6 +1735,8 @@ public:
 		int verbose_level);
 	void random_number_less_than_n(longinteger_object &n, 
 		longinteger_object &r);
+	void random_number_with_n_decimals(
+		longinteger_object &R, int n, int verbose_level);
 	void find_probable_prime_above(
 		longinteger_object &a, 
 		int nb_solovay_strassen_tests, int f_miller_rabin_test, 
@@ -1665,11 +1745,30 @@ public:
 		longinteger_object &n, int nb_tests, int verbose_level);
 	int solovay_strassen_is_prime_single_test(
 		longinteger_object &n, int verbose_level);
+	int fermat_test_iterated_with_latex_key(std::ostream &ost,
+			longinteger_object &P, int nb_times,
+			int verbose_level);
+	int fermat_test_with_latex_key(std::ostream &ost,
+		longinteger_object &n, longinteger_object &a,
+		int verbose_level);
 	int solovay_strassen_test(
 		longinteger_object &n, longinteger_object &a, 
 		int verbose_level);
+	int solovay_strassen_test_with_latex_key(std::ostream &ost,
+		longinteger_object &n, longinteger_object &a,
+		int verbose_level);
+	int solovay_strassen_test_iterated_with_latex_key(std::ostream &ost,
+			longinteger_object &P, int nb_times,
+			int verbose_level);
+	// returns TRUE is the test is conclusive, i.e. if the number is not prime.
 	int miller_rabin_test(
 		longinteger_object &n, int verbose_level);
+	int miller_rabin_test_with_latex_key(std::ostream &ost,
+		longinteger_object &n, int iteration, int verbose_level);
+	int miller_rabin_test_iterated_with_latex_key(std::ostream &ost,
+			longinteger_object &P, int nb_times,
+			int verbose_level);
+	// returns TRUE is the test is conclusive, i.e. if the number is not prime.
 	void get_k_bit_random_pseudoprime(
 		longinteger_object &n, int k, 
 		int nb_tests_solovay_strassen, 
@@ -1698,29 +1797,10 @@ public:
 	int plotkin_bound_for_d(int n, int k, int q, int verbose_level);
 	int griesmer_bound_for_d(int n, int k, int q, int verbose_level);
 	int griesmer_bound_for_n(int k, int d, int q, int verbose_level);
+	void square_root_floor(longinteger_object &a,
+			longinteger_object &x, int verbose_level);
 };
 
-#if 0
-void test_longinteger();
-void test_longinteger2();
-void test_longinteger3();
-void test_longinteger4();
-void test_longinteger5();
-void test_longinteger6();
-void test_longinteger7();
-void test_longinteger8();
-void mac_williams_equations(longinteger_object *&M, int n, int k, int q);
-void determine_weight_enumerator();
-void longinteger_collect_setup(int &nb_agos, 
-	longinteger_object *&agos, int *&multiplicities);
-void longinteger_collect_free(int &nb_agos, 
-	longinteger_object *&agos, int *&multiplicities);
-void longinteger_collect_add(int &nb_agos, 
-	longinteger_object *&agos, int *&multiplicities, 
-	longinteger_object &ago);
-void longinteger_collect_print(std::ostream &ost, int &nb_agos,
-	longinteger_object *&agos, int *&multiplicities);
-#endif
 void longinteger_free_global_data();
 void longinteger_print_digits(char *rep, int len);
 void longinteger_domain_free_tab_q_binomials();
@@ -1781,7 +1861,7 @@ public:
 // null_polarity_generator.cpp:
 // #############################################################################
 
-//! all null polarities
+//! construct all null polarities
 
 class null_polarity_generator {
 public:
@@ -1830,19 +1910,24 @@ class number_theory_domain {
 public:
 	number_theory_domain();
 	~number_theory_domain();
-	int power_mod(int a, int n, int p);
-	int inverse_mod(int a, int p);
-	int mult_mod(int a, int b, int p);
-	int add_mod(int a, int b, int p);
-	int int_abs(int a);
-	long int irem(long int a, long int m);
+	long int mod(long int a, long int p);
+	long int int_negate(long int a, long int p);
+	long int power_mod(long int a, long int n, long int p);
+	long int inverse_mod(long int a, long int p);
+	long int mult_mod(long int a, long int b, long int p);
+	long int add_mod(long int a, long int b, long int p);
+	long int int_abs(long int a);
 	long int gcd_lint(long int m, long int n);
 	void extended_gcd_int(int m, int n, int &g, int &u, int &v);
+	void extended_gcd_lint(long int m, long int n,
+			long int &g, long int &u, long int &v);
+	long int gcd_with_key_in_latex(std::ostream &ost,
+			long int a, long int b, int f_key, int verbose_level);
 	int i_power_j_safe(int i, int j);
 	long int i_power_j_lint_safe(int i, int j, int verbose_level);
-	long int i_power_j_lint(int i, int j);
+	long int i_power_j_lint(long int i, long int j);
 	int i_power_j(int i, int j);
-	int order_mod_p(int a, int p);
+	long int order_mod_p(long int a, long int p);
 	int int_log2(int n);
 	int int_log10(int n);
 	int lint_log10(long int n);
@@ -1859,20 +1944,21 @@ public:
 	//The algorithm is based on Lueneburg~\cite{Lueneburg87a}.
 	int sp_ge(int n, int p_min);
 	int factor_int(int a, int *&primes, int *&exponents);
+	void factor_lint(long int a, std::vector<long int> &primes, std::vector<int> &exponents);
 	void factor_prime_power(int q, int &p, int &e);
-	int primitive_root(int p, int verbose_level);
-	int Legendre(int a, int p, int verbose_level);
-	int Jacobi(int a, int m, int verbose_level);
-	int Jacobi_with_key_in_latex(std::ostream &ost, int a, int m, int verbose_level);
-	int gcd_with_key_in_latex(std::ostream &ost,
-			int a, int b, int f_key, int verbose_level);
+	long int primitive_root_randomized(long int p, int verbose_level);
+	long int primitive_root(long int p, int verbose_level);
+	int Legendre(long int a, long int p, int verbose_level);
+	int Jacobi(long int a, long int m, int verbose_level);
+	int Jacobi_with_key_in_latex(std::ostream &ost,
+			long int a, long int m, int verbose_level);
 	int ny2(long int x, long int &x1);
-	int ny_p(int n, int p);
-	int sqrt_mod_simple(int a, int p);
+	int ny_p(long int n, long int p);
+	//long int sqrt_mod_simple(long int a, long int p);
 	void print_factorization(int nb_primes, int *primes, int *exponents);
 	void print_longfactorization(int nb_primes,
 		longinteger_object *primes, int *exponents);
-	int euler_function(int n);
+	int euler_function(long int n);
 	void int_add_fractions(int at, int ab, int bt, int bb,
 		int &ct, int &cb, int verbose_level);
 	void int_mult_fractions(int at, int ab, int bt, int bb,
@@ -1883,10 +1969,15 @@ public:
 	int random_integer_in_interval(int lower_bound, int upper_bound);
 	int nb_primes_available();
 	int get_prime_from_table(int idx);
-	int int_negate(int a, int p);
-	int ChineseRemainder2(int a1, int a2, int p1, int p2, int verbose_level);
-	void do_babystep_giantstep(int p, int g, int h,
+	long int ChineseRemainder2(long int a1, long int a2,
+			long int p1, long int p2, int verbose_level);
+	void do_babystep_giantstep(long int p, long int g, long int h,
 			int f_latex, std::ostream &ost, int verbose_level);
+	void sieve(std::vector<int> &primes,
+			int factorbase, int verbose_level);
+	void sieve_primes(std::vector<int> &v,
+			int from, int to, int limit, int verbose_level);
+	int nb_primes(int n);
 };
 
 // #############################################################################

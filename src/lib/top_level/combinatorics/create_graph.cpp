@@ -19,6 +19,28 @@ namespace top_level {
 
 static int evaluate_cubic_form(finite_field *F, int *v);
 
+create_graph::create_graph()
+{
+	description = NULL;
+
+	f_has_CG = FALSE;
+	CG = NULL;
+
+	N = 0;
+	Adj = NULL;
+
+	//char label[1000];
+	//char label_tex[1000];
+
+}
+
+create_graph::~create_graph()
+{
+	if (f_has_CG) {
+		FREE_OBJECT(CG);
+	}
+}
+
 void create_graph::init(
 		create_graph_description *description,
 		int verbose_level)
@@ -30,7 +52,65 @@ void create_graph::init(
 	}
 	create_graph::description = description;
 
-	if (description->f_Johnson) {
+	f_has_CG = FALSE;
+
+	if (description->f_load_from_file) {
+
+		f_has_CG = TRUE;
+		CG = NEW_OBJECT(colored_graph);
+		CG->load(description->fname, verbose_level);
+		sprintf(label, "%s", description->fname);
+		sprintf(label_tex, "File\\_%s", description->fname);
+	}
+	else if (description->f_edge_list) {
+
+		combinatorics_domain Combi;
+		int h, i, j, a;
+
+		int *Idx;
+		int sz;
+
+		int_vec_scan(description->edge_list_text, Idx, sz);
+
+		N = description->n;
+
+
+		Adj = NEW_int(N * N);
+		int_vec_zero(Adj, N * N);
+		for (h = 0; h < sz; h++) {
+			a = Idx[h];
+			Combi.k2ij(a, i, j, N);
+			Adj[i * N + j] = 1;
+			Adj[j * N + i] = 1;
+		}
+		FREE_int(Idx);
+		sprintf(label, "graph_v%d_e%d", description->n, sz);
+		sprintf(label_tex, "Graph\\_%d\\_%d", description->n, sz);
+		}
+	else if (description->f_edges_as_pairs) {
+		int h, i, j;
+		int *Idx;
+		int sz, sz2;
+
+		int_vec_scan(description->edges_as_pairs_text, Idx, sz);
+
+		N = description->n;
+
+
+		Adj = NEW_int(N * N);
+		int_vec_zero(Adj, N * N);
+		sz2 = sz >> 1;
+		for (h = 0; h < sz2; h++) {
+			i = Idx[2 * h + 0];
+			j = Idx[2 * h + 1];
+			Adj[i * N + j] = 1;
+			Adj[j * N + i] = 1;
+		}
+		FREE_int(Idx);
+		sprintf(label, "graph_v%d_e%d", description->n, sz);
+		sprintf(label_tex, "Graph\\_%d\\_%d", description->n, sz);
+		}
+	else if (description->f_Johnson) {
 		if (f_v) {
 			cout << "create_graph::init before create_Johnson" << endl;
 		}

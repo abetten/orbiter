@@ -62,55 +62,84 @@ void regular_ls_classify::read_arguments(int argc, const char **argv)
 	int f_k = FALSE;
 	int f_r = FALSE;
 	
-	gen->read_arguments(argc, argv, 0);
+	//gen->read_arguments(argc, argv, 0);
 	
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-m") == 0) {
 			f_m = TRUE;
 			m = atoi(argv[++i]);
 			cout << "-m " << m << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-n") == 0) {
 			f_n = TRUE;
 			n = atoi(argv[++i]);
 			cout << "-n " << n << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-k") == 0) {
 			f_k = TRUE;
 			k = atoi(argv[++i]);
 			cout << "-k " << k << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-r") == 0) {
 			f_r = TRUE;
 			r = atoi(argv[++i]);
 			cout << "-r " << r << endl;
-			}
 		}
+	}
 	if (!f_m) {
 		cout << "regular_ls_classify::read_arguments "
 				"Please use option -m <m>" << endl;
 		exit(1);
-		}
+	}
 	if (!f_n) {
 		cout << "regular_ls_classify::read_arguments "
 				"Please use option -n <n>" << endl;
 		exit(1);
-		}
+	}
 	if (!f_k) {
 		cout << "regular_ls_classify::read_arguments "
 				"Please use option -k <k>" << endl;
 		exit(1);
-		}
+	}
 	if (!f_r) {
 		cout << "regular_ls_classify::read_arguments "
 				"Please use option -r <r>" << endl;
 		exit(1);
-		}
+	}
 }
 
 regular_ls_classify::regular_ls_classify()
 {
-	null();
+	m = 0;
+	n = 0;
+	k = 0;
+	r = 0;
+
+	starter_size = 0;
+	target_size = 0;
+	initial_pair_covering = NULL;
+
+	//char starter_directory_name[1000];
+	//char prefix[1000];
+	//char prefix_with_directory[1000];
+
+	m2 = 0;
+	v1 = NULL; // [k]
+
+	Control = NULL;
+	Poset = NULL;
+	gen = NULL;
+	A = NULL;
+	A2 = NULL;
+	Aonk = NULL; // only a pointer, do not free
+
+	row_sum = NULL;
+	pairs = NULL;
+	open_rows = NULL;
+	open_row_idx = NULL;
+	open_pairs = NULL;
+	open_pair_idx = NULL;
+	//null();
 }
 
 regular_ls_classify::~regular_ls_classify()
@@ -120,17 +149,6 @@ regular_ls_classify::~regular_ls_classify()
 
 void regular_ls_classify::null()
 {
-	Poset = NULL;
-	gen = NULL;
-	A = NULL;
-	A2 = NULL;
-	initial_pair_covering = NULL;
-	row_sum = NULL;
-	pairs = NULL;
-	open_rows = NULL;
-	open_row_idx = NULL;
-	open_pairs = NULL;
-	open_pair_idx = NULL;
 }
 
 
@@ -228,8 +246,8 @@ void regular_ls_classify::init_generator(
 	if (regular_ls_classify::initial_pair_covering) {
 		FREE_int(regular_ls_classify::initial_pair_covering);
 		}
-	if (gen->f_max_depth) {
-		gen->depth = gen->max_depth;
+	if (gen->Control->f_max_depth) {
+		gen->depth = gen->Control->max_depth;
 		}
 	else {
 		gen->depth = target_size;
@@ -255,6 +273,7 @@ void regular_ls_classify::init_generator(
 
 	strcpy(gen->fname_base, prefix_with_directory);
 
+	Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A2,
 			Strong_gens,
@@ -265,7 +284,7 @@ void regular_ls_classify::init_generator(
 				verbose_level);
 
 	
-	gen->init(Poset, gen->depth, 0/*verbose_level - 3*/);
+	gen->init(Control, Poset, gen->depth, 0/*verbose_level - 3*/);
 	
 	gen->f_print_function = FALSE;
 	gen->print_function = regular_ls_classify_print_set;
@@ -310,7 +329,7 @@ void regular_ls_classify::compute_starter(
 
 	
 	
-	gen->f_W = TRUE;
+	gen->Control->f_W = TRUE;
 	gen->compute_orbits(0 /* from_level */,
 		starter_size /* to_level */,
 		verbose_level);

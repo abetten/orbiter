@@ -35,6 +35,7 @@ translation_plane_via_andre_model::translation_plane_via_andre_model()
 	strong_gens = NULL;
 	Inc = NULL;
 	Stack = NULL;
+	Control = NULL;
 	Poset = NULL;
 	arcs = NULL;
 	T = NULL;
@@ -474,11 +475,15 @@ void translation_plane_via_andre_model::classify_arcs(
 				"before gen->initialize" << endl;
 		}
 
+	Control = NEW_OBJECT(poset_classification_control);
+
+	Control->f_w = TRUE;
+
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(An1, OnAndre,
 			strong_gens,
 			verbose_level);
-	arcs->initialize(Poset,
+	arcs->initialize(Control, Poset,
 		depth, 
 		prefix, "arcs", verbose_level - 1);
 
@@ -489,7 +494,6 @@ void translation_plane_via_andre_model::classify_arcs(
 		(void *)this /* candidate_check_data */);
 #endif
 
-	arcs->f_w = TRUE;
 
 	
 #if 0
@@ -574,8 +578,8 @@ void translation_plane_via_andre_model::classify_subplanes(
 
 	//gen->read_arguments(argc, argv, 0);
 
-	arcs->f_max_depth = TRUE;
-	arcs->max_depth = depth;
+	arcs->Control->f_max_depth = TRUE;
+	arcs->Control->max_depth = depth;
 	arcs->depth = depth;
 	
 	//sprintf(fname_base, "%sarcs", prefix);
@@ -586,11 +590,15 @@ void translation_plane_via_andre_model::classify_subplanes(
 				"before gen->initialize" << endl;
 		}
 
+	Control = NEW_OBJECT(poset_classification_control);
+
+	Control->f_w = TRUE;
+
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(An1, OnAndre,
 			strong_gens,
 			verbose_level);
-	arcs->initialize(Poset,
+	arcs->initialize(Control, Poset,
 		depth, 
 		prefix, "subplanes", verbose_level - 1);
 
@@ -602,7 +610,6 @@ void translation_plane_via_andre_model::classify_subplanes(
 		(void *)this /* candidate_check_data */);
 #endif
 
-	arcs->f_w = TRUE;
 
 	
 #if 0

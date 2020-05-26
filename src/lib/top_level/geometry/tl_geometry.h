@@ -23,14 +23,13 @@ class arc_generator {
 public:
 
 	int q;
-	//int f_poly;
-	//const char *poly;
 	finite_field *F;
-	int argc;
-	const char **argv;
+	//int argc;
+	//const char **argv;
 
-	exact_cover_arguments *ECA;
-	isomorph_arguments *IA;
+	//exact_cover_arguments *ECA;
+	//isomorph_arguments *IA;
+	group_theoretic_activity *GTA;
 
 	int verbose_level;
 	int f_starter;
@@ -78,6 +77,7 @@ public:
 	action_on_grassmannian *AG;
 	action *A_on_lines;
 	
+	poset_classification_control *Control;
 	poset *Poset;
 
 	projective_space *P; // projective n-space
@@ -106,16 +106,18 @@ public:
 	~arc_generator();
 	void null();
 	void freeself();
-	void read_arguments(int argc, const char **argv);
+	//void read_arguments(int argc, const char **argv);
 	void main(int verbose_level);
-	void init(finite_field *F,
+	void init(
+		group_theoretic_activity *GTA,
+		finite_field *F,
 		action *A, strong_generators *SG,
 		const char *starter_directory_name,
 		const char *base_fname,
 		int starter_size,  
-		int argc, const char **argv, 
 		int verbose_level);
-	void prepare_generator(int verbose_level);
+	void prepare_generator(poset_classification_control *Control,
+			int verbose_level);
 	void compute_starter(int verbose_level);
 
 	int conic_test(long int *S, int len, int pt, int verbose_level);
@@ -300,7 +302,7 @@ public:
 	~arc_lifting();
 	void null();
 	void freeself();
-	void create_surface(surface_with_action *Surf_A, long int *Arc6,
+	void create_surface_and_group(surface_with_action *Surf_A, long int *Arc6,
 		int verbose_level);
 	void lift_prepare(int verbose_level);
 	void loop_over_trihedral_pairs(vector_ge *cosets, 
@@ -330,12 +332,8 @@ public:
 		int verbose_level);
 	void create_clebsch_system(int *The_six_plane_equations, 
 		int lambda, int verbose_level);
-	void print(std::ostream &ost);
-	void print_Eckardt_point_data(std::ostream &ost);
-	void print_bisecants(std::ostream &ost);
-	void print_intersections(std::ostream &ost);
-	void print_conics(std::ostream &ost);
-	void print_Eckardt_points(std::ostream &ost);
+	void print(std::ostream &ost, int verbose_level);
+	void print_Eckardt_point_data(std::ostream &ost, int verbose_level);
 	void print_web_of_cubic_curves(std::ostream &ost);
 	void print_trihedral_plane_equations(std::ostream &ost);
 	void print_lines(std::ostream &ost);
@@ -369,6 +367,7 @@ public:
 
 	int arc_idx;
 	poset *Poset;
+	poset_classification_control *Control;
 	poset_classification *Orbits_on_pairs;
 
 	int nb_orbits_on_pairs;
@@ -388,7 +387,7 @@ public:
 	void init(
 		surfaces_arc_lifting *SAL, int arc_idx,
 		action *A,
-		int argc, const char **argv,
+		//int argc, const char **argv,
 		int verbose_level);
 	void recognize(long int *pair, int *transporter,
 			int &orbit_idx, int verbose_level);
@@ -431,7 +430,7 @@ public:
 	void init(
 		arc_orbits_on_pairs *OP, int pair_orbit_idx,
 		action *A, action *A_on_arc,
-		int argc, const char **argv,
+		//int argc, const char **argv,
 		int verbose_level);
 	void recognize(int *partition, int *transporter,
 			int &orbit_idx, int verbose_level);
@@ -462,6 +461,7 @@ public:
 	char prefix_with_directory[1000];
 	int starter_size;
 
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen;
 	action *A; // orthogonal group
@@ -481,7 +481,7 @@ public:
 		const char *input_prefix,
 		const char *base_fname,
 		int starter_size,
-		int argc, const char **argv,
+		//int argc, const char **argv,
 		int verbose_level);
 	void init_group(int f_semilinear, int verbose_level);
 	//void init_orthogonal(int verbose_level);
@@ -683,6 +683,7 @@ public:
 	int (*check_function)(int len, long int *S, void *data, int verbose_level);
 
 	poset_classification *gen;
+	poset_classification_control *Control;
 	poset *Poset;
 
 	int nb_orbits;
@@ -774,10 +775,11 @@ public:
 	~classify_cubic_curves();
 	void null();
 	void freeself();
-	void init(cubic_curve_with_action *CCA,
+	void init(
+			group_theoretic_activity *GTA,
+			cubic_curve_with_action *CCA,
 			const char *starter_directory_name,
 			const char *base_fname,
-			int argc, const char **argv,
 			int verbose_level);
 	void compute_starter(int verbose_level);
 	void test_orbits(int verbose_level);
@@ -882,6 +884,7 @@ public:
 	action *A_on_neighbors; 
 		// restricted action A2 on the set Neighbors[]
 
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *Five_plus_one;
 		// orbits on five-plus-one configurations
@@ -914,8 +917,8 @@ public:
 	void null();
 	void freeself();
 	void init(surface_with_action *Surf_A, linear_group *LG, 
-		int argc, const char **argv, 
-		int verbose_level);
+			poset_classification_control *Control,
+			int verbose_level);
 	void compute_neighbors(int verbose_level);
 	void make_spreadsheet_of_neighbors(spreadsheet *&Sp, 
 		int verbose_level);
@@ -973,6 +976,8 @@ public:
 	strong_generators *gens_type1;
 	strong_generators *gens_type2;
 
+	//poset_classification_control *Control1;
+	//poset_classification_control *Control2;
 	poset *Poset1;
 	poset *Poset2;
 	poset_classification *orbits_on_trihedra_type1;
@@ -996,7 +1001,9 @@ public:
 	void freeself();
 	void init(surface_with_action *Surf_A, int verbose_level);
 
-	void classify_orbits_on_trihedra(int verbose_level);
+	void classify_orbits_on_trihedra(
+			poset_classification_control *Control,
+			int verbose_level);
 	void list_orbits_on_trihedra_type1(std::ostream &ost);
 	void list_orbits_on_trihedra_type2(std::ostream &ost);
 	void early_test_func_type1(long int *S, int len,
@@ -1009,7 +1016,9 @@ public:
 		int verbose_level);
 	void identify_three_planes(int p1, int p2, int p3, 
 		int &type, int *transporter, int verbose_level);
-	void classify(int verbose_level);
+	void classify(
+			poset_classification_control *Control,
+			int verbose_level);
 	void downstep(int verbose_level);
 	void upstep(int verbose_level);
 	void print_trihedral_pairs(std::ostream &ost,
@@ -1084,14 +1093,15 @@ public:
 	strong_generators *Strong_gens;
 	action *A; // PGL(n - k, q) if f_linear
 
+	int f_control;
+	poset_classification_control *Control;
+
 	poset *Poset;
 	poset_classification *gen;
 
 
 	int f_irreducibility_test;
 	int f_semilinear;
-	int f_list;
-	int f_table_of_nodes;
 
 
 	int schreier_depth; // = 1000;
@@ -1099,9 +1109,12 @@ public:
 	int f_debug; // = FALSE;
 	//int f_lex; // = FALSE;
 
-	int f_draw_poset;
-	int f_print_data_structure;
-	int f_draw_schreier_trees;
+	//int f_draw_poset;
+	//int f_draw_full_poset;
+	//int f_print_data_structure;
+	//int f_list;
+	//int f_table_of_nodes;
+	//int f_draw_schreier_trees;
 
 	code_classify();
 	~code_classify();
@@ -1186,6 +1199,7 @@ public:
 	action *A2;
 	action *A2r;
 
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen;
 
@@ -1212,6 +1226,17 @@ void HS_early_test_func_callback(long int *S, int len,
 int disjoint_sets(long int *v, long int *w, int len);
 void projective_space_init_line_action(projective_space *P,
 		action *A_points, action *&A_on_lines, int verbose_level);
+
+// #############################################################################
+// hill_cap.cpp
+// #############################################################################
+
+
+void Hill_cap56(
+	char *fname, int &nb_Pts, long int *&Pts,
+	int verbose_level);
+void append_orbit_and_adjust_size(schreier *Orb, int idx, int *set, int &sz);
+
 
 
 // #############################################################################
@@ -1258,6 +1283,7 @@ public:
 int packing_types_compare_function(void *a, void *b, void *data);
 
 
+#if 0
 // #############################################################################
 // k_arc_generator.cpp
 // #############################################################################
@@ -1296,6 +1322,7 @@ public:
 		int verbose_level);
 	void compute_line_type(long int *set, int len, int verbose_level);
 };
+#endif
 
 
 
@@ -1338,6 +1365,7 @@ public:
 	action *AQ;
 	action *A_PGLQ;
 	vector_space *VS;
+	poset_classification_control *Control1;
 	poset *Poset1;
 	poset_classification *Gen;
 	int vector_space_dimension; // = n
@@ -1361,8 +1389,12 @@ public:
 	long int *secondary_candidates;
 	int secondary_nb_candidates;
 	int secondary_schreier_depth;
+
+	poset_classification_control *Control_stab;
 	poset *Poset_stab;
 	poset_classification *Gen_stab;
+
+	poset_classification_control *Control2;
 	poset *Poset2;
 	poset_classification *Gen2;
 	int *is_allowed;
@@ -1438,6 +1470,7 @@ class ovoid_classify {
 
 public:
 
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen;
 
@@ -1575,6 +1608,7 @@ public:
 	long int bitvector_length;
 	int *degree;
 
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen;
 
@@ -1955,6 +1989,7 @@ public:
 
 	int clique_size;
 	colored_graph *fixpoint_graph;
+	poset_classification_control *Control;
 	poset *Poset_fixpoint_cliques;
 	poset_classification *fixpoint_clique_gen;
 	long int *Cliques;
@@ -2051,6 +2086,7 @@ public:
 	int *base_cols; // [n]
 
 	vector_space *VS;
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *Gen;
 
@@ -2115,16 +2151,6 @@ void polar_callback_early_test_func(long int *S, int len,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 
-
-// #############################################################################
-// projective_space.cpp
-// #############################################################################
-
-
-void Hill_cap56(
-	char *fname, int &nb_Pts, long int *&Pts,
-	int verbose_level);
-void append_orbit_and_adjust_size(schreier *Orb, int idx, int *set, int &sz);
 
 // #############################################################################
 // recoordinatize.cpp
@@ -2206,6 +2232,7 @@ class search_blocking_set {
 public:
 	incidence_structure *Inc; // do not free
 	action *A; // do not free
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen;
 
@@ -2248,10 +2275,6 @@ public:
 	void restore_line_intersection_size(int level);
 };
 
-#if 0
-int callback_check_partial_blocking_set(int len, int *S, 
-	void *data, int verbose_level);
-#endif
 
 // #############################################################################
 // singer_cycle.cpp
@@ -2324,10 +2347,11 @@ public:
 	~six_arcs_not_on_a_conic();
 	void null();
 	void freeself();
-	void init(finite_field *F,
+	void init(
+		group_theoretic_activity *GTA,
+		finite_field *F,
 		action *A,
 		projective_space *P2,
-		int argc, const char **argv, 
 		int verbose_level);
 	void recognize(long int *arc6, int *transporter,
 			int &orbit_not_on_conic_idx, int verbose_level);
@@ -2354,9 +2378,9 @@ class spread_classify {
 public:
 
 	finite_field *F;
-
-	int argc;
-	const char **argv;
+	linear_group *LG;
+	int f_semilinear;
+	poset_classification_control *Control;
 
 	int order;
 	int spread_size; // = order + 1
@@ -2368,15 +2392,7 @@ public:
 	int r, nb_pts;
 	int nb_points_total; // = nb_pts = {n choose 1}_q
 	int block_size; // = r = {k choose 1}_q
-	int max_depth;
 
-	int f_print_generators;
-	int f_projective;
-	int f_semilinear;
-	int f_basis;
-	int f_induce_action;
-	int f_override_schreier_depth;
-	int override_schreier_depth;
 
 	char starter_directory_name[1000];
 	char prefix[1000];
@@ -2408,6 +2424,7 @@ public:
 	int *tmp_M3;
 	int *tmp_M4;
 
+	//poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen; // allocated in init()
 
@@ -2432,13 +2449,11 @@ public:
 	~spread_classify();
 	void null();
 	void freeself();
-	void init(int order, int n, int k, int max_depth, 
-		finite_field *F, int f_recoordinatize, 
-		const char *input_prefix, 
-		const char *base_fname,
-		int starter_size,  
-		int argc, const char **argv, 
-		int verbose_level);
+	void init(
+			finite_field *F, linear_group *LG,
+			int k, poset_classification_control *Control,
+			int verbose_level);
+	void init2(int verbose_level);
 	void unrank_point(int *v, long int a);
 	long int rank_point(int *v);
 	void unrank_subspace(int *M, long int a);
@@ -2447,8 +2462,6 @@ public:
 	void print_points(long int *pts, int len);
 	void print_elements();
 	void print_elements_and_points();
-	void read_arguments(int argc, const char **argv);
-	void init2(int verbose_level);
 	void compute(int verbose_level);
 	void early_test_func(long int *S, int len,
 		long int *candidates, int nb_candidates,
@@ -2456,7 +2469,6 @@ public:
 		int verbose_level);
 	int check_function(int len, long int *S, int verbose_level);
 	int incremental_check_function(int len, long int *S, int verbose_level);
-	//int check_function_pair(int rk1, int rk2, int verbose_level);
 	void lifting_prepare_function_new(exact_cover *E, int starter_case, 
 		long int *candidates, int nb_candidates,
 		strong_generators *Strong_gens, 
@@ -2535,6 +2547,8 @@ void spread_callback_make_quotients(isomorph *Iso, void *data,
 	int verbose_level);
 void callback_spread_print(std::ostream &ost, int len, long int *S, void *data);
 
+
+
 // #############################################################################
 // spread_create.cpp
 // #############################################################################
@@ -2579,13 +2593,12 @@ public:
 		int *f_inverse_transform, int nb_transform, int verbose_level);
 };
 
+
 // #############################################################################
 // spread_create_description.cpp
 // #############################################################################
 
 //! to describe the construction of a known spread from the command line
-
-
 
 class spread_create_description {
 
@@ -2720,15 +2733,18 @@ public:
 	~surface_classify_wedge();
 	void null();
 	void freeself();
-	void read_arguments(int argc, const char **argv, 
-		int verbose_level);
 	void init(finite_field *F, linear_group *LG, 
 		int f_semilinear, surface_with_action *Surf_A,
-		int argc, const char **argv, 
+		poset_classification_control *Control,
 		int verbose_level);
+	void do_classify_double_sixes(int verbose_level);
+	void do_classify_surfaces(int verbose_level);
 	void classify_surfaces_from_double_sixes(int verbose_level);
 	void downstep(int verbose_level);
 	void upstep(int verbose_level);
+	void derived_arcs(int verbose_level);
+	void starter_configurations_which_are_involved(int iso_type,
+		int *&Starter_configuration_idx, int &nb_starter_conf, int verbose_level);
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp, int verbose_level);
 
@@ -2758,6 +2774,22 @@ public:
 	void generate_source_code(int verbose_level);
 		// no longer produces nb_E[] and single_six[]
 	void generate_history(int verbose_level);
+	int test_if_surfaces_have_been_computed_already();
+	void write_surfaces(int verbose_level);
+	void read_surfaces(int verbose_level);
+	int test_if_double_sixes_have_been_computed_already();
+	void write_double_sixes(int verbose_level);
+	void read_double_sixes(int verbose_level);
+	void create_report(int f_with_stabilizers, int verbose_level);
+	void report(std::ostream &ost, int f_with_stabilizers, int verbose_level);
+	void create_report_double_sixes(int verbose_level);
+	void test_isomorphism(
+			surface_create_description *Descr1,
+			surface_create_description *Descr2,
+			int verbose_level);
+	void recognition(
+			surface_create_description *Descr,
+			int verbose_level);
 
 };
 
@@ -2795,6 +2827,8 @@ public:
 	long int Lines[27];
 	int f_has_group;
 	strong_generators *Sg;
+	int f_has_nice_gens;
+	vector_ge *nice_gens;
 	
 
 
@@ -2873,6 +2907,9 @@ public:
 	strong_generators *Aut_gens; 
 		// generators for the automorphism group
 
+	int f_has_nice_gens;
+	vector_ge *nice_gens;
+
 	strong_generators *projectivity_group_gens;
 	sylow_structure *Syl;
 
@@ -2907,6 +2944,7 @@ public:
 		long int *Lines, int *eqn,
 		strong_generators *Aut_gens, 
 		int f_find_double_six_and_rearrange_lines, 
+		int f_has_nice_gens, vector_ge *nice_gens,
 		int verbose_level);
 	void init_surface_object(surface_with_action *Surf_A, 
 		surface_object *SO, 
@@ -3057,15 +3095,18 @@ public:
 	~surface_with_action();
 	void null();
 	void freeself();
-	void init(surface_domain *Surf, int f_semilinear, int verbose_level);
-	void init_group(int f_semilinear, int verbose_level);
+	void init(surface_domain *Surf,
+			linear_group *LG,
+			int verbose_level);
+	//void init_group(int f_semilinear, int verbose_level);
 	int create_double_six_safely(
 		long int *five_lines, long int transversal_line,
 		long int *double_six, int verbose_level);
 	int create_double_six_from_five_lines_with_a_common_transversal(
 		long int *five_lines, long int transversal_line,
 		long int *double_six, int verbose_level);
-	void arc_lifting_and_classify(int f_log_fp, std::ofstream &fp,
+	void arc_lifting_and_classify_using_trihedral_pairs(
+		int f_log_fp, std::ofstream &fp,
 		long int *Arc6,
 		const char *arc_label, const char *arc_label_short, 
 		int nb_surfaces, 
@@ -3124,9 +3165,9 @@ public:
 	void null();
 	void freeself();
 	void init(
+		group_theoretic_activity *GTA,
 		finite_field *F, linear_group *LG4, linear_group *LG3,
 		int f_semilinear, surface_with_action *Surf_A,
-		int argc, const char **argv,
 		int verbose_level);
 	void draw_poset_of_six_arcs(int verbose_level);
 	void downstep(int verbose_level);
@@ -3225,8 +3266,8 @@ public:
 class tensor_classify {
 public:
 	int t0;
-	int argc;
-	const char **argv;
+	//int argc;
+	//const char **argv;
 	int nb_factors;
 	int n;
 	int q;
@@ -3244,6 +3285,7 @@ public:
 	longinteger_object go;
 	wreath_product *W;
 	vector_space *VS;
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *Gen;
 	int vector_space_dimension;
@@ -3251,15 +3293,14 @@ public:
 
 	tensor_classify();
 	~tensor_classify();
-	void init(int argc, const char **argv,
-			int nb_factors, int n, int q, int depth,
-			int f_permutations, int f_orbits, int f_tensor_ranks,
-			int f_orbits_restricted, const char *orbits_restricted_fname,
-			int f_orbits_restricted_compute,
-			int f_report,
-			int f_poset_classify, int poset_classify_depth,
+	void init(
+			finite_field *F, linear_group *LG,
+			//int nb_factors, int n, int q, int depth,
 			int verbose_level);
+	void print_generators();
+	void print_generators_gap();
 	void classify_poset(int depth,
+			poset_classification_control *Control,
 			int verbose_level);
 	void create_restricted_action_on_rank_one_tensors(
 			int verbose_level);
@@ -3267,6 +3308,8 @@ public:
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
+	void report(int f_poset_classify, int poset_classify_depth,
+			int verbose_level);
 };
 
 int wreath_rank_point_func(int *v, void *data);
@@ -3318,6 +3361,7 @@ public:
 	incidence_structure *Inc;
 	partitionstack *Stack;
 
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *arcs;
 

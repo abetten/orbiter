@@ -2,7 +2,6 @@
 // 
 // Anton Betten
 // 12/13/2010
-// moved to TOP_LEVEL: Apr 20, 2011
 //
 // creates Buekenhout Metz unitals in PG(2,q^2).
 //
@@ -30,9 +29,6 @@ buekenhout_metz::~buekenhout_metz()
 
 void buekenhout_metz::null()
 {
-	//f_with_group = TRUE;
-	//f_semilinear = TRUE;
-	//f_basis = TRUE;
 	f_Uab = FALSE;
 	P2 = NULL;
 	P3 = NULL;
@@ -43,13 +39,6 @@ void buekenhout_metz::null()
 	components = embedding = pair_embedding = NULL;
 	ovoid = NULL;
 	U = NULL;
-	//f_prefered_line_reps = FALSE;
-	//Orb = NULL;
-	//Orb2 = NULL;
-	//gens = NULL;
-	//tl = NULL;
-	//A = NULL;
-	//S = NULL;
 	f_is_Baer = NULL;
 	idx_in_unital = NULL;
 	idx_in_secants = NULL;
@@ -67,33 +56,11 @@ void buekenhout_metz::null()
 	U = NULL;
 	ovoid = NULL;
 	P2 = P3 = NULL;
-	//C = NULL;
-	//Stab = NULL;
 	good_points = NULL;
 }
 
 void buekenhout_metz::freeself()
 {
-#if 0
-	if (Orb) {
-		delete Orb;
-		}
-	if (Orb2) {
-		delete Orb2;
-		}
-	if (gens) {
-		delete gens;
-		}
-	if (tl) {
-		FREE_int(tl);
-		}
-	if (A) {
-		delete A;
-		}
-	if (S) {
-		delete S;
-		}
-#endif
 	if (f_is_Baer) {
 		FREE_int(f_is_Baer);
 		}
@@ -159,14 +126,6 @@ void buekenhout_metz::freeself()
 	if (P3) {
 		FREE_OBJECT(P3);
 		}
-#if 0
-	if (C) {
-		delete C;
-		}
-	if (Stab) {
-		delete Stab;
-		}
-#endif
 	if (good_points) {
 		FREE_int(good_points);
 		}
@@ -209,12 +168,8 @@ void buekenhout_metz::init(
 	P3 = NEW_OBJECT(projective_space);
 	
 
-	P2->init(2, FQ, 
-		TRUE, 
-		verbose_level);
-	P3->init(3, Fq, 
-		TRUE, 
-		verbose_level);
+	P2->init(2, FQ, TRUE, verbose_level);
+	P3->init(3, Fq, TRUE, verbose_level);
 
 
 	

@@ -71,6 +71,7 @@ public:
 
 
 
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen;
 
@@ -81,7 +82,7 @@ public:
 	~kramer_mesner();
 	void read_arguments(int argc, const char **argv, int &verbose_level);
 	void init_group(sims *&S, int verbose_level);
-	void orbits(int argc, const char **argv, sims *S, int verbose_level);
+	void orbits(sims *S, int verbose_level);
 };
 
 
@@ -385,6 +386,7 @@ public:
 	int *weights; // [n + 1]
 
 	vector_space *VS;
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *Gen;
 
@@ -406,10 +408,10 @@ public:
 
 	subspace_orbits();
 	~subspace_orbits();
-	void init(int argc, const char **argv, 
+	void init(
 		linear_group *LG, int depth, 
 		int verbose_level);
-	void init_group(int verbose_level);
+	void init_subspace_lattice(int verbose_level);
 	void compute_orbits(int verbose_level);
 	void unrank_set_to_M(int len, long int *S, int verbose_level);
 	void unrank_set_to_matrix(int len, long int *S, int *M, int verbose_level);

@@ -14,14 +14,14 @@ namespace top_level {
 
 
 // #############################################################################
-// bent_function_classify.cpp
+// boolean_function.cpp
 // #############################################################################
 
 
-//! classification of bent functions
+//! boolean function
 
 
-class bent_function_classify {
+class boolean_function {
 public:
 	int n;
 	int n2; // n / 2
@@ -35,6 +35,8 @@ public:
 	finite_field *FQ; // the field of order 2^n
 
 	homogeneous_polynomial_domain *Poly;
+		// Poly[i] = polynomial of degree i in n + 1 variables.
+		// i = 1,..,n
 	int **A_poly;
 	int **B_poly;
 	int *Kernel;
@@ -64,8 +66,8 @@ public:
 
 
 
-	bent_function_classify();
-	~bent_function_classify();
+	boolean_function();
+	~boolean_function();
 	void init(int n, int verbose_level);
 	void init_group(int verbose_level);
 	void setup_polynomial_rings(int verbose_level);
@@ -75,12 +77,12 @@ public:
 	void raise(int *in, int *out);
 	void apply_Walsh_transform(int *in, int *out);
 	int is_bent(int *T);
-	void search(int verbose_level);
+	void search_for_bent_functions(int verbose_level);
 };
 
 
-void bent_function_classify_print_function(int *poly, int sz, void *data);
-void bent_function_classify_reduction_function(int *poly, void *data);
+void boolean_function_print_function(int *poly, int sz, void *data);
+void boolean_function_reduction_function(int *poly, void *data);
 
 
 // #############################################################################
@@ -139,6 +141,7 @@ public:
 	action *Aut;
 	action *A2;
 	poset *Poset;
+	poset_classification_control *Control;
 	poset_classification *gen;
 
 
@@ -166,161 +169,6 @@ public:
 
 
 // #############################################################################
-// combinatorial_object_create.cpp
-// #############################################################################
-
-
-//! to create a combinatorial object from a description using class combinatorial_object_description
-
-
-
-class combinatorial_object_create {
-
-public:
-	combinatorial_object_description *Descr;
-
-	char prefix[1000];
-	char label_txt[1000];
-	char label_tex[1000];
-
-	int q;
-	finite_field *F;
-
-	char fname[1000];
-	int nb_pts;
-	long int *Pts;
-
-	//long int *set;
-	//int set_size;
-	int f_has_group;
-	strong_generators *Sg;
-
-
-
-
-	combinatorial_object_create();
-	~combinatorial_object_create();
-	void null();
-	void freeself();
-	void init(combinatorial_object_description *Descr, int verbose_level);
-	void apply_transformations(const char **transform_coeffs,
-		int *f_inverse_transform, int nb_transform, int verbose_level);
-};
-
-
-
-// #############################################################################
-// combinatorial_object_description.cpp
-// #############################################################################
-
-
-//! to create a combinatorial object encoded as a set using a description from the command line
-
-
-
-class combinatorial_object_description {
-
-public:
-
-	int f_q;
-	int q;
-	int f_n;
-	int n;
-	int f_poly;
-	const char *poly;
-	int f_Q;
-	int Q;
-	int f_poly_Q;
-	const char *poly_Q;
-
-	int f_subiaco_oval;
-	int f_short;
-	int f_subiaco_hyperoval;
-	int f_adelaide_hyperoval;
-
-	int f_hyperoval;
-	int f_translation;
-	int translation_exponent;
-	int f_Segre;
-	int f_Payne;
-	int f_Cherowitzo;
-	int f_OKeefe_Penttila;
-
-	int f_BLT_database;
-	int BLT_k;
-	int f_BLT_in_PG;
-
-	int f_BLT_Linear;
-	int f_BLT_Fisher;
-	int f_BLT_Mondello;
-	int f_BLT_FTWKB;
-
-	int f_ovoid;
-
-	int f_Baer;
-
-	int f_orthogonal;
-	int orthogonal_epsilon;
-
-	int f_hermitian;
-
-	int f_cubic; // twisted cubic in PG(2,q)
-	int f_twisted_cubic; // twisted cubic in PG(3,q)
-
-	int f_elliptic_curve;
-	int elliptic_curve_b;
-	int elliptic_curve_c;
-
-	int f_Hill_cap_56;
-
-	int f_ttp_code;
-	int f_ttp_construction_A;
-	int f_ttp_hyperoval;
-	int f_ttp_construction_B;
-
-	int f_unital_XXq_YZq_ZYq;
-
-	int f_desarguesian_line_spread_in_PG_3_q;
-	int f_embedded_in_PG_4_q;
-
-	int f_Buekenhout_Metz;
-	int f_classical;
-	int f_Uab;
-	int parameter_a;
-	int parameter_b;
-
-	int f_whole_space;
-	int f_hyperplane;
-	int pt;
-
-	int f_segre_variety;
-	int segre_variety_a;
-	int segre_variety_b;
-
-	int f_Maruta_Hamada_arc;
-
-	int f_projective_variety;
-	const char *variety_label;
-	int variety_degree;
-	const char *variety_coeffs;
-
-
-	int f_projective_curve;
-	const char *curve_label;
-	int curve_nb_vars;
-	int curve_degree;
-	const char *curve_coeffs;
-
-
-	combinatorial_object_description();
-	~combinatorial_object_description();
-	int read_arguments(int argc, const char **argv,
-		int verbose_level);
-};
-
-
-
-// #############################################################################
 // create_graph_description.cpp
 // #############################################################################
 
@@ -330,6 +178,18 @@ public:
 
 class create_graph_description {
 public:
+
+	int f_load_from_file;
+	const char *fname;
+
+	int f_edge_list;
+	int n;
+	const char *edge_list_text;
+
+	int f_edges_as_pairs;
+	const char *edges_as_pairs_text;
+
+
 	int f_Johnson;
 	int Johnson_n;
 	int Johnson_k;
@@ -387,12 +247,17 @@ public:
 
 	create_graph_description *description;
 
+	int f_has_CG;
+	colored_graph *CG;
+
 	int N;
 	int *Adj;
 
 	char label[1000];
 	char label_tex[1000];
 
+	create_graph();
+	~create_graph();
 	void init(
 			create_graph_description *description,
 			int verbose_level);
@@ -409,6 +274,92 @@ public:
 
 };
 
+// #############################################################################
+// delandtsheer_doyen_description.cpp
+// #############################################################################
+
+#define MAX_MASK_TESTS 1000
+
+
+//! description of the problem for delandtsheer_doyen
+
+
+class delandtsheer_doyen_description {
+public:
+
+	int f_depth;
+	int depth;
+
+	int f_d1;
+	int d1;
+
+	int f_d2;
+	int d2;
+
+	int f_q1;
+	int q1;
+
+	int f_q2;
+	int q2;
+
+	int f_group_label;
+	const char *group_label;
+
+	int f_mask_label;
+	const char *mask_label;
+
+
+
+	int DELANDTSHEER_DOYEN_X;
+	int DELANDTSHEER_DOYEN_Y;
+	int f_K;
+	int K;
+
+	int f_pair_search_control;
+	poset_classification_control *Pair_search_control;
+
+	int f_search_control;
+	poset_classification_control *Search_control;
+
+	// row intersection type
+	int f_R;
+	int nb_row_types;
+	int *row_type;     		// [nb_row_types + 1]
+
+	// col intersection type
+	int f_C;
+	int nb_col_types;
+	int *col_type;     		// [nb_col_types + 1]
+
+
+	// mask related test:
+	int nb_mask_tests;
+	int mask_test_level[MAX_MASK_TESTS];
+	int mask_test_who[MAX_MASK_TESTS];
+		// 1 = x
+		// 2 = y
+		// 3 = x+y
+		// 4 = singletons
+	int mask_test_what[MAX_MASK_TESTS];
+		// 1 = eq
+		// 2 = ge
+		// 3 = le
+	int mask_test_value[MAX_MASK_TESTS];
+
+	int f_singletons;
+	int f_subgroup;
+	const char *subgroup_gens;
+	const char *subgroup_order;
+
+	delandtsheer_doyen_description();
+	~delandtsheer_doyen_description();
+	int read_arguments(
+		int argc, const char **argv,
+		int verbose_level);
+
+};
+
+
 
 // #############################################################################
 // delandtsheer_doyen.cpp
@@ -416,32 +367,18 @@ public:
 
 
 
-#define MAX_MASK_TESTS 1000
 
-
-
-//! searching for line transitive point imprimitive designs preserving a grid structure on points
 
 
 class delandtsheer_doyen {
 public:
-	int argc;
-	const char **argv;
+	//int argc;
+	//const char **argv;
 
-	int d1;
-	int d2;
-	int q1;
-	int q2;
-
-	const char *group_label;
+	delandtsheer_doyen_description *Descr;
 
 	finite_field *F1;
 	finite_field *F2;
-
-
-	int DELANDTSHEER_DOYEN_X;
-	int DELANDTSHEER_DOYEN_Y;
-	int K;
 
 	int Xsize; // = D = q1 = # of rows
 	int Ysize; // = C = q2 = # of cols
@@ -470,7 +407,6 @@ public:
 	poset_classification *Gen;
 
 	// orbits on pairs:
-	int f_subgroup;
 	int *pair_orbit; // [V * V]
 	int nb_orbits;
 	int *transporter;
@@ -488,33 +424,13 @@ public:
 	int inner_pairs_in_cols;
 
 	// row intersection type
-	int f_R;
-	int nb_row_types;
-	int *row_type;     		// [nb_row_types + 1]
 	int *row_type_cur; 		// [nb_row_types + 1]
 	int *row_type_this_or_bigger; 	// [nb_row_types + 1]
 
 	// col intersection type
-	int f_C;
-	int nb_col_types;
-	int *col_type;     		// [nb_col_types + 1]
 	int *col_type_cur; 		// [nb_col_types + 1]
 	int *col_type_this_or_bigger; 	// [nb_col_types + 1]
 
-
-	// mask related test:
-	int nb_mask_tests;
-	int mask_test_level[MAX_MASK_TESTS];
-	int mask_test_who[MAX_MASK_TESTS];
-		// 1 = x
-		// 2 = y
-		// 3 = x+y
-		// 4 = singletons
-	int mask_test_what[MAX_MASK_TESTS];
-		// 1 = eq
-		// 2 = ge
-		// 3 = le
-	int mask_test_value[MAX_MASK_TESTS];
 
 	// a file where we print the solution, it has the extension bblt
 	// for "base block line transitive" design
@@ -537,15 +453,15 @@ public:
 
 	delandtsheer_doyen();
 	~delandtsheer_doyen();
-	void init(int argc, const char **argv,
-			int d1, int q1, int d2, int q2,
-			int f_subgroup, const char *subgroup_gens_text,
-			const char *subgroup_order_text,
-			const char *group_label,
-			int depth,
-			int verbose_level);
-	void create_graph(
-			long int *line0, int len, int verbose_level);
+	void init(delandtsheer_doyen_description *Descr, int verbose_level);
+	void show_generators(int verbose_level);
+	void search_singletons(int verbose_level);
+	void search_starter(int verbose_level);
+	void compute_orbits_on_pairs(strong_generators *Strong_gens, int verbose_level);
+	strong_generators *scan_subgroup_generators(int verbose_level);
+	void create_monomial_group(int verbose_level);
+	void create_action(int verbose_level);
+	void create_graph(long int *line0, int len, int verbose_level);
 	int find_pair_orbit(int i, int j, int verbose_level);
 	int find_pair_orbit_by_tracing(int i, int j, int verbose_level);
 	void compute_pair_orbit_table(int verbose_level);
@@ -556,14 +472,10 @@ public:
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	int check_conditions(long int *S, int len, int verbose_level);
-	int check_orbit_covering(long int *line,
-			int len, int verbose_level);
-	int check_row_sums(long int *line,
-			int len, int verbose_level);
-	int check_col_sums(long int *line,
-			int len, int verbose_level);
-	int check_mask(long int *line,
-			int len, int verbose_level);
+	int check_orbit_covering(long int *line, int len, int verbose_level);
+	int check_row_sums(long int *line, int len, int verbose_level);
+	int check_col_sums(long int *line, int len, int verbose_level);
+	int check_mask(long int *line, int len, int verbose_level);
 	void get_mask_core_and_singletons(
 		long int *line, int len,
 		int &nb_rows_used, int &nb_cols_used,
@@ -634,18 +546,25 @@ public:
 
 	//int f_semilinear;
 
-	action *A;
-	action *A2;
+	action *A; // Sym(degree)
+	action *A2; // Sym(degree), in the action on k-subsets
+
+
+	action *Aut;
+	// PGGL(3,q) in case of PG_2_q with q not prime
+	// PGL(3,q) in case of PG_2_q withq  prime
+	action *Aut_on_lines; // Aut induced on lines
 
 	int degree;
 
 	long int *set;
-	int sz;
+	int sz; // = b, the number of blocks
 
 	int f_has_group;
 	strong_generators *Sg;
 
 
+	projective_space_with_action *PA;
 	projective_space *P;
 
 	int *block; // [k]
@@ -796,6 +715,10 @@ public:
 	//int f_lex;
 
 	int f_regular;
+
+	int f_control;
+	poset_classification_control *Control;
+
 	int regularity;
 	int *degree_sequence; // [n]
 
@@ -805,14 +728,14 @@ public:
 	int *neighbor_idx; // [n]
 	int *distance; // [n]
 
-	int f_list; // list whole orbits in the end
-	int f_list_all; // list whole orbits in the end
+	//int f_list; // list whole orbits in the end
+	//int f_list_all; // list whole orbits in the end
 	int f_draw_graphs;
-	int f_embedded;
-	int f_sideways;
+	//int f_embedded;
+	//int f_sideways;
 	int f_draw_graphs_at_level;
 	int level;
-	double scale;
+	//double scale;
 	int f_x_stretch;
 	double x_stretch;
 
@@ -829,9 +752,9 @@ public:
 	int level_graph_level;
 	int f_test_multi_edge;
 
-	int f_draw_poset;
-	int f_draw_full_poset;
-	int f_plesken;
+	//int f_draw_poset;
+	//int f_draw_full_poset;
+	//int f_plesken;
 
 	int f_identify;
 	long int identify_data[1000];
@@ -842,8 +765,8 @@ public:
 
 	graph_classify();
 	~graph_classify();
-	void read_arguments(int argc, const char **argv);
-	void init(int argc, const char **argv);
+	void read_arguments(int argc, const char **argv, int verbose_level);
+	void init(int argc, const char **argv, int verbose_level);
 	int check_conditions(int len, long int *S, int verbose_level);
 	int check_conditions_tournament(int len, long int *S,
 			int verbose_level);
@@ -870,6 +793,40 @@ void graph_classify_test_function(long int *S, int len,
 void graph_classify_print_set(std::ostream &ost,
 		int len, long int *S, void *data);
 
+
+// #############################################################################
+// graph_theoretic_activity_description.cpp
+// #############################################################################
+
+//! description of an activity for graphs
+
+
+class graph_theoretic_activity_description {
+
+public:
+
+	int f_find_cliques;
+	clique_finder_control *Clique_finder_control;
+	int f_export_magma;
+	int f_export_maple;
+	int f_print;
+	int f_sort_by_colors;
+	int f_split;
+	const char *split_file;
+
+
+	graph_theoretic_activity_description();
+	~graph_theoretic_activity_description();
+	void null();
+	void freeself();
+	void read_arguments_from_string(
+			const char *str, int verbose_level);
+	int read_arguments(
+		int argc, const char **argv,
+		int verbose_level);
+
+
+};
 
 
 // #############################################################################
@@ -986,6 +943,7 @@ public:
 		// on the orbit of the reflection group.
 	int f_play_it_safe;
 
+	poset_classification_control *Control;
 	poset *Poset;
 		// subset lattice for action A_on_orbits
 	poset_classification *PC;
@@ -1029,7 +987,7 @@ void hall_system_early_test_function(long int *S, int len,
 class large_set_classify {
 public:
 	design_create *DC;
-	int design_size; // = DC->sz
+	int design_size; // = DC->sz = b, the number of blocks in the design
 	int nb_points; // = DC->A->degree
 	int nb_lines; // = DC->A2->degree
 	int search_depth;
@@ -1050,29 +1008,37 @@ public:
 	int nb_colors; // = DC->get_nb_colors_as_two_design(0 /* verbose_level */);
 	int *design_color_table; // [nb_designs]
 
-	action *A_on_designs;
+	action *A_on_designs; // action on designs in Design_table
 
 
 	uchar *bitvector_adjacency;
 	int bitvector_length;
 	int *degree;
 
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen;
 
 	int nb_needed;
 
-	long int *Design_table_reduced;
-	long int *Design_table_reduced_idx;
+	// reduced designs are those which are compatible
+	// with all the designs in the chosen set
+	long int *Design_table_reduced; // [nb_reduced * design_size]
+	long int *Design_table_reduced_idx; // [nb_reduced], index into Design_table[]
 	int nb_reduced;
 	int nb_remaining_colors; // = nb_colors - set_sz; // we assume that k = 4
 	int *reduced_design_color_table; // [nb_reduced]
+		// colors of the reduced designs after throwing away
+		// the colors covered by the designs in the chosen set.
+		// The remaining colors are relabeled consecutively.
 
 	action *A_reduced;
+		// reduced action A_on_designs based on Design_table_reduced_idx[]
 	schreier *Orbits_on_reduced;
 	int *color_of_reduced_orbits;
 
 	orbits_on_something *OoS;
+		// in action A_reduced
 	int selected_type_idx;
 
 
@@ -1101,7 +1067,7 @@ public:
 			long int *Design_table, int nb_designs, int *&design_color_table,
 			int verbose_level);
 	void compute_reduced_colors(
-			long int *set, int set_sz,
+			long int *chosen_set, int chosen_set_sz,
 			int verbose_level);
 	int designs_are_disjoint(int i, int j);
 	void process_starter_case(
@@ -1110,6 +1076,7 @@ public:
 			const char *group_label, int orbit_length,
 			int f_read_solution_file, const char *solution_file_name,
 			long int *&Large_sets, int &nb_large_sets,
+			int f_compute_normalizer_orbits, strong_generators *N_gens,
 			int verbose_level);
 	int test_orbit(long int *orbit, int orbit_length);
 	int test_pair_of_orbits(
@@ -1233,6 +1200,7 @@ public:
 	int m2;
 	int *v1; // [k]
 
+	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen;
 	action *A;

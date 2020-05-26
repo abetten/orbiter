@@ -768,14 +768,14 @@ void poset_classification::draw_poset(
 	int ymax = 1000000;
 	int x_max = 10000;
 	int y_max = 10000;
-	int rad = 50;
+	int rad = 600;
 	int f_circle = TRUE;
 	int f_corners = FALSE;
 	int f_nodes_empty = FALSE;
 	int f_show_level_info = FALSE;
 	int f_label_edges = FALSE;
 	int f_rotated = FALSE;
-	double scale = .45;
+	double scale = .20;
 	double line_width = 1.5;
 
 	draw_poset_fname_base_aux_poset(fname_base1, depth);
@@ -908,6 +908,310 @@ void poset_classification::draw_level_graph(
 }
 
 
+void poset_classification::make_flag_orbits_on_relations(
+		int depth, const char *fname_prefix, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_v5 = (verbose_level >= 5);
+	int nb_layers;
+	int *Nb_elements;
+	int *Fst;
+	int *Nb_orbits;
+	int **Fst_element_per_orbit;
+	int **Orbit_len;
+	int i, j, lvl, po, po2, so, n1, n2, ol1, ol2, el1, el2, h;
+	long int *set;
+	long int *set1;
+	long int *set2;
+	int f_contained;
+	//longinteger_domain D;
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "poset_classification::make_flag_orbits_on_relations" << endl;
+		}
+	set = NEW_lint(depth + 1);
+	set1 = NEW_lint(depth + 1);
+	set2 = NEW_lint(depth + 1);
+	nb_layers = depth + 1;
+	Nb_elements = NEW_int(nb_layers);
+	Nb_orbits = NEW_int(nb_layers);
+	Fst = NEW_int(nb_layers + 1);
+	Fst_element_per_orbit = NEW_pint(nb_layers);
+	Orbit_len = NEW_pint(nb_layers);
+	Fst[0] = 0;
+	for (i = 0; i <= depth; i++) {
+		Nb_orbits[i] = nb_orbits_at_level(i);
+		Fst_element_per_orbit[i] = NEW_int(Nb_orbits[i] + 1);
+		Orbit_len[i] = NEW_int(Nb_orbits[i]);
+		Nb_elements[i] = 0;
+
+		Fst_element_per_orbit[i][0] = 0;
+		for (j = 0; j < Nb_orbits[i]; j++) {
+			Orbit_len[i][j] = orbit_length_as_int(j, i);
+			Nb_elements[i] += Orbit_len[i][j];
+			Fst_element_per_orbit[i][j + 1] =
+					Fst_element_per_orbit[i][j] + Orbit_len[i][j];
+			}
+		Fst[i + 1] = Fst[i] + Nb_elements[i];
+		}
+
+	for (lvl = 0; lvl <= depth; lvl++) {
+		char fname[1000];
+		file_io Fio;
+
+		sprintf(fname, "%s_depth_%d_orbit_lengths.csv", fname_prefix, lvl);
+
+		Fio.int_vec_write_csv(Orbit_len[lvl], Nb_orbits[lvl],
+			fname, "Orbit_length");
+
+		cout << "poset_classification::make_flag_orbits_on_relations "
+				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	for (lvl = 0; lvl < depth; lvl++) {
+		if (f_vv) {
+			cout << "poset_classification::make_flag_orbits_on_relations "
+					"adding edges lvl=" << lvl << " / " << depth << endl;
+			}
+		//f = 0;
+
+		int *F;
+		int flag_orbit_idx;
+		char fname[1000];
+
+		if (f_vv) {
+			cout << "poset_classification::make_flag_orbits_on_relations allocating F" << endl;
+		}
+		F = NEW_int(Nb_elements[lvl] * Nb_elements[lvl + 1]);
+		int_vec_zero(F, Nb_elements[lvl] * Nb_elements[lvl + 1]);
+		sprintf(fname, "%s_depth_%d.csv", fname_prefix, lvl);
+
+		flag_orbit_idx = 1;
+		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
+
+			if (f_vv) {
+				cout << "poset_classification::make_flag_orbits_on_relations "
+						"adding edges lvl=" << lvl
+						<< " po=" << po << " / " << nb_orbits_at_level(lvl)
+						<< " Fst_element_per_orbit[lvl][po]="
+						<< Fst_element_per_orbit[lvl][po] << endl;
+				}
+
+			ol1 = Orbit_len[lvl][po];
+			//
+			n1 = first_poset_orbit_node_at_level[lvl] + po;
+
+
+			int *Down_orbits;
+			int nb_down_orbits;
+
+			Down_orbits = NEW_int(root[n1].nb_extensions);
+			nb_down_orbits = 0;
+
+			for (so = 0; so < root[n1].nb_extensions; so++) {
+
+				if (f_vv) {
+					cout << "poset_classification::make_flag_orbits_on_relations "
+							"adding edges lvl=" << lvl
+							<< " po=" << po << " / " << nb_orbits_at_level(lvl)
+							<< " so=" << so << " / " << root[n1].nb_extensions
+							<< endl;
+					}
+
+
+				extension *E = root[n1].E + so;
+				if (E->type == EXTENSION_TYPE_EXTENSION) {
+					//cout << "extension node" << endl;
+					n2 = E->data;
+
+					Down_orbits[nb_down_orbits++] = n2;
+					}
+				else if (E->type == EXTENSION_TYPE_FUSION) {
+					//cout << "fusion node" << endl;
+					// po = data1
+					// so = data2
+					int n0, so0;
+					n0 = E->data1;
+					so0 = E->data2;
+					//cout << "fusion (" << n1 << "/" << so << ") "
+					//"-> (" << n0 << "/" << so0 << ")" << endl;
+					extension *E0;
+					E0 = root[n0].E + so0;
+					if (E0->type != EXTENSION_TYPE_EXTENSION) {
+						cout << "warning: fusion node does not point "
+								"to extension node" << endl;
+						cout << "type = ";
+						print_extension_type(cout, E0->type);
+						cout << endl;
+						exit(1);
+						}
+					n2 = E0->data;
+					Down_orbits[nb_down_orbits++] = n2;
+					}
+
+				} // next so
+
+
+			if (f_vv) {
+				cout << "poset_classification::make_flag_orbits_on_relations adding edges "
+						"lvl=" << lvl
+						<< " po=" << po << " / " << nb_orbits_at_level(lvl)
+						<< " so=" << so << " / " << root[n1].nb_extensions
+						<< " downorbits = ";
+				int_vec_print(cout, Down_orbits, nb_down_orbits);
+				cout << endl;
+				}
+
+			Sorting.int_vec_sort_and_remove_duplicates(Down_orbits, nb_down_orbits);
+			if (f_vv) {
+				cout << "poset_classification::make_flag_orbits_on_relations adding edges "
+						"lvl=" << lvl << " po=" << po
+						<< " so=" << so << " unique downorbits = ";
+				int_vec_print(cout, Down_orbits, nb_down_orbits);
+				cout << endl;
+				}
+
+			for (h = 0; h < nb_down_orbits; h++, flag_orbit_idx++) {
+				n2 = Down_orbits[h];
+				po2 = n2 - first_poset_orbit_node_at_level[lvl + 1];
+				ol2 = Orbit_len[lvl + 1][po2];
+				if (f_v5) {
+					cout << "poset_classification::make_flag_orbits_on_relations "
+							"adding edges lvl=" << lvl
+							<< " po=" << po << " / " << nb_orbits_at_level(lvl)
+							<< " so=" << so << " / " << root[n1].nb_extensions
+							<< " downorbit = " << h << " / " << nb_down_orbits
+							<< " n1=" << n1 << " n2=" << n2
+							<< " po2=" << po2
+							<< " ol1=" << ol1 << " ol2=" << ol2
+							<< " Fst_element_per_orbit[lvl][po]="
+							<< Fst_element_per_orbit[lvl][po]
+							<< " Fst_element_per_orbit[lvl + 1][po2]="
+							<< Fst_element_per_orbit[lvl + 1][po2] << endl;
+					}
+				for (el1 = 0; el1 < ol1; el1++) {
+					if (f_v5) {
+						cout << "unrank " << lvl << ", " << po
+								<< ", " << el1 << endl;
+						}
+					orbit_element_unrank(lvl, po, el1, set1,
+							0 /* verbose_level */);
+					if (f_v5) {
+						cout << "set1=";
+						lint_vec_print(cout, set1, lvl);
+						cout << endl;
+						}
+
+
+					for (el2 = 0; el2 < ol2; el2++) {
+						if (f_v5) {
+							cout << "unrank " << lvl + 1 << ", "
+									<< po2 << ", " << el2 << endl;
+							}
+						orbit_element_unrank(lvl + 1, po2, el2, set2,
+								0 /* verbose_level */);
+						if (f_v5) {
+							cout << "set2=";
+							lint_vec_print(cout, set2, lvl + 1);
+							cout << endl;
+							}
+
+						if (f_v5) {
+							cout << "poset_classification::make_flag_orbits_on_relations "
+									"adding edges lvl=" << lvl
+									<< " po=" << po << " so=" << so
+									<< " downorbit = " << h << " / "
+									<< nb_down_orbits << " n1=" << n1
+									<< " n2=" << n2 << " po2=" << po2
+									<< " ol1=" << ol1 << " ol2=" << ol2
+									<< " el1=" << el1 << " el2=" << el2
+									<< endl;
+							cout << "set1=";
+							lint_vec_print(cout, set1, lvl);
+							cout << endl;
+							cout << "set2=";
+							lint_vec_print(cout, set2, lvl + 1);
+							cout << endl;
+							}
+
+
+						lint_vec_copy(set1, set, lvl);
+
+						//f_contained = int_vec_sort_and_test_if_contained(
+						// set, lvl, set2, lvl + 1);
+						f_contained = poset_structure_is_contained(
+								set, lvl, set2, lvl + 1,
+								0 /* verbose_level*/);
+
+
+						if (f_contained) {
+							if (f_v5) {
+								cout << "is contained" << endl;
+								}
+
+#if 0
+							LG->add_edge(lvl,
+								Fst_element_per_orbit[lvl][po] + el1,
+								lvl + 1,
+								Fst_element_per_orbit[lvl + 1][po2] + el2,
+								0 /*verbose_level*/);
+#else
+							F[(Fst_element_per_orbit[lvl][po] + el1) * Nb_elements[lvl + 1] + Fst_element_per_orbit[lvl + 1][po2] + el2] = flag_orbit_idx;
+#endif
+							}
+						else {
+							if (f_v5) {
+								cout << "is NOT contained" << endl;
+								}
+							}
+
+						} // next el2
+					} // next el1
+				} // next h
+
+
+			FREE_int(Down_orbits);
+
+			} // po
+
+		file_io Fio;
+
+		Fio.int_matrix_write_csv(fname, F, Nb_elements[lvl], Nb_elements[lvl + 1]);
+		FREE_int(F);
+
+		cout << "poset_classification::make_flag_orbits_on_relations "
+				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	} // lvl
+
+
+
+
+
+
+	FREE_lint(set);
+	FREE_lint(set1);
+	FREE_lint(set2);
+	FREE_int(Nb_elements);
+	FREE_int(Nb_orbits);
+	FREE_int(Fst);
+	for (i = 0; i <= depth; i++) {
+		FREE_int(Fst_element_per_orbit[i]);
+		}
+	FREE_pint(Fst_element_per_orbit);
+	for (i = 0; i <= depth; i++) {
+		FREE_int(Orbit_len[i]);
+		}
+	FREE_pint(Orbit_len);
+	if (f_v) {
+		cout << "poset_classification::make_flag_orbits_on_relations done" << endl;
+		}
+}
+
+
+
 void poset_classification::make_full_poset_graph(
 		int depth, layered_graph *&LG,
 		int data1, double x_stretch, int verbose_level)
@@ -967,8 +1271,10 @@ void poset_classification::make_full_poset_graph(
 		cout << "poset_classification::make_full_poset_graph "
 				"before LG->init" << endl;
 		cout << "nb_layers=" << nb_layers << endl;
-		cout << "Nb_elements=" << Nb_elements << endl;
+		for (lvl = 0; lvl < depth; lvl++) {
+			cout << "Nb_elements[" << lvl << "]=" << Nb_elements[lvl] << endl;
 		}
+	}
 	LG->init(nb_layers, Nb_elements, "", verbose_level);
 
 	if (f_v) {
