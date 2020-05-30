@@ -20,6 +20,14 @@
 using namespace std;
 
 
+// don't make this too big, or otherwise the linker will complain on linux machine.
+// 100000 is too big for Linux under gcc, but OK for Macintosh with LLVM
+
+
+#define MAXN 22000
+
+// must be defined before reading nauty.h
+
 
 #include "nauty.h"
 #include "foundations.h"
@@ -37,12 +45,6 @@ namespace foundations {
 
 
 
-// don't make this too big, or otherwise the linker will complain on linux machine.
-// 100000 is too big for Linux under gcc, but OK for Macintosh with LLVM
-
-
-#define MAXN 22000
-
 #define MAX_WORKSPACE 50000
 
 
@@ -55,8 +57,8 @@ using namespace std;
 
 typedef unsigned char uchar;
 
-int bitvector_s_i(uchar *bitvec, long int i);
-long int callback_ij2k(long int i, long int j, int n);
+//int bitvector_s_i(uchar *bitvec, long int i);
+//long int callback_ij2k(long int i, long int j, int n);
 
 static void nauty_interface_allocate_data(int n);
 static void nauty_interface_free_data();
@@ -544,7 +546,7 @@ void nauty_interface::nauty_interface_matrix_int(int *M, int v, int b,
 	if (f_v) {
 		cout << "nauty_interface_matrix_int "
 				"v=" << v << " b=" << b << endl;
-		}
+	}
 	options.getcanon = TRUE;
 	options.defaultptn = FALSE;
 	//options.writeautoms = TRUE;
@@ -555,7 +557,13 @@ void nauty_interface::nauty_interface_matrix_int(int *M, int v, int b,
 	aut_counter = 0;
 
 	// global variables in nauty.c:
+	if (f_vv) {
+		cout << "nauty_interface_matrix_int before nauty_interface_allocate_data" << endl;
+	}
 	nauty_interface_allocate_data(n);
+	if (f_vv) {
+		cout << "nauty_interface_matrix_int after nauty_interface_allocate_data" << endl;
+	}
 
 
 	base_length = 0;
@@ -566,60 +574,68 @@ void nauty_interface::nauty_interface_matrix_int(int *M, int v, int b,
 		cout << "nauty_interface_matrix_int n = " << n << endl;
 		cout << "nauty_interface_matrix_int MAXN = " << (int)MAXN << endl;
 		exit(1);
-		}
+	}
 	if (f_vv) {
 		cout << "nauty_interface_matrix_int n = " << n << " m=" << m << endl;
-		}
+	}
 	for (i = 0; i < n; i++) {
 		row = GRAPHROW(g, i, m);
 		EMPTYSET(row, m);
-		}
-	
+	}
+
+	if (f_vv) {
+		cout << "nauty_interface_matrix_int init adjacency" << endl;
+	}
+
 	for (i = 0; i < v; i++) {
 		for (j = 0; j < b; j++) {
-			if (M[i * b + j] == 0)
+			if (M[i * b + j] == 0) {
 				continue;
+			}
 			p1 = i;
 			p2 = v + j;
 			row = GRAPHROW(g, p1, m);
 			ADDELEMENT(row, p2);
 			row = GRAPHROW(g, p2, m);
 			ADDELEMENT(row, p1);
-			}
 		}
+	}
 
+	if (f_vv) {
+		cout << "nauty_interface_matrix_int init lab[] and ptn[]" << endl;
+	}
 	for (i = 0; i < n; i++) {
 		lab[i] = i;
 		ptn[i] = partition[i];
-		}
+	}
 	//ptn[v - 1] = 0;
 	if (f_vv) {
-		cout << "nauty_interface_matrix_int, calling nauty..." << endl;
+		cout << "nauty_interface_matrix_int, calling densenauty" << endl;
 	}
 	//	nauty(g, lab, ptn, NILSET, orbits,
 	//&options, &stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
 	densenauty(g, lab, ptn, orbits, &options, &stats, m, n, canong);
 	if (f_vv) {
-		cout << "nauty_interface_matrix_int, after nauty" << endl;
+		cout << "nauty_interface_matrix_int, after densenauty" << endl;
 		cout << "nauty_interface_matrix_int, ago=" << ago << endl;
 		cout << "nauty_interface_matrix_int, numnodes=" << stats.numnodes << endl;
-		}
+	}
 	for (i = 0; i < n; i++) {
 		labeling[i] = lab[i];
-		}
+	}
 #if 1
 	Ago = ago;
 	Base_length = base_length;
 	for (i = base_length - 1; i >= 0; i--) {
 		Base[base_length - 1 - i] = base[i];
 		Transversal_length[base_length - 1 - i] = transversal_length[i];
-		}
+	}
 
 	for (i = 0; i < aut_counter; i++) {
 		for (j = 0; j < n; j++) {
 			Aut[i * n + j] = aut[i * n + j];
-			}
 		}
+	}
 	Aut_counter = aut_counter;
 #endif
 	nauty_interface_free_data();

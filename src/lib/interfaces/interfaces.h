@@ -18,7 +18,7 @@ using namespace orbiter::top_level;
 
 namespace orbiter {
 
-//! classes for combinatorial objects and their classification
+//! classes to interface user input through the command line
 
 namespace interfaces {
 
@@ -28,6 +28,7 @@ class interface_combinatorics;
 class interface_cryptography;
 class interface_povray;
 class interface_projective;
+class orbiter_session;
 
 
 // #############################################################################
@@ -73,7 +74,7 @@ public:
 	void print_help(int argc, const char **argv, int i, int verbose_level);
 	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
 	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
-	void worker(int verbose_level);
+	void worker(orbiter_session *Session, int verbose_level);
 	void do_eigenstuff_matrix_direct(
 			int n, int q, const char *coeffs_text, int verbose_level);
 	void do_eigenstuff_matrix_from_file(
@@ -83,7 +84,7 @@ public:
 	void perform_group_theoretic_activity(finite_field *F, linear_group *LG,
 			group_theoretic_activity_description *Group_theoretic_activity_description,
 			int verbose_level);
-	void do_cheat_sheet_GF(int q, int verbose_level);
+	void do_cheat_sheet_GF(int q, int f_poly, const char *poly, int verbose_level);
 	void do_search_for_primitive_polynomial_in_range(int p_min, int p_max,
 			int deg_min, int deg_max, int verbose_level);
 	void do_make_table_of_irreducible_polynomials(int deg, int q, int verbose_level);
@@ -140,6 +141,13 @@ class interface_combinatorics {
 
 	int f_create_combinatorial_object;
 	combinatorial_object_description *Combinatorial_object_description;
+
+	int f_diophant;
+	diophant_description *Diophant_description;
+
+	int f_diophant_activity;
+	diophant_activity_description *Diophant_activity_description;
+
 	int f_save;
 	const char *fname_prefix;
 	int f_process_combinatorial_objects;
@@ -171,8 +179,14 @@ class interface_combinatorics {
 	int f_graph_classify;
 	int f_tdo_refinement;
 	tdo_refinement_description *Tdo_refinement_descr;
+	int f_tdo_print;
+	const char *tdo_print_fname;
 	int f_create_design;
 	design_create_description *Design_create_description;
+	int f_convert_stack_to_tdo;
+	const char *stack_fname;
+	int f_maximal_arc_parameters;
+	int maximal_arc_parameters_q, maximal_arc_parameters_r;
 
 public:
 	interface_combinatorics();
@@ -187,6 +201,8 @@ public:
 	void do_read_poset_file(const char *fname,
 			int f_grouping, double x_stretch, int verbose_level);
 	void do_create_combinatorial_object(int verbose_level);
+	void do_diophant(diophant_description *Descr, int verbose_level);
+	void do_diophant_activity(diophant_activity_description *Descr, int verbose_level);
 	void do_process_combinatorial_object(int verbose_level);
 	void do_bent(int n, int verbose_level);
 	void do_random_permutation(int deg, const char *fname_csv, int verbose_level);
@@ -196,7 +212,10 @@ public:
 	void do_Delandtsheer_Doyen(delandtsheer_doyen_description *Descr, int verbose_level);
 	void do_graph_classify(int verbose_level);
 	void do_tdo_refinement(tdo_refinement_description *Descr, int verbose_level);
+	void do_tdo_print(const char *fname, int verbose_level);
 	void do_create_design(design_create_description *Descr, int verbose_level);
+	void convert_stack_to_tdo(const char *stack_fname, int verbose_level);
+	void do_parameters_maximal_arc(int q, int r, int verbose_level);
 };
 
 
@@ -589,9 +608,11 @@ public:
 	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
 	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
 	int read_canonical_form_arguments(int argc, const char **argv, int i0, int verbose_level);
-	void worker(int verbose_level);
-	void do_cheat_sheet_PG(int n, int q, int verbose_level);
-	void do_canonical_form_PG(int n, int q, int verbose_level);
+	void worker(orbiter_session *Session, int verbose_level);
+	void do_cheat_sheet_PG(orbiter_session *Session,
+			int n, int q, int verbose_level);
+	void do_canonical_form_PG(orbiter_session *Session,
+			int n, int q, int verbose_level);
 	void do_classify_cubic_curves(int q, int verbose_level);
 	void do_create_points_on_quartic(double desired_distance, int verbose_level);
 	void do_create_points_on_parabola(double desired_distance, int N,
@@ -605,6 +626,55 @@ public:
 	void do_create_surface(surface_create_description *Descr, int verbose_level);
 	void do_study_surface(int q, int nb, int verbose_level);
 };
+
+
+
+// #############################################################################
+// orbiter_session.cpp
+// #############################################################################
+
+//! global settings for the orbiter session
+
+
+class orbiter_session {
+
+public:
+	int argc;
+	const char **argv;
+
+	int verbose_level;
+
+	int t0;
+
+	int f_seed;
+	int the_seed;
+
+	int f_memory_debug;
+	int memory_debug_verbose_level;
+
+	int f_override_polynomial;
+	const char *override_polynomial;
+
+
+	interface_algebra Interface_algebra;
+	interface_cryptography Interface_cryptography;
+	interface_combinatorics Interface_combinatorics;
+	interface_coding_theory Interface_coding_theory;
+	interface_povray Interface_povray;
+	interface_projective Interface_projective;
+
+
+	orbiter_session();
+	~orbiter_session();
+	void print_help(int argc,
+			const char **argv, int i, int verbose_level);
+	int recognize_keyword(int argc,
+			const char **argv, int i, int verbose_level);
+	int read_arguments(int argc,
+			const char **argv, int i0);
+	void work(int argc, const char **argv, int i, int verbose_level);
+};
+
 
 
 }}

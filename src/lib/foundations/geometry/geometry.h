@@ -2532,6 +2532,12 @@ public:
 			int f_dualize,
 			diophant *&D,
 			int verbose_level);
+	void maximal_arc_by_diophant(
+			int arc_sz, int arc_d,
+			const char *secant_lines_text,
+			const char *external_lines_as_subset_of_secants_text,
+			diophant *&D,
+			int verbose_level);
 	void rearrange_arc_for_lifting(long int *Arc6,
 			long int P1, long int P2, int partition_rk, long int *arc,
 			int verbose_level);

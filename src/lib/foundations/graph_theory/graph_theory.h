@@ -591,8 +591,9 @@ public:
 		int f_partition, int nb_row_parts, int *row_part_first,
 		int nb_col_parts, int *col_part_first,
 		int f_row_grid, int f_col_grid,
-		int f_bitmatrix, uchar *D, int *M,
-		int m, int n, int xmax_in, int ymax_in, int xmax, int ymax,
+		int f_bitmatrix, uchar *D,
+		int *M, int m, int n,
+		int xmax_in, int ymax_in, int xmax, int ymax,
 		double scale, double line_width,
 		int f_has_labels, int *labels,
 		int verbose_level);

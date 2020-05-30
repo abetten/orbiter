@@ -935,16 +935,12 @@ void compute_generators_GL_n_q(int *&Gens, int &nb_gens,
 	int &elt_size, int n, finite_field *F,
 	vector_ge *&nice_gens,
 	int verbose_level);
-//void order_of_PGGL_n_q(longinteger_object &go, int n, int q,
-//	int f_semilinear);
 void set_orthogonal_group_type(int f_siegel, 
 	int f_reflection, int f_similarity, int f_semisimilarity);
 int get_orthogonal_group_type_f_reflection();
 void callback_choose_random_generator_orthogonal(int iteration, 
 	int *Elt, void *data, int verbose_level);
 	// for use in action_init.cpp
-void test_matrix_group(int k, int q, int f_semilinear, 
-	int verbose_level);
 void lift_generators(vector_ge *gens_in, vector_ge *&gens_out, 
 	action *Aq, subfield_structure *S, int n, int verbose_level);
 void retract_generators(vector_ge *gens_in, vector_ge *&gens_out, 

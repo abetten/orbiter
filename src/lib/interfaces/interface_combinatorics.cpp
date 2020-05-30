@@ -19,6 +19,7 @@ namespace orbiter {
 namespace interfaces {
 
 
+
 interface_combinatorics::interface_combinatorics()
 {
 	argc = 0;
@@ -26,6 +27,13 @@ interface_combinatorics::interface_combinatorics()
 
 	f_create_combinatorial_object = FALSE;
 	Combinatorial_object_description = NULL;
+
+	f_diophant = FALSE;
+	Diophant_description = NULL;
+
+	f_diophant_activity = FALSE;
+	Diophant_activity_description = NULL;
+
 	f_save = FALSE;
 	fname_prefix = FALSE;
 	f_process_combinatorial_objects = FALSE;
@@ -58,8 +66,15 @@ interface_combinatorics::interface_combinatorics()
 	f_graph_classify = FALSE;
 	f_tdo_refinement = FALSE;
 	Tdo_refinement_descr = NULL;
+	f_tdo_print = FALSE;
+	tdo_print_fname = NULL;
 	f_create_design = FALSE;
 	Design_create_description = NULL;
+	f_convert_stack_to_tdo = FALSE;
+	stack_fname = NULL;
+	f_maximal_arc_parameters = FALSE;
+	maximal_arc_parameters_q = 0;
+	maximal_arc_parameters_r = 0;
 }
 
 
@@ -68,6 +83,15 @@ void interface_combinatorics::print_help(int argc,
 {
 	if (strcmp(argv[i], "-create_combinatorial_object") == 0) {
 		cout << "-create_combinatorial_object " << endl;
+	}
+	else if (strcmp(argv[i], "-diophant") == 0) {
+		cout << "-diophant <description> " << endl;
+	}
+	else if (strcmp(argv[i], "-diophant_activity") == 0) {
+		cout << "-diophant_activity <description> " << endl;
+	}
+	else if (strcmp(argv[i], "-save") == 0) {
+		cout << "-save <fname> " << endl;
 	}
 	else if (strcmp(argv[i], "-process_combinatorial_objects") == 0) {
 		cout << "-process_combinatorial_objects " << endl;
@@ -111,8 +135,17 @@ void interface_combinatorics::print_help(int argc,
 	else if (strcmp(argv[i], "-tdo_refinement") == 0) {
 		cout << "-tdo_refinement <options>" << endl;
 	}
+	else if (strcmp(argv[i], "-tdo_print") == 0) {
+		cout << "-tdo_print <string : tdo-fname>" << endl;
+	}
 	else if (strcmp(argv[i], "-create_design") == 0) {
 		cout << "-create_design <options>" << endl;
+	}
+	else if (strcmp(argv[i], "-convert_stack_to_tdo") == 0) {
+		cout << "-convert_stack_to_tdo <string : stack_fname>" << endl;
+	}
+	else if (strcmp(argv[i], "-maximal_arc_parameters") == 0) {
+		cout << "-maximal_arc_parameters <int : q > < int : r >" << endl;
 	}
 }
 
@@ -120,6 +153,15 @@ int interface_combinatorics::recognize_keyword(int argc,
 		const char **argv, int i, int verbose_level)
 {
 	if (strcmp(argv[i], "-create_combinatorial_object") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-diophant") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-diophant_activity") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-save") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-process_combinatorial_objects") == 0) {
@@ -164,7 +206,16 @@ int interface_combinatorics::recognize_keyword(int argc,
 	else if (strcmp(argv[i], "-tdo_refinement") == 0) {
 		return true;
 	}
+	else if (strcmp(argv[i], "-tdo_print") == 0) {
+		return true;
+	}
 	else if (strcmp(argv[i], "-create_design") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-convert_stack_to_tdo") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-maximal_arc_parameters") == 0) {
 		return true;
 	}
 	return false;
@@ -188,6 +239,32 @@ void interface_combinatorics::read_arguments(int argc,
 			i += Combinatorial_object_description->read_arguments(argc - i - 1,
 					argv + i + 1, verbose_level) - 1;
 			cout << "interface_combinatorics::read_arguments finished reading -create_combinatorial_object" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+		else if (strcmp(argv[i], "-diophant") == 0) {
+			f_diophant = TRUE;
+			Diophant_description = NEW_OBJECT(diophant_description);
+			i += Diophant_description->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "-diophant" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+		else if (strcmp(argv[i], "-diophant_activity") == 0) {
+			f_diophant_activity = TRUE;
+			Diophant_activity_description = NEW_OBJECT(diophant_activity_description);
+			i += Diophant_activity_description->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "-diophant_activity" << endl;
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -299,6 +376,11 @@ void interface_combinatorics::read_arguments(int argc,
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
+		if (strcmp(argv[i], "-tdo_print") == 0) {
+			f_tdo_print = TRUE;
+			tdo_print_fname = argv[++i];
+			cout << "-tdo_print " << tdo_print_fname << endl;
+		}
 		else if (strcmp(argv[i], "-create_design") == 0) {
 			f_create_design = TRUE;
 			Design_create_description = NEW_OBJECT(design_create_description);
@@ -310,6 +392,18 @@ void interface_combinatorics::read_arguments(int argc,
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
+		else if (strcmp(argv[i], "-convert_stack_to_tdo") == 0) {
+			f_convert_stack_to_tdo = TRUE;
+			stack_fname = argv[++i];
+			cout << "-convert_stack_to_tdo " << stack_fname << endl;
+		}
+		else if (strcmp(argv[i], "-maximal_arc_parameters") == 0) {
+			f_maximal_arc_parameters = TRUE;
+			maximal_arc_parameters_q = atoi(argv[++i]);
+			maximal_arc_parameters_r = atoi(argv[++i]);
+			cout << "-maximal_arc_parameters " << maximal_arc_parameters_q
+					<< " " << maximal_arc_parameters_r << endl;
+		}
 	}
 	cout << "interface_combinatorics::read_arguments done" << endl;
 }
@@ -319,6 +413,12 @@ void interface_combinatorics::worker(int verbose_level)
 {
 	if (f_create_combinatorial_object) {
 		do_create_combinatorial_object(verbose_level);
+	}
+	else if (f_diophant) {
+		do_diophant(Diophant_description, verbose_level);
+	}
+	else if (f_diophant_activity) {
+		do_diophant_activity(Diophant_activity_description, verbose_level);
 	}
 	else if (f_process_combinatorial_objects) {
 		do_process_combinatorial_object(verbose_level);
@@ -376,9 +476,21 @@ void interface_combinatorics::worker(int verbose_level)
 
 		do_tdo_refinement(Tdo_refinement_descr, verbose_level);
 	}
+	else if (f_tdo_print) {
+
+		do_tdo_print(tdo_print_fname, verbose_level);
+	}
 	else if (f_create_design) {
 
 		do_create_design(Design_create_description, verbose_level);
+	}
+	else if (f_convert_stack_to_tdo) {
+
+		convert_stack_to_tdo(stack_fname, verbose_level);
+	}
+	else if (f_maximal_arc_parameters) {
+
+		do_parameters_maximal_arc(maximal_arc_parameters_q, maximal_arc_parameters_r, verbose_level);
 	}
 }
 
@@ -648,6 +760,161 @@ void interface_combinatorics::do_create_combinatorial_object(int verbose_level)
 	}
 }
 
+
+void interface_combinatorics::do_diophant(diophant_description *Descr, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_diophant" << endl;
+	}
+
+	finite_field *F;
+
+	F = NEW_OBJECT(finite_field);
+
+	if (!Descr->f_q) {
+		cout << "interface_combinatorics::do_diophant please use option -q <q>" << endl;
+		exit(1);
+	}
+	if (Descr->f_override_polynomial) {
+		cout << "creating finite field of order q=" << Descr->input_q
+				<< " using override polynomial " << Descr->override_polynomial << endl;
+		F->init_override_polynomial(Descr->input_q,
+				Descr->override_polynomial, verbose_level);
+	}
+	else {
+		cout << "interface_combinatorics::do_diophant creating finite field "
+				"of order q=" << Descr->input_q
+				<< " using the default polynomial (if necessary)" << endl;
+		F->init(Descr->input_q, 0);
+	}
+
+	Descr->F = F;
+
+	diophant_create *DC;
+
+	DC = NEW_OBJECT(diophant_create);
+
+	DC->init(Descr, verbose_level);
+
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_diophant done" << endl;
+	}
+}
+
+void interface_combinatorics::do_diophant_activity(diophant_activity_description *Descr, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_diophant_activity" << endl;
+	}
+
+	diophant_activity *DA;
+
+	DA = NEW_OBJECT(diophant_activity);
+
+	DA->init(Descr, verbose_level);
+
+	FREE_OBJECT(DA);
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_diophant_activity done" << endl;
+	}
+}
+
+#if 0
+void interface_combinatorics::do_solve_diophant(const char *fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_solve_diophant" << endl;
+	}
+
+	diophant *Dio;
+
+	Dio = NEW_OBJECT(diophant);
+	Dio->read_compact_format(fname, verbose_level);
+
+	Dio->eliminate_zero_rows_quick(verbose_level);
+
+#if 0
+	int r, val;
+
+	for (i = 0; i < RHS_row_nb; i++) {
+		r = RHS_row[i];
+		val = RHS_row_value[i];
+		if (r < 0) {
+			Dio->RHSi(Dio->m + r) = val;
+			}
+		else {
+			Dio->RHSi(r) = val;
+			}
+		}
+
+	if (Dio->f_x_max) {
+		Dio->append_equation();
+
+		int j;
+
+
+		if (f_v) {
+			cout << "appending one equation for the sum" << endl;
+			}
+
+		i = Dio->m - 1;
+		for (j = 0; j < Dio->n; j++) {
+			Dio->Aij(i, j) = 1;
+			}
+		Dio->type[i] = t_EQ;
+		Dio->RHS[i] = Dio->sum;
+
+#if 0
+		//Dio->f_x_max = TRUE;
+		for (j = 0; j < Dio->n; j++) {
+			Dio->x_max[j] = 1;
+		}
+
+		for (i = 0; i < nb_xmax; i++) {
+			Dio->x_max[xmax_variable[i]] = xmax_value[i];
+			}
+#endif
+	}
+#endif
+
+	//Dio->print();
+	Dio->print_tight();
+
+	long int nb_backtrack_nodes;
+
+	cout << "solving with mckay" << endl;
+	Dio->solve_all_mckay(nb_backtrack_nodes, verbose_level - 2);
+	Dio->nb_steps_betten = nb_backtrack_nodes;
+
+	cout << "Found " << Dio->_resultanz << " solutions with "
+			<< Dio->nb_steps_betten << " backtrack steps" << endl;
+
+	if (TRUE) {
+		char output_file[1000];
+
+		strcpy(output_file, fname);
+		replace_extension_with(output_file, ".sol");
+
+
+		Dio->write_solutions(output_file, verbose_level);
+	}
+
+
+	FREE_OBJECT(Dio);
+	if (f_v) {
+		cout << "interface_combinatorics::do_solve_diophant done" << endl;
+	}
+}
+#endif
+
 void interface_combinatorics::do_process_combinatorial_object(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -669,7 +936,9 @@ void interface_combinatorics::do_process_combinatorial_object(int verbose_level)
 		exit(1);
 	}
 
-	Job->perform_job(verbose_level);
+	projective_space_job J;
+
+	J.perform_job(Job, verbose_level);
 
 	if (f_v) {
 		cout << "interface_combinatorics::do_process_combinatorial_object done" << endl;
@@ -1075,6 +1344,308 @@ void interface_combinatorics::do_tdo_refinement(tdo_refinement_description *Desc
 	}
 }
 
+void interface_combinatorics::do_tdo_print(const char *fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int cnt;
+	char str[1000];
+	char ext[1000];
+	//char fname_out[1000];
+	int f_widor = FALSE;
+	int f_doit = FALSE;
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_tdo_print" << endl;
+	}
+
+	cout << "opening file " << fname << " for reading" << endl;
+	ifstream f(fname);
+	//ofstream *g = NULL;
+
+	//ofstream *texfile;
+
+
+
+	strcpy(str, fname);
+	get_extension_if_present(str, ext);
+	chop_off_extension_if_present(str, ext);
+
+#if 0
+	sprintf(fname_out, "%sw.tdo", str);
+	if (f_w) {
+		g = new ofstream(fname_out);
+		}
+	if (f_texfile) {
+		texfile = new ofstream(texfile_name);
+		}
+#endif
+
+
+	geo_parameter GP;
+	tdo_scheme G;
+
+
+	Vector vm, VM, VM_mult;
+	discreta_base mu;
+
+#if 0
+	if (f_intersection) {
+		VM.m_l(0);
+		VM_mult.m_l(0);
+		}
+#endif
+
+	for (cnt = 0; ; cnt++) {
+		if (f.eof()) {
+			cout << "eof reached" << endl;
+			break;
+			}
+		if (f_widor) {
+			if (!GP.input(f)) {
+				//cout << "GP.input returns FALSE" << endl;
+				break;
+				}
+			}
+		else {
+			if (!GP.input_mode_stack(f, verbose_level - 1)) {
+				//cout << "GP.input_mode_stack returns FALSE" << endl;
+				break;
+				}
+			}
+		//if (f_v) {
+			//cout << "read decomposition " << cnt << endl;
+			//}
+
+		f_doit = TRUE;
+#if 0
+		if (f_range) {
+			if (cnt < range_first || cnt >= range_first + range_len)
+				f_doit = FALSE;
+			}
+		if (f_select) {
+			if (strcmp(GP.label, select_label))
+				continue;
+			}
+		if (f_nt) {
+			if (GP.row_level == GP.col_level)
+				continue;
+			}
+#endif
+
+		if (!f_doit) {
+			continue;
+			}
+		//cout << "before convert_single_to_stack" << endl;
+		//GP.convert_single_to_stack();
+		//cout << "after convert_single_to_stack" << endl;
+		//sprintf(label, "%s.%d", str, i);
+		//GP.write(g, label);
+		if (f_vv) {
+			cout << "before init_tdo_scheme" << endl;
+			}
+		GP.init_tdo_scheme(G, verbose_level - 1);
+		if (f_vv) {
+			cout << "after init_tdo_scheme" << endl;
+			}
+		GP.print_schemes(G);
+
+#if 0
+		if (f_C) {
+			GP.print_C_source();
+			}
+#endif
+		if (TRUE /* f_tex */) {
+			GP.print_scheme_tex(cout, G, ROW);
+			GP.print_scheme_tex(cout, G, COL);
+			}
+#if 0
+		if (f_texfile) {
+			if (f_ROW) {
+				GP.print_scheme_tex(*texfile, G, ROW);
+				}
+			if (f_COL) {
+				GP.print_scheme_tex(*texfile, G, COL);
+				}
+			}
+		if (f_Tex) {
+			char fname[1000];
+
+			sprintf(fname, "%s.tex", GP.label);
+			ofstream f(fname);
+
+			GP.print_scheme_tex(f, G, ROW);
+			GP.print_scheme_tex(f, G, COL);
+			}
+		if (f_intersection) {
+			Vector V, M;
+			intersection_of_columns(GP, G,
+				intersection_j1, intersection_j2, V, M, verbose_level - 1);
+			vm.m_l(2);
+			vm.s_i(0).swap(V);
+			vm.s_i(1).swap(M);
+			cout << "vm:" << vm << endl;
+			int idx;
+			mu.m_i_i(1);
+			if (VM.search(vm, &idx)) {
+				VM_mult.m_ii(idx, VM_mult.s_ii(idx) + 1);
+				}
+			else {
+				cout << "inserting at position " << idx << endl;
+				VM.insert_element(idx, vm);
+				VM_mult.insert_element(idx, mu);
+				}
+			}
+		if (f_w) {
+			GP.write_mode_stack(*g, GP.label);
+			nb_written++;
+			}
+#endif
+		}
+
+#if 0
+	if (f_w) {
+		*g << "-1 " << nb_written << endl;
+		delete g;
+
+		}
+
+	if (f_texfile) {
+		delete texfile;
+		}
+
+	if (f_intersection) {
+		int cl, c, l, j, L;
+		cout << "the intersection types are:" << endl;
+		for (i = 0; i < VM.s_l(); i++) {
+			//cout << setw(5) << VM_mult.s_ii(i) << " x " << VM.s_i(i) << endl;
+			cout << "intersection type " << i + 1 << ":" << endl;
+			Vector &V = VM.s_i(i).as_vector().s_i(0).as_vector();
+			Vector &M = VM.s_i(i).as_vector().s_i(1).as_vector();
+			//cout << "V=" << V << endl;
+			//cout << "M=" << M << endl;
+			cl = V.s_l();
+			for (c = 0; c < cl; c++) {
+				Vector &Vc = V.s_i(c).as_vector();
+				Vector &Mc = M.s_i(c).as_vector();
+				//cout << c << " : " << Vc << "," << Mc << endl;
+				l = Vc.s_l();
+				for (j = 0; j < l; j++) {
+					Vector &the_type = Vc.s_i(j).as_vector();
+					int mult = Mc.s_ii(j);
+					cout << setw(5) << mult << " x " << the_type << endl;
+					}
+				cout << "--------------------------" << endl;
+				}
+			cout << "appears " << setw(5) << VM_mult.s_ii(i) << " times" << endl;
+
+			classify *C;
+			classify *C_pencil;
+			int f_second = FALSE;
+			int *pencil_data;
+			int pencil_data_size = 0;
+			int pos, b, hh;
+
+			C = new classify[cl];
+			C_pencil = new classify;
+
+			for (c = 0; c < cl; c++) {
+				Vector &Vc = V.s_i(c).as_vector();
+				Vector &Mc = M.s_i(c).as_vector();
+				//cout << c << " : " << Vc << "," << Mc << endl;
+				l = Vc.s_l();
+				L = 0;
+				for (j = 0; j < l; j++) {
+					Vector &the_type = Vc.s_i(j).as_vector();
+					int mult = Mc.s_ii(j);
+					if (the_type.s_ii(1) == 1 && the_type.s_ii(0)) {
+						pencil_data_size += mult;
+						}
+					}
+				}
+			//cout << "pencil_data_size=" << pencil_data_size << endl;
+			pencil_data = new int[pencil_data_size];
+			pos = 0;
+
+			for (c = 0; c < cl; c++) {
+				Vector &Vc = V.s_i(c).as_vector();
+				Vector &Mc = M.s_i(c).as_vector();
+				//cout << c << " : " << Vc << "," << Mc << endl;
+				l = Vc.s_l();
+				L = 0;
+				for (j = 0; j < l; j++) {
+					Vector &the_type = Vc.s_i(j).as_vector();
+					int mult = Mc.s_ii(j);
+					if (the_type.s_ii(1) == 1 && the_type.s_ii(0)) {
+						b = the_type.s_ii(0);
+						for (hh = 0; hh < mult; hh++) {
+							pencil_data[pos++] = b;
+							}
+						}
+					}
+				}
+			//cout << "pencil_data: ";
+			//int_vec_print(cout, pencil_data, pencil_data_size);
+			//cout << endl;
+			C_pencil->init(pencil_data, pencil_data_size, FALSE /*f_second */, verbose_level - 2);
+			delete [] pencil_data;
+
+			for (c = 0; c < cl; c++) {
+				Vector &Vc = V.s_i(c).as_vector();
+				Vector &Mc = M.s_i(c).as_vector();
+				//cout << c << " : " << Vc << "," << Mc << endl;
+				l = Vc.s_l();
+				L = 0;
+				for (j = 0; j < l; j++) {
+					Vector &the_type = Vc.s_i(j).as_vector();
+					if (the_type.s_ii(1))
+						continue;
+					int mult = Mc.s_ii(j);
+					L += mult;
+					}
+				int *data;
+				int k, h, a;
+
+				data = new int[L];
+				k = 0;
+				for (j = 0; j < l; j++) {
+					Vector &the_type = Vc.s_i(j).as_vector();
+					int mult = Mc.s_ii(j);
+					if (the_type.s_ii(1))
+						continue;
+					a = the_type.s_ii(0);
+					for (h = 0; h < mult; h++) {
+						data[k++] = a;
+						}
+					}
+				//cout << "data: ";
+				//int_vec_print(cout, data, L);
+				//cout << endl;
+				C[c].init(data, L, f_second, verbose_level - 2);
+				delete [] data;
+				}
+
+			cout << "Intersection type " << i + 1 << ": pencil type: (";
+			C_pencil->print_naked(FALSE /*f_backwards*/);
+			cout << ") ";
+			cout << "intersection type: (";
+			for (c = 0; c < cl; c++) {
+				C[c].print_naked(FALSE /*f_backwards*/);
+				if (c < cl - 1)
+					cout << " | ";
+				}
+			cout << ") appears " << VM_mult.s_ii(i) << " times" << endl;
+			//C_pencil->print();
+			delete [] C;
+			delete C_pencil;
+			}
+		}
+#endif
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_tdo_print done" << endl;
+	}
+}
 
 void interface_combinatorics::do_create_design(design_create_description *Descr, int verbose_level)
 {
@@ -1090,9 +1661,13 @@ void interface_combinatorics::do_create_design(design_create_description *Descr,
 
 	DC = NEW_OBJECT(design_create);
 
-	cout << "before DC->init" << endl;
+	if (f_v) {
+		cout << "before DC->init" << endl;
+	}
 	DC->init(Descr, verbose_level);
-	cout << "after DC->init" << endl;
+	if (f_v) {
+		cout << "after DC->init" << endl;
+	}
 
 
 
@@ -1107,15 +1682,19 @@ void interface_combinatorics::do_create_design(design_create_description *Descr,
 
 
 
-	cout << "We have created the following design:" << endl;
-	cout << "$$" << endl;
-	L.lint_set_print_tex(cout, DC->set, DC->sz);
-	cout << endl;
-	cout << "$$" << endl;
+	if (f_v) {
+		cout << "We have created the following design:" << endl;
+		cout << "$$" << endl;
+		L.lint_set_print_tex(cout, DC->set, DC->sz);
+		cout << endl;
+		cout << "$$" << endl;
+	}
 
 	if (DC->f_has_group) {
-		cout << "The stabilizer is generated by:" << endl;
-		DC->Sg->print_generators_tex(cout);
+		if (f_v) {
+			cout << "The stabilizer is generated by:" << endl;
+			DC->Sg->print_generators_tex(cout);
+		}
 	}
 
 
@@ -1147,7 +1726,9 @@ void interface_combinatorics::do_create_design(design_create_description *Descr,
 				}
 			}
 
-		cout << "Computing incidence matrix done" << endl;
+		if (f_v) {
+			cout << "Computing incidence matrix done" << endl;
+		}
 
 
 
@@ -1155,7 +1736,9 @@ void interface_combinatorics::do_create_design(design_create_description *Descr,
 		partitionstack *Stack;
 
 
-		cout << "Opening incidence data structure:" << endl;
+		if (f_v) {
+			cout << "Opening incidence data structure:" << endl;
+		}
 
 		Inc = NEW_OBJECT(incidence_structure);
 		Inc->init_by_matrix(nb_pts, nb_blocks, Incma, 0 /* verbose_level */);
@@ -1206,6 +1789,112 @@ void interface_combinatorics::do_create_design(design_create_description *Descr,
 	}
 
 }
+
+
+void interface_combinatorics::convert_stack_to_tdo(const char *stack_fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i;
+	char str[1000];
+	char ext[1000];
+	char fname_out[1000];
+	char label[1000];
+
+	if (f_v) {
+		cout << "interface_combinatorics::convert_stack_to_tdo" << endl;
+	}
+	strcpy(str, stack_fname);
+	get_extension_if_present(str, ext);
+	chop_off_extension_if_present(str, ext);
+	sprintf(fname_out, "%s.tdo", str);
+
+	if (f_v) {
+		cout << "reading stack file " << stack_fname << endl;
+	}
+	{
+		geo_parameter GP;
+		tdo_scheme G;
+		ifstream f(stack_fname);
+		ofstream g(fname_out);
+		for (i = 0; ; i++) {
+			if (f.eof()) {
+				if (f_v) {
+					cout << "end of file reached" << endl;
+				}
+				break;
+				}
+			if (!GP.input(f)) {
+				if (f_v) {
+					cout << "GP.input returns false" << endl;
+				}
+				break;
+				}
+			if (f_v) {
+				cout << "read decomposition " << i
+							<< " v=" << GP.v << " b=" << GP.b << endl;
+			}
+			GP.convert_single_to_stack(verbose_level - 1);
+			if (f_v) {
+				cout << "after convert_single_to_stack" << endl;
+			}
+			if (strlen(GP.label)) {
+				sprintf(label, "%s", GP.label);
+			}
+			else {
+				sprintf(label, "%d", i);
+			}
+			GP.write(g, label);
+			if (f_v) {
+				cout << "after write" << endl;
+			}
+			GP.init_tdo_scheme(G, verbose_level - 1);
+			if (f_v) {
+				cout << "after init_tdo_scheme" << endl;
+			}
+			if (f_vv) {
+				GP.print_schemes(G);
+			}
+		}
+		g << "-1 " << i << endl;
+	}
+	if (f_v) {
+		file_io Fio;
+		cout << "written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+		cout << "interface_combinatorics::convert_stack_to_tdo done" << endl;
+	}
+}
+
+void interface_combinatorics::do_parameters_maximal_arc(int q, int r, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int m = 2, n = 2;
+	int v[2], b[2], aij[4];
+	int Q;
+	char fname[1000];
+	file_io Fio;
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_parameters_maximal_arc q=" << q << " r=" << r << endl;
+	}
+
+	Q = q * q;
+	v[0] = q * (r - 1) + r;
+	v[1] = Q + q * (2 - r) - r + 1;
+	b[0] = Q - Q / r + q * 2 - q / r + 1;
+	b[1] = Q / r + q / r - q;
+	aij[0] = q + 1;
+	aij[1] = 0;
+	aij[2] = q - q / r + 1;
+	aij[3] = q / r;
+	sprintf(fname, "max_arc_q%d_r%d.stack", q, r);
+
+	Fio.write_decomposition_stack(fname, m, n, v, b, aij, verbose_level - 1);
+}
+
+
+
+
 
 
 

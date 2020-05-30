@@ -579,8 +579,8 @@ void strong_generators::generators_for_the_diagonal_group(action *A,
 	int i, h;
 	
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_"
-				"diagonal_group initializing diagonal group" << endl;
+		cout << "strong_generators::generators_for_the_diagonal_group "
+				"initializing diagonal group" << endl;
 		}
 	strong_generators::A = A;
 	F = Mtx->GFq;
@@ -699,8 +699,7 @@ void strong_generators::generators_for_the_diagonal_group(action *A,
 	FREE_int(go_factored);
 	FREE_int(Elt1);
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_"
-				"diagonal_group done" << endl;
+		cout << "strong_generators::generators_for_the_diagonal_group done" << endl;
 		}
 }
 
@@ -1078,8 +1077,7 @@ void strong_generators::generators_for_the_null_polarity_group(
 	int n, q;
 	
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_"
-				"null_polarity_group" << endl;
+		cout << "strong_generators::generators_for_the_null_polarity_group" << endl;
 		}
 	F = Mtx->GFq;
 	q = F->q;
@@ -1094,8 +1092,7 @@ void strong_generators::generators_for_the_null_polarity_group(
 
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_"
-				"null_polarity_group calling "
+		cout << "strong_generators::generators_for_the_null_polarity_group calling "
 				"null_polarity_generator::init" << endl;
 		}
 	N->init(F, n, verbose_level);
@@ -1112,8 +1109,7 @@ void strong_generators::generators_for_the_null_polarity_group(
 	FREE_OBJECT(nice_gens);
 	
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_"
-				"null_polarity_group done" << endl;
+		cout << "strong_generators::generators_for_the_null_polarity_group done" << endl;
 		}
 }
 
@@ -1196,17 +1192,15 @@ void strong_generators::init_centralizer_of_matrix(
 	sims *S;
 
 	if (f_v) {
-		cout << "strong_generators::init_centralizer_"
-				"of_matrix" << endl;
-		}
+		cout << "strong_generators::init_centralizer_of_matrix" << endl;
+	}
 	S = A->create_sims_for_centralizer_of_matrix(
 			Mtx, verbose_level - 1);
 	init_from_sims(S, 0 /* verbose_level */);
 	FREE_OBJECT(S);
 	if (f_v) {
-		cout << "strong_generators::init_centralizer_"
-				"of_matrix done" << endl;
-		}
+		cout << "strong_generators::init_centralizer_of_matrix done" << endl;
+	}
 }
 
 void strong_generators::init_centralizer_of_matrix_general_linear(
@@ -1225,8 +1219,7 @@ void strong_generators::init_centralizer_of_matrix_general_linear(
 	int q, n, i;
 
 	if (f_v) {
-		cout << "strong_generators::init_centralizer_of_"
-				"matrix_general_linear" << endl;
+		cout << "strong_generators::init_centralizer_of_matrix_general_linear" << endl;
 		}
 	S = A_projective->create_sims_for_centralizer_of_matrix(
 			Mtx, 0/* verbose_level */);
@@ -1289,8 +1282,7 @@ void strong_generators::init_centralizer_of_matrix_general_linear(
 	FREE_OBJECT(new_gens);
 	FREE_OBJECT(SG1);
 	if (f_v) {
-		cout << "strong_generators::init_centralizer_of_matrix_"
-				"general_linear done" << endl;
+		cout << "strong_generators::init_centralizer_of_matrix_general_linear done" << endl;
 		}
 }
 
@@ -1453,8 +1445,7 @@ void strong_generators::field_reduction(
 	FREE_OBJECT(AQ);
 	FREE_OBJECT(FQ);
 	if (f_v) {
-		cout << "strong_generators::field_reduction "
-				"done" << endl;
+		cout << "strong_generators::field_reduction done" << endl;
 		}
 
 }
@@ -1654,8 +1645,7 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 	FREE_OBJECT(my_gens);
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_translation_"
-				"plane_in_andre_model done" << endl;
+		cout << "strong_generators::generators_for_translation_plane_in_andre_model done" << endl;
 		}
 }
 
@@ -1670,16 +1660,15 @@ void strong_generators::generators_for_the_stabilizer_of_two_components(
 	action *A_PGL_k_q;
 	
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_stabilizer_"
-				"of_two_components" << endl;
+		cout << "strong_generators::generators_for_the_stabilizer_of_two_components" << endl;
 		}
 	F = Mtx->GFq;
 	q = F->q;
 	n = Mtx->n;
 	k = n >> 1;
 	if (ODD(n)) {
-		cout << "strong_generators::generators_for_the_stabilizer_"
-				"of_two_components n must be even" << endl;
+		cout << "strong_generators::generators_for_the_stabilizer_of_two_components "
+				"n must be even" << endl;
 		exit(1);
 		}
 	if (f_v) {
@@ -1700,17 +1689,15 @@ void strong_generators::generators_for_the_stabilizer_of_two_components(
 	my_gens = NEW_OBJECT(vector_ge);
 	
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_stabilizer_"
-				"of_two_components before make_generators_stabilizer_"
-				"of_two_components" << endl;
+		cout << "strong_generators::generators_for_the_stabilizer_of_two_components "
+				"before make_generators_stabilizer_of_two_components" << endl;
 		}
 	make_generators_stabilizer_of_two_components(A_PGL_n_q, A_PGL_k_q, 
 		k, my_gens, verbose_level - 1);
 	
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_stabilizer_"
-				"of_two_components after make_generators_stabilizer_"
-				"of_two_components" << endl;
+		cout << "strong_generators::generators_for_the_stabilizer_of_two_components "
+				"after make_generators_stabilizer_of_two_components" << endl;
 		}
 
 	longinteger_object go_linear, a, two, target_go;
@@ -1722,9 +1709,8 @@ void strong_generators::generators_for_the_stabilizer_of_two_components(
 	D.mult(a, two, target_go);
 	
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_stabilizer_"
-				"of_two_components before generators_to_"
-				"strong_generators target_go=" << target_go << endl;
+		cout << "strong_generators::generators_for_the_stabilizer_of_two_components "
+				"before generators_to_strong_generators target_go=" << target_go << endl;
 		}
 	
 	strong_generators *SG;
@@ -1734,9 +1720,8 @@ void strong_generators::generators_for_the_stabilizer_of_two_components(
 		my_gens, SG, verbose_level - 3);
 	
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_stabilizer_"
-				"of_two_components after generators_to_"
-				"strong_generators" << endl;
+		cout << "strong_generators::generators_for_the_stabilizer_of_two_components "
+				"after generators_to_strong_generators" << endl;
 		}
 
 	init_copy(SG, 0);
@@ -1747,8 +1732,7 @@ void strong_generators::generators_for_the_stabilizer_of_two_components(
 	FREE_OBJECT(my_gens);
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_stabilizer_"
-				"of_two_components done" << endl;
+		cout << "strong_generators::generators_for_the_stabilizer_of_two_components done" << endl;
 		}
 }
 

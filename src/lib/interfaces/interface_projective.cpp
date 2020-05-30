@@ -355,7 +355,7 @@ int interface_projective::read_canonical_form_arguments(int argc,
 	return i;
 }
 
-void interface_projective::worker(int verbose_level)
+void interface_projective::worker(orbiter_session *Session, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -364,10 +364,10 @@ void interface_projective::worker(int verbose_level)
 	}
 
 	if (f_cheat_sheet_PG) {
-		do_cheat_sheet_PG(n, q, verbose_level);
+		do_cheat_sheet_PG(Session, n, q, verbose_level);
 	}
 	else if (f_canonical_form_PG) {
-		do_canonical_form_PG(n, q, verbose_level);
+		do_canonical_form_PG(Session, n, q, verbose_level);
 	}
 	else if (f_classify_cubic_curves) {
 		do_classify_cubic_curves(q, verbose_level);
@@ -400,7 +400,8 @@ void interface_projective::worker(int verbose_level)
 }
 
 
-void interface_projective::do_cheat_sheet_PG(int n, int q, int verbose_level)
+void interface_projective::do_cheat_sheet_PG(orbiter_session *Session,
+		int n, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -412,92 +413,15 @@ void interface_projective::do_cheat_sheet_PG(int n, int q, int verbose_level)
 
 	F = NEW_OBJECT(finite_field);
 
-	F->init(q, 0);
-	//F->init_override_polynomial(q, my_override_poly, 0);
 
-	//F->cheat_sheet_PG(n, f_surface, verbose_level);
-
-	//const char *override_poly;
-	char fname[1000];
-	char title[1000];
-	char author[1000];
-	//int f_with_group = FALSE;
-	//int f_semilinear = FALSE;
-	//int f_basis = TRUE;
-	//int q = F->q;
-
-	sprintf(fname, "PG_%d_%d.tex", n, q);
-	sprintf(title, "Cheat Sheet PG($%d,%d$)", n, q);
-	//sprintf(author, "");
-	author[0] = 0;
-	projective_space *P;
-
-	P = NEW_OBJECT(projective_space);
-	cout << "before P->init" << endl;
-	P->init(n, F,
-		TRUE /* f_init_incidence_structure */,
-		verbose_level/*MINIMUM(2, verbose_level)*/);
-
-
-	{
-	ofstream f(fname);
-	latex_interface L;
-
-	L.head(f,
-			FALSE /* f_book*/,
-			TRUE /* f_title */,
-			title, author,
-			FALSE /* f_toc */,
-			FALSE /* f_landscape */,
-			TRUE /* f_12pt */,
-			TRUE /* f_enlarged_page */,
-			TRUE /* f_pagenumbers */,
-			NULL /* extra_praeamble */);
-
-
-	P->report(f);
-
-	if (FALSE && n == 3) {
-		surface_domain *S;
-
-		S = NEW_OBJECT(surface_domain);
-		S->init(F, verbose_level + 2);
-
-		f << "\\clearpage" << endl << endl;
-		f << "\\section{Surface}" << endl;
-		f << "\\subsection{Steiner Trihedral Pairs}" << endl;
-		S->latex_table_of_trihedral_pairs(f);
-
-		f << "\\clearpage" << endl << endl;
-		f << "\\subsection{Eckardt Points}" << endl;
-		S->latex_table_of_Eckardt_points(f);
-
-#if 1
-		long int *Lines;
-
-		cout << "creating S_{3,1}:" << endl;
-		Lines = NEW_lint(27);
-		S->create_special_double_six(Lines,
-				3 /*a*/, 1 /*b*/, 0 /* verbose_level */);
-		S->create_remaining_fifteen_lines(Lines,
-				Lines + 12, 0 /* verbose_level */);
-		P->Grass_lines->print_set(Lines, 27);
-
-		FREE_lint(Lines);
-#endif
-		FREE_OBJECT(S);
-		}
-
-
-	L.foot(f);
+	if (Session->f_override_polynomial) {
+		F->init_override_polynomial(q, Session->override_polynomial, 0);
 	}
-	file_io Fio;
+	else {
+		F->init(q, 0);
+	}
 
-	cout << "written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
-
-
-	FREE_OBJECT(P);
+	F->cheat_sheet_PG(n, verbose_level);
 
 	FREE_OBJECT(F);
 
@@ -507,7 +431,8 @@ void interface_projective::do_cheat_sheet_PG(int n, int q, int verbose_level)
 
 }
 
-void interface_projective::do_canonical_form_PG(int n, int q, int verbose_level)
+void interface_projective::do_canonical_form_PG(orbiter_session *Session,
+		int n, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -525,7 +450,12 @@ void interface_projective::do_canonical_form_PG(int n, int q, int verbose_level)
 
 	F = NEW_OBJECT(finite_field);
 
-	F->init(q, 0);
+	if (Session->f_override_polynomial) {
+		F->init_override_polynomial(q, Session->override_polynomial, 0);
+	}
+	else {
+		F->init(q, 0);
+	}
 	//F->init_override_polynomial(q, poly, 0);
 
 	int f_semilinear;
@@ -558,12 +488,14 @@ void interface_projective::do_canonical_form_PG(int n, int q, int verbose_level)
 	CB = NEW_OBJECT(classify_bitvectors);
 
 
-	cout << "canonical_form.cpp before PA->classify_objects_using_nauty" << endl;
+	cout << "interface_projective::do_canonical_form_PG "
+			"before PA->classify_objects_using_nauty" << endl;
 	PA->classify_objects_using_nauty(Data_input_stream,
 		CB,
 		f_save_incma_in_and_out, prefix,
 		verbose_level - 1);
-	cout << "canonical_form.cpp after PA->classify_objects_using_nauty" << endl;
+	cout << "interface_projective::do_canonical_form_PG "
+			"after PA->classify_objects_using_nauty" << endl;
 
 
 
@@ -574,7 +506,8 @@ void interface_projective::do_canonical_form_PG(int n, int q, int verbose_level)
 			CB, verbose_level);
 
 
-	cout << "canonical_form.cpp In the ordering of canonical forms, they are" << endl;
+	cout << "interface_projective::do_canonical_form_PG "
+			"In the ordering of canonical forms, they are" << endl;
 	CB->print_reps();
 	cout << "We found " << CB->nb_types << " types:" << endl;
 	for (i = 0; i < CB->nb_types; i++) {
@@ -629,7 +562,7 @@ void interface_projective::do_canonical_form_PG(int n, int q, int verbose_level)
 
 	if (f_report) {
 
-		cout << "Producing a latex report:" << endl;
+		cout << "interface_projective::do_canonical_form_PG Producing a latex report:" << endl;
 
 		char fname[1000];
 

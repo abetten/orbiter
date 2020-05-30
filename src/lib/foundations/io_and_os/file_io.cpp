@@ -2900,6 +2900,46 @@ void file_io::read_ascii_set_of_sets_constant_size(
 		}
 }
 
+void file_io::write_decomposition_stack(char *fname, int m, int n, int *v, int *b, int *aij, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::write_widor" << endl;
+	}
+	{
+		ofstream f(fname);
+		int i, j;
+
+
+		f << "<HTDO type=pt ptanz=" << m << " btanz=" << n << " fuse=simple>" << endl;
+		f << "        ";
+		for (j = 0; j < n; j++) {
+			f << setw(8) << b[j] << " ";
+			}
+		f << endl;
+		for (i = 0; i < m; i++) {
+			f << setw(8) << v[i];
+			for (j = 0; j < n; j++) {
+				f << setw(8) << aij[i * n + j] << " ";
+				}
+			f << endl;
+			}
+		f << endl;
+		for (i = 0; i < m; i++) {
+			f << setw(3) << 1;
+			}
+		f << endl;
+		f << "</HTDO>" << endl;
+	}
+
+	if (f_v) {
+		cout << "file_io::write_decomposition_stack done" << endl;
+		cout << "written file " << fname << " of size " << file_size(fname) << endl;
+	}
+}
+
+
 
 
 }}

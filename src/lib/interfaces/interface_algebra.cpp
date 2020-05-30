@@ -68,6 +68,9 @@ void interface_algebra::print_help(int argc,
 	else if (strcmp(argv[i], "-cheat_sheet_GF") == 0) {
 		cout << "-cheat_sheet_GF <int : q>" << endl;
 	}
+	else if (strcmp(argv[i], "-override_polynomial") == 0) {
+		cout << "-override_polynomial <polynomial in decimal>" << endl;
+	}
 	else if (strcmp(argv[i], "-search_for_primitive_polynomial_in_range") == 0) {
 		cout << "-search_for_primitive_polynomial_in_range <int : p_min> <int : p_max> <int : deg_min> <int : deg_max> " << endl;
 	}
@@ -107,6 +110,9 @@ int interface_algebra::recognize_keyword(int argc,
 		return true;
 	}
 	else if (strcmp(argv[i], "-cheat_sheet_GF") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-override_polynomial") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-search_for_primitive_polynomial_in_range") == 0) {
@@ -247,14 +253,16 @@ void interface_algebra::read_arguments(int argc,
 }
 
 
-void interface_algebra::worker(int verbose_level)
+void interface_algebra::worker(orbiter_session *Session, int verbose_level)
 {
 	if (f_linear_group) {
 		do_linear_group(Linear_group_description, verbose_level);
 	}
 
 	if (f_cheat_sheet_GF) {
-		do_cheat_sheet_GF(q, verbose_level);
+		do_cheat_sheet_GF(q,
+				Session->f_override_polynomial, Session->override_polynomial,
+				verbose_level);
 	}
 	else if (f_search_for_primitive_polynomial_in_range) {
 		do_search_for_primitive_polynomial_in_range(p_min, p_max, deg_min, deg_max, verbose_level);
@@ -365,7 +373,9 @@ void interface_algebra::do_linear_group(
 				Descr->override_polynomial, verbose_level);
 	}
 	else {
-		cout << "interface_algebra::do_linear_group creating finite field of order q=" << Descr->input_q << endl;
+		cout << "interface_algebra::do_linear_group creating finite field "
+				"of order q=" << Descr->input_q
+				<< " using the default polynomial (if necessary)" << endl;
 		F->init(Descr->input_q, 0);
 	}
 
@@ -484,7 +494,7 @@ void interface_algebra::perform_group_theoretic_activity(
 	}
 }
 
-void interface_algebra::do_cheat_sheet_GF(int q, int verbose_level)
+void interface_algebra::do_cheat_sheet_GF(int q, int f_poly, const char *poly, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -492,8 +502,8 @@ void interface_algebra::do_cheat_sheet_GF(int q, int verbose_level)
 		cout << "interface_algebra::do_cheat_sheet_GF q=" << q << endl;
 	}
 	int i;
-	int f_poly = FALSE;
-	const char *poly = NULL;
+	//int f_poly = FALSE;
+	//const char *poly = NULL;
 
 	char fname[1000];
 	char title[1000];

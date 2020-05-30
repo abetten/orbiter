@@ -273,6 +273,9 @@ public:
 
 	int f_Janko1;
 
+	int f_restricted_action;
+	const char *restricted_action_text;
+
 	int f_export_magma;
 
 
@@ -452,6 +455,7 @@ public:
 			int verbose_level);
 	void strong_generators_low_level(int *&data,
 			int &size, int &nb_gens, int verbose_level);
+	int has_shape_of_singer_cycle(int *Elt);
 };
 
 // #############################################################################

@@ -383,10 +383,6 @@ public:
 
 class projective_space_job_description {
 
-	int t0;
-	finite_field *F;
-	projective_space_with_action *PA;
-	int back_end_counter;
 
 public:
 
@@ -427,8 +423,6 @@ public:
 		int orthogonal_epsilon;
 		int f_homogeneous_polynomials;
 		int homogeneous_polynomials_degree;
-		int f_homogeneous_polynomial_domain_has_been_allocated;
-		homogeneous_polynomial_domain *HPD;
 
 
 	//int f_group = FALSE;
@@ -472,9 +466,6 @@ public:
 
 	int f_intersect_with_set_from_file;
 	const char *intersect_with_set_from_file_fname;
-	int intersect_with_set_from_file_set_has_beed_read;
-	long int *intersect_with_set_from_file_set;
-	int intersect_with_set_from_file_set_size;
 
 	int f_arc_with_given_set_as_s_lines_after_dualizing;
 	int arc_size;
@@ -485,14 +476,10 @@ public:
 	int f_arc_with_two_given_sets_of_lines_after_dualizing;
 	int arc_t;
 	const char *t_lines_string;
-	long int *t_lines;
-	int nb_t_lines;
 
 	int f_arc_with_three_given_sets_of_lines_after_dualizing;
 	int arc_u;
 	const char *u_lines_string;
-	long int *u_lines;
-	int nb_u_lines;
 
 	int f_dualize_hyperplanes_to_points;
 	int f_dualize_points_to_hyperplanes;
@@ -507,7 +494,48 @@ public:
 	int read_arguments(
 		int argc, const char **argv,
 		int verbose_level);
-	void perform_job(int verbose_level);
+
+};
+
+
+
+// #############################################################################
+// projective_space_job.cpp
+// #############################################################################
+
+
+
+//! perform a job for a set in projective space PG(n,q) as described by projective_space_job_description
+
+
+class projective_space_job {
+
+
+	int t0;
+	finite_field *F;
+	projective_space_with_action *PA;
+	int back_end_counter;
+
+
+public:
+
+	projective_space_job_description *Descr;
+
+	int f_homogeneous_polynomial_domain_has_been_allocated;
+	homogeneous_polynomial_domain *HPD;
+
+	int intersect_with_set_from_file_set_has_beed_read;
+	long int *intersect_with_set_from_file_set;
+	int intersect_with_set_from_file_set_size;
+
+	long int *t_lines;
+	int nb_t_lines;
+	long int *u_lines;
+	int nb_u_lines;
+
+
+	projective_space_job();
+	void perform_job(projective_space_job_description *Descr, int verbose_level);
 	void back_end(int input_idx,
 			object_in_projective_space *OiP,
 			std::ostream &fp,
@@ -524,6 +552,7 @@ public:
 		const char *fname_base, int verbose_level);
 
 };
+
 
 
 // #############################################################################

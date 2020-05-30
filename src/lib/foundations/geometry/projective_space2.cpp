@@ -1482,8 +1482,8 @@ void projective_space::cheat_sheet_points(
 
 	v = NEW_int(d);
 
-	f << "PG$(" << n << ", " << q << ")$ has " << N_points
-			<< " points:\\\\" << endl;
+	f << "PG$(" << n << ", " << q << ")$ has "
+			<< N_points << " points:\\\\" << endl;
 	if (F->e == 1) {
 		f << "\\begin{multicols}{4}" << endl;
 		for (i = 0; i < N_points; i++) {
@@ -1507,6 +1507,29 @@ void projective_space::cheat_sheet_points(
 		f << "\\end{multicols}" << endl;
 		}
 
+	if (F->has_quadratic_subfield()) {
+		f << "Baer subgeometry:\\\\" << endl;
+		f << "\\begin{multicols}{4}" << endl;
+		int j, cnt = 0;
+		for (i = 0; i < N_points; i++) {
+			F->PG_element_unrank_modified(v, 1, d, i);
+			F->PG_element_normalize_from_front(v, 1, d);
+			for (j = 0; j < d; j++) {
+				if (!F->belongs_to_quadratic_subfield(v[j])) {
+					break;
+				}
+			}
+			if (j == d) {
+				cnt++;
+				f << "$P_{" << i << "}=";
+				int_vec_print(f, v, d);
+				f << "$\\\\" << endl;
+			}
+		}
+		f << "\\end{multicols}" << endl;
+		f << "There are " << cnt << " elements in the Baer subgeometry.\\\\" << endl;
+
+	}
 	//f << "\\clearpage" << endl << endl;
 
 	f << "Normalized from the left:\\\\" << endl;
@@ -3973,6 +3996,235 @@ void projective_space::arc_with_three_given_line_sets_diophant(
 
 }
 
+
+void projective_space::maximal_arc_by_diophant(
+		int arc_sz, int arc_d,
+		const char *secant_lines_text,
+		const char *external_lines_as_subset_of_secants_text,
+		diophant *&D,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 5);
+	int h, i, j, s;
+	int a, line;
+	int *secant_lines;
+	int nb_secant_lines;
+	int *Idx;
+	int *external_lines;
+	int nb_external_lines;
+	int *other_lines;
+	int nb_other_lines;
+	combinatorics_domain Combi;
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "projective_space::maximal_arc_by_diophant" << endl;
+		}
+
+	other_lines = NEW_int(N_lines);
+
+	int_vec_scan(secant_lines_text, secant_lines, nb_secant_lines);
+	int_vec_scan(external_lines_as_subset_of_secants_text, Idx, nb_external_lines);
+
+	Sorting.int_vec_heapsort(secant_lines, nb_secant_lines);
+
+	Combi.set_complement(
+			secant_lines, nb_secant_lines,
+			other_lines, nb_other_lines,
+			N_lines);
+
+
+	external_lines = NEW_int(nb_external_lines);
+	for (i = 0; i < nb_external_lines; i++) {
+		external_lines[i] = secant_lines[Idx[i]];
+	}
+	h = 0;
+	j = 0;
+	for (i = 0; i <= nb_external_lines; i++) {
+		if (i < nb_external_lines) {
+			s = Idx[i];
+		}
+		else {
+			s = nb_secant_lines;
+		}
+		for (; j < s; j++) {
+			secant_lines[h] = secant_lines[j];
+			h++;
+		}
+		j++;
+	}
+	if (h != nb_secant_lines - nb_external_lines) {
+		cout << "h != nb_secant_lines - nb_external_lines" << endl;
+		exit(1);
+	}
+	nb_secant_lines = h;
+
+	int nb_slack1, nb_pencil_conditions;
+	int slack1_start;
+	int nb_eqns;
+	int nb_vars;
+	int *pencil_idx;
+	int *pencil_sub_idx;
+	int *nb_times_hit;
+	int pt, sub_idx;
+
+	pencil_idx = NEW_int(N_lines);
+	pencil_sub_idx = NEW_int(N_lines);
+	nb_times_hit = NEW_int(k);
+	int_vec_zero(nb_times_hit, k);
+
+	pencil_idx[0] = -1;
+	for (i = 1; i < N_lines; i++) {
+		pt = intersection_of_two_lines(i, 0);
+		if (pt > k + 2) {
+			cout << "pt > k + 2" << endl;
+			cout << "i=" << i << endl;
+			cout << "pt=" << pt << endl;
+			exit(1);
+		}
+		if (pt == 0 || pt == 1) {
+			pencil_idx[i] = -1;
+			pencil_sub_idx[i] = -1;
+			continue;
+		}
+		if (pt < 4) {
+			cout << "pt < 4" << endl;
+			exit(1);
+		}
+		pt -= 4;
+		pencil_idx[i] = pt;
+		pencil_sub_idx[i] = nb_times_hit[pt];
+		nb_times_hit[pt]++;
+	}
+	for (pt = 0; pt < k - 2; pt++) {
+		if (nb_times_hit[pt] != k - 1) {
+			cout << "nb_times_hit[pt] != k - 1" << endl;
+			cout << "pt = " << pt << endl;
+			cout << "nb_times_hit[pt] = " << nb_times_hit[pt] << endl;
+			exit(1);
+		}
+	}
+
+	if (nb_other_lines != (k - 2) * (k - 1)) {
+		cout << "nb_other_lines != (k - 2) * (k - 1)" << endl;
+		exit(1);
+	}
+	nb_slack1 = nb_other_lines;
+	nb_pencil_conditions = k - 2;
+	slack1_start = N_points;
+
+
+	nb_eqns = N_lines + 1 + nb_pencil_conditions;
+	nb_vars = N_points + nb_slack1;
+
+	D = NEW_OBJECT(diophant);
+	D->open(nb_eqns, nb_vars);
+	D->f_x_max = TRUE;
+	for (j = 0; j < nb_vars; j++) {
+		D->x_max[j] = 1;
+		}
+	D->f_has_sum = TRUE;
+	D->sum = arc_sz + (arc_d - 1) * nb_pencil_conditions;
+	h = 0;
+	for (i = 0; i < nb_secant_lines; i++) {
+		line = secant_lines[i];
+		for (j = 0; j < N_points; j++) {
+			if (is_incident(j, line)) {
+				a = 1;
+			}
+			else {
+				a = 0;
+			}
+			D->Aij(h, j) = a;
+		}
+		D->type[h] = t_EQ;
+		D->RHSi(h) = arc_d;
+		h++;
+	}
+	for (i = 0; i < nb_external_lines; i++) {
+		line = external_lines[i];
+		for (j = 0; j < N_points; j++) {
+			if (is_incident(j, line)) {
+				a = 1;
+			}
+			else {
+				a = 0;
+			}
+			D->Aij(h, j) = a;
+		}
+		D->type[h] = t_EQ;
+		D->RHSi(h) = 0;
+		h++;
+	}
+	for (i = 0; i < nb_other_lines; i++) {
+		line = other_lines[i];
+		cout << "other line " << i << " / " << nb_other_lines << " is: " << line << " : ";
+		for (j = 0; j < N_points; j++) {
+			if (is_incident(j, line)) {
+				a = 1;
+			}
+			else {
+				a = 0;
+			}
+			D->Aij(h, j) = a;
+		}
+		pt = pencil_idx[line];
+		sub_idx = pencil_sub_idx[line];
+		cout << "pt=" << pt << " sub_idx=" << sub_idx << endl;
+		if (pt < 0) {
+			cout << "pt < 0" << endl;
+			exit(1);
+		}
+		if (sub_idx < 0) {
+			cout << "sub_idx < 0" << endl;
+			exit(1);
+		}
+		D->Aij(h, slack1_start + pt * (k - 1) + sub_idx) = arc_d;
+
+		D->type[h] = t_EQ;
+		D->RHSi(h) = arc_d;
+		h++;
+	}
+	for (i = 0; i < nb_pencil_conditions; i++) {
+		D->type[h] = t_EQ;
+		D->RHSi(h) = arc_d - 1;
+		for (j = 0; j < k - 1; j++) {
+			D->Aij(h, slack1_start + i * (k - 1) + j) = 1;
+		}
+		h++;
+	}
+	// add one extra row:
+	for (j = 0; j < N_points; j++) {
+		D->Aij(h, j) = 1;
+		}
+	D->type[h] = t_EQ;
+	D->RHSi(h) = arc_sz;
+	h++;
+
+	if (h != nb_eqns) {
+		cout << "projective_space::maximal_arc_by_diophant h != nb_eqns" << endl;
+		exit(1);
+	}
+
+	//D->m = h;
+
+	//D->init_var_labels(N_points, verbose_level);
+
+	if (f_vv) {
+		cout << "projective_space::maximal_arc_by_diophant "
+				"The system is:" << endl;
+		D->print_tight();
+		}
+
+	FREE_int(other_lines);
+	FREE_int(external_lines);
+
+	if (f_v) {
+		cout << "projective_space::maximal_arc_by_diophant done" << endl;
+		}
+
+}
 
 void projective_space::rearrange_arc_for_lifting(long int *Arc6,
 		long int P1, long int P2, int partition_rk, long int *arc,

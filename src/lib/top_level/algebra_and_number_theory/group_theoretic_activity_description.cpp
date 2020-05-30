@@ -44,6 +44,9 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_orbit_of_set_from_file = FALSE;
 	orbit_of_set_from_file_fname = NULL;
 	f_search_subgroup = FALSE;
+	f_find_singer_cycle = FALSE;
+	f_search_element_of_order = FALSE;
+	search_element_order = 0;
 	f_print_elements = FALSE;
 	f_print_elements_tex = FALSE;
 	f_multiply = FALSE;
@@ -251,6 +254,15 @@ int group_theoretic_activity_description::read_arguments(
 		else if (strcmp(argv[i], "-search_subgroup") == 0) {
 			f_search_subgroup = TRUE;
 			cout << "-search_subgroup " << endl;
+		}
+		else if (strcmp(argv[i], "-find_singer_cycle") == 0) {
+			f_find_singer_cycle = TRUE;
+			cout << "-find_singer_cycle " << endl;
+		}
+		else if (strcmp(argv[i], "-search_element_of_order") == 0) {
+			f_search_element_of_order = TRUE;
+			search_element_order = atoi(argv[++i]);
+			cout << "-search_element_of_order " << search_element_order << endl;
 		}
 		else if (strcmp(argv[i], "-print_elements") == 0) {
 			f_print_elements = TRUE;

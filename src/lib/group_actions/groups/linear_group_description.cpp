@@ -62,6 +62,10 @@ linear_group_description::linear_group_description()
 	subgroup_generators_as_string = NULL;
 
 	f_Janko1 = FALSE;
+
+	f_restricted_action = FALSE;
+	restricted_action_text = NULL;
+
 	f_export_magma = FALSE;
 	//null();
 }
@@ -391,6 +395,11 @@ int linear_group_description::read_arguments(
 			f_Janko1 = TRUE;
 			cout << "-Janko1" << endl;
 		}
+		else if (strcmp(argv[i], "-restricted_action") == 0) {
+			f_restricted_action = TRUE;
+			restricted_action_text = argv[++i];
+			cout << "-restricted_action " << restricted_action_text << endl;
+		}
 		else if (strcmp(argv[i], "-export_magma") == 0) {
 			f_export_magma = TRUE;
 			cout << "-export_magma" << endl;
@@ -405,7 +414,7 @@ int linear_group_description::read_arguments(
 		}
 	} // next i
 	cout << "linear_group_description::read_arguments done" << endl;
-	return i + 1;
+	return i;
 }
 
 }}

@@ -850,32 +850,30 @@ strong_generators
 	A_linear = A;
 
 	if (f_v) {
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object" << endl;
+		cout << "projective_space_with_action::set_stabilizer_of_object" << endl;
 		cout << "verbose_level = " << verbose_level << endl;
 		}
 #if 0
 	if (P->incidence_bitvec == NULL) {
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object P->incidence_bitvec == NULL" << endl;
+		cout << "projective_space_with_action::set_stabilizer_of_object "
+				"P->incidence_bitvec == NULL" << endl;
 		exit(1);
 		}
 #endif
 
 
 	if (f_v) {
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object before OiP->encode_incma" << endl;
+		cout << "projective_space_with_action::set_stabilizer_of_object "
+				"before OiP->encode_incma" << endl;
 		}
 	OiP->encode_incma(Incma, nb_rows, nb_cols,
 			partition, verbose_level - 1);
 	if (f_v) {
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object after OiP->encode_incma" << endl;
+		cout << "projective_space_with_action::set_stabilizer_of_object "
+				"after OiP->encode_incma" << endl;
 		}
 	if (verbose_level > 5) {
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object Incma:" << endl;
+		cout << "projective_space_with_action::set_stabilizer_of_object Incma:" << endl;
 		int_matrix_print_tight(Incma, nb_rows, nb_cols);
 	}
 
@@ -886,8 +884,9 @@ strong_generators
 
 
 	if (f_save_incma_in_and_out) {
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object Incma:" << endl;
+		if (f_v) {
+			cout << "projective_space_with_action::set_stabilizer_of_object Incma:" << endl;
+		}
 		if (nb_rows < 10) {
 			print_integer_matrix_width(cout,
 					Incma, nb_rows, nb_cols, nb_cols, 1);
@@ -921,9 +920,8 @@ strong_generators
 	L = nb_rows * nb_cols;
 
 	if (f_vv) {
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object initializing Aut, Base, "
-				"Transversal_length" << endl;
+		cout << "projective_space_with_action::set_stabilizer_of_object "
+				"initializing Aut, Base, Transversal_length" << endl;
 		}
 	Aut = NEW_int(N * N);
 	Base = NEW_int(N);
@@ -931,8 +929,8 @@ strong_generators
 	Transversal_length = NEW_int(N);
 	
 	if (f_v) {
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object calling nauty_interface_matrix_int" << endl;
+		cout << "projective_space_with_action::set_stabilizer_of_object "
+				"calling Nau.nauty_interface_matrix_int" << endl;
 		}
 	int t0, t1, dt, tps;
 	double delta_t_in_sec;
@@ -964,8 +962,8 @@ strong_generators
 	delta_t_in_sec = (double) dt / (double) tps;
 
 	if (f_v) {
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object done with nauty_interface_matrix_int, "
+		cout << "projective_space_with_action::set_stabilizer_of_object "
+				"done with Nau.nauty_interface_matrix_int, "
 				"Ago=" << Ago << " dt=" << dt
 				<< " delta_t_in_sec=" << delta_t_in_sec << endl;
 		}
@@ -984,8 +982,8 @@ strong_generators
 	int *Incma_out;
 	int ii, jj;
 	if (f_vvv) {
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object labeling:" << endl;
+		cout << "projective_space_with_action::set_stabilizer_of_object "
+				"labeling:" << endl;
 		lint_vec_print(cout, canonical_labeling, nb_rows + nb_cols);
 		cout << endl;
 		}
@@ -1001,15 +999,15 @@ strong_generators
 			}
 		}
 	if (f_vvv) {
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object Incma Out:" << endl;
+		cout << "projective_space_with_action::set_stabilizer_of_object "
+				"Incma Out:" << endl;
 		if (nb_rows < 20) {
 			print_integer_matrix_width(cout,
 					Incma_out, nb_rows, nb_cols, nb_cols, 1);
 			}
 		else {
-			cout << "projective_space_with_action::set_stabilizer_"
-					"of_object too large to print" << endl;
+			cout << "projective_space_with_action::set_stabilizer_of_object "
+					"too large to print" << endl;
 			}
 		}
 
@@ -1063,7 +1061,7 @@ strong_generators
 				TRUE, canonical_labeling, verbose_level);
 		CG->save(fname_bin, verbose_level);
 		FREE_OBJECT(CG);
-		}
+	}
 
 	FREE_int(Incma_out);
 
@@ -1074,8 +1072,8 @@ strong_generators
 	A_perm = NEW_OBJECT(action);
 
 	if (f_v) {
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object before init_permutation_group_"
+		cout << "projective_space_with_action::set_stabilizer_of_object "
+				"before init_permutation_group_"
 				"from_generators" << endl;
 		}
 	ago.create(Ago, __FILE__, __LINE__);
@@ -1086,8 +1084,8 @@ strong_generators
 		verbose_level);
 
 	if (f_vv) {
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object create_automorphism_group_of_"
+		cout << "projective_space_with_action::set_stabilizer_of_object "
+				"create_automorphism_group_of_"
 				"incidence_structure: created action ";
 		A_perm->print_info();
 		cout << endl;
@@ -1098,8 +1096,8 @@ strong_generators
 	//A_linear = A;
 
 	if (A_linear == NULL) {
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object A_linear == NULL" << endl;
+		cout << "projective_space_with_action::set_stabilizer_of_object "
+				"A_linear == NULL" << endl;
 		exit(1);
 		}
 
@@ -1119,8 +1117,8 @@ strong_generators
 	pos = 0;
 	for (g = 0; g < gens->len; g++) {
 		if (f_vv) {
-			cout << "projective_space_with_action::set_stabilizer_"
-					"of_object strong generator " << g << ":" << endl;
+			cout << "projective_space_with_action::set_stabilizer_of_object "
+					"strong generator " << g << ":" << endl;
 			//A_perm->element_print(gens->ith(g), cout);
 			cout << endl;
 			}
@@ -1132,8 +1130,8 @@ strong_generators
 			Mtx[d * d] = frobenius;
 			A_linear->make_element(Elt1, Mtx, 0 /*verbose_level - 2*/);
 			if (f_vv) {
-				cout << "projective_space_with_action::set_stabilizer_"
-						"of_object semi-linear group element:" << endl;
+				cout << "projective_space_with_action::set_stabilizer_of_object "
+						"semi-linear group element:" << endl;
 				A_linear->element_print(Elt1, cout);
 				}
 			A_linear->element_move(Elt1, gens1->ith(pos), 0);
@@ -1143,8 +1141,8 @@ strong_generators
 			}
 		else {
 			if (f_vv) {
-				cout << "projective_space_with_action::set_stabilizer_"
-						"of_object generator " << g << " does not "
+				cout << "projective_space_with_action::set_stabilizer_of_object "
+						"generator " << g << " does not "
 						"correspond to a semilinear mapping" << endl;
 				}
 			}
@@ -1175,8 +1173,8 @@ strong_generators
 			j1 = A_linear->element_image_of(i, gens1->ith(g), 0);
 			j2 = A_perm->element_image_of(i, gens->ith(g), 0);
 			if (j1 != j2) {
-				cout << "projective_space_with_action::set_stabilizer_"
-						"of_object problem with generator: "
+				cout << "projective_space_with_action::set_stabilizer_of_object "
+						"problem with generator: "
 						"j1 != j2" << endl;
 				cout << "i=" << i << endl;
 				cout << "j1=" << j1 << endl;
@@ -1187,8 +1185,8 @@ strong_generators
 			}
 		}
 	if (f_vv) {
-		cout << "projective_space_with_action::set_stabilizer_of_"
-				"object the generators are OK" << endl;
+		cout << "projective_space_with_action::set_stabilizer_of_object "
+				"the generators are OK" << endl;
 		}
 
 
@@ -1197,8 +1195,8 @@ strong_generators
 	longinteger_object go;
 
 	if (f_vv) {
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object we are now creating the group" << endl;
+		cout << "projective_space_with_action::set_stabilizer_of_object "
+				"we are now creating the group" << endl;
 		}
 
 	S = A_linear->create_sims_from_generators_with_target_group_order(
@@ -1208,15 +1206,15 @@ strong_generators
 
 	
 	if (f_vv) {
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object Found a group of order " << go << endl;
+		cout << "projective_space_with_action::set_stabilizer_of_object "
+				"Found a group of order " << go << endl;
 		}
 	if (f_vvv) {
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object strong generators are:" << endl;
+		cout << "projective_space_with_action::set_stabilizer_of_object "
+				"strong generators are:" << endl;
 		S->print_generators();
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object strong generators are (in tex):" << endl;
+		cout << "projective_space_with_action::set_stabilizer_of_object "
+				"strong generators are (in tex):" << endl;
 		S->print_generators_tex(cout);
 		}
 
@@ -1224,8 +1222,8 @@ strong_generators
 	longinteger_domain D;
 	
 	if (D.compare_unsigned(ago, go)) {
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object the group order does not match" << endl;
+		cout << "projective_space_with_action::set_stabilizer_of_object "
+				"the group order does not match" << endl;
 		cout << "ago = " << ago << endl;
 		cout << "go = " << go << endl;
 		exit(1);
@@ -1273,8 +1271,8 @@ strong_generators
 
 
 	if (f_v) {
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object before initializing strong generators" << endl;
+		cout << "projective_space_with_action::set_stabilizer_of_object "
+				"before initializing strong generators" << endl;
 		}
 	strong_generators *SG;
 
@@ -1282,13 +1280,12 @@ strong_generators
 	SG->init_from_sims(S, 0 /* verbose_level*/);
 	FREE_OBJECT(S);
 	if (f_v) {
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object after initializing strong generators" << endl;
+		cout << "projective_space_with_action::set_stabilizer_of_object "
+				"after initializing strong generators" << endl;
 		}
 
 	if (f_v) {
-		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object done" << endl;
+		cout << "projective_space_with_action::set_stabilizer_of_object done" << endl;
 		}
 	return SG;
 }
@@ -1301,13 +1298,11 @@ void projective_space_with_action::report_fixed_objects_in_PG_3_tex(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "projective_space_with_action::report_fixed_"
-				"objects_in_PG_3_tex" << endl;
+		cout << "projective_space_with_action::report_fixed_objects_in_PG_3_tex" << endl;
 		}
 
 	if (P->n != 3) {
-		cout << "projective_space_with_action::report_fixed_"
-				"objects_in_PG_3_tex P->n != 3" << endl;
+		cout << "projective_space_with_action::report_fixed_objects_in_PG_3_tex P->n != 3" << endl;
 		exit(1);
 		}
 	projective_space *P3;
@@ -1410,8 +1405,7 @@ void projective_space_with_action::report_fixed_objects_in_PG_3_tex(
 	}
 
 	if (f_v) {
-		cout << "projective_space_with_action::report_"
-				"fixed_objects_in_PG_3_tex done" << endl;
+		cout << "projective_space_with_action::report_fixed_objects_in_PG_3_tex done" << endl;
 		}
 }
 
@@ -1517,13 +1511,11 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "projective_space_with_action::report_"
-				"decomposition_by_single_automorphism" << endl;
+		cout << "projective_space_with_action::report_decomposition_by_single_automorphism" << endl;
 		}
 
 	if (P->n != 3) {
-		cout << "projective_space_with_action::report_"
-				"decomposition_by_single_automorphism P->n != 3" << endl;
+		cout << "projective_space_with_action::report_decomposition_by_single_automorphism P->n != 3" << endl;
 		exit(1);
 		}
 	//projective_space *P3;
@@ -1573,8 +1565,7 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 	//Sch->print_orbit_lengths_tex(ost);
 
 	if (f_v) {
-		cout << "projective_space_with_action::report_"
-				"decomposition_by_single_automorphism "
+		cout << "projective_space_with_action::report_decomposition_by_single_automorphism "
 				"before incidence_and_stack_for_type_ij" << endl;
 		}
 	P->incidence_and_stack_for_type_ij(
@@ -1583,42 +1574,36 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 		Stack,
 		0 /*verbose_level*/);
 	if (f_v) {
-		cout << "projective_space_with_action::report_"
-				"decomposition_by_single_automorphism "
+		cout << "projective_space_with_action::report_decomposition_by_single_automorphism "
 				"after incidence_and_stack_for_type_ij" << endl;
 		}
 
 	if (f_v) {
-		cout << "projective_space_with_action::report_"
-				"decomposition_by_single_automorphism "
+		cout << "projective_space_with_action::report_decomposition_by_single_automorphism "
 				"before S1.allocate" << endl;
 		}
 	S1.allocate(A->degree, 0 /* verbose_level */);
 	S2.allocate(A_on_lines->degree, 0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "projective_space_with_action::report_"
-				"decomposition_by_single_automorphism "
+		cout << "projective_space_with_action::report_decomposition_by_single_automorphism "
 				"before Sch1->get_orbit_partition" << endl;
 		}
 	Sch1->get_orbit_partition(S1, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "projective_space_with_action::report_"
-				"decomposition_by_single_automorphism "
+		cout << "projective_space_with_action::report_decomposition_by_single_automorphism "
 				"before Sch2->get_orbit_partition" << endl;
 		}
 	Sch2->get_orbit_partition(S2, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "projective_space_with_action::report_"
-				"decomposition_by_single_automorphism "
+		cout << "projective_space_with_action::report_decomposition_by_single_automorphism "
 				"after Sch2->get_orbit_partition" << endl;
 		}
 	int i, j, sz;
 
 	for (i = 1; i < S1.ht; i++) {
 		if (f_v) {
-			cout << "projective_space_with_action::report_"
-					"decomposition_by_single_automorphism "
+			cout << "projective_space_with_action::report_decomposition_by_single_automorphism "
 					"before Stack->split_cell (S1) i=" << i << endl;
 			}
 		Stack->split_cell(
@@ -1634,8 +1619,7 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 			set[j] += A->degree;
 		}
 		if (f_v) {
-			cout << "projective_space_with_action::report_"
-					"decomposition_by_single_automorphism "
+			cout << "projective_space_with_action::report_decomposition_by_single_automorphism "
 					"before Stack->split_cell (S2) i=" << i << endl;
 			}
 		Stack->split_cell(set, sz, 0 /*verbose_level*/);
@@ -1675,8 +1659,7 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 	FREE_OBJECT(Stack);
 
 	if (f_v) {
-		cout << "projective_space_with_action::report_"
-				"decomposition_by_single_automorphism done" << endl;
+		cout << "projective_space_with_action::report_decomposition_by_single_automorphism done" << endl;
 		}
 }
 

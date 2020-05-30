@@ -2253,15 +2253,18 @@ int matrix_group::base_len(int verbose_level)
 		base_len = GG.matrix_group_base_len_projective_group(
 					n, GFq->q,
 					f_semilinear, verbose_level - 1);
-	} else if (f_affine) {
+	}
+	else if (f_affine) {
 		base_len = GG.matrix_group_base_len_affine_group(
 					n, GFq->q,
 					f_semilinear, verbose_level - 1);
-	} else if (f_general_linear) {
+	}
+	else if (f_general_linear) {
 		base_len = GG.matrix_group_base_len_general_linear_group(
 					n, GFq->q,
 					f_semilinear, verbose_level - 1);
-	} else {
+	}
+	else {
 		cout << "matrix_group::base_len no type" << endl;
 		exit(1);
 	}
@@ -2288,13 +2291,15 @@ void matrix_group::base_and_transversal_length(
 			base_len, degree,
 			base, transversal_length,
 			verbose_level);
-	} else if (f_affine) {
+	}
+	else if (f_affine) {
 		GFq->affine_matrix_group_base_and_transversal_length(n,
 			f_semilinear,
 			base_len, degree,
 			base, transversal_length,
 			verbose_level);
-	} else if (f_general_linear) {
+	}
+	else if (f_general_linear) {
 		GFq->general_linear_matrix_group_base_and_transversal_length(n,
 			f_semilinear,
 			base_len, degree,
@@ -2320,13 +2325,15 @@ void matrix_group::strong_generators_low_level(int *&data,
 			f_semilinear,
 			data, size, nb_gens,
 			verbose_level - 1);
-	} else if (f_affine) {
+	}
+	else if (f_affine) {
 		GFq->strong_generators_for_affine_linear_group(
 				n,
 				f_semilinear,
 				data, size, nb_gens,
 				verbose_level - 1);
-	} else if (f_general_linear) {
+	}
+	else if (f_general_linear) {
 		GFq->strong_generators_for_general_linear_group(
 			n,
 			f_semilinear,
@@ -2336,6 +2343,29 @@ void matrix_group::strong_generators_low_level(int *&data,
 	if (f_v) {
 		cout << "matrix_group::strong_generators_low_level done" << endl;
 		}
+}
+
+int matrix_group::has_shape_of_singer_cycle(int *Elt)
+{
+	int i, j, a, a0;
+
+	a0 = Elt[0 * n + 1];
+	for (i = 0; i < n - 1; i++) {
+		for (j = 0; j < n; j++) {
+			a = Elt[i * n + j];
+			if (j == i + 1) {
+				if (a != a0) {
+					return FALSE;
+				}
+			}
+			else {
+				if (a) {
+					return FALSE;
+				}
+			}
+		}
+	}
+	return TRUE;
 }
 
 }}
