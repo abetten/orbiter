@@ -894,16 +894,18 @@ void diophant::write_solutions(const char *fname, int verbose_level)
 				}
 #endif
 			}
-			if (h != sum) {
-				cout << "diophant::write_solutions h != sum" << endl;
-				cout << "nb_sol = " << _resultanz << endl;
-				cout << "sum = " << sum << endl;
-				cout << "h = " << h << endl;
-				cout << "res=" << endl;
-				for (j = 0; j < n; j++) {
-					cout << j << " : " << res[j] << endl;
+			if (f_has_sum) {
+				if (h != sum) {
+					cout << "diophant::write_solutions h != sum" << endl;
+					cout << "nb_sol = " << _resultanz << endl;
+					cout << "sum = " << sum << endl;
+					cout << "h = " << h << endl;
+					cout << "res=" << endl;
+					for (j = 0; j < n; j++) {
+						cout << j << " : " << res[j] << endl;
+					}
+					exit(1);
 				}
-				exit(1);
 			}
 			fp << endl;
 			_results.pop_front();
@@ -2050,9 +2052,19 @@ void diophant::solve_mckay_override_minrhs_in_inequalities(
 				<< label << ", a system "
 				"of size " << m << " x " << n << endl;
 	}
-	lgs.Init(this, label, (int) m + 1, (int) n);
-	minres.resize(m + 1);
-	maxres.resize(m + 1);
+
+	int nb_eqns;
+
+	if (f_has_sum) {
+		nb_eqns= m + 1;
+	}
+	else {
+		nb_eqns = m;
+	}
+
+	lgs.Init(this, label, nb_eqns, n);
+	minres.resize(nb_eqns);
+	maxres.resize(nb_eqns);
 	fanz.resize(m + 1);
 	eqn.resize(m + 1);
 	
@@ -2134,13 +2146,31 @@ void diophant::solve_mckay_override_minrhs_in_inequalities(
 	else {
 		if (f_v) {
 			cout << "diophant::solve_mckay_override_minrhs_in_inequalities "
-					"f_x_max=false sum="  << sum << endl;
+					"f_x_max=false initializing with "  << INT_MAX << endl;
 		}
 		for (j = 0; j < n; j++) {
 			minvarvalue[j] = 0;
-			maxvarvalue[j] = (int) sum;
+			maxvarvalue[j] = (int) INT_MAX;
 		}
 	}
+
+	// trying to restrict maxvarvalue[]:
+	int b;
+	for (i = 0; i < m; i++) {
+		cout << "trying to restrict using of equation " << i << endl;
+		for (j = 0; j < n; j++) {
+			if (A[i * n + j]) {
+
+				b = RHS[i] / A[i * n + j];
+
+				if (b < maxvarvalue[j]) {
+					cout << "lowering maxvarvalue[" << j << "] from " << maxvarvalue[j] << " to " << b << " because of equation " << i << endl;
+					maxvarvalue[j] = b;
+				}
+			}
+		}
+	}
+
 	if (f_v) {
 		cout << "diophant::solve_mckay_override_minrhs_in_inequalities "
 				"maxvarvalue=" << endl;
@@ -2167,8 +2197,8 @@ void diophant::solve_mckay_override_minrhs_in_inequalities(
 	
 	lgs.possolve(minvarvalue, maxvarvalue, 
 		eqn, minres, maxres, fanz, 
-		(int) m + 1, (int) n, 
-		(int) verbose_level);
+		nb_eqns, n,
+		verbose_level);
 	nb_backtrack_nodes = lgs.nb_calls_to_solve;
 	nb_sol = _resultanz;
 	if (f_v) {
@@ -4047,13 +4077,238 @@ void diophant::test_if_the_last_solution_is_unique()
 	}
 }
 
+
+
+
+int diophant::solve_first_mckay_once_option(
+		int f_once, int verbose_level)
+{
+	int f_v = TRUE;//(verbose_level >= 1);
+	int j;
+	int maxresults = 10000000;
+	vector<int> res;
+	int nb_backtrack_nodes;
+	int nb_sol;
+
+	//verbose_level = 4;
+	if (f_v) {
+		cout << "diophant::solve_first_mckay calling solve_mckay" << endl;
+	}
+	if (f_once) {
+		maxresults = 1;
+	}
+
+	solve_mckay("",
+			maxresults, nb_backtrack_nodes, nb_sol,
+			verbose_level - 2);
+
+	if (f_v) {
+		cout << "diophant::solve_first_mckay found " << _resultanz
+			<< " solutions, using " << nb_backtrack_nodes
+			<< " backtrack nodes" << endl;
+	}
+	_cur_result = 0;
+	if (_resultanz == 0) {
+		return FALSE;
+	}
+	res = _results.front();
+	for (j = 0; j < n; j++) {
+		x[j] = res[j];
+		}
+	_results.pop_front();
+	_cur_result++;
+	if (f_v) {
+		cout << "diophant::solve_first_mckay done" << endl;
+		}
+	return TRUE;
+}
+
+int diophant::solve_all_mckay(
+		int &nb_backtrack_nodes, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int maxresults = 10000000;
+	//int nb_backtrack_nodes;
+	int nb_sol;
+	
+	solve_mckay(label,
+			maxresults, nb_backtrack_nodes, nb_sol,
+			verbose_level);
+
+	if (f_v) {
+		cout << "diophant_solve_all_mckay found " << _resultanz
+				<< " solutions in " << nb_backtrack_nodes
+				<< " backtrack nodes" << endl;
+	}
+	return _resultanz;
+}
+
+#if 0
+int diophant::solve_once_mckay(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int maxresults = 1;
+	int nb_backtrack_nodes;
+	int nb_sol;
+
+	solve_mckay(label,
+			maxresults, nb_backtrack_nodes, nb_sol,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "diophant_solve_once_mckay found " << _resultanz
+				<< " solutions in " << nb_backtrack_nodes
+				<< " backtrack nodes" << endl;
+		}
+	return _resultanz;
+}
+
+int diophant::solve_next_mckay(int verbose_level)
+{
+	int j;
+	if (_cur_result < _resultanz) {
+		for (j = 0; j < n; j++) {
+			x[j] = _results.front()[j];
+			}
+		_results.pop_front();
+		_cur_result++;
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
+#endif
+
+
+void diophant::solve_mckay(
+		const char *label, int maxresults,
+		int &nb_backtrack_nodes, int &nb_sol,
+		int verbose_level)
+{
+	solve_mckay_override_minrhs_in_inequalities(
+			label, maxresults, nb_backtrack_nodes,
+			0 /* minrhs */, nb_sol, verbose_level);
+}
+
+void diophant::solve_mckay_override_minrhs_in_inequalities(
+	const char *label,
+	int maxresults, int &nb_backtrack_nodes, 
+	int minrhs, int &nb_sol, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, nb;
+	vector<int> minres, maxres, fanz;
+	mckay::tMCKAY lgs;
+	vector<mckay::equation> eqn;
+	map<int, int>::iterator it;
+	vector<int> minvarvalue;
+	vector<int> maxvarvalue;
+
+	if (f_v) {
+		cout << "diophant_solve_mckay_override_minrhs_in_inequalities "
+			<< label << ", a system of size " << m
+			<< " x " << n << endl;
+		}
+	lgs.Init(this, label, (int) m + 1, (int) n);
+	minres.resize(m + 1);
+	maxres.resize(m + 1);
+	fanz.resize(m + 1);
+	eqn.resize(m + 1);
+	
+	for (i = 0; i < m; i++) {
+		// the RHS:
+		if (type[i] == t_LE) {
+			minres[i] = (int) minrhs;
+			maxres[i] = (int) RHS[i];
+		}
+		else {
+			minres[i] = (int) RHS[i];
+			maxres[i] = (int) RHS[i];
+		}
+		
+		// count the number of nonzero coefficients:
+		nb = 0;
+		for (j = 0; j < n; j++) {
+			if (A[i * n + j]) {
+				nb++;
+			}
+		}
+		
+		// initialize coefficients:
+		fanz[i] = (int) nb;
+		eqn[i].resize(nb);
+		nb = 0;
+		for (j = 0; j < n; j++) {
+			if (A[i * n + j]) {
+				eqn[i][nb].var = (int) j;
+				eqn[i][nb].coeff = (int) A[i * n + j];
+				nb++;
+			}
+		}
+	} // next i
+	
+	// one more equation for \sum x_j = sum
+	i = m;
+	fanz[i] = (int) n;
+	eqn[i].resize(n);
+	for (j = 0; j < n; j++) {
+		eqn[i][j].var = (int) j;
+		eqn[i][j].coeff = 1;
+	}
+	minres[i] = (int) sum;
+	maxres[i] = (int) sum;
+	
+	// now the bounds on the x_j
+	minvarvalue.resize(n);
+	maxvarvalue.resize(n);
+	if (f_x_max) {
+		for (j = 0; j < n; j++) {
+			minvarvalue[j] = 0;
+			maxvarvalue[j] = (int) x_max[j];
+		}
+	}
+	else {
+		for (j = 0; j < n; j++) {
+			minvarvalue[j] = 0;
+			maxvarvalue[j] = (int) sum;
+		}
+	}
+#if 0
+  for (j=1; j<=_eqnanz; j++) {
+    minres[j-1] = _eqns[j-1].GetMinResult();
+    maxres[j-1] = _eqns[j-1].GetMaxResult();
+    fanz[j-1] = _eqns[j-1].GetVarAnz();
+    eqn[j-1].resize(_eqns[j-1].GetVarAnz());
+    it = _eqns[j-1].GetFaktoren().begin();
+    for (i=1; i<=_eqns[j-1].GetVarAnz(); i++) {
+      eqn[j-1][i-1].var=it->first-1;
+      eqn[j-1][i-1].coeff=it->second;
+      it++;
+    }
+  }
+#endif
+	_resultanz = 0;
+	_maxresults = (int) maxresults;
+	
+	lgs.possolve(minvarvalue, maxvarvalue, eqn, minres, maxres, fanz, 
+		(int) m + 1, (int) n, (int) verbose_level);
+	nb_backtrack_nodes = lgs.nb_calls_to_solve;
+	nb_sol = _resultanz;
+	if (f_v) {
+		cout << "diophant_solve_mckay_override_minrhs_"
+			"in_inequalities " << label
+			<< " finished, number of solutions = " << _resultanz
+			<< " nb_backtrack_nodes=" << nb_backtrack_nodes << endl;
+	}
+}
+
+
 // #############################################################################
 // callbacks and globals
 // #############################################################################
 
 
-
-void diophant_callback_solution_found(int *sol, int len, 
+void diophant_callback_solution_found(int *sol, int len,
 	int nb_sol, void *data)
 {
 	int f_v = FALSE;
@@ -4084,7 +4339,7 @@ void diophant_callback_solution_found(int *sol, int len,
 		cout << "diophant_callback_solution_found the solution "
 				"is not a solution" << endl;
 		exit(1);
-		return;
+		//return;
 	}
 	else {
 		if (f_v) {
@@ -4109,229 +4364,6 @@ void diophant_callback_solution_found(int *sol, int len,
 		}
 	//D->test_if_the_last_solution_is_unique();
 }
-
-
-int diophant_solve_first_mckay(diophant *Dio,
-		int f_once, int verbose_level)
-{
-	int f_v = TRUE;//(verbose_level >= 1);
-	int j;
-	int maxresults = 10000000;
-	vector<int> res;
-	int nb_backtrack_nodes;
-	int nb_sol;
-
-	//verbose_level = 4;
-	if (f_v) {
-		cout << "diophant::solve_first_mckay calling solve_mckay" << endl;
-	}
-	if (f_once) {
-		maxresults = 1;
-	}
-
-	diophant_solve_mckay(Dio, "",
-			maxresults, nb_backtrack_nodes, nb_sol,
-			verbose_level - 2);
-
-	if (f_v) {
-		cout << "diophant_solve_first_mckay found " << Dio->_resultanz
-			<< " solutions, using " << nb_backtrack_nodes
-			<< " backtrack nodes" << endl;
-	}
-	Dio->_cur_result = 0;
-	if (Dio->_resultanz == 0) {
-		return FALSE;
-	}
-	res = Dio->_results.front();
-	for (j = 0; j < Dio->n; j++) {
-		Dio->x[j] = res[j];
-		}
-	Dio->_results.pop_front();
-	Dio->_cur_result++;
-	if (f_v) {
-		cout << "diophant_solve_first_mckay done" << endl;
-		}
-	return TRUE;
-}
-
-int diophant_solve_all_mckay(diophant *Dio,
-		int &nb_backtrack_nodes, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int maxresults = 10000000;
-	//int nb_backtrack_nodes;
-	int nb_sol;
-	
-	diophant_solve_mckay(Dio, Dio->label,
-			maxresults, nb_backtrack_nodes, nb_sol,
-			verbose_level);
-
-	if (f_v) {
-		cout << "diophant_solve_all_mckay found " << Dio->_resultanz
-				<< " solutions in " << nb_backtrack_nodes
-				<< " backtrack nodes" << endl;
-	}
-	return Dio->_resultanz;
-}
-
-int diophant_solve_once_mckay(diophant *Dio, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int maxresults = 1;
-	int nb_backtrack_nodes;
-	int nb_sol;
-
-	diophant_solve_mckay(Dio, Dio->label,
-			maxresults, nb_backtrack_nodes, nb_sol,
-			verbose_level - 2);
-	if (f_v) {
-		cout << "diophant_solve_once_mckay found " << Dio->_resultanz
-				<< " solutions in " << nb_backtrack_nodes
-				<< " backtrack nodes" << endl;
-		}
-	return Dio->_resultanz;
-}
-
-
-int diophant_solve_next_mckay(diophant *Dio, int verbose_level)
-{
-	int j;
-	if (Dio->_cur_result < Dio->_resultanz) {
-		for (j = 0; j < Dio->n; j++) {
-			Dio->x[j] = Dio->_results.front()[j];
-			}
-		Dio->_results.pop_front();
-		Dio->_cur_result++;
-		return TRUE;
-	}
-	else {
-		return FALSE;
-	}
-}
-
-
-void diophant_solve_mckay(diophant *Dio,
-		const char *label, int maxresults,
-		int &nb_backtrack_nodes, int &nb_sol,
-		int verbose_level)
-{
-	diophant_solve_mckay_override_minrhs_in_inequalities(Dio,
-			label, maxresults, nb_backtrack_nodes,
-			0 /* minrhs */, nb_sol, verbose_level);
-}
-
-void diophant_solve_mckay_override_minrhs_in_inequalities(
-	diophant *Dio, const char *label,
-	int maxresults, int &nb_backtrack_nodes, 
-	int minrhs, int &nb_sol, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j, nb;
-	vector<int> minres, maxres, fanz;
-	mckay::tMCKAY lgs;
-	vector<mckay::equation> eqn;
-	map<int, int>::iterator it;
-	vector<int> minvarvalue;
-	vector<int> maxvarvalue;
-
-	if (f_v) {
-		cout << "diophant_solve_mckay_override_minrhs_in_inequalities "
-			<< label << ", a system of size " << Dio->m
-			<< " x " << Dio->n << endl;
-		}
-	lgs.Init(Dio, label, (int) Dio->m + 1, (int) Dio->n);
-	minres.resize(Dio->m + 1);
-	maxres.resize(Dio->m + 1);
-	fanz.resize(Dio->m + 1);
-	eqn.resize(Dio->m + 1);
-	
-	for (i = 0; i < Dio->m; i++) {
-		// the RHS:
-		if (Dio->type[i] == t_LE) {
-			minres[i] = (int) minrhs;
-			maxres[i] = (int) Dio->RHS[i];
-		}
-		else {
-			minres[i] = (int) Dio->RHS[i];
-			maxres[i] = (int) Dio->RHS[i];
-		}
-		
-		// count the number of nonzero coefficients:
-		nb = 0;
-		for (j = 0; j < Dio->n; j++) {
-			if (Dio->A[i * Dio->n + j]) {
-				nb++;
-			}
-		}
-		
-		// initialize coefficients:
-		fanz[i] = (int) nb;
-		eqn[i].resize(nb);
-		nb = 0;
-		for (j = 0; j < Dio->n; j++) {
-			if (Dio->A[i * Dio->n + j]) {
-				eqn[i][nb].var = (int) j;
-				eqn[i][nb].coeff = (int) Dio->A[i * Dio->n + j];
-				nb++;
-			}
-		}
-	} // next i
-	
-	// one more equation for \sum x_j = sum
-	i = Dio->m;
-	fanz[i] = (int) Dio->n;
-	eqn[i].resize(Dio->n);
-	for (j = 0; j < Dio->n; j++) {
-		eqn[i][j].var = (int) j;
-		eqn[i][j].coeff = 1;
-	}
-	minres[i] = (int) Dio->sum;
-	maxres[i] = (int) Dio->sum;
-	
-	// now the bounds on the x_j
-	minvarvalue.resize(Dio->n);
-	maxvarvalue.resize(Dio->n);
-	if (Dio->f_x_max) {
-		for (j = 0; j < Dio->n; j++) {
-			minvarvalue[j] = 0;
-			maxvarvalue[j] = (int) Dio->x_max[j];
-		}
-	}
-	else {
-		for (j = 0; j < Dio->n; j++) {
-			minvarvalue[j] = 0;
-			maxvarvalue[j] = (int) Dio->sum;
-		}
-	}
-#if 0
-  for (j=1; j<=_eqnanz; j++) {
-    minres[j-1] = _eqns[j-1].GetMinResult();
-    maxres[j-1] = _eqns[j-1].GetMaxResult();
-    fanz[j-1] = _eqns[j-1].GetVarAnz();
-    eqn[j-1].resize(_eqns[j-1].GetVarAnz());
-    it = _eqns[j-1].GetFaktoren().begin();
-    for (i=1; i<=_eqns[j-1].GetVarAnz(); i++) {
-      eqn[j-1][i-1].var=it->first-1;
-      eqn[j-1][i-1].coeff=it->second;
-      it++;
-    }
-  }
-#endif
-	Dio->_resultanz = 0;
-	Dio->_maxresults = (int) maxresults;
-	
-	lgs.possolve(minvarvalue, maxvarvalue, eqn, minres, maxres, fanz, 
-		(int) Dio->m + 1, (int) Dio->n, (int) verbose_level);
-	nb_backtrack_nodes = lgs.nb_calls_to_solve;
-	nb_sol = Dio->_resultanz;
-	if (f_v) {
-		cout << "diophant_solve_mckay_override_minrhs_"
-			"in_inequalities " << label
-			<< " finished, number of solutions = " << Dio->_resultanz 
-			<< " nb_backtrack_nodes=" << nb_backtrack_nodes << endl;
-	}
-}
-
 
 void solve_diophant(int *Inc,
 	int nb_rows, int nb_cols, int nb_needed,
@@ -4396,7 +4428,7 @@ void solve_diophant(int *Inc,
 		nb_backtrack = Dio->nb_steps_betten;
 	}
 	else {
-		diophant_solve_all_mckay(Dio, nb_backtrack, verbose_level - 2);
+		Dio->solve_all_mckay(nb_backtrack, verbose_level - 2);
 	}
 
 	nb_sol = Dio->_resultanz;

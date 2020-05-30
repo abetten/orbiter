@@ -769,29 +769,6 @@ void interface_combinatorics::do_diophant(diophant_description *Descr, int verbo
 		cout << "interface_combinatorics::do_diophant" << endl;
 	}
 
-	finite_field *F;
-
-	F = NEW_OBJECT(finite_field);
-
-	if (!Descr->f_q) {
-		cout << "interface_combinatorics::do_diophant please use option -q <q>" << endl;
-		exit(1);
-	}
-	if (Descr->f_override_polynomial) {
-		cout << "creating finite field of order q=" << Descr->input_q
-				<< " using override polynomial " << Descr->override_polynomial << endl;
-		F->init_override_polynomial(Descr->input_q,
-				Descr->override_polynomial, verbose_level);
-	}
-	else {
-		cout << "interface_combinatorics::do_diophant creating finite field "
-				"of order q=" << Descr->input_q
-				<< " using the default polynomial (if necessary)" << endl;
-		F->init(Descr->input_q, 0);
-	}
-
-	Descr->F = F;
-
 	diophant_create *DC;
 
 	DC = NEW_OBJECT(diophant_create);

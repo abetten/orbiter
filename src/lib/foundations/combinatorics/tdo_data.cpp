@@ -289,8 +289,7 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 			// too expensive, hence we do not do it any more.
 			
 			int nb_backtrack;
-			nb_sol2 = diophant_solve_all_mckay(&DD,
-					nb_backtrack, 0/*verbose_level*/);
+			nb_sol2 = DD.solve_all_mckay(nb_backtrack, 0/*verbose_level*/);
 			if (f_v) {
 				cout << "N=" << N << " / " << nb_sol
 						<< " number of solutions = " << nb_sol2 << endl;
@@ -499,7 +498,7 @@ void tdo_data::solve_second_system(int verbose_level,
 	nb_sol = 0;
 
 	if (f_use_mckay_solver) {
-		ret = diophant_solve_first_mckay/*betten*/(D2,
+		ret = D2->solve_first_mckay_once_option/*betten*/(
 			f_once, 0/*verbose_level - 4*/);
 		}
 	else {
@@ -569,8 +568,7 @@ void tdo_data::solve_second_system(int verbose_level,
 				}
 			else {
 				if (f_use_mckay_solver) {
-					ret = diophant_solve_next_mckay(D2,
-							0/*verbose_level - 5*/);
+					ret = D2->solve_next_mckay(0/*verbose_level - 5*/);
 					}
 				else {
 					ret = D2->solve_next_betten(0/*verbose_level - 5*/);

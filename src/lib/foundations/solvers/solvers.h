@@ -67,7 +67,7 @@ public:
 // #############################################################################
 
 
-//! to create a diophantine systems from command line arguments
+//! to create a diophantine system from diophant_description
 
 class diophant_create {
 public:
@@ -79,7 +79,7 @@ public:
 	diophant_create();
 	~diophant_create();
 	void init(
-			diophant_description *description,
+			diophant_description *Descr,
 			int verbose_level);
 
 };
@@ -99,7 +99,7 @@ public:
 	int input_q;
 	int f_override_polynomial;
 	const char *override_polynomial;
-	finite_field *F;
+	//finite_field *F;
 
 	int f_maximal_arc;
 	int maximal_arc_sz;
@@ -107,6 +107,26 @@ public:
 	const char *maximal_arc_secants_text;
 	const char *external_lines_as_subset_of_secants_text;
 
+	int f_from_scratch;
+	const char *from_scratch_label;
+	int from_scratch_m;
+	int from_scratch_n;
+
+	int f_from_scratch_coefficient_matrix;
+	const char *from_scratch_A_text;
+
+
+	int f_from_scratch_RHS;
+	const char *from_scratch_RHS_text;
+
+	int f_from_scratch_RHS_type;
+	const char *from_scratch_RHS_type_text;
+
+	int f_from_scratch_x_max;
+	const char *from_scratch_x_max_text;
+
+	int f_from_scratch_sum;
+	int from_scratch_sum;
 
 
 	diophant_description();
@@ -308,23 +328,25 @@ public:
 	void make_clique_graph_and_save(const char *clique_graph_fname, 
 		int verbose_level);
 	void test_if_the_last_solution_is_unique();
+
+
+	int solve_first_mckay_once_option(int f_once, int verbose_level);
+	int solve_all_mckay(
+		int &nb_backtrack_nodes, int verbose_level);
+	void solve_mckay(
+			const char *label, int maxresults,
+			int &nb_backtrack_nodes, int &nb_sol,
+			int verbose_level);
+	void solve_mckay_override_minrhs_in_inequalities(
+		const char *label,
+		int maxresults, int &nb_backtrack_nodes,
+		int minrhs, int &nb_sol, int verbose_level);
+
+
 };
 
 void diophant_callback_solution_found(int *sol, 
 	int len, int nb_sol, void *data);
-int diophant_solve_first_mckay(diophant *Dio, int f_once, int verbose_level);
-int diophant_solve_all_mckay(diophant *Dio,
-	int &nb_backtrack_nodes, int verbose_level);
-int diophant_solve_once_mckay(diophant *Dio, int verbose_level);
-int diophant_solve_next_mckay(diophant *Dio, int verbose_level);
-void diophant_solve_mckay(diophant *Dio,
-		const char *label, int maxresults,
-		int &nb_backtrack_nodes, int &nb_sol,
-		int verbose_level);
-void diophant_solve_mckay_override_minrhs_in_inequalities(
-	diophant *Dio, const char *label,
-	int maxresults, int &nb_backtrack_nodes, 
-	int minrhs, int &nb_sol, int verbose_level);
 void solve_diophant(int *Inc, int nb_rows, int nb_cols, int nb_needed, 
 	int f_has_Rhs, int *Rhs, 
 	long int *&Solutions, int &nb_sol, int &nb_backtrack, int &dt,
