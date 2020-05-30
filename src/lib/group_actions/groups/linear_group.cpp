@@ -383,15 +383,6 @@ void linear_group::init(
 		}
 	}
 
-	if (!f_OK) {
-		A2 = A_linear;
-		vector_space_dimension = n;
-		q = input_q;
-		Strong_gens = initial_strong_gens;
-		//sprintf(prefix, "PGL_%d_%d", n, input_q);
-		//sprintf(label_latex, "\\PGL(%d,%d)", n, input_q);
-		}
-
 	if (description->f_on_k_subspaces) {
 		action_on_grassmannian *AG;
 		grassmann *Grass;
@@ -416,6 +407,7 @@ void linear_group::init(
 		A3->induced_action_on_grassmannian(A2, AG, 
 			FALSE /* f_induce_action */, NULL /*sims *old_G */, 
 			MINIMUM(verbose_level - 2, 2));
+		A3->f_is_linear = TRUE;
 	
 		if (f_v) {
 			cout << "linear_group::init action A3 created: ";
@@ -423,6 +415,7 @@ void linear_group::init(
 			}
 
 		A2 = A3;
+		f_OK = TRUE;
 		sprintf(prefix + strlen(prefix), "_OnGr_%d", description->on_k_subspaces_k);
 		sprintf(label_latex + strlen(label_latex), " {\\rm Gr}_{%d,%d}(%d)",
 				n, description->on_k_subspaces_k, F->q);
@@ -431,7 +424,43 @@ void linear_group::init(
 		cout << "linear_group::init creating induced "
 				"action on k-subspaces done" << endl;
 		
+	}
+	if (description->f_restricted_action) {
+		if (f_v) {
+			cout << "linear_group::init "
+					"restricted_action" << endl;
 		}
+		long int *points;
+		int nb_points;
+		action *A3;
+
+		lint_vec_scan(description->restricted_action_text, points, nb_points);
+		A3 = A2->restricted_action(points, nb_points,
+				verbose_level);
+		A3->f_is_linear = TRUE;
+		f_OK = TRUE;
+		//sprintf(A2->prefix + strlen(A2->prefix), "_restr_%d", nb_points);
+		//sprintf(A2->label_latex + strlen(A2->label_latex),
+		//		"{\\rm restr}(%d)", nb_points);
+		//Strong_gens = initial_strong_gens;
+
+		A2 = A3;
+	if (f_v) {
+			cout << "linear_group::init "
+					"after restricted_action" << endl;
+		}
+		f_OK = TRUE;
+	}
+
+	if (!f_OK) {
+		A2 = A_linear;
+		vector_space_dimension = n;
+		q = input_q;
+		Strong_gens = initial_strong_gens;
+		//sprintf(prefix, "PGL_%d_%d", n, input_q);
+		//sprintf(label_latex, "\\PGL(%d,%d)", n, input_q);
+		}
+
 
 	if (description->f_export_magma) {
 		if (f_v) {

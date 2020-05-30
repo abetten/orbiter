@@ -175,7 +175,7 @@ int data_input_stream::read_arguments(
 		}
 	} // next i
 	cout << "data_input_stream::read_arguments done" << endl;
-	return i + 1;
+	return i;
 }
 
 int data_input_stream::count_number_of_objects_to_test(

@@ -110,6 +110,14 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	if (Descr->f_search_subgroup) {
 		search_subgroup(verbose_level);
 	}
+	if (Descr->f_find_singer_cycle) {
+		find_singer_cycle(verbose_level);
+	}
+	if (Descr->f_search_element_of_order) {
+		search_element_of_order(Descr->search_element_order, verbose_level);
+	}
+
+
 
 
 	if (Descr->f_orbits_on_set_system_from_file) {
@@ -553,6 +561,144 @@ void group_theoretic_activity::search_subgroup(int verbose_level)
 	FREE_int(Elt);
 	if (f_v) {
 		cout << "group_theoretic_activity::search_subgroup done" << endl;
+	}
+}
+
+void group_theoretic_activity::find_singer_cycle(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::find_singer_cycle" << endl;
+	}
+	sims *H;
+
+	//G = LG->initial_strong_gens->create_sims(verbose_level);
+	H = LG->Strong_gens->create_sims(verbose_level);
+
+	//cout << "group order G = " << G->group_order_int() << endl;
+	cout << "group order H = " << H->group_order_lint() << endl;
+
+	int *Elt;
+	longinteger_object go;
+	int i, d, q, cnt, ord, order;
+	number_theory_domain NT;
+
+	if (!A1->is_matrix_group()) {
+		cout << "group_theoretic_activity::find_singer_cycle needs matrix group" << endl;
+		exit(1);
+	}
+	matrix_group *M;
+
+	M = A1->get_matrix_group();
+	q = M->GFq->q;
+	d = A1->matrix_group_dimension();
+
+	if (A1->is_projective()) {
+		order = (NT.i_power_j(q, d) - 1) / (q - 1);
+	}
+	else {
+		order = NT.i_power_j(q, d) - 1;
+	}
+	if (f_v) {
+		cout << "group_theoretic_activity::find_singer_cycle looking for an element of order " << order << endl;
+	}
+
+	Elt = NEW_int(A1->elt_size_in_int);
+	H->group_order(go);
+
+	cnt = 0;
+	for (i = 0; i < go.as_int(); i++) {
+		H->element_unrank_lint(i, Elt);
+
+
+		ord = A2->element_order(Elt);
+
+	#if 0
+		cout << "Element " << setw(5) << i << " / "
+				<< go.as_int() << ":" << endl;
+		A->element_print(Elt, cout);
+		cout << endl;
+		A->element_print_as_permutation(Elt, cout);
+		cout << endl;
+	#endif
+
+		if (ord != order) {
+			continue;
+		}
+		if (!M->has_shape_of_singer_cycle(Elt)) {
+			continue;
+		}
+		cout << "Element " << setw(5) << i << " / "
+					<< go.as_int() << " = " << cnt << ":" << endl;
+		A2->element_print(Elt, cout);
+		cout << endl;
+		A2->element_print_as_permutation(Elt, cout);
+		cout << endl;
+		cnt++;
+	}
+	cout << "we found " << cnt << " group elements of order " << order << endl;
+
+	FREE_int(Elt);
+	if (f_v) {
+		cout << "group_theoretic_activity::find_singer_cycle done" << endl;
+	}
+}
+
+void group_theoretic_activity::search_element_of_order(int order, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::search_element_of_order" << endl;
+	}
+	sims *H;
+
+	//G = LG->initial_strong_gens->create_sims(verbose_level);
+	H = LG->Strong_gens->create_sims(verbose_level);
+
+	//cout << "group order G = " << G->group_order_int() << endl;
+	cout << "group order H = " << H->group_order_lint() << endl;
+
+	int *Elt;
+	longinteger_object go;
+	int i, cnt, ord;
+
+	Elt = NEW_int(A1->elt_size_in_int);
+	H->group_order(go);
+
+	cnt = 0;
+	for (i = 0; i < go.as_int(); i++) {
+		H->element_unrank_lint(i, Elt);
+
+
+		ord = A2->element_order(Elt);
+
+	#if 0
+		cout << "Element " << setw(5) << i << " / "
+				<< go.as_int() << ":" << endl;
+		A->element_print(Elt, cout);
+		cout << endl;
+		A->element_print_as_permutation(Elt, cout);
+		cout << endl;
+	#endif
+
+		if (ord != order) {
+			continue;
+		}
+		cout << "Element " << setw(5) << i << " / "
+					<< go.as_int() << " = " << cnt << ":" << endl;
+		A2->element_print(Elt, cout);
+		cout << endl;
+		A2->element_print_as_permutation(Elt, cout);
+		cout << endl;
+		cnt++;
+	}
+	cout << "we found " << cnt << " group elements of order " << order << endl;
+
+	FREE_int(Elt);
+	if (f_v) {
+		cout << "group_theoretic_activity::search_element_of_order done" << endl;
 	}
 }
 

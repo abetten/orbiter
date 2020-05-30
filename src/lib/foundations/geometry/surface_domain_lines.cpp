@@ -1,4 +1,4 @@
-// surface_lines.cpp
+// surface_domain_lines.cpp
 //
 // Anton Betten
 //

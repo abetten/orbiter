@@ -193,6 +193,9 @@ public:
 	int f_orbit_of_set_from_file;
 	const char *orbit_of_set_from_file_fname;
 	int f_search_subgroup;
+	int f_find_singer_cycle;
+	int f_search_element_of_order;
+	int search_element_order;
 	int f_print_elements;
 	int f_print_elements_tex;
 	int f_multiply;
@@ -306,6 +309,8 @@ public:
 	void print_elements(int verbose_level);
 	void print_elements_tex(int verbose_level);
 	void search_subgroup(int verbose_level);
+	void find_singer_cycle(int verbose_level);
+	void search_element_of_order(int order, int verbose_level);
 	void orbits_on_set_system_from_file(int verbose_level);
 	void orbits_on_set_from_file(int verbose_level);
 	void orbit_of(int verbose_level);

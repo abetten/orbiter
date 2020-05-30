@@ -148,6 +148,10 @@ MODULES= \
 		foundations/io_and_os/os_interface.o \
 		foundations/io_and_os/override_double.o \
 		foundations/io_and_os/util.o \
+		foundations/solvers/diophant_activity_description.o \
+		foundations/solvers/diophant_activity.o \
+		foundations/solvers/diophant_create.o \
+		foundations/solvers/diophant_description.o \
 		foundations/solvers/diophant.o \
 		foundations/solvers/dlx.o \
 		foundations/solvers/mckay.o \
@@ -181,6 +185,7 @@ MODULES= \
 		group_actions/data_structures/orbit_transversal.o \
 		group_actions/data_structures/orbit_type_repository.o \
 		group_actions/data_structures/projective_space_job_description.o \
+		group_actions/data_structures/projective_space_job.o \
 		group_actions/data_structures/projective_space_with_action.o \
 		group_actions/data_structures/schreier_vector_handler.o \
 		group_actions/data_structures/schreier_vector.o \
@@ -384,7 +389,8 @@ MODULES= \
 		interfaces/interface_combinatorics.o \
 		interfaces/interface_cryptography.o \
 		interfaces/interface_povray.o \
-		interfaces/interface_projective.o
+		interfaces/interface_projective.o \
+		interfaces/orbiter_session.o
 
 
 all:

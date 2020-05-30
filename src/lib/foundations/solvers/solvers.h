@@ -11,6 +11,114 @@
 namespace orbiter {
 namespace foundations {
 
+// #############################################################################
+// diophant_activity_description.cpp
+// #############################################################################
+
+
+//! to describe an activity for a diophantine system from command line arguments
+
+class diophant_activity_description {
+public:
+
+	int f_input_file;
+	const char *input_file;
+	int f_print;
+	int f_solve_mckay;
+	int f_solve_standard;
+	int f_draw;
+	int f_perform_column_reductions;
+
+	diophant_activity_description();
+	~diophant_activity_description();
+	int read_arguments(
+		int argc, const char **argv,
+		int verbose_level);
+
+
+
+};
+
+
+// #############################################################################
+// diophant_activity.cpp
+// #############################################################################
+
+
+//! to perform an activity for a diophantine system using diophant_activity_description
+
+class diophant_activity {
+public:
+
+	diophant_activity_description *Descr;
+
+	diophant_activity();
+	~diophant_activity();
+	void init(diophant_activity_description *Descr,
+			int verbose_level);
+
+
+};
+
+
+
+// #############################################################################
+// diophant_create.cpp
+// #############################################################################
+
+
+//! to create a diophantine systems from command line arguments
+
+class diophant_create {
+public:
+
+	diophant_description *Descr;
+
+	diophant *D;
+
+	diophant_create();
+	~diophant_create();
+	void init(
+			diophant_description *description,
+			int verbose_level);
+
+};
+
+
+
+// #############################################################################
+// diophant_description.cpp
+// #############################################################################
+
+
+//! to describe a diophantine system from command line arguments
+
+class diophant_description {
+public:
+	int f_q;
+	int input_q;
+	int f_override_polynomial;
+	const char *override_polynomial;
+	finite_field *F;
+
+	int f_maximal_arc;
+	int maximal_arc_sz;
+	int maximal_arc_d;
+	const char *maximal_arc_secants_text;
+	const char *external_lines_as_subset_of_secants_text;
+
+
+
+	diophant_description();
+	~diophant_description();
+	int read_arguments(
+		int argc, const char **argv,
+		int verbose_level);
+
+
+
+};
+
 
 // #############################################################################
 // diophant.cpp
@@ -152,6 +260,7 @@ public:
 	void latex_it();
 	void latex_it(std::ostream &ost);
 	void trivial_row_reductions(int &f_no_solution, int verbose_level);
+	diophant *trivial_column_reductions(int verbose_level);
 	int count_non_zero_coefficients_in_row(int i);
 	void coefficient_values_in_row(int i, int &nb_values, 
 		int *&values, int *&multiplicities, int verbose_level);

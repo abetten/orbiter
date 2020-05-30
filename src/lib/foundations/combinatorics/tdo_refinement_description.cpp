@@ -73,7 +73,7 @@ int tdo_refinement_description::read_arguments(int argc, const char **argv, int 
 	Sol->nb_solution_files = 0;
 
 
-	for (i = 1; i < argc - 1; i++) {
+	for (i = 0; i < argc - 1; i++) {
 		if (strcmp(argv[i], "-lambda3") == 0) {
 			f_lambda3 = TRUE;
 			lambda3 = atoi(argv[++i]);
@@ -162,7 +162,7 @@ int tdo_refinement_description::read_arguments(int argc, const char **argv, int 
 		}
 	} // next i
 	cout << "tdo_refinement_description::read_arguments done" << endl;
-	return i + 1;
+	return i;
 }
 
 

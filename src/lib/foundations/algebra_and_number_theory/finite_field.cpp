@@ -42,6 +42,8 @@ void finite_field::null()
 	v3 = NULL;
 	override_poly = NULL;
 	symbol_for_print = NULL;
+	f_has_quadratic_subfield = FALSE;
+	f_belongs_to_quadratic_subfield = NULL;
 	f_print_as_exponentials = TRUE;
 	nb_calls_to_mult_matrix_matrix = 0;
 	nb_calls_to_PG_element_rank_modified = 0;
@@ -55,37 +57,52 @@ finite_field::~finite_field()
 	print_call_stats(cout);
 	//cout << "destroying tables" << endl;
 	//cout << "destroying add_table" << endl;
-	if (add_table)
+	if (add_table) {
 		FREE_int(add_table);
-	if (mult_table) 
+	}
+	if (mult_table) {
 		FREE_int(mult_table);
-	if (negate_table)
+	}
+	if (negate_table) {
 		FREE_int(negate_table);
-	if (inv_table)
+	}
+	if (inv_table) {
 		FREE_int(inv_table);
+	}
 	//cout << "destroying frobenius_table" << endl;
-	if (frobenius_table)
+	if (frobenius_table) {
 		FREE_int(frobenius_table);
+	}
 	//cout << "destroying absolute_trace_table" << endl;
-	if (absolute_trace_table)
+	if (absolute_trace_table) {
 		FREE_int(absolute_trace_table);
+	}
 	//cout << "destroying log_alpha_table" << endl;
-	if (log_alpha_table)
+	if (log_alpha_table) {
 		FREE_int(log_alpha_table);
+	}
 	//scout << "destroying alpha_power_table" << endl;
-	if (alpha_power_table)
+	if (alpha_power_table) {
 		FREE_int(alpha_power_table);
-	if (polynomial)
+	}
+	if (polynomial) {
 		FREE_char(polynomial);
-	if (v1)
+	}
+	if (v1) {
 		FREE_int(v1);
-	if (v2)
+	}
+	if (v2) {
 		FREE_int(v2);
-	if (v3)
+	}
+	if (v3) {
 		FREE_int(v3);
+	}
 	if (symbol_for_print) {
 		FREE_char(symbol_for_print);
-		}
+	}
+	if (f_belongs_to_quadratic_subfield) {
+		FREE_int(f_belongs_to_quadratic_subfield);
+	}
 	null();
 }
 
@@ -128,13 +145,13 @@ void finite_field::init(int q, int verbose_level)
 	if (e > 1) {
 		poly = get_primitive_polynomial(p, e, verbose_level);
 		init_override_polynomial(q, poly, verbose_level);
-		}
+	}
 	else {
 		init_override_polynomial(q, "", verbose_level);
-		}
+	}
 	if (f_v) {
 		cout << "finite_field::init done" << endl;
-		}
+	}
 }
 
 void finite_field::init_symbol_for_print(const char *symbol)
@@ -243,6 +260,14 @@ void finite_field::init_override_polynomial(int q,
 		f_has_table = FALSE;
 		}
 	
+	if (f_vv) {
+		cout << "finite_field::init_override_polynomial before init_quadratic_subfield" << endl;
+	}
+	init_quadratic_subfield(verbose_level);
+	if (f_vv) {
+		cout << "finite_field::init_override_polynomial after init_quadratic_subfield" << endl;
+	}
+
 	
 	if (f_vv) {
 		cout << "finite_field::init_override_polynomial computing frobenius_table and "
@@ -280,6 +305,48 @@ void finite_field::init_override_polynomial(int q,
 		cout << "finite_field::init_override_polynomial "
 				"finished" << endl;
 		}
+}
+
+int finite_field::has_quadratic_subfield()
+{
+	return f_has_quadratic_subfield;
+}
+
+int finite_field::belongs_to_quadratic_subfield(int a)
+{
+	return f_belongs_to_quadratic_subfield[a];
+}
+
+void finite_field::init_quadratic_subfield(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::init_quadratic_subfield" << endl;
+	}
+	f_belongs_to_quadratic_subfield = NEW_int(q);
+	int_vec_zero(f_belongs_to_quadratic_subfield, q);
+
+	if (EVEN(e)) {
+		int i, a, b, idx, sqrt_q;
+		number_theory_domain NT;
+
+		f_has_quadratic_subfield = TRUE;
+		sqrt_q = NT.i_power_j(p, e >> 1);
+		idx = (q - 1) / (sqrt_q - 1);
+		f_belongs_to_quadratic_subfield[0] = TRUE;
+		for (i = 0; i < sqrt_q - 1; i++) {
+			a = idx * i;
+			b = alpha_power(a);
+			f_belongs_to_quadratic_subfield[b] = TRUE;
+		}
+	}
+	else {
+		f_has_quadratic_subfield = FALSE;
+	}
+	if (f_v) {
+		cout << "finite_field::init_quadratic_subfield done" << endl;
+	}
 }
 
 int finite_field::compute_subfield_polynomial(int order_subfield,

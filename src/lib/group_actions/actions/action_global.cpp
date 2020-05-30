@@ -461,31 +461,6 @@ void compute_generators_GL_n_q(int *&Gens,
 		}
 }
 
-#if 0
-void order_of_PGGL_n_q(longinteger_object &go,
-		int n, int q, int f_semilinear)
-{
-	int verbose_level = 0;
-	action *A;
-	finite_field *F;
-	vector_ge *nice_gens;
-
-	F = NEW_OBJECT(finite_field);
-	A = NEW_OBJECT(action);
-
-	F->init(q, 0);
-	A->init_projective_group(n, F, 
-		f_semilinear, 
-		TRUE /* f_basis */, TRUE /* f_init_sims */,
-		nice_gens,
-		verbose_level - 2);
-	A->group_order(go);
-	
-	FREE_OBJECT(nice_gens);
-	FREE_OBJECT(F);
-	FREE_OBJECT(A);
-}
-#endif
 
 
 // callbacks for Schreier Sims:
@@ -569,7 +544,7 @@ void callback_choose_random_generator_orthogonal(int iteration,
 }
 
 
-
+#if 0
 void test_matrix_group(int k, int q, int f_semilinear, int verbose_level)
 {
 	action A;
@@ -585,6 +560,7 @@ void test_matrix_group(int k, int q, int f_semilinear, int verbose_level)
 	FREE_OBJECT(nice_gens);
 	FREE_OBJECT(F);
 }
+#endif
 
 void lift_generators(vector_ge *gens_in, vector_ge *&gens_out, 
 	action *Aq, subfield_structure *S, int n, 

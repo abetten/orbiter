@@ -803,8 +803,11 @@ void graph_theory_domain::print_Pijk(int *Pijk, int nb_colors) {
 	}
 }
 
-void graph_theory_domain::compute_decomposition_of_graph_wrt_partition(int *Adj,
-		int N, int *first, int *len, int nb_parts, int *&R, int verbose_level) {
+void graph_theory_domain::compute_decomposition_of_graph_wrt_partition(
+		int *Adj,
+		int N, int *first, int *len, int nb_parts, int *&R,
+		int verbose_level)
+{
 	int f_v = (verbose_level >= 1);
 	int I, J, i, j, f1, l1, f2, l2, r0 = 0, r;
 
@@ -855,12 +858,16 @@ void graph_theory_domain::compute_decomposition_of_graph_wrt_partition(int *Adj,
 	}
 }
 
-void graph_theory_domain::draw_bitmatrix(const char *fname_base, int f_dots,
+void graph_theory_domain::draw_bitmatrix(
+		const char *fname_base, int f_dots,
 		int f_partition, int nb_row_parts, int *row_part_first,
 		int nb_col_parts, int *col_part_first, int f_row_grid, int f_col_grid,
-		int f_bitmatrix, uchar *D, int *M, int m, int n, int xmax_in,
+		int f_bitmatrix, uchar *D,
+		int *M, int m, int n, int xmax_in,
 		int ymax_in, int xmax_out, int ymax_out, double scale,
-		double line_width, int f_has_labels, int *labels, int verbose_level) {
+		double line_width, int f_has_labels, int *labels,
+		int verbose_level)
+{
 	mp_graphics G;
 	char fname_base2[1000];
 	char fname[1000];

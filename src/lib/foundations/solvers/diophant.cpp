@@ -178,10 +178,15 @@ void diophant::open(int m, int n)
 	int i;
 	
 	A = NEW_int(m * n);
+	int_vec_zero(A, m * n);
 	G = NEW_int(m * n);
+	int_vec_zero(G, m * n);
 	x = NEW_int(n);
+	int_vec_zero(x, n);
 	x_max = NEW_int(n);
+	int_vec_zero(x_max, n);
 	RHS = NEW_int(m);
+	int_vec_zero(RHS, m);
 	RHS_low = NEW_int(m);
 	RHS1 = NEW_int(m);
 	type = NEW_OBJECTS(diophant_equation_type, m);
@@ -2065,6 +2070,10 @@ void diophant::solve_mckay_override_minrhs_in_inequalities(
 			minres[i] = (int) RHS_low[i];
 			maxres[i] = (int) RHS[i];
 		}
+		else if (type[i] == t_ZOR) {
+			minres[i] = (int) 0;
+			maxres[i] = (int) RHS[i];
+		}
 		else {
 			cout << "diophant::solve_mckay_override_minrhs_in_inequalities "
 					"we cannot do this type of "
@@ -2091,7 +2100,7 @@ void diophant::solve_mckay_override_minrhs_in_inequalities(
 				nb++;
 			}
 		}
-	}
+	} // next i
 	
 	if (f_has_sum) {
 		// one more equation for \sum x_j = sum
@@ -2292,6 +2301,95 @@ void diophant::trivial_row_reductions(
 		cout << "diophant::trivial_row_reductions done, eliminated "
 				<< m1 - m << " equations" << endl;
 	}
+}
+
+diophant *diophant::trivial_column_reductions(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, h, a, rhs;
+	int *f_deleted;
+	int *col_idx;
+	int nb_deleted;
+
+	if (f_v) {
+		cout << "diophant::trivial_column_reductions" << endl;
+	}
+	f_deleted = NEW_int(n);
+	col_idx = NEW_int(n);
+	int_vec_zero(f_deleted, n);
+	int_vec_zero(col_idx, n);
+	for (j = 0; j < n; j++) {
+		col_idx[j] = -1;
+	}
+	for (i = 0; i < m; i++) {
+		if (type[i] == t_EQ) {
+			rhs = RHS[i];
+			for (j = 0; j < n; j++) {
+				a = Aij(i, j);
+				if (a > rhs) {
+					f_deleted[j] = TRUE;
+				}
+			}
+		}
+	}
+	for (j = 0; j < n; j++) {
+		cout << f_deleted[j];
+	}
+	cout << endl;
+	nb_deleted = 0;
+	h = 0;
+	for (j = 0; j < n; j++) {
+		if (f_deleted[j]) {
+			nb_deleted++;
+		}
+		else {
+			col_idx[j] = h;
+			h++;
+		}
+	}
+	if (f_v) {
+		cout << "diophant::trivial_column_reductions nb_deleted = " << nb_deleted << endl;
+		cout << "col_idx=";
+		int_vec_print(cout, col_idx, n);
+		cout << endl;
+	}
+
+
+	diophant *D2;
+
+	D2 = NEW_OBJECT(diophant);
+	D2->open(m, n - nb_deleted);
+	D2->f_has_sum = f_has_sum;
+	D2->sum = sum;
+	D2->f_x_max = f_x_max;
+	D2->f_has_var_labels = TRUE;
+	D2->var_labels = NEW_int(n - nb_deleted);
+	for (i = 0; i < m; i++) {
+		D2->type[i] = type[i];
+		D2->RHS[i] = RHS[i];
+		for (j = 0; j < n; j++) {
+			if (f_deleted[j]) {
+			}
+			else {
+				h = col_idx[j];
+				D2->Aij(i, h) = Aij(i, j);
+			}
+		}
+	}
+	for (j = 0; j < n; j++) {
+		if (f_deleted[j]) {
+		}
+		else {
+			h = col_idx[j];
+			D2->var_labels[h] = j;
+			D2->x_max[h] = x_max[j];
+		}
+	}
+	FREE_int(f_deleted);
+	FREE_int(col_idx);
+
+	return D2;
+
 }
 
 int diophant::count_non_zero_coefficients_in_row(int i)
@@ -2514,8 +2612,8 @@ void diophant::read_compact_format(const char *fname, int verbose_level)
 		f_has_sum1 = atoi(str.c_str());
 
 		str = remainder2.substr(i + 1);
-		s = atoi(remainder2.c_str());
-		//cout << "m=" << m << " n=" << n << " sum=" << s << endl;
+		s = atoi(str.c_str());
+		//cout << "diophant::read_compact_format m=" << m << " n=" << n << " sum=" << s << endl;
 
 
 		open(m, n);
@@ -3506,7 +3604,7 @@ void diophant::draw_partitioned(const char *fname_base,
 
 	for (i = 0; i < m; i++) {
 		if (type[i] == t_EQ) {
-			T[i] = 1;
+			T[i] = -RHS[i];
 		}
 		else if (type[i] == t_LE) {
 			T[i] = 2;
@@ -3605,8 +3703,9 @@ void diophant::draw_partitioned(const char *fname_base,
 	Graph.draw_bitmatrix(fname_base, f_dots,
 		TRUE /* f_partition */, C.nb_types, part, col_part_size, part_col, 
 		f_row_grid, f_col_grid, 
-		f_bitmatrix, NULL, A2, 
-		m, n, xmax_in, ymax_in, xmax_out, ymax_out, 
+		f_bitmatrix, NULL,
+		A2, m, n,
+		xmax_in, ymax_in, xmax_out, ymax_out,
 		scale, line_width, 
 		FALSE, NULL, verbose_level - 1);
 

@@ -160,14 +160,16 @@ private:
 	int *mult_table; // [q * q]
 		// add_table and mult_table are needed in mindist
 
-	int *negate_table;
-	int *inv_table;
-	int *frobenius_table; // x \mapsto x^p
-	int *absolute_trace_table;
-	int *log_alpha_table;
-	int *alpha_power_table;
-	int *v1, *v2, *v3; // vectors of length e.
+	int *negate_table; // [q]
+	int *inv_table; // [q]
+	int *frobenius_table; // [q], x \mapsto x^p
+	int *absolute_trace_table; // [q]
+	int *log_alpha_table; // [q]
+	int *alpha_power_table; // [q]
+	int *v1, *v2, *v3; // [e], vectors of length e.
 	char *symbol_for_print;
+	int f_has_quadratic_subfield;
+	int *f_belongs_to_quadratic_subfield; // [q]
 
 	int my_nb_calls_to_elliptic_curve_addition;
 
@@ -194,6 +196,9 @@ public:
 	void init_symbol_for_print(const char *symbol);
 	void init_override_polynomial(int q, const char *poly, 
 		int verbose_level);
+	int has_quadratic_subfield();
+	int belongs_to_quadratic_subfield(int a);
+	void init_quadratic_subfield(int verbose_level);
 	int compute_subfield_polynomial(int order_subfield, 
 		int verbose_level);
 	void compute_subfields(int verbose_level);
@@ -1068,6 +1073,7 @@ public:
 		int x1, int y1, int z1,
 		int x3, int y3, int z3,
 		int verbose_level);
+	void cheat_sheet_PG(int n, int verbose_level);
 
 
 	// #########################################################################

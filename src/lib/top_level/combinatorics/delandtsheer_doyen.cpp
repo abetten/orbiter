@@ -835,6 +835,9 @@ void delandtsheer_doyen::compute_orbits_on_pairs(strong_generators *Strong_gens,
 		orbit_covered_max[i] = orbit_length[i] / b;
 		if (orbit_covered_max[i] * b != orbit_length[i]) {
 			cout << "integrality conditions violated (2)" << endl;
+			cout << "b=" << b << endl;
+			cout << "i=" << i << endl;
+			cout << "orbit_length[i]=" << orbit_length[i] << endl;
 			exit(1);
 		}
 	}

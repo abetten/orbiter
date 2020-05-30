@@ -5836,7 +5836,96 @@ int finite_field::elliptic_curve_discrete_log(int b, int c,
 	return n;
 }
 
+void finite_field::cheat_sheet_PG(int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "finite_field::cheat_sheet_PG" << endl;
+	}
+	char fname[1000];
+	char title[1000];
+	char author[1000];
+	//int f_with_group = FALSE;
+	//int f_semilinear = FALSE;
+	//int f_basis = TRUE;
+	//int q = F->q;
+
+	sprintf(fname, "PG_%d_%d.tex", n, q);
+	sprintf(title, "Cheat Sheet PG($%d,%d$)", n, q);
+	//sprintf(author, "");
+	author[0] = 0;
+	projective_space *P;
+
+	P = NEW_OBJECT(projective_space);
+	if (f_v) {
+		cout << "finite_field::cheat_sheet_PG before P->init" << endl;
+	}
+	P->init(n, this,
+		TRUE /* f_init_incidence_structure */,
+		verbose_level/*MINIMUM(2, verbose_level)*/);
+
+
+	{
+	ofstream f(fname);
+	latex_interface L;
+
+	L.head(f,
+			FALSE /* f_book*/,
+			TRUE /* f_title */,
+			title, author,
+			FALSE /* f_toc */,
+			FALSE /* f_landscape */,
+			TRUE /* f_12pt */,
+			TRUE /* f_enlarged_page */,
+			TRUE /* f_pagenumbers */,
+			NULL /* extra_praeamble */);
+
+
+	P->report(f);
+
+	if (FALSE && n == 3) {
+		surface_domain *S;
+
+		S = NEW_OBJECT(surface_domain);
+		S->init(this, verbose_level + 2);
+
+		f << "\\clearpage" << endl << endl;
+		f << "\\section{Surface}" << endl;
+		f << "\\subsection{Steiner Trihedral Pairs}" << endl;
+		S->latex_table_of_trihedral_pairs(f);
+
+		f << "\\clearpage" << endl << endl;
+		f << "\\subsection{Eckardt Points}" << endl;
+		S->latex_table_of_Eckardt_points(f);
+
+	#if 1
+		long int *Lines;
+
+		cout << "creating S_{3,1}:" << endl;
+		Lines = NEW_lint(27);
+		S->create_special_double_six(Lines,
+				3 /*a*/, 1 /*b*/, 0 /* verbose_level */);
+		S->create_remaining_fifteen_lines(Lines,
+				Lines + 12, 0 /* verbose_level */);
+		P->Grass_lines->print_set(Lines, 27);
+
+		FREE_lint(Lines);
+	#endif
+		FREE_OBJECT(S);
+		}
+
+
+	L.foot(f);
+	}
+	file_io Fio;
+
+	cout << "written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+
+	FREE_OBJECT(P);
+}
 
 
 }}

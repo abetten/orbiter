@@ -25,33 +25,6 @@ tdo_refinement::tdo_refinement()
 	cnt = 0;
 	p_buf = NULL;
 
-#if 0
-	p_buf = NULL;
-	fname_in = NULL;
-	f_lambda3 = FALSE;
-	lambda3 = 0;
-	block_size = 0;
-	f_scale = FALSE;
-	scaling = 0;
-	f_range = FALSE;
-	range_first = 0;
-	range_len = 1;
-	f_select = FALSE;
-	select_label = NULL;
-	f_omit1 = FALSE;
-	omit1 = 0;
-	f_omit2 = FALSE;
-	omit2 = 0;
-	f_D1_upper_bound_x0 = FALSE;
-	D1_upper_bound_x0 = 0;
-	f_reverse = FALSE;
-	f_reverse_inverse = FALSE;
-	f_use_packing_numbers = FALSE;
-	f_dual_is_linear_space = FALSE;
-	f_do_the_geometric_test = FALSE;
-	f_once = FALSE;
-	f_use_mckay_solver = FALSE;
-#endif
 
 	//geo_parameter GP;
 
@@ -63,7 +36,6 @@ tdo_refinement::tdo_refinement()
 	nb_written_tactical = 0;
 	nb_tactical = 0;
 	cnt_second_system = 0;
-	//Sol = NULL;
 
 }
 
@@ -106,7 +78,7 @@ void tdo_refinement::main_loop(int verbose_level)
 	}
 
 	if (!Descr->f_input_file) {
-		cout << "please use option -fname_in <fanme>" << endl;
+		cout << "please use option -input_file <fanme>" << endl;
 		exit(1);
 	}
 
