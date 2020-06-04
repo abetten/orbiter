@@ -1376,22 +1376,6 @@ void group_theoretic_activity::orbits_on_subspaces(int verbose_level)
 			Control->max_depth, verbose_level);
 
 
-#if 0
-	int nb_poset_orbit_nodes = 1000;
-
-	if (f_v) {
-		cout << "subspace_orbits->init_subspace_lattice "
-				"before Gen->init_poset_orbit_node" << endl;
-	}
-	orbits_on_subspaces_PC->init_poset_orbit_node(
-			nb_poset_orbit_nodes, verbose_level - 1);
-	if (f_v) {
-		cout << "subspace_orbits->init_subspace_lattice "
-				"calling Gen->init_root_node" << endl;
-	}
-	orbits_on_subspaces_PC->get_node(0)->init_root_node(
-			orbits_on_subspaces_PC, verbose_level - 1);
-#endif
 
 	int schreier_depth = Control->max_depth;
 	int f_use_invariant_subset_if_available = FALSE;

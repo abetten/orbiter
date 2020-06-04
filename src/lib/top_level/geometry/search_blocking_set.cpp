@@ -195,19 +195,6 @@ void search_blocking_set::find_partial_blocking_sets(int depth, int verbose_leve
 	gen->print_function_data = this;
 #endif	
 
-#if 0
-	int nb_poset_orbit_nodes = 1000;
-	
-	if (f_v) {
-		cout << "find_partial_blocking_sets calling gen->init_poset_orbit_node" << endl;
-		}
-	gen->init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
-	if (f_v) {
-		cout << "find_partial_blocking_sets calling gen->init_root_node" << endl;
-		}
-	gen->get_node(0)->init_root_node(gen, verbose_level - 1);
-#endif
-	
 	int schreier_depth = Inc->nb_rows;
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;

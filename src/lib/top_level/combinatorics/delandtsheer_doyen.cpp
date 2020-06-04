@@ -674,20 +674,6 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 				"after Gen->init" << endl;
 		}
 
-#if 0
-	int nb_nodes = 1000;
-
-	if (f_v) {
-		cout << "delandtsheer_doyen::search_starter "
-				"before Gen->init_poset_orbit_node" << endl;
-		}
-	Gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
-	if (f_v) {
-		cout << "delandtsheer_doyen::search_starter "
-				"calling Pairs->init_root_node" << endl;
-		}
-	Gen->get_node(0)->init_root_node(Gen, verbose_level - 1);
-#endif
 
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;
@@ -774,20 +760,6 @@ void delandtsheer_doyen::compute_orbits_on_pairs(strong_generators *Strong_gens,
 	}
 
 
-#if 0
-	int nb_nodes = 1000;
-
-	if (f_v) {
-		cout << "delandtsheer_doyen::compute_orbits_on_pairs "
-				"before Pairs->init_poset_orbit_node" << endl;
-	}
-	Pairs->init_poset_orbit_node(nb_nodes, verbose_level - 1);
-	if (f_v) {
-		cout << "delandtsheer_doyen::compute_orbits_on_pairs "
-				"calling Pairs->init_root_node" << endl;
-	}
-	Pairs->get_node(0)->init_root_node(Pairs, verbose_level - 1);
-#endif
 
 	int f_use_invariant_subset_if_available;
 	int f_debug;

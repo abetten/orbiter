@@ -690,21 +690,6 @@ void semifield_classify::init_poset_classification(
 	}
 
 
-#if 0
-	int nb_nodes = 1000;
-
-	if (f_v) {
-		cout << "semifield_classify::init before "
-				"Gen->init_poset_orbit_node" << endl;
-	}
-	Gen->init_poset_orbit_node(nb_nodes,
-			verbose_level - 2);
-	if (f_v) {
-		cout << "semifield_classify::init calling "
-				"Gen->init_root_node" << endl;
-	}
-	Gen->get_node(0)->init_root_node(Gen, verbose_level - 2);
-#endif
 
 	schreier_depth = k;
 

@@ -452,20 +452,6 @@ poset_classification *poset::orbits_on_k_sets_compute(
 	Gen->print_function_data = this;
 #endif
 
-#if 0
-	int nb_poset_orbit_nodes = 1000;
-
-	if (f_v) {
-		cout << "poset::orbits_on_k_sets_compute "
-				"calling Gen->init_poset_orbit_node" << endl;
-		}
-	Gen->init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
-	if (f_v) {
-		cout << "poset::orbits_on_k_sets_compute "
-				"calling Gen->init_root_node" << endl;
-		}
-	Gen->get_node(0)->init_root_node(Gen, verbose_level - 1);
-#endif
 
 	os_interface Os;
 	int schreier_depth = k;

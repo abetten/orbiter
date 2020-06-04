@@ -444,19 +444,6 @@ void linear_set_classify::init(int argc, const char **argv,
 		cout << "linear_set_classify::init after Gen->init" << endl;
 	}
 
-#if 0
-	int nb_nodes = 1000;
-
-	if (f_v) {
-		cout << "linear_set_classify::init before Gen->init_poset_orbit_node" << endl;
-	}
-	Gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
-	if (f_v) {
-		cout << "linear_set_classify::init calling Gen->init_root_node" << endl;
-	}
-	Gen->get_node(0)->init_root_node(Gen, verbose_level - 1);
-#endif
-
 
 	schreier_depth = depth;
 	f_use_invariant_subset_if_available = TRUE;
@@ -1014,20 +1001,6 @@ void linear_set_classify::init_secondary(int argc, const char **argv,
 		verbose_level);
 #endif
 
-#if 0
-	int nb_nodes = 1000;
-
-	if (f_v) {
-		cout << "linear_set_classify::init_secondary before "
-				"Gen2->init_poset_orbit_node" << endl;
-	}
-	Gen2->init_poset_orbit_node(nb_nodes, verbose_level - 1);
-	if (f_v) {
-		cout << "linear_set_classify::init_secondary calling "
-				"Gen2->init_root_node" << endl;
-	}
-	Gen2->get_node(0)->init_root_node(Gen2, verbose_level - 1);
-#endif
 
 	secondary_schreier_depth = secondary_depth;
 	//f_use_invariant_subset_if_available = TRUE;
@@ -1437,26 +1410,6 @@ void linear_set_classify::init_compute_stabilizer(int argc, const char **argv,
 	Gen->print_function = print_set;
 	Gen->print_function_data = this;
 #endif
-
-#if 0
-	int nb_nodes = 1000;
-
-	if (f_v) {
-		cout << "linear_set_classify::init_compute_stabilizer "
-				"before Gen_stab->init_poset_orbit_node" << endl;
-	}
-	Gen_stab->init_poset_orbit_node(nb_nodes, verbose_level - 1);
-	if (f_v) {
-		cout << "linear_set_classify::init_compute_stabilizer "
-				"calling Gen_stab->init_root_node" << endl;
-	}
-	Gen_stab->get_node(0)->init_root_node(Gen_stab, verbose_level - 1);
-#endif
-
-	//stabilizer_schreier_depth = Gen_stab->depth;
-	//f_use_invariant_subset_if_available = TRUE;
-	//f_lex = FALSE;
-	//f_debug = FALSE;
 
 
 

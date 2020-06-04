@@ -139,27 +139,6 @@ void arc_orbits_on_pairs::init(
 
 
 
-#if 0
-	int nb_nodes = 20;
-
-	if (f_v) {
-		cout << "arc_orbits_on_pairs::init calling init_poset_orbit_node with "
-				<< nb_nodes << " nodes" << endl;
-	}
-
-	Orbits_on_pairs->init_poset_orbit_node(nb_nodes, verbose_level - 1);
-
-	if (f_v) {
-		cout << "arc_orbits_on_pairs::init after init_poset_orbit_node" << endl;
-	}
-
-	if (f_v) {
-		cout << "arc_orbits_on_pairs::init before init_root_node" << endl;
-	}
-
-	Orbits_on_pairs->get_node(0)->init_root_node(
-			Orbits_on_pairs, 0/*verbose_level - 2*/);
-#endif
 
 
 	if (f_v) {

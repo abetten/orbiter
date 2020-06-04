@@ -264,27 +264,6 @@ void classify_double_sixes::init(
 	//Five_plus_one->print_function = callback_print_set;
 	//Five_plus_one->print_function_data = (void *) this;
 
-#if 0
-	int nb_poset_orbit_nodes = 100; //ONE_MILLION;
-	
-	if (f_v) {
-		cout << "classify_double_sixes::init calling "
-				"init_poset_orbit_node with "
-				<< nb_poset_orbit_nodes
-				<< " nodes" << endl;
-	}
-	
-	Five_plus_one->init_poset_orbit_node(
-			nb_poset_orbit_nodes, verbose_level - 1);
-
-	if (f_v) {
-		cout << "classify_double_sixes::init "
-				"after calling init_root_node" << endl;
-	}
-	
-	Five_plus_one->get_node(0)->init_root_node(Five_plus_one,
-			verbose_level);
-#endif
 
 	if (f_v) {
 		cout << "classify_double_sixes::init done" << endl;

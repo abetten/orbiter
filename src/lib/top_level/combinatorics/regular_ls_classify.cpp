@@ -290,28 +290,6 @@ void regular_ls_classify::init_generator(
 	gen->initialize_and_allocate_root_node(Control, Poset, 0 /* gen->depth ToDo */, 0/*verbose_level - 3*/);
 	
 	
-#if 0
-	int nb_nodes = ONE_MILLION;
-	
-	if (f_vv) {
-		cout << "regular_ls_classify::init_generator calling "
-				"init_poset_orbit_node with " << nb_nodes
-				<< " nodes" << endl;
-		}
-	
-	gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
-
-	if (f_vv) {
-		cout << "regular_ls_classify::init_generator after "
-				"init_root_node" << endl;
-		}
-	
-	//cout << "verbose_level = " << verbose_level << endl;
-	//cout << "verbose_level_group_theory = "
-	//<< verbose_level_group_theory << endl;
-	
-	gen->get_node(0)->init_root_node(gen, 0/*verbose_level - 2*/);
-#endif
 
 	if (f_v) {
 		cout << "regular_ls_classify::init_generator done" << endl;

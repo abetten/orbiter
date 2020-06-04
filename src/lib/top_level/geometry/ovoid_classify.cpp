@@ -270,22 +270,6 @@ void ovoid_classify::init(int argc, const char **argv,
 		}
 #endif
 	
-#if 0
-	int nb_nodes = ONE_MILLION;
-	
-	if (f_v) {
-		cout << "calling init_poset_orbit_node with "
-				<< nb_nodes << " nodes" << endl;
-		}
-	
-	gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
-
-	if (f_v) {
-		cout << "after calling init_root_node" << endl;
-		}
-	
-	gen->get_node(0)->init_root_node(gen, verbose_level);
-#endif
 
 
 	if (epsilon == 1 && d == 6) {

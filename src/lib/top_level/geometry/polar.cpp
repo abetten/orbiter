@@ -250,19 +250,6 @@ void polar::init2(int depth, int verbose_level)
 	Gen->print_function_data = this;
 #endif	
 
-#if 0
-	int nb_poset_orbit_nodes = 1000;
-	
-	if (f_v) {
-		cout << "Gen->init_poset_orbit_node" << endl;
-		}
-	Gen->init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
-	if (f_v) {
-		cout << "calling Gen->init_root_node" << endl;
-		}
-	Gen->get_node(0)->init_root_node(Gen, verbose_level);
-#endif
-	
 	schreier_depth = depth;
 	f_use_invariant_subset_if_available = FALSE;
 	f_debug = FALSE;

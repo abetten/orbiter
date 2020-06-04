@@ -273,32 +273,6 @@ void hall_system_classify::init(
 		cout << "hall_system_classify::init after PC->initialize_and_allocate_root_node" << endl;
 		}
 
-#if 0
-	int nb_nodes = ONE_MILLION;
-
-	if (f_v) {
-		cout << "hall_system_classify::init_generator calling "
-				"init_poset_orbit_node with " << nb_nodes
-				<< " nodes" << endl;
-		}
-
-	PC->init_poset_orbit_node(nb_nodes, verbose_level - 1);
-
-	if (f_v) {
-		cout << "hall_system_classify::init_generator after "
-				"init_root_node" << endl;
-		}
-
-	//cout << "verbose_level = " << verbose_level << endl;
-	//cout << "verbose_level_group_theory = "
-	//<< verbose_level_group_theory << endl;
-
-	PC->get_node(0)->init_root_node(PC, verbose_level - 1);
-	if (f_v) {
-		cout << "hall_system_classify::init_generator done" << endl;
-		}
-#endif
-
 
 	int depth_completed;
 	int f_use_invariant_subset_if_available = TRUE;
