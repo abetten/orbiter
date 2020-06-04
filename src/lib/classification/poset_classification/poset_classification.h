@@ -12,6 +12,43 @@ namespace orbiter {
 namespace classification {
 
 
+// #############################################################################
+// classification_base_case.cpp
+// #############################################################################
+
+
+//! represents a known classification with constructive recognition, to be used as base case for poset_classification
+
+
+
+class classification_base_case {
+
+public:
+	poset *Poset;
+
+	int size;
+	long int *orbit_rep; // [size]
+	strong_generators *Stab_gens;
+	long int *live_points;
+	int nb_live_points;
+	void *recognition_function_data;
+	int (*recognition_function)(long int *Set, int len, int *Elt,
+		void *data, int verbose_level);
+	int *Elt;
+
+	classification_base_case();
+	~classification_base_case();
+	void init(poset *Poset,
+			int size, long int *orbit_rep,
+			long int *live_points, int nb_live_points,
+			strong_generators *Stab_gens,
+			void *recognition_function_data,
+			int (*recognition_function)(long int *Set, int len,
+					int *Elt, void *data, int verbose_level),
+			int verbose_level);
+	int invoke_recognition(long int *Set, int len,
+			int *Elt, int verbose_level);
+};
 
 // #############################################################################
 // extension.cpp
@@ -150,6 +187,10 @@ public:
 	int f_has_orbit_based_testing;
 	orbit_based_testing *Orbit_based_testing;
 
+	int f_print_function;
+	void (*print_function)(std::ostream &ost, int len, long int *S, void *data);
+	void *print_function_data;
+
 	poset();
 	~poset();
 	void null();
@@ -195,6 +236,7 @@ public:
 	poset_classification *orbits_on_k_sets_compute(
 			poset_classification_control *Control,
 			int k, int verbose_level);
+	void invoke_print_function(std::ostream &ost, int sz, long int *set);
 };
 
 int callback_test_independence_condition(orbit_based_testing *Obt,
@@ -218,7 +260,7 @@ public:
 	int q;
 
 
-	char label[1000];
+	//char label[1000];
 
 	int f_independence_condition;
 	int independence_condition_value;
@@ -304,6 +346,12 @@ public:
 		double schreier_tree_scale;
 		double schreier_tree_line_width;
 
+		int f_problem_label;
+		const char *problem_label;
+
+		int f_path;
+		const char *path;
+
 
 	poset_classification_control();
 	~poset_classification_control();
@@ -311,6 +359,7 @@ public:
 		int argc, const char **argv,
 		int verbose_level);
 	void print();
+	void init_labels(char *problem_label, char *problem_label_with_path);
 
 };
 
@@ -325,23 +374,32 @@ public:
 
 class poset_classification {
 
-public:
+private:
 	int t0;
 
 	poset_classification_control *Control;
 
-	char problem_label[1000];
+	char problem_label[1000]; // = Control->problem_label
+	char problem_label_with_path[1000]; // Control->path + Control->problem_label
+
 	
 	poset *Poset;
+
+
+	int f_base_case;
+	classification_base_case *Base_case;
 
 
 	schreier_vector_handler *Schreier_vector_handler;
 
 
+	int depth;
+
+
 	// used as storage for the current set:
 	long int *S; // [sz]
 	
-	int sz;
+	int sz; // = depth
 		// the target depth
 		
 	
@@ -366,12 +424,9 @@ public:
 		// find_node_for_subspace_by_rank
 
 
-	int f_print_function;
-	void (*print_function)(std::ostream &ost, int len, long int *S, void *data);
-	void *print_function_data;
 	
-	int nb_times_trace;
-	int nb_times_trace_was_saved;
+	//int nb_times_trace;
+	//int nb_times_trace_was_saved;
 	
 	// data for recognize:
 	vector_ge *transporter; // [sz + 1]
@@ -399,27 +454,8 @@ public:
 	int *nb_unprocessed_nodes_at_level;
 
 
-	// command line options:
 
 
-	int depth; // search depth
-
-	char fname_base[1000]; // = path + prefix
-	char prefix[1000]; // = fname_base without prefix
-	char path[1000];
-
-
-	int f_starter;
-	int starter_size;
-	long int *starter;
-	strong_generators *starter_strong_gens;
-	long int *starter_live_points;
-	int starter_nb_live_points;
-	void *starter_canonize_data;
-	int (*starter_canonize)(long int *Set, int len, int *Elt,
-		void *data, int verbose_level);
-	int *starter_canonize_Elt;
-	
 	int f_has_invariant_subset_for_root_node;
 	int *invariant_subset_for_root_node;
 	int invariant_subset_for_root_node_size;
@@ -443,10 +479,47 @@ public:
 	double progress_last_time;
 	double progress_epsilon;
 
+public:
 
 
 
 	// poset_classification.cpp:
+	char *get_problem_label_with_path();
+	char *get_problem_label();
+	int first_node_at_level(int i);
+	poset_orbit_node *get_node(int node_idx);
+	vector_ge *get_transporter();
+	long int *get_S();
+	long int *get_set_i(int i);
+	long int *get_set0();
+	long int *get_set1();
+	long int *get_set3();
+	int *get_Elt1();
+	int *get_Elt2();
+	long int *get_tmp_set_apply_fusion();
+	int allowed_to_show_group_elements();
+	int do_group_extension_in_upstep();
+	poset *get_poset();
+	poset_classification_control *get_control();
+	action *get_A();
+	action *get_A2();
+	vector_space *get_VS();
+	schreier_vector_handler *get_schreier_vector_handler();
+	int has_base_case();
+	int has_invariant_subset_for_root_node();
+	int size_of_invariant_subset_for_root_node();
+	int *get_invariant_subset_for_root_node();
+	classification_base_case *get_Base_case();
+	int node_has_schreier_vector(int node_idx);
+	int max_number_of_orbits_to_print();
+	int max_number_of_points_to_print_in_orbit();
+	void invoke_early_test_func(
+			long int *the_set, int lvl,
+			long int *candidates,
+			int nb_candidates,
+			long int *good_candidates,
+			int &nb_good_candidates,
+			int verbose_level);
 	int nb_orbits_at_level(int level);
 	int nb_flag_orbits_up_at_level(int level);
 	poset_orbit_node *get_node_ij(int level, int node);
@@ -507,8 +580,6 @@ public:
 	void orbit_element_rank(int depth, int &orbit_idx, 
 		long int &rank, long int *set,
 		int verbose_level);
-		// used in M_SYSTEM/global_data::do_puzzle
-		// and in UNITALS/test_lines_data::get_orbit_of_sets
 	void coset_unrank(int depth, int orbit_idx, long int rank,
 		int *Elt, int verbose_level);
 	long int coset_rank(int depth, int orbit_idx, int *Elt,
@@ -577,47 +648,32 @@ public:
 	~poset_classification();
 	void null();
 	void freeself();
-	void init(
+	void init_internal(
 		poset_classification_control *PC_control,
 		poset *Poset,
 		int sz, int verbose_level);
-	void initialize(
+	void initialize_and_allocate_root_node(
 		poset_classification_control *PC_control,
 		poset *Poset,
 		int depth, 
-		const char *path, const char *prefix, int verbose_level);
-	void initialize_with_starter(
-			poset_classification_control *PC_control,
-			poset *Poset,
-			int depth,
-			char *path,
-			char *prefix,
-			int starter_size,
-			long int *starter,
-			strong_generators *Starter_Strong_gens,
-			long int *starter_live_points,
-			int starter_nb_live_points,
-			void *starter_canonize_data,
-			int (*starter_canonize)(long int *Set, int len, int *Elt,
-				void *data, int verbose_level),
-			int verbose_level);
+		int verbose_level);
+	void initialize_with_base_case(
+		poset_classification_control *PC_control,
+		poset *Poset,
+		int depth,
+		classification_base_case *Base_case,
+		int verbose_level);
 	void init_root_node_invariant_subset(
 		int *invariant_subset, int invariant_subset_size, 
 		int verbose_level);
+	void init_root_node_from_base_case(int verbose_level);
 	void init_root_node(int verbose_level);
 	void init_poset_orbit_node(int nb_poset_orbit_nodes,
 		int verbose_level);
 	void exit_poset_orbit_node();
 	void reallocate();
 	void reallocate_to(int new_number_of_nodes, int verbose_level);
-	void init_starter(int starter_size, 
-		long int *starter,
-		strong_generators *starter_strong_gens, 
-		long int *starter_live_points,
-		int starter_nb_live_points, 
-		void *starter_canonize_data, 
-		int (*starter_canonize)(long int *Set, int len, int *Elt,
-			void *data, int verbose_level), 
+	void init_base_case(classification_base_case *Base_case,
 		int verbose_level);
 		// Does not initialize the first starter nodes. 
 		// This is done in init_root_node 
@@ -625,7 +681,7 @@ public:
 	// poset_classification_classify.cpp:
 	void compute_orbits_on_subsets(
 		int target_depth,
-		const char *prefix,
+		//const char *prefix,
 		//int f_W, int f_w,
 		poset_classification_control *PC_control,
 		poset *Poset,

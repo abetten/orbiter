@@ -29,8 +29,6 @@ class search_blocking_set;
 	// added Nov 2, 2010
 class choose_points_or_lines;
 	// added Nov 29, 2010
-class subspace_orbits;
-	// added March 29, 2012 (started Jan 25, 2010)
 struct factor_group;
 class orbit_of_sets;
 	// added March 27, 2013

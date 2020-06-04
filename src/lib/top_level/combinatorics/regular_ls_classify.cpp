@@ -236,8 +236,6 @@ void regular_ls_classify::init_generator(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	//int f_vvv = (verbose_level >= 3);
 	int i;
 
 	if (f_v) {
@@ -246,12 +244,8 @@ void regular_ls_classify::init_generator(
 	if (regular_ls_classify::initial_pair_covering) {
 		FREE_int(regular_ls_classify::initial_pair_covering);
 		}
-	if (gen->Control->f_max_depth) {
-		gen->depth = gen->Control->max_depth;
-		}
-	else {
-		gen->depth = target_size;
-		}
+
+
 	regular_ls_classify::initial_pair_covering = NEW_int(m2);
 	if (f_has_initial_pair_covering) {
 		for (i = 0; i < m2; i++) {
@@ -266,14 +260,19 @@ void regular_ls_classify::init_generator(
 		}
 	
 	if (f_v) {
-		cout << "regular_ls_classify::init_generator "
-				"depth = " << gen->depth << endl;
+		cout << "regular_ls_classify::init_generator" << endl;
 		}
 
 
-	strcpy(gen->fname_base, prefix_with_directory);
+	//strcpy(gen->fname_base, prefix_with_directory);
 
 	Control = NEW_OBJECT(poset_classification_control);
+
+	Control->problem_label = prefix;
+	Control->f_problem_label = TRUE;
+	Control->path = starter_directory_name;
+	Control->f_path = TRUE;
+
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A2,
 			Strong_gens,
@@ -283,14 +282,15 @@ void regular_ls_classify::init_generator(
 				this /* void *data */,
 				verbose_level);
 
+	Poset->f_print_function = FALSE;
+	Poset->print_function = regular_ls_classify_print_set;
+	Poset->print_function_data = (void *) this;
+
 	
-	gen->init(Control, Poset, gen->depth, 0/*verbose_level - 3*/);
-	
-	gen->f_print_function = FALSE;
-	gen->print_function = regular_ls_classify_print_set;
-	gen->print_function_data = (void *) this;
+	gen->initialize_and_allocate_root_node(Control, Poset, 0 /* gen->depth ToDo */, 0/*verbose_level - 3*/);
 	
 	
+#if 0
 	int nb_nodes = ONE_MILLION;
 	
 	if (f_vv) {
@@ -310,7 +310,9 @@ void regular_ls_classify::init_generator(
 	//cout << "verbose_level_group_theory = "
 	//<< verbose_level_group_theory << endl;
 	
-	gen->root[0].init_root_node(gen, 0/*verbose_level - 2*/);
+	gen->get_node(0)->init_root_node(gen, 0/*verbose_level - 2*/);
+#endif
+
 	if (f_v) {
 		cout << "regular_ls_classify::init_generator done" << endl;
 		}
@@ -329,7 +331,7 @@ void regular_ls_classify::compute_starter(
 
 	
 	
-	gen->Control->f_W = TRUE;
+	//gen->Control->f_W = TRUE;
 	gen->compute_orbits(0 /* from_level */,
 		starter_size /* to_level */,
 		verbose_level);

@@ -164,7 +164,8 @@ void ovoid_classify::init(int argc, const char **argv,
 	int f_reflection = TRUE;
 	int f_similarity = TRUE;
 	int f_semisimilarity = TRUE;
-	set_orthogonal_group_type(f_siegel, f_reflection,
+	action_global AG;
+	AG.set_orthogonal_group_type(f_siegel, f_reflection,
 			f_similarity, f_semisimilarity);
 
 
@@ -230,9 +231,11 @@ void ovoid_classify::init(int argc, const char **argv,
 			exit(1);
 			}
 		}
-	
 
-	gen->depth = depth;
+	Control->f_max_depth = TRUE;
+	Control->max_depth = depth;
+
+
 	if (f_v) {
 		cout << "depth = " << depth << endl;
 		}
@@ -247,24 +250,27 @@ void ovoid_classify::init(int argc, const char **argv,
 				this /* void *data */,
 				verbose_level);
 
-	gen->init(Control, Poset,
-		gen->depth /* sz */,
-		verbose_level - 1);
+	Poset->f_print_function = FALSE;
+	Poset->print_function = callback_ovoid_print_set;
+	Poset->print_function_data = (void *) this;
+
+
+	gen->initialize_and_allocate_root_node(Control, Poset,
+			depth /* sz */,
+			verbose_level - 1);
 
 
 
-	gen->f_print_function = FALSE;
-	gen->print_function = callback_ovoid_print_set;
-	gen->print_function_data = (void *) this;
 
-
-	sprintf(gen->fname_base, "ovoid_Q%d_%d_%d", epsilon, n, q);
+#if 0
+	//sprintf(gen->fname_base, "ovoid_Q%d_%d_%d", epsilon, n, q);
 
 	if (f_v) {
 		cout << "fname_base = " << gen->fname_base << endl;
 		}
+#endif
 	
-	
+#if 0
 	int nb_nodes = ONE_MILLION;
 	
 	if (f_v) {
@@ -278,7 +284,8 @@ void ovoid_classify::init(int argc, const char **argv,
 		cout << "after calling init_root_node" << endl;
 		}
 	
-	gen->root[0].init_root_node(gen, gen->Control->verbose_level);
+	gen->get_node(0)->init_root_node(gen, verbose_level);
+#endif
 
 
 	if (epsilon == 1 && d == 6) {

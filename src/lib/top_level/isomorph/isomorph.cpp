@@ -1476,8 +1476,8 @@ void isomorph::read_data_files_for_starter(int level,
 	sprintf(fname_base_a, "%sa", prefix);
 	sprintf(fname_base_b, "%sb", prefix);
 	
-	if (gen->f_starter) {
-		i0 = gen->starter_size;
+	if (gen->has_base_case()) {
+		i0 = gen->get_Base_case()->size;
 		}
 	else {
 		i0 = 0;
@@ -1526,7 +1526,7 @@ void isomorph::print_node_local(int level, int node_local)
 {
 	int n;
 
-	n = gen->first_poset_orbit_node_at_level[level] + node_local;
+	n = gen->first_node_at_level(level) + node_local;
 	cout << n << "=" << level << "/" << node_local;
 }
 
@@ -1534,7 +1534,7 @@ void isomorph::print_node_global(int level, int node_global)
 {
 	int node_local;
 
-	node_local = node_global - gen->first_poset_orbit_node_at_level[level];
+	node_local = node_global - gen->first_node_at_level(level);
 	cout << node_global << "=" << level << "/" << node_local;
 }
 

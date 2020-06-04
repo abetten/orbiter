@@ -367,13 +367,12 @@ public:
 
 
 
+//! search for line transitive point imprimitive linear spaces as described by Delandtsheer and Doyen
 
 
 
 class delandtsheer_doyen {
 public:
-	//int argc;
-	//const char **argv;
 
 	delandtsheer_doyen_description *Descr;
 

@@ -12,7 +12,7 @@ using namespace std;
 namespace orbiter {
 namespace group_actions {
 
-void action_print_symmetry_group_type(ostream &ost,
+void action_global::action_print_symmetry_group_type(ostream &ost,
 		symmetry_group_type a)
 {
 	if (a == unknown_symmetry_group_t) {
@@ -120,7 +120,7 @@ void action_print_symmetry_group_type(ostream &ost,
 }
 
 
-void make_generators_stabilizer_of_two_components(
+void action_global::make_generators_stabilizer_of_two_components(
 	action *A_PGL_n_q, action *A_PGL_k_q,
 	int k, vector_ge *gens, int verbose_level)
 // used in semifield.cpp
@@ -144,8 +144,8 @@ void make_generators_stabilizer_of_two_components(
 
 
 	if (f_v) {
-		cout << "make_generators_stabilizer_of_two_components" << endl;
-		}
+		cout << "action_global::make_generators_stabilizer_of_two_components" << endl;
+	}
 	n = 2 * k;
 
 	Zero = NEW_int(k * k);
@@ -167,13 +167,13 @@ void make_generators_stabilizer_of_two_components(
 	int_vec_zero(minusId, k * k);
 	for (i = 0; i < k; i++) {
 		Id[i * k + i] = 1;
-		}
+	}
 	for (i = 0; i < k; i++) {
 		Center[i * k + i] = alpha;
-		}
+	}
 	for (i = 0; i < k; i++) {
 		minusId[i * k + i] = minus_one;
-		}
+	}
 
 	gens_PGL_k = A_PGL_k_q->Strong_gens;
 	//gens_PGL_k = A_PGL_k_q->strong_generators;
@@ -188,7 +188,7 @@ void make_generators_stabilizer_of_two_components(
 	sz = n * n;
 	if (Mtx->f_semilinear) {
 		sz++;
-		}
+	}
 	
 
 	Data = NEW_int(new_len * sz);
@@ -201,24 +201,24 @@ void make_generators_stabilizer_of_two_components(
 		if (EVEN(h)) {
 			// Q := diag(P,Id)
 			int_matrix_make_block_matrix_2x2(Q, k, P, Zero, Zero, Id);
-			}
+		}
 		else {
 			// Q := diag(Id,P)
 			int_matrix_make_block_matrix_2x2(Q, k, Id, Zero, Zero, P);
-			}
+		}
 		if (Mtx->f_semilinear) {
 			Q[n * n] = P[k * k];
-			}
+		}
 		int_vec_copy(Q, Data + idx * sz, sz);
 		idx++;
-		}
+	}
 
 #if 0
 	// Q := matrix(0,I,I,0):
 	int_matrix_make_block_matrix_2x2(Q, k, Zero, Id, Id, Zero);
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
-		}
+	}
 	int_vec_copy(Q, Data + idx * sz, sz);
 	idx++;
 #endif
@@ -227,7 +227,7 @@ void make_generators_stabilizer_of_two_components(
 	int_matrix_make_block_matrix_2x2(Q, k, Center, Zero, Zero, Id);
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
-		}
+	}
 	int_vec_copy(Q, Data + idx * sz, sz);
 	idx++;
 
@@ -235,16 +235,16 @@ void make_generators_stabilizer_of_two_components(
 	int_matrix_make_block_matrix_2x2(Q, k, Id, Zero, Zero, Center);
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
-		}
+	}
 	int_vec_copy(Q, Data + idx * sz, sz);
 	idx++;
 
 
 	if (idx != new_len) {
-		cout << "make_generators_stabilizer_of_two_components "
+		cout << "action_global::make_generators_stabilizer_of_two_components "
 				"idx != new_len" << endl;
 		exit(1);
-		}
+	}
 
 
 
@@ -253,12 +253,12 @@ void make_generators_stabilizer_of_two_components(
 	for (h = 0; h < new_len; h++) {
 		A_PGL_n_q->make_element(Elt1, Data + h * sz, 0);
 		if (f_vv) {
-			cout << "make_generators_stabilizer_of_two_components "
+			cout << "action_global::make_generators_stabilizer_of_two_components "
 					"after make_element generator " << h << " : " << endl;
 			A_PGL_n_q->print_quick(cout, Elt1);
-			}
-		A_PGL_n_q->move(Elt1, gens->ith(h));
 		}
+		A_PGL_n_q->move(Elt1, gens->ith(h));
+	}
 	
 
 	FREE_int(Data);
@@ -270,12 +270,12 @@ void make_generators_stabilizer_of_two_components(
 	FREE_int(Q);
 	FREE_int(Elt1);
 	if (f_v) {
-		cout << "make_generators_stabilizer_of_two_components done" << endl;
-		}
+		cout << "action_global::make_generators_stabilizer_of_two_components done" << endl;
+	}
 }
 
 
-void make_generators_stabilizer_of_three_components(
+void action_global::make_generators_stabilizer_of_three_components(
 	action *A_PGL_n_q, action *A_PGL_k_q,
 	int k, vector_ge *gens, int verbose_level)
 {
@@ -294,8 +294,8 @@ void make_generators_stabilizer_of_three_components(
 	strong_generators *gens_PGL_k;
 
 	if (f_v) {
-		cout << "make_generators_stabilizer_of_three_components" << endl;
-		}
+		cout << "action_global::make_generators_stabilizer_of_three_components" << endl;
+	}
 	n = 2 * k;
 
 	Zero = NEW_int(k * k);
@@ -315,10 +315,10 @@ void make_generators_stabilizer_of_three_components(
 	int_vec_zero(minusId, k * k);
 	for (i = 0; i < k; i++) {
 		Id[i * k + i] = 1;
-		}
+	}
 	for (i = 0; i < k; i++) {
 		minusId[i * k + i] = minus_one;
-		}
+	}
 
 	gens_PGL_k = A_PGL_k_q->Strong_gens;
 	//gens_PGL_k = A_PGL_k_q->strong_generators;
@@ -333,7 +333,7 @@ void make_generators_stabilizer_of_three_components(
 	sz = n * n;
 	if (Mtx->f_semilinear) {
 		sz++;
-		}
+	}
 	
 
 	Data = NEW_int(new_len * sz);
@@ -350,13 +350,13 @@ void make_generators_stabilizer_of_three_components(
 			}
 		int_vec_copy(Q, Data + idx * sz, sz);
 		idx++;
-		}
+	}
 
 	// Q := matrix(0,I,I,0):
 	int_matrix_make_block_matrix_2x2(Q, k, Zero, Id, Id, Zero);
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
-		}
+	}
 	int_vec_copy(Q, Data + idx * sz, sz);
 	idx++;
 
@@ -364,16 +364,16 @@ void make_generators_stabilizer_of_three_components(
 	int_matrix_make_block_matrix_2x2(Q, k, Zero, Id, minusId, minusId);
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
-		}
+	}
 	int_vec_copy(Q, Data + idx * sz, sz);
 	idx++;
 
 
 	if (idx != new_len) {
-		cout << "make_generators_stabilizer_of_three_components "
+		cout << "action_global::make_generators_stabilizer_of_three_components "
 				"idx != new_len" << endl;
 		exit(1);
-		}
+	}
 
 
 
@@ -382,12 +382,12 @@ void make_generators_stabilizer_of_three_components(
 	for (h = 0; h < new_len; h++) {
 		A_PGL_n_q->make_element(Elt1, Data + h * sz, 0);
 		if (f_vv) {
-			cout << "make_generators_stabilizer_of_three_components "
+			cout << "action_global::make_generators_stabilizer_of_three_components "
 					"after make_element generator " << h << " : " << endl;
 			A_PGL_n_q->print_quick(cout, Elt1);
-			}
-		A_PGL_n_q->move(Elt1, gens->ith(h));
 		}
+		A_PGL_n_q->move(Elt1, gens->ith(h));
+	}
 	
 
 	FREE_int(Data);
@@ -398,11 +398,11 @@ void make_generators_stabilizer_of_three_components(
 	FREE_int(Q);
 	FREE_int(Elt1);
 	if (f_v) {
-		cout << "make_generators_stabilizer_of_three_components done" << endl;
-		}
+		cout << "action_global::make_generators_stabilizer_of_three_components done" << endl;
+	}
 }
 
-void compute_generators_GL_n_q(int *&Gens,
+void action_global::compute_generators_GL_n_q(int *&Gens,
 		int &nb_gens, int &elt_size, int n, finite_field *F,
 		vector_ge *&nice_gens,
 		int verbose_level)
@@ -415,8 +415,8 @@ void compute_generators_GL_n_q(int *&Gens,
 	int h, i, l, alpha;
 
 	if (f_v) {
-		cout << "compute_generators_GL_n_q" << endl;
-		}
+		cout << "action_global::compute_generators_GL_n_q" << endl;
+	}
 	A = NEW_OBJECT(action);
 
 	A->init_projective_group(n, F,
@@ -436,29 +436,29 @@ void compute_generators_GL_n_q(int *&Gens,
 			Elt = gens->ith(h);
 			for (i = 0; i < n * n; i++) {
 				Gens[h * elt_size + i] = Elt[i];
-				}
 			}
+		}
 		else {
 			for (i = 0; i < n * n; i++) {
 				Gens[h * elt_size + i] = 0;
-				}
+			}
 			alpha = F->primitive_root();
 			for (i = 0; i < n; i++) {
 				Gens[h * elt_size + i * n + i] = alpha;
-				}
 			}
 		}
+	}
 	if (f_vv) {
 		for (h = 0; h < nb_gens; h++) {
 			cout << "Generator " << h << ":" << endl;
 			int_matrix_print(Gens + h * elt_size, n, n);
-			}
-		
 		}
+		
+	}
 	FREE_OBJECT(A);
 	if (f_v) {
-		cout << "compute_generators_GL_n_q done" << endl;
-		}
+		cout << "action_global::compute_generators_GL_n_q done" << endl;
+	}
 }
 
 
@@ -472,7 +472,7 @@ void compute_generators_GL_n_q(int *&Gens,
 	int f_generator_orthogonal_semisimilarity = TRUE;
 
 
-void set_orthogonal_group_type(int f_siegel,
+void action_global::set_orthogonal_group_type(int f_siegel,
 		int f_reflection,
 		int f_similarity,
 		int f_semisimilarity)
@@ -483,65 +483,11 @@ void set_orthogonal_group_type(int f_siegel,
 	f_generator_orthogonal_semisimilarity = f_semisimilarity;
 }
 
-int get_orthogonal_group_type_f_reflection()
+int action_global::get_orthogonal_group_type_f_reflection()
 {
 	return f_generator_orthogonal_reflection;
 }
 
-void callback_choose_random_generator_orthogonal(int iteration, 
-	int *Elt, void *data, int verbose_level)
-{
-	//verbose_level += 5;
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "callback_choose_random_generator_orthogonal "
-				"iteration=" << iteration << endl;
-		}
-
-	schreier_sims *ss = (schreier_sims *) data;
-	action *A = ss->GA;
-	action *subaction = ss->KA;
-	matrix_group *M;
-#if 0
-	int f_siegel = TRUE;
-	int f_reflection = TRUE;
-	int f_similarity = TRUE;
-	int f_semisimilarity = TRUE;
-#endif
-
-	action_on_orthogonal *AO;
-	orthogonal *O;
-	
-	AO = A->G.AO;
-	O = AO->O;
-	
-	M = subaction->G.matrix_grp;
-	if (f_v) {
-		cout << "callback_choose_random_generator_orthogonal "
-				"iteration=" << iteration
-				<< " before M->orthogonal_group_random_generator"
-				<< endl;
-		}
-	M->orthogonal_group_random_generator(ss->GA, O, 
-		f_generator_orthogonal_siegel, 
-		f_generator_orthogonal_reflection, 
-		f_generator_orthogonal_similarity, 
-		f_generator_orthogonal_semisimilarity, 
-		Elt, verbose_level - 2);
-	//M->GL_invert_internal(Elt, Elt + M->elt_size_int_half, 0);
-	if (f_v) {
-		cout << "callback_choose_random_generator_orthogonal "
-				"iteration=" << iteration
-				<< " after M->orthogonal_group_random_generator"
-				<< endl;
-		}
-
-	if (f_v) {
-		cout << "callback_choose_random_generator_orthogonal "
-				"iteration=" << iteration << " done" << endl;
-		}
-}
 
 
 #if 0
@@ -562,7 +508,7 @@ void test_matrix_group(int k, int q, int f_semilinear, int verbose_level)
 }
 #endif
 
-void lift_generators(vector_ge *gens_in, vector_ge *&gens_out, 
+void action_global::lift_generators(vector_ge *gens_in, vector_ge *&gens_out,
 	action *Aq, subfield_structure *S, int n, 
 	int verbose_level)
 {
@@ -575,8 +521,8 @@ void lift_generators(vector_ge *gens_in, vector_ge *&gens_out,
 
 
 	if (f_v) {
-		cout << "lift_generators" << endl;
-		}
+		cout << "action_global::lift_generators" << endl;
+	}
 
 	nb_gens = gens_in->len;
 
@@ -588,8 +534,8 @@ void lift_generators(vector_ge *gens_in, vector_ge *&gens_out,
 	Mtx = NEW_int(n * n);
 
 	if (f_v) {
-		cout << "lift_generators lifting generators" << endl;
-		}
+		cout << "action_global::lift_generators lifting generators" << endl;
+	}
 	gens_out->init(Aq, verbose_level - 2);
 	gens_out->allocate(nb_gens, verbose_level - 2);
 	for (t = 0; t < nb_gens; t++) {
@@ -599,29 +545,28 @@ void lift_generators(vector_ge *gens_in, vector_ge *&gens_out,
 		EltQ = gens_in->ith(t);
 		S->lift_matrix(EltQ, m, Mtx, 0 /* verbose_level */);
 		if (f_vv) {
-			cout << "lift_generators lifted matrix:" << endl;
+			cout << "action_global::lift_generators lifted matrix:" << endl;
 			int_matrix_print(Mtx, n, n);
 			}
 		Aq->make_element(Eltq, Mtx, 0 /*verbose_level - 4 */);
 		if (f_vv) {
-			cout << "lift_generators after make_element:" << endl;
+			cout << "action_global::lift_generators after make_element:" << endl;
 			Aq->element_print_quick(Eltq, cout);
 			}
 		Aq->element_move(Eltq, gens_out->ith(t), 0);
 		if (f_vv) {
-			cout << "lift_generators " << t << " / "
+			cout << "action_global::lift_generators " << t << " / "
 					<< nb_gens << " done" << endl;
 			}
 		}
 	FREE_int(Eltq);
 	FREE_int(Mtx);
 	if (f_v) {
-		cout << "lift_generators done" << endl;
-		}
-
+		cout << "action_global::lift_generators done" << endl;
+	}
 }
 
-void retract_generators(vector_ge *gens_in,
+void action_global::retract_generators(vector_ge *gens_in,
 	vector_ge *&gens_out,
 	action *AQ, subfield_structure *S, int n, 
 	int verbose_level)
@@ -635,8 +580,8 @@ void retract_generators(vector_ge *gens_in,
 
 
 	if (f_v) {
-		cout << "retract_generators" << endl;
-		}
+		cout << "action_global::retract_generators" << endl;
+	}
 
 	nb_gens = gens_in->len;
 
@@ -648,41 +593,40 @@ void retract_generators(vector_ge *gens_in,
 	Mtx = NEW_int(m * m);
 
 	if (f_v) {
-		cout << "retract_generators retracting generators" << endl;
-		}
+		cout << "action_global::retract_generators retracting generators" << endl;
+	}
 	gens_out->init(AQ, verbose_level - 2);
 	gens_out->allocate(nb_gens, verbose_level - 2);
 	for (t = 0; t < nb_gens; t++) {
 		if (f_vv) {
-			cout << "retract_generators " << t
+			cout << "action_global::retract_generators " << t
 					<< " / " << nb_gens << endl;
-			}
+		}
 		Eltq = gens_in->ith(t);
 		S->retract_matrix(Eltq, n, Mtx, m, 0 /* verbose_level */);
 		if (f_vv) {
-			cout << "retract_generators retracted matrix:" << endl;
+			cout << "action_global::retract_generators retracted matrix:" << endl;
 			int_matrix_print(Mtx, m, m);
-			}
+		}
 		AQ->make_element(EltQ, Mtx, 0 /*verbose_level - 4*/);
 		if (f_vv) {
-			cout << "retract_generators after make_element:" << endl;
+			cout << "action_global::retract_generators after make_element:" << endl;
 			AQ->element_print_quick(EltQ, cout);
-			}
+		}
 		AQ->element_move(EltQ, gens_out->ith(t), 0);
 		if (f_vv) {
-			cout << "retract_generators " << t
+			cout << "action_global::retract_generators " << t
 					<< " / " << nb_gens << " done" << endl;
-			}
 		}
+	}
 	FREE_int(EltQ);
 	FREE_int(Mtx);
 	if (f_v) {
-		cout << "retract_generators done" << endl;
-		}
-
+		cout << "action_global::retract_generators done" << endl;
+	}
 }
 
-void lift_generators_to_subfield_structure(
+void action_global::lift_generators_to_subfield_structure(
 	int n, int s, 
 	subfield_structure *S, 
 	action *Aq, action *AQ, 
@@ -698,29 +642,29 @@ void lift_generators_to_subfield_structure(
 	number_theory_domain NT;
 
 	if (f_v) {
-		cout << "lift_generators_to_subfield_structure" << endl;
-		}
+		cout << "action_global::lift_generators_to_subfield_structure" << endl;
+	}
 	Fq = S->Fq;
 	//FQ = S->FQ;
 	q = Fq->q;
 	Q = NT.i_power_j(q, s);
 	m = n / s;
 	if (m * s != n) {
-		cout << "lift_generators_to_subfield_structure "
+		cout << "action_global::lift_generators_to_subfield_structure "
 				"s must divide n" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
-		cout << "lift_generators_to_subfield_structure "
+		cout << "action_global::lift_generators_to_subfield_structure "
 				"creating subfield structure" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "n=" << n << endl;
 		cout << "s=" << s << endl;
 		cout << "m=" << m << endl;
 		cout << "q=" << q << endl;
 		cout << "Q=" << Q << endl;
-		}
+	}
 
 	longinteger_object order_GLmQ;
 	longinteger_object target_go;
@@ -731,15 +675,15 @@ void lift_generators_to_subfield_structure(
 	
 
 	if (f_v) {
-		cout << "lift_generators_to_subfield_structure "
+		cout << "action_global::lift_generators_to_subfield_structure "
 				"order of GL(m,Q) = " << order_GLmQ << endl;
-		}
+	}
 	D.integral_division_by_int(order_GLmQ, 
 		q - 1, target_go, r);
 	if (f_v) {
-		cout << "lift_generators_to_subfield_structure "
+		cout << "action_global::lift_generators_to_subfield_structure "
 				"target_go = " << target_go << endl;
-		}
+	}
 
 
 
@@ -751,21 +695,21 @@ void lift_generators_to_subfield_structure(
 
 
 	if (f_v) {
-		cout << "lift_generators_to_subfield_structure "
+		cout << "action_global::lift_generators_to_subfield_structure "
 				"before lift_generators" << endl;
-		}
+	}
 	lift_generators(gens, gens1, Aq, S, n, verbose_level);
 
 	if (f_v) {
-		cout << "lift_generators_to_subfield_structure "
+		cout << "action_global::lift_generators_to_subfield_structure "
 				"after lift_generators" << endl;
-		}
+	}
 
 
 	if (f_v) {
-		cout << "lift_generators_to_subfield_structure "
+		cout << "action_global::lift_generators_to_subfield_structure "
 				"creating lifted group:" << endl;
-		}
+	}
 	//Aq->group_order(target_go);
 	Sims = Aq->create_sims_from_generators_with_target_group_order(
 		gens1, 
@@ -778,9 +722,9 @@ void lift_generators_to_subfield_structure(
 #endif
 
 	if (f_v) {
-		cout << "lift_generators_to_subfield_structure "
+		cout << "action_global::lift_generators_to_subfield_structure "
 				"creating lifted group done" << endl;
-		}
+	}
 
 	longinteger_object go;
 
@@ -788,36 +732,35 @@ void lift_generators_to_subfield_structure(
 
 	if (f_v) {
 		cout << "go=" << go << endl;
-		}
+	}
 
 
 	Strong_gens = NEW_OBJECT(strong_generators);
 
 	Strong_gens->init_from_sims(Sims, 0 /* verbose_level */);
 	if (f_vv) {
-		cout << "lift_generators_to_subfield_structure "
+		cout << "action_global::lift_generators_to_subfield_structure "
 				"strong generators are:" << endl;
-		Strong_gens->print_generators();
-		}
+		Strong_gens->print_generators(cout);
+	}
 
 
 	FREE_OBJECT(gens1);
 	FREE_OBJECT(Sims);
 	if (f_v) {
-		cout << "lift_generators_to_subfield_structure done" << endl;
-		}
-
+		cout << "action_global::lift_generators_to_subfield_structure done" << endl;
+	}
 }
 
 
-void perm_print_cycles_sorted_by_length(ostream &ost,
+void action_global::perm_print_cycles_sorted_by_length(ostream &ost,
 		int degree, int *perm, int verbose_level)
 {
 	perm_print_cycles_sorted_by_length_offset(ost,
 			degree, perm, 0, FALSE, TRUE, verbose_level);
 }
 
-void perm_print_cycles_sorted_by_length_offset(ostream &ost, 
+void action_global::perm_print_cycles_sorted_by_length_offset(ostream &ost,
 	int degree, int *perm, int offset,
 	int f_do_it_anyway_even_for_big_degree,
 	int f_print_cycles_of_length_one, int verbose_level)
@@ -832,13 +775,13 @@ void perm_print_cycles_sorted_by_length_offset(ostream &ost,
 	int f_doit = TRUE;
 	
 	if (f_v) {
-		cout << "perm_print_cycles_sorted_by_length, "
+		cout << "action_global::perm_print_cycles_sorted_by_length, "
 				"degree=" << degree << endl;
-		}
+	}
 	
 	if (degree > 500) {
 		f_big = TRUE;
-		}
+	}
 	A = NEW_OBJECT(action);
 	
 	A->init_permutation_group(degree, 0/*verbose_level*/);
@@ -846,10 +789,10 @@ void perm_print_cycles_sorted_by_length_offset(ostream &ost,
 	Gens.allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
 		Gens.copy_in(i, perm + i * degree);
-		}
+	}
 	if (f_vv) {
 		Gens.print(cout);
-		}
+	}
 	
 	schreier S;
 	
@@ -859,7 +802,7 @@ void perm_print_cycles_sorted_by_length_offset(ostream &ost,
 	if (f_v) {
 		cout << "after S.compute_all_point_orbits, "
 				"nb_orbits=" << S.nb_orbits << endl;
-		}
+	}
 	//S.print_orbit_lengths(cout);
 	//S.print_orbit_length_distribution(ost);
 
@@ -899,11 +842,11 @@ void perm_print_cycles_sorted_by_length_offset(ostream &ost,
 			l = type_len[i];
 			length = orbit_len_sorted[f];
 			ost << l << " cycles of length " << length << endl;
-			}
 		}
+	}
 	if (f_big && !f_do_it_anyway_even_for_big_degree) {
 		f_doit = FALSE;
-		}
+	}
 	if (f_doit) {
 		for (i = 0; i < nb_types; i++) {
 			f = type_first[i];
@@ -911,7 +854,7 @@ void perm_print_cycles_sorted_by_length_offset(ostream &ost,
 			length = orbit_len_sorted[f];
 			if (length == 1 && !f_print_cycles_of_length_one) {
 				continue;
-				}
+			}
 			for (j = 0; j < l; j++) {
 				orbit_idx = sorting_perm_inv[f + j];
 				//ost << "orbit " << orbit_idx << ": ";
@@ -921,7 +864,7 @@ void perm_print_cycles_sorted_by_length_offset(ostream &ost,
 				for (h = 1; h < L; h++) {
 					if (S.orbit[F + h] < m)
 						m = S.orbit[F + h];
-					}
+				}
 				// now m is the least lement in the orbit
 				ost << "(";
 				a = m;
@@ -932,15 +875,15 @@ void perm_print_cycles_sorted_by_length_offset(ostream &ost,
 						break;
 					ost << ", " << (b + offset);
 					a = b;
-					}
+				}
 				ost << ")";
 				if (length > 20) {
 					//ost << endl;
-					}
-				} // next j
+				}
+			} // next j
 			//ost << endl;
-			} // next i
-		} // if
+		} // next i
+	} // if
 	//ost << "done" << endl;
 
 #if 0
@@ -961,6 +904,60 @@ void perm_print_cycles_sorted_by_length_offset(ostream &ost,
 }
 
 
+void callback_choose_random_generator_orthogonal(int iteration,
+	int *Elt, void *data, int verbose_level)
+{
+	//verbose_level += 5;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::callback_choose_random_generator_orthogonal "
+				"iteration=" << iteration << endl;
+		}
+
+	schreier_sims *ss = (schreier_sims *) data;
+	action *A = ss->GA;
+	action *subaction = ss->KA;
+	matrix_group *M;
+#if 0
+	int f_siegel = TRUE;
+	int f_reflection = TRUE;
+	int f_similarity = TRUE;
+	int f_semisimilarity = TRUE;
+#endif
+
+	action_on_orthogonal *AO;
+	orthogonal *O;
+
+	AO = A->G.AO;
+	O = AO->O;
+
+	M = subaction->G.matrix_grp;
+	if (f_v) {
+		cout << "action_global::callback_choose_random_generator_orthogonal "
+				"iteration=" << iteration
+				<< " before M->orthogonal_group_random_generator"
+				<< endl;
+	}
+	M->orthogonal_group_random_generator(ss->GA, O,
+		f_generator_orthogonal_siegel,
+		f_generator_orthogonal_reflection,
+		f_generator_orthogonal_similarity,
+		f_generator_orthogonal_semisimilarity,
+		Elt, verbose_level - 2);
+	//M->GL_invert_internal(Elt, Elt + M->elt_size_int_half, 0);
+	if (f_v) {
+		cout << "action_global::callback_choose_random_generator_orthogonal "
+				"iteration=" << iteration
+				<< " after M->orthogonal_group_random_generator"
+				<< endl;
+	}
+
+	if (f_v) {
+		cout << "action_global::callback_choose_random_generator_orthogonal "
+				"iteration=" << iteration << " done" << endl;
+	}
+}
 
 
 

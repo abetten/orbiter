@@ -185,7 +185,7 @@ void set_and_stabilizer::init_stab_from_data(int *data_gens,
 
 	if (FALSE) {
 		cout << "strong generators are:" << endl;
-		Strong_gens->print_generators();
+		Strong_gens->print_generators(cout);
 		}
 	
 	Stab = Strong_gens->create_sims(verbose_level);
@@ -255,7 +255,7 @@ void set_and_stabilizer::init_stab_from_file(
 
 	if (FALSE) {
 		cout << "strong generators are:" << endl;
-		Strong_gens->print_generators();
+		Strong_gens->print_generators(cout);
 		}
 	
 	Stab = Strong_gens->create_sims(verbose_level);

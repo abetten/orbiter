@@ -17,6 +17,9 @@ namespace orbiter {
 namespace foundations {
 
 
+static void Web_of_cubic_curves_entry_print(int *p,
+	int m, int n, int i, int j, int val,
+	char *output, void *data);
 
 void surface_domain::multiply_conic_times_linear(int *six_coeff,
 	int *three_coeff, int *ten_coeff,
@@ -2710,6 +2713,159 @@ void surface_domain::do_arc_lifting_with_two_lines(
 		cout << "surface_domain::do_arc_lifting_with_two_lines done" << endl;
 	}
 }
+
+void surface_domain::print_web_of_cubic_curves(long int *arc6,
+		int *Web_of_cubic_curves, ostream &ost)
+{
+	combinatorics_domain Combi;
+	latex_interface L;
+
+	ost << "The web of cubic curves is:\\\\" << endl;
+
+#if 0
+	ost << "$$" << endl;
+	print_integer_matrix_with_standard_labels(ost,
+		Web_of_cubic_curves, 15, 10, TRUE /* f_tex*/);
+	ost << "$$" << endl;
+	ost << "$$" << endl;
+	print_integer_matrix_with_standard_labels_and_offset(ost,
+		Web_of_cubic_curves + 15 * 10, 15, 10, 15, 0, TRUE /* f_tex*/);
+	ost << "$$" << endl;
+	ost << "$$" << endl;
+	print_integer_matrix_with_standard_labels_and_offset(ost,
+		Web_of_cubic_curves + 30 * 10, 15, 10, 30, 0, TRUE /* f_tex*/);
+	ost << "$$" << endl;
+#endif
+
+	int *bisecants;
+	int *conics;
+
+	int labels[15];
+	int row_fst[1];
+	int row_len[1];
+	int col_fst[1];
+	int col_len[1];
+	row_fst[0] = 0;
+	row_len[0] = 15;
+	col_fst[0] = 0;
+	col_len[0] = 10;
+	char str[1000];
+	int i, j, k, l, m, n, h, ij, kl, mn;
+
+	P2->compute_bisecants_and_conics(arc6,
+			bisecants, conics, 0 /*verbose_level*/);
+
+	for (h = 0; h < 45; h++) {
+		ost << "$";
+		sprintf(str, "W_{%s}=\\Phi\\big(\\pi_{%d}\\big) "
+				"= \\Phi\\big(\\pi_{%s}\\big)",
+				Eckard_point_label[h], h,
+				Eckard_point_label[h]);
+		ost << str;
+		ost << " = ";
+		if (h < 30) {
+			Combi.ordered_pair_unrank(h, i, j, 6);
+			ij = Combi.ij2k(i, j, 6);
+			ost << "C_" << j + 1
+				<< "P_{" << i + 1 << "}P_{" << j + 1 << "} = ";
+			ost << "\\big(";
+			Poly2->print_equation(ost, conics + j * 6);
+			ost << "\\big)";
+			ost << "\\big(";
+			Poly1->print_equation(ost, bisecants + ij * 3);
+			ost << "\\big)";
+			//multiply_conic_times_linear(conics + j * 6,
+			//bisecants + ij * 3, ten_coeff, 0 /* verbose_level */);
+		}
+		else {
+			Combi.unordered_triple_pair_unrank(h - 30, i, j, k, l, m, n);
+			ij = Combi.ij2k(i, j, 6);
+			kl = Combi.ij2k(k, l, 6);
+			mn = Combi.ij2k(m, n, 6);
+			ost << "P_{" << i + 1 << "}P_{" << j + 1 << "},P_{"
+					<< k + 1 << "}P_{" << l + 1 << "},P_{"
+					<< m + 1 << "}P_{" << n + 1 << "} = ";
+			ost << "\\big(";
+			Poly1->print_equation(ost, bisecants + ij * 3);
+			ost << "\\big)";
+			ost << "\\big(";
+			Poly1->print_equation(ost, bisecants + kl * 3);
+			ost << "\\big)";
+			ost << "\\big(";
+			Poly1->print_equation(ost, bisecants + mn * 3);
+			ost << "\\big)";
+			//multiply_linear_times_linear_times_linear(
+			//bisecants + ij * 3, bisecants + kl * 3,
+			//bisecants + mn * 3, ten_coeff, 0 /* verbose_level */);
+		}
+		ost << " = ";
+		Poly3->print_equation(ost, Web_of_cubic_curves + h * 10);
+		ost << "$\\\\";
+	}
+
+	ost << "The coeffcients are:" << endl;
+	for (i = 0; i < 15; i++) {
+		labels[i] = i;
+	}
+	ost << "$$" << endl;
+	L.int_matrix_print_with_labels_and_partition(ost,
+			Web_of_cubic_curves, 15, 10,
+		labels, labels,
+		row_fst, row_len, 1,
+		col_fst, col_len, 1,
+		Web_of_cubic_curves_entry_print, (void *) this,
+		TRUE /* f_tex */);
+	ost << "$$" << endl;
+
+	for (i = 0; i < 15; i++) {
+		labels[i] = 15 + i;
+	}
+	ost << "$$" << endl;
+	L.int_matrix_print_with_labels_and_partition(ost,
+			Web_of_cubic_curves, 15, 10,
+		labels, labels,
+		row_fst, row_len, 1,
+		col_fst, col_len, 1,
+		Web_of_cubic_curves_entry_print, (void *) this,
+		TRUE /* f_tex */);
+	ost << "$$" << endl;
+
+	for (i = 0; i < 15; i++) {
+		labels[i] = 30 + i;
+	}
+	ost << "$$" << endl;
+	L.int_matrix_print_with_labels_and_partition(ost,
+			Web_of_cubic_curves, 15, 10,
+		labels, labels,
+		row_fst, row_len, 1,
+		col_fst, col_len, 1,
+		Web_of_cubic_curves_entry_print, (void *) this,
+		TRUE /* f_tex */);
+	ost << "$$" << endl;
+
+	FREE_int(bisecants);
+	FREE_int(conics);
+
+}
+
+static void Web_of_cubic_curves_entry_print(int *p,
+	int m, int n, int i, int j, int val,
+	char *output, void *data)
+{
+	surface_domain *Surf = (surface_domain *) data;
+
+	if (i == -1) {
+		Surf->Poly3->print_monomial(output, j);
+	}
+	else if (j == -1) {
+		sprintf(output, "\\pi_{%d} = \\pi_{%s}", i,
+				Surf->Eckard_point_label[i]);
+	}
+	else {
+		sprintf(output, "%d", val);
+	}
+}
+
 
 
 }}

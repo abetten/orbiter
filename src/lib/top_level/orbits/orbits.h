@@ -358,6 +358,7 @@ public:
 };
 
 
+#if 0
 // #############################################################################
 // subspace_orbits.cpp
 // #############################################################################
@@ -440,6 +441,8 @@ void subspace_orbits_early_test_func(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
+#endif
+
 
 }}
 

@@ -114,23 +114,27 @@ void upstep_work::init(poset_classification *gen,
 	upstep_work::f_debug = f_debug;
 	upstep_work::f_implicit_fusion = f_implicit_fusion;
 	upstep_work::f_indicate_not_canonicals = f_indicate_not_canonicals;
-	if (gen->root[prev].nb_extensions > 25) {
+
+	O_prev = gen->get_node(prev);
+
+
+	if (O_prev->nb_extensions > 25) {
 		mod_for_printing = 25;
 		}
-	if (gen->root[prev].nb_extensions > 50) {
+	if (O_prev->nb_extensions > 50) {
 		mod_for_printing = 50;
 		}
-	if (gen->root[prev].nb_extensions > 100) {
+	if (O_prev->nb_extensions > 100) {
 		mod_for_printing = 100;
 		}
-	if (gen->root[prev].nb_extensions > 500) {
+	if (O_prev->nb_extensions > 500) {
 		mod_for_printing = 500;
 		}
-	O_prev = &gen->root[prev];
+
 	path = NEW_int(size + 1);
 	path[size] = prev;
 	for (i = size - 1; i >= 0; i--) {
-		path[i] = gen->root[path[i + 1]].prev;
+		path[i] = gen->get_node(path[i + 1])->prev;
 		}
 	if (f_v) {
 		cout << "upstep_work::init path: ";
@@ -376,13 +380,13 @@ int upstep_work::init_extension_node(int verbose_level)
 	if (prev == 12 && prev_ex == 3) {
 		cout << "upstep_work::init_extension_node we are at node (12,3)" << endl;
 		verbose_level += 10;
-		}
+	}
 #endif
 
 #if 0
 	if (cur == 26) {
 		cout << "upstep_work::init_extension_node Node=26" << endl;
-		}
+	}
 #endif
 
 	//longinteger_domain D;
@@ -397,15 +401,15 @@ int upstep_work::init_extension_node(int verbose_level)
 		cout << "upstep_work::init_extension_node cur=" << cur 
 			<< " size=" << size
 			<< " verbose_level=" << verbose_level << endl;
-		}
+	}
 
 	if (cur == -1) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		cout << "upstep_work::init_extension_node cur=" << cur << endl;
 		exit(1);
-		}
+	}
 
-	O_cur = &gen->root[cur];
+	O_cur = gen->get_node(cur);
 		
 
 	O_cur->freeself();
@@ -421,66 +425,65 @@ int upstep_work::init_extension_node(int verbose_level)
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		cout << "upstep_work::init_extension_node "
 				"initializing Node " << cur << " ";
-		lint_vec_print(cout, gen->S, size);
+		lint_vec_print(cout, gen->get_S(), size);
 		cout << " f_indicate_not_canonicals="
 				<< f_indicate_not_canonicals;
 		cout << " verbose_level=" << verbose_level;
 		cout << endl;
-		}
+	}
 
 	if (f_vv) {
 		cout << "point " << pt << " lies in an orbit of length "
 				<< pt_orbit_len
 				<< " verbose_level = " << verbose_level << endl;
-		}
+	}
 
 
 	if (G) {
 		cout << "upstep_work::init_extension_node "
 				"G is already allocated" << endl;
 		exit(1);
-		}
+	}
 	if (H) {
 		cout << "upstep_work::init_extension_node "
 				"H is already allocated" << endl;
 		exit(1);
-		}
+	}
 	G = NEW_OBJECT(group);
 	H = NEW_OBJECT(group);
 	
 
 	if (f_v) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		lint_set_print(cout, gen->S, size);
+		lint_set_print(cout, gen->get_S(), size);
 		cout << "upstep_work::init_extension_node "
 				"before O_cur->init_extension_node_prepare_G" << endl;
-		}
+	}
 	O_cur->init_extension_node_prepare_G(gen, 
 		prev, prev_ex, size, *G, go_G, 
 		verbose_level - 4);
 	if (f_v) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		lint_set_print(cout, gen->S, size);
+		lint_set_print(cout, gen->get_S(), size);
 		cout << "upstep_work::init_extension_node "
 				"after O_cur->init_extension_node_prepare_G" << endl;
-		}
+	}
 
 	
 
 	if (f_vv) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		lint_set_print(cout, gen->S, size);
+		lint_set_print(cout, gen->get_S(), size);
 		cout << endl;
-		}
+	}
 	if (f_vvv) {
-		if (gen->f_print_function) {
-			(*gen->print_function)(cout,
-					size, gen->S, gen->print_function_data);
-			}
+		if (gen->get_poset()->f_print_function) {
+			gen->get_poset()->invoke_print_function(cout, size, gen->get_S());
 		}
+	}
 	if (f_vv) {
 		cout << "(orbit length = " << pt_orbit_len << ")" << endl;
-		}
+	}
 	
 	O_prev->E[prev_ex].type = EXTENSION_TYPE_PROCESSING;
 		// currently processing
@@ -492,10 +495,10 @@ int upstep_work::init_extension_node(int verbose_level)
 
 	if (f_v) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		lint_set_print(cout, gen->S, size);
+		lint_set_print(cout, gen->get_S(), size);
 		cout << "upstep_work::init_extension_node "
 				"before O_cur->init_extension_node_prepare_H" << endl;
-		}
+	}
 	
 	O_cur->init_extension_node_prepare_H(gen, 
 		prev, prev_ex, size, 
@@ -510,83 +513,83 @@ int upstep_work::init_extension_node(int verbose_level)
 		cout << "upstep_work::init_extension_node Node=26" << endl;
 		cout << "go_G=" << go_G << endl;
 		cout << "go_H=" << go_H << endl;
-		}
+	}
 #endif
 	
 	if (f_v) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		lint_set_print(cout, gen->S, size);
+		lint_set_print(cout, gen->get_S(), size);
 		cout << "upstep_work::init_extension_node "
 				"after O_cur->init_extension_node_prepare_H" << endl;
-		}
+	}
 
 	
 	if (f_v) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		lint_vec_print(cout, gen->S, size);
+		lint_vec_print(cout, gen->get_S(), size);
 		cout << "upstep_work::init_extension_node calling upstep" << endl;
-		}
+	}
 
-	if (gen->Poset->f_subspace_lattice) {
+	if (gen->get_poset()->f_subspace_lattice) {
 		if (f_v) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
-			lint_vec_print(cout, gen->S, size);
+			lint_vec_print(cout, gen->get_S(), size);
 			cout << "upstep_work::init_extension_node "
 					"calling upstep_subspace_action" << endl;
-			}
+		}
 		if (!upstep_subspace_action(verbose_level - 2)) {
 
 			if (f_indicate_not_canonicals) {
 				if (f_vv) {
 					cout << "the set is not canonical" << endl;
-					}
-				return FALSE;
 				}
+				return FALSE;
+			}
 			cout << "upstep_subspace_action returns FALSE, "
 					"the set is not canonical, this should not happen"
 					<< endl;
 			exit(1);
-			}
+		}
 		if (f_v) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
-			lint_vec_print(cout, gen->S, size);
+			lint_vec_print(cout, gen->get_S(), size);
 			cout << "upstep_work::init_extension_node "
 					"after upstep_subspace_action" << endl;
-			}
 		}
+	}
 	else {
 		if (f_v) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
-			lint_vec_print(cout, gen->S, size);
+			lint_vec_print(cout, gen->get_S(), size);
 			cout << "upstep_work::init_extension_node calling "
 					"upstep_for_sets, verbose_level = "
 					<< verbose_level - 2 << endl;
-			}
+		}
 		if (!upstep_for_sets(verbose_level - 2)) {
 			if (f_indicate_not_canonicals) {
 				if (f_vv) {
 					cout << "the set is not canonical" << endl;
-					}
-				return FALSE;
 				}
+				return FALSE;
+			}
 			cout << "upstep returns FALSE, the set is not canonical, "
 					"this should not happen" << endl;
 			exit(1);
-			}
+		}
 		if (f_v) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
-			lint_vec_print(cout, gen->S, size);
+			lint_vec_print(cout, gen->get_S(), size);
 			cout << "upstep_work::init_extension_node after "
 					"upstep_for_sets" << endl;
-			}
 		}
+	}
 	if (f_vv) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		lint_vec_print(cout, gen->S, size);
+		lint_vec_print(cout, gen->get_S(), size);
 		cout << "extension with point " << pt << " : " << endl;
 		cout << "after upstep_for_sets/upstep_subspace_action" << endl;
 		//print_coset_table(coset_table, nb_cosets_processed);
-		}
+	}
 
 	gen->change_extension_type(size - 1, prev, prev_ex,
 			EXTENSION_TYPE_EXTENSION, 0/* verbose_level*/);
@@ -594,11 +597,11 @@ int upstep_work::init_extension_node(int verbose_level)
 
 	if (f_vv) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		lint_vec_print(cout, gen->S, size);
+		lint_vec_print(cout, gen->get_S(), size);
 		cout << "_{";
 		H->print_group_order(cout);
 		cout << "}" << endl;
-		}
+	}
 
 	strong_generators *Strong_gens;
 
@@ -618,7 +621,7 @@ int upstep_work::init_extension_node(int verbose_level)
 		cout << "tl:";
 		int_vec_print(cout, Strong_gens->tl, gen->A->base_len);
 		cout << endl;
-		}
+	}
 #endif
 
 	O_cur->store_strong_generators(gen, Strong_gens);
@@ -630,12 +633,12 @@ int upstep_work::init_extension_node(int verbose_level)
 		
 		gen->stabilizer_order(cur, go);
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		lint_vec_print(cout, gen->S, size);
+		lint_vec_print(cout, gen->get_S(), size);
 		cout << "_{";
 		cout << go;
 		cout << "} (double check)" << endl;
 		cout << "upstep_work::init_extension_node done" << endl;
-		}
+	}
 	return TRUE;
 }
 
@@ -652,7 +655,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 	int f_v4 = (verbose_level >= 4);
 	int f_v5 = (verbose_level >= 5);
 	schreier up_orbit;
-	int h, possible_image;
+	int possible_image;
 	int *aut, idx;
 	trace_result r;
 	action *A_by_restriction;
@@ -663,36 +666,36 @@ int upstep_work::upstep_for_sets(int verbose_level)
 	if (f_v) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		cout << "upstep for set ";
-		lint_set_print(cout, gen->S, size);
+		lint_set_print(cout, gen->get_S(), size);
 		cout << " verbose_level=" << verbose_level;
 		cout << " f_indicate_not_canonicals="
 				<< f_indicate_not_canonicals << endl;
 		//cout << endl;
-		}
-	A_by_restriction = gen->Poset->A2->create_induced_action_by_restriction(
+	}
+	A_by_restriction = gen->get_A2()->create_induced_action_by_restriction(
 		NULL /*sims *old_G */,
-		size, gen->S,
+		size, gen->get_S(),
 		FALSE /* f_induce_action */,
 		0 /*verbose_level - 2*/);
 	
 	// the newly added point:
-	if (gen->S[size - 1] != pt) {
+	if (gen->get_S()[size - 1] != pt) {
 		cout << "upstep_work::upstep_for_sets fatal: "
 				"gen->S[size - 1] != pt" << endl;
 		exit(1);
-		}
+	}
 
 	if (f_v) {
 		print_level_extension_info();
 		cout << "initializing up_orbit with restricted action ";
 		A_by_restriction->print_info();
-		}	
+	}
 	up_orbit.init(A_by_restriction, verbose_level - 2);
 	//up_orbit.init(gen->A2);
 	if (f_v) {
 		print_level_extension_info();
 		cout << "initializing up_orbit with generators" << endl;
-		}	
+	}
 	up_orbit.init_generators(*H->SG, verbose_level - 2);
 
 
@@ -700,7 +703,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 	if (f_v) {
 		print_level_extension_info();
 		cout << "computing orbit of point " << pt << endl;
-		}	
+	}
 	up_orbit.compute_point_orbit(size - 1 /*pt*/, 0);
 		// the orbits of the group H
 		// up_orbit will be extended as soon 
@@ -711,27 +714,27 @@ int upstep_work::upstep_for_sets(int verbose_level)
 	if (f_vv) {
 		cout << "upstep_work::upstep_for_sets "
 				"initializing union_find:" << endl;
-		}
+	}
 	UF.init(A_by_restriction, 0 /*verbose_level - 8*/);
 	if (f_vv) {
 		cout << "upstep_work::upstep_for_sets "
 				"adding generators to union_find:" << endl;
-		}
+	}
 	UF.add_generators(H->SG, 0 /*verbose_level - 8*/);
 	if (f_vv) {
 		cout << "upstep_work::upstep_for_sets "
 				"initializing union_find done" << endl;
-		}
+	}
 	if (f_vvv) {
 		UF.print();
-		}
+	}
 
 
 	if (coset_table) {
 		cout << "upstep_work::upstep_for_sets "
 				"coset_table is allocated" << endl;
 		exit(1);
-		}
+	}
 	nb_cosets = size;
 	nb_cosets_processed = 0;
 	coset_table = NEW_OBJECTS(coset_table_entry, nb_cosets);
@@ -740,27 +743,26 @@ int upstep_work::upstep_for_sets(int verbose_level)
 		if (f_v) {
 			cout << "upstep_work::upstep_for_sets "
 					"coset=" << coset << " / " << nb_cosets << endl;
-			}
+		}
 		// for all the previous (=old) points
-		possible_image = gen->S[coset];
+		possible_image = gen->get_S()[coset];
 		if (f_vv) {
 			print_level_extension_coset_info();
-			cout << " we are trying to map " << possible_image
-					<< " to " << pt << endl;
-			}	
+			cout << " we are trying to map " << possible_image << " to " << pt << endl;
+		}
 
 
 		idx = UF.ancestor(coset);
 		if (idx < coset) {
-			gen->nb_times_trace_was_saved++;
+			//gen->nb_times_trace_was_saved++;
 			if (f_vv) {
 				print_level_extension_coset_info();
 				cout << "coset " << coset << " / " << nb_cosets
 						<< " is at " << idx << " which has already "
 								"been done, so we save one trace" << endl;
-				}
-			continue;
 			}
+			continue;
+		}
 
 
 
@@ -769,32 +771,35 @@ int upstep_work::upstep_for_sets(int verbose_level)
 			print_level_extension_coset_info();
 			cout << " orbit length upstep so far: " << up_orbit.orbit_len[0] 
 				<< " checking possible image " << possible_image << endl;
-			}
+		}
 
 
 		// initialize set[0] and transporter[0] for the tracing
+		lint_vec_copy(gen->get_S(), gen->get_set_i(0), size);
+#if 0
 		for (h = 0; h < size; h++) {
 			gen->set[0][h] = gen->S[h];
-			}
-		gen->set[0][coset] = pt;
-		gen->set[0][size - 1] = possible_image;
-		gen->Poset->A->element_one(gen->transporter->ith(0), 0);
+		}
+#endif
+		gen->get_set_i(0)[coset] = pt;
+		gen->get_set_i(0)[size - 1] = possible_image;
+		gen->get_A()->element_one(gen->get_transporter()->ith(0), 0);
 
 
 		if (f_v4) {
 			print_level_extension_coset_info();
 			cout << "exchanged set: ";
-			lint_set_print(cout, gen->set[0], size);
+			lint_set_print(cout, gen->get_set_i(0), size);
 			cout << endl;
 			cout << "upstep_work::upstep_for_sets "
 					"calling recognize, verbose_level="
 					<< verbose_level << endl;
-			}
+		}
 		
-		int nb_times_image_of_called0 = gen->Poset->A->ptr->nb_times_image_of_called;
-		int nb_times_mult_called0 = gen->Poset->A->ptr->nb_times_mult_called;
-		int nb_times_invert_called0 = gen->Poset->A->ptr->nb_times_invert_called;
-		int nb_times_retrieve_called0 = gen->Poset->A->ptr->nb_times_retrieve_called;
+		int nb_times_image_of_called0 = gen->get_A()->ptr->nb_times_image_of_called;
+		int nb_times_mult_called0 = gen->get_A()->ptr->nb_times_mult_called;
+		int nb_times_invert_called0 = gen->get_A()->ptr->nb_times_invert_called;
+		int nb_times_retrieve_called0 = gen->get_A()->ptr->nb_times_retrieve_called;
 		
 		r = recognize(final_node, 
 				final_ex, 
@@ -806,7 +811,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 					<< coset << " / " << nb_cosets
 					<< " recognize returns "
 					<< trace_result_as_text(r) << endl;
-			}
+		}
 		
 
 
@@ -815,55 +820,55 @@ int upstep_work::upstep_for_sets(int verbose_level)
 		coset_table[nb_cosets_processed].node = final_node;
 		coset_table[nb_cosets_processed].ex = final_ex;
 		coset_table[nb_cosets_processed].nb_times_image_of_called = 
-			gen->Poset->A->ptr->nb_times_image_of_called - nb_times_image_of_called0;
+			gen->get_A()->ptr->nb_times_image_of_called - nb_times_image_of_called0;
 		coset_table[nb_cosets_processed].nb_times_mult_called = 
-			gen->Poset->A->ptr->nb_times_mult_called - nb_times_mult_called0;
+			gen->get_A()->ptr->nb_times_mult_called - nb_times_mult_called0;
 		coset_table[nb_cosets_processed].nb_times_invert_called = 
-			gen->Poset->A->ptr->nb_times_invert_called - nb_times_invert_called0;
+			gen->get_A()->ptr->nb_times_invert_called - nb_times_invert_called0;
 		coset_table[nb_cosets_processed].nb_times_retrieve_called = 
-			gen->Poset->A->ptr->nb_times_retrieve_called - nb_times_retrieve_called0;
+			gen->get_A()->ptr->nb_times_retrieve_called - nb_times_retrieve_called0;
 		nb_cosets_processed++;
 
 		if (f_vvv) {
 			print_level_extension_coset_info();
 			cout << "upstep_work::upstep_for_sets calling find_automorphism "
 					"returns " << trace_result_as_text(r) << endl;
-			}
+		}
 		
 		
 		if (r == found_automorphism) {
-			aut = gen->transporter->ith(size);
+			aut = gen->get_transporter()->ith(size);
 			if (f_vvv) {
 				print_level_extension_coset_info();
 				cout << "upstep_work::upstep_for_sets found automorphism "
 						"mapping " << possible_image << " to " << pt << endl;
 				//gen->A->element_print_as_permutation(aut, cout);
-				if (gen->f_allowed_to_show_group_elements && f_v5) {
-					gen->Poset->A->element_print_quick(aut, cout);
+				if (gen->allowed_to_show_group_elements() && f_v5) {
+					gen->get_A()->element_print_quick(aut, cout);
 					cout << endl;
-					}
 				}
-			if (gen->Poset->A2->element_image_of(possible_image, aut, 0) != pt) {
+			}
+			if (gen->get_A2()->element_image_of(possible_image, aut, 0) != pt) {
 				cout << "upstep_work::upstep_for_sets image of possible_"
 						"image is not pt" << endl;
 				exit(1);
-				}
+			}
 			UF.add_generator(aut, 0 /*verbose_level - 5*/);
 			up_orbit.extend_orbit(aut, verbose_level - 5);
 			if (f_vvv) {
 				cout << "upstep_work::upstep_for_sets n e w orbit length "
 						"upstep = " << up_orbit.orbit_len[0] << endl;
-				}
 			}
+		}
 		else if (r == not_canonical) {
 			if (f_indicate_not_canonicals) {
 				if (f_vvv) {
 					cout << "upstep_work::upstep_for_sets not canonical"
 							<< endl;
-					}
+				}
 				FREE_OBJECT(A_by_restriction);
 				return FALSE;
-				}
+			}
 #if 0
 			print_level_extension_coset_info();
 			cout << "upstep_work::upstep_for_sets fatal: find_automorphism_"
@@ -871,46 +876,46 @@ int upstep_work::upstep_for_sets(int verbose_level)
 					"not happen" << endl;
 			exit(1);
 #endif
-			}
+		}
 		else if (r == no_result_extension_not_found) {
 			if (f_vvv) {
 				cout << "upstep_work::upstep_for_sets no_result_"
 						"extension_not_found" << endl;
-				}
 			}
+		}
 		else if (r == no_result_fusion_node_installed) {
 			if (f_vvv) {
 				cout << "upstep_work::upstep_for_sets no_result_"
 						"fusion_node_installed" << endl;
-				}
 			}
+		}
 		else if (r == no_result_fusion_node_already_installed) {
 			if (f_vvv) {
 				cout << "upstep_work::upstep_for_sets no_result_"
 						"fusion_node_already_installed" << endl;
-				}
 			}
-		} // next j
+		}
+	} // next j
 	if (f_v) {
 		print_level_extension_info();
 		cout << "upstep_work::upstep_for_sets upstep orbit "
 				"length for set ";
-		lint_set_print(cout, gen->S, size);
+		lint_set_print(cout, gen->get_S(), size);
 		cout << " is " << up_orbit.orbit_len[0] << endl;
 
 		cout << "coset_table of length " << nb_cosets_processed
 				<< ":" << endl;
 		print_coset_table(coset_table, nb_cosets_processed);
-		}
+	}
 	vector_ge SG_extension;
-	int *tl_extension = NEW_int(gen->Poset->A->base_len());
+	int *tl_extension = NEW_int(gen->get_A()->base_len());
 	int f_tolerant = TRUE;
 	
 	if (f_vvv) {
 		cout << "upstep_work::upstep_for_sets H->S->transitive_"
 				"extension_tolerant up_orbit.orbit_len[0]="
 				<< up_orbit.orbit_len[0] << endl;
-		}
+	}
 	H->S->transitive_extension_tolerant(
 			up_orbit,
 			SG_extension, tl_extension, f_tolerant,
@@ -924,7 +929,7 @@ int upstep_work::upstep_for_sets(int verbose_level)
 		print_level_extension_info();
 		cout << "upstep_work::upstep_for_sets done "
 				"nb_cosets_processed = " << nb_cosets_processed << endl;
-		}
+	}
 	FREE_OBJECT(A_by_restriction);
 	return TRUE;
 }
@@ -966,7 +971,7 @@ void print_coset_table(coset_table_entry *coset_table, int len)
 			<< coset_table[i].nb_times_retrieve_called << ") : " 
 			<< setw(5) << trace_result_as_text((trace_result)
 					coset_table[i].type) << endl;
-		}
+	}
 }
 
 

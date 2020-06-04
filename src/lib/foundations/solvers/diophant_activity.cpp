@@ -71,7 +71,7 @@ void diophant_activity::init(diophant_activity_description *Descr,
 		}
 	}
 	else if (Descr->f_solve_standard) {
-		long int nb_backtrack_nodes;
+		//long int nb_backtrack_nodes;
 
 		cout << "solving with standard method" << endl;
 

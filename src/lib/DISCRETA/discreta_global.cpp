@@ -82,8 +82,8 @@ void calc_Kramer_Mesner_matrix_neighboring(
 				"level=" << level << endl;
 		}
 
-	f1 = gen->first_poset_orbit_node_at_level[level];
-	f2 = gen->first_poset_orbit_node_at_level[level + 1];
+	f1 = gen->first_node_at_level(level);
+	f2 = gen->first_node_at_level(level + 1);
 	l1 = gen->nb_orbits_at_level(level); //f2 - f1;
 	l2 = gen->nb_orbits_at_level(level + 1); //f3 - f2;
 
@@ -100,7 +100,7 @@ void calc_Kramer_Mesner_matrix_neighboring(
 					"i=" << i << " / " << l1 << endl;
 			}
 		I = f1 + i;
-		O = &gen->root[I];
+		O = gen->get_node(I);
 		for (k = 0; k < O->nb_extensions; k++) {
 			if (f_vv) {
 				cout << "calc_Kramer_Mesner_matrix_neighboring "
@@ -134,7 +134,7 @@ void calc_Kramer_Mesner_matrix_neighboring(
 				
 				I1 = O->E[k].data1;
 				ext1 = O->E[k].data2;
-				O1 = &gen->root[I1];
+				O1 = gen->get_node(I1);
 				if (O1->E[ext1].type != EXTENSION_TYPE_EXTENSION) {
 					cout << "calc_Kramer_Mesner_matrix_neighboring "
 							"O1->E[ext1].type != EXTENSION_TYPE_EXTENSION "

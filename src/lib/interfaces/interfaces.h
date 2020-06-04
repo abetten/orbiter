@@ -564,6 +564,8 @@ class interface_projective {
 	int max_TDO_depth;
 
 	int f_classify_cubic_curves;
+	int f_has_control_six_arcs;
+	poset_classification_control *Control_six_arcs;
 
 	int f_create_points_on_quartic;
 	double desired_distance;
@@ -613,7 +615,8 @@ public:
 			int n, int q, int verbose_level);
 	void do_canonical_form_PG(orbiter_session *Session,
 			int n, int q, int verbose_level);
-	void do_classify_cubic_curves(int q, int verbose_level);
+	void do_classify_cubic_curves(int q,
+			poset_classification_control *Control_six_arcs, int verbose_level);
 	void do_create_points_on_quartic(double desired_distance, int verbose_level);
 	void do_create_points_on_parabola(double desired_distance, int N,
 			double a, double b, double c, int verbose_level);

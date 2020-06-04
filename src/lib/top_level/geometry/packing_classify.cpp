@@ -682,7 +682,7 @@ void packing_classify::compute_adjacency_matrix(int verbose_level)
 
 	if (f_v) {
 		cout << "packing_classify::compute_adjacency_matrix" << endl;
-		}
+	}
 
 	Spread_tables->compute_adjacency_matrix(
 			bitvector_adjacency,
@@ -692,7 +692,7 @@ void packing_classify::compute_adjacency_matrix(int verbose_level)
 	
 	if (f_v) {
 		cout << "packing_classify::compute_adjacency_matrix done" << endl;
-		}
+	}
 }
 
 
@@ -706,7 +706,7 @@ void packing_classify::prepare_generator(
 	if (f_v) {
 		cout << "packing_classify::prepare_generator" << endl;
 		cout << "search_depth=" << search_depth << endl;
-		}
+	}
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(T->A, A_on_spreads,
 			T->A->Strong_gens,
@@ -715,7 +715,7 @@ void packing_classify::prepare_generator(
 	if (f_v) {
 		cout << "packing_classify::prepare_generator before "
 				"Poset->add_testing_without_group" << endl;
-		}
+	}
 	Poset->add_testing_without_group(
 			packing_early_test_function,
 				this /* void *data */,
@@ -723,38 +723,41 @@ void packing_classify::prepare_generator(
 
 
 	Control = NEW_OBJECT(poset_classification_control);
-	gen = NEW_OBJECT(poset_classification);
 	
 	Control->f_T = TRUE;
 	Control->f_W = TRUE;
+	Control->f_max_depth = TRUE;
+	Control->max_depth = search_depth;
+
+#if 0
+	Control->f_print_function = TRUE;
+	Control->print_function = print_set;
+	Control->print_function_data = this;
+#endif
+
 
 	if (f_v) {
 		cout << "packing_classify::prepare_generator "
 				"calling gen->initialize" << endl;
-		}
+	}
 
-	gen->initialize(Control, Poset,
+	gen = NEW_OBJECT(poset_classification);
+
+	gen->initialize_and_allocate_root_node(Control, Poset,
 		search_depth, 
-		"", prefix_with_directory,
 		verbose_level - 1);
 
 
-
-#if 0
-	gen->f_print_function = TRUE;
-	gen->print_function = print_set;
-	gen->print_function_data = this;
-#endif	
 
 
 
 }
 
 
-void packing_classify::compute(int verbose_level)
+void packing_classify::compute(int search_depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int schreier_depth = gen->depth;
+	int schreier_depth = search_depth;
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;
 	int t0;
@@ -772,13 +775,13 @@ void packing_classify::compute(int verbose_level)
 	
 	if (f_v) {
 		cout << "packing_classify::compute done with generator_main" << endl;
-		}
-	length = gen->nb_orbits_at_level(gen->depth);
+	}
+	length = gen->nb_orbits_at_level(search_depth);
 	if (f_v) {
 		cout << "packing_classify::compute We found "
 			<< length << " orbits on "
-			<< gen->depth << "-sets" << endl;
-		}
+			<< search_depth << "-sets" << endl;
+	}
 }
 
 int packing_classify::spreads_are_disjoint(int i, int j)
@@ -790,10 +793,10 @@ int packing_classify::spreads_are_disjoint(int i, int j)
 	if (test_if_sets_are_disjoint_assuming_sorted_lint(p1, p2,
 			spread_size, spread_size)) {
 		return TRUE;
-		}
+	}
 	else {
 		return FALSE;
-		}
+	}
 }
 
 
@@ -823,7 +826,7 @@ void packing_classify::lifting_prepare_function_new(
 	if (f_v) {
 		cout << "packing_classify::lifting_prepare_function "
 				"nb_candidates=" << nb_candidates << endl;
-		}
+	}
 
 	nb_needed = size_of_packing - E->starter_size;
 
@@ -831,7 +834,7 @@ void packing_classify::lifting_prepare_function_new(
 	if (f_v) {
 		cout << "packing_classify::lifting_prepare_function "
 				"before compute_covered_points" << endl;
-		}
+	}
 
 	compute_covered_points(points_covered_by_starter, 
 		nb_points_covered_by_starter, 
@@ -842,7 +845,7 @@ void packing_classify::lifting_prepare_function_new(
 	if (f_v) {
 		cout << "packing_classify::lifting_prepare_function "
 				"before compute_free_points2" << endl;
-		}
+	}
 
 	compute_free_points2(
 		free_points2, nb_free_points2, free_point_idx,
@@ -853,7 +856,7 @@ void packing_classify::lifting_prepare_function_new(
 	if (f_v) {
 		cout << "packing_classify::lifting_prepare_function "
 				"before compute_live_blocks2" << endl;
-		}
+	}
 
 	compute_live_blocks2(
 		E, starter_case, live_blocks2, nb_live_blocks2,
@@ -865,7 +868,7 @@ void packing_classify::lifting_prepare_function_new(
 	if (f_v) {
 		cout << "packing_classify::lifting_prepare_function "
 				"after compute_live_blocks2" << endl;
-		}
+	}
 
 	nb_rows = nb_free_points2;
 	nb_cols = nb_live_blocks2;
@@ -879,7 +882,7 @@ void packing_classify::lifting_prepare_function_new(
 		cout << "packing_classify::lifting_prepare_function_new candidates: ";
 		lint_vec_print(cout, col_labels, nb_cols);
 		cout << " (nb_candidates=" << nb_cols << ")" << endl;
-		}
+	}
 
 
 
@@ -894,15 +897,15 @@ void packing_classify::lifting_prepare_function_new(
 					"lexorder test nb_candidates before: " << nb_cols_before
 					<< " reduced to  " << nb_cols << " (deleted "
 					<< nb_cols_before - nb_cols << ")" << endl;
-			}
 		}
+	}
 
 	if (f_vv) {
 		cout << "packing_classify::lifting_prepare_function_new "
 				"after lexorder test" << endl;
 		cout << "packing::lifting_prepare_function_new "
 				"nb_cols=" << nb_cols << endl;
-		}
+	}
 
 
 	int s, u;
@@ -915,7 +918,7 @@ void packing_classify::lifting_prepare_function_new(
 	for (i = 0; i < nb_rows; i++) {
 		Dio->type[i] = t_EQ;
 		Dio->RHS[i] = 1;
-		}
+	}
 
 	Dio->fill_coefficient_matrix_with(0);
 
@@ -929,10 +932,10 @@ void packing_classify::lifting_prepare_function_new(
 				cout << "packing::lifting_prepare_function "
 						"free_point_idx[i] == -1" << endl;
 				exit(1);
-				}
-			Dio->Aij(u, j) = 1;
 			}
+			Dio->Aij(u, j) = 1;
 		}
+	}
 
 
 	FREE_lint(points_covered_by_starter);
@@ -956,15 +959,15 @@ void packing_classify::compute_covered_points(
 	
 	if (f_v) {
 		cout << "packing_classify::compute_covered_points" << endl;
-		}
+	}
 	points_covered_by_starter = NEW_lint(starter_size * spread_size);
 	for (i = 0; i < starter_size; i++) {
 		s = starter[i];
 		for (j = 0; j < spread_size; j++) {
 			a = Spread_tables->spread_table[s * spread_size + j];
 			points_covered_by_starter[i * spread_size + j] = a;
-			}
 		}
+	}
 #if 0
 	cout << "covered lines:" << endl;
 	int_vec_print(cout, covered_lines, starter_size * spread_size);
@@ -972,7 +975,7 @@ void packing_classify::compute_covered_points(
 #endif
 	if (f_v) {
 		cout << "packing_classify::compute_covered_points done" << endl;
-		}
+	}
 }
 
 void packing_classify::compute_free_points2(
@@ -990,24 +993,24 @@ void packing_classify::compute_free_points2(
 	
 	if (f_v) {
 		cout << "packing_classify::compute_free_points2" << endl;
-		}
+	}
 	free_point_idx = NEW_lint(nb_lines);
 	free_points2 = NEW_lint(nb_lines);
 	for (i = 0; i < nb_lines; i++) {
 		free_point_idx[i] = 0;
-		}
+	}
 	for (i = 0; i < starter_size * spread_size; i++) {
 		a = points_covered_by_starter[i];
 		free_point_idx[a] = -1;
-		}
+	}
 	nb_free_points2 = 0;
 	for (i = 0; i < nb_lines; i++) {
 		if (free_point_idx[i] == 0) {
 			free_points2[nb_free_points2] = i;
 			free_point_idx[i] = nb_free_points2;
 			nb_free_points2++;
-			}
 		}
+	}
 #if 0
 	cout << "free points2:" << endl;
 	int_vec_print(cout, free_points2, nb_free_points2);
@@ -1015,7 +1018,7 @@ void packing_classify::compute_free_points2(
 #endif
 	if (f_v) {
 		cout << "packing_classify::compute_free_points2 done" << endl;
-		}
+	}
 }
 
 void packing_classify::compute_live_blocks2(
@@ -1030,28 +1033,28 @@ void packing_classify::compute_live_blocks2(
 	
 	if (f_v) {
 		cout << "packing_classify::compute_live_blocks2" << endl;
-		}
+	}
 	live_blocks2 = NEW_lint(Spread_tables->nb_spreads);
 	nb_live_blocks2 = 0;
 	for (i = 0; i < Spread_tables->nb_spreads; i++) {
 		for (j = 0; j < starter_size; j++) {
 			if (!is_adjacent(starter[j], i)) {
 				break;
-				}
 			}
+		}
 		if (j == starter_size) {
 			live_blocks2[nb_live_blocks2++] = i;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "packing_classify::compute_live_blocks2 done" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "packing_classify::compute_live_blocks2 STARTER_CASE "
 			<< starter_case << " / " << EC->starter_nb_cases
 			<< " : Found " << nb_live_blocks2 << " live spreads" << endl;
-		}
+	}
 }
 
 int packing_classify::is_adjacent(int i, int j)
@@ -1061,24 +1064,24 @@ int packing_classify::is_adjacent(int i, int j)
 	
 	if (i == j) {
 		return FALSE;
-		}
+	}
 	if (bitvector_adjacency) {
 		k = Combi.ij2k(i, j, Spread_tables->nb_spreads);
 		if (bitvector_s_i(bitvector_adjacency, k)) {
 			return TRUE;
-			}
+		}
 		else {
 			return FALSE;
-			}
 		}
+	}
 	else {
 		if (spreads_are_disjoint(i, j)) {
 			return TRUE;
-			}
+		}
 		else {
 			return FALSE;
-			}
 		}
+	}
 }
 
 void packing_classify::read_spread_table(int verbose_level)
@@ -1088,14 +1091,14 @@ void packing_classify::read_spread_table(int verbose_level)
 
 	if (f_v) {
 		cout << "packing_classify::read_spread_table" << endl;
-		}
+	}
 
 	Spread_tables = NEW_OBJECT(spread_tables);
 
 	if (f_v) {
 		cout << "packing_classify::read_spread_table "
 				"before Spread_tables->init" << endl;
-		}
+	}
 
 	Spread_tables->init(F,
 			TRUE /* f_load */, nb_spreads_up_to_isomorphism,
@@ -1136,13 +1139,13 @@ void packing_classify::read_spread_table(int verbose_level)
 	if (f_v) {
 		cout << "packing_classify::read_spread_table "
 				"after Spread_tables->init" << endl;
-		}
+	}
 
 
 
 	if (f_v) {
 		cout << "packing_classify::read_spread_table done" << endl;
-		}
+	}
 }
 
 void packing_classify::create_action_on_spreads(int verbose_level)
@@ -1151,13 +1154,13 @@ void packing_classify::create_action_on_spreads(int verbose_level)
 
 	if (f_v) {
 		cout << "packing_classify::create_action_on_spreads" << endl;
-		}
+	}
 	//int f_induce = FALSE;
 
 	if (f_v) {
 		cout << "packing_classify::create_action_on_spreads "
 				"creating action A_on_spreads" << endl;
-		}
+	}
 	A_on_spreads = T->A2->create_induced_action_on_sets(
 			Spread_tables->nb_spreads, spread_size,
 			Spread_tables->spread_table,
@@ -1169,7 +1172,7 @@ void packing_classify::create_action_on_spreads(int verbose_level)
 	if (f_v) {
 		cout << "packing_classify::create_action_on_spreads "
 				"creating action A_on_spreads done" << endl;
-		}
+	}
 }
 
 
@@ -1239,7 +1242,7 @@ void packing_classify::conjugacy_classes(int verbose_level)
 
 	if (f_v) {
 		cout << "packing_classify::conjugacy_classes" << endl;
-		}
+	}
 
 	sprintf(prefix, "PGGL_4_%d", q);
 	sprintf(fname1, "%sconjugacy_classes.magma", prefix);
@@ -1248,15 +1251,15 @@ void packing_classify::conjugacy_classes(int verbose_level)
 
 	if (Fio.file_size(fname2) > 0) {
 		read_conjugacy_classes(fname2, verbose_level);
-		}
+	}
 	else {
 		T->A->conjugacy_classes_using_MAGMA(prefix,
 				T->A->Sims, verbose_level);
-		}
+	}
 
 	if (f_v) {
 		cout << "packing_classify::conjugacy_classes done" << endl;
-		}
+	}
 }
 
 void packing_classify::read_conjugacy_classes(
@@ -1272,7 +1275,7 @@ void packing_classify::read_conjugacy_classes(
 
 	if (f_v) {
 		cout << "packing_classify::read_conjugacy_classes" << endl;
-		}
+	}
 
 	T->A->read_conjugacy_classes_from_MAGMA(
 			fname,
@@ -1281,32 +1284,6 @@ void packing_classify::read_conjugacy_classes(
 			class_size,
 			class_order_of_element,
 			verbose_level - 1);
-#if 0
-	{
-		ifstream fp(fname);
-
-		fp >> nb_classes;
-		cout << "We found " << nb_classes
-				<< " conjugacy classes" << endl;
-
-		perms = NEW_int(nb_classes * T->A->degree);
-		class_size = NEW_int(nb_classes);
-		class_order_of_element = NEW_int(nb_classes);
-
-		for (i = 0; i < nb_classes; i++) {
-			fp >> class_order_of_element[i];
-			fp >> class_size[i];
-			for (j = 0; j < T->A->degree; j++) {
-				fp >> perms[i * T->A->degree + j];
-				}
-			}
-		cout << "we read all class representatives "
-				"from file " << fname << endl;
-	}
-	for (i = 0; i < nb_classes * T->A->degree; i++) {
-		perms[i]--;
-		}
-#endif
 
 
 
@@ -1322,93 +1299,93 @@ void packing_classify::read_conjugacy_classes(
 	replace_extension_with(fname_latex, ".tex");
 
 	{
-	ofstream fp(fname_latex);
-	char title[1000];
-	latex_interface L;
-
-	sprintf(title, "Conjugacy classes of $%s$",
-			T->A->label_tex);
+		ofstream fp(fname_latex);
+		char title[1000];
+		latex_interface L;
 	
-	L.head(fp,
-		FALSE /* f_book */, TRUE /* f_title */,
-		title, "computed by MAGMA" /* const char *author */, 
-		FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */, 
-		TRUE /* f_enlarged_page */, TRUE /* f_pagenumbers */, 
-		NULL /* extra_praeamble */);
-	//latex_head_easy(fp);
+		sprintf(title, "Conjugacy classes of $%s$",
+				T->A->label_tex);
+
+		L.head(fp,
+			FALSE /* f_book */, TRUE /* f_title */,
+			title, "computed by MAGMA" /* const char *author */,
+			FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */,
+			TRUE /* f_enlarged_page */, TRUE /* f_pagenumbers */,
+			NULL /* extra_praeamble */);
+		//latex_head_easy(fp);
+
+		fp << "\\section{Conjugacy classes in $"
+				<< T->A->label_tex << "$}" << endl;
 	
-	fp << "\\section{Conjugacy classes in $"
-			<< T->A->label_tex << "$}" << endl;
-
-
-	fp << "The group order is " << endl;
-	fp << "$$" << endl;
-	go.print_not_scientific(fp);
-	fp << endl;
-	fp << "$$" << endl;
 	
-
-	cout << "The conjugacy classes are:" << endl;
-	for (i = 0; i < nb_classes; i++) {
-		strong_generators *gens;
-		longinteger_object go1, Class_size, centralizer_order;
-		int goi;
-		vector_ge *nice_gens;
-
-		goi = class_order_of_element[i];
-		gens = NEW_OBJECT(strong_generators);
-		gens->init_from_permutation_representation(T->A, 
-			perms + i * T->A->degree, 
-			1, goi, nice_gens,
-			verbose_level);
-
-		FREE_OBJECT(nice_gens);
-
-		Class_size.create(class_size[i], __FILE__, __LINE__);
+		fp << "The group order is " << endl;
+		fp << "$$" << endl;
+		go.print_not_scientific(fp);
+		fp << endl;
+		fp << "$$" << endl;
 		
-		D.integral_division_exact(go, Class_size, centralizer_order);
 
-		fp << "\\bigskip" << endl;
-		fp << "\\subsection*{Class " << i << " / "
-				<< nb_classes << "}" << endl;
-		fp << "Order of element = " << class_order_of_element[i]
-				<< "\\\\" << endl;
-		fp << "Class size = " << class_size[i] << "\\\\" << endl;
-		fp << "Centralizer order = " << centralizer_order
-				<< "\\\\" << endl;
+		cout << "The conjugacy classes are:" << endl;
+		for (i = 0; i < nb_classes; i++) {
+			strong_generators *gens;
+			longinteger_object go1, Class_size, centralizer_order;
+			int goi;
+			vector_ge *nice_gens;
 
-		if (class_order_of_element[i] > 1) {
-			fp << "Representing element is" << endl;
-			fp << "$$" << endl;
-			T->A->element_print_latex(gens->gens->ith(0), fp);
-			fp << "$$" << endl;
-			fp << "$";
-			T->A->element_print_for_make_element(gens->gens->ith(0), fp);
-			fp << "$\\\\" << endl;
+			goi = class_order_of_element[i];
+			gens = NEW_OBJECT(strong_generators);
+			gens->init_from_permutation_representation(T->A,
+				perms + i * T->A->degree,
+				1, goi, nice_gens,
+				verbose_level);
+
+			FREE_OBJECT(nice_gens);
+
+			Class_size.create(class_size[i], __FILE__, __LINE__);
+
+			D.integral_division_exact(go, Class_size, centralizer_order);
+
+			fp << "\\bigskip" << endl;
+			fp << "\\subsection*{Class " << i << " / "
+					<< nb_classes << "}" << endl;
+			fp << "Order of element = " << class_order_of_element[i]
+					<< "\\\\" << endl;
+			fp << "Class size = " << class_size[i] << "\\\\" << endl;
+			fp << "Centralizer order = " << centralizer_order
+					<< "\\\\" << endl;
+
+			if (class_order_of_element[i] > 1) {
+				fp << "Representing element is" << endl;
+				fp << "$$" << endl;
+				T->A->element_print_latex(gens->gens->ith(0), fp);
+				fp << "$$" << endl;
+				fp << "$";
+				T->A->element_print_for_make_element(gens->gens->ith(0), fp);
+				fp << "$\\\\" << endl;
+				}
+
+			cout << "class " << i << " / " << nb_classes
+				<< " size = " << class_size[i]
+				<< " order of element = " << class_order_of_element[i]
+				<< " centralizer order = " << centralizer_order
+				<< " : " << endl;
+			cout << "packing::make_element created "
+					"generators for a group" << endl;
+			gens->print_generators(cout);
+			gens->group_order(go1);
+			cout << "prime_at_a_time::make_element "
+					"The group has order " << go1 << endl;
+
+			FREE_OBJECT(gens);
 			}
-
-		cout << "class " << i << " / " << nb_classes 
-			<< " size = " << class_size[i] 
-			<< " order of element = " << class_order_of_element[i] 
-			<< " centralizer order = " << centralizer_order 
-			<< " : " << endl;
-		cout << "packing::make_element created "
-				"generators for a group" << endl;
-		gens->print_generators();
-		gens->group_order(go1);
-		cout << "prime_at_a_time::make_element "
-				"The group has order " << go1 << endl;
-
-		FREE_OBJECT(gens);
-		}
-	L.foot(fp);
+		L.foot(fp);
 	}
 	cout << "Written file " << fname_latex << " of size "
 			<< Fio.file_size(fname_latex) << endl;
 	
 	if (f_v) {
 		cout << "packing::read_conjugacy_classes done" << endl;
-		}
+	}
 }
 
 
@@ -1423,7 +1400,7 @@ void packing_classify::conjugacy_classes_and_normalizers(int verbose_level)
 
 	if (f_v) {
 		cout << "packing_classify::conjugacy_classes_and_normalizers" << endl;
-		}
+	}
 
 	sprintf(prefix, "PGGL_4_%d", q);
 	T->A->conjugacy_classes_and_normalizers_using_MAGMA_make_fnames(
@@ -1434,18 +1411,19 @@ void packing_classify::conjugacy_classes_and_normalizers(int verbose_level)
 
 	if (Fio.file_size(fname_output) > 0) {
 		if (f_v) {
-			cout << "packing_classify::conjugacy_classes_and_normalizers before read_conjugacy_classes_and_normalizers" << endl;
-			}
-		read_conjugacy_classes_and_normalizers(fname_output, verbose_level);
+			cout << "packing_classify::conjugacy_classes_and_normalizers "
+					"before read_conjugacy_classes_and_normalizers" << endl;
 		}
+		read_conjugacy_classes_and_normalizers(fname_output, verbose_level);
+	}
 	else {
 		T->A->conjugacy_classes_and_normalizers_using_MAGMA(prefix,
 				T->A->Sims, verbose_level);
-		}
+	}
 
 	if (f_v) {
 		cout << "packing_classify::conjugacy_classes_and_normalizers done" << endl;
-		}
+	}
 }
 
 
@@ -1467,11 +1445,12 @@ void packing_classify::read_conjugacy_classes_and_normalizers(
 
 	if (f_v) {
 		cout << "packing_classify::read_conjugacy_classes_and_normalizers" << endl;
-		}
+	}
 
 	if (f_v) {
-		cout << "packing_classify::read_conjugacy_classes_and_normalizers before T->A->read_conjugacy_classes_and_normalizers_from_MAGMA" << endl;
-		}
+		cout << "packing_classify::read_conjugacy_classes_and_normalizers "
+				"before T->A->read_conjugacy_classes_and_normalizers_from_MAGMA" << endl;
+	}
 	T->A->read_conjugacy_classes_and_normalizers_from_MAGMA(
 			fname,
 			nb_classes,
@@ -1483,7 +1462,8 @@ void packing_classify::read_conjugacy_classes_and_normalizers(
 			normalizer_generators_perms,
 			verbose_level - 1);
 	if (f_v) {
-		cout << "packing_classify::read_conjugacy_classes_and_normalizers after T->A->read_conjugacy_classes_and_normalizers_from_MAGMA" << endl;
+		cout << "packing_classify::read_conjugacy_classes_and_normalizers "
+				"after T->A->read_conjugacy_classes_and_normalizers_from_MAGMA" << endl;
 		}
 
 
@@ -1499,14 +1479,14 @@ void packing_classify::read_conjugacy_classes_and_normalizers(
 	}
 	if (f_v) {
 		cout << "packing_classify::read_conjugacy_classes_and_normalizers before PA->init" << endl;
-		}
+	}
 	PA->init(
 		F, 3 /* n */, f_semilinear,
 		FALSE /* f_init_incidence_structure */,
 		verbose_level);
 	if (f_v) {
 		cout << "packing_classify::read_conjugacy_classes_and_normalizers after PA->init" << endl;
-		}
+	}
 
 
 
@@ -1523,171 +1503,175 @@ void packing_classify::read_conjugacy_classes_and_normalizers(
 
 	if (f_v) {
 		cout << "packing_classify::read_conjugacy_classes_and_normalizers writing latex file " << fname_latex << endl;
-		}
+	}
 	{
-	ofstream fp(fname_latex);
-	char title[1000];
-	latex_interface L;
+		ofstream fp(fname_latex);
+		char title[1000];
+		latex_interface L;
 
-	sprintf(title, "Conjugacy classes of $%s$",
-			T->A->label_tex);
+		sprintf(title, "Conjugacy classes of $%s$",
+				T->A->label_tex);
 
-	L.head(fp,
-		FALSE /* f_book */, TRUE /* f_title */,
-		title, "computed by MAGMA" /* const char *author */,
-		FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */,
-		TRUE /* f_enlarged_page */, TRUE /* f_pagenumbers */,
-		NULL /* extra_praeamble */);
-	//latex_head_easy(fp);
+		L.head(fp,
+			FALSE /* f_book */, TRUE /* f_title */,
+			title, "computed by MAGMA" /* const char *author */,
+			FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */,
+			TRUE /* f_enlarged_page */, TRUE /* f_pagenumbers */,
+			NULL /* extra_praeamble */);
+		//latex_head_easy(fp);
 
-	fp << "\\section{Conjugacy classes in $"
-			<< T->A->label_tex << "$}" << endl;
-
-
-	fp << "The group order is " << endl;
-	fp << "$$" << endl;
-	go.print_not_scientific(fp);
-	fp << endl;
-	fp << "$$" << endl;
+		fp << "\\section{Conjugacy classes in $"
+				<< T->A->label_tex << "$}" << endl;
 
 
-	cout << "The conjugacy classes are:" << endl;
-	for (i = 0; i < nb_classes; i++) {
+		fp << "The group order is " << endl;
+		fp << "$$" << endl;
+		go.print_not_scientific(fp);
+		fp << endl;
+		fp << "$$" << endl;
 
-		if (f_v) {
-			cout << "packing_classify::read_conjugacy_classes_and_normalizers writing conjugacy class " << i << " / " << nb_classes << endl;
+
+		cout << "The conjugacy classes are:" << endl;
+		for (i = 0; i < nb_classes; i++) {
+
+			if (f_v) {
+				cout << "packing_classify::read_conjugacy_classes_and_normalizers "
+						"writing conjugacy class " << i << " / " << nb_classes << endl;
+				}
+
+			strong_generators *gens;
+			longinteger_object go1, Class_size, centralizer_order;
+			int goi;
+			vector_ge *nice_gens;
+
+
+			goi = class_order_of_element[i];
+			gens = NEW_OBJECT(strong_generators);
+
+			if (goi == 0) {
+				cout << "packing_classify::read_conjugacy_classes_and_normalizers "
+						"writing conjugacy class " << i << " / " << nb_classes << " goi == 0" << endl;
+				exit(1);
 			}
-
-		strong_generators *gens;
-		longinteger_object go1, Class_size, centralizer_order;
-		int goi;
-		vector_ge *nice_gens;
-
-
-		goi = class_order_of_element[i];
-		gens = NEW_OBJECT(strong_generators);
-
-		if (goi == 0) {
-			cout << "packing_classify::read_conjugacy_classes_and_normalizers writing conjugacy class " << i << " / " << nb_classes << " goi == 0" << endl;
-			exit(1);
-		}
-		if (f_v) {
-			cout << "packing_classify::read_conjugacy_classes_and_normalizers before gens->init_from_permutation_representation" << endl;
-			}
-		gens->init_from_permutation_representation(T->A,
-			perms + i * T->A->degree,
-			1, goi, nice_gens,
-			verbose_level);
-
-		if (f_v) {
-			cout << "action::read_conjugacy_classes_and_normalizers "
-				"after gens->init_from_permutation_representation" << endl;
-		}
-
-		Class_size.create(class_size[i], __FILE__, __LINE__);
-
-		D.integral_division_exact(go, Class_size, centralizer_order);
-
-
-
-		long int ngo;
-		int nb_perms;
-		strong_generators *N_gens;
-		vector_ge *nice_gens_N;
-
-		ngo = class_normalizer_order[i];
-		nb_perms = class_normalizer_number_of_generators[i];
-
-		//int *class_normalizer_order;
-		//int *class_normalizer_number_of_generators;
-		//int **normalizer_generators_perms;
-
-		if (ngo == 0) {
-			cout << "packing_classify::read_conjugacy_classes_and_normalizers writing conjugacy class " << i << " / " << nb_classes << " ngo == 0" << endl;
-			exit(1);
-		}
-		N_gens = NEW_OBJECT(strong_generators);
-		N_gens->init_from_permutation_representation(T->A,
-				normalizer_generators_perms[i],
-				nb_perms, ngo, nice_gens_N,
-				verbose_level - 1);
-
-		cout << "class " << i << " / " << nb_classes
-			<< " size = " << class_size[i]
-			<< " order of element = " << class_order_of_element[i]
-			<< " centralizer order = " << centralizer_order
-			<< " normalizer order = " << ngo
-			<< " : " << endl;
-		cout << "packing_classify::read_conjugacy_classes_and_normalizers created "
-				"generators for a group" << endl;
-		gens->print_generators();
-		gens->print_generators_as_permutations();
-		gens->group_order(go1);
-		cout << "packing_classify::read_conjugacy_classes_and_normalizers "
-				"The group has order " << go1 << endl;
-
-		fp << "\\bigskip" << endl;
-		fp << "\\subsection*{Class " << i << " / "
-				<< nb_classes << "}" << endl;
-		fp << "Order of element = " << class_order_of_element[i]
-				<< "\\\\" << endl;
-		fp << "Class size = " << class_size[i] << "\\\\" << endl;
-		fp << "Centralizer order = " << centralizer_order
-				<< "\\\\" << endl;
-		fp << "Normalizer order = " << ngo
-				<< "\\\\" << endl;
-
-		int *Elt = NULL;
-
-
-		if (class_order_of_element[i] > 1) {
-			Elt = nice_gens->ith(0);
-			fp << "Representing element is" << endl;
-			fp << "$$" << endl;
-			T->A->element_print_latex(Elt, fp);
-			fp << "$$" << endl;
-			fp << "$";
-			T->A->element_print_for_make_element(Elt, fp);
-			fp << "$\\\\" << endl;
-
-
-
-		}
-		fp << "The normalizer is generated by:\\\\" << endl;
-		N_gens->print_generators_tex(fp);
-
-
-		if (class_order_of_element[i] > 1) {
-			fp << "The fix structure is:\\\\" << endl;
-			PA->report_fixed_objects_in_PG_3_tex(
-					Elt, fp,
-					verbose_level);
-
-			fp << "The orbit structure is:\\\\" << endl;
-			PA->report_orbits_in_PG_3_tex(
-				Elt, fp,
+			if (f_v) {
+				cout << "packing_classify::read_conjugacy_classes_and_normalizers "
+						"before gens->init_from_permutation_representation" << endl;
+				}
+			gens->init_from_permutation_representation(T->A,
+				perms + i * T->A->degree,
+				1, goi, nice_gens,
 				verbose_level);
-		}
-		if (class_order_of_element[i] > 1) {
 
-			PA->report_decomposition_by_single_automorphism(
+			if (f_v) {
+				cout << "action::read_conjugacy_classes_and_normalizers "
+					"after gens->init_from_permutation_representation" << endl;
+			}
+
+			Class_size.create(class_size[i], __FILE__, __LINE__);
+
+			D.integral_division_exact(go, Class_size, centralizer_order);
+
+
+
+			long int ngo;
+			int nb_perms;
+			strong_generators *N_gens;
+			vector_ge *nice_gens_N;
+
+			ngo = class_normalizer_order[i];
+			nb_perms = class_normalizer_number_of_generators[i];
+
+			//int *class_normalizer_order;
+			//int *class_normalizer_number_of_generators;
+			//int **normalizer_generators_perms;
+
+			if (ngo == 0) {
+				cout << "packing_classify::read_conjugacy_classes_and_normalizers "
+						"writing conjugacy class " << i << " / " << nb_classes << " ngo == 0" << endl;
+				exit(1);
+			}
+			N_gens = NEW_OBJECT(strong_generators);
+			N_gens->init_from_permutation_representation(T->A,
+					normalizer_generators_perms[i],
+					nb_perms, ngo, nice_gens_N,
+					verbose_level - 1);
+
+			cout << "class " << i << " / " << nb_classes
+				<< " size = " << class_size[i]
+				<< " order of element = " << class_order_of_element[i]
+				<< " centralizer order = " << centralizer_order
+				<< " normalizer order = " << ngo
+				<< " : " << endl;
+			cout << "packing_classify::read_conjugacy_classes_and_normalizers "
+					"created generators for a group" << endl;
+			gens->print_generators(cout);
+			gens->print_generators_as_permutations();
+			gens->group_order(go1);
+			cout << "packing_classify::read_conjugacy_classes_and_normalizers "
+					"The group has order " << go1 << endl;
+
+			fp << "\\bigskip" << endl;
+			fp << "\\subsection*{Class " << i << " / "
+					<< nb_classes << "}" << endl;
+			fp << "Order of element = " << class_order_of_element[i]
+					<< "\\\\" << endl;
+			fp << "Class size = " << class_size[i] << "\\\\" << endl;
+			fp << "Centralizer order = " << centralizer_order
+					<< "\\\\" << endl;
+			fp << "Normalizer order = " << ngo
+					<< "\\\\" << endl;
+
+			int *Elt = NULL;
+
+
+			if (class_order_of_element[i] > 1) {
+				Elt = nice_gens->ith(0);
+				fp << "Representing element is" << endl;
+				fp << "$$" << endl;
+				T->A->element_print_latex(Elt, fp);
+				fp << "$$" << endl;
+				fp << "$";
+				T->A->element_print_for_make_element(Elt, fp);
+				fp << "$\\\\" << endl;
+
+
+
+			}
+			fp << "The normalizer is generated by:\\\\" << endl;
+			N_gens->print_generators_tex(fp);
+
+
+			if (class_order_of_element[i] > 1) {
+				fp << "The fix structure is:\\\\" << endl;
+				PA->report_fixed_objects_in_PG_3_tex(
+						Elt, fp,
+						verbose_level);
+
+				fp << "The orbit structure is:\\\\" << endl;
+				PA->report_orbits_in_PG_3_tex(
 					Elt, fp,
 					verbose_level);
-			// PA->
-			//action *A; // linear group PGGL(d,q)
-			//action *A_on_lines; // linear group PGGL(d,q) acting on lines
+			}
+			if (class_order_of_element[i] > 1) {
+
+				PA->report_decomposition_by_single_automorphism(
+						Elt, fp,
+						verbose_level);
+				// PA->
+				//action *A; // linear group PGGL(d,q)
+				//action *A_on_lines; // linear group PGGL(d,q) acting on lines
 
 
-		}
+			}
 
-		FREE_int(normalizer_generators_perms[i]);
+			FREE_int(normalizer_generators_perms[i]);
 
-		FREE_OBJECT(nice_gens_N);
-		FREE_OBJECT(nice_gens);
-		FREE_OBJECT(N_gens);
-		FREE_OBJECT(gens);
-		}
-	L.foot(fp);
+			FREE_OBJECT(nice_gens_N);
+			FREE_OBJECT(nice_gens);
+			FREE_OBJECT(N_gens);
+			FREE_OBJECT(gens);
+			}
+		L.foot(fp);
 	}
 	cout << "Written file " << fname_latex << " of size "
 			<< Fio.file_size(fname_latex) << endl;
@@ -1702,7 +1686,7 @@ void packing_classify::read_conjugacy_classes_and_normalizers(
 
 	if (f_v) {
 		cout << "packing_classify::read_conjugacy_classes_and_normalizers done" << endl;
-		}
+	}
 }
 
 
@@ -1716,127 +1700,127 @@ void packing_classify::report_fixed_objects(int *Elt,
 
 	if (f_v) {
 		cout << "packing_classify::report_fixed_objects" << endl;
-		}
+	}
 
 
 	{
-	ofstream fp(fname_latex);
-	char title[1000];
-	latex_interface L;
+		ofstream fp(fname_latex);
+		char title[1000];
+		latex_interface L;
 
-	sprintf(title, "Fixed Objects");
+		sprintf(title, "Fixed Objects");
+
+		L.head(fp,
+			FALSE /* f_book */, TRUE /* f_title */,
+			title, "" /* const char *author */,
+			FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */,
+			TRUE /* f_enlarged_page */, TRUE /* f_pagenumbers */,
+			NULL /* extra_praeamble */);
+		//latex_head_easy(fp);
+
 	
-	L.head(fp,
-		FALSE /* f_book */, TRUE /* f_title */,
-		title, "" /* const char *author */, 
-		FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */, 
-		TRUE /* f_enlarged_page */, TRUE /* f_pagenumbers */, 
-		NULL /* extra_praeamble */);
-	//latex_head_easy(fp);
+		T->A->report_fixed_objects_in_P3(fp,
+				P3,
+				Elt,
+				verbose_level);
 	
-
-	T->A->report_fixed_objects_in_P3(fp,
-			P3,
-			Elt,
-			verbose_level);
-
 #if 0
-	fp << "\\section{Fixed Objects}" << endl;
+		fp << "\\section{Fixed Objects}" << endl;
 
 
 
-	fp << "The element" << endl;
-	fp << "$$" << endl;
-	T->A->element_print_latex(Elt, fp);
-	fp << "$$" << endl;
-	fp << "has the following fixed objects:" << endl;
+		fp << "The element" << endl;
+		fp << "$$" << endl;
+		T->A->element_print_latex(Elt, fp);
+		fp << "$$" << endl;
+		fp << "has the following fixed objects:" << endl;
 
 
-	fp << "\\subsection{Fixed Points}" << endl;
+		fp << "\\subsection{Fixed Points}" << endl;
 
-	cnt = 0;
-	for (i = 0; i < P3->N_points; i++) {
-		j = T->A->element_image_of(i, Elt, 0 /* verbose_level */);
-		if (j == i) {
-			cnt++;
+		cnt = 0;
+		for (i = 0; i < P3->N_points; i++) {
+			j = T->A->element_image_of(i, Elt, 0 /* verbose_level */);
+			if (j == i) {
+				cnt++;
+				}
 			}
-		}
 
-	fp << "There are " << cnt << " fixed points, they are: \\\\" << endl;
-	for (i = 0; i < P3->N_points; i++) {
-		j = T->A->element_image_of(i, Elt, 0 /* verbose_level */);
-		F->PG_element_unrank_modified(v, 1, 4, i);
-		if (j == i) {
-			fp << i << " : ";
-			int_vec_print(fp, v, 4);
-			fp << "\\\\" << endl;
-			cnt++;
+		fp << "There are " << cnt << " fixed points, they are: \\\\" << endl;
+		for (i = 0; i < P3->N_points; i++) {
+			j = T->A->element_image_of(i, Elt, 0 /* verbose_level */);
+			F->PG_element_unrank_modified(v, 1, 4, i);
+			if (j == i) {
+				fp << i << " : ";
+				int_vec_print(fp, v, 4);
+				fp << "\\\\" << endl;
+				cnt++;
+				}
 			}
-		}
-
-	fp << "\\subsection{Fixed Lines}" << endl;
-
-	{
-	action *A2;
 	
-	A2 = T->A->induced_action_on_grassmannian(2, 0 /* verbose_level*/);
+		fp << "\\subsection{Fixed Lines}" << endl;
 
-	cnt = 0;
-	for (i = 0; i < A2->degree; i++) {
-		j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
-		if (j == i) {
-			cnt++;
+		{
+		action *A2;
+
+		A2 = T->A->induced_action_on_grassmannian(2, 0 /* verbose_level*/);
+
+		cnt = 0;
+		for (i = 0; i < A2->degree; i++) {
+			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
+			if (j == i) {
+				cnt++;
+				}
 			}
-		}
 
-	fp << "There are " << cnt << " fixed lines, they are: \\\\" << endl;
-	cnt = 0;
-	for (i = 0; i < A2->degree; i++) {
-		j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
-		if (j == i) {
-			fp << i << " : $\\left[";
-			A2->G.AG->G->print_single_generator_matrix_tex(fp, i);
-			fp << "\\right]$\\\\" << endl;
-			cnt++;
+		fp << "There are " << cnt << " fixed lines, they are: \\\\" << endl;
+		cnt = 0;
+		for (i = 0; i < A2->degree; i++) {
+			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
+			if (j == i) {
+				fp << i << " : $\\left[";
+				A2->G.AG->G->print_single_generator_matrix_tex(fp, i);
+				fp << "\\right]$\\\\" << endl;
+				cnt++;
+				}
 			}
+
+		FREE_OBJECT(A2);
 		}
-
-	FREE_OBJECT(A2);
-	}
-
-	fp << "\\subsection{Fixed Planes}" << endl;
-
-	{
-	action *A2;
 	
-	A2 = T->A->induced_action_on_grassmannian(3, 0 /* verbose_level*/);
+		fp << "\\subsection{Fixed Planes}" << endl;
 
-	cnt = 0;
-	for (i = 0; i < A2->degree; i++) {
-		j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
-		if (j == i) {
-			cnt++;
+		{
+		action *A2;
+
+		A2 = T->A->induced_action_on_grassmannian(3, 0 /* verbose_level*/);
+
+		cnt = 0;
+		for (i = 0; i < A2->degree; i++) {
+			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
+			if (j == i) {
+				cnt++;
+				}
 			}
-		}
 
-	fp << "There are " << cnt << " fixed planes, they are: \\\\" << endl;
-	cnt = 0;
-	for (i = 0; i < A2->degree; i++) {
-		j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
-		if (j == i) {
-			fp << i << " : $\\left[";
-			A2->G.AG->G->print_single_generator_matrix_tex(fp, i);
-			fp << "\\right]$\\\\" << endl;
-			cnt++;
+		fp << "There are " << cnt << " fixed planes, they are: \\\\" << endl;
+		cnt = 0;
+		for (i = 0; i < A2->degree; i++) {
+			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
+			if (j == i) {
+				fp << i << " : $\\left[";
+				A2->G.AG->G->print_single_generator_matrix_tex(fp, i);
+				fp << "\\right]$\\\\" << endl;
+				cnt++;
+				}
 			}
-		}
 
-	FREE_OBJECT(A2);
-	}
+		FREE_OBJECT(A2);
+		}
 #endif
 
 
-	L.foot(fp);
+		L.foot(fp);
 	}
 	file_io Fio;
 
@@ -1846,7 +1830,7 @@ void packing_classify::report_fixed_objects(int *Elt,
 	
 	if (f_v) {
 		cout << "packing::report_fixed_objects done" << endl;
-		}
+	}
 }
 
 void packing_classify::make_element(int idx, int verbose_level)
@@ -1892,19 +1876,19 @@ void packing_classify::make_element(int idx, int verbose_level)
 	if (f_v) {
 		cout << "packing_classify::make_element "
 				"created generators for a group" << endl;
-		gens->print_generators();
-		}
+		gens->print_generators(cout);
+	}
 	gens->group_order(go);
 	if (f_v) {
 		cout << "packing_classify::make_element "
 				"The group has order " << go << endl;
-		}
+	}
 
 	FREE_OBJECT(nice_gens);
 
 	if (f_v) {
 		cout << "packing_classify::make_element done" << endl;
-		}
+	}
 }
 
 void packing_classify::centralizer(int idx, int verbose_level)
@@ -1920,7 +1904,7 @@ void packing_classify::centralizer(int idx, int verbose_level)
 	
 	if (f_v) {
 		cout << "packing_classify::centralizer idx=" << idx << endl;
-		}
+	}
 	sprintf(prefix, "element_%d", idx);
 	
 	Elt = NEW_int(T->A->elt_size_in_int);
@@ -1935,25 +1919,25 @@ void packing_classify::centralizer(int idx, int verbose_level)
 	D.create_object_by_rank_string(m, poly, verbose_level - 2);
 	for (i = 0; i <= 2; i++) {
 		Poly2[i] = D.s_i(m, i);
-		}
+	}
 	if (f_v) {
 		cout << "packing_classify::centralizer The coefficients "
 				"of the polynomial are:" << endl;
 		int_vec_print(cout, Poly2, 3);
 		cout << endl;
-		}
+	}
 	poly = get_primitive_polynomial(q, 4, 0 /*verbose_level */);
 		
 	D.create_object_by_rank_string(m, poly, verbose_level - 2);
 	for (i = 0; i <= 4; i++) {
 		Poly4[i] = D.s_i(m, i);
-		}
+	}
 	if (f_v) {
 		cout << "packing_classify::centralizer The coefficients "
 				"of the polynomial are:" << endl;
 		int_vec_print(cout, Poly4, 5);
 		cout << endl;
-		}
+	}
 
 	int_vec_zero(Data, 17);
 
@@ -1964,37 +1948,37 @@ void packing_classify::centralizer(int idx, int verbose_level)
 			}
 		Data[2 * 4 + 2] = 3;
 		Data[3 * 4 + 3] = 3;
-		}
+	}
 	else if (idx == 1) {
 		Data[1 * 4 + 0] = 1;
 		for (i = 0; i < 2; i++) {
 			Data[i * 4 + 1] = F->negate(Poly2[i]);
-			}
+		}
 		Data[3 * 4 + 2] = 1;
 		for (i = 0; i < 2; i++) {
 			Data[(2 + i) * 4 + 3] = F->negate(Poly2[i]);
-			}
 		}
+	}
 	else if (idx == 2) {
 		int d[16] = {0,1,0,0,  3,3,0,0,  0,0,1,2,  0,0,2,0}; // AB
 		for (i = 0; i < 16; i++) {
 			Data[i] = d[i];
-			}
 		}
+	}
 	else if (idx == 3) {
 		for (i = 0; i < 3; i++) {
 			Data[(i + 1) * 4 + i] = 1;
-			}
+		}
 		for (i = 0; i < 4; i++) {
 			Data[i * 4 + 3] = F->negate(Poly4[i]);
-			}
 		}
+	}
 	
 
 	if (f_v) {
 		cout << "packing_classify::centralizer Matrix:" << endl;
 		int_matrix_print(Data, 4, 4);
-		}
+	}
 
 	T->A->make_element(Elt, Data, 0 /* verbose_level */);
 
@@ -2008,7 +1992,7 @@ void packing_classify::centralizer(int idx, int verbose_level)
 		T->A->element_print_as_permutation(Elt, cout);
 		cout << "packing_classify::centralizer on lines:" << endl;
 		T->A2->element_print_as_permutation(Elt, cout);
-		}
+	}
 
 	cout << "packing_classify::centralizer the element has order " << o << endl;
 	
@@ -2023,13 +2007,13 @@ void packing_classify::centralizer(int idx, int verbose_level)
 			T->A->element_print_as_permutation(Elt, cout);
 			cout << "packing_classify::centralizer on lines:" << endl;
 			T->A2->element_print_as_permutation(Elt, cout);
-			}
 		}
+	}
 	
 	if (f_v) {
 		cout << "packing_classify::centralizer "
 				"before centralizer_using_MAGMA" << endl;
-		}
+	}
 
 	T->A->centralizer_using_MAGMA(prefix,
 			T->A->Sims, Elt, verbose_level);
@@ -2037,12 +2021,12 @@ void packing_classify::centralizer(int idx, int verbose_level)
 	if (f_v) {
 		cout << "packing_classify::centralizer "
 				"after centralizer_using_MAGMA" << endl;
-		}
+	}
 	
 
 	if (f_v) {
 		cout << "packing_classify::centralizer done" << endl;
-		}
+	}
 }
 
 void packing_classify::centralizer_of_element(
@@ -2057,7 +2041,7 @@ void packing_classify::centralizer_of_element(
 		cout << "packing_classify::centralizer_of_element label=" << label
 				<< " element_description="
 				<< element_description << endl;
-		}
+	}
 	sprintf(prefix, "element_%s", label);
 	
 	Elt = NEW_int(T->A->elt_size_in_int);
@@ -2071,11 +2055,11 @@ void packing_classify::centralizer_of_element(
 	if (data_len < 16) {
 		cout << "data_len < 16" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "packing_classify::centralizer_of_element Matrix:" << endl;
 		int_matrix_print(data, 4, 4);
-		}
+	}
 
 	T->A->make_element(Elt, data, 0 /* verbose_level */);
 
@@ -2089,7 +2073,7 @@ void packing_classify::centralizer_of_element(
 		T->A->element_print_as_permutation(Elt, cout);
 		cout << "packing_classify::centralizer_of_element on lines:" << endl;
 		T->A2->element_print_as_permutation(Elt, cout);
-		}
+	}
 
 	cout << "packing_classify::centralizer_of_element "
 			"the element has order " << o << endl;
@@ -2099,7 +2083,7 @@ void packing_classify::centralizer_of_element(
 	if (f_v) {
 		cout << "packing_classify::centralizer_of_element "
 				"before centralizer_using_MAGMA" << endl;
-		}
+	}
 
 	T->A->centralizer_using_MAGMA(prefix,
 			T->A->Sims, Elt, verbose_level);
@@ -2107,14 +2091,14 @@ void packing_classify::centralizer_of_element(
 	if (f_v) {
 		cout << "packing_classify::centralizer_of_element "
 				"after centralizer_using_MAGMA" << endl;
-		}
+	}
 	
 
 	FREE_int(data);
 	
 	if (f_v) {
 		cout << "packing_classify::centralizer_of_element done" << endl;
-		}
+	}
 }
 
 int packing_classify::test_if_orbit_is_partial_packing(
@@ -2129,7 +2113,7 @@ int packing_classify::test_if_orbit_is_partial_packing(
 	if (f_v) {
 		cout << "packing_classify::test_if_orbit_is_partial_packing "
 				"orbit_idx = " << orbit_idx << endl;
-		}
+	}
 	Orbits->get_orbit(orbit_idx,
 			orbit1, len, 0 /* verbose_level*/);
 	for (i = 0; i < len; i++) {
@@ -2139,20 +2123,20 @@ int packing_classify::test_if_orbit_is_partial_packing(
 			if (!test_if_spreads_are_disjoint_based_on_table(
 					a, b)) {
 				break;
-				}
-			}
-		if (j < len) {
-			break;
 			}
 		}
+		if (j < len) {
+			break;
+		}
+	}
 	if (i < len) {
 		//cout << "is NOT a partial packing" << endl;
 		ret = FALSE;
-		}
+	}
 	else {
 		ret = TRUE;
 		//cout << "IS a partial packing" << endl;
-		}
+	}
 	return ret;
 }
 
@@ -2171,10 +2155,10 @@ int packing_classify::test_if_pair_of_orbits_are_adjacent(
 	if (f_v) {
 		cout << "packing_classify::test_if_pair_of_orbits_"
 				"are_adjacent a=" << a << " b=" << b << endl;
-		}
+	}
 	if (a == b) {
 		return FALSE;
-		}
+	}
 	Orbits->get_orbit(a, orbit1, len1, 0 /* verbose_level*/);
 	Orbits->get_orbit(b, orbit2, len2, 0 /* verbose_level*/);
 	for (i = 0; i < len1; i++) {
@@ -2184,18 +2168,18 @@ int packing_classify::test_if_pair_of_orbits_are_adjacent(
 			if (!test_if_spreads_are_disjoint_based_on_table(
 					s1, s2)) {
 				break;
-				}
 			}
+		}
 		if (j < len2) {
 			break;
-			}
 		}
+	}
 	if (i < len1) {
 		return FALSE;
-		}
+	}
 	else {
 		return TRUE;
-		}
+	}
 }
 
 int packing_classify::test_if_pair_of_sets_are_adjacent(
@@ -2210,7 +2194,7 @@ int packing_classify::test_if_pair_of_sets_are_adjacent(
 	if (f_v) {
 		cout << "packing_classify::test_if_"
 				"pair_of_sets_are_adjacent" << endl;
-		}
+	}
 	for (i = 0; i < sz1; i++) {
 		s1 = set1[i];
 		for (j = 0; j < sz2; j++) {
@@ -2218,18 +2202,18 @@ int packing_classify::test_if_pair_of_sets_are_adjacent(
 			if (!test_if_spreads_are_disjoint_based_on_table(
 					s1, s2)) {
 				break;
-				}
 			}
+		}
 		if (j < sz2) {
 			break;
-			}
 		}
+	}
 	if (i < sz1) {
 		return FALSE;
-		}
+	}
 	else {
 		return TRUE;
-		}
+	}
 }
 
 int packing_classify::test_if_spreads_are_disjoint_based_on_table(int a, int b)
@@ -2274,7 +2258,7 @@ void packing_lifting_prepare_function_new(
 	if (f_v) {
 		cout << "packing_lifting_prepare_function_new "
 				"nb_candidates=" << nb_candidates << endl;
-		}
+	}
 
 	P->lifting_prepare_function_new(
 		EC, starter_case,
@@ -2286,17 +2270,17 @@ void packing_lifting_prepare_function_new(
 	if (f_v) {
 		cout << "packing_lifting_prepare_function_new "
 				"after lifting_prepare_function_new" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "packing_lifting_prepare_function_new "
 				"nb_rows=" << Dio->m
 				<< " nb_cols=" << Dio->n << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "packing_lifting_prepare_function_new done" << endl;
-		}
+	}
 }
 
 
@@ -2315,7 +2299,7 @@ void packing_early_test_function(long int *S, int len,
 		cout << "packing_early_test_function for set ";
 		print_set(cout, len, S);
 		cout << endl;
-		}
+	}
 	a = S[len - 1];
 	nb_good_candidates = 0;
 	for (i = 0; i < nb_candidates; i++) {
@@ -2323,22 +2307,22 @@ void packing_early_test_function(long int *S, int len,
 
 		if (b == a) {
 			continue;
-			}
+		}
 		if (P->bitvector_adjacency) {
 			k = Combi.ij2k_lint(a, b, P->Spread_tables->nb_spreads);
 			if (bitvector_s_i(P->bitvector_adjacency, k)) {
 				good_candidates[nb_good_candidates++] = b;
-				}
 			}
+		}
 		else {
 			if (P->spreads_are_disjoint(a, b)) {
 				good_candidates[nb_good_candidates++] = b;
-				}
 			}
 		}
+	}
 	if (f_v) {
 		cout << "packing_early_test_function done" << endl;
-		}
+	}
 }
 
 
@@ -2355,12 +2339,12 @@ int count(int *Inc, int n, int m, int *set, int t)
 			i = set[h];
 			if (Inc[i * m + j] == 0) {
 				break;
-				}
-			}
-		if (h == t) {
-			nb++;
 			}
 		}
+		if (h == t) {
+			nb++;
+		}
+	}
 	return nb;
 }
 
@@ -2376,12 +2360,12 @@ int count_and_record(int *Inc,
 			i = set[h];
 			if (Inc[i * m + j] == 0) {
 				break;
-				}
-			}
-		if (h == t) {
-			occurances[nb++] = j;
 			}
 		}
+		if (h == t) {
+			occurances[nb++] = j;
+		}
+	}
 	return nb;
 }
 

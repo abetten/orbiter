@@ -715,7 +715,8 @@ public:
 	action *A2;
 	poset_classification *gen;
 	int target_size;
-	const char *prefix_with_directory;
+	poset_classification_control *Control;
+	char prefix_with_directory[1000];
 	exact_cover_arguments *ECA;
 	
 	void (*callback_report)(isomorph *Iso, void *data, 
@@ -736,7 +737,9 @@ public:
 	int read_arguments(int argc, const char **argv,
 		int verbose_level);
 	void init(action *A, action *A2, poset_classification *gen,
-		int target_size, const char *prefix_with_directory, 
+		int target_size,
+		poset_classification_control *Control,
+		//const char *prefix_with_directory,
 		exact_cover_arguments *ECA, 
 		void (*callback_report)(isomorph *Iso, void *data, 
 			int verbose_level), 

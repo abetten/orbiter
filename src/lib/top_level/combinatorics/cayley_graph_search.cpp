@@ -320,7 +320,7 @@ void cayley_graph_search::init_group_level_3(int verbose_level)
 		TRUE /* f_target_go */, target_go,
 		gens, Strong_gens,
 		verbose_level);
-	Strong_gens->print_generators_ost(cout);
+	Strong_gens->print_generators(cout);
 	if (f_v) {
 		cout << "cayley_graph_search::init_group_level_3 done" << endl;
 		}
@@ -771,6 +771,10 @@ void cayley_graph_search::classify_subsets(int verbose_level)
 	Control = NEW_OBJECT(poset_classification_control);
 	Control->f_W = TRUE;
 	Control->f_w = TRUE;
+
+	Control->problem_label = prefix;
+	Control->f_problem_label = TRUE;
+
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(Aut, Aut,
 			Aut_gens,
@@ -780,7 +784,7 @@ void cayley_graph_search::classify_subsets(int verbose_level)
 
 	gen->compute_orbits_on_subsets(
 		target_depth,
-		prefix,
+		//prefix,
 		//f_W, f_w,
 		Control,
 		Poset,

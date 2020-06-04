@@ -60,6 +60,8 @@ interface_projective::interface_projective()
 	max_TDO_depth = INT_MAX;
 
 	f_classify_cubic_curves = FALSE;
+	f_has_control_six_arcs = FALSE;
+	Control_six_arcs = NULL;;
 
 	f_create_points_on_quartic = FALSE;
 	desired_distance = 0;
@@ -195,6 +197,19 @@ void interface_projective::read_arguments(int argc,
 			q = atoi(argv[++i]);
 			cout << "-classify_cubic_curves " <<  q << endl;
 			i++;
+		}
+		else if (strcmp(argv[i], "-control_six_arcs") == 0) {
+			f_has_control_six_arcs = TRUE;
+			Control_six_arcs = NEW_OBJECT(poset_classification_control);
+			i += Control_six_arcs->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -control_six_arcs " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
 		}
 		else if (strcmp(argv[i], "-create_points_on_quartic") == 0) {
 			f_create_points_on_quartic = TRUE;
@@ -370,7 +385,11 @@ void interface_projective::worker(orbiter_session *Session, int verbose_level)
 		do_canonical_form_PG(Session, n, q, verbose_level);
 	}
 	else if (f_classify_cubic_curves) {
-		do_classify_cubic_curves(q, verbose_level);
+		if (!f_has_control_six_arcs) {
+			cout << "please use -control_six_arcs <description> -end" << endl;
+			exit(1);
+		}
+		do_classify_cubic_curves(q, Control_six_arcs, verbose_level);
 	}
 	else if (f_create_points_on_quartic) {
 		do_create_points_on_quartic(desired_distance, verbose_level);
@@ -591,7 +610,8 @@ void interface_projective::do_canonical_form_PG(orbiter_session *Session,
 	}
 }
 
-void interface_projective::do_classify_cubic_curves(int q, int verbose_level)
+void interface_projective::do_classify_cubic_curves(int q,
+		poset_classification_control *Control_six_arcs, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -643,7 +663,7 @@ void interface_projective::do_classify_cubic_curves(int q, int verbose_level)
 			CCA,
 			starter_directory_name,
 			base_fname,
-			//argc, argv,
+			Control_six_arcs,
 			verbose_level);
 
 	CCC->compute_starter(verbose_level);

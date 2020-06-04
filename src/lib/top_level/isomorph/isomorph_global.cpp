@@ -756,7 +756,7 @@ void isomorph_testing(
 	if (f_v) {
 		for (i = 0; i <= level + 1; i++) {
 			cout << "gen->first_oracle_node_at_level[" << i << "]="
-					<< gen->first_poset_orbit_node_at_level[i] << endl;
+					<< gen->first_node_at_level(i) << endl;
 			}
 		cout << "Iso.depth_completed=" << Iso.depth_completed << endl;
 		}
@@ -770,7 +770,7 @@ void isomorph_testing(
 
 	int f_implicit_fusion = FALSE;
 	
-	Iso.gen->f_allowed_to_show_group_elements = FALSE;
+	//Iso.gen->f_allowed_to_show_group_elements = FALSE;
 	
 	Iso.read_starter_nb_orbits(verbose_level); // added Oct 30, 2014 
 

@@ -131,15 +131,47 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	if (Descr->f_orbit_of) {
 		orbit_of(verbose_level);
 	} // if (f_orbit_of)
+	else if (Descr->f_orbits_on_subsets) {
+		orbits_on_subsets(verbose_level);
+	}
 
+	// generic orbits on points or subspaces:
 
-	if (Descr->f_orbits_on_points) {
+	else if (Descr->f_orbits_on_points) {
 		orbits_on_points(verbose_level);
 	}
-
-	if (Descr->f_classify_arcs) {
-		do_classify_arcs(verbose_level);
+	else if (Descr->f_orbits_on_subspaces) {
+		orbits_on_subspaces(verbose_level);
 	}
+
+
+
+	// arcs:
+
+
+	else if (Descr->f_classify_arcs) {
+		if (!Descr->f_poset_classification_control) {
+			cout << "please use -poset_classification_control <descr> -end" << endl;
+			exit(1);
+		}
+		do_classify_arcs(Descr->classify_arcs_target_size, Descr->classify_arcs_d, FALSE,
+				Descr->Control,
+				verbose_level);
+	}
+
+	else if (Descr->f_classify_nonconical_arcs) {
+		if (!Descr->f_poset_classification_control) {
+			cout << "please use -poset_classification_control <descr> -end" << endl;
+			exit(1);
+		}
+		do_classify_arcs(Descr->classify_arcs_target_size, Descr->classify_arcs_d, TRUE,
+				Descr->Control,
+				verbose_level);
+	}
+
+
+	// surfaces:
+
 
 	else if (Descr->f_surface_classify) {
 		do_surface_classify(verbose_level);
@@ -151,32 +183,56 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		do_surface_identify_Sa(verbose_level);
 	}
 	else if (Descr->f_surface_isomorphism_testing) {
-		do_surface_isomorphism_testing(Descr->surface_descr_isomorph1,
-				Descr->surface_descr_isomorph2, verbose_level);
+		do_surface_isomorphism_testing(
+				Descr->surface_descr_isomorph1,
+				Descr->surface_descr_isomorph2,
+				verbose_level);
 	}
 	else if (Descr->f_surface_recognize) {
 		do_surface_recognize(Descr->surface_descr, verbose_level);
 	}
 
-	if (Descr->f_orbits_on_subsets) {
-		orbits_on_subsets(verbose_level);
+	else if (Descr->f_classify_surfaces_through_arcs_and_trihedral_pairs) {
+		if (!Descr->f_trihedra1_control) {
+			cout << "please use option -trihedra1_control <description> -end" << endl;
+			exit(1);
+		}
+		if (!Descr->f_trihedra2_control) {
+			cout << "please use option -trihedra2_control <description> -end" << endl;
+			exit(1);
+		}
+		if (!Descr->f_control_six_arcs) {
+			cout << "please use option -Control_six_arcs <description> -end" << endl;
+			exit(1);
+		}
+		do_classify_surfaces_through_arcs_and_trihedral_pairs(
+				Descr->Trihedra1_control, Descr->Trihedra2_control,
+				Descr->Control_six_arcs,
+				verbose_level);
+	}
+	else if (Descr->f_create_surface) {
+		if (!Descr->f_control_six_arcs) {
+			cout << "please use option -Control_six_arcs <description> -end" << endl;
+			exit(1);
+		}
+		do_create_surface(Descr->surface_descr, Descr->Control_six_arcs, verbose_level);
 	}
 
-	else if (Descr->f_orbits_on_subspaces) {
-		orbits_on_subspaces(verbose_level);
-	}
-	else if (Descr->f_classify_surfaces_through_arcs_and_trihedral_pairs) {
-		do_classify_surfaces_through_arcs_and_trihedral_pairs(verbose_level);
-	}
+
 	else if (Descr->f_spread_classify) {
 		do_spread_classify(Descr->spread_classify_k, verbose_level);
 	}
+
+	// tensors:
+
 	else if (Descr->f_tensor_classify) {
 		do_tensor_classify(Descr->tensor_classify_depth, verbose_level);
 	}
 	else if (Descr->f_tensor_permutations) {
 		do_tensor_permutations(verbose_level);
 	}
+
+	// surface create is missing?
 
 	if (f_v) {
 		cout << "group_theoretic_activity::perform_activity done" << endl;
@@ -351,6 +407,7 @@ void group_theoretic_activity::report(int verbose_level)
 			extras_for_preamble);
 
 		LG->report(fp, Descr->f_sylow, Descr->f_group_table,
+				Descr->f_classes,
 				tikz_global_scale, tikz_global_line_width, factor1000,
 				verbose_level);
 
@@ -924,7 +981,7 @@ void group_theoretic_activity::orbit_of(int verbose_level)
 			full_group_order,
 			0 /* orbit_idx */, verbose_level);
 	cout << "The stabilizer of the orbit rep has been computed:" << endl;
-	SG_stab->print_generators();
+	SG_stab->print_generators(cout);
 	SG_stab->print_generators_tex();
 
 
@@ -973,7 +1030,7 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 	Sch = NEW_OBJECT(schreier);
 
 	cout << "Strong generators are:" << endl;
-	LG->Strong_gens->print_generators();
+	LG->Strong_gens->print_generators(cout);
 	cout << "Strong generators in tex are:" << endl;
 	LG->Strong_gens->print_generators_tex(cout);
 	cout << "Strong generators as permutations are:" << endl;
@@ -1310,13 +1367,16 @@ void group_theoretic_activity::orbits_on_subspaces(int verbose_level)
 				"LG->prefix=" << LG->prefix << endl;
 	}
 
-	sprintf(orbits_on_subspaces_PC->fname_base, "%s", LG->prefix);
+	Control->problem_label = LG->prefix;
+	Control->f_problem_label = TRUE;
+	//sprintf(orbits_on_subspaces_PC->fname_base, "%s", LG->prefix);
 
-	orbits_on_subspaces_PC->init(Control, orbits_on_subspaces_Poset,
+	orbits_on_subspaces_PC->initialize_and_allocate_root_node(
+			Control, orbits_on_subspaces_Poset,
 			Control->max_depth, verbose_level);
 
 
-
+#if 0
 	int nb_poset_orbit_nodes = 1000;
 
 	if (f_v) {
@@ -1329,8 +1389,9 @@ void group_theoretic_activity::orbits_on_subspaces(int verbose_level)
 		cout << "subspace_orbits->init_subspace_lattice "
 				"calling Gen->init_root_node" << endl;
 	}
-	orbits_on_subspaces_PC->root[0].init_root_node(
+	orbits_on_subspaces_PC->get_node(0)->init_root_node(
 			orbits_on_subspaces_PC, verbose_level - 1);
+#endif
 
 	int schreier_depth = Control->max_depth;
 	int f_use_invariant_subset_if_available = FALSE;
@@ -1344,9 +1405,9 @@ void group_theoretic_activity::orbits_on_subspaces(int verbose_level)
 		cout << "group_theoretic_activity::orbits_on_subspaces "
 				"calling generator_main" << endl;
 		cout << "A=";
-		orbits_on_subspaces_PC->Poset->A->print_info();
+		orbits_on_subspaces_PC->get_A()->print_info();
 		cout << "A2=";
-		orbits_on_subspaces_PC->Poset->A2->print_info();
+		orbits_on_subspaces_PC->get_A2()->print_info();
 	}
 	orbits_on_subspaces_PC->main(t0,
 		schreier_depth,
@@ -1359,11 +1420,11 @@ void group_theoretic_activity::orbits_on_subspaces(int verbose_level)
 		cout << "group_theoretic_activity::orbits_on_subspaces "
 				"done with generator_main" << endl;
 	}
-	nb_orbits = orbits_on_subspaces_PC->nb_orbits_at_level(orbits_on_subspaces_PC->depth);
+	nb_orbits = orbits_on_subspaces_PC->nb_orbits_at_level(Control->max_depth);
 	if (f_v) {
 		cout << "group_theoretic_activity::orbits_on_subspaces we found "
 				<< nb_orbits << " orbits at depth "
-				<< orbits_on_subspaces_PC->depth << endl;
+				<< Control->max_depth << endl;
 	}
 
 	orbits_on_poset_post_processing(
@@ -1404,7 +1465,15 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 				FALSE /* f_show_whole_orbit*/);
 	}
 
+	if (f_v) {
+		cout << "group_theoretic_activity::orbits_on_poset_post_processing after PC->list_all_orbits_at_level" << endl;
+	}
+
 	if (Descr->f_report) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::orbits_on_poset_post_processing doing a report" << endl;
+		}
 		{
 			char fname_report[1000];
 			sprintf(fname_report, "%s_poset.tex", LG->prefix);
@@ -1414,8 +1483,22 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 			{
 				ofstream ost(fname_report);
 				L.head_easy(ost);
-				LG->A_linear->report(ost, TRUE /* f_sims */, LG->A_linear->Sims,
-						TRUE /* f_strong_gens */, LG->A_linear->Strong_gens, verbose_level - 1);
+
+				if (f_v) {
+					cout << "group_theoretic_activity::orbits_on_poset_post_processing before A1->report" << endl;
+				}
+
+				A1 /*LG->A_linear*/->report(ost,
+						FALSE /* f_sims */,
+						NULL, //A1/*LG->A_linear*/->Sims,
+						TRUE /* f_strong_gens */,
+						LG->Strong_gens,
+						verbose_level - 1);
+
+				if (f_v) {
+					cout << "group_theoretic_activity::orbits_on_poset_post_processing after LG->A_linear->report" << endl;
+				}
+
 				L.foot(ost);
 			}
 			cout << "Written file " << fname_report << " of size " << Fio.file_size(fname_report) << endl;
@@ -1563,7 +1646,9 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 
 
 
-void group_theoretic_activity::do_classify_arcs(int verbose_level)
+void group_theoretic_activity::do_classify_arcs(int arc_size, int arc_d, int f_not_on_conic,
+		poset_classification_control *Control,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1583,6 +1668,7 @@ void group_theoretic_activity::do_classify_arcs(int verbose_level)
 
 	Gen = NEW_OBJECT(arc_generator);
 
+
 	//cout << argv[0] << endl;
 	//cout << "before Gen->read_arguments" << endl;
 	//Gen->read_arguments(argc, argv);
@@ -1590,22 +1676,23 @@ void group_theoretic_activity::do_classify_arcs(int verbose_level)
 
 	Gen->f_starter = TRUE;
 	Gen->f_target_size = TRUE;
-	Gen->target_size = Descr->classify_arcs_target_size;
+	Gen->target_size = arc_size;
 	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_arcs "
-				"target_size=" << Gen->target_size << endl;
+		cout << "group_theoretic_activity::do_classify_arcs target_size=" << arc_size << endl;
+		cout << "group_theoretic_activity::do_classify_arcs arc_d=" << arc_d << endl;
+		cout << "group_theoretic_activity::do_classify_arcs f_not_on_conic=" << f_not_on_conic << endl;
 	}
 
 
-	const char *input_prefix = "";
-	const char *base_fname = "";
+	//const char *input_prefix = "";
+	//const char *base_fname = "";
 	//int starter_size = 0;
 
 	Gen->F = LG->F;
 	Gen->q = LG->F->q;
-	if (Descr->f_classify_arcs_d) {
+	if (arc_d > 0) {
 		Gen->f_d = TRUE;
-		Gen->d = Descr->classify_arcs_d;
+		Gen->d = arc_d;
 		cout << "setting condition for no more than "
 				<< Gen->d << " points per line" << endl;
 	}
@@ -1616,15 +1703,15 @@ void group_theoretic_activity::do_classify_arcs(int verbose_level)
 	Gen->verbose_level = verbose_level;
 	if (Descr->f_exact_cover) {
 		//Gen->ECA = Descr->ECA;
-		input_prefix = Descr->ECA->input_prefix;
-		base_fname = Descr->ECA->base_fname;
+		//input_prefix = Descr->ECA->input_prefix;
+		//base_fname = Descr->ECA->base_fname;
 		//starter_size = Gen->ECA->starter_size;
 	}
 	else {
 		cout << "no exact cover" << endl;
 		Descr->ECA = NULL;
-		input_prefix = "";
-		base_fname = "";
+		//input_prefix = "";
+		//base_fname = "";
 	}
 	if (Descr->f_isomorph_arguments) {
 		//Gen->IA = Descr->IA;
@@ -1640,9 +1727,9 @@ void group_theoretic_activity::do_classify_arcs(int verbose_level)
 	Gen->init(this,
 			LG->F,
 			A, LG->Strong_gens,
-			input_prefix,
-			base_fname,
-			Gen->target_size,
+			arc_size,
+			f_not_on_conic,
+			Control,
 			verbose_level);
 
 	if (f_v) {
@@ -2192,7 +2279,11 @@ int group_theoretic_activity::subspace_orbits_test_set(
 }
 
 
-void group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs(int verbose_level)
+void group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs(
+		poset_classification_control *Control1,
+		poset_classification_control *Control2,
+		poset_classification_control *Control_six_arcs,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2203,16 +2294,10 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_p
 	algebra_global_with_action Algebra;
 	surface_with_action *Surf_A;
 	surface_domain *Surf;
-	poset_classification_control *my_control;
 	number_theory_domain NT;
 
 
-	if (Descr->f_poset_classification_control) {
-		my_control = Descr->Control;
-	}
-	else {
-		my_control = NEW_OBJECT(poset_classification_control);
-	}
+
 	Surf = NEW_OBJECT(surface_domain);
 	Surf_A = NEW_OBJECT(surface_with_action);
 
@@ -2250,7 +2335,7 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_p
 	if (f_v) {
 		cout << "before Surf_A->Classify_trihedral_pairs->classify" << endl;
 	}
-	Surf_A->Classify_trihedral_pairs->classify(my_control, 0 /*verbose_level*/);
+	Surf_A->Classify_trihedral_pairs->classify(Control1, Control2, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "after Surf_A->Classify_trihedral_pairs->classify" << endl;
 	}
@@ -2260,7 +2345,9 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_p
 	}
 	Algebra.classify_surfaces_through_arcs_and_trihedral_pairs(
 			this,
-			Surf_A, verbose_level);
+			Surf_A,
+			Control_six_arcs,
+			verbose_level);
 	if (f_v) {
 		cout << "after A.classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
 	}
@@ -2272,7 +2359,9 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_p
 }
 
 void group_theoretic_activity::do_create_surface(
-		surface_create_description *Surface_Descr, int verbose_level)
+		surface_create_description *Surface_Descr,
+		poset_classification_control *Control_six_arcs,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2514,6 +2603,7 @@ void group_theoretic_activity::do_create_surface(
 				SC->F,
 				A,
 			SC->Surf->P2,
+			Control_six_arcs,
 			verbose_level);
 		transporter = NEW_int(Six_arcs->Gen->A->elt_size_in_int);
 
@@ -2855,8 +2945,8 @@ long int gta_subspace_orbits_rank_point_func(int *v, void *data)
 
 	G = (group_theoretic_activity *) data;
 	gen = G->orbits_on_subspaces_PC;
-	gen->Poset->VS->F->PG_element_rank_modified_lint(v, 1,
-			gen->Poset->VS->dimension, rk);
+	gen->get_VS()->F->PG_element_rank_modified_lint(v, 1,
+			gen->get_VS()->dimension, rk);
 	return rk;
 }
 
@@ -2867,8 +2957,8 @@ void gta_subspace_orbits_unrank_point_func(int *v, long int rk, void *data)
 
 	G = (group_theoretic_activity *) data;
 	gen = G->orbits_on_subspaces_PC;
-	gen->Poset->VS->F->PG_element_unrank_modified(v, 1,
-			gen->Poset->VS->dimension, rk);
+	gen->get_VS()->F->PG_element_unrank_modified(v, 1,
+			gen->get_VS()->dimension, rk);
 }
 
 void gta_subspace_orbits_early_test_func(long int *S, int len,

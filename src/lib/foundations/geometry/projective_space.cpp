@@ -1343,6 +1343,46 @@ int projective_space::determine_line_in_plane(
 	return TRUE;
 }
 
+int projective_space::conic_test(long int *S, int len, int pt, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int ret = TRUE;
+	int subset[5];
+	long int the_set[6];
+	int six_coeffs[6];
+	int i;
+	combinatorics_domain Combi;
+
+	if (f_v) {
+		cout << "projective_space::conic_test" << endl;
+	}
+	if (len < 5) {
+		return TRUE;
+	}
+	Combi.first_k_subset(subset, len, 5);
+	while (TRUE) {
+		for (i = 0; i < 5; i++) {
+			the_set[i] = S[subset[i]];
+		}
+		the_set[5] = pt;
+		if (determine_conic_in_plane(
+				the_set, 6, six_coeffs, 0 /*verbose_level*/)) {
+			ret = FALSE;
+			break;
+		}
+
+		if (!Combi.next_k_subset(subset, len, 5)) {
+			ret = TRUE;
+			break;
+		}
+	}
+	if (f_v) {
+		cout << "projective_space::conic_test done" << endl;
+	}
+	return ret;
+}
+
+
 int projective_space::determine_conic_in_plane(
 	long int *input_pts, int nb_pts,
 	int *six_coeffs, 

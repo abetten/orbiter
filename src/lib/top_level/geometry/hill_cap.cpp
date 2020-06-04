@@ -5,7 +5,7 @@
 // started March 14, 2012
 //
 //
-// Hill cap and Buekenhout Metz unitals
+// Hill cap
 //
 //
 
@@ -107,7 +107,7 @@ void Hill_cap56(
 	if (f_v) {
 		cout << "Hill_cap before P.init2" << endl;
 		}
-	P->init2(verbose_level - 2);	
+	P->init2(w, verbose_level - 2);
 	if (f_v) {
 		cout << "Hill_cap before P.compute_orbits" << endl;
 		}

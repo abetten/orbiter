@@ -148,13 +148,11 @@ void search_blocking_set::find_partial_blocking_sets(int depth, int verbose_leve
 		cout << "search_blocking_set::find_partial_blocking_sets" << endl;
 		}
 	
-	gen = NEW_OBJECT(poset_classification);
 	
 
-	sprintf(gen->fname_base, "blocking_set");
+	//sprintf(gen->fname_base, "blocking_set");
 	
 	
-	gen->depth = Inc->nb_rows;
 	
 	if (f_v) {
 		cout << "find_blocking_sets calling gen->init" << endl;
@@ -165,13 +163,18 @@ void search_blocking_set::find_partial_blocking_sets(int depth, int verbose_leve
 		exit(1);
 		}
 	Control = NEW_OBJECT(poset_classification_control);
+	Control->f_max_depth = TRUE;
+	Control->max_depth = Inc->nb_rows;
+
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A,
 			A->Strong_gens,
 			verbose_level);
-	gen->init(Control, Poset,
-		//*A->strong_generators, A->tl, 
-		gen->depth, verbose_level);
+
+	gen = NEW_OBJECT(poset_classification);
+
+	gen->initialize_and_allocate_root_node(Control, Poset,
+			Inc->nb_rows, verbose_level);
 
 #if 0
 	// ToDo
@@ -192,6 +195,7 @@ void search_blocking_set::find_partial_blocking_sets(int depth, int verbose_leve
 	gen->print_function_data = this;
 #endif	
 
+#if 0
 	int nb_poset_orbit_nodes = 1000;
 	
 	if (f_v) {
@@ -201,15 +205,13 @@ void search_blocking_set::find_partial_blocking_sets(int depth, int verbose_leve
 	if (f_v) {
 		cout << "find_partial_blocking_sets calling gen->init_root_node" << endl;
 		}
-	gen->root[0].init_root_node(gen, verbose_level - 1);
+	gen->get_node(0)->init_root_node(gen, verbose_level - 1);
+#endif
 	
-	int schreier_depth = gen->depth;
+	int schreier_depth = Inc->nb_rows;
 	int f_use_invariant_subset_if_available = TRUE;
-	//int f_implicit_fusion = FALSE;
 	int f_debug = FALSE;
 	
-	gen->Control->f_max_depth = TRUE;
-	gen->Control->max_depth = depth;
 	
 	if (f_v) {
 		cout << "find_partial_blocking_sets: calling generator_main" << endl;
@@ -217,7 +219,6 @@ void search_blocking_set::find_partial_blocking_sets(int depth, int verbose_leve
 	gen->main(t0, 
 		schreier_depth, 
 		f_use_invariant_subset_if_available, 
-		//f_implicit_fusion, 
 		f_debug, 
 		verbose_level - 1);
 	
@@ -230,14 +231,14 @@ int search_blocking_set::test_level(int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_OK;
-	int f, nb_orbits, h;
+	int nb_orbits, f, h;
 	
 	if (f_v) {
 		cout << "search_blocking_set::test_level: testing all partial "
 				"blocking sets at level " << depth << endl;
 		}
-	f = gen->first_poset_orbit_node_at_level[depth];
-	nb_orbits = gen->first_poset_orbit_node_at_level[depth + 1] - f;
+	f = gen->first_node_at_level(depth);
+	nb_orbits = gen->nb_orbits_at_level(depth);
 	if (f_v) {
 		cout << "search_blocking_set::test_level: we found " << nb_orbits
 				<< " orbits on partial blocking sets "
@@ -245,7 +246,7 @@ int search_blocking_set::test_level(int depth, int verbose_level)
 		}
 	f_OK = FALSE;
 	for (h = 0; h < nb_orbits; h++) {
-		gen->root[f + h].store_set_to(gen, depth - 1, blocking_set);
+		gen->get_node(f + h)->store_set_to(gen, depth - 1, blocking_set);
 		
 		if (f_v) {
 			cout << "testing set " << h << " / " << nb_orbits << " : ";
@@ -460,15 +461,15 @@ void search_blocking_set::search_for_blocking_set(int input_no,
 		f_find_only_one = TRUE;
 		}
 
-	f = gen->first_poset_orbit_node_at_level[level];
-	nb_orbits = gen->first_poset_orbit_node_at_level[level + 1] - f;
+	f = gen->first_node_at_level(level);
+	nb_orbits = gen->nb_orbits_at_level(level);
 	if (f_v) {
 		cout << "search_blocking_set::search_for_blocking_set: "
 				"we found " << nb_orbits << " orbits on partial "
 				"blocking sets of size" << level << endl;
 		}
 	for (h = 0; h < nb_orbits; h++) {
-		gen->root[f + h].store_set_to(gen, level - 1, blocking_set);
+		gen->get_node(f + h)->store_set_to(gen, level - 1, blocking_set);
 		
 		if (f_v) {
 			cout << "input_no " << input_no << " level " << level

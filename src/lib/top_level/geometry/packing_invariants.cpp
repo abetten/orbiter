@@ -42,18 +42,18 @@ void packing_invariants::freeself()
 	
 	if (the_packing) {
 		FREE_lint(the_packing);
-		}
+	}
 	if (list_of_lines) {
 		FREE_lint(list_of_lines);
-		}
+	}
 	if (f_has_klein) {
 		delete [] R;
 		for (i = 0; i < nb_planes; i++) {
 			FREE_int(Pts_on_plane[i]);
-			}
+		}
 		FREE_pint(Pts_on_plane);
 		FREE_int(nb_pts_on_plane);
-		}
+	}
 	null();
 }
 
@@ -75,7 +75,7 @@ void packing_invariants::init(packing_classify *P,
 	packing_invariants::iso_cnt = iso_cnt;
 	for (i = 0; i < P->size_of_packing; i++) {
 		packing_invariants::the_packing[i] = the_packing[i];
-		}
+	}
 	list_of_lines = NEW_lint(P->size_of_packing * P->spread_size);
 	P->compute_list_of_lines_from_packing(
 			list_of_lines,
@@ -85,7 +85,7 @@ void packing_invariants::init(packing_classify *P,
 		cout << "list_of_lines:" << endl;
 		lint_matrix_print(list_of_lines,
 				P->size_of_packing, P->spread_size);
-		}
+	}
 	f_has_klein = FALSE;
 
 #if 0
@@ -103,7 +103,7 @@ void packing_invariants::init(packing_classify *P,
 
 	if (f_v) {
 		cout << "packing_invariants::init done" << endl;
-		}
+	}
 }
 
 void packing_invariants::init_klein_invariants(
@@ -114,14 +114,14 @@ void packing_invariants::init_klein_invariants(
 
 	if (f_v) {
 		cout << "packing_invariants::init_klein_invariants" << endl;
-		}
+	}
 	nb_planes = v.s_ii(0);
 	R = new longinteger_object[nb_planes];
 	Pts_on_plane = NEW_pint(nb_planes);
 	nb_pts_on_plane = NEW_int(nb_planes);
 	for (i = 0; i < nb_planes; i++) {
 		R[i].create(v.s_i(1).as_vector().s_ii(i), __FILE__, __LINE__);
-		}
+	}
 	for (i = 0; i < nb_planes; i++) {
 		nb_pts_on_plane[i] =
 			v.s_i(2).as_vector().s_i(i).as_vector().s_l();
@@ -129,12 +129,12 @@ void packing_invariants::init_klein_invariants(
 		for (j = 0; j < nb_pts_on_plane[i]; j++) {
 			Pts_on_plane[i][j] =
 				v.s_i(2).as_vector().s_i(i).as_vector().s_ii(j);
-			}
 		}
+	}
 	f_has_klein = TRUE;
 	if (f_v) {
 		cout << "packing_invariants::init_klein_invariants done" << endl;
-		}
+	}
 }
 
 
@@ -146,7 +146,7 @@ void packing_invariants::compute_decomposition(
 
 	if (f_v) {
 		cout << "packing_invariants::compute_decomposition" << endl;
-		}
+	}
 	
 
 	int f_second = FALSE;
@@ -158,7 +158,7 @@ void packing_invariants::compute_decomposition(
 				"plane-intersection type: ";
 		C->print(FALSE /*f_backwards*/);
 		C->print_naked_tex(cout, FALSE /*f_backwards*/);
-		}
+	}
 	
 #if 0
 	ost << "Plane type of Klein-image is $($ ";
@@ -175,7 +175,7 @@ void packing_invariants::compute_decomposition(
 		l = C->type_len[i];
 		a = C->data_sorted[f];
 		m = MAXIMUM(a, m);
-		}
+	}
 
 	nb_blocks = 0;
 	for (i = 0; i < C->nb_types; i++) {
@@ -184,12 +184,12 @@ void packing_invariants::compute_decomposition(
 		a = C->data_sorted[f];
 		if (TRUE /*a == m*/) {
 			nb_blocks += l;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "There are " << nb_blocks
 				<< " interesting planes" << endl;
-		}
+	}
 	block_to_plane = NEW_int(nb_blocks);
 	plane_to_block = NEW_int(nb_planes);
 
@@ -204,10 +204,10 @@ void packing_invariants::compute_decomposition(
 	Inc = NEW_int(total_nb_points * total_nb_blocks);
 	for (i = 0; i < total_nb_points * total_nb_blocks; i++) {
 		Inc[i] = 0;
-		}
+	}
 	for (i = 0; i < nb_planes; i++) {
 		plane_to_block[i] = -1;
-		}
+	}
 	j = 0;
 	for (h = 0; h < C->nb_types; h++) {
 		f = C->type_first[h];
@@ -220,27 +220,27 @@ void packing_invariants::compute_decomposition(
 				for (uu = 0; uu < a; uu++) {
 					i = Pts_on_plane[idx][uu];
 					Inc[i * total_nb_blocks + j] = 1;
-					}
+				}
 				block_to_plane[j] = idx;
 				plane_to_block[idx] = j;
 				j++;
-				} // next u
-			} // if
-		} // next h
+			} // next u
+		} // if
+	} // next h
 	for (h = 0; h < P->size_of_packing; h++) {
 		for (u = 0; u < P->spread_size; u++) {
 			i = h * P->spread_size + u;
 			j = nb_blocks + h;
 			Inc[i * total_nb_blocks + j] = 1;
-			}
-		}	
+		}
+	}
 	for (h = 0; h < P->size_of_packing; h++) {
 		a = the_packing[h];
 		b = P->Spread_tables->spread_iso_type[a];
 		i = P->size_of_packing * P->spread_size + b;
 		j = nb_blocks + h;
 		Inc[i * total_nb_blocks + j] = 1;
-		}
+	}
 
 	if (FALSE /*nb_blocks < 20*/) {
 
@@ -269,8 +269,8 @@ void packing_invariants::compute_decomposition(
 						P->size_of_packing * P->spread_size + i,
 						nb_fake_points - i);
 				Stack->split_cell(0 /* verbose_level */);
-				}
 			}
+		}
 		Stack->subset_continguous(total_nb_points + nb_blocks,
 				nb_fake_blocks);
 		Stack->split_cell(0 /* verbose_level */);
@@ -287,7 +287,7 @@ void packing_invariants::compute_decomposition(
 		}
 		FREE_OBJECT(Stack);
 		FREE_OBJECT(I);
-		}
+	}
 
 	// compute TDO:
 	{
@@ -314,8 +314,8 @@ void packing_invariants::compute_decomposition(
 						P->size_of_packing * P->spread_size + i,
 						nb_fake_points - i);
 				Stack->split_cell(0 /* verbose_level */);
-				}
 			}
+		}
 		Stack->subset_continguous(total_nb_points + nb_blocks,
 				nb_fake_blocks);
 		Stack->split_cell(0 /* verbose_level */);
@@ -331,23 +331,21 @@ void packing_invariants::compute_decomposition(
 				"%s%d_packing_planes_col_scheme.tex",
 				prefix_tex, iso_cnt);
 		{
-		ofstream fp_row_scheme(fname_row_scheme);
-		ofstream fp_col_scheme(fname_col_scheme);
-		I->get_and_print_row_tactical_decomposition_scheme_tex(
-			fp_row_scheme, FALSE /* f_enter_math */,
-			TRUE /* f_print_subscripts */, *Stack);
-		I->get_and_print_column_tactical_decomposition_scheme_tex(
-			fp_col_scheme, FALSE /* f_enter_math */,
-			TRUE /* f_print_subscripts */, *Stack);
+			ofstream fp_row_scheme(fname_row_scheme);
+			ofstream fp_col_scheme(fname_col_scheme);
+			I->get_and_print_row_tactical_decomposition_scheme_tex(
+				fp_row_scheme, FALSE /* f_enter_math */,
+				TRUE /* f_print_subscripts */, *Stack);
+			I->get_and_print_column_tactical_decomposition_scheme_tex(
+				fp_col_scheme, FALSE /* f_enter_math */,
+				TRUE /* f_print_subscripts */, *Stack);
 		}
-
-
 	}
 
 
 	if (f_v) {
 		cout << "packing_invariants::compute_decomposition done" << endl;
-		}
+	}
 }
 
 }}

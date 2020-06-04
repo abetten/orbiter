@@ -108,8 +108,8 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 		}
 	if (nb_strong_generators == 0) {
 
-		cosetrep = gen->Elt1;
-		gen->Poset->A->element_one(gen->Elt1, 0);
+		cosetrep = gen->get_Elt1();
+		gen->get_A()->element_one(gen->get_Elt1(), 0);
 		projected_pt0 = projected_pt;
 		
 
@@ -133,12 +133,12 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 					"subspace_action before "
 					"Schreier_vector_handler->coset_rep_inv" << endl;
 		}
-		gen->Schreier_vector_handler->coset_rep_inv(
+		gen->get_schreier_vector_handler()->coset_rep_inv(
 				Schreier_vector,
 				projected_pt,
 				projected_pt0,
 				verbose_level - 4);
-		cosetrep = gen->Schreier_vector_handler->cosetrep;
+		cosetrep = gen->get_schreier_vector_handler()->cosetrep;
 		if (f_v) {
 			cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv_"
 					"subspace_action after "

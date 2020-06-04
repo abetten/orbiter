@@ -552,7 +552,7 @@ void packing_was::init(int argc, const char **argv)
 		cout << "packing_was::init before IA->init" << endl;
 	}
 	IA->init(T->A, P->A_on_spreads, P->gen,
-		P->size_of_packing, P->prefix_with_directory, ECA,
+		P->size_of_packing, Control, ECA,
 		callback_packing_report,
 		NULL /*callback_subset_orbits*/,
 		P,
@@ -1383,7 +1383,7 @@ void packing_was::compute_cliques_on_fixpoint_graph(
 
 		fixpoint_clique_gen->compute_orbits_on_subsets(
 				clique_size /* int target_depth */,
-				my_prefix /* const char *prefix */,
+				//my_prefix /* const char *prefix */,
 				//TRUE /* f_W */, TRUE /* f_w */,
 				Control,
 				Poset_fixpoint_cliques,

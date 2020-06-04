@@ -86,13 +86,15 @@ void strong_generators::init_from_sims(sims *S, int verbose_level)
 
 	if (f_v) {
 		cout << "strong_generators::init_from_sims" << endl;
-		}
+		cout << "action = " << S->A->label << endl;
+		cout << "base_len = " << S->A->base_len() << endl;
+	}
 	A = S->A;
 	tl = NEW_int(A->base_len());
 	gens = NEW_OBJECT(vector_ge);
 	if (f_v) {
 		cout << "strong_generators::init_from_sims before S->extract_strong_generators_in_order" << endl;
-		}
+	}
 	S->extract_strong_generators_in_order(*gens, tl,
 			verbose_level - 5);
 	if (f_v) {
@@ -100,10 +102,10 @@ void strong_generators::init_from_sims(sims *S, int verbose_level)
 		cout << "strong_generators::init_from_sims tl=";
 		int_vec_print(cout, tl, A->base_len());
 		cout << endl;
-		}
+	}
 	if (f_v) {
 		cout << "strong_generators::init_from_sims done" << endl;
-		}
+	}
 }
 
 void strong_generators::init_from_ascii_coding(action *A,
@@ -372,7 +374,7 @@ void strong_generators::init_from_data_with_target_go(
 		cout << "strong_generators::init_from_data_"
 				"with_target_go "
 				"strong generators are:" << endl;
-		SG->print_generators();
+		SG->print_generators(cout);
 		}
 
 	//FREE_OBJECT(my_gens);
@@ -663,7 +665,7 @@ void strong_generators::init_group_extension(
 	if (FALSE) {
 		cout << "strong_generators::init_group_extension "
 				"strong generators are:" << endl;
-		SG->print_generators();
+		SG->print_generators(cout);
 		}
 
 	FREE_OBJECT(my_gens);
@@ -752,7 +754,7 @@ void strong_generators::init_group_extension(
 	if (FALSE) {
 		cout << "strong_generators::init_group_extension "
 				"strong generators are:" << endl;
-		SG->print_generators();
+		SG->print_generators(cout);
 		}
 
 	FREE_OBJECT(my_gens);
@@ -833,7 +835,7 @@ void strong_generators::switch_to_subgroup(
 	if (FALSE) {
 		cout << "strong_generators::switch_to_subgroup "
 				"strong generators are:" << endl;
-		SG->print_generators();
+		SG->print_generators(cout);
 		}
 
 	FREE_OBJECT(my_gens);
@@ -901,7 +903,7 @@ void strong_generators::init_subgroup(action *A,
 	if (FALSE) {
 		cout << "strong_generators::init_subgroup "
 				"strong generators are:" << endl;
-		SG->print_generators();
+		SG->print_generators(cout);
 		}
 
 	FREE_OBJECT(my_gens);
@@ -972,7 +974,7 @@ void strong_generators::init_subgroup_by_generators(action *A,
 	if (FALSE) {
 		cout << "strong_generators::init_subgroup_by_generators "
 				"strong generators are:" << endl;
-		SG->print_generators();
+		SG->print_generators(cout);
 		}
 
 	//FREE_OBJECT(my_gens);
@@ -1166,6 +1168,124 @@ long int strong_generators::group_order_as_lint()
 	return go.as_lint();
 }
 
+void strong_generators::print_generators_gap(ostream &ost)
+{
+	int i, j, a;
+
+	ost << "strong_generators::print_generators_gap Generators in GAP format are:" << endl;
+	if (A->degree < 200) {
+		ost << "G := Group([";
+		for (i = 0; i < gens->len; i++) {
+			A->element_print_as_permutation_with_offset(
+					gens->ith(i), ost,
+					1 /*offset*/,
+					TRUE /* f_do_it_anyway_even_for_big_degree */,
+					FALSE /* f_print_cycles_of_length_one */,
+					0 /* verbose_level*/);
+			if (i < gens->len - 1) {
+				ost << ", " << endl;
+			}
+		}
+		ost << "]);" << endl;
+	}
+	else {
+		ost << "too big to print" << endl;
+	}
+	ost << "strong_generators::print_generators_gap "
+			"Generators in compact permutation form are:" << endl;
+	if (A->degree < 200) {
+		ost << gens->len << " " << A->degree << endl;
+		for (i = 0; i < gens->len; i++) {
+			for (j = 0; j < A->degree; j++) {
+				a = A->element_image_of(j,
+						gens->ith(i), 0 /* verbose_level */);
+				ost << a << " ";
+				}
+			ost << endl;
+			}
+		ost << "-1" << endl;
+	}
+	else {
+		ost << "too big to print" << endl;
+	}
+}
+
+void strong_generators::print_generators(ostream &ost)
+{
+	int i;
+	longinteger_object go;
+
+	ost << "strong_generators::print_generators computing group order" << endl;
+	group_order(go);
+	ost << "Strong generators for a group of order "
+			<< go << " tl=";
+	int_vec_print(cout, tl, A->base_len());
+	ost << endl;
+
+	for (i = 0; i < gens->len; i++) {
+		ost << "generator " << i << " / "
+				<< gens->len << " is: " << endl;
+		A->element_print_quick(gens->ith(i), ost);
+		ost << "as permutation: " << endl;
+		if (A->degree < 400) {
+			A->element_print_as_permutation_with_offset(
+					gens->ith(i), ost,
+					0 /* offset*/,
+					TRUE /* f_do_it_anyway_even_for_big_degree*/,
+					TRUE /* f_print_cycles_of_length_one*/,
+					0 /* verbose_level*/);
+			//A->element_print_as_permutation(SG->gens->ith(i), cout);
+			ost << endl;
+		}
+		else {
+			ost << "too big to print" << endl;
+		}
+	}
+
+	ost << "strong_generators::print_generators Generators as permutations are:" << endl;
+
+
+
+	if (A->degree < 400) {
+		for (i = 0; i < gens->len; i++) {
+			A->element_print_as_permutation(gens->ith(i), ost);
+			ost << endl;
+		}
+	}
+	else {
+		ost << "too big to print" << endl;
+	}
+}
+
+void strong_generators::print_generators_in_latex_individually(ostream &ost)
+{
+	int i;
+	longinteger_object go;
+
+	group_order(go);
+
+	ost << "The stabilizer of order $" << go
+			<< "$ is generated by:\\\\" << endl;
+	for (i = 0; i < gens->len; i++) {
+
+		int *fp, n, ord;
+
+		fp = NEW_int(A->degree);
+		n = A->find_fixed_points(gens->ith(i), fp, 0);
+		//cout << "with " << n << " fixed points" << endl;
+		FREE_int(fp);
+
+		ord = A->element_order(gens->ith(i));
+
+		ost << "$$ g_{" << i + 1 << "}=" << endl;
+		A->element_print_latex(gens->ith(i), ost);
+		ost << "$$" << endl << "of order $" << ord << "$ and with "
+				<< n << " fixed points." << endl;
+		}
+	ost << endl << "\\bigskip" << endl;
+}
+
+#if 0
 void strong_generators::print_generators()
 {
 	int i;
@@ -1203,6 +1323,7 @@ void strong_generators::print_generators_ost(ostream &ost)
 		ost << endl;
 		}
 }
+#endif
 
 void strong_generators::print_generators_in_source_code()
 {
@@ -2585,6 +2706,10 @@ void strong_generators::export_permutation_group_to_GAP(
 				"group_to_GAP done" << endl;
 		}
 }
+
+
+
+
 
 
 void strong_generators::compute_and_print_orbits_on_a_given_set(

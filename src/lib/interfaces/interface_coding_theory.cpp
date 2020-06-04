@@ -191,7 +191,12 @@ void interface_coding_theory::do_codes_classify(int verbose_level)
 		if (f_v) {
 			cout << "interface_coding_theory::do_codes_classify before init" << endl;
 		}
-		cg.init(argc, argv);
+
+		poset_classification_control *Control = NULL;
+
+		Control = NEW_OBJECT(poset_classification_control);
+
+		cg.init(Control);
 		if (f_v) {
 			cout << "interface_coding_theory::do_codes_classify after init" << endl;
 		}

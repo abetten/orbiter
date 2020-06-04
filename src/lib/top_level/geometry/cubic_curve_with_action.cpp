@@ -42,16 +42,16 @@ void cubic_curve_with_action::freeself()
 {
 	if (A) {
 		FREE_OBJECT(A);
-		}
+	}
 	if (A2) {
 		FREE_OBJECT(A2);
-		}
+	}
 	if (Elt1) {
 		FREE_int(Elt1);
-		}
+	}
 	if (AonHPD_3_3) {
 		FREE_OBJECT(AonHPD_3_3);
-		}
+	}
 	null();
 }
 
@@ -62,7 +62,7 @@ void cubic_curve_with_action::init(cubic_curve *CC,
 
 	if (f_v) {
 		cout << "cubic_curve_with_action::init" << endl;
-		}
+	}
 	cubic_curve_with_action::CC = CC;
 	cubic_curve_with_action::f_semilinear = f_semilinear;
 	F = CC->F;
@@ -76,13 +76,13 @@ void cubic_curve_with_action::init(cubic_curve *CC,
 	if (f_v) {
 		cout << "cubic_curve_with_action::init "
 				"before AonHPD_3_3->init" << endl;
-		}
+	}
 	AonHPD_3_3->init(A, CC->Poly, verbose_level);
 
 
 	if (f_v) {
 		cout << "cubic_curve_with_action::init done" << endl;
-		}
+	}
 }
 
 void cubic_curve_with_action::init_group(int f_semilinear,
@@ -92,11 +92,11 @@ void cubic_curve_with_action::init_group(int f_semilinear,
 
 	if (f_v) {
 		cout << "cubic_curve_with_action::init_group" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "cubic_curve_with_action::init_group "
 				"creating linear group" << endl;
-		}
+	}
 
 	vector_ge *nice_gens;
 	//sims *S;
@@ -118,23 +118,23 @@ void cubic_curve_with_action::init_group(int f_semilinear,
 	if (f_v) {
 		cout << "cubic_curve_with_action::init_group "
 				"creating linear group done" << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "cubic_curve_with_action::init_group "
 				"creating action on lines" << endl;
-		}
+	}
 	A2 = A->induced_action_on_grassmannian(2, verbose_level);
 	if (f_v) {
 		cout << "cubic_curve_with_action::init_group "
 				"creating action on lines done" << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "cubic_curve_with_action::init_group done" << endl;
-		}
+	}
 }
 
 

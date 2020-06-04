@@ -62,10 +62,9 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	x_stretch = 1.;
 	f_print_generators = FALSE;
 	f_classify_arcs = FALSE;
+	f_classify_nonconical_arcs = FALSE;
 	classify_arcs_target_size = 0;
-	f_classify_arcs_d = FALSE;
 	classify_arcs_d = 0;
-	f_not_on_conic = FALSE;
 	f_exact_cover = FALSE;
 	ECA = NULL;
 	f_isomorph_arguments = FALSE;
@@ -79,6 +78,12 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_surface_recognize = FALSE;
 		surface_descr = NULL;
 	f_classify_surfaces_through_arcs_and_trihedral_pairs = FALSE;
+	f_trihedra1_control = FALSE;
+	Trihedra1_control = NULL;
+	f_trihedra2_control = FALSE;
+	Trihedra2_control = NULL;
+	f_control_six_arcs = FALSE;
+			Control_six_arcs = NULL;
 	f_create_surface = FALSE;
 	surface_description = NULL;
 	f_surface_quartic = FALSE;
@@ -311,16 +316,14 @@ int group_theoretic_activity_description::read_arguments(
 		else if (strcmp(argv[i], "-classify_arcs") == 0) {
 			f_classify_arcs = TRUE;
 			classify_arcs_target_size = atoi(argv[++i]);
-			cout << "-classify_arcs" << endl;
-		}
-		else if (strcmp(argv[i], "-classify_arcs_d") == 0) {
-			f_classify_arcs_d = TRUE;
 			classify_arcs_d = atoi(argv[++i]);
-			cout << "-classify_arcs_d " << classify_arcs_d << endl;
+			cout << "-classify_arcs" << " " << classify_arcs_target_size << " " << classify_arcs_d << endl;
 		}
-		else if (strcmp(argv[i], "-not_on_conic") == 0) {
-			f_not_on_conic = TRUE;
-			cout << "-not_on_conic" << endl;
+		else if (strcmp(argv[i], "-classify_nonconical_arcs") == 0) {
+			f_classify_nonconical_arcs = TRUE;
+			classify_arcs_target_size = atoi(argv[++i]);
+			classify_arcs_d = atoi(argv[++i]);
+			cout << "-classify_nonconical_arcs" << " " << classify_arcs_target_size << " " << classify_arcs_d << endl;
 		}
 		else if (strcmp(argv[i], "-exact_cover") == 0) {
 			f_exact_cover = TRUE;
@@ -445,10 +448,6 @@ int group_theoretic_activity_description::read_arguments(
 			f_doubly_even = TRUE;
 			cout << "-doubly_even" << endl;
 		}
-		else if (strcmp(argv[i], "-end") == 0) {
-			cout << "-end" << endl;
-			break;
-		}
 		else if (strcmp(argv[i], "-spread_classify") == 0) {
 			f_spread_classify = TRUE;
 			spread_classify_k = atoi(argv[++i]);
@@ -462,6 +461,49 @@ int group_theoretic_activity_description::read_arguments(
 		else if (strcmp(argv[i], "-tensor_permutations") == 0) {
 			f_tensor_permutations = TRUE;
 			cout << "-tensor_permutations " << endl;
+		}
+		else if (strcmp(argv[i], "-trihedra1_control") == 0) {
+			f_trihedra1_control = TRUE;
+			Trihedra1_control = NEW_OBJECT(poset_classification_control);
+			i += Trihedra1_control->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -trihedra1_control " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+		else if (strcmp(argv[i], "-trihedra2_control") == 0) {
+			f_trihedra2_control = TRUE;
+			Trihedra2_control = NEW_OBJECT(poset_classification_control);
+			i += Trihedra2_control->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -trihedra2_control " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+		else if (strcmp(argv[i], "-control_six_arcs") == 0) {
+			f_control_six_arcs = TRUE;
+			Control_six_arcs = NEW_OBJECT(poset_classification_control);
+			i += Control_six_arcs->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -control_six_arcs " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+		else if (strcmp(argv[i], "-end") == 0) {
+			cout << "-end" << endl;
+			break;
 		}
 		else {
 			cout << "group_theoretic_activity_description::read_arguments "

@@ -604,7 +604,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 		cout << "verbose_level=" << verbose_level << endl;
 		}
 	
-	f = gen->first_poset_orbit_node_at_level[level];
+	f = gen->first_node_at_level(level);
 	nb_nodes = gen->nb_orbits_at_level(level);
 
 	if (f_vv) {
@@ -630,7 +630,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 			//}
 		for (i = 0; i < nb_nodes; i++) {
 			I = f + i;
-			O = &gen->root[I];
+			O = gen->get_node(I);
 			O->store_set_to(gen, level - 1, set1);
 			if (f_v && ((i % print_mod) == 0)) {
 				cout << "isomorph::create_level_database level "
@@ -679,7 +679,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 			
 			len = 1 + 1 + level + 1;
 			if (O->nb_strong_generators) {
-				len += gen->Poset->A->base_len();
+				len += gen->get_A()->base_len();
 				}
 			len += 1;
 			len += 4 * O->nb_extensions;
@@ -696,7 +696,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 				}
 			v.m_ii(idx++, O->nb_strong_generators);
 			if (O->nb_strong_generators) {
-				for (j = 0; j < gen->Poset->A->base_len(); j++) {
+				for (j = 0; j < gen->get_A()->base_len(); j++) {
 					v.m_ii(idx++, O->tl[j]);
 					}
 				}
@@ -710,10 +710,10 @@ void isomorph::create_level_database(int level, int verbose_level)
 					v.m_ii(idx++, O->E[j].data);
 					}
 				else if (O->E[j].type == 2) {
-					gen->Poset->A->element_retrieve(O->E[j].data, gen->Elt1, FALSE);
+					gen->get_A()->element_retrieve(O->E[j].data, gen->get_Elt1(), FALSE);
 
 
-					gen->Poset->A2->map_a_set(set1, set2, level + 1, gen->Elt1, 0);
+					gen->get_A2()->map_a_set(set1, set2, level + 1, gen->get_Elt1(), 0);
 					Sorting.lint_vec_heapsort(set2, level + 1);
 
 					if (f_vv /*f_vv && (i % print_mod) == 0*/) {
@@ -776,18 +776,18 @@ void isomorph::create_level_database(int level, int verbose_level)
 #else
 			v.m_ii(idx++, cnt);
 			for (j = 0; j < O->nb_strong_generators; j++) {
-				gen->Poset->A->element_retrieve(
-						O->hdl_strong_generators[j], gen->Elt1,
+				gen->get_A()->element_retrieve(
+						O->hdl_strong_generators[j], gen->get_Elt1(),
 						FALSE);
-				gen->Poset->A->element_write_file_fp(gen->Elt1, fp,
+				gen->get_A()->element_write_file_fp(gen->get_Elt1(), fp,
 						0/* verbose_level*/);
 				cnt++;
 				}
 			for (j = 0; j < O->nb_extensions; j++) {
 				if (O->E[j].type == 1)
 					continue;
-				gen->Poset->A->element_retrieve(O->E[j].data, gen->Elt1, FALSE);
-				gen->Poset->A->element_write_file_fp(gen->Elt1, fp,
+				gen->get_A()->element_retrieve(O->E[j].data, gen->get_Elt1(), FALSE);
+				gen->get_A()->element_write_file_fp(gen->get_Elt1(), fp,
 						0/* verbose_level*/);
 				cnt++;
 				}
@@ -821,7 +821,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 				<< " is " << cnt << endl;
 		cout << "file size is " << Fio.file_size(fname_db_level_ge) << endl;
 		cout << "gen->A->coded_elt_size_in_char="
-				<< gen->Poset->A->coded_elt_size_in_char << endl;
+				<< gen->get_A()->coded_elt_size_in_char << endl;
 		}
 	
 	//FREE_char(elt);
@@ -878,24 +878,24 @@ void isomorph::load_strong_generators_oracle(int cur_level,
 				<< cur_node_local << endl;
 		}
 
-	node = gen->first_poset_orbit_node_at_level[cur_level] + cur_node_local;
-	O = &gen->root[node];
+	node = gen->first_node_at_level(cur_level) + cur_node_local;
+	O = gen->get_node(node);
 	if (O->nb_strong_generators == 0) {
-		gens.init(gen->Poset->A, verbose_level - 2);
+		gens.init(gen->get_A(), verbose_level - 2);
 		gens.allocate(0, verbose_level - 2);
 		go.create(1, __FILE__, __LINE__);
 		goto finish;
 		}
-	tl = NEW_int(gen->Poset->A->base_len());
-	for (i = 0; i < gen->Poset->A->base_len(); i++) {
+	tl = NEW_int(gen->get_A()->base_len());
+	for (i = 0; i < gen->get_A()->base_len(); i++) {
 		tl[i] = O->tl[i];
 		}
-	Dom.multiply_up(go, tl, gen->Poset->A->base_len(), 0 /* verbose_level */);
+	Dom.multiply_up(go, tl, gen->get_A()->base_len(), 0 /* verbose_level */);
 	FREE_int(tl);
-	gens.init(gen->Poset->A, verbose_level - 2);
+	gens.init(gen->get_A(), verbose_level - 2);
 	gens.allocate(O->nb_strong_generators, verbose_level - 2);
 	for (i = 0; i < O->nb_strong_generators; i++) {
-		gen->Poset->A->element_retrieve(
+		gen->get_A()->element_retrieve(
 				O->hdl_strong_generators[i],
 				gens.ith(i), FALSE);
 		}
@@ -932,7 +932,7 @@ void isomorph::load_strong_generators_database(int cur_level,
 
 	prepare_database_access(cur_level, verbose_level);
 
-	tmp_ELT = NEW_int(gen->Poset->A->elt_size_in_int);
+	tmp_ELT = NEW_int(gen->get_A()->elt_size_in_int);
 	
 	//cur_node_local = cur_node - first_node;
 	if (f_v) {
@@ -964,16 +964,16 @@ void isomorph::load_strong_generators_database(int cur_level,
 				<< nb_strong_generators << endl;
 		}
 	if (nb_strong_generators == 0) {
-		gens.init(gen->Poset->A, verbose_level - 2);
+		gens.init(gen->get_A(), verbose_level - 2);
 		gens.allocate(0, verbose_level - 2);
 		go.create(1, __FILE__, __LINE__);
 		goto finish;
 		}
-	tl = NEW_int(gen->Poset->A->base_len());
-	for (i = 0; i < gen->Poset->A->base_len(); i++) {
+	tl = NEW_int(gen->get_A()->base_len());
+	for (i = 0; i < gen->get_A()->base_len(); i++) {
 		tl[i] = v.s_ii(pos++);
 		}
-	Dom.multiply_up(go, tl, gen->Poset->A->base_len(), 0 /* verbose_level */);
+	Dom.multiply_up(go, tl, gen->get_A()->base_len(), 0 /* verbose_level */);
 	FREE_int(tl);
 	pos = v.s_l() - 1;
 	ref = v.s_ii(pos++);
@@ -982,13 +982,13 @@ void isomorph::load_strong_generators_database(int cur_level,
 				"ref = " << ref << endl;
 		}
 
-	gens.init(gen->Poset->A, verbose_level - 2);
+	gens.init(gen->get_A(), verbose_level - 2);
 	gens.allocate(nb_strong_generators, verbose_level - 2);
 
 	//fseek(fp_ge, ref * gen->Poset->A->coded_elt_size_in_char, SEEK_SET);
-	fp_ge->seekg(ref * gen->Poset->A->coded_elt_size_in_char, ios::beg);
+	fp_ge->seekg(ref * gen->get_A()->coded_elt_size_in_char, ios::beg);
 	for (i = 0; i < nb_strong_generators; i++) {
-		gen->Poset->A->element_read_file_fp(gens.ith(i), *fp_ge,
+		gen->get_A()->element_read_file_fp(gens.ith(i), *fp_ge,
 				0/* verbose_level*/);
 		}
 finish:

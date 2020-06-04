@@ -1130,6 +1130,7 @@ void linear_group::init_subgroup_Janko1(char *prefix, char *label_latex,
 }
 
 void linear_group::report(ostream &fp, int f_sylow, int f_group_table,
+		int f_conjugacy_classes_and_normalizers,
 		double tikz_scale, double tikz_line_width, int factor_1000,
 		int verbose_level)
 {
@@ -1335,8 +1336,6 @@ void linear_group::report(ostream &fp, int f_sylow, int f_group_table,
 			Syl->init(H, verbose_level);
 			Syl->report(fp);
 
-			A2->report_conjugacy_classes_and_normalizers(fp,
-					verbose_level);
 		}
 		else {
 
@@ -1344,7 +1343,20 @@ void linear_group::report(ostream &fp, int f_sylow, int f_group_table,
 				cout << "linear_group::report f_sylow is false" << endl;
 			}
 
+		}
 
+		if (f_conjugacy_classes_and_normalizers) {
+
+			if (f_v) {
+				cout << "linear_group::report f_conjugacy_classes_and_normalizers is true" << endl;
+			}
+
+			A2->report_conjugacy_classes_and_normalizers(fp,
+					verbose_level);
+
+			if (f_v) {
+				cout << "linear_group::report A2->report_conjugacy_classes_and_normalizers" << endl;
+			}
 		}
 
 		//L.foot(fp);

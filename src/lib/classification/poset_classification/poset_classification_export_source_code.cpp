@@ -36,7 +36,7 @@ void poset_classification::generate_source_code(
 	if (f_v) {
 		cout << "poset_classification::generate_source_code" << endl;
 		}
-	sprintf(my_prefix, "%s_level_%d", prefix, level);
+	sprintf(my_prefix, "%s_level_%d", Control->problem_label, level);
 	sprintf(fname, "%s.cpp", my_prefix);
 
 	set = NEW_lint(level);
@@ -48,9 +48,9 @@ void poset_classification::generate_source_code(
 	{
 	ofstream fp(fname);
 
-	fp << "static long int " << prefix << "_nb_reps = " << nb_iso << ";" << endl;
-	fp << "static long int " << prefix << "_size = " << level << ";" << endl;
-	fp << "static long int " << prefix << "_reps[] = {" << endl;
+	fp << "static long int " << Control->problem_label << "_nb_reps = " << nb_iso << ";" << endl;
+	fp << "static long int " << Control->problem_label << "_size = " << level << ";" << endl;
+	fp << "static long int " << Control->problem_label << "_reps[] = {" << endl;
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 		get_set_by_level(level, iso_type, set);
 		rep = set;
@@ -62,7 +62,7 @@ void poset_classification::generate_source_code(
 		fp << endl;
 		}
 	fp << "};" << endl;
-	fp << "static const char *" << prefix << "_stab_order[] = {" << endl;
+	fp << "static const char *" << Control->problem_label << "_stab_order[] = {" << endl;
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 		//rep = The_surface[iso_type]->coeff;
 
@@ -80,7 +80,7 @@ void poset_classification::generate_source_code(
 	fp << "};" << endl;
 
 
-	fp << "static int " << prefix << "_make_element_size = "
+	fp << "static int " << Control->problem_label << "_make_element_size = "
 			<< Poset->A->make_element_size << ";" << endl;
 
 	{
@@ -91,7 +91,7 @@ void poset_classification::generate_source_code(
 	stab_gens_first = NEW_int(nb_iso);
 	stab_gens_len = NEW_int(nb_iso);
 	fst = 0;
-	fp << "static int " << prefix << "_stab_gens[] = {" << endl;
+	fp << "static int " << Control->problem_label << "_stab_gens[] = {" << endl;
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 
 
@@ -125,7 +125,7 @@ void poset_classification::generate_source_code(
 	fp << "};" << endl;
 
 
-	fp << "static long int " << prefix << "_stab_gens_fst[] = { ";
+	fp << "static long int " << Control->problem_label << "_stab_gens_fst[] = { ";
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 		fp << stab_gens_first[iso_type];
 		if (iso_type < nb_iso - 1) {
@@ -137,7 +137,7 @@ void poset_classification::generate_source_code(
 		}
 	fp << "};" << endl;
 
-	fp << "static long int " << prefix << "_stab_gens_len[] = { ";
+	fp << "static long int " << Control->problem_label << "_stab_gens_len[] = { ";
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 		fp << stab_gens_len[iso_type];
 		if (iso_type < nb_iso - 1) {
@@ -171,7 +171,6 @@ void poset_classification::generate_history(int level, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	char fname[1000];
-	char prefix[1000];
 	char my_prefix[1000];
 	int iso_type;
 	long int *rep;
@@ -185,8 +184,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 	if (f_v) {
 		cout << "poset_classification::generate_history" << endl;
 		}
-	sprintf(my_prefix, "%s_history_level_%d", fname_base, level);
-	strcpy(prefix, fname_base);
+	sprintf(my_prefix, "%s_history_level_%d", problem_label, level);
 	sprintf(fname, "%s.cpp", my_prefix);
 
 	set = NEW_lint(level);
@@ -198,7 +196,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 		ofstream fp(fname);
 		int lvl;
 
-		fp << "static int " << prefix << "_make_element_size = "
+		fp << "static int " << problem_label << "_make_element_size = "
 				<< Poset->A->make_element_size << ";" << endl;
 
 
@@ -208,9 +206,9 @@ void poset_classification::generate_history(int level, int verbose_level)
 			nb_iso = nb_orbits_at_level(lvl);
 
 			fp << "// level " << lvl << ":" << endl;
-			fp << "static long int " << prefix << "_lvl_" << lvl << "_nb_reps = " << nb_iso << ";" << endl;
-			fp << "static long int " << prefix << "_lvl_" << lvl << "_size = " << level << ";" << endl;
-			fp << "static long int " << prefix << "_lvl_" << lvl << "_reps[] = {" << endl;
+			fp << "static long int " << problem_label << "_lvl_" << lvl << "_nb_reps = " << nb_iso << ";" << endl;
+			fp << "static long int " << problem_label << "_lvl_" << lvl << "_size = " << level << ";" << endl;
+			fp << "static long int " << problem_label << "_lvl_" << lvl << "_reps[] = {" << endl;
 			for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 				get_set_by_level(lvl, iso_type, set);
 				rep = set;
@@ -233,7 +231,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 				L = nb_iso;
 				L100 = L / 100 + 1;
 			}
-			fp << "static const char *" << prefix << "_lvl_" << lvl << "_stab_order[] = {" << endl << "\t";
+			fp << "static const char *" << problem_label << "_lvl_" << lvl << "_stab_order[] = {" << endl << "\t";
 			for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 				//rep = The_surface[iso_type]->coeff;
 
@@ -263,7 +261,8 @@ void poset_classification::generate_history(int level, int verbose_level)
 
 				if (f_progress) {
 					if ((iso_type % L100) == 0) {
-						cout << "poset_classification::generate_history first loop at " << iso_type / L100 << "%" << endl;
+						cout << "poset_classification::generate_history "
+								"first loop at " << iso_type / L100 << "%" << endl;
 					}
 				}
 
@@ -280,7 +279,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 				stab_gens_first = NEW_int(nb_iso);
 				stab_gens_len = NEW_int(nb_iso);
 				fst = 0;
-				fp << "static int " << prefix << "_lvl_" << lvl << "_stab_gens[] = {" << endl;
+				fp << "static int " << problem_label << "_lvl_" << lvl << "_stab_gens[] = {" << endl;
 				for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 
 
@@ -320,14 +319,15 @@ void poset_classification::generate_history(int level, int verbose_level)
 
 					if (f_progress) {
 						if ((iso_type % L100) == 0) {
-							cout << "poset_classification::generate_history second loop at " << iso_type / L100 << "%" << endl;
+							cout << "poset_classification::generate_history "
+									"second loop at " << iso_type / L100 << "%" << endl;
 						}
 					}
 				}
 				fp << "};" << endl;
 
 
-				fp << "static long int " << prefix << "_lvl_" << lvl << "_stab_gens_fst[] = { " << endl << "\t";
+				fp << "static long int " << problem_label << "_lvl_" << lvl << "_stab_gens_fst[] = { " << endl << "\t";
 				for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 					fp << stab_gens_first[iso_type];
 					if (iso_type < nb_iso - 1) {
@@ -339,7 +339,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 					}
 				fp << "};" << endl;
 
-				fp << "static long int " << prefix << "_lvl_" << lvl << "_stab_gens_len[] = { " << endl << "\t";
+				fp << "static long int " << problem_label << "_lvl_" << lvl << "_stab_gens_len[] = { " << endl << "\t";
 				for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 					fp << stab_gens_len[iso_type];
 					if (iso_type < nb_iso - 1) {
@@ -382,8 +382,8 @@ void poset_classification::generate_history(int level, int verbose_level)
 							flag_orbit_first[iso_type - 1] +
 							flag_orbit_nb[iso_type - 1];
 				}
-				fp << "static long int " << prefix << "_lvl_" << lvl << "_total_number_flag_orbits = " << total_number_flag_orbits << endl;
-				fp << "static long int " << prefix << "_lvl_" << lvl << "_flag_orbit_fst[] = { " << endl << "\t";
+				fp << "static long int " << problem_label << "_lvl_" << lvl << "_total_number_flag_orbits = " << total_number_flag_orbits << endl;
+				fp << "static long int " << problem_label << "_lvl_" << lvl << "_flag_orbit_fst[] = { " << endl << "\t";
 				for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 					fp << flag_orbit_first[iso_type];
 					if (iso_type < nb_iso - 1) {
@@ -394,7 +394,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 						}
 					}
 				fp << "};" << endl;
-				fp << "static long int " << prefix << "_lvl_" << lvl << "_flag_orbit_nb[] = { " << endl << "\t";
+				fp << "static long int " << problem_label << "_lvl_" << lvl << "_flag_orbit_nb[] = { " << endl << "\t";
 				for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 					fp << flag_orbit_nb[iso_type];
 					if (iso_type < nb_iso - 1) {
@@ -410,7 +410,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 				int po, so;
 				sorting Sorting;
 
-				fp << "static int " << prefix << "_lvl_" << lvl << "_flag_orbit_type[] = { " << endl << "\t";
+				fp << "static int " << problem_label << "_lvl_" << lvl << "_flag_orbit_type[] = { " << endl << "\t";
 				for (f = 0; f < total_number_flag_orbits; f++) {
 
 					if (!Sorting.int_vec_search(flag_orbit_first, nb_iso, f, po)) {
@@ -441,7 +441,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 				fp << "};" << endl;
 
 
-				fp << "static long int " << prefix << "_lvl_" << lvl << "_flag_orbit_pt[] = { " << endl << "\t";
+				fp << "static long int " << problem_label << "_lvl_" << lvl << "_flag_orbit_pt[] = { " << endl << "\t";
 				for (f = 0; f < total_number_flag_orbits; f++) {
 
 					if (!Sorting.int_vec_search(flag_orbit_first, nb_iso, f, po)) {
@@ -465,7 +465,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 					}
 				fp << "};" << endl;
 
-				fp << "static long int " << prefix << "_lvl_" << lvl << "_flag_orbit_ol[] = { " << endl << "\t";
+				fp << "static long int " << problem_label << "_lvl_" << lvl << "_flag_orbit_ol[] = { " << endl << "\t";
 				for (f = 0; f < total_number_flag_orbits; f++) {
 
 					if (!Sorting.int_vec_search(flag_orbit_first, nb_iso, f, po)) {
@@ -515,7 +515,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 
 				nb_fuse = 0;
 
-				fp << "static long int " << prefix << "_lvl_" << lvl << "_flag_index[] = { " << endl << "\t";
+				fp << "static long int " << problem_label << "_lvl_" << lvl << "_flag_index[] = { " << endl << "\t";
 				for (f = 0; f < total_number_flag_orbits; f++) {
 
 					if (!Sorting.int_vec_search(flag_orbit_first, nb_iso, f, po)) {
@@ -571,7 +571,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 				}
 
 				cout << "writing data1" << endl;
-				fp << "static long int " << prefix << "_lvl_" << lvl << "_flag_fuse_data1[] = { " << endl << "\t";
+				fp << "static long int " << problem_label << "_lvl_" << lvl << "_flag_fuse_data1[] = { " << endl << "\t";
 				for (nb_fuse = 0; nb_fuse < nb_fuse_total; nb_fuse++) {
 					fp << fuse_data[nb_fuse * 3 + 1];
 					if (nb_fuse < nb_fuse_total - 1) {
@@ -584,7 +584,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 				fp << "};" << endl;
 
 				cout << "writing data2" << endl;
-				fp << "static long int " << prefix << "_lvl_" << lvl << "_flag_fuse_data2[] = { " << endl << "\t";
+				fp << "static long int " << problem_label << "_lvl_" << lvl << "_flag_fuse_data2[] = { " << endl << "\t";
 				for (nb_fuse = 0; nb_fuse < nb_fuse_total; nb_fuse++) {
 					fp << fuse_data[nb_fuse * 3 + 2];
 					if (nb_fuse < nb_fuse_total - 1) {
@@ -598,7 +598,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 				int hdl;
 
 				cout << "writing iso" << endl;
-				fp << "static long int " << prefix << "_lvl_" << lvl << "_flag_fuse_iso[] = { " << endl;
+				fp << "static long int " << problem_label << "_lvl_" << lvl << "_flag_fuse_iso[] = { " << endl;
 				for (nb_fuse = 0; nb_fuse < nb_fuse_total; nb_fuse++) {
 					hdl = fuse_data[nb_fuse * 3 + 0];
 					Poset->A->element_retrieve(hdl, Elt, 0);

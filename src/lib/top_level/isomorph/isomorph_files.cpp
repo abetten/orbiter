@@ -1738,7 +1738,7 @@ void isomorph::induced_action_on_set_and_kernel(
 
 	int f_induce_action = TRUE;
 	
-	AAA = gen->Poset->A2->create_induced_action_by_restriction(
+	AAA = gen->get_A2()->create_induced_action_by_restriction(
 		Stab,
 		size, set,
 		f_induce_action,
@@ -2357,7 +2357,7 @@ void isomorph::read_everything_including_classification(
 	if (f_v) {
 		for (i = 0; i <= level + 1; i++) {
 			cout << "gen->first_oracle_node_at_level[" << i
-					<< "]=" << gen->first_poset_orbit_node_at_level[i] << endl;
+					<< "]=" << gen->first_node_at_level(i) << endl;
 			}
 		cout << "depth_completed=" << depth_completed << endl;
 		}
@@ -2373,7 +2373,7 @@ void isomorph::read_everything_including_classification(
 
 	//int f_implicit_fusion = FALSE;
 	
-	gen->f_allowed_to_show_group_elements = FALSE;
+	//gen->f_allowed_to_show_group_elements = FALSE;
 	
 	if (f_v) {
 		cout << "isomorph::read_everything_including_classification before read_starter_nb_orbits" << endl;

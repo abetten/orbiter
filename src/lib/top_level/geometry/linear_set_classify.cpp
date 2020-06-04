@@ -89,105 +89,105 @@ void linear_set_classify::freeself()
 	if (VS) {
 		if (f_v) {
 			cout << "linear_set_classify::freeself before delete VS" << endl;
-			}
-		FREE_OBJECT(VS);
 		}
+		FREE_OBJECT(VS);
+	}
 	if (Poset1) {
 		if (f_v) {
 			cout << "linear_set_classify::freeself before delete Poset1" << endl;
-			}
-		FREE_OBJECT(Poset1);
 		}
+		FREE_OBJECT(Poset1);
+	}
 	if (Gen) {
 		if (f_v) {
 			cout << "linear_set_classify::freeself before delete Gen" << endl;
-			}
-		FREE_OBJECT(Gen);
 		}
+		FREE_OBJECT(Gen);
+	}
 	if (Strong_gens) {
 		if (f_v) {
 			cout << "linear_set_classify::freeself before delete Strong_gens" << endl;
-			}
-		FREE_OBJECT(Strong_gens);
 		}
+		FREE_OBJECT(Strong_gens);
+	}
 	if (D) {
 		if (f_v) {
 			cout << "linear_set_classify::freeself before delete D" << endl;
-			}
-		FREE_OBJECT(D);
 		}
+		FREE_OBJECT(D);
+	}
 	if (D1) {
 		if (f_v) {
 			cout << "linear_set_classify::freeself before delete D1" << endl;
-			}
-		FREE_OBJECT(D1);
 		}
+		FREE_OBJECT(D1);
+	}
 	if (spread_embedding) {
 		if (f_v) {
 			cout << "linear_set_classify::freeself before delete spread_embedding" << endl;
-			}
-		FREE_OBJECT(spread_embedding);
 		}
+		FREE_OBJECT(spread_embedding);
+	}
 	if (P) {
 		if (f_v) {
 			cout << "linear_set_classify::freeself before delete P" << endl;
-			}
-		FREE_OBJECT(P);
 		}
+		FREE_OBJECT(P);
+	}
 	if (Aq) {
 		if (f_v) {
 			cout << "linear_set_classify::freeself before delete Aq" << endl;
-			}
-		FREE_OBJECT(Aq);
 		}
+		FREE_OBJECT(Aq);
+	}
 	if (AQ) {
 		if (f_v) {
 			cout << "linear_set_classify::freeself before delete AQ" << endl;
-			}
-		FREE_OBJECT(AQ);
 		}
+		FREE_OBJECT(AQ);
+	}
 	if (A_PGLQ) {
 		if (f_v) {
 			cout << "linear_set_classify::freeself before delete A_PGLQ" << endl;
-			}
-		FREE_OBJECT(A_PGLQ);
 		}
+		FREE_OBJECT(A_PGLQ);
+	}
 	if (SubS) {
 		if (f_v) {
 			cout << "linear_set_classify::freeself before delete SubS" << endl;
-			}
-		FREE_OBJECT(SubS);
 		}
+		FREE_OBJECT(SubS);
+	}
 	if (Fq) {
 		if (f_v) {
 			cout << "linear_set_classify::freeself before delete Fq" << endl;
-			}
-		FREE_OBJECT(Fq);
 		}
+		FREE_OBJECT(Fq);
+	}
 	if (FQ) {
 		if (f_v) {
 			cout << "linear_set_classify::freeself before delete FQ" << endl;
-			}
-		FREE_OBJECT(FQ);
 		}
+		FREE_OBJECT(FQ);
+	}
 	if (Basis) {
 		FREE_int(Basis);
-		}
+	}
 	if (base_cols) {
 		FREE_int(base_cols);
-		}
+	}
 	if (Poset2) {
 		FREE_OBJECT(Poset2);
-		}
+	}
 	if (Gen2) {
 		FREE_OBJECT(Gen2);
-		}
+	}
 	if (is_allowed) {
 		FREE_int(is_allowed);
-		}
+	}
 	if (T) {
 		FREE_OBJECT(T);
-		}
+	}
 	null();
 }
 
@@ -201,7 +201,7 @@ void linear_set_classify::init(int argc, const char **argv,
 
 	if (f_v) {
 		cout << "linear_set_classify::init" << endl;
-		}
+	}
 
 	linear_set_classify::s = s;
 	linear_set_classify::n = n;
@@ -214,7 +214,7 @@ void linear_set_classify::init(int argc, const char **argv,
 		cout << "linear_set_classify::init q=" << q << endl;
 		cout << "linear_set_classify::init depth=" << depth << endl;
 		cout << "linear_set_classify::init f_identify=" << f_identify << endl;
-		}
+	}
 
 
 	Q = NT.i_power_j(q, s);
@@ -222,62 +222,62 @@ void linear_set_classify::init(int argc, const char **argv,
 	if (m * s != n) {
 		cout << "linear_set_classify::init s must divide n" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "linear_set_classify::init m=" << m << endl;
 		cout << "linear_set_classify::init Q=" << Q << endl;
-		}
+	}
 
 	vector_space_dimension = n;
 	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
-		}
+	}
 	else {
 		f_semilinear = TRUE;
-		}
+	}
 
 	Fq = NEW_OBJECT(finite_field);
 	if (f_v) {
 		cout << "linear_set_classify::init before Fq->init" << endl;
-		}
+	}
 	Fq->init_override_polynomial(q, poly_q, 0);
 
 	FQ = NEW_OBJECT(finite_field);
 	if (f_v) {
 		cout << "linear_set_classify::init before FQ->init" << endl;
-		}
+	}
 	FQ->init_override_polynomial(Q, poly_Q, 0);
 
 	SubS = NEW_OBJECT(subfield_structure);
 	if (f_v) {
 		cout << "linear_set_classify::init before SubS->init" << endl;
-		}
+	}
 	SubS->init(FQ, Fq, verbose_level);
 
 	if (f_v) {
 		cout << "Field-basis: ";
 		int_vec_print(cout, SubS->Basis, s);
 		cout << endl;
-		}
+	}
 
 
 	P = NEW_OBJECT(projective_space);
 	if (f_v) {
 		cout << "linear_set_classify::init before P->init" << endl;
-		}
+	}
 	P->init(n - 1, Fq,
 		FALSE /* f_init_incidence_structure */,
 		0 /*verbose_level*/);
 	if (f_v) {
 		cout << "linear_set_classify::init after P->init" << endl;
-		}
+	}
 
 
 
 	if (f_v) {
 		cout << "linear_set_classify::init before init_general_linear_group "
 				"GL(" << n << "," << Fq->q << ")" << endl;
-		}
+	}
 
 	vector_ge *nice_gens;
 
@@ -292,7 +292,7 @@ void linear_set_classify::init(int argc, const char **argv,
 	if (f_v) {
 		cout << "linear_set_classify::init after init_general_linear_group "
 				"GL(" << n << "," << Fq->q << ")" << endl;
-		}
+	}
 
 
 	AQ = NEW_OBJECT(action);
@@ -300,7 +300,7 @@ void linear_set_classify::init(int argc, const char **argv,
 	if (f_v) {
 		cout << "linear_set_classify::init before init_general_linear_group "
 				"GL(" << m << "," << FQ->q << ")" << endl;
-		}
+	}
 	AQ->init_general_linear_group(m, FQ,
 		FALSE /* f_semilinear */,
 		TRUE /* f_basis */, TRUE /* f_init_sims */,
@@ -310,20 +310,20 @@ void linear_set_classify::init(int argc, const char **argv,
 	if (f_v) {
 		cout << "linear_set_classify::init after init_general_linear_group "
 				"GL(" << m << "," << FQ->q << ")" << endl;
-		}
+	}
 
 	if (f_vv) {
 		cout << "Strong generators are:" << endl;
-		AQ->Strong_gens->print_generators();
+		AQ->Strong_gens->print_generators(cout);
 		AQ->Strong_gens->print_generators_tex();
-		}
+	}
 
 
 	A_PGLQ = NEW_OBJECT(action);
 	if (f_v) {
 		cout << "linear_set_classify::init before init_projective_group "
 				"PGL(" << m << "," << FQ->q << ")" << endl;
-		}
+	}
 	A_PGLQ->init_projective_group(m, FQ,
 		FALSE /* f_semilinear */,
 		TRUE /* f_basis */, TRUE /* f_init_sims */,
@@ -333,27 +333,30 @@ void linear_set_classify::init(int argc, const char **argv,
 	if (f_v) {
 		cout << "linear_set_classify::init after init_projective_group "
 				"PGL(" << m << "," << FQ->q << ")" << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "linear_set_classify::init before linear_set_lift_generators_"
 				"to_subfield_structure" << endl;
-		}
-	lift_generators_to_subfield_structure(n, s,
+	}
+
+	action_global AG;
+
+	AG.lift_generators_to_subfield_structure(n, s,
 		SubS, Aq, AQ, Strong_gens,
 		verbose_level);
 
 	if (f_v) {
 		cout << "linear_set_classify::init after linear_set_lift_generators_"
 				"to_subfield_structure" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "After lift, strong generators are:" << endl;
-		Strong_gens->print_generators();
+		Strong_gens->print_generators(cout);
 		Strong_gens->print_generators_tex();
-		}
+	}
 
 
 
@@ -364,33 +367,33 @@ void linear_set_classify::init(int argc, const char **argv,
 	D = NEW_OBJECT(desarguesian_spread);
 	if (f_v) {
 		cout << "linear_set_classify::init before D->init" << endl;
-		}
+	}
 	D->init(n, m, s,
 		SubS,
 		verbose_level);
 	if (f_v) {
 		cout << "linear_set_classify::init after D->init" << endl;
-		}
+	}
 
 	m1 = m + 1;
 	n1 = s * m1; // = n + s
 	D1 = NEW_OBJECT(desarguesian_spread);
 	if (f_v) {
 		cout << "linear_set_classify::init before D1->init" << endl;
-		}
+	}
 	D1->init(n1, m1, s,
 		SubS,
 		0 /*verbose_level*/);
 	if (f_v) {
 		cout << "linear_set_classify::init after D1->init" << endl;
-		}
+	}
 
 	int *vec;
 	int i, j;
 
 	if (f_v) {
 		cout << "linear_set_classify::init computing spread_embedding" << endl;
-		}
+	}
 	spread_embedding = NEW_int(D->N);
 	vec = NEW_int(m1);
 	for (i = 0; i < D->N; i++) {
@@ -398,12 +401,12 @@ void linear_set_classify::init(int argc, const char **argv,
 		vec[m] = 0;
 		FQ->PG_element_rank_modified(vec, 1, m1, j);
 		spread_embedding[i] = j;
-		}
+	}
 
 	FREE_int(vec);
 	if (f_v) {
 		cout << "linear_set_classify::init computing spread_embedding done" << endl;
-		}
+	}
 
 	VS = NEW_OBJECT(vector_space);
 	VS->init(P->F, vector_space_dimension /* dimension */,
@@ -422,68 +425,40 @@ void linear_set_classify::init(int argc, const char **argv,
 	//Gen->read_arguments(argc, argv, 0);
 
 	//Gen->prefix[0] = 0;
-	sprintf(Gen->fname_base, "subspaces_%d_%d_%d", n, q, s);
+	//sprintf(Gen->fname_base, "subspaces_%d_%d_%d", n, q, s);
 
+
+	Control1->f_max_depth = TRUE;
+	Control1->max_depth = depth;
 
 	Poset1->init_subspace_lattice(Aq, Aq, Strong_gens, VS,
 			verbose_level);
 
-	Gen->depth = depth;
+	//Gen->depth = depth;
 
 	if (f_v) {
 		cout << "linear_set_classify::init before Gen->init" << endl;
-		}
-	Gen->init(Control1, Poset1, Gen->depth /* sz */, verbose_level);
+	}
+	Gen->initialize_and_allocate_root_node(Control1, Poset1, depth /* sz */, verbose_level);
 	if (f_v) {
 		cout << "linear_set_classify::init after Gen->init" << endl;
-		}
-
-
-#if 0
-	Gen->init_check_func(
-		subspace_orbits_test_func,
-		this /* candidate_check_data */);
-#endif
+	}
 
 #if 0
-	// ToDo
-	Gen->init_early_test_func(
-		linear_set_early_test_func,
-		this /*void *data */,
-		verbose_level);
-#endif
-
-
-	//Gen->init_incremental_check_func(
-		//check_mindist_incremental,
-		//this /* candidate_check_data */);
-
-#if 0
-	Gen->init_vector_space_action(vector_space_dimension,
-		P->F,
-		linear_set_rank_point_func,
-		linear_set_unrank_point_func,
-		this,
-		verbose_level);
-#endif
-#if 0
-	Gen->f_print_function = TRUE;
-	Gen->print_function = print_set;
-	Gen->print_function_data = this;
-#endif
-
 	int nb_nodes = 1000;
 
 	if (f_v) {
 		cout << "linear_set_classify::init before Gen->init_poset_orbit_node" << endl;
-		}
+	}
 	Gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
 	if (f_v) {
 		cout << "linear_set_classify::init calling Gen->init_root_node" << endl;
-		}
-	Gen->root[0].init_root_node(Gen, verbose_level - 1);
+	}
+	Gen->get_node(0)->init_root_node(Gen, verbose_level - 1);
+#endif
 
-	schreier_depth = Gen->depth;
+
+	schreier_depth = depth;
 	f_use_invariant_subset_if_available = TRUE;
 	//f_lex = FALSE;
 	f_debug = FALSE;
@@ -499,7 +474,7 @@ void linear_set_classify::init(int argc, const char **argv,
 
 		if (f_v) {
 			cout << "Classifying spreads of order " << order << endl;
-			}
+		}
 
 		//int max_depth = order + 1;
 		poset_classification_control *Control;
@@ -529,17 +504,17 @@ void linear_set_classify::init(int argc, const char **argv,
 		if (f_v) {
 			cout << "Classifying spreads planes of order "
 					<< order << ":" << endl;
-			}
+		}
 		T->compute(0 /*verbose_level*/);
 		if (f_v) {
 			cout << "Spreads of order " << order
 					<< " have been classified" << endl;
-			}
 		}
+	}
 
 	if (f_v) {
 		cout << "linear_set_classify::init done" << endl;
-		}
+	}
 }
 
 void linear_set_classify::do_classify(int verbose_level)
@@ -548,17 +523,17 @@ void linear_set_classify::do_classify(int verbose_level)
 
 	if (f_v) {
 		cout << "linear_set_classify::do_classify" << endl;
-		}
+	}
 
 	//int t0 = os_ticks();
 
 	if (f_v) {
 		cout << "linear_set_classify::do_classify calling generator_main" << endl;
 		cout << "A=";
-		Gen->Poset->A->print_info();
+		Gen->get_A()->print_info();
 		cout << "A2=";
-		Gen->Poset->A2->print_info();
-		}
+		Gen->get_A2()->print_info();
+	}
 
 	Gen->compute_orbits(0, depth,
 		verbose_level);
@@ -576,17 +551,17 @@ void linear_set_classify::do_classify(int verbose_level)
 
 	if (f_v) {
 		cout << "linear_set_classify::do_classify done with generator_main" << endl;
-		}
+	}
 	nb_orbits = Gen->nb_orbits_at_level(depth);
 	if (f_v) {
 		cout << "linear_set_classify::do_classify we found " << nb_orbits
 				<< " orbits at depth " << depth<< endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "linear_set_classify::do_classify done" << endl;
-		}
+	}
 }
 
 int linear_set_classify::test_set(int len, long int *S, int verbose_level)
@@ -601,43 +576,43 @@ int linear_set_classify::test_set(int len, long int *S, int verbose_level)
 		cout << "Testing set ";
 		lint_vec_print(cout, S, len);
 		cout << endl;
-		}
+	}
 	for (i = 0; i < len; i++) {
 		Fq->PG_element_unrank_modified(
 			Basis + i * vector_space_dimension, 1,
 			vector_space_dimension, S[i]);
-		}
+	}
 	if (f_vv) {
 		cout << "coordinate matrix:" << endl;
 		print_integer_matrix_width(cout, Basis,
 			len, vector_space_dimension, vector_space_dimension,
 			Fq->log10_of_q);
-		}
+	}
 	rk = Fq->Gauss_simple(Basis, len, vector_space_dimension,
 			base_cols, 0 /*verbose_level - 2*/);
 	if (f_v) {
 		cout << "the matrix has rank " << rk << endl;
-		}
+	}
 	if (rk < len) {
 		ret = FALSE;
-		}
+	}
 	if (ret) {
 		if (f_has_extra_test_func) {
 			ret = (*extra_test_func)(this, len, S,
 				extra_test_func_data, verbose_level);
-			}
 		}
+	}
 
 	if (ret) {
 		if (f_v) {
 			cout << "OK" << endl;
-			}
 		}
+	}
 	else {
 		if (f_v) {
 			cout << "not OK" << endl;
-			}
 		}
+	}
 	return ret;
 }
 
@@ -650,7 +625,7 @@ void linear_set_classify::compute_intersection_types_at_level(int level,
 
 	if (f_v) {
 		cout << "linear_set_classify::compute_intersection_types_at_level" << endl;
-		}
+	}
 
 	set = NEW_lint(level);
 
@@ -659,20 +634,18 @@ void linear_set_classify::compute_intersection_types_at_level(int level,
 	for (node = 0; node < nb_nodes; node++) {
 		Gen->get_set_by_level(level, node, set);
 		for (i = 0; i < level; i++) {
-			Fq->PG_element_unrank_modified(
-				Basis + i * n, 1, n, set[i]);
-			}
-		D->compute_intersection_type(level, Basis,
-			Intersection_dimensions + node * D->N,
-			0 /*verbose_level - 1*/);
+			Fq->PG_element_unrank_modified(Basis + i * n, 1, n, set[i]);
 		}
+		D->compute_intersection_type(level, Basis,
+			Intersection_dimensions + node * D->N, 0 /*verbose_level - 1*/);
+	}
 
 
 	FREE_lint(set);
 
 	if (f_v) {
 		cout << "linear_set_classify::compute_intersection_types_at_level done" << endl;
-		}
+	}
 }
 
 void linear_set_classify::calculate_intersections(int depth, int verbose_level)
@@ -681,7 +654,7 @@ void linear_set_classify::calculate_intersections(int depth, int verbose_level)
 
 	if (f_v) {
 		cout << "linear_set_classify::calculate_intersections" << endl;
-		}
+	}
 
 	int level;
 	int *Nb_nodes;
@@ -703,7 +676,7 @@ void linear_set_classify::calculate_intersections(int depth, int verbose_level)
 			Nb_nodes[level], Intersection_dimensions[level],
 			verbose_level - 1);
 		cout << "nb_nodes=" << Nb_nodes[level] << endl;
-		}
+	}
 	for (level = 0; level <= depth; level++) {
 		cout << "Intersection types at level " << level << " / "
 				<< depth << " with " << Nb_nodes[level] << " orbits:" << endl;
@@ -713,19 +686,19 @@ void linear_set_classify::calculate_intersections(int depth, int verbose_level)
 					Intersection_dimensions[level] + i * D->N, D->N);
 			cout << " : ";
 			{
-			classify C;
+				classify C;
 
-			C.init(Intersection_dimensions[level] + i * D->N, D->N, FALSE, 0);
-			C.print_naked(TRUE);
+				C.init(Intersection_dimensions[level] + i * D->N, D->N, FALSE, 0);
+				C.print_naked(TRUE);
 			}
 			cout << " : ";
 			Gen->get_stabilizer_order(level, i, go);
 			cout << go;
 			cout << endl;
-			}
+		}
 		//int_matrix_print(Intersection_dimensions[level],
 		// Nb_nodes[level], LS->D->N);
-		}
+	}
 	for (level = 0; level <= depth; level++) {
 		cout << "Level " << level << ":" << endl;
 		Sets[level] = NEW_plint(Nb_nodes[level]);
@@ -738,30 +711,30 @@ void linear_set_classify::calculate_intersections(int depth, int verbose_level)
 			for (i = 0; i < D->N; i++) {
 				if (I[i]) {
 					Set_sz[level][h]++;
-					}
 				}
+			}
 			Sets[level][h] = NEW_lint(Set_sz[level][h]);
 			j = 0;
 			for (i = 0; i < D->N; i++) {
 				if (I[i]) {
 					Sets[level][h][j++] = i;
-					}
 				}
+			}
 			cout << h << " : ";
 			lint_vec_print(cout, Sets[level][h], Set_sz[level][h]);
 			cout << endl;
-			}
 		}
+	}
 
 
 	for (level = 0; level <= depth; level++) {
 		for (h = 0; h < Nb_nodes[level]; h++) {
 			FREE_lint(Sets[level][h]);
-			}
+		}
 		FREE_plint(Sets[level]);
 		FREE_int(Set_sz[level]);
 		FREE_int(Intersection_dimensions[level]);
-		}
+	}
 	FREE_pplint(Sets);
 	FREE_pint(Set_sz);
 	FREE_pint(Intersection_dimensions);
@@ -769,7 +742,7 @@ void linear_set_classify::calculate_intersections(int depth, int verbose_level)
 
 	if (f_v) {
 		cout << "linear_set_classify::calculate_intersections done" << endl;
-		}
+	}
 }
 
 void linear_set_classify::read_data_file(int depth, int verbose_level)
@@ -780,28 +753,28 @@ void linear_set_classify::read_data_file(int depth, int verbose_level)
 
 	if (f_v) {
 		cout << "linear_set_classify::read_data_file" << endl;
-		}
-	sprintf(fname, "%s_%d.data", Gen->fname_base, depth);
+	}
+	sprintf(fname, "%s_%d.data", Gen->get_problem_label_with_path(), depth);
 	Gen->read_data_file(depth_completed, fname, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "linear_set_classify::read_data_file after read_data_file" << endl;
-		}
+	}
 
 	int level;
 	char prefix[1000];
 
 
-	sprintf(prefix, "%sb", Gen->fname_base);
+	sprintf(prefix, "%sb", Gen->get_problem_label_with_path());
 	for (level = 0; level < depth; level++) {
 		if (f_v) {
 			cout << "linear_set_classify::read_data_file before "
 					"read_sv_level_file_binary level=" << level << endl;
-			}
+		}
 		Gen->read_sv_level_file_binary(level, prefix,
 			FALSE /* f_split */, 0 /* split_mod */, 0 /*split_case*/,
 			FALSE /*f_recreate_extensions*/, FALSE /* f_dont_keep_sv */,
 			verbose_level - 2);
-		}
+	}
 
 #if 0
 	cout << "before print_tree" << endl;
@@ -816,7 +789,7 @@ void linear_set_classify::read_data_file(int depth, int verbose_level)
 
 	if (f_v) {
 		cout << "linear_set_classify::read_data_file done" << endl;
-		}
+	}
 }
 
 
@@ -835,7 +808,7 @@ void linear_set_classify::print_orbits_at_level(int level)
 		Gen->get_set_by_level(level, orbit_at_level, set);
 		for (i = 0; i < level; i++) {
 			Fq->PG_element_unrank_modified(Basis + i * n, 1, n, set[i]);
-			}
+		}
 		Gen->get_stabilizer_order(level, orbit_at_level, go);
 		cout << "orbit " << orbit_at_level << " / " << len
 				<< " stabilizer order " << go << ":" << endl;
@@ -844,7 +817,7 @@ void linear_set_classify::print_orbits_at_level(int level)
 		cout << endl;
 		cout << "Basis:" << endl;
 		int_matrix_print(Basis, level, n);
-		}
+	}
 
 	FREE_lint(set);
 	FREE_int(Basis);
@@ -862,7 +835,7 @@ void linear_set_classify::classify_secondary(int argc, const char **argv,
 
 	if (f_v) {
 		cout << "linear_set_classify::classify_secondary" << endl;
-		}
+	}
 
 	secondary_level = level;
 	secondary_orbit_at_level = orbit_at_level;
@@ -873,7 +846,7 @@ void linear_set_classify::classify_secondary(int argc, const char **argv,
 	Gen->get_set_by_level(level, orbit_at_level, set);
 	for (i = 0; i < level; i++) {
 		Fq->PG_element_unrank_modified(Basis + i * n, 1, n, set[i]);
-		}
+	}
 	cout << "set: ";
 	lint_vec_print(cout, set, level);
 	cout << endl;
@@ -885,15 +858,15 @@ void linear_set_classify::classify_secondary(int argc, const char **argv,
 	D->compute_shadow(Basis, level, is_allowed, verbose_level - 1);
 	for (i = 0; i < Aq->degree; i++) {
 		is_allowed[i] = !is_allowed[i];
-		}
+	}
 
 
 	nb_allowed = 0;
 	for (i = 0; i < Aq->degree; i++) {
 		if (is_allowed[i]) {
 			nb_allowed++;
-			}
 		}
+	}
 
 	cout << "degree=" << Aq->degree << endl;
 	cout << "nb_allowed=" << nb_allowed << endl;
@@ -948,8 +921,8 @@ void linear_set_classify::classify_secondary(int argc, const char **argv,
 	for (i = 0; i < Aq->degree; i++) {
 		if (is_allowed[i]) {
 			candidates[nb_candidates++] = i;
-			}
 		}
+	}
 	cout << "candidates:" << nb_candidates << endl;
 	lint_vec_print(cout, candidates, nb_candidates);
 	cout << endl;
@@ -985,7 +958,7 @@ void linear_set_classify::init_secondary(int argc, const char **argv,
 
 	if (f_v) {
 		cout << "linear_set_classify::init_secondary" << endl;
-		}
+	}
 
 	secondary_candidates = candidates;
 	secondary_nb_candidates = nb_candidates;
@@ -994,46 +967,44 @@ void linear_set_classify::init_secondary(int argc, const char **argv,
 	Poset2 = NEW_OBJECT(poset);
 	Gen2 = NEW_OBJECT(poset_classification);
 
+	secondary_depth = n - secondary_level;
+
+	Control2->f_max_depth = TRUE;
+	Control2->max_depth = secondary_depth;
+
 	//Gen2->read_arguments(argc, argv, 0);
 
 	//Gen2->prefix[0] = 0;
-	sprintf(Gen2->fname_base, "subspaces_%d_%d_%d_secondary_%d_%d", n, q, s,
+
+	char label[1000]; // ToDo
+
+	sprintf(label, "subspaces_%d_%d_%d_secondary_%d_%d", n, q, s,
 		secondary_level, secondary_orbit_at_level);
 
 
-	secondary_depth = n - secondary_level;
-	Gen2->depth = secondary_depth;
 	if (f_v) {
 		cout << "linear_set_classify::init_secondary "
 				"secondary_level = " << secondary_level << endl;
 		cout << "linear_set_classify::init_secondary "
 				"secondary_depth = " << secondary_depth << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "linear_set_classify::init_secondary generators are:" << endl;
-		Strong_gens_previous->print_generators();
+		Strong_gens_previous->print_generators(cout);
 		//Strong_gens_previous->print_generators_as_permutations();
-		}
+	}
 
-	cout << "linear_set_classify::init_secondary before Gen2->init" << endl;
+	cout << "linear_set_classify::init_secondary before Gen2->initialize_and_allocate_root_node" << endl;
 	Poset2->init_subspace_lattice(Aq, Aq,
 			Strong_gens_previous, VS,
 			verbose_level);
-	Gen2->init(Control2, Poset2,
-			Gen2->depth /* sz */,
+	Gen2->initialize_and_allocate_root_node(Control2, Poset2,
+			secondary_depth /* sz */,
 			verbose_level);
-	cout << "linear_set_classify::init_secondary after Gen2->init" << endl;
+	cout << "linear_set_classify::init_secondary after Gen2->initialize_and_allocate_root_node" << endl;
 
-	Gen2->Control->f_max_depth = FALSE;
-		// could have been set to true because of -depth option
-
-#if 0
-	Gen2->init_check_func(
-		subspace_orbits_test_func,
-		this /* candidate_check_data */);
-#endif
 
 #if 0
 	// ToDo
@@ -1043,38 +1014,22 @@ void linear_set_classify::init_secondary(int argc, const char **argv,
 		verbose_level);
 #endif
 
-	//Gen2->init_incremental_check_func(
-		//check_mindist_incremental,
-		//this /* candidate_check_data */);
-
 #if 0
-	Gen2->init_vector_space_action(vector_space_dimension,
-		P->F,
-		linear_set_classify_rank_point_func,
-		linear_set_classify_unrank_point_func,
-		this,
-		verbose_level);
-#endif
-#if 0
-	Gen->f_print_function = TRUE;
-	Gen->print_function = print_set;
-	Gen->print_function_data = this;
-#endif
-
 	int nb_nodes = 1000;
 
 	if (f_v) {
 		cout << "linear_set_classify::init_secondary before "
 				"Gen2->init_poset_orbit_node" << endl;
-		}
+	}
 	Gen2->init_poset_orbit_node(nb_nodes, verbose_level - 1);
 	if (f_v) {
 		cout << "linear_set_classify::init_secondary calling "
 				"Gen2->init_root_node" << endl;
-		}
-	Gen2->root[0].init_root_node(Gen2, verbose_level - 1);
+	}
+	Gen2->get_node(0)->init_root_node(Gen2, verbose_level - 1);
+#endif
 
-	secondary_schreier_depth = Gen2->depth;
+	secondary_schreier_depth = secondary_depth;
 	//f_use_invariant_subset_if_available = TRUE;
 	//f_lex = FALSE;
 	//f_debug = FALSE;
@@ -1086,27 +1041,27 @@ void linear_set_classify::init_secondary(int argc, const char **argv,
 	if (f_v) {
 		cout << "linear_set_classify::init_secondary before "
 				"Gen2->init_root_node_invariant_subset" << endl;
-		}
+	}
 	Gen2->init_root_node_invariant_subset(
 		secondary_candidates, secondary_nb_candidates, verbose_level);
 	if (f_v) {
 		cout << "linear_set_classify::init_secondary after "
 				"Gen2->init_root_node_invariant_subset" << endl;
-		}
+	}
 #endif
 
 	if (f_v) {
 		cout << "linear_set_classify::init_secondary before "
 				"do_classify_secondary" << endl;
-		}
+	}
 	do_classify_secondary(verbose_level);
 	if (f_v) {
 		cout << "linear_set_classify::init_secondary after "
 				"do_classify_secondary" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "linear_set_classify::init_secondary done" << endl;
-		}
+	}
 
 }
 
@@ -1117,7 +1072,7 @@ void linear_set_classify::do_classify_secondary(int verbose_level)
 
 	if (f_v) {
 		cout << "linear_set_classify::do_classify_secondary" << endl;
-		}
+	}
 
 	int t0 = Os.os_ticks();
 
@@ -1125,14 +1080,13 @@ void linear_set_classify::do_classify_secondary(int verbose_level)
 		cout << "linear_set_classify::do_classify_secondary "
 				"calling generator_main" << endl;
 		cout << "A=";
-		Gen2->Poset->A->print_info();
+		Gen2->get_A()->print_info();
 		cout << "A2=";
-		Gen2->Poset->A2->print_info();
-		}
+		Gen2->get_A2()->print_info();
+	}
 	Gen2->main(t0,
 		secondary_schreier_depth,
 		f_use_invariant_subset_if_available,
-		//f_lex,
 		f_debug,
 		verbose_level - 1);
 
@@ -1141,12 +1095,12 @@ void linear_set_classify::do_classify_secondary(int verbose_level)
 	if (f_v) {
 		cout << "linear_set_classify::do_classify_secondary "
 				"done with generator_main" << endl;
-		}
+	}
 	nb_orbits = Gen2->nb_orbits_at_level(secondary_depth);
 	if (f_v) {
 		cout << "linear_set_classify::do_classify_secondary we found "
 				<< nb_orbits << " orbits at depth " << secondary_depth<< endl;
-		}
+	}
 
 	int h, i;
 
@@ -1163,7 +1117,7 @@ void linear_set_classify::do_classify_secondary(int verbose_level)
 	Gen->get_set_by_level(secondary_level, secondary_orbit_at_level, set1);
 	for (i = 0; i < secondary_level; i++) {
 		Fq->PG_element_unrank_modified(Basis1 + i * n, 1, n, set1[i]);
-		}
+	}
 	cout << "set1: ";
 	lint_vec_print(cout, set1, secondary_level);
 	cout << endl;
@@ -1180,7 +1134,7 @@ void linear_set_classify::do_classify_secondary(int verbose_level)
 		Gen2->get_set_by_level(secondary_depth, h, set2);
 		for (i = 0; i < secondary_depth; i++) {
 			Fq->PG_element_unrank_modified(Basis2 + i * n, 1, n, set2[i]);
-			}
+		}
 		cout << "set2: ";
 		lint_vec_print(cout, set2, secondary_depth);
 		cout << endl;
@@ -1205,17 +1159,17 @@ void linear_set_classify::do_classify_secondary(int verbose_level)
 
 		cout << "The stabilizer has order " << go
 				<< " and is generated by:" << endl;
-		Strong_gens2->print_generators();
+		Strong_gens2->print_generators(cout);
 
-		delete Strong_gens2;
-		}
+		FREE_OBJECT(Strong_gens2);
+	}
 
 	FREE_int(Intersection_dimensions);
 
 
 	if (f_v) {
 		cout << "linear_set_classify::do_classify_secondary done" << endl;
-		}
+	}
 }
 
 int linear_set_classify::test_set_secondary(int len, long int *S, int verbose_level)
@@ -1233,29 +1187,29 @@ int linear_set_classify::test_set_secondary(int len, long int *S, int verbose_le
 		cout << "Testing set ";
 		lint_vec_print(cout, S, len);
 		cout << endl;
-		}
+	}
 	for (i = 0; i < len; i++) {
 		Fq->PG_element_unrank_modified(
 				Basis + i * vector_space_dimension, 1,
 				vector_space_dimension, S[i]);
-		}
+	}
 
 	if (f_vv) {
 		cout << "coordinate matrix:" << endl;
 		print_integer_matrix_width(cout,
 				Basis, len, vector_space_dimension,
 				vector_space_dimension, Fq->log10_of_q);
-		}
+	}
 
 	rk = Fq->Gauss_simple(Basis, len,
 			vector_space_dimension, base_cols,
 			0 /*verbose_level - 2*/);
 	if (f_v) {
 		cout << "the matrix has rank " << rk << endl;
-		}
+	}
 	if (rk < len) {
 		ret = FALSE;
-		}
+	}
 
 	if (ret) {
 		// need to make sure that the whole space
@@ -1275,30 +1229,30 @@ int linear_set_classify::test_set_secondary(int len, long int *S, int verbose_le
 			if (is_allowed[rk] == FALSE) {
 				ret = FALSE;
 				break;
-				}
 			}
+		}
 
 		FREE_int(v);
 		FREE_int(w);
-		}
+	}
 
 	if (ret) {
 		if (f_has_extra_test_func) {
 			ret = (*extra_test_func)(this, len, S,
 					extra_test_func_data, verbose_level);
-			}
 		}
+	}
 
 	if (ret) {
 		if (f_v) {
 			cout << "OK" << endl;
-			}
 		}
+	}
 	else {
 		if (f_v) {
 			cout << "not OK" << endl;
-			}
 		}
+	}
 	return ret;
 }
 
@@ -1314,7 +1268,7 @@ void linear_set_classify::compute_stabilizer_of_linear_set(
 
 	if (f_v) {
 		cout << "linear_set_classify::compute_stabilizer_of_linear_set" << endl;
-		}
+	}
 
 	set = NEW_lint(level);
 	is_allowed = NEW_int(Aq->degree);
@@ -1322,7 +1276,7 @@ void linear_set_classify::compute_stabilizer_of_linear_set(
 	Gen->get_set_by_level(level, orbit_at_level, set);
 	for (i = 0; i < level; i++) {
 		Fq->PG_element_unrank_modified(Basis + i * n, 1, n, set[i]);
-		}
+	}
 	cout << "set: ";
 	lint_vec_print(cout, set, level);
 	cout << endl;
@@ -1336,15 +1290,15 @@ void linear_set_classify::compute_stabilizer_of_linear_set(
 #if 0
 	for (i = 0; i < Aq->degree; i++) {
 		is_allowed[i] = !is_allowed[i];
-		}
+	}
 #endif
 
 	nb_allowed = 0;
 	for (i = 0; i < Aq->degree; i++) {
 		if (is_allowed[i]) {
 			nb_allowed++;
-			}
 		}
+	}
 
 	cout << "degree=" << Aq->degree << endl;
 	cout << "nb_allowed=" << nb_allowed << endl;
@@ -1359,8 +1313,8 @@ void linear_set_classify::compute_stabilizer_of_linear_set(
 	for (i = 0; i < Aq->degree; i++) {
 		if (is_allowed[i]) {
 			candidates[nb_candidates++] = i;
-			}
 		}
+	}
 	cout << "candidates:" << nb_candidates << endl;
 	lint_vec_print(cout, candidates, nb_candidates);
 	cout << endl;
@@ -1398,47 +1352,55 @@ void linear_set_classify::init_compute_stabilizer(int argc, const char **argv,
 
 	if (f_v) {
 		cout << "linear_set_classify::init_compute_stabilizer" << endl;
-		}
+	}
 
 	Control_stab = NEW_OBJECT(poset_classification_control);
 	Poset_stab = NEW_OBJECT(poset);
-	Gen_stab = NEW_OBJECT(poset_classification);
+
+
+	Control_stab->f_max_depth = TRUE;
+	Control_stab->max_depth = level;
+
 
 	//Gen_stab->read_arguments(argc, argv, 0);
 
 	//Gen_stab->prefix[0] = 0;
-	sprintf(Gen_stab->fname_base,
+
+	char label[1000];
+
+	sprintf(label,
 		"subspaces_%d_%d_%d_stabilizer_%d_%d", n, q, s,
 		level, orbit_at_level);
 
 
-	Gen_stab->depth = level;
 	if (f_v) {
 		cout << "linear_set_classify::init_compute_stabilizer "
-				"depth = " << Gen_stab->depth << endl;
-		}
+				"depth = " << level << endl;
+	}
 
 
 	if (f_v) {
 		cout << "linear_set_classify::init_compute_stabilizer "
 				"generators are:" << endl;
-		Strong_gens_previous->print_generators();
+		Strong_gens_previous->print_generators(cout);
 		//Strong_gens_previous->print_generators_as_permutations();
-		}
+	}
 
 	cout << "linear_set_classify::init_compute_stabilizer "
 			"before Gen_stab->init" << endl;
 	Poset_stab->init_subspace_lattice(Aq, Aq,
 			Strong_gens_previous, VS,
 			verbose_level);
-	Gen_stab->init(Control_stab,
+
+	Gen_stab = NEW_OBJECT(poset_classification);
+
+	Gen_stab->initialize_and_allocate_root_node(Control_stab,
 			Poset_stab,
-			Gen_stab->depth /* sz */,
+			level /* sz */,
 			verbose_level);
 	cout << "linear_set_classify::init_compute_stabilizer "
 			"after Gen_stab->init" << endl;
 
-	Gen_stab->Control->f_max_depth = FALSE; // could have been set to true because of -depth option
 
 #if 0
 	Gen_stab->init_check_func(
@@ -1476,18 +1438,20 @@ void linear_set_classify::init_compute_stabilizer(int argc, const char **argv,
 	Gen->print_function_data = this;
 #endif
 
+#if 0
 	int nb_nodes = 1000;
 
 	if (f_v) {
 		cout << "linear_set_classify::init_compute_stabilizer "
 				"before Gen_stab->init_poset_orbit_node" << endl;
-		}
+	}
 	Gen_stab->init_poset_orbit_node(nb_nodes, verbose_level - 1);
 	if (f_v) {
 		cout << "linear_set_classify::init_compute_stabilizer "
 				"calling Gen_stab->init_root_node" << endl;
-		}
-	Gen_stab->root[0].init_root_node(Gen_stab, verbose_level - 1);
+	}
+	Gen_stab->get_node(0)->init_root_node(Gen_stab, verbose_level - 1);
+#endif
 
 	//stabilizer_schreier_depth = Gen_stab->depth;
 	//f_use_invariant_subset_if_available = TRUE;
@@ -1501,19 +1465,19 @@ void linear_set_classify::init_compute_stabilizer(int argc, const char **argv,
 	if (f_v) {
 		cout << "linear_set_classify::init_secondary before "
 				"Gen_stab->init_root_node_invariant_subset" << endl;
-		}
+	}
 	Gen_stab->init_root_node_invariant_subset(
 		secondary_candidates, secondary_nb_candidates, verbose_level);
 	if (f_v) {
 		cout << "linear_set_classify::init_secondary after "
 				"Gen_stab->init_root_node_invariant_subset" << endl;
-		}
+	}
 #endif
 
 	if (f_v) {
 		cout << "linear_set_classify::init_compute_stabilizer "
 				"before do_compute_stabilizer" << endl;
-		}
+	}
 	do_compute_stabilizer(level, orbit_at_level,
 		candidates, nb_candidates,
 		strong_gens,
@@ -1521,10 +1485,10 @@ void linear_set_classify::init_compute_stabilizer(int argc, const char **argv,
 	if (f_v) {
 		cout << "linear_set_classify::init_compute_stabilizer "
 				"after do_compute_stabilizer" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "linear_set_classify::init_compute_stabilizer done" << endl;
-		}
+	}
 
 }
 
@@ -1539,7 +1503,7 @@ void linear_set_classify::do_compute_stabilizer(
 
 	if (f_v) {
 		cout << "linear_set_classify::do_compute_stabilizer" << endl;
-		}
+	}
 
 	int t0 = Os.os_ticks();
 
@@ -1547,14 +1511,13 @@ void linear_set_classify::do_compute_stabilizer(
 		cout << "linear_set_classify::do_compute_stabilizer "
 				"calling generator_main" << endl;
 		cout << "A=";
-		Gen_stab->Poset->A->print_info();
+		Gen_stab->get_A()->print_info();
 		cout << "A2=";
-		Gen_stab->Poset->A2->print_info();
-		}
+		Gen_stab->get_A2()->print_info();
+	}
 	Gen_stab->main(t0,
-		Gen_stab->depth,
+			level,
 		f_use_invariant_subset_if_available,
-		//f_lex,
 		f_debug,
 		verbose_level - 1);
 
@@ -1563,13 +1526,13 @@ void linear_set_classify::do_compute_stabilizer(
 	if (f_v) {
 		cout << "linear_set_classify::do_compute_stabilizer "
 				"done with generator_main" << endl;
-		}
-	nb_orbits = Gen_stab->nb_orbits_at_level(Gen_stab->depth);
+	}
+	nb_orbits = Gen_stab->nb_orbits_at_level(level);
 	if (f_v) {
 		cout << "linear_set_classify::do_compute_stabilizer we found "
 				<< nb_orbits << " orbits at depth "
-				<< Gen_stab->depth << endl;
-		}
+				<< level << endl;
+	}
 
 	long int *set1;
 	long int *set2;
@@ -1588,7 +1551,7 @@ void linear_set_classify::do_compute_stabilizer(
 	Gen->get_set_by_level(level, orbit_at_level, set1);
 	for (i = 0; i < level; i++) {
 		Fq->PG_element_unrank_modified(Basis1 + i * n, 1, n, set1[i]);
-		}
+	}
 	cout << "set1: ";
 	lint_vec_print(cout, set1, level);
 	cout << endl;
@@ -1617,15 +1580,15 @@ void linear_set_classify::do_compute_stabilizer(
 	for (i = 0; i < D->N; i++) {
 		if (Intersection_dimensions1[i]) {
 			linear_set_sz++;
-			}
 		}
+	}
 	linear_set = NEW_int(linear_set_sz);
 	j = 0;
 	for (i = 0; i < D->N; i++) {
 		if (Intersection_dimensions1[i]) {
 			linear_set[j++] = i;
-			}
 		}
+	}
 	cout << "The linear set is: ";
 	int_vec_print(cout, linear_set, linear_set_sz);
 	cout << endl;
@@ -1655,7 +1618,7 @@ void linear_set_classify::do_compute_stabilizer(
 	for (i = 0; i < Strong_gens_previous->gens->len; i++) {
 		Aq->element_move(Strong_gens_previous->gens->ith(i),
 				aut_gens->ith(i), 0);
-		}
+	}
 
 
 	group_index = 0;
@@ -1666,7 +1629,7 @@ void linear_set_classify::do_compute_stabilizer(
 		Gen_stab->get_set_by_level(level, h, set2);
 		for (i = 0; i < level; i++) {
 			Fq->PG_element_unrank_modified(Basis2 + i * n, 1, n, set2[i]);
-			}
+		}
 		cout << "set2: ";
 		lint_vec_print(cout, set2, level);
 		cout << endl;
@@ -1698,12 +1661,12 @@ void linear_set_classify::do_compute_stabilizer(
 				cout << "The automorphism does not "
 						"stabilize the candidate set" << endl;
 				exit(1);
-				}
+			}
 			else {
 				if (f_v) {
 					cout << "The automorphism is OK" << endl;
-					}
 				}
+			}
 			aut_gens->append(Elt1, verbose_level - 2);
 			strong_generators *Strong_gens_next;
 
@@ -1712,12 +1675,12 @@ void linear_set_classify::do_compute_stabilizer(
 
 			for (i = 0; i < Strong_gens_next->gens->len; i++) {
 				aut_gens->append(Strong_gens_next->gens->ith(i), verbose_level - 2);
-				}
-			delete Strong_gens_next;
+			}
+			FREE_OBJECT(Strong_gens_next);
 			group_index += orbit_len;
 
-			}
 		}
+	}
 
 	cout << "old stabilizer order = " << go_int << endl;
 	cout << "group_index = " << group_index << endl;
@@ -1741,12 +1704,13 @@ void linear_set_classify::do_compute_stabilizer(
 	strong_gens->init_from_sims(Aut, 0);
 	cout << "Generators for the stabilizer of order "
 			<< target_go << " are:" << endl;
-	strong_gens->print_generators();
+	strong_gens->print_generators(cout);
 
 	vector_ge *gensQ;
 
 
-	retract_generators(strong_gens->gens, gensQ,
+	action_global AG;
+	AG.retract_generators(strong_gens->gens, gensQ,
 			AQ, SubS, n, verbose_level);
 
 	cout << "Generators over FQ:" << endl;
@@ -1787,7 +1751,7 @@ void linear_set_classify::do_compute_stabilizer(
 
 	if (f_v) {
 		cout << "linear_set_classify::do_classify_secondary done" << endl;
-		}
+	}
 }
 
 void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level)
@@ -1799,7 +1763,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 
 	if (f_v) {
 		cout << "linear_set_classify::construct_semifield orbit_for_W=" << orbit_for_W << endl;
-		}
+	}
 
 	long int *set1;
 	long int *set2;
@@ -1825,10 +1789,10 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	Gen->get_set_by_level(secondary_level, secondary_orbit_at_level, set1);
 	for (i = 0; i < secondary_level; i++) {
 		Fq->PG_element_unrank_modified(Basis1 + i * n, 1, n, set1[i]);
-		}
+	}
 	for (i = 0; i < secondary_level; i++) {
 		Fq->PG_element_unrank_modified(BasisU + i * n1, 1, n, set1[i]);
-		}
+	}
 	BasisU[secondary_level * n1 + n] = 1; // the vector v
 	if (f_vv) {
 		cout << "set1: ";
@@ -1838,16 +1802,16 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 		int_matrix_print(Basis1, secondary_level, n);
 		cout << "BasisU:" << endl;
 		int_matrix_print(BasisU, dimU, n1);
-		}
+	}
 
 
 	Gen2->get_set_by_level(secondary_depth, orbit_for_W, set2);
 	for (i = 0; i < secondary_depth; i++) {
 		Fq->PG_element_unrank_modified(Basis2 + i * n, 1, n, set2[i]);
-		}
+	}
 	for (i = 0; i < secondary_depth; i++) {
 		Fq->PG_element_unrank_modified(BasisW + i * n1, 1, n, set2[i]);
-		}
+	}
 
 	if (f_vv) {
 		cout << "set2: ";
@@ -1857,7 +1821,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 		int_matrix_print(Basis2, secondary_depth, n);
 		cout << "BasisW:" << endl;
 		int_matrix_print(BasisW, dimW, n1);
-		}
+	}
 
 
 	long int *large_linear_set;
@@ -1878,7 +1842,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 		cout << endl;
 		D1->print_linear_set_tex(large_linear_set, large_linear_set_sz);
 		cout << endl;
-		}
+	}
 
 	D->compute_linear_set(Basis1, secondary_level,
 		small_linear_set, small_linear_set_sz,
@@ -1890,7 +1854,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 		cout << endl;
 		D->print_linear_set_tex(small_linear_set, small_linear_set_sz);
 		cout << endl;
-		}
+	}
 
 
 	D->compute_linear_set(Basis2, secondary_depth,
@@ -1903,7 +1867,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 		cout << endl;
 		D->print_linear_set_tex(small_linear_set_W, small_linear_set_W_sz);
 		cout << endl;
-		}
+	}
 
 	int *is_deleted;
 	int a, b, idx;
@@ -1912,7 +1876,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 		a = small_linear_set[i];
 		b = spread_embedding[a];
 		small_linear_set[i] = b;
-		}
+	}
 	if (f_vv) {
 		cout << "After embedding, the small linear set of size "
 				<< small_linear_set_sz << " is ";
@@ -1920,13 +1884,13 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 		cout << endl;
 		D1->print_linear_set_tex(small_linear_set, small_linear_set_sz);
 		cout << endl;
-		}
+	}
 
 
 	is_deleted = NEW_int(large_linear_set_sz);
 	for (i = 0; i < large_linear_set_sz; i++) {
 		is_deleted[i] = FALSE;
-		}
+	}
 
 	for (i = 0; i < small_linear_set_sz; i++) {
 		a = small_linear_set[i];
@@ -1935,9 +1899,9 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 			cout << "Cannot find embedded spread element "
 					"in large linear set, something is wrong" << endl;
 			exit(1);
-			}
-		is_deleted[idx] = TRUE;
 		}
+		is_deleted[idx] = TRUE;
+	}
 
 	long int *linear_set;
 	int linear_set_sz;
@@ -1947,22 +1911,22 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	for (i = 0; i < large_linear_set_sz; i++) {
 		if (!is_deleted[i]) {
 			linear_set_sz++;
-			}
 		}
+	}
 	linear_set = NEW_lint(linear_set_sz);
 	j = 0;
 	for (i = 0; i < large_linear_set_sz; i++) {
 		if (!is_deleted[i]) {
 			linear_set[j++] = large_linear_set[i];
-			}
 		}
+	}
 	if (f_vv) {
 		cout << "The linear set of size " << linear_set_sz << " is ";
 		lint_vec_print(cout, linear_set, linear_set_sz);
 		cout << endl;
 		D1->print_linear_set_tex(linear_set, linear_set_sz);
 		cout << endl;
-		}
+	}
 
 
 	int *base_cols;
@@ -1984,21 +1948,21 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 			0/* verbose_level*/) != dimW) {
 		cout << "BasisW does not have the correct rank" << endl;
 		exit(1);
-		}
+	}
 	if (f_vv) {
 		cout << "BasisW:" << endl;
 		int_matrix_print(BasisW, dimW, n1);
 		cout << "base_cols:";
 		int_vec_print(cout, base_cols, dimW);
 		cout << endl;
-		}
+	}
 
 	Fq->kernel_columns(n1, dimW, base_cols, kernel_cols);
 	if (f_vv) {
 		cout << "kernel_cols:";
 		int_vec_print(cout, kernel_cols, n2);
 		cout << endl;
-		}
+	}
 
 
 
@@ -2006,11 +1970,11 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	for (i = 0; i < s; i++) {
 		//a = kernel_cols[i] - s;
 		Basis_infinity[i * n2 + i] = 1;
-		}
+	}
 	if (f_vv) {
 		cout << "Basis element infinity:" << endl;
 		int_matrix_print(Basis_infinity, s, n2);
-		}
+	}
 
 
 	int nb_components;
@@ -2029,7 +1993,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 		if (f_v3) {
 			cout << "spread element " << h << " / "
 					<< linear_set_sz << ":" << endl;
-			}
+		}
 		a = linear_set[h];
 		int_vec_copy(
 				D1->Spread_elements + a * D1->spread_element_size,
@@ -2037,7 +2001,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 		if (f_v3) {
 			cout << "Spread element " << a << " is:" << endl;
 			int_matrix_print(Spread_element_basis, s, n1);
-			}
+		}
 
 		for (i = 0; i < dimW; i++) {
 			a = base_cols[i];
@@ -2046,43 +2010,43 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 				v2 = Spread_element_basis + j * n1;
 				if (v2[a]) {
 					Fq->Gauss_step(v1, v2, n1, a, 0 /* verbose_level*/);
-					}
 				}
 			}
+		}
 		if (f_v3) {
 			cout << "Basis after reduction mod W:" << endl;
 			int_matrix_print(Spread_element_basis, s, n1);
-			}
+		}
 
 		for (i = 0; i < dimW; i++) {
 			for (j = 0; j < n2; j++) {
 				a = kernel_cols[j];
 				Basis_elt[i * n2 + j] = Spread_element_basis[i * n1 + a];
-				}
 			}
+		}
 
 		if (f_v3) {
 			cout << "Basis element:" << endl;
 			int_matrix_print(Basis_elt, s, n2);
-			}
+		}
 
 		Fq->Gauss_easy(Basis_elt, s, n2);
 
 		if (f_v3) {
 			cout << "Basis element after RREF:" << endl;
 			int_matrix_print(Basis_elt, s, n2);
-			}
+		}
 
 		for (i = 0; i < s; i++) {
 			for (j = 0; j < s; j++) {
 				a = Basis_elt[i * n2 + s + j];
 				Spread_set[h * s * s + i * s + j] = a;
-				}
 			}
+		}
 
 		Components[h + 1] = NEW_int(s * n2);
 		int_vec_copy(Basis_elt, Components[h + 1], s * n2);
-		}
+	}
 
 	if (f_v3) {
 		cout << "The components are:" << endl;
@@ -2090,8 +2054,8 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 			cout << "Component " << h << " / "
 					<< linear_set_sz << ":" << endl;
 			int_matrix_print(Components[h], s, n2);
-			}
 		}
+	}
 
 	int h2;
 
@@ -2099,16 +2063,16 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	for (h = 0; h < linear_set_sz + 1; h++) {
 		if (h == 1) {
 			continue;
-			}
+		}
 		for (i = 0; i < s; i++) {
 			for (j = 0; j < s; j++) {
 				a = Components[h][i * n2 + s + j];
 				Spread_set[h2 * s * s + i * s + j] = a;
-				}
 			}
+		}
 
 		h2++;
-		}
+	}
 
 	int h1, k3;
 	int *Intersection;
@@ -2128,12 +2092,12 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 				cout << "Component " << h2 << " / "
 						<< nb_components << ":" << endl;
 				int_matrix_print(Components[h2], s, n2);
-				}
 			}
 		}
+	}
 	if (f_vv) {
 		cout << "The components are disjoint!" << endl;
-		}
+	}
 
 
 	int rk;
@@ -2141,25 +2105,25 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	if (f_v3) {
 		cout << "The spread_set is:" << endl;
 		int_matrix_print(Spread_set, linear_set_sz, s * s);
-		}
+	}
 	rk = Fq->Gauss_easy(Spread_set, linear_set_sz, s * s);
 	if (f_v) {
 		cout << "rank = " << rk << endl;
-		}
+	}
 	if (f_v3) {
 		cout << "The spread_set basis is:" << endl;
 		int_matrix_print(Spread_set, rk, s * s);
 		for (h = 0; h < rk; h++) {
 			cout << "basis elt " << h << " / " << rk << ":" << endl;
 			int_matrix_print(Spread_set + h * s * s, s, s);
-			}
 		}
+	}
 
 
 
 	if (f_v3) {
 		cout << "opening grassmann:" << endl;
-		}
+	}
 	grassmann *Grass;
 	Grass = NEW_OBJECT(grassmann);
 	Grass->init(n2, s, Fq, 0 /*verbose_level*/);
@@ -2170,15 +2134,15 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	for (h = 0; h < nb_components; h++) {
 		spread_elements_numeric[h] =
 				Grass->rank_lint_here(Components[h], 0);
-		}
+	}
 
 	if (f_vv) {
 		cout << "spread elements numeric:" << endl;
 		for (i = 0; i < nb_components; i++) {
 			cout << setw(3) << i << " : "
 					<< spread_elements_numeric[i] << endl;
-			}
 		}
+	}
 
 	if (f_identify) {
 		cout << "linear_set::construct_semifield "
@@ -2187,13 +2151,13 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 		if (nb_components != order + 1) {
 			cout << "nb_components != order + 1" << endl;
 			exit(1);
-			}
+		}
 
 		int *transporter;
 		int f_implicit_fusion = FALSE;
 		int final_node;
 
-		transporter = NEW_int(T->gen->Poset->A->elt_size_in_int);
+		transporter = NEW_int(T->gen->get_A()->elt_size_in_int);
 
 		T->gen->recognize(
 			spread_elements_numeric, nb_components,
@@ -2206,7 +2170,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 		int orbit_at_lvl;
 
 		lvl = order + 1;
-		orbit_at_lvl = final_node - T->gen->first_poset_orbit_node_at_level[lvl];
+		orbit_at_lvl = final_node - T->gen->first_node_at_level(lvl);
 
 		T->gen->get_stabilizer_order(lvl, orbit_at_lvl, go);
 
@@ -2215,10 +2179,10 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 				<< " which is isomorphism type " << orbit_at_lvl
 				<< " with stabilizer order " << go << endl;
 		cout << "transporter=" << endl;
-		T->gen->Poset->A->element_print_quick(transporter, cout);
+		T->gen->get_A()->element_print_quick(transporter, cout);
 
 		FREE_int(transporter);
-		}
+	}
 
 #if 0
 	andre_construction *Andre;
@@ -2292,7 +2256,7 @@ void linear_set_classify_early_test_func(long int *S, int len,
 	if (f_v) {
 		cout << "linear_set_classify_early_test_func" << endl;
 		cout << "testing " << nb_candidates << " candidates" << endl;
-		}
+	}
 	nb_good_candidates = 0;
 	for (i = 0; i < nb_candidates; i++) {
 		S[len] = candidates[i];
@@ -2305,22 +2269,22 @@ void linear_set_classify_early_test_func(long int *S, int len,
 					cout << "candidate " << i << " / " << nb_candidates
 							<< " which is " << candidates[i]
 							<< " is accepted" << endl;
-					}
 				}
+			}
 			else {
 				if (f_vv) {
 					cout << "candidate " << i << " / " << nb_candidates
 							<< " which is " << candidates[i]
 							<< " is rejected" << endl;
-					}
 				}
 			}
 		}
+	}
 	if (f_v) {
 		cout << "linear_set_classify_early_test_func" << endl;
 		cout << "Out of " << nb_candidates << " candidates, "
 				<< nb_good_candidates << " survive" << endl;
-		}
+	}
 }
 
 void linear_set_classify_secondary_early_test_func(long int *S, int len,
@@ -2339,21 +2303,21 @@ void linear_set_classify_secondary_early_test_func(long int *S, int len,
 	if (f_v) {
 		cout << "linear_set_classify_secondary_early_test_func" << endl;
 		cout << "testing " << nb_candidates << " candidates" << endl;
-		}
+	}
 	nb_good_candidates = 0;
 	for (i = 0; i < nb_candidates; i++) {
 		S[len] = candidates[i];
 		if (LS->is_allowed[candidates[i]]) {
 			if (LS->test_set_secondary(len + 1, S, verbose_level - 1)) {
 				good_candidates[nb_good_candidates++] = candidates[i];
-				}
 			}
 		}
+	}
 	if (f_v) {
 		cout << "linear_set_classify_secondary_early_test_func" << endl;
 		cout << "Out of " << nb_candidates << " candidates, "
 				<< nb_good_candidates << " survive" << endl;
-		}
+	}
 }
 
 

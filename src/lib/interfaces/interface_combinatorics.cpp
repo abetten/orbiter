@@ -802,96 +802,6 @@ void interface_combinatorics::do_diophant_activity(diophant_activity_description
 	}
 }
 
-#if 0
-void interface_combinatorics::do_solve_diophant(const char *fname, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_solve_diophant" << endl;
-	}
-
-	diophant *Dio;
-
-	Dio = NEW_OBJECT(diophant);
-	Dio->read_compact_format(fname, verbose_level);
-
-	Dio->eliminate_zero_rows_quick(verbose_level);
-
-#if 0
-	int r, val;
-
-	for (i = 0; i < RHS_row_nb; i++) {
-		r = RHS_row[i];
-		val = RHS_row_value[i];
-		if (r < 0) {
-			Dio->RHSi(Dio->m + r) = val;
-			}
-		else {
-			Dio->RHSi(r) = val;
-			}
-		}
-
-	if (Dio->f_x_max) {
-		Dio->append_equation();
-
-		int j;
-
-
-		if (f_v) {
-			cout << "appending one equation for the sum" << endl;
-			}
-
-		i = Dio->m - 1;
-		for (j = 0; j < Dio->n; j++) {
-			Dio->Aij(i, j) = 1;
-			}
-		Dio->type[i] = t_EQ;
-		Dio->RHS[i] = Dio->sum;
-
-#if 0
-		//Dio->f_x_max = TRUE;
-		for (j = 0; j < Dio->n; j++) {
-			Dio->x_max[j] = 1;
-		}
-
-		for (i = 0; i < nb_xmax; i++) {
-			Dio->x_max[xmax_variable[i]] = xmax_value[i];
-			}
-#endif
-	}
-#endif
-
-	//Dio->print();
-	Dio->print_tight();
-
-	long int nb_backtrack_nodes;
-
-	cout << "solving with mckay" << endl;
-	Dio->solve_all_mckay(nb_backtrack_nodes, verbose_level - 2);
-	Dio->nb_steps_betten = nb_backtrack_nodes;
-
-	cout << "Found " << Dio->_resultanz << " solutions with "
-			<< Dio->nb_steps_betten << " backtrack steps" << endl;
-
-	if (TRUE) {
-		char output_file[1000];
-
-		strcpy(output_file, fname);
-		replace_extension_with(output_file, ".sol");
-
-
-		Dio->write_solutions(output_file, verbose_level);
-	}
-
-
-	FREE_OBJECT(Dio);
-	if (f_v) {
-		cout << "interface_combinatorics::do_solve_diophant done" << endl;
-	}
-}
-#endif
-
 void interface_combinatorics::do_process_combinatorial_object(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1144,13 +1054,12 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 
 	Gen.init(argc, argv, verbose_level);
 
-	int verbose_level = Gen.gen->Control->verbose_level;
 
 	depth = Gen.gen->main(t0,
 		schreier_depth,
 		f_use_invariant_subset_if_available,
 		f_debug,
-		Gen.gen->Control->verbose_level);
+		verbose_level);
 	cout << "Gen.gen->main returns depth=" << depth << endl;
 
 	if (Gen.f_tournament) {
@@ -1162,7 +1071,7 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 
 
 	if (Gen.Control->f_draw_poset) {
-		Gen.gen->draw_poset(Gen.gen->fname_base, depth,
+		Gen.gen->draw_poset(Gen.gen->get_problem_label_with_path(), depth,
 			Gen.n /* data1 */, f_embedded, f_sideways,
 			verbose_level);
 		}
@@ -1171,7 +1080,7 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 	if (Gen.Control->f_draw_full_poset) {
 		//double x_stretch = 0.4;
 		cout << "Gen.f_draw_full_poset" << endl;
-		Gen.gen->draw_poset_full(Gen.gen->fname_base, depth,
+		Gen.gen->draw_poset_full(Gen.gen->get_problem_label_with_path(), depth,
 			Gen.n /* data1 */, f_embedded, f_sideways,
 			Gen.x_stretch, verbose_level);
 
@@ -1205,7 +1114,7 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 		int f_save_stab = FALSE;
 		int f_show_whole_orbit = FALSE;
 
-		Gen.gen->list_all_orbits_at_level(Gen.gen->depth,
+		Gen.gen->list_all_orbits_at_level(Gen.Control->max_depth,
 			FALSE, NULL, NULL,
 			f_show_orbit_decomposition,
 			f_show_stab, f_save_stab, f_show_whole_orbit);
@@ -1218,7 +1127,7 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 		int f_show_whole_orbit = FALSE;
 		int j;
 
-		for (j = 0; j <= Gen.gen->depth; j++) {
+		for (j = 0; j <= Gen.Control->max_depth; j++) {
 			Gen.gen->list_all_orbits_at_level(j,
 				FALSE, NULL, NULL,
 				f_show_orbit_decomposition,
@@ -1233,7 +1142,7 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 		int ymax = 1000000;
 		int level;
 
-		for (level = 0; level <= Gen.gen->depth; level++) {
+		for (level = 0; level <= Gen.Control->max_depth; level++) {
 			Gen.draw_graphs(level, Gen.Control->scale,
 					xmax_in, ymax_in, xmax, ymax,
 					Gen.Control->f_embedded, Gen.Control->f_sideways,
@@ -1256,8 +1165,8 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 		}
 
 	if (Gen.f_draw_level_graph) {
-		Gen.gen->draw_level_graph(Gen.gen->fname_base,
-				Gen.gen->depth, Gen.n /* data1 */,
+		Gen.gen->draw_level_graph(Gen.gen->get_problem_label_with_path(),
+				Gen.Control->max_depth, Gen.n /* data1 */,
 				Gen.level_graph_level,
 				f_embedded, f_sideways,
 				verbose_level - 3);
@@ -1271,7 +1180,7 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 		int *transporter;
 		int orbit_at_level;
 
-		transporter = NEW_int(Gen.gen->Poset->A->elt_size_in_int);
+		transporter = NEW_int(Gen.gen->get_A()->elt_size_in_int);
 
 		Gen.gen->identify(Gen.identify_data, Gen.identify_data_sz,
 				transporter, orbit_at_level, verbose_level);
@@ -1283,10 +1192,10 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 
 	N = 0;
 	F = 0;
-	for (level = 0; level <= Gen.gen->depth; level++) {
+	for (level = 0; level <= Gen.Control->max_depth; level++) {
 		N += Gen.gen->nb_orbits_at_level(level);
 		}
-	for (level = 0; level < Gen.gen->depth; level++) {
+	for (level = 0; level < Gen.Control->max_depth; level++) {
 		F += Gen.gen->nb_flag_orbits_up_at_level(level);
 		}
 	cout << "N=" << N << endl;

@@ -12,6 +12,176 @@ using namespace std;
 namespace orbiter {
 namespace classification {
 
+char *poset_classification::get_problem_label_with_path()
+{
+	return problem_label_with_path;
+}
+
+char *poset_classification::get_problem_label()
+{
+	return problem_label;
+}
+
+int poset_classification::first_node_at_level(int i)
+{
+	return first_poset_orbit_node_at_level[i];
+}
+
+poset_orbit_node *poset_classification::get_node(int node_idx)
+{
+	return root + node_idx;
+}
+
+vector_ge *poset_classification::get_transporter()
+{
+	return transporter;
+}
+
+long int *poset_classification::get_S()
+{
+	return S;
+}
+
+long int *poset_classification::get_set_i(int i)
+{
+	return set[i];
+}
+
+long int *poset_classification::get_set0()
+{
+	return set0;
+}
+
+long int *poset_classification::get_set1()
+{
+	return set1;
+}
+
+long int *poset_classification::get_set3()
+{
+	return set3;
+}
+
+int *poset_classification::get_Elt1()
+{
+	return Elt1;
+}
+
+int *poset_classification::get_Elt2()
+{
+	return Elt2;
+}
+
+long int *poset_classification::get_tmp_set_apply_fusion()
+{
+	return tmp_set_apply_fusion;
+}
+
+int poset_classification::allowed_to_show_group_elements()
+{
+	return f_allowed_to_show_group_elements;
+}
+
+int poset_classification::do_group_extension_in_upstep()
+{
+	return f_do_group_extension_in_upstep;
+}
+
+poset *poset_classification::get_poset()
+{
+	return Poset;
+}
+
+poset_classification_control *poset_classification::get_control()
+{
+	return Control;
+}
+
+action *poset_classification::get_A()
+{
+	return Poset->A;
+}
+
+action *poset_classification::get_A2()
+{
+	return Poset->A2;
+}
+
+vector_space *poset_classification::get_VS()
+{
+	return Poset->VS;
+}
+
+schreier_vector_handler *poset_classification::get_schreier_vector_handler()
+{
+	return Schreier_vector_handler;
+}
+
+int poset_classification::has_base_case()
+{
+	return f_base_case;
+}
+
+int poset_classification::has_invariant_subset_for_root_node()
+{
+	return f_has_invariant_subset_for_root_node;
+}
+
+int poset_classification::size_of_invariant_subset_for_root_node()
+{
+	return invariant_subset_for_root_node_size;
+}
+
+int *poset_classification::get_invariant_subset_for_root_node()
+{
+	return invariant_subset_for_root_node;
+}
+
+
+
+classification_base_case *poset_classification::get_Base_case()
+{
+	return Base_case;
+}
+
+int poset_classification::node_has_schreier_vector(int node_idx)
+{
+	if (root[node_idx].Schreier_vector) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
+
+int poset_classification::max_number_of_orbits_to_print()
+{
+	return downstep_orbits_print_max_orbits;
+}
+
+int poset_classification::max_number_of_points_to_print_in_orbit()
+{
+	return downstep_orbits_print_max_points_per_orbit;
+}
+
+void poset_classification::invoke_early_test_func(
+		long int *the_set, int lvl,
+		long int *candidates,
+		int nb_candidates,
+		long int *good_candidates,
+		int &nb_good_candidates,
+		int verbose_level)
+{
+	Poset->early_test_func(
+			the_set, lvl,
+			candidates,
+			nb_candidates,
+			good_candidates,
+			nb_good_candidates,
+			verbose_level - 2);
+
+}
+
 int poset_classification::nb_orbits_at_level(int level)
 {
 	int f, l;
@@ -253,20 +423,20 @@ int poset_classification::find_poset_orbit_node_for_set(
 		lint_vec_print(cout, set, len);
 		cout << endl;
 		}
-	if (f_starter) {
+	if (f_base_case) {
 		int i, j, h;
-		if (len < starter_size) {
+		if (len < Base_case->size) {
 			cout << "poset_classification::find_poset_orbit_node_for_set "
 					"len < starter_size" << endl;
 			cout << "len=" << len << endl;
 			exit(1);
 			}
-		for (i = 0; i < starter_size; i++) {
+		for (i = 0; i < Base_case->size; i++) {
 			for (j = i; j < len; j++) {
-				if (set[j] == starter[i]) {
+				if (set[j] == Base_case->orbit_rep[i]) {
 					if (f_v) {
 						cout << "found " << i << "-th element "
-								"of the starter which is " << starter[i]
+								"of the starter which is " << Base_case->orbit_rep[i]
 							<< " at position " << j << endl;
 						}
 					break;
@@ -280,10 +450,10 @@ int poset_classification::find_poset_orbit_node_for_set(
 			for (h = j; h > i; h--) {
 				set[h] = set[h - 1];
 				}
-			set[i] = starter[i];
+			set[i] = Base_case->orbit_rep[i];
 			}
-		int from = starter_size;
-		int node = starter_size;
+		int from = Base_case->size;
+		int node = Base_case->size;
 		ret = find_poset_orbit_node_for_set_basic(from,
 				node, len, set, f_tolerant, verbose_level);
 		}
@@ -702,7 +872,7 @@ void poset_classification::recreate_schreier_vectors_at_level(
 				"schreier_vectors_at_level "
 				"Testing if a schreier vector file exists" << endl;
 		}
-	if (test_sv_level_file_binary(i, fname_base)) {
+	if (test_sv_level_file_binary(i, problem_label_with_path)) {
 
 		if (f_v) {
 			cout << "poset_classification::recreate_"
@@ -711,7 +881,7 @@ void poset_classification::recreate_schreier_vectors_at_level(
 					"We will read this file" << endl;
 			}
 
-		read_sv_level_file_binary(i, fname_base, FALSE, 0, 0, 
+		read_sv_level_file_binary(i, problem_label_with_path, FALSE, 0, 0,
 			f_recreate_extensions, f_dont_keep_sv, 
 			verbose_level);
 		if (f_v) {
@@ -753,7 +923,7 @@ void poset_classification::recreate_schreier_vectors_at_level(
 				0 /*verbose_level - 1*/);
 		}
 	write_sv_level_file_binary(i,
-			fname_base, FALSE, 0, 0, verbose_level);
+			problem_label_with_path, FALSE, 0, 0, verbose_level);
 	if (f_v) {
 		cout << "poset_classification::recreate_"
 				"schreier_vectors_at_level "
@@ -1436,7 +1606,7 @@ void poset_classification::list_whole_orbit(
 
 	cout << "poset_classification::list_whole_orbit "
 			"depth " << depth
-			<< "orbit " << orbit_idx
+			<< " orbit " << orbit_idx
 			<< " / " << nb_orbits_at_level(depth) << " (=node "
 			<< first_poset_orbit_node_at_level[depth] + orbit_idx
 			<< ") at depth " << depth << " has length " << Len << " : ";
@@ -1478,14 +1648,14 @@ void poset_classification::list_whole_orbit(
 	
 	if (f_show_stab) {
 		cout << "The stabilizer is generated by:" << endl;
-		Strong_gens->print_generators();
+		Strong_gens->print_generators(cout);
 		}
 
 	if (f_save_stab) {
 		char fname[1000];
 
 		sprintf(fname, "%s_stab_%d_%d.bin",
-				fname_base, depth, orbit_idx);
+				problem_label_with_path, depth, orbit_idx);
 		cout << "saving stabilizer poset_classifications "
 				"to file " << fname << endl;
 		Strong_gens->write_file(fname, Control->verbose_level);
@@ -1520,6 +1690,7 @@ void poset_classification::list_whole_orbit(
 
 	FREE_lint(set);
 	FREE_OBJECT(Strong_gens);
+	cout << "poset_classification::list_whole_orbit done" << endl;
 }
 
 void poset_classification::get_whole_orbit(

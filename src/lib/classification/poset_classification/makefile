@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	classification_base_case.o \
 	extension.o \
 	orbit_based_testing.o \
 	poset_classification_classify.o \

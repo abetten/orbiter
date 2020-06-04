@@ -1923,7 +1923,9 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 					"we will create the orthogonal group now" << endl;
 			}
 
-		if (get_orthogonal_group_type_f_reflection()) {
+		action_global AG;
+
+		if (AG.get_orthogonal_group_type_f_reflection()) {
 			if (f_vv) {
 				cout << "action::init_orthogonal_group_with_O "
 						"with reflections, before order_PO_epsilon" << endl;
@@ -2027,7 +2029,7 @@ void action::init_BLT(finite_field *F, int f_basis,
 					"generators have been computed" << endl;
 			}
 		if (f_vv) {
-			Strong_gens->print_generators();
+			Strong_gens->print_generators(cout);
 			}
 		}
 	else {
