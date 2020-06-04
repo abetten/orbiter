@@ -281,30 +281,6 @@ void blt_set_classify::init2(int verbose_level)
 		Control->max_depth /* sz */, verbose_level);
 	
 
-
-
-	
-#if 0
-	int nb_nodes = ONE_MILLION;
-	
-	if (f_vv) {
-		cout << "blt_set_classify::init2 calling init_poset_orbit_node with "
-				<< nb_nodes << " nodes" << endl;
-	}
-	
-	gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
-
-	if (f_vv) {
-		cout << "blt_set_classify::init2 after init_root_node" << endl;
-	}
-	
-	//cout << "verbose_level = " << verbose_level << endl;
-	//cout << "verbose_level_group_theory = "
-	//<< verbose_level_group_theory << endl;
-	
-	gen->get_node(0)->init_root_node(gen, 0/*verbose_level - 2*/);
-#endif
-
 	if (f_v) {
 		cout << "blt_set_classify::init2 done" << endl;
 	}

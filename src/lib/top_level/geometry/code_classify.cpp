@@ -425,24 +425,6 @@ void code_classify::init(poset_classification_control *Control)
 		}
 #endif
 
-#if 0
-	int nb_nodes = ONE_MILLION;
-
-	if (f_v) {
-		cout << "code_classify::init group set up, "
-				"calling gen->init_poset_orbit_node" << endl;
-	}
-
-	gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
-
-	if (f_v) {
-		cout << "code_classify::init group set up, "
-				"calling gen->root[0].init_root_node" << endl;
-	}
-
-	gen->get_node(0)->init_root_node(gen, verbose_level - 2);
-#endif
-
 	if (f_read_data_file) {
 		if (f_v) {
 			cout << "code_classify::init reading data file "

@@ -566,20 +566,6 @@ void arc_generator::prepare_generator(poset_classification_control *Control,
 	}
 
 
-#if 0
-	if (f_no_arc_testing) {
-		cout << "arc_generator::prepare_generator "
-				"installing placebo_test_function" << endl;
-		gen->init_check_func(placebo_test_function, 
-			(void *)this /* candidate_check_data */);
-	}
-	else {
-		cout << "arc_generator::prepare_generator "
-				"installing ::check_arc" << endl;
-		gen->init_check_func(::check_arc, 
-			(void *)this /* candidate_check_data */);
-	}
-#endif
 
 	if (f_read_data_file) {
 		if (f_v) {

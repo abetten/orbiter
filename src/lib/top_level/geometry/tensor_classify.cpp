@@ -215,21 +215,6 @@ void tensor_classify::classify_poset(int depth,
 	}
 
 
-#if 0
-	int nb_nodes = 1000;
-
-	if (f_v) {
-		cout << "tensor_classify::classify_poset "
-				"before Gen->init_poset_orbit_node" << endl;
-	}
-	Gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
-	if (f_v) {
-		cout << "tensor_classify::classify_poset "
-				"calling Gen->init_root_node" << endl;
-	}
-	Gen->get_node(0)->init_root_node(Gen, verbose_level - 1);
-#endif
-
 	//int schreier_depth;
 	int f_use_invariant_subset_if_available;
 	int f_debug;

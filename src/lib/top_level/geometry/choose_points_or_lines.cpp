@@ -226,22 +226,6 @@ void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens,
 	gen->print_function_data = this;
 #endif	
 
-#if 0
-	int nb_poset_orbit_nodes = 1000;
-	
-	if (f_vv) {
-		cout << "choose_points_or_lines::compute_orbits "
-				<< label << " calling gen->init_poset_orbit_node" << endl;
-	}
-	gen->init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
-	if (f_vv) {
-		cout << "choose_points_or_lines::compute_orbits "
-				<< label << " calling gen->init_root_node" << endl;
-	}
-	gen->get_node(0)->init_root_node(gen, verbose_level - 1);
-#endif
-	
-	//int schreier_depth = gen->depth;
 	
 	int f_use_invariant_subset_if_available = TRUE;
 	//int f_implicit_fusion = FALSE;

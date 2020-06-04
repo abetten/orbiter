@@ -164,7 +164,7 @@ public:
 // poset.cpp
 // #############################################################################
 
-//! a poset on which a group acts
+//! a poset with a group action on it
 
 
 class poset {
@@ -176,7 +176,6 @@ public:
 
 	int f_subspace_lattice;
 	vector_space *VS;
-	//int vector_space_dimension;
 
 	action *A; // the action in which the group is given
 	action *A2; // the action in which we do the search
@@ -1422,7 +1421,7 @@ public:
 
 typedef struct coset_table_entry coset_table_entry;
 
-//! a helper class for the poset classification algorithm
+//! a helper class for the poset classification algorithm to build up a coset transversal for the automorphism group
 
 struct coset_table_entry {
 	int coset;
@@ -1440,7 +1439,7 @@ struct coset_table_entry {
 };
 
 
-//! a helper class for the poset classification algorithm
+//! a helper class for the poset classification algorithm to deal with flag orbits
 
 
 class upstep_work {
