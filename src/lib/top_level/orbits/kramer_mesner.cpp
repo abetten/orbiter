@@ -271,7 +271,6 @@ void kramer_mesner::init_group(sims *&S, int verbose_level)
 }
 
 void kramer_mesner::orbits(
-		//int argc, const char **argv,
 		sims *S, int verbose_level)
 // the group is in A->strong_generators, A->transversal_length
 {
@@ -286,8 +285,6 @@ void kramer_mesner::orbits(
 		cout << "kramer_mesner::orbits" << endl;
 		cout << "computing orbits up to depth " << orbits_k << endl;
 		}
-	gen = NEW_OBJECT(poset_classification);
-	//gen->read_arguments(argc, argv, verbose_level);
 	
 	if (!f_orbits_t) {
 		cout << "kramer_mesner::orbits please specify t" << endl;
@@ -298,7 +295,7 @@ void kramer_mesner::orbits(
 		exit(1);
 		}
 	//gen->depth = orbits_depth;
-	gen->depth = orbits_k;
+	//gen->depth = orbits_k;
 	
 
 
@@ -325,6 +322,9 @@ void kramer_mesner::orbits(
 		}
 
 	Control = NEW_OBJECT(poset_classification_control);
+	Control->f_max_depth = TRUE;
+	Control->max_depth = orbits_k;
+
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A2,
 			Strong_gens,
@@ -342,8 +342,10 @@ void kramer_mesner::orbits(
 				verbose_level);
 #endif
 
-	gen->init(Control, Poset,
-		gen->depth /* sz */, verbose_level - 2);
+	gen = NEW_OBJECT(poset_classification);
+
+	gen->initialize_and_allocate_root_node(Control, Poset,
+			orbits_k /* sz */, verbose_level - 2);
 
 
 #if 0
@@ -358,18 +360,6 @@ void kramer_mesner::orbits(
 		}
 #endif
 
-	int nb_nodes = 100;
-	
-	gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
-	
-	sprintf(gen->fname_base, "%s", A2->label);
-	
-	if (f_v) {
-		cout << "kramer_mesner::orbits calling "
-				"init_root_node:" << endl;
-		}
-
-	gen->root[0].init_root_node(gen, gen->Control->verbose_level);
 
 	if (f_v) {
 		cout << "kramer_mesner::orbits "
@@ -385,7 +375,8 @@ void kramer_mesner::orbits(
 	if (f_v) {
 		cout << "kramer_mesner::orbits computing orbits" << endl;
 		}
-	gen->main(t0, schreier_depth, 
+	gen->main(t0,
+			schreier_depth,
 		f_use_invariant_subset_if_available, 
 		f_debug, 
 		verbose_level);
@@ -399,7 +390,7 @@ void kramer_mesner::orbits(
 		if (f_v) {
 			cout << "before gen->draw_poset" << endl;
 			}
-		gen->draw_poset(gen->fname_base, gen->depth, 
+		gen->draw_poset(gen->get_problem_label_with_path(), orbits_k,
 			0 /* data1 */, f_embedded,
 			f_sideways,
 			0 /* gen->verbose_level */);
@@ -534,15 +525,15 @@ void kramer_mesner::orbits(
 						Orbit_reps + i * orbits_k, verbose_level);
 				}
 			{
-			classify C;
-			C.init(R, nb_orbits, FALSE, 0);
-			cout << "Rank distribution of all " << nb_orbits
-					<< " orbit reps:" << endl;
-			C.print_naked(TRUE);
-			cout << endl;
-			}
+				classify C;
+				C.init(R, nb_orbits, FALSE, 0);
+				cout << "Rank distribution of all " << nb_orbits
+						<< " orbit reps:" << endl;
+				C.print_naked(TRUE);
+				cout << endl;
 			}
 		}
+	}
 
 	if (nb_identify) {
 		int i, j, a, b, idx;
@@ -574,10 +565,10 @@ void kramer_mesner::orbits(
 			cout << endl;
 
 			cout << "testing the mapping in action "
-					<< gen->Poset->A2->label << ":" << endl;
+					<< gen->get_A2()->label << ":" << endl;
 			for (j = 0; j < Identify_length[i]; j++) {
 				a = Identify_data[i][j];
-				b = gen->Poset->A2->element_image_of(a, Elt, 0);
+				b = gen->get_A2()->element_image_of(a, Elt, 0);
 				cout << a << " -> " << b << endl;
 				}
 
@@ -593,7 +584,7 @@ void kramer_mesner::orbits(
 
 			cout << "The given set has the following "
 					"stabilizer generators:" << endl;
-			SaS->Strong_gens->print_generators();
+			SaS->Strong_gens->print_generators(cout);
 			
 
 			char fname_gens[1000];

@@ -83,7 +83,9 @@ void action::freeself()
 	if (f_allocated) {
 		if (f_vv) {
 			cout << "action::freeself freeing G of type ";
-			action_print_symmetry_group_type(cout, type_G);
+
+			action_global AG;
+			AG.action_print_symmetry_group_type(cout, type_G);
 			cout << endl;
 			}
 		if (type_G == matrix_group_t) {

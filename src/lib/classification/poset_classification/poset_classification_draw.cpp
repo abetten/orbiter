@@ -72,7 +72,7 @@ int poset_classification::write_treefile(char *fname_base,
 		
 		f << "# " << lvl << endl; 
 			
-		if (f_starter) {
+		if (f_base_case) {
 			level = 0; // starter_size;
 			}
 		else {
@@ -688,25 +688,25 @@ void poset_classification::draw_poset_full(const char *fname_base,
 void poset_classification::draw_poset_fname_base_aux_poset(
 		char *fname, int depth)
 {
-	sprintf(fname, "%s_aux_poset_lvl_%d", fname_base, depth);
+	sprintf(fname, "%s_aux_poset_lvl_%d", problem_label_with_path, depth);
 }
 
 void poset_classification::draw_poset_fname_base_poset_lvl(
 		char *fname, int depth)
 {
-	sprintf(fname, "%s_poset_lvl_%d", fname_base, depth);
+	sprintf(fname, "%s_poset_lvl_%d", problem_label_with_path, depth);
 }
 
 void poset_classification::draw_poset_fname_base_tree_lvl(
 		char *fname, int depth)
 {
-	sprintf(fname, "%s_tree_lvl_%d", fname_base, depth);
+	sprintf(fname, "%s_tree_lvl_%d", problem_label_with_path, depth);
 }
 
 void poset_classification::draw_poset_fname_base_poset_detailed_lvl(
 		char *fname, int depth)
 {
-	sprintf(fname, "%s_poset_detailed_lvl_%d", fname_base, depth);
+	sprintf(fname, "%s_poset_detailed_lvl_%d", problem_label_with_path, depth);
 }
 
 
@@ -2479,7 +2479,7 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 	if (f_v) {
 		cout << "poset_classification::print_data_structure_tex" << endl;
 		}
-	sprintf(fname_base1, "%s_data_lvl_%d", fname_base, depth);
+	sprintf(fname_base1, "%s_data_lvl_%d", problem_label_with_path, depth);
 	sprintf(fname, "%s.tex", fname_base1);
 
 	set = NEW_lint(depth);

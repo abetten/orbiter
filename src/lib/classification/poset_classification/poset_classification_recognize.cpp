@@ -121,9 +121,9 @@ void poset_classification::recognize_recursion(
 		cout << endl;
 		}
 	if (f_v4) {
-		if (f_print_function) {
-			(*print_function)(cout, size, set[lvl],
-					print_function_data);
+		if (Poset->f_print_function) {
+			(*Poset->print_function)(cout, size, set[lvl],
+					Poset->print_function_data);
 			}
 		}
 	
@@ -143,12 +143,12 @@ void poset_classification::recognize_recursion(
 		}
 #endif
 
-	if (lvl == 0 && f_starter) {
+	if (lvl == 0 && f_base_case) {
 		long int *cur_set = set[0];
-		long int *next_set = set[0 + starter_size];
+		long int *next_set = set[0 + Base_case->size];
 		int *cur_transporter = transporter->ith(0);
 		int *next_transporter = transporter->ith(
-				0 + starter_size);
+				0 + Base_case->size);
 		
 		O->trace_starter(this, size,
 			cur_set, next_set,
@@ -162,7 +162,7 @@ void poset_classification::recognize_recursion(
 			}
 		recognize_recursion(
 			size, f_implicit_fusion,
-			starter_size, starter_size, final_node,
+			Base_case->size, Base_case->size, final_node,
 			verbose_level);
 
 		if (f_v) {
@@ -429,9 +429,9 @@ void poset_classification::recognize(
 	if (f_vv) {
 		lint_vec_print(cout, set[0], size);
 		cout << endl;
-		if (f_print_function) {
-			(*print_function)(cout, size, set[0],
-					print_function_data);
+		if (Poset->f_print_function) {
+			(*Poset->print_function)(cout, size, set[0],
+					Poset->print_function_data);
 			}
 		}
 	if (size > sz) {
@@ -441,7 +441,7 @@ void poset_classification::recognize(
 		exit(1);
 		}
 
-	nb_times_trace++;
+	//nb_times_trace++;
 
 	
 	lint_vec_copy(set[0], set0, size);

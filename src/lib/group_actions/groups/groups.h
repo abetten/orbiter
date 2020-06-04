@@ -209,6 +209,7 @@ public:
 	void init_subgroup_Janko1(char *prefix, char *label_latex,
 		int verbose_level);
 	void report(std::ostream &fp, int f_sylow, int f_group_table,
+			int f_conjugacy_classes_and_normalizers,
 			double tikz_scale, double tikz_line_width, int factor_1000,
 			int verbose_level);
 };
@@ -1560,14 +1561,17 @@ public:
 		int group_index, int verbose_level);
 	void group_order(longinteger_object &go);
 	long int group_order_as_lint();
-	void print_generators();
-	void print_generators_ost(std::ostream &ost);
+	//void print_generators();
+	//void print_generators_ost(std::ostream &ost);
 	void print_generators_in_source_code();
 	void print_generators_in_source_code_to_file(
 	const char *fname);
 	void print_generators_even_odd();
 	void print_generators_MAGMA(action *A, std::ostream &ost);
 	void export_magma(action *A, std::ostream &ost);
+	void print_generators_gap(std::ostream &ost);
+	void print_generators(std::ostream &ost);
+	void print_generators_in_latex_individually(std::ostream &ost);
 	void print_generators_tex();
 	void print_generators_tex(std::ostream &ost);
 	void print_generators_tex_with_print_point_function(

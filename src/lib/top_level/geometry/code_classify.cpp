@@ -63,34 +63,35 @@ void code_classify::freeself()
 {
 	if (A) {
 		FREE_OBJECT(A);
-		}
+	}
 	if (Control) {
 		FREE_OBJECT(Control);
-		}
+	}
 	if (Poset) {
 		FREE_OBJECT(Poset);
-		}
+	}
 	if (F) {
 		FREE_OBJECT(F);
-		}
+	}
 	if (v1) {
 		FREE_int(v1);
-		}
+	}
 	if (v2) {
 		FREE_int(v2);
-		}
+	}
 	if (gen) {
 		FREE_OBJECT(gen);
-		}
+	}
 	if (description) {
 		FREE_OBJECT(description);
-		}
+	}
 	if (L) {
 		FREE_OBJECT(L);
-		}
+	}
 	null();
 }
 
+#if 0
 void code_classify::read_arguments(int argc, const char **argv)
 {
 	int i;
@@ -258,21 +259,19 @@ void code_classify::read_arguments(int argc, const char **argv)
 		}
 
 }
+#endif
 
-void code_classify::init(int argc, const char **argv)
+void code_classify::init(poset_classification_control *Control)
 {
 	F = NEW_OBJECT(finite_field);
 	A = NEW_OBJECT(action);
-	//Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset);
 	gen = NEW_OBJECT(poset_classification);
 	int f_basis = TRUE;
+	int target_depth;
 	
 
-	if (!f_control) {
-		Control = NEW_OBJECT(poset_classification_control);
-	}
-	read_arguments(argc, argv);
+	//read_arguments(argc, argv);
 	
 	//int verbose_level = gen->verbose_level;
 	
@@ -280,42 +279,43 @@ void code_classify::init(int argc, const char **argv)
 	
 	if (f_v) {
 		cout << "code_classify::init" << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "code_classify::init initializing "
 				"finite field of order " << q << endl;
-		}
+	}
 	F->init(q, 0);
 	if (f_v) {
 		cout << "code_classify::init initializing "
 				"finite field of order " << q << " done" << endl;
-		}
+	}
 
 
-
+#if 0
 	if (f_linear) {
 		if (f_nmk) {
 			sprintf(directory_path, "CODES_NMK_%d_%d_%d/", nmk, q, d);
 			sprintf(prefix, "codes_nmk_%d_%d_%d", nmk, q, d);
-			}
+		}
 		else {
 			sprintf(directory_path, "CODES_%d_%d_%d_%d/", n, k, q, d);
 			sprintf(prefix, "codes_%d_%d_%d_%d", n, k, q, d);
-			}
 		}
+	}
 	else if (f_nonlinear) {
 		sprintf(directory_path, "NONLINEAR_CODES_%d_%d_%d/", n, q, d);
 		sprintf(prefix, "nonlinear_codes_%d_%d_%d", n, q, d);
-		}
+	}
 	if (strlen(directory_path)) {
 		char cmd[1000];
 
 		sprintf(cmd, "mkdir %s", directory_path);
 		system(cmd);
-		}
+	}
 	sprintf(gen->fname_base, "%s%s", directory_path, prefix);
+#endif
 	
 	
 	if (f_linear) {
@@ -324,7 +324,7 @@ void code_classify::init(int argc, const char **argv)
 		if (f_v) {
 			cout << "code_classify::init calling "
 					"init_projective_group, dimension = " << nmk << endl;
-			}
+		}
 
 		v1 = NEW_int(nmk);
 		v2 = NEW_int(nmk);
@@ -340,12 +340,13 @@ void code_classify::init(int argc, const char **argv)
 		if (f_v) {
 			cout << "code_classify::init finished with "
 					"init_projective_group" << endl;
-			}
+		}
 
-		gen->depth = n;
+		target_depth = n;
+		//gen->depth = n;
 		rc.init(F, nmk, n, d);
 		Strong_gens = A->Strong_gens;
-		}
+	}
 	else if (f_nonlinear) {
 
 
@@ -367,19 +368,27 @@ void code_classify::init(int argc, const char **argv)
 		L->Strong_gens->group_order(go);
 		cout << "created strong generators for a group of "
 				"order " << go << endl;
-		L->Strong_gens->print_generators();
+		L->Strong_gens->print_generators(cout);
 
 		A = L->A2;
 		Strong_gens = L->Strong_gens;
-		gen->depth = N;
-		}
+		target_depth = N;
+		//gen->depth = N;
+	}
+	else {
+		cout << "must use either liner or nonlinear option" << endl;
+		exit(1);
+	}
 
 	if (f_v) {
 		cout << "code_classify::init degree = " << A->degree << endl;
-		cout << "code_classify::init depth = " << gen->depth << endl;
-		}
+		cout << "code_classify::init target_depth = " << target_depth << endl;
+	}
 	
 
+
+	Control->f_max_depth = TRUE;
+	Control->max_depth = target_depth;
 	
 	
 	if (f_v) {
@@ -387,7 +396,7 @@ void code_classify::init(int argc, const char **argv)
 				"calling gen->init" << endl;
 		cout << "A->f_has_strong_generators="
 				<< A->f_has_strong_generators << endl;
-		}
+	}
 	
 	Poset->init_subset_lattice(A, A,
 			Strong_gens,
@@ -400,7 +409,11 @@ void code_classify::init(int argc, const char **argv)
 			independence_value,
 			verbose_level);
 
-	gen->init(Control, Poset, gen->depth /* sz */, verbose_level);
+	Poset->f_print_function = FALSE;
+	Poset->print_function = print_code;
+	Poset->print_function_data = this;
+
+	gen->initialize_and_allocate_root_node(Control, Poset, target_depth, verbose_level);
 
 
 
@@ -412,30 +425,29 @@ void code_classify::init(int argc, const char **argv)
 		}
 #endif
 
-	gen->f_print_function = FALSE;
-	gen->print_function = print_code;
-	gen->print_function_data = this;
-	
+#if 0
 	int nb_nodes = ONE_MILLION;
 
 	if (f_v) {
 		cout << "code_classify::init group set up, "
 				"calling gen->init_poset_orbit_node" << endl;
-		}
+	}
 
 	gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
 
 	if (f_v) {
 		cout << "code_classify::init group set up, "
 				"calling gen->root[0].init_root_node" << endl;
-		}
+	}
 
-	gen->root[0].init_root_node(gen, gen->Control->verbose_level - 2);
+	gen->get_node(0)->init_root_node(gen, verbose_level - 2);
+#endif
+
 	if (f_read_data_file) {
 		if (f_v) {
 			cout << "code_classify::init reading data file "
 					<< fname_data_file << endl;
-			}
+		}
 
 		gen->read_data_file(depth_completed,
 				fname_data_file, verbose_level - 1);
@@ -443,17 +455,17 @@ void code_classify::init(int argc, const char **argv)
 			cout << "code_classify::init after reading data file "
 					<< fname_data_file << " depth_completed = "
 					<< depth_completed << endl;
-			}
+		}
 		if (f_v) {
 			cout << "code_classify::init before "
 					"gen->recreate_schreier_vectors_up_to_level" << endl;
-			}
+		}
 		gen->recreate_schreier_vectors_up_to_level(depth_completed - 1,
 			verbose_level - 1);
 		if (f_v) {
 			cout << "code_classify::init after "
 					"gen->recreate_schreier_vectors_up_to_level" << endl;
-			}
+		}
 
 	}
 	
@@ -473,25 +485,19 @@ void code_classify::main(int verbose_level)
 
 	if (f_v) {
 		cout << "code_classify::main" << endl;
-		}
+	}
 	if (f_read_data_file) {
-		int target_depth;
+		int target_depth = Control->max_depth;
 		if (f_v) {
 			cout << "code_classify::main f_read_data_file" << endl;
-			}
-		if (gen->Control->f_max_depth) {
-			target_depth = gen->Control->max_depth;
-			}
-		else {
-			target_depth = gen->depth;
-			}
+		}
 		depth = gen->compute_orbits(depth_completed, target_depth,
 				verbose_level);
 	}
 	else {
 		if (f_v) {
 			cout << "code_classify::main before gen->main" << endl;
-			}
+		}
 		depth = gen->main(t0,
 			schreier_depth,
 			f_use_invariant_subset_if_available,
@@ -515,7 +521,7 @@ void code_classify::main(int verbose_level)
 
 
 		FREE_lint(Table);
-		}
+	}
 
 	if (Control->f_list) {
 		if (f_v) {
@@ -526,7 +532,8 @@ void code_classify::main(int verbose_level)
 			spreadsheet *Sp;
 
 			if (f_v) {
-				cout << "code_classify::main before gen->make_spreadsheet_of_orbit_reps" << endl;
+				cout << "code_classify::main before "
+						"gen->make_spreadsheet_of_orbit_reps" << endl;
 			}
 
 			gen->make_spreadsheet_of_orbit_reps(Sp, depth);
@@ -535,7 +542,8 @@ void code_classify::main(int verbose_level)
 			Sp->save(fname_csv, verbose_level);
 			delete Sp;
 			if (f_v) {
-				cout << "code_classify::main after gen->make_spreadsheet_of_orbit_reps" << endl;
+				cout << "code_classify::main after "
+						"gen->make_spreadsheet_of_orbit_reps" << endl;
 			}
 		}
 
@@ -546,7 +554,8 @@ void code_classify::main(int verbose_level)
 		int f_show_whole_orbit = FALSE;
 		
 		if (f_v) {
-			cout << "code_classify::main before gen->list_all_orbits_at_level" << endl;
+			cout << "code_classify::main before "
+					"gen->list_all_orbits_at_level" << endl;
 		}
 		gen->list_all_orbits_at_level(depth, 
 			TRUE, 
@@ -558,14 +567,15 @@ void code_classify::main(int verbose_level)
 			f_show_whole_orbit);
 
 		if (f_v) {
-			cout << "code_classify::main after gen->list_all_orbits_at_level" << endl;
+			cout << "code_classify::main after "
+					"gen->list_all_orbits_at_level" << endl;
 		}
 
 #if 0
 		int d;
 		for (d = 0; d < 3; d++) {
 			gen->print_schreier_vectors_at_depth(d, verbose_level);
-			}
+		}
 #endif
 #endif
 		}
@@ -610,7 +620,7 @@ void code_classify::main(int verbose_level)
 		if (f_v) {
 			cout << "code_classify::main f_draw_poset" << endl;
 		}
-		gen->draw_poset(gen->fname_base, depth, 
+		gen->draw_poset(gen->get_problem_label_with_path(), depth,
 			0 /* data1 */, f_embedded, f_sideways, 
 			verbose_level);
 		}
@@ -618,7 +628,7 @@ void code_classify::main(int verbose_level)
 		if (f_v) {
 			cout << "code_classify::main f_draw_full_poset" << endl;
 		}
-		gen->draw_poset_full(gen->fname_base, depth,
+		gen->draw_poset_full(gen->get_problem_label_with_path(), depth,
 				0 /* data1 */, f_embedded, f_sideways,
 				1 /* x_stretch */, verbose_level);
 
@@ -642,14 +652,14 @@ void code_classify::main(int verbose_level)
 		if (f_linear) {
 			if (f_nmk) {
 				sprintf(fname_base, "codes_linear_nmk%d_q%d_d%d", nmk, q, d);
-				}
+			}
 			else {
 				sprintf(fname_base, "codes_linear_n%d_k%d_q%d_d%d", n, k, q, d);
-				}
 			}
+		}
 		else if (f_nonlinear) {
 			sprintf(fname_base, "codes_nonlinear_n%d_k%d_d%d", n, k, d);
-			}
+		}
 #if 0
 		sprintf(fname_report, "%s.txt", fname_base);
 		{
@@ -677,56 +687,56 @@ void code_classify::main(int verbose_level)
 				sprintf(title, "Classification of ${\\mathbb F}_{%d}$-linear codes "
 						"with redundancy %d and distance at least %d", q, nmk, d);
 				sprintf(fname_base, "codes_linear_nmk%d_q%d_d%d", nmk, q, d);
-				}
+			}
 			else {
 				sprintf(title, "Classification of linear "
 						"$[%d,%d,%d]$ codes over ${\\mathbb F}_{%d}$", n, k, d, q);
 				sprintf(fname_base, "codes_linear_n%d_k%d_q%d_d%d", n, k, q, d);
-				}
 			}
+		}
 		else if (f_nonlinear) {
 			sprintf(title, "Classification of optimal nonlinear codes of "
 					"length %d over the field ${\\mathbb F}_{%d}$", n, q);
 			sprintf(fname_base, "codes_nonlinear_n%d_k%d_d%d", n, k, d);
-			}
+		}
 
 		sprintf(fname_report, "%s.tex", fname_base);
 		{
-		ofstream fp(fname_report);
-		latex_interface L;
+			ofstream fp(fname_report);
+			latex_interface L;
 
 
-		L.head(fp,
-			FALSE /* f_book */,
-			TRUE /* f_title */,
-			title, author,
-			FALSE /*f_toc */,
-			FALSE /* f_landscape */,
-			FALSE /* f_12pt */,
-			TRUE /*f_enlarged_page */,
-			TRUE /* f_pagenumbers*/,
-			NULL /* extra_praeamble */);
+			L.head(fp,
+				FALSE /* f_book */,
+				TRUE /* f_title */,
+				title, author,
+				FALSE /*f_toc */,
+				FALSE /* f_landscape */,
+				FALSE /* f_12pt */,
+				TRUE /*f_enlarged_page */,
+				TRUE /* f_pagenumbers*/,
+				NULL /* extra_praeamble */);
 
-		fp << "\\section{The field of order " << F->q << "}" << endl;
-		fp << "\\noindent The field ${\\mathbb F}_{"
-				<< F->q
-				<< "}$ :\\\\" << endl;
-		F->cheat_sheet(fp, verbose_level);
+			fp << "\\section{The field of order " << F->q << "}" << endl;
+			fp << "\\noindent The field ${\\mathbb F}_{"
+					<< F->q
+					<< "}$ :\\\\" << endl;
+			F->cheat_sheet(fp, verbose_level);
 
-		fp << "\\section{The group $" << A->label_tex << "$}" << endl;
-		A->report(fp, A->f_has_sims, A->Sims, A->f_has_strong_generators, A->Strong_gens, verbose_level);
-		A->print_points(fp);
+			fp << "\\section{The group $" << A->label_tex << "$}" << endl;
+			A->report(fp, A->f_has_sims, A->Sims, A->f_has_strong_generators, A->Strong_gens, verbose_level);
+			A->print_points(fp);
 
-		gen->report(fp);
+			gen->report(fp);
 
-		L.foot(fp);
+			L.foot(fp);
 
 		} // close fp
 
 	}
 	if (f_v) {
 		cout << "code_classify::main done" << endl;
-		}
+	}
 }
 
 void code_classify::print(ostream &ost, int len, long int *S)
@@ -738,7 +748,7 @@ void code_classify::print(ostream &ost, int len, long int *S)
 
 	if (len == 0) {
 		return;
-		}
+	}
 
 	if (f_linear) {
 		ost << "generator matrix:" << endl;
@@ -746,7 +756,7 @@ void code_classify::print(ostream &ost, int len, long int *S)
 			F->PG_element_unrank_modified(
 				rc.M1 + j, len /* stride */, nmk /* len */,
 				S[j]);
-			}
+		}
 		print_integer_matrix(ost, rc.M1, nmk, len);
 
 		L.int_matrix_print_tex(ost, rc.M1, nmk, len);
@@ -801,11 +811,11 @@ void code_classify::print(ostream &ost, int len, long int *S)
 					"projective_weights" << endl;
 			F->compute_and_print_projective_weights(
 					ost, B, len, len - nmk);
-			}
 		}
+	}
 	else if (f_nonlinear) {
 		ost << "print nonlinear not yet implemented" << endl;
-		}
+	}
 }
 
 
@@ -823,13 +833,13 @@ int code_classify::Hamming_distance(int a, int b)
 	if (f_nonlinear) {
 		if (q == 2) {
 			d = Combi.Hamming_distance_binary(a, b, n);
-			}
+		}
 		else {
 			cout << "code_generator::Hamming_distance "
 					"f_nonlinear and q != 2" << endl;
 			exit(1);
-			}
 		}
+	}
 	if (f_linear) {
 		F->PG_element_unrank_modified(
 			v1, 1 /* stride */, nmk /* len */, 
@@ -840,13 +850,13 @@ int code_classify::Hamming_distance(int a, int b)
 		for (i = 0; i < nmk; i++) {
 			if (v1[i] != v2[i]) {
 				d++;
-				}
 			}
 		}
+	}
 	if (f_v) {
 		cout << "code_classify::Hamming_distance "
-				"a=" << a << " b=" << b << " d=" << d << endl;
-		}
+			"a=" << a << " b=" << b << " d=" << d << endl;
+	}
 	return d;
 }
 

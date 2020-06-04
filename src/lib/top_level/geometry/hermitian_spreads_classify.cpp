@@ -52,48 +52,48 @@ void hermitian_spreads_classify::freeself()
 
 	if (F) {
 		FREE_OBJECT(F);
-		}
+	}
 	if (H) {
 		FREE_OBJECT(H);
-		}
+	}
 	if (Pts) {
 		FREE_lint(Pts);
-		}
+	}
 	if (v) {
 		FREE_int(v);
-		}
+	}
 	if (P) {
 		FREE_OBJECT(P);
-		}
+	}
 	if (A) {
 		FREE_OBJECT(A);
-		}
+	}
 	if (A2) {
 		FREE_OBJECT(A2);
 	}
 	if (line_type) {
 		FREE_int(line_type);
-		}
+	}
 	if (Intersection_sets) {
 		for (i = 0; i < nb_secants; i++) {
 			FREE_lint(Intersection_sets[i]);
-			}
 		}
+	}
 	if (f_v) {
 		cout << "hermitian_spreads_classify::freeself deleting secants" << endl;
-		}
+	}
 	if (secants) {
 		FREE_lint(secants);
-		}
+	}
 	if (f_v) {
 		cout << "hermitian_spreads_classify::freeself deleting Adj" << endl;
-		}
+	}
 	if (Adj) {
 		FREE_int(Adj);
-		}
+	}
 	if (f_v) {
 		cout << "hermitian_spreads_classify::freeself deleting GU" << endl;
-		}
+	}
 #if 0
 	if (GU) {
 		delete GU;
@@ -101,25 +101,25 @@ void hermitian_spreads_classify::freeself()
 #endif
 	if (f_v) {
 		cout << "hermitian_spreads_classify::freeself deleting sg" << endl;
-		}
+	}
 	if (sg) {
 		FREE_OBJECT(sg);
-		}
+	}
 	if (f_v) {
 		cout << "hermitian_spreads_classify::freeself deleting A2r" << endl;
-		}
+	}
 	if (A2r) {
 		FREE_OBJECT(A2r);
-		}
+	}
 	if (f_v) {
 		cout << "hermitian_spreads_classify::freeself deleting gen" << endl;
-		}
+	}
 	if (Poset) {
 		FREE_OBJECT(Poset);
 	}
 	if (gen) {
 		FREE_OBJECT(gen);
-		}
+	}
 	null();
 }
 
@@ -133,7 +133,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 		cout << "hermitian_spreads_classify::init" << endl;
 		cout << "n=" << n << endl;
 		cout << "Q=" << Q << endl;
-		}
+	}
 	hermitian_spreads_classify::n = n;
 	hermitian_spreads_classify::Q = Q;
 	F = NEW_OBJECT(finite_field);
@@ -160,7 +160,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 		F->PG_element_unrank_modified(v, 1, len, Pts[i]);
 		int_vec_print(cout, v, len);
 		cout << endl;
-		}
+	}
 
 
 	P = NEW_OBJECT(projective_space);
@@ -208,7 +208,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 	for (j = 0; j < nb_secants; j++) {
 		a = C.sorting_perm_inv[f + j];
 		secants[j] = a;
-		}
+	}
 
 	int intersection_set_size;
 
@@ -223,34 +223,34 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 		if (intersection_set_size != sz) {
 			cout << "intersection_set_size != sz" << endl;
 			exit(1);
-			}
+		}
 		for (i = 0; i < sz; i++) {
 			b = Intersection_sets[j][i];
 			if (!Sorting.lint_vec_search_linear(Pts, nb_pts, b, idx)) {
 				cout << "cannot find the point" << endl;
 				exit(1);
-				}
-			Intersection_sets[j][i] = idx;
 			}
+			Intersection_sets[j][i] = idx;
+		}
 
 		lint_vec_print(cout, Intersection_sets[j], sz);
 		cout << endl;
-		}
+	}
 
 
 	cout << "Computing Adjacency matrix:" << endl;
 	Adj = NEW_int(nb_secants * nb_secants);
 	for (i = 0; i < nb_secants * nb_secants; i++) {
 		Adj[i] = 0;
-		}
+	}
 	for (i = 0; i < nb_secants; i++) {
 		for (j = i + 1; j < nb_secants; j++) {
 			if (disjoint_sets(Intersection_sets[i], Intersection_sets[j], sz)) {
 				Adj[i * nb_secants + j] = 1;
 				Adj[j * nb_secants + i] = 1;
-				}
 			}
 		}
+	}
 	cout << "Adj" << endl;
 	int_matrix_print(Adj, nb_secants, nb_secants);
 
@@ -270,7 +270,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 
 
 	cout << "strong generators are:" << endl;
-	sg->print_generators();
+	sg->print_generators(cout);
 
 
 
@@ -287,7 +287,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 
 	if (f_v) {
 		cout << "hermitian_spread_classify::init done" << endl;
-		}
+	}
 }
 
 void hermitian_spreads_classify::read_arguments(int argc, const char **argv)
@@ -319,7 +319,7 @@ void hermitian_spreads_classify::read_arguments(int argc, const char **argv)
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
-		}
+	}
 }
 
 void hermitian_spreads_classify::init2(int verbose_level)
@@ -343,42 +343,15 @@ void hermitian_spreads_classify::init2(int verbose_level)
 	if (f_v) {
 		cout << "hermitian_spreads_classify::init2 before "
 				"Poset->add_testing_without_group" << endl;
-		}
+	}
 	Poset->add_testing_without_group(
 			HS_early_test_func_callback,
 				this /* void *data */,
 				verbose_level);
 
 
-	gen->initialize(Control, Poset,
-		nb_pts / sz,
-		"", prefix, verbose_level - 2);
+	//gen->f_allowed_to_show_group_elements = TRUE;
 
-	gen->f_allowed_to_show_group_elements = TRUE;
-
-#if 0
-	// not needed since we have an early_test_func:
-
-	gen->init_check_func(
-		check_function_callback,
-		this /* candidate_check_data */);
-#endif
-
-
-#if 0
-	// we have an early test function:
-
-	gen->init_early_test_func(
-		HS_early_test_func_callback,
-		this,
-		verbose_level);
-
-	// We also have an incremental check function.
-	// This is only used by the clique finder:
-	gen->init_incremental_check_func(
-		HS_check_function_incremental_callback,
-		this /* candidate_check_data */);
-#endif
 
 
 #if 0
@@ -390,13 +363,13 @@ void hermitian_spreads_classify::init2(int verbose_level)
 
 	if (f_v) {
 		cout << "hermitian_spreads_classify::init2 done" << endl;
-		}
+	}
 }
 
 void hermitian_spreads_classify::compute(int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int schreier_depth = gen->depth;
+	int schreier_depth = depth;
 	int f_use_invariant_subset_if_available = TRUE;
 	//int f_implicit_fusion = FALSE;
 	int f_debug = FALSE;
@@ -405,44 +378,51 @@ void hermitian_spreads_classify::compute(int depth, int verbose_level)
 	os_interface Os;
 
 
+	Control->f_max_depth = TRUE;
+	Control->max_depth = depth;
+
+
+
+	gen->initialize_and_allocate_root_node(Control, Poset,
+		nb_pts / sz,
+		//"", prefix,
+		verbose_level - 2);
+
+
+
 #if 0
 	if (f_override_schreier_depth) {
 		schreier_depth = override_schreier_depth;
-		}
+	}
 #endif
 	if (f_v) {
 		cout << "hermitian_spreads_classify::compute calling generator_main" << endl;
-		}
-
-	gen->Control->f_max_depth = TRUE;
-	gen->Control->max_depth = depth;
+	}
 
 	t0 = Os.os_ticks();
 	gen->main(t0,
 		schreier_depth,
 		f_use_invariant_subset_if_available,
-		//f_implicit_fusion,
 		f_debug,
 		verbose_level - 1);
 
-	int fst, length;
+	int length;
 
 	if (f_v) {
 		cout << "hermitian_spreads_classify::compute done with generator_main" << endl;
-		}
-	fst = gen->first_poset_orbit_node_at_level[depth];
-	length = gen->first_poset_orbit_node_at_level[depth + 1] - fst;
+	}
+	length = gen->nb_orbits_at_level(depth);
 
 	int f_sideways = FALSE;
 
-	gen->draw_poset(gen->fname_base, depth, 0 /* data1 */,
-			f_embedded, f_sideways, gen->Control->verbose_level);
-	gen->print_data_structure_tex(depth, gen->Control->verbose_level);
+	gen->draw_poset(gen->get_problem_label_with_path(), depth, 0 /* data1 */,
+			f_embedded, f_sideways, verbose_level);
+	gen->print_data_structure_tex(depth, verbose_level);
 
 	if (f_v) {
 		cout << "hermitian_spreads_classify::compute "
 				"We found " << length << " orbits" << endl;
-		}
+	}
 }
 
 
@@ -461,7 +441,7 @@ void hermitian_spreads_classify::early_test_func(long int *S, int len,
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
 		lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
-		}
+	}
 
 	nb_good_candidates = 0;
 	for (j = 0; j < nb_candidates; j++) {
@@ -470,25 +450,25 @@ void hermitian_spreads_classify::early_test_func(long int *S, int len,
 
 		if (len == 0) {
 			i0 = 0;
-			}
+		}
 		else {
 			i0 = len - 1;
-			}
+		}
 		for (i = i0; i < len; i++) {
 			b = S[i];
 			if (Adj[a * nb_secants + b] == 0) {
 				break;
-				}
+			}
 			else {
-				}
-			} // next i
+			}
+		} // next i
 
 
 
 		if (i == len) {
 			good_candidates[nb_good_candidates++] = candidates[j];
-			}
-		} // next j
+		}
+	} // next j
 
 }
 
@@ -505,14 +485,14 @@ void HS_early_test_func_callback(long int *S, int len,
 		cout << "HS_early_test_func for set ";
 		print_set(cout, len, S);
 		cout << endl;
-		}
+	}
 	HS->early_test_func(S, len,
 		candidates, nb_candidates,
 		good_candidates, nb_good_candidates,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "HS_early_test_func done" << endl;
-		}
+	}
 }
 
 int disjoint_sets(long int *v, long int *w, int len)
@@ -524,8 +504,8 @@ int disjoint_sets(long int *v, long int *w, int len)
 		a = v[i];
 		if (Sorting.lint_vec_search_linear(w, len, a, idx)) {
 			return FALSE;
-			}
 		}
+	}
 	return TRUE;
 }
 
@@ -537,7 +517,7 @@ void projective_space_init_line_action(projective_space *P,
 
 	if (f_v) {
 		cout << "projective_space_init_line_action" << endl;
-		}
+	}
 	A_on_lines = NEW_OBJECT(action);
 
 	AoL = NEW_OBJECT(action_on_grassmannian);
@@ -548,12 +528,12 @@ void projective_space_init_line_action(projective_space *P,
 	if (f_v) {
 		cout << "projective_space_init_line_action "
 				"action on grassmannian established" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "projective_space_init_line_action "
 				"initializing A_on_lines" << endl;
-		}
+	}
 	int f_induce_action = TRUE;
 	sims S;
 	longinteger_object go1;
@@ -568,31 +548,31 @@ void projective_space_init_line_action(projective_space *P,
 	if (f_v) {
 		cout << "projective_space_init_line_action "
 				"group order " << go1 << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "projective_space_init_line_action "
 				"initializing action on grassmannian" << endl;
-		}
+	}
 	A_on_lines->induced_action_on_grassmannian(A_points, AoL,
 		f_induce_action, &S, verbose_level);
 	if (f_v) {
 		cout << "projective_space_init_line_action "
 				"initializing A_on_lines done" << endl;
 		A_on_lines->print_info();
-		}
+	}
 
 	if (f_v) {
 		cout << "projective_space_init_line_action "
 				"computing strong generators" << endl;
-		}
+	}
 	if (!A_on_lines->f_has_strong_generators) {
 		cout << "projective_space_init_line_action "
 				"induced action does not have strong generators" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "projective_space_init_line_action done" << endl;
-		}
+	}
 }
 
 

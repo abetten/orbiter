@@ -115,6 +115,7 @@ static long int induced_action_element_image_of(action &A,
 	int *Elt = (int *) elt;
 	long int b = 0;
 	int f_v = (verbose_level >= 1);
+	action_global AG;
 	
 	if (f_v) {
 		cout << "induced_action_element_image_of "
@@ -540,14 +541,14 @@ static long int induced_action_element_image_of(action &A,
 	else {
 		cout << "induced_action_element_image_of type_G "
 				"unknown:: type_G = " << A.type_G << endl;
-		action_print_symmetry_group_type(cout, A.type_G);
+		AG.action_print_symmetry_group_type(cout, A.type_G);
 		cout << "action:" << endl;
 		A.print_info();
 		exit(1);
 		}
 	if (f_v) {
 		cout << "induced_action_element_image_of type=";
-			action_print_symmetry_group_type(cout, A.type_G);
+			AG.action_print_symmetry_group_type(cout, A.type_G);
 			cout << " image of " << a << " is " << b << endl;
 		}
 	return b;
@@ -1504,6 +1505,7 @@ static void induced_action_element_print_for_make_element_no_commas(
 static void induced_action_print_point(action &A,
 		long int a, ostream &ost)
 {
+	action_global AG;
 
 	if (A.type_G == action_by_right_multiplication_t) {
 		//action_by_right_multiplication *ABRM = A.G.ABRM;
@@ -1724,7 +1726,7 @@ static void induced_action_print_point(action &A,
 		}
 	else {
 		cout << "induced_action_print_point type_G unknown:: type_G = ";
-		action_print_symmetry_group_type(cout, A.type_G);
+		AG.action_print_symmetry_group_type(cout, A.type_G);
 		cout << endl;
 		exit(1);
 		}
@@ -1733,6 +1735,7 @@ static void induced_action_print_point(action &A,
 
 static void induced_action_unrank_point(action &A, long int rk, int *v)
 {
+	action_global AG;
 	//cout << "induced_action_unrank_point" << endl;
 
 	if (A.type_G == action_by_right_multiplication_t) {
@@ -1962,7 +1965,7 @@ static void induced_action_unrank_point(action &A, long int rk, int *v)
 		}
 	else {
 		cout << "induced_action_unrank_point type_G unknown:: type_G = ";
-		action_print_symmetry_group_type(cout, A.type_G);
+		AG.action_print_symmetry_group_type(cout, A.type_G);
 		cout << endl;
 		exit(1);
 		}
@@ -1971,6 +1974,7 @@ static void induced_action_unrank_point(action &A, long int rk, int *v)
 
 static long int induced_action_rank_point(action &A, int *v)
 {
+	action_global AG;
 	//cout << "induced_action_rank_point" << endl;
 	long int rk = -1;
 
@@ -2213,7 +2217,7 @@ static long int induced_action_rank_point(action &A, int *v)
 		}
 	else {
 		cout << "induced_action_rank_point type_G unknown:: type_G = ";
-		action_print_symmetry_group_type(cout, A.type_G);
+		AG.action_print_symmetry_group_type(cout, A.type_G);
 		cout << endl;
 		exit(1);
 		}

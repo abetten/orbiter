@@ -157,7 +157,9 @@ int isomorph_arguments::read_arguments(int argc, const char **argv,
 
 void isomorph_arguments::init(action *A, action *A2,
 	poset_classification *gen,
-	int target_size, const char *prefix_with_directory,
+	int target_size,
+	poset_classification_control *Control,
+	//const char *prefix_with_directory,
 	exact_cover_arguments *ECA,
 	void (*callback_report)(isomorph *Iso, void *data, int verbose_level), 
 	void (*callback_subset_orbits)(isomorph *Iso, void *data, int verbose_level), 
@@ -173,7 +175,9 @@ void isomorph_arguments::init(action *A, action *A2,
 	isomorph_arguments::A2 = A2;
 	isomorph_arguments::gen = gen;
 	isomorph_arguments::target_size = target_size;
-	isomorph_arguments::prefix_with_directory = prefix_with_directory;
+	isomorph_arguments::Control = Control;
+	//sprintf(prefix_with_directory, "%s%s", Control->path, Control->problem_label);
+	//isomorph_arguments::prefix_with_directory = prefix_with_directory;
 	isomorph_arguments::ECA = ECA;
 	isomorph_arguments::callback_report = callback_report;
 	isomorph_arguments::callback_subset_orbits = callback_subset_orbits;
@@ -204,7 +208,7 @@ void isomorph_arguments::execute(int verbose_level)
 
 	if (f_v) {
 		cout << "isomorph_arguments::execute" << endl;
-		}
+	}
 	
 	if (!f_init_has_been_called) {
 		cout << "isomorph_arguments::execute please "
@@ -214,14 +218,17 @@ void isomorph_arguments::execute(int verbose_level)
 	
 	if (f_build_db) {
 
-		cout << "isomorph_arguments::execute build_db" << endl;
-		
-		cout << "isomorph_arguments::execute before isomorph_build_db" << endl;
+		if (f_v) {
+			cout << "isomorph_arguments::execute build_db" << endl;
+			cout << "isomorph_arguments::execute before isomorph_build_db" << endl;
+		}
 		isomorph_build_db(A, A, gen, 
 			target_size, prefix_with_directory, prefix_iso, 
 			ECA->starter_size, verbose_level);
-		cout << "isomorph_arguments::execute after isomorph_build_db" << endl;
+		if (f_v) {
+			cout << "isomorph_arguments::execute after isomorph_build_db" << endl;
 		}
+	}
 	else if (f_read_solutions) {
 
 		const char *fname[1];
@@ -234,7 +241,9 @@ void isomorph_arguments::execute(int verbose_level)
 		fname[0] = fname1;
 
 
-		cout << "isomorph_arguments::execute before isomorph_read_solution_files" << endl;
+		if (f_v) {
+			cout << "isomorph_arguments::execute before isomorph_read_solution_files" << endl;
+		}
 		isomorph_read_solution_files(A, A2, gen, 
 			target_size, prefix_with_directory,
 			prefix_iso, ECA->starter_size,
@@ -242,9 +251,11 @@ void isomorph_arguments::execute(int verbose_level)
 			f_has_final_test_function,
 			final_test_function, final_test_data,
 			verbose_level);
-		cout << "isomorph_arguments::execute after isomorph_read_solution_files" << endl;
-
+		if (f_v) {
+			cout << "isomorph_arguments::execute after isomorph_read_solution_files" << endl;
 		}
+
+	}
 	else if (f_read_solutions_from_clique_finder) {
 
 		const char *fname[1];
@@ -257,25 +268,35 @@ void isomorph_arguments::execute(int verbose_level)
 		fname[0] = fname1;
 
 
-		cout << "isomorph_arguments::execute before isomorph_read_solution_files_from_clique_finder" << endl;
+		if (f_v) {
+			cout << "isomorph_arguments::execute before isomorph_read_solution_files_from_clique_finder" << endl;
+		}
 		isomorph_read_solution_files_from_clique_finder(
 			A, A2, gen,
 			target_size, prefix_with_directory,
 			prefix_iso, ECA->starter_size,
 			fname, nb_files, verbose_level);
-		cout << "isomorph_arguments::execute after isomorph_read_solution_files_from_clique_finder" << endl;
+		if (f_v) {
+			cout << "isomorph_arguments::execute after isomorph_read_solution_files_from_clique_finder" << endl;
 		}
+	}
 	else if (f_read_solutions_from_clique_finder_list_of_cases) {
 
 
-		cout << "f_read_solutions_from_clique_finder_list_of_cases" << endl;
+		if (f_v) {
+			cout << "f_read_solutions_from_clique_finder_list_of_cases" << endl;
+		}
 		long int *list_of_cases;
 		int nb_cases;
 
-		cout << "isomorph_arguments::execute before Fio.read_set_from_file" << endl;
+		if (f_v) {
+			cout << "isomorph_arguments::execute before Fio.read_set_from_file" << endl;
+		}
 		Fio.read_set_from_file(fname_list_of_cases,
 				list_of_cases, nb_cases, verbose_level);
-		cout << "nb_cases=" << nb_cases << endl;
+		if (f_v) {
+			cout << "nb_cases=" << nb_cases << endl;
+		}
 
 		char **fname;
 		char fname1[1000];
@@ -291,17 +312,20 @@ void isomorph_arguments::execute(int verbose_level)
 			strcpy(fname[i], fname1);
 			}
 
-		cout << "isomorph_arguments::execute before isomorph_read_solution_files_from_clique_finder_case_by_case" << endl;
+		if (f_v) {
+			cout << "isomorph_arguments::execute before "
+					"isomorph_read_solution_files_from_clique_finder_case_by_case" << endl;
+		}
 		isomorph_read_solution_files_from_clique_finder_case_by_case(A, A2, gen, 
 			target_size, prefix_with_directory, prefix_iso, ECA->starter_size, 
 			(const char **) fname, list_of_cases, nb_cases, verbose_level);
 
 		for (i = 0; i < nb_cases; i++) {
 			FREE_char(fname[i]);
-			}
+		}
 		FREE_pchar(fname);
 		FREE_lint(list_of_cases);
-		}
+	}
 
 
 	else if (f_read_solutions_after_split) {
@@ -321,14 +345,19 @@ void isomorph_arguments::execute(int verbose_level)
 			fname[i] = NEW_char(strlen(fname1) + 1);
 			strcpy(fname[i], fname1);
 			}
-		cout << "Reading the following " << nb_files << " files:" << endl;
-		for (i = 0; i < nb_files; i++) {
-			cout << i << " : " << fname[i] << endl;
+		if (f_v) {
+			cout << "Reading the following " << nb_files << " files:" << endl;
+			for (i = 0; i < nb_files; i++) {
+				cout << i << " : " << fname[i] << endl;
 			}
+		}
 
 
 		
-		cout << "isomorph_arguments::execute before isomorph_read_solution_files_from_clique_finder" << endl;
+		if (f_v) {
+			cout << "isomorph_arguments::execute before "
+					"isomorph_read_solution_files_from_clique_finder" << endl;
+		}
 		isomorph_read_solution_files_from_clique_finder(A, A2, gen, 
 			target_size, prefix_with_directory, prefix_iso, ECA->starter_size, 
 			(const char **) fname, nb_files, verbose_level);
@@ -342,7 +371,9 @@ void isomorph_arguments::execute(int verbose_level)
 		int i;
 
 
-		cout << "f_read_statistics_after_split" << endl;
+		if (f_v) {
+			cout << "f_read_statistics_after_split" << endl;
+		}
 		
 		nb_files = read_statistics_split_m;
 		fname = NEW_pchar(nb_files);
@@ -353,13 +384,18 @@ void isomorph_arguments::execute(int verbose_level)
 			fname[i] = NEW_char(strlen(fname1) + 1);
 			strcpy(fname[i], fname1);
 			}
-		cout << "Reading the following " << nb_files << " files:" << endl;
-		for (i = 0; i < nb_files; i++) {
-			cout << i << " : " << fname[i] << endl;
+		if (f_v) {
+			cout << "Reading the following " << nb_files << " files:" << endl;
+			for (i = 0; i < nb_files; i++) {
+				cout << i << " : " << fname[i] << endl;
 			}
+		}
 
 		
-		cout << "isomorph_arguments::execute before isomorph_read_statistic_files" << endl;
+		if (f_v) {
+			cout << "isomorph_arguments::execute before "
+					"isomorph_read_statistic_files" << endl;
+		}
 		isomorph_read_statistic_files(A, A2, gen, 
 			target_size, prefix_with_directory,
 			prefix_iso, ECA->starter_size,
@@ -367,40 +403,56 @@ void isomorph_arguments::execute(int verbose_level)
 
 		for (i = 0; i < nb_files; i++) {
 			FREE_char(fname[i]);
-			}
-		FREE_pchar(fname);
 		}
+		FREE_pchar(fname);
+	}
 
 	else if (f_compute_orbits) {
 
 
-		cout << "isomorph_arguments::execute before isomorph_compute_orbits" << endl;
+		if (f_v) {
+			cout << "isomorph_arguments::execute before "
+					"isomorph_compute_orbits" << endl;
+		}
 		isomorph_compute_orbits(A, A2, gen, 
 			target_size, prefix_with_directory, prefix_iso, 
 			ECA->starter_size, verbose_level);
-		cout << "isomorph_arguments::execute after isomorph_compute_orbits" << endl;
+		if (f_v) {
+			cout << "isomorph_arguments::execute after "
+					"isomorph_compute_orbits" << endl;
 		}
+	}
 	else if (f_isomorph_testing) {
 
 
-		cout << "isomorph_arguments::execute before isomorph_testing" << endl;
+		if (f_v) {
+			cout << "isomorph_arguments::execute before isomorph_testing" << endl;
+		}
 		isomorph_testing(A, A2, gen, 
 			target_size, prefix_with_directory, prefix_iso, 
 			ECA->starter_size, 
 			f_event_file, event_file_name, print_mod, 
 			verbose_level);
-		cout << "isomorph_arguments::execute after isomorph_testing" << endl;
+		if (f_v) {
+			cout << "isomorph_arguments::execute after isomorph_testing" << endl;
 		}
+	}
 	else if (f_classification_graph) {
 
-		cout << "isomorph_arguments::execute before isomorph_classification_graph" << endl;
+		if (f_v) {
+			cout << "isomorph_arguments::execute before "
+					"isomorph_classification_graph" << endl;
+		}
 		isomorph_classification_graph(A, A2, gen, 
 			target_size, 
 			prefix_with_directory, prefix_iso, 
 			ECA->starter_size, 
 			verbose_level);
-		cout << "isomorph_arguments::execute after isomorph_classification_graph" << endl;
+		if (f_v) {
+			cout << "isomorph_arguments::execute after "
+					"isomorph_classification_graph" << endl;
 		}
+	}
 	else if (f_isomorph_report) {
 
 		if (callback_report == NULL) {
@@ -408,13 +460,17 @@ void isomorph_arguments::execute(int verbose_level)
 					"callback_report == NULL" << endl;
 			exit(1);
 			}
-		cout << "isomorph_arguments::execute before isomorph_worker" << endl;
+		if (f_v) {
+			cout << "isomorph_arguments::execute before isomorph_worker" << endl;
+		}
 		isomorph_worker(A, A2, gen, 
 			target_size, prefix_with_directory, prefix_iso, 
 			callback_report, callback_data, 
 			ECA->starter_size, verbose_level);
-		cout << "isomorph_arguments::execute after isomorph_worker" << endl;
+		if (f_v) {
+			cout << "isomorph_arguments::execute after isomorph_worker" << endl;
 		}
+	}
 	else if (f_subset_orbits) {
 
 		isomorph_worker_data WD;
@@ -427,32 +483,40 @@ void isomorph_arguments::execute(int verbose_level)
 			Fio.read_set_from_file(subset_orbits_fname,
 					WD.the_set, WD.set_size, verbose_level);
 			}
-		cout << "isomorph_arguments::execute before isomorph_worker" << endl;
+		if (f_v) {
+			cout << "isomorph_arguments::execute before isomorph_worker" << endl;
+		}
 		isomorph_worker(A, A2, gen, 
 			target_size, prefix_with_directory, prefix_iso, 
 			callback_subset_orbits, &WD, 
 			ECA->starter_size, verbose_level);
-		cout << "isomorph_arguments::execute after isomorph_worker" << endl;
+		if (f_v) {
+			cout << "isomorph_arguments::execute after isomorph_worker" << endl;
+		}
 
 		if (WD.the_set) {
 			FREE_lint(WD.the_set);
-			}
 		}
+	}
 	else if (f_down_orbits) {
 
-		cout << "isomorph_arguments::execute before isomorph_compute_down_orbits" << endl;
+		if (f_v) {
+			cout << "isomorph_arguments::execute before isomorph_compute_down_orbits" << endl;
+		}
 		isomorph_compute_down_orbits(A, A2, gen, 
 			target_size, 
 			prefix_with_directory, prefix_iso, 
 			callback_data, 
 			ECA->starter_size, verbose_level);
-		cout << "isomorph_arguments::execute after isomorph_compute_down_orbits" << endl;
+		if (f_v) {
+			cout << "isomorph_arguments::execute after isomorph_compute_down_orbits" << endl;
 		}
+	}
 
 
 	if (f_v) {
 		cout << "isomorph_arguments::execute done" << endl;
-		}
+	}
 }
 
 }}

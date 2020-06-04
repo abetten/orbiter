@@ -117,63 +117,69 @@ void arc_orbits_on_pairs::init(
 		cout << "arc_orbits_on_pairs::init "
 				"creating poset" << endl;
 		}
-	Poset = NEW_OBJECT(poset);
+
 	Control = NEW_OBJECT(poset_classification_control);
+	Control->f_max_depth = TRUE;
+	Control->max_depth = 2;
+
+	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A_on_arc,
 			The_arc->Strong_gens,
 			verbose_level);
 
+	Poset->f_print_function = FALSE;
+	Poset->print_function = NULL;
+	Poset->print_function_data = (void *) this;
+
+
 	Orbits_on_pairs = NEW_OBJECT(poset_classification);
-	Orbits_on_pairs->init(Control, Poset,
+	Orbits_on_pairs->initialize_and_allocate_root_node(Control, Poset,
 		2 /* sz */, verbose_level);
 
 
 
 
-	Orbits_on_pairs->f_print_function = FALSE;
-	Orbits_on_pairs->print_function = NULL;
-	Orbits_on_pairs->print_function_data = (void *) this;
-
-
+#if 0
 	int nb_nodes = 20;
 
 	if (f_v) {
 		cout << "arc_orbits_on_pairs::init calling init_poset_orbit_node with "
 				<< nb_nodes << " nodes" << endl;
-		}
+	}
 
 	Orbits_on_pairs->init_poset_orbit_node(nb_nodes, verbose_level - 1);
 
 	if (f_v) {
 		cout << "arc_orbits_on_pairs::init after init_poset_orbit_node" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "arc_orbits_on_pairs::init before init_root_node" << endl;
-		}
+	}
 
-	Orbits_on_pairs->root[0].init_root_node(
+	Orbits_on_pairs->get_node(0)->init_root_node(
 			Orbits_on_pairs, 0/*verbose_level - 2*/);
+#endif
 
 
 	if (f_v) {
 		cout << "arc_orbits_on_pairs::init after init_root_node" << endl;
-		}
+	}
 	os_interface Os;
 
 	int t0 = Os.os_ticks();
 
 	if (f_v) {
 		cout << "arc_orbits_on_pairs::init before Orbits_on_pairs->main" << endl;
-		}
-	Orbits_on_pairs->depth = 2;
+	}
+	//Orbits_on_pairs->depth = 2;
 	Orbits_on_pairs->main(t0, 2 /*schreier_depth */,
 				TRUE /* f_use_invariant_subset_if_available */,
 				FALSE /* f_debug*/,
 				verbose_level);
 	if (f_v) {
 		cout << "arc_orbits_on_pairs::init after Orbits_on_pairs->main" << endl;
-		}
+	}
 
 	nb_orbits_on_pairs = Orbits_on_pairs->nb_orbits_at_level(2);
 	if (f_v) {
@@ -187,11 +193,10 @@ void arc_orbits_on_pairs::init(
 	if (f_v) {
 		cout << "arc_orbits_on_pairs::init "
 				"computing orbits on partition" << endl;
-		}
+	}
 
 
-	Table_orbits_on_partition =
-			NEW_OBJECTS(arc_partition, nb_orbits_on_pairs);
+	Table_orbits_on_partition = NEW_OBJECTS(arc_partition, nb_orbits_on_pairs);
 	int pair_orbit_idx;
 
 	total_nb_orbits_on_partitions = 0;
@@ -206,7 +211,7 @@ void arc_orbits_on_pairs::init(
 		if (f_v) {
 			cout << "arc_orbits_on_pairs::init "
 					"before Table_orbits_on_pairs[" << arc_idx << "].init" << endl;
-			}
+		}
 		Table_orbits_on_partition[pair_orbit_idx].init(this, pair_orbit_idx,
 				A, A_on_arc,
 				//argc, argv,
@@ -222,12 +227,12 @@ void arc_orbits_on_pairs::init(
 	if (f_v) {
 		cout << "arc_orbits_on_pairs::init "
 				"computing orbits on partition done" << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "arc_orbits_on_pairs::init done" << endl;
-		}
+	}
 }
 
 void arc_orbits_on_pairs::recognize(long int *pair, int *transporter,

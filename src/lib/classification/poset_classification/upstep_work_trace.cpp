@@ -54,13 +54,13 @@ trace_result upstep_work::recognize(
 	
 	if (f_vv) {
 		print_level_extension_coset_info();
-		lint_vec_print(cout, gen->set[0], len + 1);
+		lint_vec_print(cout, gen->get_set_i(0), len + 1);
 		cout << endl;
-		if (gen->f_print_function) {
-			(*gen->print_function)(cout, size,
-					gen->set[0], gen->print_function_data);
+		if (gen->get_poset()->f_print_function) {
+			gen->get_poset()->invoke_print_function(cout, size, gen->get_set_i(0));
 		}
 	}
+#if 0
 	if (len >= gen->sz) {
 		cout << "upstep_work::recognize "
 				"len >= sz, "
@@ -70,8 +70,8 @@ trace_result upstep_work::recognize(
 		cout << "gen->sz=" << gen->sz << endl;
 		exit(1);
 	}
-
-	gen->nb_times_trace++;
+#endif
+	//gen->nb_times_trace++;
 
 #if 0
 	if ((gen->nb_times_trace & ((1 << 17) - 1)) == 0) {
@@ -82,8 +82,8 @@ trace_result upstep_work::recognize(
 	}
 #endif
 	
-	lint_vec_copy(gen->set[0], gen->set0, size);
-	Sorting.lint_vec_heapsort(gen->set0, size - 1);
+	lint_vec_copy(gen->get_set_i(0), gen->get_set0(), size);
+	Sorting.lint_vec_heapsort(gen->get_set0(), size - 1);
 		// important: we keep the last point separate
 	
 	if (f_v) {
@@ -135,7 +135,7 @@ trace_result upstep_work::recognize_recursion(
 	
 	poset_orbit_node *O;
 
-	O = &gen->root[current_node];
+	O = gen->get_node(current_node);
 	if (f_vvv) {
 		print_level_extension_coset_info();
 		cout << "upstep_work::recognize_recursion"
@@ -145,7 +145,7 @@ trace_result upstep_work::recognize_recursion(
 			<< endl;
 		cout << "node=" << O->node << " prev="
 				<< O->prev << " pt=" << O->pt << endl;
-		lint_set_print(cout, gen->set[lvl], size);
+		lint_set_print(cout, gen->get_set_i(lvl), size);
 		cout << endl;
 	}
 	if (current_node < path[lvl]) {
@@ -157,39 +157,38 @@ trace_result upstep_work::recognize_recursion(
 		return not_canonical;
 	}
 	if (f_v4) {
-		if (gen->f_print_function) {
-			(*gen->print_function)(cout, size,
-					gen->set[lvl], gen->print_function_data);
+		if (gen->get_poset()->f_print_function) {
+			gen->get_poset()->invoke_print_function(cout, size, gen->get_set_i(lvl));
 		}
 	}
 	
 	if (f_debug) {
 		if (!O->check_node_and_set_consistency(gen,
-				lvl - 1, gen->set[lvl])) {
+				lvl - 1, gen->get_set_i(lvl))) {
 			print_level_extension_coset_info();
 			cout << "upstep_work::recognize_recursion: "
 					"node and set inconsistent, "
 					"the node corresponds to" << endl;
-			O->store_set_to(gen, lvl - 1, gen->set3);
-			lint_set_print(cout, gen->set3, lvl);
+			O->store_set_to(gen, lvl - 1, gen->get_set3());
+			lint_set_print(cout, gen->get_set3(), lvl);
 			cout << endl;
 			exit(1);
 		}
 	}
 	
-	if (lvl == 0 && gen->f_starter) {
+	if (lvl == 0 && gen->has_base_case()) {
 		if (f_v4) {
 			print_level_extension_coset_info();
 			cout << "upstep_work::recognize_recursion "
 					"special handling because of starter" << endl;
 			}
-		long int *cur_set = gen->set[0];
+		long int *cur_set = gen->get_set_i(0);
 		long int *next_set =
-				gen->set[0 + gen->starter_size];
+				gen->get_set_i(0 + gen->get_Base_case()->size);
 		int *cur_transporter =
-				gen->transporter->ith(0);
+				gen->get_transporter()->ith(0);
 		int *next_transporter =
-				gen->transporter->ith(0 + gen->starter_size);
+				gen->get_transporter()->ith(0 + gen->get_Base_case()->size);
 		
 		O->trace_starter(gen,
 			size,
@@ -204,13 +203,13 @@ trace_result upstep_work::recognize_recursion(
 			cout << "upstep_work::recognize_recursion "
 					"after trace_starter, calling find_automorphism_by_"
 					"tracing_recursion for node "
-					<< gen->starter_size << endl;
+					<< gen->get_Base_case()->size << endl;
 		}
 		trace_result r;
 
 		r = recognize_recursion(
-			gen->starter_size,
-			gen->starter_size,
+			gen->get_Base_case()->size,
+			gen->get_Base_case()->size,
 			final_node,
 			final_ex,
 			f_tolerant,
@@ -220,7 +219,7 @@ trace_result upstep_work::recognize_recursion(
 			cout << "upstep_work::recognize_recursion "
 					"after trace_starter, "
 					"after recognize_recursion for node "
-					<< gen->starter_size << endl;
+					<< gen->get_Base_case()->size << endl;
 		}
 		return r;
 	}
@@ -280,44 +279,43 @@ trace_result upstep_work::recognize_recursion(
 		return no_result_extension_not_found;
 	}
 
-	pt0 = gen->set[lvl + 1][lvl];
+	pt0 = gen->get_set_i(lvl + 1)[lvl];
 	current_extension =
-			O->find_extension_from_point(
-					gen, pt0, FALSE);
+			O->find_extension_from_point(gen, pt0, FALSE);
 	
 	if (current_extension == -1) {
 
 		cout << "upstep_work::recognize_recursion "
 				"failure in find_extension_from_point" << endl;
 		cout << "the original set is" << endl;
-		lint_set_print(cout, gen->set[0], len + 1);
+		lint_set_print(cout, gen->get_set_i(0), len + 1);
 		cout << endl;
 		//if (gen->f_print_function) {
 			//(*gen->print_function)(cout, len + 1, gen->set[0],
 			// gen->print_function_data);
 			//}
 		cout << "the current set is" << endl;
-		lint_set_print(cout, gen->set[lvl + 1], len + 1);
+		lint_set_print(cout, gen->get_set_i(lvl + 1), len + 1);
 		cout << endl;
 		//if (gen->f_print_function) {
 			//(*gen->print_function)(cout, len + 1, gen->set[lvl + 1],
 			// gen->print_function_data);
 			//}
 		cout << "the node corresponds to" << endl;
-		O->store_set_to(gen, lvl - 1, gen->set3);
-		lint_set_print(cout, gen->set3, lvl);
+		O->store_set_to(gen, lvl - 1, gen->get_set3());
+		lint_set_print(cout, gen->get_set3(), lvl);
 		cout << endl;
 
 		cout << "lvl = " << lvl << endl;
 		cout << "current_node = " << current_node << endl;
 
 		cout << "pt0=" << pt0 << endl;
-		cout << "gen->set[0][lvl]=" << gen->set[0][lvl] << endl;
+		cout << "gen->set[0][lvl]=" << gen->get_set_i(0)[lvl] << endl;
 
 		if (current_node == path[lvl]
-				&& pt0 < gen->set[0][lvl]) {
+				&& pt0 < gen->get_set_i(0)[lvl]) {
 			cout << "since pt0=" << pt0 << " is less than '"
-					"gen->set[0][lvl]=" << gen->set[0][lvl]
+					"gen->set[0][lvl]=" << gen->get_set_i(0)[lvl]
 					<< ", we return not_canonical" << endl;
 			return not_canonical;
 		}
@@ -349,12 +347,12 @@ trace_result upstep_work::recognize_recursion(
 				"point " << pt0 << " is extension no "
 				<< current_extension << endl;
 	}
-	if (gen->f_allowed_to_show_group_elements
+	if (gen->allowed_to_show_group_elements()
 			&& f_v4) {
-		int *transporter = gen->transporter->ith(lvl + 1);
+		int *transporter = gen->get_transporter()->ith(lvl + 1);
 		cout << "upstep_work::recognize_recursion "
 				"transporter element:" << endl;
-		gen->Poset->A2->element_print_quick(transporter, cout);
+		gen->get_A2()->element_print_quick(transporter, cout);
 		//gen->A2->element_print_as_permutation(transporter, cout);
 		cout << endl;
 	}
@@ -366,8 +364,8 @@ trace_result upstep_work::recognize_recursion(
 			cout << "upstep_work::recognize_recursion "
 					"calling handle_last_level" << endl;
 			cout << "The element \\alpha is equal to " << endl;
-			gen->Poset->A2->element_print_quick(
-					gen->transporter->ith(lvl + 1), cout);
+			gen->get_A2()->element_print_quick(
+					gen->get_transporter()->ith(lvl + 1), cout);
 		}
 		trace_result r;
 		if (f_v) {
@@ -531,7 +529,7 @@ trace_result upstep_work::handle_last_level(
 	//int next_node;
 	int my_current_node;
 
-	poset_orbit_node *O = &gen->root[current_node];
+	poset_orbit_node *O = gen->get_node(current_node);
 
 	if (f_v) {
 		print_level_extension_coset_info();
@@ -632,9 +630,9 @@ trace_result upstep_work::handle_last_level(
 					<< current_extension << ")";
 			cout << " extension node is current node, "
 					"i.e. found an automorphism" << endl;
-			if (gen->f_allowed_to_show_group_elements && f_vv) {
-				gen->Poset->A->element_print_quick(
-						gen->transporter->ith(lvl + 1), cout);
+			if (gen->allowed_to_show_group_elements() && f_vv) {
+				gen->get_A()->element_print_quick(
+						gen->get_transporter()->ith(lvl + 1), cout);
 				cout << endl;
 			}
 		}
@@ -652,14 +650,14 @@ trace_result upstep_work::handle_last_level(
 		cout << " extension node at level len, "
 				"this should not happen" << endl;
 		cout << "the original set is" << endl;
-		lint_set_print(cout, gen->set[0], lvl + 1);
+		lint_set_print(cout, gen->get_set_i(0), lvl + 1);
 		cout << endl;
 		cout << "the current set is" << endl;
-		lint_set_print(cout, gen->set[lvl + 1], lvl + 1);
+		lint_set_print(cout, gen->get_set_i(lvl + 1), lvl + 1);
 		cout << endl;
 		cout << "the node corresponds to" << endl;
-		O->store_set_to(gen, lvl - 1, gen->set3);
-		lint_set_print(cout, gen->set3, lvl);
+		O->store_set_to(gen, lvl - 1, gen->get_set3());
+		lint_set_print(cout, gen->get_set3(), lvl);
 		cout << endl;
 		exit(1);
 #else
@@ -707,17 +705,17 @@ trace_result upstep_work::start_over(
 	}
 
 
-	Sorting.lint_vec_heapsort(gen->set[lvl + 1], size - 1);
+	Sorting.lint_vec_heapsort(gen->get_set_i(lvl + 1), size - 1);
 		// we keep the last point (i.e., the (len + 1)-th) extra
-	lint_vec_copy(gen->set[lvl + 1], gen->set[0], size);
+	lint_vec_copy(gen->get_set_i(lvl + 1), gen->get_set_i(0), size);
 
 	if (f_vv) {
-		lint_set_print(cout, gen->set[0], size);
+		lint_set_print(cout, gen->get_set_i(0), size);
 		cout << endl;
 	}
-	gen->Poset->A->element_move(
-		gen->transporter->ith(lvl + 1),
-		gen->transporter->ith(0),
+	gen->get_A()->element_move(
+		gen->get_transporter()->ith(lvl + 1),
+		gen->get_transporter()->ith(0),
 		FALSE);
 
 	trace_result r;

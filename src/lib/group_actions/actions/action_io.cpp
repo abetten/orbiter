@@ -545,7 +545,9 @@ void action::list_elements_as_permutations_vertically(
 
 void action::print_symmetry_group_type(ostream &ost)
 {
-	action_print_symmetry_group_type(ost, type_G);
+	action_global AG;
+
+	AG.action_print_symmetry_group_type(ost, type_G);
 	if (f_has_subaction) {
 		ost << "->";
 		subaction->print_symmetry_group_type(ost);

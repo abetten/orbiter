@@ -15,18 +15,6 @@ namespace classification {
 
 poset::poset()
 {
-	null();
-}
-
-poset::~poset()
-{
-	freeself();
-}
-
-void poset::null()
-{
-
-
 	description = NULL;
 	f_subset_lattice = FALSE;
 	n = 0;
@@ -40,6 +28,20 @@ void poset::null()
 	f_has_orbit_based_testing = FALSE;
 	Orbit_based_testing = NULL;
 
+	f_print_function = FALSE;;
+	print_function = NULL;
+	print_function_data = NULL;
+
+	//null();
+}
+
+poset::~poset()
+{
+	freeself();
+}
+
+void poset::null()
+{
 }
 
 void poset::freeself()
@@ -420,20 +422,22 @@ poset_classification *poset::orbits_on_k_sets_compute(
 		}
 	Gen = NEW_OBJECT(poset_classification);
 
-	sprintf(Gen->fname_base, "orbits_on_k_sets");
+	//sprintf(Gen->problem_label_with_path, "orbits_on_k_sets");
 
 
-	Gen->depth = k;
+
+	//Gen->depth = k;
 
 	//Gen->f_W = TRUE;
 
 	if (f_v) {
 		cout << "poset::orbits_on_k_sets_compute calling Gen->init" << endl;
 		}
-	Gen->init(
+	Gen->initialize_and_allocate_root_node(
 			Control,
 			this,
-			Gen->depth /* sz */, verbose_level - 1);
+			k /* sz */,
+			verbose_level - 1);
 	//Gen->init_check_func(
 	//	check_zero_lines,
 	//	this /* candidate_check_data */);
@@ -448,6 +452,7 @@ poset_classification *poset::orbits_on_k_sets_compute(
 	Gen->print_function_data = this;
 #endif
 
+#if 0
 	int nb_poset_orbit_nodes = 1000;
 
 	if (f_v) {
@@ -459,10 +464,11 @@ poset_classification *poset::orbits_on_k_sets_compute(
 		cout << "poset::orbits_on_k_sets_compute "
 				"calling Gen->init_root_node" << endl;
 		}
-	Gen->root[0].init_root_node(Gen, verbose_level - 1);
+	Gen->get_node(0)->init_root_node(Gen, verbose_level - 1);
+#endif
 
 	os_interface Os;
-	int schreier_depth = Gen->depth;
+	int schreier_depth = k;
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;
 	int t0 = Os.os_ticks();
@@ -480,11 +486,14 @@ poset_classification *poset::orbits_on_k_sets_compute(
 
 	if (f_v) {
 		cout << "poset::orbits_on_k_sets_compute done" << endl;
-		}
+	}
 	return Gen;
 }
 
-
+void poset::invoke_print_function(ostream &ost, int sz, long int *set)
+{
+	(*print_function)(ost, sz, set, print_function_data);
+}
 
 //##############################################################################
 // global functions:

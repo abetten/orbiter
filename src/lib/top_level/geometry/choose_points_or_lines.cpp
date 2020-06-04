@@ -48,26 +48,26 @@ void choose_points_or_lines::freeself()
 #if 0
 	if (input_set) {
 		FREE_int(input_set);
-		}
+	}
 	if (f_is_in_input_set) {
 		FREE_int(f_is_in_input_set);
-		}
+	}
 #endif
 	if (transporter) {
 		FREE_int(transporter);
-		}
+	}
 	if (transporter_inv) {
 		FREE_int(transporter_inv);
-		}
+	}
 	if (gen) {
 		FREE_OBJECT(gen);
-		}
+	}
 	if (Control) {
 		FREE_OBJECT(Control);
-		}
+	}
 	if (Poset) {
 		FREE_OBJECT(Poset);
-		}
+	}
 	free_representative();
 	null();
 }
@@ -88,22 +88,22 @@ void choose_points_or_lines::free_representative()
 
 	if (f_v) {
 		cout << "choose_points_or_lines::free_representative freeing representative" << endl;
-		}
+	}
 	if (representative) {
 		FREE_lint(representative);
-		}
+	}
 	if (stab_order) {
 		FREE_OBJECT(stab_order);
-		}
+	}
 	if (Stab_Strong_gens) {
 		FREE_OBJECT(Stab_Strong_gens);
-		}
+	}
 	if (f_v) {
 		cout << "choose_points_or_lines::free_representative freeing stab" << endl;
-		}
+	}
 	if (stab) {
 		FREE_OBJECT(stab);
-		}
+	}
 	null_representative();
 }
 
@@ -142,10 +142,10 @@ void choose_points_or_lines::init(const char *label, void *data,
 	choose_points_or_lines::t0 = t0;
 	if (f_choose_lines) {
 		A2 = A_lines;
-		}
+	}
 	else {
 		A2 = A;
-		}
+	}
 	transporter = NEW_int(A->elt_size_in_int);
 	transporter_inv = NEW_int(A->elt_size_in_int);
 }
@@ -160,7 +160,7 @@ void choose_points_or_lines::compute_orbits_from_sims(sims *G, int verbose_level
 	
 	if (f_v) {
 		cout << "choose_points_or_lines::compute_orbits_from_sims " << label << endl;
-		}
+	}
 	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_from_sims(G, verbose_level - 2);
 	compute_orbits(Strong_gens, verbose_level);
@@ -175,37 +175,40 @@ void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens,
 	
 	if (f_v) {
 		cout << "choose_points_or_lines::compute_orbits " << label << endl;
-		}
+	}
 	
 	if (gen) {
 		FREE_OBJECT(gen);
-		}
+	}
 	if (Poset) {
 		FREE_OBJECT(Poset);
-		}
+	}
 	
 	gen = NEW_OBJECT(poset_classification);
 
-	sprintf(gen->fname_base, "%s", label);
+	//sprintf(gen->fname_base, "%s", label);
 	
 	
-	gen->depth = nb_points_or_lines;
+	//gen->depth = nb_points_or_lines;
 	
 	if (f_vv) {
 		cout << "choose_points_or_lines::compute_orbits "
 				<< label << " calling gen->init" << endl;
-		}
+	}
 
 	Control = NEW_OBJECT(poset_classification_control);
+	Control->f_max_depth = TRUE;
+	Control->max_depth = nb_points_or_lines;
+
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A2, Strong_gens, verbose_level);
 
-	gen->init(Control, Poset,
-		gen->depth /* sz */, verbose_level - 2);
+	gen->initialize_and_allocate_root_node(Control, Poset,
+			nb_points_or_lines /* sz */, verbose_level - 2);
 	if (f_vv) {
 		cout << "choose_points_or_lines::compute_orbits "
 				<< label << " calling gen->init_check_func" << endl;
-		}
+	}
 
 #if 0
 	gen->init_check_func(
@@ -223,20 +226,22 @@ void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens,
 	gen->print_function_data = this;
 #endif	
 
+#if 0
 	int nb_poset_orbit_nodes = 1000;
 	
 	if (f_vv) {
 		cout << "choose_points_or_lines::compute_orbits "
 				<< label << " calling gen->init_poset_orbit_node" << endl;
-		}
+	}
 	gen->init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
 	if (f_vv) {
 		cout << "choose_points_or_lines::compute_orbits "
 				<< label << " calling gen->init_root_node" << endl;
-		}
-	gen->root[0].init_root_node(gen, verbose_level - 1);
+	}
+	gen->get_node(0)->init_root_node(gen, verbose_level - 1);
+#endif
 	
-	int schreier_depth = gen->depth;
+	//int schreier_depth = gen->depth;
 	
 	int f_use_invariant_subset_if_available = TRUE;
 	//int f_implicit_fusion = FALSE;
@@ -245,33 +250,32 @@ void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens,
 	if (f_vv) {
 		cout << "choose_points_or_lines::compute_orbits "
 				<< label << " calling generator_main" << endl;
-		}
+	}
 	gen->main(t0, 
-		schreier_depth, 
+		Control->max_depth,
 		f_use_invariant_subset_if_available, 
 		//f_implicit_fusion, 
 		f_debug, 
 		verbose_level - 2);
 	
-	int f;
 	
 	if (f_vv) {
 		cout << "choose_points_or_lines::compute_orbits "
 				<< label << " done with generator_main" << endl;
-		}
-	f = gen->first_poset_orbit_node_at_level[nb_points_or_lines];
-	nb_orbits = gen->first_poset_orbit_node_at_level[nb_points_or_lines + 1] - f;
+	}
+	nb_orbits = gen->nb_orbits_at_level(nb_points_or_lines);
+
 	if (f_v) {
 		cout << "choose_points_or_lines::compute_orbits "
 				<< label << " we found " << nb_orbits
 				<< " orbits on " << nb_points_or_lines;
 		if (f_choose_lines) {
 			cout << "-sets of lines" << endl;
-			}
+		}
 		else {
 			cout << "-sets of points" << endl;
-			}
 		}
+	}
 }
 
 void choose_points_or_lines::choose_orbit(int orbit_no,
@@ -291,13 +295,13 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 	if (f_v) {
 		cout << "choose_points_or_lines::choose_orbit " << label
 				<< " orbit_no " << orbit_no << " / " << nb_orbits << endl;
-		}
+	}
 	
 	
 	free_representative();
 
 
-	f = gen->first_poset_orbit_node_at_level[nb_points_or_lines];
+	f = gen->first_node_at_level(nb_points_or_lines);
 	nd = f + orbit_no;
 	
 	longinteger_object go;
@@ -306,27 +310,27 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 	representative = NEW_lint(nb_points_or_lines);
 	the_favorite_representative = NEW_lint(nb_points_or_lines);
 	
-	O = gen->root + nd;
+	O = gen->get_node(nd);
 	O->store_set_to(gen, nb_points_or_lines - 1, representative);
 	
 	if (f_vv) {
 		cout << "##############################################################################" << endl;
 		cout << "choose_points_or_lines::choose_orbit " << label
 				<< " choosing orbit " << orbit_no << " / " << nb_orbits << endl;
-		}
+	}
 	if (f_vvv) {
 		cout << "choose_points_or_lines::choose_orbit " << label << " the ";
 		if (f_choose_lines) {
 			cout << "lines";
-			}
+		}
 		else {
 			cout << "points";
-			}
+		}
 		cout << " representing orbit " << orbit_no << " / "
 				<< nb_orbits << " are ";
 		lint_set_print(representative, nb_points_or_lines);
 		cout << endl;
-		}
+	}
 
 
 	f_changed = FALSE;
@@ -345,25 +349,25 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 					A->print_for_make_element(cout, transporter_inv);
 					cout << endl;					
 					A->print_quick(cout, transporter_inv);
-					}
-				}
-			else {
-				f_changed = TRUE;
 				}
 			}
+			else {
+				f_changed = TRUE;
+			}
 		}
+	}
 	if (f_changed) {
 		for (i = 0; i < nb_points_or_lines; i++) {
 			representative[i] = the_favorite_representative[i];
-			}
+		}
 		if (f_vvv) {
 			cout << "choose_points_or_lines::choose_orbit " << label
 				<< " / " << nb_orbits << " after changing, the "
 				"representative set for orbit " << orbit_no << " are ";
 			lint_set_print(representative, nb_points_or_lines);
 			cout << endl;
-			}
 		}
+	}
 	
 	G->init(A, verbose_level - 2);
 	G->init_strong_generators_by_hdl(O->nb_strong_generators,
@@ -373,7 +377,7 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 
 	if (f_vv) {
 		cout << "stabilizer of the chosen set has order " << go << endl;
-		}
+	}
 	
 	stab_order = NEW_OBJECT(longinteger_object);
 	Stab_Strong_gens = NEW_OBJECT(strong_generators);
@@ -385,7 +389,7 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 		
 		if (f_vvv) {
 			cout << "computing NewStab (because we changed)" << endl;
-			}
+		}
 		NewStab = NEW_OBJECT(sims);
 		NewStab->init(A, verbose_level - 2);
 		NewStab->init_trivial_group(0/*verbose_level - 1*/);
@@ -396,16 +400,16 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 		NewStab->group_order(go1);
 		if (f_vv) {
 			cout << "The conjugated stabilizer has order " << go1 << endl;
-			}
+		}
 		Stab_Strong_gens->init_from_sims(NewStab, 0);
 		NewStab->group_order(*stab_order);
 
 		FREE_OBJECT(NewStab);
-		}
+	}
 	else {
 		Stab_Strong_gens->init_from_sims(G->S, 0);
 		G->S->group_order(*stab_order);
-		}
+	}
 
 	if (f_v) {
 		cout << "choose_points_or_lines::choose_orbit " << label
@@ -414,19 +418,19 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 		lint_set_print(representative, nb_points_or_lines);
 		cout << "_" << *stab_order;
 		cout << endl;
-		}
+	}
 #if 0
 	if (f_vv) {
 		cout << "tl: ";
 		int_vec_print(cout, stab_tl, A->base_len);
 		cout << endl;
-		}
+	}
 #endif
 	if (f_vv) {
 		cout << "choose_points_or_lines::choose_orbit " << label
 			<< " we have " << Stab_Strong_gens->gens->len
 			<< " strong generators" << endl;
-		}
+	}
 	if (f_vv || print_generators_verbose_level) {
 		for (i = 0; i < Stab_Strong_gens->gens->len; i++) {
 			cout << i << " : " << endl;
@@ -443,9 +447,9 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 				A_lines->element_print_as_permutation(
 						Stab_Strong_gens->gens->ith(i), cout);
 				cout << endl;
-				}
 			}
 		}
+	}
 	
 
 
@@ -472,14 +476,14 @@ int choose_points_or_lines::favorite_orbit_representative(
 	if (f_v) {
 		cout << "choose_points_or_lines::favorite_orbit_representative "
 				<< label << endl;
-		}
+	}
 	if (nb_points_or_lines != favorite_size) {
 		cout << "choose_points_or_lines::favorite_orbit_representative "
 				<< label << " not the right size" << endl;
 		cout << "nb_points_or_lines=" << nb_points_or_lines << endl;		
 		cout << "favorite_size=" << favorite_size << endl;		
 		return FALSE;
-		}
+	}
 	
 	canonical_set1 = NEW_lint(nb_points_or_lines);
 	canonical_set2 = NEW_lint(nb_points_or_lines);
@@ -499,8 +503,8 @@ int choose_points_or_lines::favorite_orbit_representative(
 		if (canonical_set1[i] != representative[i]) {
 			f_OK = FALSE;
 			break;
-			}
 		}
+	}
 	A2->element_invert(transporter_inv, transporter, FALSE);
 	if (f_OK) {
 		if (f_v) {
@@ -508,11 +512,11 @@ int choose_points_or_lines::favorite_orbit_representative(
 					"to favorite set:" << endl;
 			A2->element_print(transporter, cout);
 			A2->element_print_as_permutation(transporter, cout);
-			}
+		}
 		for (i = 0; i < nb_points_or_lines; i++) {
 			the_favorite_representative[i] = favorite[i];
-			}
 		}
+	}
 	FREE_lint(canonical_set1);
 	FREE_lint(canonical_set2);
 	FREE_int(Elt1);
@@ -520,10 +524,10 @@ int choose_points_or_lines::favorite_orbit_representative(
 	FREE_int(Elt3);
 	if (f_OK) {
 		return TRUE;
-		}
+	}
 	else {
 		return FALSE;
-		}
+	}
 	
 }
 
@@ -552,7 +556,7 @@ void choose_points_or_lines::print_stab()
 		cout << endl;
 #endif
 
-		}
+	}
 }
 
 int choose_points_or_lines::is_in_rep(int a)
@@ -562,8 +566,8 @@ int choose_points_or_lines::is_in_rep(int a)
 	for (i = 0; i < nb_points_or_lines; i++) {
 		if (a == representative[i]) {
 			return TRUE;
-			}
 		}
+	}
 	return FALSE;
 }
 

@@ -690,7 +690,7 @@ void surface_with_action::arc_lifting_and_classify_using_trihedral_pairs(
 	}
 
 	SOA->init(this, 
-		AL->Lines27, AL->the_equation, 
+		AL->Web->Lines27, AL->the_equation,
 		AL->Aut_gens,
 		FALSE /* f_find_double_six_and_rearrange_lines */,
 		FALSE, NULL,

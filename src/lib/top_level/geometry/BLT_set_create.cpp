@@ -62,11 +62,11 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 	if (!Descr->f_q) {
 		cout << "BLT_set_create::init !Descr->f_q" << endl;
 		exit(1);
-		}
+	}
 	q = Descr->q;
 	if (f_v) {
 		cout << "BLT_set_create::init q = " << q << endl;
-		}
+	}
 	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
 	
@@ -74,10 +74,10 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 
 	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
-		}
+	}
 	else {
 		f_semilinear = TRUE;
-		}
+	}
 
 
 	A = NEW_OBJECT(action);
@@ -85,7 +85,7 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 	if (f_v) {
 		cout << "BLT_set_create::init before "
 				"A->init_orthogonal_group" << endl;
-		}
+	}
 	A->init_orthogonal_group(0 /* epsilon */, 5 /* n */, F, 
 		TRUE /* f_on_points */, 
 		FALSE /* f_on_lines */, 
@@ -103,12 +103,12 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 			<< A->make_element_size << endl;
 		cout << "BLT_set_create::init "
 				"degree = " << degree << endl;
-		}
+	}
 	
 	if (f_v) {
 		cout << "BLT_set_create::init computing "
 				"lex least base" << endl;
-		}
+	}
 	A->lex_least_base_in_place(0 /*verbose_level - 2*/);
 	if (f_v) {
 		cout << "BLT_set_create::init computing "
@@ -116,7 +116,7 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 		cout << "BLT_set_create::init base: ";
 		lint_vec_print(cout, A->get_base(), A->base_len());
 		cout << endl;
-		}
+	}
 	
 	action_on_orthogonal *AO;
 
@@ -137,7 +137,6 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 			if (f_v) {
 				cout << "BLT_set_create::init creating object of family linear" << endl;
 			}
-
 		}
 
 	}
@@ -147,7 +146,7 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 
 		if (f_v) {
 			cout << "BLT_set_create::init BLT set from catalogue" << endl;
-			}
+		}
 		int nb_iso;
 		knowledge_base K;
 
@@ -156,7 +155,7 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 			cout << "BLT_set_create::init iso >= nb_iso, "
 					"this BLT set does not exist" << endl;
 			exit(1);
-			}
+		}
 
 		set = NEW_int(q + 1);
 		int_vec_copy(K.BLT_representative(q, Descr->iso), set, q + 1);
@@ -166,7 +165,7 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 		if (f_v) {
 			cout << "BLT_set_create::init before "
 					"Sg->BLT_set_from_catalogue_stabilizer" << endl;
-			}
+		}
 
 		Sg->BLT_set_from_catalogue_stabilizer(A, 
 			F, Descr->iso, 
@@ -179,31 +178,31 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 		if (f_v) {
 			cout << "BLT_set_create::init after "
 					"Sg->BLT_set_from_catalogue_stabilizer" << endl;
-			}
 		}
+	}
 	else {
 		cout << "BLT_set_create::init we do not recognize "
 				"the type of BLT-set" << endl;
 		exit(1);
-		}
+	}
 
 
 	if (f_v) {
 		cout << "BLT_set_create::init set = ";
 		int_vec_print(cout, set, q + 1);
 		cout << endl;
-		}
+	}
 
 	if (f_has_group) {
 		cout << "BLT_set_create::init the stabilizer is:" << endl;
 		Sg->print_generators_tex(cout);
-		}
+	}
 
 
 
 	if (f_v) {
 		cout << "BLT_set_create::init done" << endl;
-		}
+	}
 }
 
 void BLT_set_create::apply_transformations(const char **transform_coeffs, 
@@ -213,7 +212,7 @@ void BLT_set_create::apply_transformations(const char **transform_coeffs,
 
 	if (f_v) {
 		cout << "BLT_set_create::apply_transformations done" << endl;
-		}
+	}
 }
 
 

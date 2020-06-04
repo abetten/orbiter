@@ -622,7 +622,7 @@ void semifield_classify::report(std::ostream &ost, int level,
 
 
 void semifield_classify::init_poset_classification(
-		int argc, const char **argv,
+		//int argc, const char **argv,
 		const char *prefix,
 		int verbose_level)
 {
@@ -635,6 +635,9 @@ void semifield_classify::init_poset_classification(
 
 	Poset = NEW_OBJECT(poset);
 	Control = NEW_OBJECT(poset_classification_control);
+	Control->problem_label = prefix;
+	Control->f_problem_label = TRUE;
+
 	vector_space *VS;
 	VS = NEW_OBJECT(vector_space);
 	VS->init(F, vector_space_dimension,
@@ -671,23 +674,23 @@ void semifield_classify::init_poset_classification(
 	//Gen->read_arguments(argc, argv, 0);
 
 	//Gen->prefix[0] = 0;
-	sprintf(Gen->fname_base, "%s", prefix);
+	//sprintf(Gen->fname_base, "%s", prefix);
 
 
-	Gen->depth = k;
+	//Gen->depth = k;
 
 	if (f_v) {
 		cout << "semifield_classify::init before Gen->init" << endl;
 	}
-	Gen->init(Control, Poset,
-			Gen->depth /* sz */,
+	Gen->initialize_and_allocate_root_node(Control, Poset,
+			k /* sz */,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "semifield_classify::init after Gen->init" << endl;
 	}
 
 
-
+#if 0
 	int nb_nodes = 1000;
 
 	if (f_v) {
@@ -700,9 +703,10 @@ void semifield_classify::init_poset_classification(
 		cout << "semifield_classify::init calling "
 				"Gen->init_root_node" << endl;
 	}
-	Gen->root[0].init_root_node(Gen, verbose_level - 2);
+	Gen->get_node(0)->init_root_node(Gen, verbose_level - 2);
+#endif
 
-	schreier_depth = Gen->depth;
+	schreier_depth = k;
 
 	if (f_v) {
 		cout << "semifield_classify::init_poset_classification done" << endl;
@@ -721,11 +725,11 @@ void semifield_classify::compute_orbits(int depth, int verbose_level)
 		cout << "semifield_classify::compute_orbits "
 				"calling generator_main" << endl;
 		cout << "A=";
-		Gen->Poset->A->print_info();
+		Gen->get_A()->print_info();
 		cout << "A2=";
-		Gen->Poset->A2->print_info();
+		Gen->get_A2()->print_info();
 	}
-	Gen->depth = depth;
+	//Gen->depth = depth;
 	Gen->main(t0,
 		schreier_depth,
 		FALSE /*f_use_invariant_subset_if_available*/,
@@ -738,11 +742,11 @@ void semifield_classify::compute_orbits(int depth, int verbose_level)
 		cout << "semifield_classify::compute_orbits "
 				"done with generator_main" << endl;
 	}
-	nb_orbits = Gen->nb_orbits_at_level(Gen->depth);
+	nb_orbits = Gen->nb_orbits_at_level(depth);
 	if (f_v) {
 		cout << "semifield_classify::compute_orbits "
 				"we found " << nb_orbits
-				<< " orbits at depth " << Gen->depth << endl;
+				<< " orbits at depth " << depth << endl;
 	}
 
 	char fname[1000];

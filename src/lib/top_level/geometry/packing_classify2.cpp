@@ -24,7 +24,7 @@ void packing_classify::compute_list_of_lines_from_packing(
 	
 	if (f_v) {
 		cout << "packing_classify::compute_list_of_lines_from_packing" << endl;
-		}
+	}
 	for (i = 0; i < size_of_packing; i++) {
 		a = packing[i];
 		lint_vec_copy(Spread_tables->spread_table + a * spread_size,
@@ -33,12 +33,12 @@ void packing_classify::compute_list_of_lines_from_packing(
 		for (j = 0; j < spread_size; j++) {
 			b = Spread_table[a * spread_size + j];
 			list_of_lines[i * spread_size + j] = b;
-			}
-#endif
 		}
+#endif
+	}
 	if (f_v) {
 		cout << "packing_classify::compute_list_of_lines_from_packing done" << endl;
-		}
+	}
 }
 
 void packing_classify::compute_klein_invariants(
@@ -55,7 +55,7 @@ void packing_classify::compute_klein_invariants(
 
 	if (f_v) {
 		cout << "papacking_classifycking::compute_klein_invariants" << endl;
-		}
+	}
 	f_split = f_split_klein;
 	split_r = split_klein_r;
 	split_m = split_klein_m;
@@ -64,12 +64,12 @@ void packing_classify::compute_klein_invariants(
 	
 		if (f_split && (orbit % split_m) != split_r) {
 			continue;
-			}
+		}
 		
 		if (f_v) {
 			cout << "packing::compute_klein_invariants orbit "
 					<< orbit << " / " << Iso->Reps->count << endl;
-			}
+		}
 		
 		char fname[1000];
 	
@@ -78,9 +78,9 @@ void packing_classify::compute_klein_invariants(
 		if (Fio.file_size(fname) > 0) {
 			if (f_v) {
 				cout << "file " << fname << " exists, skipping" << endl;
-				}
-			continue;
 			}
+			continue;
+		}
 		id = Iso->orbit_perm[Iso->orbit_fst[Iso->Reps->rep[orbit]]];
 	
 		Iso->load_solution(id, data);
@@ -89,7 +89,7 @@ void packing_classify::compute_klein_invariants(
 					<< " (id=" << id << ")" << endl;
 			lint_vec_print(cout, data, Iso->size);
 			cout << endl;
-			}
+		}
 		compute_list_of_lines_from_packing(list_of_lines,
 				data, verbose_level - 2);
 		if (f_v3) {
@@ -98,20 +98,20 @@ void packing_classify::compute_klein_invariants(
 			lint_matrix_print(list_of_lines,
 					size_of_packing, spread_size);
 			cout << endl;
-			}
+		}
 
 		save_klein_invariants(Iso->prefix_invariants, 
 			orbit, 
 			list_of_lines,
 			size_of_packing * spread_size,
 			verbose_level - 2);
-		} // next orbit
+	} // next orbit
 
 	FREE_lint(list_of_lines);
 	
 	if (f_v) {
 		cout << "packing_classify::compute_klein_invariants done" << endl;
-		}
+	}
 }
 
 void packing_classify::klein_invariants_fname(
@@ -133,7 +133,7 @@ void packing_classify::save_klein_invariants(char *prefix,
 
 	if (f_v) {
 		cout << "packing_classify::save_klein_invariants" << endl;
-		}
+	}
 	
 	compute_plane_intersections(data, data_size, 
 		R,
@@ -159,8 +159,8 @@ void packing_classify::save_klein_invariants(char *prefix,
 		v.s_i(2).as_vector().s_i(i).as_vector().m_l(nb_pts_on_plane[i]);
 		for (j = 0; j < nb_pts_on_plane[i]; j++) {
 			v.s_i(2).as_vector().s_i(i).as_vector().m_ii(j, Pts_on_plane[i][j]);
-			}
 		}
+	}
 
 	char fname[1000];
 	
@@ -170,13 +170,13 @@ void packing_classify::save_klein_invariants(char *prefix,
 	delete [] R;
 	for (i = 0; i < nb_planes; i++) {
 		FREE_lint(Pts_on_plane[i]);
-		}
+	}
 	FREE_plint(Pts_on_plane);
 	FREE_int(nb_pts_on_plane);
 
 	if (f_v) {
 		cout << "packing_classify::save_klein_invariants done" << endl;
-		}
+	}
 }
 
 
@@ -198,7 +198,7 @@ void packing_classify::compute_plane_intersections(
 
 	if (f_v) {
 		cout << "packing_classify::compute_plane_intersections" << endl;
-		}
+	}
 	set_size = data_size;
 
 	P5 = NEW_OBJECT(projective_space);
@@ -212,7 +212,7 @@ void packing_classify::compute_plane_intersections(
 	if (f_v) {
 		cout << "packing_classify::compute_plane_intersections "
 				"before P3->klein_correspondence" << endl;
-		}
+	}
 	P3->klein_correspondence(P5, 
 		data, set_size, the_set_out, 0/*verbose_level*/);
 
@@ -221,7 +221,7 @@ void packing_classify::compute_plane_intersections(
 	if (f_v) {
 		cout << "packing_classify::compute_plane_intersections "
 				"after P3->klein_correspondence" << endl;
-		}
+	}
 
 	
 
@@ -229,7 +229,7 @@ void packing_classify::compute_plane_intersections(
 	if (f_v) {
 		cout << "packing_classify::compute_plane_intersections "
 				"N = " << N << endl;
-		}
+	}
 
 	
 
@@ -240,7 +240,7 @@ void packing_classify::compute_plane_intersections(
 	if (f_v) {
 		cout << "packing_classify::compute_plane_intersections "
 				"before plane_intersection_type_fast" << endl;
-		}
+	}
 	P5->plane_intersection_type_slow(Gr, the_set_out, set_size, 
 		R, Pts_on_plane, nb_pts_on_plane, nb_planes, 
 		verbose_level /*- 3*/);
@@ -254,9 +254,9 @@ void packing_classify::compute_plane_intersections(
 				<< " : " << setw(5) << nb_pts_on_plane[i] << " : ";
 			lint_vec_print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
 			cout << endl; 
-			}
-#endif
 		}
+#endif
+	}
 
 
 	FREE_lint(the_set_out);
@@ -264,7 +264,7 @@ void packing_classify::compute_plane_intersections(
 	FREE_OBJECT(P5);
 	if (f_v) {
 		cout << "packing_classify::compute_plane_intersections done" << endl;
-		}
+	}
 }
 
 void packing_classify::report(isomorph *Iso, int verbose_level)
@@ -276,29 +276,29 @@ void packing_classify::report(isomorph *Iso, int verbose_level)
 
 	if (f_v) {
 		cout << "packing_classify::report" << endl;
-		}
+	}
 
 	sprintf(fname, "packing_report_q%d.tex", (int)q);
 
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
-	cout << "Writing file " << fname << " with "
-			<< Iso->Reps->count << " spreads:" << endl;
+		cout << "Writing file " << fname << " with "
+				<< Iso->Reps->count << " spreads:" << endl;
 
-	report_whole(Iso, f, verbose_level);
+		report_whole(Iso, f, verbose_level);
 
 	} // close file f
 	if (f_v) {
 		cout << "packing_classify::report written file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;
-		}
+	}
 	
 
 
 	if (f_v) {
 		cout << "packing_classify::report done" << endl;
-		}
+	}
 }
 
 void packing_classify::report_whole(isomorph *Iso,
@@ -325,7 +325,7 @@ void packing_classify::report_whole(isomorph *Iso,
 	if (f_v) {
 		cout << "packing::report loading and "
 				"computing invariants" << endl;
-		}
+	}
 
 	inv->init(Iso, this, verbose_level);
 
@@ -333,7 +333,7 @@ void packing_classify::report_whole(isomorph *Iso,
 	if (f_v) {
 		cout << "packing::report loading and "
 				"computing invariants done" << endl;
-		}
+	}
 
 	
 	classify C_ago;
@@ -372,7 +372,7 @@ void packing_classify::report_whole(isomorph *Iso,
 	L.foot(ost);
 	if (inv) {
 		FREE_OBJECT(inv);
-		}
+	}
 }
 
 void packing_classify::report_title_page(
@@ -397,17 +397,6 @@ void packing_classify::report_title_page(
 		NULL /* extra_praeamble */);
 
 
-#if 0
-	char prefix[1000];
-	char label_of_structure_plural[1000];
-
-	sprintf(prefix, "packing_PG_3_%d", q);
-	sprintf(label_of_structure_plural, "Packings");
-	isomorph_report_data_in_source_code_inside_tex(*Iso, 
-		prefix, label_of_structure_plural, f, 
-		verbose_level);
-#endif
-
 
 }
 
@@ -420,7 +409,7 @@ void packing_classify::report_packings_by_ago(
 
 	if (f_v) {
 		cout << "packing_classify::report_packings_by_ago" << endl;
-		}
+	}
 
 	ost << "\\chapter{The Packings of PG$(3," << q << ")$}"
 			<< endl << endl;
@@ -451,7 +440,7 @@ void packing_classify::report_packings_by_ago(
 		if (length > 100) {
 			ost << "Too many packings to list.\\\\" << endl;
 			continue;
-			}
+		}
 		
 		set = NEW_int(length);
 		
@@ -459,7 +448,7 @@ void packing_classify::report_packings_by_ago(
 			vv = fst + v;
 			a = C_ago.sorting_perm_inv[vv];
 			set[v] = a;
-			}
+		}
 
 		Sorting.int_vec_heapsort(set, length);
 
@@ -475,15 +464,15 @@ void packing_classify::report_packings_by_ago(
 				orbit, inv, verbose_level);
 		
 		//} // next orbit
-			} // next v
+		} // next v
 
 		FREE_int(set);
-		} // next u
+	} // next u
 
 	
 	if (f_v) {
 		cout << "packing_classify::report_packings_by_ago done" << endl;
-		}
+	}
 }
 
 
@@ -502,7 +491,7 @@ void packing_classify::report_isomorphism_type(
 
 	if (f_v) {
 		cout << "packing_classify::report_isomorphism_type" << endl;
-		}
+	}
 
 	list_of_lines = NEW_lint(size_of_packing * spread_size);
 
@@ -516,7 +505,7 @@ void packing_classify::report_isomorphism_type(
 	for (i = 0; i < Iso->size; i++) {
 		packing[i] = data[i];
 		dual_packing[i] = Spread_tables->dual_spread_idx[packing[i]];
-		}
+	}
 
 	compute_list_of_lines_from_packing(
 			list_of_lines, data, verbose_level - 1);
@@ -527,7 +516,7 @@ void packing_classify::report_isomorphism_type(
 
 	for (i = 0; i < Iso->size; i++) {
 		spread_iso_type[i] = Spread_tables->spread_iso_type[packing[i]];
-		}
+	}
 	ost << "spread : isotype : dualspread \\\\" << endl;
 	for (i = 0; i < Iso->size; i++) {
 		ost << packing[i];
@@ -536,7 +525,7 @@ void packing_classify::report_isomorphism_type(
 		ost << " : ";
 		ost << Spread_tables->dual_spread_idx[packing[i]];
 		ost << "\\\\" << endl;
-		}
+	}
 	//ost << "\\\\" << endl;
 	ost << "\\bigskip" << endl;
 
@@ -590,7 +579,7 @@ void packing_classify::report_isomorphism_type(
 	if (f_v) {
 		cout << "packing_classify::report computing induced "
 				"action on the set (in data)" << endl;
-		}
+	}
 	Iso->induced_action_on_set_basic(Stab, data, verbose_level - 2);
 
 	if (f_v) {
@@ -599,7 +588,7 @@ void packing_classify::report_isomorphism_type(
 		Iso->AA->group_order(go);
 		cout << "action " << Iso->AA->label << " computed, "
 				"group order is " << go << endl;
-		}
+	}
 
 	report_stabilizer_in_action(*Iso, ost, orbit, verbose_level);
 
@@ -645,7 +634,7 @@ void packing_classify::report_isomorphism_type(
 
 	if (f_v) {
 		cout << "packing_classify::report_isomorphism_type done" << endl;
-		}
+	}
 }
 
 void packing_classify::report_packing_as_table(
@@ -655,7 +644,7 @@ void packing_classify::report_packing_as_table(
 {
 	latex_interface L;
 
-	#if 1
+#if 1
 	{
 	int nb_points;
 	int *the_spread;
@@ -752,49 +741,49 @@ void packing_classify::report_klein_invariants(
 	int f_vv = (verbose_level >= 2);
 	file_io Fio;
 
-		// klein invariants:
-		{
-			char fname_klein[1000];
-			Vector V;
-			
-			klein_invariants_fname(fname_klein,
-					Iso->prefix_invariants, orbit);
-			if (Fio.file_size(fname_klein) > 0) {
-				if (f_vv) {
-					cout << "packing::report loading "
-							"file " << fname_klein << endl;
-					}
-				V.load_file(fname_klein);
-				inv->Inv[orbit].init_klein_invariants(
-						V, verbose_level - 1);
-				// free, so that we don't use that much memory:
-				V.freeself();
+	// klein invariants:
+	{
+		char fname_klein[1000];
+		Vector V;
 		
-				inv->Inv[orbit].compute_decomposition(verbose_level - 1);
-				ost << "\\bigskip" << endl << endl;
-				if (Fio.file_size(inv->Inv[orbit].fname_row_scheme) < 1000) {
-					ost << "\\[" << endl;
-					cout << "copying file "
-							<< inv->Inv[orbit].fname_row_scheme
-							<< " in" << endl;
-					Fio.copy_file_to_ostream(ost,
-							inv->Inv[orbit].fname_row_scheme);
-					//f << "\\input "
-					//<< inv->Inv[orbit].fname_row_scheme << endl;
-					ost << "\\]" << endl;
-					ost << "\\[" << endl;
-					Fio.copy_file_to_ostream(ost,
-							inv->Inv[orbit].fname_col_scheme);
-					//ost << "\\input "
-					//<< inv->Inv[orbit].fname_col_scheme << endl;
-					ost << "\\]" << endl;
-					}
-				else {
-					ost << "The TDO decomposition is "
-							"too large to print\\\\" << endl;
-					}
+		klein_invariants_fname(fname_klein,
+				Iso->prefix_invariants, orbit);
+		if (Fio.file_size(fname_klein) > 0) {
+			if (f_vv) {
+				cout << "packing::report loading "
+						"file " << fname_klein << endl;
 				}
+			V.load_file(fname_klein);
+			inv->Inv[orbit].init_klein_invariants(
+					V, verbose_level - 1);
+			// free, so that we don't use that much memory:
+			V.freeself();
+
+			inv->Inv[orbit].compute_decomposition(verbose_level - 1);
+			ost << "\\bigskip" << endl << endl;
+			if (Fio.file_size(inv->Inv[orbit].fname_row_scheme) < 1000) {
+				ost << "\\[" << endl;
+				cout << "copying file "
+						<< inv->Inv[orbit].fname_row_scheme
+						<< " in" << endl;
+				Fio.copy_file_to_ostream(ost,
+						inv->Inv[orbit].fname_row_scheme);
+				//f << "\\input "
+				//<< inv->Inv[orbit].fname_row_scheme << endl;
+				ost << "\\]" << endl;
+				ost << "\\[" << endl;
+				Fio.copy_file_to_ostream(ost,
+						inv->Inv[orbit].fname_col_scheme);
+				//ost << "\\input "
+				//<< inv->Inv[orbit].fname_col_scheme << endl;
+				ost << "\\]" << endl;
+			}
+			else {
+				ost << "The TDO decomposition is "
+						"too large to print\\\\" << endl;
+			}
 		}
+	}
 }
 
 void packing_classify::report_stabilizer(isomorph &Iso,
@@ -826,7 +815,7 @@ void packing_classify::report_stabilizer(isomorph &Iso,
 		//f << "$$" << endl;
 		//f << "of order $" << ord << "$ and with " << n
 		//<< " fixed points" << endl;
-		}
+	}
 	ost << "$$" << endl;
 }
 
@@ -867,7 +856,7 @@ void packing_classify::report_stabilizer_in_action(
 		ost << "$\\\\" << endl;
 		//f << "of order $" << ord << "$ and with " << n
 		//<< " fixed points" << endl;
-		}
+	}
 	//f << "$$" << endl;
 }
 
@@ -883,47 +872,47 @@ void packing_classify::report_stabilizer_in_action_gap(
 
 	sprintf(fname, "group_%d.g", orbit);
 	{
-	ofstream fp(fname);
+		ofstream fp(fname);
 
 
-	Stab = Iso.Reps->stab[orbit];
-	Stab->group_order(go);
+		Stab = Iso.Reps->stab[orbit];
+		Stab->group_order(go);
 
-	//f << "The stabilizer generators in their action on "
-	//"the spreads of the packing are:\\\\" << endl;
-	//f << "$$" << endl;
-	for (i = 0; i < Stab->gens.len; i++) {
-		
-		int offset = 1;
-		int f_do_it_anyway_even_for_big_degree = TRUE;
-		int f_print_cycles_of_length_one = FALSE;
+		//f << "The stabilizer generators in their action on "
+		//"the spreads of the packing are:\\\\" << endl;
+		//f << "$$" << endl;
+		for (i = 0; i < Stab->gens.len; i++) {
 
-		//int *fp, n, ord;
-		
-		//fp = NEW_int(A->degree);
-		//n = A->find_fixed_points(Stab->gens.ith(i), fp, 0);
-		//cout << "with " << n << " fixed points" << endl;
-		//FREE_int(fp);
+			int offset = 1;
+			int f_do_it_anyway_even_for_big_degree = TRUE;
+			int f_print_cycles_of_length_one = FALSE;
 
-		//ord = A->element_order(Stab->gens.ith(i));
+			//int *fp, n, ord;
 
-		fp << "g" << i + 1 << " := ";
-		Iso.AA->element_print_as_permutation_with_offset(
-			Stab->gens.ith(i), fp,
-			offset, f_do_it_anyway_even_for_big_degree, 
-			f_print_cycles_of_length_one, 0 /* verbose_level */);
-		fp << ";" << endl;
-		//f << "of order $" << ord << "$ and with " << n
-		//<< " fixed points" << endl;
+			//fp = NEW_int(A->degree);
+			//n = A->find_fixed_points(Stab->gens.ith(i), fp, 0);
+			//cout << "with " << n << " fixed points" << endl;
+			//FREE_int(fp);
+
+			//ord = A->element_order(Stab->gens.ith(i));
+
+			fp << "g" << i + 1 << " := ";
+			Iso.AA->element_print_as_permutation_with_offset(
+				Stab->gens.ith(i), fp,
+				offset, f_do_it_anyway_even_for_big_degree,
+				f_print_cycles_of_length_one, 0 /* verbose_level */);
+			fp << ";" << endl;
+			//f << "of order $" << ord << "$ and with " << n
+			//<< " fixed points" << endl;
 		}
-	fp << "G := Group([";
-	for (i = 0; i < Stab->gens.len; i++) {
-		fp << "g" << i + 1;
-		if (i < Stab->gens.len - 1) {
-			fp << ",";
+		fp << "G := Group([";
+		for (i = 0; i < Stab->gens.len; i++) {
+			fp << "g" << i + 1;
+			if (i < Stab->gens.len - 1) {
+				fp << ",";
 			}
 		}
-	fp << "]);" << endl;
+		fp << "]);" << endl;
 	}
 
 }
@@ -943,66 +932,66 @@ void packing_classify::report_extra_stuff(
 	//f << "\\clearpage" << endl << endl;
 
 	{
-	int nb_points;
-	int nb_lines;
-	int v[4];
-	int i, j, u;
-	combinatorics_domain Combi;
+		int nb_points;
+		int nb_lines;
+		int v[4];
+		int i, j, u;
+		combinatorics_domain Combi;
 
-	nb_points = P3->N_points;
-	nb_lines = Combi.generalized_binomial(4, 2, q);
+		nb_points = P3->N_points;
+		nb_lines = Combi.generalized_binomial(4, 2, q);
 
-	ost << "PG$(3," << q << ")$ has " << nb_points
-			<< " points:\\\\" << endl;
-	for (i = 0; i < nb_points; i++) {
-		P3->unrank_point(v, i);
-		ost << "$P_{" << i << "}=";
-		int_vec_print_fully(ost, v, 4);
-		ost << "$\\\\" << endl;
+		ost << "PG$(3," << q << ")$ has " << nb_points
+				<< " points:\\\\" << endl;
+		for (i = 0; i < nb_points; i++) {
+			P3->unrank_point(v, i);
+			ost << "$P_{" << i << "}=";
+			int_vec_print_fully(ost, v, 4);
+			ost << "$\\\\" << endl;
 		}
-	ost << endl;
-	ost << "\\bigskip" << endl;
-	ost << endl;
-	ost << "PG$(3," << q << ")$ has " << nb_lines
-			<< " lines:\\\\" << endl;
-	for (u = 0; u < nb_lines; u++) {
-		T->Grass->unrank_lint(u, 0 /* verbose_level*/);
-		ost << "$L_{" << u << "}=";
-		ost << "\\left[" << endl;
-		ost << "\\begin{array}{c}" << endl;
-		for (i = 0; i < T->k; i++) {
-			for (j = 0; j < T->n; j++) {
-				ost << T->Grass->M[i * T->n + j];
+		ost << endl;
+		ost << "\\bigskip" << endl;
+		ost << endl;
+		ost << "PG$(3," << q << ")$ has " << nb_lines
+				<< " lines:\\\\" << endl;
+		for (u = 0; u < nb_lines; u++) {
+			T->Grass->unrank_lint(u, 0 /* verbose_level*/);
+			ost << "$L_{" << u << "}=";
+			ost << "\\left[" << endl;
+			ost << "\\begin{array}{c}" << endl;
+			for (i = 0; i < T->k; i++) {
+				for (j = 0; j < T->n; j++) {
+					ost << T->Grass->M[i * T->n + j];
 				}
-			ost << "\\\\" << endl;
+				ost << "\\\\" << endl;
 			}
-		ost << "\\end{array}" << endl;
-		ost << "\\right]" << endl;
-		ost << " = \\{" << endl;
-		for (i = 0; i < P3->k; i++) {
-			ost << P3->Lines[u * P3->k + i];
-			if (i < P3->k - 1) {
-				ost << ", ";
+			ost << "\\end{array}" << endl;
+			ost << "\\right]" << endl;
+			ost << " = \\{" << endl;
+			for (i = 0; i < P3->k; i++) {
+				ost << P3->Lines[u * P3->k + i];
+				if (i < P3->k - 1) {
+					ost << ", ";
 				}
 			}
-		ost << "\\}" << endl;
-		ost << "$\\\\" << endl;
+			ost << "\\}" << endl;
+			ost << "$\\\\" << endl;
 		}
 
 #if 1
-	ost << "\\chapter{The Spreads of PG$(3," << q << ")$}"
-			<< endl << endl;
+		ost << "\\chapter{The Spreads of PG$(3," << q << ")$}"
+				<< endl << endl;
 
-	ost << "PG$(3," << q << ")$ has " << Spread_tables->nb_spreads
-			<< " labeled spreads\\\\" << endl;
+		ost << "PG$(3," << q << ")$ has " << Spread_tables->nb_spreads
+				<< " labeled spreads\\\\" << endl;
 
-	for (u = 0; u < Spread_tables->nb_spreads; u++) {
-		ost << "Spread " << u << " is $";
-		lint_vec_print_fully(ost,
-				Spread_tables->spread_table + u * spread_size, spread_size);
-		ost << "$ isomorphism type "
-				<< Spread_tables->spread_iso_type[u] << "\\\\" << endl;
-		
+		for (u = 0; u < Spread_tables->nb_spreads; u++) {
+			ost << "Spread " << u << " is $";
+			lint_vec_print_fully(ost,
+					Spread_tables->spread_table + u * spread_size, spread_size);
+			ost << "$ isomorphism type "
+					<< Spread_tables->spread_iso_type[u] << "\\\\" << endl;
+
 		}
 #endif
 

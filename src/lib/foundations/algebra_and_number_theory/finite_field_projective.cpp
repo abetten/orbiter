@@ -5928,5 +5928,179 @@ void finite_field::cheat_sheet_PG(int n, int verbose_level)
 }
 
 
+
+void finite_field::simeon(int n, int len, long int *S, int s, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 1);
+	int k, nb_rows, nb_cols, nb_r1, nb_r2, row, col;
+	int *Coord;
+	int *M;
+	int *A;
+	int *C;
+	int *T;
+	int *Ac; // no not free
+	int *U;
+	int *U1;
+	int nb_A, nb_U;
+	int a, u, ac, i, d, idx, mtx_rank;
+	combinatorics_domain Combi;
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "finite_field::simeon s=" << s << endl;
+	}
+	k = n + 1;
+	nb_cols = Combi.int_n_choose_k(len, k - 1);
+	nb_r1 = Combi.int_n_choose_k(len, s);
+	nb_r2 = Combi.int_n_choose_k(len - s, k - 2);
+	nb_rows = nb_r1 * nb_r2;
+	if (f_v) {
+		cout << "nb_r1=" << nb_r1 << endl;
+		cout << "nb_r2=" << nb_r2 << endl;
+		cout << "nb_rows=" << nb_rows << endl;
+		cout << "nb_cols=" << nb_cols << endl;
+	}
+
+	Coord = NEW_int(len * k);
+	M = NEW_int(nb_rows * nb_cols);
+	A = NEW_int(len);
+	U = NEW_int(k - 2);
+	U1 = NEW_int(k - 2);
+	C = NEW_int(k - 1);
+	T = NEW_int(k * k);
+
+	int_vec_zero(M, nb_rows * nb_cols);
+
+
+	// unrank all points of the arc:
+	for (i = 0; i < len; i++) {
+		//point_unrank(Coord + i * k, S[i]);
+		PG_element_unrank_modified(Coord + i * k, 1 /* stride */, n + 1 /* len */, S[i]);
+	}
+
+
+	nb_A = Combi.int_n_choose_k(len, k - 2);
+	nb_U = Combi.int_n_choose_k(len - (k - 2), k - 1);
+	if (nb_A * nb_U != nb_rows) {
+		cout << "nb_A * nb_U != nb_rows" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "nb_A=" << nb_A << endl;
+		cout << "nb_U=" << nb_U << endl;
+	}
+
+
+	Ac = A + k - 2;
+
+	row = 0;
+	for (a = 0; a < nb_A; a++) {
+		if (f_vv) {
+			cout << "a=" << a << " / " << nb_A << ":" << endl;
+		}
+		Combi.unrank_k_subset(a, A, len, k - 2);
+		Combi.set_complement(A, k - 2, Ac, ac, len);
+		if (ac != len - (k - 2)) {
+			cout << "arc_generator::simeon ac != len - (k - 2)" << endl;
+			exit(1);
+		}
+		if (f_vv) {
+			cout << "Ac=";
+			int_vec_print(cout, Ac, ac);
+			cout << endl;
+		}
+
+
+		for (u = 0; u < nb_U; u++, row++) {
+
+			Combi.unrank_k_subset(u, U, len - (k - 2), k - 1);
+			for (i = 0; i < k - 1; i++) {
+				U1[i] = Ac[U[i]];
+			}
+			if (f_vv) {
+				cout << "U1=";
+				int_vec_print(cout, U1, k - 1);
+				cout << endl;
+			}
+
+			for (col = 0; col < nb_cols; col++) {
+				if (f_vv) {
+					cout << "row=" << row << " / " << nb_rows
+							<< " col=" << col << " / "
+							<< nb_cols << ":" << endl;
+				}
+				Combi.unrank_k_subset(col, C, len, k - 1);
+				if (f_vv) {
+					cout << "C: ";
+					int_vec_print(cout, C, k - 1);
+					cout << endl;
+				}
+
+
+				// test if A is a subset of C:
+				for (i = 0; i < k - 2; i++) {
+					if (!Sorting.int_vec_search_linear(C, k - 1, A[i], idx)) {
+						//cout << "did not find A[" << i << "] in C" << endl;
+						break;
+					}
+				}
+				if (i == k - 2) {
+					d = BallChowdhury_matrix_entry(
+							Coord, C, U1, k, s /*sz_U */,
+						T, 0 /*verbose_level*/);
+					if (f_vv) {
+						cout << "d=" << d << endl;
+					}
+
+					M[row * nb_cols + col] = d;
+				} // if
+			} // next col
+		} // next u
+	} // next a
+
+	if (f_v) {
+		cout << "simeon, the matrix M is:" << endl;
+		//int_matrix_print(M, nb_rows, nb_cols);
+	}
+
+	//print_integer_matrix_with_standard_labels(cout, M,
+	//nb_rows, nb_cols, TRUE /* f_tex*/);
+	//int_matrix_print_tex(cout, M, nb_rows, nb_cols);
+
+	if (f_v) {
+		cout << "nb_rows=" << nb_rows << endl;
+		cout << "nb_cols=" << nb_cols << endl;
+		cout << "s=" << s << endl;
+	}
+
+	mtx_rank = Gauss_easy(M, nb_rows, nb_cols);
+	if (f_v) {
+		cout << "mtx_rank=" << mtx_rank << endl;
+		//cout << "simeon, the reduced matrix M is:" << endl;
+		//int_matrix_print(M, mtx_rank, nb_cols);
+	}
+
+
+	FREE_int(Coord);
+	FREE_int(M);
+	FREE_int(A);
+	FREE_int(C);
+	//FREE_int(E);
+#if 0
+	FREE_int(A1);
+	FREE_int(C1);
+	FREE_int(E1);
+	FREE_int(A2);
+	FREE_int(C2);
+#endif
+	FREE_int(T);
+	if (f_v) {
+		cout << "finite_field::simeon s=" << s << " done" << endl;
+	}
+}
+
+
+
 }}
 

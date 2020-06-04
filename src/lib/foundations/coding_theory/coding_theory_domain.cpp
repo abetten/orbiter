@@ -1229,6 +1229,16 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 
+	latex_interface L;
+
+	int k = n - degree;
+
+	cout << "$$" << endl;
+	cout << "\\left[" << endl;
+	L.int_matrix_print_tex(cout, Genma, k, n);
+	cout << "\\right]" << endl;
+	cout << "$$" << endl;
+
 	//cout << "before FREE_int(taken)" << endl;
 	FREE_int(taken);
 	//cout << "before FREE_int(transversal)" << endl;

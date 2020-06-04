@@ -58,7 +58,7 @@ void blt_set_with_action::init_set(
 
 	if (f_v) {
 		cout << "blt_set_with_action::init_set" << endl;
-		}
+	}
 	blt_set_with_action::Blt_set = Blt_set;
 	Blt_set_domain = Blt_set->Blt_set_domain;
 	blt_set_with_action::Aut_gens = Aut_gens;
@@ -69,7 +69,7 @@ void blt_set_with_action::init_set(
 
 	if (f_v) {
 		cout << "blt_set_with_action::init_set done" << endl;
-		}
+	}
 }
 
 
@@ -81,12 +81,12 @@ void blt_set_with_action::init_orbits_on_points(
 	if (f_v) {
 		cout << "blt_set_with_action::init_orbits_"
 				"on_points" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "blt_set_with_action action "
 				"on points:" << endl;
-		}
+	}
 	A_on_points = Blt_set->A->restricted_action(
 			Inv->the_set_in_orthogonal,
 			Blt_set_domain->target_size,
@@ -94,23 +94,23 @@ void blt_set_with_action::init_orbits_on_points(
 	if (f_v) {
 		cout << "surface_object_with_action action "
 				"on points done" << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "computing orbits on points:" << endl;
-		}
+	}
 	Orbits_on_points = Aut_gens->orbits_on_points_schreier(
 			A_on_points, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "We found " << Orbits_on_points->nb_orbits
 				<< " orbits on points" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "blt_set_with_action::init_orbits_"
 				"on_points done" << endl;
-		}
+	}
 }
 
 void blt_set_with_action::print_automorphism_group(

@@ -103,6 +103,7 @@ MODULES= \
 		foundations/geometry/surface_object.o \
 		foundations/geometry/unusual.o \
 		foundations/geometry/w3q.o \
+		foundations/geometry/web_of_cubic_curves.o \
 		foundations/globals/function_command.o \
 		foundations/globals/function_polish_description.o \
 		foundations/globals/function_polish.o \
@@ -244,6 +245,7 @@ MODULES= \
 		classification/classify/flag_orbit_node.o \
 		classification/classify/flag_orbits.o \
 		classification/classify/orbit_node.o \
+		classification/poset_classification/classification_base_case.o \
 		classification/poset_classification/extension.o \
 		classification/poset_classification/orbit_based_testing.o \
 		classification/poset_classification/poset.o \
@@ -381,7 +383,6 @@ MODULES= \
 		top_level/orbits/orbit_of_equations.o \
 		top_level/orbits/orbit_of_sets.o \
 		top_level/orbits/orbit_of_subspaces.o \
-		top_level/orbits/subspace_orbits.o \
 		top_level/solver/exact_cover.o \
 		top_level/solver/exact_cover_arguments.o \
 		interfaces/interface_algebra.o \

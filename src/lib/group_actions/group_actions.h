@@ -84,6 +84,7 @@ class orbits_on_something;
 class orbit_type_repository;
 class permutation_representation;
 class incidence_structure_with_group;
+class action_global;
 
 //! enumeration to distinguish between the various types of group actions
 

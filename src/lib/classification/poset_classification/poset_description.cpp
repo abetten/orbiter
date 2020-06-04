@@ -27,7 +27,7 @@ void poset_description::null()
 {
 	f_subset_lattice = FALSE;
 	f_subspace_lattice = FALSE;
-	label[0] = 0;
+	//label[0] = 0;
 	f_independence_condition = FALSE;
 	independence_condition_value = 0;
 }

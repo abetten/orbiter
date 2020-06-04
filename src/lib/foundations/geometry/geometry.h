@@ -2279,6 +2279,7 @@ public:
 	int determine_line_in_plane(long int *two_input_pts,
 		int *three_coeffs, 
 		int verbose_level);
+	int conic_test(long int *S, int len, int pt, int verbose_level);
 	int determine_conic_in_plane(
 			long int *input_pts, int nb_pts,
 			int *six_coeffs,
@@ -2932,6 +2933,8 @@ public:
 		long int line1, long int line2,
 		int *coeff20, long int *lines27,
 		int verbose_level);
+	void print_web_of_cubic_curves(long int *arc6,
+			int *Web_of_cubic_curves, std::ostream &ost);
 
 
 
@@ -3368,6 +3371,37 @@ public:
 	int find_line(int line);
 };
 
+// #############################################################################
+// web_of_cubic_curves.cpp
+// #############################################################################
+
+//! a web of cubic curves which is used to create an algebraic variety
+
+
+class web_of_cubic_curves {
+
+public:
+	surface_domain *Surf;
+
+	int nb_T;
+	int *T_idx;
+
+	long int arc6[6];
+	int base_curves4[4];
+	int *Web_of_cubic_curves; // [45 * 10]
+	int *The_plane_equations; // [45 * 4]
+	int *base_curves; // [4 * 10]
+	long int *The_plane_rank; // [45]
+	long int *The_plane_duals; // [45]
+	long int *Dual_point_ranks; // [nb_T * 6]
+	long int Lines27[27];
+
+	web_of_cubic_curves();
+	~web_of_cubic_curves();
+	void init(surface_domain *Surf, long int *arc6, int *base_curves4,
+			 int nb_T, int *T_idx, int verbose_level);
+
+};
 
 
 

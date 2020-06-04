@@ -78,7 +78,7 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 
 	if (f_v) {
 		cout << "packing_long_orbits::filter_orbits" << endl;
-		}
+	}
 
 
 	set_of_sets *Input;
@@ -99,7 +99,7 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 	for (t = 0; t < Input->nb_sets; t++) {
 		if (t == fixpoints_idx) {
 			continue;
-			}
+		}
 
 		long int *Orb;
 		int orbit_length;
@@ -125,11 +125,11 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 				// add b to the list in Reduced_Orbits_by_length:
 
 				Filtered_orbits->add_element(t, b);
-				}
 			}
+		}
 
 		FREE_lint(Orb);
-		}
+	}
 
 	if (f_v) {
 		cout << "packing_long_orbits::filter_orbits "
@@ -138,12 +138,12 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 		for (t = 0; t < Input->nb_sets; t++) {
 			cout << t << " : " << Filtered_orbits->Set_size[t]
 				<< endl;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "packing_long_orbits::filter_orbits "
 				"done" << endl;
-		}
+	}
 }
 
 void packing_long_orbits::create_graph_on_remaining_long_orbits(
@@ -160,14 +160,14 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		//		"clique_size = " << Paat->clique_size << endl;
 		//cout << "long_orbits_fixpoint_case::create_graph_on_remaining_long_orbits "
 		//		"clique_no = " << clique_no << endl;
-		}
+	}
 
 	create_fname_graph_on_remaining_long_orbits();
 
 	if (f_v) {
 		cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
 				"fname=" << fname_graph << endl;
-		}
+	}
 
 	//selected_fixpoints, clique_size,
 
@@ -213,16 +213,18 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 	if (f_v) {
 		cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
 				"done" << endl;
-		}
+	}
 }
 
 void packing_long_orbits::create_fname_graph_on_remaining_long_orbits()
 {
 	if (P->f_output_path) {
-		sprintf(fname_graph, "%s%s_fpc%d_graph", P->output_path, P->H_LG->prefix, fixpoints_clique_case_number);
+		sprintf(fname_graph, "%s%s_fpc%d_graph", P->output_path,
+				P->H_LG->prefix, fixpoints_clique_case_number);
 	}
 	else {
-		sprintf(fname_graph, "%s_fpc%d_graph", P->H_LG->prefix, fixpoints_clique_case_number);
+		sprintf(fname_graph, "%s_fpc%d_graph", P->H_LG->prefix,
+				fixpoints_clique_case_number);
 	}
 
 }
@@ -238,7 +240,7 @@ void packing_long_orbits::create_graph_and_save_to_file(
 
 	if (f_v) {
 		cout << "packing_long_orbits::create_graph_and_save_to_file" << endl;
-		}
+	}
 
 
 	int type_idx;
@@ -260,7 +262,7 @@ void packing_long_orbits::create_graph_and_save_to_file(
 
 	if (f_v) {
 		cout << "packing_long_orbits::create_graph_and_save_to_file done" << endl;
-		}
+	}
 }
 
 void packing_long_orbits::create_graph_on_long_orbits(

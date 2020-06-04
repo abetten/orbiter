@@ -1074,6 +1074,7 @@ public:
 		int x3, int y3, int z3,
 		int verbose_level);
 	void cheat_sheet_PG(int n, int verbose_level);
+	void simeon(int n, int len, long int *S, int s, int verbose_level);
 
 
 	// #########################################################################

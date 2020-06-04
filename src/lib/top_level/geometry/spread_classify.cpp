@@ -48,6 +48,7 @@ spread_classify::spread_classify()
 
 	f_recoordinatize = FALSE;
 	R = NULL;
+	Base_case = NULL;
 
 	Starter = NULL;
 	Starter_size = 0;
@@ -98,6 +99,9 @@ void spread_classify::freeself()
 
 	if (R) {
 		FREE_OBJECT(R);
+		}
+	if (Base_case) {
+		FREE_OBJECT(Base_case);
 		}
 	if (Starter) {
 		FREE_lint(Starter);
@@ -457,17 +461,23 @@ void spread_classify::init2(int verbose_level)
 			cout << "spread_classify::init2 "
 					"before gen->initialize_with_starter" << endl;
 		}
-		gen->initialize_with_starter(Control, Poset,
+
+		Base_case = NEW_OBJECT(classification_base_case);
+
+		Base_case->init(Poset,
+				Starter_size,
+				Starter,
+				R->live_points,
+				R->nb_live_points,
+				Starter_Strong_gens,
+				this,
+				starter_canonize_callback,
+				verbose_level);
+
+
+		gen->initialize_with_base_case(Control, Poset,
 			spread_size,
-			starter_directory_name,
-			prefix,
-			Starter_size,
-			Starter,
-			Starter_Strong_gens,
-			R->live_points,
-			R->nb_live_points,
-			this /*starter_canonize_data*/,
-			starter_canonize_callback,
+			Base_case,
 			verbose_level - 2);
 		if (f_v) {
 			cout << "spread_classify::init2 "
@@ -479,9 +489,9 @@ void spread_classify::init2(int verbose_level)
 			cout << "spread_classify::init2 "
 					"before gen->initialize" << endl;
 		}
-		gen->initialize(Control, Poset,
+		gen->initialize_and_allocate_root_node(Control, Poset,
 			spread_size,
-			starter_directory_name, prefix,
+			//starter_directory_name, prefix,
 			verbose_level - 2);
 		if (f_v) {
 			cout << "spread_classify::init2 "
@@ -489,7 +499,7 @@ void spread_classify::init2(int verbose_level)
 		}
 	}
 
-	gen->f_allowed_to_show_group_elements = TRUE;
+	//gen->f_allowed_to_show_group_elements = TRUE;
 
 
 #if 0
@@ -661,10 +671,10 @@ void spread_classify::compute(int verbose_level)
 	if (f_v) {
 		cout << "spread_classify::compute done with generator_main" << endl;
 	}
-	length = gen->nb_orbits_at_level(gen->Control->max_depth);
+	length = gen->nb_orbits_at_level(Control->max_depth);
 	if (f_v) {
 		cout << "spread_classify::compute We found " << length << " orbits on "
-			<< gen->Control->max_depth << "-sets of " << k
+			<< Control->max_depth << "-sets of " << k
 			<< "-subspaces in PG(" << n - 1 << "," << q << ")" 
 			<< " satisfying the partial spread condition" << endl;
 	}

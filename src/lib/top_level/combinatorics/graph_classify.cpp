@@ -404,19 +404,20 @@ void graph_classify::init(int argc, const char **argv, int verbose_level)
 			A_base->Strong_gens,
 			verbose_level);
 
-	gen->initialize(Control, Poset,
-		target_depth, 
-		"", prefix, verbose_level - 1);
-	
 	Poset->add_testing_without_group(
 			graph_classify_test_function,
 			this,
 			verbose_level);
 
 	
-	gen->f_print_function = TRUE;
-	gen->print_function = graph_classify_print_set;
-	gen->print_function_data = (void *) this;
+	Poset->f_print_function = TRUE;
+	Poset->print_function = graph_classify_print_set;
+	Poset->print_function_data = (void *) this;
+
+	gen->initialize_and_allocate_root_node(Control, Poset,
+		target_depth,
+		verbose_level - 1);
+
 
 	if (f_v) {
 		cout << "graph_classify::init done" << endl;
@@ -886,7 +887,7 @@ void graph_classify::draw_graphs(int level,
 		char fname_full[1000];
 
 		sprintf(fname_full, "%s_rep_%d_%d.mp",
-				gen->fname_base, level, h);
+				gen->get_problem_label_with_path(), level, h);
 		int x_min = 0, x_max = xmax_in;
 		int y_min = 0, y_max = ymax_in;
 		int x, y, dx, dy;

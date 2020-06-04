@@ -35,10 +35,10 @@ void six_arcs_not_on_a_conic::freeself()
 {
 	if (Gen) {
 		FREE_OBJECT(Gen);
-		}
+	}
 	if (Not_on_conic_idx) {
 		FREE_int(Not_on_conic_idx);
-		}
+	}
 	null();
 }
 
@@ -47,6 +47,7 @@ void six_arcs_not_on_a_conic::init(
 	finite_field *F,
 	action *A,
 	projective_space *P2,
+	poset_classification_control *Control,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -70,16 +71,6 @@ void six_arcs_not_on_a_conic::init(
 	Gen->d = 2; // we will classify two-arcs
 
 
-#if 0
-	Gen->ECA = NEW_OBJECT(exact_cover_arguments);
-	Gen->IA = NEW_OBJECT(isomorph_arguments);
-
-	Gen->ECA->f_has_solution_prefix = TRUE;
-	Gen->ECA->solution_prefix = "";
-
-	Gen->ECA->f_has_base_fname = TRUE;
-	Gen->ECA->base_fname = base_fname;
-#endif
 	
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::init "
@@ -90,12 +81,11 @@ void six_arcs_not_on_a_conic::init(
 	Gen->init(
 			GTA,
 			F,
-		A, A->Strong_gens,
-		"" /* Gen->ECA->input_prefix */, 
-		"" /* Gen->ECA->base_fname */,
-		6 /* Gen->ECA->starter_size */, 
-		//argc, argv,
-		verbose_level - 2);
+			A, A->Strong_gens,
+			6 /* Gen->ECA->starter_size */,
+			TRUE /* f_conic_test */,
+			Control,
+			verbose_level - 2);
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::init "
 				"after Gen->init" << endl;
@@ -143,7 +133,7 @@ void six_arcs_not_on_a_conic::init(
 		if (f_v) {
 			cout << "six_arcs_not_on_a_conic::init "
 					"testing arc " << h << " / " << nb_orbits << endl;
-			}
+		}
 
 		
 		Gen->gen->get_set_by_level(level, h, Arc6);
@@ -158,7 +148,7 @@ void six_arcs_not_on_a_conic::init(
 		if (f_v) {
 			cout << "six_arcs_not_on_a_conic::init "
 					"computing conic intersections:" << endl;
-			}
+		}
 		P2->conic_type(
 			Arc6, 6, 
 			Pts_on_conic, nb_pts_on_conic, len1, 
@@ -217,7 +207,7 @@ void six_arcs_not_on_a_conic::recognize(long int *arc6, int *transporter,
 		orbit_not_on_conic_idx)) {
 		cout << "six_arcs_not_on_a_conic::recognize could not find orbit" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::recognize done" << endl;
 	}

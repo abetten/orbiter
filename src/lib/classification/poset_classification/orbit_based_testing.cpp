@@ -184,7 +184,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 
 	node = PC->find_poset_orbit_node_for_set(len, local_S,
 		FALSE /* f_tolerant */, 0);
-	O = PC->root + node;
+	O = PC->get_node(node);
 
 	if (f_v) {
 		cout << "orbit_based_testing::early_test_func_by_using_group for ";
@@ -194,7 +194,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 
 	schreier Schreier;
 
-	Schreier.init(PC->Poset->A2, verbose_level - 2);
+	Schreier.init(PC->get_A2(), verbose_level - 2);
 
 	Schreier.init_generators_by_hdl(
 		O->nb_strong_generators, O->hdl_strong_generators, 0);

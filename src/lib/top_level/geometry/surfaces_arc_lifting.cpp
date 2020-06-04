@@ -92,6 +92,7 @@ void surfaces_arc_lifting::init(
 	group_theoretic_activity *GTA,
 	finite_field *F, linear_group *LG4, linear_group *LG3,
 	int f_semilinear, surface_with_action *Surf_A,
+	poset_classification_control *Control_six_arcs,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -125,7 +126,7 @@ void surfaces_arc_lifting::init(
 			F,
 		A3,
 		Surf->P2,
-		//argc, argv,
+		Control_six_arcs,
 		verbose_level - 10);
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init "
@@ -566,7 +567,7 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 				}
 				if (f_vv) {
 					cout << "lifted generators are:" << endl;
-					SG_induced->print_generators_ost(cout);
+					SG_induced->print_generators(cout);
 				}
 
 				if (f_v) {

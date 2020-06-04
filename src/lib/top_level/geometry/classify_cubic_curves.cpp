@@ -75,6 +75,7 @@ void classify_cubic_curves::init(
 		cubic_curve_with_action *CCA,
 		const char *starter_directory_name,
 		const char *base_fname,
+		poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -100,21 +101,20 @@ void classify_cubic_curves::init(
 	Arc_gen->init(GTA,
 			F,
 			A, A->Strong_gens,
-			starter_directory_name,
-			base_fname,
 			9 /* starter_size */,
-			//argc, argv,
+			FALSE /* f_conic_test */,
+			Control,
 			verbose_level);
 
 
 	if (f_v) {
 		cout << "classify_cubic_curves::init after Arc_gen->init" << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "classify_cubic_curves::init done" << endl;
-		}
+	}
 }
 
 void classify_cubic_curves::compute_starter(int verbose_level)
@@ -181,8 +181,7 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 		}
 #endif
 
-		r = CC->compute_system_in_RREF(9,
-				S, 0 /*verbose_level*/);
+		r = CC->compute_system_in_RREF(9, S, 0 /*verbose_level*/);
 		if (f_vv) {
 			cout << "classify_cubic_curves::test_orbits orbit "
 					<< i << " / " << nb_orbits_on_sets
@@ -241,7 +240,7 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 		cout << "Idx=";
 		int_vec_print(cout, Idx, nb);
 		cout << endl;
-		}
+	}
 
 	FREE_lint(Pts_on_curve);
 	FREE_lint(singular_Pts);
@@ -249,7 +248,7 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 
 	if (f_v) {
 		cout << "classify_cubic_curves::test_orbits done" << endl;
-		}
+	}
 }
 
 
@@ -263,12 +262,12 @@ void classify_cubic_curves::downstep(int verbose_level)
 	if (f_v) {
 		cout << "classify_cubic_curves::downstep" << endl;
 		cout << "verbose_level = " << verbose_level << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "classify_cubic_curves::downstep "
 				"before test_orbits" << endl;
-		}
+	}
 	test_orbits(verbose_level - 1);
 	if (f_v) {
 		cout << "classify_cubic_curves::downstep "
@@ -276,7 +275,7 @@ void classify_cubic_curves::downstep(int verbose_level)
 		cout << "Idx=";
 		int_vec_print(cout, Idx, nb);
 		cout << endl;
-		}
+	}
 
 
 
@@ -290,7 +289,7 @@ void classify_cubic_curves::downstep(int verbose_level)
 	if (f_v) {
 		cout << "classify_cubic_curves::downstep "
 				"initializing flag orbits" << endl;
-		}
+	}
 
 	nb_flag_orbits = 0;
 	for (f = 0; f < nb; f++) {
@@ -454,7 +453,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 
 		if (f_processed[f]) {
 			continue;
-			}
+		}
 
 		progress = ((double)nb_processed * 100. ) /
 				(double) Flag_orbits->nb_flag_orbits;
@@ -465,7 +464,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 				<< " from flag orbit " << f << " / "
 				<< Flag_orbits->nb_flag_orbits
 				<< " progress=" << progress << "%" << endl;
-			}
+		}
 		Flag_orbits->Flag_orbit_node[f].upstep_primary_orbit
 			= Flag_orbits->nb_primary_orbits_upper;
 
@@ -473,7 +472,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 		if (Flag_orbits->pt_representation_sz != 19) {
 			cout << "Flag_orbits->pt_representation_sz != 19" << endl;
 			exit(1);
-			}
+		}
 		po = Flag_orbits->Flag_orbit_node[f].downstep_primary_orbit;
 		so = Flag_orbits->Flag_orbit_node[f].downstep_secondary_orbit;
 		if (f_v) {
@@ -498,13 +497,13 @@ void classify_cubic_curves::upstep(int verbose_level)
 			cout << "equation:";
 			int_vec_print(cout, eqn, 10);
 			cout << endl;
-			}
+		}
 		S = Flag_orbits->Flag_orbit_node[f].gens->create_copy();
 		S->group_order(go);
 		if (f_v) {
 			cout << "po=" << po << " so=" << so
 					<< " go=" << go << endl;
-			}
+		}
 
 		nb_coset_reps = 0;
 
@@ -519,7 +518,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 			cout << "po=" << po << " so=" << so
 					<< " we found a curve with " << nb_pts
 					<< " points" << endl;
-			}
+		}
 
 		N = Combi.int_n_choose_k(nb_pts, 9);
 
@@ -532,7 +531,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 			if (FALSE) {
 				cout << "po=" << po << " so=" << so
 						<< " i=" << i << " / " << N << endl;
-				}
+			}
 
 			Combi.unrank_k_subset(i, idx_set, nb_pts, 9);
 			for (j = 0; j < 9; j++) {
@@ -574,14 +573,14 @@ void classify_cubic_curves::upstep(int verbose_level)
 				int_vec_print(cout, Po, Flag_orbits->nb_flag_orbits);
 				cout << endl;
 				exit(1);
-				}
+			}
 
 			if (Flag_orbits->Flag_orbit_node[f2].downstep_primary_orbit
 					!= orbit_index) {
 				cout << "Flag_orbits->Flag_orbit_node[f2].downstep_"
 						"primary_orbit != orbit_index" << endl;
 				exit(1);
-				}
+			}
 
 
 
@@ -599,12 +598,12 @@ void classify_cubic_curves::upstep(int verbose_level)
 				nb_coset_reps++;
 				//S->add_single_generator(Elt3,
 				//2 /* group_index */, verbose_level - 2);
-				}
+			}
 			else {
 				if (FALSE) {
 					cout << "We are identifying flag orbit "
 							<< f2 << " with flag orbit " << f << endl;
-					}
+				}
 				if (!f_processed[f2]) {
 					Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit
 						= Flag_orbits->nb_primary_orbits_upper;
@@ -619,7 +618,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 							0);
 					f_processed[f2] = TRUE;
 					nb_processed++;
-					}
+				}
 				else {
 					if (FALSE) {
 						cout << "Flag orbit " << f2 << " has already been "
@@ -629,9 +628,9 @@ void classify_cubic_curves::upstep(int verbose_level)
 						cout << "Flag_orbits->Flag_orbit_node[f2]."
 								"fusion_with != f" << endl;
 						exit(1);
-						}
 					}
 				}
+			}
 
 		}
 

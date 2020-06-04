@@ -325,9 +325,11 @@ void surface_create::init2(int verbose_level)
 			cout << endl;
 		}
 
-		poset_classification_control *Control;
+		poset_classification_control *Control1;
+		poset_classification_control *Control2;
 
-		Control = NEW_OBJECT(poset_classification_control);
+		Control1 = NEW_OBJECT(poset_classification_control);
+		Control2 = NEW_OBJECT(poset_classification_control);
 
 #if 1
 		// classifying the trihedral pairs is expensive:
@@ -335,7 +337,7 @@ void surface_create::init2(int verbose_level)
 			cout << "surface_create::init2 before Surf_A->"
 					"Classify_trihedral_pairs->classify" << endl;
 		}
-		Surf_A->Classify_trihedral_pairs->classify(Control, 0 /*verbose_level*/);
+		Surf_A->Classify_trihedral_pairs->classify(Control1, Control2, 0 /*verbose_level*/);
 		if (f_v) {
 			cout << "surface_create::init2 after Surf_A->"
 					"Classify_trihedral_pairs->classify" << endl;
@@ -382,7 +384,8 @@ void surface_create::init2(int verbose_level)
 
 
 		FREE_OBJECT(AL);
-		FREE_OBJECT(Control);
+		FREE_OBJECT(Control1);
+		FREE_OBJECT(Control2);
 		
 
 		FREE_lint(arc);

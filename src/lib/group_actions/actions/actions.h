@@ -922,42 +922,47 @@ public:
 // action_global.cpp
 // #############################################################################
 
+//! global functions related to group actions
 
-void action_print_symmetry_group_type(std::ostream &ost, symmetry_group_type a);
-void make_generators_stabilizer_of_three_components(
-	action *A_PGL_n_q, action *A_PGL_k_q, 
-	int k, vector_ge *gens, int verbose_level);
-void make_generators_stabilizer_of_two_components(
-	action *A_PGL_n_q, action *A_PGL_k_q, 
-	int k, vector_ge *gens, int verbose_level);
-// used in semifield
-void compute_generators_GL_n_q(int *&Gens, int &nb_gens, 
-	int &elt_size, int n, finite_field *F,
-	vector_ge *&nice_gens,
-	int verbose_level);
-void set_orthogonal_group_type(int f_siegel, 
-	int f_reflection, int f_similarity, int f_semisimilarity);
-int get_orthogonal_group_type_f_reflection();
-void callback_choose_random_generator_orthogonal(int iteration, 
+class action_global {
+public:
+	void action_print_symmetry_group_type(std::ostream &ost, symmetry_group_type a);
+	void make_generators_stabilizer_of_three_components(
+		action *A_PGL_n_q, action *A_PGL_k_q,
+		int k, vector_ge *gens, int verbose_level);
+	void make_generators_stabilizer_of_two_components(
+		action *A_PGL_n_q, action *A_PGL_k_q,
+		int k, vector_ge *gens, int verbose_level);
+	// used in semifield
+	void compute_generators_GL_n_q(int *&Gens, int &nb_gens,
+		int &elt_size, int n, finite_field *F,
+		vector_ge *&nice_gens,
+		int verbose_level);
+	void set_orthogonal_group_type(int f_siegel,
+		int f_reflection, int f_similarity, int f_semisimilarity);
+	int get_orthogonal_group_type_f_reflection();
+	void lift_generators(vector_ge *gens_in, vector_ge *&gens_out,
+		action *Aq, subfield_structure *S, int n, int verbose_level);
+	void retract_generators(vector_ge *gens_in, vector_ge *&gens_out,
+		action *AQ, subfield_structure *S, int n,
+		int verbose_level);
+	void lift_generators_to_subfield_structure(
+		int n, int s,
+		subfield_structure *S,
+		action *Aq, action *AQ,
+		strong_generators *&Strong_gens,
+		int verbose_level);
+	void perm_print_cycles_sorted_by_length(std::ostream &ost,
+		int degree, int *perm, int verbose_level);
+	void perm_print_cycles_sorted_by_length_offset(std::ostream &ost,
+		int degree, int *perm, int offset,
+		int f_do_it_anyway_even_for_big_degree,
+		int f_print_cycles_of_length_one, int verbose_level);
+};
+
+void callback_choose_random_generator_orthogonal(int iteration,
 	int *Elt, void *data, int verbose_level);
 	// for use in action_init.cpp
-void lift_generators(vector_ge *gens_in, vector_ge *&gens_out, 
-	action *Aq, subfield_structure *S, int n, int verbose_level);
-void retract_generators(vector_ge *gens_in, vector_ge *&gens_out, 
-	action *AQ, subfield_structure *S, int n, 
-	int verbose_level);
-void lift_generators_to_subfield_structure(
-	int n, int s, 
-	subfield_structure *S, 
-	action *Aq, action *AQ, 
-	strong_generators *&Strong_gens, 
-	int verbose_level);
-void perm_print_cycles_sorted_by_length(std::ostream &ost,
-	int degree, int *perm, int verbose_level);
-void perm_print_cycles_sorted_by_length_offset(std::ostream &ost,
-	int degree, int *perm, int offset, 
-	int f_do_it_anyway_even_for_big_degree, 
-	int f_print_cycles_of_length_one, int verbose_level);
 
 
 // #############################################################################

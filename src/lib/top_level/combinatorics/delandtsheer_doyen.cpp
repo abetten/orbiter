@@ -622,6 +622,9 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 	os_interface Os;
 	int t0 = Os.os_ticks();
 
+	char label[1000];
+
+
 	if (f_v) {
 		cout << "delandtsheer_doyen::search_starter" << endl;
 	}
@@ -633,17 +636,19 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 	//Gen->prefix[0] = 0;
 
 	if (Descr->f_subgroup) {
-		sprintf(Gen->fname_base, "design_%s_%s_%d_%d",
+		sprintf(label, "design_%s_%s_%d_%d",
 				Descr->group_label, Descr->mask_label, Descr->q1, Descr->q2);
 	}
 	else {
-		sprintf(Gen->fname_base, "design_no_group_%s_%d_%d", Descr->mask_label,
+		sprintf(label, "design_no_group_%s_%d_%d", Descr->mask_label,
 				Descr->d1, Descr->d2);
 
 	}
 
 
-	Gen->depth = Descr->depth;
+	Descr->Search_control->problem_label = label;
+	Descr->Search_control->f_problem_label = TRUE;
+	//Gen->depth = Descr->depth;
 	//Control_search = NEW_OBJECT(poset_classification_control);
 	Poset_search = NEW_OBJECT(poset);
 	Poset_search->init_subset_lattice(A0, A, SG,
@@ -662,13 +667,14 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 		cout << "delandtsheer_doyen::search_starter "
 				"before Gen->init" << endl;
 		}
-	Gen->init(Descr->Search_control, Poset_search,
-			Gen->depth /* sz */, verbose_level);
+	Gen->initialize_and_allocate_root_node(Descr->Search_control, Poset_search,
+			Descr->depth /* sz */, verbose_level);
 	if (f_v) {
 		cout << "delandtsheer_doyen::search_starter "
 				"after Gen->init" << endl;
 		}
 
+#if 0
 	int nb_nodes = 1000;
 
 	if (f_v) {
@@ -680,7 +686,8 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 		cout << "delandtsheer_doyen::search_starter "
 				"calling Pairs->init_root_node" << endl;
 		}
-	Gen->root[0].init_root_node(Gen, verbose_level - 1);
+	Gen->get_node(0)->init_root_node(Gen, verbose_level - 1);
+#endif
 
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;
@@ -699,13 +706,13 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 
 	//Gen->f_allowed_to_show_group_elements = TRUE;
 
-	Gen->Control->f_max_depth = FALSE;
-	Gen->depth = Descr->depth;
+	//Control->f_max_depth = FALSE;
+	//Gen->depth = Descr->depth;
 	Gen->main(t0,
-		Gen->depth /* schreier_depth */,
-		f_use_invariant_subset_if_available,
-		f_debug,
-		verbose_level - 2);
+			Descr->depth /* schreier_depth */,
+			f_use_invariant_subset_if_available,
+			f_debug,
+			verbose_level - 2);
 
 	if (f_v) {
 		cout << "delandtsheer_doyen::search_starter "
@@ -717,7 +724,7 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 		cout << "delandtsheer_doyen::search_starter "
 				"before Gen->draw_poset" << endl;
 	}
-	Gen->draw_poset(Gen->fname_base, Descr->depth,
+	Gen->draw_poset(Gen->get_problem_label_with_path(), Descr->depth,
 			0 /* data1 */, TRUE /* f_embedded */, TRUE /* f_sideways */,
 			verbose_level);
 	if (f_v) {
@@ -742,11 +749,13 @@ void delandtsheer_doyen::compute_orbits_on_pairs(strong_generators *Strong_gens,
 	//Pairs->read_arguments(argc, argv, 0);
 
 	//Pairs->prefix[0] = 0;
-	sprintf(Pairs->fname_base, "pairs_%s_%d_%d",
+	sprintf(Pairs->get_problem_label_with_path(), "pairs_%s_%d_%d",
 			Descr->group_label, Descr->q1, Descr->q2);
 
 
-	Pairs->depth = 2;
+	//Pairs->depth = 2;
+	Descr->Pair_search_control->f_max_depth = TRUE;
+	Descr->Pair_search_control->max_depth = 2;
 
 	Poset_pairs = NEW_OBJECT(poset);
 	Poset_pairs->init_subset_lattice(A0, A, Strong_gens,
@@ -757,14 +766,15 @@ void delandtsheer_doyen::compute_orbits_on_pairs(strong_generators *Strong_gens,
 		cout << "delandtsheer_doyen::compute_orbits_on_pairs "
 				"before Pairs->init" << endl;
 	}
-	Pairs->init(Descr->Pair_search_control, Poset_pairs,
-			Pairs->depth /* sz */, verbose_level);
+	Pairs->initialize_and_allocate_root_node(Descr->Pair_search_control, Poset_pairs,
+			2 /* sz */, verbose_level);
 	if (f_v) {
 		cout << "direct_product_action::compute_orbits_on_pairs "
 				"after Pairs->init" << endl;
 	}
 
 
+#if 0
 	int nb_nodes = 1000;
 
 	if (f_v) {
@@ -776,7 +786,8 @@ void delandtsheer_doyen::compute_orbits_on_pairs(strong_generators *Strong_gens,
 		cout << "delandtsheer_doyen::compute_orbits_on_pairs "
 				"calling Pairs->init_root_node" << endl;
 	}
-	Pairs->root[0].init_root_node(Pairs, verbose_level - 1);
+	Pairs->get_node(0)->init_root_node(Pairs, verbose_level - 1);
+#endif
 
 	int f_use_invariant_subset_if_available;
 	int f_debug;
@@ -797,10 +808,12 @@ void delandtsheer_doyen::compute_orbits_on_pairs(strong_generators *Strong_gens,
 
 	//Pairs->f_allowed_to_show_group_elements = TRUE;
 
-	Descr->Pair_search_control->f_max_depth = FALSE;
-	Pairs->depth = 2;
+	Descr->Pair_search_control->f_max_depth = TRUE;
+	Descr->Pair_search_control->max_depth = 2;
+
+	//Pairs->depth = 2;
 	Pairs->main(t0,
-		Pairs->depth /* schreier_depth */,
+		2 /* schreier_depth */,
 		f_use_invariant_subset_if_available,
 		f_debug,
 		verbose_level - 2);
@@ -1218,7 +1231,7 @@ void delandtsheer_doyen::write_pair_orbit_file(int verbose_level)
 		ofstream f(fname);
 		f << nb_orbits << endl;
 		for (i = 0; i < nb_orbits; i++) {
-			n = Pairs->first_poset_orbit_node_at_level[2] + i;
+			n = Pairs->first_node_at_level(2) + i;
 			Pairs->get_set(n, set, size);
 			if (size != 2) {
 				cout << "delandtsheer_doyen::write_pair_orbit_file "

@@ -154,20 +154,19 @@ void polar::init(
 	
 	tmp_M = NEW_int(n * n);
 	base_cols = NEW_int(n);
-	Gen = NEW_OBJECT(poset_classification);
 
 	//Gen->read_arguments(argc, argv, 0);
 
 	//Gen->prefix[0] = 0;
-	sprintf(Gen->fname_base, "polar_%d_%d_%d_%d", epsilon, n, k, q);
+	//sprintf(Gen->fname_base, "polar_%d_%d_%d_%d", epsilon, n, k, q);
 	
 	
-	Gen->depth = depth;
+	//Gen->depth = depth;
 	//Gen->Control->verbose_level = verbose_level - 2;
 	
 }
 
-void polar::init2(int verbose_level)
+void polar::init2(int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -219,43 +218,30 @@ void polar::init2(int verbose_level)
 			verbose_level - 1);
 
 	Control = NEW_OBJECT(poset_classification_control);
+	Control->f_max_depth = TRUE;
+	Control->max_depth = depth;
+
+
+	char label[1000];
+
+	sprintf(label, "polar_%d_%d_%d_%d", epsilon, n, k, q); // ToDo
+
+
+
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subspace_lattice(A, A,
 			gens,
 			VS,
 			verbose_level);
+
 	Poset->add_testing_without_group(
 			polar_callback_early_test_func,
 				this /* void *data */,
 				verbose_level);
-	Gen->init(Control, Poset,
-			Gen->depth /* sz */, verbose_level);
 
-#if 0
-	Gen->init_check_func(
-		polar_callback_test_func, 
-		this /* candidate_check_data */);
-#endif
-
-	//Gen->init_incremental_check_func(
-		//check_mindist_incremental, 
-		//this /* candidate_check_data */);
-
-#if 0
-	Gen->init_vector_space_action(n /* vector_space_dimension */, 
-		F, 
-		polar_callback_rank_point_func, 
-		polar_callback_unrank_point_func, 
-		this, 
-		verbose_level);
-#endif
-
-#if 0
-	Gen->init_early_test_func(
-		polar_callback_early_test_func, 
-		this,  
-		verbose_level);
-#endif
+	Gen = NEW_OBJECT(poset_classification);
+	Gen->initialize_and_allocate_root_node(Control, Poset,
+			depth /* sz */, verbose_level);
 
 
 #if 0
@@ -264,6 +250,7 @@ void polar::init2(int verbose_level)
 	Gen->print_function_data = this;
 #endif	
 
+#if 0
 	int nb_poset_orbit_nodes = 1000;
 	
 	if (f_v) {
@@ -273,11 +260,11 @@ void polar::init2(int verbose_level)
 	if (f_v) {
 		cout << "calling Gen->init_root_node" << endl;
 		}
-	Gen->root[0].init_root_node(Gen, verbose_level);
+	Gen->get_node(0)->init_root_node(Gen, verbose_level);
+#endif
 	
-	schreier_depth = Gen->depth;
+	schreier_depth = depth;
 	f_use_invariant_subset_if_available = FALSE;
-	//f_implicit_fusion = FALSE;
 	f_debug = FALSE;
 }
 
@@ -288,22 +275,21 @@ void polar::compute_orbits(int t0, int verbose_level)
 	if (f_v) {
 		cout << "polar::compute_orbits calling generator_main" << endl;
 		cout << "A=";
-		Gen->Poset->A->print_info();
+		Gen->get_A()->print_info();
 		cout << "A2=";
-		Gen->Poset->A2->print_info();
+		Gen->get_A2()->print_info();
 		}
 	Gen->main(t0, 
 		schreier_depth, 
 		f_use_invariant_subset_if_available, 
-		//f_implicit_fusion, 
 		f_debug, 
 		verbose_level - 1);
 		
 	if (f_v) {
 		cout << "done with generator_main" << endl;
 		}
-	first_node = Gen->first_poset_orbit_node_at_level[depth];
-	nb_orbits = Gen->first_poset_orbit_node_at_level[depth + 1] - first_node;
+	first_node = Gen->first_node_at_level(depth);
+	nb_orbits = Gen->nb_orbits_at_level(depth);
 
 	int i;
 	nb_elements = 0;
@@ -334,15 +320,15 @@ void polar::compute_cosets(int depth, int orbit_idx, int verbose_level)
 	if (f_v) {
 		cout << "polar::compute_cosets" << endl;
 		}
-	Elt1 = NEW_int(Gen->Poset->A->elt_size_in_int);
-	Elt2 = NEW_int(Gen->Poset->A->elt_size_in_int);
+	Elt1 = NEW_int(Gen->get_A()->elt_size_in_int);
+	Elt2 = NEW_int(Gen->get_A()->elt_size_in_int);
 	the_set1 = NEW_lint(depth);
 	the_set2 = NEW_lint(depth);
 	M1 = NEW_int(k * n);
 	M2 = NEW_int(k * n);
 	
-	node2 = Gen->first_poset_orbit_node_at_level[depth] + orbit_idx;
-	O2 = &Gen->root[node2];
+	node2 = Gen->first_node_at_level(depth) + orbit_idx;
+	O2 = Gen->get_node(node2);
 
 	Gen->stabilizer_order(0, go1);
 	Gen->stabilizer_order(node2, go2);
@@ -390,16 +376,16 @@ void polar::compute_cosets(int depth, int orbit_idx, int verbose_level)
 
 		if (f_vvv) {
 			cout << "Left coset " << c << " is represented by" << endl;
-			Gen->Poset->A->element_print_quick(Elt1, cout);
+			Gen->get_A()->element_print_quick(Elt1, cout);
 			cout << endl;
 			}
 
-		Gen->Poset->A->element_invert(Elt1, Elt2, 0);
+		Gen->get_A()->element_invert(Elt1, Elt2, 0);
 
 
 		if (f_vvv) {
 			cout << "Right coset " << c << " is represented by" << endl;
-			Gen->Poset->A->element_print_quick(Elt2, cout);
+			Gen->get_A()->element_print_quick(Elt2, cout);
 			cout << endl;
 			}
 
@@ -461,8 +447,8 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 	if (f_v) {
 		cout << "polar::dual_polar_graph" << endl;
 		}
-	Elt1 = NEW_int(Gen->Poset->A->elt_size_in_int);
-	Elt2 = NEW_int(Gen->Poset->A->elt_size_in_int);
+	Elt1 = NEW_int(Gen->get_A()->elt_size_in_int);
+	Elt2 = NEW_int(Gen->get_A()->elt_size_in_int);
 	the_set1 = NEW_lint(depth);
 	the_set2 = NEW_lint(depth);
 	M1 = NEW_int(k * n);
@@ -470,8 +456,8 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 
 	witt = Gg.Witt_index(epsilon, n - 1);
 		
-	node2 = Gen->first_poset_orbit_node_at_level[depth] + orbit_idx;
-	O2 = &Gen->root[node2];
+	node2 = Gen->first_node_at_level(depth) + orbit_idx;
+	O2 = Gen->get_node(node2);
 
 	Gen->stabilizer_order(0, go1);
 	Gen->stabilizer_order(node2, go2);
@@ -534,17 +520,17 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 
 		if (FALSE) {
 			cout << "Left coset " << c << " is represented by" << endl;
-			Gen->Poset->A->element_print_quick(Elt1, cout);
+			Gen->get_A()->element_print_quick(Elt1, cout);
 			cout << endl;
 			}
 
-		Gen->Poset->A->element_invert(Elt1, Elt2, 0);
+		Gen->get_A()->element_invert(Elt1, Elt2, 0);
 
 
 		if (FALSE) {
 			cout << "Right coset " << c
 					<< " is represented by" << endl;
-			Gen->Poset->A->element_print_quick(Elt2, cout);
+			Gen->get_A()->element_print_quick(Elt2, cout);
 			cout << endl;
 			}
 
@@ -1140,7 +1126,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 void polar::get_stabilizer(int orbit_idx, group &G,
 		longinteger_object &go_G)
 {
-	Gen->root[first_node + orbit_idx].get_stabilizer(Gen,
+	Gen->get_node(first_node + orbit_idx)->get_stabilizer(Gen,
 			G, go_G, 0 /*verbose_level - 2*/);
 }
 

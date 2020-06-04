@@ -853,7 +853,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 	cout << "after move_point_set" << endl;
 
 	cout << "The stabilizer of the Eckardt points is:" << endl;
-	Eckardt_stab->Strong_gens->print_generators();
+	Eckardt_stab->Strong_gens->print_generators(cout);
 	cout << "a group of order " << Eckardt_stab->target_go << endl;
 
 
@@ -1508,7 +1508,7 @@ void move_point_set(action *A2,
 
 	gen->compute_orbits_on_subsets(
 		nb_pts,
-		prefix,
+		//prefix,
 		//f_W, f_w,
 		Control,
 		Poset,

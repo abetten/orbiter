@@ -120,7 +120,7 @@ void recoordinatize::do_recoordinatize(
 	long int j1, j2, j3;
 
 	if (f_v) {
-		cout << "translation_plane::recoordinatize "
+		cout << "recoordinatize::do_recoordinatize "
 				<< i1 << "," << i2 << "," << i3 << endl;
 		}
 	Grass->unrank_lint_here(M, i1, 0 /*verbose_level - 4*/);
@@ -221,12 +221,12 @@ void recoordinatize::do_recoordinatize(
 	
 	A->make_element(Elt, C, 0);
 	if (f_vv) {
-		cout << "translation_plane::recoordinatize "
+		cout << "recoordinatize::do_recoordinatize "
 				"transporter:" << endl;
 		A->element_print(Elt, cout);
 		}
 	if (f_v) {
-		cout << "translation_plane::recoordinatize done" << endl;
+		cout << "recoordinatize::do_recoordinatize done" << endl;
 		}
 }
 
@@ -366,7 +366,9 @@ void recoordinatize::stabilizer_of_first_three(
 				"three_components" << endl;
 		}
 
-	make_generators_stabilizer_of_three_components(
+	action_global AG;
+
+	AG.make_generators_stabilizer_of_three_components(
 		A /* A_PGL_n_q */,
 		A0 /* A_PGL_k_q */,
 		k, gens2, verbose_level - 1);

@@ -314,10 +314,13 @@ void hadamard_classify::init(int n, int f_draw,
 	gen = NEW_OBJECT(poset_classification);
 	Control = NEW_OBJECT(poset_classification_control);
 	Control->f_W = TRUE;
+	Control->problem_label = prefix;
+	Control->f_problem_label = TRUE;
+
 
 	gen->compute_orbits_on_subsets(
 		n /* target_depth */,
-		prefix,
+		//prefix,
 		//TRUE /* f_W */, FALSE /* f_w */,
 		Control,
 		Poset,

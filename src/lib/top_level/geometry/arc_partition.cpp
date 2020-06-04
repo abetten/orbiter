@@ -64,7 +64,6 @@ void arc_partition::freeself()
 void arc_partition::init(
 	arc_orbits_on_pairs *OP, int pair_orbit_idx,
 	action *A, action *A_on_arc,
-	//int argc, const char **argv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

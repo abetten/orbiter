@@ -14,7 +14,7 @@ namespace top_level {
 // algebra_global_with_action.cpp
 // #############################################################################
 
-//! group theoretic stuff which requires action
+//! group theoretic functions which require an action
 
 
 class algebra_global_with_action {
@@ -65,7 +65,9 @@ public:
 	void young_symmetrizer_sym_4(int verbose_level);
 	void classify_surfaces_through_arcs_and_trihedral_pairs(
 			group_theoretic_activity *GTA,
-			surface_with_action *Surf_A, int verbose_level);
+			surface_with_action *Surf_A,
+			poset_classification_control *Control,
+			int verbose_level);
 	void investigate_surface_and_write_report(
 			action *A,
 			surface_create *SC,
@@ -74,6 +76,11 @@ public:
 			int f_surface_clebsch,
 			int f_surface_codes,
 			int f_surface_quartic,
+			int verbose_level);
+	void report_tactical_decomposition_by_automorphism_group(
+			std::ostream &ost, projective_space *P,
+			action *A_on_points, action *A_on_lines,
+			strong_generators *gens, int size_limit_for_printing,
 			int verbose_level);
 
 };
@@ -213,10 +220,9 @@ public:
 
 	// classification of arcs in projective spaces:
 	int f_classify_arcs;
+	int f_classify_nonconical_arcs;
 	int classify_arcs_target_size;
-	int f_classify_arcs_d;
 	int classify_arcs_d;
-	int f_not_on_conic;
 	int f_exact_cover;
 	exact_cover_arguments *ECA;
 	int f_isomorph_arguments;
@@ -233,6 +239,12 @@ public:
 	int f_surface_recognize;
 		surface_create_description *surface_descr;
 	int f_classify_surfaces_through_arcs_and_trihedral_pairs;
+		int f_trihedra1_control;
+		poset_classification_control *Trihedra1_control;
+		int f_trihedra2_control;
+		poset_classification_control *Trihedra2_control;
+		int f_control_six_arcs;
+		poset_classification_control *Control_six_arcs;
 	int f_create_surface;
 	surface_create_description *surface_description;
 	int f_surface_quartic;
@@ -277,7 +289,7 @@ public:
 // #############################################################################
 
 
-//! perform a group theoretic actvity
+//! perform a group theoretic activity
 
 class group_theoretic_activity {
 public:
@@ -321,7 +333,9 @@ public:
 			poset_classification *PC,
 			int depth,
 			int verbose_level);
-	void do_classify_arcs(int verbose_level);
+	void do_classify_arcs(int arc_size, int arc_d, int f_not_on_conic,
+			poset_classification_control *Control,
+			int verbose_level);
 	void do_surface_classify(int verbose_level);
 	void do_surface_report(int verbose_level);
 	void do_surface_identify_Sa(int verbose_level);
@@ -334,9 +348,15 @@ public:
 			int verbose_level);
 	int subspace_orbits_test_set(
 			int len, long int *S, int verbose_level);
-	void do_classify_surfaces_through_arcs_and_trihedral_pairs(int verbose_level);
+	void do_classify_surfaces_through_arcs_and_trihedral_pairs(
+			poset_classification_control *Control1,
+			poset_classification_control *Control2,
+			poset_classification_control *Control_six_arcs,
+			int verbose_level);
 	void do_create_surface(
-			surface_create_description *Descr, int verbose_level);
+			surface_create_description *Descr,
+			poset_classification_control *Control_six_arcs,
+			int verbose_level);
 	void do_spread_classify(int k, int verbose_level);
 	void do_packing_classify(int k,
 			const char *spread_selection_text,
@@ -537,7 +557,7 @@ public:
 			semifield_lifting *L3,
 			int verbose_level);
 	void init_poset_classification(
-			int argc, const char **argv,
+			//int argc, const char **argv,
 			const char *prefix,
 			int verbose_level);
 	void compute_orbits(int depth, int verbose_level);

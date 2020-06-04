@@ -154,7 +154,7 @@ void strong_generators::init_linear_group_from_scratch(
 		}
 
 	if (f_vv) {
-		print_generators();
+		print_generators(cout);
 		print_generators_tex();
 		}
 
@@ -1434,7 +1434,7 @@ void strong_generators::field_reduction(
 	if (f_v) {
 		cout << "strong_generators::field_reduction "
 				"strong generators are:" << endl;
-		print_generators();
+		print_generators(cout);
 		}
 
 	FREE_OBJECT(gens1);
@@ -1692,7 +1692,10 @@ void strong_generators::generators_for_the_stabilizer_of_two_components(
 		cout << "strong_generators::generators_for_the_stabilizer_of_two_components "
 				"before make_generators_stabilizer_of_two_components" << endl;
 		}
-	make_generators_stabilizer_of_two_components(A_PGL_n_q, A_PGL_k_q, 
+
+	action_global AG;
+
+	AG.make_generators_stabilizer_of_two_components(A_PGL_n_q, A_PGL_k_q,
 		k, my_gens, verbose_level - 1);
 	
 	if (f_v) {
@@ -3390,7 +3393,7 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 		cout << "strong_generators::lifted_group_on_"
 				"hyperplane_W0_fixing_two_lines f_semilinear = " << f_semilinear << endl;
 		cout << "generators SG_hyperplane:" << endl;
-		SG_hyperplane->print_generators_ost(cout);
+		SG_hyperplane->print_generators(cout);
 	}
 
 	gens->allocate(SG_hyperplane->gens->len, verbose_level - 2);

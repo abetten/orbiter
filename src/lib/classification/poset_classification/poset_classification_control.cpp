@@ -81,6 +81,13 @@ poset_classification_control::poset_classification_control()
 	schreier_tree_scale = 0.3;
 	schreier_tree_line_width = 1.;
 
+	f_problem_label = FALSE;
+	problem_label = NULL;
+
+	f_path = FALSE;
+	path = NULL;
+
+
 }
 
 poset_classification_control::~poset_classification_control()
@@ -312,6 +319,20 @@ int poset_classification_control::read_arguments(
 			f_sideways = TRUE;
 			cout << "-sideways" << endl;
 			}
+		else if (strcmp(argv[i], "-problem_label") == 0) {
+			f_problem_label = TRUE;
+			problem_label = argv[++i];
+			if (f_v) {
+				cout << "poset_classification_control::read_arguments -problem_label " << problem_label << endl;
+			}
+		}
+		else if (strcmp(argv[i], "-path") == 0) {
+			f_path = TRUE;
+			path = argv[++i];
+			if (f_v) {
+				cout << "poset_classification_control::read_arguments -path " << path << endl;
+			}
+		}
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -382,6 +403,29 @@ void poset_classification_control::print()
 	if (f_export_schreier_trees) {
 		cout << "-export_schreier_trees" << endl;
 	}
+	if (f_path) {
+		cout << "-path" << path << endl;
+	}
+	if (f_problem_label) {
+		cout << "-problem_label " << problem_label << endl;
+	}
+}
+
+void poset_classification_control::init_labels(char *problem_label, char *problem_label_with_path)
+{
+	if (f_path && f_problem_label) {
+		sprintf(problem_label, "%s", poset_classification_control::problem_label);
+		sprintf(problem_label_with_path, "%s%s", path, poset_classification_control::problem_label);
+	}
+	else if (f_problem_label) {
+		sprintf(problem_label, "%s", poset_classification_control::problem_label);
+		sprintf(problem_label_with_path, "%s", poset_classification_control::problem_label);
+	}
+	else {
+		sprintf(problem_label, "unnamed");
+		sprintf(problem_label_with_path, "unnamed");
+	}
+
 }
 
 

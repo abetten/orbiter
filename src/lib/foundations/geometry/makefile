@@ -48,7 +48,8 @@ MODULES = \
 	surface_domain2.o \
 	surface_object.o \
 	unusual.o \
-	w3q.o 
+	w3q.o \
+	web_of_cubic_curves.o 
 
 
 

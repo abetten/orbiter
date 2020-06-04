@@ -257,23 +257,23 @@ void hall_system_classify::init(
 				this /* void *data */,
 				verbose_level);
 
+	Poset->f_print_function = TRUE;
+	Poset->print_function = hall_system_print_set;
+	Poset->print_function_data = (void *) this;
+
 
 	Control = NEW_OBJECT(poset_classification_control);
 	PC = NEW_OBJECT(poset_classification);
 	//PC->read_arguments(argc, argv, 0);
 	if (f_v) {
-		cout << "hall_system_classify::init before PC->init" << endl;
+		cout << "hall_system_classify::init before PC->initialize_and_allocate_root_node" << endl;
 		}
-	PC->init(Control, Poset, depth, verbose_level - 3);
+	PC->initialize_and_allocate_root_node(Control, Poset, depth, verbose_level - 3);
 	if (f_v) {
-		cout << "hall_system_classify::init after PC->init" << endl;
+		cout << "hall_system_classify::init after PC->initialize_and_allocate_root_node" << endl;
 		}
 
-	PC->f_print_function = TRUE;
-	PC->print_function = hall_system_print_set;
-	PC->print_function_data = (void *) this;
-
-
+#if 0
 	int nb_nodes = ONE_MILLION;
 
 	if (f_v) {
@@ -293,10 +293,12 @@ void hall_system_classify::init(
 	//cout << "verbose_level_group_theory = "
 	//<< verbose_level_group_theory << endl;
 
-	PC->root[0].init_root_node(PC, verbose_level - 1);
+	PC->get_node(0)->init_root_node(PC, verbose_level - 1);
 	if (f_v) {
 		cout << "hall_system_classify::init_generator done" << endl;
 		}
+#endif
+
 
 	int depth_completed;
 	int f_use_invariant_subset_if_available = TRUE;

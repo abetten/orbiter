@@ -279,24 +279,29 @@ void large_set_classify::init_designs(orbit_of_sets *SetOrb,
 
 	Control->f_T = TRUE;
 	Control->f_W = TRUE;
+	Control->problem_label = prefix;
+	Control->f_problem_label = TRUE;
+	Control->path = path;
+	Control->f_path = TRUE;
+	Control->f_max_depth = TRUE;
+	Control->max_depth = search_depth;
 
+#if 0
+	Control->f_print_function = TRUE;
+	Control->print_function = print_set;
+	Control->print_function_data = this;
+#endif
 	if (f_v) {
 		cout << "large_set_classify::init_designs "
 				"calling gen->initialize" << endl;
 	}
 
-	gen->initialize(Control, Poset,
+	gen->initialize_and_allocate_root_node(Control, Poset,
 		search_depth,
-		path, prefix,
 		verbose_level - 1);
 
 
 
-#if 0
-	gen->f_print_function = TRUE;
-	gen->print_function = print_set;
-	gen->print_function_data = this;
-#endif
 
 
 
@@ -308,7 +313,7 @@ void large_set_classify::init_designs(orbit_of_sets *SetOrb,
 void large_set_classify::compute(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int schreier_depth = gen->depth;
+	int schreier_depth = search_depth;
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;
 	int t0;
@@ -327,11 +332,11 @@ void large_set_classify::compute(int verbose_level)
 	if (f_v) {
 		cout << "large_set_classify::compute done with generator_main" << endl;
 	}
-	length = gen->nb_orbits_at_level(gen->depth);
+	length = gen->nb_orbits_at_level(search_depth);
 	if (f_v) {
 		cout << "large_set_classify::compute We found "
 			<< length << " orbits on "
-			<< gen->depth << "-sets" << endl;
+			<< search_depth << "-sets" << endl;
 	}
 }
 
@@ -347,7 +352,7 @@ void large_set_classify::read_classification(orbit_transversal *&T,
 	}
 
 	gen->make_fname_lvl_file(fname_classification_at_level,
-			gen->fname_base, level);
+			gen->get_problem_label_with_path(), level);
 
 	if (f_v) {
 		cout << "reading all orbit representatives from "
@@ -356,7 +361,7 @@ void large_set_classify::read_classification(orbit_transversal *&T,
 
 	T = NEW_OBJECT(orbit_transversal);
 
-	T->read_from_file(gen->Poset->A, gen->Poset->A2,
+	T->read_from_file(gen->get_A(), gen->get_A2(),
 			fname_classification_at_level, verbose_level - 1);
 
 	if (f_v) {
@@ -377,7 +382,7 @@ void large_set_classify::read_classification_single_case(set_and_stabilizer *&Re
 	}
 
 	gen->make_fname_lvl_file(fname_classification_at_level,
-			gen->fname_base, level);
+			gen->get_problem_label_with_path(), level);
 
 	if (f_v) {
 		cout << "reading all orbit representatives from "
@@ -389,7 +394,7 @@ void large_set_classify::read_classification_single_case(set_and_stabilizer *&Re
 	orbit_transversal *T;
 	T = NEW_OBJECT(orbit_transversal);
 
-	T->read_from_file_one_case_only(gen->Poset->A, gen->Poset->A2,
+	T->read_from_file_one_case_only(gen->get_A(), gen->get_A2(),
 			fname_classification_at_level, case_nr, verbose_level - 1);
 
 	if (f_v) {

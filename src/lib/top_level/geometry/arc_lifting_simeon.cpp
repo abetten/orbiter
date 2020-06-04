@@ -107,10 +107,10 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 		cout << "point " << i << " / " << A->degree << " is ";
 		int_vec_print(cout, v, d);
 		cout << endl;
-		}
+	}
 
 	cout << "generating set: " << endl;
-	A->Strong_gens->print_generators();
+	A->Strong_gens->print_generators(cout);
 
 	Sch = A->Strong_gens->orbits_on_points_schreier(A, verbose_level);
 
@@ -139,7 +139,7 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 	if (f_v) {
 		cout << "before "
 				"Poset->add_testing_without_group" << endl;
-		}
+	}
 	Poset->add_testing_without_group(
 			early_test_func_for_arc_callback,
 			this /* void *data */,
@@ -150,7 +150,7 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 
 	Gen->compute_orbits_on_subsets(
 		k /* target_depth */,
-		"" /* const char *prefix */,
+		//"" /* const char *prefix */,
 		//FALSE /* f_W */, FALSE /* f_w */,
 		Control,
 		Poset,
@@ -371,7 +371,7 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 
 	Gen2->compute_orbits_on_subsets(
 		target_depth,
-		"" /* const char *prefix */,
+		//"" /* const char *prefix */,
 		//FALSE /* f_W */, FALSE /* f_w */,
 		Control2,
 		Poset2,

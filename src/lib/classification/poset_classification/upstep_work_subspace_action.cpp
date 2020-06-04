@@ -38,7 +38,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 	trace_result r;
 	int final_node, final_ex;
 	
-	wreath_product *W;
+	//wreath_product *W;
 	matrix_group *M;
 	finite_field *F;
 	{
@@ -62,24 +62,25 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		print_level_extension_info();
 		cout << "upstep_work::upstep_subspace_action "
 				"upstep in subspace action for set ";
-		lint_set_print(cout, gen->S, size);
+		lint_set_print(cout, gen->get_S(), size);
 		cout << " verbose_level=" << verbose_level;
 		cout << " f_indicate_not_canonicals="
 				<< f_indicate_not_canonicals << endl;
 		//cout << endl;
 	}
 
-	if (!gen->Poset->A2->f_is_linear) {
+	if (!gen->get_A2()->f_is_linear) {
 		cout << "upstep_work::upstep_subspace_action "
 				"action is not linear" << endl;
 		exit(1);
 	}
-	if (gen->Poset->A2->type_G == matrix_group_t) {
-		M = gen->Poset->A2->G.matrix_grp;
+#if 0
+	if (gen->get_A2()->type_G == matrix_group_t) {
+		M = gen->get_A2()->G.matrix_grp;
 		F = M->GFq;
 	}
 	else {
-		action *sub = gen->Poset->A2->subaction;
+		action *sub = gen->get_A2()->subaction;
 		if (sub->type_G == wreath_product_t) {
 			W = sub->G.wreath_product_group;
 			F = W->F;
@@ -89,14 +90,21 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 			F = M->GFq;
 		}
 	}
+#else
+	M = gen->get_A2()->get_matrix_group();
+	F = M->GFq;
+#endif
+
+
+
 #if 1
-	if (gen->Poset->A2->type_G == action_by_subfield_structure_t) {
-		F = gen->Poset->A2->G.SubfieldStructure->Fq;
+	if (gen->get_A2()->type_G == action_by_subfield_structure_t) {
+		F = gen->get_A2()->G.SubfieldStructure->Fq;
 			// we need the small field because we work 
 			// in the large vector space over the small field.
 	}
 #endif
-	big_n = gen->Poset->VS->dimension;
+	big_n = gen->get_VS()->dimension;
 	n = size;
 	k = size - 1;
 	if (f_vv) {
@@ -110,7 +118,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 	embedding = NEW_int(n);
 	changed_space = NEW_int(n * big_n);
 	
-	gen->unrank_basis(ambient_space, gen->S, n);
+	gen->unrank_basis(ambient_space, gen->get_S(), n);
 
 	if (f_vv) {
 		cout << "upstep_work::upstep_subspace_action "
@@ -129,7 +137,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		cout << "upstep_work::upstep_subspace_action "
 				"setting up action_on_grassmannian:" << endl;
 	}
-	AG->init(*gen->Poset->A2, &G, verbose_level - 2);
+	AG->init(*gen->get_A2(), &G, verbose_level - 2);
 	if (f_vv) {
 		cout << "upstep_work::upstep_subspace_action "
 				"after AG.init" << endl;
@@ -149,7 +157,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 	
 
 	A_on_hyperplanes.induced_action_on_grassmannian(
-		gen->Poset->A2,
+		gen->get_A2(),
 		AG, 
 		FALSE /* f_induce_action*/,
 		NULL /*sims *old_G*/,
@@ -242,7 +250,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		}
 		idx = UF.ancestor(coset);
 		if (idx < coset) {
-			gen->nb_times_trace_was_saved++;
+			//gen->nb_times_trace_was_saved++;
 			if (f_vv) {
 				cout << "upstep_work::upstep_subspace_action coset "
 						<< coset << " / " << degree << " is at " << idx
@@ -347,25 +355,25 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 
 		// initialize set[0] for the tracing
 		// (keep gen->S as it is):
-		gen->rank_basis(changed_space, gen->set[0], n);
+		gen->rank_basis(changed_space, gen->get_set_i(0), n);
 
 		if (f_vvv) {
 			cout << "upstep_work::upstep_subspace_action "
 					"changed_space for coset " << coset
 					<< " as rank vector: ";
-			lint_vec_print(cout, gen->set[0], n);
+			lint_vec_print(cout, gen->get_set_i(0), n);
 			cout << endl; 
 		}
 		
 		
 		// initialize transporter[0] for the tracing
-		gen->Poset->A->element_one(gen->transporter->ith(0), 0);
+		gen->get_A()->element_one(gen->get_transporter()->ith(0), 0);
 
 
 		if (f_vv) {
 			print_level_extension_coset_info();
 			cout << "upstep_work::upstep_subspace_action exchanged set: ";
-			lint_set_print(cout, gen->set[0], size);
+			lint_set_print(cout, gen->get_set_i(0), size);
 			cout << endl;
 			cout << "upstep_work::upstep_subspace_action "
 					"calling recognize" << endl;
@@ -377,10 +385,10 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 			}
 #endif
 		
-		int nb_times_image_of_called0 = gen->Poset->A->ptr->nb_times_image_of_called;
-		int nb_times_mult_called0 = gen->Poset->A->ptr->nb_times_mult_called;
-		int nb_times_invert_called0 = gen->Poset->A->ptr->nb_times_invert_called;
-		int nb_times_retrieve_called0 = gen->Poset->A->ptr->nb_times_retrieve_called;
+		int nb_times_image_of_called0 = gen->get_A()->ptr->nb_times_image_of_called;
+		int nb_times_mult_called0 = gen->get_A()->ptr->nb_times_mult_called;
+		int nb_times_invert_called0 = gen->get_A()->ptr->nb_times_invert_called;
+		int nb_times_retrieve_called0 = gen->get_A()->ptr->nb_times_retrieve_called;
 
 		
 		if (f_vv) {
@@ -412,13 +420,13 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		coset_table[nb_cosets_processed].node = final_node;
 		coset_table[nb_cosets_processed].ex = final_ex;
 		coset_table[nb_cosets_processed].nb_times_image_of_called = 
-			gen->Poset->A->ptr->nb_times_image_of_called - nb_times_image_of_called0;
+			gen->get_A()->ptr->nb_times_image_of_called - nb_times_image_of_called0;
 		coset_table[nb_cosets_processed].nb_times_mult_called = 
-			gen->Poset->A->ptr->nb_times_mult_called - nb_times_mult_called0;
+			gen->get_A()->ptr->nb_times_mult_called - nb_times_mult_called0;
 		coset_table[nb_cosets_processed].nb_times_invert_called = 
-			gen->Poset->A->ptr->nb_times_invert_called - nb_times_invert_called0;
+			gen->get_A()->ptr->nb_times_invert_called - nb_times_invert_called0;
 		coset_table[nb_cosets_processed].nb_times_retrieve_called = 
-			gen->Poset->A->ptr->nb_times_retrieve_called - nb_times_retrieve_called0;
+			gen->get_A()->ptr->nb_times_retrieve_called - nb_times_retrieve_called0;
 		nb_cosets_processed++;
 
 		if (f_v) {
@@ -430,7 +438,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		
 		
 		if (r == found_automorphism) {
-			aut = gen->transporter->ith(size);
+			aut = gen->get_transporter()->ith(size);
 			if (f_v) {
 				print_level_extension_coset_info();
 				cout << "upstep_work::upstep_subspace_action "
@@ -438,7 +446,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 				if (coset > 0 &&
 						TRUE /*gen->f_allowed_to_show_group_elements*/
 						&& f_v) {
-					gen->Poset->A->element_print_quick(aut, cout);
+					gen->get_A()->element_print_quick(aut, cout);
 					cout << endl;
 #if 0
 					cout << "in the action " << gen->A2->label
@@ -512,7 +520,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		print_level_extension_info();
 		cout << "upstep_work::upstep_subspace_action "
 				"upstep orbit length for set ";
-		lint_set_print(cout, gen->S, size);
+		lint_set_print(cout, gen->get_S(), size);
 		cout << " is " << up_orbit.orbit_len[0] << endl;
 	}
 
@@ -524,9 +532,9 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 
 
 
-	if (gen->f_do_group_extension_in_upstep) {
+	if (gen->do_group_extension_in_upstep()) {
 		vector_ge SG_extension;
-		int *tl_extension = NEW_int(gen->Poset->A->base_len());
+		int *tl_extension = NEW_int(gen->get_A()->base_len());
 		int f_OK;
 		int f_tolerant = FALSE;
 	

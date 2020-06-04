@@ -45,7 +45,6 @@ tensor_classify::~tensor_classify()
 
 void tensor_classify::init(
 		finite_field *F, linear_group *LG,
-		//int nb_factors, int n, int q, int depth,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -93,7 +92,7 @@ void tensor_classify::init(
 		cout << "tensor_classify::init action A0 does not "
 				"have strong generators" << endl;
 		exit(1);
-		}
+	}
 
 	v = NEW_int(vector_space_dimension);
 
@@ -130,7 +129,7 @@ void tensor_classify::init(
 #endif
 
 	if (f_v) {
-		print_generators();
+		SG->print_generators(cout);
 	}
 
 #if 0
@@ -145,7 +144,7 @@ void tensor_classify::init(
 #endif
 
 	if (f_v) {
-		print_generators_gap();
+		SG->print_generators_gap(cout);
 	}
 
 
@@ -156,87 +155,6 @@ void tensor_classify::init(
 
 }
 
-void tensor_classify::print_generators()
-{
-	int i;
-
-	cout << "tensor_classify::print_generators Generators are:" << endl;
-	for (i = 0; i < SG->gens->len; i++) {
-		cout << "generator " << i << " / "
-				<< SG->gens->len << " is: " << endl;
-		A->element_print_quick(SG->gens->ith(i), cout);
-		cout << "as permutation: " << endl;
-		if (A->degree < 400) {
-			A->element_print_as_permutation_with_offset(
-					SG->gens->ith(i), cout,
-					0 /* offset*/,
-					TRUE /* f_do_it_anyway_even_for_big_degree*/,
-					TRUE /* f_print_cycles_of_length_one*/,
-					0 /* verbose_level*/);
-			//A->element_print_as_permutation(SG->gens->ith(i), cout);
-			cout << endl;
-		}
-		else {
-			cout << "too big to print" << endl;
-		}
-	}
-
-	cout << "tensor_classify::print_generators Generators as permutations are:" << endl;
-
-
-
-	if (A->degree < 400) {
-		for (i = 0; i < SG->gens->len; i++) {
-			A->element_print_as_permutation(SG->gens->ith(i), cout);
-			cout << endl;
-		}
-	}
-	else {
-		cout << "too big to print" << endl;
-	}
-}
-
-void tensor_classify::print_generators_gap()
-{
-	int i, j, a;
-
-	cout << "tensor_classify::print_generators_gap Generators in GAP format are:" << endl;
-	if (A->degree < 200) {
-		cout << "G := Group([";
-		for (i = 0; i < SG->gens->len; i++) {
-			A->element_print_as_permutation_with_offset(
-					SG->gens->ith(i), cout,
-					1 /*offset*/,
-					TRUE /* f_do_it_anyway_even_for_big_degree */,
-					FALSE /* f_print_cycles_of_length_one */,
-					0 /* verbose_level*/);
-			if (i < SG->gens->len - 1) {
-				cout << ", " << endl;
-			}
-		}
-		cout << "]);" << endl;
-	}
-	else {
-		cout << "too big to print" << endl;
-	}
-	cout << "tensor_classify::print_generators_gap "
-			"Generators in compact permutation form are:" << endl;
-	if (A->degree < 200) {
-		cout << SG->gens->len << " " << A->degree << endl;
-		for (i = 0; i < SG->gens->len; i++) {
-			for (j = 0; j < A->degree; j++) {
-				a = A->element_image_of(j,
-						SG->gens->ith(i), 0 /* verbose_level */);
-				cout << a << " ";
-				}
-			cout << endl;
-			}
-		cout << "-1" << endl;
-	}
-	else {
-		cout << "too big to print" << endl;
-	}
-}
 
 void tensor_classify::classify_poset(int depth,
 		poset_classification_control *Control,
@@ -247,14 +165,12 @@ void tensor_classify::classify_poset(int depth,
 	if (f_v) {
 		cout << "tensor_classify::classify_poset" << endl;
 	}
-	Gen = NEW_OBJECT(poset_classification);
 
 	//Gen->read_arguments(argc, argv, 0);
 
 	//Gen->prefix[0] = 0;
-	sprintf(Gen->fname_base, "wreath_%d_%d_%d", nb_factors, n, q);
+	//sprintf(Gen->fname_base, "wreath_%d_%d_%d", nb_factors, n, q);
 
-	Gen->depth = depth;
 
 	if (f_v) {
 		cout << "tensor_classify::classify_poset "
@@ -275,39 +191,44 @@ void tensor_classify::classify_poset(int depth,
 	if (f_v) {
 		cout << "tensor_classify::classify_poset before "
 				"Poset->add_testing_without_group" << endl;
-		}
+	}
 	Poset->add_testing_without_group(
 			wreath_product_rank_one_early_test_func_callback,
 			this /* void *data */,
 			verbose_level);
 
+	Poset->f_print_function = TRUE;
+	Poset->print_function = wreath_product_print_set;
+	Poset->print_function_data = this;
+
+	Control->f_max_depth = TRUE;
+	Control->max_depth = depth;
+
 	if (f_v) {
-		cout << "tensor_classify::classify_poset before Gen->init" << endl;
+		cout << "tensor_classify::classify_poset before Gen->initialize_and_allocate_root_node" << endl;
 		}
-	Gen->init(Control, Poset, depth /* sz */, verbose_level);
+	Gen = NEW_OBJECT(poset_classification);
+
+	Gen->initialize_and_allocate_root_node(Control, Poset, depth /* sz */, verbose_level);
 	if (f_v) {
-		cout << "tensor_classify::classify_poset after Gen->init" << endl;
-		}
-	Gen->Control->f_max_depth = TRUE;
-	Gen->Control->max_depth = depth;
+		cout << "tensor_classify::classify_poset after Gen->initialize_and_allocate_root_node" << endl;
+	}
 
 
-	Gen->f_print_function = TRUE;
-	Gen->print_function = wreath_product_print_set;
-	Gen->print_function_data = this;
-
+#if 0
 	int nb_nodes = 1000;
 
 	if (f_v) {
 		cout << "tensor_classify::classify_poset "
 				"before Gen->init_poset_orbit_node" << endl;
-		}
+	}
 	Gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
 	if (f_v) {
 		cout << "tensor_classify::classify_poset "
 				"calling Gen->init_root_node" << endl;
-		}
-	Gen->root[0].init_root_node(Gen, verbose_level - 1);
+	}
+	Gen->get_node(0)->init_root_node(Gen, verbose_level - 1);
+#endif
 
 	//int schreier_depth;
 	int f_use_invariant_subset_if_available;
@@ -325,7 +246,7 @@ void tensor_classify::classify_poset(int depth,
 		A->print_info();
 		cout << "A0=";
 		A0->print_info();
-		}
+	}
 
 
 	//Gen->f_allowed_to_show_group_elements = TRUE;
@@ -333,7 +254,7 @@ void tensor_classify::classify_poset(int depth,
 	if (f_v) {
 		cout << "tensor_classify::classify_poset "
 				"before Gen->main, verbose_level=" << verbose_level << endl;
-		}
+	}
 	Gen->main(t0,
 		depth,
 		f_use_invariant_subset_if_available,
@@ -342,7 +263,7 @@ void tensor_classify::classify_poset(int depth,
 	if (f_v) {
 		cout << "tensor_classify::classify_poset "
 				"after Gen->main" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "tensor_classify::classify_poset done" << endl;
 	}
@@ -404,19 +325,19 @@ void tensor_classify::early_test_func(long int *S, int len,
 				<< nb_candidates << ":" << endl;
 		lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
-		}
+	}
 
 
 	if (len == 0) {
 		lint_vec_copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
-		}
+	}
 	else {
 		nb_good_candidates = 0;
 
 		if (f_vv) {
 			cout << "tensor_classify::early_test_func before testing" << endl;
-			}
+		}
 		for (j = 0; j < nb_candidates; j++) {
 
 
@@ -424,7 +345,7 @@ void tensor_classify::early_test_func(long int *S, int len,
 				cout << "tensor_classify::early_test_func "
 						"testing " << j << " / "
 						<< nb_candidates << endl;
-				}
+			}
 
 			f_OK = TRUE;
 			c = candidates[j];
@@ -441,9 +362,9 @@ void tensor_classify::early_test_func(long int *S, int len,
 			if (f_OK) {
 				good_candidates[nb_good_candidates++] =
 						candidates[j];
-				}
-			} // next j
-		} // else
+			}
+		} // next j
+	} // else
 	if (f_v) {
 		cout << "tensor_classify::early_test_func done" << endl;
 	}
@@ -696,14 +617,14 @@ void wreath_product_rank_one_early_test_func_callback(long int *S, int len,
 		cout << "wreath_product_rank_one_early_test_func_callback for set ";
 		print_set(cout, len, S);
 		cout << endl;
-		}
+	}
 	T->early_test_func(S, len,
 		candidates, nb_candidates,
 		good_candidates, nb_good_candidates,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "wreath_product_rank_one_early_test_func_callback done" << endl;
-		}
+	}
 }
 
 

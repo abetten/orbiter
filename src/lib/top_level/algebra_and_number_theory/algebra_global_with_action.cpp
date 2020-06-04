@@ -2411,7 +2411,9 @@ void algebra_global_with_action::young_symmetrizer_sym_4(int verbose_level)
 
 void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs(
 		group_theoretic_activity *GTA,
-		surface_with_action *Surf_A, int verbose_level)
+		surface_with_action *Surf_A,
+		poset_classification_control *Control,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int q;
@@ -2470,7 +2472,7 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 			F,
 			A,
 			Surf->P2,
-		//argc, argv,
+			Control,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "after Six_arcs->init" << endl;
@@ -3270,5 +3272,134 @@ void algebra_global_with_action::investigate_surface_and_write_report(
 }
 
 
+void algebra_global_with_action::report_tactical_decomposition_by_automorphism_group(
+		ostream &ost, projective_space *P,
+		action *A_on_points, action *A_on_lines,
+		strong_generators *gens, int size_limit_for_printing,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::report_tactical_decomposition_by_automorphism_group" << endl;
+	}
+	int *Mtx;
+	int i, j, h;
+	incidence_structure *Inc;
+	Inc = NEW_OBJECT(incidence_structure);
+
+	Mtx = NEW_int(P->N_points * P->N_lines);
+	int_vec_zero(Mtx, P->N_points * P->N_lines);
+
+	for (j = 0; j < P->N_lines; j++) {
+		for (h = 0; h < P->k; h++) {
+			i = P->Lines[j * P->k + h];
+			Mtx[i * P->N_lines + j] = 1;
+		}
+	}
+
+	Inc->init_by_matrix(P->N_points, P->N_lines, Mtx, 0 /* verbose_level*/);
+
+
+	partitionstack S;
+
+	int N;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::report_tactical_decomposition_by_automorphism_group "
+				"allocating partitionstack" << endl;
+	}
+	N = Inc->nb_points() + Inc->nb_lines();
+
+	S.allocate(N, 0);
+	// split off the column class:
+	S.subset_continguous(Inc->nb_points(), Inc->nb_lines());
+	S.split_cell(0);
+
+	#if 0
+	// ToDo:
+	S.split_cell_front_or_back(data, target_size,
+			TRUE /* f_front */, 0 /* verbose_level*/);
+	#endif
+
+
+	int TDO_depth = N;
+	//int TDO_ht;
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::report_tactical_decomposition_by_automorphism_group "
+				"before Inc->compute_TDO_safe" << endl;
+	}
+	Inc->compute_TDO_safe(S, TDO_depth, verbose_level - 3);
+	//TDO_ht = S.ht;
+
+
+	if (S.ht < size_limit_for_printing) {
+		ost << "The TDO decomposition is" << endl;
+		Inc->get_and_print_column_tactical_decomposition_scheme_tex(
+				ost, TRUE /* f_enter_math */,
+				TRUE /* f_print_subscripts */, S);
+	}
+	else {
+		ost << "The TDO decomposition is very large (with "
+				<< S.ht<< " classes).\\\\" << endl;
+	}
+
+
+	{
+		schreier *Sch_points;
+		schreier *Sch_lines;
+		Sch_points = NEW_OBJECT(schreier);
+		Sch_points->init(A_on_points, verbose_level - 2);
+		Sch_points->initialize_tables();
+		Sch_points->init_generators(*gens->gens /* *generators */, verbose_level - 2);
+		Sch_points->compute_all_point_orbits(0 /*verbose_level - 2*/);
+
+		if (f_v) {
+			cout << "found " << Sch_points->nb_orbits
+					<< " orbits on points" << endl;
+		}
+		Sch_lines = NEW_OBJECT(schreier);
+		Sch_lines->init(A_on_lines, verbose_level - 2);
+		Sch_lines->initialize_tables();
+		Sch_lines->init_generators(*gens->gens /* *generators */, verbose_level - 2);
+		Sch_lines->compute_all_point_orbits(0 /*verbose_level - 2*/);
+
+		if (f_v) {
+			cout << "found " << Sch_lines->nb_orbits
+					<< " orbits on lines" << endl;
+		}
+		S.split_by_orbit_partition(Sch_points->nb_orbits,
+			Sch_points->orbit_first, Sch_points->orbit_len, Sch_points->orbit,
+			0 /* offset */,
+			verbose_level - 2);
+		S.split_by_orbit_partition(Sch_lines->nb_orbits,
+			Sch_lines->orbit_first, Sch_lines->orbit_len, Sch_lines->orbit,
+			Inc->nb_points() /* offset */,
+			verbose_level - 2);
+		FREE_OBJECT(Sch_points);
+		FREE_OBJECT(Sch_lines);
+	}
+
+	if (S.ht < size_limit_for_printing) {
+		ost << "The TDA decomposition is" << endl;
+		Inc->get_and_print_column_tactical_decomposition_scheme_tex(
+				ost, TRUE /* f_enter_math */,
+				TRUE /* f_print_subscripts */, S);
+	}
+	else {
+		ost << "The TDA decomposition is very large (with "
+				<< S.ht<< " classes).\\\\" << endl;
+	}
+
+	FREE_int(Mtx);
+	FREE_OBJECT(gens);
+	FREE_OBJECT(Inc);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::report_tactical_decomposition_by_automorphism_group done" << endl;
+	}
+}
 
 }}

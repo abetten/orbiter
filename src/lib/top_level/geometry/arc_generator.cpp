@@ -107,24 +107,24 @@ void arc_generator::freeself()
 #if 0
 	if (ECA) {
 		FREE_OBJECT(ECA);
-		}
+	}
 	if (IA) {
 		FREE_OBJECT(IA);
-		}
+	}
 #endif
 	if (gen) {
 		FREE_OBJECT(gen);
-		}
+	}
 	
 	if (Grass) {
 		FREE_OBJECT(Grass);
-		}
+	}
 	if (A) {
 		FREE_OBJECT(A);
-		}
+	}
 	if (A_on_lines) {
 		FREE_OBJECT(A_on_lines);
-		}
+	}
 	if (Control) {
 		FREE_OBJECT(Control);
 	}
@@ -133,10 +133,10 @@ void arc_generator::freeself()
 	}
 	if (P) {
 		FREE_OBJECT(P);
-		}
+	}
 	if (line_type) {
 		FREE_int(line_type);
-		}
+	}
 	null();
 }
 
@@ -269,7 +269,7 @@ void arc_generator::main(int verbose_level)
 	if (f_v) {
 		cout << "arc_generator::main "
 				"verbose_level=" << verbose_level << endl;
-		}
+	}
 
 	
 	if (f_starter) {
@@ -347,9 +347,9 @@ void arc_generator::init(
 	group_theoretic_activity *GTA,
 	finite_field *F,
 	action *A, strong_generators *SG,
-	const char *starter_directory_name,
-	const char *base_fname,
 	int starter_size,  
+	int f_conic_test,
+	poset_classification_control *Control,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -359,31 +359,19 @@ void arc_generator::init(
 	if (f_v) {
 		cout << "arc_generator::init starter_size=" << starter_size << endl;
 		cout << "arc_generator::init d=" << d << endl;
-		}
+	}
 	
 	arc_generator::GTA = GTA;
 	arc_generator::F = F;
 	q = F->q;
-	//arc_generator::argc = argc;
-	//arc_generator::argv = argv;
-	strcpy(arc_generator::starter_directory_name, starter_directory_name);
-	strcpy(prefix, base_fname);
-	sprintf(prefix_with_directory, "%s%s",
-			starter_directory_name, base_fname);
 
-	if (f_v) {
-		cout << "arc_generator::init "
-				"prefix_with_directory="
-				<< prefix_with_directory << endl;
-		}
-
+	arc_generator::f_conic_test = f_conic_test;
 	arc_generator::starter_size = starter_size;
 	arc_generator::A = A;
 	arc_generator::SG = SG;
 	f_semilinear = A->is_semilinear_matrix_group();
 
 	
-	//A = NEW_OBJECT(action);
 	A_on_lines = NEW_OBJECT(action);
 	AG = NEW_OBJECT(action_on_grassmannian);
 
@@ -451,15 +439,13 @@ void arc_generator::init(
 	P = NEW_OBJECT(projective_space);
 
 	if (f_v) {
-		cout << "arc_generator::init "
-				"before P->init" << endl;
+		cout << "arc_generator::init before P->init" << endl;
 	}
 	P->init(n, F, 
 		TRUE /* f_init_incidence_structure */, 
 		0 /*verbose_level - 2*/);
 	if (f_v) {
-		cout << "arc_generator::init "
-				"after P->init" << endl;
+		cout << "arc_generator::init after P->init" << endl;
 	}
 
 	if (f_has_forbidden_point_set) {
@@ -487,18 +473,15 @@ void arc_generator::init(
 	line_type = NEW_int(P->N_lines);
 
 	if (f_v) {
+		cout << "arc_generator::init before prepare_generator Control=" << endl;
+		Control->print();
+	}
+	if (f_v) {
 		cout << "arc_generator::init before prepare_generator" << endl;
 	}
 
-	if (GTA->Descr->f_poset_classification_control) {
-		prepare_generator(GTA->Descr->Control, verbose_level - 2);
-	}
-	else {
-		poset_classification_control *Control;
+	prepare_generator(Control, verbose_level - 2);
 
-		Control = NEW_OBJECT(poset_classification_control);
-		prepare_generator(Control, verbose_level - 2);
-	}
 	if (f_v) {
 		cout << "arc_generator::init after prepare_generator" << endl;
 	}
@@ -510,7 +493,7 @@ void arc_generator::init(
 		}
 
 		GTA->Descr->IA->init(A, A, gen,
-			target_size, prefix_with_directory, GTA->Descr->ECA,
+			target_size, Control, GTA->Descr->ECA,
 			arc_generator_report,
 			NULL /* callback_subset_orbits */,
 			this,
@@ -527,7 +510,7 @@ void arc_generator::init(
 
 	if (f_v) {
 		cout << "arc_generator::init done" << endl;
-		}
+	}
 }
 
 
@@ -540,18 +523,25 @@ void arc_generator::prepare_generator(poset_classification_control *Control,
 		cout << "arc_generator::prepare_generator" << endl;
 		cout << "arc_generator::prepare_generator "
 				"starter_size = " << starter_size << endl;
-		}
+	}
+
+	Control->f_max_depth = TRUE;
+	Control->max_depth = starter_size;
 
 
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A, SG /* A->Strong_gens*/, verbose_level);
+
+	Poset->f_print_function = FALSE;
+	Poset->print_function = arc_generator_print_arc;
+	Poset->print_function_data = this;
 
 
 	if (!f_no_arc_testing) {
 		if (f_v) {
 			cout << "arc_generator::init before "
 					"Poset->add_testing_without_group" << endl;
-			}
+		}
 		Poset->add_testing_without_group(
 				arc_generator_early_test_function,
 					this /* void *data */,
@@ -562,17 +552,19 @@ void arc_generator::prepare_generator(poset_classification_control *Control,
 	gen = NEW_OBJECT(poset_classification);
 
 
-	//gen->read_arguments(argc, argv, 0);
 
-	gen->f_print_function = FALSE;
-	gen->print_function = arc_generator_print_arc;
-	gen->print_function_data = this;
 
 	
-	gen->depth = starter_size;
-	gen->initialize(Control, Poset,
+	//gen->depth = starter_size;
+	gen->initialize_and_allocate_root_node(Control, Poset,
 		starter_size, 
-		starter_directory_name, prefix, verbose_level - 1);
+		verbose_level - 1);
+
+	if (f_v) {
+		cout << "arc_generator::init "
+				"problem_label_with_path=" << gen->get_problem_label_with_path() << endl;
+	}
+
 
 #if 0
 	if (f_no_arc_testing) {
@@ -580,20 +572,20 @@ void arc_generator::prepare_generator(poset_classification_control *Control,
 				"installing placebo_test_function" << endl;
 		gen->init_check_func(placebo_test_function, 
 			(void *)this /* candidate_check_data */);
-		}
+	}
 	else {
 		cout << "arc_generator::prepare_generator "
 				"installing ::check_arc" << endl;
 		gen->init_check_func(::check_arc, 
 			(void *)this /* candidate_check_data */);
-		}
+	}
 #endif
 
 	if (f_read_data_file) {
 		if (f_v) {
 			cout << "arc_generator::init reading data file "
 					<< fname_data_file << endl;
-			}
+		}
 
 		gen->read_data_file(depth_completed,
 				fname_data_file, verbose_level - 1);
@@ -601,23 +593,23 @@ void arc_generator::prepare_generator(poset_classification_control *Control,
 			cout << "arc_generator::init after reading data file "
 					<< fname_data_file << " depth_completed = "
 					<< depth_completed << endl;
-			}
+		}
 		if (f_v) {
 			cout << "arc_generator::init before "
 					"gen->recreate_schreier_vectors_up_to_level" << endl;
-			}
+		}
 		gen->recreate_schreier_vectors_up_to_level(depth_completed - 1,
 			verbose_level - 1);
 		if (f_v) {
 			cout << "arc_generator::init after "
 					"gen->recreate_schreier_vectors_up_to_level" << endl;
-			}
+		}
 
 	}
 
 	if (f_v) {
 		cout << "arc_generator::prepare_generator done" << endl;
-		}
+	}
 }
 
 void arc_generator::compute_starter(int verbose_level)
@@ -629,7 +621,7 @@ void arc_generator::compute_starter(int verbose_level)
 
 	if (f_v) {
 		cout << "arc_generator::compute_starter" << endl;
-		}
+	}
 
 #if 0
 	gen->f_print_function = TRUE;
@@ -646,34 +638,29 @@ void arc_generator::compute_starter(int verbose_level)
 
 
 	if (f_read_data_file) {
-		int target_depth;
-		if (gen->Control->f_max_depth) {
-			target_depth = gen->Control->max_depth;
-			}
-		else {
-			target_depth = gen->depth;
-			}
+		int target_depth = 0; // ToDo
+
 		if (f_v) {
 			cout << "arc_generator::compute_starter "
 					"before generator_main" << endl;
 			cout << "arc_generator::compute_starter "
-					"gen->compute_orbits=" << gen->fname_base << endl;
-			}
+					"problem_label_with_path=" << gen->get_problem_label_with_path() << endl;
+		}
 		depth = gen->compute_orbits(
 				depth_completed, target_depth,
 				verbose_level - 2);
 		if (f_v) {
 			cout << "arc_generator::compute_starter "
 					"after gen->compute_orbits" << endl;
-			}
+		}
 	}
 	else {
 		if (f_v) {
 			cout << "arc_generator::compute_starter "
 					"before generator_main" << endl;
 			cout << "arc_generator::compute_starter "
-					"gen->fname_base=" << gen->fname_base << endl;
-			}
+					"problem_label_with_path=" << gen->get_problem_label_with_path() << endl;
+		}
 		depth = gen->main(t0,
 			schreier_depth,
 			f_use_invariant_subset_if_available,
@@ -682,13 +669,13 @@ void arc_generator::compute_starter(int verbose_level)
 		if (f_v) {
 			cout << "arc_generator::compute_starter "
 					"after gen->main" << endl;
-			}
+		}
 	}
 
 	if (f_v) {
 		cout << "arc_generator::compute_starter "
 				"finished, depth=" << depth << endl;
-		}
+	}
 
 
 
@@ -696,7 +683,7 @@ void arc_generator::compute_starter(int verbose_level)
 	if (f_v) {
 		cout << "arc_generator::compute_starter "
 				"before gen->print_data_structure_tex" << endl;
-		}
+	}
 
 	//gen->print_data_structure_tex(depth, 0 /*gen->verbose_level */);
 #endif
@@ -705,11 +692,11 @@ void arc_generator::compute_starter(int verbose_level)
 		if (f_v) {
 			cout << "arc_generator::compute_starter "
 					"before gen->draw_poset" << endl;
-			}
-
-		gen->draw_poset(gen->fname_base, depth, 0 /* data1 */,
-				f_embedded, f_sideways, 0 /* gen->verbose_level */);
 		}
+
+		gen->draw_poset(gen->get_problem_label_with_path(), depth, 0 /* data1 */,
+				f_embedded, f_sideways, 0 /* gen->verbose_level */);
+	}
 
 
 	if (nb_recognize) {
@@ -730,8 +717,8 @@ void arc_generator::compute_starter(int verbose_level)
 			cout << endl;
 		
 			canonical_set = NEW_lint(recognize_set_sz);
-			Elt_transporter = NEW_int(gen->Poset->A->elt_size_in_int);
-			Elt_transporter_inv = NEW_int(gen->Poset->A->elt_size_in_int);
+			Elt_transporter = NEW_int(gen->get_A()->elt_size_in_int);
+			Elt_transporter_inv = NEW_int(gen->get_A()->elt_size_in_int);
 			
 			orb = gen->trace_set(recognize_set,
 				recognize_set_sz, recognize_set_sz /* level */,
@@ -754,8 +741,8 @@ void arc_generator::compute_starter(int verbose_level)
 			FREE_int(Elt_transporter);
 			FREE_int(Elt_transporter_inv);
 			FREE_lint(recognize_set);
-			}
 		}
+	}
 	if (f_list) {
 		int f_show_orbit_decomposition = FALSE, f_show_stab = FALSE;
 		int f_save_stab = FALSE, f_show_whole_orbit = FALSE;
@@ -774,12 +761,12 @@ void arc_generator::compute_starter(int verbose_level)
 
 
 		{
-		spreadsheet *Sp;
-		gen->make_spreadsheet_of_orbit_reps(Sp, depth);
-		char fname_csv[1000];
-		sprintf(fname_csv, "orbits_%d.csv", depth);
-		Sp->save(fname_csv, verbose_level);
-		FREE_OBJECT(Sp);
+			spreadsheet *Sp;
+			gen->make_spreadsheet_of_orbit_reps(Sp, depth);
+			char fname_csv[1000];
+			sprintf(fname_csv, "orbits_%d.csv", depth);
+			Sp->save(fname_csv, verbose_level);
+			FREE_OBJECT(Sp);
 		}
 
 
@@ -789,13 +776,13 @@ void arc_generator::compute_starter(int verbose_level)
 			gen->print_schreier_vectors_at_depth(d, verbose_level);
 			}
 #endif
-		}
+	}
 
 
 
 	if (f_v) {
 		cout << "arc_generator::compute_starter done" << endl;
-		}
+	}
 
 }
 
@@ -803,35 +790,11 @@ int arc_generator::conic_test(long int *S, int len, int pt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret = TRUE;
-	int subset[5];
-	long int the_set[6];
-	int six_coeffs[6];
-	int i;
-	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "arc_generator::conic_test" << endl;
 	}
-	if (len < 5) {
-		return TRUE;
-	}
-	Combi.first_k_subset(subset, len, 5);
-	while (TRUE) {
-		for (i = 0; i < 5; i++) {
-			the_set[i] = S[subset[i]];
-		}
-		the_set[5] = pt;
-		if (P->determine_conic_in_plane(
-				the_set, 6, six_coeffs, 0 /*verbose_level*/)) {
-			ret = FALSE;
-			break;
-		}
-
-		if (!Combi.next_k_subset(subset, len, 5)) {
-			ret = TRUE;
-			break;
-		}
-	}
+	ret = P->conic_test(S, len, pt, verbose_level);
 	if (f_v) {
 		cout << "arc_generator::conic_test done" << endl;
 	}
@@ -903,7 +866,7 @@ void arc_generator::print(int len, long int *S)
 	
 	if (len == 0) {
 		return;
-		}
+	}
 
 	compute_line_type(S, len, 0 /* verbose_level */);
 
@@ -924,17 +887,17 @@ void arc_generator::print(int len, long int *S)
 	for (i = 0; i < len; i++) {
 		a = S[i];
 		point_unrank(Coord + i * (n + 1), a);
-		}
+	}
 	for (i = 0; i < len; i++) {
 		cout << S[i] << " : ";
 		int_vec_print(cout, Coord + i * (n + 1), (n + 1));
 		cout << endl;
-		}
+	}
 
 
 
 	if (f_d && d >= 3) {
-		}
+	}
 	else {
 		long int **Pts_on_conic;
 		int *nb_pts_on_conic;
@@ -947,7 +910,7 @@ void arc_generator::print(int len, long int *S)
 			cout << "conic intersections "
 					"only defined in the plane" << endl;
 			exit(1);
-			}
+		}
 		P->conic_type(
 			S, len, 
 			Pts_on_conic, nb_pts_on_conic, len1, 
@@ -962,7 +925,7 @@ void arc_generator::print(int len, long int *S)
 					<< nb_pts_on_conic[i] << " : ";
 			int_vec_print(cout, Pts_on_conic[i], nb_pts_on_conic[i]);
 			cout << endl;
-			}
+		}
 #endif
 
 
@@ -971,14 +934,14 @@ void arc_generator::print(int len, long int *S)
 
 		for (i = 0; i < len1; i++) {
 			FREE_lint(Pts_on_conic[i]);
-			}
+		}
 		FREE_int(nb_pts_on_conic);
 		FREE_plint(Pts_on_conic);
-		}
+	}
 	
 	if (f_simeon) {
-		simeon(len, S, simeon_s, verbose_level);
-		}
+		F->simeon(n, len, S, simeon_s, verbose_level);
+	}
 
 	FREE_int(Coord);
 }
@@ -993,16 +956,14 @@ void arc_generator::print_set_in_affine_plane(int len, long int *S)
 
 void arc_generator::point_unrank(int *v, int rk)
 {
-	F->PG_element_unrank_modified(v,
-			1 /* stride */, n + 1 /* len */, rk);
+	F->PG_element_unrank_modified(v, 1 /* stride */, n + 1 /* len */, rk);
 }
 
 int arc_generator::point_rank(int *v)
 {
 	int rk;
 	
-	F->PG_element_rank_modified(v,
-			1 /* stride */, n + 1, rk);
+	F->PG_element_rank_modified(v, 1 /* stride */, n + 1, rk);
 	return rk;
 }
 
@@ -1014,21 +975,21 @@ void arc_generator::compute_line_type(long int *set, int len, int verbose_level)
 
 	if (f_v) {
 		cout << "arc_generator::compute_line_type" << endl;
-		}
+	}
 
 	if (P->Lines_on_point == 0) {
 		cout << "arc_generator::compute_line_type "
 				"P->Lines_on_point == 0" << endl;
 		exit(1);
-		}
+	}
 	int_vec_zero(line_type, P->N_lines);
 	for (i = 0; i < len; i++) {
 		a = set[i];
 		for (j = 0; j < P->r; j++) {
 			b = P->Lines_on_point[a * P->r + j];
 			line_type[b]++;
-			}
 		}
+	}
 	
 }
 
@@ -1242,48 +1203,73 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char fname[1000];
-	sorting Sorting;
 	file_io Fio;
 
 	if (f_v) {
 		cout << "arc_generator::report" << endl;
-		}
+	}
 	if (target_size == q + 2) {
 		sprintf(fname, "hyperovals_%d.tex", q);
-		}
+	}
 	else {
 		sprintf(fname, "arcs_%d_%d.tex", q, target_size);
-		}
+	}
 
 	{
-	ofstream f(fname);
-	int f_book = TRUE;
-	int f_title = TRUE;
-	char title[1000];
-	const char *author = "Orbiter";
-	int f_toc = TRUE;
-	int f_landscape = FALSE;
-	int f_12pt = FALSE;
-	int f_enlarged_page = TRUE;
-	int f_pagenumbers = TRUE;
-	latex_interface L;
+		ofstream f(fname);
+		int f_book = TRUE;
+		int f_title = TRUE;
+		char title[1000];
+		const char *author = "Orbiter";
+		int f_toc = TRUE;
+		int f_landscape = FALSE;
+		int f_12pt = FALSE;
+		int f_enlarged_page = TRUE;
+		int f_pagenumbers = TRUE;
+		latex_interface L;
 
-	if (target_size == q + 2) {
-		sprintf(title, "Hyperovals over ${\\mathbb F}_{%d}$", q);
-		}
-	else {
-		sprintf(title, "Arcs over  ${\\mathbb F}_{%d}$ "
-				"of size $%d$", q, target_size);
-		}
-	cout << "Writing file " << fname << " with "
-			<< Iso.Reps->count << " arcs:" << endl;
-	L.head(f, f_book, f_title,
-		title, author, 
-		f_toc, f_landscape, f_12pt, f_enlarged_page, f_pagenumbers,
-		NULL /* extra_praeamble */);
+		if (target_size == q + 2) {
+			sprintf(title, "Hyperovals over ${\\mathbb F}_{%d}$", q);
+			}
+		else {
+			sprintf(title, "Arcs over  ${\\mathbb F}_{%d}$ "
+					"of size $%d$", q, target_size);
+			}
+		cout << "Writing file " << fname << " with "
+				<< Iso.Reps->count << " arcs:" << endl;
+		L.head(f, f_book, f_title,
+			title, author,
+			f_toc, f_landscape, f_12pt, f_enlarged_page, f_pagenumbers,
+			NULL /* extra_praeamble */);
 
-	f << "\\chapter{Summary}" << endl << endl;
-	f << "There are " << Iso.Reps->count
+
+		report_do_the_work(f, Iso, verbose_level);
+
+
+
+
+		L.foot(f);
+
+	}
+
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+}
+
+void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "arc_generator::report_do_the_work" << endl;
+	}
+
+
+
+	ost << "\\chapter{Summary}" << endl << endl;
+	ost << "There are " << Iso.Reps->count
 			<< " isomorphism types." << endl << endl;
 
 
@@ -1325,7 +1311,7 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 		
 			
 		Iso.AA->group_order(Ago_induced[h]);
-		}
+	}
 
 
 	classify C_ago;
@@ -1336,18 +1322,18 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 
 
 
-	f << "\\chapter{Invariants}" << endl << endl;
+	ost << "\\chapter{Invariants}" << endl << endl;
 
-	f << "Classification by automorphism group order: ";
-	C_ago.print_naked_tex(f, FALSE /*f_backwards*/);
-	f << "\\\\" << endl;
+	ost << "Classification by automorphism group order: ";
+	C_ago.print_naked_tex(ost, FALSE /*f_backwards*/);
+	ost << "\\\\" << endl;
 
-	f << "\\begin{center}" << endl;
-	f << "\\begin{tabular}{|c|l|}" << endl;
-	f << "\\hline" << endl;
-	f << "Ago & Isom. Types \\\\" << endl;
-	f << "\\hline" << endl;
-	f << "\\hline" << endl;
+	ost << "\\begin{center}" << endl;
+	ost << "\\begin{tabular}{|c|l|}" << endl;
+	ost << "\\hline" << endl;
+	ost << "Ago & Isom. Types \\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\hline" << endl;
 
 	int cnt, length, t, vv, *set;
 
@@ -1357,49 +1343,49 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 		length = C_ago.type_len[u];
 		t = C_ago.data_sorted[first];
 
-		f << t << " & ";
+		ost << t << " & ";
 
 		set = NEW_int(length);
 		for (v = 0; v < length; v++, cnt++) {
 			vv = first + v;
 			i = C_ago.sorting_perm_inv[vv];
 			set[v] = i;
-			}
+		}
 
 		Sorting.int_vec_heapsort(set, length);
 
 		for (v = 0; v < length; v++, cnt++) {
 
-			f << set[v];
+			ost << set[v];
 
 			if (v < length - 1) {
-				f << ",";
+				ost << ",";
 				if ((v + 1) % 10 == 0) {
-					f << "\\\\" << endl;
-					f << " & " << endl;
-					}
+					ost << "\\\\" << endl;
+					ost << " & " << endl;
 				}
 			}
-		f << "\\\\" << endl;
-		if (u > 0) {
-			f << "\\hline" << endl;
-			}
-		FREE_int(set);
 		}
-	f << "\\hline" << endl;
-	f << "\\end{tabular}" << endl;
-	f << "\\end{center}" << endl << endl;
+		ost << "\\\\" << endl;
+		if (u > 0) {
+			ost << "\\hline" << endl;
+		}
+		FREE_int(set);
+	}
+	ost << "\\hline" << endl;
+	ost << "\\end{tabular}" << endl;
+	ost << "\\end{center}" << endl << endl;
 
 
-	f << "\\clearpage" << endl << endl;
+	ost << "\\clearpage" << endl << endl;
 
-	f << "\\begin{center}" << endl;
-	f << "\\begin{tabular}{|r|r|r|}" << endl;
-	f << "\\hline" << endl;
-	f << "Isom. Type & $|\\mbox{Aut}|$ & $|\\mbox{Aut}|$ "
+	ost << "\\begin{center}" << endl;
+	ost << "\\begin{tabular}{|r|r|r|}" << endl;
+	ost << "\\hline" << endl;
+	ost << "Isom. Type & $|\\mbox{Aut}|$ & $|\\mbox{Aut}|$ "
 			"(induced)\\\\" << endl;
-	f << "\\hline" << endl;
-	f << "\\hline" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\hline" << endl;
 
 	cnt = 0;
 	for (u = 0; u < C_ago.nb_types; u ++) {
@@ -1412,7 +1398,7 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 			vv = first + v;
 			i = C_ago.sorting_perm_inv[vv];
 			set[v] = i;
-			}
+		}
 
 		Sorting.int_vec_heapsort(set, length);
 
@@ -1421,41 +1407,41 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 			vv = first + v;
 			i = C_ago.sorting_perm_inv[vv];
 			h = set[v];
-			f << setw(3) << h << " & ";
-			Ago[h].print_not_scientific(f);
-			f << " & ";
-			Ago_induced[h].print_not_scientific(f);
-			f << "\\\\" << endl;
+			ost << setw(3) << h << " & ";
+			Ago[h].print_not_scientific(ost);
+			ost << " & ";
+			Ago_induced[h].print_not_scientific(ost);
+			ost << "\\\\" << endl;
 			cnt++;
 			if ((cnt % 30) == 0) {
-				f << "\\hline" << endl;
-				f << "\\end{tabular}" << endl;
-				f << "\\end{center}" << endl << endl;
-				f << "\\begin{center}" << endl;
-				f << "\\begin{tabular}{|r|r|r|}" << endl;
-				f << "\\hline" << endl;
-				f << "Isom. Type & $|\\mbox{Aut}|$ & $|\\mbox{Aut}|$ "
+				ost << "\\hline" << endl;
+				ost << "\\end{tabular}" << endl;
+				ost << "\\end{center}" << endl << endl;
+				ost << "\\begin{center}" << endl;
+				ost << "\\begin{tabular}{|r|r|r|}" << endl;
+				ost << "\\hline" << endl;
+				ost << "Isom. Type & $|\\mbox{Aut}|$ & $|\\mbox{Aut}|$ "
 						"(induced)\\\\" << endl;
-				f << "\\hline" << endl;
-				f << "\\hline" << endl;
-				}
+				ost << "\\hline" << endl;
+				ost << "\\hline" << endl;
 			}
-		FREE_int(set);
 		}
+		FREE_int(set);
+	}
 
-	f << "\\hline" << endl;
-	f << "\\end{tabular}" << endl;
-	f << "\\end{center}" << endl << endl;
+	ost << "\\hline" << endl;
+	ost << "\\end{tabular}" << endl;
+	ost << "\\end{center}" << endl << endl;
 
 
 	if (target_size == q + 2) {
-		f << "\\chapter{The Hyperovals}" << endl << endl;
-		}
+		ost << "\\chapter{The Hyperovals}" << endl << endl;
+	}
 	else {
-		f << "\\chapter{The Arcs}" << endl << endl;
-		}
+		ost << "\\chapter{The Arcs}" << endl << endl;
+	}
 
-	f << "\\clearpage" << endl << endl;
+	ost << "\\clearpage" << endl << endl;
 
 
 	for (h = 0; h < Iso.Reps->count; h++) {
@@ -1466,19 +1452,19 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 		Iso.load_solution(id, data);
 
 
-		f << "\\section{Isomorphism type " << h << "}" << endl;
-		f << "\\bigskip" << endl;
+		ost << "\\section{Isomorphism type " << h << "}" << endl;
+		ost << "\\bigskip" << endl;
 
 
 		if (Iso.Reps->stab[h]) {
 			Iso.Reps->stab[h]->group_order(go);
-			f << "Stabilizer has order $";
-			go.print_not_scientific(f);
-			f << "$.\\\\" << endl;
-			}
+			ost << "Stabilizer has order $";
+			go.print_not_scientific(ost);
+			ost << "$.\\\\" << endl;
+		}
 		else {
 			//cout << endl;
-			}
+		}
 
 		sims *Stab;
 		
@@ -1487,9 +1473,8 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 		if (f_v) {
 			cout << "arc_generator::report computing induced "
 					"action on the set (in data)" << endl;
-			}
-		Iso.induced_action_on_set_basic(Stab, data,
-				0 /*verbose_level*/);
+		}
+		Iso.induced_action_on_set_basic(Stab, data, 0 /*verbose_level*/);
 		
 		longinteger_object go1;
 			
@@ -1497,10 +1482,10 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 		cout << "action " << Iso.AA->label
 				<< " computed, group order is " << go1 << endl;
 
-		f << "Order of the group that is induced on the set is ";
-		f << "$";
-		go1.print_not_scientific(f);
-		f << "$.\\\\" << endl;
+		ost << "Order of the group that is induced on the set is ";
+		ost << "$";
+		go1.print_not_scientific(ost);
+		ost << "$.\\\\" << endl;
 		
 
 		schreier Orb;
@@ -1508,52 +1493,52 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 		
 		Iso.AA->compute_all_point_orbits(Orb,
 				Stab->gens, verbose_level - 2);
-		f << "With " << Orb.nb_orbits
+		ost << "With " << Orb.nb_orbits
 				<< " orbits on the set.\\\\" << endl;
 
 		classify C_ol;
 
 		C_ol.init(Orb.orbit_len, Orb.nb_orbits, FALSE, 0);
 
-		f << "Orbit lengths: ";
+		ost << "Orbit lengths: ";
 		//int_vec_print(f, Orb.orbit_len, Orb.nb_orbits);
-		C_ol.print_naked_tex(f, FALSE /*f_backwards*/);
-		f << " \\\\" << endl;
+		C_ol.print_naked_tex(ost, FALSE /*f_backwards*/);
+		ost << " \\\\" << endl;
 	
 		tt = (target_size + 3) / 4;
 
-		f << "The points by ranks:\\\\" << endl;
-		f << "\\begin{center}" << endl;
+		ost << "The points by ranks:\\\\" << endl;
+		ost << "\\begin{center}" << endl;
 
 		for (u = 0; u < 4; u++) {
-			f << "\\begin{tabular}[t]{|c|c|c|}" << endl;
-			f << "\\hline" << endl;
-			f << "$i$ & Rank & Unrank\\\\" << endl;
-			f << "\\hline" << endl;
+			ost << "\\begin{tabular}[t]{|c|c|c|}" << endl;
+			ost << "\\hline" << endl;
+			ost << "$i$ & Rank & Unrank\\\\" << endl;
+			ost << "\\hline" << endl;
 			for (i = 0; i < tt; i++) {
 				v = u * tt + i;
 				if (v < target_size) {
 					int vec[3];
 
 					point_unrank(vec, data[v]);
-					f << "$" << v << "$ & $" << data[v] << "$ & $";
-					int_vec_print(f, vec, 3);
-					f << "$\\\\" << endl;
-					}
+					ost << "$" << v << "$ & $" << data[v] << "$ & $";
+					int_vec_print(ost, vec, 3);
+					ost << "$\\\\" << endl;
 				}
-			f << "\\hline" << endl;
-			f << "\\end{tabular}" << endl;
 			}
-		f << "\\end{center}" << endl; 
+			ost << "\\hline" << endl;
+			ost << "\\end{tabular}" << endl;
+		}
+		ost << "\\end{center}" << endl;
 
 
-		report_stabilizer(Iso, f, h /* orbit */, 0 /* verbose_level */);
+		report_stabilizer(Iso, ost, h /* orbit */, 0 /* verbose_level */);
 
 
-		report_decompositions(Iso, f, h /* orbit */, 
+		report_decompositions(Iso, ost, h /* orbit */,
 			data, verbose_level);
 
-		}
+	}
 
 
 	char prefix[1000];
@@ -1562,28 +1547,23 @@ void arc_generator::report(isomorph &Iso, int verbose_level)
 	sprintf(prefix, "arcs_%d_%d", q, target_size);
 	sprintf(label_of_structure_plural, "Arcs");
 	isomorph_report_data_in_source_code_inside_tex(Iso, 
-		prefix, label_of_structure_plural, f, 
+		prefix, label_of_structure_plural, ost,
 		verbose_level);
 
 
 	Iso.close_solution_database(verbose_level - 1);
 
-
-
-	L.foot(f);
-	
 	FREE_int(Ago_int);
 	FREE_OBJECTS(Ago);
 	FREE_OBJECTS(Ago_induced);
+
+	if (f_v) {
+		cout << "arc_generator::report_do_the_work done" << endl;
 	}
-
-	cout << "Written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
-
 }
 
 void arc_generator::report_decompositions(
-	isomorph &Iso, ofstream &f, int orbit,
+	isomorph &Iso, ostream &ost, int orbit,
 	long int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1591,315 +1571,41 @@ void arc_generator::report_decompositions(
 	if (f_v) {
 		cout << "arc_generator::report_decompositions" << endl;
 		}
-	incidence_structure *Inc;
 	sims *Stab;
 	strong_generators *gens;
-	int *Mtx;
-	int i, j, h;
 
-	Inc = NEW_OBJECT(incidence_structure);
 	gens = NEW_OBJECT(strong_generators);
 
 	Stab = Iso.Reps->stab[orbit];
 	gens->init_from_sims(Stab, 0 /* verbose_level */);
 
-	Mtx = NEW_int(P->N_points * P->N_lines);
-	int_vec_zero(Mtx, P->N_points * P->N_lines);
-
-	for (j = 0; j < P->N_lines; j++) {
-		for (h = 0; h < P->k; h++) {
-			i = P->Lines[j * P->k + h];
-			Mtx[i * P->N_lines + j] = 1;
-			}
-		}
-
-	Inc->init_by_matrix(P->N_points, P->N_lines, Mtx, 0 /* verbose_level*/);
+	algebra_global_with_action Algebra;
 	
-
-	partitionstack S;
-
-	int N;
-
-	if (f_v) {
-		cout << "arc_generator::report_decompositions "
-				"allocating partitionstack" << endl;
-		}
-	N = Inc->nb_points() + Inc->nb_lines();
-	
-	S.allocate(N, 0);
-	// split off the column class:
-	S.subset_continguous(Inc->nb_points(), Inc->nb_lines());
-	S.split_cell(0);
-
-#if 0
-	// ToDo:
-	S.split_cell_front_or_back(data, target_size,
-			TRUE /* f_front */, 0 /* verbose_level*/);
-#endif
+	Algebra.report_tactical_decomposition_by_automorphism_group(
+			ost, P,
+			A /* A_on_points */, A_on_lines,
+			gens, 25 /* size_limit_for_printing */,
+			verbose_level);
 
 
-	int TDO_depth = N;
-	//int TDO_ht;
-
-
-	if (f_v) {
-		cout << "arc_generator::report_decompositions "
-				"before Inc->compute_TDO_safe" << endl;
-		}
-	Inc->compute_TDO_safe(S, TDO_depth, verbose_level - 3);
-	//TDO_ht = S.ht;
-
-
-	if (S.ht < 50) {
-		f << "The TDO decomposition is" << endl;
-		Inc->get_and_print_column_tactical_decomposition_scheme_tex(
-				f, TRUE /* f_enter_math */,
-				TRUE /* f_print_subscripts */, S);
-		}
-	else {
-		f << "The TDO decomposition is very large (with "
-				<< S.ht<< " classes).\\\\" << endl;
-		}
-
-
-	{
-		schreier *Sch_points;
-		schreier *Sch_lines;
-		Sch_points = NEW_OBJECT(schreier);
-		Sch_points->init(A /*A_on_points*/, verbose_level - 2);
-		Sch_points->initialize_tables();
-		Sch_points->init_generators(*gens->gens /* *generators */, verbose_level - 2);
-		Sch_points->compute_all_point_orbits(0 /*verbose_level - 2*/);
-		
-		if (f_v) {
-			cout << "found " << Sch_points->nb_orbits
-					<< " orbits on points" << endl;
-			}
-		Sch_lines = NEW_OBJECT(schreier);
-		Sch_lines->init(A_on_lines, verbose_level - 2);
-		Sch_lines->initialize_tables();
-		Sch_lines->init_generators(*gens->gens /* *generators */, verbose_level - 2);
-		Sch_lines->compute_all_point_orbits(0 /*verbose_level - 2*/);
-		
-		if (f_v) {
-			cout << "found " << Sch_lines->nb_orbits
-					<< " orbits on lines" << endl;
-			}
-		S.split_by_orbit_partition(Sch_points->nb_orbits, 
-			Sch_points->orbit_first, Sch_points->orbit_len, Sch_points->orbit,
-			0 /* offset */, 
-			verbose_level - 2);
-		S.split_by_orbit_partition(Sch_lines->nb_orbits, 
-			Sch_lines->orbit_first, Sch_lines->orbit_len, Sch_lines->orbit,
-			Inc->nb_points() /* offset */, 
-			verbose_level - 2);
-		FREE_OBJECT(Sch_points);
-		FREE_OBJECT(Sch_lines);
-	}
-
-	if (S.ht < 50) {
-		f << "The TDA decomposition is" << endl;
-		Inc->get_and_print_column_tactical_decomposition_scheme_tex(
-				f, TRUE /* f_enter_math */,
-				TRUE /* f_print_subscripts */, S);
-		}
-	else {
-		f << "The TDA decomposition is very large (with "
-				<< S.ht<< " classes).\\\\" << endl;
-		}
-
-	FREE_int(Mtx);
-	FREE_OBJECT(gens);
-	FREE_OBJECT(Inc);
 }
 
 void arc_generator::report_stabilizer(isomorph &Iso,
-		ofstream &f, int orbit, int verbose_level)
+		ostream &ost, int orbit, int verbose_level)
 {
 	sims *Stab;
-	longinteger_object go;
-	int i;
 
 	Stab = Iso.Reps->stab[orbit];
-	Stab->group_order(go);
+	strong_generators *SG;
 
-	f << "The stabilizer of order $" << go
-			<< "$ is generated by:\\\\" << endl;
-	for (i = 0; i < Stab->gens.len; i++) {
-		
-		int *fp, n, ord;
-		
-		fp = NEW_int(A->degree);
-		n = A->find_fixed_points(Stab->gens.ith(i), fp, 0);
-		//cout << "with " << n << " fixed points" << endl;
-		FREE_int(fp);
+	SG = NEW_OBJECT(strong_generators);
+	SG->init_from_sims(Stab, verbose_level);
 
-		ord = A->element_order(Stab->gens.ith(i));
+	SG->print_generators_in_latex_individually(ost);
 
-		f << "$$ g_{" << i + 1 << "}=" << endl;
-		A->element_print_latex(Stab->gens.ith(i), f);
-		f << "$$" << endl << "of order $" << ord << "$ and with "
-				<< n << " fixed points." << endl;
-		}
-	f << endl << "\\bigskip" << endl;
+	FREE_OBJECT(SG);
 }
 
-void arc_generator::simeon(int len, long int *S, int s, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 1);
-	int k, nb_rows, nb_cols, nb_r1, nb_r2, row, col;
-	int *Coord;
-	int *M;
-	int *A;
-	int *C;
-	int *T;
-	int *Ac; // no not free
-	int *U;
-	int *U1;
-	int nb_A, nb_U;
-	int a, u, ac, i, d, idx, mtx_rank;
-	combinatorics_domain Combi;
-	sorting Sorting;
-
-	if (f_v) {
-		cout << "arc_generator::simeon s=" << s << endl;
-		}
-	k = n + 1;
-	nb_cols = Combi.int_n_choose_k(len, k - 1);
-	nb_r1 = Combi.int_n_choose_k(len, s);
-	nb_r2 = Combi.int_n_choose_k(len - s, k - 2);
-	nb_rows = nb_r1 * nb_r2;
-	cout << "nb_r1=" << nb_r1 << endl;
-	cout << "nb_r2=" << nb_r2 << endl;
-	cout << "nb_rows=" << nb_rows << endl;
-	cout << "nb_cols=" << nb_cols << endl;
-
-	Coord = NEW_int(len * k);
-	M = NEW_int(nb_rows * nb_cols);
-	A = NEW_int(len);
-	U = NEW_int(k - 2);
-	U1 = NEW_int(k - 2);
-	C = NEW_int(k - 1);
-	T = NEW_int(k * k);
-
-	int_vec_zero(M, nb_rows * nb_cols);
-
-
-	// unrank all points of the arc:
-	for (i = 0; i < len; i++) {
-		point_unrank(Coord + i * k, S[i]);
-		}
-
-	
-	nb_A = Combi.int_n_choose_k(len, k - 2);
-	nb_U = Combi.int_n_choose_k(len - (k - 2), k - 1);
-	if (nb_A * nb_U != nb_rows) {
-		cout << "nb_A * nb_U != nb_rows" << endl;
-		exit(1);
-		}
-	cout << "nb_A=" << nb_A << endl;
-	cout << "nb_U=" << nb_U << endl;
-
-
-	Ac = A + k - 2;
-
-	row = 0;
-	for (a = 0; a < nb_A; a++) {
-		if (f_vv) {
-			cout << "a=" << a << " / " << nb_A << ":" << endl;
-			}
-		Combi.unrank_k_subset(a, A, len, k - 2);
-		Combi.set_complement(A, k - 2, Ac, ac, len);
-		if (ac != len - (k - 2)) {
-			cout << "arc_generator::simeon ac != len - (k - 2)" << endl;
-			exit(1);
-			}
-		if (f_vv) {
-			cout << "Ac=";
-			int_vec_print(cout, Ac, ac);
-			cout << endl;
-			}
-
-
-		for (u = 0; u < nb_U; u++, row++) {
-
-			Combi.unrank_k_subset(u, U, len - (k - 2), k - 1);
-			for (i = 0; i < k - 1; i++) {
-				U1[i] = Ac[U[i]];
-				}
-			if (f_vv) {
-				cout << "U1=";
-				int_vec_print(cout, U1, k - 1);
-				cout << endl;
-				}
-
-			for (col = 0; col < nb_cols; col++) {
-				if (f_vv) {
-					cout << "row=" << row << " / " << nb_rows
-							<< " col=" << col << " / "
-							<< nb_cols << ":" << endl;
-					}
-				Combi.unrank_k_subset(col, C, len, k - 1);
-				if (f_vv) {
-					cout << "C: ";
-					int_vec_print(cout, C, k - 1);
-					cout << endl;
-					}
-
-			
-				// test if A is a subset of C:
-				for (i = 0; i < k - 2; i++) {
-					if (!Sorting.int_vec_search_linear(C, k - 1, A[i], idx)) {
-						//cout << "did not find A[" << i << "] in C" << endl;
-						break;
-						}
-					}
-				if (i == k - 2) {
-					d = F->BallChowdhury_matrix_entry(
-							Coord, C, U1, k, s /*sz_U */,
-						T, 0 /*verbose_level*/);
-					if (f_vv) {
-						cout << "d=" << d << endl;
-						}
-
-					M[row * nb_cols + col] = d;
-					} // next a
-				} // next c
-			} // next u
-		} // next a
-
-	cout << "simeon, the matrix M is:" << endl;
-	//int_matrix_print(M, nb_rows, nb_cols);
-
-	//print_integer_matrix_with_standard_labels(cout, M,
-	//nb_rows, nb_cols, TRUE /* f_tex*/);
-	//int_matrix_print_tex(cout, M, nb_rows, nb_cols);
-
-	cout << "nb_rows=" << nb_rows << endl;
-	cout << "nb_cols=" << nb_cols << endl;
-	cout << "s=" << s << endl;
-	
-	mtx_rank = F->Gauss_easy(M, nb_rows, nb_cols);
-	cout << "mtx_rank=" << mtx_rank << endl;
-	//cout << "simeon, the reduced matrix M is:" << endl;
-	//int_matrix_print(M, mtx_rank, nb_cols);
-
-
-	FREE_int(Coord);
-	FREE_int(M);
-	FREE_int(A);
-	FREE_int(C);
-	//FREE_int(E);
-#if 0
-	FREE_int(A1);
-	FREE_int(C1);
-	FREE_int(E1);
-	FREE_int(A2);
-	FREE_int(C2);
-#endif
-	FREE_int(T);
-}
 
 
 // #############################################################################
@@ -1926,7 +1632,8 @@ void arc_generator_early_test_function(long int *S, int len,
 		good_candidates, nb_good_candidates, 
 		verbose_level - 2);
 	if (f_v) {
-		cout << "arc_generator_early_test_function nb_candidates=" << nb_candidates << " nb_good_candidates=" << nb_good_candidates << endl;
+		cout << "arc_generator_early_test_function nb_candidates=" << nb_candidates
+				<< " nb_good_candidates=" << nb_good_candidates << endl;
 	}
 	if (f_v)  {
 		cout << "arc_generator_early_test_function done" << endl;
@@ -1947,7 +1654,7 @@ void arc_generator_lifting_prepare_function_new(
 	if (f_v) {
 		cout << "arc_generator_lifting_prepare_function_new "
 				"nb_candidates=" << nb_candidates << endl;
-		}
+	}
 
 	Gen->lifting_prepare_function_new(EC, starter_case, 
 		candidates, nb_candidates, Strong_gens, 
@@ -1958,12 +1665,11 @@ void arc_generator_lifting_prepare_function_new(
 	if (f_v) {
 		cout << "arc_generator_lifting_prepare_function_new "
 				"nb_rows=" << Dio->m << " nb_cols=" << Dio->n << endl;
-		}
+	}
 
 	if (f_v) {
-		cout << "arc_generator_lifting_prepare_function_new "
-				"done" << endl;
-		}
+		cout << "arc_generator_lifting_prepare_function_new done" << endl;
+	}
 }
 
 
