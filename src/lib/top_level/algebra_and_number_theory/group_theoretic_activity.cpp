@@ -232,7 +232,6 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		do_tensor_permutations(verbose_level);
 	}
 
-	// surface create is missing?
 
 	if (f_v) {
 		cout << "group_theoretic_activity::perform_activity done" << endl;

@@ -3383,13 +3383,22 @@ class web_of_cubic_curves {
 public:
 	surface_domain *Surf;
 
-	int nb_T;
-	int *T_idx;
 
 	long int arc6[6];
+
+	eckardt_point_info *E;
+
+	int *E_idx;
+
+	int *T_idx;
+	int nb_T;
+
+
 	int base_curves4[4];
+	int t_idx0;
+	int row_col_Eckardt_points[6];
 	int *Web_of_cubic_curves; // [45 * 10]
-	int *The_plane_equations; // [45 * 4]
+	int *Tritangent_plane_equations; // [45 * 4]
 	int *base_curves; // [4 * 10]
 	long int *The_plane_rank; // [45]
 	long int *The_plane_duals; // [45]
@@ -3398,8 +3407,20 @@ public:
 
 	web_of_cubic_curves();
 	~web_of_cubic_curves();
-	void init(surface_domain *Surf, long int *arc6, int *base_curves4,
-			 int nb_T, int *T_idx, int verbose_level);
+	void init(surface_domain *Surf, long int *arc6, int verbose_level);
+	void find_Eckardt_points(int verbose_level);
+	void find_trihedral_pairs(int verbose_level);
+	void print_lines(std::ostream &ost);
+	void print_trihedral_plane_equations(std::ostream &ost);
+	void print_the_six_plane_equations(
+		int *The_six_plane_equations,
+		long int *plane6, std::ostream &ost);
+	void print_surface_equations_on_line(
+		int *The_surface_equations,
+		int lambda, int lambda_rk, std::ostream &ost);
+	void print_dual_point_ranks(std::ostream &ost);
+	void print_Eckardt_point_data(std::ostream &ost, int verbose_level);
+	void report(std::ostream &ost, int verbose_level);
 
 };
 

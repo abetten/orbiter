@@ -693,12 +693,12 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 
 			if (f_v) {
 				cout << "exact_cover::compute_liftings_single_case_new "
-						"before save_in_compact_format, fname=" << fname << endl;
+						"before save_in_general_format, fname=" << fname << endl;
 				}
-			Dio->save_in_compact_format(fname, verbose_level - 1);
+			Dio->save_in_general_format(fname, verbose_level - 1);
 			if (f_v) {
 				cout << "exact_cover::compute_liftings_single_case_new "
-						"after save_in_compact_format" << endl;
+						"after save_in_general_format" << endl;
 				}
 			}
 		if (f_solve || f_read_instead) {

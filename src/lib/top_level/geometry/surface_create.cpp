@@ -360,7 +360,7 @@ void surface_create::init2(int verbose_level)
 					"AL->create_surface" << endl;
 		}
 
-		AL->print_Eckardt_point_data(cout, verbose_level);
+		AL->Web->print_Eckardt_point_data(cout, verbose_level);
 
 		int_vec_copy(AL->The_surface_equations
 				+ AL->lambda_rk * 20, coeffs, 20);

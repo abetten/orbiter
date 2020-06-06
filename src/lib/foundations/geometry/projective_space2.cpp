@@ -3470,8 +3470,9 @@ void projective_space::arc_lifting_diophant(
 
 	D = NEW_OBJECT(diophant);
 	D->open(N_lines + 1, nb_free_points);
-	D->f_x_max = TRUE;
+	//D->f_x_max = TRUE;
 	for (j = 0; j < nb_free_points; j++) {
+		D->x_min[j] = 0;
 		D->x_max[j] = 1;
 		}
 	D->f_has_sum = TRUE;
@@ -3577,8 +3578,9 @@ void projective_space::arc_with_given_set_of_s_lines_diophant(
 
 	D = NEW_OBJECT(diophant);
 	D->open(N_lines + 1, N_points);
-	D->f_x_max = TRUE;
+	//D->f_x_max = TRUE;
 	for (j = 0; j < N_points; j++) {
+		D->x_min[j] = 0;
 		D->x_max[j] = 1;
 		}
 	D->f_has_sum = TRUE;
@@ -3709,8 +3711,9 @@ void projective_space::arc_with_two_given_line_sets_diophant(
 
 	D = NEW_OBJECT(diophant);
 	D->open(N_lines + 1, N_points);
-	D->f_x_max = TRUE;
+	//D->f_x_max = TRUE;
 	for (j = 0; j < N_points; j++) {
+		D->x_min[j] = 0;
 		D->x_max[j] = 1;
 		}
 	D->f_has_sum = TRUE;
@@ -3865,8 +3868,9 @@ void projective_space::arc_with_three_given_line_sets_diophant(
 
 	D = NEW_OBJECT(diophant);
 	D->open(N_lines + 1, N_points);
-	D->f_x_max = TRUE;
+	//D->f_x_max = TRUE;
 	for (j = 0; j < N_points; j++) {
+		D->x_min[j] = 0;
 		D->x_max[j] = 1;
 		}
 	D->f_has_sum = TRUE;
@@ -4120,8 +4124,9 @@ void projective_space::maximal_arc_by_diophant(
 
 	D = NEW_OBJECT(diophant);
 	D->open(nb_eqns, nb_vars);
-	D->f_x_max = TRUE;
+	//D->f_x_max = TRUE;
 	for (j = 0; j < nb_vars; j++) {
+		D->x_min[j] = 0;
 		D->x_max[j] = 1;
 		}
 	D->f_has_sum = TRUE;

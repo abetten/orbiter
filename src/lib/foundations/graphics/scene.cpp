@@ -106,16 +106,6 @@ static double Hilbert_Cohn_Vossen_tritangent_planes[] = {
 
 scene::scene()
 {
-	null();
-}
-
-scene::~scene()
-{
-	freeself();
-}
-
-void scene::null()
-{
 	line_radius = 0.05;
 	nb_lines = 0;
 	Line_coords = NULL;
@@ -128,6 +118,10 @@ void scene::null()
 	nb_quadrics = 0;
 	Quadric_coords = NULL;
 	nb_cubics = 0;
+	Quartic_coords = NULL;
+	nb_quartics = 0;
+	Octic_coords = NULL;
+	nb_octics = 0;
 	Cubic_coords = NULL;
 	nb_faces = 0;
 	Nb_face_points = NULL;
@@ -140,38 +134,54 @@ void scene::null()
 	affine_space_starting_point = 0;
 
 	nb_groups = 0;
+	//null();
+}
+
+scene::~scene()
+{
+	freeself();
+}
+
+void scene::null()
+{
 }
 
 void scene::freeself()
 {
 	if (Line_coords) {
 		delete [] Line_coords;
-		}
+	}
 	if (Edge_points) {
 		FREE_int(Edge_points);
-		}
+	}
 	if (Point_coords) {
 		delete [] Point_coords;
-		}
+	}
 	if (Plane_coords) {
 		delete [] Plane_coords;
-		}
+	}
 	if (Quadric_coords) {
 		delete [] Quadric_coords;
-		}
+	}
 	if (Cubic_coords) {
 		delete [] Cubic_coords;
-		}
+	}
+	if (Quartic_coords) {
+		delete [] Quartic_coords;
+	}
+	if (Octic_coords) {
+		delete [] Octic_coords;
+	}
 	if (Nb_face_points) {
 		FREE_int(Nb_face_points);
-		}
+	}
 	if (Face_points) {
 		int i;
 		for (i = 0; i < nb_faces; i++) {
 			FREE_int(Face_points[i]);
-			}
-		FREE_pint(Face_points);
 		}
+		FREE_pint(Face_points);
+	}
 	null();
 }
 
@@ -338,6 +348,8 @@ void scene::init(int verbose_level)
 	nb_cubics = 0;
 	Quartic_coords = new double [SCENE_MAX_QUARTICS * 35];
 	nb_quartics = 0;
+	Octic_coords = new double [SCENE_MAX_OCTICS * 165];
+	nb_octics = 0;
 	Face_points = NEW_pint(SCENE_MAX_FACES);
 	Nb_face_points = NEW_int(SCENE_MAX_FACES);
 	nb_faces = 0;
@@ -1146,6 +1158,22 @@ int scene::quadric_through_three_lines(
 	return idx;
 }
 
+int scene::octic(double *coeff_165)
+{
+	int i;
+
+	for (i = 0; i < 165; i++) {
+		Octic_coords[nb_octics * 165 + i] = coeff_165[i];
+		}
+	nb_octics++;
+	if (nb_octics >= SCENE_MAX_OCTICS) {
+		cout << "too many octics" << endl;
+		exit(1);
+		}
+	return nb_octics - 1;
+
+}
+
 int scene::quadric(double *coeff)
 // povray ordering of monomials:
 // http://www.povray.org/documentation/view/3.6.1/298/
@@ -1865,6 +1893,43 @@ void scene::draw_quartic_with_selection(int *selection, int nb_select,
 		for (h = 0; h < 35; h++) {
 			N.output_double(Quartic_coords[j * 35 + h], ost);
 			if (h < 35 - 1) {
+				ost << ", ";
+				}
+			}
+		ost << ">";
+		}
+	ost << endl;
+	ost << "		" << options << " " << endl;
+	//ost << "		pigment{" << color << "}" << endl;
+	//ost << "		pigment{Cyan*1.3}" << endl;
+	//ost << "		finish {ambient 0.4 diffuse 0.5 roughness 0.001 "
+	//"reflection 0.1 specular .8} " << endl;
+	ost << "		}" << endl;
+	ost << "	}" << endl;
+}
+
+void scene::draw_octic_with_selection(int *selection, int nb_select,
+	const char *options, ostream &ost)
+{
+	int i, j, h, s;
+	numerics N;
+
+	ost << endl;
+	ost << "	union{ // octics" << endl;
+	ost << endl;
+	for (i = 0; i < nb_select; i++) {
+		s = selection[i];
+		j = s;
+
+		cout << "scene::draw_quartic_with_selection j=" << j << ":" << endl;
+		for (h = 0; h < 165; h++) {
+			cout << h << " : " << Quartic_coords[j * 165 + h] << endl;
+		}
+		ost << "		poly{8, <";
+
+		for (h = 0; h < 165; h++) {
+			N.output_double(Octic_coords[j * 165 + h], ost);
+			if (h < 165 - 1) {
 				ost << ", ";
 				}
 			}

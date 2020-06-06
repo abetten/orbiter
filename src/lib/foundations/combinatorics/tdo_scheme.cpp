@@ -1664,11 +1664,13 @@ int tdo_scheme::refine_rows_easy(int verbose_level,
 		}
 		
 	for (j = 0; j < l2; j++) {
+		D.x_min[j] = 0;
 		D.x_max[j] = col_classes_len[COL][j];
 		}
-	D.x_max[nb_vars - 1] = nb_rows - 1;;
+	D.x_min[nb_vars - 1] = 0;
+	D.x_max[nb_vars - 1] = nb_rows - 1;
 	
-	D.f_x_max = TRUE;
+	//D.f_x_max = TRUE;
 		
 
 	D.eliminate_zero_rows_quick(verbose_level);
@@ -2342,6 +2344,7 @@ int tdo_scheme::tdo_rows_setup_first_system(int verbose_level,
 		for (j = 0; j < l; j++) {
 			J = f + i + j; // +i for the slack variables
 			T.D1->Aij(R + i, J) = 1;
+			T.D1->x_min[J] = 0;
 			T.D1->x_max[J] = MINIMUM(col_classes_len[COL][f + j],
 					s_or_s_default);
 		}
@@ -2352,10 +2355,11 @@ int tdo_scheme::tdo_rows_setup_first_system(int verbose_level,
 		else {
 			T.D1->x_max[f + i + l] = 0;
 		}
+		T.D1->x_min[f + i + l] = 0;
 	}
 	T.D1->f_has_sum = TRUE;
 	T.D1->sum = S;
-	T.D1->f_x_max = TRUE;
+	//T.D1->f_x_max = TRUE;
 		
 	T.D1->eliminate_zero_rows_quick(verbose_level);
 	
@@ -2956,6 +2960,7 @@ int tdo_scheme::refine_cols_hard(partitionstack &P,
 			}
 
 			if (f_D1_upper_bound_x0) {
+				T.D1->x_min[0] = 0;
 				T.D1->x_max[0] = D1_upper_bound_x0;
 				cout << "setting upper bound for D1->x[0] to "
 						<< T.D1->x_max[0] << endl;
@@ -3309,9 +3314,11 @@ int tdo_scheme::tdo_columns_setup_first_system(int verbose_level,
 	T.D1->open(nb_eqns, nb_vars);
 	S = 0;
 		
-	for (I = 0; I < nb_eqns; I++) 
-		for (J = 0; J < nb_vars; J++) 
+	for (I = 0; I < nb_eqns; I++) {
+		for (J = 0; J < nb_vars; J++) {
 			T.D1->A[I * nb_vars + J] = 0;
+		}
+	}
 	
 	// the m equalities that come from the fact that the n e w type
 	// is a partition of the old type.
@@ -3325,39 +3332,43 @@ int tdo_scheme::tdo_columns_setup_first_system(int verbose_level,
 			J = f + j;
 			T.D1->Aij(I, J) = 1;
 			a = the_row_scheme[J * R + r];
-			if (a == 0)
+			if (a == 0) {
 				T.D1->x_max[J] = 0;
-			else
+			}
+			else {
 				T.D1->x_max[J] = row_classes_len[ROW][J];
 			}
+			T.D1->x_min[J] = 0;
+		}
 		s = the_col_scheme[I * R + r];
 		T.D1->RHS[I] = s;
 		T.D1->type[I] = t_EQ;
 		S += s;
-		}
+	}
 	
 	eqn_number = L1;
 	
 	for (i = 0; i < L2; i++) {
 		a = Combi.minus_one_if_positive(the_row_scheme[i * R + r]);
 		T.D1->Aij(eqn_number, i) = a;
-		}
+	}
 	T.D1->RHS[eqn_number] = col_classes_len[ROW][r] - 1;
 			// the -1 was missing!!!
 	T.D1->type[eqn_number] = t_LE;
 	eqn_number++;
 	
 	for (j = 0; j < R; j++) {
-		if (j == r)
+		if (j == r) {
 			continue;
+		}
 		for (i = 0; i < L2; i++) {
 			a = the_row_scheme[i * R + j];
 			T.D1->Aij(eqn_number, i) = a;
-			}
+		}
 		T.D1->RHS[eqn_number] = col_classes_len[ROW][j];
 		T.D1->type[eqn_number] = t_LE;
 		eqn_number++;
-		}
+	}
 	T.D1->m = eqn_number;
 
 
@@ -3369,8 +3380,9 @@ int tdo_scheme::tdo_columns_setup_first_system(int verbose_level,
 		//cout << "u=" << u << endl;
 		for (j = 0; j < nb_vars; j++) {
 			//cout << "j=" << j << endl;
-			if (T.D1->x_max[j] == 0)
+			if (T.D1->x_max[j] == 0) {
 				continue;
+			}
 			d = row_classes_len[ROW][j];
 			p = col_classes_len[COL][rr];
 			d2 = Combi.binomial2(d);
@@ -3382,18 +3394,19 @@ int tdo_scheme::tdo_columns_setup_first_system(int verbose_level,
 					cout << "only one type, but no solution because of "
 						"joining in row-class " << j << endl;
 					//cout << "u=" << u << " j=" << j << endl;
-					}
-				return FALSE;
 				}
-			e = Combi.largest_binomial2_below(o);
-			T.D1->x_max[j] = MINIMUM(T.D1->x_max[j], e);
+				return FALSE;
 			}
+			e = Combi.largest_binomial2_below(o);
+			T.D1->x_min[j] = 0;
+			T.D1->x_max[j] = MINIMUM(T.D1->x_max[j], e);
 		}
+	}
 
 		
 	T.D1->f_has_sum = TRUE;
 	T.D1->sum = S;
-	T.D1->f_x_max = TRUE;
+	//T.D1->f_x_max = TRUE;
 
 	T.D1->eliminate_zero_rows_quick(verbose_level);
 		
@@ -3687,6 +3700,7 @@ void tdo_scheme::tdo_columns_setup_second_system_eqns_counting(
 		for (j = 0; j < l; j++) {
 			c = f + j;
 			J = T.types_first2[i] + j;
+			T.D2->x_min[J] = 0;
 			T.D2->x_max[J] = s;
 			}
 		}
@@ -3708,7 +3722,7 @@ void tdo_scheme::tdo_columns_setup_second_system_eqns_counting(
 
 	T.D2->f_has_sum = TRUE;
 	T.D2->sum = S;
-	T.D2->f_x_max = TRUE;
+	//T.D2->f_x_max = TRUE;
 }
 
 int tdo_scheme::tdo_columns_setup_second_system_eqns_upper_bound(
@@ -4091,6 +4105,7 @@ int tdo_scheme::td3_rows_setup_first_system(int verbose_level,
 			
 		for (j = 0; j < l; j++) {
 			T.D1->A[(eqn_offset + i) * nb_vars + f + j] = 1;
+			T.D1->x_min[f + j] = 0;
 			T.D1->x_max[f + j] = s;
 			}
 		}
@@ -4103,7 +4118,7 @@ int tdo_scheme::td3_rows_setup_first_system(int verbose_level,
 	
 	T.D1->f_has_sum = TRUE;
 	T.D1->sum = S;
-	T.D1->f_x_max = TRUE;
+	//T.D1->f_x_max = TRUE;
 		
 		
 	if (f_vv) {
@@ -4431,22 +4446,26 @@ int tdo_scheme::td3_columns_setup_first_system(int verbose_level,
 			J = f + j;
 			T.D1->A[I * nb_vars + J] = 1;
 			a = the_row_scheme[J * R + r];
-			if (a == 0)
+			if (a == 0) {
 				T.D1->x_max[J] = 0;
-			else
+			}
+			else {
 				T.D1->x_max[J] = row_classes_len[ROW][J];
 			}
+			T.D1->x_min[J] = 0;
+		}
 		s = the_col_scheme[I * R + r];
 		T.D1->RHS[I] = s;
 		S += s;
-		}
+	}
 
 	// try to reduce the upper bounds:
 		
 	for (j = 0; j < nb_vars; j++) {
 		//cout << "j=" << j << endl;
-		if (T.D1->x_max[j] == 0)
+		if (T.D1->x_max[j] == 0) {
 			continue;
+		}
 		d = row_classes_len[ROW][j];
 		d2 = Combi.binomial2(d) * lambda2;
 		o = d2;
@@ -4470,12 +4489,14 @@ int tdo_scheme::td3_columns_setup_first_system(int verbose_level,
 				}
 			}
 		e = Combi.largest_binomial2_below(o);
+		T.D1->x_min[j] = 0;
 		T.D1->x_max[j] = MINIMUM(T.D1->x_max[j], e);
 		}
 	for (j = 0; j < nb_vars; j++) {
 		//cout << "j=" << j << endl;
-		if (T.D1->x_max[j] == 0)
+		if (T.D1->x_max[j] == 0) {
 			continue;
+		}
 		d = row_classes_len[ROW][j];
 		d3 = Combi.binomial3(d) * lambda3;
 		o = d3;
@@ -4498,12 +4519,13 @@ int tdo_scheme::td3_columns_setup_first_system(int verbose_level,
 				}
 			}
 		e = Combi.largest_binomial3_below(o);
+		T.D1->x_min[j] = 0;
 		T.D1->x_max[j] = MINIMUM(T.D1->x_max[j], e);
 		}
 		
 	T.D1->f_has_sum = TRUE;
 	T.D1->sum = S;
-	T.D1->f_x_max = TRUE;
+	//T.D1->f_x_max = TRUE;
 		
 	if (f_vv) {
 		cout << "r=" << r << " the system is" << endl;
