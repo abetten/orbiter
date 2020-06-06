@@ -36,7 +36,8 @@ drawable_set_of_objects::drawable_set_of_objects()
 		// 6 = cubics
 		// 7 = quadrics
 		// 8 = quartics
-		// 9 = label
+		// 9 = octics
+		// 10 = label
 
 	d = 0.;
 	d2 = 0.;
@@ -201,6 +202,25 @@ void drawable_set_of_objects::init_quartics(int group_idx,
 	}
 }
 
+void drawable_set_of_objects::init_octics(int group_idx,
+		const char *properties, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "drawable_set_of_objects::init_octics" << endl;
+	}
+	drawable_set_of_objects::group_idx = group_idx;
+	type = 9;
+	//d = rad;
+	drawable_set_of_objects::properties = properties;
+
+
+	if (f_v) {
+		cout << "drawable_set_of_objects::init_octics done" << endl;
+	}
+}
+
 void drawable_set_of_objects::init_labels(int group_idx,
 		double thickness_half, double scale, const char *properties, int verbose_level)
 {
@@ -210,7 +230,7 @@ void drawable_set_of_objects::init_labels(int group_idx,
 		cout << "drawable_set_of_objects::init_labels" << endl;
 	}
 	drawable_set_of_objects::group_idx = group_idx;
-	type = 9;
+	type = 10;
 	d = thickness_half;
 	d2 = scale;
 	drawable_set_of_objects::properties = properties;
@@ -308,7 +328,14 @@ void drawable_set_of_objects::draw(animate *Anim, ostream &ost, int verbose_leve
 	}
 	else if (type == 9) {
 		if (f_v) {
-			cout << "type == 9 labels" << endl;
+			cout << "type == 9 octics" << endl;
+		}
+		Anim->S->draw_octic_with_selection(Selection, sz,
+				properties, ost);
+	}
+	else if (type == 10) {
+		if (f_v) {
+			cout << "type == 10 labels" << endl;
 		}
 		Anim->draw_text_with_selection(Selection, sz,
 				d /* thickness_half */, 0. /* extra_spacing */,

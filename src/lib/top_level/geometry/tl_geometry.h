@@ -232,32 +232,13 @@ public:
 	int arc_size;
 	
 
-	eckardt_point_info *E;
 
-	int *E_idx;
-
-	int *T_idx;
-	int nb_T;
-
-	int t_idx0;
 
 
 	int *the_equation; // [20]
 
-	int base_curves4[4];
 	web_of_cubic_curves *Web;
 
-#if 0
-	int *Web_of_cubic_curves; // [45 * 10]
-	int *The_plane_equations; // [45 * 4]
-	int *base_curves; // [4 * 10]
-	long int *The_plane_rank; // [45]
-	long int *The_plane_duals; // [45]
-	long int *Dual_point_ranks; // [nb_T * 6]
-	long int Lines27[27];
-#endif
-
-	int row_col_Eckardt_points[6];
 
 
 	int The_six_plane_equations[6 * 4]; // [6 * 4]
@@ -302,15 +283,10 @@ public:
 	void freeself();
 	void create_surface_and_group(surface_with_action *Surf_A, long int *Arc6,
 		int verbose_level);
-	void lift_prepare(int verbose_level);
+	void create_web_of_cubic_curves(int verbose_level);
 	void loop_over_trihedral_pairs(vector_ge *cosets, 
 		vector_ge *&coset_reps, 
 		int *&aut_T_index, int *&aut_coset_index, int verbose_level);
-	void init(surface_with_action *Surf_A, long int *arc, int arc_size,
-		int verbose_level);
-		// calls find_Eckardt_points and find_trihedral_pairs
-	void find_Eckardt_points(int verbose_level);
-	void find_trihedral_pairs(int verbose_level);
 	void create_the_six_plane_equations(int t_idx, 
 		int *The_six_plane_equations, long int *planes6,
 		int verbose_level);
@@ -330,16 +306,8 @@ public:
 		int verbose_level);
 	void create_clebsch_system(int *The_six_plane_equations, 
 		int lambda, int verbose_level);
-	void print(std::ostream &ost, int verbose_level);
-	void print_Eckardt_point_data(std::ostream &ost, int verbose_level);
-	void print_trihedral_plane_equations(std::ostream &ost);
-	void print_lines(std::ostream &ost);
-	void print_dual_point_ranks(std::ostream &ost);
+	void report(std::ostream &ost, int verbose_level);
 	void print_FG(std::ostream &ost);
-	void print_the_six_plane_equations(int *The_six_plane_equations, 
-		long int *plane6, std::ostream &ost);
-	void print_surface_equations_on_line(int *The_surface_equations, 
-		int lambda, int lambda_rk, std::ostream &ost);
 	void print_equations();
 	void print_isomorphism_types_of_trihedral_pairs(std::ostream &ost,
 		vector_ge *cosets);
@@ -477,7 +445,6 @@ public:
 		const char *input_prefix,
 		const char *base_fname,
 		int starter_size,
-		//int argc, const char **argv,
 		int verbose_level);
 	void init_group(int f_semilinear, int verbose_level);
 	//void init_orthogonal(int verbose_level);

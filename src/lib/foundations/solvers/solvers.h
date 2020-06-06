@@ -112,21 +112,33 @@ public:
 	int from_scratch_m;
 	int from_scratch_n;
 
-	int f_from_scratch_coefficient_matrix;
-	const char *from_scratch_A_text;
+	int f_coefficient_matrix;
+	const char *coefficient_matrix_text;
+
+	int f_coefficient_matrix_csv;
+	const char *coefficient_matrix_csv;
 
 
-	int f_from_scratch_RHS;
-	const char *from_scratch_RHS_text;
+	int f_RHS;
+	const char *RHS_text;
 
-	int f_from_scratch_RHS_type;
-	const char *from_scratch_RHS_type_text;
+	int f_RHS_csv;
+	const char *RHS_csv_text;
 
-	int f_from_scratch_x_max;
-	const char *from_scratch_x_max_text;
+	int f_x_max_global;
+	int x_max_global;
 
-	int f_from_scratch_sum;
-	int from_scratch_sum;
+	int f_x_min_global;
+	int x_min_global;
+
+	int f_x_bounds;
+	const char *x_bounds_text;
+
+	int f_x_bounds_csv;
+	const char *x_bounds_csv;
+
+	int f_has_sum;
+	int has_sum;
 
 
 	diophant_description();
@@ -168,12 +180,13 @@ public:
 	int f_has_sum;
 	int sum; // constraint: sum(i=0..(n-1); x[i]) = sum 
 	int sum1;
-	int f_x_max;
+	//int f_x_max;
 	// with constraints: x[i] <= x_max[i] for i=0..(n-1) 
 	
-	int *A; // [m][n] the coefficient matrix
-	int *G; // [m][n] matrix of gcd values
+	int *A; // [m * n] the coefficient matrix
+	int *G; // [m * n] matrix of gcd values
 	int *x_max; // [n] upper bounds for x
+	int *x_min; // [n] lower bounds for x
 	int *x; // [n]  current value of x
 	int *RHS; // [m] the right hand sides
 	int *RHS_low; // [m] the minimum for the right hand side
@@ -242,7 +255,7 @@ public:
 	int RHS_ge_zero();
 	int solve_first(int verbose_level);
 	int solve_next();
-	int solve_first_wassermann(int verbose_level);
+	//int solve_first_wassermann(int verbose_level);
 	int solve_first_mckay(int f_once, int verbose_level);
 	void draw_solutions(const char *fname, int verbose_level);
 	void write_solutions(const char *fname, int verbose_level);
@@ -288,12 +301,12 @@ public:
 	void get_coefficient_matrix(int *&M, int &nb_rows, int &nb_cols, 
 		int verbose_level);
 	void save_as_Levi_graph(const char *fname, int verbose_level);
-	void save_in_compact_format(const char *fname, int verbose_level);
-	void read_compact_format(const char *fname, int verbose_level);
+	//void save_in_compact_format(const char *fname, int verbose_level);
+	//void read_compact_format(const char *fname, int verbose_level);
 	void save_in_general_format(const char *fname, int verbose_level);
 	void read_general_format(const char *fname, int verbose_level);
-	void save_in_wassermann_format(const char *fname, int verbose_level);
-	void solve_wassermann(int verbose_level);
+	//void save_in_wassermann_format(const char *fname, int verbose_level);
+	//void solve_wassermann(int verbose_level);
 	void eliminate_zero_rows_quick(int verbose_level);
 	void eliminate_zero_rows(int *&eqn_number, int verbose_level);
 	int is_zero_outside(int first, int len, int i);

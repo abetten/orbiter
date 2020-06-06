@@ -98,11 +98,11 @@ void diophant_create::init(
 
 		D->open(m, n);
 
-		if (Descr->f_from_scratch_coefficient_matrix) {
+		if (Descr->f_coefficient_matrix) {
 			int *A;
 			int sz;
 
-			int_vec_scan(Descr->from_scratch_A_text, A, sz);
+			int_vec_scan(Descr->coefficient_matrix_text, A, sz);
 			if (sz != m * n) {
 				cout << "sz != m * n" << endl;
 				exit(1);
@@ -114,85 +114,166 @@ void diophant_create::init(
 			}
 			FREE_int(A);
 		}
-		else {
-			cout << "warning, coefficient matrix is not specified" << endl;
+
+		if (Descr->f_coefficient_matrix_csv) {
+			int *A;
+			int m, n;
+			file_io Fio;
+
+			if (f_v) {
+				cout << "reading coefficient matrix from file "
+						<< Descr->coefficient_matrix_csv << endl;
+			}
+			Fio.int_matrix_read_csv(Descr->coefficient_matrix_csv,
+					A,
+					m, n, verbose_level);
+
+			for (i = 0; i < m; i++) {
+				for (j = 0; j < n; j++) {
+					D->Aij(i, j) = A[i * n + j];
+				}
+			}
+			FREE_int(A);
 		}
 
-		if (Descr->f_from_scratch_RHS) {
+		if (Descr->f_RHS) {
 			int *RHS;
 			int sz;
 
-			int_vec_scan(Descr->from_scratch_RHS_text, RHS, sz);
-			if (sz != m) {
+			int_vec_scan(Descr->RHS_text, RHS, sz);
+			if (sz != 3 * m) {
 				cout << "sz != m" << endl;
 				exit(1);
 			}
 			for (i = 0; i < m; i++) {
-				D->RHS[i] = RHS[i];
-				//D->type[i] = t_EQ;
+				if (RHS[3 * i + 2] == 1) {
+					D->RHS_low[i] = RHS[3 * i + 0];
+					D->RHS[i] = RHS[3 * i + 1];
+					D->type[i] = t_EQ;
+				}
+				else if (RHS[3 * i + 2] == 2) {
+					D->RHS_low[i] = 0;
+					D->RHS[i] = RHS[3 * i + 1];
+					D->type[i] = t_LE;
+				}
+				else if (RHS[3 * i + 2] == 3) {
+					D->RHS_low[i] = RHS[3 * i + 0];
+					D->RHS[i] = RHS[3 * i + 1];
+					D->type[i] = t_INT;
+				}
+				else if (RHS[3 * i + 2] == 4) {
+					D->RHS_low[i] = 0;
+					D->RHS[i] = RHS[3 * i + 1];
+					D->type[i] = t_ZOR;
+				}
+				else {
+					cout << "type of RHS not recognized" << endl;
+					exit(1);
+				}
 			}
 			FREE_int(RHS);
 
 		}
-		else {
-			cout << "warning, RHS is not specified" << endl;
-		}
 
-		if (Descr->f_from_scratch_RHS_type) {
-			int *RHS_type;
-			int sz;
+		if (Descr->f_RHS_csv) {
+			int *RHS;
+			int m, n;
+			file_io Fio;
 
-			int_vec_scan(Descr->from_scratch_RHS_type_text, RHS_type, sz);
-			if (sz != m) {
-				cout << "sz != m" << endl;
+			Fio.int_matrix_read_csv(Descr->RHS_csv_text,
+					RHS,
+					m, n, verbose_level);
+			if (n != 3) {
+				cout << "reading RHS from file " << Descr->RHS_csv_text << ". Csv file must have exactly 3 column2." << endl;
 				exit(1);
 			}
 			for (i = 0; i < m; i++) {
-				if (RHS_type[i] == 1) {
+				if (RHS[3 * i + 2] == 1) {
+					D->RHS_low[i] = RHS[3 * i + 0];
+					D->RHS[i] = RHS[3 * i + 1];
 					D->type[i] = t_EQ;
 				}
-				else if (RHS_type[i] == 2) {
+				else if (RHS[3 * i + 2] == 2) {
+					D->RHS_low[i] = 0;
+					D->RHS[i] = RHS[3 * i + 1];
 					D->type[i] = t_LE;
 				}
-				else if (RHS_type[i] == 3) {
+				else if (RHS[3 * i + 2] == 3) {
+					D->RHS_low[i] = RHS[3 * i + 0];
+					D->RHS[i] = RHS[3 * i + 1];
+					D->type[i] = t_INT;
+				}
+				else if (RHS[3 * i + 2] == 4) {
+					D->RHS_low[i] = 0;
+					D->RHS[i] = RHS[3 * i + 1];
 					D->type[i] = t_ZOR;
 				}
 				else {
-					cout << "unknown type" << endl;
+					cout << "type of RHS not recognized" << endl;
 					exit(1);
 				}
 			}
-			FREE_int(RHS_type);
+			FREE_int(RHS);
+
 		}
-		else {
-			cout << "warning, RHS_type is not specified, assuming equalities" << endl;
-			for (i = 0; i < m; i++) {
-				D->type[i] = t_EQ;
+
+		if (Descr->f_x_max_global) {
+			for (j = 0; j < n; j++) {
+				D->x_max[j] = Descr->x_max_global;
 			}
 		}
 
-		if (Descr->f_from_scratch_RHS_type) {
-			int *x_max;
+		if (Descr->f_x_min_global) {
+			for (j = 0; j < n; j++) {
+				D->x_min[j] = Descr->x_min_global;
+			}
+		}
+
+		if (Descr->f_x_bounds) {
+			int *x_bounds;
 			int sz;
 
-			int_vec_scan(Descr->from_scratch_x_max_text, x_max, sz);
-			if (sz != n) {
-				cout << "sz != n" << endl;
+			int_vec_scan(Descr->x_bounds_text, x_bounds, sz);
+			if (sz != 2 * n) {
+				cout << "sz != 2 * n" << endl;
 				exit(1);
 			}
 			for (j = 0; j < n; j++) {
-				D->x_max[j] = x_max[j];
+				D->x_min[j] = x_bounds[2 * j + 0];
+				D->x_max[j] = x_bounds[2 * j + 1];
 			}
-			FREE_int(x_max);
-		}
-		else {
-			cout << "warning, x_max is not specified" << endl;
+			FREE_int(x_bounds);
 		}
 
-		if (Descr->f_from_scratch_sum) {
+		if (Descr->f_x_bounds_csv) {
+			int *x_bounds;
+			int m1, n1;
+			file_io Fio;
+
+			Fio.int_matrix_read_csv(Descr->x_bounds_csv,
+					x_bounds,
+					m1, n1, verbose_level);
+			if (m1 != n) {
+				cout << "reading RHS from file " << Descr->x_bounds_csv
+						<< ". Csv file must have exactly " << n << " rows." << endl;
+				exit(1);
+			}
+			if (n1 != 2) {
+				cout << "reading RHS from file " << Descr->x_bounds_csv
+						<< ". Csv file must have exactly 2 columns." << endl;
+				exit(1);
+			}
+			for (j = 0; j < n; j++) {
+				D->x_min[j] = x_bounds[2 * j + 0];
+				D->x_max[j] = x_bounds[2 * j + 1];
+			}
+			FREE_int(x_bounds);
+		}
+
+		if (Descr->f_has_sum) {
 
 			D->f_has_sum = TRUE;
-			D->sum = Descr->from_scratch_sum;
+			D->sum = Descr->has_sum;
 		}
 
 

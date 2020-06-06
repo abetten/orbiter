@@ -2287,11 +2287,11 @@ void numerics::vec_scan_from_stream(istream & is, double *&v, int &len)
 			if (FALSE) {
 				cout << "digit as string: " << s << ", numeric: " << a << endl;
 				}
-			if (h == l) {
-				l += 20;
+			if (h == len) {
+				len += 20;
 				double *v2;
 
-				v2 = new double [l];
+				v2 = new double [len];
 				vec_copy(v, v2, h);
 				delete [] v;
 				v = v2;

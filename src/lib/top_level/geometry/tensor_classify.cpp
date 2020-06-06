@@ -182,7 +182,6 @@ void tensor_classify::classify_poset(int depth,
 				"after create_restricted_action_on_rank_one_tensors" << endl;
 	}
 
-	//Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, Ar,
 			SG,
@@ -205,13 +204,17 @@ void tensor_classify::classify_poset(int depth,
 	Control->max_depth = depth;
 
 	if (f_v) {
-		cout << "tensor_classify::classify_poset before Gen->initialize_and_allocate_root_node" << endl;
+		cout << "tensor_classify::classify_poset before "
+				"Gen->initialize_and_allocate_root_node" << endl;
 		}
 	Gen = NEW_OBJECT(poset_classification);
 
-	Gen->initialize_and_allocate_root_node(Control, Poset, depth /* sz */, verbose_level);
+	Gen->initialize_and_allocate_root_node(
+			Control, Poset,
+			depth /* sz */, verbose_level);
 	if (f_v) {
-		cout << "tensor_classify::classify_poset after Gen->initialize_and_allocate_root_node" << endl;
+		cout << "tensor_classify::classify_poset after "
+				"Gen->initialize_and_allocate_root_node" << endl;
 	}
 
 

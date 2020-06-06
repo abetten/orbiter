@@ -36,20 +36,33 @@ diophant_description::diophant_description()
 	from_scratch_m = 0;
 	from_scratch_n = 0;
 
-	f_from_scratch_coefficient_matrix = FALSE;
-	from_scratch_A_text = NULL;
+	f_coefficient_matrix = FALSE;
+	coefficient_matrix_text = NULL;
 
-	f_from_scratch_RHS = FALSE;
-	from_scratch_RHS_text = NULL;
+	f_coefficient_matrix_csv = FALSE;
+	coefficient_matrix_csv = NULL;
 
-	f_from_scratch_RHS_type = FALSE;
-	from_scratch_RHS_type_text = NULL;
 
-	f_from_scratch_x_max = FALSE;
-	from_scratch_x_max_text = NULL;
+	f_RHS = FALSE;
+	RHS_text = NULL;
 
-	f_from_scratch_sum = FALSE;
-	from_scratch_sum = 0;
+	f_RHS_csv = FALSE;
+	RHS_csv_text = NULL;
+
+	f_x_max_global = FALSE;
+	x_max_global = 0;
+
+	f_x_min_global = FALSE;
+	x_min_global = 0;
+
+	f_x_bounds = FALSE;
+	x_bounds_text = NULL;
+
+	f_x_bounds_csv = FALSE;
+	x_bounds_csv = NULL;
+
+	f_has_sum = FALSE;
+	has_sum = 0;
 }
 
 
@@ -87,29 +100,49 @@ int diophant_description::read_arguments(
 					<< endl;
 		}
 		else if (strcmp(argv[i], "-coefficient_matrix") == 0) {
-			f_from_scratch_coefficient_matrix = TRUE;
-			from_scratch_A_text = argv[++i];
-			cout << "-from_scratch_coefficient_matrix " << from_scratch_A_text << endl;
+			f_coefficient_matrix = TRUE;
+			coefficient_matrix_text = argv[++i];
+			cout << "-coefficient_matrix " << coefficient_matrix_text << endl;
+		}
+		else if (strcmp(argv[i], "-coefficient_matrix_csv") == 0) {
+			f_coefficient_matrix_csv = TRUE;
+			coefficient_matrix_csv = argv[++i];
+			cout << "-coefficient_matrix_csv " << coefficient_matrix_csv << endl;
 		}
 		else if (strcmp(argv[i], "-RHS") == 0) {
-			f_from_scratch_RHS = TRUE;
-			from_scratch_RHS_text = argv[++i];
-			cout << "-from_scratch_RHS " << from_scratch_RHS_text << endl;
+			f_RHS = TRUE;
+			RHS_text = argv[++i];
+			cout << "-RHS " << RHS_text << endl;
 		}
-		else if (strcmp(argv[i], "-RHS_type") == 0) {
-			f_from_scratch_RHS_type = TRUE;
-			from_scratch_RHS_type_text = argv[++i];
-			cout << "-from_scratch_RHS_type " << from_scratch_RHS_type_text << endl;
+		else if (strcmp(argv[i], "-RHS_csv") == 0) {
+			f_RHS_csv = TRUE;
+			RHS_csv_text = argv[++i];
+			cout << "-RHS_csv " << RHS_csv_text << endl;
 		}
-		else if (strcmp(argv[i], "-x_max") == 0) {
-			f_from_scratch_x_max = TRUE;
-			from_scratch_x_max_text = argv[++i];
-			cout << "-from_scratch_x_max " << from_scratch_x_max_text << endl;
+		else if (strcmp(argv[i], "-x_max_global") == 0) {
+			f_x_max_global = TRUE;
+			x_max_global = atoi(argv[++i]);
+			cout << "-x_max_global " << x_max_global << endl;
+		}
+		else if (strcmp(argv[i], "-x_min_global") == 0) {
+			f_x_min_global = TRUE;
+			x_min_global = atoi(argv[++i]);
+			cout << "-x_min_global " << x_min_global << endl;
+		}
+		else if (strcmp(argv[i], "-x_bounds") == 0) {
+			f_x_bounds = TRUE;
+			x_bounds_text = argv[++i];
+			cout << "-x_bounds " << x_bounds_text << endl;
+		}
+		else if (strcmp(argv[i], "-x_bounds_csv") == 0) {
+			f_x_bounds_csv = TRUE;
+			x_bounds_csv = argv[++i];
+			cout << "-x_bounds_csv " << x_bounds_csv << endl;
 		}
 		else if (strcmp(argv[i], "-has_sum") == 0) {
-			f_from_scratch_sum = TRUE;
-			from_scratch_sum = atoi(argv[++i]);
-			cout << "-from_scratch_sum " << from_scratch_sum << endl;
+			f_has_sum = TRUE;
+			has_sum = atoi(argv[++i]);
+			cout << "-has_sum " << has_sum << endl;
 		}
 		else if (strcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;

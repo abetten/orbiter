@@ -1439,6 +1439,12 @@ void print_incidence_structure(ostream &ost,
 
 void int_vec_scan(const char *s, int *&v, int &len)
 {
+	int verbose_level = 0;
+
+	int f_v = (verbose_level >= 1);
+	if (f_v) {
+		cout << "int_vec_scan: " << s << endl;
+	}
 	istringstream ins(s);
 	int_vec_scan_from_stream(ins, v, len);
 }
@@ -1451,11 +1457,15 @@ void lint_vec_scan(const char *s, long int *&v, int &len)
 
 void int_vec_scan_from_stream(istream & is, int *&v, int &len)
 {
-	//int verbose_level = 0;
+	int verbose_level = 0;
 	int a;
 	char s[10000], c;
 	int l, h;
+	int f_v = (verbose_level >= 1);
 		
+	if (f_v) {
+		cout << "int_vec_scan_from_stream" << endl;
+	}
 	len = 20;
 	v = NEW_int(len);
 	h = 0;
@@ -1468,11 +1478,16 @@ void int_vec_scan_from_stream(istream & is, int *&v, int &len)
 			}
 		l = 0;
 		if (is.eof()) {
-			//cout << "breaking off because of eof" << endl;
+			if (f_v) {
+				cout << "breaking off because of eof" << endl;
+			}
 			len = h;
 			return;
 			}
 		is >> c;
+		if (f_v) {
+			cout << "c='" << c << "'" << endl;
+		}
 		//c = get_character(is, verbose_level - 2);
 		if (c == 0) {
 			len = h;
@@ -1484,9 +1499,13 @@ void int_vec_scan_from_stream(istream & is, int *&v, int &len)
 			//<< "\", ascii=" << (int)c << endl;
 			while (c != 0) {
 				if (c == '-') {
-					//cout << "c='" << c << "'" << endl;
+					if (f_v) {
+						cout << "c='" << c << "'" << endl;
+					}
 					if (is.eof()) {
-						//cout << "breaking off because of eof" << endl;
+						if (f_v) {
+							cout << "breaking off because of eof" << endl;
+						}
 						break;
 						}
 					s[l++] = c;
@@ -1504,21 +1523,25 @@ void int_vec_scan_from_stream(istream & is, int *&v, int &len)
 					//c = get_character(is, verbose_level - 2);
 					}
 				else {
-					//cout << "breaking off because c='" << c << "'" << endl;
+					if (f_v) {
+						cout << "breaking off because c='" << c << "'" << endl;
+					}
 					break;
 					}
 				if (c == 0) {
 					break;
 					}
-				//cout << "int_vec_scan_from_stream inside loop: \""
-				//<< c << "\", ascii=" << (int)c << endl;
+				if (f_v) {
+					cout << "int_vec_scan_from_stream inside loop: \""
+								<< c << "\", ascii=" << (int)c << endl;
 				}
+			}
 			s[l] = 0;
 			a = atoi(s);
-			if (FALSE) {
+			if (f_v) {
 				cout << "digit as string: " << s
 						<< ", numeric: " << a << endl;
-				}
+			}
 			if (h == len) {
 				len += 20;
 				int *v2;
@@ -1539,7 +1562,9 @@ void int_vec_scan_from_stream(istream & is, int *&v, int &len)
 				return;
 				}
 			if (is.eof()) {
-				//cout << "breaking off because of eof" << endl;
+				if (f_v) {
+					cout << "breaking off because of eof" << endl;
+				}
 				len = h;
 				return;
 				}

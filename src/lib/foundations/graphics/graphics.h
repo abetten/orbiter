@@ -181,6 +181,8 @@ public:
 			const char *properties, int verbose_level);
 	void init_quartics(int group_idx,
 			const char *properties, int verbose_level);
+	void init_octics(int group_idx,
+			const char *properties, int verbose_level);
 	void init_labels(int group_idx,
 			double thickness_half, double scale, const char *properties, int verbose_level);
 	void draw(animate *Anim, std::ostream &ost, int verbose_level);
@@ -760,6 +762,7 @@ public:
 #define SCENE_MAX_POINTS   200000
 #define SCENE_MAX_PLANES    10000
 #define SCENE_MAX_QUADRICS  10000
+#define SCENE_MAX_OCTICS      100
 #define SCENE_MAX_QUARTICS   1000
 #define SCENE_MAX_CUBICS    10000
 #define SCENE_MAX_FACES    200000
@@ -796,6 +799,9 @@ private:
 	double *Quartic_coords;
 		// [nb_quartics * 35]
 
+	double *Octic_coords;
+		// [nb_quartics * 165]
+
 	int *Nb_face_points; // [nb_faces]
 	int **Face_points; // [nb_faces]
 
@@ -820,6 +826,8 @@ public:
 	int nb_cubics;
 
 	int nb_quartics;
+
+	int nb_octics;
 
 	int nb_faces;
 
@@ -901,6 +909,7 @@ public:
 	int plane_through_three_points(int pt1, int pt2, int pt3);
 	int quadric_through_three_lines(int line_idx1, 
 		int line_idx2, int line_idx3, int verbose_level);
+	int octic(double *coeff_165);
 	int quadric(double *coeff);
 	// povray ordering of monomials:
 	// http://www.povray.org/documentation/view/3.6.1/298/
@@ -974,6 +983,8 @@ public:
 	void draw_cubic_with_selection(int *selection, int nb_select, 
 		const char *options, std::ostream &ost);
 	void draw_quartic_with_selection(int *selection, int nb_select,
+		const char *options, std::ostream &ost);
+	void draw_octic_with_selection(int *selection, int nb_select,
 		const char *options, std::ostream &ost);
 	void draw_quadric_with_selection(int *selection, int nb_select, 
 		const char *options, std::ostream &ost);

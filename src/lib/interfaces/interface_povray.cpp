@@ -239,6 +239,22 @@ int interface_povray::read_scene_objects(int argc, const char **argv, int i0, in
 			S->quartic(coeff);
 			delete [] coeff;
 		}
+		else if (strcmp(argv[i], "-octic_lex_165") == 0) {
+			cout << "-octic_lex_165" << endl;
+			const char *coeff_text;
+			double *coeff;
+			int coeff_sz;
+			numerics Numerics;
+
+			coeff_text = argv[++i];
+			Numerics.vec_scan(coeff_text, coeff, coeff_sz);
+			if (coeff_sz != 165) {
+				cout << "For -octic_lex_165, number of coefficients must be 165; is " << coeff_sz << endl;
+				exit(1);
+			}
+			S->octic(coeff);
+			delete [] coeff;
+		}
 		else if (strcmp(argv[i], "-point") == 0) {
 			cout << "-point" << endl;
 			const char *coeff_text;
@@ -556,9 +572,14 @@ int interface_povray::read_scene_objects(int argc, const char **argv, int i0, in
 			int Idx_sz;
 
 			Idx_text = argv[++i];
+			cout << "group: " << Idx_text << endl;
 			int_vec_scan(Idx_text, Idx, Idx_sz);
+			cout << "group: ";
+			int_vec_print(cout, Idx, Idx_sz);
+			cout << endl;
 			S->add_a_group_of_things(Idx, Idx_sz, verbose_level);
 			FREE_int(Idx);
+			cout << "end of -group_of_things" << endl;
 		}
 		else if (strcmp(argv[i], "-group_of_things_with_offset") == 0) {
 			cout << "-group_of_things" << endl;
@@ -814,6 +835,21 @@ int interface_povray::read_scene_objects(int argc, const char **argv, int i0, in
 			drawable_set_of_objects D;
 
 			D.init_quartics(group_idx, properties, verbose_level);
+			S->Drawables.push_back(D);
+		}
+		else if (strcmp(argv[i], "-octics") == 0) {
+			cout << "-octics" << endl;
+			int group_idx;
+			//double thickness;
+			const char *properties;
+
+			group_idx = atoi(argv[++i]);
+			//thickness = atof(argv[++i]);
+			properties = argv[++i];
+
+			drawable_set_of_objects D;
+
+			D.init_octics(group_idx, properties, verbose_level);
 			S->Drawables.push_back(D);
 		}
 		else if (strcmp(argv[i], "-texts") == 0) {
