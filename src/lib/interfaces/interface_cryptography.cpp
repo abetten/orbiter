@@ -377,6 +377,9 @@ int interface_cryptography::recognize_keyword(int argc, const char **argv, int i
 	if (f_v) {
 		cout << "interface_cryptography::recognize_keyword" << endl;
 	}
+	if (i >= argc) {
+		return false;
+	}
 	if (strcmp(argv[i], "-cs") == 0) {
 		return true;
 	}

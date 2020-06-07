@@ -116,11 +116,13 @@ int orbiter_session::read_arguments(int argc,
 			break;
 		}
 	}
+	//cout << "orbiter_session::read_arguments done" << endl;
 	return i;
 }
 
 void orbiter_session::work(int argc, const char **argv, int i, int verbose_level)
 {
+	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {

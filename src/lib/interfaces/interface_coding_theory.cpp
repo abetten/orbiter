@@ -54,6 +54,9 @@ void interface_coding_theory::print_help(int argc,
 int interface_coding_theory::recognize_keyword(int argc,
 		const char **argv, int i, int verbose_level)
 {
+	if (i >= argc) {
+		return false;
+	}
 	if (strcmp(argv[i], "-make_macwilliams_system") == 0) {
 		return true;
 	}

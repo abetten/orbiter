@@ -152,6 +152,9 @@ void interface_combinatorics::print_help(int argc,
 int interface_combinatorics::recognize_keyword(int argc,
 		const char **argv, int i, int verbose_level)
 {
+	if (i >= argc) {
+		return false;
+	}
 	if (strcmp(argv[i], "-create_combinatorial_object") == 0) {
 		return true;
 	}
