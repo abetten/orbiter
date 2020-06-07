@@ -133,6 +133,9 @@ void interface_projective::print_help(int argc,
 int interface_projective::recognize_keyword(int argc,
 		const char **argv, int i, int verbose_level)
 {
+	if (i >= argc) {
+		return false;
+	}
 	if (strcmp(argv[i], "-cheat_sheet_PG") == 0) {
 		return true;
 	}

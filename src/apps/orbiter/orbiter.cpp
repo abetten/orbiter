@@ -15,6 +15,7 @@ using namespace orbiter::interfaces;
 int main(int argc, const char **argv)
 {
 
+	//cout << "orbiter.out main" << endl;
 
 	orbiter_session Session;
 	int i;
