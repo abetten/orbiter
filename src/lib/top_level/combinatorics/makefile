@@ -20,7 +20,6 @@ MODULES = \
 	hadamard_classify.o \
 	hall_system_classify.o \
 	large_set_classify.o \
-	pentomino_puzzle.o \
 	regular_ls_classify.o \
 	tactical_decomposition.o
 

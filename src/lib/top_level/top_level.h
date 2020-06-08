@@ -128,7 +128,6 @@ class delandtsheer_doyen;
 class boolean_function;
 class hermitian_spread_classify;
 class surface_study;
-class pentomino_puzzle;
 class character_table_burnside;
 class create_graph_description;
 class create_graph;

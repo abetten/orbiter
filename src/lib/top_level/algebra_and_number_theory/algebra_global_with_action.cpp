@@ -3402,4 +3402,76 @@ void algebra_global_with_action::report_tactical_decomposition_by_automorphism_g
 	}
 }
 
+void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
+		poset_classification_control *Control, linear_group *LG,
+		int d, int target_depth, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::linear_codes_with_bounded_minimum_distance" << endl;
+	}
+
+	poset *Poset;
+	poset_classification *PC;
+
+
+	Control->f_max_depth = TRUE;
+	Control->max_depth = target_depth;
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::linear_codes_with_bounded_minimum_distance group set up, "
+				"calling gen->init" << endl;
+		cout << "LG->A2->A->f_has_strong_generators="
+				<< LG->A2->f_has_strong_generators << endl;
+	}
+
+	Poset = NEW_OBJECT(poset);
+
+	Poset->init_subset_lattice(LG->A_linear, LG->A_linear,
+			LG->Strong_gens,
+			verbose_level);
+
+
+	int independence_value = d - 1;
+
+	Poset->add_independence_condition(
+			independence_value,
+			verbose_level);
+
+#if 0
+	Poset->f_print_function = FALSE;
+	Poset->print_function = print_code;
+	Poset->print_function_data = this;
+#endif
+
+	PC = NEW_OBJECT(poset_classification);
+	PC->initialize_and_allocate_root_node(Control, Poset,
+			target_depth, verbose_level);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::linear_codes_with_bounded_minimum_distance before gen->main" << endl;
+	}
+
+	int t0;
+	os_interface Os;
+	int depth;
+
+	t0 = Os.os_ticks();
+	depth = PC->main(t0,
+			target_depth /*schreier_depth*/,
+		TRUE /*f_use_invariant_subset_if_available*/,
+		FALSE /*f_debug */,
+		verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::linear_codes_with_bounded_minimum_distance depth = " << depth << endl;
+	}
+
+	if (f_v) {
+		cout << "algebra_global_with_action::linear_codes_with_bounded_minimum_distance done" << endl;
+	}
+}
+
+
 }}

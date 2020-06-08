@@ -54,7 +54,7 @@ void diophant_activity::init(diophant_activity_description *Descr,
 		long int nb_backtrack_nodes;
 
 		cout << "solving with mckay" << endl;
-		Dio->solve_all_mckay(nb_backtrack_nodes, verbose_level - 2);
+		Dio->solve_all_mckay(nb_backtrack_nodes, INT_MAX, verbose_level - 2);
 		Dio->nb_steps_betten = nb_backtrack_nodes;
 
 		cout << "Found " << Dio->_resultanz << " solutions with "
@@ -88,6 +88,47 @@ void diophant_activity::init(diophant_activity_description *Descr,
 
 
 			Dio->write_solutions(output_file, verbose_level);
+		}
+	}
+	else if (Descr->f_draw_as_bitmap) {
+		char fname_base[1000];
+
+		sprintf(fname_base, "%s", Descr->input_file);
+		replace_extension_with(fname_base, "_drawing");
+		Dio->draw_as_bitmap(fname_base, TRUE, Descr->box_width,
+			verbose_level);
+
+	}
+	else if (Descr->f_test_single_equation) {
+		Dio->project_to_single_equation_and_solve(
+				Descr->max_number_of_coefficients,
+				verbose_level);
+	}
+	else if (Descr->f_project_to_single_equation_and_solve) {
+		Dio->split_by_equation(
+				Descr->eqn_idx,
+				TRUE,
+				Descr->solve_case_idx,
+				verbose_level);
+	}
+	else if (Descr->f_project_to_two_equations_and_solve) {
+
+		if (Descr->solve_case_idx_r == -1) {
+			Dio->split_by_two_equations(
+					Descr->eqn1_idx,
+					Descr->eqn2_idx,
+					FALSE,
+					0, 1,
+					verbose_level);
+		}
+		else {
+			Dio->split_by_two_equations(
+					Descr->eqn1_idx,
+					Descr->eqn2_idx,
+					TRUE,
+					Descr->solve_case_idx_r,
+					Descr->solve_case_idx_m,
+					verbose_level);
 		}
 	}
 	else if (Descr->f_draw) {

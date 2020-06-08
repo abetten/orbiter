@@ -783,7 +783,7 @@ void projective_space_job::perform_job_for_one_set(
 		long int *Sol;
 		int nb_sol;
 
-		D->solve_all_mckay(nb_backtrack_nodes, verbose_level);
+		D->solve_all_mckay(nb_backtrack_nodes, INT_MAX, verbose_level);
 
 		if (f_v) {
 			cout << "before D->get_solutions" << endl;
@@ -864,7 +864,7 @@ void projective_space_job::perform_job_for_one_set(
 		long int *Sol;
 		int nb_sol;
 
-		D->solve_all_mckay(nb_backtrack_nodes, verbose_level);
+		D->solve_all_mckay(nb_backtrack_nodes, INT_MAX, verbose_level);
 
 		if (f_v) {
 			cout << "before D->get_solutions" << endl;
@@ -951,7 +951,7 @@ void projective_space_job::perform_job_for_one_set(
 		long int *Sol;
 		int nb_sol;
 
-		D->solve_all_mckay(nb_backtrack_nodes, verbose_level);
+		D->solve_all_mckay(nb_backtrack_nodes, INT_MAX, verbose_level);
 
 		if (f_v) {
 			cout << "before D->get_solutions" << endl;

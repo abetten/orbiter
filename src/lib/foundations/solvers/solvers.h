@@ -26,8 +26,25 @@ public:
 	int f_print;
 	int f_solve_mckay;
 	int f_solve_standard;
+	int f_draw_as_bitmap;
+	int box_width;
 	int f_draw;
 	int f_perform_column_reductions;
+
+	int f_project_to_single_equation_and_solve;
+	int eqn_idx;
+	int solve_case_idx;
+
+	int f_project_to_two_equations_and_solve;
+	int eqn1_idx;
+	int eqn2_idx;
+	int solve_case_idx_r;
+	int solve_case_idx_m;
+
+	int f_test_single_equation;
+	int max_number_of_coefficients;
+
+
 
 	diophant_activity_description();
 	~diophant_activity_description();
@@ -255,7 +272,6 @@ public:
 	int RHS_ge_zero();
 	int solve_first(int verbose_level);
 	int solve_next();
-	//int solve_first_wassermann(int verbose_level);
 	int solve_first_mckay(int f_once, int verbose_level);
 	void draw_solutions(const char *fname, int verbose_level);
 	void write_solutions(const char *fname, int verbose_level);
@@ -274,7 +290,7 @@ public:
 		void (*user_callback_solution_found)(int *sol, int len, 
 			int nb_sol, void *data), 
 		int verbose_level);
-	int solve_all_mckay(long int &nb_backtrack_nodes, int verbose_level);
+	int solve_all_mckay(long int &nb_backtrack_nodes, int maxresults, int verbose_level);
 	int solve_once_mckay(int verbose_level);
 	int solve_all_betten(int verbose_level);
 	int solve_all_betten_with_conditions(int verbose_level, 
@@ -305,14 +321,23 @@ public:
 	//void read_compact_format(const char *fname, int verbose_level);
 	void save_in_general_format(const char *fname, int verbose_level);
 	void read_general_format(const char *fname, int verbose_level);
-	//void save_in_wassermann_format(const char *fname, int verbose_level);
-	//void solve_wassermann(int verbose_level);
 	void eliminate_zero_rows_quick(int verbose_level);
 	void eliminate_zero_rows(int *&eqn_number, int verbose_level);
 	int is_zero_outside(int first, int len, int i);
 	void project(diophant *D, int first, int len, int *&eqn_number, 
 		int &nb_eqns_replaced, int *&eqns_replaced, 
 		int verbose_level);
+	void split_by_equation(int eqn_idx, int f_solve_case, int solve_case_idx, int verbose_level);
+	void split_by_two_equations(int eqn1_idx, int eqn2_idx,
+			int f_solve_case, int solve_case_idx_r, int solve_case_idx_m,
+			int verbose_level);
+	void project_to_single_equation_and_solve(
+			int max_number_of_coefficients,
+			int verbose_level);
+	void project_to_single_equation(diophant *D, int eqn_idx,
+			int verbose_level);
+	void project_to_two_equations(diophant *D, int eqn1_idx, int eqn2_idx,
+			int verbose_level);
 	void multiply_A_x_to_RHS1();
 	void write_xml(std::ostream &ost, const char *label);
 	void read_xml(std::ifstream &f, char *label, int verbose_level);
@@ -321,6 +346,7 @@ public:
 	void append_equation();
 	void delete_equation(int I);
 	void write_gurobi_binary_variables(const char *fname);
+	void draw_as_bitmap(const char *fname, int f_box_width, int box_width, int verbose_level);
 	void draw_it(const char *fname_base, int xmax_in, int ymax_in, 
 		int xmax_out, int ymax_out, int verbose_level);
 	void draw_partitioned(const char *fname_base, 
@@ -344,16 +370,6 @@ public:
 
 
 	int solve_first_mckay_once_option(int f_once, int verbose_level);
-	int solve_all_mckay(
-		int &nb_backtrack_nodes, int verbose_level);
-	void solve_mckay(
-			const char *label, int maxresults,
-			int &nb_backtrack_nodes, int &nb_sol,
-			int verbose_level);
-	void solve_mckay_override_minrhs_in_inequalities(
-		const char *label,
-		int maxresults, int &nb_backtrack_nodes,
-		int minrhs, int &nb_sol, int verbose_level);
 
 
 };
@@ -362,7 +378,7 @@ void diophant_callback_solution_found(int *sol,
 	int len, int nb_sol, void *data);
 void solve_diophant(int *Inc, int nb_rows, int nb_cols, int nb_needed, 
 	int f_has_Rhs, int *Rhs, 
-	long int *&Solutions, int &nb_sol, int &nb_backtrack, int &dt,
+	long int *&Solutions, int &nb_sol, long int &nb_backtrack, int &dt,
 	int f_DLX, 
 	int f_draw_system, const char *fname_system, 
 	int f_write_tree, const char *fname_tree, 

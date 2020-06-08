@@ -705,6 +705,7 @@ public:
 		// (using Schreier.orbits_on_invariant_subset_fast).
 		// The set of possible points is stored 
 		// inside the schreier vector data structure (sv).
+	void post_processing(int actual_size, int verbose_level);
 	void extend_level(int size, 
 		int f_create_schreier_vector, 
 		int f_use_invariant_subset_if_available, 

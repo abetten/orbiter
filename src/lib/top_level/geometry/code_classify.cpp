@@ -376,7 +376,7 @@ void code_classify::init(poset_classification_control *Control)
 		//gen->depth = N;
 	}
 	else {
-		cout << "must use either liner or nonlinear option" << endl;
+		cout << "must use either linear or nonlinear option" << endl;
 		exit(1);
 	}
 
@@ -458,8 +458,6 @@ void code_classify::main(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int depth;
-	int f_embedded = TRUE;
-	int f_sideways = FALSE;
 	os_interface Os;
 	int t0;
 
@@ -488,146 +486,14 @@ void code_classify::main(int verbose_level)
 	}
 	cout << "code_classify::main depth = " << depth << endl;
 
-	if (Control->f_table_of_nodes) {
-		if (f_v) {
-			cout << "code_classify::main f_table_of_nodes" << endl;
-		}
-		long int *Table;
-		int nb_rows, nb_cols;
-		file_io Fio;
-
-		gen->get_table_of_nodes(Table, 
-			nb_rows, nb_cols, 0 /*verbose_level*/);
-	
-		Fio.lint_matrix_write_csv("data.csv", Table, nb_rows, nb_cols);
-
-
-		FREE_lint(Table);
-	}
-
-	if (Control->f_list) {
-		if (f_v) {
-			cout << "code_classify::main f_list" << endl;
-		}
-
-		{
-			spreadsheet *Sp;
-
-			if (f_v) {
-				cout << "code_classify::main before "
-						"gen->make_spreadsheet_of_orbit_reps" << endl;
-			}
-
-			gen->make_spreadsheet_of_orbit_reps(Sp, depth);
-			char fname_csv[1000];
-			sprintf(fname_csv, "orbits_%d.csv", depth);
-			Sp->save(fname_csv, verbose_level);
-			delete Sp;
-			if (f_v) {
-				cout << "code_classify::main after "
-						"gen->make_spreadsheet_of_orbit_reps" << endl;
-			}
-		}
-
-#if 1
-		int f_show_orbit_decomposition = TRUE;
-		int f_show_stab = TRUE;
-		int f_save_stab = TRUE;
-		int f_show_whole_orbit = FALSE;
-		
-		if (f_v) {
-			cout << "code_classify::main before "
-					"gen->list_all_orbits_at_level" << endl;
-		}
-		gen->list_all_orbits_at_level(depth, 
-			TRUE, 
-			print_code, 
-			this, 
-			f_show_orbit_decomposition, 
-			f_show_stab, 
-			f_save_stab, 
-			f_show_whole_orbit);
-
-		if (f_v) {
-			cout << "code_classify::main after "
-					"gen->list_all_orbits_at_level" << endl;
-		}
-
-#if 0
-		int d;
-		for (d = 0; d < 3; d++) {
-			gen->print_schreier_vectors_at_depth(d, verbose_level);
-		}
-#endif
-#endif
-		}
-
-
-	if (f_v) {
-		cout << "code_classify::main preparing level spreadsheet" << endl;
-	}
-	{
-		spreadsheet *Sp;
-		gen->make_spreadsheet_of_level_info(
-				Sp, depth, verbose_level);
-		char fname_csv[1000];
-		sprintf(fname_csv, "levels_%d.csv", depth);
-		Sp->save(fname_csv, verbose_level);
-		delete Sp;
-	}
-	if (f_v) {
-		cout << "code_classify::main preparing level spreadsheet done" << endl;
-	}
-
-	if (f_v) {
-		cout << "code_classify::main preparing orbit spreadsheet" << endl;
-	}
-	{
-		spreadsheet *Sp;
-		gen->make_spreadsheet_of_orbit_reps(
-				Sp, depth);
-		char fname_csv[1000];
-		sprintf(fname_csv, "orbits_%d.csv",
-				depth);
-		Sp->save(fname_csv, verbose_level);
-		delete Sp;
-	}
-	if (f_v) {
-		cout << "code_classify::main preparing orbit spreadsheet done" << endl;
-	}
 
 
 
-	if (Control->f_draw_poset) {
-		if (f_v) {
-			cout << "code_classify::main f_draw_poset" << endl;
-		}
-		gen->draw_poset(gen->get_problem_label_with_path(), depth,
-			0 /* data1 */, f_embedded, f_sideways, 
-			verbose_level);
-		}
-	if (Control->f_draw_full_poset) {
-		if (f_v) {
-			cout << "code_classify::main f_draw_full_poset" << endl;
-		}
-		gen->draw_poset_full(gen->get_problem_label_with_path(), depth,
-				0 /* data1 */, f_embedded, f_sideways,
-				1 /* x_stretch */, verbose_level);
 
-			const char *fname_prefix = "flag_orbits";
 
-			gen->make_flag_orbits_on_relations(
-					depth, fname_prefix, verbose_level);
-		}
-	if (Control->f_print_data_structure) {
-		if (f_v) {
-			cout << "code_classify::main f_print_data_structure" << endl;
-		}
-		gen->print_data_structure_tex(depth, verbose_level);
-		}
 	if (f_report_schreier_trees) {
 		if (f_v) {
-			cout << "code_classify::main f_report_schreier_trees" << endl;
+			cout << "poset_classification::post_processing f_report_schreier_trees" << endl;
 		}
 		char fname_base[1000];
 		//char fname_report[1000];
@@ -651,6 +517,7 @@ void code_classify::main(int verbose_level)
 		}
 #endif
 	}
+
 	if (f_report) {
 		if (f_v) {
 			cout << "code_classify::main f_report" << endl;

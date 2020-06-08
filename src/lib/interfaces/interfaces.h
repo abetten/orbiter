@@ -115,6 +115,10 @@ class interface_coding_theory {
 	int f_BCH_dual;
 	int BCH_t;
 	//int BCH_b;
+	int f_Hamming_graph;
+	int f_draw_matrix;
+	const char *fname;
+	int box_width;
 
 public:
 	interface_coding_theory();
@@ -187,6 +191,7 @@ class interface_combinatorics {
 	const char *stack_fname;
 	int f_maximal_arc_parameters;
 	int maximal_arc_parameters_q, maximal_arc_parameters_r;
+	int f_pentomino_puzzle;
 
 public:
 	interface_combinatorics();

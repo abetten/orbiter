@@ -47,6 +47,9 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_find_singer_cycle = FALSE;
 	f_search_element_of_order = FALSE;
 	search_element_order = 0;
+	f_linear_codes = FALSE;
+	linear_codes_minimum_distance = 0;
+	linear_codes_target_size = 0;
 	f_print_elements = FALSE;
 	f_print_elements_tex = FALSE;
 	f_multiply = FALSE;
@@ -268,6 +271,12 @@ int group_theoretic_activity_description::read_arguments(
 			f_search_element_of_order = TRUE;
 			search_element_order = atoi(argv[++i]);
 			cout << "-search_element_of_order " << search_element_order << endl;
+		}
+		else if (strcmp(argv[i], "-linear_codes") == 0) {
+			f_linear_codes = TRUE;
+			linear_codes_minimum_distance = atoi(argv[++i]);
+			linear_codes_target_size = atoi(argv[++i]);
+			cout << "-linear_codes " << linear_codes_minimum_distance << " " << linear_codes_target_size << endl;
 		}
 		else if (strcmp(argv[i], "-print_elements") == 0) {
 			f_print_elements = TRUE;

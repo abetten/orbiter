@@ -11,6 +11,7 @@ MODULES = \
 		combinatorial_object_description.o \
 		combinatorics_domain.o \
 		geo_parameter.o \
+		pentomino_puzzle.o \
 		tdo_data.o \
 		tdo_refinement_description.o \
 		tdo_refinement.o \

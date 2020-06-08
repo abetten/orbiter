@@ -1312,6 +1312,15 @@ public:
 };
 
 
+// draw_bitmap.cpp:
+
+void draw_bitmap(const char *fname, int *M, int m, int n,
+		int f_partition, int part_width,
+		int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
+		int f_box_width, int box_width,
+		int f_invert_colors,
+		int verbose_level);
+
 
 
 }}

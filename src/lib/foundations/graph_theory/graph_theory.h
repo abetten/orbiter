@@ -149,7 +149,6 @@ public:
 	void degree_of_point_statistic(int depth, int nb_points, 
 		int verbose_level);
 	int degree_of_point(int depth, int i, int nb_points);
-	//int degree_of_point_verbose(int i, int nb_points);
 	int is_suspicous(int i);
 	int point_label(int i);
 	int is_adjacent(int depth, int i, int j);

@@ -28,7 +28,7 @@ void poset_classification::Plesken_matrix_up(int depth,
 
 	if (f_v) {
 		cout << "poset_classification::Plesken_matrix_up" << endl;
-		}
+	}
 	N = 0;
 	Nb = NEW_int(depth + 1);
 	Fst = NEW_int(depth + 2);
@@ -46,14 +46,14 @@ void poset_classification::Plesken_matrix_up(int depth,
 				for (b = 0; b < N2; b++) {
 					cnt = Pij[a * N2 + b];
 					P[(Fst[i] + a) * N + Fst[j] + b] = cnt;
-					}
 				}
-			FREE_int(Pij);
 			}
+			FREE_int(Pij);
 		}
+	}
 	if (f_v) {
 		cout << "poset_classification::Plesken_matrix_up done" << endl;
-		}
+	}
 }
 
 void poset_classification::Plesken_matrix_down(int depth,
@@ -69,7 +69,7 @@ void poset_classification::Plesken_matrix_down(int depth,
 
 	if (f_v) {
 		cout << "poset_classification::Plesken_matrix_down" << endl;
-		}
+	}
 	N = 0;
 	Nb = NEW_int(depth + 1);
 	Fst = NEW_int(depth + 2);
@@ -78,7 +78,7 @@ void poset_classification::Plesken_matrix_down(int depth,
 		Nb[i] = nb_orbits_at_level(i);
 		Fst[i + 1] = Fst[i] + Nb[i];
 		N += Nb[i];
-		}
+	}
 	P = NEW_int(N * N);
 	for (i = 0; i <= depth; i++) {
 		for (j = 0; j <= depth; j++) {
@@ -88,14 +88,14 @@ void poset_classification::Plesken_matrix_down(int depth,
 				for (b = 0; b < N2; b++) {
 					cnt = Pij[a * N2 + b];
 					P[(Fst[i] + a) * N + Fst[j] + b] = cnt;
-					}
 				}
-			FREE_int(Pij);
 			}
+			FREE_int(Pij);
 		}
+	}
 	if (f_v) {
 		cout << "poset_classification::Plesken_matrix_down done" << endl;
-		}
+	}
 }
 
 void poset_classification::Plesken_submatrix_up(int i, int j,
@@ -107,7 +107,7 @@ void poset_classification::Plesken_submatrix_up(int i, int j,
 	if (f_v) {
 		cout << "poset_classification::Plesken_submatrix_up "
 				"i=" << i << " j=" << j << endl;
-		}
+	}
 	N1 = nb_orbits_at_level(i);
 	N2 = nb_orbits_at_level(j);
 	Pij = NEW_int(N1 * N2);
@@ -115,11 +115,11 @@ void poset_classification::Plesken_submatrix_up(int i, int j,
 		for (b = 0; b < N2; b++) {
 			Pij[a * N2 + b] = count_incidences_up(
 					i, a, j, b, verbose_level - 1);
-			}
 		}
+	}
 	if (f_v) {
 		cout << "poset_classification::Plesken_submatrix_up done" << endl;
-		}
+	}
 }
 
 void poset_classification::Plesken_submatrix_down(int i, int j,
@@ -131,7 +131,7 @@ void poset_classification::Plesken_submatrix_down(int i, int j,
 	if (f_v) {
 		cout << "poset_classification::Plesken_submatrix_down "
 				"i=" << i << " j=" << j << endl;
-		}
+	}
 	N1 = nb_orbits_at_level(i);
 	N2 = nb_orbits_at_level(j);
 	Pij = NEW_int(N1 * N2);
@@ -139,11 +139,11 @@ void poset_classification::Plesken_submatrix_down(int i, int j,
 		for (b = 0; b < N2; b++) {
 			Pij[a * N2 + b] = count_incidences_down(
 					i, a, j, b, verbose_level - 1);
-			}
 		}
+	}
 	if (f_v) {
 		cout << "poset_classification::Plesken_submatrix_down done" << endl;
-		}
+	}
 }
 
 int poset_classification::count_incidences_up(int lvl1, int po1,
@@ -161,10 +161,10 @@ int poset_classification::count_incidences_up(int lvl1, int po1,
 		cout << "poset_classification::count_incidences_up "
 				"lvl1=" << lvl1 << " po1=" << po1
 				<< " lvl2=" << lvl2 << " po2=" << po2 << endl;
-		}
+	}
 	if (lvl1 > lvl2) {
 		return 0;
-		}
+	}
 	set = NEW_lint(lvl2 + 1);
 	set1 = NEW_lint(lvl2 + 1);
 	set2 = NEW_lint(lvl2 + 1);
@@ -178,7 +178,7 @@ int poset_classification::count_incidences_up(int lvl1, int po1,
 		cout << "set1=";
 		lint_vec_print(cout, set1, lvl1);
 		cout << endl;
-		}
+	}
 
 	for (i = 0; i < ol; i++) {
 
@@ -191,7 +191,7 @@ int poset_classification::count_incidences_up(int lvl1, int po1,
 			cout << "set2 " << i << " / " << ol << "=";
 			lint_vec_print(cout, set2, lvl2);
 			cout << endl;
-			}
+		}
 
 		f_contained = poset_structure_is_contained(
 				set, lvl1, set2, lvl2, verbose_level - 2);
@@ -200,13 +200,13 @@ int poset_classification::count_incidences_up(int lvl1, int po1,
 		
 		if (f_vv) {
 			cout << "f_contained=" << f_contained << endl;
-			}
+		}
 						
 
 		if (f_contained) {
 			cnt++;
-			}
 		}
+	}
 
 	
 	FREE_lint(set);
@@ -217,7 +217,7 @@ int poset_classification::count_incidences_up(int lvl1, int po1,
 				"lvl1=" << lvl1 << " po1=" << po1
 				<< " lvl2=" << lvl2 << " po2=" << po2
 				<< " cnt=" << cnt << endl;
-		}
+	}
 	return cnt;
 }
 
@@ -236,10 +236,10 @@ int poset_classification::count_incidences_down(
 		cout << "poset_classification::count_incidences_down "
 				"lvl1=" << lvl1 << " po1=" << po1
 				<< " lvl2=" << lvl2 << " po2=" << po2 << endl;
-		}
+	}
 	if (lvl1 > lvl2) {
 		return 0;
-		}
+	}
 	set = NEW_lint(lvl2 + 1);
 	set1 = NEW_lint(lvl2 + 1);
 	set2 = NEW_lint(lvl2 + 1);
@@ -252,7 +252,7 @@ int poset_classification::count_incidences_down(
 		cout << "set2=";
 		lint_vec_print(cout, set2, lvl2);
 		cout << endl;
-		}
+	}
 
 	for (i = 0; i < ol; i++) {
 
@@ -265,7 +265,7 @@ int poset_classification::count_incidences_down(
 			cout << "set1 " << i << " / " << ol << "=";
 			lint_vec_print(cout, set1, lvl1);
 			cout << endl;
-			}
+		}
 
 		
 		f_contained = poset_structure_is_contained(
@@ -275,12 +275,12 @@ int poset_classification::count_incidences_down(
 						
 		if (f_vv) {
 			cout << "f_contained=" << f_contained << endl;
-			}
+		}
 
 		if (f_contained) {
 			cnt++;
-			}
 		}
+	}
 
 	
 	FREE_lint(set);
@@ -291,7 +291,7 @@ int poset_classification::count_incidences_down(
 				"lvl1=" << lvl1 << " po1=" << po1
 				<< " lvl2=" << lvl2 << " po2=" << po2
 				<< " cnt=" << cnt << endl;
-		}
+	}
 	return cnt;
 }
 
@@ -311,13 +311,13 @@ void poset_classification::Asup_to_Ainf(int t, int k,
 	
 	if (f_v) {
 		cout << "poset_classification::Asup_to_Ainf" << endl;
-		}
+	}
 	Nt = nb_orbits_at_level(t);
 	Nk = nb_orbits_at_level(k);
 	get_stabilizer_order(0, 0, go);
 	if (f_v) {
 		cout << "poset_classification::Asup_to_Ainf go=" << go << endl;
-		}
+	}
 	go_t = NEW_OBJECTS(longinteger_object, Nt);
 	go_k = NEW_OBJECTS(longinteger_object, Nk);
 	ol_t = NEW_OBJECTS(longinteger_object, Nt);
@@ -325,34 +325,34 @@ void poset_classification::Asup_to_Ainf(int t, int k,
 	if (f_v) {
 		cout << "poset_classification::Asup_to_Ainf "
 				"computing orbit lengths t-orbits" << endl;
-		}
+	}
 	for (i = 0; i < Nt; i++) {
 		get_stabilizer_order(t, i, go_t[i]);
 		D.integral_division_exact(go, go_t[i], ol_t[i]);
-		}
+	}
 	if (f_v) {
 		cout << "i : go_t[i] : ol_t[i]" << endl;
 		for (i = 0; i < Nt; i++) {
 			cout << i << " : " << go_t[i] << " : " << ol_t[i] << endl;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "poset_classification::Asup_to_Ainf "
 				"computing orbit lengths k-orbits" << endl;
-		}
+	}
 	for (i = 0; i < Nk; i++) {
 		get_stabilizer_order(k, i, go_k[i]);
 		D.integral_division_exact(go, go_k[i], ol_k[i]);
-		}
+	}
 	if (f_v) {
 		cout << "i : go_k[i] : ol_k[i]" << endl;
 		for (i = 0; i < Nk; i++) {
 			cout << i << " : " << go_k[i] << " : " << ol_k[i] << endl;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "poset_classification::Asup_to_Ainf computing Ainf" << endl;
-		}
+	}
 	for (i = 0; i < Nt; i++) {
 		for (j = 0; j < Nk; j++) {
 			a = M_sup[i * Nk + j];
@@ -368,21 +368,21 @@ void poset_classification::Asup_to_Ainf(int t, int k,
 						<< " ol_t[i]=" << ol_t[i]
 						<< " ol_k[j]=" << ol_k[j] << endl;
 				exit(1);
-				}
+			}
 			c = cc.as_int();
 			M_inf[i * Nk + j] = c;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "poset_classification::Asup_to_Ainf computing Ainf done" << endl;
-		}
+	}
 	FREE_OBJECTS(go_t);
 	FREE_OBJECTS(go_k);
 	FREE_OBJECTS(ol_t);
 	FREE_OBJECTS(ol_k);
 	if (f_v) {
 		cout << "poset_classification::Asup_to_Ainf done" << endl;
-		}
+	}
 }
 
 void poset_classification::test_for_multi_edge_in_classification_graph(
@@ -394,14 +394,14 @@ void poset_classification::test_for_multi_edge_in_classification_graph(
 	if (f_v) {
 		cout << "poset_classification::test_for_multi_edge_in_classification_graph "
 				"depth=" << depth << endl;
-		}
+	}
 	for (i = 0; i <= depth; i++) {
 		f = first_poset_orbit_node_at_level[i];
 		l = nb_orbits_at_level(i);
 		if (f_v) {
 			cout << "poset_classification::test_for_multi_edge_in_classification_graph "
 					"level=" << i << " with " << l << " nodes" << endl;
-			}
+		}
 		for (j = 0; j < l; j++) {
 			poset_orbit_node *O;
 
@@ -411,7 +411,7 @@ void poset_classification::test_for_multi_edge_in_classification_graph(
 
 				if (E1->type != EXTENSION_TYPE_FUSION) {
 					continue;
-					}
+				}
 
 				//cout << "fusion (" << f + j << "/" << h1 << ") ->
 				// (" << E1->data1 << "/" << E1->data2 << ")" << endl;
@@ -421,7 +421,7 @@ void poset_classification::test_for_multi_edge_in_classification_graph(
 							<< j << "/" << h1 << ") -> ("
 							<< E1->data1 - f << "/"
 							<< E1->data2 << ")" << endl;
-					}
+				}
 
 #if 0
 				for (h2 = 0; h2 < O->nb_extensions; h2++) {
@@ -438,21 +438,21 @@ void poset_classification::test_for_multi_edge_in_classification_graph(
 						cout << "fusion (" << f + j << "/" << h2
 								<< ") -> (" << E2->data1 << "/"
 								<< E2->data2 << ")" << endl;
-						}
 					}
+				}
 #endif
 
-				}
 			}
+		}
 		if (f_v) {
 			cout << "poset_classification::test_for_multi_edge_in_classification_graph "
 					"level=" << i << " with " << l << " nodes done" << endl;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "poset_classification::test_for_multi_edge_in_classification_graph "
 				"done" << endl;
-		}
+	}
 }
 
 

@@ -32,20 +32,20 @@ void poset_classification::write_treefile_and_draw_tree(
 	if (f_v) {
 		cout << "poset_classification::write_treefile_and_draw_tree "
 				"verbose_level=" << verbose_level << endl;
-		}
+	}
 	if (write_treefile(fname_base, lvl, verbose_level)) {
 #if 0
 		if (f_v) {
 			cout << "poset_classification::write_treefile_and_draw_tree "
 					"before draw_tree" << endl;
-			}
+		}
 		draw_tree(fname_base, lvl, xmax, ymax, rad, f_embedded,
 				verbose_level);
 #endif
-		}
+	}
 	if (f_v) {
 		cout << "poset_classification::write_treefile_and_draw_tree done" << endl;
-		}
+	}
 }
 
 int poset_classification::write_treefile(char *fname_base,

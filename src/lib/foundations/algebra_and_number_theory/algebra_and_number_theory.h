@@ -144,6 +144,7 @@ public:
 	void gl_random_matrix(int k, int q, int verbose_level);
 	const char *plus_minus_string(int epsilon);
 	const char *plus_minus_letter(int epsilon);
+	void make_Hamming_graph_and_write_file(int n, int q, int f_projective, int verbose_level);
 };
 
 // #############################################################################

@@ -33,7 +33,6 @@ poset_classification_control::poset_classification_control()
 	extend_to = 0;
 	extend_r = 0;
 	extend_m = 1;
-	//char extend_fname[1000];
 
 	f_recover = FALSE;
 	recover_fname = NULL;
@@ -411,15 +410,20 @@ void poset_classification_control::print()
 	}
 }
 
-void poset_classification_control::init_labels(char *problem_label, char *problem_label_with_path)
+void poset_classification_control::init_labels(
+		char *problem_label, char *problem_label_with_path)
 {
 	if (f_path && f_problem_label) {
-		sprintf(problem_label, "%s", poset_classification_control::problem_label);
-		sprintf(problem_label_with_path, "%s%s", path, poset_classification_control::problem_label);
+		sprintf(problem_label, "%s",
+				poset_classification_control::problem_label);
+		sprintf(problem_label_with_path, "%s%s",
+				path, poset_classification_control::problem_label);
 	}
 	else if (f_problem_label) {
-		sprintf(problem_label, "%s", poset_classification_control::problem_label);
-		sprintf(problem_label_with_path, "%s", poset_classification_control::problem_label);
+		sprintf(problem_label, "%s",
+				poset_classification_control::problem_label);
+		sprintf(problem_label_with_path, "%s",
+				poset_classification_control::problem_label);
 	}
 	else {
 		sprintf(problem_label, "unnamed");

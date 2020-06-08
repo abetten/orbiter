@@ -335,14 +335,190 @@ int poset_classification::main(int t0,
 				first_poset_orbit_node_at_level[j] =
 						first_poset_orbit_node_at_level[j - 1];
 			}
-			return size + 1;
+			//return size + 1;
+			//size++;
+			break;
 		}
 			
 	} // next size
+
+
+	if (f_v) {
+		cout << "poset_classification::main before post_processing" << endl;
+	}
+	post_processing(size, verbose_level);
+	if (f_v) {
+		cout << "poset_classification::main after post_processing" << endl;
+	}
+
 	if (f_v) {
 		cout << "poset_classification::main done" << endl;
 	}
 	return size;
+}
+
+void poset_classification::post_processing(int actual_size, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_classification::post_processing" << endl;
+	}
+
+	if (Control->f_table_of_nodes) {
+		if (f_v) {
+			cout << "poset_classification::post_processing f_table_of_nodes" << endl;
+		}
+		long int *Table;
+		int nb_rows, nb_cols;
+		char fname[1000];
+		file_io Fio;
+
+		get_table_of_nodes(Table,
+			nb_rows, nb_cols, 0 /*verbose_level*/);
+
+		sprintf(fname, "%s_table_of_orbits.csv", problem_label_with_path);
+
+		Fio.lint_matrix_write_csv(fname, Table, nb_rows, nb_cols);
+
+		if (f_v) {
+			cout << "poset_classification::post_processing written file " << fname
+					<< " of size " << Fio.file_size(fname) << endl;
+		}
+
+
+		FREE_lint(Table);
+	}
+
+	if (Control->f_list) {
+		if (f_v) {
+			cout << "poset_classification::post_processing f_list" << endl;
+		}
+
+		{
+			spreadsheet *Sp;
+
+			if (f_v) {
+				cout << "poset_classification::post_processing before "
+						"make_spreadsheet_of_orbit_reps" << endl;
+			}
+
+			make_spreadsheet_of_orbit_reps(Sp, actual_size);
+			char fname_csv[1000];
+			sprintf(fname_csv, "orbits_%d.csv", actual_size);
+			Sp->save(fname_csv, verbose_level);
+			delete Sp;
+			if (f_v) {
+				cout << "poset_classification::post_processing after "
+						"make_spreadsheet_of_orbit_reps" << endl;
+			}
+		}
+
+#if 1
+		int f_show_orbit_decomposition = TRUE;
+		int f_show_stab = TRUE;
+		int f_save_stab = TRUE;
+		int f_show_whole_orbit = FALSE;
+
+		if (f_v) {
+			cout << "poset_classification::post_processing before "
+					"list_all_orbits_at_level" << endl;
+		}
+		list_all_orbits_at_level(actual_size,
+			FALSE,
+			NULL,
+			this,
+			f_show_orbit_decomposition,
+			f_show_stab,
+			f_save_stab,
+			f_show_whole_orbit);
+
+		if (f_v) {
+			cout << "poset_classification::post_processing after "
+					"list_all_orbits_at_level" << endl;
+		}
+
+#if 0
+		int d;
+		for (d = 0; d < 3; d++) {
+			gen->print_schreier_vectors_at_depth(d, verbose_level);
+		}
+#endif
+#endif
+	}
+
+	if (Control->f_W) {
+		if (f_v) {
+			cout << "poset_classification::post_processing preparing level spreadsheet" << endl;
+		}
+		{
+			spreadsheet *Sp;
+			make_spreadsheet_of_level_info(Sp, actual_size, verbose_level);
+			char fname_csv[1000];
+			sprintf(fname_csv, "%s_levels_%d.csv", problem_label_with_path, actual_size);
+			Sp->save(fname_csv, verbose_level);
+			delete Sp;
+		}
+		if (f_v) {
+			cout << "poset_classification::post_processing preparing level spreadsheet done" << endl;
+		}
+	}
+
+
+	if (Control->f_w) {
+		if (f_v) {
+			cout << "poset_classification::post_processing preparing orbit spreadsheet" << endl;
+		}
+		{
+			spreadsheet *Sp;
+			make_spreadsheet_of_orbit_reps(Sp, actual_size);
+			char fname_csv[1000];
+			sprintf(fname_csv, "%s_orbits_at_level_%d.csv", problem_label_with_path, actual_size);
+			Sp->save(fname_csv, verbose_level);
+			delete Sp;
+		}
+		if (f_v) {
+			cout << "poset_classification::post_processing preparing orbit spreadsheet done" << endl;
+		}
+	}
+
+
+	if (Control->f_draw_poset) {
+		if (f_v) {
+			cout << "poset_classification::post_processing f_draw_poset" << endl;
+		}
+		draw_poset(get_problem_label_with_path(), actual_size,
+			0 /* data1 */, Control->f_embedded, Control->f_sideways,
+			verbose_level);
+	}
+
+	if (Control->f_draw_full_poset) {
+		if (f_v) {
+			cout << "poset_classification::post_processing f_draw_full_poset" << endl;
+		}
+		draw_poset_full(get_problem_label_with_path(), actual_size,
+				0 /* data1 */, Control->f_embedded, Control->f_sideways,
+				1 /* x_stretch */, verbose_level);
+
+			const char *fname_prefix = "flag_orbits";
+
+			make_flag_orbits_on_relations(
+					depth, fname_prefix, verbose_level);
+	}
+	if (Control->f_print_data_structure) {
+		if (f_v) {
+			cout << "poset_classification::post_processing f_print_data_structure" << endl;
+		}
+		print_data_structure_tex(actual_size, verbose_level);
+	}
+
+
+
+
+
+	if (f_v) {
+		cout << "poset_classification::post_processing done" << endl;
+	}
 }
 
 void poset_classification::extend_level(int size,

@@ -242,16 +242,6 @@ void poset_classification::print_level_extension_info(
 	int prev_level,
 	int prev, int cur_extension)
 {
-#if 0
-	int t1, dt;
-
-	t1 = os_ticks();
-	dt = t1 - t0;
-
-	cout << "Time ";
-	time_check_delta(cout, dt);
-	print_problem_label();
-#endif
 	cout << "Level " << prev_level << " Node " << prev << " = "
 		<< prev - first_poset_orbit_node_at_level[prev_level]
 		<< " / "
@@ -266,16 +256,6 @@ void poset_classification::print_level_extension_coset_info(
 	int prev_level,
 	int prev, int cur_extension, int coset, int nb_cosets)
 {
-#if 0
-	int t1, dt;
-
-	t1 = os_ticks();
-	dt = t1 - t0;
-
-	cout << "Time ";
-	time_check_delta(cout, dt);
-	print_problem_label();
-#endif
 	cout << "Level " << prev_level << " Node " << prev << " = "
 		<< prev - first_poset_orbit_node_at_level[prev_level]
 		<< " / "
