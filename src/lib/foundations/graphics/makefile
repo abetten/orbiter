@@ -7,7 +7,9 @@ LFLAGS = -lm
 
 MODULES = \
 	animate.o \
+	draw_bitmap.o \
 	drawable_set_of_objects.o \
+	EasyBMP.o \
 	mp_graphics.o \
 	parametric_curve_point.o \
 	parametric_curve.o \

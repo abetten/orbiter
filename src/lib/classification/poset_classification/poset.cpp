@@ -62,7 +62,7 @@ void poset::init_subset_lattice(action *A, action *A2,
 
 	if (f_v) {
 		cout << "poset::init_subset_lattice" << endl;
-		}
+	}
 	f_subset_lattice = TRUE;
 	n = A2->degree;
 	f_subspace_lattice = FALSE;
@@ -73,7 +73,7 @@ void poset::init_subset_lattice(action *A, action *A2,
 	f_has_orbit_based_testing = FALSE;
 	if (f_v) {
 		cout << "poset::init_subset_lattice done" << endl;
-		}
+	}
 }
 
 void poset::init_subspace_lattice(action *A, action *A2,
@@ -85,7 +85,7 @@ void poset::init_subspace_lattice(action *A, action *A2,
 
 	if (f_v) {
 		cout << "poset::init_subspace_lattice" << endl;
-		}
+	}
 	f_subset_lattice = FALSE;
 	n = A2->degree;
 	f_subspace_lattice = TRUE;
@@ -97,7 +97,7 @@ void poset::init_subspace_lattice(action *A, action *A2,
 	f_has_orbit_based_testing = FALSE;
 	if (f_v) {
 		cout << "poset::init_subspace_lattice done" << endl;
-		}
+	}
 }
 
 void poset::init(
@@ -111,7 +111,7 @@ void poset::init(
 
 	if (f_v) {
 		cout << "poset::init" << endl;
-		}
+	}
 	poset::description = description;
 	poset::A = A;
 	poset::A2 = A2;
@@ -142,18 +142,18 @@ void poset::init(
 	if (f_v) {
 		cout << "poset::init action A:" << endl;
 		A->print_info();
-		}
+	}
 	if (f_v) {
 		cout << "poset::init action A2:" << endl;
 		A2->print_info();
-		}
+	}
 	if (f_v) {
 		cout << "poset::init generators for a group of order " << go
 				<< " and degree " << A2->degree << endl;
-		}
+	}
 	if (f_v) {
 		cout << "poset::init done" << endl;
-		}
+	}
 }
 
 void poset::add_independence_condition(
@@ -164,11 +164,11 @@ void poset::add_independence_condition(
 
 	if (f_v) {
 		cout << "poset::add_independence_condition" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "poset::init independence_condition value = "
 				<< independence_value << endl;
-		}
+	}
 
 	rank_checker *rc;
 	matrix_group *mtx;
@@ -208,7 +208,7 @@ void poset::add_independence_condition(
 			verbose_level);
 	if (f_v) {
 		cout << "poset::add_independence_condition done" << endl;
-		}
+	}
 }
 
 
@@ -222,7 +222,7 @@ void poset::add_testing(
 
 	if (f_v) {
 		cout << "poset::add_testing" << endl;
-		}
+	}
 
 	if (Orbit_based_testing == NULL) {
 		f_has_orbit_based_testing = TRUE;
@@ -248,7 +248,7 @@ void poset::add_testing(
 
 	if (f_v) {
 		cout << "poset::add_testing done" << endl;
-		}
+	}
 }
 
 void poset::add_testing_without_group(
@@ -263,7 +263,7 @@ void poset::add_testing_without_group(
 
 	if (f_v) {
 		cout << "poset::add_testing_without_group" << endl;
-		}
+	}
 
 	if (Orbit_based_testing == NULL) {
 		f_has_orbit_based_testing = TRUE;
@@ -289,7 +289,7 @@ void poset::add_testing_without_group(
 
 	if (f_v) {
 		cout << "poset::add_testing_without_group done" << endl;
-		}
+	}
 }
 
 
@@ -384,14 +384,14 @@ void poset::orbits_on_k_sets(
 
 	if (f_v) {
 		cout << "poset::orbits_on_k_sets" << endl;
-		}
+	}
 
 	Gen = orbits_on_k_sets_compute(Control,
 		k, verbose_level);
 	if (f_v) {
 		cout << "poset::orbits_on_k_sets "
 				"done with orbits_on_k_sets_compute" << endl;
-		}
+	}
 
 	Gen->get_orbit_representatives(k, nb_orbits,
 			orbit_reps, verbose_level);
@@ -401,12 +401,12 @@ void poset::orbits_on_k_sets(
 		cout << "poset::orbits_on_k_sets "
 				"we found "
 				<< nb_orbits << " orbits on " << k << "-sets" << endl;
-		}
+	}
 
 	FREE_OBJECT(Gen);
 	if (f_v) {
 		cout << "poset::orbits_on_k_sets done" << endl;
-		}
+	}
 }
 
 poset_classification *poset::orbits_on_k_sets_compute(
@@ -419,7 +419,7 @@ poset_classification *poset::orbits_on_k_sets_compute(
 
 	if (f_v) {
 		cout << "poset::orbits_on_k_sets_compute" << endl;
-		}
+	}
 	Gen = NEW_OBJECT(poset_classification);
 
 	//sprintf(Gen->problem_label_with_path, "orbits_on_k_sets");
@@ -432,7 +432,7 @@ poset_classification *poset::orbits_on_k_sets_compute(
 
 	if (f_v) {
 		cout << "poset::orbits_on_k_sets_compute calling Gen->init" << endl;
-		}
+	}
 	Gen->initialize_and_allocate_root_node(
 			Control,
 			this,
@@ -500,10 +500,10 @@ int callback_test_independence_condition(orbit_based_testing *Obt,
 	if (rc->check_rank_last_two_are_fixed(len,
 		S, verbose_level - 1)) {
 		return TRUE;
-		}
+	}
 	else {
 		return FALSE;
-		}
+	}
 
 }
 

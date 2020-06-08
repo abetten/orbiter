@@ -714,7 +714,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 					cout << "exact_cover::compute_liftings_single_case_new "
 							"before solve_all_mckay" << endl;
 					}
-				Dio->solve_all_mckay(nb_backtrack_nodes, verbose_level - 3);
+				Dio->solve_all_mckay(nb_backtrack_nodes, INT_MAX, verbose_level - 3);
 				if (f_v) {
 					cout << "exact_cover::compute_liftings_single_case_new "
 							"after solve_all_mckay" << endl;

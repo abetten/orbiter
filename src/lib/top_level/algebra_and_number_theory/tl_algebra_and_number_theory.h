@@ -82,6 +82,9 @@ public:
 			action *A_on_points, action *A_on_lines,
 			strong_generators *gens, int size_limit_for_printing,
 			int verbose_level);
+	void linear_codes_with_bounded_minimum_distance(
+			poset_classification_control *Control, linear_group *LG,
+			int d, int target_depth, int verbose_level);
 
 };
 
@@ -203,6 +206,9 @@ public:
 	int f_find_singer_cycle;
 	int f_search_element_of_order;
 	int search_element_order;
+	int f_linear_codes;
+	int linear_codes_minimum_distance;
+	int linear_codes_target_size;
 	int f_print_elements;
 	int f_print_elements_tex;
 	int f_multiply;
@@ -366,6 +372,8 @@ public:
 			int verbose_level);
 	void do_tensor_classify(int depth, int verbose_level);
 	void do_tensor_permutations(int verbose_level);
+	void do_linear_codes(int minimum_distance,
+			int target_size, int verbose_level);
 };
 
 long int gta_subspace_orbits_rank_point_func(int *v, void *data);

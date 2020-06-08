@@ -31,6 +31,10 @@ interface_coding_theory::interface_coding_theory()
 	f_BCH_dual = FALSE;
 	BCH_t = 0;
 	//BCH_b = 0;
+	f_Hamming_graph = FALSE;
+	f_draw_matrix = FALSE;
+	fname = NULL;
+	box_width = 0;
 }
 
 
@@ -48,6 +52,12 @@ void interface_coding_theory::print_help(int argc,
 	}
 	else if (strcmp(argv[i], "-BCH_dual") == 0) {
 		cout << "-BCH_dual <int : n> <int : q> <int t>" << endl;
+	}
+	else if (strcmp(argv[i], "-Hamming_graph") == 0) {
+		cout << "-Hamming_graph <int : n> <int : q>" << endl;
+	}
+	else if (strcmp(argv[i], "-draw_matrix") == 0) {
+		cout << "-draw_matrix <string : fname> <int : box_width>" << endl;
 	}
 }
 
@@ -67,6 +77,12 @@ int interface_coding_theory::recognize_keyword(int argc,
 		return true;
 	}
 	else if (strcmp(argv[i], "-BCH_dual") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-Hamming_graph") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-draw_matrix") == 0) {
 		return true;
 	}
 	return false;
@@ -111,6 +127,18 @@ void interface_coding_theory::read_arguments(int argc,
 			//BCH_b = atoi(argv[++i]);
 			cout << "-BCH " << n << " " << q << " " << BCH_t << endl;
 		}
+		else if (strcmp(argv[i], "-Hamming_graph") == 0) {
+			f_Hamming_graph = TRUE;
+			n = atoi(argv[++i]);
+			q = atoi(argv[++i]);
+			cout << "-Hamming_graph " << n << " " << q << endl;
+		}
+		else if (strcmp(argv[i], "-draw_matrix") == 0) {
+			f_draw_matrix = TRUE;
+			fname = argv[++i];
+			box_width = atoi(argv[++i]);
+			cout << "-draw_matrix " << fname << " " << box_width << endl;
+		}
 	}
 }
 
@@ -129,7 +157,29 @@ void interface_coding_theory::worker(int verbose_level)
 	else if (f_BCH_dual) {
 		make_BCH_codes(n, q, BCH_t, 1, TRUE, verbose_level);
 	}
+	else if (f_Hamming_graph) {
+
+		algebra_global Algebra;
+
+		Algebra.make_Hamming_graph_and_write_file(n, q,
+				FALSE /* f_projective*/, verbose_level);
+	}
+	else if (f_draw_matrix) {
+		file_io Fio;
+		int *M;
+		int m, n;
+
+		Fio.int_matrix_read_csv(fname, M, m, n, verbose_level);
+		draw_bitmap(fname, M, m, n,
+				FALSE, 0, // int f_partition, int part_width,
+				0, NULL, 0, NULL, // int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
+				TRUE /* f_box_width */, box_width,
+				FALSE /* f_invert_colors */,
+				verbose_level);
+	}
 }
+
+
 
 void interface_coding_theory::do_make_macwilliams_system(
 		int q, int n, int k, int verbose_level)

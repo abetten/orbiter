@@ -445,6 +445,76 @@ int tdo_scheme_get_row_class_length_fused(tdo_scheme &G,
 int tdo_scheme_get_col_class_length_fused(tdo_scheme &G,
 		int h, int class_first, int class_len);
 
+
+// #############################################################################
+// pentomino_puzzle.cpp
+// #############################################################################
+
+
+#define NB_PIECES 18
+
+
+
+//! generate all solutions of the pentomino puzzle
+
+
+class pentomino_puzzle {
+
+	public:
+	int *S[NB_PIECES];
+	int S_length[NB_PIECES];
+	int *O[NB_PIECES];
+	int O_length[NB_PIECES];
+	int *T[NB_PIECES];
+	int T_length[NB_PIECES];
+	int *R[NB_PIECES];
+	int R_length[NB_PIECES];
+	int Rotate[4 * 25];
+	int Rotate6[4 * 36];
+	int var_start[NB_PIECES + 1];
+	int var_length[NB_PIECES + 1];
+
+
+	void main(int verbose_level);
+	int has_interlocking_Ps(long int *set);
+	int has_interlocking_Pprime(long int *set);
+	int has_interlocking_Ls(long int *set);
+	int test_if_interlocking_Ps(int a1, int a2);
+	int has_interlocking_Lprime(long int *set);
+	int test_if_interlocking_Ls(int a1, int a2);
+	int number_of_pieces_of_type(int t, long int *set);
+	int does_it_contain_an_I(long int *set);
+	void decode_assembly(long int *set);
+	// input set[5]
+	void decode_piece(int j, int &h, int &r, int &t);
+	// h is the kind of piece
+	// r is the rotation index
+	// t is the translation index
+	// to get the actual rotation and translation, use
+	// R[h][r] and T[h][t].
+	int code_piece(int h, int r, int t);
+	void draw_it(std::ostream &ost, long int *sol);
+	void compute_image_function(set_of_sets *S,
+			int elt_idx,
+			int gen_idx, int &idx_of_image, int verbose_level);
+	void turn_piece(int &h, int &r, int &t, int verbose_level);
+	void flip_piece(int &h, int &r, int &t, int verbose_level);
+	void setup_pieces();
+	void setup_rotate();
+	void setup_var_start();
+	void make_coefficient_matrix(diophant *D);
+
+};
+
+
+void pentomino_puzzle_compute_image_function(set_of_sets *S,
+		void *compute_image_data, int elt_idx,
+		int gen_idx, int &idx_of_image, int verbose_level);
+int pentomino_puzzle_compare_func(void *vec, void *a, int b, void *data_for_compare);
+
+
+
+
 // #############################################################################
 // tdo_data.cpp TDO parameter refinement
 // #############################################################################

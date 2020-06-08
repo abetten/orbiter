@@ -288,8 +288,8 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 			// Since out solver finds in fact all solutions, this test is 
 			// too expensive, hence we do not do it any more.
 			
-			int nb_backtrack;
-			nb_sol2 = DD.solve_all_mckay(nb_backtrack, 0/*verbose_level*/);
+			long int nb_backtrack;
+			nb_sol2 = DD.solve_all_mckay(nb_backtrack, INT_MAX, 0/*verbose_level*/);
 			if (f_v) {
 				cout << "N=" << N << " / " << nb_sol
 						<< " number of solutions = " << nb_sol2 << endl;

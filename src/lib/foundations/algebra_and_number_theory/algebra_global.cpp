@@ -759,6 +759,98 @@ const char *algebra_global::plus_minus_letter(int epsilon)
 	exit(1);
 }
 
+void algebra_global::make_Hamming_graph_and_write_file(int n, int q, int f_projective, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	int N, width, height;
+	int *v;
+	int *w;
+	int *Table;
+	//int *Adj = NULL;
+	geometry_global Gg;
+	finite_field *F = NULL;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::make_Hamming_graph_and_write_file" << endl;
+	}
+
+	v = NEW_int(n);
+	w = NEW_int(n);
+
+	if (f_projective) {
+		N = width = height = Gg.nb_PG_elements(n - 1, q);
+		F = NEW_OBJECT(finite_field);
+		F->init(q);
+	}
+	else {
+		N = width = height = Gg.nb_AG_elements(n, q);
+	}
+
+#if 0
+	if (f_graph) {
+		Adj = NEW_int(N * N);
+		int_vec_zero(Adj, N * N);
+	}
+#endif
+
+	cout << "width=" << width << endl;
+
+	int i, j, d, h;
+
+	Table = NEW_int(height * width);
+	for (i = 0; i < height; i++) {
+
+		if (f_projective) {
+			F->PG_element_unrank_modified(v, 1 /*stride*/, n, i);
+		}
+		else {
+			Gg.AG_element_unrank(q, v, 1, n, i);
+		}
+
+		for (j = 0; j < width; j++) {
+
+			if (f_projective) {
+				F->PG_element_unrank_modified(w, 1 /*stride*/, n, j);
+			}
+			else {
+				Gg.AG_element_unrank(q, w, 1, n, j);
+			}
+
+			d = 0;
+			for (h = 0; h < n; h++) {
+				if (v[h] != w[h]) {
+					d++;
+				}
+			}
+
+#if 0
+			if (f_graph && d == 1) {
+				Adj[i * N + j] = 1;
+			}
+#endif
+
+			Table[i * width + j] = d;
+
+		}
+	}
+
+	char fname[1000];
+	file_io Fio;
+
+	sprintf(fname, "Hamming_n%d_q%d.csv", n, q);
+
+	Fio.int_matrix_write_csv(fname, Table, height, width);
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "algebra_global_with_action::make_Hamming_graph_and_write_file" << endl;
+	}
+
+}
 
 }}
 

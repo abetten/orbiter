@@ -118,6 +118,9 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	}
 
 
+	if (Descr->f_linear_codes) {
+		do_linear_codes(Descr->linear_codes_minimum_distance, Descr->linear_codes_target_size, verbose_level);
+	}
 
 
 	if (Descr->f_orbits_on_set_system_from_file) {
@@ -1069,50 +1072,50 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 
 
 	{
-	char fname[1000];
-	file_io Fio;
-	int *orbit_reps;
-	int i;
+		char fname[1000];
+		file_io Fio;
+		int *orbit_reps;
+		int i;
 
 
-	sprintf(fname, "%s_orbit_reps.csv", A2->label);
+		sprintf(fname, "%s_orbit_reps.csv", A2->label);
 
-	orbit_reps = NEW_int(Sch->nb_orbits);
-
-
-	for (i = 0; i < Sch->nb_orbits; i++) {
-		orbit_reps[i] = Sch->orbit[Sch->orbit_first[i]];
-	}
+		orbit_reps = NEW_int(Sch->nb_orbits);
 
 
-	Fio.int_vec_write_csv(orbit_reps, Sch->nb_orbits,
-			fname, "OrbRep");
+		for (i = 0; i < Sch->nb_orbits; i++) {
+			orbit_reps[i] = Sch->orbit[Sch->orbit_first[i]];
+		}
 
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+		Fio.int_vec_write_csv(orbit_reps, Sch->nb_orbits,
+				fname, "OrbRep");
+
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
 
 
 	{
-	char fname[1000];
-	file_io Fio;
-	int *orbit_reps;
-	int i;
+		char fname[1000];
+		file_io Fio;
+		int *orbit_reps;
+		int i;
 
 
-	sprintf(fname, "%s_orbit_length.csv", A2->label);
+		sprintf(fname, "%s_orbit_length.csv", A2->label);
 
-	orbit_reps = NEW_int(Sch->nb_orbits);
-
-
-	for (i = 0; i < Sch->nb_orbits; i++) {
-		orbit_reps[i] = Sch->orbit_len[i];
-	}
+		orbit_reps = NEW_int(Sch->nb_orbits);
 
 
-	Fio.int_vec_write_csv(orbit_reps, Sch->nb_orbits,
-			fname, "OrbLen");
+		for (i = 0; i < Sch->nb_orbits; i++) {
+			orbit_reps[i] = Sch->orbit_len[i];
+		}
 
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+		Fio.int_vec_write_csv(orbit_reps, Sch->nb_orbits,
+				fname, "OrbLen");
+
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
 
 
@@ -1267,7 +1270,8 @@ void group_theoretic_activity::orbits_on_subsets(int verbose_level)
 	}
 	PC = Poset->orbits_on_k_sets_compute(
 			Control,
-			Descr->orbits_on_subsets_size, verbose_level);
+			Descr->orbits_on_subsets_size,
+			verbose_level);
 	if (f_v) {
 		cout << "group_theoretic_activity::orbits_on_subsets "
 				"after Poset->orbits_on_k_sets_compute" << endl;
@@ -1278,7 +1282,8 @@ void group_theoretic_activity::orbits_on_subsets(int verbose_level)
 				"before orbits_on_poset_post_processing" << endl;
 	}
 	orbits_on_poset_post_processing(
-			PC, Descr->orbits_on_subsets_size, verbose_level);
+			PC, Descr->orbits_on_subsets_size,
+			verbose_level);
 
 
 	if (f_v) {
@@ -1488,6 +1493,7 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 		}
 	}
 
+#if 0
 	if (Descr->f_draw_poset) {
 		{
 		char fname_poset[1000];
@@ -1516,8 +1522,7 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 
 		}
 	}
-
-
+#endif
 
 
 	if (Descr->f_test_if_geometric) {
@@ -1618,6 +1623,8 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 
 		} // if nb_orbits == 2
 	} // if (f_test_if_geometric)
+
+
 
 
 	if (f_v) {
@@ -2913,6 +2920,45 @@ if (f_tensor_ranks) {
 }
 
 #endif
+
+
+void group_theoretic_activity::do_linear_codes(int minimum_distance,
+		int target_size, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_linear_codes" << endl;
+	}
+
+	if (!Descr->f_poset_classification_control) {
+		cout << "Please use option -poset_classification_control <descr> -end" << endl;
+		exit(1);
+	}
+
+	algebra_global_with_action Algebra;
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_linear_codes before "
+				"Algebra.linear_codes_with_bounded_minimum_distance" << endl;
+	}
+
+	Algebra.linear_codes_with_bounded_minimum_distance(
+			Descr->Control, LG,
+			minimum_distance, target_size, verbose_level);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_linear_codes after "
+				"Algebra.linear_codes_with_bounded_minimum_distance" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_linear_codes done" << endl;
+	}
+}
+
+
 
 
 // #############################################################################

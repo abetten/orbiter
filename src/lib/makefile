@@ -42,6 +42,7 @@ MODULES= \
 		foundations/combinatorics/combinatorial_object_description.o \
 		foundations/combinatorics/combinatorics_domain.o \
 		foundations/combinatorics/geo_parameter.o \
+		foundations/combinatorics/pentomino_puzzle.o \
 		foundations/combinatorics/tdo_data.o \
 		foundations/combinatorics/tdo_refinement_description.o \
 		foundations/combinatorics/tdo_refinement.o \
@@ -129,7 +130,9 @@ MODULES= \
 		foundations/graph_theory_nauty/nauty_interface.o \
 		foundations/graph_theory_nauty/schreier.o \
 		foundations/graphics/animate.o \
+		foundations/graphics/draw_bitmap.o \
 		foundations/graphics/drawable_set_of_objects.o \
+		foundations/graphics/EasyBMP.o \
 		foundations/graphics/mp_graphics.o \
 		foundations/graphics/parametric_curve_point.o \
 		foundations/graphics/parametric_curve.o \
@@ -324,7 +327,6 @@ MODULES= \
 		top_level/combinatorics/hadamard_classify.o \
 		top_level/combinatorics/hall_system_classify.o \
 		top_level/combinatorics/large_set_classify.o \
-		top_level/combinatorics/pentomino_puzzle.o \
 		top_level/combinatorics/regular_ls_classify.o \
 		top_level/combinatorics/tactical_decomposition.o \
 		top_level/geometry/arc_generator.o \

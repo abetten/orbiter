@@ -75,6 +75,7 @@ interface_combinatorics::interface_combinatorics()
 	f_maximal_arc_parameters = FALSE;
 	maximal_arc_parameters_q = 0;
 	maximal_arc_parameters_r = 0;
+	f_pentomino_puzzle = FALSE;
 }
 
 
@@ -146,6 +147,9 @@ void interface_combinatorics::print_help(int argc,
 	}
 	else if (strcmp(argv[i], "-maximal_arc_parameters") == 0) {
 		cout << "-maximal_arc_parameters <int : q > < int : r >" << endl;
+	}
+	else if (strcmp(argv[i], "-pentomino_puzzle") == 0) {
+		cout << "-pentomino_puzzle" << endl;
 	}
 }
 
@@ -219,6 +223,9 @@ int interface_combinatorics::recognize_keyword(int argc,
 		return true;
 	}
 	else if (strcmp(argv[i], "-maximal_arc_parameters") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-pentomino_puzzle") == 0) {
 		return true;
 	}
 	return false;
@@ -407,6 +414,10 @@ void interface_combinatorics::read_arguments(int argc,
 			cout << "-maximal_arc_parameters " << maximal_arc_parameters_q
 					<< " " << maximal_arc_parameters_r << endl;
 		}
+		else if (strcmp(argv[i], "-pentomino_puzzle") == 0) {
+			f_pentomino_puzzle = TRUE;
+			cout << "-pentomino_puzzle " <<endl;
+		}
 	}
 	cout << "interface_combinatorics::read_arguments done" << endl;
 }
@@ -494,6 +505,18 @@ void interface_combinatorics::worker(int verbose_level)
 	else if (f_maximal_arc_parameters) {
 
 		do_parameters_maximal_arc(maximal_arc_parameters_q, maximal_arc_parameters_r, verbose_level);
+	}
+	else if (f_pentomino_puzzle) {
+		cout << "pentomino_puzzle " <<endl;
+
+		pentomino_puzzle *P;
+
+		P = NEW_OBJECT(pentomino_puzzle);
+
+		P->main(verbose_level);
+
+		FREE_OBJECT(P);
+
 	}
 }
 

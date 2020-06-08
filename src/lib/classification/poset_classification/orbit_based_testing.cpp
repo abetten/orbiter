@@ -121,7 +121,7 @@ void orbit_based_testing::early_test_func(
 
 	if (f_v) {
 		cout << "orbit_based_testing::early_test_func" << endl;
-		}
+	}
 	if (nb_callback) {
 		early_test_func_by_using_group(
 			S, len,
@@ -143,7 +143,7 @@ void orbit_based_testing::early_test_func(
 	}
 	if (f_v) {
 		cout << "orbit_based_testing::early_test_func done" << endl;
-		}
+	}
 }
 
 void orbit_based_testing::early_test_func_by_using_group(
@@ -158,7 +158,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 
 	if (f_v) {
 		cout << "orbit_based_testing::early_test_func_by_using_group" << endl;
-		}
+	}
 
 	if (f_vv) {
 		cout << "S=";
@@ -166,7 +166,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 		cout << " testing " << nb_candidates << " candidates" << endl;
 		//int_vec_print(cout, candidates, nb_candidates);
 		//cout << endl;
-		}
+	}
 
 	if (len >= max_depth) {
 		cout << "orbit_based_testing::early_test_func_by_using_group "
@@ -190,7 +190,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 		cout << "orbit_based_testing::early_test_func_by_using_group for ";
 		O->print_set(PC);
 		cout << endl;
-		}
+	}
 
 	schreier Schreier;
 
@@ -208,7 +208,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 				"using_group after Schreier.compute_all_orbits_"
 				"on_invariant_subset, we found "
 		<< Schreier.nb_orbits << " orbits" << endl;
-		}
+	}
 	nb_good_candidates = 0;
 	nb_good_orbits = 0;
 	for (i = 0; i < Schreier.nb_orbits; i++) {
@@ -229,11 +229,11 @@ void orbit_based_testing::early_test_func_by_using_group(
 			if (rc.check_rank_last_two_are_fixed(len + 1,
 				local_S, verbose_level - 1)) {
 				f_orbit_is_good = TRUE;
-				}
+			}
 			else {
 				f_orbit_is_good = FALSE;
-				}
 			}
+		}
 		else {
 			f_orbit_is_good = TRUE;
 			for (s = 0; s < len; s++) {
@@ -241,19 +241,19 @@ void orbit_based_testing::early_test_func_by_using_group(
 				if (Hamming_distance(a, pt) < d) {
 					f_orbit_is_good = FALSE;
 					break;
-					}
 				}
 			}
+		}
 #endif
 
 		if (f_orbit_is_good) {
 			for (j = 0; j < l; j++) {
 				pt = Schreier.orbit[f + j];
 				good_candidates[nb_good_candidates++] = pt;
-				}
-			nb_good_orbits++;
 			}
+			nb_good_orbits++;
 		}
+	}
 
 	Sorting.lint_vec_heapsort(good_candidates, nb_good_candidates);
 	if (f_v) {
@@ -262,7 +262,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 			"we found "
 			<< nb_good_candidates << " good candidates in "
 			<< nb_good_orbits << " good orbits" << endl;
-		}
+	}
 }
 
 }}
