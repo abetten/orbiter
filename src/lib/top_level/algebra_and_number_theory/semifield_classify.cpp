@@ -17,13 +17,15 @@ namespace top_level {
 
 semifield_classify::semifield_classify()
 {
-	F = NULL;
-	LG = NULL;
-	f_semilinear = FALSE;
-
 	n = 0;
 	k = 0;
 	k2 = 0;
+
+	LG = NULL;
+	Mtx = NULL;
+	//F = NULL;
+	//f_semilinear = FALSE;
+
 	q = 0;
 	order = 0;
 
@@ -89,32 +91,32 @@ void semifield_classify::freeself()
 	}
 	if (A0) {
 		FREE_OBJECT(A0);
-		}
+	}
 
 	if (f_v) {
 		cout << "semifield_classify::freeself before A0_linear" << endl;
 	}
 	if (A0_linear) {
 		FREE_OBJECT(A0_linear);
-		}
+	}
 	if (f_v) {
 		cout << "semifield_classify::freeself before T" << endl;
 	}
 	if (T) {
 		FREE_OBJECT(T);
-		}
+	}
 	if (f_v) {
 		cout << "semifield_classify::freeself before Elt1" << endl;
 	}
 	if (Elt1) {
 		FREE_int(Elt1);
-		}
+	}
 	if (f_v) {
 		cout << "semifield_classify::freeself before Symmetry_group" << endl;
 	}
 	if (Symmetry_group) {
 		FREE_OBJECT(Symmetry_group);
-		}
+	}
 	if (f_v) {
 		cout << "semifield_classify::freeself before Poset" << endl;
 	}
@@ -132,31 +134,31 @@ void semifield_classify::freeself()
 	}
 	if (test_base_cols) {
 		FREE_int(test_base_cols);
-		}
+	}
 	if (test_v) {
 		FREE_int(test_v);
-		}
+	}
 	if (test_w) {
 		FREE_int(test_w);
-		}
+	}
 	if (test_Basis) {
 		FREE_int(test_Basis);
-		}
+	}
 	if (f_v) {
 		cout << "semifield_classify::freeself before Basis1" << endl;
 	}
 	if (Basis1) {
 		FREE_int(Basis1);
-		}
+	}
 	if (Basis2) {
 		FREE_int(Basis2);
-		}
+	}
 	if (f_v) {
 		cout << "semifield_classify::freeself before desired_pivots" << endl;
 	}
 	if (desired_pivots) {
 		FREE_int(desired_pivots);
-		}
+	}
 	null();
 	if (f_v) {
 		cout << "semifield_classify::freeself done" << endl;
@@ -164,7 +166,7 @@ void semifield_classify::freeself()
 }
 
 void semifield_classify::init(
-		finite_field *F, linear_group *LG,
+		linear_group *LG,
 		int k, poset_classification_control *Control,
 		const char *level_two_prefix,
 		const char *level_three_prefix,
@@ -183,17 +185,17 @@ void semifield_classify::init(
 
 	semifield_classify::Control = Control;
 
-	semifield_classify::F = F;
 	semifield_classify::LG = LG;
 	A = LG->A2;
+	Mtx = A->get_matrix_group();
+
 	n = A->matrix_group_dimension();
-	f_semilinear = A->is_semilinear_matrix_group();
-	q = F->q;
+	//semifield_classify::F = Mtx->GFq;
+	//f_semilinear = A->is_semilinear_matrix_group();
+	q = Mtx->GFq->q;
 	order = NT.i_power_j(q, k);
 
 	k2 = k * k;
-	semifield_classify::F = F;
-	semifield_classify::q = F->q;
 	//semifield_classify::order = order;
 	if (order != NT.i_power_j(q, k)) {
 		cout << "semifield_classify::init "
@@ -246,21 +248,19 @@ void semifield_classify::init(
 	//T->read_arguments(argc, argv);
 
 	if (f_v) {
-		cout << "semifield_classify::init "
-				"before T->init" << endl;
+		cout << "semifield_classify::init before T->init" << endl;
 	}
 
 	//int max_depth = k + 1;
 
-	T->init(F, LG, k, Control,
+	T->init(LG, k, Control,
 		//max_depth,
 		//F, FALSE /* f_recoordinatize */,
 		//"TP_STARTER", "TP", order + 1,
 		0 /*verbose_level - 2*/);
 
 	if (f_v) {
-		cout << "semifield_classify::init "
-				"after T->init" << endl;
+		cout << "semifield_classify::init after T->init" << endl;
 	}
 
 	longinteger_object go1, go2;
@@ -281,7 +281,7 @@ void semifield_classify::init(
 	vector_ge *nice_gens;
 
 	A0->init_projective_group(
-		k, F, f_semilinear,
+		k, Mtx->GFq, Mtx->f_semilinear,
 		TRUE /* f_basis */, TRUE /* f_init_sims */,
 		nice_gens,
 		0 /* verbose_level */);
@@ -311,10 +311,10 @@ void semifield_classify::init(
 	}
 
 	A0_linear->init_projective_group(k,
-		F, FALSE /*f_semilinear */,
-		TRUE /* f_basis */, TRUE /* f_init_sims */,
-		nice_gens,
-		0 /* verbose_level */);
+			Mtx->GFq, FALSE /*f_semilinear */,
+			TRUE /* f_basis */, TRUE /* f_init_sims */,
+			nice_gens,
+			0 /* verbose_level */);
 	FREE_OBJECT(nice_gens);
 
 	if (f_v) {
@@ -358,7 +358,7 @@ void semifield_classify::init(
 	A_on_S->init(T->A /* A_PGL_n_q */,
 		A0 /* A_PGL_k_q */,
 		A0_linear->Sims /* G_PGL_k_q */,
-		k, F,
+		k, Mtx->GFq,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "semifield_classify::init "
@@ -462,7 +462,7 @@ void semifield_classify::report(std::ostream &ost, int level,
 
 	ost << "Semifields of order " << order << "\\\\" << endl;
 
-	F->report(ost, verbose_level);
+	Mtx->GFq->report(ost, verbose_level);
 
 	ost << endl;
 	ost << "\\bigskip" << endl;
@@ -640,7 +640,7 @@ void semifield_classify::init_poset_classification(
 
 	vector_space *VS;
 	VS = NEW_OBJECT(vector_space);
-	VS->init(F, vector_space_dimension,
+	VS->init(Mtx->GFq, vector_space_dimension,
 			verbose_level);
 	VS->init_rank_functions(
 			semifield_classify_rank_point_func,
@@ -903,7 +903,7 @@ void semifield_classify::early_test_func(long int *S, int len,
 				Gg.AG_element_unrank(q, v, 1, len, j);
 			}
 			v[len] = 1;
-			F->mult_matrix_matrix(v, M, w, 1, len + 1, k2,
+			Mtx->GFq->mult_matrix_matrix(v, M, w, 1, len + 1, k2,
 					0 /* verbose_level */);
 			r = A_on_S->F->Gauss_easy(w, k, k);
 			if (r != k) {
@@ -947,7 +947,7 @@ void semifield_classify::early_test_func(long int *S, int len,
 }
 
 int semifield_classify::test_candidate(
-		int **Mtx_stack, int stack_size, int *Mtx,
+		int **Mtx_stack, int stack_size, int *M,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -980,13 +980,12 @@ int semifield_classify::test_candidate(
 			c = 0;
 			for (j = 0; j < stack_size; j++) {
 				a = v[j];
-				b = F->mult(a, Mtx_stack[j][i]);
-				c = F->add(c, b);
+				b = Mtx->GFq->mult(a, Mtx_stack[j][i]);
+				c = Mtx->GFq->add(c, b);
 			}
-			w[i] = F->add(c, Mtx[i]);
+			w[i] = Mtx->GFq->add(c, M[i]);
 		}
-		r = A_on_S->F->Gauss_easy_memory_given(
-				w, k, k, base_cols);
+		r = A_on_S->F->Gauss_easy_memory_given(w, k, k, base_cols);
 		if (r != k) {
 			ret = FALSE;
 			break;
@@ -1075,12 +1074,12 @@ int semifield_classify::test_partial_semifield(
 			c = 0;
 			for (j = 0; j < sz; j++) {
 				a = v[j];
-				b = F->mult(a, Basis[j * k2 + i]);
-				c = F->add(c, b);
+				b = Mtx->GFq->mult(a, Basis[j * k2 + i]);
+				c = Mtx->GFq->add(c, b);
 			}
 			w[i] = c;
 		}
-		r = F->Gauss_easy_memory_given(w, k, k, base_cols);
+		r = Mtx->GFq->Gauss_easy_memory_given(w, k, k, base_cols);
 		if (r != k) {
 			ret = FALSE;
 			if (TRUE) {
@@ -1096,8 +1095,8 @@ int semifield_classify::test_partial_semifield(
 					c = 0;
 					for (j = 0; j < sz; j++) {
 						a = v[j];
-						b = F->mult(a, Basis[j * k2 + i]);
-						c = F->add(c, b);
+						b = Mtx->GFq->mult(a, Basis[j * k2 + i]);
+						c = Mtx->GFq->add(c, b);
 					}
 					w[i] = c;
 				}
@@ -1292,7 +1291,7 @@ int semifield_classify::test_if_third_basis_vector_is_ok(int *Basis)
 	for (i = 0; i < k; i++) {
 		v[i] = Basis[2 * k2 + i * k + 0];
 	}
-	if (!F->is_unit_vector(v, k, k - 1)) {
+	if (!Mtx->GFq->is_unit_vector(v, k, k - 1)) {
 		return FALSE;
 	}
 	return TRUE;
@@ -1444,7 +1443,7 @@ void semifield_classify::compute_orbit_of_subspaces(
 	Orb = NEW_OBJECT(orbit_of_subspaces);
 
 
-	Orb->init_lint(A, AS, F,
+	Orb->init_lint(A, AS, Mtx->GFq,
 		input_data, k, k2 /* n */,
 		TRUE /* f_has_desired_pivots */, desired_pivots,
 		TRUE /* f_has_rank_functions */, this /* rank_unrank_data */,

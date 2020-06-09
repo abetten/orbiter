@@ -84,25 +84,25 @@ void packing_classify::freeself()
 {
 	if (bitvector_adjacency) {
 		FREE_uchar(bitvector_adjacency);
-		}
+	}
 	if (input_spreads) {
 		FREE_lint(input_spreads);
-		}
+	}
 	if (input_spread_label) {
 		FREE_int(input_spread_label);
-		}
+	}
 	if (Spread_tables) {
 		FREE_OBJECT(Spread_tables);
 	}
 	if (P3) {
 		delete P3;
-		}
+	}
 	null();
 }
 
 void packing_classify::init(spread_classify *T,
 	int f_packing_select_spread,
-	int *packing_select_spread, int packing_select_spread_nb,
+	const char *packing_select_spread_text,
 	const char *input_prefix, const char *base_fname, 
 	int search_depth, 
 	int f_lexorder_test,
@@ -113,10 +113,26 @@ void packing_classify::init(spread_classify *T,
 
 	if (f_v) {
 		cout << "packing_classify::init" << endl;
+	}
+
+	int *packing_select_spread = NULL;
+	int packing_select_spread_nb;
+
+	if (f_packing_select_spread) {
+		int_vec_scan(packing_select_spread_text, packing_select_spread, packing_select_spread_nb);
+		if (f_v) {
+			cout << "packing_select_spread = ";
+			int_vec_print(cout, packing_select_spread, packing_select_spread_nb);
+			cout << endl;
 		}
+	}
+	else {
+		packing_select_spread_nb = 0;
+	}
+
 
 	packing_classify::T = T;
-	F = T->F;
+	F = T->Mtx->GFq;
 	packing_classify::f_lexorder_test = f_lexorder_test;
 	q = T->q;
 	spread_size = T->spread_size;
@@ -133,7 +149,7 @@ void packing_classify::init(spread_classify *T,
 		cout << "packing_classify::init input_prefix=" << input_prefix << endl;
 		cout << "packing_classify::init base_fname=" << base_fname << endl;
 		cout << "packing_classify::init search_depth=" << search_depth << endl;
-		}
+	}
 
 	init_P3(verbose_level - 1);
 
@@ -151,7 +167,7 @@ void packing_classify::init(spread_classify *T,
 				packing_select_spread,
 				packing_select_spread_nb);
 		cout << endl;
-		}
+	}
 	
 
 	Spread_tables = NEW_OBJECT(spread_tables);
@@ -165,12 +181,12 @@ void packing_classify::init(spread_classify *T,
 		cout << "We will use " << nb_input_spreads << " isomorphism types of spreads, "
 				"this will give a total number of " << Spread_tables->nb_spreads
 				<< " labeled spreads" << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "packing_classify::init done" << endl;
-		}
+	}
 }
 
 void packing_classify::init2(int verbose_level)
@@ -179,45 +195,45 @@ void packing_classify::init2(int verbose_level)
 
 	if (f_v) {
 		cout << "packing_classify::init2" << endl;
-		}
+	}
 
 #if 0
 	if (f_v) {
 		cout << "packing_classify::init2 "
 				"before compute_spread_table" << endl;
-		}
+	}
 	compute_spread_table(verbose_level - 1);
 	if (f_v) {
 		cout << "packing_classify::init2 "
 				"after compute_spread_table" << endl;
-		}
+	}
 #endif
 
 	if (f_v) {
 		cout << "packing_classify::init2 "
 				"before create_action_on_spreads" << endl;
-		}
+	}
 	create_action_on_spreads(verbose_level - 1);
 	if (f_v) {
 		cout << "packing_classify::init2 "
 				"after create_action_on_spreads" << endl;
-		}
+	}
 
 
 	
 	if (f_v) {
 		cout << "packing_classify::init "
 				"before prepare_generator" << endl;
-		}
+	}
 	prepare_generator(search_depth, verbose_level - 1);
 	if (f_v) {
 		cout << "packing_classify::init "
 				"after prepare_generator" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "packing_classify::init done" << endl;
-		}
+	}
 }
 
 void packing_classify::compute_spread_table(int verbose_level)
@@ -231,7 +247,7 @@ void packing_classify::compute_spread_table(int verbose_level)
 
 	if (f_v) {
 		cout << "packing_classify::compute_spread_table" << endl;
-		}
+	}
 
 	nb_spreads = Spread_tables->nb_spreads;
 	Sets = NEW_plint(nb_spreads);
@@ -243,7 +259,7 @@ void packing_classify::compute_spread_table(int verbose_level)
 	if (f_v) {
 		cout << "packing_classify::compute_spread_table "
 				"before make_spread_table" << endl;
-		}
+	}
 	make_spread_table(nb_spreads,
 		input_spreads, nb_input_spreads, input_spread_label,
 		Sets, isomorphism_type_of_spread,
@@ -251,13 +267,13 @@ void packing_classify::compute_spread_table(int verbose_level)
 	if (f_v) {
 		cout << "packing_classify::compute_spread_table "
 				"after make_spread_table" << endl;
-		}
+	}
 
 
 	Spread_table = NEW_lint(nb_spreads * spread_size);
 	for (i = 0; i < nb_spreads; i++) {
 		lint_vec_copy(Sets[i], Spread_table + i * spread_size, spread_size);
-		}
+	}
 
 
 	Spread_tables->init(F, FALSE, nb_spreads_up_to_isomorphism,
@@ -296,22 +312,22 @@ void packing_classify::compute_spread_table(int verbose_level)
 		compute_adjacency_matrix(verbose_level - 1);
 		cout << "packing_classify::compute_spread_table "
 				"The adjacency matrix has been computed" << endl;
-		}
+	}
 	else {
 		cout << "packing_classify::compute_spread_table "
 				"We are NOT computing the adjacency matrix" << endl;
-		}
+	}
 
 
 	for (i = 0; i < nb_spreads; i++) {
 		FREE_lint(Sets[i]);
-		}
+	}
 	FREE_plint(Sets);
 
 
 	if (f_v) {
 		cout << "packing_classify::compute_spread_table done" << endl;
-		}
+	}
 }
 
 void packing_classify::init_P3(int verbose_level)
@@ -320,17 +336,17 @@ void packing_classify::init_P3(int verbose_level)
 
 	if (f_v) {
 		cout << "packing_classify::init_P3" << endl;
-		}
+	}
 	P3 = NEW_OBJECT(projective_space);
 	
-	P3->init(3, T->F, 
+	P3->init(3, T->Mtx->GFq,
 		TRUE /* f_init_incidence_structure */, 
 		0 /* verbose_level - 2 */);
 	if (f_v) {
 		cout << "packing_classify::init_P3 done" << endl;
 		cout << "N_points=" << P3->N_points << endl;
 		cout << "N_lines=" << P3->N_lines << endl;
-		}
+	}
 }
 
 
@@ -350,7 +366,7 @@ int packing_classify::predict_spread_table_length(
 
 	if (f_v) {
 		cout << "packing_classify::predict_spread_table_length" << endl;
-		}
+	}
 
 
 	N = 0;
@@ -379,11 +395,11 @@ int packing_classify::predict_spread_table_length(
 			if (Sorting.int_vec_search_linear(packing_select_spread,
 					packing_select_spread_nb, no, idx)) {
 				f_do_it = TRUE;
-				}
 			}
+		}
 		else {
 			f_do_it = TRUE;
-			}
+		}
 		if (f_do_it) {
 			long int *rep;
 			int sz;
@@ -410,22 +426,22 @@ int packing_classify::predict_spread_table_length(
 						<< " has group order "
 						<< stab_go << " orbit_length = "
 						<< orbit_length << endl;
-				}
+			}
 
 
 			N += orbit_length;
 
 
-			}
+		}
 
 
-		} // next no
+	} // next no
 
 
 
 	if (f_v) {
 		cout << "packing_classify::predict_spread_table_length done, N = " << N << endl;
-		}
+	}
 	return N;
 }
 

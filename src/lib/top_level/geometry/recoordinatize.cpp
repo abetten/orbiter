@@ -50,17 +50,17 @@ void recoordinatize::freeself()
 		FREE_int(C);
 		FREE_int(N);
 		FREE_int(Elt);
-		}
+	}
 	if (A0) {
 		FREE_OBJECT(A0);
-		}
+	}
 	if (gens2) {
 		FREE_OBJECT(gens2);
-		}
+	}
 	
 	if (live_points) {
 		FREE_lint(live_points);
-		}
+	}
 	null();
 }
 
@@ -77,7 +77,7 @@ void recoordinatize::init(int n, int k,
 
 	if (f_v) {
 		cout << "recoordinatize::init" << endl;
-		}
+	}
 
 	recoordinatize::A = A;
 	recoordinatize::A2 = A2;
@@ -93,6 +93,10 @@ void recoordinatize::init(int n, int k,
 	recoordinatize::check_function_incremental_data
 		= check_function_incremental_data;
 	nCkq = Combi.generalized_binomial(n, k, q);
+
+	if (f_v) {
+		cout << "recoordinatize::init n=" << n << " k=" << k << endl;
+	}
 	
 
 	M = NEW_int((3 * k) * n);
@@ -108,7 +112,7 @@ void recoordinatize::init(int n, int k,
 	f_data_is_allocated = TRUE;
 	if (f_v) {
 		cout << "recoordinatize::init done" << endl;
-		}
+	}
 }
 
 void recoordinatize::do_recoordinatize(
@@ -122,112 +126,102 @@ void recoordinatize::do_recoordinatize(
 	if (f_v) {
 		cout << "recoordinatize::do_recoordinatize "
 				<< i1 << "," << i2 << "," << i3 << endl;
-		}
+	}
 	Grass->unrank_lint_here(M, i1, 0 /*verbose_level - 4*/);
 	Grass->unrank_lint_here(M + k * n, i2, 0 /*verbose_level - 4*/);
 	Grass->unrank_lint_here(M + 2 * k * n, i3, 0 /*verbose_level - 4*/);
 	if (f_vv) {
 		cout << "M:" << endl;
-		print_integer_matrix_width(cout,
-				M, 3 * k, n, n, F->log10_of_q + 1);
-		}
+		print_integer_matrix_width(cout, M, 3 * k, n, n, F->log10_of_q + 1);
+	}
 	int_vec_copy(M, AA, n * n);
 	F->matrix_inverse(AA, AAv, n, 0 /*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "AAv:" << endl;
-		print_integer_matrix_width(cout,
-				AAv, n, n, n, F->log10_of_q + 1);
-		}
+		print_integer_matrix_width(cout, AAv, n, n, n, F->log10_of_q + 1);
+	}
 	F->mult_matrix_matrix(M, AAv, N, 3 * k, n, n,
 			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "N:" << endl;
-		print_integer_matrix_width(cout,
-				N, 3 * k, n, n, F->log10_of_q + 1);
-		}
+		print_integer_matrix_width(cout, N, 3 * k, n, n, F->log10_of_q + 1);
+	}
 
 	for (i = 0; i < k; i++) {
 		for (j = 0; j < k; j++) {
 			TT[i * k + j] = N[2 * k * n + i * n + j];
-			}
 		}
+	}
 	if (f_vv) {
 		cout << "TT:" << endl;
-		print_integer_matrix_width(cout,
-				TT, k, k, k, F->log10_of_q + 1);
-		}
+		print_integer_matrix_width(cout, TT, k, k, k, F->log10_of_q + 1);
+	}
 	F->matrix_inverse(TT, TTv, k, 0 /*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "TTv:" << endl;
-		print_integer_matrix_width(cout,
-				TTv, k, k, k, F->log10_of_q + 1);
-		}
+		print_integer_matrix_width(cout, TTv, k, k, k, F->log10_of_q + 1);
+	}
 
 	int_vec_zero(B, n * n);
 	for (i = 0; i < k; i++) {
 		for (j = 0; j < k; j++) {
 			B[i * n + j] = TTv[i * k + j];
-			}
 		}
+	}
 	for (i = 0; i < k; i++) {
 		for (j = 0; j < k; j++) {
 			TT[i * k + j] = N[2 * k * n + i * n + k + j];
-			}
 		}
+	}
 	if (f_vv) {
 		cout << "TT:" << endl;
-		print_integer_matrix_width(cout,
-				TT, k, k, k, F->log10_of_q + 1);
-		}
+		print_integer_matrix_width(cout, TT, k, k, k, F->log10_of_q + 1);
+	}
 	F->matrix_inverse(TT, TTv, k, 0 /*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "TTv:" << endl;
-		print_integer_matrix_width(cout,
-				TTv, k, k, k, F->log10_of_q + 1);
-		}
+		print_integer_matrix_width(cout, TTv, k, k, k, F->log10_of_q + 1);
+	}
 	for (i = 0; i < k; i++) {
 		for (j = 0; j < k; j++) {
 			B[(k + i) * n + k + j] = TTv[i * k + j];
-			}
 		}
+	}
 	if (f_vv) {
 		cout << "B:" << endl;
 		print_integer_matrix_width(cout,
 				B, n, n, n, F->log10_of_q + 1);
-		}
+	}
 
 	
-	F->mult_matrix_matrix(AAv, B, C, n, n, n,
-			0 /* verbose_level */);
+	F->mult_matrix_matrix(AAv, B, C, n, n, n, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "C:" << endl;
-		print_integer_matrix_width(cout,
-				C, n, n, n, F->log10_of_q + 1);
-		}
+		print_integer_matrix_width(cout, C, n, n, n, F->log10_of_q + 1);
+	}
 	
-	F->mult_matrix_matrix(M, C, M1, 3 * k, n, n,
-			0 /* verbose_level */);
+	F->mult_matrix_matrix(M, C, M1, 3 * k, n, n, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "M1:" << endl;
 		print_integer_matrix_width(cout,
 				M1, 3 * k, n, n, F->log10_of_q + 1);
-		}
+	}
 	j1 = Grass->rank_lint_here(M1, 0 /*verbose_level - 4*/);
 	j2 = Grass->rank_lint_here(M1 + k * n, 0 /*verbose_level - 4*/);
 	j3 = Grass->rank_lint_here(M1 + 2 * k * n, 0 /*verbose_level - 4*/);
 	if (f_v) {
 		cout << "j1=" << j1 << " j2=" << j2 << " j3=" << j3 << endl;
-		}
+	}
 	
 	A->make_element(Elt, C, 0);
 	if (f_vv) {
 		cout << "recoordinatize::do_recoordinatize "
 				"transporter:" << endl;
 		A->element_print(Elt, cout);
-		}
+	}
 	if (f_v) {
 		cout << "recoordinatize::do_recoordinatize done" << endl;
-		}
+	}
 }
 
 void recoordinatize::compute_starter(long int *&S, int &size,
@@ -241,12 +235,17 @@ void recoordinatize::compute_starter(long int *&S, int &size,
 	if (f_v) {
 		cout << "recoordinatize::compute_starter" << endl;
 		cout << "verbose_level = " << verbose_level << endl;
-		}
+	}
 
 	
 
-	make_first_three(starter_j1, starter_j2, starter_j3,
-			verbose_level - 1);
+	if (f_v) {
+		cout << "recoordinatize::compute_starter before make_first_three" << endl;
+	}
+	make_first_three(starter_j1, starter_j2, starter_j3, verbose_level - 1);
+	if (f_v) {
+		cout << "recoordinatize::compute_starter after make_first_three" << endl;
+	}
 
 	// initialize S with the vector (j1,j2,j3):
 	size = 3;
@@ -260,12 +259,12 @@ void recoordinatize::compute_starter(long int *&S, int &size,
 	if (f_v) {
 		cout << "recoordinatize::compute_starter "
 				"before stabilizer_of_first_three" << endl;
-		}
+	}
 	stabilizer_of_first_three(Strong_gens, verbose_level - 1);
 	if (f_v) {
 		cout << "recoordinatize::compute_starter "
 				"after stabilizer_of_first_three" << endl;
-		}
+	}
 
 
 
@@ -273,18 +272,18 @@ void recoordinatize::compute_starter(long int *&S, int &size,
 	if (f_v) {
 		cout << "recoordinatize::compute_starter "
 				"before compute_live_points" << endl;
-		}
-	compute_live_points(verbose_level - 1);
+	}
+	compute_live_points(verbose_level - 10);
 	if (f_v) {
 		cout << "recoordinatize::compute_starter "
 				"after compute_live_points" << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "recoordinatize::compute_starter finished" << endl;
 		cout << "we found " << nb_live_points << " live points" << endl;
-		}
+	}
 	
 }
 
@@ -299,7 +298,7 @@ void recoordinatize::stabilizer_of_first_three(
 
 	if (f_v) {
 		cout << "recoordinatize::stabilizer_of_first_three" << endl;
-		}
+	}
 
 	A0 = NEW_OBJECT(action);
 	A0_linear = NEW_OBJECT(action);
@@ -311,7 +310,7 @@ void recoordinatize::stabilizer_of_first_three(
 	if (f_v) {
 		cout << "recoordinatize::stabilizer_of_first_three "
 				"before  A0->init_matrix_group" << endl;
-		}
+	}
 	A0->init_projective_group(k, F, 
 		f_semilinear, 
 		TRUE /* f_basis */, TRUE /* f_init_sims */,
@@ -326,7 +325,7 @@ void recoordinatize::stabilizer_of_first_three(
 			<< " = order of PGGL(" << k << "," << q << ")" << endl;
 		cout << "action A0 created: ";
 		A0->print_info();
-		}
+	}
 
 	A0_linear->init_projective_group(k, F, 
 		FALSE /*f_semilinear*/, 
@@ -342,7 +341,7 @@ void recoordinatize::stabilizer_of_first_three(
 			<< go_linear << endl;
 		cout << "action A0_linear created: ";
 		A0_linear->print_info();
-		}
+	}
 
 
 
@@ -353,7 +352,7 @@ void recoordinatize::stabilizer_of_first_three(
 		cout << "recoordinatize::stabilizer_of_first_three "
 				"target_go2=" << target_go2
 			<< " = target_go times 6" << endl;
-		}
+	}
 	
 
 
@@ -364,7 +363,7 @@ void recoordinatize::stabilizer_of_first_three(
 		cout << "recoordinatize::stabilizer_of_first_three "
 				"before make_generators_stabilizer_of_"
 				"three_components" << endl;
-		}
+	}
 
 	action_global AG;
 
@@ -376,7 +375,7 @@ void recoordinatize::stabilizer_of_first_three(
 	if (f_v) {
 		cout << "recoordinatize::stabilizer_of_first_three "
 				"before generators_to_strong_generators" << endl;
-		}
+	}
 
 
 	A->generators_to_strong_generators(
@@ -387,7 +386,7 @@ void recoordinatize::stabilizer_of_first_three(
 	if (f_v) {
 		cout << "recoordinatize::stabilizer_of_first_three "
 				"done" << endl;
-		}
+	}
 }
 
 
@@ -397,7 +396,7 @@ void recoordinatize::compute_live_points(int verbose_level)
 
 	if (f_v) {
 		cout << "recoordinatize::compute_live_points" << endl;
-		}
+	}
 
 
 	char fname[1000];
@@ -464,7 +463,7 @@ void recoordinatize::compute_live_points(int verbose_level)
 		cout << "recoordinatize::compute_live_points "
 				"we found " << nb_live_points << " live points" << endl;
 		return;
-		}
+	}
 	else {
 		cout << "recoordinatize::compute_live_points "
 				"befor we compute_live_points_low_level" << endl;
@@ -476,8 +475,8 @@ void recoordinatize::compute_live_points(int verbose_level)
 		if (f_v) {
 			cout << "recoordinatize::compute_live_points "
 					"written file " << fname << endl;
-			}
 		}
+	}
 
 #if 0
 
@@ -541,7 +540,7 @@ void recoordinatize::compute_live_points(int verbose_level)
 
 	if (f_v) {
 		cout << "recoordinatize::compute_live_points done" << endl;
-		}
+	}
 }
 
 void recoordinatize::compute_live_points_low_level(
@@ -565,7 +564,7 @@ void recoordinatize::compute_live_points_low_level(
 
 	if (f_v) {
 		cout << "recoordinatize::compute_live_points_low_level" << endl;
-		}
+	}
 
 
 	Mtx = A0->G.matrix_grp;
@@ -581,7 +580,7 @@ void recoordinatize::compute_live_points_low_level(
 	if (f_v) {
 		cout << "recoordinatize::compute_live_points_low_level "
 				"nCkq = " << nCkq << endl;
-		}
+	}
 	live_points = NEW_lint(nCkq);
 	nb_live_points = 0;
 
@@ -596,8 +595,8 @@ void recoordinatize::compute_live_points_low_level(
 					cout << "recoordinatize::compute_live_points_low_level"
 							<< cnt << " iterations, h=" << h << " found "
 							<< nb_live_points << " points so far" << endl;
-					}
 				}
+			}
 			A0_linear->Sims->element_unrank_lint(h, Elt1);
 			Fq->PG_element_normalize(Elt1, 1, k * k);
 			if (f_vv && (cnt % cnt_mod) == 0 && cnt) {
@@ -605,43 +604,43 @@ void recoordinatize::compute_live_points_low_level(
 						"element " << cnt << " = " << h
 						<< ", normalized:" << endl;
 				A0->element_print(Elt1, cout);
-				}
+			}
 			for (i = 0; i < k * k; i++) {
 				Elt1[i] = Fq->mult(Elt1[i], z);
-				}
+			}
 			if (f_v && (cnt % cnt_mod) == 0 && cnt) {
 				cout << "recoordinatize::compute_live_points_low_level "
 						"element " << cnt << " = " << h
 						<< ", multiplied by z=" << z << ":" << endl;
 				print_integer_matrix_width(cout,
 						Elt1, k, k, k, F->log10_of_q + 1);
-				}
+			}
 	
 			// make the k x n matrix ( I_k | Elt1 )
 			int_vec_zero(Grass->M, k * n);
 			for (i = 0; i < k; i++) {
 				Grass->M[i * n + i] = 1;
-				}
+			}
 			for (i = 0; i < k; i++) {
 				for (j = 0; j < k; j++) {
 					Grass->M[i * n + k + j] = Elt1[i * k + j];
-					}
 				}
+			}
 			if (f_vv && (cnt % cnt_mod) == 0) {
 				cout << "recoordinatize::compute_live_points_low_level "
 						"element " << h << ":" << endl;
 				print_integer_matrix_width(cout, Grass->M, k, n, n, 2);
-				}
+			}
 			if (FALSE || ((h & ((1 << 15) - 1)) == 0 && z == 1)) {
 				cout << h << " / " << gos
 						<< " nb_live_points=" << nb_live_points << endl;
 				print_integer_matrix_width(cout, Grass->M, k, n, n, 2);
-				}
+			}
 			a = Grass->rank_lint(0);
 			SS[3] = a;
 			if (f_vv && (cnt % cnt_mod) == 0 && cnt) {
 				cout << "has rank " << a << endl;
-				}
+			}
 			if ((*check_function_incremental)(4, SS,
 					check_function_incremental_data,
 					0/*verbose_level - 4*/)) {
@@ -651,34 +650,34 @@ void recoordinatize::compute_live_points_low_level(
 							<< z << " subspace rank " << a
 							<< " is accepted as live point no "
 							<< nb_live_points << endl;
-					}
-				live_points[nb_live_points++] = a;
 				}
+				live_points[nb_live_points++] = a;
+			}
 			else {
 				if (f_vv && (cnt % cnt_mod) == 0) {
 					cout << "recoordinatize::compute_live_points_"
 							"low_level element " << cnt << " = " << h << ", "
 							<< z << " subspace rank " << a
 							<< " is not accepted" << endl;
-					}
 				}
 			}
 		}
+	}
 #endif
 
 	if (f_v) {
 		cout << "recoordinatize::compute_live_points_low_level "
 				"we found " << nb_live_points << " live points" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "recoordinatize::compute_live_points_low_level "
 				"sorting" << endl;
-		}
+	}
 
 	Sorting.lint_vec_heapsort(live_points, nb_live_points);
 	if (f_v) {
 		cout << "recoordinatize::compute_live_points_low_level done" << endl;
-		}
+	}
 }
 
 void recoordinatize::make_first_three(
@@ -692,60 +691,60 @@ void recoordinatize::make_first_three(
 	
 	if (f_v) {
 		cout << "recoordinatize::make_first_three" << endl;
-		}
+	}
 	M = NEW_int(k * n);
 
 	// make the element (I_k | 0). Let j1 be its rank
 	int_vec_zero(M, k * n);
 	for (i = 0; i < k; i++) {
 		M[i * n + i] = 1;
-		}
+	}
 	if (f_v3) {
 		cout << "recoordinatize::compute_starter M1:" << endl;
 		print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
-		}
+	}
 	j1 = Grass->rank_lint_here(M, 0/*verbose_level - 4*/);
 	if (f_v3) {
 		cout << "recoordinatize::compute_starter j1=" << j1 << endl;
-		}
+	}
 
 	// make the element (0 | I_k). Let j2 be its rank
 	int_vec_zero(M, k * n);
 	for (i = 0; i < k; i++) {
 		M[i * n + k + i] = 1;
-		}
+	}
 	if (f_v3) {
 		cout << "recoordinatize::compute_starter M2:" << endl;
 		print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
-		}
+	}
 	j2 = Grass->rank_lint_here(M, 0/*verbose_level - 4*/);
 	if (f_v3) {
 		cout << "recoordinatize::compute_starter j2=" << j2 << endl;
-		}
+	}
 
 	// make the element (I_k | I_k). Let j3 be its rank
 	int_vec_zero(M, k * n);
 	for (i = 0; i < k; i++) {
 		M[i * n + i] = 1;
 		M[i * n + k + i] = 1;
-		}
+	}
 	if (f_v3) {
 		cout << "recoordinatize::compute_starter M3:" << endl;
 		print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
-		}
+	}
 	j3 = Grass->rank_lint_here(M, 0/*verbose_level - 4*/);
 	if (f_v3) {
 		cout << "recoordinatize::compute_starter j3=" << j3 << endl;
-		}
+	}
 
 	FREE_int(M);
 	if (f_vv) {
 		cout << "recoordinatize::make_first_three j1=" << j1
-				<< ",j2=" << j2 << ",j3=" << j3 << endl;
-		}
+				<< ", j2=" << j2 << ", j3=" << j3 << endl;
+	}
 	if (f_v) {
 		cout << "recoordinatize::make_first_three done" << endl;
-		}
+	}
 }
 
 }}

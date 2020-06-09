@@ -115,7 +115,6 @@ class tensor_classify;
 class design_create;
 class design_create_description;
 class large_set_classify;
-class code_classify;
 class ovoid_classify;
 class graph_generator;
 class regular_ls_classify;

@@ -342,7 +342,6 @@ MODULES= \
 		top_level/geometry/classify_cubic_curves.o \
 		top_level/geometry/classify_double_sixes.o \
 		top_level/geometry/classify_trihedral_pairs.o \
-		top_level/geometry/code_classify.o \
 		top_level/geometry/cubic_curve_with_action.o \
 		top_level/geometry/hermitian_spreads_classify.o \
 		top_level/geometry/hill_cap.o \

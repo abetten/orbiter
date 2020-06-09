@@ -85,7 +85,10 @@ public:
 	void linear_codes_with_bounded_minimum_distance(
 			poset_classification_control *Control, linear_group *LG,
 			int d, int target_depth, int verbose_level);
-
+	void packing_init(
+			poset_classification_control *Control, linear_group *LG,
+			int f_select_spread, const char *select_spread_text,
+			int verbose_level);
 };
 
 
@@ -229,6 +232,7 @@ public:
 	int f_classify_nonconical_arcs;
 	int classify_arcs_target_size;
 	int classify_arcs_d;
+
 	int f_exact_cover;
 	exact_cover_arguments *ECA;
 	int f_isomorph_arguments;
@@ -396,8 +400,9 @@ public:
 
 	int t0;
 
-	finite_field *F;
 	linear_group *LG;
+	matrix_group *Mtx;
+	//finite_field *F;
 	poset_classification_control *Control;
 
 	//int argc;
@@ -459,7 +464,7 @@ public:
 	~semifield_classify_with_substructure();
 	//void read_arguments(int argc, const char **argv, int &verbose_level);
 	void init(
-			finite_field *F, linear_group *LG,
+			linear_group *LG,
 			poset_classification_control *Control,
 			int verbose_level);
 	void read_data(int verbose_level);
@@ -494,9 +499,10 @@ public:
 	int n;
 	int k;
 	int k2; // = k * k
-	finite_field *F;
 	linear_group *LG;
-	int f_semilinear;
+	matrix_group *Mtx;
+	//finite_field *F;
+	//int f_semilinear;
 
 	int q;
 	int order; // q^k
@@ -555,7 +561,7 @@ public:
 	void null();
 	void freeself();
 	void init(
-			finite_field *F, linear_group *LG,
+			linear_group *LG,
 			int k, poset_classification_control *Control,
 			const char *level_two_prefix,
 			const char *level_three_prefix,
@@ -565,7 +571,6 @@ public:
 			semifield_lifting *L3,
 			int verbose_level);
 	void init_poset_classification(
-			//int argc, const char **argv,
 			const char *prefix,
 			int verbose_level);
 	void compute_orbits(int depth, int verbose_level);
@@ -577,7 +582,7 @@ public:
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	int test_candidate(
-			int **Mtx_stack, int stack_size, int *Mtx,
+			int **Mtx_stack, int stack_size, int *M,
 			int verbose_level);
 	int test_partial_semifield_numerical_data(
 			long int *data, int data_sz, int verbose_level);

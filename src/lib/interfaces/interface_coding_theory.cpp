@@ -26,7 +26,6 @@ interface_coding_theory::interface_coding_theory()
 	q = 0;
 	n = 0;
 	k = 0;
-	f_codes_classify = FALSE;
 	f_BCH = FALSE;
 	f_BCH_dual = FALSE;
 	BCH_t = 0;
@@ -43,9 +42,6 @@ void interface_coding_theory::print_help(int argc,
 {
 	if (strcmp(argv[i], "-make_macwilliams_system") == 0) {
 		cout << "-make_macwilliams_system <int : q> <int : n> <int k>" << endl;
-	}
-	else if (strcmp(argv[i], "-code_classify") == 0) {
-		cout << "-code_classify" << endl;
 	}
 	else if (strcmp(argv[i], "-BCH") == 0) {
 		cout << "-BCH <int : n> <int : q> <int t>" << endl;
@@ -68,9 +64,6 @@ int interface_coding_theory::recognize_keyword(int argc,
 		return false;
 	}
 	if (strcmp(argv[i], "-make_macwilliams_system") == 0) {
-		return true;
-	}
-	else if (strcmp(argv[i], "-codes_classify") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-BCH") == 0) {
@@ -106,10 +99,6 @@ void interface_coding_theory::read_arguments(int argc,
 			n = atoi(argv[++i]);
 			k = atoi(argv[++i]);
 			cout << "-make_macwilliams_system " << q << " " << n << " " << k << endl;
-		}
-		else if (strcmp(argv[i], "-codes_classify") == 0) {
-			f_codes_classify = TRUE;
-			cout << "-codes_classify " << endl;
 		}
 		else if (strcmp(argv[i], "-BCH") == 0) {
 			f_BCH = TRUE;
@@ -147,9 +136,6 @@ void interface_coding_theory::worker(int verbose_level)
 {
 	if (f_make_macwilliams_system) {
 		do_make_macwilliams_system(q, n, k, verbose_level);
-	}
-	else if (f_codes_classify) {
-		do_codes_classify(verbose_level);
 	}
 	else if (f_BCH) {
 		make_BCH_codes(n, q, BCH_t, 1, FALSE, verbose_level);
@@ -226,48 +212,6 @@ void interface_coding_theory::do_make_macwilliams_system(
 
 	if (f_v) {
 		cout << "interface_coding_theory::do_make_macwilliams_system done" << endl;
-	}
-}
-
-void interface_coding_theory::do_codes_classify(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_coding_theory::do_codes_classify" << endl;
-	}
-
-	{
-		code_classify cg;
-
-		//cout << argv[0] << endl;
-		if (f_v) {
-			cout << "interface_coding_theory::do_codes_classify before init" << endl;
-		}
-
-		poset_classification_control *Control = NULL;
-
-		Control = NEW_OBJECT(poset_classification_control);
-
-		cg.init(Control);
-		if (f_v) {
-			cout << "interface_coding_theory::do_codes_classify after init" << endl;
-		}
-
-		if (f_v) {
-			cout << "interface_coding_theory::do_codes_classify before main" << endl;
-		}
-		cg.main(cg.verbose_level);
-		if (f_v) {
-			cout << "interface_coding_theory::do_codes_classify after main" << endl;
-		}
-		cg.F->print_call_stats(cout);
-
-
-	}
-
-	if (f_v) {
-		cout << "interface_coding_theory::do_codes_classify done" << endl;
 	}
 }
 

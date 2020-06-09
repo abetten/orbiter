@@ -87,9 +87,9 @@ void semifield_substructure::init()
 	transporter3 = NEW_int(SC->A->elt_size_in_int);
 
 
-	Gr3->init(SC->k, 3, SC->F, 0 /* verbose_level */);
+	Gr3->init(SC->k, 3, SC->Mtx->GFq, 0 /* verbose_level */);
 	N = Gr3->nb_of_subspaces(0 /* verbose_level */);
-	Gr2->init(SC->k, 2, SC->F, 0 /* verbose_level */);
+	Gr2->init(SC->k, 2, SC->Mtx->GFq, 0 /* verbose_level */);
 	N2 = Gr2->nb_of_subspaces(0 /* verbose_level */);
 	data1 = NEW_lint(SC->k);
 	data2 = NEW_lint(SC->k);
@@ -589,7 +589,7 @@ void semifield_substructure::do_classify(int verbose_level)
 		for (i = 0; i < SC->k; i++) {
 			v3[i] = Basis1[2 * SC->k2 + i * SC->k + 0];
 		}
-		if (!SC->F->is_unit_vector(v3, SC->k, SC->k - 1)) {
+		if (!SC->Mtx->GFq->is_unit_vector(v3, SC->k, SC->k - 1)) {
 			cout << "flag orbit " << f << " / "
 					<< nb_flag_orbits
 					<< " 1st col of third matrix is = ";
@@ -748,7 +748,7 @@ void semifield_substructure::loop_over_all_subspaces(
 
 	k = SC->k;
 	k2 = SC->k2;
-	F = SC->F;
+	F = SC->Mtx->GFq;
 
 	for (rk = 0; rk < N; rk++) {
 
@@ -1162,7 +1162,7 @@ void semifield_substructure::all_two_dimensional_subspaces(
 
 	k = SC->k;
 	k2 = SC->k2;
-	F = SC->F;
+	F = SC->Mtx->GFq;
 
 	for (rk = 0; rk < N2; rk++) {
 
@@ -1258,7 +1258,7 @@ int semifield_substructure::identify(long int *data,
 
 	k = SC->k;
 	k2 = SC->k2;
-	F = SC->F;
+	F = SC->Mtx->GFq;
 
 	for (rk = 0; rk < N; rk++) {
 
