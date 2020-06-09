@@ -117,25 +117,25 @@ void function_polish::init(
 
 			int j;
 
-			for (j = 0; j < Variables.size(); j++) {
+			for (j = 0; j < (int) Variables.size(); j++) {
 				if (strcmp(Variables[j].c_str(), S.c_str()) == 0) {
 					break;
 				}
 			}
-			if (j < Variables.size()) {
+			if (j < (int) Variables.size()) {
 				cmd.init_with_argument(3, j);
 				if (f_v) {
 					cout << "push variable " << S << " (= " << j << ")" << endl;
 				}
 			}
 			else {
-				for (j = 0; j < Constants.size(); j++) {
+				for (j = 0; j < (int) Constants.size(); j++) {
 
 					if (strcmp(Constants[j].first.c_str(), S.c_str()) == 0) {
 						break;
 					}
 				}
-				if (j < Constants.size()) {
+				if (j < (int) Constants.size()) {
 					cmd.init_with_argument(1, j);
 					if (f_v) {
 						cout << "push constant " << S << " (= " << j << ")" << endl;
@@ -156,12 +156,12 @@ void function_polish::init(
 			int j;
 			string S(cmds[++i]);
 
-			for (j = 0; j < Variables.size(); j++) {
+			for (j = 0; j < (int) Variables.size(); j++) {
 				if (strcmp(Variables[j].c_str(), S.c_str()) == 0) {
 					break;
 				}
 			}
-			if (j < Variables.size()) {
+			if (j < (int) Variables.size()) {
 				cmd.init_with_argument(4, j);
 				if (f_v) {
 					cout << "store " << S << " (= " << j << ")" << endl;

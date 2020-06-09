@@ -763,7 +763,7 @@ void algebra_global::make_Hamming_graph_and_write_file(int n, int q, int f_proje
 {
 	int f_v = (verbose_level >= 1);
 
-	int N, width, height;
+	int width, height;
 	int *v;
 	int *w;
 	int *Table;
@@ -779,15 +779,17 @@ void algebra_global::make_Hamming_graph_and_write_file(int n, int q, int f_proje
 	w = NEW_int(n);
 
 	if (f_projective) {
-		N = width = height = Gg.nb_PG_elements(n - 1, q);
+		width = height = Gg.nb_PG_elements(n - 1, q);
 		F = NEW_OBJECT(finite_field);
 		F->init(q);
 	}
 	else {
-		N = width = height = Gg.nb_AG_elements(n, q);
+		width = height = Gg.nb_AG_elements(n, q);
 	}
 
 #if 0
+	int N;
+	N = width;
 	if (f_graph) {
 		Adj = NEW_int(N * N);
 		int_vec_zero(Adj, N * N);

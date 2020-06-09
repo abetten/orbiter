@@ -1304,7 +1304,7 @@ void longinteger_domain::calc_roots(longinteger_object &M,
 // Due to reduce primes, the polynomial factors mod p.
 {
 	int f_v = (verbose_level >= 1);
-	int i, l, p, Mmodp, sqrtMmodp, a, b;
+	int i, l, p, Mmodp, sqrtMmodp, b;
 	int r1, r2, c, c2, s;
 	longinteger_object P, l1, l2, l3;
 
@@ -1337,7 +1337,7 @@ void longinteger_domain::calc_roots(longinteger_object &M,
 		}
 
 		// a = 2 * sqrtMmodp mod p
-		a = (sqrtMmodp << 1) % p;
+		//a = (sqrtMmodp << 1) % p;
 
 		// b = (sqrtMmodp * sqrtMmodp) % p;
 		l1.create(sqrtMmodp, __FILE__, __LINE__);
