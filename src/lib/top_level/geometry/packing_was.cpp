@@ -31,7 +31,8 @@ packing_was::packing_was()
 	f_recoordinatize = FALSE;
 	f_select_spread = FALSE;
 	//select_spread[1000];
-	select_spread_nb = 0;
+	select_spread_text = NULL;
+	//select_spread_nb = 0;
 	f_spreads_invariant_under_H = FALSE;
 	f_cliques_on_fixpoint_graph = FALSE;
 	clique_size_on_fixpoint_graph = 0;
@@ -197,20 +198,9 @@ void packing_was::init(int argc, const char **argv)
 			cout << "-recoordinatize " << endl;
 		}
 		else if (strcmp(argv[i], "-select_spread") == 0) {
-			int a;
-
 			f_select_spread = TRUE;
-			select_spread_nb = 0;
-			while (TRUE) {
-				a = atoi(argv[++i]);
-				if (a == -1) {
-					break;
-				}
-				select_spread[select_spread_nb++] = a;
-			}
-			cout << "-select_spread ";
-			int_vec_print(cout, select_spread, select_spread_nb);
-			cout << endl;
+			select_spread_text = argv[++i];
+			cout << "-select_spread " << select_spread_text << endl;
 		}
 
 		else if (strcmp(argv[i], "-H") == 0) {
@@ -537,8 +527,7 @@ void packing_was::init(int argc, const char **argv)
 	}
 	P->init(T,
 		f_select_spread,
-		select_spread,
-		select_spread_nb,
+		select_spread_text,
 		ECA->input_prefix, ECA->base_fname,
 		ECA->starter_size,
 		ECA->f_lex,

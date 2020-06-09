@@ -1781,8 +1781,9 @@ public:
 	int dim_over_kernel;
 	int f_recoordinatize;
 	int f_select_spread;
-	int select_spread[1000];
-	int select_spread_nb;
+	const char *select_spread_text;
+	//int select_spread[1000];
+	//int select_spread_nb;
 	int f_spreads_invariant_under_H;
 	int f_cliques_on_fixpoint_graph;
 	int clique_size_on_fixpoint_graph;

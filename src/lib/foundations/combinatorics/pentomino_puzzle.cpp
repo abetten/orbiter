@@ -373,8 +373,8 @@ int pentomino_puzzle::has_interlocking_Lprime(long int *set)
 
 int pentomino_puzzle::test_if_interlocking_Ps(int a1, int a2)
 {
-	int h1, r1, t1, tt1, x1, y1, rr1;
-	int h2, r2, t2, tt2, x2, y2, rr2;
+	int h1 = 0, r1 = 0, t1 = 0, tt1, x1, y1, rr1;
+	int h2 = 0, r2 = 0, t2 = 0, tt2, x2, y2, rr2;
 
 	decode_piece(a1, h1, r1, t1);
 	tt1 = T[h1][t1];
@@ -404,8 +404,8 @@ int pentomino_puzzle::test_if_interlocking_Ps(int a1, int a2)
 
 int pentomino_puzzle::test_if_interlocking_Ls(int a1, int a2)
 {
-	int h1, r1, t1, tt1, x1, y1, rr1;
-	int h2, r2, t2, tt2, x2, y2, rr2;
+	int h1 = 0, r1 = 0, t1 = 0, tt1, x1, y1, rr1;
+	int h2 = 0, r2 = 0, t2 = 0, tt2, x2, y2, rr2;
 
 	decode_piece(a1, h1, r1, t1);
 	tt1 = T[h1][t1];

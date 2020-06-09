@@ -880,7 +880,7 @@ void elliptic_curve::latex_points_with_order(ostream &ost)
 
 	order_of_all_points(Ord);
 	p = NEW_int(Ord.size());
-	for (i = 0; i < Ord.size(); i++) {
+	for (i = 0; i < (int) Ord.size(); i++) {
 		p[i] = Ord[i];
 	}
 
@@ -913,7 +913,7 @@ void elliptic_curve::latex_order_of_all_points(ostream &ost)
 
 	order_of_all_points(Ord);
 	p = NEW_int(Ord.size());
-	for (i = 0; i < Ord.size(); i++) {
+	for (i = 0; i < (int) Ord.size(); i++) {
 		p[i] = Ord[i];
 	}
 	L.print_integer_matrix_with_standard_labels(ost,

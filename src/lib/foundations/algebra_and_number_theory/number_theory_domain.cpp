@@ -835,7 +835,7 @@ long int number_theory_domain::primitive_root_randomized(long int p, int verbose
 				break;
 			}
 		}
-		if (i == primes.size()) {
+		if (i == (long int)primes.size()) {
 			break;
 		}
 	}

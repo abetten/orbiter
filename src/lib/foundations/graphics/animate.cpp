@@ -522,12 +522,12 @@ void animate::animate_one_round(
 				char cmd[1000];
 
 				strcpy(str, Opt->round_text_text[i]);
-				if (strlen(str) > h) {
+				if ((int) strlen(str) > h) {
 					str[h] = 0;
 					}
 
-				if (strlen(str) + Opt->round_text_sustain[i] > h &&
-						strlen(str) && !is_all_whitespace(str)) {
+				if ((int) strlen(str) + Opt->round_text_sustain[i] > h &&
+						(int) strlen(str) && !is_all_whitespace(str)) {
 					int font_size = 36;
 					int stroke_width = 1;
 
@@ -2449,10 +2449,10 @@ void animate::draw_frame_HCV_surface(
 	else if (round == 4 || round == 5 || round == 6) {
 
 		int selection[27];
-		int nb_select;
+		//int nb_select;
 
 		selection[0] = 2;
-		nb_select = 1;
+		//nb_select = 1;
 		S->draw_cubic_with_selection(selection, 1, Pov->color_white, fp);
 
 #if 0
@@ -2465,7 +2465,7 @@ void animate::draw_frame_HCV_surface(
 		for (i = 0; i < 27; i++) {
 			selection[i] = i;
 		}
-		nb_select = 27;
+		//nb_select = 27;
 		S->draw_lines_with_selection(selection, 6,
 				Pov->color_red,
 				fp);
@@ -2520,10 +2520,10 @@ void animate::draw_frame_HCV_surface(
 		// yellow lines only:
 
 		int selection[27];
-		int nb_select;
+		//int nb_select;
 
 		selection[0] = 2;
-		nb_select = 1;
+		//nb_select = 1;
 		S->draw_cubic_with_selection(selection, 1, Pov->color_white, fp);
 
 #if 0
@@ -2536,7 +2536,7 @@ void animate::draw_frame_HCV_surface(
 		for (i = 0; i < 27; i++) {
 			selection[i] = i;
 		}
-		nb_select = 27 - 12;
+		//nb_select = 27 - 12;
 #if 0
 		S->draw_lines_with_selection(selection, 6,
 				color_red,
@@ -2565,9 +2565,9 @@ void animate::draw_frame_E4_surface(
 {
 	cout << "animate::draw_frame_E4_surface" << endl;
 
-	double scale_factor;
+	//double scale_factor;
 
-	scale_factor = Opt->scale_factor;
+	//scale_factor = Opt->scale_factor;
 
 	Pov->union_start(fp);
 
@@ -2607,9 +2607,9 @@ void animate::draw_frame_triangulation_of_cube(
 	ostream &fp,
 	int verbose_level)
 {
-	double scale_factor;
+	//double scale_factor;
 
-	scale_factor = Opt->scale_factor;
+	//scale_factor = Opt->scale_factor;
 
 
 	Pov->union_start(fp);
@@ -2664,17 +2664,17 @@ void animate::draw_frame_twisted_cubic(
 
 	cout << "draw_frame_twisted_cubic" << endl;
 
-	double my_clipping_radius;
-	double scale_factor;
+	//double my_clipping_radius;
+	//double scale_factor;
 
-	my_clipping_radius = Opt->clipping_radius;
-	scale_factor = Opt->scale_factor;
+	//my_clipping_radius = Opt->clipping_radius;
+	//scale_factor = Opt->scale_factor;
 
 	Pov->union_start(fp);
 
 	for (i = 0; i < Opt->nb_clipping; i++) {
 		if (Opt->clipping_round[i] == round) {
-			my_clipping_radius = Opt->clipping_value[i];
+			//my_clipping_radius = Opt->clipping_value[i];
 			}
 		}
 
@@ -2749,14 +2749,14 @@ void animate::draw_frame_five_plus_one(
 	ostream &fp,
 	int verbose_level)
 {
-	double d_theta, theta;
+	//double d_theta, theta;
 
 	// prepare for a curve in polar coordinates
 	// with theta from 0 to 2 * pi:
 
-	d_theta = 2 * M_PI / nb_frames;
+	//d_theta = 2 * M_PI / nb_frames;
 
-	theta = (double) h * d_theta;
+	//theta = (double) h * d_theta;
 
 	int plane0 = 3;
 	int line0 = 0;
