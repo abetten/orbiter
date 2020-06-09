@@ -19,7 +19,6 @@ MODULES = \
 	classify_cubic_curves.o \
 	classify_double_sixes.o \
 	classify_trihedral_pairs.o \
-	code_classify.o \
 	cubic_curve_with_action.o \
 	hermitian_spreads_classify.o \
 	hill_cap.o \

@@ -18,9 +18,10 @@ namespace top_level {
 
 spread_classify::spread_classify()
 {
-	F = NULL;
+	//F = NULL;
 	LG = NULL;
-	f_semilinear = FALSE;
+	Mtx = NULL;
+	//f_semilinear = FALSE;
 	Control = NULL;
 
 	order = 0;
@@ -83,71 +84,71 @@ void spread_classify::freeself()
 #if 0
 	if (A) {
 		FREE_OBJECT(A);
-		}
+	}
 #endif
 	if (A2) {
 		FREE_OBJECT(A2);
-		}
+	}
 #if 0
 	if (AG) {
 		FREE_OBJECT(AG);
-		}
+	}
 #endif
 	if (Grass) {
 		FREE_OBJECT(Grass);
-		}
+	}
 
 	if (R) {
 		FREE_OBJECT(R);
-		}
+	}
 	if (Base_case) {
 		FREE_OBJECT(Base_case);
-		}
+	}
 	if (Starter) {
 		FREE_lint(Starter);
-		}
+	}
 	if (Starter_Strong_gens) {
 		FREE_OBJECT(Starter_Strong_gens);
-		}
+	}
 	if (tmp_M1) {
 		FREE_int(tmp_M1);
-		}
+	}
 	if (tmp_M2) {
 		FREE_int(tmp_M2);
-		}
+	}
 	if (tmp_M3) {
 		FREE_int(tmp_M3);
-		}
+	}
 	if (tmp_M4) {
 		FREE_int(tmp_M4);
-		}
+	}
 
 	
 	if (Sing) {
 		FREE_OBJECT(Sing);
-		}
+	}
 	if (O) {
 		FREE_OBJECT(O);
-		}
+	}
 	if (Klein) {
 		FREE_OBJECT(Klein);
-		}
+	}
 	if (Data1) {
 		FREE_int(Data1);
-		}
+	}
 	if (Data2) {
 		FREE_int(Data2);
-		}
+	}
 #if 0
 	if (Data3) {
 		FREE_int(Data3);
-		}
+	}
 #endif
 	null();
 }
 
 void spread_classify::init(
-		finite_field *F, linear_group *LG,
+		linear_group *LG,
 		int k, poset_classification_control *Control,
 		int verbose_level)
 {
@@ -157,8 +158,6 @@ void spread_classify::init(
 	combinatorics_domain Combi;
 	
 	int f_recoordinatize = TRUE;
-	const char *input_prefix = "";
-	const char *base_fname = "";
 	
 	if (f_v) {
 		cout << "spread_classify::init" << endl;
@@ -168,18 +167,18 @@ void spread_classify::init(
 	spread_classify::k = k;
 	spread_classify::Control = Control;
 
-	spread_classify::F = F;
 	spread_classify::LG = LG;
-	A = LG->A2;
+	A = LG->A_linear;
 	n = A->matrix_group_dimension();
-	f_semilinear = A->is_semilinear_matrix_group();
-	q = F->q;
+	Mtx = A->get_matrix_group();
+	q = Mtx->GFq->q;
 	order = NT.i_power_j(q, k);
 	spread_size = order + 1;
 	if (f_v) {
 		cout << "spread_classify::init" << endl;
 		cout << "q=" << q << endl;
 		cout << "n=" << n << endl;
+		cout << "k=" << k << endl;
 		cout << "order=" << order << endl;
 		cout << "spread_size=" << spread_size << endl;
 	}
@@ -188,18 +187,13 @@ void spread_classify::init(
 	Control->max_depth = spread_size;
 	if (f_v) {
 		cout << "spread_classify::init" << endl;
-		cout << "Control->max_depth=" << Control->max_depth << endl;
+		cout << "Control:" << endl;
+		Control->print();
 	}
 
 	kn = k * n;
 	spread_classify::f_recoordinatize = f_recoordinatize;
 	
-	strcpy(starter_directory_name, input_prefix);
-	strcpy(prefix, base_fname);
-	//sprintf(prefix_with_directory, "%s%s",
-	//starter_directory_name, base_fname);
-	//spread_classify::starter_size = starter_size;
-
 
 
 
@@ -210,11 +204,9 @@ void spread_classify::init(
 	tmp_M4 = NEW_int(n * n);
 	
 	gen = NEW_OBJECT(poset_classification);
-	//gen->read_arguments(argc, argv, 1);
 
 
 
-	//A = NEW_OBJECT(action);
 	A2 = NEW_OBJECT(action);
 	AG = NEW_OBJECT(action_on_grassmannian);
 
@@ -235,7 +227,7 @@ void spread_classify::init(
 
 
 	Grass = NEW_OBJECT(grassmann);
-	Grass->init(n, k, F, 0 /*MINIMUM(verbose_level - 1, 1)*/);
+	Grass->init(n, k, Mtx->GFq, 0 /*MINIMUM(verbose_level - 1, 1)*/);
 	
 	nCkq = Combi.generalized_binomial(n, k, q);
 	block_size = r = Combi.generalized_binomial(k, 1, q);
@@ -332,19 +324,17 @@ void spread_classify::init(
 		longinteger_object go;
 		
 		A->Strong_gens->group_order(go);
-		cout << "spread_classify::init The order "
-				"of PGGL(n,q) is " << go << endl;
+		cout << "spread_classify::init The order of PGGL(n,q) is " << go << endl;
 	}
 
 	
 	if (f_recoordinatize) {
 		if (f_v) {
-			cout << "spread_classify::init before "
-					"recoordinatize::init" << endl;
+			cout << "spread_classify::init before recoordinatize::init" << endl;
 		}
 		R = NEW_OBJECT(recoordinatize);
-		R->init(n, k, F, Grass, A, A2, 
-			TRUE /*f_projective*/, f_semilinear,
+		R->init(n, k, Mtx->GFq, Grass, A, A2,
+			TRUE /*f_projective*/, Mtx->f_semilinear,
 			callback_incremental_check_function, (void *) this,
 			verbose_level);
 
@@ -353,7 +343,7 @@ void spread_classify::init(
 					"recoordinatize::compute_starter" << endl;
 		}
 		R->compute_starter(Starter, Starter_size, 
-			Starter_Strong_gens, MINIMUM(verbose_level - 1, 1));
+			Starter_Strong_gens, verbose_level - 10);
 
 		longinteger_object go;
 		Starter_Strong_gens->group_order(go);
@@ -409,8 +399,8 @@ void spread_classify::init(
 		Klein = NEW_OBJECT(klein_correspondence);
 		O = NEW_OBJECT(orthogonal);
 		
-		O->init(1 /* epsilon */, 6, F, 0 /* verbose_level*/);
-		Klein->init(F, O, 0 /* verbose_level */);
+		O->init(1 /* epsilon */, 6, Mtx->GFq, 0 /* verbose_level*/);
+		Klein->init(Mtx->GFq, O, 0 /* verbose_level */);
 	}
 	else {
 		if (f_v) {
@@ -445,7 +435,6 @@ void spread_classify::init2(int verbose_level)
 	}
 	//depth = order + 1;
 
-	//Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A2,
 			A->Strong_gens,
@@ -516,14 +505,14 @@ void spread_classify::init2(int verbose_level)
 
 void spread_classify::unrank_point(int *v, long int a)
 {
-	F->PG_element_unrank_modified_lint(v, 1, n, a);
+	Mtx->GFq->PG_element_unrank_modified_lint(v, 1, n, a);
 }
 
 long int spread_classify::rank_point(int *v)
 {
 	long int a;
 	
-	F->PG_element_rank_modified_lint(v, 1, n, a);
+	Mtx->GFq->PG_element_rank_modified_lint(v, 1, n, a);
 	return a;
 }
 
@@ -587,7 +576,7 @@ void spread_classify::print_elements()
 		unrank_subspace(M, i);
 		if (FALSE) {
 			print_integer_matrix_width(cout, M,
-					k, n, n, F->log10_of_q + 1);
+					k, n, n, Mtx->GFq->log10_of_q + 1);
 		}
 		j = rank_subspace(M);
 		if (j != i) {
@@ -615,15 +604,15 @@ void spread_classify::print_elements_and_points()
 		}
 		unrank_subspace(M, i);
 		for (a = 0; a < r; a++) {
-			F->PG_element_unrank_modified(v, 1, k, a);
-			F->mult_matrix_matrix(v, M, w, 1, k, n,
+			Mtx->GFq->PG_element_unrank_modified(v, 1, k, a);
+			Mtx->GFq->mult_matrix_matrix(v, M, w, 1, k, n,
 					0 /* verbose_level */);
 			b = rank_point(w);
 			Line[a] = b;
 		}
 		cout << "line " << i << ":" << endl;
 		print_integer_matrix_width(cout, M,
-				k, n, n, F->log10_of_q + 1);
+				k, n, n, Mtx->GFq->log10_of_q + 1);
 		cout << "points on subspace " << i << " : ";
 		int_vec_print(cout, Line, r);
 		cout << endl;
@@ -714,7 +703,7 @@ void spread_classify::early_test_func(long int *S, int len,
 					cout << "candidate " << i << "="
 							<< candidates[i] << ":" << endl;
 					print_integer_matrix_width(cout,
-							Grass->M, k, n, n, F->log10_of_q + 1);
+							Grass->M, k, n, n, Mtx->GFq->log10_of_q + 1);
 				}
 			}
 			else {
@@ -742,7 +731,7 @@ void spread_classify::early_test_func(long int *S, int len,
 		for (i = 0; i < len; i++) {
 			cout << "p_" << i << "=" << S[i] << ":" << endl;
 			print_integer_matrix_width(cout,
-					MM + i * k * n, k, n, n, F->log10_of_q + 1);
+					MM + i * k * n, k, n, n, Mtx->GFq->log10_of_q + 1);
 		}
 	}
 	
@@ -763,9 +752,9 @@ void spread_classify::early_test_func(long int *S, int len,
 				cout << "testing (p_" << i << ",candidates[" << j << "])="
 						"(" << S[i] <<  "," << candidates[j] << ")" << endl;
 				print_integer_matrix_width(cout, M,
-						n, n, n, F->log10_of_q + 1);
+						n, n, n, Mtx->GFq->log10_of_q + 1);
 			}
-			rk = F->rank_of_matrix_memory_given(M, n, B, base_cols, 0);
+			rk = Mtx->GFq->rank_of_matrix_memory_given(M, n, B, base_cols, 0);
 			if (rk < n) {
 				if (f_vv) {
 					cout << "rank is " << rk << " which is bad" << endl;
@@ -818,7 +807,7 @@ int spread_classify::check_function(int len, long int *S, int verbose_level)
 			cout << "p_" << i << "=" << S[i] << ":" << endl;
 			Grass->unrank_lint(S[i], 0/*verbose_level - 4*/);
 			print_integer_matrix_width(cout, Grass->M,
-					k, n, n, F->log10_of_q + 1);
+					k, n, n, Mtx->GFq->log10_of_q + 1);
 		}
 	}
 
@@ -832,9 +821,9 @@ int spread_classify::check_function(int len, long int *S, int verbose_level)
 				cout << "testing (p_" << i << ",p_" << j << ")"
 						"=(" << S[i] << "," << S[j] << ")" << endl;
 				print_integer_matrix_width(cout, M,
-						n, n, n, F->log10_of_q + 1);
+						n, n, n, Mtx->GFq->log10_of_q + 1);
 			}
-			rk = F->rank_of_matrix_memory_given(M, n, B, base_cols, 0);
+			rk = Mtx->GFq->rank_of_matrix_memory_given(M, n, B, base_cols, 0);
 			if (rk < n) {
 				if (f_vv) {
 					cout << "rank is " << rk << " which is bad" << endl;
@@ -898,7 +887,7 @@ int spread_classify::incremental_check_function(int len, long int *S, int verbos
 			cout << "p_" << i << "=" << S[i] << ":" << endl;
 			Grass->unrank_lint(S[i], 0/*verbose_level - 4*/);
 			print_integer_matrix_width(cout,
-					Grass->M, k, n, n, F->log10_of_q + 1);
+					Grass->M, k, n, n, Mtx->GFq->log10_of_q + 1);
 		}
 	}
 	
@@ -913,9 +902,9 @@ int spread_classify::incremental_check_function(int len, long int *S, int verbos
 			cout << "testing (p_" << i << ",p_" << j << ")"
 					"=(" << S[i] <<  "," << S[j] << ")" << endl;
 			print_integer_matrix_width(cout, M,
-					n, n, n, F->log10_of_q + 1);
+					n, n, n, Mtx->GFq->log10_of_q + 1);
 		}
-		rk = F->rank_of_matrix_memory_given(M, n, B, base_cols, 0);
+		rk = Mtx->GFq->rank_of_matrix_memory_given(M, n, B, base_cols, 0);
 		if (rk < n) {
 			if (f_vv) {
 				cout << "rank is " << rk << " which is bad" << endl;
@@ -1109,7 +1098,7 @@ void spread_classify::print(ostream &ost, int len, long int *S)
 		Grass->unrank_lint(S[i], 0);
 		ost << "$$" << endl;
 		ost << "\\left[" << endl;
-		F->latex_matrix(ost, f_elements_exponential, symbol_for_print,
+		Mtx->GFq->latex_matrix(ost, f_elements_exponential, symbol_for_print,
 			Grass->M, k, n);
 		ost << "\\right]" << endl;
 		ost << "$$" << endl << endl;

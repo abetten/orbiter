@@ -1005,86 +1005,6 @@ void classify_trihedral_pairs_early_test_function_type2(long int *S, int len,
 	void *data, int verbose_level);
 
 
-// #############################################################################
-// code_classify.cpp
-// #############################################################################
-
-//! classification of linear and nonlinear codes
-
-
-class code_classify {
-
-public:
-
-	int verbose_level;
-
-	int f_nmk;
-	int n;
-	int q;
-	int d;
-
-	int f_report_schreier_trees;
-	int f_report;
-
-	int f_read_data_file;
-	const char *fname_data_file;
-	int depth_completed;
-
-
-	char directory_path[1000];
-	char prefix[1000];
-
-
-	finite_field *F; // F_q
-
-
-	int f_linear;
-	int k; // for linear codes
-	int nmk; // n - k
-	rank_checker rc;
-	int *v1; // [nmk], used by Hamming distance
-	int *v2; // [nmk], used by Hamming distance
-
-
-
-
-	int f_nonlinear;
-	int N; // number of codewords for nonlinear codes
-	linear_group_description *description;
-	linear_group *L;
-
-
-	strong_generators *Strong_gens;
-	action *A; // PGL(n - k, q) if f_linear
-
-	int f_control;
-	poset_classification_control *Control;
-
-	poset *Poset;
-	poset_classification *gen;
-
-
-	int f_irreducibility_test;
-	int f_semilinear;
-
-
-	int schreier_depth; // = 1000;
-	int f_use_invariant_subset_if_available; // = TRUE;
-	int f_debug; // = FALSE;
-
-	code_classify();
-	~code_classify();
-	void null();
-	void freeself();
-	void read_arguments(int argc, const char **argv);
-	void init(poset_classification_control *Control);
-	void main(int verbose_level);
-	void print(std::ostream &ost, int len, long int *S);
-	int Hamming_distance(int a, int b);
-};
-
-void print_code(std::ostream &ost, int len, long int *S, void *data);
-
 
 // #############################################################################
 // cubic_curve_action.cpp:
@@ -1359,7 +1279,7 @@ public:
 	~linear_set_classify();
 	void null();
 	void freeself();
-	void init(int argc, const char **argv,
+	void init(//int argc, const char **argv,
 		int s, int n, int q,
 		const char *poly_q, const char *poly_Q,
 		int depth, int f_identify, int verbose_level);
@@ -1581,7 +1501,7 @@ public:
 	void freeself();
 	void init(spread_classify *T,
 		int f_packing_select_spread,
-		int *packing_select_spread, int packing_select_spread_nb,
+		const char *packing_select_spread_text,
 		const char *input_prefix, const char *base_fname,
 		int search_depth,
 		int f_lexorder_test,
@@ -2334,9 +2254,10 @@ public:
 class spread_classify {
 public:
 
-	finite_field *F;
+	//finite_field *F;
 	linear_group *LG;
-	int f_semilinear;
+	matrix_group *Mtx;
+	//int f_semilinear;
 	poset_classification_control *Control;
 
 	int order;
@@ -2351,8 +2272,8 @@ public:
 	int block_size; // = r = {k choose 1}_q
 
 
-	char starter_directory_name[1000];
-	char prefix[1000];
+	//char starter_directory_name[1000];
+	//char prefix[1000];
 	//char prefix_with_directory[1000];
 	int starter_size;
 
@@ -2408,7 +2329,7 @@ public:
 	void null();
 	void freeself();
 	void init(
-			finite_field *F, linear_group *LG,
+			linear_group *LG,
 			int k, poset_classification_control *Control,
 			int verbose_level);
 	void init2(int verbose_level);
@@ -2442,10 +2363,14 @@ public:
 		int iso_cnt, sims *Stab, schreier &Orb, 
 		long int *data, int verbose_level);
 		// called from callback_print_isomorphism_type()
+	void print_isomorphism_type2(isomorph *Iso,
+			std::ostream &ost,
+			int iso_cnt, sims *Stab, schreier &Orb,
+			long int *data, int verbose_level);
 	void save_klein_invariants(char *prefix, 
 		int iso_cnt, 
 		long int *data, int data_size, int verbose_level);
-	void klein(std::ofstream &ost,
+	void klein(std::ostream &ost,
 		isomorph *Iso, 
 		int iso_cnt, sims *Stab, schreier &Orb, 
 		long int *data, int data_size, int verbose_level);
@@ -2467,11 +2392,12 @@ public:
 	void get_spread_matrices(int *F, int *G, long int *data, int verbose_level);
 	void print_spread(std::ostream &ost, long int *data, int sz);
 	void report2(isomorph &Iso, int verbose_level);
+	void report3(isomorph &Iso, std::ostream &ost, int verbose_level);
 	void all_cooperstein_thas_quotients(isomorph &Iso, int verbose_level);
 	void cooperstein_thas_quotients(isomorph &Iso, std::ofstream &f,
 		int h, int &cnt, int verbose_level);
-	void orbit_info_short(std::ofstream &f, isomorph &Iso, int h);
-	void report_stabilizer(isomorph &Iso, std::ofstream &f, int orbit,
+	void orbit_info_short(std::ostream &ost, isomorph &Iso, int h);
+	void report_stabilizer(isomorph &Iso, std::ostream &ost, int orbit,
 		int verbose_level);
 	void print(std::ostream &ost, int len, long int *S);
 };

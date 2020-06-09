@@ -137,7 +137,7 @@ void semifield_lifting::init_level_three(
 	semifield_lifting::prefix = prefix;
 
 	Gr = NEW_OBJECT(grassmann);
-	Gr->init(level, level - 1, SC->F, 0/*verbose_level - 10*/);
+	Gr->init(level, level - 1, SC->Mtx->GFq, 0/*verbose_level - 10*/);
 
 	Matrix0 = NEW_int(k2);
 	Matrix1 = NEW_int(k2);
@@ -192,7 +192,7 @@ void semifield_lifting::report(
 		Mtx1 = NEW_int(k2);
 		Mtx2 = NEW_int(k2);
 
-		SC->F->identity_matrix(Mtx_Id, k);
+		SC->Mtx->GFq->identity_matrix(Mtx_Id, k);
 
 
 		if (f_v) {
@@ -320,17 +320,17 @@ void semifield_lifting::report(
 			ost << "$$" << endl;
 			ost << "\\left\\{" << endl;
 			ost << "\\left[" << endl;
-			SC->F->latex_matrix(ost, f_elements_exponential,
+			SC->Mtx->GFq->latex_matrix(ost, f_elements_exponential,
 					symbol_for_print, Mtx_Id, k, k);
 			ost << "\\right]";
 			ost << ",";
 			ost << "\\left[" << endl;
-			SC->F->latex_matrix(ost, f_elements_exponential,
+			SC->Mtx->GFq->latex_matrix(ost, f_elements_exponential,
 					symbol_for_print, Mtx1, k, k);
 			ost << "\\right]";
 			ost << ",";
 			ost << "\\left[" << endl;
-			SC->F->latex_matrix(ost, f_elements_exponential,
+			SC->Mtx->GFq->latex_matrix(ost, f_elements_exponential,
 					symbol_for_print, Mtx2, k, k);
 			ost << "\\right]";
 			ost << "\\right\\}" << endl;
@@ -993,7 +993,7 @@ void semifield_lifting::upstep(
 	//changed_space_after_trace = NEW_int(level * k2);
 	set = NEW_lint(level);
 
-	N = Combi.generalized_binomial(level, level - 1, SC->F->q);
+	N = Combi.generalized_binomial(level, level - 1, SC->Mtx->GFq->q);
 
 
 	Stabilizer_gens = NEW_OBJECTS(strong_generators, nb_flag_orbits);
@@ -1022,7 +1022,7 @@ void semifield_lifting::upstep(
 
 		Flag_orbits[f].upstep_orbit = nb_orbits;
 
-		SC->F->identity_matrix(Mtx, k);
+		SC->Mtx->GFq->identity_matrix(Mtx, k);
 
 		po = Flag_orbits[f].downstep_primary_orbit;
 		so = Flag_orbits[f].downstep_secondary_orbit;
@@ -1241,7 +1241,7 @@ void semifield_lifting::upstep_loop_over_down_set(
 			cout << "semifield_lifting::upstep_loop_over_down_set "
 					"before SC->F->mult_matrix_matrix" << endl;
 		}
-		SC->F->mult_matrix_matrix(base_change_matrix,
+		SC->Mtx->GFq->mult_matrix_matrix(base_change_matrix,
 				Mtx, changed_space, level, level, k2,
 				0 /* verbose_level */);
 		if (f_vvv) {
@@ -1408,7 +1408,7 @@ void semifield_lifting::get_basis(
 				"po3 = " << po3 << endl;
 	}
 
-	SC->F->identity_matrix(basis, k);
+	SC->Mtx->GFq->identity_matrix(basis, k);
 
 	po = Po[po3];
 	so = So[po3];
@@ -1650,7 +1650,7 @@ int semifield_lifting::trace_step_up(
 				"before Gauss_int_with_given_pivots" << endl;
 		int_matrix_print(changed_basis, basis_sz, k2);
 	}
-	if (!SC->F->Gauss_int_with_given_pivots(
+	if (!SC->Mtx->GFq->Gauss_int_with_given_pivots(
 		changed_basis,
 		FALSE /* f_special */,
 		TRUE /* f_complete */,
@@ -1675,7 +1675,7 @@ int semifield_lifting::trace_step_up(
 		}
 		for (i = 0; i < 3; i++) {
 			for (j = 3; j < basis_sz; j++) {
-				SC->F->Gauss_step(changed_basis + i * k2,
+				SC->Mtx->GFq->Gauss_step(changed_basis + i * k2,
 						changed_basis + j * k2, k2,
 						SC->desired_pivots[i], 0 /*verbose_level*/);
 			}
@@ -1720,7 +1720,7 @@ void semifield_lifting::trace_very_general(
 		exit(1);
 	}
 	A = SC->A;
-	F = SC->F;
+	F = SC->Mtx->GFq;
 	if (f_vv) {
 		cout << "semifield_lifting::trace_very_general "
 				"input basis:" << endl;
@@ -1898,7 +1898,7 @@ void semifield_lifting::trace_to_level_two(
 		exit(1);
 	}
 	A = SC->A;
-	F = SC->F;
+	F = SC->Mtx->GFq;
 	if (f_vv) {
 		cout << "semifield_lifting::trace_very_general "
 				"input basis:" << endl;
@@ -2763,7 +2763,7 @@ void semifield_lifting::level_three_get_a1_a2_a3(
 
 	basis = NEW_int(k2);
 
-	SC->F->identity_matrix(basis, k);
+	SC->Mtx->GFq->identity_matrix(basis, k);
 
 	a1 = SC->matrix_rank(basis);
 

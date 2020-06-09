@@ -339,7 +339,7 @@ void semifield_level_two::init(semifield_classify *SC,
 	k = SC->k;
 	n = 2 * k;
 	k2 = k * k;
-	F = SC->F;
+	F = SC->Mtx->GFq;
 	q = SC->q;
 
 	A = SC->A;

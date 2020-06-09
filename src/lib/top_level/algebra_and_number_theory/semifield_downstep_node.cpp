@@ -66,7 +66,7 @@ void semifield_downstep_node::init(
 
 	semifield_downstep_node::SL = SL;
 	semifield_downstep_node::SC = SL->SC;
-	semifield_downstep_node::F = SC->F;
+	semifield_downstep_node::F = SC->Mtx->GFq;
 	semifield_downstep_node::k = SC->k;
 	semifield_downstep_node::k2 = SC->k2;
 

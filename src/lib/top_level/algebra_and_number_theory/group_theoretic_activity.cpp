@@ -221,6 +221,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		do_create_surface(Descr->surface_descr, Descr->Control_six_arcs, verbose_level);
 	}
 
+	// spreads:
 
 	else if (Descr->f_spread_classify) {
 		do_spread_classify(Descr->spread_classify_k, verbose_level);
@@ -2640,11 +2641,12 @@ void group_theoretic_activity::do_spread_classify(int k, int verbose_level)
 
 	poset_classification_control *Control;
 
-	if (Descr->f_poset_classification_control) {
-		Control = Descr->Control;
+	if (!Descr->f_poset_classification_control) {
+		cout << "please use -poset_classification_control <descr> -end" << endl;
+		exit(1);
 	}
 	else {
-		Control = NEW_OBJECT(poset_classification_control);
+		Control = Descr->Control;
 	}
 
 
@@ -2657,7 +2659,7 @@ void group_theoretic_activity::do_spread_classify(int k, int verbose_level)
 	}
 
 	SC->init(
-			F, LG,
+			LG,
 			k,
 			Control,
 			verbose_level - 1);
@@ -2700,11 +2702,12 @@ void group_theoretic_activity::do_packing_classify(int k,
 
 	poset_classification_control *Control;
 
-	if (Descr->f_poset_classification_control) {
-		Control = Descr->Control;
+	if (!Descr->f_poset_classification_control) {
+		cout << "please use -poset_classification_control <descr> -end" << endl;
+		exit(1);
 	}
 	else {
-		Control = NEW_OBJECT(poset_classification_control);
+		Control = Descr->Control;
 	}
 
 
@@ -2717,7 +2720,7 @@ void group_theoretic_activity::do_packing_classify(int k,
 	}
 
 	SC->init(
-			F, LG,
+			LG,
 			k,
 			Control,
 			verbose_level - 1);
@@ -2738,10 +2741,6 @@ void group_theoretic_activity::do_packing_classify(int k,
 	}
 
 	packing_classify *P;
-	int *select_spread;
-	int select_spread_nb;
-
-	int_vec_scan(spread_selection_text, select_spread, select_spread_nb);
 
 	P = NEW_OBJECT(packing_classify);
 
@@ -2749,8 +2748,7 @@ void group_theoretic_activity::do_packing_classify(int k,
 	cout << "before P->init" << endl;
 	P->init(SC,
 		TRUE /* f_select_spread */,
-		select_spread,
-		select_spread_nb,
+		spread_selection_text,
 		input_prefix, base_fname,
 		starter_size,
 		TRUE /* ECA->f_lex */,

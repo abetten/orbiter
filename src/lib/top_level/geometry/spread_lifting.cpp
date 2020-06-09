@@ -40,16 +40,16 @@ void spread_lifting::freeself()
 {
 	if (points_covered_by_starter) {
 		FREE_lint(points_covered_by_starter);
-		}
+	}
 	if (free_point_list) {
 		FREE_lint(free_point_list);
-		}
+	}
 	if (point_idx) {
 		FREE_lint(point_idx);
-		}
+	}
 	if (col_labels) {
 		FREE_lint(col_labels);
-		}
+	}
 	null();
 }
 
@@ -69,7 +69,7 @@ void spread_lifting::init(
 	
 	if (f_v) {
 		cout << "spread_lifting::init" << endl;
-		}
+	}
 	spread_lifting::S = S;
 	spread_lifting::E = E;
 	spread_lifting::starter = starter;
@@ -84,22 +84,22 @@ void spread_lifting::init(
 	if (f_v) {
 		cout << "spread_lifting::init "
 				"before compute_points_covered_by_starter" << endl;
-		}
+	}
 	compute_points_covered_by_starter(verbose_level - 2);
 	if (f_v) {
 		cout << "spread_lifting::init "
 				"after compute_points_covered_by_starter" << endl;
-		}
+	}
 	
 	if (f_v) {
 		cout << "spread_lifting::init "
 				"before prepare_free_points" << endl;
-		}
+	}
 	prepare_free_points(verbose_level - 2);
 	if (f_v) {
 		cout << "spread_lifting::init "
 				"after prepare_free_points" << endl;
-		}
+	}
 
 	nb_needed = S->spread_size - starter_size;
 	if (f_v) {
@@ -107,7 +107,7 @@ void spread_lifting::init(
 				"nb_needed=" << nb_needed << endl;
 		cout << "spread_lifting::init "
 				"nb_candidates=" << nb_candidates << endl;
-		}
+	}
 
 
 	col_labels = NEW_lint(nb_candidates);
@@ -126,17 +126,17 @@ void spread_lifting::init(
 					"nb_candidates before: " << nb_cols_before
 					<< " reduced to  " << nb_cols << " (deleted "
 					<< nb_cols_before - nb_cols << ")" << endl;
-			}
 		}
+	}
 
 	if (f_v) {
 		cout << "spread_lifting::init after lexorder test" << endl;
 		cout << "spread_lifting::init nb_cols=" << nb_cols << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "spread_lifting::init done" << endl;
-		}
+	}
 }
 
 void spread_lifting::compute_points_covered_by_starter(
@@ -151,7 +151,7 @@ void spread_lifting::compute_points_covered_by_starter(
 	if (f_v) {
 		cout << "spread_lifting::compute_points_"
 				"covered_by_starter" << endl;
-		}
+	}
 	nb_points_covered_by_starter = starter_size * S->block_size;
 	points_covered_by_starter = NEW_lint(nb_points_covered_by_starter);
 
@@ -161,7 +161,7 @@ void spread_lifting::compute_points_covered_by_starter(
 
 		a = starter[i];
 		S->Grass->unrank_lint(a, 0/*verbose_level - 4*/);
-		S->F->all_PG_elements_in_subspace(
+		S->Mtx->GFq->all_PG_elements_in_subspace(
 			S->Grass->M, S->k, S->n, point_list,
 			nb_points, 0 /*verbose_level - 2*/);
 		
@@ -169,7 +169,7 @@ void spread_lifting::compute_points_covered_by_starter(
 			cout << "spread_lifting::compute_points_"
 					"covered_by_starter nb_points != S->block_size" << endl;
 			exit(1);
-			}
+		}
 
 		lint_vec_copy(point_list,
 				points_covered_by_starter + i * S->block_size,
@@ -185,10 +185,10 @@ void spread_lifting::compute_points_covered_by_starter(
 					points_covered_by_starter +
 						i * S->block_size, S->block_size);
 			cout << endl;
-			}
+		}
 
 		FREE_lint(point_list);
-		}
+	}
 	Sorting.lint_vec_heapsort(points_covered_by_starter,
 			nb_points_covered_by_starter);
 	if (f_vv) {
@@ -200,12 +200,12 @@ void spread_lifting::compute_points_covered_by_starter(
 		lint_vec_print(cout, points_covered_by_starter,
 				nb_points_covered_by_starter);
 		cout << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "spread_lifting::compute_points_"
 				"covered_by_starter done" << endl;
-		}
+	}
 }
 
 void spread_lifting::prepare_free_points(
@@ -219,13 +219,13 @@ void spread_lifting::prepare_free_points(
 	
 	if (f_v) {
 		cout << "spread_lifting::prepare_free_points" << endl;
-		}
+	}
 
 	nb_free_points = S->nb_points_total - nb_points_covered_by_starter;
 	if (f_vv) {
 		cout << "spread_lifting::prepare_free_points "
 				"nb_free_points=" << nb_free_points << endl;
-		}
+	}
 	free_point_list = NEW_lint(nb_free_points);
 	point_idx = NEW_lint(S->nb_points_total);
 	j = 0;
@@ -233,22 +233,22 @@ void spread_lifting::prepare_free_points(
 		if (Sorting.lint_vec_search(points_covered_by_starter,
 				nb_points_covered_by_starter, i, idx, 0)) {
 			point_idx[i] = -1;
-			}
+		}
 		else {
 			free_point_list[j] = i;
 			point_idx[i] = j;
 			j++;
-			}
 		}
+	}
 	if (j != nb_free_points) {
 		cout << "spread_lifting::prepare_free_points "
 				"j != nb_free_points" << endl;
 		exit(1);
-		}
+	}
 	if (f_vv) {
 		cout << "spread_lifting::prepare_free_points "
 				"computed free points" << endl;
-		}
+	}
 
 	if (f_v3) {
 		cout << "spread_lifting::prepare_free_points "
@@ -257,10 +257,10 @@ void spread_lifting::prepare_free_points(
 				free_point_list, nb_free_points);
 		cout << endl;
 		S->print_points(free_point_list, nb_free_points);
-		}
+	}
 	if (f_v) {
 		cout << "spread_lifting::prepare_free_points done" << endl;
-		}
+	}
 }
 
 diophant *spread_lifting::create_system(int verbose_level)
@@ -274,7 +274,7 @@ diophant *spread_lifting::create_system(int verbose_level)
 
 	if (f_v) {
 		cout << "spread_lifting::create_system" << endl;
-		}
+	}
 
 	Dio = NEW_OBJECT(diophant);
 	Dio->open(nb_rows, nb_cols);
@@ -284,7 +284,7 @@ diophant *spread_lifting::create_system(int verbose_level)
 	for (i = 0; i < nb_rows; i++) {
 		Dio->type[i] = t_EQ;
 		Dio->RHS[i] = 1;
-		}
+	}
 
 	Dio->fill_coefficient_matrix_with(0);
 	if (f_vv) {
@@ -292,7 +292,7 @@ diophant *spread_lifting::create_system(int verbose_level)
 				"nb_rows = " << nb_rows << endl;
 		cout << "spread_lifting::create_system "
 				"nb_cols = " << nb_cols << endl;
-		}
+	}
 	for (j = 0; j < nb_cols; j++) {
 
 		long int *point_list;
@@ -303,25 +303,25 @@ diophant *spread_lifting::create_system(int verbose_level)
 		if (f_vv) {
 			cout << "candidate " << j << " / "
 					<< nb_cols << " is " << a << endl;
-			}
+		}
 
 		if (f_v5) {
 			cout << "Which is " << endl;
 			int_matrix_print(S->Grass->M, S->k, S->n);
-			}
-		S->F->all_PG_elements_in_subspace(
+		}
+		S->Mtx->GFq->all_PG_elements_in_subspace(
 				S->Grass->M, S->k, S->n, point_list, nb_points,
 				0 /*verbose_level*/);
 		if (nb_points != S->block_size) {
 			cout << "spread_lifting::create_system "
 					"nb_points != S->block_size" << endl;
 			exit(1);
-			}
+		}
 		if (FALSE /*f_vv*/) {
 			cout << "List of points: ";
 			lint_vec_print(cout, point_list, nb_points);
 			cout << endl;
-			}
+		}
 
 
 
@@ -334,16 +334,16 @@ diophant *spread_lifting::create_system(int verbose_level)
 						"candidate block contains point that "
 						"is already covered" << endl;
 				exit(1);
-				}
+			}
 			if (i < 0 || i >= nb_free_points) {
 				cout << "spread_lifting::create_system "
 						"i < 0 || i >= nb_free_points" << endl;
 				exit(1);
-				}
-			Dio->Aij(i, j) = 1;
 			}
-		FREE_lint(point_list);
+			Dio->Aij(i, j) = 1;
 		}
+		FREE_lint(point_list);
+	}
 
 	if (FALSE) {
 		cout << "spread_lifting::create_system "
@@ -351,13 +351,13 @@ diophant *spread_lifting::create_system(int verbose_level)
 		for (i = 0; i < nb_rows; i++) {
 			for (j = 0; j < nb_cols; j++) {
 				cout << Dio->Aij(i, j);
-				}
-			cout << endl;
 			}
+			cout << endl;
 		}
+	}
 	if (f_v) {
 		cout << "spread_lifting::create_system done" << endl;
-		}
+	}
 	return Dio;
 }
 
@@ -372,43 +372,43 @@ void spread_lifting::find_coloring(diophant *Dio,
 	
 	if (f_v) {
 		cout << "spread_lifting::find_coloring" << endl;
-		}
+	}
 	v = NEW_int(S->n);
 	colors = NEW_int(nb_free_points);
 	nb_colors = 0;
 	for (i = 0; i < nb_free_points; i++) {
 		a = free_point_list[i];
 		S->unrank_point(v, a);
-		S->F->PG_element_normalize_from_front(
+		S->Mtx->GFq->PG_element_normalize_from_front(
 			v, 1, S->n);
 		if (v[0] != 1) {
 			continue;
-			}
+		}
 		for (j = 1; j < S->k; j++) {
 			if (v[j] != 0) {
 				break;
-				}
 			}
+		}
 		if (j < S->k) {
 			continue;
-			}
+		}
 		if (f_v) {
 			cout << "found color " << nb_colors
 					<< " : " << i << " = " << a << " = ";
 			int_vec_print(cout, v, S->n);
 			cout << endl;
-			}
-		colors[nb_colors++] = i;
 		}
+		colors[nb_colors++] = i;
+	}
 	if (f_v) {
 		cout << "spread_lifting::find_coloring "
 				"we found " << nb_colors << " colors" << endl;
-		}
+	}
 	if (nb_colors != nb_needed) {
 		cout << "spread_lifting::find_coloring "
 				"nb_colors != nb_needed" << endl;
 		exit(1);
-		}
+	}
 	
 	col_color = NEW_int(nb_cols);
 	for (j = 0; j < nb_cols; j++) {
@@ -417,20 +417,19 @@ void spread_lifting::find_coloring(diophant *Dio,
 			if (Dio->Aij(i, j)) {
 				col_color[j] = c;
 				break;
-				}
 			}
+		}
 		if (c == nb_colors) {
 			cout << "spread_lifting::find_coloring "
 					"c == nb_colors" << endl;
 			exit(1);
-			}
 		}
+	}
 	FREE_int(colors);
 	FREE_int(v);
 	if (f_v) {
-		cout << "spread_lifting::find_coloring "
-				"done" << endl;
-		}
+		cout << "spread_lifting::find_coloring done" << endl;
+	}
 }
 
 }}

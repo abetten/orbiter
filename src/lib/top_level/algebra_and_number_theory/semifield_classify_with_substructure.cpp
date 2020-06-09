@@ -20,8 +20,9 @@ namespace top_level {
 semifield_classify_with_substructure::semifield_classify_with_substructure()
 {
 
-	F = NULL;
 	LG = NULL;
+	Mtx = NULL;
+	//F = NULL;
 	Control = NULL;
 	t0 = 0;
 	//argc = 0;
@@ -171,7 +172,7 @@ void semifield_classify_with_substructure::read_arguments(
 #endif
 
 void semifield_classify_with_substructure::init(
-		finite_field *F, linear_group *LG,
+		linear_group *LG,
 		poset_classification_control *Control,
 		int verbose_level)
 {
@@ -182,8 +183,10 @@ void semifield_classify_with_substructure::init(
 	}
 	number_theory_domain NT;
 
-	semifield_classify_with_substructure::F = F;
+
+	//semifield_classify_with_substructure::F = F;
 	semifield_classify_with_substructure::LG = LG;
+	Mtx = LG->A_linear->get_matrix_group();
 	semifield_classify_with_substructure::Control = Control;
 
 	NT.factor_prime_power(order, p, e);
@@ -222,7 +225,7 @@ void semifield_classify_with_substructure::init(
 	Sub->SC = NEW_OBJECT(semifield_classify);
 	cout << "before SC->init" << endl;
 
-	Sub->SC->init(F, LG, k, Control,
+	Sub->SC->init(LG, k, Control,
 			"L2" /* level_two_prefix */,
 			"L3" /* level_three_prefix */,
 			verbose_level - 1);

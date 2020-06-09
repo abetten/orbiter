@@ -191,7 +191,7 @@ void linear_set_classify::freeself()
 	null();
 }
 
-void linear_set_classify::init(int argc, const char **argv,
+void linear_set_classify::init(//int argc, const char **argv,
 	int s, int n, int q, const char *poly_q, const char *poly_Q,
 	int depth, int f_identify, int verbose_level)
 {
@@ -470,7 +470,7 @@ void linear_set_classify::init(int argc, const char **argv,
 		Control = NEW_OBJECT(poset_classification_control);
 		LG = NEW_OBJECT(linear_group); // hack !!! ToDo
 
-		T->init(Fq, LG, k, Control,
+		T->init(LG, k, Control,
 			//Fq, f_recoordinatize,
 			//"SPREADS_STARTER", "Spreads", order + 1,
 			//argc, argv,

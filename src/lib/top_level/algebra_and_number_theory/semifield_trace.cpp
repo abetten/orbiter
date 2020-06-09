@@ -70,7 +70,7 @@ void semifield_trace::init(semifield_lifting *SL)
 	SC = SL->SC;
 	L2 = SL->L2;
 	A = SC->A;
-	F = SC->F;
+	F = SC->Mtx->GFq;
 	k = SC->k;
 	k2 = k * k;
 	n = 2 * k;

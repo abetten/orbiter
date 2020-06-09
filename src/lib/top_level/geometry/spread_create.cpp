@@ -40,13 +40,13 @@ void spread_create::freeself()
 {
 	if (F) {
 		FREE_OBJECT(F);
-		}
+	}
 	if (set) {
 		FREE_lint(set);
-		}
+	}
 	if (Sg) {
 		FREE_OBJECT(Sg);
-		}
+	}
 	null();
 }
 

@@ -498,7 +498,7 @@ void packing_was::init(int argc, const char **argv)
 	Control = NEW_OBJECT(poset_classification_control);
 	LG = NEW_OBJECT(linear_group); // hack !!! ToDo
 
-	T->init(F, LG, k, Control,
+	T->init(LG, k, Control,
 		//Fq, f_recoordinatize,
 		//"SPREADS_STARTER", "Spreads", order + 1,
 		//argc, argv,

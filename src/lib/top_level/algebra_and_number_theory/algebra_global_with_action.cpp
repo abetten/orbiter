@@ -3473,5 +3473,75 @@ void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 	}
 }
 
+void algebra_global_with_action::packing_init(
+		poset_classification_control *Control, linear_group *LG,
+		int f_select_spread, const char *select_spread_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::packing_init" << endl;
+	}
+	action *A;
+	int n, q, k;
+	matrix_group *Mtx;
+	//finite_field *F;
+	spread_classify *T;
+	packing_classify *P;
+
+
+	A = LG->A2;
+	n = A->matrix_group_dimension();
+	Mtx = A->get_matrix_group();
+	q = Mtx->GFq->q;
+	k = n >> 1;
+	if (f_v) {
+		cout << "algebra_global_with_action::packing_init n=" << n << " k=" << k << " q=" << q << endl;
+	}
+
+
+	T = NEW_OBJECT(spread_classify);
+
+
+	cout << "algebra_global_with_action::packing_init before T->init" << endl;
+
+
+	T->init(LG, k, Control, verbose_level - 1);
+
+	cout << "algebra_global_with_action::packing_init after T->init" << endl;
+
+
+	P = NEW_OBJECT(packing_classify);
+
+
+	cout << "algebra_global_with_action::packing_init before P->init" << endl;
+	P->init(T,
+		f_select_spread,
+		select_spread_text,
+		"", "", //ECA->input_prefix, ECA->base_fname,
+		0, //ECA->starter_size,
+		TRUE, // ECA->f_lex,
+		"", //spread_tables_prefix,
+		verbose_level);
+	cout << "algebra_global_with_action::packing_init after P->init" << endl;
+
+#if 0
+	cout << "before IA->init" << endl;
+	IA->init(T->A, P->A_on_spreads, P->gen,
+		P->size_of_packing, P->prefix_with_directory, ECA,
+		callback_packing_report,
+		NULL /*callback_subset_orbits*/,
+		P,
+		verbose_level);
+	cout << "after IA->init" << endl;
+#endif
+
+	if (f_v) {
+		cout << "algebra_global_with_action::packing_init done" << endl;
+	}
+
+
+}
 
 }}

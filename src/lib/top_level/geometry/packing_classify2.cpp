@@ -203,7 +203,7 @@ void packing_classify::compute_plane_intersections(
 
 	P5 = NEW_OBJECT(projective_space);
 	
-	P5->init(5, T->F, 
+	P5->init(5, T->Mtx->GFq,
 		TRUE /* f_init_incidence_structure */, 
 		0 /* verbose_level - 2 */);
 
@@ -923,7 +923,7 @@ void packing_classify::report_extra_stuff(
 {
 	ost << "\\chapter{The Field GF$(" << q << ")$}" << endl << endl;
 	
-	T->F->cheat_sheet(ost, verbose_level - 1);
+	T->Mtx->GFq->cheat_sheet(ost, verbose_level - 1);
 
 
 	ost << "\\chapter{The Points and Lines of "
