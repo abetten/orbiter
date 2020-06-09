@@ -157,7 +157,6 @@ void spread_classify::init(
 	number_theory_domain NT;
 	combinatorics_domain Combi;
 	
-	int f_recoordinatize = TRUE;
 	
 	if (f_v) {
 		cout << "spread_classify::init" << endl;
@@ -172,8 +171,8 @@ void spread_classify::init(
 	n = A->matrix_group_dimension();
 	Mtx = A->get_matrix_group();
 	q = Mtx->GFq->q;
+	spread_size = (NT.i_power_j(q, n) - 1) / (NT.i_power_j(q, k) - 1);
 	order = NT.i_power_j(q, k);
-	spread_size = order + 1;
 	if (f_v) {
 		cout << "spread_classify::init" << endl;
 		cout << "q=" << q << endl;
@@ -192,9 +191,17 @@ void spread_classify::init(
 	}
 
 	kn = k * n;
-	spread_classify::f_recoordinatize = f_recoordinatize;
 	
+	if (k == (n >> 1)) {
+		f_recoordinatize = TRUE;
+	}
+	else {
+		f_recoordinatize = FALSE;
+	}
 
+	if (f_v) {
+		cout << "spread_classify::init f_recoordinatize = " << f_recoordinatize << endl;
+	}
 
 
 
@@ -358,8 +365,7 @@ void spread_classify::init(
 	else {
 		if (f_v) {
 			cout << "spread_classify::init we are not using "
-					"recoordinatization, please use option "
-					"-recoordinatize" << endl;
+					"recoordinatization" << endl;
 			//exit(1);
 		}
 		Nb = Combi.generalized_binomial(n, k, q); //R->nCkq; // this makes no sense
@@ -390,10 +396,10 @@ void spread_classify::init(
 	}
 #endif
 
-	if (k == 2) {
+	if (k == 2 && n == 4) {
 		
 		if (f_v) {
-			cout << "spread_classify::init k = 2, "
+			cout << "spread_classify::init k == 2 and n == 4, "
 					"initializing klein correspondence" << endl;
 		}
 		Klein = NEW_OBJECT(klein_correspondence);
@@ -427,13 +433,10 @@ void spread_classify::init(
 void spread_classify::init2(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
-	//int depth;
 
 	if (f_v) {
 		cout << "spread_classify::init2" << endl;
 	}
-	//depth = order + 1;
 
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A2,
@@ -480,7 +483,6 @@ void spread_classify::init2(int verbose_level)
 		}
 		gen->initialize_and_allocate_root_node(Control, Poset,
 			spread_size,
-			//starter_directory_name, prefix,
 			verbose_level - 2);
 		if (f_v) {
 			cout << "spread_classify::init2 "
@@ -752,10 +754,12 @@ void spread_classify::early_test_func(long int *S, int len,
 				cout << "testing (p_" << i << ",candidates[" << j << "])="
 						"(" << S[i] <<  "," << candidates[j] << ")" << endl;
 				print_integer_matrix_width(cout, M,
-						n, n, n, Mtx->GFq->log10_of_q + 1);
+						2 * k, n, n, Mtx->GFq->log10_of_q + 1);
 			}
-			rk = Mtx->GFq->rank_of_matrix_memory_given(M, n, B, base_cols, 0);
-			if (rk < n) {
+			rk = Mtx->GFq->rank_of_rectangular_matrix_memory_given(
+					M, 2 * k, n, B, base_cols, 0 /* verbose_level */);
+
+			if (rk < 2 * k) {
 				if (f_vv) {
 					cout << "rank is " << rk << " which is bad" << endl;
 				}
@@ -821,10 +825,11 @@ int spread_classify::check_function(int len, long int *S, int verbose_level)
 				cout << "testing (p_" << i << ",p_" << j << ")"
 						"=(" << S[i] << "," << S[j] << ")" << endl;
 				print_integer_matrix_width(cout, M,
-						n, n, n, Mtx->GFq->log10_of_q + 1);
+						2 * k, n, n, Mtx->GFq->log10_of_q + 1);
 			}
-			rk = Mtx->GFq->rank_of_matrix_memory_given(M, n, B, base_cols, 0);
-			if (rk < n) {
+			rk = Mtx->GFq->rank_of_rectangular_matrix_memory_given(
+					M, 2 * k, n, B, base_cols, 0 /* verbose_level */);
+			if (rk < 2 * k) {
 				if (f_vv) {
 					cout << "rank is " << rk << " which is bad" << endl;
 				}
@@ -902,10 +907,11 @@ int spread_classify::incremental_check_function(int len, long int *S, int verbos
 			cout << "testing (p_" << i << ",p_" << j << ")"
 					"=(" << S[i] <<  "," << S[j] << ")" << endl;
 			print_integer_matrix_width(cout, M,
-					n, n, n, Mtx->GFq->log10_of_q + 1);
+					2 * k, n, n, Mtx->GFq->log10_of_q + 1);
 		}
-		rk = Mtx->GFq->rank_of_matrix_memory_given(M, n, B, base_cols, 0);
-		if (rk < n) {
+		rk = Mtx->GFq->rank_of_rectangular_matrix_memory_given(
+				M, 2 * k, n, B, base_cols, 0 /* verbose_level */);
+		if (rk < 2 * k) {
 			if (f_vv) {
 				cout << "rank is " << rk << " which is bad" << endl;
 			}
