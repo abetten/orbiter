@@ -87,8 +87,37 @@ public:
 			int d, int target_depth, int verbose_level);
 	void packing_init(
 			poset_classification_control *Control, linear_group *LG,
+			int dimension_of_spread_elements,
 			int f_select_spread, const char *select_spread_text,
+			packing_classify *&P,
 			int verbose_level);
+	void predict_spread_table_length(
+		int q, int dimension_of_spread_elements, int spread_size,
+		action *A, strong_generators *Strong_gens,
+		int f_select_spread,
+		int *select_spread, int select_spread_nb,
+		long int *&spread_reps, int *&spread_reps_idx, long int *&spread_orbit_length,
+		int &nb_spread_reps,
+		long int &total_nb_of_spreads,
+		int &nb_iso_types_of_spreads,
+		int verbose_level);
+	void make_spread_table(
+			action *A, action *A2, strong_generators *Strong_gens,
+			int spread_size,
+			long int *spread_reps, int *spread_reps_idx, long int *spread_orbit_length,
+			int nb_spread_reps,
+			long int total_nb_of_spreads,
+			long int **&Sets, int *&isomorphism_type_of_spread,
+			int verbose_level);
+		// does not sort the table
+	void centralizer_of_element(
+			action *A, sims *S,
+			const char *element_description,
+			const char *label, int verbose_level);
+	void normalizer_of_cyclic_subgroup(
+			action *A, sims *S,
+			const char *element_description,
+			const char *label, int verbose_level);
 };
 
 
@@ -182,6 +211,7 @@ public:
 
 	int f_poset_classification_control;
 	poset_classification_control *Control;
+
 	int f_orbits_on_points;
 	int f_export_trees;
 	int f_shallow_tree;
@@ -192,6 +222,10 @@ public:
 	int f_draw_full_poset;
 	int f_classes;
 	int f_normalizer;
+	int f_centralizer_of_element;
+	const char *element_description_text;
+	const char *element_label;
+	int f_normalizer_of_cyclic_subgroup;
 	int f_report;
 	int f_sylow;
 	int f_test_if_geometric;
@@ -209,9 +243,6 @@ public:
 	int f_find_singer_cycle;
 	int f_search_element_of_order;
 	int search_element_order;
-	int f_linear_codes;
-	int linear_codes_minimum_distance;
-	int linear_codes_target_size;
 	int f_print_elements;
 	int f_print_elements_tex;
 	int f_multiply;
@@ -226,6 +257,12 @@ public:
 	int f_sideways;
 	double x_stretch;
 	int f_print_generators;
+
+	// classification of optimal linear codes:
+	int f_linear_codes;
+	int linear_codes_minimum_distance;
+	int linear_codes_target_size;
+
 
 	// classification of arcs in projective spaces:
 	int f_classify_arcs;
@@ -275,6 +312,15 @@ public:
 
 		int f_spread_classify;
 		int spread_classify_k;
+
+		int f_packing_classify;
+		int dimension_of_spread_elements;
+		const char *spread_selection_text;
+		const char *spread_tables_prefix;
+
+		int f_packing_with_assumed_symmetry;
+		packing_was_description *packing_was_descr;
+
 
 		int f_tensor_classify;
 		int tensor_classify_depth;
@@ -327,6 +373,14 @@ public:
 	void multiply(int verbose_level);
 	void inverse(int verbose_level);
 	void normalizer(int verbose_level);
+	void centralizer(
+			const char *element_label,
+			const char *element_description_text,
+			int verbose_level);
+	void normalizer_of_cyclic_subgroup(
+			const char *element_label,
+			const char *element_description_text,
+			int verbose_level);
 	void report(int verbose_level);
 	void print_elements(int verbose_level);
 	void print_elements_tex(int verbose_level);
@@ -368,11 +422,12 @@ public:
 			poset_classification_control *Control_six_arcs,
 			int verbose_level);
 	void do_spread_classify(int k, int verbose_level);
-	void do_packing_classify(int k,
+	void do_packing_classify(int dimension_of_spread_elements,
 			const char *spread_selection_text,
 			const char *spread_tables_prefix,
 			const char *input_prefix, const char *base_fname,
 			int starter_size,
+			packing_classify *&P,
 			int verbose_level);
 	void do_tensor_classify(int depth, int verbose_level);
 	void do_tensor_permutations(int verbose_level);

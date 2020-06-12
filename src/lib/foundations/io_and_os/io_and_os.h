@@ -764,6 +764,7 @@ long int my_atol(char *str);
 int compare_strings(void *a, void *b, void *data);
 int strcmp_with_or_without(char *p, char *q);
 uint32_t root_of_tree_uint32_t (uint32_t* S, uint32_t i);
+int util_compare_func(void *a, void *b, void *data);
 
 
 

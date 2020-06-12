@@ -2074,6 +2074,39 @@ void colored_graph::export_to_file_matlab(
 		}
 }
 
+void colored_graph::export_to_csv(const char *fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	int *M;
+	file_io Fio;
+
+	if (f_v) {
+		cout << "colored_graph::export_to_csv" << endl;
+	}
+
+	M = NEW_int(nb_points * nb_points);
+	int_vec_zero(M, nb_points * nb_points);
+
+	for (i = 0; i < nb_points; i++) {
+		for (j = 0; j < nb_points; j++) {
+			if (is_adjacent(i, j)) {
+				M[i * nb_points + j] = 1;
+			}
+		}
+	}
+
+
+	Fio.int_matrix_write_csv(fname, M, nb_points, nb_points);
+
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+	if (f_v) {
+		cout << "colored_graph::export_to_csv" << endl;
+		}
+}
+
 
 void colored_graph::early_test_func_for_clique_search(
 	long int *S, int len,
@@ -2086,8 +2119,7 @@ void colored_graph::early_test_func_for_clique_search(
 	long int j, a, pt;
 
 	if (f_v) {
-		cout << "colored_graph::early_test_func_for_clique_"
-				"search checking set ";
+		cout << "colored_graph::early_test_func_for_clique_search checking set ";
 		print_set(cout, len, S);
 		cout << endl;
 		cout << "candidate set of size "
@@ -2110,7 +2142,7 @@ void colored_graph::early_test_func_for_clique_search(
 		if (is_adjacent(pt, a)) {
 			good_candidates[nb_good_candidates++] = a;
 		}
-	} // next j
+	}
 	
 }
 

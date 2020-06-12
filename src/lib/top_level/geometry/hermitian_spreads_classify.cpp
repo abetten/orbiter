@@ -371,7 +371,6 @@ void hermitian_spreads_classify::compute(int depth, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int schreier_depth = depth;
 	int f_use_invariant_subset_if_available = TRUE;
-	//int f_implicit_fusion = FALSE;
 	int f_debug = FALSE;
 	int t0;
 	int f_embedded = TRUE;

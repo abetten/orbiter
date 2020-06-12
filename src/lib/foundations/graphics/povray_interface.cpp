@@ -159,8 +159,8 @@ void povray_interface::beginning(ostream &ost,
 	ost << "//Place a light" << endl;
 	//ost << "light_source { <4,4,4> color White }  " << endl;
 	//ost << "light_source { <-5,0,5> color White }" << endl;
-	ost << "light_source { <" << sky[0] * 120 << "," << sky[1] * 120 << "," << sky[2] * 120 << "> color White parallel }  " << endl;
-	ost << "light_source { <" << location[0] << "," << location[1] << "," << location[2] << "> color White }" << endl;
+	ost << "light_source { <" << sky[0] * 6 << "," << sky[1] * 6 << "," << sky[2] * 6 << "> color White }  " << endl; // parallel
+	ost << "light_source { <" << location[0] << "," << location[1] << "," << location[2] << "> color White * 2 }" << endl;
 	ost << endl;
 
 	if (f_with_background) {
@@ -302,7 +302,7 @@ void povray_interface::animation_rotate_around_origin_and_given_vector_by_a_give
 	ost << "	// the next three steps will perform a rotation" << endl;
 	ost << "	// around the axis of symmetry (" << v[0] << ", " << v[1] << "," << v[2] << "):" << endl;
 	ost << endl;
-	ost << "	// move axis of symmetry to 1,0,0:" << endl;
+	ost << "	// move axis of symmetry to (" << v[0] << ", " << v[1] << ", " << v[2] << ") " << endl;
 	ost << "	matrix<" << endl;
 	ost << "	";
 	N.output_double(A[0], ost);
@@ -331,7 +331,7 @@ void povray_interface::animation_rotate_around_origin_and_given_vector_by_a_give
 	ost << endl;
 	ost << "        rotate <" << angle_zero_one * 360. << ",0,0> " << endl;
 	ost << endl;
-	ost << "	// move 1,0,0 back to axis:" << endl;
+	ost << "	// move (" << v[0] << ", " << v[1] << ", " << v[2] << ") back to axis:" << endl;
 	ost << endl;
 	ost << "	matrix<" << endl;
 	ost << "	";

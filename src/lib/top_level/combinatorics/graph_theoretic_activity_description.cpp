@@ -23,6 +23,7 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 	Clique_finder_control = NULL;
 	f_export_magma = FALSE;
 	f_export_maple = FALSE;
+	f_export_csv = FALSE;
 	f_print = FALSE;
 	f_sort_by_colors = FALSE;
 	f_split = FALSE;
@@ -100,6 +101,10 @@ int graph_theoretic_activity_description::read_arguments(
 		else if (strcmp(argv[i], "-export_maple") == 0) {
 			f_export_maple = TRUE;
 			cout << "-export_maple" << endl;
+		}
+		else if (strcmp(argv[i], "-export_csv") == 0) {
+			f_export_csv = TRUE;
+			cout << "-export_csv" << endl;
 		}
 		else if (strcmp(argv[i], "-print") == 0) {
 			f_print = TRUE;

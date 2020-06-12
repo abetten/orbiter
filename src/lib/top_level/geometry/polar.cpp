@@ -59,28 +59,28 @@ polar::~polar()
 {
 	if (tmp_M) {
 		FREE_int(tmp_M);
-		}
+	}
 	if (base_cols) {
 		FREE_int(base_cols);
-		}
+	}
 	if (VS) {
 		FREE_OBJECT(VS);
 	}
 	if (Control) {
 		FREE_OBJECT(Control);
-		}
+	}
 	if (Poset) {
 		FREE_OBJECT(Poset);
-		}
+	}
 	if (Gen) {
 		FREE_OBJECT(Gen);
-		}
+	}
 	if (f_has_strong_generators
 		&& f_has_strong_generators_allocated) {
 		if (Strong_gens) {
 			FREE_OBJECT(Strong_gens);
-			}
 		}
+	}
 }
 
 void polar::init_group_by_base_images(
@@ -96,6 +96,7 @@ void polar::init_group_by_base_images(
 				"A->init_group_from_generators_by_base_images" << endl;
 		}
 	A->init_group_from_generators_by_base_images(
+		A->Sims,
 		group_generator_data, group_generator_size, 
 		f_group_order_target, group_order_target, 
 		&gens, Strong_gens, 

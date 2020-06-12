@@ -66,85 +66,85 @@ int isomorph_arguments::read_arguments(int argc, const char **argv,
 {
 	int i;
 
-	for (i = 1; i < argc; i++) {
+	for (i = 0; i < argc; i++) {
 		if (argv[i][0] != '-') {
 			continue;
-			}
+		}
 		else if (strcmp(argv[i], "-build_db") == 0) {
 			f_build_db = TRUE;
 			cout << "-build_db " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-read_solutions") == 0) {
 			f_read_solutions = TRUE;
 			cout << "-read_solutions " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-read_solutions_from_clique_finder") == 0) {
 			f_read_solutions_from_clique_finder = TRUE;
 			cout << "-read_solutions_from_clique_finder " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-read_solutions_from_clique_finder_list_of_cases") == 0) {
 			f_read_solutions_from_clique_finder_list_of_cases = TRUE;
 			fname_list_of_cases = argv[++i];
 			cout << "-read_solutions_from_clique_finder_list_of_cases " << fname_list_of_cases << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-read_solutions_after_split") == 0) {
 			f_read_solutions_after_split = TRUE;
 			read_solutions_split_m = atoi(argv[++i]);
 			cout << "-read_solutions_after_split " << read_solutions_split_m << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-read_statistics_after_split") == 0) {
 			f_read_statistics_after_split = TRUE;
 			read_statistics_split_m = atoi(argv[++i]);
 			cout << "-read_statistics_after_split " << read_statistics_split_m << endl;
-			}
+		}
 
 		else if (strcmp(argv[i], "-compute_orbits") == 0) {
 			f_compute_orbits = TRUE;
 			cout << "-compute_orbits " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-isomorph_testing") == 0) {
 			f_isomorph_testing = TRUE;
 			cout << "-isomorph_testing " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-classification_graph") == 0) {
 			f_classification_graph = TRUE;
 			cout << "-make_classification_graph " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-e") == 0) {
 			i++;
 			f_event_file = TRUE;
 			event_file_name = argv[i];
 			cout << "-e " << event_file_name << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-print_interval") == 0) {
 			print_mod = atoi(argv[++i]);
 			cout << "-print_interval " << print_mod << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-isomorph_report") == 0) {
 			f_isomorph_report = TRUE;
 			cout << "-report " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-subset_orbits") == 0) {
 			f_subset_orbits = TRUE;
 			cout << "-subset_orbits " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-subset_orbits_file") == 0) {
 			f_subset_orbits_file = TRUE;
 			subset_orbits_fname = argv[++i];
 			cout << "-subset_orbits_fname " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-down_orbits") == 0) {
 			f_down_orbits = TRUE;
 			cout << "-down_orbits " << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-prefix_iso") == 0) {
 			prefix_iso = argv[++i];
 			cout << "-prefix_iso " << prefix_iso << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
-			}
+		}
 		else {
 			cout << "isomorph_arguments::read_arguments "
 					"unrecognized option " << argv[i] << endl;

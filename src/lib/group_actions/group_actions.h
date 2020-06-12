@@ -202,7 +202,7 @@ public:
 	void init_by_hdl(action *A, int *gen_hdl, int nb_gen, int verbose_level);
 	void init_single(action *A, int *Elt, int verbose_level);
 	void init_double(action *A, int *Elt1, int *Elt2, int verbose_level);
-	void init_from_permutation_representation(action *A, int *data, 
+	void init_from_permutation_representation(action *A, sims *S, int *data,
 		int nb_elements, int verbose_level);
 		// data[nb_elements * degree]
 	void init_from_data(action *A, int *data, 

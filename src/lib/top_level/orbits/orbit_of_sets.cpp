@@ -392,26 +392,6 @@ void orbit_of_sets::coset_rep(int j)
 
 
 
-#if 1
-int orbit_of_sets_compare_func(void *a, void *b, void *data)
-{
-	int *A = (int *)a;
-	int *B = (int *)b;
-	int *p = (int *) data;
-	int n = *p;
-	int i;
-
-	for (i = 0; i < n; i++) {
-		if (A[i] < B[i]) {
-			return 1;
-			}
-		if (A[i] > B[i]) {
-			return -1;
-			}
-		}
-	return 0;
-}
-#endif
 
 
 }}

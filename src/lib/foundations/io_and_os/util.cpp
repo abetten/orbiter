@@ -2831,6 +2831,24 @@ uint32_t root_of_tree_uint32_t (uint32_t* S, uint32_t i)
 	return i;
 }
 
+int util_compare_func(void *a, void *b, void *data)
+{
+	int *A = (int *)a;
+	int *B = (int *)b;
+	int *p = (int *) data;
+	int n = *p;
+	int i;
+
+	for (i = 0; i < n; i++) {
+		if (A[i] < B[i]) {
+			return 1;
+			}
+		if (A[i] > B[i]) {
+			return -1;
+			}
+		}
+	return 0;
+}
 
 
 

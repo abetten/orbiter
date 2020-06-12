@@ -279,6 +279,22 @@ void spread_tables::classify_self_dual_spreads(int *&type,
 	}
 }
 
+int spread_tables::files_exist(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	file_io Fio;
+
+	if (f_v) {
+		cout << "spread_tables::files_exist testing whether file exists: " << fname_spreads << endl;
+	}
+	if (Fio.file_size(fname_spreads) > 0) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
+
 void spread_tables::save(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -291,20 +307,20 @@ void spread_tables::save(int verbose_level)
 	if (f_v) {
 		cout << "spread_tables::save "
 				"writing file " << fname_spreads << endl;
-		}
+	}
 
 	Fio.lint_matrix_write_csv(fname_spreads,
 			spread_table, nb_spreads, spread_size);
 	if (f_v) {
 		cout << "spread_tables::save "
 				"written file " << fname_spreads << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "spread_tables::save, "
 				"writing file " << fname_isomorphism_type_of_spreads
 				<< endl;
-		}
+	}
 	Fio.int_vec_write_csv(
 			spread_iso_type, nb_spreads,
 			fname_isomorphism_type_of_spreads,
@@ -313,13 +329,13 @@ void spread_tables::save(int verbose_level)
 		cout << "spread_tables::save, "
 				"written file " << fname_isomorphism_type_of_spreads
 				<< endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "spread_tables::save, "
 				"writing file " << fname_dual_spread
 				<< endl;
-		}
+	}
 	Fio.lint_vec_write_csv(
 			dual_spread_idx, nb_spreads,
 			fname_dual_spread,
@@ -328,13 +344,13 @@ void spread_tables::save(int verbose_level)
 		cout << "spread_tables::save, "
 				"written file " << fname_dual_spread
 				<< endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "spread_tables::save, "
 				"writing file " << fname_self_dual_spreads
 				<< endl;
-		}
+	}
 	Fio.lint_vec_write_csv(
 			self_dual_spreads, nb_self_dual_spreads,
 			fname_self_dual_spreads,
@@ -343,7 +359,7 @@ void spread_tables::save(int verbose_level)
 		cout << "spread_tables::save, "
 				"written file " << fname_self_dual_spreads
 				<< endl;
-		}
+	}
 
 
 
@@ -365,7 +381,7 @@ void spread_tables::load(int verbose_level)
 	if (f_v) {
 		cout << "spread_tables::load "
 				"reading file " << fname_spreads << endl;
-		}
+	}
 
 	Fio.lint_matrix_read_csv(fname_spreads,
 			spread_table, nb_spreads, b,
@@ -377,13 +393,13 @@ void spread_tables::load(int verbose_level)
 	if (f_v) {
 		cout << "spread_tables::load "
 				"read file " << fname_spreads << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "spread_tables::load, "
 				"reading file " << fname_isomorphism_type_of_spreads
 				<< endl;
-		}
+	}
 	Fio.int_matrix_read_csv(fname_isomorphism_type_of_spreads,
 			spread_iso_type, a, b,
 			0 /* verbose_level */);
@@ -395,13 +411,13 @@ void spread_tables::load(int verbose_level)
 		cout << "spread_tables::load, "
 				"read file " << fname_isomorphism_type_of_spreads
 				<< endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "spread_tables::load, "
 				"reading file " << fname_dual_spread
 				<< endl;
-		}
+	}
 	Fio.lint_matrix_read_csv(fname_dual_spread,
 			dual_spread_idx, a, b,
 			0 /* verbose_level */);
@@ -413,13 +429,13 @@ void spread_tables::load(int verbose_level)
 		cout << "spread_tables::load, "
 				"read file " << fname_dual_spread
 				<< endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "spread_tables::load, "
 				"reading file " << fname_self_dual_spreads
 				<< endl;
-		}
+	}
 	Fio.lint_matrix_read_csv(fname_self_dual_spreads,
 			self_dual_spreads, nb_self_dual_spreads, b,
 			0 /* verbose_level */);
@@ -427,7 +443,7 @@ void spread_tables::load(int verbose_level)
 		cout << "spread_tables::load, "
 				"read file " << fname_self_dual_spreads
 				<< endl;
-		}
+	}
 
 
 
@@ -443,11 +459,11 @@ void spread_tables::compute_adjacency_matrix(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	long int i, j, k, N2, cnt;
+	long int i, j, k, N2; //, cnt;
 
 	if (f_v) {
 		cout << "spread_tables::compute_adjacency_matrix" << endl;
-		}
+	}
 
 	N2 = ((long int) nb_spreads * (long int) nb_spreads) >> 1;
 
@@ -458,12 +474,21 @@ void spread_tables::compute_adjacency_matrix(
 	if (f_v) {
 		cout << "after allocating adjacency bitvector" << endl;
 		cout << "computing adjacency matrix:" << endl;
-		}
+	}
 	k = 0;
-	cnt = 0;
+	//cnt = 0;
 	for (i = 0; i < nb_spreads; i++) {
 		for (j = i + 1; j < nb_spreads; j++) {
 
+
+			if (test_if_spreads_are_disjoint(i, j)) {
+				bitvector_m_ii(bitvector_adjacency, k, 1);
+				//cnt++;
+			}
+			else {
+				bitvector_m_ii(bitvector_adjacency, k, 0);
+			}
+#if 0
 			long int *p, *q;
 			int u, v;
 
@@ -473,108 +498,243 @@ void spread_tables::compute_adjacency_matrix(
 			while (u + v < 2 * spread_size) {
 				if (p[u] == q[v]) {
 					break;
-					}
+				}
 				if (u == spread_size) {
 					v++;
-					}
+				}
 				else if (v == spread_size) {
 					u++;
-					}
+				}
 				else if (p[u] < q[v]) {
 					u++;
-					}
+				}
 				else {
 					v++;
-					}
 				}
+			}
 			if (u + v < 2 * spread_size) {
 				bitvector_m_ii(bitvector_adjacency, k, 0);
 
-				}
+			}
 			else {
 				bitvector_m_ii(bitvector_adjacency, k, 1);
 				cnt++;
-				}
+			}
+#endif
 
 			k++;
 			if ((k & ((1 << 21) - 1)) == 0) {
-				cout << "i=" << i << " j=" << j << " k=" << k
-						<< " / " << N2 << endl;
-				}
+				cout << "i=" << i << " j=" << j << " k=" << k << " / " << N2 << endl;
 			}
 		}
+	}
 
 
 
 
 
 	{
-	colored_graph *CG;
-	char fname[1000];
-	file_io Fio;
+		colored_graph *CG;
+		char fname[1000];
+		file_io Fio;
 
-	CG = NEW_OBJECT(colored_graph);
-	int *color;
+		CG = NEW_OBJECT(colored_graph);
+		int *color;
 
-	color = NEW_int(nb_spreads);
-	int_vec_zero(color, nb_spreads);
+		color = NEW_int(nb_spreads);
+		int_vec_zero(color, nb_spreads);
 
-	CG->init(nb_spreads, 1, 1,
-			color, bitvector_adjacency,
-			FALSE, verbose_level);
+		CG->init(nb_spreads, 1, 1,
+				color, bitvector_adjacency,
+				FALSE, verbose_level);
 
-	sprintf(fname, "%s_disjoint_spreads.colored_graph", prefix);
+		sprintf(fname, "%s_disjoint_spreads.colored_graph", prefix);
 
-	CG->save(fname, verbose_level);
+		CG->save(fname, verbose_level);
 
-	cout << "Written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
 
-	FREE_int(color);
-	FREE_OBJECT(CG);
+		FREE_int(color);
+		FREE_OBJECT(CG);
 	}
 
 
 	if (f_v) {
 		cout << "spread_tables::compute_adjacency_matrix done" << endl;
-		}
+	}
 }
 
 int spread_tables::test_if_spreads_are_disjoint(int a, int b)
 {
 	long int *p, *q;
-	int u, v;
+	sorting Sorting;
+	//int u, v;
 
 	p = spread_table + a * spread_size;
 	q = spread_table + b * spread_size;
+	return Sorting.test_if_sets_are_disjoint(p, q, spread_size, spread_size);
+#if 0
 	u = v = 0;
-	while (u + v < 2 * spread_size) {
+	while (u < spread_size && v < spread_size) {
 		if (p[u] == q[v]) {
-			break;
-			}
-		if (u == spread_size) {
-			v++;
-			}
-		else if (v == spread_size) {
-			u++;
-			}
+			return FALSE;
+		}
 		else if (p[u] < q[v]) {
 			u++;
-			}
+		}
 		else {
+			// now p[u] > q[v]
 			v++;
+		}
+	}
+	return TRUE;
+#endif
+}
+
+void spread_tables::compute_dual_spreads(long int **Sets,
+		long int *&Dual_spread_idx,
+		long int *&self_dual_spread_idx,
+		int &nb_self_dual_spreads,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	long int *dual_spread;
+	int i, j;
+	long int a, b;
+	int idx;
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "spread_tables::compute_dual_spreads" << endl;
+	}
+
+	dual_spread = NEW_lint(spread_size);
+	Dual_spread_idx = NEW_lint(nb_spreads);
+	self_dual_spread_idx = NEW_lint(nb_spreads);
+
+	nb_self_dual_spreads = 0;
+
+	for (i = 0; i < nb_spreads; i++) {
+
+		for (j = 0; j < spread_size; j++) {
+			a = spread_table[i * spread_size + j];
+			b = dual_line_idx[a];
+			dual_spread[j] = b;
+		}
+
+		if (FALSE) {
+			cout << "spread_tables::compute_dual_spreads spread "
+					<< i << " / " << nb_spreads << endl;
+			lint_vec_print(cout,
+					spread_table + i * spread_size, spread_size);
+			cout << endl;
+			lint_vec_print(cout, dual_spread, spread_size);
+			cout << endl;
+		}
+		Sorting.lint_vec_heapsort(dual_spread, spread_size);
+		//dual_spread[0] = int_vec_hash(dual_spread + 1, spread_size);
+		if (FALSE) {
+			lint_vec_print(cout, dual_spread, spread_size);
+			cout << endl;
+		}
+
+		long int v[1];
+
+		v[0] = spread_size /*+ 1*/;
+
+		if (Sorting.vec_search((void **)Sets,
+			util_compare_func, (void *) v,
+			nb_spreads, dual_spread, idx,
+			0 /* verbose_level */)) {
+			if (FALSE) {
+				cout << "spread_tables::compute_dual_spreads Dual "
+						"spread of spread " << i
+						<< " is spread no " << idx << endl;
+			}
+			Dual_spread_idx[i] = idx;
+			if (idx == i) {
+				self_dual_spread_idx[nb_self_dual_spreads++] = i;
 			}
 		}
-	if (u + v < 2 * spread_size) {
-		return FALSE;
+		else {
+			cout << "The dual spread is not in the list, error!" << endl;
+			cout << "dual_spread: ";
+			lint_vec_print(cout, dual_spread, spread_size);
+			cout << endl;
+			exit(1);
 		}
-	else {
-		return TRUE;
-		}
+	}
+
+	FREE_lint(dual_spread);
+	if (f_v) {
+		cout << "spread_tables::compute_dual_spreads we found "
+				<< nb_self_dual_spreads << " self dual spreads" << endl;
+		cout << "They are: ";
+		lint_vec_print(cout, self_dual_spread_idx, nb_self_dual_spreads);
+		cout << endl;
+	}
+
+
+	if (f_v) {
+		cout << "spread_tables::compute_dual_spreads done" << endl;
+	}
 
 }
 
+int spread_tables::test_if_pair_of_sets_are_adjacent(
+		long int *set1, int sz1,
+		long int *set2, int sz2,
+		int verbose_level)
+{
+	int f_v = FALSE; // (verbose_level >= 1);
+	long int s1, s2;
+	int i, j;
 
+	if (f_v) {
+		cout << "spread_tables::test_if_pair_of_sets_are_adjacent" << endl;
+	}
+	for (i = 0; i < sz1; i++) {
+		s1 = set1[i];
+		for (j = 0; j < sz2; j++) {
+			s2 = set2[j];
+			if (!test_if_spreads_are_disjoint(s1, s2)) {
+				return FALSE;
+			}
+		}
+	}
+	return TRUE;
+}
+
+int spread_tables::test_if_set_of_spreads_is_line_disjoint(long int *set, int len)
+{
+	int i, j, ret;
+	long int a, b;
+
+	for (i = 0; i < len; i++) {
+		a = set[i];
+		for (j = i + 1; j < len; j++) {
+			b = set[j];
+			if (!test_if_spreads_are_disjoint(a, b)) {
+				break;
+			}
+		}
+		if (j < len) {
+			break;
+		}
+	}
+	if (i < len) {
+		//cout << "is NOT a partial packing" << endl;
+		ret = FALSE;
+	}
+	else {
+		ret = TRUE;
+		//cout << "IS a partial packing" << endl;
+	}
+	return ret;
+
+}
 
 
 }}

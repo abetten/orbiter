@@ -1037,6 +1037,8 @@ public:
 
 	double distance_between_two_points(int pt1, int pt2);
 	void create_five_plus_one();
+	void create_Clebsch_surface(int verbose_level);
+	// 1 cubic, 27 lines, 7 Eckardt points
 	void create_Hilbert_Cohn_Vossen_surface(int verbose_level);
 		// 1 cubic, 27 lines, 54 points, 45 planes
 	void create_Hilbert_model(int verbose_level);

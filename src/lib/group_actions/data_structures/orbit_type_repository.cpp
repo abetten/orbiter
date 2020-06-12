@@ -99,7 +99,7 @@ void orbit_type_repository::init(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "orbit_type_repository::init" << endl;
+		cout << "orbit_type_repository::init nb_sets = " << nb_sets << " goi=" << goi << endl;
 	}
 	orbit_type_repository::Oos = Oos;
 	orbit_type_repository::nb_sets = nb_sets;
@@ -125,10 +125,25 @@ void orbit_type_repository::init(
 		cout << "orbit_type_repository::init "
 				"before Heapsort_general" << endl;
 	}
+
+	if (f_v) {
+		cout << "orbit_type_repository::init "
+				"before Heapsort_general" << endl;
+		cout << "Type_repository:" << endl;
+		if (nb_sets < 1000) {
+			lint_matrix_print(Type_repository, nb_sets, orbit_type_size);
+		}
+		else {
+			cout << "too many to print" << endl;
+			lint_matrix_print(Type_repository, 100, orbit_type_size);
+		}
+	}
+
 	Sorting.Heapsort_general(Type_repository, nb_sets,
 			orbit_type_repository_compare_types,
 			orbit_type_repository_swap_types,
 			this /* void  *extra_data */);
+
 	if (f_v) {
 		cout << "orbit_type_repository::init "
 				"after Heapsort_general" << endl;
@@ -138,6 +153,7 @@ void orbit_type_repository::init(
 		}
 		else {
 			cout << "too many to print" << endl;
+			lint_matrix_print(Type_repository, 100, orbit_type_size);
 		}
 	}
 	nb_types = 0;
@@ -147,8 +163,7 @@ void orbit_type_repository::init(
 
 	type_first[0] = 0;
 	for (i = 1; i < nb_sets; i++) {
-		if (orbit_type_repository_compare_types(
-				Type_repository, i - 1, i, this)) {
+		if (orbit_type_repository_compare_types(Type_repository, i - 1, i, this)) {
 			type_len[nb_types] = i - type_first[nb_types];
 			nb_types++;
 			type_first[nb_types] = i;
@@ -171,6 +186,16 @@ void orbit_type_repository::init(
 	}
 
 
+	if (f_v) {
+		cout << "orbit_type_repository::init "
+				"The types are:" << endl;
+		for (i = 0; i < nb_types; i++) {
+			cout << i << " : ";
+			lint_vec_print(cout, Type_representatives + i * orbit_type_size, orbit_type_size);
+			cout << endl;
+		}
+	}
+
 	// recompute the spread types because by doing the sorting,
 	// the spread types have been mixed up.
 	for (i = 0; i < nb_sets; i++) {
@@ -178,12 +203,19 @@ void orbit_type_repository::init(
 				Sets + i * set_size, set_size, goi,
 				Type_repository + i * orbit_type_size,
 				0 /*verbose_level*/);
+		if (f_v) {
+			if (i < 10) {
+				cout << "type[" << i << "]=";
+				lint_vec_print(cout, Type_repository + i * orbit_type_size, orbit_type_size);
+				cout << endl;
+			}
+		}
 	}
 
 
 
 	if (f_v) {
-		cout << "prime_at_a_time::compute_spread_types_wrt_H "
+		cout << "orbit_type_repository::init "
 				"computing spread_type" << endl;
 		}
 	int idx;
@@ -206,13 +238,17 @@ void orbit_type_repository::init(
 			cout << "orbit_type_repository::init "
 					"error, cannot find spread type" << endl;
 			cout << "i=" << i << endl;
+			//lint_matrix_print(Type_repository, nb_sets, orbit_type_size);
+			cout << "searching for ";
+			lint_vec_print(cout, Type_repository + i * orbit_type_size, orbit_type_size);
+			cout << endl;
 			exit(1);
 		}
 		type[i] = idx;
 	}
 	if (f_v) {
 		cout << "orbit_type_repository::init "
-				"spread_type has been computed" << endl;
+				"spread_type has been computed, nb_types = " << nb_types << endl;
 	}
 
 
@@ -269,11 +305,10 @@ static int orbit_type_repository_compare_types(void *data,
 		int i, int j, void *extra_data)
 {
 	orbit_type_repository *OTR = (orbit_type_repository *) extra_data;
-	int *Types = (int *) data;
+	long int *Types = (long int *) data;
 	int len = OTR->orbit_type_size;
 
-	return int_vec_compare(Types + i * len,
-			Types + j * len, len);
+	return lint_vec_compare(Types + i * len, Types + j * len, len);
 }
 
 
@@ -293,9 +328,10 @@ static void orbit_type_repository_swap_types(void *data,
 			int i, int j, void *extra_data)
 {
 	orbit_type_repository *OTR = (orbit_type_repository *) extra_data;
-	int *Types = (int *) data;
+	long int *Types = (long int *) data;
 	int len = OTR->orbit_type_size;
-	int h, a;
+	long int a;
+	int h;
 
 	for (h = 0; h < len; h++) {
 		a = Types[i * len + h];

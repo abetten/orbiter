@@ -1351,7 +1351,7 @@ void linear_group::report(ostream &fp, int f_sylow, int f_group_table,
 				cout << "linear_group::report f_conjugacy_classes_and_normalizers is true" << endl;
 			}
 
-			A2->report_conjugacy_classes_and_normalizers(fp,
+			A2->report_conjugacy_classes_and_normalizers(fp, H,
 					verbose_level);
 
 			if (f_v) {

@@ -183,9 +183,23 @@ int video_draw_options::read_arguments(
 		else if (strcmp(argv[i], "-rotate_about_custom_axis") == 0) {
 			f_rotate = TRUE;
 			rotation_axis_type = 3;
-			rotation_axis_custom[0] = atof(argv[++i]);
-			rotation_axis_custom[1] = atof(argv[++i]);
-			rotation_axis_custom[2] = atof(argv[++i]);
+
+			const char *rotation_axis_custom_text;
+
+			rotation_axis_custom_text = argv[++i];
+			double *data;
+			int data_sz;
+			numerics Num;
+
+			Num.vec_scan(rotation_axis_custom_text, data, data_sz);
+			if (data_sz != 3) {
+				cout << "For -rotate_about_custom_axis, the number of coefficients must be 3; is " << data_sz << endl;
+				exit(1);
+			}
+			rotation_axis_custom[0] = data[0];
+			rotation_axis_custom[1] = data[1];
+			rotation_axis_custom[2] = data[2];
+			delete [] data;
 			cout << "video_draw_options::read_arguments -rotate_about_custom_axis " << endl;
 		}
 		else if (strcmp(argv[i], "-boundary_none") == 0) {

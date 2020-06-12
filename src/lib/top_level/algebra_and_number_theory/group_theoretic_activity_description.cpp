@@ -30,6 +30,10 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_draw_full_poset = FALSE;
 	f_classes = FALSE;
 	f_normalizer = FALSE;
+	f_centralizer_of_element = FALSE;
+	element_description_text = NULL;
+	element_label = NULL;
+	f_normalizer_of_cyclic_subgroup = FALSE;
 	f_report = FALSE;
 	f_sylow = FALSE;
 	f_test_if_geometric = FALSE;
@@ -106,6 +110,14 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	f_spread_classify = FALSE;
 	spread_classify_k = 0;
+
+	f_packing_classify = FALSE;
+	dimension_of_spread_elements = 0;
+	spread_selection_text = NULL;
+	spread_tables_prefix = NULL;
+	f_packing_with_assumed_symmetry = FALSE;
+	packing_was_descr = NULL;
+
 
 	f_tensor_classify = FALSE;
 	tensor_classify_depth = 0;
@@ -226,6 +238,18 @@ int group_theoretic_activity_description::read_arguments(
 			f_normalizer = TRUE;
 			cout << "-normalizer" << endl;
 		}
+		else if (strcmp(argv[i], "-centralizer_of_element") == 0) {
+			f_centralizer_of_element = TRUE;
+			element_label = argv[++i];
+			element_description_text = argv[++i];
+			cout << "-centralizer_of_element " << element_label << " " << element_description_text << endl;
+		}
+		else if (strcmp(argv[i], "-normalizer_of_cyclic_subgroup") == 0) {
+			f_normalizer_of_cyclic_subgroup = TRUE;
+			element_label = argv[++i];
+			element_description_text = argv[++i];
+			cout << "-normalizer_of_cyclic_subgroup " << element_label << " " << element_description_text << endl;
+		}
 		else if (strcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			cout << "-report" << endl;
@@ -272,12 +296,6 @@ int group_theoretic_activity_description::read_arguments(
 			search_element_order = atoi(argv[++i]);
 			cout << "-search_element_of_order " << search_element_order << endl;
 		}
-		else if (strcmp(argv[i], "-linear_codes") == 0) {
-			f_linear_codes = TRUE;
-			linear_codes_minimum_distance = atoi(argv[++i]);
-			linear_codes_target_size = atoi(argv[++i]);
-			cout << "-linear_codes " << linear_codes_minimum_distance << " " << linear_codes_target_size << endl;
-		}
 		else if (strcmp(argv[i], "-print_elements") == 0) {
 			f_print_elements = TRUE;
 			cout << "-print_elements " << endl;
@@ -321,7 +339,23 @@ int group_theoretic_activity_description::read_arguments(
 		else if (strcmp(argv[i], "-print_generators") == 0) {
 			f_print_generators = TRUE;
 			cout << "-print_generators" << endl;
-			}
+		}
+
+		// classification tasks:
+
+		// linear codes:
+
+		else if (strcmp(argv[i], "-linear_codes") == 0) {
+			f_linear_codes = TRUE;
+			linear_codes_minimum_distance = atoi(argv[++i]);
+			linear_codes_target_size = atoi(argv[++i]);
+			cout << "-linear_codes " << linear_codes_minimum_distance << " " << linear_codes_target_size << endl;
+		}
+
+
+		// arcs:
+
+
 		else if (strcmp(argv[i], "-classify_arcs") == 0) {
 			f_classify_arcs = TRUE;
 			classify_arcs_target_size = atoi(argv[++i]);
@@ -334,6 +368,7 @@ int group_theoretic_activity_description::read_arguments(
 			classify_arcs_d = atoi(argv[++i]);
 			cout << "-classify_nonconical_arcs" << " " << classify_arcs_target_size << " " << classify_arcs_d << endl;
 		}
+
 		else if (strcmp(argv[i], "-exact_cover") == 0) {
 			f_exact_cover = TRUE;
 			ECA = NEW_OBJECT(exact_cover_arguments);
@@ -360,6 +395,9 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
+
+
+		// cubic surfaces:
 		else if (strcmp(argv[i], "-surface_classify") == 0) {
 			f_surface_classify = TRUE;
 			cout << "-surface_classify " << endl;
@@ -438,39 +476,6 @@ int group_theoretic_activity_description::read_arguments(
 					<< transform_coeffs[nb_transform] << endl;
 			nb_transform++;
 		}
-
-		else if (strcmp(argv[i], "-orbits_on_subspaces") == 0) {
-			f_orbits_on_subspaces = TRUE;
-			orbits_on_subspaces_depth = atoi(argv[++i]);
-			cout << "-orbits_on_subspaces " << orbits_on_subspaces_depth << endl;
-		}
-		else if (strcmp(argv[i], "-mindist") == 0) {
-			f_mindist = TRUE;
-			mindist = atoi(argv[++i]);
-			cout << "-mindist" << mindist << endl;
-		}
-		else if (strcmp(argv[i], "-self_orthogonal") == 0) {
-			f_self_orthogonal = TRUE;
-			cout << "-self_orthogonal" << endl;
-		}
-		else if (strcmp(argv[i], "-doubly_even") == 0) {
-			f_doubly_even = TRUE;
-			cout << "-doubly_even" << endl;
-		}
-		else if (strcmp(argv[i], "-spread_classify") == 0) {
-			f_spread_classify = TRUE;
-			spread_classify_k = atoi(argv[++i]);
-			cout << "-spread_classify " << spread_classify_k << endl;
-		}
-		else if (strcmp(argv[i], "-tensor_classify") == 0) {
-			f_tensor_classify = TRUE;
-			tensor_classify_depth = atoi(argv[++i]);
-			cout << "-tensor_classify " << tensor_classify_depth << endl;
-		}
-		else if (strcmp(argv[i], "-tensor_permutations") == 0) {
-			f_tensor_permutations = TRUE;
-			cout << "-tensor_permutations " << endl;
-		}
 		else if (strcmp(argv[i], "-trihedra1_control") == 0) {
 			f_trihedra1_control = TRUE;
 			Trihedra1_control = NEW_OBJECT(poset_classification_control);
@@ -509,6 +514,76 @@ int group_theoretic_activity_description::read_arguments(
 			if (i < argc) {
 				cout << "next argument is " << argv[i] << endl;
 			}
+		}
+
+
+
+		else if (strcmp(argv[i], "-orbits_on_subspaces") == 0) {
+			f_orbits_on_subspaces = TRUE;
+			orbits_on_subspaces_depth = atoi(argv[++i]);
+			cout << "-orbits_on_subspaces " << orbits_on_subspaces_depth << endl;
+		}
+		else if (strcmp(argv[i], "-mindist") == 0) {
+			f_mindist = TRUE;
+			mindist = atoi(argv[++i]);
+			cout << "-mindist" << mindist << endl;
+		}
+		else if (strcmp(argv[i], "-self_orthogonal") == 0) {
+			f_self_orthogonal = TRUE;
+			cout << "-self_orthogonal" << endl;
+		}
+		else if (strcmp(argv[i], "-doubly_even") == 0) {
+			f_doubly_even = TRUE;
+			cout << "-doubly_even" << endl;
+		}
+
+
+		// spreads:
+
+		else if (strcmp(argv[i], "-spread_classify") == 0) {
+			f_spread_classify = TRUE;
+			spread_classify_k = atoi(argv[++i]);
+			cout << "-spread_classify " << spread_classify_k << endl;
+		}
+
+		// packings:
+		else if (strcmp(argv[i], "-packing_classify") == 0) {
+			f_packing_classify = TRUE;
+			dimension_of_spread_elements = atoi(argv[++i]);
+			spread_selection_text = argv[++i];
+			spread_tables_prefix = argv[++i];
+			cout << "-packing_classify "
+					<< dimension_of_spread_elements
+					<< " " << spread_selection_text
+					<< " " << spread_tables_prefix
+					<< endl;
+		}
+		else if (strcmp(argv[i], "-packing_with_assumed_symmetry") == 0) {
+			f_packing_with_assumed_symmetry = TRUE;
+			packing_was_descr = NEW_OBJECT(packing_was_description);
+			cout << "-packing_with_assumed_symmetry " << endl;
+			i += packing_was_descr->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -packing_with_assumed_symmetry " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+
+
+		// tensors:
+
+		else if (strcmp(argv[i], "-tensor_classify") == 0) {
+			f_tensor_classify = TRUE;
+			tensor_classify_depth = atoi(argv[++i]);
+			cout << "-tensor_classify " << tensor_classify_depth << endl;
+		}
+		else if (strcmp(argv[i], "-tensor_permutations") == 0) {
+			f_tensor_permutations = TRUE;
+			cout << "-tensor_permutations " << endl;
 		}
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;

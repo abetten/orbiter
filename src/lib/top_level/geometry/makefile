@@ -29,6 +29,7 @@ MODULES = \
 	packing_classify2.o \
 	packing_invariants.o \
 	packing_long_orbits.o \
+	packing_was_description.o \
 	packing_was.o \
 	polar.o \
 	recoordinatize.o \

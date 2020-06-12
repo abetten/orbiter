@@ -2621,6 +2621,7 @@ public:
 	void classify_self_dual_spreads(int *&type,
 			set_of_sets *&SoS,
 			int verbose_level);
+	int files_exist(int verbose_level);
 	void save(int verbose_level);
 	void load(int verbose_level);
 	void compute_adjacency_matrix(
@@ -2628,6 +2629,16 @@ public:
 			long int &bitvector_length,
 			int verbose_level);
 	int test_if_spreads_are_disjoint(int a, int b);
+	void compute_dual_spreads(long int **Sets,
+			long int *&Dual_spread_idx,
+			long int *&self_dual_spread_idx,
+			int &nb_self_dual_spreads,
+			int verbose_level);
+	int test_if_pair_of_sets_are_adjacent(
+			long int *set1, int sz1,
+			long int *set2, int sz2,
+			int verbose_level);
+	int test_if_set_of_spreads_is_line_disjoint(long int *set, int len);
 
 };
 

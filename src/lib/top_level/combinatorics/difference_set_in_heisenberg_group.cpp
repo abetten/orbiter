@@ -187,7 +187,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	E1 = NEW_int(A->elt_size_in_int);
 
 	cout << "making element" << endl;
-	A->make_element_from_base_image(E1, base_image, verbose_level);
+	A->make_element_from_base_image(E1, A->Sims, base_image, verbose_level);
 	cout << "generator has been created:" << endl;
 	A->element_print(E1, cout);
 	cout << endl;

@@ -61,7 +61,7 @@ void packing_long_orbits::init(packing_was *P,
 	packing_long_orbits::fixpoint_clique = fixpoint_clique;
 
 
-	long_orbit_idx = P->find_orbits_of_length(P->long_orbit_length);
+	long_orbit_idx = P->find_orbits_of_length(P->Descr->long_orbit_length);
 	if (f_v) {
 		cout << "packing_long_orbits::init long_orbit_idx=" << long_orbit_idx << endl;
 	}
@@ -189,7 +189,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 	create_graph_and_save_to_file(
 				CG,
 				fname_graph,
-				P->long_orbit_length /* orbit_length */,
+				P->Descr->long_orbit_length /* orbit_length */,
 				TRUE /* f_has_user_data */, user_data, user_data_sz,
 				verbose_level);
 
@@ -218,8 +218,8 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 
 void packing_long_orbits::create_fname_graph_on_remaining_long_orbits()
 {
-	if (P->f_output_path) {
-		sprintf(fname_graph, "%s%s_fpc%d_graph", P->output_path,
+	if (P->Descr->f_output_path) {
+		sprintf(fname_graph, "%s%s_fpc%d_graph", P->Descr->output_path,
 				P->H_LG->prefix, fixpoints_clique_case_number);
 	}
 	else {
@@ -280,7 +280,7 @@ void packing_long_orbits::create_graph_on_long_orbits(
 	create_graph_and_save_to_file(
 			CG,
 			fname_graph,
-			P->long_orbit_length /* orbit_length */,
+			P->Descr->long_orbit_length /* orbit_length */,
 			TRUE /* f_has_user_data */, user_data, user_data_sz,
 			verbose_level);
 

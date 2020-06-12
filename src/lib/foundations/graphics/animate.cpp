@@ -2942,7 +2942,7 @@ void animate::rotation(
 		else if (Opt->rotation_axis_type == 2) {
 			Pov->rotate_around_z_axis(h, nb_frames, fp);
 		}
-		else if (Opt->rotation_axis_type == 2) {
+		else if (Opt->rotation_axis_type == 3) {
 
 			double angle_zero_one = 1. - (h * 1. / (double) nb_frames);
 				// rotate in the opposite direction
