@@ -808,6 +808,7 @@ public:
 	clique_finder_control *Clique_finder_control;
 	int f_export_magma;
 	int f_export_maple;
+	int f_export_csv;
 	int f_print;
 	int f_sort_by_colors;
 	int f_split;

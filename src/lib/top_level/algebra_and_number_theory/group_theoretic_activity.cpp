@@ -95,6 +95,20 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		normalizer(verbose_level);
 	}
 
+	if (Descr->f_centralizer_of_element) {
+		centralizer(Descr->element_label,
+				Descr->element_description_text, verbose_level);
+	}
+
+	if (Descr->f_normalizer_of_cyclic_subgroup) {
+		normalizer_of_cyclic_subgroup(Descr->element_label,
+				Descr->element_description_text, verbose_level);
+	}
+
+
+
+
+
 	if (Descr->f_report) {
 		report(verbose_level);
 	}
@@ -117,10 +131,6 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		search_element_of_order(Descr->search_element_order, verbose_level);
 	}
 
-
-	if (Descr->f_linear_codes) {
-		do_linear_codes(Descr->linear_codes_minimum_distance, Descr->linear_codes_target_size, verbose_level);
-	}
 
 
 	if (Descr->f_orbits_on_set_system_from_file) {
@@ -146,6 +156,18 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	else if (Descr->f_orbits_on_subspaces) {
 		orbits_on_subspaces(verbose_level);
 	}
+
+	// classification of:
+
+
+	// linear codes:
+
+
+	if (Descr->f_linear_codes) {
+		do_linear_codes(Descr->linear_codes_minimum_distance, Descr->linear_codes_target_size, verbose_level);
+	}
+
+
 
 
 
@@ -226,6 +248,53 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	else if (Descr->f_spread_classify) {
 		do_spread_classify(Descr->spread_classify_k, verbose_level);
 	}
+
+
+	// packings:
+
+	else if (Descr->f_packing_with_assumed_symmetry) {
+		if (!Descr->f_packing_classify) {
+			cout << "packing with symmetry needs packing" << endl;
+			exit(1);
+		}
+		packing_classify *P;
+
+		do_packing_classify(Descr->dimension_of_spread_elements,
+				Descr->spread_selection_text,
+				Descr->spread_tables_prefix,
+				"", // const char *input_prefix
+				"", // const char *base_fname
+				0, // starter_size
+				P,
+				verbose_level);
+
+		packing_was *PWAS;
+
+		PWAS = NEW_OBJECT(packing_was);
+
+		PWAS->init(Descr->packing_was_descr,
+				P, verbose_level);
+
+
+		FREE_OBJECT(PWAS);
+		FREE_OBJECT(P);
+
+	}
+	else if (Descr->f_packing_classify) {
+		packing_classify *P;
+
+		do_packing_classify(Descr->dimension_of_spread_elements,
+				Descr->spread_selection_text,
+				Descr->spread_tables_prefix,
+				"", // const char *input_prefix
+				"", // const char *base_fname
+				0, // starter_size
+				P,
+				verbose_level);
+		FREE_OBJECT(P);
+	}
+
+
 
 	// tensors:
 
@@ -377,6 +446,71 @@ void group_theoretic_activity::normalizer(int verbose_level)
 		cout << "group_theoretic_activity::normalizer done" << endl;
 	}
 }
+
+void group_theoretic_activity::centralizer(
+		const char *element_label,
+		const char *element_description_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::centralizer" << endl;
+	}
+
+	algebra_global_with_action Algebra;
+	sims *S;
+
+	S = LG->Strong_gens->create_sims(verbose_level);
+
+	Algebra.centralizer_of_element(
+			LG->A2, S,
+			element_description_text,
+			element_label, verbose_level);
+
+	FREE_OBJECT(S);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::centralizer done" << endl;
+	}
+}
+
+void group_theoretic_activity::normalizer_of_cyclic_subgroup(
+		const char *element_label,
+		const char *element_description_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::normalizer_of_cyclic_subgroup" << endl;
+	}
+
+	algebra_global_with_action Algebra;
+	sims *S;
+
+	S = LG->Strong_gens->create_sims(verbose_level);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::normalizer_of_cyclic_subgroup "
+				"before Algebra.normalizer_of_cyclic_subgroup" << endl;
+	}
+	Algebra.normalizer_of_cyclic_subgroup(
+			LG->A2, S,
+			element_description_text,
+			element_label, verbose_level);
+	if (f_v) {
+		cout << "group_theoretic_activity::normalizer_of_cyclic_subgroup "
+				"after Algebra.normalizer_of_cyclic_subgroup" << endl;
+	}
+
+	FREE_OBJECT(S);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::normalizer_of_cyclic_subgroup done" << endl;
+	}
+}
+
 
 void group_theoretic_activity::report(int verbose_level)
 {
@@ -2687,11 +2821,12 @@ void group_theoretic_activity::do_spread_classify(int k, int verbose_level)
 	}
 }
 
-void group_theoretic_activity::do_packing_classify(int k,
+void group_theoretic_activity::do_packing_classify(int dimension_of_spread_elements,
 		const char *spread_selection_text,
 		const char *spread_tables_prefix,
 		const char *input_prefix, const char *base_fname,
 		int starter_size,
+		packing_classify *&P,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2711,64 +2846,16 @@ void group_theoretic_activity::do_packing_classify(int k,
 	}
 
 
-	spread_classify *SC;
+	algebra_global_with_action Algebra;
 
-	SC = NEW_OBJECT(spread_classify);
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_packing_classify before SC->init" << endl;
-	}
-
-	SC->init(
-			LG,
-			k,
-			Control,
-			verbose_level - 1);
+	Algebra.packing_init(
+			Control, LG,
+			dimension_of_spread_elements,
+			TRUE /* f_select_spread */, spread_selection_text,
+			P,
+			verbose_level);
 
 
-	if (f_v) {
-		cout << "group_theoretic_activity::do_packing_classify after SC->init" << endl;
-	}
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_packing_classify before SC->compute" << endl;
-	}
-
-	SC->compute(verbose_level);
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_packing_classify after SC->compute" << endl;
-	}
-
-	packing_classify *P;
-
-	P = NEW_OBJECT(packing_classify);
-
-
-	cout << "before P->init" << endl;
-	P->init(SC,
-		TRUE /* f_select_spread */,
-		spread_selection_text,
-		input_prefix, base_fname,
-		starter_size,
-		TRUE /* ECA->f_lex */,
-		spread_tables_prefix,
-		verbose_level);
-	cout << "after P->init" << endl;
-
-#if 0
-	cout << "before IA->init" << endl;
-	IA->init(T->A, P->A_on_spreads, P->gen,
-		P->size_of_packing, P->prefix_with_directory, ECA,
-		callback_packing_report,
-		NULL /*callback_subset_orbits*/,
-		P,
-		verbose_level);
-	cout << "after IA->init" << endl;
-#endif
-
-	FREE_OBJECT(P);
-	FREE_OBJECT(SC);
 
 	if (f_v) {
 		cout << "group_theoretic_activity::do_packing_classify done" << endl;

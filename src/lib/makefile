@@ -352,6 +352,7 @@ MODULES= \
 		top_level/geometry/packing_classify2.o \
 		top_level/geometry/packing_invariants.o \
 		top_level/geometry/packing_long_orbits.o \
+		top_level/geometry/packing_was_description.o \
 		top_level/geometry/packing_was.o \
 		top_level/geometry/polar.o \
 		top_level/geometry/recoordinatize.o \

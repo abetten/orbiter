@@ -38,14 +38,14 @@ void BLT_set_create::null()
 void BLT_set_create::freeself()
 {
 	if (F) {
-		delete F;
-		}
+		FREE_OBJECT(F);
+	}
 	if (set) {
 		FREE_int(set);
-		}
+	}
 	if (Sg) {
-		delete Sg;
-		}
+		FREE_OBJECT(Sg);
+	}
 	null();
 }
 

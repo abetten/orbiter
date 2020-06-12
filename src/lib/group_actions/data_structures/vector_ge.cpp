@@ -137,7 +137,7 @@ void vector_ge::init_double(action *A, int *Elt1, int *Elt2, int verbose_level)
 }
 
 void vector_ge::init_from_permutation_representation(
-	action *A, int *data,
+	action *A, sims *S, int *data,
 	int nb_elements, int verbose_level)
 // data[nb_elements * A->degree]
 {
@@ -147,29 +147,27 @@ void vector_ge::init_from_permutation_representation(
 	int *Elt;
 
 	if (f_v) {
-		cout << "vector_ge::init_from_permutation_"
-				"representation" << endl;
-		}
+		cout << "vector_ge::init_from_permutation_representation" << endl;
+	}
 	Elt = NEW_int(A->elt_size_in_int);
 	init(A, verbose_level);
 	allocate(nb_elements, verbose_level);
 	for (i = 0; i < nb_elements; i++) {
 		A->make_element_from_permutation_representation(
-				Elt, data + i * A->degree, 0/*verbose_level*/);
+				Elt, S, data + i * A->degree, 0/*verbose_level*/);
 		if (f_vv) {
-			cout << "vector_ge::init_from_permutation_"
-					"representation generator " << i << ": " << endl;
+			cout << "vector_ge::init_from_permutation_representation "
+					"generator " << i << ": " << endl;
 			A->element_print_quick(Elt, cout);
 			A->element_print_latex(Elt, cout);
-			}
-		A->element_move(Elt, ith(i), 0);
 		}
+		A->element_move(Elt, ith(i), 0);
+	}
 	
 	FREE_int(Elt);
 	if (f_v) {
-		cout << "vector_ge::init_from_permutation_"
-				"representation done" << endl;
-		}
+		cout << "vector_ge::init_from_permutation_representation done" << endl;
+	}
 }
 
 void vector_ge::init_from_data(action *A, int *data, 
@@ -182,7 +180,7 @@ void vector_ge::init_from_data(action *A, int *data,
 
 	if (f_v) {
 		cout << "vector_ge::init_from_data" << endl;
-		}
+	}
 	Elt = NEW_int(A->elt_size_in_int);
 	init(A, verbose_level);
 	allocate(nb_elements, verbose_level);
@@ -192,14 +190,14 @@ void vector_ge::init_from_data(action *A, int *data,
 			cout << "vector_ge::init_from_data "
 					"generator " << i << ": " << endl;
 			A->element_print_quick(Elt, cout);
-			}
-		A->element_move(Elt, ith(i), 0);
 		}
+		A->element_move(Elt, ith(i), 0);
+	}
 	
 	FREE_int(Elt);
 	if (f_v) {
 		cout << "vector_ge::init_from_data done" << endl;
-		}
+	}
 }
 
 void vector_ge::init_conjugate_svas_of(vector_ge *v,
@@ -211,7 +209,7 @@ void vector_ge::init_conjugate_svas_of(vector_ge *v,
 
 	if (f_v) {
 		cout << "vector_ge::init_conjugate_svas_of" << endl;
-		}
+	}
 
 	init(v->A, verbose_level);
 	allocate(v->len, verbose_level);
@@ -224,14 +222,14 @@ void vector_ge::init_conjugate_svas_of(vector_ge *v,
 		A->element_mult(Elt1, v->ith(i), Elt2, FALSE);
 		A->element_mult(Elt2, Elt, Elt3, FALSE);
 		A->element_move(Elt3, ith(i), FALSE);
-		}
+	}
 	
 	FREE_int(Elt1);
 	FREE_int(Elt2);
 	FREE_int(Elt3);
 	if (f_v) {
 		cout << "vector_ge::init_conjugate_svas_of done" << endl;
-		}
+	}
 }
 
 void vector_ge::init_conjugate_sasv_of(vector_ge *v,
@@ -243,7 +241,7 @@ void vector_ge::init_conjugate_sasv_of(vector_ge *v,
 
 	if (f_v) {
 		cout << "vector_ge::init_conjugate_svas_of" << endl;
-		}
+	}
 
 	init(v->A, verbose_level);
 	allocate(v->len, verbose_level);
@@ -256,14 +254,14 @@ void vector_ge::init_conjugate_sasv_of(vector_ge *v,
 		A->element_mult(Elt, v->ith(i), Elt2, FALSE);
 		A->element_mult(Elt2, Elt1, Elt3, FALSE);
 		A->element_move(Elt3, ith(i), FALSE);
-		}
+	}
 	
 	FREE_int(Elt1);
 	FREE_int(Elt2);
 	FREE_int(Elt3);
 	if (f_v) {
 		cout << "vector_ge::init_conjugate_sasv_of done" << endl;
-		}
+	}
 }
 
 int *vector_ge::ith(int i)

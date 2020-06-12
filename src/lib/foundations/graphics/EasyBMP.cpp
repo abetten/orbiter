@@ -579,6 +579,9 @@ bool BMP::WriteToFile( const char* FileName )
   
   while( j > -1 )
   {
+	  if ((j % 50) == 0) {
+		  cout << j << endl;
+	  }
    bool Success = false;
    if( BitDepth == 32 )
    { Success = Write32bitRow( Buffer, BufferSize, j ); }

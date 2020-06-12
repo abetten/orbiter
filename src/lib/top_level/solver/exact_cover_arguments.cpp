@@ -163,33 +163,33 @@ void exact_cover_arguments::compute_lifts(int verbose_level)
 		cout << "exact_cover_arguments::compute_lifts input_prefix=" << input_prefix << endl;
 		cout << "exact_cover_arguments::compute_lifts output_prefix=" << output_prefix << endl;
 		cout << "exact_cover_arguments::compute_lifts solution_prefix=" << solution_prefix << endl;
-		}
+	}
 
 	if (!f_has_base_fname) {
 		cout << "exact_cover_arguments::compute_lifts no base_fname" << endl;
 		exit(1);
-		}
+	}
 	if (!f_has_input_prefix) {
 		cout << "exact_cover_arguments::compute_lifts no input_prefix" << endl;
 		exit(1);
-		}
+	}
 	if (!f_has_output_prefix) {
 		cout << "exact_cover_arguments::compute_lifts no output_prefix" << endl;
 		exit(1);
-		}
+	}
 	if (!f_has_solution_prefix) {
 		cout << "exact_cover_arguments::compute_lifts no solution_prefix" << endl;
 		exit(1);
-		}
+	}
 	if (!f_starter_size) {
 		cout << "exact_cover_arguments::compute_lifts no starter_size" << endl;
 		exit(1);
-		}
+	}
 
 	if (target_size == 0) {
 		cout << "exact_cover_arguments::compute_lifts target_size == 0" << endl;
 		exit(1);
-		}
+	}
 
 	exact_cover *E;
 
@@ -213,27 +213,27 @@ void exact_cover_arguments::compute_lifts(int verbose_level)
 
 	if (f_split) {
 		E->set_split(split_r, split_m, verbose_level - 1);
-		}
+	}
 
 	if (f_has_solution_test_function) {
 		E->add_solution_test_function(
 			solution_test_func, 
 			(void *) solution_test_func_data,
 			verbose_level - 1);
-		}
+	}
 
 	if (f_has_late_cleanup_function) {
 		E->add_late_cleanup_function(late_cleanup_function);
-		}
+	}
 
 	if (f_randomized) {
 		E->randomize(random_permutation_fname, verbose_level);
-		}
+	}
 	
 	if (f_v) {
 		cout << "exact_cover_arguments::compute_lifts "
 				"before compute_liftings_new" << endl;
-		}
+	}
 
 	E->compute_liftings_new(f_solve, f_save, f_read, 
 		f_draw_system, fname_system, 
@@ -244,7 +244,7 @@ void exact_cover_arguments::compute_lifts(int verbose_level)
 	
 	if (f_v) {
 		cout << "exact_cover_arguments::compute_lifts done" << endl;
-		}
+	}
 	
 }
 

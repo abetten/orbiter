@@ -1602,7 +1602,7 @@ void action::find_strong_generators_at_level(
 
 
 void action::make_element_from_permutation_representation(
-		int *Elt, int *data, int verbose_level)
+		int *Elt, sims *S, int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *base_image;
@@ -1610,7 +1610,7 @@ void action::make_element_from_permutation_representation(
 	
 	if (f_v) {
 		cout << "action::make_element_from_permutation_representation" << endl;
-		}
+	}
 	base_image = NEW_int(base_len());
 	for (i = 0; i < base_len(); i++) {
 		a = base_i(i);
@@ -1621,18 +1621,18 @@ void action::make_element_from_permutation_representation(
 			cout << "i=" << i << " base[i] = " << a
 					<< " base_image[i]=" << base_image[i] << endl;
 			exit(1);
-			}
 		}
-	make_element_from_base_image(Elt, base_image, verbose_level);
+	}
+	make_element_from_base_image(Elt, S, base_image, verbose_level);
 
 	FREE_int(base_image);
 	if (f_v) {
 		cout << "action::make_element_from_permutation_representation done"
 				<< endl;
-		}
+	}
 }
 
-void action::make_element_from_base_image(int *Elt,
+void action::make_element_from_base_image(int *Elt, sims *S,
 		int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1643,7 +1643,7 @@ void action::make_element_from_base_image(int *Elt,
 	int *Elt3;
 	int *Elt4;
 	int *Elt5;
-	sims *S;
+	//sims *S;
 #if 1
 	int offset = 0;
 	int f_do_it_anyway_even_for_big_degree = TRUE;
@@ -1654,21 +1654,27 @@ void action::make_element_from_base_image(int *Elt,
 
 	if (f_v) {
 		cout << "action::make_element_from_base_image" << endl;
+	}
+
+	if (f_v) {
+		cout << "action::make_element_from_base_image" << endl;
 		cout << "base images: ";
 		int_vec_print(cout, data, base_len());
 		cout << endl;
 		print_info();
-		}
+	}
+#if 0
 	if (!f_has_sims) {
 		cout << "action::make_element_from_base_image "
 				"fatal: does not have sims" << endl;
 		exit(1);
-		}
+	}
 	S = Sims;
+#endif
 	if (f_v) {
 		cout << "action in Sims:" << endl;
 		S->A->print_info();
-		}
+	}
 	base_image = NEW_int(base_len());
 	Elt1 = NEW_int(elt_size_in_int);
 	Elt2 = NEW_int(elt_size_in_int);
@@ -1677,7 +1683,7 @@ void action::make_element_from_base_image(int *Elt,
 	Elt5 = NEW_int(elt_size_in_int);
 	for (j = 0; j < base_len(); j++) {
 		base_image[j] = data[j];
-		}
+	}
 	element_one(Elt3, 0);
 	
 	for (i = 0; i < base_len(); i++) {
@@ -1697,7 +1703,7 @@ void action::make_element_from_base_image(int *Elt,
 			cout << "i=" << i << " b_pt=" << b_pt
 					<< " yi=" << yi << " z="
 					<< z << " j=" << j << endl;
-			}
+		}
 		S->coset_rep(Elt5, i, j, 0);
 		if (f_vv) {
 			cout << "cosetrep=" << endl;
@@ -1706,7 +1712,7 @@ void action::make_element_from_base_image(int *Elt,
 			element_print_as_permutation_with_offset(Elt5, cout,
 				offset, f_do_it_anyway_even_for_big_degree, 
 				f_print_cycles_of_length_one, 0/*verbose_level*/);
-			}
+		}
 		element_mult(Elt5, Elt3, Elt4, 0);
 		element_move(Elt4, Elt3, 0);
 
@@ -1718,7 +1724,7 @@ void action::make_element_from_base_image(int *Elt,
 				f_print_cycles_of_length_one, 0/*verbose_level*/);
 
 			cout << "computing image of b_pt=" << b_pt << endl;
-			}
+		}
 		
 		c = element_image_of(b_pt, Elt3, 0);
 		if (f_vv) {
@@ -1729,8 +1735,8 @@ void action::make_element_from_base_image(int *Elt,
 					"fatal: element_image_of(b_pt, Elt3, 0) "
 					"!= yi" << endl;
 			exit(1);
-			}
 		}
+	}
 	element_move(Elt3, Elt, 0);
 	for (i = 0; i < base_len(); i++) {
 		yi = data[i];
@@ -1744,19 +1750,22 @@ void action::make_element_from_base_image(int *Elt,
 			cout << "yi=" << yi << endl;
 			cout << "b=" << b << endl;
 			exit(1);
-			}
 		}
+	}
 	if (f_v) {
 		cout << "action::make_element_from_base_image "
 				"created element:" << endl;
 		element_print_quick(Elt, cout);
-		}
+	}
 	FREE_int(base_image);
 	FREE_int(Elt1);
 	FREE_int(Elt2);
 	FREE_int(Elt3);
 	FREE_int(Elt4);
 	FREE_int(Elt5);
+	if (f_v) {
+		cout << "action::make_element_from_base_image done" << endl;
+	}
 }
 
 void action::make_element_2x2(int *Elt, int a0, int a1, int a2, int a3)
@@ -2063,6 +2072,7 @@ void action::init_group_from_generators(
 }
 
 void action::init_group_from_generators_by_base_images(
+	sims *parent_group_S,
 	int *group_generator_data, int group_generator_size, 
 	int f_group_order_target, const char *group_order_target, 
 	vector_ge *gens, strong_generators *&Strong_gens_out, 
@@ -2078,6 +2088,8 @@ void action::init_group_from_generators_by_base_images(
 
 	if (f_v) {
 		cout << "action::init_group_from_generators_by_base_images" << endl;
+	}
+	if (f_v) {
 		cout << "group_generator_size=" << group_generator_size << endl;
 		}
 	if (f_group_order_target) {
@@ -2110,7 +2122,7 @@ void action::init_group_from_generators_by_base_images(
 		int_vec_print(cout, group_generator_data + 
 			i * base_len(), base_len());
 		cout << endl;
-		make_element_from_base_image(Elt, 
+		make_element_from_base_image(Elt, parent_group_S,
 			group_generator_data + i * base_len(),
 			verbose_level - 2);
 		element_move(Elt, gens->ith(i), 0);
@@ -2139,6 +2151,9 @@ void action::init_group_from_generators_by_base_images(
 	f_has_strong_generators = TRUE;
 
 	FREE_int(Elt);
+	if (f_v) {
+		cout << "action::init_group_from_generators_by_base_images done" << endl;
+	}
 }
 
 void action::group_order(longinteger_object &go)

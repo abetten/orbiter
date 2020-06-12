@@ -173,6 +173,8 @@ private:
 	int *f_belongs_to_quadratic_subfield; // [q]
 
 	int my_nb_calls_to_elliptic_curve_addition;
+	int nb_times_mult;
+	int nb_times_add;
 
 public:
 	const char *override_poly;
@@ -269,6 +271,8 @@ public:
 	void subfield_embedding_2dimensional(finite_field &subfield, 
 		int *&components, int *&embedding, 
 		int *&pair_embedding, int verbose_level);
+	int nb_times_mult_called();
+	int nb_times_add_called();
 
 	// #########################################################################
 	// finite_field_linear_algebra.cpp
@@ -1656,6 +1660,7 @@ public:
 	void multiply_up_lint(
 			longinteger_object &a, long int *x, int len, int verbose_level);
 	int quotient_as_int(longinteger_object &a, longinteger_object &b);
+	long int quotient_as_lint(longinteger_object &a, longinteger_object &b);
 	void integral_division_exact(longinteger_object &a, 
 		longinteger_object &b, longinteger_object &a_over_b);
 	void integral_division(

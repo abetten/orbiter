@@ -50,6 +50,8 @@ void finite_field::null()
 	nb_calls_to_PG_element_unrank_modified = 0;
 
 	my_nb_calls_to_elliptic_curve_addition = 0;
+	nb_times_mult = 0;
+	nb_times_add = 0;
 }
 
 finite_field::~finite_field()
@@ -800,6 +802,7 @@ int finite_field::is_one(int i)
 
 int finite_field::mult(int i, int j)
 {
+	nb_times_mult++;
 	//cout << "finite_field::mult i=" << i << " j=" << j << endl;
 	if (i < 0 || i >= q) {
 		cout << "finite_field::mult i = " << i << endl;
@@ -938,6 +941,7 @@ int finite_field::add(int i, int j)
 {
 	geometry_global Gg;
 
+	nb_times_add++;
 	if (i < 0 || i >= q) {
 		cout << "finite_field::add i = " << i << endl;
 		exit(1);
@@ -1474,6 +1478,17 @@ void finite_field::subfield_embedding_2dimensional(
 				"finished" << endl;
 	}
 }
+
+int finite_field::nb_times_mult_called()
+{
+	return nb_times_mult;
+}
+
+int finite_field::nb_times_add_called()
+{
+	return nb_times_add;
+}
+
 
 }
 }

@@ -211,19 +211,18 @@ void strong_generators::init_by_hdl(action *A,
 }
 
 void strong_generators::init_from_permutation_representation(
-	action *A, int *data,
+	action *A, sims *parent_group_S, int *data,
 	int nb_elements, long int group_order, vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "strong_generators::init_from_permutation_"
-				"representation" << endl;
-		}
+		cout << "strong_generators::init_from_permutation_representation" << endl;
+	}
 	if (group_order == 0) {
-		cout << "strong_generators::init_from_permutation_"
-				"representation group_order == 0" << endl;
+		cout << "strong_generators::init_from_permutation_representation "
+				"group_order == 0" << endl;
 		exit(1);
 	}
 	init(A, verbose_level - 2);
@@ -231,41 +230,48 @@ void strong_generators::init_from_permutation_representation(
 	//vector_ge *nice_gens;
 	nice_gens = NEW_OBJECT(vector_ge);
 
-	nice_gens->init_from_permutation_representation(A, data,
+	if (f_v) {
+		cout << "strong_generators::init_from_permutation_representation "
+				"before nice_gens->init_from_permutation_representation" << endl;
+	}
+	nice_gens->init_from_permutation_representation(A, parent_group_S, data,
 		nb_elements, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::init_from_permutation_representation "
+				"after nice_gens->init_from_permutation_representation" << endl;
+	}
 	
 	sims *S;
 
 	if (f_v) {
-		cout << "strong_generators::init_from_permutation_"
-				"representation before A->create_sims_from_generators_with_target_group_order_int" << endl;
-		}
+		cout << "strong_generators::init_from_permutation_representation before "
+				"A->create_sims_from_generators_with_target_group_order_int" << endl;
+	}
 	S = A->create_sims_from_generators_with_target_group_order_int(
 			nice_gens, group_order, verbose_level - 3);
 	if (f_v) {
-		cout << "strong_generators::init_from_permutation_"
-				"representation after A->create_sims_from_generators_with_target_group_order_int" << endl;
-		}
+		cout << "strong_generators::init_from_permutation_representation after "
+				"A->create_sims_from_generators_with_target_group_order_int" << endl;
+	}
 	
 	if (f_v) {
-		cout << "strong_generators::init_from_permutation_"
-				"representation before init_from_sims" << endl;
-		}
+		cout << "strong_generators::init_from_permutation_representation "
+				"before init_from_sims" << endl;
+	}
 	init_from_sims(S, verbose_level - 3);
 	if (f_v) {
-		cout << "strong_generators::init_from_permutation_"
-				"representation after init_from_sims" << endl;
-		}
+		cout << "strong_generators::init_from_permutation_representation "
+				"after init_from_sims" << endl;
+	}
 
 	//tl = NEW_int(A->base_len);
 	//int_vec_copy(transversal_length, tl, A->base_len);
 
 	//FREE_OBJECT(my_gens);
 	if (f_v) {
-		cout << "strong_generators::init_from_permutation_"
-				"representation done, found a group of order "
-				<< group_order << endl;
-		}
+		cout << "strong_generators::init_from_permutation_representation "
+				"done, found a group of order " << group_order << endl;
+	}
 }
 
 void strong_generators::init_from_data(action *A, int *data, 

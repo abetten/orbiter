@@ -22,52 +22,12 @@ namespace top_level {
 
 packing_was::packing_was()
 {
-	f_poly = FALSE;
-	poly = NULL;
-	f_order = FALSE;
-	order = 0;
-	f_dim_over_kernel = FALSE;
-	dim_over_kernel = 0;
-	f_recoordinatize = FALSE;
-	f_select_spread = FALSE;
-	//select_spread[1000];
-	select_spread_text = NULL;
-	//select_spread_nb = 0;
-	f_spreads_invariant_under_H = FALSE;
-	f_cliques_on_fixpoint_graph = FALSE;
-	clique_size_on_fixpoint_graph = 0;
-	f_process_long_orbits = FALSE;
-	process_long_orbits_r = 0;
-	process_long_orbits_m = 0;
-	long_orbit_length = 0;
-	long_orbits_clique_size = 0;
-	f_expand_cliques_of_long_orbits = FALSE;
-	clique_no_r = 0;
-	clique_no_m = 0;
-	f_type_of_fixed_spreads = FALSE;
-	f_label = FALSE;
-	label = NULL;
-	f_spread_tables_prefix = FALSE;
-	spread_tables_prefix = "";
-	f_output_path = FALSE;
-	output_path = "";
+	Descr = NULL;
 
-
-
-	ECA = new exact_cover_arguments;
-	IA = new isomorph_arguments;
-
-	f_H = FALSE;
-	H_Descr = NULL;
 	H_LG = NULL;
 
-	f_N = FALSE;
-	N_Descr = NULL;
 	N_LG = NULL;
 
-	p = e = n = k = q = 0;
-	F = NULL;
-	T = NULL;
 	P = NULL;
 
 
@@ -81,15 +41,11 @@ packing_was::packing_was()
 	dim = 0;
 
 	N_gens = NULL;
-	// N_go;
 	N_goi = 0;
 
 
-	//char prefix_line_orbits[1000];
 	Line_orbits_under_H = NULL;
 	Spread_type = NULL;
-
-	f_report = FALSE;
 
 	prefix_spread_orbits[0] = 0;
 	Spread_orbits_under_H = NULL;
@@ -105,7 +61,6 @@ packing_was::packing_was()
 	Spread_type_reduced = NULL;
 
 	A_on_reduced_spreads = NULL;
-	//char prefix_reduced_spread_orbits[1000];
 	reduced_spread_orbits_under_H = NULL;
 	A_on_reduced_spread_orbits = NULL;
 
@@ -114,7 +69,6 @@ packing_was::packing_was()
 	fixpoints_idx = 0;
 	A_on_fixpoints = NULL;
 
-	clique_size = 0;
 	fixpoint_graph = NULL;
 	Control = NULL;
 	Poset_fixpoint_cliques = NULL;
@@ -140,443 +94,97 @@ void packing_was::null()
 
 void packing_was::freeself()
 {
-	if (P) {
-		FREE_OBJECT(P);
-	}
-	if (T) {
-		FREE_OBJECT(T);
-	}
-	if (F) {
-		FREE_OBJECT(F);
-	}
 	if (Orbit_invariant) {
 		FREE_OBJECT(Orbit_invariant);
 	}
 	null();
 }
 
-void packing_was::init(int argc, const char **argv)
+void packing_was::init(packing_was_description *Descr,
+		packing_classify *P, int verbose_level)
 {
-
-	cout << "packing_was::init" << endl;
-
-	long int t0 = 0;
-	int i;
-	int verbose_level = 0;
-	os_interface Os;
-
-
-
-	t0 = Os.os_ticks();
-	for (i = 1; i < argc; i++) {
-		if (strcmp(argv[i], "-v") == 0) {
-			verbose_level = atoi(argv[++i]);
-			cout << "-v " << verbose_level << endl;
-		}
-		else if (strcmp(argv[i], "-poly") == 0) {
-			f_poly = TRUE;
-			poly = argv[++i];
-			cout << "-poly " << poly << endl;
-		}
-		else if (strcmp(argv[i], "-label") == 0) {
-			f_label = TRUE;
-			label = argv[++i];
-			cout << "-label " << label << endl;
-		}
-		else if (strcmp(argv[i], "-order") == 0) {
-			f_order = TRUE;
-			order = atoi(argv[++i]);
-			cout << "-order " << order << endl;
-		}
-		else if (strcmp(argv[i], "-dim_over_kernel") == 0) {
-			f_dim_over_kernel = TRUE;
-			dim_over_kernel = atoi(argv[++i]);
-			cout << "-dim_over_kernel " << dim_over_kernel << endl;
-		}
-		else if (strcmp(argv[i], "-recoordinatize") == 0) {
-			f_recoordinatize = TRUE;
-			cout << "-recoordinatize " << endl;
-		}
-		else if (strcmp(argv[i], "-select_spread") == 0) {
-			f_select_spread = TRUE;
-			select_spread_text = argv[++i];
-			cout << "-select_spread " << select_spread_text << endl;
-		}
-
-		else if (strcmp(argv[i], "-H") == 0) {
-			f_H = TRUE;
-			H_Descr = NEW_OBJECT(linear_group_description);
-			i += H_Descr->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			cout << "-H" << endl;
-			}
-		else if (strcmp(argv[i], "-N") == 0) {
-			f_N = TRUE;
-			N_Descr = NEW_OBJECT(linear_group_description);
-			i += N_Descr->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			cout << "-N" << endl;
-			}
-
-		else if (strcmp(argv[i], "-spreads_invariant_under_H") == 0) {
-			f_spreads_invariant_under_H = TRUE;
-			cout << "-spreads_invariant_under_H " << endl;
-		}
-		else if (strcmp(argv[i], "-cliques_on_fixpoint_graph") == 0) {
-			f_cliques_on_fixpoint_graph = TRUE;
-			clique_size_on_fixpoint_graph = atoi(argv[++i]);
-			cout << "-cliques_on_fixpoint_graph " << clique_size_on_fixpoint_graph << endl;
-		}
-		else if (strcmp(argv[i], "-type_of_fixed_spreads") == 0) {
-			f_type_of_fixed_spreads = TRUE;
-			clique_size = atoi(argv[++i]);
-			cout << "-type_of_fixed_spreads " << clique_size << endl;
-		}
-		else if (strcmp(argv[i], "-process_long_orbits") == 0) {
-			f_process_long_orbits = TRUE;
-			clique_size = atoi(argv[++i]);
-			process_long_orbits_r = atoi(argv[++i]);
-			process_long_orbits_m = atoi(argv[++i]);
-			long_orbit_length = atoi(argv[++i]);
-			long_orbits_clique_size = atoi(argv[++i]);
-			cout << "-process_long_orbits "
-				<< clique_size << " "
-				<< process_long_orbits_r << " "
-				<< process_long_orbits_m << " "
-				<< long_orbit_length << " "
-				<< long_orbits_clique_size
-				<< endl;
-		}
-		else if (strcmp(argv[i], "-expand_cliques_of_long_orbits") == 0) {
-			f_expand_cliques_of_long_orbits = TRUE;
-			clique_size = atoi(argv[++i]);
-			clique_no_r = atoi(argv[++i]);
-			clique_no_m = atoi(argv[++i]);
-			long_orbit_length = atoi(argv[++i]);
-			long_orbits_clique_size = atoi(argv[++i]);
-			cout << "-expand_cliques_of_long_orbits "
-				<< clique_size << " "
-				<< clique_no_r << " "
-				<< clique_no_m << " "
-				<< long_orbit_length << " "
-				<< long_orbits_clique_size
-				<< endl;
-		}
-		else if (strcmp(argv[i], "-spread_tables_prefix") == 0) {
-			f_spread_tables_prefix = TRUE;
-			spread_tables_prefix = argv[++i];
-			cout << "-spread_tables_prefix "
-				<< spread_tables_prefix << endl;
-		}
-		else if (strcmp(argv[i], "-output_path") == 0) {
-			f_output_path = TRUE;
-			output_path = argv[++i];
-			cout << "-output_path " << output_path << endl;
-		}
-		else if (strcmp(argv[i], "-report") == 0) {
-			f_report = TRUE;
-			cout << "-report " << endl;
-		}
-	}
-
-#if 1
-	ECA->read_arguments(argc, argv, verbose_level);
-	IA->read_arguments(argc, argv, verbose_level);
-
-
-	if (!ECA->f_starter_size) {
-		cout << "packing_was::init "
-				"please use option -starter_size <starter_size>" << endl;
-		exit(1);
-		}
-	if (!ECA->f_has_input_prefix) {
-		cout << "packing_was::init "
-				"please use option -input_prefix <input_prefix>" << endl;
-		exit(1);
-		}
-#endif
-
 	int f_v = (verbose_level >= 1);
 
-	if (!f_order) {
-		cout << "packing_was::init "
-				"please use option -order <order>" << endl;
-		exit(1);
+	if (f_v) {
+		cout << "packing_was::init" << endl;
 	}
-	if (!f_H) {
+
+	packing_was::Descr = Descr;
+	packing_was::P = P;
+
+
+	if (!Descr->f_H) {
 		cout << "packing_was::init "
 				"please use option -H <group description> -end" << endl;
 		exit(1);
 	}
 
 
-	number_theory_domain NT;
-
-	int e1;
-
-	NT.factor_prime_power(order, p, e);
-	if (f_v) {
-		cout << "packing_was::init order = " << order << " = " << p << "^" << e << endl;
-	}
-
-	if (f_dim_over_kernel) {
-		if (e % dim_over_kernel) {
-			cout << "packing_was::init "
-					"dim_over_kernel does not divide e" << endl;
-			exit(1);
-		}
-		e1 = e / dim_over_kernel;
-		n = 2 * dim_over_kernel;
-		k = dim_over_kernel;
-		q = NT.i_power_j(p, e1);
-		if (f_v) {
-			cout << "packing_was::init "
-					"order=" << order << " n=" << n
-					<< " k=" << k << " q=" << q << endl;
-		}
-	}
-	else {
-		n = 2 * e;
-		k = e;
-		q = p;
-		if (f_v) {
-			cout << "packing_was::init "
-					"order=" << order << " n=" << n
-					<< " k=" << k << " q=" << q << endl;
-		}
-	}
-
-	if (q != H_Descr->input_q) {
-		cout << "packing_was::init "
-				"q != H_Descr->input_q" << endl;
-		exit(1);
-	}
-
-	if (f_v) {
-		cout << "packing_was::init q=" << q << endl;
-		}
-	F = NEW_OBJECT(finite_field);
-
-	F->init_override_polynomial(q, poly, 0 /* verbose_level */);
-
-	H_Descr->F = F;
-
-
 
 	// set up the group H:
 
-
-	H_LG = NEW_OBJECT(linear_group);
 	if (f_v) {
-		cout << "packing_was::init before H_LG->init, "
-				"creating the group" << endl;
-		}
-
-	H_LG->init(H_Descr, verbose_level - 1);
-
-	if (f_v) {
-		cout << "packing_was::init after H_LG->init" << endl;
-		}
-
-
-	A = H_LG->A2;
-
-	if (f_v) {
-		cout << "packing_was::init created group " << H_LG->prefix << endl;
+		cout << "packing_was::init before init_H" << endl;
 	}
-
-	if (!A->is_matrix_group()) {
-		cout << "packing_was::init the group is not a matrix group " << endl;
-		exit(1);
-	}
-
-
-	f_semilinear = A->is_semilinear_matrix_group();
+	init_H(verbose_level - 1);
 	if (f_v) {
-		cout << "packing_was::init f_semilinear=" << f_semilinear << endl;
-	}
-
-
-	M = A->get_matrix_group();
-	dim = M->n;
-
-	if (f_v) {
-		cout << "packing_was::init dim=" << dim << endl;
-	}
-
-	H_gens = H_LG->Strong_gens;
-	if (f_v) {
-		cout << "packing_was::init H_gens=" << endl;
-		H_gens->print_generators_tex(cout);
-	}
-	H_goi = H_gens->group_order_as_lint();
-	if (f_v) {
-		cout << "packing_was::init H_goi=" << H_goi << endl;
+		cout << "packing_was::init after init_H" << endl;
 	}
 
 	orb = NEW_lint(H_goi);
 
-	// end set up H
 
-	if (f_N) {
-		// set up the group N:
-		action *N_A;
-
-		N_LG = NEW_OBJECT(linear_group);
-		if (f_v) {
-			cout << "packing_was::init before N_LG->init, "
-					"creating the group" << endl;
-			}
-
-		if (q != N_Descr->input_q) {
-			cout << "packing_was::init "
-					"q != N_Descr->input_q" << endl;
-			exit(1);
-		}
-		N_Descr->F = F;
-		N_LG->init(N_Descr, verbose_level - 1);
-
-		if (f_v) {
-			cout << "packing_was::init after N_LG->init" << endl;
-			}
-		N_A = N_LG->A2;
-
-		if (f_v) {
-			cout << "packing_was::init created group " << H_LG->prefix << endl;
-		}
-
-		if (!N_A->is_matrix_group()) {
-			cout << "packing_was::init the group is not a matrix group " << endl;
-			exit(1);
-		}
-
-		if (N_A->is_semilinear_matrix_group() != f_semilinear) {
-			cout << "the groups N and H must either both be semilinear or not" << endl;
-			exit(1);
-		}
-		if (f_v) {
-			cout << "packing_was::init f_semilinear=" << f_semilinear << endl;
-		}
-		N_gens = N_LG->Strong_gens;
-		if (f_v) {
-			cout << "packing_was::init N_gens=" << endl;
-			N_gens->print_generators_tex(cout);
-		}
-		N_goi = N_gens->group_order_as_lint();
-		if (f_v) {
-			cout << "packing_was::init N_goi=" << N_goi << endl;
-		}
-
-	}
-
-
-	T = NEW_OBJECT(spread_classify);
-
-	//T->read_arguments(argc, argv);
-
-	//int max_depth = order + 1;
-
-	if (f_v) {
-		cout << "packing_was::init before T->init" << endl;
-	}
-	//int max_depth = order + 1;
-	poset_classification_control *Control;
-	linear_group *LG;
-
-	Control = NEW_OBJECT(poset_classification_control);
-	LG = NEW_OBJECT(linear_group); // hack !!! ToDo
-
-	T->init(LG, k, Control,
-		//Fq, f_recoordinatize,
-		//"SPREADS_STARTER", "Spreads", order + 1,
-		//argc, argv,
-		MINIMUM(verbose_level - 1, 2));
-#if 0
-	T->init(order, n, k, max_depth,
-		F, f_recoordinatize,
-		"TP_STARTER", "TP", order + 1,
-		argc, argv,
-		MINIMUM(verbose_level - 1, 2));
-#endif
-	if (f_v) {
-		cout << "packing_was::init after T->init" << endl;
-	}
-
-	if (f_v) {
-		cout << "packing_was::init before T->init2" << endl;
-	}
-	//poset_classification_control *Control;
-
-	//Control = NEW_OBJECT(poset_classification_control);
-
-	//T->init2(Control, verbose_level);
-	if (f_v) {
-		cout << "packing_was::init after T->init2" << endl;
-	}
-
-
-
-
-	P = NEW_OBJECT(packing_classify);
+	// set up the group N:
 
 
 	if (f_v) {
-		cout << "packing_was::init before P->init" << endl;
+		cout << "packing_was::init before init_N" << endl;
 	}
-	P->init(T,
-		f_select_spread,
-		select_spread_text,
-		ECA->input_prefix, ECA->base_fname,
-		ECA->starter_size,
-		ECA->f_lex,
-		spread_tables_prefix,
-		verbose_level);
+	init_N(verbose_level - 1);
 	if (f_v) {
-		cout << "packing_was::init after P->init" << endl;
-	}
-
-	if (f_v) {
-		cout << "packing_was::init before IA->init" << endl;
-	}
-	IA->init(T->A, P->A_on_spreads, P->gen,
-		P->size_of_packing, Control, ECA,
-		callback_packing_report,
-		NULL /*callback_subset_orbits*/,
-		P,
-		verbose_level);
-	if (f_v) {
-		cout << "packing_was::init after IA->init" << endl;
+		cout << "packing_was::init after init_N" << endl;
 	}
 
 
-	if (f_output_path) {
-		sprintf(fname_fixp_graph, "%s%s_fixp_graph.bin", output_path, H_LG->prefix);
+
+
+	if (Descr->f_output_path) {
+		sprintf(fname_fixp_graph, "%s%s_fixp_graph.bin",
+				Descr->output_path, H_LG->prefix);
 	}
 	else {
 		sprintf(fname_fixp_graph, "%s_fixp_graph.bin", H_LG->prefix);
 	}
-	if (f_output_path) {
-		sprintf(fname_fixp_graph_cliques, "%s%s_fixp_graph_cliques.csv", output_path, H_LG->prefix);
+	if (Descr->f_output_path) {
+		sprintf(fname_fixp_graph_cliques, "%s%s_fixp_graph_cliques.csv",
+				Descr->output_path, H_LG->prefix);
 	}
 	else {
-		sprintf(fname_fixp_graph_cliques, "%s_fixp_graph_cliques.csv", H_LG->prefix);
+		sprintf(fname_fixp_graph_cliques, "%s_fixp_graph_cliques.csv",
+				H_LG->prefix);
 	}
-	if (f_output_path) {
-		sprintf(fname_fixp_graph_cliques_orbiter, "%s%s_fixp_graph_cliques_lvl_%d", output_path, H_LG->prefix, clique_size_on_fixpoint_graph);
+	if (Descr->f_output_path) {
+		sprintf(fname_fixp_graph_cliques_orbiter, "%s%s_fixp_graph_cliques_lvl_%d",
+				Descr->output_path, H_LG->prefix, Descr->clique_size_on_fixpoint_graph);
 	}
 	else {
-		sprintf(fname_fixp_graph_cliques_orbiter, "%s_fixp_graph_cliques_lvl_%d", H_LG->prefix, clique_size_on_fixpoint_graph);
+		sprintf(fname_fixp_graph_cliques_orbiter, "%s_fixp_graph_cliques_lvl_%d",
+				H_LG->prefix, Descr->clique_size_on_fixpoint_graph);
 	}
 
+	if (f_v) {
+		cout << "packing_was::init before init_spreads" << endl;
+	}
 	init_spreads(verbose_level);
+	if (f_v) {
+		cout << "packing_was::init after init_spreads" << endl;
+	}
 
 
 
 
 
-	if (f_report) {
+	if (Descr->f_report) {
 		cout << "doing a report" << endl;
 
 		file_io Fio;
@@ -587,9 +195,9 @@ void packing_was::init(int argc, const char **argv)
 		char author[1000];
 		//int f_with_stabilizers = TRUE;
 
-		sprintf(title, "Packings in PG(3,%d) ", q);
+		sprintf(title, "Packings in PG(3,%d) ", P->q);
 		sprintf(author, "Orbiter");
-		sprintf(fname, "Packings_q%d.tex", q);
+		sprintf(fname, "Packings_q%d.tex", P->q);
 
 			{
 			ofstream fp(fname);
@@ -607,11 +215,11 @@ void packing_was::init(int argc, const char **argv)
 				TRUE /* f_pagenumbers*/,
 				NULL /* extra_praeamble */);
 
-			fp << "\\section{The field of order " << q << "}" << endl;
+			fp << "\\section{The field of order " << P->q << "}" << endl;
 			fp << "\\noindent The field ${\\mathbb F}_{"
-					<< q
+					<< P->q
 					<< "}$ :\\\\" << endl;
-			F->cheat_sheet(fp, verbose_level);
+			P->F->cheat_sheet(fp, verbose_level);
 
 #if 0
 			fp << "\\section{The space PG$(3, " << q << ")$}" << endl;
@@ -641,11 +249,136 @@ void packing_was::init(int argc, const char **argv)
 
 
 
-	the_end(t0);
-	//the_end_quietly(t0);
 
 	if (f_v) {
 		cout << "packing_was::init done" << endl;
+	}
+}
+
+void packing_was::init_N(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "packing_was::init_N" << endl;
+	}
+	if (Descr->f_N) {
+		// set up the group N:
+		action *N_A;
+
+		N_LG = NEW_OBJECT(linear_group);
+
+
+		if (f_v) {
+			cout << "packing_was::init_N before N_LG->init, "
+					"creating the group" << endl;
+			}
+
+		if (P->q != Descr->N_Descr->input_q) {
+			cout << "packing_was::init_N "
+					"q != N_Descr->input_q" << endl;
+			exit(1);
+		}
+		Descr->N_Descr->F = P->F;
+		N_LG->init(Descr->N_Descr, verbose_level - 1);
+
+		if (f_v) {
+			cout << "packing_was::init_N after N_LG->init" << endl;
+			}
+		N_A = N_LG->A2;
+
+		if (f_v) {
+			cout << "packing_was::init_N created group " << H_LG->prefix << endl;
+		}
+
+		if (!N_A->is_matrix_group()) {
+			cout << "packing_was::init_N the group is not a matrix group " << endl;
+			exit(1);
+		}
+
+		if (N_A->is_semilinear_matrix_group() != f_semilinear) {
+			cout << "the groups N and H must either both be semilinear or not" << endl;
+			exit(1);
+		}
+		if (f_v) {
+			cout << "packing_was::init_N f_semilinear=" << f_semilinear << endl;
+		}
+		N_gens = N_LG->Strong_gens;
+		if (f_v) {
+			cout << "packing_was::init_N N_gens=" << endl;
+			N_gens->print_generators_tex(cout);
+		}
+		N_goi = N_gens->group_order_as_lint();
+		if (f_v) {
+			cout << "packing_was::init_N N_goi=" << N_goi << endl;
+		}
+
+	}
+	if (f_v) {
+		cout << "packing_was::init_N done" << endl;
+	}
+}
+
+void packing_was::init_H(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "packing_was::init_H" << endl;
+	}
+	H_LG = NEW_OBJECT(linear_group);
+
+	Descr->H_Descr->F = P->F;
+
+	if (f_v) {
+		cout << "packing_was::init_H before H_LG->init, "
+				"creating the group" << endl;
+	}
+
+	H_LG->init(Descr->H_Descr, verbose_level - 1);
+
+	if (f_v) {
+		cout << "packing_was::init_H after H_LG->init" << endl;
+	}
+
+
+	A = H_LG->A2;
+
+	if (f_v) {
+		cout << "packing_was::init_H created group " << H_LG->prefix << endl;
+	}
+
+	if (!A->is_matrix_group()) {
+		cout << "packing_was::init_H the group is not a matrix group " << endl;
+		exit(1);
+	}
+
+
+	f_semilinear = A->is_semilinear_matrix_group();
+	if (f_v) {
+		cout << "packing_was::init_H f_semilinear=" << f_semilinear << endl;
+	}
+
+
+	M = A->get_matrix_group();
+	dim = M->n;
+
+	if (f_v) {
+		cout << "packing_was::init_H dim=" << dim << endl;
+	}
+
+	H_gens = H_LG->Strong_gens;
+	if (f_v) {
+		cout << "packing_was::init_H H_gens=" << endl;
+		H_gens->print_generators_tex(cout);
+	}
+	H_goi = H_gens->group_order_as_lint();
+	if (f_v) {
+		cout << "packing_was::init_H H_goi=" << H_goi << endl;
+	}
+
+	if (f_v) {
+		cout << "packing_was::init_H done" << endl;
 	}
 }
 
@@ -655,14 +388,6 @@ void packing_was::init_spreads(int verbose_level)
 
 	if (f_v) {
 		cout << "packing_was::init_spreads" << endl;
-	}
-
-	if (f_v) {
-		cout << "packing_was::init_spreads before P->read_spread_table" << endl;
-	}
-	P->read_spread_table(verbose_level);
-	if (f_v) {
-		cout << "packing_was::init_spreads after P->read_spread_table" << endl;
 	}
 
 
@@ -785,20 +510,20 @@ void packing_was::init_spreads(int verbose_level)
 		}
 	}
 
-	if (f_cliques_on_fixpoint_graph) {
-		if (f_N) {
+	if (Descr->f_cliques_on_fixpoint_graph) {
+		if (Descr->f_N) {
 			if (fixpoints_idx >= 0) {
 				if (f_v) {
 					cout << "packing_was::init_spreads "
 							"before compute_cliques_on_fixpoint_graph" << endl;
 				}
 				compute_cliques_on_fixpoint_graph(
-						clique_size_on_fixpoint_graph, verbose_level);
+						Descr->clique_size_on_fixpoint_graph, verbose_level);
 				if (f_v) {
 					cout << "packing_was::init_spreads "
 							"after compute_cliques_on_fixpoint_graph" << endl;
 				}
-				if (f_process_long_orbits) {
+				if (Descr->f_process_long_orbits) {
 					handle_long_orbits(verbose_level);
 
 				}
@@ -806,8 +531,9 @@ void packing_was::init_spreads(int verbose_level)
 
 		}
 		else {
-			//cout << "for cliques on fixpoint graph, need -N" << endl;
-			//exit(1);
+			cout << "for cliques on fixpoint graph, need -N" << endl;
+			exit(1);
+#if 0
 			sims *H;
 			char magma_prefix[1000];
 			strong_generators *gens_N;
@@ -822,13 +548,14 @@ void packing_was::init_spreads(int verbose_level)
 					A->Sims, H, gens_N, verbose_level);
 			cout << "program is terminating now" << endl;
 			exit(0);
+#endif
 		}
 	}
 
 
 	if (f_v) {
 		cout << "packing_was::init_spreads done" << endl;
-		}
+	}
 }
 
 
@@ -842,8 +569,9 @@ void packing_was::compute_H_orbits_on_lines(int verbose_level)
 		cout << "packing_was::compute_H_orbits_on_lines" << endl;
 		}
 
-	if (f_output_path) {
-		sprintf(prefix_line_orbits, "%s%s_line_orbits", output_path, H_LG->prefix);
+	if (Descr->f_output_path) {
+		sprintf(prefix_line_orbits, "%s%s_line_orbits",
+				Descr->output_path, H_LG->prefix);
 	}
 	else {
 		sprintf(prefix_line_orbits, "%s_line_orbits", H_LG->prefix);
@@ -898,8 +626,9 @@ void packing_was::compute_H_orbits_on_spreads(int verbose_level)
 
 	Spread_orbits_under_H = NEW_OBJECT(orbits_on_something);
 
-	if (f_output_path) {
-		sprintf(prefix_spread_orbits, "%s%s_spread_orbits", output_path, H_LG->prefix);
+	if (Descr->f_output_path) {
+		sprintf(prefix_spread_orbits, "%s%s_spread_orbits",
+				Descr->output_path, H_LG->prefix);
 	}
 	else {
 		sprintf(prefix_spread_orbits, "%s_spread_orbits", H_LG->prefix);
@@ -945,8 +674,9 @@ void packing_was::test_orbits_on_spreads(int verbose_level)
 				<< " orbits are partial packings:" << endl;
 	}
 
-	if (f_output_path) {
-		sprintf(fname_good_orbits, "%s%s_good_orbits", output_path, H_LG->prefix);
+	if (Descr->f_output_path) {
+		sprintf(fname_good_orbits, "%s%s_good_orbits",
+				Descr->output_path, H_LG->prefix);
 	}
 	else {
 		sprintf(fname_good_orbits, "%s_good_orbits", H_LG->prefix);
@@ -1121,7 +851,7 @@ void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
 		cout << "packing_was::compute_H_orbits_on_reduced_spreads "
 				"creating action A_on_reduced_spreads" << endl;
 	}
-	A_on_reduced_spreads = T->A2->create_induced_action_on_sets(
+	A_on_reduced_spreads = P->T->A2->create_induced_action_on_sets(
 			Spread_tables_reduced->nb_spreads, P->spread_size,
 			Spread_tables_reduced->spread_table,
 			//f_induce,
@@ -1135,8 +865,9 @@ void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
 
 	reduced_spread_orbits_under_H = NEW_OBJECT(orbits_on_something);
 
-	if (f_output_path) {
-		sprintf(prefix_reduced_spread_orbits, "%s%s_reduced_spread_orbits", output_path, H_LG->prefix);
+	if (Descr->f_output_path) {
+		sprintf(prefix_reduced_spread_orbits, "%s%s_reduced_spread_orbits",
+				Descr->output_path, H_LG->prefix);
 	}
 	else {
 		sprintf(prefix_reduced_spread_orbits, "%s_reduced_spread_orbits", H_LG->prefix);
@@ -1176,32 +907,19 @@ int packing_was::test_if_pair_of_orbits_are_adjacent(
 	int verbose_level)
 // tests if every spread from orbit1
 // is line-disjoint from every spread from orbit2
+// using Spread_tables_reduced
 {
 	int f_v = FALSE; // (verbose_level >= 1);
-	long int s1, s2;
-	int i, j;
+	//long int s1, s2;
+	//int i, j;
 
 	if (f_v) {
 		cout << "packing_was::test_if_pair_of_orbits_are_adjacent" << endl;
-		}
-	for (i = 0; i < len1; i++) {
-		s1 = orbit1[i];
-		for (j = 0; j < len2; j++) {
-			s2 = orbit2[j];
-			if (!Spread_tables_reduced->test_if_spreads_are_disjoint(s1, s2)) {
-				break;
-			}
-		}
-		if (j < len2) {
-			break;
-		}
 	}
-	if (i < len1) {
-		return FALSE;
-	}
-	else {
-		return TRUE;
-	}
+	return Spread_tables_reduced->test_if_pair_of_sets_are_adjacent(
+			orbit1, len1,
+			orbit2, len2,
+			verbose_level);
 }
 
 void packing_was::create_graph_and_save_to_file(
@@ -1214,21 +932,30 @@ void packing_was::create_graph_and_save_to_file(
 
 	if (f_v) {
 		cout << "packing_was::create_graph_and_save_to_file" << endl;
-		}
+	}
 
 	colored_graph *CG;
 	int type_idx;
 
+	if (f_v) {
+		cout << "packing_was::create_graph_and_save_to_file before "
+				"create_graph_on_orbits_of_a_certain_length" << endl;
+	}
 	reduced_spread_orbits_under_H->create_graph_on_orbits_of_a_certain_length(
 		CG,
 		fname,
 		orbit_length,
 		type_idx,
 		f_has_user_data, user_data, user_data_size,
-		FALSE /* f_has_colors */, 0 /* nb_colors */, NULL /* color_table */,
+		FALSE /* f_has_colors */, 1 /* nb_colors */, NULL /* color_table */,
 		packing_was_orbit_test_function,
 		this /* void *test_function_data */,
 		verbose_level);
+
+	if (f_v) {
+		cout << "packing_was::create_graph_and_save_to_file after "
+				"create_graph_on_orbits_of_a_certain_length" << endl;
+	}
 
 	CG->save(fname, verbose_level);
 
@@ -1236,7 +963,7 @@ void packing_was::create_graph_and_save_to_file(
 
 	if (f_v) {
 		cout << "packing_was::create_graph_and_save_to_file done" << endl;
-		}
+	}
 }
 
 void packing_was::create_graph_on_fixpoints(int verbose_level)
@@ -1249,7 +976,8 @@ void packing_was::create_graph_on_fixpoints(int verbose_level)
 
 	fixpoints_idx = find_orbits_of_length(1);
 	if (fixpoints_idx == -1) {
-		cout << "packing_was::create_graph_on_fixpoints we don't have any orbits of length 1" << endl;
+		cout << "packing_was::create_graph_on_fixpoints "
+				"we don't have any orbits of length 1" << endl;
 		return;
 	}
 
@@ -1281,7 +1009,8 @@ void packing_was::action_on_fixpoints(int verbose_level)
 
 	fixpoints_idx = find_orbits_of_length(1);
 	if (fixpoints_idx == -1) {
-		cout << "packing_was::action_on_fixpoints we don't have any orbits of length 1" << endl;
+		cout << "packing_was::action_on_fixpoints "
+				"we don't have any orbits of length 1" << endl;
 		return;
 	}
 	if (f_v) {
@@ -1325,7 +1054,7 @@ void packing_was::compute_cliques_on_fixpoint_graph(
 				"clique_size=" << clique_size << endl;
 	}
 
-	packing_was::clique_size = clique_size;
+	Descr->clique_size = clique_size;
 
 
 	fixpoint_graph = NEW_OBJECT(colored_graph);
@@ -1342,7 +1071,8 @@ void packing_was::compute_cliques_on_fixpoint_graph(
 
 	}
 	else {
-		cout << "The file " << fname_fixp_graph_cliques << " does not exist, we compute it" << endl;
+		cout << "The file " << fname_fixp_graph_cliques
+				<< " does not exist, we compute it" << endl;
 		if (f_v) {
 			cout << "packing_was::compute_cliques_on_fixpoint_graph "
 					"before compute_orbits_on_subsets" << endl;
@@ -1391,7 +1121,8 @@ void packing_was::compute_cliques_on_fixpoint_graph(
 				<< clique_size << " in the fixed point graph:" << endl;
 		lint_matrix_print(Cliques, nb_cliques, clique_size);
 
-		Fio.lint_matrix_write_csv(fname_fixp_graph_cliques, Cliques, nb_cliques, clique_size);
+		Fio.lint_matrix_write_csv(fname_fixp_graph_cliques,
+				Cliques, nb_cliques, clique_size);
 	}
 
 	Fixp_cliques = NEW_OBJECT(orbit_transversal);
@@ -1412,18 +1143,18 @@ void packing_was::handle_long_orbits(int verbose_level)
 
 	if (f_v) {
 		cout << "packing_was::handle_long_orbits" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "packing_was::handle_long_orbits "
 				"f_process_long_orbits" << endl;
 		cout << "packing_was::handle_long_orbits "
-				"r=" << process_long_orbits_r << endl;
+				"r=" << Descr->process_long_orbits_r << endl;
 		cout << "packing_was::handle_long_orbits "
-				"m=" << process_long_orbits_m << endl;
+				"m=" << Descr->process_long_orbits_m << endl;
 		cout << "packing_was::handle_long_orbits "
-				"long_orbit_length=" << long_orbit_length << endl;
+				"long_orbit_length=" << Descr->long_orbit_length << endl;
 		cout << "packing_was::handle_long_orbits "
-				"long_orbits_clique_size=" << long_orbits_clique_size << endl;
+				"long_orbits_clique_size=" << Descr->long_orbits_clique_size << endl;
 	}
 
 
@@ -1436,9 +1167,9 @@ void packing_was::handle_long_orbits(int verbose_level)
 
 	L->init(this,
 			fixpoints_idx,
-			process_long_orbits_r /* fixpoints_clique_case_number */,
-			clique_size /* fixpoint_clique_size */,
-			Cliques + process_long_orbits_r * clique_size /* clique */,
+			Descr->process_long_orbits_r /* fixpoints_clique_case_number */,
+			Descr->clique_size /* fixpoint_clique_size */,
+			Cliques + Descr->process_long_orbits_r * Descr->clique_size /* clique */,
 			verbose_level);
 
 	if (f_v) {
@@ -1470,7 +1201,7 @@ void packing_was::handle_long_orbits(int verbose_level)
 
 	if (f_v) {
 		cout << "packing_was::handle_long_orbits done" << endl;
-		}
+	}
 }
 
 void packing_was::compute_orbit_invariant_on_classified_orbits(int verbose_level)
@@ -1482,7 +1213,8 @@ void packing_was::compute_orbit_invariant_on_classified_orbits(int verbose_level
 	}
 
 	if (f_v) {
-		cout << "packing_was::compute_orbit_invariant_on_classified_orbits before reduced_spread_orbits_under_H->compute_orbit_invariant_after_classification" << endl;
+		cout << "packing_was::compute_orbit_invariant_on_classified_orbits "
+				"before reduced_spread_orbits_under_H->compute_orbit_invariant_after_classification" << endl;
 	}
 	reduced_spread_orbits_under_H->compute_orbit_invariant_after_classification(
 			Orbit_invariant,
@@ -1490,7 +1222,8 @@ void packing_was::compute_orbit_invariant_on_classified_orbits(int verbose_level
 			this /* evaluate_data */,
 			verbose_level);
 	if (f_v) {
-		cout << "packing_was::compute_orbit_invariant_on_classified_orbits after reduced_spread_orbits_under_H->compute_orbit_invariant_after_classification" << endl;
+		cout << "packing_was::compute_orbit_invariant_on_classified_orbits "
+				"after reduced_spread_orbits_under_H->compute_orbit_invariant_after_classification" << endl;
 	}
 
 	if (f_v) {
@@ -1503,7 +1236,8 @@ int packing_was::evaluate_orbit_invariant_function(int a, int i, int j, int verb
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "packing_was::evaluate_orbit_invariant_function i=" << i << " j=" << j << " a=" << a << endl;
+		cout << "packing_was::evaluate_orbit_invariant_function "
+				"i=" << i << " j=" << j << " a=" << a << endl;
 	}
 	int val = 0;
 	int f, l, h, spread_idx, type_value;
@@ -1523,14 +1257,16 @@ int packing_was::evaluate_orbit_invariant_function(int a, int i, int j, int verb
 		}
 		else {
 			if (type_value != val) {
-				cout << "packing_was::evaluate_orbit_invariant_function the invariant is not invariant on the orbit" << endl;
+				cout << "packing_was::evaluate_orbit_invariant_function "
+						"the invariant is not invariant on the orbit" << endl;
 				exit(1);
 			}
 		}
 	}
 
 	if (f_v) {
-		cout << "packing_was::evaluate_orbit_invariant_function i=" << i << " j=" << j << " a=" << a << " val=" << val << endl;
+		cout << "packing_was::evaluate_orbit_invariant_function "
+				"i=" << i << " j=" << j << " a=" << a << " val=" << val << endl;
 	}
 	if (f_v) {
 		cout << "packing_was::evaluate_orbit_invariant_function done" << endl;
@@ -1548,16 +1284,19 @@ void packing_was::classify_orbit_invariant(int verbose_level)
 	int i;
 
 	if (f_v) {
-		cout << "packing_was::classify_orbit_invariant before Classify_spread_invariant_by_orbit_length[i].init" << endl;
+		cout << "packing_was::classify_orbit_invariant before "
+				"Classify_spread_invariant_by_orbit_length[i].init" << endl;
 	}
 	nb_sets = Orbit_invariant->nb_sets;
 	Classify_spread_invariant_by_orbit_length = NEW_OBJECTS(classify, nb_sets);
+
 	for (i = 0; i < nb_sets; i++) {
 		Classify_spread_invariant_by_orbit_length[i].init_lint(
 				Orbit_invariant->Sets[i], Orbit_invariant->Set_size[i], FALSE, 0);
 	}
 	if (f_v) {
-		cout << "packing_was::classify_orbit_invariant after Classify_spread_invariant_by_orbit_length[i].init" << endl;
+		cout << "packing_was::classify_orbit_invariant after "
+				"Classify_spread_invariant_by_orbit_length[i].init" << endl;
 	}
 
 	if (f_v) {
@@ -1587,7 +1326,7 @@ void packing_was::report_orbit_invariant(ostream &ost)
 					Spread_type_reduced->goi);
 			ost << "$$" << endl;
 			ost << "appears " << l << " times.\\\\" << endl;
-			}
+		}
 	}
 
 }
@@ -1628,7 +1367,7 @@ void packing_was::report(ostream &ost)
 	report_orbit_invariant(ost);
 	ost << endl;
 
-	if (f_N) {
+	if (Descr->f_N) {
 		ost << "\\section{The Group $N$}" << endl;
 		ost << "The Group $N$ has order " << N_goi << "\\\\" << endl;
 		N_gens->print_generators_tex(ost);
@@ -1637,11 +1376,12 @@ void packing_was::report(ostream &ost)
 
 		if (fixpoints_idx >= 0) {
 			ost << "\\section{Orbits of cliques on the fixpoint graph under $N$}" << endl;
-			ost << "The Group $N$ has " << nb_cliques << " orbits on cliques of size " << clique_size << "\\\\" << endl;
+			ost << "The Group $N$ has " << nb_cliques << " orbits on "
+					"cliques of size " << Descr->clique_size << "\\\\" << endl;
 			Fixp_cliques->report_ago_distribution(ost);
 			ost << endl;
 
-			if (f_process_long_orbits) {
+			if (Descr->f_process_long_orbits) {
 				if (L) {
 					latex_interface Li;
 
@@ -1649,7 +1389,9 @@ void packing_was::report(ostream &ost)
 					Li.lint_set_print_tex(ost, L->fixpoint_clique, L->fixpoint_clique_size);
 					ost << "$, we find the following filtered orbits:\\\\" << endl;
 					L->report_filtered_orbits(ost);
-					ost << "A graph with " << L->CG->nb_points << " vertices has been created and saved in the file \\verb'" << L->fname_graph << "'\\\\" << endl;
+					ost << "A graph with " << L->CG->nb_points << " vertices "
+							"has been created and saved in the file \\verb'"
+							<< L->fname_graph << "'\\\\" << endl;
 				}
 			}
 		}
@@ -1698,20 +1440,23 @@ void packing_was_early_test_function_fp_cliques(long int *S, int len,
 
 
 
-int packing_was_evaluate_orbit_invariant_function(int a, int i, int j, void *evaluate_data, int verbose_level)
+int packing_was_evaluate_orbit_invariant_function(int a, int i, int j,
+		void *evaluate_data, int verbose_level)
 {
-	int f_v = (verbose_level >= 1);
+	int f_v = FALSE; //(verbose_level >= 1);
 	packing_was *P = (packing_was *) evaluate_data;
 
 	if (f_v) {
-		cout << "packing_was_evaluate_orbit_invariant_function i=" << i << " j=" << j << " a=" << a << endl;
+		cout << "packing_was_evaluate_orbit_invariant_function "
+				"i=" << i << " j=" << j << " a=" << a << endl;
 	}
 	int val;
 
-	val = P->evaluate_orbit_invariant_function(a, i, j, verbose_level);
+	val = P->evaluate_orbit_invariant_function(a, i, j, 0 /*verbose_level*/);
 
 	if (f_v) {
-		cout << "packing_was_evaluate_orbit_invariant_function i=" << i << " j=" << j << " a=" << a << " val=" << val << endl;
+		cout << "packing_was_evaluate_orbit_invariant_function "
+				"i=" << i << " j=" << j << " a=" << a << " val=" << val << endl;
 	}
 	if (f_v) {
 		cout << "packing_was_evaluate_orbit_invariant_function done" << endl;

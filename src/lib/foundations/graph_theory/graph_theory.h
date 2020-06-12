@@ -182,8 +182,6 @@ class clique_finder_control {
 
 public:
 	int f_rainbow;
-	//int f_file;
-	//const char *fname_graph;
 	int f_weighted;
 	const char *weights_string;
 	int f_Sajeeb;
@@ -384,6 +382,7 @@ public:
 	void export_laplacian_to_file(const char *fname, 
 		int verbose_level);
 	void export_to_file_matlab(const char *fname, int verbose_level);
+	void export_to_csv(const char *fname, int verbose_level);
 	void early_test_func_for_clique_search(long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,

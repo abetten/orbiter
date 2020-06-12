@@ -359,7 +359,6 @@ void spread_classify::init(
 					"first three components has order " << go << endl;
 		}
 
-
 		Nb = R->nb_live_points;
 	}
 	else {

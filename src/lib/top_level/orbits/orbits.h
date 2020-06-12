@@ -220,7 +220,6 @@ public:
 	// to the j-th element in the orbit.
 };
 
-int orbit_of_sets_compare_func(void *a, void *b, void *data);
 
 // #############################################################################
 // orbit_of_subspaces.cpp

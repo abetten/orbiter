@@ -559,6 +559,16 @@ int interface_povray::read_scene_objects(int argc, const char **argv, int i0, in
 			// 27 lines
 
 		}
+		else if (strcmp(argv[i], "-Clebsch_surface") == 0) {
+			cout << "-Clebsch_surface" << endl;
+
+			S->create_Clebsch_surface(verbose_level);
+
+			// 1 cubic surface
+			// 27 lines
+			// 7 Eckardt points
+
+		}
 		else if (strcmp(argv[i], "-obj_file") == 0) {
 			cout << "-obj_file" << endl;
 			const char *fname;

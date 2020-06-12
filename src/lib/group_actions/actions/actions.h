@@ -291,9 +291,9 @@ public:
 		vector_ge &gens, vector_ge &subset_of_gens, 
 		int verbose_level);
 	void make_element_from_permutation_representation(int *Elt, 
-		int *data, int verbose_level);
-	void make_element_from_base_image(int *Elt, int *data, 
-		int verbose_level);
+			sims *S, int *data, int verbose_level);
+	void make_element_from_base_image(int *Elt, sims *S,
+			int *data, int verbose_level);
 	void make_element_2x2(int *Elt, int a0, int a1, int a2, int a3);
 	void make_element_from_string(int *Elt,
 			const char *data_string, int verbose_level);
@@ -311,10 +311,11 @@ public:
 		vector_ge *gens, strong_generators *&Strong_gens, 
 		int verbose_level);
 	void init_group_from_generators_by_base_images(
-		int *group_generator_data, int group_generator_size, 
-		int f_group_order_target, const char *group_order_target, 
-		vector_ge *gens, strong_generators *&Strong_gens_out, 
-		int verbose_level);
+			sims *S,
+			int *group_generator_data, int group_generator_size,
+			int f_group_order_target, const char *group_order_target,
+			vector_ge *gens, strong_generators *&Strong_gens_out,
+			int verbose_level);
 	void group_order(longinteger_object &go);
 	void element_print_base_images(int *Elt);
 	void element_print_base_images(int *Elt, std::ostream &ost);
@@ -389,18 +390,29 @@ public:
 			int *&class_normalizer_number_of_generators,
 			int **&normalizer_generators_perms,
 			int verbose_level);
+	void normalizer_of_cyclic_group_using_MAGMA(const char *fname_magma_prefix,
+			sims *G, int *Elt, strong_generators *&gens_N,
+			int verbose_level);
 	void centralizer_using_MAGMA(const char *prefix, 
-		sims *G, int *Elt, int verbose_level);
+			sims *G, int *Elt, strong_generators *&gens,
+			int verbose_level);
+	void read_centralizer_magma(const char *fname_output,
+			sims *override_Sims, strong_generators *&gens,
+			int verbose_level);
+	void centralizer_using_magma2(const char *prefix,
+			const char *fname_magma,
+			const char *fname_output,
+			sims *override_Sims, int *Elt, int verbose_level);
 	void conjugacy_classes_and_normalizers(sims *override_Sims,
 			const char *override_group_prefix,
 			const char *label_latex,
 			int verbose_level);
 	void report_conjugacy_classes_and_normalizers(std::ostream &ost,
-			int verbose_level);
+			sims *override_Sims, int verbose_level);
 	void read_conjugacy_classes_and_normalizers(
 			char *fname, sims *override_sims, const char *label_latex, int verbose_level);
 	void read_and_report_conjugacy_classes_and_normalizers(std::ostream &ost,
-			char *fname, int verbose_level);
+			char *fname, sims *override_Sims,int verbose_level);
 	void report_fixed_objects(int *Elt,
 			char *fname_latex, int verbose_level);
 	void element_conjugate_bvab(int *Elt_A,

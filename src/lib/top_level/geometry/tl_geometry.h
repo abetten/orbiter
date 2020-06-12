@@ -1449,7 +1449,7 @@ public:
 	finite_field *F;
 	int spread_size;
 	int nb_lines;
-	int search_depth;
+	//int search_depth;
 
 	char starter_directory_name[1000];
 	char prefix[1000];
@@ -1466,13 +1466,21 @@ public:
 
 
 	const char *spread_tables_prefix;
-	int nb_spreads_up_to_isomorphism;
-		// the number of spreads
-		// from the classification
 
+	long int *spread_reps; // [nb_spread_reps * T->spread_size]
+	int *spread_reps_idx; // [nb_spread_reps]
+	long int *spread_orbit_length; // [nb_spread_reps]
+	int nb_spread_reps;
+	long int total_nb_of_spreads; // = sum i :  spread_orbit_length[i]
+	int nb_iso_types_of_spreads;
+	// the number of spreads
+	// from the classification
+
+#if 0
 	long int *input_spreads; // [nb_input_spreads]
 	int *input_spread_label;
 	int nb_input_spreads;
+#endif
 
 	spread_tables *Spread_tables;
 	int *tmp_isomorphism_type_of_spread; // for packing_swap_func
@@ -1503,33 +1511,20 @@ public:
 		int f_packing_select_spread,
 		const char *packing_select_spread_text,
 		const char *input_prefix, const char *base_fname,
-		int search_depth,
 		int f_lexorder_test,
 		const char *spread_tables_prefix,
 		int verbose_level);
-	void init2(int verbose_level);
+	void init2(poset_classification_control *Control, int verbose_level);
 	void compute_spread_table(int verbose_level);
+	void compute_spread_table_from_scratch(int verbose_level);
 	void init_P3(int verbose_level);
-	int predict_spread_table_length(
-		int f_packing_select_spread,
-		int *packing_select_spread, int packing_select_spread_nb,
-		int verbose_level);
-	void make_spread_table(
-		int nb_spreads, long int *input_spreads,
-		int nb_input_spreads, int *input_spread_label,
-		long int **&Sets, int *&isomorphism_type_of_spread,
-		int verbose_level);
-	void compute_dual_spreads(long int **Sets,
-			long int *&Dual_spread_idx,
-			long int *&self_dual_spread_idx,
-			int &nb_self_dual_spreads,
-			int verbose_level);
 	int test_if_packing_is_self_dual(int *packing, int verbose_level);
 	void compute_adjacency_matrix(int verbose_level);
 	void prepare_generator(
-		int search_depth, int verbose_level);
+			poset_classification_control *Control,
+			int verbose_level);
 	void compute(int search_depth, int verbose_level);
-	int spreads_are_disjoint(int i, int j);
+	//int spreads_are_disjoint(int i, int j);
 	void lifting_prepare_function_new(
 		exact_cover *E, int starter_case,
 		long int *candidates, int nb_candidates,
@@ -1566,23 +1561,10 @@ public:
 			//const char *fname_spread_table_iso,
 			int verbose_level);
 	void create_action_on_spreads(int verbose_level);
-	void conjugacy_classes(int verbose_level);
-	void read_conjugacy_classes(char *fname,
-			int verbose_level);
-	void conjugacy_classes_and_normalizers(int verbose_level);
-	void read_conjugacy_classes_and_normalizers(
-			char *fname, int verbose_level);
-	void centralizer(const char *elt_string,
-			int verbose_level);
 	void report_fixed_objects(
 			int *Elt, char *fname_latex,
 			int verbose_level);
 	void make_element(int idx, int verbose_level);
-	void centralizer(int idx, int verbose_level);
-	void centralizer_of_element(
-		const char *element_description,
-		const char *label,
-		int verbose_level);
 	int test_if_orbit_is_partial_packing(
 		schreier *Orbits, int orbit_idx,
 		long int *orbit1, int verbose_level);
@@ -1591,10 +1573,6 @@ public:
 		long int *orbit1, long int *orbit2, int verbose_level);
 	// tests if every spread from orbit a
 	// is line-disjoint from every spread from orbit b
-	int test_if_pair_of_sets_are_adjacent(
-		long int *set1, int sz1, long int *set2, int sz2,
-		int verbose_level);
-	int test_if_spreads_are_disjoint_based_on_table(int a, int b);
 
 	// packing2.cpp
 	void compute_list_of_lines_from_packing(
@@ -1764,26 +1742,14 @@ int packing_long_orbit_test_function(long int *orbit1, int len1,
 		long int *orbit2, int len2, void *data);
 
 
-
 // #############################################################################
-// packing_was.cpp
+// packing_was_description.cpp
 // #############################################################################
 
-//! construction of packings in PG(3,q) with assumed symmetry
+//! command line description of tasks for packings with assumed symmetry
 
-class packing_was {
+class packing_was_description {
 public:
-	int f_poly;
-	const char *poly;
-	int f_order;
-	int order;
-	int f_dim_over_kernel;
-	int dim_over_kernel;
-	int f_recoordinatize;
-	int f_select_spread;
-	const char *select_spread_text;
-	//int select_spread[1000];
-	//int select_spread_nb;
 	int f_spreads_invariant_under_H;
 	int f_cliques_on_fixpoint_graph;
 	int clique_size_on_fixpoint_graph;
@@ -1803,20 +1769,44 @@ public:
 	int f_output_path;
 	const char *output_path;
 
+	int f_exact_cover;
 	exact_cover_arguments *ECA;
+
+	int f_isomorph;
 	isomorph_arguments *IA;
 
 	int f_H;
 	linear_group_description *H_Descr;
-	linear_group *H_LG;
 
 	int f_N;
 	linear_group_description *N_Descr;
+
+	int f_report;
+
+	int clique_size;
+
+	packing_was_description();
+	~packing_was_description();
+	int read_arguments(int argc, const char **argv,
+		int verbose_level);
+
+};
+
+
+// #############################################################################
+// packing_was.cpp
+// #############################################################################
+
+//! construction of packings in PG(3,q) with assumed symmetry
+
+class packing_was {
+public:
+	packing_was_description *Descr;
+
+	linear_group *H_LG;
+
 	linear_group *N_LG;
 
-	int p, e, n, k, q;
-	finite_field *F;
-	spread_classify *T;
 	packing_classify *P;
 
 
@@ -1838,8 +1828,6 @@ public:
 	orbits_on_something *Line_orbits_under_H;
 
 	orbit_type_repository *Spread_type;
-
-	int f_report;
 
 	char prefix_spread_orbits[1000];
 	orbits_on_something *Spread_orbits_under_H;
@@ -1864,7 +1852,6 @@ public:
 	int fixpoints_idx;
 	action *A_on_fixpoints;
 
-	int clique_size;
 	colored_graph *fixpoint_graph;
 	poset_classification_control *Control;
 	poset *Poset_fixpoint_cliques;
@@ -1884,7 +1871,10 @@ public:
 	~packing_was();
 	void null();
 	void freeself();
-	void init(int argc, const char **argv);
+	void init(packing_was_description *Descr,
+			packing_classify *P, int verbose_level);
+	void init_N(int verbose_level);
+	void init_H(int verbose_level);
 	void init_spreads(int verbose_level);
 	void compute_H_orbits_on_lines(int verbose_level);
 	// computes the orbits of H on lines (NOT on spreads!)

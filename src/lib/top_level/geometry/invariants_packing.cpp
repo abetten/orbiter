@@ -114,10 +114,10 @@ void invariants_packing::init(isomorph *Iso,
 
 
 	Type_of_packing = NEW_int(
-			Iso->Reps->count * P->nb_spreads_up_to_isomorphism);
+			Iso->Reps->count * P->nb_iso_types_of_spreads);
 	Type_idx_of_packing = NEW_int(Iso->Reps->count);
 	for (i = 0;
-			i < Iso->Reps->count * P->nb_spreads_up_to_isomorphism;
+			i < Iso->Reps->count * P->nb_iso_types_of_spreads;
 			i++) {
 		Type_of_packing[i] = 0;
 		}
@@ -140,7 +140,7 @@ void invariants_packing::init(isomorph *Iso,
 			}
 		for (i = 0; i < Iso->size; i++) {
 			Type_of_packing[orbit *
-							P->nb_spreads_up_to_isomorphism +
+							P->nb_iso_types_of_spreads +
 							spread_iso_type[i]]++;
 			}
 		}
@@ -158,7 +158,7 @@ void invariants_packing::init(isomorph *Iso,
 		if (Sorting.vec_search((void **)List_of_types,
 				packing_types_compare_function, this,
 				nb_types,
-				Type_of_packing + orbit * P->nb_spreads_up_to_isomorphism,
+				Type_of_packing + orbit * P->nb_iso_types_of_spreads,
 				idx,
 				0 /* verbose_level */)) {
 			Frequency[idx]++;
@@ -168,8 +168,8 @@ void invariants_packing::init(isomorph *Iso,
 				cout << "invariants_packing::init New type ";
 				int_vec_print(cout,
 						Type_of_packing +
-						orbit * P->nb_spreads_up_to_isomorphism,
-						P->nb_spreads_up_to_isomorphism);
+						orbit * P->nb_iso_types_of_spreads,
+						P->nb_iso_types_of_spreads);
 				cout << " at position " << idx << endl;
 				}
 			for (i = nb_types; i > idx; i--) {
@@ -177,12 +177,12 @@ void invariants_packing::init(isomorph *Iso,
 				Frequency[i] = Frequency[i - 1];
 				}
 			List_of_types[idx] =
-					NEW_int(P->nb_spreads_up_to_isomorphism);
+					NEW_int(P->nb_iso_types_of_spreads);
 			Frequency[idx] = 1;
-			for (i = 0; i < P->nb_spreads_up_to_isomorphism; i++) {
+			for (i = 0; i < P->nb_iso_types_of_spreads; i++) {
 				List_of_types[idx][i] =
 						Type_of_packing[orbit *
-								P->nb_spreads_up_to_isomorphism + i];
+								P->nb_iso_types_of_spreads + i];
 				}
 			nb_types++;
 			if (f_vv) {
@@ -197,7 +197,7 @@ void invariants_packing::init(isomorph *Iso,
 				<< " types of packings" << endl;
 		for (i = 0; i < nb_types; i++) {
 			int_vec_print(cout, List_of_types[i],
-					P->nb_spreads_up_to_isomorphism);
+					P->nb_iso_types_of_spreads);
 			cout << " : " << Frequency[i] << endl;
 			}
 		}
@@ -207,7 +207,7 @@ void invariants_packing::init(isomorph *Iso,
 		if (Sorting.vec_search((void **)List_of_types,
 			packing_types_compare_function, this,
 			nb_types,
-			Type_of_packing + orbit * P->nb_spreads_up_to_isomorphism,
+			Type_of_packing + orbit * P->nb_iso_types_of_spreads,
 			idx,
 			0 /* verbose_level */)) {
 			Type_idx_of_packing[orbit] = idx;
@@ -346,7 +346,7 @@ void invariants_packing::make_table(
 			sprintf(fname, "ids_of_all_type_%d.csv", i);
 			}
 		int_vec_print(ost, List_of_types[i],
-				P->nb_spreads_up_to_isomorphism);
+				P->nb_iso_types_of_spreads);
 		ost << " & ";
 		// ost << Frequency[i] << " & ";
 
@@ -411,7 +411,7 @@ int packing_types_compare_function(void *a, void *b, void *data)
 	int *B = (int *) b;
 	int i;
 
-	for (i = 0; i < inv->P->nb_spreads_up_to_isomorphism; i++) {
+	for (i = 0; i < inv->P->nb_iso_types_of_spreads; i++) {
 		if (A[i] > B[i]) {
 			return 1;
 			}

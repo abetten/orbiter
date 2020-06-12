@@ -3337,6 +3337,60 @@ void scene::create_five_plus_one()
 		5. ); // a3'
 }
 
+void scene::create_Clebsch_surface(int verbose_level)
+// 1 cubic, 27 lines, 7 Eckardt points
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "scene::create_Clebsch_surface" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "scene::create_Clebsch_surface creating lines" << endl;
+	}
+
+	clebsch_cubic();
+	clebsch_cubic_lines_a();
+	clebsch_cubic_lines_b();
+	clebsch_cubic_lines_cij();
+	Clebsch_Eckardt_points();
+
+#if 0
+
+	int i;
+	double r = sqrt(5);
+	for (i = 0; i < 27; i++) {
+
+		if (f_v) {
+			cout << "scene::create_Clebsch_surface creating line" << i << endl;
+		}
+		line_pt_and_dir_and_copy_points(Hilbert_Cohn_Vossen_Lines + i * 6, r, verbose_level - 1);
+		}
+
+	{
+	double coeff[20] = {0,0,0,-1,0,5./2.,0,0,0,0,0,0,-1,0,0,0,0,-1,0,1};
+	cubic(coeff);  // cubic 0
+	}
+
+#if 0
+	for (i = 0; i < 45; i++) {
+		plane_from_dual_coordinates(Hilbert_Cohn_Vossen_tritangent_planes + i * 4);
+		}
+#endif
+#endif
+
+
+
+
+
+	if (f_v) {
+		cout << "scene::create_Clebsch_surface done" << endl;
+	}
+}
+
 void scene::create_Hilbert_Cohn_Vossen_surface(int verbose_level)
 // 1 cubic, 27 lines, 54 points, 45 planes
 {

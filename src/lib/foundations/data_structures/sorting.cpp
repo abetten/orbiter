@@ -2529,6 +2529,25 @@ finish:
 	return ret;
 }
 
+int sorting::test_if_sets_are_disjoint(long int *set1, long int *set2, int sz1, int sz2)
+{
+	int u, v;
+
+	u = v = 0;
+	while (u < sz1 && v < sz2) {
+		if (set1[u] == set2[v]) {
+			return FALSE;
+		}
+		else if (set1[u] < set2[v]) {
+			u++;
+		}
+		else {
+			// now set1[u] > set2[v]
+			v++;
+		}
+	}
+	return TRUE;
+}
 
 void sorting::d_partition(double *v, int left, int right, int *middle)
 {

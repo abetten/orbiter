@@ -3475,56 +3475,66 @@ void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 
 void algebra_global_with_action::packing_init(
 		poset_classification_control *Control, linear_group *LG,
+		int dimension_of_spread_elements,
 		int f_select_spread, const char *select_spread_text,
+		packing_classify *&P,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "algebra_global_with_action::packing_init" << endl;
+		cout << "algebra_global_with_action::packing_init "
+				"dimension_of_spread_elements=" << dimension_of_spread_elements << endl;
 	}
 	action *A;
-	int n, q, k;
+	int n, q;
 	matrix_group *Mtx;
-	//finite_field *F;
 	spread_classify *T;
-	packing_classify *P;
+	//packing_classify *P;
 
 
 	A = LG->A2;
 	n = A->matrix_group_dimension();
 	Mtx = A->get_matrix_group();
 	q = Mtx->GFq->q;
-	k = n >> 1;
 	if (f_v) {
-		cout << "algebra_global_with_action::packing_init n=" << n << " k=" << k << " q=" << q << endl;
+		cout << "algebra_global_with_action::packing_init n=" << n
+				<< " k=" << dimension_of_spread_elements << " q=" << q << endl;
 	}
 
 
 	T = NEW_OBJECT(spread_classify);
 
 
-	cout << "algebra_global_with_action::packing_init before T->init" << endl;
+	if (f_v) {
+		cout << "algebra_global_with_action::packing_init before T->init" << endl;
+	}
 
 
-	T->init(LG, k, Control, verbose_level - 1);
+	T->init(LG, dimension_of_spread_elements, Control, verbose_level - 1);
 
-	cout << "algebra_global_with_action::packing_init after T->init" << endl;
+	if (f_v) {
+		cout << "algebra_global_with_action::packing_init after T->init" << endl;
+	}
 
 
 	P = NEW_OBJECT(packing_classify);
 
 
-	cout << "algebra_global_with_action::packing_init before P->init" << endl;
+	if (f_v) {
+		cout << "algebra_global_with_action::packing_init before P->init" << endl;
+	}
 	P->init(T,
 		f_select_spread,
 		select_spread_text,
 		"", "", //ECA->input_prefix, ECA->base_fname,
-		0, //ECA->starter_size,
+		//0, //ECA->starter_size,
 		TRUE, // ECA->f_lex,
 		"", //spread_tables_prefix,
 		verbose_level);
-	cout << "algebra_global_with_action::packing_init after P->init" << endl;
+	if (f_v) {
+		cout << "algebra_global_with_action::packing_init after P->init" << endl;
+	}
 
 #if 0
 	cout << "before IA->init" << endl;
@@ -3538,10 +3548,415 @@ void algebra_global_with_action::packing_init(
 #endif
 
 	if (f_v) {
+		cout << "algebra_global_with_action::packing_init before P->compute_spread_table" << endl;
+	}
+	P->compute_spread_table(verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::packing_init after P->compute_spread_table" << endl;
+	}
+
+	//FREE_OBJECT(P);
+	//FREE_OBJECT(T);
+
+	if (f_v) {
 		cout << "algebra_global_with_action::packing_init done" << endl;
 	}
 
 
 }
+
+
+void algebra_global_with_action::predict_spread_table_length(
+	int q, int dimension_of_spread_elements, int spread_size,
+	action *A, strong_generators *Strong_gens,
+	int f_select_spread,
+	int *select_spread, int select_spread_nb,
+	long int *&spread_reps, int *&spread_reps_idx, long int *&spread_orbit_length,
+	int &nb_spread_reps,
+	long int &total_nb_of_spreads,
+	int &nb_iso_types_of_spreads,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_do_it, idx, no;
+	longinteger_object go, stab_go;
+	longinteger_domain D;
+	knowledge_base K;
+	sorting Sorting;
+	//int nb_spreads_up_to_isomorphism;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::predict_spread_table_length" << endl;
+	}
+
+
+	total_nb_of_spreads = 0;
+
+	Strong_gens->group_order(go);
+	if (f_v) {
+		cout << "algebra_global_with_action::predict_spread_table_length go = " << go << endl;
+	}
+
+
+	nb_iso_types_of_spreads = K.Spread_nb_reps(q, dimension_of_spread_elements);
+	if (f_v) {
+		cout << "algebra_global_with_action::predict_spread_table_length nb_iso_types_of_spreads = " << nb_iso_types_of_spreads << endl;
+	}
+
+	spread_reps = NEW_lint(nb_iso_types_of_spreads * spread_size);
+	spread_reps_idx = NEW_int(nb_iso_types_of_spreads);
+	spread_orbit_length = NEW_lint(nb_iso_types_of_spreads);
+	nb_spread_reps = 0;
+
+
+	for (no = 0; no < nb_iso_types_of_spreads; no++) {
+
+		vector_ge *gens;
+		const char *stab_order;
+
+		A->stabilizer_of_spread_representative(q,
+				dimension_of_spread_elements, no, gens, stab_order,
+				0 /*verbose_level*/);
+
+
+		f_do_it = FALSE;
+		if (f_select_spread) {
+			if (Sorting.int_vec_search_linear(select_spread,
+					select_spread_nb, no, idx)) {
+				f_do_it = TRUE;
+			}
+		}
+		else {
+			f_do_it = TRUE;
+		}
+		if (f_do_it) {
+			long int *rep;
+			int sz;
+
+			rep = K.Spread_representative(q, dimension_of_spread_elements, no, sz);
+			lint_vec_copy(rep,
+					spread_reps + nb_spread_reps * spread_size,
+					spread_size);
+
+
+			spread_reps_idx[nb_spread_reps] = no;
+
+
+			stab_go.create_from_base_10_string(
+					stab_order,
+					0 /* verbose_level */);
+			//Stab->group_order(stab_go);
+
+			spread_orbit_length[nb_spread_reps] = D.quotient_as_lint(go, stab_go);
+			if (f_v) {
+				cout << "spread orbit " << no
+						<< " has group order "
+						<< stab_go << " orbit_length = "
+						<< spread_orbit_length[nb_spread_reps] << endl;
+			}
+
+
+			total_nb_of_spreads += spread_orbit_length[nb_spread_reps];
+			nb_spread_reps++;
+
+
+		}
+
+
+	} // next no
+
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::predict_spread_table_length done, "
+				"total_nb_of_spreads = " << total_nb_of_spreads << endl;
+	}
+}
+
+
+void algebra_global_with_action::make_spread_table(
+		action *A, action *A2, strong_generators *Strong_gens,
+		int spread_size,
+		long int *spread_reps, int *spread_reps_idx, long int *spread_orbit_length,
+		int nb_spread_reps,
+		long int total_nb_of_spreads,
+		long int **&Sets, int *&isomorphism_type_of_spread,
+		int verbose_level)
+// does not sort the table
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	int nb_spreads1;
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::make_spread_table nb_spread_reps = " << nb_spread_reps << endl;
+		cout << "algebra_global_with_action::make_spread_table total_nb_of_spreads = " << total_nb_of_spreads << endl;
+		cout << "algebra_global_with_action::make_spread_table verbose_level = " << verbose_level << endl;
+	}
+	Sets = NEW_plint(total_nb_of_spreads);
+	isomorphism_type_of_spread = NEW_int(total_nb_of_spreads);
+
+	orbit_of_sets *SetOrb;
+
+	SetOrb = NEW_OBJECTS(orbit_of_sets, nb_spread_reps);
+
+	for (i = 0; i < nb_spread_reps; i++) {
+
+		if (f_v) {
+			cout << "algebra_global_with_action::make_spread_table "
+				"Spread " << i << " / "
+				<< nb_spread_reps << " computing orbits" << endl;
+		}
+
+
+		SetOrb[i].init(A, A2,
+				spread_reps + i * spread_size,
+				spread_size, Strong_gens->gens,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "packing_classify::make_spread_table Spread "
+				<< spread_reps_idx[i] << " = " << i << " / "
+				<< nb_spread_reps << " has orbit length "
+				<< SetOrb[i].used_length << endl;
+		}
+
+
+	} // next i
+
+	nb_spreads1 = 0;
+
+	for (i = 0; i < nb_spread_reps; i++) {
+
+		for (j = 0; j < SetOrb[i].used_length; j++) {
+
+			Sets[nb_spreads1] = NEW_lint(spread_size);
+
+			lint_vec_copy(SetOrb[i].Sets[j], Sets[nb_spreads1], spread_size);
+
+			isomorphism_type_of_spread[nb_spreads1] = i;
+
+
+			nb_spreads1++;
+
+		} // next j
+	} // next i
+
+	if (f_v) {
+		cout << "algebra_global_with_action::make_spread_table We found "
+				<< nb_spreads1 << " spreads in total" << endl;
+		}
+
+	if (nb_spreads1 != total_nb_of_spreads) {
+		cout << "algebra_global_with_action::make_spread_table "
+				"nb_spreads1 != total_nb_of_spreads" << endl;
+		exit(1);
+	}
+
+	FREE_OBJECTS(SetOrb);
+
+#if 0
+	if (f_v) {
+		cout << "algebra_global_with_action::make_spread_table before "
+				"sorting spread table of size " << total_nb_of_spreads << endl;
+	}
+	tmp_isomorphism_type_of_spread = isomorphism_type_of_spread;
+		// for packing_swap_func
+	Sorting.Heapsort_general(Sets, total_nb_of_spreads,
+			packing_spread_compare_func,
+			packing_swap_func,
+			this);
+	if (f_v) {
+		cout << "algebra_global_with_action::make_spread_table after "
+				"sorting spread table of size " << total_nb_of_spreads << endl;
+	}
+#endif
+
+
+	if (FALSE) {
+		cout << "algebra_global_with_action::make_spread_table "
+				"The labeled spreads are:" << endl;
+		for (i = 0; i < total_nb_of_spreads; i++) {
+			cout << i << " : ";
+			lint_vec_print(cout, Sets[i], spread_size /* + 1*/);
+			cout << endl;
+			}
+		}
+
+	if (f_v) {
+		cout << "algebra_global_with_action::make_spread_table done" << endl;
+		}
+}
+
+void algebra_global_with_action::centralizer_of_element(
+		action *A, sims *S,
+		const char *element_description,
+		const char *label, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *Elt;
+	char prefix[1000];
+
+	if (f_v) {
+		cout << "algebra_global_with_action::centralizer_of_element label=" << label
+				<< " element_description=" << element_description << endl;
+	}
+	sprintf(prefix, "element_%s", label);
+
+	Elt = NEW_int(A->elt_size_in_int);
+
+	int *data;
+	int data_len;
+
+
+	int_vec_scan(element_description, data, data_len);
+
+
+	if (data_len != A->make_element_size) {
+		cout << "data_len != A->make_element_size" << endl;
+		exit(1);
+	}
+#if 0
+	if (f_v) {
+		cout << "algebra_global_with_action::centralizer_of_element Matrix:" << endl;
+		int_matrix_print(data, 4, 4);
+	}
+#endif
+
+	A->make_element(Elt, data, 0 /* verbose_level */);
+
+	int o;
+
+	o = A->element_order(Elt);
+	if (f_v) {
+		cout << "algebra_global_with_action::centralizer_of_element Elt:" << endl;
+		A->element_print_quick(Elt, cout);
+		cout << "algebra_global_with_action::centralizer_of_element on points:" << endl;
+		A->element_print_as_permutation(Elt, cout);
+		//cout << "algebra_global_with_action::centralizer_of_element on lines:" << endl;
+		//A2->element_print_as_permutation(Elt, cout);
+	}
+
+	cout << "algebra_global_with_action::centralizer_of_element "
+			"the element has order " << o << endl;
+
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::centralizer_of_element "
+				"before centralizer_using_MAGMA" << endl;
+	}
+
+	strong_generators *gens;
+
+	A->centralizer_using_MAGMA(prefix,
+			S, Elt, gens, verbose_level);
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::centralizer_of_element "
+				"after centralizer_using_MAGMA" << endl;
+	}
+
+
+	cout << "generators for the centralizer are:" << endl;
+	gens->print_generators_tex();
+
+
+	FREE_int(data);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::centralizer_of_element done" << endl;
+	}
+}
+
+void algebra_global_with_action::normalizer_of_cyclic_subgroup(
+		action *A, sims *S,
+		const char *element_description,
+		const char *label, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *Elt;
+	char prefix[1000];
+
+	if (f_v) {
+		cout << "algebra_global_with_action::normalizer_of_cyclic_subgroup label=" << label
+				<< " element_description=" << element_description << endl;
+	}
+	sprintf(prefix, "element_%s", label);
+
+	Elt = NEW_int(A->elt_size_in_int);
+
+	int *data;
+	int data_len;
+
+
+	int_vec_scan(element_description, data, data_len);
+
+
+	if (data_len != A->make_element_size) {
+		cout << "data_len != A->make_element_size" << endl;
+		exit(1);
+	}
+#if 0
+	if (f_v) {
+		cout << "algebra_global_with_action::normalizer_of_cyclic_subgroup Matrix:" << endl;
+		int_matrix_print(data, 4, 4);
+	}
+#endif
+
+	A->make_element(Elt, data, 0 /* verbose_level */);
+
+	int o;
+
+	o = A->element_order(Elt);
+	if (f_v) {
+		cout << "algebra_global_with_action::normalizer_of_cyclic_subgroup Elt:" << endl;
+		A->element_print_quick(Elt, cout);
+		cout << "algebra_global_with_action::normalizer_of_cyclic_subgroup on points:" << endl;
+		A->element_print_as_permutation(Elt, cout);
+		//cout << "algebra_global_with_action::centralizer_of_element on lines:" << endl;
+		//A2->element_print_as_permutation(Elt, cout);
+	}
+
+	cout << "algebra_global_with_action::normalizer_of_cyclic_subgroup "
+			"the element has order " << o << endl;
+
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::normalizer_of_cyclic_subgroup "
+				"before centralizer_using_MAGMA" << endl;
+	}
+
+	strong_generators *gens;
+
+	A->normalizer_of_cyclic_group_using_MAGMA(prefix,
+			S, Elt, gens, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::normalizer_of_cyclic_subgroup "
+				"after centralizer_using_MAGMA" << endl;
+	}
+
+
+	cout << "generators for the normalizer are:" << endl;
+	gens->print_generators_tex();
+
+
+	FREE_int(data);
+	FREE_int(Elt);
+	FREE_OBJECT(gens);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::normalizer_of_cyclic_subgroup done" << endl;
+	}
+}
+
+
 
 }}

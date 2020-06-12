@@ -575,6 +575,15 @@ int longinteger_domain::quotient_as_int(
 	return q.as_int();
 }
 
+long int longinteger_domain::quotient_as_lint(
+		longinteger_object &a, longinteger_object &b)
+{
+	longinteger_object q, r;
+
+	integral_division(a, b, q, r, 0);
+	return q.as_lint();
+}
+
 void longinteger_domain::integral_division_exact(
 		longinteger_object &a, longinteger_object &b,
 		longinteger_object &a_over_b)

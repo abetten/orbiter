@@ -112,8 +112,8 @@ void interface_combinatorics::print_help(int argc,
 	else if (strcmp(argv[i], "-read_poset_file_with_grouping") == 0) {
 		cout << "-read_poset_file_with_grouping <string : file_name> <double : x_stretch>" << endl;
 	}
-	else if (strcmp(argv[i], "-graph_activity") == 0) {
-		cout << "-graph_activity <description>" << endl;
+	else if (strcmp(argv[i], "-graph_theoretic_activity") == 0) {
+		cout << "-graph_theoretic_activity <description>" << endl;
 	}
 	else if (strcmp(argv[i], "-list_parameters_of_SRG") == 0) {
 		cout << "-list_parameters_of_SRG <int : v_max>" << endl;
@@ -189,7 +189,7 @@ int interface_combinatorics::recognize_keyword(int argc,
 	else if (strcmp(argv[i], "-read_poset_file_with_grouping") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-graph_activity") == 0) {
+	else if (strcmp(argv[i], "-graph_theoretic_activity") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-list_parameters_of_SRG") == 0) {
@@ -333,7 +333,7 @@ void interface_combinatorics::read_arguments(int argc,
 			x_stretch = atof(argv[++i]);
 			cout << "-read_poset_file_with_grouping " << read_poset_file_fname << " " << x_stretch << endl;
 		}
-		else if (strcmp(argv[i], "-graph_activity") == 0) {
+		else if (strcmp(argv[i], "-graph_theoretic_activity") == 0) {
 			f_graph_theoretic_activity_description = TRUE;
 			Graph_theoretic_activity_description = NEW_OBJECT(graph_theoretic_activity_description);
 			i += Graph_theoretic_activity_description->read_arguments(argc - (i - 1),
@@ -562,6 +562,27 @@ void interface_combinatorics::do_graph_theoretic_activity(
 
 		cout << "export_magma done" << endl;
 	}
+
+	else if (Descr->f_export_csv) {
+
+		cout << "export_csv" << endl;
+
+		char fname_csv[1000];
+
+		strcpy(fname_csv, fname_graph);
+
+
+		replace_extension_with(fname_csv, ".csv");
+
+		cout << "exporting to csv as " << fname_csv << endl;
+
+
+		CG->export_to_csv(fname_csv, verbose_level);
+
+
+		cout << "export_csv done" << endl;
+	}
+
 
 	else if (Descr->f_export_maple) {
 
