@@ -330,7 +330,7 @@ void packing_classify::compute_spread_table_from_scratch(int verbose_level)
 	nb_spreads = Spread_tables->nb_spreads;
 
 	if (f_v) {
-		cout << "packing_classify::compute_spread_table "
+		cout << "packing_classify::compute_spread_table_from_scratch "
 				"before Algebra.make_spread_table" << endl;
 	}
 
@@ -346,21 +346,15 @@ void packing_classify::compute_spread_table_from_scratch(int verbose_level)
 			verbose_level);
 
 	// does not sort the spread table
+
 	if (f_v) {
-		cout << "packing_classify::compute_spread_table "
+		cout << "packing_classify::compute_spread_table_from_scratch "
 				"after Algebra.make_spread_table" << endl;
 	}
 
-	Sets = NEW_plint(nb_spreads);
-	isomorphism_type_of_spread = NEW_int(nb_spreads);
 
 	if (f_v) {
-		cout << "packing_classify::compute_spread_table "
-				"after make_spread_table" << endl;
-	}
-
-	if (f_v) {
-		cout << "packing_classify::make_spread_table before "
+		cout << "packing_classify::compute_spread_table_from_scratch before "
 				"sorting spread table of size " << total_nb_of_spreads << endl;
 	}
 	tmp_isomorphism_type_of_spread = isomorphism_type_of_spread;
@@ -370,7 +364,7 @@ void packing_classify::compute_spread_table_from_scratch(int verbose_level)
 			packing_swap_func,
 			this);
 	if (f_v) {
-		cout << "packing_classify::make_spread_table after "
+		cout << "packing_classify::compute_spread_table_from_scratch after "
 				"sorting spread table of size " << total_nb_of_spreads << endl;
 	}
 
@@ -410,14 +404,14 @@ void packing_classify::compute_spread_table_from_scratch(int verbose_level)
 
 
 	if (nb_spreads < 10000) {
-		cout << "packing_classify::compute_spread_table "
+		cout << "packing_classify::compute_spread_table_from_scratch "
 				"We are computing the adjacency matrix" << endl;
 		compute_adjacency_matrix(verbose_level - 1);
-		cout << "packing_classify::compute_spread_table "
+		cout << "packing_classify::compute_spread_table_from_scratch "
 				"The adjacency matrix has been computed" << endl;
 	}
 	else {
-		cout << "packing_classify::compute_spread_table "
+		cout << "packing_classify::compute_spread_table_from_scratch "
 				"We are NOT computing the adjacency matrix" << endl;
 	}
 
@@ -539,14 +533,6 @@ void packing_classify::prepare_generator(
 				verbose_level);
 
 
-	//Control = NEW_OBJECT(poset_classification_control);
-	
-#if 0
-	Control->f_T = TRUE;
-	Control->f_W = TRUE;
-	Control->f_max_depth = TRUE;
-	Control->max_depth = search_depth;
-#endif
 
 
 #if 0
@@ -718,36 +704,11 @@ void packing_classify::lifting_prepare_function_new(
 				"nb_cols=" << nb_cols << endl;
 	}
 
-
-	int s, u;
-	
-	Dio = NEW_OBJECT(diophant);
-	Dio->open(nb_rows, nb_cols);
-	Dio->f_has_sum = TRUE;
-	Dio->sum = nb_needed;
-
-	for (i = 0; i < nb_rows; i++) {
-		Dio->type[i] = t_EQ;
-		Dio->RHS[i] = 1;
-	}
-
-	Dio->fill_coefficient_matrix_with(0);
-
-
-	for (j = 0; j < nb_cols; j++) {
-		s = live_blocks2[j];
-		for (a = 0; a < spread_size; a++) {
-			i = Spread_tables->spread_table[s * spread_size + a];
-			u = free_point_idx[i];
-			if (u == -1) {
-				cout << "packing::lifting_prepare_function "
-						"free_point_idx[i] == -1" << endl;
-				exit(1);
-			}
-			Dio->Aij(u, j) = 1;
-		}
-	}
-
+	Spread_tables->make_exact_cover_problem(Dio,
+			free_point_idx, nb_free_points2,
+			live_blocks2, nb_live_blocks2,
+			nb_needed,
+			verbose_level);
 
 	FREE_lint(points_covered_by_starter);
 	FREE_lint(free_points2);
