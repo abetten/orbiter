@@ -18,20 +18,13 @@ namespace top_level {
 
 packing_was_description::packing_was_description()
 {
-#if 0
-	f_poly = FALSE;
-	poly = NULL;
-	f_order = FALSE;
-	order = 0;
-	f_dim_over_kernel = FALSE;
-	dim_over_kernel = 0;
-	f_recoordinatize = FALSE;
-	f_select_spread = FALSE;
-	select_spread_text = NULL;
-#endif
 	f_spreads_invariant_under_H = FALSE;
 	f_cliques_on_fixpoint_graph = FALSE;
 	clique_size_on_fixpoint_graph = 0;
+
+	f_cliques_on_fixpoint_graph_control = FALSE;
+	cliques_on_fixpoint_graph_control = NULL;
+
 	f_process_long_orbits = FALSE;
 	process_long_orbits_r = 0;
 	process_long_orbits_m = 0;
@@ -94,6 +87,7 @@ int packing_was_description::read_arguments(int argc, const char **argv,
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
+
 		else if (strcmp(argv[i], "-N") == 0) {
 			f_N = TRUE;
 			cout << "reading -N" << endl;
@@ -114,16 +108,35 @@ int packing_was_description::read_arguments(int argc, const char **argv,
 			f_spreads_invariant_under_H = TRUE;
 			cout << "-spreads_invariant_under_H " << endl;
 		}
+
+
 		else if (strcmp(argv[i], "-cliques_on_fixpoint_graph") == 0) {
 			f_cliques_on_fixpoint_graph = TRUE;
 			clique_size_on_fixpoint_graph = atoi(argv[++i]);
 			cout << "-cliques_on_fixpoint_graph " << clique_size_on_fixpoint_graph << endl;
 		}
+
+		else if (strcmp(argv[i], "-cliques_on_fixpoint_graph_control") == 0) {
+			f_cliques_on_fixpoint_graph_control = TRUE;
+			cliques_on_fixpoint_graph_control = NEW_OBJECT(poset_classification_control);
+			i += cliques_on_fixpoint_graph_control->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -cliques_on_fixpoint_graph_control " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-cliques_on_fixpoint_graph_control " << endl;
+		}
+
 		else if (strcmp(argv[i], "-type_of_fixed_spreads") == 0) {
 			f_type_of_fixed_spreads = TRUE;
 			clique_size = atoi(argv[++i]);
 			cout << "-type_of_fixed_spreads " << clique_size << endl;
 		}
+
 		else if (strcmp(argv[i], "-process_long_orbits") == 0) {
 			f_process_long_orbits = TRUE;
 			clique_size = atoi(argv[++i]);
@@ -139,6 +152,7 @@ int packing_was_description::read_arguments(int argc, const char **argv,
 				<< long_orbits_clique_size
 				<< endl;
 		}
+
 		else if (strcmp(argv[i], "-expand_cliques_of_long_orbits") == 0) {
 			f_expand_cliques_of_long_orbits = TRUE;
 			clique_size = atoi(argv[++i]);
@@ -154,21 +168,25 @@ int packing_was_description::read_arguments(int argc, const char **argv,
 				<< long_orbits_clique_size
 				<< endl;
 		}
+
 		else if (strcmp(argv[i], "-spread_tables_prefix") == 0) {
 			f_spread_tables_prefix = TRUE;
 			spread_tables_prefix = argv[++i];
 			cout << "-spread_tables_prefix "
 				<< spread_tables_prefix << endl;
 		}
+
 		else if (strcmp(argv[i], "-output_path") == 0) {
 			f_output_path = TRUE;
 			output_path = argv[++i];
 			cout << "-output_path " << output_path << endl;
 		}
+
 		else if (strcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			cout << "-report " << endl;
 		}
+
 		else if (strcmp(argv[i], "-exact_cover") == 0) {
 			f_exact_cover = TRUE;
 			ECA = NEW_OBJECT(exact_cover_arguments);
@@ -183,6 +201,7 @@ int packing_was_description::read_arguments(int argc, const char **argv,
 			}
 			cout << "-exact_cover " << endl;
 		}
+
 		else if (strcmp(argv[i], "-exact_cover") == 0) {
 			f_exact_cover = TRUE;
 			ECA = NEW_OBJECT(exact_cover_arguments);
@@ -197,6 +216,7 @@ int packing_was_description::read_arguments(int argc, const char **argv,
 			}
 			cout << "-exact_cover " << endl;
 		}
+
 		else if (strcmp(argv[i], "-isomorph") == 0) {
 			f_isomorph = TRUE;
 			IA = NEW_OBJECT(isomorph_arguments);
@@ -211,6 +231,7 @@ int packing_was_description::read_arguments(int argc, const char **argv,
 			}
 			cout << "-isomorph " << endl;
 		}
+
 		else if (strcmp(argv[i], "-end") == 0) {
 			break;
 		}
@@ -219,6 +240,10 @@ int packing_was_description::read_arguments(int argc, const char **argv,
 		}
 	} // next i
 
+	if (f_cliques_on_fixpoint_graph && !f_cliques_on_fixpoint_graph_control) {
+		cout << "please use -cliques_on_fixpoint_graph_control <descr> -end" << endl;
+		exit(1);
+	}
 
 	cout << "packing_was_description::read_arguments done" << endl;
 	return i;

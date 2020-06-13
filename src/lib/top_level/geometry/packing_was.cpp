@@ -70,7 +70,6 @@ packing_was::packing_was()
 	A_on_fixpoints = NULL;
 
 	fixpoint_graph = NULL;
-	Control = NULL;
 	Poset_fixpoint_cliques = NULL;
 	fixpoint_clique_gen = NULL;
 	Cliques = NULL;
@@ -621,7 +620,7 @@ void packing_was::compute_H_orbits_on_spreads(int verbose_level)
 
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_spreads" << endl;
-		}
+	}
 
 
 	Spread_orbits_under_H = NEW_OBJECT(orbits_on_something);
@@ -642,7 +641,7 @@ void packing_was::compute_H_orbits_on_spreads(int verbose_level)
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_spreads "
 				"creating action A_on_spread_orbits" << endl;
-		}
+	}
 
 
 	A_on_spread_orbits = NEW_OBJECT(action);
@@ -654,12 +653,12 @@ void packing_was::compute_H_orbits_on_spreads(int verbose_level)
 		cout << "prime_at_a_time::compute_H_orbits_on_spreads "
 				"created action on orbits of degree "
 				<< A_on_spread_orbits->degree << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_spreads "
 				"created action A_on_spread_orbits done" << endl;
-		}
+	}
 }
 
 void packing_was::test_orbits_on_spreads(int verbose_level)
@@ -749,7 +748,7 @@ void packing_was::test_orbits_on_spreads(int verbose_level)
 				"We found "
 				<< nb_good_orbits << " orbits which "
 						"are partial packings" << endl;
-		}
+	}
 
 
 	if (f_v) {
@@ -764,7 +763,7 @@ void packing_was::reduce_spreads(int verbose_level)
 
 	if (f_v) {
 		cout << "packing_was::reduce_spreads " << endl;
-		}
+	}
 
 	int nb_good_spreads;
 	int *good_spreads;
@@ -780,7 +779,7 @@ void packing_was::reduce_spreads(int verbose_level)
 	if (f_v) {
 		cout << "packing_was::reduce_spreads "
 				"nb_good_spreads = " << nb_good_spreads << endl;
-		}
+	}
 
 	good_spreads = NEW_int(nb_good_spreads);
 
@@ -808,7 +807,7 @@ void packing_was::reduce_spreads(int verbose_level)
 
 	if (f_v) {
 		cout << "packing_was::reduce_spreads done" << endl;
-		}
+	}
 
 }
 
@@ -854,7 +853,6 @@ void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
 	A_on_reduced_spreads = P->T->A2->create_induced_action_on_sets(
 			Spread_tables_reduced->nb_spreads, P->spread_size,
 			Spread_tables_reduced->spread_table,
-			//f_induce,
 			0 /* verbose_level */);
 
 	if (f_v) {
@@ -910,8 +908,6 @@ int packing_was::test_if_pair_of_orbits_are_adjacent(
 // using Spread_tables_reduced
 {
 	int f_v = FALSE; // (verbose_level >= 1);
-	//long int s1, s2;
-	//int i, j;
 
 	if (f_v) {
 		cout << "packing_was::test_if_pair_of_orbits_are_adjacent" << endl;
@@ -1068,7 +1064,6 @@ void packing_was::compute_cliques_on_fixpoint_graph(
 		cout << "The file " << fname_fixp_graph_cliques << " exists" << endl;
 		Fio.lint_matrix_read_csv(fname_fixp_graph_cliques,
 				Cliques, nb_cliques, clique_size, verbose_level);
-
 	}
 	else {
 		cout << "The file " << fname_fixp_graph_cliques
@@ -1094,17 +1089,12 @@ void packing_was::compute_cliques_on_fixpoint_graph(
 					this /* void *data */,
 					verbose_level);
 
-		Control = NEW_OBJECT(poset_classification_control);
 		fixpoint_clique_gen = NEW_OBJECT(poset_classification);
 
-		Control->f_W = TRUE;
-		Control->f_w = TRUE;
 
 		fixpoint_clique_gen->compute_orbits_on_subsets(
 				clique_size /* int target_depth */,
-				//my_prefix /* const char *prefix */,
-				//TRUE /* f_W */, TRUE /* f_w */,
-				Control,
+				Descr->cliques_on_fixpoint_graph_control,
 				Poset_fixpoint_cliques,
 				verbose_level);
 

@@ -1476,12 +1476,6 @@ public:
 	// the number of spreads
 	// from the classification
 
-#if 0
-	long int *input_spreads; // [nb_input_spreads]
-	int *input_spread_label;
-	int nb_input_spreads;
-#endif
-
 	spread_tables *Spread_tables;
 	int *tmp_isomorphism_type_of_spread; // for packing_swap_func
 
@@ -1564,7 +1558,7 @@ public:
 	void report_fixed_objects(
 			int *Elt, char *fname_latex,
 			int verbose_level);
-	void make_element(int idx, int verbose_level);
+	//void make_element(int idx, int verbose_level);
 	int test_if_orbit_is_partial_packing(
 		schreier *Orbits, int orbit_idx,
 		long int *orbit1, int verbose_level);
@@ -1753,6 +1747,9 @@ public:
 	int f_spreads_invariant_under_H;
 	int f_cliques_on_fixpoint_graph;
 	int clique_size_on_fixpoint_graph;
+	int f_cliques_on_fixpoint_graph_control;
+	poset_classification_control *cliques_on_fixpoint_graph_control;
+
 	int f_process_long_orbits;
 	int process_long_orbits_r;
 	int process_long_orbits_m;
@@ -1853,7 +1850,7 @@ public:
 	action *A_on_fixpoints;
 
 	colored_graph *fixpoint_graph;
-	poset_classification_control *Control;
+	//poset_classification_control *Control;
 	poset *Poset_fixpoint_cliques;
 	poset_classification *fixpoint_clique_gen;
 	long int *Cliques;
