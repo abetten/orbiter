@@ -1132,6 +1132,7 @@ void packing_classify::report_fixed_objects(int *Elt,
 	}
 }
 
+#if 0
 void packing_classify::make_element(int idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1189,6 +1190,7 @@ void packing_classify::make_element(int idx, int verbose_level)
 		cout << "packing_classify::make_element done" << endl;
 	}
 }
+#endif
 
 #if 0
 void packing_classify::centralizer(int idx, int verbose_level)
@@ -1355,8 +1357,6 @@ int packing_classify::test_if_pair_of_orbits_are_adjacent(
 {
 	int f_v = FALSE; // (verbose_level >= 1);
 	int len1, len2;
-	//int s1, s2;
-	//int i, j;
 
 	if (f_v) {
 		cout << "packing_classify::test_if_pair_of_orbits_are_adjacent "
@@ -1526,10 +1526,10 @@ int count_and_record(int *Inc,
 int packing_spread_compare_func(void *data, int i, int j, void *extra_data)
 {
 	packing_classify *P = (packing_classify *) extra_data;
-	int **Sets = (int **) data;
+	long int **Sets = (long int **) data;
 	int ret;
 
-	ret = int_vec_compare(Sets[i], Sets[j], P->spread_size);
+	ret = lint_vec_compare(Sets[i], Sets[j], P->spread_size);
 	return ret;
 }
 

@@ -78,7 +78,7 @@ void orbit_transversal::read_from_file(
 
 	if (f_v) {
 		cout << "orbit_transversal::read_from_file fname = " << fname << endl;
-		}
+	}
 	
 	orbit_transversal::A = A;
 	orbit_transversal::A2 = A2;
@@ -95,7 +95,7 @@ void orbit_transversal::read_from_file(
 	if (f_v) {
 		cout << "orbit_transversal::read_from_file "
 				"before read_and_parse_data_file_fancy" << endl;
-		}
+	}
 	Fio.read_and_parse_data_file_fancy(fname,
 		FALSE /*f_casenumbers */, 
 		nb_cases, 
@@ -110,7 +110,7 @@ void orbit_transversal::read_from_file(
 		cout << "orbit_transversal::read_from_file "
 				"processing " << nb_orbits
 				<< " orbit representatives" << endl;
-		}
+	}
 
 
 	Reps = NEW_OBJECTS(set_and_stabilizer, nb_orbits);
@@ -124,7 +124,7 @@ void orbit_transversal::read_from_file(
 					"case " << i << " / " << nb_orbits << " : "
 					<< 100. * (double) i / (double) nb_cases
 					<< "%" << endl;
-			}
+		}
 		strong_generators *gens;
 		long int *set;
 
@@ -141,7 +141,7 @@ void orbit_transversal::read_from_file(
 		Reps[i].Stab = NULL;
 
 		// gens and set is now part of Reps[i], so we don't free them here.
-		}
+	}
 	
 
 	Fio.free_data_fancy(nb_cases,
@@ -151,7 +151,7 @@ void orbit_transversal::read_from_file(
 
 	if (f_v) {
 		cout << "orbit_transversal::read_from_file done" << endl;
-		}
+	}
 }
 
 void orbit_transversal::read_from_file_one_case_only(
