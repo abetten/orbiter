@@ -1537,8 +1537,8 @@ void packing_swap_func(void *data, int i, int j, void *extra_data)
 {
 	packing_classify *P = (packing_classify *) extra_data;
 	int *d = P->tmp_isomorphism_type_of_spread;
-	int **Sets = (int **) data;
-	int *p;
+	long int **Sets = (long int **) data;
+	long int *p;
 	int a;
 
 	p = Sets[i];
