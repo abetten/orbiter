@@ -488,39 +488,6 @@ void spread_tables::compute_adjacency_matrix(
 			else {
 				bitvector_m_ii(bitvector_adjacency, k, 0);
 			}
-#if 0
-			long int *p, *q;
-			int u, v;
-
-			p = spread_table + i * spread_size;
-			q = spread_table + j * spread_size;
-			u = v = 0;
-			while (u + v < 2 * spread_size) {
-				if (p[u] == q[v]) {
-					break;
-				}
-				if (u == spread_size) {
-					v++;
-				}
-				else if (v == spread_size) {
-					u++;
-				}
-				else if (p[u] < q[v]) {
-					u++;
-				}
-				else {
-					v++;
-				}
-			}
-			if (u + v < 2 * spread_size) {
-				bitvector_m_ii(bitvector_adjacency, k, 0);
-
-			}
-			else {
-				bitvector_m_ii(bitvector_adjacency, k, 1);
-				cnt++;
-			}
-#endif
 
 			k++;
 			if ((k & ((1 << 21) - 1)) == 0) {
@@ -574,22 +541,6 @@ int spread_tables::test_if_spreads_are_disjoint(int a, int b)
 	p = spread_table + a * spread_size;
 	q = spread_table + b * spread_size;
 	return Sorting.test_if_sets_are_disjoint(p, q, spread_size, spread_size);
-#if 0
-	u = v = 0;
-	while (u < spread_size && v < spread_size) {
-		if (p[u] == q[v]) {
-			return FALSE;
-		}
-		else if (p[u] < q[v]) {
-			u++;
-		}
-		else {
-			// now p[u] > q[v]
-			v++;
-		}
-	}
-	return TRUE;
-#endif
 }
 
 void spread_tables::compute_dual_spreads(long int **Sets,
@@ -734,6 +685,61 @@ int spread_tables::test_if_set_of_spreads_is_line_disjoint(long int *set, int le
 	}
 	return ret;
 
+}
+
+void spread_tables::make_exact_cover_problem(diophant *&Dio,
+		long int *live_point_index, int nb_live_points,
+		long int *live_blocks, int nb_live_blocks,
+		int nb_needed,
+		int verbose_level)
+// points are actually lines and lines are actually spreads
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "spread_tables::make_exact_cover_problem" << endl;
+	}
+
+	int s, u, i, j, a;
+	int nb_rows = nb_live_points;
+	int nb_cols = nb_live_blocks;
+
+	Dio = NEW_OBJECT(diophant);
+	Dio->open(nb_rows, nb_cols);
+	Dio->f_has_sum = TRUE;
+	Dio->sum = nb_needed;
+
+	for (i = 0; i < nb_rows; i++) {
+		Dio->type[i] = t_EQ;
+		Dio->RHS[i] = 1;
+		Dio->RHS_low[i] = 1;
+	}
+
+	Dio->fill_coefficient_matrix_with(0);
+
+
+	for (j = 0; j < nb_cols; j++) {
+		s = live_blocks[j];
+		for (a = 0; a < spread_size; a++) {
+			i = spread_table[s * spread_size + a];
+			u = live_point_index[i];
+			if (u == -1) {
+				cout << "spread_tables::make_exact_cover_problem "
+						"live_point_index[i] == -1" << endl;
+				exit(1);
+			}
+			Dio->Aij(u, j) = 1;
+		}
+	}
+	for (j = 0; j < nb_cols; j++) {
+		Dio->x_max[j] = 1;
+		Dio->x_min[j] = 0;
+	}
+
+
+	if (f_v) {
+		cout << "spread_tables::make_exact_cover_problem done" << endl;
+	}
 }
 
 
