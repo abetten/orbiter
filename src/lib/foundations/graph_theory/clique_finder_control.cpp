@@ -219,12 +219,12 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 		}
 
 		int *Sol = NULL;
-		int nb_solutions = 0;
+		//int nb_solutions = 0;
 		unsigned long int decision_step_counter = 0;
 
 		CG->all_cliques_of_size_k_ignore_colors(
 				target_size,
-				Sol, nb_solutions,
+				Sol, nb_sol,
 				decision_step_counter,
 				verbose_level);
 	}

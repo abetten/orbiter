@@ -99,7 +99,7 @@ void file_io::concatenate_files(const char *fname_in_mask, int N,
 		<< file_size(fname_out) << endl;
 	FREE_char(buf);
 	cout << "There are " << missing_idx.size() << " missing files, they are:" << endl;
-	for (h = 0; h < missing_idx.size(); h++) {
+	for (h = 0; h < (int) missing_idx.size(); h++) {
 		sprintf(fname, fname_in_mask, missing_idx[h]);
 		cout << h << " : " << missing_idx[h] << " : " << fname << endl;
 	}
@@ -177,7 +177,7 @@ void file_io::concatenate_files_into(const char *fname_in_mask, int N,
 	}
 	FREE_char(buf);
 	cout << "There are " << missing_idx.size() << " missing files, they are:" << endl;
-	for (h = 0; h < missing_idx.size(); h++) {
+	for (h = 0; h < (int) missing_idx.size(); h++) {
 		sprintf(fname, fname_in_mask, missing_idx[h]);
 		cout << h << " : " << missing_idx[h] << " : " << fname << endl;
 	}

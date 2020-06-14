@@ -25,6 +25,7 @@ packing_long_orbits::packing_long_orbits()
 	fixpoint_clique_size = 0;
 	fixpoint_clique = NULL;
 	long_orbit_idx = 0;
+	set = NULL;
 
 	Filtered_orbits = NULL;
 	fname_graph[0] = 0;
@@ -34,6 +35,12 @@ packing_long_orbits::packing_long_orbits()
 
 packing_long_orbits::~packing_long_orbits()
 {
+	if (fixpoint_clique) {
+		FREE_lint(fixpoint_clique);
+	}
+	if (set) {
+		FREE_lint(set);
+	}
 	if (Filtered_orbits) {
 		FREE_OBJECT(Filtered_orbits);
 	}
@@ -51,6 +58,8 @@ void packing_long_orbits::init(packing_was *P,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int i, len;
+	long int a, b, c;
 
 	if (f_v) {
 		cout << "packing_long_orbits::init" << endl;
@@ -59,8 +68,22 @@ void packing_long_orbits::init(packing_was *P,
 	packing_long_orbits::fixpoints_idx = fixpoints_idx;
 	packing_long_orbits::fixpoints_clique_case_number = fixpoints_clique_case_number;
 	packing_long_orbits::fixpoint_clique_size = fixpoint_clique_size;
-	packing_long_orbits::fixpoint_clique = fixpoint_clique;
+	//packing_long_orbits::fixpoint_clique = fixpoint_clique;
+	set = NEW_lint(long_orbit_length);
 
+	packing_long_orbits::fixpoint_clique = NEW_lint(fixpoint_clique_size);
+	for (i = 0; i < fixpoint_clique_size; i++) {
+		a = fixpoint_clique[i];
+		b = P->reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx][a];
+		P->reduced_spread_orbits_under_H->Sch->get_orbit(b /* orbit_idx */, set, len,
+				0 /*verbose_level */);
+		if (len != 1) {
+			cout << "packing_long_orbits::init len != 1, len = " << len << endl;
+			exit(1);
+		}
+		c = set[0];
+		packing_long_orbits::fixpoint_clique[i] = c;
+	}
 
 	long_orbit_idx = P->find_orbits_of_length(long_orbit_length);
 	if (f_v) {
@@ -73,6 +96,11 @@ void packing_long_orbits::init(packing_was *P,
 }
 
 void packing_long_orbits::filter_orbits(int verbose_level)
+// filters the orbits in P->reduced_spread_orbits_under_H->Orbits_classified
+// according to fixpoint_clique[].
+// fixpoint_clique[] contains indices into P->Spread_tables_reduced
+// output is in Filtered_orbits[], and consists of indices into
+// P->reduced_spread_orbits_under_H
 {
 	int f_v = (verbose_level >= 1);
 	int t, i, b;
@@ -94,34 +122,33 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 			Input->nb_sets,
 			Input->Set_size, 0 /* verbose_level */);
 
-	int_vec_zero(Filtered_orbits->Set_size,
-			Input->nb_sets);
+	int_vec_zero(Filtered_orbits->Set_size, Input->nb_sets);
 
 	for (t = 0; t < Input->nb_sets; t++) {
 		if (t == fixpoints_idx) {
 			continue;
 		}
 
-		long int *Orb;
+		//long int *Orb;
 		int orbit_length;
 		int len1;
 
 		orbit_length = P->reduced_spread_orbits_under_H->Orbits_classified_length[t];
-		Orb = NEW_lint(orbit_length);
+		//Orb = NEW_lint(orbit_length);
 		Filtered_orbits->Set_size[t] = 0;
 
 		for (i = 0; i < Input->Set_size[t]; i++) {
 			b = Input->element(t, i);
 
 			P->reduced_spread_orbits_under_H->Sch->get_orbit(b,
-					Orb, len1, 0 /* verbose_level*/);
+					set, len1, 0 /* verbose_level*/);
 			if (len1 != orbit_length) {
 				cout << "packing_long_orbits::filter_orbits len1 != orbit_length" << endl;
 				exit(1);
 			}
-			if (P->test_if_pair_of_orbits_are_adjacent(
+			if (P->test_if_pair_of_sets_of_reduced_spreads_are_adjacent(
 					fixpoint_clique, fixpoint_clique_size,
-					Orb, orbit_length, verbose_level)) {
+					set, orbit_length, verbose_level)) {
 
 				// add b to the list in Reduced_Orbits_by_length:
 
@@ -129,7 +156,7 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 			}
 		}
 
-		FREE_lint(Orb);
+		//FREE_lint(Orb);
 	}
 
 	if (f_v) {
@@ -313,7 +340,7 @@ int packing_long_orbit_test_function(long int *orbit1, int len1,
 {
 	packing_long_orbits *L = (packing_long_orbits *) data;
 
-	return L->P->test_if_pair_of_orbits_are_adjacent(
+	return L->P->test_if_pair_of_sets_of_reduced_spreads_are_adjacent(
 			orbit1, len1, orbit2, len2, 0 /*verbose_level*/);
 }
 

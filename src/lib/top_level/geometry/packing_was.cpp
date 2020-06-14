@@ -183,15 +183,17 @@ void packing_was::init(packing_was_description *Descr,
 
 	if (Descr->f_cliques_on_fixpoint_graph && Descr->f_process_long_orbits) {
 		if (f_v) {
-			cout << "packing_was::init before process_long_orbits" << endl;
+			cout << "packing_was::init before process_all_long_orbits" << endl;
 		}
-		process_long_orbits(Descr->process_long_orbits_r,
+
+		process_all_long_orbits(Descr->process_long_orbits_r,
 				Descr->process_long_orbits_m,
 				Descr->long_orbit_length,
 				Descr->long_orbits_clique_size,
 				verbose_level);
+
 		if (f_v) {
-			cout << "packing_was::init after process_long_orbits" << endl;
+			cout << "packing_was::init after process_all_long_orbits" << endl;
 		}
 	}
 
@@ -207,67 +209,6 @@ void packing_was::init(packing_was_description *Descr,
 
 	if (f_v) {
 		cout << "packing_was::init done" << endl;
-	}
-}
-
-void packing_was::process_long_orbits(
-		int split_r, int split_m,
-		int long_orbit_length,
-		int long_orbits_clique_size,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "packing_was::process_long_orbits" << endl;
-		cout << "packing_was::process_long_orbits split_r = " << split_r << endl;
-		cout << "packing_was::process_long_orbits split_m = " << split_m << endl;
-		cout << "packing_was::process_long_orbits long_orbit_length = " << long_orbit_length << endl;
-		cout << "packing_was::process_long_orbits long_orbits_clique_size = " << long_orbits_clique_size << endl;
-		cout << "packing_was::process_long_orbits fixpoints_idx = " << fixpoints_idx << endl;
-	}
-
-	L = NEW_OBJECT(packing_long_orbits);
-
-	if (f_v) {
-		cout << "packing_was::handle_long_orbits before L->init" << endl;
-	}
-
-	L->init(this,
-			fixpoints_idx,
-			split_r /* fixpoints_clique_case_number */,
-			Descr->clique_size /* fixpoint_clique_size */,
-			Cliques + split_r * Descr->clique_size /* clique */,
-			Descr->long_orbit_length,
-			verbose_level);
-
-	if (f_v) {
-		cout << "packing_was::handle_long_orbits after L->init" << endl;
-	}
-
-	if (f_v) {
-		cout << "packing_was::handle_long_orbits before L->filter_orbits" << endl;
-	}
-	L->filter_orbits(verbose_level);
-	if (f_v) {
-		cout << "packing_was::handle_long_orbits after L->filter_orbits" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "packing_was::handle_long_orbits "
-				"before L->create_graph_on_remaining_long_orbits" << endl;
-	}
-	L->create_graph_on_remaining_long_orbits(verbose_level);
-	if (f_v) {
-		cout << "packing_was::handle_long_orbits "
-				"after L->create_graph_on_remaining_long_orbits" << endl;
-	}
-
-	FREE_OBJECT(L);
-
-	if (f_v) {
-		cout << "packing_was::process_long_orbits done" << endl;
 	}
 }
 
@@ -413,7 +354,10 @@ void packing_was::init_spreads(int verbose_level)
 							"after compute_cliques_on_fixpoint_graph" << endl;
 				}
 			}
-
+			else {
+				cout << "packing_was::init_spreads fixpoints_idx < 0" << endl;
+				exit(1);
+			}
 		}
 		else {
 			cout << "for cliques on fixpoint graph, need -N" << endl;
@@ -424,6 +368,97 @@ void packing_was::init_spreads(int verbose_level)
 
 	if (f_v) {
 		cout << "packing_was::init_spreads done" << endl;
+	}
+}
+
+void packing_was::process_all_long_orbits(
+		int split_r, int split_m,
+		int long_orbit_length,
+		int long_orbits_clique_size,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int clique_index;
+
+	if (f_v) {
+		cout << "packing_was::process_all_long_orbits" << endl;
+		cout << "packing_was::process_all_long_orbits split_r = " << split_r << endl;
+		cout << "packing_was::process_all_long_orbits split_m = " << split_m << endl;
+		cout << "packing_was::process_all_long_orbits long_orbit_length = " << long_orbit_length << endl;
+		cout << "packing_was::process_all_long_orbits long_orbits_clique_size = " << long_orbits_clique_size << endl;
+		cout << "packing_was::process_all_long_orbits fixpoints_idx = " << fixpoints_idx << endl;
+	}
+
+	for (clique_index = 0; clique_index < nb_cliques; clique_index++) {
+
+		if ((clique_index % Descr->process_long_orbits_m) == Descr->process_long_orbits_r) {
+			process_long_orbits(clique_index,
+					Descr->long_orbit_length,
+					Descr->long_orbits_clique_size,
+					verbose_level);
+		}
+	}
+
+	if (f_v) {
+		cout << "packing_was::process_all_long_orbits done" << endl;
+	}
+}
+
+void packing_was::process_long_orbits(
+		int clique_index,
+		int long_orbit_length,
+		int long_orbits_clique_size,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "packing_was::process_long_orbits" << endl;
+		cout << "packing_was::process_long_orbits clique_index = " << clique_index << endl;
+	}
+
+	L = NEW_OBJECT(packing_long_orbits);
+
+	if (f_vv) {
+		cout << "packing_was::handle_long_orbits before L->init" << endl;
+	}
+
+	L->init(this,
+			fixpoints_idx,
+			clique_index /* fixpoints_clique_case_number */,
+			Descr->clique_size /* fixpoint_clique_size */,
+			Cliques + clique_index * Descr->clique_size /* clique */,
+			Descr->long_orbit_length,
+			verbose_level - 2);
+
+	if (f_vv) {
+		cout << "packing_was::handle_long_orbits after L->init" << endl;
+	}
+
+	if (f_vv) {
+		cout << "packing_was::handle_long_orbits before L->filter_orbits" << endl;
+	}
+	L->filter_orbits(verbose_level - 2);
+	if (f_vv) {
+		cout << "packing_was::handle_long_orbits after L->filter_orbits" << endl;
+	}
+
+
+	if (f_vv) {
+		cout << "packing_was::handle_long_orbits "
+				"before L->create_graph_on_remaining_long_orbits" << endl;
+	}
+	L->create_graph_on_remaining_long_orbits(verbose_level - 2);
+	if (f_vv) {
+		cout << "packing_was::handle_long_orbits "
+				"after L->create_graph_on_remaining_long_orbits" << endl;
+	}
+
+	FREE_OBJECT(L);
+
+	if (f_vv) {
+		cout << "packing_was::process_long_orbits done" << endl;
 	}
 }
 
@@ -563,7 +598,7 @@ void packing_was::compute_H_orbits_on_lines(int verbose_level)
 
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_lines" << endl;
-		}
+	}
 
 	if (Descr->f_output_path) {
 		sprintf(prefix_line_orbits, "%s%s_line_orbits",
@@ -580,7 +615,7 @@ void packing_was::compute_H_orbits_on_lines(int verbose_level)
 
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_lines done" << endl;
-		}
+	}
 }
 
 void packing_was::compute_spread_types_wrt_H(int verbose_level)
@@ -876,7 +911,7 @@ void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
 
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_reduced_spreads "
-				"creating action A_on_spread_orbits" << endl;
+				"creating action A_on_reduced_spread_orbits" << endl;
 	}
 
 
@@ -897,21 +932,21 @@ void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
 	}
 }
 
-int packing_was::test_if_pair_of_orbits_are_adjacent(
-	long int *orbit1, int len1, long int *orbit2, int len2,
+int packing_was::test_if_pair_of_sets_of_reduced_spreads_are_adjacent(
+	long int *set1, int len1, long int *set2, int len2,
 	int verbose_level)
-// tests if every spread from orbit1
-// is line-disjoint from every spread from orbit2
+// tests if every spread from set1
+// is line-disjoint from every spread from set2
 // using Spread_tables_reduced
 {
 	int f_v = FALSE; // (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "packing_was::test_if_pair_of_orbits_are_adjacent" << endl;
+		cout << "packing_was::test_if_pair_of_sets_of_reduced_spreads_are_adjacent" << endl;
 	}
 	return Spread_tables_reduced->test_if_pair_of_sets_are_adjacent(
-			orbit1, len1,
-			orbit2, len2,
+			set1, len1,
+			set2, len2,
 			verbose_level);
 }
 
@@ -941,7 +976,7 @@ void packing_was::create_graph_and_save_to_file(
 		type_idx,
 		f_has_user_data, user_data, user_data_size,
 		FALSE /* f_has_colors */, 1 /* nb_colors */, NULL /* color_table */,
-		packing_was_orbit_test_function,
+		packing_was_set_of_reduced_spreads_adjacency_test_function,
 		this /* void *test_function_data */,
 		verbose_level);
 
@@ -977,7 +1012,8 @@ void packing_was::create_graph_on_fixpoints(int verbose_level)
 	create_graph_and_save_to_file(
 		fname_fixp_graph,
 		1 /* orbit_length */,
-		FALSE /* f_has_user_data */, NULL /* int *user_data */, 0 /* int user_data_size */,
+		FALSE /* f_has_user_data */, NULL /* int *user_data */,
+		0 /* int user_data_size */,
 		verbose_level);
 
 	if (f_v) {
@@ -1023,8 +1059,7 @@ void packing_was::action_on_fixpoints(int verbose_level)
 		cout << "packing_was::action_on_fixpoints "
 				"action on fixpoints has been created" << endl;
 		cout << "packing_was::action_on_fixpoints "
-				"this action has degree "
-				<< A_on_fixpoints->degree << endl;
+				"this action has degree " << A_on_fixpoints->degree << endl;
 	}
 
 
@@ -1037,6 +1072,9 @@ void packing_was::action_on_fixpoints(int verbose_level)
 
 void packing_was::compute_cliques_on_fixpoint_graph(
 		int clique_size, int verbose_level)
+// initializes the orbit transversal Fixp_cliques
+// initializes Cliques[nb_cliques * clique_size]
+// (either by computing it or reading it from file)
 {
 	int f_v = (verbose_level >= 1);
 	char my_prefix[1000];
@@ -1058,65 +1096,47 @@ void packing_was::compute_cliques_on_fixpoint_graph(
 	strcat(my_prefix, "_cliques");
 
 	if (Fio.file_size(fname_fixp_graph_cliques) > 0) {
-		cout << "The file " << fname_fixp_graph_cliques << " exists" << endl;
+		if (f_v) {
+			cout << "packing_was::compute_cliques_on_fixpoint_graph "
+					"The file " << fname_fixp_graph_cliques << " exists" << endl;
+		}
 		Fio.lint_matrix_read_csv(fname_fixp_graph_cliques,
 				Cliques, nb_cliques, clique_size, verbose_level);
 	}
 	else {
-		cout << "The file " << fname_fixp_graph_cliques
+		if (f_v) {
+			cout << "packing_was::compute_cliques_on_fixpoint_graph "
+				"The file " << fname_fixp_graph_cliques
 				<< " does not exist, we compute it" << endl;
-		if (f_v) {
-			cout << "packing_was::compute_cliques_on_fixpoint_graph "
-					"before compute_orbits_on_subsets" << endl;
 		}
-
-		Poset_fixpoint_cliques = NEW_OBJECT(poset);
-		Poset_fixpoint_cliques->init_subset_lattice(
-				P->T->A, A_on_fixpoints,
-				N_gens,
-				verbose_level);
 
 		if (f_v) {
 			cout << "packing_was::compute_cliques_on_fixpoint_graph "
-					"before "
-					"Poset->add_testing_without_group" << endl;
+					"before compute_cliques_on_fixpoint_graph_from_scratch" << endl;
 		}
-		Poset_fixpoint_cliques->add_testing_without_group(
-				packing_was_early_test_function_fp_cliques,
-					this /* void *data */,
-					verbose_level);
 
-		fixpoint_clique_gen = NEW_OBJECT(poset_classification);
-
-
-		fixpoint_clique_gen->compute_orbits_on_subsets(
-				clique_size /* int target_depth */,
-				Descr->cliques_on_fixpoint_graph_control,
-				Poset_fixpoint_cliques,
-				verbose_level);
+		compute_cliques_on_fixpoint_graph_from_scratch(clique_size, verbose_level);
 
 		if (f_v) {
 			cout << "packing_was::compute_cliques_on_fixpoint_graph "
-					"after compute_orbits_on_subsets" << endl;
+					"after compute_cliques_on_fixpoint_graph_from_scratch" << endl;
 		}
-
-
-		fixpoint_clique_gen->get_orbit_representatives(clique_size,
-				nb_cliques, Cliques, verbose_level);
-
-		cout << "We found " << nb_cliques << " orbits of cliques of size "
-				<< clique_size << " in the fixed point graph:" << endl;
-		lint_matrix_print(Cliques, nb_cliques, clique_size);
-
-		Fio.lint_matrix_write_csv(fname_fixp_graph_cliques,
-				Cliques, nb_cliques, clique_size);
 	}
 
 	Fixp_cliques = NEW_OBJECT(orbit_transversal);
 
+	if (f_v) {
+		cout << "packing_was::compute_cliques_on_fixpoint_graph "
+				"before Fixp_cliques->read_from_file, "
+				"file=" << fname_fixp_graph_cliques_orbiter << endl;
+	}
 	Fixp_cliques->read_from_file(
 			P->T->A, A_on_fixpoints,
 			fname_fixp_graph_cliques_orbiter, verbose_level);
+	if (f_v) {
+		cout << "packing_was::compute_cliques_on_fixpoint_graph "
+				"after Fixp_cliques->read_from_file" << endl;
+	}
 
 	if (f_v) {
 		cout << "packing_was::compute_cliques_on_fixpoint_graph "
@@ -1124,34 +1144,81 @@ void packing_was::compute_cliques_on_fixpoint_graph(
 	}
 }
 
-#if 0
-void packing_was::handle_long_orbits(int verbose_level)
+void packing_was::compute_cliques_on_fixpoint_graph_from_scratch(
+		int clique_size, int verbose_level)
+// compute cliques on fixpoint grapf using A_on_fixpoints
+// orbit representatives will be stored in Cliques[nb_cliques * clique_size]
 {
 	int f_v = (verbose_level >= 1);
+	file_io Fio;
 
 	if (f_v) {
-		cout << "packing_was::handle_long_orbits" << endl;
-	}
-	if (f_v) {
-		cout << "packing_was::handle_long_orbits "
-				"f_process_long_orbits" << endl;
-		cout << "packing_was::handle_long_orbits "
-				"r=" << Descr->process_long_orbits_r << endl;
-		cout << "packing_was::handle_long_orbits "
-				"m=" << Descr->process_long_orbits_m << endl;
-		cout << "packing_was::handle_long_orbits "
-				"long_orbit_length=" << Descr->long_orbit_length << endl;
-		cout << "packing_was::handle_long_orbits "
-				"long_orbits_clique_size=" << Descr->long_orbits_clique_size << endl;
+		cout << "packing_was::compute_cliques_on_fixpoint_graph_from_scratch "
+				"clique_size=" << clique_size << endl;
 	}
 
+	if (f_v) {
+		cout << "packing_was::compute_cliques_on_fixpoint_graph_from_scratch "
+				"before compute_orbits_on_subsets" << endl;
+	}
 
+	Poset_fixpoint_cliques = NEW_OBJECT(poset);
+	Poset_fixpoint_cliques->init_subset_lattice(
+			P->T->A, A_on_fixpoints,
+			N_gens,
+			verbose_level);
 
 	if (f_v) {
-		cout << "packing_was::handle_long_orbits done" << endl;
+		cout << "packing_was::compute_cliques_on_fixpoint_graph_from_scratch "
+				"before "
+				"Poset->add_testing_without_group" << endl;
+	}
+	Poset_fixpoint_cliques->add_testing_without_group(
+			packing_was_early_test_function_fp_cliques,
+				this /* void *data */,
+				verbose_level);
+
+	fixpoint_clique_gen = NEW_OBJECT(poset_classification);
+
+
+	fixpoint_clique_gen->compute_orbits_on_subsets(
+			clique_size /* int target_depth */,
+			Descr->cliques_on_fixpoint_graph_control,
+			Poset_fixpoint_cliques,
+			verbose_level);
+
+	if (f_v) {
+		cout << "packing_was::compute_cliques_on_fixpoint_graph_from_scratch "
+				"after compute_orbits_on_subsets" << endl;
+	}
+
+
+	fixpoint_clique_gen->get_orbit_representatives(clique_size,
+			nb_cliques, Cliques, verbose_level);
+
+	if (f_v) {
+		cout << "packing_was::compute_cliques_on_fixpoint_graph_from_scratch "
+				"We found " << nb_cliques << " orbits of cliques of size "
+			<< clique_size << " in the fixed point graph:" << endl;
+	}
+	lint_matrix_print(Cliques, nb_cliques, clique_size);
+
+	Fio.lint_matrix_write_csv(fname_fixp_graph_cliques,
+			Cliques, nb_cliques, clique_size);
+
+	if (f_v) {
+		cout << "packing_was::compute_cliques_on_fixpoint_graph_from_scratch "
+				"Written file " << fname_fixp_graph_cliques
+				<< " of size " << Fio.file_size(fname_fixp_graph_cliques) << endl;
+	}
+
+	if (f_v) {
+		cout << "packing_was::compute_cliques_on_fixpoint_graph_from_scratch "
+				"done" << endl;
 	}
 }
-#endif
+
+
 
 void packing_was::compute_orbit_invariant_on_classified_orbits(int verbose_level)
 {
@@ -1180,7 +1247,8 @@ void packing_was::compute_orbit_invariant_on_classified_orbits(int verbose_level
 	}
 }
 
-int packing_was::evaluate_orbit_invariant_function(int a, int i, int j, int verbose_level)
+int packing_was::evaluate_orbit_invariant_function(int a,
+		int i, int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1416,13 +1484,13 @@ void packing_was::report(int verbose_level)
 // #############################################################################
 
 
-int packing_was_orbit_test_function(long int *orbit1, int len1,
-		long int *orbit2, int len2, void *data)
+int packing_was_set_of_reduced_spreads_adjacency_test_function(long int *set1, int len1,
+		long int *set2, int len2, void *data)
 {
 	packing_was *P = (packing_was *) data;
 
-	return P->test_if_pair_of_orbits_are_adjacent(
-			orbit1, len1, orbit2, len2, 0 /*verbose_level*/);
+	return P->test_if_pair_of_sets_of_reduced_spreads_are_adjacent(
+			set1, len1, set2, len2, 0 /*verbose_level*/);
 }
 
 
