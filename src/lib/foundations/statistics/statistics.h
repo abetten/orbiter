@@ -104,10 +104,9 @@ public:
 	int data_length;
 
 	int *data;
-	int *data_2_unique_data; // [data_length]
-	int data_unique_length;
-	int *Data_unique; // [data_length * data_set_sz]
-	int *Data_multiplicity; // [data_length]
+	int *rep_idx; // [data_length], rep_idx[i] is the index into Rep of data[i * data_set_sz]
+	int *Reps; // [data_length * data_set_sz], used [nb_types * data_set_sz]
+	int *Frequency; // [data_length], used [nb_types]
 	int *sorting_perm;
 		// computed using int_vec_sorting_permutation
 	int *sorting_perm_inv;
@@ -126,21 +125,16 @@ public:
 
 	int nb_types;
 	int *type_first;
-	int *type_len;
+	//int *type_len; same as Frequency[]
 
+	int **Reps_in_lex_order; // [nb_types]
+	int *Frequency_in_lex_order; // [nb_types]
 
-	int f_second;
-	int *second_data_sorted;
-	int *second_sorting_perm;
-	int *second_sorting_perm_inv;
-	int second_nb_types;
-	int *second_type_first;
-	int *second_type_len;
 
 	classify_vector_data();
 	~classify_vector_data();
 	void init(int *data, int data_length, int data_set_sz,
-		int f_second, int verbose_level);
+		int verbose_level);
 	int hash_and_find(int *data,
 			int &idx, uint32_t &h, int verbose_level);
 	void print();

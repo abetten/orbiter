@@ -2644,6 +2644,10 @@ public:
 			long int *live_blocks, int nb_live_blocks,
 			int nb_needed,
 			int verbose_level);
+	void compute_list_of_lines_from_packing(
+			long int *list_of_lines, long int *packing, int sz_of_packing,
+			int verbose_level);
+	// list_of_lines[sz_of_packing * spread_size]
 
 };
 

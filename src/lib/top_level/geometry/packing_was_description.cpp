@@ -202,21 +202,6 @@ int packing_was_description::read_arguments(int argc, const char **argv,
 			cout << "-exact_cover " << endl;
 		}
 
-		else if (strcmp(argv[i], "-exact_cover") == 0) {
-			f_exact_cover = TRUE;
-			ECA = NEW_OBJECT(exact_cover_arguments);
-			i += ECA->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			cout << "done reading -exact_cover " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-			cout << "-exact_cover " << endl;
-		}
-
 		else if (strcmp(argv[i], "-isomorph") == 0) {
 			f_isomorph = TRUE;
 			IA = NEW_OBJECT(isomorph_arguments);

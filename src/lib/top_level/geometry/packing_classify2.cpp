@@ -15,51 +15,20 @@ using namespace std;
 namespace orbiter {
 namespace top_level {
 
-
-void packing_classify::compute_list_of_lines_from_packing(
-		long int *list_of_lines, long int *packing, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, a;
-	
-	if (f_v) {
-		cout << "packing_classify::compute_list_of_lines_from_packing" << endl;
-	}
-	for (i = 0; i < size_of_packing; i++) {
-		a = packing[i];
-		lint_vec_copy(Spread_tables->spread_table + a * spread_size,
-				list_of_lines + i * spread_size, spread_size);
-#if 0
-		for (j = 0; j < spread_size; j++) {
-			b = Spread_table[a * spread_size + j];
-			list_of_lines[i * spread_size + j] = b;
-		}
-#endif
-	}
-	if (f_v) {
-		cout << "packing_classify::compute_list_of_lines_from_packing done" << endl;
-	}
-}
-
 void packing_classify::compute_klein_invariants(
-		isomorph *Iso, int verbose_level)
+		isomorph *Iso, int f_split, int split_r, int split_m,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v3 = (verbose_level >= 3);
-	long int data[1000];
-	long int *list_of_lines;
 	int orbit, id;
-	int f_split, split_r, split_m;
 	file_io Fio;
 
 	if (f_v) {
-		cout << "papacking_classifycking::compute_klein_invariants" << endl;
+		cout << "packing_classify::compute_klein_invariants" << endl;
 	}
-	f_split = f_split_klein;
-	split_r = split_klein_r;
-	split_m = split_klein_m;
-	list_of_lines = NEW_lint(size_of_packing * spread_size);
+
 	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
 	
 		if (f_split && (orbit % split_m) != split_r) {
@@ -67,7 +36,7 @@ void packing_classify::compute_klein_invariants(
 		}
 		
 		if (f_v) {
-			cout << "packing::compute_klein_invariants orbit "
+			cout << "packing_classify::compute_klein_invariants orbit "
 					<< orbit << " / " << Iso->Reps->count << endl;
 		}
 		
@@ -83,15 +52,15 @@ void packing_classify::compute_klein_invariants(
 		}
 		id = Iso->orbit_perm[Iso->orbit_fst[Iso->Reps->rep[orbit]]];
 	
-		Iso->load_solution(id, data);
+		Iso->load_solution(id, the_packing);
 		if (f_vv) {
 			cout << "read representative of orbit " << orbit
 					<< " (id=" << id << ")" << endl;
-			lint_vec_print(cout, data, Iso->size);
+			lint_vec_print(cout, the_packing, Iso->size);
 			cout << endl;
 		}
-		compute_list_of_lines_from_packing(list_of_lines,
-				data, verbose_level - 2);
+		Spread_tables->compute_list_of_lines_from_packing(list_of_lines,
+				the_packing, size_of_packing, verbose_level - 2);
 		if (f_v3) {
 			cout << "read representative of orbit " << orbit
 					<< " (id=" << id << ") list of lines:" << endl;
@@ -100,14 +69,24 @@ void packing_classify::compute_klein_invariants(
 			cout << endl;
 		}
 
-		save_klein_invariants(Iso->prefix_invariants, 
+		if (f_v) {
+			cout << "packing_classify::compute_klein_invariants orbit "
+					<< orbit << " / " << Iso->Reps->count
+					<< " before compute_and_save_klein_invariants" << endl;
+		}
+		compute_and_save_klein_invariants(Iso->prefix_invariants,
 			orbit, 
 			list_of_lines,
 			size_of_packing * spread_size,
 			verbose_level - 2);
+		if (f_v) {
+			cout << "packing_classify::compute_klein_invariants orbit "
+					<< orbit << " / " << Iso->Reps->count
+					<< " after compute_and_save_klein_invariants" << endl;
+		}
+
 	} // next orbit
 
-	FREE_lint(list_of_lines);
 	
 	if (f_v) {
 		cout << "packing_classify::compute_klein_invariants done" << endl;
@@ -120,7 +99,7 @@ void packing_classify::klein_invariants_fname(
 	sprintf(fname, "%s%d_klein_invariant.bin", prefix, iso_cnt);
 }
 
-void packing_classify::save_klein_invariants(char *prefix,
+void packing_classify::compute_and_save_klein_invariants(char *prefix,
 	int iso_cnt, 
 	long int *data, int data_size, int verbose_level)
 {
@@ -132,15 +111,49 @@ void packing_classify::save_klein_invariants(char *prefix,
 	int i, j;
 
 	if (f_v) {
-		cout << "packing_classify::save_klein_invariants" << endl;
+		cout << "packing_classify::compute_and_save_klein_invariants" << endl;
 	}
 	
-	compute_plane_intersections(data, data_size, 
-		R,
-		Pts_on_plane, 
-		nb_pts_on_plane, 
-		nb_planes, 
-		verbose_level - 2);
+	if (data_size != size_of_packing * spread_size) {
+		cout << "packing_classify::compute_and_save_klein_invariants "
+				"data_size != size_of_packing * spread_size" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "packing_classify::compute_and_save_klein_invariants "
+				"before P3->klein_correspondence" << endl;
+	}
+	P3->klein_correspondence(P5,
+		data, data_size, list_of_lines_klein_image, 0/*verbose_level*/);
+
+
+
+
+	if (f_v) {
+		cout << "packing_classify::compute_and_save_klein_invariants "
+				"after P3->klein_correspondence" << endl;
+	}
+	if (f_v) {
+		cout << "packing_classify::compute_and_save_klein_invariants "
+				"before plane_intersection_type_fast" << endl;
+	}
+	P5->plane_intersection_type_slow(Gr, list_of_lines_klein_image, data_size,
+		R, Pts_on_plane, nb_pts_on_plane, nb_planes,
+		verbose_level /*- 3*/);
+
+	if (f_v) {
+		cout << "packing_classify::compute_and_save_klein_invariants: "
+				"We found " << nb_planes << " planes." << endl;
+#if 1
+		for (i = 0; i < nb_planes; i++) {
+			cout << setw(3) << i << " : " << R[i]
+				<< " : " << setw(5) << nb_pts_on_plane[i] << " : ";
+			lint_vec_print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
+			cout << endl;
+		}
+#endif
+	}
 
 	Vector v;
 
@@ -175,97 +188,10 @@ void packing_classify::save_klein_invariants(char *prefix,
 	FREE_int(nb_pts_on_plane);
 
 	if (f_v) {
-		cout << "packing_classify::save_klein_invariants done" << endl;
+		cout << "packing_classify::compute_and_save_klein_invariants done" << endl;
 	}
 }
 
-
-void packing_classify::compute_plane_intersections(
-	long int *data, int data_size,
-	longinteger_object *&R,
-	long int **&Pts_on_plane,
-	int *&nb_pts_on_plane, 
-	int &nb_planes, 
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	projective_space *P5;
-	int i;
-	long int N;
-	long int *the_set_out;
-	int set_size;
-	grassmann *Gr;
-
-	if (f_v) {
-		cout << "packing_classify::compute_plane_intersections" << endl;
-	}
-	set_size = data_size;
-
-	P5 = NEW_OBJECT(projective_space);
-	
-	P5->init(5, T->Mtx->GFq,
-		TRUE /* f_init_incidence_structure */, 
-		0 /* verbose_level - 2 */);
-
-	the_set_out = NEW_lint(set_size);
-	
-	if (f_v) {
-		cout << "packing_classify::compute_plane_intersections "
-				"before P3->klein_correspondence" << endl;
-	}
-	P3->klein_correspondence(P5, 
-		data, set_size, the_set_out, 0/*verbose_level*/);
-
-
-
-	if (f_v) {
-		cout << "packing_classify::compute_plane_intersections "
-				"after P3->klein_correspondence" << endl;
-	}
-
-	
-
-	N = P5->nb_rk_k_subspaces_as_lint(3);
-	if (f_v) {
-		cout << "packing_classify::compute_plane_intersections "
-				"N = " << N << endl;
-	}
-
-	
-
-	Gr = NEW_OBJECT(grassmann);
-
-	Gr->init(6, 3, F, 0 /* verbose_level */);
-
-	if (f_v) {
-		cout << "packing_classify::compute_plane_intersections "
-				"before plane_intersection_type_fast" << endl;
-	}
-	P5->plane_intersection_type_slow(Gr, the_set_out, set_size, 
-		R, Pts_on_plane, nb_pts_on_plane, nb_planes, 
-		verbose_level /*- 3*/);
-
-	if (f_v) {
-		cout << "packing_classify::compute_plane_intersections: "
-				"We found " << nb_planes << " planes." << endl;
-#if 1
-		for (i = 0; i < nb_planes; i++) {
-			cout << setw(3) << i << " : " << R[i] 
-				<< " : " << setw(5) << nb_pts_on_plane[i] << " : ";
-			lint_vec_print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
-			cout << endl; 
-		}
-#endif
-	}
-
-
-	FREE_lint(the_set_out);
-	FREE_OBJECT(Gr);
-	FREE_OBJECT(P5);
-	if (f_v) {
-		cout << "packing_classify::compute_plane_intersections done" << endl;
-	}
-}
 
 void packing_classify::report(isomorph *Iso, int verbose_level)
 {
@@ -482,48 +408,43 @@ void packing_classify::report_isomorphism_type(
 {
 	int f_v = (verbose_level >= 1);
 	int i, id, rep, first, c;
-	long int packing[1000];
-	long int spread_iso_type[1000];
-	long int dual_packing[1000];
-	long int data[1000];
 	longinteger_object go;
-	long int *list_of_lines;
 
 	if (f_v) {
 		cout << "packing_classify::report_isomorphism_type" << endl;
 	}
 
-	list_of_lines = NEW_lint(size_of_packing * spread_size);
 
 	rep = Iso->Reps->rep[orbit];
 	first = Iso->orbit_fst[rep];
 	c = Iso->starter_number[first];
 	id = Iso->orbit_perm[first];		
-	Iso->load_solution(id, data);
+	Iso->load_solution(id, the_packing);
 
 	
 	for (i = 0; i < Iso->size; i++) {
-		packing[i] = data[i];
-		dual_packing[i] = Spread_tables->dual_spread_idx[packing[i]];
+		dual_packing[i] = Spread_tables->dual_spread_idx[the_packing[i]];
 	}
 
-	compute_list_of_lines_from_packing(
-			list_of_lines, data, verbose_level - 1);
+
+	Spread_tables->compute_list_of_lines_from_packing(list_of_lines,
+			the_packing, size_of_packing, verbose_level - 2);
 
 
 	ost << "\\subsection*{Isomorphism Type " << orbit << "}" << endl;
 	ost << "\\bigskip" << endl;
 
 	for (i = 0; i < Iso->size; i++) {
-		spread_iso_type[i] = Spread_tables->spread_iso_type[packing[i]];
+		spread_iso_type[i] = Spread_tables->spread_iso_type[the_packing[i]];
 	}
+
 	ost << "spread : isotype : dualspread \\\\" << endl;
 	for (i = 0; i < Iso->size; i++) {
-		ost << packing[i];
+		ost << the_packing[i];
 		ost << " : ";
 		ost << spread_iso_type[i];
 		ost << " : ";
-		ost << Spread_tables->dual_spread_idx[packing[i]];
+		ost << dual_packing[i];
 		ost << "\\\\" << endl;
 	}
 	//ost << "\\\\" << endl;
@@ -580,7 +501,7 @@ void packing_classify::report_isomorphism_type(
 		cout << "packing_classify::report computing induced "
 				"action on the set (in data)" << endl;
 	}
-	Iso->induced_action_on_set_basic(Stab, data, verbose_level - 2);
+	Iso->induced_action_on_set_basic(Stab, the_packing, verbose_level - 2);
 
 	if (f_v) {
 		longinteger_object go;
@@ -629,7 +550,6 @@ void packing_classify::report_isomorphism_type(
 	report_packing_as_table(Iso,
 			ost, orbit, inv, list_of_lines, verbose_level);
 
-	FREE_lint(list_of_lines);
 
 
 	if (f_v) {

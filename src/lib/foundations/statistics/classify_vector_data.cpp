@@ -17,59 +17,81 @@ using namespace std;
 namespace orbiter {
 namespace foundations {
 
+
+static int classify_int_vec_compare_function(void *a, void *b, void *data);
+
 classify_vector_data::classify_vector_data()
 {
 	data_set_sz = 0;
 	data_length = 0;
 	data = NULL;
-	data_2_unique_data = NULL;
-	data_unique_length = 0;
-	Data_unique = NULL;
-	Data_multiplicity = NULL;
+	rep_idx = NULL;
+	Reps = NULL;
+	Frequency = NULL;
 	sorting_perm = NULL;
 	sorting_perm_inv = NULL;
 	nb_types = 0;
 	type_first = NULL;
-	type_len = NULL;
-
-	f_second = FALSE;
-	second_data_sorted = NULL;
-	second_sorting_perm = NULL;
-	second_sorting_perm_inv = NULL;
-	second_nb_types = 0;
-	second_type_first = NULL;
-	second_type_len = NULL;
-
+	Reps_in_lex_order = NULL;
+	Frequency_in_lex_order = NULL;
 }
 
 
 classify_vector_data::~classify_vector_data()
 {
+	if (rep_idx) {
+		FREE_int(rep_idx);
+	}
+	if (Reps) {
+		FREE_int(Reps);
+	}
+	if (Frequency) {
+		FREE_int(Frequency);
+	}
+	if (sorting_perm) {
+		FREE_int(sorting_perm);
+	}
+	if (sorting_perm_inv) {
+		FREE_int(sorting_perm_inv);
+	}
+	if (type_first) {
+		FREE_int(type_first);
+	}
+	if (Reps_in_lex_order) {
+		int i;
 
+		for (i = 0; i < nb_types; i++) {
+			FREE_int(Reps_in_lex_order[i]);
+		}
+		FREE_pint(Reps_in_lex_order);
+	}
+	if (Frequency_in_lex_order) {
+		FREE_int(Frequency_in_lex_order);
+	}
 }
 
+
 void classify_vector_data::init(int *data, int data_length, int data_set_sz,
-		int f_second, int verbose_level)
+		int verbose_level)
+// data[data_length * data_set_sz]
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	sorting Sorting;
+	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "classify_vector_data::init" << endl;
-		}
+	}
 	classify_vector_data::data = data;
 	classify_vector_data::data_length = data_length;
 	classify_vector_data::data_set_sz = data_set_sz;
-	classify_vector_data::f_second = f_second;
 
-	data_2_unique_data = NEW_int(data_length);
-	Data_unique = NEW_int(data_length * data_set_sz);
-	Data_multiplicity = NEW_int(data_length);
-	data_unique_length = 0;
-	sorting_perm = NEW_int(data_length);
-	sorting_perm_inv = NEW_int(data_length);
+	rep_idx = NEW_int(data_length);
+	Reps = NEW_int(data_length * data_set_sz);
+	Frequency = NEW_int(data_length);
+	nb_types = 0;
 	type_first = NEW_int(data_length);
-	type_len = NEW_int(data_length);
 
 	uint32_t h;
 	int idx, a;
@@ -77,47 +99,80 @@ void classify_vector_data::init(int *data, int data_length, int data_set_sz,
 	for (i = 0; i < data_length; i++) {
 		if (!hash_and_find(data + i * data_set_sz,
 				idx, h, verbose_level)) {
-			Hashing.insert(pair<uint32_t, int>(h, data_unique_length));
+			Hashing.insert(pair<uint32_t, int>(h, nb_types));
 			int_vec_copy(data + i * data_set_sz,
-					Data_unique + data_unique_length * data_set_sz,
+					Reps + nb_types * data_set_sz,
 					data_set_sz);
-			Data_multiplicity[data_unique_length] = 1;
-			data_2_unique_data[i] = data_unique_length;
-			data_unique_length++;
+			Frequency[nb_types] = 1;
+			rep_idx[i] = nb_types;
+			nb_types++;
 		}
 		else {
-			data_2_unique_data[i] = idx;
-			Data_multiplicity[idx]++;
+			rep_idx[i] = idx;
+			Frequency[idx]++;
 		}
 	}
 
-	nb_types = data_unique_length;
-	for (i = 0; i < data_unique_length; i++) {
+	for (i = 0; i < nb_types; i++) {
 		if (i == 0) {
 			type_first[i] = 0;
 		}
 		else {
-			type_first[i] = type_first[i - 1] + type_len[i - 1];
+			type_first[i] = type_first[i - 1] + Frequency[i - 1];
 		}
-		type_len[i] = Data_multiplicity[i];
 	}
 
+	int *Frequency2;
+
+	sorting_perm = NEW_int(data_length);
+	sorting_perm_inv = NEW_int(data_length);
+
+	Frequency2 = NEW_int(nb_types);
+	int_vec_zero(Frequency2, nb_types);
 	int_vec_zero(sorting_perm_inv, data_length);
-	int_vec_zero(type_len, data_unique_length);
-
 	for (i = 0; i < data_length; i++) {
-		a = data_2_unique_data[i];
-		sorting_perm_inv[type_first[a] + type_len[a]++] = i;
+		a = rep_idx[i];
+		sorting_perm_inv[type_first[a] + Frequency2[a]++] = i;
 	}
-	for (i = 0; i < data_unique_length; i++) {
-		if (type_len[i] != Data_multiplicity[i]) {
-			cout << "type_len[i] != Data_multiplicity[i]" << endl;
+	Combi.perm_inverse(sorting_perm_inv, sorting_perm, data_length);
+
+	FREE_int(Frequency2);
+
+
+
+	Reps_in_lex_order = NEW_pint(nb_types);
+	Frequency_in_lex_order = NEW_int(nb_types);
+
+	int nb_types2, j;
+
+	nb_types2 = 0;
+	for (i = 0; i < nb_types; i++) {
+		if (Sorting.vec_search((void **)Reps_in_lex_order,
+				classify_int_vec_compare_function, this,
+				nb_types2,
+				Reps + i * data_set_sz,
+				idx,
+				0 /* verbose_level */)) {
+			cout << "classify_vector_data::init error!" << endl;
 			exit(1);
 		}
+		else {
+			for (j = nb_types2; j > idx; j--) {
+				Reps_in_lex_order[j] = Reps_in_lex_order[j - 1];
+				Frequency_in_lex_order[j] = Frequency_in_lex_order[j - 1];
+			}
+			Reps_in_lex_order[idx] = NEW_int(data_set_sz);
+			Frequency_in_lex_order[idx] = Frequency[i];
+			int_vec_copy(Reps + i * data_set_sz, Reps_in_lex_order[idx],
+					data_set_sz);
+			nb_types2++;
+		}
 	}
-	combinatorics_domain Combi;
 
-	Combi.perm_inverse(sorting_perm_inv, sorting_perm, data_length);
+
+	if (f_v) {
+		cout << "classify_vector_data::init done" << endl;
+	}
 
 }
 
@@ -138,7 +193,7 @@ int classify_vector_data::hash_and_find(int *data,
 	for (itr = itr1; itr != itr2; ++itr) {
     	idx = itr->second;
 		if (int_vec_compare(data,
-				Data_unique + idx * data_set_sz,
+				Reps + idx * data_set_sz,
 				data_set_sz) == 0) {
 			f_found = TRUE;
 			break;
@@ -153,19 +208,38 @@ void classify_vector_data::print()
 	uint32_t h;
 	int i;
 
-	for (i = 0; i < data_unique_length; i++) {
+	for (i = 0; i < nb_types; i++) {
 
-		h = int_vec_hash(Data_unique + i * data_set_sz, data_set_sz);
+		h = int_vec_hash(Reps + i * data_set_sz, data_set_sz);
 
-		cout << Data_multiplicity[i] << " x ";
-		int_vec_print(cout, Data_unique + i * data_set_sz, data_set_sz);
+		cout << Frequency[i] << " x ";
+		int_vec_print(cout, Reps + i * data_set_sz, data_set_sz);
 		cout << endl;
 		cout << "for elements ";
-		int_vec_print(cout, sorting_perm_inv + type_first[i], type_len[i]);
+		int_vec_print(cout, sorting_perm_inv + type_first[i], Frequency[i]);
 		cout << endl;
-		}
+	}
 }
 
+
+static int classify_int_vec_compare_function(void *a, void *b, void *data)
+{
+	classify_vector_data *C = (classify_vector_data *) data;
+	int *A = (int *) a;
+	int *B = (int *) b;
+	int i;
+
+	for (i = 0; i < C->data_set_sz; i++) {
+		if (A[i] > B[i]) {
+			return 1;
+		}
+		if (A[i] < B[i]) {
+			return -1;
+		}
+	}
+	return 0;
+
+}
 
 }}
 

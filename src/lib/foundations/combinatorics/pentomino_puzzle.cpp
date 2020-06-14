@@ -462,7 +462,7 @@ int pentomino_puzzle::does_it_contain_an_I(long int *set)
 void pentomino_puzzle::decode_assembly(long int *set)
 // input set[5]
 {
-	int i, h, r, t, tt, x, y, rr;
+	int i, h = 0, r = 0, t = 0, tt, x, y, rr;
 
 	cout << "Set ";
 	lint_vec_print(cout, set, 5);
@@ -517,7 +517,7 @@ int pentomino_puzzle::code_piece(int h, int r, int t)
 void pentomino_puzzle::draw_it(ostream &ost, long int *sol)
 {
 	int sol_length = 5;
-	int u, h, r, rr, t, tt, tx, ty, s, a, b, x, y, j;
+	int u, h = 0, r = 0, rr, t = 0, tt, tx, ty, s, a, b, x, y, j;
 	int *O1;
 
 	ost << "\\begin{tikzpicture}[x=1cm, y=1cm, semitransparent, scale=0.5]" << endl;

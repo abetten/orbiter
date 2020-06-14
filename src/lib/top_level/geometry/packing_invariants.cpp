@@ -77,9 +77,9 @@ void packing_invariants::init(packing_classify *P,
 		packing_invariants::the_packing[i] = the_packing[i];
 	}
 	list_of_lines = NEW_lint(P->size_of_packing * P->spread_size);
-	P->compute_list_of_lines_from_packing(
+	P->Spread_tables->compute_list_of_lines_from_packing(
 			list_of_lines,
-			packing_invariants::the_packing,
+			packing_invariants::the_packing, P->size_of_packing,
 			verbose_level - 2);
 	if (f_vv) {
 		cout << "list_of_lines:" << endl;
