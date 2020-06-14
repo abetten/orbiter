@@ -47,6 +47,7 @@ void packing_long_orbits::init(packing_was *P,
 		int fixpoints_clique_case_number,
 		int fixpoint_clique_size,
 		long int *fixpoint_clique,
+		int long_orbit_length,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -61,7 +62,7 @@ void packing_long_orbits::init(packing_was *P,
 	packing_long_orbits::fixpoint_clique = fixpoint_clique;
 
 
-	long_orbit_idx = P->find_orbits_of_length(P->Descr->long_orbit_length);
+	long_orbit_idx = P->find_orbits_of_length(long_orbit_length);
 	if (f_v) {
 		cout << "packing_long_orbits::init long_orbit_idx=" << long_orbit_idx << endl;
 	}

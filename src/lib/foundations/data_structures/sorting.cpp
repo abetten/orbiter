@@ -2065,19 +2065,19 @@ void sorting::Heapsort_general_sift_down(void *data, int start, int end,
 			c = (*compare_func)(data, child, child + 1, extra_data);
 			if (c < 0 /*v[child] < v[child + 1]*/) {
 				child++;
-				}
 			}
+		}
 		//cout << "compare " << root << " : " << child << endl;
 		c = (*compare_func)(data, root, child, extra_data);
 		if (c < 0 /*v[root] < v[child] */) {
 			(*swap_func)(data, root, child, extra_data);
 			//Heapsort_swap(v, root, child, entry_size_in_chars);
 			root = child;
-			}
+		}
 		else {
 			return;
-			}
 		}
+	}
 }
 
 void sorting::heapsort_swap(int *v, int i, int j)

@@ -38,6 +38,13 @@ packing_classify::packing_classify()
 		// which is q^2 + q + 1
 
 	P3 = NULL;
+	P5 = NULL;
+	the_packing = NULL;
+	spread_iso_type = NULL;
+	dual_packing = NULL;
+	list_of_lines = NULL;
+	list_of_lines_klein_image = NULL;
+	Gr = NULL;
 
 
 	spread_tables_prefix = NULL;
@@ -68,10 +75,6 @@ packing_classify::packing_classify()
 
 	nb_needed = 0;
 
-
-	f_split_klein = FALSE;
-	split_klein_r = 0;
-	split_klein_m = 1;
 	//null();
 }
 
@@ -102,7 +105,28 @@ void packing_classify::freeself()
 		FREE_OBJECT(Spread_tables);
 	}
 	if (P3) {
-		delete P3;
+		FREE_OBJECT(P3);
+	}
+	if (P5) {
+		FREE_OBJECT(P5);
+	}
+	if (the_packing) {
+		FREE_lint(the_packing);
+	}
+	if (spread_iso_type) {
+		FREE_lint(spread_iso_type);
+	}
+	if (dual_packing) {
+		FREE_lint(dual_packing);
+	}
+	if (list_of_lines) {
+		FREE_lint(list_of_lines);
+	}
+	if (list_of_lines_klein_image) {
+		FREE_lint(list_of_lines_klein_image);
+	}
+	if (Gr) {
+		FREE_OBJECT(Gr);
 	}
 	null();
 }
@@ -155,7 +179,7 @@ void packing_classify::init(spread_classify *T,
 		cout << "packing_classify::init base_fname=" << base_fname << endl;
 	}
 
-	init_P3(verbose_level - 1);
+	init_P3_and_P5(verbose_level - 1);
 
 	strcpy(starter_directory_name, input_prefix);
 	strcpy(prefix, base_fname);
@@ -276,7 +300,8 @@ void packing_classify::compute_spread_table(int verbose_level)
 
 	if (Spread_tables->files_exist(verbose_level)) {
 		if (f_v) {
-			cout << "packing_classify::compute_spread_table files exist, reading" << endl;
+			cout << "packing_classify::compute_spread_table files exist, "
+					"reading" << endl;
 		}
 
 		Spread_tables->load(verbose_level);
@@ -426,22 +451,47 @@ void packing_classify::compute_spread_table_from_scratch(int verbose_level)
 	}
 }
 
-void packing_classify::init_P3(int verbose_level)
+void packing_classify::init_P3_and_P5(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "packing_classify::init_P3" << endl;
+		cout << "packing_classify::init_P3_and_P5" << endl;
 	}
 	P3 = NEW_OBJECT(projective_space);
 	
 	P3->init(3, T->Mtx->GFq,
 		TRUE /* f_init_incidence_structure */, 
 		0 /* verbose_level - 2 */);
+
 	if (f_v) {
-		cout << "packing_classify::init_P3 done" << endl;
-		cout << "N_points=" << P3->N_points << endl;
-		cout << "N_lines=" << P3->N_lines << endl;
+		cout << "packing_classify::init_P3_and_P5 P3->N_points=" << P3->N_points << endl;
+		cout << "packing_classify::init_P3_and_P5 P3->N_lines=" << P3->N_lines << endl;
+	}
+
+	P5 = NEW_OBJECT(projective_space);
+
+	P5->init(5, T->Mtx->GFq,
+		TRUE /* f_init_incidence_structure */,
+		0 /* verbose_level - 2 */);
+
+	if (f_v) {
+		cout << "packing_classify::init_P3_and_P5 P5->N_points=" << P5->N_points << endl;
+		cout << "packing_classify::init_P3_and_P5 P5->N_lines=" << P5->N_lines << endl;
+	}
+
+	the_packing = NEW_lint(size_of_packing);
+	spread_iso_type = NEW_lint(size_of_packing);
+	dual_packing = NEW_lint(size_of_packing);
+	list_of_lines = NEW_lint(size_of_packing * spread_size);
+	list_of_lines_klein_image = NEW_lint(size_of_packing * spread_size);
+
+	Gr = NEW_OBJECT(grassmann);
+
+	Gr->init(6, 3, F, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "packing_classify::init_P3_and_P5 done" << endl;
 	}
 }
 
@@ -1093,206 +1143,6 @@ void packing_classify::report_fixed_objects(int *Elt,
 	}
 }
 
-#if 0
-void packing_classify::make_element(int idx, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i;
-	
-	if (f_v) {
-		cout << "packing_classify::make_element" << endl;
-		}
-	int goi = 2; // was 5 before
-	int nb_perms = 3;
-	int perms[] = {
-			// the order of PGGL(4,4) is 1974067200
-			// three elements of order 2:
-			1, 2, 9, 26, 45, 6, 7, 8, 3, 11, 10, 13, 12, 15, 14, 17, 16, 19, 18, 21, 20, 23, 22, 25, 24, 4, 30, 29, 28, 27, 34, 33, 32, 31, 38, 37, 36, 35, 41, 42, 39, 40, 44, 43, 5, 48, 49, 46, 47, 52, 53, 50, 51, 55, 54, 57, 56, 59, 58, 61, 60, 63, 62, 65, 64, 67, 66, 69, 68, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 
-			1, 2, 3, 4, 64, 6, 8, 7, 9, 11, 10, 12, 13, 15, 14, 20, 21, 23, 22, 16, 17, 19, 18, 25, 24, 26, 31, 33, 32, 34, 27, 29, 28, 30, 35, 37, 36, 38, 54, 56, 55, 57, 62, 63, 65, 58, 60, 59, 61, 66, 68, 67, 69, 39, 41, 40, 42, 46, 48, 47, 49, 43, 44, 5, 45, 50, 52, 51, 53, 70, 72, 71, 73, 78, 80, 79, 81, 74, 76, 75, 77, 82, 84, 83, 85, 
-			1, 2, 13, 35, 50, 6, 7, 8, 12, 15, 14, 9, 3, 11, 10, 21, 20, 23, 22, 17, 16, 19, 18, 36, 37, 38, 31, 32, 33, 34, 27, 28, 29, 30, 4, 24, 25, 26, 47, 46, 49, 48, 51, 53, 52, 40, 39, 42, 41, 5, 43, 45, 44, 60, 61, 58, 59, 56, 57, 54, 55, 68, 69, 66, 67, 64, 65, 62, 63, 73, 72, 71, 70, 77, 76, 75, 74, 81, 80, 79, 78, 85, 84, 83, 82, 
-			// class orders : order of centralizer : class rep
-			// 5355 : 368640 matrix(1,0,0,0, 1,1,0,0, 0,0,1,0, 0,0,0,1)
-			// 48960 : 40320 identity matrix, frobenius automorphism
-			// 64260 : 30720 ('problem group')  matrix(1,0,0,0, 1,1,0,0, 0,0,1,0, 0,0,1,1)
-			
-			// three elements of order 5:
-			//22, 38, 39, 54, 81, 76, 40, 62, 37, 77, 63, 64, 36, 42, 74, 75, 35, 65, 41, 23, 1, 20, 21, 47, 84, 30, 18, 14, 10, 2, 80, 58, 51, 26, 5, 72, 66, 34, 70, 45, 32, 68, 59, 25, 50, 13, 16, 7, 11, 48, 57, 27, 83, 3, 8, 17, 15, 85, 29, 55, 46, 69, 31, 44, 71, 53, 24, 78, 60, 4, 52, 61, 79, 33, 67, 73, 43, 28, 82, 49, 56, 6, 9, 12, 19, 
-			//22, 14, 16, 24, 44, 10, 18, 2, 13, 11, 7, 8, 15, 17, 3, 9, 12, 6, 19, 23, 1, 20, 21, 53, 60, 78, 82, 56, 49, 28, 45, 32, 70, 68, 64, 74, 36, 42, 75, 65, 41, 35, 31, 69, 71, 57, 83, 27, 48, 52, 4, 79, 61, 47, 30, 84, 54, 58, 80, 26, 51, 38, 40, 62, 76, 72, 66, 5, 34, 67, 73, 33, 43, 39, 37, 77, 63, 81, 59, 50, 25, 29, 46, 55, 85, 
-			//20, 84, 46, 72, 38, 48, 29, 56, 54, 27, 82, 28, 47, 55, 83, 57, 30, 49, 85, 21, 22, 23, 1, 33, 68, 44, 80, 60, 52, 25, 76, 41, 37, 64, 2, 16, 3, 12, 13, 10, 19, 8, 65, 42, 77, 24, 51, 59, 79, 43, 66, 31, 70, 61, 81, 26, 53, 32, 71, 5, 67, 17, 6, 14, 11, 39, 74, 62, 35, 36, 63, 75, 40, 9, 15, 7, 18, 69, 45, 73, 34, 50, 4, 78, 58, 
-};
-	for (i = 0; i < nb_perms * T->A->degree; i++) {
-		perms[i]--;
-		}
-
-	strong_generators *gens;
-	longinteger_object go;
-	vector_ge *nice_gens;
-
-	gens = NEW_OBJECT(strong_generators);
-	gens->init_from_permutation_representation(T->A, T->A->Sims,
-		perms + idx * T->A->degree,
-		1, goi, nice_gens,
-		verbose_level);
-
-	if (f_v) {
-		cout << "packing_classify::make_element "
-				"created generators for a group" << endl;
-		gens->print_generators(cout);
-	}
-	gens->group_order(go);
-	if (f_v) {
-		cout << "packing_classify::make_element "
-				"The group has order " << go << endl;
-	}
-
-	FREE_OBJECT(nice_gens);
-
-	if (f_v) {
-		cout << "packing_classify::make_element done" << endl;
-	}
-}
-#endif
-
-#if 0
-void packing_classify::centralizer(int idx, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i;
-	int *Elt;
-	int *Data;
-	int *Poly2;
-	int *Poly4;
-	const char *poly;
-	char prefix[1000];
-	
-	if (f_v) {
-		cout << "packing_classify::centralizer idx=" << idx << endl;
-	}
-	sprintf(prefix, "element_%d", idx);
-	
-	Elt = NEW_int(T->A->elt_size_in_int);
-	Data = NEW_int(17);
-	Poly2 = NEW_int(3);
-	Poly4 = NEW_int(5);
-
-	poly = get_primitive_polynomial(q, 2, 0 /*verbose_level */);
-	unipoly_object m;
-	unipoly_domain D(F);
-		
-	D.create_object_by_rank_string(m, poly, verbose_level - 2);
-	for (i = 0; i <= 2; i++) {
-		Poly2[i] = D.s_i(m, i);
-	}
-	if (f_v) {
-		cout << "packing_classify::centralizer The coefficients "
-				"of the polynomial are:" << endl;
-		int_vec_print(cout, Poly2, 3);
-		cout << endl;
-	}
-	poly = get_primitive_polynomial(q, 4, 0 /*verbose_level */);
-		
-	D.create_object_by_rank_string(m, poly, verbose_level - 2);
-	for (i = 0; i <= 4; i++) {
-		Poly4[i] = D.s_i(m, i);
-	}
-	if (f_v) {
-		cout << "packing_classify::centralizer The coefficients "
-				"of the polynomial are:" << endl;
-		int_vec_print(cout, Poly4, 5);
-		cout << endl;
-	}
-
-	int_vec_zero(Data, 17);
-
-	if (idx == 0) {
-		Data[1 * 4 + 0] = 1;
-		for (i = 0; i < 2; i++) {
-			Data[i * 4 + 1] = F->negate(Poly2[i]);
-			}
-		Data[2 * 4 + 2] = 3;
-		Data[3 * 4 + 3] = 3;
-	}
-	else if (idx == 1) {
-		Data[1 * 4 + 0] = 1;
-		for (i = 0; i < 2; i++) {
-			Data[i * 4 + 1] = F->negate(Poly2[i]);
-		}
-		Data[3 * 4 + 2] = 1;
-		for (i = 0; i < 2; i++) {
-			Data[(2 + i) * 4 + 3] = F->negate(Poly2[i]);
-		}
-	}
-	else if (idx == 2) {
-		int d[16] = {0,1,0,0,  3,3,0,0,  0,0,1,2,  0,0,2,0}; // AB
-		for (i = 0; i < 16; i++) {
-			Data[i] = d[i];
-		}
-	}
-	else if (idx == 3) {
-		for (i = 0; i < 3; i++) {
-			Data[(i + 1) * 4 + i] = 1;
-		}
-		for (i = 0; i < 4; i++) {
-			Data[i * 4 + 3] = F->negate(Poly4[i]);
-		}
-	}
-	
-
-	if (f_v) {
-		cout << "packing_classify::centralizer Matrix:" << endl;
-		int_matrix_print(Data, 4, 4);
-	}
-
-	T->A->make_element(Elt, Data, 0 /* verbose_level */);
-
-	int o;
-
-	o = T->A->element_order(Elt);
-	if (f_v) {
-		cout << "packing_classify::centralizer Elt:" << endl;
-		T->A->element_print_quick(Elt, cout);
-		cout << "packing_classify::centralizer on points:" << endl;
-		T->A->element_print_as_permutation(Elt, cout);
-		cout << "packing_classify::centralizer on lines:" << endl;
-		T->A2->element_print_as_permutation(Elt, cout);
-	}
-
-	cout << "packing_classify::centralizer the element has order " << o << endl;
-	
-
-	if (idx == 3) {
-		T->A->element_power_int_in_place(Elt, 17, 0 /* verbose_level */);
-		if (f_v) {
-			cout << "packing_classify::centralizer "
-					"after power(17), Elt:" << endl;
-			T->A->element_print_quick(Elt, cout);
-			cout << "packing_classify::centralizer on points:" << endl;
-			T->A->element_print_as_permutation(Elt, cout);
-			cout << "packing_classify::centralizer on lines:" << endl;
-			T->A2->element_print_as_permutation(Elt, cout);
-		}
-	}
-	
-	if (f_v) {
-		cout << "packing_classify::centralizer "
-				"before centralizer_using_MAGMA" << endl;
-	}
-
-	T->A->centralizer_using_MAGMA(prefix,
-			T->A->Sims, Elt, verbose_level);
-	
-	if (f_v) {
-		cout << "packing_classify::centralizer "
-				"after centralizer_using_MAGMA" << endl;
-	}
-	
-
-	if (f_v) {
-		cout << "packing_classify::centralizer done" << endl;
-	}
-}
-
-#endif
 
 int packing_classify::test_if_orbit_is_partial_packing(
 	schreier *Orbits, int orbit_idx,
@@ -1345,8 +1195,12 @@ void callback_packing_compute_klein_invariants(
 		isomorph *Iso, void *data, int verbose_level)
 {
 	packing_classify *P = (packing_classify *) data;
+	int f_split = FALSE;
+	int split_r = 0;
+	int split_m = 1;
 	
-	P->compute_klein_invariants(Iso, verbose_level);
+	P->compute_klein_invariants(Iso, f_split, split_r, split_m,
+			verbose_level);
 }
 
 

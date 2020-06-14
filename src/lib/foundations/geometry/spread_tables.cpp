@@ -742,6 +742,27 @@ void spread_tables::make_exact_cover_problem(diophant *&Dio,
 	}
 }
 
+void spread_tables::compute_list_of_lines_from_packing(
+		long int *list_of_lines, long int *packing, int sz_of_packing,
+		int verbose_level)
+// list_of_lines[sz_of_packing * spread_size]
+{
+	int f_v = (verbose_level >= 1);
+	int i, a;
+
+	if (f_v) {
+		cout << "spread_tables::compute_list_of_lines_from_packing" << endl;
+	}
+	for (i = 0; i < sz_of_packing; i++) {
+		a = packing[i];
+		lint_vec_copy(spread_table + a * spread_size,
+				list_of_lines + i * spread_size, spread_size);
+	}
+	if (f_v) {
+		cout << "spread_tables::compute_list_of_lines_from_packing done" << endl;
+	}
+}
+
 
 }}
 

@@ -21,6 +21,8 @@ namespace foundations {
 clique_finder_control::clique_finder_control()
 {
 	f_rainbow = FALSE;
+	f_target_size = FALSE;
+	target_size = 0;
 	f_weighted = FALSE;
 	weights_string = NULL;
 	f_Sajeeb = FALSE;
@@ -65,6 +67,11 @@ int clique_finder_control::parse_arguments(
 		if (strcmp(argv[i], "-rainbow") == 0) {
 			f_rainbow = TRUE;
 			cout << "-rainbow " << endl;
+		}
+		else if (strcmp(argv[i], "-target_size") == 0) {
+			f_target_size = TRUE;
+			target_size = atoi(argv[++i]);
+			cout << "-target_size " << target_size << endl;
 		}
 		else if (strcmp(argv[i], "-weighted") == 0) {
 			f_weighted = TRUE;
@@ -205,8 +212,21 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 		}
 	}
 	else {
-		cout << "clique_finder_control::all_cliques !f_rainbow" << endl;
-		exit(1);
+		cout << "clique_finder_control::all_cliques not rainbow" << endl;
+		if (!f_target_size) {
+			cout << "clique_finder_control::all_cliques please use -target_size <int : target_size>" << endl;
+			exit(1);
+		}
+
+		int *Sol = NULL;
+		int nb_solutions = 0;
+		unsigned long int decision_step_counter = 0;
+
+		CG->all_cliques_of_size_k_ignore_colors(
+				target_size,
+				Sol, nb_solutions,
+				decision_step_counter,
+				verbose_level);
 	}
 	fp << -1 << " " << nb_sol << " " << nb_search_steps
 		<< " " << nb_decision_steps << " " << dt << endl;

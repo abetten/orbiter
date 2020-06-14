@@ -182,6 +182,8 @@ class clique_finder_control {
 
 public:
 	int f_rainbow;
+	int f_target_size;
+	int target_size;
 	int f_weighted;
 	const char *weights_string;
 	int f_Sajeeb;

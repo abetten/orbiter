@@ -181,69 +181,25 @@ void packing_was::init(packing_was_description *Descr,
 
 
 
+	if (Descr->f_cliques_on_fixpoint_graph && Descr->f_process_long_orbits) {
+		if (f_v) {
+			cout << "packing_was::init before process_long_orbits" << endl;
+		}
+		process_long_orbits(Descr->process_long_orbits_r,
+				Descr->process_long_orbits_m,
+				Descr->long_orbit_length,
+				Descr->long_orbits_clique_size,
+				verbose_level);
+		if (f_v) {
+			cout << "packing_was::init after process_long_orbits" << endl;
+		}
+	}
 
 
 	if (Descr->f_report) {
 		cout << "doing a report" << endl;
 
-		file_io Fio;
-
-		{
-		char fname[1000];
-		char title[1000];
-		char author[1000];
-		//int f_with_stabilizers = TRUE;
-
-		sprintf(title, "Packings in PG(3,%d) ", P->q);
-		sprintf(author, "Orbiter");
-		sprintf(fname, "Packings_q%d.tex", P->q);
-
-			{
-			ofstream fp(fname);
-			latex_interface L;
-
-			//latex_head_easy(fp);
-			L.head(fp,
-				FALSE /* f_book */,
-				TRUE /* f_title */,
-				title, author,
-				FALSE /*f_toc */,
-				FALSE /* f_landscape */,
-				FALSE /* f_12pt */,
-				TRUE /*f_enlarged_page */,
-				TRUE /* f_pagenumbers*/,
-				NULL /* extra_praeamble */);
-
-			fp << "\\section{The field of order " << P->q << "}" << endl;
-			fp << "\\noindent The field ${\\mathbb F}_{"
-					<< P->q
-					<< "}$ :\\\\" << endl;
-			P->F->cheat_sheet(fp, verbose_level);
-
-#if 0
-			fp << "\\section{The space PG$(3, " << q << ")$}" << endl;
-
-			fp << "The points in the plane PG$(2, " << q << ")$:\\\\" << endl;
-
-			fp << "\\bigskip" << endl;
-
-
-			Gen->P->cheat_sheet_points(fp, 0 /*verbose_level*/);
-
-			fp << endl;
-			fp << "\\section{Poset Classification}" << endl;
-			fp << endl;
-#endif
-			fp << "\\section{The Group $H$}" << endl;
-			H_gens->print_generators_tex(fp);
-
-			report(fp);
-
-			L.foot(fp);
-			}
-		cout << "Written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-		}
+		report(verbose_level);
 	}
 
 
@@ -254,130 +210,64 @@ void packing_was::init(packing_was_description *Descr,
 	}
 }
 
-void packing_was::init_N(int verbose_level)
+void packing_was::process_long_orbits(
+		int split_r, int split_m,
+		int long_orbit_length,
+		int long_orbits_clique_size,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "packing_was::init_N" << endl;
+		cout << "packing_was::process_long_orbits" << endl;
+		cout << "packing_was::process_long_orbits split_r = " << split_r << endl;
+		cout << "packing_was::process_long_orbits split_m = " << split_m << endl;
+		cout << "packing_was::process_long_orbits long_orbit_length = " << long_orbit_length << endl;
+		cout << "packing_was::process_long_orbits long_orbits_clique_size = " << long_orbits_clique_size << endl;
+		cout << "packing_was::process_long_orbits fixpoints_idx = " << fixpoints_idx << endl;
 	}
-	if (Descr->f_N) {
-		// set up the group N:
-		action *N_A;
 
-		N_LG = NEW_OBJECT(linear_group);
-
-
-		if (f_v) {
-			cout << "packing_was::init_N before N_LG->init, "
-					"creating the group" << endl;
-			}
-
-		if (P->q != Descr->N_Descr->input_q) {
-			cout << "packing_was::init_N "
-					"q != N_Descr->input_q" << endl;
-			exit(1);
-		}
-		Descr->N_Descr->F = P->F;
-		N_LG->init(Descr->N_Descr, verbose_level - 1);
-
-		if (f_v) {
-			cout << "packing_was::init_N after N_LG->init" << endl;
-			}
-		N_A = N_LG->A2;
-
-		if (f_v) {
-			cout << "packing_was::init_N created group " << H_LG->prefix << endl;
-		}
-
-		if (!N_A->is_matrix_group()) {
-			cout << "packing_was::init_N the group is not a matrix group " << endl;
-			exit(1);
-		}
-
-		if (N_A->is_semilinear_matrix_group() != f_semilinear) {
-			cout << "the groups N and H must either both be semilinear or not" << endl;
-			exit(1);
-		}
-		if (f_v) {
-			cout << "packing_was::init_N f_semilinear=" << f_semilinear << endl;
-		}
-		N_gens = N_LG->Strong_gens;
-		if (f_v) {
-			cout << "packing_was::init_N N_gens=" << endl;
-			N_gens->print_generators_tex(cout);
-		}
-		N_goi = N_gens->group_order_as_lint();
-		if (f_v) {
-			cout << "packing_was::init_N N_goi=" << N_goi << endl;
-		}
-
-	}
-	if (f_v) {
-		cout << "packing_was::init_N done" << endl;
-	}
-}
-
-void packing_was::init_H(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
+	L = NEW_OBJECT(packing_long_orbits);
 
 	if (f_v) {
-		cout << "packing_was::init_H" << endl;
+		cout << "packing_was::handle_long_orbits before L->init" << endl;
 	}
-	H_LG = NEW_OBJECT(linear_group);
 
-	Descr->H_Descr->F = P->F;
+	L->init(this,
+			fixpoints_idx,
+			split_r /* fixpoints_clique_case_number */,
+			Descr->clique_size /* fixpoint_clique_size */,
+			Cliques + split_r * Descr->clique_size /* clique */,
+			Descr->long_orbit_length,
+			verbose_level);
 
 	if (f_v) {
-		cout << "packing_was::init_H before H_LG->init, "
-				"creating the group" << endl;
-	}
-
-	H_LG->init(Descr->H_Descr, verbose_level - 1);
-
-	if (f_v) {
-		cout << "packing_was::init_H after H_LG->init" << endl;
-	}
-
-
-	A = H_LG->A2;
-
-	if (f_v) {
-		cout << "packing_was::init_H created group " << H_LG->prefix << endl;
-	}
-
-	if (!A->is_matrix_group()) {
-		cout << "packing_was::init_H the group is not a matrix group " << endl;
-		exit(1);
-	}
-
-
-	f_semilinear = A->is_semilinear_matrix_group();
-	if (f_v) {
-		cout << "packing_was::init_H f_semilinear=" << f_semilinear << endl;
-	}
-
-
-	M = A->get_matrix_group();
-	dim = M->n;
-
-	if (f_v) {
-		cout << "packing_was::init_H dim=" << dim << endl;
-	}
-
-	H_gens = H_LG->Strong_gens;
-	if (f_v) {
-		cout << "packing_was::init_H H_gens=" << endl;
-		H_gens->print_generators_tex(cout);
-	}
-	H_goi = H_gens->group_order_as_lint();
-	if (f_v) {
-		cout << "packing_was::init_H H_goi=" << H_goi << endl;
+		cout << "packing_was::handle_long_orbits after L->init" << endl;
 	}
 
 	if (f_v) {
-		cout << "packing_was::init_H done" << endl;
+		cout << "packing_was::handle_long_orbits before L->filter_orbits" << endl;
+	}
+	L->filter_orbits(verbose_level);
+	if (f_v) {
+		cout << "packing_was::handle_long_orbits after L->filter_orbits" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "packing_was::handle_long_orbits "
+				"before L->create_graph_on_remaining_long_orbits" << endl;
+	}
+	L->create_graph_on_remaining_long_orbits(verbose_level);
+	if (f_v) {
+		cout << "packing_was::handle_long_orbits "
+				"after L->create_graph_on_remaining_long_orbits" << endl;
+	}
+
+	FREE_OBJECT(L);
+
+	if (f_v) {
+		cout << "packing_was::process_long_orbits done" << endl;
 	}
 }
 
@@ -522,38 +412,145 @@ void packing_was::init_spreads(int verbose_level)
 					cout << "packing_was::init_spreads "
 							"after compute_cliques_on_fixpoint_graph" << endl;
 				}
-				if (Descr->f_process_long_orbits) {
-					handle_long_orbits(verbose_level);
-
-				}
 			}
 
 		}
 		else {
 			cout << "for cliques on fixpoint graph, need -N" << endl;
 			exit(1);
-#if 0
-			sims *H;
-			char magma_prefix[1000];
-			strong_generators *gens_N;
-
-			sprintf(magma_prefix, "%s_normalizer", H_LG->prefix);
-			cout << "computing normalizer using MAGMA:" << endl;
-
-			cout << "creating sims object for H:" << endl;
-			H = H_gens->create_sims(verbose_level);
-			cout << "before A->normalizer_using_MAGMA:" << endl;
-			A->normalizer_using_MAGMA(magma_prefix,
-					A->Sims, H, gens_N, verbose_level);
-			cout << "program is terminating now" << endl;
-			exit(0);
-#endif
 		}
 	}
 
 
 	if (f_v) {
 		cout << "packing_was::init_spreads done" << endl;
+	}
+}
+
+void packing_was::init_N(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "packing_was::init_N" << endl;
+	}
+	if (Descr->f_N) {
+		// set up the group N:
+		action *N_A;
+
+		N_LG = NEW_OBJECT(linear_group);
+
+
+		if (f_v) {
+			cout << "packing_was::init_N before N_LG->init, "
+					"creating the group" << endl;
+			}
+
+		if (P->q != Descr->N_Descr->input_q) {
+			cout << "packing_was::init_N "
+					"q != N_Descr->input_q" << endl;
+			exit(1);
+		}
+		Descr->N_Descr->F = P->F;
+		N_LG->init(Descr->N_Descr, verbose_level - 1);
+
+		if (f_v) {
+			cout << "packing_was::init_N after N_LG->init" << endl;
+			}
+		N_A = N_LG->A2;
+
+		if (f_v) {
+			cout << "packing_was::init_N created group " << H_LG->prefix << endl;
+		}
+
+		if (!N_A->is_matrix_group()) {
+			cout << "packing_was::init_N the group is not a matrix group " << endl;
+			exit(1);
+		}
+
+		if (N_A->is_semilinear_matrix_group() != f_semilinear) {
+			cout << "the groups N and H must either both be semilinear or not" << endl;
+			exit(1);
+		}
+		if (f_v) {
+			cout << "packing_was::init_N f_semilinear=" << f_semilinear << endl;
+		}
+		N_gens = N_LG->Strong_gens;
+		if (f_v) {
+			cout << "packing_was::init_N N_gens=" << endl;
+			N_gens->print_generators_tex(cout);
+		}
+		N_goi = N_gens->group_order_as_lint();
+		if (f_v) {
+			cout << "packing_was::init_N N_goi=" << N_goi << endl;
+		}
+
+	}
+	if (f_v) {
+		cout << "packing_was::init_N done" << endl;
+	}
+}
+
+void packing_was::init_H(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "packing_was::init_H" << endl;
+	}
+	H_LG = NEW_OBJECT(linear_group);
+
+	Descr->H_Descr->F = P->F;
+
+	if (f_v) {
+		cout << "packing_was::init_H before H_LG->init, "
+				"creating the group" << endl;
+	}
+
+	H_LG->init(Descr->H_Descr, verbose_level - 1);
+
+	if (f_v) {
+		cout << "packing_was::init_H after H_LG->init" << endl;
+	}
+
+
+	A = H_LG->A2;
+
+	if (f_v) {
+		cout << "packing_was::init_H created group " << H_LG->prefix << endl;
+	}
+
+	if (!A->is_matrix_group()) {
+		cout << "packing_was::init_H the group is not a matrix group " << endl;
+		exit(1);
+	}
+
+
+	f_semilinear = A->is_semilinear_matrix_group();
+	if (f_v) {
+		cout << "packing_was::init_H f_semilinear=" << f_semilinear << endl;
+	}
+
+
+	M = A->get_matrix_group();
+	dim = M->n;
+
+	if (f_v) {
+		cout << "packing_was::init_H dim=" << dim << endl;
+	}
+
+	H_gens = H_LG->Strong_gens;
+	if (f_v) {
+		cout << "packing_was::init_H H_gens=" << endl;
+		H_gens->print_generators_tex(cout);
+	}
+	H_goi = H_gens->group_order_as_lint();
+	if (f_v) {
+		cout << "packing_was::init_H H_goi=" << H_goi << endl;
+	}
+
+	if (f_v) {
+		cout << "packing_was::init_H done" << endl;
 	}
 }
 
@@ -1127,6 +1124,7 @@ void packing_was::compute_cliques_on_fixpoint_graph(
 	}
 }
 
+#if 0
 void packing_was::handle_long_orbits(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1148,51 +1146,12 @@ void packing_was::handle_long_orbits(int verbose_level)
 	}
 
 
-	L = NEW_OBJECT(packing_long_orbits);
-
-	if (f_v) {
-		cout << "packing_was::handle_long_orbits "
-				"before L->init" << endl;
-	}
-
-	L->init(this,
-			fixpoints_idx,
-			Descr->process_long_orbits_r /* fixpoints_clique_case_number */,
-			Descr->clique_size /* fixpoint_clique_size */,
-			Cliques + Descr->process_long_orbits_r * Descr->clique_size /* clique */,
-			verbose_level);
-
-	if (f_v) {
-		cout << "packing_was::handle_long_orbits "
-				"after L->init" << endl;
-	}
-
-	if (f_v) {
-		cout << "packing_was::handle_long_orbits "
-				"before L->filter_orbits" << endl;
-	}
-
-	L->filter_orbits(verbose_level);
-	if (f_v) {
-		cout << "packing_was::handle_long_orbits "
-				"after L->filter_orbits" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "packing_was::handle_long_orbits "
-				"before L->create_graph_on_remaining_long_orbits" << endl;
-	}
-	L->create_graph_on_remaining_long_orbits(verbose_level);
-	if (f_v) {
-		cout << "packing_was::handle_long_orbits "
-				"after L->create_graph_on_remaining_long_orbits" << endl;
-	}
 
 	if (f_v) {
 		cout << "packing_was::handle_long_orbits done" << endl;
 	}
 }
+#endif
 
 void packing_was::compute_orbit_invariant_on_classified_orbits(int verbose_level)
 {
@@ -1321,7 +1280,7 @@ void packing_was::report_orbit_invariant(ostream &ost)
 
 }
 
-void packing_was::report(ostream &ost)
+void packing_was::report2(ostream &ost, int verbose_level)
 {
 	ost << "\\section{Fixed Objects of $H$}" << endl;
 	ost << endl;
@@ -1388,6 +1347,68 @@ void packing_was::report(ostream &ost)
 	}
 }
 
+void packing_was::report(int verbose_level)
+{
+	file_io Fio;
+
+	{
+	char fname[1000];
+	char title[1000];
+	char author[1000];
+	//int f_with_stabilizers = TRUE;
+
+	sprintf(title, "Packings in PG(3,%d) ", P->q);
+	sprintf(author, "Orbiter");
+	sprintf(fname, "Packings_q%d.tex", P->q);
+
+		{
+		ofstream fp(fname);
+		latex_interface L;
+
+		//latex_head_easy(fp);
+		L.head(fp,
+			FALSE /* f_book */,
+			TRUE /* f_title */,
+			title, author,
+			FALSE /*f_toc */,
+			FALSE /* f_landscape */,
+			FALSE /* f_12pt */,
+			TRUE /*f_enlarged_page */,
+			TRUE /* f_pagenumbers*/,
+			NULL /* extra_praeamble */);
+
+		fp << "\\section{The field of order " << P->q << "}" << endl;
+		fp << "\\noindent The field ${\\mathbb F}_{"
+				<< P->q
+				<< "}$ :\\\\" << endl;
+		P->F->cheat_sheet(fp, verbose_level);
+
+#if 0
+		fp << "\\section{The space PG$(3, " << q << ")$}" << endl;
+
+		fp << "The points in the plane PG$(2, " << q << ")$:\\\\" << endl;
+
+		fp << "\\bigskip" << endl;
+
+
+		Gen->P->cheat_sheet_points(fp, 0 /*verbose_level*/);
+
+		fp << endl;
+		fp << "\\section{Poset Classification}" << endl;
+		fp << endl;
+#endif
+		fp << "\\section{The Group $H$}" << endl;
+		H_gens->print_generators_tex(fp);
+
+		report2(fp, verbose_level);
+
+		L.foot(fp);
+		}
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+	}
+
+}
 
 
 // #############################################################################

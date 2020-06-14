@@ -1131,13 +1131,22 @@ public:
 	packing_invariants *Inv;
 	longinteger_object *Ago, *Ago_induced;
 	int *Ago_int;
-	int *Type_of_packing;
+	//int *Type_of_packing;
 		// [Iso->Reps->count * P->nb_spreads_up_to_isomorphism]
-	int *Type_idx_of_packing;
-		// [Iso->Reps->count]
+	int *Spread_type_of_packing;
+		// [Iso->Reps->count * P->nb_iso_types_of_spreads]
+
+
+	classify_vector_data *Classify;
+
+#if 0
 	int **List_of_types;
 	int *Frequency;
 	int nb_types;
+	int *packing_type_idx; // [Iso->Reps->count]
+#endif
+
+
 	int *Dual_idx;
 		// [Iso->Reps->count]
 	int *f_self_dual;
@@ -1463,6 +1472,13 @@ public:
 		// which is q^2 + q + 1
 
 	projective_space *P3;
+	projective_space *P5;
+	long int *the_packing; // [size_of_packing]
+	long int *spread_iso_type; // [size_of_packing]
+	long int *dual_packing; // [size_of_packing]
+	long int *list_of_lines; // [size_of_packing * spread_size]
+	long int *list_of_lines_klein_image; // [size_of_packing * spread_size]
+	grassmann *Gr;
 
 
 	const char *spread_tables_prefix;
@@ -1493,10 +1509,6 @@ public:
 	int nb_needed;
 
 
-	int f_split_klein;
-	int split_klein_r;
-	int split_klein_m;
-
 	packing_classify();
 	~packing_classify();
 	void null();
@@ -1511,14 +1523,13 @@ public:
 	void init2(poset_classification_control *Control, int verbose_level);
 	void compute_spread_table(int verbose_level);
 	void compute_spread_table_from_scratch(int verbose_level);
-	void init_P3(int verbose_level);
+	void init_P3_and_P5(int verbose_level);
 	int test_if_packing_is_self_dual(int *packing, int verbose_level);
 	void compute_adjacency_matrix(int verbose_level);
 	void prepare_generator(
 			poset_classification_control *Control,
 			int verbose_level);
 	void compute(int search_depth, int verbose_level);
-	//int spreads_are_disjoint(int i, int j);
 	void lifting_prepare_function_new(
 		exact_cover *E, int starter_case,
 		long int *candidates, int nb_candidates,
@@ -1569,22 +1580,14 @@ public:
 	// is line-disjoint from every spread from orbit b
 
 	// packing2.cpp
-	void compute_list_of_lines_from_packing(
-			long int *list_of_lines, long int *packing,
+	void compute_klein_invariants(
+			isomorph *Iso, int f_split, int split_r, int split_m,
 			int verbose_level);
-	void compute_klein_invariants(isomorph *Iso, int verbose_level);
 	void compute_dual_spreads(isomorph *Iso, int verbose_level);
 	void klein_invariants_fname(char *fname, char *prefix, int iso_cnt);
-	void save_klein_invariants(char *prefix,
+	void compute_and_save_klein_invariants(char *prefix,
 		int iso_cnt,
 		long int *data, int data_size, int verbose_level);
-	void compute_plane_intersections(
-		long int *data, int data_size,
-		longinteger_object *&R,
-		long int **&Pts_on_plane,
-		int *&nb_pts_on_plane,
-		int &nb_planes,
-		int verbose_level);
 	void report(isomorph *Iso, int verbose_level);
 	void report_whole(isomorph *Iso, std::ostream &ost, int verbose_level);
 	void report_title_page(isomorph *Iso, std::ostream &ost, int verbose_level);
@@ -1688,7 +1691,7 @@ public:
 // packing_long_orbits.cpp
 // #############################################################################
 
-//! complete a packing by clique search among the set of long orbits
+//! complete a partial packing using long orbits, utilizing clique search
 
 class packing_long_orbits {
 public:
@@ -1713,6 +1716,7 @@ public:
 			int fixpoints_clique_case_number,
 			int fixpoint_clique_size,
 			long int *fixpoint_clique,
+			int long_orbit_length,
 			int verbose_level);
 	void filter_orbits(int verbose_level);
 	void create_graph_on_remaining_long_orbits(int verbose_level);
@@ -1870,9 +1874,14 @@ public:
 	void freeself();
 	void init(packing_was_description *Descr,
 			packing_classify *P, int verbose_level);
+	void process_long_orbits(
+			int split_r, int split_m,
+			int long_orbit_length,
+			int long_orbits_clique_size,
+			int verbose_level);
+	void init_spreads(int verbose_level);
 	void init_N(int verbose_level);
 	void init_H(int verbose_level);
-	void init_spreads(int verbose_level);
 	void compute_H_orbits_on_lines(int verbose_level);
 	// computes the orbits of H on lines (NOT on spreads!)
 	// and writes to file prefix_line_orbits
@@ -1900,12 +1909,13 @@ public:
 	void action_on_fixpoints(int verbose_level);
 	void compute_cliques_on_fixpoint_graph(
 			int clique_size, int verbose_level);
-	void handle_long_orbits(int verbose_level);
+	//void handle_long_orbits(int verbose_level);
 	void compute_orbit_invariant_on_classified_orbits(int verbose_level);
 	int evaluate_orbit_invariant_function(int a, int i, int j, int verbose_level);
 	void classify_orbit_invariant(int verbose_level);
 	void report_orbit_invariant(std::ostream &ost);
-	void report(std::ostream &ost);
+	void report2(std::ostream &ost, int verbose_level);
+	void report(int verbose_level);
 };
 
 // gloabls:
