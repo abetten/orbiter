@@ -1009,7 +1009,7 @@ int sims::find_element_with_exactly_n_fixpoints_in_given_action(
 {
 	int f_v = (verbose_level >= 1);
 	longinteger_object go;
-	long int i, order;
+	long int i, order = 0;
 	long int goi;
 	int *cycle_type;
 

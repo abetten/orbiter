@@ -205,12 +205,12 @@ int classify_vector_data::hash_and_find(int *data,
 
 void classify_vector_data::print()
 {
-	uint32_t h;
+	//uint32_t h;
 	int i;
 
 	for (i = 0; i < nb_types; i++) {
 
-		h = int_vec_hash(Reps + i * data_set_sz, data_set_sz);
+		//h = int_vec_hash(Reps + i * data_set_sz, data_set_sz);
 
 		cout << Frequency[i] << " x ";
 		int_vec_print(cout, Reps + i * data_set_sz, data_set_sz);

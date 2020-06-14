@@ -1702,6 +1702,7 @@ public:
 	int fixpoint_clique_size;
 	long int *fixpoint_clique;
 	int long_orbit_idx;
+	long int *set;
 
 	set_of_sets *Filtered_orbits;
 	char fname_graph[1000];
@@ -1833,6 +1834,8 @@ public:
 	char prefix_spread_orbits[1000];
 	orbits_on_something *Spread_orbits_under_H;
 	action *A_on_spread_orbits;
+		// restricted action on Spread_orbits_under_H:
+		// = induced_action_on_orbits(P->A_on_spreads, Spread_orbits_under_H)
 
 	char fname_good_orbits[1000];
 	int nb_good_orbits;
@@ -1844,20 +1847,27 @@ public:
 	orbit_type_repository *Spread_type_reduced;
 
 	action *A_on_reduced_spreads;
+		// induced action on Spread_tables_reduced
+
 	char prefix_reduced_spread_orbits[1000];
 	orbits_on_something *reduced_spread_orbits_under_H;
+		// = reduced_spread_orbits_under_H->init(A_on_reduced_spreads, H_gens)
 	action *A_on_reduced_spread_orbits;
+		// induced_action_on_orbits(A_on_reduced_spreads, reduced_spread_orbits_under_H)
 
 	char fname_fixp_graph[1000];
 	char fname_fixp_graph_cliques[1000];
 	int fixpoints_idx;
+		// index of orbits of length 1 in reduced_spread_orbits_under_H
 	action *A_on_fixpoints;
+		// A_on_reduced_spread_orbits->create_induced_action_by_restriction(
+		//reduced_spread_orbits_under_H->Orbits_classified->Set_size[fixpoints_idx],
+		//reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx])
 
 	colored_graph *fixpoint_graph;
-	//poset_classification_control *Control;
 	poset *Poset_fixpoint_cliques;
 	poset_classification *fixpoint_clique_gen;
-	long int *Cliques;
+	long int *Cliques; // [nb_cliques * clique_size]
 	int nb_cliques;
 	char fname_fixp_graph_cliques_orbiter[1000];
 	orbit_transversal *Fixp_cliques;
@@ -1874,14 +1884,19 @@ public:
 	void freeself();
 	void init(packing_was_description *Descr,
 			packing_classify *P, int verbose_level);
-	void process_long_orbits(
+	void init_spreads(int verbose_level);
+	void init_N(int verbose_level);
+	void init_H(int verbose_level);
+	void process_all_long_orbits(
 			int split_r, int split_m,
 			int long_orbit_length,
 			int long_orbits_clique_size,
 			int verbose_level);
-	void init_spreads(int verbose_level);
-	void init_N(int verbose_level);
-	void init_H(int verbose_level);
+	void process_long_orbits(
+			int clique_index,
+			int long_orbit_length,
+			int long_orbits_clique_size,
+			int verbose_level);
 	void compute_H_orbits_on_lines(int verbose_level);
 	// computes the orbits of H on lines (NOT on spreads!)
 	// and writes to file prefix_line_orbits
@@ -1894,11 +1909,12 @@ public:
 	void compute_reduced_spread_types_wrt_H(int verbose_level);
 	// Spread_types[P->nb_spreads * (group_order + 1)]
 	void compute_H_orbits_on_reduced_spreads(int verbose_level);
-	int test_if_pair_of_orbits_are_adjacent(
+	int test_if_pair_of_sets_of_reduced_spreads_are_adjacent(
 		long int *orbit1, int len1, long int *orbit2, int len2,
 		int verbose_level);
-		// tests if every spread from orbit1
-		// is line-disjoint from every spread from orbit2
+		// tests if every spread from set1
+		// is line-disjoint from every spread from set2
+		// using Spread_tables_reduced
 	void create_graph_and_save_to_file(
 		const char *fname,
 		int orbit_length,
@@ -1909,7 +1925,8 @@ public:
 	void action_on_fixpoints(int verbose_level);
 	void compute_cliques_on_fixpoint_graph(
 			int clique_size, int verbose_level);
-	//void handle_long_orbits(int verbose_level);
+	void compute_cliques_on_fixpoint_graph_from_scratch(
+			int clique_size, int verbose_level);
 	void compute_orbit_invariant_on_classified_orbits(int verbose_level);
 	int evaluate_orbit_invariant_function(int a, int i, int j, int verbose_level);
 	void classify_orbit_invariant(int verbose_level);
@@ -1920,7 +1937,7 @@ public:
 
 // gloabls:
 
-int packing_was_orbit_test_function(long int *orbit1, int len1,
+int packing_was_set_of_reduced_spreads_adjacency_test_function(long int *orbit1, int len1,
 		long int *orbit2, int len2, void *data);
 void packing_was_early_test_function_fp_cliques(long int *S, int len,
 	long int *candidates, int nb_candidates,

@@ -2076,21 +2076,21 @@ void poset_classification::get_orbit_representatives(
 	if (f_v) {
 		cout << "poset_classification::get_orbit_"
 				"representatives" << endl;
-		}
+	}
 	nb_orbits = nb_orbits_at_level(level);
 	if (f_v) {
 		cout << "orbits_on_k_sets: we found " << nb_orbits
 				<< " orbits on " << level << "-sets" << endl;
-		}
+	}
 	Orbit_reps = NEW_lint(nb_orbits * level);
 	for (i = 0; i < nb_orbits; i++) {
 		get_set_by_level(level, i, Orbit_reps + i * level);
-		}
+	}
 	
 	if (f_v) {
 		cout << "poset_classification::get_orbit_"
 				"representatives done" << endl;
-		}
+	}
 }
 
 void poset_classification::unrank_point(int *v, long int rk)

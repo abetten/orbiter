@@ -818,7 +818,7 @@ long int number_theory_domain::primitive_root_randomized(long int p, int verbose
 		if (f_v) {
 			cout << "number_theory_domain::primitive_root_randomized iteration " << cnt << " : trying " << a << endl;
 		}
-		for (i = 0; i < primes.size(); i++) {
+		for (i = 0; i < (long int) primes.size(); i++) {
 			n = pm1 / primes[i];
 			if (f_v) {
 				cout << "number_theory_domain::primitive_root_randomized iteration " << cnt << " : trying " << a
