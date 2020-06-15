@@ -443,9 +443,9 @@ void isomorph::write_classification_graph(int verbose_level)
 
 
 	char fname_base1[1000];
-	char fname[1000];
-	sprintf(fname_base1, "%sclassification_graph", prefix);
-	sprintf(fname, "%s.layered_graph", fname_base1);
+	char fname[2000];
+	snprintf(fname_base1, 1000, "%sclassification_graph", prefix);
+	snprintf(fname, 2000, "%s.layered_graph", fname_base1);
 	LG->write_file(fname, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "isomorph::write_classification_graph "
