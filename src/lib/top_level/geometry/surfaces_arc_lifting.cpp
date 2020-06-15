@@ -398,10 +398,10 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 #endif
 
 
-				int f, l, partition_rk, p0, p1;
+				int f, /*l,*/ partition_rk, p0, p1;
 
 				f = Sch->orbit_first[orbit_on_partition_idx];
-				l = Sch->orbit_len[orbit_on_partition_idx];
+				//l = Sch->orbit_len[orbit_on_partition_idx];
 
 				partition_rk = Sch->orbit[f + 0];
 				if (f_v) {
@@ -639,9 +639,9 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 			nb_partition_orbits = T->Table_orbits_on_partition[orbit_on_pairs_idx].nb_orbits_on_partition;
 
 
-			schreier *Sch;
+			//schreier *Sch;
 
-			Sch = T->Table_orbits_on_partition[orbit_on_pairs_idx].Orbits_on_partition;
+			//Sch = T->Table_orbits_on_partition[orbit_on_pairs_idx].Orbits_on_partition;
 
 
 
@@ -1827,15 +1827,15 @@ void surfaces_arc_lifting::upstep_group_elements(
 
 	// compute beta 3:
 
-	int orbit_not_on_conic_idx;
-	int pair_orbit_idx;
-	int partition_orbit_idx;
+	//int orbit_not_on_conic_idx;
+	//int pair_orbit_idx;
+	//int partition_orbit_idx;
 	long int line1_to, line2_to;
 
 
-	orbit_not_on_conic_idx = flag_orbit_on_arcs_not_on_a_conic_idx[f2];
-	pair_orbit_idx = flag_orbit_on_pairs_idx[f2];
-	partition_orbit_idx = flag_orbit_on_partition_idx[f2];
+	//orbit_not_on_conic_idx = flag_orbit_on_arcs_not_on_a_conic_idx[f2];
+	//pair_orbit_idx = flag_orbit_on_pairs_idx[f2];
+	//partition_orbit_idx = flag_orbit_on_partition_idx[f2];
 
 #if 0
 	line1_to = Table_orbits_on_pairs[orbit_not_on_conic_idx].
@@ -1893,10 +1893,10 @@ void surfaces_arc_lifting::upstep_group_elements(
 
 	// test if L1 and line1_to are skew then switch L1 and L2:
 
-	long int tritangent_plane_rk;
+	//long int tritangent_plane_rk;
 	long int p1, p2;
 
-	tritangent_plane_rk = SO->Tritangent_plane_rk[tritangent_plane_idx];
+	//tritangent_plane_rk = SO->Tritangent_plane_rk[tritangent_plane_idx];
 
 	p1 = Surf_A->Surf->P->point_of_intersection_of_a_line_and_a_plane_in_three_space(
 			L1 /* line */,
@@ -2005,12 +2005,14 @@ void surfaces_arc_lifting::report(int verbose_level)
 		cout << "surfaces_arc_lifting::report" << endl;
 		}
 	char fname_arc_lifting[1000];
-	char title[10000];
-	char author[10000];
-	sprintf(title, "Arc lifting over GF(%d) ", q);
-	sprintf(author, "");
+	char title[1000];
+	char author[1000];
 
-	sprintf(fname_arc_lifting, "arc_lifting_q%d.tex", q);
+
+	snprintf(fname_arc_lifting, 1000, "arc_lifting_q%d.tex", q);
+	snprintf(title, 1000, "Arc lifting over GF(%d) ", q);
+	strcpy(author, "");
+
 
 	{
 	ofstream fp(fname_arc_lifting);
