@@ -129,6 +129,32 @@ void set_of_sets::init(int underlying_set_size,
 		}
 }
 
+void set_of_sets::init_with_Sz_in_int(int underlying_set_size,
+		int nb_sets, long int **Pts, int *Sz, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "set_of_sets::init nb_sets=" << nb_sets
+				<< " underlying_set_size=" << underlying_set_size << endl;
+		}
+
+	long int *Sz1;
+
+	Sz1 = NEW_lint(nb_sets);
+	for (i = 0; i < nb_sets; i++) {
+		Sz1[i] = Sz[i];
+	}
+
+	init_basic(underlying_set_size, nb_sets, Sz1, verbose_level);
+
+	for (i = 0; i < nb_sets; i++) {
+		lint_vec_copy(Pts[i], Sets[i], Sz[i]);
+		}
+	FREE_lint(Sz1);
+}
+
 void set_of_sets::init_basic(int underlying_set_size,
 		int nb_sets, long int *Sz, int verbose_level)
 {
@@ -154,6 +180,24 @@ void set_of_sets::init_basic(int underlying_set_size,
 			}
 		Sets[i] = NEW_lint(Sz[i]);
 		}
+}
+
+void set_of_sets::init_basic_with_Sz_in_int(int underlying_set_size,
+		int nb_sets, int *Sz, int verbose_level)
+{
+	//int f_v = (verbose_level >= 1);
+
+	long int *Sz1;
+	int i;
+
+	Sz1 = NEW_lint(nb_sets);
+	for (i = 0; i < nb_sets; i++) {
+		Sz1[i] = Sz[i];
+	}
+
+	init_basic(underlying_set_size, nb_sets, Sz1, verbose_level);
+
+	FREE_lint(Sz1);
 }
 
 void set_of_sets::init_basic_constant_size(

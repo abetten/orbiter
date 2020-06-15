@@ -2459,7 +2459,7 @@ void schreier::orbits_as_set_of_sets(
 		Sz[i] = l;
 	}
 	
-	S->init_basic(degree /* underlying_set_size */,
+	S->init_basic_with_Sz_in_int(degree /* underlying_set_size */,
 			nb_orbits, Sz, 0 /* verbose_level */);
 	for (i = 0; i < nb_orbits; i++) {
 		f = orbit_first[i];

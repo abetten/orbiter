@@ -545,8 +545,12 @@ public:
 		int verbose_level);
 	void init(int underlying_set_size, int nb_sets, 
 		long int **Pts, long int *Sz, int verbose_level);
+	void init_with_Sz_in_int(int underlying_set_size,
+			int nb_sets, long int **Pts, int *Sz, int verbose_level);
 	void init_basic(int underlying_set_size, 
 		int nb_sets, long int *Sz, int verbose_level);
+	void init_basic_with_Sz_in_int(int underlying_set_size,
+			int nb_sets, int *Sz, int verbose_level);
 	void init_basic_constant_size(int underlying_set_size, 
 		int nb_sets, int constant_size, int verbose_level);
 	void init_from_file(int underlying_set_size, 

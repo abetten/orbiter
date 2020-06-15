@@ -635,7 +635,7 @@ void surface_object::enumerate_points(int verbose_level)
 		}
 
 	Type_pts_on_lines = NEW_OBJECT(classify);
-	Type_pts_on_lines->init(pts_on_lines->Set_size, 
+	Type_pts_on_lines->init_lint(pts_on_lines->Set_size,
 		pts_on_lines->nb_sets, FALSE, 0);
 	if (f_v) {
 		cout << "type of pts_on_lines:" << endl;
@@ -650,7 +650,7 @@ void surface_object::enumerate_points(int verbose_level)
 		}
 
 	Type_lines_on_point = NEW_OBJECT(classify);
-	Type_lines_on_point->init(lines_on_point->Set_size, 
+	Type_lines_on_point->init_lint(lines_on_point->Set_size,
 		lines_on_point->nb_sets, FALSE, 0);
 	if (f_v) {
 		cout << "type of lines_on_point:" << endl;

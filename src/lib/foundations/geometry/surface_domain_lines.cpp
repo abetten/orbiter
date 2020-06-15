@@ -1320,7 +1320,7 @@ void surface_domain::compute_points_on_lines(
 		P->unrank_point(Surf_pt_coords + i * 4, Pts_on_surface[i]);
 		}
 
-	int_vec_zero(pts_on_lines->Set_size, nb_lines);
+	lint_vec_zero(pts_on_lines->Set_size, nb_lines);
 	for (i = 0; i < nb_lines; i++) {
 		l = Lines[i];
 		P->unrank_line(Basis, l);

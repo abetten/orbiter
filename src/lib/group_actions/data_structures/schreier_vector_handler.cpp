@@ -484,7 +484,7 @@ set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets(
 
 	C.init(ancestor, n, FALSE, 0);
 
-	SoS->init_basic(A2->degree /* underlying_set_size*/,
+	SoS->init_basic_with_Sz_in_int(A2->degree /* underlying_set_size*/,
 			C.nb_types, C.type_len, verbose_level);
 
 	FREE_int(depth);

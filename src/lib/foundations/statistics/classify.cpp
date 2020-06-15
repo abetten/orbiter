@@ -639,7 +639,7 @@ set_of_sets *classify::get_set_partition_and_types(
 		}
 
 	SoS = NEW_OBJECT(set_of_sets);
-	SoS->init_basic(data_length /* underlying_set_size */,
+	SoS->init_basic_with_Sz_in_int(data_length /* underlying_set_size */,
 			classify::nb_types, type_len, 0 /* verbose_level */);
 	nb_types = classify::nb_types;
 	types = NEW_int(nb_types);

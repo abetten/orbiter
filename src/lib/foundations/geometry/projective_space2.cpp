@@ -664,7 +664,7 @@ void projective_space::plane_intersections(
 		cout << "projective_space::plane_intersections "
 				"before Sos.init" << endl;
 		}
-	SoS.init(set_size, nb_planes,
+	SoS.init_with_Sz_in_int(set_size, nb_planes,
 			Pts_on_plane, nb_pts_on_plane, verbose_level - 1);
 	if (f_v) {
 		cout << "projective_space::plane_intersections "
