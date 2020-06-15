@@ -390,7 +390,7 @@ void poset_classification::report(ostream &ost)
 
 
 
-	snprintf(cmd, 1000, "%s/layered_graph_main.out -v 2 "
+	snprintf(cmd, 10000, "%s/layered_graph_main.out -v 2 "
 		"-file poset.layered_graph "
 		"-xin 1000000 -yin 1000000 "
 		"-xout 1000000 -yout 1000000 "
@@ -405,7 +405,7 @@ void poset_classification::report(ostream &ost)
 	cout << "executing: " << cmd << endl;
 	system(cmd);
 
-	snprintf(cmd, 1000, "mpost -tex=latex poset_draw_tree.mp");
+	snprintf(cmd, 10000, "mpost -tex=latex poset_draw_tree.mp");
 	cout << "executing: " << cmd << endl;
 	system(cmd);
 
