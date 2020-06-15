@@ -122,7 +122,7 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 			Input->nb_sets,
 			Input->Set_size, 0 /* verbose_level */);
 
-	int_vec_zero(Filtered_orbits->Set_size, Input->nb_sets);
+	lint_vec_zero(Filtered_orbits->Set_size, Input->nb_sets);
 
 	for (t = 0; t < Input->nb_sets; t++) {
 		if (t == fixpoints_idx) {

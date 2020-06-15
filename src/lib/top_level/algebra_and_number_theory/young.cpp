@@ -571,7 +571,7 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 	Row_partition = NEW_OBJECT(set_of_sets);
 	Col_partition = NEW_OBJECT(set_of_sets);
 
-	Row_partition->init_basic(n, l1, row_parts, 0 /* verbose_level*/);
+	Row_partition->init_basic_with_Sz_in_int(n, l1, row_parts, 0 /* verbose_level*/);
 	for (i = 0; i < l1; i++) {
 		a = row_parts[i];
 		for (j = 0; j < a; j++) {
@@ -580,7 +580,7 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 			}
 		cout << endl;
 		}
-	Col_partition->init_basic(n, l2, col_parts, 0 /* verbose_level*/);
+	Col_partition->init_basic_with_Sz_in_int(n, l2, col_parts, 0 /* verbose_level*/);
 	for (i = 0; i < l2; i++) {
 		a = col_parts[i];
 		for (j = 0; j < a; j++) {

@@ -262,7 +262,7 @@ void spread_tables::classify_self_dual_spreads(int *&type,
 		type[a]++;
 	}
 	SoS = NEW_OBJECT(set_of_sets);
-	SoS->init_basic(
+	SoS->init_basic_with_Sz_in_int(
 			nb_self_dual_spreads /* underlying_set_size */,
 			nb_iso_types_of_spreads /* nb_sets */,
 			type, 0 /* verbose_level */);
