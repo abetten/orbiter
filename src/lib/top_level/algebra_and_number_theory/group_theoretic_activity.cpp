@@ -568,13 +568,13 @@ void group_theoretic_activity::print_elements(int verbose_level)
 
 	int *Elt;
 	longinteger_object go;
-	int i, cnt;
+	int i; //, cnt;
 
 	Elt = NEW_int(A1->elt_size_in_int);
 	H->group_order(go);
 
 
-	cnt = 0;
+	//cnt = 0;
 	for (i = 0; i < go.as_lint(); i++) {
 		H->element_unrank_lint(i, Elt);
 
@@ -1023,8 +1023,8 @@ void group_theoretic_activity::orbits_on_set_from_file(int verbose_level)
 	strcpy(str, Descr->orbit_of_set_from_file_fname);
 	chop_off_extension(str);
 
-	char fname[1000];
-	sprintf(fname, "orbit_of_%s_under_%s_with_hash.csv", str, LG->label.c_str());
+	char fname[2000];
+	snprintf(fname, 2000, "orbit_of_%s_under_%s_with_hash.csv", str, LG->label.c_str());
 	cout << "Writing table to file " << fname << endl;
 	Fio.lint_matrix_write_csv(fname,
 			Table, orbit_length, set_size);
@@ -2492,7 +2492,7 @@ void group_theoretic_activity::do_create_surface(
 
 	int q;
 	int i;
-	int f_semilinear;
+	//int f_semilinear;
 	finite_field *F;
 	surface_domain *Surf;
 	surface_with_action *Surf_A;
@@ -2503,12 +2503,14 @@ void group_theoretic_activity::do_create_surface(
 	q = Surface_Descr->get_q();
 	cout << "q=" << q << endl;
 
+#if 0
 	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
 		}
 	else {
 		f_semilinear = TRUE;
 		}
+#endif
 
 
 	F = NEW_OBJECT(finite_field);
@@ -2917,6 +2919,7 @@ void group_theoretic_activity::do_tensor_permutations(int verbose_level)
 		cout << "group_theoretic_activity::do_tensor_permutations" << endl;
 	}
 
+#if 0
 	poset_classification_control *Control;
 
 	if (Descr->f_poset_classification_control) {
@@ -2925,6 +2928,7 @@ void group_theoretic_activity::do_tensor_permutations(int verbose_level)
 	else {
 		Control = NEW_OBJECT(poset_classification_control);
 	}
+#endif
 
 
 
