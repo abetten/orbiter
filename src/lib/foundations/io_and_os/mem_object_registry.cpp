@@ -865,7 +865,8 @@ void mem_object_registry::add_to_registry(void *pointer,
 	if (search(pointer, idx)) {
 		if (f_ignore_duplicates) {
 
-		} else {
+		}
+		else {
 			cout << "mem_object_registry::add_to_registry pointer p is "
 					"already in the registry, something is wrong" << endl;
 			cout << "extra_type_info = " << extra_type_info << endl;
@@ -913,7 +914,8 @@ void mem_object_registry::delete_from_registry(void *pointer, int verbose_level)
 
 	if (f_accumulate) {
 		// do not delete entries so we can see all allocations
-	} else {
+	}
+	else {
 		if (!search(pointer, idx)) {
 			cout << "mem_object_registry::delete_from_registry pointer is "
 					"not in registry, something is wrong; "

@@ -120,7 +120,8 @@ void poset_classification::report_schreier_trees(
 			int f_group_is_trivial;
 			if (O->nb_strong_generators == 0) {
 				f_group_is_trivial = TRUE;
-			} else {
+			}
+			else {
 				f_group_is_trivial = FALSE;
 			}
 
@@ -144,7 +145,8 @@ void poset_classification::report_schreier_trees(
 				if (f_group_is_trivial) {
 					data1[cnt * degree + a] = -1;
 					data2[cnt * degree + a] = -1;
-				} else {
+				}
+				else {
 					data1[cnt * degree + a] = parent[h];
 					data2[cnt * degree + a] = label[h];
 				}

@@ -77,6 +77,19 @@ public:
 			int f_surface_codes,
 			int f_surface_quartic,
 			int verbose_level);
+	void investigate_surface_and_write_report2(
+			std::ostream &ost,
+			action *A,
+			surface_create *SC,
+			six_arcs_not_on_a_conic *Six_arcs,
+			surface_object_with_action *SoA,
+			int f_surface_clebsch,
+			int f_surface_codes,
+			int f_surface_quartic,
+			char fname_mask[2000],
+			char label[2000],
+			char label_tex[2000],
+			int verbose_level);
 	void report_tactical_decomposition_by_automorphism_group(
 			std::ostream &ost, projective_space *P,
 			action *A_on_points, action *A_on_lines,

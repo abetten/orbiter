@@ -343,7 +343,8 @@ int finite_field::PG_element_rank_fining(int *v, int len)
 			return 2 + v[1];
 		}
 
-	} else {
+	}
+	else {
 		if (v[0] == 0 && v[1] == 0) {
 			return q + 2;
 		}

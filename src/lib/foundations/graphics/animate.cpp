@@ -362,7 +362,8 @@ void animate::animate_one_round(
 					exit(1);
 				}
 
-			} else {
+			}
+			else {
 				angle = Opt->default_angle;
 			}
 		}
@@ -382,7 +383,8 @@ void animate::animate_one_round(
 			if (pan_f_reverse) {
 				beta = pan_alpha - pan_delta *
 						(double) (nb_frames_this_round - 1 - h);
-			} else {
+			}
+			else {
 				beta = pan_alpha - pan_delta * (double) h;
 			}
 			cout << "h=" << h << " / " << nb_frames_this_round
@@ -437,7 +439,8 @@ void animate::animate_one_round(
 					//look_at_string,
 					f_with_background);
 
-		} else {
+		}
+		else {
 			if (f_has_camera) {
 				Pov->beginning(fp,
 						angle,
@@ -445,7 +448,8 @@ void animate::animate_one_round(
 						camera_location,
 						camera_look_at,
 						f_with_background);
-			} else {
+			}
+			else {
 				Pov->beginning(fp,
 						angle,
 						Opt->sky,

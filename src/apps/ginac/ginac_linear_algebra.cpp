@@ -28,7 +28,8 @@ class my_symbolset {
 	{
 		if (is_a<symbol>(e)) {
 			s.insert(e);
-		} else {
+		}
+		else {
 			for (const ex &sube : e) {
 				insert_symbols(sube);
 			}
@@ -205,7 +206,8 @@ matrix solve(matrix *M, const matrix & vars,
 				if (!aug.m[r*(n+p)+n+co].normal().is_zero()) {
 					throw (std::runtime_error("matrix::solve(): inconsistent linear system"));
 				}
-			} else {
+			}
+			else {
 				// assign solutions for vars between fnz+1 and
 				// last_assigned_sol-1: free parameters
 				for (unsigned c=fnz; c<last_assigned_sol-1; ++c)
@@ -444,7 +446,8 @@ int pivot(matrix *M, unsigned ro, unsigned co, bool symbolic)
 		// search first non-zero element in column co beginning at row ro
 		while ((k<M->row) && (M->m[k*M->col+co].expand().is_zero()))
 			++k;
-	} else {
+	}
+	else {
 		// search largest element in column co beginning at row ro
 		GINAC_ASSERT(is_exactly_a<numeric>(this->m[k*col+co]));
 		unsigned kmax = k+1;

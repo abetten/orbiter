@@ -235,7 +235,8 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 				A->element_print_quick(S->local_gens->ith(la), cout);
 			}
 			A->element_move(S->local_gens->ith(la), Elt1, 0);
-		} else {
+		}
+		else {
 			if (f_v) {
 				cout << "schreier_vector_handler::coset_rep_inv_recursion "
 						"using global generator" << endl;

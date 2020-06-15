@@ -64,7 +64,8 @@ void graph_theory_domain::colored_graph_all_cliques(const char *fname,
 	if (f_output_fname) {
 		snprintf(fname_sol, 2000, "%s", output_fname);
 		snprintf(fname_success, 2000, "%s.success", output_fname);
-	} else {
+	}
+	else {
 		snprintf(fname_sol, 2000, "%s_sol.txt", CG.fname_base);
 		snprintf(fname_success, 2000, "%s_sol.success", CG.fname_base);
 	}
@@ -138,7 +139,8 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 			snprintf(fname_tmp, 2000, fname_template, c);
 			if (f_prefix) {
 				snprintf(fname, 2000, "%s%s", prefix, fname_tmp);
-			} else {
+			}
+			else {
 				strcpy(fname, fname_tmp);
 			}
 			CG->load(fname, verbose_level - 2);
@@ -347,7 +349,8 @@ void graph_theory_domain::save_colored_graph(const char *fname, int nb_vertices,
 		for (i = 0; i < nb_vertices; i++) {
 			if (points) {
 				fp.write((char*) &points[i], sizeof(long int));
-			} else {
+			}
+			else {
 				a = 0;
 				fp.write((char*) &a, sizeof(int));
 			}
@@ -556,23 +559,29 @@ void graph_theory_domain::write_colored_graph(ofstream &ost, char *label,
 			}
 			if (f_has_adjacency_matrix) {
 				aij = Adj[i * nb_points + j];
-			} else if (f_has_adjacency_list) {
+			}
+			else if (f_has_adjacency_list) {
 				if (i < j) {
 					h = Combi.ij2k_lint(i, j, nb_points);
-				} else {
+				}
+				else {
 					h = Combi.ij2k_lint(j, i, nb_points);
 				}
 				aij = adj_list[h];
-			} else if (f_has_bitvector) {
+			}
+			else if (f_has_bitvector) {
 				if (i < j) {
 					h = Combi.ij2k_lint(i, j, nb_points);
-				} else {
+				}
+				else {
 					h = Combi.ij2k_lint(j, i, nb_points);
 				}
 				aij = bitvector_s_i(bitvector_adjacency, h);
-			} else if (f_has_is_adjacent_callback) {
+			}
+			else if (f_has_is_adjacent_callback) {
 				aij = (*is_adjacent_callback)(i, j, is_adjacent_callback_data);
-			} else {
+			}
+			else {
 				cout << "write_colored_graph cannot "
 						"determine adjacency" << endl;
 			}
@@ -588,23 +597,29 @@ void graph_theory_domain::write_colored_graph(ofstream &ost, char *label,
 			}
 			if (f_has_adjacency_matrix) {
 				aij = Adj[i * nb_points + j];
-			} else if (f_has_adjacency_list) {
+			}
+			else if (f_has_adjacency_list) {
 				if (i < j) {
 					h = Combi.ij2k_lint(i, j, nb_points);
-				} else {
+				}
+				else {
 					h = Combi.ij2k_lint(j, i, nb_points);
 				}
 				aij = adj_list[h];
-			} else if (f_has_bitvector) {
+			}
+			else if (f_has_bitvector) {
 				if (i < j) {
 					h = Combi.ij2k_lint(i, j, nb_points);
-				} else {
+				}
+				else {
 					h = Combi.ij2k_lint(j, i, nb_points);
 				}
 				aij = bitvector_s_i(bitvector_adjacency, h);
-			} else if (f_has_is_adjacent_callback) {
+			}
+			else if (f_has_is_adjacent_callback) {
 				aij = (*is_adjacent_callback)(i, j, is_adjacent_callback_data);
-			} else {
+			}
+			else {
 				cout << "write_colored_graph cannot "
 						"determine adjacency" << endl;
 			}
@@ -731,7 +746,8 @@ int graph_theory_domain::is_association_scheme(int *color_graph, int n,
 							//<< " p_{" << i << "," << j << ","
 							//<< k << "}="
 							//<< Pijk[i * C * C + j * C + k] << endl;
-						} else {
+						}
+						else {
 							if (pijk1 != pijk) {
 								//FREE_int(Pijk);
 								//FREE_int(colors);
@@ -838,7 +854,8 @@ void graph_theory_domain::compute_decomposition_of_graph_wrt_partition(
 				}
 				if (i == 0) {
 					r0 = r;
-				} else {
+				}
+				else {
 					if (r0 != r) {
 						cout << "compute_decomposition_of_graph_"
 								"wrt_partition not tactical" << endl;
