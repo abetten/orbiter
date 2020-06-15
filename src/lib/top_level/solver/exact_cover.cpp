@@ -305,7 +305,7 @@ void exact_cover::compute_liftings_new(int f_solve,
 	{
 	ofstream fp(fname_solutions);
 	int f_do_it;
-	int nb_col, nb_sol, nb_sol_deleted, nb_backtrack, dt, sol_length;
+	int nb_col, nb_sol, nb_sol_deleted, nb_backtrack, dt, sol_length = 0;
 
 	total_solutions = 0;
 
