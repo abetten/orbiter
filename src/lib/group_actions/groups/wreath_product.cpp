@@ -2769,8 +2769,7 @@ void wreath_product::orbits_restricted(
 			}
 
 
-			int l = MINIMUM((b + 1) * block_size,
-					(unsigned long)degree_of_tensor_action) - b * block_size;
+			long int l = MINIMUM((b + 1) * block_size, degree_of_tensor_action) - b * block_size;
 			if (f_v) {
 				cout << "l=" << l << endl;
 			}
