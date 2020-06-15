@@ -797,7 +797,7 @@ void ovoid_classify::create_graph(orbiter_data_file *ODF,
 	starter_size = ODF->set_sizes[orbit_idx];
 
 	uchar *bitvector_adjacency = NULL;
-	long int bitvector_length_in_bits;
+	//long int bitvector_length_in_bits;
 	long int bitvector_length;
 	Pts = NEW_int(nb_points * d);
 	for (i = 0; i < nb_points; i++) {
@@ -806,7 +806,7 @@ void ovoid_classify::create_graph(orbiter_data_file *ODF,
 
 	L = ((long int) nb_points * ((long int) nb_points - 1)) >> 1;
 
-	bitvector_length_in_bits = L;
+	//bitvector_length_in_bits = L;
 	bitvector_length = (L + 7) >> 3;
 	bitvector_adjacency = NEW_uchar(bitvector_length);
 	for (i = 0; i < bitvector_length; i++) {
