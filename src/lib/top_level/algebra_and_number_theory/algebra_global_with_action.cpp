@@ -3477,6 +3477,7 @@ void algebra_global_with_action::packing_init(
 		poset_classification_control *Control, linear_group *LG,
 		int dimension_of_spread_elements,
 		int f_select_spread, const char *select_spread_text,
+		const char *path_to_spread_tables,
 		packing_classify *&P,
 		int verbose_level)
 {
@@ -3527,10 +3528,10 @@ void algebra_global_with_action::packing_init(
 	P->init(T,
 		f_select_spread,
 		select_spread_text,
-		"", "", //ECA->input_prefix, ECA->base_fname,
+		//"", "", //ECA->input_prefix, ECA->base_fname,
 		//0, //ECA->starter_size,
 		TRUE, // ECA->f_lex,
-		"", //spread_tables_prefix,
+		path_to_spread_tables,
 		verbose_level);
 	if (f_v) {
 		cout << "algebra_global_with_action::packing_init after P->init" << endl;

@@ -1460,9 +1460,9 @@ public:
 	int nb_lines;
 	//int search_depth;
 
-	char starter_directory_name[1000];
-	char prefix[1000];
-	char prefix_with_directory[1000];
+	//char starter_directory_name[1000];
+	//char prefix[1000];
+	//char prefix_with_directory[1000];
 
 
 	int f_lexorder_test;
@@ -1516,9 +1516,9 @@ public:
 	void init(spread_classify *T,
 		int f_packing_select_spread,
 		const char *packing_select_spread_text,
-		const char *input_prefix, const char *base_fname,
+		//const char *input_prefix, const char *base_fname,
 		int f_lexorder_test,
-		const char *spread_tables_prefix,
+		const char *path_to_spread_tables,
 		int verbose_level);
 	void init2(poset_classification_control *Control, int verbose_level);
 	void compute_spread_table(int verbose_level);

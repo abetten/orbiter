@@ -28,8 +28,12 @@ public:
 	int q1;
 	int q2;
 
-	char label[1000];
-	char label_tex[1000];
+	//char label[1000];
+	//char label_tex[1000];
+
+	std::string label;
+	std::string label_tex;
+
 
 	int degree_of_matrix_group1;
 	int dimension_of_matrix_group1;
@@ -156,7 +160,7 @@ public:
 	//char label_latex[1000];
 
 	std::string label;
-	std::string label_latex;
+	std::string label_tex;
 
 	strong_generators *initial_strong_gens;
 	action *A_linear;
@@ -325,9 +329,13 @@ public:
 		// = n, the size of the vectors on which we act
 	int make_element_size;
 
-	char label[1000];
-	char label_tex[1000];
+	//char label[1000];
+	//char label_tex[1000];
 	
+
+	std::string label;
+	std::string label_tex;
+
 	int f_GFq_is_allocated;
 		// if TRUE, GFq will be destroyed in the destructor
 		// if FALSE, it is the responsability 
@@ -1821,8 +1829,10 @@ public:
 	int q;
 	int nb_factors;
 
-	char label[1000];
-	char label_tex[1000];
+	//char label[1000];
+	//char label_tex[1000];
+	std::string label;
+	std::string label_tex;
 
 	int degree_of_matrix_group;
 		// = M->degree;
