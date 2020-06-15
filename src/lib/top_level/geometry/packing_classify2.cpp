@@ -407,7 +407,7 @@ void packing_classify::report_isomorphism_type(
 	int orbit, invariants_packing *inv, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, id, rep, first, c;
+	int i, id, rep, first; //, c;
 	longinteger_object go;
 
 	if (f_v) {
@@ -417,7 +417,7 @@ void packing_classify::report_isomorphism_type(
 
 	rep = Iso->Reps->rep[orbit];
 	first = Iso->orbit_fst[rep];
-	c = Iso->starter_number[first];
+	//c = Iso->starter_number[first];
 	id = Iso->orbit_perm[first];		
 	Iso->load_solution(id, the_packing);
 

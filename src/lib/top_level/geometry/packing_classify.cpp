@@ -53,7 +53,7 @@ packing_classify::packing_classify()
 	spread_reps_idx = NULL;
 	spread_orbit_length = NULL;
 	nb_spread_reps = 0;
-	total_nb_of_spreads = NULL;
+	total_nb_of_spreads = 0;
 	nb_iso_types_of_spreads = 0;
 	// the number of spreads
 	// from the classification
@@ -667,7 +667,7 @@ void packing_classify::lifting_prepare_function_new(
 	long int *free_point_idx;
 	long int *live_blocks2;
 	int nb_live_blocks2;
-	int nb_needed, nb_rows, nb_cols;
+	int nb_needed, /*nb_rows,*/ nb_cols;
 
 
 	if (f_v) {
@@ -717,7 +717,7 @@ void packing_classify::lifting_prepare_function_new(
 				"after compute_live_blocks2" << endl;
 	}
 
-	nb_rows = nb_free_points2;
+	//nb_rows = nb_free_points2;
 	nb_cols = nb_live_blocks2;
 	col_labels = NEW_lint(nb_cols);
 
