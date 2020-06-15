@@ -44,10 +44,11 @@ public:
 	char fname_db3[500];
 	char fname_db4[500];
 	char fname_db5[500];
-	char fname_db_level[500];
-	char fname_db_level_idx1[500];
-	char fname_db_level_idx2[500];
-	char fname_db_level_ge[500];
+
+	char fname_db_level[1000];
+	char fname_db_level_idx1[1000];
+	char fname_db_level_idx2[1000];
+	char fname_db_level_ge[1000];
 	
 	char event_out_fname[1000];
 	char fname_orbits_of_stabilizer_csv[1000];
