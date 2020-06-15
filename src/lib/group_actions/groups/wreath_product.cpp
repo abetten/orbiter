@@ -2372,7 +2372,7 @@ void wreath_product::orbits_using_files_and_union_find(
 		cout << "wreath_product::orbits_using_files_and_union_find" << endl;
 	}
 	long int i, b, h;
-	long int i, j, r, orbit_idx, rep;
+	long int j, r, orbit_idx, rep;
 	long int nb_orbits = 0;
 
 	//int mtx_n;
@@ -2598,7 +2598,7 @@ void wreath_product::orbits_using_files_and_union_find(
 		}
 		char fname_orbit[1000];
 
-		sprintf(fname_orbit, "wreath_q%d_w%d_orbit_%d.bin", q, nb_factors, orbit_idx);
+		sprintf(fname_orbit, "wreath_q%d_w%d_orbit_%ld.bin", q, nb_factors, orbit_idx);
 		if (f_v) {
 			cout << "Writing the file " << fname_orbit << endl;
 		}
@@ -2656,7 +2656,7 @@ void wreath_product::orbits_restricted(
 	int nb_blocks;
 	int *restr_first; // [nb_blocks]
 	int *restr_length; // [nb_blocks]
-	int i, j;
+	long int i, j, b, h;
 
 	Fio.lint_matrix_read_csv(orbits_restricted_fname,
 			Set, set_m, set_n, verbose_level);
@@ -2708,7 +2708,7 @@ void wreath_product::orbits_restricted(
 	restr_first = NEW_int(nb_blocks);
 	restr_length = NEW_int(nb_blocks);
 
-	for (size_t b = 0; b < nb_blocks; b++) {
+	for (b = 0; b < nb_blocks; b++) {
 
 		if (f_v) {
 			cout << "block b=" << b << " / " << nb_blocks << endl;
@@ -2722,11 +2722,11 @@ void wreath_product::orbits_restricted(
 		restr_first[b] = idx;
 	}
 
-	for (int b = 0; b < nb_blocks; b++) {
+	for (b = 0; b < nb_blocks; b++) {
 		cout << b << " : " << restr_first[b] << endl;
 	}
 
-	for (int b = nb_blocks - 1; b >= 0; b--) {
+	for (b = nb_blocks - 1; b >= 0; b--) {
 		if (f_v) {
 			cout << "b=" << b << endl;
 		}
@@ -2738,7 +2738,7 @@ void wreath_product::orbits_restricted(
 		}
 	}
 
-	for (int b = 0; b < nb_blocks; b++) {
+	for (b = 0; b < nb_blocks; b++) {
 		cout << b << " : " << restr_first[b] << " : " << restr_length[b] << endl;
 	}
 
@@ -2758,7 +2758,7 @@ void wreath_product::orbits_restricted(
 
 
 
-	for (int h = 0; h < SG->gens->len; ++h) {
+	for (h = 0; h < SG->gens->len; ++h) {
 		if (f_v) {
 			cout << "generator h=" << h << " / " << SG->gens->len << endl;
 		}
