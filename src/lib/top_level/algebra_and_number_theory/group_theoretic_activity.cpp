@@ -262,8 +262,6 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		do_packing_classify(Descr->dimension_of_spread_elements,
 				Descr->spread_selection_text,
 				Descr->spread_tables_prefix,
-				"", // const char *input_prefix
-				"", // const char *base_fname
 				0, // starter_size
 				P,
 				verbose_level);
@@ -286,8 +284,6 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		do_packing_classify(Descr->dimension_of_spread_elements,
 				Descr->spread_selection_text,
 				Descr->spread_tables_prefix,
-				"", // const char *input_prefix
-				"", // const char *base_fname
 				0, // starter_size
 				P,
 				verbose_level);
@@ -325,7 +321,7 @@ void group_theoretic_activity::classes(int verbose_level)
 	G = LG->Strong_gens->create_sims(verbose_level);
 
 	A2->conjugacy_classes_and_normalizers(G,
-			LG->label.c_str(), LG->label_latex.c_str(), verbose_level);
+			LG->label.c_str(), LG->label_tex.c_str(), verbose_level);
 
 	FREE_OBJECT(G);
 	if (f_v) {
@@ -530,7 +526,7 @@ void group_theoretic_activity::report(int verbose_level)
 
 
 	sprintf(fname, "%s_report.tex", LG->label.c_str());
-	sprintf(title, "The group $%s$", LG->label_latex.c_str());
+	sprintf(title, "The group $%s$", LG->label_tex.c_str());
 
 	{
 		ofstream fp(fname);
@@ -2824,7 +2820,6 @@ void group_theoretic_activity::do_spread_classify(int k, int verbose_level)
 void group_theoretic_activity::do_packing_classify(int dimension_of_spread_elements,
 		const char *spread_selection_text,
 		const char *spread_tables_prefix,
-		const char *input_prefix, const char *base_fname,
 		int starter_size,
 		packing_classify *&P,
 		int verbose_level)
@@ -2852,6 +2847,7 @@ void group_theoretic_activity::do_packing_classify(int dimension_of_spread_eleme
 			Control, LG,
 			dimension_of_spread_elements,
 			TRUE /* f_select_spread */, spread_selection_text,
+			spread_tables_prefix,
 			P,
 			verbose_level);
 

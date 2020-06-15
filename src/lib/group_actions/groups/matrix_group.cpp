@@ -116,14 +116,19 @@ void matrix_group::init_projective_group(int n,
 	f_kernel_is_diagonal_matrices = TRUE;
 	degree = Gg.nb_PG_elements(n - 1, F->q);
 
+	char str1[1000];
+	char str2[1000];
+
 	if (f_semilinear) {
-		sprintf(label, "PGGL_%d_%d", n, F->q);
-		sprintf(label_tex, "{\\rm P}\\Gamma {\\rm L}(%d,%d)", n, F->q);
-		}
+		sprintf(str1, "PGGL_%d_%d", n, F->q);
+		sprintf(str2, "{\\rm P}\\Gamma {\\rm L}(%d,%d)", n, F->q);
+	}
 	else {
-		sprintf(label, "PGL_%d_%d", n, F->q);
-		sprintf(label_tex, "{\\rm PGL}(%d,%d)", n, F->q);
-		}
+		sprintf(str1, "PGL_%d_%d", n, F->q);
+		sprintf(str2, "{\\rm PGL}(%d,%d)", n, F->q);
+	}
+	label.assign(str1);
+	label_tex.assign(str2);
 
 
 	compute_elt_size(verbose_level - 1);
@@ -187,14 +192,19 @@ void matrix_group::init_affine_group(int n,
 		make_element_size++;
 	}
 
+	char str1[1000];
+	char str2[1000];
+
 	if (f_semilinear) {
-		sprintf(label, "AGGL_%d_%d", n, F->q);
-		sprintf(label_tex, "{\\rm A}\\Gamma {\\rm L}(%d,%d)", n, F->q);
+		sprintf(str1, "AGGL_%d_%d", n, F->q);
+		sprintf(str2, "{\\rm A}\\Gamma {\\rm L}(%d,%d)", n, F->q);
 		}
 	else {
-		sprintf(label, "AGL_%d_%d", n, F->q);
-		sprintf(label_tex, "{\\rm AGL}(%d,%d)", n, F->q);
+		sprintf(str1, "AGL_%d_%d", n, F->q);
+		sprintf(str2, "{\\rm AGL}(%d,%d)", n, F->q);
 		}
+	label.assign(str1);
+	label_tex.assign(str2);
 
 
 	compute_elt_size(verbose_level - 1);
@@ -257,14 +267,19 @@ void matrix_group::init_general_linear_group(int n,
 		make_element_size++;
 	}
 
+	char str1[1000];
+	char str2[1000];
+
 	if (f_semilinear) {
-		sprintf(label, "GGL_%d_%d", n, F->q);
-		sprintf(label_tex, "\\Gamma {\\rm L}(%d,%d)", n, F->q);
+		sprintf(str1, "GGL_%d_%d", n, F->q);
+		sprintf(str2, "\\Gamma {\\rm L}(%d,%d)", n, F->q);
 		}
 	else {
-		sprintf(label, "GL_%d_%d", n, F->q);
-		sprintf(label_tex, "{\\rm GL}(%d,%d)", n, F->q);
+		sprintf(str1, "GL_%d_%d", n, F->q);
+		sprintf(str2, "{\\rm GL}(%d,%d)", n, F->q);
 		}
+	label.assign(str1);
+	label_tex.assign(str2);
 
 
 	compute_elt_size(verbose_level - 1);

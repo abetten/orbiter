@@ -27,8 +27,8 @@ action::~action()
 
 void action::null()
 {
-	label[0] = 0;
-	label_tex[0] = 0;
+	//label[0] = 0;
+	//label_tex[0] = 0;
 	
 	//user_data_type = 0;
 	type_G = unknown_symmetry_group_t;

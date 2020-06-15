@@ -106,8 +106,15 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	q1 = F1->q;
 	q2 = F2->q;
 
-	sprintf(label, "%s_cross_%s", M1->label, M2->label);
-	sprintf(label_tex, "%s \\times %s", M1->label_tex, M2->label_tex);
+	label.assign(M1->label);
+	label.append("_");
+	label.append(M2->label);
+	label.append("_product");
+	label_tex.assign(M1->label_tex);
+	label_tex.append(" \\times ");
+	label_tex.append(M2->label_tex);
+	//sprintf(label, "%s_cross_%s", M1->label, M2->label);
+	//sprintf(label_tex, "%s \\times %s", M1->label_tex, M2->label_tex);
 
 	degree_of_matrix_group1 = M1->degree;
 	dimension_of_matrix_group1 = M1->n;
@@ -202,15 +209,11 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "direct_product::init "
-				"base_for_component2 = ";
-		lint_vec_print(cout, base_for_component2,
-				base_len_in_component2);
+		cout << "direct_product::init base_for_component2 = ";
+		lint_vec_print(cout, base_for_component2, base_len_in_component2);
 		cout << endl;
-		cout << "direct_product::init "
-				"tl_for_component2 = ";
-		int_vec_print(cout, tl_for_component2,
-				base_len_in_component2);
+		cout << "direct_product::init tl_for_component2 = ";
+		int_vec_print(cout, tl_for_component2, base_len_in_component2);
 		cout << endl;
 	}
 
@@ -228,12 +231,10 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 				"after compute_base_and_transversals" << endl;
 	}
 	if (f_v) {
-		cout << "direct_product::init "
-				"the_base = ";
+		cout << "direct_product::init the_base = ";
 		lint_vec_print(cout, the_base, base_length);
 		cout << endl;
-		cout << "direct_product::init "
-				"the_transversal_length = ";
+		cout << "direct_product::init the_transversal_length = ";
 		int_vec_print(cout, the_transversal_length, base_length);
 		cout << endl;
 	}
@@ -260,15 +261,15 @@ long int direct_product::element_image_of(int *Elt,
 					"we are in component " << 0
 					<< " reduced input a=" << a << endl;
 		}
-		c = M1->image_of_element(Elt + offset_i(0), a,
-				0 /* verbose_level */);
+		c = M1->image_of_element(Elt + offset_i(0), a, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "direct_product::element_image_of "
 					"we are in component " << 0
 					<< " reduced output c=" << c << endl;
 		}
 		b += c;
-	} else {
+	}
+	else {
 		a -= M1->degree;
 		b += M1->degree;
 		if (a < M2->degree) {
@@ -277,15 +278,15 @@ long int direct_product::element_image_of(int *Elt,
 						"we are in component " << 1
 						<< " reduced input a=" << a << endl;
 			}
-			c = M2->image_of_element(Elt + offset_i(1), a,
-					0 /* verbose_level */);
+			c = M2->image_of_element(Elt + offset_i(1), a, 0 /* verbose_level */);
 			if (f_v) {
 				cout << "direct_product::element_image_of "
 						"we are in component " << 1
 						<< " reduced output c=" << c << endl;
 			}
 			b += c;
-		} else {
+		}
+		else {
 			a -= M2->degree;
 			b += M2->degree;
 
@@ -297,10 +298,8 @@ long int direct_product::element_image_of(int *Elt,
 						"reduced input a = " << a
 						<< " i=" << i << " j=" << j << endl;
 			}
-			c1 = M1->image_of_element(Elt + offset_i(0), i,
-					0 /* verbose_level */);
-			c2 = M2->image_of_element(Elt + offset_i(1), j,
-					0 /* verbose_level */);
+			c1 = M1->image_of_element(Elt + offset_i(0), i, 0 /* verbose_level */);
+			c2 = M2->image_of_element(Elt + offset_i(1), j, 0 /* verbose_level */);
 			c = c1 * M2->degree + c2;
 			if (f_v) {
 				cout << "direct_product::element_image_of "
@@ -316,8 +315,7 @@ long int direct_product::element_image_of(int *Elt,
 		}
 	}
 	if (f_v) {
-		cout << "direct_product::element_image_of " << a0
-				<< " maps to " << b << endl;
+		cout << "direct_product::element_image_of " << a0 << " maps to " << b << endl;
 	}
 	return b;
 }
@@ -406,12 +404,10 @@ void direct_product::element_pack(int *Elt, uchar *elt)
 	int i;
 
 	for (i = 0; i < M1->make_element_size; i++) {
-		put_digit(elt, 0, i,
-				(Elt + offset_i(0))[i]);
+		put_digit(elt, 0, i, (Elt + offset_i(0))[i]);
 	}
 	for (i = 0; i < M2->make_element_size; i++) {
-		put_digit(elt, 1, i,
-				(Elt + offset_i(1))[i]);
+		put_digit(elt, 1, i, (Elt + offset_i(1))[i]);
 	}
 }
 

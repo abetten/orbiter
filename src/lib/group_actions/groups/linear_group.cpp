@@ -104,7 +104,7 @@ void linear_group::init(
 	}
 
 	label.assign(A_linear->label);
-	label_latex.assign(A_linear->label_tex);
+	label_tex.assign(A_linear->label_tex);
 	//strcpy(prefix, A_linear->label);
 	//strcpy(label_latex, A_linear->label_tex);
 
@@ -425,7 +425,7 @@ void linear_group::init(
 		sprintf(str2, " {\\rm Gr}_{%d,%d}(%d)",
 				n, description->on_k_subspaces_k, F->q);
 		label.append(str1);
-		label_latex.append(str2);
+		label_tex.append(str2);
 
 
 		cout << "linear_group::init creating induced "
@@ -525,7 +525,7 @@ void linear_group::init_PGL2q_OnConic(int verbose_level)
 	sprintf(str1, "_OnConic_%d_%d", n, q);
 	sprintf(str2, "{\\rm OnConic}(%d,%d)", n, q);
 	label.append(str1);
-	label_latex.append(str2);
+	label_tex.append(str2);
 	if (f_v) {
 		cout << "linear_group::init_PGL2q_OnConic "
 				"created group " << label << endl;
@@ -594,7 +594,7 @@ void linear_group::init_wedge_action(int verbose_level)
 	sprintf(str1, "_Wedge_%d_%d", n, q);
 	sprintf(str2, "{\\rm Wedge}(%d,%d)", n, q);
 	label.append(str1);
-	label_latex.append(str2);
+	label_tex.append(str2);
 	if (f_v) {
 		cout << "linear_group::init_wedge_action "
 				"created group " << label << endl;
@@ -628,7 +628,7 @@ void linear_group::init_monomial_group(int verbose_level)
 	sprintf(str1, "_Monomial_%d_%d", n, q);
 	sprintf(str2, "{\\rm Monomial}(%d,%d)", n, q);
 	label.append(str1);
-	label_latex.append(str2);
+	label_tex.append(str2);
 
 	if (f_v) {
 		cout << "linear_group::init_monomial_group "
@@ -662,7 +662,7 @@ void linear_group::init_diagonal_group(int verbose_level)
 	sprintf(str1, "_Diagonal_%d_%d", n, q);
 	sprintf(str2, "{\\rm Diagonal}(%d,%d)", n, q);
 	label.append(str1);
-	label_latex.append(str2);
+	label_tex.append(str2);
 
 	if (f_v) {
 		cout << "linear_group::init_diagonal_group "
@@ -699,7 +699,7 @@ void linear_group::init_singer_group(int singer_power, int verbose_level)
 	sprintf(str1, "_Singer_%d_%d_%d", n, q, singer_power);
 	sprintf(str2, "{\\rm Singer}(%d,%d,%d)", n, q, singer_power);
 	label.append(str1);
-	label_latex.append(str2);
+	label_tex.append(str2);
 
 	if (f_v) {
 		cout << "linear_group::init_singer_group "
@@ -737,7 +737,7 @@ void linear_group::init_singer_group_and_frobenius(
 	sprintf(str1, "_Singer_and_Frob%d_%d_%d", n, q, singer_power);
 	sprintf(str2, "{\\rm SingerFrob}(%d,%d,%d)", n, q, singer_power);
 	label.append(str1);
-	label_latex.append(str2);
+	label_tex.append(str2);
 
 	if (f_v) {
 		cout << "linear_group::init_singer_group_and_frobenius "
@@ -772,7 +772,7 @@ void linear_group::init_null_polarity_group(int verbose_level)
 	sprintf(str1, "_NullPolarity_%d_%d", n, q);
 	sprintf(str2, "{\\rm NullPolarity}(%d,%d)", n, q);
 	label.append(str1);
-	label_latex.append(str2);
+	label_tex.append(str2);
 
 	if (f_v) {
 		cout << "linear_group::init_null_polarity_group "
@@ -808,7 +808,7 @@ void linear_group::init_borel_subgroup_upper(int verbose_level)
 	sprintf(str1, "_BorelUpper_%d_%d", n, q);
 	sprintf(str2, "{\\rm BorelUpper}(%d,%d)", n, q);
 	label.append(str1);
-	label_latex.append(str2);
+	label_tex.append(str2);
 
 	if (f_v) {
 		cout << "linear_group::init_borel_subgroup_upper "
@@ -842,7 +842,7 @@ void linear_group::init_identity_subgroup(int verbose_level)
 	sprintf(str1, "_Identity_%d_%d", n, q);
 	sprintf(str2, "{\\rm Identity}(%d,%d)", n, q);
 	label.append(str1);
-	label_latex.append(str2);
+	label_tex.append(str2);
 
 	if (f_v) {
 		cout << "linear_group::init_identity_subgroup "
@@ -877,7 +877,7 @@ void linear_group::init_symplectic_group(int verbose_level)
 	sprintf(str1, "_Sp_%d_%d", n, q);
 	sprintf(str2, "{\\rm Sp}(%d,%d)", n, q);
 	label.append(str1);
-	label_latex.append(str2);
+	label_tex.append(str2);
 
 
 	if (f_v) {
@@ -919,7 +919,7 @@ void linear_group::init_subfield_structure_action(int s, int verbose_level)
 	sprintf(str1, "_Subfield_%d_%d_%d", n, q, s);
 	sprintf(str2, "{\\rm SubfieldAction}(%d,%d,%d)", n, q, s);
 	label.append(str1);
-	label_latex.append(str2);
+	label_tex.append(str2);
 
 	if (f_v) {
 		cout << "linear_group::init_subfield_structure_action "
@@ -964,20 +964,20 @@ void linear_group::init_orthogonal_group(int epsilon, int verbose_level)
 			sprintf(str1, "_Orthogonal_plus_%d_%d", n, q);
 			sprintf(str2, "{\\rm O}^+(%d,%d)", n, q);
 			label.append(str1);
-			label_latex.append(str2);
+			label_tex.append(str2);
 			}
 		else {
 			sprintf(str1, "_Orthogonal_minus_%d_%d", n, q);
 			sprintf(str2, "{\\rm O}^-(%d,%d)", n, q);
 			label.append(str1);
-			label_latex.append(str2);
+			label_tex.append(str2);
 			}
 		}
 	else {
 		sprintf(str1, "_Orthogonal_%d_%d", n, q);
 		sprintf(str2, "{\\rm O}(%d,%d)", n, q);
 		label.append(str1);
-		label_latex.append(str2);
+		label_tex.append(str2);
 		}
 	if (f_v) {
 		cout << "linear_group::init_orthogonal_group "
@@ -1028,7 +1028,7 @@ void linear_group::init_subgroup_from_file(
 	sprintf(str1, "_SubgroupFile_%d_%d", n, q);
 	sprintf(str2, "{\\rm SubgroupFile}(%d,%d)", n, q);
 	label.append(str1);
-	label_latex.append(str2);
+	label_tex.append(str2);
 
 
 	if (f_v) {
@@ -1091,7 +1091,7 @@ void linear_group::init_subgroup_by_generators(
 	sprintf(str1, "_Subgroup_%s_%s", subgroup_label, subgroup_order_text);
 	sprintf(str2, "{\\rm Subgroup %s order %s}", str.str().c_str(), subgroup_order_text);
 	label.append(str1);
-	label_latex.append(str2);
+	label_tex.append(str2);
 	if (f_v) {
 		cout << "linear_group::init_subgroup_by_generators "
 				"created group " << label << endl;
@@ -1139,7 +1139,7 @@ void linear_group::init_subgroup_Janko1(int verbose_level)
 	sprintf(str1, "_Subgroup_Janko1");
 	sprintf(str2, "{\\rm Subgroup Janko1}");
 	label.append(str1);
-	label_latex.append(str2);
+	label_tex.append(str2);
 
 	if (f_v) {
 		cout << "linear_group::init_subgroup_Janko1 "
@@ -1190,13 +1190,13 @@ void linear_group::report(ostream &fp, int f_sylow, int f_group_table,
 
 
 
-		fp << "\\section{The Group $" << label_latex << "$}" << endl;
+		fp << "\\section{The Group $" << label_tex << "$}" << endl;
 
 
 		H->group_order(go);
 
 		fp << "\\noindent The order of the group $"
-				<< label_latex
+				<< label_tex
 				<< "$ is " << go << "\\\\" << endl;
 
 		fp << "\\noindent The field ${\\mathbb F}_{"

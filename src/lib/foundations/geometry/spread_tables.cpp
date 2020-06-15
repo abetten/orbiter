@@ -81,7 +81,7 @@ spread_tables::~spread_tables()
 void spread_tables::init(finite_field *F,
 		int f_load,
 		int nb_iso_types_of_spreads,
-		const char *prefix,
+		const char *path_to_spread_tables,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -114,7 +114,7 @@ void spread_tables::init(finite_field *F,
 	}
 
 
-	snprintf(spread_tables::prefix, 1000, "%sspread_%d", prefix, NT.i_power_j(q, 2));
+	snprintf(spread_tables::prefix, 1000, "%sspread_%d", path_to_spread_tables, NT.i_power_j(q, 2));
 	if (f_v) {
 		cout << "spread_tables::init prefix=" << spread_tables::prefix << endl;
 	}

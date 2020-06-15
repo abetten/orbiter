@@ -89,6 +89,7 @@ public:
 			poset_classification_control *Control, linear_group *LG,
 			int dimension_of_spread_elements,
 			int f_select_spread, const char *select_spread_text,
+			const char *path_to_spread_tables,
 			packing_classify *&P,
 			int verbose_level);
 	void predict_spread_table_length(
@@ -425,7 +426,6 @@ public:
 	void do_packing_classify(int dimension_of_spread_elements,
 			const char *spread_selection_text,
 			const char *spread_tables_prefix,
-			const char *input_prefix, const char *base_fname,
 			int starter_size,
 			packing_classify *&P,
 			int verbose_level);

@@ -28,8 +28,8 @@ wreath_product::wreath_product()
 	q = 0;
 	nb_factors = 0;
 
-	label[0] = 0;
-	label_tex[0] = 0;
+	//label[0] = 0;
+	//label_tex[0] = 0;
 
 	degree_of_matrix_group = 0;
 	dimension_of_matrix_group = 0;
@@ -225,8 +225,16 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 		cout << "wreath_product::init_tensor_wreath_product after P->init" << endl;
 	}
 
-	sprintf(label, "%s_wreath_Sym%d", M->label, nb_factors);
-	sprintf(label_tex, "%s \\wr {\\rm Sym}(%d)", M->label_tex, nb_factors);
+	char str1[1000];
+	char str2[1000];
+
+	sprintf(str1, "_wreath_Sym%d", nb_factors);
+	sprintf(str2, " \\wr {\\rm Sym}(%d)", nb_factors);
+
+	label.assign(M->label);
+	label.append(str1);
+	label_tex.assign(M->label);
+	label_tex.append(str2);
 
 	degree_of_matrix_group = M->degree;
 	dimension_of_matrix_group = M->n;

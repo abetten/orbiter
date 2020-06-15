@@ -1195,7 +1195,7 @@ void action::init_direct_product_group_and_restrict(
 				"after A_direct_product->restricted_action" << endl;
 	}
 
-	memcpy(this, Adp, sizeof(action));
+	memcpy(this, Adp, sizeof(action)); // ToDo
 	Adp->null();
 	delete Adp;
 }
@@ -1426,7 +1426,7 @@ void action::init_wreath_product_group_and_restrict(
 				"after A_wreath->restricted_action" << endl;
 	}
 
-	memcpy(this, Awr, sizeof(action));
+	memcpy(this, Awr, sizeof(action)); // ToDo
 	Awr->null();
 	FREE_OBJECT(Awr);
 }

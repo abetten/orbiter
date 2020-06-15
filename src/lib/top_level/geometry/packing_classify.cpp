@@ -26,9 +26,9 @@ packing_classify::packing_classify()
 	nb_lines = 0;
 	//search_depth = 0;
 
-	starter_directory_name[0] = 0;
-	prefix[0] = 0;
-	prefix_with_directory[0] = 0;
+	//starter_directory_name[0] = 0;
+	//prefix[0] = 0;
+	//prefix_with_directory[0] = 0;
 
 
 	f_lexorder_test = TRUE;
@@ -134,9 +134,9 @@ void packing_classify::freeself()
 void packing_classify::init(spread_classify *T,
 	int f_select_spread,
 	const char *select_spread_text,
-	const char *input_prefix, const char *base_fname, 
+	//const char *input_prefix, const char *base_fname,
 	int f_lexorder_test,
-	const char *spread_tables_prefix,
+	const char *path_to_spread_tables,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -175,18 +175,19 @@ void packing_classify::init(spread_classify *T,
 		cout << "packing_classify::init nb_lines=" << nb_lines << endl;
 		cout << "packing_classify::init spread_size=" << spread_size << endl;
 		cout << "packing_classify::init size_of_packing=" << size_of_packing << endl;
-		cout << "packing_classify::init input_prefix=" << input_prefix << endl;
-		cout << "packing_classify::init base_fname=" << base_fname << endl;
+		//cout << "packing_classify::init input_prefix=" << input_prefix << endl;
+		//cout << "packing_classify::init base_fname=" << base_fname << endl;
 	}
 
 	init_P3_and_P5(verbose_level - 1);
 
+#if 0
 	strcpy(starter_directory_name, input_prefix);
 	strcpy(prefix, base_fname);
 	sprintf(prefix_with_directory, "%s%s",
 			starter_directory_name, base_fname);
+#endif
 
-	packing_classify::spread_tables_prefix = spread_tables_prefix;
 
 	if (f_select_spread) {
 		cout << "packing_classify::init selected spreads are "
@@ -231,7 +232,7 @@ void packing_classify::init(spread_classify *T,
 	Spread_tables->init(F,
 				FALSE /* f_load */,
 				nb_iso_types_of_spreads,
-				input_prefix,
+				path_to_spread_tables,
 				verbose_level);
 
 	if (f_v) {

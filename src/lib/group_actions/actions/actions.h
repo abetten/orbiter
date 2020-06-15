@@ -407,8 +407,8 @@ public:
 			const char *fname_output,
 			sims *override_Sims, int *Elt, int verbose_level);
 	void conjugacy_classes_and_normalizers(sims *override_Sims,
-			const char *override_group_prefix,
-			const char *label_latex,
+			const char *label,
+			const char *label_tex,
 			int verbose_level);
 	void report_conjugacy_classes_and_normalizers(std::ostream &ost,
 			sims *override_Sims, int verbose_level);

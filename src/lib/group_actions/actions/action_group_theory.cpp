@@ -696,8 +696,8 @@ void action::centralizer_using_magma2(const char *prefix,
 
 
 void action::conjugacy_classes_and_normalizers(sims *override_Sims,
-		const char *override_group_prefix,
-		const char *label_latex,
+		const char *label,
+		const char *label_tex,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -711,13 +711,13 @@ void action::conjugacy_classes_and_normalizers(sims *override_Sims,
 		cout << "action::conjugacy_classes_and_normalizers" << endl;
 	}
 
-	snprintf(prefix, 2000, "%s", override_group_prefix);
+	snprintf(prefix, 2000, "%s", label);
 	snprintf(fname1, 3000, "%s_classes.magma", prefix);
 	snprintf(fname2, 3000, "%s_classes_out.txt", prefix);
 
 
 	if (Fio.file_size(fname2) > 0) {
-		read_conjugacy_classes_and_normalizers(fname2, override_Sims, label_latex, verbose_level);
+		read_conjugacy_classes_and_normalizers(fname2, override_Sims, label_tex, verbose_level);
 	}
 	else {
 		if (f_v) {

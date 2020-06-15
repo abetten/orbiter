@@ -382,9 +382,9 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 	char author[1000];
 	//int f_with_stabilizers = TRUE;
 
-	sprintf(title, "Wreath product $%s$", W->label_tex);
-	sprintf(author, "Orbiter");
-	sprintf(fname, "WreathProduct_q%d_n%d.tex", W->q, W->nb_factors);
+	snprintf(title, 1000, "Wreath product $%s$", W->label_tex.c_str());
+	strcpy(author, "Orbiter");
+	snprintf(fname, 1000, "WreathProduct_q%d_n%d.tex", W->q, W->nb_factors);
 
 	{
 		ofstream fp(fname);

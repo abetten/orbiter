@@ -2604,7 +2604,7 @@ public:
 	void init(finite_field *F,
 			int f_load,
 			int nb_iso_types_of_spreads,
-			const char *prefix,
+			const char *path_to_spread_tables,
 			int verbose_level);
 	void init_spread_table(int nb_spreads,
 			long int *spread_table, int *spread_iso_type,
