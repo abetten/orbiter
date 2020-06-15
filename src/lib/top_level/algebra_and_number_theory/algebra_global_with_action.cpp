@@ -2754,7 +2754,7 @@ void algebra_global_with_action::investigate_surface_and_write_report(
 	//action *A;
 	//surface_with_action *Surf_A;
 
-	Surf_A = SC->Surf_A;
+	//Surf_A = SC->Surf_A;
 	//A = Surf_A->A;
 
 	char fname[2000];
