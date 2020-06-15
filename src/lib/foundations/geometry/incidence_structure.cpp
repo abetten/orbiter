@@ -2777,12 +2777,12 @@ void incidence_structure::do_tdo_high_level(partitionstack &S,
 			verbose_level - 1);
 
 		for (i = 0; i < nb_row_classes; i++) {
-			sprintf(fname, "%s_TDO_point_class_%d.txt", label, i);
+			snprintf(fname, 1000, "%s_TDO_point_class_%d.txt", label, i);
 			S.write_cell_to_file_points_or_lines(
 					row_classes[i], fname, verbose_level - 1);
 			}
 		for (i = 0; i < nb_col_classes; i++) {
-			sprintf(fname, "%s_TDO_line_class_%d.txt", label, i);
+			snprintf(fname, 1000, "%s_TDO_line_class_%d.txt", label, i);
 			S.write_cell_to_file_points_or_lines(
 					col_classes[i], fname, verbose_level - 1);
 			}
@@ -2851,7 +2851,7 @@ void incidence_structure::compute_tdo(partitionstack &S,
 		}
 
 	if (f_write_tdo_files) {
-		sprintf(fname, "%s_tdo_scheme.tex", label);
+		snprintf(fname, 1000, "%s_tdo_scheme.tex", label);
 		{
 		ofstream fp(fname);
 
@@ -2865,7 +2865,7 @@ void incidence_structure::compute_tdo(partitionstack &S,
 					<< Fio.file_size(fname) << endl;
 			}
 
-		sprintf(fname, "%s_tdo.tex", label);
+		snprintf(fname, 1000, "%s_tdo.tex", label);
 		{
 		ofstream fp(fname);
 
@@ -2949,10 +2949,10 @@ void incidence_structure::compute_tdo_stepwise(
 			S.print_classes_points_and_lines(cout);
 			}
 		if (f_write_tdo_files) {
-			sprintf(fname, "%s_tdo_step_%d.tex", label, step);
-			sprintf(fname_pic, "%s_tdo_step_%d_pic.tex", label, step);
-			sprintf(fname_scheme, "%s_tdo_step_%d_scheme.tex", label, step);
-			sprintf(fname_extra, "%s_tdo_step_%d_extra.tex", label, step);
+			snprintf(fname, 1000, "%s_tdo_step_%d.tex", label, step);
+			snprintf(fname_pic, 1000, "%s_tdo_step_%d_pic.tex", label, step);
+			snprintf(fname_scheme, 1000, "%s_tdo_step_%d_scheme.tex", label, step);
+			snprintf(fname_extra, 1000, "%s_tdo_step_%d_extra.tex", label, step);
 			{
 			ofstream fp(fname);
 			ofstream fp_pic(fname_pic);
@@ -3062,9 +3062,9 @@ void incidence_structure::compute_tdo_stepwise(
 		}
 
 	if (f_write_tdo_files) {
-		sprintf(fname, "%s_tdo.tex", label);
-		sprintf(fname_pic, "%s_tdo_pic.tex", label);
-		sprintf(fname_scheme, "%s_tdo_scheme.tex", label);
+		snprintf(fname, 1000, "%s_tdo.tex", label);
+		snprintf(fname_pic, 1000, "%s_tdo_pic.tex", label);
+		snprintf(fname_scheme, 1000, "%s_tdo_scheme.tex", label);
 		{
 		ofstream fp(fname);
 		ofstream fp_pic(fname_pic);
