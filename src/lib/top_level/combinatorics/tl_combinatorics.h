@@ -626,7 +626,7 @@ public:
 	int rk_E1;
 
 	char prefix[1000];
-	char fname_magma_out[1000];
+	char fname_magma_out[2000];
 	sims *Aut;
 	sims *U;
 	longinteger_object U_go;
