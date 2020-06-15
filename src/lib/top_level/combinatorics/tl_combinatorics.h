@@ -935,7 +935,7 @@ public:
 		// The normalizer of the involution
 
 	char prefix[1000];
-	char fname_orbits_on_triples[1000];
+	char fname_orbits_on_triples[2000];
 	schreier *Orbits_on_triples;
 		// Orbits of the reflection group on triples.
 	action *A_on_orbits;

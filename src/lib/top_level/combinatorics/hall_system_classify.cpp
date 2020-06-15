@@ -312,7 +312,7 @@ void hall_system_classify::orbits_on_triples(int verbose_level)
 		cout << "hall_system_classify::orbits_on_triples" << endl;
 		}
 
-	sprintf(fname_orbits_on_triples, "%s_orbits_on_triples.bin", prefix);
+	snprintf(fname_orbits_on_triples, 2000, "%s_orbits_on_triples.bin", prefix);
 	if (Fio.file_size(fname_orbits_on_triples) > 0) {
 
 
