@@ -2045,14 +2045,14 @@ void interface_cryptography::do_EC_Koblitz_encoding(int q,
 	}
 
 	cout << "Ciphertext:\\\\" << endl;
-	for (i = 0; i < Ciphertext.size(); i++) {
+	for (i = 0; i < (int) Ciphertext.size(); i++) {
 		cout << Ciphertext[i][0] << ",";
 		cout << Ciphertext[i][1] << ",";
 		cout << Ciphertext[i][2] << ",";
 		cout << Ciphertext[i][3] << "\\\\" << endl;
 	}
 
-	for (i = 0; i < Ciphertext.size(); i++) {
+	for (i = 0; i < (int) Ciphertext.size(); i++) {
 		Rx = Ciphertext[i][0];
 		Ry = Ciphertext[i][1];
 		Tx = Ciphertext[i][2];
@@ -2224,8 +2224,8 @@ void interface_cryptography::do_EC_points(int q,
 	int i;
 	cout << "We found " << Pts.size() << " points:" << endl;
 
-	for (i = 0; i < Pts.size(); i++) {
-		if (i == Pts.size()) {
+	for (i = 0; i < (int) Pts.size(); i++) {
+		if (i == (int) Pts.size()) {
 
 			cout << i << " : {\\cal O} : 1\\\\" << endl;
 
@@ -2371,7 +2371,7 @@ void interface_cryptography::do_EC_cyclic_subgroup(int q,
 	cout << "we found that the point has order " << order << endl;
 	cout << "The multiples are:" << endl;
 	cout << "i : (" << x1 << "," << y1 << ")" << endl;
-	for (i = 0; i < Pts.size(); i++) {
+	for (i = 0; i < (int) Pts.size(); i++) {
 
 		vector<int> pts = Pts[i];
 
@@ -2834,7 +2834,7 @@ void interface_cryptography::make_2D_plot(
 
 void interface_cryptography::do_random_last(int random_nb, int verbose_level)
 {
-	int i, r;
+	int i, r = 0;
 
 
 	cout << "RAND_MAX=" << RAND_MAX << endl;
@@ -3440,7 +3440,7 @@ void interface_cryptography::quadratic_sieve(int n,
 		cout << "sqrtM=" << sqrtM << endl << endl;
 		}
 	cout << "list of small factors has length " << small_factors.size() << endl;
-	for (i = 0; i < small_factors.size(); i++) {
+	for (i = 0; i < (int) small_factors.size(); i++) {
 		cout << i << " : " << small_factors[i] << endl;
 	}
 
