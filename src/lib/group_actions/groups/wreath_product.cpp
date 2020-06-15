@@ -2091,7 +2091,7 @@ void wreath_product::compute_permutations_and_write_to_file(
 
 
 
-	int b;
+	long int b;
 
 	for (b = 0; b < nb_blocks; ++b) {
 		if (f_v) {
@@ -2099,9 +2099,9 @@ void wreath_product::compute_permutations_and_write_to_file(
 		}
 
 
-		int l;
+		long int l;
 
-		l = MINIMUM((b + 1) * block_size, (unsigned long)degree_of_tensor_action) - b * block_size;
+		l = MINIMUM((b + 1) * block_size, degree_of_tensor_action) - b * block_size;
 		if (f_v) {
 			cout << "wreath_product::compute_permutations_and_write_to_file l=" << l << endl;
 		}
@@ -2411,25 +2411,24 @@ void wreath_product::orbits_using_files_and_union_find(
 	unsigned int* T = new unsigned int [degree_of_tensor_action];
 
 
+	long int b, h;
 
 
 
-
-	for (size_t h = 0; h < SG->gens->len; ++h) {
+	for (h = 0; h < SG->gens->len; ++h) {
 		if (f_v) {
 			cout << "wreath_product::orbits_using_files_and_union_find "
 					"generator h=" << h << " / " << SG->gens->len << endl;
 		}
 
-		for (size_t b=0; b<nb_blocks; ++b) {
+		for (b = 0; b < nb_blocks; ++b) {
 			if (f_v) {
 				cout << "wreath_product::orbits_using_files_and_union_find "
 						"block b=" << b << " / " << nb_blocks << endl;
 			}
 
 
-			int l = std::min((b + 1) * block_size,
-					(unsigned long)degree_of_tensor_action) - b*block_size;
+			long int l = MINIMUM((b + 1) * block_size, degree_of_tensor_action) - b * block_size;
 			if (f_v) {
 				cout << "wreath_product::orbits_using_files_and_union_find "
 						"l=" << l << endl;
@@ -2480,7 +2479,9 @@ void wreath_product::orbits_using_files_and_union_find(
 					<< " / " << SG->gens->len << ":" << endl;
 		}
 
-		for (unsigned int i=0; i < degree_of_tensor_action; ++i) {
+		long int i;
+
+		for (i = 0; i < degree_of_tensor_action; ++i) {
 			int l1;
 
 			l1 = degree_of_tensor_action / 100;
