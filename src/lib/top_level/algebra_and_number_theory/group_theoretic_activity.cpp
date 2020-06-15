@@ -2644,9 +2644,9 @@ void group_theoretic_activity::do_create_surface(
 			cout << "after SO->init" << endl;
 			}
 
-		char fname_points[1000];
+		char fname_points[2000];
 
-		sprintf(fname_points, "surface_%s_points.txt", SC->label_txt);
+		snprintf(fname_points, 2000, "surface_%s_points.txt", SC->label_txt);
 		Fio.write_set_to_file(fname_points,
 				SO->Pts, SO->nb_pts, 0 /*verbose_level*/);
 		cout << "Written file " << fname_points << " of size "
