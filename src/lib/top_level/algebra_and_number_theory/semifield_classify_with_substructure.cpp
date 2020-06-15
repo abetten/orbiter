@@ -913,7 +913,7 @@ void semifield_classify_with_substructure::decomposition(int verbose_level)
 	}
 	semifield_flag_orbit_node *F1;
 	flag_orbits *F2;
-	int N1, N2, N3;
+	//int N1, N2, N3;
 	int i1, i2, i3;
 	int h1, h2;
 	int po_up;
@@ -921,9 +921,9 @@ void semifield_classify_with_substructure::decomposition(int verbose_level)
 
 	F1 = Sub->L3->Flag_orbits;
 	F2 = Sub->Flag_orbits;
-	N1 = L2->nb_orbits;
-	N2 = Sub->L3->nb_orbits;
-	N3 = Semifields->nb_orbits;
+	//N1 = L2->nb_orbits;
+	//N2 = Sub->L3->nb_orbits;
+	//N3 = Semifields->nb_orbits;
 	i1 = 8;
 	i3 = 322;
 
