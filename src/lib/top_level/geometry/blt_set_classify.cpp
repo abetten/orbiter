@@ -176,9 +176,9 @@ void blt_set_classify::init_group(int f_semilinear, int verbose_level)
 		cout << endl;
 	}
 	
-	action_on_orthogonal *AO;
+	//action_on_orthogonal *AO;
 
-	AO = A->G.AO;
+	//AO = A->G.AO;
 	//O = AO->O;
 
 	if (f_v) {
@@ -380,9 +380,9 @@ void blt_set_classify::create_graphs(
 			verbose_level - 2)) {
 			list_of_cases[nb_of_cases++] = orbit;
 
-			char fname[1000];
+			char fname[2000];
 
-			sprintf(fname, "%s%s.bin", output_prefix, CG->fname_base);
+			snprintf(fname, 2000, "%s%s.bin", output_prefix, CG->fname_base);
 			CG->save(fname, verbose_level - 2);
 			
 			nb_vertices = CG->nb_points;
@@ -528,9 +528,9 @@ void blt_set_classify::create_graphs_list_of_cases(
 			verbose_level - 2)) {
 			list_of_cases_created[nb_of_cases_created++] = orbit;
 
-			char fname[1000];
+			char fname[2000];
 
-			sprintf(fname, "%s%s.bin", output_prefix, CG->fname_base);
+			snprintf(fname, 2000, "%s%s.bin", output_prefix, CG->fname_base);
 			CG->save(fname, verbose_level - 2);
 			
 			nb_vertices = CG->nb_points;
