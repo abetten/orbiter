@@ -2649,7 +2649,7 @@ void wreath_product::orbits_restricted(
 	file_io Fio;
 	sorting Sorting;
 
-	int mtx_n;
+	//int mtx_n;
 	long int *Set;
 	long int *Set_in_PG;
 	int set_m, set_n;
@@ -2691,7 +2691,7 @@ void wreath_product::orbits_restricted(
 
 	nb_gens = SG->gens->len;
 	degree = degree_of_tensor_action;
-	mtx_n = dimension_of_tensor_action;
+	//mtx_n = dimension_of_tensor_action;
 
 	int block_size = 1L << 28; // pow(2, 28) ints = 1024 MB
 
@@ -2901,9 +2901,9 @@ void wreath_product::orbits_restricted_compute(
 		cout << "converting points to PG point labels" << endl;
 	}
 
-	int *v;
+	//int *v;
 	long int s;
-	v = NEW_int(dimension_of_tensor_action);
+	//v = NEW_int(dimension_of_tensor_action);
 	Set_in_PG = NEW_lint(set_m);
 	for (i = 0; i < set_m; i++) {
 		s = affine_rank_to_PG_rank(Set[i]);
