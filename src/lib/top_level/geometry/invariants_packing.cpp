@@ -121,11 +121,11 @@ void invariants_packing::init(isomorph *Iso,
 					<< " / " << Iso->Reps->count << endl;
 		}
 
-		int rep, first, c, id;
+		int rep, first, /*c,*/ id;
 		
 		rep = Iso->Reps->rep[orbit];
 		first = Iso->orbit_fst[rep];
-		c = Iso->starter_number[first];
+		//c = Iso->starter_number[first];
 		id = Iso->orbit_perm[first];		
 		Iso->load_solution(id, P->the_packing);
 		
@@ -155,11 +155,11 @@ void invariants_packing::init(isomorph *Iso,
 	// compute Spread_type_of_packing:
 
 	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
-		int rep, first, c, id, a;
+		int rep, first, /*c,*/ id, a;
 		
 		rep = Iso->Reps->rep[orbit];
 		first = Iso->orbit_fst[rep];
-		c = Iso->starter_number[first];
+		//c = Iso->starter_number[first];
 		id = Iso->orbit_perm[first];		
 		Iso->load_solution(id, P->the_packing);
 		
@@ -281,12 +281,12 @@ void invariants_packing::compute_dual_packings(
 	
 	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
 
-		int rep, first, c, id;
+		int rep, first, /*c,*/ id;
 		int f_implicit_fusion = TRUE;
 		
 		rep = Iso->Reps->rep[orbit];
 		first = Iso->orbit_fst[rep];
-		c = Iso->starter_number[first];
+		//c = Iso->starter_number[first];
 		id = Iso->orbit_perm[first];		
 		Iso->load_solution(id, P->the_packing);
 
