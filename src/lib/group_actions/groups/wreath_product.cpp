@@ -2522,6 +2522,7 @@ void wreath_product::orbits_using_files_and_union_find(
 	if (f_v) {
 		cout << "wreath_product::orbits_using_files_and_union_find nb_orbits: " << nb_orbits << endl;
 	}
+	long int i, j, r, orbit_idx, rep;
 
 	long int *orbit_length;
 	long int *orbit_rep;
@@ -2529,12 +2530,11 @@ void wreath_product::orbits_using_files_and_union_find(
 	orbit_length = NEW_lint(nb_orbits);
 	orbit_rep = NEW_lint(nb_orbits);
 
-	for (int i = 0; i < nb_orbits; i++) {
+	for (i = 0; i < nb_orbits; i++) {
 		orbit_length[i] = 0;
 	}
-	int j;
 	j = 0;
-	for (unsigned int i=0; i < degree_of_tensor_action; ++i) {
+	for (i = 0; i < degree_of_tensor_action; ++i) {
 		if (S[i] == i) {
 			orbit_rep[j++] = i;
 		}
@@ -2549,8 +2549,8 @@ void wreath_product::orbits_using_files_and_union_find(
 	if (f_v) {
 		cout << "wreath_product::orbits_using_files_and_union_find Path compression:" << endl;
 	}
-	for (unsigned int i=0; i < degree_of_tensor_action; ++i) {
-		unsigned int r = root_of_tree_uint32_t(S, i);
+	for (i = 0; i < degree_of_tensor_action; ++i) {
+		r = root_of_tree_uint32_t(S, i);
 		S[i] = r;
 	}
 	if (f_v) {
@@ -2577,9 +2577,9 @@ void wreath_product::orbits_using_files_and_union_find(
 		cout << "wreath_product::orbits_using_files_and_union_find "
 				"determining the orbits: " << endl;
 	}
-	for (int orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
+	for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
 
-		unsigned int rep = orbit_rep[orbit_idx];
+		rep = orbit_rep[orbit_idx];
 		uint32_t len = 0;
 
 		if (f_v) {
@@ -2587,7 +2587,7 @@ void wreath_product::orbits_using_files_and_union_find(
 					"determining orbit " << orbit_idx << " / " << nb_orbits
 					<< " with rep " << rep << endl;
 		}
-		for (unsigned int j=0; j < degree_of_tensor_action; ++j) {
+		for (j = 0; j < degree_of_tensor_action; ++j) {
 			if (S[j] == rep) {
 				Orbit[len++] = j;
 			}
@@ -2607,7 +2607,7 @@ void wreath_product::orbits_using_files_and_union_find(
 			ofstream fp(fname_orbit, ios::binary);
 
 			fp.write((char *) &len, sizeof(uint32_t));
-			for (int i = 0; i < len; i++) {
+			for (i = 0; i < len; i++) {
 				fp.write((char *) &Orbit[i], sizeof(uint32_t));
 			}
 		}
