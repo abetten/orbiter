@@ -2322,8 +2322,18 @@ void sorting::schreier_vector_tree(
 	}
 
 	LG = NEW_OBJECT(layered_graph);
-	LG->init(C.nb_types /* nb_layers */, SoS->Set_size /* int *Nb_nodes_layer */,
+	int *Sz;
+
+	Sz = NEW_int(C.nb_types);
+	for (i = 0; i < C.nb_types; i++) {
+		Sz[i] = SoS->Set_size[i];
+	}
+
+	LG->init(C.nb_types /* nb_layers */, Sz /* int *Nb_nodes_layer */,
 			fname_base, verbose_level);
+
+	FREE_int(Sz);
+
 
 	int pos1, pos2, d1, d2, n1, n2;
 
