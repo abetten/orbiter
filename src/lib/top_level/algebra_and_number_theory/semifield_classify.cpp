@@ -203,7 +203,7 @@ void semifield_classify::init(
 		exit(1);
 	}
 
-	if (sizeof(long int) * 8 - 1 < k2) {
+	if ((int)sizeof(long int) * 8 - 1 < k2) {
 		cout << "sizeof(long int) * 8 - 1 < k2, overflow will happen" << endl;
 		cout << "sizeof(long int)=" << sizeof(long int) << endl;
 		cout << "k2=" << k2 << endl;
@@ -264,11 +264,13 @@ void semifield_classify::init(
 	}
 
 	longinteger_object go1, go2;
-	int f_semilinear = TRUE;
+	//int f_semilinear = TRUE;
 
+#if 0
 	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
 	}
+#endif
 
 	A0 = NEW_OBJECT(action);
 	A0_linear = NEW_OBJECT(action);
