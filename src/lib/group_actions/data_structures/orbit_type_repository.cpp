@@ -107,7 +107,7 @@ void orbit_type_repository::init(
 	orbit_type_repository::Sets = Sets;
 	orbit_type_repository::goi = goi;
 
-	int i, f, l;
+	int i, f; //, l;
 	sorting Sorting;
 
 	orbit_type_size = (goi + 1) * goi;
@@ -180,7 +180,7 @@ void orbit_type_repository::init(
 	Type_representatives = NEW_lint(nb_types * orbit_type_size);
 	for (i = 0; i < nb_types; i++) {
 		f = type_first[i];
-		l = type_len[i];
+		//l = type_len[i];
 		lint_vec_copy(Type_repository + f * orbit_type_size,
 				Type_representatives + i * orbit_type_size, orbit_type_size);
 	}

@@ -360,12 +360,12 @@ strong_generators *projective_space_with_action::set_stabilizer(
 				"calling nauty_interface_matrix_int" << endl;
 		}
 
-	int t0, t1, dt, tps;
+	int t0, t1, dt; //, tps;
 	double delta_t_in_sec;
 	os_interface Os;
 	nauty_interface Nau;
 
-	tps = Os.os_ticks_per_second();
+	//tps = Os.os_ticks_per_second();
 	t0 = Os.os_ticks();
 
 	Nau.nauty_interface_matrix_int(Incma, nb_rows, nb_cols,
@@ -704,17 +704,17 @@ void projective_space_with_action::canonical_labeling(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 
-	action *A_linear;
+	//action *A_linear;
 	int *Incma;
 	int *partition;
 	int nb_rows, nb_cols;
 	int *Aut, Aut_counter;
 	int *Base, Base_length;
 	int *Transversal_length, Ago;
-	int N, i, L;
+	int N, i; //, L;
 	nauty_interface Nau;
 
-	A_linear = A;
+	//A_linear = A;
 
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_labeling"
@@ -753,7 +753,7 @@ void projective_space_with_action::canonical_labeling(
 
 
 	N = nb_rows + nb_cols;
-	L = nb_rows * nb_cols;
+	//L = nb_rows * nb_cols;
 
 	if (f_vv) {
 		cout << "projective_space_with_action::canonical_labeling "
@@ -770,11 +770,11 @@ void projective_space_with_action::canonical_labeling(
 		}
 
 
-	int t0, t1, dt, tps;
+	int t0, t1, dt; //, tps;
 	double delta_t_in_sec;
 	os_interface Os;
 
-	tps = Os.os_ticks_per_second();
+	//tps = Os.os_ticks_per_second();
 	t0 = Os.os_ticks();
 
 	Nau.nauty_interface_matrix_int(
