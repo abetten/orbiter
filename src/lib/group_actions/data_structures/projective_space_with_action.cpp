@@ -2335,7 +2335,7 @@ void projective_space_with_action::save(
 	if (f_v) {
 		cout << "projective_space_with_action::save" << endl;
 	}
-	snprintf(fname, 1000, "%s_classified.cvs", output_prefix);
+	snprintf(fname, 1000, "%s_classified.cvs", output_prefix.c_str());
 
 	{
 		ofstream fp(fname);

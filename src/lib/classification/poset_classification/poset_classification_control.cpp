@@ -410,6 +410,7 @@ void poset_classification_control::print()
 	}
 }
 
+#if 0
 void poset_classification_control::init_labels(
 		char *problem_label1000, char *problem_label_with_path1000)
 {
@@ -431,6 +432,7 @@ void poset_classification_control::init_labels(
 	}
 
 }
+#endif
 
 
 }}

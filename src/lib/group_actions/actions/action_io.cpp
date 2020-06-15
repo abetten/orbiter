@@ -97,7 +97,7 @@ void action::report(ostream &ost, int f_sims, sims *S,
 }
 
 void action::read_orbit_rep_and_candidates_from_files_and_process(
-	char *prefix,
+	const char *prefix,
 	int level, int orbit_at_level, int level_of_candidates_file,
 	void (*early_test_func_callback)(long int *S, int len,
 		long int *candidates, int nb_candidates,
@@ -175,7 +175,8 @@ void action::read_orbit_rep_and_candidates_from_files_and_process(
 		}
 }
 
-void action::read_orbit_rep_and_candidates_from_files(char *prefix,
+void action::read_orbit_rep_and_candidates_from_files(
+	const char *prefix,
 	int level, int orbit_at_level, int level_of_candidates_file,
 	long int *&starter,
 	int &starter_sz,

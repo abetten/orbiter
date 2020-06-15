@@ -912,7 +912,7 @@ void poset_classification::housekeeping(int i,
 					"writing files" << endl;
 			}
 #if 1
-		snprintf(my_fname_base, 1000, "%sa", problem_label_with_path);
+		snprintf(my_fname_base, 1000, "%sa", problem_label_with_path.c_str());
 		if (f_v) {
 			cout << "poset_classification_housekeeping "
 					"my_fname_base=" << my_fname_base << endl;
@@ -926,7 +926,7 @@ void poset_classification::housekeeping(int i,
 					"after write_level_file_binary" << endl;
 			}
 		if (i) {		
-			snprintf(my_fname_base, 1000, "%sb", problem_label_with_path);
+			snprintf(my_fname_base, 1000, "%sb", problem_label_with_path.c_str());
 			if (f_v) {
 				cout << "poset_classification_housekeeping "
 						"my_fname_base=" << my_fname_base << endl;
@@ -949,7 +949,7 @@ void poset_classification::housekeeping(int i,
 			cout << "poset_classification_housekeeping "
 					"before write_lvl_file" << endl;
 			}
-		write_lvl_file(problem_label_with_path, i, t0,
+		write_lvl_file(problem_label_with_path.c_str(), i, t0,
 				FALSE /* f_with_strong_generators */,
 				FALSE /* f_long_version */, 0);
 		if (f_v) {
@@ -961,7 +961,7 @@ void poset_classification::housekeeping(int i,
 					"before poset_classification::write_data_file" << endl;
 			}
 		poset_classification::write_data_file(i /* depth_completed */,
-				problem_label_with_path, verbose_level);
+				problem_label_with_path.c_str(), verbose_level);
 
 		if (f_v) {
 			cout << "poset_classification::housekeeping "
@@ -1009,7 +1009,7 @@ void poset_classification::housekeeping(int i,
 					"before write_treefile_and_draw_tree" << endl;
 			}
 
-		write_treefile_and_draw_tree(problem_label_with_path, i,
+		write_treefile_and_draw_tree(problem_label_with_path.c_str(), i,
 				Control->xmax, Control->ymax, Control->radius, f_embedded, 0 /*verbose_level - 1*/);
 			// in poset_classification_draw.cpp
 
@@ -1080,7 +1080,7 @@ void poset_classification::housekeeping_no_data_file(int i,
 			}
 #endif
 
-		write_lvl_file(problem_label_with_path, i, t0,
+		write_lvl_file(problem_label_with_path.c_str(), i, t0,
 				FALSE /* f_with_strong_generators */,
 				FALSE /* f_long_version */, 0);
 		
@@ -1090,7 +1090,7 @@ void poset_classification::housekeeping_no_data_file(int i,
 		}
 
 	if (Control->f_T || (Control->f_t && i == sz)) {
-		write_treefile_and_draw_tree(problem_label_with_path, i,
+		write_treefile_and_draw_tree(problem_label_with_path.c_str(), i,
 				Control->xmax, Control->ymax, Control->radius,
 				f_embedded, verbose_level - 1);
 		}
@@ -1473,7 +1473,7 @@ void poset_classification::write_level_file_binary2(
 }
 
 void poset_classification::write_candidates_binary_using_sv(
-		char *fname_base,
+		const char *fname_base,
 		int lvl, int t0, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1711,13 +1711,13 @@ void poset_classification::recover(
 }
 
 void poset_classification::make_fname_lvl_file_candidates(char *fname1000,
-		char *fname_base, int lvl)
+		const char *fname_base, int lvl)
 {
 	snprintf(fname1000, 1000, "%s_lvl_%d_candidates.txt", fname_base, lvl);
 }
 
 void poset_classification::make_fname_lvl_file(char *fname1000,
-		char *fname_base, int lvl)
+		const char *fname_base, int lvl)
 {
 	snprintf(fname1000, 1000, "%s_lvl_%d", fname_base, lvl);
 }
@@ -1757,7 +1757,7 @@ void poset_classification::write_lvl_file_with_candidates(
 
 
 void poset_classification::write_lvl_file(
-		char *fname_base,
+		const char *fname_base,
 		int lvl, int t0, int f_with_stabilizer_generators,
 		int f_long_version,
 		int verbose_level)
@@ -2299,7 +2299,7 @@ void poset_classification::create_shallow_schreier_tree_fname_mask_base(
 void poset_classification::make_fname_candidates_file_default(
 		char *fname, int level)
 {
-	snprintf(fname, 1000, "%s_lvl_%d_candidates.bin", problem_label_with_path, level);
+	snprintf(fname, 1000, "%s_lvl_%d_candidates.bin", problem_label_with_path.c_str(), level);
 }
 
 

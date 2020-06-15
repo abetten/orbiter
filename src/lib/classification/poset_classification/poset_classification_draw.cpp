@@ -23,7 +23,7 @@ static void print_table_bottom(ofstream &fp);
 static void print_set_special(ofstream &fp, long int *set, int sz);
 
 void poset_classification::write_treefile_and_draw_tree(
-		char *fname_base, int lvl, int xmax, int ymax,
+		const char *fname_base, int lvl, int xmax, int ymax,
 		int rad, int f_embedded,
 		int verbose_level)
 {
@@ -48,7 +48,7 @@ void poset_classification::write_treefile_and_draw_tree(
 	}
 }
 
-int poset_classification::write_treefile(char *fname_base,
+int poset_classification::write_treefile(const char *fname_base,
 		int lvl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -110,7 +110,7 @@ int poset_classification::write_treefile(char *fname_base,
 		}
 }
 
-void poset_classification::draw_tree(char *fname_base, int lvl, 
+void poset_classification::draw_tree(const char *fname_base, int lvl,
 	int xmax, int ymax, int rad, int f_embedded,
 	int f_sideways, int verbose_level)
 {
@@ -230,7 +230,7 @@ void poset_classification::draw_tree(char *fname_base, int lvl,
 		}
 }
 
-void poset_classification::draw_tree_low_level(char *fname, int nb_nodes, 
+void poset_classification::draw_tree_low_level(const char *fname, int nb_nodes,
 	int *coord_xyw, int *perm, int *perm_inv, 
 	int f_draw_points, int f_draw_extension_points,
 	int f_draw_aut_group_order,
@@ -688,25 +688,25 @@ void poset_classification::draw_poset_full(const char *fname_base,
 void poset_classification::draw_poset_fname_base_aux_poset(
 		char *fname, int depth)
 {
-	snprintf(fname, 1000, "%s_aux_poset_lvl_%d", problem_label_with_path, depth);
+	snprintf(fname, 1000, "%s_aux_poset_lvl_%d", problem_label_with_path.c_str(), depth);
 }
 
 void poset_classification::draw_poset_fname_base_poset_lvl(
 		char *fname, int depth)
 {
-	snprintf(fname, 1000, "%s_poset_lvl_%d", problem_label_with_path, depth);
+	snprintf(fname, 1000, "%s_poset_lvl_%d", problem_label_with_path.c_str(), depth);
 }
 
 void poset_classification::draw_poset_fname_base_tree_lvl(
 		char *fname, int depth)
 {
-	snprintf(fname, 1000, "%s_tree_lvl_%d", problem_label_with_path, depth);
+	snprintf(fname, 1000, "%s_tree_lvl_%d", problem_label_with_path.c_str(), depth);
 }
 
 void poset_classification::draw_poset_fname_base_poset_detailed_lvl(
 		char *fname, int depth)
 {
-	snprintf(fname, 1000, "%s_poset_detailed_lvl_%d", problem_label_with_path, depth);
+	snprintf(fname, 1000, "%s_poset_detailed_lvl_%d", problem_label_with_path.c_str(), depth);
 }
 
 
@@ -2471,7 +2471,7 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 	int f_v = (verbose_level >= 1);
 	//int f_vv = FALSE; //(verbose_level >= 2);
 	char fname_base1[1000];
-	char fname[1000];
+	char fname[2000];
 	int lvl, po, so, n, n1, f, cnt;
 	long int *set;
 	longinteger_domain D;
@@ -2479,8 +2479,8 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 	if (f_v) {
 		cout << "poset_classification::print_data_structure_tex" << endl;
 		}
-	snprintf(fname_base1, 1000, "%s_data_lvl_%d", problem_label_with_path, depth);
-	snprintf(fname, 1000, "%s.tex", fname_base1);
+	snprintf(fname_base1, 1000, "%s_data_lvl_%d", problem_label_with_path.c_str(), depth);
+	snprintf(fname, 2000, "%s.tex", fname_base1);
 
 	set = NEW_lint(depth);
 	{

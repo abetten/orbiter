@@ -358,7 +358,7 @@ public:
 		int argc, const char **argv,
 		int verbose_level);
 	void print();
-	void init_labels(char *problem_label1000, char *problem_label_with_path1000);
+	//void init_labels(char *problem_label1000, char *problem_label_with_path1000);
 
 };
 
@@ -378,8 +378,9 @@ private:
 
 	poset_classification_control *Control;
 
-	char problem_label[1000]; // = Control->problem_label
-	char problem_label_with_path[1000]; // Control->path + Control->problem_label
+
+	std::string problem_label; // = Control->problem_label
+	std::string problem_label_with_path; // Control->path + Control->problem_label
 
 	
 	poset *Poset;
@@ -483,8 +484,8 @@ public:
 
 
 	// poset_classification.cpp:
-	char *get_problem_label_with_path();
-	char *get_problem_label();
+	const char *get_problem_label_with_path();
+	const char *get_problem_label();
 	int first_node_at_level(int i);
 	poset_orbit_node *get_node(int node_idx);
 	vector_ge *get_transporter();
@@ -753,15 +754,15 @@ public:
 
 
 	// poset_classification_draw.cpp:
-	void write_treefile_and_draw_tree(char *fname_base, 
+	void write_treefile_and_draw_tree(const char *fname_base,
 		int lvl, int xmax, int ymax, int rad, 
 		int f_embedded, int verbose_level);
-	int write_treefile(char *fname_base, int lvl, 
+	int write_treefile(const char *fname_base, int lvl,
 		int verbose_level);
-	void draw_tree(char *fname_base, int lvl, 
+	void draw_tree(const char *fname_base, int lvl,
 		int xmax, int ymax, int rad, int f_embedded, 
 		int f_sideways, int verbose_level);
-	void draw_tree_low_level(char *fname, int nb_nodes, 
+	void draw_tree_low_level(const char *fname, int nb_nodes,
 		int *coord_xyw, int *perm, int *perm_inv, 
 		int f_draw_points, int f_draw_extension_points, 
 		int f_draw_aut_group_order, 
@@ -883,18 +884,20 @@ public:
 		int &nb_group_elements, int verbose_level);
 	void write_level_file_binary2(int level, std::ofstream &fp,
 		int &nb_group_elements, int verbose_level);
-	void write_candidates_binary_using_sv(char *fname_base, 
+	void write_candidates_binary_using_sv(
+			const char *fname_base,
 		int lvl, int t0, int verbose_level);
 	void read_level_file(int level, char *fname, int verbose_level);
 	void recover(const char *recover_fname, 
 		int &depth_completed, int verbose_level);
 	void make_fname_lvl_file_candidates(char *fname,
-			char *fname_base, int lvl);
+			const char *fname_base, int lvl);
 	void make_fname_lvl_file(char *fname,
-			char *fname_base, int lvl);
+			const char *fname_base, int lvl);
 	void write_lvl_file_with_candidates(char *fname_base, 
 		int lvl, int t0, int verbose_level);
-	void write_lvl_file(char *fname_base, int lvl, 
+	void write_lvl_file(
+			const char *fname_base, int lvl,
 		int t0, int f_with_stabilizer_generators, int f_long_version,
 		int verbose_level);
 	void write_lvl(std::ostream &f, int lvl, int t0,

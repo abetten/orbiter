@@ -745,7 +745,7 @@ public:
 	void report(std::ostream &ost, int f_sims, sims *S,
 			int f_strong_gens, strong_generators *SG, int verbose_level);
 	void read_orbit_rep_and_candidates_from_files_and_process(
-		char *prefix,
+		const char *prefix,
 		int level, int orbit_at_level, int level_of_candidates_file,
 		void (*early_test_func_callback)(long int *S, int len,
 			long int *candidates, int nb_candidates,
@@ -760,7 +760,8 @@ public:
 		int &nb_candidates,
 		int &nb_cases,
 		int verbose_level);
-	void read_orbit_rep_and_candidates_from_files(char *prefix,
+	void read_orbit_rep_and_candidates_from_files(
+			const char *prefix,
 		int level, int orbit_at_level, int level_of_candidates_file,
 		long int *&starter,
 		int &starter_sz,

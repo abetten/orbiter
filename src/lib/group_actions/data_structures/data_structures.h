@@ -245,7 +245,7 @@ public:
 	~orbit_rep();
 	void null();
 	void freeself();
-	void init_from_file(action *A, char *prefix,
+	void init_from_file(action *A, const char *prefix,
 		int level, int orbit_at_level, int level_of_candidates_file,
 		void (*early_test_func_callback)(long int *S, int len,
 			long int *candidates, int nb_candidates,
