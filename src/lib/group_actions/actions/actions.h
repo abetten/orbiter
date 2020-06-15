@@ -181,14 +181,17 @@ public:
 		// element_read_from_memory_object
 
 	
-	/** a label for the group which can be used in filenames */
-	char group_prefix[1000];
+	///** a label for the group which can be used in filenames */
+	//char group_prefix[1000];
+	//std::string group_prefix;
 
 	/** a fancy label for the group */
-	char label[1000];
+	//char label[1000];
+	std::string label;
 
 	/** a fancy label for the group for latex */
-	char label_tex[1000];
+	//char label_tex[1000];
+	std::string label_tex;
 
 
 

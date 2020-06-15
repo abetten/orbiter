@@ -282,7 +282,13 @@ void perm_group::init_with_base(int degree,
 	
 	A.allocate_element_data();
 
-	sprintf(A.group_prefix, "Sym%d", degree);
+	char str1[1000];
+	char str2[1000];
+
+	sprintf(str1, "Sym%d", degree);
+	sprintf(str2, "{\\rm Sym}_{%d}", degree);
+	A.label.assign(str1);
+	A.label_tex.assign(str2);
 
 	if (f_vv) {
 		cout << "perm_group::init finished" << endl;

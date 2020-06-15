@@ -213,8 +213,10 @@ void action::init_projective_group(int n, finite_field *F,
 		cout << "action::init_projective_group low_level_point_size=" 
 			<< low_level_point_size<< endl;
 		}
-	strcpy(label, M->label);
-	strcpy(label_tex, M->label_tex);
+	//strcpy(label, M->label);
+	//strcpy(label_tex, M->label_tex);
+	label.assign(M->label);
+	label_tex.assign(M->label_tex);
 	if (f_v) {
 		cout << "action::init_projective_group label=" << label << endl;
 		}
@@ -229,7 +231,8 @@ void action::init_projective_group(int n, finite_field *F,
 	coded_elt_size_in_char = M->char_per_elt;
 	allocate_element_data();
 
-	strcpy(group_prefix, label);
+	//strcpy(group_prefix, label);
+	//group_prefix.assign(label);
 
 	if (f_basis) {
 		if (f_v) {
@@ -248,7 +251,7 @@ void action::init_projective_group(int n, finite_field *F,
 		}
 	if (f_v) {
 		cout << "action::init_projective_group, finished setting up "
-				<< group_prefix;
+				<< label;
 		cout << ", a permutation group of degree " << degree << " ";
 		cout << "and of order ";
 		print_group_order(cout);
@@ -294,8 +297,10 @@ void action::init_affine_group(int n, finite_field *F,
 		cout << "action::init_affine_group low_level_point_size=" 
 		<< low_level_point_size<< endl;
 		}
-	strcpy(label, M->label);
-	strcpy(label_tex, M->label_tex);
+	//strcpy(label, M->label);
+	//strcpy(label_tex, M->label_tex);
+	label.assign(M->label);
+	label_tex.assign(M->label_tex);
 	if (f_v) {
 		cout << "action::init_affine_group label=" << label << endl;
 		}
@@ -310,7 +315,7 @@ void action::init_affine_group(int n, finite_field *F,
 	coded_elt_size_in_char = M->char_per_elt;
 	allocate_element_data();
 
-	strcpy(group_prefix, label);
+	//group_prefix.assign(label);
 
 	if (f_basis) {
 		setup_linear_group_from_strong_generators(M,
@@ -318,7 +323,7 @@ void action::init_affine_group(int n, finite_field *F,
 		}
 	if (f_v) {
 		cout << "action::init_affine_group, finished setting up "
-				<< group_prefix;
+				<< label;
 		cout << ", a permutation group of degree " << degree << " ";
 		cout << "and of order ";
 		print_group_order(cout);
@@ -366,8 +371,10 @@ void action::init_general_linear_group(int n, finite_field *F,
 			"low_level_point_size="
 			<< low_level_point_size<< endl;
 		}
-	strcpy(label, M->label);
-	strcpy(label_tex, M->label_tex);
+	//strcpy(label, M->label);
+	//strcpy(label_tex, M->label_tex);
+	label.assign(M->label);
+	label_tex.assign(M->label_tex);
 	if (f_v) {
 		cout << "action::init_general_linear_group "
 				"label=" << label << endl;
@@ -383,7 +390,7 @@ void action::init_general_linear_group(int n, finite_field *F,
 	coded_elt_size_in_char = M->char_per_elt;
 	allocate_element_data();
 
-	strcpy(group_prefix, label);
+	//group_prefix.assign(label);
 
 	if (f_basis) {
 		setup_linear_group_from_strong_generators(M,
@@ -391,7 +398,7 @@ void action::init_general_linear_group(int n, finite_field *F,
 		}
 	if (f_v) {
 		cout << "action::init_general_linear_group, "
-				"finished setting up " << group_prefix;
+				"finished setting up " << label;
 		cout << ", a permutation group of degree " << degree << " ";
 		cout << "and of order ";
 		print_group_order(cout);
@@ -687,13 +694,18 @@ void action::init_permutation_group(int degree, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	perm_group *P;
+	char str[1000];
 	
 	if (f_v) {
 		cout << "action::init_permutation_group, degree=" << degree << endl;
 		}
-	sprintf(group_prefix, "Perm%d", degree);
-	sprintf(label, "Perm%d", degree);
-	sprintf(label_tex, "Perm%d", degree);
+	sprintf(str, "Perm%d", degree);
+
+
+	//group_prefix.assign(str);
+	label.assign(str);
+	label_tex.assign(str);
+
 	P = NEW_OBJECT(perm_group);
 	type_G = perm_group_t;
 	G.perm_grp = P;
@@ -770,6 +782,7 @@ void action::init_permutation_group_from_generators(int degree,
 	int f_vv = (verbose_level >= 2);
 	int i;
 	combinatorics_domain Combi;
+	char str[1000];
 	
 	if (f_v) {
 		cout << "action::init_permutation_group_from_generators "
@@ -784,9 +797,13 @@ void action::init_permutation_group_from_generators(int degree,
 					"no target group order is given" << endl;
 		}
 	}
-	sprintf(group_prefix, "Perm%d", degree);
-	sprintf(label, "Perm%d", degree);
-	sprintf(label_tex, "Perm%d", degree);
+	sprintf(str, "Perm%d", degree);
+
+
+	//group_prefix.assign(str);
+	label.assign(str);
+	label_tex.assign(str);
+
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
 				"the " << nb_gens << " generators are" << endl;
@@ -928,9 +945,15 @@ void action::init_affine_group(int n, int q,
 	long int *given_base;
 	finite_field F;
 	longinteger_object go;
+	char str1[1000];
+	char str2[1000];
 	
-	sprintf(label, "AGL_%d_%d", n, q);
-	sprintf(label_tex, "AGL(%d,%d)", n, q);
+	sprintf(str1, "AGL_%d_%d", n, q);
+	sprintf(str2, "AGL(%d,%d)", n, q);
+
+	//group_prefix.assign(str1);
+	label.assign(str1);
+	label_tex.assign(str2);
 
 	F.init(q, verbose_level - 1);
 	
@@ -960,9 +983,15 @@ void action::init_symmetric_group(int degree, int verbose_level)
 	int i, j;
 	longinteger_object go;
 	longinteger_domain D;
+	char str1[1000];
+	char str2[1000];
 	
-	sprintf(label, "Sym_%d", degree);
-	sprintf(label_tex, "Sym(%d)", degree);
+	sprintf(str1, "Sym_%d", degree);
+	sprintf(str2, "Sym(%d)", degree);
+
+	//group_prefix.assign(str1);
+	label.assign(str1);
+	label_tex.assign(str2);
 
 	D.factorial(go, degree);
 
@@ -1211,8 +1240,15 @@ void action::init_direct_product_group(
 		cout << "action::init_direct_product_group low_level_point_size="
 			<< low_level_point_size<< endl;
 		}
-	strcpy(label, P->label);
-	strcpy(label_tex, P->label_tex);
+	//strcpy(label, P->label);
+	//strcpy(label_tex, P->label_tex);
+
+
+	//group_prefix.assign(P->label);
+	label.assign(P->label);
+	label_tex.assign(P->label_tex);
+
+
 	if (f_v) {
 		cout << "action::init_direct_product_group "
 				"label=" << label << endl;
@@ -1228,7 +1264,7 @@ void action::init_direct_product_group(
 	coded_elt_size_in_char = P->char_per_elt;
 	allocate_element_data();
 
-	strcpy(group_prefix, label);
+	//strcpy(group_prefix, label);
 
 
 
@@ -1330,7 +1366,7 @@ void action::init_direct_product_group(
 
 	if (f_v) {
 		cout << "action::init_direct_product_group, finished setting up "
-				<< group_prefix;
+				<< label;
 		cout << ", a permutation group of degree " << degree << " ";
 		cout << "and of order ";
 		print_group_order(cout);
@@ -1454,8 +1490,13 @@ void action::init_wreath_product_group(int nb_factors, int n,
 			"low_level_point_size="
 			<< low_level_point_size<< endl;
 	}
-	strcpy(label, W->label);
-	strcpy(label_tex, W->label_tex);
+	//strcpy(label, W->label);
+	//strcpy(label_tex, W->label_tex);
+
+	label.assign(W->label);
+	label_tex.assign(W->label_tex);
+
+
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
 				"label=" << label << endl;
@@ -1471,7 +1512,7 @@ void action::init_wreath_product_group(int nb_factors, int n,
 	coded_elt_size_in_char = W->char_per_elt;
 	allocate_element_data();
 
-	strcpy(group_prefix, label);
+	//group_prefix.assign(label);
 
 
 
@@ -1578,7 +1619,7 @@ void action::init_wreath_product_group(int nb_factors, int n,
 
 	if (f_v) {
 		cout << "action::init_wreath_product_group, finished setting up "
-				<< group_prefix;
+				<< label;
 		cout << ", a permutation group of degree " << degree << " ";
 		cout << "and of order ";
 		print_group_order(cout);
@@ -1597,6 +1638,8 @@ void action::init_permutation_representation(action *A_original,
 {
 	int f_v = (verbose_level >= 1);
 	permutation_representation *P;
+	char str1[2000];
+	char str2[2000];
 
 	if (f_v) {
 		cout << "action::init_permutation_representation" << endl;
@@ -1657,16 +1700,20 @@ void action::init_permutation_representation(action *A_original,
 		int_vec_copy(W->the_transversal_length,
 				get_transversal_length(), base_len());
 
-		sprintf(label, "%s_induced%d_prev", P->label, degree);
-		sprintf(label_tex, "%s induced%d prev", P->label_tex, degree);
+		sprintf(str1, "%s_induced%d_prev", P->label, degree);
+		sprintf(str2, "%s induced%d prev", P->label_tex, degree);
+		label.assign(str1);
+		label_tex.assign(str2);
 	}
 	else {
 		f_is_linear = FALSE;
 		dimension = 0;
 		low_level_point_size = 0;
 		action::degree = degree;
-		sprintf(label, "%s_induced%d", P->label, degree);
-		sprintf(label_tex, "%s induced%d", P->label_tex, degree);
+		sprintf(str1, "%s_induced%d", P->label, degree);
+		sprintf(str2, "%s induced%d", P->label_tex, degree);
+		label.assign(str1);
+		label_tex.assign(str2);
 
 	}
 
@@ -1686,7 +1733,7 @@ void action::init_permutation_representation(action *A_original,
 	coded_elt_size_in_char = P->char_per_elt;
 	allocate_element_data();
 
-	strcpy(group_prefix, label);
+	//group_prefix.assign(label);
 
 
 
@@ -1794,7 +1841,7 @@ void action::init_permutation_representation(action *A_original,
 
 	if (f_v) {
 		cout << "action::init_permutation_representation, finished setting up "
-				<< group_prefix;
+				<< label;
 		cout << ", a permutation group of degree " << degree << " ";
 		cout << "and of order ";
 		print_group_order(cout);
@@ -1895,25 +1942,26 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 	make_element_size = A->make_element_size;
+	char str1[1000];
+	char str2[1000];
 
 	if (O->epsilon == 1) {
-		sprintf(group_prefix, "PGOp_%d_%d", O->n, q);
-		sprintf(label, "PGOp_%d_%d", O->n, q);
+		sprintf(str1, "PGOp_%d_%d", O->n, q);
 	}
 	else if (O->epsilon == -1) {
-		sprintf(group_prefix, "PGOm_%d_%d", O->n, q);
-		sprintf(label, "PGOm_%d_%d", O->n, q);
+		sprintf(str1, "PGOm_%d_%d", O->n, q);
 	}
 	else {
-		sprintf(group_prefix, "PGO_%d_%d", O->n, q);
-		sprintf(label, "PGO_%d_%d", O->n, q);
+		sprintf(str1, "PGO_%d_%d", O->n, q);
 	}
 
 	algebra_global AG;
 
-	sprintf(label_tex, "{\\rm PGO}^{%s}(%d,%d)", AG.plus_minus_string(O->epsilon), O->n, q);
+	sprintf(str2, "{\\rm PGO}^{%s}(%d,%d)", AG.plus_minus_string(O->epsilon), O->n, q);
 
 
+	label.assign(str1);
+	label_tex.assign(str2);
 
 	if (f_basis) {
 		longinteger_object target_go;
@@ -2076,8 +2124,9 @@ void action::init_group_from_strong_generators(
 	if (f_v) {
 		cout << "action::init_group_from_strong_generators" << endl;
 		}
-	strcpy(label, "from sgs");
-	strcpy(label_tex, "from sgs");
+	label.assign("from sgs");
+	label_tex.assign("from sgs");
+
 	if (f_vv) {
 		cout << "generators are" << endl;
 		gens->print(cout);

@@ -346,10 +346,10 @@ public:
 		double schreier_tree_line_width;
 
 		int f_problem_label;
-		const char *problem_label;
+		std::string problem_label;
 
 		int f_path;
-		const char *path;
+		std::string path;
 
 
 	poset_classification_control();

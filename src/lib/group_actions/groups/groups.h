@@ -152,8 +152,12 @@ public:
 	finite_field *F;
 	int f_semilinear;
 
-	char prefix[1000];
-	char label_latex[1000];
+	//char prefix[1000];
+	//char label_latex[1000];
+
+	std::string label;
+	std::string label_latex;
+
 	strong_generators *initial_strong_gens;
 	action *A_linear;
 	matrix_group *Mtx;
@@ -173,41 +177,28 @@ public:
 	void freeself();
 	void init(linear_group_description *description, 
 		int verbose_level);
-	void init_PGL2q_OnConic(char *prefix, char *label_latex,
+	void init_PGL2q_OnConic(int verbose_level);
+	void init_wedge_action(int verbose_level);
+	void init_monomial_group(int verbose_level);
+	void init_diagonal_group(int verbose_level);
+	void init_singer_group(int singer_power, int verbose_level);
+	void init_singer_group_and_frobenius(int singer_power, int verbose_level);
+	void init_null_polarity_group(int verbose_level);
+	void init_borel_subgroup_upper(int verbose_level);
+	void init_identity_subgroup(int verbose_level);
+	void init_symplectic_group(int verbose_level);
+	void init_subfield_structure_action(int s, int verbose_level);
+	void init_orthogonal_group(int epsilon, int verbose_level);
+	void init_subgroup_from_file(
+			const char *subgroup_fname, const char *subgroup_label,
 			int verbose_level);
-	void init_wedge_action(char *prefix, char *label_latex,
-			int verbose_level);
-	void init_monomial_group(char *prefix, char *label_latex,
-			int verbose_level);
-	void init_diagonal_group(char *prefix, char *label_latex,
-			int verbose_level);
-	void init_singer_group(char *prefix, char *label_latex,
-			int singer_power, int verbose_level);
-	void init_singer_group_and_frobenius(char *prefix, char *label_latex,
-			int singer_power, int verbose_level);
-	void init_null_polarity_group(char *prefix, char *label_latex,
-			int verbose_level);
-	void init_borel_subgroup_upper(char *prefix, char *label_latex,
-			int verbose_level);
-	void init_identity_subgroup(char *prefix, char *label_latex,
-			int verbose_level);
-	void init_symplectic_group(char *prefix, char *label_latex,
-			int verbose_level);
-	void init_subfield_structure_action(char *prefix, char *label_latex,
-			int s, int verbose_level);
-	void init_orthogonal_group(char *prefix, char *label_latex,
-		int epsilon, int verbose_level);
-	void init_subgroup_from_file(char *prefix, char *label_latex,
-		const char *subgroup_fname, const char *subgroup_label, 
-		int verbose_level);
-	void init_subgroup_by_generators(char *prefix, char *label_latex,
+	void init_subgroup_by_generators(
 		const char *subgroup_label,
 		const char *subgroup_order_text,
 		int nb_subgroup_generators,
 		const char **subgroup_generators_as_string,
 		int verbose_level);
-	void init_subgroup_Janko1(char *prefix, char *label_latex,
-		int verbose_level);
+	void init_subgroup_Janko1(int verbose_level);
 	void report(std::ostream &fp, int f_sylow, int f_group_table,
 			int f_conjugacy_classes_and_normalizers,
 			double tikz_scale, double tikz_line_width, int factor_1000,

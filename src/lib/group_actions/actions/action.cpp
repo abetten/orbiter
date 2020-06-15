@@ -55,7 +55,7 @@ void action::null()
 
 	elt_size_in_int = 0;
 	coded_elt_size_in_char = 0;
-	group_prefix[0] = 0;
+	//group_prefix[0] = 0;
 	//f_has_transversal_reps = FALSE;
 	f_group_order_is_small = FALSE;
 	make_element_size = 0;

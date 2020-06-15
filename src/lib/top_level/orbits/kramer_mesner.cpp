@@ -402,7 +402,7 @@ void kramer_mesner::orbits(
 		}
 	{
 		char fname[1000];
-		sprintf(fname, "%s_orbits_%d.txt", A2->label, orbits_t);
+		sprintf(fname, "%s_orbits_%d.txt", A2->label.c_str(), orbits_t);
 		{
 			ofstream fp(fname);
 			gen->write_lvl(fp, orbits_t, t0,
@@ -420,7 +420,7 @@ void kramer_mesner::orbits(
 		}
 	{
 		char fname[1000];
-		sprintf(fname, "%s_orbits_%d.txt", A2->label, orbits_k);
+		sprintf(fname, "%s_orbits_%d.txt", A2->label.c_str(), orbits_k);
 		{
 			ofstream fp(fname);
 			gen->write_lvl(fp, orbits_k, t0,
@@ -590,7 +590,7 @@ void kramer_mesner::orbits(
 			char fname_gens[1000];
 
 			sprintf(fname_gens, "%s_stab_gens_%d_%d.txt",
-					A2->label, Identify_length[i], idx);
+					A2->label.c_str(), Identify_length[i], idx);
 			cout << "The generators in source code:" << endl;
 			SaS->Strong_gens->print_generators_in_source_code();
 			SaS->Strong_gens->print_generators_in_source_code_to_file(

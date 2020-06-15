@@ -325,7 +325,7 @@ void group_theoretic_activity::classes(int verbose_level)
 	G = LG->Strong_gens->create_sims(verbose_level);
 
 	A2->conjugacy_classes_and_normalizers(G,
-			LG->prefix, LG->label_latex, verbose_level);
+			LG->label.c_str(), LG->label_latex.c_str(), verbose_level);
 
 	FREE_OBJECT(G);
 	if (f_v) {
@@ -379,7 +379,7 @@ void group_theoretic_activity::normalizer(int verbose_level)
 	longinteger_object N_order;
 
 
-	sprintf(fname_magma_prefix, "%s_normalizer", LG->prefix);
+	sprintf(fname_magma_prefix, "%s_normalizer", LG->label.c_str());
 
 	G = LG->initial_strong_gens->create_sims(verbose_level);
 	H = LG->Strong_gens->create_sims(verbose_level);
@@ -529,8 +529,8 @@ void group_theoretic_activity::report(int verbose_level)
 	int factor1000 = 1000;
 
 
-	sprintf(fname, "%s_report.tex", LG->prefix);
-	sprintf(title, "The group $%s$", LG->label_latex);
+	sprintf(fname, "%s_report.tex", LG->label.c_str());
+	sprintf(title, "The group $%s$", LG->label_latex.c_str());
 
 	{
 		ofstream fp(fname);
@@ -638,7 +638,7 @@ void group_theoretic_activity::print_elements_tex(int verbose_level)
 
 	char fname[1000];
 
-	sprintf(fname, "%s_elements.tex", LG->prefix);
+	sprintf(fname, "%s_elements.tex", LG->label.c_str());
 
 
 	{
@@ -1028,7 +1028,7 @@ void group_theoretic_activity::orbits_on_set_from_file(int verbose_level)
 	chop_off_extension(str);
 
 	char fname[1000];
-	sprintf(fname, "orbit_of_%s_under_%s_with_hash.csv", str, LG->prefix);
+	sprintf(fname, "orbit_of_%s_under_%s_with_hash.csv", str, LG->label.c_str());
 	cout << "Writing table to file " << fname << endl;
 	Fio.lint_matrix_write_csv(fname,
 			Table, orbit_length, set_size);
@@ -1044,7 +1044,7 @@ void group_theoretic_activity::orbits_on_set_from_file(int verbose_level)
 
 	strcpy(str, Descr->orbit_of_set_from_file_fname);
 	chop_off_extension(str);
-	sprintf(fname, "orbit_of_%s_under_%s.txt", str, LG->prefix);
+	sprintf(fname, "orbit_of_%s_under_%s.txt", str, LG->label.c_str());
 	cout << "Writing table to file " << fname << endl;
 	{
 		ofstream ost(fname);
@@ -1101,7 +1101,7 @@ void group_theoretic_activity::orbit_of(int verbose_level)
 	char fname_tree_mask[1000];
 
 	sprintf(fname_tree_mask, "%s_orbit_of_point_%d.layered_graph",
-			LG->prefix, Descr->orbit_of_idx);
+			LG->label.c_str(), Descr->orbit_of_idx);
 
 	Sch->export_tree_as_layered_graph(0 /* orbit_no */,
 			fname_tree_mask,
@@ -1143,7 +1143,7 @@ void group_theoretic_activity::orbit_of(int verbose_level)
 
 	cout << "computing shallow Schreier tree done." << endl;
 
-	sprintf(fname_tree_mask, "%s_%%d_shallow.layered_graph", A2->label);
+	sprintf(fname_tree_mask, "%s_%%d_shallow.layered_graph", A2->label.c_str());
 
 	shallow_tree->export_tree_as_layered_graph(0 /* orbit_no */,
 			fname_tree_mask,
@@ -1213,7 +1213,7 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 		int i;
 
 
-		sprintf(fname, "%s_orbit_reps.csv", A2->label);
+		sprintf(fname, "%s_orbit_reps.csv", A2->label.c_str());
 
 		orbit_reps = NEW_int(Sch->nb_orbits);
 
@@ -1237,7 +1237,7 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 		int i;
 
 
-		sprintf(fname, "%s_orbit_length.csv", A2->label);
+		sprintf(fname, "%s_orbit_length.csv", A2->label.c_str());
 
 		orbit_reps = NEW_int(Sch->nb_orbits);
 
@@ -1316,7 +1316,7 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 	char fname_orbits[1000];
 	file_io Fio;
 
-	sprintf(fname_orbits, "%s_orbits.tex", A2->label);
+	sprintf(fname_orbits, "%s_orbits.tex", A2->label.c_str());
 
 
 	Sch->latex(fname_orbits);
@@ -1328,7 +1328,7 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 	if (Descr->f_export_trees) {
 		char fname_tree_mask[1000];
 
-		sprintf(fname_tree_mask, "%s_%%d.layered_graph", A2->label);
+		sprintf(fname_tree_mask, "%s_%%d.layered_graph", A2->label.c_str());
 
 		for (orbit_idx = 0; orbit_idx < Sch->nb_orbits; orbit_idx++) {
 			cout << "orbit " << orbit_idx << " / " <<  Sch->nb_orbits
@@ -1362,7 +1362,7 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 
 		cout << "computing shallow Schreier tree done." << endl;
 
-		sprintf(fname_schreier_tree_mask, "%s_%%d_shallow.layered_graph", A2->label);
+		sprintf(fname_schreier_tree_mask, "%s_%%d_shallow.layered_graph", A2->label.c_str());
 
 		shallow_tree->export_tree_as_layered_graph(0 /* orbit_no */,
 				fname_schreier_tree_mask,
@@ -1503,10 +1503,10 @@ void group_theoretic_activity::orbits_on_subspaces(int verbose_level)
 
 	if (f_v) {
 		cout << "group_theoretic_activity::orbits_on_subspaces "
-				"LG->prefix=" << LG->prefix << endl;
+				"LG->label=" << LG->label << endl;
 	}
 
-	Control->problem_label = LG->prefix;
+	Control->problem_label.assign(LG->label);
 	Control->f_problem_label = TRUE;
 	//sprintf(orbits_on_subspaces_PC->fname_base, "%s", LG->prefix);
 
@@ -1599,7 +1599,7 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 		}
 		{
 			char fname_report[1000];
-			sprintf(fname_report, "%s_poset.tex", LG->prefix);
+			sprintf(fname_report, "%s_poset.tex", LG->label.c_str());
 			latex_interface L;
 			file_io Fio;
 

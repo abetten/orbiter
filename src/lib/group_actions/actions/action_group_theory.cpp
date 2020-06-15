@@ -752,9 +752,9 @@ void action::report_conjugacy_classes_and_normalizers(ostream &ost,
 		cout << "action::conjugacy_classes_and_normalizers" << endl;
 	}
 
-	snprintf(prefix, 2000, "%s", group_prefix);
-	snprintf(fname1, 3000, "%s_classes.magma", prefix);
-	snprintf(fname2, 3000, "%s_classes_out.txt", prefix);
+	snprintf(prefix, 2000, "%s", label.c_str());
+	snprintf(fname1, 3000, "%s_classes.magma", label.c_str());
+	snprintf(fname2, 3000, "%s_classes_out.txt", label.c_str());
 
 
 	if (Fio.file_size(fname2) > 0) {

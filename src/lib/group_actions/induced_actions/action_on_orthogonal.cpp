@@ -67,7 +67,7 @@ void action_on_orthogonal::init(action *original_action,
 	if (!original_action->f_is_linear) {
 		cout << "action_on_orthogonal::init "
 				"original_action not of linear type" << endl;
-		cout << "action " << original_action->group_prefix << endl;
+		cout << "action " << original_action->label << endl;
 		exit(1);
 		}
 	action_on_orthogonal::original_action = original_action;
