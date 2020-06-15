@@ -273,9 +273,9 @@ void orbit_type_repository::report(ostream &ost)
 
 void orbit_type_repository::report_one_type(ostream &ost, int type_idx)
 {
-	int f, l;
+	int /*f,*/ l;
 
-	f = type_first[type_idx];
+	//f = type_first[type_idx];
 	l = type_len[type_idx];
 	ost << "\\item" << endl;
 	ost << "Orbit type " << type_idx << " / " << nb_types << ":\\\\" << endl;

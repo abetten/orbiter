@@ -816,7 +816,7 @@ strong_generators
 *projective_space_with_action::set_stabilizer_of_object(
 	object_in_projective_space *OiP, 
 	int f_save_incma_in_and_out,
-	const char *save_incma_in_and_out_prefix,
+	std::string &save_incma_in_and_out_prefix,
 	int f_compute_canonical_form,
 	uchar *&canonical_form,
 	int &canonical_form_len,
@@ -895,13 +895,13 @@ strong_generators
 			cout << "too large to print" << endl;
 			}
 
-		char fname_csv[1000];
-		char fname_bin[1000];
+		char fname_csv[2000];
+		char fname_bin[2000];
 
-		sprintf(fname_csv, "%sIncma_in_%d_%d.csv",
-				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		sprintf(fname_bin, "%sIncma_in_%d_%d.bin",
-				save_incma_in_and_out_prefix, nb_rows, nb_cols);
+		snprintf(fname_csv, 2000, "%sIncma_in_%d_%d.csv",
+				save_incma_in_and_out_prefix.c_str(), nb_rows, nb_cols);
+		snprintf(fname_bin, 2000, "%sIncma_in_%d_%d.bin",
+				save_incma_in_and_out_prefix.c_str(), nb_rows, nb_cols);
 		Fio.int_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
 
 		colored_graph *CG;
@@ -1031,17 +1031,17 @@ strong_generators
 
 
 	if (f_save_incma_in_and_out) {
-		char fname_labeling[1000];
-		char fname_csv[1000];
-		char fname_bin[1000];
+		char fname_labeling[2000];
+		char fname_csv[2000];
+		char fname_bin[2000];
 		latex_interface L;
 
-		sprintf(fname_labeling, "%slabeling_%d_%d.csv",
-				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		sprintf(fname_csv, "%sIncma_out_%d_%d.csv",
-				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		sprintf(fname_bin, "%sIncma_out_%d_%d.bin",
-				save_incma_in_and_out_prefix, nb_rows, nb_cols);
+		snprintf(fname_labeling, 2000, "%slabeling_%d_%d.csv",
+				save_incma_in_and_out_prefix.c_str(), nb_rows, nb_cols);
+		snprintf(fname_csv, 2000, "%sIncma_out_%d_%d.csv",
+				save_incma_in_and_out_prefix.c_str(), nb_rows, nb_cols);
+		snprintf(fname_bin, 2000, "%sIncma_out_%d_%d.bin",
+				save_incma_in_and_out_prefix.c_str(), nb_rows, nb_cols);
 		
 		cout << "labeling:" << endl;
 		L.lint_vec_print_as_matrix(cout,
@@ -1725,7 +1725,7 @@ projective_space_with_action::create_object_from_int_vec(
 int projective_space_with_action::process_object(
 	classify_bitvectors *CB,
 	object_in_projective_space *OiP,
-	int f_save_incma_in_and_out, const char *prefix,
+	int f_save_incma_in_and_out, std::string &prefix,
 	int nb_objects_to_test,
 	strong_generators *&SG,
 	long int *canonical_labeling,
@@ -1741,10 +1741,14 @@ int projective_space_with_action::process_object(
 
 	longinteger_object go;
 	//int *Extra_data;
-	char save_incma_in_and_out_prefix[1000];
+	std::string save_incma_in_and_out_prefix;
 
 	if (f_save_incma_in_and_out) {
-		sprintf(save_incma_in_and_out_prefix, "%s_%d_", prefix, CB->n);
+		save_incma_in_and_out_prefix.assign(prefix);
+		char str[1000];
+
+		sprintf(str, "_%d_", CB->n);
+		save_incma_in_and_out_prefix.append(str);
 	}
 
 
@@ -1827,7 +1831,7 @@ int projective_space_with_action::process_object(
 void projective_space_with_action::classify_objects_using_nauty(
 	data_input_stream *Data,
 	classify_bitvectors *CB,
-	int f_save_incma_in_and_out, const char *prefix,
+	int f_save_incma_in_and_out, std::string &prefix,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2320,7 +2324,7 @@ void projective_space_with_action::classify_objects_using_nauty(
 
 
 void projective_space_with_action::save(
-		const char *output_prefix,
+		std::string &output_prefix,
 		classify_bitvectors *CB,
 		int verbose_level)
 {
@@ -2331,7 +2335,7 @@ void projective_space_with_action::save(
 	if (f_v) {
 		cout << "projective_space_with_action::save" << endl;
 	}
-	sprintf(fname, "%s_classified.cvs", output_prefix);
+	snprintf(fname, 1000, "%s_classified.cvs", output_prefix);
 
 	{
 		ofstream fp(fname);
@@ -2850,7 +2854,7 @@ void projective_space_with_action::select_packings(
 		int canonical_labeling_sz;
 		int nb_rows, nb_cols;
 		object_in_projective_space *OiP;
-		int f_accept;
+		int f_accept = FALSE;
 		int *set1;
 		int *set2;
 
@@ -3814,16 +3818,16 @@ void projective_space_with_action::select_packings_self_dual(
 	} // next g
 
 	char fname_base[1000];
-	char fname_self_dual[1000];
+	char fname_self_dual[2000];
 
 	strcpy(fname_base, fname);
 	chop_off_extension(fname_base);
 	if (f_split) {
-		sprintf(fname_self_dual, "%s_self_dual_r%d_m%d.csv",
+		snprintf(fname_self_dual, 2000, "%s_self_dual_r%d_m%d.csv",
 				fname_base, split_r, split_m);
 	}
 	else {
-		sprintf(fname_self_dual, "%s_self_dual.csv", fname_base);
+		snprintf(fname_self_dual, 2000, "%s_self_dual.csv", fname_base);
 	}
 	cout << "saving self_dual_cases to file " << fname_self_dual << endl;
 	Fio.int_vec_write_csv(self_dual_cases, nb_self_dual_cases,
@@ -3847,7 +3851,7 @@ void projective_space_with_action::select_packings_self_dual(
 
 
 void projective_space_with_action::latex_report(const char *fname,
-		const char *prefix,
+		std::string &prefix,
 		classify_bitvectors *CB,
 		int f_save_incma_in_and_out,
 		int fixed_structure_order_list_sz,
@@ -3968,10 +3972,14 @@ void projective_space_with_action::latex_report(const char *fname,
 
 			strong_generators *SG;
 			longinteger_object go;
-			char save_incma_in_and_out_prefix[1000];
+			std::string save_incma_in_and_out_prefix;
 
 			if (f_save_incma_in_and_out) {
-				sprintf(save_incma_in_and_out_prefix, "%s_iso_%d_%d", prefix, i, j);
+				save_incma_in_and_out_prefix.assign(prefix);
+				char str[1000];
+
+				sprintf(str, "_iso_%d_%d", i, j);
+				save_incma_in_and_out_prefix.append(prefix);
 			}
 
 

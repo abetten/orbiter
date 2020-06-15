@@ -609,7 +609,7 @@ public:
 	strong_generators *set_stabilizer_of_object(
 		object_in_projective_space *OiP, 
 		int f_save_incma_in_and_out, 
-		const char *save_incma_in_and_out_prefix, 
+		std::string &save_incma_in_and_out_prefix,
 		int f_compute_canonical_form, 
 		uchar *&canonical_form, 
 		int &canonical_form_len,
@@ -641,7 +641,7 @@ public:
 	int process_object(
 		classify_bitvectors *CB,
 		object_in_projective_space *OiP,
-		int f_save_incma_in_and_out, const char *prefix,
+		int f_save_incma_in_and_out, std::string &prefix,
 		int nb_objects_to_test,
 		strong_generators *&SG,
 		long int *canonical_labeling,
@@ -649,9 +649,10 @@ public:
 	void classify_objects_using_nauty(
 		data_input_stream *Data,
 		classify_bitvectors *CB,
-		int f_save_incma_in_and_out, const char *prefix,
+		int f_save_incma_in_and_out, std::string &prefix,
 		int verbose_level);
-	void save(const char *output_prefix,
+	void save(
+			std::string &output_prefix,
 			classify_bitvectors *CB,
 			int verbose_level);
 	void merge_packings(
@@ -675,7 +676,7 @@ public:
 			classify_bitvectors *&CB,
 			int verbose_level);
 	void latex_report(const char *fname,
-			const char *prefix,
+			std::string &prefix,
 			classify_bitvectors *CB,
 			int f_save_incma_in_and_out,
 			int fixed_structure_order_list_sz,
