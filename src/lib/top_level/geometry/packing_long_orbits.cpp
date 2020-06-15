@@ -248,10 +248,10 @@ void packing_long_orbits::create_fname_graph_on_remaining_long_orbits()
 {
 	if (P->Descr->f_output_path) {
 		sprintf(fname_graph, "%s%s_fpc%d_graph", P->Descr->output_path,
-				P->H_LG->prefix, fixpoints_clique_case_number);
+				P->H_LG->label.c_str(), fixpoints_clique_case_number);
 	}
 	else {
-		sprintf(fname_graph, "%s_fpc%d_graph", P->H_LG->prefix,
+		sprintf(fname_graph, "%s_fpc%d_graph", P->H_LG->label.c_str(),
 				fixpoints_clique_case_number);
 	}
 

@@ -36,7 +36,7 @@ void poset_classification::generate_source_code(
 	if (f_v) {
 		cout << "poset_classification::generate_source_code" << endl;
 		}
-	snprintf(my_prefix, 1000, "%s_level_%d", Control->problem_label, level);
+	snprintf(my_prefix, 1000, "%s_level_%d", Control->problem_label.c_str(), level);
 	snprintf(fname, 1000, "%s.cpp", my_prefix);
 
 	set = NEW_lint(level);

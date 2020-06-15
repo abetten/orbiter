@@ -666,7 +666,6 @@ void packing_classify::lifting_prepare_function_new(
 	long int *free_point_idx;
 	long int *live_blocks2;
 	int nb_live_blocks2;
-	int i, j, a;
 	int nb_needed, nb_rows, nb_cols;
 
 

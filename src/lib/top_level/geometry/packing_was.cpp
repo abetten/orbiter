@@ -149,26 +149,26 @@ void packing_was::init(packing_was_description *Descr,
 
 	if (Descr->f_output_path) {
 		sprintf(fname_fixp_graph, "%s%s_fixp_graph.bin",
-				Descr->output_path, H_LG->prefix);
+				Descr->output_path, H_LG->label.c_str());
 	}
 	else {
-		sprintf(fname_fixp_graph, "%s_fixp_graph.bin", H_LG->prefix);
+		sprintf(fname_fixp_graph, "%s_fixp_graph.bin", H_LG->label.c_str());
 	}
 	if (Descr->f_output_path) {
 		sprintf(fname_fixp_graph_cliques, "%s%s_fixp_graph_cliques.csv",
-				Descr->output_path, H_LG->prefix);
+				Descr->output_path, H_LG->label.c_str());
 	}
 	else {
 		sprintf(fname_fixp_graph_cliques, "%s_fixp_graph_cliques.csv",
-				H_LG->prefix);
+				H_LG->label.c_str());
 	}
 	if (Descr->f_output_path) {
 		sprintf(fname_fixp_graph_cliques_orbiter, "%s%s_fixp_graph_cliques_lvl_%d",
-				Descr->output_path, H_LG->prefix, Descr->clique_size_on_fixpoint_graph);
+				Descr->output_path, H_LG->label.c_str(), Descr->clique_size_on_fixpoint_graph);
 	}
 	else {
 		sprintf(fname_fixp_graph_cliques_orbiter, "%s_fixp_graph_cliques_lvl_%d",
-				H_LG->prefix, Descr->clique_size_on_fixpoint_graph);
+				H_LG->label.c_str(), Descr->clique_size_on_fixpoint_graph);
 	}
 
 	if (f_v) {
@@ -495,7 +495,7 @@ void packing_was::init_N(int verbose_level)
 		N_A = N_LG->A2;
 
 		if (f_v) {
-			cout << "packing_was::init_N created group " << H_LG->prefix << endl;
+			cout << "packing_was::init_N created group " << H_LG->label << endl;
 		}
 
 		if (!N_A->is_matrix_group()) {
@@ -552,7 +552,7 @@ void packing_was::init_H(int verbose_level)
 	A = H_LG->A2;
 
 	if (f_v) {
-		cout << "packing_was::init_H created group " << H_LG->prefix << endl;
+		cout << "packing_was::init_H created group " << H_LG->label << endl;
 	}
 
 	if (!A->is_matrix_group()) {
@@ -602,10 +602,10 @@ void packing_was::compute_H_orbits_on_lines(int verbose_level)
 
 	if (Descr->f_output_path) {
 		sprintf(prefix_line_orbits, "%s%s_line_orbits",
-				Descr->output_path, H_LG->prefix);
+				Descr->output_path, H_LG->label.c_str());
 	}
 	else {
-		sprintf(prefix_line_orbits, "%s_line_orbits", H_LG->prefix);
+		sprintf(prefix_line_orbits, "%s_line_orbits", H_LG->label.c_str());
 	}
 	Line_orbits_under_H = NEW_OBJECT(orbits_on_something);
 
@@ -659,10 +659,10 @@ void packing_was::compute_H_orbits_on_spreads(int verbose_level)
 
 	if (Descr->f_output_path) {
 		sprintf(prefix_spread_orbits, "%s%s_spread_orbits",
-				Descr->output_path, H_LG->prefix);
+				Descr->output_path, H_LG->label.c_str());
 	}
 	else {
-		sprintf(prefix_spread_orbits, "%s_spread_orbits", H_LG->prefix);
+		sprintf(prefix_spread_orbits, "%s_spread_orbits", H_LG->label.c_str());
 	}
 	Spread_orbits_under_H->init(P->A_on_spreads,
 			H_gens, TRUE /*f_load_save*/,
@@ -707,10 +707,10 @@ void packing_was::test_orbits_on_spreads(int verbose_level)
 
 	if (Descr->f_output_path) {
 		sprintf(fname_good_orbits, "%s%s_good_orbits",
-				Descr->output_path, H_LG->prefix);
+				Descr->output_path, H_LG->label.c_str());
 	}
 	else {
-		sprintf(fname_good_orbits, "%s_good_orbits", H_LG->prefix);
+		sprintf(fname_good_orbits, "%s_good_orbits", H_LG->label.c_str());
 	}
 
 	if (Fio.file_size(fname_good_orbits) > 0) {
@@ -897,10 +897,10 @@ void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
 
 	if (Descr->f_output_path) {
 		sprintf(prefix_reduced_spread_orbits, "%s%s_reduced_spread_orbits",
-				Descr->output_path, H_LG->prefix);
+				Descr->output_path, H_LG->label.c_str());
 	}
 	else {
-		sprintf(prefix_reduced_spread_orbits, "%s_reduced_spread_orbits", H_LG->prefix);
+		sprintf(prefix_reduced_spread_orbits, "%s_reduced_spread_orbits", H_LG->label.c_str());
 	}
 	reduced_spread_orbits_under_H->init(A_on_reduced_spreads,
 			H_gens, TRUE /*f_load_save*/,

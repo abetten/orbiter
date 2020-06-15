@@ -82,8 +82,8 @@ void permutation_representation::init(action *A_original,
 	elt_size_int = perm_offset + P->elt_size_int;
 	make_element_size = A_original->make_element_size + degree;
 
-	sprintf(label, "%s_perm_rep_deg%d", A_original->label, degree);
-	sprintf(label_tex, "%s degree %d", A_original->label_tex, degree);
+	sprintf(label, "%s_perm_rep_deg%d", A_original->label.c_str(), degree);
+	sprintf(label_tex, "%s degree %d", A_original->label_tex.c_str(), degree);
 
 	char_per_elt = A_original->coded_elt_size_in_char + char_per_elt;
 	elt1 = (uchar *) NEW_char(char_per_elt);

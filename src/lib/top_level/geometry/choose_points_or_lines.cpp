@@ -210,15 +210,6 @@ void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens,
 				<< label << " calling gen->init_check_func" << endl;
 	}
 
-#if 0
-	gen->init_check_func(
-		check_function, 
-		data /* candidate_check_data */);
-	//gen->init_incremental_check_func(
-		//check_mindist_incremental, 
-		//this /* candidate_check_data */);
-#endif
-
 
 #if 0
 	gen->f_print_function = TRUE;

@@ -103,8 +103,10 @@ void linear_group::init(
 		cout << go << endl;
 	}
 
-	strcpy(prefix, A_linear->label);
-	strcpy(label_latex, A_linear->label_tex);
+	label.assign(A_linear->label);
+	label_latex.assign(A_linear->label_tex);
+	//strcpy(prefix, A_linear->label);
+	//strcpy(label_latex, A_linear->label_tex);
 
 	Mtx = A_linear->G.matrix_grp;
 	vector_space_dimension = n;
@@ -116,7 +118,7 @@ void linear_group::init(
 			cout << "linear_group::init "
 					"before init_PGL2q_OnConic" << endl;
 		}
-		init_PGL2q_OnConic(prefix, label_latex, verbose_level);
+		init_PGL2q_OnConic(verbose_level);
 		if (f_v) {
 			cout << "linear_group::init "
 					"after init_PGL2q_OnConic" << endl;
@@ -128,7 +130,7 @@ void linear_group::init(
 			cout << "linear_group::init "
 					"before init_wedge_action" << endl;
 		}
-		init_wedge_action(prefix, label_latex, verbose_level);
+		init_wedge_action(verbose_level);
 		if (f_v) {
 			cout << "linear_group::init "
 					"after init_wedge_action" << endl;
@@ -140,7 +142,7 @@ void linear_group::init(
 			cout << "linear_group::init "
 					"before init_monomial_group" << endl;
 		}
-		init_monomial_group(prefix, label_latex, verbose_level);
+		init_monomial_group(verbose_level);
 		if (f_v) {
 			cout << "linear_group::init "
 					"after init_monomial_group" << endl;
@@ -152,7 +154,7 @@ void linear_group::init(
 			cout << "linear_group::init "
 					"before init_diagonal_group" << endl;
 		}
-		init_diagonal_group(prefix, label_latex, verbose_level);
+		init_diagonal_group(verbose_level);
 		if (f_v) {
 			cout << "linear_group::init "
 					"after init_diagonal_group" << endl;
@@ -164,7 +166,7 @@ void linear_group::init(
 			cout << "linear_group::init "
 					"before init_null_polarity_group" << endl;
 		}
-		init_null_polarity_group(prefix, label_latex, verbose_level);
+		init_null_polarity_group(verbose_level);
 		if (f_v) {
 			cout << "linear_group::init "
 					"after init_null_polarity_group" << endl;
@@ -176,7 +178,7 @@ void linear_group::init(
 			cout << "linear_group::init "
 					"before init_symplectic_group" << endl;
 		}
-		init_symplectic_group(prefix, label_latex, verbose_level);
+		init_symplectic_group(verbose_level);
 		if (f_v) {
 			cout << "linear_group::init "
 					"after init_symplectic_group" << endl;
@@ -188,7 +190,7 @@ void linear_group::init(
 			cout << "linear_group::init "
 					"before init_borel_subgroup_upper" << endl;
 		}
-		init_borel_subgroup_upper(prefix, label_latex, verbose_level);
+		init_borel_subgroup_upper(verbose_level);
 		if (f_v) {
 			cout << "linear_group::init "
 					"after init_borel_subgroup_upper" << endl;
@@ -205,7 +207,7 @@ void linear_group::init(
 			cout << "linear_group::init "
 					"before init_singer_group" << endl;
 		}
-		init_singer_group(prefix, label_latex,
+		init_singer_group(
 				description->singer_power, verbose_level);
 		if (f_v) {
 			cout << "linear_group::init "
@@ -218,7 +220,7 @@ void linear_group::init(
 			cout << "linear_group::init "
 					"before init_singer_group_and_frobenius" << endl;
 		}
-		init_singer_group_and_frobenius(prefix, label_latex,
+		init_singer_group_and_frobenius(
 				description->singer_power, verbose_level);
 		if (f_v) {
 			cout << "linear_group::init "
@@ -231,7 +233,7 @@ void linear_group::init(
 			cout << "linear_group::init "
 					"before init_identity_subgroup" << endl;
 		}
-		init_identity_subgroup(prefix, label_latex, verbose_level);
+		init_identity_subgroup(verbose_level);
 		if (f_v) {
 			cout << "linear_group::init "
 					"after init_identity_subgroup" << endl;
@@ -243,7 +245,7 @@ void linear_group::init(
 			cout << "linear_group::init "
 					"before init_subfield_structure_action" << endl;
 		}
-		init_subfield_structure_action(prefix, label_latex,
+		init_subfield_structure_action(
 				description->s, verbose_level);
 		if (f_v) {
 			cout << "linear_group::init "
@@ -256,7 +258,7 @@ void linear_group::init(
 			cout << "linear_group::init "
 					"before init_orthogonal_group" << endl;
 		}
-		init_orthogonal_group(prefix, label_latex,
+		init_orthogonal_group(
 				description->orthogonal_group_epsilon,
 				verbose_level);
 		if (f_v) {
@@ -270,7 +272,7 @@ void linear_group::init(
 			cout << "linear_group::init "
 					"before init_subgroup_from_file" << endl;
 		}
-		init_subgroup_from_file(prefix, label_latex,
+		init_subgroup_from_file(
 			description->subgroup_fname,
 			description->subgroup_label,
 			verbose_level);
@@ -285,7 +287,7 @@ void linear_group::init(
 			cout << "linear_group::init "
 					"before init_subgroup_by_generators" << endl;
 		}
-		init_subgroup_by_generators(prefix, label_latex,
+		init_subgroup_by_generators(
 			description->subgroup_label,
 			description->subgroup_order_text,
 			description->nb_subgroup_generators,
@@ -302,8 +304,7 @@ void linear_group::init(
 			cout << "linear_group::init "
 					"before init_subgroup_Janko1" << endl;
 		}
-		init_subgroup_Janko1(prefix, label_latex,
-			verbose_level);
+		init_subgroup_Janko1(verbose_level);
 		if (f_v) {
 			cout << "linear_group::init "
 					"after init_subgroup_Janko1" << endl;
@@ -416,9 +417,15 @@ void linear_group::init(
 
 		A2 = A3;
 		f_OK = TRUE;
-		sprintf(prefix + strlen(prefix), "_OnGr_%d", description->on_k_subspaces_k);
-		sprintf(label_latex + strlen(label_latex), " {\\rm Gr}_{%d,%d}(%d)",
+
+		char str1[1000];
+		char str2[1000];
+
+		sprintf(str1, "_OnGr_%d", description->on_k_subspaces_k);
+		sprintf(str2, " {\\rm Gr}_{%d,%d}(%d)",
 				n, description->on_k_subspaces_k, F->q);
+		label.append(str1);
+		label_latex.append(str2);
 
 
 		cout << "linear_group::init creating induced "
@@ -474,8 +481,7 @@ void linear_group::init(
 	}
 }
 
-void linear_group::init_PGL2q_OnConic(char *prefix, char *label_latex,
-		int verbose_level)
+void linear_group::init_PGL2q_OnConic(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -513,16 +519,20 @@ void linear_group::init_PGL2q_OnConic(char *prefix, char *label_latex,
 				"created action of PGL2_on conic:" << endl;
 		A2->print_info();
 		}
-	sprintf(prefix + strlen(prefix), "_OnConic_%d_%d", n, q);
-	sprintf(label_latex + strlen(label_latex), "{\\rm OnConic}(%d,%d)", n, q);
+	char str1[1000];
+	char str2[1000];
+
+	sprintf(str1, "_OnConic_%d_%d", n, q);
+	sprintf(str2, "{\\rm OnConic}(%d,%d)", n, q);
+	label.append(str1);
+	label_latex.append(str2);
 	if (f_v) {
 		cout << "linear_group::init_PGL2q_OnConic "
-				"created group " << prefix << endl;
+				"created group " << label << endl;
 		}
 }
 
-void linear_group::init_wedge_action(char *prefix, char *label_latex,
-		int verbose_level)
+void linear_group::init_wedge_action(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -578,16 +588,20 @@ void linear_group::init_wedge_action(char *prefix, char *label_latex,
 				"created wedge action:" << endl;
 		A2->print_info();
 		}
-	sprintf(prefix + strlen(prefix), "_Wedge_%d_%d", n, q);
-	sprintf(label_latex + strlen(label_latex), "{\\rm Wedge}(%d,%d)", n, q);
+	char str1[1000];
+	char str2[1000];
+
+	sprintf(str1, "_Wedge_%d_%d", n, q);
+	sprintf(str2, "{\\rm Wedge}(%d,%d)", n, q);
+	label.append(str1);
+	label_latex.append(str2);
 	if (f_v) {
 		cout << "linear_group::init_wedge_action "
-				"created group " << prefix << endl;
+				"created group " << label << endl;
 		}
 }
 
-void linear_group::init_monomial_group(char *prefix, char *label_latex,
-		int verbose_level)
+void linear_group::init_monomial_group(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -607,21 +621,22 @@ void linear_group::init_monomial_group(char *prefix, char *label_latex,
 	
 	A2 = A_linear;
 
-	sprintf(prefix + strlen(prefix), "_Monomial_%d_%d", n, q);
-	sprintf(label_latex + strlen(label_latex), "{\\rm Monomial}(%d,%d)", n, q);
-	if (f_v) {
-		cout << "linear_group::init_monomial_group "
-				"created group " << prefix << endl;
-		}
+
+	char str1[1000];
+	char str2[1000];
+
+	sprintf(str1, "_Monomial_%d_%d", n, q);
+	sprintf(str2, "{\\rm Monomial}(%d,%d)", n, q);
+	label.append(str1);
+	label_latex.append(str2);
 
 	if (f_v) {
 		cout << "linear_group::init_monomial_group "
-				"done, prefix = " << prefix << endl;
+				"created group " << label << endl;
 		}
 }
 
-void linear_group::init_diagonal_group(char *prefix, char *label_latex,
-		int verbose_level)
+void linear_group::init_diagonal_group(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -641,20 +656,21 @@ void linear_group::init_diagonal_group(char *prefix, char *label_latex,
 	
 	A2 = A_linear;
 
-	sprintf(prefix + strlen(prefix), "_Diagonal_%d_%d", n, q);
-	if (f_v) {
-		cout << "linear_group::init_diagonal_group "
-				"created group " << prefix << endl;
-		}
+	char str1[1000];
+	char str2[1000];
+
+	sprintf(str1, "_Diagonal_%d_%d", n, q);
+	sprintf(str2, "{\\rm Diagonal}(%d,%d)", n, q);
+	label.append(str1);
+	label_latex.append(str2);
 
 	if (f_v) {
 		cout << "linear_group::init_diagonal_group "
-				"done, prefix = " << prefix << endl;
+				"created group " << label << endl;
 		}
 }
 
-void linear_group::init_singer_group(char *prefix, char *label_latex,
-		int singer_power, int verbose_level)
+void linear_group::init_singer_group(int singer_power, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -677,23 +693,21 @@ void linear_group::init_singer_group(char *prefix, char *label_latex,
 
 	A2 = A_linear;
 
-	sprintf(prefix + strlen(prefix), "_Singer_%d_%d_power%d",
-			n, q, singer_power);
-	sprintf(label_latex + strlen(label_latex),
-			"{\\rm SingerPower}(%d,%d,%d)", n, q, singer_power);
-	if (f_v) {
-		cout << "linear_group::init_singer_group "
-				"created group " << prefix << endl;
-		}
+	char str1[1000];
+	char str2[1000];
+
+	sprintf(str1, "_Singer_%d_%d_%d", n, q, singer_power);
+	sprintf(str2, "{\\rm Singer}(%d,%d,%d)", n, q, singer_power);
+	label.append(str1);
+	label_latex.append(str2);
 
 	if (f_v) {
 		cout << "linear_group::init_singer_group "
-				"done, prefix = " << prefix << endl;
+				"created group " << label << endl;
 		}
 }
 
 void linear_group::init_singer_group_and_frobenius(
-		char *prefix, char *label_latex,
 		int singer_power, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -717,23 +731,21 @@ void linear_group::init_singer_group_and_frobenius(
 
 	A2 = A_linear;
 
-	sprintf(prefix + strlen(prefix), "_Singer_%d_%d_power%d_and_Frob",
-			n, q, singer_power);
-	sprintf(label_latex + strlen(label_latex),
-			"{\\rm SingerPowerFrob}(%d,%d,%d)", n, q, singer_power);
-	if (f_v) {
-		cout << "linear_group::init_singer_group_and_frobenius "
-				"created group " << prefix << endl;
-		}
+	char str1[1000];
+	char str2[1000];
+
+	sprintf(str1, "_Singer_and_Frob%d_%d_%d", n, q, singer_power);
+	sprintf(str2, "{\\rm SingerFrob}(%d,%d,%d)", n, q, singer_power);
+	label.append(str1);
+	label_latex.append(str2);
 
 	if (f_v) {
 		cout << "linear_group::init_singer_group_and_frobenius "
-				"done, prefix = " << prefix << endl;
+				"created group " << label << endl;
 		}
 }
 
-void linear_group::init_null_polarity_group(char *prefix, char *label_latex,
-		int verbose_level)
+void linear_group::init_null_polarity_group(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -753,22 +765,22 @@ void linear_group::init_null_polarity_group(char *prefix, char *label_latex,
 	
 	A2 = A_linear;
 
-	sprintf(prefix + strlen(prefix), "_NullPolarity_%d_%d", n, q);
-	sprintf(label_latex + strlen(label_latex),
-			"{\\rm NullPolarity}(%d,%d)", n, q);
-	if (f_v) {
-		cout << "linear_group::init_null_polarity_group "
-				"created group " << prefix << endl;
-		}
+
+	char str1[1000];
+	char str2[1000];
+
+	sprintf(str1, "_NullPolarity_%d_%d", n, q);
+	sprintf(str2, "{\\rm NullPolarity}(%d,%d)", n, q);
+	label.append(str1);
+	label_latex.append(str2);
 
 	if (f_v) {
 		cout << "linear_group::init_null_polarity_group "
-				"done, prefix = " << prefix << endl;
+				"created group " << label << endl;
 		}
 }
 
-void linear_group::init_borel_subgroup_upper(char *prefix, char *label_latex,
-		int verbose_level)
+void linear_group::init_borel_subgroup_upper(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -789,22 +801,22 @@ void linear_group::init_borel_subgroup_upper(char *prefix, char *label_latex,
 	
 	A2 = A_linear;
 
-	sprintf(prefix + strlen(prefix), "_BorelUpper_%d_%d", n, q);
-	sprintf(label_latex + strlen(label_latex),
-			"{\\rm BorelUpper}(%d,%d)", n, q);
-	if (f_v) {
-		cout << "linear_group::init_borel_subgroup_upper "
-				"created group " << prefix << endl;
-		}
+
+	char str1[1000];
+	char str2[1000];
+
+	sprintf(str1, "_BorelUpper_%d_%d", n, q);
+	sprintf(str2, "{\\rm BorelUpper}(%d,%d)", n, q);
+	label.append(str1);
+	label_latex.append(str2);
 
 	if (f_v) {
 		cout << "linear_group::init_borel_subgroup_upper "
-				"done" << endl;
+				"created group " << label << endl;
 		}
 }
 
-void linear_group::init_identity_subgroup(char *prefix, char *label_latex,
-		int verbose_level)
+void linear_group::init_identity_subgroup(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -824,22 +836,21 @@ void linear_group::init_identity_subgroup(char *prefix, char *label_latex,
 	
 	A2 = A_linear;
 
-	sprintf(prefix + strlen(prefix), "_Identity_%d_%d", n, q);
-	sprintf(label_latex + strlen(label_latex),
-			"{\\rm Identity}(%d,%d)", n, q);
-	if (f_v) {
-		cout << "linear_group::init_identity_subgroup "
-				"created group " << prefix << endl;
-		}
+	char str1[1000];
+	char str2[1000];
+
+	sprintf(str1, "_Identity_%d_%d", n, q);
+	sprintf(str2, "{\\rm Identity}(%d,%d)", n, q);
+	label.append(str1);
+	label_latex.append(str2);
 
 	if (f_v) {
 		cout << "linear_group::init_identity_subgroup "
-				"done" << endl;
+				"created group " << label << endl;
 		}
 }
 
-void linear_group::init_symplectic_group(char *prefix, char *label_latex,
-		int verbose_level)
+void linear_group::init_symplectic_group(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -859,22 +870,23 @@ void linear_group::init_symplectic_group(char *prefix, char *label_latex,
 	
 	A2 = A_linear;
 
-	sprintf(prefix + strlen(prefix), "_Sp_%d_%d", n, q);
-	sprintf(label_latex + strlen(label_latex),
-			" {\\rm Sp}(%d,%d)", n, q);
-	if (f_v) {
-		cout << "linear_group::init_symplectic_group "
-				"created group " << prefix << endl;
-		}
+
+	char str1[1000];
+	char str2[1000];
+
+	sprintf(str1, "_Sp_%d_%d", n, q);
+	sprintf(str2, "{\\rm Sp}(%d,%d)", n, q);
+	label.append(str1);
+	label_latex.append(str2);
+
 
 	if (f_v) {
 		cout << "linear_group::init_symplectic_group "
-				"done, prefix = " << prefix << endl;
+				"created group " << label << endl;
 		}
 }
 
-void linear_group::init_subfield_structure_action(
-		char *prefix, char *label_latex, int s, int verbose_level)
+void linear_group::init_subfield_structure_action(int s, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -901,12 +913,17 @@ void linear_group::init_subfield_structure_action(
 
 	A2 = A_linear;
 
-	sprintf(prefix + strlen(prefix), "_Subfield_%d_%d_%d", n, q, s);
-	sprintf(label_latex + strlen(label_latex),
-			"{\\rm SubfieldAction}(%d,%d,%d)", n, q, s);
+	char str1[1000];
+	char str2[1000];
+
+	sprintf(str1, "_Subfield_%d_%d_%d", n, q, s);
+	sprintf(str2, "{\\rm SubfieldAction}(%d,%d,%d)", n, q, s);
+	label.append(str1);
+	label_latex.append(str2);
+
 	if (f_v) {
 		cout << "linear_group::init_subfield_structure_action "
-				"created group " << prefix << endl;
+				"created group " << label << endl;
 		}
 	
 	if (f_v) {
@@ -915,8 +932,7 @@ void linear_group::init_subfield_structure_action(
 		}
 }
 
-void linear_group::init_orthogonal_group(char *prefix, char *label_latex,
-	int epsilon, int verbose_level)
+void linear_group::init_orthogonal_group(int epsilon, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -940,36 +956,37 @@ void linear_group::init_orthogonal_group(char *prefix, char *label_latex,
 	
 	A2 = A_linear;
 
+	char str1[1000];
+	char str2[1000];
+
 	if (EVEN(n)) {
 		if (epsilon == 1) {
-			sprintf(prefix + strlen(prefix), "_Orthogonal_plus_%d_%d", n, q);
-			sprintf(label_latex + strlen(label_latex),
-					"{\\rm O}^+(%d,%d)", n, q);
+			sprintf(str1, "_Orthogonal_plus_%d_%d", n, q);
+			sprintf(str2, "{\\rm O}^+(%d,%d)", n, q);
+			label.append(str1);
+			label_latex.append(str2);
 			}
 		else {
-			sprintf(prefix + strlen(prefix), "_Orthogonal_minus_%d_%d", n, q);
-			sprintf(label_latex + strlen(label_latex),
-					"{\\rm O}^-(%d,%d)", n, q);
+			sprintf(str1, "_Orthogonal_minus_%d_%d", n, q);
+			sprintf(str2, "{\\rm O}^-(%d,%d)", n, q);
+			label.append(str1);
+			label_latex.append(str2);
 			}
 		}
 	else {
-		sprintf(prefix + strlen(prefix), "_Orthogonal_%d_%d", n, q);
-		sprintf(label_latex + strlen(label_latex),
-				"{\\rm O}(%d,%d)", n, q);
+		sprintf(str1, "_Orthogonal_%d_%d", n, q);
+		sprintf(str2, "{\\rm O}(%d,%d)", n, q);
+		label.append(str1);
+		label_latex.append(str2);
 		}
 	if (f_v) {
 		cout << "linear_group::init_orthogonal_group "
-				"created group " << prefix << endl;
-		}
-
-	if (f_v) {
-		cout << "linear_group::init_orthogonal_group "
-				"done, prefix = " << prefix << endl;
+				"created group " << label << endl;
 		}
 }
 
 
-void linear_group::init_subgroup_from_file(char *prefix, char *label_latex,
+void linear_group::init_subgroup_from_file(
 	const char *subgroup_fname, const char *subgroup_label, 
 	int verbose_level)
 {
@@ -1004,21 +1021,23 @@ void linear_group::init_subgroup_from_file(char *prefix, char *label_latex,
 
 	A2 = A_linear;
 
-	sprintf(prefix + strlen(prefix), "_Subgroup_%s_%d_%d",
-			subgroup_label, n, q);
-	sprintf(label_latex + strlen(label_latex),
-			"{\\rm Subgroup %s}(%d,%d)", subgroup_label, n, q);
+
+	char str1[1000];
+	char str2[1000];
+
+	sprintf(str1, "_SubgroupFile_%d_%d", n, q);
+	sprintf(str2, "{\\rm SubgroupFile}(%d,%d)", n, q);
+	label.append(str1);
+	label_latex.append(str2);
+
+
 	if (f_v) {
 		cout << "linear_group::init_subgroup_from_file "
-				"created group " << prefix << endl;
-		}
-	
-	if (f_v) {
-		cout << "linear_group::init_subgroup_from_file done" << endl;
+				"created group " << label << endl;
 		}
 }
 
-void linear_group::init_subgroup_by_generators(char *prefix, char *label_latex,
+void linear_group::init_subgroup_by_generators(
 	const char *subgroup_label,
 	const char *subgroup_order_text,
 	int nb_subgroup_generators,
@@ -1062,26 +1081,24 @@ void linear_group::init_subgroup_by_generators(char *prefix, char *label_latex,
 	int line_skip = 0;
 
 
-	L.latexable_string(str,
-			subgroup_label, max_len, line_skip);
+	L.latexable_string(str, subgroup_label, max_len, line_skip);
 
-	sprintf(prefix + strlen(prefix), "_Subgroup_%s_%s",
-			subgroup_label, subgroup_order_text);
-	sprintf(label_latex + strlen(label_latex),
-			"{\\rm Subgroup %s}(%s)", str.str().c_str(), subgroup_order_text);
+
+
+	char str1[1000];
+	char str2[1000];
+
+	sprintf(str1, "_Subgroup_%s_%s", subgroup_label, subgroup_order_text);
+	sprintf(str2, "{\\rm Subgroup %s order %s}", str.str().c_str(), subgroup_order_text);
+	label.append(str1);
+	label_latex.append(str2);
 	if (f_v) {
 		cout << "linear_group::init_subgroup_by_generators "
-				"created group " << prefix << endl;
+				"created group " << label << endl;
 		}
-
-	if (f_v) {
-		cout << "linear_group::init_subgroup_by_generators done" << endl;
-		}
-
 }
 
-void linear_group::init_subgroup_Janko1(char *prefix, char *label_latex,
-	int verbose_level)
+void linear_group::init_subgroup_Janko1(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1115,18 +1132,19 @@ void linear_group::init_subgroup_Janko1(char *prefix, char *label_latex,
 
 	A2 = A_linear;
 
-	sprintf(prefix + strlen(prefix), "_Subgroup_Janko1");
-	sprintf(label_latex + strlen(label_latex),
-			"{\\rm Subgroup Janko1}");
+
+	char str1[1000];
+	char str2[1000];
+
+	sprintf(str1, "_Subgroup_Janko1");
+	sprintf(str2, "{\\rm Subgroup Janko1}");
+	label.append(str1);
+	label_latex.append(str2);
+
 	if (f_v) {
 		cout << "linear_group::init_subgroup_Janko1 "
-				"created group " << prefix << endl;
+				"created group " << label << endl;
 		}
-
-	if (f_v) {
-		cout << "linear_group::init_subgroup_Janko1 done" << endl;
-		}
-
 }
 
 void linear_group::report(ostream &fp, int f_sylow, int f_group_table,
@@ -1140,7 +1158,7 @@ void linear_group::report(ostream &fp, int f_sylow, int f_group_table,
 
 	A = A2;
 	if (f_v) {
-		cout << "linear_group::report creating report for group " << prefix << endl;
+		cout << "linear_group::report creating report for group " << label << endl;
 	}
 
 	//G = initial_strong_gens->create_sims(verbose_level);
@@ -1286,7 +1304,7 @@ void linear_group::report(ostream &fp, int f_sylow, int f_group_table,
 						}
 					}
 
-				sprintf(fname2, "%s_group_table_order_%ld", prefix, n);
+				sprintf(fname2, "%s_group_table_order_%ld", label.c_str(), n);
 				{
 				mp_graphics G(fname2, x_min, y_min, xmax, ymax, f_embedded, f_sideways, verbose_level - 1);
 				//G.setup(fname2, 0, 0, ONE_MILLION, ONE_MILLION, xmax, ymax, f_embedded, scale, line_width);
