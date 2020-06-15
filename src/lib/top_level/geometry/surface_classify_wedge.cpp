@@ -826,14 +826,14 @@ void surface_classify_wedge::starter_configurations_which_are_involved(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int k, i, j, cnt, iso;
+	int /*k,*/ i, j, cnt, iso;
 	//int nb_orbits;
 
 	if (f_v) {
 		cout << "surface_classify_wedge::starter_configurations_which_are_involved" << endl;
 		}
 
-	k = 5;
+	//k = 5;
 
 	//nb_orbits = Classify_double_sixes->Five_plus_one->nb_orbits_at_level(k);
 	cnt = 0;
@@ -2467,9 +2467,9 @@ void surface_classify_wedge::create_report_double_sixes(int verbose_level)
 	char title[1000];
 	char author[1000];
 
-	sprintf(title, "Cheat Sheet on Double Sixes over GF(%d) ", q);
-	sprintf(author, "");
-	sprintf(fname, "Double_sixes_q%d.tex", q);
+	snprintf(title, 1000, "Cheat Sheet on Double Sixes over GF(%d) ", q);
+	strcpy(author, "");
+	snprintf(fname, 1000, "Double_sixes_q%d.tex", q);
 
 	{
 		ofstream fp(fname);
