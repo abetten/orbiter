@@ -757,13 +757,13 @@ void poset_classification::draw_poset(
 		}
 
 	char fname_base1[1000];
-	char fname1[1000];
+	char fname1[2000];
 	char fname_base2[1000];
-	char fname2[1000];
+	char fname2[2000];
 	char fname_base3[1000];
-	char fname3[1000];
+	char fname3[2000];
 	char fname_base4[1000];
-	char fname4[1000];
+	char fname4[2000];
 	int xmax = 1000000;
 	int ymax = 1000000;
 	int x_max = 10000;
@@ -783,10 +783,10 @@ void poset_classification::draw_poset(
 	draw_poset_fname_base_tree_lvl(fname_base3, depth);
 	draw_poset_fname_base_poset_detailed_lvl(fname_base4, depth);
 
-	snprintf(fname1, 1000, "%s.layered_graph", fname_base1);
-	snprintf(fname2, 1000, "%s.layered_graph", fname_base2);
-	snprintf(fname3, 1000, "%s.layered_graph", fname_base3);
-	snprintf(fname4, 1000, "%s.layered_graph", fname_base4);
+	snprintf(fname1, 2000, "%s.layered_graph", fname_base1);
+	snprintf(fname2, 2000, "%s.layered_graph", fname_base2);
+	snprintf(fname3, 2000, "%s.layered_graph", fname_base3);
+	snprintf(fname4, 2000, "%s.layered_graph", fname_base4);
 
 	if (f_v) {
 		cout << "poset_classification::draw_poset "
