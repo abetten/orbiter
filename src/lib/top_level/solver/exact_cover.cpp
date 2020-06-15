@@ -533,7 +533,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v4 = (verbose_level >= 4);
-	char str[1000];
+	char str[2000];
 	file_io Fio;
 	os_interface Os;
 
@@ -563,7 +563,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 		}
 
 
-	sprintf(str, "%s%s", input_prefix, base_fname);
+	snprintf(str, 2000, "%s%s", input_prefix, base_fname);
 
 	orbit_rep *R;
 	R = NEW_OBJECT(orbit_rep);
@@ -671,9 +671,9 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 				}
 			}
 
-		char fname[1000];
-		char fname_Levi[1000];
-		char fname_sol[1000];
+		char fname[2000];
+		char fname_Levi[2000];
+		char fname_sol[2000];
 
 		sprintf(fname, "%ssystem_%d.txt", output_prefix, starter_case);
 		sprintf(fname_Levi, "%ssystem_%d_Levi_graph.bin",
