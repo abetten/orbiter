@@ -266,7 +266,7 @@ void poset_classification::report(ostream &ost)
 	ost << "\\hline \\hline" << endl;
 	ost << "\\endlastfoot" << endl;
 
-	int level, nb_orbits, cnt, nb_live_pts, nb_extensions, nbo, nbg;
+	int level, nb_orbits, cnt, nb_live_pts, nb_extensions, /*nbo,*/ nbg;
 	long int *rep = NULL;
 	char str[1000];
 	poset_orbit_node *O;
@@ -383,7 +383,7 @@ void poset_classification::report(ostream &ost)
 
 	draw_poset_fname_base_poset_lvl(fname_base, depth);
 
-	snprintf(cmd, 1000, "cp %s.layered_graph ./poset.layered_graph", fname_base);
+	snprintf(cmd, 10000, "cp %s.layered_graph ./poset.layered_graph", fname_base);
 	cout << "executing: " << cmd << endl;
 	system(cmd);
 
@@ -530,24 +530,24 @@ void poset_classification::report(ostream &ost)
 				for (j = 0; j < nb_orbits_sv; j++) {
 
 					//char fname_base[1000];
-					char fname_layered_graph[1000];
-					char fname_tex[1000];
-					char fname_mp[1000];
-					char fname_1[1000];
+					char fname_layered_graph[10000];
+					char fname_tex[10000];
+					char fname_mp[10000];
+					char fname_1[10000];
 
 					snprintf(fname_base, 1000, fname_mask_base, j);
-					snprintf(fname_layered_graph, 1000, "%s.layered_graph",
+					snprintf(fname_layered_graph, 10000, "%s.layered_graph",
 							fname_base);
-					snprintf(fname_tex, 1000, "%s_draw_tree.tex", fname_base);
-					snprintf(fname_mp, 1000, "%s_draw_tree.mp", fname_base);
-					snprintf(fname_1, 1000, "%s_draw_tree.1", fname_base);
+					snprintf(fname_tex, 10000, "%s_draw_tree.tex", fname_base);
+					snprintf(fname_mp, 10000, "%s_draw_tree.mp", fname_base);
+					snprintf(fname_1, 10000, "%s_draw_tree.1", fname_base);
 
 					if (!Control->f_has_tools_path) {
 						cout << "please set tools path using "
 								"-tools_path <tools_path>" << endl;
 						exit(1);
 					}
-					snprintf(cmd, 1000, "%s/layered_graph_main.out -v 2 "
+					snprintf(cmd, 10000, "%s/layered_graph_main.out -v 2 "
 						"-file %s "
 						"-xin 1000000 -yin 1000000 "
 						"-xout 1000000 -yout 1000000 "
@@ -562,7 +562,7 @@ void poset_classification::report(ostream &ost)
 					cout << "executing: " << cmd << endl;
 					system(cmd);
 
-					snprintf(cmd, 1000, "mpost %s", fname_mp);
+					snprintf(cmd, 10000, "mpost %s", fname_mp);
 					cout << "executing: " << cmd << endl;
 					system(cmd);
 
@@ -571,7 +571,7 @@ void poset_classification::report(ostream &ost)
 							<< " / " << nb_orbits
 							<< " Tree " << j << " / " << nb_orbits_sv << "}" << endl;
 
-					nbo = Schreier_vector->number_of_orbits;
+					//nbo = Schreier_vector->number_of_orbits;
 					if (Schreier_vector->f_has_local_generators) {
 						nbg = Schreier_vector->local_gens->len;
 					}
