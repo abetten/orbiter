@@ -491,7 +491,7 @@ void animate::animate_one_round(
 
 		for (i = 0; i < Opt->nb_picture; i++) {
 			if (Opt->picture_round[i] == round) {
-				char cmd[1000];
+				char cmd[5000];
 				double scale;
 
 				scale = Opt->picture_scale[i];
@@ -499,7 +499,7 @@ void animate::animate_one_round(
 					scale *= Opt->global_picture_scale;
 					}
 				scale *= 100.;
-				sprintf(cmd, "composite \\( %s "
+				snprintf(cmd, 5000, "composite \\( %s "
 						"-resize %lf%% \\)  %s    %s   tmp.png",
 					Opt->picture_fname[i],
 					scale, //Opt->picture_scale[i] * 100.,
@@ -518,8 +518,8 @@ void animate::animate_one_round(
 		for (i = 0; i < Opt->nb_round_text; i++) {
 
 			if (Opt->round_text_round[i] == round) {
-				char str[1000];
-				char cmd[1000];
+				char str[2000];
+				char cmd[10000];
 
 				strcpy(str, Opt->round_text_text[i]);
 				if ((int) strlen(str) > h) {
@@ -537,7 +537,7 @@ void animate::animate_one_round(
 					if (Opt->f_has_stroke_width) {
 						stroke_width = Opt->stroke_width;
 						}
-					sprintf(cmd, "convert -background none  -fill white "
+					snprintf(cmd, 10000, "convert -background none  -fill white "
 							"-stroke black -strokewidth %d -font "
 							"Courier-10-Pitch-Bold  -pointsize %d   "
 							"label:'%s'   overlay.png",
@@ -547,13 +547,13 @@ void animate::animate_one_round(
 					*fpm << "\t" << cmd << endl;
 
 
-					sprintf(cmd, "composite -gravity center overlay.png  "
+					snprintf(cmd, 10000, "composite -gravity center overlay.png  "
 							" %s   tmp.png", fname_png);
 					//cout << "system: " << cmd << endl;
 					//system(cmd);
 					*fpm << "\t" << cmd << endl;
 
-					sprintf(cmd, "mv tmp.png %s", fname_png);
+					snprintf(cmd, 10000, "mv tmp.png %s", fname_png);
 					//cout << "system: " << cmd << endl;
 					//system(cmd);
 					*fpm << "\t" << cmd << endl;
@@ -565,7 +565,7 @@ void animate::animate_one_round(
 
 			if (Opt->label_round[i] == round) {
 				char str[1000];
-				char cmd[1000];
+				char cmd[10000];
 
 				strcpy(str, Opt->label_text[i]);
 
@@ -580,7 +580,7 @@ void animate::animate_one_round(
 					if (Opt->f_has_stroke_width) {
 						stroke_width = Opt->stroke_width;
 						}
-					sprintf(cmd, "convert -background none  -fill white "
+					snprintf(cmd, 10000, "convert -background none  -fill white "
 							"-stroke black -strokewidth %d -font "
 							"Courier-10-Pitch-Bold  -pointsize %d   "
 							"label:'%s'   overlay.png",
@@ -590,13 +590,13 @@ void animate::animate_one_round(
 					*fpm << "\t" << cmd << endl;
 
 
-					sprintf(cmd, "composite %s overlay.png   %s   tmp.png",
+					snprintf(cmd, 10000, "composite %s overlay.png   %s   tmp.png",
 							Opt->label_gravity[i], fname_png);
 					//cout << "system: " << cmd << endl;
 					//system(cmd);
 					*fpm << "\t" << cmd << endl;
 
-					sprintf(cmd, "mv tmp.png %s", fname_png);
+					snprintf(cmd, 10000, "mv tmp.png %s", fname_png);
 					//cout << "system: " << cmd << endl;
 					//system(cmd);
 					*fpm << "\t" << cmd << endl;
@@ -626,12 +626,12 @@ void animate::animate_one_round(
 
 						cout << "latex_fname_base=" <<
 								Opt->latex_fname_base[i] << endl;
-						char cmd[1000];
-						char fname_tex[1000];
-						char fname_pdf[1000];
+						char cmd[10000];
+						char fname_tex[2000];
+						char fname_pdf[2000];
 
-						sprintf(fname_tex, "%s.tex", Opt->latex_fname_base[i]);
-						sprintf(fname_pdf, "%s.pdf", Opt->latex_fname_base[i]);
+						snprintf(fname_tex, 2000, "%s.tex", Opt->latex_fname_base[i]);
+						snprintf(fname_pdf, 2000, "%s.pdf", Opt->latex_fname_base[i]);
 
 						cout << "begin latex source:" << endl;
 						cout << Opt->latex_label_text[i] << endl;
@@ -648,7 +648,7 @@ void animate::animate_one_round(
 
 						}
 
-						sprintf(cmd, "pdflatex %s", fname_tex);
+						snprintf(cmd, 10000, "pdflatex %s", fname_tex);
 						//cout << "system: " << cmd << endl;
 						system(cmd);
 						//fpm << "\t" << cmd << endl;
@@ -657,13 +657,13 @@ void animate::animate_one_round(
 						}
 					else {
 
-						char cmd[1000];
-						char fname_pdf[1000];
-						char fname_label_png[1000];
+						char cmd[10000];
+						char fname_pdf[2000];
+						char fname_label_png[2000];
 
-						sprintf(fname_pdf, "%s.pdf",
+						snprintf(fname_pdf, 2000, "%s.pdf",
 								Opt->latex_fname_base[i]);
-						sprintf(fname_label_png, "label.png");
+						snprintf(fname_label_png, 2000, "label.png");
 
 						sprintf(cmd, "convert -trim %s %s",
 								fname_pdf, fname_label_png);
@@ -672,14 +672,14 @@ void animate::animate_one_round(
 						*fpm << "\t" << cmd << endl;
 
 
-						sprintf(cmd, "composite %s %s   %s   tmp.png",
+						snprintf(cmd, 10000, "composite %s %s   %s   tmp.png",
 								Opt->latex_label_gravity[i],
 								fname_label_png, fname_png);
 						//cout << "system: " << cmd << endl;
 						//system(cmd);
 						*fpm << "\t" << cmd << endl;
 
-						sprintf(cmd, "mv tmp.png %s", fname_png);
+						snprintf(cmd, 10000, "mv tmp.png %s", fname_png);
 						//cout << "system: " << cmd << endl;
 						//system(cmd);
 						*fpm << "\t" << cmd << endl;
@@ -2289,7 +2289,7 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 	const char *color_options = "pigment { Black } ";
 	//const char *color_options = "pigment { BrightGold } finish { reflection .25 specular 1 }";
 	//double up_x = 1.,up_y = 1., up_z = 1.;
-	double view[3];
+	//double view[3];
 
 	double location[3] = {-3,1,3};
 	double look_at[3];
@@ -2302,9 +2302,11 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 	//ost << "   location  <-3,1,3>" << endl;
 	//ost << "   look_at   <1,1,1>*-1/sqrt(3)" << endl;
 
+#if 0
 	for (i = 0; i < 3; i++) {
 		view[i] = look_at[i] - location[i];
 		}
+#endif
 
 	double scale = 0.25;
 	double off_x = -0.1;
