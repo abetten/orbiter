@@ -635,7 +635,7 @@ void poset_classification::draw_poset_full(const char *fname_base,
 		}
 
 	char fname_base1[1000];
-	char fname1[1000];
+	char fname1[2000];
 	int xmax = 1000000;
 	int ymax = 1000000;
 	int x_max = 10000;
@@ -651,7 +651,7 @@ void poset_classification::draw_poset_full(const char *fname_base,
 	double line_width = 1.5;
 
 	snprintf(fname_base1, 1000, "%s_poset_full_lvl_%d", fname_base, depth);
-	snprintf(fname1, 1000, "%s.layered_graph", fname_base1);
+	snprintf(fname1, 2000, "%s.layered_graph", fname_base1);
 	
 	LG->write_file(fname1, 0 /*verbose_level*/);
 	if (f_v) {
@@ -867,7 +867,7 @@ void poset_classification::draw_level_graph(
 
 
 	char fname_base1[1000];
-	char fname[1000];
+	char fname[2000];
 	int xmax = 1000000;
 	int ymax = 1000000;
 	int x_max = 10000;
@@ -884,7 +884,7 @@ void poset_classification::draw_level_graph(
 
 	snprintf(fname_base1, 1000, "%s_lvl_%d_bipartite_lvl_%d",
 			fname_base, depth, level);
-	snprintf(fname, 1000, "%s.layered_graph", fname_base1);
+	snprintf(fname, 2000, "%s.layered_graph", fname_base1);
 	LG->write_file(fname, 0 /*verbose_level*/);
 	layered_graph_draw_options O;
 
@@ -1706,7 +1706,7 @@ void poset_classification::make_auxiliary_graph(int depth,
 
 
 			char text1[1000];
-			char text2[1000];
+			char text2[2000];
 			longinteger_object go, go1;
 			int n, so, len, r;
 			
@@ -1714,10 +1714,10 @@ void poset_classification::make_auxiliary_graph(int depth,
 			get_stabilizer_order(lvl, po, go);
 			go.print_to_string(text1);
 			if (lvl) {
-				snprintf(text2, 1000, "$%ld_{%s}$", root[n].pt, text1);
+				snprintf(text2, 2000, "$%ld_{%s}$", root[n].pt, text1);
 			}
 			else {
-				snprintf(text2, 1000, "$\\emptyset_{%s}$", text1);
+				snprintf(text2, 2000, "$\\emptyset_{%s}$", text1);
 			}
 
 			// set label to be the automorphism group order:
@@ -1746,7 +1746,7 @@ void poset_classification::make_auxiliary_graph(int depth,
 				D.integral_division_by_int(go, len, go1, r);
 
 				go1.print_to_string(text1);
-				snprintf(text2, 1000, "$%ld_{%s}$", E->pt, text1);
+				snprintf(text2, 2000, "$%ld_{%s}$", E->pt, text1);
 
 				// set label to be the automorphism group order:
 				//LG->add_text(2 * lvl + 1, f + so, text1, 0/*verbose_level*/);
