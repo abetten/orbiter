@@ -735,9 +735,10 @@ void delandtsheer_doyen::compute_orbits_on_pairs(strong_generators *Strong_gens,
 	//Pairs->read_arguments(argc, argv, 0);
 
 	//Pairs->prefix[0] = 0;
+#if 0
 	sprintf(Pairs->get_problem_label_with_path(), "pairs_%s_%d_%d",
 			Descr->group_label, Descr->q1, Descr->q2);
-
+#endif
 
 	//Pairs->depth = 2;
 	Descr->Pair_search_control->f_max_depth = TRUE;

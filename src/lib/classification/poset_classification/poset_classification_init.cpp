@@ -21,8 +21,8 @@ poset_classification::poset_classification()
 
 	Control = NULL;
 
-	problem_label[0] = 0;
-	problem_label_with_path[0] = 0;
+	//problem_label[0] = 0;
+	//problem_label_with_path[0] = 0;
 	
 	Elt_memory = NULL;
 
@@ -199,7 +199,10 @@ void poset_classification::init_internal(
 	poset_classification::Poset = Poset;
 	poset_classification::sz = sz;
 
-	Control->init_labels(problem_label, problem_label_with_path);
+	problem_label.assign(Control->problem_label);
+	problem_label_with_path.assign(Control->path);
+	problem_label_with_path.append(Control->problem_label);
+	//Control->init_labels(problem_label, problem_label_with_path);
 
 	if (f_v) {
 		cout << "poset_classification::init_internal, problem_label=" << problem_label << endl;

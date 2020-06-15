@@ -183,7 +183,7 @@ int poset_classification::main(int t0,
 	int f_v = (verbose_level >= 1);
 	int size, depth_completed = 0;
 	int f_create_schreier_vector;
-	int vl;
+	//int vl;
 	int target_depth;
 	int f_write_files;
 	int f_embedded = TRUE;
@@ -230,7 +230,7 @@ int poset_classification::main(int t0,
 	if (Control->f_print_only) {
 		print_tree();
 		write_treefile_and_draw_tree(
-				problem_label_with_path, depth_completed,
+				problem_label_with_path.c_str(), depth_completed,
 			Control->xmax, Control->ymax,
 			Control->radius, f_embedded, verbose_level - 1);
 
@@ -306,13 +306,14 @@ int poset_classification::main(int t0,
 			f_write_candidate_file, 
 			verbose_level - 2);
 		
-		
+#if 0
 		if (size + 1 == sz) {
 			vl = verbose_level;
 		}
 		else {
 			vl = verbose_level - 1;
 		}
+#endif
 
 		f_write_files = (Control->f_W || (Control->f_w && size == target_depth - 1));
 	
@@ -377,7 +378,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 		get_table_of_nodes(Table,
 			nb_rows, nb_cols, 0 /*verbose_level*/);
 
-		snprintf(fname, 1000, "%s_table_of_orbits.csv", problem_label_with_path);
+		snprintf(fname, 1000, "%s_table_of_orbits.csv", problem_label_with_path.c_str());
 
 		Fio.lint_matrix_write_csv(fname, Table, nb_rows, nb_cols);
 
@@ -455,7 +456,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			spreadsheet *Sp;
 			make_spreadsheet_of_level_info(Sp, actual_size, verbose_level);
 			char fname_csv[1000];
-			snprintf(fname_csv, 1000, "%s_levels_%d.csv", problem_label_with_path, actual_size);
+			snprintf(fname_csv, 1000, "%s_levels_%d.csv", problem_label_with_path.c_str(), actual_size);
 			Sp->save(fname_csv, verbose_level);
 			delete Sp;
 		}
@@ -473,7 +474,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			spreadsheet *Sp;
 			make_spreadsheet_of_orbit_reps(Sp, actual_size);
 			char fname_csv[1000];
-			snprintf(fname_csv, 1000, "%s_orbits_at_level_%d.csv", problem_label_with_path, actual_size);
+			snprintf(fname_csv, 1000, "%s_orbits_at_level_%d.csv", problem_label_with_path.c_str(), actual_size);
 			Sp->save(fname_csv, verbose_level);
 			delete Sp;
 		}
@@ -571,7 +572,7 @@ void poset_classification::extend_level(int size,
 					"size = " << size
 					<< " before write_candidates_binary_using_sv" << endl;
 		}
-		write_candidates_binary_using_sv(problem_label_with_path,
+		write_candidates_binary_using_sv(problem_label_with_path.c_str(),
 				size, t0, verbose_level - 1);
 		if (f_v) {
 			cout << "poset_classification::extend_level "

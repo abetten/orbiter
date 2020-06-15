@@ -170,8 +170,8 @@ void poset_classification::generate_history(int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	char fname[1000];
 	char my_prefix[1000];
+	char fname[2000];
 	int iso_type;
 	long int *rep;
 	int i, j;
@@ -184,8 +184,8 @@ void poset_classification::generate_history(int level, int verbose_level)
 	if (f_v) {
 		cout << "poset_classification::generate_history" << endl;
 		}
-	snprintf(my_prefix, 1000, "%s_history_level_%d", problem_label, level);
-	snprintf(fname, 1000, "%s.cpp", my_prefix);
+	snprintf(my_prefix, 1000, "%s_history_level_%d", problem_label.c_str(), level);
+	snprintf(fname, 2000, "%s.cpp", my_prefix);
 
 	set = NEW_lint(level);
 	Elt = NEW_int(Poset->A->elt_size_in_int);
