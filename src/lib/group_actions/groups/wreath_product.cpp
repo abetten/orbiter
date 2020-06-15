@@ -2371,12 +2371,15 @@ void wreath_product::orbits_using_files_and_union_find(
 	if (f_v) {
 		cout << "wreath_product::orbits_using_files_and_union_find" << endl;
 	}
+	long int i, b, h;
+	long int i, j, r, orbit_idx, rep;
+	long int nb_orbits = 0;
 
-	int mtx_n;
+	//int mtx_n;
 
 	nb_gens = SG->gens->len;
 	degree = degree_of_tensor_action;
-	mtx_n = dimension_of_tensor_action;
+	//mtx_n = dimension_of_tensor_action;
 
 	int block_size = 1L << 28; // pow(2, 28) ints = 1024 MB
 
@@ -2398,7 +2401,7 @@ void wreath_product::orbits_using_files_and_union_find(
 
 	unsigned int* S = new unsigned int [degree_of_tensor_action];
 
-	for (unsigned int i=0; i < degree_of_tensor_action; ++i) {
+	for (i = 0; i < degree_of_tensor_action; ++i) {
 		S[i] = i;
 	}
 
@@ -2411,7 +2414,6 @@ void wreath_product::orbits_using_files_and_union_find(
 	unsigned int* T = new unsigned int [degree_of_tensor_action];
 
 
-	long int b, h;
 
 
 
@@ -2479,7 +2481,6 @@ void wreath_product::orbits_using_files_and_union_find(
 					<< " / " << SG->gens->len << ":" << endl;
 		}
 
-		long int i;
 
 		for (i = 0; i < degree_of_tensor_action; ++i) {
 			int l1;
@@ -2513,8 +2514,7 @@ void wreath_product::orbits_using_files_and_union_find(
 	}
 
 
-	int nb_orbits = 0;
-	for (unsigned int i=0; i < degree_of_tensor_action; ++i) {
+	for (i = 0; i < degree_of_tensor_action; ++i) {
 		if (S[i] == i) {
 			nb_orbits++;
 		}
@@ -2522,7 +2522,6 @@ void wreath_product::orbits_using_files_and_union_find(
 	if (f_v) {
 		cout << "wreath_product::orbits_using_files_and_union_find nb_orbits: " << nb_orbits << endl;
 	}
-	long int i, j, r, orbit_idx, rep;
 
 	long int *orbit_length;
 	long int *orbit_rep;
@@ -2607,7 +2606,7 @@ void wreath_product::orbits_using_files_and_union_find(
 			ofstream fp(fname_orbit, ios::binary);
 
 			fp.write((char *) &len, sizeof(uint32_t));
-			for (i = 0; i < len; i++) {
+			for (i = 0; i < (long int) len; i++) {
 				fp.write((char *) &Orbit[i], sizeof(uint32_t));
 			}
 		}
