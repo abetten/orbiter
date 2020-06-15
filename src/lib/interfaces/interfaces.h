@@ -161,7 +161,7 @@ class interface_combinatorics {
 	const char *random_permutation_fname_csv;
 	int f_create_graph;
 	colored_graph *CG;
-	char fname_graph[1000];
+	char fname_graph[2000];
 	create_graph_description *Create_graph_description;
 	int f_read_poset_file;
 	const char *read_poset_file_fname;
