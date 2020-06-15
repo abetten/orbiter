@@ -542,8 +542,8 @@ void interface_combinatorics::do_graph_theoretic_activity(
 
 		cout << "export_magma" << endl;
 
-		char fname_magma[1000];
-		char fname_text[1000];
+		char fname_magma[3000];
+		char fname_text[3000];
 
 		strcpy(fname_magma, fname_graph);
 
@@ -567,7 +567,7 @@ void interface_combinatorics::do_graph_theoretic_activity(
 
 		cout << "export_csv" << endl;
 
-		char fname_csv[1000];
+		char fname_csv[3000];
 
 		strcpy(fname_csv, fname_graph);
 
@@ -588,7 +588,7 @@ void interface_combinatorics::do_graph_theoretic_activity(
 
 		cout << "export_maple" << endl;
 
-		char fname_maple[1000];
+		char fname_maple[3000];
 
 		strcpy(fname_maple, fname_graph);
 
@@ -694,7 +694,7 @@ void interface_combinatorics::do_create_graph(
 		CG->init_adjacency_no_colors(Gr->N, Gr->Adj, verbose_level);
 	}
 
-	snprintf(fname_graph, 1000, "%s.colored_graph", Gr->label);
+	snprintf(fname_graph, 2000, "%s.colored_graph", Gr->label);
 
 	CG->save(fname_graph, verbose_level);
 
@@ -1606,11 +1606,11 @@ void interface_combinatorics::do_create_design(design_create_description *Descr,
 
 	action *A;
 	//int *Elt1;
-	int *Elt2;
+	//int *Elt2;
 
 	A = DC->A;
 
-	Elt2 = NEW_int(A->elt_size_in_int);
+	//Elt2 = NEW_int(A->elt_size_in_int);
 
 
 
@@ -1635,7 +1635,7 @@ void interface_combinatorics::do_create_design(design_create_description *Descr,
 		int nb_pts = DC->P->N_points;
 		int nb_blocks = DC->sz;
 		int *Incma;
-		int h, i, j, a;
+		int h, i, j; //, a;
 		int pts_per_element = DC->k;
 
 
@@ -1647,7 +1647,7 @@ void interface_combinatorics::do_create_design(design_create_description *Descr,
 			//<< " the_set[j]=" << the_set[j] << endl;
 			//Grass->unrank_int(the_set[j], 0/*verbose_level - 4*/);
 
-			a = DC->set[j];
+			//a = DC->set[j];
 			DC->unrank_block_in_PG_2_q(DC->block,
 					DC->set[j], 0 /* verbose_level*/);
 			for (h = 0; h < pts_per_element; h++) {
