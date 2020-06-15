@@ -78,7 +78,7 @@ void nauty_interface::nauty_interface_graph_bitvec(int v, unsigned char *bitvect
 #if HAS_NAUTY
 	int f_v = (verbose_level >= 1);
 	static DEFAULTOPTIONS(options);
-	statsblk(stats);
+	statsblk stats;
 	set *row;
 	int m, n, i, j, k;
 
@@ -178,7 +178,7 @@ void nauty_interface::nauty_interface_graph_int(int v, int *Adj,
 #if HAS_NAUTY
 	int f_v = (verbose_level >= 1);
 	static DEFAULTOPTIONS(options);
-	statsblk(stats);
+	statsblk stats;
 	set *row;
 	int m, n, i, j;
 
@@ -267,7 +267,7 @@ void nauty_interface::nauty_interface_int(int v, int b, int *X, int nb_inc,
 {
 #if HAS_NAUTY
 	static DEFAULTOPTIONS(options);
-	statsblk(stats);
+	statsblk stats;
 	set *row;
 	int m, n, i, j, p1, p2, u, x;
 
@@ -360,7 +360,7 @@ void nauty_interface::nauty_interface_low_level(int v, int b, int *X, int nb_inc
 {
 #if HAS_NAUTY
 	static DEFAULTOPTIONS(options);
-	statsblk(stats);
+	statsblk stats;
 	set *row;
 	int m, n, i, j, p1, p2, u, x;
 
@@ -454,7 +454,7 @@ void nauty_interface::nauty_interface_matrix(int *M, int v, int b,
 {
 #if HAS_NAUTY
 	static DEFAULTOPTIONS(options);
-	statsblk(stats);
+	statsblk stats;
 	set *row;
 	int m, n, i, j, p1, p2;
 
@@ -539,7 +539,7 @@ void nauty_interface::nauty_interface_matrix_int(int *M, int v, int b,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	static DEFAULTOPTIONS(options);
-	statsblk(stats);
+	statsblk stats;
 	set *row;
 	int m, n, i, j, p1, p2;
 
