@@ -2281,25 +2281,25 @@ void poset_classification::make_spreadsheet_of_level_info(
 
 
 void poset_classification::create_schreier_tree_fname_mask_base(
-		char *fname_mask, int node)
+		char *fname_mask2000, int node)
 {
 
-	snprintf(fname_mask, 1000, "%sschreier_tree_node_%d_%%d",
+	snprintf(fname_mask2000, 2000, "%sschreier_tree_node_%d_%%d",
 			Control->schreier_tree_prefix, node);
 }
 
 void poset_classification::create_shallow_schreier_tree_fname_mask_base(
-		char *fname_mask, int node)
+		char *fname_mask2000, int node)
 {
 
-	snprintf(fname_mask, 1000, "%sshallow_schreier_tree_node_%d_%%d",
+	snprintf(fname_mask2000, 2000, "%sshallow_schreier_tree_node_%d_%%d",
 			Control->schreier_tree_prefix, node);
 }
 
 void poset_classification::make_fname_candidates_file_default(
-		char *fname, int level)
+		char *fname2000, int level)
 {
-	snprintf(fname, 1000, "%s_lvl_%d_candidates.bin", problem_label_with_path.c_str(), level);
+	snprintf(fname2000, 2000, "%s_lvl_%d_candidates.bin", problem_label_with_path.c_str(), level);
 }
 
 
