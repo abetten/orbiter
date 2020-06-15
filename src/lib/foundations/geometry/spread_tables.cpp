@@ -119,12 +119,12 @@ void spread_tables::init(finite_field *F,
 		cout << "spread_tables::init prefix=" << spread_tables::prefix << endl;
 	}
 
-	snprintf(fname_dual_line_idx, 1000, "%s_dual_line_idx.csv", spread_tables::prefix);
-	snprintf(fname_self_dual_lines, 1000, "%s_self_dual_lines.csv", spread_tables::prefix);
-	snprintf(fname_spreads, 1000, "%s_spreads.csv", spread_tables::prefix);
-	snprintf(fname_isomorphism_type_of_spreads, 1000, "%s_spreads_iso.csv", spread_tables::prefix);
-	snprintf(fname_dual_spread, 1000, "%s_dual_spread_idx.csv", spread_tables::prefix);
-	snprintf(fname_self_dual_spreads, 1000, "%s_self_dual_spreads.csv", spread_tables::prefix);
+	snprintf(fname_dual_line_idx, 2000, "%s_dual_line_idx.csv", spread_tables::prefix);
+	snprintf(fname_self_dual_lines, 2000, "%s_self_dual_lines.csv", spread_tables::prefix);
+	snprintf(fname_spreads, 2000, "%s_spreads.csv", spread_tables::prefix);
+	snprintf(fname_isomorphism_type_of_spreads, 2000, "%s_spreads_iso.csv", spread_tables::prefix);
+	snprintf(fname_dual_spread, 2000, "%s_dual_spread_idx.csv", spread_tables::prefix);
+	snprintf(fname_self_dual_spreads, 2000, "%s_self_dual_spreads.csv", spread_tables::prefix);
 
 
 	if (f_v) {
@@ -502,7 +502,7 @@ void spread_tables::compute_adjacency_matrix(
 
 	{
 		colored_graph *CG;
-		char fname[1000];
+		char fname[2000];
 		file_io Fio;
 
 		CG = NEW_OBJECT(colored_graph);
@@ -515,7 +515,7 @@ void spread_tables::compute_adjacency_matrix(
 				color, bitvector_adjacency,
 				FALSE, verbose_level);
 
-		snprintf(fname, 1000, "%s_disjoint_spreads.colored_graph", prefix);
+		snprintf(fname, 2000, "%s_disjoint_spreads.colored_graph", prefix);
 
 		CG->save(fname, verbose_level);
 
