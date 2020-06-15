@@ -2766,7 +2766,7 @@ void incidence_structure::do_tdo_high_level(partitionstack &S,
 			verbose_level);
 		}
 	if (f_write_tdo_class_files) {
-		char fname[1000];
+		char fname[2000];
 		int *row_classes, *row_class_inv, nb_row_classes;
 		int *col_classes, *col_class_inv, nb_col_classes;
 		int i;
@@ -2777,12 +2777,12 @@ void incidence_structure::do_tdo_high_level(partitionstack &S,
 			verbose_level - 1);
 
 		for (i = 0; i < nb_row_classes; i++) {
-			snprintf(fname, 1000, "%s_TDO_point_class_%d.txt", label, i);
+			snprintf(fname, 2000, "%s_TDO_point_class_%d.txt", label, i);
 			S.write_cell_to_file_points_or_lines(
 					row_classes[i], fname, verbose_level - 1);
 			}
 		for (i = 0; i < nb_col_classes; i++) {
-			snprintf(fname, 1000, "%s_TDO_line_class_%d.txt", label, i);
+			snprintf(fname, 2000, "%s_TDO_line_class_%d.txt", label, i);
 			S.write_cell_to_file_points_or_lines(
 					col_classes[i], fname, verbose_level - 1);
 			}
