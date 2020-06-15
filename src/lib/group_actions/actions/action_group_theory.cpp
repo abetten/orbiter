@@ -165,7 +165,7 @@ void action::conjugacy_classes_using_MAGMA(const char *prefix,
 	int f_v = (verbose_level >= 1);
 	char fname_magma[1000];
 	char fname_output[1000];
-	char cmd[1000];
+	char cmd[2000];
 
 	if (f_v) {
 		cout << "action::conjugacy_classes_using_MAGMA" << endl;
@@ -202,7 +202,7 @@ void action::conjugacy_classes_using_MAGMA(const char *prefix,
 			"printf \"\\n\"; end for;" << endl;
 	fp << "UnsetOutputFile();" << endl;
 	}
-	sprintf(cmd, "/scratch/magma/magma %s", fname_magma);
+	snprintf(cmd, 2000, "/scratch/magma/magma %s", fname_magma);
 	cout << "executing ConjugacyClasses command in MAGMA" << endl;
 	system(cmd);
 
@@ -296,7 +296,7 @@ void action::conjugacy_classes_and_normalizers_using_MAGMA(
 	int f_v = (verbose_level >= 1);
 	char fname_magma[1000];
 	char fname_output[1000];
-	char cmd[1000];
+	char cmd[2000];
 
 	if (f_v) {
 		cout << "action::conjugacy_classes_and_normalizers_using_MAGMA" << endl;
@@ -365,7 +365,7 @@ void action::conjugacy_classes_and_normalizers_using_MAGMA(
 		fp << "end for;" << endl;
 		fp << "UnsetOutputFile();" << endl;
 	}
-	sprintf(cmd, "/scratch/magma/magma %s", fname_magma);
+	snprintf(cmd, 2000, "/scratch/magma/magma %s", fname_magma);
 	if (f_v) {
 		cout << "executing " << fname_magma << " command in MAGMA" << endl;
 	}
@@ -642,7 +642,7 @@ void action::centralizer_using_magma2(const char *prefix,
 	if (f_v) {
 		cout << "action::centralizer_using_magma2" << endl;
 	}
-	char cmd[1000];
+	char cmd[2000];
 	file_io Fio;
 	strong_generators *G_gen;
 
@@ -679,7 +679,7 @@ void action::centralizer_using_magma2(const char *prefix,
 	cout << "Written file " << fname_magma
 			<< " of size " << Fio.file_size(fname_magma) << endl;
 
-	sprintf(cmd, "/scratch/magma/magma %s", fname_magma);
+	snprintf(cmd, 2000, "/scratch/magma/magma %s", fname_magma);
 	cout << "executing centralizer command in MAGMA" << endl;
 	system(cmd);
 
@@ -701,9 +701,9 @@ void action::conjugacy_classes_and_normalizers(sims *override_Sims,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char prefix[1000];
-	char fname1[1000];
-	char fname2[1000];
+	char prefix[2000];
+	char fname1[3000];
+	char fname2[3000];
 	file_io Fio;
 
 
@@ -711,9 +711,9 @@ void action::conjugacy_classes_and_normalizers(sims *override_Sims,
 		cout << "action::conjugacy_classes_and_normalizers" << endl;
 	}
 
-	sprintf(prefix, "%s", override_group_prefix);
-	sprintf(fname1, "%s_classes.magma", prefix);
-	sprintf(fname2, "%s_classes_out.txt", prefix);
+	snprintf(prefix, 2000, "%s", override_group_prefix);
+	snprintf(fname1, 3000, "%s_classes.magma", prefix);
+	snprintf(fname2, 3000, "%s_classes_out.txt", prefix);
 
 
 	if (Fio.file_size(fname2) > 0) {
@@ -742,9 +742,9 @@ void action::report_conjugacy_classes_and_normalizers(ostream &ost,
 		sims *override_Sims, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char prefix[1000];
-	char fname1[1000];
-	char fname2[1000];
+	char prefix[2000];
+	char fname1[3000];
+	char fname2[3000];
 	file_io Fio;
 
 
@@ -752,9 +752,9 @@ void action::report_conjugacy_classes_and_normalizers(ostream &ost,
 		cout << "action::conjugacy_classes_and_normalizers" << endl;
 	}
 
-	sprintf(prefix, "%s", group_prefix);
-	sprintf(fname1, "%s_classes.magma", prefix);
-	sprintf(fname2, "%s_classes_out.txt", prefix);
+	snprintf(prefix, 2000, "%s", group_prefix);
+	snprintf(fname1, 3000, "%s_classes.magma", prefix);
+	snprintf(fname2, 3000, "%s_classes_out.txt", prefix);
 
 
 	if (Fio.file_size(fname2) > 0) {
@@ -857,10 +857,10 @@ void action::read_conjugacy_classes_and_normalizers(
 
 	{
 	ofstream fp(fname_latex);
-	char title[1000];
+	char title[2000];
 	latex_interface L;
 
-	sprintf(title, "Conjugacy classes of $%s$",
+	snprintf(title, 2000, "Conjugacy classes of $%s$",
 			label_latex);
 
 	L.head(fp,
@@ -1254,10 +1254,10 @@ void action::report_fixed_objects(int *Elt,
 
 	{
 	ofstream fp(fname_latex);
-	char title[1000];
+	char title[2000];
 	latex_interface L;
 
-	sprintf(title, "Fixed Objects");
+	snprintf(title, 2000, "Fixed Objects");
 
 	L.head(fp,
 		FALSE /* f_book */, TRUE /* f_title */,

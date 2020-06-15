@@ -46,7 +46,7 @@ void parametric_curve_point::init(double t, int f_is_valid,
 	if (f_v) {
 		for (i = 0; i < (int) coords.size(); i++) {
 			cout << coords[i];
-			if (i < coords.size() - 1) {
+			if (i < (int) coords.size() - 1) {
 				cout << ",";
 			}
 		}
