@@ -1731,8 +1731,8 @@ void interface_combinatorics::convert_stack_to_tdo(const char *stack_fname, int 
 	int i;
 	char str[1000];
 	char ext[1000];
-	char fname_out[1000];
-	char label[1000];
+	char fname_out[2000];
+	char label[2000];
 
 	if (f_v) {
 		cout << "interface_combinatorics::convert_stack_to_tdo" << endl;
@@ -1740,7 +1740,7 @@ void interface_combinatorics::convert_stack_to_tdo(const char *stack_fname, int 
 	strcpy(str, stack_fname);
 	get_extension_if_present(str, ext);
 	chop_off_extension_if_present(str, ext);
-	snprintf(fname_out, 1000, "%s.tdo", str);
+	snprintf(fname_out, 2000, "%s.tdo", str);
 
 	if (f_v) {
 		cout << "reading stack file " << stack_fname << endl;
@@ -1772,10 +1772,10 @@ void interface_combinatorics::convert_stack_to_tdo(const char *stack_fname, int 
 				cout << "after convert_single_to_stack" << endl;
 			}
 			if (strlen(GP.label)) {
-				snprintf(label, 1000, "%s", GP.label);
+				snprintf(label, 2000, "%s", GP.label);
 			}
 			else {
-				snprintf(label, 1000, "%d", i);
+				snprintf(label, 2000, "%d", i);
 			}
 			GP.write(g, label);
 			if (f_v) {
