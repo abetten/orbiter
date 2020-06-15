@@ -1395,7 +1395,7 @@ void poset_orbit_node::check_orbits(
 		}
 	if (L > 100) {
 		f_vv = FALSE;
-		f_vvv = FALSE;
+		//f_vvv = FALSE;
 	}
 	for (k = 0; k < L; k++) {
 		fst = Schreier->orbit_first[k];
