@@ -425,7 +425,7 @@ void tree_node::draw_vertices(mp_graphics &G, int rad, int f_circle, int f_circl
 			y0 -= dy;
 		
 
-			sprintf(str, "L%d", T->leaf_count);
+			snprintf(str, 1000, "L%d", T->leaf_count);
 
 			T->leaf_count++;
 			G.aligned_text(x0, y0, "", str);
@@ -438,10 +438,10 @@ void tree_node::draw_vertices(mp_graphics &G, int rad, int f_circle, int f_circl
 			f_has_draw_vertex_callback, draw_vertex_callback, T);
 		}
 	if (f_value) {
-		sprintf(str, "%d", value);
+		snprintf(str, 1000, "%d", value);
 		}
 	else {
-		sprintf(str, " ");
+		snprintf(str, 1000, " ");
 		}
 	if (f_circletext) {
 		//G.circle_text(x, y, str);
@@ -451,7 +451,7 @@ void tree_node::draw_vertices(mp_graphics &G, int rad, int f_circle, int f_circl
 		//G.aligned_text(x, y, 1, "tl", str);
 		}
 	if (f_i && f_circletext && f_int_data) {
-		sprintf(str, "%d", int_data);
+		snprintf(str, 1000, "%d", int_data);
 		G.aligned_text(Px[1], Py[1], "tl", str);
 		}
 }
@@ -511,10 +511,10 @@ void tree_node::draw_sideways(mp_graphics &G, int f_circletext, int f_i,
 		children[i]->draw_sideways(G, f_circletext, f_i, TRUE, xx, yy, max_depth, f_edge_labels);
 		}
 	if (f_value) {
-		sprintf(str, "%d", value);
+		snprintf(str, 1000, "%d", value);
 		}
 	else {
-		sprintf(str, " ");
+		snprintf(str, 1000, " ");
 		}
 	if (f_circletext) {
 #if 0
@@ -532,7 +532,7 @@ void tree_node::draw_sideways(mp_graphics &G, int f_circletext, int f_i,
 		//G.aligned_text(xx, yy, 1, "tl", str);
 		}
 	if (f_i && f_circletext && f_int_data) {
-		sprintf(str, "%d", int_data);
+		snprintf(str, 1000, "%d", int_data);
 		G.aligned_text(Px[1], Py[1], "tl", str);
 		}
 }

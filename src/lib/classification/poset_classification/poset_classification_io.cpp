@@ -171,10 +171,10 @@ void poset_classification::print_statistic_on_callbacks()
 }
 
 
-void poset_classification::prepare_fname_data_file(char *fname,
+void poset_classification::prepare_fname_data_file(char *fname1000,
 		const char *fname_base, int depth_completed)
 {
-	sprintf(fname, "%s_%d.data", fname_base, depth_completed);
+	snprintf(fname1000, 1000, "%s_%d.data", fname_base, depth_completed);
 }
 
 void poset_classification::print_representatives_at_level(int lvl)
@@ -912,7 +912,7 @@ void poset_classification::housekeeping(int i,
 					"writing files" << endl;
 			}
 #if 1
-		sprintf(my_fname_base, "%sa", problem_label_with_path);
+		snprintf(my_fname_base, 1000, "%sa", problem_label_with_path);
 		if (f_v) {
 			cout << "poset_classification_housekeeping "
 					"my_fname_base=" << my_fname_base << endl;
@@ -926,7 +926,7 @@ void poset_classification::housekeeping(int i,
 					"after write_level_file_binary" << endl;
 			}
 		if (i) {		
-			sprintf(my_fname_base, "%sb", problem_label_with_path);
+			snprintf(my_fname_base, 1000, "%sb", problem_label_with_path);
 			if (f_v) {
 				cout << "poset_classification_housekeeping "
 						"my_fname_base=" << my_fname_base << endl;
@@ -1103,7 +1103,7 @@ void poset_classification::housekeeping_no_data_file(int i,
 void poset_classification::create_fname_sv_level_file_binary(char *fname,
 		const char *fname_base, int level)
 {
-	sprintf(fname, "%s_lvl_%d_sv.data", fname_base, level);
+	snprintf(fname, 1000, "%s_lvl_%d_sv.data", fname_base, level);
 
 }
 
@@ -1310,7 +1310,7 @@ void poset_classification::read_level_file_binary(int level,
 	int nb_group_elements;
 	file_io Fio;
 	
-	sprintf(fname, "%s_lvl_%d.data", fname_base, level);
+	snprintf(fname, 1000, "%s_lvl_%d.data", fname_base, level);
 	
 	if (f_v) {
 		cout << "poset_classification::read_level_file_binary "
@@ -1341,7 +1341,7 @@ void poset_classification::write_level_file_binary(int level,
 	int nb_group_elements;
 	file_io Fio;
 
-	sprintf(fname, "%s_lvl_%d.data", fname_base, level);
+	snprintf(fname, 1000, "%s_lvl_%d.data", fname_base, level);
 	
 	if (f_v) {
 		cout << "poset_classification::write_level_file_binary "
@@ -1710,16 +1710,16 @@ void poset_classification::recover(
 		}
 }
 
-void poset_classification::make_fname_lvl_file_candidates(char *fname,
+void poset_classification::make_fname_lvl_file_candidates(char *fname1000,
 		char *fname_base, int lvl)
 {
-	sprintf(fname, "%s_lvl_%d_candidates.txt", fname_base, lvl);
+	snprintf(fname1000, 1000, "%s_lvl_%d_candidates.txt", fname_base, lvl);
 }
 
-void poset_classification::make_fname_lvl_file(char *fname,
+void poset_classification::make_fname_lvl_file(char *fname1000,
 		char *fname_base, int lvl)
 {
-	sprintf(fname, "%s_lvl_%d", fname_base, lvl);
+	snprintf(fname1000, 1000, "%s_lvl_%d", fname_base, lvl);
 }
 
 void poset_classification::write_lvl_file_with_candidates(
@@ -1731,7 +1731,7 @@ void poset_classification::write_lvl_file_with_candidates(
 	file_io Fio;
 	os_interface Os;
 	
-	sprintf(fname1, "%s_lvl_%d_candidates.txt", fname_base, lvl);
+	snprintf(fname1, 1000, "%s_lvl_%d_candidates.txt", fname_base, lvl);
 	{
 	ofstream f(fname1);
 	int cur;
@@ -1997,12 +1997,12 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 		first = first_poset_orbit_node_at_level[level];
 		nb_orbits = nb_orbits_at_level(level);
 		for (i = 0; i < nb_orbits; i++) {
-			sprintf(str, "%d", level);
+			snprintf(str,1000,  "%d", level);
 			Text_level[first + i] =
 					NEW_char(strlen(str) + 1);
 			strcpy(Text_level[first + i], str);
 
-			sprintf(str, "%d", i);
+			snprintf(str, 1000, "%d", i);
 			Text_node[first + i] =
 					NEW_char(strlen(str) + 1);
 			strcpy(Text_node[first + i], str);
@@ -2031,7 +2031,7 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 			} else {
 				schreier_vector_length = 0;
 			}
-			sprintf(str, "%d", schreier_vector_length);
+			snprintf(str, 1000, "%d", schreier_vector_length);
 			Text_schreier_vector_length[first + i] =
 					NEW_char(strlen(str) + 1);
 			strcpy(Text_schreier_vector_length[first + i], str);
@@ -2137,11 +2137,11 @@ void poset_classification::make_spreadsheet_of_level_info(
 		nb_orbits = nb_orbits_at_level(level);
 
 
-		sprintf(str, "%d", level);
+		snprintf(str, 1000, "%d", level);
 		Text_label[level] = NEW_char(strlen(str) + 1);
 		strcpy(Text_label[level], str);
 
-		sprintf(str, "%d", nb_orbits);
+		snprintf(str, 1000, "%d", nb_orbits);
 		Text_nb_orbits[level] = NEW_char(strlen(str) + 1);
 		strcpy(Text_nb_orbits[level], str);
 
@@ -2210,11 +2210,11 @@ void poset_classification::make_spreadsheet_of_level_info(
 		}
 
 	level = max_depth + 1;
-	sprintf(str, "total");
+	snprintf(str, 1000, "total");
 	Text_label[level] = NEW_char(strlen(str) + 1);
 	strcpy(Text_label[level], str);
 
-	sprintf(str, "%d", Nb_orbits);
+	snprintf(str, 1000, "%d", Nb_orbits);
 	Text_nb_orbits[level] = NEW_char(strlen(str) + 1);
 	strcpy(Text_nb_orbits[level], str);
 
@@ -2284,7 +2284,7 @@ void poset_classification::create_schreier_tree_fname_mask_base(
 		char *fname_mask, int node)
 {
 
-	sprintf(fname_mask, "%sschreier_tree_node_%d_%%d",
+	snprintf(fname_mask, 1000, "%sschreier_tree_node_%d_%%d",
 			Control->schreier_tree_prefix, node);
 }
 
@@ -2292,14 +2292,14 @@ void poset_classification::create_shallow_schreier_tree_fname_mask_base(
 		char *fname_mask, int node)
 {
 
-	sprintf(fname_mask, "%sshallow_schreier_tree_node_%d_%%d",
+	snprintf(fname_mask, 1000, "%sshallow_schreier_tree_node_%d_%%d",
 			Control->schreier_tree_prefix, node);
 }
 
 void poset_classification::make_fname_candidates_file_default(
 		char *fname, int level)
 {
-	sprintf(fname, "%s_lvl_%d_candidates.bin", problem_label_with_path, level);
+	snprintf(fname, 1000, "%s_lvl_%d_candidates.bin", problem_label_with_path, level);
 }
 
 
@@ -2338,7 +2338,7 @@ void poset_classification::wedge_product_export_magma(
 	poset_orbit_node *O;
 	char fname[1000];
 
-	sprintf(fname, "Wedge_n%d_q%d_d%d.magma", n, q, level);
+	snprintf(fname, 1000, "Wedge_n%d_q%d_d%d.magma", n, q, level);
 
 	{
 	ofstream f(fname);

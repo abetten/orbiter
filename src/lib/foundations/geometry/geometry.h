@@ -366,7 +366,7 @@ public:
 	void create_unital_Uab_tex(int verbose_level);
 	void compute_the_design(int verbose_level);
 	void write_unital_to_file();
-	void get_name(char *name);
+	void get_name(char *name1000);
 
 };
 

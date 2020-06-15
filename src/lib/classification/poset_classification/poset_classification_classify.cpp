@@ -377,7 +377,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 		get_table_of_nodes(Table,
 			nb_rows, nb_cols, 0 /*verbose_level*/);
 
-		sprintf(fname, "%s_table_of_orbits.csv", problem_label_with_path);
+		snprintf(fname, 1000, "%s_table_of_orbits.csv", problem_label_with_path);
 
 		Fio.lint_matrix_write_csv(fname, Table, nb_rows, nb_cols);
 
@@ -405,7 +405,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 
 			make_spreadsheet_of_orbit_reps(Sp, actual_size);
 			char fname_csv[1000];
-			sprintf(fname_csv, "orbits_%d.csv", actual_size);
+			snprintf(fname_csv, 1000, "orbits_%d.csv", actual_size);
 			Sp->save(fname_csv, verbose_level);
 			delete Sp;
 			if (f_v) {
@@ -455,7 +455,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			spreadsheet *Sp;
 			make_spreadsheet_of_level_info(Sp, actual_size, verbose_level);
 			char fname_csv[1000];
-			sprintf(fname_csv, "%s_levels_%d.csv", problem_label_with_path, actual_size);
+			snprintf(fname_csv, 1000, "%s_levels_%d.csv", problem_label_with_path, actual_size);
 			Sp->save(fname_csv, verbose_level);
 			delete Sp;
 		}
@@ -473,7 +473,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			spreadsheet *Sp;
 			make_spreadsheet_of_orbit_reps(Sp, actual_size);
 			char fname_csv[1000];
-			sprintf(fname_csv, "%s_orbits_at_level_%d.csv", problem_label_with_path, actual_size);
+			snprintf(fname_csv, 1000, "%s_orbits_at_level_%d.csv", problem_label_with_path, actual_size);
 			Sp->save(fname_csv, verbose_level);
 			delete Sp;
 		}

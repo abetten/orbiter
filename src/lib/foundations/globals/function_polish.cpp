@@ -238,7 +238,7 @@ void function_polish::evaluate(
 	if (f_v) {
 		cout << "function_polish::evaluate" << endl;
 	}
-	for (h = 0; h < Entry.size(); h++) {
+	for (h = 0; h < (int) Entry.size(); h++) {
 		fst = Entry[h];
 		len = Len[h];
 		if (f_v) {
@@ -388,7 +388,7 @@ void function_polish::evaluate(
 	} // next h
 
 	if (f_v) {
-		for (h = 0; h < Entry.size(); h++) {
+		for (h = 0; h < (int) Entry.size(); h++) {
 			cout << "function " << h << " evaluates to " << output_values[h] << endl;
 		}
 	}

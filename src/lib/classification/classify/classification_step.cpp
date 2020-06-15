@@ -332,7 +332,7 @@ void classification_step::generate_source_code(const char *fname_base,
 	if (f_v) {
 		cout << "classification_step::generate_source_code" << endl;
 		}
-	sprintf(fname, "%s.cpp", fname_base);
+	snprintf(fname, 1000, "%s.cpp", fname_base);
 	prefix = fname_base;
 
 	{

@@ -504,9 +504,9 @@ void longinteger::m_one()
 
 void longinteger::homo_z(int z)
 {
-	char str[1024];
+	char str[1000];
 	
-	sprintf(str, "%d", z);
+	snprintf(str, 1000, "%d", z);
 	
 	longinteger x(str);
 	swap(x);

@@ -512,8 +512,8 @@ void interface_algebra::do_cheat_sheet_GF(int q, int f_poly, const char *poly, i
 	char title[1000];
 	char author[1000];
 
-	sprintf(fname, "GF_%d.tex", q);
-	sprintf(title, "Cheat Sheet GF($%d$)", q);
+	snprintf(fname, 1000, "GF_%d.tex", q);
+	snprintf(title, 1000, "Cheat Sheet GF($%d$)", q);
 	//sprintf(author, "");
 	author[0] = 0;
 

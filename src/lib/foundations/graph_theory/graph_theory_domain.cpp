@@ -31,7 +31,7 @@ void graph_theory_domain::colored_graph_draw(const char *fname, int xmax_in,
 		cout << "colored_graph_draw" << endl;
 	}
 	CG.load(fname, verbose_level - 1);
-	sprintf(fname_draw, "%s_graph", CG.fname_base);
+	snprintf(fname_draw, 1000, "%s_graph", CG.fname_base);
 	if (f_v) {
 		cout << "colored_graph_draw before CG.draw_partitioned" << endl;
 	}
@@ -62,11 +62,11 @@ void graph_theory_domain::colored_graph_all_cliques(const char *fname,
 	}
 	CG.load(fname, verbose_level - 1);
 	if (f_output_fname) {
-		sprintf(fname_sol, "%s", output_fname);
-		sprintf(fname_success, "%s.success", output_fname);
+		snprintf(fname_sol, 1000, "%s", output_fname);
+		snprintf(fname_success, 1000, "%s.success", output_fname);
 	} else {
-		sprintf(fname_sol, "%s_sol.txt", CG.fname_base);
-		sprintf(fname_success, "%s_sol.success", CG.fname_base);
+		snprintf(fname_sol, 1000, "%s_sol.txt", CG.fname_base);
+		snprintf(fname_success, 1000, "%s_sol.success", CG.fname_base);
 	}
 
 	//CG.print();
@@ -135,9 +135,9 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 				cout << "colored_graph_all_cliques_list_of_cases case " << i
 						<< " / " << nb_cases << " which is " << c << endl;
 			}
-			sprintf(fname_tmp, fname_template, c);
+			snprintf(fname_tmp, 1000, fname_template, c);
 			if (f_prefix) {
-				sprintf(fname, "%s%s", prefix, fname_tmp);
+				snprintf(fname, 1000, "%s%s", prefix, fname_tmp);
 			} else {
 				strcpy(fname, fname_tmp);
 			}
@@ -293,7 +293,7 @@ void graph_theory_domain::save_as_colored_graph_easy(const char *fname_base,
 	if (f_v) {
 		cout << "save_as_colored_graph_easy" << endl;
 	}
-	sprintf(fname, "%s.colored_graph", fname_base);
+	snprintf(fname, 1000, "%s.colored_graph", fname_base);
 
 	colored_graph *CG;
 
@@ -877,8 +877,8 @@ void graph_theory_domain::draw_bitmatrix(
 	//double line_width = 1.0;
 	file_io Fio;
 
-	sprintf(fname_base2, "%s", fname_base);
-	sprintf(fname, "%s.mp", fname_base2);
+	snprintf(fname_base2, 1000, "%s", fname_base);
+	snprintf(fname, 1000, "%s.mp", fname_base2);
 	{
 		G.setup(fname_base2, 0, 0, xmax_in /* ONE_MILLION */,
 				ymax_in /* ONE_MILLION */, xmax_out, ymax_out, f_embedded,

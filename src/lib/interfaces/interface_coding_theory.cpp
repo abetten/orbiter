@@ -236,7 +236,7 @@ void interface_coding_theory::make_BCH_codes(int n, int q, int t, int b, int f_d
 		j = NT.mod(b + i, n);
 		roots[i] = j;
 		}
-	sprintf(fname, "BCH_%d_%d.txt", n, t);
+	snprintf(fname, 1000, "BCH_%d_%d.txt", n, t);
 
 	cout << "roots: ";
 	int_vec_print(cout, roots, nb_roots);

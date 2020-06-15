@@ -122,8 +122,8 @@ void linear_system(int argc, const char **argv)
 	const char *author = "Orbiter";
 	const char *extras_for_preamble = "";
 
-	sprintf(fname, "HCV_report.tex");
-	sprintf(title, "The Hilbert, Cohn-Vossen Cubic Surface");
+	vsnprintf(fname, 1000, "HCV_report.tex", 0);
+	vsnprintf(title, 1000, "The Hilbert, Cohn-Vossen Cubic Surface", 0);
 
 	{
 		ofstream fp(fname);
@@ -200,7 +200,7 @@ void linear_system(int argc, const char **argv)
 			//char fname_makefile[1000];
 
 
-			//sprintf(fname_makefile, "makefile_animation");
+			//strcpy(fname_makefile, "makefile_animation");
 
 			{
 			ofstream fpm(A->fname_makefile);

@@ -28,9 +28,9 @@ void algebra_global::cheat_sheet_GF(int q,
 	char title[1000];
 	char author[1000];
 
-	sprintf(fname, "GF_%d.tex", q);
-	sprintf(title, "Cheat Sheet GF($%d$)", q);
-	//sprintf(author, "");
+	snprintf(fname, 1000, "GF_%d.tex", q);
+	snprintf(title, 1000, "Cheat Sheet GF($%d$)", q);
+	author[0] = 0;
 	author[0] = 0;
 	if (f_override_polynomial) {
 		override_poly = my_override_polynomial;
@@ -840,7 +840,7 @@ void algebra_global::make_Hamming_graph_and_write_file(int n, int q, int f_proje
 	char fname[1000];
 	file_io Fio;
 
-	sprintf(fname, "Hamming_n%d_q%d.csv", n, q);
+	snprintf(fname, 1000, "Hamming_n%d_q%d.csv", n, q);
 
 	Fio.int_matrix_write_csv(fname, Table, height, width);
 

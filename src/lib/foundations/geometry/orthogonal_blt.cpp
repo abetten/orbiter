@@ -1089,7 +1089,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 	{
 		char fname[1000];
 
-		sprintf(fname, "plane_invariant_%d_%d.txt", q, k);
+		snprintf(fname, 1000, "plane_invariant_%d_%d.txt", q, k);
 
 		ofstream fp(fname);
 		fp << nb_planes << endl;

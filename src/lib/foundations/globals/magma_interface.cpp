@@ -32,7 +32,7 @@ void magma_interface::write_permutation_group(const char *fname_base,
 	combinatorics_domain Combi;
 	file_io Fio;
 
-	sprintf(fname, "%s.magma", fname_base);
+	snprintf(fname, 1000, "%s.magma", fname_base);
 	{
 	ofstream fp(fname);
 	
@@ -64,8 +64,8 @@ void magma_interface::normalizer_in_Sym_n(
 	combinatorics_domain Combi;
 	file_io Fio;
 
-	sprintf(fname_magma, "%s.magma", fname_base);
-	sprintf(fname_output, "%s.txt", fname_base);
+	snprintf(fname_magma, 1000, "%s.magma", fname_base);
+	snprintf(fname_output, 1000, "%s.txt", fname_base);
 
 	{
 	ofstream fp(fname_magma);
@@ -172,8 +172,8 @@ void magma_interface::orbit_of_matrix_group_on_vector(
 	combinatorics_domain Combi;
 	file_io Fio;
 
-	sprintf(fname_magma, "%s.magma", fname_base);
-	sprintf(fname_output, "%s.txt", fname_base);
+	snprintf(fname_magma, 1000, "%s.magma", fname_base);
+	snprintf(fname_output, 1000, "%s.txt", fname_base);
 
 	{
 	ofstream fp(fname_magma);
@@ -221,7 +221,7 @@ void magma_interface::orbit_of_matrix_group_on_vector(
 		exit(1);
 		}
 #if 0
-	sprintf(cmd, "/usr/local/magma/magma %s", fname_magma);
+	snprintf(cmd, 1000, "/usr/local/magma/magma %s", fname_magma);
 	cout << "executing normalizer command in MAGMA" << endl;
 	system(cmd);
 #endif
@@ -255,8 +255,8 @@ void magma_interface::orbit_of_matrix_group_on_subspaces(
 	combinatorics_domain Combi;
 	file_io Fio;
 
-	sprintf(fname_magma, "%s.magma", fname_base);
-	sprintf(fname_output, "%s.txt", fname_base);
+	snprintf(fname_magma, 1000, "%s.magma", fname_base);
+	snprintf(fname_output, 1000, "%s.txt", fname_base);
 
 	{
 	ofstream fp(fname_magma);
@@ -314,7 +314,7 @@ void magma_interface::orbit_of_matrix_group_on_subspaces(
 		exit(1);
 		}
 #if 0
-	sprintf(cmd, "/usr/local/magma/magma %s", fname_magma);
+	snprintf(cmd, 1000, "/usr/local/magma/magma %s", fname_magma);
 	cout << "executing normalizer command in MAGMA" << endl;
 	system(cmd);
 #endif

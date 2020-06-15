@@ -709,13 +709,13 @@ void surface_domain::label_variables_3(
 	HPD->symbols = NEW_pchar(3);
 	HPD->symbols_latex = NEW_pchar(3);
 	for (i = 0; i < 3; i++) {
-		sprintf(label, "y_%d", i);
+		snprintf(label, 1000, "y_%d", i);
 		l = strlen(label);
 		HPD->symbols[i] = NEW_char(l + 1);
 		strcpy(HPD->symbols[i], label);
 		}
 	for (i = 0; i < 3; i++) {
-		sprintf(label, "y_{%d}", i);
+		snprintf(label, 1000, "y_{%d}", i);
 		l = strlen(label);
 		HPD->symbols_latex[i] = NEW_char(l + 1);
 		strcpy(HPD->symbols_latex[i], label);
@@ -757,13 +757,13 @@ void surface_domain::label_variables_x123(
 	HPD->symbols = NEW_pchar(3);
 	HPD->symbols_latex = NEW_pchar(3);
 	for (i = 0; i < 3; i++) {
-		sprintf(label, "x_%d", i + 1);
+		snprintf(label, 1000, "x_%d", i + 1);
 		l = strlen(label);
 		HPD->symbols[i] = NEW_char(l + 1);
 		strcpy(HPD->symbols[i], label);
 		}
 	for (i = 0; i < 3; i++) {
-		sprintf(label, "x_{%d}", i + 1);
+		snprintf(label, 1000, "x_{%d}", i + 1);
 		l = strlen(label);
 		HPD->symbols_latex[i] = NEW_char(l + 1);
 		strcpy(HPD->symbols_latex[i], label);
@@ -804,13 +804,13 @@ void surface_domain::label_variables_4(
 	HPD->symbols = NEW_pchar(4);
 	HPD->symbols_latex = NEW_pchar(4);
 	for (i = 0; i < 4; i++) {
-		sprintf(label, "X_%d", i);
+		snprintf(label, 1000, "X_%d", i);
 		l = strlen(label);
 		HPD->symbols[i] = NEW_char(l + 1);
 		strcpy(HPD->symbols[i], label);
 		}
 	for (i = 0; i < 4; i++) {
-		sprintf(label, "X_{%d}", i);
+		snprintf(label, 1000, "X_{%d}", i);
 		l = strlen(label);
 		HPD->symbols_latex[i] = NEW_char(l + 1);
 		strcpy(HPD->symbols_latex[i], label);
@@ -851,14 +851,14 @@ void surface_domain::label_variables_27(
 	HPD->symbols = NEW_pchar(27);
 	HPD->symbols_latex = NEW_pchar(27);
 	for (i = 0; i < 3; i++) {
-		sprintf(label, "y_%d", i);
+		snprintf(label, 1000, "y_%d", i);
 		l = strlen(label);
 		HPD->symbols[i] = NEW_char(l + 1);
 		strcpy(HPD->symbols[i], label);
 		}
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 4; j++) {
-			sprintf(label, "f_%d%d", i, j);
+			snprintf(label, 1000, "f_%d%d", i, j);
 			l = strlen(label);
 			HPD->symbols[3 + i * 4 + j] = NEW_char(l + 1);
 			strcpy(HPD->symbols[3 + i * 4 + j], label);
@@ -866,21 +866,21 @@ void surface_domain::label_variables_27(
 		}
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 4; j++) {
-			sprintf(label, "g_%d%d", i, j);
+			snprintf(label, 1000, "g_%d%d", i, j);
 			l = strlen(label);
 			HPD->symbols[3 + 12 + i * 4 + j] = NEW_char(l + 1);
 			strcpy(HPD->symbols[3 + 12 + i * 4 + j], label);
 			}
 		}
 	for (i = 0; i < 3; i++) {
-		sprintf(label, "y_{%d}", i);
+		snprintf(label, 1000, "y_{%d}", i);
 		l = strlen(label);
 		HPD->symbols_latex[i] = NEW_char(l + 1);
 		strcpy(HPD->symbols_latex[i], label);
 		}
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 4; j++) {
-			sprintf(label, "f_{%d%d}", i, j);
+			snprintf(label, 1000, "f_{%d%d}", i, j);
 			l = strlen(label);
 			HPD->symbols_latex[3 + i * 4 + j] = NEW_char(l + 1);
 			strcpy(HPD->symbols_latex[3 + i * 4 + j], label);
@@ -888,7 +888,7 @@ void surface_domain::label_variables_27(
 		}
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 4; j++) {
-			sprintf(label, "g_{%d%d}", i, j);
+			snprintf(label, 1000, "g_{%d%d}", i, j);
 			l = strlen(label);
 			HPD->symbols_latex[3 + 12 + i * 4 + j] = NEW_char(l + 1);
 			strcpy(HPD->symbols_latex[3 + 12 + i * 4 + j], label);
@@ -931,7 +931,7 @@ void surface_domain::label_variables_24(
 	HPD->symbols_latex = NEW_pchar(24);
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 4; j++) {
-			sprintf(label, "f_%d%d", i, j);
+			snprintf(label, 1000, "f_%d%d", i, j);
 			l = strlen(label);
 			HPD->symbols[i * 4 + j] = NEW_char(l + 1);
 			strcpy(HPD->symbols[i * 4 + j], label);
@@ -939,7 +939,7 @@ void surface_domain::label_variables_24(
 		}
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 4; j++) {
-			sprintf(label, "g_%d%d", i, j);
+			snprintf(label, 1000, "g_%d%d", i, j);
 			l = strlen(label);
 			HPD->symbols[12 + i * 4 + j] = NEW_char(l + 1);
 			strcpy(HPD->symbols[12 + i * 4 + j], label);
@@ -947,7 +947,7 @@ void surface_domain::label_variables_24(
 		}
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 4; j++) {
-			sprintf(label, "f_{%d%d}", i, j);
+			snprintf(label,  1000, "f_{%d%d}", i, j);
 			l = strlen(label);
 			HPD->symbols_latex[i * 4 + j] = NEW_char(l + 1);
 			strcpy(HPD->symbols_latex[i * 4 + j], label);
@@ -955,7 +955,7 @@ void surface_domain::label_variables_24(
 		}
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 4; j++) {
-			sprintf(label, "g_{%d%d}", i, j);
+			snprintf(label,  1000, "g_{%d%d}", i, j);
 			l = strlen(label);
 			HPD->symbols_latex[12 + i * 4 + j] = NEW_char(l + 1);
 			strcpy(HPD->symbols_latex[12 + i * 4 + j], label);
@@ -1919,7 +1919,7 @@ void surface_domain::make_trihedral_pairs(int *&T,
 		Combi.unrank_k_subset(h, subset, 6, 3);
 		Combi.set_complement(subset, 3, complement,
 			size_complement, 6);
-		sprintf(label, "%d%d%d;%d%d%d",
+		snprintf(label, 1000, "%d%d%d;%d%d%d",
 				subset[0] + 1, subset[1] + 1, subset[2] + 1,
 				complement[0] + 1, complement[1] + 1, complement[2] + 1);
 
@@ -1942,7 +1942,7 @@ void surface_domain::make_trihedral_pairs(int *&T,
 				subset[second_subset[1]], 
 				subset[complement[0]], 
 				subset[complement[1]]);
-			sprintf(label, "%d%d;%d%d;%d%d",
+			snprintf(label, 1000, "%d%d;%d%d;%d%d",
 				subset[second_subset[0]] + 1, 
 				subset[second_subset[1]] + 1, 
 				subset[complement[0]] + 1, 
@@ -1965,7 +1965,7 @@ void surface_domain::make_trihedral_pairs(int *&T,
 		make_Tdefght(T + idx * 9, 
 			subset[0], subset[1], subset[2], 
 			complement[0], complement[1], complement[2]);
-		sprintf(label, "%d%d%d,%d%d%d",
+		snprintf(label, 1000, "%d%d%d,%d%d%d",
 			subset[0] + 1, 
 			subset[1] + 1, 
 			subset[2] + 1, 

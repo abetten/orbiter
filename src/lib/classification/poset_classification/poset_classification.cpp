@@ -1654,7 +1654,7 @@ void poset_classification::list_whole_orbit(
 	if (f_save_stab) {
 		char fname[1000];
 
-		sprintf(fname, "%s_stab_%d_%d.bin",
+		snprintf(fname, 1000, "%s_stab_%d_%d.bin",
 				problem_label_with_path, depth, orbit_idx);
 		cout << "saving stabilizer poset_classifications "
 				"to file " << fname << endl;

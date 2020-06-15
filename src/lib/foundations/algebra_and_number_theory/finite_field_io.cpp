@@ -27,9 +27,8 @@ void finite_field::cheat_sheet_PG(int n,
 	//int f_basis = TRUE;
 	//int q = F->q;
 
-	sprintf(fname, "PG_%d_%d.tex", n, q);
-	sprintf(title, "Cheat Sheet PG($%d,%d$)", n, q);
-	//sprintf(author, "");
+	snprintf(fname, 1000, "PG_%d_%d.tex", n, q);
+	snprintf(title, 1000, "Cheat Sheet PG($%d,%d$)", n, q);
 	author[0] = 0;
 	projective_space *P;
 
@@ -83,7 +82,7 @@ void finite_field::cheat_sheet_PG(int n,
 		for (i = 0; i < P->N_points; i++) {
 			set[i] = i;
 			}
-		sprintf(fname_base, "plane_of_order_%d", q);
+		snprintf(fname_base, 1000, "plane_of_order_%d", q);
 		P->draw_point_set_in_plane(fname_base,
 				set, P->N_points,
 				TRUE /*f_with_points*/,
