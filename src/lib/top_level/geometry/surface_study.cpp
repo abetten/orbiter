@@ -489,10 +489,10 @@ void surface_study::study_group(int verbose_level)
 		//cout << "The group table is:" << endl;
 		//int_matrix_print(Table, n, n);
 
-		char fname_out_base[1000];
-		char fname_out[2000];
-		sprintf(fname_out_base, "%s_table_%d_%d", prefix, q, nb);
-		sprintf(fname_out, "%s.csv", fname_out_base);
+		char fname_out_base[2000];
+		char fname_out[3000];
+		snprintf(fname_out_base, 2000, "%s_table_%d_%d", prefix, q, nb);
+		snprintf(fname_out, 3000, "%s.csv", fname_out_base);
 		Fio.int_matrix_write_csv(fname_out, Table, n, n);
 		cout << "Written file " << fname_out
 				<< " of size " << Fio.file_size(fname_out) << endl;
@@ -1478,7 +1478,7 @@ void move_point_set(action *A2,
 	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen;
-	char prefix[1000];
+	//char prefix[1000];
 	//int f_W = FALSE;
 	//int f_w = FALSE;
 	long int *data_in;
@@ -1487,7 +1487,7 @@ void move_point_set(action *A2,
 	int idx, i;
 	sorting Sorting;
 
-	prefix[0] = 0;
+	//prefix[0] = 0;
 
 
 	if (f_v) {
