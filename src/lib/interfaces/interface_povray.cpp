@@ -1007,7 +1007,7 @@ void interface_povray_draw_frame(
 	if (round == 0) {
 
 
-		for (i = 0; i < Anim->S->Drawables.size(); i++) {
+		for (i = 0; i < (int) Anim->S->Drawables.size(); i++) {
 			drawable_set_of_objects D;
 
 			cout << "drawable " << i << ":" << endl;

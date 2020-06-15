@@ -706,7 +706,7 @@ void interface_projective::do_classify_cubic_curves(int q,
 	char title[1000];
 	char author[1000];
 	snprintf(title, 1000, "Cubic Curves in PG$(2,%d)$", q);
-	snprintf(author, 1000, "");
+	strcpy(author, "");
 	snprintf(fname, 1000, "Cubic_curves_q%d.tex", q);
 
 	{
@@ -799,7 +799,7 @@ void interface_projective::do_create_points_on_quartic(double desired_distance, 
 		cout << "after parametric_curve::init, C2.Pts.size()=" << C2.Pts.size() << endl;
 
 
-		for (i = 0; i < C1.Pts.size(); i++) {
+		for (i = 0; i < (int) C1.Pts.size(); i++) {
 			cout << C1.Pts[i].t << " : " << C1.Pts[i].coords[0] << ", " << C1.Pts[i].coords[1] << endl;
 		}
 
@@ -809,42 +809,42 @@ void interface_projective::do_create_points_on_quartic(double desired_distance, 
 		nb_pts = 4 * (C1.Pts.size() + C2.Pts.size());
 		Pts = new double[nb_pts * 2];
 		nb = 0;
-		for (i = 0; i < C1.Pts.size(); i++) {
+		for (i = 0; i < (int) C1.Pts.size(); i++) {
 			Pts[nb * 2 + 0] = C1.Pts[i].coords[0];
 			Pts[nb * 2 + 1] = C1.Pts[i].coords[1];
 			nb++;
 		}
-		for (i = 0; i < C1.Pts.size(); i++) {
+		for (i = 0; i < (int) C1.Pts.size(); i++) {
 			Pts[nb * 2 + 0] = -1 * C1.Pts[i].coords[0];
 			Pts[nb * 2 + 1] = C1.Pts[i].coords[1];
 			nb++;
 		}
-		for (i = 0; i < C1.Pts.size(); i++) {
+		for (i = 0; i < (int) C1.Pts.size(); i++) {
 			Pts[nb * 2 + 0] = C1.Pts[i].coords[0];
 			Pts[nb * 2 + 1] = -1 * C1.Pts[i].coords[1];
 			nb++;
 		}
-		for (i = 0; i < C1.Pts.size(); i++) {
+		for (i = 0; i < (int) C1.Pts.size(); i++) {
 			Pts[nb * 2 + 0] = -1 * C1.Pts[i].coords[0];
 			Pts[nb * 2 + 1] = -1 * C1.Pts[i].coords[1];
 			nb++;
 		}
-		for (i = 0; i < C2.Pts.size(); i++) {
+		for (i = 0; i < (int) C2.Pts.size(); i++) {
 			Pts[nb * 2 + 0] = C2.Pts[i].coords[0];
 			Pts[nb * 2 + 1] = C2.Pts[i].coords[1];
 			nb++;
 		}
-		for (i = 0; i < C2.Pts.size(); i++) {
+		for (i = 0; i < (int) C2.Pts.size(); i++) {
 			Pts[nb * 2 + 0] = -1 * C2.Pts[i].coords[0];
 			Pts[nb * 2 + 1] = C2.Pts[i].coords[1];
 			nb++;
 		}
-		for (i = 0; i < C2.Pts.size(); i++) {
+		for (i = 0; i < (int) C2.Pts.size(); i++) {
 			Pts[nb * 2 + 0] = C2.Pts[i].coords[0];
 			Pts[nb * 2 + 1] = -1 * C2.Pts[i].coords[1];
 			nb++;
 		}
-		for (i = 0; i < C2.Pts.size(); i++) {
+		for (i = 0; i < (int) C2.Pts.size(); i++) {
 			Pts[nb * 2 + 0] = -1 * C2.Pts[i].coords[0];
 			Pts[nb * 2 + 1] = -1 * C2.Pts[i].coords[1];
 			nb++;
