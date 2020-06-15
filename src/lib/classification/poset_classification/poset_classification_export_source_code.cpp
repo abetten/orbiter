@@ -23,8 +23,8 @@ void poset_classification::generate_source_code(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	char fname[1000];
 	char my_prefix[1000];
+	char fname[2000];
 	int iso_type;
 	long int *rep;
 	int i, j;
@@ -37,7 +37,7 @@ void poset_classification::generate_source_code(
 		cout << "poset_classification::generate_source_code" << endl;
 		}
 	snprintf(my_prefix, 1000, "%s_level_%d", Control->problem_label.c_str(), level);
-	snprintf(fname, 1000, "%s.cpp", my_prefix);
+	snprintf(fname, 2000, "%s.cpp", my_prefix);
 
 	set = NEW_lint(level);
 	nb_iso = nb_orbits_at_level(level);
@@ -362,11 +362,11 @@ void poset_classification::generate_history(int level, int verbose_level)
 				int *flag_orbit_first;
 				int *flag_orbit_nb;
 				int total_number_flag_orbits = 0;
-				int fst;
+				//int fst;
 
 				flag_orbit_first = NEW_int(nb_iso);
 				flag_orbit_nb = NEW_int(nb_iso);
-				fst = 0;
+				//fst = 0;
 				for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 
 					poset_orbit_node *N;
