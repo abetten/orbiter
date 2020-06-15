@@ -342,8 +342,8 @@ void surface_study::study_intersection_points(int verbose_level)
 	lint_matrix_print(Intersection_pt, SaS->sz, SaS->sz);
 
 
-	char fname_intersection_pts[1000];
-	char fname_intersection_pts_tex[1000];
+	char fname_intersection_pts[2000];
+	char fname_intersection_pts_tex[2000];
 	sprintf(fname_intersection_pts,
 			"%s_intersection_points0.csv", prefix);
 	sprintf(fname_intersection_pts_tex,
@@ -490,7 +490,7 @@ void surface_study::study_group(int verbose_level)
 		//int_matrix_print(Table, n, n);
 
 		char fname_out_base[1000];
-		char fname_out[1000];
+		char fname_out[2000];
 		sprintf(fname_out_base, "%s_table_%d_%d", prefix, q, nb);
 		sprintf(fname_out, "%s.csv", fname_out_base);
 		Fio.int_matrix_write_csv(fname_out, Table, n, n);
@@ -673,8 +673,8 @@ void surface_study::study_find_eckardt_points(int verbose_level)
 	lint_matrix_print(Intersection_pt, SaS->sz, SaS->sz);
 
 	{
-		char fname_intersection_pts[1000];
-		char fname_intersection_pts_tex[1000];
+		char fname_intersection_pts[2000];
+		char fname_intersection_pts_tex[2000];
 		sprintf(fname_intersection_pts,
 				"%s_intersection_points.csv", prefix);
 		sprintf(fname_intersection_pts_tex,
