@@ -262,12 +262,12 @@ void orbit_transversal::report_ago_distribution(ostream &ost)
 {
 	classify *C;
 	long int *Ago;
-	int i, /*f,*/ l, a;
+	int i, f, l, a;
 
 	C = get_ago_distribution(Ago, 0 /*verbose_level*/);
 
 	for (i = C->nb_types - 1; i >= 0; i--) {
-		//f = C->type_first[i];
+		f = C->type_first[i];
 		l = C->type_len[i];
 		a = C->data_sorted[f];
 		//ost << "$" << a;
