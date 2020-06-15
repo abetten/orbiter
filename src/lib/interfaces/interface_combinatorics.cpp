@@ -607,7 +607,7 @@ void interface_combinatorics::do_graph_theoretic_activity(
 	}
 	else if (Descr->f_sort_by_colors) {
 		colored_graph *CG2;
-		char fname2[1000];
+		char fname2[3000];
 
 		strcpy(fname2, fname_graph);
 		replace_extension_with(fname2, "_sorted.bin");
@@ -620,7 +620,7 @@ void interface_combinatorics::do_graph_theoretic_activity(
 		cout << "splitting by file " << Descr->split_file << endl;
 		file_io Fio;
 		long int *Split;
-		char fname_out[1000];
+		char fname_out[3000];
 		char extension[1000];
 		int m, n;
 		int a, c;
@@ -639,7 +639,7 @@ void interface_combinatorics::do_graph_theoretic_activity(
 			Subgraph = CG->compute_neighborhood_subgraph(a,
 					vertex_subset, color_subset, verbose_level);
 
-			snprintf(fname_out, 1000, "%s", fname_graph);
+			snprintf(fname_out, 3000, "%s", fname_graph);
 			snprintf(extension, 1000, "_case_%03d.bin", c);
 			replace_extension_with(fname_out, extension);
 
@@ -1604,11 +1604,11 @@ void interface_combinatorics::do_create_design(design_create_description *Descr,
 
 
 
-	action *A;
+	//action *A;
 	//int *Elt1;
 	//int *Elt2;
 
-	A = DC->A;
+	//A = DC->A;
 
 	//Elt2 = NEW_int(A->elt_size_in_int);
 
