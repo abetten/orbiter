@@ -1377,7 +1377,7 @@ void poset_orbit_node::check_orbits(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
+	//int f_vvv = (verbose_level >= 3);
 	int k, j, u = 0, L;
 	int fst, len, rep, f_accept;
 	action_by_restriction *ABR = NULL;
