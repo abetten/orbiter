@@ -827,7 +827,7 @@ void surface_classify_wedge::starter_configurations_which_are_involved(
 {
 	int f_v = (verbose_level >= 1);
 	int k, i, j, cnt, iso;
-	int nb_orbits;
+	//int nb_orbits;
 
 	if (f_v) {
 		cout << "surface_classify_wedge::starter_configurations_which_are_involved" << endl;
@@ -835,7 +835,7 @@ void surface_classify_wedge::starter_configurations_which_are_involved(
 
 	k = 5;
 
-	nb_orbits = Classify_double_sixes->Five_plus_one->nb_orbits_at_level(k);
+	//nb_orbits = Classify_double_sixes->Five_plus_one->nb_orbits_at_level(k);
 	cnt = 0;
 	for (i = 0; i < Classify_double_sixes->nb; i++) {
 
@@ -1912,7 +1912,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	char fname[1000];
+	char fname[2000];
 	char *prefix;
 	int orbit_index;
 	int i, j;
@@ -1920,7 +1920,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 	if (f_v) {
 		cout << "surface_classify_wedge::generate_source_code" << endl;
 	}
-	sprintf(fname, "%s.cpp", fname_base);
+	snprintf(fname, 2000, "%s.cpp", fname_base);
 	prefix = fname_base;
 	
 	{
@@ -2395,9 +2395,9 @@ void surface_classify_wedge::create_report(int f_with_stabilizers, int verbose_l
 	char author[1000];
 	file_io Fio;
 
-	sprintf(title, "Cubic Surfaces with 27 Lines over GF(%d) ", q);
-	sprintf(author, "Orbiter");
-	sprintf(fname, "Surfaces_q%d.tex", q);
+	snprintf(title, 1000, "Cubic Surfaces with 27 Lines over GF(%d) ", q);
+	strcpy(author, "Orbiter");
+	snprintf(fname, 1000, "Surfaces_q%d.tex", q);
 
 		{
 		ofstream fp(fname);
