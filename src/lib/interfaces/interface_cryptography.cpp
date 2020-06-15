@@ -2375,7 +2375,7 @@ void interface_cryptography::do_EC_cyclic_subgroup(int q,
 
 		vector<int> pts = Pts[i];
 
-		if (i < Pts.size() - 1) {
+		if (i < (int) Pts.size() - 1) {
 			cout << setw(3) << i + 1 << " : ";
 			cout << "$(" << pts[0] << "," << pts[1] << ")$";
 			cout << "\\\\" << endl;
