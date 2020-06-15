@@ -2259,7 +2259,7 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 		int verbose_level)
 // tritangent plane, 6 point, 2 blue lines, 6 red lines, text
 {
-	int i;
+	//int i;
 
 	//draw_Hilbert_cube_boxed(S, fp);
 	draw_Hilbert_red_lines(fp);
