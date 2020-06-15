@@ -2805,7 +2805,7 @@ void incidence_structure::compute_tdo(partitionstack &S,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	char fname[1000];
+	char fname[2000];
 	int f_list_incidences = FALSE;
 	file_io Fio;
 
@@ -2851,7 +2851,7 @@ void incidence_structure::compute_tdo(partitionstack &S,
 		}
 
 	if (f_write_tdo_files) {
-		snprintf(fname, 1000, "%s_tdo_scheme.tex", label);
+		snprintf(fname, 2000, "%s_tdo_scheme.tex", label);
 		{
 		ofstream fp(fname);
 
@@ -2865,7 +2865,7 @@ void incidence_structure::compute_tdo(partitionstack &S,
 					<< Fio.file_size(fname) << endl;
 			}
 
-		snprintf(fname, 1000, "%s_tdo.tex", label);
+		snprintf(fname, 2000, "%s_tdo.tex", label);
 		{
 		ofstream fp(fname);
 
@@ -2902,10 +2902,10 @@ void incidence_structure::compute_tdo_stepwise(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	char fname[1000];
-	char fname_pic[1000];
-	char fname_scheme[1000];
-	char fname_extra[1000];
+	char fname[2000];
+	char fname_pic[2000];
+	char fname_scheme[2000];
+	char fname_extra[2000];
 	int step, f_refine, f_refine_prev, f_done;
 	int f_local_coordinates = FALSE;
 	int f_list_incidences = FALSE;
@@ -2949,10 +2949,10 @@ void incidence_structure::compute_tdo_stepwise(
 			S.print_classes_points_and_lines(cout);
 			}
 		if (f_write_tdo_files) {
-			snprintf(fname, 1000, "%s_tdo_step_%d.tex", label, step);
-			snprintf(fname_pic, 1000, "%s_tdo_step_%d_pic.tex", label, step);
-			snprintf(fname_scheme, 1000, "%s_tdo_step_%d_scheme.tex", label, step);
-			snprintf(fname_extra, 1000, "%s_tdo_step_%d_extra.tex", label, step);
+			snprintf(fname, 2000, "%s_tdo_step_%d.tex", label, step);
+			snprintf(fname_pic, 2000, "%s_tdo_step_%d_pic.tex", label, step);
+			snprintf(fname_scheme, 2000, "%s_tdo_step_%d_scheme.tex", label, step);
+			snprintf(fname_extra, 2000, "%s_tdo_step_%d_extra.tex", label, step);
 			{
 			ofstream fp(fname);
 			ofstream fp_pic(fname_pic);
@@ -3062,9 +3062,9 @@ void incidence_structure::compute_tdo_stepwise(
 		}
 
 	if (f_write_tdo_files) {
-		snprintf(fname, 1000, "%s_tdo.tex", label);
-		snprintf(fname_pic, 1000, "%s_tdo_pic.tex", label);
-		snprintf(fname_scheme, 1000, "%s_tdo_scheme.tex", label);
+		snprintf(fname, 2000, "%s_tdo.tex", label);
+		snprintf(fname_pic, 2000, "%s_tdo_pic.tex", label);
+		snprintf(fname_scheme, 2000, "%s_tdo_scheme.tex", label);
 		{
 		ofstream fp(fname);
 		ofstream fp_pic(fname_pic);
