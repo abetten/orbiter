@@ -155,10 +155,10 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 		}
 	//CG.load(fname_graph, verbose_level - 1);
 	if (f_output_file) {
-		sprintf(fname_sol, "%s", output_file);
+		snprintf(fname_sol, 1000, "%s", output_file);
 	}
 	else {
-		sprintf(fname_sol, "%s_sol.txt", fname_graph);
+		snprintf(fname_sol, 1000, "%s_sol.txt", fname_graph);
 	}
 
 	//CG.print();

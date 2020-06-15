@@ -1189,7 +1189,7 @@ void surface_domain::init_double_sixes(int verbose_level)
 
 	for (i = 0; i < 36; i++) {
 		if (i < 1) {
-			sprintf(str, "D");
+			snprintf(str, 1000, "D");
 			}
 		else if (i < 1 + 15) {
 			ij = i - 1;
@@ -1198,7 +1198,7 @@ void surface_domain::init_double_sixes(int verbose_level)
 			set[1] = b;
 			Combi.set_complement(set, 2 /* subset_size */, set + 2,
 				size_complement, 6 /* universal_set_size */);
-			sprintf(str, "D_{%d%d}", a + 1, b + 1);
+			snprintf(str, 1000, "D_{%d%d}", a + 1, b + 1);
 			}
 		else {
 			v = i - 16;
@@ -1208,7 +1208,7 @@ void surface_domain::init_double_sixes(int verbose_level)
 			a = set[0];
 			b = set[1];
 			c = set[2];
-			sprintf(str, "D_{%d%d%d}", a + 1, b + 1, c + 1);
+			snprintf(str, 1000, "D_{%d%d%d}", a + 1, b + 1, c + 1);
 			}
 		if (f_v) {
 			cout << "creating label " << str
@@ -1255,7 +1255,7 @@ void surface_domain::create_half_double_sixes(int verbose_level)
 	for (i = 0; i < 36; i++) {
 		for (j = 0; j < 2; j++) {
 			if (i < 1) {
-				sprintf(str, "D");
+				snprintf(str, 1000, "D");
 				}
 			else if (i < 1 + 15) {
 				ij = i - 1;
@@ -1265,7 +1265,7 @@ void surface_domain::create_half_double_sixes(int verbose_level)
 				Combi.set_complement(set, 2 /* subset_size */,
 					set + 2, size_complement,
 					6 /* universal_set_size */);
-				sprintf(str, "D_{%d%d}", a + 1, b + 1);
+				snprintf(str, 1000, "D_{%d%d}", a + 1, b + 1);
 				}
 			else {
 				v = i - 16;
@@ -1276,7 +1276,7 @@ void surface_domain::create_half_double_sixes(int verbose_level)
 				a = set[0];
 				b = set[1];
 				c = set[2];
-				sprintf(str, "D_{%d%d%d}",
+				snprintf(str, 1000, "D_{%d%d%d}",
 					a + 1, b + 1, c + 1);
 				}
 			if (j == 0) {
@@ -2757,7 +2757,7 @@ void surface_domain::print_web_of_cubic_curves(long int *arc6,
 
 	for (h = 0; h < 45; h++) {
 		ost << "$";
-		sprintf(str, "W_{%s}=\\Phi\\big(\\pi_{%d}\\big) "
+		snprintf(str, 1000, "W_{%s}=\\Phi\\big(\\pi_{%d}\\big) "
 				"= \\Phi\\big(\\pi_{%s}\\big)",
 				Eckard_point_label[h], h,
 				Eckard_point_label[h]);
@@ -2858,11 +2858,11 @@ static void Web_of_cubic_curves_entry_print(int *p,
 		Surf->Poly3->print_monomial(output, j);
 	}
 	else if (j == -1) {
-		sprintf(output, "\\pi_{%d} = \\pi_{%s}", i,
+		snprintf(output, 1000, "\\pi_{%d} = \\pi_{%s}", i,
 				Surf->Eckard_point_label[i]);
 	}
 	else {
-		sprintf(output, "%d", val);
+		snprintf(output, 1000, "%d", val);
 	}
 }
 

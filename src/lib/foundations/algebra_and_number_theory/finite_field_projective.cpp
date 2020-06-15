@@ -32,7 +32,7 @@ void finite_field::create_projective_variety(
 		const char *variety_label,
 		int variety_nb_vars, int variety_degree,
 		const char *variety_coeffs,
-		char *fname, int &nb_pts, long int *&Pts,
+		char *fname1000, int &nb_pts, long int *&Pts,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -55,7 +55,7 @@ void finite_field::create_projective_variety(
 	coeff = NEW_int(HPD->nb_monomials);
 	int_vec_zero(coeff, HPD->nb_monomials);
 
-	sprintf(fname, "%s.txt", variety_label);
+	snprintf(fname1000, 1000, "%s.txt", variety_label);
 	int *coeff_pairs;
 	int len;
 	int a, b, i;
@@ -131,7 +131,7 @@ void finite_field::create_projective_curve(
 	coeff = NEW_int(HPD->nb_monomials);
 	int_vec_zero(coeff, HPD->nb_monomials);
 
-	sprintf(fname, "%s.txt", variety_label);
+	snprintf(fname, 1000, "%s.txt", variety_label);
 	int *coeffs;
 	int len, i, j, a, b, c, s, t;
 	int *v;
@@ -2718,7 +2718,7 @@ void finite_field::do_blocking_set_family_3(int n,
 void finite_field::create_hyperoval(
 	int f_translation, int translation_exponent,
 	int f_Segre, int f_Payne, int f_Cherowitzo, int f_OKeefe_Penttila,
-	char *fname, int &nb_pts, long int *&Pts,
+	char *fname1000, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2751,28 +2751,28 @@ void finite_field::create_hyperoval(
 	if (f_translation) {
 		P->create_translation_hyperoval(Pts, nb_pts,
 				translation_exponent, verbose_level - 0);
-		sprintf(fname, "hyperoval_translation_q%d.txt", q);
+		snprintf(fname1000, 1000, "hyperoval_translation_q%d.txt", q);
 		}
 	else if (f_Segre) {
 		P->create_Segre_hyperoval(Pts, nb_pts, verbose_level - 2);
-		sprintf(fname, "hyperoval_Segre_q%d.txt", q);
+		snprintf(fname1000, 1000, "hyperoval_Segre_q%d.txt", q);
 		}
 	else if (f_Payne) {
 		P->create_Payne_hyperoval(Pts, nb_pts, verbose_level - 2);
-		sprintf(fname, "hyperoval_Payne_q%d.txt", q);
+		snprintf(fname1000, 1000, "hyperoval_Payne_q%d.txt", q);
 		}
 	else if (f_Cherowitzo) {
 		P->create_Cherowitzo_hyperoval(Pts, nb_pts, verbose_level - 2);
-		sprintf(fname, "hyperoval_Cherowitzo_q%d.txt", q);
+		snprintf(fname1000, 1000, "hyperoval_Cherowitzo_q%d.txt", q);
 		}
 	else if (f_OKeefe_Penttila) {
 		P->create_OKeefe_Penttila_hyperoval_32(Pts, nb_pts,
 				verbose_level - 2);
-		sprintf(fname, "hyperoval_OKeefe_Penttila_q%d.txt", q);
+		snprintf(fname1000, 1000, "hyperoval_OKeefe_Penttila_q%d.txt", q);
 		}
 	else {
 		P->create_regular_hyperoval(Pts, nb_pts, verbose_level - 2);
-		sprintf(fname, "hyperoval_regular_q%d.txt", q);
+		snprintf(fname1000, 1000, "hyperoval_regular_q%d.txt", q);
 		}
 
 	if (f_v) {
@@ -2800,7 +2800,7 @@ void finite_field::create_hyperoval(
 
 void finite_field::create_subiaco_oval(
 	int f_short,
-	char *fname, int &nb_pts, long int *&Pts,
+	char *fname1000, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2812,10 +2812,10 @@ void finite_field::create_subiaco_oval(
 
 	Subiaco_oval(Pts, nb_pts, f_short, verbose_level);
 	if (f_short) {
-		sprintf(fname, "oval_subiaco_short_q%d.txt", q);
+		snprintf(fname1000, 1000, "oval_subiaco_short_q%d.txt", q);
 		}
 	else {
-		sprintf(fname, "oval_subiaco_long_q%d.txt", q);
+		snprintf(fname1000, 1000, "oval_subiaco_long_q%d.txt", q);
 		}
 
 
@@ -2855,7 +2855,7 @@ void finite_field::create_subiaco_oval(
 
 
 void finite_field::create_subiaco_hyperoval(
-	char *fname, int &nb_pts, long int *&Pts,
+	char *fname1000, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2866,7 +2866,7 @@ void finite_field::create_subiaco_hyperoval(
 		}
 
 	Subiaco_hyperoval(Pts, nb_pts, verbose_level);
-	sprintf(fname, "subiaco_hyperoval_q%d.txt", q);
+	snprintf(fname1000, 1000, "subiaco_hyperoval_q%d.txt", q);
 
 
 	if (f_v) {
@@ -2905,7 +2905,7 @@ void finite_field::create_subiaco_hyperoval(
 }
 
 void finite_field::create_ovoid(
-	char *fname, int &nb_pts, long int *&Pts,
+	char *fname1000, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2957,7 +2957,7 @@ void finite_field::create_ovoid(
 #endif
 
 	//char fname[1000];
-	sprintf(fname, "ovoid_%d.txt", q);
+	snprintf(fname1000, 1000, "ovoid_%d.txt", q);
 	//write_set_to_file(fname, L, N, verbose_level);
 
 	FREE_OBJECT(P);
@@ -2968,7 +2968,7 @@ void finite_field::create_ovoid(
 
 void finite_field::create_Baer_substructure(int n,
 	finite_field *Fq,
-	char *fname, int &nb_pts, long int *&Pts,
+	char *fname1000, int &nb_pts, long int *&Pts,
 	int verbose_level)
 // the big field FQ is given
 {
@@ -3030,7 +3030,7 @@ void finite_field::create_Baer_substructure(int n,
 
 
 	//char fname[1000];
-	sprintf(fname, "Baer_substructure_in_PG_%d_%d.txt", n, Q);
+	snprintf(fname1000, 1000, "Baer_substructure_in_PG_%d_%d.txt", n, Q);
 	//write_set_to_file(fname, S, sz, verbose_level);
 
 
@@ -3042,7 +3042,7 @@ void finite_field::create_Baer_substructure(int n,
 
 void finite_field::create_BLT_from_database(int f_embedded,
 	int BLT_k,
-	char *fname, int &nb_pts, long int *&Pts,
+	char *fname1000, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3094,10 +3094,10 @@ void finite_field::create_BLT_from_database(int f_embedded,
 
 	//char fname[1000];
 	if (f_embedded) {
-		sprintf(fname, "BLT_%d_%d_embedded.txt", q, BLT_k);
+		snprintf(fname1000, 1000, "BLT_%d_%d_embedded.txt", q, BLT_k);
 		}
 	else {
-		sprintf(fname, "BLT_%d_%d.txt", q, BLT_k);
+		snprintf(fname1000, 1000, "BLT_%d_%d.txt", q, BLT_k);
 		}
 	//write_set_to_file(fname, L, N, verbose_level);
 
@@ -3110,7 +3110,7 @@ void finite_field::create_BLT_from_database(int f_embedded,
 
 
 void finite_field::create_orthogonal(int epsilon, int n,
-	char *fname, int &nb_pts, long int *&Pts,
+	char *fname1000, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3158,7 +3158,7 @@ void finite_field::create_orthogonal(int epsilon, int n,
 
 	algebra_global AG;
 
-	sprintf(fname, "Q%s_%d_%d.txt", AG.plus_minus_letter(epsilon), n, q);
+	snprintf(fname1000, 1000, "Q%s_%d_%d.txt", AG.plus_minus_letter(epsilon), n, q);
 	//write_set_to_file(fname, L, N, verbose_level);
 
 
@@ -3168,7 +3168,7 @@ void finite_field::create_orthogonal(int epsilon, int n,
 
 
 void finite_field::create_hermitian(int n,
-	char *fname, int &nb_pts, long int *&Pts,
+	char *fname1000, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3209,7 +3209,7 @@ void finite_field::create_hermitian(int n,
 #endif
 
 	//char fname[1000];
-	sprintf(fname, "H_%d_%d.txt", n, q);
+	snprintf(fname1000, 1000, "H_%d_%d.txt", n, q);
 	//write_set_to_file(fname, L, N, verbose_level);
 
 
@@ -3219,7 +3219,7 @@ void finite_field::create_hermitian(int n,
 }
 
 void finite_field::create_cubic(
-	char *fname, int &nb_pts, long int *&Pts,
+	char *fname1000, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3270,7 +3270,7 @@ void finite_field::create_cubic(
 #endif
 
 	//char fname[1000];
-	sprintf(fname, "cubic_%d.txt", q);
+	snprintf(fname1000, 1000, "cubic_%d.txt", q);
 	//write_set_to_file(fname, L, N, verbose_level);
 
 	FREE_OBJECT(P);
@@ -3279,7 +3279,7 @@ void finite_field::create_cubic(
 }
 
 void finite_field::create_twisted_cubic(
-	char *fname, int &nb_pts, long int *&Pts,
+	char *fname1000, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3331,7 +3331,7 @@ void finite_field::create_twisted_cubic(
 #endif
 
 	//char fname[1000];
-	sprintf(fname, "twisted_cubic_%d.txt", q);
+	snprintf(fname1000, 1000, "twisted_cubic_%d.txt", q);
 	//write_set_to_file(fname, L, N, verbose_level);
 
 	FREE_OBJECT(P);
@@ -3342,7 +3342,7 @@ void finite_field::create_twisted_cubic(
 
 void finite_field::create_elliptic_curve(
 	int elliptic_curve_b, int elliptic_curve_c,
-	char *fname, int &nb_pts, long int *&Pts,
+	char *fname1000, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3393,7 +3393,7 @@ void finite_field::create_elliptic_curve(
 #endif
 
 	//char fname[1000];
-	sprintf(fname, "elliptic_curve_b%d_c%d_q%d.txt",
+	snprintf(fname1000, 1000, "elliptic_curve_b%d_c%d_q%d.txt",
 			elliptic_curve_b, elliptic_curve_c, q);
 	//write_set_to_file(fname, L, N, verbose_level);
 
@@ -3406,7 +3406,7 @@ void finite_field::create_elliptic_curve(
 
 void finite_field::create_ttp_code(finite_field *Fq,
 	int f_construction_A, int f_hyperoval, int f_construction_B,
-	char *fname, int &nb_pts, long int *&Pts,
+	char *fname1000, int &nb_pts, long int *&Pts,
 	int verbose_level)
 // this is FQ
 {
@@ -3486,14 +3486,14 @@ void finite_field::create_ttp_code(finite_field *Fq,
 	//char fname[1000];
 	if (f_construction_A) {
 		if (f_hyperoval) {
-			sprintf(fname, "ttp_code_Ah_%d.txt", Fq->q);
+			snprintf(fname1000, 1000, "ttp_code_Ah_%d.txt", Fq->q);
 			}
 		else {
-			sprintf(fname, "ttp_code_A_%d.txt", Fq->q);
+			snprintf(fname1000, 1000, "ttp_code_A_%d.txt", Fq->q);
 			}
 		}
 	else if (f_construction_B) {
-		sprintf(fname, "ttp_code_B_%d.txt", Fq->q);
+		snprintf(fname1000, 1000, "ttp_code_B_%d.txt", Fq->q);
 		}
 	//write_set_to_file(fname, L, N, verbose_level);
 
@@ -3504,7 +3504,7 @@ void finite_field::create_ttp_code(finite_field *Fq,
 
 
 void finite_field::create_unital_XXq_YZq_ZYq(
-	char *fname, int &nb_pts, long int *&Pts,
+	char *fname1000, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3542,7 +3542,7 @@ void finite_field::create_unital_XXq_YZq_ZYq(
 		}
 
 
-	sprintf(fname, "unital_XXq_YZq_ZYq_Q%d.txt", q);
+	snprintf(fname1000, 1000, "unital_XXq_YZq_ZYq_Q%d.txt", q);
 
 	FREE_OBJECT(P2);
 	FREE_int(v);
@@ -3550,7 +3550,7 @@ void finite_field::create_unital_XXq_YZq_ZYq(
 
 
 void finite_field::create_whole_space(int n,
-	char *fname, int &nb_pts, long int *&Pts,
+	char *fname1000, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3574,7 +3574,7 @@ void finite_field::create_whole_space(int n,
 		Pts[i] = i;
 		}
 
-	sprintf(fname, "whole_space_PG_%d_%d.txt", n, q);
+	snprintf(fname1000, 1000, "whole_space_PG_%d_%d.txt", n, q);
 
 	FREE_OBJECT(P);
 }
@@ -3582,7 +3582,7 @@ void finite_field::create_whole_space(int n,
 
 void finite_field::create_hyperplane(int n,
 	int pt,
-	char *fname, int &nb_pts, long int *&Pts,
+	char *fname1000, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3620,7 +3620,7 @@ void finite_field::create_hyperplane(int n,
 			}
 		}
 
-	sprintf(fname, "hyperplane_PG_%d_%d_pt%d.txt", n, q, pt);
+	snprintf(fname1000, 1000, "hyperplane_PG_%d_%d_pt%d.txt", n, q, pt);
 
 	FREE_OBJECT(P);
 	FREE_int(v1);
@@ -3629,7 +3629,7 @@ void finite_field::create_hyperplane(int n,
 
 
 void finite_field::create_segre_variety(int a, int b,
-	char *fname, int &nb_pts, long int *&Pts,
+	char *fname1000, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3688,7 +3688,7 @@ void finite_field::create_segre_variety(int a, int b,
 			}
 		}
 
-	sprintf(fname, "segre_variety_%d_%d_%d.txt", a, b, q);
+	snprintf(fname1000, 1000, "segre_variety_%d_%d_%d.txt", a, b, q);
 
 	FREE_OBJECT(P1);
 	FREE_OBJECT(P2);
@@ -3699,7 +3699,7 @@ void finite_field::create_segre_variety(int a, int b,
 }
 
 void finite_field::create_Maruta_Hamada_arc(
-	char *fname, int &nb_pts, long int *&Pts,
+	char *fname1000, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3721,7 +3721,7 @@ void finite_field::create_Maruta_Hamada_arc(
 
 	P->create_Maruta_Hamada_arc2(Pts, nb_pts, verbose_level);
 
-	sprintf(fname, "Maruta_Hamada_arc2_q%d.txt", q);
+	snprintf(fname1000, 1000, "Maruta_Hamada_arc2_q%d.txt", q);
 
 	FREE_OBJECT(P);
 	//FREE_int(Pts);
@@ -3731,7 +3731,7 @@ void finite_field::create_Maruta_Hamada_arc(
 void finite_field::create_desarguesian_line_spread_in_PG_3_q(
 	finite_field *Fq,
 	int f_embedded_in_PG_4_q,
-	char *fname, int &nb_lines, long int *&Lines,
+	char *fname1000, int &nb_lines, long int *&Lines,
 	int verbose_level)
 // this is FQ
 {
@@ -3896,11 +3896,11 @@ void finite_field::create_desarguesian_line_spread_in_PG_3_q(
 		}
 
 	if (f_embedded_in_PG_4_q) {
-		sprintf(fname, "desarguesian_line_spread_"
+		snprintf(fname1000, 1000, "desarguesian_line_spread_"
 				"in_PG_3_%d_embedded.txt", q);
 		}
 	else {
-		sprintf(fname, "desarguesian_line_spread_"
+		snprintf(fname1000, 1000, "desarguesian_line_spread_"
 				"in_PG_3_%d.txt", q);
 		}
 
@@ -5851,9 +5851,9 @@ void finite_field::cheat_sheet_PG(int n, int verbose_level)
 	//int f_basis = TRUE;
 	//int q = F->q;
 
-	sprintf(fname, "PG_%d_%d.tex", n, q);
-	sprintf(title, "Cheat Sheet PG($%d,%d$)", n, q);
-	//sprintf(author, "");
+	snprintf(fname, 1000, "PG_%d_%d.tex", n, q);
+	snprintf(fname, 1000, "Cheat Sheet PG($%d,%d$)", n, q);
+	//strcpy(author, "");
 	author[0] = 0;
 	projective_space *P;
 

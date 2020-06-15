@@ -2193,7 +2193,7 @@ void combinatorics_domain::compute_adjacency_matrix(
 			color, bitvector_adjacency,
 			FALSE, verbose_level);
 
-	sprintf(fname, "%s_disjointness.colored_graph", prefix_for_graph);
+	snprintf(fname, 1000, "%s_disjointness.colored_graph", prefix_for_graph);
 
 	CG->save(fname, verbose_level);
 

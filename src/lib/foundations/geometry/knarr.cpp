@@ -659,7 +659,7 @@ void knarr::incidence_matrix(int *&Inc,
 
 	char fname[1000];
 
-	sprintf(fname, "GQ_Knarr_BLT_%d_%d.inc", q, BLT_no);
+	snprintf(fname, 1000, "GQ_Knarr_BLT_%d_%d.inc", q, BLT_no);
 	write_incidence_matrix_to_file(fname, Inc,
 			nb_points, nb_lines, verbose_level);
 	cout << "Written file " << fname

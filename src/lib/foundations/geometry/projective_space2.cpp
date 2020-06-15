@@ -2870,7 +2870,7 @@ void projective_space::draw_point_set_in_plane(
 
 		Labels = NEW_pchar(nb_pts);
 		for (i = 0; i < nb_pts; i++) {
-			sprintf(str, "%ld", Pts[i]);
+			snprintf(str, 1000, "%ld", Pts[i]);
 			Labels[i] = NEW_char(strlen(str) + 1);
 			strcpy(Labels[i], str);
 		}

@@ -80,7 +80,7 @@ void spreadsheet::init_set_of_sets(set_of_sets *S, int f_make_heading)
 	h = 0;
 	if (f_make_heading) {
 		for (j = 0; j < s + 1; j++) {
-			sprintf(str, "C%d", j);
+			snprintf(str, 1000, "C%d", j);
 			len = strlen(str);
 			tokens[h] = NEW_char(len + 1);
 			strcpy(tokens[h], str);
@@ -90,7 +90,7 @@ void spreadsheet::init_set_of_sets(set_of_sets *S, int f_make_heading)
 		}
 	for (i = 0; i < S->nb_sets; i++) {
 
-		sprintf(str, "%d", S->Set_size[i]);
+		snprintf(str, 1000, "%d", S->Set_size[i]);
 		len = strlen(str);
 		tokens[h] = NEW_char(len + 1);
 		strcpy(tokens[h], str);
@@ -100,7 +100,7 @@ void spreadsheet::init_set_of_sets(set_of_sets *S, int f_make_heading)
 		for (j = 0; j < S->Set_size[i]; j++) {
 			a = S->Sets[i][j];
 			
-			sprintf(str, "%d", a);
+			snprintf(str, 1000, "%d", a);
 			len = strlen(str);
 			tokens[h] = NEW_char(len + 1);
 			strcpy(tokens[h], str);
@@ -126,7 +126,7 @@ void spreadsheet::init_int_matrix(int nb_rows, int nb_cols, int *A)
 	tokens = NEW_pchar(nb_tokens + 1);
 	for (i = 0; i < nb_tokens; i++) {
 		a = A[i];
-		sprintf(str, "%d", a);
+		snprintf(str, 1000, "%d", a);
 		len = strlen(str);
 		tokens[i] = NEW_char(len + 1);
 		strcpy(tokens[i], str);
@@ -211,7 +211,7 @@ void spreadsheet::fill_column_with_int(int col_idx,
 			strcpy(tokens[t], heading);
 			}
 		else {
-			sprintf(str, "%d", data[i - 1]);
+			snprintf(str, 1000, "%d", data[i - 1]);
 			l = strlen(str);
 			tokens[t] = NEW_char(l + 1);
 			strcpy(tokens[t], str);
@@ -265,7 +265,7 @@ void spreadsheet::fill_column_with_row_index(
 			strcpy(tokens[t], heading);
 			}
 		else {
-			sprintf(str, "%d", i - 1);
+			snprintf(str, 1000, "%d", i - 1);
 			l = strlen(str);
 			tokens[t] = NEW_char(l + 1);
 			strcpy(tokens[t], str);
@@ -657,7 +657,7 @@ void spreadsheet::add_column_with_int(const char *label, int *Value)
 	add_token(label);
 	Table[0 * nb_cols + nb_cols - 1] = nb_tokens - 1;
 	for (i = 1; i < nb_rows; i++) {
-		sprintf(str, "%d", Value[i - 1]);
+		snprintf(str, 1000, "%d", Value[i - 1]);
 		add_token(str);
 		Table[i * nb_cols + nb_cols - 1] = nb_tokens - 1;
 		}
@@ -740,7 +740,7 @@ int spreadsheet::find_by_column(const char *join_by)
 	//are all encapsulated in \" signs
 	char join_by_in_quotes[1000];
 
-	sprintf(join_by_in_quotes, "\"%s",join_by);
+	snprintf(join_by_in_quotes, 1000, "\"%s",join_by);
 	for (j = 0; j < nb_cols; j++) {
 		t = Table[0 * nb_cols + j];
 		if (t >= 0) {
@@ -897,7 +897,7 @@ void spreadsheet::tokenize(const char *fname,
 		}
 
 #if 1
-	sprintf(str, "END_OF_LINE");
+	snprintf(str, BUFSIZE, "END_OF_LINE");
 	tokens[i] = NEW_char(strlen(str) + 1);
 	strcpy(tokens[i], str);
 	if (f_vv) {

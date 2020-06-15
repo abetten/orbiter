@@ -3977,7 +3977,7 @@ void projective_space::report(ostream &ost)
 		for (i = 0; i < N_points; i++) {
 			set[i] = i;
 			}
-		sprintf(fname_base, "plane_of_order_%d", q);
+		snprintf(fname_base, 1000, "plane_of_order_%d", q);
 		draw_point_set_in_plane(fname_base,
 				set, N_points,
 				TRUE /*f_with_points*/,

@@ -1682,7 +1682,7 @@ int tdo_scheme::refine_rows_easy(int verbose_level,
 	if (f_vv) {
 		char label[1000];
 			
-		sprintf(label, "first");
+		snprintf(label, 1000, "first");
 		D.write_xml(cout, label);
 		}
 
@@ -1763,7 +1763,7 @@ int tdo_scheme::refine_rows_easy(int verbose_level,
 			}
 		D2.RHS[l2 + j] = Combi.binomial2(len);
 		D2.type[l2 + j] = t_LE;
-		sprintf(label, "J_{%d}", j + 1);
+		snprintf(label, 1000, "J_{%d}", j + 1);
 		D2.init_eqn_label(l2 + j, label);
 		}
 	cnt = 0;
@@ -1779,7 +1779,7 @@ int tdo_scheme::refine_rows_easy(int verbose_level,
 				}
 			D2.RHS[l2 + l2 + cnt] = len1 * len2;
 			D2.type[l2 + l2 + cnt] = t_LE;
-			sprintf(label, "J_{%d,%d}", j1 + 1, j2 + 1);
+			snprintf(label, 1000, "J_{%d,%d}", j1 + 1, j2 + 1);
 			D2.init_eqn_label(l2 + l2 + cnt, label);
 			cnt++;
 			}
@@ -1804,7 +1804,7 @@ int tdo_scheme::refine_rows_easy(int verbose_level,
 				int bound = Gg.TDO_upper_bound(len, k);
 				D2.RHS[l2 + nb_eqns_joining + nb_eqns_upper_bound] = bound;
 				D2.type[l2 + nb_eqns_joining + nb_eqns_upper_bound] = t_LE;
-				sprintf(label, "P_{%d,%d} \\,\\mbox{using}\\, "
+				snprintf(label, 1000, "P_{%d,%d} \\,\\mbox{using}\\, "
 						"P(%d,%d)=%d", j + 1, k, len, k, bound);
 				D2.init_eqn_label(l2 +
 						nb_eqns_joining + nb_eqns_upper_bound, label);
@@ -1827,7 +1827,7 @@ int tdo_scheme::refine_rows_easy(int verbose_level,
 	D2.sum = nb_rows;
 	for (i = 0; i < l2; i++) {
 		D2.RHS[i] = col_classes_len[COL][i] * the_col_scheme[i];
-		sprintf(label, "F_{%d}", i + 1);
+		snprintf(label, 1000, "F_{%d}", i + 1);
 		D2.init_eqn_label(i, label);
 		}
 	D2.eliminate_zero_rows_quick(verbose_level);
@@ -1838,7 +1838,7 @@ int tdo_scheme::refine_rows_easy(int verbose_level,
 	if (f_vv) {
 		char label[1000];
 			
-		sprintf(label, "second");
+		snprintf(label, 1000, "second");
 		D2.write_xml(cout, label);
 		}
 	nb_sol = 0;
@@ -1971,7 +1971,7 @@ int tdo_scheme::refine_rows_hard(partitionstack &P, int verbose_level,
 		if (f_vv) {
 			char label[1000];
 			
-			sprintf(label, "first_%d", r);
+			snprintf(label, 1000, "first_%d", r);
 			T.D1->write_xml(cout, label);
 			}
 		nb_sol = T.solve_first_system(verbose_level - 1, 
@@ -2100,7 +2100,7 @@ int tdo_scheme::refine_rows_hard(partitionstack &P, int verbose_level,
 	if (f_vv) {
 		char label[1000];
 			
-		sprintf(label, "second");
+		snprintf(label, 1000, "second");
 		T.D2->write_xml(cout, label);
 		}
 	
@@ -2500,7 +2500,7 @@ int tdo_scheme::tdo_rows_setup_second_system_eqns_joining(
 	int f_vv = (verbose_level >= 2);
 	int l2, I1, I2, k, b, ab, i, j, r, I, J;
 	int f, l, c, a, a2, rr, p, u, h, L1, L2;
-	char label[100];
+	char label[1000];
 	combinatorics_domain Combi;
 	
 	if (f_v) {
@@ -2518,13 +2518,13 @@ int tdo_scheme::tdo_rows_setup_second_system_eqns_joining(
 		}
 
 	for (I = 0; I < L2; I++) {
-		sprintf(label, "J_{%d}", I + 1);
+		snprintf(label, 1000, "J_{%d}", I + 1);
 		T.D2->init_eqn_label(eqn_offset + I, label);
 		}
 	for (I1 = 0; I1 < L2; I1++) {
 		for (I2 = I1 + 1; I2 < L2; I2++) {
 			k = Combi.ij2k(I1, I2, L2);
-			sprintf(label, "J_{%d,%d}", I1 + 1, I2 + 1);
+			snprintf(label, 1000, "J_{%d,%d}", I1 + 1, I2 + 1);
 			T.D2->init_eqn_label(eqn_offset + L2 + k, label);
 			}
 		}
@@ -2656,7 +2656,7 @@ int tdo_scheme::tdo_rows_setup_second_system_eqns_counting(
 	int eqn_offset)
 {
 	int l2, b, i, j, r, I, J, f, l, c, a, S, s, L1, L2;
-	char label[100];
+	char label[1000];
 	//int nb_vars = T.D1->n;
 	
 	l2 = nb_col_classes[COL];
@@ -2670,11 +2670,11 @@ int tdo_scheme::tdo_rows_setup_second_system_eqns_counting(
 			c = f + j;
 			J = T.types_first2[i] + j;
 			for (I = 0; I < L2; I++) {
-				sprintf(label, "F_{%d,%d}", I+1, r+1);
+				snprintf(label, 1000, "F_{%d,%d}", I+1, r+1);
 				T.D2->init_eqn_label(eqn_offset + i * (L2 + 1) + I, label);
 				}
 			}
-		sprintf(label, "F_{%d}", r+1);
+		snprintf(label, 1000, "F_{%d}", r+1);
 		T.D2->init_eqn_label(eqn_offset + i * (L2 + 1) + l2, label);
 		}
 	
@@ -2723,7 +2723,7 @@ int tdo_scheme::tdo_rows_setup_second_system_eqns_packing(
 	int nb_eqns_packing;
 	int /*l2,*/ i, r, f, l, j, c, J, JJ, k, h;
 	int rr, p, u, a, len, f_used, L1, L2;
-	char label[100];
+	char label[1000];
 	//int nb_vars = T.D1->n;
 	geometry_global Gg;
 	
@@ -2772,7 +2772,7 @@ int tdo_scheme::tdo_rows_setup_second_system_eqns_packing(
 						return FALSE;
 						}
 					}
-				sprintf(label, "P_{%d,%d} \\,\\mbox{using}\\, "
+				snprintf(label, 1000, "P_{%d,%d} \\,\\mbox{using}\\, "
 						"P(%d,%d)=%d", J + 1, k, len, k, bound);
 				T.D2->init_eqn_label(eqn_start + nb_eqns_packing, label);
 				if (f_v) {
@@ -3654,7 +3654,7 @@ void tdo_scheme::tdo_columns_setup_second_system_eqns_counting(
 	int eqn_start)
 {
 	int /*l2,*/ L1, L2, i, r, f, l, j, c, J, I, a, b, S, s;
-	char label[100];
+	char label[1000];
 
 	//l2 = nb_row_classes[ROW];
 	column_refinement_L1_L2(P, f_omit, omit, L1, L2, verbose_level);
@@ -3667,11 +3667,11 @@ void tdo_scheme::tdo_columns_setup_second_system_eqns_counting(
 			c = f + j;
 			J = T.types_first2[i] + j;
 			for (I = 0; I < L2; I++) {
-				sprintf(label, "F_{%d,%d}", r + 1, I + 1);
+				snprintf(label, 1000, "F_{%d,%d}", r + 1, I + 1);
 				T.D2->init_eqn_label(eqn_start + i * (L2 + 1) + I, label);
 				}
 			}
-		sprintf(label, "F_{%d}", r + 1);
+		snprintf(label, 1000, "F_{%d}", r + 1);
 		T.D2->init_eqn_label(eqn_start + i * (L2 + 1) + L2, label);
 		}
 
@@ -3736,7 +3736,7 @@ int tdo_scheme::tdo_columns_setup_second_system_eqns_upper_bound(
 	int nb_eqns_packing;
 	int /*l2,*/ L1, L2, i, r, f, l, j, c, J, I;
 	int k, h, rr, p, u, a, len, f_used;
-	char label[100];
+	char label[1000];
 	geometry_global Gg;
 
 	nb_eqns_packing = 0;
@@ -3785,7 +3785,7 @@ int tdo_scheme::tdo_columns_setup_second_system_eqns_upper_bound(
 						return FALSE;
 						}
 					}
-				sprintf(label, "P_{%d,%d} \\,\\mbox{using}\\, P(%d,%d)=%d",
+				snprintf(label, 1000, "P_{%d,%d} \\,\\mbox{using}\\, P(%d,%d)=%d",
 						I + 1, k, len, k, bound);
 				T.D2->init_eqn_label(eqn_start + nb_eqns_packing, label);
 				nb_eqns_packing++;

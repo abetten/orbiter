@@ -99,7 +99,7 @@ void plot_tools::draw_density(char *prefix, int *the_set, int set_size,
 		}
 
 	
-	sprintf(fname_full, "%s_%d.mp", prefix, no);
+	snprintf(fname_full, 1000, "%s_%d.mp", prefix, no);
 	{
 	mp_graphics G(fname_full,
 			x_min, y_min, x_max, y_max, f_embedded, f_sideways, verbose_level - 1);
@@ -220,7 +220,7 @@ void plot_tools::draw_density_multiple_curves(char *prefix,
 		}
 
 	
-	sprintf(fname_full, "%s_%d.mp", prefix, no);
+	snprintf(fname_full, 1000, "%s_%d.mp", prefix, no);
 	{
 	mp_graphics G(fname_full,
 			x_min, y_min, x_max, y_max, f_embedded, f_sideways, verbose_level - 1);
@@ -351,7 +351,7 @@ void plot_tools::projective_plane_draw_grid(const char *fname,
 		cout << "plot_tools::projective_plane_draw_grid" << endl;
 		cout << "plot_tools::projective_plane_draw_grid xmax=" << xmax << " ymax=" << ymax << endl;
 	}
-	sprintf(fname_full, "%s_draw.mp", fname);
+	snprintf(fname_full, 1000, "%s_draw.mp", fname);
 	{
 	mp_graphics G(fname_full, x_min, y_min, x_max, y_max,
 			f_embedded, f_sideways, verbose_level - 1);

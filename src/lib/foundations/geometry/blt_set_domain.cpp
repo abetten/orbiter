@@ -992,7 +992,7 @@ int blt_set_domain::create_graph(
 		CG->points[i] = candidates[i];
 	}
 	CG->init_user_data(Starter_set, starter_size, verbose_level - 2);
-	sprintf(CG->fname_base, "graph_BLT_%d_%d_%d",
+	snprintf(CG->fname_base, 1000, "graph_BLT_%d_%d_%d",
 			q, starter_size, case_number);
 
 

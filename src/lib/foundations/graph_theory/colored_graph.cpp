@@ -1107,7 +1107,7 @@ void colored_graph::draw_on_circle(char *fname,
 	char fname_full[1000];
 	file_io Fio;
 	
-	sprintf(fname_full, "%s.mp", fname);
+	snprintf(fname_full, 1000, "%s.mp", fname);
 	{
 	mp_graphics G;
 	G.setup(fname, 0, 0, 
@@ -1207,7 +1207,7 @@ void colored_graph::draw_on_circle_2(
 	if (f_labels) {
 		char str[1000];
 		for (i = 0; i < n; i++) {
-			sprintf(str, "%d", i);
+			snprintf(str, 1000, "%d", i);
 			G.aligned_text(Px1[i], Py1[i], "", str);
 		}
 	}

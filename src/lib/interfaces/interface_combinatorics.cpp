@@ -639,8 +639,8 @@ void interface_combinatorics::do_graph_theoretic_activity(
 			Subgraph = CG->compute_neighborhood_subgraph(a,
 					vertex_subset, color_subset, verbose_level);
 
-			sprintf(fname_out, "%s", fname_graph);
-			sprintf(extension, "_case_%03d.bin", c);
+			snprintf(fname_out, 1000, "%s", fname_graph);
+			snprintf(extension, 1000, "_case_%03d.bin", c);
 			replace_extension_with(fname_out, extension);
 
 
@@ -694,7 +694,7 @@ void interface_combinatorics::do_create_graph(
 		CG->init_adjacency_no_colors(Gr->N, Gr->Adj, verbose_level);
 	}
 
-	sprintf(fname_graph, "%s.colored_graph", Gr->label);
+	snprintf(fname_graph, 1000, "%s.colored_graph", Gr->label);
 
 	CG->save(fname_graph, verbose_level);
 
@@ -728,7 +728,7 @@ void interface_combinatorics::do_read_poset_file(const char *fname,
 	char fname_out[1000];
 	file_io Fio;
 
-	sprintf(fname_out, "%s", fname);
+	snprintf(fname_out, 1000, "%s", fname);
 
 	replace_extension_with(fname_out, ".layered_graph");
 
@@ -788,7 +788,7 @@ void interface_combinatorics::do_create_combinatorial_object(int verbose_level)
 		file_io Fio;
 		char fname[1000];
 
-		sprintf(fname, "%s%s", fname_prefix, COC->fname);
+		snprintf(fname, 1000, "%s%s", fname_prefix, COC->fname);
 
 		if (f_v) {
 			cout << "We will write to the file " << fname << endl;
@@ -1031,7 +1031,7 @@ void interface_combinatorics::do_make_tree_of_all_k_subsets(int n, int k, int ve
 	char fname[1000];
 
 
-	sprintf(fname, "all_k_subsets_%d_%d.tree", n, k);
+	snprintf(fname, 1000, "all_k_subsets_%d_%d.tree", n, k);
 	set = NEW_int(k);
 	N = Combi.int_n_choose_k(n, k);
 
@@ -1740,7 +1740,7 @@ void interface_combinatorics::convert_stack_to_tdo(const char *stack_fname, int 
 	strcpy(str, stack_fname);
 	get_extension_if_present(str, ext);
 	chop_off_extension_if_present(str, ext);
-	sprintf(fname_out, "%s.tdo", str);
+	snprintf(fname_out, 1000, "%s.tdo", str);
 
 	if (f_v) {
 		cout << "reading stack file " << stack_fname << endl;
@@ -1772,10 +1772,10 @@ void interface_combinatorics::convert_stack_to_tdo(const char *stack_fname, int 
 				cout << "after convert_single_to_stack" << endl;
 			}
 			if (strlen(GP.label)) {
-				sprintf(label, "%s", GP.label);
+				snprintf(label, 1000, "%s", GP.label);
 			}
 			else {
-				sprintf(label, "%d", i);
+				snprintf(label, 1000, "%d", i);
 			}
 			GP.write(g, label);
 			if (f_v) {
@@ -1820,7 +1820,7 @@ void interface_combinatorics::do_parameters_maximal_arc(int q, int r, int verbos
 	aij[1] = 0;
 	aij[2] = q - q / r + 1;
 	aij[3] = q / r;
-	sprintf(fname, "max_arc_q%d_r%d.stack", q, r);
+	snprintf(fname, 1000, "max_arc_q%d_r%d.stack", q, r);
 
 	Fio.write_decomposition_stack(fname, m, n, v, b, aij, verbose_level - 1);
 }

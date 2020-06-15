@@ -480,7 +480,7 @@ void layered_graph::draw_with_options(const char *fname,
 					if (O->f_label_edges) {
 						Px[2] = (Px[0] + Px[1]) >> 1;
 						Py[2] = (Py[0] + Py[1]) >> 1;
-						sprintf(text, "%d", edge_label);
+						snprintf(text, 1000, "%d", edge_label);
 						G.aligned_text_with_offset(Px[2], Py[2],
 								xoffset, yoffset, "", text);
 						edge_label++;
@@ -501,7 +501,7 @@ void layered_graph::draw_with_options(const char *fname,
 					if (O->f_label_edges) {
 						Px[2] = (Px[0] + Px[1]) >> 1;
 						Py[2] = (Py[0] + Py[1]) >> 1;
-						sprintf(text, "%d", edge_label);
+						snprintf(text, 1000, "%d", edge_label);
 						G.aligned_text_with_offset(Px[2], Py[2],
 								xoffset, yoffset, "", text);
 						edge_label++;
@@ -548,7 +548,7 @@ void layered_graph::draw_with_options(const char *fname,
 					if (O->f_label_edges) {
 						Px[2] = (Px[0] + Px[1]) >> 1;
 						Py[2] = (Py[0] + Py[1]) >> 1;
-						sprintf(text, "%d", edge_label);
+						snprintf(text, 1000, "%d", edge_label);
 						G.aligned_text_with_offset(Px[2], Py[2],
 								xoffset, yoffset, "", text);
 						edge_label++;
@@ -575,7 +575,7 @@ void layered_graph::draw_with_options(const char *fname,
 					if (O->f_label_edges) {
 						Px[2] = (Px[0] + Px[1]) >> 1;
 						Py[2] = (Py[0] + Py[1]) >> 1;
-						sprintf(text, "%d", edge_label);
+						snprintf(text, 1000, "%d", edge_label);
 						G.aligned_text_with_offset(Px[2], Py[2],
 								xoffset, yoffset, "", text);
 						edge_label++;
@@ -686,7 +686,7 @@ void layered_graph::draw_with_options(const char *fname,
 				}
 
 			if (L[i].Nodes[j].radius_factor >= 1.) {
-				sprintf(label, "{\\scriptsize %d}", L[i].Nodes[j].data1);
+				snprintf(label, 1000, "{\\scriptsize %d}", L[i].Nodes[j].data1);
 				}
 			else {
 				label[0] = 0;
@@ -766,7 +766,7 @@ void layered_graph::draw_with_options(const char *fname,
 			Px[0] = 0;
 			Py[0] = y;
 			//G.nice_circle(Px[0], Py[0], rad * 4);
-			sprintf(str, "%d", i);
+			snprintf(str, 1000, "%d", i);
 			G.aligned_text(Px[0], Py[0], "", str);
 			}
 		}
@@ -1117,7 +1117,7 @@ void layered_graph::make_subset_lattice(int n, int depth, int f_tree,
 						}
 					}
 				a += k;
-				sprintf(text, "%d", a);
+				snprintf(text, 1000, "%d", a);
 				}
 			else if (f_breadth_first) {
 				a = 0;
@@ -1125,11 +1125,11 @@ void layered_graph::make_subset_lattice(int n, int depth, int f_tree,
 					a += Nb[i];
 					}
 				a += r;
-				sprintf(text, "%d", a);
+				snprintf(text, 1000, "%d", a);
 				}
 			else {
 				if (k) {
-					sprintf(text, "%d", set1[k - 1]);
+					snprintf(text, 1000, "%d", set1[k - 1]);
 					}
 				else {
 					text[0] = 0;
@@ -1211,7 +1211,7 @@ void layered_graph::init_poset_from_file(const char *fname,
 
 				char text[1000];
 
-				sprintf(text, "%d", a);
+				snprintf(text, 1000, "%d", a);
 				add_text(l1, n1, text, 0/*verbose_level*/);
 			}
 		}

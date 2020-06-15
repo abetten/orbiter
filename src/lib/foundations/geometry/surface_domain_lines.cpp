@@ -89,17 +89,17 @@ void surface_domain::init_line_data(int verbose_level)
 
 	for (i = 0; i < 27; i++) {
 		if (i < 6) {
-			sprintf(str, "a_%d", i + 1);
+			snprintf(str, 1000, "a_%d", i + 1);
 			}
 		else if (i < 12) {
-			sprintf(str, "b_%d", i - 6 + 1);
+			snprintf(str, 1000, "b_%d", i - 6 + 1);
 			}
 		else {
 			h = i - 12;
 			c = Sets2[h * 2 + 0];
 			a = Sets[c * 2 + 0] + 1;
 			b = Sets[c * 2 + 1] - 6 + 1;
-			sprintf(str, "c_{%d%d}", a, b);
+			snprintf(str, 1000, "c_{%d%d}", a, b);
 			}
 		if (f_v) {
 			cout << "creating label " << str
@@ -112,17 +112,17 @@ void surface_domain::init_line_data(int verbose_level)
 
 	for (i = 0; i < 27; i++) {
 		if (i < 6) {
-			sprintf(str, "a_{%d}", i + 1);
+			snprintf(str, 1000, "a_{%d}", i + 1);
 			}
 		else if (i < 12) {
-			sprintf(str, "b_{%d}", i - 6 + 1);
+			snprintf(str, 1000, "b_{%d}", i - 6 + 1);
 			}
 		else {
 			h = i - 12;
 			c = Sets2[h * 2 + 0];
 			a = Sets[c * 2 + 0] + 1;
 			b = Sets[c * 2 + 1] - 6 + 1;
-			sprintf(str, "c_{%d%d}", a, b);
+			snprintf(str, 1000, "c_{%d%d}", a, b);
 			}
 		if (f_v) {
 			cout << "creating label " << str

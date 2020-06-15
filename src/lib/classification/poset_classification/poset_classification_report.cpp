@@ -383,14 +383,14 @@ void poset_classification::report(ostream &ost)
 
 	draw_poset_fname_base_poset_lvl(fname_base, depth);
 
-	sprintf(cmd, "cp %s.layered_graph ./poset.layered_graph", fname_base);
+	snprintf(cmd, 1000, "cp %s.layered_graph ./poset.layered_graph", fname_base);
 	cout << "executing: " << cmd << endl;
 	system(cmd);
 
 
 
 
-	sprintf(cmd, "%s/layered_graph_main.out -v 2 "
+	snprintf(cmd, 1000, "%s/layered_graph_main.out -v 2 "
 		"-file poset.layered_graph "
 		"-xin 1000000 -yin 1000000 "
 		"-xout 1000000 -yout 1000000 "
@@ -405,7 +405,7 @@ void poset_classification::report(ostream &ost)
 	cout << "executing: " << cmd << endl;
 	system(cmd);
 
-	sprintf(cmd, "mpost -tex=latex poset_draw_tree.mp");
+	snprintf(cmd, 1000, "mpost -tex=latex poset_draw_tree.mp");
 	cout << "executing: " << cmd << endl;
 	system(cmd);
 
@@ -535,19 +535,19 @@ void poset_classification::report(ostream &ost)
 					char fname_mp[1000];
 					char fname_1[1000];
 
-					sprintf(fname_base, fname_mask_base, j);
-					sprintf(fname_layered_graph, "%s.layered_graph",
+					snprintf(fname_base, 1000, fname_mask_base, j);
+					snprintf(fname_layered_graph, 1000, "%s.layered_graph",
 							fname_base);
-					sprintf(fname_tex, "%s_draw_tree.tex", fname_base);
-					sprintf(fname_mp, "%s_draw_tree.mp", fname_base);
-					sprintf(fname_1, "%s_draw_tree.1", fname_base);
+					snprintf(fname_tex, 1000, "%s_draw_tree.tex", fname_base);
+					snprintf(fname_mp, 1000, "%s_draw_tree.mp", fname_base);
+					snprintf(fname_1, 1000, "%s_draw_tree.1", fname_base);
 
 					if (!Control->f_has_tools_path) {
 						cout << "please set tools path using "
 								"-tools_path <tools_path>" << endl;
 						exit(1);
 					}
-					sprintf(cmd, "%s/layered_graph_main.out -v 2 "
+					snprintf(cmd, 1000, "%s/layered_graph_main.out -v 2 "
 						"-file %s "
 						"-xin 1000000 -yin 1000000 "
 						"-xout 1000000 -yout 1000000 "
@@ -562,7 +562,7 @@ void poset_classification::report(ostream &ost)
 					cout << "executing: " << cmd << endl;
 					system(cmd);
 
-					sprintf(cmd, "mpost %s", fname_mp);
+					snprintf(cmd, 1000, "mpost %s", fname_mp);
 					cout << "executing: " << cmd << endl;
 					system(cmd);
 

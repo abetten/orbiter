@@ -358,7 +358,7 @@ public:
 		int argc, const char **argv,
 		int verbose_level);
 	void print();
-	void init_labels(char *problem_label, char *problem_label_with_path);
+	void init_labels(char *problem_label1000, char *problem_label_with_path1000);
 
 };
 

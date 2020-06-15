@@ -26,12 +26,9 @@ action *action::induced_action_on_set_partitions(
 		}
 	A = NEW_OBJECT(action);
 
-	sprintf(A->group_prefix, "%s_on_set_partitions_%ld_%d",
-			label, A->degree, partition_class_size);
-	sprintf(A->label, "%s_on_set_partitions_%ld_%d",
-			label, A->degree, partition_class_size);
-	sprintf(A->label_tex, "%s on set partitions %ld %d",
-			label, A->degree, partition_class_size);
+	snprintf(A->group_prefix, 1000, "%s_on_set_partitions_%ld_%d", label, A->degree, partition_class_size);
+	snprintf(A->label, 1000, "%s_on_set_partitions_%ld_%d", label, A->degree, partition_class_size);
+	snprintf(A->label_tex, 1000, "%s on set partitions %ld %d", label, A->degree, partition_class_size);
 	if (f_v) {
 		cout << "the old_action " << label
 				<< " has base_length = " << base_len()
@@ -172,9 +169,9 @@ void action::induced_action_by_representation_on_conic(
 		}
 	
 	A = A_old;
-	sprintf(group_prefix, "%s_RepOnConic", A->label);
-	sprintf(label, "%s_RepOnConic", A->label);
-	sprintf(label_tex, "%s RepOnConic", A->label_tex);
+	snprintf(group_prefix, 1000, "%s_RepOnConic", A->label);
+	snprintf(label, 1000, "%s_RepOnConic", A->label);
+	snprintf(label_tex, 1000, "%s RepOnConic", A->label_tex);
 	if (f_v) {
 		cout << "the old_action " << A->label
 				<< " has base_length = " << A->base_len()
@@ -241,12 +238,9 @@ void action::induced_action_on_cosets(
 				"f_induce_action=" << f_induce_action << endl;
 		}
 	A = A_on_cosets->A_linear;
-	sprintf(group_prefix, "%s_Cosets_%d",
-			A->label, A_on_cosets->dimension_of_subspace);
-	sprintf(label, "%s_Cosets_%d",
-			A->label, A_on_cosets->dimension_of_subspace);
-	sprintf(label_tex, "%s Cosets_%d",
-			A->label_tex, A_on_cosets->dimension_of_subspace);
+	snprintf(group_prefix, 1000, "%s_Cosets_%d", A->label, A_on_cosets->dimension_of_subspace);
+	snprintf(label, 1000, "%s_Cosets_%d", A->label, A_on_cosets->dimension_of_subspace);
+	snprintf(label_tex, 1000, "%s Cosets_%d", A->label_tex, A_on_cosets->dimension_of_subspace);
 	if (f_v) {
 		cout << "the old_action is " << A->label << endl;
 		//		<< " has base_length = " << A->base_len()
@@ -315,13 +309,13 @@ void action::induced_action_on_factor_space(action *A_old,
 				"f_induce_action=" << f_induce_action << endl;
 		}
 	A = A_old;
-	sprintf(group_prefix, "%s_Factorspace_%d_%d_%d",
+	snprintf(group_prefix, 1000, "%s_Factorspace_%d_%d_%d",
 			A->label, AF->VS->dimension,
 			AF->factor_space_len, AF->VS->F->q);
-	sprintf(label, "%s_Factorspace_%d_%d_%d",
+	snprintf(label, 1000, "%s_Factorspace_%d_%d_%d",
 			A->label, AF->VS->dimension,
 			AF->factor_space_len, AF->VS->F->q);
-	sprintf(label_tex, "%s Factorspace_%d_%d_%d",
+	snprintf(label_tex, 1000, "%s Factorspace_%d_%d_%d",
 			A->label_tex, AF->VS->dimension,
 			AF->factor_space_len, AF->VS->F->q);
 	if (f_v) {
@@ -389,9 +383,9 @@ action *action::induced_action_on_grassmannian(int k, int verbose_level)
 		}
 	A = NEW_OBJECT(action);
 
-	sprintf(A->group_prefix, "%s_on_%d_subspaces", label, k);
-	sprintf(A->label, "%s_on_%d_subspaces", label, k);
-	sprintf(A->label_tex, "%s on %d subspaces", label, k);
+	snprintf(A->group_prefix, 1000, "%s_on_%d_subspaces", label, k);
+	snprintf(A->label, 1000, "%s_on_%d_subspaces", label, k);
+	snprintf(A->label_tex, 1000, "%s on %d subspaces", label, k);
 	if (f_v) {
 		cout << "the old_action " << label
 				<< " has base_length = " << base_len()
@@ -467,11 +461,11 @@ void action::induced_action_on_grassmannian(action *A_old,
 				"f_induce_action=" << f_induce_action << endl;
 	}
 	A = A_old;
-	sprintf(group_prefix, "%s_Grassmann_%d_%d_%d",
+	snprintf(group_prefix, 1000, "%s_Grassmann_%d_%d_%d",
 			A->label, AG->n, AG->k, AG->q);
-	sprintf(label, "%s_Grassmann_%d_%d_%d",
+	snprintf(label, 1000, "%s_Grassmann_%d_%d_%d",
 			A->label, AG->n, AG->k, AG->q);
-	sprintf(label_tex, "%s {\\rm Gr}_{%d,%d}(%d)",
+	snprintf(label_tex, 1000, "%s {\\rm Gr}_{%d,%d}(%d)",
 			A->label_tex, AG->n, AG->k, AG->q);
 	if (f_v) {
 		cout << "action::induced_action_on_grassmannian "
@@ -592,11 +586,11 @@ void action::induced_action_on_spread_set(action *A_old,
 				"f_induce_action=" << f_induce_action << endl;
 		}
 	A = A_old;
-	sprintf(group_prefix, "%s_SpreadSet_%d_%d",
+	snprintf(group_prefix, 1000, "%s_SpreadSet_%d_%d",
 			A->label, AS->k, AS->q);
-	sprintf(label, "%s_SpreadSet_%d_%d",
+	snprintf(label, 1000, "%s_SpreadSet_%d_%d",
 			A->label, AS->k, AS->q);
-	sprintf(label_tex, "%s SpreadSet_%d_%d",
+	snprintf(label_tex, 1000, "%s SpreadSet_%d_%d",
 			A->label_tex, AS->k, AS->q);
 	if (f_v) {
 		cout << "the old_action " << A->label
@@ -674,27 +668,27 @@ void action::induced_action_on_orthogonal(action *A_old,
 		}
 	A = A_old;
 	if (AO->f_on_points) {
-		sprintf(group_prefix, "%s_orthogonal_on_points_%d_%d_%d",
+		snprintf(group_prefix, 1000, "%s_orthogonal_on_points_%d_%d_%d",
 				A->label, AO->O->epsilon, AO->O->n, AO->O->q);
-		sprintf(label, "%s_orthogonal_on_points_%d_%d_%d",
+		snprintf(label, 1000, "%s_orthogonal_on_points_%d_%d_%d",
 				A->label, AO->O->epsilon, AO->O->n, AO->O->q);
-		sprintf(label_tex, "%s orthogonal_on_points_%d_%d_%d",
+		snprintf(label_tex, 1000, "%s orthogonal_on_points_%d_%d_%d",
 				A->label_tex, AO->O->epsilon, AO->O->n, AO->O->q);
 		}
 	else if (AO->f_on_lines) {
-		sprintf(group_prefix, "%s_orthogonal_on_lines_%d_%d_%d",
+		snprintf(group_prefix, 1000, "%s_orthogonal_on_lines_%d_%d_%d",
 				A->label, AO->O->epsilon, AO->O->n, AO->O->q);
-		sprintf(label, "%s_orthogonal_on_lines_%d_%d_%d",
+		snprintf(label, 1000, "%s_orthogonal_on_lines_%d_%d_%d",
 				A->label, AO->O->epsilon, AO->O->n, AO->O->q);
-		sprintf(label_tex, "%s orthogonal_on_lines_%d_%d_%d",
+		snprintf(label_tex, 1000, "%s orthogonal_on_lines_%d_%d_%d",
 				A->label_tex, AO->O->epsilon, AO->O->n, AO->O->q);
 		}
 	else if (AO->f_on_points_and_lines) {
-		sprintf(group_prefix, "%s_orthogonal_on_points_and_lines_%d_%d_%d",
+		snprintf(group_prefix, 1000, "%s_orthogonal_on_points_and_lines_%d_%d_%d",
 				A->label, AO->O->epsilon, AO->O->n, AO->O->q);
-		sprintf(label, "%s_orthogonal_on_points_and_lines_%d_%d_%d",
+		snprintf(label, 1000, "%s_orthogonal_on_points_and_lines_%d_%d_%d",
 				A->label, AO->O->epsilon, AO->O->n, AO->O->q);
-		sprintf(label_tex, "%s orthogonal_on_points_and_lines_%d_%d_%d",
+		snprintf(label_tex, 1000, "%s orthogonal_on_points_and_lines_%d_%d_%d",
 				A->label_tex, AO->O->epsilon, AO->O->n, AO->O->q);
 		}
 	if (f_v) {
@@ -766,9 +760,9 @@ void action::induced_action_on_wedge_product(action *A_old,
 				"f_induce_action=" << f_induce_action << endl;
 		}
 	A = A_old;
-	sprintf(group_prefix, "%s_Wedge", A->label);
-	sprintf(label, "%s_Wedge", A->label);
-	sprintf(label_tex, "%s Wedge", A->label_tex);
+	snprintf(group_prefix, 1000, "%s_Wedge", A->label);
+	snprintf(label, 1000, "%s_Wedge", A->label);
+	snprintf(label_tex, 1000, "%s Wedge", A->label_tex);
 	if (f_v) {
 		cout << "the old_action " << A->label
 				<< " has base_length = " << A->base_len()
@@ -832,11 +826,11 @@ void action::induced_action_by_subfield_structure(action *A_old,
 				"f_induce_action=" << f_induce_action << endl;
 		}
 	A = A_old;
-	sprintf(group_prefix, "%s_subfield_%d",
+	snprintf(group_prefix, 1000, "%s_subfield_%d",
 			A->label, SubfieldStructure->q);
-	sprintf(label, "%s_subfield_%d",
+	snprintf(label, 1000, "%s_subfield_%d",
 			A->label, SubfieldStructure->q);
-	sprintf(label_tex, "%s subfield %d",
+	snprintf(label_tex, 1000, "%s subfield %d",
 			A->label_tex, SubfieldStructure->q);
 	if (f_v) {
 		cout << "the old_action " << A->label
@@ -901,9 +895,9 @@ void action::induced_action_on_Galois_group(
 		cout << "action::induced_action_on_Galois_group" << endl;
 		}
 	A = old_G->A;
-	sprintf(group_prefix, "%s_det", A->label);
-	sprintf(label, "%s_det", A->label);
-	sprintf(label_tex, "%s det", A->label_tex);
+	snprintf(group_prefix, 1000, "%s_det", A->label);
+	snprintf(label, 1000, "%s_det", A->label);
+	snprintf(label_tex, 1000, "%s det", A->label_tex);
 	if (f_v) {
 		cout << "the old_action " << A->label
 				<< " has base_length = " << A->base_len()
@@ -964,9 +958,9 @@ void action::induced_action_on_determinant(
 		cout << "action::induced_action_on_determinant" << endl;
 		}
 	A = old_G->A;
-	sprintf(group_prefix, "%s_det", A->label);
-	sprintf(label, "%s_det", A->label);
-	sprintf(label_tex, "%s det", A->label_tex);
+	snprintf(group_prefix, 1000, "%s_det", A->label);
+	snprintf(label, 1000, "%s_det", A->label);
+	snprintf(label_tex, 1000, "%s det", A->label_tex);
 	if (f_v) {
 		cout << "the old_action " << A->label
 				<< " has base_length = " << A->base_len()
@@ -1023,9 +1017,9 @@ void action::induced_action_on_sign(
 		cout << "action::induced_action_on_sign" << endl;
 		}
 	A = old_G->A;
-	sprintf(group_prefix, "%s_OnSign", A->label);
-	sprintf(label, "%s_OnSign", A->label);
-	sprintf(label_tex, "%s sign", A->label_tex);
+	snprintf(group_prefix, 1000, "%s_OnSign", A->label);
+	snprintf(label, 1000, "%s_OnSign", A->label);
+	snprintf(label_tex, 1000, "%s sign", A->label_tex);
 	if (f_v) {
 		cout << "the old_action " << A->label
 			<< " has base_length = " << A->base_len()
@@ -1087,9 +1081,9 @@ void action::induced_action_by_conjugation(sims *old_G,
 	if (f_v) {
 		cout << "we are acting on a group of order " << goi << endl;
 		}
-	sprintf(group_prefix, "%s_C%d", A->label, goi);
-	sprintf(label, "%s_C%d", A->label, goi);
-	sprintf(label_tex, "%s C%d", A->label_tex, goi);
+	snprintf(group_prefix, 1000, "%s_C%d", A->label, goi);
+	snprintf(label, 1000, "%s_C%d", A->label, goi);
+	snprintf(label_tex, 1000, "%s C%d", A->label_tex, goi);
 	f_has_subaction = TRUE;
 	subaction = A;
 	ABC = NEW_OBJECT(action_by_conjugation);
@@ -1149,9 +1143,9 @@ void action::induced_action_by_right_multiplication(
 		}
 	Base_group->group_order(go);
 	goi = go.as_int();
-	sprintf(group_prefix, "%s_R%d", A->label, goi);
-	sprintf(label, "%s_R%d", A->label, goi);
-	sprintf(label_tex, "%s R%d", A->label_tex, goi);
+	snprintf(group_prefix, 1000, "%s_R%d", A->label, goi);
+	snprintf(label, 1000, "%s_R%d", A->label, goi);
+	snprintf(label_tex, 1000, "%s R%d", A->label_tex, goi);
 	if (f_v) {
 		cout << "we are acting on a group of order " << goi << endl;
 		}
@@ -1240,11 +1234,11 @@ void action::induced_action_on_sets(
 		cout << "action::induced_action_on_sets "
 				"verbose_level = " << verbose_level << endl;
 		}
-	sprintf(group_prefix, "%s_S%d",
+	snprintf(group_prefix, 1000, "%s_S%d",
 			old_action.label, set_size);
-	sprintf(label, "%s_S%d",
+	snprintf(label, 1000, "%s_S%d",
 			old_action.label, set_size);
-	sprintf(label_tex, "%s S%d",
+	snprintf(label_tex, 1000, "%s S%d",
 			old_action.label_tex, set_size);
 	f_has_subaction = TRUE;
 	subaction = &old_action;
@@ -1346,11 +1340,11 @@ void action::induced_action_on_subgroups(
 		cout << "action::induced_action_on_subgroups "
 				"verbose_level = " << verbose_level << endl;
 		}
-	sprintf(group_prefix, "%s_on_subgroups%d_%d",
+	snprintf(group_prefix, 1000, "%s_on_subgroups%d_%d",
 			old_action->label, nb_subgroups, group_order);
-	sprintf(label, "%s_on_subgroups%d_%d",
+	snprintf(label, 1000, "%s_on_subgroups%d_%d",
 			old_action->label, nb_subgroups, group_order);
-	sprintf(label_tex, "%s on_subgroups%d_%d",
+	snprintf(label_tex, 1000, "%s on_subgroups%d_%d",
 			old_action->label_tex, nb_subgroups, group_order);
 	f_has_subaction = TRUE;
 	subaction = old_action;
@@ -1418,11 +1412,11 @@ void action::induced_action_by_restriction_on_orbit_with_schreier_vector(
 		cout << "f_induce_action = " << f_induce_action << endl;
 		cout << "verbose_level = " << verbose_level << endl;
 		}
-	sprintf(group_prefix, "%s_res_sv%d",
+	snprintf(group_prefix, 1000, "%s_res_sv%d",
 			old_action.label, pt);
-	sprintf(label, "%s_res_sv%d",
+	snprintf(label, 1000, "%s_res_sv%d",
 			old_action.label, pt);
-	sprintf(label_tex, "%s res_sv%d",
+	snprintf(label_tex, 1000, "%s res_sv%d",
 			old_action.label_tex, pt);
 	f_has_subaction = TRUE;
 	subaction = &old_action;
@@ -1500,11 +1494,11 @@ action *action::restricted_action(
 		cout << "verbose_level = " << verbose_level << endl;
 		}
 	A = NEW_OBJECT(action);
-	sprintf(A->group_prefix, "%s_res%d",
+	snprintf(A->group_prefix, 1000, "%s_res%d",
 			label, nb_points);
-	sprintf(A->label, "%s_res%d",
+	snprintf(A->label, 1000, "%s_res%d",
 			label, nb_points);
-	sprintf(A->label_tex, "%s res%d",
+	snprintf(A->label_tex, 1000, "%s res%d",
 			label_tex, nb_points);
 	A->f_has_subaction = TRUE;
 	A->subaction = this;
@@ -1580,11 +1574,11 @@ void action::induced_action_by_restriction_internal_function(
 		cout << "f_induce_action = " << f_induce_action << endl;
 		cout << "verbose_level = " << verbose_level << endl;
 		}
-	sprintf(group_prefix, "%s_res%d",
+	snprintf(group_prefix, 1000, "%s_res%d",
 			old_action.label, nb_points);
-	sprintf(label, "%s_res%d",
+	snprintf(label, 1000, "%s_res%d",
 			old_action.label, nb_points);
-	sprintf(label_tex, "%s res%d",
+	snprintf(label_tex, 1000, "%s res%d",
 			old_action.label_tex, nb_points);
 	f_has_subaction = TRUE;
 	subaction = &old_action;
@@ -1646,12 +1640,9 @@ void action::induced_action_on_pairs(
 			<< " has base_length = " << old_action.base_len()
 			<< " and degree " << old_action.degree << endl;
 		}
-	sprintf(group_prefix, "%s_on_pairs",
-			old_action.label);
-	sprintf(label, "%s_on_pairs",
-			old_action.label);
-	sprintf(label_tex, "%s^{[2]}",
-			old_action.label_tex);
+	snprintf(group_prefix, 1000, "%s_on_pairs", old_action.label);
+	snprintf(label, 1000, "%s_on_pairs", old_action.label);
+	snprintf(label_tex, 1000, "%s^{[2]}", old_action.label_tex);
 	f_has_subaction = TRUE;
 	subaction = &old_action;
 	type_G = action_on_pairs_t;
@@ -1712,12 +1703,9 @@ void action::induced_action_on_ordered_pairs(
 				<< " has base_length = " << old_action.base_len()
 			<< " and degree " << old_action.degree << endl;
 		}
-	sprintf(group_prefix, "%s_on_ordered_pairs",
-			old_action.label);
-	sprintf(label, "%s_on_ordered_pairs",
-			old_action.label);
-	sprintf(label_tex, "%s^{(2)}",
-			old_action.label_tex);
+	snprintf(group_prefix, 1000, "%s_on_ordered_pairs", old_action.label);
+	snprintf(label, 1000, "%s_on_ordered_pairs", old_action.label);
+	snprintf(label_tex, 1000, "%s^{(2)}", old_action.label_tex);
 	f_has_subaction = TRUE;
 	subaction = &old_action;
 	type_G = action_on_ordered_pairs_t;
@@ -1763,12 +1751,9 @@ void action::induced_action_on_k_subsets(
 				<< " has base_length = " << old_action.base_len()
 			<< " and degree " << old_action.degree << endl;
 		}
-	sprintf(group_prefix, "%s_on_%d_subsets",
-			old_action.label, k);
-	sprintf(label, "%s_on_%d_subsets",
-			old_action.label, k);
-	sprintf(label_tex, "%s^{[%d]}",
-			old_action.label_tex, k);
+	snprintf(group_prefix, 1000, "%s_on_%d_subsets", old_action.label, k);
+	snprintf(label, 1000, "%s_on_%d_subsets", old_action.label, k);
+	snprintf(label_tex, 1000, "%s^{[%d]}", old_action.label_tex, k);
 
 
 	On_k_subsets = NEW_OBJECT(action_on_k_subsets);
@@ -1818,9 +1803,9 @@ void action::induced_action_on_orbits(action *old_action,
 				<< " has base_length = " << old_action->base_len()
 			<< " and degree " << old_action->degree << endl;
 	}
-	sprintf(group_prefix, "%s_on_orbits%d", old_action->label, Sch->nb_orbits);
-	sprintf(label, "%s_on_orbits%d", old_action->label, Sch->nb_orbits);
-	sprintf(label_tex, "%s\\_on\\_orbits%d", old_action->label_tex, Sch->nb_orbits);
+	snprintf(group_prefix, 1000, "%s_on_orbits%d", old_action->label, Sch->nb_orbits);
+	snprintf(label, 1000, "%s_on_orbits%d", old_action->label, Sch->nb_orbits);
+	snprintf(label_tex, 1000, "%s\\_on\\_orbits%d", old_action->label_tex, Sch->nb_orbits);
 
 
 	On_orbits = NEW_OBJECT(action_on_orbits);
@@ -1870,12 +1855,9 @@ void action::induced_action_on_flags(action *old_action,
 			<< " has base_length = " << old_action->base_len()
 			<< " and degree " << old_action->degree << endl;
 		}
-	sprintf(group_prefix, "%s_on_flags",
-			old_action->label);
-	sprintf(label, "%s_on_flags",
-			old_action->label);
-	sprintf(label_tex, "%s\\_on\\_flags",
-			old_action->label_tex);
+	snprintf(group_prefix, 1000, "%s_on_flags", old_action->label);
+	snprintf(label, 1000, "%s_on_flags", old_action->label);
+	snprintf(label_tex, 1000, "%s\\_on\\_flags", old_action->label_tex);
 
 
 	On_flags = NEW_OBJECT(action_on_flags);
@@ -1926,9 +1908,9 @@ void action::induced_action_on_bricks(action &old_action,
 			<< " has base_length = " << old_action.base_len()
 			<< " and degree " << old_action.degree << endl;
 		}
-	sprintf(group_prefix, "%s_on_bricks", old_action.label);
-	sprintf(label, "%s_on_bricks", old_action.label);
-	sprintf(label_tex, "%s on bricks", old_action.label_tex);
+	snprintf(group_prefix, 1000, "%s_on_bricks", old_action.label);
+	snprintf(label, 1000, "%s_on_bricks", old_action.label);
+	snprintf(label_tex, 1000, "%s on bricks", old_action.label_tex);
 
 
 	On_bricks = NEW_OBJECT(action_on_bricks);
@@ -1980,9 +1962,9 @@ void action::induced_action_on_andre(action *An,
 		cout << "action An1 = " << An1->label
 				<< " has degree " << An1->degree << endl;
 		}
-	sprintf(group_prefix, "%s_on_andre", An1->label);
-	sprintf(label, "%s_on_andre", An1->label);
-	sprintf(label_tex, "%s on andre", An1->label_tex);
+	snprintf(group_prefix, 1000, "%s_on_andre", An1->label);
+	snprintf(label, 1000, "%s_on_andre", An1->label);
+	snprintf(label_tex, 1000, "%s on andre", An1->label_tex);
 
 
 	On_andre = NEW_OBJECT(action_on_andre);
@@ -2030,9 +2012,9 @@ void action::setup_product_action(action *A1, action *A2,
 	if (f_v) {
 		cout << "action::setup_product_action" << endl;
 		}
-	sprintf(group_prefix, "%s_x_%s", A1->label, A2->label);
-	sprintf(label, "%s_x_%s", A1->label, A2->label);
-	sprintf(label_tex, "%s \\times %s", A1->label_tex, A2->label_tex);
+	snprintf(group_prefix, 1000, "%s_x_%s", A1->label, A2->label);
+	snprintf(label, 1000, "%s_x_%s", A1->label, A2->label);
+	snprintf(label_tex, 1000, "%s \\times %s", A1->label_tex, A2->label_tex);
 	PA = NEW_OBJECT(product_action);
 	PA->init(A1, A2, f_use_projections, verbose_level);
 	f_has_subaction = TRUE;
@@ -2110,9 +2092,9 @@ void action::induced_action_on_homogeneous_polynomials(
 		}
 	A = A_old;
 	OnHP = NEW_OBJECT(action_on_homogeneous_polynomials);
-	sprintf(group_prefix, "%s_HP_%d_%d", A->label, HPD->n, HPD->degree);
-	sprintf(label, "%s_HP_%d_%d", A->label, HPD->n, HPD->degree);
-	sprintf(label_tex, "%s HP %d %d", A->label_tex, HPD->n, HPD->degree);
+	snprintf(group_prefix, 1000, "%s_HP_%d_%d", A->label, HPD->n, HPD->degree);
+	snprintf(label, 1000, "%s_HP_%d_%d", A->label, HPD->n, HPD->degree);
+	snprintf(label_tex, 1000, "%s HP %d %d", A->label_tex, HPD->n, HPD->degree);
 	if (f_v) {
 		cout << "the old_action " << A->label
 			<< " has base_length = " << A->base_len()
@@ -2192,12 +2174,9 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 		}
 	A = A_old;
 	OnHP = NEW_OBJECT(action_on_homogeneous_polynomials);
-	sprintf(group_prefix, "%s_HP_%d_%d_eqn%d",
-			A->label, HPD->n, HPD->degree, nb_equations);
-	sprintf(label, "%s_HP_%d_%d_eqn%d",
-			A->label, HPD->n, HPD->degree, nb_equations);
-	sprintf(label_tex, "%s HP %d %d %d",
-			A->label_tex, HPD->n, HPD->degree, nb_equations);
+	snprintf(group_prefix, 1000, "%s_HP_%d_%d_eqn%d", A->label, HPD->n, HPD->degree, nb_equations);
+	snprintf(label, 1000, "%s_HP_%d_%d_eqn%d", A->label, HPD->n, HPD->degree, nb_equations);
+	snprintf(label_tex, 1000, "%s HP %d %d %d", A->label_tex, HPD->n, HPD->degree, nb_equations);
 	if (f_v) {
 		cout << "the old_action " << A->label
 			<< " has base_length = " << A->base_len()
@@ -2340,8 +2319,6 @@ void action::induce(action *old_action, sims *old_G,
 		cout << "the old group is in action:" << endl;
 		old_G->A->print_info();
 		}
-	//sprintf(label, "%s_ind", old_action->label);
-	//sprintf(label_tex, "%s ind", old_action->label_tex);
 	
 	if (old_action->subaction) {
 		if (f_vv) {
@@ -2854,12 +2831,9 @@ void action::base_change(action *old_action,
 			old_action->Sims,
 			size, set,
 			verbose_level - 1);
-	sprintf(group_prefix, "%s_base_change",
-			old_action->group_prefix);
-	sprintf(label, "%s_base_change",
-			old_action->label);
-	sprintf(label_tex, "%s_base_change",
-			old_action->label_tex);
+	snprintf(group_prefix, 1000, "%s_base_change", old_action->group_prefix);
+	snprintf(label, 1000, "%s_base_change", old_action->label);
+	snprintf(label_tex, 1000, "%s_base_change", old_action->label_tex);
 	
 	if (f_v) {
 		longinteger_object go, K_go;

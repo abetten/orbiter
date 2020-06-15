@@ -519,7 +519,7 @@ void poset_orbit_node::save_schreier_forest(
 			PC->create_schreier_tree_fname_mask_base(
 					fname_mask_base, node);
 
-			sprintf(fname_mask, "%s.layered_graph", fname_mask_base);
+			snprintf(fname_mask, 1000, "%s.layered_graph", fname_mask_base);
 
 			Schreier->export_tree_as_layered_graph(orbit_no,
 					fname_mask,
@@ -560,7 +560,7 @@ void poset_orbit_node::save_shallow_schreier_forest(
 			PC->create_shallow_schreier_tree_fname_mask_base(
 					fname_mask_base, node);
 
-			sprintf(fname_mask, "%s.layered_graph", fname_mask_base);
+			snprintf(fname_mask, 1000, "%s.layered_graph", fname_mask_base);
 
 			Schreier_vector->export_tree_as_layered_graph(
 					orbit_no, orbit_reps[orbit_no],
@@ -603,7 +603,7 @@ void poset_orbit_node::draw_schreier_forest(
 			int f_has_point_labels = FALSE;
 			long int *point_labels = NULL;
 
-			sprintf(label, "%sschreier_tree_node_%d_%d",
+			snprintf(label, 1000, "%sschreier_tree_node_%d_%d",
 					PC->get_control()->schreier_tree_prefix, node, orbit_no);
 
 			if (f_using_invariant_subset) {
@@ -626,7 +626,7 @@ void poset_orbit_node::draw_schreier_forest(
 			}
 
 		char label_data[1000];
-		sprintf(label_data, "%sschreier_data_node_%d.tex",
+		snprintf(label_data, 1000, "%sschreier_data_node_%d.tex",
 				PC->get_control()->schreier_tree_prefix, node);
 		Schreier->latex(label_data);
 		}

@@ -411,23 +411,23 @@ void poset_classification_control::print()
 }
 
 void poset_classification_control::init_labels(
-		char *problem_label, char *problem_label_with_path)
+		char *problem_label1000, char *problem_label_with_path1000)
 {
 	if (f_path && f_problem_label) {
-		sprintf(problem_label, "%s",
+		snprintf(problem_label1000, 1000, "%s",
 				poset_classification_control::problem_label);
-		sprintf(problem_label_with_path, "%s%s",
+		snprintf(problem_label_with_path1000, 1000, "%s%s",
 				path, poset_classification_control::problem_label);
 	}
 	else if (f_problem_label) {
-		sprintf(problem_label, "%s",
+		snprintf(problem_label1000, 1000, "%s",
 				poset_classification_control::problem_label);
-		sprintf(problem_label_with_path, "%s",
+		snprintf(problem_label_with_path1000, 1000, "%s",
 				poset_classification_control::problem_label);
 	}
 	else {
-		sprintf(problem_label, "unnamed");
-		sprintf(problem_label_with_path, "unnamed");
+		snprintf(problem_label1000, 1000, "unnamed");
+		snprintf(problem_label_with_path1000, 1000, "unnamed");
 	}
 
 }

@@ -278,8 +278,8 @@ void classify_bitvectors::save(const char *prefix,
 		cout << "classify_bitvectors::save" << endl;
 		}
 
-	sprintf(fname_txt, "%s_iso.txt", prefix);
-	sprintf(fname_csv, "%s_iso.csv", prefix);
+	snprintf(fname_txt, 1000, "%s_iso.txt", prefix);
+	snprintf(fname_csv, 1000, "%s_iso.csv", prefix);
 	
 
 	if (perm == NULL) {

@@ -52,7 +52,7 @@ void the_end(int t0)
 		char fname[1000];
 
 		mem_usage = Os.os_memory_usage();
-		sprintf(fname, "memory_usage.csv");
+		snprintf(fname, 1000, "memory_usage.csv");
 		Fio.int_matrix_write_csv(fname, &mem_usage, 1, 1);
 	}
 }

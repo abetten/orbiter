@@ -319,7 +319,7 @@ void parametric_curve::init(int nb_dimensions,
 
 			t = t_last;
 
-			if (Future.size() > N) {
+			if ((int) Future.size() > N) {
 				if (f_v) {
 					cout << "Future.size() > N, popping stack" << endl;
 				}

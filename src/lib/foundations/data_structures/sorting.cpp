@@ -2418,7 +2418,7 @@ void sorting::schreier_vector_tree(
 
 	char fname[1000];
 
-	sprintf(fname, "%s.layered_graph", fname_base);
+	snprintf(fname, 1000, "%s.layered_graph", fname_base);
 
 	layered_graph_draw_options O;
 

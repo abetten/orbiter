@@ -1452,7 +1452,7 @@ void clique_finder::open_tree_file(const char *fname_base,
 {
 	f_write_tree = TRUE;
 	clique_finder::f_decision_nodes_only = f_decision_nodes_only;
-	sprintf(fname_tree, "%s.tree", fname_base);
+	snprintf(fname_tree, 1000, "%s.tree", fname_base);
 	fp_tree = new ofstream;
 	fp_tree->open(fname_tree);
 }

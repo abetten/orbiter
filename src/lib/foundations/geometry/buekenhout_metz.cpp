@@ -1326,17 +1326,17 @@ void buekenhout_metz::write_unital_to_file()
 }
 
 
-void buekenhout_metz::get_name(char *name)
+void buekenhout_metz::get_name(char *name1000)
 {
 	if (f_Uab) {
-		sprintf(name, "U_%d_%d_%d", parameter_a, parameter_b, q);
+		snprintf(name1000, 1000, "U_%d_%d_%d", parameter_a, parameter_b, q);
 		}
 	else {
 		if (f_classical) {
-			sprintf(name, "H%d", q);
+			snprintf(name1000, 1000, "H%d", q);
 			}
 		else {
-			sprintf(name, "BM%d", q);
+			snprintf(name1000, 1000, "BM%d", q);
 			}
 		}
 }

@@ -36,8 +36,8 @@ void poset_classification::generate_source_code(
 	if (f_v) {
 		cout << "poset_classification::generate_source_code" << endl;
 		}
-	sprintf(my_prefix, "%s_level_%d", Control->problem_label, level);
-	sprintf(fname, "%s.cpp", my_prefix);
+	snprintf(my_prefix, 1000, "%s_level_%d", Control->problem_label, level);
+	snprintf(fname, 1000, "%s.cpp", my_prefix);
 
 	set = NEW_lint(level);
 	nb_iso = nb_orbits_at_level(level);
@@ -184,8 +184,8 @@ void poset_classification::generate_history(int level, int verbose_level)
 	if (f_v) {
 		cout << "poset_classification::generate_history" << endl;
 		}
-	sprintf(my_prefix, "%s_history_level_%d", problem_label, level);
-	sprintf(fname, "%s.cpp", my_prefix);
+	snprintf(my_prefix, 1000, "%s_history_level_%d", problem_label, level);
+	snprintf(fname, 1000, "%s.cpp", my_prefix);
 
 	set = NEW_lint(level);
 	Elt = NEW_int(Poset->A->elt_size_in_int);

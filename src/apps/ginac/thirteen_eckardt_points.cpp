@@ -63,8 +63,8 @@ void thirteen_Eckardt_points(int argc, const char **argv)
 	const char *author = "Orbiter";
 	const char *extras_for_preamble = "";
 
-	sprintf(fname, "13_report.tex");
-	sprintf(title, "Thirteen Eckardt Points");
+	vsnprintf(fname, 1000, "13_report.tex", 0);
+	vsnprintf(title, 1000, "Thirteen Eckardt Points", 0);
 
 	{
 		ofstream fp(fname);

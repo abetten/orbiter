@@ -1223,13 +1223,13 @@ void interface_cryptography::do_trace(int q, int verbose_level)
 	char fname_csv[1000];
 	file_io Fio;
 
-	sprintf(fname_csv, "F_q%d_trace_0.csv", q);
+	snprintf(fname_csv, 1000, "F_q%d_trace_0.csv", q);
 	Fio.int_vec_write_csv(T0, nb_T0,
 			fname_csv, "Trace_0");
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 
-	sprintf(fname_csv, "F_q%d_trace_1.csv", q);
+	snprintf(fname_csv, 1000, "F_q%d_trace_1.csv", q);
 	Fio.int_vec_write_csv(T1, nb_T1,
 			fname_csv, "Trace_1");
 	cout << "written file " << fname_csv << " of size "
@@ -1283,12 +1283,12 @@ void interface_cryptography::do_norm(int q, int verbose_level)
 	char fname_csv[1000];
 	file_io Fio;
 
-	sprintf(fname_csv, "F_q%d_norm_0.csv", q);
+	snprintf(fname_csv, 1000, "F_q%d_norm_0.csv", q);
 	Fio.int_vec_write_csv(T0, nb_T0,
 			fname_csv, "Norm_0");
 	cout << "written file " << fname_csv << " of size " << Fio.file_size(fname_csv) << endl;
 
-	sprintf(fname_csv, "F_q%d_norm_1.csv", q);
+	snprintf(fname_csv, 1000, "F_q%d_norm_1.csv", q);
 	Fio.int_vec_write_csv(T1, nb_T1,
 			fname_csv, "Norm_1");
 	cout << "written file " << fname_csv << " of size " << Fio.file_size(fname_csv) << endl;
@@ -2822,7 +2822,7 @@ void interface_cryptography::make_2D_plot(
 	char fname[1000];
 	file_io Fio;
 
-	sprintf(fname, "orbit_cnt%d_m%d_a%d_c%d.csv", cnt, m, a, c);
+	snprintf(fname, 1000, "orbit_cnt%d_m%d_a%d_c%d.csv", cnt, m, a, c);
 	Fio.int_matrix_write_csv(fname, M, m, m);
 
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -2875,8 +2875,8 @@ void interface_cryptography::do_jacobi(int jacobi_top, int jacobi_bottom, int ve
 	char title[1000];
 	char author[1000];
 
-	sprintf(fname, "jacobi_%d_%d.tex", jacobi_top, jacobi_bottom);
-	sprintf(title, "Jacobi %d over %d", jacobi_top, jacobi_bottom);
+	snprintf(fname, 1000, "jacobi_%d_%d.tex", jacobi_top, jacobi_bottom);
+	snprintf(title, 1000, "Jacobi %d over %d", jacobi_top, jacobi_bottom);
 	//sprintf(author, "");
 	author[0] = 0;
 
@@ -2931,8 +2931,8 @@ void interface_cryptography::do_solovay_strassen(int p, int a, int verbose_level
 	char title[1000];
 	char author[1000];
 
-	sprintf(fname, "solovay_strassen_%d_%d.tex", p, a);
-	sprintf(title, "Solovay Strassen %d with base %d", p, a);
+	snprintf(fname, 1000, "solovay_strassen_%d_%d.tex", p, a);
+	snprintf(title, 1000, "Solovay Strassen %d with base %d", p, a);
 	//sprintf(author, "");
 	author[0] = 0;
 
@@ -2988,8 +2988,8 @@ void interface_cryptography::do_miller_rabin(int p, int nb_times, int verbose_le
 	char title[1000];
 	char author[1000];
 
-	sprintf(fname, "miller_rabin_%d.tex", p);
-	sprintf(title, "Miller Rabin %d", p);
+	snprintf(fname, 1000, "miller_rabin_%d.tex", p);
+	snprintf(title, 1000, "Miller Rabin %d", p);
 	//sprintf(author, "");
 	author[0] = 0;
 
@@ -3054,8 +3054,8 @@ void interface_cryptography::do_fermat_test(int p, int nb_times, int verbose_lev
 	char title[1000];
 	char author[1000];
 
-	sprintf(fname, "fermat_%d.tex", p);
-	sprintf(title, "Fermat test %d", p);
+	snprintf(fname, 1000, "fermat_%d.tex", p);
+	snprintf(title, 1000, "Fermat test %d", p);
 	//sprintf(author, "");
 	author[0] = 0;
 
@@ -3110,8 +3110,8 @@ void interface_cryptography::do_find_pseudoprime(int nb_digits, int nb_fermat, i
 	char title[1000];
 	char author[1000];
 
-	sprintf(fname, "pseudoprime_%d.tex", nb_digits);
-	sprintf(title, "Pseudoprime %d", nb_digits);
+	snprintf(fname, 1000, "pseudoprime_%d.tex", nb_digits);
+	snprintf(title, 1000, "Pseudoprime %d", nb_digits);
 	//sprintf(author, "");
 	author[0] = 0;
 
@@ -3220,8 +3220,8 @@ void interface_cryptography::do_find_strong_pseudoprime(int nb_digits, int nb_fe
 	char title[1000];
 	char author[1000];
 
-	sprintf(fname, "strong_pseudoprime_%d.tex", nb_digits);
-	sprintf(title, "Strong Pseudoprime %d", nb_digits);
+	snprintf(fname, 1000, "strong_pseudoprime_%d.tex", nb_digits);
+	snprintf(title, 1000, "Strong Pseudoprime %d", nb_digits);
 	//sprintf(author, "");
 	author[0] = 0;
 
@@ -3319,8 +3319,8 @@ void interface_cryptography::do_miller_rabin_text(const char *number_text, int n
 	char title[1000];
 	char author[1000];
 
-	sprintf(fname, "miller_rabin_%s.tex", number_text);
-	sprintf(title, "Miller Rabin %s", number_text);
+	snprintf(fname, 1000, "miller_rabin_%s.tex", number_text);
+	snprintf(title, 1000, "Miller Rabin %s", number_text);
 	//sprintf(author, "");
 	author[0] = 0;
 

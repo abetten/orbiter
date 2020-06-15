@@ -593,7 +593,7 @@ void interface_projective::do_canonical_form_PG(orbiter_session *Session,
 					"prefix for the tex file" << endl;
 			exit(1);
 			}
-		sprintf(fname, "%s_classification.tex", prefix);
+		snprintf(fname, 1000, "%s_classification.tex", prefix);
 
 
 		PA->latex_report(fname,
@@ -625,7 +625,7 @@ void interface_projective::do_classify_cubic_curves(int q,
 	const char *starter_directory_name = "";
 	char base_fname[1000];
 
-	sprintf(base_fname, "cubic_curves_%d", q);
+	snprintf(base_fname, 1000, "cubic_curves_%d", q);
 
 
 	int f_semilinear = FALSE;
@@ -679,9 +679,9 @@ void interface_projective::do_classify_cubic_curves(int q,
 	char fname[1000];
 	char title[1000];
 	char author[1000];
-	sprintf(title, "Cubic Curves in PG$(2,%d)$", q);
-	sprintf(author, "");
-	sprintf(fname, "Cubic_curves_q%d.tex", q);
+	snprintf(title, 1000, "Cubic Curves in PG$(2,%d)$", q);
+	snprintf(author, 1000, "");
+	snprintf(fname, 1000, "Cubic_curves_q%d.tex", q);
 
 	{
 		ofstream fp(fname);
@@ -894,7 +894,7 @@ void interface_projective::do_create_points_on_parabola(
 		}
 		file_io Fio;
 		char fname[1000];
-		sprintf(fname, "parabola_N%d_%lf_%lf_%lf_points.csv", N, parabola_a, parabola_b, parabola_c);
+		snprintf(fname, 1000, "parabola_N%d_%lf_%lf_%lf_points.csv", N, parabola_a, parabola_b, parabola_c);
 
 		Fio.double_matrix_write_csv(fname, Pts, nb, 2);
 
@@ -922,7 +922,7 @@ void interface_projective::do_create_points_on_parabola(
 		}
 		file_io Fio;
 		char fname[1000];
-		sprintf(fname, "parabola_N%d_%lf_%lf_%lf_projection_from_center.csv", N, parabola_a, parabola_b, parabola_c);
+		snprintf(fname, 1000, "parabola_N%d_%lf_%lf_%lf_projection_from_center.csv", N, parabola_a, parabola_b, parabola_c);
 
 		Fio.double_matrix_write_csv(fname, Pts, nb, 6);
 
@@ -958,7 +958,7 @@ void interface_projective::do_create_points_on_parabola(
 		}
 		file_io Fio;
 		char fname[1000];
-		sprintf(fname, "parabola_N%d_%lf_%lf_%lf_projection_from_sphere.csv",
+		snprintf(fname, 1000, "parabola_N%d_%lf_%lf_%lf_projection_from_sphere.csv",
 				N, parabola_a, parabola_b, parabola_c);
 
 		Fio.double_matrix_write_csv(fname, Pts, nb, 6);
@@ -992,7 +992,7 @@ void interface_projective::do_create_points_on_parabola(
 		}
 		file_io Fio;
 		char fname[1000];
-		sprintf(fname, "parabola_N%d_%lf_%lf_%lf_points_projected.csv",
+		snprintf(fname, 1000, "parabola_N%d_%lf_%lf_%lf_points_projected.csv",
 				N, parabola_a, parabola_b, parabola_c);
 
 		Fio.double_matrix_write_csv(fname, Pts, nb, 3);
@@ -1080,7 +1080,7 @@ void interface_projective::do_smooth_curve(const char *curve_label,
 		}
 		file_io Fio;
 		char fname[1000];
-		sprintf(fname, "function_%s_N%d_points.csv", curve_label, N);
+		snprintf(fname, 1000, "function_%s_N%d_points.csv", curve_label, N);
 
 		Fio.double_matrix_write_csv(fname, Pts, nb, nb_dimensions);
 
@@ -1119,7 +1119,7 @@ void interface_projective::do_smooth_curve(const char *curve_label,
 		}
 		file_io Fio;
 		char fname[1000];
-		sprintf(fname, "function_%s_N%d_points_plus.csv", curve_label, N);
+		snprintf(fname, 1000, "function_%s_N%d_points_plus.csv", curve_label, N);
 
 		Fio.double_matrix_write_csv(fname, Pts, nb, n);
 
