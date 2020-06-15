@@ -531,7 +531,7 @@ public:
 	int underlying_set_size;
 	int nb_sets;
 	long int **Sets;
-	int *Set_size;
+	long int *Set_size;
 
 
 	set_of_sets();
@@ -544,9 +544,9 @@ public:
 	void init_from_adjacency_matrix(int n, int *Adj, 
 		int verbose_level);
 	void init(int underlying_set_size, int nb_sets, 
-		long int **Pts, int *Sz, int verbose_level);
+		long int **Pts, long int *Sz, int verbose_level);
 	void init_basic(int underlying_set_size, 
-		int nb_sets, int *Sz, int verbose_level);
+		int nb_sets, long int *Sz, int verbose_level);
 	void init_basic_constant_size(int underlying_set_size, 
 		int nb_sets, int constant_size, int verbose_level);
 	void init_from_file(int underlying_set_size, 

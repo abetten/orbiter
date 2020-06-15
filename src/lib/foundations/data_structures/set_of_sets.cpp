@@ -43,7 +43,7 @@ void set_of_sets::freeself()
 				}
 			}
 		FREE_plint(Sets);
-		FREE_int(Set_size);
+		FREE_lint(Set_size);
 		}
 	null();
 }
@@ -72,11 +72,11 @@ void set_of_sets::init_simple(int underlying_set_size,
 	set_of_sets::nb_sets = nb_sets;
 	set_of_sets::underlying_set_size = underlying_set_size;
 	Sets = NEW_plint(nb_sets);
-	Set_size = NEW_int(nb_sets);
+	Set_size = NEW_lint(nb_sets);
 	for (i = 0; i < nb_sets; i++) {
 		Sets[i] = NULL;
 		}
-	int_vec_zero(Set_size, nb_sets);
+	lint_vec_zero(Set_size, nb_sets);
 }
 
 void set_of_sets::init_from_adjacency_matrix(
@@ -100,7 +100,7 @@ void set_of_sets::init_from_adjacency_matrix(
 	for (i = 0; i < n; i++) {
 		Sets[i] = NEW_lint(Set_size[i]);
 		}
-	int_vec_zero(Set_size, n);
+	lint_vec_zero(Set_size, n);
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {
 			if (Adj[i * n + j]) {
@@ -112,7 +112,7 @@ void set_of_sets::init_from_adjacency_matrix(
 }
 
 void set_of_sets::init(int underlying_set_size,
-		int nb_sets, long int **Pts, int *Sz, int verbose_level)
+		int nb_sets, long int **Pts, long int *Sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -130,7 +130,7 @@ void set_of_sets::init(int underlying_set_size,
 }
 
 void set_of_sets::init_basic(int underlying_set_size,
-		int nb_sets, int *Sz, int verbose_level)
+		int nb_sets, long int *Sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -142,7 +142,7 @@ void set_of_sets::init_basic(int underlying_set_size,
 	set_of_sets::nb_sets = nb_sets;
 	set_of_sets::underlying_set_size = underlying_set_size;
 	Sets = NEW_plint(nb_sets);
-	Set_size = NEW_int(nb_sets);
+	Set_size = NEW_lint(nb_sets);
 	for (i = 0; i < nb_sets; i++) {
 		Sets[i] = NULL;
 		}
@@ -171,7 +171,7 @@ void set_of_sets::init_basic_constant_size(
 	set_of_sets::nb_sets = nb_sets;
 	set_of_sets::underlying_set_size = underlying_set_size;
 	Sets = NEW_plint(nb_sets);
-	Set_size = NEW_int(nb_sets);
+	Set_size = NEW_lint(nb_sets);
 	for (i = 0; i < nb_sets; i++) {
 		Sets[i] = NULL;
 		}
@@ -270,11 +270,11 @@ void set_of_sets::init_from_orbiter_file(int underlying_set_size,
 		}
 	set_of_sets::underlying_set_size = underlying_set_size;
 	Sets = NEW_plint(nb_sets);
-	Set_size = NEW_int(nb_sets);
+	Set_size = NEW_lint(nb_sets);
 	for (i = 0; i < nb_sets; i++) {
 		Sets[i] = NULL;
 		}
-	int_vec_zero(Set_size, nb_sets);
+	lint_vec_zero(Set_size, nb_sets);
 
 	char *buf, *p_buf;
 
@@ -377,8 +377,8 @@ void set_of_sets::init_cycle_structure(int *perm,
 		cout << "set_of_sets::init_cycle_structure" << endl;
 		}
 	int *have_seen = NULL;
-	int *orbit_length = NULL;
-	int *orbit_length2 = NULL;
+	long int *orbit_length = NULL;
+	long int *orbit_length2 = NULL;
 	int nb_orbits = 0;
 	int nb_orbits2 = 0;
 	int i, l, l1, first, next, len, c;
@@ -386,8 +386,8 @@ void set_of_sets::init_cycle_structure(int *perm,
 	if (f_v) {
 		cout << "set_of_sets::init_cycle_structure n=" << n << endl;
 		}
-	orbit_length = NEW_int(n);
-	orbit_length2 = NEW_int(n);
+	orbit_length = NEW_lint(n);
+	orbit_length2 = NEW_lint(n);
 	have_seen = NEW_int(n);
 	int_vec_zero(have_seen, n);
 
@@ -461,7 +461,7 @@ void set_of_sets::init_cycle_structure(int *perm,
 	if (f_v) {
 		cout << "set_of_sets::init_cycle_structure we found "
 				"the following cycle structure:";
-		int_vec_print(cout, orbit_length, nb_orbits);
+		lint_vec_print(cout, orbit_length, nb_orbits);
 		cout << endl;
 		}
 
@@ -553,8 +553,8 @@ void set_of_sets::init_cycle_structure(int *perm,
 		}
 	
 	FREE_int(have_seen);
-	FREE_int(orbit_length);
-	FREE_int(orbit_length2);
+	FREE_lint(orbit_length);
+	FREE_lint(orbit_length2);
 	if (f_v) {
 		cout << "set_of_sets::init_cycle_structure done" << endl;
 		}
@@ -634,7 +634,7 @@ void set_of_sets::dualize(set_of_sets *&S, int verbose_level)
 	S = NEW_OBJECT(set_of_sets);
 	S->init_basic_constant_size(nb_sets,
 			underlying_set_size, nb_sets, verbose_level - 1);
-	int_vec_zero(S->Set_size, underlying_set_size);
+	lint_vec_zero(S->Set_size, underlying_set_size);
 	for (i = 0; i < nb_sets; i++) {
 		for (j = 0; j < Set_size[i]; j++) {
 			a = Sets[i][j];
@@ -697,7 +697,7 @@ void set_of_sets::extract_largest_sets(
 	if (f_v) {
 		cout << "set_of_sets::extract_largest_sets" << endl;
 		}
-	C.init(Set_size, nb_sets, f_second, 0);
+	C.init_lint(Set_size, nb_sets, f_second, 0);
 	if (f_v) {
 		cout << "set_of_sets::extract_largest_sets set sizes: ";
 		C.print(FALSE /* f_backwards*/);
@@ -734,7 +734,7 @@ void set_of_sets::intersection_matrix(
 	if (f_v) {
 		cout << "set_of_sets::intersection_matrix" << endl;
 		}
-	C.init(Set_size, nb_sets, f_second, 0);
+	C.init_lint(Set_size, nb_sets, f_second, 0);
 	if (FALSE /*f_v*/) {
 		cout << "set_of_sets::intersection_matrix "
 				"plane-intersection type: ";
