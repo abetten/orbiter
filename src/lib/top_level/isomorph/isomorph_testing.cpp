@@ -494,10 +494,10 @@ void isomorph::decomposition_matrix(int verbose_level)
 		}
 
 	char fname_base1[1000];
-	char fname[1000];
+	char fname[2000];
 	
-	sprintf(fname_base1, "%sdecomposition_matrix", prefix);
-	sprintf(fname, "%s.csv", fname_base1);
+	snprintf(fname_base1, 1000, "%sdecomposition_matrix", prefix);
+	snprintf(fname, 2000, "%s.csv", fname_base1);
 	Fio.int_matrix_write_csv(fname, M, m, n);
 
 	FREE_int(down_link);
