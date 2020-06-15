@@ -902,7 +902,7 @@ void interface_projective::do_create_points_on_parabola(
 
 
 
-		for (i = 0; i < C.Pts.size(); i++) {
+		for (i = 0; i < (int) C.Pts.size(); i++) {
 			cout << C.Pts[i].t << " : " << C.Pts[i].coords[0] << ", " << C.Pts[i].coords[1] << endl;
 		}
 
@@ -913,7 +913,7 @@ void interface_projective::do_create_points_on_parabola(
 		nb_pts = C.Pts.size();
 		Pts = new double[nb_pts * 2];
 		nb = 0;
-		for (i = 0; i < C.Pts.size(); i++) {
+		for (i = 0; i < (int) C.Pts.size(); i++) {
 			Pts[nb * 2 + 0] = C.Pts[i].coords[0];
 			Pts[nb * 2 + 1] = C.Pts[i].coords[1];
 			nb++;
@@ -937,7 +937,7 @@ void interface_projective::do_create_points_on_parabola(
 		nb_pts = C.Pts.size();
 		Pts = new double[nb_pts * 6];
 		nb = 0;
-		for (i = 0; i < C.Pts.size(); i++) {
+		for (i = 0; i < (int) C.Pts.size(); i++) {
 			Pts[nb * 6 + 0] = C.Pts[i].coords[0];
 			Pts[nb * 6 + 1] = C.Pts[i].coords[1];
 			Pts[nb * 6 + 2] = 0.;
@@ -967,7 +967,7 @@ void interface_projective::do_create_points_on_parabola(
 		nb_pts = C.Pts.size();
 		Pts = new double[nb_pts * 6];
 		nb = 0;
-		for (i = 0; i < C.Pts.size(); i++) {
+		for (i = 0; i < (int) C.Pts.size(); i++) {
 			x = C.Pts[i].coords[0];
 			y = C.Pts[i].coords[1];
 			Pts[nb * 6 + 0] = x;
@@ -1004,7 +1004,7 @@ void interface_projective::do_create_points_on_parabola(
 		nb_pts = C.Pts.size();
 		Pts = new double[nb_pts * 3];
 		nb = 0;
-		for (i = 0; i < C.Pts.size(); i++) {
+		for (i = 0; i < (int) C.Pts.size(); i++) {
 			x = C.Pts[i].coords[0];
 			y = C.Pts[i].coords[1];
 
@@ -1096,7 +1096,7 @@ void interface_projective::do_smooth_curve(const char *curve_label,
 		nb_pts = C.Pts.size();
 		Pts = new double[nb_pts * nb_dimensions];
 		nb = 0;
-		for (i = 0; i < C.Pts.size(); i++) {
+		for (i = 0; i < (int) C.Pts.size(); i++) {
 			if (C.Pts[i].f_is_valid) {
 				for (j = 0; j < nb_dimensions; j++) {
 					Pts[nb * nb_dimensions + j] = C.Pts[i].coords[j];
@@ -1127,7 +1127,7 @@ void interface_projective::do_smooth_curve(const char *curve_label,
 		n = 1 + nb_dimensions + 1;
 		Pts = new double[nb_pts * n];
 		nb = 0;
-		for (i = 0; i < C.Pts.size(); i++) {
+		for (i = 0; i < (int) C.Pts.size(); i++) {
 			if (C.Pts[i].f_is_valid) {
 				Pts[nb * n + 0] = C.Pts[i].t;
 				for (j = 0; j < nb_dimensions; j++) {
