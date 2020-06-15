@@ -24,14 +24,14 @@ void graph_theory_domain::colored_graph_draw(const char *fname, int xmax_in,
 		int ymax_in, int xmax_out, int ymax_out, double scale,
 		double line_width, int verbose_level) {
 	int f_v = (verbose_level >= 1);
-	char fname_draw[1000];
+	char fname_draw[2000];
 	colored_graph CG;
 
 	if (f_v) {
 		cout << "colored_graph_draw" << endl;
 	}
 	CG.load(fname, verbose_level - 1);
-	snprintf(fname_draw, 1000, "%s_graph", CG.fname_base);
+	snprintf(fname_draw, 2000, "%s_graph", CG.fname_base);
 	if (f_v) {
 		cout << "colored_graph_draw before CG.draw_partitioned" << endl;
 	}
@@ -54,19 +54,19 @@ void graph_theory_domain::colored_graph_all_cliques(const char *fname,
 		int verbose_level) {
 	int f_v = (verbose_level >= 1);
 	colored_graph CG;
-	char fname_sol[1000];
-	char fname_success[1000];
+	char fname_sol[2000];
+	char fname_success[2000];
 
 	if (f_v) {
 		cout << "colored_graph_all_cliques" << endl;
 	}
 	CG.load(fname, verbose_level - 1);
 	if (f_output_fname) {
-		snprintf(fname_sol, 1000, "%s", output_fname);
-		snprintf(fname_success, 1000, "%s.success", output_fname);
+		snprintf(fname_sol, 2000, "%s", output_fname);
+		snprintf(fname_success, 2000, "%s.success", output_fname);
 	} else {
-		snprintf(fname_sol, 1000, "%s_sol.txt", CG.fname_base);
-		snprintf(fname_success, 1000, "%s_sol.success", CG.fname_base);
+		snprintf(fname_sol, 2000, "%s_sol.txt", CG.fname_base);
+		snprintf(fname_success, 2000, "%s_sol.success", CG.fname_base);
 	}
 
 	//CG.print();
@@ -109,8 +109,8 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 	int Search_steps = 0, Decision_steps = 0, Nb_sol = 0, Dt = 0;
 	unsigned long int search_steps, decision_steps;
 	int nb_sol, dt;
-	char fname[1000];
-	char fname_tmp[1000];
+	char fname[2000];
+	char fname_tmp[2000];
 
 	if (f_v) {
 		cout << "colored_graph_all_cliques_list_of_cases" << endl;
@@ -135,9 +135,9 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 				cout << "colored_graph_all_cliques_list_of_cases case " << i
 						<< " / " << nb_cases << " which is " << c << endl;
 			}
-			snprintf(fname_tmp, 1000, fname_template, c);
+			snprintf(fname_tmp, 2000, fname_template, c);
 			if (f_prefix) {
-				snprintf(fname, 1000, "%s%s", prefix, fname_tmp);
+				snprintf(fname, 2000, "%s%s", prefix, fname_tmp);
 			} else {
 				strcpy(fname, fname_tmp);
 			}
@@ -286,14 +286,14 @@ int graph_theory_domain::colored_graph_all_rainbow_cliques_nonrecursive(
 
 void graph_theory_domain::save_as_colored_graph_easy(const char *fname_base,
 		int n, int *Adj, int verbose_level) {
-	char fname[1000];
+	char fname[2000];
 	int f_v = (verbose_level >= 1);
 	file_io Fio;
 
 	if (f_v) {
 		cout << "save_as_colored_graph_easy" << endl;
 	}
-	snprintf(fname, 1000, "%s.colored_graph", fname_base);
+	snprintf(fname, 2000, "%s.colored_graph", fname_base);
 
 	colored_graph *CG;
 
@@ -869,16 +869,16 @@ void graph_theory_domain::draw_bitmatrix(
 		int verbose_level)
 {
 	mp_graphics G;
-	char fname_base2[1000];
-	char fname[1000];
+	char fname_base2[2000];
+	char fname[2000];
 	int f_embedded = TRUE;
 	int f_sideways = FALSE;
 	//double scale = .3;
 	//double line_width = 1.0;
 	file_io Fio;
 
-	snprintf(fname_base2, 1000, "%s", fname_base);
-	snprintf(fname, 1000, "%s.mp", fname_base2);
+	snprintf(fname_base2, 2000, "%s", fname_base);
+	snprintf(fname, 2000, "%s.mp", fname_base2);
 	{
 		G.setup(fname_base2, 0, 0, xmax_in /* ONE_MILLION */,
 				ymax_in /* ONE_MILLION */, xmax_out, ymax_out, f_embedded,
