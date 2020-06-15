@@ -530,17 +530,17 @@ void poset_classification::report(ostream &ost)
 				for (j = 0; j < nb_orbits_sv; j++) {
 
 					//char fname_base[1000];
-					char fname_layered_graph[10000];
-					char fname_tex[10000];
-					char fname_mp[10000];
-					char fname_1[10000];
+					char fname_layered_graph[2000];
+					char fname_tex[2000];
+					char fname_mp[2000];
+					char fname_1[2000];
 
 					snprintf(fname_base, 1000, fname_mask_base, j);
-					snprintf(fname_layered_graph, 10000, "%s.layered_graph",
+					snprintf(fname_layered_graph, 2000, "%s.layered_graph",
 							fname_base);
-					snprintf(fname_tex, 10000, "%s_draw_tree.tex", fname_base);
-					snprintf(fname_mp, 10000, "%s_draw_tree.mp", fname_base);
-					snprintf(fname_1, 10000, "%s_draw_tree.1", fname_base);
+					snprintf(fname_tex, 2000, "%s_draw_tree.tex", fname_base);
+					snprintf(fname_mp, 2000, "%s_draw_tree.mp", fname_base);
+					snprintf(fname_1, 2000, "%s_draw_tree.1", fname_base);
 
 					if (!Control->f_has_tools_path) {
 						cout << "please set tools path using "
