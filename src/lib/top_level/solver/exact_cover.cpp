@@ -740,7 +740,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 					}
 				}
 			else if (f_read_instead) {
-				char fname_sol[1000];
+				char fname_sol[2000];
 				const char *fname_solutions_mask = "%ssystem_%d.solutions";
 				
 				sprintf(fname_sol,
