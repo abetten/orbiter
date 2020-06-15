@@ -28,8 +28,8 @@ public:
 	char solution_prefix[1000];
 	char base_fname[1000];
 
-	char fname_solutions[1000];
-	char fname_statistics[1000];
+	char fname_solutions[3000];
+	char fname_statistics[3000];
 
 	void *user_data;
 
