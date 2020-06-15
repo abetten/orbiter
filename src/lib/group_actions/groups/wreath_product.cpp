@@ -1940,6 +1940,7 @@ void wreath_product::compute_permutations_and_write_to_file(
 	int *perms;
 	int mtx_n;
 	int mtx_n2;
+	int h;
 
 	if (f_v) {
 		cout << "wreath_product::compute_permutations_and_write_to_file" << endl;
@@ -1953,7 +1954,7 @@ void wreath_product::compute_permutations_and_write_to_file(
 	generator_stack = NEW_int(SG->gens->len * mtx_n2);
 	generators_transposed = NEW_pint(SG->gens->len);
 	perms = NEW_int(SG->gens->len * mtx_n);
-	for (size_t h = 0; h < SG->gens->len; h++) {
+	for (h = 0; h < SG->gens->len; h++) {
 		if (f_v) {
 			cout << "generator " << h << " / "
 					<< SG->gens->len << " is: " << endl;
@@ -2090,15 +2091,17 @@ void wreath_product::compute_permutations_and_write_to_file(
 
 
 
+	int b;
 
-	for (size_t b = 0; b < nb_blocks; ++b) {
+	for (b = 0; b < nb_blocks; ++b) {
 		if (f_v) {
 			cout << "wreath_product::compute_permutations_and_write_to_file block b=" << b << " / " << nb_blocks << endl;
 		}
 
 
-		int l = std::min((b + 1) * block_size,
-				(unsigned long)degree_of_tensor_action) - b * block_size;
+		int l;
+
+		l = MINIMUM((b + 1) * block_size, (unsigned long)degree_of_tensor_action) - b * block_size;
 		if (f_v) {
 			cout << "wreath_product::compute_permutations_and_write_to_file l=" << l << endl;
 		}
@@ -2149,7 +2152,7 @@ void wreath_product::compute_permutations_and_write_to_file(
 		NM->init(mtx_n, l, 0 /*verbose_level*/);
 
 
-		for (size_t h = 0; h < SG->gens->len; ++h) {
+		for (h = 0; h < SG->gens->len; ++h) {
 			if (f_v) {
 				cout << "wreath_product::compute_permutations_and_write_to_file "
 						"generator h=" << h << " / " << SG->gens->len << endl;
