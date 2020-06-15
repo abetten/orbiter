@@ -213,9 +213,9 @@ struct grid_frame {
 class mp_graphics {
 
 	char fname_base[1000];
-	char fname_mp[1000];
-	char fname_log[1000];
-	char fname_tikz[1000];
+	char fname_mp[2000];
+	char fname_log[2000];
+	char fname_tikz[2000];
 	std::ofstream fp_mp;
 	std::ofstream fp_log;
 	std::ofstream fp_tikz;
