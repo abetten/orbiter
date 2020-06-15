@@ -173,7 +173,7 @@ void orbit_transversal::read_from_file_one_case_only(
 	char **Ago_ascii;
 	char **Aut_ascii;
 	int *Casenumbers;
-	int nb_cases, nb_cases_mod;
+	int nb_cases; //, nb_cases_mod;
 	int i;
 	file_io Fio;
 
@@ -200,7 +200,7 @@ void orbit_transversal::read_from_file_one_case_only(
 
 	Reps = NEW_OBJECTS(set_and_stabilizer, nb_orbits);
 
-	nb_cases_mod = (nb_cases / 100) + 1;
+	//nb_cases_mod = (nb_cases / 100) + 1;
 
 	i = case_nr;
 
@@ -262,12 +262,12 @@ void orbit_transversal::report_ago_distribution(ostream &ost)
 {
 	classify *C;
 	long int *Ago;
-	int i, f, l, a;
+	int i, /*f,*/ l, a;
 
 	C = get_ago_distribution(Ago, 0 /*verbose_level*/);
 
 	for (i = C->nb_types - 1; i >= 0; i--) {
-		f = C->type_first[i];
+		//f = C->type_first[i];
 		l = C->type_len[i];
 		a = C->data_sorted[f];
 		//ost << "$" << a;
@@ -312,7 +312,7 @@ void orbit_transversal::print_table_latex(
 			i = I * nb_rows_per_page + row;
 			if (i < nb_orbits) {
 
-				longinteger_object(go);
+				longinteger_object go;
 				Reps[i].Strong_gens->group_order(go);
 
 				f << i << " & ";
