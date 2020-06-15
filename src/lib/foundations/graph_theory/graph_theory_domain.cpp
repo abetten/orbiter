@@ -869,7 +869,7 @@ void graph_theory_domain::draw_bitmatrix(
 		int verbose_level)
 {
 	mp_graphics G;
-	char fname_base2[2000];
+	char fname_base2[3000];
 	char fname[2000];
 	int f_embedded = TRUE;
 	int f_sideways = FALSE;
@@ -878,7 +878,7 @@ void graph_theory_domain::draw_bitmatrix(
 	file_io Fio;
 
 	snprintf(fname_base2, 2000, "%s", fname_base);
-	snprintf(fname, 2000, "%s.mp", fname_base2);
+	snprintf(fname, 3000, "%s.mp", fname_base2);
 	{
 		G.setup(fname_base2, 0, 0, xmax_in /* ONE_MILLION */,
 				ymax_in /* ONE_MILLION */, xmax_out, ymax_out, f_embedded,
