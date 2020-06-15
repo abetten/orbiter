@@ -86,12 +86,12 @@ void animate::animate_one_round(
 	double *zoom_sequence_value = NULL;
 	int *zoom_sequence_fst = NULL;
 	int *zoom_sequence_len = NULL;
-	int zoom_sequence_l;
-	double angle;
-	double clipping_radius;
-	double zoom_increment;
-	double zoom_clipping_increment;
-	int nb_frames_this_round;
+	int zoom_sequence_l = 0;
+	double angle = 0;
+	double clipping_radius = 0;
+	double zoom_increment = 0;
+	double zoom_clipping_increment = 0;
+	int nb_frames_this_round = 0;
 	int f_has_pan = FALSE;
 	int pan_f_reverse = FALSE;
 	double pan_from[3];
@@ -102,12 +102,12 @@ void animate::animate_one_round(
 	double pan_w[3];
 	double pan_z[3];
 	double pan_normal_uv[3];
-	double uu, suu;
+	double uu, suu = 0;
 	double uv;
-	double vv, svv;
+	double vv, svv = 0;
 	//double ww, sww;
-	double zz, szz;
-	double pan_alpha, pan_delta;
+	double zz, szz = 0;
+	double pan_alpha = 0, pan_delta = 0;
 
 	if (f_v) {
 		cout << "animate::animate_one_round" << endl;
@@ -2291,14 +2291,17 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 	//double up_x = 1.,up_y = 1., up_z = 1.;
 	//double view[3];
 
-	double location[3] = {-3,1,3};
-	double look_at[3];
+	//double location[3] = {-3,1,3};
+	//double look_at[3];
 
+
+#if 0
 	double a;
 	a = -1 / sqrt(3.);
 	for (i = 0; i < 3; i++) {
 		look_at[i] = a;
 		}
+#endif
 	//ost << "   location  <-3,1,3>" << endl;
 	//ost << "   look_at   <1,1,1>*-1/sqrt(3)" << endl;
 
