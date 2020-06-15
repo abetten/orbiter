@@ -43,18 +43,27 @@ interface_projective::interface_projective()
 	f_all_k_subsets = FALSE;
 	k = 0;
 
-	f_save_incma_in_and_out = FALSE;
 
-	f_prefix = FALSE;
-	prefix = "";
+
+
+
+
+	f_save_incma_in_and_out = FALSE;
+	//save_incma_in_and_out_prefix
+
+	f_classification_prefix = FALSE;
+	//classification_prefix
+	//prefix = "";
 
 	f_save = FALSE;
-	output_prefix = "";
+	//std::string save_prefix;
+
 
 	fixed_structure_order_list_sz = 0;
 	//fixed_structure_order_list[1000];
 
 	f_report = FALSE;
+	// report_prefix
 
 	f_max_TDO_depth = FALSE;
 	max_TDO_depth = INT_MAX;
@@ -127,6 +136,9 @@ void interface_projective::print_help(int argc,
 	}
 	else if (strcmp(argv[i], "-study_surface") == 0) {
 		cout << "-study_surface <int : q> <int : nb>" << endl;
+	}
+	else if (strcmp(argv[i], "-prefix") == 0) {
+		cout << "-prefix <string : prefix>" << endl;
 	}
 }
 
@@ -323,24 +335,32 @@ int interface_projective::read_canonical_form_arguments(int argc,
 		}
 
 
+
+
+
+		else if (strcmp(argv[i], "-save_incma_in_and_out") == 0) {
+			f_save_incma_in_and_out = TRUE;
+			save_incma_in_and_out_prefix.assign(argv[++i]);
+			cout << "-save_incma_in_and_out" << save_incma_in_and_out_prefix << endl;
+		}
+
+		else if (strcmp(argv[i], "-save") == 0) {
+			f_save = TRUE;
+			save_prefix.assign(argv[++i]);
+			cout << "-save " << save_prefix << endl;
+		}
+		else if (strcmp(argv[i], "-classification_prefix") == 0) {
+			f_classification_prefix = TRUE;
+			classification_prefix.assign(argv[++i]);
+			cout << "-classification_prefix " << classification_prefix << endl;
+		}
+
+
+
 		else if (strcmp(argv[i], "-all_k_subsets") == 0) {
 			f_all_k_subsets = TRUE;
 			k = atoi(argv[++i]);
 			cout << "-all_k_subsets " << k << endl;
-		}
-		else if (strcmp(argv[i], "-save_incma_in_and_out") == 0) {
-			f_save_incma_in_and_out = TRUE;
-			cout << "-save_incma_in_and_out" << endl;
-		}
-		else if (strcmp(argv[i], "-prefix") == 0) {
-			f_prefix = TRUE;
-			prefix = argv[++i];
-			cout << "-prefix " << prefix << endl;
-		}
-		else if (strcmp(argv[i], "-save") == 0) {
-			f_save = TRUE;
-			output_prefix = argv[++i];
-			cout << "-save " << output_prefix << endl;
 		}
 		else if (strcmp(argv[i], "-fixed_structure_of_element_of_order") == 0) {
 			fixed_structure_order_list[fixed_structure_order_list_sz] = atoi(argv[++i]);
@@ -350,8 +370,10 @@ int interface_projective::read_canonical_form_arguments(int argc,
 		}
 		else if (strcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
-			cout << "-report " << endl;
+			report_prefix.assign(argv[++i]);
+			cout << "-report " << report_prefix << endl;
 		}
+
 		else if (strcmp(argv[i], "-max_TDO_depth") == 0) {
 			f_max_TDO_depth = TRUE;
 			max_TDO_depth = atoi(argv[++i]);
@@ -510,11 +532,14 @@ void interface_projective::do_canonical_form_PG(orbiter_session *Session,
 	CB = NEW_OBJECT(classify_bitvectors);
 
 
+
+
+
 	cout << "interface_projective::do_canonical_form_PG "
 			"before PA->classify_objects_using_nauty" << endl;
 	PA->classify_objects_using_nauty(Data_input_stream,
 		CB,
-		f_save_incma_in_and_out, prefix,
+		f_save_incma_in_and_out, classification_prefix,
 		verbose_level - 1);
 	cout << "interface_projective::do_canonical_form_PG "
 			"after PA->classify_objects_using_nauty" << endl;
@@ -559,11 +584,12 @@ void interface_projective::do_canonical_form_PG(orbiter_session *Session,
 
 
 
+
+
 	if (f_save) {
-		cout << "Saving the classification with output prefix "
-				<< output_prefix << endl;
-		PA->save(output_prefix, CB, verbose_level);
-		CB->save(output_prefix,
+		cout << "Saving the classification with save_prefix " << save_prefix << endl;
+		PA->save(save_prefix, CB, verbose_level);
+		CB->save(save_prefix,
 			OiPA_encode, OiPA_group_order,
 			NULL /* void *global_data */,
 			verbose_level);
@@ -588,16 +614,16 @@ void interface_projective::do_canonical_form_PG(orbiter_session *Session,
 
 		char fname[1000];
 
-		if (prefix == NULL) {
+		if (f_classification_prefix == FALSE) {
 			cout << "please use option -prefix <prefix> to set the "
 					"prefix for the tex file" << endl;
 			exit(1);
 			}
-		snprintf(fname, 1000, "%s_classification.tex", prefix);
+		snprintf(fname, 1000, "%s_classification.tex", classification_prefix.c_str());
 
 
 		PA->latex_report(fname,
-				output_prefix,
+				report_prefix,
 				CB,
 				f_save_incma_in_and_out,
 				fixed_structure_order_list_sz,

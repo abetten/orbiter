@@ -551,17 +551,20 @@ class interface_projective {
 	int k;
 
 	int f_save_incma_in_and_out;
+	std::string save_incma_in_and_out_prefix;
 
-	int f_prefix;
-	const char *prefix;
+	int f_classification_prefix;
+	std::string classification_prefix;
 
 	int f_save;
-	const char *output_prefix;
+	std::string save_prefix;
 
 	int fixed_structure_order_list_sz;
 	int fixed_structure_order_list[1000];
 
 	int f_report;
+	std::string report_prefix;
+
 
 	int f_max_TDO_depth;
 	int max_TDO_depth;

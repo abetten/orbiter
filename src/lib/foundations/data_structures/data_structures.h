@@ -104,7 +104,8 @@ public:
 	void finalize(int verbose_level);
 	void print_reps();
 	void print_table();
-	void save(const char *prefix,
+	void save(
+			std::string &prefix,
 		void (*encode_function)(void *extra_data,
 			long int *&encoding, int &encoding_sz, void *global_data),
 		void (*get_group_order_or_NULL)(void *extra_data,

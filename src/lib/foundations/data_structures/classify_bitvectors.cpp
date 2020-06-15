@@ -261,7 +261,8 @@ void classify_bitvectors::print_table()
 		}
 }
 
-void classify_bitvectors::save(const char *prefix, 
+void classify_bitvectors::save(
+	std::string &prefix,
 	void (*encode_function)(void *extra_data,
 			long int *&encoding, int &encoding_sz, void *global_data),
 	void (*get_group_order_or_NULL)(void *extra_data,
