@@ -982,7 +982,7 @@ void semifield_lifting::upstep(
 	long int pt;
 	//int trace_po, trace_so;
 	combinatorics_domain Combi;
-	int fo, class_idx;
+	int /*fo,*/ class_idx;
 
 	transporter = NEW_int(SC->A->elt_size_in_int);
 
@@ -1042,7 +1042,7 @@ void semifield_lifting::upstep(
 		}
 
 		// level two stuff:
-		fo = L2->Fo[po];
+		//fo = L2->Fo[po];
 		class_idx = L2->So[po];
 		SC->matrix_unrank(L2->class_rep_rank[class_idx], Mtx + 1 * k2);
 
