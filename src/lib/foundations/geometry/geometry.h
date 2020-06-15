@@ -2581,12 +2581,12 @@ public:
 
 	char prefix[1000];
 
-	char fname_dual_line_idx[1000];
-	char fname_self_dual_lines[1000];
-	char fname_spreads[1000];
-	char fname_isomorphism_type_of_spreads[1000];
-	char fname_dual_spread[1000];
-	char fname_self_dual_spreads[1000];
+	char fname_dual_line_idx[2000];
+	char fname_self_dual_lines[2000];
+	char fname_spreads[2000];
+	char fname_isomorphism_type_of_spreads[2000];
+	char fname_dual_spread[2000];
+	char fname_self_dual_spreads[2000];
 
 	int *dual_line_idx; // [nb_lines]
 	int *self_dual_lines; // [nb_self_dual_lines]
