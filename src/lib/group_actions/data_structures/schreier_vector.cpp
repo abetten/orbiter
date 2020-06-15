@@ -175,7 +175,8 @@ int schreier_vector::count_number_of_orbits()
 	pts = sv + 1;
 	if (nb_gen == 0) {
 		return n;
-	} else {
+	}
+	else {
 		int *prev;
 		//int *label;
 		int nb = 0;
@@ -209,7 +210,8 @@ void schreier_vector::count_number_of_orbits_and_get_orbit_reps(
 		for (i = 0; i < n; i++) {
 			orbit_reps[i] = pts[i];
 			}
-	} else {
+	}
+	else {
 		int nb;
 		int *prev;
 		//int *label;
@@ -306,7 +308,8 @@ void schreier_vector::relabel_points(
 		}
 	if (nb_gen == 0) {
 		f_trivial_group = TRUE;
-	} else {
+	}
+	else {
 		f_trivial_group = FALSE;
 	}
 #if 0
@@ -990,7 +993,8 @@ void schreier_vector::export_tree_as_layered_graph(
 			orbit_prev[j] = -1;
 		}
 		max_depth = 0;
-	} else {
+	}
+	else {
 		int pos;
 		int *prev;
 		prev = points + n;

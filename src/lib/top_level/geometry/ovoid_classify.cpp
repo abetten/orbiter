@@ -307,7 +307,8 @@ void ovoid_classify::init(int argc, const char **argv,
 					exit(1);
 				}
 				c = Gg.AG_element_rank(F->q, B, 1, 2);
-			} else {
+			}
+			else {
 				c = -1;
 			}
 			color_table[i] = c;
@@ -848,7 +849,8 @@ void ovoid_classify::create_graph(orbiter_data_file *ODF,
 				}
 			}
 		}
-	} else {
+	}
+	else {
 		nb_colors_used = nb_colors;
 	}
 

@@ -222,9 +222,9 @@ class arc_lifting {
 public:
 
 	int q;
-	finite_field *F; // do not free
+	finite_field *F;
 
-	surface_domain *Surf; // do not free
+	surface_domain *Surf;
 
 	surface_with_action *Surf_A;
 
@@ -352,7 +352,6 @@ public:
 	void init(
 		surfaces_arc_lifting *SAL, int arc_idx,
 		action *A,
-		//int argc, const char **argv,
 		int verbose_level);
 	void recognize(long int *pair, int *transporter,
 			int &orbit_idx, int verbose_level);
@@ -418,11 +417,8 @@ public:
 
 	int f_semilinear;
 
-	int q; // field order
+	int q;
 
-	//char starter_directory_name[1000];
-	//char prefix[1000];
-	//char prefix_with_directory[1000];
 	int starter_size;
 
 	poset_classification_control *Control;
@@ -447,7 +443,6 @@ public:
 		int starter_size,
 		int verbose_level);
 	void init_group(int f_semilinear, int verbose_level);
-	//void init_orthogonal(int verbose_level);
 	void init_orthogonal_hash(int verbose_level);
 	void init2(int verbose_level);
 	void create_graphs(
@@ -477,10 +472,8 @@ public:
 		diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out,
 		int verbose_level);
-	//void Law_71(int verbose_level);
 	void report_from_iso(isomorph &Iso, int verbose_level);
 	void report(orbit_transversal *T, int verbose_level);
-	//void subset_orbits(isomorph &Iso, int verbose_level);
 };
 
 // global functions:
@@ -777,13 +770,13 @@ class classify_double_sixes {
 public:
 
 	int q;
-	finite_field *F; // do not free
-	action *A; // do not free
+	finite_field *F;
+	action *A;
 
-	linear_group *LG; // do not free
+	linear_group *LG;
 
-	surface_with_action *Surf_A; // do not free
-	surface_domain *Surf; // do not free
+	surface_with_action *Surf_A;
+	surface_domain *Surf;
 
 
 	// pulled from surface_classify_wedge:
@@ -1131,20 +1124,12 @@ public:
 	packing_invariants *Inv;
 	longinteger_object *Ago, *Ago_induced;
 	int *Ago_int;
-	//int *Type_of_packing;
-		// [Iso->Reps->count * P->nb_spreads_up_to_isomorphism]
+
 	int *Spread_type_of_packing;
 		// [Iso->Reps->count * P->nb_iso_types_of_spreads]
 
 
 	classify_vector_data *Classify;
-
-#if 0
-	int **List_of_types;
-	int *Frequency;
-	int nb_types;
-	int *packing_type_idx; // [Iso->Reps->count]
-#endif
 
 
 	int *Dual_idx;
@@ -1233,7 +1218,6 @@ public:
 	int f_semilinear;
 	int schreier_depth;
 	int f_use_invariant_subset_if_available;
-	//int f_lex;
 	int f_debug;
 	int f_has_extra_test_func;
 	int (*extra_test_func)(void *, int len, long int *S,
@@ -1458,11 +1442,6 @@ public:
 	finite_field *F;
 	int spread_size;
 	int nb_lines;
-	//int search_depth;
-
-	//char starter_directory_name[1000];
-	//char prefix[1000];
-	//char prefix_with_directory[1000];
 
 
 	int f_lexorder_test;
@@ -2183,7 +2162,6 @@ public:
 	int q;
 	int *poly_coeffs; // of degree n
 	int *Singer_matrix;
-	//int *Elt;
 	vector_ge *nice_gens;
 	strong_generators *SG;
 	longinteger_object target_go;
@@ -2263,21 +2241,20 @@ public:
 #define SPREAD_OF_TYPE_HUDSON 7
 
 
-//! to classify spreads of PG(k-1,q) in PG(n-1,q) where n=2*k
+//! to classify spreads of PG(k-1,q) in PG(n-1,q) where k divides n
 
 
 class spread_classify {
 public:
 
-	//finite_field *F;
 	linear_group *LG;
 	matrix_group *Mtx;
-	//int f_semilinear;
+
 	poset_classification_control *Control;
 
 	int order;
 	int spread_size; // = order + 1
-	int n; // = 2 * k
+	int n; // = a multiple of k
 	int k;
 	int kn; // = k * n
 	int q;
@@ -2287,9 +2264,6 @@ public:
 	int block_size; // = r = {k choose 1}_q
 
 
-	//char starter_directory_name[1000];
-	//char prefix[1000];
-	//char prefix_with_directory[1000];
 	int starter_size;
 
 
@@ -2320,13 +2294,13 @@ public:
 
 	//poset_classification_control *Control;
 	poset *Poset;
-	poset_classification *gen; // allocated in init()
+	poset_classification *gen;
 
 
 	singer_cycle *Sing;
 
 
-	// if k = 2 only:
+	// only if n = 2 * k:
 	klein_correspondence *Klein;
 	orthogonal *O;
 
@@ -3166,8 +3140,7 @@ public:
 class tensor_classify {
 public:
 	int t0;
-	//int argc;
-	//const char **argv;
+
 	int nb_factors;
 	int n;
 	int q;

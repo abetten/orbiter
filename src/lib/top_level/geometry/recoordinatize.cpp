@@ -19,8 +19,33 @@ namespace top_level {
 
 recoordinatize::recoordinatize()
 {
-	null();
+
+	n = k = q = 0;
+
+	Grass = NULL;
+	F = NULL;
+	A = NULL;
+	A2 = NULL;
+	f_projective = FALSE;
+	f_semilinear = FALSE;
+	nCkq = 0;
+	check_function_incremental = NULL;
+	check_function_incremental_data = NULL;
+
+	f_data_is_allocated = FALSE;
+	M = M1 = AA = AAv = TT = TTv = B = C = N = Elt = NULL;
+
+	starter_j1 = starter_j2 = starter_j3 = 0;
+	A0 = NULL;
+	A0_linear = NULL;
+	gens2 = NULL;
+
+	live_points = NULL;
+	nb_live_points = 0;
+
+	//null();
 }
+
 
 recoordinatize::~recoordinatize()
 {
@@ -29,12 +54,6 @@ recoordinatize::~recoordinatize()
 
 void recoordinatize::null()
 {
-	A0 = NULL;
-	gens2 = NULL;
-
-	live_points = NULL;
-
-	f_data_is_allocated = FALSE;
 }
 
 void recoordinatize::freeself()

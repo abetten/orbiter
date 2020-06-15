@@ -167,7 +167,8 @@ void povray_interface::beginning(ostream &ost,
 		ost << "//Set a background color" << endl;
 		ost << "background { color SkyBlue }" << endl;
 		ost << endl;
-	} else {
+	}
+	else {
 		ost << "//Set a background color" << endl;
 		ost << "background { color White }" << endl;
 		ost << endl;

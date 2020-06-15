@@ -2591,9 +2591,11 @@ void mp_graphics::bezier_idx_tikz(int *Px, int *Py,
 #if 0
 		if (i == 1) {
 			fp_tikz << " .. controls ";
-		} else if (i == n - 1) {
+		}
+		else if (i == n - 1) {
 			fp_tikz << " .. ";
-		} else if (i) {
+		}
+		else if (i) {
 			fp_tikz << " and ";
 		}
 #endif

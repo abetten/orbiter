@@ -1538,7 +1538,8 @@ void strong_generators::print_generators_as_permutations()
 		if (A->degree < 1000) {
 			A->element_print_as_permutation(gens->ith(i), cout);
 			cout << endl;
-		} else {
+		}
+		else {
 			cout << "strong_generators::print_generators_as_permutations "
 					"the degree is too large, we won't print "
 					"the permutation representation" << endl;

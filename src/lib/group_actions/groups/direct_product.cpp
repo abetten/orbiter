@@ -391,9 +391,11 @@ int direct_product::offset_i(int f)
 {
 	if (f == 0) {
 		return 0;
-	} else if (f == 1) {
+	}
+	else if (f == 1) {
 		return M1->elt_size_int;
-	} else {
+	}
+	else {
 		cout << "direct_product::offset_i illegal value of f" << endl;
 		exit(1);
 	}
@@ -441,7 +443,8 @@ void direct_product::put_digit(uchar *elt, int f, int i, int d)
 
 	if (f == 0) {
 		nb_bits = bits_per_digit1;
-	} else if (f == 1) {
+	}
+	else if (f == 1) {
 		h0 += M1->make_element_size * bits_per_digit1;
 		nb_bits = bits_per_digit2;
 	}
@@ -451,7 +454,8 @@ void direct_product::put_digit(uchar *elt, int f, int i, int d)
 
 		if (d & 1) {
 			a = 1;
-		} else {
+		}
+		else {
 			a = 0;
 		}
 		bitvector_m_ii(elt, h1, a);
@@ -467,7 +471,8 @@ int direct_product::get_digit(uchar *elt, int f, int i)
 
 	if (f == 0) {
 		nb_bits = bits_per_digit1;
-	} else if (f == 1) {
+	}
+	else if (f == 1) {
 		h0 += M1->make_element_size * bits_per_digit1;
 		nb_bits = bits_per_digit2;
 	}
@@ -528,7 +533,8 @@ void direct_product::element_print_easy(int *Elt, ostream &ost)
 			if (f == 0) {
 				M1->GL_print_easy(Elt + offset_i(f), ost);
 				cout << endl;
-			} else {
+			}
+			else {
 				M2->GL_print_easy(Elt + offset_i(f), ost);
 				cout << endl;
 			}

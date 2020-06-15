@@ -556,7 +556,8 @@ void finite_field::print_element(ostream &ost, int a)
 
 	if (e == 1) {
 		ost << a;
-	} else {
+	}
+	else {
 		if (f_print_as_exponentials) {
 			width = 10;
 			}
@@ -575,7 +576,8 @@ void finite_field::print_element_str(stringstream &ost, int a)
 
 	if (e == 1) {
 		ost << a;
-	} else {
+	}
+	else {
 		if (f_print_as_exponentials) {
 			width = 10;
 			}

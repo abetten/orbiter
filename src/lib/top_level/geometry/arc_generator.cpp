@@ -22,11 +22,8 @@ namespace top_level {
 arc_generator::arc_generator()
 {
 	q = 0;
-	//f_poly = FALSE;
-	//poly = NULL;
+
 	F = NULL;
-	//argc = 0;
-	//argv = NULL;
 	
 	GTA = NULL;
 	//ECA = NULL;
@@ -43,9 +40,6 @@ arc_generator::arc_generator()
 	f_target_size = FALSE;
 	target_size = 0;
 
-	//char starter_directory_name[1000];
-	//char prefix[1000];
-	//char prefix_with_directory[1000];
 	starter_size = 0;
 
 	f_recognize = FALSE;
@@ -555,7 +549,6 @@ void arc_generator::prepare_generator(poset_classification_control *Control,
 
 
 	
-	//gen->depth = starter_size;
 	gen->initialize_and_allocate_root_node(Control, Poset,
 		starter_size, 
 		verbose_level - 1);
@@ -756,12 +749,6 @@ void arc_generator::compute_starter(int verbose_level)
 		}
 
 
-#if 0
-		int d;
-		for (d = 0; d < 3; d++) {
-			gen->print_schreier_vectors_at_depth(d, verbose_level);
-			}
-#endif
 	}
 
 
@@ -829,7 +816,7 @@ void arc_generator::early_test_func(long int *S, int len,
 					f_survive = FALSE;
 					break;
 				}
-			} // next j
+			}
 		}
 
 		if (f_survive && f_conic_test) {

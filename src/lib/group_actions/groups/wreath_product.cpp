@@ -445,7 +445,8 @@ long int wreath_product::element_image_of(int *Elt, long int a, int verbose_leve
 				}
 				b += c;
 				break;
-			} else {
+			}
+			else {
 				a -= M->degree;
 				b += M->degree;
 			}
@@ -812,7 +813,8 @@ void wreath_product::put_digit(uchar *elt, int f, int i, int j, int d)
 
 		if (d & 1) {
 			a = 1;
-		} else {
+		}
+		else {
 			a = 0;
 		}
 		bitvector_m_ii(elt + nb_factors, h1, a);
@@ -848,7 +850,8 @@ void wreath_product::make_element_from_one_component(int *Elt,
 		for (g = 0; g < nb_factors; g++) {
 			if (g == f) {
 				M->GL_copy(Elt_component, Elt + offset_i(g));
-			} else {
+			}
+			else {
 				M->GL_one(Elt + offset_i(g));
 			}
 		}
