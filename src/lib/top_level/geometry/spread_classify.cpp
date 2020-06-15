@@ -1038,10 +1038,10 @@ void spread_classify::lifting_prepare_function_new(
 				"after CG->init_with_point_labels" << endl;
 	}
 	
-	char fname_clique_graph[1000];
+	char fname_clique_graph[2000];
 	file_io Fio;
 
-	sprintf(fname_clique_graph, "%sgraph_%d.bin",
+	snprintf(fname_clique_graph, 2000, "%sgraph_%d.bin",
 			E->output_prefix, starter_case);
 	CG->save(fname_clique_graph, verbose_level - 1);
 	if (f_v) {
