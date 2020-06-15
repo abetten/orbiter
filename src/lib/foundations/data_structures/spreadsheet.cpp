@@ -90,7 +90,7 @@ void spreadsheet::init_set_of_sets(set_of_sets *S, int f_make_heading)
 		}
 	for (i = 0; i < S->nb_sets; i++) {
 
-		snprintf(str, 1000, "%d", S->Set_size[i]);
+		snprintf(str, 1000, "%ld", S->Set_size[i]);
 		len = strlen(str);
 		tokens[h] = NEW_char(len + 1);
 		strcpy(tokens[h], str);
