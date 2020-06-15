@@ -591,7 +591,7 @@ void poset_orbit_node::draw_schreier_forest(
 
 		nb_orbits = Schreier->nb_orbits;
 		for (orbit_no = 0; orbit_no < nb_orbits; orbit_no++) {
-			char label[1000];
+			char label[2000];
 			int xmax = PC->get_control()->schreier_tree_xmax;
 			int ymax =  PC->get_control()->schreier_tree_ymax;
 			int f_circletext = PC->get_control()->schreier_tree_f_circletext;
@@ -603,7 +603,7 @@ void poset_orbit_node::draw_schreier_forest(
 			int f_has_point_labels = FALSE;
 			long int *point_labels = NULL;
 
-			snprintf(label, 1000, "%sschreier_tree_node_%d_%d",
+			snprintf(label, 2000, "%sschreier_tree_node_%d_%d",
 					PC->get_control()->schreier_tree_prefix, node, orbit_no);
 
 			if (f_using_invariant_subset) {
@@ -625,8 +625,8 @@ void poset_orbit_node::draw_schreier_forest(
 				verbose_level - 1);
 			}
 
-		char label_data[1000];
-		snprintf(label_data, 1000, "%sschreier_data_node_%d.tex",
+		char label_data[2000];
+		snprintf(label_data, 2000, "%sschreier_data_node_%d.tex",
 				PC->get_control()->schreier_tree_prefix, node);
 		Schreier->latex(label_data);
 		}
