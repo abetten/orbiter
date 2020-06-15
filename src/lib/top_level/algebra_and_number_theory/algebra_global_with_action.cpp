@@ -2422,7 +2422,7 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 	action *A;
 	int i, j, arc_idx;
 
-	char fname_arc_lifting[10000];
+	char fname_arc_lifting[1000];
 
 
 	if (f_v) {
@@ -2484,12 +2484,12 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 		cout << "before report" << endl;
 	}
 	{
-		char title[10000];
-		char author[10000];
-		sprintf(title, "Arc lifting over GF(%d) ", q);
-		sprintf(author, "");
+		char title[1000];
+		char author[1000];
+		snprintf(title, 1000, "Arc lifting over GF(%d) ", q);
+		strcpy(author, "");
 
-		sprintf(fname_arc_lifting, "arc_lifting_q%d.tex", q);
+		snprintf(fname_arc_lifting, 1000, "arc_lifting_q%d.tex", q);
 		ofstream fp(fname_arc_lifting);
 		latex_interface L;
 
@@ -2556,7 +2556,7 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 
 
 		char fname_base[1000];
-		sprintf(fname_base, "arcs_q%d", q);
+		snprintf(fname_base, 1000, "arcs_q%d", q);
 
 		if (q < 20) {
 			cout << "before Gen->gen->draw_poset_full" << endl;
@@ -2639,9 +2639,9 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 			char arc_label[1000];
 			char arc_label_short[1000];
 
-			sprintf(arc_label, "%d / %d",
+			snprintf(arc_label, 1000, "%d / %d",
 					arc_idx, Six_arcs->nb_arcs_not_on_conic);
-			sprintf(arc_label_short, "Arc%d", arc_idx);
+			snprintf(arc_label_short, 1000, "Arc%d", arc_idx);
 
 			if (f_v) {
 				cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
@@ -2757,15 +2757,15 @@ void algebra_global_with_action::investigate_surface_and_write_report(
 	Surf_A = SC->Surf_A;
 	//A = Surf_A->A;
 
-	char fname[1000];
-	char fname_mask[1000];
-	char label[1000];
-	char label_tex[1000];
+	char fname[2000];
+	char fname_mask[2000];
+	char label[2000];
+	char label_tex[2000];
 
-	sprintf(fname, "surface_%s.tex", SC->prefix);
-	sprintf(label, "surface_%s", SC->label_txt);
-	sprintf(label_tex, "surface %s", SC->label_tex);
-	sprintf(fname_mask, "surface_%s_orbit_%%d", SC->prefix);
+	snprintf(fname, 2000, "surface_%s.tex", SC->prefix);
+	snprintf(label, 2000, "surface_%s", SC->label_txt);
+	snprintf(label_tex, 2000, "surface %s", SC->label_tex);
+	snprintf(fname_mask, 2000, "surface_%s_orbit_%%d", SC->prefix);
 	{
 		ofstream fp(fname);
 		latex_interface L;
