@@ -324,10 +324,10 @@ void packing_invariants::compute_decomposition(
 		I->compute_TDO_safe(*Stack, depth, verbose_level - 2);
 		
 
-		sprintf(fname_row_scheme,
+		snprintf(fname_row_scheme, 2000,
 				"%s%d_packing_planes_row_scheme.tex",
 				prefix_tex, iso_cnt);
-		sprintf(fname_col_scheme,
+		snprintf(fname_col_scheme, 2000,
 				"%s%d_packing_planes_col_scheme.tex",
 				prefix_tex, iso_cnt);
 		{

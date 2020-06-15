@@ -1672,9 +1672,9 @@ public:
 
 	incidence_structure *I;
 	partitionstack *Stack;
-	char fname_incidence_pic[1000];
-	char fname_row_scheme[1000];
-	char fname_col_scheme[1000];
+	char fname_incidence_pic[2000];
+	char fname_row_scheme[2000];
+	char fname_col_scheme[2000];
 
 	packing_invariants();
 	~packing_invariants();
