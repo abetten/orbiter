@@ -1991,25 +1991,25 @@ eckardt_point_info *projective_space::compute_eckardt_point_info(
 	
 	if (f_v) {
 		cout << "projective_space::compute_eckardt_point_info" << endl;
-		}
+	}
 	if (n != 2) {
 		cout << "projective_space::compute_eckardt_point_info "
 				"n != 2" << endl;
 		exit(1);
-		}
+	}
 
 	if (f_v) {
 		cout << "arc: ";
 		lint_vec_print(cout, arc6, 6);
 		cout << endl;
-		}
+	}
 
 	E = NEW_OBJECT(eckardt_point_info);
 	E->init(Surf, this, arc6, verbose_level);
 
 	if (f_v) {
 		cout << "projective_space::compute_eckardt_point_info done" << endl;
-		}
+	}
 	return E;
 }
 

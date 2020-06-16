@@ -254,6 +254,8 @@ public:
 	void init_clique_finding_problem(int *Adj, int nb_pts, 
 		int nb_to_select, int verbose_level);
 	void fill_coefficient_matrix_with(int a);
+	void set_x_min_constant(int a);
+	void set_x_max_constant(int a);
 	int &Aij(int i, int j);
 	int &Gij(int i, int j);
 	int &RHSi(int i);

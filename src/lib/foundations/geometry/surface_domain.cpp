@@ -335,7 +335,7 @@ void surface_domain::init(finite_field *F, int verbose_level)
 
 	if (f_v) {
 		cout << "surface_domain::init" << endl;
-		}
+	}
 	
 	n = 4;
 	n2 = 2 * n;
@@ -345,7 +345,7 @@ void surface_domain::init(finite_field *F, int verbose_level)
 	if (f_v) {
 		cout << "surface::init nb_pts_on_surface = "
 				<< nb_pts_on_surface << endl;
-		}
+	}
 
 	v = NEW_int(n);
 	v2 = NEW_int(6);
@@ -354,24 +354,24 @@ void surface_domain::init(finite_field *F, int verbose_level)
 	P = NEW_OBJECT(projective_space);
 	if (f_v) {
 		cout << "surface::init before P->init" << endl;
-		}
+	}
 	P->init(3, F, 
 		TRUE /*f_init_incidence_structure */, 
 		verbose_level - 2);
 	if (f_v) {
 		cout << "surface::init after P->init" << endl;
-		}
+	}
 
 	P2 = NEW_OBJECT(projective_space);
 	if (f_v) {
 		cout << "surface::init before P2->init" << endl;
-		}
+	}
 	P2->init(2, F, 
 		TRUE /*f_init_incidence_structure */, 
 		verbose_level - 2);
 	if (f_v) {
 		cout << "surface::init after P2->init" << endl;
-		}
+	}
 
 	Gr = NEW_OBJECT(grassmann);
 	Gr->init(n, 2, F, 0 /* verbose_level */);
@@ -379,7 +379,7 @@ void surface_domain::init(finite_field *F, int verbose_level)
 	if (f_v) {
 		cout << "surface::init nb_lines_PG_3 = "
 				<< nb_lines_PG_3 << endl;
-		}
+	}
 
 	Gr3 = NEW_OBJECT(grassmann);
 	Gr3->init(4, 3, F, 0 /* verbose_level*/);
@@ -388,147 +388,147 @@ void surface_domain::init(finite_field *F, int verbose_level)
 	if (f_v) {
 		cout << "surface::init "
 				"initializing orthogonal" << endl;
-		}
+	}
 	O = NEW_OBJECT(orthogonal);
 	O->init(1 /* epsilon */, 6 /* n */, F, verbose_level - 2);
 	if (f_v) {
 		cout << "surface::init "
 				"initializing orthogonal done" << endl;
-		}
+	}
 
 	Klein = NEW_OBJECT(klein_correspondence);
 
 	if (f_v) {
 		cout << "surface::init initializing "
 				"Klein correspondence" << endl;
-		}
+	}
 	Klein->init(F, O, verbose_level - 2);
 	if (f_v) {
 		cout << "surface::init initializing "
 				"Klein correspondence done" << endl;
-		}
+	}
 
 
 
 	if (f_v) {
 		cout << "surface::init before "
 				"init_polynomial_domains" << endl;
-		}
+	}
 	init_polynomial_domains(verbose_level);
 	if (f_v) {
 		cout << "surface::init after "
 				"init_polynomial_domains" << endl;
-		}
+	}
 
 	//init_large_polynomial_domains(verbose_level);
 
 	if (f_v) {
 		cout << "surface::init before init_system" << endl;
-		}
+	}
 	init_system(verbose_level);
 	if (f_v) {
 		cout << "surface::init after init_system" << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "surface::init before "
 				"init_line_data" << endl;
-		}
+	}
 	init_line_data(verbose_level);
 	if (f_v) {
 		cout << "surface::init after "
 				"init_line_data" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "surface::init before "
 				"make_trihedral_pairs" << endl;
-		}
+	}
 	make_trihedral_pairs(Trihedral_pairs, 
 		Trihedral_pair_labels, nb_trihedral_pairs, 
 		verbose_level);
 	if (f_v) {
 		cout << "surface::init after "
 				"make_trihedral_pairs" << endl;
-		}
+	}
 	
 	if (f_v) {
 		cout << "surface::init before "
 				"process_trihedral_pairs" << endl;
-		}
+	}
 	process_trihedral_pairs(verbose_level);
 	if (f_v) {
 		cout << "surface::init after "
 				"process_trihedral_pairs" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "surface::init before "
 				"make_Eckardt_points" << endl;
-		}
+	}
 	make_Eckardt_points(verbose_level);
 	if (f_v) {
 		cout << "surface::init after "
 				"make_Eckardt_points" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "surface::init before "
 				"init_Trihedral_to_Eckardt" << endl;
-		}
+	}
 	init_Trihedral_to_Eckardt(verbose_level);
 	if (f_v) {
 		cout << "surface::init after "
 				"init_Trihedral_to_Eckardt" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "surface::init before "
 				"init_collinear_Eckardt_triples" << endl;
-		}
+	}
 	init_collinear_Eckardt_triples(verbose_level);
 	if (f_v) {
 		cout << "surface::init after "
 				"init_collinear_Eckardt_triples" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "surface::init before "
 				"init_double_sixes" << endl;
-		}
+	}
 	init_double_sixes(verbose_level);
 	if (f_v) {
 		cout << "surface::init after "
 				"init_double_sixes" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "surface::init before "
 				"create_half_double_sixes" << endl;
-		}
+	}
 	create_half_double_sixes(verbose_level);
 	if (f_v) {
 		cout << "surface::init after "
 				"create_half_double_sixes" << endl;
-		}
+	}
 	//print_half_double_sixes_in_GAP();
 
 	if (f_v) {
 		cout << "surface::init before "
 				"init_adjacency_matrix_of_lines" << endl;
-		}
+	}
 	init_adjacency_matrix_of_lines(verbose_level);
 	if (f_v) {
 		cout << "surface::init after "
 				"init_adjacency_matrix_of_lines" << endl;
-		}
+	}
 
 	//clebsch_cubics(verbose_level);
 
 	if (f_v) {
 		cout << "surface::init done" << endl;
-		}
+	}
 }
 
 
@@ -538,44 +538,86 @@ void surface_domain::init_polynomial_domains(int verbose_level)
 	
 	if (f_v) {
 		cout << "surface_domain::init_polynomial_domains" << endl;
-		}
+	}
 	Poly1 = NEW_OBJECT(homogeneous_polynomial_domain);
 	Poly2 = NEW_OBJECT(homogeneous_polynomial_domain);
 	Poly3 = NEW_OBJECT(homogeneous_polynomial_domain);
 
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains before Poly1->init" << endl;
+	}
 	Poly1->init(F,
 			3 /* nb_vars */, 1 /* degree */,
 			FALSE /* f_init_incidence_structure */,
 			verbose_level);
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains after Poly1->init" << endl;
+	}
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains before Poly2->init" << endl;
+	}
 	Poly2->init(F,
 			3 /* nb_vars */, 2 /* degree */,
 			FALSE /* f_init_incidence_structure */,
 			verbose_level);
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains after Poly2->init" << endl;
+	}
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains before Poly3->init" << endl;
+	}
 	Poly3->init(F,
 			3 /* nb_vars */, 3 /* degree */,
 			FALSE /* f_init_incidence_structure */,
 			verbose_level);
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains after Poly3->init" << endl;
+	}
 
 	Poly1_x123 = NEW_OBJECT(homogeneous_polynomial_domain);
 	Poly2_x123 = NEW_OBJECT(homogeneous_polynomial_domain);
 	Poly3_x123 = NEW_OBJECT(homogeneous_polynomial_domain);
 	Poly4_x123 = NEW_OBJECT(homogeneous_polynomial_domain);
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains before Poly1_x123->init" << endl;
+	}
 	Poly1_x123->init(F,
 			3 /* nb_vars */, 1 /* degree */,
 			FALSE /* f_init_incidence_structure */,
 			verbose_level);
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains after Poly1_x123->init" << endl;
+	}
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains before Poly2_x123->init" << endl;
+	}
 	Poly2_x123->init(F,
 			3 /* nb_vars */, 2 /* degree */,
 			FALSE /* f_init_incidence_structure */,
 			verbose_level);
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains after Poly2_x123->init" << endl;
+	}
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains before Poly3_x123->init" << endl;
+	}
 	Poly3_x123->init(F,
 			3 /* nb_vars */, 3 /* degree */,
 			FALSE /* f_init_incidence_structure */,
 			verbose_level);
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains after Poly3_x123->init" << endl;
+	}
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains before Poly4_x123->init" << endl;
+	}
 	Poly4_x123->init(F,
 			3 /* nb_vars */, 4 /* degree */,
 			FALSE /* f_init_incidence_structure */,
 			verbose_level);
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains after Poly4_x123->init" << endl;
+	}
 
 
 	label_variables_3(Poly1, 0 /* verbose_level */);
@@ -590,31 +632,55 @@ void surface_domain::init_polynomial_domains(int verbose_level)
 	Poly1_4 = NEW_OBJECT(homogeneous_polynomial_domain);
 	Poly2_4 = NEW_OBJECT(homogeneous_polynomial_domain);
 	Poly3_4 = NEW_OBJECT(homogeneous_polynomial_domain);
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains before Poly1_4->init" << endl;
+	}
 	Poly1_4->init(F,
 			4 /* nb_vars */, 1 /* degree */,
 			FALSE /* f_init_incidence_structure */,
 			verbose_level);
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains after Poly1_4->init" << endl;
+	}
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains before Poly2_4->init" << endl;
+	}
 	Poly2_4->init(F,
 			4 /* nb_vars */, 2 /* degree */,
 			FALSE /* f_init_incidence_structure */,
 			verbose_level);
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains after Poly2_4->init" << endl;
+	}
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains before Poly3_4->init" << endl;
+	}
 	Poly3_4->init(F,
 			4 /* nb_vars */, 3 /* degree */,
 			FALSE /* f_init_incidence_structure */,
 			verbose_level);
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains after Poly3_4->init" << endl;
+	}
 
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains before label_variables_4" << endl;
+	}
 	label_variables_4(Poly1_4, 0 /* verbose_level */);
 	label_variables_4(Poly2_4, 0 /* verbose_level */);
 	label_variables_4(Poly3_4, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains after label_variables_4" << endl;
+	}
 
 	nb_monomials = Poly3_4->nb_monomials;
 
 	if (f_v) {
 		cout << "nb_monomials = " << nb_monomials << endl;
-		}
+	}
 	if (f_v) {
 		cout << "surface_domain::init_polynomial_domains done" << endl;
-		}
+	}
 }
 
 void surface_domain::init_large_polynomial_domains(int verbose_level)
@@ -2146,12 +2212,12 @@ void surface_domain::make_Eckardt_points(int verbose_level)
 
 	if (f_v) {
 		cout << "surface_domain::make_Eckardt_points" << endl;
-		}
+	}
 	nb_Eckardt_points = 45;
 	Eckardt_points = NEW_OBJECTS(eckardt_point, nb_Eckardt_points);
 	for (i = 0; i < nb_Eckardt_points; i++) {
 		Eckardt_points[i].init_by_rank(i);
-		}
+	}
 	Eckard_point_label = NEW_pchar(nb_Eckardt_points);
 	Eckard_point_label_tex = NEW_pchar(nb_Eckardt_points);
 	for (i = 0; i < nb_Eckardt_points; i++) {
@@ -2161,10 +2227,10 @@ void surface_domain::make_Eckardt_points(int verbose_level)
 		strcpy(Eckard_point_label[i], str);
 		Eckard_point_label_tex[i] = NEW_char(l + 1);
 		strcpy(Eckard_point_label_tex[i], str);
-		}
+	}
 	if (f_v) {
 		cout << "surface_domain::make_Eckardt_points done" << endl;
-		}
+	}
 }
 
 

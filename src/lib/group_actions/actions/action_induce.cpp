@@ -3367,43 +3367,43 @@ void action::orbits_on_equations(
 
 	if (f_v) {
 		cout << "action::orbits_on_equations" << endl;
-		}
+	}
 
 	A_on_equations = NEW_OBJECT(action);
 
 	if (f_v) {
 		cout << "action::orbits_on_equations "
 				"creating the induced action on the equations:" << endl;
-		}
+	}
 	A_on_equations->induced_action_on_homogeneous_polynomials_given_by_equations(
 		this,
 		HPD,
 		The_equations, nb_equations,
 		FALSE /* f_induce_action */, NULL /* sims *old_G */,
-		0 /*verbose_level */);
+		verbose_level);
 	if (f_v) {
 		cout << "action::orbits_on_equations "
 				"The induced action on the equations has been created, "
 				"degree = " << A_on_equations->degree << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "action::orbits_on_equations "
 				"computing orbits on the equations:" << endl;
-		}
+	}
 	Orb = gens->orbits_on_points_schreier(A_on_equations,
-			0 /* verbose_level + 10 */);
+			verbose_level);
 
 	if (f_v) {
 		cout << "action::orbits_on_equations "
 				"We found " << Orb->nb_orbits
 				<< " orbits on the equations:" << endl;
 		Orb->print_and_list_orbits_tex(cout);
-		}
+	}
 
 	if (f_v) {
 		cout << "action::orbits_on_equations done" << endl;
-		}
+	}
 }
 
 

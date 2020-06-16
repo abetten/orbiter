@@ -53,7 +53,6 @@ interface_projective::interface_projective()
 
 	f_classification_prefix = FALSE;
 	//classification_prefix
-	//prefix = "";
 
 	f_save = FALSE;
 	//std::string save_prefix;
@@ -615,8 +614,8 @@ void interface_projective::do_canonical_form_PG(orbiter_session *Session,
 		char fname[1000];
 
 		if (f_classification_prefix == FALSE) {
-			cout << "please use option -prefix <prefix> to set the "
-					"prefix for the tex file" << endl;
+			cout << "please use option -classification_prefix <prefix> to set the "
+					"prefix for the output file" << endl;
 			exit(1);
 			}
 		snprintf(fname, 1000, "%s_classification.tex", classification_prefix.c_str());
