@@ -111,10 +111,8 @@ public:
         for (size_t tID=0; tID<nThreads; ++tID) {
             adj[tID].init(adjacency.size());
 		    threads[tID] = std::thread([=, &adj] {
-                #pragma unroll
                 for (size_t i = 0, k = 0; i < n; i++) {
                     if ((i % nThreads) == tID) {
-                        #pragma unroll
                         for (size_t j = i + 1; j < n; j++, k++) {
                             const int aij = bitvector_s_i(bitvector, k);
                             if (aij) {

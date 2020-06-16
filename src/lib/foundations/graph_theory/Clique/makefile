@@ -21,5 +21,8 @@ Graph.o: Graph.h Graph.cpp
 	$(CC) $(CFLAGS) $(CSTD) $(OPTFLAGS) $(INCLUDES) -c Graph.cpp -o Graph.o
 	
 
+main_k_clique: main_k_clique.cpp Graph.h KClique.h
+	$(CC) $(CFLAGS) $(CSTD) $(OPTFLAGS) $(INCLUDES) $< -o $@
+
 clean:
-	- rm -rf *.o main
+	- rm -rf *.o main main_k_clique

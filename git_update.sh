@@ -13,7 +13,7 @@ UNDERLINE='\033[4m'
 # End of terminal ansi color codes
 
 
-LINE="----------------------------------------------------------------------------------"
+LINE="--------------------------------------------------------------------------"
 
 # find all .a files and delete them before uploading the code to github
 echo $LINE

@@ -22,7 +22,7 @@ public:
         std::thread threads [nThreads];
         PARAMS<T> params [nThreads];
 
-        #pragma unroll
+
         for (size_t i=0; i<nThreads; ++i) {
             params[i].tid = i;
             params[i].live_pts = new T [G.nb_vertices] ();
@@ -36,18 +36,18 @@ public:
                                      &(params[0]), std::ref(G));
         }
 
-        #pragma unroll
+
         for (size_t i=0; i<nThreads; ++i) threads[i].join();
 
         // Find the total number of solutions
         size_t nb_sols = 0;
-        #pragma unroll
+
         for (size_t i=0; i<nThreads; ++i) {
             nb_sols += params[i].t_solutions.size();
         }
         soln.reserve(nb_sols);
 
-        #pragma unroll
+
         for (size_t i=0; i<nThreads; ++i) {
             // use std::move to avoid performing intermediate copy ops when
             // putting solutions into soln vector
@@ -98,8 +98,8 @@ private:
 
         if (depth == G.nb_colors/G.nb_colors_per_vertex) {
             param.nb_sol += 1;
-            param.t_solutions.emplace_back(std::vector<T>(G.nb_colors));
-            #pragma unroll
+            param.t_solutions.emplace_back(std::vector<T>());
+
             for (size_t i=0; i<depth; ++i)
                 param.t_solutions.at(param.t_solutions.size()-1).emplace_back(
                         G.get_label(param.current_cliques[i])
@@ -122,7 +122,7 @@ private:
             T pt = param.current_cliques[depth-1];
             end_adj = clump_by_adjacency(G, param, start, end, pt);
         } else {
-            #pragma unroll
+
             for (size_t i=0; i<G.nb_vertices; ++i) param.live_pts[i] = i;
             end_adj = G.nb_vertices;
         }
@@ -143,7 +143,7 @@ private:
 
         // find how many points are there with the lowest value at current depth
         if (depth == 0) {
-            #pragma unroll
+
             for (size_t i=start; i<end_color_class; ++i) {
             	if (param.tid == 0 && false) {
                     size_t ns = 0;
@@ -173,7 +173,7 @@ private:
                 }
             }
         } else {
-            #pragma unroll
+
             for (size_t i=start; i<end_color_class; ++i) {
             	satisfy_color(G, param, i, true);
                 param.current_cliques[depth] = param.live_pts[i];
@@ -196,13 +196,13 @@ private:
      */
     template <typename T, typename U>
 	__forceinline__
-	static inline void satisfy_color (Graph<T,U>& G, PARAMS<T>& param, size_t i, bool value) {
+	static void satisfy_color (Graph<T,U>& G, PARAMS<T>& param, size_t i, bool value) {
 		
         #ifdef COLLECT_RUNTIME_STATS
         chrono_ C;
         #endif
         
-        #pragma unroll
+
 		for (size_t j=0; j < G.nb_colors_per_vertex; ++j) {
 			param.color_satisfied[G.get_color(param.live_pts[i], j)] = value;
 		}
@@ -214,14 +214,14 @@ private:
 
     template <typename T, typename U>
     __forceinline__
-    static inline T clump_by_adjacency(Graph<T,U>& G, PARAMS<T>& param, T start, T end, T node) {
+    static T clump_by_adjacency(Graph<T,U>& G, PARAMS<T>& param, T start, T end, T node) {
         T* live_pts = param.live_pts;
 
         #ifdef COLLECT_RUNTIME_STATS
         chrono_ C;
         #endif
 
-        #pragma unroll
+
         for (T i = start; i<end; ++i) {
             if (G.is_adjacent(node, live_pts[i])) {
                 if (start != i) std::swap(live_pts[i], live_pts[start]);
@@ -238,7 +238,7 @@ private:
 
     template <typename T, typename U>
     __forceinline__
-    static inline void create_color_freq_of_live_points(Graph<T,U>& G, PARAMS<T>& param, T start, T end) {
+    static void create_color_freq_of_live_points(Graph<T,U>& G, PARAMS<T>& param, T start, T end) {
         // any point in the graph that is dead will have a negative value in the
         // live_point array
 
@@ -252,7 +252,7 @@ private:
         // reset color_frequency stats
         memset(color_frequency, 0, sizeof(T)*G.nb_colors);
 
-        #pragma unroll
+
         for (size_t i = start; i < end; ++i) {
         	for (size_t j=0; j < G.nb_colors_per_vertex; ++j) {
         		const U point_color = G.get_color(live_pts[i], j);
@@ -267,7 +267,7 @@ private:
 
     template <typename T, typename U>
     __forceinline__
-    static inline U get_color_with_lowest_frequency_(Graph<T,U>& G, PARAMS<T>& param, T start, T end) {
+    static U get_color_with_lowest_frequency_(Graph<T,U>& G, PARAMS<T>& param, T start, T end) {
 
         T* live_pts = param.live_pts;
         T* color_frequency = param.color_frequency;
@@ -282,7 +282,7 @@ private:
         // returns index of the lowest value in t he array
         T min_element = std::numeric_limits<T>::max();
         U return_value = 0;
-        #pragma unroll
+
         for (U i=0; i < G.nb_colors; ++i) {
             if (color_frequency[i] < min_element && !color_satisfied[i]) {
                 min_element = color_frequency[i];
@@ -300,7 +300,7 @@ private:
     #if 1
     template <typename T, typename U>
     __forceinline__
-    static inline T clump_color_class(Graph<T,U>& G, PARAMS<T>& param, T start, T end, U color) {
+    static T clump_color_class(Graph<T,U>& G, PARAMS<T>& param, T start, T end, U color) {
         
         T* live_pts = param.live_pts;
         bool* color_satisfied = param.color_satisfied;
@@ -309,11 +309,11 @@ private:
         chrono_ C;
         #endif
 
-        #pragma unroll
+
         for (size_t i=start; i<end; ++i) {
             const T pt = live_pts[i];
             bool pick_vertex = false;
-            #pragma unroll
+
             for (size_t j=0; j<G.nb_colors_per_vertex; ++j) {
                 const U pt_color = G.get_color(pt, j);
             	if (pt_color == color) {
@@ -338,12 +338,12 @@ private:
     #else
     template <typename T, typename U>
     __forceinline__
-    static inline T clump_color_class(Graph<T,U>& G, T* live_pts, T start, T end, U color, 
+    static T clump_color_class(Graph<T,U>& G, T* live_pts, T start, T end, U color,
                                                                         bool* color_satisfied) {
-        #pragma unroll
+
         for (size_t i=start; i<end; ++i) {
             const T pt = live_pts[i];
-            #pragma unroll
+
             for (size_t j=0; j<G.nb_colors_per_vertex; ++j) {
             	if (G.get_color(pt, j) == color) {
                     std::swap(live_pts[start], live_pts[i]);
