@@ -153,7 +153,13 @@ void homogeneous_polynomial_domain::init(finite_field *F,
 	type1 = NEW_int(degree + 1);
 	type2 = NEW_int(degree + 1);
 
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::init before make_monomials" << endl;
+	}
 	make_monomials(verbose_level);
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::init after make_monomials" << endl;
+	}
 	
 	m = MAXIMUM(nb_monomials, degree + 1);
 		// substitute_semilinear needs [nb_monomials]
@@ -207,10 +213,19 @@ void homogeneous_polynomial_domain::make_monomials(int verbose_level)
 	D->open(1, n);
 	D->fill_coefficient_matrix_with(1);
 	D->RHSi(0) = degree;
+	D->type[0] = t_EQ;
+	D->set_x_min_constant(0);
+	D->set_x_max_constant(degree);
 	D->f_has_sum = TRUE;
 	D->sum = degree;
 
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::make_monomials before D->solve_all_betten" << endl;
+	}
 	D->solve_all_betten(0 /* verbose_level */);
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::make_monomials after D->solve_all_betten" << endl;
+	}
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::make_monomials "

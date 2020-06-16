@@ -139,8 +139,6 @@ void arc_lifting::create_surface_and_group(surface_with_action *Surf_A,
 	long int *Arc6, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int q;
-	surface_domain *Surf;
 
 	if (f_v) {
 		cout << "arc_lifting::create_surface_and_group" << endl;
@@ -161,7 +159,7 @@ void arc_lifting::create_surface_and_group(surface_with_action *Surf_A,
 		cout << "arc_lifting::create_surface_and_group "
 				"before create_web_of_cubic_curves" << endl;
 	}
-	create_web_of_cubic_curves(verbose_level - 2);
+	create_web_of_cubic_curves(verbose_level);
 	if (f_v) {
 		cout << "arc_lifting::create_surface_and_group "
 				"after create_web_of_cubic_curves" << endl;
@@ -240,7 +238,7 @@ void arc_lifting::create_surface_and_group(surface_with_action *Surf_A,
 		stab_gens_trihedral_pair
 		/* strong_generators *gens_for_stabilizer_of_trihedral_pair */,
 		A_on_equations, Orb, 
-		verbose_level - 2);
+		verbose_level);
 	if (f_v) {
 		cout << "arc_lifting::create_surface_and_group after "
 				"create_action_on_equations_and_compute_orbits" << endl;
@@ -389,7 +387,13 @@ void arc_lifting::create_web_of_cubic_curves(int verbose_level)
 
 	Web = NEW_OBJECT(web_of_cubic_curves);
 
+	if (f_v) {
+		cout << "arc_lifting::create_web_of_cubic_curves before Web->init" << endl;
+	}
 	Web->init(Surf, arc, verbose_level);
+	if (f_v) {
+		cout << "arc_lifting::create_web_of_cubic_curves after Web->init" << endl;
+	}
 
 
 
@@ -833,7 +837,8 @@ void arc_lifting::create_action_on_equations_and_compute_orbits(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "arc_lifting::create_action_on_equations_and_compute_orbits" << endl;
+		cout << "arc_lifting::create_action_on_equations_and_compute_orbits "
+				"verbose_level = " << verbose_level << endl;
 	}
 	
 	if (f_v) {

@@ -479,6 +479,24 @@ void diophant::fill_coefficient_matrix_with(int a)
 	}
 }
 
+void diophant::set_x_min_constant(int a)
+{
+	int j;
+
+	for (j = 0; j < n; j++) {
+		x_min[j] = a;
+	}
+}
+
+void diophant::set_x_max_constant(int a)
+{
+	int j;
+
+	for (j = 0; j < n; j++) {
+		x_max[j] = a;
+	}
+}
+
 int &diophant::Aij(int i, int j)
 {
 	if (i >= m) {

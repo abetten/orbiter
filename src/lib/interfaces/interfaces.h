@@ -517,6 +517,8 @@ public:
 	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
 	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
 	int read_scene_objects(int argc, const char **argv, int i0, int verbose_level);
+	int scan1(int argc, const char **argv, int &i, int verbose_level);
+	int scan2(int argc, const char **argv, int &i, int verbose_level);
 	void worker(int verbose_level);
 };
 

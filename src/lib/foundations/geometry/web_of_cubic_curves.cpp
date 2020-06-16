@@ -89,6 +89,7 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 		cout << "web_of_cubic_curves::init" << endl;
 	}
 	web_of_cubic_curves::Surf = Surf;
+
 	lint_vec_copy(arc6, web_of_cubic_curves::arc6, 6);
 
 
@@ -314,7 +315,13 @@ void web_of_cubic_curves::find_Eckardt_points(int verbose_level)
 	}
 	int s;
 
+	if (f_v) {
+		cout << "web_of_cubic_curves::find_Eckardt_points before Surf->P2->compute_eckardt_point_info" << endl;
+	}
 	E = Surf->P2->compute_eckardt_point_info(Surf, arc6, verbose_level);
+	if (f_v) {
+		cout << "web_of_cubic_curves::find_Eckardt_points after Surf->P2->compute_eckardt_point_info" << endl;
+	}
 	if (f_v) {
 		cout << "web_of_cubic_curves::find_Eckardt_points We found " << E->nb_E
 				<< " Eckardt points" << endl;

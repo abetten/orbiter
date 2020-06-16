@@ -2426,7 +2426,7 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_p
 	if (f_v) {
 		cout << "before Surf->init" << endl;
 	}
-	Surf->init(F, verbose_level - 5);
+	Surf->init(F, verbose_level);
 	if (f_v) {
 		cout << "after Surf->init" << endl;
 	}
