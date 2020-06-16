@@ -1,5 +1,5 @@
 #include "Graph.h"
-#include "chrono.h"
+//#include "chrono.h"
 #include <thread>
 #include <vector>
 #include <algorithm>
@@ -145,19 +145,6 @@ private:
         if (depth == 0) {
 
             for (size_t i=start; i<end_color_class; ++i) {
-            	if (param.tid == 0 && false) {
-                    size_t ns = 0;
-                    for (size_t j=0; j<param.n_threads; ++j) ns += params[j].nb_sol;
-					printf("%ld\tof\t%ld\t", i, end_color_class);
-					printf("Progress: %.2f%", i/double(end_color_class-start)*100);
-                    
-                    if (i == 0)
-                        printf("\t\tn_sol: %ld                    \r", 0);
-                    else
-                        printf("\t\tn_sol: %ld                    \r", ns);
-					
-                    fflush(stdout);
-            	}
                 if ((i % param.n_threads) == param.tid) {
                     satisfy_color(G, param, i, true);
                     param.current_cliques[depth] = param.live_pts[i];
