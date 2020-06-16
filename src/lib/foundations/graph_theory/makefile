@@ -1,13 +1,8 @@
 DISCRETA_CPP = g++
 DISCRETA_CC = gcc
-<<<<<<< HEAD
-CPPFLAGS = -Wall -O3 -march=native -funroll-loops -I.. -I./Clique -I../BitSet -std=c++11 
-
-=======
 CPPFLAGS = -Wall -O3 -march=native -funroll-loops -I.. \
-			-I./Clique -I../BitSet -I../../ -I../../../lib/group_actions/groups/ \
-			-std=c++11 -I/usr/local/include/ginac
->>>>>>> 540332cb320271619a8ab19af9693ded21365b94
+			-I./Clique -I../BitSet -I../../ \
+			-std=c++11 
 
 # -frename-registers
 LIB = 
