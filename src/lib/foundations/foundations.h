@@ -96,9 +96,9 @@
 #ifndef FOUNDATIONS_H_
 #define FOUNDATIONS_H_
 
-/*----------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------*/
 /// Define some ANSI colour codes
-/*----------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------*/
 #if __cplusplus >= 201103L
 #define COLOR_UNICODE "\u001b"
 #else
@@ -123,14 +123,14 @@
 #define BRIGHT_MAGENTA COLOR_UNICODE "[35;1m"
 #define BRIGHT_CYAN COLOR_UNICODE "[36;1m"
 #define BRIGHT_WHITE COLOR_UNICODE "[37;1m"
-/*----------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------*/
 
 
-/*----------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------*/
 /// The following code block identifies the current operating system the code is
 /// being executed on and turns on specific macros in order to use system calls
 /// defined by that operating system.
-/*----------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------*/
 #if defined(unix) || defined(__unix) || defined(__unix__)
 #define SYSTEMUNIX
 #endif
@@ -148,7 +148,7 @@
 #if defined(__linux__) || defined(linux) || defined(__linux)
 #define SYSTEM_LINUX
 #endif
-/*----------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------*/
 
 #define SYSTEMUNIX
 
