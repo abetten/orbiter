@@ -72,7 +72,7 @@ void test_bitset_not_operator() {
     NEW_LINE;
 
     cout << "Testing bitset NOT logical operator" << endl;
-    cout << "---------------------------------------------------------------------------------" << endl;
+    cout << "-------------------------------------------------------------------------" << endl;
 
     test_bitset_not_operator_helper(val_int8_min);
     test_bitset_not_operator_helper(val_int8_max);
@@ -100,7 +100,7 @@ void test_bitset_not_operator() {
     test_bitset_not_operator_helper(val_uint64_min);
     test_bitset_not_operator_helper(val_uint64_max);
 
-    cout << "---------------------------------------------------------------------------------" << endl;
+    cout << "-------------------------------------------------------------------------" << endl;
 
     NEW_LINE;
 }

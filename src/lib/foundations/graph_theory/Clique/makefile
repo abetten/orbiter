@@ -2,7 +2,7 @@ CC=g++
 CFLAGS=-Wall -pthread
 CSTD=-std=c++14
 OPTFLAGS=-O3 -march=native -mtune=native -funroll-loops
-INCLUDES=-I../../BitSet
+INCLUDES=-I../../BitSet -I../../../ -I../../../group_actions/groups/
 
 
 all: Graph.o RainbowClique.o main.o
@@ -21,5 +21,8 @@ Graph.o: Graph.h Graph.cpp
 	$(CC) $(CFLAGS) $(CSTD) $(OPTFLAGS) $(INCLUDES) -c Graph.cpp -o Graph.o
 	
 
+main_k_clique: main_k_clique.cpp Graph.h KClique.h
+	$(CC) $(CFLAGS) $(CSTD) $(OPTFLAGS) $(INCLUDES) $< -o $@
+
 clean:
-	- rm -rf *.o main
+	- rm -rf *.o main main_k_clique

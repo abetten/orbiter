@@ -249,29 +249,32 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG, const char *fname_sol, 
 	Graph<> G (CG->nb_points, CG->nb_colors, CG->nb_colors_per_vertex);
 	cout << __FILE__ << ":" << __LINE__ << endl;
 
-    
 
-	// const size_t nThreads = std::thread::hardware_concurrency();
-	// std::thread threads [nThreads];
-	// #pragma unroll
-	// for (size_t tID=0; tID<nThreads; ++tID) {
-	// 	threads[tID] = std::thread([tID, nThreads, &CG, &G]{
-	// 		#pragma unroll
-	// 		for (size_t i = 0, k = 0; i < CG->nb_points; i++) {
-	// 			if ((i % nThreads) != tID) continue;
-	// 			#pragma unroll
-	// 			for (size_t j = i + 1; j < CG->nb_points; j++, k++) {
-	// 				const int aij = bitvector_s_i(CG->bitvector_adjacency, k);
-	// 				if (aij) {
-	// 					G.set_edge(i, j);
-	// 					G.set_edge(j, i);
-	// 				}
-	// 			}
-	// 		}
-	// 	});
-	// }
-	// #pragma unroll
-	// for (size_t i=0; i<nThreads; ++i) threads[i].join();
+
+//	 const size_t nThreads = std::thread::hardware_concurrency();
+//	 std::thread threads [nThreads];
+//	 #pragma unroll
+//	 for (size_t tID=0; tID<nThreads; ++tID) {
+//	 	threads[tID] = std::thread([tID, nThreads, &CG, &G]{
+//	 		#pragma unroll
+//	 		for (size_t i = 0, k = 0; i < CG->nb_points; i++) {
+//	 			if ((i % nThreads) != tID) {
+//					k += CG->nb_points - i - 1;
+//					continue;
+//				}
+//	 			#pragma unroll
+//	 			for (size_t j = i + 1; j < CG->nb_points; j++, k++) {
+//	 				const int aij = bitvector_s_i(CG->bitvector_adjacency, k);
+//	 				if (aij) {
+//	 					G.set_edge(i, j);
+//	 					G.set_edge(j, i);
+//	 				}
+//	 			}
+//	 		}
+//	 	});
+//	 }
+//	 #pragma unroll
+//	 for (size_t i=0; i<nThreads; ++i) threads[i].join();
 
 	for (size_t i = 0, k = 0; i < CG->nb_points; i++) {
 		#pragma unroll
@@ -291,18 +294,18 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG, const char *fname_sol, 
 	// }
 	// cout << endl;
 
-	// memcpy(G.adjacency.bit_array, CG->bitvector_adjacency, CG->L);	
+	// memcpy(G.adjacency.bit_array, CG->bitvector_adjacency, CG->L);
 
 	cout << __FILE__ << ":" << __LINE__ << endl;
 
 //	G.print_adj_matrix();
-	for (size_t i = 0; i < CG->nb_points; i++) {
-		G.set_vertex_label(CG->points[i], i);
-		for (size_t j = 0; j < CG->nb_colors_per_vertex; j++) {
-			G.set_vertex_color(CG->point_color[i * CG->nb_colors_per_vertex + j], i, j);
-		}
-	}
-	cout << __FILE__ << ":" << __LINE__ << endl;
+//	for (size_t i = 0; i < CG->nb_points; i++) {
+//		G.set_vertex_label(CG->points[i], i);
+//		for (size_t j = 0; j < CG->nb_colors_per_vertex; j++) {
+//			G.set_vertex_color(CG->point_color[i * CG->nb_colors_per_vertex + j], i, j);
+//		}
+//	}
+//	cout << __FILE__ << ":" << __LINE__ << endl;
 
 	// Create the solution storage. The base type of the solution
 	// storage must be the same as data type of the vertex label
