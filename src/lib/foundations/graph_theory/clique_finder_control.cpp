@@ -365,6 +365,10 @@ void clique_finder_control::do_Sajeeb_black_and_white(colored_graph *CG,
 	cout << __FILE__ << ":" << __LINE__ << endl;
 
 
+	for (int i = 0, k = 0; i < CG->nb_points; i++) {
+		G.vertex_label[i] = CG->points[i];
+	}
+
 
 //	 const size_t nThreads = std::thread::hardware_concurrency();
 //	 std::thread threads [nThreads];
