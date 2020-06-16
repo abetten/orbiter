@@ -145,6 +145,8 @@ public:
 	const char *plus_minus_string(int epsilon);
 	const char *plus_minus_letter(int epsilon);
 	void make_Hamming_graph_and_write_file(int n, int q, int f_projective, int verbose_level);
+	void NumberTheoreticTransform(int n, int q, int verbose_level);
+
 };
 
 // #############################################################################
@@ -166,10 +168,12 @@ private:
 	int *frobenius_table; // [q], x \mapsto x^p
 	int *absolute_trace_table; // [q]
 	int *log_alpha_table; // [q]
+	// log_alpha_table[i] = the integer k s.t. alpha^k = i (if i > 0)
+	// log_alpha_table[0] = -1
 	int *alpha_power_table; // [q]
 	int *v1, *v2, *v3; // [e], vectors of length e.
 	char *symbol_for_print;
-	int f_has_quadratic_subfield;
+	int f_has_quadratic_subfield; // TRUE if e is even.
 	int *f_belongs_to_quadratic_subfield; // [q]
 
 	int my_nb_calls_to_elliptic_curve_addition;

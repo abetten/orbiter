@@ -772,7 +772,7 @@ void algebra_global::make_Hamming_graph_and_write_file(int n, int q, int f_proje
 	finite_field *F = NULL;
 
 	if (f_v) {
-		cout << "algebra_global_with_action::make_Hamming_graph_and_write_file" << endl;
+		cout << "algebra_global::make_Hamming_graph_and_write_file" << endl;
 	}
 
 	v = NEW_int(n);
@@ -849,10 +849,160 @@ void algebra_global::make_Hamming_graph_and_write_file(int n, int q, int f_proje
 	}
 
 	if (f_v) {
-		cout << "algebra_global_with_action::make_Hamming_graph_and_write_file" << endl;
+		cout << "algebra_global::make_Hamming_graph_and_write_file" << endl;
 	}
 
 }
+
+void algebra_global::NumberTheoreticTransform(int n, int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::NumberTheoreticTransform" << endl;
+	}
+
+	int alpha, omega, omega_power;
+	int gamma, minus_gamma;
+	int idx, i, j, h;
+	int **M;
+	int **M_log;
+	int *N;
+	os_interface Os;
+	finite_field *F = NULL;
+
+	F = NEW_OBJECT(finite_field);
+	F->init(q);
+
+
+	alpha = F->primitive_root();
+	if (f_v) {
+		cout << "alpha = " << alpha << endl;
+	}
+	M = NEW_pint(n + 1);
+	M_log = NEW_pint(n + 1);
+	N = NEW_int(n + 1);
+
+	for (h = 0; h <= n; h++) {
+		N[h] = 1 << h;
+	}
+
+	idx = (q - 1) / N[n];
+	omega = F->power(alpha, idx);
+	if (f_v) {
+		cout << "omega = " << omega << endl;
+	}
+
+	omega_power = omega;
+	for (h = n; h >= 0; h--) {
+		M[h] = NEW_int(N[h] * N[h]);
+		for (i = 0; i < N[h]; i++) {
+			for (j = 0; j < N[h]; j++) {
+				M[h][i * N[h] + j] = F->power(omega_power, (i * j) % N[n]);
+			}
+		}
+		omega_power = F->mult(omega_power, omega_power);
+	}
+	for (h = n; h >= 0; h--) {
+		cout << "M_" << N[h] << ":" << endl;
+		int_matrix_print(M[h], N[h], N[h]);
+	}
+
+	for (h = n; h >= 0; h--) {
+		M_log[h] = NEW_int(N[h] * N[h]);
+		for (i = 0; i < N[h]; i++) {
+			for (j = 0; j < N[h]; j++) {
+				M_log[h][i * N[h] + j] = F->log_alpha(M[h][i * N[h] + j]) + 1;
+			}
+		}
+		cout << "M2_" << N[h] << ":" << endl;
+		int_matrix_print(M_log[h], N[h], N[h]);
+	}
+
+	int *A, *B, *C;
+	int *A1, *A2;
+	int *B1, *B2;
+
+	A = NEW_int(N[n]);
+	B = NEW_int(N[n]);
+	C = NEW_int(N[n]);
+	A1 = NEW_int(N[n - 1]);
+	A2 = NEW_int(N[n - 1]);
+	B1 = NEW_int(N[n - 1]);
+	B2 = NEW_int(N[n - 1]);
+
+	for (i = 0; i < N[n]; i++) {
+		A[i] = Os.random_integer(q);
+	}
+	cout << "A:" << endl;
+	int_matrix_print(A, 1, N[n]);
+	cout << endl;
+
+
+	int nb_m10, nb_m11, nb_a10, nb_a11;
+	int nb_m20, nb_m21, nb_a20, nb_a21;
+	int nb_m1, nb_a1;
+	int nb_m2, nb_a2;
+
+	nb_m10 = F->nb_times_mult_called();
+	nb_a10 = F->nb_times_add_called();
+	F->mult_vector_from_the_right(M[n], A, B, N[n], N[n]);
+	nb_m11 = F->nb_times_mult_called();
+	nb_a11 = F->nb_times_add_called();
+	nb_m1 = nb_m11 - nb_m10;
+	nb_a1 = nb_a11 - nb_a10;
+
+	cout << "nb_m1 = " << nb_m1 << " nb_a1 = " << nb_a1 << endl;
+
+
+	cout << "B:" << endl;
+	int_matrix_print(B, 1, N[n]);
+	cout << endl;
+
+	omega_power = omega; //F->power(omega, 2);
+	gamma = 1;
+	minus_gamma = F->negate(gamma);
+
+	for (i = 0; i < N[n - 1]; i++) {
+		A1[i] = A[2 * i + 0];
+		A2[i] = A[2 * i + 1];
+	}
+
+
+	nb_m20 = F->nb_times_mult_called();
+	nb_a20 = F->nb_times_add_called();
+
+
+	F->mult_vector_from_the_right(M[n - 1], A1, B1, N[n - 1], N[n - 1]);
+	F->mult_vector_from_the_right(M[n - 1], A2, B2, N[n - 1], N[n - 1]);
+
+	for (i = 0; i < N[n - 1]; i++) {
+		C[i] = F->add(B1[i], F->mult(gamma, B2[i]));
+		C[N[n - 1] + i] = F->add(B1[i], F->mult(minus_gamma, B2[i]));
+		gamma = F->mult(gamma, omega_power);
+		minus_gamma = F->negate(gamma);
+	}
+
+	nb_m21 = F->nb_times_mult_called();
+	nb_a21 = F->nb_times_add_called();
+	nb_m2 = nb_m21 - nb_m20;
+	nb_a2 = nb_a21 - nb_a20;
+
+	cout << "nb_m2 = " << nb_m2 << " nb_a2 = " << nb_a2 << endl;
+
+
+	cout << "C:" << endl;
+	int_matrix_print(C, 1, N[n]);
+	cout << endl;
+
+	if (f_v) {
+		cout << "algebra_global::NumberTheoreticTransform done" << endl;
+	}
+
+
+}
+
+
 
 }}
 

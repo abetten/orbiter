@@ -79,16 +79,20 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	}
 
 
-	if (Descr->f_classes) {
-		classes(verbose_level);
-	}
-
 	if (Descr->f_multiply) {
 		multiply(verbose_level);
 	}
 
 	if (Descr->f_inverse) {
 		inverse(verbose_level);
+	}
+
+	if (Descr->f_classes) {
+		classes(verbose_level);
+	}
+
+	if (Descr->f_group_table) {
+		create_group_table(verbose_level);
 	}
 
 	if (Descr->f_normalizer) {
@@ -361,6 +365,56 @@ void group_theoretic_activity::inverse(int verbose_level)
 	}
 }
 
+void group_theoretic_activity::create_group_table(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::create_group_table" << endl;
+	}
+	sims *H;
+	int goi;
+
+
+	H = LG->Strong_gens->create_sims(verbose_level);
+
+	goi = H->group_order_lint();
+
+	if (f_v) {
+			cout << "group order H = " << goi << endl;
+	}
+
+
+	char fname[1000];
+	int *Table;
+	long int n;
+	file_io Fio;
+
+	H->create_group_table(Table, n, verbose_level);
+
+	if (n != goi) {
+		cout << "group_theoretic_activity::create_group_table n != goi" << endl;
+		exit(1);
+	}
+
+	snprintf(fname, 1000, "%s_group_table.csv", LG->label.c_str());
+
+	cout << "The group table is:" << endl;
+	int_matrix_print(Table, n, n, 2);
+
+	Fio.int_matrix_write_csv(fname, Table, n, n);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	FREE_int(Table);
+	FREE_OBJECT(H);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::create_group_table done" << endl;
+	}
+}
+
+
+
 void group_theoretic_activity::normalizer(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -401,6 +455,7 @@ void group_theoretic_activity::normalizer(int verbose_level)
 		gens_N->print_generators_as_permutations();
 	}
 
+#if 0
 	sims *N;
 	int N_goi;
 
@@ -438,6 +493,7 @@ void group_theoretic_activity::normalizer(int verbose_level)
 		}
 		FREE_int(Table);
 	}
+#endif
 	if (f_v) {
 		cout << "group_theoretic_activity::normalizer done" << endl;
 	}
@@ -1467,7 +1523,7 @@ void group_theoretic_activity::orbits_on_subspaces(int verbose_level)
 			verbose_level - 1);
 
 
-
+#if 0
 	if (Descr->f_print_generators) {
 		int f_print_as_permutation = FALSE;
 		int f_offset = TRUE;
@@ -1484,6 +1540,7 @@ void group_theoretic_activity::orbits_on_subspaces(int verbose_level)
 			f_do_it_anyway_even_for_big_degree,
 			f_print_cycles_of_length_one);
 	}
+#endif
 
 	orbits_on_subspaces_Poset = NEW_OBJECT(poset);
 	orbits_on_subspaces_Poset->init_subspace_lattice(LG->A_linear,
@@ -2492,7 +2549,6 @@ void group_theoretic_activity::do_create_surface(
 
 	int q;
 	int i;
-	//int f_semilinear;
 	finite_field *F;
 	surface_domain *Surf;
 	surface_with_action *Surf_A;
@@ -2503,18 +2559,16 @@ void group_theoretic_activity::do_create_surface(
 	q = Surface_Descr->get_q();
 	cout << "q=" << q << endl;
 
-#if 0
-	if (NT.is_prime(q)) {
-		f_semilinear = FALSE;
-		}
-	else {
-		f_semilinear = TRUE;
-		}
-#endif
+
+	F = LG->F;
+	if (F->q != q) {
+		cout << "F->q != q" << endl;
+		exit(1);
+	}
 
 
-	F = NEW_OBJECT(finite_field);
-	F->init(q, 0);
+	//F = NEW_OBJECT(finite_field);
+	//F->init(q, 0);
 
 
 	if (f_v) {

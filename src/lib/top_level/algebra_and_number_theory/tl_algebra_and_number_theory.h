@@ -235,6 +235,7 @@ public:
 	int f_draw_poset;
 	int f_draw_full_poset;
 	int f_classes;
+	int f_group_table;
 	int f_normalizer;
 	int f_centralizer_of_element;
 	const char *element_description_text;
@@ -266,11 +267,11 @@ public:
 	const char *inverse_a;
 	int f_order_of_products;
 	const char *order_of_products_elements;
-	int f_group_table;
-	int f_embedded;
-	int f_sideways;
-	double x_stretch;
-	int f_print_generators;
+	//int f_group_table;
+	//int f_embedded;
+	//int f_sideways;
+	//double x_stretch;
+	//int f_print_generators;
 
 	// classification of optimal linear codes:
 	int f_linear_codes;
@@ -386,6 +387,7 @@ public:
 	void classes(int verbose_level);
 	void multiply(int verbose_level);
 	void inverse(int verbose_level);
+	void create_group_table(int verbose_level);
 	void normalizer(int verbose_level);
 	void centralizer(
 			const char *element_label,

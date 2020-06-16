@@ -6,6 +6,7 @@ ORBITER/nbproject/
 *.dSYM
 orbiter.tar.gz
 .DS_Store
+<<<<<<< HEAD
 .settings/*
 .cproject
 .settings/language.settings.xml
@@ -20,3 +21,6 @@ cmake-build-debug/
 
 .cproject
 .settings/language.settings.xml
+=======
+.settings
+>>>>>>> RoySRC-master

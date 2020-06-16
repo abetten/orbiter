@@ -107,8 +107,8 @@ void create_graph::init(
 			Adj[j * N + i] = 1;
 		}
 		FREE_int(Idx);
-		sprintf(label, "graph_v%d_e%d", description->n, sz);
-		sprintf(label_tex, "Graph\\_%d\\_%d", description->n, sz);
+		sprintf(label, "graph_v%d_e%d", description->n, sz2);
+		sprintf(label_tex, "Graph\\_%d\\_%d", description->n, sz2);
 		}
 	else if (description->f_Johnson) {
 		if (f_v) {

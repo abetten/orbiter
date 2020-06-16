@@ -115,6 +115,7 @@ class interface_coding_theory {
 	int BCH_t;
 	//int BCH_b;
 	int f_Hamming_graph;
+	int f_NTT;
 	int f_draw_matrix;
 	const char *fname;
 	int box_width;
