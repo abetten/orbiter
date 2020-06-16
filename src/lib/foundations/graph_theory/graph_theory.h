@@ -219,6 +219,7 @@ public:
 	void all_cliques_weighted(colored_graph *CG,
 		const char *fname_sol,
 		int verbose_level);
+
 };
 
 

@@ -1,8 +1,7 @@
-#include "RainbowClique.h"
+#include "KClique.h"
 
 using std::cout;
 using std::endl;
-
 
 int main () {
 
@@ -42,22 +41,13 @@ int main () {
 	G.vertex_label[4] = 4;
 
 
-	// Set the color of each vertex. note that the coloring has to
-	// be numerical in order to use the rainbow clique algorithm
-	G.vertex_color[0] = 0;
-	G.vertex_color[1] = 2;
-	G.vertex_color[2] = 2;
-	G.vertex_color[3] = 1;
-	G.vertex_color[4] = 1;
-
-
 	// Create the solution storage. The base type of the solution
 	// storage must be the same as data type of the vertex label
 	// in the graph
 	std::vector<std::vector<unsigned int>> solutions;
 
-	// Call the Rainbow Clique finding algorithm
-	RainbowClique::find_cliques(G, solutions, 0);
+	// Call the K-Clique finding algorithm where k is 3
+	KClique::find_cliques(G, solutions, 3);
 
 	// Print the solutions
 	printf("Found %ld solution(s).\n", solutions.size());

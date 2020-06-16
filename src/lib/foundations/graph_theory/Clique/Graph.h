@@ -7,7 +7,13 @@
 
 
 #include "bitset.h"
+#include "orbiter.h"
 #include <fstream>
+#include <thread>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+#include <limits>
 
 #ifndef ORBITER_SRC_LIB_FOUNDATIONS_GRAPH_THEORY_CLIQUE_GRAPH_H_
 #define ORBITER_SRC_LIB_FOUNDATIONS_GRAPH_THEORY_CLIQUE_GRAPH_H_
@@ -92,6 +98,39 @@ public:
         return adjacency[i*nb_vertices+j];
     }
 
+    /**
+     * The following function sets the edges in the graph from the bitvector
+     * adjacency. 'vl' is the verbose level.
+     */
+    __forceinline__ void set_edge_from_bitvector_adjacency(uchar* bitvector, int vl) {
+        if (vl - 2) printf("%s: %d: set_edge_from_bitvector_adjacency\n", __FILE__, __LINE__);
+        const size_t nThreads = std::thread::hardware_concurrency();
+        const size_t n = this->nb_vertices;
+	    std::thread threads [nThreads];
+        bitset adj[nThreads];
+        for (size_t tID=0; tID<nThreads; ++tID) {
+            adj[tID].init(adjacency.size());
+		    threads[tID] = std::thread([=, &adj] {
+                for (size_t i = 0, k = 0; i < n; i++) {
+                    if ((i % nThreads) == tID) {
+                        for (size_t j = i + 1; j < n; j++, k++) {
+                            const int aij = bitvector_s_i(bitvector, k);
+                            if (aij) {
+                                adj[tID].set(i*n+j);
+                                adj[tID].set(j*n+i);
+                            }
+                        }
+                    } else {
+                        k += n - (i+1);
+                    }
+                }
+            });
+        }
+        for (size_t i=0; i<nThreads; ++i) threads[i].join();
+        for (size_t i=0; i<nThreads; ++i) adjacency |= adj[i];
+        if (vl - 2) printf("%s: %d: set_edge_from_bitvector_adjacency Done.\n", __FILE__, __LINE__);
+    }
+
     void print_adj_matrix () const {
         for (size_t i=0; i<nb_vertices; ++i) {
             for (size_t j=0; j<nb_vertices; ++j) {
@@ -144,8 +183,6 @@ public:
     bitset adjacency;
     T* vertex_label = NULL;
     U* vertex_color = NULL;
-
-
 };
 
 #endif /* ORBITER_SRC_LIB_FOUNDATIONS_GRAPH_THEORY_CLIQUE_GRAPH_H_ */
