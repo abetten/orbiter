@@ -31,6 +31,7 @@ interface_coding_theory::interface_coding_theory()
 	BCH_t = 0;
 	//BCH_b = 0;
 	f_Hamming_graph = FALSE;
+	f_NTT = FALSE;
 	f_draw_matrix = FALSE;
 	fname = NULL;
 	box_width = 0;
@@ -51,6 +52,9 @@ void interface_coding_theory::print_help(int argc,
 	}
 	else if (strcmp(argv[i], "-Hamming_graph") == 0) {
 		cout << "-Hamming_graph <int : n> <int : q>" << endl;
+	}
+	else if (strcmp(argv[i], "-NTT") == 0) {
+		cout << "-NTT <int : n> <int : q>" << endl;
 	}
 	else if (strcmp(argv[i], "-draw_matrix") == 0) {
 		cout << "-draw_matrix <string : fname> <int : box_width>" << endl;
@@ -73,6 +77,9 @@ int interface_coding_theory::recognize_keyword(int argc,
 		return true;
 	}
 	else if (strcmp(argv[i], "-Hamming_graph") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-NTT") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-draw_matrix") == 0) {
@@ -122,6 +129,12 @@ void interface_coding_theory::read_arguments(int argc,
 			q = atoi(argv[++i]);
 			cout << "-Hamming_graph " << n << " " << q << endl;
 		}
+		else if (strcmp(argv[i], "-NTT") == 0) {
+			f_NTT = TRUE;
+			n = atoi(argv[++i]);
+			q = atoi(argv[++i]);
+			cout << "-NTT " << n << " " << q << endl;
+		}
 		else if (strcmp(argv[i], "-draw_matrix") == 0) {
 			f_draw_matrix = TRUE;
 			fname = argv[++i];
@@ -150,6 +163,11 @@ void interface_coding_theory::worker(int verbose_level)
 		Algebra.make_Hamming_graph_and_write_file(n, q,
 				FALSE /* f_projective*/, verbose_level);
 	}
+	else if (f_NTT) {
+		algebra_global Algebra;
+
+		Algebra.NumberTheoreticTransform(n, q, verbose_level);
+	}
 	else if (f_draw_matrix) {
 		file_io Fio;
 		int *M;
@@ -164,6 +182,7 @@ void interface_coding_theory::worker(int verbose_level)
 				verbose_level);
 	}
 }
+
 
 
 

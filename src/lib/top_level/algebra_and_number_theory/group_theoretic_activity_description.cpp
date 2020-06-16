@@ -29,6 +29,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_draw_poset = FALSE;
 	f_draw_full_poset = FALSE;
 	f_classes = FALSE;
+	f_group_table = FALSE;
 	f_normalizer = FALSE;
 	f_centralizer_of_element = FALSE;
 	element_description_text = NULL;
@@ -63,11 +64,10 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	inverse_a = NULL;
 	f_order_of_products = FALSE;
 	order_of_products_elements = NULL;
-	f_group_table = FALSE;
-	f_embedded = FALSE;
-	f_sideways = FALSE;
-	x_stretch = 1.;
-	f_print_generators = FALSE;
+	//f_embedded = FALSE;
+	//f_sideways = FALSE;
+	//x_stretch = 1.;
+	//f_print_generators = FALSE;
 	f_classify_arcs = FALSE;
 	f_classify_nonconical_arcs = FALSE;
 	classify_arcs_target_size = 0;
@@ -234,6 +234,10 @@ int group_theoretic_activity_description::read_arguments(
 			f_classes = TRUE;
 			cout << "-classes" << endl;
 		}
+		else if (strcmp(argv[i], "-group_table") == 0) {
+			f_group_table = TRUE;
+			cout << "-group_table" << endl;
+		}
 		else if (strcmp(argv[i], "-normalizer") == 0) {
 			f_normalizer = TRUE;
 			cout << "-normalizer" << endl;
@@ -320,6 +324,7 @@ int group_theoretic_activity_description::read_arguments(
 			inverse_a = argv[++i];
 			cout << "-inverse " << inverse_a << endl;
 		}
+#if 0
 		else if (strcmp(argv[i], "-group_table") == 0) {
 			f_group_table = TRUE;
 			cout << "-group_table" << endl;
@@ -340,6 +345,7 @@ int group_theoretic_activity_description::read_arguments(
 			f_print_generators = TRUE;
 			cout << "-print_generators" << endl;
 		}
+#endif
 
 		// classification tasks:
 
