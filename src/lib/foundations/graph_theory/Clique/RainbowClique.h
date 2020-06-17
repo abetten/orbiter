@@ -1,3 +1,11 @@
+/*
+ * RainbowClique.h
+ *
+ *  Created on: Aug 25, 2019
+ *      Author: sajeeb
+ */
+
+
 #include "Graph.h"
 //#include "chrono.h"
 #include <thread>
