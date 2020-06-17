@@ -183,15 +183,15 @@ void animate::animate_one_round(
 		if (Opt->pan_round[i] == round) {
 			f_has_pan = TRUE;
 			pan_f_reverse = Opt->pan_f_reverse[i];
-			pan_from[0] = Opt->pan_from_x[i];
-			pan_from[1] = Opt->pan_from_y[i];
-			pan_from[2] = Opt->pan_from_z[i];
-			pan_to[0] = Opt->pan_to_x[i];
-			pan_to[1] = Opt->pan_to_y[i];
-			pan_to[2] = Opt->pan_to_z[i];
-			pan_center[0] = Opt->pan_center_x[i];
-			pan_center[1] = Opt->pan_center_y[i];
-			pan_center[2] = Opt->pan_center_z[i];
+			pan_from[0] = Opt->pan_from[i * 3 + 0];
+			pan_from[1] = Opt->pan_from[i * 3 + 1];
+			pan_from[2] = Opt->pan_from[i * 3 + 2];
+			pan_to[0] = Opt->pan_to[i * 3 + 0];
+			pan_to[1] = Opt->pan_to[i * 3 + 1];
+			pan_to[2] = Opt->pan_to[i * 3 + 2];
+			pan_center[0] = Opt->pan_center[i * 3 + 0];
+			pan_center[1] = Opt->pan_center[i * 3 + 1];
+			pan_center[2] = Opt->pan_center[i * 3 + 2];
 
 			cout << "pan_from: ";
 			N.vec_print(pan_from, 3);

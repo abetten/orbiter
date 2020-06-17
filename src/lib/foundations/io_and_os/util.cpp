@@ -2850,6 +2850,26 @@ int util_compare_func(void *a, void *b, void *data)
 	return 0;
 }
 
+void text_to_three_double(const char *text, double *d)
+{
+	const char *rotation_axis_custom_text;
+
+	rotation_axis_custom_text = text;
+	double *data;
+	int data_sz;
+	numerics Num;
+
+	Num.vec_scan(rotation_axis_custom_text, data, data_sz);
+	if (data_sz != 3) {
+		cout << "text_to_three_double; is " << data_sz << endl;
+		exit(1);
+	}
+	d[0] = data[0];
+	d[1] = data[1];
+	d[2] = data[2];
+	delete [] data;
+
+}
 
 
 

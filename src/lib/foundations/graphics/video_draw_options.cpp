@@ -76,15 +76,9 @@ video_draw_options::video_draw_options()
 	nb_pan = 0;
 	//int pan_round[1000];
 	//int pan_f_reverse[1000];
-	//double pan_from_x[1000];
-	//double pan_from_y[1000];
-	//double pan_from_z[1000];
-	//double pan_to_x[1000];
-	//double pan_to_y[1000];
-	//double pan_to_z[1000];
-	//double pan_center_x[1000];
-	//double pan_center_y[1000];
-	//double pan_center_z[1000];
+	//double pan_from[1000 * 3];
+	//double pan_to[1000 * 3];
+	//double pan_center[1000 * 3];
 
 	nb_no_background = 0;
 	//int no_background_round[1000];
@@ -184,22 +178,7 @@ int video_draw_options::read_arguments(
 			f_rotate = TRUE;
 			rotation_axis_type = 3;
 
-			const char *rotation_axis_custom_text;
-
-			rotation_axis_custom_text = argv[++i];
-			double *data;
-			int data_sz;
-			numerics Num;
-
-			Num.vec_scan(rotation_axis_custom_text, data, data_sz);
-			if (data_sz != 3) {
-				cout << "For -rotate_about_custom_axis, the number of coefficients must be 3; is " << data_sz << endl;
-				exit(1);
-			}
-			rotation_axis_custom[0] = data[0];
-			rotation_axis_custom[1] = data[1];
-			rotation_axis_custom[2] = data[2];
-			delete [] data;
+			text_to_three_double(argv[++i], rotation_axis_custom);
 			cout << "video_draw_options::read_arguments -rotate_about_custom_axis " << endl;
 		}
 		else if (strcmp(argv[i], "-boundary_none") == 0) {
@@ -281,53 +260,43 @@ int video_draw_options::read_arguments(
 		else if (strcmp(argv[i], "-pan") == 0) {
 			pan_round[nb_pan] = atoi(argv[++i]);
 			pan_f_reverse[nb_pan] = FALSE;
-			pan_from_x[nb_pan] = atof(argv[++i]);
-			pan_from_y[nb_pan] = atof(argv[++i]);
-			pan_from_z[nb_pan] = atof(argv[++i]);
-			pan_to_x[nb_pan] = atof(argv[++i]);
-			pan_to_y[nb_pan] = atof(argv[++i]);
-			pan_to_z[nb_pan] = atof(argv[++i]);
-			pan_center_x[nb_pan] = atof(argv[++i]);
-			pan_center_y[nb_pan] = atof(argv[++i]);
-			pan_center_z[nb_pan] = atof(argv[++i]);
+			numerics Num;
+
+
+			text_to_three_double(argv[++i], pan_from + nb_pan * 3);
+			text_to_three_double(argv[++i], pan_to + nb_pan * 3);
+			text_to_three_double(argv[++i], pan_center + nb_pan * 3);
+
 			cout << "video_draw_options::read_arguments -pan "
-				<< pan_round[nb_pan] << " "
-				<< pan_from_x[nb_pan] << " "
-				<< pan_from_y[nb_pan] << " "
-				<< pan_from_z[nb_pan] << " "
-				<< pan_to_x[nb_pan] << " "
-				<< pan_to_y[nb_pan] << " "
-				<< pan_to_z[nb_pan] << " "
-				<< pan_center_x[nb_pan] << " "
-				<< pan_center_y[nb_pan] << " "
-				<< pan_center_z[nb_pan] << " "
-				<< endl;
+				<< pan_round[nb_pan];
+			cout << " ";
+			Num.vec_print(pan_from + 3 * nb_pan, 3);
+			cout << " ";
+			Num.vec_print(pan_to + 3 * nb_pan, 3);
+			cout << " ";
+			Num.vec_print(pan_center + 3 * nb_pan, 3);
+			cout << endl;
 			nb_pan++;
 		}
 		else if (strcmp(argv[i], "-pan_reverse") == 0) {
 			pan_round[nb_pan] = atoi(argv[++i]);
 			pan_f_reverse[nb_pan] = TRUE;
-			pan_from_x[nb_pan] = atof(argv[++i]);
-			pan_from_y[nb_pan] = atof(argv[++i]);
-			pan_from_z[nb_pan] = atof(argv[++i]);
-			pan_to_x[nb_pan] = atof(argv[++i]);
-			pan_to_y[nb_pan] = atof(argv[++i]);
-			pan_to_z[nb_pan] = atof(argv[++i]);
-			pan_center_x[nb_pan] = atof(argv[++i]);
-			pan_center_y[nb_pan] = atof(argv[++i]);
-			pan_center_z[nb_pan] = atof(argv[++i]);
+			numerics Num;
+
+
+			text_to_three_double(argv[++i], pan_from + nb_pan * 3);
+			text_to_three_double(argv[++i], pan_to + nb_pan * 3);
+			text_to_three_double(argv[++i], pan_center + nb_pan * 3);
+
 			cout << "video_draw_options::read_arguments -pan_reverse "
-				<< pan_round[nb_pan] << " "
-				<< pan_from_x[nb_pan] << " "
-				<< pan_from_y[nb_pan] << " "
-				<< pan_from_z[nb_pan] << " "
-				<< pan_to_x[nb_pan] << " "
-				<< pan_to_y[nb_pan] << " "
-				<< pan_to_z[nb_pan] << " "
-				<< pan_center_x[nb_pan] << " "
-				<< pan_center_y[nb_pan] << " "
-				<< pan_center_z[nb_pan] << " "
-				<< endl;
+				<< pan_round[nb_pan];
+			cout << " ";
+			Num.vec_print(pan_from + 3 * nb_pan, 3);
+			cout << " ";
+			Num.vec_print(pan_to + 3 * nb_pan, 3);
+			cout << " ";
+			Num.vec_print(pan_center + 3 * nb_pan, 3);
+			cout << endl;
 			nb_pan++;
 		}
 		else if (strcmp(argv[i], "-no_background") == 0) {
@@ -345,55 +314,11 @@ int video_draw_options::read_arguments(
 		else if (strcmp(argv[i], "-camera") == 0) {
 			camera_round[nb_camera] = atoi(argv[++i]);
 
-			const char *txt;
-			double *data;
-			int data_sz;
-			numerics Num;
-
-			{
-				txt = argv[++i];
-				Num.vec_scan(txt, data, data_sz);
-				if (data_sz != 3) {
-					cout << "For -camera sky, the number of coefficients must be 3; is " << data_sz << endl;
-					exit(1);
-				}
 
 
-				camera_sky[nb_camera * 3 + 0] = data[0];
-				camera_sky[nb_camera * 3 + 1] = data[1];
-				camera_sky[nb_camera * 3 + 2] = data[2];
-				delete [] data;
-			}
-
-			{
-				txt = argv[++i];
-				Num.vec_scan(txt, data, data_sz);
-				if (data_sz != 3) {
-					cout << "For -camera location, the number of coefficients must be 3; is " << data_sz << endl;
-					exit(1);
-				}
-
-
-				camera_location[nb_camera * 3 + 0] = data[0];
-				camera_location[nb_camera * 3 + 1] = data[1];
-				camera_location[nb_camera * 3 + 2] = data[2];
-				delete [] data;
-			}
-
-			{
-				txt = argv[++i];
-				Num.vec_scan(txt, data, data_sz);
-				if (data_sz != 3) {
-					cout << "For -camera look_at, the number of coefficients must be 3; is " << data_sz << endl;
-					exit(1);
-				}
-
-
-				camera_look_at[nb_camera * 3 + 0] = data[0];
-				camera_look_at[nb_camera * 3 + 1] = data[1];
-				camera_look_at[nb_camera * 3 + 2] = data[2];
-				delete [] data;
-			}
+			text_to_three_double(argv[++i], camera_sky + nb_camera * 3);
+			text_to_three_double(argv[++i], camera_location + nb_camera * 3);
+			text_to_three_double(argv[++i], camera_look_at + nb_camera * 3);
 
 			cout << "video_draw_options::read_arguments -camera "
 					<< camera_round[nb_camera] << " "
@@ -494,28 +419,8 @@ int video_draw_options::read_arguments(
 		else if (strcmp(argv[i], "-look_at") == 0) {
 			//look_at = argv[++i];
 
-			const char *txt;
-			double *data;
-			int data_sz;
-			numerics Num;
 
-			txt = argv[++i];
-			{
-				txt = argv[++i];
-				Num.vec_scan(txt, data, data_sz);
-				if (data_sz != 3) {
-					cout << "For -look_at location, the number of coefficients must be 3; is " << data_sz << endl;
-					exit(1);
-				}
-
-
-				look_at[0] = data[0];
-				look_at[1] = data[1];
-				look_at[2] = data[2];
-				delete [] data;
-			}
-
-
+			text_to_three_double(argv[++i], look_at);
 			cout << "video_draw_options::read_arguments -look_at "
 					<< look_at[0] << " " << look_at[1] << " " << look_at[2] << " " << endl;
 		}
@@ -530,10 +435,6 @@ int video_draw_options::read_arguments(
 			sscanf(argv[++i], "%lf", &clipping_radius);
 			cout << "video_draw_options::read_arguments -clipping_radius " << clipping_radius << endl;
 		}
-		else if (strcmp(argv[i], "-end") == 0) {
-			cout << "video_draw_options::read_arguments -end" << endl;
-			return i;
-		}
 		else if (strcmp(argv[i], "-scale_factor") == 0) {
 			scale_factor = atof(argv[++i]);
 			cout << "video_draw_options::read_arguments -scale_factor " << scale_factor << endl;
@@ -542,6 +443,10 @@ int video_draw_options::read_arguments(
 			f_line_radius = TRUE;
 			line_radius = atof(argv[++i]);
 			cout << "video_draw_options::read_arguments -line_radius " << line_radius << endl;
+		}
+		else if (strcmp(argv[i], "-end") == 0) {
+			cout << "video_draw_options::read_arguments -end" << endl;
+			return i;
 		}
 		else {
 			cout << "video_draw_options::read_arguments "

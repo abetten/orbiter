@@ -371,6 +371,9 @@ class interface_cryptography {
 	int f_count_subprimitive;
 	int count_subprimitive_Q_max;
 	int count_subprimitive_H_max;
+	int f_ntt;
+	int ntt_t;
+	int ntt_q;
 
 public:
 	interface_cryptography();

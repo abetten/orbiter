@@ -635,6 +635,8 @@ public:
 		int *&gens, int &nb_gens, int &data_size, 
 		int &group_order, int verbose_level);
 	int is_unit_vector(int *v, int len, int k);
+	void make_Fourier_matrices(
+			int omega, int n, int *N, int **A, int *Omega, int verbose_level);
 
 	// #########################################################################
 	// finite_field_linear_groups.cpp

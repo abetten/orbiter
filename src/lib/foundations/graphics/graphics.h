@@ -1242,15 +1242,9 @@ public:
 	int nb_pan;
 	int pan_round[1000];
 	int pan_f_reverse[1000];
-	double pan_from_x[1000];
-	double pan_from_y[1000];
-	double pan_from_z[1000];
-	double pan_to_x[1000];
-	double pan_to_y[1000];
-	double pan_to_z[1000];
-	double pan_center_x[1000];
-	double pan_center_y[1000];
-	double pan_center_z[1000];
+	double pan_from[1000 * 3];
+	double pan_to[1000 * 3];
+	double pan_center[1000 * 3];
 
 	int nb_no_background;
 	int no_background_round[1000];
