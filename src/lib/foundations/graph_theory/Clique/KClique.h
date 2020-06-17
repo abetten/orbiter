@@ -130,10 +130,10 @@ private:
 	template<typename T, typename U>
 	__forceinline__
 	static void populate_candidates(size_t depth, PARAMS<T>& param, Graph<T,U>& G, T node) {
-		T* candidates = param.get_candidates(depth);
-		T* candidates_prev_depth = param.get_candidates(depth-1);
-		T candidates_prev_depth_size = candidates_prev_depth[0];
-		T k = 1;
+		register T* candidates = param.get_candidates(depth);
+		register T* candidates_prev_depth = param.get_candidates(depth-1);
+		register T candidates_prev_depth_size = candidates_prev_depth[0];
+		register T k = 1;
 		for (T i=0; i<candidates_prev_depth_size; ++i) {
 			T pt = candidates_prev_depth[i+1];
 			if (G.is_adjacent(pt, node) && pt > node) {
@@ -149,8 +149,8 @@ private:
 	template<typename T, typename U>
 	__forceinline__
 	static void populate_adjacency(size_t depth, PARAMS<T>& param, Graph<T,U>& G, T node) {
-		T* candidates = param.get_candidates(depth);
-		T k = 1;
+		register T* candidates = param.get_candidates(depth);
+		register T k = 1;
 		for (T i=0; i<G.nb_vertices; ++i) {
 			if (G.is_adjacent(node, i) && i > node) {
 				candidates[k++] = i;
