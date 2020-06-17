@@ -23,7 +23,7 @@ MODULES = \
 all : $(MODULES)
 	cd ./Clique; $(MAKE)
 
-%.o: %.cpp %.c %.h; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
+%.o: %.cpp %.c %.h ./Clique/*.h; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $< -lpthread
 
 clean:
 	- rm *.o *.a *~

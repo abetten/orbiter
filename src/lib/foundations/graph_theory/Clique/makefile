@@ -5,24 +5,16 @@ OPTFLAGS=-O3 -march=native -mtune=native -funroll-loops
 INCLUDES=-I../../BitSet -I../../../ -I../../../group_actions/groups/
 
 
-all: Graph.o RainbowClique.o main.o
-	$(CC) $(CFLAGS) $(CSTD) $(OPTFLAGS) $(INCLUDES) RainbowClique.o Graph.o main.o -o main
+all: main main_k_clique
 
 
-main.o: main.cpp Graph.h RainbowClique.h
-	$(CC) $(CFLAGS) $(CSTD) $(OPTFLAGS) $(INCLUDES) -c main.cpp -o main.o
-
-
- RainbowClique.o:  RainbowClique.h  RainbowClique.cpp
-	 $(CC) $(CFLAGS) $(CSTD) $(OPTFLAGS) $(INCLUDES) -c RainbowClique.cpp -o RainbowClique.o
-
-
-Graph.o: Graph.h Graph.cpp
-	$(CC) $(CFLAGS) $(CSTD) $(OPTFLAGS) $(INCLUDES) -c Graph.cpp -o Graph.o
+main: main.cpp Graph.h RainbowClique.h
+	$(CC) $(CFLAGS) $(CSTD) $(OPTFLAGS) $(INCLUDES) $< -o $@
 	
 
 main_k_clique: main_k_clique.cpp Graph.h KClique.h
 	$(CC) $(CFLAGS) $(CSTD) $(OPTFLAGS) $(INCLUDES) $< -o $@
+
 
 clean:
 	- rm -rf *.o main main_k_clique

@@ -9,6 +9,9 @@
 // TOP_LEVEL started: September 23, 2010
 // INCIDENCE deleted: July 27, 2018
 
+#ifndef _ORBITER_
+#define _ORBITER_
+
 #include "foundations/foundations.h"
 #include "group_actions/group_actions.h"
 #include "classification/classification.h"
@@ -16,4 +19,4 @@
 #include "top_level/top_level.h"
 #include "interfaces/interfaces.h"
 
-
+#endif
