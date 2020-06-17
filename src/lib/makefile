@@ -121,8 +121,6 @@ MODULES= \
 		foundations/graph_theory/layered_graph.o \
 		foundations/graph_theory/layered_graph_draw_options.o \
 		foundations/graph_theory/rainbow_cliques.o \
-		foundations/graph_theory/Clique/RainbowClique.o	\
-		foundations/graph_theory/Clique/Graph.o	\
 		foundations/graph_theory_nauty/naugraph.o \
 		foundations/graph_theory_nauty/naurng.o \
 		foundations/graph_theory_nauty/nautil.o \
