@@ -860,13 +860,29 @@ void algebra_global::NumberTheoreticTransform(int n, int q, int verbose_level)
 
 	if (f_v) {
 		cout << "algebra_global::NumberTheoreticTransform" << endl;
+		cout << "algebra_global::NumberTheoreticTransform n = " << n << " q=" << q << endl;
 	}
 
-	int alpha, omega, omega_power;
-	int gamma, minus_gamma;
+	int alpha, omega; //, omega_power;
+	int gamma, minus_gamma, minus_one;
 	int idx, i, j, h;
-	int **M;
-	int **M_log;
+	int **A;
+	int **A_log;
+	int *Omega;
+
+
+	int **G;
+	int **D;
+	int **T;
+	int **S;
+
+	G = NEW_pint(n + 1);
+	D = NEW_pint(n + 1);
+	T = NEW_pint(n + 1);
+	S = NEW_pint(n + 1);
+
+
+
 	int *N;
 	os_interface Os;
 	finite_field *F = NULL;
@@ -875,17 +891,22 @@ void algebra_global::NumberTheoreticTransform(int n, int q, int verbose_level)
 	F->init(q);
 
 
+	minus_one = F->negate(1);
 	alpha = F->primitive_root();
 	if (f_v) {
 		cout << "alpha = " << alpha << endl;
 	}
-	M = NEW_pint(n + 1);
-	M_log = NEW_pint(n + 1);
+	Omega = NEW_int(n + 1);
+	A = NEW_pint(n + 1);
+	A_log = NEW_pint(n + 1);
 	N = NEW_int(n + 1);
 
 	for (h = 0; h <= n; h++) {
 		N[h] = 1 << h;
 	}
+
+	cout << "N[]:" << endl;
+	int_matrix_print(N, n + 1, 1);
 
 	idx = (q - 1) / N[n];
 	omega = F->power(alpha, idx);
@@ -893,49 +914,58 @@ void algebra_global::NumberTheoreticTransform(int n, int q, int verbose_level)
 		cout << "omega = " << omega << endl;
 	}
 
+
+	F->make_Fourier_matrices(omega, n, N, A, Omega, verbose_level);
+
+
+	cout << "Omega:" << endl;
+	int_matrix_print(Omega, n + 1, 1);
+
+#if 0
 	omega_power = omega;
 	for (h = n; h >= 0; h--) {
-		M[h] = NEW_int(N[h] * N[h]);
+		A[h] = NEW_int(N[h] * N[h]);
 		for (i = 0; i < N[h]; i++) {
 			for (j = 0; j < N[h]; j++) {
-				M[h][i * N[h] + j] = F->power(omega_power, (i * j) % N[n]);
+				A[h][i * N[h] + j] = F->power(omega_power, (i * j) % N[n]);
 			}
 		}
 		omega_power = F->mult(omega_power, omega_power);
 	}
 	for (h = n; h >= 0; h--) {
-		cout << "M_" << N[h] << ":" << endl;
-		int_matrix_print(M[h], N[h], N[h]);
+		cout << "A_" << N[h] << ":" << endl;
+		int_matrix_print(A[h], N[h], N[h]);
 	}
+#endif
 
 	for (h = n; h >= 0; h--) {
-		M_log[h] = NEW_int(N[h] * N[h]);
+		A_log[h] = NEW_int(N[h] * N[h]);
 		for (i = 0; i < N[h]; i++) {
 			for (j = 0; j < N[h]; j++) {
-				M_log[h][i * N[h] + j] = F->log_alpha(M[h][i * N[h] + j]) + 1;
+				A_log[h][i * N[h] + j] = F->log_alpha(A[h][i * N[h] + j]) + 1;
 			}
 		}
-		cout << "M2_" << N[h] << ":" << endl;
-		int_matrix_print(M_log[h], N[h], N[h]);
+		cout << "A_" << N[h] << ":" << endl;
+		int_matrix_print(A_log[h], N[h], N[h]);
 	}
 
-	int *A, *B, *C;
-	int *A1, *A2;
-	int *B1, *B2;
+	int *X, *Y, *Z;
+	int *X1, *X2;
+	int *Y1, *Y2;
 
-	A = NEW_int(N[n]);
-	B = NEW_int(N[n]);
-	C = NEW_int(N[n]);
-	A1 = NEW_int(N[n - 1]);
-	A2 = NEW_int(N[n - 1]);
-	B1 = NEW_int(N[n - 1]);
-	B2 = NEW_int(N[n - 1]);
+	X = NEW_int(N[n]);
+	Y = NEW_int(N[n]);
+	Z = NEW_int(N[n]);
+	X1 = NEW_int(N[n - 1]);
+	X2 = NEW_int(N[n - 1]);
+	Y1 = NEW_int(N[n - 1]);
+	Y2 = NEW_int(N[n - 1]);
 
 	for (i = 0; i < N[n]; i++) {
-		A[i] = Os.random_integer(q);
+		X[i] = Os.random_integer(q);
 	}
-	cout << "A:" << endl;
-	int_matrix_print(A, 1, N[n]);
+	cout << "X:" << endl;
+	int_matrix_print(X, 1, N[n]);
 	cout << endl;
 
 
@@ -946,26 +976,27 @@ void algebra_global::NumberTheoreticTransform(int n, int q, int verbose_level)
 
 	nb_m10 = F->nb_times_mult_called();
 	nb_a10 = F->nb_times_add_called();
-	F->mult_vector_from_the_right(M[n], A, B, N[n], N[n]);
+
+	F->mult_vector_from_the_right(A[n], X, Y, N[n], N[n]);
+
 	nb_m11 = F->nb_times_mult_called();
 	nb_a11 = F->nb_times_add_called();
+
 	nb_m1 = nb_m11 - nb_m10;
 	nb_a1 = nb_a11 - nb_a10;
 
 	cout << "nb_m1 = " << nb_m1 << " nb_a1 = " << nb_a1 << endl;
 
 
-	cout << "B:" << endl;
-	int_matrix_print(B, 1, N[n]);
+	cout << "Y:" << endl;
+	int_matrix_print(Y, 1, N[n]);
 	cout << endl;
 
-	omega_power = omega; //F->power(omega, 2);
-	gamma = 1;
-	minus_gamma = F->negate(gamma);
+	//omega_power = omega; //F->power(omega, 2);
 
 	for (i = 0; i < N[n - 1]; i++) {
-		A1[i] = A[2 * i + 0];
-		A2[i] = A[2 * i + 1];
+		X1[i] = X[2 * i + 0];
+		X2[i] = X[2 * i + 1];
 	}
 
 
@@ -973,13 +1004,20 @@ void algebra_global::NumberTheoreticTransform(int n, int q, int verbose_level)
 	nb_a20 = F->nb_times_add_called();
 
 
-	F->mult_vector_from_the_right(M[n - 1], A1, B1, N[n - 1], N[n - 1]);
-	F->mult_vector_from_the_right(M[n - 1], A2, B2, N[n - 1], N[n - 1]);
+	F->mult_vector_from_the_right(A[n - 1], X1, Y1, N[n - 1], N[n - 1]);
+	F->mult_vector_from_the_right(A[n - 1], X2, Y2, N[n - 1], N[n - 1]);
+
+
+
+	gamma = 1;
+	minus_gamma = minus_one;
 
 	for (i = 0; i < N[n - 1]; i++) {
-		C[i] = F->add(B1[i], F->mult(gamma, B2[i]));
-		C[N[n - 1] + i] = F->add(B1[i], F->mult(minus_gamma, B2[i]));
-		gamma = F->mult(gamma, omega_power);
+
+		Z[i] = F->add(Y1[i], F->mult(gamma, Y2[i]));
+		Z[N[n - 1] + i] = F->add(Y1[i], F->mult(minus_gamma, Y2[i]));
+
+		gamma = F->mult(gamma, omega);
 		minus_gamma = F->negate(gamma);
 	}
 
@@ -991,9 +1029,127 @@ void algebra_global::NumberTheoreticTransform(int n, int q, int verbose_level)
 	cout << "nb_m2 = " << nb_m2 << " nb_a2 = " << nb_a2 << endl;
 
 
-	cout << "C:" << endl;
-	int_matrix_print(C, 1, N[n]);
+	cout << "Z:" << endl;
+	int_matrix_print(Z, 1, N[n]);
 	cout << endl;
+
+	for (i = 0; i < N[n]; i++) {
+		 if (Y[i] != Z[i]) {
+			 cout << "problem in component " << i << endl;
+			 exit(1);
+		 }
+	}
+
+
+	G[n] = NEW_int(N[n] * N[n]);
+	D[n] = NEW_int(N[n] * N[n]);
+	T[n] = NEW_int(N[n] * N[n]);
+	S[n] = NEW_int(N[n] * N[n]);
+	F->identity_matrix(G[n], N[n]);
+	F->identity_matrix(D[n], N[n]);
+	int_vec_copy(A[n], T[n], N[n] * N[n]);
+	F->identity_matrix(S[n], N[n]);
+
+	G[n - 1] = NEW_int(N[n] * N[n]);
+	D[n - 1] = NEW_int(N[n] * N[n]);
+	T[n - 1] = NEW_int(N[n] * N[n]);
+	S[n - 1] = NEW_int(N[n] * N[n]);
+
+	// G[n - 1]:
+	int_vec_zero(G[n - 1], N[n] * N[n]);
+	for (i = 0; i < N[n - 1]; i++) {
+		G[n - 1][i * N[n] + i] = 1;
+		G[n - 1][i * N[n] + N[n - 1] + i] = 1;
+		G[n - 1][(N[n - 1] + i) * N[n] + i] = 1;
+		G[n - 1][(N[n - 1] + i) * N[n] + N[n - 1] + i] = minus_one;
+	}
+
+	// D[n - 1]:
+	int_vec_zero(D[n - 1], N[n] * N[n]);
+	gamma = 1;
+	for (i = 0; i < N[n - 1]; i++) {
+
+		D[n - 1][i * N[n] + i] = 1;
+		D[n - 1][(N[n - 1] + i) * N[n] + N[n - 1] + i] = gamma;
+
+
+		//Z[i] = F->add(Y1[i], F->mult(gamma, Y2[i]));
+		//Z[N[n - 1] + i] = F->add(Y1[i], F->mult(minus_gamma, Y2[i]));
+
+		gamma = F->mult(gamma, omega);
+		//minus_gamma = F->negate(gamma);
+	}
+	// T[n - 1]:
+	int sz;
+	int Id2[] = {1,0,0,1};
+
+	F->Kronecker_product_square_but_arbitrary(A[n - 1], Id2,
+			N[n - 1], 2, T[n - 1], sz, 0 /*verbose_level */);
+	if (sz != N[n]) {
+		cout << "sz != N[n]" << endl;
+		exit(1);
+	}
+
+	//S[n - 1]:
+	int_vec_zero(S[n - 1], N[n] * N[n]);
+	for (i = 0; i < N[n - 1]; i++) {
+		S[n - 1][i * N[n] + 2 * i] = 1;
+		S[n - 1][(N[n - 1] + i) * N[n] + 2 * i + 1] = 1;
+	}
+
+
+	cout << "G[n-1]:" << endl;
+	int_matrix_print(G[n - 1], N[n], N[n]);
+	cout << endl;
+	cout << "D[n-1]:" << endl;
+	int_matrix_print(D[n - 1], N[n], N[n]);
+	cout << endl;
+	cout << "T[n-1]:" << endl;
+	int_matrix_print(T[n - 1], N[n], N[n]);
+	cout << endl;
+	cout << "S[n-1]:" << endl;
+	int_matrix_print(S[n - 1], N[n], N[n]);
+	cout << endl;
+
+	file_io Fio;
+	const char *fname_F = "ntt_F.csv";
+	const char *fname_G = "ntt_G.csv";
+	const char *fname_D = "ntt_D.csv";
+	const char *fname_T = "ntt_T.csv";
+	const char *fname_S = "ntt_S.csv";
+
+	Fio.int_matrix_write_csv(fname_F, A[n], N[n], N[n]);
+	Fio.int_matrix_write_csv(fname_G, G[n - 1], N[n], N[n]);
+	Fio.int_matrix_write_csv(fname_D, D[n - 1], N[n], N[n]);
+	Fio.int_matrix_write_csv(fname_T, T[n - 1], N[n], N[n]);
+	Fio.int_matrix_write_csv(fname_S, S[n - 1], N[n], N[n]);
+
+	cout << "Written file " << fname_F << " of size " << Fio.file_size(fname_F) << endl;
+	cout << "Written file " << fname_G << " of size " << Fio.file_size(fname_G) << endl;
+	cout << "Written file " << fname_D << " of size " << Fio.file_size(fname_D) << endl;
+	cout << "Written file " << fname_T << " of size " << Fio.file_size(fname_T) << endl;
+	cout << "Written file " << fname_S << " of size " << Fio.file_size(fname_S) << endl;
+
+
+
+
+	int *Tmp1;
+	int *Tmp2;
+
+	Tmp1 = NEW_int(N[n] * N[n]);
+	Tmp2 = NEW_int(N[n] * N[n]);
+
+	F->mult_matrix_matrix(G[n - 1], D[n - 1], Tmp1, N[n], N[n], N[n], 0 /* verbose_level*/);
+	F->mult_matrix_matrix(Tmp1, T[n - 1], Tmp2, N[n], N[n], N[n], 0 /* verbose_level*/);
+	F->mult_matrix_matrix(Tmp2, S[n - 1], Tmp1, N[n], N[n], N[n], 0 /* verbose_level*/);
+
+	for (i = 0; i < N[n] * N[n]; i++) {
+		 if (A[n][i] != Tmp1[i]) {
+			 cout << "matrix product differs from the Fourier matrix, problem in component " << i << endl;
+			 exit(1);
+		 }
+	}
+
 
 	if (f_v) {
 		cout << "algebra_global::NumberTheoreticTransform done" << endl;

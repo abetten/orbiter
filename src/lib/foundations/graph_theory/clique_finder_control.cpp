@@ -125,7 +125,7 @@ int clique_finder_control::parse_arguments(
 			cout << "-restrictions ";
 			int_vec_print(cout, restrictions, 3 * nb_restrictions);
 			cout << endl;
-			}
+		}
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			return i;
