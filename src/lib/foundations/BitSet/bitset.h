@@ -89,14 +89,6 @@ public:
 
     /*----------------------------------------------------------------*/
 
-#if defined(__clang__)
-    size_t _MAX_STACK_ALLOC_LIMIT = 0; /* bits */
-#elif defined(__GNUC__) || defined(__GNUG__)
-    size_t _MAX_STACK_ALLOC_LIMIT = 32; /* bits */
-#elif defined(_MSC_VER)
-    size_t _MAX_STACK_ALLOC_LIMIT = 0; /* bits */
-#endif
-
     __forceinline__ bitset () {};
 
     __forceinline__ bitset (size_t nb_bits) {
@@ -127,14 +119,8 @@ public:
 		bit_array_size = 1 + nb_bits / WORD_LEN;
 		nb_bytes_ = sizeof(TYPE) * bit_array_size;
 
-		if (bit_array_size <= _MAX_STACK_ALLOC_LIMIT/WORD_LEN) {
-			bit_array = (TYPE*)alloca(nb_bytes_);
-			memset(bit_array, 0, nb_bytes_);
-			stack_storage = true;
-		} else {
-			bit_array = new TYPE [bit_array_size] ();
-			stack_storage = false;
-		}
+		bit_array = new TYPE [bit_array_size] ();
+		stack_storage = false;
     }
 
 

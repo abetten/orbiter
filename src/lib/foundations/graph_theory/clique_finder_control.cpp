@@ -223,7 +223,17 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 				cout << "clique_finder_control::all_cliques "
 						"before do_Sajeeb" << endl;
 			}
-			do_Sajeeb_black_and_white(CG, fname_sol, target_size, verbose_level);
+			std::vector<std::vector<long int> > solutions;
+			do_Sajeeb_black_and_white(CG, fname_sol, target_size, solutions, verbose_level);
+			// Print the solutions
+			cout << "clique_finder_control::do_Sajeeb Found " << solutions.size() << " solution(s)." << endl;
+			#if 1
+				for (size_t i=0; i<solutions.size(); ++i) {
+					for (size_t j=0; j<solutions[i].size(); ++j) {
+						cout << solutions[i][j] << " ";
+					} cout << endl;
+				}
+			#endif
 			if (f_v) {
 				cout << "clique_finder_control::all_cliques "
 						"after do_Sajeeb" << endl;
@@ -259,67 +269,12 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG, const char *fname_sol, 
 	}
 
 #if 1
-	cout << __FILE__ << ":" << __LINE__ << endl;
 	Graph<> G (CG->nb_points, CG->nb_colors, CG->nb_colors_per_vertex);
-	cout << __FILE__ << ":" << __LINE__ << endl;
 
+	for (size_t i=0; i<G.nb_vertices; ++i) G.vertex_label[i] = CG->points[i];
+	for (size_t i=0; i<G.nb_colors; ++i) G.vertex_color[i] = CG->point_color[i];
 
-
-//	 const size_t nThreads = std::thread::hardware_concurrency();
-//	 std::thread threads [nThreads];
-//	 #pragma unroll
-//	 for (size_t tID=0; tID<nThreads; ++tID) {
-//	 	threads[tID] = std::thread([tID, nThreads, &CG, &G]{
-//	 		#pragma unroll
-//	 		for (size_t i = 0, k = 0; i < CG->nb_points; i++) {
-//	 			if ((i % nThreads) != tID) {
-//					k += CG->nb_points - i - 1;
-//					continue;
-//				}
-//	 			#pragma unroll
-//	 			for (size_t j = i + 1; j < CG->nb_points; j++, k++) {
-//	 				const int aij = bitvector_s_i(CG->bitvector_adjacency, k);
-//	 				if (aij) {
-//	 					G.set_edge(i, j);
-//	 					G.set_edge(j, i);
-//	 				}
-//	 			}
-//	 		}
-//	 	});
-//	 }
-//	 #pragma unroll
-//	 for (size_t i=0; i<nThreads; ++i) threads[i].join();
-
-	for (size_t i = 0, k = 0; i < CG->nb_points; i++) {
-		#pragma unroll
-		for (size_t j = i + 1; j < CG->nb_points; j++, k++) {
-			const int aij = bitvector_s_i(CG->bitvector_adjacency, k);
-			if (aij) {
-				G.set_edge(i, j);
-				G.set_edge(j, i);
-			}
-		}
-	}
-
-
-	// G.adjacency.value_print();
-	// for (size_t i=0; i<CG->bitvector_length; ++i) {
-	// 	cout << (int)CG->bitvector_adjacency[i] << " ";
-	// }
-	// cout << endl;
-
-	// memcpy(G.adjacency.bit_array, CG->bitvector_adjacency, CG->L);
-
-	cout << __FILE__ << ":" << __LINE__ << endl;
-
-//	G.print_adj_matrix();
-//	for (size_t i = 0; i < CG->nb_points; i++) {
-//		G.set_vertex_label(CG->points[i], i);
-//		for (size_t j = 0; j < CG->nb_colors_per_vertex; j++) {
-//			G.set_vertex_color(CG->point_color[i * CG->nb_colors_per_vertex + j], i, j);
-//		}
-//	}
-//	cout << __FILE__ << ":" << __LINE__ << endl;
+	G.set_edge_from_bitvector_adjacency(CG->bitvector_adjacency);
 
 	// Create the solution storage. The base type of the solution
 	// storage must be the same as data type of the vertex label
@@ -351,7 +306,8 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG, const char *fname_sol, 
 }
 
 void clique_finder_control::do_Sajeeb_black_and_white(colored_graph *CG,
-		const char *fname_sol, int clique_size, int verbose_level)
+		const char *fname_sol, int clique_size, std::vector<std::vector<long int> >& solutions,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -360,98 +316,14 @@ void clique_finder_control::do_Sajeeb_black_and_white(colored_graph *CG,
 	}
 
 #if 1
-	cout << __FILE__ << ":" << __LINE__ << endl;
-	Graph<> G (CG->nb_points, CG->nb_colors, CG->nb_colors_per_vertex);
-	cout << __FILE__ << ":" << __LINE__ << endl;
-
-
-	for (int i = 0, k = 0; i < CG->nb_points; i++) {
-		G.vertex_label[i] = CG->points[i];
-	}
-
-
-//	 const size_t nThreads = std::thread::hardware_concurrency();
-//	 std::thread threads [nThreads];
-//	 #pragma unroll
-//	 for (size_t tID=0; tID<nThreads; ++tID) {
-//	 	threads[tID] = std::thread([tID, nThreads, &CG, &G]{
-//	 		#pragma unroll
-//	 		for (size_t i = 0, k = 0; i < CG->nb_points; i++) {
-//	 			if ((i % nThreads) != tID) {
-//					k += CG->nb_points - i - 1;
-//					continue;
-//				}
-//	 			#pragma unroll
-//	 			for (size_t j = i + 1; j < CG->nb_points; j++, k++) {
-//	 				const int aij = bitvector_s_i(CG->bitvector_adjacency, k);
-//	 				if (aij) {
-//	 					G.set_edge(i, j);
-//	 					G.set_edge(j, i);
-//	 				}
-//	 			}
-//	 		}
-//	 	});
-//	 }
-//	 #pragma unroll
-//	 for (size_t i=0; i<nThreads; ++i) threads[i].join();
-
-#if 1
-	for (size_t i = 0, k = 0; i < CG->nb_points; i++) {
-		#pragma unroll
-		for (size_t j = i + 1; j < CG->nb_points; j++, k++) {
-			const int aij = bitvector_s_i(CG->bitvector_adjacency, k);
-			if (aij) {
-				G.set_edge(i, j);
-				G.set_edge(j, i);
-			}
-		}
-	}
-#else
-	G.set_edge_from_bitvector_adjacency(CG->bitvector_adjacency, 0 /*vl*/);
-#endif
-
-
-	// G.adjacency.value_print();
-	// for (size_t i=0; i<CG->bitvector_length; ++i) {
-	// 	cout << (int)CG->bitvector_adjacency[i] << " ";
-	// }
-	// cout << endl;
-
-	// memcpy(G.adjacency.bit_array, CG->bitvector_adjacency, CG->L);
-
-	cout << __FILE__ << ":" << __LINE__ << endl;
-
-//	G.print_adj_matrix();
-//	for (size_t i = 0; i < CG->nb_points; i++) {
-//		G.set_vertex_label(CG->points[i], i);
-//		for (size_t j = 0; j < CG->nb_colors_per_vertex; j++) {
-//			G.set_vertex_color(CG->point_color[i * CG->nb_colors_per_vertex + j], i, j);
-//		}
-//	}
-//	cout << __FILE__ << ":" << __LINE__ << endl;
-
-	// Create the solution storage. The base type of the solution
-	// storage must be the same as data type of the vertex label
-	// in the graph
-	std::vector<std::vector<unsigned int> > solutions;
-	cout << __FILE__ << ":" << __LINE__ << endl;
+	Graph<long int, int> G (CG->nb_points, CG->nb_colors, CG->nb_colors_per_vertex);
+	G.set_vertex_labels(CG->points);
+	G.set_vertex_colors(CG->point_color);
+	G.set_edge_from_bitvector_adjacency(CG->bitvector_adjacency);
 
     // Call the Rainbow Clique finding algorithm
-	KClique::find_cliques(G, solutions, clique_size, 1);
+	KClique::find_cliques(G, solutions, clique_size);
 	//RainbowClique::find_cliques(G, solutions, 0 /* nb_threads */);
-		// nb_threads = 0 automatically detects the number of threads
-	cout << __FILE__ << ":" << __LINE__ << endl;
-
-
-	// Print the solutions
-	cout << "clique_finder_control::do_Sajeeb Found " << solutions.size() << " solution(s)." << endl;
-#if 1
-	for (size_t i=0; i<solutions.size(); ++i) {
-		for (size_t j=0; j<solutions[i].size(); ++j) {
-			cout << solutions[i][j] << " ";
-		} cout << endl;
-	}
-#endif
 
 	this->nb_sol = solutions.size();
 #endif

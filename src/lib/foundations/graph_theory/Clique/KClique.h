@@ -7,7 +7,6 @@
 
 #include <iostream>
 #include "Graph.h"
-//#include "chrono.h"
 #include <thread>
 #include <vector>
 #include <algorithm>
@@ -33,12 +32,10 @@ public:
 		std::thread threads [nThreads];
 		PARAMS<T> params [nThreads];
 
-
 		for (size_t i=0; i<nThreads; ++i) {
 			params[i].init(i, k, G.nb_vertices, nThreads);
-			threads[i] = std::thread(find_cliques_parallel<T,U>, 0, 0, std::ref(params[i]), std::ref(G));
+			threads[i] = std::thread(find_cliques_parallel<T,U>, 0, std::ref(params[i]), std::ref(G));
 		}
-
 
 		for (size_t i=0; i<nThreads; ++i) threads[i].join();
 
@@ -49,12 +46,8 @@ public:
 		}
 		soln.reserve(nb_sols);
 
-		std::unordered_set<std::string> solutions_set;
-		std::string s;
-
 		for (size_t i=0; i<nThreads; ++i) {
-			std::move(params[i].t_solutions.begin(), params[i].t_solutions.end(),
-						  std::back_inserter(soln));
+			std::move(params[i].t_solutions.begin(), params[i].t_solutions.end(), std::back_inserter(soln));
 		}
 	}
 
@@ -65,7 +58,7 @@ private:
 	public:
 		~PARAMS() {
 			if (current_cliques) delete [] current_cliques;
-			if (visited_nodes) delete [] visited_nodes;
+			if (candidates) delete [] candidates;
 		}
 		PARAMS() {}
 
@@ -73,20 +66,26 @@ private:
 			this->tid = tid;
 			this->n_threads = n_threads;
 			this->k = k;
+			this->num_nodes = num_nodes;
 			current_cliques= new T [k];
 			memset(current_cliques, -1, sizeof(T)*k);
-			visited_nodes = new bool [num_nodes] ();
-			node_adjacency = new T [num_nodes];
-			for (uint i=0; i<num_nodes; ++i) node_adjacency[i] = i;
+			candidates = new T [k * (num_nodes+1)] ();
+			for (uint i=0; i<num_nodes; ++i) candidates[i] = i;
+		}
+
+		__forceinline__
+		T* get_candidates(size_t depth) {
+			return candidates + depth * (num_nodes + 1);
 		}
 
 		uint8_t tid = 0;	//
 		T* current_cliques = NULL;	// Index of current clique
-		T* node_adjacency = NULL;
+		T* candidates = NULL;
 		size_t nb_sol = 0; // number of solutions found by a thread
-		bool* visited_nodes = NULL;
 		uint8_t n_threads = 0;
 		uint k = 0;
+		size_t depth = 0;
+		size_t num_nodes = 0;
 		vector<vector<T>> t_solutions;
 	};
 
@@ -94,7 +93,7 @@ private:
 	 *
 	 */
 	template <typename T, typename U>
-	static void find_cliques_parallel (uint depth, T end, PARAMS<T>& param, Graph<T,U>& G) {
+	static void find_cliques_parallel (size_t depth, PARAMS<T>& param, Graph<T,U>& G) {
 		if (depth == param.k) {
 			param.nb_sol += 1;
 			param.t_solutions.emplace_back(vector<T>());
@@ -109,16 +108,18 @@ private:
 			for (T pt=0; pt < G.nb_vertices; ++pt) {
 				if ((pt % param.n_threads) == param.tid) {
 					param.current_cliques[depth] = pt;
-					T end_adj = adjacency_cluster(param, G, depth+1, G.nb_vertices, pt);
-					find_cliques_parallel(depth+1, end_adj, param, G);
+					populate_adjacency(depth, param, G, pt);
+					find_cliques_parallel(depth+1, param, G);
 				}
 			}
 		} else {
-			for (T i=depth; i < end; ++i) {
-				T pt = param.node_adjacency[i];
+			T* candidate_nodes = param.get_candidates(depth-1);
+			T num_candidate_nodes = candidate_nodes[0];
+			for (T i=0; i < num_candidate_nodes; ++i) {
+				T pt = candidate_nodes[i+1];
 				param.current_cliques[depth] = pt;
-				T end_adj = adjacency_cluster(param, G, depth+1, end, pt);
-				find_cliques_parallel(depth+1, end_adj, param, G);
+				populate_candidates(depth, param, G, pt);
+				find_cliques_parallel(depth+1, param, G);
 			}
 		}
 	}
@@ -128,16 +129,34 @@ private:
 	 */
 	template<typename T, typename U>
 	__forceinline__
-	static T adjacency_cluster(PARAMS<T>& param, Graph<T,U>& G, uint start, size_t end, T node) {
-		T* node_adjacency = param.node_adjacency;
-		uint size = start;
-		for (T i=start; i<end; ++i) {
-			if (G.is_adjacent(node, node_adjacency[i]) && node_adjacency[i] > node) {
-				if (size != i) std::swap(node_adjacency[i], node_adjacency[size]);
-				size++;
+	static void populate_candidates(size_t depth, PARAMS<T>& param, Graph<T,U>& G, T node) {
+		register T* candidates = param.get_candidates(depth);
+		register T* candidates_prev_depth = param.get_candidates(depth-1);
+		register T candidates_prev_depth_size = candidates_prev_depth[0];
+		register T k = 1;
+		for (T i=0; i<candidates_prev_depth_size; ++i) {
+			T pt = candidates_prev_depth[i+1];
+			if (G.is_adjacent(pt, node) && pt > node) {
+				candidates[k++] = pt;
 			}
 		}
-		return size;
+		candidates[0] = k-1;
+	}
+
+	/**
+	 *
+	 */
+	template<typename T, typename U>
+	__forceinline__
+	static void populate_adjacency(size_t depth, PARAMS<T>& param, Graph<T,U>& G, T node) {
+		register T* candidates = param.get_candidates(depth);
+		register T k = 1;
+		for (T i=0; i<G.nb_vertices; ++i) {
+			if (G.is_adjacent(node, i) && i > node) {
+				candidates[k++] = i;
+			}
+		}
+		candidates[0] = k-1;
 	}
 };
 
