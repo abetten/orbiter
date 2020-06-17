@@ -7,7 +7,7 @@
 
 
 #include "bitset.h"
-//#include "orbiter.h"
+#include "orbiter.h"
 #include <fstream>
 #include <thread>
 #include <vector>
@@ -61,6 +61,26 @@ public:
     }
 
     /**
+     *
+     */
+    __forceinline__
+    void set_vertex_labels(T* lbl) {
+    	for (size_t i=0; i<nb_vertices; ++i) {
+    		vertex_label[i] = lbl[i];
+    	}
+    }
+
+    /**
+     *
+     */
+    __forceinline__
+	void set_vertex_colors(U* colors) {
+    	for (size_t i=0; i<nb_colors; ++i) {
+    		vertex_color[i] = colors[i];
+    	}
+    }
+
+    /**
      * create an edge between vertex i and j
      */
     __forceinline__ void set_edge (size_t i, size_t j) {
@@ -102,8 +122,7 @@ public:
      * The following function sets the edges in the graph from the bitvector
      * adjacency. 'vl' is the verbose level.
      */
-#if 0
-    __forceinline__ void set_edge_from_bitvector_adjacency(unsigned char* bitvector, int vl) {
+    __forceinline__ void set_edge_from_bitvector_adjacency(unsigned char* bitvector, int vl=0) {
         if (vl - 2) printf("%s: %d: set_edge_from_bitvector_adjacency\n", __FILE__, __LINE__);
         const size_t nThreads = std::thread::hardware_concurrency();
         const size_t n = this->nb_vertices;
@@ -115,7 +134,7 @@ public:
                 for (size_t i = 0, k = 0; i < n; i++) {
                     if ((i % nThreads) == tID) {
                         for (size_t j = i + 1; j < n; j++, k++) {
-                            const int aij = orbiter::foundations::bitvector_s_i(bitvector, k);
+                            const int aij = bitvector_s_i(bitvector, k);
                             if (aij) {
                                 adj[tID].set(i*n+j);
                                 adj[tID].set(j*n+i);
@@ -131,8 +150,10 @@ public:
         for (size_t i=0; i<nThreads; ++i) adjacency |= adj[i];
         if (vl - 2) printf("%s: %d: set_edge_from_bitvector_adjacency Done.\n", __FILE__, __LINE__);
     }
-#endif
 
+    /**
+     *
+     */
     void print_adj_matrix () const {
         for (size_t i=0; i<nb_vertices; ++i) {
             for (size_t j=0; j<nb_vertices; ++j) {

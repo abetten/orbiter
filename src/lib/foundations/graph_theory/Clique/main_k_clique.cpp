@@ -18,16 +18,26 @@ int main () {
 
 	// Here, for demonstration purposes, we are creating a graph with
 	// a star topology by setting the following edges:
-	// * node 0 is connected to nodes: 4,3,2,1
-	// * node 1 is connected to nodes: 0,4,3
-	// * node 2 is connected to nodes: 0,4
-	// * node 3 is connected to nodes: 0,1
-	// * node 4 is connected to nodes: 0,1,2
-	G.set_edge(0,4); G.set_edge(0,3); G.set_edge(0,2); G.set_edge(0,1);
-	G.set_edge(1,0); G.set_edge(1,4); G.set_edge(1,3);
-	G.set_edge(2,0); G.set_edge(2,4);
-	G.set_edge(3,0); G.set_edge(3,1);
-	G.set_edge(4,0); G.set_edge(4,1); G.set_edge(4,2);
+	G.set_edge(0,4);
+	G.set_edge(0,3);
+	G.set_edge(0,2);
+	G.set_edge(0,1);
+	G.set_edge(1,0);
+	G.set_edge(1,4);
+	G.set_edge(1,3);
+	G.set_edge(2,0);
+	G.set_edge(2,4);
+	G.set_edge(3,0);
+	G.set_edge(3,1);
+	G.set_edge(4,0);
+	G.set_edge(4,1);
+	G.set_edge(4,2);
+	G.set_edge(3,2);
+	G.set_edge(2,3);
+	G.set_edge(4,3);
+	G.set_edge(3,4);
+	G.set_edge(1,2);
+	G.set_edge(2,1);
 
 	// Print the adjacency matrix of the graph:
 	printf("Adjacency matrix of the current graph:\n");
@@ -47,7 +57,7 @@ int main () {
 	std::vector<std::vector<unsigned int>> solutions;
 
 	// Call the K-Clique finding algorithm where k is 3
-	KClique::find_cliques(G, solutions, 3);
+	KClique::find_cliques(G, solutions, 3, 2);
 
 	// Print the solutions
 	printf("Found %ld solution(s).\n", solutions.size());
