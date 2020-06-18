@@ -921,22 +921,6 @@ void algebra_global::NumberTheoreticTransform(int k, int q, int verbose_level)
 	cout << "Omega:" << endl;
 	int_matrix_print(Omega, k + 1, 1);
 
-#if 0
-	omega_power = omega;
-	for (h = k; h >= 0; h--) {
-		A[h] = NEW_int(N[h] * N[h]);
-		for (i = 0; i < N[h]; i++) {
-			for (j = 0; j < N[h]; j++) {
-				A[h][i * N[h] + j] = F->power(omega_power, (i * j) % N[k]);
-			}
-		}
-		omega_power = F->mult(omega_power, omega_power);
-	}
-	for (h = k; h >= 0; h--) {
-		cout << "A_" << N[h] << ":" << endl;
-		int_matrix_print(A[h], N[h], N[h]);
-	}
-#endif
 
 	for (h = k; h >= 0; h--) {
 		A_log[h] = NEW_int(N[h] * N[h]);
