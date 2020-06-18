@@ -105,12 +105,6 @@ int poset_classification_control::read_arguments(
 	cout << "poset_classification_control::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-#if 0
-		if (argv[i][0] != '-') {
-			continue;
-			}
-#endif
-
 		if (strcmp(argv[i], "-v") == 0) {
 			i++;
 			poset_classification_control::verbose_level = atoi(argv[i]);
@@ -131,16 +125,6 @@ int poset_classification_control::read_arguments(
 				cout << "poset_classification_control::read_arguments -lex" << endl;
 			}
 		}
-#if 0
-		else if (strcmp(argv[i], "-prefix") == 0) {
-			i++;
-			f_prefix = TRUE;
-			strcpy(prefix, argv[i]);
-			if (f_v) {
-				cout << "poset_classification_control::read_arguments -prefix " << prefix << endl;
-			}
-		}
-#endif
 		else if (strcmp(argv[i], "-w") == 0) {
 			f_w = TRUE;
 			if (f_v) {
@@ -409,30 +393,6 @@ void poset_classification_control::print()
 		cout << "-problem_label " << problem_label << endl;
 	}
 }
-
-#if 0
-void poset_classification_control::init_labels(
-		char *problem_label1000, char *problem_label_with_path1000)
-{
-	if (f_path && f_problem_label) {
-		snprintf(problem_label1000, 1000, "%s",
-				problem_label.c_str());
-		snprintf(problem_label_with_path1000, 1000, "%s%s",
-				path.c_str(), problem_label.c_str());
-	}
-	else if (f_problem_label) {
-		snprintf(problem_label1000, 1000, "%s",
-				problem_label.c_str());
-		snprintf(problem_label_with_path1000, 1000, "%s",
-				problem_label.c_str());
-	}
-	else {
-		snprintf(problem_label1000, 1000, "unnamed");
-		snprintf(problem_label_with_path1000, 1000, "unnamed");
-	}
-
-}
-#endif
 
 
 }}

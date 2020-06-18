@@ -711,8 +711,6 @@ public:
 
 	int *adjacency; // [n * n]
 
-	//int f_lex;
-
 	int f_regular;
 
 	int f_control;
@@ -727,14 +725,9 @@ public:
 	int *neighbor_idx; // [n]
 	int *distance; // [n]
 
-	//int f_list; // list whole orbits in the end
-	//int f_list_all; // list whole orbits in the end
 	int f_draw_graphs;
-	//int f_embedded;
-	//int f_sideways;
 	int f_draw_graphs_at_level;
 	int level;
-	//double scale;
 	int f_x_stretch;
 	double x_stretch;
 
@@ -751,9 +744,6 @@ public:
 	int level_graph_level;
 	int f_test_multi_edge;
 
-	//int f_draw_poset;
-	//int f_draw_full_poset;
-	//int f_plesken;
 
 	int f_identify;
 	long int identify_data[1000];
@@ -1102,6 +1092,50 @@ int large_set_compute_color_of_reduced_orbits_callback(schreier *Sch,
 
 
 
+
+// #############################################################################
+// regular_linear_space_description.cpp
+// #############################################################################
+
+
+//! a description of a class of regular linear spaces from the command line
+
+
+class regular_linear_space_description {
+public:
+
+	int f_m;
+	int m;
+	int f_n;
+	int n;
+	int f_k;
+	int k;
+	int f_r;
+	int r;
+	int f_target_size;
+	int target_size;
+
+	int starter_size;
+	int *initial_pair_covering;
+
+	int f_has_control;
+	poset_classification_control *Control;
+
+
+
+	regular_linear_space_description();
+	~regular_linear_space_description();
+	void read_arguments_from_string(
+			const char *str, int verbose_level);
+	int read_arguments(
+		int argc, const char **argv,
+		int verbose_level);
+
+
+};
+
+
+
 // #############################################################################
 // regular_ls_classify.cpp
 // #############################################################################
@@ -1115,25 +1149,12 @@ int large_set_compute_color_of_reduced_orbits_callback(schreier *Sch,
 class regular_ls_classify {
 
 public:
-	int m;
-	int n;
-	int k;
-	int r;
 
-	//int onk;
-	//int onr;
-	int starter_size;
-	int target_size;
-	int *initial_pair_covering;
-
-	char starter_directory_name[1000];
-	char prefix[1000];
-	char prefix_with_directory[1000];
+	regular_linear_space_description *Descr;
 
 	int m2;
 	int *v1; // [k]
 
-	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen;
 	action *A;
@@ -1147,23 +1168,19 @@ public:
 	int *open_pairs; // [m2]
 	int *open_pair_idx; // [m2]
 
-	void init_basic(int argc, const char **argv,
-		const char *input_prefix, const char *base_fname,
-		int starter_size,
-		int verbose_level);
-	void read_arguments(int argc, const char **argv);
 	regular_ls_classify();
 	~regular_ls_classify();
 	void null();
 	void freeself();
+	void init_and_run(
+			regular_linear_space_description *Descr,
+			int verbose_level);
 	void init_group(int verbose_level);
 	void init_action_on_k_subsets(int onk, int verbose_level);
 	void init_generator(
-		int f_has_initial_pair_covering, int *initial_pair_covering,
-		strong_generators *Strong_gens,
-		int verbose_level);
-	void compute_starter(
-		int f_draw_poset, int f_embedded, int f_sideways, int verbose_level);
+			poset_classification_control *Control,
+			strong_generators *Strong_gens,
+			int verbose_level);
 	void early_test_func(long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,

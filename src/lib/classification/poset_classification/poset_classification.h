@@ -259,8 +259,6 @@ public:
 	int q;
 
 
-	//char label[1000];
-
 	int f_independence_condition;
 	int independence_condition_value;
 
@@ -358,7 +356,6 @@ public:
 		int argc, const char **argv,
 		int verbose_level);
 	void print();
-	//void init_labels(char *problem_label1000, char *problem_label_with_path1000);
 
 };
 

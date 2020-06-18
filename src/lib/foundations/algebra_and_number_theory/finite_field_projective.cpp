@@ -32,6 +32,7 @@ void finite_field::create_projective_variety(
 		const char *variety_label,
 		int variety_nb_vars, int variety_degree,
 		const char *variety_coeffs,
+		monomial_ordering_type Monomial_ordering_type,
 		char *fname1000, int &nb_pts, long int *&Pts,
 		int verbose_level)
 {
@@ -48,6 +49,7 @@ void finite_field::create_projective_variety(
 
 	HPD->init(this, variety_nb_vars, variety_degree,
 			FALSE /* f_init_incidence_structure */,
+			Monomial_ordering_type,
 			verbose_level);
 
 	HPD->print_monomial_ordering(cout);
@@ -108,6 +110,7 @@ void finite_field::create_projective_curve(
 		const char *variety_label,
 		int curve_nb_vars, int curve_degree,
 		const char *curve_coeffs,
+		monomial_ordering_type Monomial_ordering_type,
 		char *fname, int &nb_pts, long int *&Pts,
 		int verbose_level)
 {
@@ -124,6 +127,7 @@ void finite_field::create_projective_curve(
 
 	HPD->init(this, 2, curve_degree,
 			FALSE /* f_init_incidence_structure */,
+			Monomial_ordering_type,
 			verbose_level);
 
 	HPD->print_monomial_ordering(cout);
@@ -5258,6 +5262,7 @@ void finite_field::do_draw_points_in_plane(
 void finite_field::do_ideal(int n,
 		long int *set_in, int set_size, int degree,
 		long int *&set_out, int &size_out,
+		monomial_ordering_type Monomial_ordering_type,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -5280,6 +5285,7 @@ void finite_field::do_ideal(int n,
 
 	HPD->init(this, n + 1, degree,
 		FALSE /* f_init_incidence_structure */,
+		Monomial_ordering_type,
 		verbose_level);
 
 	Kernel = NEW_int(HPD->nb_monomials * HPD->nb_monomials);

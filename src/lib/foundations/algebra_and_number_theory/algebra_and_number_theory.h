@@ -636,7 +636,7 @@ public:
 		int &group_order, int verbose_level);
 	int is_unit_vector(int *v, int len, int k);
 	void make_Fourier_matrices(
-			int omega, int n, int *N, int **A, int *Omega, int verbose_level);
+			int omega, int k, int *N, int **A, int *Omega, int verbose_level);
 
 	// #########################################################################
 	// finite_field_linear_groups.cpp
@@ -815,12 +815,14 @@ public:
 			const char *variety_label,
 			int variety_nb_vars, int variety_degree,
 			const char *variety_coeffs,
+			monomial_ordering_type Monomial_ordering_type,
 			char *fname1000, int &nb_pts, long int *&Pts,
 			int verbose_level);
 	void create_projective_curve(
 			const char *variety_label,
 			int curve_nb_vars, int curve_degree,
 			const char *curve_coeffs,
+			monomial_ordering_type Monomial_ordering_type,
 			char *fname, int &nb_pts, long int *&Pts,
 			int verbose_level);
 	void PG_element_normalize(
@@ -1056,7 +1058,8 @@ public:
 	void do_ideal(int n,
 			long int *set_in, int set_size, int degree,
 			long int *&set_out, int &size_out,
-		int verbose_level);
+			monomial_ordering_type Monomial_ordering_type,
+			int verbose_level);
 	void PG_element_modified_not_in_subspace_perm(int n, int m,
 		long int *orbit, long int *orbit_inv,
 		int verbose_level);
@@ -1518,7 +1521,7 @@ public:
 // homogeneous_polynomial_domain.cpp
 // #############################################################################
 
-//! homogeneous polynomials in n variables over a finite field
+//! homogeneous polynomials of degree degree in n variables over a finite field GF(q)
 
 
 class homogeneous_polynomial_domain {
@@ -1527,6 +1530,7 @@ public:
 	int q;
 	int n; // number of variables
 	int degree;
+	enum monomial_ordering_type Monomial_ordering_type;
 	finite_field *F;
 	int nb_monomials;
 	int *Monomials; // [nb_monomials * n]
@@ -1566,8 +1570,12 @@ public:
 	void freeself();
 	void null();
 	void init(finite_field *F, int nb_vars, int degree, 
-		int f_init_incidence_structure, int verbose_level);
-	void make_monomials(int verbose_level);
+		int f_init_incidence_structure,
+		monomial_ordering_type Monomial_ordering_type,
+		int verbose_level);
+	void make_monomials(
+			monomial_ordering_type Monomial_ordering_type,
+			int verbose_level);
 	void rearrange_monomials_by_partition_type(int verbose_level);
 	int index_of_monomial(int *v);
 	void affine_evaluation_kernel(
@@ -1610,6 +1618,7 @@ public:
 	void vanishing_ideal(long int *Pts, int nb_pts, int &r, int *Kernel,
 		int verbose_level);
 	int compare_monomials(int *M1, int *M2);
+	int compare_monomials_PART(int *M1, int *M2);
 	void print_monomial_ordering(std::ostream &ost);
 
 

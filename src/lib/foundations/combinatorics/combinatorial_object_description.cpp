@@ -104,6 +104,7 @@ combinatorial_object_description::combinatorial_object_description()
 	variety_label = NULL;
 	variety_degree = 0;
 	variety_coeffs = NULL;
+	Monomial_ordering_type = t_PART;
 
 
 	f_projective_curve = FALSE;
@@ -344,6 +345,14 @@ int combinatorial_object_description::read_arguments(int argc, const char **argv
 					<< curve_nb_vars << " "
 					<< curve_degree << " "
 					<< curve_coeffs << endl;
+		}
+		else if (strcmp(argv[i], "-monomial_type_LEX") == 0) {
+			Monomial_ordering_type = t_LEX;
+			cout << "-monomial_type_LEX " << endl;
+		}
+		else if (strcmp(argv[i], "-monomial_type_PART") == 0) {
+			Monomial_ordering_type = t_PART;
+			cout << "-monomial_type_PART " << endl;
 		}
 		else if (strcmp(argv[i], "-end") == 0) {
 			return i;

@@ -325,6 +325,7 @@ void boolean_function::setup_polynomial_rings(int verbose_level)
 	for (degree = 1; degree <= n; degree++) {
 		Poly[degree].init(Fq, nb_vars, degree,
 				FALSE /* f_init_incidence_structure */,
+				t_PART,
 				0 /* verbose_level */);
 		A_poly[degree] = NEW_int(Poly[degree].nb_monomials);
 		B_poly[degree] = NEW_int(Poly[degree].nb_monomials);
