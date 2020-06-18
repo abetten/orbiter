@@ -1067,7 +1067,7 @@ void algebra_global::NumberTheoreticTransform(int k, int q, int verbose_level)
 
 	F->Kronecker_product_square_but_arbitrary(A[k - 1], Id2,
 			N[k - 1], 2, T[k - 1], sz, 0 /*verbose_level */);
-	if (sz != N[k]]) {
+	if (sz != N[k]) {
 		cout << "sz != N[k]" << endl;
 		exit(1);
 	}
