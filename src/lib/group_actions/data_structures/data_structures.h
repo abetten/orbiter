@@ -421,8 +421,10 @@ public:
 		int points_on_grassmannian_k;
 		int f_orthogonal;
 		int orthogonal_epsilon;
-		int f_homogeneous_polynomials;
+		int f_homogeneous_polynomials_LEX;
+		int f_homogeneous_polynomials_PART;
 		int homogeneous_polynomials_degree;
+
 
 
 	//int f_group = FALSE;
@@ -460,7 +462,8 @@ public:
 
 	int f_canonical_form;
 	const char *canonical_form_fname_base;
-	int f_ideal;
+	int f_ideal_LEX;
+	int f_ideal_PART;
 	int ideal_degree;
 	//int f_find_Eckardt_points_from_arc = FALSE;
 

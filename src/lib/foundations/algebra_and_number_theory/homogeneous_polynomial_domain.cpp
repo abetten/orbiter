@@ -21,6 +21,7 @@ homogeneous_polynomial_domain::homogeneous_polynomial_domain()
 	q = 0;
 	n = 0;
 	degree = 0;
+	Monomial_ordering_type = t_LEX;
 	F = NULL;
 	nb_monomials = 0;
 	Monomials = NULL;
@@ -136,6 +137,7 @@ void homogeneous_polynomial_domain::null()
 
 void homogeneous_polynomial_domain::init(finite_field *F,
 		int n, int degree, int f_init_incidence_structure,
+		monomial_ordering_type Monomial_ordering_type,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -148,6 +150,7 @@ void homogeneous_polynomial_domain::init(finite_field *F,
 	q = F->q;
 	homogeneous_polynomial_domain::n = n;
 	homogeneous_polynomial_domain::degree = degree;
+	homogeneous_polynomial_domain::Monomial_ordering_type = Monomial_ordering_type;
 	
 	v = NEW_int(n);
 	type1 = NEW_int(degree + 1);
@@ -156,7 +159,7 @@ void homogeneous_polynomial_domain::init(finite_field *F,
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::init before make_monomials" << endl;
 	}
-	make_monomials(verbose_level);
+	make_monomials(Monomial_ordering_type, verbose_level);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::init after make_monomials" << endl;
 	}
@@ -192,7 +195,9 @@ void homogeneous_polynomial_domain::init(finite_field *F,
 	
 }
 
-void homogeneous_polynomial_domain::make_monomials(int verbose_level)
+void homogeneous_polynomial_domain::make_monomials(
+		monomial_ordering_type Monomial_ordering_type,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a, h, idx, t;
@@ -254,10 +259,15 @@ void homogeneous_polynomial_domain::make_monomials(int verbose_level)
 
 	FREE_OBJECT(D);
 	
+	if (Monomial_ordering_type == t_PART) {
 
+		if (f_v) {
+			cout << "homogeneous_polynomial_domain::make_monomials rearranging by partition type:" << endl;
+		}
+		rearrange_monomials_by_partition_type(verbose_level);
 
-	rearrange_monomials_by_partition_type(verbose_level);
-	
+	}
+
 	if (f_v) {
 		cout << "After rearranging by type:" << endl;
 		if (nb_monomials < 100) {
@@ -505,7 +515,24 @@ int homogeneous_polynomial_domain::index_of_monomial(int *v)
 		homogeneous_polynomial_domain_compare_monomial_with, 
 		this /* extra_data */, 0 /* verbose_level */)) {
 		cout << "homogeneous_polynomial_domain::index_of_monomial "
-				"Did not find the monomial" << endl;
+				"Did not find the monomial v=";
+		int_vec_print(cout, v, n);
+		cout << endl;
+		cout << "Monomials:" << endl;
+		//int_matrix_print(Monomials, nb_monomials, n);
+		int i;
+		for (i = 0; i < nb_monomials; i++) {
+			cout << setw(3) << i << " : ";
+			int_vec_print(cout, Monomials + i * n, n);
+			cout << endl;
+		}
+		cout << "homogeneous_polynomial_domain::index_of_monomial "
+				"Did not find the monomial v=";
+		int_vec_print(cout, v, n);
+		cout << endl;
+		Sorting.search_general(Monomials, nb_monomials, v, idx,
+				homogeneous_polynomial_domain_compare_monomial_with,
+				this /* extra_data */, 3);
 		exit(1);
 	}
 	return idx;
@@ -847,6 +874,10 @@ void homogeneous_polynomial_domain::enumerate_points(int *coeff,
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::enumerate_points "
 				"P->N_points=" << P->N_points << endl;
+		print_equation_with_line_breaks_tex(cout,
+				coeff, 8 /* nb_terms_per_line*/,
+				"\\\\\n");
+		cout << endl;
 	}
 	nb_pts = 0;
 	for (rk = 0; rk < P->N_points; rk++) {
@@ -1313,6 +1344,21 @@ void homogeneous_polynomial_domain::vanishing_ideal(long int *Pts,
 }
 
 int homogeneous_polynomial_domain::compare_monomials(int *M1, int *M2)
+{
+	if (Monomial_ordering_type == t_PART) {
+		return compare_monomials_PART(M1, M2);
+	}
+	if (Monomial_ordering_type == t_LEX) {
+		return int_vec_compare(M1, M2, n) * -1;
+	}
+	else {
+		cout << "homogeneous_polynomial_domain::compare_monomials "
+				"monomial ordering unrecognized" << endl;
+		exit(1);
+	}
+}
+
+int homogeneous_polynomial_domain::compare_monomials_PART(int *M1, int *M2)
 {
 	int h, a;
 	int ret = 0;

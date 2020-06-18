@@ -179,6 +179,7 @@ public:
 	const char *variety_label;
 	int variety_degree;
 	const char *variety_coeffs;
+	monomial_ordering_type Monomial_ordering_type;
 
 
 	int f_projective_curve;

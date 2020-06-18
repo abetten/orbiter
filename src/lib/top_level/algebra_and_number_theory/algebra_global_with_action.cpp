@@ -2870,6 +2870,7 @@ void algebra_global_with_action::investigate_surface_and_write_report2(
 
 			HPD->init(SC->F, 3, 2 /* degree */,
 					TRUE /* f_init_incidence_structure */,
+					t_PART,
 					verbose_level);
 
 			action *A_on_poly;

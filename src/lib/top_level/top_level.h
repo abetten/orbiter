@@ -135,7 +135,7 @@ class group_theoretic_activity_description;
 class graph_theoretic_activity_description;
 class group_theoretic_activity;
 class packing_was_description;
-
+class regular_linear_space_description;
 
 // #############################################################################
 // representatives.cpp

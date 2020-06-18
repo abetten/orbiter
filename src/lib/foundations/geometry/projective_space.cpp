@@ -4044,14 +4044,17 @@ void projective_space::report(ostream &ost)
 	Poly2->init(F,
 			n + 1 /* nb_vars */, 2 /* degree */,
 			FALSE /* f_init_incidence_structure */,
+			t_PART,
 			verbose_level);
 	Poly3->init(F,
 			n + 1 /* nb_vars */, 3 /* degree */,
 			FALSE /* f_init_incidence_structure */,
+			t_PART,
 			verbose_level);
 	Poly4->init(F,
 			n + 1 /* nb_vars */, 4 /* degree */,
 			FALSE /* f_init_incidence_structure */,
+			t_PART,
 			verbose_level);
 
 	Poly2->print_monomial_ordering(ost);

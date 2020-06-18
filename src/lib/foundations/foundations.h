@@ -444,6 +444,11 @@ class pentomino_puzzle;
 #endif
 
 
+enum monomial_ordering_type {
+	t_LEX, // lexicographical
+	t_PART, // by partition type
+};
+
 
 enum object_in_projective_space_type {
 	t_PTS, // points
@@ -458,6 +463,7 @@ enum diophant_equation_type {
 	t_ZOR // zero or equal to the given value
 }; 
 
+typedef enum monomial_ordering_type monomial_ordering_type;
 typedef enum diophant_equation_type diophant_equation_type;
 
 

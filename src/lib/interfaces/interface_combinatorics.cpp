@@ -76,6 +76,9 @@ interface_combinatorics::interface_combinatorics()
 	maximal_arc_parameters_q = 0;
 	maximal_arc_parameters_r = 0;
 	f_pentomino_puzzle = FALSE;
+
+	f_regular_linear_space_classify = FALSE;
+	Rls_descr = NULL;
 }
 
 
@@ -150,6 +153,9 @@ void interface_combinatorics::print_help(int argc,
 	}
 	else if (strcmp(argv[i], "-pentomino_puzzle") == 0) {
 		cout << "-pentomino_puzzle" << endl;
+	}
+	else if (strcmp(argv[i], "-regular_linear_space_classify") == 0) {
+		cout << "-regular_linear_space_classify <description>" << endl;
 	}
 }
 
@@ -226,6 +232,9 @@ int interface_combinatorics::recognize_keyword(int argc,
 		return true;
 	}
 	else if (strcmp(argv[i], "-pentomino_puzzle") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-regular_linear_space_classify") == 0) {
 		return true;
 	}
 	return false;
@@ -418,6 +427,24 @@ void interface_combinatorics::read_arguments(int argc,
 			f_pentomino_puzzle = TRUE;
 			cout << "-pentomino_puzzle " <<endl;
 		}
+		else if (strcmp(argv[i], "-regular_linear_space_classify") == 0) {
+			f_regular_linear_space_classify = TRUE;
+
+			cout << "-regular_linear_space_classify " << endl;
+
+			Rls_descr = NEW_OBJECT(regular_linear_space_description);
+			i += Rls_descr->read_arguments(argc - i - 1,
+				argv + i + 1, verbose_level) + 1;
+			cout << "interface_combinatorics::read_arguments finished "
+					"reading -regular_linear_space_classify" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+
+			cout << "-regular_linear_space_classify " <<endl;
+		}
 	}
 	cout << "interface_combinatorics::read_arguments done" << endl;
 }
@@ -425,6 +452,11 @@ void interface_combinatorics::read_arguments(int argc,
 
 void interface_combinatorics::worker(int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_combinatorics::worker" << endl;
+	}
 	if (f_create_combinatorial_object) {
 		do_create_combinatorial_object(verbose_level);
 	}
@@ -516,6 +548,22 @@ void interface_combinatorics::worker(int verbose_level)
 		P->main(verbose_level);
 
 		FREE_OBJECT(P);
+
+	}
+	else if (f_regular_linear_space_classify) {
+
+		regular_ls_classify *Rls;
+
+		Rls = NEW_OBJECT(regular_ls_classify);
+
+		if (f_v) {
+			cout << "interface_combinatorics::worker before Rls->init_and_run" << endl;
+		}
+		Rls->init_and_run(Rls_descr, verbose_level);
+		if (f_v) {
+			cout << "interface_combinatorics::worker after Rls->init_and_run" << endl;
+		}
+		FREE_OBJECT(Rls);
 
 	}
 }
