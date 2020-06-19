@@ -12,9 +12,14 @@ main: main.cpp Graph.h RainbowClique.h
 	$(CC) $(CFLAGS) $(CSTD) $(OPTFLAGS) $(INCLUDES) $< -o $@
 	
 
-main_k_clique: main_k_clique.cpp Graph.h KClique.h
-	$(CC) $(CFLAGS) $(CSTD) $(OPTFLAGS) $(INCLUDES) $< -o $@
+main_k_clique: KClique.o main_k_clique.o
+	$(CC) $(CFLAGS) $(CSTD) $(OPTFLAGS) $(INCLUDES) $^ -o $@
 
+KClique.o: KClique.cpp KClique.h Graph.h
+	$(CC) $(CFLAGS) $(CSTD) $(OPTFLAGS) $(INCLUDES) -c $< -o $@
+
+main_k_clique.o: main_k_clique.cpp Graph.h
+	$(CC) $(CFLAGS) $(CSTD) $(OPTFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	- rm -rf *.o main main_k_clique

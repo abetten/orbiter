@@ -12,7 +12,7 @@
 #include <algorithm>
 #include <iterator>
 #include <limits>
-#include <unordered_set>
+#include <atomic>
 #include <string>
 #include <math.h>
 
@@ -22,25 +22,33 @@
 using std::vector;
 using std::cout;
 using std::endl;
+using std::atomic;
 
 class KClique {
 public:
 	template <typename T, typename U>
 	__forceinline__
 	static void find_cliques (Graph<T,U>& G, vector<vector<T>>& soln, uint k, size_t n_threads=0) {
-		const size_t nThreads = (n_threads == 0) ? std::thread::hardware_concurrency() : n_threads;
+		current_progress = 0;
+		total_progress = G.nb_vertices;
+
+		const register size_t nThreads = (n_threads == 0) ? std::thread::hardware_concurrency() : n_threads;
 		std::thread threads [nThreads];
 		PARAMS<T> params [nThreads];
 
+		// Initialize the params for every thread
 		for (size_t i=0; i<nThreads; ++i) {
 			params[i].init(i, k, G.nb_vertices, nThreads);
 			threads[i] = std::thread(find_cliques_parallel<T,U>, 0, std::ref(params[i]), std::ref(G));
 		}
 
+		// start the worker threads
 		for (size_t i=0; i<nThreads; ++i) threads[i].join();
 
+		printf("Progress: %3.2f%%    \n", current_progress/(double)total_progress*100.0);
+
 		// Find the total number of solutions
-		size_t nb_sols = 0;
+		register size_t nb_sols = 0;
 		for (size_t i=0; i<nThreads; ++i) {
 			nb_sols += params[i].t_solutions.size();
 		}
@@ -53,6 +61,9 @@ public:
 
 
 private:
+	static atomic<size_t> current_progress;
+	static size_t total_progress;
+
 	template <typename T>
 	class PARAMS {
 	public:
@@ -71,6 +82,7 @@ private:
 			memset(current_cliques, -1, sizeof(T)*k);
 			candidates = new T [k * (num_nodes+1)] ();
 			for (uint i=0; i<num_nodes; ++i) candidates[i] = i;
+			t_solutions.reserve(100);
 		}
 
 		__forceinline__
@@ -81,7 +93,6 @@ private:
 		uint8_t tid = 0;	//
 		T* current_cliques = NULL;	// Index of current clique
 		T* candidates = NULL;
-		size_t nb_sol = 0; // number of solutions found by a thread
 		uint8_t n_threads = 0;
 		uint k = 0;
 		size_t depth = 0;
@@ -95,26 +106,23 @@ private:
 	template <typename T, typename U>
 	static void find_cliques_parallel (size_t depth, PARAMS<T>& param, Graph<T,U>& G) {
 		if (depth == param.k) {
-			param.nb_sol += 1;
-			param.t_solutions.emplace_back(vector<T>());
-			for (size_t i=0; i<depth; ++i)
-				param.t_solutions.at(param.t_solutions.size()-1).emplace_back(
-						G.get_label(param.current_cliques[i])
-				);
+			param.t_solutions.emplace_back({param.current_cliques, param.current_cliques+param.k});
 			return;
 		}
-
 		if (depth == 0) {
-			for (T pt=0; pt < G.nb_vertices; ++pt) {
+			register size_t nb_vertices = G.nb_vertices;
+			for (T pt=0; pt < nb_vertices; ++pt) {
 				if ((pt % param.n_threads) == param.tid) {
+					printf("Progress: %3.2f%%    \r", current_progress/(double)total_progress*100.0);
 					param.current_cliques[depth] = pt;
 					populate_adjacency(depth, param, G, pt);
 					find_cliques_parallel(depth+1, param, G);
+					current_progress += 1; // increment current progress
 				}
 			}
 		} else {
-			T* candidate_nodes = param.get_candidates(depth-1);
-			T num_candidate_nodes = candidate_nodes[0];
+			register T* candidate_nodes = param.get_candidates(depth-1);
+			register T num_candidate_nodes = candidate_nodes[0];
 			for (T i=0; i < num_candidate_nodes; ++i) {
 				T pt = candidate_nodes[i+1];
 				param.current_cliques[depth] = pt;
