@@ -15,6 +15,7 @@
 #include <atomic>
 #include <string>
 #include <math.h>
+#include <CPPLOGGER_ASYNC.h>
 
 #ifndef SRC_LIB_FOUNDATIONS_GRAPH_THEORY_CLIQUE_KCLIQUE_H_
 #define SRC_LIB_FOUNDATIONS_GRAPH_THEORY_CLIQUE_KCLIQUE_H_
@@ -37,26 +38,33 @@ public:
 		PARAMS<T> params [nThreads];
 
 		// Initialize the params for every thread
+		logger_info("Initializing params for each thread");
 		for (size_t i=0; i<nThreads; ++i) {
 			params[i].init(i, k, G.nb_vertices, nThreads);
 			threads[i] = std::thread(find_cliques_parallel<T,U>, 0, std::ref(params[i]), std::ref(G));
 		}
+		logger_info("Done initializing params for each thread");
 
 		// start the worker threads
+		logger_info("Starting worker threads");
 		for (size_t i=0; i<nThreads; ++i) threads[i].join();
 
-		printf("Progress: %3.2f%%    \n", current_progress/(double)total_progress*100.0);
+		logger_info("All worker threads done.");
 
 		// Find the total number of solutions
+		logger_info("Reserving the solutions vector");
 		register size_t nb_sols = 0;
 		for (size_t i=0; i<nThreads; ++i) {
 			nb_sols += params[i].t_solutions.size();
 		}
 		soln.reserve(nb_sols);
 
+		logger_info("Adding solutions to the solutions vector");
 		for (size_t i=0; i<nThreads; ++i) {
 			std::move(params[i].t_solutions.begin(), params[i].t_solutions.end(), std::back_inserter(soln));
 		}
+
+		logger_info("Done finding cliques.");
 	}
 
 
@@ -106,7 +114,7 @@ private:
 	template <typename T, typename U>
 	static void find_cliques_parallel (size_t depth, PARAMS<T>& param, Graph<T,U>& G) {
 		if (depth == param.k) {
-			param.t_solutions.emplace_back({param.current_cliques, param.current_cliques+param.k});
+			param.t_solutions.emplace_back(vector<T>(param.current_cliques, param.current_cliques+param.k));
 			return;
 		}
 		if (depth == 0) {
