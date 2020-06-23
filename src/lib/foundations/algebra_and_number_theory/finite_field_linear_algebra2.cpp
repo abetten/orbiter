@@ -2109,10 +2109,11 @@ int finite_field::is_unit_vector(int *v, int len, int k)
 
 
 void finite_field::make_Fourier_matrices(
-		int omega, int k, int *N, int **A, int *Omega, int verbose_level)
+		int omega, int k, int *N, int **A, int **Av,
+		int *Omega, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int h, i, j;
+	int h, i, j, om;
 
 	if (f_v) {
 		cout << "finite_field::make_Fourier_matrices" << endl;
@@ -2125,9 +2126,20 @@ void finite_field::make_Fourier_matrices(
 
 	for (h = k; h >= 0; h--) {
 		A[h] = NEW_int(N[h] * N[h]);
+		om = Omega[h];
 		for (i = 0; i < N[h]; i++) {
 			for (j = 0; j < N[h]; j++) {
-				A[h][i * N[h] + j] = power(Omega[h], (i * j) % N[k]);
+				A[h][i * N[h] + j] = power(om, (i * j) % N[k]);
+			}
+		}
+	}
+
+	for (h = k; h >= 0; h--) {
+		Av[h] = NEW_int(N[h] * N[h]);
+		om = inverse(Omega[h]);
+		for (i = 0; i < N[h]; i++) {
+			for (j = 0; j < N[h]; j++) {
+				Av[h][i * N[h] + j] = power(om, (i * j) % N[k]);
 			}
 		}
 	}
@@ -2136,6 +2148,11 @@ void finite_field::make_Fourier_matrices(
 		for (h = k; h >= 0; h--) {
 			cout << "A_" << N[h] << ":" << endl;
 			int_matrix_print(A[h], N[h], N[h]);
+		}
+
+		for (h = k; h >= 0; h--) {
+			cout << "Av_" << N[h] << ":" << endl;
+			int_matrix_print(Av[h], N[h], N[h]);
 		}
 	}
 	if (f_v) {

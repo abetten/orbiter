@@ -263,7 +263,7 @@ void algebra_global::factor_cyclotomic(int n, int q, int d,
 		t = FQ.power(Beta, a);
 		FQX.s_i(Xma, 0) = FQ.negate(t);
 		FQX.s_i(Xma, 1) = 1;
-		FQX.integral_division(h, Xma, quo, rem, 0);
+		FQX.division_with_remainder(h, Xma, quo, rem, 0);
 		b = FQX.s_i(rem, 0);
 		if (b == 0) {
 			cout << "zero Beta^" << a << " log "
@@ -854,290 +854,218 @@ void algebra_global::make_Hamming_graph_and_write_file(int n, int q, int f_proje
 
 }
 
-void algebra_global::NumberTheoreticTransform(int k, int q, int verbose_level)
+
+int algebra_global::PHG_element_normalize(finite_ring &R,
+		int *v, int stride, int len)
+// last unit element made one
 {
-	int f_v = (verbose_level >= 1);
+	int i, j, a;
 
-	if (f_v) {
-		cout << "algebra_global::NumberTheoreticTransform" << endl;
-		cout << "algebra_global::NumberTheoreticTransform k = " << k << " q=" << q << endl;
-	}
-
-	int alpha, omega; //, omega_power;
-	int gamma, minus_gamma, minus_one;
-	int idx, i, j, h;
-	int **A;
-	int **A_log;
-	int *Omega;
-
-
-	int **G;
-	int **D;
-	int **T;
-	int **S;
-
-	G = NEW_pint(k + 1);
-	D = NEW_pint(k + 1);
-	T = NEW_pint(k + 1);
-	S = NEW_pint(k + 1);
-
-
-
-	int *N;
-	os_interface Os;
-	finite_field *F = NULL;
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q);
-
-
-	minus_one = F->negate(1);
-	alpha = F->primitive_root();
-	if (f_v) {
-		cout << "alpha = " << alpha << endl;
-	}
-	Omega = NEW_int(k + 1);
-	A = NEW_pint(k + 1);
-	A_log = NEW_pint(k + 1);
-	N = NEW_int(k + 1);
-
-	for (h = 0; h <= k; h++) {
-		N[h] = 1 << h;
-	}
-
-	cout << "N[]:" << endl;
-	int_matrix_print(N, k + 1, 1);
-
-	idx = (q - 1) / N[k];
-	omega = F->power(alpha, idx);
-	if (f_v) {
-		cout << "omega = " << omega << endl;
-	}
-
-
-	F->make_Fourier_matrices(omega, k, N, A, Omega, verbose_level);
-
-
-	cout << "Omega:" << endl;
-	int_matrix_print(Omega, k + 1, 1);
-
-
-	for (h = k; h >= 0; h--) {
-		A_log[h] = NEW_int(N[h] * N[h]);
-		for (i = 0; i < N[h]; i++) {
-			for (j = 0; j < N[h]; j++) {
-				A_log[h][i * N[h] + j] = F->log_alpha(A[h][i * N[h] + j]) + 1;
-			}
-		}
-		cout << "A_" << N[h] << ":" << endl;
-		int_matrix_print(A_log[h], N[h], N[h]);
-	}
-
-	int *X, *Y, *Z;
-	int *X1, *X2;
-	int *Y1, *Y2;
-
-	X = NEW_int(N[k]);
-	Y = NEW_int(N[k]);
-	Z = NEW_int(N[k]);
-	X1 = NEW_int(N[k - 1]);
-	X2 = NEW_int(N[k - 1]);
-	Y1 = NEW_int(N[k - 1]);
-	Y2 = NEW_int(N[k - 1]);
-
-	for (i = 0; i < N[k]; i++) {
-		X[i] = Os.random_integer(q);
-	}
-	cout << "X:" << endl;
-	int_matrix_print(X, 1, N[k]);
-	cout << endl;
-
-
-	int nb_m10, nb_m11, nb_a10, nb_a11;
-	int nb_m20, nb_m21, nb_a20, nb_a21;
-	int nb_m1, nb_a1;
-	int nb_m2, nb_a2;
-
-	nb_m10 = F->nb_times_mult_called();
-	nb_a10 = F->nb_times_add_called();
-
-	F->mult_vector_from_the_right(A[k], X, Y, N[k], N[k]);
-
-	nb_m11 = F->nb_times_mult_called();
-	nb_a11 = F->nb_times_add_called();
-
-	nb_m1 = nb_m11 - nb_m10;
-	nb_a1 = nb_a11 - nb_a10;
-
-	cout << "nb_m1 = " << nb_m1 << " nb_a1 = " << nb_a1 << endl;
-
-
-	cout << "Y:" << endl;
-	int_matrix_print(Y, 1, N[k]);
-	cout << endl;
-
-	//omega_power = omega; //F->power(omega, 2);
-
-	nb_m20 = F->nb_times_mult_called();
-	nb_a20 = F->nb_times_add_called();
-
-
-	for (i = 0; i < N[k - 1]; i++) {
-		X1[i] = X[2 * i + 0];
-		X2[i] = X[2 * i + 1];
-	}
-
-
-	F->mult_vector_from_the_right(A[k - 1], X1, Y1, N[k - 1], N[k - 1]);
-	F->mult_vector_from_the_right(A[k - 1], X2, Y2, N[k - 1], N[k - 1]);
-
-	gamma = 1;
-	minus_gamma = minus_one;
-
-	for (i = 0; i < N[k - 1]; i++) {
-
-		Z[i] = F->add(Y1[i], F->mult(gamma, Y2[i]));
-		Z[N[k - 1] + i] = F->add(Y1[i], F->mult(minus_gamma, Y2[i]));
-
-		gamma = F->mult(gamma, omega);
-		minus_gamma = F->negate(gamma);
-	}
-
-	nb_m21 = F->nb_times_mult_called();
-	nb_a21 = F->nb_times_add_called();
-	nb_m2 = nb_m21 - nb_m20;
-	nb_a2 = nb_a21 - nb_a20;
-
-	cout << "nb_m2 = " << nb_m2 << " nb_a2 = " << nb_a2 << endl;
-
-
-	cout << "Z:" << endl;
-	int_matrix_print(Z, 1, N[k]);
-	cout << endl;
-
-	for (i = 0; i < N[k]; i++) {
-		 if (Y[i] != Z[i]) {
-			 cout << "problem in component " << i << endl;
-			 exit(1);
-		 }
-	}
-
-
-	G[k] = NEW_int(N[k] * N[k]);
-	D[k] = NEW_int(N[k] * N[k]);
-	T[k] = NEW_int(N[k] * N[k]);
-	S[k] = NEW_int(N[k] * N[k]);
-	F->identity_matrix(G[k], N[k]);
-	F->identity_matrix(D[k], N[k]);
-	int_vec_copy(A[k], T[k], N[k] * N[k]);
-	F->identity_matrix(S[k], N[k]);
-
-	G[k - 1] = NEW_int(N[k] * N[k]);
-	D[k - 1] = NEW_int(N[k] * N[k]);
-	T[k - 1] = NEW_int(N[k] * N[k]);
-	S[k - 1] = NEW_int(N[k] * N[k]);
-
-	// G[k - 1]:
-	int_vec_zero(G[k - 1], N[k] * N[k]);
-	for (i = 0; i < N[k - 1]; i++) {
-		G[k - 1][i * N[k] + i] = 1;
-		G[k - 1][i * N[k] + N[k - 1] + i] = 1;
-		G[k - 1][(N[k - 1] + i) * N[k] + i] = 1;
-		G[k - 1][(N[k - 1] + i) * N[k] + N[k - 1] + i] = minus_one;
-	}
-
-	// D[k - 1]:
-	int_vec_zero(D[k - 1], N[k] * N[k]);
-	gamma = 1;
-	for (i = 0; i < N[k - 1]; i++) {
-
-		D[k - 1][i * N[k] + i] = 1;
-		D[k - 1][(N[k - 1] + i) * N[k] + N[k - 1] + i] = gamma;
-
-
-		//Z[i] = F->add(Y1[i], F->mult(gamma, Y2[i]));
-		//Z[N[n - 1] + i] = F->add(Y1[i], F->mult(minus_gamma, Y2[i]));
-
-		gamma = F->mult(gamma, omega);
-		//minus_gamma = F->negate(gamma);
-	}
-	// T[k - 1]:
-	int sz;
-	int Id2[] = {1,0,0,1};
-
-	F->Kronecker_product_square_but_arbitrary(A[k - 1], Id2,
-			N[k - 1], 2, T[k - 1], sz, 0 /*verbose_level */);
-	if (sz != N[k]) {
-		cout << "sz != N[k]" << endl;
+	if (!R.f_chain_ring) {
+		cout << "algebra_global::PHG_element_normalize not a chain ring" << endl;
 		exit(1);
 	}
+	for (i = len - 1; i >= 0; i--) {
+		a = v[i * stride];
+		if (R.is_unit(a)) {
+			if (a == 1)
+				return i;
+			a = R.inverse(a);
+			for (j = len - 1; j >= 0; j--) {
+				v[j * stride] = R.mult(v[j * stride], a);
+				}
+			return i;
+			}
+		}
+	cout << "algebra_global::PHG_element_normalize "
+			"vector is not free" << endl;
+	exit(1);
+}
 
-	//S[k - 1]:
-	int_vec_zero(S[k - 1], N[k] * N[k]);
-	for (i = 0; i < N[k - 1]; i++) {
-		S[k - 1][i * N[k] + 2 * i] = 1;
-		S[k - 1][(N[k - 1] + i) * N[k] + 2 * i + 1] = 1;
+
+int algebra_global::PHG_element_normalize_from_front(finite_ring &R,
+		int *v, int stride, int len)
+// first non unit element made one
+{
+	int i, j, a;
+
+	if (!R.f_chain_ring) {
+		cout << "algebra_global::PHG_element_normalize_from_front not a chain ring" << endl;
+		exit(1);
 	}
+	for (i = 0; i < len; i++) {
+		a = v[i * stride];
+		if (R.is_unit(a)) {
+			if (a == 1)
+				return i;
+			a = R.inverse(a);
+			for (j = 0; j < len; j++) {
+				v[j * stride] = R.mult(v[j * stride], a);
+				}
+			return i;
+			}
+		}
+	cout << "algebra_global::PHG_element_normalize_from_front "
+			"vector is not free" << endl;
+	exit(1);
+}
 
+int algebra_global::PHG_element_rank(finite_ring &R,
+		int *v, int stride, int len)
+{
+	long int i, j, idx, a, b, r1, r2, rk, N;
+	int f_v = FALSE;
+	int *w;
+	int *embedding;
+	geometry_global Gg;
 
-	cout << "G[k-1]:" << endl;
-	int_matrix_print(G[k - 1], N[k], N[k]);
-	cout << endl;
-	cout << "D[k-1]:" << endl;
-	int_matrix_print(D[k - 1], N[k], N[k]);
-	cout << endl;
-	cout << "T[k-1]:" << endl;
-	int_matrix_print(T[k - 1], N[k], N[k]);
-	cout << endl;
-	cout << "S[k-1]:" << endl;
-	int_matrix_print(S[k - 1], N[k], N[k]);
-	cout << endl;
-
-	file_io Fio;
-	const char *fname_F = "ntt_F.csv";
-	const char *fname_G = "ntt_G.csv";
-	const char *fname_D = "ntt_D.csv";
-	const char *fname_T = "ntt_T.csv";
-	const char *fname_S = "ntt_S.csv";
-
-	Fio.int_matrix_write_csv(fname_F, A[k], N[k], N[k]);
-	Fio.int_matrix_write_csv(fname_G, G[k - 1], N[k], N[k]);
-	Fio.int_matrix_write_csv(fname_D, D[k - 1], N[k], N[k]);
-	Fio.int_matrix_write_csv(fname_T, T[k - 1], N[k], N[k]);
-	Fio.int_matrix_write_csv(fname_S, S[k - 1], N[k], N[k]);
-
-	cout << "Written file " << fname_F << " of size " << Fio.file_size(fname_F) << endl;
-	cout << "Written file " << fname_G << " of size " << Fio.file_size(fname_G) << endl;
-	cout << "Written file " << fname_D << " of size " << Fio.file_size(fname_D) << endl;
-	cout << "Written file " << fname_T << " of size " << Fio.file_size(fname_T) << endl;
-	cout << "Written file " << fname_S << " of size " << Fio.file_size(fname_S) << endl;
-
-
-
-
-	int *Tmp1;
-	int *Tmp2;
-
-	Tmp1 = NEW_int(N[k] * N[k]);
-	Tmp2 = NEW_int(N[k] * N[k]);
-
-	F->mult_matrix_matrix(G[k - 1], D[k - 1], Tmp1, N[k], N[k], N[k], 0 /* verbose_level*/);
-	F->mult_matrix_matrix(Tmp1, T[k - 1], Tmp2, N[k], N[k], N[k], 0 /* verbose_level*/);
-	F->mult_matrix_matrix(Tmp2, S[k - 1], Tmp1, N[k], N[k], N[k], 0 /* verbose_level*/);
-
-	for (i = 0; i < N[k] * N[k]; i++) {
-		 if (A[k][i] != Tmp1[i]) {
-			 cout << "matrix product differs from the Fourier matrix, problem in component " << i << endl;
-			 exit(1);
-		 }
+	if (!R.f_chain_ring) {
+		cout << "algebra_global::PHG_element_rank not a chain ring" << endl;
+		exit(1);
 	}
+	if (len <= 0) {
+		cout << "algebra_global::PHG_element_rank len <= 0" << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "the vector before normalization is ";
+		for (i = 0; i < len; i++) {
+			cout << v[i * stride] << " ";
+			}
+		cout << endl;
+		}
+	idx = PHG_element_normalize(R, v, stride, len);
+	if (f_v) {
+		cout << "the vector after normalization is ";
+		for (i = 0; i < len; i++) {
+			cout << v[i * stride] << " ";
+			}
+		cout << endl;
+		}
+	w = NEW_int(len - 1);
+	embedding = NEW_int(len - 1);
+	for (i = 0, j = 0; i < len - 1; i++, j++) {
+		if (i == idx) {
+			j++;
+			}
+		embedding[i] = j;
+		}
+	for (i = 0; i < len - 1; i++) {
+		w[i] = v[embedding[i] * stride];
+		}
+	for (i = 0; i < len - 1; i++) {
+		a = w[i];
+		b = a % R.get_p();
+		v[embedding[i] * stride] = b;
+		w[i] = (a - b) / R.get_p();
+		}
+	if (f_v) {
+		cout << "w=";
+		int_vec_print(cout, w, len - 1);
+		cout << endl;
+		}
+	r1 = Gg.AG_element_rank(R.get_e(), w, 1, len - 1);
+	R.get_Fp()->PG_element_rank_modified_lint(v, stride, len, r2);
 
+	N = Gg.nb_PG_elements(len - 1, R.get_p());
+	rk = r1 * N + r2;
+
+	FREE_int(w);
+	FREE_int(embedding);
+
+	return rk;
+}
+
+void algebra_global::PHG_element_unrank(finite_ring &R,
+		int *v, int stride, int len, int rk)
+{
+	int i, j, idx, r1, r2, N;
+	int f_v = FALSE;
+	int *w;
+	int *embedding;
+	geometry_global Gg;
+
+	if (!R.f_chain_ring) {
+		cout << "algebra_global::PHG_element_unrank not a chain ring" << endl;
+		exit(1);
+	}
+	if (len <= 0) {
+		cout << "algebra_global::PHG_element_unrank len <= 0" << endl;
+		exit(1);
+		}
+
+	w = NEW_int(len - 1);
+	embedding = NEW_int(len - 1);
+
+	N = Gg.nb_PG_elements(len - 1, R.get_p());
+	r2 = rk % N;
+	r1 = (rk - r2) / N;
+
+	Gg.AG_element_unrank(R.get_e(), w, 1, len - 1, r1);
+	R.get_Fp()->PG_element_unrank_modified(v, stride, len, r2);
 
 	if (f_v) {
-		cout << "algebra_global::NumberTheoreticTransform done" << endl;
+		cout << "w=";
+		int_vec_print(cout, w, len - 1);
+		cout << endl;
+		}
+
+	idx = PHG_element_normalize(R, v, stride, len);
+	for (i = 0, j = 0; i < len - 1; i++, j++) {
+		if (i == idx) {
+			j++;
+			}
+		embedding[i] = j;
+		}
+
+	for (i = 0; i < len - 1; i++) {
+		v[embedding[i] * stride] += w[i] * R.get_p();
+		}
+
+
+
+	FREE_int(w);
+	FREE_int(embedding);
+
+}
+
+int algebra_global::nb_PHG_elements(int n, finite_ring &R)
+{
+	int N1, N2;
+	geometry_global Gg;
+
+	if (!R.f_chain_ring) {
+		cout << "algebra_global::nb_PHG_elements not a chain ring" << endl;
+		exit(1);
 	}
+	N1 = Gg.nb_PG_elements(n, R.get_p());
+	N2 = Gg.nb_AG_elements(n, R.get_e());
+	return N1 * N2;
+}
 
+void algebra_global::display_all_PHG_elements(int n, int q)
+{
+	int *v = NEW_int(n + 1);
+	int l;
+	int i, j, a;
+	finite_ring R;
 
+	if (!R.f_chain_ring) {
+		cout << "algebra_global::display_all_PHG_elements not a chain ring" << endl;
+		exit(1);
+	}
+	R.init(q, 0);
+	l = nb_PHG_elements(n, R);
+	for (i = 0; i < l; i++) {
+		PHG_element_unrank(R, v, 1, n + 1, i);
+		cout << i << " : ";
+		for (j = 0; j < n + 1; j++) {
+			cout << v[j] << " ";
+			}
+		a = PHG_element_rank(R, v, 1, n + 1);
+		cout << " : " << a << endl;
+		}
+	FREE_int(v);
 }
 
 

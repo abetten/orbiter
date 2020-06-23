@@ -145,7 +145,16 @@ public:
 	const char *plus_minus_string(int epsilon);
 	const char *plus_minus_letter(int epsilon);
 	void make_Hamming_graph_and_write_file(int n, int q, int f_projective, int verbose_level);
-	void NumberTheoreticTransform(int n, int q, int verbose_level);
+	int PHG_element_normalize(finite_ring &R, int *v, int stride, int len);
+	// last unit element made one
+	int PHG_element_normalize_from_front(finite_ring &R, int *v,
+		int stride, int len);
+	// first non unit element made one
+	int PHG_element_rank(finite_ring &R, int *v, int stride, int len);
+	void PHG_element_unrank(finite_ring &R, int *v, int stride, int len, int rk);
+	int nb_PHG_elements(int n, finite_ring &R);
+	void display_all_PHG_elements(int n, int q);
+
 
 };
 
@@ -254,6 +263,7 @@ public:
 	int absolute_norm(int i);
 	int alpha_power(int i);
 	int log_alpha(int i);
+	int multiplicative_order(int a);
 	int square_root(int i, int &root);
 	int primitive_root();
 	int N2(int a);
@@ -636,7 +646,8 @@ public:
 		int &group_order, int verbose_level);
 	int is_unit_vector(int *v, int len, int k);
 	void make_Fourier_matrices(
-			int omega, int k, int *N, int **A, int *Omega, int verbose_level);
+			int omega, int k, int *N, int **A, int **Av,
+			int *Omega, int verbose_level);
 
 	// #########################################################################
 	// finite_field_linear_groups.cpp
@@ -1135,6 +1146,10 @@ public:
 	void int_vec_print_field_elements(std::ostream &ost, int *v, int len);
 	void int_vec_print_elements_exponential(std::ostream &ost,
 		int *v, int len, const char *symbol_for_print);
+	void make_fname_addition_table_csv(char *fname);
+	void make_fname_multiplication_table_csv(char *fname);
+	void addition_table_save_csv();
+	void multiplication_table_save_csv();
 	void latex_addition_table(std::ostream &f,
 		int f_elements_exponential, const char *symbol_for_print);
 	void latex_multiplication_table(std::ostream &f,
@@ -1197,16 +1212,20 @@ class finite_ring {
 	int *add_table; // [q * q]
 	int *mult_table; // [q * q]
 
-	int *f_is_unit_table;
-	int *negate_table;
-	int *inv_table;
+	int *f_is_unit_table; // [q]
+	int *negate_table; // [q]
+	int *inv_table; // [q]
+
+	// only defined if we are a chain ring:
+	int p;
+	int e;
+	finite_field *Fp;
 
 public:
 	int q;
-	int p;
-	int e;
 
-	finite_field *Fp;
+	int f_chain_ring;
+
 
 
 	finite_ring();
@@ -1214,6 +1233,9 @@ public:
 	void null();
 	void freeself();
 	void init(int q, int verbose_level);
+	int get_e();
+	int get_p();
+	finite_field *get_Fp();
 	int zero();
 	int one();
 	int is_zero(int i);
@@ -1232,16 +1254,6 @@ public:
 		// A is a m x n matrix,
 		// P is a m x Pn matrix (if f_P is TRUE)
 };
-
-int PHG_element_normalize(finite_ring &R, int *v, int stride, int len);
-// last unit element made one
-int PHG_element_normalize_from_front(finite_ring &R, int *v,
-	int stride, int len);
-// first non unit element made one
-int PHG_element_rank(finite_ring &R, int *v, int stride, int len);
-void PHG_element_unrank(finite_ring &R, int *v, int stride, int len, int rk);
-int nb_PHG_elements(int n, finite_ring &R);
-void display_all_PHG_elements(int n, int q);
 
 
 // #############################################################################
@@ -1521,19 +1533,16 @@ public:
 // homogeneous_polynomial_domain.cpp
 // #############################################################################
 
-//! homogeneous polynomials of degree degree in n variables over a finite field GF(q)
+//! homogeneous polynomials of degree degree in nb_variables variables over a finite field GF(q)
 
 
 class homogeneous_polynomial_domain {
 
-public:
-	int q;
-	int n; // number of variables
-	int degree;
+private:
 	enum monomial_ordering_type Monomial_ordering_type;
 	finite_field *F;
 	int nb_monomials;
-	int *Monomials; // [nb_monomials * n]
+	int *Monomials; // [nb_monomials * nb_variables]
 	char **symbols;
 	char **symbols_latex;
 	char **monomial_symbols;
@@ -1542,15 +1551,15 @@ public:
 	int *Variables; // [nb_monomials * degree]
 		// Variables contains the monomials written out 
 		// as a sequence of length degree 
-		// with entries in 0,..,n-1.
+		// with entries in 0,..,nb_variables-1.
 		// the entries are listed in increasing order.
 		// For instance, the monomial x_0^2x_1x_3 
 		// is recorded as 0,0,1,3
-	int nb_affine; // n^degree
+	int nb_affine; // nb_variables^degree
 	int *Affine; // [nb_affine * degree]
 		// the affine elements are used for foiling 
 		// when doing a linear substitution
-	int *v; // [n]
+	int *v; // [nb_variables]
 	int *Affine_to_monomial; // [nb_affine]
 		// for each vector in the affine space, 
 		// record the monomial associated with it.
@@ -1565,6 +1574,11 @@ public:
 	int *type1; // [degree + 1]
 	int *type2; // [degree + 1]
 
+public:
+	int q;
+	int nb_variables; // number of variables, used to be n
+	int degree;
+
 	homogeneous_polynomial_domain();
 	~homogeneous_polynomial_domain();
 	void freeself();
@@ -1573,6 +1587,19 @@ public:
 		int f_init_incidence_structure,
 		monomial_ordering_type Monomial_ordering_type,
 		int verbose_level);
+	int get_nb_monomials();
+	projective_space *get_P();
+	finite_field *get_F();
+	int get_monomial(int i, int j);
+	int *get_monomial_pointer(int i);
+	int evaluate_monomial(int idx_of_monomial, int *coords);
+	void remake_symbols(int symbol_offset,
+			const char *symbol_mask, const char *symbol_mask_latex,
+			int verbose_level);
+	void remake_symbols_interval(int symbol_offset,
+			int from, int len,
+			const char *symbol_mask, const char *symbol_mask_latex,
+			int verbose_level);
 	void make_monomials(
 			monomial_ordering_type Monomial_ordering_type,
 			int verbose_level);
@@ -1606,6 +1633,9 @@ public:
 	void substitute_line(
 		int *coeff_in, int *coeff_out,
 		int *Pt1_coeff, int *Pt2_coeff,
+		int verbose_level);
+	void multiply_mod(
+		int *coeff1, int *coeff2, int *coeff3,
 		int verbose_level);
 	int is_zero(int *coeff);
 	void unrank_point(int *v, int rk);
@@ -1927,6 +1957,75 @@ public:
 };
 
 // #############################################################################
+// number_theoretic_transform.cpp:
+// #############################################################################
+
+//! Fourier transform over finite fields
+
+class number_theoretic_transform {
+public:
+
+	int k;
+	int q;
+
+	finite_field *F; // no ownership, do not destroy
+
+	int *N;
+
+	int alpha, omega;
+	int gamma, minus_gamma, minus_one;
+	int **A;
+	int **Av;
+	int **A_log;
+	int *Omega;
+
+
+	int **G;
+	int **D;
+	int **Dv;
+	int **T;
+	int **Tv;
+	int **P;
+
+	int *X, *Y, *Z;
+	int *X1, *X2;
+	int *Y1, *Y2;
+
+	int **Gr;
+	int **Dr;
+	int **Dvr;
+	int **Tr;
+	int **Tvr;
+	int **Pr;
+
+	int *Tmp1;
+	int *Tmp2;
+
+	int *bit_reversal;
+
+
+	number_theoretic_transform();
+	~number_theoretic_transform();
+	void init(const char *fname_code, int k, int q, int verbose_level);
+	void write_code(const char *fname_code,
+			int verbose_level);
+	void write_code2(std::ostream &ost,
+			int f_forward,
+			int &nb_add, int &nb_negate, int &nb_mult,
+			int verbose_level);
+	void write_code_header(std::ostream &ost,
+			const char *fname_code, int verbose_level);
+	void make_level(int s, int verbose_level);
+	void paste(int **Xr, int **X, int s, int verbose_level);
+	void make_G_matrix(int s, int verbose_level);
+	void make_D_matrix(int s, int verbose_level);
+	void make_T_matrix(int s, int verbose_level);
+	void make_P_matrix(int s, int verbose_level);
+	void multiply_matrix_stack(int **S,
+			int nb, int sz, int *Result, int verbose_level);
+};
+
+// #############################################################################
 // number_theory_domain.cpp:
 // #############################################################################
 
@@ -2020,8 +2119,9 @@ class partial_derivative {
 public:
 	homogeneous_polynomial_domain *H;
 	homogeneous_polynomial_domain *Hd;
+	int *v; // [H->get_nb_monomials()]
 	int variable_idx;
-	int *mapping; // [H->nb_monomials * H->nb_monomials]
+	int *mapping; // [H->get_nb_monomials() * H->get_nb_monomials()]
 
 
 	partial_derivative();
@@ -2042,7 +2142,7 @@ public:
 // #############################################################################
 
 
-//! checking whether any d-1 columns are linearly independent
+//! checking whether any d - 1 columns are linearly independent
 
 
 class rank_checker {
@@ -2213,7 +2313,7 @@ public:
 	void mult_easy(unipoly_object a, unipoly_object b, unipoly_object &c);
 	void mult_mod(unipoly_object a, unipoly_object b, unipoly_object &c, 
 		int factor_polynomial_degree, 
-		int *factor_polynomial_coefficents_negated, 
+		int *factor_polynomial_coefficients_negated,
 		int verbose_level);
 	void Frobenius_matrix_by_rows(int *&Frob,
 		unipoly_object factor_polynomial, int verbose_level);
@@ -2222,9 +2322,9 @@ public:
 		int verbose_level);
 	void Berlekamp_matrix(int *&B, unipoly_object factor_polynomial, 
 		int verbose_level);
-	void integral_division_exact(unipoly_object a, 
+	void exact_division(unipoly_object a,
 		unipoly_object b, unipoly_object &q, int verbose_level);
-	void integral_division(unipoly_object a, unipoly_object b, 
+	void division_with_remainder(unipoly_object a, unipoly_object b,
 		unipoly_object &q, unipoly_object &r, int verbose_level);
 	void derive(unipoly_object a, unipoly_object &b);
 	int compare_euclidean(unipoly_object m, unipoly_object n);

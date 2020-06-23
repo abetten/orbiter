@@ -382,6 +382,7 @@ class diophant_activity_description;
 class diophant_activity;
 class web_of_cubic_curves;
 class pentomino_puzzle;
+class number_theoretic_transform;
 
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)

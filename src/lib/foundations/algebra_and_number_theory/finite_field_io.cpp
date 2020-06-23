@@ -695,6 +695,57 @@ void finite_field::int_vec_print_elements_exponential(ostream &ost,
 	ost << ")";
 }
 
+void finite_field::make_fname_addition_table_csv(char *fname)
+{
+	sprintf(fname, "GF_q%d_addition_table.csv", q);
+}
+
+void finite_field::make_fname_multiplication_table_csv(char *fname)
+{
+	sprintf(fname, "GF_q%d_multiplication_table.csv", q);
+}
+
+void finite_field::addition_table_save_csv()
+{
+	int i, j, k;
+	int *T;
+	file_io Fio;
+
+	T = NEW_int(q * q);
+	for (i = 0; i < q; i++) {
+		for (j = 0; j < q; j++) {
+			k = add(i, j);
+			T[i * q + j] = k;
+		}
+	}
+	char fname[1000];
+
+	make_fname_addition_table_csv(fname);
+	Fio.int_matrix_write_csv(fname, T, q, q);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+}
+
+void finite_field::multiplication_table_save_csv()
+{
+	int i, j, k;
+	int *T;
+	file_io Fio;
+
+	T = NEW_int((q - 1) * (q - 1));
+	for (i = 0; i < q - 1; i++) {
+		for (j = 0; j < q - 1; j++) {
+			k = mult(1 + i, 1 + j);
+			T[i * (q - 1) + j] = k - 1;
+		}
+	}
+	char fname[1000];
+
+	make_fname_multiplication_table_csv(fname);
+	Fio.int_matrix_write_csv(fname, T, q - 1, q - 1);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+}
+
+
 void finite_field::latex_addition_table(ostream &f,
 		int f_elements_exponential, const char *symbol_for_print)
 {

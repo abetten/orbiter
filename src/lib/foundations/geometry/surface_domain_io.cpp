@@ -467,9 +467,9 @@ void surface_domain::print_clebsch_P(ostream &ost)
 		ost << "x_" << h << " &= C_" << h
 				<< "(y_0,y_1,y_2)=\\\\" << endl;
 		f_first = TRUE;
-		for (i = 0; i < Poly3->nb_monomials; i++) {
+		for (i = 0; i < Poly3->get_nb_monomials(); i++) {
 
-			if (Poly3_24->is_zero(CC[h * Poly3->nb_monomials + i])) {
+			if (Poly3_24->is_zero(CC[h * Poly3->get_nb_monomials() + i])) {
 				continue;
 				}
 			ost << "&";
@@ -482,7 +482,7 @@ void surface_domain::print_clebsch_P(ostream &ost)
 				}
 			ost << "\\Big(";
 			Poly3_24->print_equation_with_line_breaks_tex(
-					ost, CC[h * Poly3->nb_monomials + i],
+					ost, CC[h * Poly3->get_nb_monomials() + i],
 					6, "\\\\\n&");
 			ost << "\\Big)" << endl;
 
@@ -532,15 +532,15 @@ void surface_domain::print_clebsch_cubics(ostream &ost)
 	ost << "The Clebsch coefficients are:" << endl;
 	for (h = 0; h < 4; h++) {
 		ost << "C[" << h << "]:" << endl;
-		for (i = 0; i < Poly3->nb_monomials; i++) {
+		for (i = 0; i < Poly3->get_nb_monomials(); i++) {
 
-			if (Poly3_24->is_zero(CC[h * Poly3->nb_monomials + i])) {
+			if (Poly3_24->is_zero(CC[h * Poly3->get_nb_monomials() + i])) {
 				continue;
 				}
 
 			Poly3->print_monomial(ost, i);
 			ost << " \\cdot \\Big(";
-			Poly3_24->print_equation(ost, CC[h * Poly3->nb_monomials + i]);
+			Poly3_24->print_equation(ost, CC[h * Poly3->get_nb_monomials() + i]);
 			ost << "\\Big)" << endl;
 			}
 		}

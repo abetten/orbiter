@@ -803,7 +803,7 @@ public:
 	void get_column_split_partition(int verbose_level, partitionstack &P);
 	void get_row_split_partition(int verbose_level, partitionstack &P);
 	void print_all_schemes();
-	void print_scheme(int h, int f_v);
+	void print_scheme(int h, int verbose_level);
 	void print_scheme_tex(std::ostream &ost, int h);
 	void print_scheme_tex_fancy(std::ostream &ost,
 			int h, int f_label, char *label);
