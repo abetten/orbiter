@@ -107,7 +107,7 @@ void cubic_curve::init(finite_field *F, int verbose_level)
 			t_PART,
 			verbose_level);
 
-	nb_monomials = Poly->nb_monomials;
+	nb_monomials = Poly->get_nb_monomials();
 	if (f_v) {
 		cout << "cubic_curve::init nb_monomials=" << nb_monomials << endl;
 		}
@@ -117,7 +117,7 @@ void cubic_curve::init(finite_field *F, int verbose_level)
 		Partials[i].init(Poly, Poly2, i, verbose_level);
 	}
 
-	gradient = NEW_int(3 * Poly2->nb_monomials);
+	gradient = NEW_int(3 * Poly2->get_nb_monomials());
 
 	if (f_v) {
 		cout << "cubic_curve::init done" << endl;
@@ -159,9 +159,12 @@ int cubic_curve::compute_system_in_RREF(
 	for (i = 0; i < nb_pts; i++) {
 		for (j = 0; j < nb_monomials; j++) {
 			System[i * nb_monomials + j] =
+					Poly->evaluate_monomial(j, Pts + i * 3);
+#if 0
 				F->evaluate_monomial(
-					Poly->Monomials + j * 3,
+					Poly->monomials + j * 3,
 					Pts + i * 3, 3);
+#endif
 			}
 		}
 	if (f_v && FALSE) {
@@ -201,20 +204,20 @@ void cubic_curve::compute_gradient(
 			}
 		if (f_v) {
 			cout << "cubic_curve::compute_gradient eqn_in=";
-			int_vec_print(cout, eqn_in, Poly->nb_monomials);
+			int_vec_print(cout, eqn_in, Poly->get_nb_monomials());
 			cout << " = ";
 			Poly->print_equation(cout, eqn_in);
 			cout << endl;
 			}
 		Partials[i].apply(eqn_in,
-				gradient + i * Poly2->nb_monomials,
+				gradient + i * Poly2->get_nb_monomials(),
 				verbose_level - 2);
 		if (f_v) {
 			cout << "cubic_curve::compute_gradient partial=";
-			int_vec_print(cout, gradient + i * Poly2->nb_monomials,
-					Poly2->nb_monomials);
+			int_vec_print(cout, gradient + i * Poly2->get_nb_monomials(),
+					Poly2->get_nb_monomials());
 			cout << " = ";
-			Poly2->print_equation(cout, gradient + i * Poly2->nb_monomials);
+			Poly2->print_equation(cout, gradient + i * Poly2->get_nb_monomials());
 			cout << endl;
 			}
 	}
@@ -270,12 +273,12 @@ void cubic_curve::compute_singular_points(
 				cout << "cubic_curve::compute_singular_points "
 						"gradient " << i << " = ";
 				int_vec_print(cout,
-						gradient + i * Poly2->nb_monomials,
-						Poly2->nb_monomials);
+						gradient + i * Poly2->get_nb_monomials(),
+						Poly2->get_nb_monomials());
 				cout << endl;
 				}
 			a = Poly2->evaluate_at_a_point(
-					gradient + i * Poly2->nb_monomials, v);
+					gradient + i * Poly2->get_nb_monomials(), v);
 			if (f_vv) {
 				cout << "cubic_curve::compute_singular_points "
 						"value = " << a << endl;
@@ -328,7 +331,7 @@ void cubic_curve::compute_inflexion_points(
 		}
 		for (i = 0; i < 3; i++) {
 			T[i] = Poly2->evaluate_at_a_point(
-					gradient + i * Poly2->nb_monomials, v);
+					gradient + i * Poly2->get_nb_monomials(), v);
 		}
 		for (i = 0; i < 3; i++) {
 			if (T[i]) {

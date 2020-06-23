@@ -504,6 +504,7 @@ void interface_algebra::do_cheat_sheet_GF(int q, int f_poly, const char *poly, i
 	if (f_v) {
 		cout << "interface_algebra::do_cheat_sheet_GF q=" << q << endl;
 	}
+
 	int i;
 	//int f_poly = FALSE;
 	//const char *poly = NULL;
@@ -524,6 +525,49 @@ void interface_algebra::do_cheat_sheet_GF(int q, int f_poly, const char *poly, i
 	}
 	else {
 		F.init(q, 0 /* verbose_level */);
+	}
+
+
+	F.addition_table_save_csv();
+
+	F.multiplication_table_save_csv();
+
+	char fname1[1000];
+	char fname2[1000];
+
+	F.make_fname_addition_table_csv(fname1);
+	F.make_fname_multiplication_table_csv(fname2);
+
+	int box_width = 20;
+
+	{
+		file_io Fio;
+		int *M;
+		int m, n;
+
+		Fio.int_matrix_read_csv(fname1, M, m, n, verbose_level);
+		draw_bitmap(fname1, M, m, n,
+				FALSE, 0, // int f_partition, int part_width,
+				0, NULL, 0, NULL, // int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
+				TRUE /* f_box_width */, box_width,
+				FALSE /* f_invert_colors */,
+				verbose_level);
+		FREE_int(M);
+	}
+
+	{
+		file_io Fio;
+		int *M;
+		int m, n;
+
+		Fio.int_matrix_read_csv(fname2, M, m, n, verbose_level);
+		draw_bitmap(fname2, M, m, n,
+				FALSE, 0, // int f_partition, int part_width,
+				0, NULL, 0, NULL, // int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
+				TRUE /* f_box_width */, box_width,
+				FALSE /* f_invert_colors */,
+				verbose_level);
+		FREE_int(M);
 	}
 
 	{
@@ -548,6 +592,7 @@ void interface_algebra::do_cheat_sheet_GF(int q, int f_poly, const char *poly, i
 	F.cheat_sheet(f, verbose_level);
 
 	F.cheat_sheet_tables(f, verbose_level);
+
 
 	int *power_table;
 	int t;

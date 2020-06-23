@@ -81,7 +81,7 @@ void orbit_of_equations::init(action *A, finite_field *F,
 	orbit_of_equations::SG = SG;
 	orbit_of_equations::AonHPD = AonHPD;
 	
-	nb_monomials = AonHPD->HPD->nb_monomials;
+	nb_monomials = AonHPD->HPD->get_nb_monomials();
 	sz = 1 + nb_monomials;
 	sz_for_compare = 1 + nb_monomials;
 	

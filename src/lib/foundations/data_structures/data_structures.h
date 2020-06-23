@@ -289,7 +289,7 @@ public:
 
 };
 
-void test_page_storage(int f_v);
+void test_page_storage(int verbose_level);
 
 
 // #############################################################################

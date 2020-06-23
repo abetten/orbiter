@@ -2129,9 +2129,9 @@ public:
 	int *field_element_inv; // [plane_order]
 
 
-	int is_desarguesian_plane(int f_v, int f_vv);
-	int identify_field_not_of_prime_order(int f_v, int f_vv);
-	void init_projective_plane(int order, int f_v);
+	int is_desarguesian_plane(int verbose_level);
+	int identify_field_not_of_prime_order(int verbose_level);
+	void init_projective_plane(int order, int verbose_level);
 	void free_projective_plane();
 	void plane_report(std::ostream &ost);
 	int plane_line_through_two_points(int pt1, int pt2);
@@ -2144,16 +2144,16 @@ public:
 	int plane_next_quadrangle(int &pt1, int &pt2, int &pt3, int &pt4);
 	int plane_quadrangle_first_i(int *pt, int i);
 	int plane_quadrangle_next_i(int *pt, int i);
-	void coordinatize_plane(int O, int I, int X, int Y, int *MOLS, int f_v);
+	void coordinatize_plane(int O, int I, int X, int Y, int *MOLS, int verbose_level);
 	// needs pt_labels, points, pts_on_line_x_eq_y, pts_on_line_x_eq_y_labels, 
 	// lines_through_X, lines_through_Y, pts_on_line, MOLS to be allocated
 	int &MOLSsxb(int s, int x, int b);
 	int &MOLSaddition(int a, int b);
 	int &MOLSmultiplication(int a, int b);
-	int ternary_field_is_linear(int *MOLS, int f_v);
+	int ternary_field_is_linear(int *MOLS, int verbose_level);
 	void print_MOLS(std::ostream &ost);
 
-	int is_projective_plane(partitionstack &P, int &order, int f_v, int f_vv);
+	int is_projective_plane(partitionstack &P, int &order, int verbose_level);
 		// if it is a projective plane, the order is returned.
 		// otherwise, 0 is returned.
 	int count_RC(partitionstack &P, int row_cell, int col_cell);

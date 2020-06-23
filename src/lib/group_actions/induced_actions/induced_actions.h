@@ -583,7 +583,7 @@ public:
 
 class action_on_homogeneous_polynomials {
 public:
-	int n; // M->n
+	int n; // the dimension M->n
 	int q;
 	action *A;
 	homogeneous_polynomial_domain *HPD;

@@ -138,7 +138,7 @@ void finite_field::init(int q, int verbose_level)
 	
 	if (f_v) {
 		cout << "finite_field::init q=" << q << endl;
-		}
+	}
 	nb_calls_to_finite_field_init++;
 	finite_field::q = q;
 	NT.factor_prime_power(q, p, e);
@@ -161,7 +161,7 @@ void finite_field::init_symbol_for_print(const char *symbol)
 	if (symbol_for_print) {
 		FREE_char(symbol_for_print);
 		symbol_for_print = NULL;
-		}
+	}
 	symbol_for_print = NEW_char(strlen(symbol) + 1);
 	strcpy(symbol_for_print, symbol);
 }
@@ -176,7 +176,7 @@ void finite_field::init_override_polynomial(int q,
 
 	if (f_v) {
 		cout << "finite_field::init_override_polynomial" << endl;
-		}
+	}
 	override_poly = poly;
 	finite_field::q = q;
 	NT.factor_prime_power(q, p, e);
@@ -184,18 +184,18 @@ void finite_field::init_override_polynomial(int q,
 	if (e > 1) {
 		if (poly == NULL || (poly && strlen(poly) == 0)) {
 			poly = get_primitive_polynomial(p, e, verbose_level);
-			}
+		}
 		else {
 			if (f_vv) {
 				cout << "finite_field::init_override_polynomial, "
 					"using polynomial " << poly << endl;
-				}
 			}
+		}
 		if (f_v) {
 			cout << "finite_field::init_override_polynomial using poly "
 					<< poly << endl;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "finite_field::init_override_polynomial "
 				"GF(" << q << ") = GF(" << p << "^" << e << ")";
@@ -203,25 +203,25 @@ void finite_field::init_override_polynomial(int q,
 			cout << ", polynomial = ";
 			print_minimum_polynomial(p, poly);
 			cout << " = " << poly << endl;
-			}
+		}
 		else {
 			cout << endl;
-			}
 		}
+	}
 	
 	if (poly) {
 		l = strlen(poly);
-		}
+	}
 	else {
 		l = 0;
-		}
+	}
 	polynomial = NEW_char(l + 1);
 	if (poly) {
 		strcpy(polynomial, poly);
-		}
+	}
 	else {
 		polynomial[0] = 0;
-		}
+	}
 	
 	finite_field::q = q;
 	log10_of_q = NT.int_log10(q);
@@ -233,34 +233,34 @@ void finite_field::init_override_polynomial(int q,
 	if (f_vv) {
 		cout << "finite_field::init_override_polynomial "
 				"alpha table created" << endl;
-		}
+	}
 
 
 	if (q <= CREATE_TABLE_UPPER_BOUND) {
 		if (f_vv) {
 			cout << "finite_field::init_override_polynomial creating tables q=" << q << endl;
-			}
+		}
 		add_table = NEW_int(q * q);
 		mult_table = NEW_int(q * q);
 		negate_table = NEW_int(q);
 		inv_table = NEW_int(q);
 		if (e == 1) {
 			create_tables_prime_field(verbose_level - 1);
-			}
+		}
 		else {
 			create_tables_extension_field(verbose_level - 1);
-			}
+		}
 		if (FALSE) {
 			print_add_mult_tables();
-			}
-		f_has_table = TRUE;
 		}
+		f_has_table = TRUE;
+	}
 	else {
 		if (f_v) {
 			cout << "finite_field::init_override_polynomial field size is big, we don't create tables" << endl;
-			}
-		f_has_table = FALSE;
 		}
+		f_has_table = FALSE;
+	}
 	
 	if (f_vv) {
 		cout << "finite_field::init_override_polynomial before init_quadratic_subfield" << endl;
@@ -274,7 +274,7 @@ void finite_field::init_override_polynomial(int q,
 	if (f_vv) {
 		cout << "finite_field::init_override_polynomial computing frobenius_table and "
 				"absolute_trace_table q=" << q << endl;
-		}
+	}
 	frobenius_table = NEW_int(q);
 	absolute_trace_table = NEW_int(q);
 	
@@ -283,12 +283,12 @@ void finite_field::init_override_polynomial(int q,
 		if (FALSE) {
 			cout << "finite_field::init_override_polynomial frobenius_table[" << i << "]="
 					<< frobenius_table[i] << endl;
-			}
 		}
+	}
 	
 	for (i = 0; i < q; i++) {
 		absolute_trace_table[i] = absolute_trace(i);
-		}
+	}
 
 	
 	if (f_vv) {
@@ -297,16 +297,16 @@ void finite_field::init_override_polynomial(int q,
 		if (f_vv && q <= CREATE_TABLE_UPPER_BOUND) {
 			if (e > 1) {
 				print_tables_extension_field(poly);
-				}
+			}
 			else {
 				print_tables();
-				}
 			}
 		}
+	}
 	if (f_vv) {
 		cout << "finite_field::init_override_polynomial "
 				"finished" << endl;
-		}
+	}
 }
 
 int finite_field::has_quadratic_subfield()
@@ -362,16 +362,16 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 	if (f_v) {
 		cout << "finite_field::compute_subfield_polynomial "
 				"for subfield of order " << order_subfield << endl;
-		}
+	}
 	NT.factor_prime_power(order_subfield, p1, e1);
 	if (p1 != p) {
 		cout << "the subfield must have the same characteristic" << endl;
 		exit(1);
-		}
+	}
 	if ((e % e1)) {
 		cout << "is not a subfield" << endl;
 		exit(1);
-		}
+	}
 	finite_field GFp;
 	GFp.init(p, 0);
 
@@ -390,15 +390,16 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 	geometry_global Gg;
 
 	M = NEW_int(e * (e1 + 1));
-	for (i = 0; i < e * (e1 + 1); i++) {
-		M[i] = 0;
-	}
+	int_vec_zero(M, e * (e1 + 1));
+
 	K = NEW_int(e);
 	base_cols = NEW_int(e);
 	q1 = NT.i_power_j(p, e1);
 	subgroup_index = (q - 1) / (q1 - 1);
-	cout << "subfield " << p << "^" << e1 << " : subgroup_index = "
+	if (f_v) {
+		cout << "subfield " << p << "^" << e1 << " : subgroup_index = "
 			<< subgroup_index << endl;
+	}
 	for (i = 0; i <= e1; i++) {
 		j = i * subgroup_index;
 		jj = alpha_power(j);
@@ -407,18 +408,15 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 			unipoly_object elt;
 		
 			Fq.create_object_by_rank(elt, jj, __FILE__, __LINE__, verbose_level);
-			cout << i << " : " << j << " : " << jj << " : ";
-			Fq.print_object(elt, cout);
-			cout << endl;
+			if (f_v) {
+				cout << i << " : " << j << " : " << jj << " : ";
+				Fq.print_object(elt, cout);
+				cout << endl;
+			}
 			Fq.delete_object(elt);
 		}
-		if (f_vv) {
-			cout << "M=" << endl;
-			print_integer_matrix_width(cout, M, 
-				e, e1 + 1, e1 + 1, GFp.log10_of_q);
-		}
 	}
-	if (f_vv) {
+	if (f_v) {
 		cout << "M=" << endl;
 		print_integer_matrix_width(cout, M, 
 			e, e1 + 1, e1 + 1, GFp.log10_of_q);
@@ -436,8 +434,10 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 		cout << "rk=" << rk << endl;
 		exit(1);
 	}
+
 	GFp.matrix_get_kernel(M, e, e1 + 1, base_cols, rk, 
 		kernel_m, kernel_n, K);
+
 	if (f_vv) {
 		cout << "kernel_m=" << kernel_m << endl;
 		cout << "kernel_n=" << kernel_n << endl;
@@ -456,12 +456,15 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 			K[i] = GFp.mult(a, K[i]);
 		}
 	}
+
 	if (f_vv) {
 		cout << "the relation is " << endl;
 		int_vec_print(cout, K, e1 + 1);
 		cout << endl;
 	}
+
 	a = Gg.AG_element_rank(p, K, 1, e1 + 1);
+
 	if (f_v) {
 		unipoly_object elt;
 		
@@ -472,6 +475,7 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 		cout << endl;
 		Fq.delete_object(elt);
 	}
+
 	FREE_int(M);
 	FREE_int(K);
 	FREE_int(base_cols);
@@ -487,7 +491,7 @@ void finite_field::compute_subfields(int verbose_level)
 	
 	if (f_v) {
 		cout << "finite_field::compute_subfields" << endl;
-		}
+	}
 	cout << "subfields of F_{" << q << "}:" << endl;
 	
 	finite_field GFp;
@@ -496,7 +500,7 @@ void finite_field::compute_subfields(int verbose_level)
 	unipoly_domain FX(&GFp);
 	unipoly_object m;
 
-	FX.create_object_by_rank_string(m, polynomial, 0/*verbose_level*/);
+	FX.create_object_by_rank_string(m, polynomial, 0 /*verbose_level*/);
 	unipoly_domain Fq(&GFp, m, verbose_level - 1);
 
 	//Fq.print_object(m, cout);
@@ -510,15 +514,16 @@ void finite_field::compute_subfields(int verbose_level)
 			{
 				unipoly_object elt;
 				
-				FX.create_object_by_rank(elt, poly, __FILE__, __LINE__, verbose_level);
+				FX.create_object_by_rank(elt,
+						poly, __FILE__, __LINE__, verbose_level);
 				cout << "subfield of order " << NT.i_power_j(p, e1)
 						<< " : " << poly << " = ";
 				Fq.print_object(elt, cout);
 				cout << endl;
 				Fq.delete_object(elt);
 			}
-			}
 		}
+	}
 	FX.delete_object(m);
 }
 
@@ -532,16 +537,16 @@ void finite_field::create_alpha_table(int verbose_level)
 	if (f_v) {
 		cout << "creating alpha table, q=" << q
 				<< " p=" << p << " e=" << e << endl;
-		}
+	}
 	if (e > 1) {
 		create_alpha_table_extension_field(verbose_level);
-		}
+	}
 	if (e == 1) {
 		create_alpha_table_prime_field(verbose_level);
-		}
+	}
 	if (f_v) {
 		cout << "alpha table created" << endl;
-		}
+	}
 }
 
 void finite_field::create_alpha_table_extension_field(int verbose_level)
@@ -628,11 +633,11 @@ void finite_field::create_alpha_table_prime_field(int verbose_level)
 	if (f_v) {
 		cout << "finite_field::create_alpha_table_prime_field, "
 				"q=" << q << " p=" << p << " e=" << e << endl;
-		}
+	}
 	alpha = NT.primitive_root(p, verbose_level);
 	if (f_v) {
 		cout << "primitive element is alpha=" << alpha << endl;
-		}
+	}
 	for (i = 0; i < p; i++) {
 		log_alpha_table[i] = -1;
 		alpha_power_table[i] = -1;
@@ -643,7 +648,7 @@ void finite_field::create_alpha_table_prime_field(int verbose_level)
 		if (a < 0 || a >= q) {
 			cout << "error in finite_field::create_alpha_table_prime_field "
 					"a = " << a << endl;
-			}
+		}
 		alpha_power_table[i] = a;
 		if (log_alpha_table[a] == -1) {
 			log_alpha_table[a] = i;
@@ -651,11 +656,11 @@ void finite_field::create_alpha_table_prime_field(int verbose_level)
 
 		if (f_vv) {
 			cout << "alpha_power_table[" << i << "]=" << a << endl;
-			}
+		}
 
 		a *= alpha;
 		a %= p;
-		}
+	}
 	if (f_v) {
 		cout << "finite_field::create_alpha_table_prime_field "
 				"table, p=" << p << endl;
@@ -731,7 +736,7 @@ void finite_field::create_tables_extension_field(int verbose_level)
 	for (i = 0; i < q; i++) {
 		mult_table[i * q + 0] = 0;
 		mult_table[0 * q + i] = 0;
-		}
+	}
 	for (i = 1; i < q; i++) {
 		ii = log_alpha_table[i];
 		for (j = 1; j < q; j++) {
@@ -1177,6 +1182,21 @@ int finite_field::alpha_power(int i)
 int finite_field::log_alpha(int i)
 {
 	return log_alpha_table[i];
+}
+
+int finite_field::multiplicative_order(int a)
+{
+	int l, g, order;
+	number_theory_domain NT;
+
+	if (a == 0) {
+		cout << "finite_field::multiplicative_order a == 0" << endl;
+		exit(1);
+	}
+	l = log_alpha(a);
+	g = NT.gcd_lint(l, q - 1);
+	order = (q - 1) / g;
+	return order;
 }
 
 int finite_field::square_root(int i, int &root)

@@ -576,18 +576,26 @@ void page_storage::print_storage_used()
 		<< nb_free_entries << " entries currently empty" << endl;
 }
 
-void test_page_storage(int f_v)
+void test_page_storage(int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "test_page_storage" << endl;
+	}
 	{
-	page_storage *Elts;
-	Elts = NEW_OBJECT(page_storage);
-	
-	int char_per_elt = 20;
-	int page_length_log = PAGE_LENGTH_LOG;
-	
-	Elts->init(char_per_elt /* entry_size */, page_length_log, f_v);
-	cout << "destroying Elts" << endl;
-	FREE_OBJECT(Elts);
+		page_storage *Elts;
+		Elts = NEW_OBJECT(page_storage);
+
+		int char_per_elt = 20;
+		int page_length_log = PAGE_LENGTH_LOG;
+
+		Elts->init(char_per_elt /* entry_size */, page_length_log, verbose_level - 1);
+		cout << "destroying Elts" << endl;
+		FREE_OBJECT(Elts);
+	}
+	if (f_v) {
+		cout << "test_page_storage done" << endl;
 	}
 }
 
