@@ -154,6 +154,10 @@ public:
 	void PHG_element_unrank(finite_ring &R, int *v, int stride, int len, int rk);
 	int nb_PHG_elements(int n, finite_ring &R);
 	void display_all_PHG_elements(int n, int q);
+	void test_unipoly();
+	void test_unipoly2();
+	int is_diagonal_matrix(int *A, int n);
+	const char *get_primitive_polynomial(int p, int e, int verbose_level);
 
 
 };
@@ -194,6 +198,7 @@ public:
 	char *polynomial;
 		// the actual polynomial we consider 
 		// as integer (in text form)
+	int f_is_prime_field;
 	int q, p, e;
 	int alpha; // primitive element
 	int log10_of_q; // needed for printing purposes
@@ -574,8 +579,7 @@ public:
 		int verbose_level);
 	int is_subspace(int d, int dim_U, int *Basis_U, int dim_V, 
 		int *Basis_V, int verbose_level);
-	void Kronecker_product(int *A, int *B, 
-		int n, int *AB);
+	void Kronecker_product(int *A, int *B, int n, int *AB);
 	void Kronecker_product_square_but_arbitrary(int *A, int *B, 
 		int na, int nb, int *AB, int &N, int verbose_level);
 	int dependency(int d, int *v, int *A, int m, int *rho, 
@@ -1196,7 +1200,6 @@ extern int finitefield_primes[];
 extern int finitefield_nb_primes;
 extern int finitefield_largest_degree_irreducible_polynomial[];
 extern const char *finitefield_primitive_polynomial[][100];
-const char *get_primitive_polynomial(int p, int e, int verbose_level);
 
 // #############################################################################
 // finite_ring.cpp
@@ -1576,7 +1579,7 @@ private:
 
 public:
 	int q;
-	int nb_variables; // number of variables, used to be n
+	int nb_variables; // number of variables
 	int degree;
 
 	homogeneous_polynomial_domain();

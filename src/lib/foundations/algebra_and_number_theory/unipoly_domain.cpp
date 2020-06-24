@@ -2940,12 +2940,15 @@ void unipoly_domain::BCH_generator_polynomial(
 		}
 	}
 
+	algebra_global Algebra;
 	unipoly_object m, M, h1, h2;
 		
 	create_object_by_rank_string(m,
-			get_primitive_polynomial(p, e, 0), verbose_level - 2);
+			Algebra.get_primitive_polynomial(p, e, 0), verbose_level - 2);
+
 	create_object_by_rank_string(M,
-			get_primitive_polynomial(p, e, 0), verbose_level - 2);
+			Algebra.get_primitive_polynomial(p, e, 0), verbose_level - 2);
+
 	create_object_by_rank(g, 1, __FILE__, __LINE__, verbose_level);
 	create_object_by_rank(h1, 0, __FILE__, __LINE__, verbose_level);
 	create_object_by_rank(h2, 0, __FILE__, __LINE__, verbose_level);

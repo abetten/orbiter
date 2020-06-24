@@ -251,8 +251,11 @@ void finite_field::print()
 }
 
 void finite_field::print_detailed(int f_add_mult_table)
-	{
-	if (e > 1) {
+{
+	if (f_is_prime_field) {
+		print_tables();
+	}
+	else {
 		//char *poly;
 
 		//poly = get_primitive_polynomial(p, e, 0 /* verbose_level */);
@@ -262,13 +265,10 @@ void finite_field::print_detailed(int f_add_mult_table)
 		cout << endl;
 		//cout << " = " << poly << endl;
 		print_tables_extension_field(polynomial);
-		}
-	else {
-		print_tables();
-		}
+	}
 	if (f_add_mult_table) {
 		print_add_mult_tables();
-		}
+	}
 }
 
 void finite_field::print_add_mult_tables()
@@ -723,6 +723,7 @@ void finite_field::addition_table_save_csv()
 	make_fname_addition_table_csv(fname);
 	Fio.int_matrix_write_csv(fname, T, q, q);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	FREE_int(T);
 }
 
 void finite_field::multiplication_table_save_csv()
@@ -743,6 +744,7 @@ void finite_field::multiplication_table_save_csv()
 	make_fname_multiplication_table_csv(fname);
 	Fio.int_matrix_write_csv(fname, T, q - 1, q - 1);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	FREE_int(T);
 }
 
 
@@ -867,7 +869,7 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 	v = NEW_int(e);
 
 	f << "\\small" << endl;
-	if (e > 1) {
+	if (!f_is_prime_field) {
 		f << "polynomial: ";
 		finite_field GFp;
 		GFp.init(p, 0);
@@ -883,7 +885,7 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 
 	f << "$Z_i = \\log_\\alpha (1 + \\alpha^i)$\\\\" << endl;
 
-	if (e > 1 && !NT.is_prime(e)) {
+	if (!f_is_prime_field && !NT.is_prime(e)) {
 		report_subfields(f, verbose_level);
 	}
 

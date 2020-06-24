@@ -1765,8 +1765,10 @@ void finite_field::choose_anisotropic_form(
 		c3 = negate(primitive_element());
 	}
 	else {
+		algebra_global Algebra;
+
 		FX.create_object_by_rank_string(m,
-				get_primitive_polynomial(q, 2, 0),
+				Algebra.get_primitive_polynomial(q, 2, 0),
 				verbose_level);
 
 		//FX.create_object_by_rank_string(m,

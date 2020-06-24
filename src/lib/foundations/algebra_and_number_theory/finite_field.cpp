@@ -42,6 +42,7 @@ void finite_field::null()
 	v3 = NULL;
 	override_poly = NULL;
 	symbol_for_print = NULL;
+	f_is_prime_field = FALSE;
 	f_has_quadratic_subfield = FALSE;
 	f_belongs_to_quadratic_subfield = NULL;
 	f_print_as_exponentials = TRUE;
@@ -145,10 +146,14 @@ void finite_field::init(int q, int verbose_level)
 	init_symbol_for_print("g");
 	
 	if (e > 1) {
-		poly = get_primitive_polynomial(p, e, verbose_level);
+		f_is_prime_field = FALSE;
+		algebra_global Algebra;
+
+		poly = Algebra.get_primitive_polynomial(p, e, verbose_level);
 		init_override_polynomial(q, poly, verbose_level);
 	}
 	else {
+		f_is_prime_field = TRUE;
 		init_override_polynomial(q, "", verbose_level);
 	}
 	if (f_v) {
@@ -182,8 +187,11 @@ void finite_field::init_override_polynomial(int q,
 	NT.factor_prime_power(q, p, e);
 	init_symbol_for_print("\\alpha");
 	if (e > 1) {
+		f_is_prime_field = FALSE;
+		algebra_global Algebra;
+
 		if (poly == NULL || (poly && strlen(poly) == 0)) {
-			poly = get_primitive_polynomial(p, e, verbose_level);
+			poly = Algebra.get_primitive_polynomial(p, e, verbose_level);
 		}
 		else {
 			if (f_vv) {
@@ -192,9 +200,12 @@ void finite_field::init_override_polynomial(int q,
 			}
 		}
 		if (f_v) {
-			cout << "finite_field::init_override_polynomial using poly "
-					<< poly << endl;
+			cout << "finite_field::init_override_polynomial "
+					"using poly " << poly << endl;
 		}
+	}
+	else {
+		f_is_prime_field = TRUE;
 	}
 	if (f_v) {
 		cout << "finite_field::init_override_polynomial "
@@ -238,7 +249,8 @@ void finite_field::init_override_polynomial(int q,
 
 	if (q <= CREATE_TABLE_UPPER_BOUND) {
 		if (f_vv) {
-			cout << "finite_field::init_override_polynomial creating tables q=" << q << endl;
+			cout << "finite_field::init_override_polynomial "
+					"creating tables q=" << q << endl;
 		}
 		add_table = NEW_int(q * q);
 		mult_table = NEW_int(q * q);
@@ -257,7 +269,8 @@ void finite_field::init_override_polynomial(int q,
 	}
 	else {
 		if (f_v) {
-			cout << "finite_field::init_override_polynomial field size is big, we don't create tables" << endl;
+			cout << "finite_field::init_override_polynomial "
+					"field size is big, we don't create tables" << endl;
 		}
 		f_has_table = FALSE;
 	}
@@ -372,6 +385,7 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 		cout << "is not a subfield" << endl;
 		exit(1);
 	}
+
 	finite_field GFp;
 	GFp.init(p, 0);
 
@@ -538,11 +552,11 @@ void finite_field::create_alpha_table(int verbose_level)
 		cout << "creating alpha table, q=" << q
 				<< " p=" << p << " e=" << e << endl;
 	}
-	if (e > 1) {
-		create_alpha_table_extension_field(verbose_level);
-	}
-	if (e == 1) {
+	if (f_is_prime_field) {
 		create_alpha_table_prime_field(verbose_level);
+	}
+	else {
+		create_alpha_table_extension_field(verbose_level);
 	}
 	if (f_v) {
 		cout << "alpha table created" << endl;
@@ -597,8 +611,7 @@ void finite_field::create_alpha_table_extension_field(int verbose_level)
 				cout << " has rank " << k << endl;
 			}
 			if (k < 0 || k >= q) {
-				cout << "error in finite_field::create_alpha_table_"
-						"extension_field k = " << k << endl;
+				cout << "error in finite_field::create_alpha_table_extension_field k = " << k << endl;
 			}
 
 			alpha_power_table[i] = k;

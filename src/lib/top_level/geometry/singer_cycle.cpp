@@ -138,7 +138,9 @@ void singer_cycle::init(int n, finite_field *F, action *A, action *A2, int verbo
 		cout << "singer_cycle::init field must be prime field" << endl;
 		exit(1);
 		}
-	poly = get_primitive_polynomial(q, n, verbose_level);
+	algebra_global Algebra;
+
+	poly = Algebra.get_primitive_polynomial(q, n, verbose_level);
 	poly_coeffs = NEW_int(n + 1);
 	{
 	//finite_field GFp;

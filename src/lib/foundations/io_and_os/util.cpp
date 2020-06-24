@@ -2378,7 +2378,8 @@ int test_if_sets_are_disjoint_assuming_sorted(int *set1, int *set2, int sz1, int
 	return TRUE;
 }
 
-int test_if_sets_are_disjoint_assuming_sorted_lint(long int *set1, long int *set2, int sz1, int sz2)
+int test_if_sets_are_disjoint_assuming_sorted_lint(
+		long int *set1, long int *set2, int sz1, int sz2)
 {
 	int sz;
 	long int *p, *q;
@@ -2649,93 +2650,8 @@ void int_vec_print(int *v, int len)
 	}
 }
 
-#if 0
-void test_unipoly()
-{
-	finite_field GFp;
-	int p = 2;
-	unipoly_object m, a, b, c;
-	unipoly_object elts[4];
-	int i, j;
-	int verbose_level = 0;
-
-	GFp.init(p, verbose_level);
-	unipoly_domain FX(&GFp);
-
-	FX.create_object_by_rank(m, 7);
-	FX.create_object_by_rank(a, 5);
-	FX.create_object_by_rank(b, 55);
-	FX.print_object(a, cout); cout << endl;
-	FX.print_object(b, cout); cout << endl;
-
-	unipoly_domain Fq(&GFp, m);
-	Fq.create_object_by_rank(c, 2);
-	for (i = 0; i < 4; i++) {
-		Fq.create_object_by_rank(elts[i], i);
-		cout << "elt_" << i << " = ";
-		Fq.print_object(elts[i], cout); cout << endl;
-		}
-	for (i = 0; i < 4; i++) {
-		for (j = 0; j < 4; j++) {
-			Fq.print_object(elts[i], cout);
-			cout << " * ";
-			Fq.print_object(elts[j], cout);
-			cout << " = ";
-			Fq.mult(elts[i], elts[j], c);
-			Fq.print_object(c, cout); cout << endl;
-
-			FX.mult(elts[i], elts[j], a);
-			FX.print_object(a, cout); cout << endl;
-			}
-		}
-
-}
-
-void test_unipoly2()
-{
-	finite_field Fq;
-	int q = 4, p = 2, i;
-	int verbose_level = 0;
-
-	Fq.init(q, verbose_level);
-	unipoly_domain FX(&Fq);
-
-	unipoly_object a;
-
-	FX.create_object_by_rank(a, 0);
-	for (i = 1; i < q; i++) {
-		FX.minimum_polynomial(a, i, p, TRUE);
-		//cout << "minpoly_" << i << " = ";
-		//FX.print_object(a, cout); cout << endl;
-		}
-
-}
-#endif
 
 
-
-
-
-
-
-int is_diagonal_matrix(int *A, int n)
-{
-	int i, j;
-
-	for (i = 0; i < n; i++) {
-		for (j = 0; j < n; j++) {
-			if (i == j) {
-				continue;
-				}
-			else {
-				if (A[i * n + j]) {
-					return FALSE;
-					}
-				}
-			}
-		}
-	return TRUE;
-}
 
 
 
