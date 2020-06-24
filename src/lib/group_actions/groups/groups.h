@@ -6,6 +6,11 @@
 // based on action.h which was started:  August 13, 2005
 
 
+
+#ifndef ORBITER_SRC_LIB_GROUP_ACTIONS_GROUPS_GROUPS_H_
+#define ORBITER_SRC_LIB_GROUP_ACTIONS_GROUPS_GROUPS_H_
+
+
 namespace orbiter {
 
 namespace group_actions {
@@ -1982,4 +1987,9 @@ public:
 };
 
 }}
+
+
+#endif /* ORBITER_SRC_LIB_GROUP_ACTIONS_GROUPS_GROUPS_H_ */
+
+
 

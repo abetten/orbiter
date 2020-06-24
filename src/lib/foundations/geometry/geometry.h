@@ -8,6 +8,11 @@
 // galois started:  August 12, 2005
 
 
+
+#ifndef ORBITER_SRC_LIB_FOUNDATIONS_GEOMETRY_GEOMETRY_H_
+#define ORBITER_SRC_LIB_FOUNDATIONS_GEOMETRY_GEOMETRY_H_
+
+
 namespace orbiter {
 namespace foundations {
 
@@ -3446,8 +3451,12 @@ public:
 
 
 
-}
-}
+}}
+
+
+#endif /* ORBITER_SRC_LIB_FOUNDATIONS_GEOMETRY_GEOMETRY_H_ */
+
+
 
 
 

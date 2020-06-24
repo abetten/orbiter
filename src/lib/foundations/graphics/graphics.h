@@ -7,6 +7,12 @@
 // 2nd version started:  December 7, 2003
 // galois started:  August 12, 2005
 
+
+#ifndef ORBITER_SRC_LIB_FOUNDATIONS_GRAPHICS_GRAPHICS_H_
+#define ORBITER_SRC_LIB_FOUNDATIONS_GRAPHICS_GRAPHICS_H_
+
+
+
 namespace orbiter {
 namespace foundations {
 
@@ -1321,5 +1327,7 @@ void draw_bitmap(const char *fname, int *M, int m, int n,
 
 }}
 
+
+#endif /* ORBITER_SRC_LIB_FOUNDATIONS_GRAPHICS_GRAPHICS_H_ */
 
 

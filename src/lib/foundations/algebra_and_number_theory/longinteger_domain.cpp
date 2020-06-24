@@ -1019,7 +1019,8 @@ void longinteger_domain::square_root(
 				}
 				if (compare_unsigned(a2, a) <= 0) {
 					if (f_v) {
-						cout << "success with digit " << i << " : sqrt_a=" << sqrt_a << endl;
+						cout << "success with digit " << i
+								<< " : sqrt_a=" << sqrt_a << endl;
 					}
 					break;
 				}
@@ -1352,14 +1353,16 @@ void longinteger_domain::calc_roots(longinteger_object &M,
 		}
 		Mmodp = remainder_mod_int(M, p);
 		if (f_v) {
-			cout << "longinteger_domain::calc_roots after remainder_mod_int Mmodp=" << Mmodp << endl;
+			cout << "longinteger_domain::calc_roots after remainder_mod_int "
+					"Mmodp=" << Mmodp << endl;
 		}
 		if (f_v) {
 			cout << "longinteger_domain::calc_roots before remainder_mod_int" << endl;
 		}
 		sqrtMmodp = remainder_mod_int(sqrtM, p);
 		if (f_v) {
-			cout << "longinteger_domain::calc_roots after remainder_mod_int, sqrtMmodp=" << sqrtMmodp << endl;
+			cout << "longinteger_domain::calc_roots after remainder_mod_int, "
+					"sqrtMmodp=" << sqrtMmodp << endl;
 		}
 
 		// a = 2 * sqrtMmodp mod p
@@ -1392,7 +1395,8 @@ void longinteger_domain::calc_roots(longinteger_object &M,
 
 
 		if (f_v) {
-			cout << "longinteger_domain::calc_roots computing square root of discriminant c2=" << c2 << endl;
+			cout << "longinteger_domain::calc_roots computing square root "
+					"of discriminant c2=" << c2 << endl;
 		}
 		s = square_root_mod(c2, p, 0 /* verbose_level*/);
 		if (f_v) {
@@ -1570,7 +1574,8 @@ int longinteger_domain::quadratic_sieve(
 		}
 		//f << x << endl;
 		if (f_v) {
-			cout << "found solution " << j << " which is " << x << ", need " << ll - j << " more" << endl;
+			cout << "found solution " << j << " which is " << x
+					<< ", need " << ll - j << " more" << endl;
 		}
 		X.push_back(x);
 		j++;
@@ -2318,7 +2323,8 @@ void longinteger_domain::factor_into_longintegers(
 	number_theory_domain NT;
 	
 	if (f_v) {
-		cout << "longinteger_domain::factor_into_longintegers factoring " << a << endl;
+		cout << "longinteger_domain::factor_into_longintegers "
+				"factoring " << a << endl;
 	}
 	if (a.is_zero()) {
 		cout << "longinteger_domain::factor_into_longintegers "
@@ -2351,7 +2357,8 @@ void longinteger_domain::factor_into_longintegers(
 	q.assign_to(n);
 	while (!n.is_one()) {
 		if (f_v) {
-			cout << "longinteger_domain::factor_into_longintegers remaining factor: " << n << endl;
+			cout << "longinteger_domain::factor_into_longintegers "
+					"remaining factor: " << n << endl;
 		}
 		p = smallest_primedivisor(n, last_prime, verbose_level);
 		// if p == 0: n is prime
@@ -2402,7 +2409,8 @@ void longinteger_domain::factor_into_longintegers(
 
 	}
 	if (f_v) {
-		cout << "longinteger_domain::factor_into_longintegers prime factorization of " << a << " = ";
+		cout << "longinteger_domain::factor_into_longintegers "
+				"prime factorization of " << a << " = ";
 		NT.print_longfactorization(nb_primes, primes, exponents);
 		cout << endl;
 	}
@@ -2616,7 +2624,8 @@ void longinteger_domain::random_number_with_n_decimals(
 
 
 	if (f_v) {
-		cout << "longinteger_domain::random_number_with_n_decimals random number = " << str << endl;
+		cout << "longinteger_domain::random_number_with_n_decimals "
+				"random number = " << str << endl;
 	}
 
 	R.create_from_base_10_string(str);
@@ -2919,7 +2928,8 @@ int longinteger_domain::solovay_strassen_test_with_latex_key(ostream &ost,
 		cout << "longinteger_domain::solovay_strassen_test_with_latex_key "
 			"a = " << a << endl;
 	}
-	ost << "Solovay-Strassen pseudoprime test for $n=" << n << ",$ picking basis $a=" << a << "$\\\\" << endl;
+	ost << "Solovay-Strassen pseudoprime test for $n=" << n
+			<< ",$ picking basis $a=" << a << "$\\\\" << endl;
 	x = jacobi(a, n, verbose_level - 2);
 	ost << "$\\Big( \\frac{" << a
 		<< " }{ " << n << "}\\Big) = " << x << "$\\\\" << endl;
@@ -3802,313 +3812,6 @@ void longinteger_domain::square_root_floor(longinteger_object &a,
 // global functions:
 //##############################################################################
 
-#if 0
-void test_longinteger()
-{
-	longinteger_domain D;
-	int x[] = {15, 14, 12, 8};
-	longinteger_object a, b, q, r;
-	int verbose_level = 0;
-	
-	D.multiply_up(a, x, 4);
-	cout << "a=" << a << endl;
-	b.create(2);
-	while (!a.is_zero()) {
-		D.integral_division(a, b, q, r, verbose_level);
-		//cout << a << " = " << q << " * " << b << " + " << r << endl;
-		cout << r << endl;
-		q.assign_to(a);
-		}
-	
-	D.multiply_up(a, x, 4);
-	cout << "a=" << a << endl;
-	
-	int *rep, len;
-	D.base_b_representation(a, 2, rep, len);
-	b.create_from_base_b_representation(2, rep, len);
-	cout << "b=" << b << endl;
-	FREE_int(rep);
-}
-
-void test_longinteger2()
-{
-	longinteger_domain D;
-	longinteger_object a, b, c, d, e;
-	int r;
-	int verbose_level = 0;
-	
-	a.create_from_base_10_string("562949953421311", verbose_level);
-	D.integral_division_by_int(a, 127, b, r);
-	cout << a << " = " << b << " * 127 + " << r << endl;
-	c.create_from_base_10_string("270549121", verbose_level);
-	D.integral_division(b, c, d, e, verbose_level);
-	cout << b << " = " << d << " * " << c << " + " << e << endl;
-}
-
-void test_longinteger3()
-{
-	int i, j;
-	longinteger_domain D;
-	longinteger_object a, b, c, d, e;
-	
-	for (i = 0; i < 10; i++) {
-		for (j = 0; j < 10; j++) {
-			D.binomial(a, i, j, FALSE);
-			a.print(cout);
-			cout << " ";
-			}
-		cout << endl;
-		}
-}
-
-void test_longinteger4()
-{
-	int n = 6, q = 2, k, x, d = 3;
-	longinteger_domain D;
-	longinteger_object a;
-	
-	for (k = 0; k <= n; k++) {
-		for (x = 0; x <= n; x++) {
-			if (x > 0 && x < d)
-				continue;
-			if (q == 2 && EVEN(d) && ODD(x))
-				continue;
-			D.krawtchouk(a, n, q, k, x);
-			a.print(cout);
-			cout << " ";
-			}
-		cout << endl;
-		}
-}
-
-void test_longinteger5()
-{
-	longinteger_domain D;
-	longinteger_object a, b, u, v, g;
-	int verbose_level = 2;
-	
-	a.create(9548);
-	b.create(254774);
-	D.extended_gcd(a, b, g, u, v, verbose_level);
-
-	g.print(cout);
-	cout << " = ";
-	u.print(cout);
-	cout << " * ";
-	a.print(cout);
-	cout << " + ";
-	v.print(cout);
-	cout << " * ";
-	b.print(cout);
-	cout << endl;
-
-}
-
-void test_longinteger6()
-{
-	int verbose_level = 2;
-	longinteger_domain D;
-	longinteger_object a, b;
-	
-	a.create(7411);
-	b.create(9283);
-	D.jacobi(a, b, verbose_level);
-
-
-}
-
-void test_longinteger7()
-{
-	longinteger_domain D;
-	longinteger_object a, b;
-	int i, j;
-	int mult[15];
-		
-	a.create(15);
-	for (i = 0; i < 15; i++) {
-		mult[i] = 0;
-		}
-	for (i = 0; i < 10000; i++) {
-		D.random_number_less_than_n(a, b);
-		j = b.as_int();
-		mult[j]++;
-		//cout << b << endl;
-		}
-	for (i = 0; i < 15; i++) {
-		cout << i << " : " << mult[i] << endl;
-		}
-
-}
-
-void test_longinteger8()
-{
-	int verbose_level = 2;
-	longinteger_domain D;
-	longinteger_object a, b, one;
-	int nb_solovay_strassen_tests = 100;
-	int f_miller_rabin_test = TRUE;
-	
-	one.create(1);
-	a.create(197659);
-	D.find_probable_prime_above(a, nb_solovay_strassen_tests, 
-		f_miller_rabin_test, verbose_level);
-}
-
-void mac_williams_equations(longinteger_object *&M, int n, int k, int q)
-{
-	longinteger_domain D;
-	int i, j;
-	
-	M = NEW_OBJECTS(longinteger_object, (n + 1) * (n + 1));
-	
-	for (i = 0; i <= n; i++) {
-		for (j = 0; j <= n; j++) {
-			D.krawtchouk(M[i * (n + 1) + j], n, q, i, j);
-			}
-		}
-}
-
-void determine_weight_enumerator()
-{
-	int n = 19, k = 7, q = 2;
-	longinteger_domain D;
-	longinteger_object *M, *A1, *A2, qk;
-	int i;
-	
-	qk.create(q);
-	D.power_int(qk, k);
-	cout << q << "^" << k << " = " << qk << endl;
-	
-	mac_williams_equations(M, n, k, q);
-	
-	D.matrix_print_tex(cout, M, n + 1, n + 1);
-	
-	A1 = NEW_OBJECTS(longinteger_object, n + 1);
-	A2 = NEW_OBJECTS(longinteger_object, n + 1);
-	for (i = 0; i <= n; i++) {
-		A1[i].create(0);
-		}
-	A1[0].create(1);
-	A1[8].create(78);
-	A1[12].create(48);
-	A1[16].create(1);
-	D.matrix_print_tex(cout, A1, n + 1, 1);
-	
-	D.matrix_product(M, A1, A2, n + 1, n + 1, 1);
-	D.matrix_print_tex(cout, A2, n + 1, 1);
-
-	D.matrix_entries_integral_division_exact(A2, qk, n + 1, 1);
-
-	D.matrix_print_tex(cout, A2, n + 1, 1);
-	
-	FREE_OBJECTS(M);
-	FREE_OBJECTS(A1);
-	FREE_OBJECTS(A2);
-}
-
-void longinteger_collect_setup(int &nb_agos,
-		longinteger_object *&agos, int *&multiplicities)
-{
-	nb_agos = 0;
-	agos = NULL;
-	multiplicities = NULL;
-}
-
-void longinteger_collect_free(int &nb_agos,
-		longinteger_object *&agos, int *&multiplicities)
-{
-	if (nb_agos) {
-		FREE_OBJECTS(agos);
-		FREE_int(multiplicities);
-		}
-}
-
-void longinteger_collect_add(int &nb_agos,
-		longinteger_object *&agos, int *&multiplicities,
-		longinteger_object &ago)
-{
-	int j, c, h, f_added;
-	longinteger_object *tmp_agos;
-	int *tmp_multiplicities;
-	longinteger_domain D;
-
-	f_added = FALSE;
-	for (j = 0; j < nb_agos; j++) {
-		c = D.compare_unsigned(ago, agos[j]);
-		//cout << "comparing " << ago << " with "
-		//<< agos[j] << " yields " << c << endl;
-		if (c >= 0) {
-			if (c == 0) {
-				multiplicities[j]++;
-				}
-			else {
-				tmp_agos = agos;
-				tmp_multiplicities = multiplicities;
-				agos = NEW_OBJECTS(longinteger_object, nb_agos + 1);
-				multiplicities = NEW_int(nb_agos + 1);
-				for (h = 0; h < j; h++) {
-					tmp_agos[h].swap_with(agos[h]);
-					multiplicities[h] = tmp_multiplicities[h];
-					}
-				ago.swap_with(agos[j]);
-				multiplicities[j] = 1;
-				for (h = j; h < nb_agos; h++) {
-					tmp_agos[h].swap_with(agos[h + 1]);
-					multiplicities[h + 1] = tmp_multiplicities[h];
-					}
-				nb_agos++;
-				if (tmp_agos) {
-					FREE_OBJECTS(tmp_agos);
-					FREE_int(tmp_multiplicities);
-					}
-				}
-			f_added = TRUE;
-			break;
-			}
-		}
-	if (!f_added) {
-		// add at the end (including the case that the list is empty)
-		tmp_agos = agos;
-		tmp_multiplicities = multiplicities;
-		agos = NEW_OBJECTS(longinteger_object, nb_agos + 1);
-		multiplicities = NEW_int(nb_agos + 1);
-		for (h = 0; h < nb_agos; h++) {
-			tmp_agos[h].swap_with(agos[h]);
-			multiplicities[h] = tmp_multiplicities[h];
-			}
-		ago.swap_with(agos[nb_agos]);
-		multiplicities[nb_agos] = 1;
-		nb_agos++;
-		if (tmp_agos) {
-			FREE_OBJECTS(tmp_agos);
-			FREE_int(tmp_multiplicities);
-			}
-		}
-}
-
-void longinteger_collect_print(ostream &ost,
-		int &nb_agos, longinteger_object *&agos, int *&multiplicities)
-{
-	int j;
-	
-	ost << "(";
-	for (j = 0; j < nb_agos; j++) {
-		ost << agos[j];
-		if (multiplicities[j] == 1) {
-			}
-		else if (multiplicities[j] >= 10) {
-			ost << "^{" << multiplicities[j] << "}";
-			}
-		else  {
-			ost << "^" << multiplicities[j];
-			}
-		if (j < nb_agos - 1) {
-			ost << ", ";
-			}
-		}
-	ost << ")" << endl;
-}
-#endif
 
 void longinteger_free_global_data()
 {

@@ -7,6 +7,10 @@
 // based on global.h, which was taken from reader.h: 3/22/09
 
 
+#ifndef ORBITER_SRC_LIB_TOP_LEVEL_ALGEBRA_AND_NUMBER_THEORY_TL_ALGEBRA_AND_NUMBER_THEORY_H_
+#define ORBITER_SRC_LIB_TOP_LEVEL_ALGEBRA_AND_NUMBER_THEORY_TL_ALGEBRA_AND_NUMBER_THEORY_H_
+
+
 namespace orbiter {
 namespace top_level {
 
@@ -267,11 +271,6 @@ public:
 	const char *inverse_a;
 	int f_order_of_products;
 	const char *order_of_products_elements;
-	//int f_group_table;
-	//int f_embedded;
-	//int f_sideways;
-	//double x_stretch;
-	//int f_print_generators;
 
 	// classification of optimal linear codes:
 	int f_linear_codes;
@@ -472,14 +471,8 @@ public:
 
 	linear_group *LG;
 	matrix_group *Mtx;
-	//finite_field *F;
 	poset_classification_control *Control;
 
-	//int argc;
-	//const char **argv;
-
-	//int f_poly;
-	//const char *poly;
 	int f_order;
 	int order;
 	int f_dim_over_kernel;
@@ -532,7 +525,6 @@ public:
 
 	semifield_classify_with_substructure();
 	~semifield_classify_with_substructure();
-	//void read_arguments(int argc, const char **argv, int &verbose_level);
 	void init(
 			linear_group *LG,
 			poset_classification_control *Control,
@@ -571,17 +563,13 @@ public:
 	int k2; // = k * k
 	linear_group *LG;
 	matrix_group *Mtx;
-	//finite_field *F;
-	//int f_semilinear;
 
 	int q;
 	int order; // q^k
 
 
-	//int f_level_two_prefix;
 	const char *level_two_prefix;
 
-	//int f_level_three_prefix;
 	const char *level_three_prefix;
 
 
@@ -1392,4 +1380,8 @@ public:
 
 
 }}
+
+
+#endif /* ORBITER_SRC_LIB_TOP_LEVEL_ALGEBRA_AND_NUMBER_THEORY_TL_ALGEBRA_AND_NUMBER_THEORY_H_ */
+
 

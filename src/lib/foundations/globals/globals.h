@@ -7,6 +7,13 @@
 // 2nd version started:  December 7, 2003
 // galois started:  August 12, 2005
 
+
+#ifndef ORBITER_SRC_LIB_FOUNDATIONS_GLOBALS_GLOBALS_H_
+#define ORBITER_SRC_LIB_FOUNDATIONS_GLOBALS_GLOBALS_H_
+
+
+
+
 namespace orbiter {
 namespace foundations {
 
@@ -371,5 +378,9 @@ public:
 
 
 }}
+
+
+#endif /* ORBITER_SRC_LIB_FOUNDATIONS_GLOBALS_GLOBALS_H_ */
+
 
 

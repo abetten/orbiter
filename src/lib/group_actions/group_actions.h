@@ -6,8 +6,9 @@
 
 
 
-#ifndef GROUP_ACTIONS_H_
-#define GROUP_ACTIONS_H_
+#ifndef ORBITER_SRC_LIB_GROUP_ACTIONS_GROUP_ACTIONS_H_
+#define ORBITER_SRC_LIB_GROUP_ACTIONS_GROUP_ACTIONS_H_
+
 
 
 using namespace orbiter::foundations;
@@ -268,4 +269,9 @@ public:
 #include "./groups/groups.h"
 #include "./induced_actions/induced_actions.h"
 
-#endif
+
+
+#endif /* ORBITER_SRC_LIB_GROUP_ACTIONS_GROUP_ACTIONS_H_ */
+
+
+

@@ -8,6 +8,10 @@
 // galois started:  August 12, 2005
 
 
+#ifndef ORBITER_SRC_LIB_FOUNDATIONS_FOUNDATIONS_H_
+#define ORBITER_SRC_LIB_FOUNDATIONS_FOUNDATIONS_H_
+
+
 
 // History:
 //
@@ -582,5 +586,10 @@ std::ostream& operator<<(std::ostream& ost, longinteger_object& p);
 
 
 #endif
+
+
+
+#endif /* ORBITER_SRC_LIB_FOUNDATIONS_FOUNDATIONS_H_ */
+
 
 
