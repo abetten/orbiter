@@ -1068,6 +1068,131 @@ void algebra_global::display_all_PHG_elements(int n, int q)
 	FREE_int(v);
 }
 
+void algebra_global::test_unipoly()
+{
+	finite_field GFp;
+	int p = 2;
+	unipoly_object m, a, b, c;
+	unipoly_object elts[4];
+	int i, j;
+	int verbose_level = 0;
+
+	GFp.init(p, verbose_level);
+	unipoly_domain FX(&GFp);
+
+	FX.create_object_by_rank(m, 7, __FILE__, __LINE__, 0);
+	FX.create_object_by_rank(a, 5, __FILE__, __LINE__, 0);
+	FX.create_object_by_rank(b, 55, __FILE__, __LINE__, 0);
+	FX.print_object(a, cout); cout << endl;
+	FX.print_object(b, cout); cout << endl;
+
+	unipoly_domain Fq(&GFp, m, verbose_level);
+	Fq.create_object_by_rank(c, 2, __FILE__, __LINE__, 0);
+	for (i = 0; i < 4; i++) {
+		Fq.create_object_by_rank(elts[i], i, __FILE__, __LINE__, 0);
+		cout << "elt_" << i << " = ";
+		Fq.print_object(elts[i], cout); cout << endl;
+		}
+	for (i = 0; i < 4; i++) {
+		for (j = 0; j < 4; j++) {
+			Fq.print_object(elts[i], cout);
+			cout << " * ";
+			Fq.print_object(elts[j], cout);
+			cout << " = ";
+			Fq.mult(elts[i], elts[j], c, verbose_level);
+			Fq.print_object(c, cout); cout << endl;
+
+			FX.mult(elts[i], elts[j], a, verbose_level);
+			FX.print_object(a, cout); cout << endl;
+			}
+		}
+
+}
+
+void algebra_global::test_unipoly2()
+{
+	finite_field Fq;
+	int q = 4, p = 2, i;
+	int verbose_level = 0;
+
+	Fq.init(q, verbose_level);
+	unipoly_domain FX(&Fq);
+
+	unipoly_object a;
+
+	FX.create_object_by_rank(a, 0, __FILE__, __LINE__, 0);
+	for (i = 1; i < q; i++) {
+		FX.minimum_polynomial(a, i, p, TRUE);
+		//cout << "minpoly_" << i << " = ";
+		//FX.print_object(a, cout); cout << endl;
+		}
+
+}
+
+int algebra_global::is_diagonal_matrix(int *A, int n)
+{
+	int i, j;
+
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++) {
+			if (i == j) {
+				continue;
+				}
+			else {
+				if (A[i * n + j]) {
+					return FALSE;
+					}
+				}
+			}
+		}
+	return TRUE;
+}
+
+const char *algebra_global::get_primitive_polynomial(int p, int e, int verbose_level)
+{
+	//int f_v = (verbose_level >= 1);
+	int idx;
+	char *s;
+	sorting Sorting;
+
+	if (!Sorting.int_vec_search(finitefield_primes, finitefield_nb_primes, p, idx)) {
+		cout << "I don't have prime " << p << " in the tables" << endl;
+		cout << "searching for a polynomial of degree " << e << endl;
+
+		algebra_global AG;
+
+		s = AG.search_for_primitive_polynomial_of_given_degree(p, e, verbose_level);
+		cout << "the search came up with a polynomial of degree " << e << ", coded as " << s << endl;
+		return s;
+		}
+#if 0
+	for (idx = 0; idx < finitefield_nb_primes; idx++) {
+		if (finitefield_primes[idx] == p)
+			break;
+		}
+	if (idx == finitefield_nb_primes) {
+		cout << "get_primitive_polynomial() couldn't find prime " << p << endl;
+		exit(1);
+		}
+#endif
+	if (e > finitefield_largest_degree_irreducible_polynomial[idx]) {
+		cout << "get_primitive_polynomial() I do not have a polynomial\n";
+		cout << "of that degree over that field" << endl;
+		cout << "requested: degree " << e << " polynomial over GF(" << p << ")" << endl;
+		exit(1);
+		}
+	const char *m = finitefield_primitive_polynomial[idx][e - 2];
+	if (strlen(m) == 0) {
+		cout << "get_primitive_polynomial() I do not have a polynomial\n";
+		cout << "of that degree over that field" << endl;
+		cout << "requested: degree " << e << " polynomial over GF(" << p << ")" << endl;
+		exit(1);
+		}
+	return m;
+}
+
+
+
 
 
 }}

@@ -1328,7 +1328,6 @@ void homogeneous_polynomial_domain::multiply_mod(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a, b, c, idx;
-	//int M[3];
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::multiply_mod" << endl;
@@ -1359,7 +1358,6 @@ void homogeneous_polynomial_domain::multiply_mod(
 			}
 		}
 	}
-
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::multiply_mod done" << endl;

@@ -2309,7 +2309,9 @@ const char *knowledge_base::override_polynomial_extension_field(int q)
 		exit(1);
 		}
 	if (h == 1) {
-		return get_primitive_polynomial(q, 2, 0/*verbose_level*/);
+		algebra_global Algebra;
+
+		return Algebra.get_primitive_polynomial(q, 2, 0/*verbose_level*/);
 		}
 #if 0
 	if (h == 1) {

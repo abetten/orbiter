@@ -756,7 +756,6 @@ const char *strip_directory(const char *p);
 int is_all_whitespace(const char *str);
 int is_all_digits(char *p);
 void int_vec_print(int *v, int len);
-int is_diagonal_matrix(int *A, int n);
 int str2int(std::string &str);
 void print_longinteger_after_multiplying(std::ostream &ost, int *factors, int len);
 int my_atoi(char *str);
