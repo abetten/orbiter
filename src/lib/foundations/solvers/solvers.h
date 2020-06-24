@@ -8,6 +8,10 @@
 // galois started:  August 12, 2005
 
 
+#ifndef ORBITER_SRC_LIB_FOUNDATIONS_SOLVERS_SOLVERS_H_
+#define ORBITER_SRC_LIB_FOUNDATIONS_SOLVERS_SOLVERS_H_
+
+
 namespace orbiter {
 namespace foundations {
 
@@ -545,6 +549,11 @@ namespace mckay {
 
 
 }}
+
+
+#endif /* ORBITER_SRC_LIB_FOUNDATIONS_SOLVERS_SOLVERS_H_ */
+
+
 
 
 

@@ -8,6 +8,11 @@
 
 
 
+#ifndef ORBITER_SRC_LIB_TOP_LEVEL_TOP_LEVEL_H_
+#define ORBITER_SRC_LIB_TOP_LEVEL_TOP_LEVEL_H_
+
+
+
 using namespace orbiter::foundations;
 using namespace orbiter::group_actions;
 using namespace orbiter::classification;
@@ -216,4 +221,11 @@ public:
 #include "./isomorph/isomorph.h"
 #include "./orbits/orbits.h"
 #include "./solver/solver.h"
+
+
+
+#endif /* ORBITER_SRC_LIB_TOP_LEVEL_TOP_LEVEL_H_ */
+
+
+
 

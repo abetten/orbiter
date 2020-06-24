@@ -8,6 +8,11 @@
 // galois started:  August 12, 2005
 
 
+#ifndef ORBITER_SRC_LIB_FOUNDATIONS_ALGEBRA_AND_NUMBER_THEORY_H_
+#define ORBITER_SRC_LIB_FOUNDATIONS_ALGEBRA_AND_NUMBER_THEORY_H_
+
+
+
 namespace orbiter {
 namespace foundations {
 
@@ -158,6 +163,25 @@ public:
 	void test_unipoly2();
 	int is_diagonal_matrix(int *A, int n);
 	const char *get_primitive_polynomial(int p, int e, int verbose_level);
+	void test_longinteger();
+	void test_longinteger2();
+	void test_longinteger3();
+	void test_longinteger4();
+	void test_longinteger5();
+	void test_longinteger6();
+	void test_longinteger7();
+	void test_longinteger8();
+	void mac_williams_equations(longinteger_object *&M, int n, int k, int q);
+	void determine_weight_enumerator();
+	void longinteger_collect_setup(int &nb_agos,
+			longinteger_object *&agos, int *&multiplicities);
+	void longinteger_collect_free(int &nb_agos,
+			longinteger_object *&agos, int *&multiplicities);
+	void longinteger_collect_add(int &nb_agos,
+			longinteger_object *&agos, int *&multiplicities,
+			longinteger_object &ago);
+	void longinteger_collect_print(std::ostream &ost,
+			int &nb_agos, longinteger_object *&agos, int *&multiplicities);
 
 
 };
@@ -2466,5 +2490,9 @@ void vector_space_unrank_point_callback(int *v, long int rk, void *data);
 long int vector_space_rank_point_callback(int *v, void *data);
 
 }}
+
+
+#endif /* ORBITER_SRC_LIB_FOUNDATIONS_ALGEBRA_AND_NUMBER_THEORY_H_ */
+
 
 

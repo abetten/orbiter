@@ -6,6 +6,12 @@
 // based on action.h which was started:  August 13, 2005
 
 
+
+#ifndef ORBITER_SRC_LIB_GROUP_ACTIONS_ACTIONS_ACTIONS_H_
+#define ORBITER_SRC_LIB_GROUP_ACTIONS_ACTIONS_ACTIONS_H_
+
+
+
 namespace orbiter {
 
 namespace group_actions {
@@ -993,51 +999,32 @@ class action_pointer_table {
 public:
 
 	/** function pointers for group actions */
-	long int (*ptr_element_image_of)(action &A, long int a, void *elt,
-		int verbose_level);
-	void (*ptr_element_image_of_low_level)(action &A,
-		int *input, int *output, void *elt, int verbose_level);
-	int (*ptr_element_linear_entry_ij)(action &A,
-		void *elt, int i, int j, int verbose_level);
-	int (*ptr_element_linear_entry_frobenius)(action &A,
-		void *elt, int verbose_level);
+	long int (*ptr_element_image_of)(action &A, long int a, void *elt, int verbose_level);
+	void (*ptr_element_image_of_low_level)(action &A, int *input, int *output, void *elt, int verbose_level);
+	int (*ptr_element_linear_entry_ij)(action &A, void *elt, int i, int j, int verbose_level);
+	int (*ptr_element_linear_entry_frobenius)(action &A, void *elt, int verbose_level);
 	void (*ptr_element_one)(action &A, void *elt, int verbose_level);
 	int (*ptr_element_is_one)(action &A, void *elt, int verbose_level);
-	void (*ptr_element_unpack)(action &A, void *elt,
-		void *Elt, int verbose_level);
-	void (*ptr_element_pack)(action &A, void *Elt,
-		void *elt, int verbose_level);
-	void (*ptr_element_retrieve)(action &A, int hdl,
-		void *elt, int verbose_level);
-	int (*ptr_element_store)(action &A, void *elt,
-		int verbose_level);
-	void (*ptr_element_mult)(action &A,
-		void *a, void *b, void *ab, int verbose_level);
-	void (*ptr_element_invert)(action &A,
-		void *a, void *av, int verbose_level);
-	void (*ptr_element_transpose)(action &A,
-		void *a, void *at, int verbose_level);
-	void (*ptr_element_move)(action &A,
-		void *a, void *b, int verbose_level);
-	void (*ptr_element_dispose)(action &A,
-		int hdl, int verbose_level);
-	void (*ptr_element_print)(action &A,
-		void *elt, std::ostream &ost);
-	void (*ptr_element_print_quick)(action &A,
-		void *elt, std::ostream &ost);
-	void (*ptr_element_print_latex)(action &A,
-		void *elt, std::ostream &ost);
+	void (*ptr_element_unpack)(action &A, void *elt, void *Elt, int verbose_level);
+	void (*ptr_element_pack)(action &A, void *Elt, void *elt, int verbose_level);
+	void (*ptr_element_retrieve)(action &A, int hdl, void *elt, int verbose_level);
+	int (*ptr_element_store)(action &A, void *elt, int verbose_level);
+	void (*ptr_element_mult)(action &A, void *a, void *b, void *ab, int verbose_level);
+	void (*ptr_element_invert)(action &A, void *a, void *av, int verbose_level);
+	void (*ptr_element_transpose)(action &A, void *a, void *at, int verbose_level);
+	void (*ptr_element_move)(action &A, void *a, void *b, int verbose_level);
+	void (*ptr_element_dispose)(action &A, int hdl, int verbose_level);
+	void (*ptr_element_print)(action &A, void *elt, std::ostream &ost);
+	void (*ptr_element_print_quick)(action &A, void *elt, std::ostream &ost);
+	void (*ptr_element_print_latex)(action &A, void *elt, std::ostream &ost);
 	void (*ptr_element_print_latex_with_print_point_function)(action &A,
 		void *elt, std::ostream &ost,
 		void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 		void *point_label_data);
-	void (*ptr_element_print_verbose)(action &A,
-		void *elt, std::ostream &ost);
+	void (*ptr_element_print_verbose)(action &A, void *elt, std::ostream &ost);
 	void (*ptr_print_point)(action &A, long int i, std::ostream &ost);
-	void (*ptr_element_code_for_make_element)(action &A,
-		void *elt, int *data);
-	void (*ptr_element_print_for_make_element)(action &A,
-		void *elt, std::ostream &ost);
+	void (*ptr_element_code_for_make_element)(action &A, void *elt, int *data);
+	void (*ptr_element_print_for_make_element)(action &A, void *elt, std::ostream &ost);
 	void (*ptr_element_print_for_make_element_no_commas)(action &A,
 		void *elt, std::ostream &ost);
 	void (*ptr_unrank_point)(action &A, long int rk, int *v);
@@ -1212,4 +1199,8 @@ public:
 
 
 }}
+
+
+#endif /* ORBITER_SRC_LIB_GROUP_ACTIONS_ACTIONS_ACTIONS_H_ */
+
 

@@ -8,6 +8,13 @@
 // galois started:  August 12, 2005
 
 
+#ifndef ORBITER_SRC_LIB_FOUNDATIONS_IO_AND_OS_IO_AND_OS_H_
+#define ORBITER_SRC_LIB_FOUNDATIONS_IO_AND_OS_IO_AND_OS_H_
+
+
+
+
+
 namespace orbiter {
 namespace foundations {
 
@@ -772,6 +779,8 @@ void text_to_three_double(const char *text, double *d);
 }}
 
 
+
+#endif /* ORBITER_SRC_LIB_FOUNDATIONS_IO_AND_OS_IO_AND_OS_H_ */
 
 
 

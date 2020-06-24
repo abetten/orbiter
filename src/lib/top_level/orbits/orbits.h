@@ -7,6 +7,11 @@
 // based on global.h, which was taken from reader.h: 3/22/09
 
 
+#ifndef ORBITER_SRC_LIB_TOP_LEVEL_ORBITS_ORBITS_H_
+#define ORBITER_SRC_LIB_TOP_LEVEL_ORBITS_ORBITS_H_
+
+
+
 
 namespace orbiter {
 namespace top_level {
@@ -444,5 +449,9 @@ void subspace_orbits_early_test_func(long int *S, int len,
 
 
 }}
+
+#endif /* ORBITER_SRC_LIB_TOP_LEVEL_ORBITS_ORBITS_H_ */
+
+
 
 
