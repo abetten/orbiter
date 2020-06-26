@@ -382,7 +382,7 @@ void interface_combinatorics::read_arguments(int argc,
 			f_graph_classify = TRUE;
 			cout << "-graph_classify " << endl;
 		}
-		if (strcmp(argv[i], "-tdo_refinement") == 0) {
+		else if (strcmp(argv[i], "-tdo_refinement") == 0) {
 			f_tdo_refinement = TRUE;
 			cout << "-tdo_refinement " << endl;
 			Tdo_refinement_descr = NEW_OBJECT(tdo_refinement_description);
@@ -395,7 +395,7 @@ void interface_combinatorics::read_arguments(int argc,
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
-		if (strcmp(argv[i], "-tdo_print") == 0) {
+		else if (strcmp(argv[i], "-tdo_print") == 0) {
 			f_tdo_print = TRUE;
 			tdo_print_fname = argv[++i];
 			cout << "-tdo_print " << tdo_print_fname << endl;
