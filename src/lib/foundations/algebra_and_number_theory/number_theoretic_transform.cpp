@@ -48,6 +48,13 @@ number_theoretic_transform::number_theoretic_transform()
 
 	bit_reversal = NULL;
 
+	Q = 0;
+	FQ = NULL;
+	alphaQ = 0;
+	psi = 0;
+
+	Psi_powers = NULL;
+
 	//null();
 }
 
@@ -55,7 +62,8 @@ number_theoretic_transform::~number_theoretic_transform()
 {
 }
 
-void number_theoretic_transform::init(const char *fname_code, int k, int q, int verbose_level)
+void number_theoretic_transform::init(const char *fname_code,
+		int k, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int idx, i, j, h;
@@ -74,14 +82,6 @@ void number_theoretic_transform::init(const char *fname_code, int k, int q, int 
 
 	number_theoretic_transform::k = k;
 	number_theoretic_transform::q = q;
-
-
-	G = NEW_pint(k + 1);
-	D = NEW_pint(k + 1);
-	Dv = NEW_pint(k + 1);
-	T = NEW_pint(k + 1);
-	Tv = NEW_pint(k + 1);
-	P = NEW_pint(k + 1);
 
 
 
@@ -127,6 +127,33 @@ void number_theoretic_transform::init(const char *fname_code, int k, int q, int 
 		Fio.int_matrix_write_csv(fname, A[h], N[h], N[h]);
 	}
 
+
+	{
+
+
+		Psi_powers = NEW_int(N[k]);
+		Q = q * q;
+		FQ = NEW_OBJECT(finite_field);
+		FQ->init(Q, 0);
+		alphaQ = FQ->primitive_element();
+
+		psi = FQ->power(alphaQ, (q + 1) >> 1);
+		Psi_powers[0] = 1;
+		for (i = 1; i < N[k]; i++) {
+			Psi_powers[i] = FQ->mult(Psi_powers[i - 1], psi);
+		}
+
+		if (f_v) {
+			cout << "alphaQ=" << alphaQ << endl;
+			cout << "psi=" << psi << endl;
+			cout << "Psi_powers:" << endl;
+			int_matrix_print(Psi_powers, N[k], 1);
+		}
+
+
+	}
+
+
 	cout << "Omega:" << endl;
 	int_matrix_print(Omega, k + 1, 1);
 
@@ -149,7 +176,7 @@ void number_theoretic_transform::init(const char *fname_code, int k, int q, int 
 				A_log[h][i * N[h] + j] = F->log_alpha(A[h][i * N[h] + j]) + 1;
 			}
 		}
-		cout << "A_" << N[h] << " using logariths (+1):" << endl;
+		cout << "A_" << N[h] << " using logarithms (+1):" << endl;
 		int_matrix_print(A_log[h], N[h], N[h]);
 	}
 
@@ -235,6 +262,14 @@ void number_theoretic_transform::init(const char *fname_code, int k, int q, int 
 	}
 
 
+	G = NEW_pint(k + 1);
+	D = NEW_pint(k + 1);
+	Dv = NEW_pint(k + 1);
+	T = NEW_pint(k + 1);
+	Tv = NEW_pint(k + 1);
+	P = NEW_pint(k + 1);
+
+
 	G[k] = NEW_int(N[k] * N[k]);
 	D[k] = NEW_int(N[k] * N[k]);
 	Dv[k] = NEW_int(N[k] * N[k]);
@@ -251,12 +286,6 @@ void number_theoretic_transform::init(const char *fname_code, int k, int q, int 
 	Pr = NEW_pint(k + 1);
 
 
-#if 0
-	F->identity_matrix(G[k], N[k]);
-	F->identity_matrix(D[k], N[k]);
-	int_vec_copy(A[k], T[k], N[k] * N[k]);
-	F->identity_matrix(P[k], N[k]);
-#endif
 
 	// G[k - 1]:
 	make_G_matrix(k - 1, verbose_level);
@@ -363,7 +392,7 @@ void number_theoretic_transform::init(const char *fname_code, int k, int q, int 
 	Stack[0] = P[k - 3];
 	Stack[1] = P[k - 2];
 	Stack[2] = Pr[k - 1];
-	multiply_matrix_stack(Stack, 3, N[k], the_P, verbose_level);
+	multiply_matrix_stack(F, Stack, 3, N[k], the_P, verbose_level);
 
 	cout << "the_P:" << endl;
 	int_matrix_print(the_P, N[k], N[k]);
@@ -396,7 +425,7 @@ void number_theoretic_transform::init(const char *fname_code, int k, int q, int 
 	Stack[5] = D[k - 3];
 
 
-	multiply_matrix_stack(Stack, 6, N[k], the_L, verbose_level);
+	multiply_matrix_stack(F, Stack, 6, N[k], the_L, verbose_level);
 
 	cout << "the_L:" << endl;
 	int_matrix_print(the_L, N[k], N[k]);
@@ -417,7 +446,7 @@ void number_theoretic_transform::init(const char *fname_code, int k, int q, int 
 	Stack[3] = Pr[2];
 
 
-	multiply_matrix_stack(Stack, 4, N[3], the_L, verbose_level);
+	multiply_matrix_stack(F, Stack, 4, N[3], the_L, verbose_level);
 
 	cout << "G[2]*D[2]*T[2]*P[2]=" << endl;
 	int_matrix_print(the_L, N[3], N[3]);
@@ -437,7 +466,7 @@ void number_theoretic_transform::init(const char *fname_code, int k, int q, int 
 	Stack[1] = Av[k];
 
 
-	multiply_matrix_stack(Stack, 2, N[k], the_L, verbose_level);
+	multiply_matrix_stack(F, Stack, 2, N[k], the_L, verbose_level);
 
 	cout << "A*Av=" << endl;
 	int_matrix_print(the_L, N[k], N[k]);
@@ -447,6 +476,11 @@ void number_theoretic_transform::init(const char *fname_code, int k, int q, int 
 	snprintf(fname, 1000, "ntt_AAv_k%d.csv", k);
 	Fio.int_matrix_write_csv(fname, the_L, N[k], N[k]);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname_P) << endl;
+
+
+
+
+
 
 
 	homogeneous_polynomial_domain *Hom;
@@ -512,6 +546,38 @@ void number_theoretic_transform::init(const char *fname_code, int k, int q, int 
 	cout << "poly_C:" << endl;
 	int_matrix_print(poly_C, 1, N[k]);
 	cout << endl;
+
+
+	cout << "negatively wrapped convolution:" << endl;
+
+	Hom->multiply_mod_negatively_wrapped(poly_A, poly_B, poly_C, 0/*verbose_level*/);
+
+	cout << "poly_C:" << endl;
+	int_matrix_print(poly_C, 1, N[k]);
+	cout << endl;
+
+	for (i = 0; i < N[k]; i++) {
+		poly_A[i] = FQ->mult(poly_A[i], Psi_powers[i]);
+	}
+	for (i = 0; i < N[k]; i++) {
+		poly_B[i] = FQ->mult(poly_B[i], Psi_powers[i]);
+	}
+	ntt4_forward(poly_A, poly_Ap, FQ);
+	ntt4_forward(poly_B, poly_Bp, FQ);
+
+	for (i = 0; i < N[k]; i++) {
+		poly_Cp[i] = FQ->mult(poly_Ap[i], poly_Bp[i]);
+	}
+	ntt4_backward(poly_Cp, poly_C, FQ);
+	for (i = 0; i < N[k]; i++) {
+		poly_C[i] = FQ->mult(poly_C[i], FQ->inverse(Psi_powers[i]));
+	}
+	cout << "poly_C:" << endl;
+	int_matrix_print(poly_C, 1, N[k]);
+	cout << endl;
+
+
+
 
 	if (f_v) {
 		cout << "number_theoretic_transform::init done" << endl;
@@ -1117,6 +1183,7 @@ void number_theoretic_transform::make_D_matrix(int s, int verbose_level)
 	int_vec_zero(Dvr[s], N[s + 1] * N[s + 1]);
 	omega = F->inverse(Omega[s + 1]);
 	gamma = 1;
+
 	for (i = 0; i < N[s]; i++) {
 
 		Dvr[s][i * N[s + 1] + i] = 1;
@@ -1190,7 +1257,8 @@ void number_theoretic_transform::make_P_matrix(int s, int verbose_level)
 	}
 }
 
-void number_theoretic_transform::multiply_matrix_stack(int **S,
+void number_theoretic_transform::multiply_matrix_stack(finite_field *F,
+		int **S,
 		int nb, int sz, int *Result, int verbose_level)
 {
 	int f_v = (verbose_level = 1);

@@ -1664,6 +1664,9 @@ public:
 	void multiply_mod(
 		int *coeff1, int *coeff2, int *coeff3,
 		int verbose_level);
+	void multiply_mod_negatively_wrapped(
+		int *coeff1, int *coeff2, int *coeff3,
+		int verbose_level);
 	int is_zero(int *coeff);
 	void unrank_point(int *v, int rk);
 	int rank_point(int *v);
@@ -2001,7 +2004,7 @@ public:
 
 	int alpha, omega;
 	int gamma, minus_gamma, minus_one;
-	int **A;
+	int **A; // Fourier matrices for the positively wrapped convolution
 	int **Av;
 	int **A_log;
 	int *Omega;
@@ -2030,6 +2033,12 @@ public:
 
 	int *bit_reversal;
 
+	int Q;
+	finite_field *FQ;
+	int alphaQ;
+	int psi;
+	int *Psi_powers; // powers of psi
+
 
 	number_theoretic_transform();
 	~number_theoretic_transform();
@@ -2048,7 +2057,7 @@ public:
 	void make_D_matrix(int s, int verbose_level);
 	void make_T_matrix(int s, int verbose_level);
 	void make_P_matrix(int s, int verbose_level);
-	void multiply_matrix_stack(int **S,
+	void multiply_matrix_stack(finite_field *F, int **S,
 			int nb, int sz, int *Result, int verbose_level);
 };
 
