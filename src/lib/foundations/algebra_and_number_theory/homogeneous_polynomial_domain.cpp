@@ -1364,6 +1364,54 @@ void homogeneous_polynomial_domain::multiply_mod(
 	}
 }
 
+void homogeneous_polynomial_domain::multiply_mod_negatively_wrapped(
+	int *coeff1, int *coeff2, int *coeff3,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, a, b, c, idx;
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::multiply_mod_negatively_wrapped" << endl;
+	}
+
+	int_vec_zero(coeff3, nb_monomials);
+	for (i = 0; i < nb_monomials; i++) {
+		a = coeff1[i];
+		if (a == 0) {
+			continue;
+		}
+		if (f_v) {
+			cout << "coeff1[" << i << "] = " << a << endl;
+		}
+		for (j = 0; j < nb_monomials; j++) {
+			b = coeff2[j];
+			if (b == 0) {
+				continue;
+			}
+			if (f_v) {
+				cout << "coeff2[" << j << "] = " << b << endl;
+			}
+			c = F->mult(a, b);
+			idx = i + j;
+			if (idx < nb_monomials) {
+				coeff3[idx] = F->add(coeff3[idx], c);
+			}
+			else {
+				idx = idx % nb_monomials;
+				coeff3[idx] = F->add(coeff3[idx], F->negate(c));
+			}
+			if (f_v) {
+				cout << "coeff3[" << idx << "] += " << c << endl;
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::multiply_mod_negatively_wrapped done" << endl;
+	}
+}
+
 
 int homogeneous_polynomial_domain::is_zero(int *coeff)
 {
