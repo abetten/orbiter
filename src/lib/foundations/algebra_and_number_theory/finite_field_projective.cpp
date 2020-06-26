@@ -5859,7 +5859,7 @@ void finite_field::cheat_sheet_PG(int n, int verbose_level)
 	//int q = F->q;
 
 	snprintf(fname, 1000, "PG_%d_%d.tex", n, q);
-	snprintf(fname, 1000, "Cheat Sheet PG($%d,%d$)", n, q);
+	snprintf(title, 1000, "Cheat Sheet PG($%d,%d$)", n, q);
 	//strcpy(author, "");
 	author[0] = 0;
 	projective_space *P;
