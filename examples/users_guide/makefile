@@ -546,19 +546,21 @@ EC:
 	$(ORBITER_PATH)/orbiter.out -v 5 -create_combinatorial_object -q 11 \
 		-elliptic_curve 1 3 -end \
 		-save "./"
-	$(ORBITER_PATH)/orbiter.out -v 2 -process_combinatorial_objects \
-		-draw_points_in_plane EC_11_1_3 -q 11 -n 2 \
+	$(ORBITER_PATH)/orbiter.out -v 2 -process_combinatorial_objects -q 11 -n 2  \
+		-draw_points_in_plane EC_11_1_3 \
 		-fname_base_out EC_11_1_3 -embedded \
-		-input -file_of_points elliptic_curve_b1_c3_q11.txt \
-		-end \
+		-input -file_of_points elliptic_curve_b1_c3_q11.txt -end \
 		-end
 	$(ORBITER_PATH)/orbiter.out -v 2 -canonical_form_PG  2 11 \
-		-input \
-		-file_of_points elliptic_curve_b1_c3_q11.txt \
-		-end \
-		-prefix PG_2_11_EC \
-		-save elliptic_curve_b1_c3_q11_classified \
-		-report
+		-input -file_of_points elliptic_curve_b1_c3_q11.txt -end \
+		-classification_prefix elliptic_curve_b1_c3_q11 \
+		-report \
+		-end 
+	pdflatex elliptic_curve_b1_c3_q11_classification.tex
+	open elliptic_curve_b1_c3_q11_classification.pdf
+
+
+no:
 	pdflatex EC_11_1_3_draw.tex
 	open EC_11_1_3_draw.pdf
 	pdflatex PG_2_11_EC_classification.tex
@@ -1996,4 +1998,34 @@ STS13:
 		-control -problem_label STS13 -w -depth 7 -end -end
 	
 	
-	
+PG_4_3:
+	$(ORBITER_PATH)/orbiter.out -cheat_sheet_PG 4 3
+	pdflatex PG_4_3.tex 
+	open PG_4_3.pdf
+
+
+AGL_4_3:
+	$(ORBITER_PATH)/orbiter.out -v 5 \
+		-linear_group -PGL 5 3 -subgroup_by_generators "AGL_4_3" "1965150720" 14 \
+			"1,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1," \
+			"1,0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,0,1," \
+			"1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,1," \
+			"1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,1," \
+			"1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,1," \
+			"1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,0,1," \
+			"1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,1," \
+			"1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,2," \
+			"1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,2,0,0,0,0,0,1," \
+			"1,0,0,0,0,0,1,0,0,0,0,0,2,0,0,0,0,0,1,0,0,0,0,0,1," \
+			"1,0,0,0,0,0,2,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1," \
+			"1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1,0," \
+			"1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,1," \
+			"1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1," \
+			-end \
+		-group_theoretic_activities \
+			-poset_classification_control \
+				-W \
+				-problem_label arcs \
+			-end \
+			-report \
+		-end
