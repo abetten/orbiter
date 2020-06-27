@@ -15,8 +15,15 @@ namespace top_level {
 
 six_arcs_not_on_a_conic::six_arcs_not_on_a_conic()
 {
-	null();
+	P2 = NULL;
+	Descr = NULL;
+	Gen = NULL;
+	nb_orbits = 0;
+	Not_on_conic_idx = NULL;
+	nb_arcs_not_on_conic = 0;
+	//null();
 }
+
 
 six_arcs_not_on_a_conic::~six_arcs_not_on_a_conic()
 {
@@ -25,10 +32,6 @@ six_arcs_not_on_a_conic::~six_arcs_not_on_a_conic()
 
 void six_arcs_not_on_a_conic::null()
 {
-	F = NULL;
-	P2 = NULL;
-	Gen = NULL;
-	Not_on_conic_idx = NULL;
 }
 
 void six_arcs_not_on_a_conic::freeself()
@@ -43,11 +46,9 @@ void six_arcs_not_on_a_conic::freeself()
 }
 
 void six_arcs_not_on_a_conic::init(
-	group_theoretic_activity *GTA,
-	finite_field *F,
+	arc_generator_description *Descr,
 	action *A,
 	projective_space *P2,
-	poset_classification_control *Control,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -57,18 +58,22 @@ void six_arcs_not_on_a_conic::init(
 		cout << "six_arcs_not_on_a_conic::init" << endl;
 	}
 
-	six_arcs_not_on_a_conic::F = F;
 	six_arcs_not_on_a_conic::P2 = P2;
+	six_arcs_not_on_a_conic::Descr = Descr;
 	
-	sprintf(base_fname, "arcs_%d", F->q);
 
 	
-	Gen = NEW_OBJECT(arc_generator);
 
-	//Gen->f_poly = FALSE;
+	Descr->f_target_size = TRUE;
+	Descr->target_size = 6;
+	Descr->f_d = TRUE;
+	Descr->d = 2;
+	Descr->f_n = TRUE;
+	Descr->n = 3;
+	Descr->f_conic_test = TRUE;
 
-	Gen->f_d = TRUE;
-	Gen->d = 2; // we will classify two-arcs
+
+
 
 
 	
@@ -77,15 +82,22 @@ void six_arcs_not_on_a_conic::init(
 				"before Gen->init" << endl;
 	}
 
+	Gen = NEW_OBJECT(arc_generator);
+
 
 	Gen->init(
-			GTA,
-			F,
+			Descr,
 			A, A->Strong_gens,
-			6 /* Gen->ECA->starter_size */,
-			TRUE /* f_conic_test */,
-			Control,
+			//GTA,
+			//F,
+			//A, A->Strong_gens,
+			//6 /* Gen->ECA->starter_size */,
+			//TRUE /* f_conic_test */,
+			//Control,
 			verbose_level - 2);
+
+
+
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::init "
 				"after Gen->init" << endl;
@@ -98,7 +110,7 @@ void six_arcs_not_on_a_conic::init(
 
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::init "
-				"Classifying 6-arcs for q=" << F->q << endl;
+				"Classifying 6-arcs for q=" << Descr->F->q << endl;
 		cout << "six_arcs_not_on_a_conic::init before Gen->compute_starter" << endl;
 	}
 	
@@ -219,7 +231,7 @@ void six_arcs_not_on_a_conic::report_latex(ostream &ost)
 	int h;
 	
 	ost << "\\subsection*{Classification of 6-arcs not on a conic "
-			"in $\\PG(2," << F->q << ")$}" << endl;
+			"in $\\PG(2," << Descr->F->q << ")$}" << endl;
 	
 	longinteger_object go;
 	longinteger_domain D;
@@ -258,7 +270,7 @@ void six_arcs_not_on_a_conic::report_latex(ostream &ost)
 		FREE_OBJECT(R);
 	}
 	ost << "The overall number of 6-arcs not on a conic "
-			"in $\\PG(2," << F->q << ")$ is: " << Ol << "\\\\" << endl;
+			"in $\\PG(2," << Descr->F->q << ")$ is: " << Ol << "\\\\" << endl;
 }
 
 }}

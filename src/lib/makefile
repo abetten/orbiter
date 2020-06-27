@@ -329,6 +329,7 @@ MODULES= \
 		top_level/combinatorics/regular_linear_space_description.o \
 		top_level/combinatorics/regular_ls_classify.o \
 		top_level/combinatorics/tactical_decomposition.o \
+		top_level/geometry/arc_generator_description.o \
 		top_level/geometry/arc_generator.o \
 		top_level/geometry/arc_lifting_simeon.o \
 		top_level/geometry/arc_lifting.o \

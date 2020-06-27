@@ -69,9 +69,10 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//x_stretch = 1.;
 	//f_print_generators = FALSE;
 	f_classify_arcs = FALSE;
-	f_classify_nonconical_arcs = FALSE;
-	classify_arcs_target_size = 0;
-	classify_arcs_d = 0;
+	Arc_generator_description = NULL;
+	//f_classify_nonconical_arcs = FALSE;
+	//classify_arcs_target_size = 0;
+	//classify_arcs_d = 0;
 	f_exact_cover = FALSE;
 	ECA = NULL;
 	f_isomorph_arguments = FALSE;
@@ -364,16 +365,30 @@ int group_theoretic_activity_description::read_arguments(
 
 		else if (strcmp(argv[i], "-classify_arcs") == 0) {
 			f_classify_arcs = TRUE;
-			classify_arcs_target_size = atoi(argv[++i]);
-			classify_arcs_d = atoi(argv[++i]);
-			cout << "-classify_arcs" << " " << classify_arcs_target_size << " " << classify_arcs_d << endl;
+			Arc_generator_description = NEW_OBJECT(arc_generator_description);
+			cout << "-classify_arcs" << endl;
+			i += Arc_generator_description->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -classify_arcs " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+
+
+			//classify_arcs_target_size = atoi(argv[++i]);
+			//classify_arcs_d = atoi(argv[++i]);
 		}
+#if 0
 		else if (strcmp(argv[i], "-classify_nonconical_arcs") == 0) {
 			f_classify_nonconical_arcs = TRUE;
 			classify_arcs_target_size = atoi(argv[++i]);
 			classify_arcs_d = atoi(argv[++i]);
 			cout << "-classify_nonconical_arcs" << " " << classify_arcs_target_size << " " << classify_arcs_d << endl;
 		}
+#endif
 
 		else if (strcmp(argv[i], "-exact_cover") == 0) {
 			f_exact_cover = TRUE;

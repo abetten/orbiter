@@ -183,11 +183,11 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 			cout << "please use -poset_classification_control <descr> -end" << endl;
 			exit(1);
 		}
-		do_classify_arcs(Descr->classify_arcs_target_size, Descr->classify_arcs_d, FALSE,
-				Descr->Control,
+		do_classify_arcs(Descr->Arc_generator_description,
 				verbose_level);
 	}
 
+#if 0
 	else if (Descr->f_classify_nonconical_arcs) {
 		if (!Descr->f_poset_classification_control) {
 			cout << "please use -poset_classification_control <descr> -end" << endl;
@@ -197,6 +197,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 				Descr->Control,
 				verbose_level);
 	}
+#endif
 
 
 	// surfaces:
@@ -1824,8 +1825,8 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 
 
 
-void group_theoretic_activity::do_classify_arcs(int arc_size, int arc_d, int f_not_on_conic,
-		poset_classification_control *Control,
+void group_theoretic_activity::do_classify_arcs(
+		arc_generator_description *Arc_generator_description,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1834,19 +1835,43 @@ void group_theoretic_activity::do_classify_arcs(int arc_size, int arc_d, int f_n
 		cout << "group_theoretic_activity::do_classify_arcs" << endl;
 	}
 
+	if (!Arc_generator_description->f_q) {
+		cout << "please use -q <q>" << endl;
+		exit(1);
+	}
+
+	if (!Arc_generator_description->f_n) {
+		cout << "please use -n <n>" << endl;
+		exit(1);
+	}
+
+	if (Arc_generator_description->q != LG->F->q) {
+		cout << "group_theoretic_activity::do_classify_arcs the order of the fields don't match" << endl;
+		exit(1);
+	}
+	Arc_generator_description->F = LG->F;
+	Arc_generator_description->LG = LG;
+	Arc_generator_description->Control = Descr->Control;
+
+	if (Arc_generator_description->n != LG->A2->matrix_group_dimension()) {
+		cout << "group_theoretic_activity::do_classify_arcs the dimensions don't match" << endl;
+		exit(1);
+	}
+
 	{
 	arc_generator *Gen;
 
 	//finite_field *F;
 	//action *A;
 
-	action *A;
+	//action *A;
 
-	A = LG->A2;
+	//A = LG->A2;
 
 	Gen = NEW_OBJECT(arc_generator);
 
 
+#if 0
 	//cout << argv[0] << endl;
 	//cout << "before Gen->read_arguments" << endl;
 	//Gen->read_arguments(argc, argv);
@@ -1898,16 +1923,13 @@ void group_theoretic_activity::do_classify_arcs(int arc_size, int arc_d, int f_n
 		cout << "no isomorph arguments" << endl;
 		//Gen->IA = NULL;
 	}
+#endif
+
 
 	if (f_v) {
 		cout << "group_theoretic_activity::do_classify_arcs before Gen->init" << endl;
 	}
-	Gen->init(this,
-			LG->F,
-			A, LG->Strong_gens,
-			arc_size,
-			f_not_on_conic,
-			Control,
+	Gen->init_from_description(Arc_generator_description,
 			verbose_level);
 
 	if (f_v) {
@@ -2522,7 +2544,7 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_p
 		cout << "before A.classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
 	}
 	Algebra.classify_surfaces_through_arcs_and_trihedral_pairs(
-			this,
+			//this,
 			Surf_A,
 			Control_six_arcs,
 			verbose_level);
@@ -2747,9 +2769,22 @@ void group_theoretic_activity::do_create_surface(
 
 
 		six_arcs_not_on_a_conic *Six_arcs;
+		arc_generator_description *Six_arc_descr;
+
 		int *transporter;
 
 		Six_arcs = NEW_OBJECT(six_arcs_not_on_a_conic);
+
+		Six_arc_descr = NEW_OBJECT(arc_generator_description);
+		Six_arc_descr->F = F;
+		Six_arc_descr->f_q = TRUE;
+		Six_arc_descr->q = F->q;
+		Six_arc_descr->f_n = TRUE;
+		Six_arc_descr->n = 3;
+		Six_arc_descr->f_target_size = TRUE;
+		Six_arc_descr->target_size = 6;
+		Six_arc_descr->Control = Control_six_arcs;
+
 
 
 		// classify six arcs not on a conic:
@@ -2776,11 +2811,13 @@ void group_theoretic_activity::do_create_surface(
 					0 /*verbose_level*/);
 			FREE_OBJECT(nice_gens);
 		}
-		Six_arcs->init(this,
-				SC->F,
+		Six_arcs->init(
+				Six_arc_descr,
+				//this,
+				//SC->F,
 				A,
 			SC->Surf->P2,
-			Control_six_arcs,
+			//Control_six_arcs,
 			verbose_level);
 		transporter = NEW_int(Six_arcs->Gen->A->elt_size_in_int);
 
@@ -2799,6 +2836,7 @@ void group_theoretic_activity::do_create_surface(
 
 		FREE_OBJECT(SoA);
 		FREE_OBJECT(Six_arcs);
+		FREE_OBJECT(Six_arc_descr);
 		FREE_int(transporter);
 
 

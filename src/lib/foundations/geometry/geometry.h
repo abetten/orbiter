@@ -789,6 +789,7 @@ public:
 		// $\frac{q^{n+1} - 1}{q-1} = \sum_{i=0}^{n} q^i $
 	long int nb_PG_elements_not_in_subspace(int n, int m, int q);
 	long int nb_AG_elements(int n, int q);
+	long int nb_affine_lines(int n, int q);
 	long int AG_element_rank(int q, int *v, int stride, int len);
 	void AG_element_unrank(int q, int *v, int stride, int len, long int a);
 	void AG_element_rank_longinteger(int q, int *v, int stride, int len,

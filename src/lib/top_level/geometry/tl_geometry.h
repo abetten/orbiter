@@ -15,6 +15,53 @@ namespace orbiter {
 namespace top_level {
 
 
+
+// #############################################################################
+// arc_generator_description.cpp
+// #############################################################################
+
+//! description of a classification problem of arcs in a geometry
+
+
+class arc_generator_description {
+
+public:
+	linear_group *LG;
+
+	int f_q;
+	int q;
+	finite_field *F;
+	poset_classification_control *Control;
+
+	int f_d;
+	int d;
+	// d is the maximum number of points per line
+
+	int f_n;
+	int n;
+	// n is the dimension of the matrix group
+
+	int f_target_size;
+	int target_size;
+	// desired size of the arc
+
+	int f_conic_test;
+
+	int f_affine;
+
+	int f_no_arc_testing;
+	int f_has_forbidden_point_set;
+	const char *forbidden_point_set_string;
+
+
+	arc_generator_description();
+	~arc_generator_description();
+	int read_arguments(int argc, const char **argv, int verbose_level);
+
+
+};
+
+
 // #############################################################################
 // arc_generator.cpp
 // #############################################################################
@@ -26,11 +73,19 @@ class arc_generator {
 
 public:
 
-	int q;
-	finite_field *F;
 
-	group_theoretic_activity *GTA;
+	arc_generator_description *Descr;
 
+	//int q;
+	//finite_field *F;
+
+	//group_theoretic_activity *GTA;
+
+	int nb_points_total;
+	int nb_affine_lines;
+
+
+#if 0
 	int verbose_level;
 	int f_starter;
 	int f_draw_poset;
@@ -38,15 +93,19 @@ public:
 	int list_depth;
 	int f_simeon;
 	int simeon_s;
+#endif
 
 
+#if 0
 	int nb_points_total;
 	int f_target_size;
 	int target_size;
+#endif
 
-	int starter_size;
+	//int starter_size;
 
 
+#if 0
 	int f_recognize;
 	const char *recognize[1000];
 	int nb_recognize;
@@ -54,15 +113,13 @@ public:
 	int f_read_data_file;
 	const char *fname_data_file;
 	int depth_completed;
+#endif
 
 
-	int f_no_arc_testing;
 
 
 	int f_semilinear;
 
-	int f_has_forbidden_point_set;
-	const char *forbidden_points_string;
 	int *forbidden_points;
 	int nb_forbidden_points;
 	int *f_is_forbidden;
@@ -74,20 +131,11 @@ public:
 	action_on_grassmannian *AG;
 	action *A_on_lines;
 	
-	poset_classification_control *Control;
+	//poset_classification_control *Control;
 	poset *Poset;
 
 	projective_space *P; // projective n-space
 	
-	int f_d;
-	int d;
-	// d is the degree of the arc.
-
-	int f_n;
-	int n;
-	// n is the size of the arc
-
-	int f_conic_test;
 
 
 	int *line_type; // [P2->N_lines]
@@ -104,16 +152,14 @@ public:
 	void null();
 	void freeself();
 	void main(int verbose_level);
-	void init(
-		group_theoretic_activity *GTA,
-		finite_field *F,
-		action *A, strong_generators *SG,
-		int starter_size,  
-		int f_conic_test,
-		poset_classification_control *Control,
+	void init_from_description(
+		arc_generator_description *Descr,
 		int verbose_level);
-	void prepare_generator(poset_classification_control *Control,
-			int verbose_level);
+	void init(
+		arc_generator_description *Descr,
+		action *A, strong_generators *SG,
+		int verbose_level);
+	void prepare_generator(int verbose_level);
 	void compute_starter(int verbose_level);
 
 	int conic_test(long int *S, int len, int pt, int verbose_level);
@@ -2205,11 +2251,10 @@ class six_arcs_not_on_a_conic {
 
 public:
 
-	finite_field *F; // do not free
 	projective_space *P2; // do not free
+	arc_generator_description *Descr;
 	
 	arc_generator *Gen;
-	char base_fname[1000];
 
 	int nb_orbits;
 
@@ -2221,11 +2266,9 @@ public:
 	void null();
 	void freeself();
 	void init(
-		group_theoretic_activity *GTA,
-		finite_field *F,
+		arc_generator_description *Descr,
 		action *A,
 		projective_space *P2,
-		poset_classification_control *Control,
 		int verbose_level);
 	void recognize(long int *arc6, int *transporter,
 			int &orbit_not_on_conic_idx, int verbose_level);
