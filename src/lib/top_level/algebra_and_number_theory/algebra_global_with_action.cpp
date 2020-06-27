@@ -2410,7 +2410,7 @@ void algebra_global_with_action::young_symmetrizer_sym_4(int verbose_level)
 }
 
 void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs(
-		group_theoretic_activity *GTA,
+		//group_theoretic_activity *GTA,
 		surface_with_action *Surf_A,
 		poset_classification_control *Control,
 		int verbose_level)
@@ -2426,7 +2426,7 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 
 
 	if (f_v) {
-		cout << "classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
+		cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
 	}
 	F = Surf_A->F;
 	q = F->q;
@@ -2445,7 +2445,7 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 
 
 	if (f_v) {
-		cout << "before A->init_projective_group" << endl;
+		cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs before A->init_projective_group" << endl;
 	}
 	A->init_projective_group(3, F,
 			f_semilinear,
@@ -2454,34 +2454,46 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 			0 /*verbose_level*/);
 	FREE_OBJECT(nice_gens);
 	if (f_v) {
-		cout << "after A->init_projective_group" << endl;
+		cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs after A->init_projective_group" << endl;
 	}
 
 
 	six_arcs_not_on_a_conic *Six_arcs;
+	arc_generator_description *Descr;
 
 	Six_arcs = NEW_OBJECT(six_arcs_not_on_a_conic);
+	Descr = NEW_OBJECT(arc_generator_description);
+	Descr->F = F;
+	Descr->f_q = TRUE;
+	Descr->q = F->q;
+	Descr->f_n = TRUE;
+	Descr->n = 3;
+	Descr->f_d = TRUE;
+	Descr->d = 2;
+	Descr->f_target_size = TRUE;
+	Descr->target_size = 6;
+	Descr->Control = Control;
+
 
 
 	// classify six arcs not on a conic:
 
 	if (f_v) {
-		cout << "before Six_arcs->init" << endl;
+		cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs before Six_arcs->init" << endl;
 	}
-	Six_arcs->init(GTA,
-			F,
+	Six_arcs->init(
+			Descr,
 			A,
 			Surf->P2,
-			Control,
-		verbose_level - 2);
+			verbose_level - 2);
 	if (f_v) {
-		cout << "after Six_arcs->init" << endl;
+		cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs after Six_arcs->init" << endl;
 	}
 
 
 
 	if (f_v) {
-		cout << "before report" << endl;
+		cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs before report" << endl;
 	}
 	{
 		char title[1000];
@@ -2507,7 +2519,7 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 
 
 		if (f_v) {
-			cout << "classify_surfaces_through_arcs_and_trihedral_pairs q=" << q << endl;
+			cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs q=" << q << endl;
 		}
 
 
@@ -2597,7 +2609,7 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 
 
 			if (f_v) {
-				cout << "classify_surfaces_through_arcs_and_trihedral_pairs extending arc "
+				cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs extending arc "
 						<< arc_idx << " / "
 						<< Six_arcs->nb_arcs_not_on_conic << ":" << endl;
 			}
@@ -2644,7 +2656,7 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 			snprintf(arc_label_short, 1000, "Arc%d", arc_idx);
 
 			if (f_v) {
-				cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+				cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs "
 						"before arc_lifting_and_classify_using_trihedral_pairs" << endl;
 			}
 
@@ -2662,7 +2674,7 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 				verbose_level);
 
 			if (f_v) {
-				cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+				cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs "
 						"after arc_lifting_and_classify_using_trihedral_pairs" << endl;
 			}
 
@@ -2671,10 +2683,10 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 			nb_surfaces++;
 		} // next arc_idx
 
-		cout << "We found " << nb_surfaces << " surfaces" << endl;
+		cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs We found " << nb_surfaces << " surfaces" << endl;
 
 
-		cout << "decomposition matrix:" << endl;
+		cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs decomposition matrix:" << endl;
 		for (i = 0; i < nb_surfaces; i++) {
 			for (j = 0; j < Arc_identify_nb[i]; j++) {
 				cout << Arc_identify[i * Six_arcs->nb_arcs_not_on_conic + j];
@@ -2696,7 +2708,7 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 			}
 		}
 
-		cout << "decomposition matrix:" << endl;
+		cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs decomposition matrix:" << endl;
 		cout << "$$" << endl;
 		L.print_integer_matrix_with_standard_labels(cout, Decomp,
 				Six_arcs->nb_arcs_not_on_conic, nb_surfaces,
@@ -2710,6 +2722,14 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 		L.print_integer_matrix_tex_block_by_block(fp, Decomp,
 				Six_arcs->nb_arcs_not_on_conic, nb_surfaces, 25);
 		//fp << "$$" << endl;
+
+		file_io Fio;
+		char fname_decomposition[1000];
+
+		sprintf(fname_decomposition, "surfaces_q%d_decomposition_matrix.csv", F->q);
+
+		Fio.int_matrix_write_csv(fname_decomposition, Decomp, Six_arcs->nb_arcs_not_on_conic, nb_surfaces);
+		cout << "Written file " << fname_decomposition << " of size " << Fio.file_size(fname_decomposition) << endl;
 
 
 
@@ -2729,7 +2749,7 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 	//delete F;
 
 	if (f_v) {
-		cout << "classify_surfaces_through_arcs_and_trihedral_pairs done" << endl;
+		cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs done" << endl;
 	}
 }
 

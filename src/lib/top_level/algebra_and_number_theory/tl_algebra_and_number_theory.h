@@ -68,7 +68,7 @@ public:
 	void young_symmetrizer(int n, int verbose_level);
 	void young_symmetrizer_sym_4(int verbose_level);
 	void classify_surfaces_through_arcs_and_trihedral_pairs(
-			group_theoretic_activity *GTA,
+			//group_theoretic_activity *GTA,
 			surface_with_action *Surf_A,
 			poset_classification_control *Control,
 			int verbose_level);
@@ -280,9 +280,11 @@ public:
 
 	// classification of arcs in projective spaces:
 	int f_classify_arcs;
-	int f_classify_nonconical_arcs;
-	int classify_arcs_target_size;
-	int classify_arcs_d;
+	arc_generator_description *Arc_generator_description;
+
+	//int f_classify_nonconical_arcs;
+	//int classify_arcs_target_size;
+	//int classify_arcs_d;
 
 	int f_exact_cover;
 	exact_cover_arguments *ECA;
@@ -412,8 +414,8 @@ public:
 			poset_classification *PC,
 			int depth,
 			int verbose_level);
-	void do_classify_arcs(int arc_size, int arc_d, int f_not_on_conic,
-			poset_classification_control *Control,
+	void do_classify_arcs(
+			arc_generator_description *Arc_generator_description,
 			int verbose_level);
 	void do_surface_classify(int verbose_level);
 	void do_surface_report(int verbose_level);

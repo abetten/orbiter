@@ -62,6 +62,22 @@ long int geometry_global::nb_AG_elements(int n, int q)
 	return NT.i_power_j_lint(q, n);
 }
 
+long int geometry_global::nb_affine_lines(int n, int q)
+{
+	number_theory_domain NT;
+	long int qnp1, qn, q2, a, b, denom, res;
+
+	qnp1 = NT.i_power_j_lint(q, n + 1);
+	qn = NT.i_power_j_lint(q, n);
+	q2 = q * q;
+	denom = (q2 - 1) * (q2 - q);
+	a = (qnp1 - 1) * (qnp1 - q) / denom;
+	b = (qn - 1) * (qn - q) / denom;
+	res = a - b;
+	return res;
+}
+
+
 long int geometry_global::AG_element_rank(int q, int *v, int stride, int len)
 {
 	int i;

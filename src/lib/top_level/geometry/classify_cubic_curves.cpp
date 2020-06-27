@@ -98,6 +98,10 @@ void classify_cubic_curves::init(
 
 	//Arc_gen->read_arguments(argc, argv);
 
+
+	// ToDo
+
+#if 0
 	Arc_gen->init(GTA,
 			F,
 			A, A->Strong_gens,
@@ -105,6 +109,7 @@ void classify_cubic_curves::init(
 			FALSE /* f_conic_test */,
 			Control,
 			verbose_level);
+#endif
 
 
 	if (f_v) {

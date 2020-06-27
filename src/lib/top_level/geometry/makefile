@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	arc_generator_description.o \
 	arc_generator.o \
 	arc_lifting_simeon.o \
 	arc_lifting.o \
