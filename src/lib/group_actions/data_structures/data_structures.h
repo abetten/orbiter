@@ -337,7 +337,7 @@ public:
 	int nb_sets;
 	int set_size;
 	long int *Sets; // [nb_sets * set_size]
-		// A system of sets that is gicen
+		// A system of sets that is given
 	long int goi;
 
 	int orbit_type_size;

@@ -87,6 +87,14 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		inverse(verbose_level);
 	}
 
+	if (Descr->f_export_gap) {
+		do_export_gap(verbose_level);
+	}
+
+	if (Descr->f_export_magma) {
+		do_export_magma(verbose_level);
+	}
+
 	if (Descr->f_classes) {
 		classes(verbose_level);
 	}
@@ -147,7 +155,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 	if (Descr->f_orbit_of) {
 		orbit_of(verbose_level);
-	} // if (f_orbit_of)
+	}
 	else if (Descr->f_orbits_on_subsets) {
 		orbits_on_subsets(verbose_level);
 	}
@@ -168,7 +176,8 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 
 	if (Descr->f_linear_codes) {
-		do_linear_codes(Descr->linear_codes_minimum_distance, Descr->linear_codes_target_size, verbose_level);
+		do_linear_codes(Descr->linear_codes_minimum_distance,
+				Descr->linear_codes_target_size, verbose_level);
 	}
 
 
@@ -180,24 +189,13 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_classify_arcs) {
 		if (!Descr->f_poset_classification_control) {
-			cout << "please use -poset_classification_control <descr> -end" << endl;
+			cout << "For classifying arcs, please use -poset_classification_control <descr> -end" << endl;
 			exit(1);
 		}
 		do_classify_arcs(Descr->Arc_generator_description,
 				verbose_level);
 	}
 
-#if 0
-	else if (Descr->f_classify_nonconical_arcs) {
-		if (!Descr->f_poset_classification_control) {
-			cout << "please use -poset_classification_control <descr> -end" << endl;
-			exit(1);
-		}
-		do_classify_arcs(Descr->classify_arcs_target_size, Descr->classify_arcs_d, TRUE,
-				Descr->Control,
-				verbose_level);
-	}
-#endif
 
 
 	// surfaces:
@@ -264,6 +262,10 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		}
 		packing_classify *P;
 
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity before do_packing_classify" << endl;
+		}
+
 		do_packing_classify(Descr->dimension_of_spread_elements,
 				Descr->spread_selection_text,
 				Descr->spread_tables_prefix,
@@ -271,27 +273,61 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 				P,
 				verbose_level);
 
-		packing_was *PWAS;
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity after do_packing_classify" << endl;
+		}
 
-		PWAS = NEW_OBJECT(packing_was);
+		packing_was *PW;
 
-		PWAS->init(Descr->packing_was_descr,
-				P, verbose_level);
+		PW = NEW_OBJECT(packing_was);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity before PW->init" << endl;
+		}
+
+		PW->init(Descr->packing_was_descr, P, verbose_level);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity after PW->init" << endl;
+		}
+
+		packing_was_fixpoints *PWF;
+
+		PWF = NEW_OBJECT(packing_was_fixpoints);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity before PWF->init" << endl;
+		}
+
+		PWF->init(PW, verbose_level);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity after PWF->init" << endl;
+		}
 
 
-		FREE_OBJECT(PWAS);
+		FREE_OBJECT(PWF);
+		FREE_OBJECT(PW);
 		FREE_OBJECT(P);
 
 	}
 	else if (Descr->f_packing_classify) {
 		packing_classify *P;
 
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity before do_packing_classify" << endl;
+		}
+
 		do_packing_classify(Descr->dimension_of_spread_elements,
 				Descr->spread_selection_text,
 				Descr->spread_tables_prefix,
 				0, // starter_size
 				P,
 				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity after do_packing_classify" << endl;
+		}
+
 		FREE_OBJECT(P);
 	}
 
@@ -365,6 +401,55 @@ void group_theoretic_activity::inverse(int verbose_level)
 		cout << "group_theoretic_activity::inverse done" << endl;
 	}
 }
+
+void group_theoretic_activity::do_export_gap(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_export_gap" << endl;
+	}
+
+	char fname[1000];
+	file_io Fio;
+
+	sprintf(fname, "%s_generators.gap", LG->label.c_str());
+	{
+		ofstream fp(fname);
+		LG->Strong_gens->print_generators_gap(fp);
+	}
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_export_gap done" << endl;
+	}
+}
+
+void group_theoretic_activity::do_export_magma(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_export_magma" << endl;
+	}
+
+	char fname[1000];
+	file_io Fio;
+
+	sprintf(fname, "%s_generators.magma", LG->label.c_str());
+	{
+		ofstream fp(fname);
+		LG->Strong_gens->export_magma(LG->A_linear, fp);
+	}
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_export_magma done" << endl;
+	}
+}
+
 
 void group_theoretic_activity::create_group_table(int verbose_level)
 {
@@ -2813,12 +2898,10 @@ void group_theoretic_activity::do_create_surface(
 		}
 		Six_arcs->init(
 				Six_arc_descr,
-				//this,
-				//SC->F,
 				A,
-			SC->Surf->P2,
-			//Control_six_arcs,
-			verbose_level);
+				SC->Surf->P2,
+				verbose_level);
+
 		transporter = NEW_int(Six_arcs->Gen->A->elt_size_in_int);
 
 		algebra_global_with_action Algebra;

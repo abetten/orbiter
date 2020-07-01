@@ -1500,6 +1500,8 @@ public:
 		// the number of spreads in a packing,
 		// which is q^2 + q + 1
 
+	spread_table_with_selection *Spread_table_with_selection;
+
 	projective_space *P3;
 	projective_space *P5;
 	long int *the_packing; // [size_of_packing]
@@ -1510,6 +1512,7 @@ public:
 	grassmann *Gr;
 
 
+#if 0
 	const char *spread_tables_prefix;
 
 	long int *spread_reps; // [nb_spread_reps * T->spread_size]
@@ -1525,10 +1528,9 @@ public:
 	int *tmp_isomorphism_type_of_spread; // for packing_swap_func
 
 	action *A_on_spreads;
+#endif
 
 
-	uchar *bitvector_adjacency;
-	long int bitvector_length;
 	int *degree;
 
 	poset_classification_control *Control;
@@ -1542,18 +1544,15 @@ public:
 	~packing_classify();
 	void null();
 	void freeself();
-	void init(spread_classify *T,
-		int f_packing_select_spread,
-		const char *packing_select_spread_text,
-		//const char *input_prefix, const char *base_fname,
-		int f_lexorder_test,
-		const char *path_to_spread_tables,
-		int verbose_level);
+	void init(
+			spread_table_with_selection *Spread_table_with_selection,
+			int f_lexorder_test,
+			int verbose_level);
 	void init2(poset_classification_control *Control, int verbose_level);
-	void compute_spread_table(int verbose_level);
-	void compute_spread_table_from_scratch(int verbose_level);
+	//void compute_spread_table(int verbose_level);
+	//void compute_spread_table_from_scratch(int verbose_level);
 	void init_P3_and_P5(int verbose_level);
-	int test_if_packing_is_self_dual(int *packing, int verbose_level);
+	//int test_if_packing_is_self_dual(int *packing, int verbose_level);
 	void compute_adjacency_matrix(int verbose_level);
 	void prepare_generator(
 			poset_classification_control *Control,
@@ -1566,35 +1565,6 @@ public:
 		diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out,
 		int verbose_level);
-	void compute_covered_points(
-		long int *&points_covered_by_starter,
-		int &nb_points_covered_by_starter,
-		long int *starter, int starter_size,
-		int verbose_level);
-		// points_covered_by_starter are the lines
-		// that are contained in the spreads chosen for the starter
-	void compute_free_points2(
-		long int *&free_points2, int &nb_free_points2, long int *&free_point_idx,
-		long int *points_covered_by_starter,
-		int nb_points_covered_by_starter,
-		long int *starter, int starter_size,
-		int verbose_level);
-		// free_points2 are actually the free lines, i.e.,
-		// the lines that are not
-		// yet part of the partial packing
-	void compute_live_blocks2(
-		exact_cover *EC, int starter_case,
-		long int *&live_blocks2, int &nb_live_blocks2,
-		long int *points_covered_by_starter,
-		int nb_points_covered_by_starter,
-		long int *starter, int starter_size,
-		int verbose_level);
-	int is_adjacent(int i, int j);
-	void read_spread_table(
-			//const char *fname_spread_table,
-			//const char *fname_spread_table_iso,
-			int verbose_level);
-	void create_action_on_spreads(int verbose_level);
 	void report_fixed_objects(
 			int *Elt, char *fname_latex,
 			int verbose_level);
@@ -1720,11 +1690,12 @@ public:
 // packing_long_orbits.cpp
 // #############################################################################
 
-//! complete a partial packing using long orbits, utilizing clique search
+//! complete a partial packing from a clique on the fixpoint graph using long orbits, utilizing clique search
 
 class packing_long_orbits {
 public:
-	packing_was *P;
+	//packing_was *P;
+	packing_was_fixpoints *PWF;
 
 	int fixpoints_idx;
 	int fixpoints_clique_case_number;
@@ -1741,7 +1712,7 @@ public:
 
 	packing_long_orbits();
 	~packing_long_orbits();
-	void init(packing_was *P,
+	void init(packing_was_fixpoints *PWF,
 			int fixpoints_idx,
 			int fixpoints_clique_case_number,
 			int fixpoint_clique_size,
@@ -1789,10 +1760,17 @@ public:
 	int process_long_orbits_m;
 	int long_orbit_length;
 	int long_orbits_clique_size;
+
+
+	int f_process_long_orbits_by_list_of_cases_from_file;
+	const char *process_long_orbits_by_list_of_cases_from_file_fname;
+
+
 	int f_expand_cliques_of_long_orbits;
 	int clique_no_r;
 	int clique_no_m;
 	int f_type_of_fixed_spreads;
+	int f_fixp_clique_types_save_individually;
 	int f_label;
 	const char *label;
 	int f_spread_tables_prefix;
@@ -1823,6 +1801,76 @@ public:
 
 };
 
+// #############################################################################
+// packing_was_fixpoints.cpp
+// #############################################################################
+
+//! construction of packings in PG(3,q) with assumed symmetry, picking fixpoints
+
+class packing_was_fixpoints {
+public:
+	packing_was *PW;
+
+	char fname_fixp_graph[1000];
+	char fname_fixp_graph_cliques[1000];
+	int fixpoints_idx;
+		// index of orbits of length 1 in reduced_spread_orbits_under_H
+	action *A_on_fixpoints;
+		// A_on_reduced_spread_orbits->create_induced_action_by_restriction(
+		//reduced_spread_orbits_under_H->Orbits_classified->Set_size[fixpoints_idx],
+		//reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx])
+
+	colored_graph *fixpoint_graph;
+	poset *Poset_fixpoint_cliques;
+	poset_classification *fixpoint_clique_gen;
+	long int *Cliques; // [nb_cliques * clique_size]
+	int nb_cliques;
+	char fname_fixp_graph_cliques_orbiter[1000];
+	orbit_transversal *Fixp_cliques;
+
+
+
+
+	packing_was_fixpoints();
+	~packing_was_fixpoints();
+	void init(packing_was *PW, int verbose_level);
+	void create_graph_on_fixpoints(int verbose_level);
+	void action_on_fixpoints(int verbose_level);
+	void compute_cliques_on_fixpoint_graph(
+			int clique_size, int verbose_level);
+	// initializes the orbit transversal Fixp_cliques
+	// initializes Cliques[nb_cliques * clique_size]
+	// (either by computing it or reading it from file)
+	void compute_cliques_on_fixpoint_graph_from_scratch(
+			int clique_size, int verbose_level);
+	// compute cliques on fixpoint graph using A_on_fixpoints
+	// orbit representatives will be stored in Cliques[nb_cliques * clique_size]
+	void process_long_orbits_by_list_of_cases_from_file(
+			const char *process_long_orbits_by_list_of_cases_from_file,
+			int split_r, int split_m,
+			int long_orbit_length,
+			int long_orbits_clique_size,
+			int verbose_level);
+	void process_all_long_orbits(
+			int split_r, int split_m,
+			int long_orbit_length,
+			int long_orbits_clique_size,
+			int verbose_level);
+	void process_long_orbits(
+			int clique_index,
+			int long_orbit_length,
+			int long_orbits_clique_size,
+			int verbose_level);
+	void report(packing_long_orbits *L, int verbose_level);
+	void report2(std::ostream &ost, packing_long_orbits *L, int verbose_level);
+	long int fixpoint_to_reduced_spread(int a);
+
+};
+
+void packing_was_fixpoints_early_test_function_fp_cliques(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
 
 // #############################################################################
 // packing_was.cpp
@@ -1884,25 +1932,6 @@ public:
 	action *A_on_reduced_spread_orbits;
 		// induced_action_on_orbits(A_on_reduced_spreads, reduced_spread_orbits_under_H)
 
-	char fname_fixp_graph[1000];
-	char fname_fixp_graph_cliques[1000];
-	int fixpoints_idx;
-		// index of orbits of length 1 in reduced_spread_orbits_under_H
-	action *A_on_fixpoints;
-		// A_on_reduced_spread_orbits->create_induced_action_by_restriction(
-		//reduced_spread_orbits_under_H->Orbits_classified->Set_size[fixpoints_idx],
-		//reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx])
-
-	colored_graph *fixpoint_graph;
-	poset *Poset_fixpoint_cliques;
-	poset_classification *fixpoint_clique_gen;
-	long int *Cliques; // [nb_cliques * clique_size]
-	int nb_cliques;
-	char fname_fixp_graph_cliques_orbiter[1000];
-	orbit_transversal *Fixp_cliques;
-
-	packing_long_orbits *L;
-
 	set_of_sets *Orbit_invariant;
 	int nb_sets;
 	classify *Classify_spread_invariant_by_orbit_length;
@@ -1916,16 +1945,6 @@ public:
 	void init_spreads(int verbose_level);
 	void init_N(int verbose_level);
 	void init_H(int verbose_level);
-	void process_all_long_orbits(
-			int split_r, int split_m,
-			int long_orbit_length,
-			int long_orbits_clique_size,
-			int verbose_level);
-	void process_long_orbits(
-			int clique_index,
-			int long_orbit_length,
-			int long_orbits_clique_size,
-			int verbose_level);
 	void compute_H_orbits_on_lines(int verbose_level);
 	// computes the orbits of H on lines (NOT on spreads!)
 	// and writes to file prefix_line_orbits
@@ -1949,13 +1968,7 @@ public:
 		int orbit_length,
 		int f_has_user_data, long int *user_data, int user_data_size,
 		int verbose_level);
-	void create_graph_on_fixpoints(int verbose_level);
 	int find_orbits_of_length(int orbit_length);
-	void action_on_fixpoints(int verbose_level);
-	void compute_cliques_on_fixpoint_graph(
-			int clique_size, int verbose_level);
-	void compute_cliques_on_fixpoint_graph_from_scratch(
-			int clique_size, int verbose_level);
 	void compute_orbit_invariant_on_classified_orbits(int verbose_level);
 	int evaluate_orbit_invariant_function(int a, int i, int j, int verbose_level);
 	void classify_orbit_invariant(int verbose_level);
@@ -1968,10 +1981,6 @@ public:
 
 int packing_was_set_of_reduced_spreads_adjacency_test_function(long int *orbit1, int len1,
 		long int *orbit2, int len2, void *data);
-void packing_was_early_test_function_fp_cliques(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
 int packing_was_evaluate_orbit_invariant_function(
 		int a, int i, int j, void *evaluate_data, int verbose_level);
 
@@ -2606,6 +2615,98 @@ public:
 
 
 // #############################################################################
+// spread_table_with_selection.cpp
+// #############################################################################
+
+//! spreads tables with a selection of isomorphism types
+
+
+class spread_table_with_selection {
+public:
+
+	spread_classify *T;
+	finite_field *F;
+	int q;
+	int spread_size;
+	int size_of_packing;
+	int nb_lines;
+	int f_select_spread;
+	const char *select_spread_text;
+
+	int *select_spread;
+	int select_spread_nb;
+
+
+	const char *path_to_spread_tables;
+
+
+	long int *spread_reps; // [nb_spread_reps * T->spread_size]
+	int *spread_reps_idx; // [nb_spread_reps]
+	long int *spread_orbit_length; // [nb_spread_reps]
+	int nb_spread_reps;
+	long int total_nb_of_spreads; // = sum i :  spread_orbit_length[i]
+	int nb_iso_types_of_spreads;
+	// the number of spreads
+	// from the classification
+	int *sorted_packing;
+	int *dual_packing;
+
+	spread_tables *Spread_tables;
+	int *tmp_isomorphism_type_of_spread; // for packing_swap_func
+
+	uchar *bitvector_adjacency;
+	long int bitvector_length;
+
+	action *A_on_spreads;
+
+	spread_table_with_selection();
+	~spread_table_with_selection();
+	void init(spread_classify *T,
+		int f_select_spread,
+		const char *select_spread_text,
+		const char *path_to_spread_tables,
+		int verbose_level);
+	void compute_spread_table(int verbose_level);
+	void compute_spread_table_from_scratch(int verbose_level);
+	void create_action_on_spreads(int verbose_level);
+	int test_if_packing_is_self_dual(int *packing, int verbose_level);
+	void predict_spread_table_length(
+		action *A, strong_generators *Strong_gens,
+		int verbose_level);
+	void make_spread_table(
+			action *A, action *A2, strong_generators *Strong_gens,
+			long int **&Sets, int *&isomorphism_type_of_spread,
+			int verbose_level);
+	void compute_covered_points(
+		long int *&points_covered_by_starter,
+		int &nb_points_covered_by_starter,
+		long int *starter, int starter_size,
+		int verbose_level);
+	// points_covered_by_starter are the lines that
+	// are contained in the spreads chosen for the starter
+	void compute_free_points2(
+		long int *&free_points2, int &nb_free_points2, long int *&free_point_idx,
+		long int *points_covered_by_starter,
+		int nb_points_covered_by_starter,
+		long int *starter, int starter_size,
+		int verbose_level);
+	// free_points2 are actually the free lines,
+	// i.e., the lines that are not
+	// yet part of the partial packing
+	void compute_live_blocks2(
+		exact_cover *EC, int starter_case,
+		long int *&live_blocks2, int &nb_live_blocks2,
+		long int *points_covered_by_starter, int nb_points_covered_by_starter,
+		long int *starter, int starter_size,
+		int verbose_level);
+	void compute_adjacency_matrix(int verbose_level);
+	int is_adjacent(int i, int j);
+
+};
+
+
+
+// #############################################################################
 // surface_classify_wedge.cpp
 // #############################################################################
 
@@ -3035,6 +3136,7 @@ public:
 		int *Arc_identify, 
 		int *f_deleted, 
 		int verbose_level);
+	void report_basics_and_trihedral_pair(std::ostream &ost);
 
 };
 

@@ -109,6 +109,7 @@ public:
 			const char *path_to_spread_tables,
 			packing_classify *&P,
 			int verbose_level);
+#if 0
 	void predict_spread_table_length(
 		int q, int dimension_of_spread_elements, int spread_size,
 		action *A, strong_generators *Strong_gens,
@@ -128,6 +129,7 @@ public:
 			long int **&Sets, int *&isomorphism_type_of_spread,
 			int verbose_level);
 		// does not sort the table
+#endif
 	void centralizer_of_element(
 			action *A, sims *S,
 			const char *element_description,
@@ -269,6 +271,8 @@ public:
 	const char *multiply_b;
 	int f_inverse;
 	const char *inverse_a;
+	int f_export_gap;
+	int f_export_magma;
 	int f_order_of_products;
 	const char *order_of_products_elements;
 
@@ -388,6 +392,8 @@ public:
 	void classes(int verbose_level);
 	void multiply(int verbose_level);
 	void inverse(int verbose_level);
+	void do_export_gap(int verbose_level);
+	void do_export_magma(int verbose_level);
 	void create_group_table(int verbose_level);
 	void normalizer(int verbose_level);
 	void centralizer(

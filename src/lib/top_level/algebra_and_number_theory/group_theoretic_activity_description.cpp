@@ -62,6 +62,8 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	multiply_b = NULL;
 	f_inverse = FALSE;
 	inverse_a = NULL;
+	f_export_gap = FALSE;
+	f_export_magma = FALSE;
 	f_order_of_products = FALSE;
 	order_of_products_elements = NULL;
 	//f_embedded = FALSE;
@@ -325,6 +327,14 @@ int group_theoretic_activity_description::read_arguments(
 			inverse_a = argv[++i];
 			cout << "-inverse " << inverse_a << endl;
 		}
+		else if (strcmp(argv[i], "-export_gap") == 0) {
+			f_export_gap = TRUE;
+			cout << "-export_gap " << endl;
+		}
+		else if (strcmp(argv[i], "-export_magma") == 0) {
+			f_export_magma = TRUE;
+			cout << "-export_magma " << endl;
+		}
 #if 0
 		else if (strcmp(argv[i], "-group_table") == 0) {
 			f_group_table = TRUE;
@@ -376,19 +386,7 @@ int group_theoretic_activity_description::read_arguments(
 			if (i < argc) {
 				cout << "next argument is " << argv[i] << endl;
 			}
-
-
-			//classify_arcs_target_size = atoi(argv[++i]);
-			//classify_arcs_d = atoi(argv[++i]);
 		}
-#if 0
-		else if (strcmp(argv[i], "-classify_nonconical_arcs") == 0) {
-			f_classify_nonconical_arcs = TRUE;
-			classify_arcs_target_size = atoi(argv[++i]);
-			classify_arcs_d = atoi(argv[++i]);
-			cout << "-classify_nonconical_arcs" << " " << classify_arcs_target_size << " " << classify_arcs_d << endl;
-		}
-#endif
 
 		else if (strcmp(argv[i], "-exact_cover") == 0) {
 			f_exact_cover = TRUE;

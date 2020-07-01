@@ -120,6 +120,7 @@ class interface_coding_theory {
 	int f_draw_matrix;
 	const char *fname;
 	int box_width;
+	int bit_depth; // 8 or 24
 
 public:
 	interface_coding_theory();

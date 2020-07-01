@@ -213,6 +213,7 @@ private:
 	int f_has_quadratic_subfield; // TRUE if e is even.
 	int *f_belongs_to_quadratic_subfield; // [q]
 
+
 	int my_nb_calls_to_elliptic_curve_addition;
 	int nb_times_mult;
 	int nb_times_add;
@@ -227,6 +228,8 @@ public:
 	int alpha; // primitive element
 	int log10_of_q; // needed for printing purposes
 	int f_print_as_exponentials;
+	int *reordered_list_of_elements; // [q]
+	int *reordered_list_of_elements_inv; // [q]
 	long int nb_calls_to_mult_matrix_matrix;
 	long int nb_calls_to_PG_element_rank_modified;
 	long int nb_calls_to_PG_element_unrank_modified;
@@ -1176,8 +1179,12 @@ public:
 		int *v, int len, const char *symbol_for_print);
 	void make_fname_addition_table_csv(char *fname);
 	void make_fname_multiplication_table_csv(char *fname);
+	void make_fname_addition_table_reordered_csv(char *fname);
+	void make_fname_multiplication_table_reordered_csv(char *fname);
 	void addition_table_save_csv();
 	void multiplication_table_save_csv();
+	void addition_table_reordered_save_csv();
+	void multiplication_table_reordered_save_csv();
 	void latex_addition_table(std::ostream &f,
 		int f_elements_exponential, const char *symbol_for_print);
 	void latex_multiplication_table(std::ostream &f,

@@ -59,7 +59,7 @@ void packing_classify::compute_klein_invariants(
 			lint_vec_print(cout, the_packing, Iso->size);
 			cout << endl;
 		}
-		Spread_tables->compute_list_of_lines_from_packing(list_of_lines,
+		Spread_table_with_selection->Spread_tables->compute_list_of_lines_from_packing(list_of_lines,
 				the_packing, size_of_packing, verbose_level - 2);
 		if (f_v3) {
 			cout << "read representative of orbit " << orbit
@@ -423,11 +423,11 @@ void packing_classify::report_isomorphism_type(
 
 	
 	for (i = 0; i < Iso->size; i++) {
-		dual_packing[i] = Spread_tables->dual_spread_idx[the_packing[i]];
+		dual_packing[i] = Spread_table_with_selection->Spread_tables->dual_spread_idx[the_packing[i]];
 	}
 
 
-	Spread_tables->compute_list_of_lines_from_packing(list_of_lines,
+	Spread_table_with_selection->Spread_tables->compute_list_of_lines_from_packing(list_of_lines,
 			the_packing, size_of_packing, verbose_level - 2);
 
 
@@ -435,7 +435,7 @@ void packing_classify::report_isomorphism_type(
 	ost << "\\bigskip" << endl;
 
 	for (i = 0; i < Iso->size; i++) {
-		spread_iso_type[i] = Spread_tables->spread_iso_type[the_packing[i]];
+		spread_iso_type[i] = Spread_table_with_selection->Spread_tables->spread_iso_type[the_packing[i]];
 	}
 
 	ost << "spread : isotype : dualspread \\\\" << endl;
@@ -902,15 +902,15 @@ void packing_classify::report_extra_stuff(
 		ost << "\\chapter{The Spreads of PG$(3," << q << ")$}"
 				<< endl << endl;
 
-		ost << "PG$(3," << q << ")$ has " << Spread_tables->nb_spreads
+		ost << "PG$(3," << q << ")$ has " << Spread_table_with_selection->Spread_tables->nb_spreads
 				<< " labeled spreads\\\\" << endl;
 
-		for (u = 0; u < Spread_tables->nb_spreads; u++) {
+		for (u = 0; u < Spread_table_with_selection->Spread_tables->nb_spreads; u++) {
 			ost << "Spread " << u << " is $";
 			lint_vec_print_fully(ost,
-					Spread_tables->spread_table + u * spread_size, spread_size);
+					Spread_table_with_selection->Spread_tables->spread_table + u * spread_size, spread_size);
 			ost << "$ isomorphism type "
-					<< Spread_tables->spread_iso_type[u] << "\\\\" << endl;
+					<< Spread_table_with_selection->Spread_tables->spread_iso_type[u] << "\\\\" << endl;
 
 		}
 #endif

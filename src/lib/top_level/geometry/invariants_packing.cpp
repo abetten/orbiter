@@ -149,8 +149,8 @@ void invariants_packing::init(isomorph *Iso,
 	}
 
 
-	Spread_type_of_packing = NEW_int(Iso->Reps->count * P->nb_iso_types_of_spreads);
-	int_vec_zero(Spread_type_of_packing, Iso->Reps->count * P->nb_iso_types_of_spreads);
+	Spread_type_of_packing = NEW_int(Iso->Reps->count * P->Spread_table_with_selection->nb_iso_types_of_spreads);
+	int_vec_zero(Spread_type_of_packing, Iso->Reps->count * P->Spread_table_with_selection->nb_iso_types_of_spreads);
 	
 	// compute Spread_type_of_packing:
 
@@ -165,15 +165,15 @@ void invariants_packing::init(isomorph *Iso,
 		
 		
 		for (i = 0; i < Iso->size; i++) {
-			a = P->Spread_tables->spread_iso_type[P->the_packing[i]];
-			Spread_type_of_packing[orbit * P->nb_iso_types_of_spreads + a]++;
+			a = P->Spread_table_with_selection->Spread_tables->spread_iso_type[P->the_packing[i]];
+			Spread_type_of_packing[orbit * P->Spread_table_with_selection->nb_iso_types_of_spreads + a]++;
 		}
 	}
 
 	Classify = NEW_OBJECT(classify_vector_data);
 
 	Classify->init(Spread_type_of_packing, Iso->size /* data_length */,
-			P->nb_iso_types_of_spreads /* data_set_sz */,
+			P->Spread_table_with_selection->nb_iso_types_of_spreads /* data_set_sz */,
 			verbose_level);
 
 #if 0
@@ -226,7 +226,7 @@ void invariants_packing::init(isomorph *Iso,
 		for (i = 0; i < Classify->nb_types; i++) {
 			int_vec_print(cout,
 					Classify->Reps_in_lex_order[i],
-					P->nb_iso_types_of_spreads);
+					P->Spread_table_with_selection->nb_iso_types_of_spreads);
 			cout << " : " << Classify->Frequency_in_lex_order[i] << endl;
 		}
 	}
@@ -292,7 +292,7 @@ void invariants_packing::compute_dual_packings(
 
 	
 		for (i = 0; i < Iso->size; i++) {
-			P->dual_packing[i] = P->Spread_tables->dual_spread_idx[P->the_packing[i]];
+			P->dual_packing[i] = P->Spread_table_with_selection->Spread_tables->dual_spread_idx[P->the_packing[i]];
 		}
 		Sorting.lint_vec_heapsort(P->the_packing, Iso->size);
 		Sorting.lint_vec_heapsort(P->dual_packing, Iso->size);
@@ -319,8 +319,8 @@ void invariants_packing::compute_dual_packings(
 	Fio.int_vecs_write_csv(Dual_idx, f_self_dual,
 		Iso->Reps->count, "Dual_idx.csv", "dual_idx", "f_self_dual");
 
-	Fio.lint_vec_write_csv(P->Spread_tables->dual_spread_idx,
-		P->Spread_tables->nb_spreads, "Dual_spread_idx.csv", "dual_spread_idx");
+	Fio.lint_vec_write_csv(P->Spread_table_with_selection->Spread_tables->dual_spread_idx,
+		P->Spread_table_with_selection->Spread_tables->nb_spreads, "Dual_spread_idx.csv", "dual_spread_idx");
 	
 	if (f_v) {
 		cout << "invariants_packing::compute_dual_packings done" << endl;
@@ -375,8 +375,8 @@ void invariants_packing::make_table(
 		else {
 			sprintf(fname, "ids_of_all_type_%d.csv", i);
 		}
-		int_vec_print(ost, Classify->Reps + i * P->nb_iso_types_of_spreads,
-				P->nb_iso_types_of_spreads);
+		int_vec_print(ost, Classify->Reps + i * P->Spread_table_with_selection->nb_iso_types_of_spreads,
+				P->Spread_table_with_selection->nb_iso_types_of_spreads);
 		ost << " & ";
 		// ost << Frequency[i] << " & ";
 
@@ -441,7 +441,7 @@ int packing_types_compare_function(void *a, void *b, void *data)
 	int *B = (int *) b;
 	int i;
 
-	for (i = 0; i < inv->P->nb_iso_types_of_spreads; i++) {
+	for (i = 0; i < inv->P->Spread_table_with_selection->nb_iso_types_of_spreads; i++) {
 		if (A[i] > B[i]) {
 			return 1;
 		}
