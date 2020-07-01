@@ -784,33 +784,6 @@ int count_and_record(int *Inc,
 	return nb;
 }
 
-int packing_spread_compare_func(void *data, int i, int j, void *extra_data)
-{
-	packing_classify *P = (packing_classify *) extra_data;
-	long int **Sets = (long int **) data;
-	int ret;
-
-	ret = lint_vec_compare(Sets[i], Sets[j], P->spread_size);
-	return ret;
-}
-
-void packing_swap_func(void *data, int i, int j, void *extra_data)
-{
-	packing_classify *P = (packing_classify *) extra_data;
-	int *d = P->Spread_table_with_selection->tmp_isomorphism_type_of_spread;
-	long int **Sets = (long int **) data;
-	long int *p;
-	int a;
-
-	p = Sets[i];
-	Sets[i] = Sets[j];
-	Sets[j] = p;
-
-	a = d[i];
-	d[i] = d[j];
-	d[j] = a;
-}
-
 
 }}
 

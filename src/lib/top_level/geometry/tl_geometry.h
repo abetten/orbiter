@@ -1627,8 +1627,7 @@ void packing_early_test_function(long int *S, int len,
 int count(int *Inc, int n, int m, int *set, int t);
 int count_and_record(int *Inc, int n, int m,
 		int *set, int t, int *occurances);
-int packing_spread_compare_func(void *data, int i, int j, void *extra_data);
-void packing_swap_func(void *data, int i, int j, void *extra_data);
+
 
 // #############################################################################
 // packing_invariants.cpp
@@ -2704,6 +2703,9 @@ public:
 
 };
 
+// globals:
+int spread_table_with_selection_compare_func(void *data, int i, int j, void *extra_data);
+void spread_table_with_selection_swap_func(void *data, int i, int j, void *extra_data);
 
 
 // #############################################################################
