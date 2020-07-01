@@ -142,14 +142,7 @@ void spread_table_with_selection::init(spread_classify *T,
 		cout << "spread_table_with_selection::init before predict_spread_table_length" << endl;
 	}
 	predict_spread_table_length(
-		//q, T->k /* dimension_of_spread_elements */, T->spread_size,
 		T->A, T->LG->Strong_gens,
-		//f_select_spread,
-		//select_spread, select_spread_nb,
-		//spread_reps, spread_reps_idx, spread_orbit_length,
-		//nb_spread_reps,
-		//total_nb_of_spreads,
-		//nb_iso_types_of_spreads,
 		verbose_level - 1);
 	if (f_v) {
 		cout << "spread_table_with_selection::init after predict_spread_table_length" << endl;
@@ -263,10 +256,6 @@ void spread_table_with_selection::compute_spread_table_from_scratch(int verbose_
 
 	make_spread_table(
 			T->A, T->A2, T->LG->Strong_gens,
-			//T->spread_size,
-			//spread_reps, spread_reps_idx, spread_orbit_length,
-			//nb_spread_reps,
-			//total_nb_of_spreads,
 			Sets, isomorphism_type_of_spread,
 			verbose_level);
 
@@ -279,14 +268,16 @@ void spread_table_with_selection::compute_spread_table_from_scratch(int verbose_
 
 
 	if (f_v) {
-		cout << "packing_classify::compute_spread_table_from_scratch before "
+		cout << "spread_table_with_selection::compute_spread_table_from_scratch before "
 				"sorting spread table of size " << total_nb_of_spreads << endl;
 	}
 	tmp_isomorphism_type_of_spread = isomorphism_type_of_spread;
-		// for packing_swap_func
+
+	// for packing_swap_func
+
 	Sorting.Heapsort_general(Sets, total_nb_of_spreads,
-			packing_spread_compare_func,
-			packing_swap_func,
+			spread_table_with_selection_compare_func,
+			spread_table_with_selection_swap_func,
 			this);
 	if (f_v) {
 		cout << "spread_table_with_selection::compute_spread_table_from_scratch after "
@@ -476,14 +467,7 @@ void packing_classify::read_spread_table(int verbose_level)
 #endif
 
 void spread_table_with_selection::predict_spread_table_length(
-	//int q, int dimension_of_spread_elements, int spread_size,
 	action *A, strong_generators *Strong_gens,
-	//int f_select_spread,
-	//int *select_spread, int select_spread_nb,
-	//long int *&spread_reps, int *&spread_reps_idx, long int *&spread_orbit_length,
-	//int &nb_spread_reps,
-	//long int &total_nb_of_spreads,
-	//int &nb_iso_types_of_spreads,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -585,10 +569,6 @@ void spread_table_with_selection::predict_spread_table_length(
 
 void spread_table_with_selection::make_spread_table(
 		action *A, action *A2, strong_generators *Strong_gens,
-		//int spread_size,
-		//long int *spread_reps, int *spread_reps_idx, long int *spread_orbit_length,
-		//int nb_spread_reps,
-		//long int total_nb_of_spreads,
 		long int **&Sets, int *&isomorphism_type_of_spread,
 		int verbose_level)
 // does not sort the table
@@ -867,6 +847,40 @@ int spread_table_with_selection::is_adjacent(int i, int j)
 	}
 #endif
 }
+
+
+// #############################################################################
+// global functions:
+// #############################################################################
+
+
+int spread_table_with_selection_compare_func(void *data, int i, int j, void *extra_data)
+{
+	spread_table_with_selection *S = (spread_table_with_selection *) extra_data;
+	long int **Sets = (long int **) data;
+	int ret;
+
+	ret = lint_vec_compare(Sets[i], Sets[j], S->spread_size);
+	return ret;
+}
+
+void spread_table_with_selection_swap_func(void *data, int i, int j, void *extra_data)
+{
+	spread_table_with_selection *S = (spread_table_with_selection *) extra_data;
+	int *d = S->tmp_isomorphism_type_of_spread;
+	long int **Sets = (long int **) data;
+	long int *p;
+	int a;
+
+	p = Sets[i];
+	Sets[i] = Sets[j];
+	Sets[j] = p;
+
+	a = d[i];
+	d[i] = d[j];
+	d[j] = a;
+}
+
 
 
 
