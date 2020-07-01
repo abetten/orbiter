@@ -142,6 +142,7 @@ public:
 	int hash_and_find(int *data,
 			int &idx, uint32_t &h, int verbose_level);
 	void print();
+	void save_classes_individually(const char *fname);
 };
 
 

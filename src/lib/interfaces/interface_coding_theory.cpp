@@ -34,6 +34,7 @@ interface_coding_theory::interface_coding_theory()
 	f_NTT = FALSE;
 	ntt_fname_code = NULL;
 	f_draw_matrix = FALSE;
+	bit_depth = 8;
 	fname = NULL;
 	box_width = 0;
 }
@@ -58,7 +59,7 @@ void interface_coding_theory::print_help(int argc,
 		cout << "-NTT <int : n> <int : q> <string : fname_code> " << endl;
 	}
 	else if (strcmp(argv[i], "-draw_matrix") == 0) {
-		cout << "-draw_matrix <string : fname> <int : box_width>" << endl;
+		cout << "-draw_matrix <string : fname> <int : box_width> <int : bit_depth>" << endl;
 	}
 }
 
@@ -141,7 +142,8 @@ void interface_coding_theory::read_arguments(int argc,
 			f_draw_matrix = TRUE;
 			fname = argv[++i];
 			box_width = atoi(argv[++i]);
-			cout << "-draw_matrix " << fname << " " << box_width << endl;
+			bit_depth = atoi(argv[++i]);
+			cout << "-draw_matrix " << fname << " " << box_width << " " << bit_depth << endl;
 		}
 	}
 }
@@ -180,7 +182,7 @@ void interface_coding_theory::worker(int verbose_level)
 				FALSE, 0, // int f_partition, int part_width,
 				0, NULL, 0, NULL, // int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
 				TRUE /* f_box_width */, box_width,
-				FALSE /* f_invert_colors */,
+				FALSE /* f_invert_colors */, bit_depth,
 				verbose_level);
 		FREE_int(M);
 	}

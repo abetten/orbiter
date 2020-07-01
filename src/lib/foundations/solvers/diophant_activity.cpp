@@ -95,7 +95,7 @@ void diophant_activity::init(diophant_activity_description *Descr,
 
 		sprintf(fname_base, "%s", Descr->input_file);
 		replace_extension_with(fname_base, "_drawing");
-		Dio->draw_as_bitmap(fname_base, TRUE, Descr->box_width,
+		Dio->draw_as_bitmap(fname_base, TRUE, Descr->box_width, Descr->bit_depth,
 			verbose_level);
 
 	}

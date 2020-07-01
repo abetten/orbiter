@@ -1181,6 +1181,47 @@ void surface_with_action::arc_lifting_and_classify_using_trihedral_pairs(
 
 }
 
+void surface_with_action::report_basics_and_trihedral_pair(ostream &ost)
+{
+
+	Surf->print_polynomial_domains(ost);
+	Surf->print_line_labelling(ost);
+
+
+	cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+			"before Surf->print_Steiner_and_Eckardt" << endl;
+	Surf->print_Steiner_and_Eckardt(ost);
+	cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+			"after Surf->print_Steiner_and_Eckardt" << endl;
+
+	cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+			"before Surf->print_clebsch_P" << endl;
+	Surf->print_clebsch_P(ost);
+	cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+			"after Surf->print_clebsch_P" << endl;
+
+
+
+	cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+			"before Surf_A->list_orbits_on_trihedra_type1" << endl;
+	Classify_trihedral_pairs->list_orbits_on_trihedra_type1(ost);
+
+	cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+			"before Surf_A->list_orbits_on_trihedra_type2" << endl;
+	Classify_trihedral_pairs->list_orbits_on_trihedra_type2(ost);
+
+	cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+			"before Surf_A->print_trihedral_pairs no stabs" << endl;
+	Classify_trihedral_pairs->print_trihedral_pairs(ost,
+			FALSE /* f_with_stabilizers */);
+
+	cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+			"before Surf_A->print_trihedral_pairs with stabs" << endl;
+	Classify_trihedral_pairs->print_trihedral_pairs(ost,
+			TRUE /* f_with_stabilizers */);
+
+}
+
 }}
 
 

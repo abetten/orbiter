@@ -532,11 +532,18 @@ void interface_algebra::do_cheat_sheet_GF(int q, int f_poly, const char *poly, i
 
 	F.multiplication_table_save_csv();
 
+	F.addition_table_reordered_save_csv();
+
+	F.multiplication_table_reordered_save_csv();
+
+#if 0
 	char fname1[1000];
 	char fname2[1000];
 
 	F.make_fname_addition_table_csv(fname1);
 	F.make_fname_multiplication_table_csv(fname2);
+	F.make_fname_addition_table_reordered_csv(fname1);
+	F.make_fname_multiplication_table_reordered_csv(fname2);
 
 	int box_width = 20;
 
@@ -569,6 +576,7 @@ void interface_algebra::do_cheat_sheet_GF(int q, int f_poly, const char *poly, i
 				verbose_level);
 		FREE_int(M);
 	}
+#endif
 
 	{
 	ofstream f(fname);

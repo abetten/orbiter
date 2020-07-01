@@ -142,6 +142,8 @@ class group_theoretic_activity;
 class packing_was_description;
 class regular_linear_space_description;
 class arc_generator_description;
+class spread_table_with_selection;
+class packing_was_fixpoints;
 
 // #############################################################################
 // representatives.cpp

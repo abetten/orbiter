@@ -32,6 +32,7 @@ public:
 	int f_solve_standard;
 	int f_draw_as_bitmap;
 	int box_width;
+	int bit_depth; // 8 or 24
 	int f_draw;
 	int f_perform_column_reductions;
 
@@ -352,7 +353,8 @@ public:
 	void append_equation();
 	void delete_equation(int I);
 	void write_gurobi_binary_variables(const char *fname);
-	void draw_as_bitmap(const char *fname, int f_box_width, int box_width, int verbose_level);
+	void draw_as_bitmap(const char *fname,
+			int f_box_width, int box_width, int bit_depth, int verbose_level);
 	void draw_it(const char *fname_base, int xmax_in, int ymax_in, 
 		int xmax_out, int ymax_out, int verbose_level);
 	void draw_partitioned(const char *fname_base, 

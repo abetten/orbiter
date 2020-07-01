@@ -2570,7 +2570,7 @@ public:
 // spread_tables.cpp
 // #############################################################################
 
-//! tables with spreads in PG(3,q), used by class packing_classify
+//! tables with line-spreads in PG(3,q)
 
 
 class spread_tables {
@@ -2654,6 +2654,10 @@ public:
 			long int *list_of_lines, long int *packing, int sz_of_packing,
 			int verbose_level);
 	// list_of_lines[sz_of_packing * spread_size]
+	void compute_iso_type_invariant(
+			int *Partial_packings, int nb_pp, int sz,
+			int *&Iso_type_invariant,
+			int verbose_level);
 
 };
 

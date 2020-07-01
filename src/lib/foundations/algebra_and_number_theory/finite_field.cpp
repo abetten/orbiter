@@ -256,6 +256,8 @@ void finite_field::init_override_polynomial(int q,
 		mult_table = NEW_int(q * q);
 		negate_table = NEW_int(q);
 		inv_table = NEW_int(q);
+		reordered_list_of_elements = NEW_int(q);
+		reordered_list_of_elements_inv = NEW_int(q);
 		if (e == 1) {
 			create_tables_prime_field(verbose_level - 1);
 		}
@@ -265,6 +267,7 @@ void finite_field::init_override_polynomial(int q,
 		if (FALSE) {
 			print_add_mult_tables();
 		}
+
 		f_has_table = TRUE;
 	}
 	else {
@@ -688,11 +691,15 @@ void finite_field::create_alpha_table_prime_field(int verbose_level)
 void finite_field::create_tables_prime_field(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, k;
+	int i, j, k, a;
 	
 	if (f_v) {
 		cout << "finite_field::create_tables_prime_field" << endl;
 		}
+	reordered_list_of_elements[0] = 0;
+	reordered_list_of_elements[1] = alpha;
+	reordered_list_of_elements_inv[0] = 0;
+	reordered_list_of_elements_inv[alpha] = 1;
 	for (i = 0; i < q; i++) {
 		for (j = 0; j < q; j++) {
 			k = (i + j) % q;
@@ -716,6 +723,11 @@ void finite_field::create_tables_prime_field(int verbose_level)
 		}
 	}
 	inv_table[0] = -999999999;
+	for (i = 2; i < q; i++) {
+		a = mult_table[reordered_list_of_elements[i - 1] * q + alpha];
+		reordered_list_of_elements[i] = a;
+		reordered_list_of_elements_inv[a] = i;
+	}
 	if (f_v) {
 		cout << "finite_field::create_tables_prime_field finished" << endl;
 		}
@@ -725,7 +737,7 @@ void finite_field::create_tables_extension_field(int verbose_level)
 // assumes that alpha_table and log_alpha_table have been computed already 
 {
 	int f_v = (verbose_level >= 1);
-	long int i, j, l, k, ii, jj, kk;
+	long int i, j, l, k, ii, jj, kk, a;
 	geometry_global Gg;
 	
 	if (f_v) {
@@ -761,6 +773,15 @@ void finite_field::create_tables_extension_field(int verbose_level)
 				inv_table[i] = j;
 			}
 		}
+	}
+	reordered_list_of_elements[0] = 0;
+	reordered_list_of_elements[1] = p;
+	reordered_list_of_elements_inv[0] = 0;
+	reordered_list_of_elements_inv[p] = 1;
+	for (i = 2; i < q; i++) {
+		a = mult_table[reordered_list_of_elements[i - 1] * q + p];
+		reordered_list_of_elements[i] = a;
+		reordered_list_of_elements_inv[a] = i;
 	}
 	if (f_v) {
 		cout << "finite_field::create_tables_extension_field finished" << endl;

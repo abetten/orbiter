@@ -1320,8 +1320,9 @@ void draw_bitmap(const char *fname, int *M, int m, int n,
 		int f_partition, int part_width,
 		int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
 		int f_box_width, int box_width,
-		int f_invert_colors,
+		int f_invert_colors, int bit_depth,
 		int verbose_level);
+// bit_depth should be either 8 or 24.
 
 
 
