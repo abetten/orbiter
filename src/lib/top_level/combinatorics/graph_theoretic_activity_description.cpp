@@ -28,6 +28,7 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 	f_sort_by_colors = FALSE;
 	f_split = FALSE;
 	split_file = NULL;
+	f_save = FALSE;
 }
 
 graph_theoretic_activity_description::~graph_theoretic_activity_description()
@@ -122,6 +123,10 @@ int graph_theoretic_activity_description::read_arguments(
 			f_split = TRUE;
 			split_file = argv[++i];
 			cout << "-split " << endl;
+		}
+		else if (strcmp(argv[i], "-save") == 0) {
+			f_save = TRUE;
+			cout << "-save " << endl;
 		}
 		else {
 			cout << "graph_theoretic_activity_description::read_arguments "

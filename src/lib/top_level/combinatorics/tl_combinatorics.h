@@ -803,6 +803,7 @@ public:
 	int f_sort_by_colors;
 	int f_split;
 	const char *split_file;
+	int f_save;
 
 
 	graph_theoretic_activity_description();

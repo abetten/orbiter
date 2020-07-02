@@ -695,6 +695,11 @@ void interface_combinatorics::do_graph_theoretic_activity(
 			Subgraph->save(fname_out, verbose_level - 2);
 		}
 	}
+	else if (Descr->f_save) {
+		cout << "before save fname_graph=" << fname_graph << endl;
+		CG->save(fname_graph, verbose_level);
+		cout << "after save" << endl;
+	}
 
 
 
@@ -746,7 +751,7 @@ void interface_combinatorics::do_create_graph(
 	replace_extension_with(fname_graph, ".colored_graph");
 	//snprintf(fname_graph, 2000, "%s.colored_graph", Gr->label);
 
-	CG->save(fname_graph, verbose_level);
+	//CG->save(fname_graph, verbose_level);
 
 	//FREE_OBJECT(CG);
 
