@@ -226,7 +226,7 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 							"before do_Sajeeb" << endl;
 				}
 				std::vector<std::vector<long int> > solutions;
-				do_Sajeeb_black_and_white(CG, fname_sol, target_size, solutions, verbose_level);
+				do_Sajeeb_black_and_white(CG, target_size, solutions, verbose_level);
 				// Print the solutions
 				cout << "clique_finder_control::do_Sajeeb Found " << solutions.size() << " solution(s)." << endl;
 				#if 1
@@ -308,7 +308,7 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG, const char *fname_sol, 
 }
 
 void clique_finder_control::do_Sajeeb_black_and_white(colored_graph *CG,
-		const char *fname_sol, int clique_size, std::vector<std::vector<long int> >& solutions,
+		int clique_size, std::vector<std::vector<long int> >& solutions,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

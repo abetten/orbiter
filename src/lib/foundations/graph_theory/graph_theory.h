@@ -222,7 +222,7 @@ public:
 	void do_Sajeeb(colored_graph *CG,
 			const char *fname_sol,
 			int verbose_level);
-	void do_Sajeeb_black_and_white(colored_graph *CG, const char *fname_sol,
+	void do_Sajeeb_black_and_white(colored_graph *CG,
 			int clique_size, std::vector<std::vector<long int> >& solutions,
 			int verbose_level);
 	void all_cliques_weighted(colored_graph *CG,
