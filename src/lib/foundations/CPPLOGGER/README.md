@@ -35,7 +35,7 @@ This is a simple, lightweight and thread safe logger for C++.
 ## Usage examples
 #### Basic usage
 ```c++
-#include <CPPLOGGER_SYNC.h>
+#include "../CPPLOGGER_SYNC.h"
 
 /**
  * The following should always be called only in the main translation unit.
@@ -51,9 +51,11 @@ int main() {
 
 	logger_info("The following shows some basic usage.");
 
-	logger_error("This is an error message with some %s:", "argument");
+	logger_error("This is an error message with some %s", "argument");
 	logger_warning("This is a warning message with 2 args: (%.3f, %.4f)", 1.2323745, 2.5);
 	logger_info("This is an info message with three arguments: (%03d, %03d, %03d)", 0, 50, 100);
+	logger_debug("This is a debug message.");
+	logger_info("");
 
 }
 ```
@@ -99,6 +101,22 @@ int main() {
 	logger_info(logger_underline("%s: %s"),
 			logger_bold(logger_red("This is a red bold text with green bold argument")),
 			logger_bold(logger_green("12")));
+}
+```
+
+#### Printing the contents of an array
+```c++
+#include <CPPLOGGER_SYNC.h>
+
+logger_init();
+
+int main() {
+	int* array = new int [8];
+	for (size_t i=0; i<8; ++i) array[i] = i;
+
+	logger_info("Array Contents: %s", logger_array(array, 8));
+
+	delete [] array;
 }
 ```
 
@@ -329,6 +347,7 @@ int main() {
 	logger_info(verbose_level, 1, "This should only be printed at verbose level 1.");
 }
 ```
+The first argument to the function is the current verbose level and the second argument is the level at which the log message will be printed.
 
 #### Asynchronous logging
 ```c++
@@ -420,14 +439,14 @@ In synchronous mode the logging results are immediately displayed on the output 
 [INFO]: *******************************************************************
 [INFO]: Single threaded benchmark with 5,000,000 iterations
 [INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 0.63 secs | Throughput: 7,878,563/sec
-[INFO]: disabled        | Elapsed: 0.02 secs | Throughput: 288,832,788/sec
+[INFO]: basic           | Elapsed: 0.64 secs | Throughput: 7,856,909/sec
+[INFO]: disabled        | Elapsed: 0.02 secs | Throughput: 286,461,639/sec
 [INFO]: 
 [INFO]: *******************************************************************
 [INFO]: 100 thread benchmark with 5,000,000 iterations
 [INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 5.53 secs | Throughput: 904,463/sec
-[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 482,712,240/sec
+[INFO]: basic           | Elapsed: 5.29 secs | Throughput: 944,766/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 477,700,190/sec
 ```
 
 #### Benchmark result asynchronous
@@ -436,12 +455,12 @@ In asynchronous mode the logging results are not immediately displayed on the ou
 [INFO]: *******************************************************************
 [INFO]: Single threaded benchmark with 5,000,000 iterations
 [INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 1.90 secs | Throughput: 2,628,297/sec
-[INFO]: disabled        | Elapsed: 0.02 secs | Throughput: 267,387,085/sec
+[INFO]: basic           | Elapsed: 1.97 secs | Throughput: 2,537,658/sec
+[INFO]: disabled        | Elapsed: 0.02 secs | Throughput: 261,704,922/sec
 [INFO]: 
 [INFO]: *******************************************************************
 [INFO]: 100 thread benchmark with 5,000,000 iterations
 [INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 3.00 secs | Throughput: 1,667,926/sec
-[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 656,571,055/sec
+[INFO]: basic           | Elapsed: 2.68 secs | Throughput: 1,867,975/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 638,469,145/sec
 ```
