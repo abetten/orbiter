@@ -8,6 +8,11 @@
 // galois started:  August 12, 2005
 
 
+
+#ifndef ORBITER_SRC_LIB_FOUNDATIONS_GEOMETRY_GEOMETRY_H_
+#define ORBITER_SRC_LIB_FOUNDATIONS_GEOMETRY_GEOMETRY_H_
+
+
 namespace orbiter {
 namespace foundations {
 
@@ -784,6 +789,7 @@ public:
 		// $\frac{q^{n+1} - 1}{q-1} = \sum_{i=0}^{n} q^i $
 	long int nb_PG_elements_not_in_subspace(int n, int m, int q);
 	long int nb_AG_elements(int n, int q);
+	long int nb_affine_lines(int n, int q);
 	long int AG_element_rank(int q, int *v, int stride, int len);
 	void AG_element_unrank(int q, int *v, int stride, int len, long int a);
 	void AG_element_rank_longinteger(int q, int *v, int stride, int len,
@@ -2129,9 +2135,9 @@ public:
 	int *field_element_inv; // [plane_order]
 
 
-	int is_desarguesian_plane(int f_v, int f_vv);
-	int identify_field_not_of_prime_order(int f_v, int f_vv);
-	void init_projective_plane(int order, int f_v);
+	int is_desarguesian_plane(int verbose_level);
+	int identify_field_not_of_prime_order(int verbose_level);
+	void init_projective_plane(int order, int verbose_level);
 	void free_projective_plane();
 	void plane_report(std::ostream &ost);
 	int plane_line_through_two_points(int pt1, int pt2);
@@ -2144,16 +2150,16 @@ public:
 	int plane_next_quadrangle(int &pt1, int &pt2, int &pt3, int &pt4);
 	int plane_quadrangle_first_i(int *pt, int i);
 	int plane_quadrangle_next_i(int *pt, int i);
-	void coordinatize_plane(int O, int I, int X, int Y, int *MOLS, int f_v);
+	void coordinatize_plane(int O, int I, int X, int Y, int *MOLS, int verbose_level);
 	// needs pt_labels, points, pts_on_line_x_eq_y, pts_on_line_x_eq_y_labels, 
 	// lines_through_X, lines_through_Y, pts_on_line, MOLS to be allocated
 	int &MOLSsxb(int s, int x, int b);
 	int &MOLSaddition(int a, int b);
 	int &MOLSmultiplication(int a, int b);
-	int ternary_field_is_linear(int *MOLS, int f_v);
+	int ternary_field_is_linear(int *MOLS, int verbose_level);
 	void print_MOLS(std::ostream &ost);
 
-	int is_projective_plane(partitionstack &P, int &order, int f_v, int f_vv);
+	int is_projective_plane(partitionstack &P, int &order, int verbose_level);
 		// if it is a projective plane, the order is returned.
 		// otherwise, 0 is returned.
 	int count_RC(partitionstack &P, int row_cell, int col_cell);
@@ -2564,7 +2570,7 @@ public:
 // spread_tables.cpp
 // #############################################################################
 
-//! tables with spreads in PG(3,q), used by class packing_classify
+//! tables with line-spreads in PG(3,q)
 
 
 class spread_tables {
@@ -2648,6 +2654,10 @@ public:
 			long int *list_of_lines, long int *packing, int sz_of_packing,
 			int verbose_level);
 	// list_of_lines[sz_of_packing * spread_size]
+	void compute_iso_type_invariant(
+			int *Partial_packings, int nb_pp, int sz,
+			int *&Iso_type_invariant,
+			int verbose_level);
 
 };
 
@@ -3446,8 +3456,12 @@ public:
 
 
 
-}
-}
+}}
+
+
+#endif /* ORBITER_SRC_LIB_FOUNDATIONS_GEOMETRY_GEOMETRY_H_ */
+
+
 
 
 

@@ -7,6 +7,13 @@
 // 2nd version started:  December 7, 2003
 // galois started:  August 12, 2005
 
+
+#ifndef ORBITER_SRC_LIB_FOUNDATIONS_GLOBALS_GLOBALS_H_
+#define ORBITER_SRC_LIB_FOUNDATIONS_GLOBALS_GLOBALS_H_
+
+
+
+
 namespace orbiter {
 namespace foundations {
 
@@ -15,12 +22,12 @@ namespace foundations {
 // function_command.cpp
 // #############################################################################
 
-//! an individual command in function expressed in reverse polish notation
+//! an individual command which is part of a function expressed in reverse polish notation
 
 class function_command {
 public:
 
-	double type;
+	int type;
 	// 1 = push labeled constant
 	// 2 = push immediate constant
 	// 3 = push variable
@@ -371,5 +378,9 @@ public:
 
 
 }}
+
+
+#endif /* ORBITER_SRC_LIB_FOUNDATIONS_GLOBALS_GLOBALS_H_ */
+
 
 

@@ -1496,8 +1496,8 @@ int projective_space::determine_cubic_in_plane(
 		}
 	d = n + 1;
 	Pt_coord = NEW_int(nb_pts * d);
-	System = NEW_int(nb_pts * Poly_3_3->nb_monomials);
-	base_cols = NEW_int(Poly_3_3->nb_monomials);
+	System = NEW_int(nb_pts * Poly_3_3->get_nb_monomials());
+	base_cols = NEW_int(Poly_3_3->get_nb_monomials());
 
 	if (f_v) {
 		cout << "projective_space::determine_cubic_in_plane list of "
@@ -1515,24 +1515,27 @@ int projective_space::determine_cubic_in_plane(
 		}
 
 	for (i = 0; i < nb_pts; i++) {
-		for (j = 0; j < Poly_3_3->nb_monomials; j++) {
-			System[i * Poly_3_3->nb_monomials + j] =
+		for (j = 0; j < Poly_3_3->get_nb_monomials(); j++) {
+			System[i * Poly_3_3->get_nb_monomials() + j] =
+					Poly_3_3->evaluate_monomial(j, Pt_coord + i * d);
+#if 0
 				F->evaluate_monomial(
 					Poly_3_3->Monomials + j * d,
 					Pt_coord + i * d, d);
+#endif
 			}
 		}
 	if (f_v) {
 		cout << "projective_space::determine_cubic_in_plane "
 				"The system:" << endl;
-		int_matrix_print(System, nb_pts, Poly_3_3->nb_monomials);
+		int_matrix_print(System, nb_pts, Poly_3_3->get_nb_monomials());
 		}
-	r = F->Gauss_simple(System, nb_pts, Poly_3_3->nb_monomials,
+	r = F->Gauss_simple(System, nb_pts, Poly_3_3->get_nb_monomials(),
 		base_cols, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space::determine_cubic_in_plane "
 				"The system in RREF:" << endl;
-		int_matrix_print(System, r, Poly_3_3->nb_monomials);
+		int_matrix_print(System, r, Poly_3_3->get_nb_monomials());
 		}
 	if (f_v) {
 		cout << "projective_space::determine_cubic_in_plane "
@@ -1545,7 +1548,7 @@ int projective_space::determine_cubic_in_plane(
 	}
 	int kernel_m, kernel_n;
 
-	F->matrix_get_kernel(System, r, Poly_3_3->nb_monomials,
+	F->matrix_get_kernel(System, r, Poly_3_3->get_nb_monomials(),
 		base_cols, r,
 		kernel_m, kernel_n, coeff10);
 
@@ -4044,14 +4047,17 @@ void projective_space::report(ostream &ost)
 	Poly2->init(F,
 			n + 1 /* nb_vars */, 2 /* degree */,
 			FALSE /* f_init_incidence_structure */,
+			t_PART,
 			verbose_level);
 	Poly3->init(F,
 			n + 1 /* nb_vars */, 3 /* degree */,
 			FALSE /* f_init_incidence_structure */,
+			t_PART,
 			verbose_level);
 	Poly4->init(F,
 			n + 1 /* nb_vars */, 4 /* degree */,
 			FALSE /* f_init_incidence_structure */,
+			t_PART,
 			verbose_level);
 
 	Poly2->print_monomial_ordering(ost);

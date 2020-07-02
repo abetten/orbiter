@@ -68,13 +68,13 @@ void hjelmslev::init(finite_ring *R,
 	hjelmslev::R = R;
 	hjelmslev::n = n;
 	hjelmslev::k = k;
-	n_choose_k_p = Combi.generalized_binomial(n, k, R->p);
+	n_choose_k_p = Combi.generalized_binomial(n, k, R->get_p());
 	if (f_v) {
 		cout << "hjelmslev::init n_choose_k_p = "
 				<< n_choose_k_p << endl;
 		}
 	G = NEW_OBJECT(grassmann);
-	G->init(n, k, R->Fp, verbose_level);
+	G->init(n, k, R->get_Fp(), verbose_level);
 	Mtx = NEW_int(k * n);
 	base_cols = NEW_int(n);
 	v = NEW_int(k * (n - k));
@@ -83,7 +83,7 @@ void hjelmslev::init(finite_ring *R,
 long int hjelmslev::number_of_submodules()
 {
 	number_theory_domain NT;
-	return n_choose_k_p * NT.i_power_j_lint(R->p, (R->e - 1) * k * (n - k));
+	return n_choose_k_p * NT.i_power_j_lint(R->get_p(), (R->get_e() - 1) * k * (n - k));
 }
 
 void hjelmslev::unrank_lint(int *M, long int rk, int verbose_level)
@@ -106,7 +106,7 @@ void hjelmslev::unrank_lint(int *M, long int rk, int verbose_level)
 		cout << "rk=" << rk << " a=" << a << " b=" << b << endl;
 	}
 	G->unrank_lint(a, 0);
-	Gg.AG_element_unrank(R->e, v, 1, k * (n - k), b);
+	Gg.AG_element_unrank(R->get_e(), v, 1, k * (n - k), b);
 	if (f_vv) {
 		print_integer_matrix_width(cout, G->M, k, n, n, 5);
 		int_vec_print(cout, v, k * (n - k));
@@ -119,7 +119,7 @@ void hjelmslev::unrank_lint(int *M, long int rk, int verbose_level)
 		h = G->base_cols[k + j];
 		for (i = 0; i < k; i++) {
 			c = v[i * (n - k) + j];
-			Mtx[i * n + h] += c * R->p;
+			Mtx[i * n + h] += c * R->get_p();
 		}
 	}
 	for (i = 0; i < k * n; i++) {
@@ -169,9 +169,9 @@ long int hjelmslev::rank_lint(int *M, int verbose_level)
 	for (j = 0; j < n - k; j++) {
 		h = G->base_cols[k + j];
 		for (i = 0; i < k; i++) {
-			c = Mtx[i * n + h] / R->p;
+			c = Mtx[i * n + h] / R->get_p();
 			v[i * (n - k) + j] = c;
-			Mtx[i * n + h] -= c * R->p;
+			Mtx[i * n + h] -= c * R->get_p();
 			}
 		}
 	
@@ -182,7 +182,7 @@ long int hjelmslev::rank_lint(int *M, int verbose_level)
 		int_vec_print(cout, v, k * (n - k));
 		cout << endl;
 		}
-	b = Gg.AG_element_rank(R->e, v, 1, k * (n - k));
+	b = Gg.AG_element_rank(R->get_e(), v, 1, k * (n - k));
 	a = G->rank_lint(0);
 	rk = b * n_choose_k_p + a;
 	if (f_v) {

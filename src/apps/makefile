@@ -1,5 +1,7 @@
 all: 
 	cd orbiter; $(MAKE) all
+	
+no:
 	#cd ginac; $(MAKE) all
 		# ginac requires cln and ginac to be installed
 

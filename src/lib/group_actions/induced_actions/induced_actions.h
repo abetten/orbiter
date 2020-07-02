@@ -6,6 +6,12 @@
 // based on action.h which was started:  August 13, 2005
 
 
+
+#ifndef ORBITER_SRC_LIB_GROUP_ACTIONS_INDUCED_ACTIONS_INDUCED_ACTIONS_H_
+#define ORBITER_SRC_LIB_GROUP_ACTIONS_INDUCED_ACTIONS_INDUCED_ACTIONS_H_
+
+
+
 namespace orbiter {
 
 namespace group_actions {
@@ -583,7 +589,7 @@ public:
 
 class action_on_homogeneous_polynomials {
 public:
-	int n; // M->n
+	int n; // the dimension M->n
 	int q;
 	action *A;
 	homogeneous_polynomial_domain *HPD;
@@ -965,6 +971,8 @@ public:
 
 }}
 
+
+#endif /* ORBITER_SRC_LIB_GROUP_ACTIONS_INDUCED_ACTIONS_INDUCED_ACTIONS_H_ */
 
 
 

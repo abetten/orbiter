@@ -936,48 +936,6 @@ const char *finitefield_primitive_polynomial[][100] = {
 },
 };
 
-const char *get_primitive_polynomial(int p, int e, int verbose_level)
-{
-	//int f_v = (verbose_level >= 1);
-	int idx;
-	char *s;
-	sorting Sorting;
-
-	if (!Sorting.int_vec_search(finitefield_primes, finitefield_nb_primes, p, idx)) {
-		cout << "I don't have prime " << p << " in the tables" << endl;
-		cout << "searching for a polynomial of degree " << e << endl;
-
-		algebra_global AG;
-
-		s = AG.search_for_primitive_polynomial_of_given_degree(p, e, verbose_level);
-		cout << "the search came up with a polynomial of degree " << e << ", coded as " << s << endl;
-		return s;
-		}
-#if 0
-	for (idx = 0; idx < finitefield_nb_primes; idx++) {
-		if (finitefield_primes[idx] == p)
-			break;
-		}
-	if (idx == finitefield_nb_primes) {
-		cout << "get_primitive_polynomial() couldn't find prime " << p << endl;
-		exit(1);
-		}
-#endif
-	if (e > finitefield_largest_degree_irreducible_polynomial[idx]) {
-		cout << "get_primitive_polynomial() I do not have a polynomial\n";
-		cout << "of that degree over that field" << endl;
-		cout << "requested: degree " << e << " polynomial over GF(" << p << ")" << endl;
-		exit(1);
-		}
-	const char *m = finitefield_primitive_polynomial[idx][e - 2];
-	if (strlen(m) == 0) {
-		cout << "get_primitive_polynomial() I do not have a polynomial\n";
-		cout << "of that degree over that field" << endl;
-		cout << "requested: degree " << e << " polynomial over GF(" << p << ")" << endl;
-		exit(1);
-		}
-	return m; 
-}
 
 }}
 

@@ -91,6 +91,13 @@ void action::report(ostream &ost, int f_sims, sims *S,
 			cout << "action::report after S->report" << endl;
 		}
 	}
+	if (Stabilizer_chain) {
+		if (f_strong_gens) {
+			ost << "\\begin{verbatim}" << endl;
+			SG->print_generators_gap(ost);
+			ost << "\\end{verbatim}" << endl;
+		}
+	}
 	if (f_v) {
 		cout << "action::report done" << endl;
 	}

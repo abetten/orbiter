@@ -7,6 +7,12 @@
 // 2nd version started:  December 7, 2003
 // galois started:  August 12, 2005
 
+
+#ifndef ORBITER_SRC_LIB_FOUNDATIONS_GRAPHICS_GRAPHICS_H_
+#define ORBITER_SRC_LIB_FOUNDATIONS_GRAPHICS_GRAPHICS_H_
+
+
+
 namespace orbiter {
 namespace foundations {
 
@@ -1242,15 +1248,9 @@ public:
 	int nb_pan;
 	int pan_round[1000];
 	int pan_f_reverse[1000];
-	double pan_from_x[1000];
-	double pan_from_y[1000];
-	double pan_from_z[1000];
-	double pan_to_x[1000];
-	double pan_to_y[1000];
-	double pan_to_z[1000];
-	double pan_center_x[1000];
-	double pan_center_y[1000];
-	double pan_center_z[1000];
+	double pan_from[1000 * 3];
+	double pan_to[1000 * 3];
+	double pan_center[1000 * 3];
 
 	int nb_no_background;
 	int no_background_round[1000];
@@ -1320,12 +1320,15 @@ void draw_bitmap(const char *fname, int *M, int m, int n,
 		int f_partition, int part_width,
 		int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
 		int f_box_width, int box_width,
-		int f_invert_colors,
+		int f_invert_colors, int bit_depth,
 		int verbose_level);
+// bit_depth should be either 8 or 24.
 
 
 
 }}
 
+
+#endif /* ORBITER_SRC_LIB_FOUNDATIONS_GRAPHICS_GRAPHICS_H_ */
 
 

@@ -1714,7 +1714,7 @@ void projective_space::cheat_sheet_subspaces(
 			<< nb_k_subspaces << " $" << k
 			<< "$-subspaces:\\\\" << endl;
 
-	if (nb_k_subspaces > 1000) {
+	if (nb_k_subspaces > 2000) {
 		f << "Too many to print \\\\" << endl;
 	}
 	else {

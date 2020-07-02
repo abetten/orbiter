@@ -326,9 +326,12 @@ int surface_domain::compute_system_in_RREF(
 	for (i = 0; i < nb_pts; i++) {
 		for (j = 0; j < nb_monomials; j++) {
 			System[i * nb_monomials + j] =
+					Poly3_4->evaluate_monomial(j, Pts + i * n);
+#if 0
 				F->evaluate_monomial(
 					Poly3_4->Monomials + j * n,
 					Pts + i * n, n);
+#endif
 			}
 		}
 	if (f_v && FALSE) {

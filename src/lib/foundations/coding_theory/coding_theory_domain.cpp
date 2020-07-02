@@ -991,9 +991,10 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	}
 	Fp.init(p, verbose_level - 1);
 
+	algebra_global Algebra;
 	unipoly_domain FpX(&Fp);
 	FpX.create_object_by_rank_string(M,
-			get_primitive_polynomial(p, field_degree, 0),
+			Algebra.get_primitive_polynomial(p, field_degree, 0),
 			verbose_level - 2);
 
 	if (f_v) {

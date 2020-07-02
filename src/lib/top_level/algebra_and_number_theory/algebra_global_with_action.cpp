@@ -2410,7 +2410,6 @@ void algebra_global_with_action::young_symmetrizer_sym_4(int verbose_level)
 }
 
 void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs(
-		group_theoretic_activity *GTA,
 		surface_with_action *Surf_A,
 		poset_classification_control *Control,
 		int verbose_level)
@@ -2426,7 +2425,7 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 
 
 	if (f_v) {
-		cout << "classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
+		cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
 	}
 	F = Surf_A->F;
 	q = F->q;
@@ -2445,7 +2444,7 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 
 
 	if (f_v) {
-		cout << "before A->init_projective_group" << endl;
+		cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs before A->init_projective_group" << endl;
 	}
 	A->init_projective_group(3, F,
 			f_semilinear,
@@ -2454,34 +2453,46 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 			0 /*verbose_level*/);
 	FREE_OBJECT(nice_gens);
 	if (f_v) {
-		cout << "after A->init_projective_group" << endl;
+		cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs after A->init_projective_group" << endl;
 	}
 
 
 	six_arcs_not_on_a_conic *Six_arcs;
+	arc_generator_description *Descr;
 
 	Six_arcs = NEW_OBJECT(six_arcs_not_on_a_conic);
+	Descr = NEW_OBJECT(arc_generator_description);
+	Descr->F = F;
+	Descr->f_q = TRUE;
+	Descr->q = F->q;
+	Descr->f_n = TRUE;
+	Descr->n = 3;
+	Descr->f_d = TRUE;
+	Descr->d = 2;
+	Descr->f_target_size = TRUE;
+	Descr->target_size = 6;
+	Descr->Control = Control;
+
 
 
 	// classify six arcs not on a conic:
 
 	if (f_v) {
-		cout << "before Six_arcs->init" << endl;
+		cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs before Six_arcs->init" << endl;
 	}
-	Six_arcs->init(GTA,
-			F,
+	Six_arcs->init(
+			Descr,
 			A,
 			Surf->P2,
-			Control,
-		verbose_level - 2);
+			verbose_level - 2);
 	if (f_v) {
-		cout << "after Six_arcs->init" << endl;
+		cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs after Six_arcs->init" << endl;
 	}
 
 
 
 	if (f_v) {
-		cout << "before report" << endl;
+		cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs before report" << endl;
 	}
 	{
 		char title[1000];
@@ -2507,7 +2518,7 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 
 
 		if (f_v) {
-			cout << "classify_surfaces_through_arcs_and_trihedral_pairs q=" << q << endl;
+			cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs q=" << q << endl;
 		}
 
 
@@ -2515,42 +2526,7 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 		Six_arcs->report_latex(fp);
 
 		if (f_v) {
-			Surf->print_polynomial_domains(fp);
-			Surf->print_line_labelling(fp);
-
-
-			cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
-					"before Surf->print_Steiner_and_Eckardt" << endl;
-			Surf->print_Steiner_and_Eckardt(fp);
-			cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
-					"after Surf->print_Steiner_and_Eckardt" << endl;
-
-			cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
-					"before Surf->print_clebsch_P" << endl;
-			Surf->print_clebsch_P(fp);
-			cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
-					"after Surf->print_clebsch_P" << endl;
-
-
-
-			cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
-					"before Surf_A->list_orbits_on_trihedra_type1" << endl;
-			Surf_A->Classify_trihedral_pairs->list_orbits_on_trihedra_type1(fp);
-
-			cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
-					"before Surf_A->list_orbits_on_trihedra_type2" << endl;
-			Surf_A->Classify_trihedral_pairs->list_orbits_on_trihedra_type2(fp);
-
-			cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
-					"before Surf_A->print_trihedral_pairs no stabs" << endl;
-			Surf_A->Classify_trihedral_pairs->print_trihedral_pairs(fp,
-					FALSE /* f_with_stabilizers */);
-
-			cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
-					"before Surf_A->print_trihedral_pairs with stabs" << endl;
-			Surf_A->Classify_trihedral_pairs->print_trihedral_pairs(fp,
-					TRUE /* f_with_stabilizers */);
-
+			Surf_A->report_basics_and_trihedral_pair(fp);
 		}
 
 
@@ -2597,7 +2573,7 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 
 
 			if (f_v) {
-				cout << "classify_surfaces_through_arcs_and_trihedral_pairs extending arc "
+				cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs extending arc "
 						<< arc_idx << " / "
 						<< Six_arcs->nb_arcs_not_on_conic << ":" << endl;
 			}
@@ -2644,7 +2620,7 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 			snprintf(arc_label_short, 1000, "Arc%d", arc_idx);
 
 			if (f_v) {
-				cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+				cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs "
 						"before arc_lifting_and_classify_using_trihedral_pairs" << endl;
 			}
 
@@ -2662,7 +2638,7 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 				verbose_level);
 
 			if (f_v) {
-				cout << "classify_surfaces_through_arcs_and_trihedral_pairs "
+				cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs "
 						"after arc_lifting_and_classify_using_trihedral_pairs" << endl;
 			}
 
@@ -2671,10 +2647,10 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 			nb_surfaces++;
 		} // next arc_idx
 
-		cout << "We found " << nb_surfaces << " surfaces" << endl;
+		cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs We found " << nb_surfaces << " surfaces" << endl;
 
 
-		cout << "decomposition matrix:" << endl;
+		cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs decomposition matrix:" << endl;
 		for (i = 0; i < nb_surfaces; i++) {
 			for (j = 0; j < Arc_identify_nb[i]; j++) {
 				cout << Arc_identify[i * Six_arcs->nb_arcs_not_on_conic + j];
@@ -2696,7 +2672,7 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 			}
 		}
 
-		cout << "decomposition matrix:" << endl;
+		cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs decomposition matrix:" << endl;
 		cout << "$$" << endl;
 		L.print_integer_matrix_with_standard_labels(cout, Decomp,
 				Six_arcs->nb_arcs_not_on_conic, nb_surfaces,
@@ -2710,6 +2686,14 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 		L.print_integer_matrix_tex_block_by_block(fp, Decomp,
 				Six_arcs->nb_arcs_not_on_conic, nb_surfaces, 25);
 		//fp << "$$" << endl;
+
+		file_io Fio;
+		char fname_decomposition[1000];
+
+		sprintf(fname_decomposition, "surfaces_q%d_decomposition_matrix.csv", F->q);
+
+		Fio.int_matrix_write_csv(fname_decomposition, Decomp, Six_arcs->nb_arcs_not_on_conic, nb_surfaces);
+		cout << "Written file " << fname_decomposition << " of size " << Fio.file_size(fname_decomposition) << endl;
 
 
 
@@ -2729,7 +2713,7 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 	//delete F;
 
 	if (f_v) {
-		cout << "classify_surfaces_through_arcs_and_trihedral_pairs done" << endl;
+		cout << "algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pairs done" << endl;
 	}
 }
 
@@ -2870,6 +2854,7 @@ void algebra_global_with_action::investigate_surface_and_write_report2(
 
 			HPD->init(SC->F, 3, 2 /* degree */,
 					TRUE /* f_init_incidence_structure */,
+					t_PART,
 					verbose_level);
 
 			action *A_on_poly;
@@ -3546,17 +3531,32 @@ void algebra_global_with_action::packing_init(
 	}
 
 
+	spread_table_with_selection *Spread_table_with_selection;
+
+	Spread_table_with_selection = NEW_OBJECT(spread_table_with_selection);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::packing_init before Spread_table_with_selection->init" << endl;
+	}
+	Spread_table_with_selection->init(T,
+		f_select_spread,
+		select_spread_text,
+		path_to_spread_tables,
+		verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::packing_init after Spread_table_with_selection->init" << endl;
+	}
+
+
+
 	P = NEW_OBJECT(packing_classify);
 
 
 	if (f_v) {
 		cout << "algebra_global_with_action::packing_init before P->init" << endl;
 	}
-	P->init(T,
-		f_select_spread,
-		select_spread_text,
+	P->init(Spread_table_with_selection,
 		TRUE, // ECA->f_lex,
-		path_to_spread_tables,
 		verbose_level);
 	if (f_v) {
 		cout << "algebra_global_with_action::packing_init after P->init" << endl;
@@ -3576,7 +3576,7 @@ void algebra_global_with_action::packing_init(
 	if (f_v) {
 		cout << "algebra_global_with_action::packing_init before P->compute_spread_table" << endl;
 	}
-	P->compute_spread_table(verbose_level);
+	P->Spread_table_with_selection->compute_spread_table(verbose_level);
 	if (f_v) {
 		cout << "algebra_global_with_action::packing_init after P->compute_spread_table" << endl;
 	}
@@ -3586,230 +3586,6 @@ void algebra_global_with_action::packing_init(
 	}
 
 
-}
-
-
-void algebra_global_with_action::predict_spread_table_length(
-	int q, int dimension_of_spread_elements, int spread_size,
-	action *A, strong_generators *Strong_gens,
-	int f_select_spread,
-	int *select_spread, int select_spread_nb,
-	long int *&spread_reps, int *&spread_reps_idx, long int *&spread_orbit_length,
-	int &nb_spread_reps,
-	long int &total_nb_of_spreads,
-	int &nb_iso_types_of_spreads,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_do_it, idx, no;
-	longinteger_object go, stab_go;
-	longinteger_domain D;
-	knowledge_base K;
-	sorting Sorting;
-
-	if (f_v) {
-		cout << "algebra_global_with_action::predict_spread_table_length" << endl;
-	}
-
-
-	total_nb_of_spreads = 0;
-
-	Strong_gens->group_order(go);
-	if (f_v) {
-		cout << "algebra_global_with_action::predict_spread_table_length go = " << go << endl;
-	}
-
-
-	nb_iso_types_of_spreads = K.Spread_nb_reps(q, dimension_of_spread_elements);
-	if (f_v) {
-		cout << "algebra_global_with_action::predict_spread_table_length nb_iso_types_of_spreads = " << nb_iso_types_of_spreads << endl;
-	}
-
-	spread_reps = NEW_lint(nb_iso_types_of_spreads * spread_size);
-	spread_reps_idx = NEW_int(nb_iso_types_of_spreads);
-	spread_orbit_length = NEW_lint(nb_iso_types_of_spreads);
-	nb_spread_reps = 0;
-
-
-	for (no = 0; no < nb_iso_types_of_spreads; no++) {
-
-		vector_ge *gens;
-		const char *stab_order;
-
-		A->stabilizer_of_spread_representative(q,
-				dimension_of_spread_elements, no, gens, stab_order,
-				0 /*verbose_level*/);
-
-
-		f_do_it = FALSE;
-		if (f_select_spread) {
-			if (Sorting.int_vec_search_linear(select_spread,
-					select_spread_nb, no, idx)) {
-				f_do_it = TRUE;
-			}
-		}
-		else {
-			f_do_it = TRUE;
-		}
-		if (f_do_it) {
-			long int *rep;
-			int sz;
-
-			rep = K.Spread_representative(q, dimension_of_spread_elements, no, sz);
-			lint_vec_copy(rep,
-					spread_reps + nb_spread_reps * spread_size,
-					spread_size);
-
-
-			spread_reps_idx[nb_spread_reps] = no;
-
-
-			stab_go.create_from_base_10_string(
-					stab_order,
-					0 /* verbose_level */);
-			//Stab->group_order(stab_go);
-
-			spread_orbit_length[nb_spread_reps] = D.quotient_as_lint(go, stab_go);
-			if (f_v) {
-				cout << "spread orbit " << no
-						<< " has group order "
-						<< stab_go << " orbit_length = "
-						<< spread_orbit_length[nb_spread_reps] << endl;
-			}
-
-
-			total_nb_of_spreads += spread_orbit_length[nb_spread_reps];
-			nb_spread_reps++;
-
-
-		}
-
-
-	} // next no
-
-
-
-	if (f_v) {
-		cout << "algebra_global_with_action::predict_spread_table_length done, "
-				"total_nb_of_spreads = " << total_nb_of_spreads << endl;
-	}
-}
-
-
-void algebra_global_with_action::make_spread_table(
-		action *A, action *A2, strong_generators *Strong_gens,
-		int spread_size,
-		long int *spread_reps, int *spread_reps_idx, long int *spread_orbit_length,
-		int nb_spread_reps,
-		long int total_nb_of_spreads,
-		long int **&Sets, int *&isomorphism_type_of_spread,
-		int verbose_level)
-// does not sort the table
-{
-	int f_v = (verbose_level >= 1);
-	int i, j;
-	int nb_spreads1;
-	sorting Sorting;
-
-	if (f_v) {
-		cout << "algebra_global_with_action::make_spread_table nb_spread_reps = " << nb_spread_reps << endl;
-		cout << "algebra_global_with_action::make_spread_table total_nb_of_spreads = " << total_nb_of_spreads << endl;
-		cout << "algebra_global_with_action::make_spread_table verbose_level = " << verbose_level << endl;
-	}
-	Sets = NEW_plint(total_nb_of_spreads);
-	isomorphism_type_of_spread = NEW_int(total_nb_of_spreads);
-
-	orbit_of_sets *SetOrb;
-
-	SetOrb = NEW_OBJECTS(orbit_of_sets, nb_spread_reps);
-
-	for (i = 0; i < nb_spread_reps; i++) {
-
-		if (f_v) {
-			cout << "algebra_global_with_action::make_spread_table "
-				"Spread " << i << " / "
-				<< nb_spread_reps << " computing orbits" << endl;
-		}
-
-
-		SetOrb[i].init(A, A2,
-				spread_reps + i * spread_size,
-				spread_size, Strong_gens->gens,
-				verbose_level);
-
-
-		if (f_v) {
-			cout << "packing_classify::make_spread_table Spread "
-				<< spread_reps_idx[i] << " = " << i << " / "
-				<< nb_spread_reps << " has orbit length "
-				<< SetOrb[i].used_length << endl;
-		}
-
-
-	} // next i
-
-	nb_spreads1 = 0;
-
-	for (i = 0; i < nb_spread_reps; i++) {
-
-		for (j = 0; j < SetOrb[i].used_length; j++) {
-
-			Sets[nb_spreads1] = NEW_lint(spread_size);
-
-			lint_vec_copy(SetOrb[i].Sets[j], Sets[nb_spreads1], spread_size);
-
-			isomorphism_type_of_spread[nb_spreads1] = i;
-
-
-			nb_spreads1++;
-
-		} // next j
-	} // next i
-
-	if (f_v) {
-		cout << "algebra_global_with_action::make_spread_table We found "
-				<< nb_spreads1 << " spreads in total" << endl;
-		}
-
-	if (nb_spreads1 != total_nb_of_spreads) {
-		cout << "algebra_global_with_action::make_spread_table "
-				"nb_spreads1 != total_nb_of_spreads" << endl;
-		exit(1);
-	}
-
-	FREE_OBJECTS(SetOrb);
-
-#if 0
-	if (f_v) {
-		cout << "algebra_global_with_action::make_spread_table before "
-				"sorting spread table of size " << total_nb_of_spreads << endl;
-	}
-	tmp_isomorphism_type_of_spread = isomorphism_type_of_spread;
-		// for packing_swap_func
-	Sorting.Heapsort_general(Sets, total_nb_of_spreads,
-			packing_spread_compare_func,
-			packing_swap_func,
-			this);
-	if (f_v) {
-		cout << "algebra_global_with_action::make_spread_table after "
-				"sorting spread table of size " << total_nb_of_spreads << endl;
-	}
-#endif
-
-
-	if (FALSE) {
-		cout << "algebra_global_with_action::make_spread_table "
-				"The labeled spreads are:" << endl;
-		for (i = 0; i < total_nb_of_spreads; i++) {
-			cout << i << " : ";
-			lint_vec_print(cout, Sets[i], spread_size /* + 1*/);
-			cout << endl;
-			}
-		}
-
-	if (f_v) {
-		cout << "algebra_global_with_action::make_spread_table done" << endl;
-		}
 }
 
 void algebra_global_with_action::centralizer_of_element(
@@ -3950,7 +3726,7 @@ void algebra_global_with_action::normalizer_of_cyclic_subgroup(
 
 	if (f_v) {
 		cout << "algebra_global_with_action::normalizer_of_cyclic_subgroup "
-				"before centralizer_using_MAGMA" << endl;
+				"before normalizer_of_cyclic_group_using_MAGMA" << endl;
 	}
 
 	strong_generators *gens;
@@ -3962,11 +3738,12 @@ void algebra_global_with_action::normalizer_of_cyclic_subgroup(
 
 	if (f_v) {
 		cout << "algebra_global_with_action::normalizer_of_cyclic_subgroup "
-				"after centralizer_using_MAGMA" << endl;
+				"after normalizer_of_cyclic_group_using_MAGMA" << endl;
 	}
 
 
-	cout << "generators for the normalizer are:" << endl;
+	cout << "algebra_global_with_action::normalizer_of_cyclic_subgroup "
+			"generators for the normalizer are:" << endl;
 	gens->print_generators_tex();
 
 

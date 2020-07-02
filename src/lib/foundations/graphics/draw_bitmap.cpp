@@ -27,8 +27,9 @@ void draw_bitmap(const char *fname, int *M, int m, int n,
 		int f_partition, int part_width,
 		int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
 		int f_box_width, int box_width,
-		int f_invert_colors,
+		int f_invert_colors, int bit_depth,
 		int verbose_level)
+// bit_depth should be either 8 or 24.
 {
 	int f_v = (verbose_level >= 1);
 
@@ -52,7 +53,7 @@ void draw_bitmap(const char *fname, int *M, int m, int n,
 
 	replace_extension_with(fname_out, "_draw.bmp");
 
-	int bit_depth = 8;
+	//int bit_depth = 8;
 
 	BMP image;
 
@@ -190,8 +191,6 @@ std::vector<int> get_color(int bit_depth, int max_value, int loopCount, int f_in
 {
 	int f_v = (verbose_level>= 1);
 	int r, g, b;
-
-	if (loopCount < 10 && bit_depth == 8) {
 #if 0
 		Black	#000000	(0,0,0)
 		 	White	#FFFFFF	(255,255,255)
@@ -210,24 +209,26 @@ std::vector<int> get_color(int bit_depth, int max_value, int loopCount, int f_in
 		 	Teal	#008080	(0,128,128)
 		 	Navy	#000080	(0,0,128)
 #endif
-			int table[] = {
-					255,255,255, // white
-					0,0,0, // black
-					255,0,0,
-					0,255,0,
-					0,0,255,
-					255,255,0,
-					0,255,255,
-					255,0,255,
-					192,192,192,
-					128,128,128,
-					128,0,0,
-					128,128,0,
-					0,128,0,
-					128,0,128,
-					0,128,128,
-					0,0,128
-			};
+	int table[] = {
+			255,255,255, // white
+			0,0,0, // black
+			255,0,0,
+			0,255,0,
+			0,0,255,
+			255,255,0,
+			0,255,255,
+			255,0,255,
+			192,192,192,
+			128,128,128,
+			128,0,0,
+			128,128,0,
+			0,128,0,
+			128,0,128,
+			0,128,128,
+			0,0,128
+	};
+
+	if (loopCount < 16 && bit_depth == 8) {
 		r = table[loopCount * 3 + 0];
 		g = table[loopCount * 3 + 1];
 		b = table[loopCount * 3 + 2];
@@ -244,6 +245,15 @@ std::vector<int> get_color(int bit_depth, int max_value, int loopCount, int f_in
 			cout << "max_value=" << max_value << endl;
 			exit(1);
 		}
+
+		if (loopCount < 16) {
+			r = table[loopCount * 3 + 0];
+			g = table[loopCount * 3 + 1];
+			b = table[loopCount * 3 + 2];
+			return { r, g, b};
+		}
+		loopCount -= 16;
+
 		a1 = (double) loopCount / (double) max_value;
 
 

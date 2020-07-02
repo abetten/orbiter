@@ -340,10 +340,10 @@ void Hill_cap56(
 
 	FREE_int(Sets);
 
-	delete P;
-	delete A;
-	delete An;
-	delete F;
+	FREE_OBJECT(P);
+	FREE_OBJECT(A);
+	FREE_OBJECT(An);
+	FREE_OBJECT(F);
 	
 }
 

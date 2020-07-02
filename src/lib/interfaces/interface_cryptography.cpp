@@ -178,6 +178,11 @@ interface_cryptography::interface_cryptography()
 	f_count_subprimitive = FALSE;
 	count_subprimitive_Q_max = 0;
 	count_subprimitive_H_max = 0;
+#if 0
+	f_ntt = FALSE;
+	ntt_t = 0;
+	ntt_q = 0;
+#endif
 	//cout << "interface_cryptography::interface_cryptography done" << endl;
 
 }
@@ -368,6 +373,11 @@ void interface_cryptography::print_help(int argc, const char **argv, int i, int 
 	else if (strcmp(argv[i], "-count_subprimitive") == 0) {
 		cout << "-count_subprimitive <int : Q_max> <int : H_max>" << endl;
 	}
+#if 0
+	else if (strcmp(argv[i], "-ntt") == 0) {
+		cout << "-ntt <int : t> <int : q>" << endl;
+	}
+#endif
 }
 
 int interface_cryptography::recognize_keyword(int argc, const char **argv, int i, int verbose_level)
@@ -530,6 +540,11 @@ int interface_cryptography::recognize_keyword(int argc, const char **argv, int i
 	else if (strcmp(argv[i], "-count_subprimitive") == 0) {
 		return true;
 	}
+#if 0
+	else if (strcmp(argv[i], "-ntt") == 0) {
+		return true;
+	}
+#endif
 	return false;
 }
 
@@ -947,6 +962,16 @@ void interface_cryptography::read_arguments(int argc, const char **argv, int i0,
 					<< " " << count_subprimitive_H_max
 					<< endl;
 		}
+#if 0
+		else if (strcmp(argv[i], "-ntt") == 0) {
+			f_ntt = TRUE;
+			ntt_t = atoi(argv[++i]);
+			ntt_q = atoi(argv[++i]);
+			cout << "-ntt " << ntt_t
+					<< " " << ntt_q
+					<< endl;
+		}
+#endif
 	}
 }
 
@@ -1180,6 +1205,12 @@ void interface_cryptography::worker(int verbose_level)
 		algebra_global AG;
 		AG.count_subprimitive(count_subprimitive_Q_max, count_subprimitive_H_max);
 	}
+#if 0
+	else if (f_ntt) {
+		number_theoretic_transform NTT;
+		NTT.init(ntt_t, ntt_q, verbose_level);
+	}
+#endif
 
 }
 

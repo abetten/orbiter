@@ -28,6 +28,7 @@ MODULES= \
 		foundations/algebra_and_number_theory/matrix_block_data.o \
 		foundations/algebra_and_number_theory/norm_tables.o \
 		foundations/algebra_and_number_theory/null_polarity_generator.o \
+		foundations/algebra_and_number_theory/number_theoretic_transform.o \
 		foundations/algebra_and_number_theory/number_theory_domain.o \
 		foundations/algebra_and_number_theory/partial_derivative.o \
 		foundations/algebra_and_number_theory/rank_checker.o \
@@ -326,8 +327,10 @@ MODULES= \
 		top_level/combinatorics/hadamard_classify.o \
 		top_level/combinatorics/hall_system_classify.o \
 		top_level/combinatorics/large_set_classify.o \
+		top_level/combinatorics/regular_linear_space_description.o \
 		top_level/combinatorics/regular_ls_classify.o \
 		top_level/combinatorics/tactical_decomposition.o \
+		top_level/geometry/arc_generator_description.o \
 		top_level/geometry/arc_generator.o \
 		top_level/geometry/arc_lifting_simeon.o \
 		top_level/geometry/arc_lifting.o \
@@ -352,6 +355,7 @@ MODULES= \
 		top_level/geometry/packing_invariants.o \
 		top_level/geometry/packing_long_orbits.o \
 		top_level/geometry/packing_was_description.o \
+		top_level/geometry/packing_was_fixpoints.o \
 		top_level/geometry/packing_was.o \
 		top_level/geometry/polar.o \
 		top_level/geometry/recoordinatize.o \
@@ -363,6 +367,7 @@ MODULES= \
 		top_level/geometry/spread_create_description.o \
 		top_level/geometry/spread_create.o \
 		top_level/geometry/spread_lifting.o \
+		top_level/geometry/spread_table_with_selection.o \
 		top_level/geometry/surface_classify_wedge.o \
 		top_level/geometry/surface_create_description.o \
 		top_level/geometry/surface_create.o \

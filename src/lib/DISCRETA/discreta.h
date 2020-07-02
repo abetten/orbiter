@@ -6,6 +6,12 @@
 // modified: 23.03.2000
 // moved from D2 to ORBI Nov 15, 2007
 
+
+#ifndef ORBITER_SRC_LIB_DISCRETA_DISCRETA_H_
+#define ORBITER_SRC_LIB_DISCRETA_DISCRETA_H_
+
+
+
 #pragma once
 
 #include <iostream>
@@ -2735,6 +2741,8 @@ void matrix_to_diophant(discreta_matrix& M, diophant *&D, int verbose_level);
 
 }}
 
+
+#endif /* ORBITER_SRC_LIB_DISCRETA_DISCRETA_H_ */
 
 
 
