@@ -1706,7 +1706,7 @@ public:
 	set_of_sets *Filtered_orbits;
 	char fname_graph[1000];
 
-	colored_graph *CG;
+	//colored_graph *CG;
 
 
 	packing_long_orbits();
@@ -1855,6 +1855,7 @@ public:
 			int long_orbit_length,
 			int long_orbits_clique_size,
 			int verbose_level);
+	long int *clique_by_index(int idx);
 	void process_long_orbits(
 			int clique_index,
 			int long_orbit_length,

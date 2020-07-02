@@ -30,7 +30,7 @@ packing_long_orbits::packing_long_orbits()
 	Filtered_orbits = NULL;
 	fname_graph[0] = 0;
 
-	CG = NULL;
+	//CG = NULL;
 }
 
 packing_long_orbits::~packing_long_orbits()
@@ -44,9 +44,11 @@ packing_long_orbits::~packing_long_orbits()
 	if (Filtered_orbits) {
 		FREE_OBJECT(Filtered_orbits);
 	}
+#if 0
 	if (CG) {
 		FREE_OBJECT(CG);
 	}
+#endif
 }
 
 void packing_long_orbits::init(packing_was_fixpoints *PWF,
@@ -210,6 +212,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 
 	int user_data_sz;
 	long int *user_data;
+	colored_graph *CG;
 
 	user_data_sz = fixpoint_clique_size;
 	user_data = NEW_lint(user_data_sz);
@@ -232,6 +235,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 			<< CG->nb_points
 			<< " vertices" << endl;
 
+	FREE_OBJECT(CG);
 
 #if 0
 	CG->save(fname_graph, verbose_level);

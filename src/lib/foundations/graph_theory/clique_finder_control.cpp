@@ -158,102 +158,104 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 		snprintf(fname_sol, 1000, "%s", output_file);
 	}
 	else {
-		snprintf(fname_sol, 1000, "%s_sol.txt", fname_graph);
+		strcpy(fname_sol, fname_graph);
+		replace_extension_with(fname_sol, "_sol.txt");
+		//snprintf(fname_sol, 1000, "%s_sol.txt", fname_graph);
 	}
 
 	//CG.print();
 
 	{
-	ofstream fp(fname_sol);
+		ofstream fp(fname_sol);
 
 
-	if (f_rainbow) {
-		if (f_weighted) {
+		if (f_rainbow) {
+			if (f_weighted) {
 
-			if (f_v) {
-				cout << "clique_finder_control::all_cliques "
-						"weighted cliques" << endl;
+				if (f_v) {
+					cout << "clique_finder_control::all_cliques "
+							"weighted cliques" << endl;
+				}
+
+				all_cliques_weighted(CG, fname_sol, verbose_level);
+
+
+
+
 			}
-
-			all_cliques_weighted(CG, fname_sol, verbose_level);
-
-
-
-
-		}
-		else if (f_Sajeeb) {
-			if (f_v) {
-				cout << "clique_finder_control::all_cliques "
-						"before do_Sajeeb" << endl;
+			else if (f_Sajeeb) {
+				if (f_v) {
+					cout << "clique_finder_control::all_cliques "
+							"before do_Sajeeb" << endl;
+				}
+				do_Sajeeb(CG, fname_sol, verbose_level);
+				if (f_v) {
+					cout << "clique_finder_control::all_cliques "
+							"after do_Sajeeb" << endl;
+				}
 			}
-			do_Sajeeb(CG, fname_sol, verbose_level);
-			if (f_v) {
-				cout << "clique_finder_control::all_cliques "
-						"after do_Sajeeb" << endl;
+			else {
+				if (f_v) {
+					cout << "clique_finder_control::all_cliques "
+							"before CG.all_rainbow_cliques" << endl;
+					}
+				CG->all_rainbow_cliques(&fp,
+					f_output_solution_raw,
+					f_maxdepth, maxdepth,
+					f_restrictions, restrictions,
+					f_tree, f_decision_nodes_only, fname_tree,
+					print_interval,
+					nb_search_steps, nb_decision_steps, nb_sol, dt,
+					verbose_level - 1);
+				if (f_v) {
+					cout << "clique_finder_control::all_cliques "
+							"after CG.all_rainbow_cliques" << endl;
+				}
 			}
 		}
 		else {
-			if (f_v) {
-				cout << "clique_finder_control::all_cliques "
-						"before CG.all_rainbow_cliques" << endl;
+			cout << "clique_finder_control::all_cliques not rainbow" << endl;
+			if (!f_target_size) {
+				cout << "clique_finder_control::all_cliques please use -target_size <int : target_size>" << endl;
+				exit(1);
+			}
+
+			if (f_Sajeeb) {
+				if (f_v) {
+					cout << "clique_finder_control::all_cliques "
+							"before do_Sajeeb" << endl;
 				}
-			CG->all_rainbow_cliques(&fp,
-				f_output_solution_raw,
-				f_maxdepth, maxdepth,
-				f_restrictions, restrictions,
-				f_tree, f_decision_nodes_only, fname_tree,
-				print_interval,
-				nb_search_steps, nb_decision_steps, nb_sol, dt,
-				verbose_level - 1);
-			if (f_v) {
-				cout << "clique_finder_control::all_cliques "
-						"after CG.all_rainbow_cliques" << endl;
-			}
-		}
-	}
-	else {
-		cout << "clique_finder_control::all_cliques not rainbow" << endl;
-		if (!f_target_size) {
-			cout << "clique_finder_control::all_cliques please use -target_size <int : target_size>" << endl;
-			exit(1);
-		}
-
-		if (f_Sajeeb) {
-			if (f_v) {
-				cout << "clique_finder_control::all_cliques "
-						"before do_Sajeeb" << endl;
-			}
-			std::vector<std::vector<long int> > solutions;
-			do_Sajeeb_black_and_white(CG, fname_sol, target_size, solutions, verbose_level);
-			// Print the solutions
-			cout << "clique_finder_control::do_Sajeeb Found " << solutions.size() << " solution(s)." << endl;
-			#if 1
-				for (size_t i=0; i<solutions.size(); ++i) {
-					for (size_t j=0; j<solutions[i].size(); ++j) {
-						cout << solutions[i][j] << " ";
-					} cout << endl;
+				std::vector<std::vector<long int> > solutions;
+				do_Sajeeb_black_and_white(CG, fname_sol, target_size, solutions, verbose_level);
+				// Print the solutions
+				cout << "clique_finder_control::do_Sajeeb Found " << solutions.size() << " solution(s)." << endl;
+				#if 1
+					for (size_t i=0; i<solutions.size(); ++i) {
+						for (size_t j=0; j<solutions[i].size(); ++j) {
+							fp << solutions[i][j] << " ";
+						} fp << endl;
+					}
+				#endif
+				if (f_v) {
+					cout << "clique_finder_control::all_cliques "
+							"after do_Sajeeb" << endl;
 				}
-			#endif
-			if (f_v) {
-				cout << "clique_finder_control::all_cliques "
-						"after do_Sajeeb" << endl;
+			}
+			else {
+
+				int *Sol = NULL;
+				//int nb_solutions = 0;
+				unsigned long int decision_step_counter = 0;
+
+				CG->all_cliques_of_size_k_ignore_colors(
+						target_size,
+						Sol, nb_sol,
+						decision_step_counter,
+						verbose_level);
 			}
 		}
-		else {
-
-			int *Sol = NULL;
-			//int nb_solutions = 0;
-			unsigned long int decision_step_counter = 0;
-
-			CG->all_cliques_of_size_k_ignore_colors(
-					target_size,
-					Sol, nb_sol,
-					decision_step_counter,
-					verbose_level);
-		}
-	}
-	fp << -1 << " " << nb_sol << " " << nb_search_steps
-		<< " " << nb_decision_steps << " " << dt << endl;
+		fp << -1 << " " << nb_sol << " " << nb_search_steps
+			<< " " << nb_decision_steps << " " << dt << endl;
 	}
 	if (f_v) {
 		cout << "clique_finder_control::all_cliques done" << endl;
