@@ -941,9 +941,10 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 	//Fp.init(p, 0 /*verbose_level*/);
 	unipoly_domain FX(this);
 
+	algebra_global Algebra;
 	const char *poly;
 
-	poly = get_primitive_polynomial(q, d, 0 /* verbose_level */);
+	poly = Algebra.get_primitive_polynomial(q, d, 0 /* verbose_level */);
 
 	unipoly_object m;
 	unipoly_object g;
@@ -1102,9 +1103,10 @@ int finite_field::count_all_irreducible_polynomials_of_degree_d(
 	//Fp.init(p, 0 /*verbose_level*/);
 	unipoly_domain FX(this);
 
+	algebra_global Algebra;
 	const char *poly;
 
-	poly = get_primitive_polynomial(q, d, 0 /* verbose_level */);
+	poly = Algebra.get_primitive_polynomial(q, d, 0 /* verbose_level */);
 
 	unipoly_object m;
 	unipoly_object g;
@@ -2106,6 +2108,62 @@ int finite_field::is_unit_vector(int *v, int len, int k)
 		}
 	return TRUE;
 }
+
+
+void finite_field::make_Fourier_matrices(
+		int omega, int k, int *N, int **A, int **Av,
+		int *Omega, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int h, i, j, om;
+
+	if (f_v) {
+		cout << "finite_field::make_Fourier_matrices" << endl;
+	}
+
+	Omega[k] = omega;
+	for (h = k; h > 0; h--) {
+		Omega[h - 1] = mult(Omega[h], Omega[h]);
+	}
+
+	for (h = k; h >= 0; h--) {
+		A[h] = NEW_int(N[h] * N[h]);
+		om = Omega[h];
+		for (i = 0; i < N[h]; i++) {
+			for (j = 0; j < N[h]; j++) {
+				A[h][i * N[h] + j] = power(om, (i * j) % N[k]);
+			}
+		}
+	}
+
+	for (h = k; h >= 0; h--) {
+		Av[h] = NEW_int(N[h] * N[h]);
+		om = inverse(Omega[h]);
+		for (i = 0; i < N[h]; i++) {
+			for (j = 0; j < N[h]; j++) {
+				Av[h][i * N[h] + j] = power(om, (i * j) % N[k]);
+			}
+		}
+	}
+
+	if (f_v) {
+		for (h = k; h >= 0; h--) {
+			cout << "A_" << N[h] << ":" << endl;
+			int_matrix_print(A[h], N[h], N[h]);
+		}
+
+		for (h = k; h >= 0; h--) {
+			cout << "Av_" << N[h] << ":" << endl;
+			int_matrix_print(Av[h], N[h], N[h]);
+		}
+	}
+	if (f_v) {
+		cout << "finite_field::make_Fourier_matrices done" << endl;
+	}
+}
+
+
+
 
 
 }}

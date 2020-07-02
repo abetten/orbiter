@@ -32,7 +32,9 @@ interface_coding_theory::interface_coding_theory()
 	//BCH_b = 0;
 	f_Hamming_graph = FALSE;
 	f_NTT = FALSE;
+	ntt_fname_code = NULL;
 	f_draw_matrix = FALSE;
+	bit_depth = 8;
 	fname = NULL;
 	box_width = 0;
 }
@@ -54,10 +56,10 @@ void interface_coding_theory::print_help(int argc,
 		cout << "-Hamming_graph <int : n> <int : q>" << endl;
 	}
 	else if (strcmp(argv[i], "-NTT") == 0) {
-		cout << "-NTT <int : n> <int : q>" << endl;
+		cout << "-NTT <int : n> <int : q> <string : fname_code> " << endl;
 	}
 	else if (strcmp(argv[i], "-draw_matrix") == 0) {
-		cout << "-draw_matrix <string : fname> <int : box_width>" << endl;
+		cout << "-draw_matrix <string : fname> <int : box_width> <int : bit_depth>" << endl;
 	}
 }
 
@@ -133,13 +135,15 @@ void interface_coding_theory::read_arguments(int argc,
 			f_NTT = TRUE;
 			n = atoi(argv[++i]);
 			q = atoi(argv[++i]);
-			cout << "-NTT " << n << " " << q << endl;
+			ntt_fname_code = argv[++i];
+			cout << "-NTT " << n << " " << q << " " << ntt_fname_code << endl;
 		}
 		else if (strcmp(argv[i], "-draw_matrix") == 0) {
 			f_draw_matrix = TRUE;
 			fname = argv[++i];
 			box_width = atoi(argv[++i]);
-			cout << "-draw_matrix " << fname << " " << box_width << endl;
+			bit_depth = atoi(argv[++i]);
+			cout << "-draw_matrix " << fname << " " << box_width << " " << bit_depth << endl;
 		}
 	}
 }
@@ -164,9 +168,9 @@ void interface_coding_theory::worker(int verbose_level)
 				FALSE /* f_projective*/, verbose_level);
 	}
 	else if (f_NTT) {
-		algebra_global Algebra;
+		number_theoretic_transform NTT;
 
-		Algebra.NumberTheoreticTransform(n, q, verbose_level);
+		NTT.init(ntt_fname_code, n, q, verbose_level);
 	}
 	else if (f_draw_matrix) {
 		file_io Fio;
@@ -178,8 +182,9 @@ void interface_coding_theory::worker(int verbose_level)
 				FALSE, 0, // int f_partition, int part_width,
 				0, NULL, 0, NULL, // int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
 				TRUE /* f_box_width */, box_width,
-				FALSE /* f_invert_colors */,
+				FALSE /* f_invert_colors */, bit_depth,
 				verbose_level);
+		FREE_int(M);
 	}
 }
 

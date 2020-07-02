@@ -867,8 +867,9 @@ void tdo_scheme::print_all_schemes()
 		}
 }
 
-void tdo_scheme::print_scheme(int h, int f_v)
+void tdo_scheme::print_scheme(int h, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i, j, c1, c2, a = 0;
 	
 	if (h == ROW) {

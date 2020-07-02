@@ -20,6 +20,7 @@ MODULES = \
 	hadamard_classify.o \
 	hall_system_classify.o \
 	large_set_classify.o \
+	regular_linear_space_description.o \
 	regular_ls_classify.o \
 	tactical_decomposition.o
 

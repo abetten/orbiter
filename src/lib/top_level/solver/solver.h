@@ -8,6 +8,10 @@
 
 
 
+#ifndef ORBITER_SRC_LIB_TOP_LEVEL_SOLVER_SOLVER_H_
+#define ORBITER_SRC_LIB_TOP_LEVEL_SOLVER_SOLVER_H_
+
+
 namespace orbiter {
 namespace top_level {
 
@@ -208,3 +212,9 @@ public:
 };
 
 }}
+
+
+#endif /* ORBITER_SRC_LIB_TOP_LEVEL_SOLVER_SOLVER_H_ */
+
+
+

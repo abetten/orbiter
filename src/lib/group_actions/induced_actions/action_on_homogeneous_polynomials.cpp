@@ -79,12 +79,7 @@ void action_on_homogeneous_polynomials::init(action *A,
 	F = M->GFq;
 	n = M->n;
 	q = F->q;
-	if (n != HPD->n) {
-		cout << "action_on_homogeneous_polynomials::init "
-				"fatal: n != HPD->n" << endl;
-		exit(1);
-	}
-	dimension = HPD->nb_monomials;
+	dimension = HPD->get_nb_monomials();
 	degree = Gg.nb_PG_elements(dimension - 1, q);
 	if (f_v) {
 		cout << "action_on_homogeneous_polynomials::init "

@@ -352,6 +352,7 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 				Descr->variety_label,
 				Descr->n + 1, Descr->variety_degree,
 				Descr->variety_coeffs,
+				Descr->Monomial_ordering_type,
 				fname, nb_pts, Pts,
 				verbose_level);
 	}
@@ -360,6 +361,7 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 				Descr->curve_label,
 				Descr->curve_nb_vars, Descr->curve_degree,
 				Descr->curve_coeffs,
+				Descr->Monomial_ordering_type,
 				fname, nb_pts, Pts,
 				verbose_level);
 	}

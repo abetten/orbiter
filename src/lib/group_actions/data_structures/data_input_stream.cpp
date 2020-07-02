@@ -80,6 +80,9 @@ int data_input_stream::read_arguments(
 	int i;
 
 	cout << "data_input_stream::read_arguments" << endl;
+	if (argc) {
+		cout << "data_input_stream::read_arguments next argument is " << argv[0] << endl;
+	}
 	for (i = 0; i < argc; i++) {
 
 #if 0
@@ -175,7 +178,7 @@ int data_input_stream::read_arguments(
 		}
 	} // next i
 	cout << "data_input_stream::read_arguments done" << endl;
-	return i;
+	return i + 1;
 }
 
 int data_input_stream::count_number_of_objects_to_test(

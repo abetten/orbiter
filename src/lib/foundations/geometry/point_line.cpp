@@ -1,7 +1,7 @@
 // point_line.cpp
 // Anton Betten
 //
-// started: ?
+// started: 2001
 
 
 
@@ -15,8 +15,10 @@ namespace orbiter {
 namespace foundations {
 
 
-int point_line::is_desarguesian_plane(int f_v, int f_vv)
+int point_line::is_desarguesian_plane(int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	int line = 0;
 	int *pts_on_line;
 	int u, v, o, e = 0, loe, p0, a, i, y1, y2;
@@ -25,7 +27,7 @@ int point_line::is_desarguesian_plane(int f_v, int f_vv)
 	int aa;
 	number_theory_domain NT;
 	
-	if (f_vv) {
+	if (f_v) {
 		cout << "is_desarguesian_plane plane_order ="
 				<< plane_order << endl;
 		}
@@ -101,7 +103,7 @@ int point_line::is_desarguesian_plane(int f_v, int f_vv)
 			cout << plane_order << " = " << plane_prime << "^"
 					<< plane_exponent << endl;
 			}
-		return identify_field_not_of_prime_order(f_v, f_vv);
+		return identify_field_not_of_prime_order(verbose_level);
 		}
 	else {
 		if (f_v) {
@@ -158,7 +160,7 @@ int point_line::is_desarguesian_plane(int f_v, int f_vv)
 	return TRUE;
 }
 
-int point_line::identify_field_not_of_prime_order(int f_v, int f_vv)
+int point_line::identify_field_not_of_prime_order(int verbose_level)
 {
 	cout << "point_line::identify_field_not_of_prime_order "
 			"not yet implemented" << endl;
@@ -376,8 +378,9 @@ finish:
 #endif
 }
 
-void point_line::init_projective_plane(int order, int f_v)
+void point_line::init_projective_plane(int order, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i, j, h;
 	
 	f_plane_data_computed = FALSE;
@@ -435,7 +438,7 @@ void point_line::init_projective_plane(int order, int f_v)
 	field_element_inv = NEW_int(plane_order);
 	if (f_v) {
 		cout << "finished" << endl;
-		}
+	}
 	f_plane_data_computed = TRUE;
 }
 
@@ -457,7 +460,7 @@ void point_line::free_projective_plane()
 		FREE_int(field_element);
 		FREE_int(field_element_inv);
 		f_plane_data_computed = FALSE;
-		}
+	}
 }
 
 void point_line::plane_report(ostream &ost)
@@ -606,8 +609,7 @@ void point_line::plane_get_lines_through_point(int pt, int *lines)
 		}
 }
 
-int point_line::plane_points_collinear(
-		int pt1, int pt2, int pt3)
+int point_line::plane_points_collinear(int pt1, int pt2, int pt3)
 {
 	int line;
 	line = plane_line_through_two_points(pt1, pt2);
@@ -617,8 +619,7 @@ int point_line::plane_points_collinear(
 		return FALSE;
 }
 
-int point_line::plane_lines_concurrent(
-		int line1, int line2, int line3)
+int point_line::plane_lines_concurrent(int line1, int line2, int line3)
 {
 	int pt;
 	pt = plane_line_intersection(line1, line2);
@@ -628,8 +629,7 @@ int point_line::plane_lines_concurrent(
 		return FALSE;
 }
 
-int point_line::plane_first_quadrangle(
-		int &pt1, int &pt2, int &pt3, int &pt4)
+int point_line::plane_first_quadrangle(int &pt1, int &pt2, int &pt3, int &pt4)
 {
 	// int v = m;
 	int pts[4];
@@ -652,8 +652,7 @@ int point_line::plane_first_quadrangle(
 		}
 }
 
-int point_line::plane_next_quadrangle(
-		int &pt1, int &pt2, int &pt3, int &pt4)
+int point_line::plane_next_quadrangle(int &pt1, int &pt2, int &pt3, int &pt4)
 {
 	// int v = m;
 	int pts[4];
@@ -743,13 +742,15 @@ int point_line::plane_quadrangle_next_i(int *pt, int i)
 }
 
 void point_line::coordinatize_plane(int O, int I, int X, int Y,
-		int *MOLS, int f_v)
+		int *MOLS, int verbose_level)
 // needs pt_labels, points, pts_on_line_x_eq_y, pts_on_line_x_eq_y_labels, 
 // lines_through_X, lines_through_Y, pts_on_line, MOLS to be allocated
 {
+	int f_v = (verbose_level >= 1);
 	int i, j, ii, jj, x, y, l, pt, line, pt2, pt3, b, pt_label;
 	int slope;
 	
+
 	quad_O = O;
 	quad_I = I;
 	quad_X = X;
@@ -959,8 +960,9 @@ int &point_line::MOLSmultiplication(int a, int b)
 	return MOLSsxb(plane_order, a, b);
 }
 
-int point_line::ternary_field_is_linear(int *MOLS, int f_v)
+int point_line::ternary_field_is_linear(int *MOLS, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int x, m, b, y1, mx, y2;
 	int *addition = MOLS;
 	int *multiplication = MOLS + plane_order * plane_order * plane_order;
@@ -1025,15 +1027,16 @@ void point_line::print_MOLS(ostream &ost)
 		}
 }
 
-int point_line::is_projective_plane(partitionstack &P,
-		int &order, int f_v, int f_vv)
+int point_line::is_projective_plane(partitionstack &P, int &order, int verbose_level)
 // if it is a projective plane, the order is returned.
 // otherwise, 0 is returned.
 {
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	int v, n, r, k, lambda, mu;
 	
-	if (f_vv) {
-		cout << "checking for projective plane:" << endl;
+	if (f_v) {
+		cout << "point_line::is_projective_plane checking for projective plane:" << endl;
 		}
 	if (P.ht != 2) {
 		if (f_vv) {
@@ -1117,8 +1120,7 @@ int point_line::is_projective_plane(partitionstack &P,
 	return TRUE;
 }
 
-int point_line::count_RC(partitionstack &P,
-		int row_cell, int col_cell)
+int point_line::count_RC(partitionstack &P, int row_cell, int col_cell)
 {
 	int l1, i, nb = -1, nb1;
 	
@@ -1139,8 +1141,7 @@ int point_line::count_RC(partitionstack &P,
 	return nb;
 }
 
-int point_line::count_CR(partitionstack &P,
-		int col_cell, int row_cell)
+int point_line::count_CR(partitionstack &P, int col_cell, int row_cell)
 {
 	int l1, i, nb = -1, nb1;
 	

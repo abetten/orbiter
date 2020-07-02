@@ -8,6 +8,13 @@
 // galois started:  August 12, 2005
 
 
+#ifndef ORBITER_SRC_LIB_FOUNDATIONS_IO_AND_OS_IO_AND_OS_H_
+#define ORBITER_SRC_LIB_FOUNDATIONS_IO_AND_OS_IO_AND_OS_H_
+
+
+
+
+
 namespace orbiter {
 namespace foundations {
 
@@ -756,7 +763,6 @@ const char *strip_directory(const char *p);
 int is_all_whitespace(const char *str);
 int is_all_digits(char *p);
 void int_vec_print(int *v, int len);
-int is_diagonal_matrix(int *A, int n);
 int str2int(std::string &str);
 void print_longinteger_after_multiplying(std::ostream &ost, int *factors, int len);
 int my_atoi(char *str);
@@ -765,6 +771,7 @@ int compare_strings(void *a, void *b, void *data);
 int strcmp_with_or_without(char *p, char *q);
 uint32_t root_of_tree_uint32_t (uint32_t* S, uint32_t i);
 int util_compare_func(void *a, void *b, void *data);
+void text_to_three_double(const char *text, double *d);
 
 
 
@@ -772,6 +779,8 @@ int util_compare_func(void *a, void *b, void *data);
 }}
 
 
+
+#endif /* ORBITER_SRC_LIB_FOUNDATIONS_IO_AND_OS_IO_AND_OS_H_ */
 
 
 

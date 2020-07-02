@@ -263,7 +263,7 @@ void algebra_global::factor_cyclotomic(int n, int q, int d,
 		t = FQ.power(Beta, a);
 		FQX.s_i(Xma, 0) = FQ.negate(t);
 		FQX.s_i(Xma, 1) = 1;
-		FQX.integral_division(h, Xma, quo, rem, 0);
+		FQX.division_with_remainder(h, Xma, quo, rem, 0);
 		b = FQX.s_i(rem, 0);
 		if (b == 0) {
 			cout << "zero Beta^" << a << " log "
@@ -854,153 +854,650 @@ void algebra_global::make_Hamming_graph_and_write_file(int n, int q, int f_proje
 
 }
 
-void algebra_global::NumberTheoreticTransform(int n, int q, int verbose_level)
+
+int algebra_global::PHG_element_normalize(finite_ring &R,
+		int *v, int stride, int len)
+// last unit element made one
 {
-	int f_v = (verbose_level >= 1);
+	int i, j, a;
 
-	if (f_v) {
-		cout << "algebra_global::NumberTheoreticTransform" << endl;
+	if (!R.f_chain_ring) {
+		cout << "algebra_global::PHG_element_normalize not a chain ring" << endl;
+		exit(1);
 	}
-
-	int alpha, omega, omega_power;
-	int gamma, minus_gamma;
-	int idx, i, j, h;
-	int **M;
-	int **M_log;
-	int *N;
-	os_interface Os;
-	finite_field *F = NULL;
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q);
-
-
-	alpha = F->primitive_root();
-	if (f_v) {
-		cout << "alpha = " << alpha << endl;
-	}
-	M = NEW_pint(n + 1);
-	M_log = NEW_pint(n + 1);
-	N = NEW_int(n + 1);
-
-	for (h = 0; h <= n; h++) {
-		N[h] = 1 << h;
-	}
-
-	idx = (q - 1) / N[n];
-	omega = F->power(alpha, idx);
-	if (f_v) {
-		cout << "omega = " << omega << endl;
-	}
-
-	omega_power = omega;
-	for (h = n; h >= 0; h--) {
-		M[h] = NEW_int(N[h] * N[h]);
-		for (i = 0; i < N[h]; i++) {
-			for (j = 0; j < N[h]; j++) {
-				M[h][i * N[h] + j] = F->power(omega_power, (i * j) % N[n]);
+	for (i = len - 1; i >= 0; i--) {
+		a = v[i * stride];
+		if (R.is_unit(a)) {
+			if (a == 1)
+				return i;
+			a = R.inverse(a);
+			for (j = len - 1; j >= 0; j--) {
+				v[j * stride] = R.mult(v[j * stride], a);
+				}
+			return i;
 			}
 		}
-		omega_power = F->mult(omega_power, omega_power);
-	}
-	for (h = n; h >= 0; h--) {
-		cout << "M_" << N[h] << ":" << endl;
-		int_matrix_print(M[h], N[h], N[h]);
-	}
+	cout << "algebra_global::PHG_element_normalize "
+			"vector is not free" << endl;
+	exit(1);
+}
 
-	for (h = n; h >= 0; h--) {
-		M_log[h] = NEW_int(N[h] * N[h]);
-		for (i = 0; i < N[h]; i++) {
-			for (j = 0; j < N[h]; j++) {
-				M_log[h][i * N[h] + j] = F->log_alpha(M[h][i * N[h] + j]) + 1;
+
+int algebra_global::PHG_element_normalize_from_front(finite_ring &R,
+		int *v, int stride, int len)
+// first non unit element made one
+{
+	int i, j, a;
+
+	if (!R.f_chain_ring) {
+		cout << "algebra_global::PHG_element_normalize_from_front not a chain ring" << endl;
+		exit(1);
+	}
+	for (i = 0; i < len; i++) {
+		a = v[i * stride];
+		if (R.is_unit(a)) {
+			if (a == 1)
+				return i;
+			a = R.inverse(a);
+			for (j = 0; j < len; j++) {
+				v[j * stride] = R.mult(v[j * stride], a);
+				}
+			return i;
 			}
 		}
-		cout << "M2_" << N[h] << ":" << endl;
-		int_matrix_print(M_log[h], N[h], N[h]);
+	cout << "algebra_global::PHG_element_normalize_from_front "
+			"vector is not free" << endl;
+	exit(1);
+}
+
+int algebra_global::PHG_element_rank(finite_ring &R,
+		int *v, int stride, int len)
+{
+	long int i, j, idx, a, b, r1, r2, rk, N;
+	int f_v = FALSE;
+	int *w;
+	int *embedding;
+	geometry_global Gg;
+
+	if (!R.f_chain_ring) {
+		cout << "algebra_global::PHG_element_rank not a chain ring" << endl;
+		exit(1);
 	}
+	if (len <= 0) {
+		cout << "algebra_global::PHG_element_rank len <= 0" << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "the vector before normalization is ";
+		for (i = 0; i < len; i++) {
+			cout << v[i * stride] << " ";
+			}
+		cout << endl;
+		}
+	idx = PHG_element_normalize(R, v, stride, len);
+	if (f_v) {
+		cout << "the vector after normalization is ";
+		for (i = 0; i < len; i++) {
+			cout << v[i * stride] << " ";
+			}
+		cout << endl;
+		}
+	w = NEW_int(len - 1);
+	embedding = NEW_int(len - 1);
+	for (i = 0, j = 0; i < len - 1; i++, j++) {
+		if (i == idx) {
+			j++;
+			}
+		embedding[i] = j;
+		}
+	for (i = 0; i < len - 1; i++) {
+		w[i] = v[embedding[i] * stride];
+		}
+	for (i = 0; i < len - 1; i++) {
+		a = w[i];
+		b = a % R.get_p();
+		v[embedding[i] * stride] = b;
+		w[i] = (a - b) / R.get_p();
+		}
+	if (f_v) {
+		cout << "w=";
+		int_vec_print(cout, w, len - 1);
+		cout << endl;
+		}
+	r1 = Gg.AG_element_rank(R.get_e(), w, 1, len - 1);
+	R.get_Fp()->PG_element_rank_modified_lint(v, stride, len, r2);
 
-	int *A, *B, *C;
-	int *A1, *A2;
-	int *B1, *B2;
+	N = Gg.nb_PG_elements(len - 1, R.get_p());
+	rk = r1 * N + r2;
 
-	A = NEW_int(N[n]);
-	B = NEW_int(N[n]);
-	C = NEW_int(N[n]);
-	A1 = NEW_int(N[n - 1]);
-	A2 = NEW_int(N[n - 1]);
-	B1 = NEW_int(N[n - 1]);
-	B2 = NEW_int(N[n - 1]);
+	FREE_int(w);
+	FREE_int(embedding);
 
-	for (i = 0; i < N[n]; i++) {
-		A[i] = Os.random_integer(q);
+	return rk;
+}
+
+void algebra_global::PHG_element_unrank(finite_ring &R,
+		int *v, int stride, int len, int rk)
+{
+	int i, j, idx, r1, r2, N;
+	int f_v = FALSE;
+	int *w;
+	int *embedding;
+	geometry_global Gg;
+
+	if (!R.f_chain_ring) {
+		cout << "algebra_global::PHG_element_unrank not a chain ring" << endl;
+		exit(1);
 	}
-	cout << "A:" << endl;
-	int_matrix_print(A, 1, N[n]);
-	cout << endl;
+	if (len <= 0) {
+		cout << "algebra_global::PHG_element_unrank len <= 0" << endl;
+		exit(1);
+		}
 
+	w = NEW_int(len - 1);
+	embedding = NEW_int(len - 1);
 
-	int nb_m10, nb_m11, nb_a10, nb_a11;
-	int nb_m20, nb_m21, nb_a20, nb_a21;
-	int nb_m1, nb_a1;
-	int nb_m2, nb_a2;
+	N = Gg.nb_PG_elements(len - 1, R.get_p());
+	r2 = rk % N;
+	r1 = (rk - r2) / N;
 
-	nb_m10 = F->nb_times_mult_called();
-	nb_a10 = F->nb_times_add_called();
-	F->mult_vector_from_the_right(M[n], A, B, N[n], N[n]);
-	nb_m11 = F->nb_times_mult_called();
-	nb_a11 = F->nb_times_add_called();
-	nb_m1 = nb_m11 - nb_m10;
-	nb_a1 = nb_a11 - nb_a10;
-
-	cout << "nb_m1 = " << nb_m1 << " nb_a1 = " << nb_a1 << endl;
-
-
-	cout << "B:" << endl;
-	int_matrix_print(B, 1, N[n]);
-	cout << endl;
-
-	omega_power = omega; //F->power(omega, 2);
-	gamma = 1;
-	minus_gamma = F->negate(gamma);
-
-	for (i = 0; i < N[n - 1]; i++) {
-		A1[i] = A[2 * i + 0];
-		A2[i] = A[2 * i + 1];
-	}
-
-
-	nb_m20 = F->nb_times_mult_called();
-	nb_a20 = F->nb_times_add_called();
-
-
-	F->mult_vector_from_the_right(M[n - 1], A1, B1, N[n - 1], N[n - 1]);
-	F->mult_vector_from_the_right(M[n - 1], A2, B2, N[n - 1], N[n - 1]);
-
-	for (i = 0; i < N[n - 1]; i++) {
-		C[i] = F->add(B1[i], F->mult(gamma, B2[i]));
-		C[N[n - 1] + i] = F->add(B1[i], F->mult(minus_gamma, B2[i]));
-		gamma = F->mult(gamma, omega_power);
-		minus_gamma = F->negate(gamma);
-	}
-
-	nb_m21 = F->nb_times_mult_called();
-	nb_a21 = F->nb_times_add_called();
-	nb_m2 = nb_m21 - nb_m20;
-	nb_a2 = nb_a21 - nb_a20;
-
-	cout << "nb_m2 = " << nb_m2 << " nb_a2 = " << nb_a2 << endl;
-
-
-	cout << "C:" << endl;
-	int_matrix_print(C, 1, N[n]);
-	cout << endl;
+	Gg.AG_element_unrank(R.get_e(), w, 1, len - 1, r1);
+	R.get_Fp()->PG_element_unrank_modified(v, stride, len, r2);
 
 	if (f_v) {
-		cout << "algebra_global::NumberTheoreticTransform done" << endl;
+		cout << "w=";
+		int_vec_print(cout, w, len - 1);
+		cout << endl;
+		}
+
+	idx = PHG_element_normalize(R, v, stride, len);
+	for (i = 0, j = 0; i < len - 1; i++, j++) {
+		if (i == idx) {
+			j++;
+			}
+		embedding[i] = j;
+		}
+
+	for (i = 0; i < len - 1; i++) {
+		v[embedding[i] * stride] += w[i] * R.get_p();
+		}
+
+
+
+	FREE_int(w);
+	FREE_int(embedding);
+
+}
+
+int algebra_global::nb_PHG_elements(int n, finite_ring &R)
+{
+	int N1, N2;
+	geometry_global Gg;
+
+	if (!R.f_chain_ring) {
+		cout << "algebra_global::nb_PHG_elements not a chain ring" << endl;
+		exit(1);
 	}
+	N1 = Gg.nb_PG_elements(n, R.get_p());
+	N2 = Gg.nb_AG_elements(n, R.get_e());
+	return N1 * N2;
+}
+
+void algebra_global::display_all_PHG_elements(int n, int q)
+{
+	int *v = NEW_int(n + 1);
+	int l;
+	int i, j, a;
+	finite_ring R;
+
+	if (!R.f_chain_ring) {
+		cout << "algebra_global::display_all_PHG_elements not a chain ring" << endl;
+		exit(1);
+	}
+	R.init(q, 0);
+	l = nb_PHG_elements(n, R);
+	for (i = 0; i < l; i++) {
+		PHG_element_unrank(R, v, 1, n + 1, i);
+		cout << i << " : ";
+		for (j = 0; j < n + 1; j++) {
+			cout << v[j] << " ";
+			}
+		a = PHG_element_rank(R, v, 1, n + 1);
+		cout << " : " << a << endl;
+		}
+	FREE_int(v);
+}
+
+void algebra_global::test_unipoly()
+{
+	finite_field GFp;
+	int p = 2;
+	unipoly_object m, a, b, c;
+	unipoly_object elts[4];
+	int i, j;
+	int verbose_level = 0;
+
+	GFp.init(p, verbose_level);
+	unipoly_domain FX(&GFp);
+
+	FX.create_object_by_rank(m, 7, __FILE__, __LINE__, 0);
+	FX.create_object_by_rank(a, 5, __FILE__, __LINE__, 0);
+	FX.create_object_by_rank(b, 55, __FILE__, __LINE__, 0);
+	FX.print_object(a, cout); cout << endl;
+	FX.print_object(b, cout); cout << endl;
+
+	unipoly_domain Fq(&GFp, m, verbose_level);
+	Fq.create_object_by_rank(c, 2, __FILE__, __LINE__, 0);
+	for (i = 0; i < 4; i++) {
+		Fq.create_object_by_rank(elts[i], i, __FILE__, __LINE__, 0);
+		cout << "elt_" << i << " = ";
+		Fq.print_object(elts[i], cout); cout << endl;
+		}
+	for (i = 0; i < 4; i++) {
+		for (j = 0; j < 4; j++) {
+			Fq.print_object(elts[i], cout);
+			cout << " * ";
+			Fq.print_object(elts[j], cout);
+			cout << " = ";
+			Fq.mult(elts[i], elts[j], c, verbose_level);
+			Fq.print_object(c, cout); cout << endl;
+
+			FX.mult(elts[i], elts[j], a, verbose_level);
+			FX.print_object(a, cout); cout << endl;
+			}
+		}
+
+}
+
+void algebra_global::test_unipoly2()
+{
+	finite_field Fq;
+	int q = 4, p = 2, i;
+	int verbose_level = 0;
+
+	Fq.init(q, verbose_level);
+	unipoly_domain FX(&Fq);
+
+	unipoly_object a;
+
+	FX.create_object_by_rank(a, 0, __FILE__, __LINE__, 0);
+	for (i = 1; i < q; i++) {
+		FX.minimum_polynomial(a, i, p, TRUE);
+		//cout << "minpoly_" << i << " = ";
+		//FX.print_object(a, cout); cout << endl;
+		}
+
+}
+
+int algebra_global::is_diagonal_matrix(int *A, int n)
+{
+	int i, j;
+
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++) {
+			if (i == j) {
+				continue;
+				}
+			else {
+				if (A[i * n + j]) {
+					return FALSE;
+					}
+				}
+			}
+		}
+	return TRUE;
+}
+
+const char *algebra_global::get_primitive_polynomial(int p, int e, int verbose_level)
+{
+	//int f_v = (verbose_level >= 1);
+	int idx;
+	char *s;
+	sorting Sorting;
+
+	if (!Sorting.int_vec_search(finitefield_primes, finitefield_nb_primes, p, idx)) {
+		cout << "I don't have prime " << p << " in the tables" << endl;
+		cout << "searching for a polynomial of degree " << e << endl;
+
+		algebra_global AG;
+
+		s = AG.search_for_primitive_polynomial_of_given_degree(p, e, verbose_level);
+		cout << "the search came up with a polynomial of degree " << e << ", coded as " << s << endl;
+		return s;
+		}
+#if 0
+	for (idx = 0; idx < finitefield_nb_primes; idx++) {
+		if (finitefield_primes[idx] == p)
+			break;
+		}
+	if (idx == finitefield_nb_primes) {
+		cout << "get_primitive_polynomial() couldn't find prime " << p << endl;
+		exit(1);
+		}
+#endif
+	if (e > finitefield_largest_degree_irreducible_polynomial[idx]) {
+		cout << "get_primitive_polynomial() I do not have a polynomial\n";
+		cout << "of that degree over that field" << endl;
+		cout << "requested: degree " << e << " polynomial over GF(" << p << ")" << endl;
+		exit(1);
+		}
+	const char *m = finitefield_primitive_polynomial[idx][e - 2];
+	if (strlen(m) == 0) {
+		cout << "get_primitive_polynomial() I do not have a polynomial\n";
+		cout << "of that degree over that field" << endl;
+		cout << "requested: degree " << e << " polynomial over GF(" << p << ")" << endl;
+		exit(1);
+		}
+	return m;
+}
+
+void algebra_global::test_longinteger()
+{
+	longinteger_domain D;
+	int x[] = {15, 14, 12, 8};
+	longinteger_object a, b, q, r;
+	int verbose_level = 0;
+
+	D.multiply_up(a, x, 4, verbose_level);
+	cout << "a=" << a << endl;
+	b.create(2, __FILE__, __LINE__);
+	while (!a.is_zero()) {
+		D.integral_division(a, b, q, r, verbose_level);
+		//cout << a << " = " << q << " * " << b << " + " << r << endl;
+		cout << r << endl;
+		q.assign_to(a);
+		}
+
+	D.multiply_up(a, x, 4, verbose_level);
+	cout << "a=" << a << endl;
+
+	int *rep, len;
+	D.base_b_representation(a, 2, rep, len);
+	b.create_from_base_b_representation(2, rep, len);
+	cout << "b=" << b << endl;
+	FREE_int(rep);
+}
+
+void algebra_global::test_longinteger2()
+{
+	longinteger_domain D;
+	longinteger_object a, b, c, d, e;
+	int r;
+	int verbose_level = 0;
+
+	a.create_from_base_10_string("562949953421311", verbose_level);
+	D.integral_division_by_int(a, 127, b, r);
+	cout << a << " = " << b << " * 127 + " << r << endl;
+	c.create_from_base_10_string("270549121", verbose_level);
+	D.integral_division(b, c, d, e, verbose_level);
+	cout << b << " = " << d << " * " << c << " + " << e << endl;
+}
+
+void algebra_global::test_longinteger3()
+{
+	int i, j;
+	longinteger_domain D;
+	longinteger_object a, b, c, d, e;
+
+	for (i = 0; i < 10; i++) {
+		for (j = 0; j < 10; j++) {
+			D.binomial(a, i, j, FALSE);
+			a.print(cout);
+			cout << " ";
+			}
+		cout << endl;
+		}
+}
+
+void algebra_global::test_longinteger4()
+{
+	int n = 6, q = 2, k, x, d = 3;
+	longinteger_domain D;
+	longinteger_object a;
+
+	for (k = 0; k <= n; k++) {
+		for (x = 0; x <= n; x++) {
+			if (x > 0 && x < d)
+				continue;
+			if (q == 2 && EVEN(d) && ODD(x))
+				continue;
+			D.krawtchouk(a, n, q, k, x);
+			a.print(cout);
+			cout << " ";
+			}
+		cout << endl;
+		}
+}
+
+void algebra_global::test_longinteger5()
+{
+	longinteger_domain D;
+	longinteger_object a, b, u, v, g;
+	int verbose_level = 2;
+
+	a.create(9548, __FILE__, __LINE__);
+	b.create(254774, __FILE__, __LINE__);
+	D.extended_gcd(a, b, g, u, v, verbose_level);
+
+	g.print(cout);
+	cout << " = ";
+	u.print(cout);
+	cout << " * ";
+	a.print(cout);
+	cout << " + ";
+	v.print(cout);
+	cout << " * ";
+	b.print(cout);
+	cout << endl;
+
+}
+
+void algebra_global::test_longinteger6()
+{
+	int verbose_level = 2;
+	longinteger_domain D;
+	longinteger_object a, b;
+
+	a.create(7411, __FILE__, __LINE__);
+	b.create(9283, __FILE__, __LINE__);
+	D.jacobi(a, b, verbose_level);
 
 
 }
+
+void algebra_global::test_longinteger7()
+{
+	longinteger_domain D;
+	longinteger_object a, b;
+	int i, j;
+	int mult[15];
+
+	a.create(15, __FILE__, __LINE__);
+	for (i = 0; i < 15; i++) {
+		mult[i] = 0;
+		}
+	for (i = 0; i < 10000; i++) {
+		D.random_number_less_than_n(a, b);
+		j = b.as_int();
+		mult[j]++;
+		//cout << b << endl;
+		}
+	for (i = 0; i < 15; i++) {
+		cout << i << " : " << mult[i] << endl;
+		}
+
+}
+
+void algebra_global::test_longinteger8()
+{
+	int verbose_level = 2;
+	longinteger_domain D;
+	longinteger_object a, b, one;
+	int nb_solovay_strassen_tests = 100;
+	int f_miller_rabin_test = TRUE;
+
+	one.create(1, __FILE__, __LINE__);
+	a.create(197659, __FILE__, __LINE__);
+	D.find_probable_prime_above(a, nb_solovay_strassen_tests,
+		f_miller_rabin_test, verbose_level);
+}
+
+void algebra_global::mac_williams_equations(longinteger_object *&M, int n, int k, int q)
+{
+	longinteger_domain D;
+	int i, j;
+
+	M = NEW_OBJECTS(longinteger_object, (n + 1) * (n + 1));
+
+	for (i = 0; i <= n; i++) {
+		for (j = 0; j <= n; j++) {
+			D.krawtchouk(M[i * (n + 1) + j], n, q, i, j);
+			}
+		}
+}
+
+void algebra_global::determine_weight_enumerator()
+{
+	int n = 19, k = 7, q = 2;
+	longinteger_domain D;
+	longinteger_object *M, *A1, *A2, qk;
+	int i;
+
+	qk.create(q, __FILE__, __LINE__);
+	D.power_int(qk, k);
+	cout << q << "^" << k << " = " << qk << endl;
+
+	mac_williams_equations(M, n, k, q);
+
+	D.matrix_print_tex(cout, M, n + 1, n + 1);
+
+	A1 = NEW_OBJECTS(longinteger_object, n + 1);
+	A2 = NEW_OBJECTS(longinteger_object, n + 1);
+	for (i = 0; i <= n; i++) {
+		A1[i].create(0, __FILE__, __LINE__);
+		}
+	A1[0].create(1, __FILE__, __LINE__);
+	A1[8].create(78, __FILE__, __LINE__);
+	A1[12].create(48, __FILE__, __LINE__);
+	A1[16].create(1, __FILE__, __LINE__);
+	D.matrix_print_tex(cout, A1, n + 1, 1);
+
+	D.matrix_product(M, A1, A2, n + 1, n + 1, 1);
+	D.matrix_print_tex(cout, A2, n + 1, 1);
+
+	D.matrix_entries_integral_division_exact(A2, qk, n + 1, 1);
+
+	D.matrix_print_tex(cout, A2, n + 1, 1);
+
+	FREE_OBJECTS(M);
+	FREE_OBJECTS(A1);
+	FREE_OBJECTS(A2);
+}
+
+void algebra_global::longinteger_collect_setup(int &nb_agos,
+		longinteger_object *&agos, int *&multiplicities)
+{
+	nb_agos = 0;
+	agos = NULL;
+	multiplicities = NULL;
+}
+
+void algebra_global::longinteger_collect_free(int &nb_agos,
+		longinteger_object *&agos, int *&multiplicities)
+{
+	if (nb_agos) {
+		FREE_OBJECTS(agos);
+		FREE_int(multiplicities);
+		}
+}
+
+void algebra_global::longinteger_collect_add(int &nb_agos,
+		longinteger_object *&agos, int *&multiplicities,
+		longinteger_object &ago)
+{
+	int j, c, h, f_added;
+	longinteger_object *tmp_agos;
+	int *tmp_multiplicities;
+	longinteger_domain D;
+
+	f_added = FALSE;
+	for (j = 0; j < nb_agos; j++) {
+		c = D.compare_unsigned(ago, agos[j]);
+		//cout << "comparing " << ago << " with "
+		//<< agos[j] << " yields " << c << endl;
+		if (c >= 0) {
+			if (c == 0) {
+				multiplicities[j]++;
+				}
+			else {
+				tmp_agos = agos;
+				tmp_multiplicities = multiplicities;
+				agos = NEW_OBJECTS(longinteger_object, nb_agos + 1);
+				multiplicities = NEW_int(nb_agos + 1);
+				for (h = 0; h < j; h++) {
+					tmp_agos[h].swap_with(agos[h]);
+					multiplicities[h] = tmp_multiplicities[h];
+					}
+				ago.swap_with(agos[j]);
+				multiplicities[j] = 1;
+				for (h = j; h < nb_agos; h++) {
+					tmp_agos[h].swap_with(agos[h + 1]);
+					multiplicities[h + 1] = tmp_multiplicities[h];
+					}
+				nb_agos++;
+				if (tmp_agos) {
+					FREE_OBJECTS(tmp_agos);
+					FREE_int(tmp_multiplicities);
+					}
+				}
+			f_added = TRUE;
+			break;
+			}
+		}
+	if (!f_added) {
+		// add at the end (including the case that the list is empty)
+		tmp_agos = agos;
+		tmp_multiplicities = multiplicities;
+		agos = NEW_OBJECTS(longinteger_object, nb_agos + 1);
+		multiplicities = NEW_int(nb_agos + 1);
+		for (h = 0; h < nb_agos; h++) {
+			tmp_agos[h].swap_with(agos[h]);
+			multiplicities[h] = tmp_multiplicities[h];
+			}
+		ago.swap_with(agos[nb_agos]);
+		multiplicities[nb_agos] = 1;
+		nb_agos++;
+		if (tmp_agos) {
+			FREE_OBJECTS(tmp_agos);
+			FREE_int(tmp_multiplicities);
+			}
+		}
+}
+
+void algebra_global::longinteger_collect_print(ostream &ost,
+		int &nb_agos, longinteger_object *&agos, int *&multiplicities)
+{
+	int j;
+
+	ost << "(";
+	for (j = 0; j < nb_agos; j++) {
+		ost << agos[j];
+		if (multiplicities[j] == 1) {
+			}
+		else if (multiplicities[j] >= 10) {
+			ost << "^{" << multiplicities[j] << "}";
+			}
+		else  {
+			ost << "^" << multiplicities[j];
+			}
+		if (j < nb_agos - 1) {
+			ost << ", ";
+			}
+		}
+	ost << ")" << endl;
+}
+
+
 
 
 

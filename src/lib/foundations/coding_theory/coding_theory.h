@@ -8,6 +8,10 @@
 // galois started:  August 12, 2005
 
 
+#ifndef ORBITER_SRC_LIB_FOUNDATIONS_CODING_THEORY_CODING_THEORY_H_
+#define ORBITER_SRC_LIB_FOUNDATIONS_CODING_THEORY_CODING_THEORY_H_
+
+
 namespace orbiter {
 namespace foundations {
 
@@ -83,5 +87,10 @@ public:
 
 
 
-}
-}
+}}
+
+
+#endif /* ORBITER_SRC_LIB_FOUNDATIONS_CODING_THEORY_CODING_THEORY_H_ */
+
+
+

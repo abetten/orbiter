@@ -7,6 +7,11 @@
 // based on global.h, which was taken from reader.h: 3/22/09
 
 
+
+#ifndef ORBITER_SRC_LIB_TOP_LEVEL_ISOMORPH_ISOMORPH_H_
+#define ORBITER_SRC_LIB_TOP_LEVEL_ISOMORPH_ISOMORPH_H_
+
+
 namespace orbiter {
 namespace top_level {
 
@@ -860,5 +865,9 @@ struct isomorph_worker_data {
 
 
 }}
+
+
+#endif /* ORBITER_SRC_LIB_TOP_LEVEL_ISOMORPH_ISOMORPH_H_ */
+
 
 

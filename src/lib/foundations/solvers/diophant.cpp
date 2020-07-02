@@ -3865,7 +3865,7 @@ void diophant::write_gurobi_binary_variables(const char *fname)
 }
 
 void diophant::draw_as_bitmap(const char *fname,
-		int f_box_width, int box_width, int verbose_level)
+		int f_box_width, int box_width, int bit_depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3905,7 +3905,7 @@ void diophant::draw_as_bitmap(const char *fname,
 			FALSE /* f_partition */, 0 /* part_width*/,
 			0, NULL, 0, NULL, //int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
 			f_box_width, box_width,
-			FALSE /* f_invert_colors */,
+			FALSE /* f_invert_colors */, bit_depth,
 			verbose_level);
 
 	FREE_int(M);
@@ -3936,7 +3936,8 @@ void diophant::draw_it(const char *fname_base,
 		f_bitmatrix, NULL, A, 
 		m, n, xmax_in, ymax_in, xmax_out, ymax_out, 
 		scale, line_width, 
-		FALSE, NULL, verbose_level);
+		FALSE, NULL,
+		verbose_level);
 }
 
 void diophant::draw_partitioned(const char *fname_base, 

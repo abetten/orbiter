@@ -5,6 +5,12 @@
 // moved here from action.h: July 28, 2018
 // based on action.h which was started:  August 13, 2005
 
+
+#ifndef ORBITER_SRC_LIB_GROUP_ACTIONS_DATA_STRUCTURES_DATA_STRUCTURES_H_
+#define ORBITER_SRC_LIB_GROUP_ACTIONS_DATA_STRUCTURES_DATA_STRUCTURES_H_
+
+
+
 namespace orbiter {
 
 namespace group_actions {
@@ -331,7 +337,7 @@ public:
 	int nb_sets;
 	int set_size;
 	long int *Sets; // [nb_sets * set_size]
-		// A system of sets that is gicen
+		// A system of sets that is given
 	long int goi;
 
 	int orbit_type_size;
@@ -421,8 +427,10 @@ public:
 		int points_on_grassmannian_k;
 		int f_orthogonal;
 		int orthogonal_epsilon;
-		int f_homogeneous_polynomials;
+		int f_homogeneous_polynomials_LEX;
+		int f_homogeneous_polynomials_PART;
 		int homogeneous_polynomials_degree;
+
 
 
 	//int f_group = FALSE;
@@ -460,7 +468,8 @@ public:
 
 	int f_canonical_form;
 	const char *canonical_form_fname_base;
-	int f_ideal;
+	int f_ideal_LEX;
+	int f_ideal_PART;
 	int ideal_degree;
 	//int f_find_Eckardt_points_from_arc = FALSE;
 
@@ -961,4 +970,9 @@ public:
 
 
 }}
+
+
+#endif /* ORBITER_SRC_LIB_GROUP_ACTIONS_DATA_STRUCTURES_DATA_STRUCTURES_H_ */
+
+
 

@@ -96,7 +96,7 @@ void surfaces_arc_lifting::init(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-
+	arc_generator_description *Descr;
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init" << endl;
@@ -117,17 +117,38 @@ void surfaces_arc_lifting::init(
 
 
 	Six_arcs = NEW_OBJECT(six_arcs_not_on_a_conic);
+	Descr = NEW_OBJECT(arc_generator_description);
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init "
 				"before Six_arcs->init" << endl;
 		}
+
+	Descr->Control = Control_six_arcs;
+	Descr->LG = LG3;
+	Descr->F = F;
+	Descr->f_q = TRUE;
+	Descr->q = F->q;
+	Descr->f_n = TRUE;
+	Descr->n = 3;
+	Descr->f_target_size = TRUE;
+	Descr->target_size = 6;
+
+	Six_arcs->init(
+		Descr,
+		A3,
+		Surf->P2,
+		verbose_level);
+
+#if 0
 	Six_arcs->init(GTA,
 			F,
 		A3,
 		Surf->P2,
 		Control_six_arcs,
 		verbose_level - 10);
+#endif
+
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init "
 				"after Six_arcs->init" << endl;

@@ -349,7 +349,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 			f_semilinear,
 			f_basis,
 			verbose_level - 2);
-		}
+	}
 	else {
 		vector_ge *nice_gens;
 
@@ -362,7 +362,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 			nice_gens,
 			verbose_level - 2);
 		FREE_OBJECT(nice_gens);
-		}
+	}
 
 
 
@@ -395,11 +395,11 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	sqrt_mod_q = NEW_int(q);
 	for (i = 0; i < q; i++) {
 		sqrt_mod_q[i] = -1;
-		}
+	}
 	for (i = 0; i < q; i++) {
 		j = F->mult(i, i);
 		sqrt_mod_q[j] = i;
-		}
+	}
 	if (f_v) {
 		cout << "sqrt_mod_q:" << endl;
 		int_vec_print(cout, sqrt_mod_q, q);
@@ -411,8 +411,8 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 		if (i * i > p) {
 			sqrt_p = i - 1;
 			break;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "p=" << p << endl;
 		cout << "sqrt_p = " << sqrt_p << endl;
@@ -422,12 +422,12 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	for (I = 0; I < q; I++) {
 		if (F->add(F->mult(I, I), 1) == 0) {
 			break;
-			}
 		}
+	}
 	if (I == q) {
 		cout << "did not find I" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "I=" << I << endl;
 	}
@@ -435,19 +435,19 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	for (a0 = 1; a0 <= sqrt_p; a0++) {
 		if (EVEN(a0)) {
 			continue;
-			}
+		}
 		for (a1 = -sqrt_p; a1 <= sqrt_p; a1++) {
 			if (ODD(a1)) {
 				continue;
-				}
+			}
 			for (a2 = -sqrt_p; a2 <= sqrt_p; a2++) {
 				if (ODD(a2)) {
 					continue;
-					}
+				}
 				for (a3 = -sqrt_p; a3 <= sqrt_p; a3++) {
 					if (ODD(a3)) {
 						continue;
-						}
+					}
 					if (a0 * a0 + a1 * a1 + a2 * a2 + a3 * a3 == p) {
 						if (f_v) {
 							cout << "solution " << nb_A4 << " : " << a0
@@ -457,17 +457,17 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 						if (nb_A4 == p + 1) {
 							cout << "too many solutions" << endl;
 							exit(1);
-							}
+						}
 						A4[nb_A4 * 4 + 0] = a0;
 						A4[nb_A4 * 4 + 1] = a1;
 						A4[nb_A4 * 4 + 2] = a2;
 						A4[nb_A4 * 4 + 3] = a3;
 						nb_A4++;
-						}
 					}
 				}
 			}
 		}
+	}
 
 	if (f_v) {
 		cout << "nb_A4=" << nb_A4 << endl;
@@ -475,7 +475,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	if (nb_A4 != p + 1) {
 		cout << "nb_A4 != p + 1" << endl;
 		exit(1);
-		}
+	}
 
 	int_matrix_print(A4, nb_A4, 4);
 
@@ -501,23 +501,23 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 
 		if (f_vv) {
 			cout << "making generator " << i << ":" << endl;
-			}
+		}
 		a0 = A4[i * 4 + 0];
 		a1 = A4[i * 4 + 1];
 		a2 = A4[i * 4 + 2];
 		a3 = A4[i * 4 + 3];
 		while (a0 < 0) {
 			a0 += q;
-			}
+		}
 		while (a1 < 0) {
 			a1 += q;
-			}
+		}
 		while (a2 < 0) {
 			a2 += q;
-			}
+		}
 		while (a3 < 0) {
 			a3 += q;
-			}
+		}
 		a0 = a0 % q;
 		a1 = a1 % q;
 		a2 = a2 % q;
@@ -526,7 +526,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 			cout << "making generator " << i << ": a0=" << a0
 					<< " a1=" << a1 << " a2=" << a2
 					<< " a3=" << a3 << endl;
-			}
+		}
 		M4[0] = F->add(a0, F->mult(I, a1));
 		M4[1] = F->add(a2, F->mult(I, a3));
 		M4[2] = F->add(F->negate(a2), F->mult(I, a3));
@@ -536,7 +536,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 			cout << "M4=";
 			int_vec_print(cout, M4, 4);
 			cout << endl;
-			}
+		}
 
 		if (f_special) {
 			det = F->add(F->mult(M4[0], M4[3]),
@@ -544,39 +544,39 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 
 			if (f_vv) {
 				cout << "det=" << det << endl;
-				}
+			}
 
 #if 0
 			s = sqrt_mod_q[det];
 			if (s == -1) {
 				cout << "determinant is not a square" << endl;
 				exit(1);
-				}
+			}
 			sv = F->inverse(s);
 			if (f_vv) {
 				cout << "det=" << det << " sqrt=" << s
 						<< " mutiplying by " << sv << endl;
-				}
+			}
 			for (j = 0; j < 4; j++) {
 				M4[j] = F->mult(sv, M4[j]);
-				}
+			}
 			if (f_vv) {
 				cout << "M4=";
 				int_vec_print(cout, M4, 4);
 				cout << endl;
-				}
-#endif
 			}
+#endif
+		}
 
 		A->make_element(Elt1, M4, verbose_level - 1);
 
 		if (f_v) {
 			cout << "s_" << i << "=" << endl;
 			A->element_print_quick(Elt1, cout);
-			}
+		}
 
 		A->element_move(Elt1, gens->ith(i), 0);
-		}
+	}
 
 
 	Adj = NEW_int(goi * goi);
@@ -604,9 +604,9 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 			Adj[i * goi + j] = Adj[j * goi + i] = 1;
 			if (i == 0) {
 				cout << "edge " << i << " " << j << endl;
-				}
 			}
 		}
+	}
 
 	if (f_v) {
 		cout << "create_graph::create_Sarnak The adjacency matrix of a graph with " << goi
@@ -619,8 +619,8 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	for (i = 0; i < goi; i++) {
 		if (Adj[0 * goi + i]) {
 			k++;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "k=" << k << endl;
 	}
@@ -697,8 +697,8 @@ void create_graph::create_Schlaefli(int &N, int *&Adj,
 			}
 		if (j == q + 1) {
 			List[sz++] = i;
-			}
 		}
+	}
 	cout << "We found " << sz << " lines" << endl;
 
 
@@ -719,9 +719,9 @@ void create_graph::create_Schlaefli(int &N, int *&Adj,
 			if (rr == 2 * k) {
 				Adj[i * sz + j] = 1;
 				Adj[j * sz + i] = 1;
-				}
 			}
 		}
+	}
 
 
 
@@ -776,7 +776,7 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 	Elt_S = NEW_pint(nb_S);
 	for (i = 0; i < nb_S; i++) {
 		Elt_S[i] = NEW_int(A->elt_size_in_int);
-		}
+	}
 	v = NEW_int(n);
 
 
@@ -784,85 +784,85 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 		if (i == 0) {
 			for (j = 0; j < 4; j++) {
 				v[j] = (j + 1) % 4;
-				}
+			}
 			for (j = 0; j < 4; j++) {
 				v[4 + j] = 4 + j;
-				}
 			}
+		}
 		else {
 			for (j = 0; j < 4; j++) {
 				v[j] = j;
-				}
+			}
 			for (j = 0; j < 4; j++) {
 				v[4 + j] = 4 + ((j + 1) % 4);
-				}
 			}
-		A->make_element(gens_G->ith(i), v, 0 /* verbose_level */);
 		}
+		A->make_element(gens_G->ith(i), v, 0 /* verbose_level */);
+	}
 
 	cout << "generators for G:" << endl;
 	for (i = 0; i < nb_G; i++) {
 		cout << "generator " << i << ":" << endl;
 		A->element_print(gens_G->ith(i), cout);
-		}
+	}
 
 	for (i = 0; i < nb_S; i++) {
 		if (i == 0) {
 			for (j = 0; j < 4; j++) {
 				v[j] = (j + 1) % 4;
-				}
+			}
 			for (j = 0; j < 4; j++) {
 				v[4 + j] = 4 + j;
-				}
 			}
+		}
 		else if (i == 1) {
 			for (j = 0; j < 4; j++) {
 				v[j] = (4 + j - 1) % 4;
-				}
+			}
 			for (j = 0; j < 4; j++) {
 				v[4 + j] = 4 + j;
-				}
 			}
+		}
 		else if (i == 2) {
 			for (j = 0; j < 4; j++) {
 				v[j] = j;
-				}
+			}
 			for (j = 0; j < 4; j++) {
 				v[4 + j] = 4 + ((j + 1) % 4);
-				}
 			}
+		}
 		else if (i == 3) {
 			for (j = 0; j < 4; j++) {
 				v[j] = j;
-				}
+			}
 			for (j = 0; j < 4; j++) {
 				v[4 + j] = 4 + ((4 + j - 1) % 4);
-				}
 			}
+		}
 		else if (i == 4) {
 			for (j = 0; j < 4; j++) {
 				v[j] = (j + 1) % 4;
-				}
+			}
 			for (j = 0; j < 4; j++) {
 				v[4 + j] = 4 + ((j + 1) % 4);
-				}
 			}
+		}
 		else if (i == 5) {
 			for (j = 0; j < 4; j++) {
 				v[j] = (4 + j - 1) % 4;
-				}
+			}
 			for (j = 0; j < 4; j++) {
 				v[4 + j] = 4 + ((4 + j - 1) % 4);
-				}
 			}
-		A->make_element(Elt_S[i], v, 0 /* verbose_level */);
 		}
+		A->make_element(Elt_S[i], v, 0 /* verbose_level */);
+	}
 
 	cout << "generators for S:" << endl;
 	for (i = 0; i < nb_S; i++) {
 		cout << "generator " << i << ":" << endl;
 		A->element_print(Elt_S[i], cout);
-		}
+	}
 
 	sims *G;
 
@@ -879,7 +879,7 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 	if (goi != 16) {
 		cout << "group order is wrong" << endl;
 		exit(1);
-		}
+	}
 
 	int *Elt1, *Elt2;
 
@@ -908,9 +908,9 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 			Adj[i * goi + j] = Adj[j * goi + i] = 1;
 			if (i == 0) {
 				cout << "edge " << i << " " << j << endl;
-				}
 			}
 		}
+	}
 
 	cout << "The adjacency matrix of a graph with " << goi << " vertices has been computed" << endl;
 	//int_matrix_print(Adj, goi, goi);
@@ -926,7 +926,7 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 	FREE_OBJECT(gens_G);
 	for (i = 0; i < nb_S; i++) {
 		FREE_int(Elt_S[i]);
-		}
+	}
 	FREE_pint(Elt_S);
 
 	if (f_v) {
@@ -964,7 +964,7 @@ void create_graph::create_Winnie_Li(int &N, int *&Adj,
 	if (co_index * index != F->e) {
 		cout << "the index has to divide the field degree" << endl;
 		exit(1);
-		}
+	}
 	q1 = NT.i_power_j(p, co_index);
 
 	k = (q - 1) / (q1 - 1);
@@ -980,7 +980,7 @@ void create_graph::create_Winnie_Li(int &N, int *&Adj,
 	for (i = 0; i < index; i++) {
 		relative_norm += j;
 		j *= q1;
-		}
+	}
 	cout << "relative_norm=" << relative_norm << endl;
 
 	N1 = NEW_int(k);
@@ -988,12 +988,12 @@ void create_graph::create_Winnie_Li(int &N, int *&Adj,
 	for (i = 0; i < q; i++) {
 		if (F->power(i, relative_norm) == 1) {
 			N1[j++] = i;
-			}
 		}
+	}
 	if (j != k) {
 		cout << "j != k" << endl;
 		exit(1);
-		}
+	}
 	cout << "found " << k << " norm-one elements:" << endl;
 	int_vec_print(cout, N1, k);
 	cout << endl;
@@ -1005,8 +1005,8 @@ void create_graph::create_Winnie_Li(int &N, int *&Adj,
 			u = F->add(i, j);
 			Adj[i * q + u] = 1;
 			Adj[u * q + i] = 1;
-			}
 		}
+	}
 
 	N = q;
 
@@ -1073,9 +1073,9 @@ void create_graph::create_Grassmann(int &N, int *&Adj,
 			if (rr == r) {
 				Adj[i * N + j] = 1;
 				Adj[j * N + i] = 1;
-				}
 			}
 		}
+	}
 
 
 	sprintf(label, "Grassmann_%d_%d_%d_%d", n, k, q, r);
@@ -1130,12 +1130,12 @@ void create_graph::create_coll_orthogonal(int &N, int *&Adj,
 
 	if (epsilon == 0) {
 		c1 = 1;
-		}
+	}
 	else if (epsilon == -1) {
 		F->choose_anisotropic_form(c1, c2, c3, verbose_level - 2);
 		//cout << "incma.cpp: epsilon == -1, need irreducible polynomial" << endl;
 		//exit(1);
-		}
+	}
 	F->Gram_matrix(epsilon, n, c1, c2, c3, Gram);
 	cout << "Gram matrix" << endl;
 	print_integer_matrix_width(cout, Gram, d, d, d, 2);
@@ -1174,17 +1174,17 @@ void create_graph::create_coll_orthogonal(int &N, int *&Adj,
 					//cout << endl;
 				Adj[i * N + j] = 1;
 				Adj[j * N + i] = 1;
-				}
+			}
 			else {
 				Adj[i * N + j] = 0;
 				Adj[j * N + i] = 0;
 				; //cout << " 0";
 				nb_inc++;
-				}
 			}
+		}
 		//cout << endl;
 		Adj[i * N + i] = 0;
-		}
+	}
 	//cout << endl;
 	cout << "The adjacency matrix of the collinearity graph has been computed" << endl;
 
@@ -1209,7 +1209,7 @@ static int evaluate_cubic_form(finite_field *F, int *v)
 	a = 0;
 	for (i = 0; i < 4; i++) {
 		a = F->add(a, F->power(v[i], 3));
-		}
+	}
 	return a;
 }
 
