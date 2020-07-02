@@ -742,7 +742,9 @@ void interface_combinatorics::do_create_graph(
 		CG->init_adjacency_no_colors(Gr->N, Gr->Adj, verbose_level);
 	}
 
-	snprintf(fname_graph, 2000, "%s.colored_graph", Gr->label);
+	strcpy(fname_graph, Gr->label);
+	replace_extension_with(fname_graph, ".colored_graph");
+	//snprintf(fname_graph, 2000, "%s.colored_graph", Gr->label);
 
 	CG->save(fname_graph, verbose_level);
 

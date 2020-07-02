@@ -331,7 +331,7 @@ void kramer_mesner::orbits(
 			verbose_level);
 
 	if (f_v) {
-		cout << "blt_set::init2 before "
+		cout << "kramer_mesner::orbits before "
 				"Poset->add_testing_without_group" << endl;
 		}
 
@@ -501,7 +501,7 @@ void kramer_mesner::orbits(
 			schreier *Orb;
 			
 			if (f_v) {
-				cout << "set_and_stabilizer::rearrange_by_orbits "
+				cout << "kramer_mesner::orbits "
 					"creating restricted action on the set of lines" << endl;
 				}
 			A_on_set = SaS->A2->restricted_action(

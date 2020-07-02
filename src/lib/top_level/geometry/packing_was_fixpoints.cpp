@@ -506,6 +506,11 @@ void packing_was_fixpoints::process_all_long_orbits(
 	}
 }
 
+long int *packing_was_fixpoints::clique_by_index(int idx)
+{
+	return Cliques + idx * PW->Descr->clique_size;
+}
+
 void packing_was_fixpoints::process_long_orbits(
 		int clique_index,
 		int long_orbit_length,
@@ -533,7 +538,7 @@ void packing_was_fixpoints::process_long_orbits(
 			fixpoints_idx,
 			clique_index /* fixpoints_clique_case_number */,
 			PW->Descr->clique_size /* fixpoint_clique_size */,
-			Cliques + clique_index * PW->Descr->clique_size /* clique */,
+			clique_by_index(clique_index), //Cliques + clique_index * PW->Descr->clique_size /* clique */,
 			long_orbit_length,
 			verbose_level - 2);
 
@@ -659,9 +664,11 @@ void packing_was_fixpoints::report2(ostream &ost, packing_long_orbits *L, int ve
 				Li.lint_set_print_tex(ost, L->fixpoint_clique, L->fixpoint_clique_size);
 				ost << "$, we find the following filtered orbits:\\\\" << endl;
 				L->report_filtered_orbits(ost);
+#if 0
 				ost << "A graph with " << L->CG->nb_points << " vertices "
 						"has been created and saved in the file \\verb'"
 						<< L->fname_graph << "'\\\\" << endl;
+#endif
 			}
 		}
 	}
