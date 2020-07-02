@@ -205,7 +205,8 @@ void unipoly_domain::create_object_by_rank_longinteger(
 		// << "] = " << coeff[i] << endl;
 		// coeff[i] = rk % gfq->q;
 		if (f_vv) {
-			cout << "unipoly_domain::create_object_by_rank_longinteger i=" << i << " rk=" << rk << " quotient " << rk1
+			cout << "unipoly_domain::create_object_by_rank_longinteger "
+					"i=" << i << " rk=" << rk << " quotient " << rk1
 					<< " remainder " << coeff[i] << endl;
 		}
 		rk1.assign_to(rk);
@@ -349,8 +350,7 @@ int unip_f_print_sub = FALSE;
 int unip_f_use_variable_name = FALSE;
 char unip_variable_name[128];
 
-ostream& unipoly_domain::print_object(
-	unipoly_object p, ostream& ost)
+ostream& unipoly_domain::print_object(unipoly_object p, ostream& ost)
 {
 	int i, k;
 	int f_prev = FALSE;
@@ -722,7 +722,7 @@ void unipoly_domain::mult_easy(unipoly_object a,
 void unipoly_domain::mult_mod(unipoly_object a,
 	unipoly_object b, unipoly_object &c,
 	int factor_polynomial_degree,
-	int *factor_polynomial_coefficents_negated,
+	int *factor_polynomial_coefficients_negated,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -748,15 +748,14 @@ void unipoly_domain::mult_mod(unipoly_object a,
 		print_object(rb, cout);
 		cout << " modulo - (";
 		int_vec_print(cout,
-			factor_polynomial_coefficents_negated,
+				factor_polynomial_coefficients_negated,
 			factor_polynomial_degree + 1);
 		cout << ")";
 		cout << endl;
 	}
 #if 0
 	if (!f_factorring) {
-		cout << "unipoly_domain::mult_mod "
-				"not a factorring" << endl;
+		cout << "unipoly_domain::mult_mod not a factorring" << endl;
 		exit(1);
 	}
 #endif
@@ -779,7 +778,7 @@ void unipoly_domain::mult_mod(unipoly_object a,
 				if (c1) {
 					cout << A[i] << "x^" << i << " * "
 						<< B[j] << " x^" << j << " = "
-						<< c1 << " x^" << j << " = ";
+						<< c1 << " x^" << i + j << " = ";
 					print_object(rc, cout);
 					cout << endl;
 				}
@@ -799,13 +798,13 @@ void unipoly_domain::mult_mod(unipoly_object a,
 				if (carry == 1) {
 					for (j = 0; j < factor_polynomial_degree; j++) {
 						C[j] = gfq->add(C[j],
-								factor_polynomial_coefficents_negated[j]);
+								factor_polynomial_coefficients_negated[j]);
 					}
 				}
 				else {
 					for (j = 0; j < factor_polynomial_degree; j++) {
 						c1 = gfq->mult(carry,
-								factor_polynomial_coefficents_negated[j]);
+								factor_polynomial_coefficients_negated[j]);
 						C[j] = gfq->add(C[j], c1);
 					}
 				}
@@ -897,8 +896,9 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 		print_object(a, cout);
 		cout << endl;
 	}
-	integral_division(a,
-			factor_polynomial, Q, R, 0 /* verbose_level */);
+	division_with_remainder(a,
+			factor_polynomial,
+			Q, R, 0 /* verbose_level */);
 	assign(R, a, verbose_level);
 	if (f_vv) {
 		cout << "unipoly_domain::Frobenius_matrix "
@@ -991,30 +991,30 @@ void unipoly_domain::Berlekamp_matrix(int *&B,
 	}
 }
 
-void unipoly_domain::integral_division_exact(
+void unipoly_domain::exact_division(
 		unipoly_object a, unipoly_object b, unipoly_object &q,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "unipoly_domain::integral_division_exact" << endl;
+		cout << "unipoly_domain::exact_division" << endl;
 	}
 
 	unipoly_object r;
 
 	create_object_by_rank(r, 0, __FILE__, __LINE__, verbose_level);
 
-	integral_division(a, b, q, r, verbose_level - 1);
+	division_with_remainder(a, b, q, r, verbose_level - 1);
 	
 	delete_object(r);
 	
 	if (f_v) {
-		cout << "unipoly_domain::integral_division_exact done" << endl;
+		cout << "unipoly_domain::exact_division done" << endl;
 	}
 }
 
-void unipoly_domain::integral_division(
+void unipoly_domain::division_with_remainder(
 	unipoly_object a, unipoly_object b,
 	unipoly_object &q, unipoly_object &r,
 	int verbose_level)
@@ -1028,19 +1028,19 @@ void unipoly_domain::integral_division(
 	int da, db;
 	
 	if (f_v) {
-		cout << "unipoly_domain::integral_division" << endl;
+		cout << "unipoly_domain::division_with_remainder" << endl;
 	}
 	da = degree(a);
 	db = degree(b);
 	
 	if (f_factorring) {
-		cout << "unipoly_domain::integral_division "
+		cout << "unipoly_domain::division_with_remainder "
 				"not good for a factorring" << endl;
 		exit(1);
 	}
 	if (db == 0) {
 		if (B[0] == 0) {
-			cout << "unipoly_domain::integral_division: "
+			cout << "unipoly_domain::division_with_remainder: "
 					"division by zero" << endl;
 			exit(1);
 		}
@@ -1090,7 +1090,7 @@ void unipoly_domain::integral_division(
 				R[ii] = gfq->add(d, R[ii]);
 			}
 			if (R[i] != 0) {
-				cout << "unipoly::integral_division: R[i] != 0" << endl;
+				cout << "unipoly::division_with_remainder: R[i] != 0" << endl;
 				exit(1);
 			}
 			//cout << "i=" << i << endl;
@@ -1105,7 +1105,7 @@ void unipoly_domain::integral_division(
 	}
 done:
 	if (f_v) {
-		cout << "unipoly_domain::integral_division done" << endl;
+		cout << "unipoly_domain::division_with_remainder done" << endl;
 	}
 }
 
@@ -1130,8 +1130,7 @@ void unipoly_domain::derive(unipoly_object a, unipoly_object &b)
 	b = rb;
 }
 
-int unipoly_domain::compare_euclidean(
-		unipoly_object m, unipoly_object n)
+int unipoly_domain::compare_euclidean(unipoly_object m, unipoly_object n)
 {
 	int dm = degree(m);
 	int dn = degree(n);
@@ -1187,7 +1186,7 @@ void unipoly_domain::greatest_common_divisor(
 			print_object(N, cout);
 			cout << endl;
 		}
-		integral_division(M, N, Q, R, verbose_level - 2);
+		division_with_remainder(M, N, Q, R, verbose_level - 2);
 		if (f_vv) {
 			cout << "unipoly::greatest_common_divisor Q=";
 			print_object(Q, cout);
@@ -1271,7 +1270,7 @@ void unipoly_domain::extended_gcd(
 			print_object(N, cout);
 			cout << endl;
 		}
-		integral_division(M, N, Q, R, 0);
+		division_with_remainder(M, N, Q, R, 0);
 		if (f_v) {
 			cout << "Q=";
 			print_object(Q, cout);
@@ -1327,8 +1326,7 @@ void unipoly_domain::extended_gcd(
 
 }
 
-int unipoly_domain::is_squarefree(
-	unipoly_object p, int verbose_level)
+int unipoly_domain::is_squarefree(unipoly_object p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	unipoly_object a, b, u, v, g;
@@ -1465,7 +1463,7 @@ void unipoly_domain::compute_normal_basis(int d,
 			int_vec_zero(b, deg);
 			b[i] = 1;
 			
-			integral_division_exact(lambda,
+			exact_division(lambda,
 					GCD, Q, 0 /* verbose_level - 2 */);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
@@ -1484,7 +1482,7 @@ void unipoly_domain::compute_normal_basis(int d,
 				cout << endl;
 			}
 
-			integral_division_exact(mue,
+			exact_division(mue,
 					R, Q, 0 /* verbose_level - 2 */);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
@@ -1509,7 +1507,7 @@ void unipoly_domain::compute_normal_basis(int d,
 			// now: Orderideal(v1) = Ideal(r) 
 			// v = v *(mue/R)(Frobenius) = v * Q (Frobenius)
 			
-			integral_division_exact(mue, GCD, Q, 0 /* verbose_level - 2 */);
+			exact_division(mue, GCD, Q, 0 /* verbose_level - 2 */);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
 						"Q = mue / GCD = ";
@@ -1535,7 +1533,7 @@ void unipoly_domain::compute_normal_basis(int d,
 				cout << endl;
 			}
 
-			integral_division_exact(R1,
+			exact_division(R1,
 					GCD, R2, 0 /* verbose_level - 2 */);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
@@ -1547,7 +1545,7 @@ void unipoly_domain::compute_normal_basis(int d,
 			// now: greatest_common_divisor(R, R2) = 1
 			// R * R2 = lcm(mue, lambda) 
 			
-			integral_division_exact(lambda,
+			exact_division(lambda,
 					R2, Q, 0 /* verbose_level - 2 */);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
@@ -1978,7 +1976,7 @@ void unipoly_domain::take_away_all_factors_from_b(
 
 	while (degree(G)) {
 
-		integral_division_exact(A, G, Q, 0 /* verbose_level - 2 */);
+		exact_division(A, G, Q, 0 /* verbose_level - 2 */);
 
 		assign(Q, A, verbose_level);
 		
@@ -2942,12 +2940,15 @@ void unipoly_domain::BCH_generator_polynomial(
 		}
 	}
 
+	algebra_global Algebra;
 	unipoly_object m, M, h1, h2;
 		
 	create_object_by_rank_string(m,
-			get_primitive_polynomial(p, e, 0), verbose_level - 2);
+			Algebra.get_primitive_polynomial(p, e, 0), verbose_level - 2);
+
 	create_object_by_rank_string(M,
-			get_primitive_polynomial(p, e, 0), verbose_level - 2);
+			Algebra.get_primitive_polynomial(p, e, 0), verbose_level - 2);
+
 	create_object_by_rank(g, 1, __FILE__, __LINE__, verbose_level);
 	create_object_by_rank(h1, 0, __FILE__, __LINE__, verbose_level);
 	create_object_by_rank(h2, 0, __FILE__, __LINE__, verbose_level);

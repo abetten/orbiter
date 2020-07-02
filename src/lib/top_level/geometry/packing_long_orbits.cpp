@@ -18,7 +18,7 @@ namespace top_level {
 
 packing_long_orbits::packing_long_orbits()
 {
-	P = NULL;
+	PWF = NULL;
 
 	fixpoints_idx = 0;
 	fixpoints_clique_case_number = 0;
@@ -49,7 +49,7 @@ packing_long_orbits::~packing_long_orbits()
 	}
 }
 
-void packing_long_orbits::init(packing_was *P,
+void packing_long_orbits::init(packing_was_fixpoints *PWF,
 		int fixpoints_idx,
 		int fixpoints_clique_case_number,
 		int fixpoint_clique_size,
@@ -58,13 +58,13 @@ void packing_long_orbits::init(packing_was *P,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, len;
-	long int a, b, c;
+	int i;
+	long int a, /*b,*/ c;
 
 	if (f_v) {
 		cout << "packing_long_orbits::init" << endl;
 	}
-	packing_long_orbits::P = P;
+	packing_long_orbits::PWF = PWF;
 	packing_long_orbits::fixpoints_idx = fixpoints_idx;
 	packing_long_orbits::fixpoints_clique_case_number = fixpoints_clique_case_number;
 	packing_long_orbits::fixpoint_clique_size = fixpoint_clique_size;
@@ -74,6 +74,8 @@ void packing_long_orbits::init(packing_was *P,
 	packing_long_orbits::fixpoint_clique = NEW_lint(fixpoint_clique_size);
 	for (i = 0; i < fixpoint_clique_size; i++) {
 		a = fixpoint_clique[i];
+		c = PWF->fixpoint_to_reduced_spread(a);
+#if 0
 		b = P->reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx][a];
 		P->reduced_spread_orbits_under_H->Sch->get_orbit(b /* orbit_idx */, set, len,
 				0 /*verbose_level */);
@@ -82,10 +84,11 @@ void packing_long_orbits::init(packing_was *P,
 			exit(1);
 		}
 		c = set[0];
+#endif
 		packing_long_orbits::fixpoint_clique[i] = c;
 	}
 
-	long_orbit_idx = P->find_orbits_of_length(long_orbit_length);
+	long_orbit_idx = PWF->PW->find_orbits_of_length(long_orbit_length);
 	if (f_v) {
 		cout << "packing_long_orbits::init long_orbit_idx=" << long_orbit_idx << endl;
 	}
@@ -112,7 +115,7 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 
 	set_of_sets *Input;
 
-	Input = P->reduced_spread_orbits_under_H->Orbits_classified;
+	Input = PWF->PW->reduced_spread_orbits_under_H->Orbits_classified;
 
 
 	Filtered_orbits = NEW_OBJECT(set_of_sets);
@@ -133,20 +136,20 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 		int orbit_length;
 		int len1;
 
-		orbit_length = P->reduced_spread_orbits_under_H->Orbits_classified_length[t];
+		orbit_length = PWF->PW->reduced_spread_orbits_under_H->Orbits_classified_length[t];
 		//Orb = NEW_lint(orbit_length);
 		Filtered_orbits->Set_size[t] = 0;
 
 		for (i = 0; i < Input->Set_size[t]; i++) {
 			b = Input->element(t, i);
 
-			P->reduced_spread_orbits_under_H->Sch->get_orbit(b,
+			PWF->PW->reduced_spread_orbits_under_H->Sch->get_orbit(b,
 					set, len1, 0 /* verbose_level*/);
 			if (len1 != orbit_length) {
 				cout << "packing_long_orbits::filter_orbits len1 != orbit_length" << endl;
 				exit(1);
 			}
-			if (P->test_if_pair_of_sets_of_reduced_spreads_are_adjacent(
+			if (PWF->PW->test_if_pair_of_sets_of_reduced_spreads_are_adjacent(
 					fixpoint_clique, fixpoint_clique_size,
 					set, orbit_length, verbose_level)) {
 
@@ -211,13 +214,13 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 	user_data_sz = fixpoint_clique_size;
 	user_data = NEW_lint(user_data_sz);
 	lint_vec_apply(fixpoint_clique,
-			P->reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx],
+			PWF->PW->reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx],
 			user_data, fixpoint_clique_size);
 
 	create_graph_and_save_to_file(
 				CG,
 				fname_graph,
-				P->Descr->long_orbit_length /* orbit_length */,
+				PWF->PW->Descr->long_orbit_length /* orbit_length */,
 				TRUE /* f_has_user_data */, user_data, user_data_sz,
 				verbose_level);
 
@@ -246,12 +249,12 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 
 void packing_long_orbits::create_fname_graph_on_remaining_long_orbits()
 {
-	if (P->Descr->f_output_path) {
-		sprintf(fname_graph, "%s%s_fpc%d_graph", P->Descr->output_path,
-				P->H_LG->label.c_str(), fixpoints_clique_case_number);
+	if (PWF->PW->Descr->f_output_path) {
+		sprintf(fname_graph, "%s%s_fpc%d_graph", PWF->PW->Descr->output_path,
+				PWF->PW->H_LG->label.c_str(), fixpoints_clique_case_number);
 	}
 	else {
-		sprintf(fname_graph, "%s_fpc%d_graph", P->H_LG->label.c_str(),
+		sprintf(fname_graph, "%s_fpc%d_graph", PWF->PW->H_LG->label.c_str(),
 				fixpoints_clique_case_number);
 	}
 
@@ -273,7 +276,7 @@ void packing_long_orbits::create_graph_and_save_to_file(
 
 	int type_idx;
 
-	P->reduced_spread_orbits_under_H->create_graph_on_orbits_of_a_certain_length_override_orbits_classified(
+	PWF->PW->reduced_spread_orbits_under_H->create_graph_on_orbits_of_a_certain_length_override_orbits_classified(
 		CG,
 		fname,
 		orbit_length,
@@ -308,7 +311,7 @@ void packing_long_orbits::create_graph_on_long_orbits(
 	create_graph_and_save_to_file(
 			CG,
 			fname_graph,
-			P->Descr->long_orbit_length /* orbit_length */,
+			PWF->PW->Descr->long_orbit_length /* orbit_length */,
 			TRUE /* f_has_user_data */, user_data, user_data_sz,
 			verbose_level);
 
@@ -325,7 +328,7 @@ void packing_long_orbits::report_filtered_orbits(ostream &ost)
 	//Sch->print_orbit_lengths_tex(ost);
 	ost << "Type : orbit length : number of orbits of this length\\\\" << endl;
 	for (i = 0; i < Filtered_orbits->nb_sets; i++) {
-		ost << i << " : " << P->reduced_spread_orbits_under_H->Orbits_classified_length[i] << " : "
+		ost << i << " : " << PWF->PW->reduced_spread_orbits_under_H->Orbits_classified_length[i] << " : "
 				<< Filtered_orbits->Set_size[i] << "\\\\" << endl;
 		}
 }
@@ -340,7 +343,7 @@ int packing_long_orbit_test_function(long int *orbit1, int len1,
 {
 	packing_long_orbits *L = (packing_long_orbits *) data;
 
-	return L->P->test_if_pair_of_sets_of_reduced_spreads_are_adjacent(
+	return L->PWF->PW->test_if_pair_of_sets_of_reduced_spreads_are_adjacent(
 			orbit1, len1, orbit2, len2, 0 /*verbose_level*/);
 }
 

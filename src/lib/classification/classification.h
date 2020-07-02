@@ -4,6 +4,12 @@
 //
 // started:  September 20, 2007
 
+
+#ifndef ORBITER_SRC_LIB_CLASSIFICATION_CLASSIFICATION_H_
+#define ORBITER_SRC_LIB_CLASSIFICATION_CLASSIFICATION_H_
+
+
+
 using namespace orbiter::foundations;
 using namespace orbiter::group_actions;
 
@@ -49,4 +55,10 @@ enum find_isomorphism_result {
 #include "./classify/classify.h"
 #include "./poset_classification/poset_classification.h"
 //#include "./set_stabilizer/set_stabilizer.h"
+
+
+
+#endif /* ORBITER_SRC_LIB_CLASSIFICATION_CLASSIFICATION_H_ */
+
+
 

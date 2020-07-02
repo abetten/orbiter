@@ -7,6 +7,10 @@
 // based on global.h, which was taken from reader.h: 3/22/09
 
 
+#ifndef ORBITER_SRC_LIB_TOP_LEVEL_ALGEBRA_AND_NUMBER_THEORY_TL_ALGEBRA_AND_NUMBER_THEORY_H_
+#define ORBITER_SRC_LIB_TOP_LEVEL_ALGEBRA_AND_NUMBER_THEORY_TL_ALGEBRA_AND_NUMBER_THEORY_H_
+
+
 namespace orbiter {
 namespace top_level {
 
@@ -64,7 +68,7 @@ public:
 	void young_symmetrizer(int n, int verbose_level);
 	void young_symmetrizer_sym_4(int verbose_level);
 	void classify_surfaces_through_arcs_and_trihedral_pairs(
-			group_theoretic_activity *GTA,
+			//group_theoretic_activity *GTA,
 			surface_with_action *Surf_A,
 			poset_classification_control *Control,
 			int verbose_level);
@@ -105,6 +109,7 @@ public:
 			const char *path_to_spread_tables,
 			packing_classify *&P,
 			int verbose_level);
+#if 0
 	void predict_spread_table_length(
 		int q, int dimension_of_spread_elements, int spread_size,
 		action *A, strong_generators *Strong_gens,
@@ -124,6 +129,7 @@ public:
 			long int **&Sets, int *&isomorphism_type_of_spread,
 			int verbose_level);
 		// does not sort the table
+#endif
 	void centralizer_of_element(
 			action *A, sims *S,
 			const char *element_description,
@@ -265,13 +271,10 @@ public:
 	const char *multiply_b;
 	int f_inverse;
 	const char *inverse_a;
+	int f_export_gap;
+	int f_export_magma;
 	int f_order_of_products;
 	const char *order_of_products_elements;
-	//int f_group_table;
-	//int f_embedded;
-	//int f_sideways;
-	//double x_stretch;
-	//int f_print_generators;
 
 	// classification of optimal linear codes:
 	int f_linear_codes;
@@ -281,9 +284,11 @@ public:
 
 	// classification of arcs in projective spaces:
 	int f_classify_arcs;
-	int f_classify_nonconical_arcs;
-	int classify_arcs_target_size;
-	int classify_arcs_d;
+	arc_generator_description *Arc_generator_description;
+
+	//int f_classify_nonconical_arcs;
+	//int classify_arcs_target_size;
+	//int classify_arcs_d;
 
 	int f_exact_cover;
 	exact_cover_arguments *ECA;
@@ -387,6 +392,8 @@ public:
 	void classes(int verbose_level);
 	void multiply(int verbose_level);
 	void inverse(int verbose_level);
+	void do_export_gap(int verbose_level);
+	void do_export_magma(int verbose_level);
 	void create_group_table(int verbose_level);
 	void normalizer(int verbose_level);
 	void centralizer(
@@ -413,8 +420,8 @@ public:
 			poset_classification *PC,
 			int depth,
 			int verbose_level);
-	void do_classify_arcs(int arc_size, int arc_d, int f_not_on_conic,
-			poset_classification_control *Control,
+	void do_classify_arcs(
+			arc_generator_description *Arc_generator_description,
 			int verbose_level);
 	void do_surface_classify(int verbose_level);
 	void do_surface_report(int verbose_level);
@@ -472,14 +479,8 @@ public:
 
 	linear_group *LG;
 	matrix_group *Mtx;
-	//finite_field *F;
 	poset_classification_control *Control;
 
-	//int argc;
-	//const char **argv;
-
-	//int f_poly;
-	//const char *poly;
 	int f_order;
 	int order;
 	int f_dim_over_kernel;
@@ -532,7 +533,6 @@ public:
 
 	semifield_classify_with_substructure();
 	~semifield_classify_with_substructure();
-	//void read_arguments(int argc, const char **argv, int &verbose_level);
 	void init(
 			linear_group *LG,
 			poset_classification_control *Control,
@@ -571,17 +571,13 @@ public:
 	int k2; // = k * k
 	linear_group *LG;
 	matrix_group *Mtx;
-	//finite_field *F;
-	//int f_semilinear;
 
 	int q;
 	int order; // q^k
 
 
-	//int f_level_two_prefix;
 	const char *level_two_prefix;
 
-	//int f_level_three_prefix;
 	const char *level_three_prefix;
 
 
@@ -1392,4 +1388,8 @@ public:
 
 
 }}
+
+
+#endif /* ORBITER_SRC_LIB_TOP_LEVEL_ALGEBRA_AND_NUMBER_THEORY_TL_ALGEBRA_AND_NUMBER_THEORY_H_ */
+
 

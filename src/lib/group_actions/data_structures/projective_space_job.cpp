@@ -384,12 +384,28 @@ void projective_space_job::perform_job_for_one_set(
 			F->do_print_points_in_orthogonal_space(Descr->orthogonal_epsilon, Descr->n,
 				the_set_in, set_size_in, verbose_level);
 		}
-		else if (Descr->f_homogeneous_polynomials) {
+		else if (Descr->f_homogeneous_polynomials_LEX) {
 			if (!f_homogeneous_polynomial_domain_has_been_allocated) {
 				HPD = NEW_OBJECT(homogeneous_polynomial_domain);
 
 				HPD->init(F, Descr->n + 1, Descr->homogeneous_polynomials_degree,
 					FALSE /* f_init_incidence_structure */,
+					t_LEX,
+					verbose_level);
+				f_homogeneous_polynomial_domain_has_been_allocated = TRUE;
+			}
+			fp_tex << back_end_counter << ": $";
+			HPD->print_equation_lint(fp_tex, the_set_in);
+			fp_tex << "$\\\\" << endl;
+
+		}
+		else if (Descr->f_homogeneous_polynomials_PART) {
+			if (!f_homogeneous_polynomial_domain_has_been_allocated) {
+				HPD = NEW_OBJECT(homogeneous_polynomial_domain);
+
+				HPD->init(F, Descr->n + 1, Descr->homogeneous_polynomials_degree,
+					FALSE /* f_init_incidence_structure */,
+					t_PART,
 					verbose_level);
 				f_homogeneous_polynomial_domain_has_been_allocated = TRUE;
 			}
@@ -703,13 +719,24 @@ void projective_space_job::perform_job_for_one_set(
 			f_semilinear, Descr->canonical_form_fname_base,
 			verbose_level);
 	}
-	else if (Descr->f_ideal) {
+	else if (Descr->f_ideal_LEX) {
 		if (f_v) {
 			cout << "perform_job_for_one_set f_ideal" << endl;
 		}
 		F->do_ideal(Descr->n,
 			the_set_in, set_size_in, Descr->ideal_degree,
 			the_set_out, set_size_out,
+			t_LEX,
+			verbose_level);
+	}
+	else if (Descr->f_ideal_PART) {
+		if (f_v) {
+			cout << "perform_job_for_one_set f_ideal" << endl;
+		}
+		F->do_ideal(Descr->n,
+			the_set_in, set_size_in, Descr->ideal_degree,
+			the_set_out, set_size_out,
+			t_PART,
 			verbose_level);
 	}
 	else if (Descr->f_intersect_with_set_from_file) {

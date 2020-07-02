@@ -213,12 +213,12 @@ void finite_field::representing_matrix9_U(int *A,
 	int r, q, q1,q2,tq, tq1; //, tq2;
 	number_theory_domain NT;
 	
-	r = e >> 1;
-	if (e != 2 * r) {
+	if (!f_has_quadratic_subfield) {
 		cout << "finite_field::representing_matrix9_U "
 				"field does not have a quadratic subfield" << endl;
 		exit(1);
-		}
+	}
+	r = e >> 1;
 	q = NT.i_power_j(p, r);
 	q1 = q + 1;
 	q2 = q + 2;

@@ -1156,9 +1156,9 @@ void surface_object_with_action::quartic(
 	int *poly2;
 	int two, four, mfour;
 
-	curve = NEW_int(Surf->Poly4_x123->nb_monomials);
-	poly1 = NEW_int(Surf->Poly4_x123->nb_monomials);
-	poly2 = NEW_int(Surf->Poly4_x123->nb_monomials);
+	curve = NEW_int(Surf->Poly4_x123->get_nb_monomials());
+	poly1 = NEW_int(Surf->Poly4_x123->get_nb_monomials());
+	poly2 = NEW_int(Surf->Poly4_x123->get_nb_monomials());
 	Surf->multiply_Poly2_3_times_Poly2_3(f2, f2, poly1,
 			0 /* verbose_level */);
 	Surf->multiply_Poly1_3_times_Poly3_3(f1, f3, poly2,
@@ -1167,8 +1167,8 @@ void surface_object_with_action::quartic(
 	four = F->add(two, two);
 	mfour = F->negate(four);
 	F->scalar_multiply_vector_in_place(mfour, poly2,
-			Surf->Poly4_x123->nb_monomials);
-	F->add_vector(poly1, poly2, curve, Surf->Poly4_x123->nb_monomials);
+			Surf->Poly4_x123->get_nb_monomials());
+	F->add_vector(poly1, poly2, curve, Surf->Poly4_x123->get_nb_monomials());
 	
 	int *tangent_quadric;
 
@@ -1795,18 +1795,18 @@ void surface_object_with_action::cheat_sheet_quartic_curve(
 
 
 
-	curve = NEW_int(Surf->Poly4_x123->nb_monomials);
-	poly1 = NEW_int(Surf->Poly4_x123->nb_monomials);
-	poly2 = NEW_int(Surf->Poly4_x123->nb_monomials);
+	curve = NEW_int(Surf->Poly4_x123->get_nb_monomials());
+	poly1 = NEW_int(Surf->Poly4_x123->get_nb_monomials());
+	poly2 = NEW_int(Surf->Poly4_x123->get_nb_monomials());
 	Surf->multiply_Poly2_3_times_Poly2_3(f2, f2, poly1, 0 /* verbose_level */);
 	Surf->multiply_Poly1_3_times_Poly3_3(f1, f3, poly2, 0 /* verbose_level */);
 	two = F->add(1, 1);
 	four = F->add(two, two);
 	mfour = F->negate(four);
 	F->scalar_multiply_vector_in_place(mfour, poly2,
-			Surf->Poly4_x123->nb_monomials);
+			Surf->Poly4_x123->get_nb_monomials());
 	F->add_vector(poly1, poly2, curve,
-			Surf->Poly4_x123->nb_monomials);
+			Surf->Poly4_x123->get_nb_monomials());
 	
 
 	cout << "surface_object_with_action::cheat_sheet_quartic_curve "

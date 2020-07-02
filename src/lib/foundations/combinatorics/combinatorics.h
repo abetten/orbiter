@@ -7,6 +7,13 @@
 // 2nd version started:  December 7, 2003
 // galois started:  August 12, 2005
 
+
+
+#ifndef ORBITER_SRC_LIB_FOUNDATIONS_COMBINATORICS_COMBINATORICS_H_
+#define ORBITER_SRC_LIB_FOUNDATIONS_COMBINATORICS_COMBINATORICS_H_
+
+
+
 namespace orbiter {
 namespace foundations {
 
@@ -179,6 +186,7 @@ public:
 	const char *variety_label;
 	int variety_degree;
 	const char *variety_coeffs;
+	monomial_ordering_type Monomial_ordering_type;
 
 
 	int f_projective_curve;
@@ -629,35 +637,6 @@ class tdo_refinement {
 	char fname_out[1000];
 
 
-#if 0
-	char *p_buf;
-	char str[1000];
-	char ext[1000];
-	char *fname_in;
-	char fname_out[1000];
-	int f_lambda3;
-	int lambda3, block_size;
-	int f_scale;
-	int scaling;
-	int f_range;
-	int range_first, range_len;
-	int f_select;
-	char *select_label;
-	int f_omit1;
-	int omit1;
-	int f_omit2;
-	int omit2;
-	int f_D1_upper_bound_x0;
-	int D1_upper_bound_x0;
-	int f_reverse;
-	int f_reverse_inverse;
-	int f_use_packing_numbers;
-	int f_dual_is_linear_space;
-	int f_do_the_geometric_test;
-	int f_once;
-	int f_use_mckay_solver;
-#endif
-
 
 	geo_parameter GP;
 
@@ -802,7 +781,7 @@ public:
 	void get_column_split_partition(int verbose_level, partitionstack &P);
 	void get_row_split_partition(int verbose_level, partitionstack &P);
 	void print_all_schemes();
-	void print_scheme(int h, int f_v);
+	void print_scheme(int h, int verbose_level);
 	void print_scheme_tex(std::ostream &ost, int h);
 	void print_scheme_tex_fancy(std::ostream &ost,
 			int h, int f_label, char *label);
@@ -994,3 +973,10 @@ public:
 
 
 }}
+
+
+#endif /* ORBITER_SRC_LIB_FOUNDATIONS_COMBINATORICS_COMBINATORICS_H_ */
+
+
+
+

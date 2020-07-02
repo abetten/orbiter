@@ -251,8 +251,11 @@ void finite_field::print()
 }
 
 void finite_field::print_detailed(int f_add_mult_table)
-	{
-	if (e > 1) {
+{
+	if (f_is_prime_field) {
+		print_tables();
+	}
+	else {
 		//char *poly;
 
 		//poly = get_primitive_polynomial(p, e, 0 /* verbose_level */);
@@ -262,13 +265,10 @@ void finite_field::print_detailed(int f_add_mult_table)
 		cout << endl;
 		//cout << " = " << poly << endl;
 		print_tables_extension_field(polynomial);
-		}
-	else {
-		print_tables();
-		}
+	}
 	if (f_add_mult_table) {
 		print_add_mult_tables();
-		}
+	}
 }
 
 void finite_field::print_add_mult_tables()
@@ -695,6 +695,122 @@ void finite_field::int_vec_print_elements_exponential(ostream &ost,
 	ost << ")";
 }
 
+void finite_field::make_fname_addition_table_csv(char *fname)
+{
+	sprintf(fname, "GF_q%d_addition_table.csv", q);
+}
+
+void finite_field::make_fname_multiplication_table_csv(char *fname)
+{
+	sprintf(fname, "GF_q%d_multiplication_table.csv", q);
+}
+
+void finite_field::make_fname_addition_table_reordered_csv(char *fname)
+{
+	sprintf(fname, "GF_q%d_addition_table_reordered.csv", q);
+}
+
+void finite_field::make_fname_multiplication_table_reordered_csv(char *fname)
+{
+	sprintf(fname, "GF_q%d_multiplication_table_reordered.csv", q);
+}
+
+void finite_field::addition_table_save_csv()
+{
+	int i, j, k;
+	int *T;
+	file_io Fio;
+
+	T = NEW_int(q * q);
+	for (i = 0; i < q; i++) {
+		for (j = 0; j < q; j++) {
+			k = add(i, j);
+			T[i * q + j] = k;
+		}
+	}
+	char fname[1000];
+
+	make_fname_addition_table_csv(fname);
+	Fio.int_matrix_write_csv(fname, T, q, q);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	FREE_int(T);
+}
+
+void finite_field::multiplication_table_save_csv()
+{
+	int i, j, k;
+	int *T;
+	file_io Fio;
+
+	T = NEW_int((q - 1) * (q - 1));
+	for (i = 0; i < q - 1; i++) {
+		for (j = 0; j < q - 1; j++) {
+			k = mult(1 + i, 1 + j);
+			T[i * (q - 1) + j] = k;
+		}
+	}
+	char fname[1000];
+
+	make_fname_multiplication_table_csv(fname);
+	Fio.int_matrix_write_csv(fname, T, q - 1, q - 1);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	FREE_int(T);
+}
+
+void finite_field::addition_table_reordered_save_csv()
+{
+	int i, j, a, b, c;
+	int *T;
+	file_io Fio;
+
+	T = NEW_int(q * q);
+	for (i = 0; i < q; i++) {
+		a = reordered_list_of_elements[i];
+		for (j = 0; j < q; j++) {
+			b = reordered_list_of_elements[j];
+			c = add(a, b);
+			//k = reordered_list_of_elements_inv[c];
+			T[i * q + j] = c;
+		}
+	}
+	char fname[1000];
+
+	make_fname_addition_table_reordered_csv(fname);
+	Fio.int_matrix_write_csv(fname, T, q, q);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	FREE_int(T);
+}
+
+
+void finite_field::multiplication_table_reordered_save_csv()
+{
+	int i, j, a, b, c;
+	int *T;
+	file_io Fio;
+
+	T = NEW_int(q * q);
+	for (i = 1; i < q; i++) {
+		a = reordered_list_of_elements[i];
+		for (j = 1; j < q; j++) {
+			b = reordered_list_of_elements[j];
+			c = mult(a, b);
+			//k = reordered_list_of_elements_inv[c];
+			if (c == 0) {
+				cout << "finite_field::multiplication_table_reordered_save_csv c == 0" << endl;
+				exit(1);
+			}
+			T[(i - 1) * (q - 1) + j - 1] = c;
+		}
+	}
+	char fname[1000];
+
+	make_fname_multiplication_table_reordered_csv(fname);
+	Fio.int_matrix_write_csv(fname, T, q - 1, q - 1);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	FREE_int(T);
+}
+
+
 void finite_field::latex_addition_table(ostream &f,
 		int f_elements_exponential, const char *symbol_for_print)
 {
@@ -816,7 +932,7 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 	v = NEW_int(e);
 
 	f << "\\small" << endl;
-	if (e > 1) {
+	if (!f_is_prime_field) {
 		f << "polynomial: ";
 		finite_field GFp;
 		GFp.init(p, 0);
@@ -832,7 +948,7 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 
 	f << "$Z_i = \\log_\\alpha (1 + \\alpha^i)$\\\\" << endl;
 
-	if (e > 1 && !NT.is_prime(e)) {
+	if (!f_is_prime_field && !NT.is_prime(e)) {
 		report_subfields(f, verbose_level);
 	}
 

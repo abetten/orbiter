@@ -8,6 +8,11 @@
 
 
 
+#ifndef ORBITER_SRC_LIB_TOP_LEVEL_TOP_LEVEL_H_
+#define ORBITER_SRC_LIB_TOP_LEVEL_TOP_LEVEL_H_
+
+
+
 using namespace orbiter::foundations;
 using namespace orbiter::group_actions;
 using namespace orbiter::classification;
@@ -135,7 +140,10 @@ class group_theoretic_activity_description;
 class graph_theoretic_activity_description;
 class group_theoretic_activity;
 class packing_was_description;
-
+class regular_linear_space_description;
+class arc_generator_description;
+class spread_table_with_selection;
+class packing_was_fixpoints;
 
 // #############################################################################
 // representatives.cpp
@@ -216,4 +224,11 @@ public:
 #include "./isomorph/isomorph.h"
 #include "./orbits/orbits.h"
 #include "./solver/solver.h"
+
+
+
+#endif /* ORBITER_SRC_LIB_TOP_LEVEL_TOP_LEVEL_H_ */
+
+
+
 
