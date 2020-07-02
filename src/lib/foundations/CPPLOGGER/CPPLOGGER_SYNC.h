@@ -19,7 +19,6 @@
 #include <cxxabi.h>
 #include <string.h>
 #include <stdio.h>
-
 #include "lock_free_linked_list.h"
 
 using std::string;
@@ -29,6 +28,37 @@ using std::mutex;
 #define __force_inline__ __attribute__((always_inline)) inline
 #endif
 
+/**
+ * Add support for colors for versions older than c++11. This is for backwards compatibility
+ */
+#if __cplusplus >= 201103L
+#define COLOR_UNICODE "\u001b"
+#else
+#define COLOR_UNICODE "\x1b"
+#endif
+
+/**
+ * Define the ANSI color codes
+ */
+#ifndef __ANSI_COLORS__
+#define __ANSI_COLORS__
+#define ANSI_RESET		COLOR_UNICODE	"[00m"
+#define ANSI_BLACK		COLOR_UNICODE	"[30m"
+#define ANSI_RED		COLOR_UNICODE	"[31m"
+#define ANSI_GREEN		COLOR_UNICODE	"[32m"
+#define ANSI_YELLOW		COLOR_UNICODE	"[33m"
+#define ANSI_BLUE		COLOR_UNICODE	"[34m"
+#define ANSI_PURPLE		COLOR_UNICODE	"[35m"
+#define ANSI_CYAN		COLOR_UNICODE	"[36m"
+#define ANSI_WHITE		COLOR_UNICODE	"[37m"
+#define ANSI_BOLD		COLOR_UNICODE	"[01m"
+#define ANSI_UNDERLINE	COLOR_UNICODE	"[04m"
+#define ANSI_ITALIC		COLOR_UNICODE	"[03m"
+#endif
+
+/**
+ * Colors supported by the logger
+ */
 #ifndef LOGGER_COLORS
 #define LOGGER_COLORS
 #define logger_black(msg) 		logger::_BLACK_(msg).c_str()
@@ -66,8 +96,7 @@ namespace logger { \
 #endif
 
 #ifndef logger_output_stream
-#define logger_output_stream(v) \
-		logger::_output_stream_ = v
+#define logger_output_stream(v) logger::_output_stream_ = v
 #endif
 
 namespace logger {
@@ -84,7 +113,9 @@ namespace logger {
 	 * with the logging information
 	 */
 	extern bool _print_timestamps_;
+	#ifndef logger_print_timestamps
 	#define logger_print_timestamps(v) logger::_print_timestamps_ = v
+	#endif
 
 	/**
 	 * Setting the following to true will print the thread id
@@ -92,40 +123,52 @@ namespace logger {
 	 * printing the current log statement
 	 */
 	extern bool _print_thread_id_;
+	#ifndef logger_print_thread_id
 	#define logger_print_thread_id(v) logger::_print_thread_id_ = v
+	#endif
 
 	/**
 	 * Setting the following to false will not print "[INFO]: ", "[ERROR]: ", "[WARN]: "
 	 * before log messages.
 	 */
 	extern bool _print_log_type_;
+	#ifndef logger_print_log_type
 	#define logger_print_log_type(v) logger::_print_log_type_ = v
+	#endif
 
 	/**
 	 * Setting the following to true will the file name from
 	 * where the current log statement was invoked
 	 */
 	extern bool _print_file_;
+	#ifndef logger_print_file
 	#define logger_print_file(v) logger::_print_file_ = v
+	#endif
 
 	/**
 	 * Setting the following to true will the line number from
 	 * where the current log statement was invoked
 	 */
 	extern bool _print_line_;
+	#ifndef logger_print_line
 	#define logger_print_line(v) logger::_print_line_ = v
+	#endif
 
 	/**
 	 * setting the following to false will disable global logging.
 	 */
 	extern bool _enable_global_;
+	#ifndef logger_enable_global
 	#define logger_enable_global(v) logger::_enable_global_ = v
+	#endif
 
 	/**
 	 * Enable or disable logging in a single translation unit
 	 */
 	static bool _enable_translation_uint_ = true;
+	#ifndef logger_enable
 	#define logger_enable(v) logger::_enable_translation_uint_ = v
+	#endif
 
 	/**
 	 * The output stream of the logger.
@@ -139,6 +182,8 @@ namespace logger {
 		nanosecond, microsecond, millisecond, seconds, minutes, hours
 	};
 	extern timestamp_resolution _resolution;
+	#ifndef logger_timestamp_resolution
+	#define logger_timestamp_resolution(v) logger::_resolution = v
 	#define logger_nanosecond 	logger::timestamp_resolution::nanosecond
 	#define logger_microsecond 	logger::timestamp_resolution::microsecond
 	#define logger_millisecond 	logger::timestamp_resolution::millisecond
@@ -149,24 +194,29 @@ namespace logger {
 	#define logger_weeks 		logger::timestamp_resolution::weeks
 	#define logger_months 		logger::timestamp_resolution::months
 	#define logger_years 		logger::timestamp_resolution::years
-	#define logger_timestamp_resolution(v) logger::_resolution = v
+	#endif
 
 	/**
 	 *
 	 */
 	enum log_level {
-		all, info, error, warning
+		all, info, error, warning, debug
 	};
+	#ifndef logger_loglevel
 	#define logger_loglevel_all 		logger::log_level::all
 	#define logger_loglevel_info 		logger::log_level::info
 	#define logger_loglevel_error 		logger::log_level::error
 	#define logger_loglevel_warning 	logger::log_level::warning
+	#define logger_loglevel_debug		logger::log_level::debug
+	#endif
 
 	/**
 	 *
 	 */
 	extern log_level _loglevel_global_;
+	#ifndef logger_log_level
 	#define logger_log_level(v) logger::_loglevel_global_ = v
+	#endif
 
 
 	/**
@@ -217,27 +267,33 @@ namespace logger {
 		const auto duration = std::chrono::system_clock::now().time_since_epoch();
 		switch (_resolution) {
 			case nanosecond:
-				rv += sprintf(b, "[%ld]", std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count());
+				rv += sprintf(b, "[%ld]",
+						std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count());
 				break;
 
 			case microsecond:
-				rv += sprintf(b, "[%ld]", std::chrono::duration_cast<std::chrono::microseconds>(duration).count());
+				rv += sprintf(b, "[%ld]",
+						std::chrono::duration_cast<std::chrono::microseconds>(duration).count());
 				break;
 
 			case millisecond:
-				rv += sprintf(b, "[%ld]", std::chrono::duration_cast<std::chrono::milliseconds>(duration).count());
+				rv += sprintf(b, "[%ld]",
+						std::chrono::duration_cast<std::chrono::milliseconds>(duration).count());
 				break;
 
 			case seconds:
-				rv += sprintf(b, "[%ld]", std::chrono::duration_cast<std::chrono::seconds>(duration).count());
+				rv += sprintf(b, "[%ld]",
+						std::chrono::duration_cast<std::chrono::seconds>(duration).count());
 				break;
 
 			case minutes:
-				rv += sprintf(b, "[%ld]", std::chrono::duration_cast<std::chrono::minutes>(duration).count());
+				rv += sprintf(b, "[%ld]",
+						std::chrono::duration_cast<std::chrono::minutes>(duration).count());
 				break;
 
 			case hours:
-				rv += sprintf(b, "[%ld]", std::chrono::duration_cast<std::chrono::hours>(duration).count());
+				rv += sprintf(b, "[%ld]",
+						std::chrono::duration_cast<std::chrono::hours>(duration).count());
 				break;
 		}
 		return rv;
@@ -249,35 +305,11 @@ namespace logger {
 	extern va_list __args__;
 
 	/**
-	 * Add support for colors for versions older than c++11. This is for backwards compatibility
-	 */
-	#if __cplusplus >= 201103L
-	#define COLOR_UNICODE "\u001b"
-	#else
-	#define COLOR_UNICODE "\x1b"
-	#endif
-
-	/**
-	 * Define the ANSI color codes
-	 */
-	#define ANSI_RESET		COLOR_UNICODE	"[00m"
-	#define ANSI_BLACK		COLOR_UNICODE	"[30m"
-	#define ANSI_RED		COLOR_UNICODE	"[31m"
-	#define ANSI_GREEN		COLOR_UNICODE	"[32m"
-	#define ANSI_YELLOW		COLOR_UNICODE	"[33m"
-	#define ANSI_BLUE		COLOR_UNICODE	"[34m"
-	#define ANSI_PURPLE		COLOR_UNICODE	"[35m"
-	#define ANSI_CYAN		COLOR_UNICODE	"[36m"
-	#define ANSI_WHITE		COLOR_UNICODE	"[37m"
-	#define ANSI_BOLD		COLOR_UNICODE	"[01m"
-	#define ANSI_UNDERLINE	COLOR_UNICODE	"[04m"
-	#define ANSI_ITALIC		COLOR_UNICODE	"[03m"
-
-
-	/**
 	 * The following set of macros take in a string object as argument and return a constant char pointer
 	 */
+	#ifndef __CPPLOGGER_COLOR__
 	#define __CPPLOGGER_COLOR__(color, msg) color+msg;
+	#endif
 	__force_inline__ string _BLACK_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_BLACK, msg);		}
 	__force_inline__ string _RED_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_RED, msg);			}
 	__force_inline__ string _GREEN_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_GREEN, msg);		}
@@ -292,11 +324,31 @@ namespace logger {
 
 
 	/**
+	 *
+	 */
+	template<typename T>
+	string _PRINT_ARRAY_(T* array, size_t size) {
+		string returnValue;
+		returnValue.reserve(size*10);
+		returnValue.append("[");
+		for (size_t i=0; i<size; ++i) {
+			returnValue.append(std::to_string(array[i]));
+			if (i+1 != size) returnValue.append(", ");
+		}
+		returnValue.append("]");
+		return returnValue;
+	}
+	#ifndef logger_array
+	#define logger_array(...) logger::_PRINT_ARRAY_(__VA_ARGS__).c_str()
+	#endif
+
+	/**
 	 * Wrapper macro boilerplate code for printing logging information to screen
 	 */
+	#ifndef __CPPLOGGER_PRINT__
 	#define __CPPLOGGER_PRINT__(color, type) { \
 		if (_print_log_type_) { \
-			fputs("[" color type ANSI_RESET "]", _output_stream_); \
+			fputs(color "[" type "]" ANSI_RESET, _output_stream_); \
 		} \
 		if (_print_timestamps_) { \
 			__print_timestamp_printf__(); \
@@ -323,138 +375,101 @@ namespace logger {
 		fputs(ANSI_RESET "\n", _output_stream_); \
 		va_end(__args__); \
 	}
+	#endif
 
 	/**
 	 *
 	 */
+	#ifndef __CPPLOGGER_MT__
 	#define __CPPLOGGER_MT__(color, type) {\
 		va_list __args__;\
 		va_start(__args__, fmt);\
 		std::lock_guard<std::mutex> lock(critical_section);\
 		__CPPLOGGER_PRINT__(color, type);\
 	}
+	#endif
+
+	/**
+	 * wrapper macro for the functions provided by the logger
+	 */
+	#ifndef __CPPLOGGER_SYNC_FUNC__
+	#define __CPPLOGGER_SYNC_FUNC__(func_name, mt_func_name, log_color, log_level, log_type)\
+	inline void func_name(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {\
+		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {\
+			if (_loglevel_global_ == all || _loglevel_global_ == log_level) {\
+				va_start(__args__, fmt);\
+				__CPPLOGGER_PRINT__(log_color, log_type);\
+			}\
+		}\
+	}\
+	\
+	inline void func_name(const char* _file_, const int line, const char* fmt, ...) {\
+		if (_enable_global_ && _enable_translation_uint_) {\
+			if (_loglevel_global_ == all || _loglevel_global_ == log_level) {\
+				va_start(__args__, fmt);\
+				__CPPLOGGER_PRINT__(log_color, log_type);\
+			}\
+		}\
+	}\
+	\
+	inline void mt_func_name(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {\
+		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {\
+			if (_loglevel_global_ == all || _loglevel_global_ == log_level) {\
+				__CPPLOGGER_MT__(log_color, log_type);\
+			}\
+		}\
+	}\
+	\
+	inline void mt_func_name(const char* _file_, const int line, const char* fmt, ...) {\
+		if (_enable_global_ && _enable_translation_uint_) {\
+			if (_loglevel_global_ == all || _loglevel_global_ == log_level) {\
+				__CPPLOGGER_MT__(log_color, log_type);\
+			}\
+		}\
+	}
+	#endif
 
 	/**
 	 * Variadic argument function for printing information logs to screen.
 	 */
+	#ifndef logger_info
 	#define logger_info(...) logger::_info_(__FILE__, __LINE__, __VA_ARGS__)
 	#define logger_info_mt(...) logger::_info_mt_(__FILE__, __LINE__, __VA_ARGS__)
+	#endif
 
-	inline void _info_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			if (_loglevel_global_ == all || _loglevel_global_ == info) {
-				va_start(__args__, fmt);
-				__CPPLOGGER_PRINT__(ANSI_GREEN, "INFO");
-			}
-		}
-	}
-
-	inline void _info_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_) {
-			if (_loglevel_global_ == all || _loglevel_global_ == info) {
-				va_start(__args__, fmt);
-				__CPPLOGGER_PRINT__(ANSI_GREEN, "INFO");
-			}
-		}
-	}
-
-
-	inline void _info_mt_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			if (_loglevel_global_ == all || _loglevel_global_ == info) {
-				__CPPLOGGER_MT__(ANSI_GREEN, "INFO");
-			}
-		}
-	}
-
-	inline void _info_mt_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_) {
-			if (_loglevel_global_ == all || _loglevel_global_ == info) {
-				__CPPLOGGER_MT__(ANSI_GREEN, "INFO");
-			}
-		}
-	}
+	__CPPLOGGER_SYNC_FUNC__(_info_, _info_mt_, ANSI_GREEN, info, "INFO")
 
 	/**
 	 * Variadic argument function for printing error logs to screen.
 	 */
+	#ifndef logger_error
 	#define logger_error(...) logger::_error_(__FILE__, __LINE__, __VA_ARGS__)
 	#define logger_error_mt(...) logger::_error_mt_(__FILE__, __LINE__, __VA_ARGS__)
+	#endif
 
-	inline void _error_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			if (_loglevel_global_ == all || _loglevel_global_ == error) {
-				va_start(__args__, fmt);
-				__CPPLOGGER_PRINT__(ANSI_RED, "ERROR");
-			}
-		}
-	}
-
-	inline void _error_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_) {
-			if (_loglevel_global_ == all || _loglevel_global_ == error) {
-				va_start(__args__, fmt);
-				__CPPLOGGER_PRINT__(ANSI_RED, "ERROR");
-			}
-		}
-	}
-
-	inline void _error_mt_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			if (_loglevel_global_ == all || _loglevel_global_ == error) {
-				__CPPLOGGER_MT__(ANSI_RED, "ERROR");
-			}
-		}
-	}
-
-	inline void _error_mt_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_) {
-			if (_loglevel_global_ == all || _loglevel_global_ == error) {
-				__CPPLOGGER_MT__(ANSI_RED, "ERROR");
-			}
-		}
-	}
+	__CPPLOGGER_SYNC_FUNC__(_error_, _error_mt_, ANSI_RED, error, "ERROR")
 
 	/**
 	 * Variadic argument function for printing warning logs to screen.
 	 */
+	#ifndef logger_warning
 	#define logger_warning(...) logger::_warning_(__FILE__, __LINE__, __VA_ARGS__)
 	#define logger_warning_mt(...) logger::_warning_mt_(__FILE__, __LINE__, __VA_ARGS__)
+	#endif
 
-	inline void _warning_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			if (_loglevel_global_ == all || _loglevel_global_ == warning) {
-				va_start(__args__, fmt);
-				__CPPLOGGER_PRINT__(ANSI_PURPLE, "WARN");
-			}
-		}
-	}
-
-	inline void _warning_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_) {
-			if (_loglevel_global_ == all || _loglevel_global_ == warning) {
-				va_start(__args__, fmt);
-				__CPPLOGGER_PRINT__(ANSI_PURPLE, "WARN");
-			}
-		}
-	}
+	__CPPLOGGER_SYNC_FUNC__(_warning_, _warning_mt_, ANSI_PURPLE, warning, "WARNING")
 
 
-	inline void _warning_mt_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			if (_loglevel_global_ == all || _loglevel_global_ == warning) {
-				__CPPLOGGER_MT__(ANSI_BLUE, "WARN");
-			}
-		}
-	}
+	/**
+	 *
+	 */
+	#ifndef logger_debug
+	#define logger_debug(...) logger::_debug_(__FILE__, __LINE__, __VA_ARGS__)
+	#define logger_debug_mt(...) logger::_debug_mt_(__FILE__, __LINE__, __VA_ARGS__)
+	#endif
 
-	inline void _warning_mt_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_) {
-			if (_loglevel_global_ == all || _loglevel_global_ == warning) {
-				__CPPLOGGER_MT__(ANSI_BLUE, "WARN");
-			}
-		}
-	}
+	__CPPLOGGER_SYNC_FUNC__(_debug_, _debug_mt_, ANSI_CYAN, debug, "DEBUG")
+
 
 	/**
 	 * The following function are used to get the name of a type from its pointer

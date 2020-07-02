@@ -24,6 +24,7 @@ int main() {
 	logger_error("This is an error message with some %s", "argument");
 	logger_warning("This is a warning message with 2 args: (%.3f, %.4f)", 1.2323745, 2.5);
 	logger_info("This is an info message with three arguments: (%03d, %03d, %03d)", 0, 50, 100);
+	logger_debug("This is a debug message.");
 	logger_info("");
 
 }
