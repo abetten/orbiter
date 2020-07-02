@@ -201,10 +201,13 @@ void interface_projective::read_arguments(int argc,
 			n = atoi(argv[++i]);
 			q = atoi(argv[++i]);
 			cout << "-canonical_form_PG " << n << " " <<  q << ", reading extra arguments" << endl;
-			i++;
-			i = read_canonical_form_arguments(argc, argv, i, verbose_level);
-			cout << "-canonical_form_PG " << n << " " <<  q << endl;
-
+			i += read_canonical_form_arguments(argc - (i + 1), argv + i + 1, 0, verbose_level);
+			cout << "done reading -canonical_form_PG " << n << " " <<  q << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
 		}
 		else if (strcmp(argv[i], "-classify_cubic_curves") == 0) {
 			f_classify_cubic_curves = TRUE;
@@ -327,10 +330,16 @@ int interface_projective::read_canonical_form_arguments(int argc,
 
 		if (strcmp(argv[i], "-input") == 0) {
 			f_input = TRUE;
+			cout << "-input" << endl;
 			Data_input_stream = NEW_OBJECT(data_input_stream);
 			i += Data_input_stream->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 			cout << "-input" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
 		}
 
 
@@ -378,9 +387,8 @@ int interface_projective::read_canonical_form_arguments(int argc,
 			max_TDO_depth = atoi(argv[++i]);
 			cout << "-max_TDO_depth " << max_TDO_depth << endl;
 		}
-		else if (strcmp(argv[i], "-canonical_form_PG_end") == 0) {
-			cout << "-canonical_form_PG_end " << endl;
-			i++;
+		else if (strcmp(argv[i], "-end") == 0) {
+			cout << "-end " << endl;
 			break;
 		}
 		else {
@@ -391,7 +399,7 @@ int interface_projective::read_canonical_form_arguments(int argc,
 	if (f_v) {
 		cout << "interface_projective::read_canonical_form_arguments done" << endl;
 	}
-	return i;
+	return i + 1;
 }
 
 void interface_projective::worker(orbiter_session *Session, int verbose_level)

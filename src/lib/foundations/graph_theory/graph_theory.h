@@ -7,6 +7,12 @@
 // 2nd version started:  December 7, 2003
 // galois started:  August 12, 2005
 
+
+#ifndef ORBITER_SRC_LIB_FOUNDATIONS_GRAPH_THEORY_GRAPH_THEORY_H_
+#define ORBITER_SRC_LIB_FOUNDATIONS_GRAPH_THEORY_GRAPH_THEORY_H_
+
+
+
 namespace orbiter {
 namespace foundations {
 
@@ -839,4 +845,10 @@ int call_back_colored_graph_find_candidates(clique_finder *CF,
 
 
 }}
+
+
+#endif /* ORBITER_SRC_LIB_FOUNDATIONS_GRAPH_THEORY_GRAPH_THEORY_H_ */
+
+
+
 

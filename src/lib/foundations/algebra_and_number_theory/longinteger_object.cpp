@@ -525,6 +525,5 @@ int longinteger_object::compare_with_int(int a)
 	return D.compare(*this, b);
 }
 
-}
-}
+}}
 

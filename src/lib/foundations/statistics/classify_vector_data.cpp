@@ -96,7 +96,13 @@ void classify_vector_data::init(int *data, int data_length, int data_set_sz,
 	uint32_t h;
 	int idx, a;
 
+	if (f_v) {
+		cout << "classify_vector_data::init starting to collect data" << endl;
+	}
 	for (i = 0; i < data_length; i++) {
+		if (FALSE) {
+			cout << "classify_vector_data::init starting to collect data i=" << i << " / " << data_length << endl;
+		}
 		if (!hash_and_find(data + i * data_set_sz,
 				idx, h, verbose_level)) {
 			Hashing.insert(pair<uint32_t, int>(h, nb_types));
@@ -111,6 +117,9 @@ void classify_vector_data::init(int *data, int data_length, int data_set_sz,
 			rep_idx[i] = idx;
 			Frequency[idx]++;
 		}
+	}
+	if (f_v) {
+		cout << "classify_vector_data::init finished collecting data" << endl;
 	}
 
 	for (i = 0; i < nb_types; i++) {
@@ -139,6 +148,9 @@ void classify_vector_data::init(int *data, int data_length, int data_set_sz,
 	FREE_int(Frequency2);
 
 
+	if (f_v) {
+		cout << "classify_vector_data::init computing Reps_in_lex_order" << endl;
+	}
 
 	Reps_in_lex_order = NEW_pint(nb_types);
 	Frequency_in_lex_order = NEW_int(nb_types);
@@ -220,6 +232,33 @@ void classify_vector_data::print()
 		cout << endl;
 	}
 }
+
+void classify_vector_data::save_classes_individually(const char *fname)
+{
+	//uint32_t h;
+	int i, j;
+	file_io Fio;
+
+	for (i = 0; i < nb_types; i++) {
+
+		char fname2[10000];
+		char str[10000];
+
+		strcpy(fname2, fname);
+		str[0] = 0;
+		for (j = 0; j < data_set_sz; j++) {
+			sprintf(str + strlen(str), "%d", Reps[i * data_set_sz + j]);
+		}
+		strcat(fname2, str);
+		strcat(fname2, ".csv");
+
+		//h = int_vec_hash(Reps + i * data_set_sz, data_set_sz);
+
+		Fio.int_vec_write_csv(sorting_perm_inv + type_first[i], Frequency[i], fname2, "case");
+		cout << "Written file " << fname2 << " of size " << Fio.file_size(fname2) << endl;
+	}
+}
+
 
 
 static int classify_int_vec_compare_function(void *a, void *b, void *data)

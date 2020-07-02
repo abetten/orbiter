@@ -30,10 +30,15 @@ packing_was_description::packing_was_description()
 	process_long_orbits_m = 0;
 	long_orbit_length = 0;
 	long_orbits_clique_size = 0;
+
+	f_process_long_orbits_by_list_of_cases_from_file = FALSE;
+	process_long_orbits_by_list_of_cases_from_file_fname = NULL;
+
 	f_expand_cliques_of_long_orbits = FALSE;
 	clique_no_r = 0;
 	clique_no_m = 0;
 	f_type_of_fixed_spreads = FALSE;
+	f_fixp_clique_types_save_individually = FALSE;
 	f_label = FALSE;
 	label = NULL;
 	f_spread_tables_prefix = FALSE;
@@ -137,6 +142,12 @@ int packing_was_description::read_arguments(int argc, const char **argv,
 			cout << "-type_of_fixed_spreads " << clique_size << endl;
 		}
 
+		else if (strcmp(argv[i], "-fixp_clique_types_save_individually") == 0) {
+			f_fixp_clique_types_save_individually = TRUE;
+			cout << "-fixp_clique_types_save_individually " << endl;
+		}
+
+
 		else if (strcmp(argv[i], "-process_long_orbits") == 0) {
 			f_process_long_orbits = TRUE;
 			clique_size = atoi(argv[++i]);
@@ -145,6 +156,26 @@ int packing_was_description::read_arguments(int argc, const char **argv,
 			long_orbit_length = atoi(argv[++i]);
 			long_orbits_clique_size = atoi(argv[++i]);
 			cout << "-process_long_orbits "
+				<< clique_size << " "
+				<< process_long_orbits_r << " "
+				<< process_long_orbits_m << " "
+				<< long_orbit_length << " "
+				<< long_orbits_clique_size
+				<< endl;
+		}
+
+
+
+		else if (strcmp(argv[i], "-process_long_orbits_by_list_of_cases_from_file") == 0) {
+			f_process_long_orbits_by_list_of_cases_from_file = TRUE;
+			process_long_orbits_by_list_of_cases_from_file_fname = argv[++i];
+			clique_size = atoi(argv[++i]);
+			process_long_orbits_r = atoi(argv[++i]);
+			process_long_orbits_m = atoi(argv[++i]);
+			long_orbit_length = atoi(argv[++i]);
+			long_orbits_clique_size = atoi(argv[++i]);
+			cout << "-process_long_orbits_by_list_of_cases_from_file "
+				<< process_long_orbits_by_list_of_cases_from_file_fname << " "
 				<< clique_size << " "
 				<< process_long_orbits_r << " "
 				<< process_long_orbits_m << " "

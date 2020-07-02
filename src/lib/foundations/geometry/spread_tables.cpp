@@ -763,6 +763,33 @@ void spread_tables::compute_list_of_lines_from_packing(
 	}
 }
 
+void spread_tables::compute_iso_type_invariant(
+		int *Partial_packings, int nb_pp, int sz,
+		int *&Iso_type_invariant,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, a, b;
+
+	if (f_v) {
+		cout << "spread_tables::compute_iso_type_invariant" << endl;
+	}
+
+	Iso_type_invariant = NEW_int(nb_pp * nb_iso_types_of_spreads);
+	int_vec_zero(Iso_type_invariant, nb_pp * nb_iso_types_of_spreads);
+	for (i = 0; i < nb_pp; i++) {
+		for (j = 0; j < sz; j++) {
+			a = Partial_packings[i * sz + j];
+			b = spread_iso_type[a];
+			Iso_type_invariant[i * nb_iso_types_of_spreads + b]++;
+		}
+	}
+
+	if (f_v) {
+		cout << "spread_tables::compute_iso_type_invariant done" << endl;
+	}
+}
+
 
 }}
 

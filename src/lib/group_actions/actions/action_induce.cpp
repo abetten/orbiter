@@ -2414,8 +2414,8 @@ void action::induced_action_on_homogeneous_polynomials(
 
 	char str1[1000];
 	char str2[1000];
-	snprintf(str1, 1000, "_on_homog_poly_%d_%d", HPD->n, HPD->degree);
-	snprintf(str2, 1000, " {\\rm OnHomPoly}_{%d,%d}", HPD->n, HPD->degree);
+	snprintf(str1, 1000, "_on_homog_poly_%d_%d", HPD->nb_variables, HPD->degree);
+	snprintf(str2, 1000, " {\\rm OnHomPoly}_{%d,%d}", HPD->nb_variables, HPD->degree);
 
 	label.assign(A->label);
 	label_tex.assign(A->label_tex);
@@ -2509,8 +2509,8 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 
 	char str1[1000];
 	char str2[1000];
-	snprintf(str1, 1000, "_on_homog_poly_%d_%d_eqn%d", HPD->n, HPD->degree, nb_equations);
-	snprintf(str2, 1000, " {\\rm OnHomPolyEqn}_{%d,%d%d}", HPD->n, HPD->degree, nb_equations);
+	snprintf(str1, 1000, "_on_homog_poly_%d_%d_eqn%d", HPD->nb_variables, HPD->degree, nb_equations);
+	snprintf(str2, 1000, " {\\rm OnHomPolyEqn}_{%d,%d%d}", HPD->nb_variables, HPD->degree, nb_equations);
 
 	label.assign(A->label);
 	label_tex.assign(A->label_tex);

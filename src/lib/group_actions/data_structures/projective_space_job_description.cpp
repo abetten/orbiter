@@ -55,7 +55,8 @@ projective_space_job_description::projective_space_job_description()
 		points_on_grassmannian_k = 0;
 		f_orthogonal = FALSE;
 		orthogonal_epsilon = 0;
-		f_homogeneous_polynomials = FALSE;
+		f_homogeneous_polynomials_LEX = FALSE;
+		f_homogeneous_polynomials_PART = FALSE;
 		homogeneous_polynomials_degree = 0;
 
 
@@ -90,7 +91,8 @@ projective_space_job_description::projective_space_job_description()
 
 	f_canonical_form = FALSE;
 	canonical_form_fname_base = NULL;
-	f_ideal = FALSE;
+	f_ideal_LEX = FALSE;
+	f_ideal_PART = FALSE;
 	ideal_degree = 0;
 
 	f_intersect_with_set_from_file = FALSE;
@@ -224,10 +226,15 @@ int projective_space_job_description::read_arguments(
 			orthogonal_epsilon = atoi(argv[++i]);
 			cout << "projective_space_job_description::read_arguments -orthogonal " << orthogonal_epsilon << endl;
 		}
-		else if (strcmp(argv[i], "-homogeneous_polynomials") == 0) {
-			f_homogeneous_polynomials = TRUE;
+		else if (strcmp(argv[i], "-homogeneous_polynomials_LEX") == 0) {
+			f_homogeneous_polynomials_LEX = TRUE;
 			homogeneous_polynomials_degree = atoi(argv[++i]);
-			cout << "projective_space_job_description::read_arguments -homogeneous_polynomials " << homogeneous_polynomials_degree << endl;
+			cout << "projective_space_job_description::read_arguments -homogeneous_polynomials_LEX " << homogeneous_polynomials_degree << endl;
+		}
+		else if (strcmp(argv[i], "-homogeneous_polynomials_PART") == 0) {
+			f_homogeneous_polynomials_PART = TRUE;
+			homogeneous_polynomials_degree = atoi(argv[++i]);
+			cout << "projective_space_job_description::read_arguments -homogeneous_polynomials_PART " << homogeneous_polynomials_degree << endl;
 		}
 		else if (strcmp(argv[i], "-andre") == 0) {
 			f_andre = TRUE;
@@ -314,10 +321,15 @@ int projective_space_job_description::read_arguments(
 			canonical_form_fname_base = argv[++i];
 			cout << "projective_space_job_description::read_arguments -canonical_form" << canonical_form_fname_base << endl;
 		}
-		else if (strcmp(argv[i], "-ideal") == 0) {
-			f_ideal = TRUE;
+		else if (strcmp(argv[i], "-ideal_LEX") == 0) {
+			f_ideal_LEX = TRUE;
 			ideal_degree = atoi(argv[++i]);
-			cout << "projective_space_job_description::read_arguments -ideal " << ideal_degree << endl;
+			cout << "projective_space_job_description::read_arguments -ideal_LEX " << ideal_degree << endl;
+		}
+		else if (strcmp(argv[i], "-ideal_PART") == 0) {
+			f_ideal_PART = TRUE;
+			ideal_degree = atoi(argv[++i]);
+			cout << "projective_space_job_description::read_arguments -ideal_PART " << ideal_degree << endl;
 		}
 		else if (strcmp(argv[i], "-embedded") == 0) {
 			f_embedded = TRUE;

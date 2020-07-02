@@ -9,6 +9,12 @@
 
 
 
+
+#ifndef ORBITER_SRC_LIB_FOUNDATIONS_GRAPH_THEORY_NAUTY_GRAPH_THEORY_NAUTY_H_
+#define ORBITER_SRC_LIB_FOUNDATIONS_GRAPH_THEORY_NAUTY_GRAPH_THEORY_NAUTY_H_
+
+
+
 namespace orbiter {
 namespace foundations {
 
@@ -59,3 +65,9 @@ public:
 };
 
 }}
+
+
+#endif /* ORBITER_SRC_LIB_FOUNDATIONS_GRAPH_THEORY_NAUTY_GRAPH_THEORY_NAUTY_H_ */
+
+
+

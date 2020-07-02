@@ -116,9 +116,11 @@ class interface_coding_theory {
 	//int BCH_b;
 	int f_Hamming_graph;
 	int f_NTT;
+	const char *ntt_fname_code;
 	int f_draw_matrix;
 	const char *fname;
 	int box_width;
+	int bit_depth; // 8 or 24
 
 public:
 	interface_coding_theory();
@@ -191,6 +193,9 @@ class interface_combinatorics {
 	int f_maximal_arc_parameters;
 	int maximal_arc_parameters_q, maximal_arc_parameters_r;
 	int f_pentomino_puzzle;
+
+	int f_regular_linear_space_classify;
+	regular_linear_space_description *Rls_descr;
 
 public:
 	interface_combinatorics();
@@ -371,6 +376,11 @@ class interface_cryptography {
 	int f_count_subprimitive;
 	int count_subprimitive_Q_max;
 	int count_subprimitive_H_max;
+#if 0
+	int f_ntt;
+	int ntt_t;
+	int ntt_q;
+#endif
 
 public:
 	interface_cryptography();

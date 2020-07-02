@@ -8,6 +8,11 @@
 // galois started:  August 12, 2005
 
 
+#ifndef ORBITER_SRC_LIB_FOUNDATIONS_ALGEBRA_AND_NUMBER_THEORY_H_
+#define ORBITER_SRC_LIB_FOUNDATIONS_ALGEBRA_AND_NUMBER_THEORY_H_
+
+
+
 namespace orbiter {
 namespace foundations {
 
@@ -145,7 +150,39 @@ public:
 	const char *plus_minus_string(int epsilon);
 	const char *plus_minus_letter(int epsilon);
 	void make_Hamming_graph_and_write_file(int n, int q, int f_projective, int verbose_level);
-	void NumberTheoreticTransform(int n, int q, int verbose_level);
+	int PHG_element_normalize(finite_ring &R, int *v, int stride, int len);
+	// last unit element made one
+	int PHG_element_normalize_from_front(finite_ring &R, int *v,
+		int stride, int len);
+	// first non unit element made one
+	int PHG_element_rank(finite_ring &R, int *v, int stride, int len);
+	void PHG_element_unrank(finite_ring &R, int *v, int stride, int len, int rk);
+	int nb_PHG_elements(int n, finite_ring &R);
+	void display_all_PHG_elements(int n, int q);
+	void test_unipoly();
+	void test_unipoly2();
+	int is_diagonal_matrix(int *A, int n);
+	const char *get_primitive_polynomial(int p, int e, int verbose_level);
+	void test_longinteger();
+	void test_longinteger2();
+	void test_longinteger3();
+	void test_longinteger4();
+	void test_longinteger5();
+	void test_longinteger6();
+	void test_longinteger7();
+	void test_longinteger8();
+	void mac_williams_equations(longinteger_object *&M, int n, int k, int q);
+	void determine_weight_enumerator();
+	void longinteger_collect_setup(int &nb_agos,
+			longinteger_object *&agos, int *&multiplicities);
+	void longinteger_collect_free(int &nb_agos,
+			longinteger_object *&agos, int *&multiplicities);
+	void longinteger_collect_add(int &nb_agos,
+			longinteger_object *&agos, int *&multiplicities,
+			longinteger_object &ago);
+	void longinteger_collect_print(std::ostream &ost,
+			int &nb_agos, longinteger_object *&agos, int *&multiplicities);
+
 
 };
 
@@ -176,6 +213,7 @@ private:
 	int f_has_quadratic_subfield; // TRUE if e is even.
 	int *f_belongs_to_quadratic_subfield; // [q]
 
+
 	int my_nb_calls_to_elliptic_curve_addition;
 	int nb_times_mult;
 	int nb_times_add;
@@ -185,10 +223,13 @@ public:
 	char *polynomial;
 		// the actual polynomial we consider 
 		// as integer (in text form)
+	int f_is_prime_field;
 	int q, p, e;
 	int alpha; // primitive element
 	int log10_of_q; // needed for printing purposes
 	int f_print_as_exponentials;
+	int *reordered_list_of_elements; // [q]
+	int *reordered_list_of_elements_inv; // [q]
 	long int nb_calls_to_mult_matrix_matrix;
 	long int nb_calls_to_PG_element_rank_modified;
 	long int nb_calls_to_PG_element_unrank_modified;
@@ -254,6 +295,7 @@ public:
 	int absolute_norm(int i);
 	int alpha_power(int i);
 	int log_alpha(int i);
+	int multiplicative_order(int a);
 	int square_root(int i, int &root);
 	int primitive_root();
 	int N2(int a);
@@ -564,8 +606,7 @@ public:
 		int verbose_level);
 	int is_subspace(int d, int dim_U, int *Basis_U, int dim_V, 
 		int *Basis_V, int verbose_level);
-	void Kronecker_product(int *A, int *B, 
-		int n, int *AB);
+	void Kronecker_product(int *A, int *B, int n, int *AB);
 	void Kronecker_product_square_but_arbitrary(int *A, int *B, 
 		int na, int nb, int *AB, int &N, int verbose_level);
 	int dependency(int d, int *v, int *A, int m, int *rho, 
@@ -635,6 +676,9 @@ public:
 		int *&gens, int &nb_gens, int &data_size, 
 		int &group_order, int verbose_level);
 	int is_unit_vector(int *v, int len, int k);
+	void make_Fourier_matrices(
+			int omega, int k, int *N, int **A, int **Av,
+			int *Omega, int verbose_level);
 
 	// #########################################################################
 	// finite_field_linear_groups.cpp
@@ -813,12 +857,14 @@ public:
 			const char *variety_label,
 			int variety_nb_vars, int variety_degree,
 			const char *variety_coeffs,
+			monomial_ordering_type Monomial_ordering_type,
 			char *fname1000, int &nb_pts, long int *&Pts,
 			int verbose_level);
 	void create_projective_curve(
 			const char *variety_label,
 			int curve_nb_vars, int curve_degree,
 			const char *curve_coeffs,
+			monomial_ordering_type Monomial_ordering_type,
 			char *fname, int &nb_pts, long int *&Pts,
 			int verbose_level);
 	void PG_element_normalize(
@@ -1054,7 +1100,8 @@ public:
 	void do_ideal(int n,
 			long int *set_in, int set_size, int degree,
 			long int *&set_out, int &size_out,
-		int verbose_level);
+			monomial_ordering_type Monomial_ordering_type,
+			int verbose_level);
 	void PG_element_modified_not_in_subspace_perm(int n, int m,
 		long int *orbit, long int *orbit_inv,
 		int verbose_level);
@@ -1130,6 +1177,14 @@ public:
 	void int_vec_print_field_elements(std::ostream &ost, int *v, int len);
 	void int_vec_print_elements_exponential(std::ostream &ost,
 		int *v, int len, const char *symbol_for_print);
+	void make_fname_addition_table_csv(char *fname);
+	void make_fname_multiplication_table_csv(char *fname);
+	void make_fname_addition_table_reordered_csv(char *fname);
+	void make_fname_multiplication_table_reordered_csv(char *fname);
+	void addition_table_save_csv();
+	void multiplication_table_save_csv();
+	void addition_table_reordered_save_csv();
+	void multiplication_table_reordered_save_csv();
 	void latex_addition_table(std::ostream &f,
 		int f_elements_exponential, const char *symbol_for_print);
 	void latex_multiplication_table(std::ostream &f,
@@ -1176,7 +1231,6 @@ extern int finitefield_primes[];
 extern int finitefield_nb_primes;
 extern int finitefield_largest_degree_irreducible_polynomial[];
 extern const char *finitefield_primitive_polynomial[][100];
-const char *get_primitive_polynomial(int p, int e, int verbose_level);
 
 // #############################################################################
 // finite_ring.cpp
@@ -1192,16 +1246,20 @@ class finite_ring {
 	int *add_table; // [q * q]
 	int *mult_table; // [q * q]
 
-	int *f_is_unit_table;
-	int *negate_table;
-	int *inv_table;
+	int *f_is_unit_table; // [q]
+	int *negate_table; // [q]
+	int *inv_table; // [q]
+
+	// only defined if we are a chain ring:
+	int p;
+	int e;
+	finite_field *Fp;
 
 public:
 	int q;
-	int p;
-	int e;
 
-	finite_field *Fp;
+	int f_chain_ring;
+
 
 
 	finite_ring();
@@ -1209,6 +1267,9 @@ public:
 	void null();
 	void freeself();
 	void init(int q, int verbose_level);
+	int get_e();
+	int get_p();
+	finite_field *get_Fp();
 	int zero();
 	int one();
 	int is_zero(int i);
@@ -1227,16 +1288,6 @@ public:
 		// A is a m x n matrix,
 		// P is a m x Pn matrix (if f_P is TRUE)
 };
-
-int PHG_element_normalize(finite_ring &R, int *v, int stride, int len);
-// last unit element made one
-int PHG_element_normalize_from_front(finite_ring &R, int *v,
-	int stride, int len);
-// first non unit element made one
-int PHG_element_rank(finite_ring &R, int *v, int stride, int len);
-void PHG_element_unrank(finite_ring &R, int *v, int stride, int len, int rk);
-int nb_PHG_elements(int n, finite_ring &R);
-void display_all_PHG_elements(int n, int q);
 
 
 // #############################################################################
@@ -1516,18 +1567,16 @@ public:
 // homogeneous_polynomial_domain.cpp
 // #############################################################################
 
-//! homogeneous polynomials in n variables over a finite field
+//! homogeneous polynomials of degree degree in nb_variables variables over a finite field GF(q)
 
 
 class homogeneous_polynomial_domain {
 
-public:
-	int q;
-	int n; // number of variables
-	int degree;
+private:
+	enum monomial_ordering_type Monomial_ordering_type;
 	finite_field *F;
 	int nb_monomials;
-	int *Monomials; // [nb_monomials * n]
+	int *Monomials; // [nb_monomials * nb_variables]
 	char **symbols;
 	char **symbols_latex;
 	char **monomial_symbols;
@@ -1536,15 +1585,15 @@ public:
 	int *Variables; // [nb_monomials * degree]
 		// Variables contains the monomials written out 
 		// as a sequence of length degree 
-		// with entries in 0,..,n-1.
+		// with entries in 0,..,nb_variables-1.
 		// the entries are listed in increasing order.
 		// For instance, the monomial x_0^2x_1x_3 
 		// is recorded as 0,0,1,3
-	int nb_affine; // n^degree
+	int nb_affine; // nb_variables^degree
 	int *Affine; // [nb_affine * degree]
 		// the affine elements are used for foiling 
 		// when doing a linear substitution
-	int *v; // [n]
+	int *v; // [nb_variables]
 	int *Affine_to_monomial; // [nb_affine]
 		// for each vector in the affine space, 
 		// record the monomial associated with it.
@@ -1559,13 +1608,35 @@ public:
 	int *type1; // [degree + 1]
 	int *type2; // [degree + 1]
 
+public:
+	int q;
+	int nb_variables; // number of variables
+	int degree;
+
 	homogeneous_polynomial_domain();
 	~homogeneous_polynomial_domain();
 	void freeself();
 	void null();
 	void init(finite_field *F, int nb_vars, int degree, 
-		int f_init_incidence_structure, int verbose_level);
-	void make_monomials(int verbose_level);
+		int f_init_incidence_structure,
+		monomial_ordering_type Monomial_ordering_type,
+		int verbose_level);
+	int get_nb_monomials();
+	projective_space *get_P();
+	finite_field *get_F();
+	int get_monomial(int i, int j);
+	int *get_monomial_pointer(int i);
+	int evaluate_monomial(int idx_of_monomial, int *coords);
+	void remake_symbols(int symbol_offset,
+			const char *symbol_mask, const char *symbol_mask_latex,
+			int verbose_level);
+	void remake_symbols_interval(int symbol_offset,
+			int from, int len,
+			const char *symbol_mask, const char *symbol_mask_latex,
+			int verbose_level);
+	void make_monomials(
+			monomial_ordering_type Monomial_ordering_type,
+			int verbose_level);
 	void rearrange_monomials_by_partition_type(int verbose_level);
 	int index_of_monomial(int *v);
 	void affine_evaluation_kernel(
@@ -1597,6 +1668,12 @@ public:
 		int *coeff_in, int *coeff_out,
 		int *Pt1_coeff, int *Pt2_coeff,
 		int verbose_level);
+	void multiply_mod(
+		int *coeff1, int *coeff2, int *coeff3,
+		int verbose_level);
+	void multiply_mod_negatively_wrapped(
+		int *coeff1, int *coeff2, int *coeff3,
+		int verbose_level);
 	int is_zero(int *coeff);
 	void unrank_point(int *v, int rk);
 	int rank_point(int *v);
@@ -1608,6 +1685,7 @@ public:
 	void vanishing_ideal(long int *Pts, int nb_pts, int &r, int *Kernel,
 		int verbose_level);
 	int compare_monomials(int *M1, int *M2);
+	int compare_monomials_PART(int *M1, int *M2);
 	void print_monomial_ordering(std::ostream &ost);
 
 
@@ -1916,6 +1994,81 @@ public:
 };
 
 // #############################################################################
+// number_theoretic_transform.cpp:
+// #############################################################################
+
+//! Fourier transform over finite fields
+
+class number_theoretic_transform {
+public:
+
+	int k;
+	int q;
+
+	finite_field *F; // no ownership, do not destroy
+
+	int *N;
+
+	int alpha, omega;
+	int gamma, minus_gamma, minus_one;
+	int **A; // Fourier matrices for the positively wrapped convolution
+	int **Av;
+	int **A_log;
+	int *Omega;
+
+
+	int **G;
+	int **D;
+	int **Dv;
+	int **T;
+	int **Tv;
+	int **P;
+
+	int *X, *Y, *Z;
+	int *X1, *X2;
+	int *Y1, *Y2;
+
+	int **Gr;
+	int **Dr;
+	int **Dvr;
+	int **Tr;
+	int **Tvr;
+	int **Pr;
+
+	int *Tmp1;
+	int *Tmp2;
+
+	int *bit_reversal;
+
+	int Q;
+	finite_field *FQ;
+	int alphaQ;
+	int psi;
+	int *Psi_powers; // powers of psi
+
+
+	number_theoretic_transform();
+	~number_theoretic_transform();
+	void init(const char *fname_code, int k, int q, int verbose_level);
+	void write_code(const char *fname_code,
+			int verbose_level);
+	void write_code2(std::ostream &ost,
+			int f_forward,
+			int &nb_add, int &nb_negate, int &nb_mult,
+			int verbose_level);
+	void write_code_header(std::ostream &ost,
+			const char *fname_code, int verbose_level);
+	void make_level(int s, int verbose_level);
+	void paste(int **Xr, int **X, int s, int verbose_level);
+	void make_G_matrix(int s, int verbose_level);
+	void make_D_matrix(int s, int verbose_level);
+	void make_T_matrix(int s, int verbose_level);
+	void make_P_matrix(int s, int verbose_level);
+	void multiply_matrix_stack(finite_field *F, int **S,
+			int nb, int sz, int *Result, int verbose_level);
+};
+
+// #############################################################################
 // number_theory_domain.cpp:
 // #############################################################################
 
@@ -2009,8 +2162,9 @@ class partial_derivative {
 public:
 	homogeneous_polynomial_domain *H;
 	homogeneous_polynomial_domain *Hd;
+	int *v; // [H->get_nb_monomials()]
 	int variable_idx;
-	int *mapping; // [H->nb_monomials * H->nb_monomials]
+	int *mapping; // [H->get_nb_monomials() * H->get_nb_monomials()]
 
 
 	partial_derivative();
@@ -2031,7 +2185,7 @@ public:
 // #############################################################################
 
 
-//! checking whether any d-1 columns are linearly independent
+//! checking whether any d - 1 columns are linearly independent
 
 
 class rank_checker {
@@ -2202,7 +2356,7 @@ public:
 	void mult_easy(unipoly_object a, unipoly_object b, unipoly_object &c);
 	void mult_mod(unipoly_object a, unipoly_object b, unipoly_object &c, 
 		int factor_polynomial_degree, 
-		int *factor_polynomial_coefficents_negated, 
+		int *factor_polynomial_coefficients_negated,
 		int verbose_level);
 	void Frobenius_matrix_by_rows(int *&Frob,
 		unipoly_object factor_polynomial, int verbose_level);
@@ -2211,9 +2365,9 @@ public:
 		int verbose_level);
 	void Berlekamp_matrix(int *&B, unipoly_object factor_polynomial, 
 		int verbose_level);
-	void integral_division_exact(unipoly_object a, 
+	void exact_division(unipoly_object a,
 		unipoly_object b, unipoly_object &q, int verbose_level);
-	void integral_division(unipoly_object a, unipoly_object b, 
+	void division_with_remainder(unipoly_object a, unipoly_object b,
 		unipoly_object &q, unipoly_object &r, int verbose_level);
 	void derive(unipoly_object a, unipoly_object &b);
 	int compare_euclidean(unipoly_object m, unipoly_object n);
@@ -2352,5 +2506,9 @@ void vector_space_unrank_point_callback(int *v, long int rk, void *data);
 long int vector_space_rank_point_callback(int *v, void *data);
 
 }}
+
+
+#endif /* ORBITER_SRC_LIB_FOUNDATIONS_ALGEBRA_AND_NUMBER_THEORY_H_ */
+
 
 

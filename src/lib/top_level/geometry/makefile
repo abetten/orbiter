@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	arc_generator_description.o \
 	arc_generator.o \
 	arc_lifting_simeon.o \
 	arc_lifting.o \
@@ -30,6 +31,7 @@ MODULES = \
 	packing_invariants.o \
 	packing_long_orbits.o \
 	packing_was_description.o \
+	packing_was_fixpoints.o \
 	packing_was.o \
 	polar.o \
 	recoordinatize.o \
@@ -41,6 +43,7 @@ MODULES = \
 	spread_create_description.o \
 	spread_create.o \
 	spread_lifting.o \
+	spread_table_with_selection.o \
 	surface_classify_wedge.o \
 	surface_create_description.o \
 	surface_create.o \

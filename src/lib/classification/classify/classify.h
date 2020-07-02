@@ -8,6 +8,11 @@
  * pulled out of snakesandladders.h: Aug 9, 2018
  */
 
+
+#ifndef ORBITER_SRC_LIB_CLASSIFICATION_CLASSIFY_CLASSIFY_H_
+#define ORBITER_SRC_LIB_CLASSIFICATION_CLASSIFY_CLASSIFY_H_
+
+
 namespace orbiter {
 namespace classification {
 
@@ -164,5 +169,10 @@ public:
 };
 
 }}
+
+
+#endif /* ORBITER_SRC_LIB_CLASSIFICATION_CLASSIFY_CLASSIFY_H_ */
+
+
 
 

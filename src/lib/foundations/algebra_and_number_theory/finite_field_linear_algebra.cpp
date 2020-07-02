@@ -72,8 +72,9 @@ int finite_field::is_identity_matrix(int *A, int n)
 
 int finite_field::is_diagonal_matrix(int *A, int n)
 {
+	algebra_global Algebra;
 
-	return orbiter::foundations::is_diagonal_matrix(A, n);
+	return Algebra.is_diagonal_matrix(A, n);
 
 #if 0
 	int i, j;

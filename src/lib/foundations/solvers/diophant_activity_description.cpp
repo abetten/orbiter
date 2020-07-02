@@ -25,6 +25,7 @@ diophant_activity_description::diophant_activity_description()
 	f_solve_standard = FALSE;
 	f_draw_as_bitmap = FALSE;
 	box_width = 1;
+	bit_depth = 8;
 	f_draw = FALSE;
 	f_perform_column_reductions = FALSE;
 
@@ -76,7 +77,8 @@ int diophant_activity_description::read_arguments(
 		else if (strcmp(argv[i], "-draw_as_bitmap") == 0) {
 			f_draw_as_bitmap = TRUE;
 			box_width = atoi(argv[++i]);
-			cout << "-draw_as_bitmap " << box_width << endl;
+			bit_depth = atoi(argv[++i]);
+			cout << "-draw_as_bitmap " << box_width << " " << bit_depth << endl;
 		}
 		else if (strcmp(argv[i], "-draw") == 0) {
 			f_draw = TRUE;

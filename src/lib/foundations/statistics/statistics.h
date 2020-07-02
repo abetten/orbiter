@@ -8,6 +8,10 @@
 // galois started:  August 12, 2005
 
 
+#ifndef ORBITER_SRC_LIB_FOUNDATIONS_STATISTICS_STATISTICS_H_
+#define ORBITER_SRC_LIB_FOUNDATIONS_STATISTICS_STATISTICS_H_
+
+
 namespace orbiter {
 namespace foundations {
 
@@ -138,8 +142,12 @@ public:
 	int hash_and_find(int *data,
 			int &idx, uint32_t &h, int verbose_level);
 	void print();
+	void save_classes_individually(const char *fname);
 };
 
 
 }}
+
+#endif /* ORBITER_SRC_LIB_FOUNDATIONS_STATISTICS_STATISTICS_H_ */
+
 

@@ -325,9 +325,10 @@ void boolean_function::setup_polynomial_rings(int verbose_level)
 	for (degree = 1; degree <= n; degree++) {
 		Poly[degree].init(Fq, nb_vars, degree,
 				FALSE /* f_init_incidence_structure */,
+				t_PART,
 				0 /* verbose_level */);
-		A_poly[degree] = NEW_int(Poly[degree].nb_monomials);
-		B_poly[degree] = NEW_int(Poly[degree].nb_monomials);
+		A_poly[degree] = NEW_int(Poly[degree].get_nb_monomials());
+		B_poly[degree] = NEW_int(Poly[degree].get_nb_monomials());
 	}
 
 	Poly[n].affine_evaluation_kernel(
@@ -364,11 +365,11 @@ void boolean_function::compute_polynomial_representation(
 		for (s = 0; s < N; s++) {
 			cout << s << " : " << func[s] << endl;
 		}
-		cout << "Poly[n].nb_monomials=" << Poly[n].nb_monomials << endl;
+		cout << "Poly[n].nb_monomials=" << Poly[n].get_nb_monomials() << endl;
 	}
 	vec = NEW_int(n);
 	mon = NEW_int(degree);
-	int_vec_zero(coeff, Poly[n].nb_monomials);
+	int_vec_zero(coeff, Poly[n].get_nb_monomials());
 	for (s = 0; s < N; s++) {
 
 		// we are making the complement of the function,
@@ -405,7 +406,7 @@ void boolean_function::compute_polynomial_representation(
 			// create the polynomial (x_i+(vec[i]+1)*x_n)
 			// note that x_n stands for the constants
 			// because we are in affine space
-			int_vec_zero(A_poly[1], Poly[1].nb_monomials);
+			int_vec_zero(A_poly[1], Poly[1].get_nb_monomials());
 			A_poly[1][n] = Fq->add(1, vec[i]);
 			A_poly[1][i] = 1;
 
@@ -417,17 +418,17 @@ void boolean_function::compute_polynomial_representation(
 
 
 			if (i == 0) {
-				int_vec_copy(A_poly[1], B_poly[1], Poly[1].nb_monomials);
+				int_vec_copy(A_poly[1], B_poly[1], Poly[1].get_nb_monomials());
 			}
 			else {
 				// B_poly[i + 1] = A_poly[1] * B_poly[i]
-				int_vec_zero(B_poly[i + 1], Poly[i + 1].nb_monomials);
-				for (u = 0; u < Poly[1].nb_monomials; u++) {
+				int_vec_zero(B_poly[i + 1], Poly[i + 1].get_nb_monomials());
+				for (u = 0; u < Poly[1].get_nb_monomials(); u++) {
 					a = A_poly[1][u];
 					if (a == 0) {
 						continue;
 					}
-					for (v = 0; v < Poly[i].nb_monomials; v++) {
+					for (v = 0; v < Poly[i].get_nb_monomials(); v++) {
 						b = B_poly[i][v];
 						if (b == 0) {
 							continue;
@@ -435,8 +436,8 @@ void boolean_function::compute_polynomial_representation(
 						c = Fq->mult(a, b);
 						int_vec_zero(mon, n + 1);
 						for (h = 0; h <= n + 1; h++) {
-							mon[h] = Poly[1].Monomials[u * degree + h] +
-									Poly[i].Monomials[v * degree + h];
+							mon[h] = Poly[1].get_monomial(u, h) +
+									Poly[i].get_monomial(v, h);
 						}
 						idx = Poly[i + 1].index_of_monomial(mon);
 						B_poly[i + 1][idx] = Fq->add(B_poly[i + 1][idx], c);
@@ -449,7 +450,7 @@ void boolean_function::compute_polynomial_representation(
 			Poly[n].print_equation(cout, B_poly[n]);
 			cout << endl;
 		}
-		for (h = 0; h < Poly[n].nb_monomials; h++) {
+		for (h = 0; h < Poly[n].get_nb_monomials(); h++) {
 			coeff[h] = Fq->add(coeff[h], B_poly[n][h]);
 		}
 	} // next s
@@ -621,7 +622,7 @@ void boolean_function::search_for_bent_functions(int verbose_level)
 
 
 
-	poly = NEW_int(Poly[n].nb_monomials);
+	poly = NEW_int(Poly[n].get_nb_monomials());
 
 	a.create(0, __FILE__, __LINE__);
 	while (D.is_less_than(a, NN)) {
@@ -717,7 +718,7 @@ void boolean_function::search_for_bent_functions(int verbose_level)
 						v.push_back(f_proj[j]);
 					}
 					vector<int> w;
-					for (j = 0; j < Poly[n].nb_monomials; j++) {
+					for (j = 0; j < Poly[n].get_nb_monomials(); j++) {
 						w.push_back(Orb->Equations[i][1 + j]);
 					}
 
@@ -749,7 +750,7 @@ void boolean_function::search_for_bent_functions(int verbose_level)
 					int_vec_print(cout, f_proj, Q);
 					cout << endl;
 					cout << "orbit " << nb_orbits << ", equation: ";
-					int_vec_print(cout, coeff, Poly[n].nb_monomials);
+					int_vec_print(cout, coeff, Poly[n].get_nb_monomials());
 					cout << endl;
 
 					strong_generators *Stab_gens_clean;
@@ -798,7 +799,7 @@ void boolean_function::search_for_bent_functions(int verbose_level)
 			for (j = 0; j < Q; j++) {
 				f[j] = Bent_function_table[i][j];
 			}
-			for (j = 0; j < Poly[n].nb_monomials; j++) {
+			for (j = 0; j < Poly[n].get_nb_monomials(); j++) {
 				poly[j] = Equation_table[i][j];
 			}
 
@@ -807,7 +808,7 @@ void boolean_function::search_for_bent_functions(int verbose_level)
 
 			int_vec_print(cout, f, Q);
 			cout << " : " << a << " : ";
-			int_vec_print(cout, poly, Poly[n].nb_monomials);
+			int_vec_print(cout, poly, Poly[n].get_nb_monomials());
 			cout << " : ";
 			Poly[n].print_equation(cout, poly);
 			cout << endl;
@@ -819,12 +820,12 @@ void boolean_function::search_for_bent_functions(int verbose_level)
 		for (j = 0; j < Q; j++) {
 			f[j] = Bent_function_table[i][j];
 		}
-		for (j = 0; j < Poly[n].nb_monomials; j++) {
+		for (j = 0; j < Poly[n].get_nb_monomials(); j++) {
 			poly[j] = Equation_table[i][j];
 		}
 		int_vec_print(cout, f, Q);
 		cout << " : ";
-		int_vec_print(cout, poly, Poly[n].nb_monomials);
+		int_vec_print(cout, poly, Poly[n].get_nb_monomials());
 		cout << " : ";
 		Poly[n].print_equation(cout, poly);
 		cout << endl;
