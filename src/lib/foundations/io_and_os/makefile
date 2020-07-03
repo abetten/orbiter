@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	create_file_description.o \
 	file_io.o \
 	file_output.o \
 	latex_interface.o \

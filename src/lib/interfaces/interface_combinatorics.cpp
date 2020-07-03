@@ -79,6 +79,9 @@ interface_combinatorics::interface_combinatorics()
 
 	f_regular_linear_space_classify = FALSE;
 	Rls_descr = NULL;
+
+	f_create_files = FALSE;
+	Create_file_description = NULL;
 }
 
 
@@ -156,6 +159,9 @@ void interface_combinatorics::print_help(int argc,
 	}
 	else if (strcmp(argv[i], "-regular_linear_space_classify") == 0) {
 		cout << "-regular_linear_space_classify <description>" << endl;
+	}
+	else if (strcmp(argv[i], "-create_files") == 0) {
+		cout << "-create_files <description>" << endl;
 	}
 }
 
@@ -235,6 +241,9 @@ int interface_combinatorics::recognize_keyword(int argc,
 		return true;
 	}
 	else if (strcmp(argv[i], "-regular_linear_space_classify") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-create_files") == 0) {
 		return true;
 	}
 	return false;
@@ -445,6 +454,24 @@ void interface_combinatorics::read_arguments(int argc,
 
 			cout << "-regular_linear_space_classify " <<endl;
 		}
+		else if (strcmp(argv[i], "-create_files") == 0) {
+			f_create_files = TRUE;
+
+			cout << "-create_files " << endl;
+
+			Create_file_description = NEW_OBJECT(create_file_description);
+			i += Create_file_description->read_arguments(argc - i - 1,
+				argv + i + 1, verbose_level) + 1;
+			cout << "interface_combinatorics::read_arguments finished "
+					"reading -create_files" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+
+			cout << "-create_files " <<endl;
+		}
 	}
 	cout << "interface_combinatorics::read_arguments done" << endl;
 }
@@ -565,6 +592,11 @@ void interface_combinatorics::worker(int verbose_level)
 		}
 		FREE_OBJECT(Rls);
 
+	}
+	else if (f_create_files) {
+		file_io Fio;
+
+		Fio.create_file(Create_file_description, verbose_level);
 	}
 }
 

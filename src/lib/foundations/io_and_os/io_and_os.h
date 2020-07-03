@@ -20,6 +20,52 @@ namespace foundations {
 
 
 
+// #############################################################################
+// create_file_description.cpp
+// #############################################################################
+
+//! to create files
+
+#define MAX_LINES 100
+
+
+class create_file_description {
+public:
+	int f_file_mask;
+	const char *file_mask;
+	int f_N;
+	int N;
+	int nb_lines;
+	const char *lines[MAX_LINES];
+	int f_line_numeric[MAX_LINES];
+	int nb_final_lines;
+	const char *final_lines[MAX_LINES];
+	int f_command;
+	const char *command;
+	int f_repeat;
+	int repeat_N;
+	int repeat_start;
+	int repeat_increment;
+	const char *repeat_mask;
+	int f_split;
+	int split_m;
+	int f_read_cases;
+	const char *read_cases_fname;
+	int f_read_cases_text;
+	int read_cases_column_of_case;
+	int read_cases_column_of_fname;
+	int f_tasks;
+	int nb_tasks;
+	const char *tasks_line;
+
+	create_file_description();
+	~create_file_description();
+	int read_arguments(
+		int argc, const char **argv,
+		int verbose_level);
+
+};
+
 
 // #############################################################################
 // file_io.cpp
@@ -184,6 +230,11 @@ public:
 			int *&Sets, int &nb_sets, int &set_size, int verbose_level);
 	void write_decomposition_stack(char *fname, int m, int n,
 			int *v, int *b, int *aij, int verbose_level);
+	void create_file(create_file_description *Descr, int verbose_level);
+	void create_files(create_file_description *Descr,
+		int verbose_level);
+	void create_files_list_of_cases(spreadsheet *S,
+			create_file_description *Descr, int verbose_level);
 };
 
 

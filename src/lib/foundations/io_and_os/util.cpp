@@ -1886,8 +1886,11 @@ void replace_extension_with(char *p, const char *new_ext)
 		if (p[i] == '.') {
 			p[i] = 0;
 			break;
-			}
 		}
+		else if (p[i] == '/') {
+			break;
+		}
+	}
 	strcat(p, new_ext);
 }
 

@@ -197,6 +197,10 @@ class interface_combinatorics {
 	int f_regular_linear_space_classify;
 	regular_linear_space_description *Rls_descr;
 
+	int f_create_files;
+	create_file_description *Create_file_description;
+
+
 public:
 	interface_combinatorics();
 	void print_help(int argc, const char **argv, int i, int verbose_level);
