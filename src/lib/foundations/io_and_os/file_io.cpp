@@ -2939,7 +2939,359 @@ void file_io::write_decomposition_stack(char *fname, int m, int n, int *v, int *
 	}
 }
 
+void file_io::create_file(create_file_description *Descr, int verbose_level)
+{
+	file_io Fio;
+	int j;
 
+	if (Descr->f_read_cases) {
+
+		cout << "Descr->f_read_cases" << endl;
+		char fname[1000];
+		char str[1000];
+		//int *Cases;
+		int nb_cases;
+		int n, c;
+
+		cout << "reading file " << Descr->read_cases_fname << endl;
+
+
+		spreadsheet S;
+
+		S.read_spreadsheet(Descr->read_cases_fname, 0/*verbose_level - 1*/);
+
+		nb_cases = S.nb_rows;
+		n = S.nb_cols;
+
+#if 0
+		Fio.int_matrix_read_csv(Descr->read_cases_fname,
+				Cases, nb_cases, n, 0 /* verbose_level */);
+#endif
+
+		cout << "nb_cases = " << nb_cases << endl;
+		cout << "n = " << n << endl;
+		if (n != 1) {
+			cout << "read cases, n != 1" << endl;
+			exit(1);
+		}
+#if 0
+		cout << "We found " << nb_cases << " cases to do:" << endl;
+		int_vec_print(cout, Cases, nb_cases);
+		cout << endl;
+#endif
+
+		const char *log_fname = "log_file.txt";
+		const char *log_mask = "\tsbatch job%03d";
+		{
+		ofstream fp_log(log_fname);
+
+		for (c = 0; c < nb_cases; c++) {
+
+			//i = Cases[c];
+			sprintf(fname, Descr->file_mask, c);
+
+
+			{
+				ofstream fp(fname);
+
+				for (j = 0; j < Descr->nb_lines; j++) {
+					if (Descr->f_line_numeric[j]) {
+						sprintf(str, Descr->lines[j], c);
+					}
+					else {
+						sprintf(str, Descr->lines[j], S.get_string(c, 0));
+					}
+					fp << str << endl;
+				}
+			}
+			cout << "Written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+
+			char log_entry[1000];
+
+			sprintf(log_entry, log_mask, c);
+			fp_log << log_entry << endl;
+			}
+		}
+		cout << "Written file " << log_fname << " of size "
+				<< Fio.file_size(log_fname) << endl;
+	}
+	else if (Descr->f_read_cases_text) {
+		cout << "read_cases_text" << endl;
+
+		if (!Descr->f_N) {
+			cout << "please use option -N <N>" << endl;
+			exit(1);
+		}
+		if (!Descr->f_command) {
+			cout << "please use option -command <command>" << endl;
+			exit(1);
+		}
+
+		cout << "Reading file " << Descr->read_cases_fname << endl;
+
+		spreadsheet *S;
+		int row;
+
+		S = NEW_OBJECT(spreadsheet);
+		S->read_spreadsheet(Descr->read_cases_fname, 0 /*verbose_level*/);
+
+		cout << "Read spreadsheet with " << S->nb_rows << " rows" << endl;
+
+		//S->print_table(cout, FALSE /* f_enclose_in_parentheses */);
+		for (row = 0; row < MINIMUM(10, S->nb_rows); row++) {
+			cout << "row " << row << " : ";
+			S->print_table_row(row,
+					FALSE /* f_enclose_in_parentheses */, cout);
+		}
+		cout << "..." << endl;
+		for (row = MAXIMUM(S->nb_rows - 10, 0); row < S->nb_rows; row++) {
+			cout << "row " << row << " : ";
+			S->print_table_row(row,
+					FALSE /* f_enclose_in_parentheses */, cout);
+		}
+
+
+
+		create_files_list_of_cases(S, Descr, verbose_level);
+
+	}
+	else if (Descr->f_N) {
+		create_files(Descr, verbose_level);
+	}
+
+}
+
+void file_io::create_files(create_file_description *Descr,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	file_io Fio;
+
+	char fname[1000];
+	char str[1000];
+	int r;
+
+	if (f_v) {
+		cout << "file_io::create_files" << endl;
+	}
+
+	const char *makefile_fname = "makefile_submit";
+	{
+	ofstream fp_makefile(makefile_fname);
+
+	for (i = 0; i < Descr->N; i++) {
+
+		sprintf(fname, Descr->file_mask, i);
+
+		fp_makefile << "\tsbatch " << fname << endl;
+		{
+			ofstream fp(fname);
+
+			for (j = 0; j < Descr->nb_lines; j++) {
+				sprintf(str, Descr->lines[j], i, i, i, i, i, i, i, i);
+				fp << str << endl;
+			}
+			if (Descr->f_repeat) {
+				if (Descr->f_split) {
+					for (r = 0; r < Descr->split_m; r++) {
+						for (j = 0; j < Descr->repeat_N; j++) {
+							if ((j % Descr->split_m) == r) {
+								sprintf(str, Descr->repeat_mask, j);
+								fp << str << endl;
+							}
+						}
+						fp << endl;
+					}
+				}
+				else {
+					int c;
+
+					sprintf(str, Descr->repeat_mask, Descr->repeat_N);
+					fp << str << endl;
+					if (!Descr->f_command) {
+						cout << "please use option -command when using -repeat" << endl;
+						exit(1);
+					}
+					for (j = 0; j < Descr->repeat_N; j++) {
+						c = Descr->repeat_start + j * Descr->repeat_increment;
+						sprintf(str, Descr->command, i, i, c, c);
+						fp << str << endl;
+					}
+				}
+				for (j = 0; j < Descr->nb_final_lines; j++) {
+					fp << Descr->final_lines[j] << endl;
+				}
+			}
+		}
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+
+		}
+
+	}
+	cout << "Written file " << makefile_fname << " of size "
+			<< Fio.file_size(makefile_fname) << endl;
+
+
+	if (f_v) {
+		cout << "file_io::create_files done" << endl;
+	}
+}
+
+void file_io::create_files_list_of_cases(spreadsheet *S,
+		create_file_description *Descr, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+
+	char fname[1000];
+	char str[1000];
+	file_io Fio;
+
+	if (f_v) {
+		cout << "file_io::create_files_list_of_cases" << endl;
+	}
+
+	int nb_cases = S->nb_rows - 1;
+	cout << "nb_cases=" << nb_cases << endl;
+
+
+	const char *makefile_fname = "makefile_submit";
+	const char *fname_submit_script = "submit_jobs.sh";
+	{
+		ofstream fp_makefile(makefile_fname);
+		ofstream fp_submit_script(fname_submit_script);
+
+		fp_submit_script << "#!/bin/bash" << endl;
+		for (i = 0; i < Descr->N; i++) {
+
+			sprintf(fname, Descr->file_mask, i);
+
+			fp_makefile << "\tsbatch " << fname << endl;
+			fp_submit_script << "sbatch " << fname << endl;
+			{
+				ofstream fp(fname);
+
+				for (j = 0; j < Descr->nb_lines; j++) {
+					sprintf(str, Descr->lines[j], i, i, i, i, i, i, i, i);
+					fp << str << endl;
+				}
+
+				if (Descr->f_tasks) {
+					char str[1000];
+					int t;
+					int NT;
+
+					sprintf(str, Descr->tasks_line, Descr->nb_tasks);
+					fp << str << endl;
+					NT = Descr->N * Descr->nb_tasks;
+					for (t = 0; t < Descr->nb_tasks; t++) {
+						sprintf(str, Descr->command, i, t, i, t);
+						fp << str; // << " \\" << endl;
+						for (j = 0; j < nb_cases; j++) {
+							if ((j % Descr->N) != i) {
+								continue;
+							}
+							if (((j - i) / Descr->N) % Descr->nb_tasks != t) {
+								continue;
+							}
+							char *entry;
+							int case_number;
+
+							case_number = S->get_int(j + 1, Descr->read_cases_column_of_case);
+							entry = S->get_string(j + 1, Descr->read_cases_column_of_fname);
+							fp << /* case_number << " " <<*/ entry;
+
+							if (j < nb_cases - Descr->N) {
+								fp << ", "; // << endl;
+							}
+							else {
+								fp << ")\"\\" << endl;
+							}
+						}
+						fp << " & " << endl;
+						//fp << "\t\t" << -1 << " &" << endl;
+					}
+				} // if
+				else {
+					sprintf(str, Descr->command, i);
+					fp << str << " \\" << endl;
+					//fp << command << " \\" << endl;
+					for (j = 0; j < nb_cases; j++) {
+						if ((j % Descr->N) != i) {
+							continue;
+						}
+						char *entry;
+						int case_number;
+
+						case_number = S->get_int(j + 1, Descr->read_cases_column_of_case);
+						entry = S->get_string(j + 1, Descr->read_cases_column_of_fname);
+						fp <<  "\t\t" /*<< case_number << " "*/ << entry << " \\" << endl;
+#if 0
+						if (j < nb_cases - N) {
+							fp << ", "; // << endl;
+						}
+						else {
+							fp << ")\"\\" << endl;
+						}
+#endif
+					}
+					fp << " & " << endl;
+					//fp << "\t\t" << -1 << " &" << endl;
+				} // else
+
+				for (j = 0; j < Descr->nb_final_lines; j++) {
+					sprintf(str, Descr->final_lines[j], i, i, i, i, i, i, i, i);
+					fp << str << endl;
+				} // next j
+
+			} // close fp(fname)
+
+			cout << "Written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+
+		} // next i
+
+	}
+	cout << "Written file " << makefile_fname << " of size "
+			<< Fio.file_size(makefile_fname) << endl;
+
+	const char *mask_submit_script_piecewise = "submit_jobs_%d.sh";
+	char fname_submit_piecewise[1000];
+	char cmd[1000];
+	int h;
+	int N1 = 128;
+
+	for (h = 0; h < Descr->N / N1; h++) {
+		sprintf(fname_submit_piecewise, mask_submit_script_piecewise, h * N1);
+		{
+			ofstream fp_submit_script(fname_submit_piecewise);
+
+			fp_submit_script << "#!/bin/bash" << endl;
+			for (i = 0; i < N1; i++) {
+
+				sprintf(fname, Descr->file_mask, h * N1 + i);
+
+				fp_submit_script << "sbatch " << fname;
+				if (i < N1 - 1) {
+					fp_submit_script << "; ";
+				}
+				else {
+					fp_submit_script << endl;
+				}
+			}
+		}
+		cout << "Written file " << fname_submit_piecewise << " of size "
+			<< Fio.file_size(fname_submit_piecewise) << endl;
+		sprintf(cmd, "chmod +x %s", fname_submit_piecewise);
+		system(cmd);
+	}
+	if (f_v) {
+		cout << "file_io::create_files_list_of_cases done" << endl;
+	}
+}
 
 
 }}
