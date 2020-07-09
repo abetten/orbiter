@@ -70,7 +70,7 @@ private:
 			current_cliques= new T [k];
 			memset(current_cliques, -1, sizeof(T)*k);
 			candidates = new T [k * (num_nodes+1)] ();
-			for (uint i=0; i<num_nodes; ++i) candidates[i] = i;
+			for (unsigned int i=0; i<num_nodes; ++i) candidates[i] = i;
 		}
 
 		__forceinline__
