@@ -2226,7 +2226,8 @@ void group_theoretic_activity::do_surface_classify(int verbose_level)
 
 	if (f_v) {
 		cout << "group_theoretic_activity::do_surface_classify "
-				"before Algebra.classify_surfaces" << endl;
+				"before Algebra.classify_surfaces, control=" << endl;
+		Control->print();
 	}
 	Algebra.classify_surfaces(
 			F, LG,

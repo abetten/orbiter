@@ -1266,6 +1266,57 @@ int scene::cubic(double *coeff)
 	return nb_cubics - 1;
 }
 
+void scene::deformation_of_cubic_lex(int nb_frames,
+		double angle_start, double angle_max, double angle_min,
+		double *coeff1, double *coeff2,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "scene::deformation_of_cubic_lex" << endl;
+	}
+	double phi_step, phi, s1, s2, c, theta, t, mu, lambda;
+	double coeff3[20];
+	int h, nb_frames_half, i;
+
+	nb_frames_half = nb_frames >> 1;
+	phi_step = 2 * 2 * M_PI / (nb_frames - 1);
+	s1 = (angle_max - angle_start) / 2.;
+	s2 = (angle_start - angle_min) / 2.;
+
+	for (h = 0; h < nb_frames; h++) {
+		phi = h * phi_step;
+		c = 1. - cos(phi);
+		if (h < nb_frames_half) {
+			theta = angle_start + c * s1;
+		}
+		else {
+			theta = angle_start - c * s2;
+		}
+		t = tan(theta);
+		if (isnan(t) || ABS(t) > 1000000.) {
+			mu = 0;
+			lambda = 1;
+		}
+		else if (t > 1.) {
+			mu = 1. / t;
+			lambda = 1;
+		}
+		else {
+			mu = 1;
+			lambda = t;
+		}
+		for (i = 0; i < 20; i++) {
+			coeff3[i] = mu * coeff1[i] + lambda * coeff2[i];
+		}
+		cubic(coeff3);
+	}
+	if (f_v) {
+		cout << "scene::deformation_of_cubic_lex done" << endl;
+	}
+}
+
 int scene::cubic_Goursat_ABC(double A, double B, double C)
 {
 	double coeffs[20];
@@ -5116,10 +5167,15 @@ void scene::add_a_group_of_things(int *Idx, int sz, int verbose_level)
 	if (f_v) {
 		cout << "scene::add_a_group_of_things" << endl;
 	}
+
 	for (i = 0; i < sz; i++) {
 		v.push_back(Idx[i]);
 	}
+
 	group_of_things.push_back(v);
+
+	f_group_is_animated.push_back(FALSE);
+
 	if (f_v) {
 		cout << "scene::add_a_group_of_things done" << endl;
 	}

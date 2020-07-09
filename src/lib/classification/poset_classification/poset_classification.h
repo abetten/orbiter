@@ -777,14 +777,14 @@ public:
 		int f_draw_aut_group_order, 
 		int radius, int verbose_level);
 	void draw_poset_full(const char *fname_base, int depth, 
-		int data, int f_embedded, int f_sideways, 
+		int data, int f_embedded, int f_sideways, int rad,
 		double x_stretch, int verbose_level);
 	void draw_poset_fname_base_aux_poset(char *fname, int depth);
 	void draw_poset_fname_base_poset_lvl(char *fname, int depth);
 	void draw_poset_fname_base_tree_lvl(char *fname, int depth);
 	void draw_poset_fname_base_poset_detailed_lvl(char *fname, int depth);
 	void draw_poset(const char *fname_base, int depth, 
-		int data1, int f_embedded, int f_sideways, 
+		int data1, int f_embedded, int f_sideways, int rad,
 		int verbose_level);
 	void draw_level_graph(const char *fname_base, int depth, 
 		int data, int level, int f_embedded, int f_sideways, 

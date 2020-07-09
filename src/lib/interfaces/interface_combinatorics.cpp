@@ -1206,7 +1206,7 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 
 	if (Gen.Control->f_draw_poset) {
 		Gen.gen->draw_poset(Gen.gen->get_problem_label_with_path(), depth,
-			Gen.n /* data1 */, f_embedded, f_sideways,
+			Gen.n /* data1 */, f_embedded, f_sideways, 100 /* rad */,
 			verbose_level);
 		}
 
@@ -1215,7 +1215,7 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 		//double x_stretch = 0.4;
 		cout << "Gen.f_draw_full_poset" << endl;
 		Gen.gen->draw_poset_full(Gen.gen->get_problem_label_with_path(), depth,
-			Gen.n /* data1 */, f_embedded, f_sideways,
+			Gen.n /* data1 */, f_embedded, f_sideways, 100 /* rad */,
 			Gen.x_stretch, verbose_level);
 
 		const char *fname_prefix = "flag_orbits";

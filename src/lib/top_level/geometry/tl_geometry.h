@@ -930,8 +930,6 @@ public:
 	void make_spreadsheet_of_neighbors(spreadsheet *&Sp, 
 		int verbose_level);
 	void classify_partial_ovoids(
-		int f_draw_poset,
-		int f_draw_poset_full, 
 		int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
 	void partial_ovoid_test_early(long int *S, int len,

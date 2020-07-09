@@ -489,7 +489,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			cout << "poset_classification::post_processing f_draw_poset" << endl;
 		}
 		draw_poset(get_problem_label_with_path(), actual_size,
-			0 /* data1 */, Control->f_embedded, Control->f_sideways,
+			0 /* data1 */, Control->f_embedded, Control->f_sideways, Control->radius,
 			verbose_level);
 	}
 
@@ -498,7 +498,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			cout << "poset_classification::post_processing f_draw_full_poset" << endl;
 		}
 		draw_poset_full(get_problem_label_with_path(), actual_size,
-				0 /* data1 */, Control->f_embedded, Control->f_sideways,
+				0 /* data1 */, Control->f_embedded, Control->f_sideways, Control->radius,
 				1 /* x_stretch */, verbose_level);
 
 			const char *fname_prefix = "flag_orbits";

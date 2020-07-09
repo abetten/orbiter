@@ -27,7 +27,7 @@ class KClique {
 public:
 	template <typename T, typename U>
 	__forceinline__
-	static void find_cliques (Graph<T,U>& G, vector<vector<T>>& soln, uint k, size_t n_threads=0) {
+	static void find_cliques (Graph<T,U>& G, vector<vector<T>>& soln, unsigned int k, size_t n_threads=0) {
 		const size_t nThreads = (n_threads == 0) ? std::thread::hardware_concurrency() : n_threads;
 		std::thread threads [nThreads];
 		PARAMS<T> params [nThreads];
@@ -62,7 +62,7 @@ private:
 		}
 		PARAMS() {}
 
-		void init(uint8_t tid, uint k, uint32_t num_nodes, uint8_t n_threads) {
+		void init(uint8_t tid, unsigned int k, uint32_t num_nodes, uint8_t n_threads) {
 			this->tid = tid;
 			this->n_threads = n_threads;
 			this->k = k;
@@ -83,7 +83,7 @@ private:
 		T* candidates = NULL;
 		size_t nb_sol = 0; // number of solutions found by a thread
 		uint8_t n_threads = 0;
-		uint k = 0;
+		unsigned int k = 0;
 		size_t depth = 0;
 		size_t num_nodes = 0;
 		vector<vector<T>> t_solutions;

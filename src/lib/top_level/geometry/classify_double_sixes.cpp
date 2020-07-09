@@ -444,8 +444,6 @@ void classify_double_sixes::make_spreadsheet_of_neighbors(
 }
 
 void classify_double_sixes::classify_partial_ovoids(
-	int f_draw_poset,
-	int f_draw_poset_full, 
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -480,6 +478,7 @@ void classify_double_sixes::classify_partial_ovoids(
 				"classifying starter done" << endl;
 	}
 	
+#if 0
 	if (f_draw_poset) {
 		{
 			char fname_poset[1000];
@@ -488,6 +487,7 @@ void classify_double_sixes::classify_partial_ovoids(
 					5 /*depth*/, 0 /* data1 */,
 					TRUE /* f_embedded */,
 					FALSE /* f_sideways */,
+					Five_plus_one->Control->radius,
 					0 /* verbose_level */);
 		}
 	}
@@ -499,9 +499,12 @@ void classify_double_sixes::classify_partial_ovoids(
 					5 /*depth*/, 0 /* data1 */,
 					TRUE /* f_embedded */,
 					FALSE /* f_sideways */,
+					Five_plus_one->Control->radius,
 					0 /* verbose_level */);
 		}
 	}
+#endif
+
 	if (q < 20) {
 		{
 			spreadsheet *Sp;

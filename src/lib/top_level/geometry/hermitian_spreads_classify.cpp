@@ -373,7 +373,7 @@ void hermitian_spreads_classify::compute(int depth, int verbose_level)
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;
 	int t0;
-	int f_embedded = TRUE;
+	//int f_embedded = TRUE;
 	os_interface Os;
 
 
@@ -412,11 +412,13 @@ void hermitian_spreads_classify::compute(int depth, int verbose_level)
 	}
 	length = gen->nb_orbits_at_level(depth);
 
+#if 0
 	int f_sideways = FALSE;
 
 	gen->draw_poset(gen->get_problem_label_with_path(), depth, 0 /* data1 */,
-			f_embedded, f_sideways, verbose_level);
+			f_embedded, f_sideways, 100, verbose_level);
 	gen->print_data_structure_tex(depth, verbose_level);
+#endif
 
 	if (f_v) {
 		cout << "hermitian_spreads_classify::compute "

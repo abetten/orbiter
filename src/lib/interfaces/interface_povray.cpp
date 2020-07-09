@@ -174,8 +174,8 @@ int interface_povray::read_scene_objects(int argc, const char **argv, int i0, in
 			break;
 		}
 		else {
-			cout << "-scene_object: unrecognized option " << argv[i] << endl;
-			exit(1);
+			cout << "-scene_object: unrecognized option " << argv[i] << " ignored" << endl;
+			continue;
 		}
 	}
 	if (f_v) {
@@ -917,6 +917,52 @@ int interface_povray::scan2(int argc, const char **argv, int &i, int verbose_lev
 
 		D.init_labels(group_idx, thickness_half, scale, properties, verbose_level);
 		S->Drawables.push_back(D);
+	}
+	else if (strcmp(argv[i], "-deformation_of_cubic_lex") == 0) {
+		cout << "-deformation_of_cubic_lex" << endl;
+		const char *coeff1_text;
+		const char *coeff2_text;
+		int nb_frames;
+		double angle_start, angle_max, angle_min;
+		double *coeff1;
+		double *coeff2;
+		int coeff_sz;
+		numerics Numerics;
+
+		nb_frames = atoi(argv[++i]);
+		angle_start = atof(argv[++i]);
+		angle_max = atof(argv[++i]);
+		angle_min = atof(argv[++i]);
+		coeff1_text = argv[++i];
+		Numerics.vec_scan(coeff1_text, coeff1, coeff_sz);
+		if (coeff_sz != 20) {
+			cout << "For -deformation_of_cubic_lex, number of coefficients must be 20; is " << coeff_sz << endl;
+			exit(1);
+		}
+		coeff2_text = argv[++i];
+		Numerics.vec_scan(coeff2_text, coeff2, coeff_sz);
+		if (coeff_sz != 20) {
+			cout << "For -deformation_of_cubic_lex, number of coefficients must be 20; is " << coeff_sz << endl;
+			exit(1);
+		}
+		S->deformation_of_cubic_lex(
+				nb_frames, angle_start, angle_max, angle_min,
+				coeff1, coeff2,
+				verbose_level);
+		delete [] coeff1;
+		delete [] coeff2;
+	}
+	else if (strcmp(argv[i], "-group_is_animated") == 0) {
+		cout << "-group_is_animated" << endl;
+		int group_idx;
+
+		group_idx = atoi(argv[++i]);
+
+		//S->Drawables.push_back(D);
+
+		S->f_group_is_animated[group_idx] = 1;
+
+		cout << "-group_is_animated" << group_idx << endl;
 	}
 	else {
 		return FALSE;

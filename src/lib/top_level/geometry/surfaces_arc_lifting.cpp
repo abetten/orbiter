@@ -251,6 +251,7 @@ void surfaces_arc_lifting::draw_poset_of_six_arcs(int verbose_level)
 		6 /* depth */, 0 /* data */,
 		TRUE /* f_embedded */,
 		FALSE /* f_sideways */,
+		100 /* rad */,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "surfaces_arc_lifting::draw_poset_of_six_arcs done" << endl;

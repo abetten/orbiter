@@ -840,6 +840,8 @@ public:
 	int nb_groups;
 	std::vector<std::vector<int> > group_of_things;
 
+	std::vector<int> f_group_is_animated;
+
 	std::vector<drawable_set_of_objects> Drawables;
 
 
@@ -953,6 +955,10 @@ public:
 	// 18: z^2
 	// 19: z
 	// 20: 1
+	void deformation_of_cubic_lex(int nb_frames,
+			double angle_start, double angle_max, double angle_min,
+			double *coeff1, double *coeff2,
+			int verbose_level);
 	int cubic_Goursat_ABC(double A, double B, double C);
 	int quartic(double *coeff);
 	int face(int *pts, int nb_pts);
