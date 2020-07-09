@@ -392,7 +392,7 @@ void kramer_mesner::orbits(
 			}
 		gen->draw_poset(gen->get_problem_label_with_path(), orbits_k,
 			0 /* data1 */, f_embedded,
-			f_sideways,
+			f_sideways, 100 /* rad */,
 			0 /* gen->verbose_level */);
 		}
 

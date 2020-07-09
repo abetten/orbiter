@@ -182,8 +182,6 @@ void surface_classify_wedge::do_classify_double_sixes(int verbose_level)
 					"Classify_double_sixes->classify_partial_ovoids" << endl;
 		}
 		Classify_double_sixes->classify_partial_ovoids(
-			FALSE /*f_draw_poset*/,
-			FALSE /*f_draw_poset_full*/,
 			//f_report_5p1,
 			verbose_level - 1);
 		if (f_v) {

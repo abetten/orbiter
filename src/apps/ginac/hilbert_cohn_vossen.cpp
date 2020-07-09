@@ -460,7 +460,9 @@ void surface(int argc, const char **argv)
 
 		HPD = NEW_OBJECT(homogeneous_polynomial_domain);
 		HPD->init(F, 4 /* nb_vars */, 3 /* degree */,
-				FALSE /* f_init_incidence_structure */, verbose_level);
+				FALSE /* f_init_incidence_structure */,
+				t_PART,
+				verbose_level);
 
 		//print the monomials in Orbiter ordering:
 		for (i = 0; i < HPD->nb_monomials; i++) {
@@ -600,10 +602,26 @@ void surface(int argc, const char **argv)
 			// Here, the equation for the i-th point.
 			// The right hand side is 0:
 
-			eqns.append(S(i,0)*m0+S(i,1)*m1+S(i,2)*m2+S(i,3)*m3+S(i,4)*m4
-					+S(i,5)*m5+S(i,6)*m6+S(i,7)*m7+S(i,8)*m8+S(i,9)*m9
-					+S(i,10)*m10+S(i,11)*m11+S(i,12)*m12+S(i,13)*m13+S(i,14)*m14
-					+S(i,15)*m15+S(i,16)*m16+S(i,17)*m17+S(i,18)*m18+S(i,19)*m19
+			eqns.append(S(i,0)*m0
+					+S(i,1)*m1
+					+S(i,2)*m2
+					+S(i,3)*m3
+					+S(i,4)*m4
+					+S(i,5)*m5
+					+S(i,6)*m6
+					+S(i,7)*m7
+					+S(i,8)*m8
+					+S(i,9)*m9
+					+S(i,10)*m10
+					+S(i,11)*m11
+					+S(i,12)*m12
+					+S(i,13)*m13
+					+S(i,14)*m14
+					+S(i,15)*m15
+					+S(i,16)*m16
+					+S(i,17)*m17
+					+S(i,18)*m18
+					+S(i,19)*m19
 					==0);
 		}
 

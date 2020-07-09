@@ -449,6 +449,7 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 					0 /* data1 */,
 					FALSE /* f_embedded */,
 					FALSE /* f_sideways */,
+					100 /* rad */,
 					verbose_level);
 			}
 

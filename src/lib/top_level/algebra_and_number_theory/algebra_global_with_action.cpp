@@ -2541,6 +2541,7 @@ void algebra_global_with_action::classify_surfaces_through_arcs_and_trihedral_pa
 				6 /* depth */, 0 /* data */,
 				TRUE /* f_embedded */,
 				FALSE /* f_sideways */,
+				100 /* rad */,
 				verbose_level);
 		}
 

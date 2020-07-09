@@ -617,7 +617,7 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 }
 
 void poset_classification::draw_poset_full(const char *fname_base,
-		int depth, int data, int f_embedded, int f_sideways,
+		int depth, int data, int f_embedded, int f_sideways, int rad,
 		double x_stretch,
 		int verbose_level)
 {
@@ -640,7 +640,6 @@ void poset_classification::draw_poset_full(const char *fname_base,
 	int ymax = 1000000;
 	int x_max = 10000;
 	int y_max = 10000;
-	int rad = 50;
 	int f_circle = TRUE;
 	int f_corners = FALSE;
 	int f_nodes_empty = FALSE;
@@ -712,7 +711,7 @@ void poset_classification::draw_poset_fname_base_poset_detailed_lvl(
 
 void poset_classification::draw_poset(
 		const char *fname_base,
-		int depth, int data, int f_embedded, int f_sideways,
+		int depth, int data, int f_embedded, int f_sideways, int rad,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -768,7 +767,6 @@ void poset_classification::draw_poset(
 	int ymax = 1000000;
 	int x_max = 10000;
 	int y_max = 10000;
-	int rad = 600;
 	int f_circle = TRUE;
 	int f_corners = FALSE;
 	int f_nodes_empty = FALSE;
