@@ -43,8 +43,8 @@ public:
 	atomic<int> num_nodes;
 	atomic<bool> __kill__;
 	atomic<bool> __terminated__;
-	uint flush_interval = pow(2, 13);
-	atomic<uint> current_flush_count;
+	unsigned int flush_interval = pow(2, 13);
+	atomic<unsigned int> current_flush_count;
 	atomic<FILE*> _output_stream_;
 	thread printer;
 	condition_variable cv, cv1;
