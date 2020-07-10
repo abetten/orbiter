@@ -10,14 +10,10 @@
 void shallow_schreier_ai::generate_shallow_tree(schreier& sch, int verbose_level) {
 
 	int f_v = (verbose_level >= 1);
-	int fst, len, root, cnt, l;
-	int i, a, f, o;
 	int *Elt1;
 
 	if (f_v) {
-
 		cout << "schreier::shallow_tree_generators_ai" << endl;
-
 	}
 
 

@@ -191,7 +191,8 @@ public:
 			const char *properties, int verbose_level);
 	void init_labels(int group_idx,
 			double thickness_half, double scale, const char *properties, int verbose_level);
-	void draw(animate *Anim, std::ostream &ost, int verbose_level);
+	void draw(animate *Anim, std::ostream &ost,
+			int f_group_is_animated, int frame, int verbose_level);
 
 };
 
@@ -840,7 +841,7 @@ public:
 	int nb_groups;
 	std::vector<std::vector<int> > group_of_things;
 
-	std::vector<int> f_group_is_animated;
+	std::vector<int> animated_groups;
 
 	std::vector<drawable_set_of_objects> Drawables;
 

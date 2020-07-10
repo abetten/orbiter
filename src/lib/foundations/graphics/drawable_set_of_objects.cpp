@@ -242,7 +242,8 @@ void drawable_set_of_objects::init_labels(int group_idx,
 }
 
 
-void drawable_set_of_objects::draw(animate *Anim, ostream &ost, int verbose_level)
+void drawable_set_of_objects::draw(animate *Anim, ostream &ost,
+		int f_group_is_animated, int frame, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int sz;
@@ -254,15 +255,31 @@ void drawable_set_of_objects::draw(animate *Anim, ostream &ost, int verbose_leve
 	}
 	if (f_v) {
 		cout << "group_idx = " << group_idx << endl;
+		cout << "f_group_is_animated = " << f_group_is_animated << endl;
 	}
+
 	sz = Anim->S->group_of_things[group_idx].size();
+
+	if (f_group_is_animated) {
+		if (frame < sz) {
+			sz = 1;
+			Selection = NEW_int(1);
+			Selection[0] = Anim->S->group_of_things[group_idx][frame];
+		}
+		else {
+			return;
+		}
+	}
+	else {
+		Selection = NEW_int(sz);
+		for (j = 0; j < sz; j++) {
+			Selection[j] = Anim->S->group_of_things[group_idx][j];
+		}
+	}
 	if (f_v) {
 		cout << "sz = " << sz << endl;
 	}
-	Selection = NEW_int(sz);
-	for (j = 0; j < sz; j++) {
-		Selection[j] = Anim->S->group_of_things[group_idx][j];
-	}
+
 	if (f_v) {
 		cout << "Selection: " << endl;
 		int_vec_print(cout, Selection, sz);

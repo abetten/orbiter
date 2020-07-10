@@ -5174,7 +5174,7 @@ void scene::add_a_group_of_things(int *Idx, int sz, int verbose_level)
 
 	group_of_things.push_back(v);
 
-	f_group_is_animated.push_back(FALSE);
+	//f_group_is_animated.push_back(FALSE);
 
 	if (f_v) {
 		cout << "scene::add_a_group_of_things done" << endl;

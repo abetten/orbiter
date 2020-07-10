@@ -1,0 +1,10 @@
+main
+*.o
+.cproject
+.project
+.setting
+.settings
+*.out
+benchmark
+async_benchmark
+*/bin/*
