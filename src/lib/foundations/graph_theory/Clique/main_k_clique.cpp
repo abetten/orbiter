@@ -3,6 +3,8 @@
 using std::cout;
 using std::endl;
 
+logger_init();
+
 int main () {
 
 	// The graph class is templated such that the vertex labels can be

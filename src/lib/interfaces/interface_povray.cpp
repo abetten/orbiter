@@ -960,9 +960,9 @@ int interface_povray::scan2(int argc, const char **argv, int &i, int verbose_lev
 
 		//S->Drawables.push_back(D);
 
-		S->f_group_is_animated[group_idx] = 1;
+		S->animated_groups.push_back(group_idx);
 
-		cout << "-group_is_animated" << group_idx << endl;
+		cout << "-group_is_animated " << group_idx << endl;
 	}
 	else {
 		return FALSE;
@@ -1000,52 +1000,52 @@ void interface_povray::worker(int verbose_level)
 	//sprintf(fname_makefile, "makefile_animation");
 
 	{
-	ofstream fpm(A->fname_makefile);
+		ofstream fpm(A->fname_makefile);
 
-	A->fpm = &fpm;
+		A->fpm = &fpm;
 
-	fpm << "all:" << endl;
+		fpm << "all:" << endl;
 
-	if (f_rounds) {
+		if (f_rounds) {
 
-		int *rounds;
-		int nb_rounds;
+			int *rounds;
+			int nb_rounds;
 
-		int_vec_scan(rounds_as_string, rounds, nb_rounds);
+			int_vec_scan(rounds_as_string, rounds, nb_rounds);
 
-		cout << "Doing the following " << nb_rounds << " rounds: ";
-		int_vec_print(cout, rounds, nb_rounds);
-		cout << endl;
+			cout << "Doing the following " << nb_rounds << " rounds: ";
+			int_vec_print(cout, rounds, nb_rounds);
+			cout << endl;
 
-		int r;
+			int r;
 
-		for (r = 0; r < nb_rounds; r++) {
+			for (r = 0; r < nb_rounds; r++) {
 
 
-			round = rounds[r];
+				round = rounds[r];
 
-			cout << "round " << r << " / " << nb_rounds
-					<< " is " << round << endl;
+				cout << "round " << r << " / " << nb_rounds
+						<< " is " << round << endl;
 
-			//round = first_round + r;
+				//round = first_round + r;
+
+				A->animate_one_round(
+						round,
+						verbose_level);
+
+				}
+			}
+		else {
+			cout << "round " << round << endl;
+
 
 			A->animate_one_round(
 					round,
 					verbose_level);
 
 			}
-		}
-	else {
-		cout << "round " << round << endl;
 
-
-		A->animate_one_round(
-				round,
-				verbose_level);
-
-		}
-
-	fpm << endl;
+		fpm << endl;
 	}
 	file_io Fio;
 
@@ -1070,7 +1070,7 @@ void interface_povray_draw_frame(
 	ostream &fp,
 	int verbose_level)
 {
-	int i;
+	int i, j;
 
 
 
@@ -1082,10 +1082,26 @@ void interface_povray_draw_frame(
 
 		for (i = 0; i < (int) Anim->S->Drawables.size(); i++) {
 			drawable_set_of_objects D;
+			int f_group_is_animated = FALSE;
 
 			cout << "drawable " << i << ":" << endl;
 			D = Anim->S->Drawables[i];
-			D.draw(Anim, fp, verbose_level);
+
+			for (j = 0; j < Anim->S->animated_groups.size(); j++) {
+				if (Anim->S->animated_groups[j] == i) {
+					break;
+				}
+			}
+			if (j < Anim->S->animated_groups.size()) {
+				f_group_is_animated = TRUE;
+			}
+			if (f_group_is_animated) {
+				cout << "is animated" << endl;
+			}
+			else {
+				cout << "is not animated" << endl;
+			}
+			D.draw(Anim, fp, f_group_is_animated, h, verbose_level);
 		}
 
 

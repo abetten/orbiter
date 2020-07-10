@@ -405,15 +405,6 @@ void midpoint_of_2(int *Px, int *Py, int i1, int i2, int idx);
 void midpoint_of_5(int *Px, int *Py, int i1, int i2, int i3, int i4, int i5, int idx);
 void ratio_int(int *Px, int *Py, int idx_from, int idx_to, int idx_result, double r);
 
-//void time_check_delta(int dt);
-//void time_check(int t0);
-#if 0
-int nb_of_bits();
-void bit_set(uint & g, int k);
-void bit_clear(uint & g, int k);
-int bit_test(uint & g, int k);
-void bitset2vector(uint g, Vector &v);
-#endif
 void frobenius_in_PG(domain *dom, int n, permutation &p);
 // n is the projective dimension
 void frobenius_in_AG(domain *dom, int n, permutation &p);
@@ -1530,11 +1521,6 @@ class unipoly: public Vector
 	
 };
 
-// vbp.cpp:
-void place_lattice(Vector& nl, Vector& orbit_size, 
-	int size_x, int size_y, 
-	Vector& Px, Vector& Py, Vector& O_dx, 
-	int f_upside_down, int f_v);
 
 
 
