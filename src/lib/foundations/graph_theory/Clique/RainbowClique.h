@@ -264,7 +264,6 @@ private:
     __forceinline__
     static U get_color_with_lowest_frequency_(Graph<T,U>& G, PARAMS<T>& param, T start, T end) {
 
-        T* live_pts = param.live_pts;
         T* color_frequency = param.color_frequency;
         bool* color_satisfied = param.color_satisfied; 
 
