@@ -5,19 +5,12 @@ ORBITER/nbproject/
 *~
 *.dSYM
 orbiter.tar.gz
-.DS_Store
-.settings/*
-.cproject
-.settings/language.settings.xml
 
 idea/
-.idea/
 CMakeLists.txt
 cmake-build-debug/
 
-./.cproject
-./.settings/language.settings.xml
+.*
+!/.gitignore
 
-.cproject
-.settings/language.settings.xml
-.settings
+_config.yml
