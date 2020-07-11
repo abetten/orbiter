@@ -24,6 +24,10 @@
 using std::string;
 using std::mutex;
 
+#ifndef uint
+typedef unsigned int uint;
+#endif
+
 #ifndef __force_inline__
 #define __force_inline__ __attribute__((always_inline)) inline
 #endif
@@ -171,6 +175,13 @@ namespace logger {
 	#endif
 
 	/**
+	 *
+	 */
+	#ifndef logger_enable_scope
+	#define logger_enable_scope(v) logger::__scope__ scope_logging(v)
+	#endif
+
+	/**
 	 * The output stream of the logger.
 	 */
 	extern FILE* _output_stream_;
@@ -218,43 +229,82 @@ namespace logger {
 	#define logger_log_level(v) logger::_loglevel_global_ = v
 	#endif
 
+	/**
+	 * Used to enable or disable logging within a certain scope
+	 * Affects the states of both global logging and translation unit logging
+	 */
+	class __scope__ {
+		bool value;
+		bool previous_global_logger_state;
+		bool previous_translation_unit_logger_state;
+
+	public:
+		explicit __scope__(bool value) {
+			bool current_global_logger_state = logger::_enable_global_;
+			bool current_translation_unit_logger_state = logger::_enable_translation_uint_;
+
+			previous_global_logger_state = current_global_logger_state;
+			previous_translation_unit_logger_state = current_translation_unit_logger_state;
+
+			logger_enable(value);
+			logger_enable_global(value);
+			this->value = value;
+		}
+
+		~__scope__() {
+			logger_enable(previous_translation_unit_logger_state);
+			logger_enable_global(previous_global_logger_state);
+		}
+	};
 
 	/**
 	 *
 	 */
 	__force_inline__
-	void __print_timestamp_printf__() {
+	void __print_timestamp__() {
 		const auto duration = std::chrono::system_clock::now().time_since_epoch();
 		switch (_resolution) {
-			case nanosecond:
-				fprintf(_output_stream_, "[%ld]",
-						std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count());
+			case nanosecond: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count();
+				fprintf(_output_stream_, "[%lu]", time);
 				break;
+			}
 
-			case microsecond:
-				fprintf(_output_stream_, "[%ld]",
-						std::chrono::duration_cast<std::chrono::microseconds>(duration).count());
+			case microsecond: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
+				fprintf(_output_stream_, "[%lu]", time);
 				break;
+			}
 
-			case millisecond:
-				fprintf(_output_stream_, "[%ld]",
-						std::chrono::duration_cast<std::chrono::milliseconds>(duration).count());
+			case millisecond: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+				fprintf(_output_stream_, "[%lu]", time);
 				break;
+			}
 
-			case seconds:
-				fprintf(_output_stream_, "[%ld]",
-						std::chrono::duration_cast<std::chrono::seconds>(duration).count());
+			case seconds: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::seconds>(duration).count();
+				fprintf(_output_stream_, "[%lu]", time);
 				break;
+			}
 
-			case minutes:
-				fprintf(_output_stream_, "[%ld]",
-						std::chrono::duration_cast<std::chrono::minutes>(duration).count());
+			case minutes: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::minutes>(duration).count();
+				fprintf(_output_stream_, "[%lu]", time);
 				break;
+			}
 
-			case hours:
-				fprintf(_output_stream_, "[%ld]",
-						std::chrono::duration_cast<std::chrono::hours>(duration).count());
+			case hours: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::hours>(duration).count();
+				fprintf(_output_stream_, "[%lu]", time);
 				break;
+			}
 		}
 	}
 
@@ -262,39 +312,51 @@ namespace logger {
 	 *
 	 */
 	__force_inline__
-	int __print_timestamp_sprintf__(char* b) {
+	int __print_timestamp__(char* b) {
 		int rv = 0;
 		const auto duration = std::chrono::system_clock::now().time_since_epoch();
 		switch (_resolution) {
-			case nanosecond:
-				rv += sprintf(b, "[%ld]",
-						std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count());
+			case nanosecond: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count();
+				rv += snprintf(b, 20, "[%lu]", time);
 				break;
+			}
 
-			case microsecond:
-				rv += sprintf(b, "[%ld]",
-						std::chrono::duration_cast<std::chrono::microseconds>(duration).count());
+			case microsecond: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
+				rv += snprintf(b, 20, "[%lu]", time);
 				break;
+			}
 
-			case millisecond:
-				rv += sprintf(b, "[%ld]",
-						std::chrono::duration_cast<std::chrono::milliseconds>(duration).count());
+			case millisecond: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+				rv += snprintf(b, 20, "[%lu]", time);
 				break;
+			}
 
-			case seconds:
-				rv += sprintf(b, "[%ld]",
-						std::chrono::duration_cast<std::chrono::seconds>(duration).count());
+			case seconds: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::seconds>(duration).count();
+				rv += snprintf(b, 20, "[%lu]", time);
 				break;
+			}
 
-			case minutes:
-				rv += sprintf(b, "[%ld]",
-						std::chrono::duration_cast<std::chrono::minutes>(duration).count());
+			case minutes: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::minutes>(duration).count();
+				rv += snprintf(b, 20, "[%lu]", time);
 				break;
+			}
 
-			case hours:
-				rv += sprintf(b, "[%ld]",
-						std::chrono::duration_cast<std::chrono::hours>(duration).count());
+			case hours: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::hours>(duration).count();
+				rv += snprintf(b, 20, "[%lu]", time);
 				break;
+			}
 		}
 		return rv;
 	}
@@ -310,17 +372,17 @@ namespace logger {
 	#ifndef __CPPLOGGER_COLOR__
 	#define __CPPLOGGER_COLOR__(color, msg) color+msg;
 	#endif
-	__force_inline__ string _BLACK_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_BLACK, msg);		}
-	__force_inline__ string _RED_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_RED, msg);			}
-	__force_inline__ string _GREEN_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_GREEN, msg);		}
-	__force_inline__ string _YELLOW_(string msg)	{return __CPPLOGGER_COLOR__(ANSI_YELLOW, msg);		}
-	__force_inline__ string _BLUE_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_BLUE, msg);		}
-	__force_inline__ string _PURPLE_(string msg)	{return __CPPLOGGER_COLOR__(ANSI_PURPLE, msg);		}
-	__force_inline__ string _CYAN_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_CYAN, msg);		}
-	__force_inline__ string _WHITE_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_WHITE, msg);		}
-	__force_inline__ string _BOLD_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_BOLD, msg);		}
-	__force_inline__ string _UNDERLINE_(string msg)	{return __CPPLOGGER_COLOR__(ANSI_UNDERLINE, msg);	}
-	__force_inline__ string _ITALIC_(string msg)	{return __CPPLOGGER_COLOR__(ANSI_ITALIC, msg);		}
+	__force_inline__ string _BLACK_(const string& msg)		{return __CPPLOGGER_COLOR__(ANSI_BLACK, msg);		}
+	__force_inline__ string _RED_(const string& msg)		{return __CPPLOGGER_COLOR__(ANSI_RED, msg);			}
+	__force_inline__ string _GREEN_(const string& msg)		{return __CPPLOGGER_COLOR__(ANSI_GREEN, msg);		}
+	__force_inline__ string _YELLOW_(const string& msg)	{return __CPPLOGGER_COLOR__(ANSI_YELLOW, msg);		}
+	__force_inline__ string _BLUE_(const string& msg)		{return __CPPLOGGER_COLOR__(ANSI_BLUE, msg);		}
+	__force_inline__ string _PURPLE_(const string& msg)	{return __CPPLOGGER_COLOR__(ANSI_PURPLE, msg);		}
+	__force_inline__ string _CYAN_(const string& msg)		{return __CPPLOGGER_COLOR__(ANSI_CYAN, msg);		}
+	__force_inline__ string _WHITE_(const string& msg)		{return __CPPLOGGER_COLOR__(ANSI_WHITE, msg);		}
+	__force_inline__ string _BOLD_(const string& msg)		{return __CPPLOGGER_COLOR__(ANSI_BOLD, msg);		}
+	__force_inline__ string _UNDERLINE_(const string& msg)	{return __CPPLOGGER_COLOR__(ANSI_UNDERLINE, msg);	}
+	__force_inline__ string _ITALIC_(const string& msg)	{return __CPPLOGGER_COLOR__(ANSI_ITALIC, msg);		}
 
 
 	/**
@@ -351,12 +413,12 @@ namespace logger {
 			fputs(color "[" type "]" ANSI_RESET, _output_stream_); \
 		} \
 		if (_print_timestamps_) { \
-			__print_timestamp_printf__(); \
+			__print_timestamp__(); \
 		} \
 		if (_print_thread_id_) { \
 			std::stringstream ss; ss << std::this_thread::get_id(); \
 			const unsigned long long int id = std::stoull(ss.str()); \
-			fprintf(_output_stream_, "[%04lld]", id); \
+			fprintf(_output_stream_, "[%04llu]", id); \
 		} \
 		if (_print_log_type_ || _print_timestamps_ || _print_thread_id_) { \
 			fputs(": ", _output_stream_); \
@@ -461,7 +523,7 @@ namespace logger {
 
 
 	/**
-	 *
+	 * Variadic argument function for printing debug logs to screen.
 	 */
 	#ifndef logger_debug
 	#define logger_debug(...) logger::_debug_(__FILE__, __LINE__, __VA_ARGS__)
@@ -473,29 +535,31 @@ namespace logger {
 
 	/**
 	 * The following function are used to get the name of a type from its pointer
+	 * or its reference
 	 */
+	#ifndef logger_get_type
+	#define logger_get_type(v) logger::get_type(v).c_str()
+	#endif
+
 	template<typename T>
-	const char* get_type(T* c) {
+	string get_type(T* c) {
 		if (!_enable_global_ || !_enable_translation_uint_) return nullptr;
 		auto ptr = std::unique_ptr<char, decltype(& std::free)>{
 			abi::__cxa_demangle(typeid(*c).name(), nullptr, nullptr, nullptr),
 			std::free
 		};
-		return string(ptr.get()).c_str();
+		return string(ptr.get());
 	}
 
-	/**
-	 * The following function is used to get the name of a type from its reference
-	 */
 	#ifndef __clang__
 	template<typename T>
-	const char* get_type(T& c) {
+	string get_type(T& c) {
 		if (!_enable_global_ || !_enable_translation_uint_) return nullptr;
 		auto ptr = std::unique_ptr<char, decltype(& std::free)>{
 			abi::__cxa_demangle(typeid(c).name(), nullptr, nullptr, nullptr),
 			std::free
 		};
-		return string(ptr.get()).c_str();
+		return string(ptr.get());
 	}
 	#endif
 
