@@ -18,7 +18,7 @@
 			std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count();\
 	const char*  ___file___ = __FILE__;\
 	const int ___line___ = __LINE__;\
-	printf("[%lld][%ld]: %s:%d:: " fmt "\n", id, millis, ___file___, ___line___, ##__VA_ARGS__);\
+	printf("[%llu][%lu]: %s:%d:: " fmt "\n", id, millis, ___file___, ___line___, ##__VA_ARGS__);\
 	fflush((FILE*)stdout);\
 }
 #else
