@@ -21,13 +21,14 @@ This is a simple, lightweight and thread safe logger for C++.
 		* Purple/ Magenta
 		* White
 	* For **bold**, underline and *italicizing* text, or a combination of any or all three
-	* Provides support for three levels of logging: `[INFO]`, `[ERROR]`, `[WARN]`
+	* Provides support for four levels of logging: `[INFO]`, `[ERROR]`, `[WARN]`, `[DEBUG]`
 	* Flag for enabling or disabling the printing of:
 		* Time stamps
 		* Threads IDs for logging at thread level for Multi/Single threaded applications
 		* Logging types
 		* File name and Line numbers
 * Provides a flag to disable global logging and also logging in a single translation unit.
+* Provides feature to enable or disable logging within a certain scope.
 * Enabling/Disabling logging does not require flags to be passed in at compile time
 * Provides verbose level option to limit how much logging information gets printed. Refer to [this](#Verbose-Level) example.
 	
@@ -367,6 +368,28 @@ int main() {
 }
 ```
 
+#### Scoped logging
+This feature allows the enabling or disabling of logging within a certain scope. Note that `logger_enable_scope()` function can only be called once in a scope.
+```c++
+#include <CPPLOGGER_SYNC.h>
+
+logger_init();
+
+int main() {
+	logger_enable(false);
+	logger_enable_global(false);
+	logger_info("This is before entering a new scope. This message should not be printed");
+	{
+	    logger_enable_scope(true);
+	    logger_info("This is logging in the new scope.");
+	}
+	logger_info("This is after leaving the scope. This message should not be printed");
+	logger_enable(true);
+	logger_enable_global(true);
+	logger_info("This message is after enabling global logging.");
+}
+```
+
 #### Setting the log level
 ```c++
 #include <CPPLOGGER_SYNC.h>
@@ -400,7 +423,7 @@ int main() {
 
 #### Get type of a variable
 ```c++
-#include <CPPLOGGER_SYNC.h>
+#include "../CPPLOGGER_SYNC.h"
 
 /**
  * The following should always be called only in the main translation unit.
@@ -412,7 +435,7 @@ class sample_class {
 public:
 	sample_class() {}
 	void print() {
-		logger_info("print method in class: %s", logger_red(logger::get_type(this)));
+		logger_info("print method in class: %s", logger_red(logger_get_type(this)));
 	}
 };
 
@@ -420,11 +443,11 @@ int main(int argc, char** argv) {
 
 	sample_class c;
 	c.print();
-	logger_info("c: %s", logger::get_type(c));
+	logger_info("c: %s", logger_get_type(c));
 
 
 	int a = 10;
-	logger_info("type of a: %s", logger::get_type(a));
+	logger_info("type of a: %s", logger_get_type(a));
 }
 ```
 

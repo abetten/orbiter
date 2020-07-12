@@ -1,7 +1,7 @@
 SRC=../../../src
 DISCRETA_CPP = g++
 DISCRETA_CC = gcc
-CPPFLAGS = -Wall -I$(SRC)/lib -I$(SRC)/lib/foundations/CPPLOGGER -std=c++14
+CPPFLAGS = -Wall -I$(SRC)/lib -I$(SRC)/lib/foundations/io_and_os/CPPLOGGER -std=c++14
 LIB = $(SRC)/lib/liborbiter.a -lpthread
 LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 #LFLAGS = -lm -lpthread -Wl,-rpath -Wl,/projects/abetten@colostate.edu/gcc-install-destdir/usr/local/gcc-8.1/lib64

@@ -2,7 +2,7 @@ CC=g++
 CFLAGS=-Wall -pthread
 CSTD=-std=c++14
 OPTFLAGS=-O3 -march=native -mtune=native -funroll-loops
-INCLUDES=-I../../BitSet -I../../CPPLOGGER -I../../../ -I../../../group_actions/groups/
+INCLUDES=-I../../BitSet -I../../io_and_os/CPPLOGGER -I../../../ -I../../../group_actions/groups/
 
 
 all: main main_k_clique

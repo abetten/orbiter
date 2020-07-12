@@ -8,6 +8,10 @@
 #ifndef LOCK_FREE_LINKED_LIST_H_
 #define LOCK_FREE_LINKED_LIST_H_
 
+#ifndef uint
+typedef unsigned int uint;
+#endif
+
 #include <chrono>
 #include <math.h>
 #include <stdlib.h>
@@ -31,7 +35,7 @@ using std::mutex;
 class lock_free_queue {
 public:
 	typedef struct node {
-		char data[256];
+		char data[256] = {'\0',};
 		node* next = nullptr;
 		bool done = false;
 		FILE* stream;
@@ -43,8 +47,8 @@ public:
 	atomic<int> num_nodes;
 	atomic<bool> __kill__;
 	atomic<bool> __terminated__;
-	unsigned int flush_interval = pow(2, 13);
-	atomic<unsigned int> current_flush_count;
+	uint flush_interval = pow(2, 13);
+	atomic<uint> current_flush_count;
 	atomic<FILE*> _output_stream_;
 	thread printer;
 	condition_variable cv, cv1;
