@@ -67,33 +67,6 @@ public:
 			int verbose_level);
 	void young_symmetrizer(int n, int verbose_level);
 	void young_symmetrizer_sym_4(int verbose_level);
-	void classify_surfaces_through_arcs_and_trihedral_pairs(
-			//group_theoretic_activity *GTA,
-			surface_with_action *Surf_A,
-			poset_classification_control *Control,
-			int verbose_level);
-	void investigate_surface_and_write_report(
-			action *A,
-			surface_create *SC,
-			six_arcs_not_on_a_conic *Six_arcs,
-			surface_object_with_action *SoA,
-			int f_surface_clebsch,
-			int f_surface_codes,
-			int f_surface_quartic,
-			int verbose_level);
-	void investigate_surface_and_write_report2(
-			std::ostream &ost,
-			action *A,
-			surface_create *SC,
-			six_arcs_not_on_a_conic *Six_arcs,
-			surface_object_with_action *SoA,
-			int f_surface_clebsch,
-			int f_surface_codes,
-			int f_surface_quartic,
-			char fname_mask[2000],
-			char label[2000],
-			char label_tex[2000],
-			int verbose_level);
 	void report_tactical_decomposition_by_automorphism_group(
 			std::ostream &ost, projective_space *P,
 			action *A_on_points, action *A_on_lines,
@@ -109,27 +82,6 @@ public:
 			const char *path_to_spread_tables,
 			packing_classify *&P,
 			int verbose_level);
-#if 0
-	void predict_spread_table_length(
-		int q, int dimension_of_spread_elements, int spread_size,
-		action *A, strong_generators *Strong_gens,
-		int f_select_spread,
-		int *select_spread, int select_spread_nb,
-		long int *&spread_reps, int *&spread_reps_idx, long int *&spread_orbit_length,
-		int &nb_spread_reps,
-		long int &total_nb_of_spreads,
-		int &nb_iso_types_of_spreads,
-		int verbose_level);
-	void make_spread_table(
-			action *A, action *A2, strong_generators *Strong_gens,
-			int spread_size,
-			long int *spread_reps, int *spread_reps_idx, long int *spread_orbit_length,
-			int nb_spread_reps,
-			long int total_nb_of_spreads,
-			long int **&Sets, int *&isomorphism_type_of_spread,
-			int verbose_level);
-		// does not sort the table
-#endif
 	void centralizer_of_element(
 			action *A, sims *S,
 			const char *element_description,

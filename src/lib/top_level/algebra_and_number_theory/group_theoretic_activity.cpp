@@ -230,7 +230,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 			exit(1);
 		}
 		if (!Descr->f_control_six_arcs) {
-			cout << "please use option -Control_six_arcs <description> -end" << endl;
+			cout << "please use option -control_six_arcs <description> -end" << endl;
 			exit(1);
 		}
 		do_classify_surfaces_through_arcs_and_trihedral_pairs(
@@ -240,10 +240,10 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_create_surface) {
 		if (!Descr->f_control_six_arcs) {
-			cout << "please use option -Control_six_arcs <description> -end" << endl;
+			cout << "please use option -control_six_arcs <description> -end" << endl;
 			exit(1);
 		}
-		do_create_surface(Descr->surface_descr, Descr->Control_six_arcs, verbose_level);
+		do_create_surface(Descr->surface_description, Descr->Control_six_arcs, verbose_level);
 	}
 
 	// spreads:
@@ -2577,7 +2577,6 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_p
 		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
 	}
 
-	algebra_global_with_action Algebra;
 	surface_with_action *Surf_A;
 	surface_domain *Surf;
 	number_theory_domain NT;
@@ -2589,11 +2588,13 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_p
 
 
 	if (f_v) {
-		cout << "before Surf->init" << endl;
+		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs "
+				"before Surf->init" << endl;
 	}
 	Surf->init(F, verbose_level);
 	if (f_v) {
-		cout << "after Surf->init" << endl;
+		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs "
+				"after Surf->init" << endl;
 	}
 
 
@@ -2609,34 +2610,61 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_p
 
 
 	if (f_v) {
-		cout << "before Surf_A->init" << endl;
+		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs "
+				"before Surf_A->init" << endl;
 	}
 	Surf_A->init(Surf, LG, verbose_level - 1);
 	if (f_v) {
-		cout << "after Surf_A->init" << endl;
+		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs "
+				"after Surf_A->init" << endl;
 	}
 
 
 
 	if (f_v) {
-		cout << "before Surf_A->Classify_trihedral_pairs->classify" << endl;
+		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs "
+				"before Surf_A->Classify_trihedral_pairs->classify" << endl;
 	}
 	Surf_A->Classify_trihedral_pairs->classify(Control1, Control2, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "after Surf_A->Classify_trihedral_pairs->classify" << endl;
+		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs "
+				"after Surf_A->Classify_trihedral_pairs->classify" << endl;
 	}
 
 	if (f_v) {
-		cout << "before A.classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
+		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs "
+				"before Surf_arc->classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
 	}
-	Algebra.classify_surfaces_through_arcs_and_trihedral_pairs(
-			//this,
-			Surf_A,
+
+	surface_classify_using_arc *Surf_arc;
+
+	Surf_arc = NEW_OBJECT(surface_classify_using_arc);
+
+
+	Surf_arc->classify_surfaces_through_arcs_and_trihedral_pairs(
 			Control_six_arcs,
+			Surf_A,
 			verbose_level);
+
 	if (f_v) {
-		cout << "after A.classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
+		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs "
+				"after Surf_arc->classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
 	}
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs "
+				"before Surf_arc->report" << endl;
+	}
+
+
+	Surf_arc->report(verbose_level);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs "
+				"after Surf_arc->report" << endl;
+	}
+
+	FREE_OBJECT(Surf_arc);
 
 	if (f_v) {
 		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs done" << endl;
@@ -2664,8 +2692,13 @@ void group_theoretic_activity::do_create_surface(
 	sorting Sorting;
 	file_io Fio;
 
+	if (f_v) {
+		cout << "group_theoretic_activity::do_create_surface before Surface_Descr->get_q" << endl;
+	}
 	q = Surface_Descr->get_q();
-	cout << "q=" << q << endl;
+	if (f_v) {
+		cout << "group_theoretic_activity::do_create_surface q = " << q << endl;
+	}
 
 
 	F = LG->F;
@@ -2742,7 +2775,7 @@ void group_theoretic_activity::do_create_surface(
 
 	if (SC->f_has_group) {
 		for (i = 0; i < SC->Sg->gens->len; i++) {
-			cout << "Testing generator " << i << " / "
+			cout << "group_theoretic_activity::do_create_surface Testing generator " << i << " / "
 					<< SC->Sg->gens->len << endl;
 			A->element_invert(SC->Sg->gens->ith(i),
 					Elt2, 0 /*verbose_level*/);
@@ -2758,39 +2791,39 @@ void group_theoretic_activity::do_create_surface(
 
 
 			if (int_vec_compare(SC->coeffs, coeffs_out, 20)) {
-				cout << "error, the transformation does not preserve "
+				cout << "group_theoretic_activity::do_create_surface error, the transformation does not preserve "
 						"the equation of the surface" << endl;
 				exit(1);
 			}
-			cout << "Generator " << i << " / " << SC->Sg->gens->len
+			cout << "group_theoretic_activity::do_create_surface Generator " << i << " / " << SC->Sg->gens->len
 					<< " is good" << endl;
 		}
 	}
 	else {
-		cout << "We do not have information about "
+		cout << "group_theoretic_activity::do_create_surface We do not have information about "
 				"the automorphism group" << endl;
 	}
 
 
-	cout << "We have created the surface " << SC->label_txt << ":" << endl;
+	cout << "group_theoretic_activity::do_create_surface We have created the surface " << SC->label_txt << ":" << endl;
 	cout << "$$" << endl;
 	SC->Surf->print_equation_tex(cout, SC->coeffs);
 	cout << endl;
 	cout << "$$" << endl;
 
 	if (SC->f_has_group) {
-		cout << "The stabilizer is generated by:" << endl;
+		cout << "group_theoretic_activity::do_create_surface The stabilizer is generated by:" << endl;
 		SC->Sg->print_generators_tex(cout);
 
 		if (SC->f_has_nice_gens) {
-			cout << "The stabilizer is generated by the following nice generators:" << endl;
+			cout << "group_theoretic_activity::do_create_surface The stabilizer is generated by the following nice generators:" << endl;
 			SC->nice_gens->print_tex(cout);
 
 		}
 	}
 
 	if (SC->f_has_lines) {
-		cout << "The lines are:" << endl;
+		cout << "group_theoretic_activity::do_create_surface The lines are:" << endl;
 		SC->Surf->Gr->print_set_tex(cout, SC->Lines, 27);
 
 
@@ -2798,12 +2831,12 @@ void group_theoretic_activity::do_create_surface(
 
 		SO = NEW_OBJECT(surface_object);
 		if (f_v) {
-			cout << "before SO->init" << endl;
+			cout << "group_theoretic_activity::do_create_surface before SO->init" << endl;
 			}
 		SO->init(SC->Surf, SC->Lines, SC->coeffs,
 				FALSE /*f_find_double_six_and_rearrange_lines */, verbose_level);
 		if (f_v) {
-			cout << "after SO->init" << endl;
+			cout << "group_theoretic_activity::do_create_surface after SO->init" << endl;
 			}
 
 		char fname_points[2000];
@@ -2811,11 +2844,11 @@ void group_theoretic_activity::do_create_surface(
 		snprintf(fname_points, 2000, "surface_%s_points.txt", SC->label_txt);
 		Fio.write_set_to_file(fname_points,
 				SO->Pts, SO->nb_pts, 0 /*verbose_level*/);
-		cout << "Written file " << fname_points << " of size "
+		cout << "group_theoretic_activity::do_create_surface Written file " << fname_points << " of size "
 				<< Fio.file_size(fname_points) << endl;
 	}
 	else {
-		cout << "The surface " << SC->label_txt
+		cout << "group_theoretic_activity::do_create_surface The surface " << SC->label_txt
 				<< " does not come with lines" << endl;
 	}
 
@@ -2824,14 +2857,14 @@ void group_theoretic_activity::do_create_surface(
 
 	if (SC->f_has_group) {
 
-		cout << "creating surface_object_with_action object" << endl;
+		cout << "group_theoretic_activity::do_create_surface creating surface_object_with_action object" << endl;
 
 		surface_object_with_action *SoA;
 
 		SoA = NEW_OBJECT(surface_object_with_action);
 
 		if (SC->f_has_lines) {
-			cout << "creating surface using the known lines (which are "
+			cout << "group_theoretic_activity::do_create_surface creating surface using the known lines (which are "
 					"arranged with respect to a double six):" << endl;
 			SoA->init(SC->Surf_A,
 				SC->Lines,
@@ -2842,14 +2875,14 @@ void group_theoretic_activity::do_create_surface(
 				verbose_level);
 			}
 		else {
-			cout << "creating surface from equation only "
+			cout << "group_theoretic_activity::do_create_surface creating surface from equation only "
 					"(no lines):" << endl;
 			SoA->init_equation(SC->Surf_A,
 				SC->coeffs,
 				SC->Sg,
 				verbose_level);
 			}
-		cout << "The surface has been created." << endl;
+		cout << "group_theoretic_activity::do_create_surface The surface has been created." << endl;
 
 
 
@@ -2875,7 +2908,7 @@ void group_theoretic_activity::do_create_surface(
 
 		// classify six arcs not on a conic:
 
-		cout << "Classifying six-arcs not on a conic:" << endl;
+		cout << "group_theoretic_activity::do_create_surface Classifying six-arcs not on a conic:" << endl;
 
 		action *A;
 
@@ -2887,7 +2920,7 @@ void group_theoretic_activity::do_create_surface(
 
 		if (NT.is_prime(F->q)) {
 			f_semilinear = FALSE;
-			}
+		}
 
 		{
 			vector_ge *nice_gens;
@@ -2905,14 +2938,11 @@ void group_theoretic_activity::do_create_surface(
 
 		transporter = NEW_int(Six_arcs->Gen->A->elt_size_in_int);
 
-		algebra_global_with_action Algebra;
 
-
-		Algebra.investigate_surface_and_write_report(
+		SoA->investigate_surface_and_write_report(
 				A,
 				SC,
 				Six_arcs,
-				SoA,
 				Descr->f_surface_clebsch,
 				Descr->f_surface_codes,
 				Descr->f_surface_quartic,

@@ -844,15 +844,6 @@ public:
 	long int nb_pts_Nbar(int n, int q);
 	void test_Orthogonal(int epsilon, int k, int q);
 	void test_orthogonal(int n, int q);
-#if 0
-	void create_BLT(int f_embedded, finite_field *FQ, finite_field *Fq,
-		int f_Linear,
-		int f_Fisher,
-		int f_Mondello,
-		int f_FTWKB,
-		char *fname, int &nb_pts, int *&Pts,
-		int verbose_level);
-#endif
 	int &TDO_upper_bound(int i, int j);
 	int &TDO_upper_bound_internal(int i, int j);
 	int &TDO_upper_bound_source(int i, int j);
@@ -2883,36 +2874,14 @@ public:
 		int *result, int verbose_level);
 	void multiply_Poly1_3_times_Poly3_3(int *input1, int *input2, 
 		int *result, int verbose_level);
-	void web_of_cubic_curves(long int *arc6, int *&curves, int verbose_level);
-		// curves[45 * 10]
-	void web_of_cubic_curves_rank_of_foursubsets(int *Web_of_cubic_curves, 
-		int *&rk, int &N, int verbose_level);
-	void 
-	create_web_of_cubic_curves_and_equations_based_on_four_tritangent_planes(
-			long int *arc6, int *base_curves4,
-		int *&Web_of_cubic_curves, int *&The_plane_equations, 
-		int verbose_level);
 	void create_equations_for_pencil_of_surfaces_from_trihedral_pair(
 		int *The_six_plane_equations, int *The_surface_equations, 
 		int verbose_level);
 		// The_surface_equations[(q + 1) * 20]
-	void create_lambda_from_trihedral_pair_and_arc(long int *arc6,
-		int *Web_of_cubic_curves, 
-		int *The_plane_equations, int t_idx, int &lambda, 
-		int &lambda_rk, int verbose_level);
-	void create_surface_equation_from_trihedral_pair(long int *arc6,
-		int *Web_of_cubic_curves, 
-		int *The_plane_equations, int t_idx, int *surface_equation, 
-		int &lambda, int verbose_level);
-	void extract_six_curves_from_web(int *Web_of_cubic_curves, 
-		int *row_col_Eckardt_points, int *six_curves, 
-		int verbose_level);
-	void find_point_not_on_six_curves(long int *arc6, int *six_curves,
-		int &pt, int &f_point_was_found, int verbose_level);
 	int plane_from_three_lines(long int *three_lines, int verbose_level);
-	void Trihedral_pairs_to_planes(long int *Lines, long int *Planes,
+	void Trihedral_pairs_to_planes(long int *Lines, long int *Planes_by_rank,
 		int verbose_level);
-		// Planes[nb_trihedral_pairs * 6]
+		// Planes_by_rank[nb_trihedral_pairs * 6]
 	void create_surface_family_S(int a, long int *Lines27,
 		int *equation20, int verbose_level);
 	void compute_tritangent_planes(long int *Lines,
@@ -2963,12 +2932,12 @@ public:
 		long int line1, long int line2,
 		int *coeff20, long int *lines27,
 		int verbose_level);
-	void print_web_of_cubic_curves(long int *arc6,
-			int *Web_of_cubic_curves, std::ostream &ost);
+	//void print_web_of_cubic_curves(long int *arc6,
+	//		int *Web_of_cubic_curves, std::ostream &ost);
 
 
 
-	// surface_lines.cpp:
+	// surface_domain_lines.cpp:
 	void init_line_data(int verbose_level);
 	void unrank_line(int *v, long int rk);
 	void unrank_lines(int *v, long int *Rk, int nb);
@@ -3025,6 +2994,10 @@ public:
 	int compute_rank_of_any_four(
 			long int *&Rk, int &nb_subsets, long int *lines,
 		int sz, int verbose_level);
+	void rearrange_lines_according_to_a_given_double_six(long int *Lines,
+			int *given_double_six,
+			long int *New_lines,
+			int verbose_level);
 	void rearrange_lines_according_to_double_six(long int *Lines,
 		int verbose_level);
 	void rearrange_lines_according_to_starter_configuration(
@@ -3050,7 +3023,7 @@ public:
 			long int *&Trans, int &nb_subsets,
 			long int *lines, int sz, int verbose_level);
 
-	// surface_io.cpp:
+	// surface_domain_io.cpp:
 	void print_equation(std::ostream &ost, int *coeffs);
 	void print_equation_tex(std::ostream &ost, int *coeffs);
 	void print_equation_tex_lint(std::ostream &ost, long int *coeffs);
@@ -3060,6 +3033,7 @@ public:
 		int verbose_level);
 	void print_line(std::ostream &ost, int rk);
 	void latex_table_of_double_sixes(std::ostream &ost);
+	void latex_table_of_half_double_sixes(std::ostream &ost);
 	void print_Steiner_and_Eckardt(std::ostream &ost);
 	void latex_abstract_trihedral_pair(std::ostream &ost, int t_idx);
 	void latex_trihedral_pair(std::ostream &ost, int *T, int *TE);
@@ -3067,7 +3041,7 @@ public:
 	void print_trihedral_pairs(std::ostream &ost);
 	void latex_table_of_Eckardt_points(std::ostream &ost);
 	void latex_table_of_tritangent_planes(std::ostream &ost);
-	void print_web_of_cubic_curves(std::ostream &ost, int *Web_of_cubic_curves);
+	//void print_web_of_cubic_curves(std::ostream &ost, int *Web_of_cubic_curves);
 	void print_equation_in_trihedral_form(std::ostream &ost,
 		int *the_six_plane_equations, int lambda, int *the_equation);
 	void print_equation_wrapped(std::ostream &ost, int *the_equation);
@@ -3078,8 +3052,9 @@ public:
 	void print_system(std::ostream &ost, int *system);
 	void print_trihedral_pair_in_dual_coordinates_in_GAP(
 		long int *F_planes_rank, long int *G_planes_rank);
+	void print_basics(std::ostream &ost);
 	void print_polynomial_domains(std::ostream &ost);
-	void print_line_labelling(std::ostream &ost);
+	void print_Schlaefli_labelling(std::ostream &ost);
 	void print_set_of_lines_tex(std::ostream &ost, long int *v, int len);
 	void latex_table_of_clebsch_maps(std::ostream &ost);
 	void print_half_double_sixes_in_GAP();
@@ -3181,8 +3156,10 @@ public:
 	void compute_tritangent_planes_by_rank(int verbose_level);
 	void compute_tritangent_planes(int verbose_level);
 	void compute_planes_and_dual_point_ranks(int verbose_level);
+	void print_everything(std::ostream &ost, int verbose_level);
 	void report_properties(std::ostream &ost, int verbose_level);
 	void print_line_intersection_graph(std::ostream &ost);
+	void print_adjacency_list(std::ostream &ost);
 	void print_adjacency_matrix(std::ostream &ost);
 	void print_adjacency_matrix_with_intersection_points(std::ostream &ost);
 	void print_planes_in_trihedral_pairs(std::ostream &ost);
@@ -3427,6 +3404,7 @@ public:
 	int base_curves4[4];
 	int t_idx0;
 	int row_col_Eckardt_points[6];
+	int six_curves[6 * 10];
 	int *Web_of_cubic_curves; // [45 * 10]
 	int *Tritangent_plane_equations; // [45 * 4]
 	int *base_curves; // [4 * 10]
@@ -3438,8 +3416,29 @@ public:
 	web_of_cubic_curves();
 	~web_of_cubic_curves();
 	void init(surface_domain *Surf, long int *arc6, int verbose_level);
+	void compute_web_of_cubic_curves(long int *arc6, int verbose_level);
+	// curves[45 * 10]
+	void rank_of_foursubsets(int *&rk, int &N, int verbose_level);
+	void create_web_and_equations_based_on_four_tritangent_planes(
+			long int *arc6, int *base_curves4,
+			int verbose_level);
 	void find_Eckardt_points(int verbose_level);
 	void find_trihedral_pairs(int verbose_level);
+	void extract_six_curves_from_web(
+		//int *row_col_Eckardt_points, int *six_curves,
+		int verbose_level);
+	void create_surface_equation_from_trihedral_pair(long int *arc6,
+		int t_idx, int *surface_equation,
+		int &lambda,
+		int verbose_level);
+	void create_lambda_from_trihedral_pair_and_arc(
+		long int *arc6, int t_idx,
+		int &lambda, int &lambda_rk,
+		int verbose_level);
+	void find_point_not_on_six_curves(//long int *arc6,
+		//int *six_curves,
+		int &pt, int &f_point_was_found,
+		int verbose_level);
 	void print_lines(std::ostream &ost);
 	void print_trihedral_plane_equations(std::ostream &ost);
 	void print_the_six_plane_equations(
@@ -3450,7 +3449,9 @@ public:
 		int lambda, int lambda_rk, std::ostream &ost);
 	void print_dual_point_ranks(std::ostream &ost);
 	void print_Eckardt_point_data(std::ostream &ost, int verbose_level);
+	void report_basics(std::ostream &ost, int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
+	void print_web_of_cubic_curves(long int *arc6, std::ostream &ost);
 
 };
 

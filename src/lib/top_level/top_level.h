@@ -144,6 +144,10 @@ class regular_linear_space_description;
 class arc_generator_description;
 class spread_table_with_selection;
 class packing_was_fixpoints;
+class surface_object_tangent_cone;
+class surface_classify_using_arc;
+class surface_create_by_arc_lifting;
+class surface_clebsch_map;
 
 // #############################################################################
 // representatives.cpp

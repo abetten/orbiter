@@ -152,6 +152,7 @@ MODULES= \
 		foundations/io_and_os/orbiter_data_file.o \
 		foundations/io_and_os/os_interface.o \
 		foundations/io_and_os/override_double.o \
+		foundations/io_and_os/prepare_frames.o \
 		foundations/io_and_os/util.o \
 		foundations/solvers/diophant_activity_description.o \
 		foundations/solvers/diophant_activity.o \
@@ -369,9 +370,13 @@ MODULES= \
 		top_level/geometry/spread_create.o \
 		top_level/geometry/spread_lifting.o \
 		top_level/geometry/spread_table_with_selection.o \
+		top_level/geometry/surface_classify_using_arc.o \
 		top_level/geometry/surface_classify_wedge.o \
+		top_level/geometry/surface_clebsch_map.o \
+		top_level/geometry/surface_create_by_arc_lifting.o \
 		top_level/geometry/surface_create_description.o \
 		top_level/geometry/surface_create.o \
+		top_level/geometry/surface_object_tangent_cone.o \
 		top_level/geometry/surface_object_with_action.o \
 		top_level/geometry/surface_study.o \
 		top_level/geometry/surface_with_action.o \

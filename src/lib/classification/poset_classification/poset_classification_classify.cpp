@@ -500,11 +500,59 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 		draw_poset_full(get_problem_label_with_path(), actual_size,
 				0 /* data1 */, Control->f_embedded, Control->f_sideways, Control->radius,
 				1 /* x_stretch */, verbose_level);
-
+	}
+	if (Control->f_make_relations_with_flag_orbits) {
 			const char *fname_prefix = "flag_orbits";
 
 			make_flag_orbits_on_relations(
 					depth, fname_prefix, verbose_level);
+	}
+	if (Control->nb_recognize) {
+		int h;
+
+		for (h = 0; h < Control->nb_recognize; h++) {
+			long int *recognize_set;
+			int recognize_set_sz;
+			int orb;
+			long int *canonical_set;
+			int *Elt_transporter;
+			int *Elt_transporter_inv;
+
+			cout << "recognize " << h << " / " << Control->nb_recognize << endl;
+			lint_vec_scan(Control->recognize[h], recognize_set, recognize_set_sz);
+			cout << "input set = " << h << " / " << Control->nb_recognize << " : ";
+			lint_vec_print(cout, recognize_set, recognize_set_sz);
+			cout << endl;
+
+			canonical_set = NEW_lint(recognize_set_sz);
+			Elt_transporter = NEW_int(get_A()->elt_size_in_int);
+			Elt_transporter_inv = NEW_int(get_A()->elt_size_in_int);
+
+			orb = trace_set(recognize_set,
+				recognize_set_sz, recognize_set_sz /* level */,
+				canonical_set, Elt_transporter,
+				0 /*verbose_level */);
+
+			cout << "recognize " << h << " / " << Control->nb_recognize << endl;
+			cout << "canonical set = ";
+			lint_vec_print(cout, canonical_set, recognize_set_sz);
+			cout << endl;
+			cout << "is orbit " << orb << endl;
+			cout << "recognize " << h << " / " << Control->nb_recognize << endl;
+			cout << "transporter:" << endl;
+			get_A()->element_print_quick(Elt_transporter, cout);
+
+			get_A()->element_invert(Elt_transporter, Elt_transporter_inv, 0);
+			cout << "recognize " << h << " / " << Control->nb_recognize << endl;
+			cout << "transporter inverse:" << endl;
+			get_A()->element_print_quick(Elt_transporter_inv, cout);
+
+
+			FREE_lint(canonical_set);
+			FREE_int(Elt_transporter);
+			FREE_int(Elt_transporter_inv);
+			FREE_lint(recognize_set);
+		}
 	}
 	if (Control->f_print_data_structure) {
 		if (f_v) {

@@ -285,6 +285,8 @@ public:
 // poset_classification_control.cpp
 // #############################################################################
 
+#define CONTROL_MAX_RECOGNIZE 1000
+
 //! to control the bahavior of the poset classification algorithm
 
 
@@ -331,6 +333,10 @@ public:
 	int f_list;
 	int f_list_all;
 	int f_table_of_nodes;
+	int f_make_relations_with_flag_orbits;
+
+	int nb_recognize;
+	const char *recognize[CONTROL_MAX_RECOGNIZE];
 
 	double scale;
 	int f_embedded;

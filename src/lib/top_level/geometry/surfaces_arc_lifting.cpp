@@ -2059,9 +2059,13 @@ void surfaces_arc_lifting::report(int verbose_level)
 
 
 
+	fp << "\\section{Basics}" << endl << endl;
 
-	Surf->print_polynomial_domains(fp);
-	Surf->print_line_labelling(fp);
+	Surf->print_basics(fp);
+	//Surf->print_polynomial_domains(fp);
+	//Surf->print_Schlaefli_labelling(fp);
+
+	fp << "\\section{Six-Arcs}" << endl << endl;
 
 	Six_arcs->report_latex(fp);
 

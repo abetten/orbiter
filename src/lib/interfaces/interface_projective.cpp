@@ -28,8 +28,8 @@ static int do_create_points_smooth_curve_compute_point_function(double t,
 
 interface_projective::interface_projective()
 {
-	argc = 0;
-	argv = NULL;
+	//argc = 0;
+	//argv = NULL;
 
 	f_cheat_sheet_PG = FALSE;
 	n = 0;
@@ -185,8 +185,8 @@ void interface_projective::read_arguments(int argc,
 	cout << "interface_projective::read_arguments" << endl;
 	//return 0;
 
-	interface_projective::argc = argc;
-	interface_projective::argv = argv;
+	//interface_projective::argc = argc;
+	//interface_projective::argv = argv;
 
 	for (i = i0; i < argc; i++) {
 		if (strcmp(argv[i], "-cheat_sheet_PG") == 0) {

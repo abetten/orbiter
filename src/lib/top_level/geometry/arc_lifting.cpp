@@ -168,7 +168,6 @@ void arc_lifting::create_surface_and_group(surface_with_action *Surf_A,
 
 
 
-	The_surface_equations = NEW_int((q + 1) * 20);
 	
 	if (f_v) {
 		cout << "arc_lifting::create_surface_and_group before "
@@ -176,10 +175,10 @@ void arc_lifting::create_surface_and_group(surface_with_action *Surf_A,
 				<< endl;
 	}
 	create_surface_from_trihedral_pair_and_arc(
-		Web->t_idx0, planes6,
-		The_six_plane_equations,
-		The_surface_equations,
-		lambda, lambda_rk,
+		Web->t_idx0,
+		//The_six_plane_equations,
+		//The_surface_equations,
+		//lambda, lambda_rk,
 		verbose_level);
 	if (f_v) {
 		cout << "arc_lifting::create_surface_and_group after "
@@ -197,8 +196,8 @@ void arc_lifting::create_surface_and_group(surface_with_action *Surf_A,
 				"before create_clebsch_system" << endl;
 	}
 	create_clebsch_system(
-		The_six_plane_equations, 
-		lambda, 
+		//The_six_plane_equations,
+		//lambda,
 		0 /* verbose_level */);
 	if (f_v) {
 		cout << "arc_lifting::create_surface_and_group "
@@ -212,9 +211,9 @@ void arc_lifting::create_surface_and_group(surface_with_action *Surf_A,
 				"create_stabilizer_of_trihedral_pair" << endl;
 	}
 	stab_gens_trihedral_pair = create_stabilizer_of_trihedral_pair(
-		planes6, 
-		trihedral_pair_orbit_index, 
-		verbose_level - 2);
+			//plane6_by_dual_ranks,
+			trihedral_pair_orbit_index,
+			verbose_level - 2);
 	if (f_v) {
 		cout << "arc_lifting::create_surface_and_group after "
 				"create_stabilizer_of_trihedral_pair" << endl;
@@ -336,7 +335,7 @@ void arc_lifting::create_surface_and_group(surface_with_action *Surf_A,
 	
 
 	
-
+	// the problem is here:
 	{
 		longinteger_object ago;
 
@@ -595,8 +594,6 @@ void arc_lifting::loop_over_trihedral_pairs(
 					verbose_level - 1);
 
 
-
-
 			F->PG_element_normalize(coeff_out, 1, 20);
 
 			if (f_v) {
@@ -670,9 +667,7 @@ void arc_lifting::loop_over_trihedral_pairs(
 
 
 
-void arc_lifting::create_the_six_plane_equations(
-		int t_idx, int *The_six_plane_equations, long int *plane6,
-		int verbose_level)
+void arc_lifting::create_the_six_plane_equations(int t_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -698,7 +693,7 @@ void arc_lifting::create_the_six_plane_equations(
 	}
 
 	for (i = 0; i < 6; i++) {
-		plane6[i] = Surf->P->rank_point(The_six_plane_equations + i * 4);
+		plane6_by_dual_ranks[i] = Surf->P->rank_point(The_six_plane_equations + i * 4);
 	}
 
 	if (f_v) {
@@ -707,12 +702,12 @@ void arc_lifting::create_the_six_plane_equations(
 }
 
 void arc_lifting::create_surface_from_trihedral_pair_and_arc(
-	int t_idx, long int *planes6,
-	int *The_six_plane_equations, 
-	int *The_surface_equations, 
-	int &lambda, int &lambda_rk, 
+	int t_idx,
+	//int *The_six_plane_equations,
+	//int *The_surface_equations,
+	//int &lambda, int &lambda_rk,
 	int verbose_level)
-// plane6[6]
+// plane6_by_dual_ranks[6]
 // The_six_plane_equations[6 * 4]
 // The_surface_equations[(q + 1) * 20]
 {
@@ -722,9 +717,9 @@ void arc_lifting::create_surface_from_trihedral_pair_and_arc(
 		cout << "arc_lifting::create_surface_from_trihedral_pair_and_arc t_idx=" << t_idx << endl;
 	}
 
-	create_the_six_plane_equations(t_idx, 
-		The_six_plane_equations, planes6, 
-		verbose_level);
+	The_surface_equations = NEW_int((q + 1) * 20);
+
+	create_the_six_plane_equations(t_idx, verbose_level);
 
 
 	if (f_v) {
@@ -739,14 +734,12 @@ void arc_lifting::create_surface_from_trihedral_pair_and_arc(
 		cout << "arc_lifting::create_surface_from_trihedral_pair_and_arc "
 				"before create_lambda_from_trihedral_pair_and_arc" << endl;
 	}
-	Surf->create_lambda_from_trihedral_pair_and_arc(arc, 
-		Web->Web_of_cubic_curves,
-		Web->Tritangent_plane_equations, t_idx, lambda, lambda_rk,
+	Web->create_lambda_from_trihedral_pair_and_arc(arc,
+		t_idx, lambda, lambda_rk,
 		verbose_level);
 
 
-	int_vec_copy(The_surface_equations + lambda_rk * 20,
-			the_equation, 20);
+	int_vec_copy(The_surface_equations + lambda_rk * 20, the_equation, 20);
 
 	if (f_v) {
 		cout << "arc_lifting::create_surface_from_trihedral_pair_and_arc done" << endl;
@@ -754,7 +747,7 @@ void arc_lifting::create_surface_from_trihedral_pair_and_arc(
 }
 
 strong_generators *arc_lifting::create_stabilizer_of_trihedral_pair(
-	long int *planes6,
+	//long int *planes6,
 	int &trihedral_pair_orbit_index, 
 	int verbose_level)
 {
@@ -777,10 +770,9 @@ strong_generators *arc_lifting::create_stabilizer_of_trihedral_pair(
 	}
 
 	gens_dual =
-		Surf_A->Classify_trihedral_pairs->
-			identify_trihedral_pair_and_get_stabilizer(
-		planes6, transporter, trihedral_pair_orbit_index, 
-		verbose_level);
+		Surf_A->Classify_trihedral_pairs->identify_trihedral_pair_and_get_stabilizer(
+					plane6_by_dual_ranks, transporter, trihedral_pair_orbit_index,
+					verbose_level);
 
 	if (f_v) {
 		cout << "arc_lifting::create_stabilizer_of_trihedral_pair "
@@ -816,14 +808,13 @@ strong_generators *arc_lifting::create_stabilizer_of_trihedral_pair(
 		cout << "arc_lifting::create_stabilizer_of_trihedral_pair "
 				"The transposed stabilizer is generated by:" << endl;
 		gens->print_generators_tex(cout);
-		//gens->print_generators_tex(cout);
+		//gens->print_elements_ost(cout);
 	}
 
 	FREE_OBJECT(gens_dual);
 
 	if (f_v) {
-		cout << "arc_lifting::create_stabilizer_of_trihedral_pair "
-				"done" << endl;
+		cout << "arc_lifting::create_stabilizer_of_trihedral_pair done" << endl;
 	}
 	return gens;
 }
@@ -861,25 +852,27 @@ void arc_lifting::create_action_on_equations_and_compute_orbits(
 }
 
 void arc_lifting::create_clebsch_system(
-	int *The_six_plane_equations,
-	int lambda, int verbose_level)
+	//int *The_six_plane_equations,
+	//int lambda,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
 
 	if (f_v) {
 		cout << "arc_lifting::create_clebsch_system" << endl;
-		}
+	}
 	
 	int_vec_copy(The_six_plane_equations, F_plane, 12);
 	int_vec_copy(The_six_plane_equations + 12, G_plane, 12);
-	cout << "F_planes:" << endl;
-	int_matrix_print(F_plane, 3, 4);
-	cout << "G_planes:" << endl;
-	int_matrix_print(G_plane, 3, 4);
+	if (f_v) {
+		cout << "F_planes:" << endl;
+		int_matrix_print(F_plane, 3, 4);
+		cout << "G_planes:" << endl;
+		int_matrix_print(G_plane, 3, 4);
+	}
 
-	Surf->compute_nine_lines(F_plane, G_plane,
-			nine_lines, 0 /* verbose_level */);
+	Surf->compute_nine_lines(F_plane, G_plane, nine_lines, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "arc_lifting::create_clebsch_system" << endl;
@@ -891,15 +884,18 @@ void arc_lifting::create_clebsch_system(
 	Surf->prepare_system_from_FG(F_plane, G_plane, 
 		lambda, System, verbose_level);
 
-	cout << "arc_lifting::create_clebsch_system "
-			"The System:" << endl;
-	for (i = 0; i < 3; i++) {
-		for (j = 0; j < 4; j++) {
-			int *p = System + (i * 4 + j) * 3;
-			Surf->Poly1->print_equation(cout, p);
-			cout << endl;
+	if (f_v) {
+		cout << "arc_lifting::create_clebsch_system "
+				"The System:" << endl;
+		for (i = 0; i < 3; i++) {
+			for (j = 0; j < 4; j++) {
+				int *p = System + (i * 4 + j) * 3;
+				Surf->Poly1->print_equation(cout, p);
+				cout << endl;
+			}
 		}
 	}
+
 	if (f_v) {
 		cout << "arc_lifting::create_clebsch_system done" << endl;
 	}
@@ -921,7 +917,7 @@ void arc_lifting::report(ostream &ost, int verbose_level)
 	cout << "arc_lifting::print before "
 			"print_the_six_plane_equations" << endl;
 	Web->print_the_six_plane_equations(
-			The_six_plane_equations, planes6, ost);
+			The_six_plane_equations, plane6_by_dual_ranks, ost);
 
 	cout << "arc_lifting::print before "
 			"print_surface_equations_on_line" << endl;

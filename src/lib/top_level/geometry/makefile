@@ -44,9 +44,13 @@ MODULES = \
 	spread_create.o \
 	spread_lifting.o \
 	spread_table_with_selection.o \
+	surface_classify_using_arc.o \
 	surface_classify_wedge.o \
+	surface_clebsch_map.o \
+	surface_create_by_arc_lifting.o \
 	surface_create_description.o \
 	surface_create.o \
+	surface_object_tangent_cone.o \
 	surface_object_with_action.o \
 	surface_study.o \
 	surface_with_action.o \

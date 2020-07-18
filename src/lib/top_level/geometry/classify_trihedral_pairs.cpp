@@ -237,13 +237,35 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 	}
 }
 
+
+void classify_trihedral_pairs::report(ostream &ost)
+{
+	cout << "classify_trihedral_pairs::report "
+			"before list_orbits_on_trihedra_type1" << endl;
+	list_orbits_on_trihedra_type1(ost);
+
+	cout << "classify_trihedral_pairs::report "
+			"before list_orbits_on_trihedra_type2" << endl;
+	list_orbits_on_trihedra_type2(ost);
+
+	cout << "classify_trihedral_pairs::report "
+			"before print_trihedral_pairs no stabs" << endl;
+	print_trihedral_pairs(ost,
+			FALSE /* f_with_stabilizers */);
+
+	cout << "classify_trihedral_pairs::report "
+			"before print_trihedral_pairs with stabs" << endl;
+	print_trihedral_pairs(ost,
+			TRUE /* f_with_stabilizers */);
+}
+
 void classify_trihedral_pairs::list_orbits_on_trihedra_type1(ostream &ost)
 {
 	int i, l;
 
 	l = orbits_on_trihedra_type1->nb_orbits_at_level(3);
 
-	ost << "\\clearpage" << endl;
+	//ost << "\\clearpage" << endl;
 	ost << "\\subsection*{Classification of Double Triplets of "
 			"type 1 in $\\PG(3," << q << ")$}" << endl;
 
@@ -302,7 +324,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type2(ostream &ost)
 
 	l = orbits_on_trihedra_type2->nb_orbits_at_level(3);
 
-	ost << "\\clearpage" << endl;
+	//ost << "\\clearpage" << endl;
 	ost << "\\subsection*{Classification of Double Triplets of "
 			"type 2 in $\\PG(3," << q << ")$}" << endl;
 

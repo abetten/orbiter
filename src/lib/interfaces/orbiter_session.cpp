@@ -19,8 +19,8 @@ namespace interfaces {
 
 orbiter_session::orbiter_session()
 {
-	argc = 0;
-	argv = NULL;
+	//argc = 0;
+	//argv = NULL;
 
 	verbose_level = 0;
 
@@ -86,8 +86,8 @@ int orbiter_session::read_arguments(int argc,
 	//cout << "orbiter_session::read_arguments" << endl;
 	//return 0;
 
-	orbiter_session::argc = argc;
-	orbiter_session::argv = argv;
+	//orbiter_session::argc = argc;
+	//orbiter_session::argv = argv;
 	os_interface Os;
 
 	t0 = Os.os_ticks();

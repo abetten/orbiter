@@ -19,8 +19,8 @@ namespace interfaces {
 
 interface_coding_theory::interface_coding_theory()
 {
-	argc = 0;
-	argv = NULL;
+	//argc = 0;
+	//argv = NULL;
 
 	f_make_macwilliams_system = FALSE;
 	q = 0;
@@ -98,8 +98,8 @@ void interface_coding_theory::read_arguments(int argc,
 	cout << "interface_coding_theory::read_arguments" << endl;
 	//return 0;
 
-	interface_coding_theory::argc = argc;
-	interface_coding_theory::argv = argv;
+	//interface_coding_theory::argc = argc;
+	//interface_coding_theory::argv = argv;
 
 	for (i = i0; i < argc; i++) {
 		if (strcmp(argv[i], "-make_macwilliams_system") == 0) {

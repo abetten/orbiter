@@ -233,7 +233,7 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 
 	label.assign(M->label);
 	label.append(str1);
-	label_tex.assign(M->label);
+	label_tex.assign(M->label_tex);
 	label_tex.append(str2);
 
 	degree_of_matrix_group = M->degree;

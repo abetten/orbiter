@@ -293,7 +293,7 @@ public:
 
 	int The_six_plane_equations[6 * 4]; // [6 * 4]
 	int *The_surface_equations; // [(q + 1) * 20]
-	long int planes6[6];
+	long int plane6_by_dual_ranks[6];
 	int lambda, lambda_rk;
 	int t_idx;
 
@@ -338,24 +338,26 @@ public:
 		vector_ge *&coset_reps, 
 		int *&aut_T_index, int *&aut_coset_index, int verbose_level);
 	void create_the_six_plane_equations(int t_idx, 
-		int *The_six_plane_equations, long int *planes6,
 		int verbose_level);
 	void create_surface_from_trihedral_pair_and_arc(
-		int t_idx, long int *planes6,
-		int *The_six_plane_equations, int *The_surface_equations, 
-		int &lambda, int &lambda_rk, int verbose_level);
+		int t_idx,
+		//int *The_six_plane_equations, int *The_surface_equations,
+		//int &lambda, int &lambda_rk,
+		int verbose_level);
 		// plane6[6]
 		// The_six_plane_equations[6 * 4]
 		// The_surface_equations[(q + 1) * 20]
-	strong_generators *create_stabilizer_of_trihedral_pair(long int *planes6,
-		int &trihedral_pair_orbit_index, int verbose_level);
+	strong_generators *create_stabilizer_of_trihedral_pair(
+			//long int *planes6,
+			int &trihedral_pair_orbit_index, int verbose_level);
 	void create_action_on_equations_and_compute_orbits(
 		int *The_surface_equations, 
 		strong_generators *gens_for_stabilizer_of_trihedral_pair, 
 		action *&A_on_equations, schreier *&Orb, 
 		int verbose_level);
-	void create_clebsch_system(int *The_six_plane_equations, 
-		int lambda, int verbose_level);
+	void create_clebsch_system(//int *The_six_plane_equations,
+			//int lambda,
+			int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
 	void print_FG(std::ostream &ost);
 	void print_equations();
@@ -1008,6 +1010,7 @@ public:
 			poset_classification_control *Control1,
 			poset_classification_control *Control2,
 			int verbose_level);
+	void report(std::ostream &ost);
 	void list_orbits_on_trihedra_type1(std::ostream &ost);
 	void list_orbits_on_trihedra_type2(std::ostream &ost);
 	void early_test_func_type1(long int *S, int len,
@@ -2708,6 +2711,48 @@ void spread_table_with_selection_swap_func(void *data, int i, int j, void *extra
 
 
 // #############################################################################
+// surface_classify_using_arc.cpp
+// #############################################################################
+
+//! classification of cubic surfaces using nonconial six-arcs as substructures
+
+
+class surface_classify_using_arc {
+public:
+
+	surface_with_action *Surf_A;
+
+	action *A; // PGL(3,q)
+	vector_ge *nice_gens;
+
+
+	six_arcs_not_on_a_conic *Six_arcs;
+	arc_generator_description *Descr;
+
+	int *transporter;
+
+
+	int nb_surfaces;
+	surface_create_by_arc_lifting *SCAL;
+	// allocated as [Six_arcs->nb_arcs_not_on_conic], used as [nb_surfaces]
+
+	int *Arc_identify_nb;
+	int *Arc_identify;  // [Six_arcs->nb_arcs_not_on_conic]
+	//[Six_arcs->nb_arcs_not_on_conic * Six_arcs->nb_arcs_not_on_conic]
+	int *f_deleted; // [Six_arcs->nb_arcs_not_on_conic]
+
+	int *Decomp;
+
+	surface_classify_using_arc();
+	~surface_classify_using_arc();
+	void report(int verbose_level);
+	void classify_surfaces_through_arcs_and_trihedral_pairs(
+			poset_classification_control *Control_six_arcs,
+			surface_with_action *Surf_A,
+			int verbose_level);
+};
+
+// #############################################################################
 // surface_classify_wedge.cpp
 // #############################################################################
 
@@ -2816,6 +2861,84 @@ public:
 };
 
 // #############################################################################
+// surface_clebsch_map.cpp
+// #############################################################################
+
+//! a clebsch map associated to a surface and a choice of half double six
+
+
+class surface_clebsch_map {
+public:
+
+	surface_object_with_action *SOA;
+
+	int orbit_idx;
+	int f, l, k;
+	int line1, line2, transversal;
+
+	long int *Clebsch_map;
+	int *Clebsch_coeff;
+
+	long int plane_rk, plane_rk_global;
+	int line_idx[2];
+	long int Arc[6];
+	long int Blown_up_lines[6];
+	//int orbit_at_level;
+	int ds, ds_row;
+	int intersection_points[6];
+	//int intersection_points_local[6];
+	int v[4];
+	int Plane[16];
+	int base_cols[4];
+	int coefficients[3];
+
+
+	surface_clebsch_map();
+	~surface_clebsch_map();
+	void report(std::ostream &ost, int verbose_level);
+	void init(surface_object_with_action *SOA, int orbit_idx, int verbose_level);
+
+};
+
+
+// #############################################################################
+// surface_create_by_arc_lifting.cpp
+// #############################################################################
+
+//! to create a single cubic surface from an arc using arc lifting
+
+
+class surface_create_by_arc_lifting {
+public:
+
+	surface_classify_using_arc *SCA;
+
+	int arc_idx;
+	int surface_idx;
+	long int *Arc6;
+
+
+	arc_lifting *AL;
+
+	surface_object_with_action *SOA;
+
+
+	int nine_lines_idx[9];
+	std::string arc_label;
+	std::string arc_label_short;
+
+	surface_clebsch_map *Clebsch; // [SOA->Orbits_on_single_sixes->nb_orbits]
+	int *Other_arc_idx; // [SOA->Orbits_on_single_sixes->nb_orbits]
+
+	surface_create_by_arc_lifting();
+	~surface_create_by_arc_lifting();
+	void init(int arc_idx,
+			surface_classify_using_arc *SCA, int verbose_level);
+	void report(std::ostream &ost, int verbose_level);
+
+};
+
+// #############################################################################
 // surface_create.cpp
 // #############################################################################
 
@@ -2875,6 +2998,8 @@ public:
 // surface_create_description.cpp
 // #############################################################################
 
+#define SURFACE_CREATE_MAX_SELECT_DOUBLE_SIX 1000
+
 
 //! to describe a cubic surface from the command line
 
@@ -2893,9 +3018,11 @@ public:
 	int parameter_a;
 	int f_arc_lifting;
 	const char *arc_lifting_text;
+	const char *arc_lifting_two_lines_text;
 	int f_arc_lifting_with_two_lines;
-	int f_select_double_six;
-	const char *select_double_six_string;
+	//int f_select_double_six;
+	int nb_select_double_six;
+	const char *select_double_six_string[SURFACE_CREATE_MAX_SELECT_DOUBLE_SIX];
 
 	
 	surface_create_description();
@@ -2906,6 +3033,73 @@ public:
 		int verbose_level);
 	int get_q();
 };
+
+// #############################################################################
+// surface_object_tangent_cone.cpp
+// #############################################################################
+
+
+//! tangent cone of a cubic surface
+
+
+class surface_object_tangent_cone {
+
+public:
+
+	surface_object_with_action *SOA;
+
+	int equation_nice[20];
+	int *transporter;
+	int v[4];
+	int pt_A, pt_B;
+
+	int *f1;
+	int *f2;
+	int *f3;
+
+	long int *Pts_on_surface;
+	int nb_pts_on_surface;
+
+	int *curve;
+	int *poly1;
+	int *poly2;
+	int two, four, mfour;
+
+	int *tangent_quadric;
+	long int *Pts_on_tangent_quadric;
+	int nb_pts_on_tangent_quadric;
+
+	int *line_type;
+	int *type_collected;
+
+	int *Class_pts;
+	int nb_class_pts;
+	long int *Pts_intersection;
+	int nb_pts_intersection;
+
+	long int *Pts_on_curve;
+	int sz_curve;
+
+	strong_generators *gens_copy;
+	set_and_stabilizer *moved_surface;
+	//strong_generators *stab_gens_moved_surface;
+	strong_generators *stab_gens_P0;
+
+
+	surface_object_tangent_cone();
+	~surface_object_tangent_cone();
+	void init(surface_object_with_action *SOA, int verbose_level);
+	void quartic(std::ostream &ost, int verbose_level);
+	void compute_quartic(int pt_orbit,
+		//int &pt_A, int &pt_B, int *transporter,
+		int *equation, //int *equation_nice,
+		int verbose_level);
+	void cheat_sheet_quartic_curve(std::ostream &ost,
+		const char *label_txt, const char *label_tex,
+		int verbose_level);
+
+};
+
 
 // #############################################################################
 // surface_object_with_action.cpp
@@ -2991,17 +3185,30 @@ public:
 			int verbose_level);
 	void print_automorphism_group(std::ostream &ost,
 		int f_print_orbits, const char *fname_mask);
-	void compute_quartic(int pt_orbit, 
-		int &pt_A, int &pt_B, int *transporter, 
-		int *equation, int *equation_nice, int verbose_level);
-	void quartic(std::ostream &ost, int verbose_level);
 	void cheat_sheet(std::ostream &ost,
 		const char *label_txt, const char *label_tex, 
 		int f_print_orbits, const char *fname_mask, 
 		int verbose_level);
-	void cheat_sheet_quartic_curve(std::ostream &ost,
-		const char *label_txt, const char *label_tex, 
-		int verbose_level);
+	void investigate_surface_and_write_report(
+			action *A,
+			surface_create *SC,
+			six_arcs_not_on_a_conic *Six_arcs,
+			int f_surface_clebsch,
+			int f_surface_codes,
+			int f_surface_quartic,
+			int verbose_level);
+	void investigate_surface_and_write_report2(
+			std::ostream &ost,
+			action *A,
+			surface_create *SC,
+			six_arcs_not_on_a_conic *Six_arcs,
+			int f_surface_clebsch,
+			int f_surface_codes,
+			int f_surface_quartic,
+			char fname_mask[2000],
+			char label[2000],
+			char label_tex[2000],
+			int verbose_level);
 };
 
 // #############################################################################
@@ -3127,16 +3334,6 @@ public:
 	int create_double_six_from_five_lines_with_a_common_transversal(
 		long int *five_lines, long int transversal_line,
 		long int *double_six, int verbose_level);
-	void arc_lifting_and_classify_using_trihedral_pairs(
-		int f_log_fp, std::ofstream &fp,
-		long int *Arc6,
-		const char *arc_label, const char *arc_label_short, 
-		int nb_surfaces, 
-		six_arcs_not_on_a_conic *Six_arcs, 
-		int *Arc_identify_nb, 
-		int *Arc_identify, 
-		int *f_deleted, 
-		int verbose_level);
 	void report_basics_and_trihedral_pair(std::ostream &ost);
 
 };

@@ -266,11 +266,13 @@ void surface_object_with_action::init_surface_object(
 	surface_object_with_action::Aut_gens = Aut_gens;
 	
 	if (f_v) {
-		cout << "surface_object_with_action::init_surface_object before compute_projectivity_group" << endl;
+		cout << "surface_object_with_action::init_surface_object "
+				"before compute_projectivity_group" << endl;
 	}
 	compute_projectivity_group(verbose_level - 5);
 	if (f_v) {
-		cout << "surface_object_with_action::init_surface_object after compute_projectivity_group" << endl;
+		cout << "surface_object_with_action::init_surface_object "
+				"after compute_projectivity_group" << endl;
 	}
 
 
@@ -300,7 +302,8 @@ void surface_object_with_action::compute_projectivity_group(
 
 	if (f_v) {
 		cout << "surface_object_with_action::compute_projectivity_group" << endl;
-		cout << "surface_object_with_action::compute_projectivity_group verbose_level=" << verbose_level << endl;
+		cout << "surface_object_with_action::compute_projectivity_group "
+				"verbose_level=" << verbose_level << endl;
 	}
 	if (Surf_A->A->is_semilinear_matrix_group()) {
 		if (f_v) {
@@ -370,15 +373,14 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "surface_object_with_action::compute_orbits_of_"
-				"automorphism_group" << endl;
+		cout << "surface_object_with_action::compute_orbits_of_automorphism_group" << endl;
 	}
 
 	// orbits on points:
 	
 	if (f_v) {
-		cout << "surface_object_with_action::compute_orbits_of_"
-				"automorphism_group orbits on points" << endl;
+		cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
+				"orbits on points" << endl;
 	}
 	init_orbits_on_points(verbose_level - 1);
 
@@ -386,8 +388,8 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(
 	// orbits on Eckardt points:
 	
 	if (f_v) {
-		cout << "surface_object_with_action::compute_orbits_of_"
-				"automorphism_group orbits on Eckardt points" << endl;
+		cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
+				"orbits on Eckardt points" << endl;
 	}
 	init_orbits_on_Eckardt_points(verbose_level - 1);
 
@@ -395,8 +397,8 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(
 	// orbits on Double points:
 	
 	if (f_v) {
-		cout << "surface_object_with_action::compute_orbits_of_"
-				"automorphism_group orbits on double points" << endl;
+		cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
+				"orbits on double points" << endl;
 	}
 	init_orbits_on_Double_points(verbose_level - 1);
 
@@ -404,8 +406,8 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(
 	// orbits on lines:
 
 	if (f_v) {
-		cout << "surface_object_with_action::compute_orbits_of_"
-				"automorphism_group orbits on lines" << endl;
+		cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
+				"orbits on lines" << endl;
 	}
 	init_orbits_on_lines(verbose_level);
 
@@ -413,8 +415,8 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(
 	// orbits on half double sixes:
 
 	if (f_v) {
-		cout << "surface_object_with_action::compute_orbits_of_"
-				"automorphism_group orbits on half double sixes" << endl;
+		cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
+				"orbits on half double sixes" << endl;
 	}
 	init_orbits_on_half_double_sixes(verbose_level);
 
@@ -423,8 +425,8 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(
 	// orbits on tritangent planes:
 
 	if (f_v) {
-		cout << "surface_object_with_action::compute_orbits_of_"
-				"automorphism_group orbits on tritangent planes" << endl;
+		cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
+				"orbits on tritangent planes" << endl;
 	}
 	init_orbits_on_tritangent_planes(verbose_level);
 
@@ -432,8 +434,8 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(
 	// orbits on trihedral pairs:
 
 	if (f_v) {
-		cout << "surface_object_with_action::compute_orbits_of_"
-				"automorphism_group orbits on trihedral pairs" << endl;
+		cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
+				"orbits on trihedral pairs" << endl;
 	}
 	init_orbits_on_trihedral_pairs(verbose_level);
 
@@ -442,15 +444,14 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(
 	// orbits on points not on lines:
 
 	if (f_v) {
-		cout << "surface_object_with_action::compute_orbits_of_"
-				"automorphism_group orbits on points not on lines" << endl;
+		cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
+				"orbits on points not on lines" << endl;
 	}
 	init_orbits_on_points_not_on_lines(verbose_level);
 
 
 	if (f_v) {
-		cout << "surface_object_with_action::compute_orbits_of_"
-				"automorphism_group done" << endl;
+		cout << "surface_object_with_action::compute_orbits_of_automorphism_group done" << endl;
 	}
 }
 
@@ -552,8 +553,7 @@ void surface_object_with_action::init_orbits_on_Double_points(
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_"
-				"on_Double_points" << endl;
+		cout << "surface_object_with_action::init_orbits_on_Double_points" << endl;
 	}
 
 	if (f_v) {
@@ -584,8 +584,7 @@ void surface_object_with_action::init_orbits_on_Double_points(
 	}
 
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_on_"
-				"Double_points done" << endl;
+		cout << "surface_object_with_action::init_orbits_on_Double_points done" << endl;
 	}
 }
 
@@ -626,8 +625,7 @@ void surface_object_with_action::init_orbits_on_lines(
 	}
 
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_"
-				"on_lines done" << endl;
+		cout << "surface_object_with_action::init_orbits_on_lines done" << endl;
 	}
 }
 
@@ -637,8 +635,7 @@ void surface_object_with_action::init_orbits_on_half_double_sixes(
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_"
-				"on_half_double_sixes" << endl;
+		cout << "surface_object_with_action::init_orbits_on_half_double_sixes" << endl;
 	}
 
 	if (f_v) {
@@ -673,8 +670,7 @@ void surface_object_with_action::init_orbits_on_half_double_sixes(
 	//nb_orbits_on_single_sixes = Orbits_on_single_sixes->nb_orbits;
 
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_"
-				"on_half_double_sixes done" << endl;
+		cout << "surface_object_with_action::init_orbits_on_half_double_sixes done" << endl;
 	}
 }
 
@@ -684,8 +680,7 @@ void surface_object_with_action::init_orbits_on_tritangent_planes(
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_"
-				"on_tritangent_planes" << endl;
+		cout << "surface_object_with_action::init_orbits_on_tritangent_planes" << endl;
 	}
 
 	if (f_v) {
@@ -717,8 +712,7 @@ void surface_object_with_action::init_orbits_on_tritangent_planes(
 	Orbits_on_tritangent_planes->print_and_list_orbits(cout);
 
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_"
-				"on_tritangent_planes done" << endl;
+		cout << "surface_object_with_action::init_orbits_on_tritangent_planes done" << endl;
 	}
 }
 
@@ -728,8 +722,7 @@ void surface_object_with_action::init_orbits_on_trihedral_pairs(
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_"
-				"on_trihedral_pairs" << endl;
+		cout << "surface_object_with_action::init_orbits_on_trihedral_pairs" << endl;
 	}
 
 	if (f_v) {
@@ -759,8 +752,7 @@ void surface_object_with_action::init_orbits_on_trihedral_pairs(
 	Orbits_on_trihedral_pairs->print_and_list_orbits(cout);
 
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_"
-				"on_trihedral_pairs done" << endl;
+		cout << "surface_object_with_action::init_orbits_on_trihedral_pairs done" << endl;
 	}
 }
 
@@ -770,8 +762,7 @@ void surface_object_with_action::init_orbits_on_points_not_on_lines(
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_"
-				"on_points_not_on_lines" << endl;
+		cout << "surface_object_with_action::init_orbits_on_points_not_on_lines" << endl;
 	}
 
 	if (f_v) {
@@ -802,8 +793,7 @@ void surface_object_with_action::init_orbits_on_points_not_on_lines(
 	Orbits_on_points_not_on_lines->print_and_list_orbits(cout);
 
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_"
-				"on_points_not_on_lines done" << endl;
+		cout << "surface_object_with_action::init_orbits_on_points_not_on_lines done" << endl;
 	}
 }
 
@@ -890,6 +880,7 @@ void surface_object_with_action::print_automorphism_group(
 	ost << "Decomposition scheme of line intersection graph:" << endl;
 	L.print_integer_matrix_tex_block_by_block(ost,
 			Decomp_scheme, nb, nb, block_width);
+	FREE_int(Decomp_scheme);
 	
 
 	ost << "\\subsection*{Orbits on single sixes}" << endl;
@@ -953,440 +944,6 @@ void surface_object_with_action::print_automorphism_group(
 
 }
 
-void surface_object_with_action::compute_quartic(int pt_orbit, 
-	int &pt_A, int &pt_B, int *transporter, 
-	int *equation, int *equation_nice, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//int *Elt;
-
-	if (f_v) {
-		cout << "surface_object_with_action::compute_quartic" << endl;
-		cout << "pt_orbit=" << pt_orbit << endl;
-	}
-	
-	if (Orbits_on_points_not_on_lines == NULL) {
-		cout << "surface_object_with_action::compute_quartic "
-				"Orbits_on_points_not_on_lines has not been computed" << endl;
-		exit(1);
-	}
-	if (pt_orbit >= Orbits_on_points_not_on_lines->nb_orbits) {
-		cout << "surface_object_with_action::compute_quartic "
-				"pt_orbit >= Orbits_on_points_not_on_lines->nb_orbits" << endl;
-		exit(1);
-	}
-	int v[4];
-	int i;
-
-	//Elt = NEW_int(Surf_A->A->elt_size_in_int);
-	v[0] = 1;
-	v[1] = 0;
-	v[2] = 0;
-	v[3] = 0;
-	pt_B = Surf->rank_point(v);
-	i = Orbits_on_points_not_on_lines->orbit[0];
-	pt_A = SO->Pts_not_on_lines[i];
-
-	cout << "surface_object_with_action::compute_quartic "
-			"pt_A = " << pt_A << " pt_B=" << pt_B << endl;
-	
-	Surf_A->A->Strong_gens->make_element_which_moves_a_point_from_A_to_B(
-		Surf_A->A,
-		pt_A, pt_B, transporter, verbose_level);
-
-	cout << "surface_object_with_action::compute_quartic "
-			"transporter element=" << endl;
-	Surf_A->A->element_print_quick(transporter, cout);
-	
-	Surf_A->AonHPD_3_4->compute_image_int_low_level(
-			transporter, equation /*int *input*/,
-			equation_nice /* int *output */, verbose_level);
-	cout << "surface_object_with_action::compute_quartic "
-			"equation_nice=" << endl;
-	Surf->Poly3_4->print_equation(cout, equation_nice);
-	cout << endl;
-
-	
-	//FREE_int(Elt);
-	if (f_v) {
-		cout << "surface_object_with_action::compute_quartic" << endl;
-	}
-}
-
-
-void surface_object_with_action::quartic(
-		ostream &ost, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//int *Elt;
-	sorting Sorting;
-
-	if (f_v) {
-		cout << "surface_object_with_action::quartic" << endl;
-	}
-	
-
-	if (Orbits_on_points_not_on_lines->nb_orbits == 0) {
-		return;
-	}
-
-	int equation_nice[20];
-	int *transporter;
-	int i, a;
-	int v[4];
-	int pt_A, pt_B;
-
-	transporter = NEW_int(Surf_A->A->elt_size_in_int);
-
-	cout << "surface_object_with_action::quartic "
-			"The surface has points not on lines, "
-			"we are computing the quartic" << endl;
-	compute_quartic(0 /* pt_orbit */, pt_A, pt_B,
-			transporter, SO->eqn, equation_nice, verbose_level);
-
-	cout << "surface_object_with_action::quartic "
-			"equation_nice=" << endl;
-	Surf->Poly3_4->print_equation(cout, equation_nice);
-	cout << endl;
-	
-	ost << "An equivalent surface containing the point (1,0,0,0) "
-			"on no line of the surface is obtained by applying "
-			"the transformation" << endl;
-	ost << "$$" << endl;
-	Surf_A->A->element_print_latex(transporter, ost);
-	ost << "$$" << endl;
-	ost << "Which moves $P_{" << pt_A << "}$ to $P_{" << pt_B << "}$." << endl;
-	ost << endl;
-	ost << "\\bigskip" << endl;
-	ost << endl;
-	ost << "The transformed surface is" << endl;
-	ost << "\\begin{align*}" << endl;
-	ost << "{\\cal F}^3 &={\\bf \\rm v}(" << endl;
-	Surf->Poly3_4->print_equation_with_line_breaks_tex(ost,
-			equation_nice, 9 /* nb_terms_per_line */, "\\\\\n&");
-	ost << ")" << endl;
-	ost << "\\end{align*}" << endl;
-
-	int *f1;
-	int *f2;
-	int *f3;
-	
-	cout << "surface_object_with_action::quartic "
-			"before Surf->split_nice_equation" << endl;
-	Surf->split_nice_equation(equation_nice, f1, f2, f3,
-			0 /* verbose_level */);
-	cout << "surface_object_with_action::quartic "
-			"after Surf->split_nice_equation" << endl;
-
-
-	cout << "The equation is of the form $x_0^2f_1(x_1,x_2,x_3) "
-			"+ x_0f_2(x_1,x_2,x_3) + f_3(x_1,x_2,x_3)$, where" << endl;
-	cout << "f1=" << endl;
-	Surf->Poly1_x123->print_equation(cout, f1);
-	cout << endl;
-	cout << "f2=" << endl;
-	Surf->Poly2_x123->print_equation(cout, f2);
-	cout << endl;
-	cout << "f3=" << endl;
-	Surf->Poly3_x123->print_equation(cout, f3);
-	cout << endl;
-
-	ost << "\\begin{align*}" << endl;
-	ost << "f_1 = & ";
-	Surf->Poly1_x123->print_equation_with_line_breaks_tex(ost,
-			f1, 8 /* nb_terms_per_line */, "\\\\\n");
-	ost << "\\\\" << endl;
-	ost << "f_2 = & ";
-	Surf->Poly2_x123->print_equation_with_line_breaks_tex(ost,
-			f2, 8 /* nb_terms_per_line */, "\\\\\n&");
-	ost << "\\\\" << endl;
-	ost << "f_3 = & ";
-	Surf->Poly3_x123->print_equation_with_line_breaks_tex(ost,
-			f3, 8 /* nb_terms_per_line */, "\\\\\n");
-	ost << "\\\\" << endl;
-	ost << "\\end{align*}" << endl;
-
-	long int *Pts_on_surface;
-	int nb_pts_on_surface;
-	
-	nb_pts_on_surface = SO->nb_pts;
-	Pts_on_surface = NEW_lint(nb_pts_on_surface);
-
-	
-	cout << "surface_object_with_action::quartic "
-			"before Surf_A->A->map_a_set_and_reorder" << endl;
-	Surf_A->A->map_a_set_and_reorder(SO->Pts, Pts_on_surface,
-			nb_pts_on_surface, transporter, 0 /* verbose_level */);
-	for (i = 0; i < nb_pts_on_surface; i++) {
-		Surf->unrank_point(v, Pts_on_surface[i]);
-		if (Surf->Poly3_4->evaluate_at_a_point(equation_nice, v)) {
-			cout << "the transformed point does not satisfy "
-					"the transformed equation" << endl;
-			exit(1);
-		}
-	}
-	ost << "The points on the moved surface are:\\\\" << endl;
-	ost << "\\begin{multicols}{2}" << endl;
-	for (i = 0; i < nb_pts_on_surface; i++) {
-		Surf->unrank_point(v, Pts_on_surface[i]);
-		ost << i << " : $P_{" << i << "} = P_{"
-				<< Pts_on_surface[i] << "}=";
-		int_vec_print_fully(ost, v, 4);
-		ost << "$\\\\" << endl;
-	}
-	ost << "\\end{multicols}" << endl;
-
-	for (i = 0; i < nb_pts_on_surface; i++) {
-	
-		a = Surf->Poly3_4->evaluate_at_a_point_by_rank(
-				equation_nice, Pts_on_surface[i]);
-		if (a) {
-			cout << "error, the transformed point " << i
-					<< " does not lie on the transformed surface" << endl;
-			exit(1);
-		}
-	}
-	ost << "The points satisfy the equation of the moved surface.\\\\" << endl;
-
-	
-
-
-	int *curve;
-	int *poly1;
-	int *poly2;
-	int two, four, mfour;
-
-	curve = NEW_int(Surf->Poly4_x123->get_nb_monomials());
-	poly1 = NEW_int(Surf->Poly4_x123->get_nb_monomials());
-	poly2 = NEW_int(Surf->Poly4_x123->get_nb_monomials());
-	Surf->multiply_Poly2_3_times_Poly2_3(f2, f2, poly1,
-			0 /* verbose_level */);
-	Surf->multiply_Poly1_3_times_Poly3_3(f1, f3, poly2,
-			0 /* verbose_level */);
-	two = F->add(1, 1);
-	four = F->add(two, two);
-	mfour = F->negate(four);
-	F->scalar_multiply_vector_in_place(mfour, poly2,
-			Surf->Poly4_x123->get_nb_monomials());
-	F->add_vector(poly1, poly2, curve, Surf->Poly4_x123->get_nb_monomials());
-	
-	int *tangent_quadric;
-
-	cout << "surface_object_with_action::quartic before "
-			"Surf->assemble_tangent_quadric" << endl;
-	Surf->assemble_tangent_quadric(f1, f2, f3,
-			tangent_quadric, verbose_level);
-
-	ost << "The tangent quadric is given as" << endl;
-	ost << "\\begin{align*}" << endl;
-	ost << "{\\cal C}_2 = & {\\rm \\bf v}(2x_0 \\cdot f_1 + f_2) "
-			"= {\\rm \\bf v}(";
-	Surf->Poly2_4->print_equation_with_line_breaks_tex(
-			ost, tangent_quadric, 8 /* nb_terms_per_line */, "\\\\\n&");
-	ost << ")\\\\" << endl;
-	ost << "\\end{align*}" << endl;
-
-	long int *Pts_on_tangent_quadric;
-	int nb_pts_on_tangent_quadric;
-	
-	Pts_on_tangent_quadric = NEW_lint(Surf->P->N_points);
-	
-	cout << "surface_object_with_action::quartic "
-			"before Surf->Poly2_4->enumerate_points" << endl;
-	Surf->Poly2_4->enumerate_points(tangent_quadric,
-			Pts_on_tangent_quadric, nb_pts_on_tangent_quadric,
-			0 /* verbose_level */);
-	cout << "We found " << nb_pts_on_tangent_quadric
-			<< " points on the tangent quadric." << endl;
-
-	ost << "The tangent quadric has " << nb_pts_on_tangent_quadric
-			<< " points.\\\\" << endl;
-
-	Sorting.lint_vec_heapsort(Pts_on_tangent_quadric, nb_pts_on_tangent_quadric);
-	ost << "The points on the tangent quadric are:\\\\" << endl;
-	ost << "\\begin{multicols}{2}" << endl;
-	for (i = 0; i < nb_pts_on_tangent_quadric; i++) {
-		Surf->unrank_point(v, Pts_on_tangent_quadric[i]);
-		ost << i << " : $P_{" << i << "} = P_{"
-				<< Pts_on_tangent_quadric[i] << "}=";
-		int_vec_print_fully(ost, v, 4);
-		ost << "$\\\\" << endl;
-	}
-	ost << "\\end{multicols}" << endl;
-
-
-	int *line_type;
-	
-	line_type = NEW_int(Surf->P->N_lines);
-
-	Surf->P->line_intersection_type(Pts_on_tangent_quadric,
-			nb_pts_on_tangent_quadric, line_type, verbose_level);
-
-
-	int *type_collected;
-
-	type_collected = NEW_int(nb_pts_on_tangent_quadric + 1);
-
-	int_vec_zero(type_collected, nb_pts_on_tangent_quadric + 1);
-	for (i = 0; i < Surf->P->N_lines; i++) {
-		type_collected[line_type[i]]++;
-	}
-
-
-
-
-	ost << "The line type of the tangent quadric is:" << endl;
-	ost << "$$" << endl;
-	for (i = 0; i <= nb_pts_on_tangent_quadric; i++) {
-		if (type_collected[i] == 0) {
-			continue;
-		}
-		
-		ost << i << "^{" << type_collected[i] <<"}";
-		
-		ost << ", \\;" << endl;
-	}
-	ost << "$$" << endl;
-
-	classify C;
-	int *Class_pts;
-	int nb_class_pts;
-
-	C.init(line_type, Surf->P->N_lines, FALSE, 0);
-	C.get_class_by_value(Class_pts, nb_class_pts,
-			q + 1 /* value */, 0 /* verbose_level */);
-	
-
-
-	long int *Pts_intersection;
-	int nb_pts_intersection;
-
-	Sorting.vec_intersect(Pts_on_surface, nb_pts_on_surface,
-		Pts_on_tangent_quadric, nb_pts_on_tangent_quadric, 
-		Pts_intersection, nb_pts_intersection);
-
-
-	ost << "The tangent quadric intersects the cubic surface in "
-			<< nb_pts_intersection << " points." << endl;
-
-	
-	ost << "The intersection points are:\\\\" << endl;
-	ost << "\\begin{multicols}{2}" << endl;
-	for (i = 0; i < nb_pts_intersection; i++) {
-		Surf->unrank_point(v, Pts_intersection[i]);
-		ost << i << " : $P_{" << i << "} = P_{" << Pts_intersection[i] << "}=";
-		int_vec_print_fully(ost, v, 4);
-		ost << "$\\\\" << endl;
-	}
-	ost << "\\end{multicols}" << endl;
-
-
-
-	ost << "The quartic curve is given as" << endl;
-	ost << "\\begin{align*}" << endl;
-	ost << "{\\cal C}_4 = & {\\rm \\bf v}(";
-	Surf->Poly4_x123->print_equation_with_line_breaks_tex(ost,
-			curve, 10 /* nb_terms_per_line */, "\\\\\n&");
-	ost << ")\\\\" << endl;
-	ost << "\\end{align*}" << endl;
-
-
-#if 1
-	long int *Pts_on_curve;
-	int sz_curve;
-
-
-	Pts_on_curve = NEW_lint(Surf->P2->N_points);
-
-	cout << "surface_object_with_action::quartic before "
-			"Surf->Poly4_x123->enumerate_points" << endl;
-	Surf->Poly4_x123->enumerate_points(curve, Pts_on_curve,
-			sz_curve, 0 /* verbose_level */);
-	cout << "We found " << sz_curve
-			<< " points on the quartic quadric." << endl;
-
-	ost << "The " << sz_curve
-			<< " points on the quartic curve are:\\\\" << endl;
-	ost << "\\begin{multicols}{2}" << endl;
-	for (i = 0; i < sz_curve; i++) {
-		Surf->P2->unrank_point(v, Pts_on_curve[i]);
-		ost << i << " : $P_{" << i << "} = P_{"
-				<< Pts_on_curve[i] << "}=";
-		int_vec_print_fully(ost, v, 3);
-		ost << "$\\\\" << endl;
-	}
-	ost << "\\end{multicols}" << endl;
-
-#else
-	int *Pts_on_curve;
-	int sz_curve;
-
-	sz_curve = nb_pts_intersection - 1;
-	Pts_on_curve = NEW_int(sz_curve);
-
-	
-	// skip the first point (1,0,0,0):
-	for (i = 1; i < nb_pts_intersection; i++) {
-		Surf->unrank_point(v, Pts_intersection[i]);
-		Pts_on_curve[i - 1] = Surf->P2->rank_point(v + 1);
-		}
-
-	ost << "The " << sz_curve << " projected points are:\\\\" << endl;
-	ost << "\\begin{multicols}{2}" << endl;
-	for (i = 0; i < sz_curve; i++) {
-		Surf->P2->unrank_point(v, Pts_on_curve[i]);
-		ost << i << " : $P_{" << i << "} = P_{" << Pts_on_curve[i] << "}=";
-		int_vec_print_fully(ost, v, 3);
-		ost << "$\\\\" << endl;
-	}
-	ost << "\\end{multicols}" << endl;
-
-	
-	int r;
-	int *Kernel;
-	
-	Kernel = NEW_int(Surf->Poly4_x123->nb_monomials
-				* Surf->Poly4_x123->nb_monomials);
-	Surf->Poly4_x123->vanishing_ideal(Pts_on_curve,
-			sz_curve, r, Kernel, verbose_level);
-	cout << "r=" << r << endl;
-	ost << "The quartics have "
-			<< Surf->Poly4_x123->nb_monomials << " terms.\\\\" << endl;
-	ost << "The kernel has dimension "
-			<< Surf->Poly4_x123->nb_monomials - r << " .\\\\" << endl;
-#endif
-
-
-	strong_generators *gens_copy;
-	set_and_stabilizer *moved_surface;
-	//strong_generators *stab_gens_moved_surface;
-	strong_generators *stab_gens_P0;
-
-
-	gens_copy = Aut_gens->create_copy();
-
-	moved_surface = NEW_OBJECT(set_and_stabilizer);
-
-	cout << "creating moved_surface" << endl;
-	moved_surface->init_everything(Surf_A->A,
-		Surf_A->A, SO->Pts, SO->nb_pts,
-		gens_copy, 0 /*verbose_level */);
-
-	//stab_gens_moved_surface = SaS->Strong_gens->create_copy();
-
-	cout << "before apply_to_self" << endl;
-	moved_surface->apply_to_self(transporter,
-			0 /* verbose_level */);
-
-	cout << "before moved_surface->Strong_gens->point_stabilizer" << endl;
-	stab_gens_P0 = moved_surface->Strong_gens->point_stabilizer(
-			0 /*int pt */, verbose_level);
-	
-	ost << "The stabilizer of $P0$ and the moved surface "
-			"is the following group:\\\\" << endl;
-	stab_gens_P0->print_generators_tex(ost);
-			
-}
 
 
 void surface_object_with_action::cheat_sheet(ostream &ost, 
@@ -1400,11 +957,6 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 	if (f_v) {
 		cout << "surface_object_with_action::cheat_sheet" << endl;
 	}
-	
-
-
-
-
 
 	if (f_v) {
 		cout << "surface_object_with_action::cheat_sheet "
@@ -1455,12 +1007,15 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 				ost,
 				projectivity_group_gens,
 				verbose_level);
+
+#if 0
 		ost << "The elements of the projectivity group "
 				"in the action on the lines:\\\\" << endl;
 		print_elements_on_lines(
 				ost,
 				projectivity_group_gens,
 				verbose_level);
+#endif
 
 		char label_group[1000];
 
@@ -1492,97 +1047,15 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 
 	if (f_v) {
 		cout << "surface_object_with_action::cheat_sheet "
-				"before SO->print_general" << endl;
+				"before SO->print_everything" << endl;
 	}
-	SO->print_general(ost);
 
+	SO->print_everything(ost, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "surface_object_with_action::cheat_sheet "
-				"before SO->print_lines" << endl;
+				"after SO->print_everything" << endl;
 	}
-	SO->print_lines(ost);
-
-
-	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet "
-				"before SO->print_points" << endl;
-	}
-	SO->print_points(ost);
-
-
-	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet "
-				"before SO->print_lines_with_points_on_them" << endl;
-	}
-	SO->print_lines_with_points_on_them(ost);
-
-
-
-	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet "
-				"before SO->print_line_intersection_graph" << endl;
-	}
-	SO->print_line_intersection_graph(ost);
-
-
-
-	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet "
-				"before SO->print_tritangent_planes" << endl;
-	}
-	SO->print_tritangent_planes(ost);
-
-
-	//SO->print_planes_in_trihedral_pairs(ost);
-
-	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet "
-				"before SO->print_generalized_quadrangle" << endl;
-	}
-	SO->print_generalized_quadrangle(ost);
-
-	
-	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet "
-				"before SO->print_double sixes" << endl;
-	}
-	SO->print_double_sixes(ost);
-
-	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet "
-				"before SO->print_trihedral_pairs" << endl;
-	}
-
-	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet "
-				"before SO->print_half_double_sixes" << endl;
-	}
-	SO->print_half_double_sixes(ost);
-
-	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet "
-				"before SO->print_half_double_sixes_numerically" << endl;
-	}
-	SO->print_half_double_sixes_numerically(ost);
-
-	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet "
-				"before SO->print_trihedral_pairs" << endl;
-	}
-
-	SO->print_trihedral_pairs(ost);
-
-	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet "
-				"before SO->print_trihedral_pairs_numerically" << endl;
-	}
-
-	SO->print_trihedral_pairs_numerically(ost);
-
-	//SO->latex_table_of_trihedral_pairs_and_clebsch_system(
-	//*Clebsch->ost, AL->T_idx, AL->nb_T);
-
 
 
 
@@ -1591,8 +1064,7 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 		cout << "surface_object_with_action::cheat_sheet "
 				"before print_automorphism_group" << endl;
 	}
-	print_automorphism_group(ost, 
-		f_print_orbits, fname_mask);
+	print_automorphism_group(ost, f_print_orbits, fname_mask);
 	
 
 #if 0
@@ -1636,7 +1108,6 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 
 	if (Aut_gens->A->degree < 10000) {
 
-
 		Aut_gens->export_group_and_copy_to_latex(label_txt,
 				ost,
 				verbose_level - 2);
@@ -1656,342 +1127,588 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 }
 
 
-void surface_object_with_action::cheat_sheet_quartic_curve(
-	ostream &ost,
-	const char *label_txt, const char *label_tex,
-	int verbose_level)
+void surface_object_with_action::investigate_surface_and_write_report(
+		action *A,
+		surface_create *SC,
+		six_arcs_not_on_a_conic *Six_arcs,
+		int f_surface_clebsch,
+		int f_surface_codes,
+		int f_surface_quartic,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "surface_object_with_action::investigate_surface_and_write_report" << endl;
+	}
+
+	char fname[2000];
+	char fname_mask[2000];
+	char label[2000];
+	char label_tex[2000];
+
+	snprintf(fname, 2000, "surface_%s.tex", SC->prefix);
+	snprintf(label, 2000, "surface_%s", SC->label_txt);
+	snprintf(label_tex, 2000, "surface %s", SC->label_tex);
+	snprintf(fname_mask, 2000, "surface_%s_orbit_%%d", SC->prefix);
+	{
+		ofstream fp(fname);
+		latex_interface L;
+
+		L.head_easy(fp);
+
+		investigate_surface_and_write_report2(
+					fp,
+					A,
+					SC,
+					Six_arcs,
+					f_surface_clebsch,
+					f_surface_codes,
+					f_surface_quartic,
+					fname_mask,
+					label,
+					label_tex,
+					verbose_level);
+
+
+		L.foot(fp);
+	}
+	file_io Fio;
+
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+
+}
+
+
+
+
+void surface_object_with_action::investigate_surface_and_write_report2(
+		ostream &ost,
+		action *A,
+		surface_create *SC,
+		six_arcs_not_on_a_conic *Six_arcs,
+		int f_surface_clebsch,
+		int f_surface_codes,
+		int f_surface_quartic,
+		char fname_mask[2000],
+		char label[2000],
+		char label_tex[2000],
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surface_object_with_action::"
-				"cheat_sheet_quartic_curve" << endl;
+		cout << "surface_object_with_action::investigate_surface_and_write_report2" << endl;
 	}
-	
 
-	int equation_nice[20];
-	int *transporter;
-	int *f1;
-	int *f2;
-	int *f3;
-	long int *Pts_on_surface;
-	int nb_pts_on_surface;
-	int *curve;
-	int *poly1;
-	int *poly2;
-	int *tangent_quadric;
-	long int *Pts_on_tangent_quadric;
-	long int *Pts_intersection;
-	long int *Pts_on_curve;
-	int sz_curve;
-	int nb_pts_intersection;
-	int nb_pts_on_tangent_quadric;
-	strong_generators *gens_copy;
-	set_and_stabilizer *moved_surface;
-	strong_generators *stab_gens_P0;
-	sorting Sorting;
+	ost << "\\section{The Finite Field $\\mathbb F_{" << SC->F->q << "}$}" << endl;
+	SC->F->cheat_sheet(ost, verbose_level);
 
-	int two, four, mfour;
-	int i;
-	int v[4];
-	int pt_A, pt_B;
-
-	transporter = NEW_int(Surf_A->A->elt_size_in_int);
-
-	cout << "surface_object_with_action::cheat_sheet_quartic_curve "
-			"The surface has points not on lines, we are computing "
-			"the quartic" << endl;
-	compute_quartic(0 /* pt_orbit */, pt_A, pt_B, transporter,
-			SO->eqn, equation_nice, verbose_level);
-
-	cout << "surface_object_with_action::cheat_sheet_quartic_curve "
-			"equation_nice=" << endl;
-	Surf->Poly3_4->print_equation(cout, equation_nice);
-	cout << endl;
-	
-	ost << "An equivalent surface containing the point (1,0,0,0) "
-			"on no line of the surface is obtained by applying "
-			"the transformation" << endl;
-	ost << "$$" << endl;
-	Surf_A->A->element_print_latex(transporter, ost);
-	ost << "$$" << endl;
-	ost << "Which moves $P_{" << pt_A << "}$ to $P_{"
-			<< pt_B << "}$." << endl;
-	ost << endl;
 	ost << "\\bigskip" << endl;
-	ost << endl;
-	ost << "The transformed surface is" << endl;
-	ost << "\\begin{align*}" << endl;
-	ost << "{\\cal F}^3 &={\\bf \\rm v}(" << endl;
-	Surf->Poly3_4->print_equation_with_line_breaks_tex(ost,
-			equation_nice, 9 /* nb_terms_per_line */, "\\\\\n&");
-	ost << ")" << endl;
-	ost << "\\end{align*}" << endl;
 
-	
-	cout << "surface_object_with_action::cheat_sheet_quartic_curve "
-			"before Surf->split_nice_equation" << endl;
-	Surf->split_nice_equation(equation_nice, f1, f2, f3,
-			0 /* verbose_level */);
-	cout << "surface_object_with_action::cheat_sheet_quartic_curve "
-			"after Surf->split_nice_equation" << endl;
+	cheat_sheet(ost,
+		label,
+		label_tex,
+		TRUE /* f_print_orbits */,
+		fname_mask /* const char *fname_mask*/,
+		verbose_level);
+
+	ost << "\\setlength{\\parindent}{0pt}" << endl;
+
+	if (f_surface_clebsch) {
+
+		//surface_object *SO;
+		//SO = SoA->SO;
+
+		ost << endl;
+		ost << "\\bigskip" << endl;
+		ost << endl;
+		ost << "\\section{Points on the surface}" << endl;
+		ost << endl;
+
+		SO->print_affine_points_in_source_code(ost);
 
 
-	ost << "The equation is of the form $x_0^2f_1(x_1,x_2,x_3) "
-			"+ x_0f_2(x_1,x_2,x_3) + f_3(x_1,x_2,x_3)$, where" << endl;
-	cout << "f1=" << endl;
-	Surf->Poly1_x123->print_equation(cout, f1);
-	cout << endl;
-	cout << "f2=" << endl;
-	Surf->Poly2_x123->print_equation(cout, f2);
-	cout << endl;
-	cout << "f3=" << endl;
-	Surf->Poly3_x123->print_equation(cout, f3);
-	cout << endl;
+		ost << endl;
+		ost << "\\bigskip" << endl;
+		ost << endl;
 
-	ost << "\\begin{align*}" << endl;
-	ost << "f_1 = & ";
-	Surf->Poly1_x123->print_equation_with_line_breaks_tex(ost,
-			f1, 8 /* nb_terms_per_line */, "\\\\\n");
-	ost << "\\\\" << endl;
-	ost << "f_2 = & ";
-	Surf->Poly2_x123->print_equation_with_line_breaks_tex(ost,
-			f2, 8 /* nb_terms_per_line */, "\\\\\n&");
-	ost << "\\\\" << endl;
-	ost << "f_3 = & ";
-	Surf->Poly3_x123->print_equation_with_line_breaks_tex(ost,
-			f3, 8 /* nb_terms_per_line */, "\\\\\n");
-	ost << "\\\\" << endl;
-	ost << "\\end{align*}" << endl;
+		ost << "\\section{Clebsch maps}" << endl;
 
-	
-	nb_pts_on_surface = SO->nb_pts;
-	Pts_on_surface = NEW_lint(nb_pts_on_surface);
+		SC->Surf->latex_table_of_clebsch_maps(ost);
 
-	
-	cout << "surface_object_with_action::cheat_sheet_quartic_curve "
-			"before Surf_A->A->map_a_set_and_reorder" << endl;
-	Surf_A->A->map_a_set_and_reorder(SO->Pts, Pts_on_surface,
-			nb_pts_on_surface, transporter, 0 /* verbose_level */);
-	for (i = 0; i < nb_pts_on_surface; i++) {
-		Surf->unrank_point(v, Pts_on_surface[i]);
-		if (Surf->Poly3_4->evaluate_at_a_point(equation_nice, v)) {
-			cout << "the transformed point does not satisfy "
-					"the transformed equation" << endl;
-			exit(1);
-		}
-	}
-	ost << "The points on the moved surface are:\\\\" << endl;
-	ost << "\\begin{multicols}{2}" << endl;
-	for (i = 0; i < nb_pts_on_surface; i++) {
-		Surf->unrank_point(v, Pts_on_surface[i]);
-		ost << i << " : $P_{" << i << "} = P_{"
-				<< Pts_on_surface[i] << "}=";
-		int_vec_print_fully(ost, v, 4);
-		ost << "$\\\\" << endl;
-	}
-	ost << "\\end{multicols}" << endl;
+
+		ost << endl;
+		ost << "\\clearpage" << endl;
+		ost << endl;
 
 
 
-
-	curve = NEW_int(Surf->Poly4_x123->get_nb_monomials());
-	poly1 = NEW_int(Surf->Poly4_x123->get_nb_monomials());
-	poly2 = NEW_int(Surf->Poly4_x123->get_nb_monomials());
-	Surf->multiply_Poly2_3_times_Poly2_3(f2, f2, poly1, 0 /* verbose_level */);
-	Surf->multiply_Poly1_3_times_Poly3_3(f1, f3, poly2, 0 /* verbose_level */);
-	two = F->add(1, 1);
-	four = F->add(two, two);
-	mfour = F->negate(four);
-	F->scalar_multiply_vector_in_place(mfour, poly2,
-			Surf->Poly4_x123->get_nb_monomials());
-	F->add_vector(poly1, poly2, curve,
-			Surf->Poly4_x123->get_nb_monomials());
-	
-
-	cout << "surface_object_with_action::cheat_sheet_quartic_curve "
-			"before Surf->assemble_tangent_quadric" << endl;
-	Surf->assemble_tangent_quadric(f1, f2, f3, tangent_quadric, verbose_level);
-
-	ost << "The tangent quadric is given as" << endl;
-	ost << "\\begin{align*}" << endl;
-	ost << "{\\cal C}_2 = & {\\rm \\bf v}(2x_0 \\cdot f_1 + f_2) = {\\rm \\bf v}(";
-	Surf->Poly2_x123->print_equation_with_line_breaks_tex(ost,
-			tangent_quadric, 8 /* nb_terms_per_line */, "\\\\\n&");
-	ost << ")\\\\" << endl;
-	ost << "\\end{align*}" << endl;
-	
-	Pts_on_tangent_quadric = NEW_lint(Surf->P->N_points);
-	
-	cout << "surface_object_with_action::cheat_sheet_quartic_curve "
-			"before Surf->Poly2_4->enumerate_points" << endl;
-	Surf->Poly2_4->enumerate_points(tangent_quadric,
-			Pts_on_tangent_quadric, nb_pts_on_tangent_quadric,
-			0 /* verbose_level */);
-	cout << "We found " << nb_pts_on_tangent_quadric
-			<< " points on the tangent quadric." << endl;
-
-	ost << "The tangent quadric has " << nb_pts_on_tangent_quadric
-			<< " points.\\\\" << endl;
-
-	Sorting.lint_vec_heapsort(Pts_on_tangent_quadric, nb_pts_on_tangent_quadric);
-	ost << "The points on the tangent quadric are:\\\\" << endl;
-	ost << "\\begin{multicols}{2}" << endl;
-	for (i = 0; i < nb_pts_on_tangent_quadric; i++) {
-		Surf->unrank_point(v, Pts_on_tangent_quadric[i]);
-		ost << i << " : $P_{" << i << "} = P_{"
-				<< Pts_on_tangent_quadric[i] << "}=";
-		int_vec_print_fully(ost, v, 4);
-		ost << "$\\\\" << endl;
-	}
-	ost << "\\end{multicols}" << endl;
+		ost << "\\section{Six-arcs not on a conic}" << endl;
+		ost << endl;
 
 
+		//ost << "The six-arcs not on a conic are:\\\\" << endl;
+		Six_arcs->report_latex(ost);
 
 
+		if (f_surface_codes) {
 
-	Sorting.vec_intersect(Pts_on_surface, nb_pts_on_surface,
-		Pts_on_tangent_quadric, nb_pts_on_tangent_quadric, 
-		Pts_intersection, nb_pts_intersection);
+			homogeneous_polynomial_domain *HPD;
+
+			HPD = NEW_OBJECT(homogeneous_polynomial_domain);
+
+			HPD->init(SC->F, 3, 2 /* degree */,
+					TRUE /* f_init_incidence_structure */,
+					t_PART,
+					verbose_level);
+
+			action *A_on_poly;
+
+			A_on_poly = NEW_OBJECT(action);
+			A_on_poly->induced_action_on_homogeneous_polynomials(A,
+				HPD,
+				FALSE /* f_induce_action */, NULL,
+				verbose_level);
+
+			cout << "created action A_on_poly" << endl;
+			A_on_poly->print_info();
+
+			schreier *Sch;
+			longinteger_object full_go;
+
+			//Sch = new schreier;
+			//A2->all_point_orbits(*Sch, verbose_level);
+
+			cout << "computing orbits:" << endl;
+
+			Sch = A->Strong_gens->orbits_on_points_schreier(A_on_poly, verbose_level);
+
+			//SC->Sg->
+			//Sch = SC->Sg->orbits_on_points_schreier(A_on_poly, verbose_level);
+
+			orbit_transversal *T;
+
+			A->group_order(full_go);
+			T = NEW_OBJECT(orbit_transversal);
+
+			cout << "before T->init_from_schreier" << endl;
+
+			T->init_from_schreier(
+					Sch,
+					A,
+					full_go,
+					verbose_level);
+
+			cout << "after T->init_from_schreier" << endl;
+
+			Sch->print_orbit_reps(cout);
+
+			cout << "orbit reps:" << endl;
+
+			ost << "\\section{Orbits on conics}" << endl;
+			ost << endl;
+
+			T->print_table_latex(
+					ost,
+					TRUE /* f_has_callback */,
+					HPD_callback_print_function2,
+					HPD /* callback_data */,
+					TRUE /* f_has_callback */,
+					HPD_callback_print_function,
+					HPD /* callback_data */,
+					verbose_level);
 
 
-	ost << "The tangent quadric intersects the cubic surface in "
-			<< nb_pts_intersection << " points." << endl;
-
-	
-	ost << "The intersection points are:\\\\" << endl;
-	ost << "\\begin{multicols}{2}" << endl;
-	for (i = 0; i < nb_pts_intersection; i++) {
-		Surf->unrank_point(v, Pts_intersection[i]);
-		ost << i << " : $P_{" << i << "} = P_{"
-				<< Pts_intersection[i] << "}=";
-		int_vec_print_fully(ost, v, 4);
-		ost << "$\\\\" << endl;
-	}
-	ost << "\\end{multicols}" << endl;
-
-
-
-	ost << "The quartic curve is given as" << endl;
-	ost << "\\begin{align*}" << endl;
-	ost << "{\\cal C}_4 = & {\\rm \\bf v}(";
-	Surf->Poly4_x123->print_equation_with_line_breaks_tex(
-			ost, curve, 10 /* nb_terms_per_line */, "\\\\\n&");
-	ost << ")\\\\" << endl;
-	ost << "\\end{align*}" << endl;
-
-
-#if 1
-
-
-	Pts_on_curve = NEW_lint(Surf->P2->N_points);
-
-	cout << "surface_object_with_action::cheat_sheet_quartic_curve "
-			"before Surf->Poly4_x123->enumerate_points" << endl;
-	Surf->Poly4_x123->enumerate_points(curve,
-			Pts_on_curve, sz_curve, 0 /* verbose_level */);
-	cout << "We found " << sz_curve << " points on "
-			"the quartic quadric." << endl;
-
-	ost << "The " << sz_curve << " points on the "
-			"quartic curve are:\\\\" << endl;
-	ost << "\\begin{multicols}{2}" << endl;
-	for (i = 0; i < sz_curve; i++) {
-		Surf->P2->unrank_point(v, Pts_on_curve[i]);
-		ost << i << " : $P_{" << i << "} = P_{"
-				<< Pts_on_curve[i] << "}=";
-		int_vec_print_fully(ost, v, 3);
-		ost << "$\\\\" << endl;
-	}
-	ost << "\\end{multicols}" << endl;
-
-#else
-
-	sz_curve = nb_pts_intersection - 1;
-	Pts_on_curve = NEW_int(sz_curve);
-
-	
-	// skip the first point (1,0,0,0):
-	for (i = 1; i < nb_pts_intersection; i++) {
-		Surf->unrank_point(v, Pts_intersection[i]);
-		Pts_on_curve[i - 1] = Surf->P2->rank_point(v + 1);
 		}
 
-	ost << "The " << sz_curve << " projected points are:\\\\" << endl;
-	ost << "\\begin{multicols}{2}" << endl;
-	for (i = 0; i < sz_curve; i++) {
-		Surf->P2->unrank_point(v, Pts_on_curve[i]);
-		ost << i << " : $P_{" << i << "} = P_{" << Pts_on_curve[i] << "}=";
-		int_vec_print_fully(ost, v, 3);
-		ost << "$\\\\" << endl;
-	}
-	ost << "\\end{multicols}" << endl;
 
-	
-	int r;
-	int *Kernel;
-	
-	Kernel = NEW_int(Surf->Poly4_x123->nb_monomials *
-			Surf->Poly4_x123->nb_monomials);
-	Surf->Poly4_x123->vanishing_ideal(Pts_on_curve,
-			sz_curve, r, Kernel, verbose_level);
-	cout << "r=" << r << endl;
-	ost << "The quartics have " << Surf->Poly4_x123->nb_monomials
-			<< " terms.\\\\" << endl;
-	ost << "The kernel has dimension "
-			<< Surf->Poly4_x123->nb_monomials - r << " .\\\\" << endl;
-	FREE_int(Kernel);
+#if 0
+
+		int *Arc_iso; // [72]
+		int *Clebsch_map; // [nb_pts]
+		int *Clebsch_coeff; // [nb_pts * 4]
+		//int line_a, line_b;
+		//int transversal_line;
+		int tritangent_plane_rk;
+		int plane_rk_global;
+		int ds, ds_row;
+
+		fp << endl;
+		fp << "\\clearpage" << endl;
+		fp << endl;
+
+		fp << "\\section{Clebsch maps in detail}" << endl;
+		fp << endl;
+
+
+
+
+		Arc_iso = NEW_int(72);
+		Clebsch_map = NEW_int(SO->nb_pts);
+		Clebsch_coeff = NEW_int(SO->nb_pts * 4);
+
+		for (ds = 0; ds < 36; ds++) {
+			for (ds_row = 0; ds_row < 2; ds_row++) {
+				SC->Surf->prepare_clebsch_map(
+						ds, ds_row,
+						line_a, line_b,
+						transversal_line,
+						0 /*verbose_level */);
+
+
+				ost << endl;
+				ost << "\\bigskip" << endl;
+				ost << endl;
+				ost << "\\subsection{Clebsch map for double six "
+						<< ds << ", row " << ds_row << "}" << endl;
+				ost << endl;
+
+
+
+				cout << "computing clebsch map:" << endl;
+				SO->compute_clebsch_map(line_a, line_b,
+					transversal_line,
+					tritangent_plane_rk,
+					Clebsch_map,
+					Clebsch_coeff,
+					verbose_level);
+
+
+				plane_rk_global = SO->Tritangent_planes[
+					SO->Eckardt_to_Tritangent_plane[
+						tritangent_plane_rk]];
+
+				int Arc[6];
+				int Arc2[6];
+				int Blown_up_lines[6];
+				int perm[6];
+
+				SO->clebsch_map_find_arc_and_lines(
+						Clebsch_map,
+						Arc,
+						Blown_up_lines,
+						0 /* verbose_level */);
+
+				for (j = 0; j < 6; j++) {
+					perm[j] = j;
+					}
+
+				int_vec_heapsort_with_log(Blown_up_lines, perm, 6);
+				for (j = 0; j < 6; j++) {
+					Arc2[j] = Arc[perm[j]];
+					}
+
+
+				ost << endl;
+				ost << "\\bigskip" << endl;
+				ost << endl;
+				//ost << "\\section{Clebsch map}" << endl;
+				//ost << endl;
+				ost << "Line 1 = $";
+				ost << SC->Surf->Line_label_tex[line_a];
+				ost << "$\\\\" << endl;
+				ost << "Line 2 = $";
+				ost << SC->Surf->Line_label_tex[line_b];
+				ost << "$\\\\" << endl;
+				ost << "Transversal line $";
+				ost << SC->Surf->Line_label_tex[transversal_line];
+				ost << "$\\\\" << endl;
+				ost << "Image plane $\\pi_{" << tritangent_plane_rk
+						<< "}=" << plane_rk_global << "=$\\\\" << endl;
+				ost << "$$" << endl;
+
+				ost << "\\left[" << endl;
+				SC->Surf->Gr3->print_single_generator_matrix_tex(
+						ost, plane_rk_global);
+				ost << "\\right]," << endl;
+
+				ost << "$$" << endl;
+				ost << "Arc $";
+				int_set_print_tex(ost, Arc2, 6);
+				ost << "$\\\\" << endl;
+				ost << "Half double six: $";
+				int_set_print_tex(ost, Blown_up_lines, 6);
+				ost << "=\\{";
+				for (j = 0; j < 6; j++) {
+					ost << SC->Surf->Line_label_tex[Blown_up_lines[j]];
+					ost << ", ";
+					}
+				ost << "\\}$\\\\" << endl;
+
+				ost << "The arc consists of the following "
+						"points:\\\\" << endl;
+				display_table_of_projective_points(ost,
+						SC->F, Arc2, 6, 3);
+
+				int orbit_at_level, idx;
+				Six_arcs->Gen->gen->identify(Arc2, 6,
+						transporter, orbit_at_level,
+						0 /*verbose_level */);
+
+
+				if (!int_vec_search(Six_arcs->Not_on_conic_idx,
+					Six_arcs->nb_arcs_not_on_conic,
+					orbit_at_level,
+					idx)) {
+					cout << "could not find orbit" << endl;
+					exit(1);
+					}
+
+				ost << "The arc is isomorphic to arc " << orbit_at_level
+						<< " in the original classification.\\\\" << endl;
+				ost << "The arc is isomorphic to arc " << idx
+						<< " in the list.\\\\" << endl;
+				Arc_iso[2 * ds + ds_row] = idx;
+
+
+
+				SO->clebsch_map_latex(ost, Clebsch_map, Clebsch_coeff);
+
+				//SO->clebsch_map_print_fibers(Clebsch_map);
+				}
+			}
+
+
+
+		ost << "The isomorphism type of arc associated with "
+				"each half-double six is:" << endl;
+		ost << "$$" << endl;
+		print_integer_matrix_with_standard_labels(ost,
+				Arc_iso, 36, 2, TRUE);
+		ost << "$$" << endl;
+
+		FREE_int(Arc_iso);
+		FREE_int(Clebsch_map);
+		FREE_int(Clebsch_coeff);
+#endif
+
+
+#if 0
+		ost << endl;
+		ost << "\\clearpage" << endl;
+		ost << endl;
+
+
+		ost << "\\section{Clebsch maps in detail by orbits "
+				"on half-double sixes}" << endl;
+		ost << endl;
+
+
+
+		ost << "There are " << SoA->Orbits_on_single_sixes->nb_orbits
+				<< "orbits on half double sixes\\\\" << endl;
+
+		Arc_iso = NEW_int(SoA->Orbits_on_single_sixes->nb_orbits);
+		Clebsch_map = NEW_int(SO->nb_pts);
+		Clebsch_coeff = NEW_int(SO->nb_pts * 4);
+
+		int j, f, l, k;
+
+		for (j = 0; j < SoA->Orbits_on_single_sixes->nb_orbits; j++) {
+
+			int line1, line2, transversal_line;
+
+			if (f_v) {
+				cout << "surface_with_action::arc_lifting_and_classify "
+					"orbit on single sixes " << j << " / "
+					<< SoA->Orbits_on_single_sixes->nb_orbits << ":" << endl;
+			}
+
+			fp << "\\subsection*{Orbit on single sixes " << j << " / "
+				<< SoA->Orbits_on_single_sixes->nb_orbits << "}" << endl;
+
+			f = SoA->Orbits_on_single_sixes->orbit_first[j];
+			l = SoA->Orbits_on_single_sixes->orbit_len[j];
+			if (f_v) {
+				cout << "orbit f=" << f <<  " l=" << l << endl;
+				}
+			k = SoA->Orbits_on_single_sixes->orbit[f];
+
+			if (f_v) {
+				cout << "The half double six is no " << k << " : ";
+				int_vec_print(cout, SoA->Surf->Half_double_sixes + k * 6, 6);
+				cout << endl;
+				}
+
+			int h;
+
+			fp << "The half double six is no " << k << "$ = "
+					<< Surf->Half_double_six_label_tex[k] << "$ : $";
+			int_vec_print(ost, Surf->Half_double_sixes + k * 6, 6);
+			ost << " = \\{" << endl;
+			for (h = 0; h < 6; h++) {
+				ost << Surf->Line_label_tex[
+						Surf->Half_double_sixes[k * 6 + h]];
+				if (h < 6 - 1) {
+					ost << ", ";
+					}
+				}
+			ost << "\\}$\\\\" << endl;
+
+			ds = k / 2;
+			ds_row = k % 2;
+
+			SC->Surf->prepare_clebsch_map(
+					ds, ds_row,
+					line1, line2,
+					transversal_line,
+					0 /*verbose_level */);
+
+			ost << endl;
+			ost << "\\bigskip" << endl;
+			ost << endl;
+			ost << "\\subsection{Clebsch map for double six "
+					<< ds << ", row " << ds_row << "}" << endl;
+			ost << endl;
+
+
+
+			cout << "computing clebsch map:" << endl;
+			SO->compute_clebsch_map(line1, line2,
+				transversal_line,
+				tritangent_plane_rk,
+				Clebsch_map,
+				Clebsch_coeff,
+				verbose_level);
+
+
+			plane_rk_global = SO->Tritangent_planes[
+				SO->Eckardt_to_Tritangent_plane[
+					tritangent_plane_rk]];
+
+			int Arc[6];
+			int Arc2[6];
+			int Blown_up_lines[6];
+			int perm[6];
+
+			SO->clebsch_map_find_arc_and_lines(
+					Clebsch_map,
+					Arc,
+					Blown_up_lines,
+					0 /* verbose_level */);
+
+			for (h = 0; h < 6; h++) {
+				perm[h] = h;
+				}
+
+			Sorting.int_vec_heapsort_with_log(Blown_up_lines, perm, 6);
+			for (h = 0; h < 6; h++) {
+				Arc2[h] = Arc[perm[h]];
+				}
+
+
+			ost << endl;
+			ost << "\\bigskip" << endl;
+			ost << endl;
+			//ost << "\\section{Clebsch map}" << endl;
+			//ost << endl;
+			ost << "Line 1 = $";
+			ost << SC->Surf->Line_label_tex[line1];
+			ost << "$\\\\" << endl;
+			ost << "Line 2 = $";
+			ost << SC->Surf->Line_label_tex[line2];
+			ost << "$\\\\" << endl;
+			ost << "Transversal line $";
+			ost << SC->Surf->Line_label_tex[transversal_line];
+			ost << "$\\\\" << endl;
+			ost << "Image plane $\\pi_{" << tritangent_plane_rk
+					<< "}=" << plane_rk_global << "=$\\\\" << endl;
+			ost << "$$" << endl;
+
+			ost << "\\left[" << endl;
+			SC->Surf->Gr3->print_single_generator_matrix_tex(
+					ost, plane_rk_global);
+			ost << "\\right]," << endl;
+
+			ost << "$$" << endl;
+			ost << "Arc $";
+			int_set_print_tex(ost, Arc2, 6);
+			ost << "$\\\\" << endl;
+			ost << "Half double six: $";
+			int_set_print_tex(ost, Blown_up_lines, 6);
+			ost << "=\\{";
+			for (h = 0; h < 6; h++) {
+				ost << SC->Surf->Line_label_tex[Blown_up_lines[h]];
+				ost << ", ";
+				}
+			ost << "\\}$\\\\" << endl;
+
+			ost << "The arc consists of the following "
+					"points:\\\\" << endl;
+			SC->F->display_table_of_projective_points(ost,
+					Arc2, 6, 3);
+
+			int orbit_at_level, idx;
+			Six_arcs->Gen->gen->identify(Arc2, 6,
+					transporter, orbit_at_level,
+					0 /*verbose_level */);
+
+
+			if (!Sorting.int_vec_search(Six_arcs->Not_on_conic_idx,
+				Six_arcs->nb_arcs_not_on_conic,
+				orbit_at_level,
+				idx)) {
+				cout << "could not find orbit" << endl;
+				exit(1);
+				}
+
+			ost << "The arc is isomorphic to arc " << orbit_at_level
+					<< " in the original classification.\\\\" << endl;
+			ost << "The arc is isomorphic to arc " << idx
+					<< " in the list.\\\\" << endl;
+			Arc_iso[j] = idx;
+
+
+
+			SO->clebsch_map_latex(ost, Clebsch_map, Clebsch_coeff);
+
+		} // next j
+
+		ost << "The isomorphism type of arc associated with "
+				"each half-double six is:" << endl;
+		ost << "$$" << endl;
+		int_vec_print(fp,
+				Arc_iso, SoA->Orbits_on_single_sixes->nb_orbits);
+		ost << "$$" << endl;
+
+
+
+		FREE_int(Arc_iso);
+		FREE_int(Clebsch_map);
+		FREE_int(Clebsch_coeff);
+
 #endif
 
 
 
+		if (f_surface_quartic) {
 
-	gens_copy = Aut_gens->create_copy();
+			surface_object_tangent_cone *SOT;
 
-	moved_surface = NEW_OBJECT(set_and_stabilizer);
+			SOT = NEW_OBJECT(surface_object_tangent_cone);
 
-	cout << "creating moved_surface" << endl;
-	moved_surface->init_everything(Surf_A->A,
-		Surf_A->A, SO->Pts, SO->nb_pts,
-		gens_copy, 0 /*verbose_level */);
+			SOT->init(this, verbose_level);
+			SOT->quartic(ost, verbose_level);
 
-	//stab_gens_moved_surface = SaS->Strong_gens->create_copy();
+			FREE_OBJECT(SOT);
 
-	cout << "before apply_to_self" << endl;
-	moved_surface->apply_to_self(transporter,
-			0 /* verbose_level */);
+			//SoA->quartic(ost, verbose_level);
+		}
 
-	cout << "before moved_surface->Strong_gens->point_stabilizer"
-			<< endl;
-	stab_gens_P0 = moved_surface->Strong_gens->point_stabilizer(
-			0 /*int pt */, verbose_level);
-	
-	ost << "The stabilizer of $P0$ and the moved surface is "
-			"the following group:\\\\" << endl;
-	stab_gens_P0->print_generators_tex(ost);
 
-	FREE_int(transporter);
-	FREE_int(f1);
-	FREE_int(f2);
-	FREE_int(f3);
-	FREE_lint(Pts_on_surface);
-	FREE_int(curve);
-	FREE_int(poly1);
-	FREE_int(poly2);
-	FREE_int(tangent_quadric);
-	FREE_lint(Pts_on_tangent_quadric);
-	FREE_lint(Pts_intersection);
-	FREE_lint(Pts_on_curve);
-	FREE_OBJECT(gens_copy);
-	FREE_OBJECT(moved_surface);
-	FREE_OBJECT(stab_gens_P0);
-
+	}
 
 	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet_"
-				"quartic_curve" << endl;
+		cout << "surface_object_with_action::investigate_surface_and_write_report2 done" << endl;
 	}
 }
+
+
+
 
 
 }}

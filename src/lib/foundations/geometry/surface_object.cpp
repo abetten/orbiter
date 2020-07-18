@@ -1048,6 +1048,111 @@ void surface_object::compute_planes_and_dual_point_ranks(int verbose_level)
 		}
 }
 
+void surface_object::print_everything(ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object::print_everything" << endl;
+	}
+	if (f_v) {
+		cout << "surface_object::print_everything "
+				"before print_general" << endl;
+	}
+	print_general(ost);
+
+
+	if (f_v) {
+		cout << "surface_object::print_everything "
+				"before print_lines" << endl;
+	}
+	print_lines(ost);
+
+
+	if (f_v) {
+		cout << "surface_object::print_everything "
+				"before print_points" << endl;
+	}
+	print_points(ost);
+
+
+	if (f_v) {
+		cout << "surface_object::print_everything "
+				"before print_lines_with_points_on_them" << endl;
+	}
+	print_lines_with_points_on_them(ost);
+
+
+
+	if (f_v) {
+		cout << "surface_object::print_everything "
+				"before SO->print_line_intersection_graph" << endl;
+	}
+	print_line_intersection_graph(ost);
+
+
+
+	if (f_v) {
+		cout << "surface_object::print_everything "
+				"before print_tritangent_planes" << endl;
+	}
+	print_tritangent_planes(ost);
+
+
+	//SO->print_planes_in_trihedral_pairs(ost);
+
+	if (f_v) {
+		cout << "surface_object::print_everything "
+				"before print_generalized_quadrangle" << endl;
+	}
+	print_generalized_quadrangle(ost);
+
+
+	if (f_v) {
+		cout << "surface_object::print_everything "
+				"before print_double sixes" << endl;
+	}
+	print_double_sixes(ost);
+
+	if (f_v) {
+		cout << "surface_object::print_everything "
+				"before print_trihedral_pairs" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_object::print_everything "
+				"before print_half_double_sixes" << endl;
+	}
+	print_half_double_sixes(ost);
+
+	if (f_v) {
+		cout << "surface_object::print_everything "
+				"before print_half_double_sixes_numerically" << endl;
+	}
+	print_half_double_sixes_numerically(ost);
+
+	if (f_v) {
+		cout << "surface_object::print_everything "
+				"before print_trihedral_pairs" << endl;
+	}
+
+	print_trihedral_pairs(ost);
+
+	if (f_v) {
+		cout << "surface_object::print_everything "
+				"before print_trihedral_pairs_numerically" << endl;
+	}
+
+	print_trihedral_pairs_numerically(ost);
+
+	if (f_v) {
+		cout << "surface_object::print_everything done" << endl;
+	}
+}
+
+
+
+
 void surface_object::report_properties(ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1095,6 +1200,12 @@ void surface_object::report_properties(ostream &ost, int verbose_level)
 	print_generalized_quadrangle(ost);
 
 	if (f_v) {
+		cout << "surface_object::report_properties "
+				"before print_line_intersection_graph" << endl;
+	}
+	print_line_intersection_graph(ost);
+
+	if (f_v) {
 		cout << "surface_object::report_properties done" << endl;
 	}
 }
@@ -1104,12 +1215,69 @@ void surface_object::print_line_intersection_graph(ostream &ost)
 	//ost << "\\clearpage" << endl;
 	ost << "\\subsection*{Line Intersection Graph}" << endl;
 
+	print_adjacency_list(ost);
+
 	print_adjacency_matrix(ost);
 
 	print_adjacency_matrix_with_intersection_points(ost);
 
 	print_neighbor_sets(ost);
 }
+
+void surface_object::print_adjacency_list(ostream &ost)
+{
+	int i, j, m, n, h;
+	int *p;
+	int set[27];
+
+	m = 27;
+	n = 27;
+	p = Adj_line_intersection_graph;
+	ost << "{\\arraycolsep=1pt" << endl;
+	//int block_width = 27;
+	//print_integer_matrix_tex_block_by_block(ost,
+	//Adj_line_intersection_graph, 27, 27, block_width);
+	ost << "$$" << endl;
+	ost << "\\begin{array}{rr|l|l}" << endl;
+	ost << " &  & \\mbox{intersecting} & \\mbox{non-intersecting}";
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < m; i++) {
+		ost << i << " & " << Surf->Line_label_tex[i];
+		ost << " & ";
+		h = 0;
+		for (j = 0; j < n; j++) {
+			if (p[i * n + j]) {
+				set[h++] = j;
+			}
+		}
+		for (j = 0; j < h; j++) {
+			ost << Surf->Line_label_tex[set[j]];
+			if (j < h - 1) {
+				ost << ", ";
+			}
+		}
+		ost << " & ";
+		h = 0;
+		for (j = 0; j < n; j++) {
+			if (p[i * n + j] == 0) {
+				set[h++] = j;
+			}
+		}
+		for (j = 0; j < h; j++) {
+			ost << Surf->Line_label_tex[set[j]];
+			if (j < h - 1) {
+				ost << ", ";
+			}
+		}
+		ost << "\\\\";
+		ost << endl;
+		}
+	ost << "\\end{array}" << endl;
+	ost << "$$" << endl;
+	ost << "}%%" << endl;
+}
+
 
 void surface_object::print_adjacency_matrix(ostream &ost)
 {
@@ -1832,7 +2000,7 @@ void surface_object::print_points(ostream &ost)
 				ost << "\\ell_{" << b << "} ";
 				ost << " = ";
 				ost << Surf->Line_label_tex[a] << " \\cap ";
-				ost << Surf->Line_label_tex[b] << "\\\\";
+				ost << Surf->Line_label_tex[b] << "\\\\" << endl;
 			}
 		}
 		ost << "\\end{align*}" << endl;
@@ -1896,10 +2064,17 @@ void surface_object::print_points(ostream &ost)
 
 void surface_object::print_double_sixes(ostream &ost)
 {
-	int i, j, a;
-	latex_interface L;
+	//int i, j, a;
+	//latex_interface L;
 	
-	//ost << "\\clearpage" << endl;
+	ost << "\\bigskip" << endl;
+
+	ost << "\\subsection*{Double sixes}" << endl;
+
+	Surf->latex_table_of_double_sixes(ost);
+
+
+#if 0
 	ost << "\\subsection*{Double sixes}" << endl;
 	ost << "The double sixes are:\\\\" << endl;
 	ost << "$$" << endl;
@@ -1926,19 +2101,23 @@ void surface_object::print_double_sixes(ostream &ost)
 	ost << "\\end{array}" << endl;
 	ost << "$$" << endl;
 	//ost << "\\clearpage" << endl;
-
+#endif
 
 }
 
 void surface_object::print_half_double_sixes(ostream &ost)
 {
-	int h, i, j, a;
-	latex_interface L;
+	//int h, i, j, a;
+	//latex_interface L;
 
+
+	ost << "\\bigskip" << endl;
 
 	ost << "\\subsection*{Half Double sixes}" << endl;
 
+	Surf->latex_table_of_half_double_sixes(ost);
 
+#if 0
 	ost << "The half double sixes are:\\\\" << endl;
 	ost << "$$" << endl;
 	L.print_lint_matrix_with_standard_labels(ost,
@@ -1995,6 +2174,7 @@ void surface_object::print_half_double_sixes(ostream &ost)
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
 	ost << "$$" << endl;
+#endif
 
 	//ost << "\\clearpage" << endl;
 
@@ -2022,6 +2202,10 @@ void surface_object::print_trihedral_pairs(ostream &ost)
 	int i, j, a;
 
 	//ost << "\\clearpage" << endl;
+
+	ost << "\\bigskip" << endl;
+
+
 	ost << "\\subsection*{Trihedral pairs}" << endl;
 	ost << "The 120 trihedral pairs are:\\\\" << endl;
 	ost << "{\\renewcommand{\\arraystretch}{1.3}" << endl;
@@ -2324,8 +2508,7 @@ void surface_object::make_equation_in_trihedral_form(int t_idx,
 	int plane_idx[6];
 
 	if (f_v) {
-		cout << "surface_object::make_equation_in_trihedral_"
-				"form t_idx=" << t_idx << endl;
+		cout << "surface_object::make_equation_in_trihedral_form t_idx=" << t_idx << endl;
 		}
 	
 	if (f_v) {
@@ -2397,8 +2580,7 @@ void surface_object::make_equation_in_trihedral_form(int t_idx,
 	
 
 	if (f_v) {
-		cout << "surface_object::make_equation_in_trihedral_"
-				"form done" << endl;
+		cout << "surface_object::make_equation_in_trihedral_form done" << endl;
 		}
 	
 }
@@ -2467,43 +2649,40 @@ void surface_object::identify_double_six_from_trihedral_pair(
 	sorting Sorting;
 
 	if (f_v) {
-		cout << "surface_object::identify_double_six_from_"
-				"trihedral_pair" << endl;
-		}
+		cout << "surface_object::identify_double_six_from_trihedral_pair" << endl;
+	}
 	if (f_v) {
-		cout << "surface_object::identify_double_six_from_"
-				"trihedral_pair t_idx = " << t_idx << endl;
-		}
+		cout << "surface_object::identify_double_six_from_trihedral_pair t_idx = " << t_idx << endl;
+	}
 
 	for (i = 0; i < 9; i++) {
 		if (!Sorting.int_vec_search_linear(Lines, 27, nine_lines[i], idx)) {
 			cout << "surface_object::identify_double_six_from_"
 					"trihedral_pair cannot find line" << endl;
 			exit(1);
-			}
-		nine_line_idx[i] = idx;
 		}
+		nine_line_idx[i] = idx;
+	}
 	if (t_idx < 20) {
 		identify_double_six_from_trihedral_pair_type_one(Lines,
 				t_idx, nine_line_idx, double_sixes, verbose_level);
-		}
+	}
 	else if (t_idx < 110) {
 		identify_double_six_from_trihedral_pair_type_two(Lines,
 				t_idx, nine_line_idx, double_sixes, verbose_level);
-		}
+	}
 	else if (t_idx < 120) {
 		identify_double_six_from_trihedral_pair_type_three(Lines,
 				t_idx, nine_line_idx, double_sixes, verbose_level);
-		}
+	}
 	else {
 		cout << "surface_object::identify_double_six_from_"
 				"trihedral_pair t_idx is out of range" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
-		cout << "surface_object::identify_double_six_from_"
-				"trihedral_pair done" << endl;
-		}
+		cout << "surface_object::identify_double_six_from_trihedral_pair done" << endl;
+	}
 }
 
 void surface_object::identify_double_six_from_trihedral_pair_type_one(
@@ -2519,20 +2698,19 @@ void surface_object::identify_double_six_from_trihedral_pair_type_one(
 	combinatorics_domain Combi;
 
 	if (f_v) {
-		cout << "surface_object::identify_double_six_from_"
-				"trihedral_pair_type_one" << endl;
-		}
+		cout << "surface_object::identify_double_six_from_trihedral_pair_type_one" << endl;
+	}
 	if (f_v) {
 		cout << "t_idx=" << t_idx << endl;
 		cout << "Lines:" << endl;
 		for (h = 0; h < 27; h++) {
 			cout << h << " : " << Lines[h] << endl;
-			}
+		}
 		cout << "nine_line_idx:" << endl;
 		for (h = 0; h < 9; h++) {
 			cout << h << " : " << nine_line_idx[h] << endl;
-			}
 		}
+	}
 	Combi.unrank_k_subset(t_idx, subset, 6, 3);
 	Combi.set_complement(subset, 3, subset + 3, size_complement, 6);
 	i = subset[0];
@@ -2545,7 +2723,7 @@ void surface_object::identify_double_six_from_trihedral_pair_type_one(
 	if (f_v) {
 		cout << "i=" << i << " j=" << j << " k=" << k
 				<< " l=" << l << " m=" << m << " n=" << n << endl;
-		}
+	}
 	T[0] = Surf->line_cij(j, k);
 	T[1] = Surf->line_bi(k);
 	T[2] = Surf->line_ai(j);
@@ -2563,7 +2741,7 @@ void surface_object::identify_double_six_from_trihedral_pair_type_one(
 	
 	for (h = 0; h < 9; h++) {
 		new_lines[T[h]] = nine_line_idx[h];
-		}
+	}
 
 	int X1[5], X1_len;
 	int X2[5], X2_len;
@@ -2579,7 +2757,7 @@ void surface_object::identify_double_six_from_trihedral_pair_type_one(
 		cout << "X1=";
 		int_vec_print(cout, X1, X1_len);
 		cout << endl;
-		}
+	}
 
 	int c1, c2, c2b;
 
@@ -2591,37 +2769,37 @@ void surface_object::identify_double_six_from_trihedral_pair_type_one(
 
 		if (f_v) {
 			cout << "c1=" << c1 << " / " << X1_len << endl;
-			}
+		}
 
 		// pick b_l according to c1:
 		new_lines[Surf->line_bi(l)] = X1[c1];
 		if (f_v) {
 			cout << "b_l=" << X1[c1] << endl;
-			}
+		}
 
 
 		int X4[2];
 		if (c1 == 0) {
 			X4[0] = X1[1];
 			X4[1] = X1[2];
-			}
+		}
 		else if (c1 == 1) {
 			X4[0] = X1[0];
 			X4[1] = X1[2];
-			}
+		}
 		else if (c1 == 2) {
 			X4[0] = X1[0];
 			X4[1] = X1[1];
-			}
+		}
 		else {
 			cout << "c1 is illegal" << endl;
 			exit(1);
-			}
+		}
 		if (f_v) {
 			cout << "X4=";
 			int_vec_print(cout, X4, 2);
 			cout << endl;
-			}
+		}
 
 
 
@@ -2636,29 +2814,29 @@ void surface_object::identify_double_six_from_trihedral_pair_type_one(
 			cout << "X2=";
 			int_vec_print(cout, X2, 2);
 			cout << endl;
-			}
+		}
 
 		for (c2 = 0; c2 < X2_len; c2++) {
 
 			if (f_v) {
 				cout << "c2=" << c2 << " / " << X2_len << endl;
-				}
+			}
 
 			// pick a_m according to c2:
 			new_lines[Surf->line_ai(m)] = X2[c2];
 			if (f_v) {
 				cout << "a_m=" << X2[c2] << endl;
-				}
+			}
 			if (c2 == 0) {
 				c2b = 1;
-				}
+			}
 			else {
 				c2b = 0;
-				}
+			}
 			new_lines[Surf->line_ai(n)] = X2[c2b];
 			if (f_v) {
 				cout << "a_n=" << X2[c2b] << endl;
-				}
+			}
 			
 			int p_ml, p_il, p_jl, p_kl;
 			int c_ml, c_il, c_jl, c_kl;
@@ -2673,7 +2851,7 @@ void surface_object::identify_double_six_from_trihedral_pair_type_one(
 			new_lines[Surf->line_cij(m, l)] = c_ml;
 			if (f_v) {
 				cout << "c_ml=" << c_ml << endl;
-				}
+			}
 			
 			// determine c_il:
 			p_il = find_tritangent_plane_through_two_lines(
@@ -2709,22 +2887,22 @@ void surface_object::identify_double_six_from_trihedral_pair_type_one(
 			for (h = 0; h < 5; h++) {
 				if (planes[h] == p_ml) {
 					continue;
-					}
+				}
 				if (planes[h] == p_il) {
 					continue;
-					}
+				}
 				if (planes[h] == p_jl) {
 					continue;
-					}
+				}
 				if (planes[h] == p_kl) {
 					continue;
-					}
-				break;
 				}
+				break;
+			}
 			if (h == 5) {
 				cout << "could not find the plane" << endl;
 				exit(1);
-				}
+			}
 
 			int plane_idx, b_m, b_n, a_l;
 			int X3[2];
@@ -2732,58 +2910,58 @@ void surface_object::identify_double_six_from_trihedral_pair_type_one(
 			plane_idx = planes[h];
 			if (f_v) {
 				cout << "plane_idx=" << plane_idx << endl;
-				}
+			}
 			find_two_lines_in_plane(plane_idx, c_ml, X3[0], X3[1]);
 			if (f_v) {
 				cout << "X3=";
 				int_vec_print(cout, X3, 2);
 				cout << endl;
-				}
+			}
 
 
 			if (X4[0] == X3[0]) {
 				b_m = X4[0];
 				b_n = X4[1];
 				a_l = X3[1];
-				}
+			}
 			else if (X4[0] == X3[1]) {
 				b_m = X4[0];
 				b_n = X4[1];
 				a_l = X3[0];
-				}
+			}
 			else if (X4[1] == X3[0]) {
 				b_m = X4[1];
 				b_n = X4[0];
 				a_l = X3[1];
-				}
+			}
 			else if (X4[1] == X3[1]) {
 				b_m = X4[1];
 				b_n = X4[0];
 				a_l = X3[0];
-				}
+			}
 			else {
 				cout << "surface_object::identify_double_six_from_"
 						"trihedral_pair_type_one something is wrong "
 						"with this choice of c2" << endl;
 				continue;
 				//exit(1);
-				}
+			}
 			new_lines[Surf->line_ai(l)] = a_l;
 			new_lines[Surf->line_bi(m)] = b_m;
 			new_lines[Surf->line_bi(n)] = b_n;
 			if (f_v) {
 				cout << "a_l=" << a_l << " b_m=" << b_m
 						<< " b_n=" << b_n << endl;
-				}
+			}
 
 			for (h = 0; h < 6; h++) {
 				double_sixes[nb_double_sixes * 12 + h] =
 						new_lines[Surf->line_ai(h)];
-				}
+			}
 			for (h = 0; h < 6; h++) {
 				double_sixes[nb_double_sixes * 12 + 6 + h] =
 						new_lines[Surf->line_bi(h)];
-				}
+			}
 
 			cout << "We found the following double six, "
 					"nb_double_sixes=" << nb_double_sixes << endl;
@@ -2791,26 +2969,25 @@ void surface_object::identify_double_six_from_trihedral_pair_type_one(
 				cout << setw(2) << new_lines[Surf->line_ai(h)];
 				if (h < 6 - 1) {
 					cout << ", ";
-					}
 				}
+			}
 			cout << endl;
 			for (h = 0; h < 6; h++) {
 				cout << setw(2) << new_lines[Surf->line_bi(h)];
 				if (h < 6 - 1) {
 					cout << ", ";
-					}
 				}
+			}
 			cout << endl;
 
 			nb_double_sixes++;
-			} // next c2
+		} // next c2
 
-		} // next c1
+	} // next c1
 
 	if (f_v) {
-		cout << "surface_object::identify_double_six_from_"
-				"trihedral_pair_type_one done" << endl;
-		}
+		cout << "surface_object::identify_double_six_from_trihedral_pair_type_one done" << endl;
+	}
 }
 
 void surface_object::identify_double_six_from_trihedral_pair_type_two(
@@ -2829,9 +3006,8 @@ void surface_object::identify_double_six_from_trihedral_pair_type_two(
 	sorting Sorting;
 	
 	if (f_v) {
-		cout << "surface_object::identify_double_six_from_"
-				"trihedral_pair_type_two" << endl;
-		}
+		cout << "surface_object::identify_double_six_from_trihedral_pair_type_two" << endl;
+	}
 
 	idx = t_idx - 20;
 	rk_h = idx / 6;
@@ -2862,7 +3038,7 @@ void surface_object::identify_double_six_from_trihedral_pair_type_two(
 	if (f_v) {
 		cout << "l=" << l << " m=" << m << " n=" << n
 				<< " p=" << p << " r=" << r << " s=" << s << endl;
-		}
+	}
 
 	T[0] = Surf->line_ai(l);
 	T[1] = Surf->line_bi(p);
@@ -2882,7 +3058,7 @@ void surface_object::identify_double_six_from_trihedral_pair_type_two(
 	
 	for (i = 0; i < 9; i++) {
 		new_lines[T[i]] = nine_line_idx[i];
-		}
+	}
 
 	
 	int X1[5], X1_len;
@@ -2898,7 +3074,7 @@ void surface_object::identify_double_six_from_trihedral_pair_type_two(
 		cout << "X1=";
 		int_vec_print(cout, X1, X1_len);
 		cout << endl;
-		}
+	}
 	int_vec_delete_element_assume_sorted(X1, X1_len,
 			find_tritangent_plane_through_two_lines(
 					new_lines[Surf->line_ai(l)],
@@ -2911,20 +3087,20 @@ void surface_object::identify_double_six_from_trihedral_pair_type_two(
 		cout << "X1=";
 		int_vec_print(cout, X1, X1_len);
 		cout << endl;
-		}
+	}
 	for (i = 0; i < 3; i++) {
 		pi = X1[i];
 		find_two_lines_in_plane(pi,
 				new_lines[Surf->line_cij(l, n)],
 				X2[2 * i + 0],
 				X2[2 * i + 1]);
-		}
+	}
 	X2_len = 6;
 	if (f_v) {
 		cout << "X2=";
 		int_vec_print(cout, X2, X2_len);
 		cout << endl;
-		}
+	}
 
 	get_planes_through_line(new_lines, Surf->line_cij(m, n), X3);
 	X3_len = 5;
@@ -2932,7 +3108,7 @@ void surface_object::identify_double_six_from_trihedral_pair_type_two(
 		cout << "X3=";
 		int_vec_print(cout, X3, X3_len);
 		cout << endl;
-		}
+	}
 	int_vec_delete_element_assume_sorted(X3, X3_len,
 			find_tritangent_plane_through_two_lines(
 					new_lines[Surf->line_ai(m)],
@@ -2945,20 +3121,20 @@ void surface_object::identify_double_six_from_trihedral_pair_type_two(
 		cout << "X3=";
 		int_vec_print(cout, X3, X3_len);
 		cout << endl;
-		}
+	}
 	for (i = 0; i < 3; i++) {
 		pi = X3[i];
 		find_two_lines_in_plane(pi,
 				new_lines[Surf->line_cij(m, n)],
 				X4[2 * i + 0],
 				X4[2 * i + 1]);
-		}
+	}
 	X4_len = 6;
 	if (f_v) {
 		cout << "X4=";
 		int_vec_print(cout, X4, X4_len);
 		cout << endl;
-		}
+	}
 	X5_len = 0;
 	Sorting.int_vec_heapsort(X2, X2_len);
 	Sorting.int_vec_heapsort(X4, X4_len);
@@ -2966,17 +3142,17 @@ void surface_object::identify_double_six_from_trihedral_pair_type_two(
 		a = X2[i];
 		if (Sorting.int_vec_search(X4, X4_len, a, idx)) {
 			X5[X5_len++] = a;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "found a set X5 of size " << X5_len << " : ";
 		int_vec_print(cout, X5, X5_len);
 		cout << endl;
-		}
+	}
 	if (X5_len != 3) {
 		cout << "X5_len != 3" << endl;
 		exit(1);
-		}
+	}
 
 	int nb_double_sixes;
 	nb_double_sixes = 0;
@@ -2986,7 +3162,7 @@ void surface_object::identify_double_six_from_trihedral_pair_type_two(
 
 		if (f_v) {
 			cout << "c1=" << c1 << " / " << X5_len << endl;
-			}
+		}
 
 		// pick a_n according to c1:
 		new_lines[Surf->line_ai(n)] = X5[c1];
@@ -3029,17 +3205,17 @@ void surface_object::identify_double_six_from_trihedral_pair_type_two(
 			
 			if (f_v) {
 				cout << "c2=" << c2 << " / " << 2 << endl;
-				}
+			}
 
 			// pick b_r according to c2:
 
 			new_lines[Surf->line_bi(r)] = X6[c2];
 			if (c2 == 0) {
 				new_lines[Surf->line_bi(s)] = X6[1];
-				}
+			}
 			else {
 				new_lines[Surf->line_bi(s)] = X6[0];
-				}
+			}
 
 			// determine c_nr:
 			pi = find_tritangent_plane_through_two_lines(
@@ -3080,11 +3256,11 @@ void surface_object::identify_double_six_from_trihedral_pair_type_two(
 			for (i = 0; i < 6; i++) {
 				double_sixes[nb_double_sixes * 12 + i] =
 						new_lines[Surf->line_ai(i)];
-				}
+			}
 			for (i = 0; i < 6; i++) {
 				double_sixes[nb_double_sixes * 12 + 6 + i] =
 						new_lines[Surf->line_bi(i)];
-				}
+			}
 
 			cout << "We found the following double six, "
 					"nb_double_sixes=" << nb_double_sixes << endl;
@@ -3092,35 +3268,34 @@ void surface_object::identify_double_six_from_trihedral_pair_type_two(
 				cout << setw(2) << new_lines[Surf->line_ai(i)];
 				if (i < 6 - 1) {
 					cout << ", ";
-					}
 				}
+			}
 			cout << endl;
 			for (i = 0; i < 6; i++) {
 				cout << setw(2) << new_lines[Surf->line_bi(i)];
 				if (i < 6 - 1) {
 					cout << ", ";
-					}
 				}
+			}
 			cout << endl;
 
 			nb_double_sixes++;
 
-			} // next c2
+		} // next c2
 
-		} // next c1
+	} // next c1
 
 	if (nb_double_sixes != 6) {
 		cout << "surface_object::identify_double_six_from_"
 				"trihedral_pair_type_two nb_double_sixes != 6" << endl;
 		exit(1);
-		}
+	}
 
 	
 
 	if (f_v) {
-		cout << "surface_object::identify_double_six_from_"
-				"trihedral_pair_type_two done" << endl;
-		}
+		cout << "surface_object::identify_double_six_from_trihedral_pair_type_two done" << endl;
+	}
 }
 
 void surface_object::identify_double_six_from_trihedral_pair_type_three(
@@ -3132,11 +3307,11 @@ void surface_object::identify_double_six_from_trihedral_pair_type_three(
 	if (f_v) {
 		cout << "surface_object::identify_double_six_from_"
 				"trihedral_pair_type_three" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "surface_object::identify_double_six_from_"
 				"trihedral_pair_type_three done" << endl;
-		}
+	}
 }
 
 
@@ -3149,17 +3324,17 @@ void surface_object::find_common_transversals_to_two_disjoint_lines(
 	for (i = 0; i < 27; i++) {
 		if (i == a || i == b) {
 			continue;
-			}
+		}
 		if (Adj_line_intersection_graph[i * 27 + a] 
 			&& Adj_line_intersection_graph[i * 27 + b]) {
 			transversals5[c++] = i;
-			}
 		}
+	}
 	if (c != 5) {
 		cout << "surface_object::find_common_transversals_"
 				"to_two_disjoint_lines c != 5" << endl;
 		exit(1);
-		}
+	}
 }
 
 void surface_object::find_common_transversals_to_three_disjoint_lines(
@@ -3171,19 +3346,19 @@ void surface_object::find_common_transversals_to_three_disjoint_lines(
 	for (i = 0; i < 27; i++) {
 		if (i == a1 || i == a2 || i == a3) {
 			continue;
-			}
+		}
 		if (Adj_line_intersection_graph[i * 27 + a1] 
 			&& Adj_line_intersection_graph[i * 27 + a2] 
 			&& Adj_line_intersection_graph[i * 27 + a3]) {
 			transversals3[c++] = i;
-			}
 		}
+	}
 	if (c != 3) {
 		cout << "surface_object::find_common_transversals_"
 				"to_three_disjoint_lines c != 3" << endl;
 		cout << "c=" << c << endl;
 		exit(1);
-		}
+	}
 }
 
 void surface_object::find_common_transversals_to_four_disjoint_lines(
@@ -3195,19 +3370,19 @@ void surface_object::find_common_transversals_to_four_disjoint_lines(
 	for (i = 0; i < 27; i++) {
 		if (i == a1 || i == a2 || i == a3 || i == a4) {
 			continue;
-			}
+		}
 		if (Adj_line_intersection_graph[i * 27 + a1] 
 			&& Adj_line_intersection_graph[i * 27 + a2] 
 			&& Adj_line_intersection_graph[i * 27 + a3] 
 			&& Adj_line_intersection_graph[i * 27 + a4]) {
 			transversals2[c++] = i;
-			}
 		}
+	}
 	if (c != 2) {
 		cout << "surface_object::find_common_transversals_"
 				"to_four_disjoint_lines c != 2" << endl;
 		exit(1);
-		}
+	}
 }
 
 int surface_object::find_tritangent_plane_through_two_lines(
@@ -3222,8 +3397,8 @@ int surface_object::find_tritangent_plane_through_two_lines(
 				Lines_in_tritangent_plane + pi * 3, 3,
 				line_b, idx)) {
 			return pi;
-			}
 		}
+	}
 	cout << "surface_object::find_tritangent_plane_through_"
 			"two_lines we could not find the tritangent "
 			"plane through these two lines" << endl;
@@ -3238,7 +3413,7 @@ void surface_object::get_planes_through_line(int *new_lines,
 	if (f_v) {
 		cout << "surface_object::get_planes_through_line " << endl;
 		cout << "line=" << Surf->Line_label[line_idx] << endl;
-		}
+	}
 	int_vec_copy(Tritangent_planes_on_lines + new_lines[line_idx] * 5,
 			planes5, 5);
 }
@@ -3253,18 +3428,18 @@ void surface_object::find_two_lines_in_plane(int plane_idx,
 			if (i == 0) {
 				line1 = Lines_in_tritangent_plane[plane_idx * 3 + 1];
 				line2 = Lines_in_tritangent_plane[plane_idx * 3 + 2];
-				}
+			}
 			else if (i == 1) {
 				line1 = Lines_in_tritangent_plane[plane_idx * 3 + 0];
 				line2 = Lines_in_tritangent_plane[plane_idx * 3 + 2];
-				}
+			}
 			else if (i == 2) {
 				line1 = Lines_in_tritangent_plane[plane_idx * 3 + 0];
 				line2 = Lines_in_tritangent_plane[plane_idx * 3 + 1];
-				}
-			return;
 			}
+			return;
 		}
+	}
 	cout << "surface_object::find_two_lines_in_plane we "
 			"could not find the forbidden line" << endl;
 }
@@ -4080,7 +4255,7 @@ void surface_object::latex_trihedral_pair(ostream &ost,
 		for (j = 0; j < 3; j++) {
 			Surf->print_line(ost, T[i * 3 + j]);
 			ost << " & ";
-			}
+		}
 		ost << "\\pi_{";
 		Surf->Eckardt_points[TE[i]].latex_index_only(ost);
 		ost << "}=" << endl;
@@ -4093,13 +4268,13 @@ void surface_object::latex_trihedral_pair(ostream &ost,
 		Surf->Poly1_4->print_equation(ost, Mtx + 12);
 		ost << "\\big)=" << plane_rk;
 		ost << "\\\\" << endl;
-		}
+	}
 	ost << "\\hline" << endl;
 	for (j = 0; j < 3; j++) {
 		ost << "\\pi_{";
 		Surf->Eckardt_points[TE[3 + j]].latex_index_only(ost);
 		ost << "} & ";
-		}
+	}
 	ost << "\\\\" << endl;
 	for (j = 0; j < 3; j++) {
 		ost << "\\multicolumn{4}{l}{" << endl;
@@ -4114,7 +4289,7 @@ void surface_object::latex_trihedral_pair(ostream &ost,
 		F->PG_element_normalize(Mtx + 12, 1, 4);
 		Surf->Poly1_4->print_equation(ost, Mtx + 12);
 		ost << "\\big)=" << plane_rk << "}\\\\" << endl;
-		}
+	}
 	ost << "\\\\" << endl;
 	ost << "\\end{array}" << endl;
 }
