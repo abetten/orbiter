@@ -4,16 +4,16 @@ Orbiter
 A C++ class library devoted to the classification of combinatorial objects.
 
 
-Please see doc/users_guide.pdf 
+Please find a user's guide here:
 
-or
 
-http://www.math.colostate.edu/~betten/orbiter/html/
+https://www.math.colostate.edu/~betten/orbiter/users_guide.pdf
 
 
 Anton Betten
 August 17, 2018
 May 19, 2020
+July 18, 2020
 
 
 ===
