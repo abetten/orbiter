@@ -16,6 +16,7 @@ MODULES = \
 	orbiter_data_file.o \
 	os_interface.o \
 	override_double.o \
+	prepare_frames.o \
 	util.o
 
 

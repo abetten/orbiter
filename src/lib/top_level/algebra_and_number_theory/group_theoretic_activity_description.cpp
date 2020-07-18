@@ -443,7 +443,7 @@ int group_theoretic_activity_description::read_arguments(
 			surface_descr_isomorph2 = NEW_OBJECT(surface_create_description);
 			i += surface_descr_isomorph2->
 					read_arguments(argc - (i - 1), argv + i,
-					verbose_level) - 1;
+					verbose_level);
 			cout << "-surface_isomorphism_testing " << endl;
 		}
 		else if (strcmp(argv[i], "-surface_recognize") == 0) {
@@ -452,8 +452,8 @@ int group_theoretic_activity_description::read_arguments(
 			surface_descr = NEW_OBJECT(surface_create_description);
 			i += surface_descr->
 					read_arguments(argc - (i - 1), argv + i,
-					verbose_level) - 1;
-			i += 2;
+					verbose_level);
+			//i += 2;
 			cout << "-surface_recognize " << endl;
 		}
 		else if (strcmp(argv[i], "-classify_surfaces_through_arcs_and_trihedral_pairs") == 0) {
@@ -464,11 +464,16 @@ int group_theoretic_activity_description::read_arguments(
 		else if (strcmp(argv[i], "-create_surface") == 0) {
 			f_create_surface = TRUE;
 			surface_description = NEW_OBJECT(surface_create_description);
+			cout << "-create_surface" << endl;
 			i += surface_description->read_arguments(
 					argc - (i - 1), argv + i,
-					verbose_level) - 1;
-
-			cout << "-create_surface" << endl;
+					verbose_level);
+			cout << "done with -create_surface" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
 		}
 		else if (strcmp(argv[i], "-surface_quartic") == 0) {
 			f_surface_quartic = TRUE;

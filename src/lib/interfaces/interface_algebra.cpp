@@ -19,8 +19,8 @@ namespace interfaces {
 
 interface_algebra::interface_algebra()
 {
-	argc = 0;
-	argv = NULL;
+	//argc = 0;
+	//argv = NULL;
 
 	f_linear_group = FALSE;
 	Linear_group_description = NULL;
@@ -156,8 +156,8 @@ void interface_algebra::read_arguments(int argc,
 	cout << "interface_algebra::read_arguments" << endl;
 	//return 0;
 
-	interface_algebra::argc = argc;
-	interface_algebra::argv = argv;
+	//interface_algebra::argc = argc;
+	//interface_algebra::argv = argv;
 
 	for (i = i0; i < argc; i++) {
 		if (strcmp(argv[i], "-linear_group") == 0) {
@@ -373,7 +373,7 @@ void interface_algebra::do_linear_group(
 		cout << "creating finite field of order q=" << Descr->input_q
 				<< " using override polynomial " << Descr->override_polynomial << endl;
 		F->init_override_polynomial(Descr->input_q,
-				Descr->override_polynomial, verbose_level);
+				Descr->override_polynomial, verbose_level - 3);
 	}
 	else {
 		cout << "interface_algebra::do_linear_group creating finite field "
@@ -393,7 +393,7 @@ void interface_algebra::do_linear_group(
 				"creating the group" << endl;
 		}
 
-	LG->init(Descr, verbose_level - 1);
+	LG->init(Descr, verbose_level - 5);
 
 	if (f_v) {
 		cout << "interface_algebra::do_linear_group after LG->init" << endl;

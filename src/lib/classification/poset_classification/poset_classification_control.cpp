@@ -62,6 +62,9 @@ poset_classification_control::poset_classification_control()
 	f_list = FALSE;
 	f_list_all = FALSE;
 	f_table_of_nodes = FALSE;
+	f_make_relations_with_flag_orbits = FALSE;
+
+	nb_recognize = 0;
 
 
 	scale = 0.2;
@@ -257,6 +260,19 @@ int poset_classification_control::read_arguments(
 		else if (strcmp(argv[i], "-table_of_nodes") == 0) {
 			f_table_of_nodes = TRUE;
 			cout << "-table_of_nodes" << endl;
+		}
+		else if (strcmp(argv[i], "-make_relations_with_flag_orbits") == 0) {
+			f_make_relations_with_flag_orbits = TRUE;
+			cout << "-make_relation_with_flag_orbits" << endl;
+		}
+		else if (strcmp(argv[i], "-recognize") == 0) {
+
+			if (nb_recognize == CONTROL_MAX_RECOGNIZE) {
+				cout << "too many -recognize" << endl;
+				exit(1);
+			}
+			recognize[nb_recognize++] = argv[++i];
+			cout << "-recognize" << recognize[nb_recognize - 1] << endl;
 		}
 		else if (strcmp(argv[i], "-export_schreier_trees") == 0) {
 			f_export_schreier_trees = TRUE;

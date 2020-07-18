@@ -280,6 +280,41 @@ void surface_create::init2(int verbose_level)
 		Surf->rearrange_lines_according_to_double_six(
 				Lines, 0 /* verbose_level */);
 		
+		if (Descr->nb_select_double_six) {
+			int i;
+
+			for (i = 0; i < Descr->nb_select_double_six; i++) {
+				int *select_double_six;
+				int sz;
+				long int New_lines[27];
+
+				if (f_v) {
+					cout << "surface_create::init2 selecting double six " << i << " / " << Descr->nb_select_double_six << endl;
+				}
+				int_vec_scan(Descr->select_double_six_string[i], select_double_six, sz);
+				if (sz != 12) {
+					cout << "surface_create::init2 f_select_double_six double six must consist of 12 numbers" << endl;
+					exit(1);
+				}
+
+				if (f_v) {
+					cout << "surface_create::init2 select_double_six = ";
+					int_vec_print(cout, select_double_six, 12);
+					cout << endl;
+				}
+
+
+				if (f_v) {
+					cout << "surface_create::init2 before Surf->rearrange_lines_according_to_a_given_double_six" << endl;
+				}
+				Surf->rearrange_lines_according_to_a_given_double_six(
+						Lines, select_double_six, New_lines, 0 /* verbose_level */);
+
+				lint_vec_copy(New_lines, Lines, 27);
+				FREE_int(select_double_six);
+			}
+		}
+
 		Surf->build_cubic_surface_from_lines(27,
 				Lines, coeffs, 0 /* verbose_level */);
 		f_has_lines = TRUE;
@@ -398,22 +433,34 @@ void surface_create::init2(int verbose_level)
 		}
 
 		long int *arc;
-		int arc_size;
+		int arc_size, lines_size;
 		long int line1, line2;
+		long int *lines;
 
 		lint_vec_scan(Descr->arc_lifting_text, arc, arc_size);
 
-		if (arc_size != 8) {
-			cout << "surface_create::init arc_size != 8" << endl;
+		if (arc_size != 6) {
+			cout << "surface_create::init arc_size != 6" << endl;
 			exit(1);
 		}
-		line1 = arc[6];
-		line2 = arc[7];
-		arc_size -= 2;
+
+		lint_vec_scan(Descr->arc_lifting_two_lines_text, lines, lines_size);
+
+		if (lines_size != 2) {
+			cout << "surface_create::init lines_size != 2" << endl;
+			exit(1);
+		}
+
+
+		line1 = lines[0];
+		line2 = lines[1];
 
 		if (f_v) {
 			cout << "surface_create::init2 arc: ";
 			lint_vec_print(cout, arc, 6);
+			cout << endl;
+			cout << "surface_create::init2 lines: ";
+			lint_vec_print(cout, lines, 2);
 			cout << endl;
 		}
 
@@ -470,6 +517,7 @@ void surface_create::init2(int verbose_level)
 
 
 		FREE_lint(arc);
+		FREE_lint(lines);
 	}
 	else {
 		cout << "surface_create::init2 we do not "

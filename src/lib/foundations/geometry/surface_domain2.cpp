@@ -17,10 +17,6 @@ namespace orbiter {
 namespace foundations {
 
 
-static void Web_of_cubic_curves_entry_print(int *p,
-	int m, int n, int i, int j, int val,
-	char *output, void *data);
-
 void surface_domain::multiply_conic_times_linear(int *six_coeff,
 	int *three_coeff, int *ten_coeff,
 	int verbose_level)
@@ -50,7 +46,6 @@ void surface_domain::multiply_conic_times_linear(int *six_coeff,
 			for (u = 0; u < 3; u++) {
 				M[u] = Poly2->get_monomial(i, u) + Poly1->get_monomial(j, u);
 			}
-			//int_vec_add(Poly2->Monomials + i * 3, Poly1->Monomials + j * 3, M, 3);
 			idx = Poly3->index_of_monomial(M);
 			if (idx >= 10) {
 				cout << "surface_domain::multiply_conic_times_linear "
@@ -76,8 +71,7 @@ void surface_domain::multiply_linear_times_linear_times_linear(
 	int M[3];
 
 	if (f_v) {
-		cout << "surface_domain::multiply_linear_times_linear_"
-				"times_linear" << endl;
+		cout << "surface_domain::multiply_linear_times_linear_times_linear" << endl;
 	}
 
 	int_vec_zero(ten_coeff, 10);
@@ -102,12 +96,6 @@ void surface_domain::multiply_linear_times_linear_times_linear(
 							+ Poly1->get_monomial(j, u)
 							+ Poly1->get_monomial(k, u);
 				}
-#if 0
-				int_vec_add3(Poly1->Monomials + i * 3,
-					Poly1->Monomials + j * 3,
-					Poly1->Monomials + k * 3,
-					M, 3);
-#endif
 				idx = Poly3->index_of_monomial(M);
 				if (idx >= 10) {
 					cout << "surface::multiply_linear_times_"
@@ -121,8 +109,7 @@ void surface_domain::multiply_linear_times_linear_times_linear(
 
 
 	if (f_v) {
-		cout << "surface_domain::multiply_linear_times_linear_"
-				"times_linear done" << endl;
+		cout << "surface_domain::multiply_linear_times_linear_times_linear done" << endl;
 	}
 }
 
@@ -135,8 +122,7 @@ void surface_domain::multiply_linear_times_linear_times_linear_in_space(
 	int M[4];
 
 	if (f_v) {
-		cout << "surface_domain::multiply_linear_times_linear_"
-				"times_linear_in_space" << endl;
+		cout << "surface_domain::multiply_linear_times_linear_times_linear_in_space" << endl;
 	}
 
 	int_vec_zero(twenty_coeff, 20);
@@ -161,12 +147,6 @@ void surface_domain::multiply_linear_times_linear_times_linear_in_space(
 							+ Poly1_4->get_monomial(j, u)
 							+ Poly1_4->get_monomial(k, u);
 				}
-#if 0
-				int_vec_add3(Poly1_4->Monomials + i * 4,
-					Poly1_4->Monomials + j * 4,
-					Poly1_4->Monomials + k * 4,
-					M, 4);
-#endif
 				idx = index_of_monomial(M);
 				if (idx >= 20) {
 					cout << "surface_domain::multiply_linear_times_linear_"
@@ -180,8 +160,7 @@ void surface_domain::multiply_linear_times_linear_times_linear_in_space(
 
 
 	if (f_v) {
-		cout << "surface_domain::multiply_linear_times_linear_"
-				"times_linear_in_space done" << endl;
+		cout << "surface_domain::multiply_linear_times_linear_times_linear_in_space done" << endl;
 	}
 }
 
@@ -211,14 +190,8 @@ void surface_domain::multiply_Poly2_3_times_Poly2_3(
 			c = F->mult(a, b);
 
 			for (u = 0; u < 3; u++) {
-				M[u] = Poly2->get_monomial(i, u)
-						+ Poly2->get_monomial(j, u);
+				M[u] = Poly2->get_monomial(i, u) + Poly2->get_monomial(j, u);
 			}
-#if 0
-			int_vec_add(Poly2->Monomials + i * 3,
-				Poly2->Monomials + j * 3,
-				M, 3);
-#endif
 			idx = Poly4_x123->index_of_monomial(M);
 			result[idx] = F->add(result[idx], c);
 		}
@@ -254,13 +227,8 @@ void surface_domain::multiply_Poly1_3_times_Poly3_3(int *input1, int *input2,
 			}
 			c = F->mult(a, b);
 			for (u = 0; u < 3; u++) {
-				M[u] = Poly1->get_monomial(i, u)
-						+ Poly3->get_monomial(j, u);
+				M[u] = Poly1->get_monomial(i, u) + Poly3->get_monomial(j, u);
 			}
-#if 0
-			int_vec_add(Poly1->Monomials + i * 3,
-				Poly3->Monomials + j * 3, M, 3);
-#endif
 			idx = Poly4_x123->index_of_monomial(M);
 			result[idx] = F->add(result[idx], c);
 		}
@@ -271,229 +239,10 @@ void surface_domain::multiply_Poly1_3_times_Poly3_3(int *input1, int *input2,
 	}
 }
 
-void surface_domain::web_of_cubic_curves(long int *arc6, int *&curves,
-	int verbose_level)
-// curves[45 * 10]
-{
-	int f_v = (verbose_level >= 1);
-	int *bisecants;
-	int *conics;
-	int ten_coeff[10];
-	int a, rk, i, j, k, l, m, n;
-	int ij, kl, mn;
-	combinatorics_domain Combi;
-
-	if (f_v) {
-		cout << "surface::web_of_cubic_curves" << endl;
-	}
-	P2->compute_bisecants_and_conics(arc6,
-		bisecants, conics, verbose_level);
-
-	curves = NEW_int(45 * 10);
-
-
-	a = 0;
-
-	// the first 30 curves:
-	for (rk = 0; rk < 30; rk++, a++) {
-		Combi.ordered_pair_unrank(rk, i, j, 6);
-		ij = Combi.ij2k(i, j, 6);
-		multiply_conic_times_linear(conics + j * 6,
-			bisecants + ij * 3,
-			ten_coeff,
-			0 /* verbose_level */);
-		int_vec_copy(ten_coeff, curves + a * 10, 10);
-	}
-
-	// the next 15 curves:
-	for (rk = 0; rk < 15; rk++, a++) {
-		Combi.unordered_triple_pair_unrank(rk, i, j, k, l, m, n);
-		ij = Combi.ij2k(i, j, 6);
-		kl = Combi.ij2k(k, l, 6);
-		mn = Combi.ij2k(m, n, 6);
-		multiply_linear_times_linear_times_linear(
-			bisecants + ij * 3,
-			bisecants + kl * 3,
-			bisecants + mn * 3,
-			ten_coeff,
-			0 /* verbose_level */);
-		int_vec_copy(ten_coeff, curves + a * 10, 10);
-	}
-
-	if (a != 45) {
-		cout << "surface_domain::web_of_cubic_curves a != 45" << endl;
-		exit(1);
-	}
-
-	if (f_v) {
-		cout << "The web of cubic curves is:" << endl;
-		int_matrix_print(curves, 45, 10);
-	}
-
-	FREE_int(bisecants);
-	FREE_int(conics);
-
-	if (f_v) {
-		cout << "surface_domain::web_of_cubic_curves done" << endl;
-	}
-}
-
-void surface_domain::web_of_cubic_curves_rank_of_foursubsets(
-	int *Web_of_cubic_curves,
-	int *&rk, int &N, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int set[4], i, j, a;
-	int B[4 * 10];
-	combinatorics_domain Combi;
-
-	if (f_v) {
-		cout << "surface_domain::web_of_cubic_curves_rank_of_foursubsets" << endl;
-	}
-	if (f_v) {
-		cout << "web of cubic curves:" << endl;
-		int_matrix_print(Web_of_cubic_curves, 45, 10);
-	}
-	N = Combi.int_n_choose_k(45, 4);
-	rk = NEW_int(N);
-	for (i = 0; i < N; i++) {
-		Combi.unrank_k_subset(i, set, 45, 4);
-		if (f_v) {
-			cout << "subset " << i << " / " << N << " is ";
-			int_vec_print(cout, set, 4);
-			cout << endl;
-		}
-		for (j = 0; j < 4; j++) {
-			a = set[j];
-			int_vec_copy(Web_of_cubic_curves + a * 10,
-				B + j * 10, 10);
-		}
-		rk[i] = F->rank_of_rectangular_matrix(B,
-			4, 10, 0 /* verbose_level */);
-	}
-	if (f_v) {
-		cout << "surface_domain::web_of_cubic_curves_rank_of_foursubsets done" << endl;
-	}
-}
-
-void
-surface_domain::create_web_of_cubic_curves_and_equations_based_on_four_tritangent_planes(
-		long int *arc6, int *base_curves4,
-	int *&Web_of_cubic_curves, int *&The_plane_equations,
-	int verbose_level)
-// Web_of_cubic_curves[45 * 10]
-{
-	int f_v = (verbose_level >= 1);
-	int h, rk, idx;
-	int *base_curves;
-	int *curves;
-	int *curves_t;
-	sorting Sorting;
-
-	if (f_v) {
-		cout << "surface_domain::create_web_of_cubic_curves_and_equations_based_"
-				"on_four_tritangent_planes" << endl;
-	}
-
-	web_of_cubic_curves(arc6, Web_of_cubic_curves, verbose_level);
-
-	base_curves = NEW_int(5 * 10);
-	curves = NEW_int(5 * 10);
-	curves_t = NEW_int(10 * 5);
-
-
-
-	for (h = 0; h < 4; h++) {
-		int_vec_copy(Web_of_cubic_curves + base_curves4[h] * 10,
-			base_curves + h * 10, 10);
-	}
-
-	if (f_v) {
-		cout << "base_curves:" << endl;
-		int_matrix_print(base_curves, 4, 10);
-	}
-
-	// find the plane equations:
-
-	The_plane_equations = NEW_int(45 * 4);
-
-	for (h = 0; h < 45; h++) {
-
-		if (f_v) {
-			cout << "h=" << h << " / " << 45 << ":" << endl;
-		}
-
-		if (Sorting.int_vec_search_linear(base_curves4, 4, h, idx)) {
-			int_vec_zero(The_plane_equations + h * 4, 4);
-			The_plane_equations[h * 4 + idx] = 1;
-		}
-		else {
-			int_vec_copy(base_curves, curves, 4 * 10);
-			int_vec_copy(Web_of_cubic_curves + h * 10,
-				curves + 4 * 10, 10);
-
-			if (f_v) {
-				cout << "h=" << h << " / " << 45
-					<< " the system is:" << endl;
-				int_matrix_print(curves, 5, 10);
-			}
-
-			F->transpose_matrix(curves, curves_t, 5, 10);
-
-			if (f_v) {
-				cout << "after transpose:" << endl;
-				int_matrix_print(curves_t, 10, 5);
-			}
-
-			rk = F->RREF_and_kernel(5, 10, curves_t,
-				0 /* verbose_level */);
-			if (rk != 4) {
-				cout << "surface::create_surface_and_planes_from_"
-						"trihedral_pair_and_arc the rank of the "
-						"system is not equal to 4" << endl;
-				cout << "rk = " << rk << endl;
-				exit(1);
-			}
-			if (curves_t[4 * 5 + 4] != F->negate(1)) {
-				cout << "h=" << h << " / " << 2
-					<< " curves_t[4 * 5 + 4] != -1" << endl;
-				exit(1);
-			}
-			int_vec_copy(curves_t + 4 * 5,
-				The_plane_equations + h * 4, 4);
-
-			F->PG_element_normalize(
-				The_plane_equations + h * 4, 1, 4);
-
-		}
-		if (f_v) {
-			cout << "h=" << h << " / " << 45
-				<< ": the plane equation is ";
-			int_vec_print(cout, The_plane_equations + h * 4, 4);
-			cout << endl;
-		}
-
-
-	}
-	if (f_v) {
-		cout << "the plane equations are: " << endl;
-		int_matrix_print(The_plane_equations, 45, 4);
-		cout << endl;
-	}
-
-	FREE_int(base_curves);
-	FREE_int(curves);
-	FREE_int(curves_t);
-
-	if (f_v) {
-		cout << "surface_domain::create_web_of_cubic_curves_and_equations_"
-				"based_on_four_tritangent_planes done" << endl;
-	}
-}
-
 void surface_domain::create_equations_for_pencil_of_surfaces_from_trihedral_pair(
 	int *The_six_plane_equations, int *The_surface_equations,
 	int verbose_level)
+// The_six_plane_equations[24]
 // The_surface_equations[(q + 1) * 20]
 {
 	int f_v = (verbose_level >= 1);
@@ -505,300 +254,40 @@ void surface_domain::create_equations_for_pencil_of_surfaces_from_trihedral_pair
 	int eqn_G2[20];
 
 	if (f_v) {
-		cout << "surface_domain::create_equations_for_pencil_of_surfaces_"
-				"from_trihedral_pair" << endl;
+		cout << "surface_domain::create_equations_for_pencil_of_surfaces_from_trihedral_pair" << endl;
 	}
+
+
+	multiply_linear_times_linear_times_linear_in_space(
+		The_six_plane_equations + 0 * 4,
+		The_six_plane_equations + 1 * 4,
+		The_six_plane_equations + 2 * 4,
+		eqn_F, FALSE /* verbose_level */);
+	multiply_linear_times_linear_times_linear_in_space(
+		The_six_plane_equations + 3 * 4,
+		The_six_plane_equations + 4 * 4,
+		The_six_plane_equations + 5 * 4,
+		eqn_G, FALSE /* verbose_level */);
 
 
 	for (l = 0; l < q + 1; l++) {
 		F->PG_element_unrank_modified(v, 1, 2, l);
 
-		multiply_linear_times_linear_times_linear_in_space(
-			The_six_plane_equations + 0 * 4,
-			The_six_plane_equations + 1 * 4,
-			The_six_plane_equations + 2 * 4,
-			eqn_F, FALSE /* verbose_level */);
-		multiply_linear_times_linear_times_linear_in_space(
-			The_six_plane_equations + 3 * 4,
-			The_six_plane_equations + 4 * 4,
-			The_six_plane_equations + 5 * 4,
-			eqn_G, FALSE /* verbose_level */);
-
 		int_vec_copy(eqn_F, eqn_F2, 20);
 		F->scalar_multiply_vector_in_place(v[0], eqn_F2, 20);
 		int_vec_copy(eqn_G, eqn_G2, 20);
 		F->scalar_multiply_vector_in_place(v[1], eqn_G2, 20);
-		F->add_vector(eqn_F2, eqn_G2,
-			The_surface_equations + l * 20, 20);
-		F->PG_element_normalize(
-			The_surface_equations + l * 20, 1, 20);
+		F->add_vector(eqn_F2, eqn_G2, The_surface_equations + l * 20, 20);
+		F->PG_element_normalize(The_surface_equations + l * 20, 1, 20);
 	}
 
 	if (f_v) {
-		cout << "surface_domain::create_equations_for_pencil_of_surfaces_"
-				"from_trihedral_pair done" << endl;
-	}
-}
-
-void surface_domain::create_lambda_from_trihedral_pair_and_arc(
-	long int *arc6,
-	int *Web_of_cubic_curves,
-	int *The_plane_equations, int t_idx,
-	int &lambda, int &lambda_rk,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i;
-	int row_col_Eckardt_points[6];
-	int six_curves[6 * 10];
-	int pt, f_point_was_found;
-	int v[3];
-	int w[2];
-	int evals[6];
-	int evals_for_point[6];
-	int pt_on_surface[4];
-	int a, b, ma, bv;
-
-	if (f_v) {
-		cout << "surface_domain::create_lambda_from_trihedral_pair_and_arc "
-				"t_idx=" << t_idx << endl;
-	}
-
-	if (f_v) {
-		cout << "Trihedral pair T_{" << Trihedral_pair_labels[t_idx] << "}"
-			<< endl;
-	}
-
-	int_vec_copy(Trihedral_to_Eckardt + t_idx * 6,
-		row_col_Eckardt_points, 6);
-
-	if (f_v) {
-		cout << "row_col_Eckardt_points = ";
-		int_vec_print(cout, row_col_Eckardt_points, 6);
-		cout << endl;
-	}
-
-
-
-	extract_six_curves_from_web(Web_of_cubic_curves,
-		row_col_Eckardt_points, six_curves, verbose_level);
-
-	if (f_v) {
-		cout << "The six curves are:" << endl;
-		int_matrix_print(six_curves, 6, 10);
-	}
-
-
-
-	if (f_v) {
-		cout << "surface_domain::create_lambda_from_trihedral_pair_and_arc "
-				"before find_point_not_on_six_curves" << endl;
-	}
-	find_point_not_on_six_curves(arc6, six_curves,
-		pt, f_point_was_found, verbose_level);
-	if (!f_point_was_found) {
-		lambda = 1;
-	}
-	else {
-		if (f_v) {
-			cout << "surface_domain::create_lambda_from_trihedral_pair_and_arc "
-					"after find_point_not_on_six_curves" << endl;
-			cout << "pt=" << pt << endl;
-		}
-
-		Poly3->unrank_point(v, pt);
-		for (i = 0; i < 6; i++) {
-			evals[i] = Poly3->evaluate_at_a_point(
-				six_curves + i * 10, v);
-		}
-
-		if (f_v) {
-			cout << "The point pt=" << pt << " = ";
-			int_vec_print(cout, v, 3);
-			cout << " is nonzero on all plane sections of "
-					"the trihedral pair. The values are ";
-			int_vec_print(cout, evals, 6);
-			cout << endl;
-		}
-
-		if (f_v) {
-			cout << "solving for lambda:" << endl;
-		}
-		a = F->mult3(evals[0], evals[1], evals[2]);
-		b = F->mult3(evals[3], evals[4], evals[5]);
-		ma = F->negate(a);
-		bv = F->inverse(b);
-		lambda = F->mult(ma, bv);
-
-#if 1
-		pt_on_surface[0] = evals[0];
-		pt_on_surface[1] = evals[1];
-		pt_on_surface[2] = evals[3];
-		pt_on_surface[3] = evals[4];
-#endif
-
-		if (FALSE) {
-			cout << "lambda = " << lambda << endl;
-		}
-
-
-
-		for (i = 0; i < 6; i++) {
-			evals_for_point[i] =
-				Poly1_4->evaluate_at_a_point(
-				The_plane_equations +
-					row_col_Eckardt_points[i] * 4,
-				pt_on_surface);
-		}
-		a = F->mult3(evals_for_point[0],
-			evals_for_point[1],
-			evals_for_point[2]);
-		b = F->mult3(evals_for_point[3],
-			evals_for_point[4],
-			evals_for_point[5]);
-		lambda = F->mult(F->negate(a), F->inverse(b));
-		if (f_v) {
-			cout << "lambda = " << lambda << endl;
-		}
-	}
-	w[0] = 1;
-	w[1] = lambda;
-	F->PG_element_rank_modified(w, 1, 2, lambda_rk);
-
-	if (f_v) {
-		cout << "surface_domain::create_lambda_from_trihedral_"
-				"pair_and_arc done" << endl;
+		cout << "surface_domain::create_equations_for_pencil_of_surfaces_from_trihedral_pair done" << endl;
 	}
 }
 
 
-void surface_domain::create_surface_equation_from_trihedral_pair(long int *arc6,
-	int *Web_of_cubic_curves,
-	int *The_plane_equations, int t_idx, int *surface_equation,
-	int &lambda,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int *The_surface_equations;
-	int row_col_Eckardt_points[6];
-	int The_six_plane_equations[6 * 4];
-	int lambda_rk;
 
-	if (f_v) {
-		cout << "surface_domain::create_surface_equation_from_"
-				"trihedral_pair t_idx=" << t_idx << endl;
-	}
-
-
-	int_vec_copy(Trihedral_to_Eckardt + t_idx * 6, row_col_Eckardt_points, 6);
-
-	int_vec_copy(The_plane_equations + row_col_Eckardt_points[0] * 4,
-			The_six_plane_equations, 4);
-	int_vec_copy(The_plane_equations + row_col_Eckardt_points[1] * 4,
-			The_six_plane_equations + 4, 4);
-	int_vec_copy(The_plane_equations + row_col_Eckardt_points[2] * 4,
-			The_six_plane_equations + 8, 4);
-	int_vec_copy(The_plane_equations + row_col_Eckardt_points[3] * 4,
-			The_six_plane_equations + 12, 4);
-	int_vec_copy(The_plane_equations + row_col_Eckardt_points[4] * 4,
-			The_six_plane_equations + 16, 4);
-	int_vec_copy(The_plane_equations + row_col_Eckardt_points[5] * 4,
-			The_six_plane_equations + 20, 4);
-
-
-	The_surface_equations = NEW_int((q + 1) * 20);
-
-	create_equations_for_pencil_of_surfaces_from_trihedral_pair(
-		The_six_plane_equations, The_surface_equations,
-		verbose_level - 2);
-
-	create_lambda_from_trihedral_pair_and_arc(arc6,
-		Web_of_cubic_curves,
-		The_plane_equations, t_idx, lambda, lambda_rk,
-		verbose_level - 2);
-
-	int_vec_copy(The_surface_equations + lambda_rk * 20,
-		surface_equation, 20);
-
-	FREE_int(The_surface_equations);
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_equation_from_"
-				"trihedral_pair done" << endl;
-	}
-}
-
-void surface_domain::extract_six_curves_from_web(
-	int *Web_of_cubic_curves,
-	int *row_col_Eckardt_points, int *six_curves,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i;
-
-	if (f_v) {
-		cout << "surface_domain::extract_six_curves_from_web" << endl;
-	}
-	for (i = 0; i < 6; i++) {
-		int_vec_copy(Web_of_cubic_curves + row_col_Eckardt_points[i] * 10,
-			six_curves + i * 10, 10);
-	}
-
-	if (f_v) {
-		cout << "The six curves are:" << endl;
-		int_matrix_print(six_curves, 6, 10);
-	}
-	if (f_v) {
-		cout << "surface_domain::extract_six_curves_from_web done" << endl;
-	}
-}
-
-void surface_domain::find_point_not_on_six_curves(long int *arc6,
-	int *six_curves,
-	int &pt, int &f_point_was_found,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int v[3];
-	int i;
-	int idx, a;
-	sorting Sorting;
-
-	if (f_v) {
-		cout << "surface_domain::find_point_not_on_six_curves" << endl;
-		cout << "surface_domain::find_point_not_on_six_curves "
-			"P2->N_points="
-			<< P2->N_points << endl;
-	}
-	pt = -1;
-	for (pt = 0; pt < P2->N_points; pt++) {
-		if (Sorting.lint_vec_search_linear(arc6, 6, pt, idx)) {
-			continue;
-		}
-		Poly3->unrank_point(v, pt);
-		for (i = 0; i < 6; i++) {
-			a = Poly3->evaluate_at_a_point(six_curves + i * 10, v);
-			if (a == 0) {
-				break;
-			}
-		}
-		if (i == 6) {
-			break;
-		}
-	}
-	if (pt == P2->N_points) {
-		cout << "could not find a point which is not on "
-				"any of the curve" << endl;
-		f_point_was_found = FALSE;
-	}
-	else {
-		f_point_was_found = TRUE;
-	}
-	if (f_v) {
-		cout << "surface_domain::find_point_not_on_six_curves "
-				"done" << endl;
-	}
-}
 
 int surface_domain::plane_from_three_lines(long int *three_lines,
 	int verbose_level)
@@ -824,13 +313,13 @@ int surface_domain::plane_from_three_lines(long int *three_lines,
 	return rk;
 }
 
-void surface_domain::Trihedral_pairs_to_planes(long int *Lines, long int *Planes,
+void surface_domain::Trihedral_pairs_to_planes(long int *Lines, long int *Planes_by_rank,
 	int verbose_level)
-// Planes[nb_trihedral_pairs * 6]
+// Planes_by_rank[nb_trihedral_pairs * 6]
 {
 	int f_v = (verbose_level >= 1);
 	int t, i, j, rk;
-	long int tritangent_plane[3];
+	int lines_in_tritangent_plane[3];
 	long int three_lines[3];
 	latex_interface L;
 
@@ -840,35 +329,25 @@ void surface_domain::Trihedral_pairs_to_planes(long int *Lines, long int *Planes
 	for (t = 0; t < nb_trihedral_pairs; t++) {
 		for (i = 0; i < 3; i++) {
 			for (j = 0; j < 3; j++) {
-				tritangent_plane[j] =
-					Trihedral_pairs[t * 9 + i * 3 + j];
+				lines_in_tritangent_plane[j] = Trihedral_pairs[t * 9 + i * 3 + j];
+				three_lines[j] = Lines[lines_in_tritangent_plane[j]];
 			}
-			for (j = 0; j < 3; j++) {
-				three_lines[j] =
-					Lines[tritangent_plane[j]];
-			}
-			rk = plane_from_three_lines(three_lines,
-				0 /* verbose_level */);
-			Planes[t * 6 + i] = rk;
+			rk = plane_from_three_lines(three_lines, 0 /* verbose_level */);
+			Planes_by_rank[t * 6 + i] = rk;
 		}
 		for (j = 0; j < 3; j++) {
 			for (i = 0; i < 3; i++) {
-				tritangent_plane[i] =
-					Trihedral_pairs[t * 9 + i * 3 + j];
+				lines_in_tritangent_plane[i] = Trihedral_pairs[t * 9 + i * 3 + j];
+				three_lines[i] = Lines[lines_in_tritangent_plane[i]];
 			}
-			for (i = 0; i < 3; i++) {
-				three_lines[i] =
-					Lines[tritangent_plane[i]];
-			}
-			rk = plane_from_three_lines(three_lines,
-				0 /* verbose_level */);
-			Planes[t * 6 + 3 + j] = rk;
+			rk = plane_from_three_lines(three_lines, 0 /* verbose_level */);
+			Planes_by_rank[t * 6 + 3 + j] = rk;
 		}
 	}
 	if (f_v) {
 		cout << "Trihedral_pairs_to_planes:" << endl;
 		L.print_lint_matrix_with_standard_labels(cout,
-			Planes, nb_trihedral_pairs, 6, FALSE /* f_tex */);
+				Planes_by_rank, nb_trihedral_pairs, 6, FALSE /* f_tex */);
 	}
 	if (f_v) {
 		cout << "surface_domain::Trihedral_pairs_to_planes done" << endl;
@@ -1014,163 +493,6 @@ void surface_domain::compute_tritangent_planes(long int *Lines,
 	}
 }
 
-#if 0
-void surface_domain::compute_external_lines_on_three_tritangent_planes(
-	long int *Lines, long int *&External_lines, int &nb_external_lines,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j;
-	latex_interface L;
-
-	if (f_v) {
-		cout << "surface_domain::compute_external_lines_on_"
-				"three_tritangent_planes" << endl;
-		}
-
-	int *Tritangent_planes;
-	int nb_tritangent_planes;
-	int *Lines_in_tritangent_plane; // [nb_tritangent_planes * 3]
-
-	int *Unitangent_planes;
-	int nb_unitangent_planes;
-	int *Line_in_unitangent_plane; // [nb_unitangent_planes]
-
-	if (f_v) {
-		cout << "surface_domain::compute_external_lines_on_"
-				"three_tritangent_planes computing "
-				"tritangent planes:" << endl;
-		}
-	compute_tritangent_planes(Lines,
-		Tritangent_planes, nb_tritangent_planes,
-		Unitangent_planes, nb_unitangent_planes,
-		Lines_in_tritangent_plane,
-		Line_in_unitangent_plane,
-		verbose_level);
-
-	if (f_v) {
-		cout << "surface_domain::compute_external_lines_on_"
-				"three_tritangent_planes Lines_in_"
-				"tritangent_plane: " << endl;
-		L.print_integer_matrix_with_standard_labels(cout,
-			Lines_in_tritangent_plane, nb_tritangent_planes,
-			3, FALSE);
-		}
-
-	int *Intersection_matrix;
-		// [nb_tritangent_planes * nb_tritangent_planes]
-	int *Plane_intersections;
-	int *Plane_intersections_general;
-	int rk, idx;
-	sorting Sorting;
-
-
-
-	if (f_v) {
-		cout << "surface_domain::compute_external_lines_on_"
-				"three_tritangent_planes Computing intersection "
-				"matrix of tritangent planes:" << endl;
-		}
-
-	P->plane_intersection_matrix_in_three_space(Tritangent_planes,
-		nb_tritangent_planes, Intersection_matrix,
-		0 /* verbose_level */);
-
-	Plane_intersections =
-			NEW_int(nb_tritangent_planes * nb_tritangent_planes);
-	Plane_intersections_general =
-			NEW_int(nb_tritangent_planes * nb_tritangent_planes);
-	for (i = 0; i < nb_tritangent_planes; i++) {
-		for (j = 0; j < nb_tritangent_planes; j++) {
-			Plane_intersections[i * nb_tritangent_planes + j] = -1;
-			Plane_intersections_general[i * nb_tritangent_planes + j] = -1;
-			if (j != i) {
-				rk = Intersection_matrix[i * nb_tritangent_planes + j];
-				if (Sorting.lint_vec_search_linear(
-					Lines, 27, rk, idx)) {
-					Plane_intersections[i * nb_tritangent_planes + j] = idx;
-					}
-				else {
-					Plane_intersections_general[
-						i * nb_tritangent_planes + j] = rk;
-					}
-				}
-			}
-		}
-
-	if (f_v) {
-		cout << "surface_domain::compute_external_lines_on_three_"
-				"tritangent_planes The tritangent planes intersecting "
-				"in surface lines:" << endl;
-		L.print_integer_matrix_with_standard_labels(cout,
-			Plane_intersections, nb_tritangent_planes,
-			nb_tritangent_planes, FALSE);
-		}
-
-
-	classify Plane_intersection_type;
-
-	Plane_intersection_type.init(Plane_intersections,
-		nb_tritangent_planes * nb_tritangent_planes, TRUE, 0);
-	if (f_v) {
-		cout << "surface_domain::compute_external_lines_on_three_"
-				"tritangent_planes The surface lines in terms "
-				"of plane intersections are: ";
-		Plane_intersection_type.print_naked(TRUE);
-		cout << endl;
-		}
-
-
-	if (f_v) {
-		cout << "surface_domain::compute_external_lines_on_three_"
-				"tritangent_planes The tritangent planes "
-				"intersecting in general lines:" << endl;
-		L.print_integer_matrix_with_standard_labels(cout,
-				Plane_intersections_general, nb_tritangent_planes,
-				nb_tritangent_planes, FALSE);
-		}
-
-	classify Plane_intersection_type2;
-
-	Plane_intersection_type2.init(Plane_intersections_general,
-		nb_tritangent_planes * nb_tritangent_planes, TRUE, 0);
-	if (f_v) {
-		cout << "The other lines in terms of plane intersections are: ";
-		Plane_intersection_type2.print_naked(TRUE);
-		cout << endl;
-		}
-
-
-	Plane_intersection_type2.get_data_by_multiplicity(
-		External_lines, nb_external_lines, 6, 0 /* verbose_level */);
-
-	Sorting.int_vec_heapsort(External_lines, nb_external_lines);
-
-	if (f_v) {
-		cout << "surface_domain::compute_external_lines_on_three_"
-				"tritangent_planes The non-surface lines which are on "
-				"three tritangent planes are:" << endl;
-		int_vec_print(cout, External_lines, nb_external_lines);
-		cout << endl;
-		cout << "surface_domain::compute_external_lines_on_three_"
-				"tritangent_planes these lines are:" << endl;
-		P->Grass_lines->print_set(External_lines, nb_external_lines);
-		}
-
-	FREE_int(Tritangent_planes);
-	FREE_int(Lines_in_tritangent_plane);
-	FREE_int(Unitangent_planes);
-	FREE_int(Line_in_unitangent_plane);
-	FREE_int(Intersection_matrix);
-	FREE_int(Plane_intersections);
-	FREE_int(Plane_intersections_general);
-
-	if (f_v) {
-		cout << "surface_domain::compute_external_lines_on_three_"
-				"tritangent_planes done" << endl;
-		}
-}
-#endif
 
 void surface_domain::init_double_sixes(int verbose_level)
 {
@@ -2696,14 +2018,12 @@ void surface_domain::tritangent_plane_to_trihedral_pair_and_position(
 		};
 
 	if (f_v) {
-		cout << "surface_domain::tritangent_plane_to_trihedral_"
-				"pair_and_position" << endl;
+		cout << "surface_domain::tritangent_plane_to_trihedral_pair_and_position" << endl;
 	}
 	trihedral_pair_idx = Table[2 * tritangent_plane_idx + 0];
 	position = Table[2 * tritangent_plane_idx + 1];
 	if (f_v) {
-		cout << "surface_domain::tritangent_plane_to_trihedral_"
-				"pair_and_position done" << endl;
+		cout << "surface_domain::tritangent_plane_to_trihedral_pair_and_position done" << endl;
 	}
 }
 
@@ -2772,160 +2092,11 @@ void surface_domain::do_arc_lifting_with_two_lines(
 	lint_vec_copy(AL->lines27, lines27, 27);
 
 
+	FREE_OBJECT(AL);
+
+
 	if (f_v) {
 		cout << "surface_domain::do_arc_lifting_with_two_lines done" << endl;
-	}
-}
-
-void surface_domain::print_web_of_cubic_curves(long int *arc6,
-		int *Web_of_cubic_curves, ostream &ost)
-{
-	combinatorics_domain Combi;
-	latex_interface L;
-
-	ost << "The web of cubic curves is:\\\\" << endl;
-
-#if 0
-	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost,
-		Web_of_cubic_curves, 15, 10, TRUE /* f_tex*/);
-	ost << "$$" << endl;
-	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost,
-		Web_of_cubic_curves + 15 * 10, 15, 10, 15, 0, TRUE /* f_tex*/);
-	ost << "$$" << endl;
-	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost,
-		Web_of_cubic_curves + 30 * 10, 15, 10, 30, 0, TRUE /* f_tex*/);
-	ost << "$$" << endl;
-#endif
-
-	int *bisecants;
-	int *conics;
-
-	int labels[15];
-	int row_fst[1];
-	int row_len[1];
-	int col_fst[1];
-	int col_len[1];
-	row_fst[0] = 0;
-	row_len[0] = 15;
-	col_fst[0] = 0;
-	col_len[0] = 10;
-	char str[1000];
-	int i, j, k, l, m, n, h, ij, kl, mn;
-
-	P2->compute_bisecants_and_conics(arc6,
-			bisecants, conics, 0 /*verbose_level*/);
-
-	for (h = 0; h < 45; h++) {
-		ost << "$";
-		snprintf(str, 1000, "W_{%s}=\\Phi\\big(\\pi_{%d}\\big) "
-				"= \\Phi\\big(\\pi_{%s}\\big)",
-				Eckard_point_label[h], h,
-				Eckard_point_label[h]);
-		ost << str;
-		ost << " = ";
-		if (h < 30) {
-			Combi.ordered_pair_unrank(h, i, j, 6);
-			ij = Combi.ij2k(i, j, 6);
-			ost << "C_" << j + 1
-				<< "P_{" << i + 1 << "}P_{" << j + 1 << "} = ";
-			ost << "\\big(";
-			Poly2->print_equation(ost, conics + j * 6);
-			ost << "\\big)";
-			ost << "\\big(";
-			Poly1->print_equation(ost, bisecants + ij * 3);
-			ost << "\\big)";
-			//multiply_conic_times_linear(conics + j * 6,
-			//bisecants + ij * 3, ten_coeff, 0 /* verbose_level */);
-		}
-		else {
-			Combi.unordered_triple_pair_unrank(h - 30, i, j, k, l, m, n);
-			ij = Combi.ij2k(i, j, 6);
-			kl = Combi.ij2k(k, l, 6);
-			mn = Combi.ij2k(m, n, 6);
-			ost << "P_{" << i + 1 << "}P_{" << j + 1 << "},P_{"
-					<< k + 1 << "}P_{" << l + 1 << "},P_{"
-					<< m + 1 << "}P_{" << n + 1 << "} = ";
-			ost << "\\big(";
-			Poly1->print_equation(ost, bisecants + ij * 3);
-			ost << "\\big)";
-			ost << "\\big(";
-			Poly1->print_equation(ost, bisecants + kl * 3);
-			ost << "\\big)";
-			ost << "\\big(";
-			Poly1->print_equation(ost, bisecants + mn * 3);
-			ost << "\\big)";
-			//multiply_linear_times_linear_times_linear(
-			//bisecants + ij * 3, bisecants + kl * 3,
-			//bisecants + mn * 3, ten_coeff, 0 /* verbose_level */);
-		}
-		ost << " = ";
-		Poly3->print_equation(ost, Web_of_cubic_curves + h * 10);
-		ost << "$\\\\";
-	}
-
-	ost << "The coeffcients are:" << endl;
-	for (i = 0; i < 15; i++) {
-		labels[i] = i;
-	}
-	ost << "$$" << endl;
-	L.int_matrix_print_with_labels_and_partition(ost,
-			Web_of_cubic_curves, 15, 10,
-		labels, labels,
-		row_fst, row_len, 1,
-		col_fst, col_len, 1,
-		Web_of_cubic_curves_entry_print, (void *) this,
-		TRUE /* f_tex */);
-	ost << "$$" << endl;
-
-	for (i = 0; i < 15; i++) {
-		labels[i] = 15 + i;
-	}
-	ost << "$$" << endl;
-	L.int_matrix_print_with_labels_and_partition(ost,
-			Web_of_cubic_curves, 15, 10,
-		labels, labels,
-		row_fst, row_len, 1,
-		col_fst, col_len, 1,
-		Web_of_cubic_curves_entry_print, (void *) this,
-		TRUE /* f_tex */);
-	ost << "$$" << endl;
-
-	for (i = 0; i < 15; i++) {
-		labels[i] = 30 + i;
-	}
-	ost << "$$" << endl;
-	L.int_matrix_print_with_labels_and_partition(ost,
-			Web_of_cubic_curves, 15, 10,
-		labels, labels,
-		row_fst, row_len, 1,
-		col_fst, col_len, 1,
-		Web_of_cubic_curves_entry_print, (void *) this,
-		TRUE /* f_tex */);
-	ost << "$$" << endl;
-
-	FREE_int(bisecants);
-	FREE_int(conics);
-
-}
-
-static void Web_of_cubic_curves_entry_print(int *p,
-	int m, int n, int i, int j, int val,
-	char *output, void *data)
-{
-	surface_domain *Surf = (surface_domain *) data;
-
-	if (i == -1) {
-		Surf->Poly3->print_monomial(output, j);
-	}
-	else if (j == -1) {
-		snprintf(output, 1000, "\\pi_{%d} = \\pi_{%s}", i,
-				Surf->Eckard_point_label[i]);
-	}
-	else {
-		snprintf(output, 1000, "%d", val);
 	}
 }
 

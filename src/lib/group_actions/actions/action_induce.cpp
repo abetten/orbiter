@@ -274,7 +274,7 @@ void action::induced_action_on_cosets(
 	char str1[1000];
 	char str2[1000];
 	snprintf(str1, 1000, "_Cosets_%d", A_on_cosets->dimension_of_subspace);
-	snprintf(str2, 1000, " {\\rm Cosets}_{%d}", A_on_cosets->dimension_of_subspace);
+	snprintf(str2, 1000, " {\\rm OnCosets}_{%d}", A_on_cosets->dimension_of_subspace);
 
 	label.assign(A->label);
 	label_tex.assign(A->label_tex);
@@ -366,7 +366,7 @@ void action::induced_action_on_factor_space(action *A_old,
 	char str1[1000];
 	char str2[1000];
 	snprintf(str1, 1000, "_Factor_%d_%d", AF->VS->dimension, AF->factor_space_len);
-	snprintf(str2, 1000, " {\\rm Factor}_{%d,%d}", AF->VS->dimension, AF->factor_space_len);
+	snprintf(str2, 1000, " {\\rm OnFactor}_{%d,%d}", AF->VS->dimension, AF->factor_space_len);
 
 	label.assign(A->label);
 	label_tex.assign(A->label_tex);
@@ -447,10 +447,10 @@ action *action::induced_action_on_grassmannian(int k, int verbose_level)
 	char str1[1000];
 	char str2[1000];
 	snprintf(str1, 1000, "_Gr_%d", k);
-	snprintf(str2, 1000, " {\\rm Gr}_{%d}", k);
+	snprintf(str2, 1000, " {\\rm OnGr}_{%d}", k);
 
-	label.assign(A->label);
-	label_tex.assign(A->label_tex);
+	label.assign(label);
+	label_tex.assign(label_tex);
 	label.append(str1);
 	label_tex.append(str2);
 
@@ -538,7 +538,7 @@ void action::induced_action_on_grassmannian(action *A_old,
 	char str1[1000];
 	char str2[1000];
 	snprintf(str1, 1000, "_Gr_%d_%d", AG->n, AG->k);
-	snprintf(str2, 1000, " {\\rm Gr}_{%d,%d}", AG->n, AG->k);
+	snprintf(str2, 1000, " {\\rm OnGr}_{%d,%d}", AG->n, AG->k);
 
 	label.assign(A->label);
 	label_tex.assign(A->label_tex);
@@ -673,7 +673,7 @@ void action::induced_action_on_spread_set(action *A_old,
 	char str1[1000];
 	char str2[1000];
 	snprintf(str1, 1000, "_SpreadSet_%d_%d", AS->k, AS->q);
-	snprintf(str2, 1000, "_SpreadSet_%d_%d", AS->k, AS->q);
+	snprintf(str2, 1000, " {\\rm OnSpreadSet %d,%d}", AS->k, AS->q);
 
 	label.assign(A->label);
 	label_tex.assign(A->label_tex);
@@ -763,15 +763,15 @@ void action::induced_action_on_orthogonal(action *A_old,
 
 	if (AO->f_on_points) {
 		snprintf(str1, 1000, "_Opts_%d_%d_%d", AO->O->epsilon, AO->O->n, AO->O->q);
-		snprintf(str2, 1000, "_Opts_%d_%d_%d", AO->O->epsilon, AO->O->n, AO->O->q);
+		snprintf(str2, 1000, " {\\rm OnOpts %d,%d,%d}", AO->O->epsilon, AO->O->n, AO->O->q);
 		}
 	else if (AO->f_on_lines) {
 		snprintf(str1, 1000, "_Olines_%d_%d_%d", AO->O->epsilon, AO->O->n, AO->O->q);
-		snprintf(str2, 1000, "_Olines_%d_%d_%d", AO->O->epsilon, AO->O->n, AO->O->q);
+		snprintf(str2, 1000, " {\\rm OnOlines %d,%d,%d}", AO->O->epsilon, AO->O->n, AO->O->q);
 		}
 	else if (AO->f_on_points_and_lines) {
 		snprintf(str1, 1000, "_Optslines_%d_%d_%d", AO->O->epsilon, AO->O->n, AO->O->q);
-		snprintf(str2, 1000, "_Optslines_%d_%d_%d", AO->O->epsilon, AO->O->n, AO->O->q);
+		snprintf(str2, 1000, " {\\rm OnOptslines %d,%d,%d}", AO->O->epsilon, AO->O->n, AO->O->q);
 		}
 
 
@@ -860,7 +860,7 @@ void action::induced_action_on_wedge_product(action *A_old,
 	char str1[1000];
 	char str2[1000];
 	snprintf(str1, 1000, "_Wedge");
-	snprintf(str2, 1000, "_Wedge");
+	snprintf(str2, 1000, " {\\rm OnWedge}");
 
 	label.assign(A->label);
 	label_tex.assign(A->label_tex);
@@ -940,7 +940,7 @@ void action::induced_action_by_subfield_structure(action *A_old,
 	char str1[1000];
 	char str2[1000];
 	snprintf(str1, 1000, "_subfield_%d", SubfieldStructure->q);
-	snprintf(str2, 1000, "_subfield_%d", SubfieldStructure->q);
+	snprintf(str2, 1000, " {\\rm OnSubfield F%d}", SubfieldStructure->q);
 
 	label.assign(A->label);
 	label_tex.assign(A->label_tex);
@@ -1018,8 +1018,8 @@ void action::induced_action_on_Galois_group(
 
 	char str1[1000];
 	char str2[1000];
-	snprintf(str1, 1000, "_det");
-	snprintf(str2, 1000, "_det");
+	snprintf(str1, 1000, "_gal");
+	snprintf(str2, 1000, " {\\rm OnGal}");
 
 	label.assign(A->label);
 	label_tex.assign(A->label_tex);
@@ -1094,7 +1094,7 @@ void action::induced_action_on_determinant(
 	char str1[1000];
 	char str2[1000];
 	snprintf(str1, 1000, "_det");
-	snprintf(str2, 1000, "_det");
+	snprintf(str2, 1000, " {\\rm OnDet}");
 
 	label.assign(A->label);
 	label_tex.assign(A->label_tex);
@@ -1166,7 +1166,7 @@ void action::induced_action_on_sign(
 	char str1[1000];
 	char str2[1000];
 	snprintf(str1, 1000, "_OnSign");
-	snprintf(str2, 1000, "_OnSign");
+	snprintf(str2, 1000, " {\\rm OnSign}");
 
 	label.assign(A->label);
 	label_tex.assign(A->label_tex);
@@ -1244,7 +1244,7 @@ void action::induced_action_by_conjugation(sims *old_G,
 	char str1[1000];
 	char str2[1000];
 	snprintf(str1, 1000, "_C%d", goi);
-	snprintf(str2, 1000, "_C%d", goi);
+	snprintf(str2, 1000, " {\\rm ByConj%d}", goi);
 
 	label.assign(A->label);
 	label_tex.assign(A->label_tex);
@@ -1320,7 +1320,7 @@ void action::induced_action_by_right_multiplication(
 	char str1[1000];
 	char str2[1000];
 	snprintf(str1, 1000, "_R%d", goi);
-	snprintf(str2, 1000, "_R%d", goi);
+	snprintf(str2, 1000, " {\\rm RightMult%d}", goi);
 
 	label.assign(A->label);
 	label_tex.assign(A->label_tex);
@@ -1423,7 +1423,7 @@ void action::induced_action_on_sets(
 	char str1[1000];
 	char str2[1000];
 	snprintf(str1, 1000, "_S%d", set_size);
-	snprintf(str2, 1000, "_S%d", set_size);
+	snprintf(str2, 1000, " {\\rm S%d}", set_size);
 
 	label.assign(old_action.label);
 	label_tex.assign(old_action.label_tex);
@@ -1539,7 +1539,7 @@ void action::induced_action_on_subgroups(
 	char str1[1000];
 	char str2[1000];
 	snprintf(str1, 1000, "_on_subgroups%d_%d", nb_subgroups, group_order);
-	snprintf(str2, 1000, "_on_subgroups%d_%d", nb_subgroups, group_order);
+	snprintf(str2, 1000, " {\\rm OnSubgroups%d,%d}", nb_subgroups, group_order);
 
 	label.assign(old_action->label);
 	label_tex.assign(old_action->label_tex);
@@ -1620,7 +1620,7 @@ void action::induced_action_by_restriction_on_orbit_with_schreier_vector(
 	char str1[1000];
 	char str2[1000];
 	snprintf(str1, 1000, "_res_sv%d", pt);
-	snprintf(str2, 1000, "_res_sv%d", pt);
+	snprintf(str2, 1000, " {\\rm res sv%d}", pt);
 
 	label.assign(old_action.label);
 	label_tex.assign(old_action.label_tex);
@@ -1710,7 +1710,7 @@ action *action::restricted_action(
 	char str1[1000];
 	char str2[1000];
 	snprintf(str1, 1000, "_res%d", nb_points);
-	snprintf(str2, 1000, "_res%d", nb_points);
+	snprintf(str2, 1000, " {\\rm res%d}", nb_points);
 
 	A->label.assign(label);
 	A->label_tex.assign(label_tex);
@@ -1800,7 +1800,7 @@ void action::induced_action_by_restriction_internal_function(
 	char str1[1000];
 	char str2[1000];
 	snprintf(str1, 1000, "_res%d", nb_points);
-	snprintf(str2, 1000, "_res%d", nb_points);
+	snprintf(str2, 1000, " {\\rm res%d}", nb_points);
 
 	label.assign(old_action.label);
 	label_tex.assign(old_action.label_tex);
@@ -1875,7 +1875,7 @@ void action::induced_action_on_pairs(
 	char str1[1000];
 	char str2[1000];
 	snprintf(str1, 1000, "_on_pairs");
-	snprintf(str2, 1000, "_on_pairs");
+	snprintf(str2, 1000, " {\\rm OnPairs}");
 
 	label.assign(old_action.label);
 	label_tex.assign(old_action.label_tex);
@@ -1950,7 +1950,7 @@ void action::induced_action_on_ordered_pairs(
 	char str1[1000];
 	char str2[1000];
 	snprintf(str1, 1000, "_on_ordered_pairs");
-	snprintf(str2, 1000, "_on_ordered_pairs");
+	snprintf(str2, 1000, " {\\rm OnOrderedPairs}");
 
 	label.assign(old_action.label);
 	label_tex.assign(old_action.label_tex);

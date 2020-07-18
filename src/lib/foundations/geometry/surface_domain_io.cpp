@@ -49,18 +49,18 @@ void surface_domain::latex_double_six(ostream &ost, long int *double_six)
 					ost << Gr->M[u * 4 + v];
 					if (v < 4 - 1) {
 						ost << ", ";
-						}
 					}
-				ost << "\\\\" << endl;
 				}
+				ost << "\\\\" << endl;
+			}
 			ost << "\\end{array}" << endl;
 			ost << "\\right]" << endl;
 			if (j < 2 - 1) {
 				ost << ", " << endl;
-				}
 			}
-		ost << "\\\\" << endl;
 		}
+		ost << "\\\\" << endl;
+	}
 	ost << "\\end{array}" << endl;
 }
 
@@ -170,7 +170,7 @@ void surface_domain::print_Steiner_and_Eckardt(ostream &ost)
 	latex_table_of_Eckardt_points(ost);
 
 	ost << "\\clearpage" << endl << endl;
-	ost << "\\section*{Half Double Sixes}" << endl;
+	ost << "\\section*{Double Sixes}" << endl;
 	latex_table_of_double_sixes(ost);
 
 	ost << "\\clearpage" << endl << endl;
@@ -268,12 +268,14 @@ void surface_domain::print_trihedral_pairs(ostream &ost)
 	ost << "$$" << endl;
 	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 		Trihedral_to_Eckardt, 40, 6, 0, 0, TRUE /* f_tex*/);
-	ost << "$$" << endl;
-	ost << "$$" << endl;
+	ost << "\\;";
+	//ost << "$$" << endl;
+	//ost << "$$" << endl;
 	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 		Trihedral_to_Eckardt + 40 * 6, 40, 6, 40, 0, TRUE /* f_tex*/);
-	ost << "$$" << endl;
-	ost << "$$" << endl;
+	ost << "\\;";
+	//ost << "$$" << endl;
+	//ost << "$$" << endl;
 	L.print_integer_matrix_with_standard_labels_and_offset(ost,
 		Trihedral_to_Eckardt + 80 * 6, 40, 6, 80, 0, TRUE /* f_tex*/);
 	ost << "$$" << endl;
@@ -281,10 +283,64 @@ void surface_domain::print_trihedral_pairs(ostream &ost)
 
 void surface_domain::latex_table_of_double_sixes(ostream &ost)
 {
+	int i, j, h;
+	long int D[12];
+
+	cout << "surface::latex_table_of_double_sixes" << endl;
+
+
+
+	//ost << "\\begin{multicols}{2}" << endl;
+	for (h = 0; h < 36; h++) {
+
+		lint_vec_copy(Double_six + h * 12, D, 12);
+
+		ost << "$D_{" << h << "} = " << Double_six_label_tex[h] << endl;
+
+		ost << " = \\left[";
+		ost << "\\begin{array}{cccccc}" << endl;
+		for (i = 0; i < 2; i++) {
+			for (j = 0; j < 6; j++) {
+				ost << Line_label_tex[D[i * 6 + j]];
+				if (j < 6 - 1) {
+					ost << " & ";
+				}
+			}
+			ost << "\\\\" << endl;
+		}
+		ost << "\\end{array}" << endl;
+		ost << "\\right]" << endl;
+		ost << " = \\left[";
+		ost << "\\begin{array}{cccccc}" << endl;
+		for (i = 0; i < 2; i++) {
+			for (j = 0; j < 6; j++) {
+				ost << D[i * 6 + j];
+				if (j < 6 - 1) {
+					ost << " & ";
+				}
+			}
+			ost << "\\\\" << endl;
+		}
+		ost << "\\end{array}" << endl;
+		ost << "\\right]" << endl;
+		ost << "$\\\\" << endl;
+		}
+	//ost << "\\end{multicols}" << endl;
+
+	cout << "surface::latex_table_of_double_sixes done" << endl;
+
+}
+
+
+void surface_domain::latex_table_of_half_double_sixes(ostream &ost)
+{
 	int i, j;
 	long int H[6];
 
-	cout << "surface::latex_table_of_double_sixes" << endl;
+	cout << "surface::latex_table_of_half_double_sixes" << endl;
+
+
+
 	ost << "\\begin{multicols}{2}" << endl;
 	for (i = 0; i < 72; i++) {
 
@@ -302,6 +358,9 @@ void surface_domain::latex_table_of_double_sixes(ostream &ost)
 		ost << "\\}$\\\\" << endl;
 		}
 	ost << "\\end{multicols}" << endl;
+
+
+
 	cout << "surface::latex_table_of_double_sixes done" << endl;
 }
 
@@ -355,6 +414,7 @@ void surface_domain::latex_table_of_tritangent_planes(ostream &ost)
 	cout << "surface_domain::latex_table_of_tritangent_planes done" << endl;
 }
 
+#if 0
 void surface_domain::print_web_of_cubic_curves(ostream &ost,
 	int *Web_of_cubic_curves)
 // curves[45 * 10]
@@ -367,6 +427,7 @@ void surface_domain::print_web_of_cubic_curves(ostream &ost,
 		Web_of_cubic_curves, 45, 10, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 }
+#endif
 
 void surface_domain::print_equation_in_trihedral_form(ostream &ost,
 	int *the_six_plane_equations, int lambda, int *the_equation)
@@ -611,6 +672,27 @@ void surface_domain::print_trihedral_pair_in_dual_coordinates_in_GAP(
 	cout << "];";
 }
 
+void surface_domain::print_basics(ostream &ost)
+{
+	print_polynomial_domains(ost);
+	print_Schlaefli_labelling(ost);
+
+
+	cout << "surface_domain::print_basics "
+			"before print_Steiner_and_Eckardt" << endl;
+	print_Steiner_and_Eckardt(ost);
+	cout << "surface_domain::print_basics "
+			"after print_Steiner_and_Eckardt" << endl;
+
+	cout << "surface_domain::print_basics "
+			"before print_clebsch_P" << endl;
+	print_clebsch_P(ost);
+	cout << "surface_domain::print_basics "
+			"after print_clebsch_P" << endl;
+
+}
+
+
 void surface_domain::print_polynomial_domains(ostream &ost)
 {
 	ost << "The polynomial domain Poly3\\_4 is:" << endl;
@@ -630,11 +712,11 @@ void surface_domain::print_polynomial_domains(ostream &ost)
 
 }
 
-void surface_domain::print_line_labelling(ostream &ost)
+void surface_domain::print_Schlaefli_labelling(ostream &ost)
 {
 	int j, h;
 
-	//ost << "The ordering of monomials is:\\\\" << endl;
+	ost << "The Schlaefli labeling of lines:\\\\" << endl;
 	ost << "$$" << endl;
 	for (j = 0; j < 3; j++) {
 		ost << "\\begin{array}{|r|r|}" << endl;

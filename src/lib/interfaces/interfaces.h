@@ -39,8 +39,8 @@ class orbiter_session;
 
 
 class interface_algebra {
-	int argc;
-	const char **argv;
+	//int argc;
+	//const char **argv;
 
 	int f_linear_group;
 	linear_group_description *Linear_group_description;
@@ -103,8 +103,8 @@ public:
 
 
 class interface_coding_theory {
-	int argc;
-	const char **argv;
+	//int argc;
+	//const char **argv;
 
 	int f_make_macwilliams_system;
 	int q;
@@ -143,6 +143,7 @@ public:
 class interface_combinatorics {
 	int argc;
 	const char **argv;
+		// only needed for kramer_mesner and for graph classify
 
 	int f_create_combinatorial_object;
 	combinatorial_object_description *Combinatorial_object_description;
@@ -509,9 +510,8 @@ public:
 
 
 class interface_povray {
-	int argc;
-	const char **argv;
 
+	int f_povray;
 	int f_output_mask;
 	const char *output_mask;
 	int f_nb_frames_default;
@@ -526,14 +526,14 @@ class interface_povray {
 	scene *S;
 	animate *A;
 
+	int f_prepare_frames;
+	prepare_frames *Prepare_frames;
+
 public:
 	interface_povray();
 	void print_help(int argc, const char **argv, int i, int verbose_level);
 	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
 	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
-	int read_scene_objects(int argc, const char **argv, int i0, int verbose_level);
-	int scan1(int argc, const char **argv, int &i, int verbose_level);
-	int scan2(int argc, const char **argv, int &i, int verbose_level);
 	void worker(int verbose_level);
 };
 
@@ -553,8 +553,8 @@ void interface_povray_draw_frame(
 
 
 class interface_projective {
-	int argc;
-	const char **argv;
+	//int argc;
+	//const char **argv;
 
 	int f_cheat_sheet_PG;
 	int n;
@@ -665,8 +665,8 @@ public:
 class orbiter_session {
 
 public:
-	int argc;
-	const char **argv;
+	//int argc;
+	//const char **argv;
 
 	int verbose_level;
 

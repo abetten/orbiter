@@ -648,6 +648,35 @@ public:
 
 
 // #############################################################################
+// prepare_frames.cpp
+// #############################################################################
+
+
+//! to prepare the frames of a video
+
+class prepare_frames {
+public:
+
+	int nb_inputs;
+	int input_first[1000];
+	int input_len[1000];
+	const char *input_mask[1000];
+	int f_o;
+	const char *output_mask;
+	int f_output_starts_at;
+	int output_starts_at;
+	int f_step;
+	int step;
+
+	prepare_frames();
+	~prepare_frames();
+	int parse_arguments(int argc, const char **argv);
+	void do_the_work(int verbose_level);
+};
+
+
+
+// #############################################################################
 // util.cpp
 // #############################################################################
 

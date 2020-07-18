@@ -1395,6 +1395,52 @@ int surface_domain::compute_rank_of_any_four(
 	return ret;
 }
 
+void surface_domain::rearrange_lines_according_to_a_given_double_six(long int *Lines,
+		int *given_double_six,
+		long int *New_lines,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *Adj;
+	int nb_lines = 27;
+	int i, j, h;
+
+	if (f_v) {
+		cout << "surface_domain::rearrange_lines_according_to_a_given_double_six" << endl;
+	}
+	if (f_v) {
+		cout << "surface_domain::rearrange_lines_according_to_a_given_double_six "
+			"before compute_adjacency_matrix_of_line_intersection_graph" << endl;
+	}
+	compute_adjacency_matrix_of_line_intersection_graph(Adj,
+		Lines, nb_lines, 0 /* verbose_level */);
+
+	for (i = 0; i < 12; i++) {
+		New_lines[i] = Lines[given_double_six[i]];
+	}
+
+
+	h = 0;
+	for (i = 0; i < 6; i++) {
+		for (j = i + 1; j < 6; j++, h++) {
+			New_lines[12 + h] = compute_cij(New_lines /* double_six */, i, j,
+				0 /* verbose_level */);
+			}
+		}
+	if (f_v) {
+		cout << "New_lines:";
+		lint_vec_print(cout, New_lines, 27);
+		cout << endl;
+		}
+
+
+
+	if (f_v) {
+		cout << "surface_domain::rearrange_lines_according_to_a_given_double_six done" << endl;
+	}
+}
+
+
 void surface_domain::rearrange_lines_according_to_double_six(long int *Lines,
 	int verbose_level)
 {

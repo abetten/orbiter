@@ -1072,6 +1072,9 @@ public:
 	void add_a_group_of_things(int *Idx, int sz, int verbose_level);
 	void create_regulus(int idx, int nb_lines, int verbose_level);
 	void clipping_by_cylinder(int line_idx, double r, std::ostream &ost);
+	int scan1(int argc, const char **argv, int &i, int verbose_level);
+	int scan2(int argc, const char **argv, int &i, int verbose_level);
+	int read_scene_objects(int argc, const char **argv, int i0, int verbose_level);
 };
 
 

@@ -1121,7 +1121,7 @@ void schreier::export_tree_as_layered_graph(int orbit_no,
 
 	sprintf(fname, fname_mask, orbit_no);
 	LG->write_file(fname, 0 /*verbose_level*/);
-	delete LG;
+	FREE_OBJECT(LG);
 
 	FREE_int(Nb);
 	FREE_int(Nb1);
