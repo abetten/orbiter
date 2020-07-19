@@ -197,8 +197,8 @@ void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens,
 	}
 
 	Control = NEW_OBJECT(poset_classification_control);
-	Control->f_max_depth = TRUE;
-	Control->max_depth = nb_points_or_lines;
+	Control->f_depth = TRUE;
+	Control->depth = nb_points_or_lines;
 
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A2, Strong_gens, verbose_level);
@@ -227,7 +227,7 @@ void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens,
 				<< label << " calling generator_main" << endl;
 	}
 	gen->main(t0, 
-		Control->max_depth,
+		Control->depth,
 		f_use_invariant_subset_if_available, 
 		//f_implicit_fusion, 
 		f_debug, 

@@ -237,8 +237,8 @@ void classify_double_sixes::init(
 				this /* void *data */,
 				verbose_level);
 
-	Control->f_max_depth = TRUE;
-	Control->max_depth = 5;
+	Control->f_depth = TRUE;
+	Control->depth = 5;
 
 
 	if (f_v) {

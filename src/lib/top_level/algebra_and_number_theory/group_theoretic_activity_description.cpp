@@ -194,6 +194,7 @@ int group_theoretic_activity_description::read_arguments(
 		else if (strcmp(argv[i], "-poset_classification_control") == 0) {
 			f_poset_classification_control = TRUE;
 			Control = NEW_OBJECT(poset_classification_control);
+			cout << "-poset_classification_control " << endl;
 			i += Control->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 

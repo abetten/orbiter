@@ -428,8 +428,8 @@ void linear_set_classify::init(//int argc, const char **argv,
 	//sprintf(Gen->fname_base, "subspaces_%d_%d_%d", n, q, s);
 
 
-	Control1->f_max_depth = TRUE;
-	Control1->max_depth = depth;
+	Control1->f_depth = TRUE;
+	Control1->depth = depth;
 
 	Poset1->init_subspace_lattice(Aq, Aq, Strong_gens, VS,
 			verbose_level);
@@ -956,8 +956,8 @@ void linear_set_classify::init_secondary(int argc, const char **argv,
 
 	secondary_depth = n - secondary_level;
 
-	Control2->f_max_depth = TRUE;
-	Control2->max_depth = secondary_depth;
+	Control2->f_depth = TRUE;
+	Control2->depth = secondary_depth;
 
 	//Gen2->read_arguments(argc, argv, 0);
 
@@ -1331,8 +1331,8 @@ void linear_set_classify::init_compute_stabilizer(int argc, const char **argv,
 	Poset_stab = NEW_OBJECT(poset);
 
 
-	Control_stab->f_max_depth = TRUE;
-	Control_stab->max_depth = level;
+	Control_stab->f_depth = TRUE;
+	Control_stab->depth = level;
 
 
 	//Gen_stab->read_arguments(argc, argv, 0);

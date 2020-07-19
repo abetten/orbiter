@@ -283,8 +283,8 @@ void large_set_classify::init_designs(orbit_of_sets *SetOrb,
 	Control->f_problem_label = TRUE;
 	Control->path = path;
 	Control->f_path = TRUE;
-	Control->f_max_depth = TRUE;
-	Control->max_depth = search_depth;
+	Control->f_depth = TRUE;
+	Control->depth = search_depth;
 
 #if 0
 	Control->f_print_function = TRUE;

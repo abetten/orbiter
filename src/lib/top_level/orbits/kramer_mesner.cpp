@@ -322,8 +322,8 @@ void kramer_mesner::orbits(
 		}
 
 	Control = NEW_OBJECT(poset_classification_control);
-	Control->f_max_depth = TRUE;
-	Control->max_depth = orbits_k;
+	Control->f_depth = TRUE;
+	Control->depth = orbits_k;
 
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A2,

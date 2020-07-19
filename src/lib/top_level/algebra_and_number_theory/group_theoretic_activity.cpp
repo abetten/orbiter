@@ -1581,11 +1581,11 @@ void group_theoretic_activity::orbits_on_subspaces(int verbose_level)
 		Control = NEW_OBJECT(poset_classification_control);
 	}
 
-	Control->f_max_depth = TRUE;
-	Control->max_depth = Descr->orbits_on_subspaces_depth;
+	Control->f_depth = TRUE;
+	Control->depth = Descr->orbits_on_subspaces_depth;
 	if (f_v) {
 		cout << "group_theoretic_activity::orbits_on_subspaces "
-				"Control->max_depth=" << Control->max_depth << endl;
+				"Control->max_depth=" << Control->depth << endl;
 	}
 
 	int n;
@@ -1651,11 +1651,11 @@ void group_theoretic_activity::orbits_on_subspaces(int verbose_level)
 
 	orbits_on_subspaces_PC->initialize_and_allocate_root_node(
 			Control, orbits_on_subspaces_Poset,
-			Control->max_depth, verbose_level);
+			Control->depth, verbose_level);
 
 
 
-	int schreier_depth = Control->max_depth;
+	int schreier_depth = Control->depth;
 	int f_use_invariant_subset_if_available = FALSE;
 	int f_debug = FALSE;
 	int nb_orbits;
@@ -1682,15 +1682,15 @@ void group_theoretic_activity::orbits_on_subspaces(int verbose_level)
 		cout << "group_theoretic_activity::orbits_on_subspaces "
 				"done with generator_main" << endl;
 	}
-	nb_orbits = orbits_on_subspaces_PC->nb_orbits_at_level(Control->max_depth);
+	nb_orbits = orbits_on_subspaces_PC->nb_orbits_at_level(Control->depth);
 	if (f_v) {
 		cout << "group_theoretic_activity::orbits_on_subspaces we found "
 				<< nb_orbits << " orbits at depth "
-				<< Control->max_depth << endl;
+				<< Control->depth << endl;
 	}
 
 	orbits_on_poset_post_processing(
-			orbits_on_subspaces_PC, Control->max_depth, verbose_level);
+			orbits_on_subspaces_PC, Control->depth, verbose_level);
 
 
 	if (f_v) {

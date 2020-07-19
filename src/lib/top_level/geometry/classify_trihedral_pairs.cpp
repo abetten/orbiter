@@ -169,17 +169,6 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 		//"", /* const char *prefix, */
 		Control1,
 		Poset1,
-#if 0
-		classify_trihedral_pairs_early_test_function_type1
-			/* void (*early_test_func_callback)(int *S, int len,
-			int *candidates, int nb_candidates, 
-			int *good_candidates, int &nb_good_candidates, 
-			void *data, int verbose_level) */,
-		this /* void *early_test_func_data */, 
-		NULL /* int (*candidate_incremental_check_func)(int len,
-				int *S, void *data, int verbose_level) */,
-		NULL  /*void *candidate_incremental_check_data */, 
-#endif
 		0 /*verbose_level*/);
 
 	if (f_v) {
@@ -211,17 +200,6 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 		//"", /* const char *prefix, */
 		Control2,
 		Poset2,
-#if 0
-		classify_trihedral_pairs_early_test_function_type2
-			/* void (*early_test_func_callback)(int *S, int len,
-			int *candidates, int nb_candidates, 
-			int *good_candidates, int &nb_good_candidates, 
-			void *data, int verbose_level) */,
-		this /* void *early_test_func_data */, 
-		NULL /* int (*candidate_incremental_check_func)(int len,
-			int *S, void *data, int verbose_level) */,
-		NULL  /*void *candidate_incremental_check_data */, 
-#endif
 		0 /*verbose_level*/);
 
 	if (f_v) {
@@ -768,7 +746,7 @@ void classify_trihedral_pairs::classify(
 
 	if (f_v) {
 		cout << "classify_trihedral_pairs::classify" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "classify_trihedral_pairs::classify "
@@ -1127,8 +1105,7 @@ strong_generators
 	//int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
-		cout << "classify_trihedral_pairs::identify_trihedral_pair_"
-				"and_get_stabilizer" << endl;
+		cout << "classify_trihedral_pairs::identify_trihedral_pair_and_get_stabilizer" << endl;
 	}
 
 	if (f_v) {
@@ -1172,8 +1149,7 @@ strong_generators
 
 
 	if (f_v) {
-		cout << "classify_trihedral_pairs::identify_trihedral_pair_"
-				"and_get_stabilizer done" << endl;
+		cout << "classify_trihedral_pairs::identify_trihedral_pair_and_get_stabilizer done" << endl;
 	}
 
 	return gens;
@@ -1196,7 +1172,7 @@ void classify_trihedral_pairs::identify_trihedral_pair(long int *planes6,
 
 	if (f_v) {
 		cout << "classify_trihedral_pairs::identify_trihedral_pair" << endl;
-		}
+	}
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);

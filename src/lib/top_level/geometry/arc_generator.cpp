@@ -911,7 +911,7 @@ void arc_generator::lifting_prepare_function_new(
 				"needs d == 2" << endl;
 		exit(1);
 	}
-	starter_size = Descr->Control->max_depth;
+	starter_size = Descr->Control->depth;
 	if (f_v) {
 		cout << "arc_generator::lifting_prepare_function_new "
 				"starter_size=" << starter_size << endl;

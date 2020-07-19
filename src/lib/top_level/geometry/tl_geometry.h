@@ -2745,11 +2745,11 @@ public:
 
 	surface_classify_using_arc();
 	~surface_classify_using_arc();
-	void report(int verbose_level);
 	void classify_surfaces_through_arcs_and_trihedral_pairs(
 			poset_classification_control *Control_six_arcs,
 			surface_with_action *Surf_A,
 			int verbose_level);
+	void report(int verbose_level);
 };
 
 // #############################################################################

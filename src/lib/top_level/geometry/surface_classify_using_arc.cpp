@@ -67,176 +67,6 @@ surface_classify_using_arc::~surface_classify_using_arc()
 }
 
 
-void surface_classify_using_arc::report(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "surface_classify_using_arc::report" << endl;
-	}
-
-	surface_domain *Surf;
-	finite_field *F;
-
-	char fname_arc_lifting[1000];
-
-
-	F = Surf_A->F;
-	Surf = Surf_A->Surf;
-
-
-	{
-		char title[1000];
-		char author[1000];
-		snprintf(title, 1000, "Arc lifting over GF(%d) ", F->q);
-		strcpy(author, "");
-
-		snprintf(fname_arc_lifting, 1000, "arc_lifting_q%d.tex", F->q);
-		ofstream fp(fname_arc_lifting);
-		latex_interface L;
-
-
-		L.head(fp,
-			FALSE /* f_book */,
-			TRUE /* f_title */,
-			title, author,
-			FALSE /*f_toc */,
-			FALSE /* f_landscape */,
-			FALSE /* f_12pt */,
-			TRUE /*f_enlarged_page */,
-			TRUE /* f_pagenumbers*/,
-			NULL /* extra_praeamble */);
-
-
-		if (f_v) {
-			cout << "surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pairs q=" << F->q << endl;
-		}
-
-
-
-		fp << "\\section*{Basics}" << endl << endl;
-
-		if (f_v) {
-			cout << "surface_classify_using_arc::report before Surf_A->report_basics_and_trihedral_pair" << endl;
-		}
-		if (f_v) {
-			Surf_A->report_basics_and_trihedral_pair(fp);
-		}
-		if (f_v) {
-			cout << "surface_classify_using_arc::report after Surf_A->report_basics_and_trihedral_pair" << endl;
-		}
-
-		fp << "\\section*{Six-Arcs}" << endl << endl;
-
-
-		if (f_v) {
-			cout << "surface_classify_using_arc::report before Six_arcs->report_latex" << endl;
-		}
-		Six_arcs->report_latex(fp);
-		if (f_v) {
-			cout << "surface_classify_using_arc::report after Six_arcs->report_latex" << endl;
-		}
-
-
-		char fname_base[1000];
-		snprintf(fname_base, 1000, "arcs_q%d", F->q);
-
-		if (F->q < 20) {
-			cout << "before Gen->gen->draw_poset_full" << endl;
-			Six_arcs->Gen->gen->draw_poset(
-				fname_base,
-				6 /* depth */, 0 /* data */,
-				TRUE /* f_embedded */,
-				FALSE /* f_sideways */,
-				100 /* rad */,
-				verbose_level);
-		}
-
-
-		fp << "\\section*{List of Surfaces}" << endl << endl;
-
-
-
-		int surface_idx;
-
-		for (surface_idx = 0;
-				surface_idx < nb_surfaces;
-				surface_idx++) {
-
-
-
-			fp << "\\section*{Surface $" << surface_idx << "$ of " << nb_surfaces << "}" << endl << endl;
-
-
-			if (f_v) {
-				cout << "surface_classify_using_arc::report before SCAL[" << surface_idx << "].report" << endl;
-			}
-			SCAL[surface_idx].report(fp, verbose_level);
-			if (f_v) {
-				cout << "surface_classify_using_arc::report after SCAL[" << surface_idx << "].report" << endl;
-			}
-
-
-			fp << "The following " << Arc_identify_nb[surface_idx]
-				<< " arcs are involved with surface " <<   nb_surfaces << ": $";
-			int_vec_print(fp,
-				Arc_identify + surface_idx * Six_arcs->nb_arcs_not_on_conic,
-				Arc_identify_nb[surface_idx]);
-			fp << "$\\\\" << endl;
-
-
-
-		}
-
-
-		fp << "\\section*{Decomposition Matrix Surfaces vs Arcs}" << endl << endl;
-
-
-
-		cout << "surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pairs "
-				"decomposition matrix:" << endl;
-		cout << "$$" << endl;
-		L.print_integer_matrix_with_standard_labels(cout, Decomp,
-				Six_arcs->nb_arcs_not_on_conic, nb_surfaces,
-				TRUE /* f_tex */);
-		cout << "$$" << endl;
-
-		fp << "Decomposition matrix:" << endl;
-		//fp << "$$" << endl;
-		//print_integer_matrix_with_standard_labels(fp, Decomp,
-		//nb_arcs_not_on_conic, nb_surfaces, TRUE /* f_tex */);
-		L.print_integer_matrix_tex_block_by_block(fp, Decomp,
-				Six_arcs->nb_arcs_not_on_conic, nb_surfaces, 25);
-		//fp << "$$" << endl;
-
-		file_io Fio;
-		char fname_decomposition[1000];
-
-		sprintf(fname_decomposition, "surfaces_q%d_decomposition_matrix.csv", F->q);
-
-		Fio.int_matrix_write_csv(fname_decomposition, Decomp,
-				Six_arcs->nb_arcs_not_on_conic, nb_surfaces);
-		cout << "Written file " << fname_decomposition << " of size "
-				<< Fio.file_size(fname_decomposition) << endl;
-
-
-
-
-		L.foot(fp);
-
-	} // fp
-
-	file_io Fio;
-
-	cout << "Written file " << fname_arc_lifting << " of size "
-			<< Fio.file_size(fname_arc_lifting) << endl;
-
-
-	if (f_v) {
-		cout << "surface_classify_using_arc::report done" << endl;
-	}
-}
-
 void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pairs(
 		poset_classification_control *Control_six_arcs,
 		surface_with_action *Surf_A,
@@ -349,8 +179,6 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 			continue;
 		}
 
-		SCAL->init(arc_idx, this, verbose_level);
-
 		if (f_v) {
 			cout << "surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pairs "
 					"before SCAL[nb_surfaces].init, nb_surfaces = " << nb_surfaces << endl;
@@ -411,6 +239,174 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 	}
 }
 
+
+void surface_classify_using_arc::report(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_classify_using_arc::report" << endl;
+	}
+
+	surface_domain *Surf;
+	finite_field *F;
+
+	char fname_arc_lifting[1000];
+
+
+	F = Surf_A->F;
+	Surf = Surf_A->Surf;
+
+
+	{
+		char title[1000];
+		char author[1000];
+		snprintf(title, 1000, "Arc lifting over GF(%d) ", F->q);
+		strcpy(author, "");
+
+		snprintf(fname_arc_lifting, 1000, "arc_lifting_q%d.tex", F->q);
+		ofstream fp(fname_arc_lifting);
+		latex_interface L;
+
+
+		L.head(fp,
+			FALSE /* f_book */,
+			TRUE /* f_title */,
+			title, author,
+			FALSE /*f_toc */,
+			FALSE /* f_landscape */,
+			FALSE /* f_12pt */,
+			TRUE /*f_enlarged_page */,
+			TRUE /* f_pagenumbers*/,
+			NULL /* extra_praeamble */);
+
+
+		if (f_v) {
+			cout << "surface_classify_using_arc::report q=" << F->q << endl;
+		}
+
+
+
+		fp << "\\section*{Basics}" << endl << endl;
+
+		if (f_v) {
+			cout << "surface_classify_using_arc::report before Surf_A->report_basics_and_trihedral_pair" << endl;
+		}
+		if (f_v) {
+			Surf_A->report_basics_and_trihedral_pair(fp);
+		}
+		if (f_v) {
+			cout << "surface_classify_using_arc::report after Surf_A->report_basics_and_trihedral_pair" << endl;
+		}
+
+		fp << "\\section*{Six-Arcs}" << endl << endl;
+
+
+		if (f_v) {
+			cout << "surface_classify_using_arc::report before Six_arcs->report_latex" << endl;
+		}
+		Six_arcs->report_latex(fp);
+		if (f_v) {
+			cout << "surface_classify_using_arc::report after Six_arcs->report_latex" << endl;
+		}
+
+
+		char fname_base[1000];
+		snprintf(fname_base, 1000, "arcs_q%d", F->q);
+
+		if (F->q < 20) {
+			cout << "before Gen->gen->draw_poset_full" << endl;
+			Six_arcs->Gen->gen->draw_poset(
+				fname_base,
+				6 /* depth */, 0 /* data */,
+				TRUE /* f_embedded */,
+				FALSE /* f_sideways */,
+				100 /* rad */,
+				verbose_level);
+		}
+
+
+		fp << "\\section*{List of Surfaces}" << endl << endl;
+
+
+
+		int surface_idx;
+
+		for (surface_idx = 0;
+				surface_idx < nb_surfaces;
+				surface_idx++) {
+
+
+
+			fp << "\\section*{Surface $" << surface_idx << "$ of " << nb_surfaces << "}" << endl << endl;
+
+
+			if (f_v) {
+				cout << "surface_classify_using_arc::report before SCAL[" << surface_idx << "].report" << endl;
+			}
+			SCAL[surface_idx].report(fp, verbose_level);
+			if (f_v) {
+				cout << "surface_classify_using_arc::report after SCAL[" << surface_idx << "].report" << endl;
+			}
+
+
+			fp << "The following " << Arc_identify_nb[surface_idx]
+				<< " arcs are involved with surface " <<   nb_surfaces << ": $";
+			int_vec_print(fp,
+				Arc_identify + surface_idx * Six_arcs->nb_arcs_not_on_conic,
+				Arc_identify_nb[surface_idx]);
+			fp << "$\\\\" << endl;
+
+
+
+		}
+
+
+		fp << "\\section*{Decomposition Matrix Arcs vs Surfaces}" << endl << endl;
+
+
+
+		cout << "surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pairs "
+				"decomposition matrix:" << endl;
+		cout << "$$" << endl;
+		L.print_integer_matrix_with_standard_labels(cout, Decomp,
+				Six_arcs->nb_arcs_not_on_conic, nb_surfaces,
+				TRUE /* f_tex */);
+		cout << "$$" << endl;
+
+		fp << "Decomposition matrix:" << endl;
+		//fp << "$$" << endl;
+		//print_integer_matrix_with_standard_labels(fp, Decomp,
+		//nb_arcs_not_on_conic, nb_surfaces, TRUE /* f_tex */);
+		L.print_integer_matrix_tex_block_by_block(fp, Decomp,
+				Six_arcs->nb_arcs_not_on_conic, nb_surfaces, 25);
+		//fp << "$$" << endl;
+
+		file_io Fio;
+		char fname_decomposition[1000];
+
+		sprintf(fname_decomposition, "surfaces_q%d_decomposition_matrix.csv", F->q);
+
+		Fio.int_matrix_write_csv(fname_decomposition, Decomp,
+				Six_arcs->nb_arcs_not_on_conic, nb_surfaces);
+		cout << "Written file " << fname_decomposition << " of size "
+				<< Fio.file_size(fname_decomposition) << endl;
+
+
+		L.foot(fp);
+
+	} // fp
+
+	file_io Fio;
+
+	cout << "Written file " << fname_arc_lifting << " of size "
+			<< Fio.file_size(fname_arc_lifting) << endl;
+
+
+	if (f_v) {
+		cout << "surface_classify_using_arc::report done" << endl;
+	}
+}
 
 
 

@@ -182,8 +182,8 @@ void spread_classify::init(
 		cout << "spread_size=" << spread_size << endl;
 	}
 
-	Control->f_max_depth = TRUE;
-	Control->max_depth = spread_size;
+	Control->f_depth = TRUE;
+	Control->depth = spread_size;
 	if (f_v) {
 		cout << "spread_classify::init" << endl;
 		cout << "Control:" << endl;
@@ -638,9 +638,9 @@ void spread_classify::compute(int verbose_level)
 
 	if (f_v) {
 		cout << "spread_classify::compute" << endl;
-		cout << "spread_classify::compute Control->max_depth=" << Control->max_depth << endl;
+		cout << "spread_classify::compute Control->max_depth=" << Control->depth << endl;
 	}
-	schreier_depth = Control->max_depth;
+	schreier_depth = Control->depth;
 	
 	if (f_v) {
 		cout << "spread_classify::compute calling generator_main" << endl;
@@ -661,10 +661,10 @@ void spread_classify::compute(int verbose_level)
 	if (f_v) {
 		cout << "spread_classify::compute done with generator_main" << endl;
 	}
-	length = gen->nb_orbits_at_level(Control->max_depth);
+	length = gen->nb_orbits_at_level(Control->depth);
 	if (f_v) {
 		cout << "spread_classify::compute We found " << length << " orbits on "
-			<< Control->max_depth << "-sets of " << k
+			<< Control->depth << "-sets of " << k
 			<< "-subspaces in PG(" << n - 1 << "," << q << ")" 
 			<< " satisfying the partial spread condition" << endl;
 	}

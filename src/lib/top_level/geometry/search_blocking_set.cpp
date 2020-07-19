@@ -163,8 +163,8 @@ void search_blocking_set::find_partial_blocking_sets(int depth, int verbose_leve
 		exit(1);
 		}
 	Control = NEW_OBJECT(poset_classification_control);
-	Control->f_max_depth = TRUE;
-	Control->max_depth = Inc->nb_rows;
+	Control->f_depth = TRUE;
+	Control->depth = Inc->nb_rows;
 
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A,

@@ -219,8 +219,8 @@ void polar::init2(int depth, int verbose_level)
 			verbose_level - 1);
 
 	Control = NEW_OBJECT(poset_classification_control);
-	Control->f_max_depth = TRUE;
-	Control->max_depth = depth;
+	Control->f_depth = TRUE;
+	Control->depth = depth;
 
 
 	char label[1000];

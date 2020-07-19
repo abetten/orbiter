@@ -232,8 +232,8 @@ void ovoid_classify::init(int argc, const char **argv,
 			}
 		}
 
-	Control->f_max_depth = TRUE;
-	Control->max_depth = depth;
+	Control->f_depth = TRUE;
+	Control->depth = depth;
 
 
 	if (f_v) {

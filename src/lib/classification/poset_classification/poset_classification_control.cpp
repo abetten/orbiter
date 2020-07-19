@@ -25,8 +25,8 @@ poset_classification_control::poset_classification_control()
 	verbose_level_group_theory = 0;
 
 	f_lex = FALSE;
-	f_max_depth = FALSE;
-	max_depth = 0;
+	f_depth = FALSE;
+	depth = 0;
 
 	f_extend = FALSE;
 	extend_from = 0;
@@ -192,10 +192,10 @@ int poset_classification_control::read_arguments(
 			}
 		}
 		else if (strcmp(argv[i], "-depth") == 0) {
-			f_max_depth = TRUE;
-			max_depth = atoi(argv[++i]);
+			f_depth = TRUE;
+			depth = atoi(argv[++i]);
 			if (f_v) {
-				cout << "poset_classification_control::read_arguments -depth " << max_depth << endl;
+				cout << "poset_classification_control::read_arguments -depth " << depth << endl;
 			}
 		}
 		else if (strcmp(argv[i], "-extend") == 0) {

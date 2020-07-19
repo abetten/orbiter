@@ -1248,7 +1248,7 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 		int f_save_stab = FALSE;
 		int f_show_whole_orbit = FALSE;
 
-		Gen.gen->list_all_orbits_at_level(Gen.Control->max_depth,
+		Gen.gen->list_all_orbits_at_level(Gen.Control->depth,
 			FALSE, NULL, NULL,
 			f_show_orbit_decomposition,
 			f_show_stab, f_save_stab, f_show_whole_orbit);
@@ -1261,7 +1261,7 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 		int f_show_whole_orbit = FALSE;
 		int j;
 
-		for (j = 0; j <= Gen.Control->max_depth; j++) {
+		for (j = 0; j <= Gen.Control->depth; j++) {
 			Gen.gen->list_all_orbits_at_level(j,
 				FALSE, NULL, NULL,
 				f_show_orbit_decomposition,
@@ -1276,7 +1276,7 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 		int ymax = 1000000;
 		int level;
 
-		for (level = 0; level <= Gen.Control->max_depth; level++) {
+		for (level = 0; level <= Gen.Control->depth; level++) {
 			Gen.draw_graphs(level, Gen.Control->scale,
 					xmax_in, ymax_in, xmax, ymax,
 					Gen.Control->f_embedded, Gen.Control->f_sideways,
@@ -1300,7 +1300,7 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 
 	if (Gen.f_draw_level_graph) {
 		Gen.gen->draw_level_graph(Gen.gen->get_problem_label_with_path(),
-				Gen.Control->max_depth, Gen.n /* data1 */,
+				Gen.Control->depth, Gen.n /* data1 */,
 				Gen.level_graph_level,
 				f_embedded, f_sideways,
 				verbose_level - 3);
@@ -1326,10 +1326,10 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 
 	N = 0;
 	F = 0;
-	for (level = 0; level <= Gen.Control->max_depth; level++) {
+	for (level = 0; level <= Gen.Control->depth; level++) {
 		N += Gen.gen->nb_orbits_at_level(level);
 		}
-	for (level = 0; level < Gen.Control->max_depth; level++) {
+	for (level = 0; level < Gen.Control->depth; level++) {
 		F += Gen.gen->nb_flag_orbits_up_at_level(level);
 		}
 	cout << "N=" << N << endl;

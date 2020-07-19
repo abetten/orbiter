@@ -741,8 +741,8 @@ void delandtsheer_doyen::compute_orbits_on_pairs(strong_generators *Strong_gens,
 #endif
 
 	//Pairs->depth = 2;
-	Descr->Pair_search_control->f_max_depth = TRUE;
-	Descr->Pair_search_control->max_depth = 2;
+	Descr->Pair_search_control->f_depth = TRUE;
+	Descr->Pair_search_control->depth = 2;
 
 	Poset_pairs = NEW_OBJECT(poset);
 	Poset_pairs->init_subset_lattice(A0, A, Strong_gens,
@@ -781,8 +781,8 @@ void delandtsheer_doyen::compute_orbits_on_pairs(strong_generators *Strong_gens,
 
 	//Pairs->f_allowed_to_show_group_elements = TRUE;
 
-	Descr->Pair_search_control->f_max_depth = TRUE;
-	Descr->Pair_search_control->max_depth = 2;
+	Descr->Pair_search_control->f_depth = TRUE;
+	Descr->Pair_search_control->depth = 2;
 
 	//Pairs->depth = 2;
 	Pairs->main(t0,

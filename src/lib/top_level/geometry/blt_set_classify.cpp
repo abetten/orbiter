@@ -121,8 +121,8 @@ void blt_set_classify::init_basic(orthogonal *O,
 
 	Control = NEW_OBJECT(poset_classification_control);
 
-	Control->f_max_depth = TRUE;
-	Control->max_depth = target_size;
+	Control->f_depth = TRUE;
+	Control->depth = target_size;
 
 	if (f_v) {
 		cout << "blt_set_classify::init_basic q=" << q
@@ -252,7 +252,7 @@ void blt_set_classify::init2(int verbose_level)
 
 	
 	if (f_v) {
-		cout << "blt_set_classify::init2 depth = " << Control->max_depth << endl;
+		cout << "blt_set_classify::init2 depth = " << Control->depth << endl;
 	}
 
 
@@ -278,7 +278,7 @@ void blt_set_classify::init2(int verbose_level)
 	gen = NEW_OBJECT(poset_classification);
 
 	gen->initialize_and_allocate_root_node(Control, Poset,
-		Control->max_depth /* sz */, verbose_level);
+		Control->depth /* sz */, verbose_level);
 	
 
 	if (f_v) {
