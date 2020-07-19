@@ -68,7 +68,7 @@ namespace linalg {
 			}
 		}
 
-		T* data = NULL;
+		T* data;
 		size_t _nrows, _ncols;
 	};
 
