@@ -2555,8 +2555,8 @@ void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 	poset_classification *PC;
 
 
-	Control->f_max_depth = TRUE;
-	Control->max_depth = target_depth;
+	Control->f_depth = TRUE;
+	Control->depth = target_depth;
 
 
 	if (f_v) {

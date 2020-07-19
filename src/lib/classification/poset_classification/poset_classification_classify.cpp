@@ -241,8 +241,8 @@ int poset_classification::main(int t0,
 	}
 		
 	
-	if (Control->f_max_depth) {
-		target_depth = Control->max_depth;
+	if (Control->f_depth) {
+		target_depth = Control->depth;
 	}
 	else {
 		target_depth = depth;

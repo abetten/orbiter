@@ -182,7 +182,6 @@ void surface_classify_wedge::do_classify_double_sixes(int verbose_level)
 					"Classify_double_sixes->classify_partial_ovoids" << endl;
 		}
 		Classify_double_sixes->classify_partial_ovoids(
-			//f_report_5p1,
 			verbose_level - 1);
 		if (f_v) {
 			cout << "surface_classify_wedge::do_classify_double_sixes after "
@@ -334,8 +333,7 @@ void surface_classify_wedge::downstep(int verbose_level)
 		longinteger_object go;
 		long int Lines[27];
 
-		R = Classify_double_sixes->Double_sixes->
-				get_set_and_stabilizer(
+		R = Classify_double_sixes->Double_sixes->get_set_and_stabilizer(
 				i /* orbit_index */,
 				0 /* verbose_level */);
 
@@ -522,13 +520,11 @@ void surface_classify_wedge::upstep(int verbose_level)
 			
 			if (f2 == f) {
 				if (f_v) {
-					cout << "We found an automorphism "
-							"of the surface:" << endl;
+					cout << "We found an automorphism of the surface:" << endl;
 					A->element_print_quick(Elt1, cout);
 					cout << endl;
 				}
-				A->element_move(Elt1,
-						coset_reps->ith(nb_coset_reps), 0);
+				A->element_move(Elt1, coset_reps->ith(nb_coset_reps), 0);
 				nb_coset_reps++;
 			}
 			else {

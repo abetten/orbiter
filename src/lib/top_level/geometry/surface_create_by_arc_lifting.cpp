@@ -102,7 +102,15 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 	AL = NEW_OBJECT(arc_lifting);
 
 
+	if (f_v) {
+		cout << "surface_create_by_arc_lifting::init "
+				"before AL->create_surface_and_group" << endl;
+	}
 	AL->create_surface_and_group(SCA->Surf_A, Arc6, verbose_level);
+	if (f_v) {
+		cout << "surface_create_by_arc_lifting::init "
+				"after AL->create_surface_and_group" << endl;
+	}
 
 	char magma_fname[1000];
 	file_io Fio;
@@ -127,7 +135,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 	SOA = NEW_OBJECT(surface_object_with_action);
 
 	if (f_v) {
-		cout << "surface_create_by_arc_lifting::arc_lifting_and_classify_using_trihedral_pairs "
+		cout << "surface_create_by_arc_lifting::init "
 				"before SOA->init" << endl;
 	}
 
@@ -138,7 +146,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 		FALSE, NULL,
 		verbose_level);
 	if (f_v) {
-		cout << "surface_create_by_arc_lifting::arc_lifting_and_classify_using_trihedral_pairs "
+		cout << "surface_create_by_arc_lifting::init "
 				"after SOA->init" << endl;
 	}
 
@@ -164,7 +172,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 
 
 	if (f_v) {
-		cout << "surface_create_by_arc_lifting::arc_lifting_and_classify_using_trihedral_pairs "
+		cout << "surface_create_by_arc_lifting::init "
 				"arc " << arc_label << " yields a surface with "
 			<< AL->Web->E->nb_E << " Eckardt points and a stabilizer "
 				"of order " << go << " with "
@@ -179,7 +187,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 	int orbit_idx;
 
 	if (f_v) {
-		cout << "surface_create_by_arc_lifting::arc_lifting_and_classify_using_trihedral_pairs "
+		cout << "surface_create_by_arc_lifting::init "
 				"performing isomorph rejection" << endl;
 	}
 
@@ -188,30 +196,8 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 
 	for (orbit_idx = 0; orbit_idx < SOA->Orbits_on_single_sixes->nb_orbits; orbit_idx++) {
 
-#if 0
-		int f, l, k;
-		int line1, line2, transversal;
-		long int *Clebsch_map;
-		int *Clebsch_coeff;
-		long int plane_rk, plane_rk_global;
-		int line_idx[2];
-		long int Arc[6];
-		long int Blown_up_lines[6];
-		//int orbit_at_level;
-		int ds, ds_row;
-		int intersection_points[6];
-		//int intersection_points_local[6];
-		int u, a;
-		int v[4];
-		int Plane[16];
-		int base_cols[4];
-		int coefficients[3];
-
-		int idx;
-#endif
-
 		if (f_v) {
-			cout << "surface_create_by_arc_lifting::arc_lifting_and_classify_using_trihedral_pairs "
+			cout << "surface_create_by_arc_lifting::init "
 					"orbit " << orbit_idx << " / " << SOA->Orbits_on_single_sixes->nb_orbits << endl;
 		}
 		Clebsch[orbit_idx].init(SOA, orbit_idx, verbose_level);

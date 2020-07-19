@@ -377,8 +377,8 @@ void hermitian_spreads_classify::compute(int depth, int verbose_level)
 	os_interface Os;
 
 
-	Control->f_max_depth = TRUE;
-	Control->max_depth = depth;
+	Control->f_depth = TRUE;
+	Control->depth = depth;
 
 
 

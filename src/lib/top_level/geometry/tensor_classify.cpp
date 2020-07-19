@@ -200,8 +200,8 @@ void tensor_classify::classify_poset(int depth,
 	Poset->print_function = wreath_product_print_set;
 	Poset->print_function_data = this;
 
-	Control->f_max_depth = TRUE;
-	Control->max_depth = depth;
+	Control->f_depth = TRUE;
+	Control->depth = depth;
 
 	if (f_v) {
 		cout << "tensor_classify::classify_poset before "

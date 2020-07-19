@@ -322,8 +322,8 @@ public:
 	int extend_r, extend_m;
 	char extend_fname[1000];
 
-	int f_max_depth;
-	int max_depth;
+	int f_depth;
+	int depth;
 
 
 	int f_draw_poset;
