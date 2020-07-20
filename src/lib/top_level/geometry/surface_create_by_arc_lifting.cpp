@@ -116,7 +116,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 	file_io Fio;
 
 	sprintf(magma_fname, "surface_q%d_iso%d_group.magma", SCA->Surf_A->F->q, SCA->nb_surfaces);
-	AL->Aut_gens->export_permutation_group_to_magma(
+	AL->Trihedral_pair->Aut_gens->export_permutation_group_to_magma(
 			magma_fname, verbose_level - 2);
 
 	if (f_v) {
@@ -126,7 +126,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 
 	longinteger_object go;
 
-	AL->Aut_gens->group_order(go);
+	AL->Trihedral_pair->Aut_gens->group_order(go);
 
 
 
@@ -141,7 +141,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 
 	SOA->init(SCA->Surf_A,
 		AL->Web->Lines27, AL->the_equation,
-		AL->Aut_gens,
+		AL->Trihedral_pair->Aut_gens,
 		FALSE /* f_find_double_six_and_rearrange_lines */,
 		FALSE, NULL,
 		verbose_level);
@@ -154,7 +154,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 
 
 	longinteger_object ago;
-	AL->Aut_gens->group_order(ago);
+	AL->Trihedral_pair->Aut_gens->group_order(ago);
 	cout << "The automorphism group of the surface has order "
 			<< ago << "\\\\" << endl;
 
@@ -163,7 +163,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 
 
 	SOA->SO->identify_lines(
-			AL->nine_lines, 9,
+			AL->Trihedral_pair->nine_lines, 9,
 			nine_lines_idx,
 			FALSE /* verbose_level */);
 
@@ -263,8 +263,8 @@ void surface_create_by_arc_lifting::report(std::ostream &ost, int verbose_level)
 				"before Surf->print_equation_in_trihedral_form" << endl;
 	}
 	SCA->Surf_A->Surf->print_equation_in_trihedral_form(ost,
-			AL->The_six_plane_equations,
-			AL->lambda,
+			AL->Trihedral_pair->The_six_plane_equations,
+			AL->Trihedral_pair->lambda,
 			AL->the_equation);
 	//Surf->print_equation_in_trihedral_form(fp,
 	//AL->the_equation, AL->t_idx0, lambda);
@@ -307,9 +307,9 @@ void surface_create_by_arc_lifting::report(std::ostream &ost, int verbose_level)
 	AL->report(ost, verbose_level);
 
 
-
 	longinteger_object ago;
-	AL->Aut_gens->group_order(ago);
+	AL->Trihedral_pair->Aut_gens->group_order(ago);
+#if 0
 	ost << "The automorphism group of the surface has order "
 			<< ago << "\\\\" << endl;
 	ost << "The automorphism group is the following group\\\\" << endl;
@@ -317,7 +317,8 @@ void surface_create_by_arc_lifting::report(std::ostream &ost, int verbose_level)
 		cout << "surface_with_action::arc_lifting_and_classify "
 				"before Aut_gens->print_generators_tex" << endl;
 	}
-	AL->Aut_gens->print_generators_tex(ost);
+	AL->Trihedral_pair->Aut_gens->print_generators_tex(ost);
+#endif
 
 	if (f_v) {
 		cout << "surface_create_by_arc_lifting::report "
@@ -333,7 +334,7 @@ void surface_create_by_arc_lifting::report(std::ostream &ost, int verbose_level)
 	ost << "The nine lines in the selected trihedral pair are:" << endl;
 
 	SOA->SO->print_nine_lines_latex(ost,
-			AL->nine_lines,
+			AL->Trihedral_pair->nine_lines,
 			nine_lines_idx);
 
 	//SOA->SO->latex_table_of_trihedral_pairs_and_clebsch_system(

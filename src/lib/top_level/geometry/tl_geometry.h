@@ -290,42 +290,7 @@ public:
 	web_of_cubic_curves *Web;
 
 
-
-	int The_six_plane_equations[6 * 4]; // [6 * 4]
-	int *The_surface_equations; // [(q + 1) * 20]
-	long int plane6_by_dual_ranks[6];
-	int lambda, lambda_rk;
-	int t_idx;
-
-	strong_generators *stab_gens_trihedral_pair; // stabilizer of trihedral pair
-	strong_generators *gens_subgroup;
-	longinteger_object stabilizer_of_trihedral_pair_go;
-	action *A_on_equations;
-	schreier *Orb;
-	longinteger_object stab_order;
-	int trihedral_pair_orbit_index;
-	vector_ge *cosets;
-
-	vector_ge *coset_reps;
-	long int nine_lines[9];
-	int *aut_T_index;
-	int *aut_coset_index;
-	strong_generators *Aut_gens;
-
-
-	int F_plane[3 * 4];
-	int G_plane[3 * 4];
-	int *System; // [3 * 4 * 3]
-	//int nine_lines[9];
-
-	int *transporter0;
-	int *transporter;
-	int *Elt1;
-	int *Elt2;
-	int *Elt3;
-	int *Elt4;
-	int *Elt5;
-
+	trihedral_pair_with_action *Trihedral_pair;
 
 	arc_lifting();
 	~arc_lifting();
@@ -334,35 +299,7 @@ public:
 	void create_surface_and_group(surface_with_action *Surf_A, long int *Arc6,
 		int verbose_level);
 	void create_web_of_cubic_curves(int verbose_level);
-	void loop_over_trihedral_pairs(vector_ge *cosets, 
-		vector_ge *&coset_reps, 
-		int *&aut_T_index, int *&aut_coset_index, int verbose_level);
-	void create_the_six_plane_equations(int t_idx, 
-		int verbose_level);
-	void create_surface_from_trihedral_pair_and_arc(
-		int t_idx,
-		//int *The_six_plane_equations, int *The_surface_equations,
-		//int &lambda, int &lambda_rk,
-		int verbose_level);
-		// plane6[6]
-		// The_six_plane_equations[6 * 4]
-		// The_surface_equations[(q + 1) * 20]
-	strong_generators *create_stabilizer_of_trihedral_pair(
-			//long int *planes6,
-			int &trihedral_pair_orbit_index, int verbose_level);
-	void create_action_on_equations_and_compute_orbits(
-		int *The_surface_equations, 
-		strong_generators *gens_for_stabilizer_of_trihedral_pair, 
-		action *&A_on_equations, schreier *&Orb, 
-		int verbose_level);
-	void create_clebsch_system(//int *The_six_plane_equations,
-			//int lambda,
-			int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
-	void print_FG(std::ostream &ost);
-	void print_equations();
-	void print_isomorphism_types_of_trihedral_pairs(std::ostream &ost,
-		vector_ge *cosets);
 };
 
 // #############################################################################
@@ -3610,6 +3547,103 @@ int translation_plane_via_andre_model_check_arc(int len, long int *S,
 	void *data, int verbose_level);
 int translation_plane_via_andre_model_check_subplane(int len, long int *S,
 	void *data, int verbose_level);
+
+
+// #############################################################################
+// trihedral_pair_with_action.cpp
+// #############################################################################
+
+//! a trihedral pair and its stabilizer
+
+
+class trihedral_pair_with_action {
+
+public:
+
+	arc_lifting *AL;
+
+	int The_six_plane_equations[6 * 4]; // [6 * 4]
+	int *The_surface_equations; // [(q + 1) * 20]
+	long int plane6_by_dual_ranks[6];
+	int lambda, lambda_rk;
+	int t_idx;
+
+	strong_generators *stab_gens_trihedral_pair; // stabilizer of trihedral pair
+	strong_generators *gens_subgroup;
+	longinteger_object stabilizer_of_trihedral_pair_go;
+	action *A_on_equations;
+	schreier *Orb;
+	longinteger_object stab_order;
+	int trihedral_pair_orbit_index;
+	vector_ge *cosets;
+
+	vector_ge *coset_reps;
+	long int nine_lines[9];
+	int *aut_T_index;
+	int *aut_coset_index;
+	strong_generators *Aut_gens;
+
+
+	int F_plane[3 * 4];
+	int G_plane[3 * 4];
+	int *System; // [3 * 4 * 3]
+	//int nine_lines[9];
+
+	int Iso_type_as_double_triplet[120];
+	classify *Double_triplet_type_distribution;
+	set_of_sets *Double_triplet_types;
+	int *Double_triplet_type_values;
+	int nb_double_triplet_types;
+
+	int *transporter0;
+	int *transporter;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+	int *Elt4;
+	int *Elt5;
+
+
+	trihedral_pair_with_action();
+	~trihedral_pair_with_action();
+	void init(arc_lifting *AL, int verbose_level);
+	void loop_over_trihedral_pairs(vector_ge *cosets,
+		vector_ge *&coset_reps,
+		int *&aut_T_index, int *&aut_coset_index, int verbose_level);
+	void create_the_six_plane_equations(int t_idx,
+		int verbose_level);
+	void create_surface_from_trihedral_pair_and_arc(
+		int t_idx,
+		//int *The_six_plane_equations, int *The_surface_equations,
+		//int &lambda, int &lambda_rk,
+		int verbose_level);
+		// plane6[6]
+		// The_six_plane_equations[6 * 4]
+		// The_surface_equations[(q + 1) * 20]
+	strong_generators *create_stabilizer_of_trihedral_pair(
+			//long int *planes6,
+			int &trihedral_pair_orbit_index, int verbose_level);
+	void create_action_on_equations_and_compute_orbits(
+		int *The_surface_equations,
+		strong_generators *gens_for_stabilizer_of_trihedral_pair,
+		action *&A_on_equations, schreier *&Orb,
+		int verbose_level);
+	void create_clebsch_system(//int *The_six_plane_equations,
+			//int lambda,
+			int verbose_level);
+	void compute_iso_types_as_double_triplets(int verbose_level);
+	void print_FG(std::ostream &ost);
+	void print_equations();
+	void print_isomorphism_types_of_trihedral_pairs(std::ostream &ost,
+		vector_ge *cosets);
+	void report(std::ostream &ost, int verbose_level);
+	void report_iso_type_as_double_triplets(std::ostream &ost);
+
+};
+
+
+
+
 
 }}
 

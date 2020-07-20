@@ -56,7 +56,8 @@ MODULES = \
 	surface_with_action.o \
 	surfaces_arc_lifting.o \
 	tensor_classify.o \
-	translation_plane_via_andre_model.o
+	translation_plane_via_andre_model.o \
+	trihedral_pair_with_action.o
 
 
 all : $(MODULES)

@@ -3182,11 +3182,11 @@ void file_io::create_files_list_of_cases(spreadsheet *S,
 				if (Descr->f_tasks) {
 					char str[1000];
 					int t;
-					int NT;
+					//int NT;
 
 					sprintf(str, Descr->tasks_line, Descr->nb_tasks);
 					fp << str << endl;
-					NT = Descr->N * Descr->nb_tasks;
+					//NT = Descr->N * Descr->nb_tasks;
 					for (t = 0; t < Descr->nb_tasks; t++) {
 						sprintf(str, Descr->command, i, t, i, t);
 						fp << str; // << " \\" << endl;
@@ -3198,9 +3198,9 @@ void file_io::create_files_list_of_cases(spreadsheet *S,
 								continue;
 							}
 							char *entry;
-							int case_number;
+							//int case_number;
 
-							case_number = S->get_int(j + 1, Descr->read_cases_column_of_case);
+							//case_number = S->get_int(j + 1, Descr->read_cases_column_of_case);
 							entry = S->get_string(j + 1, Descr->read_cases_column_of_fname);
 							fp << /* case_number << " " <<*/ entry;
 
@@ -3260,7 +3260,7 @@ void file_io::create_files_list_of_cases(spreadsheet *S,
 
 	const char *mask_submit_script_piecewise = "submit_jobs_%d.sh";
 	char fname_submit_piecewise[1000];
-	char cmd[1000];
+	char cmd[2000];
 	int h;
 	int N1 = 128;
 

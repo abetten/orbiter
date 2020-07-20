@@ -87,7 +87,7 @@ void prepare_frames::do_the_work(int verbose_level)
 	int i, j, h, u;
 	char input_fname[1000];
 	char output_fname[1000];
-	char cmd[1000];
+	char cmd[3000];
 
 	if (f_v) {
 		cout << "prepare_frames::do_the_work" << endl;
