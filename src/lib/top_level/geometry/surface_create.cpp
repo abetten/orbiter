@@ -397,10 +397,10 @@ void surface_create::init2(int verbose_level)
 
 		AL->Web->print_Eckardt_point_data(cout, verbose_level);
 
-		int_vec_copy(AL->The_surface_equations
-				+ AL->lambda_rk * 20, coeffs, 20);
+		int_vec_copy(AL->Trihedral_pair->The_surface_equations
+				+ AL->Trihedral_pair->lambda_rk * 20, coeffs, 20);
 
-		Sg = AL->Aut_gens->create_copy();
+		Sg = AL->Trihedral_pair->Aut_gens->create_copy();
 		f_has_group = TRUE;
 		f_has_lines = FALSE;
 		sprintf(prefix, "arc_q%d", F->q);

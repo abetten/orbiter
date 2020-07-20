@@ -383,6 +383,7 @@ MODULES= \
 		top_level/geometry/surfaces_arc_lifting.o \
 		top_level/geometry/tensor_classify.o \
 		top_level/geometry/translation_plane_via_andre_model.o \
+		top_level/geometry/trihedral_pair_with_action.o \
 		top_level/isomorph/isomorph.o \
 		top_level/isomorph/isomorph_arguments.o \
 		top_level/isomorph/isomorph_database.o \

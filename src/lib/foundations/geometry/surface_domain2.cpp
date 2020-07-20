@@ -1843,8 +1843,7 @@ void surface_domain::compute_nine_lines_by_dual_point_ranks(
 	int Basis[16];
 
 	if (f_v) {
-		cout << "surface_domain::compute_nine_lines_by_dual_"
-				"point_ranks" << endl;
+		cout << "surface_domain::compute_nine_lines_by_dual_point_ranks" << endl;
 	}
 	for (i = 0; i < 3; i++) {
 		P->unrank_point(F_planes + i * 4, F_planes_rank[i]);
@@ -1868,8 +1867,7 @@ void surface_domain::compute_nine_lines_by_dual_point_ranks(
 		cout << endl;
 	}
 	if (f_v) {
-		cout << "surface_domain::compute_nine_lines_by_dual_"
-				"point_ranks done" << endl;
+		cout << "surface_domain::compute_nine_lines_by_dual_point_ranks done" << endl;
 	}
 }
 
