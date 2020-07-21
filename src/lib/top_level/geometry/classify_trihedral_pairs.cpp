@@ -169,7 +169,7 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 		//"", /* const char *prefix, */
 		Control1,
 		Poset1,
-		0 /*verbose_level*/);
+		verbose_level - 1);
 
 	if (f_v) {
 		cout << "classify_trihedral_pairs::classify_orbits_on_trihedra "
@@ -200,7 +200,7 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 		//"", /* const char *prefix, */
 		Control2,
 		Poset2,
-		0 /*verbose_level*/);
+		verbose_level - 1);
 
 	if (f_v) {
 		cout << "classify_trihedral_pairs::classify_orbits_on_trihedra "
@@ -215,29 +215,56 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 	}
 }
 
+void classify_trihedral_pairs::report_summary(ostream &ost)
+{
+	cout << "classify_trihedral_pairs::report "
+			"before list_orbits_on_trihedra_type1" << endl;
+	list_orbits_on_trihedra_type1(ost, FALSE);
+
+	cout << "classify_trihedral_pairs::report "
+			"before list_orbits_on_trihedra_type2" << endl;
+	list_orbits_on_trihedra_type2(ost, FALSE);
+
+	cout << "classify_trihedral_pairs::report "
+			"before print_trihedral_pairs no stabs" << endl;
+
+	ost << "\\subsection*{Classification of Double Triplets in $\\PG(3," << q << ")$}" << endl;
+	print_trihedral_pairs_summary(ost);
+
+
+#if 0
+	cout << "classify_trihedral_pairs::report "
+			"before print_trihedral_pairs with stabs" << endl;
+	print_trihedral_pairs(ost,
+			TRUE /* f_with_stabilizers */);
+#endif
+}
+
 
 void classify_trihedral_pairs::report(ostream &ost)
 {
 	cout << "classify_trihedral_pairs::report "
 			"before list_orbits_on_trihedra_type1" << endl;
-	list_orbits_on_trihedra_type1(ost);
+	list_orbits_on_trihedra_type1(ost, TRUE);
 
 	cout << "classify_trihedral_pairs::report "
 			"before list_orbits_on_trihedra_type2" << endl;
-	list_orbits_on_trihedra_type2(ost);
+	list_orbits_on_trihedra_type2(ost, TRUE);
 
 	cout << "classify_trihedral_pairs::report "
 			"before print_trihedral_pairs no stabs" << endl;
 	print_trihedral_pairs(ost,
 			FALSE /* f_with_stabilizers */);
 
+#if 0
 	cout << "classify_trihedral_pairs::report "
 			"before print_trihedral_pairs with stabs" << endl;
 	print_trihedral_pairs(ost,
 			TRUE /* f_with_stabilizers */);
+#endif
 }
 
-void classify_trihedral_pairs::list_orbits_on_trihedra_type1(ostream &ost)
+void classify_trihedral_pairs::list_orbits_on_trihedra_type1(ostream &ost, int f_detailed)
 {
 	int i, l;
 
@@ -270,33 +297,36 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type1(ostream &ost)
 		<< l 
 		<< " orbits on double triplets of type 1 in "
 				"$\\PG(3," << q << ").$" << endl << endl;
-	for (i = 0; i < l; i++) {
-		set_and_stabilizer *R;
 
-		R = orbits_on_trihedra_type1->get_set_and_stabilizer(
-				3 /* level */,
-				i /* orbit_at_level */,
-				0 /* verbose_level */);
-		orbits_on_trihedra_type1->orbit_length(
-				i /* node */,
-				3 /* level */,
-				ol);
-		D.add_in_place(Ol, ol);
-		
-		ost << "$" << i << " / " << l << "$ $" << endl;
-		R->print_set_tex(ost);
-		ost << "$ orbit length $";
-		ol.print_not_scientific(ost);
-		ost << "$\\\\" << endl;
+	if (f_detailed) {
+		for (i = 0; i < l; i++) {
+			set_and_stabilizer *R;
 
-		FREE_OBJECT(R);
+			R = orbits_on_trihedra_type1->get_set_and_stabilizer(
+					3 /* level */,
+					i /* orbit_at_level */,
+					0 /* verbose_level */);
+			orbits_on_trihedra_type1->orbit_length(
+					i /* node */,
+					3 /* level */,
+					ol);
+			D.add_in_place(Ol, ol);
+
+			ost << "$" << i << " / " << l << "$ $" << endl;
+			R->print_set_tex(ost);
+			ost << "$ orbit length $";
+			ol.print_not_scientific(ost);
+			ost << "$\\\\" << endl;
+
+			FREE_OBJECT(R);
+		}
+
+		ost << "The overall number of double triplets of type 1 "
+				"in $\\PG(3," << q << ")$ is: " << Ol << "\\\\" << endl;
 	}
-
-	ost << "The overall number of double triplets of type 1 "
-			"in $\\PG(3," << q << ")$ is: " << Ol << "\\\\" << endl;
 }
 
-void classify_trihedral_pairs::list_orbits_on_trihedra_type2(ostream &ost)
+void classify_trihedral_pairs::list_orbits_on_trihedra_type2(ostream &ost, int f_detailed)
 {
 	int i, l;
 
@@ -329,30 +359,34 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type2(ostream &ost)
 		<< l 
 		<< " orbits on double triplets of type 2 "
 				"in $\\PG(3," << q << ").$" << endl << endl;
-	for (i = 0; i < l; i++) {
-		set_and_stabilizer *R;
 
-		R = orbits_on_trihedra_type2->get_set_and_stabilizer(
-				3 /* level */,
-				i /* orbit_at_level */,
-				0 /* verbose_level */);
-		orbits_on_trihedra_type2->orbit_length(
-				i /* node */,
-				3 /* level */,
-				ol);
-		D.add_in_place(Ol, ol);
-		
-		ost << "$" << i << " / " << l << "$ $" << endl;
-		R->print_set_tex(ost);
-		ost << "$ orbit length $";
-		ol.print_not_scientific(ost);
-		ost << "$\\\\" << endl;
 
-		FREE_OBJECT(R);
+	if (f_detailed) {
+		for (i = 0; i < l; i++) {
+			set_and_stabilizer *R;
+
+			R = orbits_on_trihedra_type2->get_set_and_stabilizer(
+					3 /* level */,
+					i /* orbit_at_level */,
+					0 /* verbose_level */);
+			orbits_on_trihedra_type2->orbit_length(
+					i /* node */,
+					3 /* level */,
+					ol);
+			D.add_in_place(Ol, ol);
+
+			ost << "$" << i << " / " << l << "$ $" << endl;
+			R->print_set_tex(ost);
+			ost << "$ orbit length $";
+			ol.print_not_scientific(ost);
+			ost << "$\\\\" << endl;
+
+			FREE_OBJECT(R);
+		}
+
+		ost << "The overall number of double triplets of type 2 "
+				"in $\\PG(3," << q << ")$ is: " << Ol << "\\\\" << endl;
 	}
-
-	ost << "The overall number of double triplets of type 2 "
-			"in $\\PG(3," << q << ")$ is: " << Ol << "\\\\" << endl;
 }
 
 void classify_trihedral_pairs::early_test_func_type1(
@@ -1087,6 +1121,11 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 	}
 }
 
+void classify_trihedral_pairs::print_trihedral_pairs_summary(ostream &ost)
+{
+	Trihedral_pairs->print_summary(ost);
+}
+
 void classify_trihedral_pairs::print_trihedral_pairs(ostream &ost, 
 	int f_with_stabilizers)
 {
@@ -1094,7 +1133,6 @@ void classify_trihedral_pairs::print_trihedral_pairs(ostream &ost,
 		"Classification of Double Triplets", f_with_stabilizers,
 		FALSE, NULL, NULL);
 }
-
 
 strong_generators
 *classify_trihedral_pairs::identify_trihedral_pair_and_get_stabilizer(

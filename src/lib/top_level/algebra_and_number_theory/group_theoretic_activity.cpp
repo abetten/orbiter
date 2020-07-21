@@ -2625,7 +2625,7 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_p
 		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs "
 				"before Surf_A->Classify_trihedral_pairs->classify" << endl;
 	}
-	Surf_A->Classify_trihedral_pairs->classify(Control1, Control2, 0 /*verbose_level*/);
+	Surf_A->Classify_trihedral_pairs->classify(Control1, Control2, verbose_level);
 	if (f_v) {
 		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs "
 				"after Surf_A->Classify_trihedral_pairs->classify" << endl;

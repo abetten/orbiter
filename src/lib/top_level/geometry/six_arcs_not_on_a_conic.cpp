@@ -273,6 +273,69 @@ void six_arcs_not_on_a_conic::report_latex(ostream &ost)
 			"in $\\PG(2," << Descr->F->q << ")$ is: " << Ol << "\\\\" << endl;
 }
 
+void six_arcs_not_on_a_conic::report_specific_arc_basic(ostream &ost, int arc_idx)
+{
+	set_and_stabilizer *The_arc;
+	longinteger_object go;
+
+	The_arc = Gen->gen->get_set_and_stabilizer(
+			6 /* level */,
+			Not_on_conic_idx[arc_idx],
+			0 /* verbose_level */);
+
+	The_arc->Strong_gens->group_order(go);
+
+	ost << "Arc " << arc_idx << " / " << nb_arcs_not_on_conic << " is: ";
+	ost << "$$" << endl;
+	//int_vec_print(fp, Arc6, 6);
+	//ost << "\{";
+	The_arc->print_set_tex(ost);
+	//ost << "\}_{" << go << "}";
+	ost << "$$" << endl;
+
+	//P2->F->display_table_of_projective_points(ost, The_arc->data, 6, 3);
+
+
+	//ost << "The arc-stabilizer is the following group:\\\\" << endl;
+	//The_arc->Strong_gens->print_generators_tex(ost);
+
+	FREE_OBJECT(The_arc);
+
+
+}
+
+void six_arcs_not_on_a_conic::report_specific_arc(ostream &ost, int arc_idx)
+{
+	set_and_stabilizer *The_arc;
+	longinteger_object go;
+
+	The_arc = Gen->gen->get_set_and_stabilizer(
+			6 /* level */,
+			Not_on_conic_idx[arc_idx],
+			0 /* verbose_level */);
+
+	The_arc->Strong_gens->group_order(go);
+
+	ost << "Arc " << arc_idx << " / " << nb_arcs_not_on_conic << " is: ";
+	ost << "$$" << endl;
+	//int_vec_print(fp, Arc6, 6);
+	//ost << "\{";
+	The_arc->print_set_tex(ost);
+	//ost << "\}_{" << go << "}";
+	ost << "$$" << endl;
+
+	P2->F->display_table_of_projective_points(ost, The_arc->data, 6, 3);
+
+
+	//ost << "The arc-stabilizer is the following group:\\\\" << endl;
+	//The_arc->Strong_gens->print_generators_tex(ost);
+
+	FREE_OBJECT(The_arc);
+
+
+}
+
+
 }}
 
 

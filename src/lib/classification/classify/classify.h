@@ -48,6 +48,7 @@ public:
 	set_and_stabilizer *get_set_and_stabilizer(int orbit_index,
 			int verbose_level);
 	void print_group_orders();
+	void print_summary(std::ostream &ost);
 	void print_latex(std::ostream &ost,
 		const char *title, int f_print_stabilizer_gens,
 		int f_has_print_function,

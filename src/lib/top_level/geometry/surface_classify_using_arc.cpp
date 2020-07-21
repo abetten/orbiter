@@ -287,17 +287,31 @@ void surface_classify_using_arc::report(int verbose_level)
 
 
 
-		fp << "\\section*{Basics}" << endl << endl;
+		report_decomposition_matrix(fp, verbose_level);
 
-		if (f_v) {
-			cout << "surface_classify_using_arc::report before Surf_A->report_basics_and_trihedral_pair" << endl;
+
+		int surface_idx;
+
+		for (surface_idx = 0;
+				surface_idx < nb_surfaces;
+				surface_idx++) {
+
+
+
+			fp << "Surface $" << surface_idx << "$ is associated with the following arcs: $";
+			int_vec_print(fp,
+				Arc_identify + surface_idx * Six_arcs->nb_arcs_not_on_conic,
+				Arc_identify_nb[surface_idx]);
+			fp << "$\\\\" << endl;
+
+
+
 		}
-		if (f_v) {
-			Surf_A->report_basics_and_trihedral_pair(fp);
-		}
-		if (f_v) {
-			cout << "surface_classify_using_arc::report after Surf_A->report_basics_and_trihedral_pair" << endl;
-		}
+
+
+		//fp << "\\clearpage" << endl << endl;
+
+
 
 		fp << "\\section*{Six-Arcs}" << endl << endl;
 
@@ -326,11 +340,25 @@ void surface_classify_using_arc::report(int verbose_level)
 		}
 
 
-		fp << "\\section*{List of Surfaces}" << endl << endl;
+		fp << "\\section*{Double Triplets}" << endl << endl;
+
+		if (f_v) {
+			cout << "surface_classify_using_arc::report before Surf_A->report_double_triplets" << endl;
+		}
+		if (f_v) {
+			Surf_A->report_double_triplets(fp);
+		}
+		if (f_v) {
+			cout << "surface_classify_using_arc::report after Surf_A->report_double_triplets" << endl;
+		}
 
 
 
-		int surface_idx;
+
+		fp << "\\section*{Summary of Surfaces}" << endl << endl;
+
+
+
 
 		for (surface_idx = 0;
 				surface_idx < nb_surfaces;
@@ -338,7 +366,43 @@ void surface_classify_using_arc::report(int verbose_level)
 
 
 
-			fp << "\\section*{Surface $" << surface_idx << "$ of " << nb_surfaces << "}" << endl << endl;
+			fp << "\\subsection*{Surface $" << surface_idx << "$ of " << nb_surfaces << "}" << endl << endl;
+
+
+			if (f_v) {
+				cout << "surface_classify_using_arc::report before SCAL[" << surface_idx << "].report_summary" << endl;
+			}
+			SCAL[surface_idx].report_summary(fp, verbose_level);
+			if (f_v) {
+				cout << "surface_classify_using_arc::report after SCAL[" << surface_idx << "].report_summary" << endl;
+			}
+
+
+			fp << "The following " << Arc_identify_nb[surface_idx]
+				<< " arcs are involved with surface " <<   nb_surfaces << ": $";
+			int_vec_print(fp,
+				Arc_identify + surface_idx * Six_arcs->nb_arcs_not_on_conic,
+				Arc_identify_nb[surface_idx]);
+			fp << "$\\\\" << endl;
+
+
+
+		}
+
+
+
+		fp << "\\section*{List of Surfaces}" << endl << endl;
+
+
+
+
+		for (surface_idx = 0;
+				surface_idx < nb_surfaces;
+				surface_idx++) {
+
+
+
+			fp << "\\subsection*{Surface $" << surface_idx << "$ of " << nb_surfaces << "}" << endl << endl;
 
 
 			if (f_v) {
@@ -362,35 +426,29 @@ void surface_classify_using_arc::report(int verbose_level)
 		}
 
 
-		fp << "\\section*{Decomposition Matrix Arcs vs Surfaces}" << endl << endl;
+		fp << "\\section*{Double Triplets: Details}" << endl << endl;
+		if (f_v) {
+			cout << "surface_classify_using_arc::report before Surf_A->report_double_triplets_detailed" << endl;
+		}
+		if (f_v) {
+			Surf_A->report_double_triplets_detailed(fp);
+		}
+		if (f_v) {
+			cout << "surface_classify_using_arc::report after Surf_A->report_double_triplets_detailed" << endl;
+		}
 
 
+		fp << "\\section*{Basics}" << endl << endl;
 
-		cout << "surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pairs "
-				"decomposition matrix:" << endl;
-		cout << "$$" << endl;
-		L.print_integer_matrix_with_standard_labels(cout, Decomp,
-				Six_arcs->nb_arcs_not_on_conic, nb_surfaces,
-				TRUE /* f_tex */);
-		cout << "$$" << endl;
-
-		fp << "Decomposition matrix:" << endl;
-		//fp << "$$" << endl;
-		//print_integer_matrix_with_standard_labels(fp, Decomp,
-		//nb_arcs_not_on_conic, nb_surfaces, TRUE /* f_tex */);
-		L.print_integer_matrix_tex_block_by_block(fp, Decomp,
-				Six_arcs->nb_arcs_not_on_conic, nb_surfaces, 25);
-		//fp << "$$" << endl;
-
-		file_io Fio;
-		char fname_decomposition[1000];
-
-		sprintf(fname_decomposition, "surfaces_q%d_decomposition_matrix.csv", F->q);
-
-		Fio.int_matrix_write_csv(fname_decomposition, Decomp,
-				Six_arcs->nb_arcs_not_on_conic, nb_surfaces);
-		cout << "Written file " << fname_decomposition << " of size "
-				<< Fio.file_size(fname_decomposition) << endl;
+		if (f_v) {
+			cout << "surface_classify_using_arc::report before Surf_A->report_basics_and_trihedral_pair" << endl;
+		}
+		if (f_v) {
+			Surf_A->report_basics(fp);
+		}
+		if (f_v) {
+			cout << "surface_classify_using_arc::report after Surf_A->report_basics_and_trihedral_pair" << endl;
+		}
 
 
 		L.foot(fp);
@@ -410,6 +468,50 @@ void surface_classify_using_arc::report(int verbose_level)
 
 
 
+void surface_classify_using_arc::report_decomposition_matrix(ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	latex_interface L;
+
+	if (f_v) {
+		cout << "surface_classify_using_arc::report_decomposition_matrix" << endl;
+	}
+
+	ost << "\\section*{Decomposition Matrix Arcs vs Surfaces}" << endl << endl;
+
+
+
+	cout << "surface_classify_using_arc::report_decomposition_matrix "
+			"decomposition matrix:" << endl;
+	cout << "$$" << endl;
+	L.print_integer_matrix_with_standard_labels(cout, Decomp,
+			Six_arcs->nb_arcs_not_on_conic, nb_surfaces,
+			TRUE /* f_tex */);
+	cout << "$$" << endl;
+
+	ost << "Decomposition matrix:" << endl;
+	//fp << "$$" << endl;
+	//print_integer_matrix_with_standard_labels(fp, Decomp,
+	//nb_arcs_not_on_conic, nb_surfaces, TRUE /* f_tex */);
+	L.print_integer_matrix_tex_block_by_block(ost, Decomp,
+			Six_arcs->nb_arcs_not_on_conic, nb_surfaces, 25);
+	//fp << "$$" << endl;
+
+	file_io Fio;
+	char fname_decomposition[1000];
+
+	sprintf(fname_decomposition, "surfaces_q%d_decomposition_matrix.csv", Surf_A->F->q);
+
+	Fio.int_matrix_write_csv(fname_decomposition, Decomp,
+			Six_arcs->nb_arcs_not_on_conic, nb_surfaces);
+	cout << "Written file " << fname_decomposition << " of size "
+			<< Fio.file_size(fname_decomposition) << endl;
+
+	if (f_v) {
+		cout << "surface_classify_using_arc::report_decomposition_matrix done" << endl;
+	}
+
+}
 
 }}
 

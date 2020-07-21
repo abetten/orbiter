@@ -46,7 +46,7 @@ void poset_classification::compute_orbits_on_subsets(
 
 	if (f_v) {
 		cout << "poset_classification::compute_orbits_on_subsets "
-				"calling gen->init" << endl;
+				"calling initialize_and_allocate_root_node" << endl;
 	}
 	initialize_and_allocate_root_node(PC_control,
 		Poset,
@@ -56,11 +56,19 @@ void poset_classification::compute_orbits_on_subsets(
 	//init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
 	//init_root_node(verbose_level - 1);
 
+	if (f_v) {
+		cout << "poset_classification::compute_orbits_on_subsets "
+				"calling main" << endl;
+	}
 	main(t0,
 		schreier_depth,
 		f_use_invariant_subset_if_available,
 		f_debug,
-		verbose_level - 1);
+		verbose_level);
+	if (f_v) {
+		cout << "poset_classification::compute_orbits_on_subsets "
+				"after main" << endl;
+	}
 
 	int i, fst, len;
 

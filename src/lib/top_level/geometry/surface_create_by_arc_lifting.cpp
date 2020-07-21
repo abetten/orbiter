@@ -249,34 +249,96 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 
 }
 
-void surface_create_by_arc_lifting::report(std::ostream &ost, int verbose_level)
+void surface_create_by_arc_lifting::report_summary(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "surface_create_by_arc_lifting::report_summary" << endl;
+	}
 
 
+
+	longinteger_object ago;
+	AL->Trihedral_pair->Aut_gens->group_order(ago);
 
 	ost << "The equation of the surface is" << endl;
 
 	if (f_v) {
-		cout << "surface_create_by_arc_lifting::report "
-				"before Surf->print_equation_in_trihedral_form" << endl;
+		cout << "surface_create_by_arc_lifting::report_summary "
+				"before AL->report_equation" << endl;
 	}
-	SCA->Surf_A->Surf->print_equation_in_trihedral_form(ost,
-			AL->Trihedral_pair->The_six_plane_equations,
-			AL->Trihedral_pair->lambda,
-			AL->the_equation);
-	//Surf->print_equation_in_trihedral_form(fp,
-	//AL->the_equation, AL->t_idx0, lambda);
+	AL->report_equation(ost);
 	if (f_v) {
-		cout << "surface_create_by_arc_lifting::report "
-				"after Surf->print_equation_in_trihedral_form" << endl;
+		cout << "surface_create_by_arc_lifting::report_summary "
+				"after AL->report_equation" << endl;
 	}
 
 
 	ost << "Extension of arc " << arc_idx
 			<< " / " << SCA->Six_arcs->nb_arcs_not_on_conic << ":" << endl;
 
+
+	SCA->Six_arcs->report_specific_arc_basic(ost, arc_idx);
+
+	ost << "arc " << arc_idx << " yields a surface with "
+		<< AL->Web->E->nb_E << " Eckardt points and a "
+				"stabilizer of order " << ago << " with "
+		<< SOA->Orbits_on_single_sixes->nb_orbits
+		<< " orbits on single sixes\\\\" << endl;
+
+
+	if (f_v) {
+		cout << "surface_create_by_arc_lifting::report_summary "
+				"before SOA->SO->print_Eckardt_points" << endl;
+	}
+	SOA->SO->print_Eckardt_points(ost);
+	if (f_v) {
+		cout << "surface_create_by_arc_lifting::report_summary "
+				"after SOA->SO->print_Eckardt_points" << endl;
+	}
+
+
+}
+
+void surface_create_by_arc_lifting::report(std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create_by_arc_lifting::report" << endl;
+	}
+
+
+	longinteger_object ago;
+	AL->Trihedral_pair->Aut_gens->group_order(ago);
+
+	ost << "The equation of the surface is" << endl;
+
+	if (f_v) {
+		cout << "surface_create_by_arc_lifting::report "
+				"before AL->report_equation" << endl;
+	}
+	AL->report_equation(ost);
+	if (f_v) {
+		cout << "surface_create_by_arc_lifting::report "
+				"after AL->report_equation" << endl;
+	}
+
+
+	ost << "Extension of arc " << arc_idx
+			<< " / " << SCA->Six_arcs->nb_arcs_not_on_conic << ":" << endl;
+
+
+	SCA->Six_arcs->report_specific_arc(ost, arc_idx);
+
+	ost << "arc " << arc_idx << " yields a surface with "
+		<< AL->Web->E->nb_E << " Eckardt points and a "
+				"stabilizer of order " << ago << " with "
+		<< SOA->Orbits_on_single_sixes->nb_orbits
+		<< " orbits on single sixes\\\\" << endl;
+
+#if 0
 	{
 		set_and_stabilizer *The_arc;
 
@@ -297,28 +359,17 @@ void surface_create_by_arc_lifting::report(std::ostream &ost, int verbose_level)
 			The_arc->data, 6, 3);
 
 
-		ost << "The stabilizer is the following group:\\\\" << endl;
+		ost << "The arc-stabilizer is the following group:\\\\" << endl;
 		The_arc->Strong_gens->print_generators_tex(ost);
 
 		FREE_OBJECT(The_arc);
 	}
+#endif
 
 
 	AL->report(ost, verbose_level);
 
 
-	longinteger_object ago;
-	AL->Trihedral_pair->Aut_gens->group_order(ago);
-#if 0
-	ost << "The automorphism group of the surface has order "
-			<< ago << "\\\\" << endl;
-	ost << "The automorphism group is the following group\\\\" << endl;
-	if (f_v) {
-		cout << "surface_with_action::arc_lifting_and_classify "
-				"before Aut_gens->print_generators_tex" << endl;
-	}
-	AL->Trihedral_pair->Aut_gens->print_generators_tex(ost);
-#endif
 
 	if (f_v) {
 		cout << "surface_create_by_arc_lifting::report "
@@ -377,6 +428,10 @@ void surface_create_by_arc_lifting::report(std::ostream &ost, int verbose_level)
 
 	for (orbit_idx = 0; orbit_idx < SOA->Orbits_on_single_sixes->nb_orbits; orbit_idx++) {
 		Clebsch[orbit_idx].report(ost, verbose_level);
+	}
+
+	if (f_v) {
+		cout << "surface_create_by_arc_lifting::report done" << endl;
 	}
 }
 
