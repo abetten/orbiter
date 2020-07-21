@@ -232,7 +232,6 @@ void arc_lifting::create_web_of_cubic_curves(int verbose_level)
 void arc_lifting::report(ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i;
 
 	if (f_v) {
 		cout << "arc_lifting::report" << endl;
@@ -262,7 +261,13 @@ void arc_lifting::report(ostream &ost, int verbose_level)
 }
 
 
-
+void arc_lifting::report_equation(ostream &ost)
+{
+	Surf_A->Surf->print_equation_in_trihedral_form(ost,
+				Trihedral_pair->The_six_plane_equations,
+				Trihedral_pair->lambda,
+				the_equation);
+}
 
 
 

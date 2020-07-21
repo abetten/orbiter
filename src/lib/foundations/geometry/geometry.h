@@ -3172,6 +3172,11 @@ public:
 	void print_general(std::ostream &ost);
 	void print_affine_points_in_source_code(std::ostream &ost);
 	void print_points(std::ostream &ost);
+	void print_Eckardt_points(std::ostream &ost);
+	void print_double_points(std::ostream &ost);
+	void print_points_on_surface(std::ostream &ost);
+	void print_points_on_lines(std::ostream &ost);
+	void print_points_on_surface_but_not_on_a_line(std::ostream &ost);
 	void print_double_sixes(std::ostream &ost);
 	void print_half_double_sixes(std::ostream &ost);
 	void print_half_double_sixes_numerically(std::ostream &ost);

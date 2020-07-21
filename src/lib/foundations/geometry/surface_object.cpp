@@ -1809,39 +1809,40 @@ void surface_object::print_affine_points_in_source_code(ostream &ost)
 
 void surface_object::print_points(ostream &ost)
 {
+	ost << "\\subsection*{All Points on surface}" << endl;
+	print_points_on_surface(ost);
+
+	ost << "\\subsubsection*{Eckardt Points}" << endl;
+	print_Eckardt_points(ost);
+
+	ost << "\\subsubsection*{Double Points}" << endl;
+	print_double_points(ost);
+	
+	ost << "\\subsubsection*{Points on lines}" << endl;
+	print_points_on_lines(ost);
+
+	ost << "\\subsubsection*{Points on surface but on no line}" << endl;
+	print_points_on_surface_but_not_on_a_line(ost);
+
+#if 0
+	ost << "\\clearpage" << endl;
+	ost << "\\section*{Lines through points}" << endl;
+	lines_on_point->print_table_tex(ost);
+#endif
+}
+
+void surface_object::print_Eckardt_points(ostream &ost)
+{
 	latex_interface L;
 	int i, j, p, a, b, c;
 	int v[4];
 
 	//ost << "\\clearpage" << endl;
-	ost << "\\subsection*{Points on surface}" << endl;
-	ost << "\\subsubsection*{All Points}" << endl;
-	ost << "The surface has " << nb_pts << " points:\\\\" << endl;
-
-	if (nb_pts < 1000) {
-		ost << "$$" << endl;
-		L.lint_vec_print_as_matrix(ost, Pts, nb_pts, 10, TRUE /* f_tex */);
-		ost << "$$" << endl;
-		//ost << "\\clearpage" << endl;
-		ost << "The points on the surface are:\\\\" << endl;
-		ost << "\\begin{multicols}{2}" << endl;
-		ost << "\\noindent" << endl;
-		for (i = 0; i < nb_pts; i++) {
-			Surf->unrank_point(v, Pts[i]);
-			ost << i << " : $P_{" << i << "} = P_{" << Pts[i] << "}=";
-			int_vec_print_fully(ost, v, 4);
-			ost << "$\\\\" << endl;
-			}
-		ost << "\\end{multicols}" << endl;
-	}
-	else {
-		ost << "Too many to print.\\\\" << endl;
-	}
-
-	//ost << "\\clearpage" << endl;
-	ost << "\\subsubsection*{Eckardt Points}" << endl;
 	ost << "The surface has " << nb_Eckardt_points
 			<< " Eckardt points:\\\\" << endl;
+
+
+#if 0
 	ost << "$$" << endl;
 	L.lint_vec_print_as_matrix(ost,
 			Eckardt_points, nb_Eckardt_points, 10,
@@ -1881,11 +1882,12 @@ void surface_object::print_points(ostream &ost)
 		}
 	ost << "\\end{align*}" << endl;
 	//ost << "\\end{multicols}" << endl;
+#endif
 
 
 
-	ost << "%%\\clearpage" << endl;
-	ost << "The Eckardt points are:\\\\" << endl;
+	//ost << "%%\\clearpage" << endl;
+	//ost << "The Eckardt points are:\\\\" << endl;
 	//ost << "\\begin{multicols}{2}" << endl;
 	ost << "\\begin{align*}" << endl;
 	for (i = 0; i < nb_Eckardt_points; i++) {
@@ -1912,7 +1914,7 @@ void surface_object::print_points(ostream &ost)
 		if (lines_on_point->Set_size[p] != 3) {
 			cout << "Eckardt point is not on three lines" << endl;
 			exit(1);
-			}
+		}
 		a = lines_on_point->Sets[p][0];
 		b = lines_on_point->Sets[p][1];
 		c = lines_on_point->Sets[p][2];
@@ -1933,11 +1935,15 @@ void surface_object::print_points(ostream &ost)
 		ost << "\\\\" << endl;
 		}
 	ost << "\\end{align*}" << endl;
+}
 
-
+void surface_object::print_double_points(ostream &ost)
+{
+	latex_interface L;
+	int i, p, a, b;
+	int v[4];
 
 	//ost << "\\clearpage" << endl;
-	ost << "\\subsubsection*{Double Points}" << endl;
 	ost << "The surface has " << nb_Double_points
 			<< " Double points:\\\\" << endl;
 	if (nb_Double_points < 1000) {
@@ -2010,11 +2016,44 @@ void surface_object::print_points(ostream &ost)
 	else {
 		ost << "Too many to print.\\\\" << endl;
 	}
+}
 
-	
+void surface_object::print_points_on_surface(ostream &ost)
+{
+	latex_interface L;
+	int i;
+	int v[4];
 
 	//ost << "\\clearpage" << endl;
-	ost << "\\subsubsection*{Points on lines}" << endl;
+	ost << "The surface has " << nb_pts << " points:\\\\" << endl;
+
+	if (nb_pts < 1000) {
+		ost << "$$" << endl;
+		L.lint_vec_print_as_matrix(ost, Pts, nb_pts, 10, TRUE /* f_tex */);
+		ost << "$$" << endl;
+		//ost << "\\clearpage" << endl;
+		ost << "The points on the surface are:\\\\" << endl;
+		ost << "\\begin{multicols}{2}" << endl;
+		ost << "\\noindent" << endl;
+		for (i = 0; i < nb_pts; i++) {
+			Surf->unrank_point(v, Pts[i]);
+			ost << i << " : $P_{" << i << "} = P_{" << Pts[i] << "}=";
+			int_vec_print_fully(ost, v, 4);
+			ost << "$\\\\" << endl;
+			}
+		ost << "\\end{multicols}" << endl;
+	}
+	else {
+		ost << "Too many to print.\\\\" << endl;
+	}
+}
+
+void surface_object::print_points_on_lines(ostream &ost)
+{
+	latex_interface L;
+	int i;
+
+	//ost << "\\clearpage" << endl;
 	//pts_on_lines->print_table_tex(ost);
 	ost << "\\noindent" << endl;
 	for (i = 0; i < pts_on_lines->nb_sets; i++) {
@@ -2027,7 +2066,15 @@ void surface_object::print_points(ostream &ost)
 		}
 
 	//ost << "\\clearpage" << endl;
-	ost << "\\subsubsection*{Points on surface but on no line}" << endl;
+}
+
+void surface_object::print_points_on_surface_but_not_on_a_line(ostream &ost)
+{
+	latex_interface L;
+	int i;
+	int v[4];
+
+	//ost << "\\clearpage" << endl;
 	ost << "The surface has " << nb_pts_not_on_lines
 			<< " points not on any line:\\\\" << endl;
 	if (nb_pts_not_on_lines < 1000) {
@@ -2054,12 +2101,6 @@ void surface_object::print_points(ostream &ost)
 	else {
 		ost << "Too many to print.\\\\" << endl;
 	}
-
-#if 0
-	ost << "\\clearpage" << endl;
-	ost << "\\section*{Lines through points}" << endl;
-	lines_on_point->print_table_tex(ost);
-#endif
 }
 
 void surface_object::print_double_sixes(ostream &ost)

@@ -136,6 +136,28 @@ void classification_step::print_group_orders()
 	}
 }
 
+void classification_step::print_summary(ostream &ost)
+{
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
+	latex_interface L;
+
+	if (f_v) {
+		cout << "classification_step::print_summary" << endl;
+	}
+
+
+	ost << "The order of the group is ";
+	go.print_not_scientific(ost);
+	ost << "\\\\" << endl;
+
+	ost << "\\bigskip" << endl;
+
+	ost << "The group has " << nb_orbits << " orbits. \\\\" << endl;
+
+}
+
+
 void classification_step::print_latex(ostream &ost,
 	const char *title, int f_print_stabilizer_gens,
 	int f_has_print_function,

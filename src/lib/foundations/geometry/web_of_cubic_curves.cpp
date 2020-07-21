@@ -1096,7 +1096,7 @@ void web_of_cubic_curves::report(ostream &ost, int verbose_level)
 	}
 
 
-	ost << "\\section{Web of cubic curves}" << endl << endl;
+	ost << "Web of cubic curves:\\\\" << endl << endl;
 
 	if (f_v) {
 		cout << "web_of_cubic_curves::report before print_Eckardt_point_data" << endl;
@@ -1125,7 +1125,7 @@ void web_of_cubic_curves::report(ostream &ost, int verbose_level)
 	//cout << "web_of_cubic_curves::report before print_dual_point_ranks" << endl;
 	//print_dual_point_ranks(ost);
 
-	ost << "Reporting web of cubic curves done.\\\\";
+	//ost << "Reporting web of cubic curves done.\\\\";
 
 
 	if (f_v) {

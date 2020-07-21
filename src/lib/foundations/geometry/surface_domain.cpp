@@ -699,7 +699,7 @@ void surface_domain::init_large_polynomial_domains(int verbose_level)
 	
 	if (f_v) {
 		cout << "surface_domain::init_large_polynomial_domains" << endl;
-		}
+	}
 	f_has_large_polynomial_domains = TRUE;
 	Poly2_27 = NEW_OBJECT(homogeneous_polynomial_domain);
 	Poly4_27 = NEW_OBJECT(homogeneous_polynomial_domain);
@@ -742,21 +742,21 @@ void surface_domain::init_large_polynomial_domains(int verbose_level)
 		cout << "nb_monomials4 = " << nb_monomials4 << endl;
 		cout << "nb_monomials6 = " << nb_monomials6 << endl;
 		cout << "nb_monomials3 = " << nb_monomials3 << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "surface_domain::init_large_polynomial_domains "
 				"before clebsch_cubics" << endl;
-		}
+	}
 	clebsch_cubics(verbose_level - 1);
 	if (f_v) {
 		cout << "surface_domain::init_large_polynomial_domains "
 				"after clebsch_cubics" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "surface::init_large_polynomial_domains done" << endl;
-		}
+	}
 }
 
 void surface_domain::label_variables_3(
@@ -764,53 +764,21 @@ void surface_domain::label_variables_3(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int i, l;
-	//char label[1000];
-	
+
 	if (f_v) {
 		cout << "surface_domain::label_variables_3" << endl;
-		}
+	}
 	if (HPD->nb_variables != 3) {
 		cout << "surface_domain::label_variables_3 HPD->nb_variables != 3" << endl;
 		exit(1);
-		}
+	}
 
 	HPD->remake_symbols(0 /* symbol_offset */,
 			"y_%d", "y_{%d}", verbose_level);
 
-#if 0
-	if (HPD->symbols) {
-		for (i = 0; i < HPD->nb_variables; i++) {
-			FREE_char(HPD->symbols[i]);
-			}
-		FREE_pchar(HPD->symbols);
-		}
-	if (HPD->symbols_latex) {
-		for (i = 0; i < HPD->nb_variables; i++) {
-			FREE_char(HPD->symbols_latex[i]);
-			}
-		FREE_pchar(HPD->symbols_latex);
-		}
-	HPD->symbols = NEW_pchar(3);
-	HPD->symbols_latex = NEW_pchar(3);
-	for (i = 0; i < 3; i++) {
-		snprintf(label, 1000, "y_%d", i);
-		l = strlen(label);
-		HPD->symbols[i] = NEW_char(l + 1);
-		strcpy(HPD->symbols[i], label);
-		}
-	for (i = 0; i < 3; i++) {
-		snprintf(label, 1000, "y_{%d}", i);
-		l = strlen(label);
-		HPD->symbols_latex[i] = NEW_char(l + 1);
-		strcpy(HPD->symbols_latex[i], label);
-		}
-#endif
-
 	if (f_v) {
 		cout << "surface_domain::label_variables_3 done" << endl;
-		}
-	
+	}
 }
 
 void surface_domain::label_variables_x123(
@@ -818,54 +786,23 @@ void surface_domain::label_variables_x123(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int i, l;
-	//char label[1000];
 	
 	if (f_v) {
 		cout << "surface_domain::label_variables_x123" << endl;
-		}
+	}
 	if (HPD->nb_variables != 3) {
 		cout << "surface_domain::label_variables_x123 "
 				"HPD->nb_variables != 3" << endl;
 		exit(1);
-		}
+	}
 
 
 	HPD->remake_symbols(0 /* symbol_offset */,
 			"x_%d", "x_{%d}", verbose_level);
 
-#if 0
-	if (HPD->symbols) {
-		for (i = 0; i < HPD->nb_variables; i++) {
-			FREE_char(HPD->symbols[i]);
-			}
-		FREE_pchar(HPD->symbols);
-		}
-	if (HPD->symbols_latex) {
-		for (i = 0; i < HPD->nb_variables; i++) {
-			FREE_char(HPD->symbols_latex[i]);
-			}
-		FREE_pchar(HPD->symbols_latex);
-		}
-	HPD->symbols = NEW_pchar(3);
-	HPD->symbols_latex = NEW_pchar(3);
-	for (i = 0; i < 3; i++) {
-		snprintf(label, 1000, "x_%d", i + 1);
-		l = strlen(label);
-		HPD->symbols[i] = NEW_char(l + 1);
-		strcpy(HPD->symbols[i], label);
-		}
-	for (i = 0; i < 3; i++) {
-		snprintf(label, 1000, "x_{%d}", i + 1);
-		l = strlen(label);
-		HPD->symbols_latex[i] = NEW_char(l + 1);
-		strcpy(HPD->symbols_latex[i], label);
-		}
-#endif
 	if (f_v) {
 		cout << "surface_domain::label_variables_x123 done" << endl;
-		}
-	
+	}
 }
 
 void surface_domain::label_variables_4(
@@ -888,34 +825,6 @@ void surface_domain::label_variables_4(
 	HPD->remake_symbols(0 /* symbol_offset */,
 			"X_%d", "X_{%d}", verbose_level);
 
-#if 0
-	if (HPD->symbols) {
-		for (i = 0; i < HPD->nb_variables; i++) {
-			FREE_char(HPD->symbols[i]);
-			}
-		FREE_pchar(HPD->symbols);
-		}
-	if (HPD->symbols_latex) {
-		for (i = 0; i < HPD->nb_variables; i++) {
-			FREE_char(HPD->symbols_latex[i]);
-			}
-		FREE_pchar(HPD->symbols_latex);
-		}
-	HPD->symbols = NEW_pchar(4);
-	HPD->symbols_latex = NEW_pchar(4);
-	for (i = 0; i < 4; i++) {
-		snprintf(label, 1000, "X_%d", i);
-		l = strlen(label);
-		HPD->symbols[i] = NEW_char(l + 1);
-		strcpy(HPD->symbols[i], label);
-		}
-	for (i = 0; i < 4; i++) {
-		snprintf(label, 1000, "X_{%d}", i);
-		l = strlen(label);
-		HPD->symbols_latex[i] = NEW_char(l + 1);
-		strcpy(HPD->symbols_latex[i], label);
-		}
-#endif
 
 	if (f_v) {
 		cout << "surface::label_variables_4 done" << endl;
@@ -928,16 +837,14 @@ void surface_domain::label_variables_27(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int i, j, l;
-	//char label[1000];
 	
 	if (f_v) {
 		cout << "surface_domain::label_variables_27" << endl;
-		}
+	}
 	if (HPD->nb_variables != 27) {
 		cout << "surface_domain::label_variables_27 HPD->n != 27" << endl;
 		exit(1);
-		}
+	}
 
 	HPD->remake_symbols_interval(0 /* symbol_offset */,
 			0, 3,
@@ -968,70 +875,9 @@ void surface_domain::label_variables_27(
 			"g_2%d", "g_{2%d}",
 			verbose_level);
 
-#if 0
-	if (HPD->symbols) {
-		for (i = 0; i < HPD->nb_variables; i++) {
-			FREE_char(HPD->symbols[i]);
-			}
-		FREE_pchar(HPD->symbols);
-		}
-	if (HPD->symbols_latex) {
-		for (i = 0; i < HPD->nb_variables; i++) {
-			FREE_char(HPD->symbols_latex[i]);
-			}
-		FREE_pchar(HPD->symbols_latex);
-		}
-	HPD->symbols = NEW_pchar(27);
-	HPD->symbols_latex = NEW_pchar(27);
-	for (i = 0; i < 3; i++) {
-		snprintf(label, 1000, "y_%d", i);
-		l = strlen(label);
-		HPD->symbols[i] = NEW_char(l + 1);
-		strcpy(HPD->symbols[i], label);
-		}
-	for (i = 0; i < 3; i++) {
-		for (j = 0; j < 4; j++) {
-			snprintf(label, 1000, "f_%d%d", i, j);
-			l = strlen(label);
-			HPD->symbols[3 + i * 4 + j] = NEW_char(l + 1);
-			strcpy(HPD->symbols[3 + i * 4 + j], label);
-			}
-		}
-	for (i = 0; i < 3; i++) {
-		for (j = 0; j < 4; j++) {
-			snprintf(label, 1000, "g_%d%d", i, j);
-			l = strlen(label);
-			HPD->symbols[3 + 12 + i * 4 + j] = NEW_char(l + 1);
-			strcpy(HPD->symbols[3 + 12 + i * 4 + j], label);
-			}
-		}
-	for (i = 0; i < 3; i++) {
-		snprintf(label, 1000, "y_{%d}", i);
-		l = strlen(label);
-		HPD->symbols_latex[i] = NEW_char(l + 1);
-		strcpy(HPD->symbols_latex[i], label);
-		}
-	for (i = 0; i < 3; i++) {
-		for (j = 0; j < 4; j++) {
-			snprintf(label, 1000, "f_{%d%d}", i, j);
-			l = strlen(label);
-			HPD->symbols_latex[3 + i * 4 + j] = NEW_char(l + 1);
-			strcpy(HPD->symbols_latex[3 + i * 4 + j], label);
-			}
-		}
-	for (i = 0; i < 3; i++) {
-		for (j = 0; j < 4; j++) {
-			snprintf(label, 1000, "g_{%d%d}", i, j);
-			l = strlen(label);
-			HPD->symbols_latex[3 + 12 + i * 4 + j] = NEW_char(l + 1);
-			strcpy(HPD->symbols_latex[3 + 12 + i * 4 + j], label);
-			}
-		}
-#endif
 	if (f_v) {
 		cout << "surface_domain::label_variables_27 done" << endl;
-		}
-	
+	}
 }
 
 void surface_domain::label_variables_24(
@@ -1039,16 +885,14 @@ void surface_domain::label_variables_24(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int i, j, l;
-	//char label[1000];
 	
 	if (f_v) {
 		cout << "surface_domain::label_variables_24" << endl;
-		}
+	}
 	if (HPD->nb_variables != 24) {
 		cout << "surface_domain::label_variables_24 HPD->n != 24" << endl;
 		exit(1);
-		}
+	}
 
 	HPD->remake_symbols_interval(0 /* symbol_offset */,
 			0, 4,
@@ -1075,60 +919,9 @@ void surface_domain::label_variables_24(
 			"g_2%d", "g_{2%d}",
 			verbose_level);
 
-
-#if 0
-	if (HPD->symbols) {
-		for (i = 0; i < HPD->nb_variables; i++) {
-			FREE_char(HPD->symbols[i]);
-			}
-		FREE_pchar(HPD->symbols);
-		}
-	if (HPD->symbols_latex) {
-		for (i = 0; i < HPD->nb_variables; i++) {
-			FREE_char(HPD->symbols_latex[i]);
-			}
-		FREE_pchar(HPD->symbols_latex);
-		}
-	HPD->symbols = NEW_pchar(24);
-	HPD->symbols_latex = NEW_pchar(24);
-	for (i = 0; i < 3; i++) {
-		for (j = 0; j < 4; j++) {
-			snprintf(label, 1000, "f_%d%d", i, j);
-			l = strlen(label);
-			HPD->symbols[i * 4 + j] = NEW_char(l + 1);
-			strcpy(HPD->symbols[i * 4 + j], label);
-			}
-		}
-	for (i = 0; i < 3; i++) {
-		for (j = 0; j < 4; j++) {
-			snprintf(label, 1000, "g_%d%d", i, j);
-			l = strlen(label);
-			HPD->symbols[12 + i * 4 + j] = NEW_char(l + 1);
-			strcpy(HPD->symbols[12 + i * 4 + j], label);
-			}
-		}
-	for (i = 0; i < 3; i++) {
-		for (j = 0; j < 4; j++) {
-			snprintf(label,  1000, "f_{%d%d}", i, j);
-			l = strlen(label);
-			HPD->symbols_latex[i * 4 + j] = NEW_char(l + 1);
-			strcpy(HPD->symbols_latex[i * 4 + j], label);
-			}
-		}
-	for (i = 0; i < 3; i++) {
-		for (j = 0; j < 4; j++) {
-			snprintf(label,  1000, "g_{%d%d}", i, j);
-			l = strlen(label);
-			HPD->symbols_latex[12 + i * 4 + j] = NEW_char(l + 1);
-			strcpy(HPD->symbols_latex[12 + i * 4 + j], label);
-			}
-		}
-#endif
-
 	if (f_v) {
 		cout << "surface_domain::label_variables_24 done" << endl;
-		}
-	
+	}
 }
 
 void surface_domain::init_system(int verbose_level)
@@ -1137,7 +930,7 @@ void surface_domain::init_system(int verbose_level)
 	
 	if (f_v) {
 		cout << "surface_domain::init_system" << endl;
-		}
+	}
 
 	max_pts = 27 * (q + 1);
 	Pts = NEW_int(max_pts * n);
@@ -1147,8 +940,7 @@ void surface_domain::init_system(int verbose_level)
 	
 	if (f_v) {
 		cout << "surface_domain::init_system done" << endl;
-		}
-
+	}
 }
 
 
@@ -1293,6 +1085,7 @@ int surface_domain::test_special_form_alpha_beta(int *coeff,
 
 void surface_domain::create_special_double_six(long int *double_six,
 	int a, int b, int verbose_level)
+// create double-six for the Hilbert, Cohn-Vossen surface
 {
 	int f_v = (verbose_level >= 1);
 	int Basis[12 * 8] = {
@@ -2025,8 +1818,7 @@ void surface_domain::find_tritangent_planes_intersecting_in_a_line(
 	sorting Sorting;
 
 	if (f_v) {
-		cout << "surface_domain::find_tritangent_planes_"
-				"intersecting_in_a_line" << endl;
+		cout << "surface_domain::find_tritangent_planes_intersecting_in_a_line" << endl;
 	}
 	for (plane1 = 0; plane1 < nb_Eckardt_points; plane1++) {
 
@@ -2047,8 +1839,7 @@ void surface_domain::find_tritangent_planes_intersecting_in_a_line(
 			}
 		}
 	}
-	cout << "surface_domain::find_tritangent_planes_"
-			"intersecting_in_a_line could not find "
+	cout << "surface_domain::find_tritangent_planes_intersecting_in_a_line could not find "
 			"two planes" << endl;
 	exit(1);
 }

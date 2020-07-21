@@ -960,7 +960,7 @@ void trihedral_pair_with_action::print_equations()
 }
 
 
-
+#if 0
 void trihedral_pair_with_action::print_isomorphism_types_of_trihedral_pairs(
 	ostream &ost,
 	vector_ge *cosets)
@@ -1270,6 +1270,7 @@ void trihedral_pair_with_action::print_isomorphism_types_of_trihedral_pairs(
 
 
 }
+#endif
 
 void trihedral_pair_with_action::report(ostream &ost, int verbose_level)
 {
@@ -1334,8 +1335,7 @@ void trihedral_pair_with_action::report(ostream &ost, int verbose_level)
 			<< stabilizer_of_trihedral_pair_go << endl;
 	ost << endl;
 
-	ost << "The stabilizer of the trihedral pair "
-		"is the following group:\\\\" << endl;
+	ost << "The stabilizer of the trihedral pair is the following group:\\\\" << endl;
 	stab_gens_trihedral_pair->print_generators_tex(ost);
 
 	ost << "The orbits of the stabilizer of the trihedral pair on the $q+1$ "

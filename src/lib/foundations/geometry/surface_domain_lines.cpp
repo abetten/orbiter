@@ -2019,19 +2019,19 @@ int surface_domain::compute_transversals_of_any_four(
 
 	if (f_v) {
 		cout << "surface_domain::compute_transversals_of_any_four" << endl;
-		}
+	}
 	nb_subsets = Combi.int_n_choose_k(sz, 4);
 	Trans = NEW_lint(nb_subsets * 2);
 	for (rk = 0; rk < nb_subsets; rk++) {
 		Combi.unrank_k_subset(rk, subset, sz, 4);
 		for (i = 0; i < 4; i++) {
 			four_lines[i] = lines[subset[i]];
-			}
+		}
 
 		if (f_v) {
 			cout << "testing subset " << rk << " / "
 				<< nb_subsets << " : " << endl;
-			}
+		}
 		if (!perp_of_four_lines(four_lines, trans12,
 			perp_sz, 0 /*verbose_level*/)) {
 
@@ -2042,21 +2042,21 @@ int surface_domain::compute_transversals_of_any_four(
 				cout << " = ";
 				lint_vec_print(cout, four_lines, 4);
 				cout << " perp_sz=" << perp_sz << endl;
-				}
+			}
 			ret = FALSE;
 			//break;
 			trans12[0] = -1;
 			trans12[1] = -1;
-			}
-		lint_vec_copy(trans12, Trans + rk * 2, 2);
 		}
+		lint_vec_copy(trans12, Trans + rk * 2, 2);
+	}
 	if (f_v) {
 		cout << "Transversals:" << endl;
 		lint_matrix_print(Trans, nb_subsets, 2);
-		}
+	}
 	if (f_v) {
 		cout << "surface_domain::compute_transversals_of_any_four done" << endl;
-		}
+	}
 	return ret;
 }
 

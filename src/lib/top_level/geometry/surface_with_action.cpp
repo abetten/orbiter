@@ -619,13 +619,31 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 
 
 
-void surface_with_action::report_basics_and_trihedral_pair(ostream &ost)
+void surface_with_action::report_basics(ostream &ost)
 {
 
 	Surf->print_basics(ost);
 
 
-	Classify_trihedral_pairs->report(ost);
+
+}
+
+void surface_with_action::report_double_triplets(ostream &ost)
+{
+
+
+
+	Classify_trihedral_pairs->report_summary(ost);
+
+}
+
+void surface_with_action::report_double_triplets_detailed(ostream &ost)
+{
+
+
+
+	Classify_trihedral_pairs->print_trihedral_pairs(ost,
+			TRUE /* f_with_stabilizers */);
 
 }
 

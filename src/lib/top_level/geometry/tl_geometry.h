@@ -300,6 +300,7 @@ public:
 		int verbose_level);
 	void create_web_of_cubic_curves(int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
+	void report_equation(std::ostream &ost);
 };
 
 // #############################################################################
@@ -947,9 +948,10 @@ public:
 			poset_classification_control *Control1,
 			poset_classification_control *Control2,
 			int verbose_level);
+	void report_summary(std::ostream &ost);
 	void report(std::ostream &ost);
-	void list_orbits_on_trihedra_type1(std::ostream &ost);
-	void list_orbits_on_trihedra_type2(std::ostream &ost);
+	void list_orbits_on_trihedra_type1(std::ostream &ost, int f_detailed);
+	void list_orbits_on_trihedra_type2(std::ostream &ost, int f_detailed);
 	void early_test_func_type1(long int *S, int len,
 			long int *candidates, int nb_candidates,
 			long int *good_candidates, int &nb_good_candidates,
@@ -966,6 +968,7 @@ public:
 			int verbose_level);
 	void downstep(int verbose_level);
 	void upstep(int verbose_level);
+	void print_trihedral_pairs_summary(std::ostream &ost);
 	void print_trihedral_pairs(std::ostream &ost,
 		int f_with_stabilizers);
 	strong_generators *identify_trihedral_pair_and_get_stabilizer(
@@ -2220,6 +2223,8 @@ public:
 	void recognize(long int *arc6, int *transporter,
 			int &orbit_not_on_conic_idx, int verbose_level);
 	void report_latex(std::ostream &ost);
+	void report_specific_arc_basic(std::ostream &ost, int arc_idx);
+	void report_specific_arc(std::ostream &ost, int arc_idx);
 };
 
 // #############################################################################
@@ -2687,6 +2692,7 @@ public:
 			surface_with_action *Surf_A,
 			int verbose_level);
 	void report(int verbose_level);
+	void report_decomposition_matrix(std::ostream &ost, int verbose_level);
 };
 
 // #############################################################################
@@ -2871,6 +2877,7 @@ public:
 	~surface_create_by_arc_lifting();
 	void init(int arc_idx,
 			surface_classify_using_arc *SCA, int verbose_level);
+	void report_summary(std::ostream &ost, int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
 
 };
@@ -3271,7 +3278,9 @@ public:
 	int create_double_six_from_five_lines_with_a_common_transversal(
 		long int *five_lines, long int transversal_line,
 		long int *double_six, int verbose_level);
-	void report_basics_and_trihedral_pair(std::ostream &ost);
+	void report_basics(std::ostream &ost);
+	void report_double_triplets(std::ostream &ost);
+	void report_double_triplets_detailed(std::ostream &ost);
 
 };
 
@@ -3634,8 +3643,7 @@ public:
 	void compute_iso_types_as_double_triplets(int verbose_level);
 	void print_FG(std::ostream &ost);
 	void print_equations();
-	void print_isomorphism_types_of_trihedral_pairs(std::ostream &ost,
-		vector_ge *cosets);
+	//void print_isomorphism_types_of_trihedral_pairs(std::ostream &ost, vector_ge *cosets);
 	void report(std::ostream &ost, int verbose_level);
 	void report_iso_type_as_double_triplets(std::ostream &ost);
 

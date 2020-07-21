@@ -798,8 +798,7 @@ void surface_domain::get_half_double_six_associated_with_Clebsch_map(
 	int null;
 
 	if (f_v) {
-		cout << "surface_domain::get_half_double_six_associated_"
-				"with_Clebsch_map" << endl;
+		cout << "surface_domain::get_half_double_six_associated_with_Clebsch_map" << endl;
 	}
 
 	if (line1 > line2) {
@@ -1081,8 +1080,7 @@ void surface_domain::get_half_double_six_associated_with_Clebsch_map(
 		exit(1);
 	}
 	if (f_v) {
-		cout << "surface_domain::get_half_double_six_associated_"
-				"with_Clebsch_map done" << endl;
+		cout << "surface_domain::get_half_double_six_associated_with_Clebsch_map done" << endl;
 	}
 }
 
