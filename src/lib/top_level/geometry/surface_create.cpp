@@ -175,17 +175,20 @@ void surface_create::init2(int verbose_level)
 	}
 
 
-	if (Descr->f_family_S) {
+	if (Descr->f_family_HCV) {
 		if (f_v) {
 			cout << "surface_create::init2 before Surf->create_"
-					"surface_family_S a=" << Descr->parameter_a << endl;
+					"surface_family_HCV a=" << Descr->family_HCV_a << endl;
 		}
-		Surf->create_surface_family_S(Descr->parameter_a,
+		Surf->create_surface_family_HCV(Descr->family_HCV_a,
 				Lines, coeffs, verbose_level - 1);
 		if (f_v) {
 			cout << "surface_create::init2 after Surf->create_"
-					"surface_family_S" << endl;
+					"surface_family_HCV" << endl;
 		}
+
+
+
 		f_has_lines = TRUE;
 
 		Sg = NEW_OBJECT(strong_generators);
@@ -210,10 +213,35 @@ void surface_create::init2(int verbose_level)
 		f_has_group = TRUE;
 		f_has_nice_gens = TRUE;
 
-		sprintf(prefix, "family_q%d_a%d", F->q, Descr->parameter_a);
-		sprintf(label_txt, "family_q%d_a%d", F->q, Descr->parameter_a);
-		sprintf(label_tex, "family\\_q%d\\_a%d", F->q, Descr->parameter_a);
+		sprintf(prefix, "family_HCV_q%d_a%d", F->q, Descr->family_HCV_a);
+		sprintf(label_txt, "family_HCV_q%d_a%d", F->q, Descr->family_HCV_a);
+		sprintf(label_tex, "family\\_HCV\\_q%d\\_a%d", F->q, Descr->family_HCV_a);
 		
+	}
+	else if (Descr->f_family_F13) {
+
+		if (f_v) {
+			cout << "surface_create::init2 before Surf->create_surface_F13 a=" << Descr->family_F13_a << endl;
+		}
+
+		int nb_E = 0;
+
+		Surf->create_surface_F13(Descr->family_HCV_a,
+				coeffs,
+				Lines,
+				nb_E,
+				verbose_level);
+
+		if (f_v) {
+			cout << "surface_create::init2 after Surf->create_surface_F13" << endl;
+		}
+
+		f_has_lines = TRUE;
+
+
+		sprintf(prefix, "family_F13_q%d_a%d", F->q, Descr->family_F13_a);
+		sprintf(label_txt, "family_F13_q%d_a%d", F->q, Descr->family_F13_a);
+		sprintf(label_tex, "family\\_F13\\_q%d\\_a%d", F->q, Descr->family_F13_a);
 	}
 	else if (Descr->f_by_coefficients) {
 

@@ -5906,14 +5906,14 @@ void finite_field::cheat_sheet_PG(int n, int verbose_level)
 		f << "\\subsection{Eckardt Points}" << endl;
 		S->latex_table_of_Eckardt_points(f);
 
-	#if 1
+	#if 0
 		long int *Lines;
 
-		cout << "creating S_{3,1}:" << endl;
+		cout << "creating HCV_{3,1}:" << endl;
 		Lines = NEW_lint(27);
-		S->create_special_double_six(Lines,
+		S->create_HCV_double_six(Lines,
 				3 /*a*/, 1 /*b*/, 0 /* verbose_level */);
-		S->create_remaining_fifteen_lines(Lines,
+		S->create_HCV_fifteen_lines(Lines,
 				Lines + 12, 0 /* verbose_level */);
 		P->Grass_lines->print_set(Lines, 27);
 

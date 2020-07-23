@@ -354,45 +354,6 @@ void surface_domain::Trihedral_pairs_to_planes(long int *Lines, long int *Planes
 	}
 }
 
-void surface_domain::create_surface_family_S(int a,
-	long int *Lines27,
-	int *equation20, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_family_S" << endl;
-	}
-
-	int nb_E = 0;
-	int b = 1;
-	int alpha, beta;
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_family_S "
-				"creating surface for a=" << a << ":" << endl;
-	}
-
-	create_surface_ab(a, b,
-		equation20,
-		Lines27,
-		alpha, beta, nb_E,
-		0 /* verbose_level */);
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_family_S "
-				"The double six is:" << endl;
-		lint_matrix_print(Lines27, 2, 6);
-		cout << "The lines are : ";
-		lint_vec_print(cout, Lines27, 27);
-		cout << endl;
-	}
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_family_S "
-				"done" << endl;
-	}
-}
 
 void surface_domain::compute_tritangent_planes(long int *Lines,
 	long int *&Tritangent_planes, int &nb_tritangent_planes,

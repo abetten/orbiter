@@ -98,8 +98,9 @@ MODULES= \
 		foundations/geometry/projective_space.o \
 		foundations/geometry/projective_space2.o \
 		foundations/geometry/spread_tables.o \
-		foundations/geometry/surface_domain_lines.o \
+		foundations/geometry/surface_domain_families.o \
 		foundations/geometry/surface_domain_io.o \
+		foundations/geometry/surface_domain_lines.o \
 		foundations/geometry/surface_domain.o \
 		foundations/geometry/surface_domain2.o \
 		foundations/geometry/surface_object.o \

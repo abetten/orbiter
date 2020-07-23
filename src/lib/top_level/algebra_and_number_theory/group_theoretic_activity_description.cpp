@@ -81,7 +81,8 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	IA = NULL;
 	f_surface_classify = FALSE;
 	f_surface_report = FALSE;
-	f_surface_identify_Sa = FALSE;
+	f_surface_identify_HCV = FALSE;
+	f_surface_identify_F13 = FALSE;
 	f_surface_isomorphism_testing = FALSE;
 		surface_descr_isomorph1 = NULL;
 		surface_descr_isomorph2 = NULL;
@@ -426,9 +427,13 @@ int group_theoretic_activity_description::read_arguments(
 			f_surface_report = TRUE;
 			cout << "-surface_report " << endl;
 		}
-		else if (strcmp(argv[i], "-surface_identify_Sa") == 0) {
-			f_surface_identify_Sa = TRUE;
-			cout << "-surface_identify_Sa " << endl;
+		else if (strcmp(argv[i], "-surface_identify_HCV") == 0) {
+			f_surface_identify_HCV = TRUE;
+			cout << "-surface_identify_HCV " << endl;
+		}
+		else if (strcmp(argv[i], "-surface_identify_F13") == 0) {
+			f_surface_identify_F13 = TRUE;
+			cout << "-surface_identify_F13 " << endl;
 		}
 		else if (strcmp(argv[i], "-surface_isomorphism_testing") == 0) {
 			f_surface_isomorphism_testing = TRUE;

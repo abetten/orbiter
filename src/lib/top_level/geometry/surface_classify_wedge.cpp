@@ -1112,15 +1112,14 @@ void surface_classify_wedge::identify_surface_command_line(
 	}
 }
 
-void surface_classify_wedge::identify_Sa_and_print_table(
-	int verbose_level)
+void surface_classify_wedge::identify_HCV_and_print_table(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
 	int m;
 	
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_Sa_and_print_table" << endl;
+		cout << "surface_classify_wedge::identify_HCV_and_print_table" << endl;
 	}
 
 	int *Iso_type;
@@ -1132,7 +1131,7 @@ void surface_classify_wedge::identify_Sa_and_print_table(
 		Iso_type[i] = -1;
 		Nb_E[i] = -1;
 	}
-	identify_Sa(Iso_type, Nb_E, verbose_level);
+	identify_HCV(Iso_type, Nb_E, verbose_level);
 
 
 	m = q - 3;
@@ -1168,11 +1167,50 @@ void surface_classify_wedge::identify_Sa_and_print_table(
 	cout << "\\hline" << endl;
 	cout << "\\end{array}" << endl;
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_Sa_and_print_table done" << endl;
+		cout << "surface_classify_wedge::identify_HCV_and_print_table done" << endl;
 	}
 }
 
-void surface_classify_wedge::identify_Sa(
+void surface_classify_wedge::identify_F13_and_print_table(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int a;
+
+	if (f_v) {
+		cout << "surface_classify_wedge::identify_F13_and_print_table" << endl;
+	}
+
+	int *Iso_type;
+	int *Nb_E;
+
+	Iso_type = NEW_int(q);
+	Nb_E = NEW_int(q);
+
+	for (a = 0; a < q; a++) {
+		Iso_type[a] = -1;
+		Nb_E[a] = -1;
+	}
+
+	identify_F13(Iso_type, Nb_E, verbose_level);
+
+
+	cout << "\\begin{array}{|c|c|c|c|}" << endl;
+	cout << "\\hline" << endl;
+	cout << "a & a & \\# E & \\mbox{OCN} \\\\" << endl;
+	cout << "\\hline" << endl;
+	for (a = 1; a < q; a++) {
+		cout << a << " & ";
+		F->print_element(cout, a);
+		cout << " & " << Nb_E[a] << " & " << Iso_type[a] << "\\\\" << endl;
+	}
+	cout << "\\hline" << endl;
+	cout << "\\end{array}" << endl;
+	if (f_v) {
+		cout << "surface_classify_wedge::identify_F13_and_print_table done" << endl;
+	}
+}
+
+void surface_classify_wedge::identify_HCV(
 	int *Iso_type, int *Nb_E, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1182,16 +1220,16 @@ void surface_classify_wedge::identify_Sa(
 	int *Elt;
 
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_Sa" << endl;
+		cout << "surface_classify_wedge::identify_HCV" << endl;
 	}
 
 	coeff = NEW_int(Surf->nb_monomials);
 	Elt = NEW_int(A->elt_size_in_int);
-	cout << "surface_classify_wedge::identify_Sa "
+	cout << "surface_classify_wedge::identify_HCV "
 			"looping over all a:" << endl;
 	b = 1;
 	for (a = 2; a < q - 1; a++) {
-		cout << "surface_classify_wedge::identify_Sa "
+		cout << "surface_classify_wedge::identify_HCV "
 				"a = " << a << endl;
 
 		Iso_type[a] = -1;
@@ -1199,12 +1237,12 @@ void surface_classify_wedge::identify_Sa(
 
 		long int Lines27[27];
 		
-		if (Surf->create_surface_ab(a, b, coeff, Lines27,
+		if (Surf->create_surface_HCV(a, b, coeff, Lines27,
 			alpha, beta, nb_E, 
 			verbose_level)) {
 
 #if 0
-			Surf->create_equation_Sab(a, b, coeff,
+			Surf->create_equation_HCV(a, b, coeff,
 					0 /* verbose_level*/);
 #endif
 
@@ -1212,7 +1250,7 @@ void surface_classify_wedge::identify_Sa(
 				iso_type, Elt, 
 				verbose_level);
 			
-			cout << "surface_classify_wedge::identify_Sa "
+			cout << "surface_classify_wedge::identify_HCV "
 				"a = " << a << " is isomorphic to iso_type "
 				<< iso_type << ", an isomorphism is:" << endl;
 			A->element_print_quick(Elt, cout);
@@ -1226,7 +1264,67 @@ void surface_classify_wedge::identify_Sa(
 	FREE_int(coeff);
 	FREE_int(Elt);
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_Sa done" << endl;
+		cout << "surface_classify_wedge::identify_HCV done" << endl;
+	}
+}
+
+void surface_classify_wedge::identify_F13(
+	int *Iso_type, int *Nb_E, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int a, nb_E;
+	int *coeff;
+	int iso_type;
+	int *Elt;
+
+	if (f_v) {
+		cout << "surface_classify_wedge::identify_F13" << endl;
+	}
+
+	coeff = NEW_int(Surf->nb_monomials);
+	Elt = NEW_int(A->elt_size_in_int);
+	cout << "surface_classify_wedge::identify_F13 "
+			"looping over all a:" << endl;
+	for (a = 1; a < q; a++) {
+		cout << "surface_classify_wedge::identify_F13 "
+				"a = " << a << endl;
+
+		Iso_type[a] = -1;
+		Nb_E[a] = -1;
+
+		long int Lines27[27];
+
+		if (!Surf->create_surface_F13(a,
+				coeff,
+				Lines27,
+				nb_E,
+				verbose_level)) {
+			cout << "surface_classify_wedge::identify_F13 "
+					"a = " << a << " does not work" << endl;
+			continue;
+		}
+
+		cout << "surface_classify_wedge::identify_F13 "
+				"nb_E = " << nb_E << endl;
+
+		identify_surface(coeff,
+			iso_type, Elt,
+			verbose_level);
+
+		cout << "surface_classify_wedge::identify_F13 "
+			"a = " << a << " is isomorphic to iso_type "
+			<< iso_type << ", nb_E = " << nb_E << ", an isomorphism is:" << endl;
+		A->element_print_quick(Elt, cout);
+
+		Iso_type[a] = iso_type;
+		Nb_E[a] = nb_E;
+
+	}
+
+	FREE_int(coeff);
+	FREE_int(Elt);
+	if (f_v) {
+		cout << "surface_classify_wedge::identify_F13 done" << endl;
 	}
 }
 

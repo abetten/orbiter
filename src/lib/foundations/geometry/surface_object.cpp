@@ -234,7 +234,9 @@ int surface_object::init_equation(surface_domain *Surf, int *eqn,
 
 	if (f_v) {
 		cout << "surface_object::init_equation" << endl;
-		}
+		int_vec_print(cout, eqn, 20);
+		cout << endl;
+	}
 
 	surface_object::Surf = Surf;
 	F = Surf->F;
@@ -253,23 +255,28 @@ int surface_object::init_equation(surface_domain *Surf, int *eqn,
 	int nb_lines;
 
 
-	Points = NEW_lint(Surf->nb_pts_on_surface);
+	Points = NEW_lint(Surf->P->N_points /* Surf->nb_pts_on_surface*/);
+		// allocate enough space in case we have a surface with too many points
+
 	if (f_v) {
 		cout << "surface_object::init_equation before "
 				"Surf->enumerate_points" << endl;
-		}
+	}
 	Surf->enumerate_points(surface_object::eqn, 
 		Points, nb_points, 
 		0 /* verbose_level */);
 	if (f_v) {
 		cout << "surface_object::init_equation The surface "
 				"has " << nb_points << " points" << endl;
-		}
+	}
 	if (nb_points != Surf->nb_pts_on_surface) {
 		cout << "surface_object::init_equation nb_points != "
 				"Surf->nb_pts_on_surface" << endl;
-		exit(1);
-		}
+		cout << "Surf->nb_pts_on_surface=" << Surf->nb_pts_on_surface << endl;
+		FREE_lint(Points);
+		Points = NULL;
+		return FALSE;
+	}
 	
 	Surf->P->find_lines_which_are_contained(Points, nb_points, 
 		Lines, nb_lines, 27 /* max_lines */, 
@@ -278,12 +285,14 @@ int surface_object::init_equation(surface_domain *Surf, int *eqn,
 	if (f_v) {
 		cout << "surface_object::init_equation The surface "
 				"has " << nb_lines << " lines" << endl;
-		}
+	}
 	if (nb_lines != 27) {
 		cout << "surface_object::init_equation the surface "
 				"does not have 27 lines" << endl;
-		exit(1);
-		}
+		FREE_lint(Points);
+		Points = NULL;
+		return FALSE;
+	}
 
 	
 	FREE_lint(Points);
@@ -292,12 +301,12 @@ int surface_object::init_equation(surface_domain *Surf, int *eqn,
 		cout << "surface_object::init_equation Lines:";
 		lint_vec_print(cout, Lines, 27);
 		cout << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "surface_object::init_equation before "
 				"find_double_six_and_rearrange_lines" << endl;
-		}
+	}
 	find_double_six_and_rearrange_lines(Lines,
 			0 /*verbose_level*/);
 
@@ -307,26 +316,26 @@ int surface_object::init_equation(surface_domain *Surf, int *eqn,
 		cout << "surface_object::init_equation Lines:";
 		lint_vec_print(cout, Lines, 27);
 		cout << endl;
-		}
+	}
 
 
 
 	if (f_v) {
 		cout << "surface_object::init_equation before "
 				"compute_properties" << endl;
-		}
+	}
 	compute_properties(verbose_level);
 	if (f_v) {
 		cout << "surface_object::init_equation after "
 				"compute_properties" << endl;
-		}
+	}
 
 
 
 	if (f_v) {
 		cout << "surface_object::init_equation after "
 				"enumerate_points" << endl;
-		}
+	}
 	return TRUE;
 
 }
