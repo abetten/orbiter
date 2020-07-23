@@ -2817,18 +2817,6 @@ public:
 		int verbose_level);
 	void substitute_semilinear(int *coeff_in, int *coeff_out, 
 		int f_semilinear, int frob, int *Mtx_inv, int verbose_level);
-	int test_special_form_alpha_beta(int *coeff, int &alpha, int &beta,
-		int verbose_level);
-	void create_special_double_six(long int *double_six, int a, int b,
-		int verbose_level);
-	void create_special_fifteen_lines(long int *fifteen_lines, int a, int b,
-		int verbose_level);
-	void create_equation_Sab(int a, int b, int *coeff, int verbose_level);
-	int create_surface_ab(int a, int b,
-		int *coeff20,
-		long int *Lines27,
-		int &alpha, int &beta, int &nb_E,
-		int verbose_level);
 	void list_starter_configurations(long int *Lines, int nb_lines,
 		set_of_sets *line_intersections, int *&Table, int &N, 
 		int verbose_level);
@@ -2882,8 +2870,6 @@ public:
 	void Trihedral_pairs_to_planes(long int *Lines, long int *Planes_by_rank,
 		int verbose_level);
 		// Planes_by_rank[nb_trihedral_pairs * 6]
-	void create_surface_family_S(int a, long int *Lines27,
-		int *equation20, int verbose_level);
 	void compute_tritangent_planes(long int *Lines,
 		long int *&Tritangent_planes, int &nb_tritangent_planes,
 		long int *&Unitangent_planes, int &nb_unitangent_planes,
@@ -2932,8 +2918,6 @@ public:
 		long int line1, long int line2,
 		int *coeff20, long int *lines27,
 		int verbose_level);
-	//void print_web_of_cubic_curves(long int *arc6,
-	//		int *Web_of_cubic_curves, std::ostream &ost);
 
 
 
@@ -3041,7 +3025,6 @@ public:
 	void print_trihedral_pairs(std::ostream &ost);
 	void latex_table_of_Eckardt_points(std::ostream &ost);
 	void latex_table_of_tritangent_planes(std::ostream &ost);
-	//void print_web_of_cubic_curves(std::ostream &ost, int *Web_of_cubic_curves);
 	void print_equation_in_trihedral_form(std::ostream &ost,
 		int *the_six_plane_equations, int lambda, int *the_equation);
 	void print_equation_wrapped(std::ostream &ost, int *the_equation);
@@ -3059,6 +3042,31 @@ public:
 	void latex_table_of_clebsch_maps(std::ostream &ost);
 	void print_half_double_sixes_in_GAP();
 	void sstr_line_label(std::stringstream &sstr, long int pt);
+
+
+	// surface_domain_families.cpp:
+	void create_equation_F13(int a, int *coeff, int verbose_level);
+	int create_surface_F13(int a,
+		int *coeff20,
+		long int *Lines27,
+		int &nb_E,
+		int verbose_level);
+	void create_equation_HCV(int a, int b, int *coeff, int verbose_level);
+	int test_HCV_form_alpha_beta(int *coeff, int &alpha, int &beta,
+		int verbose_level);
+	void create_HCV_double_six(long int *double_six, int a, int b,
+		int verbose_level);
+	void create_HCV_fifteen_lines(long int *fifteen_lines, int a, int b,
+		int verbose_level);
+	void create_surface_family_HCV(int a,
+		long int *Lines27,
+		int *equation20, int verbose_level);
+	int create_surface_HCV(int a, int b,
+		int *coeff20,
+		long int *Lines27,
+		int &alpha, int &beta, int &nb_E,
+		int verbose_level);
+
 
 };
 

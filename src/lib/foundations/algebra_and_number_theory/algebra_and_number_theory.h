@@ -1577,8 +1577,12 @@ private:
 	finite_field *F;
 	int nb_monomials;
 	int *Monomials; // [nb_monomials * nb_variables]
-	char **symbols;
-	char **symbols_latex;
+
+	//char **symbols;
+	//char **symbols_latex;
+	std::string *symbols;
+	std::string *symbols_latex;
+
 	char **monomial_symbols;
 	char **monomial_symbols_latex;
 	char **monomial_symbols_easy;

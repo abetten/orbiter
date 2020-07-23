@@ -472,6 +472,7 @@ void surface_domain::print_equation_wrapped(ostream &ost, int *the_equation)
 void surface_domain::print_lines_tex(ostream &ost, long int *Lines)
 {
 	int i;
+	latex_interface L;
 
 	for (i = 0; i < 27; i++) {
 		//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
@@ -485,6 +486,10 @@ void surface_domain::print_lines_tex(ostream &ost, long int *Lines)
 		//print_integer_matrix_tex(ost, Gr->M, 2, 4);
 		//ost << "\\right]_{" << Lines[i] << "}" << endl;
 		ost << "_{" << Lines[i] << "}" << endl;
+		ost << "=" << endl;
+		ost << "\\left[" << endl;
+		L.print_integer_matrix_tex(ost, Gr->M, 2, 4);
+		ost << "\\right]_{" << Lines[i] << "}" << endl;
 		ost << "$$" << endl;
 		}
 

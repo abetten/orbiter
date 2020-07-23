@@ -251,7 +251,8 @@ public:
 	// for cubic surfaces:
 	int f_surface_classify;
 	int f_surface_report;
-	int f_surface_identify_Sa;
+	int f_surface_identify_HCV;
+	int f_surface_identify_F13;
 	int f_surface_isomorphism_testing;
 		surface_create_description *surface_descr_isomorph1;
 		surface_create_description *surface_descr_isomorph2;
@@ -377,7 +378,8 @@ public:
 			int verbose_level);
 	void do_surface_classify(int verbose_level);
 	void do_surface_report(int verbose_level);
-	void do_surface_identify_Sa(int verbose_level);
+	void do_surface_identify_HCV(int verbose_level);
+	void do_surface_identify_F13(int verbose_level);
 	void do_surface_isomorphism_testing(
 			surface_create_description *surface_descr_isomorph1,
 			surface_create_description *surface_descr_isomorph2,

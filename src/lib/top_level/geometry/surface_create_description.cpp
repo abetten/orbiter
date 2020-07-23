@@ -35,8 +35,10 @@ void surface_create_description::null()
 	iso = 0;
 	f_by_coefficients = FALSE;
 	coefficients_text = NULL;
-	f_family_S = FALSE;
-	parameter_a = 0;
+	f_family_HCV = FALSE;
+	family_HCV_a = 0;
+	f_family_F13 = FALSE;
+	family_F13_a = 0;
 	f_arc_lifting = FALSE;
 	arc_lifting_text = NULL;
 	arc_lifting_two_lines_text = NULL;
@@ -76,10 +78,15 @@ int surface_create_description::read_arguments(int argc, const char **argv,
 			coefficients_text = argv[++i];
 			cout << "-by_coefficients " << coefficients_text << endl;
 		}
-		else if (strcmp(argv[i], "-family_S") == 0) {
-			f_family_S = TRUE;
-			parameter_a = atoi(argv[++i]);
-			cout << "-family_S " << parameter_a << endl;
+		else if (strcmp(argv[i], "-family_HCV") == 0) {
+			f_family_HCV = TRUE;
+			family_HCV_a = atoi(argv[++i]);
+			cout << "-family_HCV " << family_HCV_a << endl;
+		}
+		else if (strcmp(argv[i], "-family_F13") == 0) {
+			f_family_F13 = TRUE;
+			family_F13_a = atoi(argv[++i]);
+			cout << "-family_F13 " << family_F13_a << endl;
 		}
 		else if (strcmp(argv[i], "-arc_lifting") == 0) {
 			f_arc_lifting = TRUE;

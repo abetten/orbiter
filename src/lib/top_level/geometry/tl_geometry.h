@@ -2769,8 +2769,11 @@ public:
 	void identify_surface_command_line(int cnt, 
 		int &isomorphic_to, int *Elt_isomorphism, 
 		int verbose_level);
-	void identify_Sa_and_print_table(int verbose_level);
-	void identify_Sa(int *Iso_type, int *Nb_E, int verbose_level);
+	void identify_HCV_and_print_table(int verbose_level);
+	void identify_F13_and_print_table(int verbose_level);
+	void identify_HCV(int *Iso_type, int *Nb_E, int verbose_level);
+	void identify_F13(
+		int *Iso_type, int *Nb_E, int verbose_level);
 	int isomorphism_test_pairwise(
 		surface_create *SC1, surface_create *SC2,
 		int &isomorphic_to1, int &isomorphic_to2,
@@ -2958,8 +2961,10 @@ public:
 	int iso;
 	int f_by_coefficients;
 	const char *coefficients_text;
-	int f_family_S;
-	int parameter_a;
+	int f_family_HCV;
+	int family_HCV_a;
+	int f_family_F13;
+	int family_F13_a;
 	int f_arc_lifting;
 	const char *arc_lifting_text;
 	const char *arc_lifting_two_lines_text;

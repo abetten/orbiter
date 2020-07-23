@@ -67,16 +67,24 @@ void homogeneous_polynomial_domain::freeself()
 		FREE_int(Monomials);
 	}
 	if (symbols) {
+#if 0
 		for (i = 0; i < nb_variables; i++) {
 			FREE_char(symbols[i]);
 		}
 		FREE_pchar(symbols);
+#else
+		delete [] symbols;
+#endif
 	}
 	if (symbols_latex) {
+#if 0
 		for (i = 0; i < nb_variables; i++) {
 			FREE_char(symbols_latex[i]);
 		}
 		FREE_pchar(symbols_latex);
+#else
+		delete [] symbols_latex;
+#endif
 	}
 	if (monomial_symbols) {
 		for (i = 0; i < nb_monomials; i++) {
@@ -242,34 +250,55 @@ void homogeneous_polynomial_domain::remake_symbols(int symbol_offset,
 		const char *symbol_mask, const char *symbol_mask_latex,
 		int verbose_level)
 {
-	int i, l;
+	int i; //, l;
 	char label[1000];
 
 	if (symbols) {
+#if 0
 		for (i = 0; i < nb_variables; i++) {
 			FREE_char(symbols[i]);
 		}
 		FREE_pchar(symbols);
+#else
+		delete [] symbols;
+#endif
 	}
 	if (symbols_latex) {
+#if 0
 		for (i = 0; i < nb_variables; i++) {
 			FREE_char(symbols_latex[i]);
 		}
 		FREE_pchar(symbols_latex);
+#else
+		delete [] symbols_latex;
+#endif
 	}
+#if 0
 	symbols = NEW_pchar(nb_variables);
 	symbols_latex = NEW_pchar(nb_variables);
+#else
+	symbols = new string [nb_variables];
+	symbols_latex = new string [nb_variables];
+#endif
 	for (i = 0; i < nb_variables; i++) {
 		snprintf(label, 1000, symbol_mask, i + symbol_offset);
+#if 0
 		l = strlen(label);
 		symbols[i] = NEW_char(l + 1);
 		strcpy(symbols[i], label);
+#else
+		symbols[i].assign(label);
+#endif
 	}
 	for (i = 0; i < nb_variables; i++) {
 		snprintf(label, 1000, symbol_mask_latex, i + symbol_offset);
+#if 0
 		l = strlen(label);
 		symbols_latex[i] = NEW_char(l + 1);
 		strcpy(symbols_latex[i], label);
+#else
+		symbols_latex[i].assign(label);
+#endif
 	}
 }
 
@@ -278,24 +307,26 @@ void homogeneous_polynomial_domain::remake_symbols_interval(int symbol_offset,
 		const char *symbol_mask, const char *symbol_mask_latex,
 		int verbose_level)
 {
-	int i, j, l;
+	int i, j; //, l;
 	char label[1000];
 
 	for (j = 0; j < len; j++) {
 		i = from + j;
-		FREE_char(symbols[i]);
+		//FREE_char(symbols[i]);
 		snprintf(label, 1000, symbol_mask, i + symbol_offset);
-		l = strlen(label);
-		symbols[i] = NEW_char(l + 1);
-		strcpy(symbols[i], label);
+		symbols[i].assign(label);
+		//l = strlen(label);
+		//symbols[i] = NEW_char(l + 1);
+		//strcpy(symbols[i], label);
 	}
 	for (j = 0; j < len; j++) {
 		i = from + j;
-		FREE_char(symbols_latex[i]);
+		//FREE_char(symbols_latex[i]);
 		snprintf(label, 1000, symbol_mask_latex, i + symbol_offset);
-		l = strlen(label);
-		symbols_latex[i] = NEW_char(l + 1);
-		strcpy(symbols_latex[i], label);
+		symbols_latex[i].assign(label);
+		//l = strlen(label);
+		//symbols_latex[i] = NEW_char(l + 1);
+		//strcpy(symbols_latex[i], label);
 	}
 
 }
@@ -386,7 +417,8 @@ void homogeneous_polynomial_domain::make_monomials(
 	char label[1000];
 	int l;
 
-	symbols = NEW_pchar(nb_variables);
+	//symbols = NEW_pchar(nb_variables);
+	symbols = new string[nb_variables];
 	for (i = 0; i < nb_variables; i++) {
 
 		
@@ -399,14 +431,16 @@ void homogeneous_polynomial_domain::make_monomials(
 			label[0] = 'A' + i;
 			label[1] = 0;
 		}
-		l = strlen(label);
-		symbols[i] = NEW_char(l + 1);
-		strcpy(symbols[i], label);
+		//l = strlen(label);
+		//symbols[i] = NEW_char(l + 1);
+		//strcpy(symbols[i], label);
+		symbols[i].assign(label);
 	}
-	symbols_latex = NEW_pchar(nb_variables);
+	//symbols_latex = NEW_pchar(nb_variables);
+	symbols_latex = new string[nb_variables];
 	for (i = 0; i < nb_variables; i++) {
 
-		int l;
+		//int l;
 		
 		if (TRUE) {
 			label[0] = 'X';
@@ -418,9 +452,10 @@ void homogeneous_polynomial_domain::make_monomials(
 			label[0] = 'A' + i;
 			label[1] = 0;
 		}
-		l = strlen(label);
-		symbols_latex[i] = NEW_char(l + 1);
-		strcpy(symbols_latex[i], label);
+		//l = strlen(label);
+		//symbols_latex[i] = NEW_char(l + 1);
+		//strcpy(symbols_latex[i], label);
+		symbols_latex[i].assign(label);
 	}
 
 	int f_first = FALSE;
@@ -438,7 +473,7 @@ void homogeneous_polynomial_domain::make_monomials(
 				else {
 					f_first = FALSE;
 				}
-				strcat(label, symbols[j]);
+				strcat(label, symbols[j].c_str());
 				if (a > 1) {
 					sprintf(label + strlen(label), "^%d", a);
 				}
@@ -455,7 +490,7 @@ void homogeneous_polynomial_domain::make_monomials(
 		for (j = 0; j < nb_variables; j++) {
 			a = Monomials[i * nb_variables + j];
 			if (a) {
-				strcat(label, symbols_latex[j]);
+				strcat(label, symbols_latex[j].c_str());
 				if (a > 1) {
 					if (a >= 10) {
 						sprintf(label + strlen(label), "^{%d}", a);
@@ -765,7 +800,7 @@ void homogeneous_polynomial_domain::print_monomial(char *str, int i)
 		if (a == 0) {
 			continue;
 		}
-		strcat(str + strlen(str), symbols_latex[j]);
+		strcat(str + strlen(str), symbols_latex[j].c_str());
 		if (a >= 10) {
 			sprintf(str + strlen(str), "^{%d}", a);
 		}
