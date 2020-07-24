@@ -241,6 +241,7 @@ public:
 	int &nb_calls_to_elliptic_curve_addition();
 	void init(int q);
 	void init(int q, int verbose_level);
+	void set_default_symbol_for_print();
 	void init_symbol_for_print(const char *symbol);
 	void init_override_polynomial(int q, const char *poly, 
 		int verbose_level);

@@ -88,12 +88,6 @@ void six_arcs_not_on_a_conic::init(
 	Gen->init(
 			Descr,
 			A, A->Strong_gens,
-			//GTA,
-			//F,
-			//A, A->Strong_gens,
-			//6 /* Gen->ECA->starter_size */,
-			//TRUE /* f_conic_test */,
-			//Control,
 			verbose_level - 2);
 
 
@@ -104,9 +98,6 @@ void six_arcs_not_on_a_conic::init(
 	}
 
 
-
-	//cout << "before Gen->main" << endl;
-	//Gen->main(Gen->verbose_level);
 
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::init "

@@ -248,6 +248,13 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		}
 		do_create_surface(Descr->surface_description, Descr->Control_six_arcs, verbose_level);
 	}
+	else if (Descr->f_six_arcs) {
+		if (!Descr->f_control_six_arcs) {
+			cout << "please use option -control_six_arcs <description> -end" << endl;
+			exit(1);
+		}
+		do_six_arcs(Descr->Control_six_arcs, verbose_level);
+	}
 
 	// spreads:
 
@@ -2709,7 +2716,7 @@ void group_theoretic_activity::do_create_surface(
 
 	Elt2 = NEW_int(A->elt_size_in_int);
 
-	SC->F->init_symbol_for_print("\\omega");
+	//SC->F->init_symbol_for_print("\\omega");
 
 	if (SC->F->e == 1) {
 		SC->F->f_print_as_exponentials = FALSE;
@@ -2964,6 +2971,260 @@ void group_theoretic_activity::do_create_surface(
 	}
 }
 
+void group_theoretic_activity::do_six_arcs(
+		poset_classification_control *Control_six_arcs,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_six_arcs" << endl;
+	}
+
+	finite_field *F;
+
+	F = LG->F;
+
+
+	surface_domain *Surf;
+
+	if (f_v) {
+			cout << "group_theoretic_activity::do_six_arcs before Surf->init" << endl;
+	}
+	Surf = NEW_OBJECT(surface_domain);
+	Surf->init(F, 0/*verbose_level - 1*/);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_six_arcs after Surf->init" << endl;
+	}
+
+
+
+	six_arcs_not_on_a_conic *Six_arcs;
+	arc_generator_description *Six_arc_descr;
+
+	int *transporter;
+
+	Six_arcs = NEW_OBJECT(six_arcs_not_on_a_conic);
+
+	Six_arc_descr = NEW_OBJECT(arc_generator_description);
+	Six_arc_descr->F = F;
+	Six_arc_descr->f_q = TRUE;
+	Six_arc_descr->q = F->q;
+	Six_arc_descr->f_n = TRUE;
+	Six_arc_descr->n = 3;
+	Six_arc_descr->f_target_size = TRUE;
+	Six_arc_descr->target_size = 6;
+	Six_arc_descr->Control = Control_six_arcs;
+
+
+
+	// classify six arcs not on a conic:
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_six_arcs "
+				"Setting up the group of the plane:" << endl;
+	}
+
+
+#if 0
+	action *A;
+
+	A = NEW_OBJECT(action);
+
+
+	int f_semilinear = TRUE;
+	number_theory_domain NT;
+
+	if (NT.is_prime(F->q)) {
+		f_semilinear = FALSE;
+	}
+
+	{
+		vector_ge *nice_gens;
+		A->init_projective_group(3, F,
+				f_semilinear, TRUE /*f_basis*/, TRUE /* f_init_sims */,
+				nice_gens,
+				0 /*verbose_level*/);
+		FREE_OBJECT(nice_gens);
+	}
+#endif
+
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_six_arcs "
+				"before Six_arcs->init:" << endl;
+	}
+
+
+	Six_arcs->init(
+			Six_arc_descr,
+			LG->A_linear,
+			Surf->P2,
+			verbose_level);
+
+	transporter = NEW_int(Six_arcs->Gen->A->elt_size_in_int);
+
+	int nb_orbits;
+	int level = 6;
+
+	nb_orbits = Six_arcs->Gen->gen->nb_orbits_at_level(level);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_six_arcs "
+				"We found " << nb_orbits << " isomorphism types "
+				"of 6-arcs" << endl;
+	}
+
+
+
+	long int Arc6[6];
+	int h, a, b, c, d;
+	int v1[3];
+	int v2[3];
+
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_six_arcs "
+				"testing the arcs" << endl;
+	}
+
+	longinteger_object ago;
+	int *Abcd;
+	int *Nb_E;
+	int *Ago;
+
+	Abcd = NEW_int(nb_orbits * 4);
+	Nb_E = NEW_int(nb_orbits);
+	Ago = NEW_int(nb_orbits);
+
+	for (h = 0; h < nb_orbits; h++) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::do_six_arcs "
+					"testing arc " << h << " / " << nb_orbits << endl;
+		}
+
+
+		Six_arcs->Gen->gen->get_set_by_level(level, h, Arc6);
+
+		Six_arcs->Gen->gen->get_stabilizer_order(level, h, ago);
+
+		if (Arc6[0] != 0) {
+			cout << "Arc6[0] != 0" << endl;
+			exit(1);
+		}
+		if (Arc6[1] != 1) {
+			cout << "Arc6[1] != 1" << endl;
+			exit(1);
+		}
+		if (Arc6[2] != 2) {
+			cout << "Arc6[2] != 2" << endl;
+			exit(1);
+		}
+		if (Arc6[3] != 3) {
+			cout << "Arc6[3] != 3" << endl;
+			exit(1);
+		}
+		Surf->P2->unrank_point(v1, Arc6[4]);
+		Surf->P2->unrank_point(v2, Arc6[5]);
+		if (v1[2] != 1) {
+			cout << "v1[2] != 1" << endl;
+			exit(1);
+		}
+		if (v2[2] != 1) {
+			cout << "v2[2] != 1" << endl;
+			exit(1);
+		}
+		a = v1[0];
+		b = v1[1];
+		c = v2[0];
+		d = v2[1];
+
+		Abcd[h * 4 + 0] = a;
+		Abcd[h * 4 + 1] = b;
+		Abcd[h * 4 + 2] = c;
+		Abcd[h * 4 + 3] = d;
+
+		eckardt_point_info *E;
+
+		E = Surf->P2->compute_eckardt_point_info(Surf, Arc6, verbose_level);
+
+
+		Nb_E[h] = E->nb_E;
+		Ago[h] = ago.as_int();
+
+		cout << h << " : " << a << "," << b << "," << c << "," << d << " : " << E->nb_E << " : " << ago << endl;
+
+		FREE_OBJECT(E);
+	}
+
+	cout << "Summary of " << nb_orbits << " arcs:" << endl;
+	for (h = 0; h < nb_orbits; h++) {
+		a = Abcd[h * 4 + 0];
+		b = Abcd[h * 4 + 1];
+		c = Abcd[h * 4 + 2];
+		d = Abcd[h * 4 + 3];
+
+		cout << h << " : " << a << "," << b << "," << c << "," << d << " : " << Nb_E[h] << " : " << Ago[h] << endl;
+	}
+
+	classify C;
+
+	C.init(Nb_E, nb_orbits, FALSE, 0);
+
+	cout << "nb_E distribution: ";
+	C.print_naked_tex(cout, FALSE);
+	cout << endl;
+
+
+	cout << "arcs with 13 Eckardt points:" << endl;
+	int nb_E;
+
+	for (h = 0; h < nb_orbits; h++) {
+		a = Abcd[h * 4 + 0];
+		b = Abcd[h * 4 + 1];
+		c = Abcd[h * 4 + 2];
+		d = Abcd[h * 4 + 3];
+
+		nb_E = Nb_E[h];
+
+		if (nb_E != 13) {
+			continue;
+		}
+		cout << h << " : " << a << "," << b << "," << c << "," << d << " : " << Nb_E[h] << " : " << Ago[h] << endl;
+	}
+
+
+	FREE_int(Abcd);
+	FREE_int(Nb_E);
+	FREE_int(Ago);
+
+#if 0
+	if (f_v) {
+		cout << "group_theoretic_activity::do_six_arcs "
+				"before SoA->investigate_surface_and_write_report:" << endl;
+	}
+
+	SoA->investigate_surface_and_write_report(
+			A,
+			SC,
+			Six_arcs,
+			Descr->f_surface_clebsch,
+			Descr->f_surface_codes,
+			Descr->f_surface_quartic,
+			verbose_level);
+#endif
+
+	FREE_OBJECT(Six_arcs);
+	FREE_OBJECT(Six_arc_descr);
+	FREE_int(transporter);
+
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_six_arcs done" << endl;
+	}
+
+}
 
 void group_theoretic_activity::do_spread_classify(int k, int verbose_level)
 {
