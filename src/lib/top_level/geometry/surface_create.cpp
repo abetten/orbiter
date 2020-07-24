@@ -226,11 +226,14 @@ void surface_create::init2(int verbose_level)
 
 		int nb_E = 0;
 
-		Surf->create_surface_F13(Descr->family_HCV_a,
+		if (!Surf->create_surface_F13(Descr->family_F13_a,
 				coeffs,
 				Lines,
 				nb_E,
-				verbose_level);
+				verbose_level)) {
+			cout << "surface_create::init2 the surface could not be created" << endl;
+			exit(1);
+		}
 
 		if (f_v) {
 			cout << "surface_create::init2 after Surf->create_surface_F13" << endl;

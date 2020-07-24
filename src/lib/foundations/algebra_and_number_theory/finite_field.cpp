@@ -136,14 +136,14 @@ void finite_field::init(int q, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	const char *poly;
 	number_theory_domain NT;
-	
+
 	if (f_v) {
 		cout << "finite_field::init q=" << q << endl;
 	}
 	nb_calls_to_finite_field_init++;
 	finite_field::q = q;
 	NT.factor_prime_power(q, p, e);
-	init_symbol_for_print("g");
+	set_default_symbol_for_print();
 	
 	if (e > 1) {
 		f_is_prime_field = FALSE;
@@ -160,6 +160,32 @@ void finite_field::init(int q, int verbose_level)
 		cout << "finite_field::init done" << endl;
 	}
 }
+
+void finite_field::set_default_symbol_for_print()
+{
+	if (q == 4) {
+		init_symbol_for_print("\\omega");
+	}
+	else if (q == 8) {
+		init_symbol_for_print("\\gamma");
+	}
+	else if (q == 16) {
+		init_symbol_for_print("\\delta");
+	}
+	else if (q == 32) {
+		init_symbol_for_print("\\eta");
+	}
+	else if (q == 64) {
+		init_symbol_for_print("\\epsilon");
+	}
+	else if (q == 128) {
+		init_symbol_for_print("\\zeta");
+	}
+	else {
+		init_symbol_for_print("\\alpha");
+	}
+}
+
 
 void finite_field::init_symbol_for_print(const char *symbol)
 {
@@ -185,7 +211,9 @@ void finite_field::init_override_polynomial(int q,
 	override_poly = poly;
 	finite_field::q = q;
 	NT.factor_prime_power(q, p, e);
-	init_symbol_for_print("\\alpha");
+	//init_symbol_for_print("\\alpha");
+	set_default_symbol_for_print();
+
 	if (e > 1) {
 		f_is_prime_field = FALSE;
 		algebra_global Algebra;
@@ -310,7 +338,7 @@ void finite_field::init_override_polynomial(int q,
 	if (f_vv) {
 		cout << "finite_field::init_override_polynomial field of order "
 				<< q << " initialized" << endl;
-		if (f_vv && q <= CREATE_TABLE_UPPER_BOUND) {
+		if (f_vv && f_has_table) {
 			if (e > 1) {
 				print_tables_extension_field(poly);
 			}

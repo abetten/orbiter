@@ -97,6 +97,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 			Control_six_arcs = NULL;
 	f_create_surface = FALSE;
 	surface_description = NULL;
+	f_six_arcs = FALSE;
 	f_surface_quartic = FALSE;
 	f_surface_clebsch = FALSE;
 	f_surface_codes = FALSE;
@@ -480,6 +481,10 @@ int group_theoretic_activity_description::read_arguments(
 			if (i < argc) {
 				cout << "next argument is " << argv[i] << endl;
 			}
+		}
+		else if (strcmp(argv[i], "-six_arcs") == 0) {
+			f_six_arcs = TRUE;
+			cout << "-six_arcs" << endl;
 		}
 		else if (strcmp(argv[i], "-surface_quartic") == 0) {
 			f_surface_quartic = TRUE;
