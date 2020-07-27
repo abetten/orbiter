@@ -229,6 +229,7 @@ public:
 #include "./isomorph/isomorph.h"
 #include "./orbits/orbits.h"
 #include "./solver/solver.h"
+#include "./surfaces/surfaces.h"
 
 
 

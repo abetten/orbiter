@@ -368,11 +368,11 @@ int finite_field::matrix_determinant(int *A, int n, int verbose_level)
 	
 	if (n == 1) {
 		return A[0];
-		}
+	}
 	if (f_v) {
 		cout << "determinant of " << endl;
 		print_integer_matrix_width(cout, A, n, n, n, 2);
-		}
+	}
 	Tmp = NEW_int(n * n);
 	Tmp1 = NEW_int(n * n);
 	int_vec_copy(A, Tmp, n * n);
@@ -381,13 +381,13 @@ int finite_field::matrix_determinant(int *A, int n, int verbose_level)
 	for (i = 0; i < n; i++) {
 		if (Tmp[i * n + 0]) {
 			break;
-			}
 		}
+	}
 	if (i == n) {
 		FREE_int(Tmp);
 		FREE_int(Tmp1);
 		return 0;
-		}
+	}
 
 	// possibly permute the row with the nonzero element up front:
 	if (i != 0) {
@@ -395,11 +395,11 @@ int finite_field::matrix_determinant(int *A, int n, int verbose_level)
 			a = Tmp[0 * n + j];
 			Tmp[0 * n + j] = Tmp[i * n + j];
 			Tmp[i * n + j] = a;
-			}
+		}
 		if (ODD(i)) {
 			eps *= -1;
-			}
 		}
+	}
 
 	// pick the pivot element:
 	det = Tmp[0 * n + 0];
@@ -407,33 +407,33 @@ int finite_field::matrix_determinant(int *A, int n, int verbose_level)
 	// eliminate the first column:
 	for (i = 1; i < n; i++) {
 		Gauss_step(Tmp, Tmp + i * n, n, 0, 0 /* verbose_level */);
-		}
+	}
 
 	
 	if (eps < 0) {
 		det = negate(det);
-		}
+	}
 	if (f_v) {
 		cout << "after Gauss " << endl;
 		print_integer_matrix_width(cout, Tmp, n, n, n, 2);
 		cout << "det= " << det << endl;
-		}
+	}
 
 	// delete the first row and column and form the matrix
 	// Tmp1 of size (n - 1) x (n - 1):
 	for (i = 1; i < n; i++) {
 		for (j = 1; j < n; j++) {
 			Tmp1[(i - 1) * (n - 1) + j - 1] = Tmp[i * n + j];
-			}
 		}
+	}
 	if (f_v) {
 		cout << "computing determinant of " << endl;
 		print_integer_matrix_width(cout, Tmp1, n - 1, n - 1, n - 1, 2);
-		}
+	}
 	det1 = matrix_determinant(Tmp1, n - 1, 0/*verbose_level*/);
 	if (f_v) {
 		cout << "as " << det1 << endl;
-		}
+	}
 	
 	// multiply the pivot element:
 	det2 = mult(det, det1);
@@ -442,7 +442,7 @@ int finite_field::matrix_determinant(int *A, int n, int verbose_level)
 	FREE_int(Tmp1);
 	if (f_v) {
 		cout << "determinant is " << det2 << endl;
-		}
+	}
 	
 	return det2;
 #if 0
@@ -536,7 +536,7 @@ void finite_field::matrix_invert(int *A, int *Tmp, int *Tmp_basecols,
 	if (f_v) {
 		cout << "finite_field::matrix_invert" << endl;
 		print_integer_matrix_width(cout, A, n, n, n, log10_of_q + 1);
-		}
+	}
 	copy_matrix(A, Tmp, n, n);
 	identity_matrix(Ainv, n);
 	rk = Gauss_int(Tmp,
@@ -550,11 +550,11 @@ void finite_field::matrix_invert(int *A, int *Tmp, int *Tmp_basecols,
 		print_integer_matrix_width(cout, Tmp, n, n, n, log10_of_q + 1);
 		cout << "rk=" << rk << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "the inverse is" << endl;
 		print_integer_matrix_width(cout, Ainv, n, n, n, log10_of_q + 1);
-		}
+	}
 }
 
 void finite_field::semilinear_matrix_invert(int *A,
@@ -572,7 +572,7 @@ void finite_field::semilinear_matrix_invert(int *A,
 		cout << "finite_field::semilinear_matrix_invert" << endl;
 		print_integer_matrix_width(cout, A, n, n, n, log10_of_q + 1);
 		cout << "frobenius: " << A[n * n] << endl;
-		}
+	}
 	matrix_invert(A, Tmp, Tmp_basecols, Ainv, n, verbose_level - 1);
 	f = A[n * n];
 	vector_frobenius_power_in_place(Ainv, n * n, f);
@@ -582,7 +582,7 @@ void finite_field::semilinear_matrix_invert(int *A,
 		cout << "the inverse is" << endl;
 		print_integer_matrix_width(cout, Ainv, n, n, n, log10_of_q + 1);
 		cout << "frobenius: " << Ainv[n * n] << endl;
-		}
+	}
 }
 
 void finite_field::semilinear_matrix_invert_affine(int *A,
@@ -603,7 +603,7 @@ void finite_field::semilinear_matrix_invert_affine(int *A,
 		cout << "b: ";
 		int_vec_print(cout, A + n * n, n);
 		cout << " frobenius: " << A[n * n + n] << endl;
-		}
+	}
 	b1 = A + n * n;
 	b2 = Ainv + n * n;
 	matrix_invert(A, Tmp, Tmp_basecols, Ainv, n, verbose_level - 1);
@@ -624,7 +624,7 @@ void finite_field::semilinear_matrix_invert_affine(int *A,
 		cout << "b: ";
 		int_vec_print(cout, Ainv + n * n, n);
 		cout << " frobenius: " << Ainv[n * n + n] << endl;
-		}
+	}
 }
 
 
@@ -644,7 +644,7 @@ void finite_field::matrix_invert_affine(int *A,
 		cout << "b: ";
 		int_vec_print(cout, A + n * n, n);
 		cout << endl;
-		}
+	}
 	b1 = A + n * n;
 	b2 = Ainv + n * n;
 	matrix_invert(A, Tmp, Tmp_basecols, Ainv, n, verbose_level - 1);
@@ -659,7 +659,7 @@ void finite_field::matrix_invert_affine(int *A,
 		cout << "b: ";
 		int_vec_print(cout, Ainv + n * n, n);
 		cout << endl;
-		}
+	}
 }
 
 
@@ -673,16 +673,16 @@ void finite_field::projective_action_from_the_right(int f_semilinear,
 
 	if (f_v) {
 		cout << "finite_field::projective_action_from_the_right"  << endl;
-		}	
+	}
 	if (f_semilinear) {
 		semilinear_action_from_the_right(v, A, vA, n);
-		}
+	}
 	else {
 		mult_vector_from_the_left(v, A, vA, n, n);
-		}
+	}
 	if (f_v) {
 		cout << "finite_field::projective_action_from_the_right done"  << endl;
-		}	
+	}
 }
 
 void finite_field::general_linear_action_from_the_right(int f_semilinear,
@@ -694,17 +694,17 @@ void finite_field::general_linear_action_from_the_right(int f_semilinear,
 	if (f_v) {
 		cout << "finite_field::general_linear_action_from_the_right"
 				<< endl;
-		}	
+	}
 	if (f_semilinear) {
 		semilinear_action_from_the_right(v, A, vA, n);
-		}
+	}
 	else {
 		mult_vector_from_the_left(v, A, vA, n, n);
-		}
+	}
 	if (f_v) {
 		cout << "finite_field::general_linear_action_from_the_right done"
 				<< endl;
-		}	
+	}
 }
 
 
@@ -740,7 +740,7 @@ void finite_field::affine_action_from_the_right(
 	
 		f = A[n * n + n];
 		vector_frobenius_power_in_place(vA, n, f);
-		}
+	}
 	add_vector(vA, A + n * n, vA, n);
 }
 
@@ -750,7 +750,7 @@ void finite_field::zero_vector(int *A, int m)
 	
 	for (i = 0; i < m; i++) {
 		A[i] = 0;
-		}
+	}
 }
 
 void finite_field::all_one_vector(int *A, int m)
@@ -759,7 +759,7 @@ void finite_field::all_one_vector(int *A, int m)
 	
 	for (i = 0; i < m; i++) {
 		A[i] = 1;
-		}
+	}
 }
 
 void finite_field::support(int *A, int m, int *&support, int &size)
@@ -771,8 +771,8 @@ void finite_field::support(int *A, int m, int *&support, int &size)
 	for (i = 0; i < m; i++) {
 		if (A[i]) {
 			support[size++] = i;
-			}
 		}
+	}
 }
 
 void finite_field::characteristic_vector(int *A, int m, int *set, int size)
@@ -782,7 +782,7 @@ void finite_field::characteristic_vector(int *A, int m, int *set, int size)
 	zero_vector(A, m);
 	for (i = 0; i < size; i++) {
 		A[set[i]] = 1;
-		}
+	}
 }
 
 int finite_field::is_zero_vector(int *A, int m)
@@ -792,8 +792,8 @@ int finite_field::is_zero_vector(int *A, int m)
 	for (i = 0; i < m; i++) {
 		if (A[i]) {
 			return FALSE;
-			}
 		}
+	}
 	return TRUE;
 }
 
@@ -803,7 +803,7 @@ void finite_field::add_vector(int *A, int *B, int *C, int m)
 	
 	for (i = 0; i < m; i++) {
 		C[i] = add(A[i], B[i]);
-		}
+	}
 }
 
 void finite_field::linear_combination_of_vectors(
@@ -813,7 +813,7 @@ void finite_field::linear_combination_of_vectors(
 
 	for (i = 0; i < len; i++) {
 		C[i] = add(mult(a, A[i]), mult(b, B[i]));
-		}
+	}
 }
 
 void finite_field::linear_combination_of_three_vectors(
@@ -823,7 +823,7 @@ void finite_field::linear_combination_of_three_vectors(
 
 	for (i = 0; i < len; i++) {
 		D[i] = add3(mult(a, A[i]), mult(b, B[i]), mult(c, C[i]));
-		}
+	}
 }
 
 void finite_field::negate_vector(int *A, int *B, int m)
@@ -832,7 +832,7 @@ void finite_field::negate_vector(int *A, int *B, int m)
 	
 	for (i = 0; i < m; i++) {
 		B[i] = negate(A[i]);
-		}
+	}
 }
 
 void finite_field::negate_vector_in_place(int *A, int m)
@@ -841,7 +841,7 @@ void finite_field::negate_vector_in_place(int *A, int m)
 	
 	for (i = 0; i < m; i++) {
 		A[i] = negate(A[i]);
-		}
+	}
 }
 
 void finite_field::scalar_multiply_vector_in_place(int c, int *A, int m)
@@ -850,7 +850,7 @@ void finite_field::scalar_multiply_vector_in_place(int c, int *A, int m)
 	
 	for (i = 0; i < m; i++) {
 		A[i] = mult(c, A[i]);
-		}
+	}
 }
 
 void finite_field::vector_frobenius_power_in_place(int *A, int m, int f)
@@ -859,7 +859,7 @@ void finite_field::vector_frobenius_power_in_place(int *A, int m, int f)
 	
 	for (i = 0; i < m; i++) {
 		A[i] = frobenius_power(A[i], f);
-		}
+	}
 }
 
 int finite_field::dot_product(int len, int *v, int *w)
@@ -869,7 +869,7 @@ int finite_field::dot_product(int len, int *v, int *w)
 	for (i = 0; i < len; i++) {
 		b = mult(v[i], w[i]);
 		a = add(a, b);
-		}
+	}
 	return a;
 }
 
@@ -880,8 +880,8 @@ void finite_field::transpose_matrix(int *A, int *At, int ma, int na)
 	for (i = 0; i < ma; i++) {
 		for (j = 0; j < na; j++) {
 			At[j * ma + i] = A[i * na + j];
-			}
 		}
+	}
 }
 
 void finite_field::transpose_matrix_in_place(int *A, int m)
@@ -893,8 +893,8 @@ void finite_field::transpose_matrix_in_place(int *A, int m)
 			a = A[i * m + j];
 			A[i * m + j] = A[j * m + i];
 			A[j * m + i] = a;
-			}
 		}
+	}
 }
 
 void finite_field::invert_matrix(int *A, int *A_inv, int n)
@@ -911,13 +911,13 @@ void finite_field::invert_matrix(int *A, int *A_inv, int n)
 		for (j = 0; j < n; j++) {
 			if (i == j) {
 				a = 1;
-				}
+			}
 			else {
 				a = 0;
-				}
-			A_inv[i * n + j] = a;
 			}
+			A_inv[i * n + j] = a;
 		}
+	}
 	int_vec_copy(A, A_tmp, n * n);
 	
 	rk = Gauss_int(A_tmp,
@@ -928,7 +928,7 @@ void finite_field::invert_matrix(int *A, int *A_inv, int n)
 		cout << "finite_field::invert_matrix "
 				"matrix is not invertible, the rank is " << rk << endl;
 		exit(1);
-		}
+	}
 	FREE_int(A_tmp);
 	FREE_int(base_cols);
 }
@@ -948,13 +948,13 @@ void finite_field::invert_matrix_memory_given(int *A, int *A_inv, int n,
 		for (j = 0; j < n; j++) {
 			if (i == j) {
 				a = 1;
-				}
+			}
 			else {
 				a = 0;
-				}
-			A_inv[i * n + j] = a;
 			}
+			A_inv[i * n + j] = a;
 		}
+	}
 	int_vec_copy(A, A_tmp, n * n);
 
 	rk = Gauss_int(A_tmp,
@@ -965,7 +965,7 @@ void finite_field::invert_matrix_memory_given(int *A, int *A_inv, int n,
 		cout << "finite_field::invert_matrix "
 				"matrix is not invertible, the rank is " << rk << endl;
 		exit(1);
-		}
+	}
 	//FREE_int(A_tmp);
 	//FREE_int(base_cols);
 }
@@ -995,7 +995,7 @@ int finite_field::rank_of_matrix(int *A, int m, int verbose_level)
 	
 	if (f_v) {
 		cout << "finite_field::rank_of_matrix" << endl;
-		}
+	}
 	B = NEW_int(m * m);
 	base_cols = NEW_int(m);
 	int_vec_copy(A, B, m * m);
@@ -1006,9 +1006,9 @@ int finite_field::rank_of_matrix(int *A, int m, int verbose_level)
 		if (f_vv) {
 			cout << endl;
 			print_integer_matrix_width(cout, A, m, m, m, 2);
-			}
-		cout << "has rank " << rk << endl;
 		}
+		cout << "has rank " << rk << endl;
+	}
 	FREE_int(base_cols);
 	FREE_int(B);
 	return rk;
@@ -1023,7 +1023,7 @@ int finite_field::rank_of_matrix_memory_given(int *A,
 	
 	if (f_v) {
 		cout << "finite_field::rank_of_matrix_memory_given" << endl;
-		}
+	}
 	//B = NEW_int(m * m);
 	//base_cols = NEW_int(m);
 	int_vec_copy(A, B, m * m);
@@ -1034,9 +1034,9 @@ int finite_field::rank_of_matrix_memory_given(int *A,
 		if (f_vv) {
 			cout << endl;
 			print_integer_matrix_width(cout, A, m, m, m, 2);
-			}
-		cout << "has rank " << rk << endl;
 		}
+		cout << "has rank " << rk << endl;
+	}
 	//FREE_int(base_cols);
 	//FREE_int(B);
 	return rk;
@@ -1051,7 +1051,7 @@ int finite_field::rank_of_rectangular_matrix(int *A,
 	
 	if (f_v) {
 		cout << "finite_field::rank_of_rectangular_matrix" << endl;
-		}
+	}
 	B = NEW_int(m * n);
 	base_cols = NEW_int(n);
 	int_vec_copy(A, B, m * n);
@@ -1062,9 +1062,9 @@ int finite_field::rank_of_rectangular_matrix(int *A,
 		if (f_vv) {
 			cout << endl;
 			print_integer_matrix_width(cout, A, m, n, n, 2);
-			}
-		cout << "has rank " << rk << endl;
 		}
+		cout << "has rank " << rk << endl;
+	}
 	FREE_int(base_cols);
 	FREE_int(B);
 	return rk;
@@ -1081,7 +1081,7 @@ int finite_field::rank_of_rectangular_matrix_memory_given(
 	if (f_v) {
 		cout << "finite_field::rank_of_rectangular_"
 				"matrix_memory_given" << endl;
-		}
+	}
 	//B = NEW_int(m * n);
 	//base_cols = NEW_int(n);
 	int_vec_copy(A, B, m * n);
@@ -1092,9 +1092,9 @@ int finite_field::rank_of_rectangular_matrix_memory_given(
 		if (f_vv) {
 			cout << endl;
 			print_integer_matrix_width(cout, A, m, n, n, 2);
-			}
-		cout << "has rank " << rk << endl;
 		}
+		cout << "has rank " << rk << endl;
+	}
 	return rk;
 }
 
@@ -1107,7 +1107,7 @@ int finite_field::rank_and_basecols(int *A, int m,
 	
 	if (f_v) {
 		cout << "finite_field::rank_and_basecols" << endl;
-		}
+	}
 	B = NEW_int(m * m);
 	int_vec_copy(A, B, m * m);
 	rk = Gauss_int(B, FALSE, FALSE, base_cols, FALSE,
@@ -1117,9 +1117,9 @@ int finite_field::rank_and_basecols(int *A, int m,
 		if (f_vv) {
 			cout << endl;
 			print_integer_matrix_width(cout, A, m, m, m, 2);
-			}
-		cout << "has rank " << rk << endl;
 		}
+		cout << "has rank " << rk << endl;
+	}
 	FREE_int(B);
 	return rk;
 }
@@ -1139,24 +1139,24 @@ void finite_field::Gauss_step(int *v1, int *v2,
 		int_vec_print(cout, v2, len);
 		cout << endl;
 		cout << "pivot column " << idx << endl;
-		}
+	}
 	if (v2[idx] == 0) {
 		goto after;
-		}
+	}
 	if (v1[idx] == 0) {
 		// do a swap:
 		for (i = 0; i < len; i++) {
 			a = v2[i];
 			v2[i] = v1[i];
 			v1[i] = a;
-			}
-		goto after;
 		}
+		goto after;
+	}
 	a = negate(mult(inverse(v1[idx]), v2[idx]));
 	//cout << "Gauss_step a=" << a << endl;
 	for (i = 0; i < len; i++) {
 		v2[i] = add(mult(v1[i], a), v2[i]);
-		}
+	}
 after:
 	if (f_v) {
 		cout << "Gauss_step after:" << endl;
@@ -1164,7 +1164,7 @@ after:
 		cout << endl;
 		int_vec_print(cout, v2, len);
 		cout << endl;
-		}
+	}
 }
 
 void finite_field::Gauss_step_make_pivot_one(int *v1, int *v2, 
@@ -1182,43 +1182,43 @@ void finite_field::Gauss_step_make_pivot_one(int *v1, int *v2,
 		int_vec_print(cout, v2, len);
 		cout << endl;
 		cout << "pivot column " << idx << endl;
-		}
+	}
 	if (v2[idx] == 0) {
 		goto after;
-		}
+	}
 	if (v1[idx] == 0) {
 		// do a swap:
 		for (i = 0; i < len; i++) {
 			a = v2[i];
 			v2[i] = v1[i];
 			v1[i] = a;
-			}
-		goto after;
 		}
+		goto after;
+	}
 	a = negate(mult(inverse(v1[idx]), v2[idx]));
 	//cout << "Gauss_step a=" << a << endl;
 	for (i = 0; i < len; i++) {
 		v2[i] = add(mult(v1[i], a), v2[i]);
-		}
+	}
 after:
 	if (v1[idx] == 0) {
 		cout << "Gauss_step_make_pivot_one after: v1[idx] == 0" << endl;
 		exit(1);
-		}
+	}
 	if (v1[idx] != 1) {
 		a = v1[idx];
 		av = inverse(a);
 		for (i = 0; i < len; i++) {
 			v1[i] = mult(av, v1[i]);
-			}
 		}
+	}
 	if (f_v) {
 		cout << "Gauss_step_make_pivot_one after:" << endl;
 		int_vec_print(cout, v1, len);
 		cout << endl;
 		int_vec_print(cout, v2, len);
 		cout << endl;
-		}
+	}
 }
 
 void finite_field::extend_basis(int m, int n, int *Basis,
@@ -1238,7 +1238,7 @@ void finite_field::extend_basis(int m, int n, int *Basis,
 		cout << "finite_field::extend_basis" << endl;
 		cout << "matrix:" << endl;
 		print_integer_matrix_width(cout, Basis, m, n, n, log10_of_q);
-		}
+	}
 	int_vec_zero(Basis + m * n, (n - m) * n);
 	B = NEW_int(n * n);
 	base_cols = NEW_int(n);
@@ -1279,7 +1279,7 @@ int finite_field::base_cols_and_embedding(int m, int n, int *A,
 		cout << "finite_field::base_cols_and_embedding" << endl;
 		cout << "matrix A:" << endl;
 		print_integer_matrix_width(cout, A, m, n, n, log10_of_q);
-		}
+	}
 	B = NEW_int(m * n);
 	int_vec_copy(A, B, m * n);
 	rk = Gauss_simple(B, m, n, base_cols, verbose_level - 3);
@@ -1287,15 +1287,15 @@ int finite_field::base_cols_and_embedding(int m, int n, int *A,
 	for (i = 0; i < n; i++) {
 		if (!Sorting.int_vec_search(base_cols, rk, i, idx)) {
 			embedding[j++] = i;
-			}
 		}
+	}
 	if (j != n - rk) {
 		cout << "j != n - rk" << endl;
 		cout << "j=" << j << endl;
 		cout << "rk=" << rk << endl;
 		cout << "n=" << n << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "finite_field::base_cols_and_embedding" << endl;
 		cout << "rk=" << rk << endl;
@@ -1305,7 +1305,7 @@ int finite_field::base_cols_and_embedding(int m, int n, int *A,
 		cout << "embedding:" << endl;
 		int_vec_print(cout, embedding, n - rk);
 		cout << endl;
-		}
+	}
 	FREE_int(B);
 	return rk;
 }
@@ -1358,105 +1358,105 @@ int finite_field::Gauss_int(int *A,
 		cout << "Gauss algorithm for matrix:" << endl;
 		print_integer_matrix_width(cout, A, m, n, n, 5);
 		//print_tables();
-		}
+	}
 	i = 0;
 	for (j = 0; j < n; j++) {
 		if (f_vv) {
 			cout << "j=" << j << endl;
-			}
+		}
 		/* search for pivot element: */
 		for (k = i; k < m; k++) {
 			if (A[k * n + j]) {
 				if (f_vv) {
 					cout << "i=" << i << " pivot found in "
 							<< k << "," << j << endl;
-					}
+				}
 				// pivot element found: 
 				if (k != i) {
 					for (jj = j; jj < n; jj++) {
 						int_swap(A[i * n + jj], A[k * n + jj]);
-						}
+					}
 					if (f_P) {
 						for (jj = 0; jj < Pn; jj++) {
 							int_swap(P[i * Pn + jj], P[k * Pn + jj]);
-							}
 						}
 					}
+				}
 				break;
-				} // if != 0 
-			} // next k
+			} // if != 0
+		} // next k
 		
 		if (k == m) { // no pivot found 
 			if (f_vv) {
 				cout << "no pivot found" << endl;
-				}
-			continue; // increase j, leave i constant
 			}
+			continue; // increase j, leave i constant
+		}
 		
 		if (f_vv) {
 			cout << "row " << i << " pivot in row "
 					<< k << " colum " << j << endl;
-			}
+		}
 		
 		base_cols[i] = j;
 		//if (FALSE) {
-		//	cout << "."; cout.flush();
+		//	cout << ".";
 		//	}
 
 		pivot = A[i * n + j];
 		if (f_vv) {
 			cout << "pivot=" << pivot << endl;
-			}
+		}
 		//pivot_inv = inv_table[pivot];
 		pivot_inv = inverse(pivot);
 		if (f_vv) {
 			cout << "pivot=" << pivot << " pivot_inv="
 					<< pivot_inv << endl;
-			}
+		}
 		if (!f_special) {
 			// make pivot to 1: 
 			for (jj = j; jj < n; jj++) {
 				A[i * n + jj] = mult(A[i * n + jj], pivot_inv);
-				}
+			}
 			if (f_P) {
 				for (jj = 0; jj < Pn; jj++) {
 					P[i * Pn + jj] = mult(P[i * Pn + jj], pivot_inv);
-					}
 				}
+			}
 			if (f_vv) {
 				cout << "pivot=" << pivot << " pivot_inv=" << pivot_inv 
 					<< " made to one: " << A[i * n + j] << endl;
-				}
+			}
 			if (f_vvv) {
 				print_integer_matrix_width(cout, A, m, n, n, 5);
-				}
 			}
+		}
 		
 		// do the gaussian elimination: 
 
 		if (f_vv) {
 			cout << "doing elimination in column " << j << " from row "
 					<< i + 1 << " to row " << m - 1 << ":" << endl;
-			}
+		}
 		for (k = i + 1; k < m; k++) {
 			if (f_vv) {
 				cout << "k=" << k << endl;
-				}
+			}
 			z = A[k * n + j];
 			if (z == 0) {
 				continue;
-				}
+			}
 			if (f_special) {
 				f = mult(z, pivot_inv);
-				}
+			}
 			else {
 				f = z;
-				}
+			}
 			f = negate(f);
 			A[k * n + j] = 0;
 			if (f_vv) {
 				cout << "eliminating row " << k << endl;
-				}
+			}
 			for (jj = j + 1; jj < n; jj++) {
 				a = A[i * n + jj];
 				b = A[k * n + jj];
@@ -1468,8 +1468,8 @@ int finite_field::Gauss_int(int *A,
 				A[k * n + jj] = c;
 				if (f_vv) {
 					cout << A[k * n + jj] << " ";
-					}
 				}
+			}
 			if (f_P) {
 				for (jj = 0; jj < Pn; jj++) {
 					a = P[i * Pn + jj];
@@ -1478,16 +1478,16 @@ int finite_field::Gauss_int(int *A,
 					c = mult(f, a);
 					c = add(c, b);
 					P[k * Pn + jj] = c;
-					}
 				}
+			}
 			if (f_vv) {
 				cout << endl;
-				}
+			}
 			if (f_vvv) {
 				cout << "A=" << endl;
 				print_integer_matrix_width(cout, A, m, n, n, 5);
-				}
 			}
+		}
 		i++;
 		if (f_vv) {
 			cout << "A=" << endl;
@@ -1496,9 +1496,9 @@ int finite_field::Gauss_int(int *A,
 			if (f_P) {
 				cout << "P=" << endl;
 				print_integer_matrix(cout, P, m, Pn);
-				}
 			}
-		} // next j 
+		}
+	} // next j
 	rank = i;
 	if (f_complete) {
 		//if (FALSE) {
@@ -1506,56 +1506,56 @@ int finite_field::Gauss_int(int *A,
 		//	}
 		for (i = rank - 1; i >= 0; i--) {
 			if (f_v) {
-				cout << "."; cout.flush();
-				}
+				cout << ".";
+			}
 			j = base_cols[i];
 			if (!f_special) {
 				a = A[i * n + j];
-				}
+			}
 			else {
 				pivot = A[i * n + j];
 				pivot_inv = inverse(pivot);
-				}
+			}
 			// do the gaussian elimination in the upper part: 
 			for (k = i - 1; k >= 0; k--) {
 				z = A[k * n + j];
 				if (z == 0) {
 					continue;
-					}
+				}
 				A[k * n + j] = 0;
 				for (jj = j + 1; jj < n; jj++) {
 					a = A[i * n + jj];
 					b = A[k * n + jj];
 					if (f_special) {
 						a = mult(a, pivot_inv);
-						}
+					}
 					c = mult(z, a);
 					c = negate(c);
 					c = add(c, b);
 					A[k * n + jj] = c;
-					}
+				}
 				if (f_P) {
 					for (jj = 0; jj < Pn; jj++) {
 						a = P[i * Pn + jj];
 						b = P[k * Pn + jj];
 						if (f_special) {
 							a = mult(a, pivot_inv);
-							}
+						}
 						c = mult(z, a);
 						c = negate(c);
 						c = add(c, b);
 						P[k * Pn + jj] = c;
-						}
 					}
-				} // next k
-			} // next i
-		}
+				}
+			} // next k
+		} // next i
+	}
 	if (f_v) { 
 		cout << endl;
 		print_integer_matrix_width(cout, A, m, n, n, 5);
 		//print_integer_matrix(cout, A, rank, n);
 		cout << "the rank is " << rank << endl;
-		}
+	}
 	return rank;
 }
 
@@ -1580,17 +1580,17 @@ int finite_field::Gauss_int_with_pivot_strategy(int *A,
 				"Gauss algorithm for matrix:" << endl;
 		print_integer_matrix_width(cout, A, m, n, n, 5);
 		//print_tables();
-		}
+	}
 	for (i = 0; i < m; i++) {
 		if (f_vv) {
 			cout << "i=" << i << endl;
-			}
+		}
 
 		j = (*find_pivot_function)(A, m, n, i, pivot_perm, find_pivot_data);
 
 		if (j == -1) {
 			break;
-			}
+		}
 
 		pi = pivot_perm[i];
 		pivot_perm[i] = j;
@@ -1600,21 +1600,21 @@ int finite_field::Gauss_int_with_pivot_strategy(int *A,
 		for (k = i; k < m; k++) {
 			if (A[k * n + j]) {
 				break;
-				} // if != 0 
-			} // next k
+			} // if != 0
+		} // next k
 		
 		if (k == m) { // no pivot found 
 			if (f_vv) {
 				cout << "finite_field::Gauss_int_with_pivot_strategy "
 						"no pivot found in column " << j << endl;
-				}
-			exit(1);
 			}
+			exit(1);
+		}
 		
 		if (f_vv) {
 			cout << "row " << i << " pivot in row " << k
 					<< " colum " << j << endl;
-			}
+		}
 		
 
 
@@ -1624,8 +1624,8 @@ int finite_field::Gauss_int_with_pivot_strategy(int *A,
 		if (k != i) {
 			for (jj = 0; jj < n; jj++) {
 				int_swap(A[i * n + jj], A[k * n + jj]);
-				}
 			}
+		}
 
 
 		// now, pivot is in row i, column j :
@@ -1633,50 +1633,50 @@ int finite_field::Gauss_int_with_pivot_strategy(int *A,
 		pivot = A[i * n + j];
 		if (f_vv) {
 			cout << "pivot=" << pivot << endl;
-			}
+		}
 		pivot_inv = inverse(pivot);
 		if (f_vv) {
 			cout << "pivot=" << pivot << " pivot_inv=" << pivot_inv << endl;
-			}
+		}
 		if (!f_special) {
 			// make pivot to 1: 
 			for (jj = 0; jj < n; jj++) {
 				A[i * n + jj] = mult(A[i * n + jj], pivot_inv);
-				}
+			}
 			if (f_vv) {
 				cout << "pivot=" << pivot << " pivot_inv=" << pivot_inv 
 					<< " made to one: " << A[i * n + j] << endl;
-				}
+			}
 			if (f_vvv) {
 				print_integer_matrix_width(cout, A, m, n, n, 5);
-				}
 			}
+		}
 		
 		// do the gaussian elimination: 
 
 		if (f_vv) {
 			cout << "doing elimination in column " << j << " from row "
 					<< i + 1 << " down to row " << m - 1 << ":" << endl;
-			}
+		}
 		for (k = i + 1; k < m; k++) {
 			if (f_vv) {
 				cout << "k=" << k << endl;
-				}
+			}
 			z = A[k * n + j];
 			if (z == 0) {
 				continue;
-				}
+			}
 			if (f_special) {
 				f = mult(z, pivot_inv);
-				}
+			}
 			else {
 				f = z;
-				}
+			}
 			f = negate(f);
 			//A[k * n + j] = 0;
 			if (f_vv) {
 				cout << "eliminating row " << k << endl;
-				}
+			}
 			for (jj = 0; jj < n; jj++) {
 				a = A[i * n + jj];
 				b = A[k * n + jj];
@@ -1688,61 +1688,61 @@ int finite_field::Gauss_int_with_pivot_strategy(int *A,
 				A[k * n + jj] = c;
 				if (f_vv) {
 					cout << A[k * n + jj] << " ";
-					}
 				}
+			}
 			if (f_vv) {
 				cout << endl;
-				}
+			}
 			if (f_vvv) {
 				cout << "A=" << endl;
 				print_integer_matrix_width(cout, A, m, n, n, 5);
-				}
 			}
+		}
 		i++;
 		if (f_vv) {
 			cout << "A=" << endl;
 			print_integer_matrix_width(cout, A, m, n, n, 5);
 			//print_integer_matrix(cout, A, m, n);
-			}
-		} // next j 
+		}
+	} // next j
 	rank = i;
 	if (f_complete) {
 		for (i = rank - 1; i >= 0; i--) {
 			j = pivot_perm[i];
 			if (!f_special) {
 				a = A[i * n + j];
-				}
+			}
 			else {
 				pivot = A[i * n + j];
 				pivot_inv = inverse(pivot);
-				}
+			}
 			// do the gaussian elimination in the upper part: 
 			for (k = i - 1; k >= 0; k--) {
 				z = A[k * n + j];
 				if (z == 0) {
 					continue;
-					}
+				}
 				//A[k * n + j] = 0;
 				for (jj = 0; jj < n; jj++) {
 					a = A[i * n + jj];
 					b = A[k * n + jj];
 					if (f_special) {
 						a = mult(a, pivot_inv);
-						}
+					}
 					c = mult(z, a);
 					c = negate(c);
 					c = add(c, b);
 					A[k * n + jj] = c;
-					}
-				} // next k
-			} // next i
-		}
+				}
+			} // next k
+		} // next i
+	}
 	if (f_v) { 
 		cout << endl;
 		print_integer_matrix_width(cout, A, m, n, n, 5);
 		//print_integer_matrix(cout, A, rank, n);
 		cout << "the rank is " << rank << endl;
-		}
+	}
 	return rank;
 }
 
@@ -1967,7 +1967,7 @@ void finite_field::matrix_get_kernel(int *M,
 	if (kernel == NULL) {
 		cout << "finite_field::matrix_get_kernel kernel == NULL" << endl;
 		exit(1);
-		}
+	}
 	m_one = negate(1);
 	r = nb_base_cols;
 	k = n - r;
@@ -1980,64 +1980,64 @@ void finite_field::matrix_get_kernel(int *M,
 	j = 0;
 	if (j < r) {
 		b = base_cols[j];
-		}
+	}
 	else {
 		b = -1;
-		}
+	}
 	for (i = 0; i < n; i++) {
 		if (i == b) {
 			j++;
 			if (j < r) {
 				b = base_cols[j];
-				}
+			}
 			else {
 				b = -1;
-				}
 			}
+		}
 		else {
 			kcol[ii] = i;
 			ii++;
-			}
 		}
+	}
 	if (ii != k) {
 		cout << "finite_field::matrix_get_kernel ii != k" << endl;
 		exit(1);
-		}
+	}
 	//cout << "kcol = " << kcol << endl;
 	ii = 0;
 	j = 0;
 	if (j < r) {
 		b = base_cols[j];
-		}
+	}
 	else {
 		b = -1;
-		}
+	}
 	for (i = 0; i < n; i++) {
 		if (i == b) {
 			for (iii = 0; iii < k; iii++) {
 				a = kcol[iii];
 				kernel[i * kernel_n + iii] = M[j * n + a];
-				}
+			}
 			j++;
 			if (j < r) {
 				b = base_cols[j];
-				}
+			}
 			else {
 				b = -1;
-				}
 			}
+		}
 		else {
 			for (iii = 0; iii < k; iii++) {
 				if (iii == ii) {
 					kernel[i * kernel_n + iii] = m_one;
-					}
+				}
 				else {
 					kernel[i * kernel_n + iii] = 0;
-					}
 				}
-			ii++;
 			}
+			ii++;
 		}
+	}
 	FREE_int(kcol);
 }
 
@@ -2067,8 +2067,8 @@ int finite_field::perp(int n, int k, int *A, int *Gram)
 	for (j = 0; j < kernel_n; j++) {
 		for (i = 0; i < n; i++) {
 			A[(k + j) * n + i] = K[i * kernel_n + j];
-			}
 		}
+	}
 	//cout << "perp, kernel is a " << kernel_m
 	// << " by " << kernel_n << " matrix" << endl;
 	FREE_int(B);
@@ -2090,14 +2090,14 @@ int finite_field::RREF_and_kernel(int n, int k,
 	if (f_v) {
 		cout << "finite_field::RREF_and_kernel n=" << n
 				<< " k=" << k << endl;
-		}
+	}
 #if 0
 	if (k > n) {
 		m = k;
-		}
+	}
 	else {
 		m = n;
-		}
+	}
 #endif
 	m = MAXIMUM(k, n);
 	B = NEW_int(m * n);
@@ -2107,26 +2107,26 @@ int finite_field::RREF_and_kernel(int n, int k,
 	//mult_matrix_matrix(A, Gram, B, k, n, n);
 	if (f_v) {
 		cout << "finite_field::RREF_and_kernel before Gauss_int" << endl;
-		}
+	}
 	nb_base_cols = Gauss_int(B,
 		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
 		FALSE /* f_P */, NULL /*P*/, k, n, n, verbose_level);
 	if (f_v) {
 		cout << "finite_field::RREF_and_kernel after Gauss_int, "
 				"rank = " << nb_base_cols << endl;
-		}
+	}
 	int_vec_copy(B, A, nb_base_cols * n);
 	if (f_v) {
 		cout << "finite_field::RREF_and_kernel "
 				"before matrix_get_kernel" << endl;
-		}
+	}
 	matrix_get_kernel(B, k, n, base_cols, nb_base_cols, 
 		kernel_m, kernel_n, K);
 	for (j = 0; j < kernel_n; j++) {
 		for (i = 0; i < n; i++) {
 			A[(nb_base_cols + j) * n + i] = K[i * kernel_n + j];
-			}
 		}
+	}
 	//cout << "finite_field::RREF_and_kernel,
 	// kernel is a " << kernel_m << " by " << kernel_n << " matrix" << endl;
 	FREE_int(B);
@@ -2134,7 +2134,7 @@ int finite_field::RREF_and_kernel(int n, int k,
 	FREE_int(base_cols);
 	if (f_v) {
 		cout << "finite_field::RREF_and_kernel done" << endl;
-		}
+	}
 	return nb_base_cols;
 }
 
@@ -2149,7 +2149,7 @@ int finite_field::perp_standard(int n, int k,
 
 	if (f_v) {
 		cout << "finite_field::perp_standard" << endl;
-		}
+	}
 	B = NEW_int(n * n);
 	K = NEW_int(n * n);
 	base_cols = NEW_int(n);
@@ -2161,7 +2161,7 @@ int finite_field::perp_standard(int n, int k,
 	FREE_int(base_cols);
 	if (f_v) {
 		cout << "finite_field::perp_standard done" << endl;
-		}
+	}
 	return nb_base_cols;
 }
 
@@ -2179,7 +2179,7 @@ int finite_field::perp_standard_with_temporary_data(
 	
 	if (f_v) {
 		cout << "finite_field::perp_standard_temporary_data" << endl;
-		}
+	}
 	//B = NEW_int(n * n);
 	//K = NEW_int(n * n);
 	//base_cols = NEW_int(n);
@@ -2190,14 +2190,14 @@ int finite_field::perp_standard_with_temporary_data(
 		cout << "B=" << endl;
 		int_matrix_print(B, k, n);
 		cout << "finite_field::perp_standard_temporary_data before Gauss_int" << endl;
-		}
+	}
 	nb_base_cols = Gauss_int(B,
 		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
 		FALSE /* f_P */, NULL /*P*/, k, n, n,
 		0 /*verbose_level*/);
 	if (f_v) {
 		cout << "finite_field::perp_standard_temporary_data after Gauss_int" << endl;
-		}
+	}
 	matrix_get_kernel(B, k, n, base_cols, nb_base_cols, 
 		kernel_m, kernel_n, K);
 	if (f_v) {
@@ -2205,20 +2205,20 @@ int finite_field::perp_standard_with_temporary_data(
 				"after matrix_get_kernel" << endl;
 		cout << "kernel_m = " << kernel_m << endl;
 		cout << "kernel_n = " << kernel_n << endl;
-		}
+	}
 
 	int_vec_copy(B, A, nb_base_cols * n);
 
 	for (j = 0; j < kernel_n; j++) {
 		for (i = 0; i < n; i++) {
 			A[(nb_base_cols + j) * n + i] = K[i * kernel_n + j];
-			}
 		}
+	}
 	if (f_v) {
 		cout << "finite_field::perp_standard_temporary_data" << endl;
 		cout << "A=" << endl;
 		int_matrix_print(A, n, n);
-		}
+	}
 	//cout << "perp_standard, kernel is a "
 	// << kernel_m << " by " << kernel_n << " matrix" << endl;
 	//FREE_int(B);
@@ -2226,7 +2226,7 @@ int finite_field::perp_standard_with_temporary_data(
 	//FREE_int(base_cols);
 	if (f_v) {
 		cout << "finite_field::perp_standard_temporary_data done" << endl;
-		}
+	}
 	return nb_base_cols;
 }
 
@@ -2250,36 +2250,36 @@ int finite_field::intersect_subspaces(int n, int k1,
 	if (f_v) {
 		cout << "finite_field::intersect_subspaces AA=" << endl;
 		print_integer_matrix_width(cout, AA, k1, n, n, 2);
-		}
+	}
 	r1 = perp_standard_with_temporary_data(n, k1,
 			AA, B1, K, base_cols, 0);
 	if (f_v) {
 		cout << "finite_field::intersect_subspaces AA=" << endl;
 		print_integer_matrix_width(cout, AA, n, n, n, 2);
-		}
+	}
 	if (r1 != k1) {
 		cout << "finite_field::intersect_subspaces not a base, "
 				"rank is too small" << endl;
 		cout << "k1=" << k1 << endl;
 		cout << "r1=" << r1 << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "finite_field::intersect_subspaces BB=" << endl;
 		print_integer_matrix_width(cout, BB, k2, n, n, 2);
-		}
+	}
 	r2 = perp_standard_with_temporary_data(n, k2, BB, B1, K, base_cols, 0);
 	if (f_v) {
 		cout << "finite_field::intersect_subspaces BB=" << endl;
 		print_integer_matrix_width(cout, BB, n, n, n, 2);
-		}
+	}
 	if (r2 != k2) {
 		cout << "finite_field::intersect_subspaces not a base, "
 				"rank is too small" << endl;
 		cout << "k2=" << k2 << endl;
 		cout << "r2=" << r2 << endl;
 		exit(1);
-		}
+	}
 	CC = NEW_int((3 * n) * n);
 
 	int_vec_copy(AA + k1 * n, CC, (n - k1) * n);
@@ -2289,7 +2289,7 @@ int finite_field::intersect_subspaces(int n, int k1,
 		cout << "finite_field::intersect_subspaces CC=" << endl;
 		print_integer_matrix_width(cout, CC, k3, n, n, 2);
 		cout << "k3=" << k3 << endl;
-		}
+	}
 
 	
 	k3 = Gauss_easy(CC, k3, n);
@@ -2307,7 +2307,7 @@ int finite_field::intersect_subspaces(int n, int k1,
 		cout << "finite_field::intersect_subspaces n=" << n
 				<< " dim A =" << r1 << " dim B =" << r2
 				<< " dim intersection =" << n - r3 << endl;
-		}
+	}
 	k3 = n - r3;
 	return n - r3;
 	
@@ -2328,24 +2328,24 @@ int finite_field::n_choose_k_mod_p(int n, int k, int verbose_level)
 		for (i = 0; i < k1; i++) {
 			c1 = mult(c1, (n1 - i) % p);
 			c2 = mult(c2, (1 + i) % p);
-			}
+		}
 		if (c1 != 0) {
 			cv = inverse(c2);
 			cc = mult(c1, cv);
-			}
+		}
 		if (f_vv) {
 			cout << "{" << n1 << "\\atop " << k1 << "} mod "
 					<< p << " = " << cc << endl;
-			}
+		}
 		c = mult(c, cc);
 		n = (n - n1) / p;
 		k = (k - k1) / p;
-		}
+	}
 	if (f_v) {
 		cout << "{" << n << "\\atop " << k << "} mod "
 				<< p << " = " << endl;
 		cout << c << endl;
-		}
+	}
 	return c;
 }
 
@@ -2368,15 +2368,15 @@ void finite_field::Dickson_polynomial(int *map, int *coeffs)
 			xi = power(xi, i);
 			a = mult(map[x], xi);
 			c = add(c, a);
-			}
-		coeffs[i] = negate(c);
 		}
+		coeffs[i] = negate(c);
+	}
 	
 	// coeff[q - 1] = - \sum_x map[x]
 	c = 0;
 	for (x = 0; x < q; x++) {
 		c = add(c, map[x]);
-		}
+	}
 	coeffs[q - 1] = negate(c);
 }
 
@@ -2392,27 +2392,27 @@ void finite_field::projective_action_on_columns_from_the_left(
 	
 	if (f_v) {
 		cout << "projective_action_on_columns_from_the_left" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "A:" << endl;
 		print_integer_matrix_width(cout, A, m, m, m, 2);
-		}
+	}
 	mult_matrix_matrix(A, M, AM, m, m, n, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "M:" << endl;
 		print_integer_matrix_width(cout, M, m, n, n, 2);
 		//cout << "A * M:" << endl;
 		//print_integer_matrix_width(cout, AM, m, n, n, 2);
-		}
+	}
 						
 	for (j = 0; j < n; j++) {
 		PG_element_normalize_from_front(AM + j,
 				n /* stride */, m /* length */);
-		}
+	}
 	if (f_vv) {
 		cout << "A*M:" << endl;
 		print_integer_matrix_width(cout, AM, m, n, n, 2);
-		}
+	}
 					
 	for (i = 0; i < n; i++) {
 		perm[i] = -1;
@@ -2421,8 +2421,8 @@ void finite_field::projective_action_on_columns_from_the_left(
 					m /* len */, n /* stride */) == 0) {
 				perm[i] = j;
 				break;
-				}
 			}
+		}
 		if (j == n) {
 			cout << "finite_field::projective_action_on_columns_"
 					"from_the_left could not find image" << endl;
@@ -2432,15 +2432,15 @@ void finite_field::projective_action_on_columns_from_the_left(
 			cout << "A * M:" << endl;
 			print_integer_matrix_width(cout, AM, m, n, n, 2);
 			exit(1);
-			}
 		}
+	}
 	if (f_v) {
 		//cout << "column permutation: ";
 		combinatorics_domain Combi;
 
 		Combi.perm_print_with_cycle_length(cout, perm, n);
 		cout << endl;
-		}
+	}
 	FREE_int(AM);
 }
 
@@ -2459,27 +2459,27 @@ void finite_field::builtin_transversal_rep_GLnq(int *A,
 		cout << "finite_field::builtin_transversal_rep_GLnq  "
 				"GL(" << n << "," << q << ") i = " << i
 				<< " j = " << j << endl;
-		}
+	}
 
 	// make the n x n identity matrix:
 	for (ii = 0; ii < n * n; ii++) {
 		A[ii] = 0;
-		}
+	}
 	for (ii = 0; ii < i; ii++) {
 		A[ii * n + ii] = 1;
-		}
+	}
 	if (f_semilinear) {
 		A[n * n] = 0;
-		}
+	}
 
 	if ((i == n + 1 && q > 2) || (i == n && q == 2)) {
 		if (!f_semilinear) {
 			cout << "finite_field::builtin_transversal_rep_GLnq "
 					"must be semilinear to access transversal " << n << endl;
 			exit(1);
-			}
-		A[n * n] = j;
 		}
+		A[n * n] = j;
+	}
 	else if (i == n && q > 2) {
 		transversal_length = Gg.nb_AG_elements(n - 1, q - 1);
 		if (j >= transversal_length) {
@@ -2487,47 +2487,47 @@ void finite_field::builtin_transversal_rep_GLnq(int *A,
 					"j = " << j << " >= transversal_length = "
 					<< transversal_length << endl;
 			exit(1);
-			}
+		}
 		int *v = NEW_int(n);
 		Gg.AG_element_unrank(q - 1, v, 1, n - 1, j);
 		A[0] = 1;
 		for (jj = 0; jj < n - 1; jj++) {
 			A[(jj + 1) * n + (jj + 1)] = v[jj] + 1;
-			}
-		FREE_int(v);
 		}
+		FREE_int(v);
+	}
 	else {
 		if (i == 0) {
 			PG_element_unrank_modified(A + i, n, n, j);
-			}
+		}
 		else {
 			PG_element_unrank_modified_not_in_subspace(
 					A + i, n, n, i - 1, j);
-			}
+		}
 		i0 = -1;
 		for (ii = 0; ii < n; ii++) {
 			a = A[ii * n + i];
 			if (ii >= i && i0 == -1 && a != 0) {
 				i0 = ii;
-				}
 			}
+		}
 		if (f_vv) {
 			cout << "i0 = " << i0 << endl;
-			}
+		}
 		for (jj = i; jj < i0; jj++) {
 			A[jj * n + jj + 1] = 1;
-			}
+		}
 		for (jj = i0 + 1; jj < n; jj++) {
 			A[jj * n + jj] = 1;
-			}
+		}
 		//int_matrix_transpose(n, A);
 		transpose_matrix_in_place(A, n);
-		}
+	}
 	
 	if (f_vv) {
 		cout << "transversal_rep_GLnq[" << i << "][" << j << "] = \n";
 		print_integer_matrix(cout, A, n, n);
-		}
+	}
 }
 
 void finite_field::affine_translation(int n,
@@ -2554,7 +2554,7 @@ void finite_field::affine_translation(int n,
 		v[coordinate_idx] = add(v[coordinate_idx], a);
 		j = Gg.AG_element_rank(q, v, 1, l);
 		perm[i] = j;
-		}
+	}
 	FREE_int(v);
 }
 
@@ -2575,17 +2575,17 @@ void finite_field::affine_multiplication(int n,
 		cout << "finite_field::affine_multiplication: "
 				"multiplication_order does not divide q - 1" << endl;
 		exit(1);
-		}
+	}
 	a = power(alpha, alpha_power);
 	l = Gg.nb_AG_elements(n, q);
 	for (i = 0; i < l; i++) {
 		Gg.AG_element_unrank(q, v, 1, l, i);
 		for (k = 0; k < n; k++) {
 			v[k] = mult(v[k], a);
-			}
+		}
 		j = Gg.AG_element_rank(q, v, 1, l);
 		perm[i] = j;
-		}
+	}
 	FREE_int(v);
 }
 
@@ -2605,10 +2605,10 @@ void finite_field::affine_frobenius(int n, int k, int *perm)
 		Gg.AG_element_unrank(q, v, 1, l, i);
 		for (u = 0; u < n; u++) {
 			v[u] = frobenius_power(v[u], k);
-			}
+		}
 		j = Gg.AG_element_rank(q, v, 1, l);
 		perm[i] = j;
-		}
+	}
 	FREE_int(v);
 }
 
@@ -2632,8 +2632,8 @@ void finite_field::all_affine_translations(int n, int *gens)
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < e; j++, k++) {
 			affine_translation(n, i, j, gens + k * degree);
-			}
 		}
+	}
 }
 
 void finite_field::affine_generators(int n,
@@ -2652,15 +2652,15 @@ void finite_field::affine_generators(int n,
 	if (f_translations) {
 		nb_gens += all_affine_translations_nb_gens(n);
 		base_len++;
-		}
+	}
 	if (f_multiplication) {
 		nb_gens++;
 		base_len++;
-		}
+	}
 	if (f_semilinear) {
 		nb_gens++;
 		base_len++;
-		}
+	}
 	
 	gens = NEW_int(nb_gens * degree);
 	the_base = NEW_lint(base_len);
@@ -2670,18 +2670,18 @@ void finite_field::affine_generators(int n,
 		all_affine_translations(n, gens);
 		k += all_affine_translations_nb_gens(n);
 		the_base[h++] = 0;
-		}
+	}
 	if (f_multiplication) {
 		affine_multiplication(n, multiplication_order,
 				gens + k * degree);
 		k++;
 		the_base[h++] = 1;
-		}
+	}
 	if (f_semilinear) {
 		affine_frobenius(n, frobenius_power, gens + k * degree);
 		k++;
 		the_base[h++] = p;
-		}
+	}
 }
 
 int finite_field::evaluate_bilinear_form(int n,
@@ -2705,7 +2705,7 @@ int finite_field::evaluate_standard_hyperbolic_bilinear_form(
 		cout << "finite_field::evaluate_standard_hyperbolic_bilinear_form "
 				"n must be even" << endl;
 		exit(1);
-		}
+	}
 	n2 = n >> 1;
 	c = 0;
 	for (i = 0; i < n2; i++) {
@@ -2713,7 +2713,7 @@ int finite_field::evaluate_standard_hyperbolic_bilinear_form(
 		b = mult(v1[2 * i + 1], v2[2 * i + 0]);
 		c = add(c, a);
 		c = add(c, b);
-		}
+	}
 	return c;
 }
  
@@ -2729,7 +2729,7 @@ int finite_field::evaluate_quadratic_form(int n, int nb_terms,
 		c = coeff[k];
 		d = mult(mult(c, xi), xj);
 		a = add(a, d);
-		}
+	}
 	return a;
 }
 
@@ -2745,7 +2745,7 @@ void finite_field::find_singular_vector_brute_force(int n,
 	
 	if (f_v) {
 		cout << "finite_field::find_singular_vector_brute_force" << endl;
-		}
+	}
 	v1 = NEW_int(n);
 	N = Gg.nb_AG_elements(n, q);
 	for (i = 2; i < N; i++) {
@@ -2757,12 +2757,12 @@ void finite_field::find_singular_vector_brute_force(int n,
 			int_vec_print(cout, v1, n);
 			cout << endl;
 			cout << "form value a=" << a << endl;
-			}
+		}
 		if (a == 0) {
 			int_vec_copy(v1, vec, n);
 			goto finish;
-			}
 		}
+	}
 	cout << "finite_field::find_singular_vector_brute_force "
 			"did not find a singular vector" << endl;
 	exit(1);
@@ -2782,11 +2782,11 @@ void finite_field::find_singular_vector(int n, int form_nb_terms,
 	
 	if (f_v) {
 		cout << "finite_field::find_singular_vector" << endl;
-		}
+	}
 	if (n < 3) {
 		cout << "finite_field::find_singular_vector n < 3" << endl;
 		exit(1);
-		}
+	}
 	v1 = NEW_int(n * n);
 	v2 = NEW_int(n * n);
 	v3 = NEW_int(n * n);
@@ -2803,16 +2803,16 @@ void finite_field::find_singular_vector(int n, int form_nb_terms,
 		int_vec_print(cout, v1, n);
 		cout << endl;
 		cout << "form value a=" << a << endl;
-		}
+	}
 	if (a == 0) {
 		int_vec_copy(v1, vec, n);
 		goto finish;
-		}
+	}
 	perp(n, 1, v1, Gram);
 	if (f_v) {
 		cout << "v1 perp:" << endl;
 		print_integer_matrix_width(cout, v1 + n, n - 1, n, n, 2);
-		}
+	}
 	Gg.AG_element_unrank(q, v2_coords, 1, n - 1, 1);
 	mult_matrix_matrix(v2_coords, v1 + n, v2, 1, n - 1, n,
 			0 /* verbose_level */);
@@ -2823,26 +2823,26 @@ void finite_field::find_singular_vector(int n, int form_nb_terms,
 		int_vec_print(cout, v2, n);
 		cout << endl;
 		cout << "form value b=" << b << endl;
-		}
+	}
 	if (b == 0) {
 		int_vec_copy(v2, vec, n);
 		goto finish;
-		}
+	}
 	perp(n, 1, v2, Gram);
 	if (f_v) {
 		cout << "v2 perp:" << endl;
 		print_integer_matrix_width(cout, v2 + n, n - 1, n, n, 2);
-		}
+	}
 	r3 = intersect_subspaces(n, n - 1, v1 + n, n - 1, v2 + n, 
 		k3, intersection, verbose_level);
 	if (f_v) {
 		cout << "intersection has dimension " << r3 << endl;
 		print_integer_matrix_width(cout, intersection, r3, n, n, 2);
-		}
+	}
 	if (r3 != n - 2) {
 		cout << "r3 = " << r3 << " should be " << n - 2 << endl;
 		exit(1);
-		}
+	}
 	Gg.AG_element_unrank(q, v3_coords, 1, n - 2, 1);
 	mult_matrix_matrix(v3_coords, intersection, v3, 1, n - 2, n,
 			0 /* verbose_level */);
@@ -2853,32 +2853,32 @@ void finite_field::find_singular_vector(int n, int form_nb_terms,
 		int_vec_print(cout, v3, n);
 		cout << endl;
 		cout << "form value c=" << c << endl;
-		}
+	}
 	if (c == 0) {
 		int_vec_copy(v3, vec, n);
 		goto finish;
-		}
+	}
 	if (f_v) {
 		cout << "calling abc2xy" << endl;
 		cout << "a=" << a << endl;
 		cout << "b=" << b << endl;
 		cout << "c=" << negate(c) << endl;
-		}
+	}
 	abc2xy(a, b, negate(c), x, y, verbose_level);
 	if (f_v) {
 		cout << "x=" << x << endl;
 		cout << "y=" << y << endl;
-		}
+	}
 	scalar_multiply_vector_in_place(x, v1, n);
 	scalar_multiply_vector_in_place(y, v2, n);
 	for (i = 0; i < n; i++) {
 		vec[i] = add(add(v1[i], v2[i]), v3[i]);
-		}
+	}
 	if (f_v) {
 		cout << "singular vector vec=";
 		int_vec_print(cout, vec, n);
 		cout << endl;
-		}
+	}
 	d = evaluate_quadratic_form(n, form_nb_terms,
 			form_i, form_j, form_coeff, vec);
 	if (d) {
@@ -2887,7 +2887,7 @@ void finite_field::find_singular_vector(int n, int form_nb_terms,
 		int_vec_print(cout, vec, n);
 		cout << endl;
 		exit(1);
-		}
+	}
 finish:
 	FREE_int(v1);
 	FREE_int(v2);
@@ -2916,25 +2916,25 @@ void finite_field::complete_hyperbolic_pair(
 		cout << endl;
 		cout << "Gram=" << endl;
 		print_integer_matrix_width(cout, Gram, 4, 4, 4, 2);
-		}
+	}
 	mult_matrix_matrix(vec1, Gram, v0, 1, n, n,
 			0 /* verbose_level */);
 	if (f_v) {
 		cout << "v0=";
 		int_vec_print(cout, v0, n);
 		cout << endl;
-		}
+	}
 	int_vec_zero(v1, n);
 	for (i = n - 1; i >= 0; i--) {
 		if (v0[i]) {
 			v1[i] = 1;
 			break;
-			}
 		}
+	}
 	if (i == -1) {
 		cout << "finite_field::complete_hyperbolic_pair i == -1" << endl;
 		exit(1);
-		}
+	}
 	a = dot_product(n, v0, v1);
 #if 0
 	int N;
@@ -2943,53 +2943,53 @@ void finite_field::complete_hyperbolic_pair(
 	if (f_v) {
 		cout << "number of elements in AG(" << n << ","
 				<< q << ")=" << N << endl;
-		}
+	}
 	for (i = 1; i < N; i++) {
 		if (f_v) {
 			cout << "unranking vector " << i << " / "
 					<< N << " in the affine geometry" << endl;
-			}
+		}
 		AG_element_unrank(q, v1, 1, n, i);
 		if (f_v) {
 			cout << "v1=";
 			int_vec_print(cout, v1, n);
 			cout << endl;
-			}
+		}
 		a = dot_product(n, v0, v1);
 		if (f_v) {
 			cout << "i=" << i << " trying vector ";
 			int_vec_print(cout, v1, n);
 			cout << " form value a=" << a << endl;
-			}
+		}
 		if (a)
 			break;
-		}
+	}
 	if (i == N) {
 		cout << "finite_field::complete_hyperbolic_pair "
 			"did not find a vector whose dot product is non-zero " << endl;
-		}
+	}
 #endif
 
 	if (a != 1) {
 		scalar_multiply_vector_in_place(inverse(a), v1, n);
-		}
+	}
 	if (f_v) {
 		cout << "normalized ";
 		int_vec_print(cout, v1, n);
 		cout << endl;
-		}
+	}
 	b = evaluate_quadratic_form(n, form_nb_terms,
 			form_i, form_j, form_coeff, v1);
 	b = negate(b);
 	for (i = 0; i < n; i++) {
 		vec2[i] = add(mult(b, vec1[i]), v1[i]);
-		}
+	}
 	if (f_v) {
 		cout << "finite_field::complete_hyperbolic_pair" << endl;
 		cout << "vec2=";
 		int_vec_print(cout, vec2, n);
 		cout << endl;
-		}
+	}
 	c = dot_product(n, v0, vec2);
 	if (c != 1) {
 		cout << "dot product is not 1, error" << endl;
@@ -3000,7 +3000,7 @@ void finite_field::complete_hyperbolic_pair(
 		cout << "vec2=";
 		int_vec_print(cout, vec2, n);
 		cout << endl;
-		}
+	}
 	FREE_int(v0);
 	FREE_int(v1);
 	
@@ -3016,19 +3016,19 @@ void finite_field::find_hyperbolic_pair(int n, int form_nb_terms,
 		find_singular_vector(n, form_nb_terms, 
 			form_i, form_j, form_coeff, Gram, 
 			vec1, verbose_level);
-		}
+	}
 	else {
 		find_singular_vector_brute_force(n, form_nb_terms, 
 			form_i, form_j, form_coeff, Gram, 
 			vec1, verbose_level);
-		}
+	}
 	if (f_v) {
 		cout << "finite_field::find_hyperbolic_pair, "
 				"found singular vector" << endl;
 		int_vec_print(cout, vec1, n);
 		cout << endl;
 		cout << "calling complete_hyperbolic_pair" << endl;
-		}
+	}
 	complete_hyperbolic_pair(n, form_nb_terms, 
 		form_i, form_j, form_coeff, Gram, 
 		vec1, vec2, verbose_level);
@@ -3052,18 +3052,18 @@ void finite_field::restrict_quadratic_form_list_coding(
 		j = form_j[h];
 		c = form_coeff[h];
 		C[i * n + j] = c;
-		}
+	}
 	if (f_v) {
 		cout << "finite_field::restrict_quadratic_form_list_coding "
 				"C=" << endl;
 		print_integer_matrix_width(cout, C, n, n, n, 2);
-		}
+	}
 	restrict_quadratic_form(k, n, basis, C, D, verbose_level);
 	if (f_v) {
 		cout << "finite_field::restrict_quadratic_form_list_coding "
 				"D=" << endl;
 		print_integer_matrix_width(cout, D, k, k, k, 2);
-		}
+	}
 	restricted_form_nb_terms = 0;
 	restricted_form_i = NEW_int(k * k);
 	restricted_form_j = NEW_int(k * k);
@@ -3073,13 +3073,13 @@ void finite_field::restrict_quadratic_form_list_coding(
 			c = D[i * k + j];
 			if (c == 0) {
 				continue;
-				}
+			}
 			restricted_form_i[restricted_form_nb_terms] = i;
 			restricted_form_j[restricted_form_nb_terms] = j;
 			restricted_form_coeff[restricted_form_nb_terms] = c;
 			restricted_form_nb_terms++;
-			}
 		}
+	}
 	FREE_int(C);
 	FREE_int(D);
 }
@@ -3094,7 +3094,7 @@ void finite_field::restrict_quadratic_form(int k, int n,
 	if (f_v) {
 		cout << "finite_field::restrict_quadratic_form" << endl;
 		print_integer_matrix_width(cout, C, n, n, n, 2);
-		}
+	}
 	int_vec_zero(D, k * k);
 	for (lambda = 0; lambda < k; lambda++) {
 		for (mu = 0; mu < k; mu++) {
@@ -3105,19 +3105,19 @@ void finite_field::restrict_quadratic_form(int k, int n,
 					a2 = basis[mu * n + j];
 					c = C[i * n + j];
 					d = add(d, mult(c, mult(a1, a2)));
-					}
-				}
-			if (mu < lambda) {
-				D[mu * k + lambda] = add(D[mu * k + lambda], d);
-				}
-			else {
-				D[lambda * k + mu] = add(D[lambda * k + mu], d);
 				}
 			}
+			if (mu < lambda) {
+				D[mu * k + lambda] = add(D[mu * k + lambda], d);
+			}
+			else {
+				D[lambda * k + mu] = add(D[lambda * k + mu], d);
+			}
 		}
+	}
 	if (f_v) {
 		print_integer_matrix_width(cout, D, k, k, k, 2);
-		}
+	}
 }
 
 int finite_field::compare_subspaces_ranked(
@@ -3143,7 +3143,7 @@ int finite_field::compare_subspaces_ranked(
 		cout << "set2: ";
 		int_vec_print(cout, set2, size);
 		cout << endl;
-		}
+	}
 	M1 = NEW_int(size * vector_space_dimension);
 	M2 = NEW_int(size * vector_space_dimension);
 	base_cols1 = NEW_int(vector_space_dimension);
@@ -3155,7 +3155,7 @@ int finite_field::compare_subspaces_ranked(
 		PG_element_unrank_modified(
 			M2 + i * vector_space_dimension,
 			1, vector_space_dimension, set2[i]);
-		}
+	}
 	if (f_v) {
 		cout << "matrix1:" << endl;
 		print_integer_matrix_width(cout, M1, size,
@@ -3163,7 +3163,7 @@ int finite_field::compare_subspaces_ranked(
 		cout << "matrix2:" << endl;
 		print_integer_matrix_width(cout, M2, size,
 			vector_space_dimension, vector_space_dimension, log10_of_q);
-		}
+	}
 	rk1 = Gauss_simple(M1, size, vector_space_dimension,
 			base_cols1, 0/*int verbose_level*/);
 	rk2 = Gauss_simple(M2, size, vector_space_dimension,
@@ -3184,7 +3184,7 @@ int finite_field::compare_subspaces_ranked(
 		cout << "base_cols2: ";
 		int_vec_print(cout, base_cols2, rk2);
 		cout << endl;
-		}
+	}
 	if (rk1 != rk2) {
 		if (f_v) {
 			cout << "the ranks differ, so the subspaces are not equal, "
@@ -3192,32 +3192,32 @@ int finite_field::compare_subspaces_ranked(
 			}
 		r = 1;
 		goto ret;
-		}
+	}
 	for (i = 0; i < rk1; i++) {
 		if (base_cols1[i] != base_cols2[i]) {
 			if (f_v) {
 				cout << "the base_cols differ in entry " << i
 						<< ", so the subspaces are not equal, "
 						"we return 1" << endl;
-				}
+			}
 			r = 1;
 			goto ret;
-			}
 		}
+	}
 	for (i = 0; i < size * vector_space_dimension; i++) {
 		if (M1[i] != M2[i]) {
 			if (f_v) {
 				cout << "the matrices differ in entry " << i
 						<< ", so the subspaces are not equal, "
 						"we return 1" << endl;
-				}
+			}
 			r = 1;
 			goto ret;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "the subspaces are equal, we return 0" << endl;
-		}
+	}
 	r = 0;
 ret:
 	FREE_int(M1);
@@ -3254,7 +3254,7 @@ int finite_field::compare_subspaces_ranked_with_unrank_function(
 		cout << "set2: ";
 		orbiter::foundations::int_vec_print(cout, set2, size);
 		cout << endl;
-		}
+	}
 	M1 = NEW_int(size * vector_space_dimension);
 	M2 = NEW_int(size * vector_space_dimension);
 	base_cols1 = NEW_int(vector_space_dimension);
@@ -3270,7 +3270,7 @@ int finite_field::compare_subspaces_ranked_with_unrank_function(
 		PG_element_unrank_modified(*this, M2 + i * vector_space_dimension, 
 			1, vector_space_dimension, set2[i]);
 #endif
-		}
+	}
 	if (f_v) {
 		cout << "matrix1:" << endl;
 		print_integer_matrix_width(cout, M1, size,
@@ -3280,7 +3280,7 @@ int finite_field::compare_subspaces_ranked_with_unrank_function(
 		print_integer_matrix_width(cout, M2, size,
 				vector_space_dimension, vector_space_dimension,
 				log10_of_q);
-		}
+	}
 	rk1 = Gauss_simple(M1, size,
 			vector_space_dimension, base_cols1,
 			0/*int verbose_level*/);
@@ -3305,40 +3305,40 @@ int finite_field::compare_subspaces_ranked_with_unrank_function(
 		cout << "base_cols2: ";
 		orbiter::foundations::int_vec_print(cout, base_cols2, rk2);
 		cout << endl;
-		}
+	}
 	if (rk1 != rk2) {
 		if (f_v) {
 			cout << "the ranks differ, so the subspaces are not equal, "
 					"we return 1" << endl;
-			}
+		}
 		r = 1;
 		goto ret;
-		}
+	}
 	for (i = 0; i < rk1; i++) {
 		if (base_cols1[i] != base_cols2[i]) {
 			if (f_v) {
 				cout << "the base_cols differ in entry " << i
 						<< ", so the subspaces are not equal, "
 						"we return 1" << endl;
-				}
+			}
 			r = 1;
 			goto ret;
-			}
 		}
+	}
 	for (i = 0; i < size * vector_space_dimension; i++) {
 		if (M1[i] != M2[i]) {
 			if (f_v) {
 				cout << "the matrices differ in entry " << i
 						<< ", so the subspaces are not equal, "
 						"we return 1" << endl;
-				}
+			}
 			r = 1;
 			goto ret;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "the subspaces are equal, we return 0" << endl;
-		}
+	}
 	r = 0;
 ret:
 	FREE_int(M1);
@@ -3366,7 +3366,7 @@ int finite_field::Gauss_canonical_form_ranked(
 		cout << "set1: ";
 		int_vec_print(cout, set1, size);
 		cout << endl;
-		}
+	}
 	M = NEW_int(size * vector_space_dimension);
 	base_cols = NEW_int(vector_space_dimension);
 	for (i = 0; i < size; i++) {
@@ -3374,13 +3374,13 @@ int finite_field::Gauss_canonical_form_ranked(
 			M + i * vector_space_dimension,
 			1, vector_space_dimension,
 			set1[i]);
-		}
+	}
 	if (f_v) {
 		cout << "matrix:" << endl;
 		print_integer_matrix_width(cout, M, size,
 			vector_space_dimension, vector_space_dimension,
 			log10_of_q);
-		}
+	}
 	rk = Gauss_simple(M, size,
 			vector_space_dimension, base_cols,
 			0/*int verbose_level*/);
@@ -3394,14 +3394,14 @@ int finite_field::Gauss_canonical_form_ranked(
 		cout << "base_cols: ";
 		int_vec_print(cout, base_cols, rk);
 		cout << endl;
-		}
+	}
 
 	for (i = 0; i < rk; i++) {
 		PG_element_rank_modified(
 			M + i * vector_space_dimension,
 			1, vector_space_dimension,
 			set2[i]);
-		}
+	}
 
 
 	FREE_int(M);
@@ -3441,20 +3441,20 @@ int finite_field::lexleast_canonical_form_ranked(
 		cout << "set1: ";
 		int_vec_print(cout, set1, size);
 		cout << endl;
-		}
+	}
 	tmp = NEW_int(vector_space_dimension);
 	M1 = NEW_int(size * vector_space_dimension);
 	base_cols = NEW_int(vector_space_dimension);
 	for (i = 0; i < size; i++) {
 		PG_element_unrank_modified(M1 + i * vector_space_dimension,
 			1, vector_space_dimension, set1[i]);
-		}
+	}
 	if (f_v) {
 		cout << "matrix:" << endl;
 		print_integer_matrix_width(cout, M1, size,
 				vector_space_dimension, vector_space_dimension,
 				log10_of_q);
-		}
+	}
 	
 	rk = Gauss_simple(M1, size, vector_space_dimension,
 			base_cols, 0/*int verbose_level*/);
@@ -3470,7 +3470,7 @@ int finite_field::lexleast_canonical_form_ranked(
 		cout << "base_cols: ";
 		int_vec_print(cout, base_cols, rk);
 		cout << endl;
-		}
+	}
 	N = NT.i_power_j(q, rk);
 	M2 = NEW_int(N * vector_space_dimension);
 	list_of_ranks = NEW_int(N);
@@ -3488,7 +3488,7 @@ int finite_field::lexleast_canonical_form_ranked(
 				vector_space_dimension);
 		if (a == 0) {
 			continue;
-			}
+		}
 		PG_element_rank_modified(
 				M2 + a * vector_space_dimension, 1,
 				vector_space_dimension, list_of_ranks_PG[a]);
@@ -3499,8 +3499,8 @@ int finite_field::lexleast_canonical_form_ranked(
 				}
 			list_of_ranks_PG_sorted[idx] = list_of_ranks_PG[a];
 			size_list++;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "expanded matrix with all elements in the space:" << endl;
 		print_integer_matrix_width(cout, M2, N,
@@ -3515,11 +3515,11 @@ int finite_field::lexleast_canonical_form_ranked(
 		cout << "list_of_ranks_PG_sorted:" << endl;
 		int_vec_print(cout, list_of_ranks_PG_sorted, size_list);
 		cout << endl;	
-		}
+	}
 	f_allowed = NEW_int(size_list);
 	for (i = 0; i < size_list; i++) {
 		f_allowed[i] = TRUE;
-		}
+	}
 
 	sz = 1;
 	for (i = 0; i < rk; i++) {
@@ -3531,16 +3531,16 @@ int finite_field::lexleast_canonical_form_ranked(
 			cout << "f_allowed=";
 			int_vec_print(cout, f_allowed, size_list);
 			cout << endl;
-			}
+		}
 		for (a = 0; a < size_list; a++) {
 			if (f_allowed[a]) {
 				break;
-				}
 			}
+		}
 		if (f_v) {
 			cout << "choosing a=" << a << " list_of_ranks_PG_sorted[a]="
 					<< list_of_ranks_PG_sorted[a] << endl;
-			}
+		}
 		basis_vectors[i] = list_of_ranks_PG_sorted[a];
 		PG_element_unrank_modified(M1 + i * vector_space_dimension,
 			1, vector_space_dimension, basis_vectors[i]);
@@ -3551,32 +3551,32 @@ int finite_field::lexleast_canonical_form_ranked(
 			int_vec_print(cout, M1 + i * vector_space_dimension,
 					vector_space_dimension);
 			cout << " sz=" << sz << " Sz=" << Sz << endl;
-			}
+		}
 		for (h = 0; h < size_list; h++) {
 			if (list_of_ranks_PG_sorted[h] == basis_vectors[i]) {
 				if (f_v) {
 					cout << "disallowing " << h << endl;
-					}
+				}
 				f_allowed[h] = FALSE;
 				break;
-				}
 			}
+		}
 		for (j = sz; j < Sz; j++) {
 			Gg.AG_element_unrank(q, v, 1, i + 1, j);
 			if (f_v) {
 				cout << "j=" << j << " v=";
 				int_vec_print(cout, v, i + 1);
 				cout << endl;
-				}
+			}
 #if 0
 			for (h = 0; h < i + 1; h++) {
 				w[i - h] = v[h];
-				}
+			}
 			if (f_v) {
 				cout << " w=";
 				int_vec_print(cout, w, i + 1);
 				cout << endl;
-				}
+			}
 #endif
 			mult_matrix_matrix(v/*w*/, M1, tmp, 1, i + 1,
 					vector_space_dimension,
@@ -3585,46 +3585,46 @@ int finite_field::lexleast_canonical_form_ranked(
 				cout << " tmp=";
 				int_vec_print(cout, tmp, vector_space_dimension);
 				cout << endl;
-				}
+			}
 			PG_element_rank_modified(tmp, 1,
 					vector_space_dimension, a);
 			if (f_v) {
 				cout << "has rank " << a << endl;
-				}
+			}
 			for (h = 0; h < size_list; h++) {
 				if (list_of_ranks_PG_sorted[h] == a) {
 					if (f_v) {
 						cout << "disallowing " << h << endl;
-						}
+					}
 					f_allowed[h] = FALSE;
 					break;
-					}
 				}
 			}
-		sz = Sz;	
 		}
+		sz = Sz;	
+	}
 	if (f_v) {
 		cout << "basis_vectors by rank: ";
 		int_vec_print(cout, basis_vectors, rk);
 		cout << endl;
-		}
+	}
 	if (f_v) {
 		cout << "basis_vectors by coordinates: " << endl;
 		print_integer_matrix_width(cout, M1, size,
 				vector_space_dimension, vector_space_dimension,
 				log10_of_q);
 		cout << endl;
-		}
+	}
 
 	for (i = 0; i < rk; i++) {
 		PG_element_rank_modified(M1 + i * vector_space_dimension,
 			1, vector_space_dimension, set2[i]);
-		}
+	}
 	if (f_v) {
 		cout << "basis_vectors by rank again (double check): ";
 		int_vec_print(cout, set2, rk);
 		cout << endl;
-		}
+	}
 
 
 	FREE_int(tmp);

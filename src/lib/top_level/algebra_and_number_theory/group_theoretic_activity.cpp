@@ -3026,29 +3026,6 @@ void group_theoretic_activity::do_six_arcs(
 	}
 
 
-#if 0
-	action *A;
-
-	A = NEW_OBJECT(action);
-
-
-	int f_semilinear = TRUE;
-	number_theory_domain NT;
-
-	if (NT.is_prime(F->q)) {
-		f_semilinear = FALSE;
-	}
-
-	{
-		vector_ge *nice_gens;
-		A->init_projective_group(3, F,
-				f_semilinear, TRUE /*f_basis*/, TRUE /* f_init_sims */,
-				nice_gens,
-				0 /*verbose_level*/);
-		FREE_OBJECT(nice_gens);
-	}
-#endif
-
 
 	if (f_v) {
 		cout << "group_theoretic_activity::do_six_arcs "
@@ -3147,13 +3124,13 @@ void group_theoretic_activity::do_six_arcs(
 
 		eckardt_point_info *E;
 
-		E = Surf->P2->compute_eckardt_point_info(Surf, Arc6, verbose_level);
+		E = Surf->P2->compute_eckardt_point_info(Surf, Arc6, 0/*verbose_level*/);
 
 
 		Nb_E[h] = E->nb_E;
 		Ago[h] = ago.as_int();
 
-		cout << h << " : " << a << "," << b << "," << c << "," << d << " : " << E->nb_E << " : " << ago << endl;
+		//cout << h << " : " << a << "," << b << "," << c << "," << d << " : " << E->nb_E << " : " << ago << endl;
 
 		FREE_OBJECT(E);
 	}
@@ -3199,21 +3176,6 @@ void group_theoretic_activity::do_six_arcs(
 	FREE_int(Nb_E);
 	FREE_int(Ago);
 
-#if 0
-	if (f_v) {
-		cout << "group_theoretic_activity::do_six_arcs "
-				"before SoA->investigate_surface_and_write_report:" << endl;
-	}
-
-	SoA->investigate_surface_and_write_report(
-			A,
-			SC,
-			Six_arcs,
-			Descr->f_surface_clebsch,
-			Descr->f_surface_codes,
-			Descr->f_surface_quartic,
-			verbose_level);
-#endif
 
 	FREE_OBJECT(Six_arcs);
 	FREE_OBJECT(Six_arc_descr);

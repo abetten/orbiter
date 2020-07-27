@@ -336,17 +336,12 @@ MODULES= \
 		top_level/geometry/arc_generator_description.o \
 		top_level/geometry/arc_generator.o \
 		top_level/geometry/arc_lifting_simeon.o \
-		top_level/geometry/arc_lifting.o \
-		top_level/geometry/arc_orbits_on_pairs.o \
-		top_level/geometry/arc_partition.o \
 		top_level/geometry/blt_set_classify.o \
 		top_level/geometry/BLT_set_create_description.o \
 		top_level/geometry/BLT_set_create.o \
 		top_level/geometry/blt_set_with_action.o \
 		top_level/geometry/choose_points_or_lines.o \
 		top_level/geometry/classify_cubic_curves.o \
-		top_level/geometry/classify_double_sixes.o \
-		top_level/geometry/classify_trihedral_pairs.o \
 		top_level/geometry/cubic_curve_with_action.o \
 		top_level/geometry/hermitian_spreads_classify.o \
 		top_level/geometry/hill_cap.o \
@@ -364,27 +359,14 @@ MODULES= \
 		top_level/geometry/recoordinatize.o \
 		top_level/geometry/search_blocking_set.o \
 		top_level/geometry/singer_cycle.o \
-		top_level/geometry/six_arcs_not_on_a_conic.o \
 		top_level/geometry/spread_classify.o \
 		top_level/geometry/spread_classify2.o \
 		top_level/geometry/spread_create_description.o \
 		top_level/geometry/spread_create.o \
 		top_level/geometry/spread_lifting.o \
 		top_level/geometry/spread_table_with_selection.o \
-		top_level/geometry/surface_classify_using_arc.o \
-		top_level/geometry/surface_classify_wedge.o \
-		top_level/geometry/surface_clebsch_map.o \
-		top_level/geometry/surface_create_by_arc_lifting.o \
-		top_level/geometry/surface_create_description.o \
-		top_level/geometry/surface_create.o \
-		top_level/geometry/surface_object_tangent_cone.o \
-		top_level/geometry/surface_object_with_action.o \
-		top_level/geometry/surface_study.o \
-		top_level/geometry/surface_with_action.o \
-		top_level/geometry/surfaces_arc_lifting.o \
 		top_level/geometry/tensor_classify.o \
 		top_level/geometry/translation_plane_via_andre_model.o \
-		top_level/geometry/trihedral_pair_with_action.o \
 		top_level/isomorph/isomorph.o \
 		top_level/isomorph/isomorph_arguments.o \
 		top_level/isomorph/isomorph_database.o \
@@ -399,6 +381,24 @@ MODULES= \
 		top_level/orbits/orbit_of_subspaces.o \
 		top_level/solver/exact_cover.o \
 		top_level/solver/exact_cover_arguments.o \
+		top_level/surfaces/arc_lifting.o \
+		top_level/surfaces/arc_orbits_on_pairs.o \
+		top_level/surfaces/arc_partition.o \
+		top_level/surfaces/classify_double_sixes.o \
+		top_level/surfaces/classify_trihedral_pairs.o \
+		top_level/surfaces/six_arcs_not_on_a_conic.o \
+		top_level/surfaces/surface_classify_using_arc.o \
+		top_level/surfaces/surface_classify_wedge.o \
+		top_level/surfaces/surface_clebsch_map.o \
+		top_level/surfaces/surface_create_by_arc_lifting.o \
+		top_level/surfaces/surface_create_description.o \
+		top_level/surfaces/surface_create.o \
+		top_level/surfaces/surface_object_tangent_cone.o \
+		top_level/surfaces/surface_object_with_action.o \
+		top_level/surfaces/surface_study.o \
+		top_level/surfaces/surface_with_action.o \
+		top_level/surfaces/surfaces_arc_lifting.o \
+		top_level/surfaces/trihedral_pair_with_action.o \
 		interfaces/interface_algebra.o \
 		interfaces/interface_coding_theory.o \
 		interfaces/interface_combinatorics.o \

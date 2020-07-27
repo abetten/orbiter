@@ -132,7 +132,8 @@ void algebra_global::search_for_primitive_polynomials(
 			continue;
 		}
 		if (f_v) {
-			cout << "algebra_global::search_for_primitive_polynomials considering the prime " << p << endl;
+			cout << "algebra_global::search_for_primitive_polynomials "
+					"considering the prime " << p << endl;
 		}
 
 		{
@@ -157,11 +158,13 @@ void algebra_global::search_for_primitive_polynomials(
 				cout << endl;
 			}
 			if (f_v) {
-				cout << "algebra_global::search_for_primitive_polynomials before FX.delete_object(m)" << endl;
+				cout << "algebra_global::search_for_primitive_polynomials "
+						"before FX.delete_object(m)" << endl;
 			}
 			FX.delete_object(m);
 			if (f_v) {
-				cout << "algebra_global::search_for_primitive_polynomials after FX.delete_object(m)" << endl;
+				cout << "algebra_global::search_for_primitive_polynomials "
+						"after FX.delete_object(m)" << endl;
 			}
 		}
 	}
@@ -567,13 +570,13 @@ int algebra_global::subprimitive(int q, int h)
 	f = (Q - 1) / (q - 1);
 	cout << "q=" << q << " h=" << h << endl;
 	//cout << " Q=" << Q << " f=" << f << endl;
-	int *S,*C,*SM,*CM;
+	int *S, *C, *SM, *CM;
 
 
-	S = new int[f * (q - 1)];
-	C = new int[f * (q - 1)];
-	SM = new int[Q];
-	CM = new int[q - 1];
+	S = NEW_int(f * (q - 1));
+	C = NEW_int(f * (q - 1));
+	SM = NEW_int(Q);
+	CM = NEW_int(q - 1);
 	for (k = 0; k < Q; k++)
 		SM[k] = 0;
 	for (k = 0; k < q - 1; k++)
@@ -630,13 +633,13 @@ int algebra_global::subprimitive(int q, int h)
 		}
 
 	//cout << "delete S" << endl;
-	delete [] S;
+	FREE_int(S);
 	//cout << "delete C" << endl;
-	delete [] C;
+	FREE_int(C);
 	//cout << "delete SM" << endl;
-	delete [] SM;
+	FREE_int(SM);
 	//cout << "delete CM" << endl;
-	delete [] CM;
+	FREE_int(CM);
 	return r;
 }
 
@@ -705,23 +708,23 @@ void algebra_global::gl_random_matrix(int k, int q, int verbose_level)
 
 
 	{
-	unipoly_domain U(&F);
+		unipoly_domain U(&F);
 
 
 
-	U.create_object_by_rank(char_poly, 0, __FILE__, __LINE__, verbose_level);
+		U.create_object_by_rank(char_poly, 0, __FILE__, __LINE__, verbose_level);
 
-	U.characteristic_polynomial(M, k, char_poly, verbose_level - 2);
+		U.characteristic_polynomial(M, k, char_poly, verbose_level - 2);
 
-	cout << "The characteristic polynomial is ";
-	U.print_object(char_poly, cout);
-	cout << endl;
+		cout << "The characteristic polynomial is ";
+		U.print_object(char_poly, cout);
+		cout << endl;
 
-	U.substitute_matrix_in_polynomial(char_poly, M, M2, k, verbose_level);
-	cout << "After substitution, the matrix is " << endl;
-	int_matrix_print(M2, k, k);
+		U.substitute_matrix_in_polynomial(char_poly, M, M2, k, verbose_level);
+		cout << "After substitution, the matrix is " << endl;
+		int_matrix_print(M2, k, k);
 
-	U.delete_object(char_poly);
+		U.delete_object(char_poly);
 
 	}
 	FREE_int(M);
@@ -759,7 +762,8 @@ const char *algebra_global::plus_minus_letter(int epsilon)
 	exit(1);
 }
 
-void algebra_global::make_Hamming_graph_and_write_file(int n, int q, int f_projective, int verbose_level)
+void algebra_global::make_Hamming_graph_and_write_file(int n, int q,
+		int f_projective, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

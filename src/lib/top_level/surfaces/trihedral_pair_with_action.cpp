@@ -1418,7 +1418,8 @@ void trihedral_pair_with_action::report_iso_type_as_double_triplets(ostream &ost
 
 
 	for (i = 0; i < nb_double_triplet_types; i++) {
-		ost << "type value " << Double_triplet_type_values[i] << " appears " << Double_triplet_types->Set_size[i]
+		ost << "type value " << Double_triplet_type_values[i]
+				<< " appears " << Double_triplet_types->Set_size[i]
 				<< " times for these trihedral pairs: ";
 		lint_vec_print(ost, Double_triplet_types->Sets[i], Double_triplet_types->Set_size[i]);
 		ost << "\\\\" << endl;

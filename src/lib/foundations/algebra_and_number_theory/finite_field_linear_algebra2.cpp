@@ -25,16 +25,15 @@ void finite_field::reduce_mod_subspace_and_get_coefficient_vector(
 	int i, idx;
 
 	if (f_v) {
-		cout << "finite_field::reduce_mod_subspace_and_get_"
-				"coefficient_vector: v=";
+		cout << "finite_field::reduce_mod_subspace_and_get_coefficient_vector: v=";
 		int_vec_print(cout, v, len);
 		cout << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "finite_field::reduce_mod_subspace_and_get_"
 				"coefficient_vector subspace basis:" << endl;
 		print_integer_matrix_width(cout, basis, k, len, len, log10_of_q);
-		}
+	}
 	for (i = 0; i < k; i++) {
 		idx = base_cols[i];
 		if (basis[i * len + idx] != 1) {
@@ -45,7 +44,7 @@ void finite_field::reduce_mod_subspace_and_get_coefficient_vector(
 			print_integer_matrix_width(cout, basis,
 					k, len, len, log10_of_q);
 			exit(1);
-			}
+		}
 		coefficients[i] = v[idx];
 		if (v[idx]) {
 			Gauss_step(basis + i * len, v, len, idx, 0/*verbose_level*/);
@@ -53,18 +52,17 @@ void finite_field::reduce_mod_subspace_and_get_coefficient_vector(
 				cout << "finite_field::reduce_mod_subspace_and_get_"
 						"coefficient_vector fatal: v[idx]" << endl;
 				exit(1);
-				}
 			}
 		}
+	}
 	if (f_v) {
-		cout << "finite_field::reduce_mod_subspace_and_get_"
-				"coefficient_vector after: v=";
+		cout << "finite_field::reduce_mod_subspace_and_get_coefficient_vector after: v=";
 		int_vec_print(cout, v, len);
 		cout << endl;
 		cout << "coefficients=";
 		int_vec_print(cout, coefficients, k);
 		cout << endl;
-		}
+	}
 }
 
 void finite_field::reduce_mod_subspace(int k,
@@ -79,12 +77,12 @@ void finite_field::reduce_mod_subspace(int k,
 		cout << "finite_field::reduce_mod_subspace before: v=";
 		int_vec_print(cout, v, len);
 		cout << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "finite_field::reduce_mod_subspace subspace basis:" << endl;
 		print_integer_matrix_width(cout, basis, k,
 				len, len, log10_of_q);
-		}
+	}
 	for (i = 0; i < k; i++) {
 		idx = base_cols[i];
 		if (v[idx]) {
@@ -94,14 +92,14 @@ void finite_field::reduce_mod_subspace(int k,
 				cout << "finite_field::reduce_mod_"
 						"subspace fatal: v[idx]" << endl;
 				exit(1);
-				}
 			}
 		}
+	}
 	if (f_v) {
 		cout << "finite_field::reduce_mod_subspace after: v=";
 		int_vec_print(cout, v, len);
 		cout << endl;
-		}
+	}
 }
 
 int finite_field::is_contained_in_subspace(int k,
@@ -116,7 +114,7 @@ int finite_field::is_contained_in_subspace(int k,
 		cout << "finite_field::is_contained_in_subspace testing v=";
 		int_vec_print(cout, v, len);
 		cout << endl;
-		}
+	}
 	reduce_mod_subspace(k, len, basis,
 			base_cols, v, verbose_level - 1);
 	for (i = 0; i < len; i++) {
@@ -124,14 +122,14 @@ int finite_field::is_contained_in_subspace(int k,
 			if (f_v) {
 				cout << "finite_field::is_contained_in_subspace "
 						"is NOT in the subspace" << endl;
-				}
-			return FALSE;
 			}
+			return FALSE;
 		}
+	}
 	if (f_v) {
 		cout << "finite_field::is_contained_in_subspace "
 				"is contained in the subspace" << endl;
-		}
+	}
 	return TRUE;
 }
 
@@ -152,9 +150,9 @@ void finite_field::compute_and_print_projective_weights(
 	for (i = 0; i <= n; i++) {
 		if (weights[i] == 0) {
 			continue;
-			}
-		ost << i << " : " << weights[i] << endl;
 		}
+		ost << i << " : " << weights[i] << endl;
+	}
 	FREE_int(weights);
 }
 
@@ -168,7 +166,7 @@ int finite_field::code_minimum_distance(int n, int k,
 
 	if (f_v) {
 		cout << "finite_field::code_minimum_distance" << endl;
-		}
+	}
 	weight_enumerator = NEW_int(n + 1);
 	int_vec_zero(weight_enumerator, n + 1);
 	code_weight_enumerator_fast(n, k,
@@ -178,13 +176,13 @@ int finite_field::code_minimum_distance(int n, int k,
 	for (i = 1; i <= n; i++) {
 		if (weight_enumerator[i]) {
 			break;
-			}
 		}
+	}
 	if (i == n + 1) {
 		cout << "finite_field::code_minimum_distance "
 				"the minimum weight is undefined" << endl;
 		exit(1);
-		}
+	}
 	FREE_int(weight_enumerator);
 	return i;
 }
@@ -202,11 +200,11 @@ void finite_field::codewords_affine(int n, int k,
 
 	if (f_v) {
 		cout << "finite_field::codewords_affine" << endl;
-		}
+	}
 	N = Gg.nb_AG_elements(k, q);
 	if (f_v) {
 		cout << N << " messages" << endl;
-		}
+	}
 	msg = NEW_int(k);
 	word = NEW_int(n);
 
@@ -215,12 +213,12 @@ void finite_field::codewords_affine(int n, int k,
 		mult_vector_from_the_left(msg, code, word, k, n);
 		rk = Gg.AG_element_rank(q, word, 1, n);
 		codewords[h] = rk;
-		}
+	}
 	FREE_int(msg);
 	FREE_int(word);
 	if (f_v) {
 		cout << "finite_field::codewords_affine done" << endl;
-		}
+	}
 }
 
 void finite_field::code_projective_weight_enumerator(
@@ -242,11 +240,11 @@ void finite_field::code_projective_weight_enumerator(
 
 	if (f_v) {
 		cout << "finite_field::code_projective_weight_enumerator" << endl;
-		}
+	}
 	N = Gg.nb_AG_elements(k, q);
 	if (f_v) {
 		cout << N << " messages" << endl;
-		}
+	}
 	msg = NEW_int(k);
 	word = NEW_int(n);
 
@@ -266,29 +264,29 @@ void finite_field::code_projective_weight_enumerator(
 						continue;
 					cout << setw(5) << i << " : " << setw(10)
 							<< weight_enumerator[i] << endl;
-					}
 				}
 			}
+		}
 		Gg.AG_element_unrank(q, msg, 1, k, h);
 		mult_vector_from_the_left(msg, code, word, k, n);
 		wt = 0;
 		for (i = 0; i < n; i++) {
 			if (word[i]) {
 				wt++;
-				}
 			}
-		weight_enumerator[wt]++;
 		}
+		weight_enumerator[wt]++;
+	}
 	if (f_v) {
 		cout << "the weight enumerator is:" << endl;
 		for (i = 0; i <= n; i++) {
 			if (weight_enumerator[i] == 0) {
 				continue;
-				}
+			}
 			cout << setw(5) << i << " : " << setw(10)
 					<< weight_enumerator[i] << endl;
-			}
 		}
+	}
 
 
 	FREE_int(msg);
@@ -314,11 +312,11 @@ void finite_field::code_weight_enumerator(
 
 	if (f_v) {
 		cout << "finite_field::code_weight_enumerator" << endl;
-		}
+	}
 	N = Gg.nb_AG_elements(k, q);
 	if (f_v) {
 		cout << N << " messages" << endl;
-		}
+	}
 	msg = NEW_int(k);
 	word = NEW_int(n);
 
@@ -338,17 +336,17 @@ void finite_field::code_weight_enumerator(
 						continue;
 					cout << setw(5) << i << " : " << setw(10)
 							<< weight_enumerator[i] << endl;
-					}
 				}
 			}
+		}
 		Gg.AG_element_unrank(q, msg, 1, k, h);
 		mult_vector_from_the_left(msg, code, word, k, n);
 		wt = 0;
 		for (i = 0; i < n; i++) {
 			if (word[i]) {
 				wt++;
-				}
 			}
+		}
 		weight_enumerator[wt]++;
 		}
 	if (f_v) {
@@ -356,11 +354,11 @@ void finite_field::code_weight_enumerator(
 		for (i = 0; i <= n; i++) {
 			if (weight_enumerator[i] == 0) {
 				continue;
-				}
+			}
 			cout << setw(5) << i << " : " << setw(10)
 					<< weight_enumerator[i] << endl;
-			}
 		}
+	}
 
 
 	FREE_int(msg);
@@ -386,11 +384,11 @@ void finite_field::code_weight_enumerator_fast(int n, int k,
 
 	if (f_v) {
 		cout << "finite_field::code_weight_enumerator" << endl;
-		}
+	}
 	N = Gg.nb_PG_elements(k - 1, q);
 	if (f_v) {
 		cout << N << " projective messages" << endl;
-		}
+	}
 	msg = NEW_int(k);
 	word = NEW_int(n);
 
@@ -411,9 +409,9 @@ void finite_field::code_weight_enumerator_fast(int n, int k,
 						continue;
 					cout << setw(5) << i << " : " << setw(10)
 							<< (q - 1) * weight_enumerator[i] << endl;
-					}
 				}
 			}
+		}
 		PG_element_unrank_modified(msg, 1, k, h);
 		//AG_element_unrank(q, msg, 1, k, h);
 		mult_vector_from_the_left(msg, code, word, k, n);
@@ -421,8 +419,8 @@ void finite_field::code_weight_enumerator_fast(int n, int k,
 		for (i = 0; i < n; i++) {
 			if (word[i]) {
 				wt++;
-				}
 			}
+		}
 		weight_enumerator[wt]++;
 		if (f_vv) {
 			cout << h << " / " << N << " msg: ";
@@ -430,22 +428,22 @@ void finite_field::code_weight_enumerator_fast(int n, int k,
 			cout << " codeword ";
 			int_vec_print(cout, word, n);
 			cout << " weight " << wt << endl;
-			}
 		}
+	}
 	weight_enumerator[0] = 1;
 	for (i = 1; i <= n; i++) {
 		weight_enumerator[i] *= q - 1;
-		}
+	}
 	if (f_v) {
 		cout << "the weight enumerator is:" << endl;
 		for (i = 0; i <= n; i++) {
 			if (weight_enumerator[i] == 0) {
 				continue;
-				}
+			}
 			cout << setw(5) << i << " : " << setw(10)
 					<< weight_enumerator[i] << endl;
-			}
 		}
+	}
 
 
 	FREE_int(msg);
@@ -471,11 +469,11 @@ void finite_field::code_projective_weights(
 
 	if (f_v) {
 		cout << "finite_field::code_projective_weights" << endl;
-		}
+	}
 	N = Gg.nb_PG_elements(k - 1, q);
 	if (f_v) {
 		cout << N << " projective messages" << endl;
-		}
+	}
 	weights = NEW_int(N);
 	msg = NEW_int(k);
 	word = NEW_int(n);
@@ -487,7 +485,7 @@ void finite_field::code_projective_weights(
 			cout << setw(10) << h << " / " << setw(10) << N << " : ";
 			Os.time_check_delta(cout, dt);
 			cout << endl;
-			}
+		}
 		PG_element_unrank_modified(msg, 1, k, h);
 		//AG_element_unrank(q, msg, 1, k, h);
 		mult_vector_from_the_left(msg, code, word, k, n);
@@ -495,13 +493,13 @@ void finite_field::code_projective_weights(
 		for (i = 0; i < n; i++) {
 			if (word[i]) {
 				wt++;
-				}
 			}
-		weights[h] = wt;
 		}
+		weights[h] = wt;
+	}
 	if (f_v) {
 		cout << "finite_field::code_projective_weights done" << endl;
-		}
+	}
 
 
 	FREE_int(msg);
@@ -518,7 +516,7 @@ int finite_field::is_subspace(int d, int dim_U,
 
 	if (f_v) {
 		cout << "finite_field::is_subspace" << endl;
-		}
+	}
 	Basis = NEW_int((dim_V + 1) * d);
 	for (h = 0; h < dim_U; h++) {
 
@@ -528,16 +526,15 @@ int finite_field::is_subspace(int d, int dim_U,
 		if (rk > dim_V) {
 			ret = FALSE;
 			goto done;
-			}
 		}
+	}
 	ret = TRUE;
 done:
 	FREE_int(Basis);
 	return ret;
 }
 
-void finite_field::Kronecker_product(int *A, int *B,
-	int n, int *AB)
+void finite_field::Kronecker_product(int *A, int *B, int n, int *AB)
 {
 	int i, j, I, J, u, v, a, b, c, n2;
 
@@ -552,10 +549,10 @@ void finite_field::Kronecker_product(int *A, int *B,
 					u = I * n + i;
 					v = J * n + j;
 					AB[u * n2 + v] = c;
-					}
 				}
 			}
 		}
+	}
 }
 
 void finite_field::Kronecker_product_square_but_arbitrary(
@@ -571,7 +568,7 @@ void finite_field::Kronecker_product_square_but_arbitrary(
 				<< endl;
 		cout << "na=" << na << endl;
 		cout << "nb=" << nb << endl;
-		}
+	}
 	N = na * nb;
 	if (f_v) {
 		cout << "N=" << N << endl;
@@ -586,14 +583,14 @@ void finite_field::Kronecker_product_square_but_arbitrary(
 					u = I * na + i;
 					v = J * na + j;
 					AB[u * N + v] = c;
-					}
 				}
 			}
 		}
+	}
 	if (f_v) {
 		cout << "finite_field::Kronecker_product_square_but_arbitrary "
 				"done" << endl;
-		}
+	}
 }
 
 int finite_field::dependency(int d,
@@ -611,7 +608,7 @@ int finite_field::dependency(int d,
 	if (f_v) {
 		cout << "finite_field::dependency" << endl;
 		cout << "m = " << m << endl;
-		}
+	}
 	deg = d;
 	if (f_vv) {
 		cout << "finite_field::dependency A=" << endl;
@@ -619,11 +616,11 @@ int finite_field::dependency(int d,
 		cout << "v = ";
 		orbiter::foundations::int_vec_print(cout, v, deg);
 		cout << endl;
-		}
+	}
 	// fill the m-th row of matrix A with v^rho:
 	for (j = 0; j < deg; j++) {
 		A[m * deg + j] = v[rho[j]];
-		}
+	}
 	if (f_vv) {
 		cout << "finite_field::dependency "
 				"after putting in row " << m << " A=" << endl;
@@ -631,21 +628,21 @@ int finite_field::dependency(int d,
 		cout << "rho = ";
 		orbiter::foundations::int_vec_print(cout, rho, deg);
 		cout << endl;
-		}
+	}
 	for (k = 0; k < m; k++) {
 
 		if (f_vv) {
 			cout << "finite_field::dependency "
 					"k=" << k << " A=" << endl;
 			int_matrix_print(A, m + 1, deg);
-			}
+		}
 
 		for (j = k + 1; j < deg; j++) {
 
 			if (f_vv) {
 				cout << "finite_field::dependency "
 						"j=" << j << endl;
-				}
+			}
 
 			A[m * deg + j] = mult(A[k * deg + k], A[m * deg + j]);
 
@@ -656,16 +653,16 @@ int finite_field::dependency(int d,
 			if (k > 0) {
 				c = inverse(A[(k - 1) * deg + k - 1]);
 				A[m * deg + j] = mult(A[m * deg + j], c);
-				}
-			} // next j
+			}
+		} // next j
 
 		if (f_vv) {
 			cout << "finite_field::dependency "
 					"k=" << k << " done, A=" << endl;
 			int_matrix_print(A, m + 1, deg);
-			}
+		}
 
-		} // next k
+	} // next k
 	if (f_vv) {
 		cout << "finite_field::dependency "
 				"m=" << m << " after reapply, A=" << endl;
@@ -673,7 +670,7 @@ int finite_field::dependency(int d,
 		cout << "rho = ";
 		orbiter::foundations::int_vec_print(cout, rho, deg);
 		cout << endl;
-		}
+	}
 
 	f_null = (m == deg);
 	if (!f_null) {
@@ -685,13 +682,13 @@ int finite_field::dependency(int d,
 		j = m;
 		while ((A[m * deg + j] == 0) && (j < deg - 1)) {
 			j++;
-			}
+		}
 		f_null = (A[m * deg + j] == 0);
 		if (!f_null && j > m) {
 			if (f_vv) {
 				cout << "finite_field::dependency "
 						"choosing column " << j << endl;
-				}
+			}
 
 			// swapping columns i and j:
 
@@ -699,14 +696,14 @@ int finite_field::dependency(int d,
 				c = A[i * deg + m];
 				A[i * deg + m] = A[i * deg + j];
 				A[i * deg + j] = c;
-				} // next i
+			} // next i
 
 			// updating the permutation rho:
 			c = rho[m];
 			rho[m] = rho[j];
 			rho[j] = c;
-			}
 		}
+	}
 	if (f_vv) {
 		cout << "finite_field::dependency m=" << m
 				<< " after pivoting, A=" << endl;
@@ -714,12 +711,12 @@ int finite_field::dependency(int d,
 		cout << "rho = ";
 		orbiter::foundations::int_vec_print(cout, rho, deg);
 		cout << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "finite_field::dependency "
 				"done, f_null = " << f_null << endl;
-		}
+	}
 	return f_null;
 }
 
@@ -740,7 +737,7 @@ void finite_field::order_ideal_generator(int d,
 	if (f_v) {
 		cout << "finite_field::order_ideal_generator "
 				"d = " << d << " idx = " << idx << endl;
-		}
+	}
 	deg = d;
 
 	v = NEW_int(deg);
@@ -754,7 +751,7 @@ void finite_field::order_ideal_generator(int d,
 	// make rho the identity permutation:
 	for (i = 0; i < deg; i++) {
 		rho[i] = i;
-		}
+	}
 
 	m = 0;
 	f_null = dependency(d, v, A, m, rho, verbose_level - 1);
@@ -774,8 +771,8 @@ void finite_field::order_ideal_generator(int d,
 			cout << "finite_field::order_ideal_generator "
 					"m == deg && ! f_null" << endl;
 			exit(1);
-			}
 		}
+	}
 
 	mue_deg = m;
 	mue[m] = 1;
@@ -784,15 +781,15 @@ void finite_field::order_ideal_generator(int d,
 		if (f_v) {
 			cout << "finite_field::order_ideal_generator "
 					"mue[" << j << "] = " << mue[j] << endl;
-			}
+		}
 		for (i = m - 1; i >= j + 1; i--) {
 			a = mult(mue[i], A[i * deg + j]);
 			mue[j] = add(mue[j], a);
 			if (f_v) {
 				cout << "finite_field::order_ideal_generator "
 						"mue[" << j << "] = " << mue[j] << endl;
-				}
 			}
+		}
 		a = negate(inverse(A[j * deg + j]));
 		mue[j] = mult(mue[j], a);
 			//g_asr(- mue[j] * -
@@ -800,8 +797,8 @@ void finite_field::order_ideal_generator(int d,
 		if (f_v) {
 			cout << "finite_field::order_ideal_generator "
 					"mue[" << j << "] = " << mue[j] << endl;
-			}
 		}
+	}
 
 	if (f_v) {
 		cout << "finite_field::order_ideal_generator "
@@ -810,14 +807,14 @@ void finite_field::order_ideal_generator(int d,
 		cout << "mue = ";
 		orbiter::foundations::int_vec_print(cout, mue, mue_deg + 1);
 		cout << endl;
-		}
+	}
 
 	FREE_int(v);
 	FREE_int(v1);
 	FREE_int(rho);
 	if (f_v) {
 		cout << "finite_field::order_ideal_generator done" << endl;
-		}
+	}
 }
 
 void finite_field::span_cyclic_module(int *A,
@@ -829,7 +826,7 @@ void finite_field::span_cyclic_module(int *A,
 
 	if (f_v) {
 		cout << "finite_field::span_cyclic_module" << endl;
-		}
+	}
 	w1 = NEW_int(n);
 	w2 = NEW_int(n);
 	int_vec_copy(v, w1, n);
@@ -838,16 +835,16 @@ void finite_field::span_cyclic_module(int *A,
 		// put w1 in the j-th column of A:
 		for (i = 0; i < n; i++) {
 			A[i * n + j] = w1[i];
-			}
+		}
 		mult_vector_from_the_right(Mtx, w1, w2, n, n);
 		int_vec_copy(w2, w1, n);
-		}
+	}
 
 	FREE_int(w1);
 	FREE_int(w2);
 	if (f_v) {
 		cout << "finite_field::span_cyclic_module done" << endl;
-		}
+	}
 }
 
 void finite_field::random_invertible_matrix(int *M,
@@ -863,41 +860,41 @@ void finite_field::random_invertible_matrix(int *M,
 
 	if (f_v) {
 		cout << "finite_field::random_invertible_matrix" << endl;
-		}
+	}
 	qk = NT.i_power_j(q, k);
 	N = NEW_int(k * k);
 	for (i = 0; i < k; i++) {
 		if (f_vv) {
 			cout << "i=" << i << endl;
-			}
+		}
 		while (TRUE) {
 			r = Os.random_integer(qk);
 			if (f_vv) {
 				cout << "r=" << r << endl;
-				}
+			}
 			Gg.AG_element_unrank(q, M + i * k, 1, k, r);
 			if (f_vv) {
 				orbiter::foundations::int_matrix_print(M, i + 1, k);
-				}
+			}
 
 			int_vec_copy(M, N, (i + 1) * k);
 			rk = Gauss_easy(N, i + 1, k);
 			if (f_vv) {
 				cout << "rk=" << rk << endl;
-				}
+			}
 			if (rk == i + 1) {
 				if (f_vv) {
 					cout << "has full rank" << endl;
-					}
-				break;
 				}
+				break;
 			}
 		}
+	}
 	if (f_v) {
 		cout << "finite_field::random_invertible_matrix "
 				"Random invertible matrix:" << endl;
 		int_matrix_print(M, k, k);
-		}
+	}
 	FREE_int(N);
 }
 
@@ -914,14 +911,14 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 		cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
 				"d=" << d << " q=" << q << endl;
 		cout << "verbose_level=" << verbose_level << endl;
-		}
+	}
 
 	cnt = count_all_irreducible_polynomials_of_degree_d(d, verbose_level - 2);
 
 	if (f_v) {
 		cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
 				"cnt = " << cnt << endl;
-		}
+	}
 
 	nb = cnt;
 
@@ -935,7 +932,7 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 	if (f_v) {
 		cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
 				"p=" << p << " e=" << e << endl;
-		}
+	}
 
 	//finite_field Fp;
 	//Fp.init(p, 0 /*verbose_level*/);
@@ -959,7 +956,7 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 				"chosen irreducible polynomial m = ";
 		FX.print_object(m, cout);
 		cout << endl;
-		}
+	}
 
 	FX.create_object_by_rank(g, 0, __FILE__, __LINE__, verbose_level);
 	FX.create_object_by_rank(minpol, 0, __FILE__, __LINE__, verbose_level);
@@ -980,12 +977,12 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 				"Frobenius_matrix = " << endl;
 		int_matrix_print(Frobenius, d, d);
 		cout << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
 				"before compute_normal_basis" << endl;
-		}
+	}
 	FX.compute_normal_basis(d, Normal_basis, Frobenius, verbose_level - 3);
 
 	if (f_v) {
@@ -993,7 +990,7 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 				"Normal_basis = " << endl;
 		int_matrix_print(Normal_basis, d, d);
 		cout << endl;
-		}
+	}
 
 	cnt = 0;
 
@@ -1004,7 +1001,7 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 					"of_degree_d regular word " << cnt << " : v = ";
 			int_vec_print(cout, v, d);
 			cout << endl;
-			}
+		}
 
 		FX.gfq->mult_vector_from_the_right(Normal_basis, v, w, d, d);
 		if (f_vv) {
@@ -1012,13 +1009,13 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 					"of_degree_d regular word " << cnt << " : w = ";
 			int_vec_print(cout, w, d);
 			cout << endl;
-			}
+		}
 
 		FX.delete_object(g);
 		FX.create_object_of_degree(g, d - 1);
 		for (i = 0; i < d; i++) {
 			((int *) g)[1 + i] = w[i];
-			}
+		}
 
 		FX.minimum_polynomial_extension_field(g, m, minpol, d,
 				Frobenius, verbose_level - 3);
@@ -1029,11 +1026,11 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 			cout << " irreducible polynomial = ";
 			FX.print_object(minpol, cout);
 			cout << endl;
-			}
+		}
 
 		for (i = 0; i <= d; i++) {
 			Table[cnt * (d + 1) + i] = ((int *)minpol)[1 + i];
-			}
+		}
 
 
 		cnt++;
@@ -1041,16 +1038,16 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 
 		if (!Combi.int_vec_next_regular_word(v, d, Q, q)) {
 			break;
-			}
-
 		}
+
+	}
 
 	if (f_v) {
 		cout << "finite_field::make_all_irreducible_polynomials_"
 				"of_degree_d there are " << cnt
 				<< " irreducible polynomials "
 				"of degree " << d << " over " << "F_" << q << endl;
-		}
+	}
 
 	FREE_int(Frobenius);
 	FREE_int(Normal_basis);
@@ -1064,7 +1061,7 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 	if (f_v) {
 		cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
 				"d=" << d << " q=" << q << " done" << endl;
-		}
+	}
 }
 
 int finite_field::count_all_irreducible_polynomials_of_degree_d(
@@ -1080,24 +1077,24 @@ int finite_field::count_all_irreducible_polynomials_of_degree_d(
 	if (f_v) {
 		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
 				"d=" << d << " q=" << q << endl;
-		}
+	}
 
 	Q = NT.i_power_j(q, d);
 
 	if (f_v) {
 		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
 				"Q=" << Q << endl;
-		}
+	}
 	NT.factor_prime_power(q, p, e);
 
 	if (f_v) {
 		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
 				"p=" << p << " e=" << e << endl;
-		}
+	}
 	if (e > 1) {
 		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
 				"e=" << e << " is greater than one" << endl;
-		}
+	}
 
 	//finite_field Fp;
 	//Fp.init(p, 0 /*verbose_level*/);
@@ -1121,7 +1118,7 @@ int finite_field::count_all_irreducible_polynomials_of_degree_d(
 				"chosen irreducible polynomial m = ";
 		FX.print_object(m, cout);
 		cout << endl;
-		}
+	}
 
 	FX.create_object_by_rank(g, 0, __FILE__, __LINE__, verbose_level);
 	FX.create_object_by_rank(minpol, 0, __FILE__, __LINE__, verbose_level);
@@ -1144,7 +1141,7 @@ int finite_field::count_all_irreducible_polynomials_of_degree_d(
 				"Frobenius_matrix = " << endl;
 		int_matrix_print(Frobenius, d, d);
 		cout << endl;
-		}
+	}
 
 	mult_matrix_matrix(Frobenius, Frobenius, F2, d, d, d,
 			0 /* verbose_level */);
@@ -1153,7 +1150,7 @@ int finite_field::count_all_irreducible_polynomials_of_degree_d(
 				"Frobenius^2 = " << endl;
 		int_matrix_print(F2, d, d);
 		cout << endl;
-		}
+	}
 
 
 	FX.compute_normal_basis(d, Normal_basis, Frobenius, verbose_level - 3);
@@ -1163,72 +1160,72 @@ int finite_field::count_all_irreducible_polynomials_of_degree_d(
 				"Normal_basis = " << endl;
 		int_matrix_print(Normal_basis, d, d);
 		cout << endl;
-		}
+	}
 
 	cnt = 0;
 	Combi.int_vec_first_regular_word(v, d, Q, q);
 	while (TRUE) {
 		if (f_vv) {
-			cout << "finite_field::count_all_irreducible_polynomials_"
-					"of_degree_d regular word " << cnt << " : v = ";
+			cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
+					"regular word " << cnt << " : v = ";
 			int_vec_print(cout, v, d);
 			cout << endl;
-			}
+		}
 
 		FX.gfq->mult_vector_from_the_right(Normal_basis, v, w, d, d);
 		if (f_vv) {
-			cout << "finite_field::count_all_irreducible_polynomials_"
-					"of_degree_d regular word " << cnt << " : w = ";
+			cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
+					"regular word " << cnt << " : w = ";
 			int_vec_print(cout, w, d);
 			cout << endl;
-			}
+		}
 
 		FX.delete_object(g);
 		FX.create_object_of_degree(g, d - 1);
 		for (i = 0; i < d; i++) {
 			((int *) g)[1 + i] = w[i];
-			}
+		}
 
 		FX.minimum_polynomial_extension_field(g, m, minpol, d,
 				Frobenius, verbose_level - 3);
 		if (f_vv) {
-			cout << "finite_field::count_all_irreducible_polynomials_"
-					"of_degree_d regular word " << cnt << " : v = ";
+			cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
+					"regular word " << cnt << " : v = ";
 			int_vec_print(cout, v, d);
 			cout << " irreducible polynomial = ";
 			FX.print_object(minpol, cout);
 			cout << endl;
-			}
+		}
 		if (FX.degree(minpol) != d) {
-			cout << "finite_field::count_all_irreducible_polynomials_"
-					"of_degree_d The polynomial does not have degree d"
+			cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
+					"The polynomial does not have degree d"
 					<< endl;
 			FX.print_object(minpol, cout);
 			cout << endl;
 			exit(1);
-			}
+		}
 		if (!FX.is_irreducible(minpol, verbose_level)) {
-			cout << "finite_field::count_all_irreducible_polynomials_"
-					"of_degree_d The polynomial is not irreducible" << endl;
+			cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
+					"The polynomial is not irreducible" << endl;
 			FX.print_object(minpol, cout);
 			cout << endl;
 			exit(1);
-			}
+		}
 
 
 		cnt++;
 
 		if (!Combi.int_vec_next_regular_word(v, d, Q, q)) {
 			break;
-			}
-
 		}
+
+	}
 
 	if (f_v) {
-		cout << "finite_field::count_all_irreducible_polynomials_"
-				"of_degree_d there are " << cnt << " irreducible polynomials "
+		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
+				"there are " << cnt << " irreducible polynomials "
 				"of degree " << d << " over " << "F_" << q << endl;
-		}
+	}
 
 	FREE_int(Frobenius);
 	FREE_int(F2);
@@ -1240,9 +1237,8 @@ int finite_field::count_all_irreducible_polynomials_of_degree_d(
 	FX.delete_object(minpol);
 
 	if (f_v) {
-		cout << "finite_field::count_all_irreducible_polynomials_"
-				"of_degree_d done" << endl;
-		}
+		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d done" << endl;
+	}
 	return cnt;
 }
 
@@ -1728,12 +1724,12 @@ void finite_field::map_to_standard_frame(int d, int *A,
 
 	if (f_v) {
 		cout << "finite_field::map_to_standard_frame" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "A=" << endl;
 		int_matrix_print(A, d + 1, d);
-		}
+	}
 
 	n = d + 1;
 	B = NEW_int(n * n);
@@ -1741,42 +1737,42 @@ void finite_field::map_to_standard_frame(int d, int *A,
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < d; j++) {
 			B[j * n + i] = A[i * d + j];
-			}
 		}
+	}
 	if (f_v) {
 		cout << "B before=" << endl;
 		int_matrix_print(B, d, n);
-		}
+	}
 	RREF_and_kernel(n, d, B, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "B after=" << endl;
 		int_matrix_print(B, n, n);
-		}
+	}
 	xd = B[d * n + d - 1];
 	x = negate(inverse(xd));
 	for (i = 0; i < d; i++) {
 		B[d * n + i] = mult(x, B[d * n + i]);
-		}
+	}
 	if (f_v) {
 		cout << "last row of B after scaling : " << endl;
 		int_matrix_print(B + d * n, 1, n);
-		}
+	}
 	for (i = 0; i < d; i++) {
 		for (j = 0; j < d; j++) {
 			A2[i * d + j] = mult(B[d * n + i], A[i * d + j]);
-			}
 		}
+	}
 	if (f_v) {
 		cout << "A2=" << endl;
 		int_matrix_print(A2, d, d);
-		}
+	}
 	matrix_inverse(A2, Transform, d, 0 /* verbose_level */);
 
 	FREE_int(B);
 	FREE_int(A2);
 	if (f_v) {
 		cout << "finite_field::map_to_standard_frame done" << endl;
-		}
+	}
 }
 
 void finite_field::map_frame_to_frame_with_permutation(int d,
@@ -1792,7 +1788,7 @@ void finite_field::map_frame_to_frame_with_permutation(int d,
 
 	if (f_v) {
 		cout << "finite_field::map_frame_to_frame_with_permutation" << endl;
-		}
+	}
 	T1 = NEW_int(d * d);
 	T2 = NEW_int(d * d);
 	T3 = NEW_int(d * d);
@@ -1802,53 +1798,53 @@ void finite_field::map_frame_to_frame_with_permutation(int d,
 		cout << "permutation: ";
 		orbiter::foundations::int_vec_print(cout, perm, d + 1);
 		cout << endl;
-		}
+	}
 	if (f_v) {
 		cout << "A=" << endl;
 		int_matrix_print(A, d + 1, d);
-		}
+	}
 	if (f_v) {
 		cout << "B=" << endl;
 		int_matrix_print(B, d + 1, d);
-		}
+	}
 
 	for (i = 0; i < d + 1; i++) {
 		j = perm[i];
 		int_vec_copy(A + j * d, A1 + i * d, d);
-		}
+	}
 
 	if (f_v) {
 		cout << "A1=" << endl;
 		int_matrix_print(A1, d + 1, d);
-		}
+	}
 
 
 	if (f_v) {
 		cout << "mapping A1 to standard frame:" << endl;
-		}
+	}
 	map_to_standard_frame(d, A1, T1, verbose_level);
 	if (f_v) {
 		cout << "T1=" << endl;
 		int_matrix_print(T1, d, d);
-		}
+	}
 	if (f_v) {
 		cout << "mapping B to standard frame:" << endl;
-		}
+	}
 	map_to_standard_frame(d, B, T2, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "T2=" << endl;
 		int_matrix_print(T2, d, d);
-		}
+	}
 	matrix_inverse(T2, T3, d, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "T3=" << endl;
 		int_matrix_print(T3, d, d);
-		}
+	}
 	mult_matrix_matrix(T1, T3, Transform, d, d, d, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "Transform=" << endl;
 		int_matrix_print(Transform, d, d);
-		}
+	}
 
 	FREE_int(T1);
 	FREE_int(T2);
@@ -1857,7 +1853,7 @@ void finite_field::map_frame_to_frame_with_permutation(int d,
 	if (f_v) {
 		cout << "finite_field::map_frame_to_frame_with_permutation done"
 				<< endl;
-		}
+	}
 }
 
 
@@ -1885,7 +1881,7 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 
 	if (f_v) {
 		cout << "finite_field::map_points_to_points_projectively" << endl;
-		}
+	}
 	lehmercode = NEW_int(d + 1);
 	perm = NEW_int(d + 1);
 	A1 = NEW_int((d + k + 1) * d);
@@ -1900,13 +1896,13 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 		//PG_element_normalize(*this, B1 + i * d, 1, d);
 		PG_element_rank_modified(B1 + i * d, 1, d, a);
 		B_set[i] = a;
-		}
+	}
 	Sorting.int_vec_heapsort(B_set, d + k + 1);
 	if (f_v) {
 		cout << "B_set = ";
 		orbiter::foundations::int_vec_print(cout, B_set, d + k + 1);
 		cout << endl;
-		}
+	}
 
 
 	overall_cnt = 0;
@@ -1921,17 +1917,17 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 			cout << ", the complement is ";
 			orbiter::foundations::int_vec_print(cout, subset + d + 1, k);
 			cout << endl;
-			}
+		}
 
 
 		for (i = 0; i < d + k + 1; i++) {
 			j = subset[i];
 			int_vec_copy(A + j * d, A1 + i * d, d);
-			}
+		}
 		if (f_v) {
 			cout << "A1=" << endl;
 			int_matrix_print(A1, d + k + 1, d);
-			}
+		}
 
 		cnt = 0;
 		Combi.first_lehmercode(d + 1, lehmercode);
@@ -1940,13 +1936,13 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 				cout << "lehmercode: ";
 				orbiter::foundations::int_vec_print(cout, lehmercode, d + 1);
 				cout << endl;
-				}
+			}
 			Combi.lehmercode_to_permutation(d + 1, lehmercode, perm);
 			if (f_v) {
 				cout << "permutation: ";
 				orbiter::foundations::int_vec_print(cout, perm, d + 1);
 				cout << endl;
-				}
+			}
 			map_frame_to_frame_with_permutation(d, A1, perm,
 					B1, Transform, verbose_level);
 
@@ -1954,32 +1950,32 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 				mult_vector_from_the_left(A1 + i * d, Transform, v, d, d);
 				PG_element_rank_modified(v, 1, d, a);
 				image_set[i] = a;
-				}
+			}
 			if (f_v) {
 				cout << "image_set before sorting: ";
 				orbiter::foundations::int_vec_print(cout, image_set, d + k + 1);
 				cout << endl;
-				}
+			}
 			Sorting.int_vec_heapsort(image_set, d + k + 1);
 			if (f_v) {
 				cout << "image_set after sorting: ";
 				orbiter::foundations::int_vec_print(cout, image_set, d + k + 1);
 				cout << endl;
-				}
+			}
 
 			if (int_vec_compare(image_set, B_set, d + k + 1) == 0) {
 				cnt++;
-				}
+			}
 
 			if (!Combi.next_lehmercode(d + 1, lehmercode)) {
 				break;
-				}
 			}
+		}
 
 		cout << "subset " << h << " / " << nCk << " we found "
 				<< cnt << " mappings" << endl;
 		overall_cnt += cnt;
-		}
+	}
 
 	FREE_int(perm);
 	FREE_int(lehmercode);
@@ -1995,7 +1991,7 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 	if (f_v) {
 		cout << "finite_field::map_points_to_points_projectively done"
 				<< endl;
-		}
+	}
 }
 
 int finite_field::BallChowdhury_matrix_entry(int *Coord,
@@ -2008,7 +2004,7 @@ int finite_field::BallChowdhury_matrix_entry(int *Coord,
 
 	if (f_v) {
 		cout << "finite_field::BallChowdhury_matrix_entry" << endl;
-		}
+	}
 	d = 1;
 	for (u = 0; u < sz_U; u++) {
 		a = U[u];
@@ -2016,20 +2012,20 @@ int finite_field::BallChowdhury_matrix_entry(int *Coord,
 		for (i = 0; i < k - 1; i++) {
 			a = C[i];
 			int_vec_copy(Coord + a * k, T + i * k, k);
-			}
+		}
 		if (f_vv) {
 			cout << "u=" << u << " / " << sz_U << " the matrix is:" << endl;
 			int_matrix_print(T, k, k);
-			}
+		}
 		d1 = matrix_determinant(T, k, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "determinant = " << d1 << endl;
-			}
-		d = mult(d, d1);
 		}
+		d = mult(d, d1);
+	}
 	if (f_v) {
 		cout << "finite_field::BallChowdhury_matrix_entry d=" << d << endl;
-		}
+	}
 	return d;
 }
 
@@ -2044,23 +2040,23 @@ void finite_field::cubic_surface_family_24_generators(
 
 	if (f_v) {
 		cout << "finite_field::cubic_surface_family_24_generators" << endl;
-		}
+	}
 	m_one = minus_one();
 	nb_gens = 3;
 	data_size = 16;
 	if (f_semilinear) {
 		data_size++;
-		}
+	}
 	if (EVEN(q)) {
 		group_order = 6;
-		}
+	}
 	else {
 		group_order = 24;
-		}
+	}
 	if (f_with_normalizer) {
 		nb_gens++;
 		group_order *= q - 1;
-		}
+	}
 	gens = NEW_int(nb_gens * data_size);
 	int_vec_zero(gens, nb_gens * data_size);
 		// this sets the field automorphism index
@@ -2083,11 +2079,11 @@ void finite_field::cubic_surface_family_24_generators(
 		gens[3 * data_size + 1 * 4 + 1] = 1;
 		gens[3 * data_size + 2 * 4 + 2] = 1;
 		gens[3 * data_size + 3 * 4 + 3] = primitive_root();
-		}
+	}
 	if (f_v) {
 		cout << "finite_field::cubic_surface_family_24_generators "
 				"done" << endl;
-		}
+	}
 }
 
 int finite_field::is_unit_vector(int *v, int len, int k)
@@ -2098,14 +2094,14 @@ int finite_field::is_unit_vector(int *v, int len, int k)
 		if (i == k) {
 			if (v[i] != 1) {
 				return FALSE;
-				}
 			}
+		}
 		else {
 			if (v[i] != 0) {
 				return FALSE;
-				}
 			}
 		}
+	}
 	return TRUE;
 }
 
