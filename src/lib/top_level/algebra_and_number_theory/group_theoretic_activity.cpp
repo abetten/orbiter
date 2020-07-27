@@ -1673,6 +1673,8 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 	}
 
 
+#if 0
+
 	for (int d = 0; d <= depth; d++) {
 		cout << "There are " << PC->nb_orbits_at_level(d)
 				<< " orbits on subsets of size " << d << ":" << endl;
@@ -1689,12 +1691,14 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 				FALSE /* f_save_stab */,
 				FALSE /* f_show_whole_orbit*/);
 	}
+#endif
 
 	if (f_v) {
 		cout << "group_theoretic_activity::orbits_on_poset_post_processing "
 				"after PC->list_all_orbits_at_level" << endl;
 	}
 
+#if 0
 	if (Descr->f_report) {
 
 		if (f_v) {
@@ -1733,6 +1737,7 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 					<< Fio.file_size(fname_report) << endl;
 		}
 	}
+#endif
 
 #if 0
 	if (Descr->f_draw_poset) {

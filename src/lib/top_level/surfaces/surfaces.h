@@ -761,7 +761,7 @@ public:
 // #############################################################################
 
 
-//! tangent cone of a cubic surface
+//! tangent cone of a cubic surface at a point
 
 
 class surface_object_tangent_cone {

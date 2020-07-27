@@ -334,6 +334,18 @@ public:
 	int f_list_all;
 	int f_table_of_nodes;
 	int f_make_relations_with_flag_orbits;
+	int f_Kramer_Mesner_matrix;
+	int Kramer_Mesner_t;
+	int Kramer_Mesner_k;
+	int f_level_summary_csv;
+	int f_orbit_reps_csv;
+	int f_report;
+
+	int f_show_orbit_decomposition;
+	int f_show_stab;
+	int f_save_stab;
+	int f_show_whole_orbit;
+
 
 	int nb_recognize;
 	const char *recognize[CONTROL_MAX_RECOGNIZE];
@@ -760,6 +772,19 @@ public:
 		int *M_inf, int verbose_level);
 	void test_for_multi_edge_in_classification_graph(
 		int depth, int verbose_level);
+	void Kramer_Mesner_matrix_neighboring(
+			int level, long int *&M, int &nb_rows, int &nb_cols, int verbose_level);
+	void Mtk_via_Mtr_Mrk(int t, int r, int k,
+			long int *Mtr, long int *Mrk, long int *&Mtk,
+			int nb_r1, int nb_c1, int nb_r2, int nb_c2, int &nb_r3, int &nb_c3,
+			int verbose_level);
+	// Computes $M_{tk}$ via a recursion formula:
+	// $M_{tk} = {{k - t} \choose {k - r}} \cdot M_{t,r} \cdot M_{r,k}$.
+	void Mtk_from_MM(long int **pM,
+		int *Nb_rows, int *Nb_cols,
+		int t, int k,
+		long int *&Mtk, int &nb_r, int &nb_c,
+		int verbose_level);
 
 
 	// poset_classification_draw.cpp:

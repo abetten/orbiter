@@ -149,6 +149,8 @@ class surface_classify_using_arc;
 class surface_create_by_arc_lifting;
 class surface_clebsch_map;
 class trihedral_pair_with_action;
+class graph_classify_description;
+
 
 // #############################################################################
 // representatives.cpp

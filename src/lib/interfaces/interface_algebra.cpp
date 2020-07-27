@@ -536,47 +536,6 @@ void interface_algebra::do_cheat_sheet_GF(int q, int f_poly, const char *poly, i
 
 	F.multiplication_table_reordered_save_csv();
 
-#if 0
-	char fname1[1000];
-	char fname2[1000];
-
-	F.make_fname_addition_table_csv(fname1);
-	F.make_fname_multiplication_table_csv(fname2);
-	F.make_fname_addition_table_reordered_csv(fname1);
-	F.make_fname_multiplication_table_reordered_csv(fname2);
-
-	int box_width = 20;
-
-	{
-		file_io Fio;
-		int *M;
-		int m, n;
-
-		Fio.int_matrix_read_csv(fname1, M, m, n, verbose_level);
-		draw_bitmap(fname1, M, m, n,
-				FALSE, 0, // int f_partition, int part_width,
-				0, NULL, 0, NULL, // int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
-				TRUE /* f_box_width */, box_width,
-				FALSE /* f_invert_colors */,
-				verbose_level);
-		FREE_int(M);
-	}
-
-	{
-		file_io Fio;
-		int *M;
-		int m, n;
-
-		Fio.int_matrix_read_csv(fname2, M, m, n, verbose_level);
-		draw_bitmap(fname2, M, m, n,
-				FALSE, 0, // int f_partition, int part_width,
-				0, NULL, 0, NULL, // int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
-				TRUE /* f_box_width */, box_width,
-				FALSE /* f_invert_colors */,
-				verbose_level);
-		FREE_int(M);
-	}
-#endif
 
 	{
 	ofstream f(fname);

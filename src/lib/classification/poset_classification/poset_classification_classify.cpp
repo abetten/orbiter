@@ -399,35 +399,43 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 		FREE_lint(Table);
 	}
 
+	if (Control->f_list_all) {
+		if (f_v) {
+			cout << "poset_classification::post_processing f_list_all" << endl;
+		}
+
+		int d;
+
+		for (d = 0; d <= depth; d++) {
+			cout << "There are " << nb_orbits_at_level(d)
+					<< " orbits on subsets of size " << d << ":" << endl;
+
+#if 0
+			if (d < Descr->orbits_on_subsets_size) {
+				//continue;
+			}
+#endif
+
+			list_all_orbits_at_level(d,
+					FALSE /* f_has_print_function */,
+					NULL /* void (*print_function)(ostream &ost, int len, int *S, void *data)*/,
+					NULL /* void *print_function_data*/,
+					Control->f_show_orbit_decomposition /* f_show_orbit_decomposition */,
+					Control->f_show_stab /* f_show_stab */,
+					Control->f_save_stab /* f_save_stab */,
+					Control->f_show_whole_orbit /* f_show_whole_orbit*/);
+		}
+	}
+
 	if (Control->f_list) {
 		if (f_v) {
 			cout << "poset_classification::post_processing f_list" << endl;
 		}
-
-		{
-			spreadsheet *Sp;
-
-			if (f_v) {
-				cout << "poset_classification::post_processing before "
-						"make_spreadsheet_of_orbit_reps" << endl;
-			}
-
-			make_spreadsheet_of_orbit_reps(Sp, actual_size);
-			char fname_csv[1000];
-			snprintf(fname_csv, 1000, "orbits_%d.csv", actual_size);
-			Sp->save(fname_csv, verbose_level);
-			delete Sp;
-			if (f_v) {
-				cout << "poset_classification::post_processing after "
-						"make_spreadsheet_of_orbit_reps" << endl;
-			}
-		}
-
 #if 1
-		int f_show_orbit_decomposition = TRUE;
-		int f_show_stab = TRUE;
-		int f_save_stab = TRUE;
-		int f_show_whole_orbit = FALSE;
+		//int f_show_orbit_decomposition = TRUE;
+		//int f_show_stab = TRUE;
+		//int f_save_stab = TRUE;
+		//int f_show_whole_orbit = FALSE;
 
 		if (f_v) {
 			cout << "poset_classification::post_processing before "
@@ -437,10 +445,10 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			FALSE,
 			NULL,
 			this,
-			f_show_orbit_decomposition,
-			f_show_stab,
-			f_save_stab,
-			f_show_whole_orbit);
+			Control->f_show_orbit_decomposition,
+			Control->f_show_stab,
+			Control->f_save_stab,
+			Control->f_show_whole_orbit);
 
 		if (f_v) {
 			cout << "poset_classification::post_processing after "
@@ -456,7 +464,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 #endif
 	}
 
-	if (Control->f_W) {
+	if (Control->f_level_summary_csv) {
 		if (f_v) {
 			cout << "poset_classification::post_processing preparing level spreadsheet" << endl;
 		}
@@ -474,7 +482,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 	}
 
 
-	if (Control->f_w) {
+	if (Control->f_orbit_reps_csv) {
 		if (f_v) {
 			cout << "poset_classification::post_processing preparing orbit spreadsheet" << endl;
 		}
@@ -570,8 +578,103 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 	}
 
 
+	if (Control->f_Kramer_Mesner_matrix) {
+
+		if (f_v) {
+			cout << "poset_classification::post_processing computing "
+					"Kramer Mesner matrices" << endl;
+		}
+
+		// compute Kramer Mesner matrices
+		long int **pM;
+		int *Nb_rows, *Nb_cols;
+		int i;
+
+		pM = NEW_plint(Control->Kramer_Mesner_k);
+		Nb_rows = NEW_int(Control->Kramer_Mesner_k);
+		Nb_cols = NEW_int(Control->Kramer_Mesner_k);
+		for (i = 0; i < Control->Kramer_Mesner_k; i++) {
+			Kramer_Mesner_matrix_neighboring(i, pM[i], Nb_rows[i], Nb_cols[i], verbose_level - 2);
+			if (f_v) {
+				cout << "poset_classification::post_processing matrix "
+						"level " << i << " computed" << endl;
+			}
+		}
+
+		long int *Mtk;
+		int nb_r, nb_c;
 
 
+		Mtk_from_MM(pM, Nb_rows, Nb_cols,
+				Control->Kramer_Mesner_t, Control->Kramer_Mesner_k,
+				Mtk,
+				nb_r, nb_c,
+				verbose_level - 2);
+		cout << "poset_classification::post_processing M_{" << Control->Kramer_Mesner_t << ","
+				<< Control->Kramer_Mesner_k << "} has size " << nb_r << " x "
+				<< nb_c << "." << endl;
+
+		file_io Fio;
+
+		char fname[1000];
+
+		sprintf(fname, "%s_KM_%d_%d.csv", problem_label.c_str(),
+				Control->Kramer_Mesner_t, Control->Kramer_Mesner_k);
+		Fio.lint_matrix_write_csv(fname, Mtk, nb_r, nb_c);
+		//Mtk.print(cout);
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+		if (f_v) {
+			cout << "poset_classification::post_processing computing "
+					"Kramer Mesner matrices done" << endl;
+		}
+		for (i = 0; i < Control->Kramer_Mesner_k; i++) {
+			FREE_lint(pM[i]);
+		}
+		FREE_plint(pM);
+
+
+	}
+
+	if (Control->f_report) {
+
+		if (f_v) {
+			cout << "poset_classification::post_processing f_report" << endl;
+		}
+		{
+			char fname_report[1000];
+			sprintf(fname_report, "%s_poset.tex", problem_label.c_str());
+			latex_interface L;
+			file_io Fio;
+
+			{
+				ofstream ost(fname_report);
+				L.head_easy(ost);
+
+				if (f_v) {
+					cout << "group_theoretic_activity::orbits_on_poset_post_processing "
+							"before get_A()->report" << endl;
+				}
+
+				get_A()->report(ost,
+						FALSE /* f_sims */,
+						NULL, //A1/*LG->A_linear*/->Sims,
+						FALSE /* f_strong_gens */,
+						NULL,
+						verbose_level - 1);
+
+				if (f_v) {
+					cout << "group_theoretic_activity::orbits_on_poset_post_processing "
+							"after LG->A_linear->report" << endl;
+				}
+
+				L.foot(ost);
+			}
+			cout << "Written file " << fname_report << " of size "
+					<< Fio.file_size(fname_report) << endl;
+		}
+
+	}
 
 	if (f_v) {
 		cout << "poset_classification::post_processing done" << endl;

@@ -39,8 +39,6 @@ class orbiter_session;
 
 
 class interface_algebra {
-	//int argc;
-	//const char **argv;
 
 	int f_linear_group;
 	linear_group_description *Linear_group_description;
@@ -103,8 +101,6 @@ public:
 
 
 class interface_coding_theory {
-	//int argc;
-	//const char **argv;
 
 	int f_make_macwilliams_system;
 	int q;
@@ -141,9 +137,6 @@ public:
 
 
 class interface_combinatorics {
-	int argc;
-	const char **argv;
-		// only needed for kramer_mesner and for graph classify
 
 	int f_create_combinatorial_object;
 	combinatorial_object_description *Combinatorial_object_description;
@@ -177,12 +170,12 @@ class interface_combinatorics {
 	int v_max;
 	int f_conjugacy_classes_Sym_n;
 	int n;
-	int f_Kramer_Mesner;
 	int f_tree_of_all_k_subsets;
 	int tree_n, tree_k;
 	int f_Delandtsheer_Doyen;
 	delandtsheer_doyen_description *Delandtsheer_Doyen_description;
 	int f_graph_classify;
+	graph_classify_description *Graph_classify_description;
 	int f_tdo_refinement;
 	tdo_refinement_description *Tdo_refinement_descr;
 	int f_tdo_print;
@@ -221,10 +214,9 @@ public:
 	void do_bent(int n, int verbose_level);
 	void do_random_permutation(int deg, const char *fname_csv, int verbose_level);
 	void do_conjugacy_classes_Sym_n(int n, int verbose_level);
-	void do_Kramer_Mesner(int verbose_level);
 	void do_make_tree_of_all_k_subsets(int n, int k, int verbose_level);
 	void do_Delandtsheer_Doyen(delandtsheer_doyen_description *Descr, int verbose_level);
-	void do_graph_classify(int verbose_level);
+	void do_graph_classify(graph_classify_description *Descr, int verbose_level);
 	void do_tdo_refinement(tdo_refinement_description *Descr, int verbose_level);
 	void do_tdo_print(const char *fname, int verbose_level);
 	void do_create_design(design_create_description *Descr, int verbose_level);
@@ -381,11 +373,6 @@ class interface_cryptography {
 	int f_count_subprimitive;
 	int count_subprimitive_Q_max;
 	int count_subprimitive_H_max;
-#if 0
-	int f_ntt;
-	int ntt_t;
-	int ntt_q;
-#endif
 
 public:
 	interface_cryptography();
@@ -549,12 +536,10 @@ void interface_povray_draw_frame(
 // interface_projective.cpp
 // #############################################################################
 
-//! interface to the povray rendering module
+//! interface to the projective geometry module
 
 
 class interface_projective {
-	//int argc;
-	//const char **argv;
 
 	int f_cheat_sheet_PG;
 	int n;
@@ -659,14 +644,12 @@ public:
 // orbiter_session.cpp
 // #############################################################################
 
-//! global settings for the orbiter session
+//! The orbiter session is reponsible for the command line interface and the program execution
 
 
 class orbiter_session {
 
 public:
-	//int argc;
-	//const char **argv;
 
 	int verbose_level;
 

@@ -19,6 +19,8 @@ namespace top_level {
 
 graph_classify::graph_classify()
 {
+	Descr = NULL;
+
 	Poset = NULL;
 	gen = NULL;
 	A_base = NULL;
@@ -30,45 +32,9 @@ graph_classify::graph_classify()
 	neighbor_idx = NULL;
 	distance = NULL;
 	
-	f_n = FALSE;
-	f_regular = FALSE;
-
-	f_control = FALSE;
-	Control = NULL;
-
-	f_girth = FALSE;
-	f_tournament = FALSE;
-	f_no_superking = FALSE;
-	
-	//f_list = FALSE;
-	//f_list_all = FALSE;
-	f_draw_level_graph = FALSE;
-	f_draw_graphs = FALSE;
-	f_draw_graphs_at_level = FALSE;
-	//f_embedded = FALSE;
-	//f_sideways = FALSE;
-	f_x_stretch = FALSE;
-	x_stretch = 0.4;
-
-	//scale = 0.2;
-
-	f_depth = FALSE;
 	S1 = NULL;
 	
-	f_test_multi_edge = FALSE;
-	//f_draw_poset = FALSE;
-	//f_draw_full_poset = FALSE;
-	//f_plesken = FALSE;
-	f_identify = FALSE;
-
-	regularity = 0;
-	girth = 0;
-	n = 0;
-	depth = 0;
-	level_graph_level = 0;
 	n2 = 0;
-	level = 0;
-	identify_data_sz = 0;
 }
 
 graph_classify::~graph_classify()
@@ -103,160 +69,22 @@ graph_classify::~graph_classify()
 	
 }
 
-void graph_classify::read_arguments(int argc, const char **argv, int verbose_level)
-{
-	int i;
-	
-#if 0
-	if (argc < 1) {
-		usage(argc, argv);
-		exit(1);
-		}
-#endif
-	//for (i = 1; i < argc; i++) {
-		//printf("%s\n", argv[i]);
-		//}
 
-	//gen->read_arguments(argc, argv, 0);
-
-	for (i = 1; i < argc; i++) {
-		if (strcmp(argv[i], "-regular") == 0) {
-			f_regular = TRUE;
-			sscanf(argv[++i], "%d", &regularity);
-			cout << "-regular " << regularity << endl;
-		}
-		else if (strcmp(argv[i], "-poset_classification_control") == 0) {
-			f_control = TRUE;
-			Control = NEW_OBJECT(poset_classification_control);
-			i += Control->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			cout << "done with -poset_classification_control" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-		else if (strcmp(argv[i], "-n") == 0) {
-			f_n = TRUE;
-			sscanf(argv[++i], "%d", &n);
-			cout << "-n " << n << endl;
-		}
-		else if (strcmp(argv[i], "-girth") == 0) {
-			f_girth = TRUE;
-			sscanf(argv[++i], "%d", &girth);
-			cout << "-girth " << girth << endl;
-		}
-		else if (strcmp(argv[i], "-draw_graphs") == 0) {
-			f_draw_graphs = TRUE;
-			cout << "-draw_graphs " << endl;
-		}
-		else if (strcmp(argv[i], "-draw_graphs_at_level") == 0) {
-			f_draw_graphs_at_level = TRUE;
-			level = atoi(argv[++i]);
-			cout << "-draw_graphs_at_level " << level << endl;
-		}
-		else if (strcmp(argv[i], "-tournament") == 0) {
-			f_tournament = TRUE;
-			cout << "-tournament " << endl;
-		}
-		else if (strcmp(argv[i], "-no_transmitter") == 0) {
-			f_no_superking = TRUE;
-			cout << "-no_superking " << endl;
-		}
-		else if (strcmp(argv[i], "-test_multi_edge") == 0) {
-			f_test_multi_edge = TRUE;
-			cout << "-test_multi_edge " << endl;
-		}
-		else if (strcmp(argv[i], "-draw_level_graph") == 0) {
-			f_draw_level_graph = TRUE;
-			sscanf(argv[++i], "%d", &level_graph_level);
-			cout << "-draw_level_graph " << level_graph_level << endl;
-		}
-
-#if 0
-		else if (strcmp(argv[i], "-list") == 0) {
-			f_list = TRUE;
-			cout << "-list " << endl;
-		}
-		else if (strcmp(argv[i], "-list_all") == 0) {
-			f_list_all = TRUE;
-			cout << "-list_all " << endl;
-		}
-		else if (strcmp(argv[i], "-draw_poset") == 0) {
-			f_draw_poset = TRUE;
-			cout << "-draw_poset " << endl;
-		}
-		else if (strcmp(argv[i], "-scale") == 0) {
-			sscanf(argv[++i], "%lf", &scale);
-			cout << "-scale " << scale << endl;
-		}
-		else if (strcmp(argv[i], "-embedded") == 0) {
-			f_embedded = TRUE;
-			cout << "-embedded " << endl;
-		}
-		else if (strcmp(argv[i], "-sideways") == 0) {
-			f_sideways = TRUE;
-			cout << "-sideways " << endl;
-		}
-		else if (strcmp(argv[i], "-plesken") == 0) {
-			f_plesken = TRUE;
-			cout << "-plesken" << endl;
-		}
-		else if (strcmp(argv[i], "-draw_full_poset") == 0) {
-			f_draw_full_poset = TRUE;
-			cout << "-draw_full_poset" << endl;
-		}
-#endif
-
-		else if (strcmp(argv[i], "-identify") == 0) {
-			int a, j;
-			
-			f_identify = TRUE;
-			j = 0;
-			while (TRUE) {
-				a = atoi(argv[++i]);
-				if (a == -1) {
-					break;
-				}
-				identify_data[j++] = a;
-			}
-			identify_data_sz = j;
-			cout << "-identify ";
-			lint_vec_print(cout, identify_data, identify_data_sz);
-			cout << endl;
-		}
-		else if (strcmp(argv[i], "-depth") == 0) {
-			f_depth = TRUE;
-			sscanf(argv[++i], "%d", &depth);
-			cout << "-depth " << depth << endl;
-		}
-		else if (strcmp(argv[i], "-x_stretch") == 0) {
-			f_x_stretch = TRUE;
-			sscanf(argv[++i], "%lf", &x_stretch);
-			cout << "-x_stretch " << endl;
-		}
-	}
-	if (!f_n) {
-		cout << "please use option -n <n> "
-				"to specify the number of vertices" << endl;
-		exit(1);
-	}
-}
-
-void graph_classify::init(int argc, const char **argv, int verbose_level)
+void graph_classify::init(graph_classify_description *Descr, int verbose_level)
 {
 	int N;
 	int target_depth;
 	char prefix[1000];
 	combinatorics_domain Combi;
 	
+
+	graph_classify::Descr = Descr;
+
 	A_base = NEW_OBJECT(action);
 	A_on_edges = NEW_OBJECT(action);
 	gen = NEW_OBJECT(poset_classification);
 	
-	read_arguments(argc, argv, verbose_level);
+	//read_arguments(argc, argv, verbose_level);
 	
 	int f_v = (verbose_level >= 1);
 
@@ -264,32 +92,32 @@ void graph_classify::init(int argc, const char **argv, int verbose_level)
 		cout << "graph_generator::init" << endl;
 		}
 
-	if (f_tournament) {
+	if (Descr->f_tournament) {
 		if (f_v) {
 			cout << "graph_generator::init tournaments "
-					"on " << n << " vertices" << endl;
+					"on " << Descr->n << " vertices" << endl;
 			}
-		sprintf(prefix, "tournament_%d", n);
-		if (f_no_superking) {
+		sprintf(prefix, "tournament_%d", Descr->n);
+		if (Descr->f_no_superking) {
 			sprintf(prefix + strlen(prefix), "_no_superking");
 			}
 		}
 	else {
 		if (f_v) {
 			cout << "graph_generator::init graphs "
-					"on " << n << " vertices" << endl;
+					"on " << Descr->n << " vertices" << endl;
 			}
-		sprintf(prefix, "graph_%d", n);
+		sprintf(prefix, "graph_%d", Descr->n);
 		}
 	
 
 	
-	if (f_regular) {
-		sprintf(prefix + strlen(prefix), "_r%d", regularity);
+	if (Descr->f_regular) {
+		sprintf(prefix + strlen(prefix), "_r%d", Descr->regularity);
 		}
 	
-	if (f_girth) {
-		sprintf(prefix + strlen(prefix), "_g%d", girth);
+	if (Descr->f_girth) {
+		sprintf(prefix + strlen(prefix), "_g%d", Descr->girth);
 		}
 
 	if (f_v) {
@@ -297,14 +125,14 @@ void graph_classify::init(int argc, const char **argv, int verbose_level)
 		}
 	
 	
-	n2 = Combi.int_n_choose_k(n, 2);
+	n2 = Combi.int_n_choose_k(Descr->n, 2);
 	if (f_v) {
 		cout << "n2=" << n2 << endl;
 		}
 
 	S1 = NEW_lint(n2);
 
-	A_base->init_symmetric_group(n, verbose_level - 3);
+	A_base->init_symmetric_group(Descr->n, verbose_level - 3);
 	if (f_v) {
 		cout << "A_base->init_symmetric_group done" << endl;
 		}
@@ -318,7 +146,7 @@ void graph_classify::init(int argc, const char **argv, int verbose_level)
 		A_base->Sims->print_generators();
 		}
 
-	if (f_tournament) {
+	if (Descr->f_tournament) {
 		A_on_edges->induced_action_on_ordered_pairs(
 				*A_base, A_base->Sims, verbose_level - 3);
 		if (f_v) {
@@ -353,14 +181,14 @@ void graph_classify::init(int argc, const char **argv, int verbose_level)
 		}
 
 	
-	adjacency = NEW_int(n * n);
+	adjacency = NEW_int(Descr->n * Descr->n);
 
-	if (f_tournament) {
+	if (Descr->f_tournament) {
 		target_depth = n2;
 		}
-	if (f_regular) {
-		degree_sequence = NEW_int(n);
-		N = n * regularity;
+	if (Descr->f_regular) {
+		degree_sequence = NEW_int(Descr->n);
+		N = Descr->n * Descr->regularity;
 		if (ODD(N)) {
 			cout << "n * regularity must be even" << endl;
 			exit(1);
@@ -372,13 +200,13 @@ void graph_classify::init(int argc, const char **argv, int verbose_level)
 		degree_sequence = NULL;
 		target_depth = n2;
 		}
-	if (f_depth) {
-		target_depth = depth;
+	if (Descr->f_depth) {
+		target_depth = Descr->depth;
 		}
-	if (f_girth) {
-		neighbor = NEW_int(n);
-		neighbor_idx = NEW_int(n);
-		distance = NEW_int(n);
+	if (Descr->f_girth) {
+		neighbor = NEW_int(Descr->n);
+		neighbor_idx = NEW_int(Descr->n);
+		distance = NEW_int(Descr->n);
 		}
 	else {
 		neighbor = NULL;
@@ -390,14 +218,12 @@ void graph_classify::init(int argc, const char **argv, int verbose_level)
 	if (f_v) {
 		cout << "graph_classify::init target_depth = "
 				<< target_depth << endl;
-		}
-
-
-	if (f_control) {
-
 	}
-	else {
-		Control = NEW_OBJECT(poset_classification_control);
+
+
+	if (!Descr->f_control) {
+		cout << "please use -poset_classification_control ... -end" << endl;
+		exit(1);
 	}
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A_base, A_on_edges,
@@ -414,7 +240,7 @@ void graph_classify::init(int argc, const char **argv, int verbose_level)
 	Poset->print_function = graph_classify_print_set;
 	Poset->print_function_data = (void *) this;
 
-	gen->initialize_and_allocate_root_node(Control, Poset,
+	gen->initialize_and_allocate_root_node(Descr->Control, Poset,
 		target_depth,
 		verbose_level - 1);
 
@@ -440,12 +266,12 @@ int graph_classify::check_conditions(int len,
 		cout << "graph_classify::check_conditions checking set ";
 		print_set(cout, len, S);
 		}
-	if (f_regular && !check_regularity(S, len, verbose_level - 1)) {
+	if (Descr->f_regular && !check_regularity(S, len, verbose_level - 1)) {
 		f_not_regular = TRUE;
 		f_OK = FALSE;
 		}
 	if (f_OK) {
-		if (f_girth && !girth_check(S, len, verbose_level - 1)) {
+		if (Descr->f_girth && !girth_check(S, len, verbose_level - 1)) {
 			f_bad_girth = TRUE;
 			f_OK = FALSE;
 			}
@@ -515,26 +341,26 @@ int graph_classify::check_conditions_tournament(
 		}
 
 
-	if (f_OK && f_no_superking) {
+	if (f_OK && Descr->f_no_superking) {
 		int *score;
 		int u, v;
 
-		score = NEW_int(n);
-		int_vec_zero(score, n);
+		score = NEW_int(Descr->n);
+		int_vec_zero(score, Descr->n);
 		for (i = 0; i < len && f_OK; i++) {
 			a = S_sorted[i];
 			swap = a % 2;
 			a2 = a / 2;
-			Combi.k2ij(a2, u, v, n);
+			Combi.k2ij(a2, u, v, Descr->n);
 			if (swap) {
 				score[v]++;
-				if (score[v] == n - 1) {
+				if (score[v] == Descr->n - 1) {
 					f_OK = FALSE;
 					}
 				}
 			else {
 				score[u]++;
-				if (score[u] == n - 1) {
+				if (score[u] == Descr->n - 1) {
 					f_OK = FALSE;
 					}
 				}
@@ -589,21 +415,21 @@ int graph_classify::compute_degree_sequence(long int *S, int len)
 	long int h, a, i, j;
 	combinatorics_domain Combi;
 	
-	if (f_tournament) {
+	if (Descr->f_tournament) {
 		cout << "graph_classify::compute_degree_sequence "
 				"tournament is TRUE" << endl;
 		exit(1);
 		}
-	int_vec_zero(degree_sequence, n);
+	int_vec_zero(degree_sequence, Descr->n);
 	for (h = 0; h < len; h++) {
 		a = S[h];
-		Combi.k2ij_lint(a, i, j, n);
+		Combi.k2ij_lint(a, i, j, Descr->n);
 		degree_sequence[i]++;
-		if (degree_sequence[i] > regularity) {
+		if (degree_sequence[i] > Descr->regularity) {
 			return FALSE;
 			}
 		degree_sequence[j]++;
-		if (degree_sequence[j] > regularity) {
+		if (degree_sequence[j] > Descr->regularity) {
 			return FALSE;
 			}
 		}
@@ -622,9 +448,9 @@ int graph_classify::girth_check(long int *line, int len,
 		lint_vec_print(cout, line, len);
 		cout << endl;
 		}
-	for (i = 0; i < n; i++) {
+	for (i = 0; i < Descr->n; i++) {
 		if (!girth_test_vertex(line, len, i,
-				girth, verbose_level - 2)) {
+				Descr->girth, verbose_level - 2)) {
 			f_OK = FALSE;
 			if (f_vv) {
 				cout << "girth check fails for vertex " << i << endl;
@@ -651,7 +477,7 @@ int graph_classify::girth_test_vertex(long int *S, int len,
 	int l, i, cur = 0, a, b, da, db, g;
 	
 	get_adjacency(S, len, verbose_level - 1);
-	for (i = 0; i < n; i++) {
+	for (i = 0; i < Descr->n; i++) {
 		neighbor_idx[i] = -1;
 		}
 	neighbor[0] = vertex;
@@ -661,8 +487,8 @@ int graph_classify::girth_test_vertex(long int *S, int len,
 	while (cur < l) {
 		a = neighbor[cur];
 		da = distance[a];
-		for (b = 0; b < n; b++) {
-			if (adjacency[a * n + b]) {
+		for (b = 0; b < Descr->n; b++) {
+			if (adjacency[a * Descr->n + b]) {
 				if (neighbor_idx[b] >= 0) {
 					db = distance[b];
 					g = da + 1 + db;
@@ -697,8 +523,8 @@ int graph_classify::girth_test_vertex(long int *S, int len,
 					l++;
 					}
 				}
-			adjacency[a * n + b] = 0;
-			adjacency[b * n + a] = 0;
+			adjacency[a * Descr->n + b] = 0;
+			adjacency[b * Descr->n + a] = 0;
 			}
 		cur++;
 		}
@@ -711,38 +537,38 @@ void graph_classify::get_adjacency(long int *S, int len, int verbose_level)
 	long int h, i, j, a;
 	combinatorics_domain Combi;
 	
-	int_vec_zero(adjacency, n * n);
+	int_vec_zero(adjacency, Descr->n * Descr->n);
 
-	if (f_tournament) {
+	if (Descr->f_tournament) {
 		int swap, a2;
 		
 		for (h = 0; h < len; h++) {
 			a = S[h];
 			swap = a % 2;
 			a2 = a / 2;
-			Combi.k2ij_lint(a2, i, j, n);
+			Combi.k2ij_lint(a2, i, j, Descr->n);
 			if (!swap) {
-				adjacency[i * n + j] = 1;
-				adjacency[j * n + i] = 0;
+				adjacency[i * Descr->n + j] = 1;
+				adjacency[j * Descr->n + i] = 0;
 				}
 			else {
-				adjacency[i * n + j] = 0;
-				adjacency[j * n + i] = 1;
+				adjacency[i * Descr->n + j] = 0;
+				adjacency[j * Descr->n + i] = 1;
 				}
 			}
 		}
 	else {
 		for (h = 0; h < len; h++) {
 			a = S[h];
-			Combi.k2ij_lint(a, i, j, n);
-			adjacency[i * n + j] = 1;
-			adjacency[j * n + i] = 1;
+			Combi.k2ij_lint(a, i, j, Descr->n);
+			adjacency[i * Descr->n + j] = 1;
+			adjacency[j * Descr->n + i] = 1;
 			}
 		}
 	if (f_v) {
-		for (i = 0; i < n; i++) {
-			for (j = 0; j < n; j++) {
-				cout << adjacency[i * n + j];
+		for (i = 0; i < Descr->n; i++) {
+			for (j = 0; j < Descr->n; j++) {
+				cout << adjacency[i * Descr->n + j];
 				}
 			cout << endl;
 			}
@@ -760,9 +586,9 @@ void graph_classify::print(ostream &ost, long int *S, int len)
 		}
 	ost << endl;
 	get_adjacency(S, len, 0);
-	for (i = 0; i < n; i++) {
-		for (j = 0; j < n; j++) {
-			ost << setw(2) << adjacency[i * n + j];
+	for (i = 0; i < Descr->n; i++) {
+		for (j = 0; j < Descr->n; j++) {
+			ost << setw(2) << adjacency[i * Descr->n + j];
 			}
 		ost << endl;
 		}
@@ -783,7 +609,7 @@ void graph_classify::print_score_sequences(
 		}
 
 	set = NEW_lint(level);
-	score = NEW_lint(n);
+	score = NEW_lint(Descr->n);
 	nb_orbits = gen->nb_orbits_at_level(level);
 	for (h = 0; h < nb_orbits; h++) {
 		strong_generators *Strong_gens;
@@ -800,9 +626,9 @@ void graph_classify::print_score_sequences(
 		lint_vec_print(cout, set, level);
 		cout << " : " << go << " : ";
 		
-		score_sequence(n, set, level, score, verbose_level - 1);
+		score_sequence(Descr->n, set, level, score, verbose_level - 1);
 
-		lint_vec_print(cout, score, n);
+		lint_vec_print(cout, score, Descr->n);
 		cout << endl;
 
 		delete Strong_gens;
@@ -913,11 +739,11 @@ void graph_classify::draw_graphs(int level,
 		//G.frame(0.05);
 
 
-		if (f_tournament) {
-			G.draw_tournament(x, y, dx, dy, n, set, level, 0);
+		if (Descr->f_tournament) {
+			G.draw_tournament(x, y, dx, dy, Descr->n, set, level, 0);
 			}
 		else {
-			G.draw_graph(x, y, dx, dy, n, set, level);
+			G.draw_graph(x, y, dx, dy, Descr->n, set, level);
 			}
 		
 		G.end_figure();
@@ -952,7 +778,7 @@ void graph_classify_test_function(long int *S, int len,
 	nb_good_candidates = 0;
 	for (i = 0; i < nb_candidates; i++) {
 		Gen->S1[len] = candidates[i];
-		if (Gen->f_tournament) {
+		if (Gen->Descr->f_tournament) {
 			f_OK = Gen->check_conditions_tournament(
 					len + 1, Gen->S1, verbose_level);
 		}

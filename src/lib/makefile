@@ -325,6 +325,7 @@ MODULES= \
 		top_level/combinatorics/design_create_description.o \
 		top_level/combinatorics/design_create.o \
 		top_level/combinatorics/difference_set_in_heisenberg_group.o \
+		top_level/combinatorics/graph_classify_description.o \
 		top_level/combinatorics/graph_classify.o \
 		top_level/combinatorics/graph_theoretic_activity_description.o \
 		top_level/combinatorics/hadamard_classify.o \
@@ -375,7 +376,6 @@ MODULES= \
 		top_level/isomorph/isomorph_testing.o \
 		top_level/isomorph/isomorph_trace.o \
 		top_level/isomorph/representatives.o \
-		top_level/orbits/kramer_mesner.o \
 		top_level/orbits/orbit_of_equations.o \
 		top_level/orbits/orbit_of_sets.o \
 		top_level/orbits/orbit_of_subspaces.o \
