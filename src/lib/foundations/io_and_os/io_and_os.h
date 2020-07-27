@@ -604,7 +604,7 @@ public:
 // #############################################################################
 
 
-//! system functions
+//! interface to system functions
 
 class os_interface {
 public:

@@ -1763,8 +1763,7 @@ void unipoly_domain::substitute_matrix_in_polynomial(
 	int i, j, h, c, d, *P, *coeffs;
 
 	if (f_v) {
-		cout << "unipoly_domain::substitute_matrix_"
-				"in_polynomial" << endl;
+		cout << "unipoly_domain::substitute_matrix_in_polynomial" << endl;
 	}
 	M1 = NEW_int(k * k);
 	M2 = NEW_int(k * k);
@@ -1801,8 +1800,7 @@ void unipoly_domain::substitute_matrix_in_polynomial(
 	FREE_int(M1);
 	FREE_int(M2);
 	if (f_v) {
-		cout << "unipoly_domain::substitute_matrix_"
-				"in_polynomial done" << endl;
+		cout << "unipoly_domain::substitute_matrix_in_polynomial done" << endl;
 	}
 }
 
@@ -1816,8 +1814,7 @@ int unipoly_domain::substitute_scalar_in_polynomial(
 	int h, c, d, *P, *coeffs;
 
 	if (f_v) {
-		cout << "unipoly_domain::substitute_scalar_"
-				"in_polynomial" << endl;
+		cout << "unipoly_domain::substitute_scalar_in_polynomial" << endl;
 	}
 	P = (int *)p;
 	d = P[0];
@@ -1836,8 +1833,7 @@ int unipoly_domain::substitute_scalar_in_polynomial(
 		}
 	}
 	if (f_v) {
-		cout << "unipoly_domain::substitute_scalar_"
-				"in_polynomial done" << endl;
+		cout << "unipoly_domain::substitute_scalar_in_polynomial done" << endl;
 	}
 	return m1;
 }
@@ -2120,7 +2116,8 @@ int unipoly_domain::is_primitive(unipoly_object &m,
 	for (i = 0; i < nb_primes; i++) {
 
 		if (f_v) {
-			cout << "unipoly_domain::is_primitive prime " << i << " / " << nb_primes << " is " << primes[i] << endl;
+			cout << "unipoly_domain::is_primitive prime " << i << " / "
+					<< nb_primes << " is " << primes[i] << endl;
 		}
 
 
@@ -2215,7 +2212,8 @@ void unipoly_domain::get_a_primitive_polynomial(
 	D.factor_into_longintegers(qm1, nb_primes,
 			primes, exponents, verbose_level - 2);
 	if (f_vv) {
-		cout << "unipoly_domain::get_a_primitive_polynomial after factoring " << qm1 << " nb_primes=" << nb_primes << endl;
+		cout << "unipoly_domain::get_a_primitive_polynomial after factoring "
+				<< qm1 << " nb_primes=" << nb_primes << endl;
 		cout << "primes:" << endl;
 		for (i = 0; i < nb_primes; i++) {
 			cout << i << " : " << primes[i] << endl;
@@ -2223,7 +2221,8 @@ void unipoly_domain::get_a_primitive_polynomial(
 	}
 	//a = primitive_root(p, f_v);
 	if (f_vv) {
-		cout << "unipoly_domain::get_a_primitive_polynomial before gfq->primitive_root" << endl;
+		cout << "unipoly_domain::get_a_primitive_polynomial "
+				"before gfq->primitive_root" << endl;
 	}
 	a = gfq->primitive_root();
 	if (f_vv) {
@@ -2770,8 +2769,7 @@ void unipoly_domain::minimum_polynomial_factorring_longinteger(
 	int f_vv = (verbose_level >= 2);
 	
 	if (!f_factorring) {
-		cout << "unipoly_domain::minimum_polynomial_"
-				"factorring_longinteger "
+		cout << "unipoly_domain::minimum_polynomial_factorring_longinteger "
 				"must be a factorring" << endl;
 		exit(1);
 	}
@@ -2796,8 +2794,7 @@ void unipoly_domain::minimum_polynomial_factorring_longinteger(
 	create_object_by_rank(c, 0, __FILE__, __LINE__, verbose_level);
 	create_object_by_rank(d, 0, __FILE__, __LINE__, verbose_level);
 	if (f_v) {
-		cout << "unipoly_domain::minimum_polynomial_"
-				"factorring_longinteger "
+		cout << "unipoly_domain::minimum_polynomial_factorring_longinteger "
 				"minimum polynomial of ";
 		print_object(b, cout);
 		cout << " = " << alpha << endl;

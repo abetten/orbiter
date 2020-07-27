@@ -147,7 +147,8 @@ void finite_field::projective_matrix_group_base_and_orbits(int n,
 
 
 	if (f_v) {
-		cout << "finite_field::projective_matrix_group_base_and_orbits base_len=" << base_len << endl;
+		cout << "finite_field::projective_matrix_group_base_and_orbits "
+				"base_len=" << base_len << endl;
 	}
 	for (i = 0; i < base_len; i++) {
 		base[i] = i;

@@ -307,16 +307,19 @@ void finite_field::init_override_polynomial(int q,
 	}
 	
 	if (f_vv) {
-		cout << "finite_field::init_override_polynomial before init_quadratic_subfield" << endl;
+		cout << "finite_field::init_override_polynomial "
+				"before init_quadratic_subfield" << endl;
 	}
 	init_quadratic_subfield(verbose_level);
 	if (f_vv) {
-		cout << "finite_field::init_override_polynomial after init_quadratic_subfield" << endl;
+		cout << "finite_field::init_override_polynomial "
+				"after init_quadratic_subfield" << endl;
 	}
 
 	
 	if (f_vv) {
-		cout << "finite_field::init_override_polynomial computing frobenius_table and "
+		cout << "finite_field::init_override_polynomial "
+				"computing frobenius_table and "
 				"absolute_trace_table q=" << q << endl;
 	}
 	frobenius_table = NEW_int(q);
@@ -601,7 +604,7 @@ void finite_field::create_alpha_table_extension_field(int verbose_level)
 	int i, k;
 	
 	if (f_v) {
-		cout << "create_alpha_table_extension_field, "
+		cout << "finite_field::create_alpha_table_extension_field "
 				"q=" << q << " p=" << p << " e=" << e << endl;
 	}
 
@@ -642,7 +645,7 @@ void finite_field::create_alpha_table_extension_field(int verbose_level)
 				cout << " has rank " << k << endl;
 			}
 			if (k < 0 || k >= q) {
-				cout << "error in finite_field::create_alpha_table_extension_field k = " << k << endl;
+				cout << "finite_field::create_alpha_table_extension_field error: k = " << k << endl;
 			}
 
 			alpha_power_table[i] = k;
@@ -662,7 +665,7 @@ void finite_field::create_alpha_table_extension_field(int verbose_level)
 	FX.delete_object(m);
 
 	if (f_v) {
-		cout << "finished create_alpha_table_extension_field, "
+		cout << "finite_field::create_alpha_table_extension_field done "
 				"q=" << q << " p=" << p << " e=" << e << endl;
 	}
 }
@@ -680,7 +683,8 @@ void finite_field::create_alpha_table_prime_field(int verbose_level)
 	}
 	alpha = NT.primitive_root(p, verbose_level);
 	if (f_v) {
-		cout << "primitive element is alpha=" << alpha << endl;
+		cout << "finite_field::create_alpha_table_prime_field "
+				"primitive element is alpha=" << alpha << endl;
 	}
 	for (i = 0; i < p; i++) {
 		log_alpha_table[i] = -1;
@@ -690,7 +694,7 @@ void finite_field::create_alpha_table_prime_field(int verbose_level)
 	a = 1;
 	for (i = 0; i < p; i++) {
 		if (a < 0 || a >= q) {
-			cout << "error in finite_field::create_alpha_table_prime_field "
+			cout << "finite_field::create_alpha_table_prime_field error: "
 					"a = " << a << endl;
 		}
 		alpha_power_table[i] = a;
@@ -699,7 +703,8 @@ void finite_field::create_alpha_table_prime_field(int verbose_level)
 		}
 
 		if (f_vv) {
-			cout << "alpha_power_table[" << i << "]=" << a << endl;
+			cout << "finite_field::create_alpha_table_prime_field "
+					"alpha_power_table[" << i << "]=" << a << endl;
 		}
 
 		a *= alpha;
@@ -819,8 +824,8 @@ void finite_field::create_tables_extension_field(int verbose_level)
 int *finite_field::private_add_table()
 {
 	if (!f_has_table) {
-		cout << "error: finite_field::private_add_table  "
-				"tables not computed" << endl;
+		cout << "finite_field::private_add_table  "
+				"error: tables have not been computed" << endl;
 		exit(1);
 	}
 	return add_table;
@@ -829,8 +834,8 @@ int *finite_field::private_add_table()
 int *finite_field::private_mult_table()
 {
 	if (!f_has_table) {
-		cout << "error: finite_field::private_mult_table  "
-				"tables not computed" << endl;
+		cout << "finite_field::private_mult_table  "
+				"error: tables have not been computed" << endl;
 		exit(1);
 	}
 	return mult_table;
@@ -1425,7 +1430,8 @@ void finite_field::retract_int_vec(finite_field &subfield,
 	}
 	idx = (q - 1) / (m - 1);
 	if (f_v) {
-		cout << "subfield " << p << "^" << n << " = " << n << endl;
+		cout << "finite_field::retract_int_vec "
+				"subfield " << p << "^" << n << " = " << n << endl;
 		cout << "idx = " << idx << endl;
 	}
 		
@@ -1447,7 +1453,7 @@ void finite_field::retract_int_vec(finite_field &subfield,
 		v_out[k] = b;
 	}
 	if (f_v) {
-		cout << "finite_field::retract_int_vec finished" << endl;
+		cout << "finite_field::retract_int_vec done" << endl;
 	}
 }
 
@@ -1557,7 +1563,7 @@ void finite_field::subfield_embedding_2dimensional(
 	}
 	if (f_v) {
 		cout << "finite_field::subfield_embedding_2dimensional "
-				"finished" << endl;
+				"done" << endl;
 	}
 }
 
