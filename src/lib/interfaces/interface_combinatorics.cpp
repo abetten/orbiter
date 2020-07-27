@@ -22,9 +22,6 @@ namespace interfaces {
 
 interface_combinatorics::interface_combinatorics()
 {
-	argc = 0;
-	argv = NULL;
-
 	f_create_combinatorial_object = FALSE;
 	Combinatorial_object_description = NULL;
 
@@ -57,13 +54,13 @@ interface_combinatorics::interface_combinatorics()
 	v_max = 0;
 	f_conjugacy_classes_Sym_n = FALSE;
 	n = 0;
-	f_Kramer_Mesner = FALSE;
 	f_tree_of_all_k_subsets = FALSE;
 	tree_n = 0;
 	tree_k = 0;
 	f_Delandtsheer_Doyen = FALSE;
 	Delandtsheer_Doyen_description = NULL;
 	f_graph_classify = FALSE;
+	Graph_classify_description = NULL;
 	f_tdo_refinement = FALSE;
 	Tdo_refinement_descr = NULL;
 	f_tdo_print = FALSE;
@@ -127,9 +124,6 @@ void interface_combinatorics::print_help(int argc,
 	else if (strcmp(argv[i], "-conjugacy_classes_Sym_n") == 0) {
 		cout << "-conjugacy_classes_Sym_n <int : n>" << endl;
 	}
-	else if (strcmp(argv[i], "-Kramer_Mesner") == 0) {
-		cout << "-Kramer_Mesner <description>" << endl;
-	}
 	else if (strcmp(argv[i], "-tree_of_all_k_subsets") == 0) {
 		cout << "-tree_of_all_k_subsets <int : n> <int : k>" << endl;
 	}
@@ -137,7 +131,7 @@ void interface_combinatorics::print_help(int argc,
 			cout << "-Delandtsheer_Doyen <description>" << endl;
 	}
 	else if (strcmp(argv[i], "-graph_classify") == 0) {
-		cout << "-graph_classify <options>" << endl;
+		cout << "-graph_classify <description -end>" << endl;
 	}
 	else if (strcmp(argv[i], "-tdo_refinement") == 0) {
 		cout << "-tdo_refinement <options>" << endl;
@@ -210,9 +204,6 @@ int interface_combinatorics::recognize_keyword(int argc,
 	else if (strcmp(argv[i], "-conjugacy_classes_Sym_n") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-Kramer_Mesner") == 0) {
-		return true;
-	}
 	else if (strcmp(argv[i], "-tree_of_all_k_subsets") == 0) {
 		return true;
 	}
@@ -255,9 +246,6 @@ void interface_combinatorics::read_arguments(int argc,
 	int i;
 
 	cout << "interface_combinatorics::read_arguments" << endl;
-
-	interface_combinatorics::argc = argc;
-	interface_combinatorics::argv = argv;
 
 	for (i = i0; i < argc; i++) {
 		if (strcmp(argv[i], "-create_combinatorial_object") == 0) {
@@ -369,10 +357,6 @@ void interface_combinatorics::read_arguments(int argc,
 			n = atoi(argv[++i]);
 			cout << "-conjugacy_classes_Sym_n " << n << endl;
 		}
-		else if (strcmp(argv[i], "-Kramer_Mesner") == 0) {
-			f_Kramer_Mesner = TRUE;
-			cout << "-Kramer_Mesner " << endl;
-		}
 		else if (strcmp(argv[i], "-tree_of_all_k_subsets") == 0) {
 			f_tree_of_all_k_subsets = TRUE;
 			tree_n = atoi(argv[++i]);
@@ -389,6 +373,18 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 		else if (strcmp(argv[i], "-graph_classify") == 0) {
 			f_graph_classify = TRUE;
+
+			cout << "-graph_classify " << endl;
+
+			Graph_classify_description = NEW_OBJECT(graph_classify_description);
+			i += Graph_classify_description->read_arguments(argc - i - 1,
+				argv + i + 1, verbose_level) + 1;
+			cout << "interface_combinatorics::read_arguments finished reading -graph_classify" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
 			cout << "-graph_classify " << endl;
 		}
 		else if (strcmp(argv[i], "-tdo_refinement") == 0) {
@@ -529,10 +525,6 @@ void interface_combinatorics::worker(int verbose_level)
 
 		do_conjugacy_classes_Sym_n(n, verbose_level);
 	}
-	else if (f_Kramer_Mesner) {
-
-		do_Kramer_Mesner(verbose_level);
-	}
 	else if (f_tree_of_all_k_subsets) {
 
 		do_make_tree_of_all_k_subsets(tree_n, tree_k, verbose_level);
@@ -543,7 +535,7 @@ void interface_combinatorics::worker(int verbose_level)
 	}
 	else if (f_graph_classify) {
 
-		do_graph_classify(verbose_level);
+		do_graph_classify(Graph_classify_description, verbose_level);
 	}
 	else if (f_tdo_refinement) {
 
@@ -1068,41 +1060,6 @@ void interface_combinatorics::do_conjugacy_classes_Sym_n(int n, int verbose_leve
 	}
 }
 
-void interface_combinatorics::do_Kramer_Mesner(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_Kramer_Mesner" << endl;
-	}
-
-	{
-	kramer_mesner KM;
-
-	cout << "km.cpp: before read_arguments" << endl;
-	KM.read_arguments(argc, argv, verbose_level);
-
-	//int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
-
-	sims *S;
-
-	cout << "interface_combinatorics::do_Kramer_Mesner before init_group" << endl;
-	KM.init_group(S, verbose_level);
-
-
-	cout << "interface_combinatorics::do_Kramer_Mesner before orbits" << endl;
-	KM.orbits(S, verbose_level);
-
-	delete S;
-	}
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_Kramer_Mesner done" << endl;
-	}
-}
-
-
 void interface_combinatorics::do_make_tree_of_all_k_subsets(int n, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1166,7 +1123,7 @@ void interface_combinatorics::do_Delandtsheer_Doyen(delandtsheer_doyen_descripti
 }
 
 
-void interface_combinatorics::do_graph_classify(int verbose_level)
+void interface_combinatorics::do_graph_classify(graph_classify_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1186,7 +1143,7 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 	int t0 = Os.os_ticks();
 
 
-	Gen.init(argc, argv, verbose_level);
+	Gen.init(Descr, verbose_level);
 
 
 	depth = Gen.gen->main(t0,
@@ -1196,7 +1153,7 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 		verbose_level);
 	cout << "Gen.gen->main returns depth=" << depth << endl;
 
-	if (Gen.f_tournament) {
+	if (Gen.Descr->f_tournament) {
 		Gen.print_score_sequences(depth, verbose_level);
 		}
 
@@ -1204,19 +1161,19 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 	//Gen.n /* data1 */, f_embedded, Gen.gen->verbose_level);
 
 
-	if (Gen.Control->f_draw_poset) {
+	if (Gen.Descr->Control->f_draw_poset) {
 		Gen.gen->draw_poset(Gen.gen->get_problem_label_with_path(), depth,
-			Gen.n /* data1 */, f_embedded, f_sideways, 100 /* rad */,
+			Gen.Descr->n /* data1 */, f_embedded, f_sideways, 100 /* rad */,
 			verbose_level);
 		}
 
 
-	if (Gen.Control->f_draw_full_poset) {
+	if (Gen.Descr->Control->f_draw_full_poset) {
 		//double x_stretch = 0.4;
 		cout << "Gen.f_draw_full_poset" << endl;
 		Gen.gen->draw_poset_full(Gen.gen->get_problem_label_with_path(), depth,
-			Gen.n /* data1 */, f_embedded, f_sideways, 100 /* rad */,
-			Gen.x_stretch, verbose_level);
+			Gen.Descr->n /* data1 */, f_embedded, f_sideways, 100 /* rad */,
+			Gen.Descr->x_stretch, verbose_level);
 
 		const char *fname_prefix = "flag_orbits";
 
@@ -1226,7 +1183,7 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 
 	//Gen.gen->print_data_structure_tex(depth, Gen.gen->verbose_level);
 
-	if (Gen.Control->f_plesken) {
+	if (Gen.Descr->Control->f_plesken) {
 		latex_interface L;
 		int *P;
 		int N;
@@ -1242,26 +1199,26 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 		FREE_int(P);
 		}
 
-	if (Gen.Control->f_list) {
+	if (Gen.Descr->Control->f_list) {
 		int f_show_orbit_decomposition = FALSE;
 		int f_show_stab = FALSE;
 		int f_save_stab = FALSE;
 		int f_show_whole_orbit = FALSE;
 
-		Gen.gen->list_all_orbits_at_level(Gen.Control->depth,
+		Gen.gen->list_all_orbits_at_level(Gen.Descr->Control->depth,
 			FALSE, NULL, NULL,
 			f_show_orbit_decomposition,
 			f_show_stab, f_save_stab, f_show_whole_orbit);
 		}
 
-	if (Gen.Control->f_list_all) {
+	if (Gen.Descr->Control->f_list_all) {
 		int f_show_orbit_decomposition = FALSE;
 		int f_show_stab = FALSE;
 		int f_save_stab = FALSE;
 		int f_show_whole_orbit = FALSE;
 		int j;
 
-		for (j = 0; j <= Gen.Control->depth; j++) {
+		for (j = 0; j <= Gen.Descr->Control->depth; j++) {
 			Gen.gen->list_all_orbits_at_level(j,
 				FALSE, NULL, NULL,
 				f_show_orbit_decomposition,
@@ -1269,54 +1226,54 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 			}
 		}
 
-	if (Gen.f_draw_graphs) {
+	if (Gen.Descr->f_draw_graphs) {
 		int xmax_in = 1000000;
 		int ymax_in = 1000000;
 		int xmax = 1000000;
 		int ymax = 1000000;
 		int level;
 
-		for (level = 0; level <= Gen.Control->depth; level++) {
-			Gen.draw_graphs(level, Gen.Control->scale,
+		for (level = 0; level <= Gen.Descr->Control->depth; level++) {
+			Gen.draw_graphs(level, Gen.Descr->Control->scale,
 					xmax_in, ymax_in, xmax, ymax,
-					Gen.Control->f_embedded, Gen.Control->f_sideways,
+					Gen.Descr->Control->f_embedded, Gen.Descr->Control->f_sideways,
 					verbose_level);
 			}
 		}
 
-	if (Gen.f_draw_graphs_at_level) {
+	if (Gen.Descr->f_draw_graphs_at_level) {
 		int xmax_in = 1000000;
 		int ymax_in = 1000000;
 		int xmax = 1000000;
 		int ymax = 1000000;
 
 		cout << "before Gen.draw_graphs" << endl;
-		Gen.draw_graphs(Gen.level, Gen.Control->scale,
+		Gen.draw_graphs(Gen.Descr->level, Gen.Descr->Control->scale,
 				xmax_in, ymax_in, xmax, ymax,
-				Gen.Control->f_embedded, Gen.Control->f_sideways,
+				Gen.Descr->Control->f_embedded, Gen.Descr->Control->f_sideways,
 				verbose_level);
 		cout << "after Gen.draw_graphs" << endl;
 		}
 
-	if (Gen.f_draw_level_graph) {
+	if (Gen.Descr->f_draw_level_graph) {
 		Gen.gen->draw_level_graph(Gen.gen->get_problem_label_with_path(),
-				Gen.Control->depth, Gen.n /* data1 */,
-				Gen.level_graph_level,
+				Gen.Descr->Control->depth, Gen.Descr->n /* data1 */,
+				Gen.Descr->level_graph_level,
 				f_embedded, f_sideways,
 				verbose_level - 3);
 		}
 
-	if (Gen.f_test_multi_edge) {
+	if (Gen.Descr->f_test_multi_edge) {
 		Gen.gen->test_for_multi_edge_in_classification_graph(
 				depth, verbose_level);
 		}
-	if (Gen.f_identify) {
+	if (Gen.Descr->f_identify) {
 		int *transporter;
 		int orbit_at_level;
 
 		transporter = NEW_int(Gen.gen->get_A()->elt_size_in_int);
 
-		Gen.gen->identify(Gen.identify_data, Gen.identify_data_sz,
+		Gen.gen->identify(Gen.Descr->identify_data, Gen.Descr->identify_data_sz,
 				transporter, orbit_at_level, verbose_level);
 
 		FREE_int(transporter);
@@ -1326,10 +1283,10 @@ void interface_combinatorics::do_graph_classify(int verbose_level)
 
 	N = 0;
 	F = 0;
-	for (level = 0; level <= Gen.Control->depth; level++) {
+	for (level = 0; level <= Gen.Descr->Control->depth; level++) {
 		N += Gen.gen->nb_orbits_at_level(level);
 		}
-	for (level = 0; level < Gen.Control->depth; level++) {
+	for (level = 0; level < Gen.Descr->Control->depth; level++) {
 		F += Gen.gen->nb_flag_orbits_up_at_level(level);
 		}
 	cout << "N=" << N << endl;

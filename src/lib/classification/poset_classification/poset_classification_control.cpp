@@ -63,6 +63,17 @@ poset_classification_control::poset_classification_control()
 	f_list_all = FALSE;
 	f_table_of_nodes = FALSE;
 	f_make_relations_with_flag_orbits = FALSE;
+	f_Kramer_Mesner_matrix = FALSE;
+	Kramer_Mesner_t = 0;
+	Kramer_Mesner_k = 0;
+	f_level_summary_csv = FALSE;
+	f_orbit_reps_csv = FALSE;
+	f_report = FALSE;
+
+	f_show_orbit_decomposition = FALSE;
+	f_show_stab = FALSE;
+	f_save_stab = FALSE;
+	f_show_whole_orbit = FALSE;
 
 	nb_recognize = 0;
 
@@ -140,6 +151,51 @@ int poset_classification_control::read_arguments(
 				cout << "poset_classification_control::read_arguments -W" << endl;
 			}
 		}
+		else if (strcmp(argv[i], "-level_summary_csv") == 0) {
+			f_level_summary_csv = TRUE;
+			if (f_v) {
+				cout << "poset_classification_control::read_arguments -level_summary_csv" << endl;
+			}
+		}
+		else if (strcmp(argv[i], "-orbit_reps_csv") == 0) {
+			f_orbit_reps_csv = TRUE;
+			if (f_v) {
+				cout << "poset_classification_control::read_arguments -orbit_reps_csv" << endl;
+			}
+		}
+
+		else if (strcmp(argv[i], "-report") == 0) {
+			f_report = TRUE;
+			if (f_v) {
+				cout << "poset_classification_control::read_arguments -report" << endl;
+			}
+		}
+
+		else if (strcmp(argv[i], "-show_orbit_decomposition") == 0) {
+			f_show_orbit_decomposition = TRUE;
+			if (f_v) {
+				cout << "poset_classification_control::read_arguments -show_orbit_decomposition" << endl;
+			}
+		}
+		else if (strcmp(argv[i], "-show_stab") == 0) {
+			f_show_stab = TRUE;
+			if (f_v) {
+				cout << "poset_classification_control::read_arguments -show_stab" << endl;
+			}
+		}
+		else if (strcmp(argv[i], "-save_stab") == 0) {
+			f_save_stab = TRUE;
+			if (f_v) {
+				cout << "poset_classification_control::read_arguments -save_stab" << endl;
+			}
+		}
+		else if (strcmp(argv[i], "-show_whole_orbit") == 0) {
+			f_show_whole_orbit = TRUE;
+			if (f_v) {
+				cout << "poset_classification_control::read_arguments -show_whole_orbit" << endl;
+			}
+		}
+
 		else if (strcmp(argv[i], "-write_data_files") == 0) {
 			f_write_data_files = TRUE;
 			if (f_v) {
@@ -244,6 +300,12 @@ int poset_classification_control::read_arguments(
 		else if (strcmp(argv[i], "-plesken") == 0) {
 			f_plesken = TRUE;
 			cout << "-plesken " << endl;
+		}
+		else if (strcmp(argv[i], "-Kramer_Mesner_matrix") == 0) {
+			f_Kramer_Mesner_matrix = TRUE;
+			Kramer_Mesner_t = atoi(argv[++i]);
+			Kramer_Mesner_k = atoi(argv[++i]);
+			cout << "-Kramer_Mesner_matrix " << Kramer_Mesner_t << " " << Kramer_Mesner_k << endl;
 		}
 		else if (strcmp(argv[i], "-print_data_structure") == 0) {
 			f_print_data_structure = TRUE;

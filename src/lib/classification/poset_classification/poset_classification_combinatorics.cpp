@@ -455,6 +455,253 @@ void poset_classification::test_for_multi_edge_in_classification_graph(
 	}
 }
 
+void poset_classification::Kramer_Mesner_matrix_neighboring(
+		int level, long int *&M, int &nb_rows, int &nb_cols, int verbose_level)
+// we assume that we don't use implicit fusion nodes
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE;//(verbose_level >= 2);
+	int f1, f2, i, j, k, I, J, len;
+	poset_orbit_node *O;
+
+	if (f_v) {
+		cout << "poset_classification::Kramer_Mesner_matrix_neighboring "
+				"level=" << level << endl;
+	}
+
+	f1 = first_node_at_level(level);
+	f2 = first_node_at_level(level + 1);
+	nb_rows = nb_orbits_at_level(level);
+	nb_cols = nb_orbits_at_level(level + 1);
+
+	M = NEW_lint(nb_rows * nb_cols);
+
+	if (f_v) {
+		cout << "poset_classification::Kramer_Mesner_matrix_neighboring "
+				"the size of the matrix is " << nb_rows << " x " << nb_cols << endl;
+	}
+
+	for (i = 0; i < nb_rows; i++) {
+		if (f_vv) {
+			cout << "poset_classification::Kramer_Mesner_matrix_neighboring "
+					"i=" << i << " / " << nb_rows << endl;
+		}
+		I = f1 + i;
+		O = get_node(I);
+		for (k = 0; k < O->nb_extensions; k++) {
+			if (f_vv) {
+				cout << "poset_classification::Kramer_Mesner_matrix_neighboring "
+						"i=" << i << " / " << nb_rows << " extension "
+						<< k << " / " << O->nb_extensions << endl;
+			}
+			if (O->E[k].type == EXTENSION_TYPE_EXTENSION) {
+				if (f_vv) {
+					cout << "poset_classification::Kramer_Mesner_matrix_neighboring "
+							"i=" << i << " / " << nb_rows << " extension "
+							<< k << " / " << O->nb_extensions
+							<< " type extension node" << endl;
+				}
+				len = O->E[k].orbit_len;
+				J = O->E[k].data;
+				j = J - f2;
+				M[i * nb_cols + j] += len;
+			}
+			if (O->E[k].type == EXTENSION_TYPE_FUSION) {
+				if (f_vv) {
+					cout << "poset_classification::Kramer_Mesner_matrix_neighboring "
+							"i=" << i << " / " << nb_rows << " extension "
+							<< k << " / " << O->nb_extensions
+							<< " type fusion" << endl;
+				}
+				// fusion node
+				len = O->E[k].orbit_len;
+
+				int I1, ext1;
+				poset_orbit_node *O1;
+
+				I1 = O->E[k].data1;
+				ext1 = O->E[k].data2;
+				O1 = get_node(I1);
+				if (O1->E[ext1].type != EXTENSION_TYPE_EXTENSION) {
+					cout << "poset_classification::Kramer_Mesner_matrix_neighboring "
+							"O1->E[ext1].type != EXTENSION_TYPE_EXTENSION "
+							"something is wrong" << endl;
+					exit(1);
+				}
+				J = O1->E[ext1].data;
+
+#if 0
+				O->store_set(gen, level - 1);
+					// stores a set of size level to gen->S
+				gen->S[level] = O->E[k].pt;
+
+				for (ii = 0; ii < level + 1; ii++) {
+					gen->set[level + 1][ii] = gen->S[ii];
+				}
+
+				gen->A->element_one(gen->transporter->ith(level + 1), 0);
+
+				J = O->apply_isomorphism(gen,
+					level, I /* current_node */,
+					//0 /* my_node */, 0 /* my_extension */, 0 /* my_coset */,
+					k /* current_extension */, level + 1,
+					FALSE /* f_tolerant */,
+					0/*verbose_level - 2*/);
+				if (FALSE) {
+					cout << "after apply_isomorphism J=" << J << endl;
+				}
+#else
+
+#endif
+
+
+
+
+#if 0
+				//cout << "fusion node:" << endl;
+				//int_vec_print(cout, gen->S, level + 1);
+				//cout << endl;
+				gen->A->element_retrieve(O->E[k].data, gen->Elt1, 0);
+
+				gen->A2->map_a_set(gen->S, gen->S0, level + 1, gen->Elt1, 0);
+				//int_vec_print(cout, gen->S0, level + 1);
+				//cout << endl;
+
+				int_vec_heapsort(gen->S0, level + 1); //int_vec_sort(level + 1, gen->S0);
+
+				//int_vec_print(cout, gen->S0, level + 1);
+				//cout << endl;
+
+				J = gen->find_poset_orbit_node_for_set(level + 1, gen->S0, 0);
+#endif
+				j = J - f2;
+				M[i * nb_cols + j] += len;
+			}
+		}
+	}
+	if (f_v) {
+		cout << "poset_classification::Kramer_Mesner_matrix_neighboring "
+				"level=" << level << " done" << endl;
+	}
+}
+
+void poset_classification::Mtk_via_Mtr_Mrk(int t, int r, int k,
+		long int *Mtr, long int *Mrk, long int *&Mtk,
+		int nb_r1, int nb_c1, int nb_r2, int nb_c2, int &nb_r3, int &nb_c3,
+		int verbose_level)
+// Computes $M_{tk}$ via a recursion formula:
+// $M_{tk} = {{k - t} \choose {k - r}} \cdot M_{t,r} \cdot M_{r,k}$.
+{
+	int f_v = (verbose_level >= 1);
+	//discreta_base s, h;
+	int i, j, h, a, b, c, s;
+
+	if (f_v) {
+		cout << "poset_classification::Mtk_via_Mtr_Mrk t = " << t << ", r = "
+				<< r << ", k = " << k << endl;
+	}
+	if (nb_c1 != nb_r2) {
+		cout << "poset_classification::Mtk_via_Mtr_Mrk nb_c1 != nb_r2" << endl;
+		exit(1);
+	}
+
+	nb_r3 = nb_r1;
+	nb_c3 = nb_c2;
+	Mtk = NEW_lint(nb_r3 * nb_c3);
+	for (i = 0; i < nb_r3; i++) {
+		for (j = 0; j < nb_c3; j++) {
+			c = 0;
+			for (h = 0; h < nb_c1; h++) {
+				a = Mtr[i * nb_c1 + h];
+				b = Mrk[h * nb_c2 + j];
+				c += a * b;
+			}
+			Mtk[i * nb_c3 + j] = c;
+		}
+	}
+
+
+	//Mtk.mult(Mtr, Mrk);
+		/* Mtk := (k - t) atop (k - r) * M_t,k */
+
+
+	longinteger_domain D;
+	longinteger_object S;
+
+	if (Poset->f_subset_lattice) {
+		D.binomial(S, k - t, k - r, 0/* verbose_level*/);
+		s = S.as_lint();
+	}
+	else if (Poset->f_subspace_lattice) {
+		D.q_binomial(S, k - t, r - t, Poset->VS->F->q, 0/* verbose_level*/);
+		s = S.as_lint();
+	}
+
+
+	for (i = 0; i < nb_r3; i++) {
+		for (j = 0; j < nb_c3; j++) {
+			Mtk[i * nb_c3 + j] /= s;
+		}
+	}
+	if (f_v) {
+		cout << "poset_classification::Mtk_via_Mtr_Mrk matrix M_{" << t << "," << k
+			<< "} of format " << nb_r3 << " x " << nb_c3 << " computed" << endl;
+		}
+}
+
+void poset_classification::Mtk_from_MM(long int **pM,
+	int *Nb_rows, int *Nb_cols,
+	int t, int k,
+	long int *&Mtk, int &nb_r, int &nb_c,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+
+	if (f_v) {
+		cout << "poset_classification::Mtk_from_MM t = " << t << ", k = " << k << endl;
+	}
+	if (k == t) {
+		cout << "poset_classification::Mtk_from_MM k == t" << endl;
+		exit(1);
+	}
+
+	long int *T;
+	long int *T2;
+	int Tr, Tc;
+	int T2r, T2c;
+
+	Tr = Nb_rows[t];
+	Tc = Nb_cols[t];
+
+	T = NEW_lint(Tr * Tc);
+	for (i = 0; i < Tr; i++) {
+		for (j = 0; j < Tc; j++) {
+			T[i * Tc + j] = pM[t][i * Tc + j];
+		}
+	}
+
+	for (i = t + 2; i <= k; i++) {
+		Mtk_via_Mtr_Mrk(t, i - 1, i,
+			T, pM[i - 1], T2,
+			Tr, Tc, Nb_rows[i - 1], Nb_cols[i - 1], T2r, T2c,
+			verbose_level - 1);
+		FREE_lint(T);
+		T = T2;
+		Tr = T2r;
+		Tc = T2c;
+
+	}
+	Mtk = T;
+	nb_r = Tr;
+	nb_c = Tc;
+
+	if (f_v) {
+		cout << "poset_classification::Mtk_from_MM t = " << t
+				<< ", k = " << k << " done" << endl;
+	}
+}
+
 
 }}
 

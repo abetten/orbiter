@@ -15,6 +15,7 @@ MODULES = \
 	design_create_description.o \
 	design_create.o \
 	difference_set_in_heisenberg_group.o \
+	graph_classify_description.o \
 	graph_classify.o \
 	graph_theoretic_activity_description.o \
 	hadamard_classify.o \

@@ -6,7 +6,6 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	kramer_mesner.o \
 	orbit_of_equations.o \
 	orbit_of_sets.o \
 	orbit_of_subspaces.o 

@@ -688,28 +688,19 @@ void difference_set_in_heisenberg_group_early_test_func(
 		void *data, int verbose_level);
 
 
+
 // #############################################################################
-// graph_classify.cpp
+// graph_classify_description.cpp
 // #############################################################################
 
 //! classification of graphs and tournaments
 
 
-class graph_classify {
+class graph_classify_description {
 
 public:
-
-	poset *Poset;
-	poset_classification *gen;
-
-	action *A_base; // symmetric group on n vertices
-	action *A_on_edges; // action on pairs
-
 	int f_n;
 	int n; // number of vertices
-	int n2; // n choose 2
-
-	int *adjacency; // [n * n]
 
 	int f_regular;
 
@@ -717,13 +708,9 @@ public:
 	poset_classification_control *Control;
 
 	int regularity;
-	int *degree_sequence; // [n]
 
 	int f_girth;
 	int girth;
-	int *neighbor; // [n]
-	int *neighbor_idx; // [n]
-	int *distance; // [n]
 
 	int f_draw_graphs;
 	int f_draw_graphs_at_level;
@@ -733,9 +720,6 @@ public:
 
 	int f_depth;
 	int depth;
-
-	long int *S1; // [n2]
-
 
 	int f_tournament;
 	int f_no_superking;
@@ -749,13 +733,53 @@ public:
 	long int identify_data[1000];
 	int identify_data_sz;
 
+	graph_classify_description();
+	~graph_classify_description();
+	int read_arguments(int argc, const char **argv,
+		int verbose_level);
+
+};
+
+
+// #############################################################################
+// graph_classify.cpp
+// #############################################################################
+
+//! classification of graphs and tournaments
+
+
+class graph_classify {
+
+public:
+
+	graph_classify_description *Descr;
+
+	poset *Poset;
+	poset_classification *gen;
+
+	action *A_base; // symmetric group on n vertices
+	action *A_on_edges; // action on pairs
+
+	int n2; // n choose 2
+
+	int *adjacency; // [n * n]
+
+	int *degree_sequence; // [n]
+
+	int *neighbor; // [n]
+	int *neighbor_idx; // [n]
+	int *distance; // [n]
+
+	long int *S1; // [n2]
+
+
+
 
 
 
 	graph_classify();
 	~graph_classify();
-	void read_arguments(int argc, const char **argv, int verbose_level);
-	void init(int argc, const char **argv, int verbose_level);
+	void init(graph_classify_description *Descr, int verbose_level);
 	int check_conditions(int len, long int *S, int verbose_level);
 	int check_conditions_tournament(int len, long int *S,
 			int verbose_level);
