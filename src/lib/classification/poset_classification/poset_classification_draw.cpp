@@ -22,6 +22,31 @@ static void print_table_top(ofstream &fp, int f_permutation_degree_is_small);
 static void print_table_bottom(ofstream &fp);
 static void print_set_special(ofstream &fp, long int *set, int sz);
 
+void poset_classification::draw_poset_fname_base_aux_poset(
+		char *fname, int depth)
+{
+	snprintf(fname, 1000, "%s_aux_poset_lvl_%d", problem_label_with_path.c_str(), depth);
+}
+
+void poset_classification::draw_poset_fname_base_poset_lvl(
+		char *fname, int depth)
+{
+	snprintf(fname, 1000, "%s_poset_lvl_%d", problem_label_with_path.c_str(), depth);
+}
+
+void poset_classification::draw_poset_fname_base_tree_lvl(
+		char *fname, int depth)
+{
+	snprintf(fname, 1000, "%s_tree_lvl_%d", problem_label_with_path.c_str(), depth);
+}
+
+void poset_classification::draw_poset_fname_base_poset_detailed_lvl(
+		char *fname, int depth)
+{
+	snprintf(fname, 1000, "%s_poset_detailed_lvl_%d", problem_label_with_path.c_str(), depth);
+}
+
+
 void poset_classification::write_treefile_and_draw_tree(
 		const char *fname_base, int lvl, int xmax, int ymax,
 		int rad, int f_embedded,
@@ -617,7 +642,7 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 }
 
 void poset_classification::draw_poset_full(const char *fname_base,
-		int depth, int data, int f_embedded, int f_sideways, int rad,
+		int depth, int data, int f_embedded, int f_sideways, int rad, double scale, double line_width,
 		double x_stretch,
 		int verbose_level)
 {
@@ -646,8 +671,8 @@ void poset_classification::draw_poset_full(const char *fname_base,
 	int f_show_level_info = FALSE;
 	int f_label_edges = FALSE;
 	int f_rotated = FALSE;
-	double scale = .45;
-	double line_width = 1.5;
+	//double scale = .45;
+	//double line_width = 1.5;
 
 	snprintf(fname_base1, 1000, "%s_poset_full_lvl_%d", fname_base, depth);
 	snprintf(fname1, 2000, "%s.layered_graph", fname_base1);
@@ -684,34 +709,9 @@ void poset_classification::draw_poset_full(const char *fname_base,
 	}
 }
 
-void poset_classification::draw_poset_fname_base_aux_poset(
-		char *fname, int depth)
-{
-	snprintf(fname, 1000, "%s_aux_poset_lvl_%d", problem_label_with_path.c_str(), depth);
-}
-
-void poset_classification::draw_poset_fname_base_poset_lvl(
-		char *fname, int depth)
-{
-	snprintf(fname, 1000, "%s_poset_lvl_%d", problem_label_with_path.c_str(), depth);
-}
-
-void poset_classification::draw_poset_fname_base_tree_lvl(
-		char *fname, int depth)
-{
-	snprintf(fname, 1000, "%s_tree_lvl_%d", problem_label_with_path.c_str(), depth);
-}
-
-void poset_classification::draw_poset_fname_base_poset_detailed_lvl(
-		char *fname, int depth)
-{
-	snprintf(fname, 1000, "%s_poset_detailed_lvl_%d", problem_label_with_path.c_str(), depth);
-}
-
-
 void poset_classification::draw_poset(
 		const char *fname_base,
-		int depth, int data, int f_embedded, int f_sideways, int rad,
+		int depth, int data, int f_embedded, int f_sideways, int rad, double scale, double line_width,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -773,8 +773,8 @@ void poset_classification::draw_poset(
 	int f_show_level_info = FALSE;
 	int f_label_edges = FALSE;
 	int f_rotated = FALSE;
-	double scale = .20;
-	double line_width = 1.5;
+	//double scale = .20;
+	//double line_width = 1.5;
 
 	draw_poset_fname_base_aux_poset(fname_base1, depth);
 	draw_poset_fname_base_poset_lvl(fname_base2, depth);

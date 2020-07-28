@@ -21,45 +21,11 @@ namespace top_level {
 
 arc_generator::arc_generator()
 {
-	//q = 0;
 	Descr = NULL;
-
-	//F = NULL;
-	
-	//GTA = NULL;
 
 	nb_points_total = 0;
 	nb_affine_lines = 0;
 
-	//ECA = NULL;
-	//IA = NULL;
-	//verbose_level = 0;
-#if 0
-	f_starter = FALSE;
-	f_draw_poset = FALSE;
-	f_list = FALSE;
-	list_depth = 0;
-	f_simeon = FALSE;
-	simeon_s = 0;
-#endif
-
-#if 0
-	nb_points_total = 0;
-	f_target_size = FALSE;
-	target_size = 0;
-
-	//starter_size = 0;
-
-	f_recognize = FALSE;
-	//const char *recognize[1000];
-	nb_recognize = 0;
-
-	f_read_data_file = FALSE;
-	fname_data_file = NULL;
-	depth_completed = 0;
-#endif
-
-	//f_no_arc_testing = FALSE;
 	f_semilinear = FALSE;
 
 	//f_has_forbidden_point_set = FALSE;
@@ -75,20 +41,8 @@ arc_generator::arc_generator()
 	AG = NULL;
 	A_on_lines = NULL;
 
-	//Control = NULL;
 	Poset = NULL;
 	P = NULL;
-
-#if 0
-	f_d = FALSE;
-	d = 0;
-
-	f_n = FALSE;
-	n = 2;
-
-	f_conic_test = FALSE;
-	f_affine = FALSE;
-#endif
 
 	line_type = NULL;
 

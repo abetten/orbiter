@@ -18,28 +18,12 @@ MODULES = \
 	cubic_curve_with_action.o \
 	hermitian_spreads_classify.o \
 	hill_cap.o \
-	invariants_packing.o \
 	linear_set_classify.o \
 	ovoid_classify.o \
-	packing_classify.o \
-	packing_classify2.o \
-	packing_invariants.o \
-	packing_long_orbits.o \
-	packing_was_description.o \
-	packing_was_fixpoints.o \
-	packing_was.o \
 	polar.o \
-	recoordinatize.o \
 	search_blocking_set.o \
 	singer_cycle.o \
-	spread_classify.o \
-	spread_classify2.o \
-	spread_create_description.o \
-	spread_create.o \
-	spread_lifting.o \
-	spread_table_with_selection.o \
-	tensor_classify.o \
-	translation_plane_via_andre_model.o
+	tensor_classify.o
 
 
 all : $(MODULES)

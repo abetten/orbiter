@@ -1161,6 +1161,7 @@ void interface_combinatorics::do_graph_classify(graph_classify_description *Desc
 	//Gen.n /* data1 */, f_embedded, Gen.gen->verbose_level);
 
 
+#if 0
 	if (Gen.Descr->Control->f_draw_poset) {
 		Gen.gen->draw_poset(Gen.gen->get_problem_label_with_path(), depth,
 			Gen.Descr->n /* data1 */, f_embedded, f_sideways, 100 /* rad */,
@@ -1225,6 +1226,7 @@ void interface_combinatorics::do_graph_classify(graph_classify_description *Desc
 				f_show_stab, f_save_stab, f_show_whole_orbit);
 			}
 		}
+#endif
 
 	if (Gen.Descr->f_draw_graphs) {
 		int xmax_in = 1000000;

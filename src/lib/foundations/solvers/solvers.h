@@ -129,12 +129,14 @@ public:
 	const char *maximal_arc_secants_text;
 	const char *external_lines_as_subset_of_secants_text;
 
-	int f_from_scratch;
-	const char *from_scratch_label;
-	int from_scratch_m;
-	int from_scratch_n;
+	int f_label;
+	const char *label;
+	//int from_scratch_m;
+	//int from_scratch_n;
 
 	int f_coefficient_matrix;
+	int coefficient_matrix_m;
+	int coefficient_matrix_n;
 	const char *coefficient_matrix_text;
 
 	int f_coefficient_matrix_csv;
@@ -146,6 +148,9 @@ public:
 
 	int f_RHS_csv;
 	const char *RHS_csv_text;
+
+	int f_RHS_constant;
+	const char *RHS_constant_text;
 
 	int f_x_max_global;
 	int x_max_global;

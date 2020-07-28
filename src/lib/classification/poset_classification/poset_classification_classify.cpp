@@ -191,7 +191,6 @@ int poset_classification::main(int t0,
 	int f_v = (verbose_level >= 1);
 	int size, depth_completed = 0;
 	int f_create_schreier_vector;
-	//int vl;
 	int target_depth;
 	int f_write_files;
 	int f_embedded = TRUE;
@@ -301,12 +300,6 @@ int poset_classification::main(int t0,
 			f_create_schreier_vector = FALSE;
 		}
 
-#if 0
-		if (size == 1) {
-			verbose_level += 10;
-		}
-#endif
-
 		extend_level(size,
 			f_create_schreier_vector, 
 			f_use_invariant_subset_if_available, 
@@ -314,14 +307,6 @@ int poset_classification::main(int t0,
 			f_write_candidate_file, 
 			verbose_level - 2);
 		
-#if 0
-		if (size + 1 == sz) {
-			vl = verbose_level;
-		}
-		else {
-			vl = verbose_level - 1;
-		}
-#endif
 
 		f_write_files = (Control->f_W || (Control->f_w && size == target_depth - 1));
 	
@@ -502,26 +487,43 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 
 	if (Control->f_draw_poset) {
 		if (f_v) {
-			cout << "poset_classification::post_processing f_draw_poset" << endl;
+			cout << "poset_classification::post_processing before draw_poset" << endl;
 		}
 		draw_poset(get_problem_label_with_path(), actual_size,
 			0 /* data1 */, Control->f_embedded, Control->f_sideways, Control->radius,
-			verbose_level);
+			Control->scale, Control->line_width,
+			0 /*verbose_level*/);
+		if (f_v) {
+			cout << "poset_classification::post_processing after draw_poset" << endl;
+		}
 	}
 
 	if (Control->f_draw_full_poset) {
 		if (f_v) {
-			cout << "poset_classification::post_processing f_draw_full_poset" << endl;
+			cout << "poset_classification::post_processing before draw_full_poset" << endl;
 		}
 		draw_poset_full(get_problem_label_with_path(), actual_size,
 				0 /* data1 */, Control->f_embedded, Control->f_sideways, Control->radius,
-				1 /* x_stretch */, verbose_level);
+				Control->scale, Control->line_width,
+				1 /* x_stretch */, 0 /*verbose_level*/);
+		if (f_v) {
+			cout << "poset_classification::post_processing after draw_full_poset" << endl;
+		}
 	}
 	if (Control->f_make_relations_with_flag_orbits) {
-			const char *fname_prefix = "flag_orbits";
+			char fname_prefix[1000];
 
+
+			sprintf(fname_prefix, "%s_flag_orbits", problem_label_with_path.c_str());
+
+			if (f_v) {
+				cout << "poset_classification::post_processing before make_flag_orbits_on_relations" << endl;
+			}
 			make_flag_orbits_on_relations(
 					depth, fname_prefix, verbose_level);
+			if (f_v) {
+				cout << "poset_classification::post_processing after make_flag_orbits_on_relations" << endl;
+			}
 	}
 	if (Control->nb_recognize) {
 		int h;
@@ -588,16 +590,28 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 		// compute Kramer Mesner matrices
 		long int **pM;
 		int *Nb_rows, *Nb_cols;
-		int i;
+		int h;
 
 		pM = NEW_plint(Control->Kramer_Mesner_k);
 		Nb_rows = NEW_int(Control->Kramer_Mesner_k);
 		Nb_cols = NEW_int(Control->Kramer_Mesner_k);
-		for (i = 0; i < Control->Kramer_Mesner_k; i++) {
-			Kramer_Mesner_matrix_neighboring(i, pM[i], Nb_rows[i], Nb_cols[i], verbose_level - 2);
+		for (h = 0; h < Control->Kramer_Mesner_k; h++) {
+			Kramer_Mesner_matrix_neighboring(h, pM[h], Nb_rows[h], Nb_cols[h], verbose_level - 2);
 			if (f_v) {
 				cout << "poset_classification::post_processing matrix "
-						"level " << i << " computed" << endl;
+						"level " << h << " computed" << endl;
+#if 0
+				int j;
+				for (i = 0; i < Nb_rows[h]; i++) {
+					for (j = 0; j < Nb_cols[h]; j++) {
+						cout << pM[h][i * Nb_cols[h] + j];
+						if (j < Nb_cols[h]) {
+							cout << ",";
+						}
+					}
+					cout << endl;
+				}
+#endif
 			}
 		}
 
@@ -605,16 +619,38 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 		int nb_r, nb_c;
 
 
+		if (f_v) {
+			cout << "poset_classification::post_processing before Mtk_from_MM" << endl;
+		}
 		Mtk_from_MM(pM, Nb_rows, Nb_cols,
 				Control->Kramer_Mesner_t, Control->Kramer_Mesner_k,
 				Mtk,
 				nb_r, nb_c,
-				verbose_level - 2);
-		cout << "poset_classification::post_processing M_{" << Control->Kramer_Mesner_t << ","
-				<< Control->Kramer_Mesner_k << "} has size " << nb_r << " x "
-				<< nb_c << "." << endl;
+				verbose_level);
+		if (f_v) {
+			cout << "poset_classification::post_processing after Mtk_from_MM" << endl;
+			cout << "poset_classification::post_processing M_{" << Control->Kramer_Mesner_t << ","
+					<< Control->Kramer_Mesner_k << "} has size " << nb_r << " x "
+					<< nb_c << "." << endl;
+
+#if 0
+			int j;
+			for (i = 0; i < nb_r; i++) {
+				for (j = 0; j < nb_c; j++) {
+					cout << Mtk[i * nb_c + j];
+					if (j < nb_c - 1) {
+						cout << ",";
+					}
+				}
+				cout << endl;
+			}
+#endif
+
+		}
+
 
 		file_io Fio;
+		int i;
 
 		char fname[1000];
 
@@ -632,6 +668,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			FREE_lint(pM[i]);
 		}
 		FREE_plint(pM);
+		FREE_lint(Mtk);
 
 
 	}

@@ -88,6 +88,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 		surface_descr_isomorph2 = NULL;
 	f_surface_recognize = FALSE;
 		surface_descr = NULL;
+	f_classify_surfaces_through_arcs_and_two_lines = FALSE;
 	f_classify_surfaces_through_arcs_and_trihedral_pairs = FALSE;
 	f_trihedra1_control = FALSE;
 	Trihedra1_control = NULL;
@@ -463,9 +464,12 @@ int group_theoretic_activity_description::read_arguments(
 			//i += 2;
 			cout << "-surface_recognize " << endl;
 		}
+		else if (strcmp(argv[i], "-classify_surfaces_through_arcs_and_two_lines") == 0) {
+			f_classify_surfaces_through_arcs_and_two_lines = TRUE;
+			cout << "-classify_surfaces_through_arcs_and_two_lines " << endl;
+		}
 		else if (strcmp(argv[i], "-classify_surfaces_through_arcs_and_trihedral_pairs") == 0) {
 			f_classify_surfaces_through_arcs_and_trihedral_pairs = TRUE;
-			//q = atoi(argv[++i]);
 			cout << "-classify_surfaces_through_arcs_and_trihedral_pairs " << endl;
 		}
 		else if (strcmp(argv[i], "-create_surface") == 0) {

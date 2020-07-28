@@ -31,16 +31,21 @@ diophant_description::diophant_description()
 	maximal_arc_secants_text = NULL;
 	external_lines_as_subset_of_secants_text = NULL;
 
-	f_from_scratch = FALSE;
-	from_scratch_label = NULL;
-	from_scratch_m = 0;
-	from_scratch_n = 0;
+	f_label = FALSE;
+	label = NULL;
+	//from_scratch_m = 0;
+	//from_scratch_n = 0;
 
 	f_coefficient_matrix = FALSE;
+	coefficient_matrix_m = 0;
+	coefficient_matrix_n = 0;
 	coefficient_matrix_text = NULL;
 
 	f_coefficient_matrix_csv = FALSE;
 	coefficient_matrix_csv = NULL;
+
+	f_RHS_constant = FALSE;
+	RHS_constant_text = NULL;
 
 
 	f_RHS = FALSE;
@@ -90,19 +95,18 @@ int diophant_description::read_arguments(
 					<< " " << maximal_arc_secants_text
 					<< " " << external_lines_as_subset_of_secants_text << endl;
 		}
-		else if (strcmp(argv[i], "-from_scratch") == 0) {
-			f_from_scratch = TRUE;
-			from_scratch_label = argv[++i];
-			from_scratch_m = atoi(argv[++i]);
-			from_scratch_n = atoi(argv[++i]);
-			cout << "-from_scratch " << from_scratch_label
-					<< " " << from_scratch_m << " " << from_scratch_n
-					<< endl;
+		else if (strcmp(argv[i], "-label") == 0) {
+			f_label = TRUE;
+			label = argv[++i];
+			cout << "-label " << label << endl;
 		}
 		else if (strcmp(argv[i], "-coefficient_matrix") == 0) {
 			f_coefficient_matrix = TRUE;
+			coefficient_matrix_m = atoi(argv[++i]);
+			coefficient_matrix_n = atoi(argv[++i]);
 			coefficient_matrix_text = argv[++i];
-			cout << "-coefficient_matrix " << coefficient_matrix_text << endl;
+			cout << "-coefficient_matrix " << coefficient_matrix_m << " "
+					<< coefficient_matrix_n << " " << coefficient_matrix_text << endl;
 		}
 		else if (strcmp(argv[i], "-coefficient_matrix_csv") == 0) {
 			f_coefficient_matrix_csv = TRUE;
@@ -118,6 +122,11 @@ int diophant_description::read_arguments(
 			f_RHS_csv = TRUE;
 			RHS_csv_text = argv[++i];
 			cout << "-RHS_csv " << RHS_csv_text << endl;
+		}
+		else if (strcmp(argv[i], "-RHS_constant") == 0) {
+			f_RHS_constant = TRUE;
+			RHS_constant_text = argv[++i];
+			cout << "-RHS_constant " << RHS_constant_text << endl;
 		}
 		else if (strcmp(argv[i], "-x_max_global") == 0) {
 			f_x_max_global = TRUE;

@@ -72,6 +72,12 @@ graph_classify::~graph_classify()
 
 void graph_classify::init(graph_classify_description *Descr, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_classify::init" << endl;
+		}
+
 	int N;
 	int target_depth;
 	char prefix[1000];
@@ -83,18 +89,11 @@ void graph_classify::init(graph_classify_description *Descr, int verbose_level)
 	A_base = NEW_OBJECT(action);
 	A_on_edges = NEW_OBJECT(action);
 	gen = NEW_OBJECT(poset_classification);
-	
-	//read_arguments(argc, argv, verbose_level);
-	
-	int f_v = (verbose_level >= 1);
 
-	if (f_v) {
-		cout << "graph_generator::init" << endl;
-		}
 
 	if (Descr->f_tournament) {
 		if (f_v) {
-			cout << "graph_generator::init tournaments "
+			cout << "graph_classify::init tournaments "
 					"on " << Descr->n << " vertices" << endl;
 			}
 		sprintf(prefix, "tournament_%d", Descr->n);
@@ -104,7 +103,7 @@ void graph_classify::init(graph_classify_description *Descr, int verbose_level)
 		}
 	else {
 		if (f_v) {
-			cout << "graph_generator::init graphs "
+			cout << "graph_classify::init graphs "
 					"on " << Descr->n << " vertices" << endl;
 			}
 		sprintf(prefix, "graph_%d", Descr->n);

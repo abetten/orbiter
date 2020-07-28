@@ -1138,7 +1138,6 @@ public:
 	// finite_field_io.cpp
 	// #########################################################################
 
-	void cheat_sheet_tables(std::ostream &f, int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
 	void print_minimum_polynomial(int p, const char *polynomial);
 	void print();
@@ -1195,8 +1194,12 @@ public:
 	void power_table(int t, int *power_table, int len);
 	void cheat_sheet(std::ostream &f, int verbose_level);
 	void report_subfields(std::ostream &f, int verbose_level);
-	void cheat_sheet_top(std::ostream &f, int nb_cols);
-	void cheat_sheet_bottom(std::ostream &f);
+	void cheat_sheet_addition_table(std::ostream &f, int verbose_level);
+	void cheat_sheet_multiplication_table(std::ostream &f, int verbose_level);
+	void cheat_sheet_power_table(std::ostream &f, int verbose_level);
+	void cheat_sheet_main_table(std::ostream &f, int verbose_level);
+	void cheat_sheet_main_table_top(std::ostream &f, int nb_cols);
+	void cheat_sheet_main_table_bottom(std::ostream &f);
 	void display_table_of_projective_points(
 			std::ostream &ost, long int *Pts, int nb_pts, int len);
 	void export_magma(int d, long int *Pts, int nb_pts, char *fname);

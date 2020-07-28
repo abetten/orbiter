@@ -31,28 +31,6 @@ arc_lifting::arc_lifting()
 
 	Trihedral_pair = NULL;
 
-#if 0
-	The_surface_equations = NULL;
-
-	stab_gens_trihedral_pair = NULL;
-	gens_subgroup = NULL;
-	A_on_equations = NULL;
-	Orb = NULL;
-	cosets = NULL;
-	coset_reps = NULL;
-	aut_T_index = NULL;
-	aut_coset_index = NULL;
-	Aut_gens =NULL;
-	
-	System = NULL;
-	transporter0 = NULL;
-	transporter = NULL;
-	Elt1 = NULL;
-	Elt2 = NULL;
-	Elt3 = NULL;
-	Elt4 = NULL;
-	Elt5 = NULL;
-#endif
 	null();
 }
 
@@ -77,68 +55,6 @@ void arc_lifting::freeself()
 		FREE_OBJECT(Trihedral_pair);
 	}
 
-#if 0
-	if (The_surface_equations) {
-		FREE_int(The_surface_equations);
-	}
-
-
-	if (stab_gens_trihedral_pair) {
-		FREE_OBJECT(stab_gens_trihedral_pair);
-	}
-	if (gens_subgroup) {
-		FREE_OBJECT(gens_subgroup);
-	}
-	if (A_on_equations) {
-		FREE_OBJECT(A_on_equations);
-	}
-	if (Orb) {
-		FREE_OBJECT(Orb);
-	}
-	if (cosets) {
-		FREE_OBJECT(cosets);
-	}
-	if (coset_reps) {
-		FREE_OBJECT(coset_reps);
-	}
-	if (aut_T_index) {
-		FREE_int(aut_T_index);
-	}
-	if (aut_coset_index) {
-		FREE_int(aut_coset_index);
-	}
-	if (Aut_gens) {
-		FREE_OBJECT(Aut_gens);
-	}
-
-
-
-	if (System) {
-		FREE_int(System);
-	}
-	if (transporter0) {
-		FREE_int(transporter0);
-	}
-	if (transporter) {
-		FREE_int(transporter);
-	}
-	if (Elt1) {
-		FREE_int(Elt1);
-	}
-	if (Elt2) {
-		FREE_int(Elt2);
-	}
-	if (Elt3) {
-		FREE_int(Elt3);
-	}
-	if (Elt4) {
-		FREE_int(Elt4);
-	}
-	if (Elt5) {
-		FREE_int(Elt5);
-	}
-#endif
-	
 	null();
 }
 

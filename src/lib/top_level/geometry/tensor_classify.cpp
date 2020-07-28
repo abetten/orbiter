@@ -440,6 +440,8 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 		if (f_poset_classify) {
 
 
+
+#if 0
 			{
 			char fname_poset[1000];
 
@@ -452,6 +454,7 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 					100 /* rad */,
 					verbose_level);
 			}
+#endif
 
 
 			fp << endl;

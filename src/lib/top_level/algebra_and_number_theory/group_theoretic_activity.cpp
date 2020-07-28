@@ -223,6 +223,17 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		do_surface_recognize(Descr->surface_descr, verbose_level);
 	}
 
+	else if (Descr->f_classify_surfaces_through_arcs_and_two_lines) {
+
+		if (!Descr->f_control_six_arcs) {
+			cout << "please use option -control_six_arcs <description> -end" << endl;
+			exit(1);
+		}
+		do_classify_surfaces_through_arcs_and_two_lines(
+				Descr->Control_six_arcs,
+				verbose_level);
+	}
+
 	else if (Descr->f_classify_surfaces_through_arcs_and_trihedral_pairs) {
 		if (!Descr->f_trihedra1_control) {
 			cout << "please use option -trihedra1_control <description> -end" << endl;
@@ -2532,6 +2543,86 @@ int group_theoretic_activity::subspace_orbits_test_set(
 	return ret;
 }
 
+
+void group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines(
+		poset_classification_control *Control_six_arcs,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines" << endl;
+	}
+
+	surface_with_action *Surf_A;
+	surface_domain *Surf;
+	number_theory_domain NT;
+
+
+
+	Surf = NEW_OBJECT(surface_domain);
+	Surf_A = NEW_OBJECT(surface_with_action);
+
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines "
+				"before Surf->init" << endl;
+	}
+	Surf->init(F, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines "
+				"after Surf->init" << endl;
+	}
+
+
+#if 0
+	if (f_v) {
+		cout << "before Surf->init_large_polynomial_domains" << endl;
+	}
+	Surf->init_large_polynomial_domains(0 /*verbose_level*/);
+	if (f_v) {
+		cout << "after Surf->init_large_polynomial_domains" << endl;
+	}
+#endif
+
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines "
+				"before Surf_A->init" << endl;
+	}
+	Surf_A->init(Surf, LG, 0 /*verbose_level - 1*/);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines "
+				"after Surf_A->init" << endl;
+	}
+
+
+	surfaces_arc_lifting *SAL;
+
+	SAL = NEW_OBJECT(surfaces_arc_lifting);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines "
+				"before SAL->init" << endl;
+	}
+	SAL->init(
+		LG->F, LG /* LG4 */,
+		Surf_A,
+		Control_six_arcs,
+		verbose_level);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines "
+				"after SAL->init" << endl;
+	}
+
+	FREE_OBJECT(SAL);
+
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines done" << endl;
+	}
+
+}
 
 void group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs(
 		poset_classification_control *Control1,

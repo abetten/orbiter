@@ -28,8 +28,6 @@ static int do_create_points_smooth_curve_compute_point_function(double t,
 
 interface_projective::interface_projective()
 {
-	//argc = 0;
-	//argv = NULL;
 
 	f_cheat_sheet_PG = FALSE;
 	n = 0;
