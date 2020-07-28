@@ -22,6 +22,7 @@ MODULES = \
 	surface_object_with_action.o \
 	surface_study.o \
 	surface_with_action.o \
+	surfaces_arc_lifting_upstep.o \
 	surfaces_arc_lifting.o \
 	trihedral_pair_with_action.o
 

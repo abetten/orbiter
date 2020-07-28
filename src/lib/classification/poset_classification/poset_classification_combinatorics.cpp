@@ -476,6 +476,11 @@ void poset_classification::Kramer_Mesner_matrix_neighboring(
 
 	M = NEW_lint(nb_rows * nb_cols);
 
+	for (i = 0; i < nb_rows * nb_cols; i++) {
+		M[i] = 0;
+	}
+
+
 	if (f_v) {
 		cout << "poset_classification::Kramer_Mesner_matrix_neighboring "
 				"the size of the matrix is " << nb_rows << " x " << nb_cols << endl;
@@ -593,7 +598,6 @@ void poset_classification::Mtk_via_Mtr_Mrk(int t, int r, int k,
 // $M_{tk} = {{k - t} \choose {k - r}} \cdot M_{t,r} \cdot M_{r,k}$.
 {
 	int f_v = (verbose_level >= 1);
-	//discreta_base s, h;
 	int i, j, h, a, b, c, s;
 
 	if (f_v) {
@@ -635,6 +639,9 @@ void poset_classification::Mtk_via_Mtr_Mrk(int t, int r, int k,
 	else if (Poset->f_subspace_lattice) {
 		D.q_binomial(S, k - t, r - t, Poset->VS->F->q, 0/* verbose_level*/);
 		s = S.as_lint();
+	}
+	if (f_v) {
+		cout << "poset_classification::Mtk_via_Mtr_Mrk dividing by " << s << endl;
 	}
 
 
@@ -680,25 +687,42 @@ void poset_classification::Mtk_from_MM(long int **pM,
 			T[i * Tc + j] = pM[t][i * Tc + j];
 		}
 	}
-
-	for (i = t + 2; i <= k; i++) {
-		Mtk_via_Mtr_Mrk(t, i - 1, i,
-			T, pM[i - 1], T2,
-			Tr, Tc, Nb_rows[i - 1], Nb_cols[i - 1], T2r, T2c,
-			verbose_level - 1);
-		FREE_lint(T);
-		T = T2;
-		Tr = T2r;
-		Tc = T2c;
-
+	if (f_v) {
+		cout << "poset_classification::Mtk_from_MM Tr=" << Tr << " Tc=" << Tc << endl;
 	}
-	Mtk = T;
-	nb_r = Tr;
-	nb_c = Tc;
+
+	if (t + 1 < k) {
+		for (i = t + 2; i <= k; i++) {
+			if (f_v) {
+				cout << "poset_classification::Mtk_from_MM i = " << i << " calling Mtk_via_Mtr_Mrk" << endl;
+			}
+			Mtk_via_Mtr_Mrk(t, i - 1, i,
+				T, pM[i - 1], T2,
+				Tr, Tc, Nb_rows[i - 1], Nb_cols[i - 1], T2r, T2c,
+				verbose_level - 1);
+			FREE_lint(T);
+			T = T2;
+			Tr = T2r;
+			Tc = T2c;
+			T2 = NULL;
+		}
+		Mtk = T;
+		nb_r = Tr;
+		nb_c = Tc;
+	}
+	else {
+		Mtk = T;
+		nb_r = Tr;
+		nb_c = Tc;
+	}
+
 
 	if (f_v) {
-		cout << "poset_classification::Mtk_from_MM t = " << t
-				<< ", k = " << k << " done" << endl;
+		cout << "poset_classification::Mtk_from_MM nb_r=" << nb_r << " nb_c=" << nb_c << endl;
+	}
+
+	if (f_v) {
+		cout << "poset_classification::Mtk_from_MM t = " << t << ", k = " << k << " done" << endl;
 	}
 }
 

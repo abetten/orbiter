@@ -3297,7 +3297,7 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 	projective_space *P, int line1, int line2,
 	int verbose_level)
 {
-	int f_v = TRUE;//(verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	vector_ge *gens;
 	int A4[17]; // one more in case of semilinear maps
 

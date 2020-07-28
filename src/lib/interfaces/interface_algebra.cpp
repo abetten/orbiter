@@ -439,6 +439,7 @@ void interface_algebra::do_linear_group(
 	cout << "interface_algebra::do_linear_group The group acts on the points of PG(" << n - 1
 			<< "," << Descr->input_q << ")" << endl;
 
+#if 0
 	if (A->degree < 1000) {
 		int i;
 
@@ -451,6 +452,7 @@ void interface_algebra::do_linear_group(
 	else {
 		cout << "Too many points to print" << endl;
 	}
+#endif
 
 
 
@@ -483,11 +485,11 @@ void interface_algebra::perform_group_theoretic_activity(
 	cout << "created group " << A->label << endl;
 
 	{
-	group_theoretic_activity Activity;
+		group_theoretic_activity Activity;
 
-	Activity.init(Descr, F, LG, verbose_level);
+		Activity.init(Descr, F, LG, verbose_level);
 
-	Activity.perform_activity(verbose_level);
+		Activity.perform_activity(verbose_level);
 
 	}
 
@@ -505,7 +507,7 @@ void interface_algebra::do_cheat_sheet_GF(int q, int f_poly, const char *poly, i
 		cout << "interface_algebra::do_cheat_sheet_GF q=" << q << endl;
 	}
 
-	int i;
+	//int i;
 	//int f_poly = FALSE;
 	//const char *poly = NULL;
 
@@ -558,30 +560,15 @@ void interface_algebra::do_cheat_sheet_GF(int q, int f_poly, const char *poly, i
 
 	F.cheat_sheet(f, verbose_level);
 
-	F.cheat_sheet_tables(f, verbose_level);
+	F.cheat_sheet_main_table(f, verbose_level);
+
+	F.cheat_sheet_addition_table(f, verbose_level);
+
+	F.cheat_sheet_multiplication_table(f, verbose_level);
+
+	F.cheat_sheet_power_table(f, verbose_level);
 
 
-	int *power_table;
-	int t;
-	int len = q;
-
-	t = F.primitive_root();
-
-	power_table = NEW_int(len);
-	F.power_table(t, power_table, len);
-
-	f << "\\begin{multicols}{2}" << endl;
-	f << "\\noindent" << endl;
-	for (i = 0; i < len; i++) {
-		if (F.e == 1) {
-			f << "$" << t << "^{" << i << "} \\equiv " << power_table[i] << "$\\\\" << endl;
-		}
-		else {
-			f << "$" << t << "^{" << i << "} = " << power_table[i] << "$\\\\" << endl;
-		}
-	}
-	f << "\\end{multicols}" << endl;
-	FREE_int(power_table);
 
 
 

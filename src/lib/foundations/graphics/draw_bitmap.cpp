@@ -43,8 +43,8 @@ void draw_bitmap(const char *fname, int *M, int m, int n,
 	max_value = int_vec_maximum(M, m * n);
 	cout << "max_value=" << max_value << endl;
 
-	max_value += 5;
-	cout << "max_value after adjustment=" << max_value << endl;
+	//max_value += 5;
+	//cout << "max_value after adjustment=" << max_value << endl;
 
 
 	char fname_out[1000];
@@ -59,6 +59,11 @@ void draw_bitmap(const char *fname, int *M, int m, int n,
 
 	//int bit_depth = 24;
 
+
+	if (max_value > 10000) {
+		cout << "draw_bitmap max_value > 10000" << endl;
+		exit(1);
+	}
 	for (i = max_value; i >= 0; i--) {
 		std::vector<int> color = get_color(bit_depth, max_value, i, f_invert_colors, 1);
 

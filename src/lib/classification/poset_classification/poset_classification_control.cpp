@@ -79,6 +79,7 @@ poset_classification_control::poset_classification_control()
 
 
 	scale = 0.2;
+	line_width = 0.5;
 	f_embedded = FALSE;
 	f_sideways = FALSE;
 
@@ -370,15 +371,19 @@ int poset_classification_control::read_arguments(
 		}
 		else if (strcmp(argv[i], "-scale") == 0) {
 			scale = atof(argv[++i]);
-			cout << "-scale" << scale << endl;
+			cout << "-scale " << scale << endl;
+			}
+		else if (strcmp(argv[i], "-line_width") == 0) {
+			line_width = atof(argv[++i]);
+			cout << "-line_width " << line_width << endl;
 			}
 		else if (strcmp(argv[i], "-embedded") == 0) {
 			f_embedded = TRUE;
-			cout << "-embedded" << endl;
+			cout << "-embedded " << endl;
 			}
 		else if (strcmp(argv[i], "-sideways") == 0) {
 			f_sideways = TRUE;
-			cout << "-sideways" << endl;
+			cout << "-sideways " << endl;
 			}
 		else if (strcmp(argv[i], "-problem_label") == 0) {
 			f_problem_label = TRUE;

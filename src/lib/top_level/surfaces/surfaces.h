@@ -68,7 +68,7 @@ public:
 
 	surfaces_arc_lifting *SAL;
 
-	action *A;
+	action *A; // this is the 3x3 group
 
 	set_and_stabilizer *The_arc;
 	action *A_on_arc;
@@ -465,6 +465,7 @@ public:
 			surface_with_action *Surf_A,
 			int verbose_level);
 	void report(int verbose_level);
+	void report2(std::ostream &ost, int verbose_level);
 	void report_decomposition_matrix(std::ostream &ost, int verbose_level);
 };
 
@@ -1063,6 +1064,93 @@ public:
 };
 
 // #############################################################################
+// surfaces_arc_lifting_upstep.cpp
+// #############################################################################
+
+//! classification of cubic surfaces using lifted 6-arcs
+
+
+class surfaces_arc_lifting_upstep {
+public:
+
+	surfaces_arc_lifting *Lift;
+
+	int f, f2, po, so;
+	int *f_processed;
+	int nb_processed;
+	int pt_representation_sz;
+	long int *Flag_representation;
+	long int *Flag2_representation;
+		// used only in upstep_group_elements
+
+	longinteger_object go;
+
+	int *Elt_alpha1;
+	int *Elt_alpha2;
+	int *Elt_beta1;
+	int *Elt_beta2;
+	int *Elt_beta3;
+	int *Elt_T1;
+	int *Elt_T2;
+	int *Elt_T3;
+	int *Elt_T4;
+
+	int *Elt_Alpha2;
+	int *Elt_Beta1;
+	int *Elt_Beta2;
+
+	double progress;
+	long int Lines[27];
+	int eqn20[20];
+
+	int *Adj;
+	surface_object *SO;
+
+	vector_ge *coset_reps;
+	int nb_coset_reps;
+	int tritangent_plane_idx;
+	int upstep_idx;
+
+	strong_generators *S;
+	longinteger_object S_go;
+
+	int three_lines_idx[3];
+	long int three_lines[3];
+
+	int line_idx;
+	int m1, m2, m3;
+	int l1, l2;
+	int cnt;
+
+	long int P6[6];
+	long int transversals4[4];
+
+	surfaces_arc_lifting_upstep();
+	~surfaces_arc_lifting_upstep();
+	void init(surfaces_arc_lifting *Lift, int verbose_level);
+	void process_flag_orbit(int verbose_level);
+	void process_flag_orbit_and_plane(int verbose_level);
+	void trace_second_flag_orbit(int verbose_level);
+	void compute_arc(int verbose_level);
+	void move_arc(int verbose_level);
+	void move_plane_and_arc(long int *P6a, int verbose_level);
+	void compute_local_coordinates_of_arc(
+			long int *P6, long int *P6_local, int verbose_level);
+	void make_arc_canonical(long int *P6_local,
+			int &orbit_not_on_conic_idx, int verbose_level);
+	void compute_beta1(long int *P6_local,
+			int orbit_not_on_conic_idx,
+			int &pair_orbit_idx, int *the_partition4, int verbose_level);
+	void compute_beta2(long int *P6_local,
+			int orbit_not_on_conic_idx,
+			int pair_orbit_idx, int *the_partition4, int verbose_level);
+	void lift_group_elements_and_move_two_lines(int verbose_level);
+	void embed(int *Elt_A3, int *Elt_A4, int verbose_level);
+};
+
+
+
+// #############################################################################
 // surfaces_arc_lifting.cpp
 // #############################################################################
 
@@ -1074,7 +1162,6 @@ public:
 	finite_field *F;
 	int q;
 	linear_group *LG4; // PGL(4,q)
-	linear_group *LG3; // PGL(3,q)
 
 	int f_semilinear;
 
@@ -1109,93 +1196,11 @@ public:
 	void null();
 	void freeself();
 	void init(
-		group_theoretic_activity *GTA,
-		finite_field *F, linear_group *LG4, linear_group *LG3,
-		int f_semilinear, surface_with_action *Surf_A,
+		finite_field *F, linear_group *LG4,
+		surface_with_action *Surf_A,
 		poset_classification_control *Control_six_arcs,
 		int verbose_level);
-	void draw_poset_of_six_arcs(int verbose_level);
 	void downstep(int verbose_level);
-	void upstep(int verbose_level);
-	void upstep2(
-			surface_object *SO,
-			vector_ge *coset_reps,
-			int &nb_coset_reps,
-			int *f_processed,
-			int &nb_processed,
-			int pt_representation_sz,
-			int f,
-			long int *Flag_representation,
-			int tritangent_plane_idx,
-			int line_idx, int m1, int m2, int m3,
-			int l1, int l2,
-			int cnt,
-			strong_generators *S,
-			long int *Lines,
-			int *eqn20,
-			int *Adj,
-			long int *transversals4,
-			long int *P6,
-			int &f2,
-			int *Elt_alpha1,
-			int *Elt_alpha2,
-			int *Elt_beta1,
-			int *Elt_beta2,
-			int *Elt_beta3,
-			int verbose_level);
-	void upstep3(
-			surface_object *SO,
-			vector_ge *coset_reps,
-			int &nb_coset_reps,
-			int *f_processed,
-			int &nb_processed,
-			int pt_representation_sz,
-			int f,
-			long int *Flag_representation,
-			int tritangent_plane_idx,
-			int line_idx, int m1, int m2, int m3,
-			int l1, int l2,
-			int cnt,
-			strong_generators *S,
-			long int *Lines,
-			int *eqn20,
-			int *Adj,
-			long int *transversals4,
-			long int *P6,
-			int &f2,
-			int *Elt_alpha1,
-			int *Elt_alpha2,
-			int *Elt_beta1,
-			int *Elt_beta2,
-			int *Elt_beta3,
-			int verbose_level);
-	void upstep_group_elements(
-			surface_object *SO,
-			vector_ge *coset_reps,
-			int &nb_coset_reps,
-			int *f_processed,
-			int &nb_processed,
-			int pt_representation_sz,
-			int f,
-			long int *Flag_representation,
-			int tritangent_plane_idx,
-			int line_idx, int m1, int m2, int m3,
-			int l1, int l2,
-			int cnt,
-			strong_generators *S,
-			long int *Lines,
-			int *eqn20,
-			int *Adj,
-			long int *transversals4,
-			long int *P6,
-			int &f2,
-			int *Elt_alpha1,
-			int *Elt_alpha2,
-			int *Elt_beta1,
-			int *Elt_beta2,
-			int *Elt_beta3,
-			int verbose_level);
-	void embed(int *Elt_A3, int *Elt_A4, int verbose_level);
 	void report(int verbose_level);
 };
 

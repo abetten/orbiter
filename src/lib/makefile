@@ -346,28 +346,12 @@ MODULES= \
 		top_level/geometry/cubic_curve_with_action.o \
 		top_level/geometry/hermitian_spreads_classify.o \
 		top_level/geometry/hill_cap.o \
-		top_level/geometry/invariants_packing.o \
 		top_level/geometry/linear_set_classify.o \
 		top_level/geometry/ovoid_classify.o \
-		top_level/geometry/packing_classify.o \
-		top_level/geometry/packing_classify2.o \
-		top_level/geometry/packing_invariants.o \
-		top_level/geometry/packing_long_orbits.o \
-		top_level/geometry/packing_was_description.o \
-		top_level/geometry/packing_was_fixpoints.o \
-		top_level/geometry/packing_was.o \
 		top_level/geometry/polar.o \
-		top_level/geometry/recoordinatize.o \
 		top_level/geometry/search_blocking_set.o \
 		top_level/geometry/singer_cycle.o \
-		top_level/geometry/spread_classify.o \
-		top_level/geometry/spread_classify2.o \
-		top_level/geometry/spread_create_description.o \
-		top_level/geometry/spread_create.o \
-		top_level/geometry/spread_lifting.o \
-		top_level/geometry/spread_table_with_selection.o \
 		top_level/geometry/tensor_classify.o \
-		top_level/geometry/translation_plane_via_andre_model.o \
 		top_level/isomorph/isomorph.o \
 		top_level/isomorph/isomorph_arguments.o \
 		top_level/isomorph/isomorph_database.o \
@@ -381,6 +365,22 @@ MODULES= \
 		top_level/orbits/orbit_of_subspaces.o \
 		top_level/solver/exact_cover.o \
 		top_level/solver/exact_cover_arguments.o \
+		top_level/spreads_and_packings/invariants_packing.o \
+		top_level/spreads_and_packings/packing_classify.o \
+		top_level/spreads_and_packings/packing_classify2.o \
+		top_level/spreads_and_packings/packing_invariants.o \
+		top_level/spreads_and_packings/packing_long_orbits.o \
+		top_level/spreads_and_packings/packing_was_description.o \
+		top_level/spreads_and_packings/packing_was_fixpoints.o \
+		top_level/spreads_and_packings/packing_was.o \
+		top_level/spreads_and_packings/recoordinatize.o \
+		top_level/spreads_and_packings/spread_classify.o \
+		top_level/spreads_and_packings/spread_classify2.o \
+		top_level/spreads_and_packings/spread_create_description.o \
+		top_level/spreads_and_packings/spread_create.o \
+		top_level/spreads_and_packings/spread_lifting.o \
+		top_level/spreads_and_packings/spread_table_with_selection.o \
+		top_level/spreads_and_packings/translation_plane_via_andre_model.o \
 		top_level/surfaces/arc_lifting.o \
 		top_level/surfaces/arc_orbits_on_pairs.o \
 		top_level/surfaces/arc_partition.o \
@@ -397,6 +397,7 @@ MODULES= \
 		top_level/surfaces/surface_object_with_action.o \
 		top_level/surfaces/surface_study.o \
 		top_level/surfaces/surface_with_action.o \
+		top_level/surfaces/surfaces_arc_lifting_upstep.o \
 		top_level/surfaces/surfaces_arc_lifting.o \
 		top_level/surfaces/trihedral_pair_with_action.o \
 		interfaces/interface_algebra.o \

@@ -248,14 +248,14 @@ void surface_classify_using_arc::report(int verbose_level)
 		cout << "surface_classify_using_arc::report" << endl;
 	}
 
-	surface_domain *Surf;
+	//surface_domain *Surf;
 	finite_field *F;
 
 	char fname_arc_lifting[1000];
 
 
 	F = Surf_A->F;
-	Surf = Surf_A->Surf;
+	//Surf = Surf_A->Surf;
 
 
 	{
@@ -281,174 +281,7 @@ void surface_classify_using_arc::report(int verbose_level)
 			NULL /* extra_praeamble */);
 
 
-		if (f_v) {
-			cout << "surface_classify_using_arc::report q=" << F->q << endl;
-		}
-
-
-
-		report_decomposition_matrix(fp, verbose_level);
-
-
-		int surface_idx;
-
-		for (surface_idx = 0;
-				surface_idx < nb_surfaces;
-				surface_idx++) {
-
-
-
-			fp << "Surface $" << surface_idx << "$ is associated with the following arcs: $";
-			int_vec_print(fp,
-				Arc_identify + surface_idx * Six_arcs->nb_arcs_not_on_conic,
-				Arc_identify_nb[surface_idx]);
-			fp << "$\\\\" << endl;
-
-
-
-		}
-
-
-		//fp << "\\clearpage" << endl << endl;
-
-
-
-		fp << "\\section*{Six-Arcs}" << endl << endl;
-
-
-		if (f_v) {
-			cout << "surface_classify_using_arc::report before Six_arcs->report_latex" << endl;
-		}
-		Six_arcs->report_latex(fp);
-		if (f_v) {
-			cout << "surface_classify_using_arc::report after Six_arcs->report_latex" << endl;
-		}
-
-
-		char fname_base[1000];
-		snprintf(fname_base, 1000, "arcs_q%d", F->q);
-
-		if (F->q < 20) {
-			cout << "before Gen->gen->draw_poset_full" << endl;
-			Six_arcs->Gen->gen->draw_poset(
-				fname_base,
-				6 /* depth */, 0 /* data */,
-				TRUE /* f_embedded */,
-				FALSE /* f_sideways */,
-				100 /* rad */,
-				verbose_level);
-		}
-
-
-		fp << "\\section*{Double Triplets}" << endl << endl;
-
-		if (f_v) {
-			cout << "surface_classify_using_arc::report before Surf_A->report_double_triplets" << endl;
-		}
-		if (f_v) {
-			Surf_A->report_double_triplets(fp);
-		}
-		if (f_v) {
-			cout << "surface_classify_using_arc::report after Surf_A->report_double_triplets" << endl;
-		}
-
-
-
-
-		fp << "\\section*{Summary of Surfaces}" << endl << endl;
-
-
-
-
-		for (surface_idx = 0;
-				surface_idx < nb_surfaces;
-				surface_idx++) {
-
-
-
-			fp << "\\subsection*{Surface $" << surface_idx << "$ of " << nb_surfaces << "}" << endl << endl;
-
-
-			if (f_v) {
-				cout << "surface_classify_using_arc::report before SCAL[" << surface_idx << "].report_summary" << endl;
-			}
-			SCAL[surface_idx].report_summary(fp, verbose_level);
-			if (f_v) {
-				cout << "surface_classify_using_arc::report after SCAL[" << surface_idx << "].report_summary" << endl;
-			}
-
-
-			fp << "The following " << Arc_identify_nb[surface_idx]
-				<< " arcs are involved with surface " <<   nb_surfaces << ": $";
-			int_vec_print(fp,
-				Arc_identify + surface_idx * Six_arcs->nb_arcs_not_on_conic,
-				Arc_identify_nb[surface_idx]);
-			fp << "$\\\\" << endl;
-
-
-
-		}
-
-
-
-		fp << "\\section*{List of Surfaces}" << endl << endl;
-
-
-
-
-		for (surface_idx = 0;
-				surface_idx < nb_surfaces;
-				surface_idx++) {
-
-
-
-			fp << "\\subsection*{Surface $" << surface_idx << "$ of " << nb_surfaces << "}" << endl << endl;
-
-
-			if (f_v) {
-				cout << "surface_classify_using_arc::report before SCAL[" << surface_idx << "].report" << endl;
-			}
-			SCAL[surface_idx].report(fp, verbose_level);
-			if (f_v) {
-				cout << "surface_classify_using_arc::report after SCAL[" << surface_idx << "].report" << endl;
-			}
-
-
-			fp << "The following " << Arc_identify_nb[surface_idx]
-				<< " arcs are involved with surface " <<   nb_surfaces << ": $";
-			int_vec_print(fp,
-				Arc_identify + surface_idx * Six_arcs->nb_arcs_not_on_conic,
-				Arc_identify_nb[surface_idx]);
-			fp << "$\\\\" << endl;
-
-
-
-		}
-
-
-		fp << "\\section*{Double Triplets: Details}" << endl << endl;
-		if (f_v) {
-			cout << "surface_classify_using_arc::report before Surf_A->report_double_triplets_detailed" << endl;
-		}
-		if (f_v) {
-			Surf_A->report_double_triplets_detailed(fp);
-		}
-		if (f_v) {
-			cout << "surface_classify_using_arc::report after Surf_A->report_double_triplets_detailed" << endl;
-		}
-
-
-		fp << "\\section*{Basics}" << endl << endl;
-
-		if (f_v) {
-			cout << "surface_classify_using_arc::report before Surf_A->report_basics_and_trihedral_pair" << endl;
-		}
-		if (f_v) {
-			Surf_A->report_basics(fp);
-		}
-		if (f_v) {
-			cout << "surface_classify_using_arc::report after Surf_A->report_basics_and_trihedral_pair" << endl;
-		}
+		report2(fp, verbose_level);
 
 
 		L.foot(fp);
@@ -466,6 +299,192 @@ void surface_classify_using_arc::report(int verbose_level)
 	}
 }
 
+
+void surface_classify_using_arc::report2(ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_classify_using_arc::report2" << endl;
+	}
+
+	surface_domain *Surf;
+	finite_field *F;
+
+	F = Surf_A->F;
+	Surf = Surf_A->Surf;
+
+	if (f_v) {
+		cout << "surface_classify_using_arc::report2 q=" << F->q << endl;
+	}
+
+
+
+	report_decomposition_matrix(ost, verbose_level);
+
+
+	int surface_idx;
+
+	for (surface_idx = 0;
+			surface_idx < nb_surfaces;
+			surface_idx++) {
+
+
+
+		ost << "Surface $" << surface_idx << "$ is associated with the following arcs: $";
+		int_vec_print(ost,
+			Arc_identify + surface_idx * Six_arcs->nb_arcs_not_on_conic,
+			Arc_identify_nb[surface_idx]);
+		ost << "$\\\\" << endl;
+
+
+
+	}
+
+
+	//fp << "\\clearpage" << endl << endl;
+
+
+
+	ost << "\\section*{Six-Arcs}" << endl << endl;
+
+
+	if (f_v) {
+		cout << "surface_classify_using_arc::report2 before Six_arcs->report_latex" << endl;
+	}
+	Six_arcs->report_latex(ost);
+	if (f_v) {
+		cout << "surface_classify_using_arc::report2 after Six_arcs->report_latex" << endl;
+	}
+
+#if 0
+	char fname_base[1000];
+	snprintf(fname_base, 1000, "arcs_q%d", F->q);
+
+	if (F->q < 20) {
+		cout << "before Gen->gen->draw_poset_full" << endl;
+		Six_arcs->Gen->gen->draw_poset(
+			fname_base,
+			6 /* depth */, 0 /* data */,
+			TRUE /* f_embedded */,
+			FALSE /* f_sideways */,
+			100 /* rad */,
+			verbose_level);
+	}
+#endif
+
+
+	ost << "\\section*{Double Triplets}" << endl << endl;
+
+	if (f_v) {
+		cout << "surface_classify_using_arc::report2 before Surf_A->report_double_triplets" << endl;
+	}
+	if (f_v) {
+		Surf_A->report_double_triplets(ost);
+	}
+	if (f_v) {
+		cout << "surface_classify_using_arc::report2 after Surf_A->report_double_triplets" << endl;
+	}
+
+
+
+
+	ost << "\\section*{Summary of Surfaces}" << endl << endl;
+
+
+
+
+	for (surface_idx = 0;
+			surface_idx < nb_surfaces;
+			surface_idx++) {
+
+
+
+		ost << "\\subsection*{Surface $" << surface_idx << "$ of " << nb_surfaces << "}" << endl << endl;
+
+
+		if (f_v) {
+			cout << "surface_classify_using_arc::report2 before SCAL[" << surface_idx << "].report_summary" << endl;
+		}
+		SCAL[surface_idx].report_summary(ost, verbose_level);
+		if (f_v) {
+			cout << "surface_classify_using_arc::report2 after SCAL[" << surface_idx << "].report_summary" << endl;
+		}
+
+
+		ost << "The following " << Arc_identify_nb[surface_idx]
+			<< " arcs are involved with surface " <<   nb_surfaces << ": $";
+		int_vec_print(ost,
+			Arc_identify + surface_idx * Six_arcs->nb_arcs_not_on_conic,
+			Arc_identify_nb[surface_idx]);
+		ost << "$\\\\" << endl;
+
+
+
+	}
+
+
+
+	ost << "\\section*{List of Surfaces}" << endl << endl;
+
+
+
+
+	for (surface_idx = 0;
+			surface_idx < nb_surfaces;
+			surface_idx++) {
+
+
+
+		ost << "\\subsection*{Surface $" << surface_idx << "$ of " << nb_surfaces << "}" << endl << endl;
+
+
+		if (f_v) {
+			cout << "surface_classify_using_arc::report2 before SCAL[" << surface_idx << "].report" << endl;
+		}
+		SCAL[surface_idx].report(ost, verbose_level);
+		if (f_v) {
+			cout << "surface_classify_using_arc::report2 after SCAL[" << surface_idx << "].report" << endl;
+		}
+
+
+		ost << "The following " << Arc_identify_nb[surface_idx]
+			<< " arcs are involved with surface " <<   nb_surfaces << ": $";
+		int_vec_print(ost,
+			Arc_identify + surface_idx * Six_arcs->nb_arcs_not_on_conic,
+			Arc_identify_nb[surface_idx]);
+		ost << "$\\\\" << endl;
+
+
+
+	}
+
+
+	ost << "\\section*{Double Triplets: Details}" << endl << endl;
+	if (f_v) {
+		cout << "surface_classify_using_arc::report2 before Surf_A->report_double_triplets_detailed" << endl;
+	}
+	if (f_v) {
+		Surf_A->report_double_triplets_detailed(ost);
+	}
+	if (f_v) {
+		cout << "surface_classify_using_arc::report2 after Surf_A->report_double_triplets_detailed" << endl;
+	}
+
+
+	ost << "\\section*{Basics}" << endl << endl;
+
+	if (f_v) {
+		cout << "surface_classify_using_arc::report2 before Surf_A->report_basics_and_trihedral_pair" << endl;
+	}
+	if (f_v) {
+		Surf_A->report_basics(ost);
+	}
+	if (f_v) {
+		cout << "surface_classify_using_arc::report2 after Surf_A->report_basics_and_trihedral_pair" << endl;
+	}
+
+}
 
 
 void surface_classify_using_arc::report_decomposition_matrix(ostream &ost, int verbose_level)

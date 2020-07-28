@@ -308,7 +308,7 @@ void finite_field::print_tables()
 			<< setw(4) << c << " : "
 			<< setw(4) << l << endl;
 
-		}
+	}
 }
 
 void finite_field::print_tables_extension_field(const char *poly)
@@ -536,17 +536,19 @@ void finite_field::print_indicator_square_nonsquare(int a)
 		cout << "finite_field::print_indicator_square_nonsquare "
 				"the characteristic is two" << endl;
 		exit(1);
-		}
+	}
 	if (a == 0) {
 		cout << "0";
-		}
+	}
 	else {
 		l = log_alpha(a);
-		if (EVEN(l))
+		if (EVEN(l)) {
 			cout << "+";
-		else
+		}
+		else {
 			cout << "-";
 		}
+	}
 }
 
 void finite_field::print_element(ostream &ost, int a)
@@ -560,10 +562,10 @@ void finite_field::print_element(ostream &ost, int a)
 	else {
 		if (f_print_as_exponentials) {
 			width = 10;
-			}
+		}
 		else {
 			width = log10_of_q;
-			}
+		}
 		print_element_with_symbol(ost, a, f_print_as_exponentials,
 				width, symbol_for_print);
 	}
@@ -580,10 +582,10 @@ void finite_field::print_element_str(stringstream &ost, int a)
 	else {
 		if (f_print_as_exponentials) {
 			width = 10;
-			}
+		}
 		else {
 			width = log10_of_q;
-			}
+		}
 		print_element_with_symbol_str(ost, a, f_print_as_exponentials,
 				width, symbol_for_print);
 	}
@@ -599,31 +601,32 @@ void finite_field::print_element_with_symbol(ostream &ost,
 			cout << "finite_field::print_element_with_symbol "
 					"symbol == NULL" << endl;
 			return;
-			}
+		}
 		if (a == 0) {
 			//print_repeated_character(ost, ' ', width - 1);
 			ost << "0";
-			}
+		}
 		else if (a == 1) {
 			//print_repeated_character(ost, ' ', width - 1);
 			ost << "1";
-			}
+		}
 		else {
 			b = log_alpha(a);
-			if (b == q - 1)
+			if (b == q - 1) {
 				b = 0;
+			}
 			ost << symbol;
 			if (b > 1) {
 				ost << "^{" << b << "}";
-				}
+			}
 			else {
 				ost << " ";
 			}
-			}
 		}
+	}
 	else {
 		ost << setw((int) width) << a;
-		}
+	}
 }
 
 void finite_field::print_element_with_symbol_str(stringstream &ost,
@@ -636,31 +639,32 @@ void finite_field::print_element_with_symbol_str(stringstream &ost,
 			cout << "finite_field::print_element_with_symbol_str "
 					"symbol == NULL" << endl;
 			return;
-			}
+		}
 		if (a == 0) {
 			//print_repeated_character(ost, ' ', width - 1);
 			ost << "0";
-			}
+		}
 		else if (a == 1) {
 			//print_repeated_character(ost, ' ', width - 1);
 			ost << "1";
-			}
+		}
 		else {
 			b = log_alpha(a);
-			if (b == q - 1)
+			if (b == q - 1) {
 				b = 0;
+			}
 			ost << symbol;
 			if (b > 1) {
 				ost << "^{" << b << "}";
-				}
+			}
 			else {
 				ost << " ";
 			}
-			}
 		}
+	}
 	else {
 		ost << setw((int) width) << a;
-		}
+	}
 }
 
 void finite_field::int_vec_print_field_elements(ostream &ost, int *v, int len)
@@ -669,9 +673,10 @@ void finite_field::int_vec_print_field_elements(ostream &ost, int *v, int len)
 	ost << "(";
 	for (i = 0; i < len; i++) {
 		print_element(ost, v[i]);
-		if (i < len - 1)
+		if (i < len - 1) {
 			ost << ", ";
 		}
+	}
 	ost << ")";
 }
 
@@ -689,9 +694,10 @@ void finite_field::int_vec_print_elements_exponential(ostream &ost,
 		print_element_with_symbol(ost, v[i],
 			TRUE /*f_print_as_exponentials*/,
 			10 /*width*/, symbol_for_print);
-		if (i < len - 1)
+		if (i < len - 1) {
 			ost << ", ";
 		}
+	}
 	ost << ")";
 }
 
@@ -918,18 +924,13 @@ void finite_field::power_table(int t,
 void finite_field::cheat_sheet(ostream &f, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j;
-	int *v;
-	int f_first;
-	int a;
-	const char *symbol_for_print = "\\alpha";
+	//const char *symbol_for_print = "\\alpha";
 	number_theory_domain NT;
 
 
 	if (f_v) {
 		cout << "finite_field::cheat_sheet" << endl;
-		}
-	v = NEW_int(e);
+	}
 
 	f << "\\small" << endl;
 	if (!f_is_prime_field) {
@@ -953,18 +954,191 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 	}
 
 
+
+
+
+	if (f_v) {
+		cout << "finite_field::cheat_sheet done" << endl;
+	}
+}
+
+void finite_field::report_subfields(ostream &f, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
+	int h;
+
+	if (f_v) {
+		cout << "finite_field::report_subfields" << endl;
+	}
+	f << "Subfields:" << endl;
+	f << "$$" << endl;
+	f << "\\begin{array}{|r|r|r|}" << endl;
+	f << "\\hline" << endl;
+	f << "\\mbox{Subfield} & \\mbox{Polynomial} & \\mbox{Numerical Rank} \\\\"
+			<< endl;
+	f << "\\hline" << endl;
+	for (h = 2; h < e; h++) {
+		if ((e % h) == 0) {
+
+
+			f << "\\hline" << endl;
+			int poly;
+
+			poly = compute_subfield_polynomial(
+					NT.i_power_j(p, h), verbose_level);
+			{
+				finite_field GFp;
+				GFp.init(p, 0);
+
+				unipoly_domain FX(&GFp);
+				unipoly_object m;
+
+				FX.create_object_by_rank_string(m, polynomial,
+						0/*verbose_level*/);
+				unipoly_domain Fq(&GFp, m, 0 /* verbose_level */);
+				unipoly_object elt;
+
+				FX.create_object_by_rank(elt, poly, __FILE__, __LINE__, verbose_level);
+				f << "\\bbF_{" << NT.i_power_j(p, h) << "} & ";
+				Fq.print_object(elt, f);
+				f << " & " << poly;
+				f << "\\\\" << endl;
+				Fq.delete_object(elt);
+			}
+
+		}
+	}
+	f << "\\hline" << endl;
+	f << "\\end{array}" << endl;
+	f << "$$" << endl;
+	if (f_v) {
+		cout << "finite_field::report_subfields done" << endl;
+	}
+}
+
+void finite_field::cheat_sheet_addition_table(ostream &f, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	const char *symbol_for_print = "\\alpha";
+
+
+	if (f_v) {
+		cout << "finite_field::cheat_sheet_addition_table" << endl;
+	}
+
+	if (q <= 64) {
+		f << "$$" << endl;
+		latex_addition_table(f, FALSE /* f_elements_exponential */,
+				symbol_for_print);
+		if (q >= 10) {
+			f << "$$" << endl;
+			f << "$$" << endl;
+		}
+		else {
+			f << "\\qquad" << endl;
+		}
+		latex_addition_table(f, TRUE /* f_elements_exponential */,
+				symbol_for_print);
+		f << "$$" << endl;
+
+	}
+	else {
+		f << "Addition table omitted" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "finite_field::cheat_sheet_addition_table done" << endl;
+	}
+}
+
+void finite_field::cheat_sheet_multiplication_table(ostream &f, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	const char *symbol_for_print = "\\alpha";
+
+
+	if (f_v) {
+		cout << "finite_field::cheat_sheet_multiplication_table" << endl;
+	}
+
+	if (q <= 64) {
+		f << "$$" << endl;
+		latex_multiplication_table(f, FALSE /* f_elements_exponential */,
+				symbol_for_print);
+		if (q >= 10) {
+			f << "$$" << endl;
+			f << "$$" << endl;
+		}
+		else {
+			f << "\\qquad" << endl;
+		}
+		latex_multiplication_table(f, TRUE /* f_elements_exponential */,
+				symbol_for_print);
+		f << "$$" << endl;
+	}
+	else {
+		f << "Multiplication table omitted" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "finite_field::cheat_sheet_multiplication_table done" << endl;
+	}
+}
+
+void finite_field::cheat_sheet_power_table(ostream &f, int verbose_level)
+{
+	int *Powers;
+	int i, t;
+	int len = q;
+
+	t = primitive_root();
+
+	Powers = NEW_int(len);
+	power_table(t, Powers, len);
+
+	f << "\\begin{multicols}{2}" << endl;
+	f << "\\noindent" << endl;
+	for (i = 0; i < len; i++) {
+		if (e == 1) {
+			f << "$" << t << "^{" << i << "} \\equiv " << Powers[i] << "$\\\\" << endl;
+		}
+		else {
+			f << "$" << t << "^{" << i << "} = " << Powers[i] << "$\\\\" << endl;
+		}
+	}
+	f << "\\end{multicols}" << endl;
+	FREE_int(Powers);
+
+}
+
+void finite_field::cheat_sheet_main_table(ostream &f, int verbose_level)
+{
+	int *v;
+	int i, j, a;
+	int f_first;
+
+	v = NEW_int(e);
+
+
 	int nb_cols = 7;
+
 	if (e > 1) {
 		nb_cols += 3;
-		}
+	}
 	if ((e % 2) == 0 && e > 2) {
 		nb_cols += 2;
-		}
+	}
 	if ((e % 3) == 0 && e > 3) {
 		nb_cols += 2;
-		}
+	}
 
-	cheat_sheet_top(f, nb_cols);
+
+	cheat_sheet_main_table_top(f, nb_cols);
 
 	geometry_global Gg;
 
@@ -973,8 +1147,9 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 		f << setw(3) << i << " & ";
 		f_first = TRUE;
 		for (j = e - 1; j >= 0; j--) {
-			if (v[j] == 0)
+			if (v[j] == 0) {
 				continue;
+			}
 
 			if (f_first) {
 				f_first = FALSE;
@@ -1059,125 +1234,18 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 		f << "\\\\" << endl;
 
 		if ((i % 25) == 0 && i) {
-			cheat_sheet_bottom(f);
-			cheat_sheet_top(f, nb_cols);
+			cheat_sheet_main_table_bottom(f);
+			cheat_sheet_main_table_top(f, nb_cols);
 		}
 	}
 
-	cheat_sheet_bottom(f);
-
+	cheat_sheet_main_table_bottom(f);
 
 	FREE_int(v);
-	if (f_v) {
-		cout << "finite_field::cheat_sheet done" << endl;
-	}
+
 }
 
-void finite_field::report_subfields(ostream &f, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
-	int h;
-
-	if (f_v) {
-		cout << "finite_field::report_subfields" << endl;
-	}
-	f << "Subfields:" << endl;
-	f << "$$" << endl;
-	f << "\\begin{array}{|r|r|r|}" << endl;
-	f << "\\hline" << endl;
-	f << "\\mbox{Subfield} & \\mbox{Polynomial} & \\mbox{Numerical Rank} \\\\"
-			<< endl;
-	f << "\\hline" << endl;
-	for (h = 2; h < e; h++) {
-		if ((e % h) == 0) {
-
-
-			f << "\\hline" << endl;
-			int poly;
-
-			poly = compute_subfield_polynomial(
-					NT.i_power_j(p, h), verbose_level);
-			{
-				finite_field GFp;
-				GFp.init(p, 0);
-
-				unipoly_domain FX(&GFp);
-				unipoly_object m;
-
-				FX.create_object_by_rank_string(m, polynomial,
-						0/*verbose_level*/);
-				unipoly_domain Fq(&GFp, m, 0 /* verbose_level */);
-				unipoly_object elt;
-
-				FX.create_object_by_rank(elt, poly, __FILE__, __LINE__, verbose_level);
-				f << "\\bbF_{" << NT.i_power_j(p, h) << "} & ";
-				Fq.print_object(elt, f);
-				f << " & " << poly;
-				f << "\\\\" << endl;
-				Fq.delete_object(elt);
-			}
-
-			}
-		}
-	f << "\\hline" << endl;
-	f << "\\end{array}" << endl;
-	f << "$$" << endl;
-	if (f_v) {
-		cout << "finite_field::report_subfields done" << endl;
-	}
-}
-
-void finite_field::cheat_sheet_tables(ostream &f, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	const char *symbol_for_print = "\\alpha";
-
-
-	if (f_v) {
-		cout << "finite_field::cheat_sheet_tables" << endl;
-	}
-
-	if (q <= 64) {
-		f << "$$" << endl;
-		latex_addition_table(f, FALSE /* f_elements_exponential */,
-				symbol_for_print);
-		if (q >= 10) {
-			f << "$$" << endl;
-			f << "$$" << endl;
-		}
-		else {
-			f << "\\qquad" << endl;
-		}
-		latex_addition_table(f, TRUE /* f_elements_exponential */,
-				symbol_for_print);
-		f << "$$" << endl;
-
-		f << "$$" << endl;
-		latex_multiplication_table(f, FALSE /* f_elements_exponential */,
-				symbol_for_print);
-		if (q >= 10) {
-			f << "$$" << endl;
-			f << "$$" << endl;
-		}
-		else {
-			f << "\\qquad" << endl;
-		}
-		latex_multiplication_table(f, TRUE /* f_elements_exponential */,
-				symbol_for_print);
-		f << "$$" << endl;
-	}
-	else {
-		f << "Addition and multiplication tables omitted" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "finite_field::cheat_sheet_tables done" << endl;
-	}
-}
-
-void finite_field::cheat_sheet_top(ostream &f, int nb_cols)
+void finite_field::cheat_sheet_main_table_top(ostream &f, int nb_cols)
 {
 	f << "$$";
 	f << "\\begin{array}{|*{" << nb_cols << "}{r|}}" << endl;
@@ -1192,20 +1260,20 @@ void finite_field::cheat_sheet_top(ostream &f, int nb_cols)
 		f << "& \\phi(\\gamma_i) ";
 		f << "& T(\\gamma_i) ";
 		f << "& N(\\gamma_i) ";
-		}
+	}
 	if ((e % 2) == 0 && e > 2) {
 		f << "& T_2(\\gamma_i) ";
 		f << "& N_2(\\gamma_i) ";
-		}
+	}
 	if ((e % 3) == 0 && e > 3) {
 		f << "& T_3(\\gamma_i) ";
 		f << "& N_3(\\gamma_i) ";
-		}
+	}
 	f << "\\\\" << endl;
 	f << "\\hline" << endl;
 }
 
-void finite_field::cheat_sheet_bottom(ostream &f)
+void finite_field::cheat_sheet_main_table_bottom(ostream &f)
 {
 	f << "\\hline" << endl;
 	f << "\\end{array}" << endl;
@@ -1242,8 +1310,8 @@ void finite_field::display_table_of_projective_points(
 			ost << "i & a_i & P_{a_i}\\\\" << endl;
 			ost << "\\hline" << endl;
 			ost << "\\hline" << endl;
-			}
 		}
+	}
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
 	ost << "$$}%" << endl;
@@ -1262,39 +1330,39 @@ void finite_field::export_magma(int d, long int *Pts, int nb_pts, char *fname)
 	replace_extension_with(fname2, ".magma");
 
 	{
-	ofstream fp(fname2);
+		ofstream fp(fname2);
 
-	fp << "G,I:=PGammaL(" << d << "," << q
-			<< ");F:=GF(" << q << ");" << endl;
-	fp << "S:={};" << endl;
-	fp << "a := F.1;" << endl;
-	for (h = 0; h < nb_pts; h++) {
-		PG_element_unrank_modified_lint(v, 1, d, Pts[h]);
+		fp << "G,I:=PGammaL(" << d << "," << q
+				<< ");F:=GF(" << q << ");" << endl;
+		fp << "S:={};" << endl;
+		fp << "a := F.1;" << endl;
+		for (h = 0; h < nb_pts; h++) {
+			PG_element_unrank_modified_lint(v, 1, d, Pts[h]);
 
-		PG_element_normalize_from_front(v, 1, d);
+			PG_element_normalize_from_front(v, 1, d);
 
-		fp << "Include(~S,Index(I,[";
-		for (i = 0; i < d; i++) {
-			a = v[i];
-			if (a == 0) {
-				fp << "0";
+			fp << "Include(~S,Index(I,[";
+			for (i = 0; i < d; i++) {
+				a = v[i];
+				if (a == 0) {
+					fp << "0";
 				}
-			else if (a == 1) {
-				fp << "1";
+				else if (a == 1) {
+					fp << "1";
 				}
-			else {
-				b = log_alpha(a);
-				fp << "a^" << b;
+				else {
+					b = log_alpha(a);
+					fp << "a^" << b;
 				}
-			if (i < d - 1) {
-				fp << ",";
+				if (i < d - 1) {
+					fp << ",";
 				}
 			}
-		fp << "]));" << endl;
+			fp << "]));" << endl;
 		}
-	fp << "Stab := Stabilizer(G,S);" << endl;
-	fp << "Size(Stab);" << endl;
-	fp << endl;
+		fp << "Stab := Stabilizer(G,S);" << endl;
+		fp << "Size(Stab);" << endl;
+		fp << endl;
 	}
 	file_io Fio;
 
@@ -1315,44 +1383,44 @@ void finite_field::export_gap(int d, long int *Pts, int nb_pts, char *fname)
 	replace_extension_with(fname2, ".gap");
 
 	{
-	ofstream fp(fname2);
+		ofstream fp(fname2);
 
-	fp << "LoadPackage(\"fining\");" << endl;
-	fp << "pg := ProjectiveSpace(" << d - 1 << "," << q << ");" << endl;
-	fp << "S:=[" << endl;
-	for (h = 0; h < nb_pts; h++) {
-		PG_element_unrank_modified_lint(v, 1, d, Pts[h]);
+		fp << "LoadPackage(\"fining\");" << endl;
+		fp << "pg := ProjectiveSpace(" << d - 1 << "," << q << ");" << endl;
+		fp << "S:=[" << endl;
+		for (h = 0; h < nb_pts; h++) {
+			PG_element_unrank_modified_lint(v, 1, d, Pts[h]);
 
-		PG_element_normalize_from_front(v, 1, d);
+			PG_element_normalize_from_front(v, 1, d);
 
-		fp << "[";
-		for (i = 0; i < d; i++) {
-			a = v[i];
-			if (a == 0) {
-				fp << "0*Z(" << q << ")";
+			fp << "[";
+			for (i = 0; i < d; i++) {
+				a = v[i];
+				if (a == 0) {
+					fp << "0*Z(" << q << ")";
 				}
-			else if (a == 1) {
-				fp << "Z(" << q << ")^0";
+				else if (a == 1) {
+					fp << "Z(" << q << ")^0";
 				}
-			else {
-				b = log_alpha(a);
-				fp << "Z(" << q << ")^" << b;
+				else {
+					b = log_alpha(a);
+					fp << "Z(" << q << ")^" << b;
 				}
-			if (i < d - 1) {
+				if (i < d - 1) {
+					fp << ",";
+				}
+			}
+			fp << "]";
+			if (h < nb_pts - 1) {
 				fp << ",";
-				}
 			}
-		fp << "]";
-		if (h < nb_pts - 1) {
-			fp << ",";
-			}
-		fp << endl;
+			fp << endl;
 		}
-	fp << "];" << endl;
-	fp << "S := List(S,x -> VectorSpaceToElement(pg,x));" << endl;
-	fp << "g := CollineationGroup(pg);" << endl;
-	fp << "stab := Stabilizer(g,Set(S),OnSets);" << endl;
-	fp << "Size(stab);" << endl;
+		fp << "];" << endl;
+		fp << "S := List(S,x -> VectorSpaceToElement(pg,x));" << endl;
+		fp << "g := CollineationGroup(pg);" << endl;
+		fp << "stab := Stabilizer(g,Set(S),OnSets);" << endl;
+		fp << "Size(stab);" << endl;
 	}
 	file_io Fio;
 

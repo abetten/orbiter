@@ -706,13 +706,17 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 	}
 
 
+#if 0
+
 	if (f_v) {
 		cout << "delandtsheer_doyen::search_starter "
 				"before Gen->draw_poset" << endl;
 	}
 	Gen->draw_poset(Gen->get_problem_label_with_path(), Descr->depth,
-			0 /* data1 */, TRUE /* f_embedded */, TRUE /* f_sideways */, 100 /* rad */,
+			0 /* data1 */, TRUE /* f_embedded */, TRUE /* f_sideways */, 100 /* rad */, 0.45 /* scale */,
 			verbose_level);
+#endif
+
 	if (f_v) {
 		cout << "delandtsheer_doyen::search_starter done" << endl;
 	}
