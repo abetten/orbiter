@@ -76,7 +76,7 @@ void permutation_representation::init(action *A_original,
 	nb_gens = gens->len;
 	permutation_representation::Perms = Perms;
 	permutation_representation::degree = degree;
-	P = NEW_OBJECT(perm_group);
+	P = NEW_OBJECT(permutation_representation_domain);
 	P->init(degree, 10 /* page_length_log */, verbose_level - 2);
 	perm_offset = A_original->elt_size_in_int;
 	elt_size_int = perm_offset + P->elt_size_int;

@@ -24,7 +24,7 @@ namespace group_actions {
 
 class action;
 class matrix_group;
-class perm_group;
+class permutation_representation_domain;
 class vector_ge;
 typedef class vector_ge *p_vector_ge;
 class schreier;
@@ -148,7 +148,7 @@ enum shallow_schreier_tree_strategy {
 
 union symmetry_group {
 	matrix_group *matrix_grp;
-	perm_group *perm_grp;
+	permutation_representation_domain *perm_grp;
 	wreath_product *wreath_product_group;
 	direct_product *direct_product_group;
 	permutation_representation *Permutation_representation;

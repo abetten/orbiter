@@ -216,7 +216,7 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	F = M->GFq;
 	q = F->q;
 
-	P = NEW_OBJECT(perm_group);
+	P = NEW_OBJECT(permutation_representation_domain);
 	if (f_v) {
 		cout << "wreath_product::init_tensor_wreath_product before P->init" << endl;
 	}

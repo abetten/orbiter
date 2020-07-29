@@ -12,7 +12,7 @@ MODULES = \
 	linear_group_description.o \
 	matrix_group.o \
 	orbits_on_something.o \
-	perm_group.o \
+	permutation_representation_domain.o \
 	permutation_representation.o \
 	schreier.o \
 	schreier_io.o \

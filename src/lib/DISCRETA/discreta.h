@@ -1305,18 +1305,6 @@ class discreta_matrix: public discreta_base
 	int csf();
 
 	void calc_theX(int & nb_X, int *&theX);
-#if 0
-	void lexleast_incidence_matrix(int f_on_rows, 
-		int f_row_decomp, Vector & row_decomp, 
-		int f_col_decomp, Vector & col_decomp, 
-		int f_ddp, Vector & DDp, 
-		int f_ddb, Vector & DDb, 
-		int f_group, perm_group & G, 
-		permutation & p, permutation & q, 
-		int f_print_backtrack_points, 
-		int f_get_aut_group, int f_aut_group_on_lexleast, Vector & aut_gens, 
-		int verbose_level);
-#endif
 	void apply_perms(int f_row_perm, permutation &row_perm, 
 		int f_col_perm, permutation &col_perm);
 	void apply_col_row_perm(permutation &p);
@@ -1364,34 +1352,6 @@ class discreta_matrix: public discreta_base
 	void PG_element_normalize();
 	void AG_point_rank(int i0, int j0, int di, int dj, int length, int &a);
 	void AG_point_unrank(int i0, int j0, int di, int dj, int length, int a);
-#if 0
-	void canon(int f_row_decomp, Vector & row_decomp, 
-		int f_col_decomp, Vector & col_decomp, 
-		int f_group, perm_group & G, 
-		permutation & p, permutation & q, 
-		int f_get_aut_group, int f_aut_group_on_lexleast, Vector & aut_gens, discreta_base &ago,
-		int f_v, int f_vv, int f_vvv, int f_vvvv, int f_tree_file);
-	void canon_partition_backtrack(int f_row_decomp, Vector & row_decomp, 
-		int f_col_decomp, Vector & col_decomp, 
-		int f_group, perm_group & G, 
-		permutation & p, permutation & q, 
-		int f_get_aut_group, int f_aut_group_on_lexleast, Vector & aut_gens, discreta_base &ago,
-		int f_v, int f_vv, int f_vvv, int f_vvvv, int f_tree_file);
-#endif
-	void canon_nauty(int f_row_decomp, Vector & row_decomp, 
-		int f_col_decomp, Vector & col_decomp, 
-		int f_group, perm_group & G, 
-		permutation & p, permutation & q, 
-		int f_get_aut_group, int f_aut_group_on_lexleast, Vector & aut_gens, 
-		int f_v, int f_vv, int f_vvv);
-#if 0
-	void canon_tonchev(int f_row_decomp, Vector & row_decomp, 
-		int f_col_decomp, Vector & col_decomp, 
-		int f_group, perm_group & G, 
-		permutation & p, permutation & q, 
-		int f_get_aut_group, int f_aut_group_on_lexleast, Vector & aut_gens, 
-		int f_v, int f_vv, int f_vvv);
-#endif
 	void save_as_geometry(int number, char *label);
 	void save_as_inc_file(char *fname);
 	void save_as_inc(std::ofstream &f);
@@ -1646,39 +1606,11 @@ class geometry: public Vector
 
 	void transpose();
 	int is_2design(int &r, int &lambda, int f_v);
-#if 0
-	void calc_lexleast_and_autgroup(int f_v, int f_vv, int f_print_backtrack_point);
-	void calc_canon_and_autgroup(int f_v, int f_vv, int f_vvv, int f_vvvv, 
-		int f_print_backtrack_points, int f_tree_file);
-	void calc_canon_and_autgroup_partition_backtrack(int f_v, int f_vv, int f_vvv, int f_vvvv, 
-		int f_print_backtrack_points, int f_tree_file);
-#endif
-	void calc_canon_nauty(int f_v, int f_vv, int f_vvv);
-	//void calc_canon_tonchev(int f_v, int f_vv, int f_vvv);
 	void get_lexleast_X(discreta_matrix & X0);
 };
 
 int search_geo_file(discreta_matrix & X0, char *fname, int geo_nr, char *geo_label, int f_v);
 
-
-#if 0
-// geo_canon.cpp:
-
-void perm_test(void);
-void geo_canon_with_initial_decomposition_and_ddp_ddb(
-	int f_maxtest, int *back_to, 
-	int f_transposed, 
-	int nrow, int ncol, int nb_X, int *theX, 
-	int f_row_decomp, Vector & row_decomp, 
-	int f_col_decomp, Vector & col_decomp, 
-	int f_ddp, Vector & DDp, 
-	int f_ddb, Vector & DDb, 
-	int f_col_group, perm_group & col_group, 
-	permutation & p, permutation & q, 
-	int f_print_backtrack_points, 
-	int f_get_aut_group, int f_aut_group_on_lexleast, Vector & aut_gens, 
-	int verbose_level);
-#endif
 
 //! DISCRETA class for influencing arithmetic operations
 
@@ -1993,96 +1925,6 @@ void vec_generators_aut_cube_nd(int n, Vector &gen);
 void number_to_binary(int n, int *v, int digits);
 int binary_to_number(int *v, int digits);
 
-
-
-// kramer_mesner.cpp
-
-extern char *discreta_copyright_text;
-
-typedef struct design_data DESIGN_DATA;
-
-
-//! DISCRETA class for Kramer Mesner type problems
-
-
-
-
-struct design_data {
-	char *KM_fname;
-	int v, t, k;
-	Vector gen;
-	Vector MM;
-	Vector RR;
-	Vector stab_go;
-	discreta_base go;
-	
-	
-	int lambda;
-	int nb_sol;
-	Vector S;
-
-	discreta_matrix P;
-};
-
-
-void write_KM_file(char *gsel, char *g_label, char *g_label_tex, char *km_fname, char *acting_on, 
-	Vector & G_gen, discreta_base & go, int deg,
-	discreta_matrix & M, int t, int k);
-void write_KM_file2(char *gsel, char *g_label, char *g_label_tex, char *km_fname, char *acting_on, 
-	Vector & G_gen, discreta_base & go, int deg,
-	discreta_matrix & M, int t, int k, int f_right_hand_side_in_last_column_of_M);
-void write_ascii_generators(char *km_fname, Vector & gen);
-void write_ascii_representatives(char *km_fname, Vector & R);
-void write_ascii_stabilizer_orders(char *km_fname, Vector & Ago);
-void write_ascii_stabilizer_orders_k_sets(char *km_fname, Vector & Ago, int k);
-void write_ascii_KM_matrices(char *km_fname, Vector & MM);
-void km_read_ascii_vtk(char *KM_fname, int &v, int &t, int &k);
-void km_read_ascii_strings(char *KM_fname, hollerith& group_construction, hollerith& group_label, hollerith& group_label_tex, hollerith& acting_on);
-void km_read_generators(char *KM_fname, Vector & gen);
-void km_read_KM_matrices(char *KM_fname, Vector & MM);
-void km_read_orbit_representatives(char *KM_fname, Vector & RR);
-void km_read_stabilizer_orders(char *KM_fname, Vector & stab_go);
-void km_read_orbits_below(char *KM_fname, Vector & Orbits_below1, Vector & Orbits_below2);
-void km_read_lambda_values(char *KM_fname, Vector & lambda_values, Vector & lambda_solution_count);
-void km_get_solutions_from_solver(char *KM_fname, int lambda);
-int km_nb_of_solutions(char *KM_fname, int lambda);
-void km_get_solutions(char *KM_fname, int lambda, int from, int len, Vector& S);
-void km_read_until_lambdaend(std::ifstream & f);
-void Mtk_via_Mtr_Mrk(int t, int r, int k, discreta_matrix & Mtr, discreta_matrix & Mrk, discreta_matrix & Mtk, int f_v);
-void Mtk_from_MM(Vector & MM, discreta_matrix & Mtk, int t, int k, int f_v);
-
-DESIGN_DATA *prepare_for_intersection_numbers(char *KM_fname);
-void design_load_all_solutions(DESIGN_DATA *dd, int lambda);
-void design_prepare_orbit_lengths(DESIGN_DATA *dd);
-void design_orbits_vector(Vector & X, Vector & orbits, int f_complement);
-
-void global_intersection_numbers_prepare_data(char *KM_fname, int lambda, int s_max, 
-	DESIGN_DATA *&dd, discreta_matrix& L, discreta_matrix& Z, discreta_matrix &Bv, discreta_matrix & S1t, discreta_matrix &D);
-void global_intersection_numbers_compute(char *KM_fname, int lambda, int s_max, 
-	DESIGN_DATA *&dd, discreta_matrix& L, discreta_matrix& Z, discreta_matrix &Bv, discreta_matrix & S1t, discreta_matrix &D,
-	Vector& sol, discreta_matrix& As1, discreta_matrix& As2, Vector& inv);
-void global_intersection_numbers(char *KM_fname, int lambda, int s_max);
-void extend_design_from_residual(char *KM_fname, int lambda);
-void get_group_to_file(int arg_length, char **group_arg_list, int f_v);
-void show_design(char *solid_fname, char *KM_fname, int lambda, int m);
-void report(char *KM_fname, int s_max);
-void canonical_set_reps(Vector& Set_reps, perm_group &G, int f_v, int f_vv, int f_vvv);
-void normalizer_action_on_orbits(perm_group & G, Vector & Reps, 
-	Vector &N_gens, Vector &N_gens_induced, int f_v);
-void action_on_orbits_of_normalizing_element(perm_group & G, Vector & Reps,
-	permutation & p, permutation & q, int f_v);
-void fuse_orbits(perm_group & G, Vector & Reps, 
-	Vector & fusion_map, Vector & new_reps, int f_v, int f_vv, int f_vvv);
-void km_compute_KM_matrix(int arg_length, char **group_arg_list, int t, int k, int f_v, int f_vv, int f_vvv);
-// interface for ladder:
-int permutation_element_image_of(int a, void *elt, void *data, int f_v);
-void permutation_element_retrieve(int hdl, void *elt, void *data, int f_v);
-int permutation_element_store(void *elt, void *data, int f_v);
-void permutation_element_mult(void *a, void *b, void *ab, void *data, int f_v);
-void permutation_element_invert(void *a, void *av, void *data, int f_v);
-void permutation_element_move(void *a, void *b, void *data, int f_v);
-void permutation_element_dispose(int hdl, void *data, int f_v);
-void permutation_element_print(void *elt, void *data, std::ostream &ost);
 
 
 
@@ -2659,50 +2501,6 @@ class design_parameter: public Vector
 	void init_database(database& D, char *path);
 };
 
-
-// counting.cpp:
-void cycle_index_perm_group(perm_group &G, Vector &C, int f_v, int f_vv);
-void cycle_type_add_monomial(Vector &C, Vector &m, discreta_base &coeff);
-void cycle_index_Zn(Vector &C, int n);
-void cycle_index_elementary_abelian(Vector &C, int p, int f);
-void make_monomial_of_equal_cycles(int i, int e, Vector &m);
-void cycle_index_q1_q2_dot_aubv_product_action(int q1, int q2, int u, int v, Vector &C);
-void cycle_index_direct_product(Vector &CG, Vector &CH, Vector &CGH, int f_v);
-void cycle_index_monomial_direct_product(Vector &m1, Vector &m2, Vector &m3);
-void cycle_index_on_pairs(Vector &CG, Vector &CG2, int f_v);
-void cycle_index_number_of_orbits(Vector &CG, discreta_base &number_of_orbits);
-void cycle_index_number_of_orbits_on_mappings(Vector &CG, int k, discreta_base &number_of_orbits);
-void print_cycle_type(Vector &C);
-
-// orbit.cpp:
-void all_orbits(int nb_elements, Vector &generators, 
-	Vector &orbit_no, 
-	int f_schreier_vectors, Vector &schreier_last, Vector &schreier_label, 
-	Vector &orbit_elts, Vector &orbit_elts_inv, 
-	Vector &orbit_first, Vector &orbit_length, 
-	actionkind k, discreta_base &action_data, int f_v, int f_vv, int f_v_image_of);
-int image_of_using_integers(int elt, int gen, actionkind k, discreta_base &action_data, int f_v);
-void orbit_of_element(Vector &gens, discreta_base &elt, Vector &orbit,
-	int f_schreier_data, Vector &schreier_prev, Vector &schreier_label, 
-	actionkind k, discreta_base &action_data, int f_v, int f_vv);
-void image_of(discreta_base &elt, discreta_base &image, discreta_base &g, actionkind k, discreta_base &action_data);
-void induced_permutations_on_orbit(Vector &gens, Vector &induced_gens, Vector &orbit, actionkind k, discreta_base &action_data);
-void induced_permutation_on_orbit(discreta_base &gen, permutation &induced_gen, Vector &orbit, actionkind k, discreta_base &action_data);
-void trace_schreier_vector(int i, Vector &gen, 
-	Vector &schreier_prev, Vector &schreier_label, permutation &p);
-void transversal_for_orbit(Vector &gen, 
-	Vector &schreier_prev, Vector &schreier_label, Vector &T);
-void trace_and_multiply(Vector &T, Vector &gen, 
-	Vector &schreier_prev, Vector &schreier_label, int i);
-void compute_transversal(Vector &gens, int discreta_base_pt, Vector &T, int f_v, int f_vv);
-void allocate_orbit_on_pairs_data(int v, int *&orbits_on_pairs);
-void calc_orbits_on_pairs(Vector & gens, int *&orbits_on_pairs, int &nb_orbits, 
-	Vector & orbit_first_i, Vector & orbit_first_j, Vector & orbit_length, int f_v, int f_vv);
-void write_orbits_on_pairs_to_file(char *group_label, int nb_points, 
-	Vector &orbit_first_i, Vector &orbit_first_j, Vector &orbit_length, 
-	int *orbits_on_pairs);
-void prepare_2_orbits_in_product_action(char *group_label, 
-	Vector &gen, int d, int c, int f_v, int f_vv);
 
 
 // discreta_global.cpp:

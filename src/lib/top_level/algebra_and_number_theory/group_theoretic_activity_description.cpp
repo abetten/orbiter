@@ -128,6 +128,9 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_tensor_classify = FALSE;
 	tensor_classify_depth = 0;
 	f_tensor_permutations = FALSE;
+
+	f_classify_ovoids = FALSE;
+	Ovoid_classify_description = NULL;
 }
 
 group_theoretic_activity_description::~group_theoretic_activity_description()
@@ -624,6 +627,27 @@ int group_theoretic_activity_description::read_arguments(
 			f_tensor_permutations = TRUE;
 			cout << "-tensor_permutations " << endl;
 		}
+
+
+		// ovoids:
+
+		else if (strcmp(argv[i], "-classify_ovoids") == 0) {
+			f_classify_ovoids = TRUE;
+			Ovoid_classify_description = NEW_OBJECT(ovoid_classify_description);
+			cout << "-classify_ovoids" << endl;
+			i += Ovoid_classify_description->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -classify_ovoids " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+
+
+
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;

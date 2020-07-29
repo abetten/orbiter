@@ -21,10 +21,11 @@ namespace top_level {
 
 ovoid_classify::ovoid_classify()
 {
-	Control = NULL;
+	Descr = NULL;
+	LG = NULL;
+
 	Poset = NULL;
 	gen = NULL;
-	F = NULL;
 	A = NULL;
 	O = NULL;
 	
@@ -33,34 +34,16 @@ ovoid_classify::ovoid_classify()
 	w = NULL;
 	tmp1 = NULL;
 
-	f_max_depth = FALSE;
-	f_list = FALSE;
-	f_poly = FALSE;
-	override_poly = NULL;
-	f_draw_poset = FALSE;
-	f_embedded = FALSE;
-	f_sideways = FALSE;
-
-	f_read = FALSE;
-	read_level = 0;
-
 	K = NULL;
 	color_table = NULL;
 
 	Pts = NULL;
 	Candidates = NULL;
 
-	f_prefix = FALSE;
 	nb_sol = 0;
-	epsilon = 0;
 	nb_colors = 0;
 	N = 0;
-	depth = 0;
-	max_depth = 0;
 	m = 0;
-	q = 0;
-	d = 0;
-	n = 0;
 }
 
 ovoid_classify::~ovoid_classify()
@@ -68,16 +51,13 @@ ovoid_classify::~ovoid_classify()
 	int f_v = FALSE;
 
 	if (f_v) {
-		cout << "ovoid_classify::~ovoid_generator" << endl;
+		cout << "ovoid_classify::~ovoid_classify" << endl;
 		}
 	if (Poset) {
 		FREE_OBJECT(Poset);
 		}
 	if (A) {
 		FREE_OBJECT(A);
-		}
-	if (F) {
-		FREE_OBJECT(F);
 		}
 	if (K) {
 		FREE_OBJECT(K);
@@ -105,43 +85,39 @@ ovoid_classify::~ovoid_classify()
 	}
 	
 	if (f_v) {
-		cout << "ovoid_classify::~ovoid_generator "
+		cout << "ovoid_classify::~ovoid_classify "
 				"finished" << endl;
 	}
 	
 }
 
-void ovoid_classify::init(int argc, const char **argv,
+void ovoid_classify::init(ovoid_classify_description *Descr,
+		linear_group *LG,
 		int &verbose_level)
 {
-	int f_semilinear;
-	int f_basis = TRUE;
-	number_theory_domain NT;
-	geometry_global Gg;
-
-	F = NEW_OBJECT(finite_field);
-	A = NEW_OBJECT(action);
-	Control = NEW_OBJECT(poset_classification_control);
-	gen = NEW_OBJECT(poset_classification);
-
-	read_arguments(argc, argv, verbose_level);
-
-
-
-	//gen->read_arguments(argc, argv, 0);
-
-	
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 4);
+
+	int f_semilinear;
+	//int f_basis = TRUE;
+	number_theory_domain NT;
+	geometry_global Gg;
+
+	ovoid_classify::Descr = Descr;
+	ovoid_classify::LG = LG;
+
+	A = LG->A2;
+	gen = NEW_OBJECT(poset_classification);
+
 	
-	u = NEW_int(d);
-	v = NEW_int(d);
-	w = NEW_int(d);
-	tmp1 = NEW_int(d);
+	u = NEW_int(Descr->d);
+	v = NEW_int(Descr->d);
+	w = NEW_int(Descr->d);
+	tmp1 = NEW_int(Descr->d);
 
 	int p, h;
-	NT.is_prime_power(q, p, h);
+	NT.is_prime_power(LG->F->q, p, h);
 
 
 	if (h > 1) {
@@ -155,11 +131,12 @@ void ovoid_classify::init(int argc, const char **argv,
 	//f_semilinear = TRUE;
 
 	
-	sprintf(prefix, "ovoid_Q%d_%d_%d", epsilon, d - 1, q);
-	sprintf(prefix_with_directory, "%s", prefix);
+	//sprintf(prefix, "ovoid_Q%d_%d_%d", epsilon, d - 1, q);
+	//sprintf(prefix_with_directory, "%s", prefix);
 	
-	F->init_override_polynomial(q, override_poly, 0);
+	//F->init_override_polynomial(q, override_poly, 0);
 
+#if 0
 	int f_siegel = TRUE;
 	int f_reflection = TRUE;
 	int f_similarity = TRUE;
@@ -170,7 +147,7 @@ void ovoid_classify::init(int argc, const char **argv,
 
 
 	cout << "ovoid_classify::init "
-			"d=" << d << endl;
+			"d=" << Descr->d << endl;
 	cout << "ovoid_classify::init "
 			"f_siegel=" << f_siegel << endl;
 	cout << "ovoid_classify::init "
@@ -180,12 +157,14 @@ void ovoid_classify::init(int argc, const char **argv,
 	cout << "ovoid_classify::init "
 			"f_semisimilarity=" << f_semisimilarity << endl;
 	
-	A->init_orthogonal_group(epsilon, d, F, 
+
+	A->init_orthogonal_group(Descr->epsilon, Descr->d, LG->F,
 		TRUE /* f_on_points */, 
 		FALSE /* f_on_lines */, 
 		FALSE /* f_on_points_and_lines */, 
 		f_semilinear, f_basis, verbose_level);
 	
+#endif
 
 	action_on_orthogonal *AO;
 	
@@ -205,13 +184,14 @@ void ovoid_classify::init(int argc, const char **argv,
 		cout << "alpha=" << O->alpha << endl;
 		}
 
-	Pts = NEW_int(N * d);
-	Candidates = NEW_int(N * d);
+	Pts = NEW_int(N * Descr->d);
+	Candidates = NEW_int(N * Descr->d);
 
 
 
 	//A->Strong_gens->print_generators_even_odd();
 	
+#if 0
 
 	if (f_max_depth) {
 		depth = max_depth;
@@ -232,13 +212,14 @@ void ovoid_classify::init(int argc, const char **argv,
 			}
 		}
 
-	Control->f_depth = TRUE;
-	Control->depth = depth;
+	//Control->f_depth = TRUE;
+	//Control->depth = depth;
 
 
 	if (f_v) {
 		cout << "depth = " << depth << endl;
 		}
+#endif
 	
 	Poset = NEW_OBJECT(poset);
 	Poset->init_subset_lattice(A, A,
@@ -247,18 +228,18 @@ void ovoid_classify::init(int argc, const char **argv,
 
 	Poset->add_testing_without_group(
 			ovoid_classify_early_test_func_callback,
-				this /* void *data */,
-				verbose_level);
+			this /* void *data */,
+			verbose_level);
 
 	Poset->f_print_function = FALSE;
 	Poset->print_function = callback_ovoid_print_set;
 	Poset->print_function_data = (void *) this;
 
-
+#if 0
 	gen->initialize_and_allocate_root_node(Control, Poset,
 			depth /* sz */,
 			verbose_level - 1);
-
+#endif
 
 
 
@@ -272,7 +253,7 @@ void ovoid_classify::init(int argc, const char **argv,
 	
 
 
-	if (epsilon == 1 && d == 6) {
+	if (Descr->epsilon == 1 && Descr->d == 6) {
 		if (f_v) {
 			cout << "allocating Klein correspondence" << endl;
 			}
@@ -285,9 +266,9 @@ void ovoid_classify::init(int argc, const char **argv,
 		int B[8];
 		int pivots[2] = {2,3};
 
-		K->init(F, O, verbose_level);
+		K->init(LG->F, O, verbose_level);
 		color_table = NEW_int(N);
-		nb_colors = Gg.nb_AG_elements(2, F->q);
+		nb_colors = Gg.nb_AG_elements(2, LG->F->q);
 		O->unrank_point(u, 1, 0, 0);
 		for (i = 0; i < N; i++) {
 			O->unrank_point(v, 1, i, 0);
@@ -295,7 +276,7 @@ void ovoid_classify::init(int argc, const char **argv,
 			if (i && fxy != 0) {
 				j = K->point_on_quadric_to_line(i, 0 /* verbose_level */);
 				K->P3->Grass_lines->unrank_lint_here(B, j, 0 /* verbose_level */);
-				F->Gauss_int_with_given_pivots(B,
+				LG->F->Gauss_int_with_given_pivots(B,
 					FALSE /* f_special */,
 					TRUE /* f_complete */,
 					pivots,
@@ -306,7 +287,7 @@ void ovoid_classify::init(int argc, const char **argv,
 					cout << "The shape of B is wrong" << endl;
 					exit(1);
 				}
-				c = Gg.AG_element_rank(F->q, B, 1, 2);
+				c = Gg.AG_element_rank(LG->F->q, B, 1, 2);
 			}
 			else {
 				c = -1;
@@ -317,14 +298,14 @@ void ovoid_classify::init(int argc, const char **argv,
 		cout << "color table:" << endl;
 		for (i = 0; i < N; i++) {
 			cout << i << " / " << N << " : ";
-			int_vec_print(cout, v, d);
+			int_vec_print(cout, v, Descr->d);
 
 			O->unrank_point(v, 1, i, 0);
 			fxy = O->evaluate_bilinear_form(u, v, 1);
 			if (i && fxy != 0) {
 				j = K->point_on_quadric_to_line(i, 0 /* verbose_level */);
 				K->P3->Grass_lines->unrank_lint_here(B, j, 0 /* verbose_level */);
-				F->Gauss_int_with_given_pivots(B,
+				LG->F->Gauss_int_with_given_pivots(B,
 					FALSE /* f_special */,
 					TRUE /* f_complete */,
 					pivots,
@@ -343,6 +324,7 @@ void ovoid_classify::init(int argc, const char **argv,
 		}
 }
 
+#if 0
 void ovoid_classify::read_arguments(
 		int argc, const char **argv, int &verbose_level)
 {
@@ -431,6 +413,8 @@ void ovoid_classify::read_arguments(
 	cout << "q=" << q << endl;
 	cout << "Witt index " << m << endl;
 }
+#endif
+
 
 void ovoid_classify::early_test_func(long int *S, int len,
 	long int *candidates, int nb_candidates,
@@ -457,16 +441,16 @@ void ovoid_classify::early_test_func(long int *S, int len,
 						0/*verbose_level - 4*/);
 				cout << "candidate " << i << "="
 						<< candidates[i] << ": ";
-				int_vec_print(cout, u, d);
+				int_vec_print(cout, u, Descr->d);
 				cout << endl;
 				}
 			}
 		}
 	for (i = 0; i < len; i++) {
-		O->unrank_point(Pts + i * d, 1, S[i], 0/*verbose_level - 4*/);
+		O->unrank_point(Pts + i * Descr->d, 1, S[i], 0/*verbose_level - 4*/);
 		}
 	for (i = 0; i < nb_candidates; i++) {
-		O->unrank_point(Candidates + i * d, 1, candidates[i],
+		O->unrank_point(Candidates + i * Descr->d, 1, candidates[i],
 				0/*verbose_level - 4*/);
 		}
 
@@ -490,8 +474,8 @@ void ovoid_classify::early_test_func(long int *S, int len,
 						<< nb_candidates << endl;
 				}
 
-			v1 = Pts + (len - 1) * d;
-			v2 = Candidates + j * d;
+			v1 = Pts + (len - 1) * Descr->d;
+			v2 = Candidates + j * Descr->d;
 
 
 			fxy = O->evaluate_bilinear_form(v1, v2, 1);
@@ -511,17 +495,18 @@ void ovoid_classify::print(ostream &ost, long int *S, int len)
 	for (i = 0; i < len; i++) {
 		for (i = 0; i < len; i++) {
 			O->unrank_point(u, 1, S[i], 0);
-			int_vec_print(ost, u, n);
+			int_vec_print(ost, u, Descr->d - 1);
 			ost << endl;
 			}
 		}
 }
 
 void ovoid_classify::make_graphs(orbiter_data_file *ODF,
-	int f_split, int split_r, int split_m,
-	int f_lexorder_test,
-	const char *fname_mask,
-	int verbose_level)
+		const char *prefix,
+		int f_split, int split_r, int split_m,
+		int f_lexorder_test,
+		const char *fname_mask,
+		int verbose_level)
 {
 	int orbit_idx;
 	int f_v = (verbose_level >= 1);
@@ -659,6 +644,7 @@ void ovoid_classify::make_graphs(orbiter_data_file *ODF,
 }
 
 void ovoid_classify::make_one_graph(orbiter_data_file *ODF,
+	const char *prefix,
 	int orbit_idx,
 	int f_lexorder_test,
 	colored_graph *&CG,
@@ -800,9 +786,9 @@ void ovoid_classify::create_graph(orbiter_data_file *ODF,
 	uchar *bitvector_adjacency = NULL;
 	//long int bitvector_length_in_bits;
 	long int bitvector_length;
-	Pts = NEW_int(nb_points * d);
+	Pts = NEW_int(nb_points * Descr->d);
 	for (i = 0; i < nb_points; i++) {
-		O->unrank_point(Pts + i * d, 1, candidates[i], 0);
+		O->unrank_point(Pts + i * Descr->d, 1, candidates[i], 0);
 	}
 
 	L = ((long int) nb_points * ((long int) nb_points - 1)) >> 1;
@@ -817,7 +803,7 @@ void ovoid_classify::create_graph(orbiter_data_file *ODF,
 	k = 0;
 	for (i = 0; i < nb_points; i++) {
 		for (j = i + 1; j < nb_points; j++, k++) {
-			fxy = O->evaluate_bilinear_form(Pts + i * d, Pts + j * d, 1);
+			fxy = O->evaluate_bilinear_form(Pts + i * Descr->d, Pts + j * Descr->d, 1);
 			if (fxy != 0) {
 				bitvector_m_ii(bitvector_adjacency, k, 1);
 			}
@@ -829,7 +815,7 @@ void ovoid_classify::create_graph(orbiter_data_file *ODF,
 		point_color[i] = 0;
 	}
 
-	if (epsilon == 1 && d == 6) {
+	if (Descr->epsilon == 1 && Descr->d == 6) {
 		compute_coloring(ODF->sets[orbit_idx], starter_size,
 				candidates, nb_points, point_color,
 				nb_colors_used, verbose_level);
@@ -864,7 +850,7 @@ void ovoid_classify::create_graph(orbiter_data_file *ODF,
 	CG->init_user_data(ODF->sets[orbit_idx],
 			starter_size, verbose_level - 2);
 	sprintf(CG->fname_base, "graph_ovoid_%d_%d_%d",
-			q, starter_size, orbit_idx);
+			LG->F->q, starter_size, orbit_idx);
 
 	FREE_int(Pts);
 	FREE_int(point_color);

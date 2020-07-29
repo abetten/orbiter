@@ -191,7 +191,7 @@ void linear_set_classify::freeself()
 	null();
 }
 
-void linear_set_classify::init(//int argc, const char **argv,
+void linear_set_classify::init(
 	int s, int n, int q, const char *poly_q, const char *poly_Q,
 	int depth, int f_identify, int verbose_level)
 {
@@ -422,10 +422,6 @@ void linear_set_classify::init(//int argc, const char **argv,
 	Poset1 = NEW_OBJECT(poset);
 	Gen = NEW_OBJECT(poset_classification);
 
-	//Gen->read_arguments(argc, argv, 0);
-
-	//Gen->prefix[0] = 0;
-	//sprintf(Gen->fname_base, "subspaces_%d_%d_%d", n, q, s);
 
 
 	Control1->f_depth = TRUE;
@@ -434,7 +430,6 @@ void linear_set_classify::init(//int argc, const char **argv,
 	Poset1->init_subspace_lattice(Aq, Aq, Strong_gens, VS,
 			verbose_level);
 
-	//Gen->depth = depth;
 
 	if (f_v) {
 		cout << "linear_set_classify::init before Gen->init" << endl;
@@ -447,7 +442,6 @@ void linear_set_classify::init(//int argc, const char **argv,
 
 	schreier_depth = depth;
 	f_use_invariant_subset_if_available = TRUE;
-	//f_lex = FALSE;
 	f_debug = FALSE;
 
 
@@ -471,9 +465,6 @@ void linear_set_classify::init(//int argc, const char **argv,
 		LG = NEW_OBJECT(linear_group); // hack !!! ToDo
 
 		T->init(LG, k, Control,
-			//Fq, f_recoordinatize,
-			//"SPREADS_STARTER", "Spreads", order + 1,
-			//argc, argv,
 			MINIMUM(verbose_level - 1, 2));
 
 #if 0
@@ -959,9 +950,6 @@ void linear_set_classify::init_secondary(int argc, const char **argv,
 	Control2->f_depth = TRUE;
 	Control2->depth = secondary_depth;
 
-	//Gen2->read_arguments(argc, argv, 0);
-
-	//Gen2->prefix[0] = 0;
 
 	char label[1000]; // ToDo
 
@@ -1335,10 +1323,6 @@ void linear_set_classify::init_compute_stabilizer(int argc, const char **argv,
 	Control_stab->depth = level;
 
 
-	//Gen_stab->read_arguments(argc, argv, 0);
-
-	//Gen_stab->prefix[0] = 0;
-
 	char label[1000];
 
 	sprintf(label,
@@ -1600,7 +1584,6 @@ void linear_set_classify::do_compute_stabilizer(
 
 		orbit = Gen->trace_set(set2, level, level,
 			set3 /* canonical_set */, Elt1 /* *Elt_transporter */,
-			//f_lex,
 			0 /*verbose_level */);
 
 		if (orbit == orbit_at_level) {

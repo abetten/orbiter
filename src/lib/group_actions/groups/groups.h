@@ -33,9 +33,6 @@ public:
 	int q1;
 	int q2;
 
-	//char label[1000];
-	//char label_tex[1000];
-
 	std::string label;
 	std::string label_tex;
 
@@ -145,77 +142,6 @@ public:
 	void print_as_2x2(int *mtx4x4);
 };
 
-
-
-// #############################################################################
-// linear_group.cpp
-// #############################################################################
-
-//! creates a linear group from command line arguments using linear_group_description
-
-class linear_group {
-public:
-	linear_group_description *description;
-	int n;
-	int input_q;
-	finite_field *F;
-	int f_semilinear;
-
-	//char prefix[1000];
-	//char label_latex[1000];
-
-	std::string label;
-	std::string label_tex;
-
-	strong_generators *initial_strong_gens;
-	action *A_linear;
-	matrix_group *Mtx;
-
-	int f_has_strong_generators;
-	strong_generators *Strong_gens;
-	action *A2;
-	int vector_space_dimension;
-	int q;
-
-	int f_has_nice_gens;
-	vector_ge *nice_gens;
-
-	linear_group();
-	~linear_group();
-	void null();
-	void freeself();
-	void init(linear_group_description *description, 
-		int verbose_level);
-	void init_PGL2q_OnConic(int verbose_level);
-	void init_wedge_action(int verbose_level);
-	void init_monomial_group(int verbose_level);
-	void init_diagonal_group(int verbose_level);
-	void init_singer_group(int singer_power, int verbose_level);
-	void init_singer_group_and_frobenius(int singer_power, int verbose_level);
-	void init_null_polarity_group(int verbose_level);
-	void init_borel_subgroup_upper(int verbose_level);
-	void init_identity_subgroup(int verbose_level);
-	void init_symplectic_group(int verbose_level);
-	void init_subfield_structure_action(int s, int verbose_level);
-	void init_orthogonal_group(int epsilon, int verbose_level);
-	void init_subgroup_from_file(
-			const char *subgroup_fname, const char *subgroup_label,
-			int verbose_level);
-	void init_subgroup_by_generators(
-		const char *subgroup_label,
-		const char *subgroup_order_text,
-		int nb_subgroup_generators,
-		const char **subgroup_generators_as_string,
-		int verbose_level);
-	void init_subgroup_Janko1(int verbose_level);
-	void report(std::ostream &fp, int f_sylow, int f_group_table,
-			int f_conjugacy_classes_and_normalizers,
-			double tikz_scale, double tikz_line_width, int factor_1000,
-			int verbose_level);
-};
-
-
-
 // #############################################################################
 // linear_group_description.cpp
 // #############################################################################
@@ -291,6 +217,74 @@ public:
 };
 
 
+
+// #############################################################################
+// linear_group.cpp
+// #############################################################################
+
+//! creates a linear group from command line arguments using linear_group_description
+
+class linear_group {
+public:
+	linear_group_description *description;
+	int n;
+	int input_q;
+	finite_field *F;
+	int f_semilinear;
+
+	std::string label;
+	std::string label_tex;
+
+	strong_generators *initial_strong_gens;
+	action *A_linear;
+	matrix_group *Mtx;
+
+	int f_has_strong_generators;
+	strong_generators *Strong_gens;
+	action *A2;
+	int vector_space_dimension;
+	int q;
+
+	int f_has_nice_gens;
+	vector_ge *nice_gens;
+
+	linear_group();
+	~linear_group();
+	void null();
+	void freeself();
+	void init(linear_group_description *description,
+		int verbose_level);
+	void init_PGL2q_OnConic(int verbose_level);
+	void init_wedge_action(int verbose_level);
+	void init_monomial_group(int verbose_level);
+	void init_diagonal_group(int verbose_level);
+	void init_singer_group(int singer_power, int verbose_level);
+	void init_singer_group_and_frobenius(int singer_power, int verbose_level);
+	void init_null_polarity_group(int verbose_level);
+	void init_borel_subgroup_upper(int verbose_level);
+	void init_identity_subgroup(int verbose_level);
+	void init_symplectic_group(int verbose_level);
+	void init_subfield_structure_action(int s, int verbose_level);
+	void init_orthogonal_group(int epsilon, int verbose_level);
+	void init_subgroup_from_file(
+			const char *subgroup_fname, const char *subgroup_label,
+			int verbose_level);
+	void init_subgroup_by_generators(
+		const char *subgroup_label,
+		const char *subgroup_order_text,
+		int nb_subgroup_generators,
+		const char **subgroup_generators_as_string,
+		int verbose_level);
+	void init_subgroup_Janko1(int verbose_level);
+	void report(std::ostream &fp, int f_sylow, int f_group_table,
+			int f_conjugacy_classes_and_normalizers,
+			double tikz_scale, double tikz_line_width, int factor_1000,
+			int verbose_level);
+};
+
+
+
+
 // #############################################################################
 // matrix_group.cpp
 // #############################################################################
@@ -334,9 +328,6 @@ public:
 		// = n, the size of the vectors on which we act
 	int make_element_size;
 
-	//char label[1000];
-	//char label_tex[1000];
-	
 
 	std::string label;
 	std::string label_tex;
@@ -479,7 +470,7 @@ public:
 
 	int f_load_save;
 	const char *prefix;
-	char fname[1000];
+	std::string fname;
 
 	classify *Classify_orbits_by_length;
 	set_of_sets *Orbits_classified;
@@ -545,12 +536,12 @@ public:
 
 
 // #############################################################################
-// perm_group.cpp
+// permutation_representation_domain.cpp
 // #############################################################################
 
-//! a domain for permutation groups whose elements are given in list notation
+//! a domain for permutation groups whose elements are given in the permutation representation
 
-class perm_group {
+class permutation_representation_domain {
 
 public:
 	int degree;
@@ -575,8 +566,8 @@ public:
 	
 	page_storage *Elts;
 
-	perm_group();
-	~perm_group();
+	permutation_representation_domain();
+	~permutation_representation_domain();
 	void null();
 	void free();
 	void allocate();
@@ -626,7 +617,7 @@ public:
 	int degree;
 	//longinteger_object target_go;
 
-	perm_group *P;
+	permutation_representation_domain *P;
 	int perm_offset;
 	int elt_size_int;
 		// A_original->elt_size_int + P->elt_size_int
@@ -1834,8 +1825,6 @@ public:
 	int q;
 	int nb_factors;
 
-	//char label[1000];
-	//char label_tex[1000];
 	std::string label;
 	std::string label_tex;
 
@@ -1855,7 +1844,7 @@ public:
 	int make_element_size;
 		// = nb_factors + nb_factors *
 		// dimension_of_matrix_group * dimension_of_matrix_group;
-	perm_group *P;
+	permutation_representation_domain *P;
 	int elt_size_int;
 		// = M->elt_size_int * nb_factors + P->elt_size_int;
 

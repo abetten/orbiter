@@ -745,7 +745,6 @@ public:
 	void init(action *A, action *A2, poset_classification *gen,
 		int target_size,
 		poset_classification_control *Control,
-		//const char *prefix_with_directory,
 		exact_cover_arguments *ECA, 
 		void (*callback_report)(isomorph *Iso, void *data, 
 			int verbose_level), 

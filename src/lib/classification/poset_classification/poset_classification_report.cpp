@@ -380,10 +380,13 @@ void poset_classification::report(ostream &ost)
 	ost << endl;
 
 
+
 	char fname_base[1000];
 	char cmd[10000];
 
 	draw_poset_fname_base_poset_lvl(fname_base, depth);
+
+#if 0
 
 	snprintf(cmd, 10000, "cp %s.layered_graph ./poset.layered_graph", fname_base);
 	cout << "executing: " << cmd << endl;
@@ -391,19 +394,34 @@ void poset_classification::report(ostream &ost)
 
 
 
+	if (Control->f_has_tools_path) {
+		snprintf(cmd, 10000, "%s/layered_graph_main.out -v 2 "
+			"-file poset.layered_graph "
+			"-xin 1000000 -yin 1000000 "
+			"-xout 1000000 -yout 1000000 "
+			"-y_stretch 0.75 "
+			"-rad 20000 "
+			//"-nodes_empty "
+			//"-corners "
+			//"-embedded "
+			"-line_width 0.30 "
+			"-spanning_tree",
+			Control->tools_path);
+	}
+	else {
+		snprintf(cmd, 10000, "layered_graph_main.out -v 2 "
+			"-file poset.layered_graph "
+			"-xin 1000000 -yin 1000000 "
+			"-xout 1000000 -yout 1000000 "
+			"-y_stretch 0.75 "
+			"-rad 20000 "
+			//"-nodes_empty "
+			//"-corners "
+			//"-embedded "
+			"-line_width 0.30 "
+			"-spanning_tree");
 
-	snprintf(cmd, 10000, "%s/layered_graph_main.out -v 2 "
-		"-file poset.layered_graph "
-		"-xin 1000000 -yin 1000000 "
-		"-xout 1000000 -yout 1000000 "
-		"-y_stretch 0.75 "
-		"-rad 20000 "
-		//"-nodes_empty "
-		//"-corners "
-		//"-embedded "
-		"-line_width 0.30 "
-		"-spanning_tree",
-		Control->tools_path);
+	}
 	cout << "executing: " << cmd << endl;
 	system(cmd);
 
@@ -416,7 +434,7 @@ void poset_classification::report(ostream &ost)
 	ost << "\\includegraphics[width=160mm]{poset_draw_tree.1}\\" << endl;
 
 
-
+#endif
 
 
 	ost << endl;
@@ -544,49 +562,52 @@ void poset_classification::report(ostream &ost)
 					snprintf(fname_mp, 2000, "%s_draw_tree.mp", fname_base);
 					snprintf(fname_1, 2000, "%s_draw_tree.1", fname_base);
 
-					if (!Control->f_has_tools_path) {
-						cout << "please set tools path using "
-								"-tools_path <tools_path>" << endl;
-						exit(1);
-					}
-					snprintf(cmd, 10000, "%s/layered_graph_main.out -v 2 "
-						"-file %s "
-						"-xin 1000000 -yin 1000000 "
-						"-xout 1000000 -yout 1000000 "
-						"-y_stretch 0.3 "
-						"-rad 2000 "
-						"-nodes_empty "
-						"-corners "
-						//"-embedded "
-						"-line_width 0.30 "
-						"-spanning_tree",
-						Control->tools_path, fname_layered_graph);
-					cout << "executing: " << cmd << endl;
-					system(cmd);
+					if (Control->f_has_tools_path) {
+						snprintf(cmd, 10000, "%s/layered_graph_main.out -v 2 "
+							"-file %s "
+							"-xin 1000000 -yin 1000000 "
+							"-xout 1000000 -yout 1000000 "
+							"-y_stretch 0.3 "
+							"-rad 2000 "
+							"-nodes_empty "
+							"-corners "
+							//"-embedded "
+							"-line_width 0.30 "
+							"-spanning_tree",
+							Control->tools_path, fname_layered_graph);
+						cout << "executing: " << cmd << endl;
+						system(cmd);
 
-					snprintf(cmd, 10000, "mpost %s", fname_mp);
-					cout << "executing: " << cmd << endl;
-					system(cmd);
+						snprintf(cmd, 10000, "mpost %s", fname_mp);
+						cout << "executing: " << cmd << endl;
+						system(cmd);
 
-					ost << "\\subsubsection*{Node " << O->node << " at Level "
-							<< level << " Orbit " << orbit_at_level
-							<< " / " << nb_orbits
-							<< " Tree " << j << " / " << nb_orbits_sv << "}" << endl;
+						ost << "\\subsubsection*{Node " << O->node << " at Level "
+								<< level << " Orbit " << orbit_at_level
+								<< " / " << nb_orbits
+								<< " Tree " << j << " / " << nb_orbits_sv << "}" << endl;
 
-					//nbo = Schreier_vector->number_of_orbits;
-					if (Schreier_vector->f_has_local_generators) {
-						nbg = Schreier_vector->local_gens->len;
+						//nbo = Schreier_vector->number_of_orbits;
+						if (Schreier_vector->f_has_local_generators) {
+							nbg = Schreier_vector->local_gens->len;
+						}
+						else {
+							nbg = O->nb_strong_generators;
+						}
+						ost << "Number of generators " << nbg
+								<< "\\\\" << endl;
+
+
+						//ost << "\\input " << fname_tex << endl;
+						ost << "\\includegraphics[width=160mm]{"
+								<< fname_1 << "}\\" << endl;
 					}
 					else {
-						nbg = O->nb_strong_generators;
+						//cout << "please set tools path using "
+						//		"-tools_path <tools_path>" << endl;
+						//exit(1);
 					}
-					ost << "Number of generators " << nbg
-							<< "\\\\" << endl;
 
-
-					//ost << "\\input " << fname_tex << endl;
-					ost << "\\includegraphics[width=160mm]{"
-							<< fname_1 << "}\\" << endl;
 					int e;
 
 					e = O->find_extension_from_point(this, orbit_reps[j],

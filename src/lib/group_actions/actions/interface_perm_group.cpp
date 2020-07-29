@@ -102,7 +102,7 @@ static long int perm_group_element_image_of(action &A,
 		long int a, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	perm_group &G = *A.G.perm_grp;
+	permutation_representation_domain &G = *A.G.perm_grp;
 	int *Elt = (int *) elt;
 	long int b;
 	
@@ -138,7 +138,7 @@ static void perm_group_element_one(action &A,
 		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	perm_group &G = *A.G.perm_grp;
+	permutation_representation_domain &G = *A.G.perm_grp;
 	int *Elt = (int *) elt;
 	
 	if (f_v) {
@@ -150,7 +150,7 @@ static void perm_group_element_one(action &A,
 static int perm_group_element_is_one(action &A, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	perm_group &G = *A.G.perm_grp;
+	permutation_representation_domain &G = *A.G.perm_grp;
 	int *Elt = (int *) elt;
 	int f_is_one;
 	
@@ -171,7 +171,7 @@ static void perm_group_element_unpack(action &A,
 		void *elt, void *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	perm_group &G = *A.G.perm_grp;
+	permutation_representation_domain &G = *A.G.perm_grp;
 	int *Elt1 = (int *) Elt;
 	uchar *elt1 = (uchar *)elt;
 	
@@ -185,7 +185,7 @@ static void perm_group_element_pack(action &A,
 		void *Elt, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	perm_group &G = *A.G.perm_grp;
+	permutation_representation_domain &G = *A.G.perm_grp;
 	int *Elt1 = (int *) Elt;
 	uchar *elt1 = (uchar *)elt;
 	
@@ -199,7 +199,7 @@ static void perm_group_element_retrieve(action &A,
 		int hdl, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	perm_group &G = *A.G.perm_grp;
+	permutation_representation_domain &G = *A.G.perm_grp;
 	int *Elt = (int *) elt;
 	uchar *p_elt;
 	
@@ -253,7 +253,7 @@ static void perm_group_element_retrieve(action &A,
 static int perm_group_element_store(action &A, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	perm_group &G = *A.G.perm_grp;
+	permutation_representation_domain &G = *A.G.perm_grp;
 	int *Elt = (int *) elt;
 	int hdl;
 	
@@ -332,7 +332,7 @@ static void perm_group_element_mult(action &A,
 		void *a, void *b, void *ab, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	perm_group &G = *A.G.perm_grp;
+	permutation_representation_domain &G = *A.G.perm_grp;
 	int *AA = (int *) a;
 	int *BB = (int *) b;
 	int *AB = (int *) ab;
@@ -360,7 +360,7 @@ static void perm_group_element_invert(action &A,
 		void *a, void *av, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	perm_group &G = *A.G.perm_grp;
+	permutation_representation_domain &G = *A.G.perm_grp;
 	int *AA = (int *) a;
 	int *AAv = (int *) av;
 
@@ -380,7 +380,7 @@ static void perm_group_element_move(action &A,
 		void *a, void *b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	perm_group &G = *A.G.perm_grp;
+	permutation_representation_domain &G = *A.G.perm_grp;
 	int *AA = (int *) a;
 	int *BB = (int *) b;
 
@@ -394,7 +394,7 @@ static void perm_group_element_dispose(action &A,
 		int hdl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	perm_group &G = *A.G.perm_grp;
+	permutation_representation_domain &G = *A.G.perm_grp;
 
 	if (f_v) {
 		cout << "perm_group_element_dispose hdl = " << hdl << endl;
@@ -410,7 +410,7 @@ static void perm_group_element_dispose(action &A,
 static void perm_group_element_print(action &A,
 		void *elt, ostream &ost)
 {
-	perm_group &G = *A.G.perm_grp;
+	permutation_representation_domain &G = *A.G.perm_grp;
 	int *Elt = (int *) elt;
 
 	//cout << "perm_group_element_print" << endl;
@@ -423,7 +423,7 @@ static void perm_group_element_print(action &A,
 static void perm_group_element_print_latex(action &A,
 		void *elt, ostream &ost)
 {
-	perm_group &G = *A.G.perm_grp;
+	permutation_representation_domain &G = *A.G.perm_grp;
 	int *Elt = (int *) elt;
 
 	G.print(Elt, ost);
@@ -436,7 +436,7 @@ static void perm_group_element_print_latex_with_print_point_function(
 	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 	void *point_label_data)
 {
-	perm_group &G = *A.G.perm_grp;
+	permutation_representation_domain &G = *A.G.perm_grp;
 	int *Elt = (int *) elt;
 
 	G.print_with_print_point_function(Elt, ost, point_label, point_label_data);
@@ -447,7 +447,7 @@ static void perm_group_element_print_latex_with_print_point_function(
 static void perm_group_element_print_verbose(action &A,
 		void *elt, ostream &ost)
 {
-	perm_group &G = *A.G.perm_grp;
+	permutation_representation_domain &G = *A.G.perm_grp;
 	int *Elt = (int *) elt;
 
 	G.print(Elt, ost);
@@ -456,7 +456,7 @@ static void perm_group_element_print_verbose(action &A,
 static void perm_group_element_code_for_make_element(action &A,
 		void *elt, int *data)
 {
-	perm_group &G = *A.G.perm_grp;
+	permutation_representation_domain &G = *A.G.perm_grp;
 	int *Elt = (int *) elt;
 
 	G.code_for_make_element(Elt, data);
@@ -465,7 +465,7 @@ static void perm_group_element_code_for_make_element(action &A,
 static void perm_group_element_print_for_make_element(action &A,
 		void *elt, ostream &ost)
 {
-	perm_group &G = *A.G.perm_grp;
+	permutation_representation_domain &G = *A.G.perm_grp;
 	int *Elt = (int *) elt;
 
 	G.print_for_make_element(Elt, ost);
@@ -474,7 +474,7 @@ static void perm_group_element_print_for_make_element(action &A,
 static void perm_group_element_print_for_make_element_no_commas(action &A,
 		void *elt, ostream &ost)
 {
-	perm_group &G = *A.G.perm_grp;
+	permutation_representation_domain &G = *A.G.perm_grp;
 	int *Elt = (int *) elt;
 
 	G.print_for_make_element_no_commas(Elt, ost);
@@ -483,7 +483,7 @@ static void perm_group_element_print_for_make_element_no_commas(action &A,
 
 static void perm_group_print_point(action &A, long int a, ostream &ost)
 {
-	perm_group &G = *A.G.perm_grp;
+	permutation_representation_domain &G = *A.G.perm_grp;
 	
 	if (G.f_product_action) {
 		if (a < G.offset) {

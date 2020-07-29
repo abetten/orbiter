@@ -17,17 +17,17 @@ using namespace std;
 namespace orbiter {
 namespace group_actions {
 
-perm_group::perm_group()
+permutation_representation_domain::permutation_representation_domain()
 {
 	null();
 }
 
-perm_group::~perm_group()
+permutation_representation_domain::~permutation_representation_domain()
 {
 	free();
 }
 
-void perm_group::null()
+void permutation_representation_domain::null()
 {
 	Elt1 = NULL;
 	Elt2 = NULL;
@@ -42,9 +42,9 @@ void perm_group::null()
 	Eltrk3 = NULL;
 }
 
-void perm_group::free()
+void permutation_representation_domain::free()
 {
-	//cout << "perm_group::free" << endl;
+	//cout << "permutation_representation_domain::free" << endl;
 	if (Elt1)
 		FREE_int(Elt1);
 	if (Elt2)
@@ -53,14 +53,14 @@ void perm_group::free()
 		FREE_int(Elt3);
 	if (Elt4)
 		FREE_int(Elt4);
-	//cout << "perm_group::free before elt1" << endl;
+	//cout << "permutation_representation_domain::free before elt1" << endl;
 	if (elt1)
 		FREE_uchar(elt1);
 	if (elt2)
 		FREE_uchar(elt2);
 	if (elt3)
 		FREE_uchar(elt3);
-	//cout << "perm_group::free before Elts" << endl;
+	//cout << "permutation_representation_domain::free before Elts" << endl;
 	if (Elts) {
 		FREE_OBJECT(Elts);
 	}
@@ -71,10 +71,10 @@ void perm_group::free()
 	if (Eltrk3)
 		FREE_int(Eltrk3);
 	null();
-	//cout << "perm_group::free finished" << endl;
+	//cout << "permutation_representation_domain::free finished" << endl;
 }
 
-void perm_group::allocate()
+void permutation_representation_domain::allocate()
 {
 	Elt1 = NEW_int(elt_size_int);
 	Elt2 = NEW_int(elt_size_int);
@@ -90,19 +90,19 @@ void perm_group::allocate()
 	Elts = NEW_OBJECT(page_storage);
 }
 
-void perm_group::init_product_action(int m, int n,
+void permutation_representation_domain::init_product_action(int m, int n,
 		int page_length_log, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
-		cout << "perm_group::init_product_action() "
+		cout << "permutation_representation_domain::init_product_action() "
 				"m=" << m << " n=" << n << endl;
 		}
 	f_product_action = TRUE;
-	perm_group::m = m;
-	perm_group::n = n;
+	permutation_representation_domain::m = m;
+	permutation_representation_domain::n = n;
 	mn = m * n;
 	offset = m + n;
 	
@@ -114,16 +114,16 @@ void perm_group::init_product_action(int m, int n,
 }
 
 	
-void perm_group::init(int degree,
+void permutation_representation_domain::init(int degree,
 		int page_length_log, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
-		cout << "perm_group::init()" << endl;
+		cout << "permutation_representation_domain::init()" << endl;
 		}
-	perm_group::degree = degree;
+	permutation_representation_domain::degree = degree;
 	f_product_action = FALSE;
 	
 	elt_size_int = degree;
@@ -132,14 +132,14 @@ void perm_group::init(int degree,
 	init_data(page_length_log, verbose_level);
 }
 
-void perm_group::init_data(int page_length_log, int verbose_level)
+void permutation_representation_domain::init_data(int page_length_log, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int hdl;
 
 	if (f_v) {
-		cout << "perm_group::init_data" << endl;
+		cout << "permutation_representation_domain::init_data" << endl;
 		cout << "degree=" << degree << endl;
 		cout << "elt_size_int=" << elt_size_int << endl;
 		cout << "page_length_log=" << page_length_log << endl;
@@ -155,7 +155,7 @@ void perm_group::init_data(int page_length_log, int verbose_level)
 
 	
 	if (f_vv) {
-		cout << "perm_group::init_data "
+		cout << "permutation_representation_domain::init_data "
 				"calling Elts->init()" << endl;
 		}
 	Elts->init(char_per_elt /* entry_size */,
@@ -164,14 +164,14 @@ void perm_group::init_data(int page_length_log, int verbose_level)
 
 
 	if (f_vv) {
-		cout << "perm_group::init_data "
+		cout << "permutation_representation_domain::init_data "
 				"calling one()" << endl;
 		}
 	one(tmp1);
 	//print(tmp1, cout);
 	pack(tmp1, elt1);
 	if (f_vv) {
-		cout << "perm_group::init_data "
+		cout << "permutation_representation_domain::init_data "
 				"calling Elts->store()" << endl;
 		}
 	hdl = Elts->store(elt1);
@@ -182,7 +182,7 @@ void perm_group::init_data(int page_length_log, int verbose_level)
 	
 
 	if (f_vv) {
-		cout << "perm_group::init_data "
+		cout << "permutation_representation_domain::init_data "
 				"finished" << endl;
 		}
 	
@@ -191,7 +191,7 @@ void perm_group::init_data(int page_length_log, int verbose_level)
 	FREE_int(tmp3);
 }
 
-void perm_group::init_with_base(int degree, 
+void permutation_representation_domain::init_with_base(int degree,
 	int base_length, int *base, int page_length_log, 
 	action &A, int verbose_level)
 {
@@ -199,7 +199,7 @@ void perm_group::init_with_base(int degree,
 	int f_vv = (verbose_level >= 2);
 	int i, hdl;
 	
-	perm_group::degree = degree;
+	permutation_representation_domain::degree = degree;
 	f_product_action = FALSE;
 	
 	//A.base_len = base_length;
@@ -217,7 +217,7 @@ void perm_group::init_with_base(int degree,
 
 	
 	if (f_v) {
-		cout << "perm_group::init" << endl;
+		cout << "permutation_representation_domain::init" << endl;
 		cout << "degree=" << A.degree << endl;
 		cout << "base_len=" << base_length << endl;
 		}
@@ -232,14 +232,14 @@ void perm_group::init_with_base(int degree,
 
 
 	if (f_vv) {
-		cout << "perm_group::init "
+		cout << "permutation_representation_domain::init "
 				"calling one()" << endl;
 		}
 	one(tmp1);
 	//print(tmp1, cout);
 	pack(tmp1, elt1);
 	if (f_vv) {
-		cout << "perm_group::init "
+		cout << "permutation_representation_domain::init "
 				"calling Elts->store" << endl;
 		}
 	hdl = Elts->store(elt1);
@@ -249,7 +249,7 @@ void perm_group::init_with_base(int degree,
 		}
 	
 	if (f_vv) {
-		cout << "perm_group::init "
+		cout << "permutation_representation_domain::init "
 				"initializing base, and transversal_length" << endl;
 		}
 	A.type_G = perm_group_t;
@@ -291,7 +291,7 @@ void perm_group::init_with_base(int degree,
 	A.label_tex.assign(str2);
 
 	if (f_vv) {
-		cout << "perm_group::init finished" << endl;
+		cout << "permutation_representation_domain::init finished" << endl;
 		}
 	
 	FREE_int(tmp1);
@@ -299,7 +299,7 @@ void perm_group::init_with_base(int degree,
 	FREE_int(tmp3);
 }
 
-void perm_group::transversal_rep(int i, int j,
+void permutation_representation_domain::transversal_rep(int i, int j,
 		int *Elt, int verbose_level)
 {
 	int j1, j2;
@@ -311,7 +311,7 @@ void perm_group::transversal_rep(int i, int j,
 	Elt[j2] = j1;
 }
 
-void perm_group::one(int *Elt)
+void permutation_representation_domain::one(int *Elt)
 {
 	int i;
 	
@@ -320,7 +320,7 @@ void perm_group::one(int *Elt)
 		}
 }
 
-int perm_group::is_one(int *Elt)
+int permutation_representation_domain::is_one(int *Elt)
 {
 	int i;
 	
@@ -332,7 +332,7 @@ int perm_group::is_one(int *Elt)
 	return TRUE;
 }
 
-void perm_group::mult(int *A, int *B, int *AB)
+void permutation_representation_domain::mult(int *A, int *B, int *AB)
 {
 	combinatorics_domain Combi;
 
@@ -342,7 +342,7 @@ void perm_group::mult(int *A, int *B, int *AB)
 	// finished with perm_mult" << endl;
 }
 
-void perm_group::copy(int *A, int *B)
+void permutation_representation_domain::copy(int *A, int *B)
 {
 	int i;
 	
@@ -351,14 +351,14 @@ void perm_group::copy(int *A, int *B)
 		}
 }
 
-void perm_group::invert(int *A, int *Ainv)
+void permutation_representation_domain::invert(int *A, int *Ainv)
 {
 	combinatorics_domain Combi;
 
 	Combi.perm_inverse(A, Ainv, degree);
 }
 
-void perm_group::unpack(uchar *elt, int *Elt)
+void permutation_representation_domain::unpack(uchar *elt, int *Elt)
 {
 	int i, j;
 	
@@ -372,7 +372,7 @@ void perm_group::unpack(uchar *elt, int *Elt)
 		}
 }
 
-void perm_group::pack(int *Elt, uchar *elt)
+void permutation_representation_domain::pack(int *Elt, uchar *elt)
 {
 	int i, j;
 	
@@ -386,7 +386,7 @@ void perm_group::pack(int *Elt, uchar *elt)
 		}
 }
 
-void perm_group::print(int *Elt, ostream &ost)
+void permutation_representation_domain::print(int *Elt, ostream &ost)
 {
 	combinatorics_domain Combi;
 
@@ -396,7 +396,7 @@ void perm_group::print(int *Elt, ostream &ost)
 	//cout << "perm_group::print done" << endl;
 }
 
-void perm_group::print_with_print_point_function(int *Elt,
+void permutation_representation_domain::print_with_print_point_function(int *Elt,
 		ostream &ost,
 		void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 		void *point_label_data)
@@ -409,12 +409,12 @@ void perm_group::print_with_print_point_function(int *Elt,
 	//cout << "perm_group::print done" << endl;
 }
 
-void perm_group::code_for_make_element(int *Elt, int *data)
+void permutation_representation_domain::code_for_make_element(int *Elt, int *data)
 {
 	int_vec_copy(Elt, data, degree);
 }
 
-void perm_group::print_for_make_element(int *Elt, ostream &ost)
+void permutation_representation_domain::print_for_make_element(int *Elt, ostream &ost)
 {
 	int i;
 	
@@ -423,7 +423,7 @@ void perm_group::print_for_make_element(int *Elt, ostream &ost)
 		}
 }
 
-void perm_group::print_for_make_element_no_commas(
+void permutation_representation_domain::print_for_make_element_no_commas(
 		int *Elt, ostream &ost)
 {
 	int i;
@@ -433,7 +433,7 @@ void perm_group::print_for_make_element_no_commas(
 		}
 }
 
-void perm_group::print_with_action(action *A, int *Elt, ostream &ost)
+void permutation_representation_domain::print_with_action(action *A, int *Elt, ostream &ost)
 {
 	//perm_print(ost, Elt, degree);
 	//ost << endl;
@@ -485,14 +485,14 @@ void perm_group::print_with_action(action *A, int *Elt, ostream &ost)
 	ost << endl;
 }
 
-void perm_group::make_element(int *Elt, int *data, int verbose_level)
+void permutation_representation_domain::make_element(int *Elt, int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, a;
 	
 	if (f_v) {
-		cout << "perm_group::make_element" << endl;
+		cout << "permutation_representation_domain::make_element" << endl;
 		}
 	if (f_vv) {
 		cout << "data: ";
@@ -504,7 +504,7 @@ void perm_group::make_element(int *Elt, int *data, int verbose_level)
 		Elt[i] = a;
 		}
 	if (f_v) {
-		cout << "perm_group::make_element done" << endl;
+		cout << "permutation_representation_domain::make_element done" << endl;
 		}
 }
 
