@@ -19,6 +19,7 @@ MODULES = \
 	hermitian_spreads_classify.o \
 	hill_cap.o \
 	linear_set_classify.o \
+	ovoid_classify_description.o \
 	ovoid_classify.o \
 	polar.o \
 	search_blocking_set.o \

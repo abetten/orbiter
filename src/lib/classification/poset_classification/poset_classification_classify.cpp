@@ -705,6 +705,8 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 							"after LG->A_linear->report" << endl;
 				}
 
+				report(ost);
+
 				L.foot(ost);
 			}
 			cout << "Written file " << fname_report << " of size "

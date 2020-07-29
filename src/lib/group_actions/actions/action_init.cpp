@@ -693,7 +693,7 @@ void action::init_permutation_group(int degree, int verbose_level)
 	int page_length_log = PAGE_LENGTH_LOG;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	perm_group *P;
+	permutation_representation_domain *P;
 	char str[1000];
 	
 	if (f_v) {
@@ -706,7 +706,7 @@ void action::init_permutation_group(int degree, int verbose_level)
 	label.assign(str);
 	label_tex.assign(str);
 
-	P = NEW_OBJECT(perm_group);
+	P = NEW_OBJECT(permutation_representation_domain);
 	type_G = perm_group_t;
 	G.perm_grp = P;
 	f_allocated = TRUE;

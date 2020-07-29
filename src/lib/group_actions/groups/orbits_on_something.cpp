@@ -28,7 +28,7 @@ orbits_on_something::orbits_on_something()
 
 	f_load_save = FALSE;
 	prefix = "";
-	//char fname[1000];
+	//std::string fname;
 
 	Classify_orbits_by_length = NULL;
 	Orbits_classified = NULL;
@@ -95,10 +95,13 @@ void orbits_on_something::init(
 	//orbits_on_something::Sch = NEW_OBJECT(schreier);
 	orbits_on_something::f_load_save = f_load_save;
 	orbits_on_something::prefix = prefix;
-	sprintf(fname, "%s_orbits.bin", prefix);
+	fname.assign(prefix);
+	fname.append("_orbits.bin");
+
+	//sprintf(fname, "%s_orbits.bin", prefix);
 
 
-	if (Fio.file_size(fname) > 0) {
+	if (Fio.file_size(fname.c_str()) > 0) {
 
 
 		if (f_v) {
@@ -159,7 +162,7 @@ void orbits_on_something::init(
 		}
 		}
 		cout << "Written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
+				<< Fio.file_size(fname.c_str()) << endl;
 		}
 
 	if (f_v) {

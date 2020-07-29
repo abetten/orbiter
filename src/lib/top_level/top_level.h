@@ -151,6 +151,7 @@ class surface_clebsch_map;
 class trihedral_pair_with_action;
 class graph_classify_description;
 class surfaces_arc_lifting_upstep;
+class ovoid_classify_description;
 
 
 // #############################################################################

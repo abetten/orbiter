@@ -195,7 +195,6 @@ void arc_generator::init(
 	if (f_v) {
 		cout << "arc_generator::init" << endl;
 	}
-	//arc_generator::GTA = GTA;
 	arc_generator::Descr = Descr;
 
 	

@@ -366,6 +366,12 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	}
 
 
+	else if (Descr->f_classify_ovoids) {
+		do_classify_ovoids(Descr->Control, Descr->Ovoid_classify_description, verbose_level);
+	}
+
+
+
 	if (f_v) {
 		cout << "group_theoretic_activity::perform_activity done" << endl;
 	}
@@ -3564,6 +3570,34 @@ void group_theoretic_activity::do_linear_codes(int minimum_distance,
 	}
 }
 
+void group_theoretic_activity::do_classify_ovoids(
+		poset_classification_control *Control,
+		ovoid_classify_description *Ovoid_classify_description,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_classify_ovoids" << endl;
+	}
+
+	ovoid_classify *Ovoid_classify;
+
+
+	Ovoid_classify = NEW_OBJECT(ovoid_classify);
+
+	Ovoid_classify_description->Control = Control;
+
+	Ovoid_classify->init(Ovoid_classify_description,
+			LG,
+			verbose_level);
+
+	FREE_OBJECT(Ovoid_classify);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_classify_ovoids done" << endl;
+	}
+}
 
 
 

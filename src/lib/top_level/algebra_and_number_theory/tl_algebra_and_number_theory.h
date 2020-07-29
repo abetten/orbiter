@@ -301,6 +301,9 @@ public:
 		int tensor_classify_depth;
 		int f_tensor_permutations;
 
+		int f_classify_ovoids;
+		ovoid_classify_description *Ovoid_classify_description;
+
 
 	group_theoretic_activity_description();
 	~group_theoretic_activity_description();
@@ -417,6 +420,10 @@ public:
 	void do_tensor_permutations(int verbose_level);
 	void do_linear_codes(int minimum_distance,
 			int target_size, int verbose_level);
+	void do_classify_ovoids(
+			poset_classification_control *Control,
+			ovoid_classify_description *Ovoid_classify_description,
+			int verbose_level);
 };
 
 long int gta_subspace_orbits_rank_point_func(int *v, void *data);

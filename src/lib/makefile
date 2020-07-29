@@ -206,7 +206,7 @@ MODULES= \
 		group_actions/groups/linear_group_description.o \
 		group_actions/groups/matrix_group.o \
 		group_actions/groups/orbits_on_something.o \
-		group_actions/groups/perm_group.o \
+		group_actions/groups/permutation_representation_domain.o \
 		group_actions/groups/permutation_representation.o \
 		group_actions/groups/schreier.o \
 		group_actions/groups/schreier_io.o \
@@ -347,6 +347,7 @@ MODULES= \
 		top_level/geometry/hermitian_spreads_classify.o \
 		top_level/geometry/hill_cap.o \
 		top_level/geometry/linear_set_classify.o \
+		top_level/geometry/ovoid_classify_description.o \
 		top_level/geometry/ovoid_classify.o \
 		top_level/geometry/polar.o \
 		top_level/geometry/search_blocking_set.o \

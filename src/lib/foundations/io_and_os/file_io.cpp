@@ -247,7 +247,7 @@ void file_io::poset_classification_read_candidates_of_orbit(
 }
 
 
-void file_io::read_candidates_for_one_orbit_from_file(char *prefix,
+void file_io::read_candidates_for_one_orbit_from_file(const char *prefix,
 		int level, int orbit_at_level, int level_of_candidates_file,
 		long int *S,
 		void (*early_test_func_callback)(long int *S, int len,

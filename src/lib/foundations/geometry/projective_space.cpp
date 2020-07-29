@@ -140,11 +140,10 @@ void projective_space::init(int n, finite_field *F,
 	projective_space::q = F->q;
 	
 	if (f_v) {
-		cout << "projective_space::init "
-				"PG(" << n << "," << q << ")" << endl;
+		cout << "projective_space::init PG(" << n << "," << q << ")" << endl;
 		cout << "f_init_incidence_structure="
 				<< f_init_incidence_structure << endl;
-		}
+	}
 
 	v = NEW_int(n + 1);
 	w = NEW_int(n + 1);
@@ -156,32 +155,32 @@ void projective_space::init(int n, finite_field *F,
 	if (n > 2) {
 		Grass_planes = NEW_OBJECT(grassmann);
 		Grass_planes->init(n + 1, 3, F, verbose_level - 2);
-		}
+	}
 
 	if (f_v) {
 		cout << "projective_space::init computing number of "
 				"subspaces of each dimension:" << endl;
-		}
+	}
 	Nb_subspaces = NEW_lint(n + 1);
 	if (n < 10) {
 		for (i = 0; i <= n; i++) {
 			if (f_v) {
 				cout << "projective_space::init computing number of "
 						"subspaces of dimension " << i + 1 << endl;
-				}
+			}
 			D.q_binomial_no_table(
 				a,
 				n + 1, i + 1, q, verbose_level - 2);
 			Nb_subspaces[i] = a.as_lint();
 			//Nb_subspaces[i] = generalized_binomial(n + 1, i + 1, q);
-			}
+		}
 
 		D.q_binomial_no_table(
 			a,
 			n, 1, q, verbose_level - 2);
 		r = a.as_int();
 		//r = generalized_binomial(n, 1, q);
-		}
+	}
 	else {
 		for (i = 0; i <= n; i++) {
 			if (f_v) {
@@ -189,24 +188,24 @@ void projective_space::init(int n, finite_field *F,
 						"subspaces of dimension " << i + 1 << endl;
 				}
 			Nb_subspaces[i] = 0;
-			}
-		r = 0;
 		}
+		r = 0;
+	}
 	N_points = Nb_subspaces[0]; // generalized_binomial(n + 1, 1, q);
 	if (f_v) {
 		cout << "projective_space::init N_points=" << N_points << endl;
-		}
+	}
 	N_lines = Nb_subspaces[1]; // generalized_binomial(n + 1, 2, q);
 	if (f_v) {
 		cout << "projective_space::init N_lines=" << N_lines << endl;
-		}
+	}
 	if (f_v) {
 		cout << "projective_space::init r=" << r << endl;
-		}
+	}
 	k = q + 1; // number of points on a line
 	if (f_v) {
 		cout << "projective_space::init k=" << k << endl;
-		}
+	}
 
 
 
@@ -215,24 +214,24 @@ void projective_space::init(int n, finite_field *F,
 		if (f_v) {
 			cout << "projective_space::init calling "
 					"init_incidence_structure" << endl;
-			}
+		}
 		init_incidence_structure(verbose_level);
 		if (f_v) {
 			cout << "projective_space::init "
 					"init_incidence_structure done" << endl;
-			}
 		}
+	}
 	else {
 		if (f_v) {
 			cout << "projective_space::init we don't initialize "
 					"the incidence structure data" << endl;
-			}
 		}
+	}
 	if (f_v) {
 		
 		cout << "projective_space::init n=" << n
 				<< " q=" << q << " done" << endl;
-		}
+	}
 }
 
 void projective_space::init_incidence_structure(int verbose_level)
@@ -268,9 +267,11 @@ void projective_space::init_incidence_structure(int verbose_level)
 
 	}
 	else {
-		cout << "projective_space::init_incidence_structure: "
+		if (f_v) {
+			cout << "projective_space::init_incidence_structure: "
 				"N_lines too big, we do not initialize the "
 				"incidence matrix" << endl;
+		}
 		//return;
 		incidence_bitvec = NULL;
 	}
@@ -286,9 +287,11 @@ void projective_space::init_incidence_structure(int verbose_level)
 		Lines = NEW_int(N_lines * k);
 	}
 	else {
-		cout << "projective_space::init_incidence_structure: "
+		if (f_v) {
+			cout << "projective_space::init_incidence_structure: "
 				"N_lines too big, we do not initialize "
 				"the line table" << endl;
+		}
 		Lines = NULL;
 	}
 
@@ -308,9 +311,11 @@ void projective_space::init_incidence_structure(int verbose_level)
 		Lines_on_point = NEW_int(N_points * r);
 	}
 	else {
-		cout << "projective_space::init_incidence_structure: "
+		if (f_v) {
+			cout << "projective_space::init_incidence_structure: "
 				"N_points too big, we do not initialize the "
 				"Lines_on_point table" << endl;
+		}
 		Lines_on_point = NULL;
 	}
 
@@ -325,9 +330,11 @@ void projective_space::init_incidence_structure(int verbose_level)
 		Line_through_two_points = NEW_int((long int) N_points * (long int) N_points);
 	}
 	else {
-		cout << "projective_space::init_incidence_structure: "
+		if (f_v) {
+			cout << "projective_space::init_incidence_structure: "
 				"we do not initialize "
 				"Line_through_two_points" << endl;
+		}
 		Line_through_two_points = NULL;
 	}
 
@@ -343,9 +350,11 @@ void projective_space::init_incidence_structure(int verbose_level)
 		}
 	}
 	else {
-		cout << "projective_space::init_incidence_structure: "
+		if (f_v) {
+			cout << "projective_space::init_incidence_structure: "
 				"we do not initialize "
 				"Line_intersection" << endl;
+		}
 		Line_intersection = NULL;
 	}
 
@@ -354,7 +363,7 @@ void projective_space::init_incidence_structure(int verbose_level)
 		cout << "projective_space::init_incidence_structure "
 				"number of points = " << N_points << endl;
 	}
-	if (f_vv) {
+	if (FALSE) {
 		for (i = 0; i < N_points; i++) {
 			F->PG_element_unrank_modified(v, 1, n + 1, i);
 			cout << "point " << i << " : ";

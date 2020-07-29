@@ -28,9 +28,35 @@ void action::report(ostream &ost, int f_sims, sims *S,
 	if (f_v) {
 		cout << "action::report" << endl;
 	}
+
+	ost << "\\section{The Group}" << endl;
+
 	ost << "Group action $" << label_tex
 			<< "$ of degree " << degree << "\\\\" << endl;
 
+
+	if (is_matrix_group()) {
+		ost << "The group is a matrix group.\\\\" << endl;
+		finite_field *F;
+		matrix_group *M;
+
+		M = get_matrix_group();
+		F = M->GFq;
+
+		ost << "\\subsection{The finite field ${\\mathbb F}_{" << F->q << "}$}" << endl;
+
+		F->cheat_sheet(ost, verbose_level);
+
+		F->cheat_sheet_main_table(ost, verbose_level);
+
+		F->cheat_sheet_addition_table(ost, verbose_level);
+
+		F->cheat_sheet_multiplication_table(ost, verbose_level);
+
+		F->cheat_sheet_power_table(ost, verbose_level);
+
+		ost << endl << "\\bigskip" << endl << endl;
+	}
 
 	if (type_G == wreath_product_t) {
 		wreath_product *W;

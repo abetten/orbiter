@@ -1201,6 +1201,8 @@ public:
 		poset_classification_control *Control_six_arcs,
 		int verbose_level);
 	void downstep(int verbose_level);
+	void downstep_one_arc(int arc_idx,
+			int &cur_flag_orbit, long int *Flag, int verbose_level);
 	void report(int verbose_level);
 };
 

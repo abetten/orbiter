@@ -46,6 +46,7 @@ public:
 	// desired size of the arc
 
 	int f_conic_test;
+	// if TRUE, ensure that no six points lie on a conic
 
 	int f_affine;
 
@@ -822,6 +823,32 @@ void linear_set_classify_secondary_early_test_func(long int *S, int len,
 	void *data, int verbose_level);
 
 
+// #############################################################################
+// ovoid_classify_description.cpp
+// #############################################################################
+
+
+//! description of a problem of classification of ovoids in orthogonal spaces
+
+
+class ovoid_classify_description {
+
+public:
+
+
+	poset_classification_control *Control;
+
+	int f_epsilon;
+	int epsilon; // the type of the quadric (0, 1 or -1)
+	int f_d;
+	int d; // algebraic dimension
+
+	ovoid_classify_description();
+	~ovoid_classify_description();
+	int read_arguments(int argc, const char **argv,
+		int verbose_level);
+
+};
 
 
 // #############################################################################
@@ -836,23 +863,20 @@ class ovoid_classify {
 
 public:
 
-	poset_classification_control *Control;
+	ovoid_classify_description *Descr;
+	linear_group *LG;
+
+	int m; // Witt index
+
 	poset *Poset;
 	poset_classification *gen;
 
-	finite_field *F;
 
 	action *A;
 
 
 	orthogonal *O;
 
-	int epsilon; // the type of the quadric (0, 1 or -1)
-	int n; // projective dimension
-	int d; // algebraic dimension
-	int q; // field order
-	int m; // Witt index
-	int depth; // search depth
 
 	int N; // = O->nb_points
 
@@ -860,27 +884,6 @@ public:
 
 	int nb_sol; // number of solutions so far
 
-
-
-	int f_prefix;
-	char prefix[1000]; // prefix for output files
-
-	int f_list;
-
-	int f_max_depth;
-	int max_depth;
-
-	int f_poly;
-	const char *override_poly;
-
-	int f_draw_poset;
-	int f_embedded;
-	int f_sideways;
-
-	int f_read;
-	int read_level;
-
-	char prefix_with_directory[1000];
 
 	klein_correspondence *K;
 	int *color_table;
@@ -892,23 +895,26 @@ public:
 
 	ovoid_classify();
 	~ovoid_classify();
-	void init(int argc, const char **argv, int &verbose_level);
-	void read_arguments(int argc, const char **argv, int &verbose_level);
+	void init(ovoid_classify_description *Descr,
+			linear_group *LG,
+			int &verbose_level);
 	void early_test_func(long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	void print(std::ostream &ost, long int *S, int len);
 	void make_graphs(orbiter_data_file *ODF,
-		int f_split, int split_r, int split_m,
-		int f_lexorder_test,
-		const char *fname_mask,
-		int verbose_level);
+			const char *prefix,
+			int f_split, int split_r, int split_m,
+			int f_lexorder_test,
+			const char *fname_mask,
+			int verbose_level);
 	void make_one_graph(orbiter_data_file *ODF,
-		int orbit_idx,
-		int f_lexorder_test,
-		colored_graph *&CG,
-		int verbose_level);
+			const char *prefix,
+			int orbit_idx,
+			int f_lexorder_test,
+			colored_graph *&CG,
+			int verbose_level);
 	void create_graph(orbiter_data_file *ODF,
 		int orbit_idx,
 		long int *candidates, int nb_candidates,
