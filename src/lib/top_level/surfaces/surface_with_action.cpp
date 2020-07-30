@@ -162,58 +162,6 @@ void surface_with_action::init(surface_domain *Surf,
 	}
 }
 
-#if 0
-void surface_with_action::init_group(int f_semilinear,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "surface_with_action::init_group" << endl;
-	}
-	if (f_v) {
-		cout << "surface_with_action::init_group "
-				"creating linear group" << endl;
-	}
-
-	vector_ge *nice_gens;
-
-	A = NEW_OBJECT(action);
-
-	A->init_linear_group(//S,
-		F, 4, 
-		TRUE /*f_projective*/,
-		FALSE /* f_general*/,
-		FALSE /* f_affine */,
-		f_semilinear, FALSE /* f_special */, 
-		nice_gens,
-		verbose_level - 2);
-
-	FREE_OBJECT(nice_gens);
-
-	if (f_v) {
-		cout << "surface_with_action::init_group "
-				"creating linear group done" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "surface_with_action::init_group "
-				"creating action on lines" << endl;
-	}
-	A2 = A->induced_action_on_grassmannian(2, verbose_level);
-	if (f_v) {
-		cout << "surface_with_action::init_group "
-				"creating action on lines done" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "surface_with_action::init_group done" << endl;
-	}
-}
-#endif
-
 int surface_with_action::create_double_six_safely(
 	long int *five_lines, long int transversal_line, long int *double_six,
 	int verbose_level)
@@ -230,12 +178,25 @@ int surface_with_action::create_double_six_safely(
 		cout << " transversal_line=" << transversal_line << endl;
 	}
 
+	if (f_v) {
+		cout << "surface_with_action::create_double_six_safely before create_double_six_from_five_lines_with_a_common_transversal (1)" << endl;
+	}
 	r1 = create_double_six_from_five_lines_with_a_common_transversal(
 		five_lines, transversal_line, double_six1,
 		0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_with_action::create_double_six_safely after create_double_six_from_five_lines_with_a_common_transversal (1)" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_with_action::create_double_six_safely before create_double_six_from_five_lines_with_a_common_transversal (2)" << endl;
+	}
 	r2 = Surf->create_double_six_from_five_lines_with_a_common_transversal(
 			five_lines, double_six2,
 			0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_with_action::create_double_six_safely after create_double_six_from_five_lines_with_a_common_transversal (2)" << endl;
+	}
 
 	if (r1 && !r2) {
 		cout << "surface_with_action::create_double_six_safely "
@@ -306,8 +267,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	combinatorics_domain Combi;
 	
 	if (f_v) {
-		cout << "surface_with_action::create_double_six_from_five_"
-				"lines_with_a_common_transversal" << endl;
+		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal" << endl;
 		cout << "The five lines are ";
 		lint_vec_print(cout, five_lines, 5);
 		cout << endl;
@@ -436,8 +396,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		}
 		if (a == q) {
 			if (f_v) {
-				cout << "surface_with_action::create_double_six_"
-						"from_five_lines_with_a_common_transversal "
+				cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
 						"we could not find a second intersection point"
 						<< endl;
 			}
@@ -493,8 +452,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 			d, M, 0 /* verbose_level */);
 		if (d != 2) {
 			if (f_v) {
-				cout << "projective_space::create_double_six_"
-						"from_five_lines_with_a_common_transversal "
+				cout << "projective_space::create_double_six_from_five_lines_with_a_common_transversal "
 						"intersection is not a line" << endl;
 			}
 			return FALSE;
@@ -516,18 +474,13 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 
 	// Next, determine a_6 as the transversal of b_1,\ldots,b_5:
 
-	Recoordinatize->do_recoordinatize(b1, b2, b3,
-			verbose_level - 2);
+	Recoordinatize->do_recoordinatize(b1, b2, b3, verbose_level - 2);
 
 	A->element_invert(Recoordinatize->Elt, Elt1, 0);
 
 	// map b4 and b5:
-	image[0] = A2->element_image_of(b4,
-			Recoordinatize->Elt,
-			0 /* verbose_level */);
-	image[1] = A2->element_image_of(b5,
-			Recoordinatize->Elt,
-			0 /* verbose_level */);
+	image[0] = A2->element_image_of(b4, Recoordinatize->Elt, 0 /* verbose_level */);
+	image[1] = A2->element_image_of(b5, Recoordinatize->Elt, 0 /* verbose_level */);
 	
 	nb_pts = 0;
 	for (h = 0; h < 2; h++) {
@@ -545,23 +498,21 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 				int_vec_copy(w, pt_coord + nb_pts * 4, 4);
 				nb_pts++;
 				if (nb_pts == 5) {
-					cout << "surface_with_action::create_double_six_"
-							"from_five_lines_with_a_common_transversal "
+					cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
 							"nb_pts == 5" << endl;
 					exit(1);
 				}
 			}
 		}
 		if (nb_pts != (h + 1) * 2) {
-			cout << "surface_with_action::create_double_six_from_"
-					"five_lines_with_a_common_transversal nb_pts != "
+			cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal nb_pts != "
 					"(h + 1) * 2" << endl;
 			exit(1);
 		}
 	} // next h
 
 	if (f_vv) {
-		cout << "four points computed:" << endl;
+		cout << "four points have been computed:" << endl;
 		int_matrix_print(pt_coord, 4, 4);
 	}
 	line3 = -1;
@@ -581,8 +532,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 				if (!Surf->P->test_if_lines_are_skew(ell0,
 						line3, 0 /* verbose_level */)) {
 					if (f_vv) {
-						cout << "The line intersects ell_0, "
-								"so we are good" << endl;
+						cout << "The line intersects ell_0, so we are good" << endl;
 					}
 					break;
 				}
@@ -594,14 +544,12 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		}
 	}
 	if (h == 2) {
-		cout << "surface_with_action::create_double_six_from_five_"
-				"lines_with_a_common_transversal "
+		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
 				"could not determine a_6" << endl;
 		exit(1);
 	}
 	if (line3 == -1) {
-		cout << "surface_with_action::create_double_six_from_five_"
-				"lines_with_a_common_transversal "
+		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
 				"line3 == -1" << endl;
 		exit(1);
 	}
@@ -610,8 +558,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	double_six[5] = line4; // fill in a_6
 
 	if (f_v) {
-		cout << "surface_with_action::create_double_six_from_five_"
-				"lines_with_a_common_transversal done" << endl;
+		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal done" << endl;
 	}
 	return TRUE;
 }
@@ -642,8 +589,7 @@ void surface_with_action::report_double_triplets_detailed(ostream &ost)
 
 
 
-	Classify_trihedral_pairs->print_trihedral_pairs(ost,
-			TRUE /* f_with_stabilizers */);
+	Classify_trihedral_pairs->print_trihedral_pairs(ost, TRUE /* f_with_stabilizers */);
 
 }
 

@@ -946,7 +946,7 @@ public:
 	int q;
 	int nb;
 	int *rep;
-	char prefix[1000];
+	std::string prefix;
 	finite_field *F;
 	surface_domain *Surf;
 
@@ -1134,8 +1134,8 @@ public:
 	int tritangent_plane_idx;
 	int upstep_idx;
 
-	strong_generators *S;
-	longinteger_object S_go;
+	strong_generators *Flag_stab_gens;
+	longinteger_object Flag_stab_go;
 
 	int three_lines_idx[3];
 		// the index into Lines[] of the
@@ -1170,8 +1170,6 @@ public:
 	void compute_arc(int verbose_level);
 	void move_arc(int verbose_level);
 	void move_plane_and_arc(long int *P6a, int verbose_level);
-	void compute_local_coordinates_of_arc(
-			long int *P6, long int *P6_local, int verbose_level);
 	void make_arc_canonical(long int *P6_local,
 			int &orbit_not_on_conic_idx, int verbose_level);
 	void compute_beta1(long int *P6_local,

@@ -786,18 +786,19 @@ void surfaces_arc_lifting::report(int verbose_level)
 	if (f_v) {
 		cout << "surfaces_arc_lifting::report" << endl;
 		}
-	char fname_arc_lifting[1000];
+	std::string fname_arc_lifting;
 	char title[1000];
 	char author[1000];
 
 
-	snprintf(fname_arc_lifting, 1000, "%s.tex", fname_base.c_str());
+	fname_arc_lifting.assign(fname_base);
+	fname_arc_lifting.append(".tex");
 	snprintf(title, 1000, "Arc lifting over GF(%d) ", q);
 	strcpy(author, "");
 
 
 	{
-	ofstream fp(fname_arc_lifting);
+	ofstream fp(fname_arc_lifting.c_str());
 	latex_interface L;
 
 
@@ -1042,7 +1043,7 @@ void surfaces_arc_lifting::report(int verbose_level)
 	file_io Fio;
 
 	cout << "Written file " << fname_arc_lifting << " of size "
-			<< Fio.file_size(fname_arc_lifting) << endl;
+			<< Fio.file_size(fname_arc_lifting.c_str()) << endl;
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting::report done" << endl;

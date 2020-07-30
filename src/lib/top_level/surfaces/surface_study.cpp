@@ -31,7 +31,16 @@ void surface_study::init(int q, int nb, int verbose_level)
 	knowledge_base K;
 
 
-	sprintf(prefix, "surface_q%d_no%d", q, nb);
+	char str_q[1000];
+	char str_nb[1000];
+
+	sprintf(str_q, "%d", q);
+	sprintf(str_nb, "%d", nb);
+
+	prefix.assign("surface_q");
+	prefix.append(str_q);
+	prefix.append("_nb");
+	prefix.append(str_nb);
 
 
 	F = NEW_OBJECT(finite_field);
@@ -345,9 +354,9 @@ void surface_study::study_intersection_points(int verbose_level)
 	char fname_intersection_pts[2000];
 	char fname_intersection_pts_tex[2000];
 	sprintf(fname_intersection_pts,
-			"%s_intersection_points0.csv", prefix);
+			"%s_intersection_points0.csv", prefix.c_str());
 	sprintf(fname_intersection_pts_tex,
-			"%s_intersection_points0.tex", prefix);
+			"%s_intersection_points0.tex", prefix.c_str());
 
 	Fio.lint_matrix_write_csv(fname_intersection_pts,
 			Intersection_pt, SaS->sz, SaS->sz);
@@ -491,7 +500,7 @@ void surface_study::study_group(int verbose_level)
 
 		char fname_out_base[2000];
 		char fname_out[3000];
-		snprintf(fname_out_base, 2000, "%s_table_%d_%d", prefix, q, nb);
+		snprintf(fname_out_base, 2000, "%s_table_%d_%d", prefix.c_str(), q, nb);
 		snprintf(fname_out, 3000, "%s.csv", fname_out_base);
 		Fio.int_matrix_write_csv(fname_out, Table, n, n);
 		cout << "Written file " << fname_out
@@ -676,9 +685,9 @@ void surface_study::study_find_eckardt_points(int verbose_level)
 		char fname_intersection_pts[2000];
 		char fname_intersection_pts_tex[2000];
 		sprintf(fname_intersection_pts,
-				"%s_intersection_points.csv", prefix);
+				"%s_intersection_points.csv", prefix.c_str());
 		sprintf(fname_intersection_pts_tex,
-				"%s_intersection_points.tex", prefix);
+				"%s_intersection_points.tex", prefix.c_str());
 
 		Fio.lint_matrix_write_csv(fname_intersection_pts,
 				Intersection_pt, SaS->sz, SaS->sz);

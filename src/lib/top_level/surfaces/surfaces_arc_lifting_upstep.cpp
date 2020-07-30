@@ -54,8 +54,8 @@ surfaces_arc_lifting_upstep::surfaces_arc_lifting_upstep()
 	tritangent_plane_idx = 0;
 	upstep_idx = 0;
 
-	S = NULL;
-	// S_go;
+	Flag_stab_gens = NULL;
+	//Flag_stab_go;
 
 	//int three_lines_idx[3];
 	//long int three_lines[3];
@@ -305,10 +305,10 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(int verbose_level)
 		lint_vec_print(cout, Lines, 27);
 		cout << endl;
 	}
-	S = Lift->Flag_orbits->Flag_orbit_node[f].gens->create_copy();
-	S->group_order(S_go);
+	Flag_stab_gens = Lift->Flag_orbits->Flag_orbit_node[f].gens->create_copy();
+	Flag_stab_gens->group_order(Flag_stab_go);
 	if (f_v) {
-		cout << "po=" << po << " so=" << so << " go=" << S_go << endl;
+		cout << "po=" << po << " so=" << so << " go=" << Flag_stab_go << endl;
 	}
 
 	nb_coset_reps = 0;
@@ -351,7 +351,7 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(int verbose_level)
 					<< nb_coset_reps << endl;
 		}
 		Aut_gens = NEW_OBJECT(strong_generators);
-		Aut_gens->init_group_extension(S, coset_reps,
+		Aut_gens->init_group_extension(Flag_stab_gens, coset_reps,
 				nb_coset_reps, verbose_level - 2);
 
 		Aut_gens->group_order(ago);
@@ -376,8 +376,8 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(int verbose_level)
 
 	FREE_OBJECT(coset_reps);
 	coset_reps = NULL;
-	FREE_OBJECT(S);
-	S = NULL;
+	FREE_OBJECT(Flag_stab_gens);
+	Flag_stab_gens = NULL;
 	FREE_int(Adj);
 	Adj = NULL;
 	FREE_OBJECT(SO);
@@ -826,7 +826,7 @@ void surfaces_arc_lifting_upstep::move_arc(int verbose_level)
 	if (f_v) {
 		cout << "surfaces_arc_lifting_upstep::move_arc before compute_local_coordinates_of_arc" << endl;
 	}
-	compute_local_coordinates_of_arc(P6a, P6_local, verbose_level - 2);
+	Lift->Surf->compute_local_coordinates_of_arc(P6a, P6_local, verbose_level - 2);
 	if (f_v) {
 		cout << "surfaces_arc_lifting_upstep::move_arc after compute_local_coordinates_of_arc" << endl;
 	}
@@ -952,56 +952,6 @@ void surfaces_arc_lifting_upstep::move_plane_and_arc(long int *P6a, int verbose_
 	}
 }
 
-void surfaces_arc_lifting_upstep::compute_local_coordinates_of_arc(
-		long int *P6, long int *P6_local, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "surfaces_arc_lifting_upstep::compute_local_coordinates_of_arc" << endl;
-	}
-
-	int i;
-	int v[4];
-	int base_cols[3] = {0, 1, 2};
-	int coefficients[3];
-	int Basis_of_hyperplane[12] = { 1,0,0,0, 0,1,0,0, 0,0,1,0 };
-
-	for (i = 0; i < 6; i++) {
-		if (f_v) {
-			cout << "surfaces_arc_lifting_upstep::upstep3 "
-					"i=" << i << endl;
-		}
-		Lift->Surf->P->unrank_point(v, P6[i]);
-		if (f_v) {
-			cout << "surfaces_arc_lifting_upstep::upstep3 "
-					"which is ";
-			int_vec_print(cout, v, 4);
-			cout << endl;
-		}
-		Lift->Surf_A->Surf->F->reduce_mod_subspace_and_get_coefficient_vector(
-			3, 4, Basis_of_hyperplane, base_cols,
-			v, coefficients,
-			0 /* verbose_level */);
-		if (f_v) {
-			cout << "surfaces_arc_lifting_upstep::upstep3 "
-					"local coefficients ";
-			int_vec_print(cout, coefficients, 3);
-			cout << endl;
-		}
-		Lift->Surf_A->Surf->F->PG_element_rank_modified_lint(coefficients, 1, 3, P6_local[i]);
-	}
-	if (f_v) {
-		cout << "surfaces_arc_lifting_upstep::upstep3" << endl;
-		cout << "P6_local=" << endl;
-		lint_vec_print(cout, P6_local, 6);
-		cout << endl;
-	}
-
-	if (f_v) {
-		cout << "surfaces_arc_lifting_upstep::compute_local_coordinates_of_arc done" << endl;
-	}
-}
 
 void surfaces_arc_lifting_upstep::make_arc_canonical(long int *P6_local,
 		int &orbit_not_on_conic_idx, int verbose_level)

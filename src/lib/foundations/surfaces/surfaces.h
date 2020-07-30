@@ -451,6 +451,8 @@ public:
 		long int line1, long int line2,
 		int *coeff20, long int *lines27,
 		int verbose_level);
+	void compute_local_coordinates_of_arc(
+			long int *P6, long int *P6_local, int verbose_level);
 
 
 
