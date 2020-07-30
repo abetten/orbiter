@@ -508,18 +508,30 @@ void surface_create::init2(int verbose_level)
 		Sg = AL->Trihedral_pair->Aut_gens->create_copy();
 		f_has_group = TRUE;
 		f_has_lines = FALSE;
-		sprintf(prefix, "arc_q%d", F->q);
-		sprintf(label_txt, "arc_q%d", F->q);
-		sprintf(label_tex, "arc\\_q%d", F->q);
 
-		int i;
 
-		for (i = 0; i < 6; i++) {
-			sprintf(prefix + strlen(prefix), "_%ld", arc[i]);
-			sprintf(label_txt + strlen(label_txt), "_%ld", arc[i]);
-			sprintf(label_tex + strlen(label_tex), "\\_%ld", arc[i]);
-		}
-		
+		char str_q[1000];
+		char str_a[1000];
+
+		sprintf(str_q, "%d", F->q);
+		sprintf(str_a, "%ld_%ld_%ld_%ld_%ld_%ld", arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
+
+
+		prefix.assign("arc_lifting_trihedral_q");
+		prefix.append(str_q);
+		prefix.append("_arc");
+		prefix.append(str_a);
+
+		label_txt.assign("arc_lifting_trihedral_q");
+		label_txt.append(str_q);
+		label_txt.append("_arc");
+		label_txt.append(str_a);
+
+		label_tex.assign("arc\\_lifting\\_trihedral\\_q");
+		label_tex.append(str_q);
+		label_tex.append("\\_arc");
+		label_tex.append(str_a);
+
 		//AL->print(fp);
 
 
@@ -603,17 +615,41 @@ void surface_create::init2(int verbose_level)
 		//Sg = AL->Aut_gens->create_copy();
 		f_has_group = FALSE;
 		f_has_lines = TRUE;
-		sprintf(prefix, "arc_q%d", F->q);
-		sprintf(label_txt, "arc_q%d", F->q);
-		sprintf(label_tex, "arc\\_q%d", F->q);
 
-		int i;
 
-		for (i = 0; i < 6; i++) {
-			sprintf(prefix + strlen(prefix), "_%ld", arc[i]);
-			sprintf(label_txt + strlen(label_txt), "_%ld", arc[i]);
-			sprintf(label_tex + strlen(label_tex), "\\_%ld", arc[i]);
-		}
+
+		char str_q[1000];
+		char str_lines[1000];
+		char str_a[1000];
+
+		sprintf(str_q, "%d", F->q);
+		sprintf(str_lines, "%ld_%ld", line1, line2);
+		sprintf(str_a, "%ld_%ld_%ld_%ld_%ld_%ld", arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
+
+
+		prefix.assign("arc_lifting_with_two_lines_q");
+		prefix.append(str_q);
+		prefix.append("_lines");
+		prefix.append(str_lines);
+		prefix.append("_arc");
+		prefix.append(str_a);
+
+		label_txt.assign("arc_lifting_with_two_lines_q");
+		label_txt.append(str_q);
+		label_txt.append("_lines");
+		label_txt.append(str_lines);
+		label_txt.append("_arc");
+		label_txt.append(str_a);
+
+		label_tex.assign("arc\\_lifting\\_with\\_two\\_lines\\_q");
+		label_tex.append(str_q);
+		label_tex.append("\\_lines");
+		label_tex.append(str_lines);
+		label_tex.append("\\_arc");
+		label_tex.append(str_a);
+
+
+
 
 		//AL->print(fp);
 

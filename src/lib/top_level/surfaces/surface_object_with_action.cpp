@@ -1148,10 +1148,10 @@ void surface_object_with_action::investigate_surface_and_write_report(
 	char label[2000];
 	char label_tex[2000];
 
-	snprintf(fname, 2000, "surface_%s.tex", SC->prefix);
-	snprintf(label, 2000, "surface_%s", SC->label_txt);
-	snprintf(label_tex, 2000, "surface %s", SC->label_tex);
-	snprintf(fname_mask, 2000, "surface_%s_orbit_%%d", SC->prefix);
+	snprintf(fname, 2000, "surface_%s.tex", SC->prefix.c_str());
+	snprintf(label, 2000, "surface_%s", SC->label_txt.c_str());
+	snprintf(label_tex, 2000, "surface %s", SC->label_tex.c_str());
+	snprintf(fname_mask, 2000, "surface_%s_orbit_%%d", SC->prefix.c_str());
 	{
 		ofstream fp(fname);
 		latex_interface L;
