@@ -3329,22 +3329,21 @@ void strong_generators::hyperplane_lifting_with_two_lines_fixed(
 					"lifting generator "
 					<< i << " / " << SG_hyperplane->gens->len << endl;
 			}
+		frobenius = SG_hyperplane->gens->ith(i)[9];
+		if (f_v) {
+			if (f_semilinear) {
+				cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed "
+						" frobenius = " << frobenius << endl;
+			}
+		}
 
 		if (f_v) {
 			cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed "
 					"lifting generator "
 					<< i << " / " << SG_hyperplane->gens->len
-					<< " before P->lifted_action_on_hyperplane_"
-							"W0_fixing_two_lines" << endl;
+					<< " before P->hyperplane_lifting_with_two_lines_fixed" << endl;
 			}
-		frobenius = SG_hyperplane->gens->ith(i)[9];
-		if (f_v) {
-			if (f_semilinear) {
-				cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed "
-						"lifting frobenius = " << frobenius << endl;
-			}
-		}
-		P->lifted_action_on_hyperplane_W0_fixing_two_lines(
+		P->hyperplane_lifting_with_two_lines_fixed(
 				SG_hyperplane->gens->ith(i),
 				f_semilinear, frobenius,
 				line1, line2,
@@ -3357,8 +3356,7 @@ void strong_generators::hyperplane_lifting_with_two_lines_fixed(
 			cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed "
 					"lifting generator "
 					<< i << " / " << SG_hyperplane->gens->len
-					<< " after P->lifted_action_on_hyperplane_"
-							"W0_fixing_two_lines" << endl;
+					<< " after P->hyperplane_lifting_with_two_lines_fixed" << endl;
 			}
 		A->make_element(gens->ith(i), A4, 0);
 		if (f_v) {

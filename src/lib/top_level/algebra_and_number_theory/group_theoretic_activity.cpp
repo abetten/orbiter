@@ -2912,7 +2912,7 @@ void group_theoretic_activity::do_create_surface(
 
 		char fname_points[2000];
 
-		snprintf(fname_points, 2000, "surface_%s_points.txt", SC->label_txt);
+		snprintf(fname_points, 2000, "surface_%s_points.txt", SC->label_txt.c_str());
 		Fio.write_set_to_file(fname_points,
 				SO->Pts, SO->nb_pts, 0 /*verbose_level*/);
 		cout << "group_theoretic_activity::do_create_surface "
