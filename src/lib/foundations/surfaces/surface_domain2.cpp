@@ -2057,6 +2057,56 @@ void surface_domain::do_arc_lifting_with_two_lines(
 	}
 }
 
+void surface_domain::compute_local_coordinates_of_arc(
+		long int *P6, long int *P6_local, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_domain::compute_local_coordinates_of_arc" << endl;
+	}
+
+	int i;
+	int v[4];
+	int base_cols[3] = {0, 1, 2};
+	int coefficients[3];
+	int Basis_of_hyperplane[12] = { 1,0,0,0, 0,1,0,0, 0,0,1,0 };
+
+	for (i = 0; i < 6; i++) {
+		if (f_v) {
+			cout << "surface_domain::compute_local_coordinates_of_arc "
+					"i=" << i << endl;
+		}
+		P->unrank_point(v, P6[i]);
+		if (f_v) {
+			cout << "surface_domain::compute_local_coordinates_of_arc "
+					"which is ";
+			int_vec_print(cout, v, 4);
+			cout << endl;
+		}
+		F->reduce_mod_subspace_and_get_coefficient_vector(
+			3, 4, Basis_of_hyperplane, base_cols,
+			v, coefficients,
+			0 /* verbose_level */);
+		if (f_v) {
+			cout << "surface_domain::compute_local_coordinates_of_arc "
+					"local coefficients ";
+			int_vec_print(cout, coefficients, 3);
+			cout << endl;
+		}
+		F->PG_element_rank_modified_lint(coefficients, 1, 3, P6_local[i]);
+	}
+	if (f_v) {
+		cout << "surface_domain::compute_local_coordinates_of_arc" << endl;
+		cout << "P6_local=" << endl;
+		lint_vec_print(cout, P6_local, 6);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_domain::compute_local_coordinates_of_arc done" << endl;
+	}
+}
 
 
 }}
