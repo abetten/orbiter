@@ -5,8 +5,6 @@
 
 #include "foundations/foundations.h"
 #include "group_actions.h"
-#include <cstring>
-	// for memcpy
 
 using namespace std;
 
@@ -14,7 +12,7 @@ using namespace std;
 namespace orbiter {
 namespace group_actions {
 
-void action::init_linear_group(//sims *&S,
+void action::init_linear_group(
 	finite_field *F, int m,
 	int f_projective, int f_general, int f_affine,
 	int f_semilinear, int f_special,
@@ -213,8 +211,6 @@ void action::init_projective_group(int n, finite_field *F,
 		cout << "action::init_projective_group low_level_point_size=" 
 			<< low_level_point_size<< endl;
 		}
-	//strcpy(label, M->label);
-	//strcpy(label_tex, M->label_tex);
 	label.assign(M->label);
 	label_tex.assign(M->label_tex);
 	if (f_v) {
@@ -231,8 +227,6 @@ void action::init_projective_group(int n, finite_field *F,
 	coded_elt_size_in_char = M->char_per_elt;
 	allocate_element_data();
 
-	//strcpy(group_prefix, label);
-	//group_prefix.assign(label);
 
 	if (f_basis) {
 		if (f_v) {
@@ -297,8 +291,6 @@ void action::init_affine_group(int n, finite_field *F,
 		cout << "action::init_affine_group low_level_point_size=" 
 		<< low_level_point_size<< endl;
 		}
-	//strcpy(label, M->label);
-	//strcpy(label_tex, M->label_tex);
 	label.assign(M->label);
 	label_tex.assign(M->label_tex);
 	if (f_v) {
@@ -314,8 +306,6 @@ void action::init_affine_group(int n, finite_field *F,
 	elt_size_in_int = M->elt_size_int;
 	coded_elt_size_in_char = M->char_per_elt;
 	allocate_element_data();
-
-	//group_prefix.assign(label);
 
 	if (f_basis) {
 		setup_linear_group_from_strong_generators(M,
@@ -371,8 +361,6 @@ void action::init_general_linear_group(int n, finite_field *F,
 			"low_level_point_size="
 			<< low_level_point_size<< endl;
 		}
-	//strcpy(label, M->label);
-	//strcpy(label_tex, M->label_tex);
 	label.assign(M->label);
 	label_tex.assign(M->label_tex);
 	if (f_v) {
@@ -390,7 +378,6 @@ void action::init_general_linear_group(int n, finite_field *F,
 	coded_elt_size_in_char = M->char_per_elt;
 	allocate_element_data();
 
-	//group_prefix.assign(label);
 
 	if (f_basis) {
 		setup_linear_group_from_strong_generators(M,
@@ -702,7 +689,6 @@ void action::init_permutation_group(int degree, int verbose_level)
 	sprintf(str, "Perm%d", degree);
 
 
-	//group_prefix.assign(str);
 	label.assign(str);
 	label_tex.assign(str);
 
@@ -744,8 +730,6 @@ void action::init_permutation_group(int degree, int verbose_level)
 		}
 	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
 	Stabilizer_chain->allocate_base_data(this, degree, verbose_level);
-	//allocate_base_data(given_base_length);
-	//Stabilizer_chain->base_len = given_base_length;
 
 	// init trivial base:
 	int i;
@@ -800,7 +784,6 @@ void action::init_permutation_group_from_generators(int degree,
 	sprintf(str, "Perm%d", degree);
 
 
-	//group_prefix.assign(str);
 	label.assign(str);
 	label_tex.assign(str);
 
@@ -842,8 +825,6 @@ void action::init_permutation_group_from_generators(int degree,
 		}
 	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
 	Stabilizer_chain->allocate_base_data(this, given_base_length, verbose_level - 10);
-	//allocate_base_data(given_base_length);
-	//Stabilizer_chain->base_len = given_base_length;
 	
 	// init base:
 	for (i = 0; i < base_len(); i++) {
@@ -951,7 +932,6 @@ void action::init_affine_group(int n, int q,
 	sprintf(str1, "AGL_%d_%d", n, q);
 	sprintf(str2, "AGL(%d,%d)", n, q);
 
-	//group_prefix.assign(str1);
 	label.assign(str1);
 	label_tex.assign(str2);
 
@@ -989,7 +969,6 @@ void action::init_symmetric_group(int degree, int verbose_level)
 	sprintf(str1, "Sym_%d", degree);
 	sprintf(str2, "Sym(%d)", degree);
 
-	//group_prefix.assign(str1);
 	label.assign(str1);
 	label_tex.assign(str2);
 
@@ -1069,8 +1048,7 @@ void action::create_orthogonal_group(action *subaction,
 		cout << "action::create_orthogonal_group "
 				"before Mtx->init_base_projective" << endl;
 		}
-	Mtx->init_base_projective(
-			this, verbose_level);
+	Mtx->init_base_projective(this, verbose_level);
 	// initializes base, base_len, degree,
 	// transversal_length, orbit, orbit_inv
 	if (f_v) {
@@ -1240,11 +1218,7 @@ void action::init_direct_product_group(
 		cout << "action::init_direct_product_group low_level_point_size="
 			<< low_level_point_size<< endl;
 		}
-	//strcpy(label, P->label);
-	//strcpy(label_tex, P->label_tex);
 
-
-	//group_prefix.assign(P->label);
 	label.assign(P->label);
 	label_tex.assign(P->label_tex);
 
@@ -1264,7 +1238,6 @@ void action::init_direct_product_group(
 	coded_elt_size_in_char = P->char_per_elt;
 	allocate_element_data();
 
-	//strcpy(group_prefix, label);
 
 
 
@@ -1273,12 +1246,9 @@ void action::init_direct_product_group(
 		cout << "action::init_direct_product_group "
 				"degree=" << degree << endl;
 		}
-	//base_len = P->base_length;
 
 	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
 	Stabilizer_chain->allocate_base_data(this, P->base_length, verbose_level);
-	//Stabilizer_chain->base_len = P->base_length;
-	//allocate_base_data(base_len);
 
 	if (f_v) {
 		cout << "action::init_direct_product_group "
@@ -1490,8 +1460,6 @@ void action::init_wreath_product_group(int nb_factors, int n,
 			"low_level_point_size="
 			<< low_level_point_size<< endl;
 	}
-	//strcpy(label, W->label);
-	//strcpy(label_tex, W->label_tex);
 
 	label.assign(W->label);
 	label_tex.assign(W->label_tex);
@@ -1512,7 +1480,6 @@ void action::init_wreath_product_group(int nb_factors, int n,
 	coded_elt_size_in_char = W->char_per_elt;
 	allocate_element_data();
 
-	//group_prefix.assign(label);
 
 
 
@@ -1527,8 +1494,7 @@ void action::init_wreath_product_group(int nb_factors, int n,
 				"before Stabilizer_chain->allocate_base_data" << endl;
 	}
 	Stabilizer_chain->allocate_base_data(this, W->base_length, verbose_level);
-	//allocate_base_data(base_len);
-	//Stabilizer_chain->base_len = W->base_length;
+
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
 				"base_len=" << base_len() << endl;
@@ -2632,9 +2598,6 @@ void action::init_automorphism_group_from_group_table(
 	cout << endl;
 #endif
 
-	//action *A;
-
-	//A = NEW_OBJECT(action);
 
 
 	if (f_v) {

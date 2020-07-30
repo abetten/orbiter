@@ -1193,6 +1193,7 @@ public:
 		const char *symbol_for_print, int *M, int m, int n);
 	void power_table(int t, int *power_table, int len);
 	void cheat_sheet(std::ostream &f, int verbose_level);
+	void cheat_sheet_subfields(std::ostream &f, int verbose_level);
 	void report_subfields(std::ostream &f, int verbose_level);
 	void cheat_sheet_addition_table(std::ostream &f, int verbose_level);
 	void cheat_sheet_multiplication_table(std::ostream &f, int verbose_level);

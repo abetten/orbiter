@@ -589,7 +589,7 @@ public:
 	projective_space *P;
 	
 
-	action *A; // linear group PGGL(d,q)
+	action *A; // linear group PGGL(d,q) in the action on points
 	action *A_on_lines; // linear group PGGL(d,q) acting on lines
 	//sims *S; // linear group PGGL(d,q)
 

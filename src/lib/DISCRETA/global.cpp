@@ -238,7 +238,7 @@ const char *kind_ascii(kind k)
 
 		case DESIGN_PARAMETER: return "DESIGN_PARAMETER";
 		
-		case GROUP_SELECTION: return "GROUP_SELECTION";
+		//case GROUP_SELECTION: return "GROUP_SELECTION";
 		case UNIPOLY: return "UNIPOLY";
 		
 		case DESIGN_PARAMETER_SOURCE: return "DESIGN_PARAMETER_SOURCE";

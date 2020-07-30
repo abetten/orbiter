@@ -3973,12 +3973,12 @@ void projective_space::report(ostream &ost)
 	ost << "Number of lines on a point = " << r << "\\\\" << endl;
 	ost << "Number of points on a line = " << k << "\\\\" << endl;
 
-	ost<< "\\clearpage" << endl << endl;
-	ost << "\\section{The Finite Field with $" << q << "$ Elements}" << endl;
-	F->cheat_sheet(ost, verbose_level);
+	//ost<< "\\clearpage" << endl << endl;
+	//ost << "\\section{The Finite Field with $" << q << "$ Elements}" << endl;
+	//F->cheat_sheet(ost, verbose_level);
 
 	if (n == 2) {
-		ost << "\\clearpage" << endl << endl;
+		//ost << "\\clearpage" << endl << endl;
 		ost << "\\section{The Plane}" << endl;
 		char fname_base[1000];
 		long int *set;
@@ -4006,7 +4006,7 @@ void projective_space::report(ostream &ost)
 		ost << "}%%" << endl;
 		}
 
-	ost << "\\clearpage" << endl << endl;
+	//ost << "\\clearpage" << endl << endl;
 	ost << "\\section{Points and Lines}" << endl;
 	cheat_sheet_points(ost, verbose_level);
 
@@ -4014,10 +4014,10 @@ void projective_space::report(ostream &ost)
 
 
 
-	ost << "\\clearpage" << endl << endl;
+	//ost << "\\clearpage" << endl << endl;
 	cheat_sheet_points_on_lines(ost, verbose_level);
 
-	ost << "\\clearpage" << endl << endl;
+	//ost << "\\clearpage" << endl << endl;
 	cheat_sheet_lines_on_points(ost, verbose_level);
 
 
@@ -4025,7 +4025,7 @@ void projective_space::report(ostream &ost)
 	int k;
 
 	for (k = 1; k < n; k++) {
-		ost << "\\clearpage" << endl << endl;
+		//ost << "\\clearpage" << endl << endl;
 		ost << "\\section{Subspaces of dimension " << k << "}" << endl;
 		cheat_sheet_subspaces(ost, k, verbose_level);
 		}
@@ -4033,14 +4033,14 @@ void projective_space::report(ostream &ost)
 
 
 	if (n >= 2 && N_lines < 25) {
-		ost << "\\clearpage" << endl << endl;
+		//ost << "\\clearpage" << endl << endl;
 		ost << "\\section{Line intersections}" << endl;
 		cheat_sheet_line_intersection(ost, verbose_level);
 		}
 
 
 	if (n >= 2 && N_points < 25) {
-		ost << "\\clearpage" << endl << endl;
+		//ost << "\\clearpage" << endl << endl;
 		ost << "\\section{Line through point-pairs}" << endl;
 		cheat_sheet_line_through_pairs_of_points(ost, verbose_level);
 		}

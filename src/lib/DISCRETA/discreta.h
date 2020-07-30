@@ -82,7 +82,7 @@ enum kind {
 	
 	DESIGN_PARAMETER = 70,         //!< DESIGN_PARAMETER
 	 
-	GROUP_SELECTION = 78,          //!< GROUP_SELECTION
+	//GROUP_SELECTION = 78,          //!< GROUP_SELECTION
 	UNIPOLY = 79,                  //!< UNIPOLY
 
 	DESIGN_PARAMETER_SOURCE = 83,  //!< DESIGN_PARAMETER_SOURCE
@@ -130,79 +130,6 @@ enum printing_mode_enum {
 	printing_mode_gap 
 };
 
-enum group_selection_type {
-	// the linear groups:
-	SL,
-	GL,
-	SSL,
-	GGL,
-	PSL,
-	PGL,
-	PSSL,
-	PGGL,
-	ASL,
-	AGL,
-	ASSL,
-	AGGL,
-	Affine_translations,
-	PSU_3_Q2,
-	Suzuki,
-	A5_in_PSL,
-	S4_in_PSL,
-	On_projective_lines,
-	
-	// the well known groups:
-	Trivial,
-	Symmetric, 
-	Alternating,
-	Dihedral, 
-	Cyclic,
-	Holomorph_of_cyclic, 
-	Subgroup_of_holomorph_of_cyclic_group,
-	Sn_wreath_Sm,
-	Mathieu,
-	From_file,
-	Permutation_generator, 
-	Higman_Sims_176,
-
-	// unary operators:
-	On_2_sets,
-	On_2_tuples,
-	On_3_sets,
-	On_injective_2_tuples,
-	Add_fixpoint,
-	Stabilize_point,
-	Holomorph,
-	Even_subgroup,
-
-	// binary operators:
-	Comma,
-	Direct_sum,
-	Direct_product,
-	Wreath_product,
-	Exponentiation,
-	On_mappings,
-	
-	Solid_Tetrahedron,
-	Solid_Cube,
-	Solid_Octahedron,
-	Solid_Dodecahedron,
-	Solid_Icosahedron,
-	Solid_Cube4D, 
-	Solid_truncate,
-	Solid_dual,
-	Solid_truncate_dode,
-	Solid_truncate_cube,
-	Solid_relabel_points,
-	Solid_induced_group_on_edges,
-	Solid_midpoints_of_edges,
-	Solid_add_central_point,
-	Solid_add_central_involution,
-	Solid_Cubussimus, 
-	Solid_Dodesimum, 
-	Solid_CubeEE,
-	Solid_CubeEE_russian
-};
 
 enum bt_key_kind { 
 	bt_key_int = 0, 
@@ -308,7 +235,7 @@ class hollerith;		// derived from base
 	//class perm_group_stab_chain;	// derived from vector
 	//class action;			// derived from vector
 	class geometry;			// derived from vector
-	class group_selection;		// derived from vector
+	//class group_selection;		// derived from vector
 	class solid;			// derived from vector
 	class bt_key;			// derived from vector
 	class database;			// derived from vector
@@ -525,7 +452,7 @@ class discreta_base
 	action& as_action() { return *(action *)this; }
 	geometry& as_geometry() { return *(geometry *)this; }
 	hollerith& as_hollerith() { return *(hollerith *)this; }
-	group_selection& as_group_selection() { return *(group_selection *)this; }
+	//group_selection& as_group_selection() { return *(group_selection *)this; }
 	solid& as_solid() { return *(solid *)this; }
 	bt_key& as_bt_key() { return *(bt_key *)this; }
 	database& as_database() { return *(database *)this; }
@@ -551,7 +478,7 @@ class discreta_base
 	//action& change_to_action() { freeself(); c_kind(ACTION); return as_action(); }
 	geometry& change_to_geometry() { freeself(); c_kind(GEOMETRY); return as_geometry(); }
 	hollerith& change_to_hollerith() { freeself(); c_kind(HOLLERITH); return as_hollerith(); }
-	group_selection& change_to_group_selection() { freeself(); c_kind(GROUP_SELECTION); return as_group_selection(); }
+	//group_selection& change_to_group_selection() { freeself(); c_kind(GROUP_SELECTION); return as_group_selection(); }
 	solid& change_to_solid() { freeself(); c_kind(SOLID); return as_solid(); }
 	bt_key& change_to_bt_key() { freeself(); c_kind(BT_KEY); return as_bt_key(); }
 	database& change_to_database() { freeself(); c_kind(DATABASE); return as_database(); }
@@ -1537,11 +1464,6 @@ class number_partition: public Vector
 
 };
 
-int first_passport(Vector &pass, int n, int k);
-int next_passport(Vector &pass, int n, int k);
-int first_passport_i(Vector &pass, int n, int k, int i, int & S);
-int next_passport_i(Vector &pass, int n, int k, int i, int & S);
-
 //! DISCRETA class for incidence matrices
 
 
@@ -1690,122 +1612,6 @@ class printing_mode {
 	~printing_mode();
 };
 
-//! DISCRETA class to parse a group description from the command line
-
-
-
-class group_selection: public Vector
-{
-	public:
-	group_selection();
-		// constructor, sets the vector_pointer to NULL
-	group_selection(const discreta_base& x);
-		// copy constructor
-	group_selection& operator = (const discreta_base &x);
-		// copy assignment
-	void *operator new(size_t, void *p) { return p; } 
-	void settype_group_selection();
-	kind s_virtual_kind();
-	~group_selection();
-	void freeself_group_selection();
-	void copyobject_to(discreta_base &x);
-	std::ostream& print(std::ostream&);
-
-	int & type() { return Vector::s_i(0).as_integer().s_i(); }
-	int & val1() { return Vector::s_i(1).as_integer().s_i(); }
-	int & val2() { return Vector::s_i(2).as_integer().s_i(); }
-	hollerith & s() { return Vector::s_i(3).as_hollerith(); }
-
-	void init(group_selection_type type, int v1, int v2, char *str);
-};
-
-const char *group_selection_type_as_text(group_selection_type t);
-void compose_gsel_from_strings(Vector &gsel, int num_args, char **args);
-void compose_group(Vector & gsel, Vector & gens, 
-	hollerith & group_label, hollerith & group_label_tex,
-	hollerith & acting_on, int verbose_level);
-
-
-// perm_group_gens.cpp:
-
-int vec_generators_is_trivial_group(Vector & gen);
-int is_abelian(Vector & gen);
-void read_file_of_generators_xml(Vector & gen, char *fname, int &f_cyclic_notation, int verbose_level);
-void write_file_of_generators_xml_group_label(Vector & gen, char *group_label, int f_cyclic_notation);
-void write_file_of_generators_xml(Vector & gen, char *fname, int f_cyclic_notation);
-void read_file_of_generators(Vector & G, char *fname);
-void read_generators(Vector & G, std::ifstream & f);
-void write_file_of_generators_group_label(Vector & gen, char *group_label);
-void write_file_of_generators(Vector & G, char *fname);
-void write_generators(Vector & G, std::ofstream & f);
-void write_file_of_generators_gap_group_label(Vector & gen, char *group_label);
-void write_file_of_generators_gap(Vector & G, char *fname);
-void write_generators_gap(Vector & G, std::ofstream & f);
-void vec_induced_group_on_subset(Vector & V, Vector & subset, Vector & W);
-void vec_subgroup_of_hol_of_cyclic_group(Vector & V, int n, int i);
-void vec_hol_of_cyclic_group(Vector & V, int n);
-void vec_conjugate(Vector & gen, permutation & p);
-void vec_induce_action_on_blocks(Vector & gen, Vector & B);
-void vec_induce3(Vector & gen);
-void vec_induce2(Vector & gen);
-void vec_induce_on_2tuples(Vector & gen, int f_injective);
-void vec_add_fixpoint_in_front(Vector & gen);
-void vec_add_fixpoint_at_end(Vector & gen);
-int vec_generators_degree(Vector & a);
-void vec_generators_remove_fixpoint(Vector & gen, int i);
-void vec_generators_raise_to_nth_power(Vector & gen, int n);
-void vec_generators_induce_on_lines_of_PG_k_q(Vector & gen, int k, int q, int verbose_level);
-void vec_generators_trivial_group(Vector & gen, int deg);
-void vec_generators_cyclic_group(Vector & gen, int deg);
-void vec_generators_Cn_in_Cnm(Vector & gen, int n, int m);
-void vec_generators_AutCq_in_Cqm(Vector & gen, int q, int m);
-void vec_generators_symmetric_group(Vector & gen, int deg);
-void vec_generators_alternating_group(Vector & gen, int deg);
-void vec_generators_alternating_group_huppert(Vector & gen, int deg);
-void vec_generators_dihedral_group(Vector & gen, int deg);
-void vec_generators_Mathieu_n(Vector & gen, int n);
-void vec_generators_Mathieu_11(Vector & gen);
-void vec_generators_Mathieu_12(Vector & gen);
-void vec_generators_Mathieu_23(Vector & gen);
-void vec_generators_Mathieu_24(Vector & gen);
-void vec_generators_diagonal_sum(Vector & a, Vector & b, Vector & c);
-void vec_generators_comma(Vector & a, Vector & b, Vector & c);
-void vec_generators_direct_sum(Vector & a, Vector & b, Vector & c);
-void vec_generators_direct_product(Vector & a, Vector & b, Vector & c);
-void vec_generators_GL_n_q_as_matrices(Vector & gen, int n, domain *dom, int verbose_level);
-void vec_generators_GL_n_q_subgroup_as_matrices(Vector & gen, int n, int subgroup_index, domain *dom, int verbose_level);
-void vec_generators_SL_n_q_as_matrices(Vector & gen, int n, domain *dom, int verbose_level);
-void vec_generators_frobenius_in_PG(Vector & gen, int n, domain *dom, int verbose_level);
-void vec_generators_frobenius_in_AG(Vector & gen, int n, domain *dom, int verbose_level);
-void vec_generators_affine_translations(Vector & gen, int n, domain *dom, int verbose_level);
-void vec_generators_affine_translations(Vector & gen, int n, int q, int verbose_level);
-void vec_generators_projective_representation(domain *dom, Vector & a, Vector & b, int f_action_from_right, int f_modified, int verbose_level);
-void vec_generators_affine_representation(domain *dom, Vector & a, Vector & b, int verbose_level);
-void vec_generators_GL_n_q_projective_representation(Vector & gen, int n, int q, int f_special, int f_frobenius, int f_modified, int verbose_level);
-void vec_generators_GL_n_q_affine_representation(Vector & gen, int n, int q, int f_special, int f_frobenius, int f_translations, int verbose_level);
-void vec_generators_GL_n_q_subgroup_affine_representation(Vector & gen, int n, int q, int subgroup_index, 
-	int f_special, int f_frobenius, int f_translations, int verbose_level);
-void kernel_of_homomorphism(Vector & gens, Vector & kernel_gens, 
-	void (*hom)(discreta_base & x, discreta_base & image), int verbose_level);
-void vec_generators_A5_in_PSL(Vector& G, int q, int verbose_level);
-void vec_generators_S4_in_PSL(Vector& G, int q, int verbose_level);
-void vec_generators_even_subgroup(Vector & gen, Vector & gen_even_subgroup, int verbose_level);
-void vec_generators_restrict_to_subset(Vector & gen, int first, int len);
-void wreath_embedding(permutation & g, int n, int m, permutation & q);
-void wreath_embedding_component(permutation & g, int n, int m, int j, permutation & q);
-void vec_generators_wreath_product(Vector & G, Vector & H, Vector & W, int verbose_level);
-void vec_generators_Sn_wreath_Sm(int n, int m, Vector & G);
-void vec_generators_q1_q2(int q1, int q2, Vector & gen, hollerith &label, 
-	int f_write_generators_to_file, int verbose_level);
-void vec_generators_q1_q2_aubv(int q1, int q2, int u, int v, Vector & G, hollerith &label, 
-	int f_write_generators_to_file, int verbose_level);
-void vec_generators_q1_q2_au1bv1_au2bv2(int q1, int q2, int u1, int v1, int u2, int v2, 
-	Vector & G, hollerith &label, int f_write_generators_to_file, int verbose_level);
-void vec_generators_AGGL1q_subgroup(int q, int subgroup_index, 
-	int f_special, int f_frobenius, int f_translations, int verbose_level);
-//void vec_generators_cycle_index(Vector &gen, Vector &C, int f_v);
-void vec_generators_singer_cycle_on_points_of_projective_plane(Vector &gen, int p, int f_modified, int verbose_level);
-
 
 //! DISCRETA class for polyhedra
 
@@ -1903,16 +1709,16 @@ class solid: public Vector
 	void cut_vertices(double r, solid & A);
 	void edge_midpoints(solid& A);
 	void join_disjoint(solid& A, solid& J, int f_v);
-	void direct_sum(solid& B, solid& J, int f_v);
-	void direct_product(Vector& gen, solid& J, int f_v);
+	//void direct_sum(solid& B, solid& J, int f_v);
+	//void direct_product(Vector& gen, solid& J, int f_v);
 	void scale(double f);
-	void add_central_point(solid& A);
+	//void add_central_point(solid& A);
 	void induced_action_on_edges(permutation& p, permutation& q);
 	void induced_group_on_edges(Vector & gen, Vector & gen_e);
 	
 	void tetrahedron(int r);
 	void cube(int r);
-	void cube4D(int r1, int r2);
+	//void cube4D(int r1, int r2);
 	void octahedron(int r);
 	void dodecahedron(int r);
 	void icosahedron(int r);
@@ -1921,7 +1727,7 @@ class solid: public Vector
 	void write_graphfile(char *fname);
 	void write_solidfile(char *fname);
 };
-void vec_generators_aut_cube_nd(int n, Vector &gen);
+//void vec_generators_aut_cube_nd(int n, Vector &gen);
 void number_to_binary(int n, int *v, int digits);
 int binary_to_number(int *v, int digits);
 
@@ -2507,20 +2313,6 @@ class design_parameter: public Vector
 void free_global_data();
 void the_end(int t0);
 void the_end_quietly(int t0);
-void calc_Kramer_Mesner_matrix_neighboring(poset_classification *gen,
-	int level, discreta_matrix &M, int verbose_level);
-// we assume that we don't use implicit fusion nodes
-void Mtk_from_MM(Vector & MM, discreta_matrix & Mtk, int t, int k,
-	int f_subspaces, int q,  int verbose_level);
-void Mtk_via_Mtr_Mrk(int t, int r, int k, int f_subspaces, int q, 
-		discreta_matrix & Mtr, discreta_matrix & Mrk, discreta_matrix & Mtk, int verbose_level);
-// Computes $M_{tk}$ via a recursion formula:
-// $M_{tk} = {{k - t} \choose {k - r}} \cdot M_{t,r} \cdot M_{r,k}$.
-void Mtk_sup_to_inf(poset_classification *gen,
-	int t, int k, discreta_matrix & Mtk_sup, discreta_matrix & Mtk_inf, int verbose_level);
-void compute_Kramer_Mesner_matrix(poset_classification *gen,
-	int t, int k, discreta_matrix &M, int f_subspaces, int q, int verbose_level);
-void matrix_to_diophant(discreta_matrix& M, diophant *&D, int verbose_level);
 
 
 }}

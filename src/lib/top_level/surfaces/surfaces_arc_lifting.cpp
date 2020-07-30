@@ -131,7 +131,10 @@ void surfaces_arc_lifting::init(
 	surfaces_arc_lifting::Surf = Surf_A->Surf;
 	q = F->q;
 
-	sprintf(fname_base, "surfaces_arc_lifting_%d", q);
+	fname_base.assign("surfaces_arc_lifting_");
+	char str[1000];
+	sprintf(str, "%d", q);
+	fname_base.append(str);
 
 	A4 = LG4->A_linear;
 
@@ -239,7 +242,7 @@ void surfaces_arc_lifting::init(
 		cout << "surfaces_arc_lifting::init "
 				"before downstep" << endl;
 		}
-	downstep(0 /*verbose_level - 2*/);
+	downstep(verbose_level);
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init "
 				"after downstep" << endl;
@@ -332,7 +335,7 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 					"before downstep_one_arc" << endl;
 		}
 		downstep_one_arc(arc_idx,
-				cur_flag_orbit, Flag, verbose_level - 2);
+				cur_flag_orbit, Flag, verbose_level);
 
 		if (f_v) {
 			cout << "surfaces_arc_lifting::downstep "
@@ -341,6 +344,31 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 
 
 	} // next arc_idx
+
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting::downstep " << endl;
+		cout << "arc_idx : orbit on pairs index : nb_orbits on partitions" << endl;
+		for (arc_idx = 0;
+				arc_idx < Six_arcs->nb_arcs_not_on_conic;
+				arc_idx++) {
+
+			arc_orbits_on_pairs *T;
+			int pair_orbit_idx, nb;
+
+			T = Table_orbits_on_pairs + arc_idx;
+
+			for (pair_orbit_idx = 0;
+					pair_orbit_idx < T->nb_orbits_on_pairs;
+					pair_orbit_idx++) {
+
+				nb = T->Table_orbits_on_partition[pair_orbit_idx].nb_orbits_on_partition;
+
+				cout << arc_idx << " & " << pair_orbit_idx << " & " << nb << endl;
+			}
+		}
+	}
+
 
 	//Flag_orbits->nb_flag_orbits = nb_flag_orbits;
 	FREE_lint(Flag);
@@ -461,7 +489,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 	The_arc = Six_arcs->Gen->gen->get_set_and_stabilizer(
 			6 /* level */,
 			Six_arcs->Not_on_conic_idx[arc_idx],
-			verbose_level - 2);
+			verbose_level);
 
 
 	if (f_v) {
@@ -502,9 +530,9 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 			cout << "surfaces_arc_lifting::downstep_one_arc "
 					"orbit on pairs "
 					<< orbit_on_pairs_idx << " / "
-					<< nb_orbits_on_pairs << " pair ";
+					<< nb_orbits_on_pairs << " pair \\{";
 			lint_vec_print(cout, pair_orbit->data, 2);
-			cout << endl;
+			cout << "\\}_{" << pair_orbit->group_order_as_lint() << "}" << endl;
 		}
 
 		int orbit_on_partition_idx;
@@ -533,10 +561,10 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 			}
 
 
-			int f, /*l,*/ partition_rk, p0, p1;
+			int f, l, partition_rk, p0, p1;
 
 			f = Sch->orbit_first[orbit_on_partition_idx];
-			//l = Sch->orbit_len[orbit_on_partition_idx];
+			l = Sch->orbit_len[orbit_on_partition_idx];
 
 			partition_rk = Sch->orbit[f + 0];
 			if (f_v) {
@@ -544,7 +572,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 						"orbit on partitions "
 						<< orbit_on_partition_idx << " / "
 						<< nb_partition_orbits
-						<< " partition_rk = " << partition_rk << endl;
+						<< " partition_rk = " << partition_rk << " orbit of size " << l << endl;
 			}
 
 			// prepare the flag
@@ -593,6 +621,13 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 					full_group_order,
 					orbit_on_partition_idx,
 					verbose_level - 5);
+
+			if (f_v) {
+				cout << "surfaces_arc_lifting::downstep_one_arc "
+						"stabilizer of the flag:" << endl;
+				SG->print_generators(cout);
+			}
+
 
 			long int Arc6[6];
 			long int Arc6_rearranged[6];
@@ -688,17 +723,15 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 			SG_induced->init(A4);
 			if (f_v) {
 				cout << "surfaces_arc_lifting::downstep_one_arc "
-						"before SG_induced->lifted_group_on_"
-						"hyperplane_W0_fixing_two_lines" << endl;
+						"before SG_induced->hyperplane_lifting_with_two_lines_fixed" << endl;
 			}
-			SG_induced->lifted_group_on_hyperplane_W0_fixing_two_lines(
+			SG_induced->hyperplane_lifting_with_two_lines_fixed(
 				SG,
 				Surf->P, line1, line2,
 				verbose_level - 2);
 			if (f_v) {
 				cout << "surfaces_arc_lifting::downstep_one_arc "
-						"after SG_induced->lifted_group_on_"
-						"hyperplane_W0_fixing_two_lines" << endl;
+						"after SG_induced->hyperplane_lifting_with_two_lines_fixed" << endl;
 			}
 			if (f_vv) {
 				cout << "lifted generators are:" << endl;
@@ -758,7 +791,7 @@ void surfaces_arc_lifting::report(int verbose_level)
 	char author[1000];
 
 
-	snprintf(fname_arc_lifting, 1000, "arc_lifting_q%d.tex", q);
+	snprintf(fname_arc_lifting, 1000, "%s.tex", fname_base.c_str());
 	snprintf(title, 1000, "Arc lifting over GF(%d) ", q);
 	strcpy(author, "");
 

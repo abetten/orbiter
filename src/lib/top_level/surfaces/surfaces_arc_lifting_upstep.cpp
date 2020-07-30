@@ -26,19 +26,21 @@ surfaces_arc_lifting_upstep::surfaces_arc_lifting_upstep()
 	Flag2_representation = NULL;
 
 	//longinteger_object go;
-	Elt_alpha1 = NULL;
+	//Elt_alpha1 = NULL;
 	Elt_alpha2 = NULL;
 	Elt_beta1 = NULL;
 	Elt_beta2 = NULL;
-	Elt_beta3 = NULL;
+	//Elt_beta3 = NULL;
 	Elt_T1 = NULL;
 	Elt_T2 = NULL;
 	Elt_T3 = NULL;
 	Elt_T4 = NULL;
 
+	Elt_Alpha1 = NULL;
 	Elt_Alpha2 = NULL;
 	Elt_Beta1 = NULL;
 	Elt_Beta2 = NULL;
+	Elt_Beta3 = NULL;
 
 	progress = 0.;
 	//long int Lines[27];
@@ -64,8 +66,6 @@ surfaces_arc_lifting_upstep::surfaces_arc_lifting_upstep()
 	cnt = 0;
 
 	//long int P6[6];
-	//long int transversals4[4];
-
 
 }
 
@@ -82,9 +82,6 @@ surfaces_arc_lifting_upstep::~surfaces_arc_lifting_upstep()
 	if (Flag2_representation) {
 		FREE_lint(Flag2_representation);
 	}
-	if (Elt_alpha1) {
-		FREE_int(Elt_alpha1);
-	}
 	if (Elt_alpha2) {
 		FREE_int(Elt_alpha2);
 	}
@@ -93,9 +90,6 @@ surfaces_arc_lifting_upstep::~surfaces_arc_lifting_upstep()
 	}
 	if (Elt_beta2) {
 		FREE_int(Elt_beta2);
-	}
-	if (Elt_beta3) {
-		FREE_int(Elt_beta3);
 	}
 	if (Elt_T1) {
 		FREE_int(Elt_T1);
@@ -109,6 +103,9 @@ surfaces_arc_lifting_upstep::~surfaces_arc_lifting_upstep()
 	if (Elt_T4) {
 		FREE_int(Elt_T4);
 	}
+	if (Elt_Alpha1) {
+		FREE_int(Elt_Alpha1);
+	}
 	if (Elt_Alpha2) {
 		FREE_int(Elt_Alpha2);
 	}
@@ -117,6 +114,9 @@ surfaces_arc_lifting_upstep::~surfaces_arc_lifting_upstep()
 	}
 	if (Elt_Beta2) {
 		FREE_int(Elt_Beta2);
+	}
+	if (Elt_Beta3) {
+		FREE_int(Elt_Beta3);
 	}
 	if (Adj) {
 		FREE_int(Adj);
@@ -167,19 +167,20 @@ void surfaces_arc_lifting_upstep::init(surfaces_arc_lifting *Lift, int verbose_l
 			verbose_level);
 
 
-	Elt_alpha1 = NEW_int(Lift->Surf_A->A->elt_size_in_int);
 	Elt_alpha2 = NEW_int(Lift->Surf_A->A->elt_size_in_int);
 	Elt_beta1 = NEW_int(Lift->Surf_A->A->elt_size_in_int);
 	Elt_beta2 = NEW_int(Lift->Surf_A->A->elt_size_in_int);
-	Elt_beta3 = NEW_int(Lift->Surf_A->A->elt_size_in_int);
+
 	Elt_T1 = NEW_int(Lift->Surf_A->A->elt_size_in_int);
 	Elt_T2 = NEW_int(Lift->Surf_A->A->elt_size_in_int);
 	Elt_T3 = NEW_int(Lift->Surf_A->A->elt_size_in_int);
 	Elt_T4 = NEW_int(Lift->Surf_A->A->elt_size_in_int);
 
+	Elt_Alpha1 = NEW_int(Lift->Surf_A->A->elt_size_in_int);
 	Elt_Alpha2 = NEW_int(Lift->Surf_A->A->elt_size_in_int);
 	Elt_Beta1 = NEW_int(Lift->Surf_A->A->elt_size_in_int);
 	Elt_Beta2 = NEW_int(Lift->Surf_A->A->elt_size_in_int);
+	Elt_Beta3 = NEW_int(Lift->Surf_A->A->elt_size_in_int);
 
 
 	for (f = 0; f < Lift->Flag_orbits->nb_flag_orbits; f++) {
@@ -510,22 +511,23 @@ void surfaces_arc_lifting_upstep::process_flag_orbit_and_plane(int verbose_level
 							<< " cnt=" << cnt;
 					cout << " f2=" << f2 << " the lifted group elements are:";
 					cout << endl;
-					cout << "alpha1=" << endl;
-					Lift->A4->element_print_quick(Elt_alpha1, cout);
-					cout << "alpha2=" << endl;
-					Lift->A4->element_print_quick(Elt_alpha2, cout);
-					cout << "beta1=" << endl;
-					Lift->A4->element_print_quick(Elt_beta1, cout);
-					cout << "beta2=" << endl;
-					Lift->A4->element_print_quick(Elt_beta2, cout);
-					cout << "beta3=" << endl;
-					Lift->A4->element_print_quick(Elt_beta3, cout);
+
+					cout << "Alpha1=" << endl;
+					Lift->A4->element_print_quick(Elt_Alpha1, cout);
+					cout << "Alpha2=" << endl;
+					Lift->A4->element_print_quick(Elt_Alpha2, cout);
+					cout << "Beta1=" << endl;
+					Lift->A4->element_print_quick(Elt_Beta1, cout);
+					cout << "Beta2=" << endl;
+					Lift->A4->element_print_quick(Elt_Beta2, cout);
+					cout << "Beta3=" << endl;
+					Lift->A4->element_print_quick(Elt_Beta3, cout);
 				}
 
-				Lift->A4->element_mult(Elt_alpha1, Elt_alpha2, Elt_T1, 0);
-				Lift->A4->element_mult(Elt_T1, Elt_beta1, Elt_T2, 0);
-				Lift->A4->element_mult(Elt_T2, Elt_beta2, Elt_T3, 0);
-				Lift->A4->element_mult(Elt_T3, Elt_beta3, Elt_T4, 0);
+				Lift->A4->element_mult(Elt_Alpha1, Elt_Alpha2, Elt_T1, 0);
+				Lift->A4->element_mult(Elt_T1, Elt_Beta1, Elt_T2, 0);
+				Lift->A4->element_mult(Elt_T2, Elt_Beta2, Elt_T3, 0);
+				Lift->A4->element_mult(Elt_T3, Elt_Beta3, Elt_T4, 0);
 
 
 				if (f_vvv) {
@@ -537,7 +539,7 @@ void surfaces_arc_lifting_upstep::process_flag_orbit_and_plane(int verbose_level
 							<< " cnt=" << cnt;
 					cout << " f2=" << f2;
 					cout << endl;
-					cout << "T4 = alpha1 * alpha2 * beta1 * beta2 * beta3 = " << endl;
+					cout << "T4 = Alpha1 * Alpha2 * Beta1 * Beta2 * Beta3 = " << endl;
 					Lift->A4->element_print_quick(Elt_T4, cout);
 					cout << endl;
 				}
@@ -668,6 +670,13 @@ void surfaces_arc_lifting_upstep::trace_second_flag_orbit(int verbose_level)
 }
 
 void surfaces_arc_lifting_upstep::compute_arc(int verbose_level)
+// We have chosen a tritangent planes and we know the three lines m1, m2, m3 in it.
+// The lines l1 and l2 intersect m1 in the first two points.
+// Computes the 5 transversals to the two lines l1 and l2.
+// One of these lines must be m1, so we remove that to have 4 lines.
+// These 4 lines intersect the two other lines m2 and m3 in the other 4 points.
+// This makes up the arc of 6 points.
+// They will be stored in P6[6].
 {
 	int f_v = (verbose_level >= 1);
 
@@ -676,9 +685,8 @@ void surfaces_arc_lifting_upstep::compute_arc(int verbose_level)
 	}
 	int i, j;
 
-	// determine the transversals of lines l1 and l2:
+	// determine the 5 transversals of lines l1 and l2:
 	int transversals[5];
-	//int P[6];
 	int nb_t = 0;
 	int nb;
 	int f_taken[4];
@@ -706,6 +714,8 @@ void surfaces_arc_lifting_upstep::compute_arc(int verbose_level)
 		cout << "surfaces_arc_lifting_upstep::compute_arc could not find m1 in transversals[]" << endl;
 		exit(1);
 	}
+
+	long int transversals4[4];
 
 	// remove m1 from the list of transversals to form transversals4[4]:
 	for (j = 0; j < i; j++) {
@@ -775,11 +785,11 @@ void surfaces_arc_lifting_upstep::move_arc(int verbose_level)
 // P6_local to the canonical orbit representative from the classification
 // of non-conical six-arcs computed earlier.
 // After that, 3x3 collineations beta1 and beta2 will be computed.
-// beta1 takes the pair P0,P1 to the canonical orbit representative
+// beta1 takes the pair P1,P2 to the canonical orbit representative
 // under the stabilizer of the arc.
 // beta2 takes the set-partition imposed by ({P2,P3},{P4,P5})
 // to the canonical orbit representative under that stabilizer of the arc
-// and the pair of points {P0,P1}
+// and the pair of points {P1,P2}
 {
 	int f_v = (verbose_level >= 1);
 	long int P6a[6];
@@ -793,8 +803,8 @@ void surfaces_arc_lifting_upstep::move_arc(int verbose_level)
 				"tritangent_plane_idx=" << tritangent_plane_idx << " / 45, "
 				"line_idx=" << line_idx << " / 3, "
 				"l1=" << l1 << " l2=" << l2 << " cnt=" << cnt << " / 24 ";
-		cout << " transversals4=";
-		lint_vec_print(cout, transversals4, 4);
+		//cout << " transversals4=";
+		//lint_vec_print(cout, transversals4, 4);
 		cout << " P6=";
 		lint_vec_print(cout, P6, 6);
 		cout << endl;
@@ -888,8 +898,8 @@ void surfaces_arc_lifting_upstep::move_plane_and_arc(long int *P6a, int verbose_
 				"tritangent_plane_idx=" << tritangent_plane_idx << " / 45, "
 				"line_idx=" << line_idx << " / 3, "
 				"l1=" << l1 << " l2=" << l2 << " cnt=" << cnt << " / 24 ";
-		cout << " transversals4=";
-		lint_vec_print(cout, transversals4, 4);
+		//cout << " transversals4=";
+		//lint_vec_print(cout, transversals4, 4);
 		cout << " P6=";
 		lint_vec_print(cout, P6, 6);
 		cout << endl;
@@ -925,9 +935,9 @@ void surfaces_arc_lifting_upstep::move_plane_and_arc(long int *P6a, int verbose_
 
 	Basis_pi_inv[16] = 0; // in case the group is semilinear
 
-	Lift->Surf_A->A->make_element(Elt_alpha1, Basis_pi_inv, 0 /*verbose_level*/);
+	Lift->Surf_A->A->make_element(Elt_Alpha1, Basis_pi_inv, 0 /*verbose_level*/);
 	for (i = 0; i < 6; i++) {
-		P6a[i] = Lift->Surf_A->A->image_of(Elt_alpha1, P6[i]);
+		P6a[i] = Lift->Surf_A->A->image_of(Elt_Alpha1, P6[i]);
 	}
 	if (f_v) {
 		cout << "surfaces_arc_lifting_upstep::move_plane_and_arc" << endl;
@@ -955,8 +965,7 @@ void surfaces_arc_lifting_upstep::compute_local_coordinates_of_arc(
 	int v[4];
 	int base_cols[3] = {0, 1, 2};
 	int coefficients[3];
-	//long int P6_local[6];
-	int Basis_identity[12] = { 1,0,0,0, 0,1,0,0, 0,0,1,0 };
+	int Basis_of_hyperplane[12] = { 1,0,0,0, 0,1,0,0, 0,0,1,0 };
 
 	for (i = 0; i < 6; i++) {
 		if (f_v) {
@@ -971,7 +980,7 @@ void surfaces_arc_lifting_upstep::compute_local_coordinates_of_arc(
 			cout << endl;
 		}
 		Lift->Surf_A->Surf->F->reduce_mod_subspace_and_get_coefficient_vector(
-			3, 4, Basis_identity, base_cols,
+			3, 4, Basis_of_hyperplane, base_cols,
 			v, coefficients,
 			0 /* verbose_level */);
 		if (f_v) {
@@ -1181,7 +1190,7 @@ void surfaces_arc_lifting_upstep::compute_beta2(long int *P6_local,
 }
 
 void surfaces_arc_lifting_upstep::lift_group_elements_and_move_two_lines(int verbose_level)
-// uses Elt_Alpha2, Elt_Beta1, Elt_Beta2, Elt_T1, Elt_T2, Elt_T3
+// uses Elt_Alpha2, Elt_Beta1, Elt_Beta2, Elt_Beta3, Elt_T1, Elt_T2, Elt_T3
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1200,7 +1209,8 @@ void surfaces_arc_lifting_upstep::lift_group_elements_and_move_two_lines(int ver
 
 
 	if (f_vv) {
-		cout << "surfaces_arc_lifting_upstep::lift_group_elements_and_move_two_lines before embedding" << endl;
+		cout << "surfaces_arc_lifting_upstep::lift_group_elements_and_move_two_lines "
+				"before embedding" << endl;
 		cout << "Elt_alpha2=" << endl;
 		Lift->A3->element_print_quick(Elt_alpha2, cout);
 		cout << "Elt_beta1=" << endl;
@@ -1212,17 +1222,20 @@ void surfaces_arc_lifting_upstep::lift_group_elements_and_move_two_lines(int ver
 
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_upstep::lift_group_elements_and_move_two_lines before embed Elt_alpha2" << endl;
+		cout << "surfaces_arc_lifting_upstep::lift_group_elements_and_move_two_lines "
+				"before embed Elt_alpha2" << endl;
 	}
 	embed(Elt_alpha2, Elt_Alpha2, verbose_level - 2);
 	if (f_v) {
-		cout << "surfaces_arc_lifting_upstep::lift_group_elements_and_move_two_lines before embed Elt_alpha2" << endl;
+		cout << "surfaces_arc_lifting_upstep::lift_group_elements_and_move_two_lines "
+				"before embed Elt_alpha2" << endl;
 	}
 	embed(Elt_beta1, Elt_Beta1, verbose_level - 2);
 	embed(Elt_beta2, Elt_Beta2, verbose_level - 2);
 
 	if (f_vv) {
-		cout << "surfaces_arc_lifting_upstep::lift_group_elements_and_move_two_lines after embedding" << endl;
+		cout << "surfaces_arc_lifting_upstep::lift_group_elements_and_move_two_lines "
+				"after embedding" << endl;
 		cout << "Elt_Alpha2=" << endl;
 		Lift->A4->element_print_quick(Elt_Alpha2, cout);
 		cout << "Elt_Beta1=" << endl;
@@ -1232,7 +1245,7 @@ void surfaces_arc_lifting_upstep::lift_group_elements_and_move_two_lines(int ver
 	}
 
 
-	Lift->A4->element_mult(Elt_alpha1, Elt_Alpha2, Elt_T1, 0);
+	Lift->A4->element_mult(Elt_Alpha1, Elt_Alpha2, Elt_T1, 0);
 	Lift->A4->element_mult(Elt_T1, Elt_Beta1, Elt_T2, 0);
 	Lift->A4->element_mult(Elt_T2, Elt_Beta2, Elt_T3, 0);
 
@@ -1281,7 +1294,8 @@ void surfaces_arc_lifting_upstep::lift_group_elements_and_move_two_lines(int ver
 
 	//Flag2_representation = NEW_lint(pt_representation_sz);
 
-	lint_vec_copy(Lift->Flag_orbits->Pt + f2 * pt_representation_sz,
+	lint_vec_copy(
+			Lift->Flag_orbits->Pt + f2 * pt_representation_sz,
 			Flag2_representation, pt_representation_sz);
 
 
@@ -1352,30 +1366,38 @@ void surfaces_arc_lifting_upstep::lift_group_elements_and_move_two_lines(int ver
 		}
 	}
 
-
-	Lift->Surf_A->Surf->P->find_matrix_fixing_hyperplane_and_moving_two_skew_lines(
+	if (f_v) {
+		cout << "surfaces_arc_lifting_upstep::lift_group_elements_and_move_two_lines "
+				"before hyperplane_lifting_with_two_lines_moved" << endl;
+	}
+	Lift->Surf_A->Surf->P->hyperplane_lifting_with_two_lines_moved(
 			L1 /* line1_from */, line1_to,
 			L2 /* line2_from */, line2_to,
 			beta3,
 			verbose_level - 4);
 	beta3[16] = 0;
+	if (f_v) {
+		cout << "surfaces_arc_lifting_upstep::lift_group_elements_and_move_two_lines "
+				"after hyperplane_lifting_with_two_lines_moved" << endl;
+	}
 
-	Lift->A4->make_element(Elt_beta3, beta3, 0);
+	Lift->A4->make_element(Elt_Beta3, beta3, 0);
 
 	if (f_vv) {
 		cout << "surfaces_arc_lifting_upstep::lift_group_elements_and_move_two_lines" << endl;
 		cout << "Elt_beta3=" << endl;
-		int_matrix_print(Elt_beta3, 4, 4);
+		int_matrix_print(Elt_Beta3, 4, 4);
 		cout << "Elt_beta3=" << endl;
-		Lift->A4->element_print_quick(Elt_beta3, cout);
+		Lift->A4->element_print_quick(Elt_Beta3, cout);
 		cout << endl;
 	}
 
 
+#if 0
 	Lift->A4->element_move(Elt_Alpha2, Elt_alpha2, 0);
 	Lift->A4->element_move(Elt_Beta1, Elt_beta1, 0);
 	Lift->A4->element_move(Elt_Beta2, Elt_beta2, 0);
-
+#endif
 
 
 	//FREE_lint(Flag2_representation);

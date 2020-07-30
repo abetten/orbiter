@@ -18,6 +18,7 @@ all: algebra_and_number_theory \
 	io_and_os \
 	solvers \
 	statistics \
+	surfaces \
 	BitSet
 
 
@@ -35,6 +36,7 @@ graphics : graphics2
 io_and_os : io_and_os2  
 solvers : solvers2 
 statistics : statistics2
+surfaces : surfaces2
 BitSet	:	BitSet2
 
 algebra_and_number_theory2 : ; cd algebra_and_number_theory; $(MAKE)
@@ -49,6 +51,7 @@ graphics2 : ; cd graphics; $(MAKE)
 io_and_os2 : ; cd io_and_os; $(MAKE)
 solvers2 : ; cd solvers; $(MAKE)
 statistics2 : ; cd statistics; $(MAKE)
+surfaces2 : ; cd surfaces; $(MAKE)
 BitSet2: ; cd BitSet; $(MAKE)
 
 clean:
@@ -64,6 +67,7 @@ clean:
 	cd io_and_os; $(MAKE) clean
 	cd solvers; $(MAKE) clean
 	cd statistics; $(MAKE) clean
+	cd surfaces; $(MAKE) clean
 	cd BitSet; $(MAKE) clean
 	- rm *.o *.a 
 

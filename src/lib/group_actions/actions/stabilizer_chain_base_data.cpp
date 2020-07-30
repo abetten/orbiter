@@ -54,7 +54,8 @@ void stabilizer_chain_base_data::free_base_data()
 	}
 	if (orbit) {
 		if (f_v) {
-			cout << "stabilizer_chain_base_data::free_base_data freeing " << base_len << " orbits" << endl;
+			cout << "stabilizer_chain_base_data::free_base_data "
+					"freeing " << base_len << " orbits" << endl;
 		}
 		for (i = 0; i < base_len; i++) {
 			if (f_v) {

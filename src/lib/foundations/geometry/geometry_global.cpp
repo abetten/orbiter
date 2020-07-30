@@ -287,9 +287,6 @@ void geometry_global::determine_conic(int q, const char *override_poly,
 	int f_vv = (verbose_level >= 2);
 	finite_field F;
 	projective_space *P;
-	//int f_basis = TRUE;
-	//int f_semilinear = TRUE;
-	//int f_with_group = FALSE;
 	int v[3];
 	int len = 3;
 	int six_coeffs[6];

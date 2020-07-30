@@ -3292,7 +3292,7 @@ void strong_generators::normalizer_of_a_Hall_reflection(
 	}
 }
 
-void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
+void strong_generators::hyperplane_lifting_with_two_lines_fixed(
 	strong_generators *SG_hyperplane,
 	projective_space *P, int line1, int line2,
 	int verbose_level)
@@ -3302,7 +3302,7 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 	int A4[17]; // one more in case of semilinear maps
 
 	if (f_v) {
-		cout << "strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines" << endl;
+		cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed" << endl;
 	}
 
 
@@ -3316,7 +3316,7 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 
 	f_semilinear = A->is_semilinear_matrix_group();
 	if (f_v) {
-		cout << "strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines "
+		cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed "
 				"f_semilinear = " << f_semilinear << endl;
 		cout << "generators SG_hyperplane:" << endl;
 		SG_hyperplane->print_generators(cout);
@@ -3325,13 +3325,13 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 	gens->allocate(SG_hyperplane->gens->len, verbose_level - 2);
 	for (i = 0; i < SG_hyperplane->gens->len; i++) {
 		if (f_v) {
-			cout << "strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines "
+			cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed "
 					"lifting generator "
 					<< i << " / " << SG_hyperplane->gens->len << endl;
 			}
 
 		if (f_v) {
-			cout << "strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines "
+			cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed "
 					"lifting generator "
 					<< i << " / " << SG_hyperplane->gens->len
 					<< " before P->lifted_action_on_hyperplane_"
@@ -3340,7 +3340,7 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 		frobenius = SG_hyperplane->gens->ith(i)[9];
 		if (f_v) {
 			if (f_semilinear) {
-				cout << "strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines "
+				cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed "
 						"lifting frobenius = " << frobenius << endl;
 			}
 		}
@@ -3354,7 +3354,7 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 		// A4[16] is set in lifted_action_on_hyperplane_W0_fixing_two_lines
 
 		if (f_v) {
-			cout << "strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines "
+			cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed "
 					"lifting generator "
 					<< i << " / " << SG_hyperplane->gens->len
 					<< " after P->lifted_action_on_hyperplane_"
@@ -3362,18 +3362,18 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 			}
 		A->make_element(gens->ith(i), A4, 0);
 		if (f_v) {
-			cout << "strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines "
+			cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed "
 					"generator "
 					<< i << " / " << SG_hyperplane->gens->len
 					<< " lifts to " << endl;
-			A->element_print_quick(gens->ith(i), cout);
+			A->element_print(gens->ith(i), cout);
 			}
 		}
 
 	if (f_v) {
-		cout << "strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines "
+		cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed "
 				"generators are:" << endl;
-		gens->print_quick(cout);
+		gens->print(cout);
 	}
 
 
@@ -3385,13 +3385,13 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 
 
 	if (f_v) {
-		cout << "strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines "
+		cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed "
 				"target_go=" << target_go << endl;
 	}
 
 
 	if (f_v) {
-		cout << "strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines "
+		cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed "
 				"before generators_to_strong_generators" << endl;
 	}
 
@@ -3402,7 +3402,7 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 		gens, SG, verbose_level - 3);
 
 	if (f_v) {
-		cout << "strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines "
+		cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed "
 				"after generators_to_strong_generators" << endl;
 	}
 
@@ -3413,7 +3413,7 @@ void strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines(
 	FREE_OBJECT(gens);
 
 	if (f_v) {
-		cout << "strong_generators::lifted_group_on_hyperplane_W0_fixing_two_lines done" << endl;
+		cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed done" << endl;
 	}
 }
 

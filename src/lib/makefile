@@ -65,16 +65,12 @@ MODULES= \
 		foundations/geometry/andre_construction.o \
 		foundations/geometry/andre_construction_line_element.o \
 		foundations/geometry/andre_construction_point_element.o \
-		foundations/geometry/arc_lifting_with_two_lines.o \
 		foundations/geometry/blt_set_domain.o \
 		foundations/geometry/blt_set_invariants.o \
 		foundations/geometry/buekenhout_metz.o \
-		foundations/geometry/clebsch_map.o \
 		foundations/geometry/cubic_curve.o \
 		foundations/geometry/decomposition.o \
 		foundations/geometry/desarguesian_spread.o \
-		foundations/geometry/eckardt_point_info.o \
-		foundations/geometry/eckardt_point.o \
 		foundations/geometry/elliptic_curve.o \
 		foundations/geometry/flag.o \
 		foundations/geometry/geometry_global.o \
@@ -98,15 +94,8 @@ MODULES= \
 		foundations/geometry/projective_space.o \
 		foundations/geometry/projective_space2.o \
 		foundations/geometry/spread_tables.o \
-		foundations/geometry/surface_domain_families.o \
-		foundations/geometry/surface_domain_io.o \
-		foundations/geometry/surface_domain_lines.o \
-		foundations/geometry/surface_domain.o \
-		foundations/geometry/surface_domain2.o \
-		foundations/geometry/surface_object.o \
 		foundations/geometry/unusual.o \
 		foundations/geometry/w3q.o \
-		foundations/geometry/web_of_cubic_curves.o \
 		foundations/globals/function_command.o \
 		foundations/globals/function_polish_description.o \
 		foundations/globals/function_polish.o \
@@ -164,6 +153,17 @@ MODULES= \
 		foundations/solvers/mckay.o \
 		foundations/statistics/classify_vector_data.o \
 		foundations/statistics/classify.o \
+		foundations/surfaces/arc_lifting_with_two_lines.o \
+		foundations/surfaces/clebsch_map.o \
+		foundations/surfaces/eckardt_point_info.o \
+		foundations/surfaces/eckardt_point.o \
+		foundations/surfaces/surface_domain_families.o \
+		foundations/surfaces/surface_domain_io.o \
+		foundations/surfaces/surface_domain_lines.o \
+		foundations/surfaces/surface_domain.o \
+		foundations/surfaces/surface_domain2.o \
+		foundations/surfaces/surface_object.o \
+		foundations/surfaces/web_of_cubic_curves.o \
 		foundations/BitSet/bitset.o	\
 		group_actions/actions/action.o \
 		group_actions/actions/action_cb.o \
@@ -289,14 +289,12 @@ MODULES= \
 		DISCRETA/domain.o \
 		DISCRETA/geometry.o \
 		DISCRETA/global.o \
-		DISCRETA/group_selection.o \
 		DISCRETA/hollerith.o \
 		DISCRETA/integer.o \
 		DISCRETA/longinteger.o \
 		DISCRETA/memory.o \
 		DISCRETA/number_partition.o \
 		DISCRETA/page_table.o \
-		DISCRETA/perm_group_gens.o \
 		DISCRETA/permutation.o \
 		DISCRETA/solid.o \
 		DISCRETA/unipoly.o \

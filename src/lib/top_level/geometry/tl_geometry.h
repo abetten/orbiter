@@ -997,7 +997,7 @@ public:
 		longinteger_object *&Rank_table, int &nb_maximals, 
 		int verbose_level);
 	void show_stabilizer(int depth, int orbit_idx, int verbose_level);
-	void compute_Kramer_Mesner_matrix(int t, int k, int verbose_level);
+	//void compute_Kramer_Mesner_matrix(int t, int k, int verbose_level);
 	//int test(int *S, int len, int verbose_level);
 		// test if totally isotropic, i.e. contained in its own perp
 	void test_if_in_perp(long int *S, int len,

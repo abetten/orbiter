@@ -9,16 +9,12 @@ MODULES = \
 	andre_construction.o \
 	andre_construction_line_element.o \
 	andre_construction_point_element.o \
-	arc_lifting_with_two_lines.o \
 	blt_set_domain.o \
 	blt_set_invariants.o \
 	buekenhout_metz.o \
-	clebsch_map.o \
 	cubic_curve.o \
 	decomposition.o \
 	desarguesian_spread.o \
-	eckardt_point_info.o \
-	eckardt_point.o \
 	elliptic_curve.o \
 	flag.o \
 	geometry_global.o \
@@ -42,15 +38,8 @@ MODULES = \
 	projective_space.o \
 	projective_space2.o \
 	spread_tables.o \
-	surface_domain_families.o \
-	surface_domain_io.o \
-	surface_domain_lines.o \
-	surface_domain.o \
-	surface_domain2.o \
-	surface_object.o \
 	unusual.o \
-	w3q.o \
-	web_of_cubic_curves.o 
+	w3q.o 
 
 
 

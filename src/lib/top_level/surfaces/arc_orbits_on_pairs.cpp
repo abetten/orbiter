@@ -101,7 +101,7 @@ void arc_orbits_on_pairs::init(
 	The_arc = SAL->Six_arcs->Gen->gen->get_set_and_stabilizer(
 			6 /* level */,
 			SAL->Six_arcs->Not_on_conic_idx[arc_idx],
-			0 /* verbose_level */);
+			verbose_level);
 
 
 	if (f_v) {
@@ -110,7 +110,7 @@ void arc_orbits_on_pairs::init(
 		}
 
 	A_on_arc = A->restricted_action(The_arc->data, 6 /* nb_points */,
-			verbose_level);
+			verbose_level - 2);
 
 	if (f_v) {
 		cout << "arc_orbits_on_pairs::init "
@@ -183,6 +183,10 @@ void arc_orbits_on_pairs::init(
 			pair_orbit_idx < nb_orbits_on_pairs;
 			pair_orbit_idx++) {
 
+		if (f_v) {
+			cout << "arc_orbits_on_pairs::init "
+					"pair_orbit_idx = " << pair_orbit_idx << " / " << nb_orbits_on_pairs << ":" << endl;
+		}
 
 		int nb;
 
@@ -192,10 +196,15 @@ void arc_orbits_on_pairs::init(
 		}
 		Table_orbits_on_partition[pair_orbit_idx].init(this, pair_orbit_idx,
 				A, A_on_arc,
-				//argc, argv,
 				verbose_level);
 
 		nb = Table_orbits_on_partition[pair_orbit_idx].nb_orbits_on_partition;
+
+		if (f_v) {
+			cout << "arc_orbits_on_pairs::init "
+					"pair_orbit_idx = " << pair_orbit_idx << " / " << nb_orbits_on_pairs
+					<< " has " << nb << " orbits on partitions" << endl;
+		}
 
 		partition_orbit_first[pair_orbit_idx] = total_nb_orbits_on_partitions;
 		partition_orbit_len[pair_orbit_idx] = nb;
@@ -210,6 +219,21 @@ void arc_orbits_on_pairs::init(
 
 	if (f_v) {
 		cout << "arc_orbits_on_pairs::init done" << endl;
+	}
+}
+
+void arc_orbits_on_pairs::print()
+{
+	int pair_orbit_idx, nb;
+
+	cout << "pair_orbit_idx : nb_orbits_on_partitions" << endl;
+	for (pair_orbit_idx = 0;
+			pair_orbit_idx < nb_orbits_on_pairs;
+			pair_orbit_idx++) {
+
+		nb = Table_orbits_on_partition[pair_orbit_idx].nb_orbits_on_partition;
+
+		cout << pair_orbit_idx << " & " << nb << endl;
 	}
 }
 

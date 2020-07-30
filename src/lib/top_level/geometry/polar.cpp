@@ -749,6 +749,7 @@ void polar::get_maximals(int depth, int orbit_idx, int verbose_level)
 }
 #endif
 
+#if 0
 void polar::compute_Kramer_Mesner_matrix(int t, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -785,6 +786,8 @@ void polar::compute_Kramer_Mesner_matrix(int t, int k, int verbose_level)
 	Mtk_inf.print(cout);
 	
 }
+#endif
+
 
 #if 0
 int polar::test(int *S, int len, int verbose_level)
