@@ -175,6 +175,7 @@ void surface_create::init2(int verbose_level)
 	}
 
 
+
 	if (Descr->f_family_HCV) {
 		if (f_v) {
 			cout << "surface_create::init2 before Surf->create_"
@@ -213,9 +214,28 @@ void surface_create::init2(int verbose_level)
 		f_has_group = TRUE;
 		f_has_nice_gens = TRUE;
 
-		sprintf(prefix, "family_HCV_q%d_a%d", F->q, Descr->family_HCV_a);
-		sprintf(label_txt, "family_HCV_q%d_a%d", F->q, Descr->family_HCV_a);
-		sprintf(label_tex, "family\\_HCV\\_q%d\\_a%d", F->q, Descr->family_HCV_a);
+		char str_q[1000];
+		char str_a[1000];
+
+		sprintf(str_q, "%d", F->q);
+		sprintf(str_a, "%d", Descr->family_HCV_a);
+
+
+		prefix.assign("family_HCV_q");
+		prefix.append(str_q);
+		prefix.append("_a");
+		prefix.append(str_a);
+
+		label_txt.assign("family_HCV_q");
+		label_txt.append(str_q);
+		label_txt.append("_a");
+		label_txt.append(str_a);
+
+		label_tex.assign("family\\_HCV\\_q");
+		label_tex.append(str_q);
+		label_tex.append("\\_a");
+		label_tex.append(str_a);
+
 		
 	}
 	else if (Descr->f_family_F13) {
@@ -241,10 +261,30 @@ void surface_create::init2(int verbose_level)
 
 		f_has_lines = TRUE;
 
+		char str_q[1000];
+		char str_a[1000];
 
-		sprintf(prefix, "family_F13_q%d_a%d", F->q, Descr->family_F13_a);
-		sprintf(label_txt, "family_F13_q%d_a%d", F->q, Descr->family_F13_a);
-		sprintf(label_tex, "family\\_F13\\_q%d\\_a%d", F->q, Descr->family_F13_a);
+		sprintf(str_q, "%d", F->q);
+		sprintf(str_a, "%d", Descr->family_F13_a);
+
+
+
+		prefix.assign("family_F13_q");
+		prefix.append(str_q);
+		prefix.append("_a");
+		prefix.append(str_a);
+
+		label_txt.assign("family_F13_q");
+		label_txt.append(str_q);
+		label_txt.append("_a");
+		label_txt.append(str_a);
+
+		label_tex.assign("family\\_F13\\_q");
+		label_tex.append(str_q);
+		label_tex.append("\\_a");
+		label_tex.append(str_a);
+
+
 	}
 	else if (Descr->f_by_coefficients) {
 
@@ -283,9 +323,22 @@ void surface_create::init2(int verbose_level)
 		}
 		FREE_int(surface_coeffs);
 		f_has_lines = FALSE;
-		sprintf(prefix, "by_coefficients_q%d", F->q);
-		sprintf(label_txt, "by_coefficients_q%d", F->q);
-		sprintf(label_tex, "by\\_coefficients\\_q%d", F->q);
+
+
+		char str_q[1000];
+
+		sprintf(str_q, "%d", F->q);
+
+
+		prefix.assign("by_coefficients_q");
+		prefix.append(str_q);
+
+		label_txt.assign("by_coefficients_q");
+		label_txt.append(str_q);
+
+		label_tex.assign("by\\_coefficients\\_q");
+		label_tex.append(str_q);
+
 	}
 	else if (Descr->f_catalogue) {
 
@@ -361,9 +414,30 @@ void surface_create::init2(int verbose_level)
 			verbose_level);
 		f_has_group = TRUE;
 
-		sprintf(prefix, "catalogue_q%d_%d", F->q, Descr->iso);
-		sprintf(label_txt, "catalogue_q%d_%d", F->q, Descr->iso);
-		sprintf(label_tex, "catalogue\\_q%d\\_%d", F->q, Descr->iso);
+		char str_q[1000];
+		char str_a[1000];
+
+		sprintf(str_q, "%d", F->q);
+		sprintf(str_a, "%d", Descr->iso);
+
+
+
+		prefix.assign("catalogue_q");
+		prefix.append(str_q);
+		prefix.append("_iso");
+		prefix.append(str_a);
+
+		label_txt.assign("catalogue_q");
+		label_txt.append(str_q);
+		label_txt.append("_iso");
+		label_txt.append(str_a);
+
+		label_tex.assign("catalogue\\_q");
+		label_tex.append(str_q);
+		label_tex.append("\\_iso");
+		label_tex.append(str_a);
+
+
 		if (f_v) {
 			cout << "surface_create::init2 after Sg->generators_"
 					"for_the_stabilizer_of_the_cubic_surface" << endl;

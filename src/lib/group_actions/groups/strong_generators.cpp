@@ -1218,7 +1218,7 @@ void strong_generators::print_generators(ostream &ost)
 	for (i = 0; i < gens->len; i++) {
 		ost << "generator " << i << " / "
 				<< gens->len << " is: " << endl;
-		A->element_print_quick(gens->ith(i), ost);
+		A->element_print(gens->ith(i), ost);
 		ost << "as permutation: " << endl;
 		if (A->degree < 400) {
 			A->element_print_as_permutation_with_offset(

@@ -920,8 +920,31 @@ void finite_field::power_table(int t,
 }
 
 
-
 void finite_field::cheat_sheet(ostream &f, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::cheat_sheet" << endl;
+	}
+
+	cheat_sheet_subfields(f, verbose_level);
+
+	cheat_sheet_main_table(f, verbose_level);
+
+	cheat_sheet_addition_table(f, verbose_level);
+
+	cheat_sheet_multiplication_table(f, verbose_level);
+
+	cheat_sheet_power_table(f, verbose_level);
+
+	if (f_v) {
+		cout << "finite_field::cheat_sheet done" << endl;
+	}
+
+}
+
+void finite_field::cheat_sheet_subfields(ostream &f, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//const char *symbol_for_print = "\\alpha";
@@ -929,7 +952,7 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 
 
 	if (f_v) {
-		cout << "finite_field::cheat_sheet" << endl;
+		cout << "finite_field::cheat_sheet_subfields" << endl;
 	}
 
 	f << "\\small" << endl;
@@ -953,12 +976,8 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 		report_subfields(f, verbose_level);
 	}
 
-
-
-
-
 	if (f_v) {
-		cout << "finite_field::cheat_sheet done" << endl;
+		cout << "finite_field::cheat_sheet_subfields done" << endl;
 	}
 }
 

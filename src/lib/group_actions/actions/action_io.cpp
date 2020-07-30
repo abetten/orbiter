@@ -10,8 +10,6 @@
 
 #include "foundations/foundations.h"
 #include "group_actions.h"
-#include <cstring>
-	// for memcpy
 
 using namespace std;
 
@@ -47,15 +45,24 @@ void action::report(ostream &ost, int f_sims, sims *S,
 
 		F->cheat_sheet(ost, verbose_level);
 
-		F->cheat_sheet_main_table(ost, verbose_level);
-
-		F->cheat_sheet_addition_table(ost, verbose_level);
-
-		F->cheat_sheet_multiplication_table(ost, verbose_level);
-
-		F->cheat_sheet_power_table(ost, verbose_level);
-
 		ost << endl << "\\bigskip" << endl << endl;
+
+		{
+		projective_space *P;
+
+		P = NEW_OBJECT(projective_space);
+
+		P->init(M->n - 1, F, TRUE, verbose_level);
+
+		ost << "\\subsection{The projective space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$}" << endl;
+
+		P->report(ost);
+
+
+
+		FREE_OBJECT(P);
+		}
+
 	}
 
 	if (type_G == wreath_product_t) {

@@ -96,6 +96,7 @@ public:
 		surfaces_arc_lifting *SAL, int arc_idx,
 		action *A,
 		int verbose_level);
+	void print();
 	void recognize(long int *pair, int *transporter,
 			int &orbit_idx, int verbose_level);
 
@@ -484,7 +485,7 @@ public:
 
 	int f_semilinear;
 
-	char fname_base[1000];
+	std::string fname_base;
 
 	action *A; // the action of PGL(4,q) on points
 	action *A2; // the action on the wedge product
@@ -672,9 +673,9 @@ class surface_create {
 public:
 	surface_create_description *Descr;
 
-	char prefix[1000];
-	char label_txt[1000];
-	char label_tex[1000];
+	std::string prefix;
+	std::string label_txt;
+	std::string label_tex;
 
 	int f_ownership;
 
@@ -1076,8 +1077,9 @@ public:
 	surfaces_arc_lifting *Lift;
 
 	int f, f2, po, so;
-	int *f_processed;
+	int *f_processed; // [Lift->Flag_orbits->nb_flag_orbits]
 	int nb_processed;
+
 	int pt_representation_sz;
 	long int *Flag_representation;
 	long int *Flag2_representation;
@@ -1085,19 +1087,40 @@ public:
 
 	longinteger_object go;
 
-	int *Elt_alpha1;
+	// 3x3 matrices or elements in PGGL(3,q)
 	int *Elt_alpha2;
+		// Using local coordinates P6_local[6],
+		// maps the arc P6[6] to the canonical arc in the classification.
 	int *Elt_beta1;
+		// Moves the arc points on m1 to P1 and P2.
+		// Computed using
+		// Table_orbits_on_pairs[orbit_not_on_conic_idx].recognize
 	int *Elt_beta2;
-	int *Elt_beta3;
+		// Moves the partition, computed using
+		// Table_orbits_on_partition[pair_orbit_idx].recognize
+
+	// temporary matrices
 	int *Elt_T1;
 	int *Elt_T2;
 	int *Elt_T3;
 	int *Elt_T4;
 
-	int *Elt_Alpha2;
-	int *Elt_Beta1;
-	int *Elt_Beta2;
+	// 4x4 matrices or elements in PGGL(4,q):
+	int *Elt_Alpha1;
+		// Moves the chosen tritangent plane to the hyperplane X3=0
+
+	int *Elt_Alpha2; // embedding of alpha2
+	int *Elt_Beta1; // embedding of beta1
+	int *Elt_Beta2; // embedding of beta2
+	int *Elt_Beta3;
+		// Moves the two lines  which are the images of l1 and l2
+		// under the group elements computed so far
+		// to the canonical ones associated with the flag f2.
+		// Computed with hyperplane_lifting_with_two_lines_moved
+
+		// if f2 = f then
+		// Alpha1 * Alpha2 * Beta1 * Beta2 * Beta3
+		// is an automorphism of the surface
 
 	double progress;
 	long int Lines[27];
@@ -1115,15 +1138,28 @@ public:
 	longinteger_object S_go;
 
 	int three_lines_idx[3];
+		// the index into Lines[] of the
+		// three lines in the chosen tritangent plane
+		// This is computed from the Schlaefli labeling
+		// using the eckardt point class.
+
 	long int three_lines[3];
+		// the three lines in the chosen tritangent plane
 
 	int line_idx;
-	int m1, m2, m3;
+		// the index of the line chosen to be P1,P2 in three_lines[3]
+
 	int l1, l2;
+		// the two lines defining the Clebsch map.
+		// They pass through m1.
+
+	int m1, m2, m3;
+		// rearrangement of three_lines_idx[3]
+		// m1 = line_idx is the line through P1 and P2.
+		// m2 and m3 are the two other lines.
 	int cnt;
 
 	long int P6[6];
-	long int transversals4[4];
 
 	surfaces_arc_lifting_upstep();
 	~surfaces_arc_lifting_upstep();
@@ -1165,7 +1201,7 @@ public:
 
 	int f_semilinear;
 
-	char fname_base[1000];
+	std::string fname_base;
 
 	action *A4; // the action of PGL(4,q) on points
 	action *A3; // the action of PGL(3,q) on points
@@ -1175,7 +1211,8 @@ public:
 
 	six_arcs_not_on_a_conic *Six_arcs;
 
-	arc_orbits_on_pairs *Table_orbits_on_pairs; // [Six_arcs->nb_arcs_not_on_conic]
+	arc_orbits_on_pairs *Table_orbits_on_pairs;
+		// [Six_arcs->nb_arcs_not_on_conic]
 
 	int nb_flag_orbits;
 

@@ -1748,7 +1748,7 @@ public:
 		int nb_pairs, int &degree, int verbose_level);
 	void normalizer_of_a_Hall_reflection(
 		int nb_pairs, int &degree, int verbose_level);
-	void lifted_group_on_hyperplane_W0_fixing_two_lines(
+	void hyperplane_lifting_with_two_lines_fixed(
 		strong_generators *SG_hyperplane,
 		projective_space *P, int line1, int line2,
 		int verbose_level);

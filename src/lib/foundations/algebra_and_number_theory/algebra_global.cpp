@@ -56,13 +56,6 @@ void algebra_global::cheat_sheet_GF(int q,
 
 	F.cheat_sheet(f, verbose_level);
 
-	F.cheat_sheet_main_table(f, verbose_level);
-
-	F.cheat_sheet_addition_table(f, verbose_level);
-
-	F.cheat_sheet_multiplication_table(f, verbose_level);
-
-	F.cheat_sheet_power_table(f, verbose_level);
 
 	L.foot(f);
 	}

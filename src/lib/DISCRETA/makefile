@@ -16,7 +16,6 @@ MODULES = \
 	domain.o \
 	geometry.o \
 	global.o \
-	group_selection.o \
 	hollerith.o \
 	integer.o \
 	longinteger.o \
@@ -24,7 +23,6 @@ MODULES = \
 	number_partition.o \
 	page_table.o \
 	permutation.o \
-	perm_group_gens.o \
 	solid.o \
 	unipoly.o \
 	vector.o

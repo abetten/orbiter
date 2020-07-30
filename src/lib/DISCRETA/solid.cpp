@@ -1406,6 +1406,7 @@ void solid::join_disjoint(solid& A, solid& J, int f_v)
 	}
 }
 
+#if 0
 void solid::direct_sum(solid& B, solid& J, int f_v)
 {
 	Vector gen1, gen2;
@@ -1446,6 +1447,7 @@ void solid::direct_product(Vector& gen, solid& J, int f_v)
 	A0.standard_vertex_labels(FALSE /* f_start_with_zero */);
 	A0.swap(J);
 }
+#endif
 
 void solid::scale(double f)
 {
@@ -1465,6 +1467,7 @@ void solid::scale(double f)
 	}
 }
 
+#if 0
 void solid::add_central_point(solid& A)
 {
 	solid J;
@@ -1486,6 +1489,7 @@ void solid::add_central_point(solid& A)
 		}
 	J.swap(A);
 }
+#endif
 
 void solid::induced_action_on_edges(permutation& p, permutation& q)
 {
@@ -1639,6 +1643,7 @@ void solid::cube(int r)
 	group_generators_i(1) = P;
 }
 
+#if 0
 void solid::cube4D(int r1, int r2)
 {
 	solid A, B, C;
@@ -1673,7 +1678,9 @@ void solid::cube4D(int r1, int r2)
 	standard_vertex_labels(FALSE /* f_start_with_zero */);
 	// cout << *this << endl;
 }
+#endif
 
+#if 0
 void vec_generators_aut_cube_nd(int n, Vector &gen)
 {
 	Vector gen1, gen2;
@@ -1722,6 +1729,7 @@ void vec_generators_aut_cube_nd(int n, Vector &gen)
 	delete [] w;
 	gen1.swap(gen);
 }
+#endif
 
 #undef DEBUG_BINARY_CONVERSION
 

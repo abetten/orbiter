@@ -584,6 +584,7 @@ std::ostream& operator<<(std::ostream& ost, longinteger_object& p);
 #include "./io_and_os/io_and_os.h"
 #include "./solvers/solvers.h"
 #include "./statistics/statistics.h"
+#include "./surfaces/surfaces.h"
 
 
 
