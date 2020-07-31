@@ -71,7 +71,7 @@ void arc_partition::init(
 
 	if (f_v) {
 		cout << "arc_partition::init" << endl;
-		}
+	}
 
 	arc_partition::OP = OP;
 	arc_partition::pair_orbit_idx = pair_orbit_idx;
@@ -82,7 +82,7 @@ void arc_partition::init(
 	if (f_v) {
 		cout << "arc_partition::init "
 				"creating The_arc" << endl;
-		}
+	}
 
 	The_pair = OP->Orbits_on_pairs->get_set_and_stabilizer(
 			2 /* level */,
@@ -100,12 +100,12 @@ void arc_partition::init(
 				"the remainder is :";
 		lint_vec_print(cout, arc_remainder, 4);
 		cout << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "arc_partition::init "
 				"creating restricted action on the arc" << endl;
-		}
+	}
 
 	A_on_rest = A_on_arc->restricted_action(arc_remainder, 4 /* nb_points */,
 			verbose_level);
@@ -113,7 +113,7 @@ void arc_partition::init(
 	if (f_v) {
 		cout << "arc_partition::init "
 				"creating action on the partition" << endl;
-		}
+	}
 
 	A_on_partition = A_on_rest->induced_action_on_set_partitions(
 			2,
@@ -124,7 +124,7 @@ void arc_partition::init(
 	if (f_v) {
 		cout << "arc_partition::init "
 				"before A_on_rest->all_point_orbits_from_generators" << endl;
-		}
+	}
 
 	A_on_partition->all_point_orbits_from_generators(
 			*Orbits_on_partition,
@@ -135,7 +135,7 @@ void arc_partition::init(
 
 	if (f_v) {
 		cout << "arc_partition::init done" << endl;
-		}
+	}
 }
 
 void arc_partition::recognize(int *partition, int *transporter,

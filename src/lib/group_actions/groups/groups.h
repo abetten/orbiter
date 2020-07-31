@@ -1721,11 +1721,11 @@ public:
 		int epsilon, 
 		int f_semilinear, 
 		int verbose_level);
-	void generators_for_the_stabilizer_of_the_cubic_surface(
+	void stabilizer_of_cubic_surface_from_catalogue(
 		action *A, 
 		finite_field *F, int iso, 
 		int verbose_level);
-	void generators_for_the_stabilizer_of_the_cubic_surface_family_24(
+	void stabilizer_of_HCV_surface(
 		action *A, 
 		finite_field *F, int f_with_normalizer, int f_semilinear, 
 		vector_ge *&nice_gens,

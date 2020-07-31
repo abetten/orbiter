@@ -238,9 +238,6 @@ public:
 	int f_classify_arcs;
 	arc_generator_description *Arc_generator_description;
 
-	//int f_classify_nonconical_arcs;
-	//int classify_arcs_target_size;
-	//int classify_arcs_d;
 
 	int f_exact_cover;
 	exact_cover_arguments *ECA;

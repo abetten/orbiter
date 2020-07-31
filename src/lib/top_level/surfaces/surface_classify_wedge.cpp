@@ -2707,13 +2707,13 @@ void surface_classify_wedge::recognition(
 	SG = NEW_OBJECT(strong_generators);
 	SG0 = NEW_OBJECT(strong_generators);
 	if (f_v) {
-		cout << "before SG->generators_"
-				"for_the_stabilizer_of_the_cubic_surface" << endl;
+		cout << "before SG->stabilizer_of_cubic_surface_from_catalogue" << endl;
 		}
-	SG->generators_for_the_stabilizer_of_the_cubic_surface(
+	SG->stabilizer_of_cubic_surface_from_catalogue(
 		Surf_A->A,
 		F, isomorphic_to,
 		verbose_level);
+
 	SG0->init_generators_for_the_conjugate_group_aGav(
 			SG, Elt_isomorphism, verbose_level);
 	longinteger_object go;

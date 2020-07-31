@@ -14,7 +14,6 @@ MODULES = \
 	discreta_global.o \
 	discreta_matrix.o \
 	domain.o \
-	geometry.o \
 	global.o \
 	hollerith.o \
 	integer.o \

@@ -178,14 +178,12 @@ void surface_create::init2(int verbose_level)
 
 	if (Descr->f_family_HCV) {
 		if (f_v) {
-			cout << "surface_create::init2 before Surf->create_"
-					"surface_family_HCV a=" << Descr->family_HCV_a << endl;
+			cout << "surface_create::init2 before Surf->create_surface_family_HCV a=" << Descr->family_HCV_a << endl;
 		}
 		Surf->create_surface_family_HCV(Descr->family_HCV_a,
 				Lines, coeffs, verbose_level - 1);
 		if (f_v) {
-			cout << "surface_create::init2 after Surf->create_"
-					"surface_family_HCV" << endl;
+			cout << "surface_create::init2 after Surf->create_surface_family_HCV" << endl;
 		}
 
 
@@ -195,21 +193,19 @@ void surface_create::init2(int verbose_level)
 		Sg = NEW_OBJECT(strong_generators);
 		//Sg->init(Surf_A->A, verbose_level);
 		if (f_v) {
-			cout << "surface_create::init2 before Sg->generators_"
-					"for_the_stabilizer_of_the_cubic_surface" << endl;
+			cout << "surface_create::init2 before Sg->stabilizer_of_HCV_surface" << endl;
 		}
 
 
 
-		Sg->generators_for_the_stabilizer_of_the_cubic_surface_family_24(
+		Sg->stabilizer_of_HCV_surface(
 			Surf_A->A,
 			F, FALSE /* f_with_normalizer */,
 			f_semilinear,
 			nice_gens,
 			verbose_level);
 		if (f_v) {
-			cout << "surface_create::init2 after Sg->generators_for_"
-					"the_stabilizer_of_the_cubic_surface" << endl;
+			cout << "surface_create::init2 after Sg->stabilizer_of_HCV_surface" << endl;
 		}
 		f_has_group = TRUE;
 		f_has_nice_gens = TRUE;
@@ -343,8 +339,7 @@ void surface_create::init2(int verbose_level)
 	else if (Descr->f_catalogue) {
 
 		if (f_v) {
-			cout << "surface_create::init2 "
-					"surface from catalogue" << endl;
+			cout << "surface_create::init2 surface from catalogue" << endl;
 		}
 		long int *p_lines;
 		int nb_iso;
@@ -361,8 +356,14 @@ void surface_create::init2(int verbose_level)
 		lint_vec_copy(p_lines, Lines, 27);
 		//nb_E = cubic_surface_nb_Eckardt_points(q, Descr->iso);
 
+		if (f_v) {
+			cout << "surface_create::init2 before Surf->rearrange_lines_according_to_double_six" << endl;
+		}
 		Surf->rearrange_lines_according_to_double_six(
 				Lines, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "surface_create::init2 after Surf->rearrange_lines_according_to_double_six" << endl;
+		}
 		
 		if (Descr->nb_select_double_six) {
 			int i;
@@ -399,20 +400,28 @@ void surface_create::init2(int verbose_level)
 			}
 		}
 
-		Surf->build_cubic_surface_from_lines(27,
-				Lines, coeffs, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "surface_create::init2 before Surf->build_cubic_surface_from_lines" << endl;
+		}
+		Surf->build_cubic_surface_from_lines(27, Lines, coeffs, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "surface_create::init2 after Surf->build_cubic_surface_from_lines" << endl;
+		}
 		f_has_lines = TRUE;
 
 		Sg = NEW_OBJECT(strong_generators);
 		//Sg->init(Surf_A->A, verbose_level);
 		if (f_v) {
-			cout << "surface_create::init2 before Sg->generators_"
-					"for_the_stabilizer_of_the_cubic_surface" << endl;
+			cout << "surface_create::init2 before Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
 		}
-		Sg->generators_for_the_stabilizer_of_the_cubic_surface(Surf_A->A, 
+		Sg->stabilizer_of_cubic_surface_from_catalogue(Surf_A->A,
 			F, Descr->iso, 
 			verbose_level);
 		f_has_group = TRUE;
+
+		if (f_v) {
+			cout << "surface_create::init2 after Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
+		}
 
 		char str_q[1000];
 		char str_a[1000];
@@ -438,10 +447,6 @@ void surface_create::init2(int verbose_level)
 		label_tex.append(str_a);
 
 
-		if (f_v) {
-			cout << "surface_create::init2 after Sg->generators_"
-					"for_the_stabilizer_of_the_cubic_surface" << endl;
-		}
 	}
 	else if (Descr->f_arc_lifting) {
 
@@ -684,8 +689,7 @@ void surface_create::init2(int verbose_level)
 	}
 
 	if (f_has_group) {
-		cout << "surface_create::init2 "
-				"the stabilizer is:" << endl;
+		cout << "surface_create::init2 the stabilizer is:" << endl;
 		Sg->print_generators_tex(cout);
 	}
 	else {
@@ -778,12 +782,12 @@ void surface_create::apply_transformations(
 			cout << "$$" << endl;
 		}
 		
-			matrix_group *M;
+		matrix_group *M;
 
-			M = A->G.matrix_grp;
-			M->substitute_surface_equation(Elt3,
-					coeffs, coeffs_out, Surf,
-					verbose_level - 1);
+		M = A->G.matrix_grp;
+		M->substitute_surface_equation(Elt3,
+				coeffs, coeffs_out, Surf,
+				verbose_level - 1);
 	
 		if (f_v) {
 			cout << "surface_create::apply_transformations "
@@ -801,11 +805,15 @@ void surface_create::apply_transformations(
 		SG2 = NEW_OBJECT(strong_generators);
 		if (f_v) {
 			cout << "surface_create::apply_transformations "
-					"before SG2->init_generators_for_the_"
-					"conjugate_group_avGa" << endl;
+					"before SG2->init_generators_for_the_conjugate_group_avGa" << endl;
 		}
-		SG2->init_generators_for_the_conjugate_group_avGa(
-				Sg, Elt2, verbose_level);
+		SG2->init_generators_for_the_conjugate_group_avGa(Sg, Elt2, verbose_level);
+
+		if (f_v) {
+			cout << "surface_create::apply_transformations "
+					"after SG2->init_generators_for_the_conjugate_group_avGa" << endl;
+		}
+
 		FREE_OBJECT(Sg);
 		Sg = SG2;
 

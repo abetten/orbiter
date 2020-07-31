@@ -166,11 +166,6 @@ void tensor_classify::classify_poset(int depth,
 		cout << "tensor_classify::classify_poset" << endl;
 	}
 
-	//Gen->read_arguments(argc, argv, 0);
-
-	//Gen->prefix[0] = 0;
-	//sprintf(Gen->fname_base, "wreath_%d_%d_%d", nb_factors, n, q);
-
 
 	if (f_v) {
 		cout << "tensor_classify::classify_poset "

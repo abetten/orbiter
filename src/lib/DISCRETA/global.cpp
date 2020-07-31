@@ -250,7 +250,7 @@ const char *kind_ascii(kind k)
 		//case GROUP_WORD: return "GROUP_WORD";
 		//case GROUP_TABLE: return "GROUP_TABLE";
 		//case ACTION: return "ACTION";
-		case GEOMETRY: return "GEOMETRY";
+		//case GEOMETRY: return "GEOMETRY";
 		default: return "unknown kind";
 		}
 }

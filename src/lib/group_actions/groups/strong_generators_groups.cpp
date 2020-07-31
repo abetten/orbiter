@@ -2598,15 +2598,16 @@ void strong_generators::generators_for_the_orthogonal_group(
 	}
 }
 
-void strong_generators::generators_for_the_stabilizer_of_the_cubic_surface(
+void strong_generators::stabilizer_of_cubic_surface_from_catalogue(
 	action *A,
 	finite_field *F, int iso, 
 	int verbose_level)
+// before generators_for_the_stabilizer_of_the_cubic_surface
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_stabilizer_of_the_cubic_surface" << endl;
+		cout << "strong_generators::stabilizer_of_cubic_surface_from_catalogue" << endl;
 		cout << "q=" << F->q << endl;
 		cout << "iso=" << iso << endl;
 	}
@@ -2620,7 +2621,7 @@ void strong_generators::generators_for_the_stabilizer_of_the_cubic_surface(
 	knowledge_base K;
 	
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_stabilizer_of_the_cubic_surface before "
+		cout << "strong_generators::stabilizer_of_cubic_surface_from_catalogue before "
 				"cubic_surface_stab_gens" << endl;
 	}
 	K.cubic_surface_stab_gens(F->q, iso,
@@ -2643,7 +2644,7 @@ void strong_generators::generators_for_the_stabilizer_of_the_cubic_surface(
 	strong_generators *Strong_gens2;
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_stabilizer_of_the_cubic_surface before "
+		cout << "strong_generators::stabilizer_of_cubic_surface_from_catalogue before "
 				"generators_to_strong_generators" << endl;
 	}
 	A->generators_to_strong_generators(
@@ -2652,7 +2653,7 @@ void strong_generators::generators_for_the_stabilizer_of_the_cubic_surface(
 		0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_stabilizer_of_the_cubic_surface after "
+		cout << "strong_generators::stabilizer_of_cubic_surface_from_catalogue after "
 				"generators_to_strong_generators" << endl;
 	}
 	
@@ -2662,13 +2663,13 @@ void strong_generators::generators_for_the_stabilizer_of_the_cubic_surface(
 	FREE_OBJECT(gens);
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_stabilizer_of_the_cubic_surface done" << endl;
+		cout << "strong_generators::stabilizer_of_cubic_surface_from_catalogue done" << endl;
 	}
 }
 
 
 void
-strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24(
+strong_generators::stabilizer_of_HCV_surface(
 	action *A,
 	finite_field *F, int f_with_normalizer, int f_semilinear, 
 	vector_ge *&nice_gens,
@@ -2677,7 +2678,7 @@ strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24" << endl;
+		cout << "strong_generators::stabilizer_of_HCV_surface" << endl;
 		cout << "q=" << F->q << endl;
 		cout << "f_with_normalizer=" << f_with_normalizer << endl;
 		cout << "f_semilinear=" << f_semilinear << endl;
@@ -2691,7 +2692,7 @@ strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24(
 	int i;
 	
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24 before "
+		cout << "strong_generators::stabilizer_of_HCV_surface before "
 				"cubic_surface_stab_gens" << endl;
 	}
 
@@ -2718,7 +2719,7 @@ strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24(
 	strong_generators *Strong_gens2;
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24 before "
+		cout << "strong_generators::stabilizer_of_HCV_surface before "
 				"generators_to_strong_generators" << endl;
 	}
 	A->generators_to_strong_generators(
@@ -2727,7 +2728,7 @@ strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24(
 		0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24 after "
+		cout << "strong_generators::stabilizer_of_HCV_surface after "
 				"generators_to_strong_generators" << endl;
 	}
 	
@@ -2738,7 +2739,7 @@ strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24(
 	//FREE_OBJECT(gens);
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24 done" << endl;
+		cout << "strong_generators::stabilizer_of_HCV_surface done" << endl;
 	}
 }
 

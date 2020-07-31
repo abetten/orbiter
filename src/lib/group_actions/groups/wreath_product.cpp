@@ -1101,7 +1101,8 @@ void wreath_product::report_rank_one_tensors(
 
 	if (f_v) {
 		cout << "wreath_product::report_rank_one_tensors" << endl;
-		cout << "wreath_product::report_rank_one_tensors dimension_of_tensor_action=" << dimension_of_tensor_action << endl;
+		cout << "wreath_product::report_rank_one_tensors "
+				"dimension_of_tensor_action=" << dimension_of_tensor_action << endl;
 	}
 
 

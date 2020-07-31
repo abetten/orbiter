@@ -3,7 +3,7 @@
 using std::cout;
 using std::endl;
 
-logger_init();
+//logger_init();
 
 int main () {
 

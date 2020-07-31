@@ -1076,7 +1076,13 @@ public:
 
 	surfaces_arc_lifting *Lift;
 
-	int f, f2, po, so;
+	int f, f2;
+
+	int po, so;
+
+	// po = Lift->Flag_orbits->Flag_orbit_node[f].downstep_primary_orbit;
+	// so = Lift->Flag_orbits->Flag_orbit_node[f].downstep_secondary_orbit;
+
 	int *f_processed; // [Lift->Flag_orbits->nb_flag_orbits]
 	int nb_processed;
 
@@ -1085,7 +1091,7 @@ public:
 	long int *Flag2_representation;
 		// used only in upstep_group_elements
 
-	longinteger_object go;
+	longinteger_object A4_go;
 
 	// 3x3 matrices or elements in PGGL(3,q)
 	int *Elt_alpha2;
@@ -1131,7 +1137,11 @@ public:
 
 	vector_ge *coset_reps;
 	int nb_coset_reps;
+
+
 	int tritangent_plane_idx;
+		// the tritangent plane picked for the Clebsch map, in [0,44].
+
 	int upstep_idx;
 
 	strong_generators *Flag_stab_gens;
@@ -1181,6 +1191,8 @@ public:
 	void lift_group_elements_and_move_two_lines(int verbose_level);
 	void embed(int *Elt_A3, int *Elt_A4, int verbose_level);
 };
+
+
 
 
 
@@ -1238,6 +1250,7 @@ public:
 	void downstep(int verbose_level);
 	void downstep_one_arc(int arc_idx,
 			int &cur_flag_orbit, long int *Flag, int verbose_level);
+	void report_flag_orbits(std::ostream &ost, int verbose_level);
 	void report(int verbose_level);
 };
 

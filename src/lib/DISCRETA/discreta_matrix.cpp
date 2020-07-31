@@ -3470,37 +3470,6 @@ int nb_PG_lines(int n, int q)
 	return a;
 }
 
-void discreta_matrix::save_as_geometry(int number, char *label)
-{
-	hollerith h;
-	geometry G;
-	G.allocate_geometry();
-	G.number() = number;
-	G.label().init(label);
-	G.X() = *this;
-
-	Vector labelling_P, labelling_B;
-	int i, m, n;
-	m = s_m();
-	n = s_n();
-	labelling_P.m_l_n(m);
-	labelling_B.m_l_n(n);
-	for (i = 0; i < m; i++) {
-		labelling_P.m_ii(i, i + 1);
-		}
-	for (i = 0; i < n; i++) {
-		labelling_B.m_ii(i, i + 1);
-		}
-	G.point_labels() = labelling_P;
-	G.block_labels() = labelling_B;
-	
-	h.init(label);
-	h.append(".geo");
-	ofstream f(h.s());
-	f << G << endl;
-}
-
-
 void discreta_matrix::save_as_inc_file(char *fname)
 {
 	int i, j = 0, m, n, nb_X = 0;

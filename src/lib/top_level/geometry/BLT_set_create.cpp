@@ -172,9 +172,27 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 			verbose_level);
 		f_has_group = TRUE;
 
-		sprintf(prefix, "catalogue_q%d_%d", F->q, Descr->iso);
-		sprintf(label_txt, "catalogue_q%d_%d", F->q, Descr->iso);
-		sprintf(label_tex, "catalogue\\_q%d\\_%d", F->q, Descr->iso);
+		char str_q[1000];
+		char str_iso[1000];
+
+		sprintf(str_q, "%d", F->q);
+		sprintf(str_iso, "%d", Descr->iso);
+
+		prefix.assign("catalogue_q");
+		prefix.append(str_q);
+		prefix.append("_iso");
+		prefix.append(str_iso);
+
+		label_txt.assign("catalogue_q");
+		label_txt.append(str_q);
+		label_txt.append("_iso");
+		label_txt.append(str_iso);
+
+		label_tex.assign("catalogue\\_q");
+		label_tex.append(str_q);
+		label_tex.append("\\_iso");
+		label_tex.append(str_iso);
+
 		if (f_v) {
 			cout << "BLT_set_create::init after "
 					"Sg->BLT_set_from_catalogue_stabilizer" << endl;

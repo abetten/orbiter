@@ -173,7 +173,7 @@ public:
 // #############################################################################
 
 
-//! a description of a graph read from the command line
+//! a description of a graph using command line arguments
 
 
 class create_graph_description {

@@ -359,9 +359,9 @@ class BLT_set_create {
 public:
 	BLT_set_create_description *Descr;
 
-	char prefix[1000];
-	char label_txt[1000];
-	char label_tex[1000];
+	std::string prefix;
+	std::string label_txt;
+	std::string label_tex;
 
 	int q;
 	finite_field *F;
@@ -433,7 +433,7 @@ public:
 class choose_points_or_lines {
 
 public:
-	char label[1000];
+	std::string label;
 	int t0;
 	
 	void *data;

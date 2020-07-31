@@ -124,7 +124,7 @@ void surfaces_arc_lifting::init(
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init" << endl;
-		}
+	}
 	surfaces_arc_lifting::F = F;
 	surfaces_arc_lifting::LG4 = LG4;
 	surfaces_arc_lifting::Surf_A = Surf_A;
@@ -168,7 +168,7 @@ void surfaces_arc_lifting::init(
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init "
 				"before Six_arcs->init" << endl;
-		}
+	}
 
 	Descr->Control = Control_six_arcs;
 	//Descr->LG = LG3; // not needed if we are not using init_from_description
@@ -193,60 +193,17 @@ void surfaces_arc_lifting::init(
 		cout << "surfaces_arc_lifting::init "
 				"Six_arcs->nb_arcs_not_on_conic = "
 				<< Six_arcs->nb_arcs_not_on_conic << endl;
-		}
-
-
-	if (f_v) {
-		cout << "surfaces_arc_lifting::init "
-				"computing orbits on pairs" << endl;
-		}
-
-	Table_orbits_on_pairs =
-			NEW_OBJECTS(arc_orbits_on_pairs,
-					Six_arcs->nb_arcs_not_on_conic);
-	int arc_idx;
-
-	nb_flag_orbits = 0;
-
-	for (arc_idx = 0;
-			arc_idx < Six_arcs->nb_arcs_not_on_conic;
-			arc_idx++) {
-
-		if (f_v) {
-			cout << "surfaces_arc_lifting::init "
-					"before Table_orbits_on_pairs["
-					<< arc_idx << "].init" << endl;
-			}
-		Table_orbits_on_pairs[arc_idx].init(this, arc_idx,
-				A3,
-				verbose_level - 5);
-
-		nb_flag_orbits += Table_orbits_on_pairs[arc_idx].
-				total_nb_orbits_on_partitions;
-
-	}
-	if (f_v) {
-		cout << "surfaces_arc_lifting::init "
-				"computing orbits on pairs done" << endl;
-		cout << "nb_flag_orbits=" << nb_flag_orbits << endl;
-		}
-	for (arc_idx = 0;
-			arc_idx < Six_arcs->nb_arcs_not_on_conic;
-			arc_idx++) {
-		cout << "arc_idx=" << arc_idx << " / " << Six_arcs->nb_arcs_not_on_conic
-				<< " has " << Table_orbits_on_pairs[arc_idx].nb_orbits_on_pairs << " orbits on pairs and " <<
-				Table_orbits_on_pairs[arc_idx].total_nb_orbits_on_partitions << " orbits on partitions" << endl;
 	}
 
+
+
 	if (f_v) {
-		cout << "surfaces_arc_lifting::init "
-				"before downstep" << endl;
-		}
+		cout << "surfaces_arc_lifting::init before downstep" << endl;
+	}
 	downstep(verbose_level);
 	if (f_v) {
-		cout << "surfaces_arc_lifting::init "
-				"after downstep" << endl;
-		}
+		cout << "surfaces_arc_lifting::init after downstep" << endl;
+	}
 
 
 	//exit(1);
@@ -255,7 +212,7 @@ void surfaces_arc_lifting::init(
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init "
 				"before Up->init" << endl;
-		}
+	}
 
 
 	surfaces_arc_lifting_upstep *Up;
@@ -281,11 +238,9 @@ void surfaces_arc_lifting::init(
 void surfaces_arc_lifting::downstep(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
-	int nb_orbits;
+	int arc_idx;
 	int pt_representation_sz;
 	long int *Flag;
-	combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting::downstep" << endl;
@@ -302,23 +257,64 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 		// Flag[33..59] : 27 for the lines of the surface
 	Flag = NEW_lint(pt_representation_sz);
 
-	nb_orbits = Six_arcs->nb_arcs_not_on_conic;
+
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting::downstep computing orbits on pairs" << endl;
+	}
+
+	Table_orbits_on_pairs =
+			NEW_OBJECTS(arc_orbits_on_pairs,
+					Six_arcs->nb_arcs_not_on_conic);
+
+	nb_flag_orbits = 0;
+
+	for (arc_idx = 0;
+			arc_idx < Six_arcs->nb_arcs_not_on_conic;
+			arc_idx++) {
+
+		if (f_v) {
+			cout << "surfaces_arc_lifting::downstep "
+					"before Table_orbits_on_pairs[" << arc_idx << "].init" << endl;
+		}
+		Table_orbits_on_pairs[arc_idx].init(this, arc_idx,
+				A3,
+				verbose_level - 2);
+
+		nb_flag_orbits += Table_orbits_on_pairs[arc_idx].
+				total_nb_orbits_on_partitions;
+
+	}
+	if (f_v) {
+		cout << "surfaces_arc_lifting::downstep "
+				"computing orbits on pairs done" << endl;
+		cout << "nb_flag_orbits=" << nb_flag_orbits << endl;
+	}
+	for (arc_idx = 0;
+			arc_idx < Six_arcs->nb_arcs_not_on_conic;
+			arc_idx++) {
+		cout << "arc_idx=" << arc_idx << " / " << Six_arcs->nb_arcs_not_on_conic
+				<< " has " << Table_orbits_on_pairs[arc_idx].nb_orbits_on_pairs << " orbits on pairs and " <<
+				Table_orbits_on_pairs[arc_idx].total_nb_orbits_on_partitions << " orbits on partitions" << endl;
+	}
+
+
+	//nb_orbits = Six_arcs->nb_arcs_not_on_conic;
+
 	Flag_orbits = NEW_OBJECT(flag_orbits);
 	Flag_orbits->init(
 			A4,
 			A4,
-			nb_orbits /* nb_primary_orbits_lower */,
+			Six_arcs->nb_arcs_not_on_conic /* nb_primary_orbits_lower */,
 			pt_representation_sz,
 			nb_flag_orbits,
 			verbose_level);
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting::downstep "
-				"initializing flag orbits" << endl;
+		cout << "surfaces_arc_lifting::downstep initializing flag orbits" << endl;
 	}
 
 	int cur_flag_orbit;
-	int arc_idx;
 
 
 	flag_orbit_fst = NEW_int(Six_arcs->nb_arcs_not_on_conic);
@@ -334,8 +330,7 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 			cout << "surfaces_arc_lifting::downstep "
 					"before downstep_one_arc" << endl;
 		}
-		downstep_one_arc(arc_idx,
-				cur_flag_orbit, Flag, verbose_level);
+		downstep_one_arc(arc_idx, cur_flag_orbit, Flag, verbose_level);
 
 		if (f_v) {
 			cout << "surfaces_arc_lifting::downstep "
@@ -776,6 +771,78 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 
 }
 
+void surfaces_arc_lifting::report_flag_orbits(ostream &ost, int verbose_level)
+{
+	int flag_orbit_idx;
+	int i;
+	latex_interface L;
+
+	ost << "Flag orbits: \\\\" << endl;
+	ost << "The number of flag orbits is " << Flag_orbits->nb_flag_orbits << " \\\\" << endl;
+
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|c|c|c|c|c|c|c|c|c|c|}" << endl;
+	for (flag_orbit_idx = 0; flag_orbit_idx < Flag_orbits->nb_flag_orbits; flag_orbit_idx++) {
+		//cout << "Flag orbit " << flag_orbit_idx << " : ";
+		long int *Flag;
+		long int lines[2];
+		int arc_idx;
+		int pair_orbit_idx;
+		int part_orbit_idx;
+		int part_rk;
+		long int Arc6[6];
+		long int P2[2];
+		long int flag_stab_order;
+
+		Flag = Flag_orbits->Pt +
+				flag_orbit_idx * Flag_orbits->pt_representation_sz;
+
+		// Flag[0..5]   : 6 for the arc P1,...,P6
+		// Flag[6]      : 1 for orb, the selected orbit on pairs
+		// Flag[7..8]   : 2 for the selected pair, i.e., {0,1} for P1,P2.
+		// Flag[9]      : 1 for orbit, the selected orbit on set_partitions
+		// Flag[10]     : 1 for the partition of the remaining points; values=0,1,2
+		// Flag[11..12] : 2 for the chosen lines line1 and line2 through P1 and P2
+		// Flag[13..32] : 20 for the equation of the surface
+		// Flag[33..59] : 27 for the lines of the surface
+
+
+		arc_idx = Flag_orbits->Flag_orbit_node[flag_orbit_idx].downstep_primary_orbit;
+
+		for (i = 0; i < 6; i++) {
+			Arc6[i] = Flag[i];
+		}
+
+		pair_orbit_idx = Flag[6];
+		part_orbit_idx = Flag[9];
+
+		lines[0] = Flag[11];
+		lines[1] = Flag[12];
+
+		P2[0] = Flag[7];
+		P2[1] = Flag[8];
+
+		part_rk = Flag[10];
+
+		flag_stab_order = Flag_orbits->Flag_orbit_node[flag_orbit_idx].go.as_lint();
+
+		ost << flag_orbit_idx << " & ";
+		ost << arc_idx << " & ";
+		L.lint_set_print_tex(ost, Arc6, 6);
+		ost << " & ";
+		ost << pair_orbit_idx << " & ";
+		L.lint_set_print_tex(ost, P2, 2);
+		ost << " & ";
+		ost << part_orbit_idx << " & ";
+		ost << part_rk << " & ";
+		L.lint_set_print_tex(ost, lines, 2);
+		ost << " & ";
+		ost << flag_stab_order << "\\\\" << endl;
+
+	}
+	ost << "\\end{array}" << endl;
+	ost << "$$" << endl;
+}
 
 void surfaces_arc_lifting::report(int verbose_level)
 {
@@ -826,6 +893,14 @@ void surfaces_arc_lifting::report(int verbose_level)
 	//Surf->print_polynomial_domains(fp);
 	//Surf->print_Schlaefli_labelling(fp);
 
+
+	fp << "\\section{Flag Orbits}" << endl << endl;
+
+
+	report_flag_orbits(fp, verbose_level);
+
+
+
 	fp << "\\section{Six-Arcs}" << endl << endl;
 
 	Six_arcs->report_latex(fp);
@@ -836,7 +911,13 @@ void surfaces_arc_lifting::report(int verbose_level)
 
 	nb_arcs = Six_arcs->Gen->gen->nb_orbits_at_level(6);
 
+
+
 	fp << "There are " << nb_arcs << " arcs.\\\\" << endl << endl;
+
+
+
+
 
 	fp << "There are " << Six_arcs->nb_arcs_not_on_conic
 			<< " arcs not on a conic. "
@@ -853,6 +934,7 @@ void surfaces_arc_lifting::report(int verbose_level)
 				6 /* level */,
 				Six_arcs->Not_on_conic_idx[arc_idx],
 				0 /* verbose_level */);
+
 
 
 		fp << "\\subsection*{Arc "
