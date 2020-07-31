@@ -287,7 +287,6 @@ MODULES= \
 		DISCRETA/discreta_global.o \
 		DISCRETA/discreta_matrix.o \
 		DISCRETA/domain.o \
-		DISCRETA/geometry.o \
 		DISCRETA/global.o \
 		DISCRETA/hollerith.o \
 		DISCRETA/integer.o \

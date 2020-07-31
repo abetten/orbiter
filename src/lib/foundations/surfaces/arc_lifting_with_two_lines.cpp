@@ -96,18 +96,44 @@ void arc_lifting_with_two_lines::create_surface(
 	}
 	Surf->P->unrank_points(Arc_coords, Arc6, 6);
 
+
 	plane_rk = Surf->rank_plane(Arc_coords);
+
 	if (f_vv) {
 		cout << "arc_lifting_with_two_lines::create_surface "
 				"plane_rk=" << plane_rk << endl;
 		}
+
+	if (line1 == 0 && line2 == 0) {
+		if (f_v) {
+			cout << "arc_lifting_with_two_lines::create_surface both lines are zero, "
+					"meaning we will pick our own lines" << endl;
+		}
+		if (f_v) {
+			cout << "arc_lifting_with_two_lines::create_surface before Surf->P->find_two_lines_for_arc_lifting" << endl;
+		}
+		Surf->P->find_two_lines_for_arc_lifting(
+				Arc6[0] /* P1 */, Arc6[1] /* P2 */, line1, line2,
+				verbose_level - 2);
+		if (f_v) {
+			cout << "arc_lifting_with_two_lines::create_surface after Surf->P->find_two_lines_for_arc_lifting" << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "arc_lifting_with_two_lines::create_surface line1=" << line1 << endl;
+		cout << "arc_lifting_with_two_lines::create_surface line2=" << line2 << endl;
+	}
+
+
 	Surf->unrank_line(Basis, line1);
 	Surf->unrank_line(Basis + 8, line2);
 	if (f_vv) {
-		cout << "arc_lifting_with_two_lines::create_surface "
-				"Basis of line1 and line2:" << endl;
-		cout << "line1=" << line1 << " line2=" << line2 << endl;
-		int_matrix_print(Basis, 4, 4);
+		cout << "arc_lifting_with_two_lines::create_surface" << endl;
+		cout << "line1=" << line1 << ":" << endl;
+		int_matrix_print(Basis, 2, 4);
+		cout << "line2=" << line2 << ":" << endl;
+		int_matrix_print(Basis + 8, 2, 4);
 	}
 	rk = F->Gauss_simple(
 			Basis, 4, 4 /*dimension*/,

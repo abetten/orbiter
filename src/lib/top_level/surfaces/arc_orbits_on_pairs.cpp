@@ -94,8 +94,7 @@ void arc_orbits_on_pairs::init(
 
 
 	if (f_v) {
-		cout << "arc_orbits_on_pairs::init "
-				"creating The_arc" << endl;
+		cout << "arc_orbits_on_pairs::init creating The_arc" << endl;
 		}
 
 	The_arc = SAL->Six_arcs->Gen->gen->get_set_and_stabilizer(

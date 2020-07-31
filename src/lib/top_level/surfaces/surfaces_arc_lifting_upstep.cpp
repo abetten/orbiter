@@ -25,12 +25,12 @@ surfaces_arc_lifting_upstep::surfaces_arc_lifting_upstep()
 	Flag_representation = NULL;
 	Flag2_representation = NULL;
 
-	//longinteger_object go;
-	//Elt_alpha1 = NULL;
+	//longinteger_object A4_go;
+
 	Elt_alpha2 = NULL;
 	Elt_beta1 = NULL;
 	Elt_beta2 = NULL;
-	//Elt_beta3 = NULL;
+
 	Elt_T1 = NULL;
 	Elt_T2 = NULL;
 	Elt_T3 = NULL;
@@ -159,11 +159,10 @@ void surfaces_arc_lifting_upstep::init(surfaces_arc_lifting *Lift, int verbose_l
 
 	Lift->Surfaces = NEW_OBJECT(classification_step);
 
-	//longinteger_object go;
-	Lift->A4->group_order(go);
+	Lift->A4->group_order(A4_go);
 
 	Lift->Surfaces->init(Lift->A4, Lift->Surf_A->A2,
-			Lift->Flag_orbits->nb_flag_orbits, 27, go,
+			Lift->Flag_orbits->nb_flag_orbits, 27, A4_go,
 			verbose_level);
 
 
@@ -346,8 +345,7 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(int verbose_level)
 
 		if (f_v) {
 			cout << "surfaces_arc_lifting_upstep::process_flag_orbit "
-					"Extending the "
-					"group by a factor of "
+					"Extending the group by a factor of "
 					<< nb_coset_reps << endl;
 		}
 		Aut_gens = NEW_OBJECT(strong_generators);
@@ -389,7 +387,8 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(int verbose_level)
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting_upstep::process_flag_orbit f="  << f
-			<< " done, number of surfaces = " << Lift->Flag_orbits->nb_primary_orbits_upper << endl;
+			<< " done, number of surfaces = "
+			<< Lift->Flag_orbits->nb_primary_orbits_upper << endl;
 	}
 
 }

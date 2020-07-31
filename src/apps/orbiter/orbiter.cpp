@@ -6,13 +6,11 @@
 //
 
 #include "orbiter.h"
-#include "CPPLOGGER_SYNC.h"
 
 using namespace std;
 using namespace orbiter;
 using namespace orbiter::interfaces;
 
-logger_init();
 
 int main(int argc, const char **argv)
 {

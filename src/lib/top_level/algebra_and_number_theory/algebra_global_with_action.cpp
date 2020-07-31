@@ -1885,22 +1885,18 @@ int algebra_global_with_action::proj_order(discreta_matrix &A)
 
 	m = A.s_m();
 	n = A.s_n();
-	if (m != n)
-	{
-		cout << "matrix::proj_order_mod() m != n" << endl;
+	if (m != n) {
+		cout << "matrix::proj_order_mod m != n" << endl;
 		exit(1);
 	}
-	if (A.is_zero())
-	{
+	if (A.is_zero()) {
 		ord = 0;
 		cout << "is zero matrix!" << endl;
 	}
-	else
-	{
+	else {
 		B = A;
 		ord = 1;
-		while (is_in_center(B) == FALSE)
-		{
+		while (is_in_center(B) == FALSE) {
 			ord++;
 			B *= A;
 		}
@@ -1914,14 +1910,12 @@ void algebra_global_with_action::trace(discreta_matrix &A, discreta_base &tr)
 
 	m = A.s_m();
 	n = A.s_n();
-	if (m != n)
-	{
-		cout << "ERROR: matrix::trace(): not a square matrix!" << endl;
+	if (m != n) {
+		cout << "ERROR: matrix::trace not a square matrix!" << endl;
 		exit(1);
 	}
 	tr = A[0][0];
-	for (i = 1; i < m; i++)
-	{
+	for (i = 1; i < m; i++) {
 		tr += A[i][i];
 	}
 }
@@ -1933,10 +1927,8 @@ void algebra_global_with_action::elementwise_power_int(discreta_matrix &A, int k
 	m = A.s_m();
 	n = A.s_n();
 
-	for (i=0; i < m; i++)
-	{
-		for (j=0; j < n; j++)
-		{
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
 			A[i][j].power_int(k);
 		}
 	}
@@ -1952,19 +1944,15 @@ int algebra_global_with_action::is_in_center(discreta_matrix &B)
 	n = B.s_n();
 	A = B;
 	c = A[0][0];
-	for (i = 0; i < m; i++)
-	{
-		for (j = 0; j < n; j++)
-		{
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
 			integer e;
 
 			e = A[i][j];
-			if (i != j && !e.is_zero())
-			{
+			if (i != j && !e.is_zero()) {
 				return FALSE;
 			}
-			if (i == j && e.s_i() != c.s_i())
-			{
+			if (i == j && e.s_i() != c.s_i()) {
 				return FALSE;
 			}
 		}

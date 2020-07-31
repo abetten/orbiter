@@ -94,7 +94,7 @@ enum kind {
 	//GROUP_WORD = 93, 
 	//GROUP_TABLE = 94,
 	//ACTION = 95, 
-	GEOMETRY = 96                  //!< GEOMETRY
+	//GEOMETRY = 96                  //!< GEOMETRY
 	
 };
 
@@ -234,7 +234,7 @@ class hollerith;		// derived from base
 	//class perm_group;		// derived from vector
 	//class perm_group_stab_chain;	// derived from vector
 	//class action;			// derived from vector
-	class geometry;			// derived from vector
+	//class geometry;			// derived from vector
 	//class group_selection;		// derived from vector
 	class solid;			// derived from vector
 	class bt_key;			// derived from vector
@@ -450,7 +450,7 @@ class discreta_base
 	//perm_group_stab_chain& as_perm_group_stab_chain() { return *(perm_group_stab_chain *)this; }
 	memory& as_memory() { return *(memory *)this; }
 	action& as_action() { return *(action *)this; }
-	geometry& as_geometry() { return *(geometry *)this; }
+	//geometry& as_geometry() { return *(geometry *)this; }
 	hollerith& as_hollerith() { return *(hollerith *)this; }
 	//group_selection& as_group_selection() { return *(group_selection *)this; }
 	solid& as_solid() { return *(solid *)this; }
@@ -476,7 +476,7 @@ class discreta_base
 	//perm_group_stab_chain& change_to_perm_group_stab_chain() { freeself(); c_kind(PERM_GROUP_STAB_CHAIN); return as_perm_group_stab_chain(); }
 	memory& change_to_memory() { freeself(); c_kind(MEMORY); return as_memory(); }
 	//action& change_to_action() { freeself(); c_kind(ACTION); return as_action(); }
-	geometry& change_to_geometry() { freeself(); c_kind(GEOMETRY); return as_geometry(); }
+	//geometry& change_to_geometry() { freeself(); c_kind(GEOMETRY); return as_geometry(); }
 	hollerith& change_to_hollerith() { freeself(); c_kind(HOLLERITH); return as_hollerith(); }
 	//group_selection& change_to_group_selection() { freeself(); c_kind(GROUP_SELECTION); return as_group_selection(); }
 	solid& change_to_solid() { freeself(); c_kind(SOLID); return as_solid(); }
@@ -1279,7 +1279,6 @@ class discreta_matrix: public discreta_base
 	void PG_element_normalize();
 	void AG_point_rank(int i0, int j0, int di, int dj, int length, int &a);
 	void AG_point_unrank(int i0, int j0, int di, int dj, int length, int a);
-	void save_as_geometry(int number, char *label);
 	void save_as_inc_file(char *fname);
 	void save_as_inc(std::ofstream &f);
 };
@@ -1464,74 +1463,6 @@ class number_partition: public Vector
 
 };
 
-//! DISCRETA class for incidence matrices
-
-
-
-class geometry: public Vector
-{
-	public:
-	geometry();
-		// constructor, sets the vector_pointer to NULL
-	void allocate_geometry();
-	geometry(const discreta_base& x);
-		// copy constructor
-	geometry& operator = (const discreta_base &x);
-		// copy assignment
-	void *operator new(size_t, void *p) { return p; } 
-	void settype_geometry();
-	kind s_virtual_kind();
-	~geometry();
-	void freeself_geometry();
-	void copyobject_to(discreta_base &x);
-	std::ostream& print(std::ostream&);
-	void print_latex(std::ostream& ost);
-	void print_head_latex(std::ostream& ost);
-	void print_incma_text_latex(std::ostream& ost);
-	void print_labellings_latex(std::ostream& ost);
-	void print_incma_latex_picture(std::ostream& ost);
-	
-	void print_inc(std::ostream &ost);
-	void print_inc_only(std::ostream &ost);
-	void print_inc_header(std::ostream &ost);
-	void print_ascii(std::ostream& ost);
-	int scan(std::istream&);
-	void scan_body(std::istream& f, int geo_nr, char *geo_label);
-
-
-	int & number() { return Vector::s_i(0).as_integer().s_i(); }
-	hollerith & label() { return Vector::s_i(1).as_hollerith(); }
-	discreta_matrix & X() { return Vector::s_i(2).as_matrix(); }
-	int & f_incidence_matrix() { return Vector::s_i(3).as_integer().s_i(); }
-	
-	Vector & point_labels() { return Vector::s_i(4).as_vector(); }
-	Vector & block_labels() { return Vector::s_i(5).as_vector(); }
-
-	int & f_row_decomp() { return Vector::s_i(6).as_integer().s_i(); }
-	Vector & row_decomp() { return Vector::s_i(7).as_vector(); }
-	int & f_col_decomp() { return Vector::s_i(8).as_integer().s_i(); }
-	Vector & col_decomp() { return Vector::s_i(9).as_vector(); }
-	
-	int & f_ddp() { return Vector::s_i(10).as_integer().s_i(); }
-	Vector & ddp() { return Vector::s_i(11).as_vector(); }
-	int & f_ddb() { return Vector::s_i(12).as_integer().s_i(); }
-	Vector & ddb() { return Vector::s_i(13).as_vector(); }
-
-	int & f_canonical_labelling_points() { return Vector::s_i(14).as_integer().s_i(); }
-	permutation & canonical_labelling_points() { return Vector::s_i(15).as_permutation(); }
-	int & f_canonical_labelling_blocks() { return Vector::s_i(16).as_integer().s_i(); }
-	permutation & canonical_labelling_blocks() { return Vector::s_i(17).as_permutation(); }
-
-	int & f_aut_gens() { return Vector::s_i(18).as_integer().s_i(); }
-	Vector & aut_gens() { return Vector::s_i(19).as_vector(); }
-	discreta_base & ago() { return Vector::s_i(20); }
-
-	void transpose();
-	int is_2design(int &r, int &lambda, int f_v);
-	void get_lexleast_X(discreta_matrix & X0);
-};
-
-int search_geo_file(discreta_matrix & X0, char *fname, int geo_nr, char *geo_label, int f_v);
 
 
 //! DISCRETA class for influencing arithmetic operations

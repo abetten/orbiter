@@ -66,15 +66,8 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_export_magma = FALSE;
 	f_order_of_products = FALSE;
 	order_of_products_elements = NULL;
-	//f_embedded = FALSE;
-	//f_sideways = FALSE;
-	//x_stretch = 1.;
-	//f_print_generators = FALSE;
 	f_classify_arcs = FALSE;
 	Arc_generator_description = NULL;
-	//f_classify_nonconical_arcs = FALSE;
-	//classify_arcs_target_size = 0;
-	//classify_arcs_d = 0;
 	f_exact_cover = FALSE;
 	ECA = NULL;
 	f_isomorph_arguments = FALSE;
@@ -342,28 +335,6 @@ int group_theoretic_activity_description::read_arguments(
 			f_export_magma = TRUE;
 			cout << "-export_magma " << endl;
 		}
-#if 0
-		else if (strcmp(argv[i], "-group_table") == 0) {
-			f_group_table = TRUE;
-			cout << "-group_table" << endl;
-		}
-		else if (strcmp(argv[i], "-embedded") == 0) {
-			f_embedded = TRUE;
-			cout << "-embedded" << endl;
-		}
-		else if (strcmp(argv[i], "-sideways") == 0) {
-			f_sideways = TRUE;
-			cout << "-sideways" << endl;
-		}
-		else if (strcmp(argv[i], "-x_stretch") == 0) {
-			sscanf(argv[++i], "%lf", &x_stretch);
-			cout << "-x_stretch" << x_stretch << endl;
-		}
-		else if (strcmp(argv[i], "-print_generators") == 0) {
-			f_print_generators = TRUE;
-			cout << "-print_generators" << endl;
-		}
-#endif
 
 		// classification tasks:
 
@@ -373,7 +344,8 @@ int group_theoretic_activity_description::read_arguments(
 			f_linear_codes = TRUE;
 			linear_codes_minimum_distance = atoi(argv[++i]);
 			linear_codes_target_size = atoi(argv[++i]);
-			cout << "-linear_codes " << linear_codes_minimum_distance << " " << linear_codes_target_size << endl;
+			cout << "-linear_codes " << linear_codes_minimum_distance
+					<< " " << linear_codes_target_size << endl;
 		}
 
 

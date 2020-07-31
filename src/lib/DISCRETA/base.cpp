@@ -94,7 +94,7 @@ void discreta_base::freeself_kind(kind k)
 		//case GROUP_WORD: as_group_word().freeself_group_word(); break;
 		//case GROUP_TABLE: as_group_table().freeself_group_table(); break;
 		// case ACTION: as_action().freeself_action(); break;
-		case GEOMETRY: as_geometry().freeself_geometry(); break;
+		//case GEOMETRY: as_geometry().freeself_geometry(); break;
 		case HOLLERITH: as_hollerith().freeself_hollerith(); break;
 		//case GROUP_SELECTION: as_group_selection().freeself_group_selection(); break;
 		case BT_KEY: as_bt_key().freeself_bt_key(); break;
@@ -159,7 +159,7 @@ void discreta_base::c_kind(kind k)
 		//case GROUP_WORD: as_group_word().settype_group_word(); break;
 		//case GROUP_TABLE: as_group_table().settype_group_table(); break;
 		// case ACTION: as_action().settype_action(); break;
-		case GEOMETRY: as_geometry().settype_geometry(); break;
+		//case GEOMETRY: as_geometry().settype_geometry(); break;
 		case HOLLERITH: as_hollerith().settype_hollerith(); break;
 		//case GROUP_SELECTION: as_group_selection().settype_group_selection(); break;
 		case BT_KEY: as_bt_key().settype_bt_key(); break;
@@ -1177,11 +1177,9 @@ void discreta_base::write_memory(memory &m, int debug_depth)
 		case ACTION:
 			as_action().write_mem(m, debug_depth);
 			break;
-#endif
 		case GEOMETRY:
 			as_geometry().write_mem(m, debug_depth);
 			break;
-#if 0
 		case GROUP_SELECTION:
 			as_group_selection().write_mem(m, debug_depth);
 			break;
@@ -1269,11 +1267,9 @@ void discreta_base::read_memory(memory &m, int debug_depth)
 		case ACTION:
 			as_action().read_mem(m, debug_depth);
 			break;
-#endif
 		case GEOMETRY:
 			as_geometry().read_mem(m, debug_depth);
 			break;
-#if 0
 		case GROUP_SELECTION:
 			as_group_selection().read_mem(m, debug_depth);
 			break;
@@ -1366,11 +1362,9 @@ int discreta_base::calc_size_on_file()
 		case ACTION:
 			size += as_action().csf();
 			break;
-#endif
 		case GEOMETRY:
 			size += as_geometry().csf();
 			break;
-#if 0
 		case GROUP_SELECTION:
 			size += as_group_selection().csf();
 			break;

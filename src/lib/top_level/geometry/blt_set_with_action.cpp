@@ -79,8 +79,7 @@ void blt_set_with_action::init_orbits_on_points(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "blt_set_with_action::init_orbits_"
-				"on_points" << endl;
+		cout << "blt_set_with_action::init_orbits_on_points" << endl;
 	}
 
 	if (f_v) {
@@ -108,8 +107,7 @@ void blt_set_with_action::init_orbits_on_points(
 	}
 
 	if (f_v) {
-		cout << "blt_set_with_action::init_orbits_"
-				"on_points done" << endl;
+		cout << "blt_set_with_action::init_orbits_on_points done" << endl;
 	}
 }
 

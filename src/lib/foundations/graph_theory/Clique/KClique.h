@@ -15,7 +15,7 @@
 #include <atomic>
 #include <string>
 #include <math.h>
-#include <CPPLOGGER_SYNC.h>
+//#include <CPPLOGGER_SYNC.h>
 
 #ifndef SRC_LIB_FOUNDATIONS_GRAPH_THEORY_CLIQUE_KCLIQUE_H_
 #define SRC_LIB_FOUNDATIONS_GRAPH_THEORY_CLIQUE_KCLIQUE_H_
@@ -38,36 +38,36 @@ public:
 		PARAMS<T> params [nThreads];
 
 		// Initialize the params for every thread
-		logger_info("Initializing params for each thread");
+		//logger_info("Initializing params for each thread");
 		for (size_t i=0; i<nThreads; ++i) {
 			params[i].init(i, k, G.nb_vertices, nThreads);
 			threads[i] = std::thread(find_cliques_parallel<T,U>, 0, std::ref(params[i]), std::ref(G));
 		}
-		logger_info("Done initializing params for each thread");
+		//logger_info("Done initializing params for each thread");
 
 		// start the worker threads
-		logger_info("Starting worker threads");
+		//logger_info("Starting worker threads");
 		for (size_t i=0; i<nThreads; ++i) threads[i].join();
 
-		logger_info("All worker threads done.");
+		//logger_info("All worker threads done.");
 
 		// Find the total number of solutions
-		logger_info("Reserving the solutions vector");
+		//logger_info("Reserving the solutions vector");
 		size_t nb_sols = 0;
 		for (size_t i=0; i<nThreads; ++i) {
 			nb_sols += params[i].t_solutions.size();
 		}
 		soln.reserve(nb_sols);
 
-		logger_info("Adding solutions to the solutions vector");
+		//logger_info("Adding solutions to the solutions vector");
 		for (size_t i=0; i<nThreads; ++i) {
 			auto start = params[i].t_solutions.begin();
 			auto end = params[i].t_solutions.end();
 			std::move(start, end, std::back_inserter(soln));
 		}
-		logger_info("Done adding solutions.");
+		//logger_info("Done adding solutions.");
 
-		logger_info("Done finding cliques.");
+		//logger_info("Done finding cliques.");
 	}
 
 

@@ -3060,6 +3060,9 @@ void group_theoretic_activity::do_create_surface(
 
 
 		}
+	else {
+		cout << "We don't have the group of the surface" << endl;
+	}
 
 
 
@@ -3395,13 +3398,10 @@ void group_theoretic_activity::do_tensor_classify(int depth, int verbose_level)
 		cout << "group_theoretic_activity::do_tensor_classify" << endl;
 	}
 
-	poset_classification_control *Control;
 
-	if (Descr->f_poset_classification_control) {
-		Control = Descr->Control;
-	}
-	else {
-		Control = NEW_OBJECT(poset_classification_control);
+	if (!Descr->f_poset_classification_control) {
+		cout << "please use option -poset_classification_control descr -end" << endl;
+		exit(1);
 	}
 
 
@@ -3422,7 +3422,7 @@ void group_theoretic_activity::do_tensor_classify(int depth, int verbose_level)
 		cout << "group_theoretic_activity::do_tensor_classify before classify_poset" << endl;
 	}
 	T->classify_poset(depth,
-			Control,
+			Descr->Control,
 			verbose_level);
 	if (f_v) {
 		cout << "group_theoretic_activity::do_tensor_classify after classify_poset" << endl;

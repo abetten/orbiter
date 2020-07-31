@@ -25,7 +25,7 @@ choose_points_or_lines::~choose_points_or_lines()
 
 void choose_points_or_lines::null()
 {
-	label[0] = 0;
+	//label;
 	data = NULL;
 	//Arc = NULL;
 	//input_set = NULL;
@@ -131,7 +131,7 @@ void choose_points_or_lines::init(const char *label, void *data,
 		cout << "choose_points_or_lines::init " << label << endl;
 		}
 	
-	strcpy(choose_points_or_lines::label, label);
+	choose_points_or_lines::label.assign(label);
 	//choose_points_or_lines::Arc = Arc;
 	choose_points_or_lines::data = data;
 	choose_points_or_lines::A = A;
