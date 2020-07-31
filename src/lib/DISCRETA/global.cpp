@@ -242,7 +242,7 @@ const char *kind_ascii(kind k)
 		case UNIPOLY: return "UNIPOLY";
 		
 		case DESIGN_PARAMETER_SOURCE: return "DESIGN_PARAMETER_SOURCE";
-		case SOLID: return "SOLID";
+		//case SOLID: return "SOLID";
 
 		case BITMATRIX: return "BITMATRIX";
 		//case PC_PRESENTATION: return "PC_PRESENTATION";
