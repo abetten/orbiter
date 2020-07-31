@@ -105,12 +105,17 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 	line_idx[1] = line2;
 	//plane_rk = New_clebsch->choose_unitangent_plane(
 	//line1, line2, transversal, 0 /* verbose_level */);
-	tritangent_plane_idx = SO->choose_tritangent_plane(line1, line2,
-			transversal, 0 /* verbose_level */);
+	tritangent_plane_idx = Surf->choose_tritangent_plane_for_Clebsch_map(line1, line2,
+			transversal, verbose_level);
+
+	//tritangent_plane_idx = SO->choose_tritangent_plane(line1, line2,
+	//		transversal, 0 /* verbose_level */);
 
 	//plane_rk_global = New_clebsch->Unitangent_planes[plane_rk];
-	plane_rk_global = SO->Tritangent_planes[
-			SO->Eckardt_to_Tritangent_plane[tritangent_plane_idx]];
+	//plane_rk_global = SO->Tritangent_planes[
+	//		SO->Eckardt_to_Tritangent_plane[tritangent_plane_idx]];
+
+	plane_rk_global = SO->Tritangent_plane_rk[tritangent_plane_idx];
 
 
 	int u, a, h;

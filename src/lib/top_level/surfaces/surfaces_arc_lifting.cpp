@@ -663,7 +663,8 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 					P0, P1, line1, line2,
 					verbose_level - 2);
 			if (f_v) {
-				cout << "surfaces_arc_lifting::downstep_one_arc after find_two_lines_for_arc_lifting "
+				cout << "surfaces_arc_lifting::downstep_one_arc "
+						"after find_two_lines_for_arc_lifting "
 						"line1=" << line1 << " line2=" << line2 << endl;
 			}
 
@@ -782,6 +783,7 @@ void surfaces_arc_lifting::report_flag_orbits(ostream &ost, int verbose_level)
 
 	ost << "$$" << endl;
 	ost << "\\begin{array}{|c|c|c|c|c|c|c|c|c|c|}" << endl;
+	ost << "\\hline" << endl;
 	for (flag_orbit_idx = 0; flag_orbit_idx < Flag_orbits->nb_flag_orbits; flag_orbit_idx++) {
 		//cout << "Flag orbit " << flag_orbit_idx << " : ";
 		long int *Flag;
@@ -824,7 +826,7 @@ void surfaces_arc_lifting::report_flag_orbits(ostream &ost, int verbose_level)
 
 		part_rk = Flag[10];
 
-		flag_stab_order = Flag_orbits->Flag_orbit_node[flag_orbit_idx].go.as_lint();
+		flag_stab_order = Flag_orbits->Flag_orbit_node[flag_orbit_idx].gens->group_order_as_lint();
 
 		ost << flag_orbit_idx << " & ";
 		ost << arc_idx << " & ";
@@ -838,7 +840,7 @@ void surfaces_arc_lifting::report_flag_orbits(ostream &ost, int verbose_level)
 		L.lint_set_print_tex(ost, lines, 2);
 		ost << " & ";
 		ost << flag_stab_order << "\\\\" << endl;
-
+		ost << "\\hline" << endl;
 	}
 	ost << "\\end{array}" << endl;
 	ost << "$$" << endl;
@@ -868,6 +870,8 @@ void surfaces_arc_lifting::report(int verbose_level)
 	ofstream fp(fname_arc_lifting.c_str());
 	latex_interface L;
 
+	int arc_idx;
+	int nb_arcs;
 
 	L.head(fp,
 		FALSE /* f_book */,
@@ -886,13 +890,59 @@ void surfaces_arc_lifting::report(int verbose_level)
 		}
 
 
+	fp << "\\section{Six-Arcs}" << endl << endl;
 
-	fp << "\\section{Basics}" << endl << endl;
+	Six_arcs->report_latex(fp);
 
-	Surf->print_basics(fp);
-	//Surf->print_polynomial_domains(fp);
-	//Surf->print_Schlaefli_labelling(fp);
 
+
+	nb_arcs = Six_arcs->Gen->gen->nb_orbits_at_level(6);
+
+
+
+	fp << "There are " << nb_arcs << " arcs.\\\\" << endl << endl;
+
+
+
+
+
+	fp << "There are " << Six_arcs->nb_arcs_not_on_conic
+			<< " arcs not on a conic. "
+			"They are as follows:\\\\" << endl << endl;
+
+
+	for (arc_idx = 0;
+			arc_idx < Six_arcs->nb_arcs_not_on_conic;
+			arc_idx++) {
+		{
+			set_and_stabilizer *The_arc;
+
+		The_arc = Six_arcs->Gen->gen->get_set_and_stabilizer(
+				6 /* level */,
+				Six_arcs->Not_on_conic_idx[arc_idx],
+				0 /* verbose_level */);
+
+
+
+		fp << "\\subsection*{Arc "
+				<< arc_idx << " / "
+				<< Six_arcs->nb_arcs_not_on_conic << "}" << endl;
+
+		fp << "$$" << endl;
+		//int_vec_print(fp, Arc6, 6);
+		The_arc->print_set_tex(fp);
+		fp << "$$" << endl;
+
+		F->display_table_of_projective_points(fp,
+			The_arc->data, 6, 3);
+
+
+		fp << "The stabilizer is the following group:\\\\" << endl;
+		The_arc->Strong_gens->print_generators_tex(fp);
+
+		FREE_OBJECT(The_arc);
+		}
+	} // arc_idx
 
 	fp << "\\section{Flag Orbits}" << endl << endl;
 
@@ -901,13 +951,11 @@ void surfaces_arc_lifting::report(int verbose_level)
 
 
 
-	fp << "\\section{Six-Arcs}" << endl << endl;
+	fp << "\\section{Flag Orbits in Detail}" << endl << endl;
 
 	Six_arcs->report_latex(fp);
 
 
-	int arc_idx;
-	int nb_arcs;
 
 	nb_arcs = Six_arcs->Gen->gen->nb_orbits_at_level(6);
 
@@ -1086,18 +1134,21 @@ void surfaces_arc_lifting::report(int verbose_level)
 				fp << "line1=" << line1 << " line2=" << line2 << "\\\\" << endl;
 				fp << "$$" << endl;
 				fp << "\\ell_1 = " << endl;
-				fp << "\\left[" << endl;
+				//fp << "\\left[" << endl;
 				Surf->P->Grass_lines->print_single_generator_matrix_tex(fp, line1);
-				fp << "\\right]" << endl;
+				//fp << "\\right]" << endl;
 				fp << "\\quad" << endl;
 				fp << "\\ell_2 = " << endl;
-				fp << "\\left[" << endl;
+				//fp << "\\left[" << endl;
 				Surf->P->Grass_lines->print_single_generator_matrix_tex(fp, line2);
-				fp << "\\right]" << endl;
+				//fp << "\\right]" << endl;
 				fp << "$$" << endl;
 				fp << "The equation of the lifted surface is:" << endl;
 				fp << "$$" << endl;
 				Surf->print_equation_tex_lint(fp, Flag + 13);
+				fp << "$$" << endl;
+				fp << "$$" << endl;
+				lint_vec_print(fp, Flag + 13, 20);
 				fp << "$$" << endl;
 
 				downstep_secondary_orbit++;
@@ -1114,7 +1165,15 @@ void surfaces_arc_lifting::report(int verbose_level)
 
 		FREE_OBJECT(The_arc);
 		}
-	}
+	} // arc_idx
+
+	fp << "\\section{Basics}" << endl << endl;
+
+	Surf->print_basics(fp);
+	//Surf->print_polynomial_domains(fp);
+	//Surf->print_Schlaefli_labelling(fp);
+
+
 
 
 

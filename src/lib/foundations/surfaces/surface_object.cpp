@@ -55,6 +55,9 @@ surface_object::surface_object()
 	Type_pts_on_lines = NULL;
 	Type_lines_on_point = NULL;
 	Tritangent_plane_rk = NULL;
+	nb_tritangent_planes = 0;
+
+#if 0
 	Tritangent_planes = NULL;
 	nb_tritangent_planes = 0;
 	Lines_in_tritangent_plane = NULL;
@@ -72,6 +75,11 @@ surface_object::surface_object()
 	Eckardt_to_Tritangent_plane = NULL;
 	Trihedral_pairs_as_tritangent_planes = NULL;
 	Unitangent_planes_on_lines = NULL;
+#endif
+
+	Lines_in_tritangent_planes = NULL;
+
+	Trihedral_pairs_as_tritangent_planes = NULL;
 
 	All_Planes = NULL;
 	Dual_point_ranks = NULL;
@@ -142,6 +150,8 @@ void surface_object::freeself()
 	if (Tritangent_plane_rk) {
 		FREE_lint(Tritangent_plane_rk);
 	}
+
+#if 0
 	if (Tritangent_planes) {
 		FREE_lint(Tritangent_planes);
 	}
@@ -196,6 +206,16 @@ void surface_object::freeself()
 	if (Unitangent_planes_on_lines) {
 		FREE_int(Unitangent_planes_on_lines);
 	}
+#endif
+
+	if (Lines_in_tritangent_planes) {
+		FREE_lint(Lines_in_tritangent_planes);
+	}
+
+	if (Trihedral_pairs_as_tritangent_planes) {
+		FREE_lint(Trihedral_pairs_as_tritangent_planes);
+	}
+
 	if (All_Planes) {
 		FREE_lint(All_Planes);
 	}
@@ -457,6 +477,29 @@ void surface_object::compute_properties(int verbose_level)
 				"compute_plane_type_by_points" << endl;
 	}
 
+
+	if (f_v) {
+		cout << "surface_object::compute_properties before "
+				"compute_Lines_in_tritangent_planes" << endl;
+	}
+	compute_Lines_in_tritangent_planes(verbose_level - 1);
+	if (f_v) {
+		cout << "surface_object::compute_properties after "
+				"compute_Lines_in_tritangent_planes" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_object::compute_properties before "
+				"compute_Trihedral_pairs_as_tritangent_planes" << endl;
+	}
+	compute_Trihedral_pairs_as_tritangent_planes(verbose_level - 1);
+	if (f_v) {
+		cout << "surface_object::compute_properties after "
+				"compute_Trihedral_pairs_as_tritangent_planes" << endl;
+	}
+
+#if 0
 	if (f_v) {
 		cout << "surface_object::compute_properties before "
 				"compute_tritangent_planes" << endl;
@@ -466,6 +509,7 @@ void surface_object::compute_properties(int verbose_level)
 		cout << "surface_object::compute_properties after "
 				"compute_tritangent_planes" << endl;
 	}
+#endif
 
 	if (f_v) {
 		cout << "surface_object::compute_properties before "
@@ -850,6 +894,7 @@ void surface_object::compute_tritangent_planes_by_rank(int verbose_level)
 		cout << "surface_object::compute_tritangent_planes_by_rank" << endl;
 	}
 
+	nb_tritangent_planes = 45;
 	Tritangent_plane_rk = NEW_lint(45);
 
 	int tritangent_plane_idx;
@@ -887,14 +932,59 @@ void surface_object::compute_tritangent_planes_by_rank(int verbose_level)
 			cout << tritangent_plane_idx << " : " << Tritangent_plane_rk[tritangent_plane_idx] << endl;
 		}
 	}
-
-
-
 	if (f_v) {
 		cout << "surface_object::compute_tritangent_planes_by_rank done" << endl;
 	}
 }
 
+
+void surface_object::compute_Lines_in_tritangent_planes(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int tritangent_plane_idx, j;
+
+	if (f_v) {
+		cout << "surface_object::compute_Lines_in_tritangent_planes" << endl;
+	}
+	Lines_in_tritangent_planes = NEW_lint(45 * 3);
+	for (tritangent_plane_idx = 0;
+			tritangent_plane_idx < 45;
+			tritangent_plane_idx++) {
+		for (j = 0; j < 3; j++) {
+			Lines_in_tritangent_planes[tritangent_plane_idx * 3 + j] =
+				Lines[Surf->Lines_in_tritangent_planes[tritangent_plane_idx * 3 + j]];
+		}
+	}
+
+	if (f_v) {
+		cout << "surface_object::compute_Lines_in_tritangent_planes done" << endl;
+	}
+}
+
+void surface_object::compute_Trihedral_pairs_as_tritangent_planes(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+
+	if (f_v) {
+		cout << "surface_object::compute_Lines_in_tritangent_planes" << endl;
+	}
+	Trihedral_pairs_as_tritangent_planes = NEW_lint(120 * 6);
+	for (i = 0;
+			i < 120;
+			i++) {
+		for (j = 0; j < 6; j++) {
+			Trihedral_pairs_as_tritangent_planes[i * 6 + j] =
+					Tritangent_plane_rk[Surf->Trihedral_to_Eckardt[i * 6 + j]];
+		}
+	}
+
+	if (f_v) {
+		cout << "surface_object::compute_Lines_in_tritangent_planes done" << endl;
+	}
+}
+
+#if 0
 void surface_object::compute_tritangent_planes(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -907,9 +997,9 @@ void surface_object::compute_tritangent_planes(int verbose_level)
 	
 	if (f_v) {
 		cout << "surface_object::compute_tritangent_planes "
-				"computing tritangent planes:" << endl;
+				"before compute_tritangent_planes_slow" << endl;
 	}
-	Surf->compute_tritangent_planes(Lines, 
+	Surf->compute_tritangent_planes_slow(Lines,
 		Tritangent_planes, nb_tritangent_planes, 
 		Unitangent_planes, nb_unitangent_planes, 
 		Lines_in_tritangent_plane, 
@@ -1017,6 +1107,7 @@ void surface_object::compute_tritangent_planes(int verbose_level)
 		cout << "surface_object::compute_tritangent_planes done" << endl;
 	}
 }
+#endif
 
 void surface_object::compute_planes_and_dual_point_ranks(int verbose_level)
 {
@@ -1032,8 +1123,7 @@ void surface_object::compute_planes_and_dual_point_ranks(int verbose_level)
 	//Iso_trihedral_pair = NEW_int(Surf->nb_trihedral_pairs);
 
 
-	Surf->Trihedral_pairs_to_planes(Lines, All_Planes,
-			0 /*verbose_level*/);
+	Surf->Trihedral_pairs_to_planes(Lines, All_Planes, 0 /*verbose_level*/);
 	
 	
 	for (i = 0; i < Surf->nb_trihedral_pairs; i++) {
@@ -1104,12 +1194,13 @@ void surface_object::print_everything(ostream &ost, int verbose_level)
 
 	//SO->print_planes_in_trihedral_pairs(ost);
 
+#if 0
 	if (f_v) {
 		cout << "surface_object::print_everything "
 				"before print_generalized_quadrangle" << endl;
 	}
 	print_generalized_quadrangle(ost);
-
+#endif
 
 	if (f_v) {
 		cout << "surface_object::print_everything "
@@ -1196,11 +1287,13 @@ void surface_object::report_properties(ostream &ost, int verbose_level)
 
 	//SOA->SO->print_planes_in_trihedral_pairs(fp);
 
+#if 0
 	if (f_v) {
 		cout << "surface_object::report_properties "
 				"before print_generalized_quadrangle" << endl;
 	}
 	print_generalized_quadrangle(ost);
+#endif
 
 	if (f_v) {
 		cout << "surface_object::report_properties "
@@ -1453,7 +1546,7 @@ void surface_object::print_planes_in_trihedral_pairs(ostream &ost)
 
 void surface_object::print_tritangent_planes(ostream &ost)
 {
-	int i, j, plane_rk, b, v4[4];
+	int i, plane_rk, b, v4[4];
 	int Mtx[16];
 
 	//ost << "\\clearpage" << endl;
@@ -1461,9 +1554,16 @@ void surface_object::print_tritangent_planes(ostream &ost)
 	ost << "The " << nb_tritangent_planes << " tritangent "
 			"planes are:\\\\" << endl;
 	for (i = 0; i < nb_tritangent_planes; i++) {
+
+#if 0
 		j = Eckardt_to_Tritangent_plane[i];
 		plane_rk = Tritangent_planes[j];
 		b = Tritangent_plane_dual[j];
+#else
+		plane_rk = Tritangent_plane_rk[i];
+		b = Surf->P->dual_rank_of_plane_in_three_space(
+				plane_rk, 0 /* verbose_level */);
+#endif
 		ost << "$$" << endl;
 		ost << "\\pi_{" << Surf->Eckard_point_label_tex[i] << "} = ";
 		ost << "\\pi_{" << i << "} = " << plane_rk << " = ";
@@ -1568,6 +1668,7 @@ void surface_object::print_tritangent_planes(ostream &ost)
 
 }
 
+#if 0
 void surface_object::print_generalized_quadrangle(ostream &ost)
 {
 	//ost << "\\clearpage" << endl;
@@ -1698,6 +1799,8 @@ void surface_object::print_generalized_quadrangle(ostream &ost)
 #endif
 
 }
+#endif
+
 
 void surface_object::print_plane_type_by_points(ostream &ost)
 {
@@ -1776,10 +1879,12 @@ void surface_object::print_general(ostream &ost)
 	Type_lines_on_point->print_naked_tex(ost, TRUE);
 	ost << "$$" << endl;
 	ost << endl;
+#if 0
 	ost << "Type iso of tritangent planes: ";
 	ost << "$$" << endl;
 	Type_iso_tritangent_planes->print_naked_tex(ost, TRUE);
 	ost << "$$" << endl;
+#endif
 	ost << endl;
 }
 
@@ -2259,7 +2364,7 @@ void surface_object::print_trihedral_pairs(ostream &ost)
 	int n_offset = 0;
 	int m = 40;
 	int m_offset = 0;
-	int *p = Surf->Trihedral_to_Eckardt;
+	long int *p = Surf->Trihedral_to_Eckardt;
 
 	ost << "\\begin{array}{|r|r|*{" << n << "}r|}" << endl;
 	ost << "\\hline" << endl;
@@ -2360,18 +2465,16 @@ void surface_object::print_trihedral_pairs_numerically(ostream &ost)
 	ost << "The planes in the trihedral pairs in Eckardt "
 			"point labeling are:\\\\" << endl;
 	ost << "$$" << endl;
-	L.print_integer_matrix_with_standard_labels(ost,
+	L.print_lint_matrix_with_standard_labels(ost,
 		Surf->Trihedral_to_Eckardt, 40, 6, TRUE /* f_tex */);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
-	L.print_integer_matrix_with_standard_labels_and_offset(ost,
-		Surf->Trihedral_to_Eckardt + 40 * 6, 40, 6, 40, 0,
-		TRUE /* f_tex */);
+	L.print_lint_matrix_with_standard_labels_and_offset(ost,
+		Surf->Trihedral_to_Eckardt + 40 * 6, 40, 6, 40, 0, TRUE /* f_tex */);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
-	L.print_integer_matrix_with_standard_labels_and_offset(ost,
-		Surf->Trihedral_to_Eckardt + 80 * 6, 40, 6, 80, 0,
-		TRUE /* f_tex */);
+	L.print_lint_matrix_with_standard_labels_and_offset(ost,
+		Surf->Trihedral_to_Eckardt + 80 * 6, 40, 6, 80, 0, TRUE /* f_tex */);
 	ost << "$$" << endl;
 }
 
@@ -2492,7 +2595,7 @@ void surface_object::latex_table_of_trihedral_pairs(ostream &ost,
 
 void surface_object::latex_trihedral_pair(ostream &ost, int t_idx)
 {
-	int i, j, e, t, a;
+	int i, j, e, a;
 	
 	//ost << "\\left[" << endl;
 	ost << "\\begin{array}{c||ccc|cc}" << endl;
@@ -2511,8 +2614,12 @@ void surface_object::latex_trihedral_pair(ostream &ost, int t_idx)
 			}
 		e = Surf->Trihedral_to_Eckardt[t_idx * 6 + i];
 		ost << " & {\\pi_{" << e << "} =\\atop";
+#if 0
 		t = Eckardt_to_Tritangent_plane[e];
 		a = Tritangent_planes[t];
+#else
+		a = Tritangent_plane_rk[e];
+#endif
 		ost << "\\left[" << endl;
 		Surf->Gr3->print_single_generator_matrix_tex(ost, a);
 		ost << "\\right]}" << endl;
@@ -2524,8 +2631,12 @@ void surface_object::latex_trihedral_pair(ostream &ost, int t_idx)
 	for (j = 0; j < 3; j++) {
 		e = Surf->Trihedral_to_Eckardt[t_idx * 6 + 3 + j];
 		ost << " & {\\pi_{" << e << "} =\\atop";
+#if 0
 		t = Eckardt_to_Tritangent_plane[e];
 		a = Tritangent_planes[t];
+#else
+		a = Tritangent_plane_rk[e];
+#endif
 		ost << "\\left[" << endl;
 		Surf->Gr3->print_single_generator_matrix_tex(ost, a);
 		ost << "\\right]}" << endl;
@@ -2548,34 +2659,40 @@ void surface_object::make_equation_in_trihedral_form(int t_idx,
 	int f_v = (verbose_level >= 1);
 	int i, c, h;
 	int row_col_Eckardt_points[6];
-	//int plane_rk[6];
-	int plane_idx[6];
+	int plane_rk[6];
+	//int plane_idx[6];
 
 	if (f_v) {
 		cout << "surface_object::make_equation_in_trihedral_form t_idx=" << t_idx << endl;
-		}
+	}
 	
 	if (f_v) {
 		cout << "Trihedral pair T_{"
 			<< Surf->Trihedral_pair_labels[t_idx] << "}"
 			<< endl;
-		}
+	}
 
-	int_vec_copy(Surf->Trihedral_to_Eckardt + t_idx * 6,
-			row_col_Eckardt_points, 6);
+	for (h = 0; h < 6; h++) {
+		row_col_Eckardt_points[h] = Surf->Trihedral_to_Eckardt[t_idx * 6 + h];
+	}
+	//int_vec_copy(Surf->Trihedral_to_Eckardt + t_idx * 6, row_col_Eckardt_points, 6);
 	for (i = 0; i < 6; i++) {
-		plane_idx[i] = Eckardt_to_Tritangent_plane[
-						row_col_Eckardt_points[i]];
+		//plane_idx[i] = Eckardt_to_Tritangent_plane[row_col_Eckardt_points[i]];
 		//plane_rk[i] = Tritangent_planes[plane_idx[i]];
-		}
+		plane_rk[i] = Tritangent_plane_rk[row_col_Eckardt_points[i]];
+	}
 	for (i = 0; i < 3; i++) {
-		c = Tritangent_plane_dual[plane_idx[i]];
+		c = Surf->P->dual_rank_of_plane_in_three_space(
+				plane_rk[i], 0 /* verbose_level */);
+		//c = Tritangent_plane_dual[plane_idx[i]];
 		F->PG_element_unrank_modified(F_planes + i * 4, 1, 4, c);
-		}
+	}
 	for (i = 0; i < 3; i++) {
-		c = Tritangent_plane_dual[plane_idx[3 + i]];
+		c = Surf->P->dual_rank_of_plane_in_three_space(
+				plane_rk[3 + i], 0 /* verbose_level */);
+		//c = Tritangent_plane_dual[plane_idx[3 + i]];
 		F->PG_element_unrank_modified(G_planes + i * 4, 1, 4, c);
-		}
+	}
 	int evals[6];
 	int pt_on_surface[4];
 	int a, b, ma, bv, pt;
@@ -2587,13 +2704,12 @@ void surface_object::make_equation_in_trihedral_form(int t_idx,
 		pt = Pts[h];
 		F->PG_element_unrank_modified(pt_on_surface, 1, 4, pt);
 		for (i = 0; i < 3; i++) {
-			evals[i] = Surf->Poly1_4->evaluate_at_a_point(
-					F_planes + i * 4, pt_on_surface);
-			}
+			evals[i] = Surf->Poly1_4->evaluate_at_a_point(F_planes + i * 4, pt_on_surface);
+		}
 		for (i = 0; i < 3; i++) {
 			evals[3 + i] = Surf->Poly1_4->evaluate_at_a_point(
 					G_planes + i * 4, pt_on_surface);
-			}
+		}
 		a = F->mult3(evals[0], evals[1], evals[2]);
 		b = F->mult3(evals[3], evals[4], evals[5]);
 		if (b) {
@@ -2601,13 +2717,13 @@ void surface_object::make_equation_in_trihedral_form(int t_idx,
 			bv = F->inverse(b);
 			lambda = F->mult(ma, bv);
 			break;
-			}
 		}
+	}
 	if (h == nb_pts) {
 		cout << "surface_object::make_equation_in_trihedral_form could "
 				"not determine lambda" << endl;
 		exit(1);
-		}
+	}
 
 	Surf->multiply_linear_times_linear_times_linear_in_space(F_planes, 
 		F_planes + 4, F_planes + 8, 
@@ -2625,8 +2741,7 @@ void surface_object::make_equation_in_trihedral_form(int t_idx,
 
 	if (f_v) {
 		cout << "surface_object::make_equation_in_trihedral_form done" << endl;
-		}
-	
+	}
 }
 
 void surface_object::print_equation_in_trihedral_form(ostream &ost, 
@@ -2637,8 +2752,7 @@ void surface_object::print_equation_in_trihedral_form(ostream &ost,
 	ost << "0 & = F_0F_1F_2 + \\lambda G_0G_1G_2\\\\" << endl;
 	ost << "& = " << endl;
 
-	print_equation_in_trihedral_form_equation_only(ost, 
-		F_planes, G_planes, lambda);
+	print_equation_in_trihedral_form_equation_only(ost, F_planes, G_planes, lambda);
 }
 
 void surface_object::print_equation_in_trihedral_form_equation_only(
@@ -2683,6 +2797,8 @@ void surface_object::make_and_print_equation_in_trihedral_form(
 	//FREE_int(system);
 }
 
+
+#if 0
 void surface_object::identify_double_six_from_trihedral_pair(
 	int *Lines, int t_idx, int *nine_lines, int *double_sixes, 
 	int verbose_level)
@@ -2728,6 +2844,7 @@ void surface_object::identify_double_six_from_trihedral_pair(
 		cout << "surface_object::identify_double_six_from_trihedral_pair done" << endl;
 	}
 }
+
 
 void surface_object::identify_double_six_from_trihedral_pair_type_one(
 		int *Lines, int t_idx, int *nine_line_idx, int *double_sixes,
@@ -3508,84 +3625,6 @@ int surface_object::find_unique_line_in_plane(int plane_idx,
 	exit(1);
 }
 
-void surface_object::identify_lines(long int *lines, int nb_lines,
-	int *line_idx, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, idx;
-	sorting Sorting;
-
-	if (f_v) {
-		cout << "surface_object::identify_lines" << endl;
-		}
-	for (i = 0; i < nb_lines; i++) {
-		if (!Sorting.lint_vec_search_linear(Lines, 27, lines[i], idx)) {
-			cout << "surface_object::identify_lines could "
-					"not find lines[" << i << "]=" << lines[i]
-					<< " in Lines[]" << endl;
-			exit(1);
-			}
-		line_idx[i] = idx;
-		}
-	if (f_v) {
-		cout << "surface_object::identify_lines done" << endl;
-		}
-}
-
-void surface_object::print_nine_lines_latex(ostream &ost, 
-	long int *nine_lines, int *nine_lines_idx)
-{
-	latex_interface L;
-	int i, j, idx;
-
-	ost << "$$";
-	L.print_lint_matrix_with_standard_labels(ost,
-			nine_lines, 3, 3, TRUE /* f_tex*/);
-
-
-	ost << "\\qquad" << endl;
-	ost << "\\begin{array}{c|ccc}" << endl;
-	for (j = 0; j < 3; j++) {
-		ost << " & " << j;
-		}
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < 3; i++) {
-		ost << i << " & ";
-		for (j = 0; j < 3; j++) {
-
-			idx = nine_lines_idx[i * 3 + j];
-			ost << "\\ell_{" << idx << "}";
-			if (j < 3 - 1) {
-				ost << " & ";
-				}
-			}
-		ost << "\\\\" << endl;
-		}
-	ost << "\\end{array}" << endl;
-	ost << "\\qquad" << endl;
-	ost << "\\begin{array}{c|ccc}" << endl;
-	for (j = 0; j < 3; j++) {
-		ost << " & " << j;
-		}
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < 3; i++) {
-		ost << i << " & ";
-		for (j = 0; j < 3; j++) {
-
-			idx = nine_lines_idx[i * 3 + j];
-			ost << Surf->Line_label_tex[idx];
-			if (j < 3 - 1) {
-				ost << " & ";
-				}
-			}
-		ost << "\\\\" << endl;
-		}
-	ost << "\\end{array}" << endl;
-	ost << "$$" << endl;
-}
-
 int surface_object::choose_tritangent_plane(
 	int line_a, int line_b, int transversal_line, int verbose_level)
 {
@@ -3695,6 +3734,85 @@ void surface_object::find_all_tritangent_planes(
 		cout << "surface_object::choose_tritangent_plane "
 				"done" << endl;
 		}
+}
+#endif
+
+void surface_object::identify_lines(long int *lines, int nb_lines,
+	int *line_idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, idx;
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "surface_object::identify_lines" << endl;
+		}
+	for (i = 0; i < nb_lines; i++) {
+		if (!Sorting.lint_vec_search_linear(Lines, 27, lines[i], idx)) {
+			cout << "surface_object::identify_lines could "
+					"not find lines[" << i << "]=" << lines[i]
+					<< " in Lines[]" << endl;
+			exit(1);
+			}
+		line_idx[i] = idx;
+		}
+	if (f_v) {
+		cout << "surface_object::identify_lines done" << endl;
+		}
+}
+
+void surface_object::print_nine_lines_latex(ostream &ost,
+	long int *nine_lines, int *nine_lines_idx)
+{
+	latex_interface L;
+	int i, j, idx;
+
+	ost << "$$";
+	L.print_lint_matrix_with_standard_labels(ost,
+			nine_lines, 3, 3, TRUE /* f_tex*/);
+
+
+	ost << "\\qquad" << endl;
+	ost << "\\begin{array}{c|ccc}" << endl;
+	for (j = 0; j < 3; j++) {
+		ost << " & " << j;
+		}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < 3; i++) {
+		ost << i << " & ";
+		for (j = 0; j < 3; j++) {
+
+			idx = nine_lines_idx[i * 3 + j];
+			ost << "\\ell_{" << idx << "}";
+			if (j < 3 - 1) {
+				ost << " & ";
+				}
+			}
+		ost << "\\\\" << endl;
+		}
+	ost << "\\end{array}" << endl;
+	ost << "\\qquad" << endl;
+	ost << "\\begin{array}{c|ccc}" << endl;
+	for (j = 0; j < 3; j++) {
+		ost << " & " << j;
+		}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < 3; i++) {
+		ost << i << " & ";
+		for (j = 0; j < 3; j++) {
+
+			idx = nine_lines_idx[i * 3 + j];
+			ost << Surf->Line_label_tex[idx];
+			if (j < 3 - 1) {
+				ost << " & ";
+				}
+			}
+		ost << "\\\\" << endl;
+		}
+	ost << "\\end{array}" << endl;
+	ost << "$$" << endl;
 }
 
 int surface_object::compute_transversal_line(
@@ -4112,6 +4230,10 @@ void surface_object::compute_clebsch_maps(int verbose_level)
 }
 #endif
 
+
+
+
+
 void surface_object::compute_clebsch_map(int line_a, int line_b, 
 	int transversal_line, 
 	long int &tritangent_plane_rk,
@@ -4146,11 +4268,23 @@ void surface_object::compute_clebsch_map(int line_a, int line_b,
 	//transversal_line = compute_transversal_line(line_a, line_b,
 	//0 /* verbose_level */);
 	
+
+#if 0
 	tritangent_plane_rk = choose_tritangent_plane(line_a, line_b,
 			transversal_line, 0 /* verbose_level */);
+#else
+	tritangent_plane_rk = Surf->choose_tritangent_plane_for_Clebsch_map(
+			line_a, line_b,
+			transversal_line, verbose_level);
+#endif
 
+#if 0
 	plane_rk_global = Tritangent_planes[
 			Eckardt_to_Tritangent_plane[tritangent_plane_rk]];
+#else
+	plane_rk_global = Tritangent_plane_rk[tritangent_plane_rk];
+#endif
+
 
 	if (f_v) {
 		cout << "transversal\\_line = " << transversal_line
@@ -4288,10 +4422,9 @@ void surface_object::latex_table_of_trihedral_pairs(ostream &ost)
 	cout << "surface_object::latex_table_of_trihedral_pairs done" << endl;
 }
 
-void surface_object::latex_trihedral_pair(ostream &ost,
-		int *T, int *TE)
+void surface_object::latex_trihedral_pair(ostream &ost, int *T, long int *TE)
 {
-	int i, j, t, plane_rk;
+	int i, j, plane_rk;
 	int Mtx[16];
 	
 	ost << "\\begin{array}{*{" << 3 << "}{c}|c}" << endl;
@@ -4303,8 +4436,12 @@ void surface_object::latex_trihedral_pair(ostream &ost,
 		ost << "\\pi_{";
 		Surf->Eckardt_points[TE[i]].latex_index_only(ost);
 		ost << "}=" << endl;
+#if 0
 		t = Eckardt_to_Tritangent_plane[TE[i]];
 		plane_rk = Tritangent_planes[t];
+#else
+		plane_rk = Tritangent_plane_rk[TE[i]];
+#endif
 		Surf->Gr3->unrank_lint_here_and_compute_perp(Mtx, plane_rk,
 			0 /*verbose_level */);
 		F->PG_element_normalize(Mtx + 12, 1, 4);
@@ -4322,8 +4459,12 @@ void surface_object::latex_trihedral_pair(ostream &ost,
 	ost << "\\\\" << endl;
 	for (j = 0; j < 3; j++) {
 		ost << "\\multicolumn{4}{l}{" << endl;
+#if 0
 		t = Eckardt_to_Tritangent_plane[TE[3 + j]];
 		plane_rk = Tritangent_planes[t];
+#else
+		plane_rk = Tritangent_plane_rk[TE[i]];
+#endif
 		ost << "\\pi_{";
 		Surf->Eckardt_points[TE[3 + j]].latex_index_only(ost);
 		ost << "}=" << endl;

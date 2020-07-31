@@ -189,7 +189,7 @@ void surface_domain::latex_abstract_trihedral_pair(ostream &ost, int t_idx)
 		Trihedral_to_Eckardt + t_idx * 6);
 }
 
-void surface_domain::latex_trihedral_pair(ostream &ost, int *T, int *TE)
+void surface_domain::latex_trihedral_pair(ostream &ost, int *T, long int *TE)
 {
 	int i, j;
 
@@ -266,17 +266,17 @@ void surface_domain::print_trihedral_pairs(ostream &ost)
 		}
 	ost << "List of trihedral pairs numerically:\\\\" << endl;
 	ost << "$$" << endl;
-	L.print_integer_matrix_with_standard_labels_and_offset(ost,
+	L.print_lint_matrix_with_standard_labels_and_offset(ost,
 		Trihedral_to_Eckardt, 40, 6, 0, 0, TRUE /* f_tex*/);
 	ost << "\\;";
 	//ost << "$$" << endl;
 	//ost << "$$" << endl;
-	L.print_integer_matrix_with_standard_labels_and_offset(ost,
+	L.print_lint_matrix_with_standard_labels_and_offset(ost,
 		Trihedral_to_Eckardt + 40 * 6, 40, 6, 40, 0, TRUE /* f_tex*/);
 	ost << "\\;";
 	//ost << "$$" << endl;
 	//ost << "$$" << endl;
-	L.print_integer_matrix_with_standard_labels_and_offset(ost,
+	L.print_lint_matrix_with_standard_labels_and_offset(ost,
 		Trihedral_to_Eckardt + 80 * 6, 40, 6, 80, 0, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 }

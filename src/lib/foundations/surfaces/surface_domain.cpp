@@ -19,6 +19,74 @@ namespace foundations {
 
 surface_domain::surface_domain()
 {
+	v = NULL;
+	v2 = NULL;
+	w2 = NULL;
+	P = NULL;
+	P2 = NULL;
+	Gr = NULL;
+	Gr3 = NULL;
+	O = NULL;
+	Klein = NULL;
+
+	Sets = NULL;
+	M = NULL;
+	Sets2 = NULL;
+
+
+	Pts = NULL;
+	pt_list = NULL;
+	System = NULL;
+	base_cols = NULL;
+
+	Line_label = NULL;
+	Line_label_tex = NULL;
+	Trihedral_pairs = NULL;
+	Trihedral_pair_labels = NULL;
+	nb_trihedral_pairs = 0;
+	Trihedral_pairs_row_sets = NULL;
+	Trihedral_pairs_col_sets = NULL;
+	Classify_trihedral_pairs_row_values = NULL;
+	Classify_trihedral_pairs_col_values = NULL;
+	nb_Eckardt_points = 0;
+	Eckardt_points = NULL;
+	Eckard_point_label = NULL;
+	Eckard_point_label_tex = NULL;
+	Trihedral_to_Eckardt = NULL;
+	collinear_Eckardt_triples_rank = NULL;
+	Classify_collinear_Eckardt_triples = NULL;
+	Poly1 = NULL;
+	Poly2 = NULL;
+	Poly3 = NULL;
+	Poly1_x123 = NULL;
+	Poly2_x123 = NULL;
+	Poly3_x123 = NULL;
+	Poly4_x123 = NULL;
+	Poly1_4 = NULL;
+	Poly2_4 = NULL;
+	Poly3_4 = NULL;
+	Double_six = NULL;
+	Double_six_label_tex = NULL;
+	Half_double_sixes = NULL;
+	Half_double_six_label_tex = NULL;
+	Half_double_six_to_double_six = NULL;
+	Half_double_six_to_double_six_row = NULL;
+
+	f_has_large_polynomial_domains = FALSE;
+	Poly2_27 = NULL;
+	Poly4_27 = NULL;
+	Poly6_27 = NULL;
+	Poly3_24 = NULL;
+
+	Clebsch_Pij = NULL;
+	Clebsch_P = NULL;
+	Clebsch_P3 = NULL;
+	Clebsch_coeffs = NULL;
+	CC = NULL;
+
+	adjacency_matrix_of_lines = NULL;
+	incidence_lines_vs_tritangent_planes = NULL;
+	Lines_in_tritangent_planes = NULL;
 	null();
 }
 
@@ -153,7 +221,7 @@ void surface_domain::freeself()
 		FREE_OBJECTS(Eckardt_points);
 	}
 	if (Trihedral_to_Eckardt) {
-		FREE_int(Trihedral_to_Eckardt);
+		FREE_lint(Trihedral_to_Eckardt);
 	}
 	if (collinear_Eckardt_triples_rank) {
 		FREE_int(collinear_Eckardt_triples_rank);
@@ -253,6 +321,12 @@ void surface_domain::freeself()
 	if (adjacency_matrix_of_lines) {
 		FREE_int(adjacency_matrix_of_lines);
 	}
+	if (incidence_lines_vs_tritangent_planes) {
+		FREE_int(incidence_lines_vs_tritangent_planes);
+	}
+	if (Lines_in_tritangent_planes) {
+		FREE_lint(Lines_in_tritangent_planes);
+	}
 	null();
 	if (f_v) {
 		cout << "surface_domain::freeself done" << endl;
@@ -261,72 +335,6 @@ void surface_domain::freeself()
 
 void surface_domain::null()
 {
-	v = NULL;
-	v2 = NULL;
-	w2 = NULL;
-	P = NULL;
-	P2 = NULL;
-	Gr = NULL;
-	Gr3 = NULL;
-	O = NULL;
-	Klein = NULL;
-
-	Sets = NULL;
-	M = NULL;
-	Sets2 = NULL;
-
-
-	Pts = NULL;
-	pt_list = NULL;
-	System = NULL;
-	base_cols = NULL;
-
-	Line_label = NULL;
-	Line_label_tex = NULL;
-	Trihedral_pairs = NULL;
-	Trihedral_pair_labels = NULL;
-	nb_trihedral_pairs = 0;
-	Trihedral_pairs_row_sets = NULL;
-	Trihedral_pairs_col_sets = NULL;
-	Classify_trihedral_pairs_row_values = NULL;
-	Classify_trihedral_pairs_col_values = NULL;
-	nb_Eckardt_points = 0;
-	Eckardt_points = NULL;
-	Eckard_point_label = NULL;
-	Eckard_point_label_tex = NULL;
-	Trihedral_to_Eckardt = NULL;
-	collinear_Eckardt_triples_rank = NULL;
-	Classify_collinear_Eckardt_triples = NULL;
-	Poly1 = NULL;
-	Poly2 = NULL;
-	Poly3 = NULL;
-	Poly1_x123 = NULL;
-	Poly2_x123 = NULL;
-	Poly3_x123 = NULL;
-	Poly4_x123 = NULL;
-	Poly1_4 = NULL;
-	Poly2_4 = NULL;
-	Poly3_4 = NULL;
-	Double_six = NULL;
-	Double_six_label_tex = NULL;
-	Half_double_sixes = NULL;
-	Half_double_six_label_tex = NULL;
-	Half_double_six_to_double_six = NULL;
-	Half_double_six_to_double_six_row = NULL;
-
-	f_has_large_polynomial_domains = FALSE;
-	Poly2_27 = NULL;
-	Poly4_27 = NULL;
-	Poly6_27 = NULL;
-	Poly3_24 = NULL;
-
-	Clebsch_Pij = NULL;
-	Clebsch_P = NULL;
-	Clebsch_P3 = NULL;
-	Clebsch_coeffs = NULL;
-	CC = NULL;
-
-	adjacency_matrix_of_lines = NULL;
 }
 
 void surface_domain::init(finite_field *F, int verbose_level)
@@ -515,13 +523,19 @@ void surface_domain::init(finite_field *F, int verbose_level)
 	//print_half_double_sixes_in_GAP();
 
 	if (f_v) {
-		cout << "surface::init before "
-				"init_adjacency_matrix_of_lines" << endl;
+		cout << "surface::init before init_adjacency_matrix_of_lines" << endl;
 	}
 	init_adjacency_matrix_of_lines(verbose_level);
 	if (f_v) {
-		cout << "surface::init after "
-				"init_adjacency_matrix_of_lines" << endl;
+		cout << "surface::init after init_adjacency_matrix_of_lines" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface::init before init_incidence_matrix_of_lines_vs_tritangent_planes" << endl;
+	}
+	init_incidence_matrix_of_lines_vs_tritangent_planes(verbose_level);
+	if (f_v) {
+		cout << "surface::init after init_incidence_matrix_of_lines_vs_tritangent_planes" << endl;
 	}
 
 	//clebsch_cubics(verbose_level);
@@ -1554,12 +1568,11 @@ void surface_domain::init_Trihedral_to_Eckardt(int verbose_level)
 		cout << "surface_domain::init_Trihedral_to_Eckardt" << endl;
 	}
 	nb_trihedral_to_Eckardt = nb_trihedral_pairs * 6;
-	Trihedral_to_Eckardt = NEW_int(nb_trihedral_to_Eckardt);
+	Trihedral_to_Eckardt = NEW_lint(nb_trihedral_to_Eckardt);
 	for (t = 0; t < nb_trihedral_pairs; t++) {
 		for (i = 0; i < 3; i++) {
 			for (j = 0; j < 3; j++) {
-				tritangent_plane[j] = 
-					Trihedral_pairs[t * 9 + i * 3 + j];
+				tritangent_plane[j] = Trihedral_pairs[t * 9 + i * 3 + j];
 				}
 			rk = Eckardt_point_from_tritangent_plane(tritangent_plane);
 			Trihedral_to_Eckardt[t * 6 + i] = rk;
@@ -1569,14 +1582,13 @@ void surface_domain::init_Trihedral_to_Eckardt(int verbose_level)
 				tritangent_plane[i] = 
 					Trihedral_pairs[t * 9 + i * 3 + j];
 			}
-			rk = Eckardt_point_from_tritangent_plane(
-				tritangent_plane);
+			rk = Eckardt_point_from_tritangent_plane(tritangent_plane);
 			Trihedral_to_Eckardt[t * 6 + 3 + j] = rk;
 		}
 	}
 	if (f_v) {
 		cout << "Trihedral_to_Eckardt:" << endl;
-		L.print_integer_matrix_with_standard_labels(cout,
+		L.print_lint_matrix_with_standard_labels(cout,
 			Trihedral_to_Eckardt, nb_trihedral_pairs, 6, 
 			FALSE /* f_tex */);
 	}
@@ -1618,7 +1630,7 @@ int surface_domain::Eckardt_point_from_tritangent_plane(
 void surface_domain::init_collinear_Eckardt_triples(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int t, i, rk;
+	int t, i, rk, h;
 	int subset[3];
 	combinatorics_domain Combi;
 	sorting Sorting;
@@ -1631,8 +1643,10 @@ void surface_domain::init_collinear_Eckardt_triples(int verbose_level)
 	collinear_Eckardt_triples_rank = NEW_int(nb_collinear_Eckardt_triples);
 	for (t = 0; t < nb_trihedral_pairs; t++) {
 		for (i = 0; i < 2; i++) {
-			int_vec_copy(Trihedral_to_Eckardt + 6 * t + i * 3, 
-				subset, 3);
+			for (h = 0; h < 3; h++) {
+				subset[h] = Trihedral_to_Eckardt[6 * t + i * 3 + h];
+			}
+			//int_vec_copy(Trihedral_to_Eckardt + 6 * t + i * 3, subset, 3);
 			Sorting.int_vec_heapsort(subset, 3);
 			rk = Combi.rank_k_subset(subset, nb_Eckardt_points, 3);
 			collinear_Eckardt_triples_rank[t * 2 + i] = rk;

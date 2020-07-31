@@ -355,7 +355,8 @@ void surface_domain::Trihedral_pairs_to_planes(long int *Lines, long int *Planes
 }
 
 
-void surface_domain::compute_tritangent_planes(long int *Lines,
+
+void surface_domain::compute_tritangent_planes_slow(long int *Lines,
 	long int *&Tritangent_planes, int &nb_tritangent_planes,
 	long int *&Unitangent_planes, int &nb_unitangent_planes,
 	long int *&Lines_in_tritangent_plane,
@@ -369,7 +370,7 @@ void surface_domain::compute_tritangent_planes(long int *Lines,
 	int i, j, h, c;
 
 	if (f_v) {
-		cout << "surface_domain::compute_tritangent_planes" << endl;
+		cout << "surface_domain::compute_tritangent_planes_slow" << endl;
 	}
 	if (f_v) {
 		cout << "Lines=" << endl;
@@ -393,7 +394,7 @@ void surface_domain::compute_tritangent_planes(long int *Lines,
 
 	Plane_type.init(The_plane_type, nb_planes, FALSE, 0);
 	if (f_v) {
-		cout << "surface_domain::compute_tritangent_planes The plane type is: ";
+		cout << "surface_domain::compute_tritangent_planes_slow The plane type is: ";
 		Plane_type.print_naked(TRUE);
 		cout << endl;
 	}
@@ -402,7 +403,7 @@ void surface_domain::compute_tritangent_planes(long int *Lines,
 	Plane_type.get_class_by_value_lint(Tritangent_planes,
 		nb_tritangent_planes, 3 /* value */, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "surface_domain::compute_tritangent_planes "
+		cout << "surface_domain::compute_tritangent_planes_slow "
 				"The tritangent planes are: ";
 		lint_vec_print(cout, Tritangent_planes, nb_tritangent_planes);
 		cout << endl;
@@ -417,7 +418,7 @@ void surface_domain::compute_tritangent_planes(long int *Lines,
 			}
 		}
 		if (c != 3) {
-			cout << "surface_domain::compute_tritangent_planes c != 3" << endl;
+			cout << "surface_domain::compute_tritangent_planes_slow c != 3" << endl;
 			exit(1);
 		}
 	}
@@ -426,7 +427,7 @@ void surface_domain::compute_tritangent_planes(long int *Lines,
 	Plane_type.get_class_by_value_lint(Unitangent_planes,
 		nb_unitangent_planes, 1 /* value */, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "surface_domain::compute_tritangent_planes "
+		cout << "surface_domain::compute_tritangent_planes_slow "
 				"The unitangent planes are: ";
 		lint_vec_print(cout, Unitangent_planes, nb_unitangent_planes);
 		cout << endl;
@@ -441,7 +442,7 @@ void surface_domain::compute_tritangent_planes(long int *Lines,
 			}
 		}
 		if (c != 1) {
-			cout << "surface_domain::compute_tritangent_planes c != 1" << endl;
+			cout << "surface_domain::compute_tritangent_planes_slow c != 1" << endl;
 			exit(1);
 		}
 	}
@@ -450,9 +451,10 @@ void surface_domain::compute_tritangent_planes(long int *Lines,
 	FREE_int(The_plane_type);
 
 	if (f_v) {
-		cout << "surface_domain::compute_tritangent_planes done" << endl;
+		cout << "surface_domain::compute_tritangent_planes_slow done" << endl;
 	}
 }
+
 
 
 void surface_domain::init_double_sixes(int verbose_level)
@@ -2107,6 +2109,36 @@ void surface_domain::compute_local_coordinates_of_arc(
 		cout << "surface_domain::compute_local_coordinates_of_arc done" << endl;
 	}
 }
+
+int surface_domain::choose_tritangent_plane_for_Clebsch_map(int line_a, int line_b,
+			int transversal_line, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int j, nb;
+	int planes[45];
+
+	if (f_v) {
+		cout << "surface_domain::choose_tritangent_plane_for_Clebsch_map" << endl;
+	}
+
+	nb = 0;
+	for (j = 0; j < 45; j++) {
+		if (incidence_lines_vs_tritangent_planes[line_a * 45 + j] == 0 &&
+				incidence_lines_vs_tritangent_planes[line_b * 45 + j] == 0 &&
+				incidence_lines_vs_tritangent_planes[transversal_line * 45 + j]) {
+			planes[nb++] = j;
+		}
+	}
+	if (nb != 3) {
+		cout << "surface_domain::choose_tritangent_plane_for_Clebsch_map nb != 3" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "surface_domain::choose_tritangent_plane_for_Clebsch_map done" << endl;
+	}
+	return planes[0];
+}
+
 
 
 }}

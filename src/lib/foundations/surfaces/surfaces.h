@@ -255,9 +255,10 @@ public:
 
 
 	int nb_trihedral_to_Eckardt; // nb_trihedral_pairs * 6
-	int *Trihedral_to_Eckardt;
+	long int *Trihedral_to_Eckardt;
 		// [nb_trihedral_pairs * 6]
 		// first the three rows, then the three columns
+		// long int so that we can induce the action on it
 
 	int nb_collinear_Eckardt_triples;
 		// nb_trihedral_pairs * 2
@@ -320,6 +321,15 @@ public:
 
 	int *adjacency_matrix_of_lines;
 		// [27 * 27]
+		// indexed by the lines in Schlaefli labeling
+
+	int *incidence_lines_vs_tritangent_planes;
+		// [27 * 45]
+		// indexed by the lines and tritangent planes in Schlaefli labeling
+
+	long int *Lines_in_tritangent_planes;
+		// [45 * 3]
+		// long int so that we can induce the action on it
 
 
 	surface_domain();
@@ -403,7 +413,7 @@ public:
 	void Trihedral_pairs_to_planes(long int *Lines, long int *Planes_by_rank,
 		int verbose_level);
 		// Planes_by_rank[nb_trihedral_pairs * 6]
-	void compute_tritangent_planes(long int *Lines,
+	void compute_tritangent_planes_slow(long int *Lines,
 		long int *&Tritangent_planes, int &nb_tritangent_planes,
 		long int *&Unitangent_planes, int &nb_unitangent_planes,
 		long int *&Lines_in_tritangent_plane,
@@ -453,6 +463,8 @@ public:
 		int verbose_level);
 	void compute_local_coordinates_of_arc(
 			long int *P6, long int *P6_local, int verbose_level);
+	int choose_tritangent_plane_for_Clebsch_map(int line_a, int line_b,
+				int transversal_line, int verbose_level);
 
 
 
@@ -496,6 +508,7 @@ public:
 	void create_the_fifteen_other_lines(long int *double_six,
 		long int *fifteen_other_lines, int verbose_level);
 	void init_adjacency_matrix_of_lines(int verbose_level);
+	void init_incidence_matrix_of_lines_vs_tritangent_planes(int verbose_level);
 	void set_adjacency_matrix_of_lines(int i, int j);
 	int get_adjacency_matrix_of_lines(int i, int j);
 	void compute_adjacency_matrix_of_line_intersection_graph(
@@ -555,7 +568,7 @@ public:
 	void latex_table_of_half_double_sixes(std::ostream &ost);
 	void print_Steiner_and_Eckardt(std::ostream &ost);
 	void latex_abstract_trihedral_pair(std::ostream &ost, int t_idx);
-	void latex_trihedral_pair(std::ostream &ost, int *T, int *TE);
+	void latex_trihedral_pair(std::ostream &ost, int *T, long int *TE);
 	void latex_table_of_trihedral_pairs(std::ostream &ost);
 	void print_trihedral_pairs(std::ostream &ost);
 	void latex_table_of_Eckardt_points(std::ostream &ost);
@@ -652,7 +665,10 @@ public:
 	classify *Type_lines_on_point;
 
 	long int *Tritangent_plane_rk; // [45]
+		// list of tritangent planes in Schlaefli labeling
+	int nb_tritangent_planes;
 
+#if 0
 	long int *Tritangent_planes; // [nb_tritangent_planes]
 	int nb_tritangent_planes;
 	long int *Lines_in_tritangent_plane; // [nb_tritangent_planes * 3]
@@ -660,6 +676,7 @@ public:
 
 	int *iso_type_of_tritangent_plane; // [nb_tritangent_planes]
 	classify *Type_iso_tritangent_planes;
+
 
 	long int *Unitangent_planes; // [nb_unitangent_planes]
 	int nb_unitangent_planes;
@@ -670,7 +687,11 @@ public:
 	int *Eckardt_to_Tritangent_plane; // [nb_tritangent_planes]
 	long int *Trihedral_pairs_as_tritangent_planes; // [nb_trihedral_pairs * 6]
 	int *Unitangent_planes_on_lines; // [27 * (q + 1 - 5)]
+#endif
 
+	long int *Lines_in_tritangent_planes; // [nb_tritangent_planes * 3]
+
+	long int *Trihedral_pairs_as_tritangent_planes; // [nb_trihedral_pairs * 6]
 
 
 	long int *All_Planes; // [nb_trihedral_pairs * 6]
@@ -697,7 +718,9 @@ public:
 	void print_neighbor_sets(std::ostream &ost);
 	void compute_plane_type_by_points(int verbose_level);
 	void compute_tritangent_planes_by_rank(int verbose_level);
-	void compute_tritangent_planes(int verbose_level);
+	void compute_Lines_in_tritangent_planes(int verbose_level);
+	void compute_Trihedral_pairs_as_tritangent_planes(int verbose_level);
+	//void compute_tritangent_planes(int verbose_level);
 	void compute_planes_and_dual_point_ranks(int verbose_level);
 	void print_everything(std::ostream &ost, int verbose_level);
 	void report_properties(std::ostream &ost, int verbose_level);
@@ -707,7 +730,7 @@ public:
 	void print_adjacency_matrix_with_intersection_points(std::ostream &ost);
 	void print_planes_in_trihedral_pairs(std::ostream &ost);
 	void print_tritangent_planes(std::ostream &ost);
-	void print_generalized_quadrangle(std::ostream &ost);
+	//void print_generalized_quadrangle(std::ostream &ost);
 	void print_plane_type_by_points(std::ostream &ost);
 	void print_lines(std::ostream &ost);
 	void print_lines_with_points_on_them(std::ostream &ost);
@@ -737,6 +760,7 @@ public:
 	void print_equation_in_trihedral_form_equation_only(std::ostream &ost,
 		int *F_planes, int *G_planes, int lambda);
 	void make_and_print_equation_in_trihedral_form(std::ostream &ost, int t_idx);
+#if 0
 	void identify_double_six_from_trihedral_pair(int *Lines,
 		int t_idx, int *nine_lines, int *double_sixes,
 		int verbose_level);
@@ -762,16 +786,17 @@ public:
 		int &line1, int &line2);
 	int find_unique_line_in_plane(int plane_idx, int forbidden_line1,
 		int forbidden_line2);
-	void identify_lines(long int *lines, int nb_lines, int *line_idx,
-		int verbose_level);
-	void print_nine_lines_latex(std::ostream &ost, long int *nine_lines,
-		int *nine_lines_idx);
 	int choose_tritangent_plane(int line_a, int line_b,
 		int transversal_line, int verbose_level);
 	void find_all_tritangent_planes(
 		int line_a, int line_b, int transversal_line,
 		int *tritangent_planes3,
 		int verbose_level);
+#endif
+	void identify_lines(long int *lines, int nb_lines, int *line_idx,
+		int verbose_level);
+	void print_nine_lines_latex(std::ostream &ost, long int *nine_lines,
+		int *nine_lines_idx);
 	int compute_transversal_line(int line_a, int line_b,
 		int verbose_level);
 	void compute_transversal_lines(
@@ -792,7 +817,7 @@ public:
 			long int *Clebsch_map, int *Clebsch_coeff);
 	void print_Steiner_and_Eckardt(std::ostream &ost);
 	void latex_table_of_trihedral_pairs(std::ostream &ost);
-	void latex_trihedral_pair(std::ostream &ost, int *T, int *TE);
+	void latex_trihedral_pair(std::ostream &ost, int *T, long int *TE);
 
 
 };
@@ -824,7 +849,7 @@ public:
 
 	int base_curves4[4];
 	int t_idx0;
-	int row_col_Eckardt_points[6];
+	long int row_col_Eckardt_points[6];
 	int six_curves[6 * 10];
 	int *Web_of_cubic_curves; // [45 * 10]
 	int *Tritangent_plane_equations; // [45 * 4]

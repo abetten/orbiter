@@ -394,6 +394,7 @@ MODULES= \
 		top_level/surfaces/surface_object_with_action.o \
 		top_level/surfaces/surface_study.o \
 		top_level/surfaces/surface_with_action.o \
+		top_level/surfaces/surfaces_arc_lifting_trace.o \
 		top_level/surfaces/surfaces_arc_lifting_upstep.o \
 		top_level/surfaces/surfaces_arc_lifting.o \
 		top_level/surfaces/trihedral_pair_with_action.o \

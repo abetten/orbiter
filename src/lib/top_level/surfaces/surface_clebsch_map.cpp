@@ -182,12 +182,18 @@ void surface_clebsch_map::init(surface_object_with_action *SOA, int orbit_idx, i
 	line_idx[1] = line2;
 	//plane_rk = New_clebsch->choose_unitangent_plane(
 	//line1, line2, transversal, 0 /* verbose_level */);
-	plane_rk = SOA->SO->choose_tritangent_plane(line1, line2,
-			transversal, 0 /* verbose_level */);
+
+	plane_rk = SOA->Surf->choose_tritangent_plane_for_Clebsch_map(line1, line2,
+			transversal, verbose_level);
+
+	//plane_rk = SOA->SO->choose_tritangent_plane(line1, line2,
+	//		transversal, 0 /* verbose_level */);
 
 	//plane_rk_global = New_clebsch->Unitangent_planes[plane_rk];
-	plane_rk_global = SOA->SO->Tritangent_planes[
-			SOA->SO->Eckardt_to_Tritangent_plane[plane_rk]];
+	//plane_rk_global = SOA->SO->Tritangent_planes[
+	//		SOA->SO->Eckardt_to_Tritangent_plane[plane_rk]];
+
+	plane_rk_global = SOA->SO->Tritangent_plane_rk[plane_rk];
 
 	if (f_v) {
 		cout << "surface_with_action::arc_lifting_and_classify "
