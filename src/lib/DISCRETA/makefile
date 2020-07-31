@@ -22,7 +22,6 @@ MODULES = \
 	number_partition.o \
 	page_table.o \
 	permutation.o \
-	solid.o \
 	unipoly.o \
 	vector.o
 	 

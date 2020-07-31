@@ -86,7 +86,7 @@ enum kind {
 	UNIPOLY = 79,                  //!< UNIPOLY
 
 	DESIGN_PARAMETER_SOURCE = 83,  //!< DESIGN_PARAMETER_SOURCE
-	SOLID = 84,                    //!< SOLID
+	//SOLID = 84,                    //!< SOLID
 
 	BITMATRIX = 90,                //!< BITMATRIX
 	//PC_PRESENTATION = 91,
@@ -236,7 +236,7 @@ class hollerith;		// derived from base
 	//class action;			// derived from vector
 	//class geometry;			// derived from vector
 	//class group_selection;		// derived from vector
-	class solid;			// derived from vector
+	//class solid;			// derived from vector
 	class bt_key;			// derived from vector
 	class database;			// derived from vector
 	class btree;			// derived from vector
@@ -453,7 +453,7 @@ class discreta_base
 	//geometry& as_geometry() { return *(geometry *)this; }
 	hollerith& as_hollerith() { return *(hollerith *)this; }
 	//group_selection& as_group_selection() { return *(group_selection *)this; }
-	solid& as_solid() { return *(solid *)this; }
+	//solid& as_solid() { return *(solid *)this; }
 	bt_key& as_bt_key() { return *(bt_key *)this; }
 	database& as_database() { return *(database *)this; }
 	btree& as_btree() { return *(btree *)this; }
@@ -479,7 +479,7 @@ class discreta_base
 	//geometry& change_to_geometry() { freeself(); c_kind(GEOMETRY); return as_geometry(); }
 	hollerith& change_to_hollerith() { freeself(); c_kind(HOLLERITH); return as_hollerith(); }
 	//group_selection& change_to_group_selection() { freeself(); c_kind(GROUP_SELECTION); return as_group_selection(); }
-	solid& change_to_solid() { freeself(); c_kind(SOLID); return as_solid(); }
+	//solid& change_to_solid() { freeself(); c_kind(SOLID); return as_solid(); }
 	bt_key& change_to_bt_key() { freeself(); c_kind(BT_KEY); return as_bt_key(); }
 	database& change_to_database() { freeself(); c_kind(DATABASE); return as_database(); }
 	btree& change_to_btree() { freeself(); c_kind(BTREE); return as_btree(); }
@@ -1543,124 +1543,6 @@ class printing_mode {
 	~printing_mode();
 };
 
-
-//! DISCRETA class for polyhedra
-
-
-
-
-class solid: public Vector
-{
-	public:
-	solid();
-		// constructor, sets the Vector_pointer to NULL
-	void init();
-		// initialize trivially all components of solid
-	
-	Vector& group_generators() { return s_i(0).as_vector(); }
-	permutation& group_generators_i(int i) { return group_generators().s_i(i).as_permutation(); }
-	int& nb_V() { return s_ii(1); }
-	int& nb_E() { return s_ii(2); }
-	int& nb_F() { return s_ii(3); }
-	Vector& placement() { return s_i(4).as_vector(); } 	/* of vertex */
-	Vector& x() { return placement().s_i(0).as_vector(); }	/* of vertex */
-	int& x_i(int i) { return x().s_ii(i); }			/* of vertex */
-	Vector& y() { return placement().s_i(1).as_vector(); }	/* of vertex */
-	int& y_i(int i) { return y().s_ii(i); }			/* of vertex */
-	Vector& z() { return placement().s_i(2).as_vector(); }	/* of vertex */
-	int& z_i(int i) { return z().s_ii(i); }			/* of vertex */
-	Vector& v1() { return s_i(5).as_vector(); }		/* at edge */
-	int& v1_i(int i) { return v1().s_ii(i); }		/* at edge */
-	Vector& v2() { return s_i(6).as_vector(); }		/* at edge */
-	int& v2_i(int i) { return v2().s_ii(i); }		/* at edge */
-	Vector& f1() { return s_i(7).as_vector(); }		/* at edge */
-	int& f1_i(int i) { return f1().s_ii(i); }		/* at edge */
-	Vector& f2() { return s_i(8).as_vector(); }		/* at edge */
-	int& f2_i(int i) { return f2().s_ii(i); }		/* at edge */
-	Vector& nb_e() { return s_i(9).as_vector(); }		/* at face */
-	int& nb_e_i(int i) { return nb_e().s_ii(i); }		/* at face */
-	Vector& edge() { return s_i(10).as_vector(); }		/* at face */
-	Vector& edge_i(int i) 
-		{ return edge().s_i(i).as_vector(); }		/* at face */
-	int& edge_ij(int i, int j) 
-		{ return edge_i(i).s_ii(j); }			/* at face */
-	Vector& neighbour_faces() 
-		{ return s_i(11).as_vector(); }			/* at face */
-	Vector& neighbour_faces_i(int i) 
-		{ return neighbour_faces().s_i(i).as_vector(); }/* at face */
-	int& neighbour_faces_ij(int i, int j) 
-		{ return neighbour_faces_i(i).s_ii(j); }	/* at face */
-	int& f_vertex_labels() { return s_ii(12); }
-	Vector& vertex_labels() { return s_i(13).as_vector(); } /* of vertex */
-	hollerith& vertex_labels_i(int i) 
-		{ return vertex_labels().s_i(i).as_hollerith(); }	/* of vertex */
-	Vector& vertex_labels_numeric() { return s_i(14).as_vector(); } /* of vertex */
-	int& vertex_labels_numeric_i(int i) 
-		{ return vertex_labels_numeric().s_ii(i); } /* of vertex */
-	int& f_oriented() { return s_ii(15); }
-	
-	void init_V(int nb_V);
-		// initialize vertices
-	void init_E(int nb_E);
-		// initialize edges
-	void init_F(int nb_F);
-		// initialize faces
-	solid(const discreta_base& x);
-		// copy constructor
-	solid& operator = (const discreta_base &x);
-		// copy assignment
-	void *operator new(size_t, void *p) { return p; } 
-	void settype_solid();
-	kind s_virtual_kind();
-	~solid();
-	void freeself_solid();
-	void copyobject_to(discreta_base &x);
-	std::ostream& print_list(std::ostream& ost);
-	std::ostream& print(std::ostream& ost);
-	void standard_vertex_labels(int f_start_with_zero);
-	void determine_neighbours();
-	void find_face(int e, int& f1, int& j1, int& f2, int& j2);
-	int find_face_2(int e1, int e2);
-	int find_face_by_two_edges(int e1, int e2);
-	void find_faces_at_edge(int e, int& f1, int& f2);
-	int find_edge(int v1, int v2);
-	void add_edge(int v1, int v2, int f1, int f2);
-	int add_edge(int v1, int v2);
-	int find_and_add_edge(int i1, int i2, int f_v);
-	void add_face3(int e1, int e2, int e3, int i1, int i2, int i3);
-	void add_face4(int i1, int i2, int i3, int i4);
-	void add_face5(int i1, int i2, int i3, int i4, int i5);
-	void add_face_n(Vector& vertices);
-	void adjacency_list(int vertex, int *adj, int *nb_adj);
-	void center(int f, Vector& Px, Vector& Py, Vector& Pz);
-	void vertices_of_face(int i, Vector& V);
-	void Ratio(int e, double r, int& x, int& y, int& z);
-	int find_common_face(int e1, int e2, int& f);
-	void dual(solid& A);
-	void cut_vertices(double r, solid & A);
-	void edge_midpoints(solid& A);
-	void join_disjoint(solid& A, solid& J, int f_v);
-	//void direct_sum(solid& B, solid& J, int f_v);
-	//void direct_product(Vector& gen, solid& J, int f_v);
-	void scale(double f);
-	//void add_central_point(solid& A);
-	void induced_action_on_edges(permutation& p, permutation& q);
-	void induced_group_on_edges(Vector & gen, Vector & gen_e);
-	
-	void tetrahedron(int r);
-	void cube(int r);
-	//void cube4D(int r1, int r2);
-	void octahedron(int r);
-	void dodecahedron(int r);
-	void icosahedron(int r);
-	void make_placed_graph(discreta_matrix & incma, Vector& aut_gens, Vector& cycles);
-		
-	void write_graphfile(char *fname);
-	void write_solidfile(char *fname);
-};
-//void vec_generators_aut_cube_nd(int n, Vector &gen);
-void number_to_binary(int n, int *v, int digits);
-int binary_to_number(int *v, int digits);
 
 
 

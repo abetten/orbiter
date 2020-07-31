@@ -87,7 +87,7 @@ void discreta_base::freeself_kind(kind k)
 		//case PERM_GROUP: as_perm_group().freeself_perm_group(); break;
 		//case PERM_GROUP_STAB_CHAIN: as_perm_group_stab_chain().freeself_perm_group_stab_chain(); break;
 		case UNIPOLY: as_unipoly().freeself_unipoly(); break;
-		case SOLID: as_solid().freeself_solid(); break;
+		//case SOLID: as_solid().freeself_solid(); break;
 		//case BITMATRIX: as_bitmatrix().freeself_bitmatrix(); break;
 		//case PC_PRESENTATION: as_pc_presentation().freeself_pc_presentation(); break;
 		//case PC_SUBGROUP: as_pc_subgroup().freeself_pc_subgroup(); break;
@@ -152,7 +152,7 @@ void discreta_base::c_kind(kind k)
 		//case PERM_GROUP: as_perm_group().settype_perm_group(); break;
 		//case PERM_GROUP_STAB_CHAIN: as_perm_group_stab_chain().settype_perm_group_stab_chain(); break;
 		case UNIPOLY: as_unipoly().settype_unipoly(); break;
-		case SOLID: as_solid().settype_solid(); break;
+		//case SOLID: as_solid().settype_solid(); break;
 		//case BITMATRIX: as_bitmatrix().settype_bitmatrix(); break;
 		//case PC_PRESENTATION: as_pc_presentation().settype_pc_presentation(); break;
 		//case PC_SUBGROUP: as_pc_subgroup().settype_pc_subgroup(); break;
@@ -1155,9 +1155,9 @@ void discreta_base::write_memory(memory &m, int debug_depth)
 		case UNIPOLY:
 			as_unipoly().write_mem(m, debug_depth);
 			break;
-		case SOLID:
-			as_solid().write_mem(m, debug_depth);
-			break;
+		//case SOLID:
+			//as_solid().write_mem(m, debug_depth);
+			//break;
 		//case BITMATRIX:
 			//as_bitmatrix().write_mem(m, debug_depth);
 			//break;
@@ -1245,9 +1245,9 @@ void discreta_base::read_memory(memory &m, int debug_depth)
 		case UNIPOLY:
 			as_unipoly().read_mem(m, debug_depth);
 			break;
-		case SOLID:
-			as_vector().read_mem(m, debug_depth);
-			break;
+		//case SOLID:
+			//as_vector().read_mem(m, debug_depth);
+			//break;
 //		case BITMATRIX:
 //			as_bitmatrix().read_mem(m, debug_depth);
 //			break;
@@ -1340,9 +1340,9 @@ int discreta_base::calc_size_on_file()
 		case UNIPOLY:
 			size += as_unipoly().csf();
 			break;
-		case SOLID:
-			size += as_vector().csf();
-			break;
+		//case SOLID:
+			//size += as_vector().csf();
+			//break;
 //		case BITMATRIX:
 //			size += as_bitmatrix().csf();
 //			break;

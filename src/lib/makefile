@@ -295,7 +295,6 @@ MODULES= \
 		DISCRETA/number_partition.o \
 		DISCRETA/page_table.o \
 		DISCRETA/permutation.o \
-		DISCRETA/solid.o \
 		DISCRETA/unipoly.o \
 		DISCRETA/vector.o \
 		top_level/algebra_and_number_theory/algebra_global_with_action.o \
