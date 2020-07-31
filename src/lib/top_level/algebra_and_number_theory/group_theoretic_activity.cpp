@@ -2621,6 +2621,18 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines(
 				"after SAL->init" << endl;
 	}
 
+	if (Descr->f_report) {
+		if (f_v) {
+			cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines "
+					"before SAL->report" << endl;
+		}
+		SAL->report(verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines "
+					"after SAL->report" << endl;
+		}
+
+	}
 	FREE_OBJECT(SAL);
 
 

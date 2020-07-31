@@ -646,7 +646,7 @@ void trihedral_pair_with_action::create_the_six_plane_equations(int t_idx, int v
 	}
 
 
-	int_vec_copy(AL->Surf->Trihedral_to_Eckardt + t_idx * 6,
+	lint_vec_copy(AL->Surf->Trihedral_to_Eckardt + t_idx * 6,
 			AL->Web->row_col_Eckardt_points, 6);
 
 	for (i = 0; i < 6; i++) {

@@ -690,7 +690,9 @@ void surface_object_with_action::init_orbits_on_tritangent_planes(
 	}
 	A_on_tritangent_planes = A_on_the_lines->create_induced_action_on_sets(
 			SO->nb_tritangent_planes, 3,
-			SO->Lines_in_tritangent_plane, 0 /*verbose_level*/);
+			//SO->Lines_in_tritangent_planes,
+			Surf->Lines_in_tritangent_planes,
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "action on tritangent planes done" << endl;
 	}
@@ -730,7 +732,9 @@ void surface_object_with_action::init_orbits_on_trihedral_pairs(
 	}
 	A_on_trihedral_pairs =
 			A_on_tritangent_planes->create_induced_action_on_sets(
-					120, 6, SO->Trihedral_pairs_as_tritangent_planes,
+					120, 6,
+					//SO->Trihedral_pairs_as_tritangent_planes,
+					Surf->Trihedral_to_Eckardt,
 					0 /*verbose_level*/);
 	if (f_v) {
 		cout << "action on trihedral pairs created" << endl;

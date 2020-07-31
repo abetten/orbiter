@@ -16,7 +16,7 @@ namespace top_level {
 // arc_lifting.cpp
 // #############################################################################
 
-//! creates a cubic surface from a 6-arc in a plane
+//! creates a cubic surface from a 6-arc in a plane using trihedral pairs
 
 
 class arc_lifting {
@@ -1065,16 +1065,34 @@ public:
 };
 
 // #############################################################################
-// surfaces_arc_lifting_upstep.cpp
+// surfaces_arc_lifting_trace.cpp
 // #############################################################################
 
-//! classification of cubic surfaces using lifted 6-arcs
+
+struct seventytwo_cases {
+	int line_idx;
+		// the index of the line chosen to be P1,P2 in three_lines[3]
+
+	int m1, m2, m3;
+		// rearrangement of three_lines_idx[3]
+		// m1 = line_idx is the line through P1 and P2.
+		// m2 and m3 are the two other lines.
+
+	int l1, l2;
+		// the indices of the two lines defining the Clebsch map.
+		// They pass through m1.
+
+};
 
 
-class surfaces_arc_lifting_upstep {
+
+//! tracing data to be used during the classification of cubic surfaces using lifted 6-arcs
+
+
+class surfaces_arc_lifting_trace {
 public:
 
-	surfaces_arc_lifting *Lift;
+	surfaces_arc_lifting_upstep *Up;
 
 	int f, f2;
 
@@ -1082,16 +1100,6 @@ public:
 
 	// po = Lift->Flag_orbits->Flag_orbit_node[f].downstep_primary_orbit;
 	// so = Lift->Flag_orbits->Flag_orbit_node[f].downstep_secondary_orbit;
-
-	int *f_processed; // [Lift->Flag_orbits->nb_flag_orbits]
-	int nb_processed;
-
-	int pt_representation_sz;
-	long int *Flag_representation;
-	long int *Flag2_representation;
-		// used only in upstep_group_elements
-
-	longinteger_object A4_go;
 
 	// 3x3 matrices or elements in PGGL(3,q)
 	int *Elt_alpha2;
@@ -1128,54 +1136,22 @@ public:
 		// Alpha1 * Alpha2 * Beta1 * Beta2 * Beta3
 		// is an automorphism of the surface
 
-	double progress;
-	long int Lines[27];
-	int eqn20[20];
-
-	int *Adj;
-	surface_object *SO;
-
-	vector_ge *coset_reps;
-	int nb_coset_reps;
-
-
-	int tritangent_plane_idx;
-		// the tritangent plane picked for the Clebsch map, in [0,44].
 
 	int upstep_idx;
 
-	strong_generators *Flag_stab_gens;
-	longinteger_object Flag_stab_go;
-
-	int three_lines_idx[3];
-		// the index into Lines[] of the
-		// three lines in the chosen tritangent plane
-		// This is computed from the Schlaefli labeling
-		// using the eckardt point class.
-
-	long int three_lines[3];
-		// the three lines in the chosen tritangent plane
-
-	int line_idx;
-		// the index of the line chosen to be P1,P2 in three_lines[3]
-
-	int l1, l2;
-		// the two lines defining the Clebsch map.
-		// They pass through m1.
-
-	int m1, m2, m3;
-		// rearrangement of three_lines_idx[3]
-		// m1 = line_idx is the line through P1 and P2.
-		// m2 and m3 are the two other lines.
-	int cnt;
 
 	long int P6[6];
 
-	surfaces_arc_lifting_upstep();
-	~surfaces_arc_lifting_upstep();
-	void init(surfaces_arc_lifting *Lift, int verbose_level);
-	void process_flag_orbit(int verbose_level);
-	void process_flag_orbit_and_plane(int verbose_level);
+	int seventytwo_case_idx;
+
+	struct seventytwo_cases The_case;
+
+
+	surfaces_arc_lifting_trace();
+	~surfaces_arc_lifting_trace();
+	void init(surfaces_arc_lifting_upstep *Up,
+			int seventytwo_case_idx, int verbose_level);
+	void process_flag_orbit(surfaces_arc_lifting_upstep *Up, int verbose_level);
 	void trace_second_flag_orbit(int verbose_level);
 	void compute_arc(int verbose_level);
 	void move_arc(int verbose_level);
@@ -1190,6 +1166,80 @@ public:
 			int pair_orbit_idx, int *the_partition4, int verbose_level);
 	void lift_group_elements_and_move_two_lines(int verbose_level);
 	void embed(int *Elt_A3, int *Elt_A4, int verbose_level);
+
+};
+
+
+
+// #############################################################################
+// surfaces_arc_lifting_upstep.cpp
+// #############################################################################
+
+
+
+
+//! classification of cubic surfaces using lifted 6-arcs
+
+
+class surfaces_arc_lifting_upstep {
+public:
+
+	surfaces_arc_lifting *Lift;
+
+	int *f_processed; // [Lift->Flag_orbits->nb_flag_orbits]
+	int nb_processed;
+
+	int pt_representation_sz;
+	long int *Flag_representation;
+	long int *Flag2_representation;
+		// used only in upstep_group_elements
+
+	longinteger_object A4_go;
+
+
+	double progress;
+	long int Lines[27];
+	int eqn20[20];
+
+	int *Adj;
+	surface_object *SO;
+
+	vector_ge *coset_reps;
+	int nb_coset_reps;
+
+	strong_generators *Flag_stab_gens;
+	longinteger_object Flag_stab_go;
+
+	int f;
+
+	int tritangent_plane_idx;
+		// the tritangent plane picked for the Clebsch map, in [0,44].
+
+
+	int three_lines_idx[3];
+		// the index into Lines[] of the
+		// three lines in the chosen tritangent plane
+		// This is computed from the Schlaefli labeling
+		// using the eckardt point class.
+
+	long int three_lines[3];
+		// the three lines in the chosen tritangent plane
+
+
+
+	struct seventytwo_cases Seventytwo[72];
+
+	int seventytwo_case_idx;
+
+
+	surfaces_arc_lifting_upstep();
+	~surfaces_arc_lifting_upstep();
+	void init(surfaces_arc_lifting *Lift, int verbose_level);
+	void process_flag_orbit(int verbose_level);
+	void compute_stabilizer(strong_generators *&Aut_gens, int verbose_level);
+	void process_tritangent_plane(int verbose_level);
+	void make_seventytwo_cases(int verbose_level);
+
 };
 
 

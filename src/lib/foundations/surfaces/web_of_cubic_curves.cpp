@@ -87,6 +87,7 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 		long int *arc6, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int h;
 
 	if (f_v) {
 		cout << "web_of_cubic_curves::init" << endl;
@@ -132,8 +133,10 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 				"We choose trihedral pair t_idx0=" << t_idx0 << endl;
 	}
 
-	int_vec_copy(Surf->Trihedral_to_Eckardt +
-			t_idx0 * 6, row_col_Eckardt_points, 6);
+	for (h = 0; h < 6; h++) {
+		row_col_Eckardt_points[h] = Surf->Trihedral_to_Eckardt[t_idx0 * 6 + h];
+	}
+	//int_vec_copy(Surf->Trihedral_to_Eckardt + t_idx0 * 6, row_col_Eckardt_points, 6);
 
 #if 1
 	base_curves4[0] = row_col_Eckardt_points[0];
@@ -272,9 +275,9 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 		//cout << "trihedral pair " << i << " / "
 		//<< Surf->nb_trihedral_pairs << endl;
 
-		int e[6];
+		long int e[6];
 
-		int_vec_copy(Surf->Trihedral_to_Eckardt + T_idx[i] * 6, e, 6);
+		lint_vec_copy(Surf->Trihedral_to_Eckardt + T_idx[i] * 6, e, 6);
 		for (j = 0; j < 6; j++) {
 			Dual_point_ranks[i * 6 + j] = The_plane_duals[e[j]];
 		}
@@ -615,7 +618,7 @@ void web_of_cubic_curves::create_surface_equation_from_trihedral_pair(long int *
 {
 	int f_v = (verbose_level >= 1);
 	int *The_surface_equations;
-	int row_col_Eckardt_points[6];
+	long int row_col_Eckardt_points[6];
 	int The_six_plane_equations[6 * 4];
 	int lambda_rk;
 
@@ -625,7 +628,7 @@ void web_of_cubic_curves::create_surface_equation_from_trihedral_pair(long int *
 	}
 
 
-	int_vec_copy(Surf->Trihedral_to_Eckardt + t_idx * 6, row_col_Eckardt_points, 6);
+	lint_vec_copy(Surf->Trihedral_to_Eckardt + t_idx * 6, row_col_Eckardt_points, 6);
 
 	int_vec_copy(Tritangent_plane_equations + row_col_Eckardt_points[0] * 4,
 			The_six_plane_equations, 4);
@@ -711,11 +714,11 @@ void web_of_cubic_curves::create_lambda_from_trihedral_pair_and_arc(
 			<< endl;
 	}
 
-	int_vec_copy(Surf->Trihedral_to_Eckardt + t_idx * 6, row_col_Eckardt_points, 6);
+	lint_vec_copy(Surf->Trihedral_to_Eckardt + t_idx * 6, row_col_Eckardt_points, 6);
 
 	if (f_v) {
 		cout << "row_col_Eckardt_points = ";
-		int_vec_print(cout, row_col_Eckardt_points, 6);
+		lint_vec_print(cout, row_col_Eckardt_points, 6);
 		cout << endl;
 	}
 
@@ -888,7 +891,7 @@ void web_of_cubic_curves::print_trihedral_plane_equations(ostream &ost)
 	ost << "$$" << endl;
 	ost << "The six planes in the trihedral pair are:" << endl;
 	ost << "$$" << endl;
-	int_vec_print(ost, row_col_Eckardt_points, 6);
+	lint_vec_print(ost, row_col_Eckardt_points, 6);
 	ost << "$$" << endl;
 
 

@@ -1916,9 +1916,21 @@ void surface_classify_wedge::report_surface(
 
 	if (f_v) {
 		cout << "surface_classify_wedge::report_surface "
-				"before SO->compute_tritangent_planes" << endl;
+				"before SO->compute_tritangent_planes_by_rank" << endl;
 	}
-	SO->compute_tritangent_planes(0 /*verbose_level*/);
+	SO->compute_tritangent_planes_by_rank(0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "surface_classify_wedge::report_surface "
+				"before SO->compute_Lines_in_tritangent_planes" << endl;
+	}
+	SO->compute_Lines_in_tritangent_planes(0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "surface_classify_wedge::report_surface "
+				"before SO->compute_Trihedral_pairs_as_tritangent_planes" << endl;
+	}
+	SO->compute_Trihedral_pairs_as_tritangent_planes(0 /*verbose_level*/);
 
 
 	SO->print_equation(ost);
@@ -1982,12 +1994,13 @@ void surface_classify_wedge::report_surface(
 
 	//New_clebsch->SO->print_planes_in_trihedral_pairs(fp);
 
+#if 0
 	if (f_v) {
 		cout << "surface_classify_wedge::report_surface "
 				"before SO->print_generalized_quadrangle" << endl;
 	}
 	SO->print_generalized_quadrangle(ost);
-
+#endif
 
 	if (f_v) {
 		cout << "surface_classify_wedge::report_surface "
