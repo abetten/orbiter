@@ -2680,7 +2680,7 @@ void finite_field::do_blocking_set_family_3(int n,
 
 	P->point_types_of_line_set(S->set, S->k, pt_type, 0);
 
-	classify C;
+	tally C;
 
 	C.init(pt_type, P->N_points, FALSE, 0);
 
@@ -4025,7 +4025,7 @@ void finite_field::do_m_subspace_type(int n, int m,
 		exit(1);
 		}
 
-	classify C;
+	tally C;
 	int f_second = FALSE;
 
 	C.init(intersection_numbers, N, f_second, 0);
@@ -4180,7 +4180,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 #endif
 		}
 
-	classify C;
+	tally C;
 	int f_second = FALSE;
 
 	C.init(nb_pts_on_plane, len, f_second, 0);
@@ -4394,7 +4394,7 @@ void finite_field::do_line_type(int n,
 		}
 #endif
 
-	classify C;
+	tally C;
 	int f_second = FALSE;
 	sorting Sorting;
 
@@ -4551,7 +4551,7 @@ void finite_field::do_plane_type_failsafe(int n,
 		verbose_level - 2);
 
 
-	classify C;
+	tally C;
 
 	C.init(type, N_planes, FALSE, 0);
 	cout << "The plane type is:" << endl;

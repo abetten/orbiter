@@ -358,7 +358,7 @@ void orbits_on_something::classify_orbits_by_length(int verbose_level)
 	if (f_v) {
 		cout << "orbits_on_something::classify_orbits_by_length" << endl;
 	}
-	Classify_orbits_by_length = NEW_OBJECT(classify);
+	Classify_orbits_by_length = NEW_OBJECT(tally);
 	Classify_orbits_by_length->init(Sch->orbit_len, Sch->nb_orbits, FALSE, 0);
 
 	if (f_v) {

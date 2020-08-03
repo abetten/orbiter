@@ -17,7 +17,7 @@ namespace foundations {
 
 
 // #############################################################################
-// classify.cpp
+// tally.cpp
 // #############################################################################
 
 
@@ -25,7 +25,7 @@ namespace foundations {
 
 
 
-class classify {
+class tally {
 
 public:
 	
@@ -51,8 +51,8 @@ public:
 	int *second_type_first;
 	int *second_type_len;
 	
-	classify();
-	~classify();
+	tally();
+	~tally();
 	void init(int *data, int data_length, 
 		int f_second, int verbose_level);
 	void init_lint(long int *data, int data_length,

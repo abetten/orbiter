@@ -734,7 +734,7 @@ void set_of_sets::extract_largest_sets(
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	classify C;
+	tally C;
 	int f_second = FALSE;
 	int f, m, nb_big_sets, i, ii, j;
 
@@ -771,7 +771,7 @@ void set_of_sets::intersection_matrix(
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	classify C;
+	tally C;
 	int f_second = FALSE;
 	int f, l, a, i, ii, u, j;
 

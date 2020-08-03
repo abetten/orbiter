@@ -1876,7 +1876,7 @@ void poset_classification::find_interesting_k_subsets(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	classify *C;
+	tally *C;
 	int j, t, f, l, l_min, t_min = 0;
 
 	if (f_v) {
@@ -1931,7 +1931,7 @@ void poset_classification::find_interesting_k_subsets(
 
 void poset_classification::classify_k_subsets(
 		long int *the_set, int n, int k,
-		classify *&C, int verbose_level)
+		tally *&C, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1946,7 +1946,7 @@ void poset_classification::classify_k_subsets(
 	trace_all_k_subsets(the_set, n, k, nCk,
 			isotype, verbose_level);
 	
-	C = NEW_OBJECT(classify);
+	C = NEW_OBJECT(tally);
 
 	C->init(isotype, nCk, FALSE, 0);
 

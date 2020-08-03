@@ -146,7 +146,7 @@ public:
 	void report_whole(isomorph *Iso, std::ostream &ost, int verbose_level);
 	void report_title_page(isomorph *Iso, std::ostream &ost, int verbose_level);
 	void report_packings_by_ago(isomorph *Iso, std::ostream &ost,
-		invariants_packing *inv, classify &C_ago, int verbose_level);
+		invariants_packing *inv, tally &C_ago, int verbose_level);
 	void report_isomorphism_type(isomorph *Iso, std::ostream &ost,
 		int orbit, invariants_packing *inv, int verbose_level);
 	void report_packing_as_table(isomorph *Iso, std::ostream &ost,
@@ -210,7 +210,7 @@ public:
 	int *nb_pts_on_plane;
 	int nb_planes;
 
-	classify *C;
+	tally *C;
 	int nb_blocks;
 	int *block_to_plane; // [nb_blocks]
 	int *plane_to_block; // [nb_planes]
@@ -486,7 +486,7 @@ public:
 
 	set_of_sets *Orbit_invariant;
 	int nb_sets;
-	classify *Classify_spread_invariant_by_orbit_length;
+	tally *Classify_spread_invariant_by_orbit_length;
 
 	packing_was();
 	~packing_was();

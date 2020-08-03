@@ -413,7 +413,7 @@ void invariants_packing::make_table(
 
 		Fio.int_vecs_write_csv(set, ago, nb, fname, "ID", "ago");
 
-		classify C;
+		tally C;
 
 		C.init(ago, nb, FALSE, 0);
 		

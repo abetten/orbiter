@@ -57,7 +57,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		cout << "computing the type of the set" << endl;
 		}
 
-	classify C;
+	tally C;
 
 	C.init_lint(set, set_size, TRUE, 0);
 	if (C.second_nb_types > 1) {

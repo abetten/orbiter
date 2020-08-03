@@ -7,7 +7,7 @@ LFLAGS = -lm
 
 MODULES = \
 	classify_vector_data.o \
-	classify.o
+	tally.o
 
 
 all : $(MODULES)

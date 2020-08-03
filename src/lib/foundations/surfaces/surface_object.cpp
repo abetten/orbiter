@@ -683,7 +683,7 @@ void surface_object::enumerate_points(int verbose_level)
 		pts_on_lines->print_table();
 	}
 
-	Type_pts_on_lines = NEW_OBJECT(classify);
+	Type_pts_on_lines = NEW_OBJECT(tally);
 	Type_pts_on_lines->init_lint(pts_on_lines->Set_size,
 		pts_on_lines->nb_sets, FALSE, 0);
 	if (f_v) {
@@ -698,7 +698,7 @@ void surface_object::enumerate_points(int verbose_level)
 		lines_on_point->print_table();
 	}
 
-	Type_lines_on_point = NEW_OBJECT(classify);
+	Type_lines_on_point = NEW_OBJECT(tally);
 	Type_lines_on_point->init_lint(lines_on_point->Set_size,
 		lines_on_point->nb_sets, FALSE, 0);
 	if (f_v) {
@@ -870,7 +870,7 @@ void surface_object::compute_plane_type_by_points(int verbose_level)
 			plane_type_by_points, 0 /* verbose_level */);
 
 
-		C_plane_type_by_points = NEW_OBJECT(classify);
+		C_plane_type_by_points = NEW_OBJECT(tally);
 	
 		C_plane_type_by_points->init(plane_type_by_points, nb_planes, FALSE, 0);
 		if (f_v) {
@@ -1070,7 +1070,7 @@ void surface_object::compute_tritangent_planes(int verbose_level)
 			three_lines, 0 /* verbose_level */);
 	}
 
-	Type_iso_tritangent_planes = NEW_OBJECT(classify);
+	Type_iso_tritangent_planes = NEW_OBJECT(tally);
 	Type_iso_tritangent_planes->init(iso_type_of_tritangent_plane, 
 		nb_tritangent_planes, FALSE, 0);
 	if (f_v) {
@@ -3905,7 +3905,7 @@ void surface_object::clebsch_map_find_arc_and_lines(
 		}
 	
 	{
-	classify C2;
+	tally C2;
 
 	C2.init_lint(Clebsch_map, nb_pts, TRUE, 0);
 	if (f_v) {
@@ -4054,7 +4054,7 @@ void surface_object::clebsch_map_find_arc_and_lines(
 					}
 				}
 			{
-				classify C_fiber;
+				tally C_fiber;
 
 				C_fiber.init(Fiber_recognize, w, FALSE, 0);
 				cout << "The fiber type is : ";
@@ -4085,7 +4085,7 @@ void surface_object::clebsch_map_print_fibers(long int *Clebsch_map)
 	
 	cout << "surface_object::clebsch_map_print_fibers" << endl;
 	{
-	classify C2;
+	tally C2;
 
 	C2.init_lint(Clebsch_map, nb_pts, TRUE, 0);
 	cout << "surface_object::clebsch_map_print_fibers The fibers "

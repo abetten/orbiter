@@ -523,7 +523,7 @@ void semifield_classify::report(std::ostream &ost, int level,
 				Go[i] = L2->Flag_orbit_stabilizer[i].group_order_as_lint();
 			}
 			{
-				classify C;
+				tally C;
 
 				C.init_lint(Go, L2->nb_flag_orbits, FALSE, 0);
 				C.print_file_tex(ost, TRUE /* f_backwards */);
@@ -536,7 +536,7 @@ void semifield_classify::report(std::ostream &ost, int level,
 		ost << "\\hline" << endl;
 		ost << 2 << " & " << L2->nb_orbits << " & ";
 		{
-			classify C;
+			tally C;
 
 			C.init_lint(L2->Go, L2->nb_orbits, FALSE, 0);
 			C.print_file_tex(ost, TRUE /* f_backwards */);
@@ -577,7 +577,7 @@ void semifield_classify::report(std::ostream &ost, int level,
 				cout << "f != L3->nb_flag_orbits" << endl;
 			}
 			{
-				classify C;
+				tally C;
 
 				C.init_lint(Go, L3->nb_flag_orbits, FALSE, 0);
 				C.print_file_tex_we_are_in_math_mode(ost, TRUE /* f_backwards */);
@@ -599,7 +599,7 @@ void semifield_classify::report(std::ostream &ost, int level,
 				Go[i] = go.as_lint();
 			}
 
-			classify C;
+			tally C;
 
 			C.init_lint(Go, L3->nb_orbits, FALSE, 0);
 			C.print_file_tex_we_are_in_math_mode(ost, TRUE /* f_backwards */);

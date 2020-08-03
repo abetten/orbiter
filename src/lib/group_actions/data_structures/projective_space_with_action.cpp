@@ -206,7 +206,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		cout << "projective_space_with_action::set_stabilizer computing the type of the set" << endl;
 		}
 
-	classify C;
+	tally C;
 
 	C.init_lint(set, set_size, TRUE, 0);
 	if (C.second_nb_types > 1) {
@@ -4350,7 +4350,7 @@ void print_summary_table_entry(int *Table,
 
 
 void compute_ago_distribution(
-	classify_bitvectors *CB, classify *&C_ago, int verbose_level)
+	classify_bitvectors *CB, tally *&C_ago, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4368,7 +4368,7 @@ void compute_ago_distribution(
 				CB->Type_extra_data[i];
 		Ago[i] = OiPA->Aut_gens->group_order_as_lint();
 		}
-	C_ago = NEW_OBJECT(classify);
+	C_ago = NEW_OBJECT(tally);
 	C_ago->init_lint(Ago, CB->nb_types, FALSE, 0);
 	FREE_lint(Ago);
 	if (f_v) {
@@ -4377,7 +4377,7 @@ void compute_ago_distribution(
 }
 
 void compute_ago_distribution_permuted(
-	classify_bitvectors *CB, classify *&C_ago, int verbose_level)
+	classify_bitvectors *CB, tally *&C_ago, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4395,7 +4395,7 @@ void compute_ago_distribution_permuted(
 				CB->Type_extra_data[CB->perm[i]];
 		Ago[i] = OiPA->Aut_gens->group_order_as_lint();
 		}
-	C_ago = NEW_OBJECT(classify);
+	C_ago = NEW_OBJECT(tally);
 	C_ago->init_lint(Ago, CB->nb_types, FALSE, 0);
 	FREE_lint(Ago);
 	if (f_v) {
@@ -4411,7 +4411,7 @@ void compute_and_print_ago_distribution(ostream &ost,
 	if (f_v) {
 		cout << "compute_and_print_ago_distribution" << endl;
 		}
-	classify *C_ago;
+	tally *C_ago;
 	compute_ago_distribution(CB, C_ago, verbose_level);
 	ost << "ago distribution: " << endl;
 	ost << "$$" << endl;
@@ -4431,7 +4431,7 @@ void compute_and_print_ago_distribution_with_classes(ostream &ost,
 	if (f_v) {
 		cout << "compute_and_print_ago_distribution_with_classes" << endl;
 		}
-	classify *C_ago;
+	tally *C_ago;
 	compute_ago_distribution_permuted(CB, C_ago, verbose_level);
 	ost << "Ago distribution: " << endl;
 	ost << "$$" << endl;

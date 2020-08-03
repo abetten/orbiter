@@ -1604,7 +1604,7 @@ void clique_finder::degree_of_point_statistic(int depth,
 	for (i = 0; i < nb_points; i++) {
 		D[i] = degree_of_point(depth, i, nb_points);
 	}
-	classify C;
+	tally C;
 	int f_second = FALSE;
 
 	C.init(D, nb_points, f_second, verbose_level);

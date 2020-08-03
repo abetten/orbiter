@@ -1158,7 +1158,7 @@ void int_vec_print_GAP(ostream &ost, int *v, int len)
 
 void int_vec_print_classified(int *v, int len)
 {
-	classify C;
+	tally C;
 
 	C.init(v, len, FALSE /*f_second */, 0);
 	C.print(TRUE /* f_backwards*/);
@@ -1168,7 +1168,7 @@ void int_vec_print_classified(int *v, int len)
 void int_vec_print_classified_str(stringstream &sstr,
 		int *v, int len, int f_backwards)
 {
-	classify C;
+	tally C;
 
 	C.init(v, len, FALSE /*f_second */, 0);
 	//C.print(TRUE /* f_backwards*/);

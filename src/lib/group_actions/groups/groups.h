@@ -472,7 +472,7 @@ public:
 	const char *prefix;
 	std::string fname;
 
-	classify *Classify_orbits_by_length;
+	tally *Classify_orbits_by_length;
 	set_of_sets *Orbits_classified;
 
 	int *Orbits_classified_length; // [Orbits_classified_nb_types]

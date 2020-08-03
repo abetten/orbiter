@@ -150,7 +150,7 @@ void packing_invariants::compute_decomposition(int verbose_level)
 
 	int f_second = FALSE;
 
-	C = NEW_OBJECT(classify);
+	C = NEW_OBJECT(tally);
 	C->init(nb_pts_on_plane, nb_planes, f_second, 0);
 	if (f_v) {
 		cout << "packing_invariants::compute_decomposition: "

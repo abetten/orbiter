@@ -867,7 +867,7 @@ void large_set_classify::process_starter_case(
 			Design_table_reduced + i * design_size,
 			0 /* verbose_level */);
 	}
-	classify C;
+	tally C;
 
 	C.init(reduced_design_color, nb_reduced, FALSE, 0);
 	cout << "color distribution of reduced designs:" << endl;

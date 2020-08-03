@@ -3262,7 +3262,7 @@ void group_theoretic_activity::do_six_arcs(
 		cout << h << " : " << a << "," << b << "," << c << "," << d << " : " << Nb_E[h] << " : " << Ago[h] << endl;
 	}
 
-	classify C;
+	tally C;
 
 	C.init(Nb_E, nb_orbits, FALSE, 0);
 

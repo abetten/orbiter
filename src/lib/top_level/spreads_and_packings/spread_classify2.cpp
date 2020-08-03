@@ -114,7 +114,7 @@ void spread_classify::print_isomorphism_type2(isomorph *Iso,
 	
 	Stab->group_order(so);
 
-	classify C;
+	tally C;
 
 
 	C.init(Orb.orbit_len, Orb.nb_orbits, FALSE, 0);
@@ -325,7 +325,7 @@ void spread_classify::klein(ostream &ost,
 		nb_planes, 
 		verbose_level);
 
-	classify C;
+	tally C;
 	int f_second = FALSE;
 
 	C.init(nb_pts_on_plane, nb_planes, f_second, 0);
@@ -459,7 +459,7 @@ void spread_classify::klein(ostream &ost,
 		ost2 << "\\bigskip" << endl;
 
 
-		classify C0;
+		tally C0;
 		C0.init(Orb.orbit_len, Orb.nb_orbits, FALSE, 0);
 		
 		ost2 << "There are $" << Orb.nb_orbits << "$ orbits on the set.\\\\" << endl;
@@ -1845,7 +1845,7 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 	}
 
 
-	classify C_ago;
+	tally C_ago;
 
 	C_ago.init(Ago_int, Iso.Reps->count, FALSE, 0);
 	cout << "Classification by ago:" << endl;
@@ -2044,7 +2044,7 @@ void spread_classify::report3(isomorph &Iso, ostream &ost, int verbose_level)
 		ost << "With " << Orb.nb_orbits
 				<< " orbits on the subspaces\\\\" << endl;
 
-		classify C_ol;
+		tally C_ol;
 
 		C_ol.init(Orb.orbit_len, Orb.nb_orbits, FALSE, 0);
 
@@ -2519,7 +2519,7 @@ void spread_classify::orbit_info_short(ostream &ost, isomorph &Iso, int h)
 
 	ost << " & " << Orb.nb_orbits << " & ";
 
-	classify C_ol;
+	tally C_ol;
 
 	C_ol.init(Orb.orbit_len, Orb.nb_orbits, FALSE, 0);
 

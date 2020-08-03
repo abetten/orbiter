@@ -916,7 +916,7 @@ void schreier::compute_all_point_orbits(int verbose_level)
 	if (f_v) {
 		cout << "schreier::compute_all_point_orbits found "
 				<< nb_orbits << " orbits" << endl;
-		classify Cl;
+		tally Cl;
 
 		Cl.init(orbit_len, nb_orbits, FALSE, 0);
 		cout << "The distribution of orbit lengths is: ";

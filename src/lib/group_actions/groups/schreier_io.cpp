@@ -835,7 +835,7 @@ void schreier::print_orbit_using_callback(ostream &ost,
 
 void schreier::print_orbit_type(int f_backwards)
 {
-	classify C;
+	tally C;
 
 	C.init(orbit_len, nb_orbits, FALSE, 0);
 	C.print_naked(f_backwards);

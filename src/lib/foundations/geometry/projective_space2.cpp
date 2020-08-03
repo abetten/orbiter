@@ -481,7 +481,7 @@ void projective_space::plane_intersection_invariant(
 		R, Pts_on_plane, nb_pts_on_plane, nb_planes_total,
 		verbose_level - 1);
 
-	classify C;
+	tally C;
 	int f_second = FALSE;
 
 	C.init(nb_pts_on_plane, nb_planes_total, f_second, 0);
@@ -604,7 +604,7 @@ void projective_space::plane_intersection_type(
 		R, Pts_on_plane, nb_pts_on_plane, nb_planes,
 		verbose_level - 1);
 
-	classify C;
+	tally C;
 	int f_second = FALSE;
 
 	C.init(nb_pts_on_plane, nb_planes, f_second, 0);
@@ -2086,7 +2086,7 @@ void projective_space::conic_type_randomized(int nb_times,
 							<< " conics" << endl;
 
 
-					classify C;
+					tally C;
 					int f_second = FALSE;
 
 					C.init(nb_pts_on_conic, len, f_second, 0);
@@ -2175,7 +2175,7 @@ void projective_space::conic_intersection_type(
 			verbose_level - 1);
 		}
 
-	classify C;
+	tally C;
 	int f_second = FALSE;
 
 	C.init(nb_pts_on_conic, nb_conics, f_second, 0);
@@ -2429,7 +2429,7 @@ void projective_space::conic_type(
 							<< " conics" << endl;
 
 
-					classify C;
+					tally C;
 					int f_second = FALSE;
 
 					C.init(nb_pts_on_conic, len, f_second, 0);
@@ -3507,7 +3507,7 @@ void projective_space::arc_lifting_diophant(
 			}
 		}
 
-	classify C;
+	tally C;
 	C.init(line_type, N_lines, FALSE, 0);
 	if (f_v) {
 		cout << "projective_space::arc_lifting_diophant line_type:";

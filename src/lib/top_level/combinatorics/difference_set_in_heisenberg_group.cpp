@@ -322,7 +322,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 		}
 
 
-	classify Pair_orbit_type;
+	tally Pair_orbit_type;
 	Pair_orbit_type.init(Pair_orbit_length, nb_paired_orbits, FALSE, 0);
 
 	sorting Sorting;
@@ -510,7 +510,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 		Sch1->print_orbit_length_distribution(cout);
 
 
-		classify Overgroup_orbit_type;
+		tally Overgroup_orbit_type;
 		Overgroup_orbit_type.init(Sch1->orbit_len,
 				Sch1->nb_orbits, FALSE, 0);
 		cout << "Overgroup orbit type:" << endl;
@@ -656,7 +656,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 					}
 				}
 
-			classify D_type;
+			tally D_type;
 			D_type.init(count, H->group_order, FALSE, 0);
 			cout << "D type:" << endl;
 			D_type.print_naked(TRUE);
@@ -770,7 +770,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 		Subs[z]->init(group, group_sz, gens, nb_gens);
 
 		}
-	classify Group_orders;
+	tally Group_orders;
 	int *Idx_subgroup;
 	int nb_subgroups;
 	int o, idx_E1;
@@ -875,7 +875,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 				Overgroups[z]->init(group, group_sz, gens, nb_gens);
 
 				}
-			classify Overgroup_orders;
+			tally Overgroup_orders;
 
 			Overgroup_orders.init(Overgroup_order, nb_zuppos, FALSE, 0);
 			cout << "We found the following overgroup orders: ";

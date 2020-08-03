@@ -480,7 +480,7 @@ set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets(
 	}
 #endif
 
-	classify C;
+	tally C;
 	int f, a;
 
 	C.init(ancestor, n, FALSE, 0);

@@ -763,7 +763,7 @@ void blt_set_domain::find_free_points(long int *S, int S_sz,
 	long int *lines_on_pt;
 	long int *Perp;
 	long int i, j, a, b, h, f, fst, len, pt;
-	classify C;
+	tally C;
 
 	if (f_v) {
 		cout << "blt_set_domain::find_free_points" << endl;
@@ -884,7 +884,7 @@ int blt_set_domain::create_graph(
 			verbose_level);
 
 
-	classify C;
+	tally C;
 
 	C.init(point_color, nb_candidates, FALSE, 0);
 	if (f_vv) {
@@ -896,7 +896,7 @@ int blt_set_domain::create_graph(
 	}
 
 
-	classify C2;
+	tally C2;
 
 	C2.init(point_color, nb_candidates, TRUE, 0);
 	if (f_vv) {

@@ -1,4 +1,4 @@
-// classify.cpp
+// tally.cpp
 //
 // Anton Betten
 //
@@ -17,7 +17,7 @@ namespace foundations {
 
 
 
-classify::classify()
+tally::tally()
 {
 	data_length = 0;
 	f_data_ownership = FALSE;
@@ -39,7 +39,7 @@ classify::classify()
 
 }
 
-classify::~classify()
+tally::~tally()
 {
 	//cout << "in ~classify()" << endl;
 	if (f_data_ownership) {
@@ -68,7 +68,7 @@ classify::~classify()
 	//cout << "~classify() finished" << endl;
 }
 
-void classify::init(int *data,
+void tally::init(int *data,
 		int data_length, int f_second, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -77,9 +77,9 @@ void classify::init(int *data,
 		cout << "classify::init" << endl;
 		}
 	f_data_ownership = FALSE;
-	classify::data = data;
-	classify::data_length = data_length;
-	classify::f_second = f_second;
+	tally::data = data;
+	tally::data_length = data_length;
+	tally::f_second = f_second;
 	
 #if 0
 	int_vec_classify(data_length, data, data_sorted, 
@@ -119,7 +119,7 @@ void classify::init(int *data,
 		}
 }
 
-void classify::init_lint(long int *data,
+void tally::init_lint(long int *data,
 		int data_length, int f_second, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -141,9 +141,9 @@ void classify::init_lint(long int *data,
 		}
 	}
 	f_data_ownership = TRUE;
-	classify::data = data_int;
-	classify::data_length = data_length;
-	classify::f_second = f_second;
+	tally::data = data_int;
+	tally::data_length = data_length;
+	tally::f_second = f_second;
 
 #if 0
 	int_vec_classify(data_length, data, data_sorted,
@@ -183,7 +183,7 @@ void classify::init_lint(long int *data,
 		}
 }
 
-void classify::sort_and_classify()
+void tally::sort_and_classify()
 {
 	int i;
 	sorting Sorting;
@@ -203,7 +203,7 @@ void classify::sort_and_classify()
 
 }
 
-void classify::sort_and_classify_second()
+void tally::sort_and_classify_second()
 {
 	int i;
 	sorting Sorting;
@@ -223,7 +223,7 @@ void classify::sort_and_classify_second()
 
 }
 
-int classify::class_of(int pt_idx)
+int tally::class_of(int pt_idx)
 {
 	int a, i;
 
@@ -238,7 +238,7 @@ int classify::class_of(int pt_idx)
 	exit(1);
 }
 
-void classify::print(int f_backwards)
+void tally::print(int f_backwards)
 {
 	if (f_second) {
 		print_second(f_backwards);
@@ -248,7 +248,7 @@ void classify::print(int f_backwards)
 		}
 }
 
-void classify::print_first(int f_backwards)
+void tally::print_first(int f_backwards)
 {
 	sorting Sorting;
 
@@ -257,7 +257,7 @@ void classify::print_first(int f_backwards)
 	cout << endl;	
 }
 
-void classify::print_second(int f_backwards)
+void tally::print_second(int f_backwards)
 {
 	if (f_second) {
 		sorting Sorting;
@@ -269,7 +269,7 @@ void classify::print_second(int f_backwards)
 
 }
 
-void classify::print_file(ostream &ost, int f_backwards)
+void tally::print_file(ostream &ost, int f_backwards)
 {
 	sorting Sorting;
 
@@ -285,7 +285,7 @@ void classify::print_file(ostream &ost, int f_backwards)
 		}
 }
 
-void classify::print_file_tex(ostream &ost, int f_backwards)
+void tally::print_file_tex(ostream &ost, int f_backwards)
 {
 	sorting Sorting;
 
@@ -305,7 +305,7 @@ void classify::print_file_tex(ostream &ost, int f_backwards)
 		}
 }
 
-void classify::print_file_tex_we_are_in_math_mode(ostream &ost, int f_backwards)
+void tally::print_file_tex_we_are_in_math_mode(ostream &ost, int f_backwards)
 {
 	sorting Sorting;
 
@@ -325,7 +325,7 @@ void classify::print_file_tex_we_are_in_math_mode(ostream &ost, int f_backwards)
 		}
 }
 
-void classify::print_naked_stringstream(stringstream &sstr, int f_backwards)
+void tally::print_naked_stringstream(stringstream &sstr, int f_backwards)
 {
 	sorting Sorting;
 
@@ -344,7 +344,7 @@ void classify::print_naked_stringstream(stringstream &sstr, int f_backwards)
 
 }
 
-void classify::print_naked(int f_backwards)
+void tally::print_naked(int f_backwards)
 {
 	sorting Sorting;
 
@@ -360,7 +360,7 @@ void classify::print_naked(int f_backwards)
 		}
 }
 
-void classify::print_naked_tex(ostream &ost, int f_backwards)
+void tally::print_naked_tex(ostream &ost, int f_backwards)
 {
 	if (f_second) {
 		print_types_naked_tex(ost, f_backwards, second_data_sorted, 
@@ -374,7 +374,7 @@ void classify::print_naked_tex(ostream &ost, int f_backwards)
 		}
 }
 
-void classify::print_types_naked_tex(
+void tally::print_types_naked_tex(
 	ostream &ost, int f_backwards, int *the_vec_sorted,
 	int nb_types, int *type_first, int *type_len)
 {
@@ -418,7 +418,7 @@ void classify::print_types_naked_tex(
 		}
 }
 
-void classify::print_array_tex(ostream &ost, int f_backwards)
+void tally::print_array_tex(ostream &ost, int f_backwards)
 {
 	int i, j, f, l, a;
 
@@ -448,7 +448,7 @@ void classify::print_array_tex(ostream &ost, int f_backwards)
 	ost << "\\end{array}" << endl;
 }
 
-double classify::average()
+double tally::average()
 {
 	int i, f, l, L, a, s;
 	
@@ -464,7 +464,7 @@ double classify::average()
 	return s / (double) L;
 }
 
-double classify::average_of_non_zero_values()
+double tally::average_of_non_zero_values()
 {
 	int i, f, l, L, a, s;
 	
@@ -482,7 +482,7 @@ double classify::average_of_non_zero_values()
 	return s / (double) L;
 }
 
-void classify::get_data_by_multiplicity(
+void tally::get_data_by_multiplicity(
 		int *&Pts, int &nb_pts, int multiplicity, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -510,7 +510,7 @@ void classify::get_data_by_multiplicity(
 		}
 }
 
-void classify::get_data_by_multiplicity_as_lint(
+void tally::get_data_by_multiplicity_as_lint(
 		long int *&Pts, int &nb_pts, int multiplicity, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -538,7 +538,7 @@ void classify::get_data_by_multiplicity_as_lint(
 		}
 }
 
-int classify::determine_class_by_value(int value)
+int tally::determine_class_by_value(int value)
 {
 	int i, f;
 
@@ -551,7 +551,7 @@ int classify::determine_class_by_value(int value)
 	return -1;
 }
 
-int classify::get_value_of_class(int class_idx)
+int tally::get_value_of_class(int class_idx)
 {
 	int f, a;
 
@@ -560,7 +560,7 @@ int classify::get_value_of_class(int class_idx)
 	return a;
 }
 
-int classify::get_largest_value()
+int tally::get_largest_value()
 {
 	int f, a;
 
@@ -569,7 +569,7 @@ int classify::get_largest_value()
 	return a;
 }
 
-void classify::get_class_by_value(
+void tally::get_class_by_value(
 		int *&Pts, int &nb_pts, int value, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -598,7 +598,7 @@ void classify::get_class_by_value(
 	//exit(1);
 }
 
-void classify::get_class_by_value_lint(
+void tally::get_class_by_value_lint(
 		long int *&Pts, int &nb_pts, int value, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -627,7 +627,7 @@ void classify::get_class_by_value_lint(
 	//exit(1);
 }
 
-set_of_sets *classify::get_set_partition_and_types(
+set_of_sets *tally::get_set_partition_and_types(
 		int *&types, int &nb_types, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -640,8 +640,8 @@ set_of_sets *classify::get_set_partition_and_types(
 
 	SoS = NEW_OBJECT(set_of_sets);
 	SoS->init_basic_with_Sz_in_int(data_length /* underlying_set_size */,
-			classify::nb_types, type_len, 0 /* verbose_level */);
-	nb_types = classify::nb_types;
+			tally::nb_types, type_len, 0 /* verbose_level */);
+	nb_types = tally::nb_types;
 	types = NEW_int(nb_types);
 	for (i = 0; i < nb_types; i++) {
 		f = type_first[i];

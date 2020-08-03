@@ -490,7 +490,7 @@ void object_in_projective_space::encoding_size_point_set(
 		}
 
 
-	C = NEW_OBJECT(classify);
+	C = NEW_OBJECT(tally);
 
 	C->init_lint(set, sz, TRUE, 0);
 	if (C->second_nb_types > 1) {
@@ -610,7 +610,7 @@ void object_in_projective_space::encode_point_set(
 	int f_vvv = (verbose_level >= 3);
 	
 
-	C = NEW_OBJECT(classify);
+	C = NEW_OBJECT(tally);
 
 	C->init_lint(set, sz, TRUE, 0);
 	if (C->second_nb_types > 1) {
@@ -1123,7 +1123,7 @@ void object_in_projective_space::klein(int verbose_level)
 		cout << "object_in_projective_space::klein "
 				"We found " << nb_planes << " planes." << endl;
 
-		classify C;
+		tally C;
 
 		C.init(nb_pts_on_plane, nb_planes, FALSE, 0);
 		cout << "plane types are: ";

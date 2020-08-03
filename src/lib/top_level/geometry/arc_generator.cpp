@@ -713,7 +713,7 @@ void arc_generator::print(int len, long int *S)
 	lint_vec_print(cout, S, len);
 	cout << " has line type ";
 
-	classify C;
+	tally C;
 
 	C.init(line_type, P->N_lines, FALSE, 0);
 	C.print_naked(TRUE);
@@ -879,7 +879,7 @@ void arc_generator::lifting_prepare_function_new(
 
 
 
-	classify C;
+	tally C;
 
 	C.init(line_type, P->N_lines, FALSE, 0);
 	if (f_v) {
@@ -1162,7 +1162,7 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 	}
 
 
-	classify C_ago;
+	tally C_ago;
 
 	C_ago.init(Ago_int, Iso.Reps->count, FALSE, 0);
 	cout << "Classification by ago:" << endl;
@@ -1344,7 +1344,7 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 		ost << "With " << Orb.nb_orbits
 				<< " orbits on the set.\\\\" << endl;
 
-		classify C_ol;
+		tally C_ol;
 
 		C_ol.init(Orb.orbit_len, Orb.nb_orbits, FALSE, 0);
 

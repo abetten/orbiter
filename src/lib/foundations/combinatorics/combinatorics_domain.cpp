@@ -1411,7 +1411,7 @@ void combinatorics_domain::perm_print_offset(ostream &ost,
 		}
 	if (f_orbit_structure) {
 
-		classify C;
+		tally C;
 
 		C.init(orbit_length, nb_orbits, FALSE, 0);
 

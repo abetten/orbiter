@@ -654,7 +654,7 @@ void isomorph::orbits_of_stabilizer(int verbose_level)
 					<< " / " << nb_starter << " finished, we found "
 					<< nb_orbits - nb_orbits_prev << " orbits : ";
 			if (nb_orbits - nb_orbits_prev) {
-				classify C;
+				tally C;
 
 				C.init(orbit_len + nb_orbits_prev,
 						nb_orbits - nb_orbits_prev, FALSE, 0);
@@ -709,7 +709,7 @@ void isomorph::orbits_of_stabilizer(int verbose_level)
 		cout << "isomorph::orbits_of_stabilizer Case " << i << " / "
 				<< nb_starter << " finished, we found " << nb_orbits
 				<< " orbits : ";
-		classify C;
+		tally C;
 
 		C.init(orbit_len, nb_orbits, FALSE, 0);
 		C.print_naked(TRUE /* f_backwards */);
@@ -1568,7 +1568,7 @@ void isomorph::test_hash(int verbose_level)
 			H[i] = lint_vec_hash(data, size);
 			}
 		{
-		classify C;
+		tally C;
 		C.init(H, l, TRUE, 0);
 		C.print(FALSE /*f_backwards*/);
 		}

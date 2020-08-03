@@ -147,7 +147,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 
 
 
-	classify C;
+	tally C;
 	int f, j, a, b, idx;
 
 

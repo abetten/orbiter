@@ -462,7 +462,7 @@ void set_and_stabilizer::rearrange_by_orbits(
 	orbit_first[0] = 0;
 
 
-	classify C;
+	tally C;
 	int t, ff, c, d;
 	//int d;
 

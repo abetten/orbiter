@@ -898,7 +898,7 @@ void trihedral_pair_with_action::compute_iso_types_as_double_triplets(int verbos
 	}
 
 
-	Double_triplet_type_distribution = NEW_OBJECT(classify);
+	Double_triplet_type_distribution = NEW_OBJECT(tally);
 
 	Double_triplet_type_distribution->init(Iso_type_as_double_triplet, 120, FALSE, 0);
 	sorting Sorting;

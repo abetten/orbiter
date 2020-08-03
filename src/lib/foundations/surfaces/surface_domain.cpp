@@ -1439,7 +1439,7 @@ void surface_domain::process_trihedral_pairs(int verbose_level)
 		//Trihedral_pairs_col_sets, 120, 3, TRUE /* f_tex */);
 	}
 
-	Classify_trihedral_pairs_row_values = NEW_OBJECT(classify);
+	Classify_trihedral_pairs_row_values = NEW_OBJECT(tally);
 	Classify_trihedral_pairs_row_values->init(
 		Trihedral_pairs_row_sets, 120 * 3, FALSE, 0);
 
@@ -1454,7 +1454,7 @@ void surface_domain::process_trihedral_pairs(int verbose_level)
 		//cout << endl;
 	}
 
-	Classify_trihedral_pairs_col_values = NEW_OBJECT(classify);
+	Classify_trihedral_pairs_col_values = NEW_OBJECT(tally);
 	Classify_trihedral_pairs_col_values->init(
 		Trihedral_pairs_col_sets,
 		120 * 3, FALSE, 0);
@@ -1659,7 +1659,7 @@ void surface_domain::init_collinear_Eckardt_triples(int verbose_level)
 			FALSE /* f_tex */);
 	}
 
-	Classify_collinear_Eckardt_triples = NEW_OBJECT(classify);
+	Classify_collinear_Eckardt_triples = NEW_OBJECT(tally);
 	Classify_collinear_Eckardt_triples->init(
 		collinear_Eckardt_triples_rank, nb_collinear_Eckardt_triples, 
 		FALSE, 0);
@@ -1745,7 +1745,7 @@ void surface_domain::find_trihedral_pairs_from_collinear_triples_of_Eckardt_poin
 
 
 #if 1
-	classify C;
+	tally C;
 
 	C.init(T_idx, nb_T, TRUE, 0);
 	cout << "The trihedral pairs come in these multiplicities: ";

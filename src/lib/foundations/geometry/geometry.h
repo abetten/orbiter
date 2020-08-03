@@ -1344,7 +1344,7 @@ public:
 	set_of_sets *SoS;
 		// SoS is used by t_PAC
 
-	classify *C;
+	tally *C;
 		// used to determine multiplicities in the set of points
 
 	object_in_projective_space();
