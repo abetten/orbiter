@@ -200,7 +200,7 @@ void surfaces_arc_lifting::init(
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init before downstep" << endl;
 	}
-	downstep(verbose_level);
+	downstep(verbose_level - 2);
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init after downstep" << endl;
 	}
@@ -220,6 +220,8 @@ void surfaces_arc_lifting::init(
 	Up = NEW_OBJECT(surfaces_arc_lifting_upstep);
 
 	Up->init(this, verbose_level - 2);
+
+	Up->D->report(verbose_level);
 
 	//upstep(verbose_level - 2);
 	if (f_v) {
@@ -274,6 +276,9 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 			arc_idx++) {
 
 		if (f_v) {
+			cout << "surfaces_arc_lifting::downstep arc " << arc_idx << " / " << Six_arcs->nb_arcs_not_on_conic << endl;
+		}
+		if (f_v) {
 			cout << "surfaces_arc_lifting::downstep "
 					"before Table_orbits_on_pairs[" << arc_idx << "].init" << endl;
 		}
@@ -308,7 +313,7 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 			Six_arcs->nb_arcs_not_on_conic /* nb_primary_orbits_lower */,
 			pt_representation_sz,
 			nb_flag_orbits,
-			verbose_level);
+			verbose_level - 3);
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting::downstep initializing flag orbits" << endl;
@@ -330,7 +335,7 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 			cout << "surfaces_arc_lifting::downstep "
 					"before downstep_one_arc" << endl;
 		}
-		downstep_one_arc(arc_idx, cur_flag_orbit, Flag, verbose_level);
+		downstep_one_arc(arc_idx, cur_flag_orbit, Flag, verbose_level - 3);
 
 		if (f_v) {
 			cout << "surfaces_arc_lifting::downstep "
@@ -772,6 +777,174 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 
 }
 
+
+void surfaces_arc_lifting::report(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting::report" << endl;
+	}
+	std::string fname_arc_lifting;
+	char title[1000];
+	char author[1000];
+
+
+	fname_arc_lifting.assign(fname_base);
+	fname_arc_lifting.append(".tex");
+	snprintf(title, 1000, "Arc lifting over GF(%d) ", q);
+	strcpy(author, "");
+
+
+	{
+		ofstream fp(fname_arc_lifting.c_str());
+		latex_interface L;
+
+		L.head(fp,
+			FALSE /* f_book */,
+			TRUE /* f_title */,
+			title, author,
+			FALSE /*f_toc */,
+			FALSE /* f_landscape */,
+			FALSE /* f_12pt */,
+			TRUE /*f_enlarged_page */,
+			TRUE /* f_pagenumbers*/,
+			NULL /* extra_praeamble */);
+
+
+		if (f_v) {
+			cout << "surfaces_arc_lifting::report before report2" << endl;
+		}
+
+
+		report2(fp, verbose_level);
+
+
+		if (f_v) {
+			cout << "surfaces_arc_lifting::report after report2" << endl;
+		}
+
+
+
+		L.foot(fp);
+
+
+	}
+	file_io Fio;
+
+	cout << "Written file " << fname_arc_lifting << " of size "
+			<< Fio.file_size(fname_arc_lifting.c_str()) << endl;
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting::report done" << endl;
+	}
+}
+
+void surfaces_arc_lifting::report2(ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int nb_arcs, arc_idx;
+
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting::report2" << endl;
+	}
+
+	//ost << "\\section{Cubic Surfaces over the field $\\mathbb F}_{" << q << "}$}" << endl << endl;
+
+	char title[1000];
+	sprintf(title, "\\section{Cubic Surfaces over the field ${\\mathbb F}_{%d}$}", q);
+
+	//classification_step *Surfaces;
+
+
+	Surfaces->print_latex(ost,
+		title, TRUE /* f_print_stabilizer_gens */,
+		FALSE /* f_has_print_function */,
+		NULL /* void (*print_function)(ostream &ost, int i,
+				classification_step *Step, void *print_function_data) */,
+		NULL /* void *print_function_data */);
+
+	ost << "\\bigskip" << endl << endl;
+
+
+	ost << "\\section{Six-Arcs}" << endl << endl;
+
+	Six_arcs->report_latex(ost);
+
+
+
+	nb_arcs = Six_arcs->Gen->gen->nb_orbits_at_level(6);
+
+
+
+	ost << "There are " << nb_arcs << " arcs.\\\\" << endl << endl;
+
+
+
+
+
+	ost << "There are " << Six_arcs->nb_arcs_not_on_conic
+			<< " arcs not on a conic. "
+			"They are as follows:\\\\" << endl << endl;
+
+
+	for (arc_idx = 0;
+			arc_idx < Six_arcs->nb_arcs_not_on_conic;
+			arc_idx++) {
+		{
+			set_and_stabilizer *The_arc;
+
+		The_arc = Six_arcs->Gen->gen->get_set_and_stabilizer(
+				6 /* level */,
+				Six_arcs->Not_on_conic_idx[arc_idx],
+				0 /* verbose_level */);
+
+
+
+		ost << "\\subsection*{Arc "
+				<< arc_idx << " / "
+				<< Six_arcs->nb_arcs_not_on_conic << "}" << endl;
+
+		ost << "$$" << endl;
+		//int_vec_print(ost, Arc6, 6);
+		The_arc->print_set_tex(ost);
+		ost << "$$" << endl;
+
+		F->display_table_of_projective_points(ost,
+			The_arc->data, 6, 3);
+
+
+		ost << "The stabilizer is the following group:\\\\" << endl;
+		The_arc->Strong_gens->print_generators_tex(ost);
+
+		FREE_OBJECT(The_arc);
+		}
+	} // arc_idx
+
+	ost << "\\section{Flag Orbits}" << endl << endl;
+
+
+	report_flag_orbits(ost, verbose_level);
+
+	ost << "\\section{Flag Orbits in Detail}" << endl << endl;
+
+	report_flag_orbits_in_detail(ost, verbose_level);
+
+
+	ost << "\\section{Basics}" << endl << endl;
+
+	Surf->print_basics(ost);
+	//Surf->print_polynomial_domains(ost);
+	//Surf->print_Schlaefli_labelling(ost);
+
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting::report2 done" << endl;
+	}
+}
+
 void surfaces_arc_lifting::report_flag_orbits(ostream &ost, int verbose_level)
 {
 	int flag_orbit_idx;
@@ -846,53 +1019,164 @@ void surfaces_arc_lifting::report_flag_orbits(ostream &ost, int verbose_level)
 	ost << "$$" << endl;
 }
 
-void surfaces_arc_lifting::report(int verbose_level)
+void surfaces_arc_lifting::report_flag_orbits_in_detail(ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	combinatorics_domain Combi;
 
-
 	if (f_v) {
-		cout << "surfaces_arc_lifting::report" << endl;
+		cout << "surfaces_arc_lifting::report_flag_orbits_in_detail" << endl;
+	}
+
+
+
+
+
+	//flag_orbit_on_arcs_not_on_a_conic_idx = NULL; // [Flag_orbits->nb_flag_orbits]
+	//flag_orbit_on_pairs_idx = NULL; // [Flag_orbits->nb_flag_orbits]
+	//flag_orbit_on_partition_idx = NULL; // [Flag_orbits->nb_flag_orbits]
+
+	ost << "There are " << Flag_orbits->nb_flag_orbits
+			<< " flag orbits. "
+			"They are as follows:\\\\" << endl << endl;
+
+	int f, arc_idx, pair_idx, part_idx;
+
+	for (f = 0; f < Flag_orbits->nb_flag_orbits; f++) {
+
+
+		ost << "\\subsection*{Flag Orbit "
+				<< f << " / "
+				<< Flag_orbits->nb_flag_orbits << "}" << endl;
+
+		arc_idx = flag_orbit_on_arcs_not_on_a_conic_idx[f];
+		pair_idx = flag_orbit_on_pairs_idx[f];
+		part_idx = flag_orbit_on_partition_idx[f];
+
+		ost << "Associated with arc =" << arc_idx << ", pair orbit "
+				<< pair_idx << " and partition orbit " << part_idx << "\\\\" << endl;
+
+
+
+		long int *Flag;
+		int line1, line2;
+
+		Flag = Flag_orbits->Pt +
+				f * Flag_orbits->pt_representation_sz;
+
+		// Flag[0..5]   : 6 for the arc P1,...,P6
+		// Flag[6]      : 1 for orb, the selected orbit on pairs
+		// Flag[7..8]   : 2 for the selected pair, i.e., {0,1} for P1,P2.
+		// Flag[9]      : 1 for orbit, the selected orbit on set_partitions
+		// Flag[10]     : 1 for the partition of the remaining points; values=0,1,2
+		// Flag[11..12] : 2 for the chosen lines line1 and line2 through P1 and P2
+		// Flag[13..32] : 20 for the equation of the surface
+		// Flag[33..59] : 27 for the lines of the surface
+
+		line1 = Flag[11];
+		line2 = Flag[12];
+
+		ost << "line1=" << line1 << " line2=" << line2 << "\\\\" << endl;
+		ost << "$$" << endl;
+		ost << "\\ell_1 = " << endl;
+		//ost << "\\left[" << endl;
+		Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, line1);
+		//ost << "\\right]" << endl;
+		ost << "\\quad" << endl;
+		ost << "\\ell_2 = " << endl;
+		//fp << "\\left[" << endl;
+		Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, line2);
+		//fp << "\\right]" << endl;
+		ost << "$$" << endl;
+		ost << "The equation of the lifted surface is:" << endl;
+		ost << "$$" << endl;
+		Surf->print_equation_tex_lint(ost, Flag + 13);
+		ost << "$$" << endl;
+		ost << "$$" << endl;
+		lint_vec_print(ost, Flag + 13, 20);
+		ost << "$$" << endl;
+
+
+		set_and_stabilizer *pair_orbit;
+		pair_orbit = Table_orbits_on_pairs[arc_idx].
+				Orbits_on_pairs->get_set_and_stabilizer(
+				2 /* level */,
+				pair_idx,
+				0 /* verbose_level */);
+		ost << "Pair orbit: $";
+		//int_vec_print(fp, Arc6, 6);
+		pair_orbit->print_set_tex(ost);
+		ost << "$\\\\" << endl;
+		if (pair_orbit->Strong_gens->group_order_as_lint() > 1) {
+			ost << "The stabilizer of the pair is the following group of order "
+					<< pair_orbit->Strong_gens->group_order_as_lint()
+					<< ":\\\\" << endl;
+			pair_orbit->Strong_gens->print_generators_tex(ost);
+			pair_orbit->Strong_gens->print_generators_as_permutations_tex(
+					ost, Table_orbits_on_pairs[arc_idx].A_on_arc);
 		}
-	std::string fname_arc_lifting;
-	char title[1000];
-	char author[1000];
+
+		schreier *Sch;
+		int part[4];
+		int h;
+
+		Sch = Table_orbits_on_pairs[arc_idx].
+					Table_orbits_on_partition[pair_idx].Orbits_on_partition;
 
 
-	fname_arc_lifting.assign(fname_base);
-	fname_arc_lifting.append(".tex");
-	snprintf(title, 1000, "Arc lifting over GF(%d) ", q);
-	strcpy(author, "");
+		int f, l, orbit_rep;
 
+		f = Sch->orbit_first[part_idx];
+		l = Sch->orbit_len[part_idx];
 
-	{
-	ofstream fp(fname_arc_lifting.c_str());
-	latex_interface L;
+		orbit_rep = Sch->orbit[f + 0];
+		ost << "orbit of $" << orbit_rep << "$ has length " << l
+				<< ", and corresponds to the partition $";
+		Combi.set_partition_4_into_2_unrank(orbit_rep, part);
+		for (h = 0; h < 2; h++) {
+			int_vec_print(ost, part + h * 2, 2);
+		}
+		ost << "$\\\\" << endl;
 
-	int arc_idx;
-	int nb_arcs;
+		longinteger_object go;
+		strong_generators *SG;
 
-	L.head(fp,
-		FALSE /* f_book */,
-		TRUE /* f_title */,
-		title, author,
-		FALSE /*f_toc */,
-		FALSE /* f_landscape */,
-		FALSE /* f_12pt */,
-		TRUE /*f_enlarged_page */,
-		TRUE /* f_pagenumbers*/,
-		NULL /* extra_praeamble */);
+		cout << "computing partition stabilizer:" << endl;
 
+		longinteger_object full_group_order;
 
-	if (f_v) {
-		cout << "surfaces_arc_lifting::report q=" << q << endl;
+		pair_orbit->Strong_gens->group_order(full_group_order);
+		cout << "expecting a group of order "
+				<< full_group_order << endl;
+		SG = Sch->stabilizer_orbit_rep(
+				A3,
+				full_group_order,
+				part_idx, verbose_level);
+
+		if (SG->group_order_as_lint() > 1) {
+			ost << "The stabilizer is the following group of order "
+					<< SG->group_order_as_lint()
+					<< ":\\\\" << endl;
+			SG->print_generators_tex(ost);
+			SG->print_generators_as_permutations_tex(
+					ost, Table_orbits_on_pairs[arc_idx].A_on_arc);
+			ost << "The embedded stabilizer is the "
+					"following group of order "
+					<< SG->group_order_as_lint()
+					<< ":\\\\" << endl;
+			Flag_orbits->Flag_orbit_node[f].gens->print_generators_tex(ost);
+		}
+		else {
+			ost << "The stabilizer is trivial.\\\\" << endl;
+
 		}
 
+		FREE_OBJECT(pair_orbit);
 
-	fp << "\\section{Six-Arcs}" << endl << endl;
+	}
 
-	Six_arcs->report_latex(fp);
+#if 0
+	Six_arcs->report_latex(ost);
 
 
 
@@ -900,13 +1184,13 @@ void surfaces_arc_lifting::report(int verbose_level)
 
 
 
-	fp << "There are " << nb_arcs << " arcs.\\\\" << endl << endl;
+	ost << "There are " << nb_arcs << " arcs.\\\\" << endl << endl;
 
 
 
 
 
-	fp << "There are " << Six_arcs->nb_arcs_not_on_conic
+	ost << "There are " << Six_arcs->nb_arcs_not_on_conic
 			<< " arcs not on a conic. "
 			"They are as follows:\\\\" << endl << endl;
 
@@ -914,8 +1198,8 @@ void surfaces_arc_lifting::report(int verbose_level)
 	for (arc_idx = 0;
 			arc_idx < Six_arcs->nb_arcs_not_on_conic;
 			arc_idx++) {
-		{
-			set_and_stabilizer *The_arc;
+
+		set_and_stabilizer *The_arc;
 
 		The_arc = Six_arcs->Gen->gen->get_set_and_stabilizer(
 				6 /* level */,
@@ -924,82 +1208,21 @@ void surfaces_arc_lifting::report(int verbose_level)
 
 
 
-		fp << "\\subsection*{Arc "
+		ost << "\\subsection*{Arc "
 				<< arc_idx << " / "
 				<< Six_arcs->nb_arcs_not_on_conic << "}" << endl;
 
-		fp << "$$" << endl;
-		//int_vec_print(fp, Arc6, 6);
-		The_arc->print_set_tex(fp);
-		fp << "$$" << endl;
+		ost << "$$" << endl;
+		//int_vec_print(ost, Arc6, 6);
+		The_arc->print_set_tex(ost);
+		ost << "$$" << endl;
 
-		F->display_table_of_projective_points(fp,
+		F->display_table_of_projective_points(ost,
 			The_arc->data, 6, 3);
 
 
-		fp << "The stabilizer is the following group:\\\\" << endl;
-		The_arc->Strong_gens->print_generators_tex(fp);
-
-		FREE_OBJECT(The_arc);
-		}
-	} // arc_idx
-
-	fp << "\\section{Flag Orbits}" << endl << endl;
-
-
-	report_flag_orbits(fp, verbose_level);
-
-
-
-	fp << "\\section{Flag Orbits in Detail}" << endl << endl;
-
-	Six_arcs->report_latex(fp);
-
-
-
-	nb_arcs = Six_arcs->Gen->gen->nb_orbits_at_level(6);
-
-
-
-	fp << "There are " << nb_arcs << " arcs.\\\\" << endl << endl;
-
-
-
-
-
-	fp << "There are " << Six_arcs->nb_arcs_not_on_conic
-			<< " arcs not on a conic. "
-			"They are as follows:\\\\" << endl << endl;
-
-
-	for (arc_idx = 0;
-			arc_idx < Six_arcs->nb_arcs_not_on_conic;
-			arc_idx++) {
-		{
-			set_and_stabilizer *The_arc;
-
-		The_arc = Six_arcs->Gen->gen->get_set_and_stabilizer(
-				6 /* level */,
-				Six_arcs->Not_on_conic_idx[arc_idx],
-				0 /* verbose_level */);
-
-
-
-		fp << "\\subsection*{Arc "
-				<< arc_idx << " / "
-				<< Six_arcs->nb_arcs_not_on_conic << "}" << endl;
-
-		fp << "$$" << endl;
-		//int_vec_print(fp, Arc6, 6);
-		The_arc->print_set_tex(fp);
-		fp << "$$" << endl;
-
-		F->display_table_of_projective_points(fp,
-			The_arc->data, 6, 3);
-
-
-		fp << "The stabilizer is the following group:\\\\" << endl;
-		The_arc->Strong_gens->print_generators_tex(fp);
+		ost << "The stabilizer is the following group:\\\\" << endl;
+		The_arc->Strong_gens->print_generators_tex(ost);
 
 		int orb, nb_orbits_on_pairs;
 		int downstep_secondary_orbit = 0;
@@ -1007,29 +1230,29 @@ void surfaces_arc_lifting::report(int verbose_level)
 		nb_orbits_on_pairs = Table_orbits_on_pairs[arc_idx].
 				Orbits_on_pairs->nb_orbits_at_level(2);
 
-		fp << "There are " << nb_orbits_on_pairs
+		ost << "There are " << nb_orbits_on_pairs
 				<< " orbits on pairs:" << endl;
-		fp << "\\begin{enumerate}[(1)]" << endl;
+		ost << "\\begin{enumerate}[(1)]" << endl;
 
 		for (orb = 0; orb < nb_orbits_on_pairs; orb++) {
-			fp << "\\item" << endl;
+			ost << "\\item" << endl;
 			set_and_stabilizer *pair_orbit;
 			pair_orbit = Table_orbits_on_pairs[arc_idx].
 					Orbits_on_pairs->get_set_and_stabilizer(
 					2 /* level */,
 					orb,
 					0 /* verbose_level */);
-			fp << "$";
+			ost << "$";
 			//int_vec_print(fp, Arc6, 6);
-			pair_orbit->print_set_tex(fp);
-			fp << "$\\\\" << endl;
+			pair_orbit->print_set_tex(ost);
+			ost << "$\\\\" << endl;
 			if (pair_orbit->Strong_gens->group_order_as_lint() > 1) {
-				fp << "The stabilizer is the following group of order "
+				ost << "The stabilizer is the following group of order "
 						<< pair_orbit->Strong_gens->group_order_as_lint()
 						<< ":\\\\" << endl;
-				pair_orbit->Strong_gens->print_generators_tex(fp);
+				pair_orbit->Strong_gens->print_generators_tex(ost);
 				pair_orbit->Strong_gens->print_generators_as_permutations_tex(
-						fp, Table_orbits_on_pairs[arc_idx].A_on_arc);
+						ost, Table_orbits_on_pairs[arc_idx].A_on_arc);
 			}
 
 			int orbit;
@@ -1038,9 +1261,9 @@ void surfaces_arc_lifting::report(int verbose_level)
 			nb_partition_orbits = Table_orbits_on_pairs[arc_idx].
 					Table_orbits_on_partition[orb].nb_orbits_on_partition;
 
-			fp << "There are " << nb_partition_orbits
+			ost << "There are " << nb_partition_orbits
 					<< " orbits on partitions.\\\\" << endl;
-			fp << "\\begin{enumerate}[(i)]" << endl;
+			ost << "\\begin{enumerate}[(i)]" << endl;
 
 			schreier *Sch;
 			int part[4];
@@ -1052,7 +1275,7 @@ void surfaces_arc_lifting::report(int verbose_level)
 
 			for (orbit = 0; orbit < nb_partition_orbits; orbit++) {
 
-				fp << "\\item" << endl;
+				ost << "\\item" << endl;
 
 				int flag_orbit_idx;
 
@@ -1062,7 +1285,7 @@ void surfaces_arc_lifting::report(int verbose_level)
 					flag_orbit_idx,
 					verbose_level);
 
-				fp << "secondary orbit number " << downstep_secondary_orbit
+				ost << "secondary orbit number " << downstep_secondary_orbit
 						<< " is flag orbit " << flag_orbit_idx
 						<< ":\\\\" << endl;
 
@@ -1072,13 +1295,13 @@ void surfaces_arc_lifting::report(int verbose_level)
 				l = Sch->orbit_len[orbit];
 
 				orbit_rep = Sch->orbit[f + 0];
-				fp << "orbit of $" << orbit_rep << "$ has length " << l
+				ost << "orbit of $" << orbit_rep << "$ has length " << l
 						<< ", and corresponds to the partition $";
 				Combi.set_partition_4_into_2_unrank(orbit_rep, part);
 				for (h = 0; h < 2; h++) {
-					int_vec_print(fp, part + h * 2, 2);
+					int_vec_print(ost, part + h * 2, 2);
 				}
-				fp << "$\\\\" << endl;
+				ost << "$\\\\" << endl;
 
 				longinteger_object go;
 				strong_generators *SG;
@@ -1096,21 +1319,21 @@ void surfaces_arc_lifting::report(int verbose_level)
 						orbit, verbose_level);
 
 				if (SG->group_order_as_lint() > 1) {
-					fp << "The stabilizer is the following group of order "
+					ost << "The stabilizer is the following group of order "
 							<< SG->group_order_as_lint()
 							<< ":\\\\" << endl;
-					SG->print_generators_tex(fp);
+					SG->print_generators_tex(ost);
 					SG->print_generators_as_permutations_tex(
-							fp, Table_orbits_on_pairs[arc_idx].A_on_arc);
-					fp << "The embedded stabilizer is the "
+							ost, Table_orbits_on_pairs[arc_idx].A_on_arc);
+					ost << "The embedded stabilizer is the "
 							"following group of order "
 							<< SG->group_order_as_lint()
 							<< ":\\\\" << endl;
 					Flag_orbits->Flag_orbit_node[flag_orbit_idx].gens->
-						print_generators_tex(fp);
+						print_generators_tex(ost);
 				}
 				else {
-					fp << "The stabilizer is trivial.\\\\" << endl;
+					ost << "The stabilizer is trivial.\\\\" << endl;
 
 				}
 				long int *Flag;
@@ -1131,65 +1354,45 @@ void surfaces_arc_lifting::report(int verbose_level)
 				line1 = Flag[11];
 				line2 = Flag[12];
 
-				fp << "line1=" << line1 << " line2=" << line2 << "\\\\" << endl;
-				fp << "$$" << endl;
-				fp << "\\ell_1 = " << endl;
+				ost << "line1=" << line1 << " line2=" << line2 << "\\\\" << endl;
+				ost << "$$" << endl;
+				ost << "\\ell_1 = " << endl;
+				//ost << "\\left[" << endl;
+				Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, line1);
+				//ost << "\\right]" << endl;
+				ost << "\\quad" << endl;
+				ost << "\\ell_2 = " << endl;
 				//fp << "\\left[" << endl;
-				Surf->P->Grass_lines->print_single_generator_matrix_tex(fp, line1);
+				Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, line2);
 				//fp << "\\right]" << endl;
-				fp << "\\quad" << endl;
-				fp << "\\ell_2 = " << endl;
-				//fp << "\\left[" << endl;
-				Surf->P->Grass_lines->print_single_generator_matrix_tex(fp, line2);
-				//fp << "\\right]" << endl;
-				fp << "$$" << endl;
-				fp << "The equation of the lifted surface is:" << endl;
-				fp << "$$" << endl;
-				Surf->print_equation_tex_lint(fp, Flag + 13);
-				fp << "$$" << endl;
-				fp << "$$" << endl;
-				lint_vec_print(fp, Flag + 13, 20);
-				fp << "$$" << endl;
+				ost << "$$" << endl;
+				ost << "The equation of the lifted surface is:" << endl;
+				ost << "$$" << endl;
+				Surf->print_equation_tex_lint(ost, Flag + 13);
+				ost << "$$" << endl;
+				ost << "$$" << endl;
+				lint_vec_print(ost, Flag + 13, 20);
+				ost << "$$" << endl;
 
 				downstep_secondary_orbit++;
 
 				//FREE_OBJECT(Stab);
 
 			}
-			fp << "\\end{enumerate}" << endl;
+			ost << "\\end{enumerate}" << endl;
 		}
-		fp << "\\end{enumerate}" << endl;
-		fp << "There are in total " << Table_orbits_on_pairs[arc_idx].
+		ost << "\\end{enumerate}" << endl;
+		ost << "There are in total " << Table_orbits_on_pairs[arc_idx].
 				total_nb_orbits_on_partitions
 				<< " orbits on partitions.\\\\" << endl;
 
 		FREE_OBJECT(The_arc);
-		}
-	} // arc_idx
-
-	fp << "\\section{Basics}" << endl << endl;
-
-	Surf->print_basics(fp);
-	//Surf->print_polynomial_domains(fp);
-	//Surf->print_Schlaefli_labelling(fp);
-
-
-
-
-
-	L.foot(fp);
-
-
 	}
-	file_io Fio;
+#endif
 
-	cout << "Written file " << fname_arc_lifting << " of size "
-			<< Fio.file_size(fname_arc_lifting.c_str()) << endl;
-
-	if (f_v) {
-		cout << "surfaces_arc_lifting::report done" << endl;
-		}
 }
+
+
 
 }}
 

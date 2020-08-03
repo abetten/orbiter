@@ -119,7 +119,7 @@ void action::report(ostream &ost, int f_sims, sims *S,
 		if (f_v) {
 			cout << "action::report before S->report" << endl;
 		}
-		S->report(ost, verbose_level);
+		S->report(ost, 0 /*verbose_level*/);
 		if (f_v) {
 			cout << "action::report after S->report" << endl;
 		}

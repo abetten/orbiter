@@ -101,6 +101,12 @@ interface_projective::interface_projective()
 	f_study_surface = FALSE;
 	study_surface_q = 0;
 	study_surface_nb = 0;
+
+	f_move_two_lines_in_hyperplane_stabilizer = FALSE;
+	line1_from = 0;
+	line2_from = 0;
+	line1_to = 0;
+	line2_to = 0;
 }
 
 
@@ -137,6 +143,9 @@ void interface_projective::print_help(int argc,
 	else if (strcmp(argv[i], "-prefix") == 0) {
 		cout << "-prefix <string : prefix>" << endl;
 	}
+	else if (strcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer") == 0) {
+		cout << "-move_two_lines_in_hyperplane_stabilizer <int : q>  <int : line1_from> <int : line2_from> <int : line1_to> <int : line2_to> " << endl;
+	}
 }
 
 int interface_projective::recognize_keyword(int argc,
@@ -170,6 +179,9 @@ int interface_projective::recognize_keyword(int argc,
 		return true;
 	}
 	else if (strcmp(argv[i], "-study_surface") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer") == 0) {
 		return true;
 	}
 	return false;
@@ -304,6 +316,18 @@ void interface_projective::read_arguments(int argc,
 			study_surface_q = atoi(argv[++i]);
 			study_surface_nb = atoi(argv[++i]);
 			cout << "-study_surface" << study_surface_q << " " << study_surface_nb << endl;
+		}
+		else if (strcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer") == 0) {
+			f_move_two_lines_in_hyperplane_stabilizer = TRUE;
+			q = atoi(argv[++i]);
+			line1_from = atoi(argv[++i]);
+			line2_from = atoi(argv[++i]);
+			line1_to = atoi(argv[++i]);
+			line2_to = atoi(argv[++i]);
+			cout << "-move_two_lines_in_hyperplane_stabilizer" << q
+					<< " " << line1_from << " " << line1_from
+					<< " " << line1_to << " " << line2_to
+					<< endl;
 		}
 		else {
 			cout << "interface_projective::read_arguments: unrecognized option "
@@ -442,6 +466,12 @@ void interface_projective::worker(orbiter_session *Session, int verbose_level)
 	}
 	else if (f_study_surface) {
 		do_study_surface(study_surface_q, study_surface_nb, verbose_level);
+	}
+	else if (f_move_two_lines_in_hyperplane_stabilizer) {
+		do_move_two_lines_in_hyperplane_stabilizer(
+				q,
+				line1_from, line2_from,
+				line1_to, line2_to, verbose_level);
 	}
 	if (f_v) {
 		cout << "interface_projective::worker done" << endl;
@@ -1358,6 +1388,43 @@ void interface_projective::do_study_surface(int q, int nb, int verbose_level)
 
 	if (f_v) {
 		cout << "interface_projective::do_study_surface done" << endl;
+	}
+}
+
+
+void interface_projective::do_move_two_lines_in_hyperplane_stabilizer(
+		int q,
+		long int line1_from, long int line2_from,
+		long int line1_to, long int line2_to, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_projective::do_move_two_lines_in_hyperplane_stabilizer" << endl;
+	}
+
+	finite_field *F;
+	projective_space *P;
+	int A4[16];
+
+	F = NEW_OBJECT(finite_field);
+	F->init(q, 0);
+
+	P = NEW_OBJECT(projective_space);
+	P->init(3, F,
+			FALSE /* f_init_incidence_structure */,
+			0 /*verbose_level*/);
+	P->hyperplane_lifting_with_two_lines_moved(
+			line1_from, line1_to,
+			line2_from, line2_to,
+			A4,
+			verbose_level);
+
+	cout << "interface_projective::do_move_two_lines_in_hyperplane_stabilizer A4=" << endl;
+	int_matrix_print(A4, 4, 4);
+
+	if (f_v) {
+		cout << "interface_projective::do_move_two_lines_in_hyperplane_stabilizer done" << endl;
 	}
 }
 

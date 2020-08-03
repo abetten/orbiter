@@ -231,6 +231,11 @@ int homogeneous_polynomial_domain::get_monomial(int i, int j)
 	return Monomials[i * nb_variables + j];
 }
 
+char *homogeneous_polynomial_domain::get_monomial_symbol_easy(int i)
+{
+	return monomial_symbols_easy[i];
+}
+
 int *homogeneous_polynomial_domain::get_monomial_pointer(int i)
 {
 	return Monomials + i * nb_variables;
@@ -654,6 +659,7 @@ int homogeneous_polynomial_domain::index_of_monomial(int *v)
 	if (!Sorting.search_general(Monomials, nb_monomials, v, idx,
 		homogeneous_polynomial_domain_compare_monomial_with, 
 		this /* extra_data */, 0 /* verbose_level */)) {
+
 		cout << "homogeneous_polynomial_domain::index_of_monomial "
 				"Did not find the monomial v=";
 		int_vec_print(cout, v, nb_variables);
@@ -760,8 +766,30 @@ void homogeneous_polynomial_domain::affine_evaluation_kernel(
 
 void homogeneous_polynomial_domain::print_monomial(ostream &ost, int i)
 {
-	int j, a;
+	int j, a, f_first = TRUE;
 	
+	for (j = 0; j < nb_variables; j++) {
+		a = Monomials[i * nb_variables + j];
+		if (a == 0) {
+			continue;
+		}
+		if (!f_first) {
+			ost << "*";
+		}
+		else {
+			f_first = FALSE;
+		}
+		ost << symbols[j];
+		if (a > 1) {
+			ost << "^" << a;
+		}
+	}
+}
+
+void homogeneous_polynomial_domain::print_monomial_latex(ostream &ost, int i)
+{
+	int j, a;
+
 	for (j = 0; j < nb_variables; j++) {
 		a = Monomials[i * nb_variables + j];
 		if (a == 0) {
@@ -776,8 +804,30 @@ void homogeneous_polynomial_domain::print_monomial(ostream &ost, int i)
 
 void homogeneous_polynomial_domain::print_monomial(ostream &ost, int *mon)
 {
-	int j, a;
+	int j, a, f_first = TRUE;
 	
+	for (j = 0; j < nb_variables; j++) {
+		a = mon[j];
+		if (a == 0) {
+			continue;
+		}
+		if (!f_first) {
+			ost << "*";
+		}
+		else {
+			f_first = FALSE;
+		}
+		ost << symbols[j];
+		if (a > 1) {
+			ost << "^" << a;
+		}
+	}
+}
+
+void homogeneous_polynomial_domain::print_monomial_latex(ostream &ost, int *mon)
+{
+	int j, a;
+
 	for (j = 0; j < nb_variables; j++) {
 		a = mon[j];
 		if (a == 0) {
@@ -811,6 +861,29 @@ void homogeneous_polynomial_domain::print_monomial(char *str, int i)
 }
 
 void homogeneous_polynomial_domain::print_monomial_str(stringstream &ost, int i)
+{
+	int j, a, f_first = TRUE;
+
+	for (j = 0; j < nb_variables; j++) {
+		a = Monomials[i * nb_variables + j];
+		if (a == 0) {
+			continue;
+		}
+		if (!f_first) {
+			ost << "*";
+		}
+		else {
+			f_first = FALSE;
+		}
+		ost << symbols[j];
+		if (a > 1) {
+			ost << "^" << a;
+		}
+	}
+}
+
+
+void homogeneous_polynomial_domain::print_monomial_latex_str(stringstream &ost, int i)
 {
 	int j, a;
 

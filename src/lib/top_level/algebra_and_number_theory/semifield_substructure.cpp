@@ -688,7 +688,7 @@ void semifield_substructure::do_classify(int verbose_level)
 		SCWS->Semifields->Orbit[Flag_orbits->nb_primary_orbits_upper].init(
 				SCWS->Semifields,
 			Flag_orbits->nb_primary_orbits_upper,
-			Stab, data1, verbose_level);
+			Stab, data1, NULL /* extra_data */, verbose_level);
 
 		FREE_OBJECT(Aut_gens);
 

@@ -157,6 +157,7 @@ MODULES= \
 		foundations/surfaces/clebsch_map.o \
 		foundations/surfaces/eckardt_point_info.o \
 		foundations/surfaces/eckardt_point.o \
+		foundations/surfaces/seventytwo_cases.o \
 		foundations/surfaces/surface_domain_families.o \
 		foundations/surfaces/surface_domain_io.o \
 		foundations/surfaces/surface_domain_lines.o \
@@ -394,6 +395,7 @@ MODULES= \
 		top_level/surfaces/surface_object_with_action.o \
 		top_level/surfaces/surface_study.o \
 		top_level/surfaces/surface_with_action.o \
+		top_level/surfaces/surfaces_arc_lifting_definition_node.o \
 		top_level/surfaces/surfaces_arc_lifting_trace.o \
 		top_level/surfaces/surfaces_arc_lifting_upstep.o \
 		top_level/surfaces/surfaces_arc_lifting.o \

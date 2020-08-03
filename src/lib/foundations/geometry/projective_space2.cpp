@@ -1722,11 +1722,11 @@ void projective_space::cheat_sheet_subspaces(
 			<< nb_k_subspaces << " $" << k
 			<< "$-subspaces:\\\\" << endl;
 
-	if (nb_k_subspaces > 2000) {
+	if (nb_k_subspaces > 10000) {
 		f << "Too many to print \\\\" << endl;
 	}
 	else {
-		f << "\\begin{multicols}{5}" << endl;
+		f << "\\begin{multicols}{2}" << endl;
 		for (u = 0; u < nb_k_subspaces; u++) {
 			Gr->unrank_lint(u, 0 /* verbose_level*/);
 			f << "$L_{" << u << "}=";
@@ -1761,6 +1761,47 @@ void projective_space::cheat_sheet_subspaces(
 				}
 			}
 		f << "\\end{multicols}" << endl;
+	}
+	if (n == 3 && k == 1) {
+		f << "PG$(" << n << ", " << q << ")$ has "
+				<< "the following low weight Pluecker lines:\\\\" << endl;
+		for (u = 0; u < nb_k_subspaces; u++) {
+			int v6[6];
+			int w;
+
+			Gr->unrank_lint(u, 0 /* verbose_level*/);
+			Pluecker_coordinates(u, v6, 0 /* verbose_level */);
+			w = 0;
+			for (j = 0; j < 6; j++) {
+				if (v6[j]) {
+					w++;
+				}
+			}
+			if (w == 1) {
+				f << "$L_{" << u << "}=";
+				f << "\\left[" << endl;
+				f << "\\begin{array}{c}" << endl;
+				for (i = 0; i < k1; i++) {
+					for (j = 0; j < n1; j++) {
+						f << Gr->M[i * n1 + j];
+						if (f_need_comma && j < n1 - 1) {
+							f << ", ";
+							}
+						}
+					f << "\\\\" << endl;
+					}
+				f << "\\end{array}" << endl;
+				f << "\\right]" << endl;
+				f << "Pl=(" << v6[0] << "," << v6[1] << ","
+						<< v6[2] << "," << v6[3] << "," << v6[4]
+						<< "," << v6[5] << " ";
+				f << ")" << endl;
+				f << "$\\\\" << endl;
+
+			}
+		}
+
+
 	}
 
 	f << "\\clearpage" << endl << endl;

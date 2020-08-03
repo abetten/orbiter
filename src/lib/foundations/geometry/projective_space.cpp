@@ -4007,19 +4007,19 @@ void projective_space::report(ostream &ost)
 		}
 
 	//ost << "\\clearpage" << endl << endl;
-	ost << "\\section{Points and Lines}" << endl;
+	ost << "\\section{Points}" << endl;
 	cheat_sheet_points(ost, verbose_level);
 
-	cheat_sheet_point_table(ost, verbose_level);
+	//cheat_sheet_point_table(ost, verbose_level);
 
 
-
+#if 0
 	//ost << "\\clearpage" << endl << endl;
 	cheat_sheet_points_on_lines(ost, verbose_level);
 
 	//ost << "\\clearpage" << endl << endl;
 	cheat_sheet_lines_on_points(ost, verbose_level);
-
+#endif
 
 	// report subspaces:
 	int k;
@@ -4031,7 +4031,7 @@ void projective_space::report(ostream &ost)
 		}
 
 
-
+#if 0
 	if (n >= 2 && N_lines < 25) {
 		//ost << "\\clearpage" << endl << endl;
 		ost << "\\section{Line intersections}" << endl;
@@ -4044,6 +4044,7 @@ void projective_space::report(ostream &ost)
 		ost << "\\section{Line through point-pairs}" << endl;
 		cheat_sheet_line_through_pairs_of_points(ost, verbose_level);
 		}
+#endif
 
 	homogeneous_polynomial_domain *Poly2;
 	homogeneous_polynomial_domain *Poly3;

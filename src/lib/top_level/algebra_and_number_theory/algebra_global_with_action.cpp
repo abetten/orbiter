@@ -2873,6 +2873,48 @@ void algebra_global_with_action::normalizer_of_cyclic_subgroup(
 }
 
 
+void algebra_global_with_action::relative_order_vector_of_cosets(
+		action *A, strong_generators *SG,
+		vector_ge *cosets, int *&relative_order_table, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+	sims *S;
+	int i, drop_out_level, image, order;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::relative_order_vector_of_cosets" << endl;
+	}
+
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+
+	relative_order_table = NEW_int(cosets->len);
+
+	S = SG->create_sims(0 /*verbose_level */);
+	for (i = 0; i < cosets->len; i++) {
+		A->element_move(cosets->ith(i), Elt1, 0);
+		order = 1;
+		while (TRUE) {
+			if (S->strip(Elt1, Elt2, drop_out_level, image, 0 /*verbose_level*/)) {
+				break;
+			}
+			A->element_mult(cosets->ith(i), Elt1, Elt2, 0);
+			A->element_move(Elt2, Elt1, 0);
+			order++;
+		}
+		relative_order_table[i] = order;
+	}
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::relative_order_vector_of_cosets done" << endl;
+	}
+}
+
 
 
 
