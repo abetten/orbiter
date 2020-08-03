@@ -893,7 +893,7 @@ void packing_was::classify_orbit_invariant(int verbose_level)
 				"Classify_spread_invariant_by_orbit_length[i].init" << endl;
 	}
 	nb_sets = Orbit_invariant->nb_sets;
-	Classify_spread_invariant_by_orbit_length = NEW_OBJECTS(classify, nb_sets);
+	Classify_spread_invariant_by_orbit_length = NEW_OBJECTS(tally, nb_sets);
 
 	for (i = 0; i < nb_sets; i++) {
 		Classify_spread_invariant_by_orbit_length[i].init_lint(

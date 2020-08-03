@@ -596,7 +596,7 @@ int surface_domain::create_surface_HCV(int a, int b,
 	}
 
 
-	classify C;
+	tally C;
 
 	C.init(Intersection_pt_idx, 27 * 27, FALSE, 0);
 	if (f_v) {

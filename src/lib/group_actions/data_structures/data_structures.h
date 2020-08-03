@@ -294,7 +294,7 @@ public:
 		const char *fname, int verbose_level);
 	void read_from_file_one_case_only(
 			action *A, action *A2, const char *fname, int case_nr, int verbose_level);
-	classify *get_ago_distribution(long int *&ago,
+	tally *get_ago_distribution(long int *&ago,
 			int verbose_level);
 	void report_ago_distribution(std::ostream &ost);
 	void print_table_latex(
@@ -702,9 +702,9 @@ void OiPA_group_order(void *extra_data,
 void print_summary_table_entry(int *Table,
 	int m, int n, int i, int j, int val, char *output, void *data);
 void compute_ago_distribution(
-	classify_bitvectors *CB, classify *&C_ago, int verbose_level);
+	classify_bitvectors *CB, tally *&C_ago, int verbose_level);
 void compute_ago_distribution_permuted(
-	classify_bitvectors *CB, classify *&C_ago, int verbose_level);
+	classify_bitvectors *CB, tally *&C_ago, int verbose_level);
 void compute_and_print_ago_distribution(std::ostream &ost,
 	classify_bitvectors *CB, int verbose_level);
 void compute_and_print_ago_distribution_with_classes(

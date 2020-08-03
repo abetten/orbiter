@@ -89,7 +89,7 @@ public:
 		// type_of[N]
 		// type_of[i] is the isomorphism type of the i-th candidate
 
-	classify *C_type_of;
+	tally *C_type_of;
 		// the classification of type_of[N]
 		// this will be computed in finalize()
 

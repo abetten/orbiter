@@ -212,7 +212,7 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 					Pts_on_curve, nb_pts_on_curve /* set_size */,
 					type, 0 /*verbose_level*/);
 
-			classify Cl;
+			tally Cl;
 
 			Cl.init(type, CC->P->N_lines, FALSE, 0);
 			idx = Cl.determine_class_by_value(q + 1);
@@ -1440,7 +1440,7 @@ void classify_cubic_curves::report(ostream &ost, int verbose_level)
 		// type[N_lines]
 
 		ost << "The line type is $";
-		classify C;
+		tally C;
 		C.init(type, CCA->CC->P->N_lines, FALSE, 0);
 		C.print_naked_tex(ost, TRUE /* f_backwards*/);
 		ost << ".$ \\\\" << endl;
@@ -1658,7 +1658,7 @@ void classify_cubic_curves::report(ostream &ost, int verbose_level)
 
 
 
-	classify C;
+	tally C;
 
 	C.init(Ago, Curves->nb_orbits, FALSE, 0);
 	ost << "Distribution: $(";

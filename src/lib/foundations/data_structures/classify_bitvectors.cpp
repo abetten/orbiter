@@ -198,7 +198,7 @@ void classify_bitvectors::finalize(int verbose_level)
 	if (f_v) {
 		cout << "classify_bitvectors::finalize" << endl;
 		}
-	C_type_of = NEW_OBJECT(classify);
+	C_type_of = NEW_OBJECT(tally);
 
 	C_type_of->init(type_of, N, FALSE, 0);
 

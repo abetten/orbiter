@@ -202,7 +202,7 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 
 	rank_of_foursubsets(Rk, N, 0 /*verbose_level*/);
 	{
-		classify C;
+		tally C;
 		C.init(Rk, N, FALSE, 0 /* verbose_level */);
 		cout << "web_of_cubic_curves::init "
 				"classification of ranks of 4-subsets:" << endl;

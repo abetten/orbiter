@@ -144,7 +144,7 @@ void semifield_substructure::compute_cases(
 		sum += Need_orbits_len[i];
 		}
 	{
-	classify C;
+	tally C;
 
 	C.init(Need_orbits_len,
 			nb_non_unique_cases_with_non_trivial_group, FALSE,

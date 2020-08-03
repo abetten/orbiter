@@ -729,7 +729,7 @@ void semifield_lifting::downstep(
 		for (orbit = 0; orbit < prev_level_nb_orbits; orbit++) {
 			Nb_orbits[orbit] = Downstep_nodes[orbit].Sch->nb_orbits;
 		}
-		classify C;
+		tally C;
 
 		C.init(Nb_orbits, prev_level_nb_orbits, FALSE, 0);
 		cout << "semifield_lifting::downstep "
@@ -931,7 +931,7 @@ void semifield_lifting::compute_flag_orbits(
 			//Go[i] = M[i].gens->group_order_as_int();
 			//cout << i << " : " << Go[i] << endl;
 		}
-		classify C;
+		tally C;
 
 		C.init_lint(Go, nb_flag_orbits, FALSE, 0);
 		cout << "semifield_lifting::compute_flag_orbits "
@@ -1376,7 +1376,7 @@ void semifield_lifting::find_all_candidates(
 #endif
 
 	if (f_v) {
-		classify C;
+		tally C;
 
 		C.init(Nb_candidates, prev_level_nb_orbits, FALSE, 0);
 		cout << "semifield_lifting::find_all_candidates "
@@ -2329,7 +2329,7 @@ void semifield_lifting::print_stabilizer_orders()
 		Go[i] = Stabilizer_gens[i].group_order_as_lint();
 		}
 #endif
-	classify C;
+	tally C;
 
 	C.init_lint(Go, nb_orbits, FALSE, 0);
 	cout << "distribution of stabilizer orders at level " << cur_level << " : ";

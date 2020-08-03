@@ -302,7 +302,7 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 
 
 
-	classify C;
+	tally C;
 	int mtx_n;
 	int i, a;
 
@@ -396,7 +396,7 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 		}
 
 	{
-		classify C;
+		tally C;
 
 		C.init(Non_unique_cases_len, nb_non_unique_cases, FALSE, 0);
 		if (f_v) {
@@ -406,7 +406,7 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 		}
 	}
 	{
-	classify C;
+	tally C;
 
 	C.init_lint(Non_unique_cases_go, nb_non_unique_cases, FALSE, 0);
 	if (f_v) {
@@ -747,7 +747,7 @@ void semifield_classify_with_substructure::latex_report(
 		long int *Go;
 
 
-		classify C;
+		tally C;
 
 		Go = NEW_lint(Semifields->nb_orbits);
 		for (i = 0; i < Semifields->nb_orbits; i++) {
@@ -842,7 +842,7 @@ void semifield_classify_with_substructure::latex_report(
 			fp << "\\item" << endl;
 			fp << orbit_idx << " / " << Semifields->nb_orbits << endl;
 			fp << " has  type ";
-			classify C;
+			tally C;
 
 			C.init(Po2, Sub->N2, FALSE, 0);
 			fp << "$";

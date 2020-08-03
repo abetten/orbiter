@@ -690,7 +690,7 @@ int graph_theory_domain::is_association_scheme(int *color_graph, int n,
 		exit(1);
 	}
 
-	classify Cl;
+	tally Cl;
 
 	Cl.init(M1, N, FALSE, 0);
 	nb_colors = Cl.nb_types + 1;

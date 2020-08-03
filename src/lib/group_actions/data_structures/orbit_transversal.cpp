@@ -232,7 +232,7 @@ void orbit_transversal::read_from_file_one_case_only(
 	}
 }
 
-classify *orbit_transversal::get_ago_distribution(long int *&ago,
+tally *orbit_transversal::get_ago_distribution(long int *&ago,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -249,8 +249,8 @@ classify *orbit_transversal::get_ago_distribution(long int *&ago,
 	for (i = 0; i < nb_orbits; i++) {
 		ago[i] = Reps[i].group_order_as_lint();
 	}
-	classify *C;
-	C = NEW_OBJECT(classify);
+	tally *C;
+	C = NEW_OBJECT(tally);
 	C->init_lint(ago, nb_orbits, FALSE, 0);
 	if (f_v) {
 		cout << "orbit_transversal::get_ago_distribution done" << endl;
@@ -260,7 +260,7 @@ classify *orbit_transversal::get_ago_distribution(long int *&ago,
 
 void orbit_transversal::report_ago_distribution(ostream &ost)
 {
-	classify *C;
+	tally *C;
 	long int *Ago;
 	int i, f, l, a;
 

@@ -1342,7 +1342,7 @@ int sorting::longinteger_vec_search(longinteger_object *v, int len,
 
 void sorting::int_vec_classify_and_print(ostream &ost, int *v, int l)
 {
-	classify C;
+	tally C;
 	int f_backwards = TRUE;
 
 	C.init(v, l, FALSE, 0);
@@ -1351,7 +1351,7 @@ void sorting::int_vec_classify_and_print(ostream &ost, int *v, int l)
 
 void sorting::int_vec_values(int *v, int l, int *&w, int &w_len)
 {
-	classify C;
+	tally C;
 	//int f_backwards = TRUE;
 	int i, f, a;
 
@@ -1368,7 +1368,7 @@ void sorting::int_vec_values(int *v, int l, int *&w, int &w_len)
 void sorting::int_vec_multiplicities(int *v, int l,
 	int *&w, int &w_len)
 {
-	classify C;
+	tally C;
 	//int f_backwards = TRUE;
 	int i;
 
@@ -1383,7 +1383,7 @@ void sorting::int_vec_multiplicities(int *v, int l,
 void sorting::int_vec_values_and_multiplicities(int *v, int l,
 	int *&val, int *&mult, int &nb_values)
 {
-	classify C;
+	tally C;
 	//int f_backwards = TRUE;
 	int i, f, len, a;
 
@@ -2118,7 +2118,7 @@ void sorting::find_points_by_multiplicity(
 		int *data, int data_sz, int multiplicity,
 		int *&pts, int &nb_pts)
 {
-	classify C;
+	tally C;
 	C.init(data, data_sz, FALSE, 0);
 	C.get_data_by_multiplicity(pts, nb_pts, multiplicity, 0 /* verbose_level */);
 }
@@ -2303,7 +2303,7 @@ void sorting::schreier_vector_tree(
 		}
 	}
 	set_of_sets *SoS;
-	classify C;
+	tally C;
 	//int f, a, t;
 
 	SoS = NEW_OBJECT(set_of_sets);

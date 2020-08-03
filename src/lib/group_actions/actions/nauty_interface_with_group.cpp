@@ -105,7 +105,7 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 				"and_canonical_labeling_of_colored_graph" << endl;
 		}
 
-	classify C;
+	tally C;
 
 	C.init(vertex_colors, n, FALSE, 0);
 

@@ -664,7 +664,7 @@ void linear_set_classify::calculate_intersections(int depth, int verbose_level)
 					Intersection_dimensions[level] + i * D->N, D->N);
 			cout << " : ";
 			{
-				classify C;
+				tally C;
 
 				C.init(Intersection_dimensions[level] + i * D->N, D->N, FALSE, 0);
 				C.print_naked(TRUE);

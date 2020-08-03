@@ -1704,7 +1704,7 @@ void strong_generators::print_elements_latex_ost_with_print_point_function(
 		nb_fix_points[i] = cycle_type[0];
 		ost << "The element has " << nb_fix_points[i] << " fix points.\\\\" << endl;
 	}
-	classify C;
+	tally C;
 
 	C.init(nb_fix_points, m, FALSE, 0);
 	ost << "The distribution of the number of fix points is $";
@@ -2415,7 +2415,7 @@ void strong_generators::generators_for_shallow_schreier_tree(
 		for (i = 0; i < Sch->A->degree; i++) {
 			Depth[i] = Sch->depth_in_tree(i);
 			}
-		classify Cl;
+		tally Cl;
 
 		Cl.init(Depth, Sch->A->degree, FALSE, 0);
 		if (f_v) {

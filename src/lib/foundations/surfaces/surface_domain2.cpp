@@ -390,7 +390,7 @@ void surface_domain::compute_tritangent_planes_slow(long int *Lines,
 			}
 		}
 	}
-	classify Plane_type;
+	tally Plane_type;
 
 	Plane_type.init(The_plane_type, nb_planes, FALSE, 0);
 	if (f_v) {

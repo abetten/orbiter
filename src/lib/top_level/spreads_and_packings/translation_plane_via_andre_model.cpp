@@ -807,7 +807,7 @@ int translation_plane_via_andre_model::check_subplane(
 					"check_subplane h != len2" << endl;
 			exit(1);
 			}
-		classify C;
+		tally C;
 
 		C.init(L, len2, FALSE, 0);
 

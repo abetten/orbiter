@@ -262,7 +262,7 @@ void packing_classify::report_whole(isomorph *Iso,
 	}
 
 	
-	classify C_ago;
+	tally C_ago;
 
 	
 	C_ago.init(inv->Ago_int, Iso->Reps->count, FALSE, 0);
@@ -328,7 +328,7 @@ void packing_classify::report_title_page(
 
 void packing_classify::report_packings_by_ago(
 	isomorph *Iso, ostream &ost,
-	invariants_packing *inv, classify &C_ago, int verbose_level)
+	invariants_packing *inv, tally &C_ago, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	sorting Sorting;
@@ -450,7 +450,7 @@ void packing_classify::report_isomorphism_type(
 	//ost << "\\\\" << endl;
 	ost << "\\bigskip" << endl;
 
-	classify C_iso;
+	tally C_iso;
 
 	C_iso.init_lint(spread_iso_type, Iso->size, FALSE, 0);
 	ost << "Classification by isomorphism type of spreads: ";
@@ -528,7 +528,7 @@ void packing_classify::report_isomorphism_type(
 	//int_vec_print(cout, Orb.orbit_len, Orb.nb_orbits);
 	//cout << endl;
 
-	classify C;
+	tally C;
 
 
 	C.init(Orb.orbit_len, Orb.nb_orbits, FALSE, 0);

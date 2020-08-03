@@ -264,7 +264,7 @@ class longinteger_object;
 typedef longinteger_object *plonginteger_object;
 class longinteger_domain;
 class rank_checker;
-class classify;
+class tally;
 typedef void *unipoly_object;
 class unipoly_domain;
 class mp_graphics;

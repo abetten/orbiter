@@ -341,8 +341,8 @@ public:
 	int *Trihedral_pairs_col_sets; // [nb_trihedral_pairs * 3]
 	int nb_trihedral_pairs; // = 120
 
-	classify *Classify_trihedral_pairs_row_values;
-	classify *Classify_trihedral_pairs_col_values;
+	tally *Classify_trihedral_pairs_row_values;
+	tally *Classify_trihedral_pairs_col_values;
 
 	int nb_Eckardt_points; // = 45
 	eckardt_point *Eckardt_points;
@@ -362,7 +362,7 @@ public:
 	int *collinear_Eckardt_triples_rank;
 		// as three subsets of 45 = nb_Eckardt_points
 
-	classify *Classify_collinear_Eckardt_triples;
+	tally *Classify_collinear_Eckardt_triples;
 
 	homogeneous_polynomial_domain *Poly1;
 		// linear polynomials in three variables
@@ -757,9 +757,9 @@ public:
 	int *plane_type_by_points;
 	int *plane_type_by_lines;
 
-	classify *C_plane_type_by_points;
-	classify *Type_pts_on_lines;
-	classify *Type_lines_on_point;
+	tally *C_plane_type_by_points;
+	tally *Type_pts_on_lines;
+	tally *Type_lines_on_point;
 
 	long int *Tritangent_plane_rk; // [45]
 		// list of tritangent planes in Schlaefli labeling
@@ -772,7 +772,7 @@ public:
 	int *Tritangent_plane_dual; // [nb_tritangent_planes]
 
 	int *iso_type_of_tritangent_plane; // [nb_tritangent_planes]
-	classify *Type_iso_tritangent_planes;
+	tally *Type_iso_tritangent_planes;
 
 
 	long int *Unitangent_planes; // [nb_unitangent_planes]

@@ -1714,7 +1714,7 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 			cout << endl;
 		}
 
-		classify C;
+		tally C;
 		set_of_sets *SoS;
 		int *types;
 		int nb_types;
@@ -1741,8 +1741,8 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 				//L[s] = w5_reps[3 * a + 2];
 				Ago[s] = 933120 / L[s];
 			}
-			classify C1;
-			classify C2;
+			tally C1;
+			tally C2;
 
 			C1.init(L, SoS->Set_size[t], FALSE, 0);
 			cout << "classification of orbit lengths for tensor rank " << types[t] << ":" << endl;
@@ -1813,7 +1813,7 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 			cout << endl;
 		}
 
-		classify C;
+		tally C;
 		set_of_sets *SoS;
 		int *types;
 		int nb_types;
@@ -1840,8 +1840,8 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 				//L[s] = w4_reps[3 * a + 2];
 				Ago[s] = 31104 / L[s];
 			}
-			classify C1;
-			classify C2;
+			tally C1;
+			tally C2;
 
 			C1.init(L, SoS->Set_size[t], FALSE, 0);
 			cout << "classification of orbit lengths for tensor rank " << types[t] << ":" << endl;

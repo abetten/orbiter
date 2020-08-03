@@ -139,7 +139,7 @@ void eckardt_point_info::init(surface_domain *Surf, projective_space *P,
 	//int_matrix_print(Intersections, 15, 15);
 
 
-	classify C;
+	tally C;
 	C.init(Intersections, 15 * 15, FALSE, 0);
 	C.get_data_by_multiplicity(B_pts, nb_B_pts,
 		multiplicity, 0 /* verbose_level */);
@@ -185,7 +185,7 @@ void eckardt_point_info::init(surface_domain *Surf, projective_space *P,
 				cout << endl;
 			}
 
-			classify C2;
+			tally C2;
 			int *Labels;
 			int nb_labels;
 

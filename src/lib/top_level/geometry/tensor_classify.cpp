@@ -517,7 +517,7 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 				L.print_lint_matrix_tex(fp, data, (orbit_length + 9)/ 10, 10);
 				fp << "$$" << endl;
 
-				classify C;
+				tally C;
 
 				C.init_lint(data, orbit_length, TRUE, 0);
 				fp << "$$";

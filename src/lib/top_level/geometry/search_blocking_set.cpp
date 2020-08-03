@@ -295,7 +295,7 @@ int search_blocking_set::test_blocking_set(int len, long int *S, int verbose_lev
 		}
 
 	if (f_v) {
-		classify C;
+		tally C;
 
 		C.init(sz, Inc->nb_cols, FALSE, 0);
 
@@ -374,7 +374,7 @@ int search_blocking_set::test_blocking_set_upper_bound_only(
 		}
 
 	if (f_v) {
-		classify C;
+		tally C;
 
 		C.init(sz, Inc->nb_cols, FALSE, 0);
 
@@ -546,7 +546,7 @@ int search_blocking_set::recursive_search_for_blocking_set(
 	for (j = 0; j < Inc->nb_cols; j++) {
 		sz[j] = Line_intersections[j].k;
 		}
-	classify C;
+	tally C;
 
 	C.init(sz, Inc->nb_cols, FALSE, 0);
 

@@ -339,7 +339,7 @@ void surface_object_tangent_cone::quartic(ostream &ost, int verbose_level)
 	}
 	ost << "$$" << endl;
 
-	classify C;
+	tally C;
 
 	C.init(line_type, SOA->Surf->P->N_lines, FALSE, 0);
 	C.get_class_by_value(Class_pts, nb_class_pts,

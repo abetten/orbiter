@@ -221,7 +221,7 @@ colored_graph *colored_graph::sort_by_color_classes(int verbose_level)
 		exit(1);
 	}
 
-	classify C;
+	tally C;
 
 	C.init(point_color, nb_points, FALSE, 0);
 	if (f_v) {
@@ -309,7 +309,7 @@ colored_graph *colored_graph::subgraph_by_color_classes(
 		exit(1);
 	}
 
-	classify C;
+	tally C;
 
 	C.init(point_color, nb_points, FALSE, 0);
 	if (f_v) {
@@ -387,7 +387,7 @@ colored_graph *colored_graph::subgraph_by_color_classes_with_condition(
 		exit(1);
 	}
 
-	classify C;
+	tally C;
 
 	C.init(point_color, nb_points, FALSE, 0);
 	if (f_v) {
@@ -486,7 +486,7 @@ void colored_graph::print()
 	cout << endl;
 #endif
 	
-	classify C;
+	tally C;
 
 	C.init(point_color, nb_points, TRUE, 0);
 
@@ -1462,7 +1462,7 @@ void colored_graph::draw_partitioned(const char *fname,
 		D[i] = 0;
 	}
 
-	classify C;
+	tally C;
 
 	C.init(point_color, nb_vertices, FALSE, 0);
 	if (f_v) {

@@ -437,7 +437,7 @@ void projective_space_job::perform_job_for_one_set(
 					0 /*verbose_level*/);
 			type[i] = point_indices.size();
 		}
-		classify C;
+		tally C;
 
 		C.init(type, N_lines, FALSE, 0);
 
@@ -489,7 +489,7 @@ void projective_space_job::perform_job_for_one_set(
 					verbose_level);
 			type[i] = point_indices.size();
 		}
-		classify C;
+		tally C;
 
 		C.init(type, N_planes, FALSE, 0);
 		fp_tex << back_end_counter << ": ";
@@ -623,7 +623,7 @@ void projective_space_job::perform_job_for_one_set(
 
 
 
-			classify C;
+			tally C;
 
 			C.init(type, len, FALSE, 0);
 			fp_tex << back_end_counter << ": ";

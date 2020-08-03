@@ -99,7 +99,7 @@ void isomorph::init_solutions(int **Solutions, int *Nb_sol,
 				"sorting hash_vs_id_hash" << endl;
 		}
 	{
-		classify C;
+		tally C;
 
 		C.init(hash_vs_id_hash, N, TRUE, 0);
 		cout << "isomorph::init_solutions "
@@ -346,7 +346,7 @@ void isomorph::read_solutions_from_clique_finder_case_by_case(
 				"sorting hash_vs_id_hash" << endl;
 		}
 	{
-		classify C;
+		tally C;
 
 		C.init(hash_vs_id_hash, N, TRUE, 0);
 		cout << "isomorph::read_solutions_from_clique_finder_case_by_case "
@@ -480,7 +480,7 @@ void isomorph::read_solutions_from_clique_finder(
 				"sorting hash_vs_id_hash" << endl;
 		}
 	{
-		classify C;
+		tally C;
 
 		C.init(hash_vs_id_hash, N, TRUE, 0);
 		cout << "isomorph::read_solutions_from_clique_finder "
@@ -721,7 +721,7 @@ void isomorph::build_up_database(int nb_files,
 				"sorting hash_vs_id_hash" << endl;
 		}
 	{
-		classify C;
+		tally C;
 
 		C.init(hash_vs_id_hash, N, TRUE, 0);
 		cout << "isomorph::build_up_database "

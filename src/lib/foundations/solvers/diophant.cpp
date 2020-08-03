@@ -3470,7 +3470,7 @@ void diophant::project_to_single_equation_and_solve(
 		cout << setw(3) << eqn_idx[i] << " : " << setw(4) << nb_sol_in_eqn[i] << endl;
 	}
 
-	classify C;
+	tally C;
 
 	C.init_lint(nb_sol_in_eqn, h, FALSE, 0);
 	cout << "number of solutions of individual equations classified:" << endl;
@@ -3982,7 +3982,7 @@ void diophant::draw_partitioned(const char *fname_base,
 		}
 	}
 
-	classify C;
+	tally C;
 
 	C.init(T, m, FALSE, 0);
 	if (f_v) {
@@ -4234,7 +4234,7 @@ void diophant::test_solution_file(const char *solution_file,
 		int_vec_print(cout, Y, m);
 		cout << endl;
 
-		classify C;
+		tally C;
 
 		C.init(Y, m, FALSE, 0);
 		cout << "classification: ";
