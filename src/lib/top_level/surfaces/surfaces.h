@@ -387,6 +387,8 @@ void classify_trihedral_pairs_early_test_function_type2(long int *S, int len,
 	void *data, int verbose_level);
 
 
+
+
 // #############################################################################
 // six_arcs_not_on_a_conic.cpp
 // #############################################################################
@@ -1064,25 +1066,70 @@ public:
 
 };
 
+
+// #############################################################################
+// surfaces_arc_lifting_definition_node.cpp
+// #############################################################################
+
+
+
+//! flag orbit node which is a definition node and hence describes a surface
+
+
+class surfaces_arc_lifting_definition_node {
+public:
+
+	surfaces_arc_lifting *Lift;
+
+	int f;
+	int orbit_idx;
+
+	surface_object *SO;
+
+
+
+	strong_generators *Flag_stab_gens;
+	longinteger_object Flag_stab_go;
+
+
+	int three_lines_idx[45 * 3];
+		// the index into Lines[] of the
+		// three lines in the chosen tritangent plane
+		// This is computed from the Schlaefli labeling
+		// using the eckardt point class.
+
+	long int three_lines[45 * 3];
+		// the three lines in the chosen tritangent plane
+
+
+
+	seventytwo_cases Seventytwo[45 * 72];
+
+
+	int nb_coset_reps;
+	surfaces_arc_lifting_trace *T; // [nb_coset_reps]
+	vector_ge *coset_reps;
+
+	int *relative_order_table; // [nb_coset_reps]
+
+
+	surfaces_arc_lifting_definition_node();
+	~surfaces_arc_lifting_definition_node();
+	void init(surfaces_arc_lifting *Lift,
+			int f, int orbit_idx, surface_object *SO,
+			int verbose_level);
+	void report(int verbose_level);
+	void report2(std::ostream &ost, int verbose_level);
+	void report_Clebsch_maps(std::ostream &ost, int verbose_level);
+	void report_seventytwo_maps_top(std::ostream &ost);
+	void report_seventytwo_maps_bottom(std::ostream &ost);
+	void report_seventytwo_maps_line(std::ostream &ost, seventytwo_cases *S, int i, int j);
+};
+
+
 // #############################################################################
 // surfaces_arc_lifting_trace.cpp
 // #############################################################################
-
-
-struct seventytwo_cases {
-	int line_idx;
-		// the index of the line chosen to be P1,P2 in three_lines[3]
-
-	int m1, m2, m3;
-		// rearrangement of three_lines_idx[3]
-		// m1 = line_idx is the line through P1 and P2.
-		// m2 and m3 are the two other lines.
-
-	int l1, l2;
-		// the indices of the two lines defining the Clebsch map.
-		// They pass through m1.
-
-};
 
 
 
@@ -1140,11 +1187,10 @@ public:
 	int upstep_idx;
 
 
-	long int P6[6];
 
 	int seventytwo_case_idx;
 
-	struct seventytwo_cases The_case;
+	seventytwo_cases The_case;
 
 
 	surfaces_arc_lifting_trace();
@@ -1152,18 +1198,17 @@ public:
 	void init(surfaces_arc_lifting_upstep *Up,
 			int seventytwo_case_idx, int verbose_level);
 	void process_flag_orbit(surfaces_arc_lifting_upstep *Up, int verbose_level);
-	void trace_second_flag_orbit(int verbose_level);
-	void compute_arc(int verbose_level);
+	//void trace_second_flag_orbit(int verbose_level);
+	//void compute_arc(int verbose_level);
 	void move_arc(int verbose_level);
 	void move_plane_and_arc(long int *P6a, int verbose_level);
-	void make_arc_canonical(long int *P6_local,
+	void make_arc_canonical(
+			long int *P6_local, long int *P6_local_canonical,
 			int &orbit_not_on_conic_idx, int verbose_level);
-	void compute_beta1(long int *P6_local,
-			int orbit_not_on_conic_idx,
-			int &pair_orbit_idx, int *the_partition4, int verbose_level);
-	void compute_beta2(long int *P6_local,
-			int orbit_not_on_conic_idx,
-			int pair_orbit_idx, int *the_partition4, int verbose_level);
+	void compute_beta1(seventytwo_cases *The_case, int verbose_level);
+	void compute_beta2(int orbit_not_on_conic_idx,
+			int pair_orbit_idx, int &partition_orbit_idx,
+			int *the_partition4, int verbose_level);
 	void lift_group_elements_and_move_two_lines(int verbose_level);
 	void embed(int *Elt_A3, int *Elt_A4, int verbose_level);
 
@@ -1201,19 +1246,20 @@ public:
 	long int Lines[27];
 	int eqn20[20];
 
-	int *Adj;
-	surface_object *SO;
 
-	vector_ge *coset_reps;
-	int nb_coset_reps;
+	surfaces_arc_lifting_definition_node *D;
 
-	strong_generators *Flag_stab_gens;
-	longinteger_object Flag_stab_go;
+	//vector_ge *coset_reps;
+	//int nb_coset_reps;
+
+	//strong_generators *Flag_stab_gens;
+	//longinteger_object Flag_stab_go;
 
 	int f;
 
 	int tritangent_plane_idx;
-		// the tritangent plane picked for the Clebsch map, in [0,44].
+		// the tritangent plane picked for the Clebsch map,
+		// using the Schlaefli labeling, in [0,44].
 
 
 	int three_lines_idx[3];
@@ -1227,7 +1273,7 @@ public:
 
 
 
-	struct seventytwo_cases Seventytwo[72];
+	seventytwo_cases Seventytwo[72];
 
 	int seventytwo_case_idx;
 
@@ -1236,8 +1282,10 @@ public:
 	~surfaces_arc_lifting_upstep();
 	void init(surfaces_arc_lifting *Lift, int verbose_level);
 	void process_flag_orbit(int verbose_level);
-	void compute_stabilizer(strong_generators *&Aut_gens, int verbose_level);
-	void process_tritangent_plane(int verbose_level);
+	void compute_stabilizer(surfaces_arc_lifting_definition_node *D,
+			strong_generators *&Aut_gens, int verbose_level);
+	void process_tritangent_plane(surfaces_arc_lifting_definition_node *D,
+			int verbose_level);
 	void make_seventytwo_cases(int verbose_level);
 
 };
@@ -1300,8 +1348,10 @@ public:
 	void downstep(int verbose_level);
 	void downstep_one_arc(int arc_idx,
 			int &cur_flag_orbit, long int *Flag, int verbose_level);
-	void report_flag_orbits(std::ostream &ost, int verbose_level);
 	void report(int verbose_level);
+	void report2(std::ostream &ost, int verbose_level);
+	void report_flag_orbits(std::ostream &ost, int verbose_level);
+	void report_flag_orbits_in_detail(std::ostream &ost, int verbose_level);
 };
 
 

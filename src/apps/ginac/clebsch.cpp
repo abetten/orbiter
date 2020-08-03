@@ -173,11 +173,15 @@ void surface(int argc, const char **argv)
 
 		HPD = NEW_OBJECT(homogeneous_polynomial_domain);
 		HPD->init(F, 4 /* nb_vars */, 3 /* degree */,
-				FALSE /* f_init_incidence_structure */, 0 /*verbose_level*/);
+				FALSE /* f_init_incidence_structure */,
+				t_PART,
+				0 /*verbose_level*/);
 
 		//print the monomials in Orbiter ordering:
-		for (i = 0; i < HPD->nb_monomials; i++) {
-			cout << i << " : " << HPD->monomial_symbols[i] << endl;
+		for (i = 0; i < HPD->get_nb_monomials(); i++) {
+			cout << i << " : ";
+			HPD->print_monomial(cout, i);
+			cout << endl;
 		}
 
 		// Create the 20 monomials as objects in ginac:
@@ -185,10 +189,17 @@ void surface(int argc, const char **argv)
 		ex M[20];
 		parser reader;
 
-		for (i = 0; i < HPD->nb_monomials; i++) {
-			M[i] = reader(HPD->monomial_symbols[i]);
+		for (i = 0; i < HPD->get_nb_monomials(); i++) {
+
+			std::stringstream sstr;
+
+
+			HPD->print_monomial_str(sstr, i);
+
+
+			M[i] = reader(sstr.str().c_str());
 			ostringstream s;
-			s << latex << M[i];
+			s << latex << sstr.str();
 			cout << "M[" << i << "]=" << s.str() << endl;
 		}
 

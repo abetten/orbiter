@@ -63,9 +63,11 @@ void thirteen_Eckardt_points(int argc, const char **argv)
 	const char *author = "Orbiter";
 	const char *extras_for_preamble = "";
 
-	vsnprintf(fname, 1000, "13_report.tex", 0);
-	vsnprintf(title, 1000, "Thirteen Eckardt Points", 0);
+	snprintf(fname, 1000, "13_report.tex", 0);
+	snprintf(title, 1000, "Thirteen Eckardt Points", 0);
 
+	cout << "fname=" << fname << endl;
+	cout << "title=" << title << endl;
 	{
 		ofstream fp(fname);
 		latex_interface L;
@@ -86,6 +88,7 @@ void thirteen_Eckardt_points(int argc, const char **argv)
 		// For instance, u=1 and v=2 leads to the standard form of the
 		// Hilbert Cohn-Vossen surface
 
+		cout << "creating symbol a" << endl;
 		symbol a("a"); //', b("b"), c("c"), d("d");
 
 		// a matrix for 20 points:
@@ -112,6 +115,8 @@ void thirteen_Eckardt_points(int argc, const char **argv)
 		};
 		fp << "$$V=" << endl << latex << V << endl << "$$" << endl;
 
+		// We consider the i conics i=0...5 C_i where
+		// C_i passes through all but P_i:
 		int conic_idx[] = {
 				1,2,3,4,5,
 				0,2,3,4,5,
@@ -177,11 +182,13 @@ void thirteen_Eckardt_points(int argc, const char **argv)
 
 			HPD = NEW_OBJECT(homogeneous_polynomial_domain);
 			HPD->init(F, 3 /* nb_vars */, 2 /* degree */,
-					FALSE /* f_init_incidence_structure */, verbose_level);
+					FALSE /* f_init_incidence_structure */, t_PART, verbose_level);
 
 			//print the monomials in Orbiter ordering:
-			for (col = 0; col < HPD->nb_monomials; col++) {
-				cout << col << " : " << HPD->monomial_symbols[col] << endl;
+			for (col = 0; col < HPD->get_nb_monomials(); col++) {
+				cout << col << " : ";
+				HPD->print_monomial(cout, col);
+				cout << endl;
 			}
 
 			// Create the 6 monomials as objects in ginac:
@@ -189,15 +196,24 @@ void thirteen_Eckardt_points(int argc, const char **argv)
 			ex M[6];
 			parser reader;
 
-			for (col = 0; col < HPD->nb_monomials; col++) {
-				M[col] = reader(HPD->monomial_symbols[col]);
+			for (col = 0; col < HPD->get_nb_monomials(); col++) {
+				std::stringstream sstr;
+
+
+				HPD->print_monomial_str(sstr, col);
+
+
+				M[col] = reader(sstr.str().c_str());
 				ostringstream s;
-				s << latex << M[col];
+				s << latex << sstr.str();
 				cout << "M[" << col << "]=" << s.str() << endl;
+
 			}
 
 			// During the previous loop, ginac has created 3 symbolic variables.
 			// We just need to identify them in the symbol table:
+
+			cout << "before symtab" << endl;
 
 			symtab table = reader.get_syms();
 			symbol X0 = ex_to<symbol>(table["X0"]);
@@ -205,14 +221,17 @@ void thirteen_Eckardt_points(int argc, const char **argv)
 			symbol X2 = ex_to<symbol>(table["X2"]);
 
 
+			cout << "before matrix" << endl;
+
+
 			// Create the coefficient matrix which forces
 			// the surface to pass through the 19 points:
 			matrix S(5, 6);
-			for (col = 0; col < HPD->nb_monomials; col++) {
+			for (col = 0; col < HPD->get_nb_monomials(); col++) {
 				for (r = 0; r < 5; r++) {
 
 					// the (r,col)-entry of S
-					// is the col-th monomial evaluated at the r-th point P[r].
+					// is the monomial M[col] evaluated at the point P[r].
 
 					ex e = M[col].subs(lst{X0, X1, X2},
 							lst{(*P[r])(0, 0), (*P[r])(0, 1), (*P[r])(0, 2)});
@@ -244,12 +263,12 @@ void thirteen_Eckardt_points(int argc, const char **argv)
 			// We have Orbiter create these labels for us
 			// and store them in HPD->monomial_symbols_easy
 
-			symbol m0(HPD->monomial_symbols_easy[0]);
-			symbol m1(HPD->monomial_symbols_easy[1]);
-			symbol m2(HPD->monomial_symbols_easy[2]);
-			symbol m3(HPD->monomial_symbols_easy[3]);
-			symbol m4(HPD->monomial_symbols_easy[4]);
-			symbol m5(HPD->monomial_symbols_easy[5]);
+			symbol m0(HPD->get_monomial_symbol_easy(0));
+			symbol m1(HPD->get_monomial_symbol_easy(1));
+			symbol m2(HPD->get_monomial_symbol_easy(2));
+			symbol m3(HPD->get_monomial_symbol_easy(3));
+			symbol m4(HPD->get_monomial_symbol_easy(4));
+			symbol m5(HPD->get_monomial_symbol_easy(5));
 
 			lst eqns, vars;
 			ex sol;
@@ -276,6 +295,8 @@ void thirteen_Eckardt_points(int argc, const char **argv)
 			cout << "solving " << eqns << " for " << vars << endl;
 			sol = my_lsolve(fp, eqns, vars);
 
+			cout << "after solving" << endl;
+
 			fp << "\\clearpage" << endl;
 
 			// Print the solution (there should be only one):
@@ -288,14 +309,21 @@ void thirteen_Eckardt_points(int argc, const char **argv)
 			fp << "The equation of the conic $C_" << j << "$ is" << endl;
 			fp << "$$" << endl;
 			for (col = 0; col < 6; col++) {
+
+				cout << "A" << endl;
 				ex solc = sol.op(col);  // solution for col-th variable
 
+				cout << "B" << endl;
 				Eqn[col] = 0;
 
 				if (!solc.is_zero()) {
+					cout << "C" << endl;
 					numeric value = ex_to<numeric>(evalf(solc));
 
+					cout << "D" << endl;
 					Eqn[col] = value.to_double();
+
+					cout << "E" << endl;
 
 					if (f_first) {
 						f_first = FALSE;
@@ -303,9 +331,13 @@ void thirteen_Eckardt_points(int argc, const char **argv)
 					else {
 						fp << " + ";
 					}
-					fp << solc << HPD->monomial_symbols_latex[col];
+					fp << solc;
+
+					cout << "before  HPD->print_monomial" << endl;
+					HPD->print_monomial(fp, col);
 				}
 			}
+			cout << "F" << endl;
 			fp << " = 0" << endl;
 			fp << "$$" << endl;
 			cout << endl;
@@ -320,8 +352,11 @@ void thirteen_Eckardt_points(int argc, const char **argv)
 
 			} // next i
 
+		cout << "finished with j=" << j << endl;
+
 		} // next j
 
+		cout << "finished with loop" << endl;
 
 		L.foot(fp);
 	}

@@ -47,6 +47,12 @@ public:
 			longinteger_object &go, int verbose_level);
 	set_and_stabilizer *get_set_and_stabilizer(int orbit_index,
 			int verbose_level);
+	void write_file(std::ofstream &fp, int verbose_level);
+	void read_file(std::ifstream &fp,
+			action *A, action *A2, longinteger_object &go,
+			int verbose_level);
+	void generate_source_code(const char *fname_base, int verbose_level);
+	long int *Rep_ith(int i);
 	void print_group_orders();
 	void print_summary(std::ostream &ost);
 	void print_latex(std::ostream &ost,
@@ -55,13 +61,6 @@ public:
 		void (*print_function)(std::ostream &ost, int i,
 				classification_step *Step, void *print_function_data),
 		void *print_function_data);
-	void write_file(std::ofstream &fp, int verbose_level);
-	void read_file(std::ifstream &fp,
-			action *A, action *A2, longinteger_object &go,
-			int verbose_level);
-	void generate_source_code(const char *fname_base, int verbose_level);
-	long int *Rep_ith(int i);
-	//long int *Rep_lint_ith(int i);
 
 };
 
@@ -157,6 +156,7 @@ public:
 	classification_step *C;
 	int orbit_index;
 	strong_generators *gens;
+	void *extra_data;
 
 	orbit_node();
 	~orbit_node();
@@ -164,7 +164,7 @@ public:
 	void freeself();
 	void init(classification_step *C,
 			int orbit_index, strong_generators *gens,
-			long int *Rep, int verbose_level);
+			long int *Rep, void *extra_data, int verbose_level);
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp, int verbose_level);
 };

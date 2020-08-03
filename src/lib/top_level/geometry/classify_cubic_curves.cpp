@@ -679,7 +679,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 		Curves->Orbit[Flag_orbits->nb_primary_orbits_upper].init(
 				Curves,
 			Flag_orbits->nb_primary_orbits_upper,
-			Aut_gens, dataset, verbose_level);
+			Aut_gens, dataset, NULL /* extra_data */, verbose_level);
 
 		FREE_OBJECT(coset_reps);
 		FREE_OBJECT(S);

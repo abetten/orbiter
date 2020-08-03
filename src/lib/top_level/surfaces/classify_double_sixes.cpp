@@ -1393,7 +1393,7 @@ void classify_double_sixes::upstep(int verbose_level)
 		Double_sixes->Orbit[Flag_orbits->nb_primary_orbits_upper].init(
 			Double_sixes,
 			Flag_orbits->nb_primary_orbits_upper, 
-			Aut_gens, dataset + 11, verbose_level);
+			Aut_gens, dataset + 11, NULL /* extra_data */, verbose_level);
 
 		FREE_OBJECT(coset_reps);
 		FREE_OBJECT(S);

@@ -1634,6 +1634,7 @@ public:
 	projective_space *get_P();
 	finite_field *get_F();
 	int get_monomial(int i, int j);
+	char *get_monomial_symbol_easy(int i);
 	int *get_monomial_pointer(int i);
 	int evaluate_monomial(int idx_of_monomial, int *coords);
 	void remake_symbols(int symbol_offset,
@@ -1651,9 +1652,12 @@ public:
 	void affine_evaluation_kernel(
 			int *&Kernel, int &dim_kernel, int verbose_level);
 	void print_monomial(std::ostream &ost, int i);
+	void print_monomial_latex(std::ostream &ost, int i);
 	void print_monomial(std::ostream &ost, int *mon);
+	void print_monomial_latex(std::ostream &ost, int *mon);
 	void print_monomial(char *str, int i);
 	void print_monomial_str(std::stringstream &ost, int i);
+	void print_monomial_latex_str(std::stringstream &ost, int i);
 	void print_equation(std::ostream &ost, int *coeffs);
 	void print_equation_numerical(std::ostream &ost, int *coeffs);
 	void print_equation_lint(std::ostream &ost, long int *coeffs);

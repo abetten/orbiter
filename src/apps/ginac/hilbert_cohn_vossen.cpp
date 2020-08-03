@@ -465,21 +465,38 @@ void surface(int argc, const char **argv)
 				verbose_level);
 
 		//print the monomials in Orbiter ordering:
-		for (i = 0; i < HPD->nb_monomials; i++) {
-			cout << i << " : " << HPD->monomial_symbols[i] << endl;
+		for (i = 0; i < HPD->get_nb_monomials(); i++) {
+
+			std::stringstream sstr;
+
+
+			HPD->print_monomial_str(sstr, i);
+
+
+			cout << i << " : " << sstr.str() << endl;
 		}
+
+
 
 		// Create the 20 monomials as objects in ginac:
 		// We use Orbiter created strings which represent each monomial
 		ex M[20];
 		parser reader;
 
-		for (i = 0; i < HPD->nb_monomials; i++) {
-			M[i] = reader(HPD->monomial_symbols[i]);
+		for (i = 0; i < HPD->get_nb_monomials(); i++) {
+
+			std::stringstream sstr;
+
+
+			HPD->print_monomial_str(sstr, i);
+
+
+			M[i] = reader(sstr.str().c_str());
 			ostringstream s;
-			s << latex << M[i];
+			s << latex << sstr.str();
 			cout << "M[" << i << "]=" << s.str() << endl;
 		}
+
 
 		// During the previous loop, ginac has created 4 symbolic variables.
 		// We just need to identify them in the symbol table:
@@ -494,7 +511,7 @@ void surface(int argc, const char **argv)
 		// Create the coefficient matrix which forces
 		// the surface to pass through the 19 points:
 		matrix Suv(19, 20);
-		for (j = 0; j < HPD->nb_monomials; j++) {
+		for (j = 0; j < HPD->get_nb_monomials(); j++) {
 			for (i = 0; i < 19; i++) {
 
 				// the (i,j)-entry of S
@@ -529,7 +546,7 @@ void surface(int argc, const char **argv)
 
 
 		matrix S(19, 20);
-		for (j = 0; j < HPD->nb_monomials; j++) {
+		for (j = 0; j < HPD->get_nb_monomials(); j++) {
 			for (i = 0; i < 19; i++) {
 
 				// the (i,j)-entry of S
@@ -570,26 +587,26 @@ void surface(int argc, const char **argv)
 		// We have Orbiter create these labels for us
 		// and store them in HPD->monomial_symbols_easy
 
-		symbol m0(HPD->monomial_symbols_easy[0]);
-		symbol m1(HPD->monomial_symbols_easy[1]);
-		symbol m2(HPD->monomial_symbols_easy[2]);
-		symbol m3(HPD->monomial_symbols_easy[3]);
-		symbol m4(HPD->monomial_symbols_easy[4]);
-		symbol m5(HPD->monomial_symbols_easy[5]);
-		symbol m6(HPD->monomial_symbols_easy[6]);
-		symbol m7(HPD->monomial_symbols_easy[7]);
-		symbol m8(HPD->monomial_symbols_easy[8]);
-		symbol m9(HPD->monomial_symbols_easy[9]);
-		symbol m10(HPD->monomial_symbols_easy[10]);
-		symbol m11(HPD->monomial_symbols_easy[11]);
-		symbol m12(HPD->monomial_symbols_easy[12]);
-		symbol m13(HPD->monomial_symbols_easy[13]);
-		symbol m14(HPD->monomial_symbols_easy[14]);
-		symbol m15(HPD->monomial_symbols_easy[15]);
-		symbol m16(HPD->monomial_symbols_easy[16]);
-		symbol m17(HPD->monomial_symbols_easy[17]);
-		symbol m18(HPD->monomial_symbols_easy[18]);
-		symbol m19(HPD->monomial_symbols_easy[19]);
+		symbol m0(HPD->get_monomial_symbol_easy(0));
+		symbol m1(HPD->get_monomial_symbol_easy(1));
+		symbol m2(HPD->get_monomial_symbol_easy(2));
+		symbol m3(HPD->get_monomial_symbol_easy(3));
+		symbol m4(HPD->get_monomial_symbol_easy(4));
+		symbol m5(HPD->get_monomial_symbol_easy(5));
+		symbol m6(HPD->get_monomial_symbol_easy(6));
+		symbol m7(HPD->get_monomial_symbol_easy(7));
+		symbol m8(HPD->get_monomial_symbol_easy(8));
+		symbol m9(HPD->get_monomial_symbol_easy(9));
+		symbol m10(HPD->get_monomial_symbol_easy(10));
+		symbol m11(HPD->get_monomial_symbol_easy(11));
+		symbol m12(HPD->get_monomial_symbol_easy(12));
+		symbol m13(HPD->get_monomial_symbol_easy(13));
+		symbol m14(HPD->get_monomial_symbol_easy(14));
+		symbol m15(HPD->get_monomial_symbol_easy(15));
+		symbol m16(HPD->get_monomial_symbol_easy(16));
+		symbol m17(HPD->get_monomial_symbol_easy(17));
+		symbol m18(HPD->get_monomial_symbol_easy(18));
+		symbol m19(HPD->get_monomial_symbol_easy(19));
 
 		lst eqns, vars;
 		ex sol;
@@ -663,7 +680,8 @@ void surface(int argc, const char **argv)
 				else {
 					fp << " + ";
 				}
-				fp << solj << HPD->monomial_symbols_latex[j];
+				fp << solj;
+				HPD->print_monomial(fp, j);
 			}
 			//if (j < 20) {
 			//	cout << ", " << endl;

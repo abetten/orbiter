@@ -90,6 +90,9 @@ public:
 			action *A, sims *S,
 			const char *element_description,
 			const char *label, int verbose_level);
+	void relative_order_vector_of_cosets(
+			action *A, strong_generators *SG,
+			vector_ge *cosets, int *&relative_order_table, int verbose_level);
 };
 
 

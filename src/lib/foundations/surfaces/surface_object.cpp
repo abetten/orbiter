@@ -849,6 +849,10 @@ void surface_object::compute_adjacency_matrix_of_line_intersection_graph(
 
 }
 
+int surface_object::Adj_ij(int i, int j)
+{
+	return Adj_line_intersection_graph[i * 27 + j];
+}
 
 void surface_object::compute_plane_type_by_points(int verbose_level)
 {

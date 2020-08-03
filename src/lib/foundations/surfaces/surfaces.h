@@ -186,6 +186,103 @@ public:
 
 
 // #############################################################################
+// seventytwo_cases.cpp
+// #############################################################################
+
+//! description of a Clebsch map with a fixed tritangent plane
+
+class seventytwo_cases {
+
+public:
+
+	int f;
+
+	int tritangent_plane_idx;
+		// the tritangent plane picked for the Clebsch map,
+		// using the Schlaefli labeling, in [0,44].
+
+
+	int three_lines_idx[3];
+		// the index into Lines[] of the
+		// three lines in the chosen tritangent plane
+		// This is computed from the Schlaefli labeling
+		// using the eckardt point class.
+
+	long int three_lines[3];
+		// the three lines in the chosen tritangent plane
+
+
+	long int tritangent_plane_rk;
+
+	int Basis_pi[16];
+	int Basis_pi_inv[17]; // in case it is semilinear
+
+	int line_idx;
+		// the index of the line chosen to be P1,P2 in three_lines[3]
+		// three_lines refers to class surfaces_arc_lifting_upstep
+
+	int m1, m2, m3;
+		// rearrangement of three_lines_idx[3]
+		// m1 = line_idx is the line through P1 and P2.
+		// m2 and m3 are the two other lines.
+
+	int l1, l2;
+		// the indices of the two lines defining the Clebsch map.
+		// They pass through m1.
+
+	int transversals[5];
+		// the 5 transversals of l1 and l2 in Schlaefli labeling
+
+	long int transversals4[4];
+		// the 4 transversals different from m1 in Schlaefli labeling
+
+	long int P6[6];
+		// the points of intersection of l1, l2, and of the 4 transversals
+		// with the tritangent plane
+
+	long int P6a[6];
+		// the arc after the plane has been moved
+
+	long int P6_local[6];
+		// the moved arc in local coordinates
+
+	long int P6_local_canonical[6];
+		// the canonical form of P6_local[]
+
+	long int P6_perm[6];
+	long int P6_perm_mapped[6];
+	long int pair[2];
+	int the_rest[4];
+
+	int orbit_not_on_conic_idx;
+	int pair_orbit_idx;
+
+	int partition_orbit_idx;
+	int the_partition4[4];
+
+	int f2;
+
+	seventytwo_cases();
+	~seventytwo_cases();
+	void init(int f, int tritangent_plane_idx,
+			int *three_lines_idx, long int *three_lines,
+			int line_idx, int m1, int m2, int m3, int l1, int l2);
+	void compute_arc(surface_object *SO, int verbose_level);
+	// We have chosen a tritangent planes and we know the three lines m1, m2, m3 in it.
+	// The lines l1 and l2 intersect m1 in the first two points.
+	// Computes the 5 transversals to the two lines l1 and l2.
+	// One of these lines must be m1, so we remove that to have 4 lines.
+	// These 4 lines intersect the two other lines m2 and m3 in the other 4 points.
+	// This makes up the arc of 6 points.
+	// They will be stored in P6[6].
+	void compute_partition(int verbose_level);
+	void print();
+};
+
+
+
+
+// #############################################################################
 // surface_domain.cpp
 // #############################################################################
 
@@ -716,6 +813,7 @@ public:
 	void compute_adjacency_matrix_of_line_intersection_graph(
 		int verbose_level);
 	void print_neighbor_sets(std::ostream &ost);
+	int Adj_ij(int i, int j);
 	void compute_plane_type_by_points(int verbose_level);
 	void compute_tritangent_planes_by_rank(int verbose_level);
 	void compute_Lines_in_tritangent_planes(int verbose_level);

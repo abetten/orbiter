@@ -589,6 +589,12 @@ class interface_projective {
 	int study_surface_q;
 	int study_surface_nb;
 
+	int f_move_two_lines_in_hyperplane_stabilizer;
+	long int line1_from;
+	long int line2_from;
+	long int line1_to;
+	long int line2_to;
+
 
 public:
 
@@ -636,6 +642,10 @@ public:
 	void do_create_spread(spread_create_description *Descr, int verbose_level);
 	void do_create_surface(surface_create_description *Descr, int verbose_level);
 	void do_study_surface(int q, int nb, int verbose_level);
+	void do_move_two_lines_in_hyperplane_stabilizer(
+			int q,
+			long int line1_from, long int line2_from,
+			long int line1_to, long int line2_to, int verbose_level);
 };
 
 

@@ -595,7 +595,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 		Surfaces->Orbit[Flag_orbits->nb_primary_orbits_upper].init(
 			Surfaces,
 			Flag_orbits->nb_primary_orbits_upper, 
-			Aut_gens, Lines, verbose_level);
+			Aut_gens, Lines, NULL /* extra_data */, verbose_level);
 
 		FREE_OBJECT(coset_reps);
 		FREE_OBJECT(S);
