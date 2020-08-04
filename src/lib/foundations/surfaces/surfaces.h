@@ -332,11 +332,14 @@ public:
 	int *System; // [max_pts * nb_monomials]
 	int *base_cols; // [nb_monomials]
 
-	char **Line_label; // [27]
-	char **Line_label_tex; // [27]
+	//char **Line_label; // [27]
+	//char **Line_label_tex; // [27]
+
+	std::string *Line_label; // [27]
+	std::string *Line_label_tex; // [27]
 
 	int *Trihedral_pairs; // [nb_trihedral_pairs * 9]
-	char **Trihedral_pair_labels; // [nb_trihedral_pairs]
+	std::string *Trihedral_pair_labels; // [nb_trihedral_pairs]
 	int *Trihedral_pairs_row_sets; // [nb_trihedral_pairs * 3]
 	int *Trihedral_pairs_col_sets; // [nb_trihedral_pairs * 3]
 	int nb_trihedral_pairs; // = 120
@@ -347,8 +350,8 @@ public:
 	int nb_Eckardt_points; // = 45
 	eckardt_point *Eckardt_points;
 
-	char **Eckard_point_label; // [nb_Eckardt_points]
-	char **Eckard_point_label_tex; // [nb_Eckardt_points]
+	std::string *Eckard_point_label; // [nb_Eckardt_points]
+	std::string *Eckard_point_label_tex; // [nb_Eckardt_points]
 
 
 	int nb_trihedral_to_Eckardt; // nb_trihedral_pairs * 6
@@ -388,14 +391,14 @@ public:
 		// cubic polynomials in four variables
 
 	long int *Double_six; // [36 * 12]
-	char **Double_six_label_tex; // [36]
+	std::string *Double_six_label_tex; // [36]
 
 
 	long int *Half_double_sixes; // [72 * 6]
 		// warning: the half double sixes are sorted individually,
 		// so the pairing between the lines
 		// in the associated double six is gone.
-	char **Half_double_six_label_tex; // [72]
+	std::string *Half_double_six_label_tex; // [72]
 
 	int *Half_double_six_to_double_six; // [72]
 	int *Half_double_six_to_double_six_row; // [72]
@@ -474,8 +477,7 @@ public:
 		long int *Lines_wedge, long int *Lines, long int *Lines_klein, int nb_lines);
 	void find_tritangent_planes_intersecting_in_a_line(int line_idx,
 		int &plane1, int &plane2, int verbose_level);
-	void make_trihedral_pairs(int *&T, char **&T_label,
-		int &nb_trihedral_pairs, int verbose_level);
+	void make_trihedral_pairs(int verbose_level);
 	void process_trihedral_pairs(int verbose_level);
 	void make_Tijk(int *T, int i, int j, int k);
 	void make_Tlmnp(int *T, int l, int m, int n, int p);
@@ -567,6 +569,7 @@ public:
 
 	// surface_domain_lines.cpp:
 	void init_line_data(int verbose_level);
+	void init_Schlaefli_labels(int verbose_level);
 	void unrank_line(int *v, long int rk);
 	void unrank_lines(int *v, long int *Rk, int nb);
 	int line_ai(int i);

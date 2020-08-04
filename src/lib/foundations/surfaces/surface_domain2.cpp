@@ -535,7 +535,7 @@ void surface_domain::init_double_sixes(int verbose_level)
 		exit(1);
 	}
 
-	Double_six_label_tex = NEW_pchar(36);
+	Double_six_label_tex = new string [36];
 	char str[1000];
 
 	for (i = 0; i < 36; i++) {
@@ -565,9 +565,10 @@ void surface_domain::init_double_sixes(int verbose_level)
 			cout << "creating label " << str
 				<< " for Double six " << i << endl;
 		}
-		l = strlen(str);
-		Double_six_label_tex[i] = NEW_char(l + 1);
-		strcpy(Double_six_label_tex[i], str);
+		//l = strlen(str);
+		//Double_six_label_tex[i] = NEW_char(l + 1);
+		//strcpy(Double_six_label_tex[i], str);
+		Double_six_label_tex[i].assign(str);
 	}
 
 	if (f_v) {
@@ -578,7 +579,7 @@ void surface_domain::init_double_sixes(int verbose_level)
 void surface_domain::create_half_double_sixes(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, a, b, c, ij, v, l;
+	int i, j, a, b, c, ij, v;
 	int set[6];
 	int size_complement;
 	combinatorics_domain Combi;
@@ -600,7 +601,7 @@ void surface_domain::create_half_double_sixes(int verbose_level)
 			Half_double_six_to_double_six_row[2 * i + j] = j;
 		}
 	}
-	Half_double_six_label_tex = NEW_pchar(72);
+	Half_double_six_label_tex = new string [72];
 	char str[1000];
 
 	for (i = 0; i < 36; i++) {
@@ -641,9 +642,10 @@ void surface_domain::create_half_double_sixes(int verbose_level)
 					<< " for half double six "
 					<< 2 * i + j << endl;
 			}
-			l = strlen(str);
-			Half_double_six_label_tex[2 * i + j] = NEW_char(l + 1);
-			strcpy(Half_double_six_label_tex[2 * i + j], str);
+			//l = strlen(str);
+			//Half_double_six_label_tex[2 * i + j] = NEW_char(l + 1);
+			//strcpy(Half_double_six_label_tex[2 * i + j], str);
+			Half_double_six_label_tex[2 * i + j].assign(str);
 		}
 	}
 

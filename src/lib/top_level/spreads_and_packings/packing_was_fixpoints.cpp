@@ -325,7 +325,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 				Iso_type_invariant,
 				verbose_level);
 
-	classify_vector_data C;
+	tally_vector_data C;
 
 
 	C.init(Iso_type_invariant, nb_cliques,

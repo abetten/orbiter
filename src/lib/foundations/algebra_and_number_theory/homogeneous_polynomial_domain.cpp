@@ -924,6 +924,31 @@ void homogeneous_polynomial_domain::print_equation(ostream &ost, int *coeffs)
 	}
 }
 
+void homogeneous_polynomial_domain::print_equation_tex(ostream &ost, int *coeffs)
+{
+	int i, c;
+	int f_first = TRUE;
+
+
+	for (i = 0; i < nb_monomials; i++) {
+		c = coeffs[i];
+		if (c == 0) {
+			continue;
+		}
+		if (f_first) {
+			f_first = FALSE;
+		}
+		else {
+			ost << " + ";
+		}
+		if (c > 1) {
+			F->print_element(ost, c);
+			//ost << c;
+		}
+		print_monomial_latex(ost, i);
+	}
+}
+
 void homogeneous_polynomial_domain::print_equation_numerical(std::ostream &ost, int *coeffs)
 {
 	int i, c;
@@ -1028,7 +1053,41 @@ void homogeneous_polynomial_domain::print_equation_with_line_breaks_tex(
 			F->print_element(ost, c);
 			//ost << c;
 		}
-		print_monomial(ost, i);
+		print_monomial_latex(ost, i);
+		cnt++;
+	}
+}
+
+void homogeneous_polynomial_domain::print_equation_with_line_breaks_tex_lint(
+	ostream &ost, long int *coeffs, int nb_terms_per_line,
+	const char *new_line_text)
+{
+	int i, c, cnt = 0;
+	int f_first = TRUE;
+
+
+	for (i = 0; i < nb_monomials; i++) {
+		c = coeffs[i];
+		if (c == 0) {
+			continue;
+		}
+
+		if ((cnt % nb_terms_per_line) == 0 && cnt) {
+			ost << new_line_text;
+		}
+
+
+		if (f_first) {
+			f_first = FALSE;
+		}
+		else {
+			ost << " + ";
+		}
+		if (c > 1) {
+			F->print_element(ost, c);
+			//ost << c;
+		}
+		print_monomial_latex(ost, i);
 		cnt++;
 	}
 }
@@ -1726,7 +1785,7 @@ void homogeneous_polynomial_domain::print_monomial_ordering(ostream &ost)
 	ost << "\\hline" << endl;
 	for (h = 0; h < nb_monomials; h++) {
 		ost << h << " & ";
-		print_monomial(ost, h);
+		print_monomial_latex(ost, h);
 		ost << " & ";
 		int_vec_print(ost, Monomials + h * nb_variables, nb_variables);
 		ost << "\\\\" << endl; 

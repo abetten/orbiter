@@ -1748,7 +1748,7 @@ void projective_space::cheat_sheet_subspaces(
 				int v6[6];
 
 				Pluecker_coordinates(u, v6, 0 /* verbose_level */);
-				f << "Pl=(" << v6[0] << "," << v6[1] << ","
+				f << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
 						<< v6[2] << "," << v6[3] << "," << v6[4]
 						<< "," << v6[5] << " ";
 				f << ")" << endl;
@@ -1792,7 +1792,7 @@ void projective_space::cheat_sheet_subspaces(
 					}
 				f << "\\end{array}" << endl;
 				f << "\\right]" << endl;
-				f << "Pl=(" << v6[0] << "," << v6[1] << ","
+				f << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
 						<< v6[2] << "," << v6[3] << "," << v6[4]
 						<< "," << v6[5] << " ";
 				f << ")" << endl;

@@ -1,5 +1,5 @@
 /*
- * classify_vector_data.cpp
+ * tally_vector_data.cpp
  *
  *  Created on: May 17, 2019
  *      Author: betten
@@ -20,7 +20,7 @@ namespace foundations {
 
 static int classify_int_vec_compare_function(void *a, void *b, void *data);
 
-classify_vector_data::classify_vector_data()
+tally_vector_data::tally_vector_data()
 {
 	data_set_sz = 0;
 	data_length = 0;
@@ -37,7 +37,7 @@ classify_vector_data::classify_vector_data()
 }
 
 
-classify_vector_data::~classify_vector_data()
+tally_vector_data::~tally_vector_data()
 {
 	if (rep_idx) {
 		FREE_int(rep_idx);
@@ -71,7 +71,7 @@ classify_vector_data::~classify_vector_data()
 }
 
 
-void classify_vector_data::init(int *data, int data_length, int data_set_sz,
+void tally_vector_data::init(int *data, int data_length, int data_set_sz,
 		int verbose_level)
 // data[data_length * data_set_sz]
 {
@@ -81,11 +81,11 @@ void classify_vector_data::init(int *data, int data_length, int data_set_sz,
 	combinatorics_domain Combi;
 
 	if (f_v) {
-		cout << "classify_vector_data::init" << endl;
+		cout << "tally_vector_data::init" << endl;
 	}
-	classify_vector_data::data = data;
-	classify_vector_data::data_length = data_length;
-	classify_vector_data::data_set_sz = data_set_sz;
+	tally_vector_data::data = data;
+	tally_vector_data::data_length = data_length;
+	tally_vector_data::data_set_sz = data_set_sz;
 
 	rep_idx = NEW_int(data_length);
 	Reps = NEW_int(data_length * data_set_sz);
@@ -97,11 +97,11 @@ void classify_vector_data::init(int *data, int data_length, int data_set_sz,
 	int idx, a;
 
 	if (f_v) {
-		cout << "classify_vector_data::init starting to collect data" << endl;
+		cout << "tally_vector_data::init starting to collect data" << endl;
 	}
 	for (i = 0; i < data_length; i++) {
 		if (FALSE) {
-			cout << "classify_vector_data::init starting to collect data i=" << i << " / " << data_length << endl;
+			cout << "tally_vector_data::init starting to collect data i=" << i << " / " << data_length << endl;
 		}
 		if (!hash_and_find(data + i * data_set_sz,
 				idx, h, verbose_level)) {
@@ -119,7 +119,7 @@ void classify_vector_data::init(int *data, int data_length, int data_set_sz,
 		}
 	}
 	if (f_v) {
-		cout << "classify_vector_data::init finished collecting data" << endl;
+		cout << "tally_vector_data::init finished collecting data" << endl;
 	}
 
 	for (i = 0; i < nb_types; i++) {
@@ -149,7 +149,7 @@ void classify_vector_data::init(int *data, int data_length, int data_set_sz,
 
 
 	if (f_v) {
-		cout << "classify_vector_data::init computing Reps_in_lex_order" << endl;
+		cout << "tally_vector_data::init computing Reps_in_lex_order" << endl;
 	}
 
 	Reps_in_lex_order = NEW_pint(nb_types);
@@ -165,7 +165,7 @@ void classify_vector_data::init(int *data, int data_length, int data_set_sz,
 				Reps + i * data_set_sz,
 				idx,
 				0 /* verbose_level */)) {
-			cout << "classify_vector_data::init error!" << endl;
+			cout << "tally_vector_data::init error!" << endl;
 			exit(1);
 		}
 		else {
@@ -183,12 +183,12 @@ void classify_vector_data::init(int *data, int data_length, int data_set_sz,
 
 
 	if (f_v) {
-		cout << "classify_vector_data::init done" << endl;
+		cout << "tally_vector_data::init done" << endl;
 	}
 
 }
 
-int classify_vector_data::hash_and_find(int *data,
+int tally_vector_data::hash_and_find(int *data,
 		int &idx, uint32_t &h, int verbose_level)
 {
 	int f_found;
@@ -215,7 +215,7 @@ int classify_vector_data::hash_and_find(int *data,
 }
 
 
-void classify_vector_data::print()
+void tally_vector_data::print()
 {
 	//uint32_t h;
 	int i;
@@ -233,7 +233,7 @@ void classify_vector_data::print()
 	}
 }
 
-void classify_vector_data::save_classes_individually(const char *fname)
+void tally_vector_data::save_classes_individually(const char *fname)
 {
 	//uint32_t h;
 	int i, j;
@@ -263,7 +263,7 @@ void classify_vector_data::save_classes_individually(const char *fname)
 
 static int classify_int_vec_compare_function(void *a, void *b, void *data)
 {
-	classify_vector_data *C = (classify_vector_data *) data;
+	tally_vector_data *C = (tally_vector_data *) data;
 	int *A = (int *) a;
 	int *B = (int *) b;
 	int i;

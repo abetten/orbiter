@@ -1181,8 +1181,8 @@ void web_of_cubic_curves::print_web_of_cubic_curves(long int *arc6, ostream &ost
 		ost << "$";
 		snprintf(str, 1000, "W_{%s}=\\Phi\\big(\\pi_{%d}\\big) "
 				"= \\Phi\\big(\\pi_{%s}\\big)",
-				Surf->Eckard_point_label[h], h,
-				Surf->Eckard_point_label[h]);
+				Surf->Eckard_point_label[h].c_str(), h,
+				Surf->Eckard_point_label[h].c_str());
 		ost << str;
 		ost << " = ";
 		if (h < 30) {
@@ -1281,7 +1281,7 @@ static void Web_of_cubic_curves_entry_print(int *p,
 	}
 	else if (j == -1) {
 		snprintf(output, 1000, "\\pi_{%d} = \\pi_{%s}", i,
-				Web->Surf->Eckard_point_label[i]);
+				Web->Surf->Eckard_point_label[i].c_str());
 	}
 	else {
 		snprintf(output, 1000, "%d", val);

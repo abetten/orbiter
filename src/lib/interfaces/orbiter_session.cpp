@@ -19,8 +19,6 @@ namespace interfaces {
 
 orbiter_session::orbiter_session()
 {
-	//argc = 0;
-	//argv = NULL;
 
 	verbose_level = 0;
 

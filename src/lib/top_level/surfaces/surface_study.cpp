@@ -1597,10 +1597,10 @@ void matrix_entry_print(long int *p,
 	Surf = (surface_domain *) data;
 
 	if (i == -1) {
-		strcpy(output, Surf->Line_label_tex[val]);
+		strcpy(output, Surf->Line_label_tex[val].c_str());
 		}
 	else if (j == -1) {
-		strcpy(output, Surf->Line_label_tex[val]);
+		strcpy(output, Surf->Line_label_tex[val].c_str());
 		}
 	else {
 		if (val == -1) {

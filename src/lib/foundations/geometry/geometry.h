@@ -2206,6 +2206,7 @@ public:
 		int verbose_level);
 	int is_contained_in_Baer_subline(long int *pts, int nb_pts,
 		int verbose_level);
+	void report_summary(std::ostream &ost);
 	void report(std::ostream &ost);
 
 	// projective_space2.cpp:

@@ -449,10 +449,10 @@ action *action::induced_action_on_grassmannian(int k, int verbose_level)
 	snprintf(str1, 1000, "_Gr_%d", k);
 	snprintf(str2, 1000, " {\\rm OnGr}_{%d}", k);
 
-	label.assign(label);
-	label_tex.assign(label_tex);
-	label.append(str1);
-	label_tex.append(str2);
+	A->label.assign(label);
+	A->label_tex.assign(label_tex);
+	A->label.append(str1);
+	A->label_tex.append(str2);
 
 
 	if (f_v) {

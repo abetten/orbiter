@@ -41,11 +41,6 @@ void action::report(ostream &ost, int f_sims, sims *S,
 		M = get_matrix_group();
 		F = M->GFq;
 
-		ost << "\\subsection{The finite field ${\\mathbb F}_{" << F->q << "}$}" << endl;
-
-		F->cheat_sheet(ost, verbose_level);
-
-		ost << endl << "\\bigskip" << endl << endl;
 
 		{
 		projective_space *P;
@@ -54,14 +49,21 @@ void action::report(ostream &ost, int f_sims, sims *S,
 
 		P->init(M->n - 1, F, TRUE, verbose_level);
 
-		ost << "\\subsection{The projective space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$}" << endl;
+		ost << "The group acts on projective space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$\\\\" << endl;
 
-		P->report(ost);
+		P->report_summary(ost);
 
 
 
 		FREE_OBJECT(P);
 		}
+
+		ost << "\\subsection{The finite field ${\\mathbb F}_{" << F->q << "}$}" << endl;
+
+		F->cheat_sheet(ost, verbose_level);
+
+		ost << endl << "\\bigskip" << endl << endl;
+
 
 	}
 
@@ -133,6 +135,43 @@ void action::report(ostream &ost, int f_sims, sims *S,
 	}
 	if (f_v) {
 		cout << "action::report done" << endl;
+	}
+}
+
+void action::report_what_we_act_on(ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action::report_what_we_act_on" << endl;
+	}
+	if (is_matrix_group()) {
+
+		finite_field *F;
+		matrix_group *M;
+
+		M = get_matrix_group();
+		F = M->GFq;
+
+		{
+		projective_space *P;
+
+		P = NEW_OBJECT(projective_space);
+
+		P->init(M->n - 1, F, TRUE, verbose_level);
+
+		ost << "\\section{The Group Acts on Projective Space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$}" << endl;
+
+		P->report(ost);
+
+
+
+		FREE_OBJECT(P);
+		}
+
+	}
+	if (f_v) {
+		cout << "action::report_what_we_act_on done" << endl;
 	}
 }
 

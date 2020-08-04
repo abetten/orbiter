@@ -81,11 +81,25 @@ void surface_domain::init_line_data(int verbose_level)
 			Sets2, 15, 2, FALSE /* f_tex */);
 		//int_matrix_print(Sets2, 15, 2);
 		}
+	if (f_v) {
+		cout << "surface_domain::init_line_data done" << endl;
+		}
+}
 
-	Line_label = NEW_pchar(27);
-	Line_label_tex = NEW_pchar(27);
+void surface_domain::init_Schlaefli_labels(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	latex_interface L;
+
+	int i, h;
+
+	if (f_v) {
+		cout << "surface_domain::init_Schlaefli_labels" << endl;
+		}
+	Line_label = new std::string[27];
+	Line_label_tex = new std::string[27];
 	char str[1000];
-	int a, b, c, l;
+	int a, b, c; //, l;
 
 	for (i = 0; i < 27; i++) {
 		if (i < 6) {
@@ -105,9 +119,10 @@ void surface_domain::init_line_data(int verbose_level)
 			cout << "creating label " << str
 				<< " for line " << i << endl;
 			}
-		l = strlen(str);
-		Line_label[i] = NEW_char(l + 1);
-		strcpy(Line_label[i], str);
+		//l = strlen(str);
+		//Line_label[i] = NEW_char(l + 1);
+		//strcpy(Line_label[i], str);
+		Line_label[i].assign(str);
 		}
 
 	for (i = 0; i < 27; i++) {
@@ -128,13 +143,14 @@ void surface_domain::init_line_data(int verbose_level)
 			cout << "creating label " << str
 				<< " for line " << i << endl;
 			}
-		l = strlen(str);
-		Line_label_tex[i] = NEW_char(l + 1);
-		strcpy(Line_label_tex[i], str);
+		//l = strlen(str);
+		//Line_label_tex[i] = NEW_char(l + 1);
+		//strcpy(Line_label_tex[i], str);
+		Line_label_tex[i].assign(str);
 		}
 
 	if (f_v) {
-		cout << "surface_domain::init_line_data done" << endl;
+		cout << "surface_domain::init_Schlaefli_labels done" << endl;
 		}
 }
 
@@ -325,13 +341,7 @@ int surface_domain::compute_system_in_RREF(
 
 	for (i = 0; i < nb_pts; i++) {
 		for (j = 0; j < nb_monomials; j++) {
-			System[i * nb_monomials + j] =
-					Poly3_4->evaluate_monomial(j, Pts + i * n);
-#if 0
-				F->evaluate_monomial(
-					Poly3_4->Monomials + j * n,
-					Pts + i * n, n);
-#endif
+			System[i * nb_monomials + j] = Poly3_4->evaluate_monomial(j, Pts + i * n);
 			}
 		}
 	if (f_v && FALSE) {
@@ -1789,6 +1799,7 @@ void surface_domain::create_lines_from_plane_equations(
 }
 
 int surface_domain::identify_two_lines(long int *lines, int verbose_level)
+// bad! Why compute the adjacency matrix? This function should be in class surface_object
 {
 	int f_v = (verbose_level >= 1);
 	int iso = 0;
@@ -1815,6 +1826,7 @@ int surface_domain::identify_two_lines(long int *lines, int verbose_level)
 
 
 int surface_domain::identify_three_lines(long int *lines, int verbose_level)
+// bad! Why compute the adjacency matrix? This function should be in class surface_object
 {
 	int f_v = (verbose_level >= 1);
 	int iso = 0;
@@ -1910,8 +1922,7 @@ void surface_domain::create_remaining_fifteen_lines(
 						"creating line c_ij where i=" << i
 						<< " j=" << j << ":" << endl;
 			}
-			fifteen_lines[h++] = compute_cij(
-				double_six, i, j, 0 /*verbose_level*/);
+			fifteen_lines[h++] = compute_cij(double_six, i, j, 0 /*verbose_level*/);
 		}
 	}
 	if (f_v) {

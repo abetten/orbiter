@@ -3956,6 +3956,18 @@ void projective_space::Baer_subline(long int *pts3,
 	FREE_int(z);
 }
 
+void projective_space::report_summary(ostream &ost)
+{
+	//ost << "\\parindent=0pt" << endl;
+	ost << "$q = " << F->q << "$\\\\" << endl;
+	ost << "$p = " << F->p << "$\\\\" << endl;
+	ost << "$e = " << F->e << "$\\\\" << endl;
+	ost << "$n = " << n << "$\\\\" << endl;
+	ost << "Number of points = " << N_points << "\\\\" << endl;
+	ost << "Number of lines = " << N_lines << "\\\\" << endl;
+	ost << "Number of lines on a point = " << r << "\\\\" << endl;
+	ost << "Number of points on a line = " << k << "\\\\" << endl;
+}
 
 void projective_space::report(ostream &ost)
 {
@@ -3979,7 +3991,7 @@ void projective_space::report(ostream &ost)
 
 	if (n == 2) {
 		//ost << "\\clearpage" << endl << endl;
-		ost << "\\section{The Plane}" << endl;
+		ost << "\\subsection{The Plane}" << endl;
 		char fname_base[1000];
 		long int *set;
 		int i;
@@ -4007,7 +4019,7 @@ void projective_space::report(ostream &ost)
 		}
 
 	//ost << "\\clearpage" << endl << endl;
-	ost << "\\section{Points}" << endl;
+	ost << "\\subsection{The Points of ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
 	cheat_sheet_points(ost, verbose_level);
 
 	//cheat_sheet_point_table(ost, verbose_level);
@@ -4026,7 +4038,16 @@ void projective_space::report(ostream &ost)
 
 	for (k = 1; k < n; k++) {
 		//ost << "\\clearpage" << endl << endl;
-		ost << "\\section{Subspaces of dimension " << k << "}" << endl;
+		if (k == 1) {
+			ost << "\\subsection{The Lines of ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
+		}
+		else if (k == 2) {
+			ost << "\\subsection{The Planes of ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
+		}
+		else {
+			ost << "\\subsection{The Subspaces of dimension " << k << " of ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
+		}
+		//ost << "\\section{Subspaces of dimension " << k << "}" << endl;
 		cheat_sheet_subspaces(ost, k, verbose_level);
 		}
 

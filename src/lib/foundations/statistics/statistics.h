@@ -92,7 +92,7 @@ public:
 
 
 // #############################################################################
-// classify_vector_data.cpp
+// tally_vector_data.cpp
 // #############################################################################
 
 
@@ -100,7 +100,7 @@ public:
 
 
 
-class classify_vector_data {
+class tally_vector_data {
 
 public:
 
@@ -135,8 +135,8 @@ public:
 	int *Frequency_in_lex_order; // [nb_types]
 
 
-	classify_vector_data();
-	~classify_vector_data();
+	tally_vector_data();
+	~tally_vector_data();
 	void init(int *data, int data_length, int data_set_sz,
 		int verbose_level);
 	int hash_and_find(int *data,
