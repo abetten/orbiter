@@ -170,7 +170,7 @@ void invariants_packing::init(isomorph *Iso,
 		}
 	}
 
-	Classify = NEW_OBJECT(classify_vector_data);
+	Classify = NEW_OBJECT(tally_vector_data);
 
 	Classify->init(Spread_type_of_packing, Iso->size /* data_length */,
 			P->Spread_table_with_selection->nb_iso_types_of_spreads /* data_set_sz */,

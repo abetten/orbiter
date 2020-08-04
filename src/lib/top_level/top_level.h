@@ -153,6 +153,7 @@ class graph_classify_description;
 class surfaces_arc_lifting_upstep;
 class ovoid_classify_description;
 class surfaces_arc_lifting_trace;
+typedef class surfaces_arc_lifting_trace psurfaces_arc_lifting_trace;
 class surfaces_arc_lifting_definition_node;
 
 

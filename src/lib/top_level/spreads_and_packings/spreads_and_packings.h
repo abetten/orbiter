@@ -34,7 +34,7 @@ public:
 		// [Iso->Reps->count * P->nb_iso_types_of_spreads]
 
 
-	classify_vector_data *Classify;
+	tally_vector_data *Classify;
 
 
 	int *Dual_idx;

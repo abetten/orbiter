@@ -137,6 +137,10 @@ void surfaces_arc_lifting::init(
 	fname_base.append(str);
 
 	A4 = LG4->A_linear;
+	if (f_v) {
+		cout << "surfaces_arc_lifting::init A4 = " << A4->label << endl;
+		cout << "surfaces_arc_lifting::init A4 = " << A4->label_tex << endl;
+	}
 
 	f_semilinear = A4->is_semilinear_matrix_group();
 
@@ -854,17 +858,28 @@ void surfaces_arc_lifting::report2(ostream &ost, int verbose_level)
 	//ost << "\\section{Cubic Surfaces over the field $\\mathbb F}_{" << q << "}$}" << endl << endl;
 
 	char title[1000];
-	sprintf(title, "\\section{Cubic Surfaces over the field ${\\mathbb F}_{%d}$}", q);
+	sprintf(title, "\\section{The Classification of Cubic Surfaces with 27 Lines "
+			"over the field ${\\mathbb F}_{%d}$}", q);
 
 	//classification_step *Surfaces;
+
+	//ost << "\\section{The Group}" << endl << endl;
+
+	A4->report(ost, FALSE /* f_sims */, NULL /* sims *S */,
+				FALSE /* f_strong_gens */, NULL /* strong_generators *SG */,
+				verbose_level);
+
+
+	//ost << "\\section{The Classification of Cubic Surfaces with 27 Lines "
+	//		"over the field ${\\mathbb F}_{" << q << "}$}" << endl << endl;
 
 
 	Surfaces->print_latex(ost,
 		title, TRUE /* f_print_stabilizer_gens */,
-		FALSE /* f_has_print_function */,
-		NULL /* void (*print_function)(ostream &ost, int i,
+		TRUE /* f_has_print_function */,
+		callback_surfaces_arc_lifting_report /* void (*print_function)(ostream &ost, int i,
 				classification_step *Step, void *print_function_data) */,
-		NULL /* void *print_function_data */);
+		this /* void *print_function_data */);
 
 	ost << "\\bigskip" << endl << endl;
 
@@ -933,11 +948,21 @@ void surfaces_arc_lifting::report2(ostream &ost, int verbose_level)
 	report_flag_orbits_in_detail(ost, verbose_level);
 
 
+
+
+	ost << "\\section{Surfaces in Detail}" << endl << endl;
+
+	report_surfaces_in_detail(ost, verbose_level);
+
+
+	A4->report_what_we_act_on(ost, verbose_level);
+
 	ost << "\\section{Basics}" << endl << endl;
 
 	Surf->print_basics(ost);
 	//Surf->print_polynomial_domains(ost);
 	//Surf->print_Schlaefli_labelling(ost);
+
 
 
 	if (f_v) {
@@ -1089,9 +1114,19 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(ostream &ost, int verbos
 		//fp << "\\right]" << endl;
 		ost << "$$" << endl;
 		ost << "The equation of the lifted surface is:" << endl;
-		ost << "$$" << endl;
+		ost << "\\begin{align*}" << endl;
+		ost << "&" << endl;
+
+#if 0
 		Surf->print_equation_tex_lint(ost, Flag + 13);
-		ost << "$$" << endl;
+#else
+		Surf->Poly3_4->print_equation_with_line_breaks_tex_lint(
+			ost, Flag + 13, 6 /* nb_terms_per_line */,
+			"\\\\\n&" /*const char *new_line_text*/);
+		ost << "=0" << endl;
+#endif
+
+		ost << "\\end{align*}" << endl;
 		ost << "$$" << endl;
 		lint_vec_print(ost, Flag + 13, 20);
 		ost << "$$" << endl;
@@ -1392,6 +1427,106 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(ostream &ost, int verbos
 
 }
 
+
+void surfaces_arc_lifting::report_surfaces_in_detail(ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+	int f_print_stabilizer_gens = TRUE;
+	latex_interface L;
+	surfaces_arc_lifting_definition_node *D;
+	longinteger_domain Dom;
+	longinteger_object go1, ol;
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting::report_surfaces_in_detail" << endl;
+	}
+
+
+
+	ost << "\\begin{enumerate}" << endl;
+	for (i = 0; i < Surfaces->nb_orbits; i++) {
+
+		if (f_v) {
+			cout << "orbit " << i << " / " << Surfaces->nb_orbits << ":" << endl;
+			}
+
+		Surfaces->Orbit[i].gens->group_order(go1);
+
+		if (f_v) {
+			cout << "stab order " << go1 << endl;
+			}
+
+		Dom.integral_division_exact(Surfaces->go, go1, ol);
+
+		if (f_v) {
+			cout << "orbit length " << ol << endl;
+			}
+
+		ost << "\\item" << endl;
+		ost << "$" << i << " / " << Surfaces->nb_orbits << "$ \\\\" << endl;
+
+
+
+		ost << "$" << endl;
+
+		L.lint_set_print_tex_for_inline_text(ost,
+				Surfaces->Rep_ith(i),
+				Surfaces->representation_sz);
+
+		ost << "_{";
+		go1.print_not_scientific(ost);
+		ost << "}$ orbit length $";
+		ol.print_not_scientific(ost);
+		ost << "$\\\\" << endl;
+
+		if (f_print_stabilizer_gens) {
+			//ost << "Strong generators are:" << endl;
+			Surfaces->Orbit[i].gens->print_generators_tex(ost);
+			}
+
+
+		D = (surfaces_arc_lifting_definition_node *) Surfaces->Orbit[i].extra_data;
+
+		D->report_Clebsch_maps(ost, verbose_level);
+
+		ost << "Coset Representatives:\\\\" << endl;
+
+		D->report_cosets(ost, verbose_level);
+
+		ost << "Coset Representatives in detail:\\\\" << endl;
+
+		D->report_cosets_detailed(ost, verbose_level);
+
+		//Dom.add_in_place(Ol, ol);
+
+
+		}
+	ost << "\\end{enumerate}" << endl;
+
+
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting::report_surfaces_in_detail done" << endl;
+	}
+}
+
+
+void callback_surfaces_arc_lifting_report(std::ostream &ost, int i,
+				classification_step *Step, void *print_function_data)
+{
+	int verbose_level = 0;
+	void *data;
+	surfaces_arc_lifting_definition_node *D;
+	surfaces_arc_lifting *SAL;
+
+
+	data = Step->Orbit[i].extra_data;
+	D = (surfaces_arc_lifting_definition_node *) data;
+	SAL = (surfaces_arc_lifting *) print_function_data;
+
+	D->report_tally_F2(ost, verbose_level);
+}
 
 
 }}

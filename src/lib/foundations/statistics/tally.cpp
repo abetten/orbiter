@@ -41,7 +41,7 @@ tally::tally()
 
 tally::~tally()
 {
-	//cout << "in ~classify()" << endl;
+	//cout << "in ~tally()" << endl;
 	if (f_data_ownership) {
 		FREE_int(data);
 	}
@@ -74,7 +74,7 @@ void tally::init(int *data,
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classify::init" << endl;
+		cout << "tally::init" << endl;
 		}
 	f_data_ownership = FALSE;
 	tally::data = data;
@@ -115,7 +115,7 @@ void tally::init(int *data,
 
 		}
 	if (f_v) {
-		cout << "classify::init done" << endl;
+		cout << "tally::init done" << endl;
 		}
 }
 
@@ -127,13 +127,13 @@ void tally::init_lint(long int *data,
 	int i;
 
 	if (f_v) {
-		cout << "classify::init_lint" << endl;
+		cout << "tally::init_lint" << endl;
 		}
 	data_int = NEW_int(data_length);
 	for (i = 0; i < data_length; i++) {
 		data_int[i] = (int) data[i];
 		if (data_int[i] != data[i]) {
-			cout << "classify::init_lint data loss" << endl;
+			cout << "tally::init_lint data loss" << endl;
 			cout << "i=" << i << endl;
 			cout << "data[i]=" << data[i] << endl;
 			cout << "data_int[i]=" << data_int[i] << endl;
@@ -179,7 +179,7 @@ void tally::init_lint(long int *data,
 
 		}
 	if (f_v) {
-		cout << "classify::init_lint done" << endl;
+		cout << "tally::init_lint done" << endl;
 		}
 }
 
@@ -233,7 +233,7 @@ int tally::class_of(int pt_idx)
 			return i;
 			}
 		}
-	cout << "classify::class_of cannot find the class "
+	cout << "tally::class_of cannot find the class "
 			"containing " << pt_idx << endl;
 	exit(1);
 }
@@ -488,7 +488,7 @@ void tally::get_data_by_multiplicity(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classify::get_data_by_multiplicity" << endl;
+		cout << "tally::get_data_by_multiplicity" << endl;
 		}
 	int i, j, f, l;
 	
@@ -516,7 +516,7 @@ void tally::get_data_by_multiplicity_as_lint(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classify::get_data_by_multiplicity" << endl;
+		cout << "tally::get_data_by_multiplicity" << endl;
 		}
 	int i, j, f, l;
 
@@ -575,7 +575,7 @@ void tally::get_class_by_value(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classify::get_class_by_value" << endl;
+		cout << "tally::get_class_by_value" << endl;
 		}
 	int i, j, f, l;
 	
@@ -593,7 +593,7 @@ void tally::get_class_by_value(
 		}
 	Pts = NEW_int(1);
 	nb_pts = 0;
-	//cout << "classify::get_class_by_value
+	//cout << "tally::get_class_by_value
 	//did not find the value" << endl;
 	//exit(1);
 }
@@ -604,7 +604,7 @@ void tally::get_class_by_value_lint(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classify::get_class_by_value_lint" << endl;
+		cout << "tally::get_class_by_value_lint" << endl;
 		}
 	int i, j, f, l;
 
@@ -622,7 +622,7 @@ void tally::get_class_by_value_lint(
 		}
 	Pts = NEW_lint(1);
 	nb_pts = 0;
-	//cout << "classify::get_class_by_value
+	//cout << "tally::get_class_by_value
 	//did not find the value" << endl;
 	//exit(1);
 }
@@ -635,7 +635,7 @@ set_of_sets *tally::get_set_partition_and_types(
 	int i, j, f, l;
 
 	if (f_v) {
-		cout << "classify::get_set_partition_and_types" << endl;
+		cout << "tally::get_set_partition_and_types" << endl;
 		}
 
 	SoS = NEW_OBJECT(set_of_sets);
@@ -653,7 +653,7 @@ set_of_sets *tally::get_set_partition_and_types(
 		}
 	
 	if (f_v) {
-		cout << "classify::get_set_partition_and_types done" << endl;
+		cout << "tally::get_set_partition_and_types done" << endl;
 		}
 	return SoS;
 }

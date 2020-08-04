@@ -156,36 +156,48 @@ void surface_domain::freeself()
 		cout << "before FREE_pchar(Line_label);" << endl;
 	}
 	if (Line_label) {
+		delete [] Line_label;
+#if 0
 		int i;
 		
 		for (i = 0; i < 27; i++) {
 			FREE_char(Line_label[i]);
 		}
 		FREE_pchar(Line_label);
+#endif
 	}
 	if (Line_label_tex) {
+		delete [] Line_label_tex;
+#if 0
 		int i;
 		
 		for (i = 0; i < 27; i++) {
 			FREE_char(Line_label_tex[i]);
 		}
 		FREE_pchar(Line_label_tex);
+#endif
 	}
 	if (Eckard_point_label) {
+		delete [] Eckard_point_label;
+#if 0
 		int i;
 		
 		for (i = 0; i < 45; i++) {
 			FREE_char(Eckard_point_label[i]);
 		}
 		FREE_pchar(Eckard_point_label);
+#endif
 	}
 	if (Eckard_point_label_tex) {
+		delete [] Eckard_point_label_tex;
+#if 0
 		int i;
 		
 		for (i = 0; i < 45; i++) {
 			FREE_char(Eckard_point_label_tex[i]);
 		}
 		FREE_pchar(Eckard_point_label_tex);
+#endif
 	}
 	if (f_v) {
 		cout << "before FREE_int(Trihedral_pairs);" << endl;
@@ -194,12 +206,15 @@ void surface_domain::freeself()
 		FREE_int(Trihedral_pairs);
 	}
 	if (Trihedral_pair_labels) {
+		delete [] Trihedral_pair_labels;
+#if 0
 		int i;
 		
 		for (i = 0; i < nb_trihedral_pairs; i++) {
 			FREE_char(Trihedral_pair_labels[i]);
 		}
 		FREE_pchar(Trihedral_pair_labels);
+#endif
 	}
 	if (Trihedral_pairs_row_sets) {
 		FREE_int(Trihedral_pairs_row_sets);
@@ -263,24 +278,30 @@ void surface_domain::freeself()
 		FREE_lint(Double_six);
 	}
 	if (Double_six_label_tex) {
+		delete [] Double_six_label_tex;
+#if 0
 		int i;
 		
 		for (i = 0; i < 36; i++) {
 			FREE_char(Double_six_label_tex[i]);
 		}
 		FREE_pchar(Double_six_label_tex);
+#endif
 	}
 	if (Half_double_sixes) {
 		FREE_lint(Half_double_sixes);
 	}
 
 	if (Half_double_six_label_tex) {
+		delete [] Half_double_six_label_tex;
+#if 0
 		int i;
 		
 		for (i = 0; i < 72; i++) {
 			FREE_char(Half_double_six_label_tex[i]);
 		}
 		FREE_pchar(Half_double_six_label_tex);
+#endif
 	}
 
 	if (Half_double_six_to_double_six) {
@@ -451,11 +472,19 @@ void surface_domain::init(finite_field *F, int verbose_level)
 
 	if (f_v) {
 		cout << "surface::init before "
+				"init_Schlaefli_labels" << endl;
+	}
+	init_Schlaefli_labels(verbose_level);
+	if (f_v) {
+		cout << "surface::init after "
+				"init_Schlaefli_labels" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface::init before "
 				"make_trihedral_pairs" << endl;
 	}
-	make_trihedral_pairs(Trihedral_pairs, 
-		Trihedral_pair_labels, nb_trihedral_pairs, 
-		verbose_level);
+	make_trihedral_pairs(verbose_level);
 	if (f_v) {
 		cout << "surface::init after "
 				"make_trihedral_pairs" << endl;
@@ -1279,9 +1308,7 @@ void surface_domain::find_tritangent_planes_intersecting_in_a_line(
 }
 
 
-void surface_domain::make_trihedral_pairs(int *&T,
-	char **&T_label, int &nb_trihedral_pairs, 
-	int verbose_level)
+void surface_domain::make_trihedral_pairs(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int h, s, idx;
@@ -1298,8 +1325,8 @@ void surface_domain::make_trihedral_pairs(int *&T,
 		cout << "surface_domain::make_trihedral_pairs" << endl;
 	}
 	nb_trihedral_pairs = 120;
-	T = NEW_int(nb_trihedral_pairs * 9);
-	T_label = NEW_pchar(nb_trihedral_pairs);
+	Trihedral_pairs = NEW_int(nb_trihedral_pairs * 9);
+	Trihedral_pair_labels = new std::string [nb_trihedral_pairs];
 
 	idx = 0;
 
@@ -1312,9 +1339,10 @@ void surface_domain::make_trihedral_pairs(int *&T,
 				subset[0] + 1, subset[1] + 1, subset[2] + 1,
 				complement[0] + 1, complement[1] + 1, complement[2] + 1);
 
-		make_Tijk(T + idx * 9, subset[0], subset[1], subset[2]);
-		T_label[idx] = NEW_char(strlen(label) + 1);
-		strcpy(T_label[idx], label);
+		make_Tijk(Trihedral_pairs + idx * 9, subset[0], subset[1], subset[2]);
+		//T_label[idx] = NEW_char(strlen(label) + 1);
+		//strcpy(T_label[idx], label);
+		Trihedral_pair_labels[idx].assign(label);
 	}
 
 	// the second type (90 of them, (6 choose 2) times (4 choose 2)):
@@ -1326,7 +1354,7 @@ void surface_domain::make_trihedral_pairs(int *&T,
 			Combi.unrank_k_subset(s, second_subset, 4, 2);
 			Combi.set_complement(second_subset, 2, complement,
 				size_complement, 4);
-			make_Tlmnp(T + idx * 9, 
+			make_Tlmnp(Trihedral_pairs + idx * 9,
 				subset[second_subset[0]], 
 				subset[second_subset[1]], 
 				subset[complement[0]], 
@@ -1338,8 +1366,9 @@ void surface_domain::make_trihedral_pairs(int *&T,
 				subset[complement[1]] + 1,
 				subset_complement[0] + 1,
 				subset_complement[1] + 1);
-			T_label[idx] = NEW_char(strlen(label) + 1);
-			strcpy(T_label[idx], label);
+			//T_label[idx] = NEW_char(strlen(label) + 1);
+			//strcpy(T_label[idx], label);
+			Trihedral_pair_labels[idx].assign(label);
 		}
 	}
 
@@ -1351,7 +1380,7 @@ void surface_domain::make_trihedral_pairs(int *&T,
 		subset[2]++;
 		Combi.set_complement(subset, 3, complement,
 			size_complement, 6);
-		make_Tdefght(T + idx * 9, 
+		make_Tdefght(Trihedral_pairs + idx * 9,
 			subset[0], subset[1], subset[2], 
 			complement[0], complement[1], complement[2]);
 		snprintf(label, 1000, "%d%d%d,%d%d%d",
@@ -1361,8 +1390,9 @@ void surface_domain::make_trihedral_pairs(int *&T,
 			complement[0] + 1, 
 			complement[1] + 1, 
 			complement[2] + 1);
-		T_label[idx] = NEW_char(strlen(label) + 1);
-		strcpy(T_label[idx], label);
+		//T_label[idx] = NEW_char(strlen(label) + 1);
+		//strcpy(T_label[idx], label);
+		Trihedral_pair_labels[idx].assign(label);
 	}
 
 	if (idx != 120) {
@@ -1374,9 +1404,9 @@ void surface_domain::make_trihedral_pairs(int *&T,
 	if (f_v) {
 		cout << "The trihedral pairs are:" << endl;
 		L.print_integer_matrix_with_standard_labels(cout,
-			T, 120, 9, FALSE /* f_tex */);
+				Trihedral_pairs, 120, 9, FALSE /* f_tex */);
 		L.print_integer_matrix_with_standard_labels(cout,
-			T, 120, 9, TRUE /* f_tex */);
+				Trihedral_pairs, 120, 9, TRUE /* f_tex */);
 	}
 
 	if (f_v) {
@@ -1530,7 +1560,7 @@ void surface_domain::make_Tdefght(int *T,
 void surface_domain::make_Eckardt_points(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, l;
+	int i;
 	char str[1000];
 
 	if (f_v) {
@@ -1541,15 +1571,17 @@ void surface_domain::make_Eckardt_points(int verbose_level)
 	for (i = 0; i < nb_Eckardt_points; i++) {
 		Eckardt_points[i].init_by_rank(i);
 	}
-	Eckard_point_label = NEW_pchar(nb_Eckardt_points);
-	Eckard_point_label_tex = NEW_pchar(nb_Eckardt_points);
+	Eckard_point_label = new string [nb_Eckardt_points];
+	Eckard_point_label_tex = new string [nb_Eckardt_points];
 	for (i = 0; i < nb_Eckardt_points; i++) {
 		Eckardt_points[i].latex_to_str_without_E(str);
-		l = strlen(str);
-		Eckard_point_label[i] = NEW_char(l + 1);
-		strcpy(Eckard_point_label[i], str);
-		Eckard_point_label_tex[i] = NEW_char(l + 1);
-		strcpy(Eckard_point_label_tex[i], str);
+		//l = strlen(str);
+		//Eckard_point_label[i] = NEW_char(l + 1);
+		//strcpy(Eckard_point_label[i], str);
+		Eckard_point_label[i].assign(str);
+		//Eckard_point_label_tex[i] = NEW_char(l + 1);
+		//strcpy(Eckard_point_label_tex[i], str);
+		Eckard_point_label_tex[i].assign(str);
 	}
 	if (f_v) {
 		cout << "surface_domain::make_Eckardt_points done" << endl;
@@ -1614,8 +1646,7 @@ int surface_domain::Eckardt_point_from_tritangent_plane(
 	}
 	else {
 		if (a < 12) {
-			cout << "surface_domain::Eckardt_point_from_"
-					"tritangent_plane a < 12" << endl;
+			cout << "surface_domain::Eckardt_point_from_tritangent_plane a < 12" << endl;
 			exit(1);
 		}
 		a -= 12;

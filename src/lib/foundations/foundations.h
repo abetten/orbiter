@@ -362,7 +362,7 @@ class coding_theory_domain;
 class file_io;
 class table_of_irreducible_polynomials;
 class set_of_sets_lint;
-class classify_vector_data;
+class tally_vector_data;
 class clebsch_map;
 class bitmatrix;
 class override_double;

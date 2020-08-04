@@ -1107,10 +1107,14 @@ public:
 
 
 	int nb_coset_reps;
-	surfaces_arc_lifting_trace *T; // [nb_coset_reps]
+	surfaces_arc_lifting_trace **T; // [nb_coset_reps]
 	vector_ge *coset_reps;
 
 	int *relative_order_table; // [nb_coset_reps]
+
+	int f_has_F2;
+	int *F2;
+	tally *tally_F2;
 
 
 	surfaces_arc_lifting_definition_node();
@@ -1118,10 +1122,14 @@ public:
 	void init(surfaces_arc_lifting *Lift,
 			int f, int orbit_idx, surface_object *SO,
 			int verbose_level);
+	void tally_f2(int verbose_level);
 	void report(int verbose_level);
 	void report2(std::ostream &ost, int verbose_level);
+	void report_cosets(std::ostream &ost, int verbose_level);
+	void report_cosets_detailed(std::ostream &ost, int verbose_level);
+	void report_tally_F2(std::ostream &ost, int verbose_level);
 	void report_Clebsch_maps(std::ostream &ost, int verbose_level);
-	void report_seventytwo_maps_top(std::ostream &ost);
+	void report_seventytwo_maps_top(std::ostream &ost, int t, int i);
 	void report_seventytwo_maps_bottom(std::ostream &ost);
 	void report_seventytwo_maps_line(std::ostream &ost, seventytwo_cases *S, int i, int j);
 };
@@ -1352,8 +1360,12 @@ public:
 	void report2(std::ostream &ost, int verbose_level);
 	void report_flag_orbits(std::ostream &ost, int verbose_level);
 	void report_flag_orbits_in_detail(std::ostream &ost, int verbose_level);
+	void report_surfaces_in_detail(std::ostream &ost, int verbose_level);
 };
 
+
+void callback_surfaces_arc_lifting_report(std::ostream &ost, int i,
+				classification_step *Step, void *print_function_data);
 
 // #############################################################################
 // trihedral_pair_with_action.cpp

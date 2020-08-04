@@ -822,7 +822,7 @@ void finite_field::latex_addition_table(ostream &f,
 {
 	int i, j, k;
 
-	f << "\\arraycolsep=1pt" << endl;
+	//f << "\\arraycolsep=1pt" << endl;
 	f << "\\begin{array}{|r|*{" << q << "}{r}|}" << endl;
 	f << "\\hline" << endl;
 	f << "+ ";
@@ -856,7 +856,7 @@ void finite_field::latex_multiplication_table(ostream &f,
 {
 	int i, j, k;
 
-	f << "\\arraycolsep=1pt" << endl;
+	//f << "\\arraycolsep=1pt" << endl;
 	f << "\\begin{array}{|r|*{" << q - 1 << "}{r}|}" << endl;
 	f << "\\hline" << endl;
 	f << "\\cdot ";
@@ -1039,7 +1039,6 @@ void finite_field::report_subfields(ostream &f, int verbose_level)
 void finite_field::cheat_sheet_addition_table(ostream &f, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	const char *symbol_for_print = "\\alpha";
 
 
 	if (f_v) {
@@ -1050,6 +1049,8 @@ void finite_field::cheat_sheet_addition_table(ostream &f, int verbose_level)
 		f << "$$" << endl;
 		latex_addition_table(f, FALSE /* f_elements_exponential */,
 				symbol_for_print);
+#if 0
+		const char *symbol_for_print = "\\alpha";
 		if (q >= 10) {
 			f << "$$" << endl;
 			f << "$$" << endl;
@@ -1059,8 +1060,8 @@ void finite_field::cheat_sheet_addition_table(ostream &f, int verbose_level)
 		}
 		latex_addition_table(f, TRUE /* f_elements_exponential */,
 				symbol_for_print);
+#endif
 		f << "$$" << endl;
-
 	}
 	else {
 		f << "Addition table omitted" << endl;
@@ -1076,7 +1077,6 @@ void finite_field::cheat_sheet_addition_table(ostream &f, int verbose_level)
 void finite_field::cheat_sheet_multiplication_table(ostream &f, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	const char *symbol_for_print = "\\alpha";
 
 
 	if (f_v) {
@@ -1087,6 +1087,8 @@ void finite_field::cheat_sheet_multiplication_table(ostream &f, int verbose_leve
 		f << "$$" << endl;
 		latex_multiplication_table(f, FALSE /* f_elements_exponential */,
 				symbol_for_print);
+#if 0
+		const char *symbol_for_print = "\\alpha";
 		if (q >= 10) {
 			f << "$$" << endl;
 			f << "$$" << endl;
@@ -1096,6 +1098,7 @@ void finite_field::cheat_sheet_multiplication_table(ostream &f, int verbose_leve
 		}
 		latex_multiplication_table(f, TRUE /* f_elements_exponential */,
 				symbol_for_print);
+#endif
 		f << "$$" << endl;
 	}
 	else {

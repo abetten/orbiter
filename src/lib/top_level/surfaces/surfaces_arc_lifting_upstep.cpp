@@ -303,7 +303,7 @@ void surfaces_arc_lifting_upstep::compute_stabilizer(surfaces_arc_lifting_defini
 	D->coset_reps = NEW_OBJECT(vector_ge);
 	D->coset_reps->init(Lift->Surf_A->A, verbose_level - 2);
 	D->coset_reps->allocate(3240, verbose_level - 2); // 3240 = 45 * 3 * (8 * 6) / 2
-
+	D->T = (surfaces_arc_lifting_trace **) NEW_pvoid(3240);
 
 	if (f_vvv) {
 		cout << "surfaces_arc_lifting_upstep::compute_stabilizer Lines:";
@@ -420,6 +420,13 @@ void surfaces_arc_lifting_upstep::compute_stabilizer(surfaces_arc_lifting_defini
 
 #endif
 
+	if (f_v) {
+		cout << "surfaces_arc_lifting_upstep::compute_stabilizer before D->tally_f2" << endl;
+	}
+	D->tally_f2(verbose_level);
+	if (f_v) {
+		cout << "surfaces_arc_lifting_upstep::compute_stabilizer after D->tally_f2" << endl;
+	}
 
 
 
@@ -509,6 +516,9 @@ void surfaces_arc_lifting_upstep::process_tritangent_plane(
 		}
 
 
+		// copy the results from the tracing back:
+		Seventytwo[seventytwo_case_idx] = T->The_case;
+
 		if (T->f2 == f) {
 			if (f_v) {
 				cout << "surfaces_arc_lifting_upstep::process_tritangent_plane "
@@ -520,7 +530,10 @@ void surfaces_arc_lifting_upstep::process_tritangent_plane(
 				cout << endl;
 			}
 			Lift->A4->element_move(T->Elt_T4, D->coset_reps->ith(D->nb_coset_reps), 0);
+			D->T[D->nb_coset_reps] = T;
 			D->nb_coset_reps++;
+
+			// don't free T
 		}
 		else {
 			if (!f_processed[f2]) {
@@ -557,14 +570,11 @@ void surfaces_arc_lifting_upstep::process_tritangent_plane(
 					exit(1);
 				}
 			}
+			FREE_OBJECT(T);
+
 		}
 
-		// copy the results from the tracing back:
-		Seventytwo[seventytwo_case_idx] = T->The_case;
 
-
-
-		FREE_OBJECT(T);
 
 	} // next seventytwo_case_idx
 

@@ -253,8 +253,7 @@ long int finite_field::PG_element_embed(
 }
 
 
-void finite_field::PG_element_unrank_fining(
-		int *v, int len, int a)
+void finite_field::PG_element_unrank_fining(int *v, int len, int a)
 {
 	int b, c;
 	

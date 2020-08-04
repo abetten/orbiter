@@ -6,7 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	classify_vector_data.o \
+	tally_vector_data.o \
 	tally.o
 
 

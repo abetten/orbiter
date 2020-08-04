@@ -151,7 +151,7 @@ MODULES= \
 		foundations/solvers/diophant.o \
 		foundations/solvers/dlx.o \
 		foundations/solvers/mckay.o \
-		foundations/statistics/classify_vector_data.o \
+		foundations/statistics/tally_vector_data.o \
 		foundations/statistics/tally.o \
 		foundations/surfaces/arc_lifting_with_two_lines.o \
 		foundations/surfaces/clebsch_map.o \
