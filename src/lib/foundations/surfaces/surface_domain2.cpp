@@ -540,7 +540,7 @@ void surface_domain::init_double_sixes(int verbose_level)
 
 	for (i = 0; i < 36; i++) {
 		if (i < 1) {
-			snprintf(str, 1000, "D");
+			snprintf(str, 1000, "{\\cal D}");
 		}
 		else if (i < 1 + 15) {
 			ij = i - 1;
@@ -549,7 +549,7 @@ void surface_domain::init_double_sixes(int verbose_level)
 			set[1] = b;
 			Combi.set_complement(set, 2 /* subset_size */, set + 2,
 				size_complement, 6 /* universal_set_size */);
-			snprintf(str, 1000, "D_{%d%d}", a + 1, b + 1);
+			snprintf(str, 1000, "{\\cal D}_{%d%d}", a + 1, b + 1);
 		}
 		else {
 			v = i - 16;
@@ -559,15 +559,12 @@ void surface_domain::init_double_sixes(int verbose_level)
 			a = set[0];
 			b = set[1];
 			c = set[2];
-			snprintf(str, 1000, "D_{%d%d%d}", a + 1, b + 1, c + 1);
+			snprintf(str, 1000, "{\\cal D}_{%d%d%d}", a + 1, b + 1, c + 1);
 		}
 		if (f_v) {
 			cout << "creating label " << str
 				<< " for Double six " << i << endl;
 		}
-		//l = strlen(str);
-		//Double_six_label_tex[i] = NEW_char(l + 1);
-		//strcpy(Double_six_label_tex[i], str);
 		Double_six_label_tex[i].assign(str);
 	}
 
@@ -642,9 +639,6 @@ void surface_domain::create_half_double_sixes(int verbose_level)
 					<< " for half double six "
 					<< 2 * i + j << endl;
 			}
-			//l = strlen(str);
-			//Half_double_six_label_tex[2 * i + j] = NEW_char(l + 1);
-			//strcpy(Half_double_six_label_tex[2 * i + j], str);
 			Half_double_six_label_tex[2 * i + j].assign(str);
 		}
 	}

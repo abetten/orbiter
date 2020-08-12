@@ -198,28 +198,139 @@ void surfaces_arc_lifting_definition_node::report_cosets_detailed(ostream &ost, 
 		ost << "\\item" << endl;
 		ost << "Aut coset " << i << " / " << nb_coset_reps << ": relative order is "
 				<< relative_order_table[i] << "\\\\" << endl;
-		ost << "$$" << endl;
-		Lift->A4->element_print_latex(T[i]->Elt_Alpha1, ost);
-		Lift->A4->element_print_latex(T[i]->Elt_Alpha2, ost);
-		Lift->A4->element_print_latex(T[i]->Elt_Beta1, ost);
-		Lift->A4->element_print_latex(T[i]->Elt_Beta2, ost);
-		Lift->A4->element_print_latex(T[i]->Elt_Beta3, ost);
-		ost << "=";
-		Lift->A4->element_print_latex(coset_reps->ith(i), ost);
-		ost << "$$" << endl;
+
+		T[i]->report_product(ost, coset_reps->ith(i), verbose_level);
+
+		T[i]->The_case.report_single_Clebsch_map(ost, verbose_level);
+
+
+		SO->print_lines(ost);
+
+
+		T[i]->The_case.report_Clebsch_map_details(ost, SO, verbose_level);
+
+		T[i]->report_product(ost, coset_reps->ith(i), verbose_level);
+
 	}
 	ost << "\\end{enumerate}" << endl;
 
-
-	//surfaces_arc_lifting_trace *T; // [nb_coset_reps]
-	//vector_ge *coset_reps;
-
-	//int *relative_order_table; // [nb_coset_reps]
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting_definition_node::report_cosets_detailed done" << endl;
 	}
 }
+
+void surfaces_arc_lifting_definition_node::report_cosets_HDS(ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int coset;
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting_definition_node::report_cosets_detailed" << endl;
+	}
+
+	report_HDS_top(ost);
+
+	for (coset = 0; coset < nb_coset_reps; coset++) {
+
+		//ost << "Aut coset " << i << " / " << nb_coset_reps << ": relative order is "
+		//		<< relative_order_table[i] << "\\\\" << endl;
+
+		//T[i]->The_case.report_single_Clebsch_map(ost, verbose_level);
+
+
+
+		T[coset]->The_case.report_Clebsch_map_HDS(ost, coset, verbose_level);
+
+
+	}
+
+	report_HDS_bottom(ost);
+
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting_definition_node::report_cosets_detailed done" << endl;
+	}
+}
+
+
+void surfaces_arc_lifting_definition_node::report_HDS_top(ostream &ost)
+{
+	int t = T[0]->The_case.tritangent_plane_idx;
+
+	ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|c|c|c|c|c|c|c|}" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\multicolumn{7}{|c|}{\\mbox{Tritangent Plane}\\; \\pi_{" << t << "} = \\pi_{" << Lift->Surf->Eckard_point_label_tex[t] << "}}\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\mbox{Coset} & \\mbox{Clebsch} & (m_1,m_2,m_3) & (\\ell_1,\\ell_2) & (t_3,t_4,t_5,t_6) & DS & HDS \\\\" << endl;
+	ost << "\\hline" << endl;
+}
+
+void surfaces_arc_lifting_definition_node::report_HDS_bottom(ostream &ost)
+{
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$}" << endl;
+	ost << "\\bigskip" << endl;
+}
+
+
+void surfaces_arc_lifting_definition_node::report_cosets_T3(ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int coset;
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting_definition_node::report_cosets_T3" << endl;
+	}
+
+	report_T3_top(ost);
+
+	for (coset = 0; coset < nb_coset_reps; coset++) {
+
+		//ost << "Aut coset " << i << " / " << nb_coset_reps << ": relative order is "
+		//		<< relative_order_table[i] << "\\\\" << endl;
+
+		//T[i]->The_case.report_single_Clebsch_map(ost, verbose_level);
+
+
+		ost << coset << " & ";
+		//T[coset]->The_case.report_Clebsch_map_HDS(ost, coset, verbose_level);
+		Lift->Surf->F->display_table_of_projective_points2(ost, T[coset]->The_case.P6, 6, 4);
+		ost << " & \\\\";
+		//Lift->A4->element_print_latex(Elt_Beta2, ost);
+
+
+	}
+
+	report_T3_bottom(ost);
+
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting_definition_node::report_cosets_T3 done" << endl;
+	}
+}
+
+void surfaces_arc_lifting_definition_node::report_T3_top(ostream &ost)
+{
+	ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|c|c|c|}" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\mbox{Coset} & \\mbox{Arc} & T_3 \\\\" << endl;
+	ost << "\\hline" << endl;
+}
+
+void surfaces_arc_lifting_definition_node::report_T3_bottom(ostream &ost)
+{
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$}" << endl;
+	ost << "\\bigskip" << endl;
+}
+
 
 
 void surfaces_arc_lifting_definition_node::report_tally_F2(ostream &ost, int verbose_level)
@@ -246,11 +357,11 @@ void surfaces_arc_lifting_definition_node::report_Clebsch_maps(ostream &ost, int
 		ost << "\\clearpage" << endl;
 		//ost << "Tritangent plane " << t << ": \\\\" << endl;
 		for (i = 0; i < 3; i++) {
-			report_seventytwo_maps_top(ost, t, i);
+			Seventytwo[t * 72 + i * 24].report_seventytwo_maps_top(ost);
 			for (j = 0; j < 24; j++) {
-				report_seventytwo_maps_line(ost, Seventytwo + t * 72, i, j);
+				Seventytwo[t * 72 + i * 24 + j].report_seventytwo_maps_line(ost);
 			}
-			report_seventytwo_maps_bottom(ost);
+			Seventytwo[t * 72 + i * 24].report_seventytwo_maps_bottom(ost);
 		}
 	}
 	if (f_v) {
@@ -258,49 +369,7 @@ void surfaces_arc_lifting_definition_node::report_Clebsch_maps(ostream &ost, int
 	}
 }
 
-void surfaces_arc_lifting_definition_node::report_seventytwo_maps_top(ostream &ost, int t, int i)
-{
-	ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;
-	ost << "$$" << endl;
-	ost << "\\begin{array}{|c|c|c|c|c|c|c|c|c|}" << endl;
-	ost << "\\hline" << endl;
-	ost << "\\multicolumn{9}{|c|}{\\mbox{Tritangent Plane}\\; \\pi_{" << t << "} = \\pi_{" << Lift->Surf->Eckard_point_label_tex[t] << "} \\; \\mbox{Part "<< i << "}}\\\\" << endl;
-	ost << "\\hline" << endl;
-	ost << "\\mbox{Clebsch} & m_1-\\mbox{Case} & (m_1,m_2,m_3) & (\\ell_1,\\ell_2) & (t_3,t_4,t_5,t_6) & \\mbox{Arc} & \\mbox{Pair} & \\mbox{Part} &  \\mbox{Flag-Orb}  \\\\" << endl;
-	ost << "\\hline" << endl;
-}
 
-void surfaces_arc_lifting_definition_node::report_seventytwo_maps_bottom(ostream &ost)
-{
-	ost << "\\hline" << endl;
-	ost << "\\end{array}" << endl;
-	ost << "$$}" << endl;
-	ost << "\\bigskip" << endl;
-}
-
-void surfaces_arc_lifting_definition_node::report_seventytwo_maps_line(ostream &ost, seventytwo_cases *S, int i, int j)
-{
-	int c;
-
-	c = i * 24 + j;
-	ost << c << " & ";
-	ost << S[c].line_idx << " & ";
-	ost << "(" << Lift->Surf_A->Surf->Line_label_tex[S[c].m1]
-		<< ", " << Lift->Surf_A->Surf->Line_label_tex[S[c].m2]
-		<< ", " << Lift->Surf_A->Surf->Line_label_tex[S[c].m3] << ") & ";
-	ost << "(" << Lift->Surf_A->Surf->Line_label_tex[S[c].l1]
-		<< ", " << Lift->Surf_A->Surf->Line_label_tex[S[c].l2] << ") & ";
-	ost << "(" << Lift->Surf_A->Surf->Line_label_tex[S[c].transversals4[0]]
-		<< ", " << Lift->Surf_A->Surf->Line_label_tex[S[c].transversals4[1]]
-		<< ", " << Lift->Surf_A->Surf->Line_label_tex[S[c].transversals4[2]]
-		<< ", " << Lift->Surf_A->Surf->Line_label_tex[S[c].transversals4[3]]
-		<< ") & ";
-	ost << S[c].orbit_not_on_conic_idx << " & ";
-	ost << S[c].pair_orbit_idx << " & ";
-	ost << S[c].partition_orbit_idx << " & ";
-	ost << S[c].f2; // << " & ";
-	ost << "\\\\";
-}
 
 
 

@@ -740,6 +740,8 @@ public:
 	const char *coefficients_text;
 	int f_family_HCV;
 	int family_HCV_a;
+	int f_family_G13;
+	int family_G13_a;
 	int f_family_F13;
 	int family_F13_a;
 	int f_arc_lifting;
@@ -1127,11 +1129,14 @@ public:
 	void report2(std::ostream &ost, int verbose_level);
 	void report_cosets(std::ostream &ost, int verbose_level);
 	void report_cosets_detailed(std::ostream &ost, int verbose_level);
+	void report_cosets_HDS(std::ostream &ost, int verbose_level);
+	void report_HDS_top(std::ostream &ost);
+	void report_HDS_bottom(std::ostream &ost);
+	void report_cosets_T3(std::ostream &ost, int verbose_level);
+	void report_T3_top(std::ostream &ost);
+	void report_T3_bottom(std::ostream &ost);
 	void report_tally_F2(std::ostream &ost, int verbose_level);
 	void report_Clebsch_maps(std::ostream &ost, int verbose_level);
-	void report_seventytwo_maps_top(std::ostream &ost, int t, int i);
-	void report_seventytwo_maps_bottom(std::ostream &ost);
-	void report_seventytwo_maps_line(std::ostream &ost, seventytwo_cases *S, int i, int j);
 };
 
 
@@ -1219,6 +1224,7 @@ public:
 			int *the_partition4, int verbose_level);
 	void lift_group_elements_and_move_two_lines(int verbose_level);
 	void embed(int *Elt_A3, int *Elt_A4, int verbose_level);
+	void report_product(std::ostream &ost, int *Elt, int verbose_level);
 
 };
 

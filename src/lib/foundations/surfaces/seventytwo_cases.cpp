@@ -17,6 +17,8 @@ namespace foundations {
 
 seventytwo_cases::seventytwo_cases()
 {
+	Surf = NULL;
+
 	f = 0;
 
 	tritangent_plane_idx = 0;
@@ -47,11 +49,19 @@ seventytwo_cases::seventytwo_cases()
 
 	l1 = l2 = 0;
 
+	line_l1_l2_idx = 0;
+
 	//int transversals[5];
+
+	//long int half_double_six[6];
+
+	half_double_six_index = 0;
 
 	//long int P6[6];
 		// the points of intersection of l1, l2, and of the 4 transversals
 		// with the tritangent plane
+
+	L1 = L2 = 0;
 
 	//long int P6a[6];
 		// the arc after the plane has been moved
@@ -77,10 +87,11 @@ seventytwo_cases::~seventytwo_cases()
 {
 }
 
-void seventytwo_cases::init(int f, int tritangent_plane_idx,
+void seventytwo_cases::init(surface_domain *Surf, int f, int tritangent_plane_idx,
 		int *three_lines_idx, long int *three_lines,
-		int line_idx, int m1, int m2, int m3, int l1, int l2)
+		int line_idx, int m1, int m2, int m3, int line_l1_l2_idx, int l1, int l2)
 {
+	seventytwo_cases::Surf = Surf;
 	seventytwo_cases::f = f;
 	seventytwo_cases::tritangent_plane_idx = tritangent_plane_idx;
 	int_vec_copy(three_lines_idx, seventytwo_cases::three_lines_idx, 3);
@@ -92,6 +103,7 @@ void seventytwo_cases::init(int f, int tritangent_plane_idx,
 	seventytwo_cases::m1 = m1;
 	seventytwo_cases::m2 = m2;
 	seventytwo_cases::m3 = m3;
+	seventytwo_cases::line_l1_l2_idx = line_l1_l2_idx;
 	seventytwo_cases::l1 = l1;
 	seventytwo_cases::l2 = l2;
 }
@@ -154,6 +166,19 @@ void seventytwo_cases::compute_arc(surface_object *SO, int verbose_level)
 		lint_vec_print(cout, transversals4, 4);
 		cout << endl;
 	}
+
+
+	if (f_v) {
+		cout << "seventytwo_cases::compute_arc before compute_half_double_six" << endl;
+	}
+	compute_half_double_six(SO, verbose_level);
+	if (f_v) {
+		cout << "seventytwo_cases::compute_arc after compute_half_double_six" << endl;
+	}
+
+
+
+
 	P6[0] = SO->Surf->P->intersection_of_two_lines(SO->Lines[l1], SO->Lines[m1]);
 	P6[1] = SO->Surf->P->intersection_of_two_lines(SO->Lines[l2], SO->Lines[m1]);
 	nb_t = 4;
@@ -235,12 +260,220 @@ void seventytwo_cases::compute_partition(int verbose_level)
 	}
 }
 
+void seventytwo_cases::compute_half_double_six(surface_object *SO, int verbose_level)
+// needs transversals4[]
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "seventytwo_cases::compute_half_double_six" << endl;
+	}
+
+	half_double_six[0] = SO->Surf->third_line_in_tritangent_plane(m1, l1, verbose_level);
+	half_double_six[1] = SO->Surf->third_line_in_tritangent_plane(m1, l2, verbose_level);
+	for (i = 0; i < 4; i++) {
+		half_double_six[2 + i] = transversals4[i];
+	}
+	half_double_six_index = SO->Surf->find_half_double_six(half_double_six);
+	if (f_v) {
+		cout << "seventytwo_cases::compute_half_double_six done" << endl;
+	}
+}
+
 void seventytwo_cases::print()
 {
 	cout << "line_idx=" << line_idx << " "
 			"m=(" << m1 << "," << m2 << "," << m3 << ") "
 					"l1=" << l1 << " l2=" << l2 << endl;
 }
+
+void seventytwo_cases::report_seventytwo_maps_line(ostream &ost)
+{
+	int c;
+
+	c = line_idx * 24 + line_l1_l2_idx;
+	ost << c << " & ";
+	ost << line_idx << " & ";
+	ost << "(" << Surf->Line_label_tex[m1]
+		<< ", " << Surf->Line_label_tex[m2]
+		<< ", " << Surf->Line_label_tex[m3] << ") & ";
+	ost << "(" << Surf->Line_label_tex[l1]
+		<< ", " << Surf->Line_label_tex[l2] << ") & ";
+	ost << "(" << Surf->Line_label_tex[transversals4[0]]
+		<< ", " << Surf->Line_label_tex[transversals4[1]]
+		<< ", " << Surf->Line_label_tex[transversals4[2]]
+		<< ", " << Surf->Line_label_tex[transversals4[3]]
+		<< ") & ";
+	ost << half_double_six_index << " & ";
+	ost << orbit_not_on_conic_idx << " & ";
+	ost << pair_orbit_idx << " & ";
+	ost << partition_orbit_idx << " & ";
+	ost << f2; // << " & ";
+	ost << "\\\\";
+}
+
+void seventytwo_cases::report_seventytwo_maps_top(ostream &ost)
+{
+	int t = tritangent_plane_idx;
+
+	ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|c|c|c|c|c|c|c|c|c|c|}" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\multicolumn{10}{|c|}{\\mbox{Tritangent Plane}\\; \\pi_{" << t << "} = \\pi_{" << Surf->Eckard_point_label_tex[t] << "} \\; \\mbox{Part "<< line_idx << "}}\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\mbox{Clebsch} & m_1-\\mbox{Case} & (m_1,m_2,m_3) & (\\ell_1,\\ell_2) & (t_3,t_4,t_5,t_6) & HDS & \\mbox{Arc} & \\mbox{Pair} & \\mbox{Part} &  \\mbox{Flag-Orb}  \\\\" << endl;
+	ost << "\\hline" << endl;
+}
+
+void seventytwo_cases::report_seventytwo_maps_bottom(ostream &ost)
+{
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$}" << endl;
+	ost << "\\bigskip" << endl;
+}
+
+void seventytwo_cases::report_single_Clebsch_map(ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting_definition_node::report_single_Clebsch_map" << endl;
+	}
+
+	report_seventytwo_maps_top(ost);
+	report_seventytwo_maps_line(ost);
+	report_seventytwo_maps_bottom(ost);
+	if (f_v) {
+		cout << "surfaces_arc_lifting_definition_node::report_single_Clebsch_map done" << endl;
+	}
+}
+
+void seventytwo_cases::report_Clebsch_map_details(ostream &ost, surface_object *SO, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int *H;
+	int i;
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting_definition_node::report_Clebsch_map_details" << endl;
+	}
+
+	ost << "\\bigskip" << endl << endl;
+
+	ost << "$\\ell_1=" << Surf->Line_label_tex[l1] << " = " << SO->Lines[l1] << " = ";
+	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[l1]);
+	ost << "$\\\\" << endl;
+
+	ost << "$\\ell_2=" << Surf->Line_label_tex[l2] << " = " << SO->Lines[l2] << " = ";
+	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[l2]);
+	ost << "$\\\\" << endl;
+
+	ost << "\\bigskip" << endl << endl;
+
+	ost << "The associated half double six " << half_double_six_index << " is: $";
+	H = Surf->Double_six + half_double_six_index * 6;
+	for (i = 0; i < 6; i++) {
+		ost << Surf->Line_label_tex[H[i]];
+		if (i < 6 - 1) {
+			ost << ", ";
+		}
+	}
+	ost << "$\\\\" << endl;
+	for (i = 0; i < 6; i++) {
+		ost << "$";
+		ost << Surf->Line_label_tex[H[i]];
+		ost << " = " << SO->Lines[H[i]] << " = ";
+		Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[H[i]]);
+		ost << "$\\\\" << endl;
+	}
+
+	ost << "\\bigskip" << endl << endl;
+
+	ost << "P6:\\\\" << endl;
+	Surf->F->display_table_of_projective_points(ost, P6, 6, 4);
+
+	ost << "P6 * Alpha1\\\\" << endl;
+	Surf->F->display_table_of_projective_points(ost, P6a, 6, 4);
+
+
+
+	ost << "P6 * Alpha1 in local coordinates:\\\\" << endl;
+	Surf->F->display_table_of_projective_points(ost, P6_local, 6, 3);
+
+	ost << "P6 * Alpha1 in local coordinates, made canonical:\\\\" << endl;
+	Surf->F->display_table_of_projective_points(ost, P6_local_canonical, 6, 3);
+
+
+	ost << "\\bigskip" << endl << endl;
+
+	ost << "$L1=";
+	ost << L1 << " = ";
+	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, L1);
+	ost << "$\\\\" << endl;
+	ost << "$L2=";
+	ost << L2 << " = ";
+	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, L2);
+	ost << "$\\\\" << endl;
+
+	ost << "\\bigskip" << endl << endl;
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting_definition_node::report_Clebsch_map_details" << endl;
+	}
+}
+
+void seventytwo_cases::report_Clebsch_map_HDS(ostream &ost, int coset, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int *H;
+	int i;
+	int ds;
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting_definition_node::report_Clebsch_map_HDS" << endl;
+	}
+	int c;
+
+	ds = half_double_six_index >> 1;
+	c = line_idx * 24 + line_l1_l2_idx;
+	ost << coset << " & ";
+	ost << c << " & ";
+	//ost << line_idx << " & ";
+	ost << "(" << Surf->Line_label_tex[m1]
+		<< ", " << Surf->Line_label_tex[m2]
+		<< ", " << Surf->Line_label_tex[m3] << ") & ";
+	ost << "(" << Surf->Line_label_tex[l1]
+		<< ", " << Surf->Line_label_tex[l2] << ") & ";
+	ost << "(" << Surf->Line_label_tex[transversals4[0]]
+		<< ", " << Surf->Line_label_tex[transversals4[1]]
+		<< ", " << Surf->Line_label_tex[transversals4[2]]
+		<< ", " << Surf->Line_label_tex[transversals4[3]]
+		<< ") & ";
+	ost << Surf->Double_six_label_tex[ds] << " & ";
+	H = Surf->Double_six + half_double_six_index * 6;
+	for (i = 0; i < 6; i++) {
+		ost << Surf->Line_label_tex[H[i]];
+		if (i < 6 - 1) {
+			ost << ", ";
+		}
+	}
+	ost << "\\\\" << endl;
+
+
+	//ost << half_double_six_index << " & ";
+	//ost << orbit_not_on_conic_idx << " & ";
+	//ost << pair_orbit_idx << " & ";
+	//ost << partition_orbit_idx << " & ";
+	//ost << f2; // << " & ";
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting_definition_node::report_Clebsch_map_HDS done" << endl;
+	}
+}
+
 
 
 

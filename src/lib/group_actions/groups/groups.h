@@ -1730,6 +1730,16 @@ public:
 		finite_field *F, int f_with_normalizer, int f_semilinear, 
 		vector_ge *&nice_gens,
 		int verbose_level);
+	void stabilizer_of_G13_surface(
+		action *A,
+		finite_field *F, int a,
+		vector_ge *&nice_gens,
+		int verbose_level);
+	void stabilizer_of_F13_surface(
+		action *A,
+		finite_field *F, int a,
+		vector_ge *&nice_gens,
+		int verbose_level);
 	void BLT_set_from_catalogue_stabilizer(action *A, 
 		finite_field *F, int iso, 
 		int verbose_level);

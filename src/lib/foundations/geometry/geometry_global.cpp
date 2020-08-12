@@ -1375,6 +1375,417 @@ int geometry_global::packing_number_via_maxfit(int n, int k)
 	return m - 1;
 }
 
+void geometry_global::make_table_of_surfaces(int verbose_level)
+{
+
+
+	//int f_v = (verbose_level >= 1);
+
+
+	char fname[1000];
+	char title[1000];
+	const char *author = "Orbiter";
+	const char *extras_for_preamble = "";
+
+	sprintf(fname, "surfaces_report.tex");
+	sprintf(title, "Cubic Surfaces with 27 Lines over Finite Fields");
+
+	{
+		ofstream fp(fname);
+		latex_interface L;
+		//latex_head_easy(fp);
+		L.head(fp,
+			FALSE /* f_book */, TRUE /* f_title */,
+			title, author,
+			FALSE /*f_toc*/, FALSE /* f_landscape*/, FALSE /* f_12pt*/,
+			TRUE /*f_enlarged_page*/, TRUE /* f_pagenumbers*/,
+			extras_for_preamble);
+
+
+		{
+		int Q_even[] = {
+			4,8,16,32,64,128
+			};
+		int nb_Q_even = 6;
+
+		fp << "\\section*{Even Characteristic}" << endl;
+
+		make_table_of_surfaces2(fp, Q_even, nb_Q_even, verbose_level);
+		}
+
+		fp << endl;
+
+		fp << "\\clearpage" << endl;
+
+		fp << endl;
+
+		{
+		int Q_odd[] = {
+				7,9,11,13,17,19,23,25,27,29,31,37,
+				41,43,47,49,53,59,61,67,71,73,79,81,83, 89, 97, 101, 103, 107, 109, 113, 121
+			};
+		int nb_Q_odd = sizeof(Q_odd) / sizeof(int);
+
+
+		fp << "\\section*{Odd Characteristic}" << endl;
+
+		make_table_of_surfaces2(fp, Q_odd, nb_Q_odd, verbose_level);
+		}
+
+
+		L.foot(fp);
+	}
+
+}
+
+
+void geometry_global::make_table_of_surfaces2(ostream &ost,
+		int *Q_table, int Q_table_len, int verbose_level)
+{
+#if 0
+	int Q_table[] = {
+		4,7,8,9,11,13,16,17,19,23,25,27,29,31,32,37,
+		41,43,47,49,53,59,61,64,67,71,73,79,81,83, 89, 97};
+	int Q_table[] = {
+		4,8,16,32,64,128
+	};
+#endif
+	//int Q_table_len = sizeof(Q_table) / sizeof(int);
+	int q, nb_reps;
+	int i, j, nb_E;
+	int *data;
+	int nb_gens;
+	int data_size;
+	const char *stab_order;
+	knowledge_base K;
+	file_io Fio;
+
+
+	for (i = 0; i < Q_table_len; i++) {
+		q = Q_table[i];
+		nb_reps = K.cubic_surface_nb_reps(q);
+		cout << q << " : " << nb_reps << "\\\\" << endl;
+		}
+
+#if 0
+	const char *fname_ago = "ago.csv";
+	{
+	ofstream f(fname_ago);
+
+	f << "q,j,nb_E,stab_order" << endl;
+	for (i = 0; i < Q_table_len; i++) {
+		q = Q_table[i];
+		nb_reps = K.cubic_surface_nb_reps(q);
+		for (j = 0; j < nb_reps; j++) {
+			nb_E = K.cubic_surface_nb_Eckardt_points(q, j);
+			K.cubic_surface_stab_gens(q, j,
+					data, nb_gens, data_size, stab_order);
+			f << q << "," << j << ", " << nb_E << ", "
+					<< stab_order << endl;
+			}
+		}
+	f << "END" << endl;
+	}
+	cout << "Written file " << fname_ago << " of size "
+			<< Fio.file_size(fname_ago) << endl;
+
+	const char *fname_dist = "ago_dist.csv";
+	{
+	ofstream f(fname_dist);
+	int *Ago;
+
+	f << "q,ago" << endl;
+	for (i = 0; i < Q_table_len; i++) {
+		q = Q_table[i];
+		nb_reps = K.cubic_surface_nb_reps(q);
+		Ago = NEW_int(nb_reps);
+		for (j = 0; j < nb_reps; j++) {
+			nb_E = K.cubic_surface_nb_Eckardt_points(q, j);
+			K.cubic_surface_stab_gens(q, j, data,
+					nb_gens, data_size, stab_order);
+			sscanf(stab_order, "%d", &Ago[j]);
+			//f << q << "," << j << ", " << nb_E << ", " << stab_order << endl;
+			}
+		tally C;
+
+		C.init(Ago, nb_reps, FALSE, 0);
+		f << q << ", ";
+		C.print_naked_tex(f, TRUE /* f_backwards*/);
+		f << endl;
+
+		FREE_int(Ago);
+		}
+	f << "END" << endl;
+	}
+	cout << "Written file " << fname_dist << " of size "
+			<< Fio.file_size(fname_dist) << endl;
+#endif
+
+	int *Table;
+	int *Q;
+	int nb_Q;
+	int *E;
+	int nb_E_types;
+
+	compute_table_E(Q_table, Q_table_len,
+			Table, Q, nb_Q, E, nb_E_types, verbose_level);
+
+
+
+	//LG->report(fp, f_sylow, f_group_table, verbose_level);
+
+
+
+	int Nb_total = 0;
+
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|r||r||*{" << nb_E_types << "}{r|}}" << endl;
+	ost << "\\hline" << endl;
+	ost << "q  & \\mbox{total} ";
+	for (j = 0; j < nb_E_types; j++) {
+		ost << " & " << E[j];
+		}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < nb_Q; i++) {
+		q = Q[i];
+		ost << q;
+		nb_reps = K.cubic_surface_nb_reps(q);
+		Nb_total += nb_reps;
+		ost << " & ";
+		ost << nb_reps;
+		for (j = 0; j < nb_E_types; j++) {
+			ost << " & " << Table[i * nb_E_types + j];
+			}
+		ost << "\\\\" << endl;
+		ost << "\\hline" << endl;
+		}
+	//cout << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$" << endl;
+
+	ost << "Total: " << Nb_total << endl;
+
+
+
+
+
+	ost << "\\bigskip" << endl;
+
+	for (j = 0; j < nb_E_types; j++) {
+		ost << "\\section*{" << E[j] << " Eckardt Points}" << endl;
+
+		Nb_total = 0;
+
+		ost << "$$" << endl;
+		ost << "\\begin{array}{|r|r|p{8cm}|}" << endl;
+		ost << "\\hline" << endl;
+		ost << "q & \\mbox{total} & \\mbox{Ago} \\\\" << endl;
+		ost << "\\hline" << endl;
+		ost << "\\hline" << endl;
+
+		for (i = 0; i < nb_Q; i++) {
+			q = Q[i];
+			nb_reps = Table[i * nb_E_types + j];
+			Nb_total += nb_reps;
+			if (nb_reps) {
+
+				int *Ago;
+				int go;
+				int h, u, nb_total;
+
+				nb_total = K.cubic_surface_nb_reps(q);
+				Ago = NEW_int(nb_reps);
+				u = 0;
+				for (h = 0; h < nb_total; h++) {
+					nb_E = K.cubic_surface_nb_Eckardt_points(q, h);
+					if (nb_E != E[j]) {
+						continue;
+					}
+					K.cubic_surface_stab_gens(q, h, data,
+							nb_gens, data_size, stab_order);
+					sscanf(stab_order, "%d", &go);
+					Ago[u++] = go;
+				}
+
+				if (u != nb_reps) {
+					cout << "u != nb_reps" << endl;
+					exit(1);
+				}
+				tally C;
+
+				C.init(Ago, nb_reps, FALSE, 0);
+				ost << q << " & " << nb_reps << " & ";
+				ost << "$";
+				C.print_naked_tex(ost, TRUE /* f_backwards*/);
+				ost << "$\\\\" << endl;
+
+				FREE_int(Ago);
+
+
+
+				ost << "\\hline" << endl;
+			}
+		}
+
+
+		ost << "\\end{array}" << endl;
+		ost << "$$" << endl;
+
+		ost << "Total: " << Nb_total << endl;
+
+
+		ost << "\\bigskip" << endl;
+
+
+	} // next j
+
+#if 0
+	table_top(ost);
+
+	h = 0;
+	for (i = 0; i < Q_table_len; i++) {
+		q = Q_table[i];
+		nb_reps = K.cubic_surface_nb_reps(q);
+
+
+
+
+		for (j = 0; j < nb_reps; j++, h++) {
+
+			int *data;
+			int nb_gens;
+			int data_size;
+			const char *stab_order;
+
+			nb_E = K.cubic_surface_nb_Eckardt_points(q, j);
+			K.cubic_surface_stab_gens(q, j,
+					data, nb_gens, data_size, stab_order);
+			ost << q << " & " << j << " & " << stab_order
+					<< " & " << nb_E << " & \\\\" << endl;
+			if ((h + 1) % 30 == 0) {
+				table_bottom(ost);
+				if ((h + 1) % 60 == 0) {
+					ost << endl;
+					ost << "\\bigskip" << endl;
+					ost << endl;
+					}
+				table_top(ost);
+				}
+			}
+		ost << "\\hline" << endl;
+		}
+	table_bottom(ost);
+#endif
+
+	FREE_int(Table);
+	FREE_int(Q);
+	FREE_int(E);
+
+
+}
+
+void geometry_global::table_top(ostream &ost)
+{
+	ost << "$" << endl;
+	ost << "\\begin{array}{|c|c||c|c|c|}" << endl;
+	ost << "\\hline" << endl;
+	ost << "q & \\mbox{Iso} & \\mbox{Ago} & \\# E & "
+			"\\mbox{Comment}\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\hline" << endl;
+}
+
+void geometry_global::table_bottom(ostream &ost)
+{
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	//ost << "\\quad" << endl;
+	ost << "$" << endl;
+}
+
+void geometry_global::compute_table_E(
+		int *field_orders, int nb_fields,
+		int *&Table,
+		int *&Q, int &nb_Q,
+		int *&E, int &nb_E_types, int verbose_level)
+{
+	//int Q_table[] = {4,7,8,9,11,13,16,17,19,23,25,27,29,
+	//		31,32,37,41,43,47,49,53,59,61,64,67,71,73,79,81,83,89, 97};
+	//int Q_table_len = sizeof(Q_table) / sizeof(int);
+	int i, j, q, nb_reps, nb_E, nb_E_max, idx;
+	int *Table_idx;
+	knowledge_base K;
+
+	nb_Q = nb_fields;
+	Q = NEW_int(nb_Q);
+	int_vec_copy(field_orders, Q, nb_Q);
+
+	nb_E_max = 0;
+	for (i = 0; i < nb_fields; i++) {
+		q = field_orders[i];
+		nb_reps = K.cubic_surface_nb_reps(q);
+		for (j = 0; j < nb_reps; j++) {
+			nb_E = K.cubic_surface_nb_Eckardt_points(q, j);
+			nb_E_max = MAXIMUM(nb_E_max, nb_E);
+			}
+		}
+	cout << "nb_E_max=" << nb_E_max << endl;
+	int *E_freq;
+	E_freq = NEW_int(nb_E_max + 1);
+	int_vec_zero(E_freq, nb_E_max + 1);
+	for (i = 0; i < nb_fields; i++) {
+		q = field_orders[i];
+		nb_reps = K.cubic_surface_nb_reps(q);
+		for (j = 0; j < nb_reps; j++) {
+			nb_E = K.cubic_surface_nb_Eckardt_points(q, j);
+			E_freq[nb_E]++;
+			}
+		}
+
+
+
+	cout << "E_freq=";
+	int_vec_print(cout, E_freq, nb_E_max + 1);
+	cout << endl;
+
+
+	E = NEW_int(nb_E_max + 1);
+	nb_E_types = 0;
+
+	Table_idx = NEW_int(nb_E_max + 1);
+	for (j = 0; j <= nb_E_max; j++) {
+		if (E_freq[j]) {
+			E[nb_E_types] = j;
+			Table_idx[j] = nb_E_types;
+			nb_E_types++;
+			}
+		else {
+			Table_idx[j] = -1;
+			}
+		}
+
+
+	Table = NEW_int(nb_Q * nb_E_types);
+	int_vec_zero(Table, nb_Q * nb_E_types);
+	for (i = 0; i < nb_fields; i++) {
+		q = Q[i];
+		nb_reps = K.cubic_surface_nb_reps(q);
+		for (j = 0; j < nb_reps; j++) {
+			nb_E = K.cubic_surface_nb_Eckardt_points(q, j);
+			idx = Table_idx[nb_E];
+			Table[i * nb_E_types + idx]++;
+			}
+		}
+	cout << "Table:" << endl;
+	int_matrix_print(Table, nb_Q, nb_E_types);
+
+	FREE_int(Table_idx);
+}
+
+
+
 
 
 }}

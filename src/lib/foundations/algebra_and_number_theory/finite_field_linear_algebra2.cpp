@@ -56,7 +56,8 @@ void finite_field::reduce_mod_subspace_and_get_coefficient_vector(
 		}
 	}
 	if (f_v) {
-		cout << "finite_field::reduce_mod_subspace_and_get_coefficient_vector after: v=";
+		cout << "finite_field::reduce_mod_subspace_and_get_coefficient_vector "
+				"after: v=";
 		int_vec_print(cout, v, len);
 		cout << endl;
 		cout << "coefficients=";
@@ -2083,6 +2084,220 @@ void finite_field::cubic_surface_family_24_generators(
 	if (f_v) {
 		cout << "finite_field::cubic_surface_family_24_generators "
 				"done" << endl;
+	}
+}
+
+void finite_field::cubic_surface_family_G13_generators(
+	int a,
+	int *&gens, int &nb_gens, int &data_size,
+	int &group_order, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int data[] = {
+			// A1:
+			1,0,0,0,
+			0,1,0,0,
+			3,2,1,0,
+			3,0,0,1,
+
+			// A2:
+			1,0,0,0,
+			0,1,0,0,
+			1,1,1,0,
+			1,0,0,1,
+
+			// A3:
+			0,1,0,0,
+			1,0,0,0,
+			0,0,1,0,
+			1,1,1,1,
+
+			// A4:
+			0,1,0,0,
+			1,0,0,0,
+			1,1,1,0,
+			7,6,1,1,
+
+			// A5:
+			2,3,0,0,
+			3,2,0,0,
+			0,0,1,0,
+			3,3,5,1,
+
+			// A6:
+			2,2,1,0,
+			3,3,1,0,
+			1,0,1,0,
+			1,4,2,1,
+
+	};
+
+	data_size = 16 + 1;
+	nb_gens = 6;
+	group_order = 192;
+
+	gens = NEW_int(nb_gens * data_size);
+	int_vec_zero(gens, nb_gens * data_size);
+
+	int h, i, j, c, m, l;
+	int *v;
+	geometry_global Gg;
+	number_theory_domain NT;
+
+	m = int_vec_maximum(data, nb_gens * data_size);
+	l = NT.int_log2(m) + 1;
+
+	v = NEW_int(l);
+
+
+	for (h = 0; h < nb_gens; h++) {
+		for (i = 0; i < 16; i++) {
+			int_vec_zero(v, l);
+			Gg.AG_element_unrank(p, v, 1, l, data[h * 16 + i]);
+			c = 0;
+			for (j = 0; j < l; j++) {
+				c = mult(c, a);
+				if (v[l - 1 - j]) {
+					c = add(c, v[l - 1 - j]);
+				}
+			}
+			gens[h * data_size + i] = c;
+		}
+		gens[h * data_size + 16] = 0;
+	}
+	FREE_int(v);
+
+	if (f_v) {
+		cout << "finite_field::cubic_surface_family_G13_generators" << endl;
+		for (h = 0; h < nb_gens; h++) {
+			cout << "generator " << h << ":" << endl;
+			int_matrix_print(gens + h * data_size, 4, 4);
+		}
+	}
+	if (f_v) {
+		cout << "finite_field::cubic_surface_family_G13_generators done" << endl;
+	}
+}
+
+void finite_field::cubic_surface_family_F13_generators(
+	int a,
+	int *&gens, int &nb_gens, int &data_size,
+	int &group_order, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	// 2 = a
+	// 3 = a+1
+	// 4 = a^2
+	// 5 = a^2+1
+	// 6 = a^2 + a
+	// 7 = a^2 + a + 1
+	// 8 = a^3
+	// 9 = a^3 + 1
+	// 10 = a^3 + a
+	// 11 = a^3 + a + 1
+	// 12 = a^3 + a^2
+	// 13 = a^3 + a^2 + 1
+	// 14 = a^3 + a^2 + a
+	// 15 = a^3 + a^2 + a + 1 = (a+1)^3
+	// 16 = a^4
+	// 17 = a^4 + 1 = (a+1)^4
+	// 18 = a^4 + a
+	// 19 = a^4 + a + 1
+	// 20 = a^4 + a^2 = a^2(a+1)^2
+	// 23 = (a+1)(a^3+a^2+1)
+	// 34 = a(a+1)^4
+	// 45 = (a+1)^3(a^2+a+1)
+	// 52 = a^2(a^3+a^2+1)
+	// 54 = a(a+1)^2(a^2+a+1)
+	// 57 = (a+1)^2(a^3+a^2+1)
+	// 60 = a^2(a+1)^3
+	// 63 = (a+1)(a^2+a+1)^2
+	// 75 = (a+1)^3(a^3+a^2+1)
+	// 90 = a(a+1)^3(a^2+a+1) = a^6 + a^4 + a^3 + a
+	// 170 = a(a+1)^6
+	int data[] = {
+			// A1:
+			10,0,0,0,
+			0,10,0,0,
+			4,10,10,0,
+			0,17,0,10,
+
+			// A2:
+			10,0,0,0,
+			0,10,0,0,
+			2,0,10,0,
+			0,15,0,10,
+
+			// A3:
+			10,0,0,0,
+			2,10,0,0,
+			0,0,10,0,
+			0,0,15,10,
+
+			// A4:
+			60,0,0,0,
+			12,60,0,0,
+			12,0,60,0,
+			54,34,34,60,
+
+			// A5:
+			12,0,0,0,
+			4,12,0,0,
+			0,0,12,0,
+			0,0,34,12,
+
+			// A6:
+			10,0,0,0,
+			4,0,10,0,
+			0,10,10,0,
+			10,60,17,10,
+
+	};
+
+	data_size = 16 + 1;
+	nb_gens = 6;
+	group_order = 192;
+
+	gens = NEW_int(nb_gens * data_size);
+	int_vec_zero(gens, nb_gens * data_size);
+
+	int h, i, j, c, m, l;
+	int *v;
+	geometry_global Gg;
+	number_theory_domain NT;
+
+	m = int_vec_maximum(data, nb_gens * data_size);
+	l = NT.int_log2(m) + 1;
+
+	v = NEW_int(l);
+
+
+	for (h = 0; h < nb_gens; h++) {
+		for (i = 0; i < 16; i++) {
+			int_vec_zero(v, l);
+			Gg.AG_element_unrank(p, v, 1, l, data[h * 16 + i]);
+			c = 0;
+			for (j = 0; j < l; j++) {
+				c = mult(c, a);
+				if (v[l - 1 - j]) {
+					c = add(c, v[l - 1 - j]);
+				}
+			}
+			gens[h * data_size + i] = c;
+		}
+		gens[h * data_size + 16] = 0;
+	}
+	FREE_int(v);
+
+	if (f_v) {
+		cout << "finite_field::cubic_surface_family_F13_generators" << endl;
+		for (h = 0; h < nb_gens; h++) {
+			cout << "generator " << h << ":" << endl;
+			int_matrix_print(gens + h * data_size, 4, 4);
+		}
+	}
+	if (f_v) {
+		cout << "finite_field::cubic_surface_family_F13_generators done" << endl;
 	}
 }
 

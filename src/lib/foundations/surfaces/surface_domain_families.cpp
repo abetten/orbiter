@@ -40,6 +40,27 @@ void surface_domain::create_equation_F13(int a, int *coeff, int verbose_level)
 	}
 }
 
+void surface_domain::create_equation_G13(int a, int *coeff, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int b, c;
+
+	if (f_v) {
+		cout << "surface_domain::create_equation_G13" << endl;
+	}
+
+	b = F->mult(a, F->add(a, 1));
+	c = F->add(F->mult(a, a), F->add(a, 1));
+	int_vec_zero(coeff, nb_monomials);
+
+	coeff[5] = coeff[8] = coeff[9] = coeff[10] = coeff[11] = coeff[12] = 1;
+	coeff[14] = coeff[15] = b;
+	coeff[18] = coeff[19] = c;
+	if (f_v) {
+		cout << "surface_domain::create_equation_G13 done" << endl;
+	}
+}
+
 
 int surface_domain::create_surface_F13(int a,
 	int *coeff20,
@@ -89,6 +110,58 @@ int surface_domain::create_surface_F13(int a,
 
 	if (f_v) {
 		cout << "surface_domain::create_surface_F13 done" << endl;
+	}
+	return TRUE;
+}
+
+int surface_domain::create_surface_G13(int a,
+	int *coeff20,
+	long int *Lines27,
+	int &nb_E,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_G13" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_G13 before create_equation_G13" << endl;
+	}
+	create_equation_G13(a, coeff20, verbose_level);
+	if (f_v) {
+		cout << "surface_domain::create_surface_G13 after create_equation_G13" << endl;
+	}
+
+	surface_object *SO;
+
+	SO = NEW_OBJECT(surface_object);
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_G13 before SO->init_equation" << endl;
+	}
+	if (!SO->init_equation(this, coeff20, verbose_level)) {
+		if (f_v) {
+			cout << "surface_domain::create_surface_G13 SO->init_equation returns FALSE, returning" << endl;
+		}
+		FREE_OBJECT(SO);
+		return FALSE;
+	}
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_G13 after SO->init_equation" << endl;
+	}
+
+	nb_E = SO->nb_Eckardt_points;
+
+	lint_vec_copy(SO->Lines, Lines27, 27);
+
+	FREE_OBJECT(SO);
+
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_G13 done" << endl;
 	}
 	return TRUE;
 }

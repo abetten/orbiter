@@ -569,6 +569,12 @@ public:
 		// spanned by the elements in set1.
 		// The result is written to set2.
 		// Returns the rank of the span of the elements in set1.
+
+
+	// #########################################################################
+	// finite_field_linear_algebra2.cpp
+	// #########################################################################
+
 	void reduce_mod_subspace_and_get_coefficient_vector(
 		int k, int len, int *basis, int *base_cols, 
 		int *v, int *coefficients, int verbose_level);
@@ -675,6 +681,14 @@ public:
 	void cubic_surface_family_24_generators(int f_with_normalizer, 
 		int f_semilinear, 
 		int *&gens, int &nb_gens, int &data_size, 
+		int &group_order, int verbose_level);
+	void cubic_surface_family_G13_generators(
+			int a,
+			int *&gens, int &nb_gens, int &data_size,
+			int &group_order, int verbose_level);
+	void cubic_surface_family_F13_generators(
+		int a,
+		int *&gens, int &nb_gens, int &data_size,
 		int &group_order, int verbose_level);
 	int is_unit_vector(int *v, int len, int k);
 	void make_Fourier_matrices(
@@ -1203,6 +1217,8 @@ public:
 	void cheat_sheet_main_table_bottom(std::ostream &f);
 	void display_table_of_projective_points(
 			std::ostream &ost, long int *Pts, int nb_pts, int len);
+	void display_table_of_projective_points2(
+		std::ostream &ost, long int *Pts, int nb_pts, int len);
 	void export_magma(int d, long int *Pts, int nb_pts, char *fname);
 	void export_gap(int d, long int *Pts, int nb_pts, char *fname);
 	void oval_polynomial(
@@ -1662,6 +1678,7 @@ public:
 	void print_equation_tex(std::ostream &ost, int *coeffs);
 	void print_equation_numerical(std::ostream &ost, int *coeffs);
 	void print_equation_lint(std::ostream &ost, long int *coeffs);
+	void print_equation_lint_tex(std::ostream &ost, long int *coeffs);
 	void print_equation_str(std::stringstream &ost, int *coeffs);
 	void print_equation_with_line_breaks_tex(std::ostream &ost,
 		int *coeffs, int nb_terms_per_line, 

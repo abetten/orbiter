@@ -597,7 +597,7 @@ void surfaces_arc_lifting_upstep::make_seventytwo_cases(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int c;
-	int line_idx, m1, m2, m3, l1, l2;
+	int line_idx, m1, m2, m3, line_l1_l2_idx, l1, l2;
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting_upstep::make_seventytwo_cases "
@@ -625,6 +625,8 @@ void surfaces_arc_lifting_upstep::make_seventytwo_cases(int verbose_level)
 		}
 
 		// there are 24 possibilities for l1 and l2:
+
+		line_l1_l2_idx = 0;
 
 		for (l1 = 0; l1 < 27; l1++) {
 			if (D->SO->Adj_ij(l1, m1) == 0) {
@@ -660,12 +662,19 @@ void surfaces_arc_lifting_upstep::make_seventytwo_cases(int verbose_level)
 				}
 
 
-				Seventytwo[c].init(f, tritangent_plane_idx, three_lines_idx, three_lines,
-						line_idx, m1, m2, m3, l1, l2);
+				Seventytwo[c].init(Lift->Surf, f, tritangent_plane_idx, three_lines_idx, three_lines,
+						line_idx, m1, m2, m3, line_l1_l2_idx, l1, l2);
 				c++;
+				line_l1_l2_idx++;
 
 			} // l2
 		} // l1
+
+		if (line_l1_l2_idx != 24) {
+			cout << "surfaces_arc_lifting_upstep::make_seventytwo_cases line_l1_l2_idx != 24" << endl;
+			exit(1);
+		}
+
 	} // line_idx
 
 	if (c != 72) {

@@ -107,6 +107,8 @@ interface_projective::interface_projective()
 	line2_from = 0;
 	line1_to = 0;
 	line2_to = 0;
+
+	f_make_table_of_surfaces = FALSE;
 }
 
 
@@ -146,7 +148,12 @@ void interface_projective::print_help(int argc,
 	else if (strcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer") == 0) {
 		cout << "-move_two_lines_in_hyperplane_stabilizer <int : q>  <int : line1_from> <int : line2_from> <int : line1_to> <int : line2_to> " << endl;
 	}
+	else if (strcmp(argv[i], "-make_table_of_surfaces") == 0) {
+		cout << "-make_table_of_surfaces " << endl;
+	}
 }
+
+
 
 int interface_projective::recognize_keyword(int argc,
 		const char **argv, int i, int verbose_level)
@@ -182,6 +189,9 @@ int interface_projective::recognize_keyword(int argc,
 		return true;
 	}
 	else if (strcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-make_table_of_surfaces") == 0) {
 		return true;
 	}
 	return false;
@@ -329,6 +339,10 @@ void interface_projective::read_arguments(int argc,
 					<< " " << line1_to << " " << line2_to
 					<< endl;
 		}
+		else if (strcmp(argv[i], "-make_table_of_surfaces") == 0) {
+			f_make_table_of_surfaces = TRUE;
+			cout << "-make_table_of_surfaces" << endl;
+		}
 		else {
 			cout << "interface_projective::read_arguments: unrecognized option "
 					<< argv[i] << ", skipping" << endl;
@@ -473,6 +487,13 @@ void interface_projective::worker(orbiter_session *Session, int verbose_level)
 				line1_from, line2_from,
 				line1_to, line2_to, verbose_level);
 	}
+	else if (f_make_table_of_surfaces) {
+
+		geometry_global GG;
+
+		GG.make_table_of_surfaces(verbose_level);
+	}
+
 	if (f_v) {
 		cout << "interface_projective::worker done" << endl;
 	}

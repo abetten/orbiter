@@ -269,6 +269,8 @@ public:
 	int f_create_surface;
 	surface_create_description *surface_description;
 	int f_six_arcs;
+	int f_filter_by_nb_Eckardt_points;
+	int nb_Eckardt_points;
 	int f_surface_quartic;
 	int f_surface_clebsch;
 	int f_surface_codes;
@@ -408,6 +410,7 @@ public:
 			int verbose_level);
 	void do_six_arcs(
 			poset_classification_control *Control_six_arcs,
+			int f_filter_by_nb_Eckardt_points, int nb_Eckardt_points,
 			int verbose_level);
 	void do_spread_classify(int k, int verbose_level);
 	void do_packing_classify(int dimension_of_spread_elements,

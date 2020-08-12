@@ -2693,7 +2693,7 @@ strong_generators::stabilizer_of_HCV_surface(
 	
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_HCV_surface before "
-				"cubic_surface_stab_gens" << endl;
+				"F->cubic_surface_family_24_generators" << endl;
 	}
 
 	F->cubic_surface_family_24_generators(f_with_normalizer, 
@@ -2742,6 +2742,143 @@ strong_generators::stabilizer_of_HCV_surface(
 		cout << "strong_generators::stabilizer_of_HCV_surface done" << endl;
 	}
 }
+
+void strong_generators::stabilizer_of_G13_surface(
+	action *A,
+	finite_field *F, int a,
+	vector_ge *&nice_gens,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_G13_surface" << endl;
+		cout << "q=" << F->q << endl;
+		cout << "a=" << a << endl;
+	}
+
+	int *data;
+	int nb_gens;
+	int data_size;
+	int group_order;
+	longinteger_object target_go;
+	int i;
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_G13_surface before "
+				"F->cubic_surface_family_G13_generators" << endl;
+	}
+
+	F->cubic_surface_family_G13_generators(a,
+		data, nb_gens, data_size, group_order, verbose_level);
+
+	nice_gens = NEW_OBJECT(vector_ge);
+	nice_gens->init(A, verbose_level - 2);
+	target_go.create(group_order, __FILE__, __LINE__);
+
+
+	nice_gens->allocate(nb_gens, verbose_level - 2);
+	for (i = 0; i < nb_gens; i++) {
+		A->make_element(nice_gens->ith(i), data + i * data_size, 0);
+	}
+
+
+
+	strong_generators *Strong_gens2;
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_G13_surface before "
+				"generators_to_strong_generators" << endl;
+	}
+	A->generators_to_strong_generators(
+		TRUE /* f_target_go */, target_go,
+		nice_gens, Strong_gens2,
+		verbose_level);
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_G13_surface after "
+				"generators_to_strong_generators" << endl;
+	}
+
+	init_copy(Strong_gens2, 0 /* verbose_level */);
+
+	FREE_int(data);
+	FREE_OBJECT(Strong_gens2);
+	//FREE_OBJECT(gens);
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_G13_surface done" << endl;
+	}
+}
+
+void strong_generators::stabilizer_of_F13_surface(
+	action *A,
+	finite_field *F, int a,
+	vector_ge *&nice_gens,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_F13_surface" << endl;
+		cout << "q=" << F->q << endl;
+		cout << "a=" << a << endl;
+	}
+
+	int *data;
+	int nb_gens;
+	int data_size;
+	int group_order;
+	longinteger_object target_go;
+	int i;
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_F13_surface before "
+				"F->cubic_surface_family_F13_generators" << endl;
+	}
+
+	F->cubic_surface_family_F13_generators(a,
+		data, nb_gens, data_size, group_order, verbose_level);
+
+	nice_gens = NEW_OBJECT(vector_ge);
+	nice_gens->init(A, verbose_level - 2);
+	target_go.create(group_order, __FILE__, __LINE__);
+
+
+	nice_gens->allocate(nb_gens, verbose_level - 2);
+	for (i = 0; i < nb_gens; i++) {
+		A->make_element(nice_gens->ith(i), data + i * data_size, 0);
+	}
+
+
+
+	strong_generators *Strong_gens2;
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_F13_surface before "
+				"generators_to_strong_generators" << endl;
+	}
+	A->generators_to_strong_generators(
+		TRUE /* f_target_go */, target_go,
+		nice_gens, Strong_gens2,
+		verbose_level);
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_F13_surface after "
+				"generators_to_strong_generators" << endl;
+	}
+
+	init_copy(Strong_gens2, 0 /* verbose_level */);
+
+	FREE_int(data);
+	FREE_OBJECT(Strong_gens2);
+	//FREE_OBJECT(gens);
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_F13_surface done" << endl;
+	}
+}
+
 
 void strong_generators::BLT_set_from_catalogue_stabilizer(
 	action *A,

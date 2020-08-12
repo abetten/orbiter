@@ -595,6 +595,7 @@ class interface_projective {
 	long int line1_to;
 	long int line2_to;
 
+	int f_make_table_of_surfaces;
 
 public:
 
