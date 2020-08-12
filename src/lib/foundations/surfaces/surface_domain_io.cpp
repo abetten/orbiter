@@ -25,12 +25,12 @@ void surface_domain::print_equation(ostream &ost, int *coeffs)
 
 void surface_domain::print_equation_tex(ostream &ost, int *coeffs)
 {
-	Poly3_4->print_equation(ost, coeffs);
+	Poly3_4->print_equation_tex(ost, coeffs);
 }
 
 void surface_domain::print_equation_tex_lint(ostream &ost, long int *coeffs)
 {
-	Poly3_4->print_equation_lint(ost, coeffs);
+	Poly3_4->print_equation_lint_tex(ost, coeffs);
 }
 
 void surface_domain::latex_double_six(ostream &ost, long int *double_six)

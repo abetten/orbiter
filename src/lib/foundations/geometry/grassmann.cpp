@@ -117,6 +117,8 @@ void grassmann::print_single_generator_matrix_tex(
 {
 	unrank_lint(a, 0 /*verbose_level*/);
 	latex_matrix(ost, M);
+	ost << " = ";
+	latex_matrix_numerical(ost, M);
 	//print_integer_matrix_tex(ost, M, k, n);
 }
 

@@ -1200,6 +1200,12 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(ostream &ost, int verbos
 					<< SG->group_order_as_lint()
 					<< ":\\\\" << endl;
 			Flag_orbits->Flag_orbit_node[f].gens->print_generators_tex(ost);
+			if (SG->group_order_as_lint() < 10){
+				ost << "The elements of the group of order "
+						<< SG->group_order_as_lint()
+						<< " are:\\\\" << endl;
+				Flag_orbits->Flag_orbit_node[f].gens->print_elements_latex_ost(ost);
+			}
 		}
 		else {
 			ost << "The stabilizer is trivial.\\\\" << endl;
@@ -1486,7 +1492,12 @@ void surfaces_arc_lifting::report_surfaces_in_detail(ostream &ost, int verbose_l
 			}
 
 
+
 		D = (surfaces_arc_lifting_definition_node *) Surfaces->Orbit[i].extra_data;
+
+
+		D->SO->print_lines(ost);
+
 
 		D->report_Clebsch_maps(ost, verbose_level);
 
@@ -1497,6 +1508,15 @@ void surfaces_arc_lifting::report_surfaces_in_detail(ostream &ost, int verbose_l
 		ost << "Coset Representatives in detail:\\\\" << endl;
 
 		D->report_cosets_detailed(ost, verbose_level);
+
+		ost << "Coset Representatives HDS:\\\\" << endl;
+
+		D->report_cosets_HDS(ost, verbose_level);
+
+
+		ost << "Coset Representatives T3:\\\\" << endl;
+
+		D->report_cosets_T3(ost, verbose_level);
 
 		//Dom.add_in_place(Ol, ol);
 

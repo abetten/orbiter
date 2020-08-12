@@ -195,9 +195,11 @@ class seventytwo_cases {
 
 public:
 
+	surface_domain *Surf;
+
 	int f;
 
-	int tritangent_plane_idx;
+	int tritangent_plane_idx;  // = t
 		// the tritangent plane picked for the Clebsch map,
 		// using the Schlaefli labeling, in [0,44].
 
@@ -217,7 +219,7 @@ public:
 	int Basis_pi[16];
 	int Basis_pi_inv[17]; // in case it is semilinear
 
-	int line_idx;
+	int line_idx;  // = i
 		// the index of the line chosen to be P1,P2 in three_lines[3]
 		// three_lines refers to class surfaces_arc_lifting_upstep
 
@@ -230,11 +232,18 @@ public:
 		// the indices of the two lines defining the Clebsch map.
 		// They pass through m1.
 
+	int line_l1_l2_idx; // = j
+
 	int transversals[5];
 		// the 5 transversals of l1 and l2 in Schlaefli labeling
 
 	long int transversals4[4];
 		// the 4 transversals different from m1 in Schlaefli labeling
+
+	long int half_double_six[6];
+		// long int because surf->find_half_double_six() requires it that way
+
+	int half_double_six_index;
 
 	long int P6[6];
 		// the points of intersection of l1, l2, and of the 4 transversals
@@ -242,6 +251,8 @@ public:
 
 	long int P6a[6];
 		// the arc after the plane has been moved
+
+	long int L1, L2; // images of l1 and l2 under Alpha1 * Alpha2 * Beta1 * Beta2
 
 	long int P6_local[6];
 		// the moved arc in local coordinates
@@ -264,9 +275,9 @@ public:
 
 	seventytwo_cases();
 	~seventytwo_cases();
-	void init(int f, int tritangent_plane_idx,
+	void init(surface_domain *Surf, int f, int tritangent_plane_idx,
 			int *three_lines_idx, long int *three_lines,
-			int line_idx, int m1, int m2, int m3, int l1, int l2);
+			int line_idx, int m1, int m2, int m3, int line_l1_l2_idx, int l1, int l2);
 	void compute_arc(surface_object *SO, int verbose_level);
 	// We have chosen a tritangent planes and we know the three lines m1, m2, m3 in it.
 	// The lines l1 and l2 intersect m1 in the first two points.
@@ -276,7 +287,14 @@ public:
 	// This makes up the arc of 6 points.
 	// They will be stored in P6[6].
 	void compute_partition(int verbose_level);
+	void compute_half_double_six(surface_object *SO, int verbose_level);
 	void print();
+	void report_seventytwo_maps_line(std::ostream &ost);
+	void report_seventytwo_maps_top(std::ostream &ost);
+	void report_seventytwo_maps_bottom(std::ostream &ost);
+	void report_single_Clebsch_map(std::ostream &ost, int verbose_level);
+	void report_Clebsch_map_details(std::ostream &ost, surface_object *SO, int verbose_level);
+	void report_Clebsch_map_HDS(std::ostream &ost, int coset, int verbose_level);
 };
 
 
@@ -331,9 +349,6 @@ public:
 		// used only in compute_system_in_RREF
 	int *System; // [max_pts * nb_monomials]
 	int *base_cols; // [nb_monomials]
-
-	//char **Line_label; // [27]
-	//char **Line_label_tex; // [27]
 
 	std::string *Line_label; // [27]
 	std::string *Line_label_tex; // [27]
@@ -579,6 +594,7 @@ public:
 		// 0 = a_i, 1 = b_i, 2 = c_ij
 	void index_of_line(int line, int &i, int &j);
 		// returns i for a_i, i for b_i and (i,j) for c_ij
+	int third_line_in_tritangent_plane(int l1, int l2, int verbose_level);
 	long int rank_line(int *v);
 	void build_cubic_surface_from_lines(int len, long int *S, int *coeff,
 		int verbose_level);
@@ -694,7 +710,13 @@ public:
 
 	// surface_domain_families.cpp:
 	void create_equation_F13(int a, int *coeff, int verbose_level);
+	void create_equation_G13(int a, int *coeff, int verbose_level);
 	int create_surface_F13(int a,
+		int *coeff20,
+		long int *Lines27,
+		int &nb_E,
+		int verbose_level);
+	int create_surface_G13(int a,
 		int *coeff20,
 		long int *Lines27,
 		int &nb_E,

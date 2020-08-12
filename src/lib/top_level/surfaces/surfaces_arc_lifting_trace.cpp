@@ -648,14 +648,16 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 
 	// map the two lines:
 
-	long int L1, L2;
+	//long int L1, L2;
 	int beta3[17];
 
-	L1 = Up->Lift->Surf_A->A2->element_image_of(Up->Lines[The_case.l1], Elt_T3, 0 /* verbose_level */);
-	L2 = Up->Lift->Surf_A->A2->element_image_of(Up->Lines[The_case.l2], Elt_T3, 0 /* verbose_level */);
+
+
+	The_case.L1 = Up->Lift->Surf_A->A2->element_image_of(Up->Lines[The_case.l1], Elt_T3, 0 /* verbose_level */);
+	The_case.L2 = Up->Lift->Surf_A->A2->element_image_of(Up->Lines[The_case.l2], Elt_T3, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines "
-				"L1=" << L1 << " L2=" << L2 << endl;
+				"L1=" << The_case.L1 << " L2=" << The_case.L2 << endl;
 	}
 
 	// compute beta 3:
@@ -713,14 +715,14 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 
 	if (f_vv) {
 		cout << "surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines "
-				"L1=" << L1 << " L2=" << L2 << endl;
+				"L1=" << The_case.L1 << " L2=" << The_case.L2 << endl;
 		int A[8];
 		int B[8];
-		Up->Lift->Surf_A->Surf->P->unrank_line(A, L1);
-		cout << "L1=" << L1 << "=" << endl;
+		Up->Lift->Surf_A->Surf->P->unrank_line(A, The_case.L1);
+		cout << "L1=" << The_case.L1 << "=" << endl;
 		int_matrix_print(A, 2, 4);
-		Up->Lift->Surf_A->Surf->P->unrank_line(B, L2);
-		cout << "L2=" << L2 << "=" << endl;
+		Up->Lift->Surf_A->Surf->P->unrank_line(B, The_case.L2);
+		cout << "L2=" << The_case.L2 << "=" << endl;
 		int_matrix_print(B, 2, 4);
 	}
 
@@ -732,7 +734,7 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 	//tritangent_plane_rk = SO->Tritangent_plane_rk[tritangent_plane_idx];
 
 	p1 = Up->Lift->Surf_A->Surf->P->point_of_intersection_of_a_line_and_a_plane_in_three_space(
-			L1 /* line */,
+			The_case.L1 /* line */,
 			0 /* plane */, 0 /* verbose_level */);
 
 	p2 = Up->Lift->Surf_A->Surf->P->point_of_intersection_of_a_line_and_a_plane_in_three_space(
@@ -752,9 +754,9 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 		}
 		int t;
 
-		t = L1;
-		L1 = L2;
-		L2 = t;
+		t = The_case.L1;
+		The_case.L1 = The_case.L2;
+		The_case.L2 = t;
 	}
 	else {
 		if (f_vv) {
@@ -767,8 +769,8 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 				"before hyperplane_lifting_with_two_lines_moved" << endl;
 	}
 	Up->Lift->Surf_A->Surf->P->hyperplane_lifting_with_two_lines_moved(
-			L1 /* line1_from */, line1_to,
-			L2 /* line2_from */, line2_to,
+			The_case.L1 /* line1_from */, line1_to,
+			The_case.L2 /* line2_from */, line2_to,
 			beta3,
 			verbose_level - 4);
 	beta3[16] = 0;
@@ -799,6 +801,7 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 void surfaces_arc_lifting_trace::embed(int *Elt_A3, int *Elt_A4, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int M3[9];
 	int M4[17];
 	int i, j, a;
 
@@ -806,10 +809,12 @@ void surfaces_arc_lifting_trace::embed(int *Elt_A3, int *Elt_A4, int verbose_lev
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::embed" << endl;
 	}
+	int_vec_copy(Elt_A3, M3, 9);
+	Up->Lift->F->PG_element_normalize(M3, 1, 9);
 	int_vec_zero(M4, 17);
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
-			a = Elt_A3[i * 3 + j];
+			a = M3[i * 3 + j];
 			M4[i * 4 + j] = a;
 		}
 	}
@@ -831,6 +836,20 @@ void surfaces_arc_lifting_trace::embed(int *Elt_A3, int *Elt_A4, int verbose_lev
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::embed done" << endl;
 	}
+}
+
+void surfaces_arc_lifting_trace::report_product(ostream &ost, int *Elt, int verbose_level)
+{
+	ost << "$$" << endl;
+	Up->Lift->A4->element_print_latex(Elt_Alpha1, ost);
+	Up->Lift->A4->element_print_latex(Elt_Alpha2, ost);
+	Up->Lift->A4->element_print_latex(Elt_Beta1, ost);
+	Up->Lift->A4->element_print_latex(Elt_Beta2, ost);
+	Up->Lift->A4->element_print_latex(Elt_Beta3, ost);
+	ost << "=";
+	Up->Lift->A4->element_print_latex(Elt, ost);
+	ost << "$$" << endl;
+
 }
 
 

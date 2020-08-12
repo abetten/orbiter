@@ -264,7 +264,9 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 			cout << "please use option -control_six_arcs <description> -end" << endl;
 			exit(1);
 		}
-		do_six_arcs(Descr->Control_six_arcs, verbose_level);
+		do_six_arcs(Descr->Control_six_arcs,
+				Descr->f_filter_by_nb_Eckardt_points, Descr->nb_Eckardt_points,
+				verbose_level);
 	}
 
 	// spreads:
@@ -2845,6 +2847,11 @@ void group_theoretic_activity::do_create_surface(
 	cout << endl;
 	cout << "$$" << endl;
 
+	cout << "$$" << endl;
+	int_vec_print(cout, SC->coeffs, 20);
+	cout << endl;
+	cout << "$$" << endl;
+
 
 	if (SC->f_has_group) {
 		for (i = 0; i < SC->Sg->gens->len; i++) {
@@ -3090,6 +3097,7 @@ void group_theoretic_activity::do_create_surface(
 
 void group_theoretic_activity::do_six_arcs(
 		poset_classification_control *Control_six_arcs,
+		int f_filter_by_nb_Eckardt_points, int nb_Eckardt_points,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3252,6 +3260,7 @@ void group_theoretic_activity::do_six_arcs(
 		FREE_OBJECT(E);
 	}
 
+#if 0
 	cout << "Summary of " << nb_orbits << " arcs:" << endl;
 	for (h = 0; h < nb_orbits; h++) {
 		a = Abcd[h * 4 + 0];
@@ -3261,6 +3270,7 @@ void group_theoretic_activity::do_six_arcs(
 
 		cout << h << " : " << a << "," << b << "," << c << "," << d << " : " << Nb_E[h] << " : " << Ago[h] << endl;
 	}
+#endif
 
 	tally C;
 
@@ -3271,8 +3281,22 @@ void group_theoretic_activity::do_six_arcs(
 	cout << endl;
 
 
-	cout << "arcs with 13 Eckardt points:" << endl;
+	if (f_filter_by_nb_Eckardt_points) {
+		cout << "Nonconical six-arcs associated with surfaces with " << nb_Eckardt_points << " Eckardt points in PG(2," << F->q << "):" << endl;
+
+	}
+	else {
+		cout << "Nonconical six-arcs associated in PG(2," << F->q << "):" << endl;
+
+	}
 	int nb_E;
+	int cnt = 0;
+
+	cout << "$$" << endl;
+	cout << "\\begin{array}{|r|c|r|}" << endl;
+	cout << "\\hline" << endl;
+	cout << "\\mbox{Orbit} & a,b,c,d & \\mbox{Ago} \\\\" << endl;
+	cout << "\\hline" << endl;
 
 	for (h = 0; h < nb_orbits; h++) {
 		a = Abcd[h * 4 + 0];
@@ -3282,11 +3306,21 @@ void group_theoretic_activity::do_six_arcs(
 
 		nb_E = Nb_E[h];
 
-		if (nb_E != 13) {
-			continue;
+		if (f_filter_by_nb_Eckardt_points) {
+			if (nb_E != nb_Eckardt_points) {
+				continue;
+			}
 		}
-		cout << h << " : " << a << "," << b << "," << c << "," << d << " : " << Nb_E[h] << " : " << Ago[h] << endl;
+		cout << h << " & " << a << "," << b << "," << c << "," << d << " & ";
+		//<< Nb_E[h] << " & "
+		cout << Ago[h] << "\\\\" << endl;
+
+		cnt++;
 	}
+	cout << "\\hline" << endl;
+	cout << "\\end{array}" << endl;
+	cout << "$$" << endl;
+	cout << "There are " << cnt << " such arcs.\\\\" << endl;
 
 
 	FREE_int(Abcd);

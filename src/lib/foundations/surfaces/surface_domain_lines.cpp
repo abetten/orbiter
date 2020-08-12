@@ -27,7 +27,7 @@ void surface_domain::init_line_data(int verbose_level)
 
 	if (f_v) {
 		cout << "surface_domain::init_line_data" << endl;
-		}
+	}
 
 	Sets = NEW_lint(30 * 2);
 	M = NEW_int(6 * 6);
@@ -38,19 +38,19 @@ void surface_domain::init_line_data(int verbose_level)
 		for (j = 0; j < 6; j++) {
 			if (j == i) {
 				continue;
-				}
+			}
 			M[i * 6 + j] = h;
 			Sets[h * 2 + 0] = i;
 			Sets[h * 2 + 1] = 6 + j;
 			h++;
-			}
 		}
+	}
 
 
 	if (h != 30) {
 		cout << "h != 30" << endl;
 		exit(1);
-		}
+	}
 
 
 	if (f_v) {
@@ -58,7 +58,7 @@ void surface_domain::init_line_data(int verbose_level)
 		L.print_lint_matrix_with_standard_labels(cout,
 			Sets, 30, 2, FALSE /* f_tex */);
 		//int_matrix_print(Sets, 30, 2);
-		}
+	}
 
 
 	Sets2 = NEW_lint(15 * 2);
@@ -68,22 +68,22 @@ void surface_domain::init_line_data(int verbose_level)
 			Sets2[h2 * 2 + 0] = M[i * 6 + j];
 			Sets2[h2 * 2 + 1] = M[j * 6 + i];
 			h2++;
-			}
 		}
+	}
 	if (h2 != 15) {
 		cout << "h2 != 15" << endl;
 		exit(1);
-		}
+	}
 
 	if (f_v) {
 		cout << "Sets2:" << endl;
 		L.print_lint_matrix_with_standard_labels(cout,
 			Sets2, 15, 2, FALSE /* f_tex */);
 		//int_matrix_print(Sets2, 15, 2);
-		}
+	}
 	if (f_v) {
 		cout << "surface_domain::init_line_data done" << endl;
-		}
+	}
 }
 
 void surface_domain::init_Schlaefli_labels(int verbose_level)
@@ -99,7 +99,7 @@ void surface_domain::init_Schlaefli_labels(int verbose_level)
 	Line_label = new std::string[27];
 	Line_label_tex = new std::string[27];
 	char str[1000];
-	int a, b, c; //, l;
+	int a, b, c;
 
 	for (i = 0; i < 27; i++) {
 		if (i < 6) {
@@ -119,9 +119,6 @@ void surface_domain::init_Schlaefli_labels(int verbose_level)
 			cout << "creating label " << str
 				<< " for line " << i << endl;
 			}
-		//l = strlen(str);
-		//Line_label[i] = NEW_char(l + 1);
-		//strcpy(Line_label[i], str);
 		Line_label[i].assign(str);
 		}
 
@@ -143,9 +140,6 @@ void surface_domain::init_Schlaefli_labels(int verbose_level)
 			cout << "creating label " << str
 				<< " for line " << i << endl;
 			}
-		//l = strlen(str);
-		//Line_label_tex[i] = NEW_char(l + 1);
-		//strcpy(Line_label_tex[i], str);
 		Line_label_tex[i].assign(str);
 		}
 
@@ -234,6 +228,75 @@ void surface_domain::index_of_line(int line, int &i, int &j)
 		cout << "surface_domain::index_of_line error" << endl;
 		exit(1);
 		}
+}
+
+int surface_domain::third_line_in_tritangent_plane(int l1, int l2, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int h, i, j, k, l, m, n;
+
+	if (f_v) {
+		cout << "surface_domain::third_line_in_tritangent_plane" << endl;
+	}
+	if (l1 > l2) {
+		int t = l1;
+		l1 = l2;
+		l2 = t;
+	}
+	// now l1 < l2.
+	if (l1 < 6) {
+		// l1 = ai line
+		i = l1;
+		if (l2 < 6) {
+			cout << "surface_domain::third_line_in_tritangent_plane impossible (1)" << endl;
+			exit(1);
+		}
+		if (l2 < 12) {
+			j = l2 - 6;
+			return line_cij(i, j);
+		}
+		else {
+			index_of_line(l2, h, k);
+			if (h == i) {
+				return line_bi(k);
+			}
+			else if (k == i) {
+				return line_bi(h);
+			}
+			else {
+				cout << "surface_domain::third_line_in_tritangent_plane impossible (2)" << endl;
+				exit(1);
+			}
+		}
+	}
+	else if (l1 < 12) {
+		// l1 = bh line
+		h = l1 - 6;
+		if (l2 < 12) {
+			cout << "surface_domain::third_line_in_tritangent_plane impossible (3)" << endl;
+			exit(1);
+		}
+		index_of_line(l2, i, j);
+		if (i == h) {
+			return line_ai(j);
+		}
+		else if (h == j) {
+			return line_ai(i);
+		}
+		else {
+			cout << "surface_domain::third_line_in_tritangent_plane impossible (4)" << endl;
+			exit(1);
+		}
+	}
+	else {
+		// now we must be in a tritangent plane c_{ij,kl,mn}
+		index_of_line(l1, i, j);
+		index_of_line(l2, k, l);
+
+		ijkl2mn(i, j, k, l, m, n);
+
+		return line_cij(m, n);
+	}
 }
 
 void surface_domain::unrank_line(int *v, long int rk)

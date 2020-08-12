@@ -1667,7 +1667,8 @@ void matrix_group::GL_print_latex(int *Elt, ostream &ost)
 	int_vec_copy(Elt, D, n * n);
 	
 	if (f_projective) {
-		GFq->PG_element_normalize_from_front(D, 1, n * n);
+		//GFq->PG_element_normalize_from_front(D, 1, n * n);
+		GFq->PG_element_normalize(D, 1, n * n);
 	}
 
 	ost << "\\left[" << endl;

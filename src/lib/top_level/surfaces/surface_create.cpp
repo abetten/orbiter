@@ -234,6 +234,74 @@ void surface_create::init2(int verbose_level)
 
 		
 	}
+	else if (Descr->f_family_G13) {
+
+		if (f_v) {
+			cout << "surface_create::init2 before Surf->create_surface_G13 a=" << Descr->family_G13_a << endl;
+		}
+
+		int nb_E = 0;
+
+		if (!Surf->create_surface_G13(Descr->family_G13_a,
+				coeffs,
+				Lines,
+				nb_E,
+				verbose_level)) {
+			cout << "surface_create::init2 the surface could not be created" << endl;
+			exit(1);
+		}
+
+		if (f_v) {
+			cout << "surface_create::init2 after Surf->create_surface_G13" << endl;
+		}
+
+		f_has_lines = TRUE;
+
+		Sg = NEW_OBJECT(strong_generators);
+		//Sg->init(Surf_A->A, verbose_level);
+		if (f_v) {
+			cout << "surface_create::init2 before Sg->stabilizer_of_G13_surface" << endl;
+		}
+
+
+
+		Sg->stabilizer_of_G13_surface(
+			Surf_A->A,
+			F, Descr->family_G13_a,
+			nice_gens,
+			verbose_level);
+		if (f_v) {
+			cout << "surface_create::init2 after Sg->stabilizer_of_G13_surface" << endl;
+		}
+		f_has_group = TRUE;
+		f_has_nice_gens = TRUE;
+
+		char str_q[1000];
+		char str_a[1000];
+
+		sprintf(str_q, "%d", F->q);
+		sprintf(str_a, "%d", Descr->family_G13_a);
+
+
+
+		prefix.assign("family_G13_q");
+		prefix.append(str_q);
+		prefix.append("_a");
+		prefix.append(str_a);
+
+		label_txt.assign("family_G13_q");
+		label_txt.append(str_q);
+		label_txt.append("_a");
+		label_txt.append(str_a);
+
+		label_tex.assign("family\\_G13\\_q");
+		label_tex.append(str_q);
+		label_tex.append("\\_a");
+		label_tex.append(str_a);
+
+
+	}
+
 	else if (Descr->f_family_F13) {
 
 		if (f_v) {
@@ -256,6 +324,25 @@ void surface_create::init2(int verbose_level)
 		}
 
 		f_has_lines = TRUE;
+
+		Sg = NEW_OBJECT(strong_generators);
+		//Sg->init(Surf_A->A, verbose_level);
+		if (f_v) {
+			cout << "surface_create::init2 before Sg->stabilizer_of_F13_surface" << endl;
+		}
+
+
+
+		Sg->stabilizer_of_F13_surface(
+			Surf_A->A,
+			F, Descr->family_F13_a,
+			nice_gens,
+			verbose_level);
+		if (f_v) {
+			cout << "surface_create::init2 after Sg->stabilizer_of_F13_surface" << endl;
+		}
+		f_has_group = TRUE;
+		f_has_nice_gens = TRUE;
 
 		char str_q[1000];
 		char str_a[1000];
@@ -282,6 +369,7 @@ void surface_create::init2(int verbose_level)
 
 
 	}
+
 	else if (Descr->f_by_coefficients) {
 
 		if (f_v) {

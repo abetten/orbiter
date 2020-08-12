@@ -1306,12 +1306,22 @@ void finite_field::cheat_sheet_main_table_bottom(ostream &f)
 void finite_field::display_table_of_projective_points(
 	ostream &ost, long int *Pts, int nb_pts, int len)
 {
+
+	ost << "{\\renewcommand*{\\arraystretch}{1.5}" << endl;
+	ost << "$$" << endl;
+
+	display_table_of_projective_points2(ost, Pts, nb_pts, len);
+
+	ost << "$$}%" << endl;
+}
+
+void finite_field::display_table_of_projective_points2(
+	ostream &ost, long int *Pts, int nb_pts, int len)
+{
 	int i;
 	int *coords;
 
 	coords = NEW_int(len);
-	ost << "{\\renewcommand*{\\arraystretch}{1.5}" << endl;
-	ost << "$$" << endl;
 	ost << "\\begin{array}{|c|c|c|}" << endl;
 	ost << "\\hline" << endl;
 	ost << "i & a_i & P_{a_i}\\\\" << endl;
@@ -1336,7 +1346,6 @@ void finite_field::display_table_of_projective_points(
 	}
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
-	ost << "$$}%" << endl;
 	FREE_int(coords);
 }
 
