@@ -49,6 +49,7 @@ void six_arcs_not_on_a_conic::init(
 	arc_generator_description *Descr,
 	action *A,
 	projective_space *P2,
+	int f_test_nb_Eckardt_points, int nb_E, surface_domain *Surf,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -71,7 +72,9 @@ void six_arcs_not_on_a_conic::init(
 	Descr->f_n = TRUE;
 	Descr->n = 3;
 	Descr->f_conic_test = TRUE;
-
+	Descr->f_test_nb_Eckardt_points = f_test_nb_Eckardt_points;
+	Descr->nb_E = nb_E;
+	Descr->Surf = Surf;
 
 
 

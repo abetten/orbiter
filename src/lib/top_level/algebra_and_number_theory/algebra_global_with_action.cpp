@@ -2880,7 +2880,7 @@ void algebra_global_with_action::relative_order_vector_of_cosets(
 	int f_v = (verbose_level >= 1);
 	int *Elt1;
 	int *Elt2;
-	int *Elt3;
+	//int *Elt3;
 	sims *S;
 	int i, drop_out_level, image, order;
 
@@ -2890,7 +2890,7 @@ void algebra_global_with_action::relative_order_vector_of_cosets(
 
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
-	Elt3 = NEW_int(A->elt_size_in_int);
+	//Elt3 = NEW_int(A->elt_size_in_int);
 
 	relative_order_table = NEW_int(cosets->len);
 
@@ -2909,6 +2909,9 @@ void algebra_global_with_action::relative_order_vector_of_cosets(
 		relative_order_table[i] = order;
 	}
 
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
 
 	if (f_v) {
 		cout << "algebra_global_with_action::relative_order_vector_of_cosets done" << endl;

@@ -620,6 +620,22 @@ void arc_generator::compute_starter(int verbose_level)
 
 }
 
+int arc_generator::test_nb_Eckardt_points(surface_domain *Surf,
+		long int *S, int len, int pt, int nb_E, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int ret = TRUE;
+
+	if (f_v) {
+		cout << "arc_generator::test_nb_Eckardt_points" << endl;
+	}
+	ret = P->test_nb_Eckardt_points(Surf, S, len, pt, nb_E, verbose_level);
+	if (f_v) {
+		cout << "arc_generator::test_nb_Eckardt_points done" << endl;
+	}
+	return ret;
+}
+
 int arc_generator::conic_test(long int *S, int len, int pt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -691,6 +707,12 @@ void arc_generator::early_test_func(long int *S, int len,
 			}
 		}
 
+		if (f_survive && Descr->f_test_nb_Eckardt_points) {
+			if (test_nb_Eckardt_points(Descr->Surf, S, len, a,
+					Descr->nb_E, verbose_level) == FALSE) {
+				f_survive = FALSE;
+			}
+		}
 
 		if (f_survive) {
 			good_candidates[nb_good_candidates++] = candidates[i];

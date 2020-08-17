@@ -117,6 +117,7 @@ void surfaces_arc_lifting::init(
 	finite_field *F, linear_group *LG4,
 	surface_with_action *Surf_A,
 	poset_classification_control *Control_six_arcs,
+	int f_test_nb_Eckardt_points, int nb_E,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -188,6 +189,7 @@ void surfaces_arc_lifting::init(
 		Descr,
 		A3,
 		Surf->P2,
+		f_test_nb_Eckardt_points, nb_E, Surf,
 		verbose_level);
 
 
@@ -317,6 +319,10 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 			Six_arcs->nb_arcs_not_on_conic /* nb_primary_orbits_lower */,
 			pt_representation_sz,
 			nb_flag_orbits,
+			3240 /* upper_bound_for_number_of_traces */,
+			callback_surfaces_arc_lifting_free_trace_result /* void (*func_to_free_received_trace)(void *trace_result, void *data, int verbose_level) */,
+			callback_surfaces_arc_lifting_latex_report_trace,
+			this /* void *free_received_trace_data */,
 			verbose_level - 3);
 
 	if (f_v) {
@@ -943,11 +949,6 @@ void surfaces_arc_lifting::report2(ostream &ost, int verbose_level)
 
 	report_flag_orbits(ost, verbose_level);
 
-	ost << "\\section{Flag Orbits in Detail}" << endl << endl;
-
-	report_flag_orbits_in_detail(ost, verbose_level);
-
-
 
 
 	ost << "\\section{Surfaces in Detail}" << endl << endl;
@@ -956,6 +957,20 @@ void surfaces_arc_lifting::report2(ostream &ost, int verbose_level)
 
 
 	A4->report_what_we_act_on(ost, verbose_level);
+
+
+
+	ost << "\\section{Flag Orbits in Detail}" << endl << endl;
+
+	report_flag_orbits_in_detail(ost, verbose_level);
+
+
+	ost << "\\section{Six-Arcs in Detail}" << endl << endl;
+
+	Six_arcs->Gen->gen->report(ost);
+
+
+
 
 	ost << "\\section{Basics}" << endl << endl;
 
@@ -1130,6 +1145,28 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(ostream &ost, int verbos
 		ost << "$$" << endl;
 		lint_vec_print(ost, Flag + 13, 20);
 		ost << "$$" << endl;
+
+
+
+		ost << "nb received = " << Flag_orbits->Flag_orbit_node[f].nb_received << "\\\\" << endl;
+
+		if (Flag_orbits->Flag_orbit_node[f].nb_received) {
+			if (Flag_orbits->func_latex_report_trace) {
+				int i;
+
+				for (i = 0; i < Flag_orbits->Flag_orbit_node[f].nb_received; i++) {
+					ost << "Flag orbit " << f << " / "
+							<< Flag_orbits->nb_flag_orbits
+							<< ", Trace event " << i << " / "
+							<< Flag_orbits->Flag_orbit_node[f].nb_received << ":\\\\" << endl;
+					(*Flag_orbits->func_latex_report_trace)(ost, Flag_orbits->Flag_orbit_node[f].Receptacle[i],
+						Flag_orbits->free_received_trace_data, 0 /*verbose_level*/);
+				}
+			}
+		}
+
+
+
 
 
 		set_and_stabilizer *pair_orbit;
@@ -1450,7 +1487,7 @@ void surfaces_arc_lifting::report_surfaces_in_detail(ostream &ost, int verbose_l
 
 
 
-	ost << "\\begin{enumerate}" << endl;
+	//ost << "\\begin{enumerate}" << endl;
 	for (i = 0; i < Surfaces->nb_orbits; i++) {
 
 		if (f_v) {
@@ -1469,8 +1506,8 @@ void surfaces_arc_lifting::report_surfaces_in_detail(ostream &ost, int verbose_l
 			cout << "orbit length " << ol << endl;
 			}
 
-		ost << "\\item" << endl;
-		ost << "$" << i << " / " << Surfaces->nb_orbits << "$ \\\\" << endl;
+		//ost << "\\item" << endl;
+		ost << "Surface $" << i << " / " << Surfaces->nb_orbits << "$ \\\\" << endl;
 
 
 
@@ -1498,12 +1535,21 @@ void surfaces_arc_lifting::report_surfaces_in_detail(ostream &ost, int verbose_l
 
 		D->SO->print_lines(ost);
 
+		D->SO->print_tritangent_planes(ost);
 
 		D->report_Clebsch_maps(ost, verbose_level);
+		// too much output!
 
-		ost << "Coset Representatives:\\\\" << endl;
+		ost << "The automorphism group of the surface:\\\\" << endl;
 
-		D->report_cosets(ost, verbose_level);
+		if (D->SOA) {
+			D->SOA->cheat_sheet_basic(ost, verbose_level);
+		}
+
+
+		//ost << "Coset Representatives:\\\\" << endl;
+
+		//D->report_cosets(ost, verbose_level);
 
 		ost << "Coset Representatives in detail:\\\\" << endl;
 
@@ -1522,7 +1568,7 @@ void surfaces_arc_lifting::report_surfaces_in_detail(ostream &ost, int verbose_l
 
 
 		}
-	ost << "\\end{enumerate}" << endl;
+	//ost << "\\end{enumerate}" << endl;
 
 
 
@@ -1546,6 +1592,66 @@ void callback_surfaces_arc_lifting_report(std::ostream &ost, int i,
 	SAL = (surfaces_arc_lifting *) print_function_data;
 
 	D->report_tally_F2(ost, verbose_level);
+}
+
+void callback_surfaces_arc_lifting_free_trace_result(void *ptr, void *data, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "callback_surfaces_arc_lifting_free_trace_result" << endl;
+	}
+	surfaces_arc_lifting *SAL;
+	surfaces_arc_lifting_trace *T;
+
+	SAL = (surfaces_arc_lifting *) data;
+	T = (surfaces_arc_lifting_trace *) ptr;
+
+	FREE_OBJECT(T);
+	if (f_v) {
+		cout << "callback_surfaces_arc_lifting_free_trace_result done" << endl;
+	}
+}
+
+void callback_surfaces_arc_lifting_latex_report_trace(std::ostream &ost, void *trace_result, void *data, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "callback_surfaces_arc_lifting_latex_report_trace" << endl;
+	}
+	surfaces_arc_lifting *SAL;
+	surfaces_arc_lifting_trace *T;
+
+	SAL = (surfaces_arc_lifting *) data;
+	T = (surfaces_arc_lifting_trace *) trace_result;
+
+
+	//T->report_product(ost, coset_reps->ith(i), verbose_level);
+
+	T->The_case.report_single_Clebsch_map(ost, verbose_level);
+
+
+	//SO->print_lines(ost);
+
+	surfaces_arc_lifting_definition_node *D;
+
+	int idx;
+
+	idx = SAL->Flag_orbits->Flag_orbit_node[T->f2].upstep_primary_orbit;
+
+
+	D = (surfaces_arc_lifting_definition_node *) SAL->Surfaces->Orbit[idx].extra_data;
+
+
+	T->The_case.report_Clebsch_map_details(ost, D->SO, verbose_level);
+
+	T->report_product(ost, T->Elt_T3, verbose_level);
+
+	if (f_v) {
+		cout << "callback_surfaces_arc_lifting_latex_report_trace done" << endl;
+	}
+
 }
 
 

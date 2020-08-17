@@ -208,39 +208,12 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(int verbose_level)
 
 
 
-#if 0
-	Lift->Surf_A->Surf->compute_adjacency_matrix_of_line_intersection_graph(
-			Adj,
-			Lines, 27, verbose_level - 3);
-#endif
-
-
-	surface_object *SO;
-	SO = NEW_OBJECT(surface_object);
-
-
-
-	if (f_v) {
-		cout << "surfaces_arc_lifting_upstep::process_flag_orbit before SO->init" << endl;
-	}
-
-	SO->init(Lift->Surf_A->Surf, Lines, eqn20,
-			FALSE /* f_find_double_six_and_rearrange_lines */,
-			verbose_level - 2);
-
-	if (f_v) {
-		cout << "surfaces_arc_lifting_upstep::process_flag_orbit after SO->init" << endl;
-	}
-
-
-
-
 
 
 	D = NEW_OBJECT(surfaces_arc_lifting_definition_node);
 
 	D->init(Lift,
-			f, Lift->Surfaces->nb_orbits, SO,
+			f, Lift->Surfaces->nb_orbits, Lines, eqn20,
 			verbose_level);
 
 
@@ -269,17 +242,38 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(int verbose_level)
 		cout << "surfaces_arc_lifting_upstep::process_flag_orbit after init Aut_gens" << endl;
 	}
 
+	D->SOA = NEW_OBJECT(surface_object_with_action);
 
+	if (f_v) {
+		cout << "surfaces_arc_lifting_upstep::process_flag_orbit before D->SOA->init" << endl;
+	}
+
+
+	{
+
+		D->SOA->init(Lift->Surf_A,
+				Lines, eqn20,
+				Aut_gens,
+				FALSE /*f_find_double_six_and_rearrange_lines*/,
+				FALSE /*f_has_nice_gens*/, NULL /*vector_ge *nice_gens*/,
+				verbose_level);
+#if 0
+	D->SOA->init_with_surface_object(Lift->Surf_A,
+			SO,
+			Aut_gens,
+			FALSE /*f_has_nice_gens*/, NULL /*vector_ge *nice_gens*/,
+			verbose_level);
+#endif
+	}
+
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting_upstep::process_flag_orbit after D->SOA->init" << endl;
+	}
 
 	Lift->Surfaces->nb_orbits++;
 	Lift->Flag_orbits->nb_primary_orbits_upper++;
 
-	//FREE_int(Adj);
-	//Adj = NULL;
-
-	// SO is now in Surfaces.
-	//FREE_OBJECT(SO);
-	//SO = NULL;
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting_upstep::process_flag_orbit f=" << f
@@ -336,18 +330,16 @@ void surfaces_arc_lifting_upstep::compute_stabilizer(surfaces_arc_lifting_defini
 					"before process_tritangent_plane" << endl;
 		}
 
-		int vl;
+		process_tritangent_plane(D, verbose_level - 2);
 
-		if (tritangent_plane_idx == 30) {
-			vl = verbose_level;
+		if (f_v) {
+			cout << "surfaces_arc_lifting_upstep::compute_stabilizer "
+					"after process_tritangent_plane" << endl;
 		}
-		else {
-			vl = verbose_level - 2;
-		}
-		process_tritangent_plane(D, vl);
 
 		int_vec_copy(three_lines_idx, D->three_lines_idx + tritangent_plane_idx * 3, 3);
 		lint_vec_copy(three_lines, D->three_lines + tritangent_plane_idx * 3, 3);
+
 		for (seventytwo_case_idx = 0; seventytwo_case_idx < 72; seventytwo_case_idx++) {
 			D->Seventytwo[tritangent_plane_idx * 72 + seventytwo_case_idx] = Seventytwo[seventytwo_case_idx];
 		}
@@ -430,13 +422,6 @@ void surfaces_arc_lifting_upstep::compute_stabilizer(surfaces_arc_lifting_defini
 
 
 
-
-	//FREE_OBJECT(Flag_stab_gens);
-	//Flag_stab_gens = NULL;
-
-	//FREE_OBJECT(coset_reps);
-	//coset_reps = NULL;
-
 	if (f_v) {
 		cout << "surfaces_arc_lifting_upstep::compute_stabilizer f=" << f
 				<< " / " << Lift->Flag_orbits->nb_flag_orbits << " done" << endl;
@@ -489,20 +474,11 @@ void surfaces_arc_lifting_upstep::process_tritangent_plane(
 	for (seventytwo_case_idx = 0; seventytwo_case_idx < 72; seventytwo_case_idx++) {
 
 		surfaces_arc_lifting_trace *T;
-		//int vl;
 
 		T = NEW_OBJECT(surfaces_arc_lifting_trace);
 
 		T->init(this, seventytwo_case_idx, verbose_level - 2);
 
-#if 0
-		if (tritangent_plane_idx == 30 && seventytwo_case_idx == 50) {
-			vl = verbose_level + 2;
-		}
-		else {
-			vl = verbose_level - 2;
-		}
-#endif
 		T->process_flag_orbit(this, verbose_level);
 
 		f2 = T->f2;
@@ -552,6 +528,7 @@ void surfaces_arc_lifting_upstep::process_tritangent_plane(
 				Lift->Flag_orbits->Flag_orbit_node[f2].fusion_elt
 					= NEW_int(Lift->A4->elt_size_in_int);
 
+
 				Lift->A4->element_invert(T->Elt_T4,
 						Lift->Flag_orbits->Flag_orbit_node[f2].fusion_elt, 0);
 
@@ -570,7 +547,8 @@ void surfaces_arc_lifting_upstep::process_tritangent_plane(
 					exit(1);
 				}
 			}
-			FREE_OBJECT(T);
+			Lift->Flag_orbits->Flag_orbit_node[f2].receive_trace_result(T, verbose_level);
+			//FREE_OBJECT(T);
 
 		}
 

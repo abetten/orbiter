@@ -174,6 +174,10 @@ void surface_domain::print_Steiner_and_Eckardt(ostream &ost)
 	latex_table_of_double_sixes(ost);
 
 	ost << "\\clearpage" << endl << endl;
+	ost << "\\section*{Half Double Sixes}" << endl;
+	latex_table_of_half_double_sixes(ost);
+
+	ost << "\\clearpage" << endl << endl;
 	ost << "\\section*{Tritangent Planes}" << endl;
 	latex_table_of_tritangent_planes(ost);
 
@@ -334,35 +338,69 @@ void surface_domain::latex_table_of_double_sixes(ostream &ost)
 
 void surface_domain::latex_table_of_half_double_sixes(ostream &ost)
 {
-	int i, j;
+	int i;
+
+	cout << "surface::latex_table_of_half_double_sixes" << endl;
+
+
+
+	//ost << "\\begin{multicols}{2}" << endl;
+	for (i = 0; i < 72; i++) {
+
+
+		ost << "$" << endl;
+
+		latex_half_double_six(ost, i);
+
+		ost << "$\\\\" << endl;
+
+	}
+	//ost << "\\end{multicols}" << endl;
+
+
+
+	cout << "surface::latex_table_of_double_sixes done" << endl;
+}
+
+void surface_domain::latex_half_double_six(ostream &ost, int idx)
+{
+	int j;
 	long int H[6];
 
 	cout << "surface::latex_table_of_half_double_sixes" << endl;
 
 
 
-	ost << "\\begin{multicols}{2}" << endl;
-	for (i = 0; i < 72; i++) {
 
-		lint_vec_copy(Half_double_sixes + i * 6, H, 6);
+	lint_vec_copy(Half_double_sixes + idx * 6, H, 6);
 
-		ost << "$H_{" << i << "} = " << Half_double_six_label_tex[i] << endl;
+	ost << "H_{" << idx << "} = " << Half_double_six_label_tex[idx] << endl;
 
-		ost << " = \\{";
-		for (j = 0; j < 6; j++) {
-			ost << Line_label_tex[H[j]];
-			if (j < 6 - 1) {
-				ost << ", ";
-				}
+	ost << " = \\{";
+	for (j = 0; j < 6; j++) {
+		ost << Line_label_tex[H[j]];
+		if (j < 6 - 1) {
+			ost << ", ";
 			}
-		ost << "\\}$\\\\" << endl;
 		}
-	ost << "\\end{multicols}" << endl;
+	ost << "\\}";
+
+	ost << "= \\{";
+
+	for (j = 0; j < 6; j++) {
+		ost << H[j];
+		if (j < 6 - 1) {
+			ost << ", ";
+		}
+	}
+	ost << "\\}";
+
 
 
 
 	cout << "surface::latex_table_of_double_sixes done" << endl;
 }
+
 
 
 void surface_domain::latex_table_of_Eckardt_points(ostream &ost)

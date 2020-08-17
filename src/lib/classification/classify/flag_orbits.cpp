@@ -23,13 +23,16 @@ flag_orbits::flag_orbits()
 	A2 = NULL;
 	nb_primary_orbits_lower = 0;
 	nb_primary_orbits_upper = 0;
-	//f_lint = FALSE;
+
+	upper_bound_for_number_of_traces = 0;
+	func_to_free_received_trace = NULL;
+	func_latex_report_trace = NULL;
+	free_received_trace_data = NULL;
+
 	nb_flag_orbits = 0;
 	Flag_orbit_node = NULL;
 	pt_representation_sz = 0;
 	Pt = NULL;
-	//Pt_lint = NULL;
-	//null();
 }
 
 flag_orbits::~flag_orbits()
@@ -70,6 +73,10 @@ void flag_orbits::freeself()
 void flag_orbits::init(action *A, action *A2, 
 	int nb_primary_orbits_lower, 
 	int pt_representation_sz, int nb_flag_orbits, 
+	int upper_bound_for_number_of_traces,
+	void (*func_to_free_received_trace)(void *trace_result, void *data, int verbose_level),
+	void (*func_latex_report_trace)(std::ostream &ost, void *trace_result, void *data, int verbose_level),
+	void *free_received_trace_data,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -82,7 +89,11 @@ void flag_orbits::init(action *A, action *A2,
 	flag_orbits::nb_primary_orbits_lower = nb_primary_orbits_lower;
 	flag_orbits::pt_representation_sz = pt_representation_sz;
 	flag_orbits::nb_flag_orbits = nb_flag_orbits;
-	//f_lint = FALSE;
+	flag_orbits::upper_bound_for_number_of_traces = upper_bound_for_number_of_traces;
+	flag_orbits::func_to_free_received_trace = func_to_free_received_trace;
+	flag_orbits::free_received_trace_data = free_received_trace_data;
+	flag_orbits::func_latex_report_trace = func_latex_report_trace;
+
 	Pt = NEW_lint(nb_flag_orbits * pt_representation_sz);
 	Flag_orbit_node = NEW_OBJECTS(flag_orbit_node, nb_flag_orbits);
 	if (f_v) {

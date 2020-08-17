@@ -850,6 +850,27 @@ void surfaces_arc_lifting_trace::report_product(ostream &ost, int *Elt, int verb
 	Up->Lift->A4->element_print_latex(Elt, ost);
 	ost << "$$" << endl;
 
+	int f_print_as_exponentials_save = Up->Lift->F->f_print_as_exponentials;
+
+	if (f_print_as_exponentials_save == FALSE) {
+		return;
+	}
+
+	Up->Lift->F->f_print_as_exponentials = FALSE;
+
+	ost << "$$" << endl;
+	Up->Lift->A4->element_print_latex(Elt_Alpha1, ost);
+	Up->Lift->A4->element_print_latex(Elt_Alpha2, ost);
+	Up->Lift->A4->element_print_latex(Elt_Beta1, ost);
+	Up->Lift->A4->element_print_latex(Elt_Beta2, ost);
+	Up->Lift->A4->element_print_latex(Elt_Beta3, ost);
+	ost << "=";
+	Up->Lift->A4->element_print_latex(Elt, ost);
+	ost << "$$" << endl;
+
+	Up->Lift->F->f_print_as_exponentials = f_print_as_exponentials_save;
+
+
 }
 
 

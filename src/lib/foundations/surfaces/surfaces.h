@@ -294,7 +294,7 @@ public:
 	void report_seventytwo_maps_bottom(std::ostream &ost);
 	void report_single_Clebsch_map(std::ostream &ost, int verbose_level);
 	void report_Clebsch_map_details(std::ostream &ost, surface_object *SO, int verbose_level);
-	void report_Clebsch_map_HDS(std::ostream &ost, int coset, int verbose_level);
+	void report_Clebsch_map_aut_coset(std::ostream &ost, int coset, int relative_order, int verbose_level);
 };
 
 
@@ -687,6 +687,7 @@ public:
 	void latex_trihedral_pair(std::ostream &ost, int *T, long int *TE);
 	void latex_table_of_trihedral_pairs(std::ostream &ost);
 	void print_trihedral_pairs(std::ostream &ost);
+	void latex_half_double_six(std::ostream &ost, int idx);
 	void latex_table_of_Eckardt_points(std::ostream &ost);
 	void latex_table_of_tritangent_planes(std::ostream &ost);
 	void print_equation_in_trihedral_form(std::ostream &ost,
@@ -853,6 +854,7 @@ public:
 	void print_adjacency_matrix_with_intersection_points(std::ostream &ost);
 	void print_planes_in_trihedral_pairs(std::ostream &ost);
 	void print_tritangent_planes(std::ostream &ost);
+	void print_single_tritangent_planes(std::ostream &ost, int plane_idx);
 	//void print_generalized_quadrangle(std::ostream &ost);
 	void print_plane_type_by_points(std::ostream &ost);
 	void print_lines(std::ostream &ost);

@@ -323,7 +323,7 @@ void seventytwo_cases::report_seventytwo_maps_top(ostream &ost)
 	ost << "\\hline" << endl;
 	ost << "\\multicolumn{10}{|c|}{\\mbox{Tritangent Plane}\\; \\pi_{" << t << "} = \\pi_{" << Surf->Eckard_point_label_tex[t] << "} \\; \\mbox{Part "<< line_idx << "}}\\\\" << endl;
 	ost << "\\hline" << endl;
-	ost << "\\mbox{Clebsch} & m_1-\\mbox{Case} & (m_1,m_2,m_3) & (\\ell_1,\\ell_2) & (t_3,t_4,t_5,t_6) & HDS & \\mbox{Arc} & \\mbox{Pair} & \\mbox{Part} &  \\mbox{Flag-Orb}  \\\\" << endl;
+	ost << "\\mbox{Clebsch} & m_1-\\mbox{Case} & (m_1,m_2,m_3) & (\\ell_1',\\ell_2') & (t_3',t_4',t_5',t_6') & HDS & \\mbox{Arc} & \\mbox{Pair} & \\mbox{Part} &  \\mbox{Flag-Orb}  \\\\" << endl;
 	ost << "\\hline" << endl;
 }
 
@@ -371,6 +371,21 @@ void seventytwo_cases::report_Clebsch_map_details(ostream &ost, surface_object *
 	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[l2]);
 	ost << "$\\\\" << endl;
 
+	SO->print_single_tritangent_planes(ost, tritangent_plane_idx);
+
+	ost << "$m_1=" << Surf->Line_label_tex[m1] << " = " << SO->Lines[m1] << " = ";
+	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[m1]);
+	ost << "$\\\\" << endl;
+
+	ost << "$m_2=" << Surf->Line_label_tex[m2] << " = " << SO->Lines[m2] << " = ";
+	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[m2]);
+	ost << "$\\\\" << endl;
+
+	ost << "$m_3=" << Surf->Line_label_tex[m3] << " = " << SO->Lines[m3] << " = ";
+	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[m3]);
+	ost << "$\\\\" << endl;
+
+
 	ost << "\\bigskip" << endl << endl;
 
 	ost << "The associated half double six " << half_double_six_index << " is: $";
@@ -390,42 +405,40 @@ void seventytwo_cases::report_Clebsch_map_details(ostream &ost, surface_object *
 		ost << "$\\\\" << endl;
 	}
 
-	ost << "\\bigskip" << endl << endl;
+	//ost << "\\bigskip" << endl << endl;
 
-	ost << "P6:\\\\" << endl;
-	Surf->F->display_table_of_projective_points(ost, P6, 6, 4);
-
-	ost << "P6 * Alpha1\\\\" << endl;
-	Surf->F->display_table_of_projective_points(ost, P6a, 6, 4);
-
-
-
-	ost << "P6 * Alpha1 in local coordinates:\\\\" << endl;
-	Surf->F->display_table_of_projective_points(ost, P6_local, 6, 3);
-
-	ost << "P6 * Alpha1 in local coordinates, made canonical:\\\\" << endl;
-	Surf->F->display_table_of_projective_points(ost, P6_local_canonical, 6, 3);
+	ost << "P6, P6 * Alpha1, P6 * Alpha1 local, P6 * Alpha1 * Alpha2:\\\\" << endl;
+	ost << "{\\renewcommand*{\\arraystretch}{1.5}" << endl;
+	ost << "$$" << endl;
+	Surf->F->display_table_of_projective_points_easy(ost, P6, 6, 4);
+	ost << "\\;" << endl;
+	Surf->F->display_table_of_projective_points_easy(ost, P6a, 6, 4);
+	ost << "\\;" << endl;
+	Surf->F->display_table_of_projective_points_easy(ost, P6_local, 6, 3);
+	ost << "\\;" << endl;
+	Surf->F->display_table_of_projective_points_easy(ost, P6_local_canonical, 6, 3);
+	ost << "$$}" << endl;
 
 
-	ost << "\\bigskip" << endl << endl;
+	//ost << "\\bigskip" << endl << endl;
 
-	ost << "$L1=";
+	ost << "$\\ell_1\\tau=";
 	ost << L1 << " = ";
 	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, L1);
 	ost << "$\\\\" << endl;
-	ost << "$L2=";
+	ost << "$\\ell_2\\tau=";
 	ost << L2 << " = ";
 	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, L2);
 	ost << "$\\\\" << endl;
 
-	ost << "\\bigskip" << endl << endl;
+	//ost << "\\bigskip" << endl << endl;
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting_definition_node::report_Clebsch_map_details" << endl;
 	}
 }
 
-void seventytwo_cases::report_Clebsch_map_HDS(ostream &ost, int coset, int verbose_level)
+void seventytwo_cases::report_Clebsch_map_aut_coset(ostream &ost, int coset, int relative_order, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int *H;
@@ -433,7 +446,7 @@ void seventytwo_cases::report_Clebsch_map_HDS(ostream &ost, int coset, int verbo
 	int ds;
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_definition_node::report_Clebsch_map_HDS" << endl;
+		cout << "surfaces_arc_lifting_definition_node::report_Clebsch_map_aut_coset" << endl;
 	}
 	int c;
 
@@ -460,6 +473,7 @@ void seventytwo_cases::report_Clebsch_map_HDS(ostream &ost, int coset, int verbo
 			ost << ", ";
 		}
 	}
+	ost << " & " << relative_order;
 	ost << "\\\\" << endl;
 
 
@@ -470,7 +484,7 @@ void seventytwo_cases::report_Clebsch_map_HDS(ostream &ost, int coset, int verbo
 	//ost << f2; // << " & ";
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_definition_node::report_Clebsch_map_HDS done" << endl;
+		cout << "surfaces_arc_lifting_definition_node::report_Clebsch_map_aut_coset done" << endl;
 	}
 }
 

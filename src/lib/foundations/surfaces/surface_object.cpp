@@ -1550,50 +1550,16 @@ void surface_object::print_planes_in_trihedral_pairs(ostream &ost)
 
 void surface_object::print_tritangent_planes(ostream &ost)
 {
-	int i, plane_rk, b, v4[4];
-	int Mtx[16];
+	int i;
+	//int plane_rk, b, v4[4];
+	//int Mtx[16];
 
 	//ost << "\\clearpage" << endl;
 	ost << "\\subsection*{Tritangent planes}" << endl;
 	ost << "The " << nb_tritangent_planes << " tritangent "
 			"planes are:\\\\" << endl;
 	for (i = 0; i < nb_tritangent_planes; i++) {
-
-#if 0
-		j = Eckardt_to_Tritangent_plane[i];
-		plane_rk = Tritangent_planes[j];
-		b = Tritangent_plane_dual[j];
-#else
-		plane_rk = Tritangent_plane_rk[i];
-		b = Surf->P->dual_rank_of_plane_in_three_space(
-				plane_rk, 0 /* verbose_level */);
-#endif
-		ost << "$$" << endl;
-		ost << "\\pi_{" << Surf->Eckard_point_label_tex[i] << "} = ";
-		ost << "\\pi_{" << i << "} = " << plane_rk << " = ";
-		//ost << "\\left[" << endl;
-		Surf->Gr3->print_single_generator_matrix_tex(ost, plane_rk);
-		//ost << "\\right]" << endl;
-		ost << " = ";
-		Surf->Gr3->print_single_generator_matrix_tex_numerical(ost, plane_rk);
-
-		Surf->Gr3->unrank_lint_here_and_compute_perp(Mtx, plane_rk,
-			0 /*verbose_level */);
-		F->PG_element_normalize(Mtx + 12, 1, 4);
-		ost << "$$" << endl;
-		ost << "$$" << endl;
-		ost << "=V\\big(" << endl;
-		Surf->Poly1_4->print_equation(ost, Mtx + 12);
-		ost << "\\big)" << endl;
-		ost << "=V\\big(" << endl;
-		Surf->Poly1_4->print_equation_numerical(ost, Mtx + 12);
-		ost << "\\big)" << endl;
-		ost << "$$" << endl;
-		ost << "dual pt rank = $" << b << "$ ";
-		F->PG_element_unrank_modified(v4, 1, 4, b);
-		ost << "$=";
-		int_vec_print(ost, v4, 4);
-		ost << "$.\\\\" << endl;
+		print_single_tritangent_planes(ost, i);
 		}
 
 #if 0
@@ -1669,6 +1635,50 @@ void surface_object::print_tritangent_planes(ostream &ost)
 			TRUE /* f_tex */);
 	ost << "$$" << endl;
 #endif
+
+}
+
+void surface_object::print_single_tritangent_planes(ostream &ost, int plane_idx)
+{
+	long int plane_rk, b;
+	int v4[4];
+	int Mtx[16];
+
+#if 0
+	j = Eckardt_to_Tritangent_plane[plane_idx];
+	plane_rk = Tritangent_planes[j];
+	b = Tritangent_plane_dual[j];
+#else
+	plane_rk = Tritangent_plane_rk[plane_idx];
+	b = Surf->P->dual_rank_of_plane_in_three_space(
+			plane_rk, 0 /* verbose_level */);
+#endif
+	ost << "$$" << endl;
+	ost << "\\pi_{" << Surf->Eckard_point_label_tex[plane_idx] << "} = ";
+	ost << "\\pi_{" << plane_idx << "} = " << plane_rk << " = ";
+	//ost << "\\left[" << endl;
+	Surf->Gr3->print_single_generator_matrix_tex(ost, plane_rk);
+	//ost << "\\right]" << endl;
+	ost << " = ";
+	Surf->Gr3->print_single_generator_matrix_tex_numerical(ost, plane_rk);
+
+	Surf->Gr3->unrank_lint_here_and_compute_perp(Mtx, plane_rk,
+		0 /*verbose_level */);
+	F->PG_element_normalize(Mtx + 12, 1, 4);
+	ost << "$$" << endl;
+	ost << "$$" << endl;
+	ost << "=V\\big(" << endl;
+	Surf->Poly1_4->print_equation(ost, Mtx + 12);
+	ost << "\\big)" << endl;
+	ost << "=V\\big(" << endl;
+	Surf->Poly1_4->print_equation_numerical(ost, Mtx + 12);
+	ost << "\\big)" << endl;
+	ost << "$$" << endl;
+	ost << "dual pt rank = $" << b << "$ ";
+	F->PG_element_unrank_modified(v4, 1, 4, b);
+	ost << "$=";
+	int_vec_print(ost, v4, 4);
+	ost << "$.\\\\" << endl;
 
 }
 
@@ -2225,6 +2235,8 @@ void surface_object::print_double_sixes(ostream &ost)
 	ost << "\\subsection*{Double sixes}" << endl;
 
 	Surf->latex_table_of_double_sixes(ost);
+
+
 
 
 #if 0

@@ -418,6 +418,7 @@ public:
 		arc_generator_description *Descr,
 		action *A,
 		projective_space *P2,
+		int f_test_nb_Eckardt_points, int nb_E, surface_domain *Surf,
 		int verbose_level);
 	void recognize(long int *arc6, int *transporter,
 			int &orbit_not_on_conic_idx, int verbose_level);
@@ -466,6 +467,7 @@ public:
 	void classify_surfaces_through_arcs_and_trihedral_pairs(
 			poset_classification_control *Control_six_arcs,
 			surface_with_action *Surf_A,
+			int f_test_nb_Eckardt_points, int nb_E,
 			int verbose_level);
 	void report(int verbose_level);
 	void report2(std::ostream &ost, int verbose_level);
@@ -884,6 +886,11 @@ public:
 	void freeself();
 	int init_equation(surface_with_action *Surf_A, int *eqn,
 		strong_generators *Aut_gens, int verbose_level);
+	void init_with_surface_object(surface_with_action *Surf_A,
+			surface_object *SO,
+			strong_generators *Aut_gens,
+			int f_has_nice_gens, vector_ge *nice_gens,
+			int verbose_level);
 	void init(surface_with_action *Surf_A,
 		long int *Lines, int *eqn,
 		strong_generators *Aut_gens,
@@ -913,6 +920,7 @@ public:
 			int verbose_level);
 	void print_automorphism_group(std::ostream &ost,
 		int f_print_orbits, const char *fname_mask);
+	void cheat_sheet_basic(std::ostream &ost, int verbose_level);
 	void cheat_sheet(std::ostream &ost,
 		const char *label_txt, const char *label_tex,
 		int f_print_orbits, const char *fname_mask,
@@ -1087,6 +1095,7 @@ public:
 	int orbit_idx;
 
 	surface_object *SO;
+	surface_object_with_action *SOA;
 
 
 
@@ -1122,7 +1131,7 @@ public:
 	surfaces_arc_lifting_definition_node();
 	~surfaces_arc_lifting_definition_node();
 	void init(surfaces_arc_lifting *Lift,
-			int f, int orbit_idx, surface_object *SO,
+			int f, int orbit_idx, long int *Lines, int *eqn20,
 			int verbose_level);
 	void tally_f2(int verbose_level);
 	void report(int verbose_level);
@@ -1137,6 +1146,8 @@ public:
 	void report_T3_bottom(std::ostream &ost);
 	void report_tally_F2(std::ostream &ost, int verbose_level);
 	void report_Clebsch_maps(std::ostream &ost, int verbose_level);
+	void report_Clebsch_maps_for_one_tritangent_plane(std::ostream &ost,
+			int plane_idx, int verbose_level);
 };
 
 
@@ -1358,6 +1369,7 @@ public:
 		finite_field *F, linear_group *LG4,
 		surface_with_action *Surf_A,
 		poset_classification_control *Control_six_arcs,
+		int f_test_nb_Eckardt_points, int nb_E,
 		int verbose_level);
 	void downstep(int verbose_level);
 	void downstep_one_arc(int arc_idx,
@@ -1372,6 +1384,10 @@ public:
 
 void callback_surfaces_arc_lifting_report(std::ostream &ost, int i,
 				classification_step *Step, void *print_function_data);
+void callback_surfaces_arc_lifting_free_trace_result(void *ptr,
+		void *data, int verbose_level);
+void callback_surfaces_arc_lifting_latex_report_trace(std::ostream &ost,
+		void *trace_result, void *data, int verbose_level);
 
 // #############################################################################
 // trihedral_pair_with_action.cpp

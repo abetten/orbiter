@@ -259,6 +259,8 @@ public:
 	int f_surface_recognize;
 		surface_create_description *surface_descr;
 	int f_classify_surfaces_through_arcs_and_two_lines;
+	int f_test_nb_Eckardt_points;
+	int nb_E;
 	int f_classify_surfaces_through_arcs_and_trihedral_pairs;
 		int f_trihedra1_control;
 		poset_classification_control *Trihedra1_control;
@@ -398,11 +400,13 @@ public:
 			int len, long int *S, int verbose_level);
 	void do_classify_surfaces_through_arcs_and_two_lines(
 			poset_classification_control *Control_six_arcs,
+			int f_test_nb_Eckardt_points, int nb_E,
 			int verbose_level);
 	void do_classify_surfaces_through_arcs_and_trihedral_pairs(
 			poset_classification_control *Control1,
 			poset_classification_control *Control2,
 			poset_classification_control *Control_six_arcs,
+			int f_test_nb_Eckardt_points, int nb_E,
 			int verbose_level);
 	void do_create_surface(
 			surface_create_description *Descr,

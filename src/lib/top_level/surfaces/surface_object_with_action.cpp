@@ -133,6 +133,7 @@ int surface_object_with_action::init_equation(
 	}
 
 	surface_object_with_action::Surf_A = Surf_A;
+	surface_object_with_action::Aut_gens = Aut_gens;
 	Surf = Surf_A->Surf;
 	F = Surf->F;
 	q = F->q;
@@ -152,7 +153,6 @@ int surface_object_with_action::init_equation(
 				"after SO->init_equation" << endl;
 	}
 
-	surface_object_with_action::Aut_gens = Aut_gens;
 	
 	compute_projectivity_group(verbose_level);
 
@@ -173,6 +173,64 @@ int surface_object_with_action::init_equation(
 }
 
 
+void surface_object_with_action::init_with_surface_object(surface_with_action *Surf_A,
+		surface_object *SO,
+		strong_generators *Aut_gens,
+		int f_has_nice_gens, vector_ge *nice_gens,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_action::init_with_surface_object" << endl;
+	}
+
+	surface_object_with_action::Surf_A = Surf_A;
+	surface_object_with_action::f_has_nice_gens = f_has_nice_gens;
+	surface_object_with_action::nice_gens = nice_gens;
+	surface_object_with_action::SO = SO;
+	surface_object_with_action::Aut_gens = Aut_gens;
+	Surf = Surf_A->Surf;
+	F = Surf->F;
+	q = F->q;
+
+	if (f_v) {
+		cout << "surface_object_with_action::init_with_surface_object "
+				"testing Aut_gens" << endl;
+	}
+	Aut_gens->test_if_set_is_invariant_under_given_action(
+			Surf_A->A2, SO->Lines, 27, verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_action::init_with_surface_object "
+				"testing Aut_gens done" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_object_with_action::init_with_surface_object "
+				"before compute_projectivity_group" << endl;
+	}
+	compute_projectivity_group(verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_action::init_with_surface_object "
+				"after compute_projectivity_group" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_object_with_action::init_with_surface_object "
+				"before compute_orbits_of_automorphism_group" << endl;
+	}
+	compute_orbits_of_automorphism_group(verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_action::init_with_surface_object "
+				"after compute_orbits_of_automorphism_group" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_object_with_action::init_with_surface_object done" << endl;
+	}
+}
+
 
 void surface_object_with_action::init(surface_with_action *Surf_A, 
 	long int *Lines, int *eqn,
@@ -187,13 +245,7 @@ void surface_object_with_action::init(surface_with_action *Surf_A,
 		cout << "surface_object_with_action::init" << endl;
 	}
 
-	surface_object_with_action::Surf_A = Surf_A;
-	surface_object_with_action::f_has_nice_gens = f_has_nice_gens;
-	surface_object_with_action::nice_gens = nice_gens;
-	Surf = Surf_A->Surf;
-	F = Surf->F;
-	q = F->q;
-
+	surface_object *SO;
 	SO = NEW_OBJECT(surface_object);
 	if (f_v) {
 		cout << "surface_object_with_action::init "
@@ -206,39 +258,20 @@ void surface_object_with_action::init(surface_with_action *Surf_A,
 				"after SO->init" << endl;
 	}
 
-
-	surface_object_with_action::Aut_gens = Aut_gens;
-
 	if (f_v) {
-		cout << "surface_object_with_action::init_surface_object "
-				"testing Aut_gens" << endl;
-	}
-	Aut_gens->test_if_set_is_invariant_under_given_action(
-			Surf_A->A2, Lines, 27, verbose_level);
-	if (f_v) {
-		cout << "surface_object_with_action::init_surface_object "
-				"testing Aut_gens done" << endl;
+		cout << "surface_object_with_action::init "
+				"before SO->init_with_surface_object" << endl;
 	}
 
-	if (f_v) {
-		cout << "surface_object_with_action::init_surface_object "
-				"before compute_projectivity_group" << endl;
-	}
-	compute_projectivity_group(verbose_level);
-	if (f_v) {
-		cout << "surface_object_with_action::init_surface_object "
-				"after compute_projectivity_group" << endl;
-	}
-
+	init_with_surface_object(Surf_A,
+			SO,
+			Aut_gens,
+			f_has_nice_gens, nice_gens,
+			verbose_level);
 
 	if (f_v) {
-		cout << "surface_object_with_action::init_surface_object "
-				"before compute_orbits_of_automorphism_group" << endl;
-	}
-	compute_orbits_of_automorphism_group(verbose_level);
-	if (f_v) {
-		cout << "surface_object_with_action::init_surface_object "
-				"after compute_orbits_of_automorphism_group" << endl;
+		cout << "surface_object_with_action::init "
+				"after SO->init_with_surface_object" << endl;
 	}
 
 	if (f_v) {
@@ -257,13 +290,15 @@ void surface_object_with_action::init_surface_object(
 		cout << "surface_object_with_action::init_surface_object" << endl;
 	}
 	surface_object_with_action::Surf_A = Surf_A;
+	surface_object_with_action::SO = SO;
+	surface_object_with_action::Aut_gens = Aut_gens;
+
+
 	Surf = Surf_A->Surf;
 	F = Surf->F;
 	q = F->q;
 
 
-	surface_object_with_action::SO = SO;
-	surface_object_with_action::Aut_gens = Aut_gens;
 	
 	if (f_v) {
 		cout << "surface_object_with_action::init_surface_object "
@@ -350,16 +385,29 @@ void surface_object_with_action::compute_projectivity_group(
 				"computing Sylow structure" << endl;
 	}
 	// compute the Sylow structure:
-	sims *S;
+	sims *S = NULL;
 
 	if (projectivity_group_gens) {
 		S = projectivity_group_gens->create_sims(0 /*verbose_level */);
 	}
 	else {
-		S = Aut_gens->create_sims(0 /*verbose_level */);
+		if (Aut_gens) {
+			S = Aut_gens->create_sims(0 /*verbose_level */);
+		}
 	}
-	Syl = NEW_OBJECT(sylow_structure);
-	Syl->init(S, verbose_level);
+
+	if (S) {
+		if (f_v) {
+			cout << "surface_object_with_action::compute_projectivity_group "
+					"before Syl->init" << endl;
+		}
+		Syl = NEW_OBJECT(sylow_structure);
+		Syl->init(S, verbose_level);
+		if (f_v) {
+			cout << "surface_object_with_action::compute_projectivity_group "
+					"after Syl->init" << endl;
+		}
+	}
 
 
 	if (f_v) {
@@ -489,6 +537,10 @@ void surface_object_with_action::init_orbits_on_points(
 
 	}
 	else {
+		if (f_v) {
+			cout << "surface_object_with_action::init_orbits_on_points "
+					"computing orbits on points using Aut_gens:" << endl;
+		}
 		Orbits_on_points = Aut_gens->orbits_on_points_schreier(
 				A_on_points, 0 /*verbose_level*/);
 	}
@@ -948,7 +1000,75 @@ void surface_object_with_action::print_automorphism_group(
 
 }
 
+void surface_object_with_action::cheat_sheet_basic(ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	file_io Fio;
+	latex_interface L;
 
+	if (f_v) {
+		cout << "surface_object_with_action::cheat_sheet_basic" << endl;
+	}
+
+
+	longinteger_object ago;
+	Aut_gens->group_order(ago);
+	ost << "The automorphism group has order "
+			<< ago << "\\\\" << endl;
+	ost << "The automorphism group is generated by:\\\\" << endl;
+	if (f_v) {
+		cout << "surface_object_with_action::cheat_sheet_basic "
+				"before Aut_gens->"
+				"print_generators_tex" << endl;
+	}
+	Aut_gens->print_generators_tex(ost);
+
+
+	if (f_has_nice_gens) {
+		ost << "The stabilizer is generated by the following nice generators:\\\\" << endl;
+		nice_gens->print_tex(ost);
+
+	}
+
+	ost << "Orbits on Eckardt points:\\\\" << endl;
+	Orbits_on_Eckardt_points->print_and_list_orbits_sorted_by_length_tex(ost);
+
+	ost << "\\bigskip" << endl;
+
+	ost << "Orbits on half double-sixes:\\\\" << endl;
+	int i, idx;
+
+	for (i = 0; i < Orbits_on_single_sixes->nb_orbits; i++) {
+
+		//ost << "\\bigskip" << endl;
+		//ost << "" << endl;
+		ost << "Orbit " << i << " / " << Orbits_on_single_sixes->nb_orbits
+				<< " of length " << Orbits_on_single_sixes->orbit_len[i]
+				<< " consists of the following half double sixes:" << endl;
+
+
+		ost << "$$" << endl;
+		L.int_set_print_tex(ost,
+			Orbits_on_single_sixes->orbit +
+				Orbits_on_single_sixes->orbit_first[i],
+			Orbits_on_single_sixes->orbit_len[i]);
+		ost << "$$" << endl;
+
+		idx = Orbits_on_single_sixes->orbit[Orbits_on_single_sixes->orbit_first[i]];
+
+		ost << "orbit rep:" << endl;
+		ost << "$$" << endl;
+		Surf->latex_half_double_six(ost, idx);
+		ost << "$$" << endl;
+
+	}
+
+	ost << "\\bigskip" << endl;
+
+	if (f_v) {
+		cout << "surface_object_with_action::cheat_sheet_basic done" << endl;
+	}
+}
 
 void surface_object_with_action::cheat_sheet(ostream &ost, 
 	const char *label_txt, const char *label_tex, 
@@ -1110,7 +1230,7 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 	}
 
 
-	if (Aut_gens->A->degree < 10000) {
+	if (Aut_gens->A->degree < 500) {
 
 		Aut_gens->export_group_and_copy_to_latex(label_txt,
 				ost,

@@ -2118,6 +2118,8 @@ public:
 	int determine_line_in_plane(long int *two_input_pts,
 		int *three_coeffs, 
 		int verbose_level);
+	int test_nb_Eckardt_points(surface_domain *Surf,
+			long int *S, int len, int pt, int nb_E, int verbose_level);
 	int conic_test(long int *S, int len, int pt, int verbose_level);
 	int determine_conic_in_plane(
 			long int *input_pts, int nb_pts,
