@@ -1219,6 +1219,8 @@ public:
 			std::ostream &ost, long int *Pts, int nb_pts, int len);
 	void display_table_of_projective_points2(
 		std::ostream &ost, long int *Pts, int nb_pts, int len);
+	void display_table_of_projective_points_easy(
+		std::ostream &ost, long int *Pts, int nb_pts, int len);
 	void export_magma(int d, long int *Pts, int nb_pts, char *fname);
 	void export_gap(int d, long int *Pts, int nb_pts, char *fname);
 	void oval_polynomial(

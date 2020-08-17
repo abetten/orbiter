@@ -849,6 +849,10 @@ void classify_trihedral_pairs::downstep(int verbose_level)
 	Flag_orbits->init(A, A, 2 /* nb_primary_orbits_lower */, 
 		3 /* pt_representation_sz */,
 		nb_orbits_ordered_total /* nb_flag_orbits */,
+		1 /* upper_bound_for_number_of_traces */, // ToDo
+		NULL /* void (*func_to_free_received_trace)(void *trace_result, void *data, int verbose_level) */,
+		NULL /* void (*func_latex_report_trace)(std::ostream &ost, void *trace_result, void *data, int verbose_level)*/,
+		NULL /* void *free_received_trace_data */,
 		verbose_level);
 
 	if (f_v) {

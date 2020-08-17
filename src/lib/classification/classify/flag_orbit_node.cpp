@@ -19,7 +19,23 @@ namespace classification {
 
 flag_orbit_node::flag_orbit_node()
 {
-	null();
+	Flag_orbits = NULL;
+	flag_orbit_index = -1;
+	downstep_primary_orbit = -1;
+	downstep_secondary_orbit = -1;
+	f_long_orbit = FALSE;
+	upstep_primary_orbit = -1;
+	upstep_secondary_orbit = -1;
+	downstep_orbit_len = 0;
+	f_fusion_node = FALSE;
+	fusion_with = -1;
+	fusion_elt = NULL;
+	gens = NULL;
+
+	nb_received = 0;
+	Receptacle = NULL;
+
+	//null();
 }
 
 flag_orbit_node::~flag_orbit_node()
@@ -29,17 +45,6 @@ flag_orbit_node::~flag_orbit_node()
 
 void flag_orbit_node::null()
 {
-	Flag_orbits = NULL;
-	flag_orbit_index = -1;
-	downstep_primary_orbit = -1;
-	downstep_secondary_orbit = -1;
-	upstep_primary_orbit = -1;
-	upstep_secondary_orbit = -1;
-	downstep_orbit_len = 0;
-	f_fusion_node = FALSE;
-	fusion_with = -1;
-	fusion_elt = NULL;
-	gens = NULL;
 }
 
 void flag_orbit_node::freeself()
@@ -59,6 +64,15 @@ void flag_orbit_node::freeself()
 	if (gens) {
 		FREE_OBJECT(gens);
 		}
+	if (Receptacle) {
+		int i;
+
+		for (i = 0; i < nb_received; i++) {
+			(*Flag_orbits->func_to_free_received_trace)(Receptacle[i],
+					Flag_orbits->free_received_trace_data, verbose_level);
+		}
+		FREE_pvoid(Receptacle);
+	}
 	if (f_v) {
 		cout << "flag_orbit_node::freeself done" << endl;
 	}
@@ -76,7 +90,7 @@ void flag_orbit_node::init(
 
 	if (f_v) {
 		cout << "flag_orbit_node::init" << endl;
-		}
+	}
 	flag_orbit_node::Flag_orbits = Flag_orbits;
 	flag_orbit_node::flag_orbit_index = flag_orbit_index;
 	flag_orbit_node::downstep_primary_orbit = downstep_primary_orbit;
@@ -88,44 +102,37 @@ void flag_orbit_node::init(
 			flag_orbit_index * Flag_orbits->pt_representation_sz,
 			Flag_orbits->pt_representation_sz);
 	gens = Strong_gens;
+
+	nb_received = 0;
+	Receptacle = NEW_pvoid(Flag_orbits->upper_bound_for_number_of_traces);
+
 	if (f_v) {
 		cout << "flag_orbit_node::init done" << endl;
-		}
+	}
 }
 
-#if 0
-void flag_orbit_node::init_lint(
-	flag_orbits *Flag_orbits, int flag_orbit_index,
-	int downstep_primary_orbit, int downstep_secondary_orbit,
-	int downstep_orbit_len, int f_long_orbit,
-	long int *pt_representation, strong_generators *Strong_gens,
-	int verbose_level)
+void flag_orbit_node::receive_trace_result(void *trace_result, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "flag_orbit_node::init" << endl;
-		}
-	if (!Flag_orbits->f_lint) {
-		cout << "flag_orbit_node::init_lint !Flag_orbits->f_lint" << endl;
+		cout << "flag_orbit_node::receive_trace_result" << endl;
+	}
+	if (nb_received == Flag_orbits->upper_bound_for_number_of_traces) {
+		cout << "flag_orbit_node::receive_trace_result Receptacle is full" << endl;
 		exit(1);
 	}
-	flag_orbit_node::Flag_orbits = Flag_orbits;
-	flag_orbit_node::flag_orbit_index = flag_orbit_index;
-	flag_orbit_node::downstep_primary_orbit = downstep_primary_orbit;
-	flag_orbit_node::downstep_secondary_orbit = downstep_secondary_orbit;
-	flag_orbit_node::downstep_orbit_len = downstep_orbit_len;
-	flag_orbit_node::f_long_orbit = FALSE;
-	lint_vec_copy(pt_representation,
-			Flag_orbits->Pt_lint +
-			flag_orbit_index * Flag_orbits->pt_representation_sz,
-			Flag_orbits->pt_representation_sz);
-	gens = Strong_gens;
+	Receptacle[nb_received++] = trace_result;
+
+	if (Flag_orbits->free_received_trace_data == NULL) {
+		cout << "flag_orbit_node::receive_trace_result Warning: Flag_orbits->free_received_trace_data == NULL" << endl;
+	}
 	if (f_v) {
-		cout << "flag_orbit_node::init done" << endl;
-		}
+		cout << "flag_orbit_node::receive_trace_result done" << endl;
+	}
 }
-#endif
+
+
 
 void flag_orbit_node::write_file(ofstream &fp, int verbose_level)
 {
@@ -226,6 +233,15 @@ void flag_orbit_node::print_latex(flag_orbits *Flag_orbits,
 		ost << "$$" << endl;
 		Flag_orbits->A->element_print_latex(fusion_elt, ost);
 		ost << "$$" << endl;
+	}
+
+	ost << "nb received = " << nb_received << "\\\\" << endl;
+
+	if (nb_received) {
+		if (Flag_orbits->func_latex_report_trace) {
+			(*Flag_orbits->func_latex_report_trace)(ost, Receptacle[0],
+					Flag_orbits->free_received_trace_data, 0 /*verbose_level*/);
+		}
 	}
 }
 

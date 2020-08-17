@@ -24,6 +24,7 @@ surfaces_arc_lifting_definition_node::surfaces_arc_lifting_definition_node()
 	orbit_idx = 0;
 
 	SO = NULL;
+	SOA = NULL;
 
 	Flag_stab_gens = NULL;
 	//longinteger_object Flag_stab_go;
@@ -49,7 +50,7 @@ surfaces_arc_lifting_definition_node::~surfaces_arc_lifting_definition_node()
 }
 
 void surfaces_arc_lifting_definition_node::init(surfaces_arc_lifting *Lift,
-		int f, int orbit_idx, surface_object *SO,
+		int f, int orbit_idx, long int *Lines, int *eqn20,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -61,7 +62,20 @@ void surfaces_arc_lifting_definition_node::init(surfaces_arc_lifting *Lift,
 	surfaces_arc_lifting_definition_node::Lift = Lift;
 	surfaces_arc_lifting_definition_node::f = f;
 	surfaces_arc_lifting_definition_node::orbit_idx = orbit_idx;
-	surfaces_arc_lifting_definition_node::SO = SO;
+
+
+	SO = NEW_OBJECT(surface_object);
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting_definition_node::init before SO->init" << endl;
+	}
+	SO->init(Lift->Surf_A->Surf, Lines, eqn20,
+			FALSE /* f_find_double_six_and_rearrange_lines */,
+			verbose_level - 2);
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting_definition_node::init after SO->init" << endl;
+	}
 
 
 	if (f_v) {
@@ -135,6 +149,10 @@ void surfaces_arc_lifting_definition_node::report(int verbose_level)
 void surfaces_arc_lifting_definition_node::report2(ostream &ost, int verbose_level)
 {
 	report_Clebsch_maps(ost, verbose_level);
+
+	if (SOA) {
+		SOA->cheat_sheet_basic(ost, verbose_level);
+	}
 }
 
 void surfaces_arc_lifting_definition_node::report_cosets(ostream &ost, int verbose_level)
@@ -145,17 +163,18 @@ void surfaces_arc_lifting_definition_node::report_cosets(ostream &ost, int verbo
 	if (f_v) {
 		cout << "surfaces_arc_lifting_definition_node::report_cosets" << endl;
 	}
-	ost << "\\begin{enumerate}" << endl;
+	//ost << "\\begin{enumerate}" << endl;
 	for (i = 0; i < nb_coset_reps; i++) {
 
-		ost << "\\item" << endl;
+		ost << endl << "\\bigskip" << endl << endl;
+		//ost << "\\item" << endl;
 		ost << "Aut coset " << i << " / " << nb_coset_reps << ": relative order is "
 				<< relative_order_table[i] << "\\\\" << endl;
 		ost << "$$" << endl;
 		Lift->A4->element_print_latex(coset_reps->ith(i), ost);
 		ost << "$$" << endl;
 	}
-	ost << "\\end{enumerate}" << endl;
+	//ost << "\\end{enumerate}" << endl;
 
 
 	//surfaces_arc_lifting_trace *T; // [nb_coset_reps]
@@ -192,10 +211,11 @@ void surfaces_arc_lifting_definition_node::report_cosets_detailed(ostream &ost, 
 	ost << "Beta1 maps the two points $P_1$ and $P_2$ defined by the lines $(\\ell_1,\\ell_2)$ to the canonical pair.\\\\" << endl;
 	ost << "Beta2 maps the partition defined by $\\{\\{P_3,P_4\\}, \\{P_5,P_6\\}\\}$ to the canonical partition.\\\\" << endl;
 	ost << "Beta3 maps the image of the lines $(\\ell_1,\\ell_2)$ under Alpha1*Alpha2*Beta1*Beta2 to the canonical pair.\\\\" << endl;
-	ost << "\\begin{enumerate}" << endl;
+	//ost << "\\begin{enumerate}" << endl;
 	for (i = 0; i < nb_coset_reps; i++) {
 
-		ost << "\\item" << endl;
+		ost << endl << "\\bigskip" << endl << endl;
+		//ost << "\\item" << endl;
 		ost << "Aut coset " << i << " / " << nb_coset_reps << ": relative order is "
 				<< relative_order_table[i] << "\\\\" << endl;
 
@@ -204,15 +224,15 @@ void surfaces_arc_lifting_definition_node::report_cosets_detailed(ostream &ost, 
 		T[i]->The_case.report_single_Clebsch_map(ost, verbose_level);
 
 
-		SO->print_lines(ost);
+		//SO->print_lines(ost);
 
 
 		T[i]->The_case.report_Clebsch_map_details(ost, SO, verbose_level);
 
-		T[i]->report_product(ost, coset_reps->ith(i), verbose_level);
+		//T[i]->report_product(ost, coset_reps->ith(i), verbose_level);
 
 	}
-	ost << "\\end{enumerate}" << endl;
+	//ost << "\\end{enumerate}" << endl;
 
 
 	if (f_v) {
@@ -226,7 +246,7 @@ void surfaces_arc_lifting_definition_node::report_cosets_HDS(ostream &ost, int v
 	int coset;
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_definition_node::report_cosets_detailed" << endl;
+		cout << "surfaces_arc_lifting_definition_node::report_cosets_HDS" << endl;
 	}
 
 	report_HDS_top(ost);
@@ -240,7 +260,14 @@ void surfaces_arc_lifting_definition_node::report_cosets_HDS(ostream &ost, int v
 
 
 
-		T[coset]->The_case.report_Clebsch_map_HDS(ost, coset, verbose_level);
+		if ((coset % 24) == 0) {
+			report_HDS_bottom(ost);
+			report_HDS_top(ost);
+		}
+
+
+		T[coset]->The_case.report_Clebsch_map_aut_coset(ost, coset,
+				relative_order_table[coset], verbose_level);
 
 
 	}
@@ -249,7 +276,7 @@ void surfaces_arc_lifting_definition_node::report_cosets_HDS(ostream &ost, int v
 
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_definition_node::report_cosets_detailed done" << endl;
+		cout << "surfaces_arc_lifting_definition_node::report_cosets_HDS done" << endl;
 	}
 }
 
@@ -260,11 +287,13 @@ void surfaces_arc_lifting_definition_node::report_HDS_top(ostream &ost)
 
 	ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;
 	ost << "$$" << endl;
-	ost << "\\begin{array}{|c|c|c|c|c|c|c|}" << endl;
+	ost << "\\begin{array}{|c|c|c|c|c|c|c|c|}" << endl;
 	ost << "\\hline" << endl;
-	ost << "\\multicolumn{7}{|c|}{\\mbox{Tritangent Plane}\\; \\pi_{" << t << "} = \\pi_{" << Lift->Surf->Eckard_point_label_tex[t] << "}}\\\\" << endl;
+	ost << "\\multicolumn{8}{|c|}{\\mbox{Tritangent Plane}\\; \\pi_{" << t
+			<< "} = \\pi_{" << Lift->Surf->Eckard_point_label_tex[t] << "}}\\\\" << endl;
 	ost << "\\hline" << endl;
-	ost << "\\mbox{Coset} & \\mbox{Clebsch} & (m_1,m_2,m_3) & (\\ell_1,\\ell_2) & (t_3,t_4,t_5,t_6) & DS & HDS \\\\" << endl;
+	ost << "\\mbox{Coset} & \\mbox{Clebsch} & (m_1,m_2,m_3) & "
+			"(\\ell_1',\\ell_2') & (t_3',t_4',t_5',t_6') & DS & HDS & \\mbox{r.o.}\\\\" << endl;
 	ost << "\\hline" << endl;
 }
 
@@ -296,11 +325,14 @@ void surfaces_arc_lifting_definition_node::report_cosets_T3(ostream &ost, int ve
 		//T[i]->The_case.report_single_Clebsch_map(ost, verbose_level);
 
 
+		if ((coset % 24) == 0) {
+			report_T3_bottom(ost);
+			report_T3_top(ost);
+		}
+
 		ost << coset << " & ";
-		//T[coset]->The_case.report_Clebsch_map_HDS(ost, coset, verbose_level);
-		Lift->Surf->F->display_table_of_projective_points2(ost, T[coset]->The_case.P6, 6, 4);
+		//Lift->Surf->F->display_table_of_projective_points2(ost, T[coset]->The_case.P6, 6, 4);
 		ost << " & \\\\";
-		//Lift->A4->element_print_latex(Elt_Beta2, ost);
 
 
 	}
@@ -345,7 +377,6 @@ void surfaces_arc_lifting_definition_node::report_tally_F2(ostream &ost, int ver
 void surfaces_arc_lifting_definition_node::report_Clebsch_maps(ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int t, i, j;
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting_definition_node::report_Clebsch_maps" << endl;
@@ -353,22 +384,53 @@ void surfaces_arc_lifting_definition_node::report_Clebsch_maps(ostream &ost, int
 
 	report_tally_F2(ost, verbose_level);
 
+#if 1
+	int plane_idx[] = {12, 30};
+	int i;
+
+	for (i = 0; i < sizeof(plane_idx) / sizeof(int); i++) {
+
+		report_Clebsch_maps_for_one_tritangent_plane(ost,
+				plane_idx[i], verbose_level);
+	}
+
+#else
+	int t;
 	for (t = 0; t < 45; t++) {
 		ost << "\\clearpage" << endl;
 		//ost << "Tritangent plane " << t << ": \\\\" << endl;
-		for (i = 0; i < 3; i++) {
-			Seventytwo[t * 72 + i * 24].report_seventytwo_maps_top(ost);
-			for (j = 0; j < 24; j++) {
-				Seventytwo[t * 72 + i * 24 + j].report_seventytwo_maps_line(ost);
-			}
-			Seventytwo[t * 72 + i * 24].report_seventytwo_maps_bottom(ost);
-		}
+		report_Clebsch_maps_for_one_tritangent_plane(ost, t, verbose_level);
 	}
+#endif
+
 	if (f_v) {
 		cout << "surfaces_arc_lifting_definition_node::report_Clebsch_maps done" << endl;
 	}
 }
 
+
+void surfaces_arc_lifting_definition_node::report_Clebsch_maps_for_one_tritangent_plane(
+		ostream &ost, int plane_idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting_definition_node::report_Clebsch_maps_for_one_tritangent_plane" << endl;
+	}
+
+	for (i = 0; i < 3; i++) {
+		Seventytwo[plane_idx * 72 + i * 24].report_seventytwo_maps_top(ost);
+		for (j = 0; j < 24; j++) {
+			Seventytwo[plane_idx * 72 + i * 24 + j].report_seventytwo_maps_line(ost);
+		}
+		Seventytwo[plane_idx * 72 + i * 24].report_seventytwo_maps_bottom(ost);
+	}
+
+	if (f_v) {
+		cout << "surfaces_arc_lifting_definition_node::report_Clebsch_maps_for_one_tritangent_plane done" << endl;
+	}
+}
 
 
 

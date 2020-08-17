@@ -231,6 +231,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		}
 		do_classify_surfaces_through_arcs_and_two_lines(
 				Descr->Control_six_arcs,
+				Descr->f_test_nb_Eckardt_points, Descr->nb_E,
 				verbose_level);
 	}
 
@@ -250,6 +251,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		do_classify_surfaces_through_arcs_and_trihedral_pairs(
 				Descr->Trihedra1_control, Descr->Trihedra2_control,
 				Descr->Control_six_arcs,
+				Descr->f_test_nb_Eckardt_points, Descr->nb_E,
 				verbose_level);
 	}
 	else if (Descr->f_create_surface) {
@@ -2554,6 +2556,7 @@ int group_theoretic_activity::subspace_orbits_test_set(
 
 void group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines(
 		poset_classification_control *Control_six_arcs,
+		int f_test_nb_Eckardt_points, int nb_E,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2617,6 +2620,7 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines(
 		LG->F, LG /* LG4 */,
 		Surf_A,
 		Control_six_arcs,
+		f_test_nb_Eckardt_points, nb_E,
 		verbose_level);
 	if (f_v) {
 		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines "
@@ -2648,6 +2652,7 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_p
 		poset_classification_control *Control1,
 		poset_classification_control *Control2,
 		poset_classification_control *Control_six_arcs,
+		int f_test_nb_Eckardt_points, int nb_E,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2723,6 +2728,7 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_p
 	Surf_arc->classify_surfaces_through_arcs_and_trihedral_pairs(
 			Control_six_arcs,
 			Surf_A,
+			f_test_nb_Eckardt_points, nb_E,
 			verbose_level);
 
 	if (f_v) {
@@ -3053,6 +3059,7 @@ void group_theoretic_activity::do_create_surface(
 				Six_arc_descr,
 				A,
 				SC->Surf->P2,
+				FALSE, 0, NULL,
 				verbose_level);
 
 		transporter = NEW_int(Six_arcs->Gen->A->elt_size_in_int);
@@ -3162,6 +3169,7 @@ void group_theoretic_activity::do_six_arcs(
 			Six_arc_descr,
 			LG->A_linear,
 			Surf->P2,
+			FALSE, 0, NULL,
 			verbose_level);
 
 	transporter = NEW_int(Six_arcs->Gen->A->elt_size_in_int);

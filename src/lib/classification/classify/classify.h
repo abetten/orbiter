@@ -79,19 +79,28 @@ public:
 	int nb_primary_orbits_lower;
 	int nb_primary_orbits_upper;
 
-	//int f_lint;
+	int upper_bound_for_number_of_traces;
+	void (*func_to_free_received_trace)(void *trace_result, void *data, int verbose_level);
+	void (*func_latex_report_trace)(std::ostream &ost, void *trace_result, void *data, int verbose_level);
+	void *free_received_trace_data;
+
 	int nb_flag_orbits;
 	flag_orbit_node *Flag_orbit_node;
 	int pt_representation_sz;
 	long int *Pt; // [nb_flag_orbits * pt_representation_sz]
-	//long int *Pt_lint; // [nb_flag_orbits * pt_representation_sz]
+
 
 	flag_orbits();
 	~flag_orbits();
 	void null();
 	void freeself();
 	void init(action *A, action *A2, int nb_primary_orbits_lower,
-			int pt_representation_sz, int nb_flag_orbits, int verbose_level);
+			int pt_representation_sz, int nb_flag_orbits,
+			int upper_bound_for_number_of_traces,
+			void (*func_to_free_received_trace)(void *trace_result, void *data, int verbose_level),
+			void (*func_latex_report_trace)(std::ostream &ost, void *trace_result, void *data, int verbose_level),
+			void *free_received_trace_data,
+			int verbose_level);
 	int find_node_by_po_so(int po, int so, int &idx,
 		int verbose_level);
 	void write_file(std::ofstream &fp, int verbose_level);
@@ -129,6 +138,9 @@ public:
 	longinteger_object go;
 	strong_generators *gens;
 
+	int nb_received;
+	void **Receptacle; // [upper_bound_for_number_of_traces]
+
 	flag_orbit_node();
 	~flag_orbit_node();
 	void null();
@@ -137,6 +149,7 @@ public:
 			int downstep_primary_orbit, int downstep_secondary_orbit,
 			int downstep_orbit_len, int f_long_orbit, long int *pt_representation,
 			strong_generators *Strong_gens, int verbose_level);
+	void receive_trace_result(void *trace_result, int verbose_level);
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp, int verbose_level);
 	void print_latex(flag_orbits *Flag_orbits,

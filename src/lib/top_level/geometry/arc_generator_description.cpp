@@ -29,6 +29,9 @@ arc_generator_description::arc_generator_description()
 	f_target_size = FALSE;
 	target_size = 0;
 	f_conic_test = FALSE;
+	f_test_nb_Eckardt_points = FALSE;
+	nb_E = 0;
+	Surf = NULL;
 	f_affine = FALSE;
 	f_no_arc_testing = FALSE;
 	f_has_forbidden_point_set = FALSE;
@@ -73,6 +76,11 @@ int arc_generator_description::read_arguments(int argc, const char **argv,
 		else if (strcmp(argv[i], "-conic_test") == 0) {
 			f_conic_test = TRUE;
 			cout << "-conic_test " << endl;
+		}
+		else if (strcmp(argv[i], "-test_nb_Eckardt_points") == 0) {
+			f_test_nb_Eckardt_points = TRUE;
+			nb_E = atoi(argv[++i]);
+			cout << "-test_nb_Eckardt_points " << nb_E << endl;
 		}
 		else if (strcmp(argv[i], "-affine") == 0) {
 			f_affine = TRUE;

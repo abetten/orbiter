@@ -1349,6 +1349,39 @@ void finite_field::display_table_of_projective_points2(
 	FREE_int(coords);
 }
 
+void finite_field::display_table_of_projective_points_easy(
+	ostream &ost, long int *Pts, int nb_pts, int len)
+{
+	int i;
+	int *coords;
+
+	coords = NEW_int(len);
+	ost << "\\begin{array}{|c|}" << endl;
+	ost << "\\hline" << endl;
+	ost << "P_i\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < nb_pts; i++) {
+		PG_element_unrank_modified_lint(coords, 1, len, Pts[i]);
+		int_vec_print(ost, coords, len);
+		ost << "\\\\" << endl;
+		if (((i + 1) % 30) == 0) {
+			ost << "\\hline" << endl;
+			ost << "\\end{array}" << endl;
+			ost << "$$}%" << endl;
+			ost << "$$" << endl;
+			ost << "\\begin{array}{|c|}" << endl;
+			ost << "\\hline" << endl;
+			ost << "P_i\\\\" << endl;
+			ost << "\\hline" << endl;
+			ost << "\\hline" << endl;
+		}
+	}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	FREE_int(coords);
+}
+
 
 void finite_field::export_magma(int d, long int *Pts, int nb_pts, char *fname)
 {

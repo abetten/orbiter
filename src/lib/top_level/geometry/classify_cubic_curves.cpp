@@ -289,6 +289,10 @@ void classify_cubic_curves::downstep(int verbose_level)
 		nb_orbits_on_sets /* nb_primary_orbits_lower */,
 		9 + 10 /* pt_representation_sz */,
 		nb,
+		1 /* upper_bound_for_number_of_traces */, // ToDo
+		NULL /* void (*func_to_free_received_trace)(void *trace_result, void *data, int verbose_level) */,
+		NULL /* void (*func_latex_report_trace)(std::ostream &ost, void *trace_result, void *data, int verbose_level)*/,
+		NULL /* void *free_received_trace_data */,
 		verbose_level);
 
 	if (f_v) {

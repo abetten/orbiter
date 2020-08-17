@@ -48,6 +48,10 @@ public:
 	int f_conic_test;
 	// if TRUE, ensure that no six points lie on a conic
 
+	int f_test_nb_Eckardt_points;
+	int nb_E;
+	surface_domain *Surf;
+
 	int f_affine;
 
 	int f_no_arc_testing;
@@ -125,6 +129,8 @@ public:
 	void prepare_generator(int verbose_level);
 	void compute_starter(int verbose_level);
 
+	int test_nb_Eckardt_points(surface_domain *Surf,
+			long int *S, int len, int pt, int nb_E, int verbose_level);
 	int conic_test(long int *S, int len, int pt, int verbose_level);
 	void early_test_func(long int *S, int len,
 			long int *candidates, int nb_candidates,

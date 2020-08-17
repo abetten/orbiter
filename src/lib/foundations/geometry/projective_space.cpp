@@ -1352,6 +1352,41 @@ int projective_space::determine_line_in_plane(
 	return TRUE;
 }
 
+int projective_space::test_nb_Eckardt_points(surface_domain *Surf,
+		long int *S, int len, int pt, int nb_E, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int ret = TRUE;
+	long int Arc6[6];
+
+	if (f_v) {
+		cout << "projective_space::test_nb_Eckardt_points" << endl;
+	}
+	if (len != 5) {
+		return TRUE;
+	}
+
+	lint_vec_copy(S, Arc6, 5);
+	Arc6[5] = pt;
+
+	eckardt_point_info *E;
+
+	E = compute_eckardt_point_info(Surf, Arc6, 0/*verbose_level*/);
+
+
+	if (E->nb_E != nb_E) {
+		ret = FALSE;
+	}
+
+	FREE_OBJECT(E);
+
+	if (f_v) {
+		cout << "projective_space::test_nb_Eckardt_points done" << endl;
+	}
+	return ret;
+}
+
+
 int projective_space::conic_test(long int *S, int len, int pt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
