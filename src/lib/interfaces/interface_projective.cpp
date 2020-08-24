@@ -704,10 +704,10 @@ void interface_projective::do_classify_cubic_curves(int q,
 		cout << "interface_projective::do_classify_cubic_curves" << endl;
 	}
 
-	const char *starter_directory_name = "";
-	char base_fname[1000];
+	//const char *starter_directory_name = "";
+	//char base_fname[1000];
 
-	snprintf(base_fname, 1000, "cubic_curves_%d", q);
+	//snprintf(base_fname, 1000, "cubic_curves_%d", q);
 
 
 	int f_semilinear = FALSE;
@@ -746,8 +746,8 @@ void interface_projective::do_classify_cubic_curves(int q,
 	CCC->init(
 			GTA,
 			CCA,
-			starter_directory_name,
-			base_fname,
+			//starter_directory_name,
+			//base_fname,
 			Control_six_arcs,
 			verbose_level);
 

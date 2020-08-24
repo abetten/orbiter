@@ -563,8 +563,8 @@ public:
 	void init(
 			group_theoretic_activity *GTA,
 			cubic_curve_with_action *CCA,
-			const char *starter_directory_name,
-			const char *base_fname,
+			//const char *starter_directory_name,
+			//const char *base_fname,
 			poset_classification_control *Control,
 			int verbose_level);
 	void compute_starter(int verbose_level);

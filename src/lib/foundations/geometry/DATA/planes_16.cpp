@@ -8,7 +8,7 @@
 
 // from Mustafa Gezek Jan 10, 2019
 
-//Postatic int set: 1..273
+//Point set: 1..273
 
 //Line set:
 
@@ -288,7 +288,7 @@ static int plane_mathon[] = {
      257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273 };
 
 //Semi4 Plane-2018-07-11 14:08:24
-//Postatic int set: 1..273
+//Point set: 1..273
 
 //Line set:
 
@@ -569,7 +569,7 @@ static int plane_semi4[] = {
 
 
 //Semi2 Plane-2018-07-11 14:12:12
-//Postatic int set: 1..273
+//Point set: 1..273
 
 //Line set:
 
@@ -850,7 +850,7 @@ static int plane_semi2[] = {
 
 
 //PG(2,16) Plane-2018-07-11 14:01:09
-//Postatic int set: 1..273
+//Point set: 1..273
 
 //Line set:
 
@@ -1130,7 +1130,7 @@ static int plane_PG_2_16[] = {
      17, 33, 34, 54, 74, 96, 99, 124, 143, 155, 164, 185, 199, 222, 237, 248, 261 };
 
 //Lmrh Plane-2018-07-11 14:16:00
-//Postatic int set: 1..273
+//Point set: 1..273
 
 //Line set:
 
@@ -1411,7 +1411,7 @@ static int plane_Lmrh[] = {
 
 
 //Jowk Plane-2018-07-11 14:24:26
-//Postatic int set: 1..273
+//Point set: 1..273
 
 //Line set:
 
@@ -1694,7 +1694,7 @@ static int plane_jowk[] = {
 
 
 //Johnson Plane-2018-07-11 13:57:17
-//Postatic int set: 1..273
+//Point set: 1..273
 
 //Line set:
 
@@ -1975,7 +1975,7 @@ static int plane_johnson[] = {
 
 
 //Hall Plane-2018-07-11 14:18:35
-//Postatic int set: 1..273
+//Point set: 1..273
 
 //Line set:
 
@@ -2256,7 +2256,7 @@ static int plane_Hall[] = {
 
 
 //Dsfp Plane-2018-07-11 14:26:51
-//Postatic int set: 1..273
+//Point set: 1..273
 
 //Line set:
 
@@ -2537,7 +2537,7 @@ static int plane_dsfp[] = {
 
 
 //Demp Plane-2018-07-11 14:05:47
-//Postatic int set: 1..273
+//Point set: 1..273
 
 //Line set:
 
@@ -2821,7 +2821,7 @@ static int plane_demp[] = {
 
 
 //Bbh1 Plane-2018-07-11 14:21:50
-//Postatic int set: 1..273
+//Point set: 1..273
 
 //Line set:
 

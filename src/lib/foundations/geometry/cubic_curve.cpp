@@ -46,7 +46,7 @@ void cubic_curve::freeself()
 
 	if (f_v) {
 		cout << "cubic_curve::freeself" << endl;
-		}
+	}
 	if (P) {
 		FREE_OBJECT(P);
 	}
@@ -71,25 +71,24 @@ void cubic_curve::init(finite_field *F, int verbose_level)
 
 	if (f_v) {
 		cout << "cubic_curve::init" << endl;
-		}
+	}
 
 	cubic_curve::F = F;
 	q = F->q;
 	if (f_v) {
-		cout << "cubic_curve::init q = "
-				<< q << endl;
-		}
+		cout << "cubic_curve::init q = " << q << endl;
+	}
 
 	P = NEW_OBJECT(projective_space);
 	if (f_v) {
 		cout << "cubic_curve::init before P->init" << endl;
-		}
+	}
 	P->init(2, F,
 		TRUE /*f_init_incidence_structure */,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "cubic_curve::init after P->init" << endl;
-		}
+	}
 
 	Poly = NEW_OBJECT(homogeneous_polynomial_domain);
 
@@ -109,8 +108,8 @@ void cubic_curve::init(finite_field *F, int verbose_level)
 
 	nb_monomials = Poly->get_nb_monomials();
 	if (f_v) {
-		cout << "cubic_curve::init nb_monomials=" << nb_monomials << endl;
-		}
+		cout << "cubic_curve::init nb_monomials = " << nb_monomials << endl;
+	}
 
 	Partials = NEW_OBJECTS(partial_derivative, 3);
 	for (i = 0; i < 3; i++) {
@@ -121,7 +120,7 @@ void cubic_curve::init(finite_field *F, int verbose_level)
 
 	if (f_v) {
 		cout << "cubic_curve::init done" << endl;
-		}
+	}
 }
 
 
@@ -137,7 +136,7 @@ int cubic_curve::compute_system_in_RREF(
 
 	if (f_v) {
 		cout << "cubic_curve::compute_system_in_RREF" << endl;
-		}
+	}
 	Pts = NEW_int(nb_pts * 3);
 	System = NEW_int(nb_pts * nb_monomials);
 	base_cols = NEW_int(nb_monomials);
@@ -146,15 +145,15 @@ int cubic_curve::compute_system_in_RREF(
 		cout << "cubic_curve::compute_system_in_RREF list of "
 				"covered points by lines:" << endl;
 		lint_matrix_print(pt_list, nb_pts, P->k);
-		}
+	}
 	for (i = 0; i < nb_pts; i++) {
 		P->unrank_point(Pts + i * 3, pt_list[i]);
-		}
+	}
 	if (f_v && FALSE) {
 		cout << "cubic_curve::compute_system_in_RREF list of "
 				"covered points in coordinates:" << endl;
 		int_matrix_print(Pts, nb_pts, 3);
-		}
+	}
 
 	for (i = 0; i < nb_pts; i++) {
 		for (j = 0; j < nb_monomials; j++) {
@@ -165,24 +164,24 @@ int cubic_curve::compute_system_in_RREF(
 					Poly->monomials + j * 3,
 					Pts + i * 3, 3);
 #endif
-			}
 		}
+	}
 	if (f_v && FALSE) {
 		cout << "cubic_curve::compute_system_in_RREF "
 				"The system:" << endl;
 		int_matrix_print(System, nb_pts, nb_monomials);
-		}
+	}
 	r = F->Gauss_simple(System, nb_pts, nb_monomials,
 		base_cols, 0 /* verbose_level */);
 	if (FALSE) {
 		cout << "cubic_curve::compute_system_in_RREF "
 				"The system in RREF:" << endl;
 		int_matrix_print(System, nb_pts, nb_monomials);
-		}
+	}
 	if (f_v) {
 		cout << "cubic_curve::compute_system_in_RREF "
 				"The system has rank " << r << endl;
-		}
+	}
 	FREE_int(Pts);
 	FREE_int(System);
 	FREE_int(base_cols);
@@ -197,18 +196,18 @@ void cubic_curve::compute_gradient(
 
 	if (f_v) {
 		cout << "cubic_curve::compute_gradient" << endl;
-		}
+	}
 	for (i = 0; i < 3; i++) {
 		if (f_v) {
 			cout << "cubic_curve::compute_gradient i=" << i << endl;
-			}
+		}
 		if (f_v) {
 			cout << "cubic_curve::compute_gradient eqn_in=";
 			int_vec_print(cout, eqn_in, Poly->get_nb_monomials());
 			cout << " = ";
 			Poly->print_equation(cout, eqn_in);
 			cout << endl;
-			}
+		}
 		Partials[i].apply(eqn_in,
 				gradient + i * Poly2->get_nb_monomials(),
 				verbose_level - 2);
@@ -219,11 +218,11 @@ void cubic_curve::compute_gradient(
 			cout << " = ";
 			Poly2->print_equation(cout, gradient + i * Poly2->get_nb_monomials());
 			cout << endl;
-			}
+		}
 	}
 	if (f_v) {
 		cout << "cubic_curve::compute_gradient done" << endl;
-		}
+	}
 }
 
 void cubic_curve::compute_singular_points(
@@ -242,7 +241,7 @@ void cubic_curve::compute_singular_points(
 
 	if (f_v) {
 		cout << "cubic_curve::compute_singular_points" << endl;
-		}
+	}
 	compute_gradient(eqn_in, verbose_level);
 
 	nb_pts = 0;
@@ -251,24 +250,24 @@ void cubic_curve::compute_singular_points(
 		if (f_vv) {
 			cout << "cubic_curve::compute_singular_points "
 					"h=" << h << " / " << nb_pts_on_curve << endl;
-			}
+		}
 		rk = Pts_on_curve[h];
 		if (f_vv) {
 			cout << "cubic_curve::compute_singular_points "
 					"rk=" << rk << endl;
-			}
+		}
 		Poly->unrank_point(v, rk);
 		if (f_vv) {
 			cout << "cubic_curve::compute_singular_points "
 					"v=";
 			int_vec_print(cout, v, 3);
 			cout << endl;
-			}
+		}
 		for (i = 0; i < nb_eqns; i++) {
 			if (f_vv) {
 				cout << "cubic_curve::compute_singular_points "
 						"gradient i=" << i << " / " << nb_eqns << endl;
-				}
+			}
 			if (f_vv) {
 				cout << "cubic_curve::compute_singular_points "
 						"gradient " << i << " = ";
@@ -276,24 +275,24 @@ void cubic_curve::compute_singular_points(
 						gradient + i * Poly2->get_nb_monomials(),
 						Poly2->get_nb_monomials());
 				cout << endl;
-				}
+			}
 			a = Poly2->evaluate_at_a_point(
 					gradient + i * Poly2->get_nb_monomials(), v);
 			if (f_vv) {
 				cout << "cubic_curve::compute_singular_points "
 						"value = " << a << endl;
-				}
+			}
 			if (a) {
 				break;
 			}
 		}
 		if (i == nb_eqns) {
 			Pts[nb_pts++] = rk;
-			}
+		}
 	}
 	if (f_v) {
 		cout << "cubic_curve::compute_singular_points done" << endl;
-		}
+	}
 }
 
 void cubic_curve::compute_inflexion_points(
@@ -313,7 +312,7 @@ void cubic_curve::compute_inflexion_points(
 
 	if (f_v) {
 		cout << "cubic_curve::compute_inflexion_points" << endl;
-		}
+	}
 	compute_gradient(eqn_in, verbose_level - 2);
 
 
