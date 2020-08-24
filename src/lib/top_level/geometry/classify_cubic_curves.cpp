@@ -73,8 +73,8 @@ void classify_cubic_curves::freeself()
 void classify_cubic_curves::init(
 		group_theoretic_activity *GTA,
 		cubic_curve_with_action *CCA,
-		const char *starter_directory_name,
-		const char *base_fname,
+		//const char *starter_directory_name,
+		//const char *base_fname,
 		poset_classification_control *Control,
 		int verbose_level)
 {
@@ -547,8 +547,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 				set[j] = Pts[idx_set[j]];
 			}
 
-			r = CC->compute_system_in_RREF(9,
-					set, 0 /*verbose_level*/);
+			r = CC->compute_system_in_RREF(9, set, 0 /*verbose_level*/);
 
 			if (r < 9) {
 				continue;
@@ -602,7 +601,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 							"the curve with " << nb_pts << " points:" << endl;
 					A->element_print_quick(Elt, cout);
 					cout << endl;
-					}
+				}
 				A->element_move(Elt, coset_reps->ith(nb_coset_reps), 0);
 				nb_coset_reps++;
 				//S->add_single_generator(Elt3,
@@ -691,7 +690,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 		f_processed[f] = TRUE;
 		nb_processed++;
 		Flag_orbits->nb_primary_orbits_upper++;
-		} // next f
+	} // next f
 
 
 	if (nb_processed != Flag_orbits->nb_flag_orbits) {
