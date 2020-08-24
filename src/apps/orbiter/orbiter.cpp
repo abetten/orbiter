@@ -11,6 +11,9 @@ using namespace std;
 using namespace orbiter;
 using namespace orbiter::interfaces;
 
+int build_number =
+#include "../../../build_number"
+;
 
 int main(int argc, const char **argv)
 {
@@ -33,7 +36,7 @@ int main(int argc, const char **argv)
 	int f_v = (Session.verbose_level > 1);
 
 	if (f_v) {
-		cout << "Welcome to Orbiter!" << endl;
+		cout << "Welcome to Orbiter!  Your build number is " << build_number << endl;
 	}
 
 	if (Session.f_seed) {
