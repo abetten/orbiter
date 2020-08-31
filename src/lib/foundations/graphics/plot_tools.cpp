@@ -43,7 +43,7 @@ void plot_tools::draw_density(char *prefix, int *the_set, int set_size,
 	int y_min = 0, y_max = 1000;
 	int factor_1000 = 1000;
 	//char ext[1000];
-	char fname_full[1000];
+	string fname_full;
 	int i, prev; //, prev_start;
 	int *outline_value;
 	int *outline_number;
@@ -98,8 +98,14 @@ void plot_tools::draw_density(char *prefix, int *the_set, int set_size,
 			}
 		}
 
+	char str[1000];
+
+	fname_full.assign(prefix);
+
+	sprintf(str, "_%d.mp", no);
+
+	fname_full.append(str);
 	
-	snprintf(fname_full, 1000, "%s_%d.mp", prefix, no);
 	{
 	mp_graphics G(fname_full,
 			x_min, y_min, x_max, y_max, f_embedded, f_sideways, verbose_level - 1);
@@ -137,7 +143,7 @@ void plot_tools::draw_density(char *prefix, int *the_set, int set_size,
 	
 }
 
-void plot_tools::draw_density_multiple_curves(char *prefix,
+void plot_tools::draw_density_multiple_curves(std::string &prefix,
 	int **Data, int *Data_size, int nb_data_sets, 
 	int f_title, const char *title, int out_of, 
 	const char *label_x, 
@@ -155,7 +161,7 @@ void plot_tools::draw_density_multiple_curves(char *prefix,
 	int y_min = 0, y_max = 1000;
 	int factor_1000 = 1000;
 	//char ext[1000];
-	char fname_full[1000];
+	string fname_full;
 	int i, prev; //, prev_start;
 	int **outline_value;
 	int **outline_number;
@@ -219,8 +225,15 @@ void plot_tools::draw_density_multiple_curves(char *prefix,
 			}
 		}
 
+	char str[1000];
+
+	fname_full.assign(prefix);
+
+	sprintf(str, "_%d.mp", no);
+
+	fname_full.append(str);
 	
-	snprintf(fname_full, 1000, "%s_%d.mp", prefix, no);
+
 	{
 	mp_graphics G(fname_full,
 			x_min, y_min, x_max, y_max, f_embedded, f_sideways, verbose_level - 1);
@@ -332,7 +345,7 @@ void plot_tools::y_to_pt_on_curve(int y_in, int &x, int &y,
 
 }
 
-void plot_tools::projective_plane_draw_grid(const char *fname,
+void plot_tools::projective_plane_draw_grid(std::string &fname,
 	int xmax, int ymax, int f_with_points, int rad,
 	int q, int *Table, int nb, 
 	int f_point_labels, char **Point_labels, 
@@ -343,7 +356,7 @@ void plot_tools::projective_plane_draw_grid(const char *fname,
 	int x_min = 0, x_max = 1000000;
 	int y_min = 0, y_max = 1000000;
 	int factor_1000 = 1000;
-	char fname_full[1000];
+	string fname_full;
 	//int f_embedded = TRUE;
 	//int f_sideways = FALSE;
 	
@@ -351,7 +364,16 @@ void plot_tools::projective_plane_draw_grid(const char *fname,
 		cout << "plot_tools::projective_plane_draw_grid" << endl;
 		cout << "plot_tools::projective_plane_draw_grid xmax=" << xmax << " ymax=" << ymax << endl;
 	}
-	snprintf(fname_full, 1000, "%s_draw.mp", fname);
+
+	char str[1000];
+
+	fname_full.assign(fname);
+
+	sprintf(str, "_draw.mp");
+
+	fname_full.append(str);
+
+
 	{
 	mp_graphics G(fname_full, x_min, y_min, x_max, y_max,
 			f_embedded, f_sideways, verbose_level - 1);

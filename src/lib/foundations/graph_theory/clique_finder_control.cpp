@@ -38,7 +38,7 @@ clique_finder_control::clique_finder_control()
 	nb_restrictions = 0;
 	f_tree = FALSE;
 	f_decision_nodes_only = FALSE;
-	fname_tree = NULL;
+	//fname_tree = NULL;
 	print_interval = 1;
 	nb_search_steps = 0;
 	nb_decision_steps = 0;
@@ -89,7 +89,7 @@ int clique_finder_control::parse_arguments(
 		else if (strcmp(argv[i], "-tree") == 0) {
 			f_tree = TRUE;
 			f_decision_nodes_only = FALSE;
-			fname_tree = argv[++i];
+			fname_tree.assign(argv[++i]);
 			cout << "-tree " << fname_tree << endl;
 		}
 		else if (strcmp(argv[i], "-tree_decision_nodes_only") == 0) {
@@ -142,23 +142,25 @@ int clique_finder_control::parse_arguments(
 
 
 void clique_finder_control::all_cliques(colored_graph *CG,
-	char *fname_graph,
+	std::string &fname_graph,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	//colored_graph CG;
-	char fname_sol[1000];
+	string fname_sol;
 
 	if (f_v) {
 		cout << "clique_finder_control::all_cliques" << endl;
 		}
 	//CG.load(fname_graph, verbose_level - 1);
 	if (f_output_file) {
-		snprintf(fname_sol, 1000, "%s", output_file);
+		fname_sol.assign(output_file);
+		//snprintf(fname_sol, 1000, "%s", output_file);
 	}
 	else {
-		strcpy(fname_sol, fname_graph);
+		fname_sol.assign(fname_graph);
+		//strcpy(fname_sol, fname_graph);
 		replace_extension_with(fname_sol, "_sol.txt");
 		//snprintf(fname_sol, 1000, "%s_sol.txt", fname_graph);
 	}
@@ -166,7 +168,7 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 	//CG.print();
 
 	{
-		ofstream fp(fname_sol);
+		ofstream fp(fname_sol.c_str());
 
 
 		if (f_rainbow) {
@@ -177,7 +179,7 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 							"weighted cliques" << endl;
 				}
 
-				all_cliques_weighted(CG, fname_sol, verbose_level);
+				all_cliques_weighted(CG, verbose_level);
 
 
 
@@ -188,7 +190,7 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 					cout << "clique_finder_control::all_cliques "
 							"before do_Sajeeb" << endl;
 				}
-				do_Sajeeb(CG, fname_sol, verbose_level);
+				do_Sajeeb(CG, verbose_level);
 				if (f_v) {
 					cout << "clique_finder_control::all_cliques "
 							"after do_Sajeeb" << endl;
@@ -262,7 +264,7 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 		}
 }
 
-void clique_finder_control::do_Sajeeb(colored_graph *CG, const char *fname_sol, int verbose_level)
+void clique_finder_control::do_Sajeeb(colored_graph *CG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -337,7 +339,6 @@ void clique_finder_control::do_Sajeeb_black_and_white(colored_graph *CG,
 	}
 }
 void clique_finder_control::all_cliques_weighted(colored_graph *CG,
-	const char *fname_sol,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

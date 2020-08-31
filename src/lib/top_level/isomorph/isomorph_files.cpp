@@ -768,11 +768,11 @@ void isomorph::init_cases_from_file_modulus_and_build_up_database(
 	for (i = 0; i < modulus; i++) {
 		if (f_collated) {
 			sprintf(file_name, "collated_%s_%d_%d_%d_%d.txt",
-					prefix, level, base_split, i, modulus);
+					prefix.c_str(), level, base_split, i, modulus);
 			}
 		else {
 			sprintf(file_name, "extend_%s_%d_%d_%d.txt",
-					prefix, level, i, modulus);
+					prefix.c_str(), level, i, modulus);
 			}
 		//sprintf(file_name, "extend_BLT_41_lvl_%d_%d_42_%d_1024.txt",
 		//level, level, i);
@@ -861,7 +861,7 @@ void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
 		for (h = 0; h < k; h++) {
 			u = h * s + r;
 			sprintf(file_name, "extend_%s_%d_%d_%d.txt",
-					prefix, level, u, bs);
+					prefix.c_str(), level, u, bs);
 			//sprintf(file_name, "extend_BLT_41_lvl_%d_%d_42_%d_1024.txt",
 			// level, level, i);
 			fname[j] = NEW_char(strlen(file_name) + 1);
@@ -1352,7 +1352,7 @@ void isomorph::write_starter_nb_orbits(int verbose_level)
 		}
 
 	Fio.int_vec_write_csv(flag_orbit_fst, nb_starter,
-			fname_orbits_of_stabilizer_csv, "Stab_orbits");
+			fname_orbits_of_stabilizer_csv.c_str(), "Stab_orbits");
 
 	cout << "isomorph::write_starter_nb_orbits Written file "
 			<< fname_orbits_of_stabilizer_csv << " of size "
@@ -1379,7 +1379,7 @@ void isomorph::read_starter_nb_orbits(int verbose_level)
 			<< fname_orbits_of_stabilizer_csv << " of size "
 			<< Fio.file_size(fname_orbits_of_stabilizer_csv) << endl;
 
-	Fio.int_matrix_read_csv(fname_orbits_of_stabilizer_csv,
+	Fio.int_matrix_read_csv(fname_orbits_of_stabilizer_csv.c_str(),
 			M, m, n, verbose_level);
 	
 	if (m != nb_starter) {
@@ -2299,7 +2299,7 @@ int isomorph::next_subset_play_back(int &subset_rank,
 }
 
 void isomorph::read_everything_including_classification(
-		const char *prefix_classify, int verbose_level)
+		std::string &prefix_classify, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

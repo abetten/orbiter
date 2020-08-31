@@ -83,8 +83,8 @@ void blt_set_classify::freeself()
 
 void blt_set_classify::init_basic(orthogonal *O,
 	int f_semilinear,
-	const char *input_prefix, 
-	const char *base_fname,
+	//const char *input_prefix,
+	//const char *base_fname,
 	int starter_size,  
 	int verbose_level)
 {
@@ -293,7 +293,7 @@ void blt_set_classify::init2(int verbose_level)
 void blt_set_classify::create_graphs(
 	int orbit_at_level_r, int orbit_at_level_m, 
 	int level_of_candidates_file, 
-	const char *output_prefix, 
+	std::string &output_prefix,
 	int f_lexorder_test, int f_eliminate_graphs_if_possible, 
 	int verbose_level)
 {
@@ -315,10 +315,11 @@ void blt_set_classify::create_graphs(
 	//f_memory_debug = TRUE;
 
 
-	char fname[1000];
-	char fname_list_of_cases[1000];
-	char fname_time[1000];
-	char graph_fname_base[1000];
+	char str[1000];
+	string fname;
+	string fname_list_of_cases;
+	string fname_time;
+	//string graph_fname_base;
 	int orbit;
 	int nb_orbits;
 	long int *list_of_cases;
@@ -331,15 +332,31 @@ void blt_set_classify::create_graphs(
 
 
 
-	sprintf(fname, "%s_lvl_%d", gen->get_problem_label_with_path(), starter_size);
-	sprintf(fname_list_of_cases, "%slist_of_cases_%s_%d_%d_%d.txt",
-			output_prefix, gen->get_problem_label(), starter_size,
-			orbit_at_level_r, orbit_at_level_m);
-	sprintf(fname_time, "%stime_%s_%d_%d_%d.csv",
-			output_prefix, gen->get_problem_label(), starter_size,
-			orbit_at_level_r, orbit_at_level_m);
+	fname.assign(gen->get_problem_label_with_path());
+	sprintf(str, "_lvl_%d", starter_size);
+	fname.append(str);
+	//sprintf(fname, "%s_lvl_%d", gen->get_problem_label_with_path(), starter_size);
 
-	nb_orbits = Fio.count_number_of_orbits_in_file(fname, 0);
+	fname_list_of_cases.assign(output_prefix);
+	fname_list_of_cases.append("list_of_cases_");
+	fname_list_of_cases.append(gen->get_problem_label());
+	sprintf(str, "_%d_%d_%d.txt", starter_size, orbit_at_level_r, orbit_at_level_m);
+	fname_list_of_cases.append(str);
+
+
+	fname_time.assign(output_prefix);
+	fname_time.append("time_");
+	fname_time.append(gen->get_problem_label());
+	fname_list_of_cases.append(str);
+
+	//sprintf(fname_list_of_cases, "%slist_of_cases_%s_%d_%d_%d.txt",
+	//		output_prefix, gen->get_problem_label(), starter_size,
+	//		orbit_at_level_r, orbit_at_level_m);
+	//sprintf(fname_time, "%stime_%s_%d_%d_%d.csv",
+	//		output_prefix, gen->get_problem_label(), starter_size,
+	//		orbit_at_level_r, orbit_at_level_m);
+
+	nb_orbits = Fio.count_number_of_orbits_in_file(fname.c_str(), 0);
 	if (f_v) {
 		cout << "blt_set_classify::create_graphs There are "
 				<< nb_orbits << " starters" << endl;
@@ -373,16 +390,19 @@ void blt_set_classify::create_graphs(
 		int t0 = Os.os_ticks();
 		
 		if (create_graph(orbit, level_of_candidates_file, 
-			output_prefix, 
+			//output_prefix,
 			f_lexorder_test, f_eliminate_graphs_if_possible, 
-			nb_vertices, graph_fname_base,
+			nb_vertices,
 			CG,  
 			verbose_level - 2)) {
 			list_of_cases[nb_of_cases++] = orbit;
 
-			char fname[2000];
+			string fname;
 
-			snprintf(fname, 2000, "%s%s.bin", output_prefix, CG->fname_base);
+			fname.assign(output_prefix);
+			fname.append(CG->fname_base);
+			fname.append(".bin");
+			//snprintf(fname, 2000, "%s%s.bin", output_prefix, CG->fname_base);
 			CG->save(fname, verbose_level - 2);
 			
 			nb_vertices = CG->nb_points;
@@ -417,14 +437,14 @@ void blt_set_classify::create_graphs(
 		cout << "blt_set_classify::create_graphs writing file "
 				<< fname_time << endl;
 	}
-	Fio.lint_matrix_write_csv(fname_time, Time, time_idx, 2);
+	Fio.lint_matrix_write_csv(fname_time.c_str(), Time, time_idx, 2);
 	if (f_v) {
 		cout << "blt_set_classify::create_graphs Written file "
 				<< fname_time << " of size "
 				<< Fio.file_size(fname_time) << endl;
 	}
 
-	Fio.write_set_to_file(fname_list_of_cases,
+	Fio.write_set_to_file(fname_list_of_cases.c_str(),
 			list_of_cases, nb_of_cases,
 			0 /*verbose_level */);
 	if (f_v) {
@@ -443,7 +463,7 @@ void blt_set_classify::create_graphs_list_of_cases(
 	const char *case_label, 
 	const char *list_of_cases_text, 
 	int level_of_candidates_file, 
-	const char *output_prefix, 
+	std::string &output_prefix,
 	int f_lexorder_test, int f_eliminate_graphs_if_possible, 
 	int verbose_level)
 {
@@ -475,9 +495,10 @@ void blt_set_classify::create_graphs_list_of_cases(
 				"f_lexorder_test=" << f_lexorder_test << endl;
 	}
 
-	char fname[1000];
-	char fname_list_of_cases[1000];
-	char graph_fname_base[1000];
+	char str[1000];
+	string fname;
+	string fname_list_of_cases;
+	//char graph_fname_base[1000];
 	int orbit;
 	int nb_orbits;
 	long int *list_of_cases_created;
@@ -486,13 +507,23 @@ void blt_set_classify::create_graphs_list_of_cases(
 	file_io Fio;
 
 
+	sprintf(str, "_lvl_%d", starter_size);
+	fname.assign(gen->get_problem_label_with_path());
+	fname.append(str);
+
+	//sprintf(fname, "%s_lvl_%d", gen->get_problem_label_with_path(), starter_size);
+
+	sprintf(str, "_list_of_cases.txt");
+	fname_list_of_cases.assign(output_prefix);
+	fname_list_of_cases.append(str);
+	fname_list_of_cases.append(case_label);
+	fname_list_of_cases.append(str);
 
 
-	sprintf(fname, "%s_lvl_%d", gen->get_problem_label_with_path(), starter_size);
-	sprintf(fname_list_of_cases, "%s%s_list_of_cases.txt",
-			output_prefix, case_label);
+	//sprintf(fname_list_of_cases, "%s%s_list_of_cases.txt",
+	//		output_prefix, case_label);
 
-	nb_orbits = Fio.count_number_of_orbits_in_file(fname, 0);
+	nb_orbits = Fio.count_number_of_orbits_in_file(fname.c_str(), 0);
 	if (f_v) {
 		cout << "blt_set_classify::create_graphs_list_of_cases "
 				"There are " << nb_orbits << " starters" << endl;
@@ -521,16 +552,19 @@ void blt_set_classify::create_graphs_list_of_cases(
 
 
 		if (create_graph(orbit, level_of_candidates_file, 
-			output_prefix, 
+			//output_prefix,
 			f_lexorder_test, f_eliminate_graphs_if_possible, 
-			nb_vertices, graph_fname_base,
+			nb_vertices,
 			CG,  
 			verbose_level - 2)) {
 			list_of_cases_created[nb_of_cases_created++] = orbit;
 
-			char fname[2000];
+			string fname;
 
-			snprintf(fname, 2000, "%s%s.bin", output_prefix, CG->fname_base);
+			fname.assign(output_prefix);
+			fname.append(CG->fname_base);
+			fname.append(".bin");
+			//snprintf(fname, 2000, "%s%s.bin", output_prefix, CG->fname_base);
 			CG->save(fname, verbose_level - 2);
 			
 			nb_vertices = CG->nb_points;
@@ -558,7 +592,7 @@ void blt_set_classify::create_graphs_list_of_cases(
 		}
 	}
 
-	Fio.write_set_to_file(fname_list_of_cases,
+	Fio.write_set_to_file(fname_list_of_cases.c_str(),
 			list_of_cases_created, nb_of_cases_created,
 			0 /*verbose_level */);
 	if (f_v) {
@@ -580,9 +614,8 @@ void blt_set_classify::create_graphs_list_of_cases(
 
 int blt_set_classify::create_graph(
 	int orbit_at_level, int level_of_candidates_file, 
-	const char *output_prefix, 
 	int f_lexorder_test, int f_eliminate_graphs_if_possible, 
-	int &nb_vertices, char *graph_fname_base,
+	int &nb_vertices,
 	colored_graph *&CG,  
 	int verbose_level)
 // returns TRUE if a graph was written, FALSE otherwise

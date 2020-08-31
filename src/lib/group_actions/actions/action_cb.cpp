@@ -360,6 +360,23 @@ void action::element_print_latex(
 	(*ptr->ptr_element_print_latex)(*this, elt, ost);
 }
 
+void action::element_print_latex_with_extras(void *elt, std::string &label, ostream &ost)
+{
+	int *fp, n, ord;
+
+	fp = NEW_int(degree);
+	n = find_fixed_points(elt, fp, 0);
+	//cout << "with " << n << " fixed points" << endl;
+	FREE_int(fp);
+
+	ord = element_order(elt);
+
+	ost << "$$" << label << endl;
+	element_print_latex(elt, ost);
+	ost << "$$" << endl << "of order $" << ord << "$ and with "
+			<< n << " fixed points." << endl;
+}
+
 void action::element_print_latex_with_print_point_function(
 	void *elt, std::ostream &ost,
 	void (*point_label)(std::stringstream &sstr, long int pt, void *data),

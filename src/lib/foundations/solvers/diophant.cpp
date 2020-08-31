@@ -870,7 +870,7 @@ int diophant::solve_first_mckay(int f_once, int verbose_level)
 	return TRUE;
 }
 
-void diophant::draw_solutions(const char *fname_base, int verbose_level)
+void diophant::draw_solutions(std::string &fname_base, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -892,9 +892,13 @@ void diophant::draw_solutions(const char *fname_base, int verbose_level)
 			}
 		}
 		
-		char fname_base2[1000];
+		std::string fname_base2;
+
+		fname_base2.assign(fname_base);
+		char str[1000];
 		
-		sprintf(fname_base2, "%s_sol_%d", fname_base, i);
+		sprintf(str, "_sol_%d", i);
+		fname_base2.append(str);
 		
 		int xmax_in = ONE_MILLION;
 		int ymax_in = ONE_MILLION;
@@ -913,7 +917,7 @@ void diophant::draw_solutions(const char *fname_base, int verbose_level)
 	}
 }
 
-void diophant::write_solutions(const char *fname, int verbose_level)
+void diophant::write_solutions(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, h;
@@ -925,7 +929,7 @@ void diophant::write_solutions(const char *fname, int verbose_level)
 	}
 
 	{
-		ofstream fp(fname);
+		ofstream fp(fname.c_str());
 
 		fp << _resultanz << " " << n << endl;
 		for (i = 0; i < _resultanz; i++) {
@@ -965,7 +969,7 @@ void diophant::write_solutions(const char *fname, int verbose_level)
 	}
 }
 
-void diophant::read_solutions_from_file(const char *fname_sol,
+void diophant::read_solutions_from_file(std::string &fname_sol,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -987,7 +991,7 @@ void diophant::read_solutions_from_file(const char *fname_sol,
 	}
 
 	{
-		ifstream fp(fname_sol);
+		ifstream fp(fname_sol.c_str());
 		int N, s, h;
 
 		fp >> N >> s;
@@ -1357,7 +1361,7 @@ int diophant::solve_all_mckay(long int &nb_backtrack_nodes, int maxresults, int 
 		cout << "diophant::solve_all_mckay before solve_mckay, "
 				"verbose_level=" << verbose_level << endl;
 	}
-	solve_mckay(label, maxresults,
+	solve_mckay(label.c_str(), maxresults,
 			nb_backtrack_nodes, nb_sol,
 			verbose_level - 2);
 	if (f_v) {
@@ -1375,7 +1379,7 @@ int diophant::solve_once_mckay(int verbose_level)
 	long int nb_backtrack_nodes;
 	int nb_sol;
 
-	solve_mckay(label, maxresults,
+	solve_mckay(label.c_str(), maxresults,
 			nb_backtrack_nodes, nb_sol, verbose_level - 2);
 	if (f_v) {
 		cout << "diophant::solve_once_mckay found " << _resultanz
@@ -2548,7 +2552,7 @@ void diophant::get_coefficient_matrix(int *&M,
 	}
 }
 
-void diophant::save_as_Levi_graph(const char *fname, int verbose_level)
+void diophant::save_as_Levi_graph(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -2788,7 +2792,7 @@ void diophant::read_compact_format(const char *fname, int verbose_level)
 }
 #endif
 
-void diophant::save_in_general_format(const char *fname, int verbose_level)
+void diophant::save_in_general_format(std::string &fname, int verbose_level)
 // ToDo this does not save the values of x_min[] and x_max[]
 {
 	int f_v = (verbose_level >= 1);
@@ -2812,18 +2816,22 @@ void diophant::save_in_general_format(const char *fname, int verbose_level)
 		}
 #endif
 
-	char fname_coeff[1000];
-	char fname_RHS[1000];
-	char fname_x_bounds[1000];
-	strcpy(fname_coeff, fname);
-	strcpy(fname_RHS, fname);
-	strcpy(fname_x_bounds, fname);
+	std::string fname_coeff;
+	std::string fname_RHS;
+	std::string fname_x_bounds;
+
+	fname_coeff.assign(fname);
+	fname_RHS.assign(fname);
+	fname_x_bounds.assign(fname);
+	//strcpy(fname_coeff, fname);
+	//strcpy(fname_RHS, fname);
+	//strcpy(fname_x_bounds, fname);
 
 	replace_extension_with(fname_coeff, "_coeff_matrix.csv");
 	replace_extension_with(fname_RHS, "_RHS.csv");
 	replace_extension_with(fname_x_bounds, "_x_bounds.csv");
 
-	Fio.int_matrix_write_csv(fname_coeff, A, m, n);
+	Fio.int_matrix_write_csv(fname_coeff.c_str(), A, m, n);
 	if (f_v) {
 		cout << "diophant::save_in_general_format written file " << fname_coeff << " of size "
 				<< Fio.file_size(fname_coeff) << endl;
@@ -2852,7 +2860,7 @@ void diophant::save_in_general_format(const char *fname, int verbose_level)
 			exit(1);
 		}
 	}
-	Fio.int_matrix_write_csv(fname_RHS, RHS_coded, m, 3);
+	Fio.int_matrix_write_csv(fname_RHS.c_str(), RHS_coded, m, 3);
 	if (f_v) {
 		cout << "diophant::save_in_general_format written file " << fname_RHS << " of size "
 				<< Fio.file_size(fname_RHS) << endl;
@@ -2866,7 +2874,7 @@ void diophant::save_in_general_format(const char *fname, int verbose_level)
 		X_bounds[2 * j + 1] = x_max[j];
 	}
 
-	Fio.int_matrix_write_csv(fname_x_bounds, X_bounds, n, 2);
+	Fio.int_matrix_write_csv(fname_x_bounds.c_str(), X_bounds, n, 2);
 	FREE_int(X_bounds);
 	if (f_v) {
 		cout << "diophant::save_in_general_format written file " << fname_x_bounds << " of size "
@@ -2953,7 +2961,7 @@ void diophant::save_in_general_format(const char *fname, int verbose_level)
 		}
 }
 
-void diophant::read_general_format(const char *fname, int verbose_level)
+void diophant::read_general_format(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int m, n, s;
@@ -3864,7 +3872,7 @@ void diophant::write_gurobi_binary_variables(const char *fname)
 			<< Fio.file_size(fname) << endl;
 }
 
-void diophant::draw_as_bitmap(const char *fname,
+void diophant::draw_as_bitmap(std::string &fname,
 		int f_box_width, int box_width, int bit_depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3916,7 +3924,7 @@ void diophant::draw_as_bitmap(const char *fname,
 
 }
 
-void diophant::draw_it(const char *fname_base,
+void diophant::draw_it(std::string &fname_base,
 		int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 		int verbose_level)
 {
@@ -3940,7 +3948,7 @@ void diophant::draw_it(const char *fname_base,
 		verbose_level);
 }
 
-void diophant::draw_partitioned(const char *fname_base, 
+void diophant::draw_partitioned(std::string &fname_base,
 	int xmax_in, int ymax_in, int xmax_out, int ymax_out, 
 	int f_solution, int *solution, int solution_sz, 
 	int verbose_level)
@@ -4369,7 +4377,7 @@ void diophant::make_clique_graph(colored_graph *&CG, int verbose_level)
 }
 
 void diophant::make_clique_graph_and_save(
-		const char *clique_graph_fname, int verbose_level)
+		std::string &clique_graph_fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4527,8 +4535,8 @@ void solve_diophant(int *Inc,
 	int f_has_Rhs, int *Rhs, 
 	long int *&Solutions, int &nb_sol, long int &nb_backtrack, int &dt,
 	int f_DLX, 
-	int f_draw_system, const char *fname_system, 
-	int f_write_tree, const char *fname_tree, 
+	int f_draw_system, std::string &fname_system,
+	int f_write_tree, std::string &fname_tree,
 	int verbose_level)
 // allocates Solutions[nb_sol * nb_needed]
 {
@@ -4581,7 +4589,7 @@ void solve_diophant(int *Inc,
 	}
 
 	if (f_DLX && !f_has_Rhs) {
-		Dio->solve_all_DLX(f_write_tree, fname_tree, 0 /* verbose_level*/);
+		Dio->solve_all_DLX(f_write_tree, fname_tree.c_str(), 0 /* verbose_level*/);
 		nb_backtrack = Dio->nb_steps_betten;
 	}
 	else {

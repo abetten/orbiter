@@ -78,7 +78,7 @@ void representatives::free()
 }
 
 void representatives::init(action *A,
-		int nb_objects, char *prefix, int verbose_level)
+		int nb_objects, std::string &prefix, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -88,8 +88,9 @@ void representatives::init(action *A,
 		}
 	representatives::A = A;
 	representatives::nb_objects = nb_objects;
-	strcpy(representatives::prefix, prefix);
 	
+	representatives::prefix.assign(prefix);
+
 	
 	rep = NEW_int(nb_objects);
 	stab = new psims[nb_objects];
@@ -104,10 +105,26 @@ void representatives::init(action *A,
 		fusion[i] = -2;
 		handle[i] = -1;
 		}
-	sprintf(fname_rep, "%sclassification_reps.txt", prefix);
-	sprintf(fname_stabgens, "%sclassification_stabgens.bin", prefix);
-	sprintf(fname_fusion, "%sclassification_fusion.txt", prefix);
-	sprintf(fname_fusion_ge, "%sclassification_fusion_ge.bin", prefix);
+
+	fname_rep.assign(prefix);
+	fname_rep.append("classification_reps.txt");
+
+	//sprintf(fname_rep, "%sclassification_reps.txt", prefix);
+
+	fname_stabgens.assign(prefix);
+	fname_stabgens.append("classification_stabgens.bin");
+
+	//sprintf(fname_stabgens, "%sclassification_stabgens.bin", prefix);
+
+	fname_fusion.assign(prefix);
+	fname_fusion.append("classification_fusion.txt");
+
+	//sprintf(fname_fusion, "%sclassification_fusion.txt", prefix);
+
+	fname_fusion_ge.assign(prefix);
+	fname_fusion_ge.append("classification_fusion_ge.bin");
+
+	//sprintf(fname_fusion_ge, "%sclassification_fusion_ge.bin", prefix);
 }
 
 void representatives::write_fusion(int verbose_level)

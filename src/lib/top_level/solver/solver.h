@@ -132,8 +132,8 @@ public:
 		int &nb_col, 
 		long int *&Solutions, int &sol_length, int &nb_sol,
 		int &nb_backtrack, int &dt, 
-		int f_draw_system, const char *fname_system, 
-		int f_write_tree, const char *fname_tree, 
+		int f_draw_system, std::string &fname_system,
+		int f_write_tree, std::string &fname_tree,
 		int verbose_level);
 	void lexorder_test(long int *live_blocks2, int &nb_live_blocks2,
 		vector_ge *stab_gens, 

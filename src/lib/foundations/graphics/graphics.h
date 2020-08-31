@@ -219,10 +219,10 @@ struct grid_frame {
 
 class mp_graphics {
 
-	char fname_base[1000];
-	char fname_mp[2000];
-	char fname_log[2000];
-	char fname_tikz[2000];
+	//std::string fname_base;
+	std::string fname_mp;
+	std::string fname_log;
+	std::string fname_tikz;
 	std::ofstream fp_mp;
 	std::ofstream fp_log;
 	std::ofstream fp_tikz;
@@ -282,16 +282,16 @@ public:
 
 
 	mp_graphics();
-	mp_graphics(const char *file_name, 
+	mp_graphics(std::string &file_name,
 		int xmin, int ymin, int xmax, int ymax, 
 		int f_embedded, int f_sideways, int verbose_level);
 	~mp_graphics();
 	void default_values();
-	void init(const char *file_name, 
+	void init(std::string &file_name,
 		int xmin, int ymin, int xmax, int ymax, 
 		int f_embedded, int f_sideways, int verbose_level);
 	void exit(std::ostream &ost, int verbose_level);
-	void setup(const char *fname_base, 
+	void setup(std::string &fname_base,
 		int in_xmin, int in_ymin, int in_xmax, int in_ymax, 
 		int xmax, int ymax, int f_embedded, int f_sideways, 
 		double scale, double line_width, int verbose_level);
@@ -669,7 +669,7 @@ public:
 		int xmax, int ymax, int offset_x,
 		int f_switch_x, int no, int f_embedded,
 		int verbose_level);
-	void draw_density_multiple_curves(char *prefix,
+	void draw_density_multiple_curves(std::string &prefix,
 		int **Data, int *Data_size, int nb_data_sets,
 		int f_title, const char *title, int out_of,
 		const char *label_x,
@@ -684,7 +684,7 @@ public:
 		double log_base, int f_switch_x);
 	void y_to_pt_on_curve(int y_in, int &x, int &y,
 		int *outline_value, int *outline_number, int outline_sz);
-	void projective_plane_draw_grid(const char *fname, int xmax, int ymax,
+	void projective_plane_draw_grid(std::string &fname, int xmax, int ymax,
 		int f_with_points, int rad,
 		int q, int *Table, int nb,
 		int f_point_labels, char **Point_labels,
@@ -1102,8 +1102,10 @@ public:
 
 	tree();
 	~tree();
-	void init(const char *fname, int xmax, int ymax, int verbose_level);
-	void draw(char *fname, int xmax_in, int ymax_in, int xmax, int ymax, 
+	void init(std::string &fname,
+			int xmax, int ymax, int verbose_level);
+	void draw(std::string &fname,
+		int xmax_in, int ymax_in, int xmax, int ymax,
 		int rad, 
 		int f_circle, int f_circletext, int f_i, int f_edge_labels, 
 		int f_has_draw_vertex_callback, 
@@ -1326,7 +1328,7 @@ public:
 
 // draw_bitmap.cpp:
 
-void draw_bitmap(const char *fname, int *M, int m, int n,
+void draw_bitmap(std::string &fname, int *M, int m, int n,
 		int f_partition, int part_width,
 		int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
 		int f_box_width, int box_width,

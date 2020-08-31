@@ -188,7 +188,7 @@ void file_io::concatenate_files_into(const char *fname_in_mask, int N,
 }
 
 void file_io::poset_classification_read_candidates_of_orbit(
-	const char *fname, int orbit_at_level,
+	std::string &fname, int orbit_at_level,
 	long int *&candidates, int &nb_candidates, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -247,7 +247,7 @@ void file_io::poset_classification_read_candidates_of_orbit(
 }
 
 
-void file_io::read_candidates_for_one_orbit_from_file(const char *prefix,
+void file_io::read_candidates_for_one_orbit_from_file(std::string &prefix,
 		int level, int orbit_at_level, int level_of_candidates_file,
 		long int *S,
 		void (*early_test_func_callback)(long int *S, int len,
@@ -285,9 +285,13 @@ void file_io::read_candidates_for_one_orbit_from_file(const char *prefix,
 		cout << "read_orbit_rep_and_candidates_from_files "
 				"before generator_read_candidates_of_orbit" << endl;
 	}
-	char fname2[1000];
-	sprintf(fname2, "%s_lvl_%d_candidates.bin",
-			prefix, level_of_candidates_file);
+	string fname2;
+
+	char str[1000];
+	fname2.assign(prefix);
+	sprintf(str, "_lvl_%d_candidates.bin", level_of_candidates_file);
+	fname2.append(str);
+
 	poset_classification_read_candidates_of_orbit(
 		fname2, orbit_idx,
 		candidates1, nb_candidates1, verbose_level - 1);
@@ -334,19 +338,22 @@ void file_io::read_candidates_for_one_orbit_from_file(const char *prefix,
 
 
 
-int file_io::find_orbit_index_in_data_file(const char *prefix,
+int file_io::find_orbit_index_in_data_file(std::string &prefix,
 		int level_of_candidates_file, long int *starter,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname[1000];
+	string fname;
+	char str[1000];
 	int orbit_idx;
 
 	if (f_v) {
 		cout << "find_orbit_index_in_data_file" << endl;
 	}
 
-	sprintf(fname, "%s_lvl_%d", prefix, level_of_candidates_file);
+	fname.assign(prefix);
+	sprintf(str, "_lvl_%d", level_of_candidates_file);
+	fname.append(str);
 
 	if (file_size(fname) <= 0) {
 		cout << "find_orbit_index_in_data_file file "
@@ -961,6 +968,62 @@ void file_io::read_solutions_from_file(const char *fname,
 	}
 }
 
+
+void file_io::read_solutions_from_file_size_is_known(std::string &fname,
+	std::vector<std::vector<int> > &Solutions, int solution_size,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	char *buf;
+	char *p_buf;
+	vector<int> one_solution;
+	int i, a;
+
+	if (f_v) {
+		cout << "read_solutions_from_file_size_is_known" << endl;
+		cout << "read_solutions_from_file_size_is_known trying to read file "
+			<< fname << " of size " << file_size(fname) << endl;
+		cout << "read_solutions_from_file_size_is_known solution_size="
+			<< solution_size << endl;
+	}
+
+	if (file_size(fname.c_str()) < 0) {
+		cout << "file_io::read_solutions_from_file_size_is_known the file " << fname << " does not exist" << endl;
+		return;
+	}
+
+	buf = NEW_char(MY_OWN_BUFSIZE);
+
+	one_solution.resize(solution_size);
+
+	{
+		ifstream f(fname);
+
+		while (!f.eof()) {
+			f.getline(buf, MY_OWN_BUFSIZE, '\n');
+			p_buf = buf;
+			//cout << "buf='" << buf << "' nb=" << nb << endl;
+			s_scan_int(&p_buf, &a);
+
+			if (a == -1) {
+				break;
+			}
+
+			one_solution[0] = a;
+			for (i = 1; i < solution_size; i++) {
+				s_scan_int(&p_buf, &a);
+				one_solution[i] = a;
+			}
+			Solutions.push_back(one_solution);
+		}
+	}
+	FREE_char(buf);
+	if (f_v) {
+		cout << "read_solutions_from_file_size_is_known done" << endl;
+	}
+}
+
+
 void file_io::read_solutions_from_file_by_case(const char *fname,
 	int *nb_solutions, int *case_nb, int nb_cases,
 	int **&Solutions, int solution_size,
@@ -1063,7 +1126,7 @@ void file_io::read_solutions_from_file_by_case(const char *fname,
 	}
 }
 
-void file_io::copy_file_to_ostream(ostream &ost, char *fname)
+void file_io::copy_file_to_ostream(ostream &ost, const char *fname)
 {
 	//char buf[MY_OWN_BUFSIZE];
 
@@ -1751,7 +1814,7 @@ int file_io::count_number_of_lines_in_file(const char *fname, int verbose_level)
 	return nb_lines;
 }
 
-int file_io::try_to_read_file(const char *fname,
+int file_io::try_to_read_file(std::string &fname,
 	int &nb_cases, char **&data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1766,7 +1829,7 @@ int file_io::try_to_read_file(const char *fname,
 	buf = NEW_char(MY_OWN_BUFSIZE);
 
 
-	if (file_size(fname) <= 0) {
+	if (file_size(fname.c_str()) <= 0) {
 		goto return_false;
 	}
 
@@ -1881,7 +1944,7 @@ return_false:
 }
 
 void file_io::read_and_parse_data_file(
-	const char *fname, int &nb_cases,
+	std::string &fname, int &nb_cases,
 	char **&data, long int **&sets, int *&set_sizes,
 	int verbose_level)
 {
@@ -2018,7 +2081,7 @@ void file_io::free_data_fancy(int nb_cases,
 }
 
 void file_io::read_and_parse_data_file_fancy(
-	const char *fname,
+		std::string &fname,
 	int f_casenumbers,
 	int &nb_cases,
 	int *&Set_sizes, long int **&Sets,
@@ -2691,6 +2754,11 @@ int file_io::inc_file_get_number_of_geometries(
 	}
 	FREE_int(X);
 	return cnt;
+}
+
+long int file_io::file_size(std::string &fname)
+{
+	return file_size(fname.c_str());
 }
 
 long int file_io::file_size(const char *name)

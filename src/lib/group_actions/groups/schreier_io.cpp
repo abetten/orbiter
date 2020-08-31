@@ -1064,7 +1064,11 @@ void schreier::export_tree_as_layered_graph(int orbit_no,
 				"before LG->init" << endl;
 	}
 	//LG->add_data1(data1, 0/*verbose_level*/);
-	LG->init(nb_layers, Nb, "", verbose_level);
+
+	string dummy;
+	dummy.assign("");
+
+	LG->init(nb_layers, Nb, dummy, verbose_level);
 	if (f_v) {
 		cout << "schreier::export_tree_as_layered_graph "
 				"after LG->init" << endl;
@@ -1117,9 +1121,11 @@ void schreier::export_tree_as_layered_graph(int orbit_no,
 		LG->add_text(l, horizontal_position[j],
 				text, 0/*verbose_level*/);
 	}
-	char fname[1000];
+	char str[1000];
+	string fname;
 
-	sprintf(fname, fname_mask, orbit_no);
+	sprintf(str, fname_mask, orbit_no);
+	fname.assign(str);
 	LG->write_file(fname, 0 /*verbose_level*/);
 	FREE_OBJECT(LG);
 
@@ -1219,12 +1225,15 @@ void schreier::draw_tree2(const char *fname,
 	int x_min = 0, x_max = 1000000;
 	int y_min = 0, y_max = 1000000;
 	int factor_1000 = 1000;
-	char fname_full[1000];
+	string fname_full;
 
 	if (f_v) {
 		cout << "schreier::draw_tree2" << endl;
 		}
-	sprintf(fname_full, "%s.mp", fname);
+
+	fname_full.assign(fname);
+	fname_full.append(".mp");
+
 	mp_graphics G(fname_full, x_min, y_min, x_max, y_max,
 		f_embedded, f_sideways, verbose_level - 1);
 	G.out_xmin() = 0;

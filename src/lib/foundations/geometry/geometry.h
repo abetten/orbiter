@@ -537,7 +537,7 @@ public:
 		int x2, int y2, int z2,
 		int &x3, int &y3, int &z3, int verbose_level);
 	void save_incidence_matrix(char *fname, int verbose_level);
-	void draw_grid(char *fname,
+	void draw_grid(std::string &fname,
 			double tikz_global_scale, double tikz_global_line_width,
 			int xmax, int ymax,
 			int f_with_grid, int f_with_points, int point_density,
@@ -1136,8 +1136,8 @@ class incidence_structure {
 	uchar *encode_as_bitvector(int &encoding_length_in_uchar);
 	incidence_structure *apply_canonical_labeling(
 			long int *canonical_labeling, int verbose_level);
-	void save_as_csv(const char *fname_csv, int verbose_level);
-	void save_as_Levi_graph(const char *fname_bin,
+	void save_as_csv(std::string &fname_csv, int verbose_level);
+	void save_as_Levi_graph(std::string &fname_bin,
 			int f_point_labels, long int *point_labels,
 			int verbose_level);
 	void init_large_set(
@@ -2317,7 +2317,7 @@ public:
 		int *&Table, int verbose_level);
 	int elliptic_curve_addition(int *A6, int p1_rk, int p2_rk, 
 		int verbose_level);
-	void draw_point_set_in_plane(const char *fname, long int *Pts, int nb_pts,
+	void draw_point_set_in_plane(std::string &fname, long int *Pts, int nb_pts,
 		int f_with_points, int f_point_labels, int f_embedded, 
 		int f_sideways, int rad, int verbose_level);
 	void line_plane_incidence_matrix_restricted(long int *Lines, int nb_lines,
@@ -2421,14 +2421,14 @@ public:
 	int spread_size;
 	int nb_iso_types_of_spreads;
 
-	char prefix[1000];
+	std::string prefix;
 
-	char fname_dual_line_idx[2000];
-	char fname_self_dual_lines[2000];
-	char fname_spreads[2000];
-	char fname_isomorphism_type_of_spreads[2000];
-	char fname_dual_spread[2000];
-	char fname_self_dual_spreads[2000];
+	std::string fname_dual_line_idx;
+	std::string fname_self_dual_lines;
+	std::string fname_spreads;
+	std::string fname_isomorphism_type_of_spreads;
+	std::string fname_dual_spread;
+	std::string fname_self_dual_spreads;
 
 	int *dual_line_idx; // [nb_lines]
 	int *self_dual_lines; // [nb_self_dual_lines]
@@ -2446,7 +2446,7 @@ public:
 	void init(finite_field *F,
 			int f_load,
 			int nb_iso_types_of_spreads,
-			const char *path_to_spread_tables,
+			std::string &path_to_spread_tables,
 			int verbose_level);
 	void init_spread_table(int nb_spreads,
 			long int *spread_table, int *spread_iso_type,

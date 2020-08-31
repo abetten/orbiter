@@ -72,7 +72,7 @@ void orbit_transversal::init_from_schreier(
 }
 
 void orbit_transversal::read_from_file(
-		action *A, action *A2, const char *fname, int verbose_level)
+		action *A, action *A2, std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -155,7 +155,7 @@ void orbit_transversal::read_from_file(
 }
 
 void orbit_transversal::read_from_file_one_case_only(
-		action *A, action *A2, const char *fname,
+		action *A, action *A2, std::string &fname,
 		int case_nr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

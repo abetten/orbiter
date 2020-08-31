@@ -1277,7 +1277,7 @@ void linear_group::report(ostream &fp, int f_sylow, int f_group_table,
 			}
 
 			{
-				char fname2[1000];
+				string fname2;
 				int x_min = 0, y_min = 0;
 				int xmax = ONE_MILLION;
 				int ymax = ONE_MILLION;
@@ -1286,25 +1286,30 @@ void linear_group::report(ostream &fp, int f_sylow, int f_group_table,
 				int f_sideways = FALSE;
 				int *labels;
 
+				char str[1000];
+
 				int i;
 
 				labels = NEW_int(2 * n);
 
+				for (i = 0; i < n; i++) {
+					labels[i] = i;
+				}
+				if (n > 100) {
 					for (i = 0; i < n; i++) {
-						labels[i] = i;
+						labels[n + i] = n + i % 100;
 					}
-					if (n > 100) {
-						for (i = 0; i < n; i++) {
-							labels[n + i] = n + i % 100;
-						}
+				}
+				else {
+					for (i = 0; i < n; i++) {
+						labels[n + i] = n + i;
 					}
-					else {
-						for (i = 0; i < n; i++) {
-							labels[n + i] = n + i;
-						}
-					}
+				}
 
-				sprintf(fname2, "%s_group_table_order_%ld", label.c_str(), n);
+				fname2.assign(label);
+				sprintf(str, "_group_table_order_%ld", n);
+				fname2.append(str);
+
 				{
 				mp_graphics G(fname2, x_min, y_min, xmax, ymax, f_embedded, f_sideways, verbose_level - 1);
 				//G.setup(fname2, 0, 0, ONE_MILLION, ONE_MILLION, xmax, ymax, f_embedded, scale, line_width);

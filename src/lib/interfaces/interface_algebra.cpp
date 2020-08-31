@@ -19,9 +19,6 @@ namespace interfaces {
 
 interface_algebra::interface_algebra()
 {
-	//argc = 0;
-	//argv = NULL;
-
 	f_linear_group = FALSE;
 	Linear_group_description = NULL;
 	F = NULL;
@@ -50,7 +47,6 @@ interface_algebra::interface_algebra()
 	f_young_symmetrizer = FALSE;
 	young_symmetrizer_n = 0;
 	f_young_symmetrizer_sym_4 = FALSE;
-	//f_classify_surfaces_through_arcs_and_trihedral_pairs = FALSE;
 	f_poset_classification_control = FALSE;
 	Control = NULL;
 }
@@ -175,7 +171,8 @@ void interface_algebra::read_arguments(int argc,
 		}
 		else if (strcmp(argv[i], "-group_theoretic_activities") == 0) {
 			f_group_theoretic_activity = TRUE;
-			Group_theoretic_activity_description = NEW_OBJECT(group_theoretic_activity_description);
+			Group_theoretic_activity_description =
+					NEW_OBJECT(group_theoretic_activity_description);
 			i += Group_theoretic_activity_description->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
@@ -210,7 +207,8 @@ void interface_algebra::read_arguments(int argc,
 			p_max = atoi(argv[++i]);
 			deg_min = atoi(argv[++i]);
 			deg_max = atoi(argv[++i]);
-			cout << "-search_for_primitive_polynomial_in_range " << p_min << " " << p_max << " " << deg_min << " " << deg_max << " " << endl;
+			cout << "-search_for_primitive_polynomial_in_range " << p_min
+					<< " " << p_max << " " << deg_min << " " << deg_max << " " << endl;
 		}
 		else if (strcmp(argv[i], "-make_table_of_irreducible_polynomials") == 0) {
 			f_make_table_of_irreducible_polynomials = TRUE;
@@ -233,14 +231,16 @@ void interface_algebra::read_arguments(int argc,
 			eigenstuff_n = atoi(argv[++i]);
 			eigenstuff_q = atoi(argv[++i]);
 			eigenstuff_coeffs = argv[++i];
-			cout << "-eigenstuff_matrix_direct " << eigenstuff_n << " " << eigenstuff_q << " " << eigenstuff_coeffs << endl;
+			cout << "-eigenstuff_matrix_direct " << eigenstuff_n
+					<< " " << eigenstuff_q << " " << eigenstuff_coeffs << endl;
 		}
 		else if (strcmp(argv[i], "-eigenstuff_matrix_from_file") == 0) {
 			f_eigenstuff_matrix_from_file = TRUE;
 			eigenstuff_n = atoi(argv[++i]);
 			eigenstuff_q = atoi(argv[++i]);
 			eigenstuff_fname = argv[++i];
-			cout << "-eigenstuff_matrix_from_file " << eigenstuff_n << " " << eigenstuff_q << " " << eigenstuff_fname << endl;
+			cout << "-eigenstuff_matrix_from_file " << eigenstuff_n
+					<< " " << eigenstuff_q << " " << eigenstuff_fname << endl;
 		}
 
 		else if (strcmp(argv[i], "-young_symmetrizer") == 0) {

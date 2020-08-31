@@ -117,6 +117,10 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 				Descr->element_description_text, verbose_level);
 	}
 
+	if (Descr->f_find_subgroup) {
+		do_find_subgroups(Descr->find_subgroup_order, verbose_level);
+	}
+
 
 
 
@@ -679,6 +683,90 @@ void group_theoretic_activity::normalizer_of_cyclic_subgroup(
 
 	if (f_v) {
 		cout << "group_theoretic_activity::normalizer_of_cyclic_subgroup done" << endl;
+	}
+}
+
+
+void group_theoretic_activity::do_find_subgroups(
+		int order_of_subgroup,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_find_subgroups" << endl;
+	}
+
+	algebra_global_with_action Algebra;
+	sims *S;
+
+	int nb_subgroups;
+	strong_generators *H_gens;
+	strong_generators *N_gens;
+
+
+	S = LG->Strong_gens->create_sims(verbose_level);
+
+	Algebra.find_subgroups(
+			LG->A2, S,
+			order_of_subgroup,
+			LG->A2->label,
+			nb_subgroups,
+			H_gens,
+			N_gens,
+			verbose_level);
+
+
+	cout << "We found " << nb_subgroups << " subgroups" << endl;
+
+
+	string fname;
+	string title;
+	const char *author = "Orbiter";
+	const char *extras_for_preamble = "";
+
+	file_io Fio;
+
+	fname.assign(LG->A2->label);
+	fname.append("_report.tex");
+
+
+	char str[1000];
+
+	sprintf(str, "Subgroups of order $%d$ in $", order_of_subgroup);
+	title.assign(str);
+	title.append(LG->A2->label_tex);
+	title.append("$");
+
+
+	{
+		ofstream fp(fname);
+		latex_interface L;
+		//latex_head_easy(fp);
+		L.head(fp,
+			FALSE /* f_book */, TRUE /* f_title */,
+			title.c_str(), author,
+			FALSE /*f_toc*/, FALSE /* f_landscape*/, FALSE /* f_12pt*/,
+			TRUE /*f_enlarged_page*/, TRUE /* f_pagenumbers*/,
+			extras_for_preamble);
+
+		LG->A2->report_groups_and_normalizers(fp,
+				nb_subgroups, H_gens, N_gens,
+				verbose_level);
+
+		L.foot(fp);
+	}
+
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+	FREE_OBJECT(S);
+	FREE_OBJECTS(H_gens);
+	FREE_OBJECTS(N_gens);
+
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_find_subgroups done" << endl;
 	}
 }
 
@@ -3404,8 +3492,8 @@ void group_theoretic_activity::do_spread_classify(int k, int verbose_level)
 }
 
 void group_theoretic_activity::do_packing_classify(int dimension_of_spread_elements,
-		const char *spread_selection_text,
-		const char *spread_tables_prefix,
+		std::string &spread_selection_text,
+		std::string &spread_tables_prefix,
 		int starter_size,
 		packing_classify *&P,
 		int verbose_level)

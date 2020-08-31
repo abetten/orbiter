@@ -23,32 +23,48 @@ static void print_table_bottom(ofstream &fp);
 static void print_set_special(ofstream &fp, long int *set, int sz);
 
 void poset_classification::draw_poset_fname_base_aux_poset(
-		char *fname, int depth)
+		std::string &fname, int depth)
 {
-	snprintf(fname, 1000, "%s_aux_poset_lvl_%d", problem_label_with_path.c_str(), depth);
+	char str[1000];
+
+	fname.assign(problem_label_with_path);
+	sprintf(str, "_aux_poset_lvl_%d", depth);
+	fname.append(str);
 }
 
 void poset_classification::draw_poset_fname_base_poset_lvl(
-		char *fname, int depth)
+		std::string &fname, int depth)
 {
-	snprintf(fname, 1000, "%s_poset_lvl_%d", problem_label_with_path.c_str(), depth);
+	char str[1000];
+
+	fname.assign(problem_label_with_path);
+	sprintf(str, "_poset_lvl_%d", depth);
+	fname.append(str);
 }
 
 void poset_classification::draw_poset_fname_base_tree_lvl(
-		char *fname, int depth)
+		std::string &fname, int depth)
 {
-	snprintf(fname, 1000, "%s_tree_lvl_%d", problem_label_with_path.c_str(), depth);
+	char str[1000];
+
+	fname.assign(problem_label_with_path);
+	sprintf(str, "_tree_lvl_%d", depth);
+	fname.append(str);
 }
 
 void poset_classification::draw_poset_fname_base_poset_detailed_lvl(
-		char *fname, int depth)
+		std::string &fname, int depth)
 {
-	snprintf(fname, 1000, "%s_poset_detailed_lvl_%d", problem_label_with_path.c_str(), depth);
+	char str[1000];
+
+	fname.assign(problem_label_with_path);
+	sprintf(str, "_poset_detailed_lvl_%d", depth);
+	fname.append(str);
 }
 
 
 void poset_classification::write_treefile_and_draw_tree(
-		const char *fname_base, int lvl, int xmax, int ymax,
+		std::string &fname_base, int lvl, int xmax, int ymax,
 		int rad, int f_embedded,
 		int verbose_level)
 {
@@ -73,19 +89,22 @@ void poset_classification::write_treefile_and_draw_tree(
 	}
 }
 
-int poset_classification::write_treefile(const char *fname_base,
+int poset_classification::write_treefile(std::string &fname_base,
 		int lvl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	char fname1[1000];
+	char str[1000];
+	string fname1;
 	int i, level;
 	file_io Fio;
 
 	if (f_v) {
 		cout << "poset_classification::write_treefile" << endl;
 	}
-	snprintf(fname1, 1000, "%s_%d.tree", fname_base, lvl);
+	fname1.assign(fname_base);
+	sprintf(str, "_%d.tree", lvl);
+	fname1.append(str);
 	
 	if  (first_poset_orbit_node_at_level[lvl + 1] < MAX_NODES_FOR_TREEFILE) {
 		{
@@ -135,14 +154,15 @@ int poset_classification::write_treefile(const char *fname_base,
 	}
 }
 
-void poset_classification::draw_tree(const char *fname_base, int lvl,
+void poset_classification::draw_tree(std::string &fname_base, int lvl,
 	int xmax, int ymax, int rad, int f_embedded,
 	int f_sideways, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	char fname[1000];
-	char fname1[1000];
+	string fname;
+	string fname1;
+	char str[1000];
 	tree T;
 	//int xmax = 1000;
 	//int ymax = 1000;
@@ -159,9 +179,15 @@ void poset_classification::draw_tree(const char *fname_base, int lvl,
 	if (f_v) {
 		cout << "poset_classification::draw_tree" << endl;
 	}
-	snprintf(fname, 1000, "%s_%d", fname_base, lvl);
-	snprintf(fname1, 1000, "%s_%d.tree", fname_base, lvl);
-			
+	fname.assign(fname_base);
+	sprintf(str, "_%d", lvl);
+	fname.assign(fname_base);
+
+	fname1.assign(fname_base);
+	sprintf(str, "_%d.tree", lvl);
+	fname1.assign(fname_base);
+
+
 	if (Fio.file_size(fname1)) {
 		if (f_vv) {
 			cout << "reading treefile" << endl;
@@ -255,7 +281,7 @@ void poset_classification::draw_tree(const char *fname_base, int lvl,
 	}
 }
 
-void poset_classification::draw_tree_low_level(const char *fname, int nb_nodes,
+void poset_classification::draw_tree_low_level(std::string &fname, int nb_nodes,
 	int *coord_xyw, int *perm, int *perm_inv, 
 	int f_draw_points, int f_draw_extension_points,
 	int f_draw_aut_group_order,
@@ -267,7 +293,7 @@ void poset_classification::draw_tree_low_level(const char *fname, int nb_nodes,
 	int x_min = 0, x_max = 10000;
 	int y_min = 0, y_max = 10000;
 	//int factor_1000 = 1000;
-	char fname_full[1000];
+	string fname_full;
 	double scale = 0.3;
 	double line_width = 1.0;
 	file_io Fio;
@@ -278,7 +304,10 @@ void poset_classification::draw_tree_low_level(const char *fname, int nb_nodes,
 		ymax = 3000;
 	if (ymax == 0)
 		ymax = 3000;
-	snprintf(fname_full, 1000, "%s.mp", fname);
+
+	fname_full.assign(fname);
+	fname_full.append(".mp");
+
 	if (f_v) {
 		cout << "poset_classification::draw_tree_low_level "
 				"xmax = " << xmax << " ymax = " << ymax
@@ -297,8 +326,10 @@ void poset_classification::draw_tree_low_level(const char *fname, int nb_nodes,
 		//cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
 #endif
 		mp_graphics G;
-		G.setup(fname, x_min, y_min, x_max, y_max, xmax, ymax,
-				f_embedded, f_sideways, scale, line_width, verbose_level - 1);
+		G.setup(fname,
+				x_min, y_min, x_max, y_max, xmax, ymax,
+				f_embedded, f_sideways, scale, line_width,
+				verbose_level - 1);
 		//G.frame(0.05);
 
 		//G.header();
@@ -641,7 +672,7 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 	FREE_int(Qy);
 }
 
-void poset_classification::draw_poset_full(const char *fname_base,
+void poset_classification::draw_poset_full(std::string &fname_base,
 		int depth, int data, int f_embedded, int f_sideways, int rad, double scale, double line_width,
 		double x_stretch,
 		int verbose_level)
@@ -659,8 +690,9 @@ void poset_classification::draw_poset_full(const char *fname_base,
 				"after make_full_poset_graph" << endl;
 	}
 
-	char fname_base1[1000];
-	char fname1[2000];
+	char str[1000];
+	string fname1;
+	string fname2;
 	int xmax = 1000000;
 	int ymax = 1000000;
 	int x_max = 10000;
@@ -674,8 +706,10 @@ void poset_classification::draw_poset_full(const char *fname_base,
 	//double scale = .45;
 	//double line_width = 1.5;
 
-	snprintf(fname_base1, 1000, "%s_poset_full_lvl_%d", fname_base, depth);
-	snprintf(fname1, 2000, "%s.layered_graph", fname_base1);
+	sprintf(str, "_poset_full_lvl_%d.layered_graph", depth);
+
+	fname1.assign(fname_base);
+	fname1.append(str);
 	
 	LG->write_file(fname1, 0 /*verbose_level*/);
 	if (f_v) {
@@ -695,7 +729,12 @@ void poset_classification::draw_poset_full(const char *fname_base,
 		f_rotated, 
 		scale, line_width);
 	
-	LG->draw_with_options(fname_base1, &O, 0 /* verbose_level */);
+	sprintf(str, "_poset_full_lvl_%d", depth);
+
+	fname2.assign(fname_base);
+	fname2.append(str);
+
+	LG->draw_with_options(fname2, &O, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "poset_classification::draw_poset_full "
@@ -710,7 +749,7 @@ void poset_classification::draw_poset_full(const char *fname_base,
 }
 
 void poset_classification::draw_poset(
-		const char *fname_base,
+		std::string &fname_base,
 		int depth, int data, int f_embedded, int f_sideways, int rad, double scale, double line_width,
 		int verbose_level)
 {
@@ -755,14 +794,14 @@ void poset_classification::draw_poset(
 				"after make_poset_graph_detailed" << endl;
 	}
 
-	char fname_base1[1000];
-	char fname1[2000];
-	char fname_base2[1000];
-	char fname2[2000];
-	char fname_base3[1000];
-	char fname3[2000];
-	char fname_base4[1000];
-	char fname4[2000];
+	string fname_base1;
+	string fname_base2;
+	string fname_base3;
+	string fname_base4;
+	string fname1;
+	string fname2;
+	string fname3;
+	string fname4;
 	int xmax = 1000000;
 	int ymax = 1000000;
 	int x_max = 10000;
@@ -781,10 +820,15 @@ void poset_classification::draw_poset(
 	draw_poset_fname_base_tree_lvl(fname_base3, depth);
 	draw_poset_fname_base_poset_detailed_lvl(fname_base4, depth);
 
-	snprintf(fname1, 2000, "%s.layered_graph", fname_base1);
-	snprintf(fname2, 2000, "%s.layered_graph", fname_base2);
-	snprintf(fname3, 2000, "%s.layered_graph", fname_base3);
-	snprintf(fname4, 2000, "%s.layered_graph", fname_base4);
+	fname1.assign(fname_base1);
+	fname2.assign(fname_base2);
+	fname3.assign(fname_base3);
+	fname4.assign(fname_base4);
+
+	fname1.append(".layered_graph");
+	fname2.append(".layered_graph");
+	fname3.append(".layered_graph");
+	fname4.append(".layered_graph");
 
 	if (f_v) {
 		cout << "poset_classification::draw_poset "
@@ -847,7 +891,7 @@ void poset_classification::draw_poset(
 }
 
 void poset_classification::draw_level_graph(
-		const char *fname_base,
+		std::string &fname_base,
 		int depth, int data, int level,
 		int f_embedded, int f_sideways,
 		int verbose_level)
@@ -864,8 +908,9 @@ void poset_classification::draw_level_graph(
 	make_level_graph(depth, LG, data, level, verbose_level - 1);
 
 
-	char fname_base1[1000];
-	char fname[2000];
+	string fname_base1;
+	string fname;
+	char str[1000];
 	int xmax = 1000000;
 	int ymax = 1000000;
 	int x_max = 10000;
@@ -880,9 +925,15 @@ void poset_classification::draw_level_graph(
 	double scale = .45;
 	double line_width = 1.5;
 
-	snprintf(fname_base1, 1000, "%s_lvl_%d_bipartite_lvl_%d",
-			fname_base, depth, level);
-	snprintf(fname, 2000, "%s.layered_graph", fname_base1);
+	fname_base1.assign(fname_base);
+	sprintf(str, "_lvl_%d_bipartite_lvl_%d", depth, level);
+	fname_base1.append(str);
+
+	fname.assign(fname_base);
+	sprintf(str, "_lvl_%d_bipartite_lvl_%d.layered_graph", depth, level);
+	fname.append(str);
+
+	//snprintf(fname, 2000, "%s.layered_graph", fname_base1);
 	LG->write_file(fname, 0 /*verbose_level*/);
 	layered_graph_draw_options O;
 
@@ -1273,7 +1324,9 @@ void poset_classification::make_full_poset_graph(
 			cout << "Nb_elements[" << lvl << "]=" << Nb_elements[lvl] << endl;
 		}
 	}
-	LG->init(nb_layers, Nb_elements, "", verbose_level);
+	string dummy;
+	dummy.assign("");
+	LG->init(nb_layers, Nb_elements, dummy, verbose_level);
 
 	if (f_v) {
 		cout << "poset_classification::make_full_poset_graph "
@@ -1587,7 +1640,11 @@ void poset_classification::make_auxiliary_graph(int depth,
 				"before LG->init" << endl;
 	}
 	LG->add_data1(data1, 0/*verbose_level*/);
-	LG->init(nb_layers, Nb, "", verbose_level - 1);
+
+	string dummy;
+	dummy.assign("");
+
+	LG->init(nb_layers, Nb, dummy, verbose_level - 1);
 	if (f_vv) {
 		cout << "poset_classification::make_auxiliary_graph "
 				"after LG->init" << endl;
@@ -1803,7 +1860,11 @@ void poset_classification::make_graph(int depth,
 		cout << "poset_classification::make_graph before LG->init" << endl;
 	}
 	LG->add_data1(data1, 0/*verbose_level*/);
-	LG->init(nb_layers, Nb, "", verbose_level);
+
+	string dummy;
+	dummy.assign("");
+
+	LG->init(nb_layers, Nb, dummy, verbose_level);
 	if (f_vv) {
 		cout << "poset_classification::make_graph after LG->init" << endl;
 	}
@@ -2015,7 +2076,11 @@ void poset_classification::make_level_graph(int depth,
 		cout << endl;
 	}
 	LG->add_data1(data1, 0/*verbose_level*/);
-	LG->init(nb_layers, Nb, "", verbose_level);
+
+	string dummy;
+	dummy.assign("");
+
+	LG->init(nb_layers, Nb, dummy, verbose_level);
 	if (f_vv) {
 		cout << "poset_classification::make_level_graph "
 				"after LG->init" << endl;
@@ -2247,7 +2312,11 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 		cout << endl;
 	}
 	LG->add_data1(data1, 0/*verbose_level*/);
-	LG->init(nb_layers, Nb, "", verbose_level);
+
+	string dummy;
+	dummy.assign("");
+
+	LG->init(nb_layers, Nb, dummy, verbose_level);
 	if (f_vv) {
 		cout << "poset_classification::make_poset_graph_detailed "
 				"after LG->init" << endl;

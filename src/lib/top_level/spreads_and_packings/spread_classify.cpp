@@ -1038,11 +1038,15 @@ void spread_classify::lifting_prepare_function_new(
 				"after CG->init_with_point_labels" << endl;
 	}
 	
-	char fname_clique_graph[2000];
+	string fname_clique_graph;
+	char str[1000];
 	file_io Fio;
 
-	snprintf(fname_clique_graph, 2000, "%sgraph_%d.bin",
-			E->output_prefix, starter_case);
+	fname_clique_graph.assign(E->output_prefix);
+	sprintf(str, "graph_%d.bin", starter_case);
+	fname_clique_graph.append(str);
+	//snprintf(fname_clique_graph, 2000, "%sgraph_%d.bin",
+	//		E->output_prefix, starter_case);
 	CG->save(fname_clique_graph, verbose_level - 1);
 	if (f_v) {
 		cout << "Written file " << fname_clique_graph

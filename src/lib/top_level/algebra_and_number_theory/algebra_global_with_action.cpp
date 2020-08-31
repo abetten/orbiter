@@ -686,7 +686,7 @@ void algebra_global_with_action::centralizer_brute_force(int q, int d,
 
 	sims *Cent;
 
-	Cent = A->create_sims_from_generators_with_target_group_order_int(
+	Cent = A->create_sims_from_generators_with_target_group_order_lint(
 			gens, sz, 0 /* verbose_level */);
 	Cent->extract_strong_generators_in_order(*SG, tl,
 			0 /* verbose_level */);
@@ -2603,8 +2603,8 @@ void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 void algebra_global_with_action::packing_init(
 		poset_classification_control *Control, linear_group *LG,
 		int dimension_of_spread_elements,
-		int f_select_spread, const char *select_spread_text,
-		const char *path_to_spread_tables,
+		int f_select_spread, std::string &select_spread_text,
+		std::string &path_to_spread_tables,
 		packing_classify *&P,
 		int verbose_level)
 {
@@ -2869,6 +2869,55 @@ void algebra_global_with_action::normalizer_of_cyclic_subgroup(
 
 	if (f_v) {
 		cout << "algebra_global_with_action::normalizer_of_cyclic_subgroup done" << endl;
+	}
+}
+
+void algebra_global_with_action::find_subgroups(
+		action *A, sims *S,
+		int subgroup_order,
+		std::string &label,
+		int &nb_subgroups,
+		strong_generators *&H_gens,
+		strong_generators *&N_gens,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	string prefix;
+	char str[1000];
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_subgroups label=" << label
+				<< " subgroup_order=" << subgroup_order << endl;
+	}
+	prefix.assign(label);
+	sprintf(str, "_find_subgroup_of_order_%d", subgroup_order);
+	prefix.append(str);
+
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_subgroups "
+				"before find_subgroup_using_MAGMA" << endl;
+	}
+
+
+	A->find_subgroups_using_MAGMA(prefix,
+			S, subgroup_order,
+			nb_subgroups, H_gens, N_gens, verbose_level);
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_subgroups "
+				"after find_subgroup_using_MAGMA" << endl;
+	}
+
+
+	//cout << "generators for the subgroup are:" << endl;
+	//gens->print_generators_tex();
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_subgroups done" << endl;
 	}
 }
 

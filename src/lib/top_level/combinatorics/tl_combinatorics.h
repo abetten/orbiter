@@ -180,7 +180,7 @@ class create_graph_description {
 public:
 
 	int f_load_from_file;
-	const char *fname;
+	std::string fname;
 
 	int f_edge_list;
 	int n;
@@ -253,8 +253,8 @@ public:
 	int N;
 	int *Adj;
 
-	char label[1000];
-	char label_tex[1000];
+	std::string label;
+	std::string label_tex;
 
 	create_graph();
 	~create_graph();
@@ -1007,10 +1007,10 @@ public:
 	int nb_lines; // = DC->A2->degree
 	int search_depth;
 
-	char starter_directory_name[1000];
-	char prefix[1000];
-	char path[1000];
-	char prefix_with_directory[1000];
+	std::string starter_directory_name;
+	std::string prefix;
+	std::string path;
+	std::string prefix_with_directory;
 
 
 	int f_lexorder_test;
@@ -1018,7 +1018,7 @@ public:
 
 
 	long int *Design_table; // [nb_designs * design_size]
-	const char *design_table_prefix;
+	std::string design_table_prefix;
 	int nb_designs; // = SetOrb->used_length;
 	int nb_colors; // = DC->get_nb_colors_as_two_design(0 /* verbose_level */);
 	int *design_color_table; // [nb_designs]
@@ -1062,10 +1062,10 @@ public:
 	void null();
 	void freeself();
 	void init(design_create *DC,
-			const char *input_prefix, const char *base_fname,
+			std::string &input_prefix, std::string &base_fname,
 			int search_depth,
 			int f_lexorder_test,
-			const char *design_table_prefix,
+			std::string &design_table_prefix,
 			int verbose_level);
 	void init_designs(orbit_of_sets *SetOrb,
 			int verbose_level);
@@ -1087,9 +1087,9 @@ public:
 	int designs_are_disjoint(int i, int j);
 	void process_starter_case(
 			long int *starter_set, int starter_set_sz,
-			strong_generators *SG, const char *prefix,
+			strong_generators *SG, std::string &prefix,
 			const char *group_label, int orbit_length,
-			int f_read_solution_file, const char *solution_file_name,
+			int f_read_solution_file, std::string &solution_file_name,
 			long int *&Large_sets, int &nb_large_sets,
 			int f_compute_normalizer_orbits, strong_generators *N_gens,
 			int verbose_level);

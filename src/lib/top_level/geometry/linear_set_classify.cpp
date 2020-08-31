@@ -727,22 +727,27 @@ void linear_set_classify::read_data_file(int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int depth_completed;
-	char fname[1000];
+	string fname;
+	char str[1000];
 
 	if (f_v) {
 		cout << "linear_set_classify::read_data_file" << endl;
 	}
-	sprintf(fname, "%s_%d.data", Gen->get_problem_label_with_path(), depth);
+	fname.assign(Gen->get_problem_label_with_path());
+	sprintf(str, "_%d.data", depth);
+	fname.append(str);
+
 	Gen->read_data_file(depth_completed, fname, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "linear_set_classify::read_data_file after read_data_file" << endl;
 	}
 
 	int level;
-	char prefix[1000];
+	string prefix;
 
 
-	sprintf(prefix, "%sb", Gen->get_problem_label_with_path());
+	prefix.assign(Gen->get_problem_label_with_path());
+	prefix.append("b");
 	for (level = 0; level < depth; level++) {
 		if (f_v) {
 			cout << "linear_set_classify::read_data_file before "
@@ -1627,7 +1632,7 @@ void linear_set_classify::do_compute_stabilizer(
 	target_go = go_int * group_index;
 	cout << "target_go = " << target_go << endl;
 	cout << "creating group of order " << target_go << ":" << endl;
-	Aut = Aq->create_sims_from_generators_with_target_group_order_int(
+	Aut = Aq->create_sims_from_generators_with_target_group_order_lint(
 		aut_gens, target_go, verbose_level);
 	cout << "Stabilizer created successfully" << endl;
 

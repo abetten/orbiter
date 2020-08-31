@@ -794,9 +794,12 @@ void projective_space_job::perform_job_for_one_set(
 		}
 
 		if (f_save_system) {
-			char fname_system[1000];
+			char str[1000];
+			string fname_system;
 
-			sprintf(fname_system, "system_%d.diophant", back_end_counter);
+			sprintf(str, "system_%d.diophant", back_end_counter);
+			fname_system.assign(str);
+			//sprintf(fname_system, "system_%d.diophant", back_end_counter);
 			cout << "perform_job_for_one_set saving the system "
 					"to file " << fname_system << endl;
 			D->save_in_general_format(fname_system, 0 /* verbose_level */);
@@ -876,9 +879,13 @@ void projective_space_job::perform_job_for_one_set(
 		}
 
 		if (f_save_system) {
-			char fname_system[1000];
+			char str[1000];
+			string fname_system;
 
-			sprintf(fname_system, "system_%d.diophant", back_end_counter);
+			sprintf(str, "system_%d.diophant", back_end_counter);
+			fname_system.assign(str);
+
+			//sprintf(fname_system, "system_%d.diophant", back_end_counter);
 			cout << "perform_job_for_one_set saving the system "
 					"to file " << fname_system << endl;
 			D->save_in_general_format(fname_system, 0 /* verbose_level */);
@@ -962,9 +969,13 @@ void projective_space_job::perform_job_for_one_set(
 			D->print_tight();
 		}
 		if (f_save_system) {
-			char fname_system[1000];
+			char str[1000];
+			string fname_system;
 
-			sprintf(fname_system, "system_%d.diophant", back_end_counter);
+			sprintf(str, "system_%d.diophant", back_end_counter);
+			fname_system.assign(str);
+
+			//sprintf(fname_system, "system_%d.diophant", back_end_counter);
 			cout << "perform_job_for_one_set saving the system "
 					"to file " << fname_system << endl;
 			D->save_in_general_format(fname_system, 0 /* verbose_level */);
@@ -1084,13 +1095,13 @@ void projective_space_job::do_canonical_form(
 
 	if (f_v) {
 		cout << "projective_space_job::do_canonical_form" << endl;
-		}
+	}
 
 	P = NEW_OBJECT(projective_space);
 
 	if (f_v) {
 		cout << "projective_space_job::do_canonical_form before P->init" << endl;
-		}
+	}
 
 	P->init(Descr->n, F,
 		TRUE /* f_init_incidence_structure */,
@@ -1098,7 +1109,7 @@ void projective_space_job::do_canonical_form(
 
 	if (f_v) {
 		cout << "projective_space_job::do_canonical_form after P->init" << endl;
-		}
+	}
 
 	strong_generators *SG;
 	action *A_linear;
@@ -1113,7 +1124,7 @@ void projective_space_job::do_canonical_form(
 	if (f_v) {
 		cout << "projective_space_job::do_canonical_form before "
 				"set_stabilizer_in_projective_space" << endl;
-		}
+	}
 	SG = A_linear->set_stabilizer_in_projective_space(
 		P,
 		set, set_size, canonical_pt, NULL /* canonical_set_or_NULL */,
@@ -1128,8 +1139,7 @@ void projective_space_job::do_canonical_form(
 
 	if (f_v) {
 		cout << "projective_space_job::do_canonical_form done" << endl;
-		}
-
+	}
 }
 
 

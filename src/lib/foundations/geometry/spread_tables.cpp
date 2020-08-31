@@ -29,6 +29,7 @@ spread_tables::spread_tables()
 	spread_size = 0;
 	nb_iso_types_of_spreads = 0;
 
+#if 0
 	prefix[0] = 0;
 
 	fname_dual_line_idx[0] = 0;
@@ -37,6 +38,7 @@ spread_tables::spread_tables()
 	fname_isomorphism_type_of_spreads[0] = 0;
 	fname_dual_spread[0] = 0;
 	fname_self_dual_spreads[0] = 0;
+#endif
 
 	dual_line_idx = NULL;
 	self_dual_lines = NULL;
@@ -81,7 +83,7 @@ spread_tables::~spread_tables()
 void spread_tables::init(finite_field *F,
 		int f_load,
 		int nb_iso_types_of_spreads,
-		const char *path_to_spread_tables,
+		std::string &path_to_spread_tables,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -114,17 +116,36 @@ void spread_tables::init(finite_field *F,
 	}
 
 
-	snprintf(spread_tables::prefix, 1000, "%sspread_%d", path_to_spread_tables, NT.i_power_j(q, 2));
+	prefix.assign(path_to_spread_tables);
+
+	char str[1000];
+	sprintf(str, "spread_%d", NT.i_power_j(q, 2));
+
+	prefix.append(str);
+
+	//snprintf(spread_tables::prefix, 1000, "%sspread_%d", path_to_spread_tables, NT.i_power_j(q, 2));
 	if (f_v) {
 		cout << "spread_tables::init prefix=" << spread_tables::prefix << endl;
 	}
 
-	snprintf(fname_dual_line_idx, 2000, "%s_dual_line_idx.csv", spread_tables::prefix);
-	snprintf(fname_self_dual_lines, 2000, "%s_self_dual_lines.csv", spread_tables::prefix);
-	snprintf(fname_spreads, 2000, "%s_spreads.csv", spread_tables::prefix);
-	snprintf(fname_isomorphism_type_of_spreads, 2000, "%s_spreads_iso.csv", spread_tables::prefix);
-	snprintf(fname_dual_spread, 2000, "%s_dual_spread_idx.csv", spread_tables::prefix);
-	snprintf(fname_self_dual_spreads, 2000, "%s_self_dual_spreads.csv", spread_tables::prefix);
+	fname_dual_line_idx.assign(prefix);
+	fname_dual_line_idx.append("_dual_line_idx.csv");
+	//snprintf(fname_dual_line_idx, 2000, "%s_dual_line_idx.csv", spread_tables::prefix);
+	fname_self_dual_lines.assign(prefix);
+	fname_self_dual_lines.append("_self_dual_line_idx.csv");
+	//snprintf(fname_self_dual_lines, 2000, "%s_self_dual_lines.csv", spread_tables::prefix);
+	fname_spreads.assign(prefix);
+	fname_spreads.append("_spreads.csv");
+	//snprintf(fname_spreads, 2000, "%s_spreads.csv", spread_tables::prefix);
+	fname_isomorphism_type_of_spreads.assign(prefix);
+	fname_isomorphism_type_of_spreads.append("_spreads_iso.csv");
+	//snprintf(fname_isomorphism_type_of_spreads, 2000, "%s_spreads_iso.csv", spread_tables::prefix);
+	fname_dual_spread.assign(prefix);
+	fname_dual_spread.append("_dual_spread_idx.csv");
+	//snprintf(fname_dual_spread, 2000, "%s_dual_spread_idx.csv", spread_tables::prefix);
+	fname_self_dual_spreads.assign(prefix);
+	fname_self_dual_spreads.append("_self_dual_spreads.csv");
+	//snprintf(fname_self_dual_spreads, 2000, "%s_self_dual_spreads.csv", spread_tables::prefix);
 
 
 	if (f_v) {
@@ -309,7 +330,7 @@ void spread_tables::save(int verbose_level)
 				"writing file " << fname_spreads << endl;
 	}
 
-	Fio.lint_matrix_write_csv(fname_spreads,
+	Fio.lint_matrix_write_csv(fname_spreads.c_str(),
 			spread_table, nb_spreads, spread_size);
 	if (f_v) {
 		cout << "spread_tables::save "
@@ -323,7 +344,7 @@ void spread_tables::save(int verbose_level)
 	}
 	Fio.int_vec_write_csv(
 			spread_iso_type, nb_spreads,
-			fname_isomorphism_type_of_spreads,
+			fname_isomorphism_type_of_spreads.c_str(),
 			"isomorphism_type_of_spread");
 	if (f_v) {
 		cout << "spread_tables::save, "
@@ -338,7 +359,7 @@ void spread_tables::save(int verbose_level)
 	}
 	Fio.lint_vec_write_csv(
 			dual_spread_idx, nb_spreads,
-			fname_dual_spread,
+			fname_dual_spread.c_str(),
 			"dual_spread_idx");
 	if (f_v) {
 		cout << "spread_tables::save, "
@@ -353,7 +374,7 @@ void spread_tables::save(int verbose_level)
 	}
 	Fio.lint_vec_write_csv(
 			self_dual_spreads, nb_self_dual_spreads,
-			fname_self_dual_spreads,
+			fname_self_dual_spreads.c_str(),
 			"self_dual_spreads");
 	if (f_v) {
 		cout << "spread_tables::save, "
@@ -383,7 +404,7 @@ void spread_tables::load(int verbose_level)
 				"reading file " << fname_spreads << endl;
 	}
 
-	Fio.lint_matrix_read_csv(fname_spreads,
+	Fio.lint_matrix_read_csv(fname_spreads.c_str(),
 			spread_table, nb_spreads, b,
 			0 /* verbose_level */);
 	if (b != spread_size) {
@@ -400,7 +421,7 @@ void spread_tables::load(int verbose_level)
 				"reading file " << fname_isomorphism_type_of_spreads
 				<< endl;
 	}
-	Fio.int_matrix_read_csv(fname_isomorphism_type_of_spreads,
+	Fio.int_matrix_read_csv(fname_isomorphism_type_of_spreads.c_str(),
 			spread_iso_type, a, b,
 			0 /* verbose_level */);
 	if (a != nb_spreads) {
@@ -418,7 +439,7 @@ void spread_tables::load(int verbose_level)
 				"reading file " << fname_dual_spread
 				<< endl;
 	}
-	Fio.lint_matrix_read_csv(fname_dual_spread,
+	Fio.lint_matrix_read_csv(fname_dual_spread.c_str(),
 			dual_spread_idx, a, b,
 			0 /* verbose_level */);
 	if (a != nb_spreads) {
@@ -436,7 +457,7 @@ void spread_tables::load(int verbose_level)
 				"reading file " << fname_self_dual_spreads
 				<< endl;
 	}
-	Fio.lint_matrix_read_csv(fname_self_dual_spreads,
+	Fio.lint_matrix_read_csv(fname_self_dual_spreads.c_str(),
 			self_dual_spreads, nb_self_dual_spreads, b,
 			0 /* verbose_level */);
 	if (f_v) {
@@ -502,7 +523,7 @@ void spread_tables::compute_adjacency_matrix(
 
 	{
 		colored_graph *CG;
-		char fname[2000];
+		std::string fname;
 		file_io Fio;
 
 		CG = NEW_OBJECT(colored_graph);
@@ -515,7 +536,9 @@ void spread_tables::compute_adjacency_matrix(
 				color, bitvector_adjacency,
 				FALSE, verbose_level);
 
-		snprintf(fname, 2000, "%s_disjoint_spreads.colored_graph", prefix);
+		fname.assign(prefix);
+		fname.append("_disjoint_spreads.colored_graph");
+		//snprintf(fname, 2000, "%s_disjoint_spreads.colored_graph", prefix);
 
 		CG->save(fname, verbose_level);
 

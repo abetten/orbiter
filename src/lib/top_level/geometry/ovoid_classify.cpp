@@ -502,7 +502,7 @@ void ovoid_classify::print(ostream &ost, long int *S, int len)
 }
 
 void ovoid_classify::make_graphs(orbiter_data_file *ODF,
-		const char *prefix,
+		std::string &prefix,
 		int f_split, int split_r, int split_m,
 		int f_lexorder_test,
 		const char *fname_mask,
@@ -511,7 +511,8 @@ void ovoid_classify::make_graphs(orbiter_data_file *ODF,
 	int orbit_idx;
 	int f_v = (verbose_level >= 1);
 	int f_v3 = (verbose_level >= 3);
-	char fname_graph[1000];
+	string fname_graph;
+	char str[1000];
 	int level;
 	file_io Fio;
 
@@ -534,7 +535,8 @@ void ovoid_classify::make_graphs(orbiter_data_file *ODF,
 		cout << " : " << ODF->Ago_ascii[orbit_idx]
 				<< " : " << ODF->Aut_ascii[orbit_idx] << endl;
 
-		sprintf(fname_graph, fname_mask, orbit_idx);
+		sprintf(str, fname_mask, orbit_idx);
+		fname_graph.assign(str);
 
 		long int *candidates;
 		int nb_candidates;
@@ -644,7 +646,7 @@ void ovoid_classify::make_graphs(orbiter_data_file *ODF,
 }
 
 void ovoid_classify::make_one_graph(orbiter_data_file *ODF,
-	const char *prefix,
+		std::string &prefix,
 	int orbit_idx,
 	int f_lexorder_test,
 	colored_graph *&CG,
@@ -849,8 +851,12 @@ void ovoid_classify::create_graph(orbiter_data_file *ODF,
 	lint_vec_copy(candidates, CG->points, nb_candidates);
 	CG->init_user_data(ODF->sets[orbit_idx],
 			starter_size, verbose_level - 2);
-	sprintf(CG->fname_base, "graph_ovoid_%d_%d_%d",
+
+	char str[1000];
+
+	sprintf(str, "graph_ovoid_%d_%d_%d",
 			LG->F->q, starter_size, orbit_idx);
+	CG->fname_base.assign(str);
 
 	FREE_int(Pts);
 	FREE_int(point_color);

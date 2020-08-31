@@ -95,7 +95,6 @@ int arc_generator_description::read_arguments(int argc, const char **argv,
 			forbidden_point_set_string = argv[++i];
 			cout << "-f_has_forbidden_point_set " << forbidden_point_set_string << endl;
 		}
-
 		else if (strcmp(argv[i], "-end") == 0) {
 			break;
 		}
@@ -105,7 +104,7 @@ int arc_generator_description::read_arguments(int argc, const char **argv,
 	} // next i
 
 	cout << "arc_generator_description::read_arguments done" << endl;
-	return i;
+	return i + 1;
 }
 
 

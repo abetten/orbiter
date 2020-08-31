@@ -391,7 +391,9 @@ void isomorph::write_classification_graph(int verbose_level)
 
 	LG = NEW_OBJECT(layered_graph);
 	
-	LG->init(nb_layers, Nb, "", verbose_level);
+	string dummy;
+
+	LG->init(nb_layers, Nb, dummy, verbose_level);
 	if (f_vv) {
 		cout << "isomorph::write_classification_graph "
 				"after LG->init" << endl;
@@ -441,11 +443,12 @@ void isomorph::write_classification_graph(int verbose_level)
 		LG->add_edge(1, i, 2, d, 0 /*verbose_level*/);
 		}
 
+	string fname;
 
-	char fname_base1[1000];
-	char fname[2000];
-	snprintf(fname_base1, 1000, "%sclassification_graph", prefix);
-	snprintf(fname, 2000, "%s.layered_graph", fname_base1);
+	fname.assign(prefix);
+	fname.append("classification_graph");
+	fname.append(".layered_graph");
+
 	LG->write_file(fname, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "isomorph::write_classification_graph "
@@ -493,12 +496,13 @@ void isomorph::decomposition_matrix(int verbose_level)
 			}
 		}
 
-	char fname_base1[1000];
-	char fname[2000];
-	
-	snprintf(fname_base1, 1000, "%sdecomposition_matrix", prefix);
-	snprintf(fname, 2000, "%s.csv", fname_base1);
-	Fio.int_matrix_write_csv(fname, M, m, n);
+	string fname;
+
+	fname.assign(prefix);
+	fname.append("decomposition_matrix");
+	fname.append(".csv");
+
+	Fio.int_matrix_write_csv(fname.c_str(), M, m, n);
 
 	FREE_int(down_link);
 	FREE_int(M);

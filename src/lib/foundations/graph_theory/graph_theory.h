@@ -27,14 +27,14 @@ namespace foundations {
 
 class clique_finder {
 public:
-	char label[1000];
+	std::string label;
 	int n; // number of points
 	
 	int print_interval;
 	
 	int f_write_tree;
 	int f_decision_nodes_only;
-	char fname_tree[1000];
+	std::string fname_tree;
 	std::ofstream *fp_tree;
 
 	
@@ -123,7 +123,7 @@ public:
 	~clique_finder();
 	void null();
 	void free();
-	void init(const char *label, int n, 
+	void init(std::string &label, int n,
 		int target_depth, 
 		int f_has_adj_list, int *adj_list_coded, 
 		int f_has_bitvector, uchar *bitvector_adjacency, 
@@ -138,7 +138,7 @@ public:
 	int solve_decision_problem(int depth, int verbose_level);
 		// returns TRUE if we found a solution
 	void backtrack_search_not_recursive(int verbose_level);
-	void open_tree_file(const char *fname_base,
+	void open_tree_file(std::string &fname_base,
 		int f_decision_nodes_only);
 	void close_tree_file();
 	void get_solutions(int *&Sol, int &nb_solutions, int &clique_sz,
@@ -204,7 +204,7 @@ public:
 	int restrictions[CLIQUE_FINDER_CONTROL_MAX_RESTRICTIONS * 3];
 	int f_tree;
 	int f_decision_nodes_only;
-	const char *fname_tree;
+	std::string fname_tree;
 	int print_interval;
 	unsigned long int nb_search_steps;
 	unsigned long int nb_decision_steps;
@@ -217,16 +217,14 @@ public:
 	int parse_arguments(
 			int argc, const char **argv);
 	void all_cliques(colored_graph *CG,
-			char *fname_graph,
+			std::string &fname_graph,
 			int verbose_level);
 	void do_Sajeeb(colored_graph *CG,
-			const char *fname_sol,
 			int verbose_level);
 	void do_Sajeeb_black_and_white(colored_graph *CG,
 			int clique_size, std::vector<std::vector<long int> >& solutions,
 			int verbose_level);
 	void all_cliques_weighted(colored_graph *CG,
-		const char *fname_sol,
 		int verbose_level);
 
 };
@@ -244,7 +242,7 @@ public:
 class colored_graph {
 public:
 
-	char fname_base[1000];
+	std::string fname_base;
 	
 	int nb_points;
 	int nb_colors;
@@ -306,8 +304,8 @@ public:
 	void init_adjacency_no_colors(int nb_points, int *Adj, 
 		int verbose_level);
 	void init_user_data(long int *data, int data_size, int verbose_level);
-	void save(const char *fname, int verbose_level);
-	void load(const char *fname, int verbose_level);
+	void save(std::string &fname, int verbose_level);
+	void load(std::string &fname, int verbose_level);
 	void all_cliques_of_size_k_ignore_colors(
 		int target_depth,
 		int *&Sol, int &nb_solutions,
@@ -322,7 +320,7 @@ public:
 	void all_rainbow_cliques(std::ofstream *fp, int f_output_solution_raw,
 		int f_maxdepth, int maxdepth, 
 		int f_restrictions, int *restrictions, 
-		int f_tree, int f_decision_nodes_only, const char *fname_tree,  
+		int f_tree, int f_decision_nodes_only, std::string &fname_tree,
 		int print_interval, 
 		unsigned long int &search_steps, unsigned long int &decision_steps,
 		int &nb_sol, int &dt,
@@ -331,7 +329,7 @@ public:
 		int f_output_solution_raw, 
 		int f_maxdepth, int maxdepth, 
 		int f_restrictions, int *restrictions, 
-		int f_tree, int f_decision_nodes_only, const char *fname_tree,  
+		int f_tree, int f_decision_nodes_only, std::string &fname_tree,
 		int print_interval, 
 		int f_has_additional_test_function,
 		void (*call_back_additional_test_function)(rainbow_cliques *R, 
@@ -347,7 +345,7 @@ public:
 		unsigned long int &search_steps, unsigned long int &decision_steps,
 		int &nb_sol, int &dt,
 		int verbose_level);
-	void draw_on_circle(char *fname, 
+	void draw_on_circle(std::string &fname,
 		int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 		int f_radius, double radius, 
 		int f_labels, int f_embedded, int f_sideways, 
@@ -355,23 +353,23 @@ public:
 		int verbose_level);
 	void draw_on_circle_2(mp_graphics &G, int f_labels, 
 		int f_radius, double radius);
-	void draw(const char *fname, 
+	void draw(std::string &fname,
 		int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 		double scale, double line_width, 
 		int verbose_level);
-	void draw_Levi(const char *fname, 
+	void draw_Levi(std::string &fname,
 		int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 		int f_partition, int nb_row_parts, int *row_part_first, 
 		int nb_col_parts, int *col_part_first, 
 		int m, int n, int f_draw_labels, 
 		double scale, double line_width, 
 		int verbose_level);
-	void draw_with_a_given_partition(const char *fname, 
+	void draw_with_a_given_partition(std::string &fname,
 		int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 		int *parts, int nb_parts, 
 		double scale, double line_width, 
 		int verbose_level);
-	void draw_partitioned(const char *fname, 
+	void draw_partitioned(std::string &fname,
 		int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 		int f_labels, 
 		double scale, double line_width, 
@@ -387,14 +385,14 @@ public:
 		int pt, void *test_function_data, int verbose_level),
 		void *test_function_data, 
 		int verbose_level);
-	void export_to_magma(const char *fname, int verbose_level);
-	void export_to_maple(const char *fname, int verbose_level);
-	void export_to_file(const char *fname, int verbose_level);
-	void export_to_text(const char *fname, int verbose_level);
-	void export_laplacian_to_file(const char *fname, 
+	void export_to_magma(std::string &fname, int verbose_level);
+	void export_to_maple(std::string &fname, int verbose_level);
+	void export_to_file(std::string &fname, int verbose_level);
+	void export_to_text(std::string &fname, int verbose_level);
+	void export_laplacian_to_file(std::string &fname,
 		int verbose_level);
-	void export_to_file_matlab(const char *fname, int verbose_level);
-	void export_to_csv(const char *fname, int verbose_level);
+	void export_to_file_matlab(std::string &fname, int verbose_level);
+	void export_to_csv(std::string &fname, int verbose_level);
 	void early_test_func_for_clique_search(long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
@@ -408,7 +406,7 @@ public:
 			long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	int is_cycle(int nb_e, long int *edges, int verbose_level);
-	void draw_it(const char *fname_base, 
+	void draw_it(std::string &fname_base,
 		int xmax_in, int ymax_in, int xmax_out, int ymax_out, 
 		double scale, double line_width, int verbose_level);
 	//int rainbow_cliques_nonrecursive(int &nb_backtrack_nodes, int verbose_level);
@@ -533,16 +531,16 @@ public:
 	graph_theory_domain();
 	~graph_theory_domain();
 
-	void colored_graph_draw(const char *fname,
+	void colored_graph_draw(std::string &fname,
 		int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 		double scale, double line_width,
 		int verbose_level);
 	void colored_graph_all_cliques(
-		const char *fname, int f_output_solution_raw,
-		int f_output_fname, const char *output_fname,
+			std::string &fname, int f_output_solution_raw,
+		int f_output_fname, std::string &output_fname,
 		int f_maxdepth, int maxdepth,
 		int f_restrictions, int *restrictions,
-		int f_tree, int f_decision_nodes_only, const char *fname_tree,
+		int f_tree, int f_decision_nodes_only, std::string &fname_tree,
 		int print_interval,
 		unsigned long int &search_steps, unsigned long int &decision_steps,
 		int &nb_sol, int &dt,
@@ -550,11 +548,12 @@ public:
 	void colored_graph_all_cliques_list_of_cases(
 		long int *list_of_cases, int nb_cases,
 		int f_output_solution_raw,
-		const char *fname_template,
-		const char *fname_sol, const char *fname_stats,
+		std::string &fname_template,
+		std::string &fname_sol,
+		std::string &fname_stats,
 		int f_split, int split_r, int split_m,
 		int f_maxdepth, int maxdepth,
-		int f_prefix, const char *prefix,
+		int f_prefix, std::string &prefix,
 		int print_interval,
 		int verbose_level);
 	void colored_graph_all_cliques_list_of_files(int nb_cases,
@@ -565,9 +564,8 @@ public:
 		int f_prefix, const char *prefix,
 		int print_interval,
 		int verbose_level);
-	void save_as_colored_graph_easy(
-		const char *fname_base, int n, int *Adj,
-		int verbose_level);
+	void save_as_colored_graph_easy(std::string &fname_base,
+			int n, int *Adj, int verbose_level);
 	void save_colored_graph(const char *fname,
 		int nb_vertices, int nb_colors, int nb_colors_per_vertex,
 		long int *vertex_labels, int *vertex_colors,
@@ -597,16 +595,18 @@ public:
 	void print_Pijk(int *Pijk, int nb_colors);
 	void compute_decomposition_of_graph_wrt_partition(int *Adj, int N,
 		int *first, int *len, int nb_parts, int *&R, int verbose_level);
-	void draw_bitmatrix(const char *fname_base, int f_dots,
-		int f_partition, int nb_row_parts, int *row_part_first,
-		int nb_col_parts, int *col_part_first,
-		int f_row_grid, int f_col_grid,
-		int f_bitmatrix, uchar *D,
-		int *M, int m, int n,
-		int xmax_in, int ymax_in, int xmax, int ymax,
-		double scale, double line_width,
-		int f_has_labels, int *labels,
-		int verbose_level);
+	void draw_bitmatrix(
+			std::string &fname_base,
+			int f_dots,
+			int f_partition, int nb_row_parts, int *row_part_first,
+			int nb_col_parts, int *col_part_first,
+			int f_row_grid, int f_col_grid,
+			int f_bitmatrix, uchar *D,
+			int *M, int m, int n,
+			int xmax_in, int ymax_in, int xmax, int ymax,
+			double scale, double line_width,
+			int f_has_labels, int *labels,
+			int verbose_level);
 	void list_parameters_of_SRG(int v_max, int verbose_level);
 
 };
@@ -628,7 +628,7 @@ public:
 	int nb_nodes_total;
 	int id_of_first_node;
 	graph_layer *L;
-	char fname_base[1000];
+	std::string fname_base;
 	int data1;
 
 	layered_graph();
@@ -636,7 +636,7 @@ public:
 	void null();
 	void freeself();
 	void init(int nb_layers, int *Nb_nodes_layer, 
-		const char *fname_base, int verbose_level);
+			std::string &fname_base, int verbose_level);
 	int nb_nodes();
 	double average_word_length();
 	void place(int verbose_level);
@@ -653,15 +653,15 @@ public:
 	void add_node_data1(int l, int n, int data, int verbose_level);
 	void add_node_data2(int l, int n, int data, int verbose_level);
 	void add_node_data3(int l, int n, int data, int verbose_level);
-	void draw_with_options(const char *fname, 
+	void draw_with_options(std::string &fname,
 		layered_graph_draw_options *O, int verbose_level);
 	void coordinates_direct(double x_in, double y_in, 
 		int x_max, int y_max, int f_rotated, int &x, int &y);
 	void coordinates(int id, int x_max, int y_max, 
 		int f_rotated, int &x, int &y);
 	void find_node_by_id(int id, int &l, int &n);
-	void write_file(char *fname, int verbose_level);
-	void read_file(const char *fname, int verbose_level);
+	void write_file(std::string &fname, int verbose_level);
+	void read_file(std::string &fname, int verbose_level);
 	void write_memory_object(memory_object *m, int verbose_level);
 	void read_memory_object(memory_object *m, int verbose_level);
 	void create_spanning_tree(int f_place_x, int verbose_level);
@@ -791,7 +791,7 @@ public:
 		int f_maxdepth, int maxdepth, 
 		int f_restrictions, int *restrictions, 
 		int f_tree, int f_decision_nodes_only, 
-		const char *fname_tree,  
+		std::string &fname_tree,
 		int print_interval, 
 		unsigned long int &search_steps,
 		unsigned long int &decision_steps, int &nb_sol, int &dt,
@@ -801,7 +801,7 @@ public:
 		int f_maxdepth, int maxdepth, 
 		int f_restrictions, int *restrictions, 
 		int f_tree, int f_decision_nodes_only, 
-		const char *fname_tree,  
+		std::string &fname_tree,
 		int print_interval, 
 		int f_has_additional_test_function,
 		void (*call_back_additional_test_function)(

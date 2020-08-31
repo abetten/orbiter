@@ -237,7 +237,7 @@ int poset_classification::main(int t0,
 	if (Control->f_print_only) {
 		print_tree();
 		write_treefile_and_draw_tree(
-				problem_label_with_path.c_str(), depth_completed,
+				problem_label_with_path, depth_completed,
 			Control->xmax, Control->ymax,
 			Control->radius, f_embedded, verbose_level - 1);
 

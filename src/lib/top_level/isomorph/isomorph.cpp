@@ -274,7 +274,7 @@ void isomorph::free_tmp_data()
 		}
 }
 
-void isomorph::init(const char *prefix, 
+void isomorph::init(std::string &prefix,
 	action *A_base, action *A, poset_classification *gen,
 	int size, int level, 
 	int f_use_database_for_starter, 
@@ -295,7 +295,7 @@ void isomorph::init(const char *prefix,
 		cout << "f_implicit_fusion=" << f_implicit_fusion << endl;
 		}
 
-	strcpy(isomorph::prefix, prefix);
+	isomorph::prefix.assign(prefix);
 	isomorph::A_base = A_base;
 	isomorph::A = A;
 	isomorph::gen = gen;
@@ -319,26 +319,83 @@ void isomorph::init(const char *prefix,
 		}
 	sprintf(fname_level_file, "%s_lvl_%d", prefix, level);
 #endif
-	sprintf(fname_staborbits, "%sstaborbits.txt", prefix);
-	sprintf(fname_case_len, "%scase_len.txt", prefix);
-	sprintf(fname_statistics, "%sstatistics.txt", prefix);
-	sprintf(fname_hash_and_datref, "%shash_and_datref.txt", prefix);
-	sprintf(fname_db1, "%ssolutions.db", prefix);
-	sprintf(fname_db2, "%ssolutions_a.idx", prefix);
-	sprintf(fname_db3, "%ssolutions_b.idx", prefix);
-	sprintf(fname_db4, "%ssolutions_c.idx", prefix);
-	sprintf(fname_db5, "%ssolutions_d.idx", prefix);
 
-	sprintf(event_out_fname, "%sevent.txt", prefix);
-	sprintf(fname_orbits_of_stabilizer_csv,
-			"%sorbits_of_stabilizer.csv", prefix);
-	sprintf(prefix_invariants, "%sINVARIANTS/", prefix);
-	sprintf(prefix_tex, "%sTEX/", prefix);
-	sprintf(cmd, "mkdir %s", prefix);
+	fname_staborbits.assign(prefix);
+	fname_staborbits.append("staborbits.txt");
+
+	//sprintf(fname_staborbits, "%sstaborbits.txt", prefix);
+
+	fname_case_len.assign(prefix);
+	fname_case_len.append("case_len.txt");
+
+	//sprintf(fname_case_len, "%scase_len.txt", prefix);
+
+	fname_statistics.assign(prefix);
+	fname_statistics.append("statistics.txt");
+
+	//sprintf(fname_statistics, "%sstatistics.txt", prefix);
+
+	fname_hash_and_datref.assign(prefix);
+	fname_hash_and_datref.append("hash_and_datref.txt");
+
+
+	//sprintf(fname_hash_and_datref, "%shash_and_datref.txt", prefix);
+
+	fname_db1.assign(prefix);
+	fname_db1.append("solutions.db");
+
+
+	//sprintf(fname_db1, "%ssolutions.db", prefix);
+
+	fname_db2.assign(prefix);
+	fname_db2.append("solutions_a.idx");
+
+
+	//sprintf(fname_db2, "%ssolutions_a.idx", prefix);
+
+	fname_db3.assign(prefix);
+	fname_db3.append("solutions_b.idx");
+
+	fname_db4.assign(prefix);
+	fname_db4.append("solutions_c.idx");
+
+	fname_db5.assign(prefix);
+	fname_db5.append("solutions_d.idx");
+
+
+
+	//sprintf(fname_db3, "%ssolutions_b.idx", prefix);
+	//sprintf(fname_db4, "%ssolutions_c.idx", prefix);
+	//sprintf(fname_db5, "%ssolutions_d.idx", prefix);
+
+	event_out_fname.assign(prefix);
+	event_out_fname.append("event.txt");
+
+	//sprintf(event_out_fname, "%sevent.txt", prefix);
+
+	fname_orbits_of_stabilizer_csv.assign(prefix);
+	fname_orbits_of_stabilizer_csv.append("orbits_of_stabilizer.csv");
+
+
+	//sprintf(fname_orbits_of_stabilizer_csv, "%sorbits_of_stabilizer.csv", prefix);
+
+	prefix_invariants.assign(prefix);
+	prefix_invariants.append("INVARIANTS/");
+
+
+	//sprintf(prefix_invariants, "%sINVARIANTS/", prefix);
+
+	prefix_tex.assign(prefix);
+	prefix_tex.append("TEX/");
+
+	//sprintf(prefix_tex, "%sTEX/", prefix);
+
+
+	sprintf(cmd, "mkdir %s", prefix.c_str());
 	system(cmd);
-	sprintf(cmd, "mkdir %sINVARIANTS/", prefix);
+	sprintf(cmd, "mkdir %sINVARIANTS/", prefix.c_str());
 	system(cmd);
-	sprintf(cmd, "mkdir %sTEX/", prefix);
+	sprintf(cmd, "mkdir %sTEX/", prefix.c_str());
 	system(cmd);
 
 	allocate_tmp_data();
@@ -1455,7 +1512,7 @@ int isomorph::test_edge(int n1,
 
 
 void isomorph::read_data_files_for_starter(int level, 
-	const char *prefix, int verbose_level)
+	std::string &prefix, int verbose_level)
 // Calls gen->read_level_file_binary for all levels i from 0 to level
 // Uses letter a files for i from 0 to level - 1
 // and letter b file for i = level.
@@ -1463,8 +1520,8 @@ void isomorph::read_data_files_for_starter(int level,
 // Finally, it computes nb_starter.
 {
 	int f_v = (verbose_level >= 1);
-	char fname_base_a[1000];
-	char fname_base_b[1000];
+	string fname_base_a;
+	string fname_base_b;
 	int i, i0;
 	
 	if (f_v) {
@@ -1473,8 +1530,10 @@ void isomorph::read_data_files_for_starter(int level,
 		cout << "level=" << level << endl;
 		}
 	
-	sprintf(fname_base_a, "%sa", prefix);
-	sprintf(fname_base_b, "%sb", prefix);
+	fname_base_a.assign(prefix);
+	fname_base_a.append("a");
+	fname_base_b.assign(prefix);
+	fname_base_b.append("b");
 	
 	if (gen->has_base_case()) {
 		i0 = gen->get_Base_case()->size;
@@ -1630,7 +1689,7 @@ void isomorph::compute_Ago_Ago_induced(longinteger_object *&Ago,
 }
 
 void isomorph::init_high_level(action *A, poset_classification *gen,
-	int size, char *prefix_classify, char *prefix, int level,
+	int size, std::string &prefix_classify, std::string &prefix, int level,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

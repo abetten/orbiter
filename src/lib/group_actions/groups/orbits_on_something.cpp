@@ -27,7 +27,7 @@ orbits_on_something::orbits_on_something()
 	Sch = NULL;
 
 	f_load_save = FALSE;
-	prefix = "";
+	//prefix = "";
 	//std::string fname;
 
 	Classify_orbits_by_length = NULL;
@@ -49,7 +49,7 @@ void orbits_on_something::null()
 	Sch = NULL;
 
 	f_load_save = FALSE;
-	prefix = "";
+	//prefix = "";
 	//char fname[1000];
 }
 
@@ -81,7 +81,7 @@ void orbits_on_something::init(
 		action *A,
 		strong_generators *SG,
 		int f_load_save,
-		const char *prefix,
+		std::string &prefix,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -94,7 +94,7 @@ void orbits_on_something::init(
 	orbits_on_something::SG = SG;
 	//orbits_on_something::Sch = NEW_OBJECT(schreier);
 	orbits_on_something::f_load_save = f_load_save;
-	orbits_on_something::prefix = prefix;
+	orbits_on_something::prefix.assign(prefix);
 	fname.assign(prefix);
 	fname.append("_orbits.bin");
 
@@ -483,7 +483,7 @@ void orbits_on_something::test_orbits_of_a_certain_length(
 
 void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	colored_graph *&CG,
-	const char *fname,
+	std::string &fname,
 	int orbit_length,
 	int &type_idx,
 	int f_has_user_data, long int *user_data, int user_data_size,
@@ -658,8 +658,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 
 
 	lint_vec_copy(Orbits_classified->Sets[type_idx], CG->points, nb_points);
-	sprintf(CG->fname_base, "%s", fname);
-
+	//sprintf(CG->fname_base, "%s", fname);
+	CG->fname_base.assign(fname);
 
 
 	if (f_v) {
@@ -684,7 +684,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 
 void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified(
 	colored_graph *&CG,
-	const char *fname,
+	std::string &fname,
 	int orbit_length,
 	int &type_idx,
 	int f_has_user_data, long int *user_data, int user_data_size,
@@ -835,8 +835,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 	}
 
 	//int_vec_copy(my_orbits_classified->Sets[type_idx], CG->points, nb_points);
-	sprintf(CG->fname_base, "%s", fname);
-
+	//sprintf(CG->fname_base, "%s", fname);
+	CG->fname_base.assign(fname);
 
 
 	if (f_v) {

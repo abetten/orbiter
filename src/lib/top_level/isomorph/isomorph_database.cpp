@@ -85,10 +85,10 @@ void isomorph::setup_and_open_level_database(int verbose_level)
 	D2->change_to_database();
 	
 	init_DB_level(*D1, level - 1, verbose_level - 1);
-	strcpy(fname_ge1, fname_db_level_ge);
+	fname_ge1.assign(fname_db_level_ge);
 	
 	init_DB_level(*D2, level, verbose_level - 1);
-	strcpy(fname_ge2, fname_db_level_ge);
+	fname_ge2.assign(fname_db_level_ge);
 	
 	D1->open(0/*verbose_level - 1*/);
 	D2->open(0/*verbose_level - 1*/);
@@ -166,11 +166,11 @@ void isomorph::init_DB_sol(int verbose_level)
 		cout << "isomorph::init_DB_sol" << endl;
 		}
 	//cout << "isomorph::init_DB_sol before D.init" << endl;
-	D.init(fname_db1, VECTOR, f_compress);
+	D.init(fname_db1.c_str(), VECTOR, f_compress);
 
 
 	//cout << "isomorph::init_DB_sol before B1.init" << endl;
-	B1.init(fname_db2, f_duplicatekeys, 0 /* btree_idx */);
+	B1.init(fname_db2.c_str(), f_duplicatekeys, 0 /* btree_idx */);
 	B1.add_key_int4(0, 0); 
 		// the index of the starter
 	B1.add_key_int4(1, 0);
@@ -180,7 +180,7 @@ void isomorph::init_DB_sol(int verbose_level)
 
 
 	//cout << "isomorph::init_DB_sol before B2.init" << endl;
-	B2.init(fname_db3, f_duplicatekeys, 1 /* btree_idx */);
+	B2.init(fname_db3.c_str(), f_duplicatekeys, 1 /* btree_idx */);
 		// entries 4, 5, ... 4 + level - 1 are the starter values 
 	for (i = 0; i < level; i++) {
 		B2.add_key_int4(4 + i, 0);
@@ -195,13 +195,13 @@ void isomorph::init_DB_sol(int verbose_level)
 
 
 	//cout << "isomorph::init_DB_sol before B3.init" << endl;
-	B3.init(fname_db4, f_duplicatekeys, 2 /* btree_idx */);
+	B3.init(fname_db4.c_str(), f_duplicatekeys, 2 /* btree_idx */);
 	B3.add_key_int4(2, 0);
 		// the id
 	D.btree_access().append(B3);
 
 
-	B4.init(fname_db5, f_duplicatekeys, 3 /* btree_idx */);
+	B4.init(fname_db5.c_str(), f_duplicatekeys, 3 /* btree_idx */);
 	B4.add_key_int4(0, 0); 
 		// the index of the starter
 	B4.add_key_int4(3, 0); 
@@ -563,22 +563,45 @@ void isomorph::init_DB_level(database &D, int level, int verbose_level)
 	int f_compress = TRUE;
 	int f_duplicatekeys = TRUE;
 	int i;
+	char str[1000];
 
 	if (f_v) {
 		cout << "isomorph::init_DB_level level=" << level << endl;
 		}
-	sprintf(fname_db_level, "%sstarter_lvl_%d.db", prefix, level);
-	sprintf(fname_db_level_idx1, "%sstarter_lvl_%d_a.idx", prefix, level);
-	sprintf(fname_db_level_idx2, "%sstarter_lvl_%d_b.idx", prefix, level);
-	sprintf(fname_db_level_ge, "%sstarter_lvl_%d_ge.bin", prefix, level);
 
-	D.init(fname_db_level, VECTOR, f_compress);
+	fname_db_level.assign(prefix);
+	sprintf(str, "starter_lvl_%d.db", level);
+	fname_db_level.append(str);
+
+
+	//sprintf(fname_db_level, "%sstarter_lvl_%d.db", prefix, level);
+
+	fname_db_level_idx1.assign(prefix);
+	sprintf(str, "starter_lvl_%d_a.idx", level);
+	fname_db_level_idx1.append(str);
+
+	//sprintf(fname_db_level_idx1, "%sstarter_lvl_%d_a.idx", prefix, level);
+
+	fname_db_level_idx2.assign(prefix);
+	sprintf(str, "starter_lvl_%d_b.idx", level);
+	fname_db_level_idx2.append(str);
+
+	//sprintf(fname_db_level_idx2, "%sstarter_lvl_%d_b.idx", prefix, level);
+
+	fname_db_level_ge.assign(prefix);
+	sprintf(str, "starter_lvl_%d_ge.bin", level);
+	fname_db_level_ge.append(str);
+
+
+	//sprintf(fname_db_level_ge, "%sstarter_lvl_%d_ge.bin", prefix, level);
+
+	D.init(fname_db_level.c_str(), VECTOR, f_compress);
 	
-	B1.init(fname_db_level_idx1, f_duplicatekeys, 0 /* btree_idx */);
+	B1.init(fname_db_level_idx1.c_str(), f_duplicatekeys, 0 /* btree_idx */);
 	B1.add_key_int4(0, 0); 
 	D.btree_access().append(B1);
 
-	B2.init(fname_db_level_idx2, f_duplicatekeys, 1 /* btree_idx */);
+	B2.init(fname_db_level_idx2.c_str(), f_duplicatekeys, 1 /* btree_idx */);
 		// 2 up to 2+level-1 are the values of the starter (of size level)
 	for (i = 0; i < level; i++) {
 		B2.add_key_int4(2 + i, 0);

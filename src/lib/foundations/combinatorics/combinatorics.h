@@ -344,7 +344,7 @@ public:
 	//void int_k2ij(int k, int & i, int & j, int n);
 	void compute_adjacency_matrix(
 			int *Table, int nb_sets, int set_size,
-			const char *prefix_for_graph,
+			std::string &prefix_for_graph,
 			uchar *&bitvector_adjacency,
 			int &bitvector_length,
 			int verbose_level);

@@ -2197,8 +2197,8 @@ sims *action::create_sims_from_generators_with_target_group_order_factorized(
 	return S;
 }
 
-sims *action::create_sims_from_generators_with_target_group_order_int(
-	vector_ge *gens, int target_go, int verbose_level)
+sims *action::create_sims_from_generators_with_target_group_order_lint(
+	vector_ge *gens, long int target_go, int verbose_level)
 {
 	longinteger_object tgo;
 

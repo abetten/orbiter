@@ -352,7 +352,7 @@ void elliptic_curve::save_incidence_matrix(char *fname,
 	}
 }
 
-void elliptic_curve::draw_grid(char *fname,
+void elliptic_curve::draw_grid(std::string &fname,
 		double tikz_global_scale, double tikz_global_line_width,
 		int xmax, int ymax, int f_with_grid, int f_with_points, int point_density,
 		int f_path, int start_idx, int nb_steps,
@@ -362,14 +362,16 @@ void elliptic_curve::draw_grid(char *fname,
 	int x_min = 0, x_max = 1000000;
 	int y_min = 0, y_max = 1000000;
 	int factor_1000 = 1000;
-	char fname_full[1000];
+	string fname_full;
 	int f_embedded = TRUE;
 	int f_sideways = FALSE;
 	
 	if (f_v) {
 		cout << "draw_grid" << endl;
 	}
-	sprintf(fname_full, "%s.mp", fname);
+	fname_full.assign(fname);
+	fname_full.append(".mp");
+
 	{
 		mp_graphics G(fname_full,
 				x_min, y_min, x_max, y_max, f_embedded, f_sideways,

@@ -32,19 +32,21 @@ packing_was_description::packing_was_description()
 	long_orbits_clique_size = 0;
 
 	f_process_long_orbits_by_list_of_cases_from_file = FALSE;
-	process_long_orbits_by_list_of_cases_from_file_fname = NULL;
+	//process_long_orbits_by_list_of_cases_from_file_fname = NULL;
 
 	f_expand_cliques_of_long_orbits = FALSE;
 	clique_no_r = 0;
 	clique_no_m = 0;
 	f_type_of_fixed_spreads = FALSE;
 	f_fixp_clique_types_save_individually = FALSE;
-	f_label = FALSE;
-	label = NULL;
+	//f_label = FALSE;
+	//label = NULL;
 	f_spread_tables_prefix = FALSE;
-	spread_tables_prefix = "";
+	//spread_tables_prefix = "";
 	f_output_path = FALSE;
-	output_path = "";
+	//output_path = "";
+	f_process_long_orbits_solution_path = FALSE;
+	// process_long_orbits_solution_path
 
 
 	f_exact_cover = FALSE;
@@ -168,7 +170,7 @@ int packing_was_description::read_arguments(int argc, const char **argv,
 
 		else if (strcmp(argv[i], "-process_long_orbits_by_list_of_cases_from_file") == 0) {
 			f_process_long_orbits_by_list_of_cases_from_file = TRUE;
-			process_long_orbits_by_list_of_cases_from_file_fname = argv[++i];
+			process_long_orbits_by_list_of_cases_from_file_fname.assign(argv[++i]);
 			clique_size = atoi(argv[++i]);
 			process_long_orbits_r = atoi(argv[++i]);
 			process_long_orbits_m = atoi(argv[++i]);
@@ -202,15 +204,22 @@ int packing_was_description::read_arguments(int argc, const char **argv,
 
 		else if (strcmp(argv[i], "-spread_tables_prefix") == 0) {
 			f_spread_tables_prefix = TRUE;
-			spread_tables_prefix = argv[++i];
+			spread_tables_prefix.assign(argv[++i]);
 			cout << "-spread_tables_prefix "
 				<< spread_tables_prefix << endl;
 		}
 
 		else if (strcmp(argv[i], "-output_path") == 0) {
 			f_output_path = TRUE;
-			output_path = argv[++i];
+			output_path.assign(argv[++i]);
 			cout << "-output_path " << output_path << endl;
+		}
+
+		else if (strcmp(argv[i], "-process_long_orbits_solution_path") == 0) {
+			f_process_long_orbits_solution_path = TRUE;
+			process_long_orbits_solution_path.assign(argv[++i]);
+			cout << "-process_long_orbits_solution_path "
+				<< process_long_orbits_solution_path << endl;
 		}
 
 		else if (strcmp(argv[i], "-report") == 0) {

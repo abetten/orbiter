@@ -625,8 +625,8 @@ class discreta_base
 	void unpack(memory & M, int verbose_level, int debug_depth);
 	void save_ascii(std::ostream & f);
 	void load_ascii(std::istream & f);
-	void save_file(char *fname);
-	void load_file(char *fname);
+	void save_file(const char *fname);
+	void load_file(const char *fname);
 };
 
 

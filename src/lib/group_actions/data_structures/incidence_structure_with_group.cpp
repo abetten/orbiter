@@ -140,13 +140,25 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 
 
 	if (f_save_incma_in_and_out) {
-		char fname_csv[1000];
-		char fname_bin[1000];
 
-		sprintf(fname_csv, "%sIncma_in_%d_%d.csv",
-				save_incma_in_and_out_prefix, Inc->nb_rows, Inc->nb_cols);
-		sprintf(fname_bin, "%sIncma_in_%d_%d.bin",
-				save_incma_in_and_out_prefix, Inc->nb_rows, Inc->nb_cols);
+		string fname_csv;
+		string fname_bin;
+		char str[1000];
+
+		sprintf(str, "Incma_in_%d_%d", Inc->nb_rows, Inc->nb_cols);
+
+		fname_csv.assign(save_incma_in_and_out_prefix);
+		fname_csv.append(str);
+		fname_csv.append(".csv");
+		fname_bin.assign(save_incma_in_and_out_prefix);
+		fname_bin.append(str);
+		fname_bin.append(".bin");
+
+
+		//sprintf(fname_csv, "%sIncma_in_%d_%d.csv",
+		//		save_incma_in_and_out_prefix, Inc->nb_rows, Inc->nb_cols);
+		//sprintf(fname_bin, "%sIncma_in_%d_%d.bin",
+		//		save_incma_in_and_out_prefix, Inc->nb_rows, Inc->nb_cols);
 
 		Inc->save_as_csv(fname_csv, verbose_level);
 
@@ -232,13 +244,23 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 
 	if (f_save_incma_in_and_out) {
 
-		char fname_csv[1000];
-		char fname_bin[1000];
+		string fname_csv;
+		string fname_bin;
+		char str[1000];
 
-		sprintf(fname_csv, "%sIncma_out_%d_%d.csv",
-				save_incma_in_and_out_prefix, Inc_out->nb_rows, Inc_out->nb_cols);
-		sprintf(fname_bin, "%sIncma_out_%d_%d.bin",
-				save_incma_in_and_out_prefix, Inc_out->nb_rows, Inc_out->nb_cols);
+		sprintf(str, "Incma_out_%d_%d", Inc_out->nb_rows, Inc_out->nb_cols);
+
+		fname_csv.assign(save_incma_in_and_out_prefix);
+		fname_csv.append(str);
+		fname_csv.append(".csv");
+		fname_bin.assign(save_incma_in_and_out_prefix);
+		fname_bin.append(str);
+		fname_bin.append(".bin");
+
+		//sprintf(fname_csv, "%sIncma_out_%d_%d.csv",
+		//		save_incma_in_and_out_prefix, Inc_out->nb_rows, Inc_out->nb_cols);
+		//sprintf(fname_bin, "%sIncma_out_%d_%d.bin",
+		//		save_incma_in_and_out_prefix, Inc_out->nb_rows, Inc_out->nb_cols);
 
 		Inc_out->save_as_csv(fname_csv, verbose_level);
 

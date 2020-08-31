@@ -78,11 +78,11 @@ projective_space_job_description::projective_space_job_description()
 
 	f_bsf3 = FALSE;
 	f_test_diagonals = FALSE;
-	test_diagonals_fname = NULL;
+	//test_diagonals_fname = NULL;
 	f_klein = FALSE;
 
 	f_draw_points_in_plane = FALSE;
-		draw_points_in_plane_fname_base = NULL;
+		//draw_points_in_plane_fname_base = NULL;
 		// follow up option for f_draw_points_in_plane:
 
 		f_point_labels = FALSE;
@@ -300,7 +300,7 @@ int projective_space_job_description::read_arguments(
 		}
 		else if (strcmp(argv[i], "-test_diagonals") == 0) {
 			f_test_diagonals = TRUE;
-			test_diagonals_fname = argv[++i];
+			test_diagonals_fname.assign(argv[++i]);
 			cout << "projective_space_job_description::read_arguments -test_diagonals " << test_diagonals_fname << endl;
 		}
 		else if (strcmp(argv[i], "-klein") == 0) {
@@ -309,8 +309,8 @@ int projective_space_job_description::read_arguments(
 		}
 		else if (strcmp(argv[i], "-draw_points_in_plane") == 0) {
 			f_draw_points_in_plane = TRUE;
-			draw_points_in_plane_fname_base = argv[++i];
-			cout << "projective_space_job_description::read_arguments -draw_points_in_plane" << endl;
+			draw_points_in_plane_fname_base.assign(argv[++i]);
+			cout << "projective_space_job_description::read_arguments -draw_points_in_plane" << draw_points_in_plane_fname_base << endl;
 		}
 		else if (strcmp(argv[i], "-point_labels") == 0) {
 			f_point_labels = TRUE;

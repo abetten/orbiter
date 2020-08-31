@@ -1926,6 +1926,30 @@ void replace_extension_with(char *p, const char *new_ext)
 	strcat(p, new_ext);
 }
 
+void replace_extension_with(std::string &p, const char *new_ext)
+{
+	int i, l;
+	string q;
+
+	l = p.length();
+	for (i = l - 1; i >= 0; i--) {
+		if (p[i] == '.') {
+			q = p.substr(0, i);
+			//p[i] = 0;
+			break;
+		}
+		else if (p[i] == '/') {
+			q = p.substr(0, i);
+			break;
+		}
+	}
+	if (i == -1) {
+		q = p;
+	}
+	q.append(new_ext);
+	p = q;
+}
+
 void chop_off_extension(char *p)
 {
 	int len = strlen(p);

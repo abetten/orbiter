@@ -92,9 +92,9 @@ public:
 		std::vector<int> &missing_idx,
 		int verbose_level);
 	void poset_classification_read_candidates_of_orbit(
-		const char *fname, int orbit_at_level,
+			std::string &fname, int orbit_at_level,
 		long int *&candidates, int &nb_candidates, int verbose_level);
-	void read_candidates_for_one_orbit_from_file(const char *prefix,
+	void read_candidates_for_one_orbit_from_file(std::string &prefix,
 			int level, int orbit_at_level, int level_of_candidates_file,
 			long int *S,
 			void (*early_test_func_callback)(long int *S, int len,
@@ -105,7 +105,7 @@ public:
 			long int *&candidates,
 			int &nb_candidates,
 			int verbose_level);
-	int find_orbit_index_in_data_file(const char *prefix,
+	int find_orbit_index_in_data_file(std::string &prefix,
 			int level_of_candidates_file, long int *starter,
 			int verbose_level);
 	void write_exact_cover_problem_to_file(int *Inc, int nb_rows,
@@ -130,11 +130,14 @@ public:
 	void read_solutions_from_file(const char *fname,
 		int &nb_solutions, int *&Solutions, int solution_size,
 		int verbose_level);
+	void read_solutions_from_file_size_is_known(std::string &fname,
+		std::vector<std::vector<int> > &Solutions, int solution_size,
+		int verbose_level);
 	void read_solutions_from_file_by_case(const char *fname,
 		int *nb_solutions, int *case_nb, int nb_cases,
 		int **&Solutions, int solution_size,
 		int verbose_level);
-	void copy_file_to_ostream(std::ostream &ost, char *fname);
+	void copy_file_to_ostream(std::ostream &ost, const char *fname);
 	void int_vec_write_csv(int *v, int len,
 		const char *fname, const char *label);
 	void lint_vec_write_csv(long int *v, int len,
@@ -179,15 +182,15 @@ public:
 		char *ago_ascii, char *aut_ascii);
 	int count_number_of_orbits_in_file(const char *fname, int verbose_level);
 	int count_number_of_lines_in_file(const char *fname, int verbose_level);
-	int try_to_read_file(const char *fname, int &nb_cases,
+	int try_to_read_file(std::string &fname, int &nb_cases,
 		char **&data, int verbose_level);
-	void read_and_parse_data_file(const char *fname, int &nb_cases,
+	void read_and_parse_data_file(std::string &fname, int &nb_cases,
 		char **&data, long int **&sets, int *&set_sizes, int verbose_level);
 	void free_data_fancy(int nb_cases,
 		int *Set_sizes, long int **Sets,
 		char **Ago_ascii, char **Aut_ascii,
 		int *Casenumbers);
-	void read_and_parse_data_file_fancy(const char *fname,
+	void read_and_parse_data_file_fancy(std::string &fname,
 		int f_casenumbers,
 		int &nb_cases,
 		int *&Set_sizes, long int **&Sets, char **&Ago_ascii, char **&Aut_ascii,
@@ -217,6 +220,7 @@ public:
 		char *inc_file_name, int inc_file_idx, int verbose_level);
 	int inc_file_get_number_of_geometries(
 		char *inc_file_name, int verbose_level);
+	long int file_size(std::string &fname);
 	long int file_size(const char *name);
 	void delete_file(const char *fname);
 	void fwrite_int4(FILE *fp, int a);
@@ -596,7 +600,7 @@ public:
 	~orbiter_data_file();
 	void null();
 	void freeself();
-	void load(const char *fname, int verbose_level);
+	void load(std::string &fname, int verbose_level);
 };
 
 // #############################################################################
@@ -807,6 +811,7 @@ void scan_permutation_from_stream(std::istream & is,
 	int *&perm, int &degree, int verbose_level);
 char get_character(std::istream & is, int verbose_level);
 void replace_extension_with(char *p, const char *new_ext);
+void replace_extension_with(std::string &p, const char *new_ext);
 void chop_off_extension(char *p);
 void chop_off_extension_if_present(char *p, const char *ext);
 void get_fname_base(const char *p, char *fname_base);

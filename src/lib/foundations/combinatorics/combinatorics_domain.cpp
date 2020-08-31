@@ -2093,7 +2093,7 @@ int combinatorics_domain::minus_one_if_positive(int i)
 
 void combinatorics_domain::compute_adjacency_matrix(
 		int *Table, int nb_sets, int set_size,
-		const char *prefix_for_graph,
+		std::string &prefix_for_graph,
 		uchar *&bitvector_adjacency,
 		int &bitvector_length,
 		int verbose_level)
@@ -2180,7 +2180,7 @@ void combinatorics_domain::compute_adjacency_matrix(
 
 	{
 	colored_graph *CG;
-	char fname[1000];
+	std::string fname;
 	file_io Fio;
 
 	CG = NEW_OBJECT(colored_graph);
@@ -2193,12 +2193,13 @@ void combinatorics_domain::compute_adjacency_matrix(
 			color, bitvector_adjacency,
 			FALSE, verbose_level);
 
-	snprintf(fname, 1000, "%s_disjointness.colored_graph", prefix_for_graph);
+	fname.assign(prefix_for_graph);
+	fname.append("_disjointness.colored_graph");
+	//snprintf(fname, 1000, "%s_disjointness.colored_graph", prefix_for_graph);
 
 	CG->save(fname, verbose_level);
 
-	cout << "Written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 	FREE_int(color);
 	FREE_OBJECT(CG);

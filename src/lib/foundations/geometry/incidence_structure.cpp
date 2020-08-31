@@ -3731,14 +3731,14 @@ incidence_structure *incidence_structure::apply_canonical_labeling(
 	return Inc_out;
 }
 
-void incidence_structure::save_as_csv(const char *fname_csv, int verbose_level)
+void incidence_structure::save_as_csv(std::string &fname_csv, int verbose_level)
 {
 	file_io Fio;
 
-	Fio.int_matrix_write_csv(fname_csv, M, nb_rows, nb_cols);
+	Fio.int_matrix_write_csv(fname_csv.c_str(), M, nb_rows, nb_cols);
 }
 
-void incidence_structure::save_as_Levi_graph(const char *fname_bin,
+void incidence_structure::save_as_Levi_graph(std::string &fname_bin,
 		int f_point_labels, long int *point_labels,
 		int verbose_level)
 {

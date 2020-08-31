@@ -138,8 +138,8 @@ public:
 			isomorph *Iso, int f_split, int split_r, int split_m,
 			int verbose_level);
 	void compute_dual_spreads(isomorph *Iso, int verbose_level);
-	void klein_invariants_fname(char *fname, char *prefix, int iso_cnt);
-	void compute_and_save_klein_invariants(char *prefix,
+	void klein_invariants_fname(std::string &fname, std::string &prefix, int iso_cnt);
+	void compute_and_save_klein_invariants(std::string &prefix,
 		int iso_cnt,
 		long int *data, int data_size, int verbose_level);
 	void report(isomorph *Iso, int verbose_level);
@@ -194,8 +194,8 @@ class packing_invariants {
 public:
 	packing_classify *P;
 
-	char prefix[1000];
-	char prefix_tex[1000];
+	std::string prefix;
+	std::string prefix_tex;
 	int iso_cnt;
 
 	long int *the_packing;
@@ -225,16 +225,16 @@ public:
 
 	incidence_structure *I;
 	partitionstack *Stack;
-	char fname_incidence_pic[2000];
-	char fname_row_scheme[2000];
-	char fname_col_scheme[2000];
+	std::string fname_incidence_pic;
+	std::string fname_row_scheme;
+	std::string fname_col_scheme;
 
 	packing_invariants();
 	~packing_invariants();
 	void null();
 	void freeself();
 	void init(packing_classify *P,
-		char *prefix, char *prefix_tex, int iso_cnt,
+			std::string &prefix, std::string &prefix_tex, int iso_cnt,
 		long int *the_packing, int verbose_level);
 	void init_klein_invariants(Vector &v, int verbose_level);
 	void compute_decomposition(int verbose_level);
@@ -257,8 +257,15 @@ public:
 	int long_orbit_idx;
 	long int *set;
 
+	int long_orbit_length;
+
+	int f_solution_path;
+	std::string solution_path;
+
+
 	set_of_sets *Filtered_orbits;
-	char fname_graph[1000];
+	std::string fname_graph;
+	std::string fname_solutions;
 
 
 	packing_long_orbits();
@@ -269,13 +276,15 @@ public:
 			int fixpoint_clique_size,
 			long int *fixpoint_clique,
 			int long_orbit_length,
+			int f_solution_path,
+			std::string &solution_path,
 			int verbose_level);
 	void filter_orbits(int verbose_level);
 	void create_graph_on_remaining_long_orbits(int verbose_level);
 	void create_fname_graph_on_remaining_long_orbits();
 	void create_graph_and_save_to_file(
 			colored_graph *&CG,
-			const char *fname,
+			std::string &fname,
 			int orbit_length,
 			int f_has_user_data, long int *user_data, int user_data_size,
 			int verbose_level);
@@ -314,7 +323,7 @@ public:
 
 
 	int f_process_long_orbits_by_list_of_cases_from_file;
-	const char *process_long_orbits_by_list_of_cases_from_file_fname;
+	std::string process_long_orbits_by_list_of_cases_from_file_fname;
 
 
 	int f_expand_cliques_of_long_orbits;
@@ -322,12 +331,14 @@ public:
 	int clique_no_m;
 	int f_type_of_fixed_spreads;
 	int f_fixp_clique_types_save_individually;
-	int f_label;
-	const char *label;
+	//int f_label;
+	//std::string label;
 	int f_spread_tables_prefix;
-	const char *spread_tables_prefix;
+	std::string spread_tables_prefix;
 	int f_output_path;
-	const char *output_path;
+	std::string output_path;
+	int f_process_long_orbits_solution_path;
+	std::string process_long_orbits_solution_path;
 
 	int f_exact_cover;
 	exact_cover_arguments *ECA;
@@ -362,8 +373,8 @@ class packing_was_fixpoints {
 public:
 	packing_was *PW;
 
-	char fname_fixp_graph[1000];
-	char fname_fixp_graph_cliques[1000];
+	std::string fname_fixp_graph;
+	std::string fname_fixp_graph_cliques;
 	int fixpoints_idx;
 		// index of orbits of length 1 in reduced_spread_orbits_under_H
 	action *A_on_fixpoints;
@@ -376,7 +387,7 @@ public:
 	poset_classification *fixpoint_clique_gen;
 	long int *Cliques; // [nb_cliques * clique_size]
 	int nb_cliques;
-	char fname_fixp_graph_cliques_orbiter[1000];
+	std::string fname_fixp_graph_cliques_orbiter;
 	orbit_transversal *Fixp_cliques;
 
 
@@ -397,21 +408,27 @@ public:
 	// compute cliques on fixpoint graph using A_on_fixpoints
 	// orbit representatives will be stored in Cliques[nb_cliques * clique_size]
 	void process_long_orbits_by_list_of_cases_from_file(
-			const char *process_long_orbits_by_list_of_cases_from_file,
+			std::string &process_long_orbits_by_list_of_cases_from_file,
 			int split_r, int split_m,
 			int long_orbit_length,
 			int long_orbits_clique_size,
+			int f_solution_path,
+			std::string &solution_path,
 			int verbose_level);
 	void process_all_long_orbits(
 			int split_r, int split_m,
 			int long_orbit_length,
 			int long_orbits_clique_size,
+			int f_solution_path,
+			std::string &solution_path,
 			int verbose_level);
 	long int *clique_by_index(int idx);
 	void process_long_orbits(
 			int clique_index,
 			int long_orbit_length,
 			int long_orbits_clique_size,
+			int f_solution_path,
+			std::string &solution_path,
 			int verbose_level);
 	void report(packing_long_orbits *L, int verbose_level);
 	void report2(std::ostream &ost, packing_long_orbits *L, int verbose_level);
@@ -455,18 +472,18 @@ public:
 	long int N_goi;
 
 
-	char prefix_line_orbits[1000];
+	std::string prefix_line_orbits;
 	orbits_on_something *Line_orbits_under_H;
 
 	orbit_type_repository *Spread_type;
 
-	char prefix_spread_orbits[1000];
+	std::string prefix_spread_orbits;
 	orbits_on_something *Spread_orbits_under_H;
 	action *A_on_spread_orbits;
 		// restricted action on Spread_orbits_under_H:
 		// = induced_action_on_orbits(P->A_on_spreads, Spread_orbits_under_H)
 
-	char fname_good_orbits[1000];
+	std::string fname_good_orbits;
 	int nb_good_orbits;
 	long int *Good_orbit_idx;
 	long int *Good_orbit_len;
@@ -478,7 +495,7 @@ public:
 	action *A_on_reduced_spreads;
 		// induced action on Spread_tables_reduced
 
-	char prefix_reduced_spread_orbits[1000];
+	std::string prefix_reduced_spread_orbits;
 	orbits_on_something *reduced_spread_orbits_under_H;
 		// = reduced_spread_orbits_under_H->init(A_on_reduced_spreads, H_gens)
 	action *A_on_reduced_spread_orbits;
@@ -516,7 +533,7 @@ public:
 		// is line-disjoint from every spread from set2
 		// using Spread_tables_reduced
 	void create_graph_and_save_to_file(
-		const char *fname,
+			std::string &fname,
 		int orbit_length,
 		int f_has_user_data, long int *user_data, int user_data_size,
 		int verbose_level);
@@ -953,13 +970,13 @@ public:
 	int size_of_packing;
 	int nb_lines;
 	int f_select_spread;
-	const char *select_spread_text;
+	std::string select_spread_text;
 
 	int *select_spread;
 	int select_spread_nb;
 
 
-	const char *path_to_spread_tables;
+	std::string path_to_spread_tables;
 
 
 	long int *spread_reps; // [nb_spread_reps * T->spread_size]
@@ -985,8 +1002,8 @@ public:
 	~spread_table_with_selection();
 	void init(spread_classify *T,
 		int f_select_spread,
-		const char *select_spread_text,
-		const char *path_to_spread_tables,
+		std::string &select_spread_text,
+		std::string &path_to_spread_tables,
 		int verbose_level);
 	void compute_spread_table(int verbose_level);
 	void compute_spread_table_from_scratch(int verbose_level);

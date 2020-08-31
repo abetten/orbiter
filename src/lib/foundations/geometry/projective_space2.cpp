@@ -2889,7 +2889,7 @@ int projective_space::elliptic_curve_addition(
 }
 
 void projective_space::draw_point_set_in_plane(
-	const char *fname, long int *Pts, int nb_pts,
+	std::string &fname, long int *Pts, int nb_pts,
 	int f_with_points, int f_point_labels,
 	int f_embedded, int f_sideways, int rad,
 	int verbose_level)

@@ -12,14 +12,14 @@ using namespace std;
 namespace orbiter {
 namespace classification {
 
-const char *poset_classification::get_problem_label_with_path()
+std::string &poset_classification::get_problem_label_with_path()
 {
-	return problem_label_with_path.c_str();
+	return problem_label_with_path;
 }
 
-const char *poset_classification::get_problem_label()
+std::string &poset_classification::get_problem_label()
 {
-	return problem_label.c_str();
+	return problem_label;
 }
 
 int poset_classification::first_node_at_level(int i)
@@ -872,7 +872,7 @@ void poset_classification::recreate_schreier_vectors_at_level(
 				"schreier_vectors_at_level "
 				"Testing if a schreier vector file exists" << endl;
 		}
-	if (test_sv_level_file_binary(i, problem_label_with_path.c_str())) {
+	if (test_sv_level_file_binary(i, problem_label_with_path)) {
 
 		if (f_v) {
 			cout << "poset_classification::recreate_"
@@ -881,7 +881,7 @@ void poset_classification::recreate_schreier_vectors_at_level(
 					"We will read this file" << endl;
 			}
 
-		read_sv_level_file_binary(i, problem_label_with_path.c_str(), FALSE, 0, 0,
+		read_sv_level_file_binary(i, problem_label_with_path, FALSE, 0, 0,
 			f_recreate_extensions, f_dont_keep_sv, 
 			verbose_level);
 		if (f_v) {
@@ -923,7 +923,7 @@ void poset_classification::recreate_schreier_vectors_at_level(
 				0 /*verbose_level - 1*/);
 		}
 	write_sv_level_file_binary(i,
-			problem_label_with_path.c_str(), FALSE, 0, 0, verbose_level);
+			problem_label_with_path, FALSE, 0, 0, verbose_level);
 	if (f_v) {
 		cout << "poset_classification::recreate_"
 				"schreier_vectors_at_level "

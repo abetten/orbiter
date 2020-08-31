@@ -25,10 +25,10 @@ spread_table_with_selection::spread_table_with_selection()
 	size_of_packing = 0;
 	nb_lines = 0;
 	f_select_spread = FALSE;
-	select_spread_text = NULL;
+	//select_spread_text = NULL;
 	select_spread = NULL;
 	select_spread_nb = 0;
-	path_to_spread_tables = NULL;
+	//path_to_spread_tables = NULL;
 
 	spread_reps = NULL;
 	spread_reps_idx = NULL;
@@ -80,8 +80,8 @@ spread_table_with_selection::~spread_table_with_selection()
 
 void spread_table_with_selection::init(spread_classify *T,
 	int f_select_spread,
-	const char *select_spread_text,
-	const char *path_to_spread_tables,
+	std::string &select_spread_text,
+	std::string &path_to_spread_tables,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -91,7 +91,7 @@ void spread_table_with_selection::init(spread_classify *T,
 	}
 
 	if (f_select_spread) {
-		int_vec_scan(select_spread_text, select_spread, select_spread_nb);
+		int_vec_scan(select_spread_text.c_str(), select_spread, select_spread_nb);
 		if (f_v) {
 			cout << "select_spread = ";
 			int_vec_print(cout, select_spread, select_spread_nb);
@@ -112,8 +112,8 @@ void spread_table_with_selection::init(spread_classify *T,
 	nb_lines = T->A2->degree;
 
 	spread_table_with_selection::f_select_spread = f_select_spread;
-	spread_table_with_selection::select_spread_text = select_spread_text;
-	spread_table_with_selection::path_to_spread_tables = path_to_spread_tables;
+	spread_table_with_selection::select_spread_text.assign(select_spread_text);
+	spread_table_with_selection::path_to_spread_tables.assign(path_to_spread_tables);
 
 	if (f_v) {
 		cout << "spread_table_with_selection::init q=" << q << endl;

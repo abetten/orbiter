@@ -32,7 +32,7 @@ diophant_description::diophant_description()
 	external_lines_as_subset_of_secants_text = NULL;
 
 	f_label = FALSE;
-	label = NULL;
+	//label = NULL;
 	//from_scratch_m = 0;
 	//from_scratch_n = 0;
 
@@ -97,7 +97,7 @@ int diophant_description::read_arguments(
 		}
 		else if (strcmp(argv[i], "-label") == 0) {
 			f_label = TRUE;
-			label = argv[++i];
+			label.assign(argv[++i]);
 			cout << "-label " << label << endl;
 		}
 		else if (strcmp(argv[i], "-coefficient_matrix") == 0) {

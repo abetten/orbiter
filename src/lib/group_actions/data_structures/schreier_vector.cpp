@@ -1078,7 +1078,11 @@ void schreier_vector::export_tree_as_layered_graph(
 				"before LG->init" << endl;
 		}
 	//LG->add_data1(data1, 0/*verbose_level*/);
-	LG->init(nb_layers, Nb, "", verbose_level);
+
+	string dummy;
+	dummy.assign("");
+
+	LG->init(nb_layers, Nb, dummy, verbose_level);
 	if (f_v) {
 		cout << "schreier_vector::export_tree_as_layered_graph "
 				"after LG->init" << endl;
@@ -1144,11 +1148,13 @@ void schreier_vector::export_tree_as_layered_graph(
 		LG->add_text(l, horizontal_position[j],
 				text, 0/*verbose_level*/);
 	}
-	char fname[1000];
+	char str[1000];
+	string fname;
 
-	sprintf(fname, fname_mask, orbit_no);
+	sprintf(str, fname_mask, orbit_no);
+	fname.assign(str);
 	LG->write_file(fname, 0 /*verbose_level*/);
-	delete LG;
+	FREE_OBJECT(LG);
 
 	FREE_int(Nb);
 	FREE_int(Nb1);

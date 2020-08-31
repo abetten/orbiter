@@ -342,21 +342,27 @@ void exact_cover::compute_liftings_new(int f_solve,
 		nb_sol = 0;
 
 		long int *Solutions = NULL;
-		char fname1[1000];
+		//char fname1[1000];
 
 
-		if (f_write_tree) {
-			sprintf(fname1, fname_tree, starter_case);
-			}
+		//if (f_write_tree) {
+		//	sprintf(fname1, fname_tree, starter_case);
+		//}
 		
-		char fname_system2[1000];
-		char fname_tree2[1000];
+		string fname_system2;
+		string fname_tree2;
+		char str[1000];
 
 		if (f_draw_system) {
-			sprintf(fname_system2, "%s_%d", fname_system, the_starter_case);
+			sprintf(str, "_%d", the_starter_case);
+			fname_system2.assign(fname_system);
+			fname_system2.append(str);
 			}
 		if (f_write_tree) {
-			sprintf(fname_tree2, "%s_%d", fname_tree, the_starter_case);
+			sprintf(str, "_%d", the_starter_case);
+			fname_tree2.assign(fname_tree);
+			fname_tree2.append(str);
+			//sprintf(fname_tree2, "%s_%d", fname_tree, the_starter_case);
 			}
 		compute_liftings_single_case_new(the_starter_case, 
 			f_solve, f_save, f_read_instead, 
@@ -526,14 +532,14 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 	int f_solve, int f_save, int f_read_instead, 
 	int &nb_col, 
 	long int *&Solutions, int &sol_length, int &nb_sol, int &nb_backtrack, int &dt,
-	int f_draw_system, const char *fname_system, 
-	int f_write_tree, const char *fname_tree, 
+	int f_draw_system, std::string &fname_system,
+	int f_write_tree, std::string &fname_tree,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v4 = (verbose_level >= 4);
-	char str[2000];
+	string prefix;
 	file_io Fio;
 	os_interface Os;
 
@@ -563,7 +569,9 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 		}
 
 
-	snprintf(str, 2000, "%s%s", input_prefix, base_fname);
+	prefix.assign(input_prefix);
+	prefix.append(base_fname);
+	//snprintf(str, 2000, "%s%s", input_prefix, base_fname);
 
 	orbit_rep *R;
 	R = NEW_OBJECT(orbit_rep);
@@ -572,10 +580,10 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 	if (f_vv) {
 		cout << "exact_cover::compute_liftings_single_case_new "
 				"case " << starter_case << " / " << starter_nb_cases
-				<< " before R->init_from_file str=" << str << endl;
+				<< " before R->init_from_file prefix=" << prefix << endl;
 		}
 
-	R->init_from_file(A_base, str, 
+	R->init_from_file(A_base, prefix,
 		starter_size, starter_case, starter_size - 1,
 		early_test_func, 
 		early_test_func_data, 
@@ -597,7 +605,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 	if (f_vv) {
 		cout << "exact_cover::compute_liftings_single_case_new "
 				"case " << starter_case << " / " << starter_nb_cases
-				<< " after R->init_from_file str=" << str << endl;
+				<< " after R->init_from_file prefix=" << prefix << endl;
 		}
 
 		// R has: int *candidates; int nb_candidates;
@@ -671,14 +679,32 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 				}
 			}
 
-		char fname[2000];
-		char fname_Levi[2000];
-		char fname_sol[2000];
+		char str[1000];
+		string fname;
+		string fname_Levi;
+		string fname_sol;
 
-		sprintf(fname, "%ssystem_%d.txt", output_prefix, starter_case);
-		sprintf(fname_Levi, "%ssystem_%d_Levi_graph.bin",
-				output_prefix, starter_case);
-		sprintf(fname_sol, "%ssystem_%d.sol", output_prefix, starter_case);
+		fname.assign(output_prefix);
+		sprintf(str, "system_%d.txt", starter_case);
+		fname.assign(str);
+
+		//sprintf(fname, "%ssystem_%d.txt", output_prefix, starter_case);
+
+
+		fname_Levi.assign(output_prefix);
+		sprintf(str, "system_%d_Levi_graph.bin", starter_case);
+		fname_Levi.assign(str);
+
+
+		//sprintf(fname_Levi, "%ssystem_%d_Levi_graph.bin",
+		//		output_prefix, starter_case);
+
+
+		fname_sol.assign(output_prefix);
+		sprintf(str, "system_%d.sol", starter_case);
+		fname_sol.assign(str);
+
+		//sprintf(fname_sol, "%ssystem_%d.sol", output_prefix, starter_case);
 
 
 		if (f_save) {
@@ -740,11 +766,13 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 					}
 				}
 			else if (f_read_instead) {
-				char fname_sol[2000];
-				const char *fname_solutions_mask = "%ssystem_%d.solutions";
+				string fname_sol;
+				char str[1000];
 				
-				sprintf(fname_sol,
-						fname_solutions_mask, solution_prefix, starter_case);
+
+				sprintf(str, "system_%d.solutions", starter_case);
+				fname_sol.assign(solution_prefix);
+				fname_sol.append(str);
 
 				if (f_v) {
 					cout << "exact_cover::compute_liftings_single_case_new "
@@ -782,7 +810,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 					}
 
 				if (f_save) {
-					Fio.lint_matrix_write_text(fname_sol,
+					Fio.lint_matrix_write_text(fname_sol.c_str(),
 							Solutions, nb_sol, sol_length);
 					}
 				for (i = 0; i < nb_sol; i++) {

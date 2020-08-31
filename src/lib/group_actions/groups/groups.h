@@ -469,7 +469,7 @@ public:
 	schreier *Sch;
 
 	int f_load_save;
-	const char *prefix;
+	std::string prefix;
 	std::string fname;
 
 	tally *Classify_orbits_by_length;
@@ -486,7 +486,7 @@ public:
 			action *A,
 			strong_generators *SG,
 			int f_load_save,
-			const char *prefix,
+			std::string &prefix,
 			int verbose_level);
 	void orbit_type_of_set(
 			long int *set, int set_sz, int go,
@@ -510,7 +510,7 @@ public:
 		int verbose_level);
 	void create_graph_on_orbits_of_a_certain_length(
 		colored_graph *&CG,
-		const char *fname,
+		std::string &fname,
 		int orbit_length,
 		int &type_idx,
 		int f_has_user_data, long int *user_data, int user_data_size,
@@ -520,7 +520,7 @@ public:
 		int verbose_level);
 	void create_graph_on_orbits_of_a_certain_length_override_orbits_classified(
 		colored_graph *&CG,
-		const char *fname,
+		std::string &fname,
 		int orbit_length,
 		int &type_idx,
 		int f_has_user_data, long int *user_data, int user_data_size,

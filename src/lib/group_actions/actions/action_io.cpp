@@ -121,7 +121,7 @@ void action::report(ostream &ost, int f_sims, sims *S,
 		if (f_v) {
 			cout << "action::report before S->report" << endl;
 		}
-		S->report(ost, 0 /*verbose_level*/);
+		S->report(ost, verbose_level - 2);
 		if (f_v) {
 			cout << "action::report after S->report" << endl;
 		}
@@ -176,7 +176,7 @@ void action::report_what_we_act_on(ostream &ost, int verbose_level)
 }
 
 void action::read_orbit_rep_and_candidates_from_files_and_process(
-	const char *prefix,
+		std::string &prefix,
 	int level, int orbit_at_level, int level_of_candidates_file,
 	void (*early_test_func_callback)(long int *S, int len,
 		long int *candidates, int nb_candidates,
@@ -255,7 +255,7 @@ void action::read_orbit_rep_and_candidates_from_files_and_process(
 }
 
 void action::read_orbit_rep_and_candidates_from_files(
-	const char *prefix,
+		std::string &prefix,
 	int level, int orbit_at_level, int level_of_candidates_file,
 	long int *&starter,
 	int &starter_sz,
@@ -280,8 +280,11 @@ void action::read_orbit_rep_and_candidates_from_files(
 	candidates = NULL;
 	//longinteger_object stab_go;
 
-	char fname1[1000];
-	sprintf(fname1, "%s_lvl_%d", prefix, level);
+	string fname1;
+	char str[1000];
+	sprintf(str, "_lvl_%d", level);
+	fname1.assign(prefix);
+	fname1.append(str);
 
 	read_set_and_stabilizer(fname1,
 		orbit_at_level, starter, starter_sz, Stab,
@@ -334,9 +337,11 @@ void action::read_orbit_rep_and_candidates_from_files(
 		cout << "action::read_orbit_rep_and_candidates_from_files "
 				"before generator_read_candidates_of_orbit" << endl;
 		}
-	char fname2[1000];
-	sprintf(fname2, "%s_lvl_%d_candidates.bin", prefix,
-			level_of_candidates_file);
+	string fname2;
+	//char str[1000];
+	fname2.assign(prefix);
+	sprintf(str, "_lvl_%d_candidates.bin", level_of_candidates_file);
+	fname2.append(str);
 	Fio.poset_classification_read_candidates_of_orbit(
 		fname2, orbit_at_candidate_level,
 		candidates, nb_candidates, verbose_level - 1);
@@ -365,7 +370,7 @@ void action::read_orbit_rep_and_candidates_from_files(
 }
 
 
-void action::read_representatives(char *fname,
+void action::read_representatives(std::string &fname,
 		int *&Reps, int &nb_reps, int &size, int verbose_level)
 {
 	int f_casenumbers = FALSE;
@@ -402,7 +407,7 @@ void action::read_representatives(char *fname,
 }
 
 void action::read_representatives_and_strong_generators(
-	char *fname, int *&Reps,
+	std::string &fname, int *&Reps,
 	char **&Aut_ascii, int &nb_reps, int &size, int verbose_level)
 {
 	int f_casenumbers = FALSE;
@@ -440,7 +445,7 @@ void action::read_representatives_and_strong_generators(
 }
 
 void action::read_file_and_print_representatives(
-		char *fname, int f_print_stabilizer_generators, int verbose_level)
+		std::string &fname, int f_print_stabilizer_generators, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_casenumbers = FALSE;
@@ -508,7 +513,7 @@ void action::read_file_and_print_representatives(
 
 }
 
-void action::read_set_and_stabilizer(const char *fname,
+void action::read_set_and_stabilizer(std::string &fname,
 	int no, long int *&set, int &set_sz, sims *&stab,
 	strong_generators *&Strong_gens,
 	int &nb_cases,

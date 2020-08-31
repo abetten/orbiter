@@ -445,11 +445,13 @@ void delandtsheer_doyen::search_singletons(int verbose_level)
 	cout << "target_depth=" << target_depth << endl;
 
 	orbiter_data_file *ODF;
-	char fname[1000];
+	char str[1000];
+	string fname;
 	int level = Descr->depth;
 
-	sprintf(fname, "design_%s_%s_%d_%d_lvl_%d",
+	sprintf(str, "design_%s_%s_%d_%d_lvl_%d",
 			Descr->group_label, Descr->mask_label, Descr->q1, Descr->q2, level);
+	fname.assign(str);
 
 	ODF = NEW_OBJECT(orbiter_data_file);
 	ODF->load(fname, verbose_level);

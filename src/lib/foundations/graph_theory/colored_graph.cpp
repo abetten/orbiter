@@ -19,7 +19,7 @@ namespace foundations {
 
 colored_graph::colored_graph()
 {
-	fname_base[0] = 0;
+	//fname_base[0] = 0;
 	nb_points = nb_colors = nb_colors_per_vertex = 0;
 	bitvector_length = 0;
 	L = 0;
@@ -836,7 +836,7 @@ void colored_graph::init_user_data(long int *data,
 	}
 }
 
-void colored_graph::save(const char *fname, int verbose_level)
+void colored_graph::save(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	graph_theory_domain Graph;
@@ -845,7 +845,7 @@ void colored_graph::save(const char *fname, int verbose_level)
 		cout << "colored_graph::save" << endl;
 	}
 
-	Graph.save_colored_graph(fname, nb_points, nb_colors, nb_colors_per_vertex,
+	Graph.save_colored_graph(fname.c_str(), nb_points, nb_colors, nb_colors_per_vertex,
 		points, point_color, 
 		user_data, user_data_size, 
 		bitvector_adjacency, bitvector_length,
@@ -856,7 +856,7 @@ void colored_graph::save(const char *fname, int verbose_level)
 	}
 }
 
-void colored_graph::load(const char *fname, int verbose_level)
+void colored_graph::load(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	graph_theory_domain Graph;
@@ -868,7 +868,7 @@ void colored_graph::load(const char *fname, int verbose_level)
 	if (f_v) {
 		cout << "colored_graph::load before Graph.load_colored_graph" << endl;
 	}
-	Graph.load_colored_graph(fname,
+	Graph.load_colored_graph(fname.c_str(),
 		nb_points, nb_colors, nb_colors_per_vertex,
 		points /*vertex_labels*/, point_color /*vertex_colors*/, 
 		user_data, user_data_size, 
@@ -880,13 +880,13 @@ void colored_graph::load(const char *fname, int verbose_level)
 
 	f_ownership_of_bitvec = TRUE;
 
-	strcpy(fname_base, fname);
+	fname_base.assign(fname);
 	replace_extension_with(fname_base, "");
 
 
 	if (f_v) {
 		cout << "colored_graph::load Read file " << fname
-				<< " of size " << Fio.file_size(fname) << endl;
+				<< " of size " << Fio.file_size(fname.c_str()) << endl;
 	}
 }
 
@@ -906,7 +906,10 @@ void colored_graph::all_cliques_of_size_k_ignore_colors(
 	}
 	CF = NEW_OBJECT(clique_finder);
 
-	CF->init("", nb_points, 
+	string dummy;
+
+	dummy.assign("");
+	CF->init(dummy, nb_points,
 		target_depth, 
 		FALSE /* f_has_adj_list */, NULL /* int *adj_list_coded */, 
 		TRUE /* f_has_bitvector */, bitvector_adjacency, 
@@ -965,7 +968,11 @@ colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file(
 	CF->call_back_clique_found_data1 = FO;
 	CF->call_back_clique_found_data2 = this;
 
-	CF->init("", nb_points, 
+	string dummy;
+
+	dummy.assign("");
+
+	CF->init(dummy, nb_points,
 		target_depth, 
 		FALSE /* f_has_adj_list */, NULL /* int *adj_list_coded */, 
 		TRUE /* f_has_bitvector */, bitvector_adjacency, 
@@ -1004,7 +1011,7 @@ void colored_graph::all_rainbow_cliques(ofstream *fp,
 	int f_output_solution_raw,
 	int f_maxdepth, int maxdepth, 
 	int f_restrictions, int *restrictions, 
-	int f_tree, int f_decision_nodes_only, const char *fname_tree,  
+	int f_tree, int f_decision_nodes_only, std::string &fname_tree,
 	int print_interval, 
 	unsigned long int &search_steps, unsigned long int &decision_steps,
 	int &nb_sol, int &dt,
@@ -1043,7 +1050,7 @@ void colored_graph::all_rainbow_cliques_with_additional_test_function(
 	ofstream *fp, int f_output_solution_raw,
 	int f_maxdepth, int maxdepth, 
 	int f_restrictions, int *restrictions, 
-	int f_tree, int f_decision_nodes_only, const char *fname_tree,  
+	int f_tree, int f_decision_nodes_only, std::string &fname_tree,
 	int print_interval, 
 	int f_has_additional_test_function,
 	void (*call_back_additional_test_function)(
@@ -1097,17 +1104,19 @@ void colored_graph::all_rainbow_cliques_with_additional_test_function(
 	}
 }
 
-void colored_graph::draw_on_circle(char *fname, 
+void colored_graph::draw_on_circle(std::string &fname,
 	int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 	int f_radius, double radius, 
 	int f_labels, int f_embedded, int f_sideways, 
 	double tikz_global_scale, double tikz_global_line_width,
 	int verbose_level)
 {
-	char fname_full[1000];
+	string fname_full;
 	file_io Fio;
 	
-	snprintf(fname_full, 1000, "%s.mp", fname);
+	fname_full.assign(fname);
+	fname_full.append(".mp");
+
 	{
 	mp_graphics G;
 	G.setup(fname, 0, 0, 
@@ -1220,7 +1229,7 @@ void colored_graph::draw_on_circle_2(
 
 
 
-void colored_graph::draw(const char *fname, 
+void colored_graph::draw(std::string &fname,
 	int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 	double scale, double line_width, 
 	int verbose_level)
@@ -1278,7 +1287,7 @@ void colored_graph::draw(const char *fname,
 	}
 }
 
-void colored_graph::draw_Levi(const char *fname, 
+void colored_graph::draw_Levi(std::string &fname,
 	int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 	int f_partition, int nb_row_parts, int *row_part_first, 
 	int nb_col_parts, int *col_part_first, 
@@ -1361,11 +1370,11 @@ void colored_graph::draw_Levi(const char *fname,
 }
 
 void colored_graph::draw_with_a_given_partition(
-	const char *fname,
-	int xmax_in, int ymax_in, int xmax_out, int ymax_out,
-	int *parts, int nb_parts, 
-	double scale, double line_width, 
-	int verbose_level)
+		std::string &fname,
+		int xmax_in, int ymax_in, int xmax_out, int ymax_out,
+		int *parts, int nb_parts,
+		double scale, double line_width,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_dots = FALSE;
@@ -1430,7 +1439,7 @@ void colored_graph::draw_with_a_given_partition(
 
 }
 
-void colored_graph::draw_partitioned(const char *fname, 
+void colored_graph::draw_partitioned(std::string &fname,
 	int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 	int f_labels, 
 	double scale, double line_width, 
@@ -1737,7 +1746,7 @@ colored_graph
 
 
 void colored_graph::export_to_magma(
-		const char *fname, int verbose_level)
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -1798,7 +1807,7 @@ void colored_graph::export_to_magma(
 }
 
 void colored_graph::export_to_maple(
-		const char *fname, int verbose_level)
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, h;
@@ -1865,7 +1874,7 @@ void colored_graph::export_to_maple(
 }
 
 void colored_graph::export_to_file(
-		const char *fname, int verbose_level)
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -1914,7 +1923,7 @@ void colored_graph::export_to_file(
 }
 
 void colored_graph::export_to_text(
-		const char *fname, int verbose_level)
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -1924,7 +1933,7 @@ void colored_graph::export_to_text(
 		cout << "colored_graph::export_to_text" << endl;
 	}
 	{
-		ofstream fp(fname);
+		ofstream fp(fname.c_str());
 
 		fp << "" << endl;
 		for (i = 0; i < nb_points; i++) {
@@ -1963,7 +1972,7 @@ void colored_graph::export_to_text(
 }
 
 void colored_graph::export_laplacian_to_file(
-		const char *fname, int verbose_level)
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, d;
@@ -2026,7 +2035,7 @@ void colored_graph::export_laplacian_to_file(
 }
 
 void colored_graph::export_to_file_matlab(
-		const char *fname, int verbose_level)
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -2074,7 +2083,7 @@ void colored_graph::export_to_file_matlab(
 		}
 }
 
-void colored_graph::export_to_csv(const char *fname, int verbose_level)
+void colored_graph::export_to_csv(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -2097,7 +2106,7 @@ void colored_graph::export_to_csv(const char *fname, int verbose_level)
 	}
 
 
-	Fio.int_matrix_write_csv(fname, M, nb_points, nb_points);
+	Fio.int_matrix_write_csv(fname.c_str(), M, nb_points, nb_points);
 
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
@@ -2280,7 +2289,7 @@ int colored_graph::is_cycle(int nb_e, long int *edges,
 }
 
 
-void colored_graph::draw_it(const char *fname_base, 
+void colored_graph::draw_it(std::string &fname_base,
 	int xmax_in, int ymax_in, int xmax_out, int ymax_out, 
 	double scale, double line_width, int verbose_level)
 {

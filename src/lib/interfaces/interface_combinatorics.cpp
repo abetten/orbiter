@@ -610,16 +610,18 @@ void interface_combinatorics::do_graph_theoretic_activity(
 
 		cout << "nb_sol = " << Descr->Clique_finder_control->nb_sol << endl;
 	}
-	else if (Descr->f_export_magma) {
+	if (Descr->f_export_magma) {
 
 		cout << "export_magma" << endl;
 
-		char fname_magma[3000];
-		char fname_text[3000];
+		string fname_magma;
+		string fname_text;
 
-		strcpy(fname_magma, fname_graph);
+		fname_magma.assign(fname_graph);
+		//strcpy(fname_magma, fname_graph);
 
-		strcpy(fname_text, fname_graph);
+		fname_text.assign(fname_graph);
+		//strcpy(fname_text, fname_graph);
 
 
 		replace_extension_with(fname_magma, ".magma");
@@ -635,13 +637,13 @@ void interface_combinatorics::do_graph_theoretic_activity(
 		cout << "export_magma done" << endl;
 	}
 
-	else if (Descr->f_export_csv) {
+	if (Descr->f_export_csv) {
 
 		cout << "export_csv" << endl;
 
-		char fname_csv[3000];
+		string fname_csv;
 
-		strcpy(fname_csv, fname_graph);
+		fname_csv.assign(fname_graph);
 
 
 		replace_extension_with(fname_csv, ".csv");
@@ -656,13 +658,13 @@ void interface_combinatorics::do_graph_theoretic_activity(
 	}
 
 
-	else if (Descr->f_export_maple) {
+	if (Descr->f_export_maple) {
 
 		cout << "export_maple" << endl;
 
-		char fname_maple[3000];
+		string fname_maple;
 
-		strcpy(fname_maple, fname_graph);
+		fname_maple.assign(fname_graph);
 
 
 		replace_extension_with(fname_maple, ".maple");
@@ -674,25 +676,26 @@ void interface_combinatorics::do_graph_theoretic_activity(
 
 		cout << "export_maple done" << endl;
 	}
-	else if (Descr->f_print) {
+	if (Descr->f_print) {
 		CG->print();
 	}
-	else if (Descr->f_sort_by_colors) {
+	if (Descr->f_sort_by_colors) {
 		colored_graph *CG2;
-		char fname2[3000];
+		string fname2;
 
-		strcpy(fname2, fname_graph);
+		fname2.assign(fname_graph);
+		//strcpy(fname2, fname_graph);
 		replace_extension_with(fname2, "_sorted.bin");
 		CG2 = CG->sort_by_color_classes(verbose_level);
 		CG2->save(fname2, verbose_level);
-		delete CG2;
+		FREE_OBJECT(CG2);
 	}
 
-	else if (Descr->f_split) {
+	if (Descr->f_split) {
 		cout << "splitting by file " << Descr->split_file << endl;
 		file_io Fio;
 		long int *Split;
-		char fname_out[3000];
+		string fname_out;
 		char extension[1000];
 		int m, n;
 		int a, c;
@@ -711,7 +714,9 @@ void interface_combinatorics::do_graph_theoretic_activity(
 			Subgraph = CG->compute_neighborhood_subgraph(a,
 					vertex_subset, color_subset, verbose_level);
 
-			snprintf(fname_out, 3000, "%s", fname_graph);
+
+			fname_out.assign(fname_graph);
+			//snprintf(fname_out, 3000, "%s", fname_graph);
 			snprintf(extension, 1000, "_case_%03d.bin", c);
 			replace_extension_with(fname_out, extension);
 
@@ -719,7 +724,7 @@ void interface_combinatorics::do_graph_theoretic_activity(
 			Subgraph->save(fname_out, verbose_level - 2);
 		}
 	}
-	else if (Descr->f_save) {
+	if (Descr->f_save) {
 		cout << "before save fname_graph=" << fname_graph << endl;
 		CG->save(fname_graph, verbose_level);
 		cout << "after save" << endl;
@@ -771,7 +776,7 @@ void interface_combinatorics::do_create_graph(
 		CG->init_adjacency_no_colors(Gr->N, Gr->Adj, verbose_level);
 	}
 
-	strcpy(fname_graph, Gr->label);
+	fname_graph.assign(Gr->label);
 	replace_extension_with(fname_graph, ".colored_graph");
 	//snprintf(fname_graph, 2000, "%s.colored_graph", Gr->label);
 
@@ -804,10 +809,10 @@ void interface_combinatorics::do_read_poset_file(const char *fname,
 	LG->init_poset_from_file(fname, f_grouping, x_stretch, verbose_level - 1);
 
 
-	char fname_out[1000];
+	string fname_out;
 	file_io Fio;
 
-	snprintf(fname_out, 1000, "%s", fname);
+	fname_out.assign(fname);
 
 	replace_extension_with(fname_out, ".layered_graph");
 
