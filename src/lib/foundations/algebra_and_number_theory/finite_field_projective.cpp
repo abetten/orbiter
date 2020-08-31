@@ -4605,7 +4605,7 @@ void finite_field::do_conic_type(int n,
 
 void finite_field::do_test_diagonal_line(int n,
 		long int *set_in, int set_size,
-	const char *fname_orbits_on_quadrangles,
+	std::string &fname_orbits_on_quadrangles,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -5217,7 +5217,7 @@ void finite_field::do_embed_points(int n,
 
 void finite_field::do_draw_points_in_plane(
 		long int *set, int set_size,
-	const char *fname_base, int f_point_labels,
+	std::string &fname_base, int f_point_labels,
 	int f_embedded, int f_sideways,
 	int verbose_level)
 {

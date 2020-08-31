@@ -35,7 +35,7 @@ interface_coding_theory::interface_coding_theory()
 	ntt_fname_code = NULL;
 	f_draw_matrix = FALSE;
 	bit_depth = 8;
-	fname = NULL;
+	//fname = NULL;
 	box_width = 0;
 }
 
@@ -140,7 +140,7 @@ void interface_coding_theory::read_arguments(int argc,
 		}
 		else if (strcmp(argv[i], "-draw_matrix") == 0) {
 			f_draw_matrix = TRUE;
-			fname = argv[++i];
+			fname.assign(argv[++i]);
 			box_width = atoi(argv[++i]);
 			bit_depth = atoi(argv[++i]);
 			cout << "-draw_matrix " << fname << " " << box_width << " " << bit_depth << endl;
@@ -177,7 +177,7 @@ void interface_coding_theory::worker(int verbose_level)
 		int *M;
 		int m, n;
 
-		Fio.int_matrix_read_csv(fname, M, m, n, verbose_level);
+		Fio.int_matrix_read_csv(fname.c_str(), M, m, n, verbose_level);
 		draw_bitmap(fname, M, m, n,
 				FALSE, 0, // int f_partition, int part_width,
 				0, NULL, 0, NULL, // int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,

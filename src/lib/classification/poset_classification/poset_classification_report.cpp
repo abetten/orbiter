@@ -381,12 +381,12 @@ void poset_classification::report(ostream &ost)
 
 
 
-	char fname_base[1000];
-	char cmd[10000];
+	string fname_base;
 
 	draw_poset_fname_base_poset_lvl(fname_base, depth);
 
 #if 0
+	string cmd;
 
 	snprintf(cmd, 10000, "cp %s.layered_graph ./poset.layered_graph", fname_base);
 	cout << "executing: " << cmd << endl;
@@ -441,7 +441,7 @@ void poset_classification::report(ostream &ost)
 	ost << "\\section{Stabilizers and Schreier trees}" << endl;
 	ost << endl;
 
-	int orbit_at_level, j, nb_gens;
+	int orbit_at_level, /*j,*/ nb_gens;
 
 	cnt = 0;
 	for (level = 0; level <= depth; level++) {
@@ -547,6 +547,7 @@ void poset_classification::report(ostream &ost)
 				}
 
 
+#if 0
 				for (j = 0; j < nb_orbits_sv; j++) {
 
 					//char fname_base[1000];
@@ -664,6 +665,9 @@ void poset_classification::report(ostream &ost)
 #endif
 
 				}
+#endif
+
+
 				FREE_int(orbit_reps);
 				FREE_int(orbit_length);
 				FREE_int(total_depth);

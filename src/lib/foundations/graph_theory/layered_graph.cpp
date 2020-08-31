@@ -44,7 +44,7 @@ void layered_graph::freeself()
 }
 
 void layered_graph::init(int nb_layers, int *Nb_nodes_layer, 
-	const char *fname_base, int verbose_level)
+	std::string &fname_base, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -53,7 +53,8 @@ void layered_graph::init(int nb_layers, int *Nb_nodes_layer,
 		cout << "layered_graph::init" << endl;
 		}
 	layered_graph::nb_layers = nb_layers;
-	strcpy(layered_graph::fname_base, fname_base);
+	layered_graph::fname_base.assign(fname_base);
+
 	L = NEW_OBJECTS(graph_layer, nb_layers);
 	id_of_first_node = 0;
 	for (i = 0; i < nb_layers; i++) {
@@ -284,21 +285,26 @@ void layered_graph::add_node_data3(int l, int n,
 
 
 
-void layered_graph::draw_with_options(const char *fname,
+void layered_graph::draw_with_options(std::string &fname,
 		layered_graph_draw_options *O, int verbose_level)
 {
-	int f_v = (verbose_level >= 1);
+	int f_v = TRUE;//(verbose_level >= 1);
 
 	int x_min = 0; //, x_max = 10000;
 	int y_min = 0; //, y_max = 10000;
 	int factor_1000 = 1000;
-	char fname_full[1000];
+	string fname_full;
 	double move_out = 0.01;
 	int edge_label = 1;
 	file_io Fio;
 	
-	strcpy(fname_full, fname);
-	strcat(fname_full, ".mp");
+	fname_full.assign(fname);
+	fname_full.append(".mp");
+
+	if (f_v) {
+		cout << "layered_graph::draw_with_options fname_full = " << fname_full << endl;
+	}
+
 	{
 	mp_graphics G(fname_full, x_min, y_min,
 			O->x_max, O->y_max,
@@ -839,7 +845,7 @@ void layered_graph::find_node_by_id(int id, int &l, int &n)
 }
 
 
-void layered_graph::write_file(char *fname,
+void layered_graph::write_file(std::string &fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -852,13 +858,13 @@ void layered_graph::write_file(char *fname,
 	M.used_length = 0;
 	M.cur_pointer = 0;
 	write_memory_object(&M, verbose_level - 1);
-	M.write_file(fname, verbose_level - 1);
+	M.write_file(fname.c_str(), verbose_level - 1);
 	if (f_v) {
 		cout << "layered_graph::write_file done" << endl;
 		}
 }
 
-void layered_graph::read_file(const char *fname,
+void layered_graph::read_file(std::string &fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -870,7 +876,7 @@ void layered_graph::read_file(const char *fname,
 				"reading file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 		}
-	M.read_file(fname, verbose_level - 1);
+	M.read_file(fname.c_str(), verbose_level - 1);
 	if (f_v) {
 		cout << "layered_graph::read_file "
 				"read file " << fname << endl;
@@ -911,7 +917,7 @@ void layered_graph::write_memory_object(
 	for (i = 0; i < nb_layers; i++) {
 		L[i].write_memory_object(m, verbose_level - 1);
 		}
-	m->write_string(fname_base);
+	m->write_string(fname_base.c_str());
 	m->write_int(MAGIC_SYNC); // a check to see if the file is not corrupt
 	if (f_v) {
 		cout << "layered_graph::write_memory_object "
@@ -955,7 +961,7 @@ void layered_graph::read_memory_object(
 		}
 	
 	m->read_string(p);
-	strcpy(fname_base, p);
+	fname_base.assign(p);
 	FREE_char(p);
 
 	m->read_int(&a);
@@ -1080,7 +1086,11 @@ void layered_graph::make_subset_lattice(int n, int depth, int f_tree,
 	set2 = NEW_int(n);
 
 	add_data1(0, 0/*verbose_level*/);
-	init(depth + 1 /*nb_layers*/, Nb, "", verbose_level);
+
+	string dummy;
+	dummy.assign("");
+
+	init(depth + 1 /*nb_layers*/, Nb, dummy, verbose_level);
 	if (f_vv) {
 		cout << "layered_graph::make_subset_lattice after init" << endl;
 		}
@@ -1201,7 +1211,11 @@ void layered_graph::init_poset_from_file(const char *fname,
 			nb_v += Nb[i];
 		}
 		add_data1(0, 0/*verbose_level*/);
-		init(nb_layer, Nb, "", 0);
+
+		string dummy;
+		dummy.assign("");
+
+		init(nb_layer, Nb, dummy, 0);
 		place(0 /*verbose_level*/);
 
 

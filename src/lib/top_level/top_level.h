@@ -169,11 +169,11 @@ class representatives {
 public:
 	action *A;
 
-	char prefix[1000];
-	char fname_rep[1000];
-	char fname_stabgens[1000];
-	char fname_fusion[1000];
-	char fname_fusion_ge[1000];
+	std::string prefix;
+	std::string fname_rep;
+	std::string fname_stabgens;
+	std::string fname_fusion;
+	std::string fname_fusion_ge;
 
 
 
@@ -216,7 +216,7 @@ public:
 	void null();
 	~representatives();
 	void free();
-	void init(action *A, int nb_objects, char *prefix, int verbose_level);
+	void init(action *A, int nb_objects, std::string &prefix, int verbose_level);
 	void write_fusion(int verbose_level);
 	void read_fusion(int verbose_level);
 	void write_representatives_and_stabilizers(int verbose_level);

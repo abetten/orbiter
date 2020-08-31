@@ -17,8 +17,8 @@ namespace top_level {
 void isomorph_read_statistic_files(
 	action *A_base, action *A,
 	poset_classification *gen,
-	int size, const char *prefix_classify,
-	const char *prefix, int level,
+	int size, std::string &prefix_classify,
+	std::string &prefix, int level,
 	const char **fname, int nb_files,
 	int verbose_level)
 {
@@ -222,8 +222,8 @@ void isomorph_read_statistic_files(
 
 void isomorph_build_db(
 	action *A_base, action *A, poset_classification *gen,
-	int size, const char *prefix_classify,
-	const char *prefix_iso, int level,
+	int size, std::string &prefix_classify,
+	std::string &prefix_iso, int level,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -276,8 +276,8 @@ void isomorph_build_db(
 
 void isomorph_read_solution_files(
 	action *A_base, action *A, poset_classification *gen,
-	int size, const char *prefix_classify,
-	const char *prefix_iso, int level,
+	int size, std::string &prefix_classify,
+	std::string &prefix_iso, int level,
 	const char **fname, int nb_files, 
 	int f_has_final_test_function, 
 	int (*final_test_function)(long int *data, int sz,
@@ -356,8 +356,8 @@ void isomorph_read_solution_files(
 
 void isomorph_init_solutions_from_memory(
 	action *A_base, action *A, poset_classification *gen,
-	int size, const char *prefix_classify,
-	const char *prefix_iso, int level,
+	int size, std::string &prefix_classify,
+	std::string &prefix_iso, int level,
 	int **Solutions, int *Nb_sol, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -434,7 +434,7 @@ void isomorph_init_solutions_from_memory(
 
 void isomorph_read_solution_files_from_clique_finder_case_by_case(
 		action *A_base, action *A, poset_classification *gen,
-	int size, const char *prefix_classify, const char *prefix_iso, int level, 
+	int size, std::string &prefix_classify, std::string &prefix_iso, int level,
 	const char **fname, long int *list_of_cases, int nb_files, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -529,7 +529,7 @@ void isomorph_read_solution_files_from_clique_finder_case_by_case(
 
 void isomorph_read_solution_files_from_clique_finder(
 	action *A_base, action *A, poset_classification *gen,
-	int size, const char *prefix_classify, const char *prefix_iso, int level, 
+	int size, std::string &prefix_classify, std::string &prefix_iso, int level,
 	const char **fname, int nb_files, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -617,8 +617,8 @@ void isomorph_read_solution_files_from_clique_finder(
 
 void isomorph_compute_orbits(
 	action *A_base, action *A, poset_classification *gen,
-	int size, const char *prefix_classify,
-	const char *prefix_iso, int level, int verbose_level)
+	int size, std::string &prefix_classify,
+	std::string &prefix_iso, int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_implicit_fusion = FALSE;
@@ -693,8 +693,8 @@ void isomorph_compute_orbits(
 
 void isomorph_testing(
 	action *A_base, action *A, poset_classification *gen,
-	int size, const char *prefix_classify,
-	const char *prefix_iso, int level,
+	int size, std::string &prefix_classify,
+	std::string &prefix_iso, int level,
 	int f_play_back, const char *old_event_file,
 	int print_mod, int verbose_level)
 {
@@ -798,8 +798,11 @@ void isomorph_testing(
 
 	Iso.setup_and_open_solution_database(verbose_level - 1);
 	
-	char fname[1000];
-	sprintf(fname, "%sorbits.txt", prefix_iso);
+	string fname;
+
+	fname.assign(prefix_iso);
+	fname.append("orbits.txt");
+
 	{
 	ofstream fp(fname);
 	fp << "# " << Iso.size << endl;
@@ -858,8 +861,8 @@ void isomorph_testing(
 
 void isomorph_classification_graph(
 	action *A_base, action *A, poset_classification *gen,
-	int size, const char *prefix_classify,
-	const char *prefix_iso, int level,
+	int size, std::string &prefix_classify,
+	std::string &prefix_iso, int level,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -917,8 +920,8 @@ void isomorph_classification_graph(
 
 void isomorph_identify(
 	action *A_base, action *A, poset_classification *gen,
-	int size, const char *prefix_classify,
-	const char *prefix_iso, int level,
+	int size, std::string &prefix_classify,
+	std::string &prefix_iso, int level,
 	int identify_nb_files, const char **fname, int *Iso_type, 
 	int f_save, int verbose_level)
 {
@@ -1026,8 +1029,8 @@ void isomorph_identify(
 
 void isomorph_identify_table(
 	action *A_base, action *A, poset_classification *gen,
-	int size, const char *prefix_classify,
-	const char *prefix_iso, int level,
+	int size, std::string &prefix_classify,
+	std::string &prefix_iso, int level,
 	int nb_rows, long int *Table, int *Iso_type,
 	int verbose_level)
 // Table[nb_rows * size]
@@ -1127,7 +1130,7 @@ void isomorph_identify_table(
 
 void isomorph_worker(
 	action *A_base, action *A, poset_classification *gen,
-	int size, const char *prefix_classify, const char *prefix_iso, 
+	int size, std::string &prefix_classify, std::string &prefix_iso,
 	void (*work_callback)(isomorph *Iso, void *data, int verbose_level), 
 	void *work_data, 
 	int level, int verbose_level)
@@ -1220,7 +1223,7 @@ void isomorph_worker(
 
 void isomorph_compute_down_orbits(
 	action *A_base, action *A, poset_classification *gen,
-	int size, const char *prefix_classify, const char *prefix, 
+	int size, std::string &prefix_classify, std::string &prefix,
 	void *data, 
 	int level, int verbose_level)
 {

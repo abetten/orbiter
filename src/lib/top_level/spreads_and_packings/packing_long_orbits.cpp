@@ -26,6 +26,9 @@ packing_long_orbits::packing_long_orbits()
 	fixpoint_clique = NULL;
 	long_orbit_idx = 0;
 	set = NULL;
+	long_orbit_length = 0;
+	f_solution_path = FALSE;
+	// solution_path;
 
 	Filtered_orbits = NULL;
 	fname_graph[0] = 0;
@@ -57,6 +60,8 @@ void packing_long_orbits::init(packing_was_fixpoints *PWF,
 		int fixpoint_clique_size,
 		long int *fixpoint_clique,
 		int long_orbit_length,
+		int f_solution_path,
+		std::string &solution_path,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -71,6 +76,10 @@ void packing_long_orbits::init(packing_was_fixpoints *PWF,
 	packing_long_orbits::fixpoints_clique_case_number = fixpoints_clique_case_number;
 	packing_long_orbits::fixpoint_clique_size = fixpoint_clique_size;
 	//packing_long_orbits::fixpoint_clique = fixpoint_clique;
+	packing_long_orbits::long_orbit_length = long_orbit_length;
+	packing_long_orbits::f_solution_path = f_solution_path;
+	packing_long_orbits::solution_path.assign(solution_path);
+
 	set = NEW_lint(long_orbit_length);
 
 	packing_long_orbits::fixpoint_clique = NEW_lint(fixpoint_clique_size);
@@ -198,8 +207,8 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 	create_fname_graph_on_remaining_long_orbits();
 
 	if (f_v) {
-		cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
-				"fname=" << fname_graph << endl;
+		cout << "packing_long_orbits::create_graph_on_remaining_long_orbits fname_graph = " << fname_graph << endl;
+		cout << "packing_long_orbits::create_graph_on_remaining_long_orbits fname_solutions = " << fname_solutions << endl;
 	}
 
 	//selected_fixpoints, clique_size,
@@ -213,6 +222,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 	int user_data_sz;
 	long int *user_data;
 	colored_graph *CG;
+	file_io Fio;
 
 	user_data_sz = fixpoint_clique_size;
 	user_data = NEW_lint(user_data_sz);
@@ -220,22 +230,44 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 			PWF->PW->reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx],
 			user_data, fixpoint_clique_size);
 
-	create_graph_and_save_to_file(
-				CG,
-				fname_graph,
-				PWF->PW->Descr->long_orbit_length /* orbit_length */,
-				TRUE /* f_has_user_data */, user_data, user_data_sz,
-				verbose_level);
+	if (Fio.file_size(fname_solutions.c_str())) {
+		cout << "solution file exists" << endl;
+
+		std::vector<std::vector<int> > Solutions;
+		int solution_size;
+
+		solution_size = (PWF->PW->P->size_of_packing - fixpoint_clique_size) / long_orbit_length;
+		cout << "solution_size = " << solution_size << endl;
+
+
+		Fio.read_solutions_from_file_size_is_known(fname_solutions,
+			Solutions, solution_size,
+			verbose_level);
+
+		cout << "solution file contains " << Solutions.size() << " solutions" << endl;
+
+	}
+	else {
+		cout << "solution file does not exist" << endl;
+		cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
+				"before create_graph_and_save_to_file" << endl;
+		create_graph_and_save_to_file(
+					CG,
+					fname_graph,
+					PWF->PW->Descr->long_orbit_length /* orbit_length */,
+					TRUE /* f_has_user_data */, user_data, user_data_sz,
+					verbose_level);
+		cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
+				"the graph on long orbits has been created with "
+				<< CG->nb_points
+				<< " vertices" << endl;
+
+		FREE_OBJECT(CG);
+	}
 
 
 
 	FREE_lint(user_data);
-	cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
-			"the graph on long orbits has been created with "
-			<< CG->nb_points
-			<< " vertices" << endl;
-
-	FREE_OBJECT(CG);
 
 #if 0
 	CG->save(fname_graph, verbose_level);
@@ -253,20 +285,38 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 
 void packing_long_orbits::create_fname_graph_on_remaining_long_orbits()
 {
+	char str[1000];
+
+	sprintf(str, "_fpc%d_graph", fixpoints_clique_case_number);
+
+
 	if (PWF->PW->Descr->f_output_path) {
-		sprintf(fname_graph, "%s%s_fpc%d_graph", PWF->PW->Descr->output_path,
-				PWF->PW->H_LG->label.c_str(), fixpoints_clique_case_number);
+		fname_graph.assign(PWF->PW->Descr->output_path);
+		fname_graph.append(PWF->PW->H_LG->label);
+		fname_graph.append(str);
 	}
 	else {
-		sprintf(fname_graph, "%s_fpc%d_graph", PWF->PW->H_LG->label.c_str(),
-				fixpoints_clique_case_number);
+		fname_graph.assign(PWF->PW->H_LG->label);
+		fname_graph.append(str);
+	}
+
+	if (f_solution_path) {
+		fname_solutions.assign(solution_path);
+		fname_solutions.append(PWF->PW->H_LG->label);
+		fname_solutions.append(str);
+		fname_solutions.append("_sol.txt");
+	}
+	else {
+		fname_solutions.assign(PWF->PW->H_LG->label);
+		fname_solutions.append(str);
+		fname_solutions.append("_sol.txt");
 	}
 
 }
 
 void packing_long_orbits::create_graph_and_save_to_file(
 	colored_graph *&CG,
-	const char *fname,
+	std::string &fname,
 	int orbit_length,
 	int f_has_user_data, long int *user_data, int user_data_size,
 	int verbose_level)

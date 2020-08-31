@@ -35,6 +35,8 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	element_description_text = NULL;
 	element_label = NULL;
 	f_normalizer_of_cyclic_subgroup = FALSE;
+	f_find_subgroup = FALSE;
+	find_subgroup_order = 0;
 	f_report = FALSE;
 	f_sylow = FALSE;
 	f_test_if_geometric = FALSE;
@@ -116,8 +118,8 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	f_packing_classify = FALSE;
 	dimension_of_spread_elements = 0;
-	spread_selection_text = NULL;
-	spread_tables_prefix = NULL;
+	//spread_selection_text = NULL;
+	//spread_tables_prefix = NULL;
 	f_packing_with_assumed_symmetry = FALSE;
 	packing_was_descr = NULL;
 
@@ -253,13 +255,20 @@ int group_theoretic_activity_description::read_arguments(
 			f_centralizer_of_element = TRUE;
 			element_label = argv[++i];
 			element_description_text = argv[++i];
-			cout << "-centralizer_of_element " << element_label << " " << element_description_text << endl;
+			cout << "-centralizer_of_element " << element_label
+					<< " " << element_description_text << endl;
 		}
 		else if (strcmp(argv[i], "-normalizer_of_cyclic_subgroup") == 0) {
 			f_normalizer_of_cyclic_subgroup = TRUE;
 			element_label = argv[++i];
 			element_description_text = argv[++i];
-			cout << "-normalizer_of_cyclic_subgroup " << element_label << " " << element_description_text << endl;
+			cout << "-normalizer_of_cyclic_subgroup " << element_label
+					<< " " << element_description_text << endl;
+		}
+		else if (strcmp(argv[i], "-find_subgroup") == 0) {
+			f_find_subgroup = TRUE;
+			find_subgroup_order = atoi(argv[++i]);
+			cout << "-find_subgroup " << find_subgroup_order << endl;
 		}
 		else if (strcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
@@ -579,8 +588,8 @@ int group_theoretic_activity_description::read_arguments(
 		else if (strcmp(argv[i], "-packing_classify") == 0) {
 			f_packing_classify = TRUE;
 			dimension_of_spread_elements = atoi(argv[++i]);
-			spread_selection_text = argv[++i];
-			spread_tables_prefix = argv[++i];
+			spread_selection_text.assign(argv[++i]);
+			spread_tables_prefix.assign(argv[++i]);
 			cout << "-packing_classify "
 					<< dimension_of_spread_elements
 					<< " " << spread_selection_text

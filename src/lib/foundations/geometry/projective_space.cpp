@@ -4027,7 +4027,8 @@ void projective_space::report(ostream &ost)
 	if (n == 2) {
 		//ost << "\\clearpage" << endl << endl;
 		ost << "\\subsection{The Plane}" << endl;
-		char fname_base[1000];
+		string fname_base;
+		char str[1000];
 		long int *set;
 		int i;
 		int rad = 17000;
@@ -4036,7 +4037,9 @@ void projective_space::report(ostream &ost)
 		for (i = 0; i < N_points; i++) {
 			set[i] = i;
 			}
-		snprintf(fname_base, 1000, "plane_of_order_%d", q);
+		sprintf(str, "plane_of_order_%d", q);
+		fname_base.assign(str);
+
 		draw_point_set_in_plane(fname_base,
 				set, N_points,
 				TRUE /*f_with_points*/,

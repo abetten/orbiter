@@ -2243,7 +2243,7 @@ int sorting::schreier_vector_determine_depth_recursion(
 
 void sorting::schreier_vector_tree(
 	int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
-	const char *fname_base,
+	std::string &fname_base,
 	layered_graph *&LG,
 	int f_embedded, int f_sideways,
 	int verbose_level)
@@ -2426,9 +2426,11 @@ void sorting::schreier_vector_tree(
 	double line_width = 1.5;
 
 
-	char fname[1000];
+	string fname;
 
-	snprintf(fname, 1000, "%s.layered_graph", fname_base);
+	fname.assign(fname_base);
+	fname.append(".layered_graph");
+
 
 	layered_graph_draw_options O;
 

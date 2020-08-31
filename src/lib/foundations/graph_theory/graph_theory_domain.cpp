@@ -20,18 +20,20 @@ graph_theory_domain::~graph_theory_domain() {
 
 }
 
-void graph_theory_domain::colored_graph_draw(const char *fname, int xmax_in,
+void graph_theory_domain::colored_graph_draw(std::string &fname, int xmax_in,
 		int ymax_in, int xmax_out, int ymax_out, double scale,
 		double line_width, int verbose_level) {
 	int f_v = (verbose_level >= 1);
-	char fname_draw[2000];
+	std::string fname_draw;
 	colored_graph CG;
 
 	if (f_v) {
 		cout << "colored_graph_draw" << endl;
 	}
 	CG.load(fname, verbose_level - 1);
-	snprintf(fname_draw, 2000, "%s_graph", CG.fname_base);
+	fname_draw.assign(CG.fname_base);
+	fname_draw.append("_graph");
+	//snprintf(fname_draw, 2000, "%s_graph", CG.fname_base);
 	if (f_v) {
 		cout << "colored_graph_draw before CG.draw_partitioned" << endl;
 	}
@@ -45,35 +47,42 @@ void graph_theory_domain::colored_graph_draw(const char *fname, int xmax_in,
 	}
 }
 
-void graph_theory_domain::colored_graph_all_cliques(const char *fname,
-		int f_output_solution_raw, int f_output_fname, const char *output_fname,
+void graph_theory_domain::colored_graph_all_cliques(std::string &fname,
+		int f_output_solution_raw, int f_output_fname, std::string &output_fname,
 		int f_maxdepth, int maxdepth, int f_restrictions, int *restrictions,
-		int f_tree, int f_decision_nodes_only, const char *fname_tree,
+		int f_tree, int f_decision_nodes_only, std::string &fname_tree,
 		int print_interval, unsigned long int &search_steps,
 		unsigned long int &decision_steps, int &nb_sol, int &dt,
 		int verbose_level) {
 	int f_v = (verbose_level >= 1);
 	colored_graph CG;
-	char fname_sol[2000];
-	char fname_success[2000];
+	std::string fname_sol;
+	std::string fname_success;
 
 	if (f_v) {
 		cout << "colored_graph_all_cliques" << endl;
 	}
 	CG.load(fname, verbose_level - 1);
 	if (f_output_fname) {
-		snprintf(fname_sol, 2000, "%s", output_fname);
-		snprintf(fname_success, 2000, "%s.success", output_fname);
+		fname_sol.assign(output_fname);
+		fname_success.assign(output_fname);
+		fname_success.append(".success");
+		//snprintf(fname_sol, 2000, "%s", output_fname);
+		//snprintf(fname_success, 2000, "%s.success", output_fname);
 	}
 	else {
-		snprintf(fname_sol, 2000, "%s_sol.txt", CG.fname_base);
-		snprintf(fname_success, 2000, "%s_sol.success", CG.fname_base);
+		fname_sol.assign(CG.fname_base);
+		fname_sol.append("_sol.txt");
+		fname_success.assign(CG.fname_base);
+		fname_success.append("_sol.success");
+		//snprintf(fname_sol, 2000, "%s_sol.txt", CG.fname_base);
+		//snprintf(fname_success, 2000, "%s_sol.success", CG.fname_base);
 	}
 
 	//CG.print();
 
 	{
-		ofstream fp(fname_sol);
+		ofstream fp(fname_sol.c_str());
 
 		if (f_v) {
 			cout << "colored_graph_all_cliques "
@@ -101,24 +110,26 @@ void graph_theory_domain::colored_graph_all_cliques(const char *fname,
 
 void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 		long int *list_of_cases, int nb_cases, int f_output_solution_raw,
-		const char *fname_template, const char *fname_sol,
-		const char *fname_stats, int f_split, int split_r, int split_m,
-		int f_maxdepth, int maxdepth, int f_prefix, const char *prefix,
+		std::string &fname_template, std::string &fname_sol,
+		std::string &fname_stats,
+		int f_split, int split_r, int split_m,
+		int f_maxdepth, int maxdepth,
+		int f_prefix, std::string &prefix,
 		int print_interval, int verbose_level) {
 	int f_v = (verbose_level >= 1);
 	int i, c;
 	int Search_steps = 0, Decision_steps = 0, Nb_sol = 0, Dt = 0;
 	unsigned long int search_steps, decision_steps;
 	int nb_sol, dt;
-	char fname[2000];
+	std::string fname;
 	char fname_tmp[2000];
 
 	if (f_v) {
 		cout << "colored_graph_all_cliques_list_of_cases" << endl;
 	}
 	{
-		ofstream fp(fname_sol);
-		ofstream fp_stats(fname_stats);
+		ofstream fp(fname_sol.c_str());
+		ofstream fp_stats(fname_stats.c_str());
 
 		fp_stats << "i,Case,Nb_sol,Nb_vertices,search_steps,"
 				"decision_steps,dt" << endl;
@@ -136,12 +147,15 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 				cout << "colored_graph_all_cliques_list_of_cases case " << i
 						<< " / " << nb_cases << " which is " << c << endl;
 			}
-			snprintf(fname_tmp, 2000, fname_template, c);
+			snprintf(fname_tmp, 2000, fname_template.c_str(), c);
 			if (f_prefix) {
-				snprintf(fname, 2000, "%s%s", prefix, fname_tmp);
+				fname.assign(prefix);
+				fname.append(fname_tmp);
+				//snprintf(fname, 2000, "%s%s", prefix, fname_tmp);
 			}
 			else {
-				strcpy(fname, fname_tmp);
+				fname.assign(fname_tmp);
+				//strcpy(fname, fname_tmp);
 			}
 			CG->load(fname, verbose_level - 2);
 
@@ -149,11 +163,13 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 
 			fp << "# start case " << c << endl;
 
+			string dummy;
+
 			CG->all_rainbow_cliques(&fp, f_output_solution_raw, f_maxdepth,
 					maxdepth,
 					FALSE /* f_restrictions */, NULL /* restrictions */,
 					FALSE /* f_tree */, FALSE /* f_decision_nodes_only */,
-					NULL /* fname_tree */, print_interval, search_steps,
+					dummy /* fname_tree */, print_interval, search_steps,
 					decision_steps, nb_sol, dt, verbose_level - 1);
 			fp << "# end case " << c << " " << nb_sol << " " << search_steps
 					<< " " << decision_steps << " " << dt << endl;
@@ -201,12 +217,13 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_files(int nb_cases,
 		for (i = 0; i < nb_cases; i++) {
 
 			colored_graph *CG;
-			const char *fname;
+			std::string fname;
 
 			CG = NEW_OBJECT(colored_graph);
 
 			c = Case_number[i];
-			fname = Case_fname[i];
+			fname.assign(Case_fname[i]);
+			//fname = Case_fname[i];
 
 			if (f_v) {
 				cout << "colored_graph_all_cliques_list_of_files case " << i
@@ -225,11 +242,13 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_files(int nb_cases,
 
 			fp << "# start case " << c << endl;
 
+			string dummy;
+
 			CG->all_rainbow_cliques(&fp, f_output_solution_raw, f_maxdepth,
 					maxdepth,
 					FALSE /* f_restrictions */, NULL /* restrictions */,
 					FALSE /* f_tree */, FALSE /* f_decision_nodes_only */,
-					NULL /* fname_tree */, print_interval, search_steps,
+					dummy /* fname_tree */, print_interval, search_steps,
 					decision_steps, nb_sol, dt, verbose_level - 1);
 			fp << "# end case " << c << " " << nb_sol << " " << search_steps
 					<< " " << decision_steps << " " << dt << endl;
@@ -286,16 +305,19 @@ int graph_theory_domain::colored_graph_all_rainbow_cliques_nonrecursive(
 }
 #endif
 
-void graph_theory_domain::save_as_colored_graph_easy(const char *fname_base,
-		int n, int *Adj, int verbose_level) {
-	char fname[2000];
+void graph_theory_domain::save_as_colored_graph_easy(std::string &fname_base,
+		int n, int *Adj, int verbose_level)
+{
+	std::string fname;
 	int f_v = (verbose_level >= 1);
 	file_io Fio;
 
 	if (f_v) {
 		cout << "save_as_colored_graph_easy" << endl;
 	}
-	snprintf(fname, 2000, "%s.colored_graph", fname_base);
+	fname.assign(fname_base);
+	fname.append(".colored_graph");
+	//snprintf(fname, 2000, "%s.colored_graph", fname_base);
 
 	colored_graph *CG;
 
@@ -876,7 +898,8 @@ void graph_theory_domain::compute_decomposition_of_graph_wrt_partition(
 }
 
 void graph_theory_domain::draw_bitmatrix(
-		const char *fname_base, int f_dots,
+		std::string &fname_base,
+		int f_dots,
 		int f_partition, int nb_row_parts, int *row_part_first,
 		int nb_col_parts, int *col_part_first, int f_row_grid, int f_col_grid,
 		int f_bitmatrix, uchar *D,
@@ -886,16 +909,19 @@ void graph_theory_domain::draw_bitmatrix(
 		int verbose_level)
 {
 	mp_graphics G;
-	char fname_base2[2000];
-	char fname[3000];
+	std::string fname_base2;
+	std::string fname;
 	int f_embedded = TRUE;
 	int f_sideways = FALSE;
 	//double scale = .3;
 	//double line_width = 1.0;
 	file_io Fio;
 
-	snprintf(fname_base2, 2000, "%s", fname_base);
-	snprintf(fname, 3000, "%s.mp", fname_base2);
+	fname_base2.assign(fname_base);
+	fname.assign(fname_base2);
+	fname.append(".mp");
+	//snprintf(fname_base2, 2000, "%s", fname_base);
+	//snprintf(fname, 3000, "%s.mp", fname_base2);
 	{
 		G.setup(fname_base2, 0, 0, xmax_in /* ONE_MILLION */,
 				ymax_in /* ONE_MILLION */, xmax_out, ymax_out, f_embedded,

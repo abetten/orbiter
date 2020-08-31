@@ -47,7 +47,7 @@ void orbiter_data_file::freeself()
 	FREE_int(Casenumbers);
 }
 
-void orbiter_data_file::load(const char *fname, int verbose_level)
+void orbiter_data_file::load(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char **data;

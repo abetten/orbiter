@@ -29,8 +29,6 @@ create_graph::create_graph()
 	N = 0;
 	Adj = NULL;
 
-	//char label[1000];
-	//char label_tex[1000];
 
 }
 
@@ -59,8 +57,9 @@ void create_graph::init(
 		f_has_CG = TRUE;
 		CG = NEW_OBJECT(colored_graph);
 		CG->load(description->fname, verbose_level);
-		sprintf(label, "%s", description->fname);
-		sprintf(label_tex, "File\\_%s", description->fname);
+		label.assign(description->fname);
+		label_tex.assign("File\\_");
+		label_tex.append(description->fname);
 	}
 	else if (description->f_edge_list) {
 
@@ -84,8 +83,11 @@ void create_graph::init(
 			Adj[j * N + i] = 1;
 		}
 		FREE_int(Idx);
-		sprintf(label, "graph_v%d_e%d", description->n, sz);
-		sprintf(label_tex, "Graph\\_%d\\_%d", description->n, sz);
+		char str[1000];
+		sprintf(str, "graph_v%d_e%d", description->n, sz);
+		label.assign(str);
+		sprintf(str, "Graph\\_%d\\_%d", description->n, sz);
+		label_tex.assign(str);
 		}
 	else if (description->f_edges_as_pairs) {
 		int h, i, j;
@@ -107,8 +109,11 @@ void create_graph::init(
 			Adj[j * N + i] = 1;
 		}
 		FREE_int(Idx);
-		sprintf(label, "graph_v%d_e%d", description->n, sz2);
-		sprintf(label_tex, "Graph\\_%d\\_%d", description->n, sz2);
+		char str[1000];
+		sprintf(str, "graph_v%d_e%d", description->n, sz2);
+		label.assign(str);
+		sprintf(str, "Graph\\_%d\\_%d", description->n, sz2);
+		label_tex.assign(str);
 		}
 	else if (description->f_Johnson) {
 		if (f_v) {
@@ -236,8 +241,11 @@ void create_graph::create_Johnson(int &N, int *&Adj,
 			}
 		}
 
-	sprintf(label, "Johnson_%d_%d_%d", n, k, s);
-	sprintf(label_tex, "Johnson\\_%d\\_%d\\_%d", n, k, s);
+	char str[1000];
+	sprintf(str, "Johnson_%d_%d_%d", n, k, s);
+	label.assign(str);
+	sprintf(str, "Johnson\\_%d\\_%d\\_%d", n, k, s);
+	label_tex.assign(str);
 
 	FREE_int(set1);
 	FREE_int(set2);
@@ -295,8 +303,11 @@ void create_graph::create_Paley(int &N, int *&Adj,
 	}
 	N = q;
 
-	sprintf(label, "Paley_%d", q);
-	sprintf(label_tex, "Paley\\_%d", q);
+	char str[1000];
+	sprintf(str, "Paley_%d", q);
+	label.assign(str);
+	sprintf(str, "Paley\\_%d", q);
+	label_tex.assign(str);
 
 	FREE_OBJECT(F);
 	FREE_int(f_is_square);
@@ -628,9 +639,11 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 
 	N = goi;
 
-
-	sprintf(label, "Sarnak_%d_%d", p, q);
-	sprintf(label_tex, "Sarnak\\_%d\\_%d", p, q);
+	char str[1000];
+	sprintf(str, "Sarnak_%d_%d", p, q);
+	label.assign(str);
+	sprintf(str, "Sarnak\\_%d\\_%d", p, q);
+	label_tex.assign(str);
 
 	FREE_OBJECT(gens);
 	FREE_OBJECT(A);
@@ -723,10 +736,12 @@ void create_graph::create_Schlaefli(int &N, int *&Adj,
 		}
 	}
 
+	char str[1000];
+	sprintf(str, "Schlaefli_%d", q);
+	label.assign(str);
+	sprintf(str, "Schlaefli\\_%d", q);
+	label_tex.assign(str);
 
-
-	sprintf(label, "Schlaefli_%d", q);
-	sprintf(label_tex, "Schlaefli\\_%d", q);
 
 	FREE_int(List);
 	FREE_int(M1);
@@ -867,7 +882,7 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 	sims *G;
 
 
-	G = A->create_sims_from_generators_with_target_group_order_int(
+	G = A->create_sims_from_generators_with_target_group_order_lint(
 		gens_G, 16, verbose_level);
 
 	G->group_order(go);
@@ -917,8 +932,12 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 
 	N = goi;
 
-	sprintf(label, "Shrikhande");
-	sprintf(label_tex, "Shrikhande");
+	char str[1000];
+	sprintf(str, "Shrikhande");
+	label.assign(str);
+	sprintf(str, "Shrikhande");
+	label_tex.assign(str);
+
 
 	FREE_int(Elt1);
 	FREE_int(Elt2);
@@ -1011,9 +1030,12 @@ void create_graph::create_Winnie_Li(int &N, int *&Adj,
 	N = q;
 
 
+	char str[1000];
+	sprintf(str, "Winnie_Li_%d_%d", q, index);
+	label.assign(str);
+	sprintf(str, "Winnie_Li\\_%d\\_%d", q, index);
+	label_tex.assign(str);
 
-	sprintf(label, "Winnie_Li_%d_%d", q, index);
-	sprintf(label_tex, "Winnie_Li\\_%d\\_%d", q, index);
 
 	FREE_int(N1);
 	FREE_OBJECT(F);
@@ -1078,8 +1100,11 @@ void create_graph::create_Grassmann(int &N, int *&Adj,
 	}
 
 
-	sprintf(label, "Grassmann_%d_%d_%d_%d", n, k, q, r);
-	sprintf(label_tex, "Grassmann\\_%d\\_%d\\_%d\\_%d", n, k, q, r);
+	char str[1000];
+	sprintf(str, "Grassmann_%d_%d_%d_%d", n, k, q, r);
+	label.assign(str);
+	sprintf(str, "Grassmann\\_%d\\_%d\\_%d\\_%d", n, k, q, r);
+	label_tex.assign(str);
 
 
 	FREE_int(M1);
@@ -1189,8 +1214,12 @@ void create_graph::create_coll_orthogonal(int &N, int *&Adj,
 	cout << "The adjacency matrix of the collinearity graph has been computed" << endl;
 
 
-	sprintf(label, "Coll_orthogonal_%d_%d_%d", epsilon, d, q);
-	sprintf(label_tex, "Coll_orthogonal\\_%d\\_%d\\_%d", epsilon, d, q);
+	char str[1000];
+	sprintf(str, "Coll_orthogonal_%d_%d_%d", epsilon, d, q);
+	label.assign(str);
+	sprintf(str, "Coll_orthogonal\\_%d\\_%d\\_%d", epsilon, d, q);
+	label_tex.assign(str);
+
 
 	FREE_int(v);
 	FREE_int(v2);

@@ -78,8 +78,8 @@ public:
 	void packing_init(
 			poset_classification_control *Control, linear_group *LG,
 			int dimension_of_spread_elements,
-			int f_select_spread, const char *select_spread_text,
-			const char *path_to_spread_tables,
+			int f_select_spread, std::string &select_spread_text,
+			std::string &path_to_spread_tables,
 			packing_classify *&P,
 			int verbose_level);
 	void centralizer_of_element(
@@ -90,6 +90,14 @@ public:
 			action *A, sims *S,
 			const char *element_description,
 			const char *label, int verbose_level);
+	void find_subgroups(
+			action *A, sims *S,
+			int subgroup_order,
+			std::string &label,
+			int &nb_subgroups,
+			strong_generators *&H_gens,
+			strong_generators *&N_gens,
+			int verbose_level);
 	void relative_order_vector_of_cosets(
 			action *A, strong_generators *SG,
 			vector_ge *cosets, int *&relative_order_table, int verbose_level);
@@ -202,6 +210,8 @@ public:
 	const char *element_description_text;
 	const char *element_label;
 	int f_normalizer_of_cyclic_subgroup;
+	int f_find_subgroup;
+	int find_subgroup_order;
 	int f_report;
 	int f_sylow;
 	int f_test_if_geometric;
@@ -294,8 +304,8 @@ public:
 
 		int f_packing_classify;
 		int dimension_of_spread_elements;
-		const char *spread_selection_text;
-		const char *spread_tables_prefix;
+		std::string spread_selection_text;
+		std::string spread_tables_prefix;
 
 		int f_packing_with_assumed_symmetry;
 		packing_was_description *packing_was_descr;
@@ -366,6 +376,9 @@ public:
 			const char *element_label,
 			const char *element_description_text,
 			int verbose_level);
+	void do_find_subgroups(
+			int order_of_subgroup,
+			int verbose_level);
 	void report(int verbose_level);
 	void print_elements(int verbose_level);
 	void print_elements_tex(int verbose_level);
@@ -418,8 +431,8 @@ public:
 			int verbose_level);
 	void do_spread_classify(int k, int verbose_level);
 	void do_packing_classify(int dimension_of_spread_elements,
-			const char *spread_selection_text,
-			const char *spread_tables_prefix,
+			std::string &spread_selection_text,
+			std::string &spread_tables_prefix,
 			int starter_size,
 			packing_classify *&P,
 			int verbose_level);

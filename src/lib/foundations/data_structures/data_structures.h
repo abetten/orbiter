@@ -135,7 +135,7 @@ class data_file {
 	
 	public:
 
-	char fname[1000];
+	std::string fname;
 	int nb_cases;
 	int *set_sizes;
 	long int **sets;
@@ -151,8 +151,8 @@ class data_file {
 	~data_file();
 	void null();
 	void freeself();
-	void read(const char *fname, int f_casenumbers, int verbose_level);
-	void read_candidates(const char *candidates_fname, int verbose_level);
+	void read(std::string &fname, int f_casenumbers, int verbose_level);
+	void read_candidates(std::string &candidates_fname, int verbose_level);
 };
 
 // #############################################################################
@@ -819,7 +819,7 @@ public:
 		int *depth, int *ancestor, int pos);
 	void schreier_vector_tree(
 		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
-		const char *fname_base,
+		std::string &fname_base,
 		layered_graph *&LG,
 		int f_embedded, int f_sideways,
 		int verbose_level);

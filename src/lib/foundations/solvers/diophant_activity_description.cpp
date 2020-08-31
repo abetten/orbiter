@@ -19,7 +19,7 @@ namespace foundations {
 diophant_activity_description::diophant_activity_description()
 {
 	f_input_file = FALSE;
-	input_file = NULL;
+	//input_file = NULL;
 	f_print = FALSE;
 	f_solve_mckay = FALSE;
 	f_solve_standard = FALSE;
@@ -59,7 +59,7 @@ int diophant_activity_description::read_arguments(
 
 		if (strcmp(argv[i], "-input_file") == 0) {
 			f_input_file = TRUE;
-			input_file = argv[++i];
+			input_file.assign(argv[++i]);
 			cout << "-input_file " << input_file << endl;
 		}
 		else if (strcmp(argv[i], "-print") == 0) {

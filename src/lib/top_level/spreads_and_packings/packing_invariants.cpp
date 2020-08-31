@@ -58,7 +58,7 @@ void packing_invariants::freeself()
 }
 
 void packing_invariants::init(packing_classify *P,
-	char *prefix, char *prefix_tex, int iso_cnt, 
+	std::string &prefix, std::string &prefix_tex, int iso_cnt,
 	long int *the_packing, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -68,8 +68,10 @@ void packing_invariants::init(packing_classify *P,
 	if (f_v) {
 		cout << "packing_invariants::init" << endl;
 		}
-	strcpy(packing_invariants::prefix, prefix);
-	strcpy(packing_invariants::prefix_tex, prefix_tex);
+
+	packing_invariants::prefix.assign(prefix);
+	packing_invariants::prefix_tex.assign(prefix_tex);
+
 	packing_invariants::P = P;
 	packing_invariants::the_packing = NEW_lint(P->size_of_packing);
 	packing_invariants::iso_cnt = iso_cnt;
@@ -275,8 +277,10 @@ void packing_invariants::compute_decomposition(int verbose_level)
 		Stack->split_cell(0 /* verbose_level */);
 		Stack->sort_cells();
 
-		sprintf(fname_incidence_pic, "%s%d_packing_planes.tex",
-				prefix_tex, iso_cnt);
+		fname_incidence_pic.assign(prefix_tex);
+		char str[1000];
+		sprintf(str, "%d_packing_planes.tex", iso_cnt);
+		fname_incidence_pic.append(str);
 		{
 			ofstream fp_pic(fname_incidence_pic);
 
@@ -323,12 +327,17 @@ void packing_invariants::compute_decomposition(int verbose_level)
 		I->compute_TDO_safe(*Stack, depth, verbose_level - 2);
 		
 
-		snprintf(fname_row_scheme, 2000,
-				"%s%d_packing_planes_row_scheme.tex",
-				prefix_tex, iso_cnt);
-		snprintf(fname_col_scheme, 2000,
-				"%s%d_packing_planes_col_scheme.tex",
-				prefix_tex, iso_cnt);
+		fname_row_scheme.assign(prefix_tex);
+		char str[1000];
+		sprintf(str, "%d_packing_planes_row_scheme.tex", iso_cnt);
+		fname_row_scheme.append(str);
+
+		fname_col_scheme.assign(prefix_tex);
+		//char str[1000];
+		sprintf(str, "%d_packing_planes_row_scheme.tex", iso_cnt);
+		fname_col_scheme.append(str);
+
+
 		{
 			ofstream fp_row_scheme(fname_row_scheme);
 			ofstream fp_col_scheme(fname_col_scheme);

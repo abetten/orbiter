@@ -70,7 +70,7 @@ void data_file::freeself()
 	cout << "data_file::freeself done" << endl;
 }
 
-void data_file::read(const char *fname,
+void data_file::read(std::string &fname,
 		int f_casenumbers, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -81,7 +81,7 @@ void data_file::read(const char *fname,
 				<< fname << " of size " << Fio.file_size(fname) << endl;
 		cout << "f_casenumbers=" << f_casenumbers << endl;
 		}
-	strcpy(data_file::fname, fname);
+	data_file::fname.assign(fname);
 	
 	Fio.read_and_parse_data_file_fancy(fname,
 		f_casenumbers, 
@@ -94,7 +94,7 @@ void data_file::read(const char *fname,
 		}	
 }
 
-void data_file::read_candidates(const char *candidates_fname,
+void data_file::read_candidates(std::string &candidates_fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -853,6 +853,7 @@ int blt_set_domain::create_graph(
 	int f_vv = (verbose_level >= 1);
 	int special_line;
 	int ret = TRUE;
+	std::string fname;
 
 	if (f_v) {
 		cout << "blt_set_domain::create_graph" << endl;
@@ -991,9 +992,15 @@ int blt_set_domain::create_graph(
 	for (i = 0; i < nb_candidates; i++) {
 		CG->points[i] = candidates[i];
 	}
+
+	char fname_char[1000];
+
+	sprintf(fname_char, "graph_BLT_%d_%d_%d", q, starter_size, case_number);
+	fname.assign(fname_char);
 	CG->init_user_data(Starter_set, starter_size, verbose_level - 2);
-	snprintf(CG->fname_base, 1000, "graph_BLT_%d_%d_%d",
-			q, starter_size, case_number);
+	CG->fname_base.assign(fname);
+	//snprintf(CG->fname_base, 1000, "graph_BLT_%d_%d_%d",
+	//		q, starter_size, case_number);
 
 
 	if (f_v) {

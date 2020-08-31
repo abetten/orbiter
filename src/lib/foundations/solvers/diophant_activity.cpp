@@ -61,9 +61,9 @@ void diophant_activity::init(diophant_activity_description *Descr,
 				<< Dio->nb_steps_betten << " backtrack steps" << endl;
 
 		if (TRUE) {
-			char output_file[1000];
+			string output_file;
 
-			strcpy(output_file, Descr->input_file);
+			output_file.assign(Descr->input_file);
 			replace_extension_with(output_file, ".sol");
 
 
@@ -81,9 +81,9 @@ void diophant_activity::init(diophant_activity_description *Descr,
 				<< Dio->nb_steps_betten << " backtrack steps" << endl;
 
 		if (TRUE) {
-			char output_file[1000];
+			string output_file;
 
-			strcpy(output_file, Descr->input_file);
+			output_file.assign(Descr->input_file);
 			replace_extension_with(output_file, ".sol");
 
 
@@ -91,9 +91,10 @@ void diophant_activity::init(diophant_activity_description *Descr,
 		}
 	}
 	else if (Descr->f_draw_as_bitmap) {
-		char fname_base[1000];
+		string fname_base;
 
-		sprintf(fname_base, "%s", Descr->input_file);
+		fname_base.assign(Descr->input_file);
+		//sprintf(fname_base, "%s", Descr->input_file);
 		replace_extension_with(fname_base, "_drawing");
 		Dio->draw_as_bitmap(fname_base, TRUE, Descr->box_width, Descr->bit_depth,
 			verbose_level);
@@ -132,13 +133,14 @@ void diophant_activity::init(diophant_activity_description *Descr,
 		}
 	}
 	else if (Descr->f_draw) {
-		char fname_base[1000];
+		string fname_base;
 		int xmax_in = ONE_MILLION;
 		int ymax_in = ONE_MILLION;
 		int xmax_out = ONE_MILLION;
 		int ymax_out = ONE_MILLION;
 
-		sprintf(fname_base, "%s", Descr->input_file);
+		fname_base.assign(Descr->input_file);
+		//sprintf(fname_base, "%s", Descr->input_file);
 		replace_extension_with(fname_base, "_drawing");
 		//Dio->draw_it(fname_base, xmax_in, ymax_in, xmax_out, ymax_out);
 		Dio->draw_partitioned(fname_base,
@@ -151,10 +153,11 @@ void diophant_activity::init(diophant_activity_description *Descr,
 
 		D2 = Dio->trivial_column_reductions(verbose_level);
 
-		char fname2[1000];
+		string fname2;
 		file_io Fio;
 
-		sprintf(fname2, "%s", Descr->input_file);
+		fname2.assign(Descr->input_file);
+		//sprintf(fname2, "%s", Descr->input_file);
 		replace_extension_with(fname2, "_red.diophant");
 
 		D2->save_in_general_format(fname2, verbose_level);

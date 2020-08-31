@@ -1085,7 +1085,7 @@ public:
 			int verbose_level);
 	void do_test_diagonal_line(int n,
 			long int *set_in, int set_size,
-		const char *fname_orbits_on_quadrangles,
+			std::string &fname_orbits_on_quadrangles,
 		int verbose_level);
 	void do_andre(finite_field *Fq,
 			long int *the_set_in, int set_size_in,
@@ -1109,7 +1109,7 @@ public:
 			int verbose_level);
 	void do_draw_points_in_plane(
 			long int *set, int set_size,
-		const char *fname_base, int f_point_labels,
+			std::string &fname_base, int f_point_labels,
 		int f_embedded, int f_sideways,
 		int verbose_level);
 	void do_ideal(int n,

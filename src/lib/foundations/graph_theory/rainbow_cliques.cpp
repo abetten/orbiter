@@ -53,7 +53,7 @@ void rainbow_cliques::search(colored_graph *graph,
 	ofstream *fp_sol, int f_output_solution_raw,
 	int f_maxdepth, int maxdepth, 
 	int f_restrictions, int *restrictions, 
-	int f_tree, int f_decision_nodes_only, const char *fname_tree,  
+	int f_tree, int f_decision_nodes_only, std::string &fname_tree,
 	int print_interval, 
 	unsigned long int &search_steps, unsigned long int &decision_steps,
 	int &nb_sol, int &dt,
@@ -97,7 +97,7 @@ void rainbow_cliques::search_with_additional_test_function(
 	ofstream *fp_sol, int f_output_solution_raw,
 	int f_maxdepth, int maxdepth, 
 	int f_restrictions, int *restrictions,
-	int f_tree, int f_decision_nodes_only, const char *fname_tree,  
+	int f_tree, int f_decision_nodes_only, std::string &fname_tree,
 	int print_interval, 
 	int f_has_additional_test_function,
 	void (*call_back_additional_test_function)(
@@ -151,7 +151,7 @@ void rainbow_cliques::search_with_additional_test_function(
 		cout << "rainbow_cliques::search_with_additional_test_function target_depth = " << target_depth << endl;
 	}
 	
-	CF->init(graph->fname_base, graph->nb_points, 
+	CF->init(graph->fname_base, graph->nb_points,
 		target_depth, 
 		FALSE, NULL, 
 		TRUE, graph->bitvector_adjacency, 

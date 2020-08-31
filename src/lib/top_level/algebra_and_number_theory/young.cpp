@@ -603,7 +603,7 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 	compute_generators(go1, go2, verbose_level);
 
 
-	S1 = A->create_sims_from_generators_with_target_group_order_int(
+	S1 = A->create_sims_from_generators_with_target_group_order_lint(
 		gens1, go1, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "Row stabilizer created" << endl;
@@ -621,7 +621,7 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 
 
 
-	S2 = A->create_sims_from_generators_with_target_group_order_int(
+	S2 = A->create_sims_from_generators_with_target_group_order_lint(
 		gens2, go2, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "Column stabilizer created" << endl;

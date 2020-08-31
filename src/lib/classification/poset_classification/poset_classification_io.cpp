@@ -331,7 +331,7 @@ void poset_classification::print_fusion_nodes(int depth)
 
 
 void poset_classification::read_data_file(int &depth_completed,
-		const char *fname, int verbose_level)
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int size;
@@ -905,14 +905,16 @@ void poset_classification::housekeeping(int i,
 		}
 	
 	if (f_write_files) {
-		char my_fname_base[1000];
+		string my_fname_base;
 		
 		if (f_v) {
 			cout << "poset_classification_housekeeping "
 					"writing files" << endl;
 			}
 #if 1
-		snprintf(my_fname_base, 1000, "%sa", problem_label_with_path.c_str());
+
+		my_fname_base.assign(problem_label_with_path);
+		my_fname_base.append("a");
 		if (f_v) {
 			cout << "poset_classification_housekeeping "
 					"my_fname_base=" << my_fname_base << endl;
@@ -926,15 +928,15 @@ void poset_classification::housekeeping(int i,
 					"after write_level_file_binary" << endl;
 			}
 		if (i) {		
-			snprintf(my_fname_base, 1000, "%sb", problem_label_with_path.c_str());
+			my_fname_base.assign(problem_label_with_path);
+			my_fname_base.append("b");
 			if (f_v) {
 				cout << "poset_classification_housekeeping "
 						"my_fname_base=" << my_fname_base << endl;
 				cout << "poset_classification_housekeeping "
 						"before write_level_file_binary" << endl;
 				}
-			write_level_file_binary(i - 1,
-					my_fname_base, 0/*verbose_level*/);
+			write_level_file_binary(i - 1, my_fname_base, 0/*verbose_level*/);
 			if (f_v) {
 				cout << "poset_classification_housekeeping "
 						"my_fname_base=" << my_fname_base << endl;
@@ -949,7 +951,7 @@ void poset_classification::housekeeping(int i,
 			cout << "poset_classification_housekeeping "
 					"before write_lvl_file" << endl;
 			}
-		write_lvl_file(problem_label_with_path.c_str(), i, t0,
+		write_lvl_file(problem_label_with_path, i, t0,
 				FALSE /* f_with_strong_generators */,
 				FALSE /* f_long_version */, 0);
 		if (f_v) {
@@ -1009,7 +1011,7 @@ void poset_classification::housekeeping(int i,
 					"before write_treefile_and_draw_tree" << endl;
 			}
 
-		write_treefile_and_draw_tree(problem_label_with_path.c_str(), i,
+		write_treefile_and_draw_tree(problem_label_with_path, i,
 				Control->xmax, Control->ymax, Control->radius, f_embedded, 0 /*verbose_level - 1*/);
 			// in poset_classification_draw.cpp
 
@@ -1080,7 +1082,7 @@ void poset_classification::housekeeping_no_data_file(int i,
 			}
 #endif
 
-		write_lvl_file(problem_label_with_path.c_str(), i, t0,
+		write_lvl_file(problem_label_with_path, i, t0,
 				FALSE /* f_with_strong_generators */,
 				FALSE /* f_long_version */, 0);
 		
@@ -1090,7 +1092,7 @@ void poset_classification::housekeeping_no_data_file(int i,
 		}
 
 	if (Control->f_T || (Control->f_t && i == sz)) {
-		write_treefile_and_draw_tree(problem_label_with_path.c_str(), i,
+		write_treefile_and_draw_tree(problem_label_with_path, i,
 				Control->xmax, Control->ymax, Control->radius,
 				f_embedded, verbose_level - 1);
 		}
@@ -1100,21 +1102,24 @@ void poset_classification::housekeeping_no_data_file(int i,
 		}
 }
 
-void poset_classification::create_fname_sv_level_file_binary(char *fname,
-		const char *fname_base, int level)
+void poset_classification::create_fname_sv_level_file_binary(std::string &fname,
+		std::string &fname_base, int level)
 {
-	snprintf(fname, 1000, "%s_lvl_%d_sv.data", fname_base, level);
+	char str[1000];
+
+	fname.assign(fname_base);
+	sprintf(str, "_lvl_%d_sv.data", level);
+	fname.append(str);
 
 }
 
 int poset_classification::test_sv_level_file_binary(
-		int level, const char *fname_base)
+		int level, std::string &fname_base)
 {
-	char fname[1000];
+	string fname;
 	file_io Fio;
 	
-	create_fname_sv_level_file_binary(fname,
-			fname_base, level);
+	create_fname_sv_level_file_binary(fname, fname_base, level);
 	//sprintf(fname, "%s_lvl_%d_sv.data", fname_base, level);
 	if (Fio.file_size(fname) >= 1)
 		return TRUE;
@@ -1123,17 +1128,16 @@ int poset_classification::test_sv_level_file_binary(
 }
 
 void poset_classification::read_sv_level_file_binary(
-	int level, const char *fname_base,
+	int level, std::string &fname_base,
 	int f_split, int split_mod, int split_case, 
 	int f_recreate_extensions, int f_dont_keep_sv, 
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname[1000];
+	string fname;
 	file_io Fio;
 	
-	create_fname_sv_level_file_binary(fname,
-			fname_base, level);
+	create_fname_sv_level_file_binary(fname, fname_base, level);
 	//sprintf(fname, "%s_lvl_%d_sv.data", fname_base, level);
 	
 	if (f_v) {
@@ -1154,16 +1158,15 @@ void poset_classification::read_sv_level_file_binary(
 }
 
 void poset_classification::write_sv_level_file_binary(
-	int level, const char *fname_base,
+	int level, std::string &fname_base,
 	int f_split, int split_mod, int split_case, 
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname[1000];
+	string fname;
 	file_io Fio;
 
-	create_fname_sv_level_file_binary(fname,
-			fname_base, level);
+	create_fname_sv_level_file_binary(fname, fname_base, level);
 	//sprintf(fname, "%s_lvl_%d_sv.data", fname_base, level);
 	
 	if (f_v) {
@@ -1303,14 +1306,17 @@ void poset_classification::write_sv_level_file_binary2(
 }
 
 void poset_classification::read_level_file_binary(int level,
-		char *fname_base, int verbose_level)
+		std::string &fname_base, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname[1000];
+	string fname;
+	char str[1000];
 	int nb_group_elements;
 	file_io Fio;
 	
-	snprintf(fname, 1000, "%s_lvl_%d.data", fname_base, level);
+	fname.assign(fname_base);
+	sprintf(str, "_lvl_%d.data", level);
+	fname.append(str);
 	
 	if (f_v) {
 		cout << "poset_classification::read_level_file_binary "
@@ -1334,14 +1340,17 @@ void poset_classification::read_level_file_binary(int level,
 }
 
 void poset_classification::write_level_file_binary(int level,
-		char *fname_base, int verbose_level)
+		std::string &fname_base, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname[1000];
+	string fname;
+	char str[1000];
 	int nb_group_elements;
 	file_io Fio;
 
-	snprintf(fname, 1000, "%s_lvl_%d.data", fname_base, level);
+	fname.assign(fname_base);
+	sprintf(str, "_lvl_%d.data", level);
+	fname.append(str);
 	
 	if (f_v) {
 		cout << "poset_classification::write_level_file_binary "
@@ -1586,7 +1595,7 @@ void poset_classification::write_candidates_binary_using_sv(
 }
 
 void poset_classification::read_level_file(int level,
-		char *fname, int verbose_level)
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1693,7 +1702,7 @@ void poset_classification::read_level_file(int level,
 }
 
 void poset_classification::recover(
-		const char *recover_fname,
+		std::string &recover_fname,
 		int &depth_completed, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1710,28 +1719,43 @@ void poset_classification::recover(
 		}
 }
 
-void poset_classification::make_fname_lvl_file_candidates(char *fname1000,
-		const char *fname_base, int lvl)
+void poset_classification::make_fname_lvl_file_candidates(std::string &fname,
+		std::string &fname_base, int lvl)
 {
-	snprintf(fname1000, 1000, "%s_lvl_%d_candidates.txt", fname_base, lvl);
+	char str[1000];
+
+	fname.assign(fname_base);
+	sprintf(str, "_lvl_%d_candidates.txt", lvl);
+	fname.append(str);
+
+	//snprintf(fname1000, 1000, "%s_lvl_%d_candidates.txt", fname_base, lvl);
 }
 
-void poset_classification::make_fname_lvl_file(char *fname1000,
-		const char *fname_base, int lvl)
+void poset_classification::make_fname_lvl_file(std::string &fname,
+		std::string &fname_base, int lvl)
 {
-	snprintf(fname1000, 1000, "%s_lvl_%d", fname_base, lvl);
+	char str[1000];
+
+	fname.assign(fname_base);
+	sprintf(str, "_lvl_%d", lvl);
+	fname.append(str);
+
+	//snprintf(fname1000, 1000, "%s_lvl_%d", fname_base, lvl);
 }
 
 void poset_classification::write_lvl_file_with_candidates(
-		char *fname_base, int lvl, int t0,
+		std::string &fname_base, int lvl, int t0,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname1[1000];
+	string fname1;
+	char str[1000];
 	file_io Fio;
 	os_interface Os;
 	
-	snprintf(fname1, 1000, "%s_lvl_%d_candidates.txt", fname_base, lvl);
+	fname1.assign(fname_base);
+	sprintf(str, "_lvl_%d_candidates.txt", lvl);
+	fname1.append(str);
 	{
 	ofstream f(fname1);
 	int cur;
@@ -1757,13 +1781,13 @@ void poset_classification::write_lvl_file_with_candidates(
 
 
 void poset_classification::write_lvl_file(
-		const char *fname_base,
+		std::string &fname_base,
 		int lvl, int t0, int f_with_stabilizer_generators,
 		int f_long_version,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname1[1000];
+	string fname1;
 	file_io Fio;
 	os_interface Os;
 

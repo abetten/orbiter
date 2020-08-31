@@ -404,11 +404,15 @@ void packing_was::compute_H_orbits_on_lines(int verbose_level)
 	}
 
 	if (Descr->f_output_path) {
-		sprintf(prefix_line_orbits, "%s%s_line_orbits",
-				Descr->output_path, H_LG->label.c_str());
+		prefix_line_orbits.assign(Descr->output_path);
+		prefix_line_orbits.append(H_LG->label);
+		prefix_line_orbits.append("_line_orbits");
+		//sprintf(prefix_line_orbits, "%s%s_line_orbits", Descr->output_path, H_LG->label.c_str());
 	}
 	else {
-		sprintf(prefix_line_orbits, "%s_line_orbits", H_LG->label.c_str());
+		prefix_line_orbits.assign(H_LG->label);
+		prefix_line_orbits.append("_line_orbits");
+		//sprintf(prefix_line_orbits, "%s_line_orbits", H_LG->label.c_str());
 	}
 	Line_orbits_under_H = NEW_OBJECT(orbits_on_something);
 
@@ -461,11 +465,15 @@ void packing_was::compute_H_orbits_on_spreads(int verbose_level)
 	Spread_orbits_under_H = NEW_OBJECT(orbits_on_something);
 
 	if (Descr->f_output_path) {
-		sprintf(prefix_spread_orbits, "%s%s_spread_orbits",
-				Descr->output_path, H_LG->label.c_str());
+		prefix_spread_orbits.assign(Descr->output_path);
+		prefix_spread_orbits.append(H_LG->label);
+		prefix_spread_orbits.append("_spread_orbits");
+		//sprintf(prefix_spread_orbits, "%s%s_spread_orbits", Descr->output_path, H_LG->label.c_str());
 	}
 	else {
-		sprintf(prefix_spread_orbits, "%s_spread_orbits", H_LG->label.c_str());
+		prefix_spread_orbits.assign(H_LG->label);
+		prefix_spread_orbits.append("_spread_orbits");
+		//sprintf(prefix_spread_orbits, "%s_spread_orbits", H_LG->label.c_str());
 	}
 	Spread_orbits_under_H->init(P->Spread_table_with_selection->A_on_spreads,
 			H_gens, TRUE /*f_load_save*/,
@@ -509,19 +517,23 @@ void packing_was::test_orbits_on_spreads(int verbose_level)
 	}
 
 	if (Descr->f_output_path) {
-		sprintf(fname_good_orbits, "%s%s_good_orbits",
-				Descr->output_path, H_LG->label.c_str());
+		fname_good_orbits.assign(Descr->output_path);
+		fname_good_orbits.append(H_LG->label);
+		fname_good_orbits.append("_good_orbits");
+		//sprintf(fname_good_orbits, "%s%s_good_orbits", Descr->output_path, H_LG->label.c_str());
 	}
 	else {
-		sprintf(fname_good_orbits, "%s_good_orbits", H_LG->label.c_str());
+		fname_good_orbits.assign(H_LG->label);
+		fname_good_orbits.append("_good_orbits");
+		//sprintf(fname_good_orbits, "%s_good_orbits", H_LG->label.c_str());
 	}
 
-	if (Fio.file_size(fname_good_orbits) > 0) {
+	if (Fio.file_size(fname_good_orbits.c_str()) > 0) {
 
 		int *M;
 		int m, n, i;
 
-		Fio.int_matrix_read_csv(fname_good_orbits, M, m, n,
+		Fio.int_matrix_read_csv(fname_good_orbits.c_str(), M, m, n,
 				0 /* verbose_level */);
 
 		nb_good_orbits = m;
@@ -572,9 +584,9 @@ void packing_was::test_orbits_on_spreads(int verbose_level)
 
 
 		Fio.lint_vec_array_write_csv(2 /* nb_vecs */, Vec,
-				nb_good_orbits, fname_good_orbits, Col_labels);
+				nb_good_orbits, fname_good_orbits.c_str(), Col_labels);
 		cout << "Written file " << fname_good_orbits
-				<< " of size " << Fio.file_size(fname_good_orbits) << endl;
+				<< " of size " << Fio.file_size(fname_good_orbits.c_str()) << endl;
 	}
 
 
@@ -699,11 +711,15 @@ void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
 	reduced_spread_orbits_under_H = NEW_OBJECT(orbits_on_something);
 
 	if (Descr->f_output_path) {
-		sprintf(prefix_reduced_spread_orbits, "%s%s_reduced_spread_orbits",
-				Descr->output_path, H_LG->label.c_str());
+		prefix_reduced_spread_orbits.assign(Descr->output_path);
+		prefix_reduced_spread_orbits.append(H_LG->label);
+		prefix_reduced_spread_orbits.append("_reduced_spread_orbits");
+		//sprintf(prefix_reduced_spread_orbits, "%s%s_reduced_spread_orbits", Descr->output_path, H_LG->label.c_str());
 	}
 	else {
-		sprintf(prefix_reduced_spread_orbits, "%s_reduced_spread_orbits", H_LG->label.c_str());
+		prefix_reduced_spread_orbits.assign(H_LG->label);
+		prefix_reduced_spread_orbits.append("_reduced_spread_orbits");
+		//sprintf(prefix_reduced_spread_orbits, "%s_reduced_spread_orbits", H_LG->label.c_str());
 	}
 	reduced_spread_orbits_under_H->init(A_on_reduced_spreads,
 			H_gens, TRUE /*f_load_save*/,
@@ -754,7 +770,7 @@ int packing_was::test_if_pair_of_sets_of_reduced_spreads_are_adjacent(
 }
 
 void packing_was::create_graph_and_save_to_file(
-	const char *fname,
+	std::string &fname,
 	int orbit_length,
 	int f_has_user_data, long int *user_data, int user_data_size,
 	int verbose_level)

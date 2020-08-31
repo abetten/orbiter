@@ -36,7 +36,7 @@ large_set_classify::large_set_classify()
 
 
 	Design_table = NULL;
-	design_table_prefix = NULL;
+	//design_table_prefix = NULL;
 	nb_designs = 0;
 	nb_colors = 0;
 	design_color_table = NULL;
@@ -104,10 +104,10 @@ void large_set_classify::freeself()
 }
 
 void large_set_classify::init(design_create *DC,
-		const char *input_prefix, const char *base_fname,
+		std::string &input_prefix, std::string &base_fname,
 		int search_depth,
 		int f_lexorder_test,
-		const char *design_table_prefix,
+		std::string &design_table_prefix,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -136,14 +136,14 @@ void large_set_classify::init(design_create *DC,
 		}
 
 
-	strcpy(starter_directory_name, input_prefix);
-	strcpy(prefix, base_fname);
-	sprintf(path, "%s",
-			starter_directory_name);
-	sprintf(prefix_with_directory, "%s%s",
-			starter_directory_name, base_fname);
+	starter_directory_name.assign(input_prefix);
+	prefix.assign(base_fname);
+	path.assign(starter_directory_name);
+	prefix_with_directory.assign(starter_directory_name);
+	prefix_with_directory.append(base_fname);
+	//sprintf(prefix_with_directory, "%s%s", starter_directory_name, base_fname);
 
-	large_set_classify::design_table_prefix = design_table_prefix;
+	large_set_classify::design_table_prefix.assign(design_table_prefix);
 
 
 	if (f_v) {
@@ -345,7 +345,7 @@ void large_set_classify::read_classification(orbit_transversal *&T,
 		int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname_classification_at_level[1000];
+	string fname_classification_at_level;
 
 	if (f_v) {
 		cout << "large_set_classify::read_classification" << endl;
@@ -375,7 +375,7 @@ void large_set_classify::read_classification_single_case(set_and_stabilizer *&Re
 		int level, int case_nr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname_classification_at_level[1000];
+	string fname_classification_at_level;
 
 	if (f_v) {
 		cout << "large_set_classify::read_classification_single_case" << endl;
@@ -541,9 +541,9 @@ int large_set_classify::designs_are_disjoint(int i, int j)
 
 void large_set_classify::process_starter_case(
 		long int *starter_set, int starter_set_sz,
-		strong_generators *SG, const char *prefix,
+		strong_generators *SG, std::string &prefix,
 		const char *group_label, int orbit_length,
-		int f_read_solution_file, const char *solution_file_name,
+		int f_read_solution_file, std::string &solution_file_name,
 		long int *&Large_sets, int &nb_large_sets,
 		int f_compute_normalizer_orbits, strong_generators *N_gens,
 		int verbose_level)
@@ -617,10 +617,12 @@ void large_set_classify::process_starter_case(
 
 
 	colored_graph *CG;
-	char fname[1000];
+	std::string fname;
 	int f_has_user_data = FALSE;
 
-	sprintf(fname, "%s_graph_%s.bin", prefix, group_label);
+	fname.assign(prefix);
+	fname.append(group_label);
+	//sprintf(fname, "%s_graph_%s.bin", prefix, group_label);
 
 	if (f_v) {
 		cout << "large_set_classify::process_starter_case "
@@ -687,13 +689,16 @@ void large_set_classify::process_starter_case(
 		{
 		long int *Orbits_under_N;
 		file_io Fio;
-		char fname_out[1000];
+		char str[1000];
+		string fname_out;
 		int i, a, l;
 
 
 		Orbits_under_N = NEW_lint(Sch->nb_orbits * 2);
 
-		sprintf(fname_out, "%s_graph_%s_N_orbit_reps.csv", prefix, group_label);
+		sprintf(str, "_graph_%s_N_orbit_reps.csv", group_label);
+		fname_out.assign(prefix);
+		fname_out.append(str);
 
 		for (i = 0; i < Sch->nb_orbits; i++) {
 			l = Sch->orbit_len[i];
@@ -701,7 +706,7 @@ void large_set_classify::process_starter_case(
 			Orbits_under_N[2 * i + 0] = a;
 			Orbits_under_N[2 * i + 1] = l;
 		}
-		Fio.lint_matrix_write_csv(fname_out, Orbits_under_N, Sch->nb_orbits, 2);
+		Fio.lint_matrix_write_csv(fname_out.c_str(), Orbits_under_N, Sch->nb_orbits, 2);
 
 		FREE_lint(Orbits_under_N);
 		}
@@ -728,7 +733,7 @@ void large_set_classify::process_starter_case(
 		int *Solutions;
 		int solution_size;
 
-		Fio.read_solutions_from_file_and_get_solution_size(solution_file_name,
+		Fio.read_solutions_from_file_and_get_solution_size(solution_file_name.c_str(),
 				nb_solutions, Solutions, solution_size,
 				verbose_level);
 		cout << "Read the following solutions from file:" << endl;
@@ -774,12 +779,14 @@ void large_set_classify::process_starter_case(
 		}
 		{
 		file_io Fio;
-		char fname_out[1000];
-
-		sprintf(fname_out, "%s", solution_file_name);
+		string fname_out;
+		fname_out.assign(solution_file_name);
 		replace_extension_with(fname_out, "_packings.csv");
 
-		Fio.lint_matrix_write_csv(fname_out, Large_sets, nb_solutions, sz);
+		//sprintf(fname_out, "%s", solution_file_name);
+		replace_extension_with(fname_out, "_packings.csv");
+
+		Fio.lint_matrix_write_csv(fname_out.c_str(), Large_sets, nb_solutions, sz);
 		}
 		long int *Packings_explicit;
 		int Sz = sz * design_size;
@@ -796,12 +803,13 @@ void large_set_classify::process_starter_case(
 		}
 		{
 		file_io Fio;
-		char fname_out[1000];
+		string fname_out;
 
-		sprintf(fname_out, "%s", solution_file_name);
+		fname_out.assign(solution_file_name);
+		//sprintf(fname_out, "%s", solution_file_name);
 		replace_extension_with(fname_out, "_packings_explicit.csv");
 
-		Fio.lint_matrix_write_csv(fname_out, Packings_explicit, nb_solutions, Sz);
+		Fio.lint_matrix_write_csv(fname_out.c_str(), Packings_explicit, nb_solutions, Sz);
 		}
 		FREE_lint(Large_sets);
 		FREE_lint(Packings_explicit);

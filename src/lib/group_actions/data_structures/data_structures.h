@@ -251,7 +251,7 @@ public:
 	~orbit_rep();
 	void null();
 	void freeself();
-	void init_from_file(action *A, const char *prefix,
+	void init_from_file(action *A, std::string &prefix,
 		int level, int orbit_at_level, int level_of_candidates_file,
 		void (*early_test_func_callback)(long int *S, int len,
 			long int *candidates, int nb_candidates,
@@ -291,9 +291,10 @@ public:
 			longinteger_object &full_group_order,
 			int verbose_level);
 	void read_from_file(action *A, action *A2, 
-		const char *fname, int verbose_level);
+			std::string &fname, int verbose_level);
 	void read_from_file_one_case_only(
-			action *A, action *A2, const char *fname, int case_nr, int verbose_level);
+			action *A, action *A2, std::string &fname,
+			int case_nr, int verbose_level);
 	tally *get_ago_distribution(long int *&ago,
 			int verbose_level);
 	void report_ago_distribution(std::ostream &ost);
@@ -455,11 +456,11 @@ public:
 
 	int f_bsf3;
 	int f_test_diagonals;
-	const char *test_diagonals_fname;
+	std::string test_diagonals_fname;
 	int f_klein;
 
 	int f_draw_points_in_plane;
-		const char *draw_points_in_plane_fname_base;
+		std::string draw_points_in_plane_fname_base;
 		// follow up option for f_draw_points_in_plane:
 
 		int f_point_labels;

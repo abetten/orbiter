@@ -19,7 +19,7 @@ namespace top_level {
 create_graph_description::create_graph_description()
 {
 	f_load_from_file = FALSE;
-	fname = NULL;
+	//fname = NULL;
 
 	f_edge_list = FALSE;
 	n = 0;
@@ -116,7 +116,7 @@ int create_graph_description::read_arguments(
 
 		if (strcmp(argv[i], "-load_from_file") == 0) {
 			f_load_from_file = TRUE;
-			fname = argv[++i];
+			fname.assign(argv[++i]);
 			cout << "-load_from_file " << fname << endl;
 		}
 		else if (strcmp(argv[i], "-edge_list") == 0) {

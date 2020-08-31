@@ -24,8 +24,9 @@ void spread_classify::print_isomorphism_type(isomorph *Iso,
 // called from callback_print_isomorphism_type()
 {
 	int f_v = (verbose_level >= 1);
-	char fname[1000];
-	char fname_klein[1000];
+	string fname;
+	string fname_klein;
+	char str[1000];
 
 
 
@@ -34,8 +35,18 @@ void spread_classify::print_isomorphism_type(isomorph *Iso,
 		cout << "spread_classify::print_isomorphism_type" << endl;
 	}
 
-	sprintf(fname, "%s_%d.tex", Iso->prefix, iso_cnt);
-	sprintf(fname_klein, "%s_%d_klein.tex", Iso->prefix, iso_cnt);
+	fname.assign(Iso->prefix);
+	sprintf(str, "_%d.tex", iso_cnt);
+	fname.append(str);
+
+	//sprintf(fname, "%s_%d.tex", Iso->prefix, iso_cnt);
+
+
+	fname_klein.assign(Iso->prefix);
+	sprintf(str, "_%d_klein.tex", iso_cnt);
+	fname_klein.append(str);
+
+	//sprintf(fname_klein, "%s_%d_klein.tex", Iso->prefix, iso_cnt);
 	
 	int save_longinteger_f_print_scientific = longinteger_f_print_scientific;
 	longinteger_f_print_scientific = FALSE;
@@ -389,7 +400,8 @@ void spread_classify::klein(ostream &ost,
 
 		cout << "we will draw an incidence picture" << endl;
 		
-		char fname_pic[1000];
+		string fname_pic;
+		char str[1000];
 		incidence_structure *I;
 		partitionstack *Stack;
 		
@@ -401,7 +413,10 @@ void spread_classify::klein(ostream &ost,
 		Stack->split_cell(0 /* verbose_level */);
 		Stack->sort_cells();
 
-		sprintf(fname_pic, "%s_%d_planes.tex", Iso->prefix, iso_cnt);
+		fname_pic.assign(Iso->prefix);
+		sprintf(str, "_%d_planes.tex", iso_cnt);
+		fname_pic.append(str);
+
 		{
 			ofstream fp_pic(fname_pic);
 
@@ -429,13 +444,19 @@ void spread_classify::klein(ostream &ost,
 
 		I->compute_TDO_safe(*Stack, depth, verbose_level + 2);
 		
-		char fname_row_scheme[1000];
-		char fname_col_scheme[1000];
+		char str[1000];
+		string fname_row_scheme;
+		string fname_col_scheme;
 
-		sprintf(fname_row_scheme, "%s_%d_planes_row_scheme.tex",
-				Iso->prefix, iso_cnt);
-		sprintf(fname_col_scheme, "%s_%d_planes_col_scheme.tex",
-				Iso->prefix, iso_cnt);
+
+		fname_row_scheme.assign(Iso->prefix);
+		sprintf(str, "_%d_planes_row_scheme.tex", iso_cnt);
+		fname_row_scheme.append(str);
+
+		fname_col_scheme.assign(Iso->prefix);
+		sprintf(str, "_%d_planes_col_scheme.tex", iso_cnt);
+		fname_col_scheme.append(str);
+
 		{
 			ofstream fp_row_scheme(fname_row_scheme);
 			ofstream fp_col_scheme(fname_col_scheme);

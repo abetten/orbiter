@@ -23,7 +23,7 @@ mp_graphics::mp_graphics()
 	default_values();
 }
 
-mp_graphics::mp_graphics(const char *file_name,
+mp_graphics::mp_graphics(std::string &file_name,
 		int xmin, int ymin, int xmax, int ymax,
 		int f_embedded, int f_sideways, int verbose_level)
 {
@@ -67,18 +67,29 @@ void mp_graphics::default_values()
 	tikz_global_line_width = 1.5;
 }
 
-void mp_graphics::init(const char *file_name,
+void mp_graphics::init(std::string &file_name,
 	int xmin, int ymin, int xmax, int ymax,
 	int f_embedded, int f_sideways, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "mp_graphics::init file_name=" << file_name << endl;
+	}
 	mp_graphics::f_embedded = f_embedded;
 	mp_graphics::f_sideways = f_sideways;
 	
-	strcpy(fname_mp, file_name);
+	fname_mp.assign(file_name);
+	fname_log.assign(file_name);
+	fname_tikz.assign(file_name);
+
+	replace_extension_with(fname_mp, ".mp");
+	replace_extension_with(fname_log, ".commands");
+	replace_extension_with(fname_tikz, ".tex");
 	
-	get_fname_base(file_name, fname_base);
-	sprintf(fname_log, "%s.commands", fname_base);
-	sprintf(fname_tikz, "%s.tex", fname_base);
+	//get_fname_base(file_name, fname_base);
+	//sprintf(fname_log, "%s.commands", fname_base);
+	//sprintf(fname_tikz, "%s.tex", fname_base);
 
 	fp_mp.open(fname_mp);
 	fp_log.open(fname_log);
@@ -131,7 +142,7 @@ void mp_graphics::exit(ostream &ost, int verbose_level)
 	}
 }
 
-void mp_graphics::setup(const char *fname_base, 
+void mp_graphics::setup(std::string &fname_base,
 	int in_xmin, int in_ymin, int in_xmax, int in_ymax, 
 	int xmax, int ymax, int f_embedded, int f_sideways, 
 	double scale, double line_width, int verbose_level)
@@ -139,9 +150,11 @@ void mp_graphics::setup(const char *fname_base,
 	//int x_min = 0, x_max = 1000;
 	//int y_min = 0, y_max = 1000;
 	int factor_1000 = 1000;
-	char fname_full[1000];
+	string fname_full;
 	
-	sprintf(fname_full, "%s.mp", fname_base);
+	fname_full.assign(fname_base);
+	fname_full.append(".mp");
+
 	init(fname_full, in_xmin, in_ymin,
 			in_xmax, in_ymax, f_embedded, f_sideways, verbose_level);
 #if 0

@@ -297,14 +297,25 @@ strong_generators *projective_space_with_action::set_stabilizer(
 			cout << "projective_space_with_action::set_stabilizer too large to print" << endl;
 			}
 
-		char fname_csv[1000];
-		char fname_bin[1000];
+		string fname_csv;
+		string fname_bin;
+		char str[1000];
 
-		sprintf(fname_csv, "%sIncma_in_%d_%d.csv",
-				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		sprintf(fname_bin, "%sIncma_in_%d_%d.bin",
-				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		Fio.int_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
+		sprintf(str, "Incma_in_%d_%d", nb_rows, nb_cols);
+
+		fname_csv.assign(save_incma_in_and_out_prefix);
+		fname_csv.append(str);
+		fname_csv.append(".csv");
+		fname_bin.assign(save_incma_in_and_out_prefix);
+		fname_bin.append(str);
+		fname_bin.append(".bin");
+
+
+		//sprintf(fname_csv, "%sIncma_in_%d_%d.csv",
+		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
+		//sprintf(fname_bin, "%sIncma_in_%d_%d.bin",
+		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
+		Fio.int_matrix_write_csv(fname_csv.c_str(), Incma, nb_rows, nb_cols);
 
 		for (i = 0; i < nb_rows + nb_cols; i++) {
 			vertex_labeling[i] = i;
@@ -318,7 +329,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 				Incma, nb_rows, nb_cols, TRUE, vertex_labeling, verbose_level);
 		CG->save(fname_bin, verbose_level);
 		//FREE_int(Incma);
-		delete CG;
+		FREE_OBJECT(CG);
 		}
 
 	if (f_vv) {
@@ -466,20 +477,38 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		}
 
 	if (f_save_incma_in_and_out) {
-		char fname_labeling[1000];
-		char fname_csv[1000];
-		char fname_bin[1000];
 
-		sprintf(fname_labeling, "%slabeling_%d_%d.csv",
-				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		sprintf(fname_csv, "%sIncma_out_%d_%d.csv",
-				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		sprintf(fname_bin, "%sIncma_out_%d_%d.bin",
-				save_incma_in_and_out_prefix, nb_rows, nb_cols);
+		string fname_csv;
+		string fname_bin;
+		string fname_labeling;
+		char str[1000];
+
+		sprintf(str, "Incma_out_%d_%d", nb_rows, nb_cols);
+
+		fname_csv.assign(save_incma_in_and_out_prefix);
+		fname_csv.append(str);
+		fname_csv.append(".csv");
+		fname_bin.assign(save_incma_in_and_out_prefix);
+		fname_bin.append(str);
+		fname_bin.append(".bin");
+
+		sprintf(str, "labeling_%d_%d", nb_rows, nb_cols);
+		fname_labeling.assign(save_incma_in_and_out_prefix);
+		fname_labeling.append(str);
+		fname_labeling.append(".csv");
+
+
+
+		//sprintf(fname_labeling, "%slabeling_%d_%d.csv",
+		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
+		//sprintf(fname_csv, "%sIncma_out_%d_%d.csv",
+		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
+		//sprintf(fname_bin, "%sIncma_out_%d_%d.bin",
+		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
 		
 		Fio.int_vec_write_csv(labeling, N,
-				fname_labeling, "canonical labeling");
-		Fio.int_matrix_write_csv(fname_csv, Incma_out, nb_rows, nb_cols);
+				fname_labeling.c_str(), "canonical labeling");
+		Fio.int_matrix_write_csv(fname_csv.c_str(), Incma_out, nb_rows, nb_cols);
 
 		
 		colored_graph *CG;
@@ -895,14 +924,24 @@ strong_generators
 			cout << "too large to print" << endl;
 			}
 
-		char fname_csv[2000];
-		char fname_bin[2000];
+		string fname_csv;
+		string fname_bin;
+		char str[1000];
 
-		snprintf(fname_csv, 2000, "%sIncma_in_%d_%d.csv",
-				save_incma_in_and_out_prefix.c_str(), nb_rows, nb_cols);
-		snprintf(fname_bin, 2000, "%sIncma_in_%d_%d.bin",
-				save_incma_in_and_out_prefix.c_str(), nb_rows, nb_cols);
-		Fio.int_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
+		sprintf(str, "Incma_in_%d_%d", nb_rows, nb_cols);
+
+		fname_csv.assign(save_incma_in_and_out_prefix);
+		fname_csv.append(str);
+		fname_csv.append(".csv");
+		fname_bin.assign(save_incma_in_and_out_prefix);
+		fname_bin.append(str);
+		fname_bin.append(".bin");
+
+		//snprintf(fname_csv, 2000, "%sIncma_in_%d_%d.csv",
+		//		save_incma_in_and_out_prefix.c_str(), nb_rows, nb_cols);
+		//snprintf(fname_bin, 2000, "%sIncma_in_%d_%d.bin",
+		//		save_incma_in_and_out_prefix.c_str(), nb_rows, nb_cols);
+		Fio.int_matrix_write_csv(fname_csv.c_str(), Incma, nb_rows, nb_cols);
 
 		colored_graph *CG;
 
@@ -1031,25 +1070,40 @@ strong_generators
 
 
 	if (f_save_incma_in_and_out) {
-		char fname_labeling[2000];
-		char fname_csv[2000];
-		char fname_bin[2000];
+
+		string fname_csv;
+		string fname_bin;
+		string fname_labeling;
+		char str[1000];
+
+		sprintf(str, "Incma_out_%d_%d", nb_rows, nb_cols);
+
+		fname_csv.assign(save_incma_in_and_out_prefix);
+		fname_csv.append(str);
+		fname_csv.append(".csv");
+		fname_bin.assign(save_incma_in_and_out_prefix);
+		fname_bin.append(str);
+		fname_bin.append(".bin");
+
+		sprintf(str, "labeling_%d_%d", nb_rows, nb_cols);
+
+
 		latex_interface L;
 
-		snprintf(fname_labeling, 2000, "%slabeling_%d_%d.csv",
-				save_incma_in_and_out_prefix.c_str(), nb_rows, nb_cols);
-		snprintf(fname_csv, 2000, "%sIncma_out_%d_%d.csv",
-				save_incma_in_and_out_prefix.c_str(), nb_rows, nb_cols);
-		snprintf(fname_bin, 2000, "%sIncma_out_%d_%d.bin",
-				save_incma_in_and_out_prefix.c_str(), nb_rows, nb_cols);
+		//snprintf(fname_labeling, 2000, "%slabeling_%d_%d.csv",
+		//		save_incma_in_and_out_prefix.c_str(), nb_rows, nb_cols);
+		//snprintf(fname_csv, 2000, "%sIncma_out_%d_%d.csv",
+		//		save_incma_in_and_out_prefix.c_str(), nb_rows, nb_cols);
+		//snprintf(fname_bin, 2000, "%sIncma_out_%d_%d.bin",
+		//		save_incma_in_and_out_prefix.c_str(), nb_rows, nb_cols);
 		
 		cout << "labeling:" << endl;
 		L.lint_vec_print_as_matrix(cout,
 				canonical_labeling, N, 10 /* width */, TRUE /* f_tex */);
 
 		Fio.lint_vec_write_csv(canonical_labeling, N,
-				fname_labeling, "canonical labeling");
-		Fio.int_matrix_write_csv(fname_csv, Incma_out, nb_rows, nb_cols);
+				fname_labeling.c_str(), "canonical labeling");
+		Fio.int_matrix_write_csv(fname_csv.c_str(), Incma_out, nb_rows, nb_cols);
 
 		
 		colored_graph *CG;

@@ -40,7 +40,7 @@ void packing_classify::compute_klein_invariants(
 					<< orbit << " / " << Iso->Reps->count << endl;
 		}
 		
-		char fname[1000];
+		string fname;
 	
 		klein_invariants_fname(fname, Iso->prefix_invariants, orbit);
 		cout << "file size of " << fname << " is " << Fio.file_size(fname) << endl;
@@ -94,12 +94,15 @@ void packing_classify::compute_klein_invariants(
 }
 
 void packing_classify::klein_invariants_fname(
-		char *fname, char *prefix, int iso_cnt)
+		std::string &fname, std::string &prefix, int iso_cnt)
 {
-	sprintf(fname, "%s%d_klein_invariant.bin", prefix, iso_cnt);
+	fname.assign(prefix);
+	char str[1000];
+	sprintf(str, "%d_klein_invariant.bin", iso_cnt);
+	fname.append(str);
 }
 
-void packing_classify::compute_and_save_klein_invariants(char *prefix,
+void packing_classify::compute_and_save_klein_invariants(std::string &prefix,
 	int iso_cnt, 
 	long int *data, int data_size, int verbose_level)
 {
@@ -175,10 +178,10 @@ void packing_classify::compute_and_save_klein_invariants(char *prefix,
 		}
 	}
 
-	char fname[1000];
+	string fname;
 	
 	klein_invariants_fname(fname, prefix, iso_cnt);
-	v.save_file(fname);
+	v.save_file(fname.c_str());
 
 	delete [] R;
 	for (i = 0; i < nb_planes; i++) {
@@ -663,7 +666,7 @@ void packing_classify::report_klein_invariants(
 
 	// klein invariants:
 	{
-		char fname_klein[1000];
+		string fname_klein;
 		Vector V;
 		
 		klein_invariants_fname(fname_klein,
@@ -673,7 +676,7 @@ void packing_classify::report_klein_invariants(
 				cout << "packing::report loading "
 						"file " << fname_klein << endl;
 				}
-			V.load_file(fname_klein);
+			V.load_file(fname_klein.c_str());
 			inv->Inv[orbit].init_klein_invariants(
 					V, verbose_level - 1);
 			// free, so that we don't use that much memory:
@@ -687,13 +690,13 @@ void packing_classify::report_klein_invariants(
 						<< inv->Inv[orbit].fname_row_scheme
 						<< " in" << endl;
 				Fio.copy_file_to_ostream(ost,
-						inv->Inv[orbit].fname_row_scheme);
+						inv->Inv[orbit].fname_row_scheme.c_str());
 				//f << "\\input "
 				//<< inv->Inv[orbit].fname_row_scheme << endl;
 				ost << "\\]" << endl;
 				ost << "\\[" << endl;
 				Fio.copy_file_to_ostream(ost,
-						inv->Inv[orbit].fname_col_scheme);
+						inv->Inv[orbit].fname_col_scheme.c_str());
 				//ost << "\\input "
 				//<< inv->Inv[orbit].fname_col_scheme << endl;
 				ost << "\\]" << endl;

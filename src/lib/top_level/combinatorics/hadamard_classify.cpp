@@ -132,7 +132,8 @@ void hadamard_classify::init(int n, int f_draw,
 
 	{
 	colored_graph *CG;
-	char fname[1000];
+	char str[1000];
+	string fname;
 
 	CG = NEW_OBJECT(colored_graph);
 	int *color;
@@ -142,7 +143,8 @@ void hadamard_classify::init(int n, int f_draw,
 
 	CG->init(N, 1, 1, color, bitvector_adjacency, FALSE, verbose_level);
 
-	sprintf(fname, "Hadamard_graph_%d.colored_graph", n);
+	sprintf(str, "Hadamard_graph_%d.colored_graph", n);
+	fname.assign(str);
 
 	CG->save(fname, verbose_level);
 
@@ -171,9 +173,11 @@ void hadamard_classify::init(int n, int f_draw,
 		cout << "initializing colored graph done" << endl;
 		}
 
-	char fname_graph[1000];
+	char str[1000];
+	string fname_graph;
 
-	sprintf(fname_graph, "Hadamard_graph_%d.magma", n);
+	sprintf(str, "Hadamard_graph_%d.magma", n);
+	fname_graph.assign(str);
 	CG->export_to_magma(fname_graph, 1);
 
 	{
@@ -243,15 +247,17 @@ void hadamard_classify::init(int n, int f_draw,
 			cout << "drawing adjacency matrix" << endl;
 			}
 
-		char fname_base[1000];
+		char str[1000];
 		int xmax_in = ONE_MILLION;
 		int ymax_in = ONE_MILLION;
 		int xmax_out = 500000;
 		int ymax_out = 500000;
 		double scale = 0.4;
 		double line_width = 0.5;
+		string fname_base;
 
-		sprintf(fname_base, "Hadamard_graph_%d", n);
+		sprintf(str, "Hadamard_graph_%d", n);
+		fname_base.assign(str);
 
 
 		//CG->draw_partitioned(fname_base,

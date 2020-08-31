@@ -85,11 +85,13 @@ void diophant_create::init(
 				D,
 				verbose_level);
 
-		char fname[1000];
+		char str[1000];
+		string fname;
 		file_io Fio;
 
-		sprintf(fname, "max_arc_%d_%d_%d.diophant", Descr->input_q,
+		sprintf(str, "max_arc_%d_%d_%d.diophant", Descr->input_q,
 				Descr->maximal_arc_sz, Descr->maximal_arc_d);
+		fname.assign(str);
 		D->save_in_general_format(fname, verbose_level);
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
@@ -375,10 +377,12 @@ void diophant_create::init(
 		FREE_OBJECT(F);
 	}
 
-	char fname[1000];
+	string fname;
 	file_io Fio;
 
-	sprintf(fname, "%s.diophant", Descr->label);
+	fname.assign(Descr->label);
+	fname.append(".diophant");
+	//sprintf(fname, "%s.diophant", Descr->label);
 	D->save_in_general_format(fname, verbose_level);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 

@@ -412,6 +412,19 @@ public:
 			const char *fname_magma,
 			const char *fname_output,
 			sims *override_Sims, int *Elt, int verbose_level);
+	void find_subgroups_using_MAGMA(std::string &prefix,
+			sims *override_Sims,
+			int subgroup_order,
+			int &nb_subgroups, strong_generators *&H_gens, strong_generators *&N_gens,
+			int verbose_level);
+	void read_subgroups_magma(std::string &fname_output,
+			sims *override_Sims, int subgroup_order,
+			int &nb_subgroups, strong_generators *&H_gens, strong_generators *&N_gens,
+			int verbose_level);
+	void find_subgroups_using_MAGMA2(std::string &prefix,
+			std::string &fname_magma, std::string &fname_output,
+			sims *override_Sims, int subgroup_order,
+			int verbose_level);
 	void conjugacy_classes_and_normalizers(sims *override_Sims,
 			const char *label,
 			const char *label_tex,
@@ -422,6 +435,9 @@ public:
 			char *fname, sims *override_sims, const char *label_latex, int verbose_level);
 	void read_and_report_conjugacy_classes_and_normalizers(std::ostream &ost,
 			char *fname, sims *override_Sims,int verbose_level);
+	void report_groups_and_normalizers(std::ostream &ost,
+			int nb_subgroups, strong_generators *H_gens, strong_generators *N_gens,
+			int verbose_level);
 	void report_fixed_objects(int *Elt,
 			char *fname_latex, int verbose_level);
 	void element_conjugate_bvab(int *Elt_A,
@@ -572,8 +588,8 @@ public:
 
 	sims *create_sims_from_generators_with_target_group_order_factorized(
 		vector_ge *gens, int *tl, int len, int verbose_level);
-	sims *create_sims_from_generators_with_target_group_order_int(
-		vector_ge *gens, int target_go, int verbose_level);
+	sims *create_sims_from_generators_with_target_group_order_lint(
+		vector_ge *gens, long int target_go, int verbose_level);
 	sims *create_sims_from_generators_with_target_group_order(
 		vector_ge *gens, longinteger_object &target_go,
 		int verbose_level);
@@ -752,7 +768,7 @@ public:
 			int f_strong_gens, strong_generators *SG, int verbose_level);
 	void report_what_we_act_on(std::ostream &ost, int verbose_level);
 	void read_orbit_rep_and_candidates_from_files_and_process(
-		const char *prefix,
+			std::string &prefix,
 		int level, int orbit_at_level, int level_of_candidates_file,
 		void (*early_test_func_callback)(long int *S, int len,
 			long int *candidates, int nb_candidates,
@@ -768,7 +784,7 @@ public:
 		int &nb_cases,
 		int verbose_level);
 	void read_orbit_rep_and_candidates_from_files(
-			const char *prefix,
+			std::string &prefix,
 		int level, int orbit_at_level, int level_of_candidates_file,
 		long int *&starter,
 		int &starter_sz,
@@ -778,15 +794,15 @@ public:
 		int &nb_candidates,
 		int &nb_cases,
 		int verbose_level);
-	void read_representatives(char *fname,
+	void read_representatives(std::string &fname,
 		int *&Reps, int &nb_reps, int &size, int verbose_level);
-	void read_representatives_and_strong_generators(char *fname,
+	void read_representatives_and_strong_generators(std::string &fname,
 		int *&Reps,
 		char **&Aut_ascii, int &nb_reps,
 		int &size, int verbose_level);
-	void read_file_and_print_representatives(char *fname,
+	void read_file_and_print_representatives(std::string &fname,
 		int f_print_stabilizer_generators, int verbose_level);
-	void read_set_and_stabilizer(const char *fname,
+	void read_set_and_stabilizer(std::string &fname,
 		int no, long int *&set, int &set_sz, sims *&stab,
 		strong_generators *&Strong_gens,
 		int &nb_cases,
@@ -855,6 +871,7 @@ public:
 	void element_print(void *elt, std::ostream &ost);
 	void element_print_quick(void *elt, std::ostream &ost);
 	void element_print_latex(void *elt, std::ostream &ost);
+	void element_print_latex_with_extras(void *elt, std::string &label, std::ostream &ost);
 	void element_print_latex_with_print_point_function(
 		void *elt, std::ostream &ost,
 		void (*point_label)(std::stringstream &sstr, long int pt, void *data),

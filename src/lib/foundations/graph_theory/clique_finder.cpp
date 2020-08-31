@@ -137,7 +137,7 @@ void clique_finder::free()
 
 
 
-void clique_finder::init(const char *label, int n, 
+void clique_finder::init(std::string &label, int n,
 	int target_depth, 
 	int f_has_adj_list, int *adj_list_coded, 
 	int f_has_bitvector, uchar *bitvector_adjacency, 
@@ -149,7 +149,8 @@ void clique_finder::init(const char *label, int n,
 	int f_v = (verbose_level >= 1);
 	int i;
 	
-	strcpy(clique_finder::label, label);
+	label.assign(label);
+	//strcpy(clique_finder::label, label);
 	
 	clique_finder::f_store_solutions = f_store_solutions;
 	clique_finder::n = n;
@@ -982,7 +983,7 @@ void all_cliques_of_given_size(int *Adj,
 	int n2;
 	int i, j, h;
 	clique_finder *C;
-	const char *label = "all_cliques_of_given_size";
+	std::string label;
 	int print_interval = 1000;
 	int f_maxdepth = FALSE;
 	int maxdepth = 0;
@@ -990,6 +991,9 @@ void all_cliques_of_given_size(int *Adj,
 	if (f_v) {
 		cout << "all_cliques_of_given_size" << endl;
 	}
+
+	label.assign("all_cliques_of_given_size");
+
 	n2 = (nb_pts * (nb_pts - 1)) >> 1;
 	adj_list_coded = NEW_int(n2);
 	h = 0;
@@ -1447,12 +1451,14 @@ continuation_point:
 	}
 }
 
-void clique_finder::open_tree_file(const char *fname_base,
+void clique_finder::open_tree_file(std::string &fname_base,
 		int f_decision_nodes_only)
 {
 	f_write_tree = TRUE;
+	fname_tree.assign(fname_base);
+	fname_tree.append(".tree");
 	clique_finder::f_decision_nodes_only = f_decision_nodes_only;
-	snprintf(fname_tree, 1000, "%s.tree", fname_base);
+	//snprintf(fname_tree, 1000, "%s.tree", fname_base);
 	fp_tree = new ofstream;
 	fp_tree->open(fname_tree);
 }

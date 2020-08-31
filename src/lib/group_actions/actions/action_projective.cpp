@@ -152,14 +152,23 @@ strong_generators *action::set_stabilizer_in_projective_space(
 				cout << "too large to print" << endl;
 				}
 			}
-		char fname_csv[1000];
-		char fname_bin[1000];
+		string fname_csv;
+		string fname_bin;
+		char str[1000];
 
-		sprintf(fname_csv, "%sIncma_in_%d_%d.csv",
-				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		sprintf(fname_bin, "%sIncma_in_%d_%d.bin",
-				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		Fio.int_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
+		sprintf(str, "Incma_in_%d_%d", nb_rows, nb_cols);
+
+		fname_csv.assign(save_incma_in_and_out_prefix);
+		fname_csv.append(str);
+		fname_csv.append(".csv");
+		fname_bin.assign(save_incma_in_and_out_prefix);
+		fname_bin.append(str);
+		fname_bin.append(".bin");
+		//sprintf(fname_csv, "%sIncma_in_%d_%d.csv",
+		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
+		//sprintf(fname_bin, "%sIncma_in_%d_%d.bin",
+		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
+		Fio.int_matrix_write_csv(fname_csv.c_str(), Incma, nb_rows, nb_cols);
 
 		for (i = 0; i < nb_rows + nb_cols; i++) {
 			vertex_labeling[i] = i;
@@ -259,14 +268,24 @@ strong_generators *action::set_stabilizer_in_projective_space(
 				cout << "too large to print" << endl;
 				}
 			}
-		char fname_csv[1000];
-		char fname_bin[1000];
+		string fname_csv;
+		string fname_bin;
+		char str[1000];
 
-		sprintf(fname_csv, "%sIncma_out_%d_%d.csv",
-				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		sprintf(fname_bin, "%sIncma_out_%d_%d.bin",
-				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		Fio.int_matrix_write_csv(fname_csv, Incma_out, nb_rows, nb_cols);
+		sprintf(str, "Incma_out_%d_%d", nb_rows, nb_cols);
+
+		fname_csv.assign(save_incma_in_and_out_prefix);
+		fname_csv.append(str);
+		fname_csv.append(".csv");
+		fname_bin.assign(save_incma_in_and_out_prefix);
+		fname_bin.append(str);
+		fname_bin.append(".bin");
+
+		//sprintf(fname_csv, "%sIncma_out_%d_%d.csv",
+		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
+		//sprintf(fname_bin, "%sIncma_out_%d_%d.bin",
+		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
+		Fio.int_matrix_write_csv(fname_csv.c_str(), Incma_out, nb_rows, nb_cols);
 
 
 		colored_graph *CG;

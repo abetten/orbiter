@@ -23,7 +23,7 @@ void fillBitmap(BMP &image, int i, int j, std::vector<int> color);
 
 
 
-void draw_bitmap(const char *fname, int *M, int m, int n,
+void draw_bitmap(std::string &fname, int *M, int m, int n,
 		int f_partition, int part_width,
 		int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
 		int f_box_width, int box_width,
@@ -47,10 +47,9 @@ void draw_bitmap(const char *fname, int *M, int m, int n,
 	//cout << "max_value after adjustment=" << max_value << endl;
 
 
-	char fname_out[1000];
+	string fname_out;
 
-	sprintf(fname_out, "%s", fname);
-
+	fname_out.assign(fname);
 	replace_extension_with(fname_out, "_draw.bmp");
 
 	//int bit_depth = 8;
@@ -182,7 +181,7 @@ void draw_bitmap(const char *fname, int *M, int m, int n,
 
 	cout << "before writing the image to file as " << fname_out << endl;
 
-	  image.WriteToFile(fname_out);
+	  image.WriteToFile(fname_out.c_str());
 
 	  std::cout << "Written file " << fname_out << std::endl;
 	  {

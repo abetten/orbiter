@@ -35,7 +35,7 @@ poset_classification_control::poset_classification_control()
 	extend_m = 1;
 
 	f_recover = FALSE;
-	recover_fname = NULL;
+	//recover_fname = NULL;
 
 	f_w = FALSE;
 	f_W = FALSE;
@@ -272,7 +272,7 @@ int poset_classification_control::read_arguments(
 		}
 		else if (strcmp(argv[i], "-recover") == 0) {
 			f_recover = TRUE;
-			recover_fname = argv[++i];
+			recover_fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "poset_classification_control::read_arguments -recover " << recover_fname << endl;
 			}

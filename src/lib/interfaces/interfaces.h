@@ -114,7 +114,7 @@ class interface_coding_theory {
 	int f_NTT;
 	const char *ntt_fname_code;
 	int f_draw_matrix;
-	const char *fname;
+	std::string fname;
 	int box_width;
 	int bit_depth; // 8 or 24
 
@@ -158,7 +158,7 @@ class interface_combinatorics {
 	const char *random_permutation_fname_csv;
 	int f_create_graph;
 	colored_graph *CG;
-	char fname_graph[2000];
+	std::string fname_graph;
 	create_graph_description *Create_graph_description;
 	int f_read_poset_file;
 	const char *read_poset_file_fname;

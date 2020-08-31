@@ -26,7 +26,7 @@ class diophant_activity_description {
 public:
 
 	int f_input_file;
-	const char *input_file;
+	std::string input_file;
 	int f_print;
 	int f_solve_mckay;
 	int f_solve_standard;
@@ -130,7 +130,7 @@ public:
 	const char *external_lines_as_subset_of_secants_text;
 
 	int f_label;
-	const char *label;
+	std::string label;
 	//int from_scratch_m;
 	//int from_scratch_n;
 
@@ -201,7 +201,7 @@ public:
 
 class diophant {
 public:
-	char label[1000];
+	std::string label;
 	int m; // number of equations or inequalities
 	int n; // number of indeterminates
 	int f_has_sum;
@@ -285,9 +285,9 @@ public:
 	int solve_first(int verbose_level);
 	int solve_next();
 	int solve_first_mckay(int f_once, int verbose_level);
-	void draw_solutions(const char *fname, int verbose_level);
-	void write_solutions(const char *fname, int verbose_level);
-	void read_solutions_from_file(const char *fname_sol, 
+	void draw_solutions(std::string &fname_base, int verbose_level);
+	void write_solutions(std::string &fname, int verbose_level);
+	void read_solutions_from_file(std::string &fname_sol,
 		int verbose_level);
 	void get_solutions(long int *&Sol, int &nb_sol, int verbose_level);
 	void get_solutions_full_length(int *&Sol, int &nb_sol, 
@@ -328,11 +328,11 @@ public:
 	int maximum_number_of_non_zero_coefficients_in_row();
 	void get_coefficient_matrix(int *&M, int &nb_rows, int &nb_cols, 
 		int verbose_level);
-	void save_as_Levi_graph(const char *fname, int verbose_level);
+	void save_as_Levi_graph(std::string &fname, int verbose_level);
 	//void save_in_compact_format(const char *fname, int verbose_level);
 	//void read_compact_format(const char *fname, int verbose_level);
-	void save_in_general_format(const char *fname, int verbose_level);
-	void read_general_format(const char *fname, int verbose_level);
+	void save_in_general_format(std::string &fname, int verbose_level);
+	void read_general_format(std::string &fname, int verbose_level);
 	void eliminate_zero_rows_quick(int verbose_level);
 	void eliminate_zero_rows(int *&eqn_number, int verbose_level);
 	int is_zero_outside(int first, int len, int i);
@@ -358,11 +358,12 @@ public:
 	void append_equation();
 	void delete_equation(int I);
 	void write_gurobi_binary_variables(const char *fname);
-	void draw_as_bitmap(const char *fname,
+	void draw_as_bitmap(std::string &fname,
 			int f_box_width, int box_width, int bit_depth, int verbose_level);
-	void draw_it(const char *fname_base, int xmax_in, int ymax_in, 
-		int xmax_out, int ymax_out, int verbose_level);
-	void draw_partitioned(const char *fname_base, 
+	void draw_it(std::string &fname_base,
+			int xmax_in, int ymax_in,
+			int xmax_out, int ymax_out, int verbose_level);
+	void draw_partitioned(std::string &fname_base,
 		int xmax_in, int ymax_in, 
 		int xmax_out, int ymax_out, 
 		int f_solution, int *solution, int solution_sz, 
@@ -377,7 +378,7 @@ public:
 	void make_clique_graph_adjacency_matrix(uchar *&Adj, 
 		int verbose_level);
 	void make_clique_graph(colored_graph *&CG, int verbose_level);
-	void make_clique_graph_and_save(const char *clique_graph_fname, 
+	void make_clique_graph_and_save(std::string &clique_graph_fname,
 		int verbose_level);
 	void test_if_the_last_solution_is_unique();
 
@@ -393,8 +394,8 @@ void solve_diophant(int *Inc, int nb_rows, int nb_cols, int nb_needed,
 	int f_has_Rhs, int *Rhs, 
 	long int *&Solutions, int &nb_sol, long int &nb_backtrack, int &dt,
 	int f_DLX, 
-	int f_draw_system, const char *fname_system, 
-	int f_write_tree, const char *fname_tree, 
+	int f_draw_system, std::string &fname_system,
+	int f_write_tree, std::string &fname_tree,
 	int verbose_level);
 // allocates Solutions[nb_sol * target_size]
 // where target_size = starter_size + nb_needed

@@ -29,7 +29,7 @@ tree::~tree()
 #define TREEPATHLEN 10000
 #define BUFSIZE_TREE 100000
 
-void tree::init(const char *fname,
+void tree::init(std::string &fname,
 		int xmax, int ymax, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -154,7 +154,7 @@ void tree::init(const char *fname,
 
 }
 
-void tree::draw(char *fname,
+void tree::draw(std::string &fname,
 	int xmax_in, int ymax_in, int xmax, int ymax, int rad,
 	int f_circle, int f_circletext, int f_i, int f_edge_labels, 
 	int f_has_draw_vertex_callback, 
@@ -167,9 +167,10 @@ void tree::draw(char *fname,
 	int x_min = 0, x_max = xmax_in;
 	int y_min = 0, y_max = ymax_in;
 	int factor_1000 = 1000;
-	char fname_full[1000];
+	string fname_full;
 	
-	strcpy(fname_full, fname);
+	fname_full.assign(fname);
+	fname_full.append(".mp");
 
 #if 0
 	if (f_edge_labels) {
@@ -178,7 +179,6 @@ void tree::draw(char *fname,
 #endif
 
 
-	strcat(fname_full, ".mp");
 	{
 	mp_graphics G(fname_full,
 			x_min, y_min, x_max, y_max, f_embedded, f_sideways, verbose_level - 1);

@@ -315,7 +315,7 @@ public:
 	int xmax, ymax, radius;
 
 	int f_recover;
-	const char *recover_fname;
+	std::string recover_fname;
 
 	int f_extend;
 	int extend_from, extend_to;
@@ -506,8 +506,8 @@ public:
 
 
 	// poset_classification.cpp:
-	const char *get_problem_label_with_path();
-	const char *get_problem_label();
+	std::string &get_problem_label_with_path();
+	std::string &get_problem_label();
 	int first_node_at_level(int i);
 	poset_orbit_node *get_node(int node_idx);
 	vector_ge *get_transporter();
@@ -789,19 +789,19 @@ public:
 
 
 	// poset_classification_draw.cpp:
-	void draw_poset_fname_base_aux_poset(char *fname, int depth);
-	void draw_poset_fname_base_poset_lvl(char *fname, int depth);
-	void draw_poset_fname_base_tree_lvl(char *fname, int depth);
-	void draw_poset_fname_base_poset_detailed_lvl(char *fname, int depth);
-	void write_treefile_and_draw_tree(const char *fname_base,
+	void draw_poset_fname_base_aux_poset(std::string &fname, int depth);
+	void draw_poset_fname_base_poset_lvl(std::string &fname, int depth);
+	void draw_poset_fname_base_tree_lvl(std::string &fname, int depth);
+	void draw_poset_fname_base_poset_detailed_lvl(std::string &fname, int depth);
+	void write_treefile_and_draw_tree(std::string &fname_base,
 		int lvl, int xmax, int ymax, int rad, 
 		int f_embedded, int verbose_level);
-	int write_treefile(const char *fname_base, int lvl,
+	int write_treefile(std::string &fname_base, int lvl,
 		int verbose_level);
-	void draw_tree(const char *fname_base, int lvl,
+	void draw_tree(std::string &fname_base, int lvl,
 		int xmax, int ymax, int rad, int f_embedded, 
 		int f_sideways, int verbose_level);
-	void draw_tree_low_level(const char *fname, int nb_nodes,
+	void draw_tree_low_level(std::string &fname, int nb_nodes,
 		int *coord_xyw, int *perm, int *perm_inv, 
 		int f_draw_points, int f_draw_extension_points, 
 		int f_draw_aut_group_order, 
@@ -812,15 +812,16 @@ public:
 		int f_draw_points, int f_draw_extension_points, 
 		int f_draw_aut_group_order, 
 		int radius, int verbose_level);
-	void draw_poset_full(const char *fname_base, int depth, 
+	void draw_poset_full(std::string &fname_base, int depth,
 		int data, int f_embedded, int f_sideways, int rad, double scale, double line_width,
 		double x_stretch, int verbose_level);
-	void draw_poset(const char *fname_base, int depth, 
+	void draw_poset(std::string &fname_base, int depth,
 		int data1, int f_embedded, int f_sideways, int rad, double scale, double line_width,
 		int verbose_level);
-	void draw_level_graph(const char *fname_base, int depth, 
-		int data, int level, int f_embedded, int f_sideways, 
-		int verbose_level);
+	void draw_level_graph(std::string &fname_base,
+			int depth,
+			int data, int level, int f_embedded, int f_sideways,
+			int verbose_level);
 	void make_flag_orbits_on_relations(
 			int depth, const char *fname_prefix, int verbose_level);
 	void make_full_poset_graph(int depth, layered_graph *&LG, 
@@ -879,7 +880,7 @@ public:
 	void print_extensions_at_level(std::ostream &ost, int lvl);
 	void print_fusion_nodes(int depth);
 	void read_data_file(int &depth_completed,
-		const char *fname, int verbose_level);
+		std::string &fname, int verbose_level);
 	void write_data_file(int depth_completed,
 		const char *fname_base, int verbose_level);
 	void write_file(std::ofstream &fp, int depth_completed,
@@ -894,14 +895,14 @@ public:
 	void housekeeping(int i, int f_write_files, int t0, 
 		int verbose_level);
 	void housekeeping_no_data_file(int i, int t0, int verbose_level);
-	void create_fname_sv_level_file_binary(char *fname,
-			const char *fname_base, int level);
-	int test_sv_level_file_binary(int level, const char *fname_base);
-	void read_sv_level_file_binary(int level, const char *fname_base,
+	void create_fname_sv_level_file_binary(std::string &fname,
+			std::string &fname_base, int level);
+	int test_sv_level_file_binary(int level, std::string &fname_base);
+	void read_sv_level_file_binary(int level, std::string &fname_base,
 		int f_split, int split_mod, int split_case, 
 		int f_recreate_extensions, int f_dont_keep_sv, 
 		int verbose_level);
-	void write_sv_level_file_binary(int level, const char *fname_base,
+	void write_sv_level_file_binary(int level, std::string &fname_base,
 		int f_split, int split_mod, int split_case, 
 		int verbose_level);
 	void read_sv_level_file_binary2(int level, std::ifstream &fp,
@@ -911,9 +912,9 @@ public:
 	void write_sv_level_file_binary2(int level, std::ofstream &fp,
 		int f_split, int split_mod, int split_case, 
 		int verbose_level);
-	void read_level_file_binary(int level, char *fname_base, 
+	void read_level_file_binary(int level, std::string &fname_base,
 		int verbose_level);
-	void write_level_file_binary(int level, char *fname_base, 
+	void write_level_file_binary(int level, std::string &fname_base,
 		int verbose_level);
 	void read_level_file_binary2(int level, std::ifstream &fp,
 		int &nb_group_elements, int verbose_level);
@@ -922,17 +923,18 @@ public:
 	void write_candidates_binary_using_sv(
 			const char *fname_base,
 		int lvl, int t0, int verbose_level);
-	void read_level_file(int level, char *fname, int verbose_level);
-	void recover(const char *recover_fname, 
+	void read_level_file(int level, std::string &fname, int verbose_level);
+	void recover(std::string &recover_fname,
 		int &depth_completed, int verbose_level);
-	void make_fname_lvl_file_candidates(char *fname,
-			const char *fname_base, int lvl);
-	void make_fname_lvl_file(char *fname,
-			const char *fname_base, int lvl);
-	void write_lvl_file_with_candidates(char *fname_base, 
+	void make_fname_lvl_file_candidates(std::string &fname,
+			std::string &fname_base, int lvl);
+	void make_fname_lvl_file(std::string &fname,
+			std::string &fname_base, int lvl);
+	void write_lvl_file_with_candidates(std::string &fname_base,
 		int lvl, int t0, int verbose_level);
 	void write_lvl_file(
-			const char *fname_base, int lvl,
+			std::string &fname_base,
+			int lvl,
 		int t0, int f_with_stabilizer_generators, int f_long_version,
 		int verbose_level);
 	void write_lvl(std::ostream &f, int lvl, int t0,

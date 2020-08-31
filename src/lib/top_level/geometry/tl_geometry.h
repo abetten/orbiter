@@ -267,8 +267,8 @@ public:
 	void freeself();
 	void init_basic(orthogonal *O,
 		int f_semilinear,
-		const char *input_prefix,
-		const char *base_fname,
+		//const char *input_prefix,
+		//const char *base_fname,
 		int starter_size,
 		int verbose_level);
 	void init_group(int f_semilinear, int verbose_level);
@@ -277,21 +277,20 @@ public:
 	void create_graphs(
 		int orbit_at_level_r, int orbit_at_level_m,
 		int level_of_candidates_file,
-		const char *output_prefix,
+		std::string &output_prefix,
 		int f_lexorder_test, int f_eliminate_graphs_if_possible,
 		int verbose_level);
 	void create_graphs_list_of_cases(
 		const char *case_label,
 		const char *list_of_cases_text,
 		int level_of_candidates_file,
-		const char *output_prefix,
+		std::string &output_prefix,
 		int f_lexorder_test, int f_eliminate_graphs_if_possible,
 		int verbose_level);
 	int create_graph(
 		int orbit_at_level, int level_of_candidates_file,
-		const char *output_prefix,
 		int f_lexorder_test, int f_eliminate_graphs_if_possible,
-		int &nb_vertices, char *graph_fname_base,
+		int &nb_vertices,
 		colored_graph *&CG,
 		int verbose_level);
 
@@ -910,13 +909,13 @@ public:
 		int verbose_level);
 	void print(std::ostream &ost, long int *S, int len);
 	void make_graphs(orbiter_data_file *ODF,
-			const char *prefix,
+			std::string &prefix,
 			int f_split, int split_r, int split_m,
 			int f_lexorder_test,
 			const char *fname_mask,
 			int verbose_level);
 	void make_one_graph(orbiter_data_file *ODF,
-			const char *prefix,
+			std::string &prefix,
 			int orbit_idx,
 			int f_lexorder_test,
 			colored_graph *&CG,

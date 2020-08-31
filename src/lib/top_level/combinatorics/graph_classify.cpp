@@ -709,10 +709,16 @@ void graph_classify::draw_graphs(int level,
 		cout << " : " << go << endl;
 
 
-		char fname_full[1000];
+		string fname_full;
+		char str[1000];
 
-		sprintf(fname_full, "%s_rep_%d_%d.mp",
-				gen->get_problem_label_with_path(), level, h);
+		fname_full.assign(gen->get_problem_label_with_path());
+
+		sprintf(str, "_rep_%d_%d.mp", level, h);
+
+		fname_full.append(str);
+
+
 		int x_min = 0, x_max = xmax_in;
 		int y_min = 0, y_max = ymax_in;
 		int x, y, dx, dy;

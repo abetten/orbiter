@@ -49,11 +49,15 @@ void isomorph_arguments::null()
 	f_subset_orbits_file = FALSE;
 	f_down_orbits = FALSE;
 
-	prefix_iso = "./ISO/";
+	f_prefix_iso = FALSE;
+	//prefix_iso = "./ISO/";
 
 	f_has_final_test_function = FALSE;
 	final_test_function = NULL;
 	final_test_data = NULL;
+
+	f_prefix_with_directory = FALSE;
+
 }
 
 void isomorph_arguments::freeself()
@@ -138,8 +142,14 @@ int isomorph_arguments::read_arguments(int argc, const char **argv,
 			cout << "-down_orbits " << endl;
 		}
 		else if (strcmp(argv[i], "-prefix_iso") == 0) {
-			prefix_iso = argv[++i];
+			f_prefix_iso = TRUE;
+			prefix_iso.assign(argv[++i]);
 			cout << "-prefix_iso " << prefix_iso << endl;
+		}
+		else if (strcmp(argv[i], "-prefix_with_directory") == 0) {
+			f_prefix_with_directory = TRUE;
+			prefix_with_directory.assign(argv[++i]);
+			cout << "-prefix_with_directory " << prefix_with_directory << endl;
 		}
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
@@ -159,7 +169,6 @@ void isomorph_arguments::init(action *A, action *A2,
 	poset_classification *gen,
 	int target_size,
 	poset_classification_control *Control,
-	//const char *prefix_with_directory,
 	exact_cover_arguments *ECA,
 	void (*callback_report)(isomorph *Iso, void *data, int verbose_level), 
 	void (*callback_subset_orbits)(isomorph *Iso, void *data, int verbose_level), 

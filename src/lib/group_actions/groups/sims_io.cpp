@@ -1082,15 +1082,21 @@ void sims::report(ostream &ost, int verbose_level)
 	ost << "\\end{array}" << endl;
 	ost << "$$" << endl;
 
-	char fname_base[1000];
+	string fname_base;
+	char str[1000];
 
 
 	for (i = 0; i < my_base_len; i++) {
 
+		if (f_v) {
+			cout << "sims::report tree " << i << " / " << my_base_len << endl;
+		}
 		ost << endl << "\\subsection*{Basic Orbit " << i << "}" << endl << endl;
 
 		if (orbit_len[i] < 1000) {
-			sprintf(fname_base, "sims_%d", i);
+
+			sprintf(str, "sims_%d", i);
+			fname_base.assign(str);
 
 			layered_graph *LG;
 			Sorting.schreier_vector_tree(
@@ -1098,7 +1104,7 @@ void sims::report(ostream &ost, int verbose_level)
 				fname_base,
 				LG,
 				FALSE/* f_embedded */, FALSE /* f_sideways */,
-				verbose_level);
+				verbose_level - 3);
 
 			FREE_OBJECT(LG);
 
@@ -1106,6 +1112,9 @@ void sims::report(ostream &ost, int verbose_level)
 			ost << endl;
 		}
 		ost << "\\bigskip" << endl;
+		if (f_v) {
+			cout << "sims::report tree " << i << " / " << my_base_len << " done" << endl;
+		}
 
 	}
 
