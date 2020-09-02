@@ -3292,9 +3292,9 @@ void file_io::create_files_list_of_cases(spreadsheet *S,
 							continue;
 						}
 						char *entry;
-						int case_number;
+						//int case_number;
 
-						case_number = S->get_int(j + 1, Descr->read_cases_column_of_case);
+						//case_number = S->get_int(j + 1, Descr->read_cases_column_of_case);
 						entry = S->get_string(j + 1, Descr->read_cases_column_of_fname);
 						fp <<  "\t\t" /*<< case_number << " "*/ << entry << " \\" << endl;
 #if 0

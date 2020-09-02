@@ -682,6 +682,45 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	}
 }
 
+void orbits_on_something::extract_orbits(
+	int orbit_length,
+	int nb_orbits,
+	int *orbits,
+	long int *extracted_set,
+	set_of_sets *my_orbits_classified,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int *orbit;
+	int l, i, type_idx, a, b;
+
+	orbit = NEW_lint(orbit_length);
+
+	if (f_v) {
+		cout << "orbits_on_something::extract_orbits "
+				"orbit_length = " << orbit_length << " nb_orbits = " << nb_orbits << endl;
+	}
+
+	type_idx = get_orbit_type_index(orbit_length);
+	for (i = 0; i < nb_orbits; i++) {
+		a = orbits[i];
+		b = my_orbits_classified->Sets[type_idx][a];
+		Sch->get_orbit(b, orbit, l, 0 /* verbose_level*/);
+		if (l != orbit_length) {
+			cout << "orbits_on_something::extract_orbits l != orbit_length" << endl;
+			exit(1);
+		}
+		lint_vec_copy(orbit, extracted_set + i * orbit_length, orbit_length);
+	}
+
+	FREE_lint(orbit);
+
+	if (f_v) {
+		cout << "orbits_on_something::extract_orbits done" << endl;
+	}
+}
+
+
 void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified(
 	colored_graph *&CG,
 	std::string &fname,

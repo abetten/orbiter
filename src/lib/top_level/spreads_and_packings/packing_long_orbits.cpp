@@ -246,6 +246,41 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 
 		cout << "solution file contains " << Solutions.size() << " solutions" << endl;
 
+		int i;
+		int sol_idx;
+		int *clique;
+		long int *packing;
+
+		clique = NEW_int(solution_size);
+		packing = NEW_lint(PWF->PW->P->size_of_packing);
+
+		for (sol_idx = 0; sol_idx < Solutions.size(); sol_idx++) {
+
+			for (i = 0; i < solution_size; i++) {
+				clique[i] = Solutions[sol_idx][i];
+			}
+
+			for (i = 0; i < fixpoint_clique_size; i++) {
+				packing[i] = fixpoint_clique[i];
+			}
+
+			PWF->PW->reduced_spread_orbits_under_H->extract_orbits(
+					long_orbit_length,
+					solution_size,
+					clique,
+					packing + fixpoint_clique_size,
+					Filtered_orbits,
+					verbose_level);
+
+			if (!PWF->PW->Spread_tables_reduced->test_if_set_of_spreads_is_line_disjoint(packing, PWF->PW->P->size_of_packing)) {
+				cout << "The packing is faulty" << endl;
+				exit(1);
+			}
+
+		}
+
+		FREE_int(clique);
+		FREE_lint(packing);
 	}
 	else {
 		cout << "solution file does not exist" << endl;
