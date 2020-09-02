@@ -518,6 +518,13 @@ public:
 		int (*test_function)(long int *orbit1, int orbit_length1, long int *orbit2, int orbit_length2, void *data),
 		void *test_function_data,
 		int verbose_level);
+	void extract_orbits(
+		int orbit_length,
+		int nb_orbits,
+		int *orbits,
+		long int *extracted_set,
+		set_of_sets *my_orbits_classified,
+		int verbose_level);
 	void create_graph_on_orbits_of_a_certain_length_override_orbits_classified(
 		colored_graph *&CG,
 		std::string &fname,
