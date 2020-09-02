@@ -227,9 +227,11 @@ void tally_vector_data::print()
 		cout << Frequency[i] << " x ";
 		int_vec_print(cout, Reps + i * data_set_sz, data_set_sz);
 		cout << endl;
+#if 0
 		cout << "for elements ";
 		int_vec_print(cout, sorting_perm_inv + type_first[i], Frequency[i]);
 		cout << endl;
+#endif
 	}
 }
 
