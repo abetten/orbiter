@@ -247,6 +247,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		cout << "solution file contains " << Solutions.size() << " solutions" << endl;
 
 		int i, a, b;
+		int nb_uniform;
 		int sol_idx;
 		int *clique;
 		long int *packing;
@@ -256,6 +257,9 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		packing = NEW_lint(PWF->PW->P->size_of_packing);
 		iso_type = NEW_int(Solutions.size() * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads);
 		int_vec_zero(iso_type, Solutions.size() * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads);
+
+		nb_uniform = 0;
+
 
 		for (sol_idx = 0; sol_idx < Solutions.size(); sol_idx++) {
 
@@ -285,6 +289,9 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 				b = PWF->PW->Spread_tables_reduced->spread_iso_type[a];
 				iso_type[sol_idx * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + b]++;
 			}
+			if (iso_type[sol_idx * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + 0] == PWF->PW->P->size_of_packing) {
+				nb_uniform++;
+			}
 
 
 		}
@@ -294,6 +301,8 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		T.init(iso_type, Solutions.size(), PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads, verbose_level);
 		cout << "We found the following type vectors:" << endl;
 		T.print();
+
+		cout << "fixpoints_clique_case_number " << fixpoints_clique_case_number << " The number of uniform packings of Hall type is " << nb_uniform << endl;
 
 		FREE_int(clique);
 		FREE_lint(packing);
