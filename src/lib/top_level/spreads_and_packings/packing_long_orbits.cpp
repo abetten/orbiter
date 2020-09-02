@@ -246,15 +246,19 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 
 		cout << "solution file contains " << Solutions.size() << " solutions" << endl;
 
-		int i;
+		int i, a, b;
 		int sol_idx;
 		int *clique;
 		long int *packing;
+		int *iso_type;
 
 		clique = NEW_int(solution_size);
 		packing = NEW_lint(PWF->PW->P->size_of_packing);
+		iso_type = NEW_int(Solutions.size() * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads);
+		int_vec_zero(iso_type, Solutions.size() * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads);
 
 		for (sol_idx = 0; sol_idx < Solutions.size(); sol_idx++) {
+
 
 			for (i = 0; i < solution_size; i++) {
 				clique[i] = Solutions[sol_idx][i];
@@ -270,17 +274,30 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 					clique,
 					packing + fixpoint_clique_size,
 					Filtered_orbits,
-					verbose_level);
+					0 /*verbose_level*/);
 
 			if (!PWF->PW->Spread_tables_reduced->test_if_set_of_spreads_is_line_disjoint(packing, PWF->PW->P->size_of_packing)) {
 				cout << "The packing is faulty" << endl;
 				exit(1);
 			}
+			for (i = 0; i < PWF->PW->P->size_of_packing; i++) {
+				a = packing[i];
+				b = PWF->PW->Spread_tables_reduced->spread_iso_type[a];
+				iso_type[sol_idx * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + b]++;
+			}
+
 
 		}
 
+		tally_vector_data T;
+
+		T.init(iso_type, Solutions.size(), PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads, verbose_level);
+		cout << "We found the following type vectors:" << endl;
+		T.print();
+
 		FREE_int(clique);
 		FREE_lint(packing);
+		FREE_int(iso_type);
 	}
 	else {
 		cout << "solution file does not exist" << endl;

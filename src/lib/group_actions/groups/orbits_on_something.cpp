@@ -692,7 +692,7 @@ void orbits_on_something::extract_orbits(
 {
 	int f_v = (verbose_level >= 1);
 	long int *orbit;
-	int l, i, type_idx, a;//, b;
+	int l, i, /*type_idx,*/ a;//, b;
 
 	orbit = NEW_lint(orbit_length);
 
@@ -701,7 +701,7 @@ void orbits_on_something::extract_orbits(
 				"orbit_length = " << orbit_length << " nb_orbits = " << nb_orbits << endl;
 	}
 
-	type_idx = get_orbit_type_index(orbit_length);
+	//type_idx = get_orbit_type_index(orbit_length);
 	for (i = 0; i < nb_orbits; i++) {
 		a = orbits[i];
 		//b = my_orbits_classified->Sets[type_idx][a];
