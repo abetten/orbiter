@@ -189,7 +189,8 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 }
 
 void packing_long_orbits::create_graph_on_remaining_long_orbits(
-	int verbose_level)
+		std::vector<std::vector<int> > &Packings,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//file_io Fio;
@@ -232,6 +233,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 
 	if (Fio.file_size(fname_solutions.c_str())) {
 		cout << "solution file exists" << endl;
+
 
 		std::vector<std::vector<int> > Solutions;
 		int solution_size;
@@ -292,7 +294,13 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 			if (iso_type[sol_idx * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + 0] == PWF->PW->P->size_of_packing) {
 				nb_uniform++;
 			}
+			vector<int> Packing;
+			for (i = 0; i < PWF->PW->P->size_of_packing; i++) {
+				a = packing[i];
+				Packing.push_back(a);
+			}
 
+			Packings.push_back(Packing);
 
 		}
 
@@ -303,6 +311,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		T.print();
 
 		cout << "fixpoints_clique_case_number " << fixpoints_clique_case_number << " The number of uniform packings of Hall type is " << nb_uniform << endl;
+
 
 		FREE_int(clique);
 		FREE_lint(packing);

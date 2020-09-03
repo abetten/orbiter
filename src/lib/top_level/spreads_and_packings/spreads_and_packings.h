@@ -280,7 +280,9 @@ public:
 			std::string &solution_path,
 			int verbose_level);
 	void filter_orbits(int verbose_level);
-	void create_graph_on_remaining_long_orbits(int verbose_level);
+	void create_graph_on_remaining_long_orbits(
+			std::vector<std::vector<int> > &Packings,
+			int verbose_level);
 	void create_fname_graph_on_remaining_long_orbits();
 	void create_graph_and_save_to_file(
 			colored_graph *&CG,
@@ -429,6 +431,7 @@ public:
 			int long_orbits_clique_size,
 			int f_solution_path,
 			std::string &solution_path,
+			std::vector<std::vector<int> > &Packings,
 			int verbose_level);
 	void report(packing_long_orbits *L, int verbose_level);
 	void report2(std::ostream &ost, packing_long_orbits *L, int verbose_level);
