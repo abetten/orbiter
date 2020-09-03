@@ -60,6 +60,9 @@ packing_was::packing_was()
 	Spread_tables_reduced = NULL;
 	Spread_type_reduced = NULL;
 
+	nb_good_spreads = 0;
+	good_spreads = NULL;
+
 	A_on_reduced_spreads = NULL;
 	reduced_spread_orbits_under_H = NULL;
 	A_on_reduced_spread_orbits = NULL;
@@ -612,8 +615,6 @@ void packing_was::reduce_spreads(int verbose_level)
 		cout << "packing_was::reduce_spreads " << endl;
 	}
 
-	int nb_good_spreads;
-	int *good_spreads;
 	int i, j, h, f, l, c;
 
 

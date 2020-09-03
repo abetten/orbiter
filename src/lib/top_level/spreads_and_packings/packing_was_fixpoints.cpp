@@ -490,6 +490,9 @@ void packing_was_fixpoints::process_long_orbits_by_list_of_cases_from_file(
 	Nb = NEW_int(m);
 	int_vec_zero(Nb, m);
 
+	std::vector<std::vector<std::vector<int> > > Packings_by_case;
+
+
 	for (idx = 0; idx < m; idx++) {
 		clique_index = List_of_cases[idx];
 		if ((idx % PW->Descr->process_long_orbits_m) == PW->Descr->process_long_orbits_r) {
@@ -506,13 +509,18 @@ void packing_was_fixpoints::process_long_orbits_by_list_of_cases_from_file(
 					Packings,
 					verbose_level);
 			Nb[idx] = Packings.size();
+			Packings_by_case.push_back(Packings);
 		}
 	}
 
 	std::string fname_out;
+	std::string fname_packings;
 
 	fname_out.assign(process_long_orbits_by_list_of_cases_from_file_fname);
 	replace_extension_with(fname_out, "_count.csv");
+
+	fname_packings.assign(process_long_orbits_by_list_of_cases_from_file_fname);
+	replace_extension_with(fname_packings, "_packings.csv");
 
 	for (idx = 0; idx < m; idx++) {
 		total += Nb[idx];
@@ -524,6 +532,27 @@ void packing_was_fixpoints::process_long_orbits_by_list_of_cases_from_file(
 			fname_out.c_str(), "nb packings before iso");
 
 	cout << "written file " << fname_out << " of size " << Fio.file_size(fname_out.c_str()) << endl;
+
+	int *The_Packings;
+	int i, j, l, h, a, b;
+
+	The_Packings = NEW_int(total * PW->P->size_of_packing);
+	h = 0;
+	for (idx = 0; idx < m; idx++) {
+		l = Packings_by_case[idx].size();
+		for (i = 0; i < l; i++) {
+			for (j = 0; j < PW->P->size_of_packing; j++) {
+				a = Packings_by_case[idx][i][j];
+				b = PW->good_spreads[a];
+				The_Packings[h * PW->P->size_of_packing + j] = b;
+			}
+			h++;
+		}
+	}
+
+	Fio.int_matrix_write_csv(fname_packings.c_str(), The_Packings, total, PW->P->size_of_packing);
+	cout << "written file " << fname_packings << " of size " << Fio.file_size(fname_packings.c_str()) << endl;
+
 
 	if (f_v) {
 		cout << "packing_was_fixpoints::process_long_orbits_by_list_of_cases_from_file" << endl;
