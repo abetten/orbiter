@@ -484,19 +484,46 @@ void packing_was_fixpoints::process_long_orbits_by_list_of_cases_from_file(
 	}
 
 
+	int *Nb;
+	int total = 0;
+
+	Nb = NEW_int(m);
+	int_vec_zero(Nb, m);
+
 	for (idx = 0; idx < m; idx++) {
 		clique_index = List_of_cases[idx];
 		if ((idx % PW->Descr->process_long_orbits_m) == PW->Descr->process_long_orbits_r) {
 			cout << "packing_was_fixpoints::process_long_orbits_by_list_of_cases_from_file "
 					<< idx << " / " << m << " is case " << clique_index << ":" << endl;
+
+			std::vector<std::vector<int> > Packings;
+
 			process_long_orbits(clique_index,
 					PW->Descr->long_orbit_length,
 					PW->Descr->long_orbits_clique_size,
 					f_solution_path,
 					solution_path,
+					Packings,
 					verbose_level);
+			Nb[idx] = Packings.size();
 		}
 	}
+
+	std::string fname_out;
+
+	fname_out.assign(process_long_orbits_by_list_of_cases_from_file_fname);
+	replace_extension_with(fname_out, "_count.csv");
+
+	for (idx = 0; idx < m; idx++) {
+		total += Nb[idx];
+	}
+	cout << "total number of packings = " << total << endl;
+
+
+	Fio.int_vec_write_csv(Nb, m,
+			fname_out.c_str(), "nb packings before iso");
+
+	cout << "written file " << fname_out << " of size " << Fio.file_size(fname_out.c_str()) << endl;
 
 	if (f_v) {
 		cout << "packing_was_fixpoints::process_long_orbits_by_list_of_cases_from_file" << endl;
@@ -527,11 +554,15 @@ void packing_was_fixpoints::process_all_long_orbits(
 	for (clique_index = 0; clique_index < nb_cliques; clique_index++) {
 
 		if ((clique_index % PW->Descr->process_long_orbits_m) == PW->Descr->process_long_orbits_r) {
+
+			std::vector<std::vector<int> > Packings;
+
 			process_long_orbits(clique_index,
 					PW->Descr->long_orbit_length,
 					PW->Descr->long_orbits_clique_size,
 					f_solution_path,
 					solution_path,
+					Packings,
 					verbose_level);
 		}
 	}
@@ -552,6 +583,7 @@ void packing_was_fixpoints::process_long_orbits(
 		int long_orbits_clique_size,
 		int f_solution_path,
 		std::string &solution_path,
+		std::vector<std::vector<int> > &Packings,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -601,7 +633,11 @@ void packing_was_fixpoints::process_long_orbits(
 		cout << "packing_was_fixpoints::handle_long_orbits "
 				"before L->create_graph_on_remaining_long_orbits" << endl;
 	}
-	L->create_graph_on_remaining_long_orbits(verbose_level - 2);
+
+
+	L->create_graph_on_remaining_long_orbits(
+			Packings,
+			verbose_level - 2);
 	if (f_vv) {
 		cout << "packing_was_fixpoints::handle_long_orbits "
 				"after L->create_graph_on_remaining_long_orbits" << endl;
