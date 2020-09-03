@@ -492,6 +492,9 @@ public:
 	long int *Good_orbit_len;
 	long int *orb;
 
+	int nb_good_spreads;
+	int *good_spreads;
+
 	spread_tables *Spread_tables_reduced;
 	orbit_type_repository *Spread_type_reduced;
 
