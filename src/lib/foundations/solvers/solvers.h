@@ -120,7 +120,7 @@ public:
 	int f_q;
 	int input_q;
 	int f_override_polynomial;
-	const char *override_polynomial;
+	std::string override_polynomial;
 	//finite_field *F;
 
 	int f_maximal_arc;

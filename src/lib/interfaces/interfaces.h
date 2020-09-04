@@ -82,7 +82,7 @@ public:
 	void perform_group_theoretic_activity(finite_field *F, linear_group *LG,
 			group_theoretic_activity_description *Group_theoretic_activity_description,
 			int verbose_level);
-	void do_cheat_sheet_GF(int q, int f_poly, const char *poly, int verbose_level);
+	void do_cheat_sheet_GF(int q, int f_poly, std::string &poly, int verbose_level);
 	void do_search_for_primitive_polynomial_in_range(int p_min, int p_max,
 			int deg_min, int deg_max, int verbose_level);
 	void do_make_table_of_irreducible_polynomials(int deg, int q, int verbose_level);
@@ -655,6 +655,9 @@ public:
 // orbiter_session.cpp
 // #############################################################################
 
+
+extern orbiter_session *Orbiter_session; // global Orbiter session
+
 //! The orbiter session is reponsible for the command line interface and the program execution
 
 
@@ -673,7 +676,10 @@ public:
 	int memory_debug_verbose_level;
 
 	int f_override_polynomial;
-	const char *override_polynomial;
+	std::string override_polynomial;
+
+	int f_orbiter_path;
+	std::string orbiter_path;
 
 
 	interface_algebra Interface_algebra;

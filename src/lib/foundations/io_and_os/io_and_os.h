@@ -813,6 +813,7 @@ char get_character(std::istream & is, int verbose_level);
 void replace_extension_with(char *p, const char *new_ext);
 void replace_extension_with(std::string &p, const char *new_ext);
 void chop_off_extension(char *p);
+void chop_off_extension(std::string &p);
 void chop_off_extension_if_present(char *p, const char *ext);
 void get_fname_base(const char *p, char *fname_base);
 void get_extension_if_present(const char *p, char *ext);

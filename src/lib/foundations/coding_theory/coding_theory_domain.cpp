@@ -597,8 +597,14 @@ void coding_theory_domain::make_tensor_code_9dimensional_as_point_set(
 		}
 	else if (q == 9) {
 		override_poly_Q = ""; override_poly = "17"; f_hyperoval = FALSE;
-		}
-	make_tensor_code_9_dimensional(q, override_poly_Q, override_poly,
+	}
+
+	string poly_Q, poly_q;
+
+	poly_Q.assign(override_poly_Q);
+	poly_q.assign(override_poly);
+
+	make_tensor_code_9_dimensional(q, poly_Q, poly_q,
 		f_hyperoval, code, length, verbose_level - 1);
 
 	the_set = NEW_int(length);
@@ -622,7 +628,7 @@ void coding_theory_domain::make_tensor_code_9dimensional_as_point_set(
 }
 
 void coding_theory_domain::make_tensor_code_9_dimensional(int q,
-	const char *override_poly_Q, const char *override_poly,
+	std::string &override_poly_Q, std::string &override_poly,
 	int f_hyperoval,
 	int *&code, int &length,
 	int verbose_level)
@@ -853,7 +859,7 @@ void coding_theory_domain::make_tensor_code_9_dimensional(int q,
 
 
 void coding_theory_domain::make_cyclic_code(int n, int q, int t,
-		int *roots, int nb_roots, int f_poly, char *poly,
+		int *roots, int nb_roots, int f_poly, std::string &poly,
 		int f_dual, char *fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1309,7 +1315,7 @@ void coding_theory_domain::print_polynomial(unipoly_domain &Fq,
 void coding_theory_domain::field_reduction(int n, int q, int p, int e, int m,
 	finite_field &Fp, unipoly_domain &Fq,
 	int degree, unipoly_object *generator, int *&generator_subfield,
-	int f_poly, char *poly,
+	int f_poly, std::string &poly,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

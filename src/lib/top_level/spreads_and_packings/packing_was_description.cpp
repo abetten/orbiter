@@ -26,17 +26,11 @@ packing_was_description::packing_was_description()
 	cliques_on_fixpoint_graph_control = NULL;
 
 	f_process_long_orbits = FALSE;
-	process_long_orbits_r = 0;
-	process_long_orbits_m = 0;
-	long_orbit_length = 0;
-	long_orbits_clique_size = 0;
+	Long_Orbits_Descr = NULL;
 
-	f_process_long_orbits_by_list_of_cases_from_file = FALSE;
-	//process_long_orbits_by_list_of_cases_from_file_fname = NULL;
+	f_problem_label = FALSE;
+	//problem_label;
 
-	f_expand_cliques_of_long_orbits = FALSE;
-	clique_no_r = 0;
-	clique_no_m = 0;
 	f_type_of_fixed_spreads = FALSE;
 	f_fixp_clique_types_save_individually = FALSE;
 	//f_label = FALSE;
@@ -45,8 +39,6 @@ packing_was_description::packing_was_description()
 	//spread_tables_prefix = "";
 	f_output_path = FALSE;
 	//output_path = "";
-	f_process_long_orbits_solution_path = FALSE;
-	// process_long_orbits_solution_path
 
 
 	f_exact_cover = FALSE;
@@ -152,55 +144,28 @@ int packing_was_description::read_arguments(int argc, const char **argv,
 
 		else if (strcmp(argv[i], "-process_long_orbits") == 0) {
 			f_process_long_orbits = TRUE;
-			clique_size = atoi(argv[++i]);
-			process_long_orbits_r = atoi(argv[++i]);
-			process_long_orbits_m = atoi(argv[++i]);
-			long_orbit_length = atoi(argv[++i]);
-			long_orbits_clique_size = atoi(argv[++i]);
-			cout << "-process_long_orbits "
-				<< clique_size << " "
-				<< process_long_orbits_r << " "
-				<< process_long_orbits_m << " "
-				<< long_orbit_length << " "
-				<< long_orbits_clique_size
-				<< endl;
+			Long_Orbits_Descr = NEW_OBJECT(packing_long_orbits_description);
+			cout << "-process_long_orbits " << endl;
+			i += Long_Orbits_Descr->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -process_long_orbits " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
 		}
 
 
 
-		else if (strcmp(argv[i], "-process_long_orbits_by_list_of_cases_from_file") == 0) {
-			f_process_long_orbits_by_list_of_cases_from_file = TRUE;
-			process_long_orbits_by_list_of_cases_from_file_fname.assign(argv[++i]);
-			clique_size = atoi(argv[++i]);
-			process_long_orbits_r = atoi(argv[++i]);
-			process_long_orbits_m = atoi(argv[++i]);
-			long_orbit_length = atoi(argv[++i]);
-			long_orbits_clique_size = atoi(argv[++i]);
-			cout << "-process_long_orbits_by_list_of_cases_from_file "
-				<< process_long_orbits_by_list_of_cases_from_file_fname << " "
-				<< clique_size << " "
-				<< process_long_orbits_r << " "
-				<< process_long_orbits_m << " "
-				<< long_orbit_length << " "
-				<< long_orbits_clique_size
-				<< endl;
+
+		else if (strcmp(argv[i], "-problem_label") == 0) {
+			f_problem_label = TRUE;
+			problem_label.assign(argv[++i]);
+			cout << "-problem_label " << problem_label << endl;
 		}
 
-		else if (strcmp(argv[i], "-expand_cliques_of_long_orbits") == 0) {
-			f_expand_cliques_of_long_orbits = TRUE;
-			clique_size = atoi(argv[++i]);
-			clique_no_r = atoi(argv[++i]);
-			clique_no_m = atoi(argv[++i]);
-			long_orbit_length = atoi(argv[++i]);
-			long_orbits_clique_size = atoi(argv[++i]);
-			cout << "-expand_cliques_of_long_orbits "
-				<< clique_size << " "
-				<< clique_no_r << " "
-				<< clique_no_m << " "
-				<< long_orbit_length << " "
-				<< long_orbits_clique_size
-				<< endl;
-		}
 
 		else if (strcmp(argv[i], "-spread_tables_prefix") == 0) {
 			f_spread_tables_prefix = TRUE;
@@ -213,13 +178,6 @@ int packing_was_description::read_arguments(int argc, const char **argv,
 			f_output_path = TRUE;
 			output_path.assign(argv[++i]);
 			cout << "-output_path " << output_path << endl;
-		}
-
-		else if (strcmp(argv[i], "-process_long_orbits_solution_path") == 0) {
-			f_process_long_orbits_solution_path = TRUE;
-			process_long_orbits_solution_path.assign(argv[++i]);
-			cout << "-process_long_orbits_solution_path "
-				<< process_long_orbits_solution_path << endl;
 		}
 
 		else if (strcmp(argv[i], "-report") == 0) {

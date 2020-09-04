@@ -901,8 +901,7 @@ void colored_graph::all_cliques_of_size_k_ignore_colors(
 	int print_interval = 10000000;
 
 	if (f_v) {
-		cout << "colored_graph::all_cliques_of_size_k_"
-				"ignore_colors" << endl;
+		cout << "colored_graph::all_cliques_of_size_k_ignore_colors" << endl;
 	}
 	CF = NEW_OBJECT(clique_finder);
 
@@ -930,8 +929,7 @@ void colored_graph::all_cliques_of_size_k_ignore_colors(
 
 	FREE_OBJECT(CF);
 	if (f_v) {
-		cout << "colored_graph::all_cliques_of_size_k_"
-				"ignore_colors done" << endl;
+		cout << "colored_graph::all_cliques_of_size_k_ignore_colors done" << endl;
 	}
 }
 

@@ -268,9 +268,12 @@ void interface_coding_theory::make_BCH_codes(int n, int q, int t, int b, int f_d
 
 	coding_theory_domain Codes;
 
+	string dummy;
+
+	dummy.assign("");
 
 	Codes.make_cyclic_code(n, q, t, roots, nb_roots,
-			FALSE /*f_poly*/, NULL /*poly*/, f_dual,
+			FALSE /*f_poly*/, dummy /*poly*/, f_dual,
 			fname, verbose_level);
 
 	FREE_int(roots);

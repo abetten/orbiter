@@ -658,5 +658,34 @@ set_of_sets *tally::get_set_partition_and_types(
 	return SoS;
 }
 
+void tally::save_classes_individually(std::string &fname)
+{
+	int i, f, l, t;
+	file_io Fio;
+
+	for (i = 0; i < nb_types; i++) {
+
+		f = type_first[i];
+		l = type_len[i];
+		t = data_sorted[f];
+
+
+		string fname2;
+		char str[10000];
+
+		fname2.assign(fname);
+		sprintf(str, "%d", t);
+		fname2.append(str);
+		fname2.append(".csv");
+
+
+		Fio.int_vec_write_csv(sorting_perm_inv + type_first[i], type_len[i], fname2.c_str(), "case");
+		cout << "Written file " << fname2 << " of size " << Fio.file_size(fname2) << endl;
+	}
+}
+
+
+
+
 }
 }

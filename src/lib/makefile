@@ -367,6 +367,7 @@ MODULES= \
 		top_level/spreads_and_packings/packing_classify.o \
 		top_level/spreads_and_packings/packing_classify2.o \
 		top_level/spreads_and_packings/packing_invariants.o \
+		top_level/spreads_and_packings/packing_long_orbits_description.o \
 		top_level/spreads_and_packings/packing_long_orbits.o \
 		top_level/spreads_and_packings/packing_was_description.o \
 		top_level/spreads_and_packings/packing_was_fixpoints.o \

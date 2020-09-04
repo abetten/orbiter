@@ -196,7 +196,7 @@ void geometry_global::test_PG(int n, int q)
 }
 
 void geometry_global::create_Fisher_BLT_set(long int *Fisher_BLT,
-		int q, const char *poly_q, const char *poly_Q, int verbose_level)
+		int q, std::string &poly_q, std::string &poly_Q, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -208,7 +208,7 @@ void geometry_global::create_Fisher_BLT_set(long int *Fisher_BLT,
 }
 
 void geometry_global::create_Linear_BLT_set(long int *BLT, int q,
-		const char *poly_q, const char *poly_Q, int verbose_level)
+		std::string &poly_q, std::string &poly_Q, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -220,7 +220,7 @@ void geometry_global::create_Linear_BLT_set(long int *BLT, int q,
 }
 
 void geometry_global::create_Mondello_BLT_set(long int *BLT, int q,
-		const char *poly_q, const char *poly_Q, int verbose_level)
+		std::string &poly_q, std::string &poly_Q, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -280,7 +280,7 @@ void geometry_global::add_term(int n, finite_field &F,
 }
 
 
-void geometry_global::determine_conic(int q, const char *override_poly,
+void geometry_global::determine_conic(int q, std::string &override_poly,
 		long int *input_pts, int nb_pts, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

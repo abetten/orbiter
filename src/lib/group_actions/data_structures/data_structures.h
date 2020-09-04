@@ -406,7 +406,7 @@ public:
 	int f_n;
 	int n;
 	int f_poly;
-	const char *poly;
+	std::string poly;
 
 	int f_embed;
 		// follow up option for f_print:
@@ -417,7 +417,7 @@ public:
 		int f_Q;
 		int Q;
 		int f_poly_Q;
-		const char *poly_Q;
+		std::string poly_Q;
 
 
 	int f_print;

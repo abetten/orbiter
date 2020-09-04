@@ -162,7 +162,7 @@ public:
 	int n;
 	int input_q;
 	int f_override_polynomial;
-	const char *override_polynomial;
+	std::string override_polynomial;
 	finite_field *F;
 	int f_semilinear;
 	int f_special;

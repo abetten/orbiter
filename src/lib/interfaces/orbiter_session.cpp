@@ -17,6 +17,10 @@ using namespace std;
 namespace orbiter {
 namespace interfaces {
 
+
+orbiter_session *Orbiter_session = NULL;
+
+
 orbiter_session::orbiter_session()
 {
 
@@ -31,7 +35,10 @@ orbiter_session::orbiter_session()
 	memory_debug_verbose_level = 0;
 
 	f_override_polynomial = FALSE;
-	override_polynomial = NULL;
+	//override_polynomial = NULL;
+
+	f_orbiter_path = FALSE;
+	//orbiter_path;
 }
 
 
@@ -56,6 +63,9 @@ void orbiter_session::print_help(int argc,
 	else if (strcmp(argv[i], "-override_polynomial") == 0) {
 		cout << "-override_polynomial <string : polynomial in decimal>" << endl;
 	}
+	else if (strcmp(argv[i], "-orbiter_path") == 0) {
+		cout << "-orbiter_path <string : path>" << endl;
+	}
 }
 
 int orbiter_session::recognize_keyword(int argc,
@@ -73,6 +83,9 @@ int orbiter_session::recognize_keyword(int argc,
 	else if (strcmp(argv[i], "-override_polynomial") == 0) {
 		return true;
 	}
+	else if (strcmp(argv[i], "-orbiter_path") == 0) {
+		return true;
+	}
 	return false;
 }
 
@@ -82,10 +95,7 @@ int orbiter_session::read_arguments(int argc,
 	int i;
 
 	//cout << "orbiter_session::read_arguments" << endl;
-	//return 0;
 
-	//orbiter_session::argc = argc;
-	//orbiter_session::argv = argv;
 	os_interface Os;
 
 	t0 = Os.os_ticks();
@@ -107,8 +117,13 @@ int orbiter_session::read_arguments(int argc,
 		}
 		else if (strcmp(argv[i], "-override_polynomial") == 0) {
 			f_override_polynomial = TRUE;
-			override_polynomial = argv[++i];
+			override_polynomial.assign(argv[++i]);
 			cout << "-override_polynomial " << override_polynomial << endl;
+		}
+		else if (strcmp(argv[i], "-orbiter_path") == 0) {
+			f_orbiter_path = TRUE;
+			orbiter_path.assign(argv[++i]);
+			cout << "-orbiter_path " << orbiter_path << endl;
 		}
 		else {
 			break;

@@ -241,6 +241,44 @@ public:
 };
 
 // #############################################################################
+// packing_long_orbits_description.cpp
+// #############################################################################
+
+//! command line description of picking long orbits of packings with assumed symmetry
+
+class packing_long_orbits_description {
+public:
+	int f_split;
+	int split_r;
+	int split_m;
+
+	int f_orbit_length;
+	int orbit_length;
+
+	int f_clique_size;
+	int clique_size;
+
+
+	int f_list_of_cases_from_file;
+	std::string list_of_cases_from_file_fname;
+
+	int f_solution_path;
+	std::string solution_path;
+
+	int f_create_graphs;
+
+	int f_solve;
+
+	int f_read_solutions;
+
+
+	packing_long_orbits_description();
+	~packing_long_orbits_description();
+	int read_arguments(int argc, const char **argv,
+		int verbose_level);
+};
+
+// #############################################################################
 // packing_long_orbits.cpp
 // #############################################################################
 
@@ -249,21 +287,21 @@ public:
 class packing_long_orbits {
 public:
 	packing_was_fixpoints *PWF;
+	packing_long_orbits_description *Descr;
 
 	int fixpoints_idx;
-	int fixpoints_clique_case_number;
 	int fixpoint_clique_size;
-	long int *fixpoint_clique;
 	int long_orbit_idx;
 	long int *set;
 
-	int long_orbit_length;
-
-	int f_solution_path;
-	std::string solution_path;
 
 
+
+	int fixpoints_clique_case_number;
+	long int *fixpoint_clique_orbit_numbers;
+	long int *fixpoint_clique;
 	set_of_sets *Filtered_orbits;
+
 	std::string fname_graph;
 	std::string fname_solutions;
 
@@ -271,14 +309,18 @@ public:
 	packing_long_orbits();
 	~packing_long_orbits();
 	void init(packing_was_fixpoints *PWF,
-			int fixpoints_idx,
-			int fixpoints_clique_case_number,
-			int fixpoint_clique_size,
-			long int *fixpoint_clique,
-			int long_orbit_length,
-			int f_solution_path,
-			std::string &solution_path,
+			//int fixpoints_idx,
+			//int fixpoints_clique_case_number,
+			//int f_solution_path,
+			//std::string &solution_path,
 			int verbose_level);
+	void list_of_cases_from_file(int verbose_level);
+	void save_packings_by_case(std::vector<std::vector<std::vector<int> > > &Packings_by_case, int verbose_level);
+	void do_single_case(int verbose_level);
+	void process_single_case(
+			std::vector<std::vector<int> > &Packings,
+			int verbose_level);
+	void init_fixpoint_clique_from_orbit_numbers(int verbose_level);
 	void filter_orbits(int verbose_level);
 	void create_graph_on_remaining_long_orbits(
 			std::vector<std::vector<int> > &Packings,
@@ -318,29 +360,21 @@ public:
 	poset_classification_control *cliques_on_fixpoint_graph_control;
 
 	int f_process_long_orbits;
-	int process_long_orbits_r;
-	int process_long_orbits_m;
-	int long_orbit_length;
-	int long_orbits_clique_size;
+	packing_long_orbits_description *Long_Orbits_Descr;
 
 
-	int f_process_long_orbits_by_list_of_cases_from_file;
-	std::string process_long_orbits_by_list_of_cases_from_file_fname;
 
 
-	int f_expand_cliques_of_long_orbits;
-	int clique_no_r;
-	int clique_no_m;
+	int f_problem_label;
+	std::string problem_label;
+
 	int f_type_of_fixed_spreads;
 	int f_fixp_clique_types_save_individually;
-	//int f_label;
-	//std::string label;
+
 	int f_spread_tables_prefix;
 	std::string spread_tables_prefix;
 	int f_output_path;
 	std::string output_path;
-	int f_process_long_orbits_solution_path;
-	std::string process_long_orbits_solution_path;
 
 	int f_exact_cover;
 	exact_cover_arguments *ECA;
@@ -409,26 +443,21 @@ public:
 			int clique_size, int verbose_level);
 	// compute cliques on fixpoint graph using A_on_fixpoints
 	// orbit representatives will be stored in Cliques[nb_cliques * clique_size]
+	void process_long_orbits(int verbose_level);
+#if 0
 	void process_long_orbits_by_list_of_cases_from_file(
 			std::string &process_long_orbits_by_list_of_cases_from_file,
-			int split_r, int split_m,
-			int long_orbit_length,
-			int long_orbits_clique_size,
 			int f_solution_path,
 			std::string &solution_path,
 			int verbose_level);
 	void process_all_long_orbits(
-			int split_r, int split_m,
-			int long_orbit_length,
-			int long_orbits_clique_size,
 			int f_solution_path,
 			std::string &solution_path,
 			int verbose_level);
+#endif
 	long int *clique_by_index(int idx);
 	void process_long_orbits(
 			int clique_index,
-			int long_orbit_length,
-			int long_orbits_clique_size,
 			int f_solution_path,
 			std::string &solution_path,
 			std::vector<std::vector<int> > &Packings,
@@ -459,7 +488,6 @@ public:
 	linear_group *N_LG;
 
 	packing_classify *P;
-
 
 	strong_generators *H_gens;
 	longinteger_object H_go;

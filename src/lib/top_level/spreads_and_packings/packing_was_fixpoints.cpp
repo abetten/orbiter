@@ -53,48 +53,43 @@ void packing_was_fixpoints::init(packing_was *PW, int verbose_level)
 
 	if (PW->Descr->f_output_path) {
 		fname_fixp_graph.assign(PW->Descr->output_path);
-		fname_fixp_graph.append(PW->H_LG->label);
-		fname_fixp_graph.append("_graph.bin");
-		//sprintf(fname_fixp_graph, "%s%s_fixp_graph.bin",
-		//		PW->Descr->output_path, PW->H_LG->label.c_str());
 	}
 	else {
-		fname_fixp_graph.assign(PW->H_LG->label);
-		fname_fixp_graph.append("_graph.bin");
-		//sprintf(fname_fixp_graph, "%s_fixp_graph.bin", PW->H_LG->label.c_str());
+		fname_fixp_graph.assign("");
 	}
+	fname_fixp_graph.append(PW->H_LG->label);
+	if (PW->Descr->f_problem_label) {
+		fname_fixp_graph.append(PW->Descr->problem_label);
+	}
+	fname_fixp_graph.append("_graph.bin");
+
+
+
 	if (PW->Descr->f_output_path) {
 		fname_fixp_graph_cliques.assign(PW->Descr->output_path);
-		fname_fixp_graph_cliques.append(PW->H_LG->label);
-		fname_fixp_graph_cliques.append("_fixp_graph_cliques.csv");
-
-		//sprintf(fname_fixp_graph_cliques, "%s%s_fixp_graph_cliques.csv",
-		//		PW->Descr->output_path, PW->H_LG->label.c_str());
 	}
 	else {
-		fname_fixp_graph_cliques.assign(PW->H_LG->label);
-		fname_fixp_graph_cliques.append("_fixp_graph_cliques.csv");
-		//sprintf(fname_fixp_graph_cliques, "%s_fixp_graph_cliques.csv",
-		//		PW->H_LG->label.c_str());
+		fname_fixp_graph_cliques.assign("");
 	}
+	fname_fixp_graph_cliques.append(PW->H_LG->label);
+	if (PW->Descr->f_problem_label) {
+		fname_fixp_graph_cliques.append(PW->Descr->problem_label);
+	}
+	fname_fixp_graph_cliques.append("_fixp_graph_cliques.csv");
+
+
 	if (PW->Descr->f_output_path) {
 		fname_fixp_graph_cliques_orbiter.assign(PW->Descr->output_path);
-		fname_fixp_graph_cliques_orbiter.append(PW->H_LG->label);
-		sprintf(str, "_fixp_graph_cliques_lvl_%d", PW->Descr->clique_size_on_fixpoint_graph);
-		fname_fixp_graph_cliques_orbiter.append(str);
-
-		//sprintf(fname_fixp_graph_cliques_orbiter, "%s%s_fixp_graph_cliques_lvl_%d",
-		//		PW->Descr->output_path, PW->H_LG->label.c_str(), PW->Descr->clique_size_on_fixpoint_graph);
 	}
 	else {
-		fname_fixp_graph_cliques_orbiter.assign(PW->H_LG->label);
-		sprintf(str, "_fixp_graph_cliques_lvl_%d", PW->Descr->clique_size_on_fixpoint_graph);
-		fname_fixp_graph_cliques_orbiter.append(str);
-
-
-		//sprintf(fname_fixp_graph_cliques_orbiter, "%s_fixp_graph_cliques_lvl_%d",
-		//		PW->H_LG->label.c_str(), PW->Descr->clique_size_on_fixpoint_graph);
+		fname_fixp_graph_cliques_orbiter.assign("");
 	}
+	fname_fixp_graph_cliques_orbiter.append(PW->H_LG->label);
+	if (PW->Descr->f_problem_label) {
+		fname_fixp_graph_cliques_orbiter.append(PW->Descr->problem_label);
+	}
+	sprintf(str, "_fixp_graph_cliques_lvl_%d", PW->Descr->clique_size_on_fixpoint_graph);
+	fname_fixp_graph_cliques_orbiter.append(str);
 
 
 	if (f_v) {
@@ -148,22 +143,28 @@ void packing_was_fixpoints::init(packing_was *PW, int verbose_level)
 
 	if (PW->Descr->f_cliques_on_fixpoint_graph && PW->Descr->f_process_long_orbits) {
 		if (f_v) {
-			cout << "packing_was_fixpoints::init before process_all_long_orbits" << endl;
+			cout << "packing_was_fixpoints::init before process_long_orbits" << endl;
 		}
 
-		process_all_long_orbits(PW->Descr->process_long_orbits_r,
-				PW->Descr->process_long_orbits_m,
-				PW->Descr->long_orbit_length,
-				PW->Descr->long_orbits_clique_size,
+
+		process_long_orbits(verbose_level);
+		if (f_v) {
+			cout << "packing_was_fixpoints::init after process_long_orbits" << endl;
+		}
+
+#if 0
+				process_all_long_orbits(
 				PW->Descr->f_process_long_orbits_solution_path,
 				PW->Descr->process_long_orbits_solution_path,
 				verbose_level);
+#endif
 
 		if (f_v) {
 			cout << "packing_was_fixpoints::init after process_all_long_orbits" << endl;
 		}
 	}
 
+#if 0
 	if (PW->Descr->f_cliques_on_fixpoint_graph && PW->Descr->f_process_long_orbits_by_list_of_cases_from_file) {
 		if (f_v) {
 			cout << "packing_was_fixpoints::init before process_long_orbits_by_list_of_cases_from_file" << endl;
@@ -172,10 +173,6 @@ void packing_was_fixpoints::init(packing_was *PW, int verbose_level)
 
 		process_long_orbits_by_list_of_cases_from_file(
 				PW->Descr->process_long_orbits_by_list_of_cases_from_file_fname,
-				PW->Descr->process_long_orbits_r,
-				PW->Descr->process_long_orbits_m,
-				PW->Descr->long_orbit_length,
-				PW->Descr->long_orbits_clique_size,
 				PW->Descr->f_process_long_orbits_solution_path,
 				PW->Descr->process_long_orbits_solution_path,
 				verbose_level);
@@ -184,6 +181,7 @@ void packing_was_fixpoints::init(packing_was *PW, int verbose_level)
 			cout << "packing_was_fixpoints::init after process_all_long_orbits" << endl;
 		}
 	}
+#endif
 
 
 
@@ -269,7 +267,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 // (either by computing it or reading it from file)
 {
 	int f_v = (verbose_level >= 1);
-	char my_prefix[1000];
+	string my_prefix;
 	file_io Fio;
 
 	if (f_v) {
@@ -283,9 +281,9 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 	fixpoint_graph = NEW_OBJECT(colored_graph);
 	fixpoint_graph->load(fname_fixp_graph, verbose_level);
 
-	strcpy(my_prefix, fname_fixp_graph.c_str());
+	my_prefix.assign(fname_fixp_graph);
 	chop_off_extension(my_prefix);
-	strcat(my_prefix, "_cliques");
+	my_prefix.append("_cliques");
 
 	if (Fio.file_size(fname_fixp_graph_cliques) > 0) {
 		if (f_v) {
@@ -330,6 +328,26 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 				"after Fixp_cliques->read_from_file" << endl;
 	}
 
+
+	tally *T;
+	long int *Ago;
+
+
+	T = Fixp_cliques->get_ago_distribution(Ago, verbose_level);
+
+	my_prefix.assign(fname_fixp_graph);
+	chop_off_extension(my_prefix);
+	my_prefix.append("_cliques_by_ago_");
+
+
+	if (PW->Descr->f_fixp_clique_types_save_individually) {
+		T->save_classes_individually(my_prefix);
+	}
+
+
+	FREE_lint(Ago);
+	FREE_OBJECT(T);
+
 	if (f_v) {
 		cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph "
 				"computing Iso_type_invariant" << endl;
@@ -360,9 +378,11 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 			verbose_level);
 	C.print();
 
-	strcpy(my_prefix, fname_fixp_graph.c_str());
+
+	my_prefix.assign(fname_fixp_graph);
 	chop_off_extension(my_prefix);
-	strcat(my_prefix, "_cliques_by_type_");
+	my_prefix.append("_cliques_by_type_");
+
 
 	if (PW->Descr->f_fixp_clique_types_save_individually) {
 		C.save_classes_individually(my_prefix);
@@ -430,8 +450,13 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch(
 		cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch "
 				"We found " << nb_cliques << " orbits of cliques of size "
 			<< clique_size << " in the fixed point graph:" << endl;
+		if (nb_cliques > 10) {
+			cout << "too big to print" << endl;
+		}
+		else {
+			lint_matrix_print(Cliques, nb_cliques, clique_size);
+		}
 	}
-	lint_matrix_print(Cliques, nb_cliques, clique_size);
 
 	Fio.lint_matrix_write_csv(fname_fixp_graph_cliques.c_str(),
 			Cliques, nb_cliques, clique_size);
@@ -448,11 +473,82 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch(
 	}
 }
 
+void packing_was_fixpoints::process_long_orbits(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "packing_was_fixpoints::process_long_orbits" << endl;
+	}
+
+
+	packing_long_orbits *L;
+
+	L = NEW_OBJECT(packing_long_orbits);
+
+	if (f_v) {
+		cout << "packing_was_fixpoints::process_long_orbits before L->init" << endl;
+	}
+
+	L->init(this, verbose_level - 2);
+
+#if 0
+			fixpoints_idx,
+			clique_index /* fixpoints_clique_case_number */,
+			f_solution_path,
+			solution_path,
+			verbose_level - 2);
+#endif
+
+
+
+	if (f_v) {
+		cout << "packing_was_fixpoints::process_long_orbits after L->init" << endl;
+	}
+
+#if 0
+	if (f_v) {
+		cout << "packing_was_fixpoints::process_long_orbits before L->filter_orbits" << endl;
+	}
+	L->filter_orbits(verbose_level - 2);
+	if (f_v) {
+		cout << "packing_was_fixpoints::process_long_orbits after L->filter_orbits" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "packing_was_fixpoints::process_long_orbits "
+				"before L->create_graph_on_remaining_long_orbits" << endl;
+	}
+
+
+	L->create_graph_on_remaining_long_orbits(
+			Packings,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "packing_was_fixpoints::process_long_orbits "
+				"after L->create_graph_on_remaining_long_orbits" << endl;
+	}
+
+	if (PW->Descr->f_report) {
+		cout << "doing a report" << endl;
+
+		report(L, verbose_level);
+	}
+#endif
+
+
+	FREE_OBJECT(L);
+
+
+	if (f_v) {
+		cout << "packing_was_fixpoints::process_long_orbits done" << endl;
+	}
+}
+
+#if 0
 void packing_was_fixpoints::process_long_orbits_by_list_of_cases_from_file(
 		std::string &process_long_orbits_by_list_of_cases_from_file_fname,
-		int split_r, int split_m,
-		int long_orbit_length,
-		int long_orbits_clique_size,
 		int f_solution_path,
 		std::string &solution_path,
 		int verbose_level)
@@ -463,10 +559,6 @@ void packing_was_fixpoints::process_long_orbits_by_list_of_cases_from_file(
 
 	if (f_v) {
 		cout << "packing_was_fixpoints::process_long_orbits_by_list_of_cases_from_file" << endl;
-		cout << "packing_was_fixpoints::process_long_orbits_by_list_of_cases_from_file split_r = " << split_r << endl;
-		cout << "packing_was_fixpoints::process_long_orbits_by_list_of_cases_from_file split_m = " << split_m << endl;
-		cout << "packing_was_fixpoints::process_long_orbits_by_list_of_cases_from_file long_orbit_length = " << long_orbit_length << endl;
-		cout << "packing_was_fixpoints::process_long_orbits_by_list_of_cases_from_file long_orbits_clique_size = " << long_orbits_clique_size << endl;
 		cout << "packing_was_fixpoints::process_long_orbits_by_list_of_cases_from_file fixpoints_idx = " << fixpoints_idx << endl;
 	}
 
@@ -502,8 +594,6 @@ void packing_was_fixpoints::process_long_orbits_by_list_of_cases_from_file(
 			std::vector<std::vector<int> > Packings;
 
 			process_long_orbits(clique_index,
-					PW->Descr->long_orbit_length,
-					PW->Descr->long_orbits_clique_size,
 					f_solution_path,
 					solution_path,
 					Packings,
@@ -528,8 +618,7 @@ void packing_was_fixpoints::process_long_orbits_by_list_of_cases_from_file(
 	cout << "total number of packings = " << total << endl;
 
 
-	Fio.int_vec_write_csv(Nb, m,
-			fname_out.c_str(), "nb packings before iso");
+	Fio.int_vec_write_csv(Nb, m, fname_out.c_str(), "nb packings before iso");
 
 	cout << "written file " << fname_out << " of size " << Fio.file_size(fname_out.c_str()) << endl;
 
@@ -549,6 +638,10 @@ void packing_was_fixpoints::process_long_orbits_by_list_of_cases_from_file(
 			h++;
 		}
 	}
+	if (h != total) {
+		cout << "packing_was_fixpoints::process_long_orbits_by_list_of_cases_from_file h != total" << endl;
+		exit(1);
+	}
 
 	Fio.int_matrix_write_csv(fname_packings.c_str(), The_Packings, total, PW->P->size_of_packing);
 	cout << "written file " << fname_packings << " of size " << Fio.file_size(fname_packings.c_str()) << endl;
@@ -561,9 +654,6 @@ void packing_was_fixpoints::process_long_orbits_by_list_of_cases_from_file(
 
 
 void packing_was_fixpoints::process_all_long_orbits(
-		int split_r, int split_m,
-		int long_orbit_length,
-		int long_orbits_clique_size,
 		int f_solution_path,
 		std::string &solution_path,
 		int verbose_level)
@@ -573,10 +663,6 @@ void packing_was_fixpoints::process_all_long_orbits(
 
 	if (f_v) {
 		cout << "packing_was_fixpoints::process_all_long_orbits" << endl;
-		cout << "packing_was_fixpoints::process_all_long_orbits split_r = " << split_r << endl;
-		cout << "packing_was_fixpoints::process_all_long_orbits split_m = " << split_m << endl;
-		cout << "packing_was_fixpoints::process_all_long_orbits long_orbit_length = " << long_orbit_length << endl;
-		cout << "packing_was_fixpoints::process_all_long_orbits long_orbits_clique_size = " << long_orbits_clique_size << endl;
 		cout << "packing_was_fixpoints::process_all_long_orbits fixpoints_idx = " << fixpoints_idx << endl;
 	}
 
@@ -587,8 +673,6 @@ void packing_was_fixpoints::process_all_long_orbits(
 			std::vector<std::vector<int> > Packings;
 
 			process_long_orbits(clique_index,
-					PW->Descr->long_orbit_length,
-					PW->Descr->long_orbits_clique_size,
 					f_solution_path,
 					solution_path,
 					Packings,
@@ -600,16 +684,17 @@ void packing_was_fixpoints::process_all_long_orbits(
 		cout << "packing_was::process_all_long_orbits done" << endl;
 	}
 }
+#endif
+
 
 long int *packing_was_fixpoints::clique_by_index(int idx)
 {
 	return Cliques + idx * PW->Descr->clique_size;
 }
 
+#if 0
 void packing_was_fixpoints::process_long_orbits(
 		int clique_index,
-		int long_orbit_length,
-		int long_orbits_clique_size,
 		int f_solution_path,
 		std::string &solution_path,
 		std::vector<std::vector<int> > &Packings,
@@ -635,9 +720,6 @@ void packing_was_fixpoints::process_long_orbits(
 	L->init(this,
 			fixpoints_idx,
 			clique_index /* fixpoints_clique_case_number */,
-			PW->Descr->clique_size /* fixpoint_clique_size */,
-			clique_by_index(clique_index), //Cliques + clique_index * PW->Descr->clique_size /* clique */,
-			long_orbit_length,
 			f_solution_path,
 			solution_path,
 			verbose_level - 2);
@@ -685,6 +767,7 @@ void packing_was_fixpoints::process_long_orbits(
 		cout << "packing_was_fixpoints::process_long_orbits done" << endl;
 	}
 }
+#endif
 
 void packing_was_fixpoints::report(packing_long_orbits *L, int verbose_level)
 {

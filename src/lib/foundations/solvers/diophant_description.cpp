@@ -22,7 +22,7 @@ diophant_description::diophant_description()
 	f_q = FALSE;
 	input_q = 0;
 	f_override_polynomial = FALSE;
-	override_polynomial = NULL;
+	//override_polynomial = NULL;
 	//F = NULL;
 
 	f_maximal_arc = FALSE;
@@ -160,7 +160,7 @@ int diophant_description::read_arguments(
 		}
 		else if (strcmp(argv[i], "-override_polynomial") == 0) {
 			f_override_polynomial = TRUE;
-			override_polynomial = argv[++i];
+			override_polynomial.assign(argv[++i]);
 			cout << "-override_polynomial" << override_polynomial << endl;
 		}
 		else if (strcmp(argv[i], "-end") == 0) {

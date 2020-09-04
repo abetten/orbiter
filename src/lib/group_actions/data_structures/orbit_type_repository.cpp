@@ -126,11 +126,11 @@ void orbit_type_repository::init(
 				"before Heapsort_general" << endl;
 	}
 
-	if (f_v) {
+	if (FALSE) {
 		cout << "orbit_type_repository::init "
 				"before Heapsort_general" << endl;
 		cout << "Type_repository:" << endl;
-		if (nb_sets < 1000) {
+		if (nb_sets < 10) {
 			lint_matrix_print(Type_repository, nb_sets, orbit_type_size);
 		}
 		else {
@@ -144,11 +144,11 @@ void orbit_type_repository::init(
 			orbit_type_repository_swap_types,
 			this /* void  *extra_data */);
 
-	if (f_v) {
+	if (FALSE) {
 		cout << "orbit_type_repository::init "
 				"after Heapsort_general" << endl;
 		cout << "Sorted Type_repository:" << endl;
-		if (nb_sets < 1000) {
+		if (nb_sets < 10) {
 			lint_matrix_print(Type_repository, nb_sets, orbit_type_size);
 		}
 		else {
@@ -186,7 +186,7 @@ void orbit_type_repository::init(
 	}
 
 
-	if (f_v) {
+	if (FALSE) {
 		cout << "orbit_type_repository::init "
 				"The types are:" << endl;
 		for (i = 0; i < nb_types; i++) {
@@ -203,7 +203,7 @@ void orbit_type_repository::init(
 				Sets + i * set_size, set_size, goi,
 				Type_repository + i * orbit_type_size,
 				0 /*verbose_level*/);
-		if (f_v) {
+		if (FALSE) {
 			if (i < 10) {
 				cout << "type[" << i << "]=";
 				lint_vec_print(cout, Type_repository + i * orbit_type_size, orbit_type_size);

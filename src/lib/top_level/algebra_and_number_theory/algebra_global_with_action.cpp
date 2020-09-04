@@ -391,7 +391,7 @@ void algebra_global_with_action::do_random(int q, int d, int f_no_eigenvalue_one
 }
 
 
-void algebra_global_with_action::group_table(int q, int d, int f_poly, const char *poly,
+void algebra_global_with_action::group_table(int q, int d, int f_poly, std::string &poly,
 		int f_no_eigenvalue_one, int verbose_level)
 {
 	gl_classes C;

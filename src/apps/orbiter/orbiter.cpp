@@ -15,6 +15,7 @@ int build_number =
 #include "../../../build_number"
 ;
 
+
 int main(int argc, const char **argv)
 {
 
@@ -26,6 +27,8 @@ int main(int argc, const char **argv)
 
 	// setup:
 
+
+	Orbiter_session = &Session;
 
 	i = Session.read_arguments(argc, argv, 1);
 
