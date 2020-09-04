@@ -232,9 +232,9 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 				// Print the solutions
 				cout << "clique_finder_control::do_Sajeeb Found " << solutions.size() << " solution(s)." << endl;
 				#if 1
-					for (size_t i=0; i<solutions.size(); ++i) {
-						for (size_t j=0; j<solutions[i].size(); ++j) {
-							fp << solutions[i][j] << " ";
+					for (size_t i = 0; i < solutions.size(); ++i) {
+						for (size_t j = 0; j < solutions[i].size(); ++j) {
+							fp << CG->points[solutions[i][j]] << " ";
 						} fp << endl;
 					}
 				#endif
@@ -246,7 +246,6 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 			else {
 
 				int *Sol = NULL;
-				//int nb_solutions = 0;
 				unsigned long int decision_step_counter = 0;
 
 				CG->all_cliques_of_size_k_ignore_colors(
@@ -254,6 +253,13 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 						Sol, nb_sol,
 						decision_step_counter,
 						verbose_level);
+				for (int i = 0; i < nb_sol; ++i) {
+					for (int j = 0; j < target_size; ++j) {
+						fp << CG->points[Sol[i * target_size + j]] << " ";
+					}
+					fp << endl;
+				}
+				FREE_int(Sol);
 			}
 		}
 		fp << -1 << " " << nb_sol << " " << nb_search_steps

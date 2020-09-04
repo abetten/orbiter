@@ -171,6 +171,8 @@ void packing_was::init_spreads(int verbose_level)
 	if (f_v) {
 		cout << "packing_was::init_spreads after P->read_spread_table" << endl;
 	}
+
+
 	if (f_v) {
 		cout << "packing_was::init_spreads before compute_spread_types_wrt_H" << endl;
 	}
@@ -181,11 +183,13 @@ void packing_was::init_spreads(int verbose_level)
 
 
 	if (f_v) {
-		cout << "packing_was::init_spreads before P->Spread_table_with_selection->create_action_on_spreads" << endl;
+		cout << "packing_was::init_spreads before "
+				"P->Spread_table_with_selection->create_action_on_spreads" << endl;
 	}
 	P->Spread_table_with_selection->create_action_on_spreads(verbose_level);
 	if (f_v) {
-		cout << "packing_was::init_spreads after P->Spread_table_with_selection->create_action_on_spreads" << endl;
+		cout << "packing_was::init_spreads after "
+				"P->Spread_table_with_selection->create_action_on_spreads" << endl;
 	}
 
 	if (f_v) {
@@ -408,15 +412,17 @@ void packing_was::compute_H_orbits_on_lines(int verbose_level)
 
 	if (Descr->f_output_path) {
 		prefix_line_orbits.assign(Descr->output_path);
-		prefix_line_orbits.append(H_LG->label);
-		prefix_line_orbits.append("_line_orbits");
-		//sprintf(prefix_line_orbits, "%s%s_line_orbits", Descr->output_path, H_LG->label.c_str());
 	}
 	else {
-		prefix_line_orbits.assign(H_LG->label);
-		prefix_line_orbits.append("_line_orbits");
-		//sprintf(prefix_line_orbits, "%s_line_orbits", H_LG->label.c_str());
+		prefix_line_orbits.assign("");
 	}
+	prefix_line_orbits.append(H_LG->label);
+	if (Descr->f_problem_label) {
+		prefix_line_orbits.append(Descr->problem_label);
+	}
+	prefix_line_orbits.append("_line_orbits");
+
+
 	Line_orbits_under_H = NEW_OBJECT(orbits_on_something);
 
 	Line_orbits_under_H->init(P->T->A2, H_gens, TRUE /*f_load_save*/,
@@ -445,8 +451,10 @@ void packing_was::compute_spread_types_wrt_H(int verbose_level)
 			P->Spread_table_with_selection->Spread_tables->spread_table,
 			H_goi,
 			verbose_level);
-	cout << "The spread types are:" << endl;
-	Spread_type->report(cout);
+	if (FALSE) {
+		cout << "The spread types are:" << endl;
+		Spread_type->report(cout);
+	}
 
 	if (f_v) {
 		cout << "packing_was::compute_spread_types_wrt_H done" << endl;
@@ -469,15 +477,17 @@ void packing_was::compute_H_orbits_on_spreads(int verbose_level)
 
 	if (Descr->f_output_path) {
 		prefix_spread_orbits.assign(Descr->output_path);
-		prefix_spread_orbits.append(H_LG->label);
-		prefix_spread_orbits.append("_spread_orbits");
-		//sprintf(prefix_spread_orbits, "%s%s_spread_orbits", Descr->output_path, H_LG->label.c_str());
 	}
 	else {
-		prefix_spread_orbits.assign(H_LG->label);
-		prefix_spread_orbits.append("_spread_orbits");
-		//sprintf(prefix_spread_orbits, "%s_spread_orbits", H_LG->label.c_str());
+		prefix_spread_orbits.assign("");
 	}
+	prefix_spread_orbits.append(H_LG->label);
+	if (Descr->f_problem_label) {
+		prefix_spread_orbits.append(Descr->problem_label);
+	}
+	prefix_spread_orbits.append("_spread_orbits");
+
+
 	Spread_orbits_under_H->init(P->Spread_table_with_selection->A_on_spreads,
 			H_gens, TRUE /*f_load_save*/,
 			prefix_spread_orbits,
@@ -491,7 +501,8 @@ void packing_was::compute_H_orbits_on_spreads(int verbose_level)
 
 
 	A_on_spread_orbits = NEW_OBJECT(action);
-	A_on_spread_orbits->induced_action_on_orbits(P->Spread_table_with_selection->A_on_spreads,
+	A_on_spread_orbits->induced_action_on_orbits(
+			P->Spread_table_with_selection->A_on_spreads,
 			Spread_orbits_under_H->Sch /* H_orbits_on_spreads*/,
 			TRUE /*f_play_it_safe*/, 0 /* verbose_level */);
 
@@ -521,18 +532,24 @@ void packing_was::test_orbits_on_spreads(int verbose_level)
 
 	if (Descr->f_output_path) {
 		fname_good_orbits.assign(Descr->output_path);
-		fname_good_orbits.append(H_LG->label);
-		fname_good_orbits.append("_good_orbits");
-		//sprintf(fname_good_orbits, "%s%s_good_orbits", Descr->output_path, H_LG->label.c_str());
 	}
 	else {
-		fname_good_orbits.assign(H_LG->label);
-		fname_good_orbits.append("_good_orbits");
-		//sprintf(fname_good_orbits, "%s_good_orbits", H_LG->label.c_str());
+		fname_good_orbits.assign("");
 	}
+	fname_good_orbits.append(H_LG->label);
+	if (Descr->f_problem_label) {
+		fname_good_orbits.append(Descr->problem_label);
+	}
+	fname_good_orbits.append("_good_orbits");
+
+
 
 	if (Fio.file_size(fname_good_orbits.c_str()) > 0) {
 
+		if (f_v) {
+			cout << "packing_was::test_orbits_on_spreads file "
+				<< fname_good_orbits << " exists, reading it" << endl;
+		}
 		int *M;
 		int m, n, i;
 
@@ -549,6 +566,14 @@ void packing_was::test_orbits_on_spreads(int verbose_level)
 
 	}
 	else {
+
+
+		if (f_v) {
+			cout << "packing_was::test_orbits_on_spreads file "
+				<< fname_good_orbits
+				<< " does not exist, computing good orbits" << endl;
+		}
+
 		int orbit_idx;
 
 		nb_good_orbits = 0;
@@ -648,10 +673,18 @@ void packing_was::reduce_spreads(int verbose_level)
 
 	Spread_tables_reduced = NEW_OBJECT(spread_tables);
 
+	if (f_v) {
+		cout << "packing_was::reduce_spreads before "
+				"Spread_tables_reduced->init_reduced" << endl;
+	}
 	Spread_tables_reduced->init_reduced(
 			nb_good_spreads, good_spreads,
 			P->Spread_table_with_selection->Spread_tables,
-			verbose_level);
+			verbose_level - 2);
+	if (f_v) {
+		cout << "packing_was::reduce_spreads after "
+				"Spread_tables_reduced->init_reduced" << endl;
+	}
 
 	if (f_v) {
 		cout << "packing_was::reduce_spreads done" << endl;
@@ -675,9 +708,11 @@ void packing_was::compute_reduced_spread_types_wrt_H(int verbose_level)
 			P->spread_size,
 			Spread_tables_reduced->spread_table,
 			H_goi,
-			verbose_level);
-	cout << "The reduced spread types are:" << endl;
-	Spread_type_reduced->report(cout);
+			verbose_level - 2);
+	if (FALSE) {
+		cout << "The reduced spread types are:" << endl;
+		Spread_type_reduced->report(cout);
+	}
 
 	if (f_v) {
 		cout << "packing_was::compute_reduced_spread_types_wrt_H done" << endl;
@@ -713,15 +748,19 @@ void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
 
 	if (Descr->f_output_path) {
 		prefix_reduced_spread_orbits.assign(Descr->output_path);
-		prefix_reduced_spread_orbits.append(H_LG->label);
-		prefix_reduced_spread_orbits.append("_reduced_spread_orbits");
-		//sprintf(prefix_reduced_spread_orbits, "%s%s_reduced_spread_orbits", Descr->output_path, H_LG->label.c_str());
 	}
 	else {
-		prefix_reduced_spread_orbits.assign(H_LG->label);
-		prefix_reduced_spread_orbits.append("_reduced_spread_orbits");
-		//sprintf(prefix_reduced_spread_orbits, "%s_reduced_spread_orbits", H_LG->label.c_str());
+		prefix_reduced_spread_orbits.assign("");
 	}
+
+	prefix_reduced_spread_orbits.append(H_LG->label);
+	if (Descr->f_problem_label) {
+		prefix_reduced_spread_orbits.append(Descr->problem_label);
+	}
+	prefix_reduced_spread_orbits.append("_reduced_spread_orbits");
+
+
+
 	reduced_spread_orbits_under_H->init(A_on_reduced_spreads,
 			H_gens, TRUE /*f_load_save*/,
 			prefix_reduced_spread_orbits,
@@ -779,7 +818,7 @@ void packing_was::create_graph_and_save_to_file(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "packing_was::create_graph_and_save_to_file" << endl;
+		cout << "packing_was::create_graph_and_save_to_file orbit_length = " << orbit_length << endl;
 	}
 
 	colored_graph *CG;
@@ -798,7 +837,7 @@ void packing_was::create_graph_and_save_to_file(
 		FALSE /* f_has_colors */, 1 /* nb_colors */, NULL /* color_table */,
 		packing_was_set_of_reduced_spreads_adjacency_test_function,
 		this /* void *test_function_data */,
-		verbose_level);
+		verbose_level - 3);
 
 	if (f_v) {
 		cout << "packing_was::create_graph_and_save_to_file after "
@@ -841,7 +880,7 @@ void packing_was::compute_orbit_invariant_on_classified_orbits(int verbose_level
 			Orbit_invariant,
 			packing_was_evaluate_orbit_invariant_function,
 			this /* evaluate_data */,
-			verbose_level);
+			verbose_level - 3);
 	if (f_v) {
 		cout << "packing_was::compute_orbit_invariant_on_classified_orbits "
 				"after reduced_spread_orbits_under_H->compute_orbit_invariant_after_classification" << endl;
@@ -1068,7 +1107,8 @@ void packing_was::report(int verbose_level)
 // #############################################################################
 
 
-int packing_was_set_of_reduced_spreads_adjacency_test_function(long int *set1, int len1,
+int packing_was_set_of_reduced_spreads_adjacency_test_function(
+		long int *set1, int len1,
 		long int *set2, int len2, void *data)
 {
 	packing_was *P = (packing_was *) data;

@@ -40,7 +40,7 @@ void finite_field::null()
 	v1 = NULL;
 	v2 = NULL;
 	v3 = NULL;
-	override_poly = NULL;
+	//override_poly = NULL;
 	symbol_for_print = NULL;
 	f_is_prime_field = FALSE;
 	f_has_quadratic_subfield = FALSE;
@@ -134,7 +134,7 @@ void finite_field::init(int q)
 void finite_field::init(int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	const char *poly;
+	string poly;
 	number_theory_domain NT;
 
 	if (f_v) {
@@ -149,12 +149,13 @@ void finite_field::init(int q, int verbose_level)
 		f_is_prime_field = FALSE;
 		algebra_global Algebra;
 
-		poly = Algebra.get_primitive_polynomial(p, e, verbose_level);
+		poly.assign(Algebra.get_primitive_polynomial(p, e, verbose_level));
 		init_override_polynomial(q, poly, verbose_level);
 	}
 	else {
 		f_is_prime_field = TRUE;
-		init_override_polynomial(q, "", verbose_level);
+		poly.assign("");
+		init_override_polynomial(q, poly, verbose_level);
 	}
 	if (f_v) {
 		cout << "finite_field::init done" << endl;
@@ -198,17 +199,19 @@ void finite_field::init_symbol_for_print(const char *symbol)
 }
 
 void finite_field::init_override_polynomial(int q,
-		const char *poly, int verbose_level)
+		std::string &poly, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, l;
 	number_theory_domain NT;
+	string my_poly;
 
 	if (f_v) {
 		cout << "finite_field::init_override_polynomial" << endl;
 	}
-	override_poly = poly;
+	override_poly.assign(poly);
+
 	finite_field::q = q;
 	NT.factor_prime_power(q, p, e);
 	//init_symbol_for_print("\\alpha");
@@ -218,18 +221,19 @@ void finite_field::init_override_polynomial(int q,
 		f_is_prime_field = FALSE;
 		algebra_global Algebra;
 
-		if (poly == NULL || (poly && strlen(poly) == 0)) {
-			poly = Algebra.get_primitive_polynomial(p, e, verbose_level);
+		if (poly.length() == 0) {
+			my_poly.assign(Algebra.get_primitive_polynomial(p, e, verbose_level));
 		}
 		else {
+			my_poly.assign(poly);
 			if (f_vv) {
 				cout << "finite_field::init_override_polynomial, "
-					"using polynomial " << poly << endl;
+					"using polynomial " << my_poly << endl;
 			}
 		}
 		if (f_v) {
 			cout << "finite_field::init_override_polynomial "
-					"using poly " << poly << endl;
+					"using poly " << my_poly << endl;
 		}
 	}
 	else {
@@ -240,27 +244,17 @@ void finite_field::init_override_polynomial(int q,
 				"GF(" << q << ") = GF(" << p << "^" << e << ")";
 		if (e > 1) {
 			cout << ", polynomial = ";
-			print_minimum_polynomial(p, poly);
-			cout << " = " << poly << endl;
+			print_minimum_polynomial(p, my_poly.c_str());
+			cout << " = " << my_poly << endl;
 		}
 		else {
 			cout << endl;
 		}
 	}
 	
-	if (poly) {
-		l = strlen(poly);
-	}
-	else {
-		l = 0;
-	}
+	l = my_poly.length();
 	polynomial = NEW_char(l + 1);
-	if (poly) {
-		strcpy(polynomial, poly);
-	}
-	else {
-		polynomial[0] = 0;
-	}
+	strcpy(polynomial, my_poly.c_str());
 	
 	finite_field::q = q;
 	log10_of_q = NT.int_log10(q);
@@ -343,7 +337,7 @@ void finite_field::init_override_polynomial(int q,
 				<< q << " initialized" << endl;
 		if (f_vv && f_has_table) {
 			if (e > 1) {
-				print_tables_extension_field(poly);
+				print_tables_extension_field(my_poly.c_str());
 			}
 			else {
 				print_tables();

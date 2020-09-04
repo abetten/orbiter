@@ -33,7 +33,7 @@ projective_space_job_description::projective_space_job_description()
 	f_n = FALSE;
 	n = 0;
 	f_poly = FALSE;
-	poly = NULL;
+	//poly = NULL;
 
 	f_embed = FALSE;
 		// follow up option for f_print:
@@ -44,7 +44,7 @@ projective_space_job_description::projective_space_job_description()
 		f_Q = FALSE;
 		Q = 0;
 		f_poly_Q = FALSE;
-		poly_Q = NULL;
+		//poly_Q = NULL;
 
 
 	f_print = FALSE;
@@ -191,12 +191,12 @@ int projective_space_job_description::read_arguments(
 		}
 		else if (strcmp(argv[i], "-poly") == 0) {
 			f_poly = TRUE;
-			poly = argv[++i];
+			poly.assign(argv[++i]);
 			cout << "projective_space_job_description::read_arguments -poly " << poly << endl;
 		}
 		else if (strcmp(argv[i], "-poly_Q") == 0) {
 			f_poly_Q = TRUE;
-			poly_Q = argv[++i];
+			poly_Q.assign(argv[++i]);
 			cout << "projective_space_job_description::read_arguments -poly_Q " << poly_Q << endl;
 		}
 		else if (strcmp(argv[i], "-input") == 0) {

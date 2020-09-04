@@ -20,10 +20,9 @@ namespace foundations {
 
 void algebra_global::cheat_sheet_GF(int q,
 		int f_override_polynomial,
-		char *my_override_polynomial,
+		std::string &override_polynomial,
 		int verbose_level)
 {
-	const char *override_poly;
 	char fname[1000];
 	char title[1000];
 	char author[1000];
@@ -32,12 +31,6 @@ void algebra_global::cheat_sheet_GF(int q,
 	snprintf(title, 1000, "Cheat Sheet GF($%d$)", q);
 	author[0] = 0;
 	author[0] = 0;
-	if (f_override_polynomial) {
-		override_poly = my_override_polynomial;
-	}
-	else {
-		override_poly = NULL;
-	}
 	finite_field F;
 
 	{
@@ -45,7 +38,12 @@ void algebra_global::cheat_sheet_GF(int q,
 	latex_interface L;
 
 	//F.init(q), verbose_level - 2);
-	F.init_override_polynomial(q, override_poly, verbose_level);
+	if (f_override_polynomial) {
+		F.init_override_polynomial(q, override_polynomial, verbose_level);
+	}
+	else {
+		F.init(q, verbose_level);
+	}
 	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
 		title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
 			TRUE /* f_12pt */,
@@ -174,7 +172,7 @@ void algebra_global::search_for_primitive_polynomials(
 
 
 void algebra_global::factor_cyclotomic(int n, int q, int d,
-	int *coeffs, int f_poly, char *poly, int verbose_level)
+	int *coeffs, int f_poly, std::string &poly, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);

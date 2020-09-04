@@ -235,7 +235,7 @@ void tally_vector_data::print()
 	}
 }
 
-void tally_vector_data::save_classes_individually(const char *fname)
+void tally_vector_data::save_classes_individually(std::string &fname)
 {
 	//uint32_t h;
 	int i, j;
@@ -243,20 +243,19 @@ void tally_vector_data::save_classes_individually(const char *fname)
 
 	for (i = 0; i < nb_types; i++) {
 
-		char fname2[10000];
+		string fname2;
 		char str[10000];
 
-		strcpy(fname2, fname);
-		str[0] = 0;
+		fname2.assign(fname);
 		for (j = 0; j < data_set_sz; j++) {
-			sprintf(str + strlen(str), "%d", Reps[i * data_set_sz + j]);
+			sprintf(str, "%d", Reps[i * data_set_sz + j]);
+			fname2.append(str);
 		}
-		strcat(fname2, str);
-		strcat(fname2, ".csv");
+		fname2.append(".csv");
 
 		//h = int_vec_hash(Reps + i * data_set_sz, data_set_sz);
 
-		Fio.int_vec_write_csv(sorting_perm_inv + type_first[i], Frequency[i], fname2, "case");
+		Fio.int_vec_write_csv(sorting_perm_inv + type_first[i], Frequency[i], fname2.c_str(), "case");
 		cout << "Written file " << fname2 << " of size " << Fio.file_size(fname2) << endl;
 	}
 }

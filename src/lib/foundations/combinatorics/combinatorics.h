@@ -110,11 +110,11 @@ public:
 	int f_n;
 	int n;
 	int f_poly;
-	const char *poly;
+	std::string poly;
 	int f_Q;
 	int Q;
 	int f_poly_Q;
-	const char *poly_Q;
+	std::string poly_Q;
 
 	int f_subiaco_oval;
 	int f_short;

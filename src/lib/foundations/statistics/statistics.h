@@ -88,6 +88,7 @@ public:
 			long int *&Pts, int &nb_pts, int value, int verbose_level);
 	set_of_sets *get_set_partition_and_types(int *&types, 
 		int &nb_types, int verbose_level);
+	void save_classes_individually(std::string &fname);
 };
 
 
@@ -142,7 +143,7 @@ public:
 	int hash_and_find(int *data,
 			int &idx, uint32_t &h, int verbose_level);
 	void print();
-	void save_classes_individually(const char *fname);
+	void save_classes_individually(std::string &fname);
 };
 
 

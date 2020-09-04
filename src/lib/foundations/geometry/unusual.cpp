@@ -119,19 +119,21 @@ unusual_model::~unusual_model()
 }
 
 void unusual_model::setup_sum_of_squares(int q,
-	const char *poly_q, const char *poly_Q, int verbose_level)
+		std::string &poly_q, std::string &poly_Q,
+		int verbose_level)
 {
 	setup2(q, poly_q, poly_Q, TRUE, verbose_level);
 }
 
 void unusual_model::setup(int q,
-	const char *poly_q, const char *poly_Q, int verbose_level)
+		std::string &poly_q, std::string &poly_Q,
+		int verbose_level)
 {
 	setup2(q, poly_q, poly_Q, FALSE, verbose_level);
 }
 
 void unusual_model::setup2(int q,
-	const char *poly_q, const char *poly_Q,
+	std::string &poly_q, std::string &poly_Q,
 	int f_sum_of_squares, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

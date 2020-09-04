@@ -499,7 +499,7 @@ void interface_algebra::perform_group_theoretic_activity(
 	}
 }
 
-void interface_algebra::do_cheat_sheet_GF(int q, int f_poly, const char *poly, int verbose_level)
+void interface_algebra::do_cheat_sheet_GF(int q, int f_poly, std::string &poly, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

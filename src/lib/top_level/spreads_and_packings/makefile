@@ -10,6 +10,7 @@ MODULES = \
 	packing_classify.o \
 	packing_classify2.o \
 	packing_invariants.o \
+	packing_long_orbits_description.o \
 	packing_long_orbits.o \
 	packing_was_description.o \
 	packing_was_fixpoints.o \

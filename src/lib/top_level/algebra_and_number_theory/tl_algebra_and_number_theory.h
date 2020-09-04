@@ -33,7 +33,7 @@ public:
 	void do_identify_all(int q, int d,
 			int f_no_eigenvalue_one, int verbose_level);
 	void do_random(int q, int d, int f_no_eigenvalue_one, int verbose_level);
-	void group_table(int q, int d, int f_poly, const char *poly,
+	void group_table(int q, int d, int f_poly, std::string &poly,
 			int f_no_eigenvalue_one, int verbose_level);
 	void centralizer_brute_force(int q, int d,
 			int elt_idx, int verbose_level);

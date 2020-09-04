@@ -1966,6 +1966,29 @@ void chop_off_extension(char *p)
 	}
 }
 
+void chop_off_extension(std::string &p)
+{
+	int l;
+	int i;
+	string q;
+
+	l = p.length();
+	for (i = l - 1; i >= 0; i--) {
+		if (p[i] == '/') {
+			q = p.substr(0, i);
+			break;
+		}
+		if (p[i] == '.') {
+			q = p.substr(0, i);
+			break;
+		}
+	}
+	if (i == -1) {
+		q = p;
+	}
+	p = q;
+}
+
 void chop_off_extension_if_present(char *p, const char *ext)
 {
 	int l1 = strlen(p);

@@ -777,7 +777,7 @@ public:
 	void freeself();
 	void init(//int argc, const char **argv,
 		int s, int n, int q,
-		const char *poly_q, const char *poly_Q,
+		std::string &poly_q, std::string &poly_Q,
 		int depth, int f_identify, int verbose_level);
 	void do_classify(int verbose_level);
 	int test_set(int len, long int *S, int verbose_level);

@@ -192,7 +192,7 @@ void linear_set_classify::freeself()
 }
 
 void linear_set_classify::init(
-	int s, int n, int q, const char *poly_q, const char *poly_Q,
+	int s, int n, int q, std::string &poly_q, std::string &poly_Q,
 	int depth, int f_identify, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

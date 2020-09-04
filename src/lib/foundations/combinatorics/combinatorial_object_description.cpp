@@ -28,11 +28,11 @@ combinatorial_object_description::combinatorial_object_description()
 	f_n = FALSE;
 	n = 0;
 	f_poly = FALSE;
-	poly = NULL;
+	//poly = NULL;
 	f_Q = FALSE;
 	Q = 0;
 	f_poly_Q = FALSE;
-	poly_Q = NULL;
+	//poly_Q = NULL;
 
 	f_subiaco_oval = FALSE;
 	f_short = FALSE;
@@ -316,12 +316,12 @@ int combinatorial_object_description::read_arguments(int argc, const char **argv
 		}
 		else if (strcmp(argv[i], "-poly") == 0) {
 			f_poly = TRUE;
-			poly = argv[++i];
+			poly.assign(argv[++i]);
 			cout << "-poly " << poly << endl;
 		}
 		else if (strcmp(argv[i], "-poly_Q") == 0) {
 			f_poly_Q = TRUE;
-			poly_Q = argv[++i];
+			poly_Q.assign(argv[++i]);
 			cout << "-poly_Q " << poly_Q << endl;
 		}
 		else if (strcmp(argv[i], "-projective_variety") == 0) {

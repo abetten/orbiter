@@ -25,7 +25,7 @@ linear_group_description::linear_group_description()
 	n = 0;
 	input_q = 0;
 	f_override_polynomial = FALSE;
-	override_polynomial = NULL;
+	//override_polynomial = NULL;
 	F = NULL;
 	f_semilinear = FALSE;
 	f_special = FALSE;
@@ -269,7 +269,7 @@ int linear_group_description::read_arguments(
 		}
 		else if (strcmp(argv[i], "-override_polynomial") == 0) {
 			f_override_polynomial = TRUE;
-			override_polynomial = argv[++i];
+			override_polynomial.assign(argv[++i]);
 			cout << "-override_polynomial" << override_polynomial << endl;
 		}
 		else if (strcmp(argv[i], "-GL_d_q_wr_Sym_n") == 0) {

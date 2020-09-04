@@ -631,11 +631,11 @@ public:
 	int PG_element_modified_is_in_subspace(int n, int m, int *v);
 	void test_PG(int n, int q);
 	void create_Fisher_BLT_set(long int *Fisher_BLT, int q,
-		const char *poly_q, const char *poly_Q, int verbose_level);
+			std::string &poly_q, std::string &poly_Q, int verbose_level);
 	void create_Linear_BLT_set(long int *BLT, int q,
-		const char *poly_q, const char *poly_Q, int verbose_level);
+			std::string &poly_q, std::string &poly_Q, int verbose_level);
 	void create_Mondello_BLT_set(long int *BLT, int q,
-		const char *poly_q, const char *poly_Q, int verbose_level);
+			std::string &poly_q, std::string &poly_Q, int verbose_level);
 	void print_quadratic_form_list_coded(int form_nb_terms,
 		int *form_i, int *form_j, int *form_coeff);
 	void make_Gram_matrix_from_list_coded_quadratic_form(
@@ -645,7 +645,7 @@ public:
 	void add_term(int n, finite_field &F, int &nb_terms,
 		int *form_i, int *form_j, int *form_coeff, int *Gram,
 		int i, int j, int coeff);
-	void determine_conic(int q, const char *override_poly, long int *input_pts,
+	void determine_conic(int q, std::string &override_poly, long int *input_pts,
 		int nb_pts, int verbose_level);
 	int test_if_arc(finite_field *Fq, int *pt_coords, int *set,
 		int set_sz, int k, int verbose_level);
@@ -2525,11 +2525,14 @@ public:
 	
 	unusual_model();
 	~unusual_model();
-	void setup_sum_of_squares(int q, const char *poly_q, 
-		const char *poly_Q, int verbose_level);
-	void setup(int q, const char *poly_q, const char *poly_Q, 
+	void setup_sum_of_squares(int q,
+			std::string &poly_q, std::string &poly_Q,
+			int verbose_level);
+	void setup(int q,
+			std::string &poly_q, std::string &poly_Q,
 		int verbose_level);
-	void setup2(int q, const char *poly_q, const char *poly_Q, 
+	void setup2(int q,
+			std::string &poly_q, std::string &poly_Q,
 		int f_sum_of_squares, int verbose_level);
 	void convert_to_ranks(int n, int *unusual_coordinates, 
 		long int *ranks, int verbose_level);
