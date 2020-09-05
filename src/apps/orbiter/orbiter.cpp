@@ -30,6 +30,8 @@ int main(int argc, const char **argv)
 
 	Orbiter_session = &Session;
 
+	cout << "Welcome to Orbiter!  Your build number is " << build_number << "." << endl;
+
 	i = Session.read_arguments(argc, argv, 1);
 
 
@@ -39,9 +41,6 @@ int main(int argc, const char **argv)
 
 	int f_v = (Session.verbose_level > 1);
 
-	if (f_v) {
-		cout << "Welcome to Orbiter!  Your build number is " << build_number << endl;
-	}
 
 	if (Session.f_list_arguments) {
 		int j;
@@ -142,6 +141,8 @@ int main(int argc, const char **argv)
 		}
 	}
 
+	cout << "Orbiter session finished." << endl;
+	cout << "User time: ";
 	the_end(Session.t0);
 
 }
