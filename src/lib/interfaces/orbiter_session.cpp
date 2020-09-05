@@ -28,6 +28,8 @@ orbiter_session::orbiter_session()
 
 	t0 = 0;
 
+	f_list_arguments = FALSE;
+
 	f_seed = FALSE;
 	the_seed = TRUE;
 
@@ -39,6 +41,14 @@ orbiter_session::orbiter_session()
 
 	f_orbiter_path = FALSE;
 	//orbiter_path;
+
+	f_fork = FALSE;
+	fork_argument_idx = 0;
+	// fork_variable
+	// fork_logfile_mask
+	fork_from = 0;
+	fork_to = 0;
+	fork_step = 0;
 }
 
 
@@ -54,6 +64,9 @@ void orbiter_session::print_help(int argc,
 	if (strcmp(argv[i], "-v") == 0) {
 		cout << "-v <int : verbosity>" << endl;
 	}
+	else if (strcmp(argv[i], "-list_arguments") == 0) {
+		cout << "-list_arguments" << endl;
+	}
 	else if (strcmp(argv[i], "-seed") == 0) {
 		cout << "-seed <int : seed>" << endl;
 	}
@@ -66,12 +79,18 @@ void orbiter_session::print_help(int argc,
 	else if (strcmp(argv[i], "-orbiter_path") == 0) {
 		cout << "-orbiter_path <string : path>" << endl;
 	}
+	else if (strcmp(argv[i], "-fork") == 0) {
+		cout << "-fork <string : variable> <string : logfile_mask> <int : from> <int : to> <int : step>" << endl;
+	}
 }
 
 int orbiter_session::recognize_keyword(int argc,
 		const char **argv, int i, int verbose_level)
 {
 	if (strcmp(argv[i], "-v") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-list_arguments") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-seed") == 0) {
@@ -84,6 +103,9 @@ int orbiter_session::recognize_keyword(int argc,
 		return true;
 	}
 	else if (strcmp(argv[i], "-orbiter_path") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-fork") == 0) {
 		return true;
 	}
 	return false;
@@ -105,6 +127,10 @@ int orbiter_session::read_arguments(int argc,
 			verbose_level = atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
 		}
+		else if (strcmp(argv[i], "-list_arguments") == 0) {
+			f_list_arguments = TRUE;
+			cout << "-list_arguments " << endl;
+		}
 		else if (strcmp(argv[i], "-seed") == 0) {
 			f_seed = TRUE;
 			the_seed = atoi(argv[++i]);
@@ -125,10 +151,21 @@ int orbiter_session::read_arguments(int argc,
 			orbiter_path.assign(argv[++i]);
 			cout << "-orbiter_path " << orbiter_path << endl;
 		}
+		else if (strcmp(argv[i], "-fork") == 0) {
+			f_fork = TRUE;
+			fork_argument_idx = i;
+			fork_variable.assign(argv[++i]);
+			fork_logfile_mask.assign(argv[++i]);
+			fork_from = atoi(argv[++i]);
+			fork_to = atoi(argv[++i]);
+			fork_step = atoi(argv[++i]);
+			cout << "-fork " << fork_variable << " " << fork_logfile_mask << " " << fork_from << " " << fork_to << " " << fork_step << endl;
+		}
 		else {
 			break;
 		}
 	}
+
 	//cout << "orbiter_session::read_arguments done" << endl;
 	return i;
 }

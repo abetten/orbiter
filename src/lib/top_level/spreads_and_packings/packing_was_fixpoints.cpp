@@ -121,8 +121,7 @@ void packing_was_fixpoints::init(packing_was *PW, int verbose_level)
 					cout << "packing_was_fixpoints::init_spreads "
 							"before compute_cliques_on_fixpoint_graph" << endl;
 				}
-				compute_cliques_on_fixpoint_graph(
-						PW->Descr->clique_size_on_fixpoint_graph, verbose_level);
+				compute_cliques_on_fixpoint_graph(verbose_level);
 				if (f_v) {
 					cout << "packing_was_fixpoints::init_spreads "
 							"after compute_cliques_on_fixpoint_graph" << endl;
@@ -260,8 +259,7 @@ void packing_was_fixpoints::action_on_fixpoints(int verbose_level)
 	}
 }
 
-void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
-		int clique_size, int verbose_level)
+void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(int verbose_level)
 // initializes the orbit transversal Fixp_cliques
 // initializes Cliques[nb_cliques * clique_size]
 // (either by computing it or reading it from file)
@@ -269,13 +267,15 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 	int f_v = (verbose_level >= 1);
 	string my_prefix;
 	file_io Fio;
+	int clique_size;
 
 	if (f_v) {
 		cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph "
-				"clique_size=" << clique_size << endl;
+				"clique_size=" << PW->Descr->clique_size_on_fixpoint_graph << endl;
 	}
 
-	PW->Descr->clique_size = clique_size;
+	clique_size = PW->Descr->clique_size_on_fixpoint_graph;
+	//PW->Descr->clique_size = clique_size;
 
 
 	fixpoint_graph = NEW_OBJECT(colored_graph);
@@ -292,6 +292,10 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 		}
 		Fio.lint_matrix_read_csv(fname_fixp_graph_cliques.c_str(),
 				Cliques, nb_cliques, clique_size, verbose_level);
+		if (nb_cliques == 0) {
+			cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph nb_cliques == 0" << endl;
+			exit(1);
+		}
 	}
 	else {
 		if (f_v) {
@@ -361,7 +365,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 	for (i = 0; i < nb_cliques; i++) {
 		for (j = 0; j < clique_size; j++) {
 			a = Cliques[i * clique_size + j];
-			b = fixpoint_to_reduced_spread(a);
+			b = fixpoint_to_reduced_spread(a, 0 /* verbose_level */);
 			Partial_packings[i * clique_size + j] = b;
 		}
 	}
@@ -385,7 +389,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 
 
 	if (PW->Descr->f_fixp_clique_types_save_individually) {
-		C.save_classes_individually(my_prefix);
+		C.save_classes_individually(my_prefix, verbose_level);
 	}
 
 	if (f_v) {
@@ -689,7 +693,7 @@ void packing_was_fixpoints::process_all_long_orbits(
 
 long int *packing_was_fixpoints::clique_by_index(int idx)
 {
-	return Cliques + idx * PW->Descr->clique_size;
+	return Cliques + idx * PW->Descr->clique_size_on_fixpoint_graph;
 }
 
 #if 0
@@ -839,7 +843,7 @@ void packing_was_fixpoints::report2(ostream &ost, packing_long_orbits *L, int ve
 	if (fixpoints_idx >= 0) {
 		ost << "\\section{Orbits of cliques on the fixpoint graph under $N$}" << endl;
 		ost << "The Group $N$ has " << nb_cliques << " orbits on "
-				"cliques of size " << PW->Descr->clique_size << "\\\\" << endl;
+				"cliques of size " << PW->Descr->clique_size_on_fixpoint_graph << "\\\\" << endl;
 		Fixp_cliques->report_ago_distribution(ost);
 		ost << endl;
 
@@ -862,12 +866,16 @@ void packing_was_fixpoints::report2(ostream &ost, packing_long_orbits *L, int ve
 
 }
 
-long int packing_was_fixpoints::fixpoint_to_reduced_spread(int a)
+long int packing_was_fixpoints::fixpoint_to_reduced_spread(int a, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	long int b, c;
 	int len;
 	long int set[1];
 
+	if (f_v) {
+		cout << "packing_was_fixpoints::fixpoint_to_reduced_spread" << endl;
+	}
 	//a = fixpoint_clique[i];
 	b = PW->reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx][a];
 	PW->reduced_spread_orbits_under_H->Sch->get_orbit(b /* orbit_idx */, set, len,
@@ -877,8 +885,10 @@ long int packing_was_fixpoints::fixpoint_to_reduced_spread(int a)
 		exit(1);
 	}
 	c = set[0];
+	if (f_v) {
+		cout << "packing_was_fixpoints::fixpoint_to_reduced_spread done" << endl;
+	}
 	return c;
-
 }
 
 

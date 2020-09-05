@@ -235,12 +235,19 @@ void tally_vector_data::print()
 	}
 }
 
-void tally_vector_data::save_classes_individually(std::string &fname)
+void tally_vector_data::save_classes_individually(std::string &fname, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	//uint32_t h;
 	int i, j;
 	file_io Fio;
 
+	if (f_v) {
+		cout << "tally_vector_data::save_classes_individually fname = " << fname << endl;
+	}
+	if (f_v) {
+		cout << "tally_vector_data::save_classes_individually nb_types = " << nb_types << endl;
+	}
 	for (i = 0; i < nb_types; i++) {
 
 		string fname2;
@@ -255,8 +262,23 @@ void tally_vector_data::save_classes_individually(std::string &fname)
 
 		//h = int_vec_hash(Reps + i * data_set_sz, data_set_sz);
 
+		if (f_v) {
+			cout << "tally_vector_data::save_classes_individually saving file = " << fname2 << endl;
+		}
 		Fio.int_vec_write_csv(sorting_perm_inv + type_first[i], Frequency[i], fname2.c_str(), "case");
 		cout << "Written file " << fname2 << " of size " << Fio.file_size(fname2) << endl;
+	}
+
+	string fname2;
+
+	fname2.assign(fname);
+	fname2.append("_all_in_one.csv");
+	Fio.int_vec_write_csv(sorting_perm_inv, data_length, fname2.c_str(), "case");
+	cout << "Written file " << fname2 << " of size " << Fio.file_size(fname2) << endl;
+
+
+	if (f_v) {
+		cout << "tally_vector_data::save_classes_individually" << endl;
 	}
 }
 

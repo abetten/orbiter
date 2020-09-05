@@ -31,7 +31,7 @@ packing_was_description::packing_was_description()
 	f_problem_label = FALSE;
 	//problem_label;
 
-	f_type_of_fixed_spreads = FALSE;
+	//f_type_of_fixed_spreads = FALSE;
 	f_fixp_clique_types_save_individually = FALSE;
 	//f_label = FALSE;
 	//label = NULL;
@@ -54,7 +54,7 @@ packing_was_description::packing_was_description()
 	N_Descr = NULL;
 
 	f_report = FALSE;
-	clique_size = 0;
+	//clique_size = 0;
 }
 
 packing_was_description::~packing_was_description()
@@ -130,11 +130,13 @@ int packing_was_description::read_arguments(int argc, const char **argv,
 			cout << "-cliques_on_fixpoint_graph_control " << endl;
 		}
 
+#if 0
 		else if (strcmp(argv[i], "-type_of_fixed_spreads") == 0) {
 			f_type_of_fixed_spreads = TRUE;
 			clique_size = atoi(argv[++i]);
 			cout << "-type_of_fixed_spreads " << clique_size << endl;
 		}
+#endif
 
 		else if (strcmp(argv[i], "-fixp_clique_types_save_individually") == 0) {
 			f_fixp_clique_types_save_individually = TRUE;

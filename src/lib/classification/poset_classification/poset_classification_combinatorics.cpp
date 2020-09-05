@@ -598,7 +598,7 @@ void poset_classification::Mtk_via_Mtr_Mrk(int t, int r, int k,
 // $M_{tk} = {{k - t} \choose {k - r}} \cdot M_{t,r} \cdot M_{r,k}$.
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, h, a, b, c, s;
+	int i, j, h, a, b, c, s = 0;
 
 	if (f_v) {
 		cout << "poset_classification::Mtk_via_Mtr_Mrk t = " << t << ", r = "
@@ -639,6 +639,10 @@ void poset_classification::Mtk_via_Mtr_Mrk(int t, int r, int k,
 	else if (Poset->f_subspace_lattice) {
 		D.q_binomial(S, k - t, r - t, Poset->VS->F->q, 0/* verbose_level*/);
 		s = S.as_lint();
+	}
+	else {
+		cout << "poset_classification::Mtk_via_Mtr_Mrk neither subset lattice nor subspace lattice" << endl;
+		exit(1);
 	}
 	if (f_v) {
 		cout << "poset_classification::Mtk_via_Mtr_Mrk dividing by " << s << endl;
