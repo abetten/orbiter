@@ -669,6 +669,8 @@ public:
 
 	int t0;
 
+	int f_list_arguments;
+
 	int f_seed;
 	int the_seed;
 
@@ -681,6 +683,13 @@ public:
 	int f_orbiter_path;
 	std::string orbiter_path;
 
+	int f_fork;
+	int fork_argument_idx;
+	std::string fork_variable;
+	std::string fork_logfile_mask;
+	int fork_from;
+	int fork_to;
+	int fork_step;
 
 	interface_algebra Interface_algebra;
 	interface_cryptography Interface_cryptography;

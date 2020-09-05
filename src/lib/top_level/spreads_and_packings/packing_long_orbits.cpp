@@ -55,10 +55,6 @@ packing_long_orbits::~packing_long_orbits()
 }
 
 void packing_long_orbits::init(packing_was_fixpoints *PWF,
-		//int fixpoints_idx,
-		//int fixpoints_clique_case_number,
-		//int f_solution_path,
-		//std::string &solution_path,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -79,10 +75,8 @@ void packing_long_orbits::init(packing_was_fixpoints *PWF,
 		cout << "packing_long_orbits::init long_orbit_idx = " << long_orbit_idx << endl;
 	}
 
-	//packing_long_orbits::fixpoints_idx = fixpoints_idx;
-	//packing_long_orbits::fixpoints_clique_case_number = fixpoints_clique_case_number;
 
-	packing_long_orbits::fixpoint_clique_size = PWF->PW->Descr->clique_size;
+	packing_long_orbits::fixpoint_clique_size = PWF->PW->Descr->clique_size_on_fixpoint_graph;
 	if (f_v) {
 		cout << "packing_long_orbits::init fixpoint_clique_size = " << fixpoint_clique_size << endl;
 	}
@@ -91,13 +85,9 @@ void packing_long_orbits::init(packing_was_fixpoints *PWF,
 	fixpoint_clique = NEW_lint(fixpoint_clique_size);
 
 
-	//packing_long_orbits::long_orbit_length = PWF->PW->Descr->long_orbit_length;
-	//packing_long_orbits::f_solution_path = f_solution_path;
-	//packing_long_orbits::solution_path.assign(solution_path);
 
 	set = NEW_lint(Descr->orbit_length);
 
-	//long int *fixpoint_clique;
 
 	if (Descr->f_list_of_cases_from_file) {
 		list_of_cases_from_file(verbose_level);
@@ -160,9 +150,16 @@ void packing_long_orbits::list_of_cases_from_file(int verbose_level)
 
 			std::vector<std::vector<int> > Packings;
 
+			if (f_v) {
+				cout << "packing_long_orbits::list_of_cases_from_file before process_single_case" << endl;
+			}
 			process_single_case(
 					Packings,
 					verbose_level);
+			if (f_v) {
+				cout << "packing_long_orbits::list_of_cases_from_file after process_single_case" << endl;
+			}
+
 			Nb[idx] = Packings.size();
 			Packings_by_case.push_back(Packings);
 		}
@@ -332,7 +329,7 @@ void packing_long_orbits::init_fixpoint_clique_from_orbit_numbers(int verbose_le
 
 	for (i = 0; i < fixpoint_clique_size; i++) {
 		a = fixpoint_clique_orbit_numbers[i];
-		c = PWF->fixpoint_to_reduced_spread(a);
+		c = PWF->fixpoint_to_reduced_spread(a, verbose_level);
 #if 0
 		b = P->reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx][a];
 		P->reduced_spread_orbits_under_H->Sch->get_orbit(b /* orbit_idx */, set, len,

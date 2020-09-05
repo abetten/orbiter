@@ -368,7 +368,7 @@ public:
 	int f_problem_label;
 	std::string problem_label;
 
-	int f_type_of_fixed_spreads;
+	//int f_type_of_fixed_spreads;
 	int f_fixp_clique_types_save_individually;
 
 	int f_spread_tables_prefix;
@@ -390,7 +390,7 @@ public:
 
 	int f_report;
 
-	int clique_size;
+	//int clique_size;
 
 	packing_was_description();
 	~packing_was_description();
@@ -434,8 +434,7 @@ public:
 	void init(packing_was *PW, int verbose_level);
 	void create_graph_on_fixpoints(int verbose_level);
 	void action_on_fixpoints(int verbose_level);
-	void compute_cliques_on_fixpoint_graph(
-			int clique_size, int verbose_level);
+	void compute_cliques_on_fixpoint_graph(int verbose_level);
 	// initializes the orbit transversal Fixp_cliques
 	// initializes Cliques[nb_cliques * clique_size]
 	// (either by computing it or reading it from file)
@@ -464,7 +463,7 @@ public:
 			int verbose_level);
 	void report(packing_long_orbits *L, int verbose_level);
 	void report2(std::ostream &ost, packing_long_orbits *L, int verbose_level);
-	long int fixpoint_to_reduced_spread(int a);
+	long int fixpoint_to_reduced_spread(int a, int verbose_level);
 
 };
 
