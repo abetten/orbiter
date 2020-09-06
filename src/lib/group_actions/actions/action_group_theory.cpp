@@ -1028,8 +1028,8 @@ void action::conjugacy_classes_and_normalizers(sims *override_Sims,
 {
 	int f_v = (verbose_level >= 1);
 	string prefix;
-	string fname1;
-	string fname2;
+	string fname_magma;
+	string fname_output;
 	file_io Fio;
 
 
@@ -1038,22 +1038,13 @@ void action::conjugacy_classes_and_normalizers(sims *override_Sims,
 	}
 
 	prefix.assign(label);
-	fname1.assign(label);
-	fname1.append("_classes.magma");
-	fname2.assign(label);
-	fname2.append("_classes_out.txt");
+	fname_magma.assign(label);
+	fname_magma.append("_classes.magma");
+	fname_output.assign(label);
+	fname_output.append("_classes_out.txt");
 
 
-	if (Fio.file_size(fname2) > 0) {
-		if (f_v) {
-			cout << "action::conjugacy_classes_and_normalizers before read_conjugacy_classes_and_normalizers" << endl;
-		}
-		read_conjugacy_classes_and_normalizers(fname2, override_Sims, label_tex, verbose_level);
-		if (f_v) {
-			cout << "action::conjugacy_classes_and_normalizers after read_conjugacy_classes_and_normalizers" << endl;
-		}
-	}
-	else {
+	if (Fio.file_size(fname_output) == 0) {
 		if (f_v) {
 			cout << "action::conjugacy_classes_and_normalizers before "
 					"conjugacy_classes_and_normalizers_using_MAGMA" << endl;
@@ -1064,6 +1055,26 @@ void action::conjugacy_classes_and_normalizers(sims *override_Sims,
 			cout << "action::conjugacy_classes_and_normalizers after "
 					"conjugacy_classes_and_normalizers_using_MAGMA" << endl;
 		}
+	}
+
+
+	if (Fio.file_size(fname_output) > 0) {
+		if (f_v) {
+			cout << "action::conjugacy_classes_and_normalizers before read_conjugacy_classes_and_normalizers" << endl;
+		}
+		read_conjugacy_classes_and_normalizers(fname_output, override_Sims, label_tex, verbose_level);
+		if (f_v) {
+			cout << "action::conjugacy_classes_and_normalizers after read_conjugacy_classes_and_normalizers" << endl;
+		}
+	}
+	else {
+		magma_interface Magma;
+
+		cout << "please run magma on the file " << fname_magma << endl;
+		cout << "for instance, try" << endl;
+		cout << Magma.Orbiter_session->magma_path << "magma " << fname_magma << endl;
+		exit(1);
+
 	}
 
 	if (f_v) {
