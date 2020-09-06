@@ -217,6 +217,9 @@ void packing_long_orbits::save_packings_by_case(
 	fname_packings.assign(Descr->list_of_cases_from_file_fname);
 	replace_extension_with(fname_packings, "_packings.csv");
 
+	for (idx = 0; idx < Packings_by_case.size(); idx++) {
+		total += Packings_by_case[idx].size();
+	}
 
 	int *The_Packings;
 	int i, j, l, h, a, b;
@@ -581,16 +584,15 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 			}
 			if (iso_type[sol_idx * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + 0] == PWF->PW->P->size_of_packing) {
 				nb_uniform++;
-
-				// filter out the uniform Hall packings only:
-				vector<int> Packing;
-				for (i = 0; i < PWF->PW->P->size_of_packing; i++) {
-					a = packing[i];
-					Packing.push_back(a);
-				}
-
-				Packings.push_back(Packing);
 			}
+
+			vector<int> Packing;
+			for (i = 0; i < PWF->PW->P->size_of_packing; i++) {
+				a = packing[i];
+				Packing.push_back(a);
+			}
+
+			Packings.push_back(Packing);
 
 		}
 
