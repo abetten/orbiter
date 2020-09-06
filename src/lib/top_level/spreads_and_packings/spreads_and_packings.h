@@ -443,17 +443,6 @@ public:
 	// compute cliques on fixpoint graph using A_on_fixpoints
 	// orbit representatives will be stored in Cliques[nb_cliques * clique_size]
 	void process_long_orbits(int verbose_level);
-#if 0
-	void process_long_orbits_by_list_of_cases_from_file(
-			std::string &process_long_orbits_by_list_of_cases_from_file,
-			int f_solution_path,
-			std::string &solution_path,
-			int verbose_level);
-	void process_all_long_orbits(
-			int f_solution_path,
-			std::string &solution_path,
-			int verbose_level);
-#endif
 	long int *clique_by_index(int idx);
 	void process_long_orbits(
 			int clique_index,
