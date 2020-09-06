@@ -33,10 +33,10 @@ delandtsheer_doyen_description::delandtsheer_doyen_description()
 	q2 = 0;
 
 	f_group_label = FALSE;
-	group_label = NULL;
+	//group_label = NULL;
 
 	f_mask_label = FALSE;
-	mask_label = NULL;
+	//mask_label = NULL;
 
 	DELANDTSHEER_DOYEN_X = -1;
 	DELANDTSHEER_DOYEN_Y = -1;
@@ -63,8 +63,8 @@ delandtsheer_doyen_description::delandtsheer_doyen_description()
 
 	f_singletons = FALSE;
 	f_subgroup = FALSE;
-	subgroup_gens = NULL;
-	subgroup_order = NULL;
+	//subgroup_gens = NULL;
+	//subgroup_order = NULL;
 
 }
 
@@ -109,12 +109,12 @@ int delandtsheer_doyen_description::read_arguments(
 
 		if (strcmp(argv[i], "-group_label") == 0) {
 			f_group_label = TRUE;
-			group_label = argv[++i];
+			group_label.assign(argv[++i]);
 			cout << "-group_label " << group_label << endl;
 		}
 		else if (strcmp(argv[i], "-mask_label") == 0) {
 			f_mask_label = TRUE;
-			mask_label = argv[++i];
+			mask_label.assign(argv[++i]);
 			cout << "-mask_label " << mask_label << endl;
 		}
 		else if (strcmp(argv[i], "-depth") == 0) {
@@ -228,8 +228,8 @@ int delandtsheer_doyen_description::read_arguments(
 		}
 		else if (strcmp(argv[i], "-subgroup") == 0) {
 			f_subgroup = TRUE;
-			subgroup_gens = argv[++i];
-			subgroup_order = argv[++i];
+			subgroup_gens.assign(argv[++i]);
+			subgroup_order.assign(argv[++i]);
 			cout << "-subgroup " << subgroup_gens << " " << subgroup_order << endl;
 		}
 		else if (strcmp(argv[i], "-pair_search_control") == 0) {

@@ -59,7 +59,9 @@ void difference_set_in_heisenberg_group::init(int n, finite_field *F, int verbos
 		cout << endl;
 		}
 
-	sprintf(fname_base, "H_%d_%d", n, q);
+	char str[1000];
+	sprintf(str, "H_%d_%d", n, q);
+	fname_base.assign(str);
 	//magma_write_permutation_group(fname_base,
 	//H->group_order, Table, gens, nb_gens, verbose_level);
 
@@ -216,7 +218,10 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	Sch->print_orbit_lengths(cout);
 	Sch->print_orbit_length_distribution(cout);
 
-	sprintf(prefix, "N_U_2_3");
+	char str[1000];
+	sprintf(str, "N_U_2_3");
+	prefix.assign(str);
+
 	cout << "computing normalizer of U in G:" << endl;
 
 	strong_generators *gens_N;
@@ -224,7 +229,8 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	A->normalizer_using_MAGMA(prefix, Aut, U, gens_N, verbose_level);
 		// added gens_N, Oct 12, 2018
 
-	sprintf(fname_magma_out, "%snormalizer.txt", prefix);
+	fname_magma_out.assign(prefix);
+	fname_magma_out.append("normalizer.txt");
 
 
 	Magma.read_permutation_group(fname_magma_out,

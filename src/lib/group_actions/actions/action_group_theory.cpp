@@ -17,21 +17,23 @@ namespace group_actions {
 
 
 void action::normalizer_using_MAGMA(
-		const char *fname_magma_prefix,
+		std::string &fname_magma_prefix,
 		sims *G, sims *H, strong_generators *&gens_N,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname_magma[1000];
-	char fname_output[1000];
-	char cmd[1000];
+	string fname_magma;
+	string fname_output;
 	file_io Fio;
 
 	if (f_v) {
 		cout << "action::normalizer_using_MAGMA" << endl;
 		}
-	sprintf(fname_magma, "%s.magma", fname_magma_prefix);
-	sprintf(fname_output, "%s.txt", fname_magma_prefix);
+
+	fname_magma.assign(fname_magma_prefix);
+	fname_magma.append(".magma");
+	fname_output.assign(fname_magma_prefix);
+	fname_output.append(".txt");
 
 	int n;
 
@@ -49,129 +51,128 @@ void action::normalizer_using_MAGMA(
 		cout << "action::normalizer_using_MAGMA n = " << n << endl;
 		}
 	{
-	ofstream fp(fname_magma);
+		ofstream fp(fname_magma);
 
-	fp << "G := PermutationGroup< " << n << " | " << endl;
-	G_gen->print_generators_MAGMA(this, fp);
-	fp << ">;" << endl;
+		fp << "G := PermutationGroup< " << n << " | " << endl;
+		G_gen->print_generators_MAGMA(this, fp);
+		fp << ">;" << endl;
 
 
-	fp << "H := sub< G |" << endl;
-	H_gen->print_generators_MAGMA(this, fp);
-	fp << ">;" << endl;
+		fp << "H := sub< G |" << endl;
+		H_gen->print_generators_MAGMA(this, fp);
+		fp << ">;" << endl;
 
-	fp << "N := Normalizer(G, H);" << endl;
-	fp << "SetOutputFile(\"" << fname_output << "\");" << endl;
-	fp << "printf \"%o\", #N; printf \"\\n\";" << endl;
-	fp << "printf \"%o\", #Generators(N); printf \"\\n\";" << endl;
-	fp << "for h := 1 to #Generators(N) do for i := 1 to "
-			<< n << " do printf \"%o\", i^N.h; printf \" \"; "
-			"if i mod 25 eq 0 then printf \"\n\"; end if; "
-			"end for; printf \"\\n\"; end for;" << endl;
-	fp << "UnsetOutputFile();" << endl;
+		fp << "N := Normalizer(G, H);" << endl;
+		fp << "SetOutputFile(\"" << fname_output << "\");" << endl;
+		fp << "printf \"%o\", #N; printf \"\\n\";" << endl;
+		fp << "printf \"%o\", #Generators(N); printf \"\\n\";" << endl;
+		fp << "for h := 1 to #Generators(N) do for i := 1 to "
+				<< n << " do printf \"%o\", i^N.h; printf \" \"; "
+				"if i mod 25 eq 0 then printf \"\n\"; end if; "
+				"end for; printf \"\\n\"; end for;" << endl;
+		fp << "UnsetOutputFile();" << endl;
 	}
 
-	if (Fio.file_size(fname_output) > 0) {
+	if (Fio.file_size(fname_output) == 0) {
+
+		magma_interface Magma;
+
+		Magma.run_magma_file(fname_magma, verbose_level);
+		if (Fio.file_size(fname_output) == 0) {
+			cout << "please run magma on the file " << fname_magma << endl;
+			cout << "for instance, try" << endl;
+			cout << Magma.Orbiter_session->magma_path << "magma " << fname_magma << endl;
+			exit(1);
+		}
+	}
+
+	if (f_v) {
+		cout << "file " << fname_output << " exists, reading it" << endl;
+	}
+
+	int i, j;
+	int go, nb_gens;
+	int *perms;
+
+	if (f_v) {
+		cout << "action::normalizer_using_MAGMA" << endl;
+		}
+	{
+		ifstream fp(fname_output);
+
+		fp >> go;
+		fp >> nb_gens;
 		if (f_v) {
-			cout << "file " << fname_output
-					<< " exists, reading it" << endl;
+			cout << "action::normalizer_using_MAGMA We found " << nb_gens
+					<< " generators for a group of order " << go << endl;
 		}
 
-		int i, j;
-		int go, nb_gens;
-		int *perms;
+		perms = NEW_int(nb_gens * degree);
 
-		if (f_v) {
-			cout << "action::normalizer_using_MAGMA" << endl;
-			}
-		{
-			ifstream fp(fname_output);
-
-			fp >> go;
-			fp >> nb_gens;
-			if (f_v) {
-				cout << "action::normalizer_using_MAGMA We found " << nb_gens
-						<< " generators for a group of order " << go << endl;
-			}
-
-			perms = NEW_int(nb_gens * degree);
-
-			for (i = 0; i < nb_gens; i++) {
-				for (j = 0; j < degree; j++) {
-					fp >> perms[i * degree + j];
-					}
+		for (i = 0; i < nb_gens; i++) {
+			for (j = 0; j < degree; j++) {
+				fp >> perms[i * degree + j];
 				}
-			if (f_v) {
-				cout << "action::normalizer_using_MAGMA we read all "
-						"generators from file " << fname_output << endl;
 			}
-		}
-		for (i = 0; i < nb_gens * degree; i++) {
-			perms[i]--;
-			}
-
-		//longinteger_object go1;
-
-
-		gens_N = NEW_OBJECT(strong_generators);
 		if (f_v) {
-			cout << "action::normalizer_using_MAGMA "
-				"before gens->init_from_permutation_"
-				"representation" << endl;
+			cout << "action::normalizer_using_MAGMA we read all "
+					"generators from file " << fname_output << endl;
+		}
+	}
+	for (i = 0; i < nb_gens * degree; i++) {
+		perms[i]--;
 		}
 
-		vector_ge *nice_gens;
+	//longinteger_object go1;
 
-		gens_N->init_from_permutation_representation(this, G,
-			perms,
-			nb_gens, go, nice_gens,
-			verbose_level);
-		if (f_v) {
-			cout << "action::normalizer_using_MAGMA "
-				"after gens->init_from_permutation_"
-				"representation" << endl;
-		}
-		FREE_OBJECT(nice_gens);
 
+	gens_N = NEW_OBJECT(strong_generators);
+	if (f_v) {
+		cout << "action::normalizer_using_MAGMA "
+			"before gens->init_from_permutation_"
+			"representation" << endl;
+	}
+
+	vector_ge *nice_gens;
+
+	gens_N->init_from_permutation_representation(this, G,
+		perms,
+		nb_gens, go, nice_gens,
+		verbose_level);
+	if (f_v) {
 		cout << "action::normalizer_using_MAGMA "
 			"after gens->init_from_permutation_"
-			"representation gens_N=" << endl;
-		gens_N->print_generators_for_make_element(cout);
-
-
-
-	} // if (file_size(fname_output))
-	else {
-
-		cout << "please exectute the magma file " << fname_magma
-				<< " and come back" << endl;
-
-		exit(0);
-		sprintf(cmd, "/scratch/magma/magma %s", fname_magma);
-		cout << "executing normalizer command in MAGMA" << endl;
-		system(cmd);
-
-		cout << "normalizer command in MAGMA has finished" << endl;
+			"representation" << endl;
 	}
+	FREE_OBJECT(nice_gens);
+
+	cout << "action::normalizer_using_MAGMA "
+		"after gens->init_from_permutation_representation gens_N=" << endl;
+	gens_N->print_generators_for_make_element(cout);
+
+
+
 
 	if (f_v) {
 		cout << "action::normalizer_using_MAGMA done" << endl;
 		}
 }
 
-void action::conjugacy_classes_using_MAGMA(const char *prefix,
+void action::conjugacy_classes_using_MAGMA(std::string &prefix,
 		sims *G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname_magma[1000];
-	char fname_output[1000];
-	char cmd[2000];
+	string fname_magma;
+	string fname_output;
 
 	if (f_v) {
 		cout << "action::conjugacy_classes_using_MAGMA" << endl;
 		}
-	sprintf(fname_magma, "%sconjugacy_classes.magma", prefix);
-	sprintf(fname_output, "%sconjugacy_classes.txt", prefix);
+
+	fname_magma.assign(prefix);
+	fname_magma.append("conjugacy_classes.magma");
+	fname_output.assign(prefix);
+	fname_output.append("conjugacy_classes.txt");
 
 	int n;
 
@@ -202,15 +203,22 @@ void action::conjugacy_classes_using_MAGMA(const char *prefix,
 			"printf \"\\n\"; end for;" << endl;
 	fp << "UnsetOutputFile();" << endl;
 	}
-	snprintf(cmd, 2000, "/scratch/magma/magma %s", fname_magma);
-	cout << "executing ConjugacyClasses command in MAGMA" << endl;
-	system(cmd);
 
-	cout << "command ConjugacyClasses in MAGMA has finished" << endl;
+
+
+	magma_interface Magma;
+	file_io Fio;
+
+	Magma.run_magma_file(fname_magma, verbose_level);
+	if (Fio.file_size(fname_output) == 0) {
+		cout << "please run magma on the file " << fname_magma << endl;
+		cout << "for instance, try" << endl;
+		cout << Magma.Orbiter_session->magma_path << "magma " << fname_magma << endl;
+		exit(1);
+	}
+
 
 	FREE_OBJECT(G_gen);
-
-
 
 
 
@@ -233,6 +241,7 @@ void action::conjugacy_classes_using_MAGMA(const char *prefix,
 // etc.
 
 
+#if 0
 void action::read_conjugacy_classes_from_MAGMA(
 		char *fname,
 		int &nb_classes,
@@ -281,22 +290,25 @@ void action::read_conjugacy_classes_from_MAGMA(
 		cout << "action::read_conjugacy_classes_from_MAGMA done" << endl;
 		}
 }
+#endif
 
 void action::conjugacy_classes_and_normalizers_using_MAGMA_make_fnames(
-		const char *prefix, char *fname_magma, char *fname_output)
+		std::string &prefix,
+		std::string &fname_magma, std::string &fname_output)
 {
-	sprintf(fname_magma, "%s_classes.magma", prefix);
-	sprintf(fname_output, "%s_classes_out.txt", prefix);
+	fname_magma.assign(prefix);
+	fname_magma.append("_classes.magma");
+	fname_output.assign(prefix);
+	fname_output.append("_classes_out.txt");
 }
 
 void action::conjugacy_classes_and_normalizers_using_MAGMA(
-		const char *prefix,
+		std::string &prefix,
 		sims *G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname_magma[1000];
-	char fname_output[1000];
-	char cmd[2000];
+	string fname_magma;
+	string fname_output;
 
 	if (f_v) {
 		cout << "action::conjugacy_classes_and_normalizers_using_MAGMA" << endl;
@@ -365,11 +377,19 @@ void action::conjugacy_classes_and_normalizers_using_MAGMA(
 		fp << "end for;" << endl;
 		fp << "UnsetOutputFile();" << endl;
 	}
-	snprintf(cmd, 2000, "/scratch/magma/magma %s", fname_magma);
-	if (f_v) {
-		cout << "executing " << fname_magma << " command in MAGMA" << endl;
+
+
+	magma_interface Magma;
+	file_io Fio;
+
+	Magma.run_magma_file(fname_magma, verbose_level);
+	if (Fio.file_size(fname_output) == 0) {
+		cout << "please run magma on the file " << fname_magma << endl;
+		cout << "for instance, try" << endl;
+		cout << Magma.Orbiter_session->magma_path << "magma " << fname_magma << endl;
+		exit(1);
 	}
-	system(cmd);
+
 
 	if (f_v) {
 		cout << "command ConjugacyClasses in MAGMA has finished" << endl;
@@ -395,7 +415,7 @@ void action::conjugacy_classes_and_normalizers_using_MAGMA(
 
 
 void action::read_conjugacy_classes_and_normalizers_from_MAGMA(
-		char *fname,
+		std::string &fname,
 		int &nb_classes,
 		int *&perms,
 		int *&class_size,
@@ -496,7 +516,7 @@ void action::read_conjugacy_classes_and_normalizers_from_MAGMA(
 }
 
 
-void action::normalizer_of_cyclic_group_using_MAGMA(const char *fname_magma_prefix,
+void action::normalizer_of_cyclic_group_using_MAGMA(std::string &fname_magma_prefix,
 		sims *G, int *Elt, strong_generators *&gens_N,
 		int verbose_level)
 {
@@ -536,20 +556,24 @@ void action::normalizer_of_cyclic_group_using_MAGMA(const char *fname_magma_pref
 	}
 }
 
-void action::centralizer_using_MAGMA(const char *prefix,
+void action::centralizer_using_MAGMA(std::string &prefix,
 		sims *override_Sims, int *Elt, strong_generators *&gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname_magma[1000];
-	char fname_output[1000];
+	string fname_magma;
+	string fname_output;
 	file_io Fio;
 
 	if (f_v) {
 		cout << "action::centralizer_using_MAGMA" << endl;
 	}
-	sprintf(fname_magma, "%s_centralizer.magma", prefix);
-	sprintf(fname_output, "%s_centralizer.txt", prefix);
+
+	fname_magma.assign(prefix);
+	fname_magma.append("_centralizer.magma");
+	fname_output.assign(prefix);
+	fname_output.append("_centralizer.txt");
+
 
 	if (Fio.file_size(fname_output) > 0) {
 		read_centralizer_magma(fname_output, override_Sims,
@@ -572,7 +596,7 @@ void action::centralizer_using_MAGMA(const char *prefix,
 	}
 }
 
-void action::read_centralizer_magma(const char *fname_output,
+void action::read_centralizer_magma(std::string &fname_output,
 		sims *override_Sims, strong_generators *&gens,
 		int verbose_level)
 {
@@ -634,9 +658,9 @@ void action::read_centralizer_magma(const char *fname_output,
 	}
 }
 
-void action::centralizer_using_magma2(const char *prefix,
-		const char *fname_magma,
-		const char *fname_output,
+void action::centralizer_using_magma2(std::string &prefix,
+		std::string &fname_magma,
+		std::string &fname_output,
 		sims *override_Sims, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -645,7 +669,6 @@ void action::centralizer_using_magma2(const char *prefix,
 	if (f_v) {
 		cout << "action::centralizer_using_magma2" << endl;
 	}
-	char cmd[2000];
 	file_io Fio;
 	strong_generators *G_gen;
 
@@ -682,9 +705,18 @@ void action::centralizer_using_magma2(const char *prefix,
 	cout << "Written file " << fname_magma
 			<< " of size " << Fio.file_size(fname_magma) << endl;
 
-	snprintf(cmd, 2000, "/scratch/magma/magma %s", fname_magma);
-	cout << "executing centralizer command in MAGMA" << endl;
-	system(cmd);
+
+
+	magma_interface Magma;
+
+	Magma.run_magma_file(fname_magma, verbose_level);
+	if (Fio.file_size(fname_output) == 0) {
+		cout << "please run magma on the file " << fname_magma << endl;
+		cout << "for instance, try" << endl;
+		cout << Magma.Orbiter_session->magma_path << "magma " << fname_magma << endl;
+		exit(1);
+	}
+
 
 	cout << "command centralizer in MAGMA has finished" << endl;
 
@@ -966,10 +998,17 @@ void action::find_subgroups_using_MAGMA2(std::string &prefix,
 	cout << "Written file " << fname_magma
 			<< " of size " << Fio.file_size(fname_magma) << endl;
 
-	cmd.assign("/scratch/magma/magma ");
-	cmd.append(fname_magma);
-	cout << "executing command script " << fname_magma << " in MAGMA" << endl;
-	system(cmd.c_str());
+	magma_interface Magma;
+
+	Magma.run_magma_file(fname_magma, verbose_level);
+	if (Fio.file_size(fname_output) == 0) {
+		cout << "please run magma on the file " << fname_magma << endl;
+		cout << "for instance, try" << endl;
+		cout << Magma.Orbiter_session->magma_path << "magma " << fname_magma << endl;
+		exit(1);
+	}
+
+
 
 	cout << "command script in MAGMA has finished" << endl;
 
@@ -983,14 +1022,14 @@ void action::find_subgroups_using_MAGMA2(std::string &prefix,
 }
 
 void action::conjugacy_classes_and_normalizers(sims *override_Sims,
-		const char *label,
-		const char *label_tex,
+		std::string &label,
+		std::string &label_tex,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char prefix[2000];
-	char fname1[3000];
-	char fname2[3000];
+	string prefix;
+	string fname1;
+	string fname2;
 	file_io Fio;
 
 
@@ -998,9 +1037,11 @@ void action::conjugacy_classes_and_normalizers(sims *override_Sims,
 		cout << "action::conjugacy_classes_and_normalizers" << endl;
 	}
 
-	snprintf(prefix, 2000, "%s", label);
-	snprintf(fname1, 3000, "%s_classes.magma", prefix);
-	snprintf(fname2, 3000, "%s_classes_out.txt", prefix);
+	prefix.assign(label);
+	fname1.assign(label);
+	fname1.append("_classes.magma");
+	fname2.assign(label);
+	fname2.append("_classes_out.txt");
 
 
 	if (Fio.file_size(fname2) > 0) {
@@ -1035,9 +1076,9 @@ void action::report_conjugacy_classes_and_normalizers(ostream &ost,
 		sims *override_Sims, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char prefix[2000];
-	char fname1[3000];
-	char fname2[3000];
+	string prefix;
+	string fname1;
+	string fname2;
 	file_io Fio;
 
 
@@ -1045,9 +1086,11 @@ void action::report_conjugacy_classes_and_normalizers(ostream &ost,
 		cout << "action::conjugacy_classes_and_normalizers" << endl;
 	}
 
-	snprintf(prefix, 2000, "%s", label.c_str());
-	snprintf(fname1, 3000, "%s_classes.magma", label.c_str());
-	snprintf(fname2, 3000, "%s_classes_out.txt", label.c_str());
+	prefix.assign(label);
+	fname1.assign(label);
+	fname1.append("_classes.magma");
+	fname2.assign(label);
+	fname2.append("_classes_out.txt");
 
 
 	if (Fio.file_size(fname2) > 0) {
@@ -1080,8 +1123,8 @@ void action::report_conjugacy_classes_and_normalizers(ostream &ost,
 
 
 void action::read_conjugacy_classes_and_normalizers(
-		char *fname, sims *override_sims,
-		const char *label_latex, int verbose_level)
+		std::string &fname, sims *override_sims,
+		std::string &label_latex, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -1092,7 +1135,6 @@ void action::read_conjugacy_classes_and_normalizers(
 	long int *class_normalizer_order;
 	int *class_normalizer_number_of_generators;
 	int **normalizer_generators_perms;
-	//projective_space_with_action *PA;
 	file_io Fio;
 
 	if (f_v) {
@@ -1148,211 +1190,213 @@ void action::read_conjugacy_classes_and_normalizers(
 	override_sims->group_order(go);
 	cout << "The group has order " << go << endl;
 
-	char fname_latex[1000];
-	strcpy(fname_latex, fname);
+	string fname_latex;
+	fname_latex.assign(fname);
 
 	replace_extension_with(fname_latex, ".tex");
 
 	{
-	ofstream fp(fname_latex);
-	char title[2000];
-	latex_interface L;
+		ofstream fp(fname_latex);
+		string title;
+		latex_interface L;
 
-	snprintf(title, 2000, "Conjugacy classes of $%s$",
-			label_latex);
+		title.assign("Conjugacy classes of ");
+		title.append("$");
+		title.append(label_latex);
+		title.append("$");
 
-	L.head(fp,
-		FALSE /* f_book */, TRUE /* f_title */,
-		title, "computed by Orbiter and MAGMA" /* const char *author */,
-		FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */,
-		TRUE /* f_enlarged_page */, TRUE /* f_pagenumbers */,
-		NULL /* extra_praeamble */);
-	//latex_head_easy(fp);
+		L.head(fp,
+			FALSE /* f_book */, TRUE /* f_title */,
+			title.c_str(), "computed by Orbiter and MAGMA" /* const char *author */,
+			FALSE /* f_toc */, FALSE /* f_landscape */, TRUE /* f_12pt */,
+			TRUE /* f_enlarged_page */, TRUE /* f_pagenumbers */,
+			NULL /* extra_praeamble */);
+		//latex_head_easy(fp);
 
-	fp << "\\section{Conjugacy classes in $" << label_latex << "$}" << endl;
-
-
-	fp << "The group order is " << endl;
-	fp << "$$" << endl;
-	go.print_not_scientific(fp);
-	fp << endl;
-	fp << "$$" << endl;
-
-	cout << "second time" << endl;
-
-	cout << "i : class_order_of_element : class_normalizer_order" << endl;
-	for (i = 0; i < nb_classes; i++) {
-		cout << i << " : " << class_order_of_element[i] << " : " << class_normalizer_order[i] << endl;
-	}
+		fp << "\\section{Conjugacy classes in $" << label_latex << "$}" << endl;
 
 
+		fp << "The group order is " << endl;
+		fp << "$$" << endl;
+		go.print_not_scientific(fp);
+		fp << endl;
+		fp << "$$" << endl;
 
-	cout << "The conjugacy classes are:" << endl;
-	for (i = 0; i < nb_classes; i++) {
+		cout << "second time" << endl;
 
-		strong_generators *gens;
-		longinteger_object go1, Class_size, centralizer_order;
-		long int goi;
-		vector_ge *nice_gens;
-		long int ngo;
-		int nb_perms;
-		strong_generators *N_gens;
-		vector_ge *nice_gens_N;
-
-
-		cout << "The conjugacy class " << i << " / " << nb_classes << " is:" << endl;
-
-		goi = class_order_of_element[i];
-		ngo = class_normalizer_order[i];
-
-
-
-		cout << "goi=" << goi << endl;
-		cout << "ngo=" << ngo << endl;
-
-
-		gens = NEW_OBJECT(strong_generators);
-
-
-		if (f_v) {
-			cout << "action::read_conjugacy_classes_and_normalizers computing H, "
-				"before gens->init_from_permutation_representation" << endl;
-		}
-		gens->init_from_permutation_representation(this, override_sims,
-			perms + i * degree,
-			1, goi, nice_gens,
-			verbose_level - 5);
-
-		if (f_v) {
-			cout << "action::read_conjugacy_classes_and_normalizers computing H, "
-				"after gens->init_from_permutation_representation" << endl;
+		cout << "i : class_order_of_element : class_normalizer_order" << endl;
+		for (i = 0; i < nb_classes; i++) {
+			cout << i << " : " << class_order_of_element[i] << " : " << class_normalizer_order[i] << endl;
 		}
 
-		Class_size.create(class_size[i], __FILE__, __LINE__);
-
-		D.integral_division_exact(go, Class_size, centralizer_order);
 
 
+		cout << "The conjugacy classes are:" << endl;
+		for (i = 0; i < nb_classes; i++) {
+
+			strong_generators *gens;
+			longinteger_object go1, Class_size, centralizer_order;
+			long int goi;
+			vector_ge *nice_gens;
+			long int ngo;
+			int nb_perms;
+			strong_generators *N_gens;
+			vector_ge *nice_gens_N;
+
+
+			cout << "The conjugacy class " << i << " / " << nb_classes << " is:" << endl;
+
+			goi = class_order_of_element[i];
+			ngo = class_normalizer_order[i];
 
 
 
-		nb_perms = class_normalizer_number_of_generators[i];
+			cout << "goi=" << goi << endl;
+			cout << "ngo=" << ngo << endl;
 
-		//int *class_normalizer_order;
-		//int *class_normalizer_number_of_generators;
-		//int **normalizer_generators_perms;
 
-		if (f_v) {
-			cout << "action::read_conjugacy_classes_and_normalizers computing N, "
-				"before gens->init_from_permutation_representation" << endl;
-		}
-		N_gens = NEW_OBJECT(strong_generators);
-		N_gens->init_from_permutation_representation(this, override_sims,
-				normalizer_generators_perms[i],
-				nb_perms, ngo, nice_gens_N,
+			gens = NEW_OBJECT(strong_generators);
+
+
+			if (f_v) {
+				cout << "action::read_conjugacy_classes_and_normalizers computing H, "
+					"before gens->init_from_permutation_representation" << endl;
+			}
+			gens->init_from_permutation_representation(this, override_sims,
+				perms + i * degree,
+				1, goi, nice_gens,
 				verbose_level - 5);
-		if (f_v) {
-			cout << "action::read_conjugacy_classes_and_normalizers computing N, "
-				"after gens->init_from_permutation_representation" << endl;
-		}
 
-		cout << "class " << i << " / " << nb_classes
-			<< " size = " << class_size[i]
-			<< " order of element = " << class_order_of_element[i]
-			<< " centralizer order = " << centralizer_order
-			<< " normalizer order = " << ngo
-			<< " : " << endl;
-		cout << "packing::read_conjugacy_classes_and_normalizers created "
-				"generators for a group" << endl;
-		gens->print_generators(cout);
-		gens->print_generators_as_permutations();
-		gens->group_order(go1);
-		cout << "packing::read_conjugacy_classes_and_normalizers "
-				"The group has order " << go1 << endl;
+			if (f_v) {
+				cout << "action::read_conjugacy_classes_and_normalizers computing H, "
+					"after gens->init_from_permutation_representation" << endl;
+			}
 
-		fp << "\\bigskip" << endl;
-		fp << "\\subsection*{Class " << i << " / "
-				<< nb_classes << "}" << endl;
-		fp << "Order of element = " << class_order_of_element[i]
-				<< "\\\\" << endl;
-		fp << "Class size = " << class_size[i] << "\\\\" << endl;
-		fp << "Centralizer order = " << centralizer_order
-				<< "\\\\" << endl;
-		fp << "Normalizer order = " << ngo
-				<< "\\\\" << endl;
+			Class_size.create(class_size[i], __FILE__, __LINE__);
 
-		int *Elt = NULL;
-
-
-		cout << "latex output element: " << endl;
-
-		if (class_order_of_element[i] > 1) {
-			Elt = nice_gens->ith(0);
-			fp << "Representing element is" << endl;
-
-			string label;
-			char str[1000];
-
-			sprintf(str, "c_{%d} = ", i);
-			label.assign(str);
-
-			element_print_latex_with_extras(Elt, label, fp);
-
-#if 0
-
-			fp << "$$" << endl;
-			element_print_latex(Elt, fp);
-			fp << "$$" << endl;
-#endif
-
-			fp << "$";
-			element_print_for_make_element(Elt, fp);
-			fp << "$\\\\" << endl;
+			D.integral_division_exact(go, Class_size, centralizer_order);
 
 
 
-		}
-
-		cout << "latex output normalizer: " << endl;
 
 
-		fp << "The normalizer is generated by:\\\\" << endl;
-		N_gens->print_generators_tex(fp);
+			nb_perms = class_normalizer_number_of_generators[i];
+
+			//int *class_normalizer_order;
+			//int *class_normalizer_number_of_generators;
+			//int **normalizer_generators_perms;
+
+			if (f_v) {
+				cout << "action::read_conjugacy_classes_and_normalizers computing N, "
+					"before gens->init_from_permutation_representation" << endl;
+			}
+			N_gens = NEW_OBJECT(strong_generators);
+			N_gens->init_from_permutation_representation(this, override_sims,
+					normalizer_generators_perms[i],
+					nb_perms, ngo, nice_gens_N,
+					verbose_level - 5);
+			if (f_v) {
+				cout << "action::read_conjugacy_classes_and_normalizers computing N, "
+					"after gens->init_from_permutation_representation" << endl;
+			}
+
+			cout << "class " << i << " / " << nb_classes
+				<< " size = " << class_size[i]
+				<< " order of element = " << class_order_of_element[i]
+				<< " centralizer order = " << centralizer_order
+				<< " normalizer order = " << ngo
+				<< " : " << endl;
+			cout << "packing::read_conjugacy_classes_and_normalizers created "
+					"generators for a group" << endl;
+			gens->print_generators(cout);
+			gens->print_generators_as_permutations();
+			gens->group_order(go1);
+			cout << "packing::read_conjugacy_classes_and_normalizers "
+					"The group has order " << go1 << endl;
+
+			fp << "\\bigskip" << endl;
+			fp << "\\subsection*{Class " << i << " / "
+					<< nb_classes << "}" << endl;
+			fp << "Order of element = " << class_order_of_element[i]
+					<< "\\\\" << endl;
+			fp << "Class size = " << class_size[i] << "\\\\" << endl;
+			fp << "Centralizer order = " << centralizer_order
+					<< "\\\\" << endl;
+			fp << "Normalizer order = " << ngo
+					<< "\\\\" << endl;
+
+			int *Elt = NULL;
 
 
-#if 0
-		if (class_order_of_element[i] > 1) {
-			fp << "The fix structure is:\\\\" << endl;
-			PA->report_fixed_objects_in_PG_3_tex(
+			cout << "latex output element: " << endl;
+
+			if (class_order_of_element[i] > 1) {
+				Elt = nice_gens->ith(0);
+				fp << "Representing element is" << endl;
+
+				string label;
+				char str[1000];
+
+				sprintf(str, "c_{%d} = ", i);
+				label.assign(str);
+
+				element_print_latex_with_extras(Elt, label, fp);
+
+	#if 0
+
+				fp << "$$" << endl;
+				element_print_latex(Elt, fp);
+				fp << "$$" << endl;
+	#endif
+
+				fp << "$";
+				element_print_for_make_element(Elt, fp);
+				fp << "$\\\\" << endl;
+
+
+
+			}
+
+			cout << "latex output normalizer: " << endl;
+
+
+			fp << "The normalizer is generated by:\\\\" << endl;
+			N_gens->print_generators_tex(fp);
+
+
+	#if 0
+			if (class_order_of_element[i] > 1) {
+				fp << "The fix structure is:\\\\" << endl;
+				PA->report_fixed_objects_in_PG_3_tex(
+						Elt, fp,
+						verbose_level);
+
+				fp << "The orbit structure is:\\\\" << endl;
+				PA->report_orbits_in_PG_3_tex(
 					Elt, fp,
 					verbose_level);
+			}
+			if (class_order_of_element[i] > 1) {
 
-			fp << "The orbit structure is:\\\\" << endl;
-			PA->report_orbits_in_PG_3_tex(
-				Elt, fp,
-				verbose_level);
-		}
-		if (class_order_of_element[i] > 1) {
-
-			PA->report_decomposition_by_single_automorphism(
-					Elt, fp,
-					verbose_level);
-			// PA->
-			//action *A; // linear group PGGL(d,q)
-			//action *A_on_lines; // linear group PGGL(d,q) acting on lines
+				PA->report_decomposition_by_single_automorphism(
+						Elt, fp,
+						verbose_level);
+				// PA->
+				//action *A; // linear group PGGL(d,q)
+				//action *A_on_lines; // linear group PGGL(d,q) acting on lines
 
 
-		}
-#endif
+			}
+	#endif
 
-		FREE_int(normalizer_generators_perms[i]);
+			FREE_int(normalizer_generators_perms[i]);
 
-		FREE_OBJECT(nice_gens_N);
-		FREE_OBJECT(nice_gens);
-		FREE_OBJECT(N_gens);
-		FREE_OBJECT(gens);
-		}
-	L.foot(fp);
+			FREE_OBJECT(nice_gens_N);
+			FREE_OBJECT(nice_gens);
+			FREE_OBJECT(N_gens);
+			FREE_OBJECT(gens);
+			}
+		L.foot(fp);
 	}
 	cout << "Written file " << fname_latex << " of size "
 			<< Fio.file_size(fname_latex) << endl;
@@ -1371,7 +1415,7 @@ void action::read_conjugacy_classes_and_normalizers(
 }
 
 void action::read_and_report_conjugacy_classes_and_normalizers(ostream &ost,
-		char *fname, sims *override_Sims, int verbose_level)
+		std::string &fname, sims *override_Sims, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -1432,14 +1476,13 @@ void action::read_and_report_conjugacy_classes_and_normalizers(ostream &ost,
 	group_order(go);
 	cout << "The group has order " << go << endl;
 
-	char fname_latex[1000];
-	strcpy(fname_latex, fname);
+	string fname_latex;
+	fname_latex.assign(fname);
 
 	replace_extension_with(fname_latex, ".tex");
 
 
-	ost << "\\section{Conjugacy classes in $"
-			<< label_tex << "$}" << endl;
+	ost << "\\section{Conjugacy classes in $" << label_tex << "$}" << endl;
 
 
 	ost << "The group order is " << endl;

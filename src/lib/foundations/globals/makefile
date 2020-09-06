@@ -11,6 +11,7 @@ MODULES = \
 	function_polish.o \
 	magma_interface.o \
 	numerics.o \
+	orbiter_session.o \
 	polynomial_double_domain.o \
 	polynomial_double.o 
 

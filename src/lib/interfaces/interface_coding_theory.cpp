@@ -96,10 +96,6 @@ void interface_coding_theory::read_arguments(int argc,
 	int i;
 
 	cout << "interface_coding_theory::read_arguments" << endl;
-	//return 0;
-
-	//interface_coding_theory::argc = argc;
-	//interface_coding_theory::argv = argv;
 
 	for (i = i0; i < argc; i++) {
 		if (strcmp(argv[i], "-make_macwilliams_system") == 0) {

@@ -101,6 +101,7 @@ MODULES= \
 		foundations/globals/function_polish.o \
 		foundations/globals/magma_interface.o \
 		foundations/globals/numerics.o \
+		foundations/globals/orbiter_session.o \
 		foundations/globals/polynomial_double_domain.o \
 		foundations/globals/polynomial_double.o \
 		foundations/graph_theory/clique_finder.o \
@@ -406,8 +407,7 @@ MODULES= \
 		interfaces/interface_combinatorics.o \
 		interfaces/interface_cryptography.o \
 		interfaces/interface_povray.o \
-		interfaces/interface_projective.o \
-		interfaces/orbiter_session.o
+		interfaces/interface_projective.o
 
 
 all:

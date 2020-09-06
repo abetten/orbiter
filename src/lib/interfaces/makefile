@@ -11,8 +11,7 @@ MODULES = \
 	interface_combinatorics.o \
 	interface_cryptography.o \
 	interface_povray.o \
-	interface_projective.o \
-	orbiter_session.o
+	interface_projective.o
 
 
 all : $(MODULES)

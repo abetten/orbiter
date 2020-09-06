@@ -10,19 +10,25 @@
 
 
 
-#include "orbiter.h"
+#include "foundations.h"
+
 
 using namespace std;
 
 namespace orbiter {
-namespace interfaces {
+namespace foundations {
 
 
-orbiter_session *Orbiter_session = NULL;
+orbiter_session *The_Orbiter_session = NULL;
 
 
 orbiter_session::orbiter_session()
 {
+	if (The_Orbiter_session) {
+		cout << "orbiter_session::orbiter_session The_Orbiter_session is non NULL" << endl;
+		exit(1);
+	}
+	The_Orbiter_session = this;
 
 	verbose_level = 0;
 
@@ -42,6 +48,9 @@ orbiter_session::orbiter_session()
 	f_orbiter_path = FALSE;
 	//orbiter_path;
 
+	f_magma_path = FALSE;
+	//magma_path
+
 	f_fork = FALSE;
 	fork_argument_idx = 0;
 	// fork_variable
@@ -54,7 +63,7 @@ orbiter_session::orbiter_session()
 
 orbiter_session::~orbiter_session()
 {
-
+	The_Orbiter_session = NULL;
 }
 
 
@@ -78,6 +87,9 @@ void orbiter_session::print_help(int argc,
 	}
 	else if (strcmp(argv[i], "-orbiter_path") == 0) {
 		cout << "-orbiter_path <string : path>" << endl;
+	}
+	else if (strcmp(argv[i], "-magma_path") == 0) {
+		cout << "-magma_path <string : path>" << endl;
 	}
 	else if (strcmp(argv[i], "-fork") == 0) {
 		cout << "-fork <string : variable> <string : logfile_mask> <int : from> <int : to> <int : step>" << endl;
@@ -103,6 +115,9 @@ int orbiter_session::recognize_keyword(int argc,
 		return true;
 	}
 	else if (strcmp(argv[i], "-orbiter_path") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-magma_path") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-fork") == 0) {
@@ -151,6 +166,11 @@ int orbiter_session::read_arguments(int argc,
 			orbiter_path.assign(argv[++i]);
 			cout << "-orbiter_path " << orbiter_path << endl;
 		}
+		else if (strcmp(argv[i], "-magma_path") == 0) {
+			f_magma_path = TRUE;
+			magma_path.assign(argv[++i]);
+			cout << "-magma_path " << magma_path << endl;
+		}
 		else if (strcmp(argv[i], "-fork") == 0) {
 			f_fork = TRUE;
 			fork_argument_idx = i;
@@ -170,84 +190,71 @@ int orbiter_session::read_arguments(int argc,
 	return i;
 }
 
-void orbiter_session::work(int argc, const char **argv, int i, int verbose_level)
+void orbiter_session::fork(int argc, const char **argv, int verbose_level)
 {
-	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "before Interface_algebra" << endl;
-	}
-	{
-
-		if (f_v) {
-			cout << "before Interface_algebra.recognize_keyword" << endl;
-		}
-		if (Interface_algebra.recognize_keyword(argc, argv, i, verbose_level)) {
-			Interface_algebra.read_arguments(argc, argv, i, verbose_level);
-			Interface_algebra.worker(this, verbose_level);
-		}
+		cout << "orbiter_session::fork" << endl;
 	}
 
+	cout << "forking with respect to " << fork_variable << endl;
+	int j, h, case_number;
+	vector<int> places;
+
+	for (j = 1; j < argc; j++) {
+		if (strcmp(fork_variable.c_str(), argv[j]) == 0) {
+			if (j != fork_argument_idx + 1) {
+				places.push_back(j);
+			}
+		}
+	}
+	cout << "the variable appears in " << places.size() << " many places:" << endl;
+	for (j = 0; j < places.size(); j++) {
+		cout << "argument " << places[j] << " is " << argv[places[j]] << endl;
+	}
+
+
+	for (case_number = fork_from; case_number < fork_to; case_number += fork_step) {
+
+		cout << "forking case " << case_number << endl;
+
+		string cmd;
+
+		cmd.assign(orbiter_path);
+		cmd.append("orbiter.out");
+		for (j = fork_argument_idx + 6; j < argc; j++) {
+			cmd.append(" \"");
+			for (h = 0; h < places.size(); h++) {
+				if (places[h] == j) {
+					break;
+				}
+			}
+			if (h < places.size()) {
+				char str[1000];
+
+				sprintf(str, "%d", case_number);
+				cmd.append(str);
+			}
+			else {
+				cmd.append(argv[j]);
+			}
+			cmd.append("\" ");
+		}
+		char str[1000];
+
+		sprintf(str, fork_logfile_mask.c_str(), case_number);
+		cmd.append(" >");
+		cmd.append(str);
+		cmd.append(" &");
+		cout << "system: " << cmd << endl;
+		system(cmd.c_str());
+	}
 	if (f_v) {
-		cout << "before Interface_cryptography" << endl;
-	}
-	{
-
-		if (f_v) {
-			cout << "before Interface_cryptography.recognize_keyword" << endl;
-		}
-		if (Interface_cryptography.recognize_keyword(argc, argv, i, verbose_level)) {
-			Interface_cryptography.read_arguments(argc, argv, i, verbose_level);
-			Interface_cryptography.worker(verbose_level);
-		}
+		cout << "orbiter_session::fork done" << endl;
 	}
 
-	if (f_v) {
-		cout << "before Interface_combinatorics" << endl;
-	}
-	{
-
-		if (Interface_combinatorics.recognize_keyword(argc, argv, i, verbose_level)) {
-			Interface_combinatorics.read_arguments(argc, argv, i, verbose_level);
-			Interface_combinatorics.worker(verbose_level);
-		}
-	}
-
-	if (f_v) {
-		cout << "before Interface_coding_theory" << endl;
-	}
-	{
-
-		if (Interface_coding_theory.recognize_keyword(argc, argv, i, verbose_level)) {
-			Interface_coding_theory.read_arguments(argc, argv, i, verbose_level);
-			Interface_coding_theory.worker(verbose_level);
-		}
-	}
-
-	if (f_v) {
-		cout << "before Interface_povray" << endl;
-	}
-	{
-
-		if (Interface_povray.recognize_keyword(argc, argv, i, verbose_level)) {
-			Interface_povray.read_arguments(argc, argv, i, verbose_level);
-			Interface_povray.worker(verbose_level);
-		}
-	}
-
-	if (f_v) {
-		cout << "before Interface_projective" << endl;
-	}
-	{
-
-		if (Interface_projective.recognize_keyword(argc, argv, i, verbose_level)) {
-			Interface_projective.read_arguments(argc, argv, i, verbose_level);
-			Interface_projective.worker(this, verbose_level);
-		}
-	}
 }
-
 
 }}
 

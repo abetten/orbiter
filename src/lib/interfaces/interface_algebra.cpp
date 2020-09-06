@@ -150,10 +150,6 @@ void interface_algebra::read_arguments(int argc,
 	int i;
 
 	cout << "interface_algebra::read_arguments" << endl;
-	//return 0;
-
-	//interface_algebra::argc = argc;
-	//interface_algebra::argv = argv;
 
 	for (i = i0; i < argc; i++) {
 		if (strcmp(argv[i], "-linear_group") == 0) {

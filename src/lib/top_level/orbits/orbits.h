@@ -92,9 +92,10 @@ int orbit_of_equations_compare_func(void *a, void *b, void *data);
 
 
 
-//! orbit of sets using a Schreier tree
 
-// used in packing::make_spread_table
+
+//! orbit of sets using a Schreier tree, used in packing::make_spread_table
+
 
 class orbit_of_sets {
 public:

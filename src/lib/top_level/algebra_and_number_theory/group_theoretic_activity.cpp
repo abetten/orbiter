@@ -399,7 +399,7 @@ void group_theoretic_activity::classes(int verbose_level)
 	G = LG->Strong_gens->create_sims(verbose_level);
 
 	A2->conjugacy_classes_and_normalizers(G,
-			LG->label.c_str(), LG->label_tex.c_str(), verbose_level);
+			LG->label, LG->label_tex, verbose_level);
 
 	FREE_OBJECT(G);
 	if (f_v) {
@@ -545,14 +545,15 @@ void group_theoretic_activity::normalizer(int verbose_level)
 	if (f_v) {
 		cout << "group_theoretic_activity::normalizer" << endl;
 	}
-	char fname_magma_prefix[1000];
+	string fname_magma_prefix;
 	sims *G;
 	sims *H;
 	strong_generators *gens_N;
 	longinteger_object N_order;
 
 
-	sprintf(fname_magma_prefix, "%s_normalizer", LG->label.c_str());
+	fname_magma_prefix.assign(LG->label);
+	fname_magma_prefix.append("_normalizer");
 
 	G = LG->initial_strong_gens->create_sims(verbose_level);
 	H = LG->Strong_gens->create_sims(verbose_level);

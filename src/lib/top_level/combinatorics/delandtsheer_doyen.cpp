@@ -449,9 +449,13 @@ void delandtsheer_doyen::search_singletons(int verbose_level)
 	string fname;
 	int level = Descr->depth;
 
-	sprintf(str, "design_%s_%s_%d_%d_lvl_%d",
-			Descr->group_label, Descr->mask_label, Descr->q1, Descr->q2, level);
-	fname.assign(str);
+	fname.assign("design_");
+	fname.append(Descr->group_label);
+	fname.append("_");
+	fname.append(Descr->mask_label);
+	sprintf(str, "_%d_%d_lvl_%d",
+			Descr->q1, Descr->q2, level);
+	fname.append(str);
 
 	ODF = NEW_OBJECT(orbiter_data_file);
 	ODF->load(fname, verbose_level);
@@ -624,7 +628,7 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 	os_interface Os;
 	int t0 = Os.os_ticks();
 
-	char label[1000];
+	string label;
 
 
 	if (f_v) {
@@ -638,14 +642,20 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 	//Gen->prefix[0] = 0;
 
 	if (Descr->f_subgroup) {
-		sprintf(label, "design_%s_%s_%d_%d",
-				Descr->group_label, Descr->mask_label, Descr->q1, Descr->q2);
+
+		label.assign("design_");
+		label.append(Descr->group_label);
+		label.append("_");
+		label.append(Descr->mask_label);
 	}
 	else {
-		sprintf(label, "design_no_group_%s_%d_%d", Descr->mask_label,
-				Descr->d1, Descr->d2);
 
+		label.assign("design_no_group_");
 	}
+	char str[1000];
+
+	sprintf(str, "_%d_%d", Descr->q1, Descr->q2);
+	label.append(str);
 
 
 	Descr->Search_control->problem_label = label;
@@ -860,7 +870,7 @@ strong_generators *delandtsheer_doyen::scan_subgroup_generators(int verbose_leve
 	int nb_gens;
 	vector_ge *nice_gens;
 
-	int_vec_scan(Descr->subgroup_gens, data, sz);
+	int_vec_scan(Descr->subgroup_gens.c_str(), data, sz);
 	nb_gens = sz / A->make_element_size;
 	if (f_v) {
 		cout << "before Strong_gens->init_from_data_with_target_go_ascii" << endl;
@@ -869,7 +879,7 @@ strong_generators *delandtsheer_doyen::scan_subgroup_generators(int verbose_leve
 	Strong_gens->init_from_data_with_target_go_ascii(A0,
 			data,
 			nb_gens, A0->make_element_size,
-			Descr->subgroup_order,
+			Descr->subgroup_order.c_str(),
 			nice_gens,
 			verbose_level + 2);
 	FREE_OBJECT(nice_gens);
@@ -1196,7 +1206,7 @@ void delandtsheer_doyen::compute_pair_orbit_table(int verbose_level)
 void delandtsheer_doyen::write_pair_orbit_file(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname[1000];
+	string fname;
 	long int set[1000];
 	int i, j, k, n, size, l;
 
@@ -1204,7 +1214,10 @@ void delandtsheer_doyen::write_pair_orbit_file(int verbose_level)
 	if (f_v) {
 		cout << "delandtsheer_doyen::write_pair_orbit_file" << endl;
 	}
-	sprintf(fname, "%s.2orbits", Descr->group_label);
+
+	fname.assign(Descr->group_label);
+	fname.append(".2orbits");
+
 	cout << "writing pair-orbit file " << fname << endl;
 	{
 		ofstream f(fname);

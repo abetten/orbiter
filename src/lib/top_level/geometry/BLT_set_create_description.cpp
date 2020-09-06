@@ -24,7 +24,7 @@ BLT_set_create_description::BLT_set_create_description()
 	f_catalogue = FALSE;
 	iso = 0;
 	f_family = FALSE;
-	family_name = NULL;
+	//family_name = NULL;
 	null();
 }
 
@@ -65,7 +65,7 @@ int BLT_set_create_description::read_arguments(int argc, const char **argv,
 		}
 		else if (strcmp(argv[i], "-family") == 0) {
 			f_family = TRUE;
-			family_name = argv[++i];
+			family_name.assign(argv[++i]);
 			cout << "-family " << family_name << endl;
 		}
 		else if (strcmp(argv[i], "-end") == 0) {
