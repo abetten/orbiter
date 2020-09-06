@@ -344,7 +344,7 @@ void magma_interface::run_magma_file(std::string &fname, int verbose_level)
 	string cmd;
 
 	cmd.assign(Orbiter_session->magma_path);
-	cmd.append(" ");
+	cmd.append("magma ");
 	cmd.append(fname);
 
 	if (f_v) {
