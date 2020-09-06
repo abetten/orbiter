@@ -133,7 +133,7 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 					<< Descr->family_name << endl;
 		}
 
-		if (strcmp(Descr->family_name, "linear") == 0) {
+		if (strcmp(Descr->family_name.c_str(), "linear") == 0) {
 			if (f_v) {
 				cout << "BLT_set_create::init creating object of family linear" << endl;
 			}

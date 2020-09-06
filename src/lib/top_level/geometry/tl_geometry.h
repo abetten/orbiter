@@ -199,7 +199,7 @@ public:
 	int f_affine;
 	int f_semilinear;
 	int f_special;
-	//sims *S;
+
 	action *A;
 	longinteger_object go;
 	int *Elt;
@@ -336,7 +336,7 @@ public:
 	int f_catalogue;
 	int iso;
 	int f_family;
-	const char *family_name;
+	std::string family_name;
 
 
 
@@ -644,7 +644,6 @@ public:
 	int *v;
 	int *line_type;
 	projective_space *P;
-	//sims *GU;
 	strong_generators *sg;
 	long int **Intersection_sets;
 	int sz;
@@ -1002,9 +1001,6 @@ public:
 		longinteger_object *&Rank_table, int &nb_maximals, 
 		int verbose_level);
 	void show_stabilizer(int depth, int orbit_idx, int verbose_level);
-	//void compute_Kramer_Mesner_matrix(int t, int k, int verbose_level);
-	//int test(int *S, int len, int verbose_level);
-		// test if totally isotropic, i.e. contained in its own perp
 	void test_if_in_perp(long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,

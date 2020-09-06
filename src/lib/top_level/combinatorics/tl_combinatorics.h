@@ -131,10 +131,10 @@ public:
 	int *generators;
 	int nb_generators;
 
-	char fname_base[1000];
-	char prefix[1000];
-	char fname[1000];
-	char fname_graphs[1000];
+	std::string fname_base;
+	std::string prefix;
+	std::string fname;
+	std::string fname_graphs;
 
 	strong_generators *Aut_gens;
 	longinteger_object Aut_order;
@@ -303,10 +303,10 @@ public:
 	int q2;
 
 	int f_group_label;
-	const char *group_label;
+	std::string group_label;
 
 	int f_mask_label;
-	const char *mask_label;
+	std::string mask_label;
 
 
 
@@ -348,8 +348,8 @@ public:
 
 	int f_singletons;
 	int f_subgroup;
-	const char *subgroup_gens;
-	const char *subgroup_order;
+	std::string subgroup_gens;
+	std::string subgroup_order;
 
 	delandtsheer_doyen_description();
 	~delandtsheer_doyen_description();
@@ -598,7 +598,7 @@ public:
 class difference_set_in_heisenberg_group {
 
 public:
-	char fname_base[1000];
+	std::string fname_base;
 
 	int n;
 	int q;
@@ -625,8 +625,8 @@ public:
 	int *E1;
 	int rk_E1;
 
-	char prefix[1000];
-	char fname_magma_out[2000];
+	std::string prefix;
+	std::string fname_magma_out;
 	sims *Aut;
 	sims *U;
 	longinteger_object U_go;

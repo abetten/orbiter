@@ -504,7 +504,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 			exit(1);
 		}
 
-		cmd.assign(interfaces::Orbiter_session->orbiter_path);
+		cmd.assign(foundations::The_Orbiter_session->orbiter_path);
 		cmd.append("orbiter.out -v 2 -create_graph -load_from_file ");
 		cmd.append(fname_graph);
 		cmd.append(" -end -graph_theoretic_activity -find_cliques -target_size ");

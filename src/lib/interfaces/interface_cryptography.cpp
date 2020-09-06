@@ -178,11 +178,6 @@ interface_cryptography::interface_cryptography()
 	f_count_subprimitive = FALSE;
 	count_subprimitive_Q_max = 0;
 	count_subprimitive_H_max = 0;
-#if 0
-	f_ntt = FALSE;
-	ntt_t = 0;
-	ntt_q = 0;
-#endif
 	//cout << "interface_cryptography::interface_cryptography done" << endl;
 
 }

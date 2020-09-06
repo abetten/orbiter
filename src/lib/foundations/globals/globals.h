@@ -124,32 +124,37 @@ public:
 //! interface to the computer algebra system MAGMA
 
 class magma_interface {
+
 public:
+
+	orbiter_session *Orbiter_session;
+
 	magma_interface();
 	~magma_interface();
-	void write_permutation_group(const char *fname_base,
+	void write_permutation_group(std::string &fname_base,
 		int group_order, int *Table, int *gens, int nb_gens,
 		int verbose_level);
 	void normalizer_in_Sym_n(
-		const char *fname_base,
+			std::string &fname_base,
 		int group_order, int *Table, int *gens, int nb_gens,
 		int *&N_gens, int &N_nb_gens, int &N_go,
 		int verbose_level);
-	void read_permutation_group(const char *fname,
+	void read_permutation_group(std::string &fname,
 		int degree, int *&gens, int &nb_gens, int &go,
 		int verbose_level);
 	void orbit_of_matrix_group_on_vector(
-		const char *fname_base,
+			std::string &fname_base,
 		int d, int q,
 		int *initial_vector, int **gens, int nb_gens,
 		int &orbit_length,
 		int verbose_level);
 	void orbit_of_matrix_group_on_subspaces(
-		const char *fname_base,
+			std::string &fname_base,
 		int d, int q, int k,
 		int *initial_subspace, int **gens, int nb_gens,
 		int &orbit_length,
 		int verbose_level);
+	void run_magma_file(std::string &fname, int verbose_level);
 };
 
 
@@ -315,6 +320,64 @@ public:
 		int verbose_level);
 
 };
+
+
+// #############################################################################
+// orbiter_session.cpp
+// #############################################################################
+
+
+extern orbiter_session *The_Orbiter_session; // global Orbiter session
+
+//! The orbiter session is reponsible for the command line interface and the program execution
+
+
+class orbiter_session {
+
+public:
+
+	int verbose_level;
+
+	int t0;
+
+	int f_list_arguments;
+
+	int f_seed;
+	int the_seed;
+
+	int f_memory_debug;
+	int memory_debug_verbose_level;
+
+	int f_override_polynomial;
+	std::string override_polynomial;
+		// used in interface_algebra::do_cheat_sheet_GF
+
+	int f_orbiter_path;
+	std::string orbiter_path;
+
+	int f_magma_path;
+	std::string magma_path;
+
+	int f_fork;
+	int fork_argument_idx;
+	std::string fork_variable;
+	std::string fork_logfile_mask;
+	int fork_from;
+	int fork_to;
+	int fork_step;
+
+
+	orbiter_session();
+	~orbiter_session();
+	void print_help(int argc,
+			const char **argv, int i, int verbose_level);
+	int recognize_keyword(int argc,
+			const char **argv, int i, int verbose_level);
+	int read_arguments(int argc,
+			const char **argv, int i0);
+	void fork(int argc, const char **argv, int verbose_level);
+};
+
 
 
 // #############################################################################

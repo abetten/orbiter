@@ -259,16 +259,12 @@ void action::induced_action_on_cosets(
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
-	//matrix_group *M;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_cosets "
 				"f_induce_action=" << f_induce_action << endl;
 		}
 	A = A_on_cosets->A_linear;
-	//snprintf(group_prefix, 1000, "%s_Cosets_%d", A->label, A_on_cosets->dimension_of_subspace);
-	//snprintf(label, 1000, "%s_Cosets_%d", A->label, A_on_cosets->dimension_of_subspace);
-	//snprintf(label_tex, 1000, "%s Cosets_%d", A->label_tex, A_on_cosets->dimension_of_subspace);
 
 
 	char str1[1000];
@@ -343,25 +339,12 @@ void action::induced_action_on_factor_space(action *A_old,
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
-	//matrix_group *M;
-	
+
 	if (f_v) {
 		cout << "action::induced_action_on_factor_space "
 				"f_induce_action=" << f_induce_action << endl;
 		}
 	A = A_old;
-
-#if 0
-	snprintf(group_prefix, 1000, "%s_Factorspace_%d_%d_%d",
-			A->label, AF->VS->dimension,
-			AF->factor_space_len, AF->VS->F->q);
-	snprintf(label, 1000, "%s_Factorspace_%d_%d_%d",
-			A->label, AF->VS->dimension,
-			AF->factor_space_len, AF->VS->F->q);
-	snprintf(label_tex, 1000, "%s Factorspace_%d_%d_%d",
-			A->label_tex, AF->VS->dimension,
-			AF->factor_space_len, AF->VS->F->q);
-#endif
 
 	char str1[1000];
 	char str2[1000];
@@ -386,15 +369,7 @@ void action::induced_action_on_factor_space(action *A_old,
 				"action not of linear type" << endl;
 		exit(1);
 		}
-#if 0
-	if (A->type_G == matrix_group_t) {
-		M = A->G.matrix_grp;
-		}
-	else {
-		action *sub = A->subaction;
-		M = sub->G.matrix_grp;
-		}
-#endif
+
 	type_G = action_on_factor_space_t;
 	G.AF = AF;
 	f_allocated = TRUE;
@@ -438,10 +413,6 @@ action *action::induced_action_on_grassmannian(int k, int verbose_level)
 		cout << "action::induced_action_on_grassmannian" << endl;
 		}
 	A = NEW_OBJECT(action);
-
-	//snprintf(A->group_prefix, 1000, "%s_on_%d_subspaces", label, k);
-	//snprintf(A->label, 1000, "%s_on_%d_subspaces", label, k);
-	//snprintf(A->label_tex, 1000, "%s on %d subspaces", label, k);
 
 
 	char str1[1000];
@@ -523,17 +494,12 @@ void action::induced_action_on_grassmannian(action *A_old,
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
-	//matrix_group *M;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_grassmannian "
 				"f_induce_action=" << f_induce_action << endl;
 	}
 	A = A_old;
-	//snprintf(group_prefix, 1000, "%s_Grassmann_%d_%d_%d", A->label, AG->n, AG->k, AG->q);
-	//snprintf(label, 1000, "%s_Grassmann_%d_%d_%d", A->label, AG->n, AG->k, AG->q);
-	//snprintf(label_tex, 1000, "%s {\\rm Gr}_{%d,%d}(%d)", A->label_tex, AG->n, AG->k, AG->q);
-
 
 	char str1[1000];
 	char str2[1000];
@@ -568,23 +534,6 @@ void action::induced_action_on_grassmannian(action *A_old,
 		cout << "action::induced_action_on_grassmannian "
 				"action is of linear type" << endl;
 	}
-#if 0
-	if (A->type_G == matrix_group_t) {
-		if (f_v) {
-			cout << "action::induced_action_on_grassmannian "
-					"A->type_G == matrix_group_t" << endl;
-			}
-		M = A->G.matrix_grp;
-		}
-	else {
-		if (f_v) {
-			cout << "action::induced_action_on_grassmannian "
-					"A->type_G != matrix_group_t" << endl;
-			}
-		action *sub = A->subaction;
-		M = sub->G.matrix_grp;
-		}
-#endif
 	type_G = action_on_grassmannian_t;
 	G.AG = AG;
 	f_allocated = FALSE;
@@ -594,7 +543,7 @@ void action::induced_action_on_grassmannian(action *A_old,
 	f_has_strong_generators = FALSE;
 	
 	degree = AG->degree.as_int();
-	//base_len = 0;
+
 	if (f_v) {
 		cout << "action::induced_action_on_grassmannian "
 				"before init_function_pointers_induced_action" << endl;
@@ -658,17 +607,12 @@ void action::induced_action_on_spread_set(action *A_old,
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
-	//matrix_group *M;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_spread_set "
 				"f_induce_action=" << f_induce_action << endl;
 		}
 	A = A_old;
-	//snprintf(group_prefix, 1000, "%s_SpreadSet_%d_%d", A->label, AS->k, AS->q);
-	//snprintf(label, 1000, "%s_SpreadSet_%d_%d", A->label, AS->k, AS->q);
-	//snprintf(label_tex, 1000, "%s SpreadSet_%d_%d", A->label_tex, AS->k, AS->q);
-
 
 	char str1[1000];
 	char str2[1000];
@@ -694,16 +638,6 @@ void action::induced_action_on_spread_set(action *A_old,
 				"action not of linear type" << endl;
 		exit(1);
 		}
-
-#if 0
-	if (A->type_G == matrix_group_t) {
-		M = A->G.matrix_grp;
-		}
-	else {
-		action *sub = A->subaction;
-		M = sub->G.matrix_grp;
-		}
-#endif
 
 	f_is_linear = TRUE;
 
@@ -750,7 +684,6 @@ void action::induced_action_on_orthogonal(action *A_old,
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
-	//matrix_group *M;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_orthogonal "
@@ -795,15 +728,6 @@ void action::induced_action_on_orthogonal(action *A_old,
 				"action not of linear type" << endl;
 		exit(1);
 		}
-#if 0
-	if (A->type_G == matrix_group_t) {
-		M = A->G.matrix_grp;
-		}
-	else {
-		action *sub = A->subaction;
-		M = sub->G.matrix_grp;
-		}
-#endif
 	type_G = action_on_orthogonal_t;
 	G.AO = AO;
 	f_allocated = TRUE;
@@ -845,16 +769,12 @@ void action::induced_action_on_wedge_product(action *A_old,
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
-	//matrix_group *M;
-	
+
 	if (f_v) {
 		cout << "action::induced_action_on_wedge_product "
 				"f_induce_action=" << f_induce_action << endl;
 		}
 	A = A_old;
-	//snprintf(group_prefix, 1000, "%s_Wedge", A->label);
-	//snprintf(label, 1000, "%s_Wedge", A->label);
-	//snprintf(label_tex, 1000, "%s Wedge", A->label_tex);
 
 
 	char str1[1000];
@@ -925,16 +845,12 @@ void action::induced_action_by_subfield_structure(action *A_old,
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
-	//matrix_group *M;
-	
+
 	if (f_v) {
 		cout << "action::induced_action_by_subfield_structure "
 				"f_induce_action=" << f_induce_action << endl;
 		}
 	A = A_old;
-	//snprintf(group_prefix, 1000, "%s_subfield_%d", A->label, SubfieldStructure->q);
-	//snprintf(label, 1000, "%s_subfield_%d", A->label, SubfieldStructure->q);
-	//snprintf(label_tex, 1000, "%s subfield %d", A->label_tex, SubfieldStructure->q);
 
 
 	char str1[1000];
@@ -1011,9 +927,6 @@ void action::induced_action_on_Galois_group(
 		cout << "action::induced_action_on_Galois_group" << endl;
 		}
 	A = old_G->A;
-	//snprintf(group_prefix, 1000, "%s_det", A->label);
-	//snprintf(label, 1000, "%s_det", A->label);
-	//snprintf(label_tex, 1000, "%s det", A->label_tex);
 
 
 	char str1[1000];
@@ -1086,9 +999,6 @@ void action::induced_action_on_determinant(
 		cout << "action::induced_action_on_determinant" << endl;
 		}
 	A = old_G->A;
-	//snprintf(group_prefix, 1000, "%s_det", A->label);
-	//snprintf(label, 1000, "%s_det", A->label);
-	//snprintf(label_tex, 1000, "%s det", A->label_tex);
 
 
 	char str1[1000];
@@ -1158,9 +1068,6 @@ void action::induced_action_on_sign(
 		cout << "action::induced_action_on_sign" << endl;
 		}
 	A = old_G->A;
-	//snprintf(group_prefix, 1000, "%s_OnSign", A->label);
-	//snprintf(label, 1000, "%s_OnSign", A->label);
-	//snprintf(label_tex, 1000, "%s sign", A->label_tex);
 
 
 	char str1[1000];
@@ -1235,9 +1142,6 @@ void action::induced_action_by_conjugation(sims *old_G,
 	if (f_v) {
 		cout << "we are acting on a group of order " << goi << endl;
 		}
-	//snprintf(group_prefix, 1000, "%s_C%d", A->label, goi);
-	//snprintf(label, 1000, "%s_C%d", A->label, goi);
-	//snprintf(label_tex, 1000, "%s C%d", A->label_tex, goi);
 
 
 
@@ -1312,9 +1216,6 @@ void action::induced_action_by_right_multiplication(
 		}
 	Base_group->group_order(go);
 	goi = go.as_int();
-	//snprintf(group_prefix, 1000, "%s_R%d", A->label, goi);
-	//snprintf(label, 1000, "%s_R%d", A->label, goi);
-	//snprintf(label_tex, 1000, "%s R%d", A->label_tex, goi);
 
 
 	char str1[1000];
@@ -1402,7 +1303,6 @@ void action::induced_action_on_sets(
 	int f_induce_action, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = FALSE; // (verbose_level >= 2);
 	action_on_sets *AOS;
 	
 	if (f_v) {
@@ -1416,9 +1316,6 @@ void action::induced_action_on_sets(
 		cout << "action::induced_action_on_sets "
 				"verbose_level = " << verbose_level << endl;
 		}
-	//snprintf(group_prefix, 1000, "%s_S%d", old_action.label, set_size);
-	//snprintf(label, 1000, "%s_S%d", old_action.label, set_size);
-	//snprintf(label_tex, 1000, "%s S%d", old_action.label_tex, set_size);
 
 	char str1[1000];
 	char str2[1000];
@@ -1519,7 +1416,6 @@ void action::induced_action_on_subgroups(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = FALSE; // (verbose_level >= 2);
 	action_on_subgroups *AOS;
 	
 	if (f_v) {
@@ -1531,10 +1427,6 @@ void action::induced_action_on_subgroups(
 		cout << "action::induced_action_on_subgroups "
 				"verbose_level = " << verbose_level << endl;
 		}
-	//snprintf(group_prefix, 1000, "%s_on_subgroups%d_%d", old_action->label, nb_subgroups, group_order);
-	//snprintf(label, 1000, "%s_on_subgroups%d_%d", old_action->label, nb_subgroups, group_order);
-	//snprintf(label_tex, 1000, "%s on_subgroups%d_%d", old_action->label_tex, nb_subgroups, group_order);
-
 
 	char str1[1000];
 	char str2[1000];
@@ -1612,9 +1504,6 @@ void action::induced_action_by_restriction_on_orbit_with_schreier_vector(
 		cout << "f_induce_action = " << f_induce_action << endl;
 		cout << "verbose_level = " << verbose_level << endl;
 		}
-	//snprintf(group_prefix, 1000, "%s_res_sv%d", old_action.label, pt);
-	//snprintf(label, 1000, "%s_res_sv%d", old_action.label, pt);
-	//snprintf(label_tex, 1000, "%s res_sv%d", old_action.label_tex, pt);
 
 
 	char str1[1000];
@@ -1703,9 +1592,6 @@ action *action::restricted_action(
 		cout << "verbose_level = " << verbose_level << endl;
 		}
 	A = NEW_OBJECT(action);
-	//snprintf(A->group_prefix, 1000, "%s_res%d", label, nb_points);
-	//snprintf(A->label, 1000, "%s_res%d", label, nb_points);
-	//snprintf(A->label_tex, 1000, "%s res%d", label_tex, nb_points);
 
 	char str1[1000];
 	char str2[1000];
@@ -1792,9 +1678,6 @@ void action::induced_action_by_restriction_internal_function(
 		cout << "f_induce_action = " << f_induce_action << endl;
 		cout << "verbose_level = " << verbose_level << endl;
 		}
-	//snprintf(group_prefix, 1000, "%s_res%d", old_action.label, nb_points);
-	//snprintf(label, 1000, "%s_res%d", old_action.label, nb_points);
-	//snprintf(label_tex, 1000, "%s res%d", old_action.label_tex, nb_points);
 
 
 	char str1[1000];
@@ -1868,9 +1751,6 @@ void action::induced_action_on_pairs(
 			<< " has base_length = " << old_action.base_len()
 			<< " and degree " << old_action.degree << endl;
 		}
-	//snprintf(group_prefix, 1000, "%s_on_pairs", old_action.label);
-	//snprintf(label, 1000, "%s_on_pairs", old_action.label);
-	//snprintf(label_tex, 1000, "%s^{[2]}", old_action.label_tex);
 
 	char str1[1000];
 	char str2[1000];
@@ -1943,9 +1823,6 @@ void action::induced_action_on_ordered_pairs(
 				<< " has base_length = " << old_action.base_len()
 			<< " and degree " << old_action.degree << endl;
 		}
-	//snprintf(group_prefix, 1000, "%s_on_ordered_pairs", old_action.label);
-	//snprintf(label, 1000, "%s_on_ordered_pairs", old_action.label);
-	//snprintf(label_tex, 1000, "%s^{(2)}", old_action.label_tex);
 
 	char str1[1000];
 	char str2[1000];
@@ -2003,7 +1880,6 @@ void action::induced_action_on_k_subsets(
 				<< " has base_length = " << old_action.base_len()
 			<< " and degree " << old_action.degree << endl;
 		}
-	//snprintf(group_prefix, 1000, "%s_on_%d_subsets", old_action.label, k);
 	char str1[1000];
 	char str2[1000];
 	snprintf(str1, 1000, "_on_%d_subsets",k);
@@ -2061,9 +1937,6 @@ void action::induced_action_on_orbits(action *old_action,
 				<< " has base_length = " << old_action->base_len()
 			<< " and degree " << old_action->degree << endl;
 	}
-	//snprintf(group_prefix, 1000, "%s_on_orbits%d", old_action->label, Sch->nb_orbits);
-	//snprintf(label, 1000, "%s_on_orbits%d", old_action->label, Sch->nb_orbits);
-	//snprintf(label_tex, 1000, "%s\\_on\\_orbits%d", old_action->label_tex, Sch->nb_orbits);
 
 
 	char str1[1000];
@@ -2124,9 +1997,6 @@ void action::induced_action_on_flags(action *old_action,
 			<< " has base_length = " << old_action->base_len()
 			<< " and degree " << old_action->degree << endl;
 		}
-	//snprintf(group_prefix, 1000, "%s_on_flags", old_action->label);
-	//snprintf(label, 1000, "%s_on_flags", old_action->label);
-	//snprintf(label_tex, 1000, "%s\\_on\\_flags", old_action->label_tex);
 
 
 	char str1[1000];
@@ -2188,9 +2058,6 @@ void action::induced_action_on_bricks(action &old_action,
 			<< " has base_length = " << old_action.base_len()
 			<< " and degree " << old_action.degree << endl;
 		}
-	//snprintf(group_prefix, 1000, "%s_on_bricks", old_action.label);
-	//snprintf(label, 1000, "%s_on_bricks", old_action.label);
-	//snprintf(label_tex, 1000, "%s on bricks", old_action.label_tex);
 
 	char str1[1000];
 	char str2[1000];
@@ -2252,9 +2119,6 @@ void action::induced_action_on_andre(action *An,
 		cout << "action An1 = " << An1->label
 				<< " has degree " << An1->degree << endl;
 		}
-	//snprintf(group_prefix, 1000, "%s_on_andre", An1->label);
-	//snprintf(label, 1000, "%s_on_andre", An1->label);
-	//snprintf(label_tex, 1000, "%s on andre", An1->label_tex);
 
 	char str1[1000];
 	char str2[1000];
@@ -2311,10 +2175,6 @@ void action::setup_product_action(action *A1, action *A2,
 	if (f_v) {
 		cout << "action::setup_product_action" << endl;
 		}
-	//snprintf(group_prefix, 1000, "%s_x_%s", A1->label, A2->label);
-	//snprintf(label, 1000, "%s_x_%s", A1->label, A2->label);
-	//snprintf(label_tex, 1000, "%s \\times %s", A1->label_tex, A2->label_tex);
-
 
 	char str1[1000];
 	char str2[1000];
@@ -2400,7 +2260,6 @@ void action::induced_action_on_homogeneous_polynomials(
 	int f_v = (verbose_level >= 1);
 	action *A;
 	action_on_homogeneous_polynomials *OnHP;
-	//matrix_group *M;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_homogeneous_polynomials "
@@ -2408,9 +2267,6 @@ void action::induced_action_on_homogeneous_polynomials(
 		}
 	A = A_old;
 	OnHP = NEW_OBJECT(action_on_homogeneous_polynomials);
-	//snprintf(group_prefix, 1000, "%s_HP_%d_%d", A->label, HPD->n, HPD->degree);
-	//snprintf(label, 1000, "%s_HP_%d_%d", A->label, HPD->n, HPD->degree);
-	//snprintf(label_tex, 1000, "%s HP %d %d", A->label_tex, HPD->n, HPD->degree);
 
 	char str1[1000];
 	char str2[1000];
@@ -2435,7 +2291,6 @@ void action::induced_action_on_homogeneous_polynomials(
 				"action not of matrix group type" << endl;
 		exit(1);
 		}
-	//M = A->G.matrix_grp;
 
 	if (f_v) {
 		cout << "action::induced_action_on_homogeneous_polynomials "
@@ -2493,7 +2348,6 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 	int f_v = (verbose_level >= 1);
 	action *A;
 	action_on_homogeneous_polynomials *OnHP;
-	//matrix_group *M;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_homogeneous_"
@@ -2502,10 +2356,6 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 		}
 	A = A_old;
 	OnHP = NEW_OBJECT(action_on_homogeneous_polynomials);
-	//snprintf(group_prefix, 1000, "%s_HP_%d_%d_eqn%d", A->label, HPD->n, HPD->degree, nb_equations);
-	//snprintf(label, 1000, "%s_HP_%d_%d_eqn%d", A->label, HPD->n, HPD->degree, nb_equations);
-	//snprintf(label_tex, 1000, "%s HP %d %d %d", A->label_tex, HPD->n, HPD->degree, nb_equations);
-
 
 	char str1[1000];
 	char str2[1000];
@@ -2531,7 +2381,6 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 				"action not of matrix group type" << endl;
 		exit(1);
 		}
-	//M = A->G.matrix_grp;
 
 	if (f_v) {
 		cout << "action::induced_action_on_homogeneous_"
@@ -3172,9 +3021,6 @@ void action::base_change(action *old_action,
 			old_action->Sims,
 			size, set,
 			verbose_level - 1);
-	//snprintf(group_prefix, 1000, "%s_base_change", old_action->group_prefix);
-	//snprintf(label, 1000, "%s_base_change", old_action->label);
-	//snprintf(label_tex, 1000, "%s_base_change", old_action->label_tex);
 
 	char str1[1000];
 	char str2[1000];
@@ -3262,29 +3108,6 @@ void action::create_orbits_on_sets_using_action_on_sets(
 }
 
 
-#if 0
-action *action::new_action_by_right_multiplication(
-		sims *group_we_act_on,
-		int f_transfer_ownership,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	action *A;
-
-	if (f_v) {
-		cout << "action::new_action_by_right_multiplication" << endl;
-		}
-	A = NEW_OBJECT(action);
-	A->induced_action_by_right_multiplication(FALSE /* f_basis */,
-		NULL /* sims *old_G */,
-		group_we_act_on, f_transfer_ownership /* f_ownership */,
-		verbose_level - 1);
-	if (f_v) {
-		cout << "action::new_action_by_right_multiplication done" << endl;
-		}
-	return A;
-}
-#endif
 
 
 int action::choose_next_base_point_default_method(

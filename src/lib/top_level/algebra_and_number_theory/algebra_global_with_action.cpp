@@ -2711,13 +2711,15 @@ void algebra_global_with_action::centralizer_of_element(
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt;
-	char prefix[1000];
+	string prefix;
 
 	if (f_v) {
 		cout << "algebra_global_with_action::centralizer_of_element label=" << label
 				<< " element_description=" << element_description << endl;
 	}
-	sprintf(prefix, "element_%s", label);
+
+	prefix.assign("element_");
+	prefix.append(label);
 
 	Elt = NEW_int(A->elt_size_in_int);
 
@@ -2793,13 +2795,15 @@ void algebra_global_with_action::normalizer_of_cyclic_subgroup(
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt;
-	char prefix[1000];
+	string prefix;
 
 	if (f_v) {
 		cout << "algebra_global_with_action::normalizer_of_cyclic_subgroup label=" << label
 				<< " element_description=" << element_description << endl;
 	}
-	sprintf(prefix, "element_%s", label);
+
+	prefix.assign("element_");
+	prefix.append(label);
 
 	Elt = NEW_int(A->elt_size_in_int);
 

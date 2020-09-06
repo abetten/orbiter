@@ -2541,7 +2541,7 @@ sims *action::create_sims_for_centralizer_of_matrix(
 
 
 void action::init_automorphism_group_from_group_table(
-	const char *fname_base,
+	std::string &fname_base,
 	int *Table, int group_order, int *gens, int nb_gens,
 	strong_generators *&Aut_gens,
 	int verbose_level)

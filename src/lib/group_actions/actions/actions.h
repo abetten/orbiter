@@ -373,10 +373,11 @@ public:
 
 
 	// action_group_theory.cpp:
-	void normalizer_using_MAGMA(const char *fname_magma_prefix,
+	void normalizer_using_MAGMA(std::string &fname_magma_prefix,
 		sims *G, sims *H, strong_generators *&gens_N, int verbose_level);
-	void conjugacy_classes_using_MAGMA(const char *prefix, 
+	void conjugacy_classes_using_MAGMA(std::string &prefix,
 		sims *G, int verbose_level);
+#if 0
 	void read_conjugacy_classes_from_MAGMA(
 			char *fname,
 			int &nb_classes,
@@ -384,13 +385,15 @@ public:
 			int *&class_size,
 			int *&class_order_of_element,
 			int verbose_level);
+#endif
 	void conjugacy_classes_and_normalizers_using_MAGMA_make_fnames(
-			const char *prefix, char *fname_magma, char *fname_output);
+			std::string &prefix,
+			std::string &fname_magma, std::string &fname_output);
 	void conjugacy_classes_and_normalizers_using_MAGMA(
-			const char *prefix,
+			std::string &prefix,
 			sims *G, int verbose_level);
 	void read_conjugacy_classes_and_normalizers_from_MAGMA(
-			char *fname,
+			std::string &fname,
 			int &nb_classes,
 			int *&perms,
 			int *&class_size,
@@ -399,18 +402,18 @@ public:
 			int *&class_normalizer_number_of_generators,
 			int **&normalizer_generators_perms,
 			int verbose_level);
-	void normalizer_of_cyclic_group_using_MAGMA(const char *fname_magma_prefix,
+	void normalizer_of_cyclic_group_using_MAGMA(std::string &fname_magma_prefix,
 			sims *G, int *Elt, strong_generators *&gens_N,
 			int verbose_level);
-	void centralizer_using_MAGMA(const char *prefix, 
+	void centralizer_using_MAGMA(std::string &prefix,
 			sims *G, int *Elt, strong_generators *&gens,
 			int verbose_level);
-	void read_centralizer_magma(const char *fname_output,
+	void read_centralizer_magma(std::string &fname_output,
 			sims *override_Sims, strong_generators *&gens,
 			int verbose_level);
-	void centralizer_using_magma2(const char *prefix,
-			const char *fname_magma,
-			const char *fname_output,
+	void centralizer_using_magma2(std::string &prefix,
+			std::string &fname_magma,
+			std::string &fname_output,
 			sims *override_Sims, int *Elt, int verbose_level);
 	void find_subgroups_using_MAGMA(std::string &prefix,
 			sims *override_Sims,
@@ -426,15 +429,16 @@ public:
 			sims *override_Sims, int subgroup_order,
 			int verbose_level);
 	void conjugacy_classes_and_normalizers(sims *override_Sims,
-			const char *label,
-			const char *label_tex,
+			std::string &label,
+			std::string &label_tex,
 			int verbose_level);
 	void report_conjugacy_classes_and_normalizers(std::ostream &ost,
 			sims *override_Sims, int verbose_level);
 	void read_conjugacy_classes_and_normalizers(
-			char *fname, sims *override_sims, const char *label_latex, int verbose_level);
+			std::string &fname, sims *override_sims,
+			std::string &label_latex, int verbose_level);
 	void read_and_report_conjugacy_classes_and_normalizers(std::ostream &ost,
-			char *fname, sims *override_Sims,int verbose_level);
+			std::string &fname, sims *override_Sims,int verbose_level);
 	void report_groups_and_normalizers(std::ostream &ost,
 			int nb_subgroups, strong_generators *H_gens, strong_generators *N_gens,
 			int verbose_level);
@@ -603,7 +607,7 @@ public:
 	sims *create_sims_for_centralizer_of_matrix(
 			int *Mtx, int verbose_level);
 	void init_automorphism_group_from_group_table(
-		const char *fname_base,
+			std::string &fname_base,
 		int *Table, int group_order, int *gens, int nb_gens,
 		strong_generators *&Aut_gens,
 		int verbose_level);

@@ -390,6 +390,7 @@ class number_theoretic_transform;
 class create_file_description;
 class prepare_frames;
 class seventytwo_cases;
+class orbiter_session;
 
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)

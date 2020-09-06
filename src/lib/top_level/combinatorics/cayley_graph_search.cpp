@@ -239,8 +239,10 @@ void cayley_graph_search::init_group2(int verbose_level)
 	S->create_group_table(Table, go, verbose_level);
 
 
-
-	sprintf(fname_base, "Ferdinand%d_%d", level, group);
+	fname_base.assign("Ferdinand");
+	char str[1000];
+	sprintf(str, "%d_%d", level, group);
+	fname_base.append("Ferdinand");
 
 	Aut = NEW_OBJECT(action);
 
@@ -763,8 +765,10 @@ void cayley_graph_search::classify_subsets(int verbose_level)
 
 
 
-
-	sprintf(prefix, "Ferdinand%d_%d", level, group);
+	prefix.assign("Ferdinand");
+	char str[1000];
+	sprintf(str, "%d_%d", level, group);
+	prefix.append(str);
 
 	cout << "classifying subsets:" << endl;
 
@@ -829,8 +833,13 @@ void cayley_graph_search::write_file(int verbose_level)
 
 	for (sz = 1; sz <= target_depth; sz++) {
 
-		sprintf(fname_graphs, "ferdinand%d_%d_subgroup_%d_graphs_sz_%d.txt",
+		fname_graphs.assign("ferdinand");
+		char str[1000];
+
+		sprintf(str, "%d_%d_subgroup_%d_graphs_sz_%d.txt",
 				level, group, subgroup, sz);
+		fname_graphs.append(str);
+
 		{
 		ofstream fp(fname_graphs);
 

@@ -28,7 +28,6 @@ class interface_combinatorics;
 class interface_cryptography;
 class interface_povray;
 class interface_projective;
-class orbiter_session;
 
 
 // #############################################################################
@@ -649,66 +648,6 @@ public:
 			long int line1_to, long int line2_to, int verbose_level);
 };
 
-
-
-// #############################################################################
-// orbiter_session.cpp
-// #############################################################################
-
-
-extern orbiter_session *Orbiter_session; // global Orbiter session
-
-//! The orbiter session is reponsible for the command line interface and the program execution
-
-
-class orbiter_session {
-
-public:
-
-	int verbose_level;
-
-	int t0;
-
-	int f_list_arguments;
-
-	int f_seed;
-	int the_seed;
-
-	int f_memory_debug;
-	int memory_debug_verbose_level;
-
-	int f_override_polynomial;
-	std::string override_polynomial;
-
-	int f_orbiter_path;
-	std::string orbiter_path;
-
-	int f_fork;
-	int fork_argument_idx;
-	std::string fork_variable;
-	std::string fork_logfile_mask;
-	int fork_from;
-	int fork_to;
-	int fork_step;
-
-	interface_algebra Interface_algebra;
-	interface_cryptography Interface_cryptography;
-	interface_combinatorics Interface_combinatorics;
-	interface_coding_theory Interface_coding_theory;
-	interface_povray Interface_povray;
-	interface_projective Interface_projective;
-
-
-	orbiter_session();
-	~orbiter_session();
-	void print_help(int argc,
-			const char **argv, int i, int verbose_level);
-	int recognize_keyword(int argc,
-			const char **argv, int i, int verbose_level);
-	int read_arguments(int argc,
-			const char **argv, int i0);
-	void work(int argc, const char **argv, int i, int verbose_level);
-};
 
 
 
