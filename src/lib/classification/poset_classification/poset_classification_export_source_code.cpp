@@ -23,8 +23,9 @@ void poset_classification::generate_source_code(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	char my_prefix[1000];
-	char fname[2000];
+	string my_prefix;
+	string fname;
+	char str[1000];
 	int iso_type;
 	long int *rep;
 	int i, j;
@@ -36,8 +37,13 @@ void poset_classification::generate_source_code(
 	if (f_v) {
 		cout << "poset_classification::generate_source_code" << endl;
 		}
-	snprintf(my_prefix, 1000, "%s_level_%d", Control->problem_label.c_str(), level);
-	snprintf(fname, 2000, "%s.cpp", my_prefix);
+
+	my_prefix.assign(Control->problem_label);
+	sprintf(str, "_level_%d", level);
+	my_prefix.append(str);
+
+	fname.assign(my_prefix);
+	fname.append(".cpp");
 
 	set = NEW_lint(level);
 	nb_iso = nb_orbits_at_level(level);
@@ -170,8 +176,9 @@ void poset_classification::generate_history(int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	char my_prefix[1000];
-	char fname[2000];
+	string my_prefix;
+	string fname;
+	char str[1000];
 	int iso_type;
 	long int *rep;
 	int i, j;
@@ -184,8 +191,15 @@ void poset_classification::generate_history(int level, int verbose_level)
 	if (f_v) {
 		cout << "poset_classification::generate_history" << endl;
 		}
-	snprintf(my_prefix, 1000, "%s_history_level_%d", problem_label.c_str(), level);
-	snprintf(fname, 2000, "%s.cpp", my_prefix);
+
+	my_prefix.assign(Control->problem_label);
+	sprintf(str, "_history_level_%d", level);
+	my_prefix.append(str);
+
+	fname.assign(my_prefix);
+	fname.append(".cpp");
+
+
 
 	set = NEW_lint(level);
 	Elt = NEW_int(Poset->A->elt_size_in_int);
@@ -620,8 +634,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 	FREE_lint(set);
 	FREE_int(Elt);
 
-	cout << "written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
+	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	if (f_v) {
 		cout << "poset_classification::generate_history done" << endl;
 		}

@@ -26,9 +26,6 @@ action *action::induced_action_on_set_partitions(
 		}
 	A = NEW_OBJECT(action);
 
-	//snprintf(A->group_prefix, 1000, "%s_on_set_partitions_%ld_%d", label, A->degree, partition_class_size);
-	//snprintf(A->label, 1000, "%s_on_set_partitions_%ld_%d", label, A->degree, partition_class_size);
-	//snprintf(A->label_tex, 1000, "%s on set partitions %ld %d", label, A->degree, partition_class_size);
 
 
 	char str1[1000];
@@ -175,7 +172,6 @@ void action::induced_action_by_representation_on_conic(
 	int f_v = (verbose_level >= 1);
 	action *A;
 	action_by_representation *Rep; // do not free
-	//matrix_group *M;
 	
 	if (f_v) {
 		cout << "action::induced_action_by_representation_on_conic "
@@ -183,9 +179,6 @@ void action::induced_action_by_representation_on_conic(
 		}
 	
 	A = A_old;
-	//snprintf(group_prefix, 1000, "%s_RepOnConic", A->label);
-	//snprintf(label, 1000, "%s_RepOnConic", A->label);
-	//snprintf(label_tex, 1000, "%s RepOnConic", A->label_tex);
 
 
 	char str1[1000];

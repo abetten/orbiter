@@ -923,7 +923,7 @@ public:
 	void print_orbit(int cur, int last);
 	void print_tree(int orbit_no);
 	void export_tree_as_layered_graph(int orbit_no,
-			const char *fname_mask,
+			std::string &fname_mask,
 			int verbose_level);
 	void draw_forest(const char *fname_mask,
 		int xmax, int ymax,

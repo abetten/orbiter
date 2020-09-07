@@ -950,9 +950,9 @@ public:
 	void make_spreadsheet_of_level_info(spreadsheet *&Sp, 
 		int max_depth, int verbose_level);
 	void create_schreier_tree_fname_mask_base(
-			char *fname_mask2000, int node);
+			std::string &fname_mask, int node);
 	void create_shallow_schreier_tree_fname_mask_base(
-			char *fname_mask2000, int node);
+			std::string &fname_mask, int node);
 	void make_fname_candidates_file_default(char *fname2000, int level);
 	void wedge_product_export_magma(
 			int n, int q, int vector_space_dimension,

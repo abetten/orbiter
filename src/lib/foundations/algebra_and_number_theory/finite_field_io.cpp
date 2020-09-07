@@ -1383,14 +1383,14 @@ void finite_field::display_table_of_projective_points_easy(
 }
 
 
-void finite_field::export_magma(int d, long int *Pts, int nb_pts, char *fname)
+void finite_field::export_magma(int d, long int *Pts, int nb_pts, std::string &fname)
 {
-	char fname2[1000];
+	string fname2;
 	int *v;
 	int h, i, a, b;
 
 	v = NEW_int(d);
-	strcpy(fname2, fname);
+	fname2.assign(fname);
 	replace_extension_with(fname2, ".magma");
 
 	{
@@ -1436,14 +1436,14 @@ void finite_field::export_magma(int d, long int *Pts, int nb_pts, char *fname)
 	FREE_int(v);
 }
 
-void finite_field::export_gap(int d, long int *Pts, int nb_pts, char *fname)
+void finite_field::export_gap(int d, long int *Pts, int nb_pts, std::string &fname)
 {
-	char fname2[1000];
+	string fname2;
 	int *v;
 	int h, i, a, b;
 
 	v = NEW_int(d);
-	strcpy(fname2, fname);
+	fname2.assign(fname);
 	replace_extension_with(fname2, ".gap");
 
 	{

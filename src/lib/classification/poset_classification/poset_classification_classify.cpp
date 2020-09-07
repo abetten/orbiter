@@ -365,15 +365,16 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 		}
 		long int *Table;
 		int nb_rows, nb_cols;
-		char fname[1000];
+		string fname;
 		file_io Fio;
 
 		get_table_of_nodes(Table,
 			nb_rows, nb_cols, 0 /*verbose_level*/);
 
-		snprintf(fname, 1000, "%s_table_of_orbits.csv", problem_label_with_path.c_str());
+		fname.assign(problem_label_with_path);
+		fname.append("_table_of_orbits.csv");
 
-		Fio.lint_matrix_write_csv(fname, Table, nb_rows, nb_cols);
+		Fio.lint_matrix_write_csv(fname.c_str(), Table, nb_rows, nb_cols);
 
 		if (f_v) {
 			cout << "poset_classification::post_processing written file " << fname
@@ -456,10 +457,14 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 		{
 			spreadsheet *Sp;
 			make_spreadsheet_of_level_info(Sp, actual_size, verbose_level);
-			char fname_csv[1000];
-			snprintf(fname_csv, 1000, "%s_levels_%d.csv", problem_label_with_path.c_str(), actual_size);
-			Sp->save(fname_csv, verbose_level);
-			delete Sp;
+			string fname_csv;
+			char str[1000];
+
+			fname_csv.assign(problem_label_with_path);
+			sprintf(str, "_levels_%d.csv", actual_size);
+			fname_csv.append(str);
+			Sp->save(fname_csv.c_str(), verbose_level);
+			FREE_OBJECT(Sp);
 		}
 		if (f_v) {
 			cout << "poset_classification::post_processing preparing level spreadsheet done" << endl;
@@ -474,10 +479,14 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 		{
 			spreadsheet *Sp;
 			make_spreadsheet_of_orbit_reps(Sp, actual_size);
-			char fname_csv[1000];
-			snprintf(fname_csv, 1000, "%s_orbits_at_level_%d.csv", problem_label_with_path.c_str(), actual_size);
-			Sp->save(fname_csv, verbose_level);
-			delete Sp;
+			string fname_csv;
+			char str[1000];
+
+			fname_csv.assign(problem_label_with_path);
+			sprintf(str, "_orbits_at_level_%d.csv", actual_size);
+			fname_csv.append(str);
+			Sp->save(fname_csv.c_str(), verbose_level);
+			FREE_OBJECT(Sp);
 		}
 		if (f_v) {
 			cout << "poset_classification::post_processing preparing orbit spreadsheet done" << endl;
@@ -511,16 +520,17 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 		}
 	}
 	if (Control->f_make_relations_with_flag_orbits) {
-			char fname_prefix[1000];
+			string fname_prefix;
 
 
-			sprintf(fname_prefix, "%s_flag_orbits", problem_label_with_path.c_str());
+			fname_prefix.assign(problem_label_with_path);
+			fname_prefix.append("_flag_orbits");
 
 			if (f_v) {
 				cout << "poset_classification::post_processing before make_flag_orbits_on_relations" << endl;
 			}
 			make_flag_orbits_on_relations(
-					depth, fname_prefix, verbose_level);
+					depth, fname_prefix.c_str(), verbose_level);
 			if (f_v) {
 				cout << "poset_classification::post_processing after make_flag_orbits_on_relations" << endl;
 			}
@@ -652,11 +662,14 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 		file_io Fio;
 		int i;
 
-		char fname[1000];
+		string fname;
+		char str[1000];
 
-		sprintf(fname, "%s_KM_%d_%d.csv", problem_label.c_str(),
+		fname.assign(problem_label);
+		sprintf(str, "_KM_%d_%d.csv",
 				Control->Kramer_Mesner_t, Control->Kramer_Mesner_k);
-		Fio.lint_matrix_write_csv(fname, Mtk, nb_r, nb_c);
+		fname.append(str);
+		Fio.lint_matrix_write_csv(fname.c_str(), Mtk, nb_r, nb_c);
 		//Mtk.print(cout);
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
@@ -679,8 +692,9 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			cout << "poset_classification::post_processing f_report" << endl;
 		}
 		{
-			char fname_report[1000];
-			sprintf(fname_report, "%s_poset.tex", problem_label.c_str());
+			string fname_report;
+			fname_report.assign(problem_label);
+			fname_report.append("_poset.tex");
 			latex_interface L;
 			file_io Fio;
 

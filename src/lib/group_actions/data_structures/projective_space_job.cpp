@@ -85,11 +85,13 @@ void projective_space_job::perform_job(projective_space_job_description *Descr,
 	t0 = Os.os_ticks();
 
 	file_io Fio;
-	char fname_out_txt[1000];
-	char fname_out_tex[1000];
+	string fname_out_txt;
+	string fname_out_tex;
 
-	sprintf(fname_out_txt, "%s.txt", Descr->fname_base_out);
-	sprintf(fname_out_tex, "%s.tex", Descr->fname_base_out);
+	fname_out_txt.assign(Descr->fname_base_out);
+	fname_out_txt.append(".txt");
+	fname_out_tex.assign(Descr->fname_base_out);
+	fname_out_tex.append(".tex");
 
 	{
 		ofstream fp(fname_out_txt);

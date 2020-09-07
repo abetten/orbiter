@@ -1652,13 +1652,16 @@ void poset_classification::list_whole_orbit(
 		}
 
 	if (f_save_stab) {
-		char fname[1000];
+		string fname;
+		char str[1000];
 
-		snprintf(fname, 1000, "%s_stab_%d_%d.bin",
-				problem_label_with_path.c_str(), depth, orbit_idx);
+		fname.assign(problem_label_with_path);
+		sprintf(str, "_stab_%d_%d.bin", depth, orbit_idx);
+		fname.append(str);
+
 		cout << "saving stabilizer poset_classifications "
 				"to file " << fname << endl;
-		Strong_gens->write_file(fname, Control->verbose_level);
+		Strong_gens->write_file(fname.c_str(), Control->verbose_level);
 		}
 
 

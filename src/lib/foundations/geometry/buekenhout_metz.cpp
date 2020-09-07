@@ -1315,30 +1315,33 @@ void buekenhout_metz::investigate_line_orbit(int h, int verbose_level)
 
 void buekenhout_metz::write_unital_to_file()
 {
-	char fname_unital[1000];
+	string fname_unital;
 	file_io Fio;
 	
 	get_name(fname_unital);
-	strcat(fname_unital, ".txt");
-	Fio.write_set_to_file(fname_unital, U, sz, 0 /* verbose_level */);
+	fname_unital.append(".txt");
+	Fio.write_set_to_file(fname_unital.c_str(), U, sz, 0 /* verbose_level */);
 	cout << "written file " << fname_unital << " of size "
 			<< Fio.file_size(fname_unital) << endl;
 }
 
 
-void buekenhout_metz::get_name(char *name1000)
+void buekenhout_metz::get_name(std::string &name)
 {
+	char str[1000];
+
 	if (f_Uab) {
-		snprintf(name1000, 1000, "U_%d_%d_%d", parameter_a, parameter_b, q);
+		sprintf(str, "U_%d_%d_%d", parameter_a, parameter_b, q);
 		}
 	else {
 		if (f_classical) {
-			snprintf(name1000, 1000, "H%d", q);
+			sprintf(str, "H%d", q);
 			}
 		else {
-			snprintf(name1000, 1000, "BM%d", q);
+			sprintf(str, "BM%d", q);
 			}
 		}
+	name.assign(str);
 }
 
 int buekenhout_metz_check_good_points(int len,
