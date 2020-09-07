@@ -395,6 +395,8 @@ void homogeneous_polynomial_domain::make_monomials(
 	if (nb_sol != nb_monomials) {
 		cout << "homogeneous_polynomial_domain::make_monomials "
 				"nb_sol != nb_monomials" << endl;
+		cout << "nb_sol=" << nb_sol << endl;
+		cout << "nb_monomials=" << nb_monomials << endl;
 		exit(1);
 	}
 
