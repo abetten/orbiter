@@ -949,8 +949,8 @@ public:
 	sims *S;
 		// The normalizer of the involution
 
-	char prefix[1000];
-	char fname_orbits_on_triples[2000];
+	std::string prefix;
+	std::string fname_orbits_on_triples;
 	schreier *Orbits_on_triples;
 		// Orbits of the reflection group on triples.
 	action *A_on_orbits;

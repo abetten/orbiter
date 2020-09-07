@@ -62,21 +62,13 @@ class combinatorial_object_create {
 public:
 	combinatorial_object_description *Descr;
 
-	char prefix[1000];
-	char label_txt[1000];
-	char label_tex[1000];
 
 	int q;
 	finite_field *F;
 
-	char fname[1000];
+	std::string fname;
 	int nb_pts;
 	long int *Pts;
-
-	//long int *set;
-	//int set_size;
-	//int f_has_group;
-	//strong_generators *Sg;
 
 
 
@@ -86,8 +78,6 @@ public:
 	void null();
 	void freeself();
 	void init(combinatorial_object_description *Descr, int verbose_level);
-	//void apply_transformations(const char **transform_coeffs,
-	//	int *f_inverse_transform, int nb_transform, int verbose_level);
 };
 
 
@@ -183,14 +173,14 @@ public:
 	int f_Maruta_Hamada_arc;
 
 	int f_projective_variety;
-	const char *variety_label;
+	std::string variety_label;
 	int variety_degree;
 	const char *variety_coeffs;
 	monomial_ordering_type Monomial_ordering_type;
 
 
 	int f_projective_curve;
-	const char *curve_label;
+	std::string curve_label;
 	int curve_nb_vars;
 	int curve_degree;
 	const char *curve_coeffs;

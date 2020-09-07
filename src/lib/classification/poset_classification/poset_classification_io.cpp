@@ -2305,19 +2305,20 @@ void poset_classification::make_spreadsheet_of_level_info(
 
 
 void poset_classification::create_schreier_tree_fname_mask_base(
-		char *fname_mask2000, int node)
+		std::string &fname_mask, int node)
 {
 
-	snprintf(fname_mask2000, 2000, "%sschreier_tree_node_%d_%%d",
-			Control->schreier_tree_prefix, node);
+	fname_mask.assign(Control->schreier_tree_prefix);
+	fname_mask.append("schreier_tree_node_%d_%d");
 }
 
 void poset_classification::create_shallow_schreier_tree_fname_mask_base(
-		char *fname_mask2000, int node)
+		std::string &fname_mask, int node)
 {
 
-	snprintf(fname_mask2000, 2000, "%sshallow_schreier_tree_node_%d_%%d",
-			Control->schreier_tree_prefix, node);
+	fname_mask.assign(Control->schreier_tree_prefix);
+	fname_mask.append("shallow_schreier_tree_node_%d_%d");
+
 }
 
 void poset_classification::make_fname_candidates_file_default(

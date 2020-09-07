@@ -155,10 +155,6 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 		fname_bin.append(".bin");
 
 
-		//sprintf(fname_csv, "%sIncma_in_%d_%d.csv",
-		//		save_incma_in_and_out_prefix, Inc->nb_rows, Inc->nb_cols);
-		//sprintf(fname_bin, "%sIncma_in_%d_%d.bin",
-		//		save_incma_in_and_out_prefix, Inc->nb_rows, Inc->nb_cols);
 
 		Inc->save_as_csv(fname_csv, verbose_level);
 
@@ -257,10 +253,6 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 		fname_bin.append(str);
 		fname_bin.append(".bin");
 
-		//sprintf(fname_csv, "%sIncma_out_%d_%d.csv",
-		//		save_incma_in_and_out_prefix, Inc_out->nb_rows, Inc_out->nb_cols);
-		//sprintf(fname_bin, "%sIncma_out_%d_%d.bin",
-		//		save_incma_in_and_out_prefix, Inc_out->nb_rows, Inc_out->nb_cols);
 
 		Inc_out->save_as_csv(fname_csv, verbose_level);
 

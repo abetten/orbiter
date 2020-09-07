@@ -320,7 +320,7 @@ public:
 	void create_unital_Uab_tex(int verbose_level);
 	void compute_the_design(int verbose_level);
 	void write_unital_to_file();
-	void get_name(char *name1000);
+	void get_name(std::string &name);
 
 };
 
@@ -652,7 +652,7 @@ public:
 	void create_Buekenhout_Metz(
 		finite_field *Fq, finite_field *FQ,
 		int f_classical, int f_Uab, int parameter_a, int parameter_b,
-		char *fname, int &nb_pts, long int *&Pts,
+		std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	long int count_Sbar(int n, int q);
 	long int count_S(int n, int q);

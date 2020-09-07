@@ -464,7 +464,7 @@ void subfield_structure::Adelaide_hyperoval(
 }
 
 void subfield_structure::create_adelaide_hyperoval(
-	char *fname1000, int &nb_pts, long int *&Pts,
+	std::string &fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -477,7 +477,10 @@ void subfield_structure::create_adelaide_hyperoval(
 		}
 
 	Adelaide_hyperoval(Pts, nb_pts, verbose_level);
-	snprintf(fname1000, 1000, "adelaide_hyperoval_q%d.txt", q);
+
+	char str[1000];
+	sprintf(str, "adelaide_hyperoval_q%d.txt", q);
+	fname.assign(str);
 
 
 	if (f_v) {

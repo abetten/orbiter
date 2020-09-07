@@ -458,7 +458,7 @@ void poset_classification::report(ostream &ost)
 				orbit_at_level < nb_orbits;
 				orbit_at_level++) {
 
-			char fname_mask_base[1000];
+			string fname_mask_base;
 			O = get_node_ij(level, orbit_at_level);
 
 			create_shallow_schreier_tree_fname_mask_base(

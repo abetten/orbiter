@@ -130,7 +130,11 @@ void hall_system_classify::init(
 	nb_orbits_needed = nb_blocks_needed / 2;
 	N0 = (nb_pairs * (nb_pairs - 1) * (nb_pairs - 2)) / 6 * 4;
 	N = N0 * 2;
-	sprintf(prefix, "hall_%d", n);
+
+	char str[1000];
+	sprintf(str, "hall_%d", n);
+	prefix.assign(str);
+
 	if (f_v) {
 		cout << "hall_system_classify::init n=" << n << endl;
 		cout << "hall_system_classify::init nb_pairs=" << nb_pairs << endl;
@@ -312,7 +316,9 @@ void hall_system_classify::orbits_on_triples(int verbose_level)
 		cout << "hall_system_classify::orbits_on_triples" << endl;
 		}
 
-	snprintf(fname_orbits_on_triples, 2000, "%s_orbits_on_triples.bin", prefix);
+	fname_orbits_on_triples.assign(prefix);
+	fname_orbits_on_triples.append("_orbits_on_triples.bin");
+
 	if (Fio.file_size(fname_orbits_on_triples) > 0) {
 
 

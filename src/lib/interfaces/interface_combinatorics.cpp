@@ -716,7 +716,6 @@ void interface_combinatorics::do_graph_theoretic_activity(
 
 
 			fname_out.assign(fname_graph);
-			//snprintf(fname_out, 3000, "%s", fname_graph);
 			snprintf(extension, 1000, "_case_%03d.bin", c);
 			replace_extension_with(fname_out, extension);
 
@@ -870,14 +869,15 @@ void interface_combinatorics::do_create_combinatorial_object(int verbose_level)
 
 	if (f_save) {
 		file_io Fio;
-		char fname[1000];
+		string fname;
 
-		snprintf(fname, 1000, "%s%s", fname_prefix, COC->fname);
+		fname.assign(fname_prefix);
+		fname.append(COC->fname);
 
 		if (f_v) {
 			cout << "We will write to the file " << fname << endl;
 		}
-		Fio.write_set_to_file(fname, COC->Pts, COC->nb_pts, verbose_level);
+		Fio.write_set_to_file(fname.c_str(), COC->Pts, COC->nb_pts, verbose_level);
 		if (f_v) {
 			cout << "Written file " << fname << " of size "
 					<< Fio.file_size(fname) << endl;

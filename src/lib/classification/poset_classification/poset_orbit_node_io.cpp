@@ -513,13 +513,14 @@ void poset_orbit_node::save_schreier_forest(
 
 		nb_orbits = Schreier->nb_orbits;
 		for (orbit_no = 0; orbit_no < nb_orbits; orbit_no++) {
-			char fname_mask_base[2000];
-			char fname_mask[3000];
+			string fname_mask_base;
+			string fname_mask;
 
 			PC->create_schreier_tree_fname_mask_base(
 					fname_mask_base, node);
 
-			snprintf(fname_mask, 3000, "%s.layered_graph", fname_mask_base);
+			fname_mask.assign(fname_mask_base);
+			fname_mask.append(".layered_graph");
 
 			Schreier->export_tree_as_layered_graph(orbit_no,
 					fname_mask,
@@ -554,17 +555,19 @@ void poset_orbit_node::save_shallow_schreier_forest(
 		Schreier_vector->count_number_of_orbits_and_get_orbit_reps(
 					orbit_reps, nb_orbits);
 		for (orbit_no = 0; orbit_no < nb_orbits; orbit_no++) {
-			char fname_mask_base[2000];
-			char fname_mask[3000];
+			string fname_mask_base;
+			string fname_mask;
 
 			PC->create_shallow_schreier_tree_fname_mask_base(
 					fname_mask_base, node);
 
-			snprintf(fname_mask, 3000, "%s.layered_graph", fname_mask_base);
+
+			fname_mask.assign(fname_mask_base);
+			fname_mask.append(".layered_graph");
 
 			Schreier_vector->export_tree_as_layered_graph(
 					orbit_no, orbit_reps[orbit_no],
-					fname_mask,
+					fname_mask.c_str(),
 					verbose_level);
 		}
 	}

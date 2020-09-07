@@ -990,7 +990,7 @@ void schreier::draw_forest(const char *fname_mask,
 }
 
 void schreier::export_tree_as_layered_graph(int orbit_no,
-		const char *fname_mask,
+		std::string &fname_mask,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1124,7 +1124,7 @@ void schreier::export_tree_as_layered_graph(int orbit_no,
 	char str[1000];
 	string fname;
 
-	sprintf(str, fname_mask, orbit_no);
+	sprintf(str, fname_mask.c_str(), orbit_no);
 	fname.assign(str);
 	LG->write_file(fname, 0 /*verbose_level*/);
 	FREE_OBJECT(LG);

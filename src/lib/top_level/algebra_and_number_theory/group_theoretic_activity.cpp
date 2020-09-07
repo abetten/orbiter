@@ -447,10 +447,11 @@ void group_theoretic_activity::do_export_gap(int verbose_level)
 		cout << "group_theoretic_activity::do_export_gap" << endl;
 	}
 
-	char fname[1000];
+	string fname;
 	file_io Fio;
 
-	sprintf(fname, "%s_generators.gap", LG->label.c_str());
+	fname.assign(LG->label);
+	fname.append("_generators.gap");
 	{
 		ofstream fp(fname);
 		LG->Strong_gens->print_generators_gap(fp);
@@ -471,10 +472,11 @@ void group_theoretic_activity::do_export_magma(int verbose_level)
 		cout << "group_theoretic_activity::do_export_magma" << endl;
 	}
 
-	char fname[1000];
+	string fname;
 	file_io Fio;
 
-	sprintf(fname, "%s_generators.magma", LG->label.c_str());
+	fname.assign(LG->label);
+	fname.append("_generators.magma");
 	{
 		ofstream fp(fname);
 		LG->Strong_gens->export_magma(LG->A_linear, fp);
@@ -508,7 +510,7 @@ void group_theoretic_activity::create_group_table(int verbose_level)
 	}
 
 
-	char fname[1000];
+	string fname;
 	int *Table;
 	long int n;
 	file_io Fio;
@@ -520,12 +522,13 @@ void group_theoretic_activity::create_group_table(int verbose_level)
 		exit(1);
 	}
 
-	snprintf(fname, 1000, "%s_group_table.csv", LG->label.c_str());
+	fname.assign(LG->label);
+	fname.append("_group_table.csv");
 
 	cout << "The group table is:" << endl;
 	int_matrix_print(Table, n, n, 2);
 
-	Fio.int_matrix_write_csv(fname, Table, n, n);
+	Fio.int_matrix_write_csv(fname.c_str(), Table, n, n);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 	FREE_int(Table);
@@ -896,9 +899,10 @@ void group_theoretic_activity::print_elements_tex(int verbose_level)
 	cout << "after A_conj->all_point_orbits" << endl;
 #endif
 
-	char fname[1000];
+	string fname;
 
-	sprintf(fname, "%s_elements.tex", LG->label.c_str());
+	fname.assign(LG->label);
+	fname.append("_elements.tex");
 
 
 	{
@@ -1359,10 +1363,13 @@ void group_theoretic_activity::orbit_of(int verbose_level)
 
 	cout << "computing orbit of point done." << endl;
 
-	char fname_tree_mask[1000];
+	string fname_tree_mask;
+	char str[1000];
 
-	sprintf(fname_tree_mask, "%s_orbit_of_point_%d.layered_graph",
-			LG->label.c_str(), Descr->orbit_of_idx);
+	fname_tree_mask.assign(LG->label);
+	sprintf(str, "_orbit_of_point_%d.layered_graph", Descr->orbit_of_idx);
+	fname_tree_mask.append(str);
+
 
 	Sch->export_tree_as_layered_graph(0 /* orbit_no */,
 			fname_tree_mask,
@@ -1404,7 +1411,8 @@ void group_theoretic_activity::orbit_of(int verbose_level)
 
 	cout << "computing shallow Schreier tree done." << endl;
 
-	sprintf(fname_tree_mask, "%s_%%d_shallow.layered_graph", A2->label.c_str());
+	fname_tree_mask.assign(A2->label);
+	fname_tree_mask.append("_%d_shallow.layered_graph");
 
 	shallow_tree->export_tree_as_layered_graph(0 /* orbit_no */,
 			fname_tree_mask,
@@ -1468,13 +1476,14 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 
 
 	{
-		char fname[1000];
+		string fname;
 		file_io Fio;
 		int *orbit_reps;
 		int i;
 
 
-		sprintf(fname, "%s_orbit_reps.csv", A2->label.c_str());
+		fname.assign(A2->label);
+		fname.append("_orbit_reps.csv");
 
 		orbit_reps = NEW_int(Sch->nb_orbits);
 
@@ -1485,20 +1494,21 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 
 
 		Fio.int_vec_write_csv(orbit_reps, Sch->nb_orbits,
-				fname, "OrbRep");
+				fname.c_str(), "OrbRep");
 
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
 
 
 	{
-		char fname[1000];
+		string fname;
 		file_io Fio;
 		int *orbit_reps;
 		int i;
 
 
-		sprintf(fname, "%s_orbit_length.csv", A2->label.c_str());
+		fname.assign(A2->label);
+		fname.append("_orbit_length.csv");
 
 		orbit_reps = NEW_int(Sch->nb_orbits);
 
@@ -1509,7 +1519,7 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 
 
 		Fio.int_vec_write_csv(orbit_reps, Sch->nb_orbits,
-				fname, "OrbLen");
+				fname.c_str(), "OrbLen");
 
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
@@ -1524,22 +1534,24 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 		cout << "The degree is too large." << endl;
 	}
 
-	char fname_orbits[1000];
+	string fname_orbits;
 	file_io Fio;
 
-	sprintf(fname_orbits, "%s_orbits.tex", A2->label.c_str());
+	fname_orbits.assign(A2->label);
+	fname_orbits.append("_orbits.tex");
 
 
-	Sch->latex(fname_orbits);
+	Sch->latex(fname_orbits.c_str());
 	cout << "Written file " << fname_orbits << " of size "
 			<< Fio.file_size(fname_orbits) << endl;
 
 
 
 	if (Descr->f_export_trees) {
-		char fname_tree_mask[1000];
+		string fname_tree_mask;
 
-		sprintf(fname_tree_mask, "%s_%%d.layered_graph", A2->label.c_str());
+		fname_tree_mask.assign(A2->label);
+		fname_tree_mask.append("_%d.layered_graph");
 
 		for (orbit_idx = 0; orbit_idx < Sch->nb_orbits; orbit_idx++) {
 			cout << "orbit " << orbit_idx << " / " <<  Sch->nb_orbits
@@ -1553,7 +1565,7 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 	if (Descr->f_shallow_tree) {
 		orbit_idx = 0;
 		schreier *shallow_tree;
-		char fname_schreier_tree_mask[1000];
+		string fname_schreier_tree_mask;
 
 		cout << "computing shallow Schreier tree for orbit " << orbit_idx << endl;
 
@@ -1573,7 +1585,8 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 
 		cout << "computing shallow Schreier tree done." << endl;
 
-		sprintf(fname_schreier_tree_mask, "%s_%%d_shallow.layered_graph", A2->label.c_str());
+		fname_schreier_tree_mask.assign(A2->label);
+		fname_schreier_tree_mask.append("_%d_shallow.layered_graph");
 
 		shallow_tree->export_tree_as_layered_graph(0 /* orbit_no */,
 				fname_schreier_tree_mask,
@@ -1720,7 +1733,6 @@ void group_theoretic_activity::orbits_on_subspaces(int verbose_level)
 
 	Control->problem_label.assign(LG->label);
 	Control->f_problem_label = TRUE;
-	//sprintf(orbits_on_subspaces_PC->fname_base, "%s", LG->prefix);
 
 	orbits_on_subspaces_PC->initialize_and_allocate_root_node(
 			Control, orbits_on_subspaces_Poset,
@@ -3024,10 +3036,12 @@ void group_theoretic_activity::do_create_surface(
 			cout << "group_theoretic_activity::do_create_surface after SO->init" << endl;
 			}
 
-		char fname_points[2000];
+		string fname_points;
 
-		snprintf(fname_points, 2000, "surface_%s_points.txt", SC->label_txt.c_str());
-		Fio.write_set_to_file(fname_points,
+		fname_points.assign("surface_");
+		fname_points.append(SC->label_txt);
+		fname_points.append("_points.txt");
+		Fio.write_set_to_file(fname_points.c_str(),
 				SO->Pts, SO->nb_pts, 0 /*verbose_level*/);
 		cout << "group_theoretic_activity::do_create_surface "
 				"Written file " << fname_points << " of size "

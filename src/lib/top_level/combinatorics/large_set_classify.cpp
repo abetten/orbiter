@@ -141,7 +141,6 @@ void large_set_classify::init(design_create *DC,
 	path.assign(starter_directory_name);
 	prefix_with_directory.assign(starter_directory_name);
 	prefix_with_directory.append(base_fname);
-	//sprintf(prefix_with_directory, "%s%s", starter_directory_name, base_fname);
 
 	large_set_classify::design_table_prefix.assign(design_table_prefix);
 
@@ -622,7 +621,6 @@ void large_set_classify::process_starter_case(
 
 	fname.assign(prefix);
 	fname.append(group_label);
-	//sprintf(fname, "%s_graph_%s.bin", prefix, group_label);
 
 	if (f_v) {
 		cout << "large_set_classify::process_starter_case "
@@ -689,16 +687,16 @@ void large_set_classify::process_starter_case(
 		{
 		long int *Orbits_under_N;
 		file_io Fio;
-		char str[1000];
 		string fname_out;
 		int i, a, l;
 
 
 		Orbits_under_N = NEW_lint(Sch->nb_orbits * 2);
 
-		sprintf(str, "_graph_%s_N_orbit_reps.csv", group_label);
 		fname_out.assign(prefix);
-		fname_out.append(str);
+		fname_out.append("_graph_");
+		fname_out.append(group_label);
+		fname_out.append("_N_orbit_reps.csv");
 
 		for (i = 0; i < Sch->nb_orbits; i++) {
 			l = Sch->orbit_len[i];
@@ -783,7 +781,6 @@ void large_set_classify::process_starter_case(
 		fname_out.assign(solution_file_name);
 		replace_extension_with(fname_out, "_packings.csv");
 
-		//sprintf(fname_out, "%s", solution_file_name);
 		replace_extension_with(fname_out, "_packings.csv");
 
 		Fio.lint_matrix_write_csv(fname_out.c_str(), Large_sets, nb_solutions, sz);
@@ -806,7 +803,6 @@ void large_set_classify::process_starter_case(
 		string fname_out;
 
 		fname_out.assign(solution_file_name);
-		//sprintf(fname_out, "%s", solution_file_name);
 		replace_extension_with(fname_out, "_packings_explicit.csv");
 
 		Fio.lint_matrix_write_csv(fname_out.c_str(), Packings_explicit, nb_solutions, Sz);

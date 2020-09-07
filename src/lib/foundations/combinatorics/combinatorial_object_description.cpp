@@ -101,14 +101,14 @@ combinatorial_object_description::combinatorial_object_description()
 	f_Maruta_Hamada_arc = FALSE;
 
 	f_projective_variety = FALSE;
-	variety_label = NULL;
+	//variety_label = NULL;
 	variety_degree = 0;
 	variety_coeffs = NULL;
 	Monomial_ordering_type = t_PART;
 
 
 	f_projective_curve = FALSE;
-	curve_label = NULL;
+	//curve_label = NULL;
 	curve_nb_vars = 0;
 	curve_degree = 0;
 	curve_coeffs = NULL;
@@ -326,7 +326,7 @@ int combinatorial_object_description::read_arguments(int argc, const char **argv
 		}
 		else if (strcmp(argv[i], "-projective_variety") == 0) {
 			f_projective_variety = TRUE;
-			variety_label = argv[++i];
+			variety_label.assign(argv[++i]);
 			variety_degree = atoi(argv[++i]);
 			variety_coeffs = argv[++i];
 			cout << "-projective_variety "
@@ -336,7 +336,7 @@ int combinatorial_object_description::read_arguments(int argc, const char **argv
 		}
 		else if (strcmp(argv[i], "-projective_curve") == 0) {
 			f_projective_curve = TRUE;
-			curve_label = argv[++i];
+			curve_label.assign(argv[++i]);
 			curve_nb_vars = atoi(argv[++i]);
 			curve_degree = atoi(argv[++i]);
 			curve_coeffs = argv[++i];

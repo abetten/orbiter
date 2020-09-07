@@ -869,24 +869,22 @@ public:
 	void PG_element_apply_frobenius(int n,
 			int *v, int f);
 	void create_projective_variety(
-			const char *variety_label,
+			std::string &variety_label,
 			int variety_nb_vars, int variety_degree,
 			const char *variety_coeffs,
 			monomial_ordering_type Monomial_ordering_type,
-			char *fname1000, int &nb_pts, long int *&Pts,
+			std::string &fname, int &nb_pts, long int *&Pts,
 			int verbose_level);
 	void create_projective_curve(
-			const char *variety_label,
+			std::string &variety_label,
 			int curve_nb_vars, int curve_degree,
 			const char *curve_coeffs,
 			monomial_ordering_type Monomial_ordering_type,
-			char *fname, int &nb_pts, long int *&Pts,
+			std::string &fname, int &nb_pts, long int *&Pts,
 			int verbose_level);
-	void PG_element_normalize(
-			int *v, int stride, int len);
+	void PG_element_normalize(int *v, int stride, int len);
 	// last non-zero element made one
-	void PG_element_normalize_from_front(
-			int *v, int stride, int len);
+	void PG_element_normalize_from_front(int *v, int stride, int len);
 	// first non zero element made one
 
 
@@ -994,68 +992,68 @@ public:
 	void create_hyperoval(
 		int f_translation, int translation_exponent,
 		int f_Segre, int f_Payne, int f_Cherowitzo, int f_OKeefe_Penttila,
-		char *fname1000, int &nb_pts, long int *&Pts,
+		std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_subiaco_oval(
 		int f_short,
-		char *fname1000, int &nb_pts, long int *&Pts,
+		std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_subiaco_hyperoval(
-		char *fname1000, int &nb_pts, long int *&Pts,
+			std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_ovoid(
-		char *fname1000, int &nb_pts, long int *&Pts,
+			std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_Baer_substructure(int n,
 		finite_field *Fq,
-		char *fname1000, int &nb_pts, long int *&Pts,
+		std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	// the big field FQ is given
 	void create_BLT_from_database(int f_embedded,
 		int BLT_k,
-		char *fname1000, int &nb_pts, long int *&Pts,
+		std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_orthogonal(int epsilon, int n,
-		char *fname1000, int &nb_pts, long int *&Pts,
+			std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_hermitian(int n,
-		char *fname1000, int &nb_pts, long int *&Pts,
+			std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_cubic(
-		char *fname1000, int &nb_pts, long int *&Pts,
+			std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_twisted_cubic(
-		char *fname1000, int &nb_pts, long int *&Pts,
+			std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_elliptic_curve(
 		int elliptic_curve_b, int elliptic_curve_c,
-		char *fname1000, int &nb_pts, long int *&Pts,
+		std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_ttp_code(finite_field *Fq,
 		int f_construction_A, int f_hyperoval, int f_construction_B,
-		char *fname1000, int &nb_pts, long int *&Pts,
+		std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	// this is FQ
 	void create_unital_XXq_YZq_ZYq(
-		char *fname1000, int &nb_pts, long int *&Pts,
+			std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_whole_space(int n,
-		char *fname1000, int &nb_pts, long int *&Pts,
+			std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_hyperplane(int n,
 		int pt,
-		char *fname1000, int &nb_pts, long int *&Pts,
+		std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_segre_variety(int a, int b,
-		char *fname1000, int &nb_pts, long int *&Pts,
+			std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_Maruta_Hamada_arc(
-		char *fname1000, int &nb_pts, long int *&Pts,
+			std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_desarguesian_line_spread_in_PG_3_q(
 		finite_field *Fq,
 		int f_embedded_in_PG_4_q,
-		char *fname1000, int &nb_lines, long int *&Lines,
+		std::string &fname, int &nb_lines, long int *&Lines,
 		int verbose_level);
 	// this is FQ
 	void do_Klein_correspondence(int n,
@@ -1221,8 +1219,8 @@ public:
 		std::ostream &ost, long int *Pts, int nb_pts, int len);
 	void display_table_of_projective_points_easy(
 		std::ostream &ost, long int *Pts, int nb_pts, int len);
-	void export_magma(int d, long int *Pts, int nb_pts, char *fname);
-	void export_gap(int d, long int *Pts, int nb_pts, char *fname);
+	void export_magma(int d, long int *Pts, int nb_pts, std::string &fname);
+	void export_gap(int d, long int *Pts, int nb_pts, std::string &fname);
 	void oval_polynomial(
 		int *S, unipoly_domain &D, unipoly_object &poly,
 		int verbose_level);
@@ -2302,7 +2300,7 @@ public:
 	void Adelaide_hyperoval(
 			long int *&Pts, int &nb_pts, int verbose_level);
 	void create_adelaide_hyperoval(
-		char *fname1000, int &nb_pts, long int *&Pts,
+			std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 
 };

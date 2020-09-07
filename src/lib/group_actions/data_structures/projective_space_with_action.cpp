@@ -311,10 +311,6 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		fname_bin.append(".bin");
 
 
-		//sprintf(fname_csv, "%sIncma_in_%d_%d.csv",
-		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		//sprintf(fname_bin, "%sIncma_in_%d_%d.bin",
-		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
 		Fio.int_matrix_write_csv(fname_csv.c_str(), Incma, nb_rows, nb_cols);
 
 		for (i = 0; i < nb_rows + nb_cols; i++) {
@@ -498,13 +494,6 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		fname_labeling.append(".csv");
 
 
-
-		//sprintf(fname_labeling, "%slabeling_%d_%d.csv",
-		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		//sprintf(fname_csv, "%sIncma_out_%d_%d.csv",
-		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		//sprintf(fname_bin, "%sIncma_out_%d_%d.bin",
-		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
 		
 		Fio.int_vec_write_csv(labeling, N,
 				fname_labeling.c_str(), "canonical labeling");
@@ -937,10 +926,6 @@ strong_generators
 		fname_bin.append(str);
 		fname_bin.append(".bin");
 
-		//snprintf(fname_csv, 2000, "%sIncma_in_%d_%d.csv",
-		//		save_incma_in_and_out_prefix.c_str(), nb_rows, nb_cols);
-		//snprintf(fname_bin, 2000, "%sIncma_in_%d_%d.bin",
-		//		save_incma_in_and_out_prefix.c_str(), nb_rows, nb_cols);
 		Fio.int_matrix_write_csv(fname_csv.c_str(), Incma, nb_rows, nb_cols);
 
 		colored_graph *CG;
@@ -1090,13 +1075,6 @@ strong_generators
 
 		latex_interface L;
 
-		//snprintf(fname_labeling, 2000, "%slabeling_%d_%d.csv",
-		//		save_incma_in_and_out_prefix.c_str(), nb_rows, nb_cols);
-		//snprintf(fname_csv, 2000, "%sIncma_out_%d_%d.csv",
-		//		save_incma_in_and_out_prefix.c_str(), nb_rows, nb_cols);
-		//snprintf(fname_bin, 2000, "%sIncma_out_%d_%d.bin",
-		//		save_incma_in_and_out_prefix.c_str(), nb_rows, nb_cols);
-		
 		cout << "labeling:" << endl;
 		L.lint_vec_print_as_matrix(cout,
 				canonical_labeling, N, 10 /* width */, TRUE /* f_tex */);
@@ -2383,13 +2361,14 @@ void projective_space_with_action::save(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname[1000];
+	string fname;
 	file_io Fio;
 
 	if (f_v) {
 		cout << "projective_space_with_action::save" << endl;
 	}
-	snprintf(fname, 1000, "%s_classified.cvs", output_prefix.c_str());
+	fname.assign(output_prefix);
+	fname.append("_classified.cvs");
 
 	{
 		ofstream fp(fname);
@@ -3871,21 +3850,24 @@ void projective_space_with_action::select_packings_self_dual(
 
 	} // next g
 
-	char fname_base[1000];
-	char fname_self_dual[2000];
+	string fname_base;
+	string fname_self_dual;
+	char str[1000];
 
-	strcpy(fname_base, fname);
+	fname_base.assign(fname);
 	chop_off_extension(fname_base);
+	fname_self_dual.assign(fname);
+	chop_off_extension(fname_self_dual);
 	if (f_split) {
-		snprintf(fname_self_dual, 2000, "%s_self_dual_r%d_m%d.csv",
-				fname_base, split_r, split_m);
+		sprintf(str, "_self_dual_r%d_m%d.csv", split_r, split_m);
 	}
 	else {
-		snprintf(fname_self_dual, 2000, "%s_self_dual.csv", fname_base);
+		sprintf(str, "_self_dual.csv");
 	}
+	fname_self_dual.append(str);
 	cout << "saving self_dual_cases to file " << fname_self_dual << endl;
 	Fio.int_vec_write_csv(self_dual_cases, nb_self_dual_cases,
-			fname_self_dual, "self_dual_idx");
+			fname_self_dual.c_str(), "self_dual_idx");
 	cout << "written file " << fname_self_dual
 			<< " of size " << Fio.file_size(fname_self_dual) << endl;
 

@@ -314,8 +314,6 @@ void action::conjugacy_classes_and_normalizers_using_MAGMA(
 		cout << "action::conjugacy_classes_and_normalizers_using_MAGMA" << endl;
 	}
 	conjugacy_classes_and_normalizers_using_MAGMA_make_fnames(prefix, fname_magma, fname_output);
-	//sprintf(fname_magma, "%s_classes.magma", prefix);
-	//sprintf(fname_output, "%s_classes_out.txt", prefix);
 	if (f_v) {
 		cout << "action::conjugacy_classes_and_normalizers_using_MAGMA, fname_magma = " << fname_magma << endl;
 		cout << "action::conjugacy_classes_and_normalizers_using_MAGMA, fname_output = " << fname_output << endl;

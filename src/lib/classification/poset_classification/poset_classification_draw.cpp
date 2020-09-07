@@ -2536,17 +2536,22 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = FALSE; //(verbose_level >= 2);
-	char fname_base1[1000];
-	char fname[2000];
+	string fname_base1;
+	string fname;
 	int lvl, po, so, n, n1, f, cnt;
 	long int *set;
+	char str[1000];
 	longinteger_domain D;
 
 	if (f_v) {
 		cout << "poset_classification::print_data_structure_tex" << endl;
 	}
-	snprintf(fname_base1, 1000, "%s_data_lvl_%d", problem_label_with_path.c_str(), depth);
-	snprintf(fname, 2000, "%s.tex", fname_base1);
+	fname_base1.assign(problem_label_with_path);
+	sprintf(str, "_data_lvl_%d", depth);
+	fname_base1.append(str);
+
+	fname.assign(fname_base1);
+	fname.append(".tex");
 
 	set = NEW_lint(depth);
 	{
