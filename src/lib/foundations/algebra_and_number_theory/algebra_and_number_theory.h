@@ -871,7 +871,7 @@ public:
 	void create_projective_variety(
 			std::string &variety_label,
 			int variety_nb_vars, int variety_degree,
-			const char *variety_coeffs,
+			std::string &variety_coeffs,
 			monomial_ordering_type Monomial_ordering_type,
 			std::string &fname, int &nb_pts, long int *&Pts,
 			int verbose_level);
@@ -1836,17 +1836,7 @@ public:
 	// $M_n = 2^n - 1$
 	void create_Fermat(longinteger_object &F, int n);
 	// $F_n = 2^{2^n} + 1$
-	void binomial(longinteger_object &a, int n, int k, 
-		int verbose_level);
-	void size_of_conjugacy_class_in_sym_n(longinteger_object &a, 
-		int n, int *part);
-	void q_binomial(longinteger_object &a, 
-		int n, int k, int q, int verbose_level);
-	void q_binomial_no_table(longinteger_object &a, 
-		int n, int k, int q, int verbose_level);
-	void make_mac_williams_equations(longinteger_object *&M,
-			int n, int k, int q, int verbose_level);
-	void krawtchouk(longinteger_object &a, int n, int q, int k, int x);
+
 	int is_even(longinteger_object &a);
 	int is_odd(longinteger_object &a);
 	int remainder_mod_int(longinteger_object &a, int p);
@@ -1921,18 +1911,11 @@ public:
 	void factorial(longinteger_object &result, int n);
 	void group_order_PGL(longinteger_object &result, 
 		int n, int q, int f_semilinear);
-	int singleton_bound_for_d(int n, int k, int q, int verbose_level);
-	int hamming_bound_for_d(int n, int k, int q, int verbose_level);
-	int plotkin_bound_for_d(int n, int k, int q, int verbose_level);
-	int griesmer_bound_for_d(int n, int k, int q, int verbose_level);
-	int griesmer_bound_for_n(int k, int d, int q, int verbose_level);
 	void square_root_floor(longinteger_object &a,
 			longinteger_object &x, int verbose_level);
 };
 
-void longinteger_free_global_data();
 void longinteger_print_digits(char *rep, int len);
-void longinteger_domain_free_tab_q_binomials();
 
 
 // #############################################################################

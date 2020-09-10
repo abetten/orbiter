@@ -12,7 +12,6 @@
 using namespace std;
 
 
-#define TABLE_Q_BINOMIALS_MAX 200
 
 namespace orbiter {
 namespace foundations {
@@ -1702,497 +1701,10 @@ void longinteger_domain::create_Fermat(longinteger_object &F, int n)
 }
 
 
-#define TABLE_BINOMIALS_MAX 1000
-
-static longinteger_object *tab_binomials = NULL;
-static int tab_binomials_size = 0;
-
-
-static void binomial_with_table(
-		longinteger_object &a, int n, int k)
-{
-	int i, j;
-	longinteger_domain D;
-	
-	if (k < 0 || k > n) {
-		a.create(0, __FILE__, __LINE__);
-		return;
-	}
-	if (k == n) {
-		a.create(1, __FILE__, __LINE__);
-		return;
-	}
-	if (k == 0) {
-		a.create(1, __FILE__, __LINE__);
-		return;
-	}
-
-	// reallocate table if necessary:
-	if (n >= tab_binomials_size) {
-		//cout << "binomial_with_table
-		// reallocating table to size " << n + 1 << endl;
-		longinteger_object *tab_binomials2 =
-			NEW_OBJECTS(longinteger_object, (n + 1) * (n + 1));
-		for (i = 0; i < tab_binomials_size; i++) {
-			for (j = 0; j <= i; j++) {
-				tab_binomials[i * tab_binomials_size +
-					j].swap_with(tab_binomials2[i * (n + 1) + j]);
-			}
-		}
-		for ( ; i <= n; i++) {
-			for (j = 0; j <= i; j++) {
-				tab_binomials2[i * (n + 1) + j].create(0, __FILE__, __LINE__);
-			}
-		}
-		if (tab_binomials) {
-			FREE_OBJECTS(tab_binomials);
-		}
-		tab_binomials = tab_binomials2;
-		tab_binomials_size = n + 1;
-#if 0
-		for (i = 0; i < tab_binomials_size; i++) {
-			for (j = 0; j <= i; j++) {
-				tab_binomials2[i * (n + 1) + j].print(cout);
-				cout << " ";
-			}
-			cout << endl;
-		}
-		cout << endl;
-#endif
-	}
-	if (tab_binomials[n * tab_binomials_size + k].is_zero()) {
-		longinteger_object b, c, d;
-		int r;
-		
-		binomial_with_table(b, n, k - 1);
-		//cout << "recursion, binom " << n << ", " << k - 1 << " = ";
-		//b.print(cout);
-		//cout << endl;
-		
-		c.create(n - k + 1, __FILE__, __LINE__);
-		D.mult(b, c, d);
-		D.integral_division_by_int(d, k, a, r);
-		if (r != 0) {
-			cout << "longinteger_domain.cpp: binomial_with_table k != 0" << endl;
-			exit(1);
-		}
-		a.assign_to(tab_binomials[n * tab_binomials_size + k]);
-		//cout << "new table entry n=" << n << " k=" << k << " : ";
-		//a.print(cout);
-		//cout << " ";
-		//tab_binomials[n * tab_binomials_size + k].print(cout);
-		//cout << endl;
-	}
-	else {
-		tab_binomials[n * tab_binomials_size + k].assign_to(a);
-	}
-}
-
-void longinteger_domain::binomial(
-	longinteger_object &a, int n, int k,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	longinteger_object b, c, d;
-	int r;
-	
-	if (f_v) {
-		cout << "longinteger_domain::binomial "
-				"n=" << n << " k=" << k << endl;
-	}
-	if (k < 0 || k > n) {
-		a.create(0, __FILE__, __LINE__);
-		return;
-	}
-	if (k == n) {
-		a.create(1, __FILE__, __LINE__);
-		return;
-	}
-	if (k == 0) {
-		a.create(1, __FILE__, __LINE__);
-		return;
-	}
-	if (n < TABLE_BINOMIALS_MAX) {
-		if (f_v) {
-			cout << "longinteger_domain::binomial "
-					"using table" << endl;
-		}
-		binomial_with_table(a, n, k);
-		return;
-	}
-	else {
-		binomial(b, n, k - 1, verbose_level);
-	}
-	c.create(n - k + 1, __FILE__, __LINE__);
-	mult(b, c, d);
-	integral_division_by_int(d, k, a, r);
-	if (r != 0) {
-		cout << "longinteger_domain::binomial "
-				"k != 0" << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "longinteger_domain::binomial "
-				"n=" << n << " k=" << k << " done" << endl;
-	}
-}
-
-void longinteger_domain::size_of_conjugacy_class_in_sym_n(
-	longinteger_object &a, int n, int *part)
-{
-	longinteger_object b, c, d;
-	int i, ai, j;
-	
-	factorial(b, n);
-	for (i = 1; i <= n; i++) {
-		ai = part[i - 1];
-		c.create(1, __FILE__, __LINE__);
-		for (j = 0; j < ai; j++) {
-			mult_integer_in_place(c, i);
-		}
-		for (j = 1; j <= ai; j++) {
-			mult_integer_in_place(c, j);
-		}
-		integral_division_exact(b, c, d);
-		d.assign_to(b);
-	}
-	b.assign_to(a);
-}
 
 
 
 
-static longinteger_object *tab_q_binomials = NULL;
-static int tab_q_binomials_size = 0;
-static int tab_q_binomials_q = 0;
-
-
-static void q_binomial_with_table(longinteger_object &a, 
-	int n, int k, int q, int verbose_level)
-{
-	int i, j;
-	longinteger_domain D;
-	
-	//cout << "q_binomial_with_table n=" << n
-	// << " k=" << k << " q=" << q << endl;
-	if (k < 0 || k > n) {
-		a.create(0, __FILE__, __LINE__);
-		return;
-	}
-	if (k == n) {
-		a.create(1, __FILE__, __LINE__);
-		return;
-	}
-	if (k == 0) {
-		a.create(1, __FILE__, __LINE__);
-		return;
-	}
-
-	// reallocate table if necessary:
-	if (n >= tab_q_binomials_size) {
-		if (tab_q_binomials_size > 0 && q != tab_q_binomials_q) {
-
-
-			D.q_binomial_no_table(a, n, k, q, verbose_level);
-			return;
-#if 0
-			cout << "tab_q_binomials_size > 0 && q != tab_q_binomials_q" << endl;
-			cout << "q=" << q << endl;
-			cout << "tab_q_binomials_q=" << tab_q_binomials_q << endl;
-			exit(1);
-#endif
-		}
-		else {
-			tab_q_binomials_q = q;
-		}
-		//cout << "binomial_with_table
-		// reallocating table to size " << n + 1 << endl;
-		longinteger_object *tab_q_binomials2 =
-			NEW_OBJECTS(longinteger_object, (n + 1) * (n + 1));
-		for (i = 0; i < tab_q_binomials_size; i++) {
-			for (j = 0; j <= i; j++) {
-				tab_q_binomials[i * tab_q_binomials_size +
-					j].swap_with(tab_q_binomials2[i * (n + 1) + j]);
-			}
-		}
-		for ( ; i <= n; i++) {
-			for (j = 0; j <= i; j++) {
-				tab_q_binomials2[i * (n + 1) + j].create(0, __FILE__, __LINE__);
-			}
-		}
-		if (tab_q_binomials) {
-			FREE_OBJECTS(tab_q_binomials);
-		}
-		tab_q_binomials = tab_q_binomials2;
-		tab_q_binomials_size = n + 1;
-#if 0
-		for (i = 0; i < tab_q_binomials_size; i++) {
-			for (j = 0; j <= i; j++) {
-				tab_q_binomials2[i * (n + 1) + j].print(cout);
-				cout << " ";
-			}
-			cout << endl;
-		}
-		cout << endl;
-#endif
-	}
-	if (tab_q_binomials[n * tab_q_binomials_size + k].is_zero()) {
-		
-		D.q_binomial_no_table(a, n, k, q, verbose_level);
-		a.assign_to(tab_q_binomials[n * tab_q_binomials_size + k]);
-		//cout << "new table entry n=" << n << " k=" << k << " : ";
-		//a.print(cout);
-		//cout << " ";
-		//tab_q_binomials[n * tab_q_binomials_size + k].print(cout);
-		//cout << endl;
-	}
-	else {
-		tab_q_binomials[n * tab_q_binomials_size + k].assign_to(a);
-	}
-}
-
-
-void longinteger_domain::q_binomial(
-	longinteger_object &a,
-	int n, int k, int q, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	longinteger_object b, c, top, bottom, r;
-	
-	if (f_v) {
-		cout << "longinteger_domain::q_binomial "
-				"n=" << n << " k=" << k << " q=" << q << endl;
-	}
-	if (k < 0 || k > n) {
-		a.create(0, __FILE__, __LINE__);
-		return;
-	}
-	if (k == n) {
-		a.create(1, __FILE__, __LINE__);
-		return;
-	}
-	if (k == 0) {
-		a.create(1, __FILE__, __LINE__);
-		return;
-	}
-	//cout << "longinteger_domain::q_binomial
-	//n=" << n << " k=" << k << " q=" << q << endl;
-	if (n < TABLE_Q_BINOMIALS_MAX) {
-		q_binomial_with_table(a, n, k, q, verbose_level);
-	}
-	else {
-		q_binomial_no_table(b, n, k, q, verbose_level);
-	}
-	if (f_v) {
-		cout << "longinteger_domain::q_binomial "
-			"n=" << n << " k=" << k << " q=" << q
-			<< " yields " << a << endl;
-	}
-}
-
-void longinteger_domain::q_binomial_no_table(
-	longinteger_object &a,
-	int n, int k, int q, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	longinteger_object b, c, top, bottom, r;
-	
-	if (f_v) {
-		cout << "longinteger_domain::q_binomial_no_table "
-			"n=" << n << " k=" << k << " q=" << q << endl;
-	}
-	if (k < 0 || k > n) {
-		a.create(0, __FILE__, __LINE__);
-		return;
-	}
-	if (k == n) {
-		a.create(1, __FILE__, __LINE__);
-		return;
-	}
-	if (k == 0) {
-		a.create(1, __FILE__, __LINE__);
-		return;
-	}
-	q_binomial_no_table(b, n - 1, k - 1, q, verbose_level);
-	create_qnm1(c, q, n);
-	mult(b, c, top);
-	create_qnm1(bottom, q, k);
-	integral_division(top, bottom, a, r, verbose_level - 1);
-	if (!r.is_zero()) {
-		cout << "longinteger_domain::q_binomial_no_table "
-				"remainder is not zero" << endl;
-		cout << "q=" << q << endl;
-		cout << "n-1=" << n-1 << endl;
-		cout << "k-1=" << k-1 << endl;
-		cout << "top=" << top << endl;
-		cout << "bottom=" << bottom << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "longinteger_domain::q_binomial_no_table "
-			"n=" << n << " k=" << k << " q=" << q
-			<< " yields " << a << endl;
-	}
-}
-
-static longinteger_object *tab_krawtchouk = NULL;
-static int *tab_krawtchouk_entry_computed = NULL;
-static int tab_krawtchouk_size = 0;
-static int tab_krawtchouk_n = 0;
-static int tab_krawtchouk_q = 0;
-
-static void krawtchouk_with_table(longinteger_object &a, 
-	int n, int q, int k, int x)
-{
-	int i, j, kx;
-	longinteger_domain D;
-	
-	if (tab_krawtchouk_size) { 
-		if (n != tab_krawtchouk_n || q != tab_krawtchouk_q) {
-			delete [] tab_krawtchouk;
-			FREE_int(tab_krawtchouk_entry_computed);
-			tab_krawtchouk_size = 0;
-			tab_krawtchouk_n = 0;
-			tab_krawtchouk_q = 0;
-		}
-	}
-	kx = MAXIMUM(k, x);
-	// reallocate table if necessary:
-	if (kx >= tab_krawtchouk_size) {
-		kx++;
-		//cout << "krawtchouk_with_table
-		//reallocating table to size " << kx << endl;
-		longinteger_object *tab_krawtchouk2 =
-				NEW_OBJECTS(longinteger_object, kx * kx);
-		int *tab_krawtchouk_entry_computed2 = NEW_int(kx * kx);
-		for (i = 0; i < kx; i++) {
-			for (j = 0; j < kx; j++) {
-				tab_krawtchouk_entry_computed2[i * kx + j] = FALSE;
-				tab_krawtchouk2[i * kx + j].create(0, __FILE__, __LINE__);
-			}
-		}
-		for (i = 0; i < tab_krawtchouk_size; i++) {
-			for (j = 0; j < tab_krawtchouk_size; j++) {
-				tab_krawtchouk[i * tab_krawtchouk_size + j
-					].swap_with(tab_krawtchouk2[i * kx + j]);
-				tab_krawtchouk_entry_computed2[i * kx + j] =
-					tab_krawtchouk_entry_computed[
-						i * tab_krawtchouk_size + j];
-			}
-		}
-		if (tab_krawtchouk) {
-			FREE_OBJECTS(tab_krawtchouk);
-		}
-		if (tab_krawtchouk_entry_computed) {
-			FREE_int(tab_krawtchouk_entry_computed);
-		}
-		tab_krawtchouk = tab_krawtchouk2;
-		tab_krawtchouk_entry_computed = tab_krawtchouk_entry_computed2;
-		tab_krawtchouk_size = kx;
-		tab_krawtchouk_n = n;
-		tab_krawtchouk_q = q;
-#if 0
-		for (i = 0; i < tab_krawtchouk_size; i++) {
-			for (j = 0; j < tab_krawtchouk_size; j++) {
-				tab_krawtchouk[i * tab_krawtchouk_size + j].print(cout);
-				cout << " ";
-			}
-			cout << endl;
-		}
-		cout << endl;
-#endif
-	}
-	if (!tab_krawtchouk_entry_computed[k * tab_krawtchouk_size + x]) {
-		longinteger_object n_choose_k, b, c, d, e, f;
-		
-		if (x < 0) {
-			cout << "krawtchouk_with_table() x < 0" << endl;
-			exit(1);
-		}
-		if (k < 0) {
-			cout << "krawtchouk_with_table() k < 0" << endl;
-			exit(1);
-		}
-		if (x == 0) {
-			D.binomial(n_choose_k, n, k, FALSE);
-			if (q != 1) {
-				b.create(q - 1, __FILE__, __LINE__);
-				D.power_int(b, k);
-				D.mult(n_choose_k, b, a);
-			}
-			else {
-				n_choose_k.assign_to(a);
-			}
-		}
-		else if (k == 0) {
-			a.create(1, __FILE__, __LINE__);
-		}
-		else {
-			krawtchouk_with_table(b, n, q, k, x - 1);
-			//cout << "K_" << k << "(" << x - 1 << ")=" << b << endl;
-			c.create(-q + 1, __FILE__, __LINE__);
-			krawtchouk_with_table(d, n, q, k - 1, x);
-			//cout << "K_" << k - 1<< "(" << x << ")=" << d << endl;
-			D.mult(c, d, e);
-			//cout << " e=";
-			//e.print(cout);
-			D.add(b, e, c);
-			//cout << " c=";
-			//c.print(cout);
-			d.create(-1, __FILE__, __LINE__);
-			krawtchouk_with_table(e, n, q, k - 1, x - 1);
-			//cout << "K_" << k - 1<< "(" << x - 1 << ")=" << e << endl;
-			D.mult(d, e, f);
-			//cout << " f=";
-			//f.print(cout);
-			//cout << " c=";
-			//c.print(cout);
-			D.add(c, f, a);
-			//cout << " a=";
-			//a.print(cout);
-			//cout << endl;
-		}
-		
-		a.assign_to(tab_krawtchouk[k * tab_krawtchouk_size + x]);
-		tab_krawtchouk_entry_computed[
-				k * tab_krawtchouk_size + x] = TRUE;
-		//cout << "new table entry k=" << k
-		// << " x=" << x << " : " << a << endl;
-	}
-	else {
-		tab_krawtchouk[k * tab_krawtchouk_size + x].assign_to(a);
-	}
-}
-
-void longinteger_domain::make_mac_williams_equations(longinteger_object *&M,
-		int n, int k, int q, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
-	int i, j;
-
-	if (f_v) {
-		cout << "longinteger_domain::make_mac_williams_equations" << endl;
-	}
-	M = NEW_OBJECTS(longinteger_object, (n + 1) * (n + 1));
-
-	for (i = 0; i <= n; i++) {
-		for (j = 0; j <= n; j++) {
-			D.krawtchouk(M[i * (n + 1) + j], n, q, i, j);
-		}
-	}
-	if (f_v) {
-		cout << "longinteger_domain::make_mac_williams_equations done" << endl;
-	}
-}
-
-void longinteger_domain::krawtchouk(longinteger_object &a, 
-	int n, int q, int k, int x)
-{	
-	//cout << "krawtchouk() n=" << n << " q=" << q
-	//<< " k=" << k << " x=" << x << endl;
-	krawtchouk_with_table(a, n, q, k, x);
-}
 
 int longinteger_domain::is_even(longinteger_object &a)
 {
@@ -2323,12 +1835,10 @@ void longinteger_domain::factor_into_longintegers(
 	number_theory_domain NT;
 	
 	if (f_v) {
-		cout << "longinteger_domain::factor_into_longintegers "
-				"factoring " << a << endl;
+		cout << "longinteger_domain::factor_into_longintegers factoring " << a << endl;
 	}
 	if (a.is_zero()) {
-		cout << "longinteger_domain::factor_into_longintegers "
-				"a is zero" << endl;
+		cout << "longinteger_domain::factor_into_longintegers a is zero" << endl;
 		exit(1);
 	}
 	if (a.is_one()) {
@@ -2511,8 +2021,7 @@ int longinteger_domain::jacobi(longinteger_object &a,
 	int n, rr, r1, t1, t2;
 	
 	if (f_v) {
-		cout << "longinteger_domain::jacobi ("
-			<< a << " over " << m << ")" << endl;
+		cout << "longinteger_domain::jacobi (" << a << " over " << m << ")" << endl;
 	}
 	a.assign_to(a1);
 	m.assign_to(m1);
@@ -2525,7 +2034,7 @@ int longinteger_domain::jacobi(longinteger_object &a,
 	}
 	
 	while (TRUE) {
-		// at this point, we have
+		// we now have
 		// jacobi(a, m) = r1 * jacobi(a1, m1);
 		integral_division(a1, m1, q, r, verbose_level - 2);
 		if (f_vv) {
@@ -2539,16 +2048,15 @@ int longinteger_domain::jacobi(longinteger_object &a,
 					<< a1 << ", " << m1 << ")" << endl;
 		}
 		if (ODD(n)) {
-			// t = (m1 * m1 - 1) >> 3; /* t = (m1 * m1 - 1) / 8 */
-			/* Ranmultiplizieren von (-1) hoch t an r1: */
+			// t = (m1 * m1 - 1) >> 3 = (m1 * m1 - 1) / 8
+			// multiply r1 by  (-1) to the power t:
 			rr = remainder_mod_int(m1, 8);
 			if (rr == 3 || rr == 5) {
-				r1 = -r1; /* Beachte ABS(r1) == 1L */
+				r1 = -r1; // note ABS(r1) == 1
 			}
 		}
 		if (f_vv) {
-			cout << r1 << " * Jacobi(" << a1 << ", "
-					<< m1 << ")" << endl;
+			cout << r1 << " * Jacobi(" << a1 << ", " << m1 << ")" << endl;
 		}
 		if (a1.is_one_or_minus_one()) {
 			break;
@@ -2567,13 +2075,11 @@ int longinteger_domain::jacobi(longinteger_object &a,
 			r1 = -r1;
 		}
 		if (f_vv) {
-			cout << r1 << " * Jacobi(" << a1
-					<< ", " << m1 << ")" << endl;
+			cout << r1 << " * Jacobi(" << a1 << ", " << m1 << ")" << endl;
 		}
 	}
 	if (f_v) {
-		cout << "jacobi(" << a << ", " << m
-				<< ") = " << r1 << endl;
+		cout << "jacobi(" << a << ", " << m << ") = " << r1 << endl;
 	}
 	return r1;
 }
@@ -3267,7 +2773,7 @@ int longinteger_domain::miller_rabin_test_with_latex_key(ostream &ost,
 int longinteger_domain::miller_rabin_test_iterated_with_latex_key(ostream &ost,
 		longinteger_object &P, int nb_times,
 		int verbose_level)
-// returns TRUE is the test is conclusive, i.e. if the number is not prime.
+// returns TRUE if the test is conclusive, i.e. if the number is not prime.
 {
 	int f_v = (verbose_level >= 1);
 	int i, ret;
@@ -3573,179 +3079,8 @@ void longinteger_domain::group_order_PGL(
 	FREE_lint(x);
 }
 
-int longinteger_domain::singleton_bound_for_d(
-		int n, int k, int q, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int d;
-	
-	if (f_v) {
-		cout << "longinteger_domain::singleton_bound_for_d" << endl;
-	}
-	d = n - k + 1;
-	return d;
-}
 
 
-int longinteger_domain::hamming_bound_for_d(
-		int n, int k, int q, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int e, d, t;
-	longinteger_object qnmk, qm1, qm1_power, B, s, a, b;
-	
-	if (f_v) {
-		cout << "longinteger_domain::hamming_bound_for_d" << endl;
-	}
-	qnmk.create(q, __FILE__, __LINE__);
-	qm1.create(q - 1, __FILE__, __LINE__);
-	power_int(qnmk, n - k);
-	qm1_power.create(1, __FILE__, __LINE__);
-	B.create(0, __FILE__, __LINE__);
-	if (f_vv) {
-		cout << "longinteger_domain::hamming_bound_for_d: "
-			"q=" << q << " n=" << n << " k=" << k << " "
-			<< q << "^" << n - k << " = " << qnmk << endl;
-	}
-	for (e = 0; ; e++) {
-		binomial(b, n, e, FALSE);
-		mult(b, qm1_power, s);
-		add(B, s, a);
-		a.assign_to(B);
-		if (compare(B, qnmk) == 1) {
-			// now the size of the Ball of radius e is bigger than q^{n-m}
-			t = e - 1;
-			d = 2 * t + 2;
-			if (f_vv) {
-				cout << "B=" << B << " t=" << t << " d=" << d << endl;
-			}
-			break;
-		}
-		if (f_vv) {
-			cout << "e=" << e << " B=" << B << " is OK" << endl;
-		}
-		mult(qm1_power, qm1, s);
-		s.assign_to(qm1_power);
-	}
-	if (f_v) {
-		cout << "longinteger_domain::hamming_bound_for_d done" << endl;
-	}
-	return d;
-}
-
-int longinteger_domain::plotkin_bound_for_d(
-		int n, int k, int q, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int d;
-	longinteger_object qkm1, qk, qm1, a, b, c, Q, R;
-	
-	if (f_v) {
-		cout << "longinteger_domain::plotkin_bound_for_d" << endl;
-	}
-
-	// d \le \frac{n q^{k-1}}{q^k-1}
-
-	qkm1.create(q, __FILE__, __LINE__);
-	power_int(qkm1, k - 1);
-	a.create(n, __FILE__, __LINE__);
-	mult(a, qkm1, b);
-		// now b = n q^{k-1}
-
-	a.create(q - 1, __FILE__, __LINE__);
-	mult(b, a, c);
-		// now c = n q^{k-1} (q - 1)
-		
-
-	a.create(q, __FILE__, __LINE__);
-	mult(a, qkm1, qk);
-		// now qk = q^k
-
-	a.create(-1, __FILE__, __LINE__);
-	add(qk, a, b);
-		// now b = 2^k - 1
-
-	if (f_vv) {
-		cout << "longinteger_domain::plotkin_bound_for_d "
-				"q=" << q << " n=" << n << " k=" << k << endl;
-	}
-	integral_division(c, b, Q, R, FALSE /* verbose_level */);
-	d = Q.as_int();
-	if (f_vv) {
-		cout << c << " / " << b << " = " << d << endl;
-	}
-	if (f_v) {
-		cout << "longinteger_domain::plotkin_bound_for_d" << endl;
-	}
-	return d;
-}
-
-int longinteger_domain::griesmer_bound_for_d(
-		int n, int k, int q, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int d, n1;
-	
-	if (f_v) {
-		cout << "longinteger_domain::griesmer_bound_for_d" << endl;
-	}
-	for (d = 1; d <= n; d++) {
-		n1 = griesmer_bound_for_n(k, d, q, verbose_level - 2);
-		if (n1 > n) {
-			d--;
-			break;
-			}
-	}
-	if (f_v) {
-		cout << "longinteger_domain::griesmer_bound_for_d done" << endl;
-	}
-	return d;
-}
-
-int longinteger_domain::griesmer_bound_for_n(
-		int k, int d, int q, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int i, n;
-	longinteger_object qq, qi, d1, S, Q, R, one, a, b;
-	
-	if (f_v) {
-		cout << "longinteger_domain::griesmer_bound_for_n" << endl;
-	}
-	one.create(1, __FILE__, __LINE__);
-	d1.create(d, __FILE__, __LINE__);
-	qq.create(q, __FILE__, __LINE__);
-	qi.create(1, __FILE__, __LINE__);
-	S.create(0, __FILE__, __LINE__);
-	if (f_vv) {
-		cout << "griesmer_bound_for_n: q=" << q
-				<< " d=" << d << " k=" << k << endl;
-	}
-	for (i = 0; i < k; i++) {
-		integral_division(d1, qi, Q, R, FALSE /* verbose_level */);
-		if (!R.is_zero()) {
-			add(Q, one, a);
-			add(S, a, b);
-		}
-		else {
-			add(S, Q, b);
-		}
-		b.assign_to(S);
-		mult(qi, qq, a);
-		a.assign_to(qi);
-		if (f_vv) {
-			cout << "i=" << i << " S=" << S << endl;
-		}
-	}
-	n = S.as_int();
-	if (f_v) {
-		cout << "longinteger_domain::griesmer_bound_for_n" << endl;
-	}
-	return n;
-}
 
 
 void longinteger_domain::square_root_floor(longinteger_object &a,
@@ -3813,45 +3148,6 @@ void longinteger_domain::square_root_floor(longinteger_object &a,
 //##############################################################################
 
 
-void longinteger_free_global_data()
-{
-	int verbose_level = 0;
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "longinteger_free_global_data" << endl;
-	}
-	if (tab_binomials) {
-		if (f_v) {
-			cout << "longinteger_free_global_data before "
-					"FREE_OBJECTS(tab_binomials)" << endl;
-		}
-		FREE_OBJECTS(tab_binomials);
-		if (f_v) {
-			cout << "longinteger_free_global_data after "
-					"FREE_OBJECTS(tab_binomials)" << endl;
-		}
-		tab_binomials = NULL;
-		tab_binomials_size = 0;
-		}
-	if (tab_q_binomials) {
-		if (f_v) {
-			cout << "longinteger_free_global_data before "
-					"FREE_OBJECTS(tab_q_binomials)" << endl;
-		}
-		FREE_OBJECTS(tab_q_binomials);
-		if (f_v) {
-			cout << "longinteger_free_global_data after "
-					"FREE_OBJECTS(tab_q_binomials)" << endl;
-		}
-		tab_q_binomials = NULL;
-		tab_q_binomials_size = 0;
-		}
-	if (f_v) {
-		cout << "longinteger_free_global_data done" << endl;
-	}
-}
-
 void longinteger_print_digits(char *rep, int len)
 {
 	for (int h = 0; h < len; h++) {
@@ -3859,13 +3155,6 @@ void longinteger_print_digits(char *rep, int len)
 	}
 }
 
-void longinteger_domain_free_tab_q_binomials()
-{
-	if (tab_q_binomials) {
-		FREE_OBJECTS(tab_q_binomials);
-		tab_q_binomials = NULL;
-	}
-}
 
 
 

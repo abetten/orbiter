@@ -2127,6 +2127,7 @@ void poset_classification::make_spreadsheet_of_level_info(
 		orbit_length_sum, orbit_length_total;
 	longinteger_object a, a_total;
 	longinteger_domain D;
+	combinatorics_domain C;
 	int schreier_vector_length_int;
 	longinteger_object schreier_vector_length,
 		schreier_vector_length_sum, schreier_vector_length_total;
@@ -2211,7 +2212,7 @@ void poset_classification::make_spreadsheet_of_level_info(
 
 		//cout << "poset_classification::make_spreadsheet_of_level_info
 		// computing binomial coeffcient" << endl;
-		D.binomial(a, Poset->A2->degree, level, FALSE);
+		C.binomial(a, Poset->A2->degree, level, FALSE);
 
 		Nb_orbits += nb_orbits;
 		D.add_in_place(orbit_length_total, orbit_length_sum);

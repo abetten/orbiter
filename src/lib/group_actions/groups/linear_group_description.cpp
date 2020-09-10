@@ -380,10 +380,17 @@ int linear_group_description::read_arguments(
 			subgroup_label = argv[++i];
 			subgroup_order_text = argv[++i];
 			nb_subgroup_generators = atoi(argv[++i]);
-			subgroup_generators_as_string = (const char **) NEW_pchar(nb_subgroup_generators);
+			//subgroup_generators_as_string = (const char **) NEW_pchar(nb_subgroup_generators);
+			subgroup_generators_as_string = new std::string [nb_subgroup_generators];
+
+			os_interface Os;
+
+			i++;
 			for (int h = 0; h < nb_subgroup_generators; h++) {
-				subgroup_generators_as_string[h] = argv[++i];
+
+				Os.get_string_from_command_line(subgroup_generators_as_string[h], argc, argv, i, verbose_level);
 			}
+			i--;
 			cout << "-subgroup_by_generators " << subgroup_label
 					<< " " << nb_subgroup_generators << endl;
 			for (int h = 0; h < nb_subgroup_generators; h++) {

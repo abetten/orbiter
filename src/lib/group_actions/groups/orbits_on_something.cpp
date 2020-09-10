@@ -197,6 +197,8 @@ void orbits_on_something::orbit_type_of_set(
 	orbit_type_sz = (go + 1) * go;
 	lint_vec_zero(orbit_type, orbit_type_sz);
 
+	// v[i] = index of orbit containing set[i]
+	// orbit_type[l - 1] = number of points lying in an orbit of length l
 	for (i = 0; i < set_sz; i++) {
 		a = set[i];
 		b = Sch->orbit_number(a);

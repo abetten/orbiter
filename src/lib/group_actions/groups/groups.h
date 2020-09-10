@@ -196,7 +196,7 @@ public:
 	int f_subgroup_by_generators;
 	const char *subgroup_order_text;
 	int nb_subgroup_generators;
-	const char **subgroup_generators_as_string;
+	std::string *subgroup_generators_as_string;
 
 	int f_Janko1;
 
@@ -273,7 +273,7 @@ public:
 		const char *subgroup_label,
 		const char *subgroup_order_text,
 		int nb_subgroup_generators,
-		const char **subgroup_generators_as_string,
+		std::string *subgroup_generators_as_string,
 		int verbose_level);
 	void init_subgroup_Janko1(int verbose_level);
 	void report(std::ostream &fp, int f_sylow, int f_group_table,
@@ -1552,7 +1552,8 @@ public:
 		sims *S, 
 		int verbose_level);
 	void init_subgroup_by_generators(action *A,
-		int nb_subgroup_gens, const char **subgroup_gens,
+		int nb_subgroup_gens,
+		std::string *subgroup_gens,
 		const char *subgroup_order_text,
 		vector_ge *&nice_gens,
 		int verbose_level);

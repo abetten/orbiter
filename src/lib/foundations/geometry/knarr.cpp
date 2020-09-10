@@ -132,6 +132,7 @@ void knarr::init(finite_field *F, int BLT_no, int verbose_level)
 	int f_vv = (verbose_level >= 2);
 	int i, a;
 	knowledge_base K;
+	combinatorics_domain C;
 	
 	knarr::F = F;
 	knarr::q = F->q;
@@ -161,7 +162,7 @@ void knarr::init(finite_field *F, int BLT_no, int verbose_level)
 	G63 = NEW_OBJECT(grassmann);
 	G63->init(6, 3, F, verbose_level - 2);
 
-	D.q_binomial(six_choose_three_q, 6, 3, q, 0);
+	C.q_binomial(six_choose_three_q, 6, 3, q, 0);
 	six_choose_three_q_int = six_choose_three_q.as_int();
 	if (f_v) {
 		cout << "Number of planes in P5 = " << six_choose_three_q_int << endl;

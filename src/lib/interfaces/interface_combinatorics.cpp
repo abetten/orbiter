@@ -1027,6 +1027,7 @@ void interface_combinatorics::do_conjugacy_classes_Sym_n(int n, int verbose_leve
 	int cnt;
 	longinteger_object class_size, S, F, A;
 	longinteger_domain D;
+	combinatorics_domain C;
 	combinatorics_domain Combi;
 
 	cnt = Combi.count_partitions(n);
@@ -1045,7 +1046,7 @@ void interface_combinatorics::do_conjugacy_classes_Sym_n(int n, int verbose_leve
 		int_vec_print(cout, Parts + i * n, n);
 		cout << " : ";
 
-		D.size_of_conjugacy_class_in_sym_n(class_size, n, Parts + i * n);
+		C.size_of_conjugacy_class_in_sym_n(class_size, n, Parts + i * n);
 		cout << class_size << " : ";
 		cout << endl;
 

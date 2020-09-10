@@ -926,7 +926,8 @@ void strong_generators::init_subgroup(action *A,
 }
 
 void strong_generators::init_subgroup_by_generators(action *A,
-	int nb_subgroup_gens, const char **subgroup_gens,
+	int nb_subgroup_gens,
+	std::string *subgroup_gens,
 	const char *subgroup_order_text,
 	vector_ge *&nice_gens,
 	int verbose_level)
@@ -948,7 +949,7 @@ void strong_generators::init_subgroup_by_generators(action *A,
 	nice_gens->allocate(nb_subgroup_gens, verbose_level - 2);
 	for (int h = 0; h < nb_subgroup_gens; h++) {
 		A->make_element_from_string(nice_gens->ith(h),
-				subgroup_gens[h], verbose_level);
+				subgroup_gens[h].c_str(), verbose_level);
 	}
 
 

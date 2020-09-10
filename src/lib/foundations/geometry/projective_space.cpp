@@ -132,7 +132,8 @@ void projective_space::init(int n, finite_field *F,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	longinteger_domain D;
+	//longinteger_domain D;
+	combinatorics_domain C;
 	longinteger_object a;
 
 	projective_space::n = n;
@@ -168,14 +169,14 @@ void projective_space::init(int n, finite_field *F,
 				cout << "projective_space::init computing number of "
 						"subspaces of dimension " << i + 1 << endl;
 			}
-			D.q_binomial_no_table(
+			C.q_binomial_no_table(
 				a,
 				n + 1, i + 1, q, verbose_level - 2);
 			Nb_subspaces[i] = a.as_lint();
 			//Nb_subspaces[i] = generalized_binomial(n + 1, i + 1, q);
 		}
 
-		D.q_binomial_no_table(
+		C.q_binomial_no_table(
 			a,
 			n, 1, q, verbose_level - 2);
 		r = a.as_int();
@@ -1026,12 +1027,13 @@ void projective_space::incidence_and_stack_for_type_ij(
 }
 long int projective_space::nb_rk_k_subspaces_as_lint(int k)
 {
-	longinteger_domain D;
+	//longinteger_domain D;
+	combinatorics_domain C;
 	longinteger_object aa;
 	long int N;
 	int d = n + 1;
 
-	D.q_binomial(aa, d, k, q, 0/*verbose_level*/);
+	C.q_binomial(aa, d, k, q, 0/*verbose_level*/);
 	N = aa.as_lint();
 	return N;
 }

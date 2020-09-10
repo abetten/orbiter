@@ -31,6 +31,12 @@ int main(int argc, const char **argv)
 
 
 	cout << "Welcome to Orbiter!  Your build number is " << build_number << "." << endl;
+	cout << "A user's guide is available here: " << endl;
+	cout << "https://www.math.colostate.edu/~betten/orbiter/users_guide.pdf" << endl;
+	cout << "The sources are available here: " << endl;
+	cout << "https://github.com/abetten/orbiter" << endl;
+	cout << "An example makefile with many commands from the user's guide is here: " << endl;
+	cout << "https://github.com/abetten/orbiter/tree/master/examples/users_guide/makefile" << endl;
 
 	i = Session.read_arguments(argc, argv, 1);
 

@@ -138,7 +138,6 @@ void surface_classify_wedge::init(
 	fname_base.append(str);
 
 	
-	//read_arguments(argc, argv, verbose_level);
 	
 	A = LG->A_linear;
 	A2 = LG->A2;
@@ -186,8 +185,7 @@ void surface_classify_wedge::do_classify_double_sixes(int verbose_level)
 			cout << "surface_classify_wedge::do_classify_double_sixes before "
 					"Classify_double_sixes->classify_partial_ovoids" << endl;
 		}
-		Classify_double_sixes->classify_partial_ovoids(
-			verbose_level - 1);
+		Classify_double_sixes->classify_partial_ovoids(verbose_level - 1);
 		if (f_v) {
 			cout << "surface_classify_wedge::do_classify_double_sixes after "
 					"Classify_double_sixes->classify_partial_ovoids" << endl;

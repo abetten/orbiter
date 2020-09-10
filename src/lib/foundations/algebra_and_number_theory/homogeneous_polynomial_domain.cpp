@@ -424,7 +424,6 @@ void homogeneous_polynomial_domain::make_monomials(
 	char label[1000];
 	int l;
 
-	//symbols = NEW_pchar(nb_variables);
 	symbols = new string[nb_variables];
 	for (i = 0; i < nb_variables; i++) {
 
@@ -438,12 +437,8 @@ void homogeneous_polynomial_domain::make_monomials(
 			label[0] = 'A' + i;
 			label[1] = 0;
 		}
-		//l = strlen(label);
-		//symbols[i] = NEW_char(l + 1);
-		//strcpy(symbols[i], label);
 		symbols[i].assign(label);
 	}
-	//symbols_latex = NEW_pchar(nb_variables);
 	symbols_latex = new string[nb_variables];
 	for (i = 0; i < nb_variables; i++) {
 
@@ -459,9 +454,6 @@ void homogeneous_polynomial_domain::make_monomials(
 			label[0] = 'A' + i;
 			label[1] = 0;
 		}
-		//l = strlen(label);
-		//symbols_latex[i] = NEW_char(l + 1);
-		//strcpy(symbols_latex[i], label);
 		symbols_latex[i].assign(label);
 	}
 
