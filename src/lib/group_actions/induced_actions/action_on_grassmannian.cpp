@@ -81,7 +81,7 @@ void action_on_grassmannian::init(action &A,
 {
 	int f_v = (verbose_level >= 1);
 	longinteger_object go;
-	longinteger_domain D;
+	combinatorics_domain C;
 	
 	if (f_v) {
 		cout << "action_on_grassmannian::init" << endl;
@@ -122,7 +122,7 @@ void action_on_grassmannian::init(action &A,
 		}
 #endif
 	
-	D.q_binomial(degree, n, k, q, 0);
+	C.q_binomial(degree, n, k, q, 0);
 	max_string_length = degree.len();
 	if (f_v) {
 		cout << "degree = " << degree << endl;

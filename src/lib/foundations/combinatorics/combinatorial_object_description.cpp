@@ -103,7 +103,7 @@ combinatorial_object_description::combinatorial_object_description()
 	f_projective_variety = FALSE;
 	//variety_label = NULL;
 	variety_degree = 0;
-	variety_coeffs = NULL;
+	//variety_coeffs = NULL;
 	Monomial_ordering_type = t_PART;
 
 
@@ -328,7 +328,14 @@ int combinatorial_object_description::read_arguments(int argc, const char **argv
 			f_projective_variety = TRUE;
 			variety_label.assign(argv[++i]);
 			variety_degree = atoi(argv[++i]);
-			variety_coeffs = argv[++i];
+			//variety_coeffs = argv[++i];
+
+
+			os_interface Os;
+
+			Os.get_string_from_command_line(variety_coeffs, argc, argv, i, verbose_level);
+
+
 			cout << "-projective_variety "
 					<< variety_label << " "
 					<< variety_degree << " "

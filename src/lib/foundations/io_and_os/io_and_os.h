@@ -629,6 +629,8 @@ public:
 	int random_integer(int p);
 	void os_date_string(char *str, int sz);
 	int os_seconds_past_1970();
+	void get_string_from_command_line(std::string &p, int argc, const char **argv,
+			int &i, int verbose_level);
 
 };
 

@@ -20,8 +20,8 @@ void free_global_data()
 		cout << "discreta_global free_global_data freeing global data" << endl;
 	}
 	orthogonal_points_free_global_data();
-	longinteger_free_global_data();
-	longinteger_domain_free_tab_q_binomials();
+	combinatorics_domain_free_global_data();
+	combinatorics_domain_free_tab_q_binomials();
 }
 
 void the_end(int t0)

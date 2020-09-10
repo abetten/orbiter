@@ -81,7 +81,8 @@ void grassmann_embedded::init(int big_n, int n,
 	int f_vv = (verbose_level >= 2);
 	int i, j, rk, idx;
 	longinteger_object deg;
-	longinteger_domain D;
+	//longinteger_domain D;
+	combinatorics_domain C;
 	sorting Sorting;
 	
 	grassmann_embedded::big_n = big_n;
@@ -173,7 +174,7 @@ void grassmann_embedded::init(int big_n, int n,
 		int_vec_print(cout, embedding, big_n - n);
 		cout << endl;
 		}
-	D.q_binomial(deg, n, k, q, 0);
+	C.q_binomial(deg, n, k, q, 0);
 	degree = deg.as_lint();
 }
 

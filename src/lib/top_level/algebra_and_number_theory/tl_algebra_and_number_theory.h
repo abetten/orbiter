@@ -302,6 +302,7 @@ public:
 		int f_spread_classify;
 		int spread_classify_k;
 
+
 		int f_packing_classify;
 		int dimension_of_spread_elements;
 		std::string spread_selection_text;

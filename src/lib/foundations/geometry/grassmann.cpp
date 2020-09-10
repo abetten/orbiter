@@ -77,7 +77,7 @@ void grassmann::init(int n, int k, finite_field *F, int verbose_level)
 	grassmann::F = F;
 	q = F->q;
 
-	longinteger_domain D;
+	combinatorics_domain D;
 
 	D.q_binomial(nCkq, n, k, q, 0 /* verbose_level */);
 	if (f_v) {
@@ -550,6 +550,7 @@ void grassmann::unrank_longinteger(
 	int f_v = (verbose_level >= 1);
 	longinteger_object r, r1, a, A, mA, Q, b, c;
 	longinteger_domain D;
+	combinatorics_domain C;
 	int i, j, h, nb_free_cols = 0;
 	geometry_global Gg;
 	
@@ -569,7 +570,7 @@ void grassmann::unrank_longinteger(
 	rk.assign_to(r);
 	h = 0;
 	while (h < n) {
-		D.q_binomial(a, n - h - 1, k - 1, q, 0);
+		C.q_binomial(a, n - h - 1, k - 1, q, 0);
 		if (f_v) {
 			cout << "[" << n - h - 1 << " choose " << k - 1
 					<< "]_" << q << " = " << a << endl;
@@ -686,6 +687,7 @@ void grassmann::rank_longinteger(longinteger_object &r,
 	int f_v = (verbose_level >= 1);
 	longinteger_object r1, a, A, Q, b, c, tmp1, tmp2;
 	longinteger_domain D;
+	combinatorics_domain C;
 	int k1, nb_free_cols, h, i, j;
 	geometry_global Gg;
 	
@@ -738,7 +740,7 @@ void grassmann::rank_longinteger(longinteger_object &r,
 					<< " nb_free_cols=" << nb_free_cols
 					<< " yields " << Q << endl;
 		}
-		D.q_binomial(a, n - h - 1, k - 1, q, 0);
+		C.q_binomial(a, n - h - 1, k - 1, q, 0);
 		if (f_v) {
 			cout << "q_binomial [" << n - h - 1 << "," << k - 1
 					<< "]_" << q << " = " << a << endl;
@@ -748,7 +750,7 @@ void grassmann::rank_longinteger(longinteger_object &r,
 		r.swap_with(r1);
 	}
 	nb_free_cols = n - h - 1 - (k - 1);
-	D.q_binomial(a, n - h - 1, k - 1, q, 0);
+	C.q_binomial(a, n - h - 1, k - 1, q, 0);
 	if (f_v) {
 		cout << "q_binomial [" << n - h - 1 << "," << k - 1
 				<< "]_" << q << " = " << a << endl;

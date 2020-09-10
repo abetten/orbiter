@@ -323,7 +323,8 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 	
 	if (f_v) {
 		cout << "classify_double_sixes::compute_neighbors "
-				"allocating Line_to_neighbor, Surf->nb_lines_PG_3=" << Surf->nb_lines_PG_3 << endl;
+				"allocating Line_to_neighbor, "
+				"Surf->nb_lines_PG_3=" << Surf->nb_lines_PG_3 << endl;
 	}
 
 #if 0
@@ -340,8 +341,7 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 		cout << "classify_double_sixes::compute_neighbors "
 				"before Surf->klein_to_wedge_vec" << endl;
 	}
-	Surf->klein_to_wedge_vec(Neighbors,
-			Neighbors, nb_neighbors);
+	Surf->klein_to_wedge_vec(Neighbors, Neighbors, nb_neighbors);
 
 	// Sort the set Neighbors:
 	Sorting.lint_vec_heapsort(Neighbors, nb_neighbors);
@@ -443,8 +443,7 @@ void classify_double_sixes::make_spreadsheet_of_neighbors(
 	}
 }
 
-void classify_double_sixes::classify_partial_ovoids(
-	int verbose_level)
+void classify_double_sixes::classify_partial_ovoids(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int schreier_depth = 10000;
@@ -478,33 +477,6 @@ void classify_double_sixes::classify_partial_ovoids(
 				"classifying starter done" << endl;
 	}
 	
-#if 0
-	if (f_draw_poset) {
-		{
-			char fname_poset[1000];
-			sprintf(fname_poset, "fiveplusone_q%d", q);
-			Five_plus_one->draw_poset(fname_poset,
-					5 /*depth*/, 0 /* data1 */,
-					TRUE /* f_embedded */,
-					FALSE /* f_sideways */,
-					Five_plus_one->Control->radius,
-					0 /* verbose_level */);
-		}
-	}
-	if (f_draw_poset_full) {
-		{
-			char fname_poset[1000];
-			sprintf(fname_poset, "fiveplusone_q%d", q);
-			Five_plus_one->draw_poset(fname_poset,
-					5 /*depth*/, 0 /* data1 */,
-					TRUE /* f_embedded */,
-					FALSE /* f_sideways */,
-					Five_plus_one->Control->radius,
-					0 /* verbose_level */);
-		}
-	}
-#endif
-
 	if (q < 20) {
 		{
 			spreadsheet *Sp;

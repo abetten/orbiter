@@ -1237,7 +1237,7 @@ void algebra_global::test_longinteger2()
 void algebra_global::test_longinteger3()
 {
 	int i, j;
-	longinteger_domain D;
+	combinatorics_domain D;
 	longinteger_object a, b, c, d, e;
 
 	for (i = 0; i < 10; i++) {
@@ -1253,7 +1253,7 @@ void algebra_global::test_longinteger3()
 void algebra_global::test_longinteger4()
 {
 	int n = 6, q = 2, k, x, d = 3;
-	longinteger_domain D;
+	combinatorics_domain D;
 	longinteger_object a;
 
 	for (k = 0; k <= n; k++) {
@@ -1345,7 +1345,7 @@ void algebra_global::test_longinteger8()
 
 void algebra_global::mac_williams_equations(longinteger_object *&M, int n, int k, int q)
 {
-	longinteger_domain D;
+	combinatorics_domain D;
 	int i, j;
 
 	M = NEW_OBJECTS(longinteger_object, (n + 1) * (n + 1));

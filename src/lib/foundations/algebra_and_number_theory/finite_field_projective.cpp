@@ -31,7 +31,7 @@ void finite_field::PG_element_apply_frobenius(int n,
 void finite_field::create_projective_variety(
 		std::string &variety_label,
 		int variety_nb_vars, int variety_degree,
-		const char *variety_coeffs,
+		std::string &variety_coeffs,
 		monomial_ordering_type Monomial_ordering_type,
 		std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level)
@@ -63,7 +63,7 @@ void finite_field::create_projective_variety(
 	int len;
 	int a, b, i;
 
-	int_vec_scan(variety_coeffs, coeff_pairs, len);
+	int_vec_scan(variety_coeffs.c_str(), coeff_pairs, len);
 	for (i = 0; i < len / 2; i++) {
 		a = coeff_pairs[2 * i];
 		b = coeff_pairs[2 * i + 1];

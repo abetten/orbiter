@@ -1041,7 +1041,7 @@ void linear_group::init_subgroup_by_generators(
 	const char *subgroup_label,
 	const char *subgroup_order_text,
 	int nb_subgroup_generators,
-	const char **subgroup_generators_as_string,
+	std::string *subgroup_generators_as_string,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

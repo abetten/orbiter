@@ -2288,6 +2288,7 @@ void strong_generators::generators_for_parabolic_subgroup(
 
 	longinteger_object go1, nCk, target_go;
 	longinteger_domain D;
+	combinatorics_domain C;
 
 
 	D.group_order_PGL(go1, n, q, Mtx->f_semilinear);
@@ -2297,7 +2298,7 @@ void strong_generators::generators_for_parabolic_subgroup(
 			"go1=" << go1 << endl;
 	}
 
-	D.q_binomial_no_table(nCk, n, k, q, 0 /* verbose_level */);
+	C.q_binomial_no_table(nCk, n, k, q, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "strong_generators::generators_for_parabolic_subgroup "

@@ -159,15 +159,17 @@ int action_on_wedge_product::element_entry_ijkl(action &A,
 
 void action_on_wedge_product::compute_image_int_low_level(
 	action &A, int *Elt, int *input, int *output, int verbose_level)
-// x_{i,j} e_i \wedge e_j * A = 
+// \sum_{i < j}  x_{i,j} e_i \wedge e_j * A =
 // \sum_{k < l} \sum_{i < j} x_{i,j} (a_{i,k}a_{j,l} - a_{i,l}a_{j,k}) e_k \wedge e_l
 // or (after a change of indices)
 // \sum_{i<j} x_{i,j} e_i \wedge e_j * A = 
 //   \sum_{i < j} \sum_{k < l} x_{k,l} (a_{k,i}a_{l,j} - a_{k,j}a_{l,i}) e_i \wedge e_j
 //
 // so, the image of e_i \wedge e_j is 
-// \sum_{k < l} x_{k,l} (a_{k,i}a_{l,j} - a_{k,j}a_{l,i}),
-// which are the entries in the row indexed by (i,j).
+// \sum_{k < l} x_{k,l} (a_{k,i}a_{l,j} - a_{k,j}a_{l,i}) e_k \wedge e_l,
+// =  \sum_{k < l} x_{k,l} w_{ij,kl} e_k \wedge e_l,
+// The w_{ij,kl} are the entries in the row indexed by (i,j).
+// w_{ij,kl} is the entry in row ij and column kl.
 {
 	int *x = input;
 	int *xA = output;

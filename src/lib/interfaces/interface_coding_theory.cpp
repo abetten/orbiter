@@ -191,7 +191,7 @@ void interface_coding_theory::do_make_macwilliams_system(
 		int q, int n, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
+	combinatorics_domain C;
 	longinteger_object *M;
 	int i, j;
 
@@ -199,7 +199,7 @@ void interface_coding_theory::do_make_macwilliams_system(
 		cout << "interface_coding_theory::do_make_macwilliams_system" << endl;
 	}
 
-	D.make_mac_williams_equations(M, n, k, q, verbose_level);
+	C.make_mac_williams_equations(M, n, k, q, verbose_level);
 
 	cout << "\\begin{array}{r|*{" << n << "}{r}}" << endl;
 	for (i = 0; i <= n; i++) {

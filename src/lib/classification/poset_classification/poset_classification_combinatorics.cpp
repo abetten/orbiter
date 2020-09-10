@@ -599,6 +599,7 @@ void poset_classification::Mtk_via_Mtr_Mrk(int t, int r, int k,
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, h, a, b, c, s = 0;
+	combinatorics_domain C;
 
 	if (f_v) {
 		cout << "poset_classification::Mtk_via_Mtr_Mrk t = " << t << ", r = "
@@ -629,15 +630,14 @@ void poset_classification::Mtk_via_Mtr_Mrk(int t, int r, int k,
 		/* Mtk := (k - t) atop (k - r) * M_t,k */
 
 
-	longinteger_domain D;
 	longinteger_object S;
 
 	if (Poset->f_subset_lattice) {
-		D.binomial(S, k - t, k - r, 0/* verbose_level*/);
+		C.binomial(S, k - t, k - r, 0/* verbose_level*/);
 		s = S.as_lint();
 	}
 	else if (Poset->f_subspace_lattice) {
-		D.q_binomial(S, k - t, r - t, Poset->VS->F->q, 0/* verbose_level*/);
+		C.q_binomial(S, k - t, r - t, Poset->VS->F->q, 0/* verbose_level*/);
 		s = S.as_lint();
 	}
 	else {

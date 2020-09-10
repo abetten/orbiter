@@ -175,7 +175,7 @@ public:
 	int f_projective_variety;
 	std::string variety_label;
 	int variety_degree;
-	const char *variety_coeffs;
+	std::string variety_coeffs;
 	monomial_ordering_type Monomial_ordering_type;
 
 
@@ -344,10 +344,33 @@ public:
 	void make_partitions(int n, int *Part, int cnt);
 	int count_partitions(int n);
 	int next_partition(int n, int *part);
+	void binomial(longinteger_object &a, int n, int k, int verbose_level);
+	void binomial_with_table(longinteger_object &a, int n, int k);
+	void size_of_conjugacy_class_in_sym_n(longinteger_object &a, int n, int *part);
+	void q_binomial_with_table(longinteger_object &a,
+		int n, int k, int q, int verbose_level);
+	void q_binomial(
+		longinteger_object &a,
+		int n, int k, int q, int verbose_level);
+	void q_binomial_no_table(
+		longinteger_object &a,
+		int n, int k, int q, int verbose_level);
+	void krawtchouk_with_table(longinteger_object &a,
+		int n, int q, int k, int x);
+	void krawtchouk(longinteger_object &a, int n, int q, int k, int x);
+	void make_mac_williams_equations(longinteger_object *&M,
+			int n, int k, int q, int verbose_level);
+	int singleton_bound_for_d(int n, int k, int q, int verbose_level);
+	int hamming_bound_for_d(int n, int k, int q, int verbose_level);
+	int plotkin_bound_for_d(int n, int k, int q, int verbose_level);
+	int griesmer_bound_for_d(int n, int k, int q, int verbose_level);
+	int griesmer_bound_for_n(int k, int d, int q, int verbose_level);
 };
 
 // combinatorics.cpp:
 long int callback_ij2k(long int i, long int j, int n);
+void combinatorics_domain_free_global_data();
+void combinatorics_domain_free_tab_q_binomials();
 
 
 // #############################################################################
