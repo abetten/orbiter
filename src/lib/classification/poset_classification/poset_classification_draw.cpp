@@ -64,8 +64,8 @@ void poset_classification::draw_poset_fname_base_poset_detailed_lvl(
 
 
 void poset_classification::write_treefile_and_draw_tree(
-		std::string &fname_base, int lvl, int xmax, int ymax,
-		int rad, int f_embedded,
+		std::string &fname_base, int lvl,
+		layered_graph_draw_options *draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -673,7 +673,8 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 }
 
 void poset_classification::draw_poset_full(std::string &fname_base,
-		int depth, int data, int f_embedded, int f_sideways, int rad, double scale, double line_width,
+		int depth, int data,
+		layered_graph_draw_options *LG_Draw_options,
 		double x_stretch,
 		int verbose_level)
 {
@@ -693,18 +694,6 @@ void poset_classification::draw_poset_full(std::string &fname_base,
 	char str[1000];
 	string fname1;
 	string fname2;
-	int xmax = 1000000;
-	int ymax = 1000000;
-	int x_max = 10000;
-	int y_max = 10000;
-	int f_circle = TRUE;
-	int f_corners = FALSE;
-	int f_nodes_empty = FALSE;
-	int f_show_level_info = FALSE;
-	int f_label_edges = FALSE;
-	int f_rotated = FALSE;
-	//double scale = .45;
-	//double line_width = 1.5;
 
 	sprintf(str, "_poset_full_lvl_%d.layered_graph", depth);
 
@@ -717,24 +706,12 @@ void poset_classification::draw_poset_full(std::string &fname_base,
 				"after LG->write_file" << endl;
 	}
 
-	layered_graph_draw_options O;
-
-	O.init(xmax, ymax, x_max, y_max, rad,
-			f_circle, f_corners, f_nodes_empty,
-		FALSE, 0, NULL, 
-		FALSE, NULL, 
-		FALSE, NULL, 
-		FALSE, NULL, 
-		f_show_level_info, f_embedded, f_sideways, f_label_edges, 
-		f_rotated, 
-		scale, line_width);
-	
 	sprintf(str, "_poset_full_lvl_%d", depth);
 
 	fname2.assign(fname_base);
 	fname2.append(str);
 
-	LG->draw_with_options(fname2, &O, 0 /* verbose_level */);
+	LG->draw_with_options(fname2, LG_Draw_options, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "poset_classification::draw_poset_full "
@@ -750,7 +727,8 @@ void poset_classification::draw_poset_full(std::string &fname_base,
 
 void poset_classification::draw_poset(
 		std::string &fname_base,
-		int depth, int data, int f_embedded, int f_sideways, int rad, double scale, double line_width,
+		int depth, int data,
+		layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -802,18 +780,6 @@ void poset_classification::draw_poset(
 	string fname2;
 	string fname3;
 	string fname4;
-	int xmax = 1000000;
-	int ymax = 1000000;
-	int x_max = 10000;
-	int y_max = 10000;
-	int f_circle = TRUE;
-	int f_corners = FALSE;
-	int f_nodes_empty = FALSE;
-	int f_show_level_info = FALSE;
-	int f_label_edges = FALSE;
-	int f_rotated = FALSE;
-	//double scale = .20;
-	//double line_width = 1.5;
 
 	draw_poset_fname_base_aux_poset(fname_base1, depth);
 	draw_poset_fname_base_poset_lvl(fname_base2, depth);
@@ -837,20 +803,8 @@ void poset_classification::draw_poset(
 
 
 	
-	layered_graph_draw_options O;
-
-	O.init(xmax, ymax, x_max, y_max, rad,
-		f_circle, f_corners, f_nodes_empty,
-		FALSE, 0, NULL, 
-		FALSE, NULL, 
-		FALSE, NULL, 
-		FALSE, NULL, 
-		f_show_level_info, f_embedded, f_sideways, f_label_edges, 
-		f_rotated, 
-		scale, line_width);
-	
 	LG1->write_file(fname1, 0 /*verbose_level*/);
-	LG1->draw_with_options(fname_base1, &O,
+	LG1->draw_with_options(fname_base1, LG_Draw_options,
 			0 /* verbose_level */);
 
 	if (f_v) {
@@ -859,7 +813,7 @@ void poset_classification::draw_poset(
 	}
 
 	LG2->write_file(fname2, 0 /*verbose_level*/);
-	LG2->draw_with_options(fname_base2, &O,
+	LG2->draw_with_options(fname_base2, LG_Draw_options,
 			0 /* verbose_level */);
 
 	if (f_v) {
@@ -868,7 +822,7 @@ void poset_classification::draw_poset(
 	}
 
 	LG3->write_file(fname3, 0 /*verbose_level*/);
-	LG3->draw_with_options(fname_base3, &O,
+	LG3->draw_with_options(fname_base3, LG_Draw_options,
 			0 /* verbose_level */);
 
 	if (f_v) {
@@ -877,7 +831,7 @@ void poset_classification::draw_poset(
 	}
 
 	LG4->write_file(fname4, 0 /*verbose_level*/);
-	LG4->draw_with_options(fname_base4, &O,
+	LG4->draw_with_options(fname_base4, LG_Draw_options,
 			0 /* verbose_level */);
 
 	FREE_OBJECT(LG1);
@@ -893,7 +847,7 @@ void poset_classification::draw_poset(
 void poset_classification::draw_level_graph(
 		std::string &fname_base,
 		int depth, int data, int level,
-		int f_embedded, int f_sideways,
+		layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -911,19 +865,6 @@ void poset_classification::draw_level_graph(
 	string fname_base1;
 	string fname;
 	char str[1000];
-	int xmax = 1000000;
-	int ymax = 1000000;
-	int x_max = 10000;
-	int y_max = 10000;
-	int rad = 50;
-	int f_circle = TRUE;
-	int f_corners = FALSE;
-	int f_nodes_empty = FALSE;
-	int f_show_level_info = TRUE;
-	int f_label_edges = FALSE;
-	int f_rotated = FALSE;
-	double scale = .45;
-	double line_width = 1.5;
 
 	fname_base1.assign(fname_base);
 	sprintf(str, "_lvl_%d_bipartite_lvl_%d", depth, level);
@@ -935,19 +876,9 @@ void poset_classification::draw_level_graph(
 
 	//snprintf(fname, 2000, "%s.layered_graph", fname_base1);
 	LG->write_file(fname, 0 /*verbose_level*/);
-	layered_graph_draw_options O;
 
-	O.init(xmax, ymax, x_max, y_max, rad,
-		f_circle, f_corners, f_nodes_empty,
-		FALSE, 0, NULL, 
-		FALSE, NULL, 
-		FALSE, NULL, 
-		FALSE, NULL, 
-		f_show_level_info, f_embedded, f_sideways, f_label_edges, 
-		f_rotated, 
-		scale, line_width);
 	
-	LG->draw_with_options(fname_base1, &O, 0 /* verbose_level */);
+	LG->draw_with_options(fname_base1, LG_Draw_options, 0 /* verbose_level */);
 
 	FREE_OBJECT(LG);
 

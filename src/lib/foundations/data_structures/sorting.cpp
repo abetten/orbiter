@@ -2244,8 +2244,8 @@ int sorting::schreier_vector_determine_depth_recursion(
 void sorting::schreier_vector_tree(
 	int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
 	std::string &fname_base,
+	layered_graph_draw_options *LG_Draw_options,
 	layered_graph *&LG,
-	int f_embedded, int f_sideways,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2411,6 +2411,7 @@ void sorting::schreier_vector_tree(
 		cout << "sorting::schreier_vector_tree after LG->create_spanning_tree" << endl;
 	}
 
+#if 0
 	int xmax = 300000;
 	int ymax = 300000;
 	int x_max = 10000;
@@ -2424,13 +2425,15 @@ void sorting::schreier_vector_tree(
 	int f_rotated = FALSE;
 	double scale = .45;
 	double line_width = 1.5;
-
+#endif
 
 	string fname;
 
 	fname.assign(fname_base);
 	fname.append(".layered_graph");
 
+
+#if 0
 
 	layered_graph_draw_options O;
 
@@ -2443,9 +2446,10 @@ void sorting::schreier_vector_tree(
 		f_show_level_info, f_embedded, f_sideways, f_label_edges,
 		f_rotated,
 		scale, line_width);
+#endif
 
 	LG->write_file(fname, 0 /*verbose_level*/);
-	LG->draw_with_options(fname_base, &O,
+	LG->draw_with_options(fname_base, LG_Draw_options,
 			0 /* verbose_level */);
 
 

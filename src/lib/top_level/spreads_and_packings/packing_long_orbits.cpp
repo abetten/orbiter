@@ -24,6 +24,7 @@ packing_long_orbits::packing_long_orbits()
 	fixpoints_idx = 0;
 	fixpoint_clique_size = 0;
 	fixpoint_clique_orbit_numbers = NULL;
+	fixpoint_clique_stabilizer_gens = NULL;
 	fixpoint_clique = NULL;
 	long_orbit_idx = 0;
 	set = NULL;
@@ -282,6 +283,9 @@ void packing_long_orbits::process_single_case(
 
 	fixpoint_clique_orbit_numbers = PWF->clique_by_index(fixpoints_clique_case_number);
 
+	fixpoint_clique_stabilizer_gens = PWF->get_stabilizer(fixpoints_clique_case_number);
+
+
 	init_fixpoint_clique_from_orbit_numbers(verbose_level);
 
 	if (f_v) {
@@ -451,10 +455,12 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 
 	//selected_fixpoints, clique_size,
 
-	cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
+	if (f_v) {
+		cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
 			"creating the graph on long orbits with "
 			<< Filtered_orbits->Set_size[long_orbit_idx]
 			<< " vertices" << endl;
+	}
 
 
 	//int user_data_sz;
@@ -479,23 +485,29 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 
 	if (Descr->f_create_graphs) {
 		colored_graph *CG;
-		cout << "solution file does not exist" << endl;
-		cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
+		if (f_v) {
+			cout << "solution file does not exist" << endl;
+			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
 				"before create_graph_and_save_to_file" << endl;
+		}
 		create_graph_and_save_to_file(
 					CG,
 					fname_graph,
 					Descr->orbit_length /* orbit_length */,
 					FALSE /* f_has_user_data */, NULL /*user_data*/, 0 /*user_data_sz*/,
 					verbose_level);
-		cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
+		if (f_v) {
+			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
 				"the graph on long orbits has been created with "
 				<< CG->nb_points
 				<< " vertices" << endl;
+		}
 		FREE_OBJECT(CG);
 	}
 	if (Descr->f_solve) {
-		cout << "calling solver" << endl;
+		if (f_v) {
+			cout << "calling solver" << endl;
+		}
 		string cmd;
 		char str[1000];
 
@@ -513,7 +525,9 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		cmd.append(" -end -end");
 
 
-		cout << "executing command: " << cmd << endl;
+		if (f_v) {
+			cout << "executing command: " << cmd << endl;
+		}
 		system(cmd.c_str());
 	}
 
@@ -530,26 +544,29 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		int solution_size;
 
 		solution_size = (PWF->PW->P->size_of_packing - fixpoint_clique_size) / Descr->orbit_length;
-		cout << "solution_size = " << solution_size << endl;
+		if (f_v) {
+			cout << "solution_size = " << solution_size << endl;
+		}
 
 
 		Fio.read_solutions_from_file_size_is_known(fname_solutions,
 			Solutions, solution_size,
 			verbose_level);
 
-		cout << "solution file contains " << Solutions.size() << " solutions" << endl;
+		if (f_v) {
+			cout << "solution file contains " << Solutions.size() << " solutions" << endl;
+		}
 
 		int i, a, b;
 		int nb_uniform;
 		int sol_idx;
 		int *clique;
 		long int *packing;
-		int *iso_type;
+		long int *Packings_table;
 
 		clique = NEW_int(solution_size);
 		packing = NEW_lint(PWF->PW->P->size_of_packing);
-		iso_type = NEW_int(Solutions.size() * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads);
-		int_vec_zero(iso_type, Solutions.size() * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads);
+		Packings_table = NEW_lint(Solutions.size() * PWF->PW->P->size_of_packing);
 
 		nb_uniform = 0;
 
@@ -577,14 +594,11 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 				cout << "The packing is faulty" << endl;
 				exit(1);
 			}
-			for (i = 0; i < PWF->PW->P->size_of_packing; i++) {
-				a = packing[i];
-				b = PWF->PW->Spread_tables_reduced->spread_iso_type[a];
-				iso_type[sol_idx * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + b]++;
-			}
-			if (iso_type[sol_idx * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + 0] == PWF->PW->P->size_of_packing) {
-				nb_uniform++;
-			}
+
+			lint_vec_copy(packing, Packings_table + sol_idx * PWF->PW->P->size_of_packing, PWF->PW->P->size_of_packing);
+
+
+#if 0
 
 			vector<int> Packing;
 			for (i = 0; i < PWF->PW->P->size_of_packing; i++) {
@@ -593,20 +607,114 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 			}
 
 			Packings.push_back(Packing);
+#endif
+
 
 		}
 
+		//action *Ar;
+		action *Ar_On_Packings;
+
+		//Ar = PWF->PW->restricted_action(Descr->orbit_length, verbose_level);
+
+		Ar_On_Packings = PWF->PW->A_on_reduced_spreads->create_induced_action_on_sets(Solutions.size(),
+				PWF->PW->P->size_of_packing, Packings_table,
+				verbose_level);
+
+		schreier *Orbits;
+
+		Orbits = NEW_OBJECT(schreier);
+
+		if (f_v) {
+			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits before Ar_On_Packings->all_point_orbits_from_generators" << endl;
+		}
+		Ar_On_Packings->all_point_orbits_from_generators(*Orbits,
+				fixpoint_clique_stabilizer_gens,
+				verbose_level);
+		if (f_v) {
+			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits after Ar_On_Packings->all_point_orbits_from_generators" << endl;
+		}
+
+		int *iso_type;
+		iso_type = NEW_int(Orbits->nb_orbits * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads);
+		int_vec_zero(iso_type, Orbits->nb_orbits * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads);
+
+		int idx, j;
+
+		for (i = 0; i < Orbits->nb_orbits; i++) {
+			idx = Orbits->orbit[Orbits->orbit_first[i]];
+
+			vector<int> Packing;
+			for (j = 0; j < PWF->PW->P->size_of_packing; j++) {
+				a = Packings_table[idx * PWF->PW->P->size_of_packing + j];
+				Packing.push_back(a);
+			}
+
+			for (j = 0; j < PWF->PW->P->size_of_packing; j++) {
+				a = Packing[j];
+				b = PWF->PW->Spread_tables_reduced->spread_iso_type[a];
+				iso_type[i * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + b]++;
+			}
+			for (j = 0; j < PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads; j++) {
+				if (iso_type[i * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + j] == PWF->PW->P->size_of_packing) {
+					nb_uniform++;
+					break;
+				}
+			}
+
+			Packings.push_back(Packing);
+		}
+
+
+
+
+
 		tally_vector_data T;
 
-		T.init(iso_type, Solutions.size(), PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads, verbose_level);
-		cout << "We found the following type vectors:" << endl;
-		T.print();
+		T.init(iso_type, Orbits->nb_orbits, PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads, verbose_level);
+		if (f_v) {
+			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits We found the following type vectors:" << endl;
+			T.print();
+		}
 
-		cout << "fixpoints_clique_case_number " << fixpoints_clique_case_number << " The number of uniform packings of Hall type is " << nb_uniform << endl;
+
+#if 0
+		cout << "fixpoints_clique_case_number " << fixpoints_clique_case_number
+				<< " go=" << fixpoint_clique_stabilizer_gens->group_order_as_lint()
+				<< " # of solutions = " << Solutions.size()
+				<< ", # of orbits is " << Orbits->nb_orbits
+				<< ", # uniform = " << nb_uniform << " ";
+#endif
+		cout << fixpoints_clique_case_number << " & ";
+
+		file_io Fio;
+		int nb_points;
+
+		nb_points = Fio.number_of_vertices_in_colored_graph(fname_graph, FALSE /* verbose_level */);
+
+		cout << nb_points << " & ";
+		cout << Solutions.size()   << " & ";
+		cout << fixpoint_clique_stabilizer_gens->group_order_as_lint()  << " & ";
+
+		{
+			tally Cl;
+
+			Cl.init(Orbits->orbit_len, Orbits->nb_orbits, FALSE, 0);
+			Cl.print_tex_no_lf(FALSE);
+			cout << " & ";
+		}
+		cout << Orbits->nb_orbits;
+		cout << " \\\\TEX" << endl;
 
 
+
+
+		FREE_OBJECT(Orbits);
+		FREE_OBJECT(Ar_On_Packings);
+		//FREE_OBJECT(Ar);
 		FREE_int(clique);
 		FREE_lint(packing);
+		FREE_lint(Packings_table);
 		FREE_int(iso_type);
 	}
 

@@ -269,7 +269,9 @@ public:
 		int verbose_level);
 	void classify_partial_ovoids(
 		int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
+	void report(std::ostream &ost,
+			layered_graph_draw_options *draw_options,
+			int verbose_level);
 	void partial_ovoid_test_early(long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
@@ -572,8 +574,12 @@ public:
 	int test_if_double_sixes_have_been_computed_already();
 	void write_double_sixes(int verbose_level);
 	void read_double_sixes(int verbose_level);
-	void create_report(int f_with_stabilizers, int verbose_level);
-	void report(std::ostream &ost, int f_with_stabilizers, int verbose_level);
+	void create_report(int f_with_stabilizers,
+			layered_graph_draw_options *draw_options,
+			int verbose_level);
+	void report(std::ostream &ost, int f_with_stabilizers,
+			layered_graph_draw_options *draw_options,
+			int verbose_level);
 	void create_report_double_sixes(int verbose_level);
 	void test_isomorphism(
 			surface_create_description *Descr1,
@@ -1374,8 +1380,11 @@ public:
 	void downstep(int verbose_level);
 	void downstep_one_arc(int arc_idx,
 			int &cur_flag_orbit, long int *Flag, int verbose_level);
-	void report(int verbose_level);
-	void report2(std::ostream &ost, int verbose_level);
+	void report(layered_graph_draw_options *draw_options,
+			int verbose_level);
+	void report2(std::ostream &ost,
+			layered_graph_draw_options *draw_options,
+			int verbose_level);
 	void report_flag_orbits(std::ostream &ost, int verbose_level);
 	void report_flag_orbits_in_detail(std::ostream &ost, int verbose_level);
 	void report_surfaces_in_detail(std::ostream &ost, int verbose_level);

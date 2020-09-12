@@ -193,7 +193,7 @@ int poset_classification::main(int t0,
 	int f_create_schreier_vector;
 	int target_depth;
 	int f_write_files;
-	int f_embedded = TRUE;
+	//int f_embedded = TRUE;
 	os_interface Os;
 
 	if (f_v) {
@@ -238,8 +238,8 @@ int poset_classification::main(int t0,
 		print_tree();
 		write_treefile_and_draw_tree(
 				problem_label_with_path, depth_completed,
-			Control->xmax, Control->ymax,
-			Control->radius, f_embedded, verbose_level - 1);
+				Control->draw_options,
+				verbose_level - 1);
 
 		return 0;
 	}
@@ -499,8 +499,10 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			cout << "poset_classification::post_processing before draw_poset" << endl;
 		}
 		draw_poset(get_problem_label_with_path(), actual_size,
-			0 /* data1 */, Control->f_embedded, Control->f_sideways, Control->radius,
-			Control->scale, Control->line_width,
+			0 /* data1 */,
+			Control->draw_options,
+			//Control->f_embedded, Control->f_sideways, Control->radius,
+			//Control->scale, Control->line_width,
 			0 /*verbose_level*/);
 		if (f_v) {
 			cout << "poset_classification::post_processing after draw_poset" << endl;
@@ -512,8 +514,10 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			cout << "poset_classification::post_processing before draw_full_poset" << endl;
 		}
 		draw_poset_full(get_problem_label_with_path(), actual_size,
-				0 /* data1 */, Control->f_embedded, Control->f_sideways, Control->radius,
-				Control->scale, Control->line_width,
+				0 /* data1 */,
+				Control->draw_options,
+				//Control->f_embedded, Control->f_sideways, Control->radius,
+				//Control->scale, Control->line_width,
 				1 /* x_stretch */, 0 /*verbose_level*/);
 		if (f_v) {
 			cout << "poset_classification::post_processing after draw_full_poset" << endl;
@@ -712,6 +716,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 						NULL, //A1/*LG->A_linear*/->Sims,
 						FALSE /* f_strong_gens */,
 						NULL,
+						Control->draw_options,
 						verbose_level - 1);
 
 				if (f_v) {

@@ -1047,7 +1047,9 @@ void sims::write_as_magma_permutation_group(const char *fname_base,
 		}
 }
 
-void sims::report(ostream &ost, int verbose_level)
+void sims::report(std::ostream &ost,
+		layered_graph_draw_options *LG_Draw_options,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1102,8 +1104,8 @@ void sims::report(ostream &ost, int verbose_level)
 			Sorting.schreier_vector_tree(
 				orbit_len[i], orbit[i], prev[i], TRUE /* f_use_pts_inv */, orbit_inv[i],
 				fname_base,
+				LG_Draw_options,
 				LG,
-				FALSE/* f_embedded */, FALSE /* f_sideways */,
 				verbose_level - 3);
 
 			FREE_OBJECT(LG);

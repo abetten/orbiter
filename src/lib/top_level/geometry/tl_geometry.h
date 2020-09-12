@@ -1181,6 +1181,7 @@ public:
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	void report(int f_poset_classify, int poset_classify_depth,
+			layered_graph_draw_options *draw_options,
 			int verbose_level);
 };
 

@@ -19,7 +19,9 @@ namespace group_actions {
 
 
 void action::report(ostream &ost, int f_sims, sims *S,
-		int f_strong_gens, strong_generators *SG, int verbose_level)
+		int f_strong_gens, strong_generators *SG,
+		layered_graph_draw_options *LG_Draw_options,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -121,7 +123,7 @@ void action::report(ostream &ost, int f_sims, sims *S,
 		if (f_v) {
 			cout << "action::report before S->report" << endl;
 		}
-		S->report(ost, verbose_level - 2);
+		S->report(ost, LG_Draw_options, verbose_level - 2);
 		if (f_v) {
 			cout << "action::report after S->report" << endl;
 		}

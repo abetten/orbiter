@@ -1142,8 +1142,8 @@ void interface_combinatorics::do_graph_classify(graph_classify_description *Desc
 	int f_use_invariant_subset_if_available = TRUE;
 	int f_debug = FALSE;
 	int depth;
-	int f_embedded = TRUE;
-	int f_sideways = FALSE;
+	//int f_embedded = TRUE;
+	//int f_sideways = FALSE;
 
 	os_interface Os;
 	int t0 = Os.os_ticks();
@@ -1235,39 +1235,53 @@ void interface_combinatorics::do_graph_classify(graph_classify_description *Desc
 #endif
 
 	if (Gen.Descr->f_draw_graphs) {
+#if 0
 		int xmax_in = 1000000;
 		int ymax_in = 1000000;
 		int xmax = 1000000;
 		int ymax = 1000000;
+#endif
 		int level;
 
 		for (level = 0; level <= Gen.Descr->Control->depth; level++) {
-			Gen.draw_graphs(level, Gen.Descr->Control->scale,
-					xmax_in, ymax_in, xmax, ymax,
-					Gen.Descr->Control->f_embedded, Gen.Descr->Control->f_sideways,
+			Gen.draw_graphs(level, //Gen.Descr->Control->scale,
+					Descr->draw_options,
+					//xmax_in, ymax_in, xmax, ymax,
+					//Gen.Descr->Control->f_embedded, Gen.Descr->Control->f_sideways,
 					verbose_level);
 			}
 		}
 
 	if (Gen.Descr->f_draw_graphs_at_level) {
+#if 0
 		int xmax_in = 1000000;
 		int ymax_in = 1000000;
 		int xmax = 1000000;
 		int ymax = 1000000;
+#endif
 
 		cout << "before Gen.draw_graphs" << endl;
-		Gen.draw_graphs(Gen.Descr->level, Gen.Descr->Control->scale,
-				xmax_in, ymax_in, xmax, ymax,
-				Gen.Descr->Control->f_embedded, Gen.Descr->Control->f_sideways,
+		Gen.draw_graphs(Gen.Descr->level,
+				Descr->draw_options,
+				//Gen.Descr->Control->scale,
+				//xmax_in, ymax_in, xmax, ymax,
+				//Gen.Descr->Control->f_embedded, Gen.Descr->Control->f_sideways,
 				verbose_level);
 		cout << "after Gen.draw_graphs" << endl;
 		}
 
 	if (Gen.Descr->f_draw_level_graph) {
+
+		if (!Descr->f_draw_options) {
+			cout << "please use option -draw_options" << endl;
+			exit(1);
+		}
+
 		Gen.gen->draw_level_graph(Gen.gen->get_problem_label_with_path(),
 				Gen.Descr->Control->depth, Gen.Descr->n /* data1 */,
 				Gen.Descr->level_graph_level,
-				f_embedded, f_sideways,
+				Descr->draw_options,
+				//f_embedded, f_sideways,
 				verbose_level - 3);
 		}
 

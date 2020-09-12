@@ -788,7 +788,8 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 }
 
 
-void surfaces_arc_lifting::report(int verbose_level)
+void surfaces_arc_lifting::report(layered_graph_draw_options *draw_options,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -828,7 +829,7 @@ void surfaces_arc_lifting::report(int verbose_level)
 		}
 
 
-		report2(fp, verbose_level);
+		report2(fp, draw_options, verbose_level);
 
 
 		if (f_v) {
@@ -851,7 +852,9 @@ void surfaces_arc_lifting::report(int verbose_level)
 	}
 }
 
-void surfaces_arc_lifting::report2(ostream &ost, int verbose_level)
+void surfaces_arc_lifting::report2(ostream &ost,
+		layered_graph_draw_options *draw_options,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int nb_arcs, arc_idx;
@@ -873,6 +876,7 @@ void surfaces_arc_lifting::report2(ostream &ost, int verbose_level)
 
 	A4->report(ost, FALSE /* f_sims */, NULL /* sims *S */,
 				FALSE /* f_strong_gens */, NULL /* strong_generators *SG */,
+				draw_options,
 				verbose_level);
 
 

@@ -492,7 +492,9 @@ void classify_double_sixes::classify_partial_ovoids(int verbose_level)
 	}
 }
 
-void classify_double_sixes::report(std::ostream &ost, int verbose_level)
+void classify_double_sixes::report(std::ostream &ost,
+		layered_graph_draw_options *draw_options,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -507,14 +509,14 @@ void classify_double_sixes::report(std::ostream &ost, int verbose_level)
 	}
 	ost << "\\section{The groups}" << endl;
 	ost << "\\subsection{The semilinear group}" << endl;
-	A->report(ost, A->f_has_sims, A->Sims, A->f_has_strong_generators, A->Strong_gens, verbose_level);
+	A->report(ost, A->f_has_sims, A->Sims, A->f_has_strong_generators, A->Strong_gens, draw_options, verbose_level);
 	A->print_points(ost);
 
 	if (f_v) {
 		cout << "classify_double_sixes::report reporting orthogonal group" << endl;
 	}
 	ost << "\\subsection{The orthogonal group}" << endl;
-	A2->report(ost, A2->f_has_sims, A2->Sims, A2->f_has_strong_generators, A2->Strong_gens,  verbose_level);
+	A2->report(ost, A2->f_has_sims, A2->Sims, A2->f_has_strong_generators, A2->Strong_gens, draw_options, verbose_level);
 	if (A2->degree < 100) {
 		A2->print_points(ost);
 	}
@@ -524,7 +526,7 @@ void classify_double_sixes::report(std::ostream &ost, int verbose_level)
 	}
 	ost << "\\subsection{The group stabilizing the fixed line}" << endl;
 	A_on_neighbors->report(ost, A_on_neighbors->f_has_sims, A_on_neighbors->Sims,
-			A_on_neighbors->f_has_strong_generators, A_on_neighbors->Strong_gens, verbose_level);
+			A_on_neighbors->f_has_strong_generators, A_on_neighbors->Strong_gens, draw_options, verbose_level);
 	A_on_neighbors->print_points(ost);
 
 	ost << "{\\small\\arraycolsep=2pt" << endl;

@@ -239,6 +239,7 @@ public:
 		int verbose_level);
 	void create_files_list_of_cases(spreadsheet *S,
 			create_file_description *Descr, int verbose_level);
+	int number_of_vertices_in_colored_graph(std::string &fname, int verbose_level);
 };
 
 

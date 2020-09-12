@@ -20,6 +20,8 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 {
 	f_poset_classification_control = FALSE;
 	Control = NULL;
+	f_draw_options = FALSE;
+	draw_options = NULL;
 	f_orbits_on_points = FALSE;
 	f_export_trees = FALSE;
 	f_shallow_tree = FALSE;
@@ -209,6 +211,22 @@ int group_theoretic_activity_description::read_arguments(
 			if (i < argc) {
 				cout << "next argument is " << argv[i] << endl;
 			}
+		}
+		else if (strcmp(argv[i], "-draw_options") == 0) {
+			f_draw_options = TRUE;
+
+			draw_options = NEW_OBJECT(layered_graph_draw_options);
+			cout << "-draw_options " << endl;
+			i += draw_options->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -draw_options " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-f_draw_options " << endl;
 		}
 		else if (strcmp(argv[i], "-orbits_on_points") == 0) {
 			f_orbits_on_points = TRUE;

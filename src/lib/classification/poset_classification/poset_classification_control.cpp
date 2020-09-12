@@ -21,6 +21,10 @@ namespace classification {
 poset_classification_control::poset_classification_control()
 {
 
+	f_draw_options = FALSE;
+
+	draw_options = NULL;
+
 	verbose_level = 0;
 	verbose_level_group_theory = 0;
 
@@ -51,9 +55,11 @@ poset_classification_control::poset_classification_control()
 	f_has_tools_path = FALSE;
 	tools_path = NULL;
 
+#if 0
 	xmax = 1000000;
 	ymax = 1000000;
 	radius = 300;
+#endif
 
 	f_draw_poset = FALSE;
 	f_draw_full_poset = FALSE;
@@ -77,11 +83,12 @@ poset_classification_control::poset_classification_control()
 
 	nb_recognize = 0;
 
-
+#if 0
 	scale = 0.2;
 	line_width = 0.5;
 	f_embedded = FALSE;
 	f_sideways = FALSE;
+#endif
 
 	f_export_schreier_trees = FALSE;
 	f_draw_schreier_trees = FALSE;
@@ -120,7 +127,23 @@ int poset_classification_control::read_arguments(
 	cout << "poset_classification_control::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-		if (strcmp(argv[i], "-v") == 0) {
+		if (strcmp(argv[i], "-draw_options") == 0) {
+			f_draw_options = TRUE;
+
+			draw_options = NEW_OBJECT(layered_graph_draw_options);
+			cout << "-draw_options " << endl;
+			i += draw_options->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -draw_options " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-f_draw_options " << endl;
+		}
+		else if (strcmp(argv[i], "-v") == 0) {
 			i++;
 			poset_classification_control::verbose_level = atoi(argv[i]);
 			if (f_v) {
@@ -227,6 +250,7 @@ int poset_classification_control::read_arguments(
 				cout << "poset_classification_control::read_arguments -Log" << endl;
 			}
 		}
+#if 0
 		else if (strcmp(argv[i], "-x") == 0) {
 			xmax = atoi(argv[i + 1]);
 			i++;
@@ -248,6 +272,7 @@ int poset_classification_control::read_arguments(
 				cout << "poset_classification_control::read_arguments -rad " << radius << endl;
 			}
 		}
+#endif
 		else if (strcmp(argv[i], "-depth") == 0) {
 			f_depth = TRUE;
 			depth = atoi(argv[++i]);
@@ -369,6 +394,7 @@ int poset_classification_control::read_arguments(
 				cout << "poset_classification_control::read_arguments -tools_path " << tools_path << endl;
 			}
 		}
+#if 0
 		else if (strcmp(argv[i], "-scale") == 0) {
 			scale = atof(argv[++i]);
 			cout << "-scale " << scale << endl;
@@ -385,6 +411,7 @@ int poset_classification_control::read_arguments(
 			f_sideways = TRUE;
 			cout << "-sideways " << endl;
 			}
+#endif
 		else if (strcmp(argv[i], "-problem_label") == 0) {
 			f_problem_label = TRUE;
 			problem_label.assign(argv[++i]);
@@ -415,6 +442,12 @@ int poset_classification_control::read_arguments(
 void poset_classification_control::print()
 {
 	cout << "poset_classification_control::print:" << endl;
+
+
+
+	if (f_draw_options) {
+		cout << "-draw_options" << endl;
+	}
 	if (f_lex) {
 		cout << "-lex" << endl;
 	}

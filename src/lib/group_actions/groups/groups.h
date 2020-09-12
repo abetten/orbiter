@@ -278,7 +278,7 @@ public:
 	void init_subgroup_Janko1(int verbose_level);
 	void report(std::ostream &fp, int f_sylow, int f_group_table,
 			int f_conjugacy_classes_and_normalizers,
-			double tikz_scale, double tikz_line_width, int factor_1000,
+			layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
 };
 
@@ -1460,7 +1460,9 @@ public:
 		char *fname, int verbose_level);
 	void write_as_magma_permutation_group(const char *fname_base,
 		vector_ge *gens, int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
+	void report(std::ostream &ost,
+			layered_graph_draw_options *LG_Draw_options,
+			int verbose_level);
 
 
 };

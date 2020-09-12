@@ -683,16 +683,52 @@ public:
 class layered_graph_draw_options {
 public:
 
+	int f_file;
+	const char *fname;
+
+
+
+	int xin;
+	int yin;
+	int xout;
+	int yout;
+
+
+	int f_spanning_tree;
+
+
+	//int xmax = 1000000;
+	//int ymax = 1000000;
+
+	int f_circle;
+	int f_corners;
+	int rad;
+	int f_embedded;
+	int f_sideways;
+	int f_show_level_info;
+	int f_label_edges;
+	int f_y_stretch;
+	double y_stretch;
+	//int f_x_stretch = FALSE;
+	//double x_stretch = 1.;
+	int f_scale;
+	double scale;
+	int f_line_width;
+	double line_width;
+	int f_rotated;
+
+#if 0
 	int xmax;
 	int ymax;
 	int x_max;
 	int y_max;
-	int rad;
+#endif
 	
-	int f_circle;
-	int f_corners;
+	//int f_circle;
+	//int f_corners;
 	int f_nodes_empty;
 	int f_select_layers;
+	const char *select_layers;
 	int nb_layer_select;
 	int *layer_select;
 
@@ -707,18 +743,19 @@ public:
 	void (*draw_vertex_callback)(layered_graph *LG, mp_graphics *G, 
 		int layer, int node, int x, int y, int dx, int dy);
 	
-	int f_show_level_info;
-	int f_embedded;
-	int f_sideways;
-	int f_label_edges;
-	int f_rotated;
+	//int f_show_level_info;
+	//int f_embedded;
+	//int f_sideways;
+	//int f_label_edges;
+	//int f_rotated;
 	
 
-	double global_scale;
-	double global_line_width;
+	//double global_scale;
+	//double global_line_width;
 
 	layered_graph_draw_options();
 	~layered_graph_draw_options();
+#if 0
 	void init(
 		int xmax, int ymax, int x_max, int y_max, int rad, 
 		int f_circle, int f_corners, int f_nodes_empty, 
@@ -743,6 +780,10 @@ public:
 		int f_label_edges, 
 		int f_rotated, 
 		double global_scale, double global_line_width);
+#endif
+	int read_arguments(
+		int argc, const char **argv,
+		int verbose_level);
 };
 
 // #############################################################################

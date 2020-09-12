@@ -820,8 +820,8 @@ public:
 	void schreier_vector_tree(
 		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
 		std::string &fname_base,
+		layered_graph_draw_options *LG_Draw_options,
 		layered_graph *&LG,
-		int f_embedded, int f_sideways,
 		int verbose_level);
 	int compare_sets(int *set1, int *set2, int sz1, int sz2);
 	int compare_sets_lint(long int *set1, long int *set2, int sz1, int sz2);

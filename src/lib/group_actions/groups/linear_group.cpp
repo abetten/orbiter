@@ -1147,9 +1147,9 @@ void linear_group::init_subgroup_Janko1(int verbose_level)
 		}
 }
 
-void linear_group::report(ostream &fp, int f_sylow, int f_group_table,
+void linear_group::report(std::ostream &fp, int f_sylow, int f_group_table,
 		int f_conjugacy_classes_and_normalizers,
-		double tikz_scale, double tikz_line_width, int factor_1000,
+		layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1237,7 +1237,9 @@ void linear_group::report(ostream &fp, int f_sylow, int f_group_table,
 		}
 
 		A2->report(fp, TRUE /*f_sims*/, H,
-				TRUE /* f_strong_gens */, Strong_gens, verbose_level);
+				TRUE /* f_strong_gens */, Strong_gens,
+				LG_Draw_options,
+				verbose_level);
 
 		if (f_v) {
 			cout << "linear_group::report after A2->report" << endl;
@@ -1319,11 +1321,11 @@ void linear_group::report(ostream &fp, int f_sylow, int f_group_table,
 				G.out_ymax() = ymax;
 				//cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
 
-				G.tikz_global_scale = tikz_scale;
-				G.tikz_global_line_width = tikz_line_width;
+				G.tikz_global_scale = LG_Draw_options->scale;
+				G.tikz_global_line_width = LG_Draw_options->line_width;
 
 				G.header();
-				G.begin_figure(factor_1000);
+				G.begin_figure(1000 /* factor_1000*/);
 
 				int color_scale[] = {8,5,6,4,3,2,18,19, 7,9,10,11,12,13,14,15,16,17,20,21,22,23,24,25,1};
 				int nb_colors = sizeof(color_scale) / sizeof(int);

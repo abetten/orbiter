@@ -246,6 +246,27 @@ void tally::print(int f_backwards)
 	else {
 		print_first(f_backwards);
 		}
+	cout << endl;
+}
+
+void tally::print_no_lf(int f_backwards)
+{
+	if (f_second) {
+		print_second(f_backwards);
+		}
+	else {
+		print_first(f_backwards);
+		}
+}
+
+void tally::print_tex_no_lf(int f_backwards)
+{
+	if (f_second) {
+		print_second_tex(f_backwards);
+		}
+	else {
+		print_first_tex(f_backwards);
+		}
 }
 
 void tally::print_first(int f_backwards)
@@ -254,7 +275,7 @@ void tally::print_first(int f_backwards)
 
 	Sorting.int_vec_print_types(cout, f_backwards, data_sorted,
 		nb_types, type_first, type_len);
-	cout << endl;	
+	//cout << endl;
 }
 
 void tally::print_second(int f_backwards)
@@ -264,7 +285,31 @@ void tally::print_second(int f_backwards)
 
 		Sorting.int_vec_print_types(cout, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
-		cout << endl;	
+		//cout << endl;
+		}
+
+}
+
+void tally::print_first_tex(int f_backwards)
+{
+	sorting Sorting;
+
+	cout << "(";
+	Sorting.int_vec_print_types_naked_tex_we_are_in_math_mode(cout, f_backwards, data_sorted,
+		nb_types, type_first, type_len);
+	cout << ")";
+	//cout << endl;
+}
+
+void tally::print_second_tex(int f_backwards)
+{
+	if (f_second) {
+		sorting Sorting;
+
+		cout << "(";
+		Sorting.int_vec_print_types_naked_tex_we_are_in_math_mode(cout, f_backwards, second_data_sorted,
+			second_nb_types, second_type_first, second_type_len);
+		cout << ")";
 		}
 
 }

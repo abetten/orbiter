@@ -44,6 +44,10 @@ graph_classify_description::graph_classify_description()
 	level_graph_level = 0;
 	level = 0;
 	identify_data_sz = 0;
+
+	f_draw_options = FALSE;
+	draw_options = NULL;
+
 }
 
 graph_classify_description::~graph_classify_description()
@@ -140,6 +144,23 @@ int graph_classify_description::read_arguments(int argc, const char **argv,
 			f_x_stretch = TRUE;
 			sscanf(argv[++i], "%lf", &x_stretch);
 			cout << "-x_stretch " << endl;
+		}
+
+		else if (strcmp(argv[i], "-draw_options") == 0) {
+			f_draw_options = TRUE;
+
+			draw_options = NEW_OBJECT(layered_graph_draw_options);
+			cout << "-draw_options " << endl;
+			i += draw_options->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -draw_options " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-f_draw_options " << endl;
 		}
 
 		else if (strcmp(argv[i], "-end") == 0) {
