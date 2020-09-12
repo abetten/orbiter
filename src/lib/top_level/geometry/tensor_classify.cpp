@@ -356,6 +356,7 @@ void tensor_classify::early_test_func(long int *S, int len,
 
 
 void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
+		layered_graph_draw_options *draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -425,7 +426,9 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 
 
 		fp << "\\section{The Group}" << endl;
-		A->report(fp, A->f_has_sims, A->Sims, A->f_has_strong_generators, A->Strong_gens, verbose_level);
+		A->report(fp, A->f_has_sims, A->Sims, A->f_has_strong_generators, A->Strong_gens,
+				draw_options,
+				verbose_level);
 
 		if (f_v) {
 			cout << "tensor_classify::report after A->report" << endl;

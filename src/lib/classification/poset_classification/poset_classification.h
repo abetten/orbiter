@@ -293,6 +293,12 @@ public:
 class poset_classification_control {
 
 public:
+
+
+	int f_draw_options;
+
+	layered_graph_draw_options *draw_options;
+
 	int verbose_level;
 	int verbose_level_group_theory;
 
@@ -312,7 +318,7 @@ public:
 	const char *tools_path;
 
 
-	int xmax, ymax, radius;
+	//int xmax, ymax, radius;
 
 	int f_recover;
 	std::string recover_fname;
@@ -350,10 +356,12 @@ public:
 	int nb_recognize;
 	const char *recognize[CONTROL_MAX_RECOGNIZE];
 
+#if 0
 	double scale;
 	double line_width;
 	int f_embedded;
 	int f_sideways;
+#endif
 
 
 	int f_export_schreier_trees;
@@ -794,8 +802,9 @@ public:
 	void draw_poset_fname_base_tree_lvl(std::string &fname, int depth);
 	void draw_poset_fname_base_poset_detailed_lvl(std::string &fname, int depth);
 	void write_treefile_and_draw_tree(std::string &fname_base,
-		int lvl, int xmax, int ymax, int rad, 
-		int f_embedded, int verbose_level);
+		int lvl,
+		layered_graph_draw_options *draw_options,
+		int verbose_level);
 	int write_treefile(std::string &fname_base, int lvl,
 		int verbose_level);
 	void draw_tree(std::string &fname_base, int lvl,
@@ -812,15 +821,20 @@ public:
 		int f_draw_points, int f_draw_extension_points, 
 		int f_draw_aut_group_order, 
 		int radius, int verbose_level);
-	void draw_poset_full(std::string &fname_base, int depth,
-		int data, int f_embedded, int f_sideways, int rad, double scale, double line_width,
-		double x_stretch, int verbose_level);
-	void draw_poset(std::string &fname_base, int depth,
-		int data1, int f_embedded, int f_sideways, int rad, double scale, double line_width,
-		int verbose_level);
-	void draw_level_graph(std::string &fname_base,
-			int depth,
-			int data, int level, int f_embedded, int f_sideways,
+	void draw_poset_full(std::string &fname_base,
+			int depth, int data,
+			layered_graph_draw_options *LG_Draw_options,
+			double x_stretch,
+			int verbose_level);
+	void draw_poset(
+			std::string &fname_base,
+			int depth, int data,
+			layered_graph_draw_options *LG_Draw_options,
+			int verbose_level);
+	void draw_level_graph(
+			std::string &fname_base,
+			int depth, int data, int level,
+			layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
 	void make_flag_orbits_on_relations(
 			int depth, const char *fname_prefix, int verbose_level);

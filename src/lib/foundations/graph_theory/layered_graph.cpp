@@ -307,16 +307,16 @@ void layered_graph::draw_with_options(std::string &fname,
 
 	{
 	mp_graphics G(fname_full, x_min, y_min,
-			O->x_max, O->y_max,
+			O->xin, O->yin,
 			O->f_embedded, O->f_sideways, verbose_level - 1);
 	G.out_xmin() = 0;
 	G.out_ymin() = 0;
-	G.out_xmax() = O->xmax;
-	G.out_ymax() = O->ymax;
+	G.out_xmax() = O->xout;
+	G.out_ymax() = O->yout;
 	//cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
 	
-	G.tikz_global_scale = O->global_scale;
-	G.tikz_global_line_width = O->global_line_width;
+	G.tikz_global_scale = O->scale;
+	G.tikz_global_line_width = O->line_width;
 
 	G.header();
 	G.begin_figure(factor_1000);
@@ -350,7 +350,7 @@ void layered_graph::draw_with_options(std::string &fname,
 	
 	if (O->f_has_draw_begining_callback) {
 		(*O->draw_begining_callback)(this, &G,
-				O->x_max, O->y_max, O->f_rotated,
+				O->xin, O->yin, O->f_rotated,
 				O->rad * 4, O->rad * 4);
 		}
 
@@ -397,7 +397,7 @@ void layered_graph::draw_with_options(std::string &fname,
 					continue;
 					}
 				}
-			coordinates(L[i].Nodes[j].id, O->x_max, O->y_max,
+			coordinates(L[i].Nodes[j].id, O->xin, O->yin,
 					O->f_rotated, x, y);
 			//G.circle(x, y, rad);
 
@@ -463,7 +463,7 @@ void layered_graph::draw_with_options(std::string &fname,
 				for (h = 0; h < nb_up; h++) {
 					id = up[h];
 					find_node_by_id(id, l, n);
-					coordinates(id, O->x_max, O->y_max,
+					coordinates(id, O->xin, O->yin,
 							O->f_rotated, x2, y2);
 					if (h > 0 && h < nb_up - 1) {
 #if 1
@@ -497,7 +497,7 @@ void layered_graph::draw_with_options(std::string &fname,
 				for (h = 0; h < nb_up; h++) {
 					id = up[h];
 					find_node_by_id(id, l, n);
-					coordinates(id, O->x_max, O->y_max,
+					coordinates(id, O->xin, O->yin,
 							O->f_rotated, x2, y2);
 					Px[0] = x;
 					Px[1] = x2;
@@ -533,7 +533,7 @@ void layered_graph::draw_with_options(std::string &fname,
 				for (h = 0; h < nb_down; h++) {
 					id = down[h];
 					find_node_by_id(id, l, n);
-					coordinates(id, O->x_max, O->y_max, O->f_rotated, x2, y2);
+					coordinates(id, O->xin, O->yin, O->f_rotated, x2, y2);
 					if (h > 0 && h < nb_down - 1) {
 #if 1
 						Px[0] = x;
@@ -571,7 +571,7 @@ void layered_graph::draw_with_options(std::string &fname,
 				for (h = 0; h < nb_down; h++) {
 					id = down[h];
 					find_node_by_id(id, l, n);
-					coordinates(id, O->x_max, O->y_max,
+					coordinates(id, O->xin, O->yin,
 							O->f_rotated, x2, y2);
 					Px[0] = x;
 					Px[1] = x2;
@@ -640,12 +640,12 @@ void layered_graph::draw_with_options(std::string &fname,
 			}
 
 		if (L[i].nb_nodes > threshold) {
-			coordinates(L[i].Nodes[0].id, O->x_max, O->y_max,
+			coordinates(L[i].Nodes[0].id, O->xin, O->yin,
 					O->f_rotated, x, y);
 			Px[0] = x;
 			Py[0] = y;
 			coordinates(L[i].Nodes[L[i].nb_nodes - 1].id,
-					O->x_max, O->y_max, O->f_rotated, x, y);
+					O->xin, O->yin, O->f_rotated, x, y);
 			Px[1] = x;
 			Py[1] = y;
 			G.polygon2(Px, Py, 0, 1);
@@ -661,7 +661,7 @@ void layered_graph::draw_with_options(std::string &fname,
 					continue;
 					}
 				}
-			coordinates(L[i].Nodes[j].id, O->x_max, O->y_max,
+			coordinates(L[i].Nodes[j].id, O->xin, O->yin,
 					O->f_rotated, x, y);
 
 
@@ -732,7 +732,7 @@ void layered_graph::draw_with_options(std::string &fname,
 
 
 	if (O->f_has_draw_ending_callback) {
-		(*O->draw_ending_callback)(this, &G, O->x_max, O->y_max,
+		(*O->draw_ending_callback)(this, &G, O->xin, O->yin,
 				O->f_rotated, O->rad * 4, O->rad * 4);
 		}
 
@@ -740,24 +740,24 @@ void layered_graph::draw_with_options(std::string &fname,
 	if (O->f_show_level_info) {
 		// draw depth labels at the side:
 		coordinates(L[0].Nodes[0].id,
-				O->x_max, O->y_max, O->f_rotated, x, y);
+				O->xin, O->yin, O->f_rotated, x, y);
 		Px[0] = 1 * O->rad;
 		Py[0] = y + 4 * O->rad;
 		G.aligned_text(Px[0], Py[0], "", "Level");
 		for (i = 0; i < nb_layers - 1; i++) {
 			coordinates(L[i].Nodes[0].id,
-					O->x_max, O->y_max, O->f_rotated, x, y);
+					O->xin, O->yin, O->f_rotated, x, y);
 			Px[0] = 2 * O->rad;
 			Py[0] = y;
 			coordinates(L[i + 1].Nodes[0].id,
-					O->x_max, O->y_max, O->f_rotated, x, y);
+					O->xin, O->yin, O->f_rotated, x, y);
 			Px[1] = 2 * O->rad;
 			Py[1] = y;
 			G.polygon2(Px, Py, 0, 1);
 			}
 		for (i = 0; i < nb_layers; i++) {
 			coordinates(L[i].Nodes[0].id,
-					O->x_max, O->y_max, O->f_rotated, x, y);
+					O->xin, O->yin, O->f_rotated, x, y);
 			Px[0] = 1 * O->rad;
 			Py[0] = y;
 			Px[1] = 3 * O->rad;
@@ -768,7 +768,7 @@ void layered_graph::draw_with_options(std::string &fname,
 			char str[1000];
 			
 			coordinates(L[i].Nodes[0].id,
-					O->x_max, O->y_max, O->f_rotated, x, y);
+					O->xin, O->yin, O->f_rotated, x, y);
 			Px[0] = 0;
 			Py[0] = y;
 			//G.nice_circle(Px[0], Py[0], rad * 4);

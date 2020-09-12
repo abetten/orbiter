@@ -61,8 +61,12 @@ public:
 	void sort_and_classify_second();
 	int class_of(int pt_idx);
 	void print(int f_backwards);
+	void print_no_lf(int f_backwards);
+	void print_tex_no_lf(int f_backwards);
 	void print_first(int f_backwards);
 	void print_second(int f_backwards);
+	void print_first_tex(int f_backwards);
+	void print_second_tex(int f_backwards);
 	void print_file(std::ostream &ost, int f_backwards);
 	void print_file_tex(std::ostream &ost, int f_backwards);
 	void print_file_tex_we_are_in_math_mode(std::ostream &ost, int f_backwards);

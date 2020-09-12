@@ -791,6 +791,40 @@ void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
 	}
 }
 
+action *packing_was::restricted_action(int orbit_length, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int orbit_idx;
+	action *Ar;
+
+	if (f_v) {
+		cout << "packing_was::restricted_action" << endl;
+	}
+
+	orbit_idx = find_orbits_of_length(orbit_length);
+	if (orbit_idx == -1) {
+		cout << "packing_was::restricted_action "
+				"we don't have any orbits of length " << orbit_length << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "orbit_idx = " << orbit_idx << endl;
+		cout << "Number of orbits of length " << orbit_length << " = "
+				<< reduced_spread_orbits_under_H->Orbits_classified->Set_size[orbit_idx] << endl;
+	}
+	Ar = A_on_reduced_spread_orbits->create_induced_action_by_restriction(
+		NULL,
+		reduced_spread_orbits_under_H->Orbits_classified->Set_size[orbit_idx],
+		reduced_spread_orbits_under_H->Orbits_classified->Sets[orbit_idx],
+		FALSE /* f_induce_action */,
+		verbose_level);
+
+	if (f_v) {
+		cout << "packing_was::restricted_action done" << endl;
+	}
+	return Ar;
+}
+
 int packing_was::test_if_pair_of_sets_of_reduced_spreads_are_adjacent(
 	long int *set1, int len1, long int *set2, int len2,
 	int verbose_level)

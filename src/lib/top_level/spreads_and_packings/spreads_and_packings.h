@@ -299,6 +299,7 @@ public:
 
 	int fixpoints_clique_case_number;
 	long int *fixpoint_clique_orbit_numbers;
+	strong_generators *fixpoint_clique_stabilizer_gens;
 	long int *fixpoint_clique;
 	set_of_sets *Filtered_orbits;
 
@@ -444,6 +445,7 @@ public:
 	// orbit representatives will be stored in Cliques[nb_cliques * clique_size]
 	void process_long_orbits(int verbose_level);
 	long int *clique_by_index(int idx);
+	strong_generators *get_stabilizer(int idx);
 	void process_long_orbits(
 			int clique_index,
 			int f_solution_path,
@@ -548,6 +550,7 @@ public:
 	void compute_reduced_spread_types_wrt_H(int verbose_level);
 	// Spread_types[P->nb_spreads * (group_order + 1)]
 	void compute_H_orbits_on_reduced_spreads(int verbose_level);
+	action *restricted_action(int orbit_length, int verbose_level);
 	int test_if_pair_of_sets_of_reduced_spreads_are_adjacent(
 		long int *orbit1, int len1, long int *orbit2, int len2,
 		int verbose_level);

@@ -844,7 +844,7 @@ void poset_classification::housekeeping(int i,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v5 = (verbose_level >= 5);
-	int f_embedded = TRUE;
+	//int f_embedded = TRUE;
 	
 	if (f_v) {
 		cout << "poset_classification::housekeeping "
@@ -1012,7 +1012,9 @@ void poset_classification::housekeeping(int i,
 			}
 
 		write_treefile_and_draw_tree(problem_label_with_path, i,
-				Control->xmax, Control->ymax, Control->radius, f_embedded, 0 /*verbose_level - 1*/);
+				Control->draw_options,
+				//Control->xmax, Control->ymax, Control->radius, f_embedded,
+				0 /*verbose_level - 1*/);
 			// in poset_classification_draw.cpp
 
 		if (f_v) {
@@ -1039,7 +1041,7 @@ void poset_classification::housekeeping_no_data_file(int i,
 	int j;
 	int f_v = (verbose_level >= 1);
 	int f_v5 = (verbose_level >= 5);
-	int f_embedded = TRUE;
+	//int f_embedded = TRUE;
 	
 	if (f_v) {
 		cout << "poset_classification::"
@@ -1093,8 +1095,9 @@ void poset_classification::housekeeping_no_data_file(int i,
 
 	if (Control->f_T || (Control->f_t && i == sz)) {
 		write_treefile_and_draw_tree(problem_label_with_path, i,
-				Control->xmax, Control->ymax, Control->radius,
-				f_embedded, verbose_level - 1);
+				Control->draw_options,
+				//Control->xmax, Control->ymax, Control->radius, f_embedded,
+				verbose_level - 1);
 		}
 	if (f_v) {
 		cout << "poset_classification::"

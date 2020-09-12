@@ -2494,7 +2494,9 @@ void surface_classify_wedge::read_double_sixes(int verbose_level)
 }
 
 
-void surface_classify_wedge::create_report(int f_with_stabilizers, int verbose_level)
+void surface_classify_wedge::create_report(int f_with_stabilizers,
+		layered_graph_draw_options *draw_options,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2525,14 +2527,16 @@ void surface_classify_wedge::create_report(int f_with_stabilizers, int verbose_l
 			TRUE /*f_enlarged_page */,
 			TRUE /* f_pagenumbers*/,
 			NULL /* extra_praeamble */);
-		report(fp, f_with_stabilizers, verbose_level - 1);
+		report(fp, f_with_stabilizers, draw_options, verbose_level - 1);
 		L.foot(fp);
 		}
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 }
 
-void surface_classify_wedge::report(ostream &ost, int f_with_stabilizers, int verbose_level)
+void surface_classify_wedge::report(ostream &ost, int f_with_stabilizers,
+		layered_graph_draw_options *draw_options,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2548,7 +2552,7 @@ void surface_classify_wedge::report(ostream &ost, int f_with_stabilizers, int ve
 			<< "}$ :\\\\" << endl;
 	LG->F->cheat_sheet(ost, verbose_level);
 
-	Classify_double_sixes->report(ost, verbose_level);
+	Classify_double_sixes->report(ost, draw_options, verbose_level);
 
 	Classify_double_sixes->print_five_plus_ones(ost);
 	Classify_double_sixes->Flag_orbits->print_latex(ost, "Flag orbits for double sixes", TRUE);

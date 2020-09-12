@@ -213,12 +213,15 @@ void packing_was_fixpoints::action_on_fixpoints(int verbose_level)
 				<< PW->reduced_spread_orbits_under_H->Orbits_classified->Set_size[fixpoints_idx] << endl;
 	}
 
+	A_on_fixpoints = PW->restricted_action(1 /* orbit_length */, verbose_level);
+#if 0
 	A_on_fixpoints = PW->A_on_reduced_spread_orbits->create_induced_action_by_restriction(
 		NULL,
 		PW->reduced_spread_orbits_under_H->Orbits_classified->Set_size[fixpoints_idx],
 		PW->reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx],
 		FALSE /* f_induce_action */,
 		verbose_level);
+#endif
 
 	if (f_v) {
 		cout << "packing_was_fixpoints::action_on_fixpoints "
@@ -492,6 +495,11 @@ void packing_was_fixpoints::process_long_orbits(int verbose_level)
 long int *packing_was_fixpoints::clique_by_index(int idx)
 {
 	return Cliques + idx * PW->Descr->clique_size_on_fixpoint_graph;
+}
+
+strong_generators *packing_was_fixpoints::get_stabilizer(int idx)
+{
+	return Fixp_cliques->Reps[idx].Strong_gens;
 }
 
 void packing_was_fixpoints::report(packing_long_orbits *L, int verbose_level)

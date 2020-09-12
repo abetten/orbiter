@@ -2488,7 +2488,7 @@ void combinatorics_domain::q_binomial_with_table(longinteger_object &a,
 	int n, int k, int q, int verbose_level)
 {
 	int i, j;
-	longinteger_domain D;
+	//longinteger_domain D;
 
 	//cout << "q_binomial_with_table n=" << n
 	// << " k=" << k << " q=" << q << endl;

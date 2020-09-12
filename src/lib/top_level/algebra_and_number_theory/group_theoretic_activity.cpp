@@ -126,7 +126,11 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 
 	if (Descr->f_report) {
-		report(verbose_level);
+		if (!Descr->f_draw_options) {
+			cout << "please use -draw_options" << endl;
+			exit(1);
+		}
+		report(Descr->draw_options, verbose_level);
 	}
 
 	if (Descr->f_print_elements) {
@@ -777,7 +781,7 @@ void group_theoretic_activity::do_find_subgroups(
 }
 
 
-void group_theoretic_activity::report(int verbose_level)
+void group_theoretic_activity::report(layered_graph_draw_options *draw_option, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -789,9 +793,9 @@ void group_theoretic_activity::report(int verbose_level)
 	const char *author = "Orbiter";
 	const char *extras_for_preamble = "";
 
-	double tikz_global_scale = 0.3;
-	double tikz_global_line_width = 1.;
-	int factor1000 = 1000;
+	//double tikz_global_scale = 0.3;
+	//double tikz_global_line_width = 1.;
+	//int factor1000 = 1000;
 
 
 	sprintf(fname, "%s_report.tex", LG->label.c_str());
@@ -810,7 +814,8 @@ void group_theoretic_activity::report(int verbose_level)
 
 		LG->report(fp, Descr->f_sylow, Descr->f_group_table,
 				Descr->f_classes,
-				tikz_global_scale, tikz_global_line_width, factor1000,
+				draw_option,
+				//tikz_global_scale, tikz_global_line_width, factor1000,
 				verbose_level);
 
 		L.foot(fp);
@@ -2340,7 +2345,7 @@ void group_theoretic_activity::do_surface_report(int verbose_level)
 		cout << "group_theoretic_activity::do_surface_report "
 				"before SCW->create_report" << endl;
 	}
-	SCW->create_report(f_with_stabilizers, verbose_level - 1);
+	SCW->create_report(f_with_stabilizers, Control->draw_options, verbose_level - 1);
 	if (f_v) {
 		cout << "group_theoretic_activity::do_surface_report "
 				"after SCW->create_report" << endl;
@@ -2735,7 +2740,7 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines(
 			cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines "
 					"before SAL->report" << endl;
 		}
-		SAL->report(verbose_level);
+		SAL->report(Control_six_arcs->draw_options, verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines "
 					"after SAL->report" << endl;

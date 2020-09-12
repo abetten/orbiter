@@ -733,6 +733,9 @@ public:
 	long int identify_data[1000];
 	int identify_data_sz;
 
+	int f_draw_options;
+	layered_graph_draw_options *draw_options;
+
 	graph_classify_description();
 	~graph_classify_description();
 	int read_arguments(int argc, const char **argv,
@@ -793,9 +796,12 @@ public:
 	void print(std::ostream &ost, long int *S, int len);
 	void print_score_sequences(int level, int verbose_level);
 	void score_sequence(int n, long int *set, int sz, long int *score, int verbose_level);
-	void draw_graphs(int level, double scale,
-			int xmax_in, int ymax_in, int xmax, int ymax,
-			int f_embedded, int f_sideways, int verbose_level);
+	void draw_graphs(int level,
+			layered_graph_draw_options *draw_options,
+			//double scale,
+			//int xmax_in, int ymax_in, int xmax, int ymax,
+			//int f_embedded, int f_sideways,
+			int verbose_level);
 
 };
 

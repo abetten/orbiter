@@ -195,6 +195,9 @@ public:
 	int f_poset_classification_control;
 	poset_classification_control *Control;
 
+	int f_draw_options;
+	layered_graph_draw_options *draw_options;
+
 	int f_orbits_on_points;
 	int f_export_trees;
 	int f_shallow_tree;
@@ -380,7 +383,7 @@ public:
 	void do_find_subgroups(
 			int order_of_subgroup,
 			int verbose_level);
-	void report(int verbose_level);
+	void report(layered_graph_draw_options *draw_option, int verbose_level);
 	void print_elements(int verbose_level);
 	void print_elements_tex(int verbose_level);
 	void search_subgroup(int verbose_level);
@@ -625,6 +628,7 @@ public:
 	void report(std::ostream &ost, int level,
 			semifield_level_two *L2,
 			semifield_lifting *L3,
+			layered_graph_draw_options *draw_options,
 			int verbose_level);
 	void init_poset_classification(
 			const char *prefix,

@@ -451,6 +451,7 @@ void semifield_classify::init(
 void semifield_classify::report(std::ostream &ost, int level,
 		semifield_level_two *L2,
 		semifield_lifting *L3,
+		layered_graph_draw_options *draw_options,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -474,6 +475,7 @@ void semifield_classify::report(std::ostream &ost, int level,
 
 	A0_linear->report(ost, TRUE /* f_sims */, G,
 			TRUE /* f_strong_gens */, A0_linear->Strong_gens,
+			draw_options,
 			verbose_level);
 
 	ost << endl;

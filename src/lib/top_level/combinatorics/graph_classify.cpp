@@ -668,8 +668,9 @@ void graph_classify::score_sequence(int n,
 
 
 void graph_classify::draw_graphs(int level,
-	double scale, int xmax_in, int ymax_in,
-	int xmax, int ymax, int f_embedded, int f_sideways,
+	layered_graph_draw_options *draw_options,
+	//double scale, int xmax_in, int ymax_in,
+	//int xmax, int ymax, int f_embedded, int f_sideways,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -719,8 +720,8 @@ void graph_classify::draw_graphs(int level,
 		fname_full.append(str);
 
 
-		int x_min = 0, x_max = xmax_in;
-		int y_min = 0, y_max = ymax_in;
+		int x_min = 0, x_max = draw_options->xin;
+		int y_min = 0, y_max = draw_options->yin;
 		int x, y, dx, dy;
 
 		x = (x_max - x_min) >> 1;
@@ -729,14 +730,14 @@ void graph_classify::draw_graphs(int level,
 		dy = y;
 		{
 		mp_graphics G(fname_full,
-				x_min, y_min, x_max, y_max, f_embedded, f_sideways, verbose_level - 1);
+				x_min, y_min, x_max, y_max, draw_options->f_embedded, draw_options->f_sideways, verbose_level - 1);
 		G.out_xmin() = 0;
 		G.out_ymin() = 0;
-		G.out_xmax() = xmax;
-		G.out_ymax() = ymax;
+		G.out_xmax() = draw_options->xout;
+		G.out_ymax() = draw_options->yout;
 		//cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
 	
-		G.set_scale(scale);
+		G.set_scale(draw_options->scale);
 		G.header();
 		G.begin_figure(1000 /*factor_1000*/);
 
