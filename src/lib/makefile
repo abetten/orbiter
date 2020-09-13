@@ -51,6 +51,7 @@ MODULES= \
 		foundations/data_structures/bitmatrix.o \
 		foundations/data_structures/classify_bitvectors.o \
 		foundations/data_structures/data_file.o \
+		foundations/data_structures/data_input_stream.o \
 		foundations/data_structures/fancy_set.o \
 		foundations/data_structures/int_matrix.o \
 		foundations/data_structures/int_vector.o \
@@ -186,7 +187,6 @@ MODULES= \
 		group_actions/actions/interface_wreath_product.o \
 		group_actions/actions/nauty_interface_with_group.o \
 		group_actions/actions/stabilizer_chain_base_data.o \
-		group_actions/data_structures/data_input_stream.o \
 		group_actions/data_structures/group.o \
 		group_actions/data_structures/incidence_structure_with_group.o \
 		group_actions/data_structures/object_in_projective_space_with_action.o \
@@ -195,6 +195,8 @@ MODULES= \
 		group_actions/data_structures/orbit_type_repository.o \
 		group_actions/data_structures/projective_space_job_description.o \
 		group_actions/data_structures/projective_space_job.o \
+		group_actions/data_structures/projective_space_object_classifier_description.o \
+		group_actions/data_structures/projective_space_object_classifier.o \
 		group_actions/data_structures/projective_space_with_action.o \
 		group_actions/data_structures/schreier_vector_handler.o \
 		group_actions/data_structures/schreier_vector.o \

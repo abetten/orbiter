@@ -156,6 +156,52 @@ class data_file {
 };
 
 // #############################################################################
+// data_input_stream.cpp:
+// #############################################################################
+
+
+#define INPUT_TYPE_SET_OF_POINTS 1
+#define INPUT_TYPE_SET_OF_LINES 2
+#define INPUT_TYPE_SET_OF_PACKING 3
+#define INPUT_TYPE_FILE_OF_POINTS 4
+#define INPUT_TYPE_FILE_OF_LINES 5
+#define INPUT_TYPE_FILE_OF_PACKINGS 6
+#define INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE 7
+#define INPUT_TYPE_FILE_OF_POINT_SET 8
+#define INPUT_TYPE_FILE_OF_DESIGNS 9
+
+
+
+//! description of input data for classification of geometric objects from the command line
+
+
+class data_input_stream {
+public:
+	int nb_inputs;
+	int input_type[1000];
+	std::string input_string[1000];
+	std::string input_string2[1000];
+
+	// for INPUT_TYPE_FILE_OF_DESIGNS:
+	int input_data1[1000]; // N_points
+	int input_data2[1000]; // b = number of blocks
+	int input_data3[1000]; // k = block size
+	int input_data4[1000]; // partition class size
+
+	data_input_stream();
+	~data_input_stream();
+	void null();
+	void freeself();
+	void read_arguments_from_string(
+			const char *str, int verbose_level);
+	int read_arguments(int argc, const char **argv,
+		int verbose_level);
+	int count_number_of_objects_to_test(
+		int verbose_level);
+};
+
+
+// #############################################################################
 // fancy_set.cpp
 // #############################################################################
 

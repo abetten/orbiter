@@ -700,7 +700,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 
 	SG = NEW_OBJECT(strong_generators);
 	SG->init_from_sims(S, 0 /* verbose_level*/);
-	delete S;
+	FREE_OBJECT(S);
 	if (f_v) {
 		cout << "projective_space_with_action::set_stabilizer "
 				"after initializing strong generators" << endl;
@@ -838,9 +838,9 @@ strong_generators
 	int f_compute_canonical_form,
 	uchar *&canonical_form,
 	int &canonical_form_len,
-	long int *canonical_labeling,
+	long int *canonical_labeling, int &canonical_labeling_len,
 	int verbose_level)
-// canonical_labeling[nb_rows, nb_cols]
+// canonical_labeling[nb_rows + nb_cols] contains the canonical labeling
 // where nb_rows and nb_cols is the encoding size ,
 // which can be computed using
 // object_in_projective_space::encoding_size(
@@ -896,7 +896,9 @@ strong_generators
 	}
 
 	//canonical_labeling = NEW_int(nb_rows + nb_cols);
-	for (i = 0; i < nb_rows + nb_cols; i++) {
+
+	canonical_labeling_len = nb_rows + nb_cols;
+	for (i = 0; i < canonical_labeling_len; i++) {
 		canonical_labeling[i] = i;
 		}
 
@@ -940,7 +942,7 @@ strong_generators
 		FREE_OBJECT(CG);
 		}
 
-	N = nb_rows + nb_cols;
+	N = canonical_labeling_len;
 	L = nb_rows * nb_cols;
 
 	if (f_vv) {
@@ -965,7 +967,7 @@ strong_generators
 
 	int *can_labeling;
 
-	can_labeling = NEW_int(nb_rows + nb_cols);
+	can_labeling = NEW_int(canonical_labeling_len);
 
 	Nau.nauty_interface_matrix_int(
 		Incma, nb_rows, nb_cols,
@@ -974,7 +976,7 @@ strong_generators
 		Base, Base_length, 
 		Transversal_length, Ago, verbose_level - 3);
 
-	for (i = 0; i < nb_rows + nb_cols; i++) {
+	for (i = 0; i < canonical_labeling_len; i++) {
 		canonical_labeling[i] = can_labeling[i];
 		}
 	FREE_int(can_labeling);
@@ -1008,7 +1010,7 @@ strong_generators
 	if (f_vvv) {
 		cout << "projective_space_with_action::set_stabilizer_of_object "
 				"labeling:" << endl;
-		lint_vec_print(cout, canonical_labeling, nb_rows + nb_cols);
+		lint_vec_print(cout, canonical_labeling, canonical_labeling_len);
 		cout << endl;
 		}
 
@@ -1696,756 +1698,7 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 }
 
 
-object_in_projective_space *
-projective_space_with_action::create_object_from_string(
-	int type, const char *input_fname, int input_idx,
-	const char *set_as_string, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
 
-	if (f_v) {
-		cout << "projective_space_with_action::create_object_from_string" << endl;
-		cout << "type=" << type << endl;
-		}
-
-
-	object_in_projective_space *OiP;
-
-	OiP = NEW_OBJECT(object_in_projective_space);
-
-	OiP->init_object_from_string(P,
-			type, input_fname, input_idx,
-			set_as_string, verbose_level);
-
-
-	if (f_v) {
-		cout << "projective_space_with_action::create_object_from_string"
-				" done" << endl;
-		}
-	return OiP;
-}
-
-object_in_projective_space *
-projective_space_with_action::create_object_from_int_vec(
-	int type, const char *input_fname, int input_idx,
-	long int *the_set, int set_sz, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_with_action::create_object_from_int_vec" << endl;
-		cout << "type=" << type << endl;
-		}
-
-
-	object_in_projective_space *OiP;
-
-	OiP = NEW_OBJECT(object_in_projective_space);
-
-	OiP->init_object_from_int_vec(P,
-			type, input_fname, input_idx,
-			the_set, set_sz, verbose_level);
-
-
-	if (f_v) {
-		cout << "projective_space_with_action::create_object_from_int_vec"
-				" done" << endl;
-		}
-	return OiP;
-}
-
-int projective_space_with_action::process_object(
-	classify_bitvectors *CB,
-	object_in_projective_space *OiP,
-	int f_save_incma_in_and_out, std::string &prefix,
-	int nb_objects_to_test,
-	strong_generators *&SG,
-	long int *canonical_labeling,
-	int verbose_level)
-// returns f_found, which is TRUE if the object is rejected
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_with_action::process_object "
-				"n=" << CB->n << endl;
-	}
-
-	longinteger_object go;
-	//int *Extra_data;
-	std::string save_incma_in_and_out_prefix;
-
-	if (f_save_incma_in_and_out) {
-		save_incma_in_and_out_prefix.assign(prefix);
-		char str[1000];
-
-		sprintf(str, "_%d_", CB->n);
-		save_incma_in_and_out_prefix.append(str);
-	}
-
-
-	uchar *canonical_form;
-	int canonical_form_len;
-
-
-	if (f_v) {
-		cout << "projective_space_with_action::process_object "
-				"before PA->set_stabilizer_of_object" << endl;
-	}
-
-	SG = set_stabilizer_of_object(
-		OiP,
-		f_save_incma_in_and_out, save_incma_in_and_out_prefix,
-		TRUE /* f_compute_canonical_form */,
-		canonical_form, canonical_form_len,
-		canonical_labeling,
-		verbose_level - 2);
-
-
-	if (f_v) {
-		cout << "projective_space_with_action::process_object "
-				"after PA->set_stabilizer_of_object" << endl;
-	}
-
-
-	SG->group_order(go);
-
-	//cout << "object:" << endl;
-	//OiP->print(cout);
-	//cout << "go=" << go << endl;
-#if 0
-	cout << "projective_space_with_action::process_object canonical form: ";
-	for (i = 0; i < canonical_form_len; i++) {
-		cout << (int)canonical_form[i];
-		if (i < canonical_form_len - 1) {
-			cout << ", ";
-		}
-	}
-#endif
-	//cout << endl;
-
-#if 0
-	Extra_data = NEW_int(OiP->sz);
-	int_vec_copy(OiP->set, Extra_data, OiP->sz);
-
-	if (CB->n == 0) {
-		CB->init(nb_objects_to_test, canonical_form_len, verbose_level);
-		sz = OiP->sz;
-	}
-	else {
-		if (OiP->sz != sz) {
-			cout << "projective_space_with_action::process_object "
-					"OiP->sz != sz" << endl;
-			exit(1);
-		}
-	}
-	if (!CB->add(canonical_form, Extra_data, verbose_level)) {
-		FREE_int(Extra_data);
-	}
-#endif
-	if (CB->n == 0) {
-		CB->init(nb_objects_to_test, canonical_form_len, verbose_level);
-	}
-	int f_found;
-	int idx;
-
-	CB->search_and_add_if_new(canonical_form, OiP, f_found, idx, verbose_level);
-
-
-	//delete SG;
-
-	if (f_v) {
-		cout << "projective_space_with_action::process_object done" << endl;
-	}
-	return f_found;
-}
-
-void projective_space_with_action::classify_objects_using_nauty(
-	data_input_stream *Data,
-	classify_bitvectors *CB,
-	int f_save_incma_in_and_out, std::string &prefix,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
-	int input_idx, f_found;
-	int t0, t1, dt;
-	file_io Fio;
-	os_interface Os;
-
-	if (f_v) {
-		cout << "projective_space_with_action::classify_objects_using_nauty" << endl;
-		}
-
-	int nb_objects_to_test;
-
-	if (f_v) {
-		cout << "projective_space_with_action::classify_objects_using_nauty "
-				"before count_number_of_objects_to_test" << endl;
-		}
-	nb_objects_to_test = Data->count_number_of_objects_to_test(
-		verbose_level - 1);
-
-	t0 = Os.os_ticks();
-
-	for (input_idx = 0; input_idx < Data->nb_inputs; input_idx++) {
-		if (f_v) {
-			cout << "projective_space_with_action::classify_objects_using_nauty "
-					"input " << input_idx << " / " << Data->nb_inputs
-					<< " is:" << endl;
-		}
-
-		if (Data->input_type[input_idx] == INPUT_TYPE_SET_OF_POINTS) {
-			cout << "projective_space_with_action::classify_objects_using_nauty "
-					"input set of points "
-				<< Data->input_string[input_idx] << ":" << endl;
-
-			object_in_projective_space *OiP;
-			strong_generators *SG;
-
-			OiP = create_object_from_string(t_PTS,
-					"command_line", CB->n,
-					Data->input_string[input_idx], verbose_level);
-
-			if (f_v) {
-				cout << "projective_space_with_action::classify_objects_using_nauty "
-						"before process_object" << endl;
-				}
-			int nb_rows, nb_cols;
-			long int *canonical_labeling;
-
-			OiP->encoding_size(
-					nb_rows, nb_cols,
-					verbose_level);
-			canonical_labeling = NEW_lint(nb_rows + nb_cols);
-
-			f_found = process_object(CB, OiP,
-					f_save_incma_in_and_out, prefix,
-					nb_objects_to_test,
-					SG,
-					canonical_labeling,
-					verbose_level);
-
-
-			if (f_v) {
-				cout << "projective_space_with_action::classify_objects_using_nauty "
-						"after process_object INPUT_TYPE_SET_OF_POINTS, f_found=" << f_found << endl;
-				}
-
-
-			if (f_found) {
-				cout << "before FREE_OBJECT(SG)" << endl;
-				FREE_OBJECT(SG);
-				cout << "before FREE_OBJECT(OiP)" << endl;
-				FREE_OBJECT(OiP);
-				//cout << "before FREE_OBJECT(canonical_labeling)" << endl;
-				//FREE_int(canonical_labeling);
-				//cout << "after FREE_OBJECT(canonical_labeling)" << endl;
-				FREE_lint(canonical_labeling);
-				}
-			else {
-				cout << "projective_space_with_action::classify_objects_using_nauty "
-						"New isomorphism type! The n e w number of "
-					"isomorphism types is " << CB->nb_types << endl;
-				int idx;
-
-				object_in_projective_space_with_action *OiPA;
-
-				OiPA = NEW_OBJECT(object_in_projective_space_with_action);
-
-				OiPA->init(OiP, SG, nb_rows, nb_cols,
-						canonical_labeling, verbose_level);
-				idx = CB->type_of[CB->n - 1];
-				CB->Type_extra_data[idx] = OiPA;
-
-				//compute_and_print_ago_distribution(cout,
-				//		CB, verbose_level);
-				}
-			}
-		else if (Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_POINT_SET) {
-			cout << "projective_space_with_action::classify_objects_using_nauty "
-					"input set of points from file "
-				<< Data->input_string[input_idx] << ":" << endl;
-
-			object_in_projective_space *OiP;
-			strong_generators *SG;
-			long int *the_set;
-			int set_size;
-
-			Fio.read_set_from_file(Data->input_string[input_idx],
-				the_set, set_size, verbose_level);
-
-			OiP = create_object_from_int_vec(t_PTS,
-					Data->input_string[input_idx], CB->n,
-					the_set, set_size, verbose_level);
-
-			if (f_v) {
-				cout << "projective_space_with_action::classify_objects_using_nauty "
-						"before encoding_size" << endl;
-				}
-			int nb_rows, nb_cols;
-			long int *canonical_labeling;
-
-			OiP->encoding_size(
-					nb_rows, nb_cols,
-					verbose_level);
-			canonical_labeling = NEW_lint(nb_rows + nb_cols);
-
-			if (f_v) {
-				cout << "projective_space_with_action::classify_objects_using_nauty "
-						"before process_object" << endl;
-				}
-			f_found = process_object(CB, OiP,
-					f_save_incma_in_and_out, prefix,
-					nb_objects_to_test,
-					SG,
-					canonical_labeling,
-					verbose_level);
-
-
-			if (f_v) {
-				cout << "projective_space_with_action::classify_objects_using_nauty "
-						"after process_object INPUT_TYPE_FILE_OF_POINT_SET, f_found=" << f_found << endl;
-				}
-
-
-			if (f_found) {
-				FREE_OBJECT(SG);
-				FREE_OBJECT(OiP);
-				//FREE_int(canonical_labeling);
-				FREE_lint(canonical_labeling);
-				}
-			else {
-				cout << "projective_space_with_action::classify_objects_using_nauty "
-						"New isomorphism type! The n e w number of "
-					"isomorphism types is " << CB->nb_types << endl;
-				int idx;
-
-				object_in_projective_space_with_action *OiPA;
-
-				OiPA = NEW_OBJECT(object_in_projective_space_with_action);
-
-				OiPA->init(OiP, SG, nb_rows, nb_cols,
-						canonical_labeling, verbose_level);
-				idx = CB->type_of[CB->n - 1];
-				CB->Type_extra_data[idx] = OiPA;
-
-				//compute_and_print_ago_distribution(cout,
-				//		CB, verbose_level);
-				}
-			}
-		else if (Data->input_type[input_idx] == INPUT_TYPE_SET_OF_LINES) {
-			cout << "projective_space_with_action::classify_objects_using_nauty "
-					"input set of lines " << Data->input_string[input_idx]
-				<< ":" << endl;
-
-			object_in_projective_space *OiP;
-			strong_generators *SG;
-
-			OiP = create_object_from_string(t_LNS,
-					"command_line", CB->n,
-					Data->input_string[input_idx], verbose_level);
-
-			int nb_rows, nb_cols;
-			long int *canonical_labeling;
-
-			OiP->encoding_size(
-					nb_rows, nb_cols,
-					verbose_level);
-			canonical_labeling = NEW_lint(nb_rows + nb_cols);
-
-
-			if (process_object(CB, OiP,
-				f_save_incma_in_and_out, prefix,
-				nb_objects_to_test,
-				SG,
-				canonical_labeling,
-				verbose_level)) {
-
-				FREE_OBJECT(SG);
-				FREE_OBJECT(OiP);
-				FREE_lint(canonical_labeling);
-				}
-			else {
-				cout << "projective_space_with_action::classify_objects_using_nauty "
-						"New isomorphism type! The n e w number of "
-						"isomorphism types is " << CB->nb_types << endl;
-				int idx;
-
-				object_in_projective_space_with_action *OiPA;
-
-				OiPA = NEW_OBJECT(object_in_projective_space_with_action);
-
-				OiPA->init(OiP, SG, nb_rows, nb_cols,
-						canonical_labeling, verbose_level);
-				idx = CB->type_of[CB->n - 1];
-				CB->Type_extra_data[idx] = OiPA;
-
-				//compute_and_print_ago_distribution(cout,
-				//	CB, verbose_level);
-				}
-			}
-		else if (Data->input_type[input_idx] == INPUT_TYPE_SET_OF_PACKING) {
-			cout << "projective_space_with_action::classify_objects_using_nauty "
-					"input set of packing "
-				<< Data->input_string[input_idx] << ":" << endl;
-
-			object_in_projective_space *OiP;
-			strong_generators *SG;
-
-			OiP = create_object_from_string(t_PAC,
-					"command_line", CB->n,
-					Data->input_string[input_idx], verbose_level);
-
-			int nb_rows, nb_cols;
-			long int *canonical_labeling;
-
-			OiP->encoding_size(
-					nb_rows, nb_cols,
-					verbose_level);
-			canonical_labeling = NEW_lint(nb_rows + nb_cols);
-
-			if (process_object(CB, OiP,
-				f_save_incma_in_and_out, prefix,
-				nb_objects_to_test,
-				SG,
-				canonical_labeling,
-				verbose_level)) {
-
-				FREE_OBJECT(SG);
-				FREE_OBJECT(OiP);
-				FREE_lint(canonical_labeling);
-				}
-			else {
-				cout << "projective_space_with_action::classify_objects_using_nauty "
-						"New isomorphism type! The n e w number of "
-					"isomorphism types is " << CB->nb_types << endl;
-				int idx;
-
-				object_in_projective_space_with_action *OiPA;
-
-				OiPA = NEW_OBJECT(object_in_projective_space_with_action);
-
-				OiPA->init(OiP, SG, nb_rows, nb_cols,
-						canonical_labeling, verbose_level);
-				idx = CB->type_of[CB->n - 1];
-				CB->Type_extra_data[idx] = OiPA;
-
-				//compute_and_print_ago_distribution(cout,
-				//		CB, verbose_level);
-				}
-			}
-		else if (Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_POINTS ||
-				Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES ||
-				Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS ||
-				Data->input_type[input_idx] ==
-						INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
-			cout << "projective_space_with_action::classify_objects_using_nauty "
-					"input from file " << Data->input_string[input_idx]
-				<< ":" << endl;
-
-			set_of_sets *SoS;
-
-			SoS = NEW_OBJECT(set_of_sets);
-
-			cout << "projective_space_with_action::classify_objects_using_nauty "
-					"Reading the file " << Data->input_string[input_idx] << endl;
-			SoS->init_from_file(
-					P->N_points /* underlying_set_size */,
-					Data->input_string[input_idx], verbose_level);
-			cout << "Read the file " << Data->input_string[input_idx] << endl;
-
-			int h;
-
-
-			// for use if INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE
-			long int *Spread_table;
-			int nb_spreads;
-			int spread_size;
-
-			if (Data->input_type[input_idx] ==
-					INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
-				cout << "projective_space_with_action::classify_objects_using_nauty "
-						"Reading spread table from file "
-					<< Data->input_string2[input_idx] << endl;
-				Fio.lint_matrix_read_csv(Data->input_string2[input_idx],
-						Spread_table, nb_spreads, spread_size,
-						0 /* verbose_level */);
-				cout << "Reading spread table from file "
-						<< Data->input_string2[input_idx] << " done" << endl;
-				cout << "The spread table contains " << nb_spreads
-						<< " spreads" << endl;
-				}
-
-			cout << "projective_space_with_action::classify_objects_using_nauty "
-					"processing " << SoS->nb_sets << " objects" << endl;
-
-			for (h = 0; h < SoS->nb_sets; h++) {
-
-
-				long int *the_set_in;
-				int set_size_in;
-				object_in_projective_space *OiP;
-
-
-				set_size_in = SoS->Set_size[h];
-				the_set_in = SoS->Sets[h];
-
-				if (f_vv || ((h % 1024) == 0)) {
-					cout << "projective_space_with_action::classify_objects_using_nauty "
-							"The input set " << h << " / " << SoS->nb_sets
-						<< " has size " << set_size_in << ":" << endl;
-					}
-
-				if (f_vvv) {
-					cout << "projective_space_with_action::classify_objects_using_nauty "
-							"The input set is:" << endl;
-					lint_vec_print(cout, the_set_in, set_size_in);
-					cout << endl;
-					}
-
-				OiP = NEW_OBJECT(object_in_projective_space);
-
-				if (Data->input_type[input_idx] ==
-						INPUT_TYPE_FILE_OF_POINTS) {
-					OiP->init_point_set(P, the_set_in, set_size_in,
-							0 /* verbose_level*/);
-					}
-				else if (Data->input_type[input_idx] ==
-						INPUT_TYPE_FILE_OF_LINES) {
-					OiP->init_line_set(P, the_set_in, set_size_in,
-							0 /* verbose_level*/);
-					}
-				else if (Data->input_type[input_idx] ==
-						INPUT_TYPE_FILE_OF_PACKINGS) {
-					OiP->init_packing_from_set(P,
-							the_set_in, set_size_in, verbose_level);
-					}
-				else if (Data->input_type[input_idx] ==
-						INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
-					OiP->init_packing_from_spread_table(P, the_set_in,
-						Spread_table, nb_spreads, spread_size,
-						verbose_level);
-					}
-				else {
-					cout << "projective_space_with_action::classify_objects_using_nauty "
-							"unknown type" << endl;
-					exit(1);
-					}
-
-				stringstream sstr;
-				//sstr << set_size_in;
-				for (int k = 0; k < set_size_in; k++) {
-					sstr << the_set_in[k];
-					if (k < set_size_in - 1) {
-						sstr << ",";
-					}
-				}
-				string s = sstr.str();
-				//cout << s << endl;
-				//Ago_text[clique_no] = NEW_char(strlen(s.c_str()) + 1);
-				//strcpy(Ago_text[clique_no], s.c_str());
-
-				OiP->input_fname = Data->input_string[input_idx];
-				OiP->input_idx = h;
-
-				int l = strlen(s.c_str());
-
-				OiP->set_as_string = NEW_char(l + 1);
-				strcpy(OiP->set_as_string, s.c_str());
-
-
-
-				strong_generators *SG;
-
-
-				int nb_rows, nb_cols;
-				long int *canonical_labeling;
-
-				OiP->encoding_size(
-						nb_rows, nb_cols,
-						verbose_level);
-				canonical_labeling = NEW_lint(nb_rows + nb_cols);
-
-
-				if (process_object(CB, OiP,
-					f_save_incma_in_and_out, prefix,
-					nb_objects_to_test,
-					SG,
-					canonical_labeling,
-					verbose_level - 3)) {
-
-					FREE_OBJECT(OiP);
-					FREE_OBJECT(SG);
-					FREE_lint(canonical_labeling);
-					}
-				else {
-					t1 = Os.os_ticks();
-					//cout << "poset_classification::print_level_info t0=" << t0 << endl;
-					//cout << "poset_classification::print_level_info t1=" << t1 << endl;
-					dt = t1 - t0;
-					//cout << "poset_classification::print_level_info dt=" << dt << endl;
-
-					cout << "Time ";
-					Os.time_check_delta(cout, dt);
-					cout << " --- New isomorphism type! input set " << h
-							<< " / " << SoS->nb_sets << " The n e w number of "
-							"isomorphism types is " << CB->nb_types << endl;
-
-					int idx;
-
-					object_in_projective_space_with_action *OiPA;
-
-					OiPA = NEW_OBJECT(object_in_projective_space_with_action);
-
-					OiPA->init(OiP, SG, nb_rows, nb_cols,
-							canonical_labeling, verbose_level);
-					idx = CB->type_of[CB->n - 1];
-					CB->Type_extra_data[idx] = OiPA;
-
-
-					}
-
-				if (f_vv) {
-					cout << "projective_space_with_action::classify_objects_using_nauty "
-							"after input set " << h << " / "
-							<< SoS->nb_sets
-							<< ", we have " << CB->nb_types
-							<< " isomorphism types of objects" << endl;
-					}
-
-				}
-			if (Data->input_type[input_idx] ==
-					INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
-				FREE_lint(Spread_table);
-				}
-			FREE_OBJECT(SoS);
-			}
-		else {
-			cout << "projective_space_with_action::classify_objects_using_nauty "
-					"unknown input type" << endl;
-			exit(1);
-			}
-		}
-
-	if (f_v) {
-		cout << "projective_space_with_action::classify_objects_using_nauty "
-				"before compute_and_print_ago_distribution" << endl;
-	}
-
-	compute_and_print_ago_distribution(cout,
-			CB, verbose_level);
-
-	if (f_v) {
-		cout << "projective_space_with_action::classify_objects_using_nauty "
-				"after compute_and_print_ago_distribution" << endl;
-	}
-
-	if (f_v) {
-		cout << "projective_space_with_action::classify_objects_using_nauty "
-				"before CB->finalize" << endl;
-	}
-
-	CB->finalize(verbose_level); // computes C_type_of and perm
-
-	if (f_v) {
-		cout << "projective_space_with_action::classify_objects_using_nauty done" << endl;
-		}
-}
-
-
-void projective_space_with_action::save(
-		std::string &output_prefix,
-		classify_bitvectors *CB,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	string fname;
-	file_io Fio;
-
-	if (f_v) {
-		cout << "projective_space_with_action::save" << endl;
-	}
-	fname.assign(output_prefix);
-	fname.append("_classified.cvs");
-
-	{
-		ofstream fp(fname);
-		int i, j;
-
-		fp << "rep,ago,original_file,input_idx,input_set,"
-				"nb_rows,nb_cols,canonical_form" << endl;
-		for (i = 0; i < CB->nb_types; i++) {
-
-			object_in_projective_space_with_action *OiPA;
-			object_in_projective_space *OiP;
-
-			//cout << i << " / " << CB->nb_types << " is "
-			//	<< CB->Type_rep[i] << " : " << CB->Type_mult[i] << " : ";
-			OiPA = (object_in_projective_space_with_action *)
-					CB->Type_extra_data[i];
-			OiP = OiPA->OiP;
-			if (OiP == NULL) {
-				cout << "OiP == NULL" << endl;
-				exit(1);
-			}
-			if (OiP->type != t_PAC) {
-				//OiP->print(cout);
-				}
-			//OiP->print(cout);
-
-	#if 0
-			for (j = 0; j < rep_len; j++) {
-				cout << (int) Type_data[i][j];
-				if (j < rep_len - 1) {
-					cout << ", ";
-					}
-				}
-	#endif
-			//cout << "before writing OiP->set_as_string:" << endl;
-			const char *p = "";
-
-			if (OiP->set_as_string) {
-				p = OiP->set_as_string;
-			}
-
-			int ago;
-
-			if (OiP->f_has_known_ago) {
-				ago = OiP->known_ago;
-			}
-			else {
-				ago = OiPA->Aut_gens->group_order_as_lint();
-			}
-			fp << i << "," << ago
-					<< "," << OiP->input_fname
-					<< "," << OiP->input_idx
-					<< ",\"" << p << "\",";
-			//cout << "before writing OiPA->nb_rows:" << endl;
-			fp << OiPA->nb_rows << "," << OiPA->nb_cols<< ",";
-
-			//cout << "before writing canonical labeling:" << endl;
-			fp << "\"";
-			for (j = 0; j < OiPA->nb_rows + OiPA->nb_cols; j++) {
-				fp << OiPA->canonical_labeling[j];
-				if (j < OiPA->nb_rows + OiPA->nb_cols - 1) {
-					fp << ",";
-				}
-			}
-			fp << "\"";
-			fp << endl;
-			}
-		fp << "END" << endl;
-	}
-	cout << "written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
-
-
-	if (f_v) {
-		cout << "projective_space_with_action::save done" << endl;
-	}
-}
 
 void projective_space_with_action::merge_packings(
 		const char **fnames, int nb_files,
@@ -2651,10 +1904,8 @@ void projective_space_with_action::merge_packings(
 			OiP->input_idx = S->get_int(g + 1, input_idx_idx);
 
 			text = S->get_string(g + 1, input_set_idx);
-			int l = strlen(text);
 
-			OiP->set_as_string = NEW_char(l + 1);
-			strcpy(OiP->set_as_string, text);
+			OiP->set_as_string.assign(text);
 
 			int i, j, ii, jj, a;
 			int L = nb_rows * nb_cols;
@@ -3032,10 +2283,8 @@ void projective_space_with_action::select_packings(
 			OiP->input_idx = S->get_int(g + 1, input_idx_idx);
 
 			text = S->get_string(g + 1, input_set_idx);
-			int l = strlen(text);
 
-			OiP->set_as_string = NEW_char(l + 1);
-			strcpy(OiP->set_as_string, text);
+			OiP->set_as_string.assign(text);
 
 			int i, j, ii, jj, a;
 			int L = nb_rows * nb_cols;
@@ -3412,10 +2661,8 @@ void projective_space_with_action::select_packings_self_dual(
 			OiP->input_idx = S->get_int(g + 1, input_idx_idx);
 
 			text = S->get_string(g + 1, input_set_idx);
-			int l = strlen(text);
 
-			OiP->set_as_string = NEW_char(l + 1);
-			strcpy(OiP->set_as_string, text);
+			OiP->set_as_string.assign(text);
 
 			int i, j, ii, jj, a;
 			int L = nb_rows * nb_cols;
@@ -3711,13 +2958,10 @@ void projective_space_with_action::select_packings_self_dual(
 		OiP2->input_idx = S->get_int(g + 1, input_idx_idx);
 
 		text = S->get_string(g + 1, input_set_idx);
-		int l = strlen(text);
 
-		OiP1->set_as_string = NEW_char(l + 1);
-		strcpy(OiP1->set_as_string, text);
+		OiP1->set_as_string.assign(text);
 
-		OiP2->set_as_string = NEW_char(l + 1);
-		strcpy(OiP2->set_as_string, text);
+		OiP2->set_as_string.assign(text);
 
 		int i, j, ii, jj, a, ret;
 		int L = nb_rows * nb_cols;
@@ -3883,400 +3127,67 @@ void projective_space_with_action::select_packings_self_dual(
 	}
 }
 
-
-
-
-void projective_space_with_action::latex_report(const char *fname,
-		std::string &prefix,
-		classify_bitvectors *CB,
-		int f_save_incma_in_and_out,
-		int fixed_structure_order_list_sz,
-		int *fixed_structure_order_list,
-		int max_TDO_depth,
-		int verbose_level)
+object_in_projective_space *
+projective_space_with_action::create_object_from_string(
+	int type, std::string &input_fname, int input_idx,
+	std::string &set_as_string, int verbose_level)
 {
-	int i, j;
 	int f_v = (verbose_level >= 1);
-	sorting Sorting;
-	file_io Fio;
-	latex_interface L;
 
 	if (f_v) {
-		cout << "projective_space_with_action::latex_report" << endl;
-	}
-	{
-		ofstream fp(fname);
-		latex_interface L;
-
-		L.head_easy(fp);
-
-		int *Table;
-		int width = 4;
-		int *row_labels;
-		int *col_labels;
-		int row_part_first[2], row_part_len[1];
-		int nb_row_parts = 1;
-		int col_part_first[2], col_part_len[1];
-		int nb_col_parts = 1;
-
-
-
-		row_part_first[0] = 0;
-		row_part_first[1] = CB->nb_types;
-		row_part_len[0] = CB->nb_types;
-
-		col_part_first[0] = 0;
-		col_part_first[1] = width;
-		col_part_len[0] = width;
-
-		Table = NEW_int(CB->nb_types * width);
-		int_vec_zero(Table, CB->nb_types * width);
-
-		row_labels = NEW_int(CB->nb_types);
-		col_labels = NEW_int(width);
-		for (i = 0; i < CB->nb_types; i++) {
-			row_labels[i] = i;
-		}
-		for (j = 0; j < width; j++) {
-			col_labels[j] = j;
-		}
-
-		for (i = 0; i < CB->nb_types; i++) {
-			j = CB->perm[i];
-			Table[i * width + 0] = CB->Type_rep[j];
-			Table[i * width + 1] = CB->Type_mult[j];
-			Table[i * width + 2] = 0; // group order
-			Table[i * width + 3] = 0; // object list
-		}
-
-		fp << "\\section{Summary of Orbits}" << endl;
-		fp << "$$" << endl;
-		L.int_matrix_print_with_labels_and_partition(fp,
-				Table, CB->nb_types, 4,
-			row_labels, col_labels,
-			row_part_first, row_part_len, nb_row_parts,
-			col_part_first, col_part_len, nb_col_parts,
-			print_summary_table_entry,
-			CB /*void *data*/,
-			TRUE /* f_tex */);
-		fp << "$$" << endl;
-
-		compute_and_print_ago_distribution_with_classes(fp,
-				CB, verbose_level);
-
-		for (i = 0; i < CB->nb_types; i++) {
-
-			j = CB->perm[i];
-			object_in_projective_space_with_action *OiPA;
-			object_in_projective_space *OiP;
-
-			cout << "###################################################"
-					"#############################" << endl;
-			cout << "Orbit " << i << " / " << CB->nb_types
-					<< " is canonical form no " << j
-					<< ", original object no " << CB->Type_rep[j]
-					<< ", frequency " << CB->Type_mult[j]
-					<< " : " << endl;
-
-
-			{
-				int *Input_objects;
-				int nb_input_objects;
-				CB->C_type_of->get_class_by_value(Input_objects,
-					nb_input_objects, j, 0 /*verbose_level */);
-
-				cout << "This isomorphism type appears " << nb_input_objects
-						<< " times, namely for the following "
-								"input objects:" << endl;
-				L.int_vec_print_as_matrix(cout, Input_objects,
-						nb_input_objects, 10 /* width */,
-						FALSE /* f_tex */);
-
-				FREE_int(Input_objects);
-			}
-
-			OiPA = (object_in_projective_space_with_action *) CB->Type_extra_data[j];
-			OiP = OiPA->OiP;
-			if (OiP->type != t_PAC) {
-				OiP->print(cout);
-			}
-
-			//OiP->init_point_set(PA->P, (int *)CB->Type_extra_data[j],
-			//sz, 0 /* verbose_level*/);
-
-
-
-			strong_generators *SG;
-			longinteger_object go;
-			std::string save_incma_in_and_out_prefix;
-
-			if (f_save_incma_in_and_out) {
-				save_incma_in_and_out_prefix.assign(prefix);
-				char str[1000];
-
-				sprintf(str, "_iso_%d_%d", i, j);
-				save_incma_in_and_out_prefix.append(prefix);
-			}
-
-
-			uchar *canonical_form;
-			int canonical_form_len;
-
-			int nb_r, nb_c;
-			long int *canonical_labeling;
-
-			OiP->encoding_size(
-					nb_r, nb_c,
-					verbose_level);
-			canonical_labeling = NEW_lint(nb_r + nb_c);
-
-
-			SG = set_stabilizer_of_object(
-				OiP,
-				f_save_incma_in_and_out, save_incma_in_and_out_prefix,
-				TRUE /* f_compute_canonical_form */,
-				canonical_form, canonical_form_len,
-				canonical_labeling,
-				0 /* verbose_level */);
-
-			FREE_lint(canonical_labeling);
-
-			SG->group_order(go);
-
-			fp << "\\section*{Orbit " << i << " / "
-				<< CB->nb_types << "}" << endl;
-			fp << "Orbit " << i << " / " << CB->nb_types <<  " stored at "
-				<< j << " is represented by input object "
-				<< CB->Type_rep[j] << " and appears "
-				<< CB->Type_mult[j] << " times: \\\\" << endl;
-			if (OiP->type != t_PAC) {
-				OiP->print(fp);
-				fp << "\\\\" << endl;
-				}
-			//int_vec_print(fp, OiP->set, OiP->sz);
-			fp << "Group order " << go << "\\\\" << endl;
-
-			fp << "Stabilizer:" << endl;
-			SG->print_generators_tex(fp);
-
-			{
-				int *Input_objects;
-				int nb_input_objects;
-				CB->C_type_of->get_class_by_value(Input_objects,
-						nb_input_objects, j, 0 /*verbose_level */);
-				Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
-
-				fp << "This isomorphism type appears " << nb_input_objects
-						<< " times, namely for the following "
-						<< nb_input_objects << " input objects: " << endl;
-				if (nb_input_objects < 10) {
-					fp << "$" << endl;
-					L.int_set_print_tex(fp, Input_objects, nb_input_objects);
-					fp << "$\\\\" << endl;
-				}
-				else {
-					fp << "$$" << endl;
-					L.int_vec_print_as_matrix(fp, Input_objects,
-						nb_input_objects, 10 /* width */, TRUE /* f_tex */);
-					fp << "$$" << endl;
-				}
-
-				FREE_int(Input_objects);
-			}
-
-
-
-			if (OiP->type == t_PTS) {
-				//long int *set;
-				//int sz;
-
-				OiP->print_tex(fp);
-
-
-				cout << "printing generators in restricted action:" << endl;
-				action *A_restricted;
-
-				A_restricted = SG->A->restricted_action(OiP->set, OiP->sz,
-						verbose_level);
-				SG->print_with_given_action(
-						fp, A_restricted);
-				FREE_OBJECT(A_restricted);
-			}
-
-
-
-
-
-			int *Incma;
-			int nb_rows, nb_cols;
-			int *partition;
-			incidence_structure *Inc;
-			partitionstack *Stack;
-
-
-			OiP->encode_incma_and_make_decomposition(
-				Incma, nb_rows, nb_cols, partition,
-				Inc,
-				Stack,
-				verbose_level);
-			FREE_int(Incma);
-			FREE_int(partition);
-		#if 0
-			cout << "set ";
-			int_vec_print(cout, OiP->set, OiP->sz);
-			cout << " go=" << go << endl;
-
-			cout << "Stabilizer:" << endl;
-			SG->print_generators_tex(cout);
-
-
-			incidence_structure *Inc;
-			partitionstack *Stack;
-
-			int Sz[1];
-			int *Subsets[1];
-
-			Sz[0] = OiP->sz;
-			Subsets[0] = OiP->set;
-
-			cout << "computing decomposition:" << endl;
-			PA->P->decomposition(1 /* nb_subsets */, Sz, Subsets,
-				Inc,
-				Stack,
-				verbose_level);
-
-		#if 0
-			cout << "the decomposition is:" << endl;
-			Inc->get_and_print_decomposition_schemes(*Stack);
-			Stack->print_classes(cout);
-		#endif
-
-
-
-
-		#if 0
-			fp << "canonical form: ";
-			for (i = 0; i < canonical_form_len; i++) {
-				fp << (int)canonical_form[i];
-				if (i < canonical_form_len - 1) {
-					fp << ", ";
-					}
-				}
-			fp << "\\\\" << endl;
-		#endif
-		#endif
-
-
-			Inc->get_and_print_row_tactical_decomposition_scheme_tex(
-				fp, TRUE /* f_enter_math */,
-				TRUE /* f_print_subscripts */, *Stack);
-
-		#if 0
-			Inc->get_and_print_tactical_decomposition_scheme_tex(
-				fp, TRUE /* f_enter_math */,
-				*Stack);
-		#endif
-
-
-
-			int f_refine_prev, f_refine, h;
-			int f_print_subscripts = TRUE;
-
-			f_refine_prev = TRUE;
-			for (h = 0; h < max_TDO_depth; h++) {
-				if (EVEN(h)) {
-					f_refine = Inc->refine_column_partition_safe(
-							*Stack, verbose_level - 3);
-				}
-				else {
-					f_refine = Inc->refine_row_partition_safe(
-							*Stack, verbose_level - 3);
-				}
-
-				if (f_v) {
-					cout << "incidence_structure::compute_TDO_safe "
-							"h=" << h << " after refine" << endl;
-				}
-				if (EVEN(h)) {
-					//int f_list_incidences = FALSE;
-					Inc->get_and_print_column_tactical_decomposition_scheme_tex(
-						fp, TRUE /* f_enter_math */,
-						f_print_subscripts, *Stack);
-					//get_and_print_col_decomposition_scheme(
-					//PStack, f_list_incidences, FALSE);
-					//PStack.print_classes_points_and_lines(cout);
-				}
-				else {
-					//int f_list_incidences = FALSE;
-					Inc->get_and_print_row_tactical_decomposition_scheme_tex(
-						fp, TRUE /* f_enter_math */,
-						f_print_subscripts, *Stack);
-					//get_and_print_row_decomposition_scheme(
-					//PStack, f_list_incidences, FALSE);
-					//PStack.print_classes_points_and_lines(cout);
-				}
-
-				if (!f_refine_prev && !f_refine) {
-					break;
-				}
-				f_refine_prev = f_refine;
-			}
-
-			cout << "Classes of the partition:\\\\" << endl;
-			Stack->print_classes_tex(fp);
-
-
-
-			OiP->klein(verbose_level);
-
-
-			sims *Stab;
-			int *Elt;
-			int nb_trials;
-			int max_trials = 100;
-
-			Stab = SG->create_sims(verbose_level);
-			Elt = NEW_int(A->elt_size_in_int);
-
-			for (h = 0; h < fixed_structure_order_list_sz; h++) {
-				if (Stab->find_element_of_given_order_int(Elt,
-						fixed_structure_order_list[h], nb_trials, max_trials,
-						verbose_level)) {
-					fp << "We found an element of order "
-							<< fixed_structure_order_list[h] << ", which is:" << endl;
-					fp << "$$" << endl;
-					A->element_print_latex(Elt, fp);
-					fp << "$$" << endl;
-					report_fixed_objects_in_PG_3_tex(
-						Elt, fp,
-						verbose_level);
-				}
-				else {
-					fp << "We could not find an element of order "
-						<< fixed_structure_order_list[h] << "\\\\" << endl;
-				}
-			}
-
-
-			FREE_int(Elt);
-			FREE_OBJECT(Stack);
-			FREE_OBJECT(Inc);
-			FREE_OBJECT(SG);
-
+		cout << "projective_space_with_action::create_object_from_string" << endl;
+		cout << "type=" << type << endl;
 		}
 
 
-		L.foot(fp);
-	}
+	object_in_projective_space *OiP;
 
-	cout << "Written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
-	//FREE_int(perm);
-	//FREE_int(v);
+	OiP = NEW_OBJECT(object_in_projective_space);
+
+	OiP->init_object_from_string(P,
+			type, input_fname, input_idx,
+			set_as_string, verbose_level);
+
+
 	if (f_v) {
-		cout << "projective_space_with_action::latex_report done" << endl;
-	}
+		cout << "projective_space_with_action::create_object_from_string"
+				" done" << endl;
+		}
+	return OiP;
 }
+
+object_in_projective_space *
+projective_space_with_action::create_object_from_int_vec(
+	int type, std::string &input_fname, int input_idx,
+	long int *the_set, int set_sz, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::create_object_from_int_vec" << endl;
+		cout << "type=" << type << endl;
+		}
+
+
+	object_in_projective_space *OiP;
+
+	OiP = NEW_OBJECT(object_in_projective_space);
+
+	OiP->init_object_from_int_vec(P,
+			type, input_fname, input_idx,
+			the_set, set_sz, verbose_level);
+
+
+	if (f_v) {
+		cout << "projective_space_with_action::create_object_from_int_vec"
+				" done" << endl;
+		}
+	return OiP;
+}
+
+
+
+
 
 
 // #############################################################################

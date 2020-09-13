@@ -110,9 +110,13 @@ void projective_space_job::perform_job(projective_space_job_description *Descr,
 				cout << "input set of points "
 					<< Descr->Data->input_string[input_idx] << ":" << endl;
 
+
 				object_in_projective_space *OiP;
+				string dummy;
+
+				dummy.assign("command_line");
 				OiP = PA->create_object_from_string(t_PTS,
-						"command_line", Descr->n,
+						dummy, Descr->n,
 						Descr->Data->input_string[input_idx], verbose_level);
 				back_end(input_idx,
 						OiP,
@@ -129,7 +133,7 @@ void projective_space_job::perform_job(projective_space_job_description *Descr,
 				long int *the_set;
 				int set_size;
 
-				Fio.read_set_from_file(Descr->Data->input_string[input_idx],
+				Fio.read_set_from_file(Descr->Data->input_string[input_idx].c_str(),
 					the_set, set_size, verbose_level);
 
 				object_in_projective_space *OiP;
@@ -160,7 +164,7 @@ void projective_space_job::perform_job(projective_space_job_description *Descr,
 				cout << "Reading the file " << Descr->Data->input_string[input_idx] << endl;
 				SoS->init_from_file(
 						PA->P->N_points /* underlying_set_size */,
-						Descr->Data->input_string[input_idx], verbose_level);
+						Descr->Data->input_string[input_idx].c_str(), verbose_level);
 				cout << "Read the file " << Descr->Data->input_string[input_idx] << endl;
 
 				int h;
@@ -175,7 +179,7 @@ void projective_space_job::perform_job(projective_space_job_description *Descr,
 						INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
 					cout << "Reading spread table from file "
 						<< Descr->Data->input_string2[input_idx] << endl;
-					Fio.lint_matrix_read_csv(Descr->Data->input_string2[input_idx],
+					Fio.lint_matrix_read_csv(Descr->Data->input_string2[input_idx].c_str(),
 							Spread_table, nb_spreads, spread_size,
 							0 /* verbose_level */);
 					cout << "Reading spread table from file "

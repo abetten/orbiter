@@ -544,7 +544,9 @@ class interface_projective {
 	int n;
 	int q;
 	int f_canonical_form_PG;
+	projective_space_object_classifier_description *Canonical_form_PG_Descr;
 
+#if 0
 	int f_input;
 	data_input_stream *Data_input_stream;
 
@@ -569,6 +571,7 @@ class interface_projective {
 
 	int f_max_TDO_depth;
 	int max_TDO_depth;
+#endif
 
 	int f_classify_cubic_curves;
 	int f_has_control_six_arcs;
@@ -623,7 +626,7 @@ public:
 	void print_help(int argc, const char **argv, int i, int verbose_level);
 	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
 	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
-	int read_canonical_form_arguments(int argc, const char **argv, int i0, int verbose_level);
+	//int read_canonical_form_arguments(int argc, const char **argv, int i0, int verbose_level);
 	void worker(orbiter_session *Session, int verbose_level);
 	void do_cheat_sheet_PG(orbiter_session *Session,
 			int n, int q, int verbose_level);

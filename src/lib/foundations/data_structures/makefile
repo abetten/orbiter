@@ -9,6 +9,7 @@ MODULES = \
 	bitmatrix.o \
 	classify_bitvectors.o \
 	data_file.o \
+	data_input_stream.o \
 	fancy_set.o \
 	int_matrix.o \
 	int_vector.o \

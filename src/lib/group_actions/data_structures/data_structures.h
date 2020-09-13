@@ -16,51 +16,6 @@ namespace orbiter {
 namespace group_actions {
 
 
-// #############################################################################
-// data_input_stream.cpp:
-// #############################################################################
-
-
-#define INPUT_TYPE_SET_OF_POINTS 1
-#define INPUT_TYPE_SET_OF_LINES 2
-#define INPUT_TYPE_SET_OF_PACKING 3
-#define INPUT_TYPE_FILE_OF_POINTS 4
-#define INPUT_TYPE_FILE_OF_LINES 5
-#define INPUT_TYPE_FILE_OF_PACKINGS 6
-#define INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE 7
-#define INPUT_TYPE_FILE_OF_POINT_SET 8
-#define INPUT_TYPE_FILE_OF_DESIGNS 9
-
-
-
-//! description of input data for classification of geometric objects from the command line
-
-
-class data_input_stream {
-public:
-	int nb_inputs;
-	int input_type[1000];
-	const char *input_string[1000];
-	const char *input_string2[1000];
-
-	// for INPUT_TYPE_FILE_OF_DESIGNS:
-	int input_data1[1000]; // N_points
-	int input_data2[1000]; // b = number of blocks
-	int input_data3[1000]; // k = block size
-	int input_data4[1000]; // partition class size
-
-	data_input_stream();
-	~data_input_stream();
-	void null();
-	void freeself();
-	void read_arguments_from_string(
-			const char *str, int verbose_level);
-	int read_arguments(int argc, const char **argv,
-		int verbose_level);
-	int count_number_of_objects_to_test(
-		int verbose_level);
-};
-
 
 
 // #############################################################################
@@ -563,6 +518,131 @@ public:
 
 };
 
+// #############################################################################
+// projective_space_object_classifier_description.cpp
+// #############################################################################
+
+
+
+
+//! description of a classification of objects using class projective_space_object_classifier
+
+
+
+class projective_space_object_classifier_description {
+
+public:
+
+	int f_input;
+	data_input_stream *Data;
+
+
+	int f_save;
+	std::string save_prefix;
+
+	int f_report;
+	std::string report_prefix;
+
+	int fixed_structure_order_list_sz;
+	int fixed_structure_order_list[1000];
+
+	int f_max_TDO_depth;
+	int max_TDO_depth;
+
+	int f_classification_prefix;
+	std::string classification_prefix;
+
+	int f_save_incma_in_and_out;
+	std::string save_incma_in_and_out_prefix;
+
+	int f_save_canonical_labeling;
+
+	int f_save_ago;
+
+	int f_load_canonical_labeling;
+	std::string load_canonical_labeling_fname;
+
+	projective_space_object_classifier_description();
+	~projective_space_object_classifier_description();
+	int read_arguments(
+		int argc, const char **argv,
+		int verbose_level);
+
+};
+
+
+// #############################################################################
+// projective_space_object_classifier.cpp
+// #############################################################################
+
+
+
+
+//! classification of objects in projective space PG(n,q) using graph a theoretic approach
+
+
+
+class projective_space_object_classifier {
+
+public:
+
+	projective_space_object_classifier_description *Descr;
+
+	projective_space_with_action *PA;
+
+	int nb_objects_to_test;
+
+	classify_bitvectors *CB;
+
+
+
+
+	projective_space_object_classifier();
+	~projective_space_object_classifier();
+	void do_the_work(projective_space_object_classifier_description *Descr,
+			projective_space_with_action *PA,
+			int verbose_level);
+	void classify_objects_using_nauty(
+		int verbose_level);
+	void process_multiple_objects_from_file(
+			int file_type,
+			std::string &input_data,
+			std::string &input_data2,
+			int verbose_level);
+	void process_set_of_points(
+			std::string &input_data,
+			int verbose_level);
+	void process_set_of_points_from_file(
+			std::string &input_data,
+			int verbose_level);
+	void process_set_of_lines_from_file(
+			std::string &input_data,
+			int verbose_level);
+	void process_set_of_packing(
+			std::string &input_data,
+			int verbose_level);
+	int process_object(
+		object_in_projective_space *OiP,
+		strong_generators *&SG,
+		long int *canonical_labeling, int &canonical_labeling_len,
+		int verbose_level);
+	// returns f_found, which is TRUE if the object is rejected
+	int process_object_with_known_canonical_labeling(
+		object_in_projective_space *OiP,
+		long int *canonical_labeling, int canonical_labeling_len,
+		int verbose_level);
+	void save(
+			std::string &output_prefix,
+			int verbose_level);
+	void latex_report(std::string &fname,
+			std::string &prefix,
+			int fixed_structure_order_list_sz,
+			int *fixed_structure_order_list,
+			int max_TDO_depth,
+			int verbose_level);
+
+
+};
 
 
 // #############################################################################
@@ -623,9 +703,9 @@ public:
 		int f_compute_canonical_form, 
 		uchar *&canonical_form, 
 		int &canonical_form_len,
-		long int *canonical_labeling,
+		long int *canonical_labeling, int &canonical_labeling_len,
 		int verbose_level);
-		// canonical_labeling[nb_rows + nb_cols]
+		// canonical_labeling[nb_rows + nb_cols] contains the canonical labeling
 		// where nb_rows and nb_cols is the encoding size,
 		// which can be computed using
 		// object_in_projective_space::encoding_size(
@@ -640,14 +720,16 @@ public:
 	void report_decomposition_by_single_automorphism(
 		int *Elt, std::ostream &ost,
 		int verbose_level);
+#if 0
 	object_in_projective_space *
 	create_object_from_string(
-		int type, const char *input_fname, int input_idx,
-		const char *set_as_string, int verbose_level);
+		int type, std::string &input_fname, int input_idx,
+		std::string &set_as_string, int verbose_level);
 	object_in_projective_space *
 	create_object_from_int_vec(
-		int type, const char *input_fname, int input_idx,
+		int type, std::string &input_fname, int input_idx,
 		long int *the_set, int set_sz, int verbose_level);
+#endif
 	int process_object(
 		classify_bitvectors *CB,
 		object_in_projective_space *OiP,
@@ -656,15 +738,6 @@ public:
 		strong_generators *&SG,
 		long int *canonical_labeling,
 		int verbose_level);
-	void classify_objects_using_nauty(
-		data_input_stream *Data,
-		classify_bitvectors *CB,
-		int f_save_incma_in_and_out, std::string &prefix,
-		int verbose_level);
-	void save(
-			std::string &output_prefix,
-			classify_bitvectors *CB,
-			int verbose_level);
 	void merge_packings(
 			const char **fnames, int nb_files,
 			const char *file_of_spreads,
@@ -685,14 +758,12 @@ public:
 			spread_tables *Spread_tables,
 			classify_bitvectors *&CB,
 			int verbose_level);
-	void latex_report(const char *fname,
-			std::string &prefix,
-			classify_bitvectors *CB,
-			int f_save_incma_in_and_out,
-			int fixed_structure_order_list_sz,
-			int *fixed_structure_order_list,
-			int max_TDO_depth,
-			int verbose_level);
+	object_in_projective_space *create_object_from_string(
+		int type, std::string &input_fname, int input_idx,
+		std::string &set_as_string, int verbose_level);
+	object_in_projective_space *create_object_from_int_vec(
+		int type, std::string &input_fname, int input_idx,
+		long int *the_set, int set_sz, int verbose_level);
 };
 
 //globals:
