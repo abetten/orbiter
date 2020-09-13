@@ -1338,12 +1338,12 @@ public:
 		// t_LNS = a set of lines 
 		// t_PAC = a packing (i.e. q^2+q+1 sets of lines of size q^2+1)
 
-	const char *input_fname;
+	std::string input_fname;
 	int input_idx;
 	int f_has_known_ago;
 	long int known_ago;
 
-	char *set_as_string;
+	std::string set_as_string;
 
 	long int *set;
 	int sz;
@@ -1366,12 +1366,12 @@ public:
 	void init_object_from_string(
 		projective_space *P,
 		int type,
-		const char *input_fname, int input_idx,
-		const char *set_as_string, int verbose_level);
+		std::string &input_fname, int input_idx,
+		std::string &set_as_string, int verbose_level);
 	void init_object_from_int_vec(
 		projective_space *P,
 		int type,
-		const char *input_fname, int input_idx,
+		std::string &input_fname, int input_idx,
 		long int *the_set_in, int the_set_sz, int verbose_level);
 	void init_point_set(projective_space *P, long int *set, int sz,
 		int verbose_level);

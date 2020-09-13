@@ -34,7 +34,9 @@ interface_projective::interface_projective()
 	q = 0;
 
 	f_canonical_form_PG = FALSE;
+	Canonical_form_PG_Descr = NULL;
 
+#if 0
 	f_input = FALSE;
 	Data_input_stream = NULL;
 
@@ -64,6 +66,7 @@ interface_projective::interface_projective()
 
 	f_max_TDO_depth = FALSE;
 	max_TDO_depth = INT_MAX;
+#endif
 
 	f_classify_cubic_curves = FALSE;
 	f_has_control_six_arcs = FALSE;
@@ -119,7 +122,7 @@ void interface_projective::print_help(int argc,
 		cout << "-cheat_sheet_PG" << endl;
 	}
 	else if (strcmp(argv[i], "-canonical_form_PG") == 0) {
-		cout << "-canonical_form_PG" << endl;
+		cout << "-canonical_form_PG <int : n> <int : q> <description>" << endl;
 	}
 	else if (strcmp(argv[i], "-classify_cubic_curves") == 0) {
 		cout << "-classify_cubic_curves" << endl;
@@ -203,10 +206,6 @@ void interface_projective::read_arguments(int argc,
 	int i;
 
 	cout << "interface_projective::read_arguments" << endl;
-	//return 0;
-
-	//interface_projective::argc = argc;
-	//interface_projective::argv = argv;
 
 	for (i = i0; i < argc; i++) {
 		if (strcmp(argv[i], "-cheat_sheet_PG") == 0) {
@@ -221,8 +220,11 @@ void interface_projective::read_arguments(int argc,
 			n = atoi(argv[++i]);
 			q = atoi(argv[++i]);
 			cout << "-canonical_form_PG " << n << " " <<  q << ", reading extra arguments" << endl;
-			i += read_canonical_form_arguments(argc - (i + 1), argv + i + 1, 0, verbose_level);
-			cout << "done reading -canonical_form_PG " << n << " " <<  q << endl;
+
+			Canonical_form_PG_Descr = NEW_OBJECT(projective_space_object_classifier_description);
+
+			i += Canonical_form_PG_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
+			cout << "done reading -Canonical_form_PG_Descr " << n << " " <<  q << endl;
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -352,6 +354,7 @@ void interface_projective::read_arguments(int argc,
 	cout << "interface_projective::read_arguments done" << endl;
 }
 
+#if 0
 int interface_projective::read_canonical_form_arguments(int argc,
 		const char **argv, int i0, int verbose_level)
 {
@@ -437,6 +440,7 @@ int interface_projective::read_canonical_form_arguments(int argc,
 	}
 	return i + 1;
 }
+#endif
 
 void interface_projective::worker(orbiter_session *Session, int verbose_level)
 {
@@ -535,16 +539,18 @@ void interface_projective::do_canonical_form_PG(orbiter_session *Session,
 		int n, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i;
+	//int i;
 
 	if (f_v) {
 		cout << "interface_projective::do_canonical_form_PG" << endl;
 	}
 
+#if 0
 	if (!f_input) {
 		cout << "please use option -input ... -end" << endl;
 		exit(1);
 	}
+#endif
 
 	finite_field *F;
 
@@ -581,8 +587,24 @@ void interface_projective::do_canonical_form_PG(orbiter_session *Session,
 
 
 
+	projective_space_object_classifier *OC;
 
+	OC = NEW_OBJECT(projective_space_object_classifier);
 
+	if (f_v) {
+		cout << "interface_projective::do_canonical_form_PG before OC->do_the_work" << endl;
+	}
+	OC->do_the_work(
+			Canonical_form_PG_Descr,
+			PA,
+			verbose_level);
+	if (f_v) {
+		cout << "interface_projective::do_canonical_form_PG after OC->do_the_work" << endl;
+	}
+
+	FREE_OBJECT(OC);
+
+#if 0
 	classify_bitvectors *CB;
 
 	CB = NEW_OBJECT(classify_bitvectors);
@@ -620,8 +642,7 @@ void interface_projective::do_canonical_form_PG(orbiter_session *Session,
 
 		cout << i << " / " << CB->nb_types << " is "
 			<< CB->Type_rep[i] << " : " << CB->Type_mult[i] << " : ";
-		OiPA = (object_in_projective_space_with_action *)
-				CB->Type_extra_data[i];
+		OiPA = (object_in_projective_space_with_action *) CB->Type_extra_data[i];
 		OiP = OiPA->OiP;
 		if (OiP->type != t_PAC) {
 			OiP->print(cout);
@@ -688,6 +709,7 @@ void interface_projective::do_canonical_form_PG(orbiter_session *Session,
 				verbose_level);
 
 	}// f_report
+#endif
 
 
 	if (f_v) {

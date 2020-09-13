@@ -6,15 +6,13 @@
  */
 
 
-#include "foundations/foundations.h"
-#include "group_actions.h"
-
+#include "foundations.h"
 
 using namespace std;
 
 
 namespace orbiter {
-namespace group_actions {
+namespace foundations {
 
 data_input_stream::data_input_stream()
 {
@@ -85,51 +83,45 @@ int data_input_stream::read_arguments(
 	}
 	for (i = 0; i < argc; i++) {
 
-#if 0
-		if (argv[i][0] != '-') {
-			continue;
-			}
-#endif
-
 		if (strcmp(argv[i], "-set_of_points") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_SET_OF_POINTS;
-			input_string[nb_inputs] = argv[++i];
-			input_string2[nb_inputs] = NULL;
+			input_string[nb_inputs].assign(argv[++i]);
+			input_string2[nb_inputs].assign("");
 			cout << "data_input_stream::read_arguments -set_of_points " << input_string[nb_inputs] << endl;
 			nb_inputs++;
 			}
 		else if (strcmp(argv[i], "-set_of_lines") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_SET_OF_LINES;
-			input_string[nb_inputs] = argv[++i];
-			input_string2[nb_inputs] = NULL;
+			input_string[nb_inputs].assign(argv[++i]);
+			input_string2[nb_inputs].assign("");
 			cout << "data_input_stream::read_arguments -set_of_lines " << input_string[nb_inputs] << endl;
 			nb_inputs++;
 			}
 		else if (strcmp(argv[i], "-set_of_packing") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_SET_OF_PACKING;
-			input_string[nb_inputs] = argv[++i];
-			input_string2[nb_inputs] = NULL;
+			input_string[nb_inputs].assign(argv[++i]);
+			input_string2[nb_inputs].assign("");
 			cout << "data_input_stream::read_arguments -set_of_packing " << input_string[nb_inputs] << endl;
 			nb_inputs++;
 			}
 		else if (strcmp(argv[i], "-file_of_points") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_POINTS;
-			input_string[nb_inputs] = argv[++i];
-			input_string2[nb_inputs] = NULL;
+			input_string[nb_inputs].assign(argv[++i]);
+			input_string2[nb_inputs].assign("");
 			cout << "data_input_stream::read_arguments -file_of_points " << input_string[nb_inputs] << endl;
 			nb_inputs++;
 			}
 		else if (strcmp(argv[i], "-file_of_lines") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_LINES;
-			input_string[nb_inputs] = argv[++i];
-			input_string2[nb_inputs] = NULL;
+			input_string[nb_inputs].assign(argv[++i]);
+			input_string2[nb_inputs].assign("");
 			cout << "data_input_stream::read_arguments -file_of_lines " << input_string[nb_inputs] << endl;
 			nb_inputs++;
 			}
 		else if (strcmp(argv[i], "-file_of_packings") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_PACKINGS;
-			input_string[nb_inputs] = argv[++i];
-			input_string2[nb_inputs] = NULL;
+			input_string[nb_inputs].assign(argv[++i]);
+			input_string2[nb_inputs].assign("");
 			cout << "data_input_stream::read_arguments -file_of_packings " << input_string[nb_inputs] << endl;
 			nb_inputs++;
 			}
@@ -137,8 +129,8 @@ int data_input_stream::read_arguments(
 				"-file_of_packings_through_spread_table") == 0) {
 			input_type[nb_inputs] =
 					INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE;
-			input_string[nb_inputs] = argv[++i];
-			input_string2[nb_inputs] = argv[++i];
+			input_string[nb_inputs].assign(argv[++i]);
+			input_string2[nb_inputs].assign(argv[++i]);
 			cout << "data_input_stream::read_arguments -file_of_packings_through_spread_table "
 				<< input_string[nb_inputs] << " "
 				<< input_string2[nb_inputs] << endl;
@@ -146,8 +138,8 @@ int data_input_stream::read_arguments(
 			}
 		else if (strcmp(argv[i], "-file_of_point_set") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_POINT_SET;
-			input_string[nb_inputs] = argv[++i];
-			input_string2[nb_inputs] = NULL;
+			input_string[nb_inputs].assign(argv[++i]);
+			input_string2[nb_inputs].assign("");
 			cout << "data_input_stream::read_arguments -file_of_point_set " << input_string[nb_inputs] << endl;
 			nb_inputs++;
 			}
@@ -230,7 +222,7 @@ int data_input_stream::count_number_of_objects_to_test(
 						<< input_string[input_idx] << ":" << endl;
 				}
 			nb_obj = Fio.count_number_of_orbits_in_file(
-					input_string[input_idx], 0 /* verbose_level*/);
+					input_string[input_idx].c_str(), 0 /* verbose_level*/);
 			if (f_v) {
 				cout << "The file " << input_string[input_idx]
 					<< " has " << nb_obj << " objects" << endl;
@@ -244,7 +236,7 @@ int data_input_stream::count_number_of_objects_to_test(
 					<< input_string[input_idx] << ":" << endl;
 				}
 			nb_obj = Fio.count_number_of_orbits_in_file(
-				input_string[input_idx], 0 /* verbose_level*/);
+				input_string[input_idx].c_str(), 0 /* verbose_level*/);
 			if (f_v) {
 				cout << "The file " << input_string[input_idx]
 					<< " has " << nb_obj << " objects" << endl;
@@ -258,7 +250,7 @@ int data_input_stream::count_number_of_objects_to_test(
 					<< input_string[input_idx] << ":" << endl;
 				}
 			nb_obj = Fio.count_number_of_orbits_in_file(
-				input_string[input_idx], 0 /* verbose_level*/);
+				input_string[input_idx].c_str(), 0 /* verbose_level*/);
 			if (f_v) {
 				cout << "The file " << input_string[input_idx]
 					<< " has " << nb_obj << " objects" << endl;
@@ -275,7 +267,7 @@ int data_input_stream::count_number_of_objects_to_test(
 					<< input_string2[input_idx] << " :" << endl;
 				}
 			nb_obj = Fio.count_number_of_orbits_in_file(
-				input_string[input_idx], 0 /* verbose_level*/);
+				input_string[input_idx].c_str(), 0 /* verbose_level*/);
 			if (f_v) {
 				cout << "The file " << input_string[input_idx]
 					<< " has " << nb_obj << " objects" << endl;
@@ -313,7 +305,7 @@ int data_input_stream::count_number_of_objects_to_test(
 				<<  " which contains designs on " << input_data1[input_idx] << " points, nck=" << nck << endl;
 			SoS->init_from_file(
 					nck /* underlying_set_size */,
-					input_string[input_idx], verbose_level);
+					input_string[input_idx].c_str(), verbose_level);
 			cout << "Read the file " << input_string[input_idx] << endl;
 			nb_obj = SoS->nb_sets;
 			FREE_OBJECT(SoS);

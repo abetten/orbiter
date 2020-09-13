@@ -32,11 +32,11 @@ object_in_projective_space::~object_in_projective_space()
 void object_in_projective_space::null()
 {
 	P = NULL;
-	input_fname = NULL;
+	//input_fname = NULL;
 	input_idx = 0;
 	f_has_known_ago = FALSE;
 	known_ago = 0;
-	set_as_string = NULL;
+	//set_as_string = NULL;
 	set = NULL;
 	sz = 0;
 	SoS = NULL;
@@ -45,9 +45,11 @@ void object_in_projective_space::null()
 
 void object_in_projective_space::freeself()
 {
+#if 0
 	if (set_as_string) {
 		FREE_char(set_as_string);
 	}
+#endif
 	if (set) {
 		FREE_lint(set);
 		}
@@ -63,9 +65,7 @@ void object_in_projective_space::freeself()
 void object_in_projective_space::print(ostream &ost)
 {
 
-	if (set_as_string) {
-		cout << "set_as_string: " << set_as_string << endl;
-	}
+	cout << "set_as_string: " << set_as_string << endl;
 	if (type == t_PTS) {
 		ost << "set of points of size " << sz << ": ";
 		lint_vec_print(ost, set, sz);
@@ -107,8 +107,8 @@ void object_in_projective_space::print_tex(ostream &ost)
 void object_in_projective_space::init_object_from_string(
 	projective_space *P,
 	int type,
-	const char *input_fname, int input_idx,
-	const char *set_as_string, int verbose_level)
+	std::string &input_fname, int input_idx,
+	std::string &set_as_string, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -117,17 +117,22 @@ void object_in_projective_space::init_object_from_string(
 		cout << "type=" << type << endl;
 		}
 
-	object_in_projective_space::input_fname = input_fname;
+	object_in_projective_space::input_fname.assign(input_fname);
 	object_in_projective_space::input_idx = input_idx;
-	int l = strlen(set_as_string);
+
+#if 0
+	int l = set_as_string.length();
 
 	object_in_projective_space::set_as_string = NEW_char(l + 1);
 	strcpy(object_in_projective_space::set_as_string, set_as_string);
+#endif
+
+	object_in_projective_space::set_as_string.assign(set_as_string);
 
 	long int *the_set_in;
 	int set_size_in;
 
-	lint_vec_scan(set_as_string, the_set_in, set_size_in);
+	lint_vec_scan(set_as_string.c_str(), the_set_in, set_size_in);
 
 
 #if 0
@@ -196,7 +201,7 @@ void object_in_projective_space::init_object_from_string(
 void object_in_projective_space::init_object_from_int_vec(
 	projective_space *P,
 	int type,
-	const char *input_fname, int input_idx,
+	std::string &input_fname, int input_idx,
 	long int *the_set_in, int the_set_sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

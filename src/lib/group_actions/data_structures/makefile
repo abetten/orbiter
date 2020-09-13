@@ -1,12 +1,11 @@
 DISCRETA_CPP = g++
 DISCRETA_CC = gcc
-CPPFLAGS = -Wall -O3 -march=native -funroll-loops -I.. -I../..
+CPPFLAGS = -Wall -O3 -march=native -funroll-loops -I.. -I../.. -std=c++14
 # -frename-registers
 LIB = 
 LFLAGS = -lm
 
 MODULES = \
-	data_input_stream.o \
 	group.o \
 	incidence_structure_with_group.o \
 	object_in_projective_space_with_action.o \
@@ -15,6 +14,8 @@ MODULES = \
 	orbit_type_repository.o \
 	projective_space_job_description.o \
 	projective_space_job.o \
+	projective_space_object_classifier_description.o \
+	projective_space_object_classifier.o \
 	projective_space_with_action.o \
 	schreier_vector_handler.o \
 	schreier_vector.o \
