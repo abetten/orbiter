@@ -36,37 +36,6 @@ interface_projective::interface_projective()
 	f_canonical_form_PG = FALSE;
 	Canonical_form_PG_Descr = NULL;
 
-#if 0
-	f_input = FALSE;
-	Data_input_stream = NULL;
-
-	f_all_k_subsets = FALSE;
-	k = 0;
-
-
-
-
-
-
-	f_save_incma_in_and_out = FALSE;
-	//save_incma_in_and_out_prefix
-
-	f_classification_prefix = FALSE;
-	//classification_prefix
-
-	f_save = FALSE;
-	//std::string save_prefix;
-
-
-	fixed_structure_order_list_sz = 0;
-	//fixed_structure_order_list[1000];
-
-	f_report = FALSE;
-	// report_prefix
-
-	f_max_TDO_depth = FALSE;
-	max_TDO_depth = INT_MAX;
-#endif
 
 	f_classify_cubic_curves = FALSE;
 	f_has_control_six_arcs = FALSE;
@@ -354,93 +323,6 @@ void interface_projective::read_arguments(int argc,
 	cout << "interface_projective::read_arguments done" << endl;
 }
 
-#if 0
-int interface_projective::read_canonical_form_arguments(int argc,
-		const char **argv, int i0, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i;
-
-	if (f_v) {
-		cout << "interface_projective::read_canonical_form_arguments" << endl;
-	}
-	for (i = i0; i < argc; i++) {
-
-
-		if (strcmp(argv[i], "-input") == 0) {
-			f_input = TRUE;
-			cout << "-input" << endl;
-			Data_input_stream = NEW_OBJECT(data_input_stream);
-			i += Data_input_stream->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-			cout << "-input" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-
-
-
-
-
-		else if (strcmp(argv[i], "-save_incma_in_and_out") == 0) {
-			f_save_incma_in_and_out = TRUE;
-			save_incma_in_and_out_prefix.assign(argv[++i]);
-			cout << "-save_incma_in_and_out" << save_incma_in_and_out_prefix << endl;
-		}
-
-		else if (strcmp(argv[i], "-save") == 0) {
-			f_save = TRUE;
-			save_prefix.assign(argv[++i]);
-			cout << "-save " << save_prefix << endl;
-		}
-		else if (strcmp(argv[i], "-classification_prefix") == 0) {
-			f_classification_prefix = TRUE;
-			classification_prefix.assign(argv[++i]);
-			cout << "-classification_prefix " << classification_prefix << endl;
-		}
-
-
-
-		else if (strcmp(argv[i], "-all_k_subsets") == 0) {
-			f_all_k_subsets = TRUE;
-			k = atoi(argv[++i]);
-			cout << "-all_k_subsets " << k << endl;
-		}
-		else if (strcmp(argv[i], "-fixed_structure_of_element_of_order") == 0) {
-			fixed_structure_order_list[fixed_structure_order_list_sz] = atoi(argv[++i]);
-			cout << "-fixed_structure_of_element_of_order "
-					<< fixed_structure_order_list[fixed_structure_order_list_sz] << endl;
-			fixed_structure_order_list_sz++;
-		}
-		else if (strcmp(argv[i], "-report") == 0) {
-			f_report = TRUE;
-			report_prefix.assign(argv[++i]);
-			cout << "-report " << report_prefix << endl;
-		}
-
-		else if (strcmp(argv[i], "-max_TDO_depth") == 0) {
-			f_max_TDO_depth = TRUE;
-			max_TDO_depth = atoi(argv[++i]);
-			cout << "-max_TDO_depth " << max_TDO_depth << endl;
-		}
-		else if (strcmp(argv[i], "-end") == 0) {
-			cout << "-end " << endl;
-			break;
-		}
-		else {
-			cout << "-canonical_form_PG: unrecognized option " << argv[i] << ", skipping" << endl;
-			//exit(1);
-		}
-	}
-	if (f_v) {
-		cout << "interface_projective::read_canonical_form_arguments done" << endl;
-	}
-	return i + 1;
-}
-#endif
 
 void interface_projective::worker(orbiter_session *Session, int verbose_level)
 {
@@ -545,12 +427,6 @@ void interface_projective::do_canonical_form_PG(orbiter_session *Session,
 		cout << "interface_projective::do_canonical_form_PG" << endl;
 	}
 
-#if 0
-	if (!f_input) {
-		cout << "please use option -input ... -end" << endl;
-		exit(1);
-	}
-#endif
 
 	finite_field *F;
 
@@ -604,112 +480,6 @@ void interface_projective::do_canonical_form_PG(orbiter_session *Session,
 
 	FREE_OBJECT(OC);
 
-#if 0
-	classify_bitvectors *CB;
-
-	CB = NEW_OBJECT(classify_bitvectors);
-
-
-
-
-
-	cout << "interface_projective::do_canonical_form_PG "
-			"before PA->classify_objects_using_nauty" << endl;
-	PA->classify_objects_using_nauty(Data_input_stream,
-		CB,
-		f_save_incma_in_and_out, classification_prefix,
-		verbose_level - 1);
-	cout << "interface_projective::do_canonical_form_PG "
-			"after PA->classify_objects_using_nauty" << endl;
-
-
-
-	cout << "canonical_form.cpp We found " << CB->nb_types << " types" << endl;
-
-
-	compute_and_print_ago_distribution_with_classes(cout,
-			CB, verbose_level);
-
-
-	cout << "interface_projective::do_canonical_form_PG "
-			"In the ordering of canonical forms, they are" << endl;
-	CB->print_reps();
-	cout << "We found " << CB->nb_types << " types:" << endl;
-	for (i = 0; i < CB->nb_types; i++) {
-
-		object_in_projective_space_with_action *OiPA;
-		object_in_projective_space *OiP;
-
-		cout << i << " / " << CB->nb_types << " is "
-			<< CB->Type_rep[i] << " : " << CB->Type_mult[i] << " : ";
-		OiPA = (object_in_projective_space_with_action *) CB->Type_extra_data[i];
-		OiP = OiPA->OiP;
-		if (OiP->type != t_PAC) {
-			OiP->print(cout);
-		}
-
-#if 0
-		for (j = 0; j < rep_len; j++) {
-			cout << (int) Type_data[i][j];
-			if (j < rep_len - 1) {
-				cout << ", ";
-				}
-			}
-#endif
-		cout << endl;
-	}
-
-
-
-
-
-	if (f_save) {
-		cout << "Saving the classification with save_prefix " << save_prefix << endl;
-		PA->save(save_prefix, CB, verbose_level);
-		CB->save(save_prefix,
-			OiPA_encode, OiPA_group_order,
-			NULL /* void *global_data */,
-			verbose_level);
-
-#if 0
-		void save(const char *prefix,
-			void (*encode_function)(void *extra_data,
-				int *&encoding, int &encoding_sz, void *global_data),
-			void (*get_group_order_or_NULL)(void *extra_data,
-				longinteger_object &go, void *global_data),
-			void *global_data,
-			int verbose_level);
-#endif
-	}
-
-
-
-
-	if (f_report) {
-
-		cout << "interface_projective::do_canonical_form_PG Producing a latex report:" << endl;
-
-		char fname[1000];
-
-		if (f_classification_prefix == FALSE) {
-			cout << "please use option -classification_prefix <prefix> to set the "
-					"prefix for the output file" << endl;
-			exit(1);
-			}
-		snprintf(fname, 1000, "%s_classification.tex", classification_prefix.c_str());
-
-
-		PA->latex_report(fname,
-				report_prefix,
-				CB,
-				f_save_incma_in_and_out,
-				fixed_structure_order_list_sz,
-				fixed_structure_order_list,
-				max_TDO_depth,
-				verbose_level);
-
-	}// f_report
-#endif
 
 
 	if (f_v) {

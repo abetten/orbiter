@@ -1149,6 +1149,16 @@ public:
 	void add_configuration_graph(std::ofstream &g,
 		int m, int n, int nb_inc, int *X, int f_first,
 		int verbose_level);
+	void reverse_engineer_linear_group_from_permutation_group(
+			action *A_linear,
+			projective_space *P,
+			strong_generators *&SG,
+			int N,
+			int *Aut, int Aut_counter,
+			int *Base, int Base_length,
+			long int *Base_lint,
+			int *Transversal_length, int Ago,
+			int verbose_level);
 
 };
 
