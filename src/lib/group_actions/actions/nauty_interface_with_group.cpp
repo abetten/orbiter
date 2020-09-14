@@ -1258,5 +1258,239 @@ void nauty_interface_with_group::add_configuration_graph(ofstream &g,
 
 
 
+void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group(
+		action *A_linear,
+		projective_space *P,
+		strong_generators *&SG,
+		int N,
+		int *Aut, int Aut_counter,
+		int *Base, int Base_length,
+		long int *Base_lint,
+		int *Transversal_length, int Ago,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group" << endl;
+	}
+
+	action *A_perm;
+	longinteger_object ago;
+
+	int d;
+
+	d = A_linear->matrix_group_dimension();
+
+
+	A_perm = NEW_OBJECT(action);
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
+				"before init_permutation_group_from_generators" << endl;
+		}
+	ago.create(Ago, __FILE__, __LINE__);
+	A_perm->init_permutation_group_from_generators(N,
+		TRUE, ago,
+		Aut_counter, Aut,
+		Base_length, Base_lint,
+		verbose_level);
+
+	if (f_vv) {
+		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
+				"create_automorphism_group_of_incidence_structure: created action ";
+		A_perm->print_info();
+		cout << endl;
+		}
+
+	//action *A_linear;
+
+	//A_linear = A;
+
+	if (A_linear == NULL) {
+		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
+				"A_linear == NULL" << endl;
+		exit(1);
+		}
+
+	vector_ge *gens; // permutations from nauty
+	vector_ge *gens1; // matrices
+	int g, frobenius, pos;
+	int *Mtx;
+	int *Elt1;
+
+	gens = A_perm->Strong_gens->gens;
+
+	gens1 = NEW_OBJECT(vector_ge);
+	gens1->init(A_linear, verbose_level - 2);
+	gens1->allocate(gens->len, verbose_level - 2);
+	Elt1 = NEW_int(A_linear->elt_size_in_int);
+
+	Mtx = NEW_int(d * d + 1); // leave space for frobenius
+
+	pos = 0;
+	for (g = 0; g < gens->len; g++) {
+		if (f_vv) {
+			cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
+					"strong generator " << g << ":" << endl;
+			//A_perm->element_print(gens->ith(g), cout);
+			cout << endl;
+			}
+
+		if (A_perm->reverse_engineer_semilinear_map(P,
+			gens->ith(g), Mtx, frobenius,
+			0 /*verbose_level - 2*/)) {
+
+			Mtx[d * d] = frobenius;
+			A_linear->make_element(Elt1, Mtx, 0 /*verbose_level - 2*/);
+			if (f_vv) {
+				cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
+						"semi-linear group element:" << endl;
+				A_linear->element_print(Elt1, cout);
+				}
+			A_linear->element_move(Elt1, gens1->ith(pos), 0);
+
+
+			pos++;
+			}
+		else {
+			if (f_vv) {
+				cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
+						"generator " << g << " does not "
+						"correspond to a semilinear mapping" << endl;
+				}
+			}
+		}
+	gens1->reallocate(pos, verbose_level - 2);
+	if (f_vv) {
+		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
+				"we found " << gens1->len << " generators" << endl;
+		}
+
+	if (f_vvv) {
+		gens1->print(cout);
+		}
+
+
+	if (f_vv) {
+		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
+				"we are now testing the generators:" << endl;
+		}
+	int i, j1, j2;
+
+	for (g = 0; g < gens1->len; g++) {
+		if (f_vv) {
+			cout << "generator " << g << ":" << endl;
+			}
+		//A_linear->element_print(gens1->ith(g), cout);
+		for (i = 0; i < P->N_points; i++) {
+			j1 = A_linear->element_image_of(i, gens1->ith(g), 0);
+			j2 = A_perm->element_image_of(i, gens->ith(g), 0);
+			if (j1 != j2) {
+				cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
+						"problem with generator: "
+						"j1 != j2" << endl;
+				cout << "i=" << i << endl;
+				cout << "j1=" << j1 << endl;
+				cout << "j2=" << j2 << endl;
+				cout << endl;
+				exit(1);
+				}
+			}
+		}
+	if (f_vv) {
+		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
+				"the generators are OK" << endl;
+		}
+
+
+
+	sims *S;
+	longinteger_object go;
+
+	if (f_vv) {
+		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
+				"we are now creating the group" << endl;
+		}
+
+	S = A_linear->create_sims_from_generators_with_target_group_order(
+		gens1, ago, 0 /*verbose_level*/);
+
+	S->group_order(go);
+
+
+	if (f_vv) {
+		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
+				"Found a group of order " << go << endl;
+		}
+	if (f_vvv) {
+		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
+				"strong generators are:" << endl;
+		S->print_generators();
+		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
+				"strong generators are (in tex):" << endl;
+		S->print_generators_tex(cout);
+		}
+
+
+	longinteger_domain D;
+
+	if (D.compare_unsigned(ago, go)) {
+		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
+				"the group order does not match" << endl;
+		cout << "ago = " << ago << endl;
+		cout << "go = " << go << endl;
+		exit(1);
+		}
+
+#if 0
+	if (f_v) {
+		cout << "before freeing labeling" << endl;
+	}
+	FREE_int(labeling);
+#endif
+	if (f_v) {
+		cout << "before freeing A_perm" << endl;
+	}
+	FREE_OBJECT(A_perm);
+	if (f_v) {
+		cout << "not freeing gens" << endl;
+	}
+	//FREE_OBJECT(gens);
+	if (f_v) {
+		cout << "before freeing Mtx" << endl;
+	}
+	FREE_int(Mtx);
+	FREE_int(Elt1);
+
+
+	// ToDo what about gens1, should it be freed ?
+
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_of_object "
+				"before initializing strong generators" << endl;
+		}
+
+	SG = NEW_OBJECT(strong_generators);
+	SG->init_from_sims(S, 0 /* verbose_level*/);
+	FREE_OBJECT(S);
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_of_object "
+				"after initializing strong generators" << endl;
+		}
+
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group done" << endl;
+	}
+
+}
+
+
 }}
 

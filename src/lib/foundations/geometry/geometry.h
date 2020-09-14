@@ -1397,6 +1397,10 @@ public:
 	void encoding_size_packing(
 			int &nb_rows, int &nb_cols,
 			int verbose_level);
+	void canonical_form_given_canonical_labeling(
+			long int *canonical_labeling,
+			uchar *&canonical_form, int &canonical_form_len,
+			int verbose_level);
 	void encode_incma(int *&Incma, int &nb_rows, int &nb_cols, 
 		int *&partition, int verbose_level);
 	void encode_point_set(int *&Incma, int &nb_rows, int &nb_cols, 

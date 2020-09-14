@@ -370,7 +370,8 @@ void object_in_projective_space::init_packing_from_set_of_sets(
 
 void object_in_projective_space::init_packing_from_spread_table(
 	projective_space *P,
-	long int *data, long int *Spread_table, int nb_spreads, int spread_size,
+	long int *data,
+	long int *Spread_table, int nb_spreads, int spread_size,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -563,6 +564,62 @@ void object_in_projective_space::encoding_size_packing(
 	nb_rows = P->N_points + SoS->nb_sets;
 	nb_cols = P->N_lines + 1;
 
+}
+
+void object_in_projective_space::canonical_form_given_canonical_labeling(
+		long int *canonical_labeling,
+		uchar *&canonical_form, int &canonical_form_len,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_in_projective_space::canonical_form_given_canonical_labeling" << endl;
+		}
+
+	int *partition;
+	int *Incma;
+	int nb_rows, nb_cols;
+
+	encode_incma(Incma, nb_rows, nb_cols, partition, verbose_level - 1);
+	if (f_v) {
+		cout << "object_in_projective_space::canonical_form_given_canonical_labeling "
+				"after OiP->encode_incma" << endl;
+		}
+
+	int *Incma_out;
+	int i, j, ii, jj, a;
+	int L;
+
+	L = nb_rows * nb_cols;
+
+	Incma_out = NEW_int(L);
+	for (i = 0; i < nb_rows; i++) {
+		ii = canonical_labeling[i];
+		for (j = 0; j < nb_cols; j++) {
+			jj = canonical_labeling[nb_rows + j] - nb_rows;
+			//cout << "i=" << i << " j=" << j << " ii=" << ii
+			//<< " jj=" << jj << endl;
+			Incma_out[i * nb_cols + j] = Incma[ii * nb_cols + jj];
+			}
+		}
+	canonical_form = bitvector_allocate_and_coded_length(L, canonical_form_len);
+	for (i = 0; i < nb_rows; i++) {
+		for (j = 0; j < nb_cols; j++) {
+			if (Incma_out[i * nb_cols + j]) {
+				a = i * nb_cols + j;
+				bitvector_set_bit(canonical_form, a);
+				}
+			}
+		}
+
+	FREE_int(partition);
+	FREE_int(Incma);
+	FREE_int(Incma_out);
+
+	if (f_v) {
+		cout << "object_in_projective_space::canonical_form_given_canonical_labeling done" << endl;
+		}
 }
 
 void object_in_projective_space::encode_incma(

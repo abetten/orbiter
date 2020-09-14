@@ -46,7 +46,14 @@ projective_space_object_classifier_description::projective_space_object_classifi
 	f_save_ago = FALSE;
 
 	f_load_canonical_labeling = FALSE;
-	//std::string load_canonical_labeling_fname
+
+	f_load_ago = FALSE;
+
+	f_save_cumulative_canonical_labeling = FALSE;
+
+	f_save_cumulative_ago = FALSE;
+
+	f_save_cumulative_data = FALSE;
 }
 
 projective_space_object_classifier_description::~projective_space_object_classifier_description()
@@ -137,8 +144,32 @@ int projective_space_object_classifier_description::read_arguments(
 
 		else if (strcmp(argv[i], "-load_canonical_labeling") == 0) {
 			f_load_canonical_labeling = TRUE;
-			load_canonical_labeling_fname.assign(argv[++i]);
-			cout << "-load_canonical_labeling " << load_canonical_labeling_fname << endl;
+			//load_canonical_labeling_fname.assign(argv[++i]);
+			cout << "-load_canonical_labeling " << endl;
+		}
+
+		else if (strcmp(argv[i], "-load_ago") == 0) {
+			f_load_ago = TRUE;
+			//load_ago_fname.assign(argv[++i]);
+			cout << "-load_ago " << endl;
+		}
+
+		else if (strcmp(argv[i], "-save_cumulative_canonical_labeling") == 0) {
+			f_save_cumulative_canonical_labeling = TRUE;
+			cumulative_canonical_labeling_fname.assign(argv[++i]);
+			cout << "-save_cumulative_canonical_labeling " << cumulative_canonical_labeling_fname << endl;
+		}
+
+		else if (strcmp(argv[i], "-save_cumulative_ago") == 0) {
+			f_save_cumulative_ago = TRUE;
+			cumulative_ago_fname.assign(argv[++i]);
+			cout << "-save_cumulative_ago " << cumulative_ago_fname << endl;
+		}
+
+		else if (strcmp(argv[i], "-save_cumulative_data") == 0) {
+			f_save_cumulative_data = TRUE;
+			cumulative_data_fname.assign(argv[++i]);
+			cout << "-save_cumulative_data " << cumulative_data_fname << endl;
 		}
 
 		else if (strcmp(argv[i], "-end") == 0) {

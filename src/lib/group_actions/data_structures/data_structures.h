@@ -146,8 +146,9 @@ public:
 
 	object_in_projective_space *OiP;
 		// do not free
-	strong_generators *Aut_gens;
+	//strong_generators *Aut_gens;
 		// generators for the automorphism group
+	long int ago;
 	int nb_rows, nb_cols;
 	long int *canonical_labeling;
 
@@ -157,16 +158,19 @@ public:
 	void null();
 	void freeself();
 	void init(object_in_projective_space *OiP,
-		strong_generators *Aut_gens,
+		//strong_generators *Aut_gens,
+		long int ago,
 		int nb_rows, int nb_cols,
 		long int *canonical_labeling,
 		int verbose_level);
+#if 0
 	void init_known_ago(
 		object_in_projective_space *OiP,
 		long int known_ago,
 		int nb_rows, int nb_cols,
 		long int *canonical_labeling,
 		int verbose_level);
+#endif
 };
 
 
@@ -560,7 +564,18 @@ public:
 	int f_save_ago;
 
 	int f_load_canonical_labeling;
-	std::string load_canonical_labeling_fname;
+
+	int f_load_ago;
+
+	int f_save_cumulative_canonical_labeling;
+	std::string cumulative_canonical_labeling_fname;
+
+	int f_save_cumulative_ago;
+	std::string cumulative_ago_fname;
+
+	int f_save_cumulative_data;
+	std::string cumulative_data_fname;
+
 
 	projective_space_object_classifier_description();
 	~projective_space_object_classifier_description();
@@ -608,6 +623,9 @@ public:
 			int file_type,
 			std::string &input_data,
 			std::string &input_data2,
+			std::vector<std::vector<int> > &Cumulative_data,
+			std::vector<long int> &Cumulative_Ago,
+			std::vector<std::vector<int> > &Cumulative_canonical_labeling,
 			int verbose_level);
 	void process_set_of_points(
 			std::string &input_data,
@@ -684,14 +702,6 @@ public:
 	void init(finite_field *F, int n, int f_semilinear, 
 		int f_init_incidence_structure, int verbose_level);
 	void init_group(int f_semilinear, int verbose_level);
-	strong_generators *set_stabilizer(
-		long int *set, int set_size, int &canonical_pt,
-		int *canonical_set_or_NULL, 
-		int f_save_incma_in_and_out, 
-		const char *save_incma_in_and_out_prefix, 
-		int f_compute_canonical_form, 
-		uchar *&canonical_form, int &canonical_form_len, 
-		int verbose_level);
 	void canonical_labeling(
 		object_in_projective_space *OiP,
 		int *canonical_labeling,
@@ -720,16 +730,6 @@ public:
 	void report_decomposition_by_single_automorphism(
 		int *Elt, std::ostream &ost,
 		int verbose_level);
-#if 0
-	object_in_projective_space *
-	create_object_from_string(
-		int type, std::string &input_fname, int input_idx,
-		std::string &set_as_string, int verbose_level);
-	object_in_projective_space *
-	create_object_from_int_vec(
-		int type, std::string &input_fname, int input_idx,
-		long int *the_set, int set_sz, int verbose_level);
-#endif
 	int process_object(
 		classify_bitvectors *CB,
 		object_in_projective_space *OiP,

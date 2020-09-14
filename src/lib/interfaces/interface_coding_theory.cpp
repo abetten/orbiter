@@ -19,9 +19,6 @@ namespace interfaces {
 
 interface_coding_theory::interface_coding_theory()
 {
-	//argc = 0;
-	//argv = NULL;
-
 	f_make_macwilliams_system = FALSE;
 	q = 0;
 	n = 0;
