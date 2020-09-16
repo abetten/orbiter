@@ -697,6 +697,8 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 			// we don't have strong generators !
 			//SG = NULL;
 
+			lint_vec_copy(Known_canonical_labeling + h * canonical_labeling_len, canonical_labeling, canonical_labeling_len);
+
 			if (Descr->f_load_ago) {
 				Ago.push_back(Known_ago[h]);
 			}
@@ -716,14 +718,12 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 		}
 
 
-		{
-			vector<int> the_canonical_labeling;
-			for (u = 0; u < canonical_labeling_len; u++) {
-				the_canonical_labeling.push_back(canonical_labeling[u]);
-			}
-
-			The_canonical_labeling.push_back(the_canonical_labeling);
+		vector<int> the_canonical_labeling;
+		for (u = 0; u < canonical_labeling_len; u++) {
+			the_canonical_labeling.push_back(canonical_labeling[u]);
 		}
+
+		The_canonical_labeling.push_back(the_canonical_labeling);
 
 		if (ret) {
 
@@ -757,14 +757,8 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 
 			cout << "pushing Cumulative_canonical_labeling" << endl;
 
-			{
-				vector<int> the_canonical_labeling;
-				for (u = 0; u < canonical_labeling_len; u++) {
-					the_canonical_labeling.push_back(canonical_labeling[u]);
-				}
 
-				Cumulative_canonical_labeling.push_back(the_canonical_labeling);
-			}
+			Cumulative_canonical_labeling.push_back(the_canonical_labeling);
 
 			vector<pair<int, int> > v;
 			v.push_back(make_pair(file_idx, h));
