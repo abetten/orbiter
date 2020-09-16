@@ -54,6 +54,8 @@ projective_space_object_classifier_description::projective_space_object_classifi
 	f_save_cumulative_ago = FALSE;
 
 	f_save_cumulative_data = FALSE;
+
+	f_save_fibration = FALSE;
 }
 
 projective_space_object_classifier_description::~projective_space_object_classifier_description()
@@ -170,6 +172,12 @@ int projective_space_object_classifier_description::read_arguments(
 			f_save_cumulative_data = TRUE;
 			cumulative_data_fname.assign(argv[++i]);
 			cout << "-save_cumulative_data " << cumulative_data_fname << endl;
+		}
+
+		else if (strcmp(argv[i], "-save_fibration") == 0) {
+			f_save_fibration = TRUE;
+			fibration_fname.assign(argv[++i]);
+			cout << "-save_fibration " << fibration_fname << endl;
 		}
 
 		else if (strcmp(argv[i], "-end") == 0) {

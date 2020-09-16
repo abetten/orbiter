@@ -1287,7 +1287,7 @@ void set_of_sets::save_csv(const char *fname,
 		cout << "set_of_sets::save_csv "
 				"before delete spreadsheet" << endl;
 		}
-	FREE_OBJECT(Sp);
+	//FREE_OBJECT(Sp); // ToDo
 	if (f_v) {
 		cout << "set_of_sets::save_csv done" << endl;
 		}

@@ -18,7 +18,8 @@ namespace top_level {
 
 
 
-void algebra_global_with_action::classes_GL(int q, int d, int f_no_eigenvalue_one, int verbose_level)
+void algebra_global_with_action::classes_GL(int q, int d,
+		int f_no_eigenvalue_one, int verbose_level)
 {
 	gl_classes C;
 	gl_class_rep *R;
@@ -2970,7 +2971,6 @@ void algebra_global_with_action::relative_order_vector_of_cosets(
 		cout << "algebra_global_with_action::relative_order_vector_of_cosets done" << endl;
 	}
 }
-
 
 
 

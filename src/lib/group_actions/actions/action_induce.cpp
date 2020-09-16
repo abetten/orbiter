@@ -1113,6 +1113,34 @@ void action::induced_action_on_sign(
 		}
 }
 
+action *action::create_induced_action_by_conjugation(
+		sims *Base_group, int f_ownership,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	action *A;
+
+	if (f_v) {
+		cout << "action::create_induced_action_by_conjugation" << endl;
+		}
+	A = NEW_OBJECT(action);
+	if (f_v) {
+		cout << "action::create_induced_action_by_conjugation "
+				"before A->induced_action_on_sets" << endl;
+		}
+	A->induced_action_by_conjugation(NULL,
+			Base_group, f_ownership, FALSE /* f_basis */,
+			verbose_level);
+	if (f_v) {
+		cout << "action::create_induced_action_by_conjugation "
+				"after A->induced_action_by_conjugation" << endl;
+		}
+	if (f_v) {
+		cout << "action::create_induced_action_by_conjugation done" << endl;
+		}
+	return A;
+}
+
 void action::induced_action_by_conjugation(sims *old_G, 
 	sims *Base_group, int f_ownership,
 	int f_basis, int verbose_level)
@@ -1302,10 +1330,12 @@ void action::induced_action_on_sets(
 		cout << "action::induced_action_on_sets" << endl;
 		cout << "action::induced_action_on_sets "
 				"f_induce_action=" << f_induce_action << endl;
+
 		cout << "action::induced_action_on_sets "
 				"the old_action " << old_action.label
-				<< " has base_length = " << old_action.base_len()
-			<< " and degree " << old_action.degree << endl;
+				//<< " has base_length = " << old_action.base_len()
+			<< " has degree " << old_action.degree << endl;
+
 		cout << "action::induced_action_on_sets "
 				"verbose_level = " << verbose_level << endl;
 		}

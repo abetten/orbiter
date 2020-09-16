@@ -48,6 +48,8 @@ class interface_algebra {
 	group_theoretic_activity_description *Group_theoretic_activity_description;
 	int f_cheat_sheet_GF;
 	int q;
+	int f_classes_GL;
+	int d;
 	int f_search_for_primitive_polynomial_in_range;
 	int p_min, p_max, deg_min, deg_max;
 	int f_make_table_of_irreducible_polynomials;
@@ -82,6 +84,7 @@ public:
 			group_theoretic_activity_description *Group_theoretic_activity_description,
 			int verbose_level);
 	void do_cheat_sheet_GF(int q, int f_poly, std::string &poly, int verbose_level);
+	void do_classes_GL(int d, int q, int f_poly, std::string &poly, int verbose_level);
 	void do_search_for_primitive_polynomial_in_range(int p_min, int p_max,
 			int deg_min, int deg_max, int verbose_level);
 	void do_make_table_of_irreducible_polynomials(int deg, int q, int verbose_level);

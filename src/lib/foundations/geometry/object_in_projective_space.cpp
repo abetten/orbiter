@@ -98,10 +98,32 @@ void object_in_projective_space::print_tex(ostream &ost)
 		ost << "\\}$" << endl;
 		}
 	else if (type == t_PAC) {
-		ost << "packing: " << endl;
+		ost << "packing: \\\\" << endl;
 		SoS->print_table_tex(ost);
 		ost << endl;
 		}
+}
+
+void object_in_projective_space::get_packing_as_set_system(long int *&Sets,
+		int &nb_sets, int &set_size, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+
+	if (f_v) {
+		cout << "object_in_projective_space::get_packing_as_set_system" << endl;
+	}
+	nb_sets = SoS->nb_sets;
+	set_size = SoS->Set_size[0];
+	Sets = NEW_lint(nb_sets * set_size);
+	for (i = 0; i < nb_sets; i++) {
+		for (j = 0; j < set_size; j++) {
+			Sets[i * set_size + j] = SoS->Sets[i][j];
+		}
+	}
+	if (f_v) {
+		cout << "object_in_projective_space::get_packing_as_set_system done" << endl;
+	}
 }
 
 void object_in_projective_space::init_object_from_string(
