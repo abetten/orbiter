@@ -1363,6 +1363,8 @@ public:
 	void freeself();
 	void print(std::ostream &ost);
 	void print_tex(std::ostream &ost);
+	void get_packing_as_set_system(long int *&Sets,
+			int &nb_sets, int &set_size, int verbose_level);
 	void init_object_from_string(
 		projective_space *P,
 		int type,

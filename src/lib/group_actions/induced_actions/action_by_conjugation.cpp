@@ -35,7 +35,7 @@ void action_by_conjugation::free()
 {
 	
 	if (Base_group && f_ownership) {
-		delete Base_group;
+		FREE_OBJECT(Base_group);
 		}
 	if (Elt1) {
 		FREE_int(Elt1);

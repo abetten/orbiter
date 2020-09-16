@@ -576,6 +576,9 @@ public:
 	int f_save_cumulative_data;
 	std::string cumulative_data_fname;
 
+	int f_save_fibration;
+	std::string fibration_fname;
+
 
 	projective_space_object_classifier_description();
 	~projective_space_object_classifier_description();
@@ -620,12 +623,13 @@ public:
 	void classify_objects_using_nauty(
 		int verbose_level);
 	void process_multiple_objects_from_file(
-			int file_type,
+			int file_type, int file_idx,
 			std::string &input_data,
 			std::string &input_data2,
 			std::vector<std::vector<int> > &Cumulative_data,
 			std::vector<long int> &Cumulative_Ago,
 			std::vector<std::vector<int> > &Cumulative_canonical_labeling,
+			std::vector<std::vector<std::pair<int, int> > > &Fibration,
 			int verbose_level);
 	void process_set_of_points(
 			std::string &input_data,
@@ -643,11 +647,13 @@ public:
 		object_in_projective_space *OiP,
 		strong_generators *&SG,
 		long int *canonical_labeling, int &canonical_labeling_len,
+		int &idx,
 		int verbose_level);
 	// returns f_found, which is TRUE if the object is rejected
 	int process_object_with_known_canonical_labeling(
 		object_in_projective_space *OiP,
 		long int *canonical_labeling, int canonical_labeling_len,
+		int &idx,
 		int verbose_level);
 	void save(
 			std::string &output_prefix,
@@ -721,6 +727,11 @@ public:
 		// object_in_projective_space::encoding_size(
 		//   int &nb_rows, int &nb_cols,
 		//   int verbose_level)
+	void save_Levi_graph(std::string &prefix,
+			const char *mask,
+			int *Incma, int nb_rows, int nb_cols,
+			long int *canonical_labeling, int canonical_labeling_len,
+			int verbose_level);
 	void report_fixed_objects_in_PG_3_tex(
 		int *Elt, std::ostream &ost,
 		int verbose_level);

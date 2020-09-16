@@ -165,31 +165,21 @@ void projective_space_with_action::canonical_labeling(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 
-	//action *A_linear;
 	int *Incma;
 	int *partition;
 	int nb_rows, nb_cols;
 	int *Aut, Aut_counter;
 	int *Base, Base_length;
 	int *Transversal_length, Ago;
-	int N, i; //, L;
+	int N, i;
 	nauty_interface Nau;
 
-	//A_linear = A;
 
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_labeling"
 				<< endl;
 		cout << "verbose_level = " << verbose_level << endl;
 		}
-#if 0
-	if (P->incidence_bitvec == NULL) {
-		cout << "projective_space_with_action::canonical_labeling "
-				"P->incidence_bitvec == NULL" << endl;
-		exit(1);
-		}
-#endif
-
 
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_labeling "
@@ -279,8 +269,7 @@ strong_generators
 	int f_save_incma_in_and_out,
 	std::string &save_incma_in_and_out_prefix,
 	int f_compute_canonical_form,
-	uchar *&canonical_form,
-	int &canonical_form_len,
+	uchar *&canonical_form, int &canonical_form_len,
 	long int *canonical_labeling, int &canonical_labeling_len,
 	int verbose_level)
 // canonical_labeling[nb_rows + nb_cols] contains the canonical labeling
@@ -319,8 +308,7 @@ strong_generators
 		cout << "projective_space_with_action::set_stabilizer_of_object "
 				"before OiP->encode_incma" << endl;
 		}
-	OiP->encode_incma(Incma, nb_rows, nb_cols,
-			partition, verbose_level - 1);
+	OiP->encode_incma(Incma, nb_rows, nb_cols, partition, verbose_level - 1);
 	if (f_v) {
 		cout << "projective_space_with_action::set_stabilizer_of_object "
 				"after OiP->encode_incma" << endl;
@@ -339,43 +327,13 @@ strong_generators
 
 
 	if (f_save_incma_in_and_out) {
-		if (f_v) {
-			cout << "projective_space_with_action::set_stabilizer_of_object Incma:" << endl;
-		}
-		if (nb_rows < 10) {
-			print_integer_matrix_width(cout,
-					Incma, nb_rows, nb_cols, nb_cols, 1);
-			}
-		else {
-			cout << "too large to print" << endl;
-			}
-
-		string fname_csv;
-		string fname_bin;
-		char str[1000];
-
-		sprintf(str, "Incma_in_%d_%d", nb_rows, nb_cols);
-
-		fname_csv.assign(save_incma_in_and_out_prefix);
-		fname_csv.append(str);
-		fname_csv.append(".csv");
-		fname_bin.assign(save_incma_in_and_out_prefix);
-		fname_bin.append(str);
-		fname_bin.append(".graph");
-
-		Fio.int_matrix_write_csv(fname_csv.c_str(), Incma, nb_rows, nb_cols);
-
-		colored_graph *CG;
-
-		CG = NEW_OBJECT(colored_graph);
-
-		CG->create_Levi_graph_from_incidence_matrix(
+		save_Levi_graph(save_incma_in_and_out_prefix,
+				"Incma_in_%d_%d",
 				Incma, nb_rows, nb_cols,
-				TRUE, canonical_labeling, verbose_level);
-		CG->save(fname_bin, verbose_level);
-		//FREE_int(Incma);
-		FREE_OBJECT(CG);
-		}
+				canonical_labeling, canonical_labeling_len,
+				verbose_level);
+
+	}
 
 	N = canonical_labeling_len;
 	L = nb_rows * nb_cols;
@@ -478,8 +436,8 @@ strong_generators
 	if (f_compute_canonical_form) {
 		
 
-		canonical_form = bitvector_allocate_and_coded_length(
-				L, canonical_form_len);
+		canonical_form = bitvector_allocate_and_coded_length(L, canonical_form_len);
+
 		for (i = 0; i < nb_rows; i++) {
 			for (j = 0; j < nb_cols; j++) {
 				if (Incma_out[i * nb_cols + j]) {
@@ -493,44 +451,12 @@ strong_generators
 
 
 	if (f_save_incma_in_and_out) {
-
-		string fname_csv;
-		string fname_bin;
-		string fname_labeling;
-		char str[1000];
-
-		sprintf(str, "Incma_out_%d_%d", nb_rows, nb_cols);
-
-		fname_csv.assign(save_incma_in_and_out_prefix);
-		fname_csv.append(str);
-		fname_csv.append(".csv");
-		fname_bin.assign(save_incma_in_and_out_prefix);
-		fname_bin.append(str);
-		fname_bin.append(".graph");
-
-		sprintf(str, "labeling_%d_%d", nb_rows, nb_cols);
-
-
-		latex_interface L;
-
-		cout << "labeling:" << endl;
-		L.lint_vec_print_as_matrix(cout,
-				canonical_labeling, N, 10 /* width */, TRUE /* f_tex */);
-
-		Fio.lint_vec_write_csv(canonical_labeling, N,
-				fname_labeling.c_str(), "canonical labeling");
-		Fio.int_matrix_write_csv(fname_csv.c_str(), Incma_out, nb_rows, nb_cols);
-
-		
-		colored_graph *CG;
-
-		CG = NEW_OBJECT(colored_graph);
-
-		CG->create_Levi_graph_from_incidence_matrix(
+		save_Levi_graph(save_incma_in_and_out_prefix,
+				"Incma_out_%d_%d",
 				Incma_out, nb_rows, nb_cols,
-				TRUE, canonical_labeling, verbose_level);
-		CG->save(fname_bin, verbose_level);
-		FREE_OBJECT(CG);
+				canonical_labeling, N,
+				verbose_level);
+
 	}
 
 	FREE_int(Incma_out);
@@ -592,6 +518,66 @@ strong_generators
 	return SG;
 }
 
+
+
+void projective_space_with_action::save_Levi_graph(std::string &prefix,
+		const char *mask,
+		int *Incma, int nb_rows, int nb_cols,
+		long int *canonical_labeling, int canonical_labeling_len,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::save_Levi_graph" << endl;
+	}
+	file_io Fio;
+	string fname_csv;
+	string fname_bin;
+	string fname_labeling;
+	char str[1000];
+
+	sprintf(str, mask, nb_rows, nb_cols);
+
+	fname_csv.assign(prefix);
+	fname_csv.append(str);
+	fname_csv.append(".csv");
+
+	fname_bin.assign(prefix);
+	fname_bin.append(str);
+	fname_bin.append(".graph");
+
+
+	fname_labeling.assign(prefix);
+	fname_labeling.append("_labeling");
+	fname_labeling.append(".csv");
+
+	latex_interface L;
+
+#if 0
+	cout << "labeling:" << endl;
+	L.lint_vec_print_as_matrix(cout,
+			canonical_labeling, N, 10 /* width */, TRUE /* f_tex */);
+#endif
+
+	Fio.lint_vec_write_csv(canonical_labeling, canonical_labeling_len,
+			fname_labeling.c_str(), "can_lab");
+	Fio.int_matrix_write_csv(fname_csv.c_str(), Incma, nb_rows, nb_cols);
+
+
+	colored_graph *CG;
+
+	CG = NEW_OBJECT(colored_graph);
+
+	CG->create_Levi_graph_from_incidence_matrix(
+			Incma, nb_rows, nb_cols,
+			TRUE, canonical_labeling, verbose_level);
+	CG->save(fname_bin, verbose_level);
+	FREE_OBJECT(CG);
+	if (f_v) {
+		cout << "projective_space_with_action::save_Levi_graph done" << endl;
+	}
+}
 
 void projective_space_with_action::report_fixed_objects_in_PG_3_tex(
 	int *Elt, ostream &ost, 
@@ -1677,8 +1663,7 @@ void projective_space_with_action::select_packings_self_dual(
 	file_io Fio;
 
 	if (f_v) {
-		cout << "projective_space_with_action::"
-				"select_packings_self_dual" << endl;
+		cout << "projective_space_with_action::select_packings_self_dual" << endl;
 	}
 
 	CB = NEW_OBJECT(classify_bitvectors);
@@ -1761,9 +1746,8 @@ void projective_space_with_action::select_packings_self_dual(
 
 
 	if (f_v) {
-		cout << "projective_space_with_action::"
-				"select_packings_self_dual file "
-				<< fname << endl;
+		cout << "projective_space_with_action::select_packings_self_dual "
+				"file " << fname << endl;
 	}
 
 	spreadsheet *S;
@@ -1868,8 +1852,7 @@ void projective_space_with_action::select_packings_self_dual(
 				}
 
 			if (canonical_labeling_sz != nb_rows + nb_cols) {
-				cout << "projective_space_with_action::"
-						"select_packings_self_dual "
+				cout << "projective_space_with_action::select_packings_self_dual "
 						"canonical_labeling_sz != nb_rows + nb_cols" << endl;
 				exit(1);
 			}
@@ -1877,16 +1860,14 @@ void projective_space_with_action::select_packings_self_dual(
 			OiP = NEW_OBJECT(object_in_projective_space);
 
 			if (FALSE) {
-				cout << "projective_space_with_action::"
-						"select_packings_self_dual "
+				cout << "projective_space_with_action::select_packings_self_dual "
 						"before init_packing_from_spread_table" << endl;
 			}
 			OiP->init_packing_from_spread_table(P, the_set_in,
 					Spread_table_original, nb_spreads, spread_size,
 				0 /*verbose_level*/);
 			if (FALSE) {
-				cout << "projective_space_with_action::"
-						"select_packings_self_dual "
+				cout << "projective_space_with_action::select_packings_self_dual "
 						"after init_packing_from_spread_table" << endl;
 			}
 			OiP->f_has_known_ago = TRUE;
@@ -1901,26 +1882,22 @@ void projective_space_with_action::select_packings_self_dual(
 
 
 			if (FALSE) {
-				cout << "projective_space_with_action::"
-						"select_packings_self_dual "
+				cout << "projective_space_with_action::select_packings_self_dual "
 						"before encode_incma" << endl;
 			}
 			OiP->encode_incma(Incma_in, nb_rows1, nb_cols1,
 					partition, 0 /*verbose_level - 1*/);
 			if (FALSE) {
-				cout << "projective_space_with_action::"
-						"select_packings_self_dual "
+				cout << "projective_space_with_action::select_packings_self_dual "
 						"after encode_incma" << endl;
 			}
 			if (nb_rows1 != nb_rows) {
-				cout << "projective_space_with_action::"
-						"select_packings_self_dual "
+				cout << "projective_space_with_action::select_packings_self_dual "
 						"nb_rows1 != nb_rows" << endl;
 				exit(1);
 			}
 			if (nb_cols1 != nb_cols) {
-				cout << "projective_space_with_action::"
-						"select_packings_self_dual "
+				cout << "projective_space_with_action::select_packings_self_dual "
 						"nb_cols1 != nb_cols" << endl;
 				exit(1);
 			}
@@ -1946,8 +1923,7 @@ void projective_space_with_action::select_packings_self_dual(
 					}
 				}
 			if (FALSE) {
-				cout << "projective_space_with_action::"
-						"select_packings_self_dual "
+				cout << "projective_space_with_action::select_packings_self_dual "
 						"before bitvector_allocate_and_coded_length" << endl;
 			}
 			canonical_form = bitvector_allocate_and_coded_length(
@@ -1963,8 +1939,7 @@ void projective_space_with_action::select_packings_self_dual(
 
 			if (f_first) {
 				if (f_v) {
-					cout << "projective_space_with_action::"
-							"select_packings_self_dual "
+					cout << "projective_space_with_action::select_packings_self_dual "
 							"before CB->init" << endl;
 				}
 				CB->init(table_length, canonical_form_len, verbose_level);
@@ -1973,8 +1948,7 @@ void projective_space_with_action::select_packings_self_dual(
 
 
 			if (FALSE) {
-				cout << "projective_space_with_action::"
-						"select_packings_self_dual "
+				cout << "projective_space_with_action::select_packings_self_dual "
 						"before CB->add" << endl;
 			}
 
@@ -1987,8 +1961,7 @@ void projective_space_with_action::select_packings_self_dual(
 				nb_reject++;
 			}
 			if (FALSE) {
-				cout << "projective_space_with_action::"
-						"select_packings_self_dual "
+				cout << "projective_space_with_action::select_packings_self_dual "
 						"CB->add f_found = " << f_found
 						<< " nb iso = " << CB->nb_types
 						<< " nb_reject=" << nb_reject
@@ -2027,8 +2000,7 @@ void projective_space_with_action::select_packings_self_dual(
 
 
 	if (f_v) {
-		cout << "projective_space_with_action::"
-				"select_packings_self_dual done, "
+		cout << "projective_space_with_action::select_packings_self_dual done, "
 				"we found " << CB->nb_types << " isomorphism types "
 				"of packings. nb_accept = " << nb_accept
 				<< " CB->n = " << CB->n
@@ -2049,8 +2021,7 @@ void projective_space_with_action::select_packings_self_dual(
 
 
 	if (f_v) {
-		cout << "projective_space_with_action::"
-				"select_packings_self_dual "
+		cout << "projective_space_with_action::select_packings_self_dual "
 				"second pass, table_length="
 				<< table_length << endl;
 	}
@@ -2135,8 +2106,7 @@ void projective_space_with_action::select_packings_self_dual(
 		OiP2 = NEW_OBJECT(object_in_projective_space);
 
 		if (FALSE) {
-			cout << "projective_space_with_action::"
-					"select_packings_self_dual "
+			cout << "projective_space_with_action::select_packings_self_dual "
 					"before init_packing_from_spread_table" << endl;
 		}
 		OiP1->init_packing_from_spread_table(P, set1,
@@ -2146,8 +2116,7 @@ void projective_space_with_action::select_packings_self_dual(
 				Spread_table_original, nb_spreads, spread_size,
 				0 /*verbose_level*/);
 		if (FALSE) {
-			cout << "projective_space_with_action::"
-					"select_packings_self_dual "
+			cout << "projective_space_with_action::select_packings_self_dual "
 					"after init_packing_from_spread_table" << endl;
 		}
 		OiP1->f_has_known_ago = TRUE;
@@ -2173,8 +2142,7 @@ void projective_space_with_action::select_packings_self_dual(
 
 
 		if (FALSE) {
-			cout << "projective_space_with_action::"
-					"select_packings_self_dual "
+			cout << "projective_space_with_action::select_packings_self_dual "
 					"before encode_incma" << endl;
 		}
 		OiP1->encode_incma(Incma_in1, nb_rows1, nb_cols1,
@@ -2182,27 +2150,23 @@ void projective_space_with_action::select_packings_self_dual(
 		OiP2->encode_incma(Incma_in2, nb_rows1, nb_cols1,
 				partition, 0 /*verbose_level - 1*/);
 		if (FALSE) {
-			cout << "projective_space_with_action::"
-					"select_packings_self_dual "
+			cout << "projective_space_with_action::select_packings_self_dual "
 					"after encode_incma" << endl;
 		}
 		if (nb_rows1 != nb_rows) {
-			cout << "projective_space_with_action::"
-					"select_packings_self_dual "
+			cout << "projective_space_with_action::select_packings_self_dual "
 					"nb_rows1 != nb_rows" << endl;
 			exit(1);
 		}
 		if (nb_cols1 != nb_cols) {
-			cout << "projective_space_with_action::"
-					"select_packings_self_dual "
+			cout << "projective_space_with_action::select_packings_self_dual "
 					"nb_cols1 != nb_cols" << endl;
 			exit(1);
 		}
 
 
 		if (FALSE) {
-			cout << "projective_space_with_action::"
-					"select_packings_self_dual "
+			cout << "projective_space_with_action::select_packings_self_dual "
 					"before PA->set_stabilizer_of_object" << endl;
 			}
 
@@ -2255,8 +2219,7 @@ void projective_space_with_action::select_packings_self_dual(
 				}
 			}
 		if (FALSE) {
-			cout << "projective_space_with_action::"
-					"select_packings_self_dual "
+			cout << "projective_space_with_action::select_packings_self_dual "
 					"before bitvector_allocate_and_coded_length" << endl;
 		}
 		canonical_form1 = bitvector_allocate_and_coded_length(
@@ -2282,8 +2245,7 @@ void projective_space_with_action::select_packings_self_dual(
 
 
 		if (FALSE) {
-			cout << "projective_space_with_action::"
-					"select_packings_self_dual "
+			cout << "projective_space_with_action::select_packings_self_dual "
 					"before CB->search" << endl;
 		}
 
@@ -2310,8 +2272,7 @@ void projective_space_with_action::select_packings_self_dual(
 			exit(1);
 		}
 		if (FALSE) {
-			cout << "projective_space_with_action::"
-					"select_packings_self_dual "
+			cout << "projective_space_with_action::select_packings_self_dual "
 					"CB->search returns idx1=" << idx1 << endl;
 		}
 		ret = CB->search(canonical_form2, idx2, 0 /*verbose_level*/);
@@ -2334,8 +2295,7 @@ void projective_space_with_action::select_packings_self_dual(
 			exit(1);
 		}
 		if (FALSE) {
-			cout << "projective_space_with_action::"
-					"select_packings_self_dual "
+			cout << "projective_space_with_action::select_packings_self_dual "
 					"CB->search returns idx2=" << idx2 << endl;
 		}
 
@@ -2389,8 +2349,7 @@ void projective_space_with_action::select_packings_self_dual(
 	FREE_lint(Spread_table_original);
 
 	if (f_v) {
-		cout << "projective_space_with_action::"
-				"select_packings_self_dual "
+		cout << "projective_space_with_action::select_packings_self_dual "
 				"done, nb_self_dual = " << nb_self_dual << endl;
 	}
 }

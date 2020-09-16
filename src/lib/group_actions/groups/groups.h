@@ -1591,6 +1591,7 @@ public:
 	void print_generators_as_permutations_tex(std::ostream &ost, action *A2);
 	void print_with_given_action(std::ostream &ost, action *A2);
 	void print_elements_ost(std::ostream &ost);
+	void print_elements_with_given_action(std::ostream &ost, action *A2);
 	void print_elements_latex_ost(std::ostream &ost);
 	void print_elements_latex_ost_with_print_point_function(
 			action *A,

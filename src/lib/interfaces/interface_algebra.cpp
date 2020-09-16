@@ -28,6 +28,8 @@ interface_algebra::interface_algebra()
 	Group_theoretic_activity_description = NULL;
 	f_cheat_sheet_GF = FALSE;
 	q = 0;
+	f_classes_GL = FALSE;
+	d = 0;
 	f_search_for_primitive_polynomial_in_range = FALSE;
 	p_min = 0;
 	p_max = 0;
@@ -63,6 +65,9 @@ void interface_algebra::print_help(int argc,
 	}
 	else if (strcmp(argv[i], "-cheat_sheet_GF") == 0) {
 		cout << "-cheat_sheet_GF <int : q>" << endl;
+	}
+	else if (strcmp(argv[i], "-classes_GL") == 0) {
+		cout << "-classes_GL <int : d> <int : q>" << endl;
 	}
 	else if (strcmp(argv[i], "-override_polynomial") == 0) {
 		cout << "-override_polynomial <polynomial in decimal>" << endl;
@@ -109,6 +114,9 @@ int interface_algebra::recognize_keyword(int argc,
 		return true;
 	}
 	else if (strcmp(argv[i], "-cheat_sheet_GF") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-classes_GL") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-override_polynomial") == 0) {
@@ -197,6 +205,12 @@ void interface_algebra::read_arguments(int argc,
 			q = atoi(argv[++i]);
 			cout << "-cheat_sheet_GF " << q << endl;
 		}
+		else if (strcmp(argv[i], "-classes_GL") == 0) {
+			f_classes_GL = TRUE;
+			d = atoi(argv[++i]);
+			q = atoi(argv[++i]);
+			cout << "-classes_GL " << d << " " << q << endl;
+		}
 		else if (strcmp(argv[i], "-search_for_primitive_polynomial_in_range") == 0) {
 			f_search_for_primitive_polynomial_in_range = TRUE;
 			p_min = atoi(argv[++i]);
@@ -258,8 +272,13 @@ void interface_algebra::worker(orbiter_session *Session, int verbose_level)
 		do_linear_group(Linear_group_description, verbose_level);
 	}
 
-	if (f_cheat_sheet_GF) {
+	else if (f_cheat_sheet_GF) {
 		do_cheat_sheet_GF(q,
+				Session->f_override_polynomial, Session->override_polynomial,
+				verbose_level);
+	}
+	else if (f_classes_GL) {
+		do_classes_GL(d, q,
 				Session->f_override_polynomial, Session->override_polynomial,
 				verbose_level);
 	}
@@ -580,6 +599,24 @@ void interface_algebra::do_cheat_sheet_GF(int q, int f_poly, std::string &poly, 
 		cout << "interface_algebra::do_cheat_sheet_GF q=" << q << " done" << endl;
 	}
 }
+
+void interface_algebra::do_classes_GL(int d, int q, int f_poly, std::string &poly, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_algebra::do_classes_GL d=" << d << " q=" << q << endl;
+	}
+	algebra_global_with_action Algebra;
+
+	Algebra.classes_GL(q, d,
+			FALSE /* f_no_eigenvalue_one */, verbose_level);
+
+	if (f_v) {
+		cout << "interface_algebra::do_classes_GL done" << endl;
+	}
+}
+
 
 void interface_algebra::do_search_for_primitive_polynomial_in_range(int p_min, int p_max,
 		int deg_min, int deg_max, int verbose_level)

@@ -1640,6 +1640,38 @@ void strong_generators::print_elements_ost(ostream &ost)
 	FREE_int(Elt);
 }
 
+void strong_generators::print_elements_with_given_action(ostream &ost, action *A2)
+{
+	long int i;
+	longinteger_object go;
+	sims *S;
+	int *Elt;
+
+	Elt = NEW_int(A->elt_size_in_int);
+	group_order(go);
+	S = create_sims(0 /*verbose_level */);
+	ost << "Group elements for a group of order " << go << " tl=";
+	int_vec_print(ost, tl, A->base_len());
+	ost << "\\\\" << endl;
+	for (i = 0; i < go.as_lint(); i++) {
+		S->element_unrank_lint(i, Elt, 0 /* verbose_level */);
+		ost << "Element " << i << " / " << go << " is:" << endl;
+		ost << "$$" << endl;
+		if (A2->degree < 1000) {
+			A2->element_print_as_permutation(Elt, ost);
+		}
+		else {
+			cout << "strong_generators::print_with_given_action "
+					"the degree is too large, we won't print "
+					"the permutation representation" << endl;
+		}
+		ost << endl;
+		ost << "$$" << endl;
+	}
+	FREE_OBJECT(S);
+	FREE_int(Elt);
+}
+
 void strong_generators::print_elements_latex_ost(ostream &ost)
 {
 	long int i, order, m;

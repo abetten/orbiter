@@ -377,15 +377,6 @@ public:
 		sims *G, sims *H, strong_generators *&gens_N, int verbose_level);
 	void conjugacy_classes_using_MAGMA(std::string &prefix,
 		sims *G, int verbose_level);
-#if 0
-	void read_conjugacy_classes_from_MAGMA(
-			char *fname,
-			int &nb_classes,
-			int *&perms,
-			int *&class_size,
-			int *&class_order_of_element,
-			int verbose_level);
-#endif
 	void conjugacy_classes_and_normalizers_using_MAGMA_make_fnames(
 			std::string &prefix,
 			std::string &fname_magma, std::string &fname_output);
@@ -662,6 +653,9 @@ public:
 			sims *old_G, int verbose_level);
 	void induced_action_on_sign(sims *old_G, 
 		int verbose_level);
+	action *create_induced_action_by_conjugation(
+			sims *Base_group, int f_ownership,
+			int verbose_level);
 	void induced_action_by_conjugation(sims *old_G, 
 		sims *Base_group, int f_ownership, 
 		int f_basis, int verbose_level);
