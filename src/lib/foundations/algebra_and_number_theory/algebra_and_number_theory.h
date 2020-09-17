@@ -569,6 +569,7 @@ public:
 		// spanned by the elements in set1.
 		// The result is written to set2.
 		// Returns the rank of the span of the elements in set1.
+	void exterior_square(int *An, int *An2, int n, int verbose_level);
 
 
 	// #########################################################################

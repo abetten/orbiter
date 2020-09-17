@@ -28,8 +28,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_stabilizer = FALSE;
 	f_orbits_on_subsets = FALSE;
 	orbits_on_subsets_size = 0;
-	f_draw_poset = FALSE;
-	f_draw_full_poset = FALSE;
 	f_classes = FALSE;
 	f_group_table = FALSE;
 	f_normalizer = FALSE;
@@ -56,6 +54,14 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_find_singer_cycle = FALSE;
 	f_search_element_of_order = FALSE;
 	search_element_order = 0;
+	f_element_rank = FALSE;
+	// std::string element_rank_data;
+	f_element_unrank = FALSE;
+	//std::string element_unrank_data;
+
+	f_conjugacy_class_of = FALSE;
+	//std::string conjugacy_class_of_data;
+
 	f_linear_codes = FALSE;
 	linear_codes_minimum_distance = 0;
 	linear_codes_target_size = 0;
@@ -249,14 +255,6 @@ int group_theoretic_activity_description::read_arguments(
 			test_if_geometric_depth = atoi(argv[++i]);
 			cout << "-test_if_geometric" << endl;
 		}
-		else if (strcmp(argv[i], "-draw_poset") == 0) {
-			f_draw_poset = TRUE;
-			cout << "-draw_poset" << endl;
-		}
-		else if (strcmp(argv[i], "-draw_full_poset") == 0) {
-			f_draw_full_poset = TRUE;
-			cout << "-draw_full_poset" << endl;
-		}
 		else if (strcmp(argv[i], "-classes") == 0) {
 			f_classes = TRUE;
 			cout << "-classes" << endl;
@@ -334,6 +332,23 @@ int group_theoretic_activity_description::read_arguments(
 			search_element_order = atoi(argv[++i]);
 			cout << "-search_element_of_order " << search_element_order << endl;
 		}
+		else if (strcmp(argv[i], "-element_rank") == 0) {
+			f_element_rank = TRUE;
+			element_rank_data.assign(argv[++i]);
+			cout << "-element_rank " << element_rank_data << endl;
+		}
+		else if (strcmp(argv[i], "-element_unrank") == 0) {
+			f_element_unrank = TRUE;
+			element_unrank_data.assign(argv[++i]);
+			cout << "-element_unrank " << element_unrank_data << endl;
+		}
+
+		else if (strcmp(argv[i], "-conjugacy_class_of") == 0) {
+			f_conjugacy_class_of = TRUE;
+			conjugacy_class_of_data.assign(argv[++i]);
+			cout << "-conjugacy_class_of " << conjugacy_class_of_data << endl;
+		}
+
 		else if (strcmp(argv[i], "-print_elements") == 0) {
 			f_print_elements = TRUE;
 			cout << "-print_elements " << endl;

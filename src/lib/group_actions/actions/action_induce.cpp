@@ -1148,7 +1148,7 @@ void action::induced_action_by_conjugation(sims *old_G,
 	int f_v = (verbose_level >= 1);
 	action_by_conjugation *ABC;
 	longinteger_object go;
-	int goi;
+	long int goi;
 	action *A;
 	
 	A = Base_group->A;
@@ -1159,7 +1159,7 @@ void action::induced_action_by_conjugation(sims *old_G,
 			<< " and degree " << A->degree << endl;
 		}
 	Base_group->group_order(go);
-	goi = go.as_int();
+	goi = go.as_lint();
 	if (f_v) {
 		cout << "we are acting on a group of order " << goi << endl;
 		}
@@ -1168,8 +1168,8 @@ void action::induced_action_by_conjugation(sims *old_G,
 
 	char str1[1000];
 	char str2[1000];
-	snprintf(str1, 1000, "_C%d", goi);
-	snprintf(str2, 1000, " {\\rm ByConj%d}", goi);
+	snprintf(str1, 1000, "_C%ld", goi);
+	snprintf(str2, 1000, " {\\rm ByConj%ld}", goi);
 
 	label.assign(A->label);
 	label_tex.assign(A->label_tex);

@@ -390,6 +390,57 @@ void orbit_of_sets::coset_rep(int j)
 		}
 }
 
+void orbit_of_sets::get_orbit_of_points(std::vector<long int> &Orbit, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbit_of_sets::get_orbit_of_points" << endl;
+		}
+	int i;
+
+	for (i = 0; i < used_length; i++) {
+		Orbit.push_back(Sets[i][0]);
+	}
+	if (f_v) {
+		cout << "orbit_of_sets::get_orbit_of_points done" << endl;
+		}
+}
+
+void orbit_of_sets::get_prev(std::vector<int> &Prev, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbit_of_sets::get_prev" << endl;
+		}
+	int i;
+
+	for (i = 0; i < used_length; i++) {
+		Prev.push_back(Extra[2 * i + 0]);
+	}
+	if (f_v) {
+		cout << "orbit_of_sets::get_prev done" << endl;
+		}
+}
+
+void orbit_of_sets::get_label(std::vector<int> &Label, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbit_of_sets::get_label" << endl;
+		}
+	int i;
+
+	for (i = 0; i < used_length; i++) {
+		Label.push_back(Extra[2 * i + 1]);
+	}
+	if (f_v) {
+		cout << "orbit_of_sets::get_label done" << endl;
+		}
+}
+
 
 
 

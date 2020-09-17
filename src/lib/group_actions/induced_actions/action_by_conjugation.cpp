@@ -64,7 +64,7 @@ void action_by_conjugation::init(sims *Base_group,
 	action_by_conjugation::f_ownership = f_ownership;
 	A = Base_group->A;
 	Base_group->group_order(go);
-	goi = go.as_int();
+	goi = go.as_lint();
 	if (f_v) {
 		cout << "action_by_conjugation::init we are acting "
 				"on a group of order " << goi << endl;
