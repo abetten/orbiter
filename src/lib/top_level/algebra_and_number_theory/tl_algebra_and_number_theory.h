@@ -204,8 +204,6 @@ public:
 	int f_stabilizer;
 	int f_orbits_on_subsets;
 	int orbits_on_subsets_size;
-	int f_draw_poset;
-	int f_draw_full_poset;
 	int f_classes;
 	int f_group_table;
 	int f_normalizer;
@@ -232,6 +230,12 @@ public:
 	int f_find_singer_cycle;
 	int f_search_element_of_order;
 	int search_element_order;
+	int f_element_rank;
+	std::string element_rank_data;
+	int f_element_unrank;
+	std::string element_unrank_data;
+	int f_conjugacy_class_of;
+	std::string conjugacy_class_of_data;
 	int f_print_elements;
 	int f_print_elements_tex;
 	int f_multiply;
@@ -389,6 +393,9 @@ public:
 	void search_subgroup(int verbose_level);
 	void find_singer_cycle(int verbose_level);
 	void search_element_of_order(int order, int verbose_level);
+	void element_rank(std::string &elt_data, int verbose_level);
+	void element_unrank(std::string &rank_string, int verbose_level);
+	void conjugacy_class_of(std::string &rank_string, int verbose_level);
 	void orbits_on_set_system_from_file(int verbose_level);
 	void orbits_on_set_from_file(int verbose_level);
 	void orbit_of(int verbose_level);

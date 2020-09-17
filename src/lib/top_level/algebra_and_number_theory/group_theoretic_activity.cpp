@@ -151,6 +151,16 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		search_element_of_order(Descr->search_element_order, verbose_level);
 	}
 
+	if (Descr->f_element_rank) {
+		element_rank(Descr->element_rank_data, verbose_level);
+	}
+	if (Descr->f_element_unrank) {
+		element_unrank(Descr->element_unrank_data, verbose_level);
+	}
+	if (Descr->f_conjugacy_class_of) {
+		conjugacy_class_of(Descr->conjugacy_class_of_data, verbose_level);
+	}
+
 
 
 	if (Descr->f_orbits_on_set_system_from_file) {
@@ -1167,6 +1177,197 @@ void group_theoretic_activity::search_element_of_order(int order, int verbose_le
 		cout << "group_theoretic_activity::search_element_of_order done" << endl;
 	}
 }
+
+void group_theoretic_activity::element_rank(std::string &elt_data, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::element_rank" << endl;
+	}
+	sims *H;
+
+	//G = LG->initial_strong_gens->create_sims(verbose_level);
+	H = LG->Strong_gens->create_sims(verbose_level);
+
+	//cout << "group order G = " << G->group_order_int() << endl;
+	cout << "group order H = " << H->group_order_lint() << endl;
+
+	cout << "creating element " << elt_data << endl;
+	int *Elt;
+
+	Elt = NEW_int(A1->elt_size_in_int);
+	A1->make_element_from_string(Elt, elt_data.c_str(), 0);
+
+	cout << "Element :" << endl;
+	A1->element_print(Elt, cout);
+	cout << endl;
+
+	longinteger_object a;
+	H->element_rank(a, Elt);
+
+	cout << "The rank of the element is " << a << endl;
+
+
+	FREE_int(Elt);
+	FREE_OBJECT(H);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::element_rank done" << endl;
+	}
+}
+
+void group_theoretic_activity::element_unrank(std::string &rank_string, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::element_unrank" << endl;
+	}
+	sims *H;
+
+	//G = LG->initial_strong_gens->create_sims(verbose_level);
+	H = LG->Strong_gens->create_sims(verbose_level);
+
+	//cout << "group order G = " << G->group_order_int() << endl;
+	cout << "group order H = " << H->group_order_lint() << endl;
+
+	int *Elt;
+
+	Elt = NEW_int(A1->elt_size_in_int);
+
+
+	longinteger_object a;
+
+	a.create_from_base_10_string(rank_string.c_str(), 0 /*verbose_level*/);
+
+	cout << "Creating element of rank " << a << endl;
+
+	H->element_unrank(a, Elt);
+
+	cout << "Element :" << endl;
+	A1->element_print(Elt, cout);
+	cout << endl;
+
+
+	FREE_int(Elt);
+	FREE_OBJECT(H);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::element_unrank done" << endl;
+	}
+}
+
+void group_theoretic_activity::conjugacy_class_of(std::string &rank_string, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::conjugacy_class_of" << endl;
+	}
+	sims *H;
+
+	//G = LG->initial_strong_gens->create_sims(verbose_level);
+	H = LG->Strong_gens->create_sims(verbose_level);
+
+	//cout << "group order G = " << G->group_order_int() << endl;
+	cout << "group order H = " << H->group_order_lint() << endl;
+
+	int *Elt;
+
+	Elt = NEW_int(A1->elt_size_in_int);
+
+
+	longinteger_object a, b;
+
+	a.create_from_base_10_string(rank_string.c_str(), 0 /*verbose_level*/);
+
+	cout << "Creating element of rank " << a << endl;
+
+	a.assign_to(b);
+
+	H->element_unrank(a, Elt);
+
+	cout << "Element :" << endl;
+	A1->element_print(Elt, cout);
+	cout << endl;
+
+
+
+	action *A_conj;
+
+	A_conj = A1->create_induced_action_by_conjugation(
+		H /*Base_group*/, FALSE /* f_ownership */,
+		verbose_level);
+
+
+	cout << "created action A_conj of degree " << A_conj->degree << endl;
+
+#if 0
+	schreier *Sch;
+
+	Sch = LG->Strong_gens->orbit_of_one_point_schreier(
+			A_conj, b.as_lint(), verbose_level);
+
+	cout << "Orbits on itself by conjugation:\\\\" << endl;
+	Sch->print_orbit_reps(cout);
+
+
+	FREE_OBJECT(Sch);
+#else
+
+
+	orbit_of_sets Orb;
+	long int set[1];
+	file_io Fio;
+
+	set[0] = b.as_lint();
+
+	Orb.init(A1, A_conj,
+			set, 1 /* sz */, LG->Strong_gens->gens, verbose_level);
+	cout << "found an orbit if size " << Orb.used_length << endl;
+
+	std::vector<long int> Orbit;
+
+	cout << "before Orb.get_orbit_of_points" << endl;
+	Orb.get_orbit_of_points(Orbit, verbose_level);
+	cout << "found an orbit of size " << Orbit.size() << endl;
+
+	long int *M;
+	int i;
+
+	M = NEW_lint(Orbit.size());
+	for (i = 0; i < Orbit.size(); i++) {
+		M[i] = Orbit[i];
+	}
+	string fname;
+
+	fname.assign(LG->label);
+	fname.append("_class_of_");
+	fname.append(rank_string);
+	fname.append(".csv");
+
+	Fio.lint_vec_write_csv(M, Orbit.size(), fname.c_str(), "ConjClass");
+
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	FREE_lint(M);
+
+#endif
+
+	FREE_OBJECT(A_conj);
+	FREE_OBJECT(H);
+
+
+
+
+	FREE_int(Elt);
+	if (f_v) {
+		cout << "group_theoretic_activity::conjugacy_class_of done" << endl;
+	}
+}
+
+
 
 void group_theoretic_activity::orbits_on_set_system_from_file(int verbose_level)
 {

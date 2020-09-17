@@ -3642,6 +3642,54 @@ int finite_field::lexleast_canonical_form_ranked(
 
 }
 
+void finite_field::exterior_square(int *An, int *An2, int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "finite_field::exterior_square" << endl;
+	}
+	int i, j, k, l, ij, kl;
+	int aki, alj, akj, ali;
+	int u, v, w;
+	int n2;
+	combinatorics_domain Combi;
+
+	n2 = (n * (n - 1)) >> 1;
+	// (i,j) = row index
+	for (i = 0; i < n; i++) {
+		for (j = i + 1; j < n; j++) {
+			ij = Combi.ij2k(i, j, n);
+
+			// (k,l) = column index
+			for (k = 0; k < n; k++) {
+				for (l = k + 1; l < n; l++) {
+					kl = Combi.ij2k(k, l, n);
+
+
+					// a_{k,i}a_{l,j} - a_{k,j}a_{l,i} = matrix entry
+
+					aki = An[k * n + i];
+					alj = An[l * n + j];
+					akj = An[k * n + j];
+					ali = An[l * n + i];
+					u = mult(aki, alj);
+					v = mult(akj, ali);
+					w = add(u, negate(v));
+					// now w is the matrix entry
+
+					An2[ij * n2 + kl] = w;
+					} // next l
+				} // next k
+			} // next j
+		} // next i
+
+
+	if (f_v) {
+		cout << "finite_field::exterior_square done" << endl;
+	}
+}
 
 
 }}

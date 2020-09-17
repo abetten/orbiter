@@ -30,7 +30,7 @@ class action_by_conjugation {
 public:
 	sims *Base_group;
 	int f_ownership;
-	int goi;
+	long int goi;
 	
 	int *Elt1;
 	int *Elt2;

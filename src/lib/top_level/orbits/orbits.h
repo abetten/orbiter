@@ -148,6 +148,9 @@ public:
 		// determines an element in the group
 		// that moves the orbit representative
 	// to the j-th element in the orbit.
+	void get_orbit_of_points(std::vector<long int> &Orbit, int verbose_level);
+	void get_prev(std::vector<int> &Prev, int verbose_level);
+	void get_label(std::vector<int> &Label, int verbose_level);
 };
 
 
