@@ -236,6 +236,8 @@ public:
 	std::string element_unrank_data;
 	int f_conjugacy_class_of;
 	std::string conjugacy_class_of_data;
+	int f_isomorphism_Klein_quadric;
+	std::string isomorphism_Klein_quadric_fname;
 	int f_print_elements;
 	int f_print_elements_tex;
 	int f_multiply;
@@ -396,6 +398,7 @@ public:
 	void element_rank(std::string &elt_data, int verbose_level);
 	void element_unrank(std::string &rank_string, int verbose_level);
 	void conjugacy_class_of(std::string &rank_string, int verbose_level);
+	void isomorphism_Klein_quadric(std::string &fname, int verbose_level);
 	void orbits_on_set_system_from_file(int verbose_level);
 	void orbits_on_set_from_file(int verbose_level);
 	void orbit_of(int verbose_level);
