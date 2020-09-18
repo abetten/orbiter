@@ -62,6 +62,10 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_conjugacy_class_of = FALSE;
 	//std::string conjugacy_class_of_data;
 
+	f_isomorphism_Klein_quadric = FALSE;
+	//std::string isomorphism_Klein_quadric_fname;
+
+
 	f_linear_codes = FALSE;
 	linear_codes_minimum_distance = 0;
 	linear_codes_target_size = 0;
@@ -347,6 +351,12 @@ int group_theoretic_activity_description::read_arguments(
 			f_conjugacy_class_of = TRUE;
 			conjugacy_class_of_data.assign(argv[++i]);
 			cout << "-conjugacy_class_of " << conjugacy_class_of_data << endl;
+		}
+
+		else if (strcmp(argv[i], "-isomorphism_Klein_quadric") == 0) {
+			f_isomorphism_Klein_quadric = TRUE;
+			isomorphism_Klein_quadric_fname.assign(argv[++i]);
+			cout << "-isomorphism_Klein_quadric " << isomorphism_Klein_quadric_fname << endl;
 		}
 
 		else if (strcmp(argv[i], "-print_elements") == 0) {

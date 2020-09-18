@@ -160,6 +160,9 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	if (Descr->f_conjugacy_class_of) {
 		conjugacy_class_of(Descr->conjugacy_class_of_data, verbose_level);
 	}
+	if (Descr->f_isomorphism_Klein_quadric) {
+		isomorphism_Klein_quadric(Descr->isomorphism_Klein_quadric_fname, verbose_level);
+	}
 
 
 
@@ -1258,7 +1261,7 @@ void group_theoretic_activity::element_unrank(std::string &rank_string, int verb
 	}
 }
 
-void group_theoretic_activity::conjugacy_class_of(std::string &rank_string, int verbose_level)
+void group_theoretic_activity::conjugacy_class_of(std::string &elt_data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1277,8 +1280,20 @@ void group_theoretic_activity::conjugacy_class_of(std::string &rank_string, int 
 
 	Elt = NEW_int(A1->elt_size_in_int);
 
-
 	longinteger_object a, b;
+
+#if 1
+	cout << "creating element " << elt_data << endl;
+
+	A1->make_element_from_string(Elt, elt_data.c_str(), 0);
+
+	H->element_rank(a, Elt);
+
+	a.assign_to(b);
+
+
+#else
+
 
 	a.create_from_base_10_string(rank_string.c_str(), 0 /*verbose_level*/);
 
@@ -1288,10 +1303,11 @@ void group_theoretic_activity::conjugacy_class_of(std::string &rank_string, int 
 
 	H->element_unrank(a, Elt);
 
+#endif
+
 	cout << "Element :" << endl;
 	A1->element_print(Elt, cout);
 	cout << endl;
-
 
 
 	action *A_conj;
@@ -1325,13 +1341,13 @@ void group_theoretic_activity::conjugacy_class_of(std::string &rank_string, int 
 
 	Orb.init(A1, A_conj,
 			set, 1 /* sz */, LG->Strong_gens->gens, verbose_level);
-	cout << "found an orbit if size " << Orb.used_length << endl;
+	cout << "Found an orbit of size " << Orb.used_length << endl;
 
 	std::vector<long int> Orbit;
 
 	cout << "before Orb.get_orbit_of_points" << endl;
 	Orb.get_orbit_of_points(Orbit, verbose_level);
-	cout << "found an orbit of size " << Orbit.size() << endl;
+	cout << "Found an orbit of size " << Orbit.size() << endl;
 
 	long int *M;
 	int i;
@@ -1341,10 +1357,13 @@ void group_theoretic_activity::conjugacy_class_of(std::string &rank_string, int 
 		M[i] = Orbit[i];
 	}
 	string fname;
+	char str[1000];
+
+	sprintf(str, "%ld", b.as_lint());
 
 	fname.assign(LG->label);
 	fname.append("_class_of_");
-	fname.append(rank_string);
+	fname.append(str);
 	fname.append(".csv");
 
 	Fio.lint_vec_write_csv(M, Orbit.size(), fname.c_str(), "ConjClass");
@@ -1364,6 +1383,149 @@ void group_theoretic_activity::conjugacy_class_of(std::string &rank_string, int 
 	FREE_int(Elt);
 	if (f_v) {
 		cout << "group_theoretic_activity::conjugacy_class_of done" << endl;
+	}
+}
+
+
+void group_theoretic_activity::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE;// (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::isomorphism_Klein_quadric" << endl;
+	}
+	sims *H;
+	file_io Fio;
+
+	//G = LG->initial_strong_gens->create_sims(verbose_level);
+	H = LG->Strong_gens->create_sims(verbose_level);
+
+	//cout << "group order G = " << G->group_order_int() << endl;
+	cout << "group order H = " << H->group_order_lint() << endl;
+
+	int *Elt;
+
+	Elt = NEW_int(A1->elt_size_in_int);
+
+	long int *M;
+	int m, n;
+	Fio.lint_matrix_read_csv(fname.c_str(), M, m, n, verbose_level);
+
+	cout << "Read a set of size " << m << endl;
+
+	if (n != 1) {
+		cout << "n != 1" << endl;
+		exit(1);
+	}
+
+
+
+	surface_domain *Surf;
+
+	Surf = NEW_OBJECT(surface_domain);
+
+	Surf->init(F, verbose_level);
+
+
+	int i, j, c;
+	int Basis1[] = {
+			1,0,0,0,0,0,
+			0,1,0,0,0,0,
+			0,0,1,0,0,0,
+			0,0,0,1,0,0,
+			0,0,0,0,1,0,
+			0,0,0,0,0,1,
+	};
+	int Basis2[36];
+	int An2[37];
+	int v[6];
+	int w[6];
+	int C[36];
+	int D[36];
+	int E[36];
+	int B[] = {
+			1,0,0,0,0,0,
+			0,0,0,2,0,0,
+			1,3,0,0,0,0,
+			0,0,0,1,3,0,
+			1,0,2,0,0,0,
+			0,0,0,2,0,4,
+	};
+	int Target[] = {
+			1,0,0,0,0,0,
+			3,2,2,0,0,0,
+			1,4,2,0,0,0,
+			0,0,0,1,0,0,
+			0,0,0,3,2,2,
+			0,0,0,1,4,2,
+	};
+	int Bv[36];
+	sorting Sorting;
+
+	for (i = 0; i < 6; i++) {
+		Surf->klein_to_wedge(Basis1 + i * 6, Basis2 + i * 6);
+	}
+
+	F->matrix_inverse(B, Bv, 6, 0 /* verbose_level */);
+
+
+	for (i = 0; i < m; i++) {
+		H->element_unrank_lint(M[i], Elt);
+
+		if ((i % 1000) == 0) {
+			cout << i << " / " << m << endl;
+		}
+
+		if (f_vv) {
+			cout << "Element :" << endl;
+			A1->element_print(Elt, cout);
+			cout << endl;
+		}
+
+		F->exterior_square(Elt, An2, 4, verbose_level);
+
+		for (j = 0; j < 6; j++) {
+			F->mult_vector_from_the_left(Basis2 + j * 6, An2, v, 6, 6);
+					// v[m], A[m][n], vA[n]
+			Surf->wedge_to_klein(v, w);
+			int_vec_copy(w, C + j * 6, 6);
+		}
+
+
+		if (f_vv) {
+			cout << "orthogonal matrix :" << endl;
+			int_matrix_print(C, 6, 6);
+			cout << endl;
+		}
+
+		F->mult_matrix_matrix(Bv, C, D, 6, 6, 6, 0 /*verbose_level */);
+		F->mult_matrix_matrix(D, B, E, 6, 6, 6, 0 /*verbose_level */);
+
+		F->PG_element_normalize_from_front(E, 1, 36);
+
+		if (f_vv) {
+			cout << "orthogonal matrix in the special form:" << endl;
+			int_matrix_print(E, 6, 6);
+			cout << endl;
+		}
+
+		c = Sorting.integer_vec_compare(E, Target, 36);
+		if (c == 0) {
+			cout << "We found it! i=" << i << " rank = " << M[i] << endl;
+			exit(1);
+		}
+
+
+	}
+
+	FREE_int(Elt);
+	FREE_lint(M);
+	FREE_OBJECT(H);
+	FREE_OBJECT(Surf);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::isomorphism_Klein_quadric" << endl;
 	}
 }
 
