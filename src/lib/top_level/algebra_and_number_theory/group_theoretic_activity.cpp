@@ -1349,28 +1349,29 @@ void group_theoretic_activity::conjugacy_class_of(std::string &elt_data, int ver
 	Orb.get_orbit_of_points(Orbit, verbose_level);
 	cout << "Found an orbit of size " << Orbit.size() << endl;
 
-	long int *M;
-	int i;
+	int *M;
+	int i, j;
 
-	M = NEW_lint(Orbit.size());
+	M = NEW_int(Orbit.size() * A1->make_element_size);
 	for (i = 0; i < Orbit.size(); i++) {
-		M[i] = Orbit[i];
+		H->element_unrank_lint(Orbit[i], Elt);
+		for (j = 0; j < A1->make_element_size; j++) {
+			M[i * A1->make_element_size + j] = Elt[j];
+		}
+		//M[i] = Orbit[i];
 	}
 	string fname;
-	char str[1000];
-
-	sprintf(str, "%ld", b.as_lint());
 
 	fname.assign(LG->label);
 	fname.append("_class_of_");
-	fname.append(str);
+	fname.append(elt_data);
 	fname.append(".csv");
 
-	Fio.lint_vec_write_csv(M, Orbit.size(), fname.c_str(), "ConjClass");
+	Fio.int_matrix_write_csv(fname.c_str(), M, Orbit.size(), A1->make_element_size);
 
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
-	FREE_lint(M);
+	FREE_int(M);
 
 #endif
 
