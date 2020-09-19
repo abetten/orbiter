@@ -1181,22 +1181,28 @@ void surface_domain::create_starter_configuration(
 
 void surface_domain::wedge_to_klein(int *W, int *K)
 {
+	F->wedge_to_klein(W, K);
+#if 0
 	K[0] = W[0];
 	K[1] = W[5];
 	K[2] = W[1];
 	K[3] = F->negate(W[4]);
 	K[4] = W[2];
 	K[5] = W[3];
+#endif
 }
 
 void surface_domain::klein_to_wedge(int *K, int *W)
 {
+	F->klein_to_wedge(K, W);
+#if 0
 	W[0] = K[0];
 	W[1] = K[2];
 	W[2] = K[4];
 	W[3] = K[5];
 	W[4] = F->negate(K[3]);
 	W[5] = K[1];
+#endif
 }
 
 long int surface_domain::line_to_wedge(long int line_rk)

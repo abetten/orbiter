@@ -1184,6 +1184,7 @@ public:
 	grassmann *Gr63;
 	grassmann *Gr62;
 
+	long int nb_lines_orthogonal;
 	
 	int *Form; // [d * d]
 
@@ -1211,6 +1212,19 @@ public:
 	long int point_on_quadric_embedded_in_P5(long int pt);
 	long int line_to_point_on_quadric(long int line_rk, int verbose_level);
 	long int point_on_quadric_to_line(long int point_rk, int verbose_level);
+	void compute_external_lines(std::vector<long int> &External_lines, int verbose_level);
+	void identify_external_lines_and_spreads(
+			spread_tables *T,
+			std::vector<long int> &External_lines,
+			long int *&spread_to_external_line_idx,
+			long int *&external_line_to_spread,
+			int verbose_level);
+	// spread_to_external_line_idx[i] is index into External_lines
+	// corresponding to regular spread i
+	// external_line_to_spread[i] is the index of the
+	// regular spread of PG(3,q) in table T associated with
+	// External_lines[i]
+
 };
 
 

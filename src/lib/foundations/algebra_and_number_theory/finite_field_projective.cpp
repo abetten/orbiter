@@ -6157,6 +6157,115 @@ void finite_field::simeon(int n, int len, long int *S, int s, int verbose_level)
 }
 
 
+void finite_field::wedge_to_klein(int *W, int *K)
+{
+	K[0] = W[0];
+	K[1] = W[5];
+	K[2] = W[1];
+	K[3] = negate(W[4]);
+	K[4] = W[2];
+	K[5] = W[3];
+}
+
+void finite_field::klein_to_wedge(int *K, int *W)
+{
+	W[0] = K[0];
+	W[1] = K[2];
+	W[2] = K[4];
+	W[3] = K[5];
+	W[4] = negate(K[3]);
+	W[5] = K[1];
+}
+
+
+void finite_field::isomorphism_to_special_orthogonal(int *A4, int *A6, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "finite_field::isomorphism_to_special_orthogonal" << endl;
+	}
+	int i, j;
+	int Basis1[] = {
+			1,0,0,0,0,0,
+			0,1,0,0,0,0,
+			0,0,1,0,0,0,
+			0,0,0,1,0,0,
+			0,0,0,0,1,0,
+			0,0,0,0,0,1,
+	};
+	int Basis2[36];
+	int An2[37];
+	int v[6];
+	int w[6];
+	int C[36];
+	int D[36];
+	int B[] = {
+			1,0,0,0,0,0,
+			0,0,0,2,0,0,
+			1,3,0,0,0,0,
+			0,0,0,1,3,0,
+			1,0,2,0,0,0,
+			0,0,0,2,0,4,
+	};
+	int Bv[36];
+	sorting Sorting;
+
+	for (i = 0; i < 6; i++) {
+		klein_to_wedge(Basis1 + i * 6, Basis2 + i * 6);
+	}
+
+	matrix_inverse(B, Bv, 6, 0 /* verbose_level */);
+
+
+
+
+	exterior_square(A4, An2, 4, 0 /*verbose_level*/);
+
+	if (f_vv) {
+		cout << "finite_field::isomorphism_to_special_orthogonal "
+				"exterior_square :" << endl;
+		int_matrix_print(An2, 6, 6);
+		cout << endl;
+	}
+
+
+	for (j = 0; j < 6; j++) {
+		mult_vector_from_the_left(Basis2 + j * 6, An2, v, 6, 6);
+				// v[m], A[m][n], vA[n]
+		wedge_to_klein(v, w);
+		int_vec_copy(w, C + j * 6, 6);
+	}
+
+
+	if (f_vv) {
+		cout << "finite_field::isomorphism_to_special_orthogonal "
+				"orthogonal matrix :" << endl;
+		int_matrix_print(C, 6, 6);
+		cout << endl;
+	}
+
+	mult_matrix_matrix(Bv, C, D, 6, 6, 6, 0 /*verbose_level */);
+	mult_matrix_matrix(D, B, A6, 6, 6, 6, 0 /*verbose_level */);
+
+	PG_element_normalize_from_front(A6, 1, 36);
+
+	if (f_vv) {
+		cout << "finite_field::isomorphism_to_special_orthogonal "
+				"orthogonal matrix in the special form:" << endl;
+		int_matrix_print(A6, 6, 6);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "finite_field::isomorphism_to_special_orthogonal done" << endl;
+	}
+
+}
+
+
+
 
 }}
 

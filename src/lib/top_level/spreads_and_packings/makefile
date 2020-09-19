@@ -16,6 +16,7 @@ MODULES = \
 	packing_was_fixpoints.o \
 	packing_was.o \
 	recoordinatize.o \
+	regular_packing.o \
 	spread_classify.o \
 	spread_classify2.o \
 	spread_create_description.o \

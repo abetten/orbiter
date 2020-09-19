@@ -279,7 +279,7 @@ void orbit_type_repository::report_one_type(ostream &ost, int type_idx)
 	l = type_len[type_idx];
 	ost << "\\item" << endl;
 	ost << "Orbit type " << type_idx << " / " << nb_types << ":\\\\" << endl;
-	ost << "There are " << l << " sets of type: \\\\";
+	ost << "There are " << l << " sets of the following type: \\\\";
 	ost << "$" << endl;
 	Oos->report_type(ost, Type_representatives + type_idx * orbit_type_size, goi);
 #if 0

@@ -376,6 +376,7 @@ MODULES= \
 		top_level/spreads_and_packings/packing_was_fixpoints.o \
 		top_level/spreads_and_packings/packing_was.o \
 		top_level/spreads_and_packings/recoordinatize.o \
+		top_level/spreads_and_packings/regular_packing.o \
 		top_level/spreads_and_packings/spread_classify.o \
 		top_level/spreads_and_packings/spread_classify2.o \
 		top_level/spreads_and_packings/spread_create_description.o \

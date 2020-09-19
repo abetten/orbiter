@@ -1647,7 +1647,8 @@ void projective_space_object_classifier::latex_report(
 			SG->print_generators_tex(fp);
 
 			fp << "Stabilizer, all elements:\\\\" << endl;
-			SG->print_elements_ost(fp);
+			//SG->print_elements_ost(fp);
+			SG->print_elements_with_special_orthogonal_action_ost(fp);
 
 			{
 				action *A_conj;
@@ -1659,10 +1660,10 @@ void projective_space_object_classifier::latex_report(
 					Base_group, FALSE /* f_ownership */,
 					verbose_level);
 
-				fp << "Generators:\\\\" << endl;
+				fp << "Generators in conjugation action action on the group itself:\\\\" << endl;
 				SG->print_with_given_action(fp, A_conj);
 
-				fp << "Elements:\\\\" << endl;
+				fp << "Elements in conjugation action action on the group itself:\\\\" << endl;
 				SG->print_elements_with_given_action(fp, A_conj);
 
 				string fname_gap;

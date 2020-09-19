@@ -29,6 +29,7 @@ void klein_correspondence::null()
 	P5 = NULL;
 	Gr63 = NULL;
 	Gr62 = NULL;
+	nb_lines_orthogonal = 0;
 	Form = NULL;
 	//Line_to_point_on_quadric = NULL;
 	//Point_on_quadric_to_line = NULL;
@@ -124,6 +125,13 @@ void klein_correspondence::init(finite_field *F,
 
 	Gr63->init(6, 3, F, 0 /* verbose_level */);
 	Gr62->init(6, 2, F, 0 /* verbose_level */);
+
+	combinatorics_domain Combi;
+	longinteger_object la;
+
+	Combi.q_binomial(la, d, 2, q, 0 /* verbose_level */);
+
+	nb_lines_orthogonal = la.as_lint();
 
 
 	Form = NEW_int(d * d);
@@ -552,6 +560,185 @@ long int klein_correspondence::point_on_quadric_to_line(long int point_rk, int v
 	}
 
 	return line_rk;
+}
+
+
+
+void klein_correspondence::compute_external_lines(
+		std::vector<long int> &External_lines, int verbose_level)
+{
+
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int i, j;
+	int d = 6;
+	int *LineMtx;
+	long int *Line;
+	int nb_points_covered;
+
+	if (f_v) {
+		cout << "klein_correspondence::compute_external_lines" << endl;
+	}
+
+
+	LineMtx = NEW_int(2 * d);
+
+	if (f_v) {
+		cout << "klein_correspondence::compute_external_lines "
+				"nb_lines_orthogonal=" << nb_lines_orthogonal << endl;
+	}
+
+	nb_points_covered = Gr62->nb_points_covered(0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "klein_correspondence::compute_external_lines "
+				"nb_points_covered=" << nb_points_covered << endl;
+	}
+
+	Line = NEW_lint(nb_points_covered);
+
+	if (f_v) {
+		cout << "klein_correspondence::compute_external_lines "
+				"computing external lines:" << endl;
+	}
+	int pt, a, b, c, val;
+	int v6[6];
+
+	// make a list of all external lines to the Klein quadric:
+	for (i = 0; i < nb_lines_orthogonal; i++) {
+		Gr62->unrank_lint_here(LineMtx, i, 0 /*verbose_level*/);
+		Gr62->points_covered(Line, 0 /* verbose_level */);
+		for (j = 0; j < nb_points_covered; j++) {
+			pt = Line[j];
+			F->PG_element_unrank_modified(v6, 1, 6, pt);
+			//K->O->unrank_point(v6, 1, pt, 0);
+			a = F->mult(v6[0], v6[1]);
+			b = F->mult(v6[2], v6[3]);
+			c = F->mult(v6[4], v6[5]);
+			val = F->add3(a, b, c);
+
+			if (val == 0) {
+				break; // we found a point on the quadric, break off
+			}
+		}
+		if (j == nb_points_covered) {
+			External_lines.push_back(i);
+		}
+	}
+	if (f_v) {
+		cout << "klein_correspondence::compute_external_lines "
+				"We found " << External_lines.size()
+				<< " external lines" << endl;
+	}
+
+	FREE_int(LineMtx);
+	FREE_lint(Line);
+
+	if (f_v) {
+		cout << "klein_correspondence::compute_external_lines done" << endl;
+	}
+
+}
+
+void klein_correspondence::identify_external_lines_and_spreads(
+		spread_tables *T,
+		std::vector<long int> &External_lines,
+		long int *&spread_to_external_line_idx,
+		long int *&external_line_to_spread,
+		int verbose_level)
+// spread_to_external_line_idx[i] is index into External_lines
+// corresponding to regular spread i
+// external_line_to_spread[i] is the index of the
+// regular spread of PG(3,q) in table T associated with
+// External_lines[i]
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "klein_correspondence::identify_external_lines_and_spreads" << endl;
+	}
+	int i, j, rk, idx;
+	long int a, b;
+	int N100;
+	int d = 6;
+	int *basis_elliptic_quadric;
+	int *basis;
+	int *basis_external_line;
+	sorting Sorting;
+
+	spread_to_external_line_idx = NEW_lint(T->nb_spreads);
+	external_line_to_spread = NEW_lint(External_lines.size());
+
+	basis_elliptic_quadric = NEW_int(T->spread_size * d);
+	basis = NEW_int(d * d);
+
+	basis_external_line = NEW_int(2 * d);
+
+	for (i = 0; i < External_lines.size(); i++) {
+		external_line_to_spread[i] = -1;
+	}
+
+	N100 = (T->nb_spreads / 100) + 1;
+	for (i = 0; i < T->nb_spreads; i++) {
+
+		if ((i % N100) == 0) {
+			cout << "klein_correspondence::identify_external_lines_and_spreads "
+					"progress " << ((double)i / N100) << " %" << endl;
+		}
+		for (j = 0; j < T->spread_size; j++) {
+			a = T->spread_table[i * T->spread_size + j];
+			b = line_to_point_on_quadric(a, 0 /* verbose_level */);
+
+			O->unrank_point(basis_elliptic_quadric + j * d, 1, b, 0);
+		}
+		if (FALSE) {
+			cout << "klein_correspondence::identify_external_lines_and_spreads"
+					"spread " << i
+					<< " the elliptic quadric space" << endl;
+			int_matrix_print(basis_elliptic_quadric,
+					T->spread_size, d);
+		}
+		rk = F->Gauss_easy(basis_elliptic_quadric, T->spread_size, d);
+		if (rk != 4) {
+			cout << "klein_correspondence::identify_external_lines_and_spreads "
+					"spread " << i << " the elliptic quadric space "
+					"does not have rank 4" << endl;
+			exit(1);
+		}
+		int_vec_copy(basis_elliptic_quadric, basis, 4 * d);
+		F->perp(d, 4, basis, Form);
+		int_vec_copy(
+				basis + 4 * d,
+				basis_external_line,
+				2 * d);
+		a = P5->rank_line(basis_external_line);
+		if (!Sorting.vector_lint_search(External_lines, a, idx, 0 /*verbose_level*/)) {
+			cout << "klein_correspondence::identify_external_lines_and_spreads spread "
+					" cannot find the external line i = " << i << endl;
+			exit(1);
+		}
+		spread_to_external_line_idx[i] = idx;
+		external_line_to_spread[idx] = i;
+	}
+
+#if 0
+	for (i = 0; i < External_lines.size(); i++) {
+		if (external_line_to_spread[i] == -1) {
+			cout << "klein_correspondence::identify_external_lines_and_spreads "
+					"something is wrong with the correspondence" << endl;
+			exit(1);
+		}
+	}
+#endif
+
+	FREE_int(basis_elliptic_quadric);
+	FREE_int(basis);
+	FREE_int(basis_external_line);
+
+	if (f_v) {
+		cout << "klein_correspondence::identify_external_lines_and_spreads done" << endl;
+	}
+
 }
 
 

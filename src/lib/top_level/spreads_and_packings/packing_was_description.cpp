@@ -55,6 +55,8 @@ packing_was_description::packing_was_description()
 
 	f_report = FALSE;
 	//clique_size = 0;
+
+	f_regular_packing = FALSE;
 }
 
 packing_was_description::~packing_was_description()
@@ -216,6 +218,13 @@ int packing_was_description::read_arguments(int argc, const char **argv,
 			}
 			cout << "-isomorph " << endl;
 		}
+
+		else if (strcmp(argv[i], "-regular_packing") == 0) {
+			f_regular_packing = TRUE;
+			cout << "-regular_packing " << endl;
+		}
+
+
 
 		else if (strcmp(argv[i], "-end") == 0) {
 			break;

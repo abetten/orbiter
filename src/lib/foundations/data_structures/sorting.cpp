@@ -1211,6 +1211,85 @@ int sorting::lint_vec_search(long int *v, int len,
 	return f_found;
 }
 
+int sorting::vector_lint_search(std::vector<long int> &v,
+		long int a, int &idx, int verbose_level)
+// This function finds the last occurence of the element a.
+// If a is not found, it returns in idx the position
+// where it should be inserted if
+// the vector is assumed to be in increasing order.
+
+{
+	int f_v = (verbose_level >= 1);
+	int len;
+	int l, r, m;
+	long int res;
+	int f_found = FALSE;
+
+	len = v.size();
+	if (f_v) {
+		cout << "sorting::vector_lint_search len=" << len << ", searching for " << a << endl;
+	}
+	if (len == 0) {
+		idx = 0;
+		return FALSE;
+		}
+	l = 0;
+	r = len;
+	// invariant:
+	// v[i] <= a for i < l;
+	// v[i] >  a for i >= r;
+	// r - l is the length of the area to search in.
+	while (l < r) {
+		m = (l + r) >> 1;
+		if (f_v) {
+			cout << "sorting::vector_lint_search l=" << l << " m=" << m << " r=" << r << endl;
+		}
+		// if the length of the search area is even
+		// we examine the element above the middle
+		res = v[m] - a;
+		if (f_v) {
+			cout << "sorting::vector_lint_search v[m]=" << v[m] << " a=" << a << endl;
+		}
+		//cout << "search l=" << l << " m=" << m << " r="
+		//	<< r << "a=" << a << " v[m]=" << v[m] << " res=" << res << endl;
+		// so, res is
+		// positive if v[m] > a,
+		// zero if v[m] == a,
+		// negative if v[m] < a
+		if (res <= 0) {
+			l = m + 1;
+			if (f_v) {
+				cout << "moving to the right" << endl;
+				}
+			if (res == 0) {
+				if (f_v) {
+					cout << "f_found = TRUE" << endl;
+					}
+				f_found = TRUE;
+				}
+			}
+		else {
+			if (f_v) {
+				cout << "moving to the left" << endl;
+				}
+			r = m;
+			}
+		}
+	// now: l == r;
+	// and f_found is set accordingly */
+#if 1
+	if (f_found) {
+		l--;
+		}
+#endif
+	idx = l;
+	if (f_v) {
+		cout << "sorting::vector_lint_search len=" << len << ", searching "
+				"for " << a << " done, f_found=" << f_found
+				<< " idx=" << idx << endl;
+	}
+	return f_found;
+}
 int sorting::int_vec_search_first_occurence(int *v,
 		int len, int a, int &idx,
 		int verbose_level)
