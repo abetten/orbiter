@@ -393,6 +393,8 @@ public:
 
 	//int clique_size;
 
+	int f_regular_packing;
+
 	packing_was_description();
 	~packing_was_description();
 	int read_arguments(int argc, const char **argv,
@@ -512,6 +514,7 @@ public:
 
 	int nb_good_spreads;
 	int *good_spreads;
+		// the union of all good orbits on spreads
 
 	spread_tables *Spread_tables_reduced;
 	orbit_type_repository *Spread_type_reduced;
@@ -526,8 +529,17 @@ public:
 		// induced_action_on_orbits(A_on_reduced_spreads, reduced_spread_orbits_under_H)
 
 	set_of_sets *Orbit_invariant;
+	// the values of Spread_type_reduced->type[spread_idx]
+	// for the spreads in one orbit.
+	// Since it is an orbit invariant, the value is constant for all elements of the orbit,
+	// so it need to be stored only once for each orbit.
+	// more precisely, Orbit_invariant->Sets[i][j] is
+	// the type of the spreads belonging to the orbit
+	// reduced_spread_orbits_under_H->Orbits_classified->Sets[i][j]
 	int nb_sets;
 	tally *Classify_spread_invariant_by_orbit_length;
+
+	regular_packing *Regular_packing;
 
 	packing_was();
 	~packing_was();
@@ -536,6 +548,7 @@ public:
 	void init(packing_was_description *Descr,
 			packing_classify *P, int verbose_level);
 	void init_spreads(int verbose_level);
+	void init_regular_packing(int verbose_level);
 	void init_N(int verbose_level);
 	void init_H(int verbose_level);
 	void compute_H_orbits_on_lines(int verbose_level);
@@ -577,6 +590,36 @@ int packing_was_set_of_reduced_spreads_adjacency_test_function(long int *orbit1,
 		long int *orbit2, int len2, void *data);
 int packing_was_evaluate_orbit_invariant_function(
 		int a, int i, int j, void *evaluate_data, int verbose_level);
+
+
+// #############################################################################
+// regular_packing.cpp
+// #############################################################################
+
+//! a regular packing as a partition of the Klein quadric into elliptic quadrics
+
+
+class regular_packing {
+public:
+	packing_was *PW;
+
+	std::vector<long int> External_lines;
+
+	long int *spread_to_external_line_idx; // [T->nb_spreads]
+		// spread_to_external_line_idx[i] is index into External_lines
+		// corresponding to regular spread i
+	long int *external_line_to_spread; // [nb_lines_orthogonal]
+		// external_line_to_spread[i] is the index of the
+		// regular spread of PG(3,q) in table T associated with
+		// External_lines[i]
+
+
+	regular_packing();
+	~regular_packing();
+	void init(packing_was *PW, int verbose_level);
+
+};
+
 
 // #############################################################################
 // recoordinatize.cpp

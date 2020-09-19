@@ -2740,6 +2740,21 @@ int action::matrix_group_dimension()
 #endif
 }
 
+finite_field *action::matrix_group_finite_field()
+{
+	if (!is_matrix_group()) {
+			cout << "action::matrix_group_finite_field "
+					"is not a matrix group" << endl;
+			exit(1);
+	}
+	else {
+		matrix_group *M;
+
+		M = get_matrix_group();
+		return M->GFq;
+	}
+}
+
 int action::is_semilinear_matrix_group()
 {
 	if (!is_matrix_group()) {

@@ -983,6 +983,18 @@ public:
 	void O4_find_tangent_plane(
 		int pt_x1, int pt_x2, int pt_x3, int pt_x4,
 		int *tangent_plane, int verbose_level);
+	void oval_polynomial(
+		int *S, unipoly_domain &D, unipoly_object &poly,
+		int verbose_level);
+	void all_PG_elements_in_subspace(
+			int *genma, int k, int n, long int *&point_list, int &nb_points,
+			int verbose_level);
+	void all_PG_elements_in_subspace_array_is_given(
+			int *genma, int k, int n, long int *point_list, int &nb_points,
+			int verbose_level);
+	void display_all_PG_elements(int n);
+	void display_all_PG_elements_not_in_subspace(int n, int m);
+	void display_all_AG_elements(int n);
 	void do_cone_over(int n,
 		long int *set_in, int set_size_in, long int *&set_out, int &set_size_out,
 		int verbose_level);
@@ -1145,6 +1157,10 @@ public:
 		int verbose_level);
 	void cheat_sheet_PG(int n, int verbose_level);
 	void simeon(int n, int len, long int *S, int s, int verbose_level);
+	void wedge_to_klein(int *W, int *K);
+	void klein_to_wedge(int *K, int *W);
+	void isomorphism_to_special_orthogonal(int *A4, int *A6, int verbose_level);
+
 
 
 	// #########################################################################
@@ -1222,18 +1238,7 @@ public:
 		std::ostream &ost, long int *Pts, int nb_pts, int len);
 	void export_magma(int d, long int *Pts, int nb_pts, std::string &fname);
 	void export_gap(int d, long int *Pts, int nb_pts, std::string &fname);
-	void oval_polynomial(
-		int *S, unipoly_domain &D, unipoly_object &poly,
-		int verbose_level);
-	void all_PG_elements_in_subspace(
-			int *genma, int k, int n, long int *&point_list, int &nb_points,
-			int verbose_level);
-	void all_PG_elements_in_subspace_array_is_given(
-			int *genma, int k, int n, long int *point_list, int &nb_points,
-			int verbose_level);
-	void display_all_PG_elements(int n);
-	void display_all_PG_elements_not_in_subspace(int n, int m);
-	void display_all_AG_elements(int n);
+	void print_matrix_latex(std::ostream &ost, int *A, int m, int n);
 };
 
 extern int nb_calls_to_finite_field_init;

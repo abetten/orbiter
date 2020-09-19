@@ -1640,6 +1640,41 @@ void strong_generators::print_elements_ost(ostream &ost)
 	FREE_int(Elt);
 }
 
+void strong_generators::print_elements_with_special_orthogonal_action_ost(ostream &ost)
+{
+	long int i;
+	longinteger_object go;
+	sims *S;
+	int *Elt;
+
+	Elt = NEW_int(A->elt_size_in_int);
+	group_order(go);
+	S = create_sims(0 /*verbose_level */);
+	ost << "Group elements for a group of order " << go << " tl=";
+	int_vec_print(ost, tl, A->base_len());
+	ost << "\\\\" << endl;
+	for (i = 0; i < go.as_lint(); i++) {
+		S->element_unrank_lint(i, Elt, 0 /* verbose_level */);
+
+		ost << "Element " << i << " / " << go << " is:" << endl;
+		ost << "$$" << endl;
+		A->element_print_latex(Elt, ost);
+		if (A->matrix_group_dimension() == 4) {
+			int A6[36];
+			finite_field *F;
+
+			F = A->matrix_group_finite_field();
+			F->isomorphism_to_special_orthogonal(Elt, A6, 0 /* verbose_level*/);
+			ost << "=" << endl;
+			F->print_matrix_latex(ost, A6, 6, 6);
+		}
+		ost << "$$" << endl;
+	}
+	FREE_OBJECT(S);
+	FREE_int(Elt);
+}
+
+
 void strong_generators::print_elements_with_given_action(ostream &ost, action *A2)
 {
 	long int i;

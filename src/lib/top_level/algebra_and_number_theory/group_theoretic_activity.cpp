@@ -1409,24 +1409,22 @@ void group_theoretic_activity::isomorphism_Klein_quadric(std::string &fname, int
 
 	Elt = NEW_int(A1->elt_size_in_int);
 
-	long int *M;
+
+	cout << "Reading file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	int *M;
 	int m, n;
-	Fio.lint_matrix_read_csv(fname.c_str(), M, m, n, verbose_level);
+	Fio.int_matrix_read_csv(fname.c_str(), M, m, n, verbose_level);
 
 	cout << "Read a set of size " << m << endl;
 
-	if (n != 1) {
-		cout << "n != 1" << endl;
+	if (n != A1->make_element_size) {
+		cout << "n != A1->make_element_size" << endl;
 		exit(1);
 	}
 
 
 
-	surface_domain *Surf;
-
-	Surf = NEW_OBJECT(surface_domain);
-
-	Surf->init(F, verbose_level);
 
 
 	int i, j, c;
@@ -1465,16 +1463,17 @@ void group_theoretic_activity::isomorphism_Klein_quadric(std::string &fname, int
 	sorting Sorting;
 
 	for (i = 0; i < 6; i++) {
-		Surf->klein_to_wedge(Basis1 + i * 6, Basis2 + i * 6);
+		F->klein_to_wedge(Basis1 + i * 6, Basis2 + i * 6);
 	}
 
 	F->matrix_inverse(B, Bv, 6, 0 /* verbose_level */);
 
 
 	for (i = 0; i < m; i++) {
-		H->element_unrank_lint(M[i], Elt);
 
-		if ((i % 1000) == 0) {
+		A1->make_element(Elt, M + i * A1->make_element_size, 0);
+
+		if ((i % 10000) == 0) {
 			cout << i << " / " << m << endl;
 		}
 
@@ -1484,12 +1483,12 @@ void group_theoretic_activity::isomorphism_Klein_quadric(std::string &fname, int
 			cout << endl;
 		}
 
-		F->exterior_square(Elt, An2, 4, verbose_level);
+		F->exterior_square(Elt, An2, 4, 0 /*verbose_level*/);
 
 		for (j = 0; j < 6; j++) {
 			F->mult_vector_from_the_left(Basis2 + j * 6, An2, v, 6, 6);
 					// v[m], A[m][n], vA[n]
-			Surf->wedge_to_klein(v, w);
+			F->wedge_to_klein(v, w);
 			int_vec_copy(w, C + j * 6, 6);
 		}
 
@@ -1513,17 +1512,35 @@ void group_theoretic_activity::isomorphism_Klein_quadric(std::string &fname, int
 
 		c = Sorting.integer_vec_compare(E, Target, 36);
 		if (c == 0) {
-			cout << "We found it! i=" << i << " rank = " << M[i] << endl;
-			exit(1);
+			cout << "We found it! i=" << i << " element = ";
+			int_vec_print(cout, M + i * A1->make_element_size, A1->make_element_size);
+			cout << endl;
+
+			cout << "Element :" << endl;
+			A1->element_print(Elt, cout);
+			cout << endl;
+
+			cout << "exterior square :" << endl;
+			int_matrix_print(An2, 6, 6);
+			cout << endl;
+
+			cout << "orthogonal matrix :" << endl;
+			int_matrix_print(C, 6, 6);
+			cout << endl;
+
+			cout << "orthogonal matrix in the special form:" << endl;
+			int_matrix_print(E, 6, 6);
+			cout << endl;
+
+			//exit(1);
 		}
 
 
 	}
 
 	FREE_int(Elt);
-	FREE_lint(M);
+	FREE_int(M);
 	FREE_OBJECT(H);
-	FREE_OBJECT(Surf);
 
 	if (f_v) {
 		cout << "group_theoretic_activity::isomorphism_Klein_quadric" << endl;

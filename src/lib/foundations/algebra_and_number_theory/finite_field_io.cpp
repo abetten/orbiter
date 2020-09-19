@@ -1512,7 +1512,37 @@ StructureDescription(stab);
 	FREE_int(v);
 }
 
+void finite_field::print_matrix_latex(std::ostream &ost, int *A, int m, int n)
+{
+	int i, j, a;
 
+	ost << "\\left[" << endl;
+	ost << "\\begin{array}{*{" << n << "}{r}}" << endl;
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			a = A[i * n + j];
+
+#if 0
+			if (is_prime(GFq->q)) {
+				ost << setw(w) << a << " ";
+			}
+			else {
+				ost << a;
+				// GFq->print_element(ost, a);
+			}
+#else
+			print_element(ost, a);
+#endif
+
+			if (j < n - 1)
+				ost << " & ";
+		}
+		ost << "\\\\" << endl;
+	}
+	ost << "\\end{array}" << endl;
+	ost << "\\right]" << endl;
+
+}
 
 
 }}

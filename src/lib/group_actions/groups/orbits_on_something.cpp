@@ -184,6 +184,9 @@ void orbits_on_something::orbit_type_of_set(
 		long int *orbit_type,
 		int verbose_level)
 // orbit_type[(go + 1) * go] must be allocated beforehand
+// orbit_type[l - 1] = number of elements lying in an orbit of length l
+// orbit_type[c * go + l - 1] = number of times that an orbit of length l
+// intersects the set in c elements.
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a, b, c, l, orbit_type_sz;
@@ -198,7 +201,9 @@ void orbits_on_something::orbit_type_of_set(
 	lint_vec_zero(orbit_type, orbit_type_sz);
 
 	// v[i] = index of orbit containing set[i]
-	// orbit_type[l - 1] = number of points lying in an orbit of length l
+	// orbit_type[l - 1] = number of elements lying in an orbit of length l
+	// orbit_type[c * go + l - 1] = number of times that an orbit of length l
+	// intersects the set in c elements.
 	for (i = 0; i < set_sz; i++) {
 		a = set[i];
 		b = Sch->orbit_number(a);

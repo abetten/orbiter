@@ -71,6 +71,9 @@ packing_was::packing_was()
 	Orbit_invariant = NULL;
 	nb_sets = 0;
 	Classify_spread_invariant_by_orbit_length = NULL;
+
+	Regular_packing = NULL;
+
 }
 
 packing_was::~packing_was()
@@ -264,13 +267,40 @@ void packing_was::init_spreads(int verbose_level)
 				"after classify_orbit_invariant" << endl;
 	}
 
-
+	if (Descr->f_regular_packing) {
+		if (f_v) {
+			cout << "packing_was::init_spreads "
+					"before init_regular_packing" << endl;
+		}
+		init_regular_packing(verbose_level);
+		if (f_v) {
+			cout << "packing_was::init_spreads "
+					"after init_regular_packing" << endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "packing_was::init_spreads done" << endl;
 	}
 }
 
+void packing_was::init_regular_packing(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "packing_was::init_regular_packing" << endl;
+	}
+
+	Regular_packing = NEW_OBJECT(regular_packing);
+
+	Regular_packing->init(this, verbose_level);
+
+
+	if (f_v) {
+		cout << "packing_was::init_regular_packing done" << endl;
+	}
+}
 
 void packing_was::init_N(int verbose_level)
 {
@@ -1001,7 +1031,10 @@ void packing_was::classify_orbit_invariant(int verbose_level)
 
 void packing_was::report_orbit_invariant(ostream &ost)
 {
-	int i, h, f, l, a;
+	int i, j, h, f, l, len, fst, u;
+	long int a, b, e, e_idx;
+	int basis_external_line[12];
+	int basis_external_line2[12];
 
 	ost << "Spread types by orbits of given length:\\\\" << endl;
 	for (i = 0; i < Orbit_invariant->nb_sets; i++) {
@@ -1021,6 +1054,73 @@ void packing_was::report_orbit_invariant(ostream &ost)
 					Spread_type_reduced->goi);
 			ost << "$$" << endl;
 			ost << "appears " << l << " times.\\\\" << endl;
+		}
+		if (reduced_spread_orbits_under_H->Orbits_classified_length[i] == 1 && Regular_packing) {
+			l = reduced_spread_orbits_under_H->Orbits_classified->Set_size[i];
+
+
+			int B[] = {
+					1,0,0,0,0,0,
+					0,0,0,2,0,0,
+					1,3,0,0,0,0,
+					0,0,0,1,3,0,
+					1,0,2,0,0,0,
+					0,0,0,2,0,4,
+			};
+			//int Bv[36];
+			int Pair[4];
+
+
+			//P->F->matrix_inverse(B, Bv, 6, 0 /* verbose_level */);
+
+			latex_interface L;
+			finite_field *Fq3;
+			number_theory_domain NT;
+
+			Fq3 = NEW_OBJECT(finite_field);
+			Fq3->init(NT.i_power_j(P->F->q, 3), 0);
+
+			ost << "Orbits of length one:\\\\" << endl;
+			for (j = 0; j < l; j++) {
+				a = reduced_spread_orbits_under_H->Orbits_classified->Sets[i][j];
+				fst = reduced_spread_orbits_under_H->Sch->orbit_first[a];
+				len = reduced_spread_orbits_under_H->Sch->orbit_len[a];
+				for (h = 0; h < len; h++) {
+					b = reduced_spread_orbits_under_H->Sch->orbit[fst + h];
+						// b the the index into Spread_tables_reduced
+					e_idx = Regular_packing->spread_to_external_line_idx[b];
+					e = Regular_packing->External_lines[e_idx];
+					P->T->Klein->P5->unrank_line(basis_external_line, e);
+					ost << "Short orbit " << j << " / " << l << " is orbit "
+							<< a << " is spread " << b << " is external line "
+							<< e << " is:\\\\" << endl;
+					ost << "$$" << endl;
+					P->F->print_matrix_latex(ost, basis_external_line, 2, 6);
+
+					P->F->mult_matrix_matrix(basis_external_line,
+							B, basis_external_line2,
+							2, 6, 6, 0 /* verbose_level*/);
+					ost << "\\hat{=}" << endl;
+					P->F->print_matrix_latex(ost, basis_external_line2, 2, 6);
+
+					geometry_global Gg;
+
+					for (u = 0; u < 4; u++) {
+						Pair[u] = Gg.AG_element_rank(P->F->q,
+								basis_external_line2 + u * 3, 1, 3);
+					}
+					ost << "\\hat{=}" << endl;
+					ost << "\\left[" << endl;
+					L.print_integer_matrix_tex(ost, Pair, 2, 2);
+					ost << "\\right]" << endl;
+
+					ost << "\\hat{=}" << endl;
+					Fq3->print_matrix_latex(ost, Pair, 2, 2);
+					ost << "$$" << endl;
+				}
+			}
+			FREE_OBJECT(Fq3);
+
 		}
 	}
 

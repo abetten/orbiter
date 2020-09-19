@@ -1656,10 +1656,6 @@ void matrix_group::GL_print_easy_normalized(int *Elt, ostream &ost)
 
 void matrix_group::GL_print_latex(int *Elt, ostream &ost)
 {
-	int i, j, a;
-	//int w;
-	
-	//w = (int) GFq->log10_of_q;
 
 	int *D;
 	D = NEW_int(n * n);
@@ -1671,31 +1667,8 @@ void matrix_group::GL_print_latex(int *Elt, ostream &ost)
 		GFq->PG_element_normalize(D, 1, n * n);
 	}
 
-	ost << "\\left[" << endl;
-	ost << "\\begin{array}{*{" << n << "}{r}}" << endl;
-	for (i = 0; i < n; i++) {
-		for (j = 0; j < n; j++) {
-			a = D[i * n + j];	
+	GFq->print_matrix_latex(ost, D, n, n);
 
-#if 0
-			if (is_prime(GFq->q)) {
-				ost << setw(w) << a << " ";
-			}
-			else {
-				ost << a;
-				// GFq->print_element(ost, a);
-			}
-#else
-			GFq->print_element(ost, a);
-#endif
-		
-			if (j < n - 1)
-				ost << " & ";
-		}
-		ost << "\\\\" << endl;
-	}
-	ost << "\\end{array}" << endl;
-	ost << "\\right]" << endl;
 	if (f_affine) {
 		int_vec_print(ost, Elt + n * n, n);
 		if (f_semilinear) {

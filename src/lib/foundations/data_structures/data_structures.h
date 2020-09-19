@@ -776,6 +776,8 @@ public:
 		// If a is not found, it returns in idx the position
 		// where it should be inserted if
 		// the vector is assumed to be in increasing order.
+	int vector_lint_search(std::vector<long int> &v,
+			long int a, int &idx, int verbose_level);
 	int int_vec_search_first_occurence(int *v, int len, int a, int &idx,
 			int verbose_level);
 		// This function finds the first occurence of the element a.
