@@ -34,14 +34,14 @@ semifield_classify_with_substructure::semifield_classify_with_substructure()
 	f_dim_over_kernel = FALSE;
 	dim_over_kernel = 0;
 	f_prefix = FALSE;
-	prefix = "";
+	//prefix = "";
 	f_orbits_light = FALSE;
 	f_test_semifield = FALSE;
-	test_semifield_data = NULL;
+	//test_semifield_data = NULL;
 	f_identify_semifield = FALSE;
-	identify_semifield_data = NULL;
+	//identify_semifield_data = NULL;
 	f_identify_semifields_from_file = FALSE;
-	identify_semifields_from_file_fname = NULL;
+	//identify_semifields_from_file_fname = NULL;
 	f_load_classification = FALSE;
 	f_report = FALSE;
 	f_decomposition_matrix_level_3 = FALSE;
@@ -50,11 +50,11 @@ semifield_classify_with_substructure::semifield_classify_with_substructure()
 	identify_semifields_from_file_m = 0;
 
 	f_trace_record_prefix = FALSE;
-	trace_record_prefix = NULL;
+	//trace_record_prefix = NULL;
 	f_FstLen = FALSE;
-	fname_FstLen = NULL;
+	//fname_FstLen = NULL;
 	f_Data = FALSE;
-	fname_Data = NULL;
+	//fname_Data = NULL;
 
 	p = e = e1 = n = k = q = k2 = 0;
 
@@ -689,11 +689,11 @@ void semifield_classify_with_substructure::identify_semifields_from_file(
 			}
 
 		}
-		char fname[1000];
+		string fname;
 
-		strcpy(fname, identify_semifields_from_file_fname);
+		fname.assign(identify_semifields_from_file_fname);
 		chop_off_extension(fname);
-		sprintf(fname + strlen(fname), "_identification.csv");
+		fname.append("_identification.csv");
 		Fio.int_matrix_write_csv(fname, identify_semifields_from_file_Po,
 				identify_semifields_from_file_m, 6);
 	}
@@ -853,9 +853,11 @@ void semifield_classify_with_substructure::latex_report(
 		fp << "\\end{enumerate}" << endl;
 
 		{
-		char fname[1000];
+		char str[1000];
+		string fname;
 
-		sprintf(fname, "Semifields_%d_2structure.tex", order);
+		sprintf(str, "Semifields_%d_2structure.tex", order);
+		fname.assign(str);
 		Fio.int_matrix_write_csv(fname, PO2, Semifields->nb_orbits, Sub->N2);
 		}
 		FREE_int(Po2);
@@ -883,15 +885,16 @@ void semifield_classify_with_substructure::generate_source_code(
 		cout << "semifield_classify_with_substructure::generate_"
 				"source_code" << endl;
 	}
-	char fname_base[1000];
-	sprintf(fname_base, "semifields_%d", order);
+	string fname_base;
+	char str[1000];
+	sprintf(str, "semifields_%d", order);
+	fname_base.assign(str);
 
 	if (f_v) {
 		cout << "before Semifields->generate_source_code " << fname_base << endl;
 		}
 
-	Semifields->generate_source_code(fname_base,
-			verbose_level);
+	Semifields->generate_source_code(fname_base, verbose_level);
 
 	if (f_v) {
 		cout << "after Semifields->generate_source_code " << fname_base << endl;

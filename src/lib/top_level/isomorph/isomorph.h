@@ -568,21 +568,21 @@ public:
 		int *Nb_sol, int verbose_level);
 	// Solutions[nb_starter], Nb_sol[nb_starter]
 	void count_solutions_from_clique_finder_case_by_case(int nb_files, 
-		long int *list_of_cases, const char **fname,
+		long int *list_of_cases, std::string *fname,
 		int verbose_level);
 	void count_solutions_from_clique_finder(int nb_files, 
-		const char **fname, 
+			std::string *fname,
 		int verbose_level);
 	void read_solutions_from_clique_finder_case_by_case(int nb_files, 
-		long int *list_of_cases, const char **fname,
+		long int *list_of_cases, std::string *fname,
 		int verbose_level);
 	void read_solutions_from_clique_finder(int nb_files, 
-		const char **fname, int verbose_level);
+			std::string *fname, int verbose_level);
 	void add_solutions_to_database(int *Solutions, 
 		int the_case, int nb_solutions, int nb_solutions_total, 
 		int print_mod, int &no, 
 		int verbose_level);
-	void build_up_database(int nb_files, const char **fname, 
+	void build_up_database(int nb_files, std::string *fname,
 		int f_has_final_test_function, 
 		int (*final_test_function)(long int *data, int sz,
 			void *final_test_data, int verbose_level),
@@ -606,17 +606,18 @@ public:
 		void *final_test_data, 
 		int verbose_level);
 	void count_solutions(int nb_files, 
-		const char **fname, int f_get_statistics, 
+			std::string *fname,
+		int f_get_statistics,
 		int f_has_final_test_function, 
 		int (*final_test_function)(long int *data, int sz,
 			void *final_test_data, int verbose_level),
 		void *final_test_data, 
 		int verbose_level);
-	void get_statistics(int nb_files, const char **fname, 
+	void get_statistics(int nb_files, std::string *fname,
 		int verbose_level);
 	void write_statistics();
 	void evaluate_statistics(int verbose_level);
-	void count_solutions2(int nb_files, const char **fname, 
+	void count_solutions2(int nb_files, std::string *fname,
 		int &total_days, int &total_hours, int &total_minutes, 
 		int f_has_final_test_function, 
 		int (*final_test_function)(long int *data, int sz,
@@ -695,12 +696,12 @@ public:
 	int f_read_solutions;
 	int f_read_solutions_from_clique_finder;
 	int f_read_solutions_from_clique_finder_list_of_cases;
-	const char *fname_list_of_cases;
+	std::string fname_list_of_cases;
 	int f_read_solutions_after_split;
 	int read_solutions_split_m;
 	
 	int f_read_statistics_after_split;
-	int read_statistics_split_m;
+	//int read_statistics_split_m;
 
 	int f_compute_orbits;
 	int f_isomorph_testing;
@@ -711,7 +712,7 @@ public:
 	int f_isomorph_report;
 	int f_subset_orbits;
 	int f_subset_orbits_file;
-	const char *subset_orbits_fname;
+	std::string subset_orbits_fname;
 	int f_eliminate_graphs_if_possible;
 	int f_down_orbits;
 
@@ -780,7 +781,7 @@ struct isomorph_worker_data {
 		action *A, poset_classification *gen,
 		int size, std::string &prefix_classify,
 		std::string &prefix, int level,
-		const char **fname, int nb_files, int verbose_level);
+		std::string *fname, int nb_files, int verbose_level);
 	void isomorph_build_db(action *A_base,
 		action *A, poset_classification *gen,
 		int size, std::string &prefix_classify,
@@ -789,7 +790,7 @@ struct isomorph_worker_data {
 		action *A, poset_classification *gen,
 		int size, std::string &prefix_classify,
 		std::string &prefix_iso, int level,
-		const char **fname, int nb_files,
+		std::string *fname, int nb_files,
 		int f_has_final_test_function,
 		int (*final_test_function)(long int *data, int sz,
 			void *final_test_data, int verbose_level),
@@ -804,13 +805,13 @@ struct isomorph_worker_data {
 		action *A_base, action *A, poset_classification *gen,
 		int size, std::string &prefix_classify,
 		std::string &prefix_iso, int level,
-		const char **fname, long int *list_of_cases,
+		std::string *fname, long int *list_of_cases,
 		int nb_files, int verbose_level);
 	void isomorph_read_solution_files_from_clique_finder(action *A_base,
 		action *A, poset_classification *gen,
 		int size, std::string &prefix_classify,
 		std::string &prefix_iso, int level,
-		const char **fname, int nb_files, int verbose_level);
+		std::string *fname, int nb_files, int verbose_level);
 	void isomorph_compute_orbits(action *A_base,
 		action *A, poset_classification *gen,
 		int size, std::string &prefix_classify,
@@ -830,7 +831,7 @@ struct isomorph_worker_data {
 		action *A, poset_classification *gen,
 		int size, std::string &prefix_classify,
 		std::string &prefix_iso, int level,
-		int identify_nb_files, const char **fname, int *Iso_type,
+		int identify_nb_files, std::string *fname, int *Iso_type,
 		int f_save, int verbose_level);
 	void isomorph_identify_table(action *A_base,
 		action *A, poset_classification *gen,

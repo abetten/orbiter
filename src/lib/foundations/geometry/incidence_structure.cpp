@@ -2767,7 +2767,6 @@ void incidence_structure::do_tdo_high_level(partitionstack &S,
 			verbose_level);
 		}
 	if (f_write_tdo_class_files) {
-		char fname[2000];
 		int *row_classes, *row_class_inv, nb_row_classes;
 		int *col_classes, *col_class_inv, nb_col_classes;
 		int i;
@@ -2778,12 +2777,20 @@ void incidence_structure::do_tdo_high_level(partitionstack &S,
 			verbose_level - 1);
 
 		for (i = 0; i < nb_row_classes; i++) {
-			snprintf(fname, 2000, "%s_TDO_point_class_%d.txt", label, i);
+			string fname;
+			fname.assign(label);
+			char str[1000];
+			sprintf(str, "_TDO_point_class_%d.txt", i);
+			fname.append(str);
 			S.write_cell_to_file_points_or_lines(
 					row_classes[i], fname, verbose_level - 1);
 			}
 		for (i = 0; i < nb_col_classes; i++) {
-			snprintf(fname, 2000, "%s_TDO_line_class_%d.txt", label, i);
+			string fname;
+			fname.assign(label);
+			char str[1000];
+			sprintf(str, "_TDO_line_class_%d.txt", i);
+			fname.append(str);
 			S.write_cell_to_file_points_or_lines(
 					col_classes[i], fname, verbose_level - 1);
 			}
@@ -3735,7 +3742,7 @@ void incidence_structure::save_as_csv(std::string &fname_csv, int verbose_level)
 {
 	file_io Fio;
 
-	Fio.int_matrix_write_csv(fname_csv.c_str(), M, nb_rows, nb_cols);
+	Fio.int_matrix_write_csv(fname_csv, M, nb_rows, nb_cols);
 }
 
 void incidence_structure::save_as_Levi_graph(std::string &fname_bin,

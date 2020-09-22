@@ -238,6 +238,7 @@ public:
 		int f_offset, int offset, 
 		int f_do_it_anyway_even_for_big_degree, 
 		int f_print_cycles_of_length_one);
+	void print_for_make_element(std::ostream &ost);
 	void write_to_memory_object(
 		foundations::memory_object *m,
 		int verbose_level);

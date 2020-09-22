@@ -536,7 +536,7 @@ public:
 		int x1, int y1, int z1,
 		int x2, int y2, int z2,
 		int &x3, int &y3, int &z3, int verbose_level);
-	void save_incidence_matrix(char *fname, int verbose_level);
+	void save_incidence_matrix(std::string &fname, int verbose_level);
 	void draw_grid(std::string &fname,
 			double tikz_global_scale, double tikz_global_line_width,
 			int xmax, int ymax,
@@ -700,6 +700,9 @@ public:
 			int *&Table,
 			int *&Q, int &nb_Q,
 			int *&E, int &nb_E_types, int verbose_level);
+	void do_inverse_isomorphism_klein_quadric(int q,
+			std::string &inverse_isomorphism_klein_quadric_matrix_A6,
+			int verbose_level);
 };
 
 
@@ -1211,7 +1214,9 @@ public:
 		int verbose_level);
 	long int point_on_quadric_embedded_in_P5(long int pt);
 	long int line_to_point_on_quadric(long int line_rk, int verbose_level);
+	void line_to_Pluecker(long int line_rk, int *v6, int verbose_level);
 	long int point_on_quadric_to_line(long int point_rk, int verbose_level);
+	void Pluecker_to_line(int *v6, int *basis_line, int verbose_level);
 	void compute_external_lines(std::vector<long int> &External_lines, int verbose_level);
 	void identify_external_lines_and_spreads(
 			spread_tables *T,
@@ -1224,6 +1229,7 @@ public:
 	// external_line_to_spread[i] is the index of the
 	// regular spread of PG(3,q) in table T associated with
 	// External_lines[i]
+	void reverse_isomorphism(int *A6, int *A4, int verbose_level);
 
 };
 
@@ -2240,6 +2246,8 @@ public:
 		int verbose_level);
 	void report_summary(std::ostream &ost);
 	void report(std::ostream &ost);
+	void incidence_matrix_save_csv();
+	void make_fname_incidence_matrix_csv(std::string &fname);
 
 	// projective_space2.cpp:
 	void print_set_numerical(std::ostream &ost, long int *set, int set_size);
@@ -2313,6 +2321,7 @@ public:
 	void cheat_sheet_points_on_lines(std::ostream &f, int verbose_level);
 	void cheat_sheet_lines_on_points(std::ostream &f, int verbose_level);
 	void cheat_sheet_subspaces(std::ostream &f, int k, int verbose_level);
+	void do_pluecker_reverse(std::ostream &ost, grassmann *Gr, int k, int nb_k_subspaces);
 	void cheat_sheet_line_intersection(std::ostream &f, int verbose_level);
 	void cheat_sheet_line_through_pairs_of_points(std::ostream &f,
 		int verbose_level);

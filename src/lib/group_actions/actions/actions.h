@@ -906,9 +906,9 @@ public:
 	void element_read_file_fp(int *Elt, 
 			std::ifstream &fp, int verbose_level);
 	void element_write_file(int *Elt, 
-		const char *fname, int verbose_level);
+			std::string &fname, int verbose_level);
 	void element_read_file(int *Elt, 
-		const char *fname, int verbose_level);
+			std::string &fname, int verbose_level);
 	void element_write_to_memory_object(int *Elt, 
 		memory_object *m, int verbose_level);
 	void element_read_from_memory_object(int *Elt, 

@@ -1,4 +1,4 @@
-// perm_group.cpp
+// permutation_representation_domain.cpp
 //
 // Anton Betten
 //
@@ -97,9 +97,9 @@ void permutation_representation_domain::init_product_action(int m, int n,
 	//int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
-		cout << "permutation_representation_domain::init_product_action() "
+		cout << "permutation_representation_domain::init_product_action "
 				"m=" << m << " n=" << n << endl;
-		}
+	}
 	f_product_action = TRUE;
 	permutation_representation_domain::m = m;
 	permutation_representation_domain::n = n;
@@ -111,6 +111,9 @@ void permutation_representation_domain::init_product_action(int m, int n,
 	char_per_elt = elt_size_int;
 	
 	init_data(page_length_log, verbose_level);
+	if (f_v) {
+		cout << "permutation_representation_domain::init_product_action done" << endl;
+	}
 }
 
 	
@@ -121,8 +124,8 @@ void permutation_representation_domain::init(int degree,
 	//int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
-		cout << "permutation_representation_domain::init()" << endl;
-		}
+		cout << "permutation_representation_domain::init" << endl;
+	}
 	permutation_representation_domain::degree = degree;
 	f_product_action = FALSE;
 	
@@ -130,6 +133,9 @@ void permutation_representation_domain::init(int degree,
 	char_per_elt = elt_size_int * sizeof(int);
 	
 	init_data(page_length_log, verbose_level);
+	if (f_v) {
+		cout << "permutation_representation_domain::init done" << endl;
+	}
 }
 
 void permutation_representation_domain::init_data(int page_length_log, int verbose_level)
@@ -144,7 +150,7 @@ void permutation_representation_domain::init_data(int page_length_log, int verbo
 		cout << "elt_size_int=" << elt_size_int << endl;
 		cout << "page_length_log=" << page_length_log << endl;
 		//cout << "base_len=" << A.base_len << endl;
-		}
+	}
 
 	allocate();
 
@@ -157,7 +163,7 @@ void permutation_representation_domain::init_data(int page_length_log, int verbo
 	if (f_vv) {
 		cout << "permutation_representation_domain::init_data "
 				"calling Elts->init()" << endl;
-		}
+	}
 	Elts->init(char_per_elt /* entry_size */,
 			page_length_log, verbose_level - 2);
 	//Elts->add_elt_print_function(perm_group_elt_print, (void *) this);
@@ -166,25 +172,25 @@ void permutation_representation_domain::init_data(int page_length_log, int verbo
 	if (f_vv) {
 		cout << "permutation_representation_domain::init_data "
 				"calling one()" << endl;
-		}
+	}
 	one(tmp1);
 	//print(tmp1, cout);
 	pack(tmp1, elt1);
 	if (f_vv) {
 		cout << "permutation_representation_domain::init_data "
 				"calling Elts->store()" << endl;
-		}
+	}
 	hdl = Elts->store(elt1);
 	if (f_vv) {
 		cout << "identity element stored, "
 				"hdl = " << hdl << endl;
-		}
+	}
 	
 
 	if (f_vv) {
 		cout << "permutation_representation_domain::init_data "
 				"finished" << endl;
-		}
+	}
 	
 	FREE_int(tmp1);
 	FREE_int(tmp2);
@@ -220,11 +226,11 @@ void permutation_representation_domain::init_with_base(int degree,
 		cout << "permutation_representation_domain::init" << endl;
 		cout << "degree=" << A.degree << endl;
 		cout << "base_len=" << base_length << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "perm_group::init "
 				"calling Elts->init" << endl;
-		}
+	}
 	Elts->init(char_per_elt /* entry_size */,
 			page_length_log, verbose_level - 2);
 	//Elts->add_elt_print_function(
@@ -234,24 +240,24 @@ void permutation_representation_domain::init_with_base(int degree,
 	if (f_vv) {
 		cout << "permutation_representation_domain::init "
 				"calling one()" << endl;
-		}
+	}
 	one(tmp1);
 	//print(tmp1, cout);
 	pack(tmp1, elt1);
 	if (f_vv) {
 		cout << "permutation_representation_domain::init "
 				"calling Elts->store" << endl;
-		}
+	}
 	hdl = Elts->store(elt1);
 	if (f_vv) {
 		cout << "identity element stored, "
 				"hdl = " << hdl << endl;
-		}
+	}
 	
 	if (f_vv) {
 		cout << "permutation_representation_domain::init "
 				"initializing base, and transversal_length" << endl;
-		}
+	}
 	A.type_G = perm_group_t;
 	A.G.perm_grp = this;
 	
@@ -261,8 +267,9 @@ void permutation_representation_domain::init_with_base(int degree,
 	//A.allocate_base_data(A.base_len);
 
 	// init base:
-	for (i = 0; i < A.base_len(); i++)
+	for (i = 0; i < A.base_len(); i++) {
 		A.base_i(i) = base[i];
+	}
 	
 
 	if (f_v) {
@@ -272,7 +279,7 @@ void permutation_representation_domain::init_with_base(int degree,
 		//cout << "transversal_length: ";
 		//print_set(cout, A.base_len, A.transversal_length);
 		//cout << endl;
-		}
+	}
 
 	A.ptr = NEW_OBJECT(action_pointer_table);
 	A.ptr->init_function_pointers_permutation_group();
@@ -292,7 +299,7 @@ void permutation_representation_domain::init_with_base(int degree,
 
 	if (f_vv) {
 		cout << "permutation_representation_domain::init finished" << endl;
-		}
+	}
 	
 	FREE_int(tmp1);
 	FREE_int(tmp2);
@@ -317,7 +324,7 @@ void permutation_representation_domain::one(int *Elt)
 	
 	for (i = 0; i < degree; i++) {
 		Elt[i] = i;
-		}
+	}
 }
 
 int permutation_representation_domain::is_one(int *Elt)
@@ -327,8 +334,8 @@ int permutation_representation_domain::is_one(int *Elt)
 	for (i = 0; i < degree; i++) {
 		if (Elt[i] != i) {
 			return FALSE;
-			}
 		}
+	}
 	return TRUE;
 }
 
@@ -348,7 +355,7 @@ void permutation_representation_domain::copy(int *A, int *B)
 	
 	for (i = 0; i < degree; i++) {
 		B[i] = A[i];
-		}
+	}
 }
 
 void permutation_representation_domain::invert(int *A, int *Ainv)
@@ -368,8 +375,8 @@ void permutation_representation_domain::unpack(uchar *elt, int *Elt)
 		p = (uchar *)(Elt + i);
 		for (j = 0; j < (int) sizeof(int); j++) {
 			*p++ = *elt++;
-			}
 		}
+	}
 }
 
 void permutation_representation_domain::pack(int *Elt, uchar *elt)
@@ -382,8 +389,8 @@ void permutation_representation_domain::pack(int *Elt, uchar *elt)
 		p = (uchar *)(Elt + i);
 		for (j = 0; j < (int) sizeof(int); j++) {
 			*elt++ = *p++;
-			}
 		}
+	}
 }
 
 void permutation_representation_domain::print(int *Elt, ostream &ost)
@@ -420,7 +427,7 @@ void permutation_representation_domain::print_for_make_element(int *Elt, ostream
 	
 	for (i = 0; i < degree; i++) {
 		ost << Elt[i] << ", ";
-		}
+	}
 }
 
 void permutation_representation_domain::print_for_make_element_no_commas(
@@ -430,7 +437,7 @@ void permutation_representation_domain::print_for_make_element_no_commas(
 	
 	for (i = 0; i < degree; i++) {
 		ost << Elt[i] << " ";
-		}
+	}
 }
 
 void permutation_representation_domain::print_with_action(action *A, int *Elt, ostream &ost)
@@ -449,11 +456,11 @@ void permutation_representation_domain::print_with_action(action *A, int *Elt, o
 				cout << "bi=" << bi << "a=" << a << endl;
 				if (bi < m) {
 					ost << "(x=" << bi << ") -> (x=" << a << ")" << endl;
-					}
+				}
 				else if (bi < m + n) {
 					ost << "(y=" << bi - m
 							<< ") -> (y=" << a - m << ")" << endl;
-					}
+				}
 				else {
 					bi -= m + n;
 					a -= m + n;
@@ -464,15 +471,16 @@ void permutation_representation_domain::print_with_action(action *A, int *Elt, o
 					ost << bi << "=(" << x1 << "," << y1 << ")" 
 						<< " -> " 
 						<< a << "=(" << x2 << "," << y2 << ")";
-					}
 				}
+			}
 			else {
 				ost << bi << " -> " << a;
-				}
-			if (i < A->base_len() - 1)
+			}
+			if (i < A->base_len() - 1) {
 				ost << ", ";
 			}
 		}
+	}
 	//perm_print(ost, Elt, degree);
 	ost << " : ";
 	Combi.perm_print_offset(ost, Elt, degree, 0 /* offset */,
@@ -493,19 +501,19 @@ void permutation_representation_domain::make_element(int *Elt, int *data, int ve
 	
 	if (f_v) {
 		cout << "permutation_representation_domain::make_element" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "data: ";
 		int_vec_print(cout, data, elt_size_int);
 		cout << endl;
-		}
+	}
 	for (i = 0; i < elt_size_int; i++) {
 		a = data[i];
 		Elt[i] = a;
-		}
+	}
 	if (f_v) {
 		cout << "permutation_representation_domain::make_element done" << endl;
-		}
+	}
 }
 
 

@@ -29,8 +29,6 @@ public:
 
 	surface_domain *Surf; // do not free
 
-	//surface_with_action *Surf_A;
-
 	long int *Arc6;
 	int arc_size; // = 6
 
@@ -488,7 +486,7 @@ public:
 	void line_to_klein_vec(long int *Line_rk, long int *Klein_rk, int len);
 	long int klein_to_wedge(long int klein_rk);
 	void klein_to_wedge_vec(long int *Klein_rk, long int *Wedge_rk, int len);
-	void save_lines_in_three_kinds(const char *fname_csv,
+	void save_lines_in_three_kinds(std::string &fname_csv,
 		long int *Lines_wedge, long int *Lines, long int *Lines_klein, int nb_lines);
 	void find_tritangent_planes_intersecting_in_a_line(int line_idx,
 		int &plane1, int &plane2, int verbose_level);

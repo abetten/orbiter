@@ -212,12 +212,12 @@ void orthogonal::Siegel_Transformation3(int *T,
 		cout << "before perp, the matrix B is:" << endl;
 		print_integer_matrix(cout, B, n, n);
 	}
-	F->perp(n, 2, B, Gram);
+	F->perp(n, 2, B, Gram, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the matrix B is:" << endl;
 		print_integer_matrix(cout, B, n, n);
 	}
-	F->invert_matrix(B, Bv, n);
+	F->invert_matrix(B, Bv, n, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the matrix Bv is:" << endl;
 		print_integer_matrix(cout, B, n, n);
@@ -697,7 +697,7 @@ void orthogonal::create_random_orthogonal_reflection(
 					"before transform_form_matrix" << endl;
 			}
 
-		F->transform_form_matrix(Mtx, Gram_matrix, new_Gram, d);
+		F->transform_form_matrix(Mtx, Gram_matrix, new_Gram, d, 0 /* verbose_level */);
 
 		if (f_v) {
 			cout << "orthogonal::create_random_orthogonal_reflection "
@@ -820,7 +820,7 @@ void orthogonal::make_Siegel_Transformation(int *M, int *v, int *u,
 	if (f_vv) {
 		cout << "Siegel matrix:" << endl;
 		print_integer_matrix_width(cout, M, n, n, n, 2);
-		F->transform_form_matrix(M, Gram, Gram2, n);
+		F->transform_form_matrix(M, Gram, Gram2, n, 0 /* verbose_level */);
 		cout << "transformed Gram matrix:" << endl;
 		print_integer_matrix_width(cout, Gram2, n, n, n, 2);
 		cout << endl;
@@ -1010,7 +1010,7 @@ void orthogonal::Siegel_move_backward(
 		}
 	subspace->Siegel_Transformation(T1,
 			rk1_subspace, rk2_subspace, root, verbose_level - 2);
-	F->invert_matrix(T1, T2, n - 2);
+	F->invert_matrix(T1, T2, n - 2, 0 /* verbose_level */);
 	F->mult_matrix_matrix(v3, T2, v4, 1, n - 2, n - 2,
 			0 /* verbose_level */);
 	v4[n - 2] = v3[n - 2];

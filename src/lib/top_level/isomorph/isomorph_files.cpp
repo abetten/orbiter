@@ -122,7 +122,7 @@ void isomorph::init_solutions(int **Solutions, int *Nb_sol,
 }
 
 void isomorph::count_solutions_from_clique_finder_case_by_case(
-		int nb_files, long int *list_of_cases, const char **fname,
+		int nb_files, long int *list_of_cases, std::string *fname,
 		int verbose_level)
 // Called from isomorph_read_solution_files_from_clique_finder
 {
@@ -194,7 +194,7 @@ void isomorph::count_solutions_from_clique_finder_case_by_case(
 
 
 void isomorph::count_solutions_from_clique_finder(
-		int nb_files, const char **fname, int verbose_level)
+		int nb_files, std::string *fname, int verbose_level)
 // Called from isomorph_read_solution_files_from_clique_finder
 {
 	int f_v = (verbose_level >= 1);
@@ -273,7 +273,7 @@ void isomorph::count_solutions_from_clique_finder(
 
 
 void isomorph::read_solutions_from_clique_finder_case_by_case(
-		int nb_files, long int *list_of_cases, const char **fname,
+		int nb_files, long int *list_of_cases, std::string *fname,
 		int verbose_level)
 // Called from isomorph_read_solution_files_from_clique_finder
 // Called after count_solutions_from_clique_finder
@@ -370,7 +370,7 @@ void isomorph::read_solutions_from_clique_finder_case_by_case(
 
 
 void isomorph::read_solutions_from_clique_finder(
-		int nb_files, const char **fname,
+		int nb_files, std::string *fname,
 		int verbose_level)
 // Called from isomorph_read_solution_files_from_clique_finder
 // Called after count_solutions_from_clique_finder
@@ -419,12 +419,12 @@ void isomorph::read_solutions_from_clique_finder(
 		int **Solutions;
 		int the_case, h; //, u, v;
 		int nb_solutions_total;
-		char fname_summary[1000];
-		char extension[1000];
+		string fname_summary;
+		//char extension[1000];
 		
-		strcpy(fname_summary, fname[i]);
-		chop_off_extension_if_present(fname_summary, extension);
-		strcat(fname_summary, "_summary.csv");
+		fname_summary.assign(fname[i]);
+		chop_off_extension_if_present(fname_summary, ".txt");
+		fname_summary.append("_summary.csv");
 
 		Fio.count_number_of_solutions_in_file_by_case(fname[i],
 			nb_solutions, case_nb, nb_cases, 
@@ -560,7 +560,7 @@ void isomorph::add_solutions_to_database(int *Solutions,
 
 
 void isomorph::build_up_database(int nb_files,
-	const char **fname,
+	std::string *fname,
 	int f_has_final_test_function, 
 	int (*final_test_function)(long int *data, int sz,
 			void *final_test_data, int verbose_level),
@@ -753,7 +753,7 @@ void isomorph::init_cases_from_file_modulus_and_build_up_database(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	char **fname;
+	string *fname;
 	int i;
 	char file_name[1000];
 	
@@ -761,7 +761,7 @@ void isomorph::init_cases_from_file_modulus_and_build_up_database(
 		cout << "isomorph::init_cases_from_file_modulus_"
 				"and_build_up_database modulus = " << modulus << endl;
 		}
-	fname = NEW_pchar(modulus);
+	fname = new string [modulus];
 	if (f_v) {
 		cout << "creating file names" << endl;
 		}
@@ -777,7 +777,7 @@ void isomorph::init_cases_from_file_modulus_and_build_up_database(
 		//sprintf(file_name, "extend_BLT_41_lvl_%d_%d_42_%d_1024.txt",
 		//level, level, i);
 		fname[i] = NEW_char(strlen(file_name) + 1);
-		strcpy(fname[i], file_name);
+		fname[i].assign(file_name);
 		}
 	if (f_vv) {
 		for (i = 0; i < modulus; i++) {
@@ -785,7 +785,7 @@ void isomorph::init_cases_from_file_modulus_and_build_up_database(
 			}
 		}
 	count_solutions(modulus,
-		(const char **) fname,
+		fname,
 		f_get_statistics,
 		f_has_final_test_function,
 		final_test_function,
@@ -797,7 +797,7 @@ void isomorph::init_cases_from_file_modulus_and_build_up_database(
 
 	// now we know N, the number of solutions
 	
-	build_up_database(modulus, (const char **) fname, 
+	build_up_database(modulus, fname,
 		f_has_final_test_function,
 		final_test_function,
 		final_test_data,
@@ -806,10 +806,7 @@ void isomorph::init_cases_from_file_modulus_and_build_up_database(
 	if (f_v) {
 		cout << "deleting file names" << endl;
 		}
-	for (i = 0; i < modulus; i++) {
-		FREE_char(fname[i]);
-		}
-	FREE_pchar(fname);
+	delete [] fname;
 }
 
 void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
@@ -823,7 +820,7 @@ void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	char **fname;
+	string *fname;
 	int i, r, s, bs, nb_files, j, k, h, u;
 	char file_name[1000];
 	
@@ -848,7 +845,7 @@ void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
 		cout << "number of files is " << nb_files << endl;
 		}
 	
-	fname = NEW_pchar(nb_files);
+	fname = new string [nb_files];
 	if (f_v) {
 		cout << "creating file names" << endl;
 		}
@@ -864,8 +861,7 @@ void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
 					prefix.c_str(), level, u, bs);
 			//sprintf(file_name, "extend_BLT_41_lvl_%d_%d_42_%d_1024.txt",
 			// level, level, i);
-			fname[j] = NEW_char(strlen(file_name) + 1);
-			strcpy(fname[j], file_name);
+			fname[j].assign(file_name);
 			j++;
 			}
 		}
@@ -881,7 +877,7 @@ void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
 		}
 	
 	count_solutions(nb_files,
-		(const char **) fname,
+		fname,
 		f_get_statistics,
 		f_has_final_test_function,
 		final_test_function,
@@ -891,7 +887,7 @@ void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
 	// now we know N, the number of solutions
 	
 	
-	build_up_database(nb_files, (const char **) fname, 
+	build_up_database(nb_files, fname,
 		f_has_final_test_function,
 		final_test_function,
 		final_test_data,
@@ -900,13 +896,10 @@ void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
 	if (f_v) {
 		cout << "deleting file names" << endl;
 		}
-	for (i = 0; i < nb_files; i++) {
-		FREE_char(fname[i]);
-		}
-	FREE_pchar(fname);
+	delete [] fname;
 }
 
-void isomorph::count_solutions(int nb_files, const char **fname, 
+void isomorph::count_solutions(int nb_files, std::string *fname,
 	int f_get_statistics, 
 	int f_has_final_test_function, 
 	int (*final_test_function)(long int *data, int sz,
@@ -996,14 +989,14 @@ void isomorph::count_solutions(int nb_files, const char **fname,
 }
 
 void isomorph::get_statistics(int nb_files,
-		const char **fname, int verbose_level)
+		std::string *fname, int verbose_level)
 {
 	int i, the_case, nb_sol, nb_backtrack, nb_backtrack_decision;
 	int nb_points, dt[5], dt_total;
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
-	char fname_summary[1000];
+	string fname_summary;
 	file_io Fio;
 
 	if (f_v) {
@@ -1020,12 +1013,16 @@ void isomorph::get_statistics(int nb_files,
 	for (i = 0; i < nb_files; i++) {
 
 
-		strcpy(fname_summary, fname[i]);
+		fname_summary.assign(fname[i]);
+
+		// ToDo:
+#if 0
 		if (strcmp(fname_summary + strlen(fname_summary) - 4, ".txt")) {
 			cout << "get_statistics: file name does not end in .txt" << endl;
 			return;
 			}
 		strcpy(fname_summary + strlen(fname_summary) - 4, ".summary");
+#endif
 
 		ifstream fp(fname_summary);
 		
@@ -1150,7 +1147,7 @@ void isomorph::evaluate_statistics(int verbose_level)
 
 
 
-void isomorph::count_solutions2(int nb_files, const char **fname, 
+void isomorph::count_solutions2(int nb_files, std::string *fname,
 	int &total_days, int &total_hours, int &total_minutes, 
 	int f_has_final_test_function, 
 	int (*final_test_function)(long int *data, int sz,
@@ -1352,7 +1349,7 @@ void isomorph::write_starter_nb_orbits(int verbose_level)
 		}
 
 	Fio.int_vec_write_csv(flag_orbit_fst, nb_starter,
-			fname_orbits_of_stabilizer_csv.c_str(), "Stab_orbits");
+			fname_orbits_of_stabilizer_csv, "Stab_orbits");
 
 	cout << "isomorph::write_starter_nb_orbits Written file "
 			<< fname_orbits_of_stabilizer_csv << " of size "
@@ -1379,7 +1376,7 @@ void isomorph::read_starter_nb_orbits(int verbose_level)
 			<< fname_orbits_of_stabilizer_csv << " of size "
 			<< Fio.file_size(fname_orbits_of_stabilizer_csv) << endl;
 
-	Fio.int_matrix_read_csv(fname_orbits_of_stabilizer_csv.c_str(),
+	Fio.int_matrix_read_csv(fname_orbits_of_stabilizer_csv,
 			M, m, n, verbose_level);
 	
 	if (m != nb_starter) {

@@ -19,7 +19,7 @@ void isomorph_read_statistic_files(
 	poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix, int level,
-	const char **fname, int nb_files,
+	std::string *fname, int nb_files,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -168,7 +168,9 @@ void isomorph_read_statistic_files(
 		"Dt", 
 		"Dt_in_sec" 
 		};
-	const char *fname_collected = "stats_collected.csv";
+	string fname_collected;
+
+	fname_collected.assign("stats_collected.csv");
 	Fio.int_matrix_write_csv_with_labels(fname_collected,
 			Stats_short, Nb_cases, 6, Column_label);
 
@@ -278,7 +280,7 @@ void isomorph_read_solution_files(
 	action *A_base, action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
-	const char **fname, int nb_files, 
+	std::string *fname, int nb_files,
 	int f_has_final_test_function, 
 	int (*final_test_function)(long int *data, int sz,
 			void *final_test_data, int verbose_level),
@@ -435,7 +437,7 @@ void isomorph_init_solutions_from_memory(
 void isomorph_read_solution_files_from_clique_finder_case_by_case(
 		action *A_base, action *A, poset_classification *gen,
 	int size, std::string &prefix_classify, std::string &prefix_iso, int level,
-	const char **fname, long int *list_of_cases, int nb_files, int verbose_level)
+	std::string *fname, long int *list_of_cases, int nb_files, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_implicit_fusion = FALSE;
@@ -530,7 +532,7 @@ void isomorph_read_solution_files_from_clique_finder_case_by_case(
 void isomorph_read_solution_files_from_clique_finder(
 	action *A_base, action *A, poset_classification *gen,
 	int size, std::string &prefix_classify, std::string &prefix_iso, int level,
-	const char **fname, int nb_files, int verbose_level)
+	std::string *fname, int nb_files, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_implicit_fusion = FALSE;
@@ -922,14 +924,14 @@ void isomorph_identify(
 	action *A_base, action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
-	int identify_nb_files, const char **fname, int *Iso_type, 
+	int identify_nb_files, std::string *fname, int *Iso_type,
 	int f_save, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_implicit_fusion = FALSE;
 	long int *the_set;
 	int set_size;
-	char fname_transporter[1000];
+	string fname_transporter;
 
 
 
@@ -975,7 +977,9 @@ void isomorph_identify(
 			}
 
 
-		sprintf(fname_transporter, "transporter_%s", fname[i]);
+		fname_transporter.assign("transporter_");
+		fname_transporter.append(fname[i]);
+		//sprintf(fname_transporter, "transporter_%s", fname[i]);
 
 
 		if (f_v) {
@@ -1297,8 +1301,12 @@ void isomorph_compute_down_orbits_worker(
 
 		}
 
-	Fio.int_matrix_write_csv("Nb_down_orbits.csv",
-			Nb_orbits, Iso->Reps->count, 2);
+	{
+		string fname;
+
+		fname.assign("Nb_down_orbits.csv");
+		Fio.int_matrix_write_csv(fname, Nb_orbits, Iso->Reps->count, 2);
+	}
 	
 	if (f_v) {
 		cout << "isomorph_compute_down_orbits_worker" << endl;
@@ -1318,8 +1326,12 @@ void isomorph_compute_down_orbits_worker(
 			}
 		}
 	
-	Fio.int_matrix_write_csv("Down_identify.csv",
-			Down_identify, nb_special_orbits, 3);
+	{
+		string fname;
+
+		fname.assign("Down_identify.csv");
+		Fio.int_matrix_write_csv(fname, Down_identify, nb_special_orbits, 3);
+	}
 
 	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
 		FREE_int(Down_orbit_identify[orbit]);

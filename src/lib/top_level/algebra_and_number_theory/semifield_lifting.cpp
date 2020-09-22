@@ -31,7 +31,7 @@ semifield_lifting::semifield_lifting()
 	prev_level_nb_orbits = 0;
 
 	f_prefix = FALSE;
-	prefix = NULL;
+	//prefix = NULL;
 
 	Prev_stabilizer_gens = NULL;
 	Candidates = NULL;
@@ -116,7 +116,7 @@ semifield_lifting::~semifield_lifting()
 
 void semifield_lifting::init_level_three(
 		semifield_level_two *L2,
-		int f_prefix, const char *prefix,
+		int f_prefix, std::string &prefix,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -134,7 +134,7 @@ void semifield_lifting::init_level_three(
 	prev_level_nb_orbits = L2->nb_orbits;
 	Prev_stabilizer_gens = L2->Stabilizer_gens;
 	semifield_lifting::f_prefix = f_prefix;
-	semifield_lifting::prefix = prefix;
+	semifield_lifting::prefix.assign(prefix);
 
 	Gr = NEW_OBJECT(grassmann);
 	Gr->init(level, level - 1, SC->Mtx->GFq, 0/*verbose_level - 10*/);
@@ -2178,7 +2178,7 @@ void semifield_lifting::trace_to_level_two(
 
 void semifield_lifting::deep_search(
 	int orbit_r, int orbit_m,
-	int f_out_path, const char *out_path,
+	int f_out_path, std::string &out_path,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2230,7 +2230,7 @@ void semifield_lifting::deep_search(
 
 void semifield_lifting::deep_search_at_level_three(
 	int orbit_r, int orbit_m,
-	int f_out_path, const char *out_path,
+	int f_out_path, std::string &out_path,
 	int &nb_sol,
 	int verbose_level)
 {
@@ -2239,7 +2239,7 @@ void semifield_lifting::deep_search_at_level_three(
 	int *Basis;
 	//int *pivots;
 	int i;
-	char fname[1000];
+	string fname;
 	file_io Fio;
 
 	if (f_v) {
@@ -2799,7 +2799,7 @@ void semifield_lifting::write_level_info_file(
 		"Go",
 		"Pt"
 		};
-	char fname[1000];
+	string fname;
 
 	create_fname_level_info_file(fname);
 
@@ -2836,7 +2836,7 @@ void semifield_lifting::write_level_info_file(
 void semifield_lifting::read_level_info_file(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname[1000];
+	string fname;
 	long int *M;
 	int m, n, i;
 	file_io Fio;
@@ -2890,7 +2890,7 @@ void semifield_lifting::save_flag_orbits(int verbose_level)
 		cout << "semifield_lifting::save_flag_orbits "
 				"cur_level = " << cur_level << endl;
 	}
-	char fname[1000];
+	string fname;
 	int i;
 	file_io Fio;
 
@@ -2921,7 +2921,7 @@ void semifield_lifting::read_flag_orbits(int verbose_level)
 				"cur_level = " << cur_level
 				<< endl;
 	}
-	char fname[1000];
+	string fname;
 	int i;
 	file_io Fio;
 
@@ -2976,7 +2976,7 @@ void semifield_lifting::save_stabilizers(int verbose_level)
 		cout << "semifield_lifting::save_stabilizers "
 				"cur_level = " << cur_level << endl;
 	}
-	char fname[1000];
+	string fname;
 	int i;
 	file_io Fio;
 
@@ -3006,7 +3006,7 @@ void semifield_lifting::read_stabilizers(int verbose_level)
 		cout << "semifield_lifting::read_stabilizers "
 				"cur_level = " << cur_level << endl;
 	}
-	char fname[1000];
+	string fname;
 	int i;
 	file_io Fio;
 
@@ -3049,76 +3049,92 @@ void semifield_lifting::read_stabilizers(int verbose_level)
 	}
 }
 
-void semifield_lifting::make_file_name_schreier(char *fname,
+void semifield_lifting::make_file_name_schreier(std::string &fname,
 		int level, int orbit_idx)
 {
-	if (f_prefix) {
-		sprintf(fname,
-				"%sL%d_orbit%d_schreier.bin",
-				prefix, level, orbit_idx);
+	char str[1000];
 
+	sprintf(str, "L%d_orbit%d_schreier.csv", level, orbit_idx);
+	if (f_prefix) {
+		fname.assign(prefix);
+		fname.append(str);
 	}
 	else {
-		sprintf(fname,
-				"L%d_orbit%d_schreier.bin",
-				level, orbit_idx);
+		fname.assign(str);
 	}
-
 }
 
-void semifield_lifting::create_fname_level_info_file(char *fname)
+void semifield_lifting::create_fname_level_info_file(std::string &fname)
 {
+	char str[1000];
+
+	sprintf(str, "L%d_info.csv", cur_level);
 	if (f_prefix) {
-		sprintf(fname, "%sL%d_info.csv", prefix, cur_level);
+		fname.assign(prefix);
+		fname.append(str);
 	}
 	else {
-		sprintf(fname, "L%d_info.csv", cur_level);
+		fname.assign(str);
 	}
 }
 
-void semifield_lifting::make_fname_flag_orbits(char *fname)
+void semifield_lifting::make_fname_flag_orbits(std::string &fname)
 {
+	char str[1000];
+
+	sprintf(str, "L%d_flag_orbits.bin", cur_level);
 	if (f_prefix) {
-		sprintf(fname, "%sL%d_flag_orbits.bin",
-				prefix, cur_level);
+		fname.assign(prefix);
+		fname.append(str);
 	}
 	else {
-		sprintf(fname, "L%d_flag_orbits.bin", cur_level);
+		fname.assign(str);
 	}
 }
 
-void semifield_lifting::make_fname_stabilizers(char *fname)
+void semifield_lifting::make_fname_stabilizers(std::string &fname)
 {
+	char str[1000];
+
+	sprintf(str, "L%d_flag_stabilizers.bin", cur_level);
 	if (f_prefix) {
-		sprintf(fname, "%sL%d_stabilizers.bin",
-				prefix, cur_level);
+		fname.assign(prefix);
+		fname.append(str);
 	}
 	else {
-		sprintf(fname, "L%d_stabilizers.bin", cur_level);
+		fname.assign(str);
 	}
 }
 
-void semifield_lifting::make_fname_deep_search_slice_solutions(char *fname,
-		int f_out_path, const char *out_path,
+void semifield_lifting::make_fname_deep_search_slice_solutions(std::string &fname,
+		int f_out_path, std::string &out_path,
 		int orbit_r, int orbit_m)
 {
+	char str[1000];
+
+	sprintf(str, "deep_slice%d_%d_sol.txt", orbit_r, orbit_m);
 	if (f_out_path) {
-		sprintf(fname, "%sdeep_slide%d_%d_sol.txt", out_path, orbit_r, orbit_m);
+		fname.assign(out_path);
+		fname.append(str);
 	}
 	else {
-		sprintf(fname, "deep_slice%d_%d_sol.txt", orbit_r, orbit_m);
+		fname.assign(str);
 	}
 }
 
-void semifield_lifting::make_fname_deep_search_slice_success(char *fname,
-		int f_out_path, const char *out_path,
+void semifield_lifting::make_fname_deep_search_slice_success(std::string &fname,
+		int f_out_path, std::string &out_path,
 		int orbit_r, int orbit_m)
 {
+	char str[1000];
+
+	sprintf(str, "deep_slice%d_%d_suc.txt", orbit_r, orbit_m);
 	if (f_out_path) {
-		sprintf(fname, "%sdeep_slice%d_%d_suc.txt", out_path, orbit_r, orbit_m);
+		fname.assign(out_path);
+		fname.append(str);
 	}
 	else {
-		sprintf(fname, "deep_slice%d_%d_suc.txt", orbit_r, orbit_m);
+		fname.assign(str);
 	}
 }
 

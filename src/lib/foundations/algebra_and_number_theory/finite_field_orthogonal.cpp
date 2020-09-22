@@ -1450,12 +1450,12 @@ void finite_field::Siegel_map_between_singular_points(int *T,
 		cout << "before perp, the matrix B is:" << endl;
 		print_integer_matrix(cout, B, d, d);
 	}
-	perp(d, 2, B, Gram_matrix);
+	perp(d, 2, B, Gram_matrix, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "after perp, the matrix B is:" << endl;
 		print_integer_matrix(cout, B, d, d);
 	}
-	invert_matrix(B, Bv, d);
+	invert_matrix(B, Bv, d, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the matrix Bv = B^{-1} is:" << endl;
 		print_integer_matrix(cout, B, d, d);

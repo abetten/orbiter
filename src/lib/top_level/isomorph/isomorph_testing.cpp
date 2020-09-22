@@ -502,7 +502,7 @@ void isomorph::decomposition_matrix(int verbose_level)
 	fname.append("decomposition_matrix");
 	fname.append(".csv");
 
-	Fio.int_matrix_write_csv(fname.c_str(), M, m, n);
+	Fio.int_matrix_write_csv(fname, M, m, n);
 
 	FREE_int(down_link);
 	FREE_int(M);

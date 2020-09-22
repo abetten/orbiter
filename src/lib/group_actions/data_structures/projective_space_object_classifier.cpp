@@ -303,7 +303,7 @@ void projective_space_object_classifier::classify_objects_using_nauty(
 				M[u * canonical_labeling_len + v] = Cumulative_canonical_labeling[u][v];
 			}
 		}
-		Fio.lint_matrix_write_csv(canonical_labeling_fname.c_str(),
+		Fio.lint_matrix_write_csv(canonical_labeling_fname,
 				M, Cumulative_canonical_labeling.size(), canonical_labeling_len);
 
 		cout << "Written file " << canonical_labeling_fname << " of size " << Fio.file_size(canonical_labeling_fname) << endl;
@@ -329,7 +329,7 @@ void projective_space_object_classifier::classify_objects_using_nauty(
 			M[u] = Cumulative_Ago[u];
 		}
 		Fio.lint_vec_write_csv(M, Cumulative_Ago.size(),
-				ago_fname.c_str(), "Ago");
+				ago_fname, "Ago");
 
 		tally T;
 
@@ -378,7 +378,7 @@ void projective_space_object_classifier::classify_objects_using_nauty(
 				M[u * data_len + v] = Cumulative_data[u][v];
 			}
 		}
-		Fio.lint_matrix_write_csv(data_fname.c_str(),
+		Fio.lint_matrix_write_csv(data_fname,
 				M, Cumulative_data.size(), data_len);
 
 		cout << "Written file " << data_fname << " of size " << Fio.file_size(data_fname) << endl;
@@ -432,11 +432,11 @@ void projective_space_object_classifier::classify_objects_using_nauty(
 		if (f_v) {
 			cout << "projective_space_object_classifier::classify_objects_using_nauty before File_idx->save_csv" << endl;
 		}
-		File_idx->save_csv(data_fname1.c_str(), TRUE, verbose_level);
+		File_idx->save_csv(data_fname1, TRUE, verbose_level);
 		if (f_v) {
 			cout << "projective_space_object_classifier::classify_objects_using_nauty before Obj_idx->save_csv" << endl;
 		}
-		Obj_idx->save_csv(data_fname2.c_str(), TRUE, verbose_level);
+		Obj_idx->save_csv(data_fname2, TRUE, verbose_level);
 		if (f_v) {
 			cout << "projective_space_object_classifier::classify_objects_using_nauty after Obj_idx->save_csv" << endl;
 		}
@@ -528,7 +528,7 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 			"Reading the file " << input_data << endl;
 	SoS->init_from_file(
 			PA->P->N_points /* underlying_set_size */,
-			input_data.c_str(), verbose_level);
+			input_data, verbose_level);
 	cout << "Read the file " << input_data << endl;
 
 	int h;
@@ -544,7 +544,7 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 		cout << "projective_space_object_classifier::process_multiple_objects_from_file "
 				"Reading spread table from file "
 			<< input_data2 << endl;
-		Fio.lint_matrix_read_csv(input_data2.c_str(),
+		Fio.lint_matrix_read_csv(input_data2,
 				Spread_table, nb_spreads, spread_size,
 				0 /* verbose_level */);
 		cout << "Reading spread table from file "
@@ -576,7 +576,7 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 		replace_extension_with(load_canonical_labeling_fname, "_can_lab.csv");
 
 
-		Fio.lint_matrix_read_csv(load_canonical_labeling_fname.c_str(),
+		Fio.lint_matrix_read_csv(load_canonical_labeling_fname,
 				Known_canonical_labeling, m, canonical_labeling_len, verbose_level);
 
 		if (m != SoS->nb_sets) {
@@ -595,7 +595,7 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 
 		load_ago_fname.assign(input_data);
 		replace_extension_with(load_ago_fname, "_ago.csv");
-		Fio.lint_matrix_read_csv(load_ago_fname.c_str(),
+		Fio.lint_matrix_read_csv(load_ago_fname,
 				Known_ago, m, n, verbose_level);
 
 		if (n != 1) {
@@ -815,7 +815,7 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 				M[u * canonical_labeling_len + v] = The_canonical_labeling[u][v];
 			}
 		}
-		Fio.lint_matrix_write_csv(canonical_labeling_fname.c_str(),
+		Fio.lint_matrix_write_csv(canonical_labeling_fname,
 				M, The_canonical_labeling.size(), canonical_labeling_len);
 
 		FREE_lint(M);
@@ -838,7 +838,7 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 			M[u] = Ago[u];
 		}
 		Fio.lint_vec_write_csv(M, The_canonical_labeling.size(),
-				ago_fname.c_str(), "Ago");
+				ago_fname, "Ago");
 
 		FREE_lint(M);
 	}
@@ -972,8 +972,7 @@ void projective_space_object_classifier::process_set_of_points_from_file(
 	long int *the_set;
 	int set_size;
 
-	Fio.read_set_from_file(input_data.c_str(),
-		the_set, set_size, verbose_level);
+	Fio.read_set_from_file(input_data, the_set, set_size, verbose_level);
 
 	OiP = PA->create_object_from_int_vec(t_PTS,
 			input_data, CB->n,

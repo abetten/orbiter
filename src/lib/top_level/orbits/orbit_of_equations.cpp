@@ -687,7 +687,7 @@ int orbit_of_equations::search_data(int *data, int &idx)
 	}
 }
 
-void orbit_of_equations::save_csv(const char *fname, int verbose_level)
+void orbit_of_equations::save_csv(std::string &fname, int verbose_level)
 {
 	int i;
 	int *Data;

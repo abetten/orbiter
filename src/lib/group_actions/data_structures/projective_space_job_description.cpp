@@ -96,7 +96,7 @@ projective_space_job_description::projective_space_job_description()
 	ideal_degree = 0;
 
 	f_intersect_with_set_from_file = FALSE;
-	intersect_with_set_from_file_fname = NULL;
+	//intersect_with_set_from_file_fname = NULL;
 
 	f_arc_with_given_set_as_s_lines_after_dualizing = FALSE;
 	arc_size = 0;
@@ -341,7 +341,7 @@ int projective_space_job_description::read_arguments(
 		}
 		else if (strcmp(argv[i], "-intersect_with_set_from_file") == 0) {
 			f_intersect_with_set_from_file = TRUE;
-			intersect_with_set_from_file_fname = argv[++i];
+			intersect_with_set_from_file_fname.assign(argv[++i]);
 			cout << "projective_space_job_description::read_arguments -intersect_with_set_from_file " << intersect_with_set_from_file_fname << endl;
 		}
 		else if (strcmp(argv[i], "-arc_with_given_set_as_s_lines_after_dualizing") == 0) {

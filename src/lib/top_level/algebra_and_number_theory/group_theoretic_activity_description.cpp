@@ -45,11 +45,11 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_orbit_of = FALSE;
 	orbit_of_idx = 0;
 	f_orbits_on_set_system_from_file = FALSE;
-	orbits_on_set_system_from_file_fname = NULL;
+	//orbits_on_set_system_from_file_fname = NULL;
 	orbits_on_set_system_first_column = 0;
 	orbits_on_set_system_number_of_columns = 0;
 	f_orbit_of_set_from_file = FALSE;
-	orbit_of_set_from_file_fname = NULL;
+	//orbit_of_set_from_file_fname = NULL;
 	f_search_subgroup = FALSE;
 	f_find_singer_cycle = FALSE;
 	f_search_element_of_order = FALSE;
@@ -309,13 +309,13 @@ int group_theoretic_activity_description::read_arguments(
 		}
 		else if (strcmp(argv[i], "-orbit_of_set_from_file") == 0) {
 			f_orbit_of_set_from_file = TRUE;
-			orbit_of_set_from_file_fname = argv[++i];
+			orbit_of_set_from_file_fname.assign(argv[++i]);
 			cout << "-orbit_of_set_from_file"
 					<< orbit_of_set_from_file_fname << endl;
 		}
 		else if (strcmp(argv[i], "-orbits_on_set_system_from_file") == 0) {
 			f_orbits_on_set_system_from_file = TRUE;
-			orbits_on_set_system_from_file_fname = argv[++i];
+			orbits_on_set_system_from_file_fname.assign(argv[++i]);
 			orbits_on_set_system_first_column = atoi(argv[++i]);
 			orbits_on_set_system_number_of_columns = atoi(argv[++i]);
 			cout << "-orbits_on_set_system_from_file"

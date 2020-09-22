@@ -83,7 +83,7 @@ void int_vector::init_permutation_from_string(const char *s)
 	FREE_int(perm);
 }
 
-void int_vector::read_ascii_file(const char *fname)
+void int_vector::read_ascii_file(std::string &fname)
 {
 	int verbose_level = 0;
 	long int *the_set;
@@ -95,7 +95,7 @@ void int_vector::read_ascii_file(const char *fname)
 	FREE_lint(the_set);
 }
 
-void int_vector::read_binary_file_int4(const char *fname)
+void int_vector::read_binary_file_int4(std::string &fname)
 {
 	int verbose_level = 0;
 	long int *the_set;
@@ -200,21 +200,21 @@ void int_vector::sort_and_remove_duplicates()
 	Sorting.lint_vec_sort_and_remove_duplicates(M, m);
 }
 
-void int_vector::write_to_ascii_file(const char *fname)
+void int_vector::write_to_ascii_file(std::string &fname)
 {
 	file_io Fio;
 
 	Fio.write_set_to_file(fname, M, m, 0 /*verbose_level*/);
 }
 
-void int_vector::write_to_binary_file_int4(const char *fname)
+void int_vector::write_to_binary_file_int4(std::string &fname)
 {
 	file_io Fio;
 
 	Fio.write_set_to_file_as_int4(fname, M, m, 0 /*verbose_level*/);
 }
 
-void int_vector::write_to_csv_file(const char *fname, const char *label)
+void int_vector::write_to_csv_file(std::string &fname, const char *label)
 {
 	file_io Fio;
 

@@ -332,8 +332,7 @@ void klein_correspondence::init(finite_field *F,
 
 	nb_pts_PG = Gg.nb_PG_elements(d - 1, q);
 	if (f_v) {
-		cout << "klein_correspondence::init "
-				"nb_pts_PG = " << nb_pts_PG << endl;
+		cout << "klein_correspondence::init nb_pts_PG = " << nb_pts_PG << endl;
 	}
 
 #if 0
@@ -415,10 +414,39 @@ long int klein_correspondence::point_on_quadric_embedded_in_P5(long int pt)
 
 long int klein_correspondence::line_to_point_on_quadric(long int line_rk, int verbose_level)
 {
-	int basis_line[8]; // [2 * 4]
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "klein_correspondence::line_to_point_on_quadric" << endl;
+	}
 	int v6[6];
-	int *x4, *y4, a, b, c, val;
 	long int point_rk;
+
+	line_to_Pluecker(line_rk, v6, verbose_level);
+
+	point_rk = O->rank_point(v6, 1, 0 /* verbose_level */);
+	if (FALSE) {
+		cout << "klein_correspondence::line_to_point_on_quadric line_rk=" << line_rk
+				<< " / " << P3->N_lines << " v6 : ";
+		int_vec_print(cout, v6, 6);
+		cout << " : point_rk=" << point_rk << endl;
+	}
+
+	if (f_v) {
+		cout << "klein_correspondence::line_to_point_on_quadric done" << endl;
+	}
+	return point_rk;
+}
+
+void klein_correspondence::line_to_Pluecker(long int line_rk, int *v6, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "klein_correspondence::line_to_Pluecker" << endl;
+	}
+	int basis_line[8]; // [2 * 4]
+	int *x4, *y4, a, b, c, val;
 
 	P3->unrank_line(basis_line, line_rk);
 	x4 = basis_line;
@@ -436,42 +464,63 @@ long int klein_correspondence::line_to_point_on_quadric(long int line_rk, int ve
 	//cout << "a=" << a << " b=" << b << " c=" << c << endl;
 	//cout << "val=" << val << endl;
 	if (val) {
-		cout << "klein_correspondence::line_to_point_on_quadric point does "
+		cout << "klein_correspondence::line_to_Pluecker point does "
 				"not lie on quadric" << endl;
 		exit(1);
 	}
 	//j = P5->rank_point(v6);
-	point_rk = O->rank_point(v6, 1, 0 /* verbose_level */);
-	if (FALSE) {
-		cout << "klein_correspondence::line_to_point_on_quadric line_rk=" << line_rk
-				<< " / " << P3->N_lines << " v6 : ";
-		int_vec_print(cout, v6, 6);
-		cout << " : point_rk=" << point_rk << endl;
+	if (f_v) {
+		cout << "klein_correspondence::line_to_Pluecker done" << endl;
 	}
-
-	return point_rk;
 }
 
 long int klein_correspondence::point_on_quadric_to_line(long int point_rk, int verbose_level)
 {
-	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
-	int basis_line[8]; // [2 * 4]
-	int v6[6];
-	//int *X4, *Y4, a, b, c, val;
-	long int line_rk = 0;
-	int p12, p34, p13, p24, p14, p23;
-	int x2, x3, x4;
-	int y2, y3, y4;
 
 	if (f_v) {
-		cout << "klein_correspondence::point_on_quadric_to_line point_rk=" << point_rk << endl;
+		cout << "klein_correspondence::point_on_quadric_to_line" << endl;
 	}
+	int v6[6];
+	int basis_line[8]; // [2 * 4]
+	long int line_rk = 0;
+
 	O->unrank_point(v6, 1, point_rk, 0);
 	if (f_v) {
 		cout << "klein_correspondence::point_on_quadric_to_line v6=";
 		int_vec_print(cout, v6, 6);
 		cout << endl;
+	}
+
+	Pluecker_to_line(v6, basis_line, verbose_level);
+
+	line_rk = P3->rank_line(basis_line);
+	if (f_v) {
+		cout << "klein_correspondence::point_on_quadric_to_line "
+				"point_rk=" << point_rk << " line_rk=" << line_rk << " done" << endl;
+	}
+	if (line_rk >= P3->N_lines) {
+		cout << "klein_correspondence::point_on_quadric_to_line "
+				"line_rk >= P3->N_lines" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "klein_correspondence::point_on_quadric_to_line done" << endl;
+	}
+	return line_rk;
+}
+
+void klein_correspondence::Pluecker_to_line(int *v6, int *basis_line, int verbose_level)
+{
+	//verbose_level = 1;
+	int f_v = (verbose_level >= 1);
+	int p12, p34, p13, p24, p14, p23;
+	int x2, x3, x4;
+	int y2, y3, y4;
+
+	if (f_v) {
+		cout << "klein_correspondence::Pluecker_to_line" << endl;
 	}
 
 	p12 = v6[0];
@@ -486,7 +535,7 @@ long int klein_correspondence::point_on_quadric_to_line(long int point_rk, int v
 	if (p12 == 0 && p13 == 0 && p14 == 0) {
 		// this means that x1 = 0
 		if (f_v) {
-			cout << "klein_correspondence::point_on_quadric_to_line x1=0" << endl;
+			cout << "klein_correspondence::Pluecker_to_line x1=0" << endl;
 		}
 
 		if (p23 == 0 && p24 == 0) {
@@ -514,7 +563,7 @@ long int klein_correspondence::point_on_quadric_to_line(long int point_rk, int v
 		// at least one of p12, p13, p14 is nonzero,
 		// which means that x1 \neq 0
 		if (f_v) {
-			cout << "klein_correspondence::point_on_quadric_to_line x1=1" << endl;
+			cout << "klein_correspondence::Pluecker_to_line x1=1" << endl;
 		}
 
 		y2 = p12;
@@ -549,17 +598,10 @@ long int klein_correspondence::point_on_quadric_to_line(long int point_rk, int v
 		}
 
 	}
-
-	line_rk = P3->rank_line(basis_line);
 	if (f_v) {
-		cout << "klein_correspondence::point_on_quadric_to_line point_rk=" << point_rk << " line_rk=" << line_rk << " done" << endl;
-	}
-	if (line_rk >= P3->N_lines) {
-		cout << "klein_correspondence::point_on_quadric_to_line line_rk >= P3->N_lines" << endl;
-		exit(1);
+		cout << "klein_correspondence::Pluecker_to_line done" << endl;
 	}
 
-	return line_rk;
 }
 
 
@@ -706,7 +748,7 @@ void klein_correspondence::identify_external_lines_and_spreads(
 			exit(1);
 		}
 		int_vec_copy(basis_elliptic_quadric, basis, 4 * d);
-		F->perp(d, 4, basis, Form);
+		F->perp(d, 4, basis, Form, 0 /* verbose_level */);
 		int_vec_copy(
 				basis + 4 * d,
 				basis_external_line,
@@ -742,8 +784,158 @@ void klein_correspondence::identify_external_lines_and_spreads(
 }
 
 
-	//long int *Line_to_point_on_quadric; // [P3->N_lines]
-	//long int *Point_on_quadric_to_line; // [P3->N_lines]
+void klein_correspondence::reverse_isomorphism(int *A6, int *A4, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int A6_copy[36];
+	int A[16];
+	int Av[16];
+	int B[16];
+	int C[16];
+	int B1[16];
+	int C1[16];
+	int D[16];
+	int i, u1, u2;
+
+	if (f_v) {
+		cout << "klein_correspondence::reverse_isomorphism" << endl;
+	}
+
+	if (f_v) {
+		cout << "A6=" << endl;
+		int_matrix_print(A6, 6, 6);
+	}
+
+
+#if 0
+	int Basis1[] = {
+			1,0,0,0,0,0,
+			0,1,0,0,0,0,
+			0,0,1,0,0,0,
+			0,0,0,1,0,0,
+			0,0,0,0,1,0,
+			0,0,0,0,0,1,
+	};
+	int Basis2[36];
+	int Image[36];
+	int Image2[36];
+	int v[6];
+	int w[6];
+	sorting Sorting;
+
+	for (i = 0; i < 6; i++) {
+		F->wedge_to_klein(Basis1 + i * 6, Basis2 + i * 6);
+	}
+
+	F->mult_matrix_matrix(Basis2, A6, Image, 6, 6, 6, 0 /* verbose_level*/);
+	for (i = 0; i < 6; i++) {
+		F->klein_to_wedge(Image + i * 6, Image2 + i * 6);
+	}
+#endif
+
+#if 1
+	int_vec_copy(A6, A6_copy, 36);
+
+	for (i = 0; i < 6; i++) {
+		u1 = A6_copy[3 * 6 + i];
+		u2 = F->negate(u1);
+		A6_copy[3 * 6 + i] = u2;
+	}
+
+	for (i = 0; i < 6; i++) {
+		u1 = A6_copy[i * 6 + 3];
+		u2 = F->negate(u1);
+		A6_copy[i * 6 + 3] = u2;
+	}
+	if (f_v) {
+		cout << "A6_copy=" << endl;
+		int_matrix_print(A6_copy, 6, 6);
+	}
+#endif
+
+	// 12,34:
+	Pluecker_to_line(A6_copy, A, 0 /* verbose_level*/);
+	Pluecker_to_line(A6_copy + 1 * 6, A + 8, 0 /* verbose_level*/);
+
+	// 13,24
+	Pluecker_to_line(A6_copy + 2 * 6, B, 0 /* verbose_level*/);
+	Pluecker_to_line(A6_copy + 3 * 6, B + 8, 0 /* verbose_level*/);
+
+	// 14,23
+	Pluecker_to_line(A6_copy + 4 * 6, C, 0 /* verbose_level*/);
+	Pluecker_to_line(A6_copy + 5 * 6, C + 8, 0 /* verbose_level*/);
+
+	if (f_v) {
+		cout << "A=" << endl;
+		int_matrix_print(A, 4, 4);
+		cout << "B=" << endl;
+		int_matrix_print(B, 4, 4);
+		cout << "C=" << endl;
+		int_matrix_print(C, 4, 4);
+	}
+
+	F->invert_matrix(A, Av, 4, 0 /* verbose_level*/);
+	F->invert_matrix(A, Av, 4, 0 /* verbose_level*/);
+
+	F->mult_matrix_matrix(Av, B, B1, 4, 4, 4, 0 /* verbose_level*/);
+	F->mult_matrix_matrix(Av, C, C1, 4, 4, 4, 0 /* verbose_level*/);
+
+	if (f_v) {
+		cout << "B1=" << endl;
+		int_matrix_print(B1, 4, 4);
+		cout << "C1=" << endl;
+		int_matrix_print(C1, 4, 4);
+	}
+	int a, b, c, d, e, f, g, h;
+	a = B1[0 * 4 + 0];
+	b = B1[0 * 4 + 1];
+	c = B1[2 * 4 + 0];
+	d = B1[2 * 4 + 1];
+	e = B1[1 * 4 + 2];
+	f = B1[1 * 4 + 3];
+	g = B1[3 * 4 + 2];
+	h = B1[3 * 4 + 3];
+
+	int_vec_zero(D, 16);
+	D[0 * 4 + 0] = a;
+	D[0 * 4 + 1] = b;
+	D[1 * 4 + 0] = c;
+	D[1 * 4 + 1] = d;
+	D[2 * 4 + 2] = e;
+	D[2 * 4 + 3] = f;
+	D[3 * 4 + 2] = g;
+	D[3 * 4 + 3] = h;
+
+	if (f_v) {
+		cout << "D=" << endl;
+		int_matrix_print(D, 4, 4);
+	}
+
+	F->mult_matrix_matrix(D, A, A4, 4, 4, 4, 0 /* verbose_level*/);
+
+	int A6b[36];
+
+	//F->exterior_square(A4, A6b, 4, 0 /* verbose_level*/);
+	F->lift_to_Klein_quadric(A4, A6b, 0 /* verbose_level*/);
+
+	if (f_v) {
+		cout << "A6b=" << endl;
+		int_matrix_print(A6b, 6, 6);
+	}
+
+
+	if (!F->test_if_vectors_are_projectively_equal(A6, A6b, 36)) {
+		cout << "matrices are not projectively equal" << endl;
+		exit(1);
+	}
+	else {
+		cout << "matrices are projectively the same, success" << endl;
+	}
+
+	if (f_v) {
+		cout << "klein_correspondence::reverse_isomorphism done" << endl;
+	}
+}
 
 
 }}

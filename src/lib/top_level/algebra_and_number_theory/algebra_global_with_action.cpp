@@ -1495,7 +1495,7 @@ void algebra_global_with_action::do_eigenstuff(int q, int size, int *Data, int v
 		cout << "rank = " << nb_base_cols << endl;
 
 		Fq.matrix_get_kernel(Bt, size, size, base_cols, nb_base_cols,
-			kernel_m, kernel_n, kernel);
+			kernel_m, kernel_n, kernel, 0 /* verbose_level */);
 		cout << "kernel = left eigenvectors:" << endl;
 		print_integer_matrix_width(cout, kernel,
 				size, kernel_n, kernel_n, Fq.log10_of_q);

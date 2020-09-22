@@ -39,7 +39,7 @@ create_file_description::create_file_description()
 	f_split = FALSE;
 	split_m = 0;
 	f_read_cases = FALSE;
-	read_cases_fname = NULL;
+	//read_cases_fname = NULL;
 	f_read_cases_text = FALSE;
 	read_cases_column_of_case = 0;
 	read_cases_column_of_fname = 0;
@@ -80,7 +80,7 @@ int create_file_description::read_arguments(
 		}
 		else if (strcmp(argv[i], "-read_cases_text") == 0) {
 			f_read_cases_text = TRUE;
-			read_cases_fname = argv[++i];
+			read_cases_fname.assign(argv[++i]);
 			read_cases_column_of_case = atoi(argv[++i]);
 			read_cases_column_of_fname = atoi(argv[++i]);
 			cout << "-read_cases_text " << read_cases_fname << " "

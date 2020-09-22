@@ -116,7 +116,7 @@ interface_cryptography::interface_cryptography()
 	//cout << "interface_cryptography::interface_cryptography 1h" << endl;
 	f_random = FALSE;
 	random_nb = 0;
-	random_fname_csv = NULL;
+	//random_fname_csv = NULL;
 	f_random_last = FALSE;
 	random_last_nb = 0;
 	//cout << "interface_cryptography::interface_cryptography 1i" << endl;
@@ -773,7 +773,7 @@ void interface_cryptography::read_arguments(int argc, const char **argv, int i0,
 		else if (strcmp(argv[i], "-random") == 0) {
 			f_random = TRUE;
 			random_nb = atoi(argv[++i]);
-			random_fname_csv = argv[++i];
+			random_fname_csv.assign(argv[++i]);
 			cout << "-random " << random_nb << " " << random_fname_csv << endl;
 		}
 		else if (strcmp(argv[i], "-random_last") == 0) {
@@ -1246,16 +1246,19 @@ void interface_cryptography::do_trace(int q, int verbose_level)
 	int_vec_print_fully(cout, T1, nb_T1);
 	cout << endl;
 
-	char fname_csv[1000];
+	char str[1000];
+	string fname_csv;
 	file_io Fio;
 
-	snprintf(fname_csv, 1000, "F_q%d_trace_0.csv", q);
+	snprintf(str, 1000, "F_q%d_trace_0.csv", q);
+	fname_csv.assign(str);
 	Fio.int_vec_write_csv(T0, nb_T0,
 			fname_csv, "Trace_0");
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 
-	snprintf(fname_csv, 1000, "F_q%d_trace_1.csv", q);
+	snprintf(str, 1000, "F_q%d_trace_1.csv", q);
+	fname_csv.assign(str);
 	Fio.int_vec_write_csv(T1, nb_T1,
 			fname_csv, "Trace_1");
 	cout << "written file " << fname_csv << " of size "
@@ -1306,15 +1309,18 @@ void interface_cryptography::do_norm(int q, int verbose_level)
 	cout << endl;
 
 
-	char fname_csv[1000];
+	char str[1000];
+	string fname_csv;
 	file_io Fio;
 
-	snprintf(fname_csv, 1000, "F_q%d_norm_0.csv", q);
+	snprintf(str, 1000, "F_q%d_norm_0.csv", q);
+	fname_csv.assign(str);
 	Fio.int_vec_write_csv(T0, nb_T0,
 			fname_csv, "Norm_0");
 	cout << "written file " << fname_csv << " of size " << Fio.file_size(fname_csv) << endl;
 
-	snprintf(fname_csv, 1000, "F_q%d_norm_1.csv", q);
+	snprintf(str, 1000, "F_q%d_norm_1.csv", q);
+	fname_csv.assign(str);
 	Fio.int_vec_write_csv(T1, nb_T1,
 			fname_csv, "Norm_1");
 	cout << "written file " << fname_csv << " of size " << Fio.file_size(fname_csv) << endl;
@@ -2845,10 +2851,12 @@ void interface_cryptography::make_2D_plot(
 		y = orbit[h + 1];
 		M[x * m + y] = 1;
 	}
-	char fname[1000];
+	char str[1000];
+	string fname;
 	file_io Fio;
 
-	snprintf(fname, 1000, "orbit_cnt%d_m%d_a%d_c%d.csv", cnt, m, a, c);
+	snprintf(str, 1000, "orbit_cnt%d_m%d_a%d_c%d.csv", cnt, m, a, c);
+	fname.assign(str);
 	Fio.int_matrix_write_csv(fname, M, m, m);
 
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -2873,7 +2881,7 @@ void interface_cryptography::do_random_last(int random_nb, int verbose_level)
 
 }
 
-void interface_cryptography::do_random(int random_nb, const char *fname_csv, int verbose_level)
+void interface_cryptography::do_random(int random_nb, std::string &fname_csv, int verbose_level)
 {
 	int i;
 	int *R;

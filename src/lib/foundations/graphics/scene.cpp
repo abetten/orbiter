@@ -5614,12 +5614,12 @@ int scene::scan1(int argc, const char **argv, int &i, int verbose_level)
 	}
 	else if (strcmp(argv[i], "-point_list_from_csv_file") == 0) {
 		cout << "-point_list_from_csv_file" << endl;
-		const char *fname;
+		string fname;
 		double *M;
 		int m, n, h;
 		file_io Fio;
 
-		fname = argv[++i];
+		fname.assign(argv[++i]);
 		Fio.double_matrix_read_csv(fname, M,
 				m, n, verbose_level);
 		cout << "The file " << fname << " contains " << m << " point coordiunates, each with " << n << " coordinates" << endl;
@@ -5646,12 +5646,12 @@ int scene::scan1(int argc, const char **argv, int &i, int verbose_level)
 	}
 	else if (strcmp(argv[i], "-line_through_two_points_recentered_from_csv_file") == 0) {
 		cout << "-line_through_two_points_recentered_from_csv_file" << endl;
-		const char *fname;
+		string fname;
 		double *M;
 		int m, n, h;
 		file_io Fio;
 
-		fname = argv[++i];
+		fname.assign(argv[++i]);
 		Fio.double_matrix_read_csv(fname, M,
 				m, n, verbose_level);
 		cout << "The file " << fname << " contains " << m << " point coordiunates, each with " << n << " coordinates" << endl;
@@ -5666,12 +5666,12 @@ int scene::scan1(int argc, const char **argv, int &i, int verbose_level)
 	}
 	else if (strcmp(argv[i], "-line_through_two_points_from_csv_file") == 0) {
 		cout << "-line_through_two_points_from_csv_file" << endl;
-		const char *fname;
+		string fname;
 		double *M;
 		int m, n, h;
 		file_io Fio;
 
-		fname = argv[++i];
+		fname.assign(argv[++i]);
 		Fio.double_matrix_read_csv(fname, M,
 				m, n, verbose_level);
 		cout << "The file " << fname << " contains " << m << " point coordiunates, each with " << n << " coordinates" << endl;

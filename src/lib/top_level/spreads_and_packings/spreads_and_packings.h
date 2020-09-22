@@ -839,8 +839,8 @@ public:
 	void make_spread(long int *data, int type_of_spread, int verbose_level);
 	void make_spread_from_q_clan(long int *data, int type_of_spread,
 		int verbose_level);
-	void read_and_print_spread(const char *fname, int verbose_level);
-	void HMO(const char *fname, int verbose_level);
+	void read_and_print_spread(std::string &fname, int verbose_level);
+	void HMO(std::string &fname, int verbose_level);
 	void get_spread_matrices(int *F, int *G, long int *data, int verbose_level);
 	void print_spread(std::ostream &ost, long int *data, int sz);
 	void report2(isomorph &Iso, int verbose_level);

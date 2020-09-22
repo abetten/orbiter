@@ -168,7 +168,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
 		//sprintf(fname_bin, "%sIncma_in_%d_%d.bin",
 		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		Fio.int_matrix_write_csv(fname_csv.c_str(), Incma, nb_rows, nb_cols);
+		Fio.int_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
 
 		for (i = 0; i < nb_rows + nb_cols; i++) {
 			vertex_labeling[i] = i;
@@ -285,7 +285,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
 		//sprintf(fname_bin, "%sIncma_out_%d_%d.bin",
 		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		Fio.int_matrix_write_csv(fname_csv.c_str(), Incma_out, nb_rows, nb_cols);
+		Fio.int_matrix_write_csv(fname_csv, Incma_out, nb_rows, nb_cols);
 
 
 		colored_graph *CG;

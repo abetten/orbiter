@@ -25,6 +25,9 @@ void finite_field::reduce_mod_subspace_and_get_coefficient_vector(
 	int i, idx;
 
 	if (f_v) {
+		cout << "finite_field::reduce_mod_subspace_and_get_coefficient_vector" << endl;
+	}
+	if (f_vv) {
 		cout << "finite_field::reduce_mod_subspace_and_get_coefficient_vector: v=";
 		int_vec_print(cout, v, len);
 		cout << endl;
@@ -55,7 +58,7 @@ void finite_field::reduce_mod_subspace_and_get_coefficient_vector(
 			}
 		}
 	}
-	if (f_v) {
+	if (f_vv) {
 		cout << "finite_field::reduce_mod_subspace_and_get_coefficient_vector "
 				"after: v=";
 		int_vec_print(cout, v, len);
@@ -63,6 +66,9 @@ void finite_field::reduce_mod_subspace_and_get_coefficient_vector(
 		cout << "coefficients=";
 		int_vec_print(cout, coefficients, k);
 		cout << endl;
+	}
+	if (f_v) {
+		cout << "finite_field::reduce_mod_subspace_and_get_coefficient_vector done" << endl;
 	}
 }
 
@@ -75,6 +81,9 @@ void finite_field::reduce_mod_subspace(int k,
 	int i, idx;
 
 	if (f_v) {
+		cout << "finite_field::reduce_mod_subspace" << endl;
+	}
+	if (f_vv) {
 		cout << "finite_field::reduce_mod_subspace before: v=";
 		int_vec_print(cout, v, len);
 		cout << endl;
@@ -96,10 +105,13 @@ void finite_field::reduce_mod_subspace(int k,
 			}
 		}
 	}
-	if (f_v) {
+	if (f_vv) {
 		cout << "finite_field::reduce_mod_subspace after: v=";
 		int_vec_print(cout, v, len);
 		cout << endl;
+	}
+	if (f_v) {
+		cout << "finite_field::reduce_mod_subspace done" << endl;
 	}
 }
 
@@ -108,10 +120,13 @@ int finite_field::is_contained_in_subspace(int k,
 	int *v, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
+	int f_vv = (verbose_level >= 2);
 	int i;
 
 	if (f_v) {
+		cout << "finite_field::is_contained_in_subspace" << endl;
+	}
+	if (f_vv) {
 		cout << "finite_field::is_contained_in_subspace testing v=";
 		int_vec_print(cout, v, len);
 		cout << endl;
@@ -120,16 +135,19 @@ int finite_field::is_contained_in_subspace(int k,
 			base_cols, v, verbose_level - 1);
 	for (i = 0; i < len; i++) {
 		if (v[i]) {
-			if (f_v) {
+			if (f_vv) {
 				cout << "finite_field::is_contained_in_subspace "
 						"is NOT in the subspace" << endl;
 			}
 			return FALSE;
 		}
 	}
-	if (f_v) {
+	if (f_vv) {
 		cout << "finite_field::is_contained_in_subspace "
 				"is contained in the subspace" << endl;
+	}
+	if (f_v) {
+		cout << "finite_field::is_contained_in_subspace done" << endl;
 	}
 	return TRUE;
 }
@@ -532,6 +550,9 @@ int finite_field::is_subspace(int d, int dim_U,
 	ret = TRUE;
 done:
 	FREE_int(Basis);
+	if (f_v) {
+		cout << "finite_field::is_subspace done" << endl;
+	}
 	return ret;
 }
 

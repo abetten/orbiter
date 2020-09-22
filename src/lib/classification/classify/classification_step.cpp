@@ -205,12 +205,12 @@ void classification_step::read_file(ifstream &fp,
 	}
 }
 
-void classification_step::generate_source_code(const char *fname_base,
+void classification_step::generate_source_code(std::string &fname_base,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string fname;
-	const char *prefix;
+	string prefix;
 	int orbit_index;
 
 	if (f_v) {
@@ -219,7 +219,7 @@ void classification_step::generate_source_code(const char *fname_base,
 	fname.assign(fname_base);
 	fname.append(".cpp");
 
-	prefix = fname_base;
+	prefix.assign(fname_base);
 
 	{
 		ofstream f(fname);

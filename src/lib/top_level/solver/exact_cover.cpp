@@ -37,7 +37,7 @@ void exact_cover::null()
 	early_test_func_data = NULL;
 
 	f_randomized = FALSE;
-	random_permutation_fname = NULL;
+	//random_permutation_fname = NULL;
 	random_permutation = NULL;
 }
 
@@ -55,8 +55,8 @@ void exact_cover::freeself()
 void exact_cover::init_basic(void *user_data, 
 	action *A_base, action *A_on_blocks, 
 	int target_size, int starter_size, 
-	const char *input_prefix, const char *output_prefix, 
-	const char *solution_prefix, const char *base_fname, 
+	std::string &input_prefix, std::string &output_prefix,
+	std::string &solution_prefix, std::string &base_fname,
 	int f_lex, 
 	int verbose_level)
 {
@@ -85,14 +85,19 @@ void exact_cover::init_basic(void *user_data,
 	exact_cover::f_lex = f_lex;
 	f_split = FALSE;
 	f_single_case = FALSE;
-	strcpy(exact_cover::input_prefix, input_prefix);
-	strcpy(exact_cover::output_prefix, output_prefix);
-	strcpy(exact_cover::solution_prefix, solution_prefix);
-	strcpy(exact_cover::base_fname, base_fname);
+	exact_cover::input_prefix.assign(input_prefix);
+	exact_cover::output_prefix.assign(output_prefix);
+	exact_cover::solution_prefix.assign(solution_prefix);
+	exact_cover::base_fname.assign(base_fname);
 
-	char fname[1000];
+	string fname;
+	char str[1000];
 
-	sprintf(fname, "%s%s_lvl_%d", input_prefix, base_fname, starter_size);
+	fname.assign(input_prefix);
+	fname.append(base_fname);
+	sprintf(str, "_lvl_%d", starter_size);
+	fname.append(str);
+
 	if (f_v) {
 		cout << "exact_cover::init_basic counting number "
 				"of orbits from file " << fname << endl;
@@ -109,10 +114,16 @@ void exact_cover::init_basic(void *user_data,
 				<< starter_nb_cases << endl;
 		}
 
-	sprintf(fname_solutions, "%s%s_depth_%d_solutions.txt",
-			solution_prefix, base_fname, starter_size);
-	sprintf(fname_statistics, "%s%s_depth_%d_statistics.csv",
-			solution_prefix, base_fname, starter_size);
+	fname_solutions.assign(solution_prefix);
+	fname_solutions.append(base_fname);
+
+	sprintf(str, "_depth_%d_solutions.txt", starter_size);
+	fname_solutions.append(str);
+
+	fname_statistics.assign(solution_prefix);
+	fname_statistics.append(base_fname);
+	sprintf(str, "_depth_%d_statistics.csv", starter_size);
+	fname_statistics.append(str);
 
 	if (f_vv) {
 		cout << "exact_cover::init_basic fname_solutions = "
@@ -167,10 +178,24 @@ void exact_cover::set_split(int split_r, int split_m, int verbose_level)
 	exact_cover::f_split = TRUE;
 	exact_cover::split_r = split_r;
 	exact_cover::split_m = split_m;
-	sprintf(fname_solutions, "%s%s_depth_%d_split_%d_%d_solutions.txt",
-			solution_prefix, base_fname, starter_size, split_r, split_m);
-	sprintf(fname_statistics, "%s%s_depth_%d_split_%d_%d_statistics.csv",
-			solution_prefix, base_fname, starter_size, split_r, split_m);
+
+	char str[1000];
+
+
+	fname_solutions.assign(solution_prefix);
+	fname_solutions.append(base_fname);
+
+
+	sprintf(str, "_depth_%d_split_%d_%d_solutions.txt", starter_size, split_r, split_m);
+	fname_solutions.append(str);
+
+
+	fname_statistics.assign(solution_prefix);
+	fname_statistics.append(base_fname);
+
+	sprintf(str, "_depth_%d_split_%d_%d_statistics.csv", starter_size, split_r, split_m);
+	fname_statistics.append(str);
+
 	if (f_v) {
 		cout << "exact_cover::set_split fname_solutions = "
 				<< fname_solutions << endl;
@@ -185,10 +210,23 @@ void exact_cover::set_single_case(int single_case, int verbose_level)
 
 	exact_cover::f_single_case = TRUE;
 	exact_cover::single_case = single_case;
-	sprintf(fname_solutions, "%s%s_depth_%d_case_%d_solutions.txt",
-			solution_prefix, base_fname, starter_size, single_case);
-	sprintf(fname_statistics, "%s%s_depth_%d_case_%d_statistics.csv",
-			solution_prefix, base_fname, starter_size, single_case);
+
+	char str[1000];
+
+	fname_solutions.assign(solution_prefix);
+	fname_solutions.append(base_fname);
+
+
+	sprintf(str, "_depth_%d_case_%d_solutions.txt", starter_size, single_case);
+	fname_solutions.append(str);
+
+
+	fname_statistics.assign(solution_prefix);
+	fname_statistics.append(base_fname);
+
+	sprintf(str, "_depth_%d_case_%d_statistics.csv", starter_size, single_case);
+	fname_statistics.append(str);
+
 	if (f_v) {
 		cout << "exact_cover::set_single_case fname_solutions = "
 				<< fname_solutions << endl;
@@ -197,7 +235,7 @@ void exact_cover::set_single_case(int single_case, int verbose_level)
 		}
 }
 
-void exact_cover::randomize(const char *random_permutation_fname,
+void exact_cover::randomize(std::string &random_permutation_fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -209,7 +247,7 @@ void exact_cover::randomize(const char *random_permutation_fname,
 	int m, n;
 	
 	f_randomized = TRUE;
-	exact_cover::random_permutation_fname = random_permutation_fname;
+	exact_cover::random_permutation_fname.assign(random_permutation_fname);
 	Fio.int_matrix_read_csv(random_permutation_fname,
 			random_permutation, m, n, verbose_level);
 	if (n != 1) {
@@ -810,7 +848,7 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 					}
 
 				if (f_save) {
-					Fio.lint_matrix_write_text(fname_sol.c_str(),
+					Fio.lint_matrix_write_text(fname_sol,
 							Solutions, nb_sol, sol_length);
 					}
 				for (i = 0; i < nb_sol; i++) {

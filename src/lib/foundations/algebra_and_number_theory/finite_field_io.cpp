@@ -701,24 +701,40 @@ void finite_field::int_vec_print_elements_exponential(ostream &ost,
 	ost << ")";
 }
 
-void finite_field::make_fname_addition_table_csv(char *fname)
+void finite_field::make_fname_addition_table_csv(std::string &fname)
 {
-	sprintf(fname, "GF_q%d_addition_table.csv", q);
+	char str[1000];
+
+	sprintf(str, "GF_q%d", q);
+	fname.assign(str);
+	fname.append("_addition_table.csv");
 }
 
-void finite_field::make_fname_multiplication_table_csv(char *fname)
+void finite_field::make_fname_multiplication_table_csv(std::string &fname)
 {
-	sprintf(fname, "GF_q%d_multiplication_table.csv", q);
+	char str[1000];
+
+	sprintf(str, "GF_q%d", q);
+	fname.assign(str);
+	fname.append("_multiplication_table.csv");
 }
 
-void finite_field::make_fname_addition_table_reordered_csv(char *fname)
+void finite_field::make_fname_addition_table_reordered_csv(std::string &fname)
 {
-	sprintf(fname, "GF_q%d_addition_table_reordered.csv", q);
+	char str[1000];
+
+	sprintf(str, "GF_q%d", q);
+	fname.assign(str);
+	fname.append("_addition_table_reordered.csv");
 }
 
-void finite_field::make_fname_multiplication_table_reordered_csv(char *fname)
+void finite_field::make_fname_multiplication_table_reordered_csv(std::string &fname)
 {
-	sprintf(fname, "GF_q%d_multiplication_table_reordered.csv", q);
+	char str[1000];
+
+	sprintf(str, "GF_q%d", q);
+	fname.assign(str);
+	fname.append("_multiplication_table_reordered.csv");
 }
 
 void finite_field::addition_table_save_csv()
@@ -734,7 +750,7 @@ void finite_field::addition_table_save_csv()
 			T[i * q + j] = k;
 		}
 	}
-	char fname[1000];
+	std::string fname;
 
 	make_fname_addition_table_csv(fname);
 	Fio.int_matrix_write_csv(fname, T, q, q);
@@ -755,7 +771,7 @@ void finite_field::multiplication_table_save_csv()
 			T[i * (q - 1) + j] = k;
 		}
 	}
-	char fname[1000];
+	std::string fname;
 
 	make_fname_multiplication_table_csv(fname);
 	Fio.int_matrix_write_csv(fname, T, q - 1, q - 1);
@@ -779,7 +795,7 @@ void finite_field::addition_table_reordered_save_csv()
 			T[i * q + j] = c;
 		}
 	}
-	char fname[1000];
+	std::string fname;
 
 	make_fname_addition_table_reordered_csv(fname);
 	Fio.int_matrix_write_csv(fname, T, q, q);
@@ -808,7 +824,7 @@ void finite_field::multiplication_table_reordered_save_csv()
 			T[(i - 1) * (q - 1) + j - 1] = c;
 		}
 	}
-	char fname[1000];
+	std::string fname;
 
 	make_fname_multiplication_table_reordered_csv(fname);
 	Fio.int_matrix_write_csv(fname, T, q - 1, q - 1);

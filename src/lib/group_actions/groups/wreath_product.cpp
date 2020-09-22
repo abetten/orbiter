@@ -2639,7 +2639,7 @@ void wreath_product::orbits_restricted(
 		int*& result,
 		int &nb_gens, int &degree,
 		int nb_factors,
-		const char *orbits_restricted_fname,
+		std::string &orbits_restricted_fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2855,14 +2855,13 @@ void wreath_product::orbits_restricted(
 
 	} // next h
 
-	char fname[1000];
+	string fname;
 
-	strcpy(fname, orbits_restricted_fname);
+	fname.assign(orbits_restricted_fname);
 	chop_off_extension(fname);
 
-	sprintf(fname + strlen(fname), "_restricted_action.txt");
-	Fio.lint_matrix_write_csv(fname,
-			Perms, set_m, SG->gens->len);
+	fname.append("_restricted_action.txt");
+	Fio.lint_matrix_write_csv(fname, Perms, set_m, SG->gens->len);
 
 	if (f_v) {
 		cout << "wreath_product::orbits_restricted done" << endl;
@@ -2875,7 +2874,7 @@ void wreath_product::orbits_restricted_compute(
 		int*& result,
 		int &nb_gens, int &degree,
 		int nb_factors,
-		const char *orbits_restricted_fname,
+		std::string &orbits_restricted_fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2929,16 +2928,15 @@ void wreath_product::orbits_restricted_compute(
 	nb_gens = SG->gens->len;
 
 
-	char fname[1000];
+	string fname;
 	int *Perms;
 	int perms_m, perms_n;
 
-	strcpy(fname, orbits_restricted_fname);
+	fname.assign(orbits_restricted_fname);
 	chop_off_extension(fname);
 
-	sprintf(fname + strlen(fname), "_restricted_action.txt");
-	Fio.int_matrix_read_csv(fname,
-			Perms, perms_m, perms_n, verbose_level - 2);
+	fname.append("_restricted_action.txt");
+	Fio.int_matrix_read_csv(fname, Perms, perms_m, perms_n, verbose_level - 2);
 	if (perms_n != SG->gens->len) {
 		cout << "perms_n != SG->gens->len" << endl;
 		exit(1);

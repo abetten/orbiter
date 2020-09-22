@@ -123,7 +123,7 @@ void packing_long_orbits::list_of_cases_from_file(int verbose_level)
 	int *List_of_cases;
 	int m, n, idx;
 
-	Fio.int_matrix_read_csv(Descr->list_of_cases_from_file_fname.c_str(),
+	Fio.int_matrix_read_csv(Descr->list_of_cases_from_file_fname,
 			List_of_cases, m, n, verbose_level);
 	if (n != 1) {
 		cout << "packing_long_orbits::list_of_cases_from_file n != 1" << endl;
@@ -178,7 +178,7 @@ void packing_long_orbits::list_of_cases_from_file(int verbose_level)
 	replace_extension_with(fname_out, "_count.csv");
 
 
-	Fio.int_vec_write_csv(Nb, m, fname_out.c_str(), "nb packings before iso");
+	Fio.int_vec_write_csv(Nb, m, fname_out, "nb packings before iso");
 
 	cout << "written file " << fname_out << " of size " << Fio.file_size(fname_out.c_str()) << endl;
 
@@ -243,7 +243,7 @@ void packing_long_orbits::save_packings_by_case(
 		//exit(1);
 	}
 
-	Fio.int_matrix_write_csv(fname_packings.c_str(), The_Packings, h, PWF->PW->P->size_of_packing);
+	Fio.int_matrix_write_csv(fname_packings, The_Packings, h, PWF->PW->P->size_of_packing);
 	cout << "written file " << fname_packings << " of size " << Fio.file_size(fname_packings.c_str()) << endl;
 
 

@@ -315,12 +315,15 @@ void invariants_packing::compute_dual_packings(
 	}
 
 	file_io Fio;
+	string fname;
 
+	fname.assign("Dual_idx.csv");
 	Fio.int_vecs_write_csv(Dual_idx, f_self_dual,
-		Iso->Reps->count, "Dual_idx.csv", "dual_idx", "f_self_dual");
+		Iso->Reps->count, fname, "dual_idx", "f_self_dual");
 
+	fname.assign("Dual_spread_idx.csv");
 	Fio.lint_vec_write_csv(P->Spread_table_with_selection->Spread_tables->dual_spread_idx,
-		P->Spread_table_with_selection->Spread_tables->nb_spreads, "Dual_spread_idx.csv", "dual_spread_idx");
+		P->Spread_table_with_selection->Spread_tables->nb_spreads, fname, "dual_spread_idx");
 	
 	if (f_v) {
 		cout << "invariants_packing::compute_dual_packings done" << endl;
@@ -335,7 +338,7 @@ void invariants_packing::make_table(
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int i;
-	char fname[1000];
+	string fname;
 	file_io Fio;
 	
 	if (f_v) {
@@ -366,15 +369,18 @@ void invariants_packing::make_table(
 	ost << "\\hline" << endl;
 	ost << "\\hline" << endl;
 	for (i = 0; i < Classify->nb_types; i++) {
+		char str[1000];
+
 		if (f_only_self_dual) {
-			sprintf(fname, "ids_of_self_dual_type_%d.csv", i);
+			sprintf(str, "ids_of_self_dual_type_%d.csv", i);
 		}
 		else if (f_only_not_self_dual) {
-			sprintf(fname, "ids_of_not_self_dual_type_%d.csv", i);
+			sprintf(str, "ids_of_not_self_dual_type_%d.csv", i);
 		}
 		else {
-			sprintf(fname, "ids_of_all_type_%d.csv", i);
+			sprintf(str, "ids_of_all_type_%d.csv", i);
 		}
+		fname.assign(str);
 		int_vec_print(ost, Classify->Reps + i * P->Spread_table_with_selection->nb_iso_types_of_spreads,
 				P->Spread_table_with_selection->nb_iso_types_of_spreads);
 		ost << " & ";

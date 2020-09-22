@@ -314,7 +314,7 @@ void exceptional_isomorphism_O4::apply_4_to_5(
 		}
 
 
-	Fq->transform_form_matrix(M5, Gram5, Gram5_transformed, 5);
+	Fq->transform_form_matrix(M5, Gram5, Gram5_transformed, 5, 0 /* verbose_level */);
 	// computes Gram_transformed = A * Gram * A^\top
 
 

@@ -110,7 +110,7 @@ void finite_field::create_projective_variety(
 void finite_field::create_projective_curve(
 		std::string &variety_label,
 		int curve_nb_vars, int curve_degree,
-		const char *curve_coeffs,
+		std::string &curve_coeffs,
 		monomial_ordering_type Monomial_ordering_type,
 		std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level)
@@ -143,7 +143,7 @@ void finite_field::create_projective_curve(
 	int *v;
 	int v2[2];
 
-	int_vec_scan(curve_coeffs, coeffs, len);
+	int_vec_scan(curve_coeffs.c_str(), coeffs, len);
 	if (len != curve_degree + 1) {
 		cout << "finite_field::create_projective_curve "
 				"len != curve_degree + 1" << endl;
@@ -184,6 +184,32 @@ void finite_field::create_projective_curve(
 	if (f_v) {
 		cout << "finite_field::create_projective_curve done" << endl;
 	}
+}
+
+int finite_field::test_if_vectors_are_projectively_equal(int *v1, int *v2, int len)
+{
+	int *w1, *w2;
+	int i;
+	int ret;
+
+	w1 = NEW_int(len);
+	w2 = NEW_int(len);
+
+	int_vec_copy(v1, w1, len);
+	int_vec_copy(v2, w2, len);
+	PG_element_normalize(w1, 1, len);
+	PG_element_normalize(w2, 1, len);
+	for (i = 0; i < len; i++) {
+		if (w1[i] != w2[i]) {
+			ret = FALSE;
+			goto finish;
+		}
+	}
+	ret = TRUE;
+finish:
+	FREE_int(w1);
+	FREE_int(w2);
+	return ret;
 }
 
 void finite_field::PG_element_normalize(
@@ -6159,12 +6185,12 @@ void finite_field::simeon(int n, int len, long int *S, int s, int verbose_level)
 
 void finite_field::wedge_to_klein(int *W, int *K)
 {
-	K[0] = W[0];
-	K[1] = W[5];
-	K[2] = W[1];
-	K[3] = negate(W[4]);
-	K[4] = W[2];
-	K[5] = W[3];
+	K[0] = W[0]; // 12
+	K[1] = W[5]; // 34
+	K[2] = W[1]; // 13
+	K[3] = negate(W[4]); // 24
+	K[4] = W[2]; // 14
+	K[5] = W[3]; // 23
 }
 
 void finite_field::klein_to_wedge(int *K, int *W)

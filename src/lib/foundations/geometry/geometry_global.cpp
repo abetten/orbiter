@@ -1787,6 +1787,58 @@ void geometry_global::compute_table_E(
 }
 
 
+void geometry_global::do_inverse_isomorphism_klein_quadric(int q,
+		std::string &inverse_isomorphism_klein_quadric_matrix_A6,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometry_global::do_inverse_isomorphism_klein_quadric" << endl;
+	}
+
+	finite_field F;
+
+	F.init(q, verbose_level);
+
+
+	int *A6;
+	int sz;
+
+	int_vec_scan(inverse_isomorphism_klein_quadric_matrix_A6.c_str(), A6, sz);
+	if (sz != 36) {
+		cout << "geometry_global::do_inverse_isomorphism_klein_quadric "
+				"The input matrix must be of size 6x6" << endl;
+		exit(1);
+	}
+
+
+	cout << "A6:" << endl;
+	int_matrix_print(A6, 6, 6);
+
+	klein_correspondence *Klein;
+	orthogonal *O;
+
+
+	Klein = NEW_OBJECT(klein_correspondence);
+	O = NEW_OBJECT(orthogonal);
+
+	O->init(1 /* epsilon */, 6, &F, 0 /* verbose_level*/);
+	Klein->init(&F, O, 0 /* verbose_level */);
+
+	int A4[16];
+	Klein->reverse_isomorphism(A6, A4, verbose_level);
+
+	cout << "A4:" << endl;
+	int_matrix_print(A4, 4, 4);
+
+	FREE_OBJECT(Klein);
+	FREE_OBJECT(O);
+
+	if (f_v) {
+		cout << "geometry_global::do_inverse_isomorphism_klein_quadric done" << endl;
+	}
+}
 
 
 

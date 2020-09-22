@@ -478,7 +478,7 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 	}
 
 	GFp.matrix_get_kernel(M, e, e1 + 1, base_cols, rk, 
-		kernel_m, kernel_n, K);
+		kernel_m, kernel_n, K, 0 /* verbose_level */);
 
 	if (f_vv) {
 		cout << "kernel_m=" << kernel_m << endl;

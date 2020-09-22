@@ -315,7 +315,7 @@ void elliptic_curve::addition(
 	}
 }
 
-void elliptic_curve::save_incidence_matrix(char *fname,
+void elliptic_curve::save_incidence_matrix(std::string &fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

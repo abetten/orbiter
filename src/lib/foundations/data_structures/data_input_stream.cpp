@@ -222,7 +222,7 @@ int data_input_stream::count_number_of_objects_to_test(
 						<< input_string[input_idx] << ":" << endl;
 				}
 			nb_obj = Fio.count_number_of_orbits_in_file(
-					input_string[input_idx].c_str(), 0 /* verbose_level*/);
+					input_string[input_idx], 0 /* verbose_level*/);
 			if (f_v) {
 				cout << "The file " << input_string[input_idx]
 					<< " has " << nb_obj << " objects" << endl;
@@ -236,7 +236,7 @@ int data_input_stream::count_number_of_objects_to_test(
 					<< input_string[input_idx] << ":" << endl;
 				}
 			nb_obj = Fio.count_number_of_orbits_in_file(
-				input_string[input_idx].c_str(), 0 /* verbose_level*/);
+				input_string[input_idx], 0 /* verbose_level*/);
 			if (f_v) {
 				cout << "The file " << input_string[input_idx]
 					<< " has " << nb_obj << " objects" << endl;
@@ -250,7 +250,7 @@ int data_input_stream::count_number_of_objects_to_test(
 					<< input_string[input_idx] << ":" << endl;
 				}
 			nb_obj = Fio.count_number_of_orbits_in_file(
-				input_string[input_idx].c_str(), 0 /* verbose_level*/);
+				input_string[input_idx], 0 /* verbose_level*/);
 			if (f_v) {
 				cout << "The file " << input_string[input_idx]
 					<< " has " << nb_obj << " objects" << endl;
@@ -267,7 +267,7 @@ int data_input_stream::count_number_of_objects_to_test(
 					<< input_string2[input_idx] << " :" << endl;
 				}
 			nb_obj = Fio.count_number_of_orbits_in_file(
-				input_string[input_idx].c_str(), 0 /* verbose_level*/);
+				input_string[input_idx], 0 /* verbose_level*/);
 			if (f_v) {
 				cout << "The file " << input_string[input_idx]
 					<< " has " << nb_obj << " objects" << endl;
@@ -305,7 +305,7 @@ int data_input_stream::count_number_of_objects_to_test(
 				<<  " which contains designs on " << input_data1[input_idx] << " points, nck=" << nck << endl;
 			SoS->init_from_file(
 					nck /* underlying_set_size */,
-					input_string[input_idx].c_str(), verbose_level);
+					input_string[input_idx], verbose_level);
 			cout << "Read the file " << input_string[input_idx] << endl;
 			nb_obj = SoS->nb_sets;
 			FREE_OBJECT(SoS);

@@ -1184,7 +1184,7 @@ void spread_classify::czerwinski_oakden(int level, int verbose_level)
 		"B8", 
 		};
 	char fname[] = "Czerwinski_Oakden.txt";
-	char fname2[1000];
+	string fname2;
 	{
 	ofstream fp(fname);
 	
@@ -1234,7 +1234,11 @@ void spread_classify::czerwinski_oakden(int level, int verbose_level)
 			}
 		fp << endl;
 
-		sprintf(fname2, "Czerwinski_Oakden_%s.txt", label[h]);
+
+		fname2.assign("Czerwinski_Oakden_");
+		fname2.append(label[h]);
+		fname2.append(".txt");
+
 		Fio.write_set_to_file(fname2, data, sz, 0/*verbose_level*/);
 		cout << "Written file " << fname2 << " of size "
 				<< Fio.file_size(fname2) << endl;
@@ -1249,32 +1253,36 @@ void spread_classify::write_spread_to_file(int type_of_spread, int verbose_level
 	int f_v = (verbose_level >= 1);
 	long int *data;
 	int sz = order + 1;
-	char fname[1000];
+	char str[1000];
 
 	if (f_v) {
 		cout << "spread_classify::write_spread_to_file" << endl;
 		}
 	if (type_of_spread == SPREAD_OF_TYPE_FTWKB) {
-		sprintf(fname, "spread_q%d_FTW.txt", q);
+		sprintf(str, "spread_q%d_FTW.txt", q);
 		}
 	else if (type_of_spread == SPREAD_OF_TYPE_KANTOR) {
-		sprintf(fname, "spread_q%d_Kantor.txt", q);
+		sprintf(str, "spread_q%d_Kantor.txt", q);
 		}
 	else if (type_of_spread == SPREAD_OF_TYPE_KANTOR2) {
-		sprintf(fname, "spread_q%d_Kantor2.txt", q);
+		sprintf(str, "spread_q%d_Kantor2.txt", q);
 		}
 	else if (type_of_spread == SPREAD_OF_TYPE_GANLEY) {
-		sprintf(fname, "spread_q%d_Ganley.txt", q);
+		sprintf(str, "spread_q%d_Ganley.txt", q);
 		}
 	else if (type_of_spread == SPREAD_OF_TYPE_LAW_PENTTILA) {
-		sprintf(fname, "spread_q%d_Law_Penttila.txt", q);
+		sprintf(str, "spread_q%d_Law_Penttila.txt", q);
 		}
 	else if (type_of_spread == SPREAD_OF_TYPE_DICKSON_KANTOR) {
-		sprintf(fname, "spread_q%d_DicksonKantor.txt", q);
+		sprintf(str, "spread_q%d_DicksonKantor.txt", q);
 		}
 	else if (type_of_spread == SPREAD_OF_TYPE_HUDSON) {
-		sprintf(fname, "spread_q%d_Hudson.txt", q);
+		sprintf(str, "spread_q%d_Hudson.txt", q);
 		}
+
+	string fname;
+
+	fname.assign(str);
 
 	file_io Fio;
 
@@ -1554,7 +1562,7 @@ void spread_classify::make_spread_from_q_clan(long int *data,
 	}
 }
 
-void spread_classify::read_and_print_spread(const char *fname, int verbose_level)
+void spread_classify::read_and_print_spread(std::string &fname, int verbose_level)
 {
 	long int *data;
 	int sz;
@@ -1565,7 +1573,7 @@ void spread_classify::read_and_print_spread(const char *fname, int verbose_level
 	FREE_lint(data);
 }
 
-void spread_classify::HMO(const char *fname, int verbose_level)
+void spread_classify::HMO(std::string &fname, int verbose_level)
 {
 	long int *data;
 	int sz, i, h, h1;
@@ -1675,8 +1683,10 @@ void spread_classify::HMO(const char *fname, int verbose_level)
 		cout << "has rank " << Data2[h] << endl;
 	}
 
-	char fname2[1000];
-	sprintf(fname2, "HMO_%s", fname);
+	string fname2;
+
+	fname2.assign("HMO_");
+	fname2.append(fname);
 
 	Fio.write_set_to_file(fname2, Data2, Sz, verbose_level);
 	
@@ -2475,9 +2485,13 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 
 
 
-		char fname[1000];
-		sprintf(fname, "quotient_q%d_iso%d_nb%d_orbit_length%d.txt",
+		char str[1000];
+		sprintf(str, "quotient_q%d_iso%d_nb%d_orbit_length%d.txt",
 				NT.i_power_j(q, k), h, u, orbit_length);
+
+		string fname;
+
+		fname.assign(str);
 		Fio.write_set_to_file(fname, data2, order, 0 /* verbose_level*/);
 		cnt++;
 

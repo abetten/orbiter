@@ -583,7 +583,7 @@ void packing_was::test_orbits_on_spreads(int verbose_level)
 		int *M;
 		int m, n, i;
 
-		Fio.int_matrix_read_csv(fname_good_orbits.c_str(), M, m, n,
+		Fio.int_matrix_read_csv(fname_good_orbits, M, m, n,
 				0 /* verbose_level */);
 
 		nb_good_orbits = m;
@@ -642,7 +642,7 @@ void packing_was::test_orbits_on_spreads(int verbose_level)
 
 
 		Fio.lint_vec_array_write_csv(2 /* nb_vecs */, Vec,
-				nb_good_orbits, fname_good_orbits.c_str(), Col_labels);
+				nb_good_orbits, fname_good_orbits, Col_labels);
 		cout << "Written file " << fname_good_orbits
 				<< " of size " << Fio.file_size(fname_good_orbits.c_str()) << endl;
 	}

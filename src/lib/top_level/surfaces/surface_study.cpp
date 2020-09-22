@@ -351,12 +351,15 @@ void surface_study::study_intersection_points(int verbose_level)
 	lint_matrix_print(Intersection_pt, SaS->sz, SaS->sz);
 
 
-	char fname_intersection_pts[2000];
-	char fname_intersection_pts_tex[2000];
-	sprintf(fname_intersection_pts,
-			"%s_intersection_points0.csv", prefix.c_str());
-	sprintf(fname_intersection_pts_tex,
-			"%s_intersection_points0.tex", prefix.c_str());
+	string fname_intersection_pts;
+	string fname_intersection_pts_tex;
+
+	fname_intersection_pts.assign(prefix);
+	fname_intersection_pts.append("_intersection_points0.csv");
+
+	fname_intersection_pts_tex.assign(prefix);
+	fname_intersection_pts_tex.append("_intersection_points0.tex");
+
 
 	Fio.lint_matrix_write_csv(fname_intersection_pts,
 			Intersection_pt, SaS->sz, SaS->sz);
@@ -498,15 +501,18 @@ void surface_study::study_group(int verbose_level)
 		//cout << "The group table is:" << endl;
 		//int_matrix_print(Table, n, n);
 
-		char fname_out_base[2000];
-		char fname_out[3000];
-		snprintf(fname_out_base, 2000, "%s_table_%d_%d", prefix.c_str(), q, nb);
-		snprintf(fname_out, 3000, "%s.csv", fname_out_base);
+		string fname_out;
+		char str[1000];
+
+		fname_out.assign(prefix);
+		sprintf(str, "_table_%d_%d.csv", q, nb);
+		fname_out.append(str);
+
 		Fio.int_matrix_write_csv(fname_out, Table, n, n);
 		cout << "Written file " << fname_out
 				<< " of size " << Fio.file_size(fname_out) << endl;
 		SaS->Stab->write_as_magma_permutation_group(
-				fname_out_base, SaS->Strong_gens->gens, verbose_level);
+				prefix, SaS->Strong_gens->gens, verbose_level);
 		}
 	else {
 		cout << "We won't create the group table because "
@@ -682,12 +688,15 @@ void surface_study::study_find_eckardt_points(int verbose_level)
 	lint_matrix_print(Intersection_pt, SaS->sz, SaS->sz);
 
 	{
-		char fname_intersection_pts[2000];
-		char fname_intersection_pts_tex[2000];
-		sprintf(fname_intersection_pts,
-				"%s_intersection_points.csv", prefix.c_str());
-		sprintf(fname_intersection_pts_tex,
-				"%s_intersection_points.tex", prefix.c_str());
+		string fname_intersection_pts;
+		string fname_intersection_pts_tex;
+
+
+		fname_intersection_pts.append(prefix);
+		fname_intersection_pts.append("_intersection_points.csv");
+
+		fname_intersection_pts_tex.append(prefix);
+		fname_intersection_pts_tex.append("_intersection_points.tex");
 
 		Fio.lint_matrix_write_csv(fname_intersection_pts,
 				Intersection_pt, SaS->sz, SaS->sz);

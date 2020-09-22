@@ -413,13 +413,15 @@ void classify_double_sixes::make_spreadsheet_of_neighbors(
 	spreadsheet *&Sp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname_csv[1000];
+	char str[1000];
+	string fname_csv;
 
 	if (f_v) {
 		cout << "classify_double_sixes::make_spreadsheet_of_neighbors" << endl;
 	}
 
-	sprintf(fname_csv, "neighbors_%d.csv", q);
+	sprintf(str, "neighbors_%d.csv", q);
+	fname_csv.assign(str);
 	
 
 	Surf->make_spreadsheet_of_lines_in_three_kinds(Sp, 
@@ -481,8 +483,10 @@ void classify_double_sixes::classify_partial_ovoids(int verbose_level)
 		{
 			spreadsheet *Sp;
 			Five_plus_one->make_spreadsheet_of_orbit_reps(Sp, 5);
-			char fname_csv[1000];
-			sprintf(fname_csv, "fiveplusone_%d.csv", q);
+			char str[1000];
+			string fname_csv;
+			sprintf(str, "fiveplusone_%d.csv", q);
+			fname_csv.assign(str);
 			Sp->save(fname_csv, verbose_level);
 			FREE_OBJECT(Sp);
 		}
@@ -708,7 +712,7 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 	int *data;
 	longinteger_object go;
 	longinteger_object len;
-	char fname_csv[1000];
+	string fname_csv;
 	char str[1000];
 	
 
@@ -716,7 +720,8 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 		cout << "classify_double_sixes::make_spreadsheet_"
 				"of_fiveplusone_configurations" << endl;
 	}
-	sprintf(fname_csv, "fiveplusone19_%d.csv", q);
+	sprintf(str, "fiveplusone19_%d.csv", q);
+	fname_csv.assign(str);
 
 	k = 5;
 

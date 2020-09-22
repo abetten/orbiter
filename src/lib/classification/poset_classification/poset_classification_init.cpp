@@ -572,10 +572,10 @@ void poset_classification::init_poset_orbit_node(
 	set0 = NEW_lint(sz + 1);
 	set1 = NEW_lint(sz + 1);
 	set3 = NEW_lint(sz + 1);
-	nb_extension_nodes_at_level_total = NEW_int(sz + 1);
-	nb_extension_nodes_at_level = NEW_int(sz + 1);
-	nb_fusion_nodes_at_level = NEW_int(sz + 1);
-	nb_unprocessed_nodes_at_level = NEW_int(sz + 1);
+	nb_extension_nodes_at_level_total = NEW_lint(sz + 1);
+	nb_extension_nodes_at_level = NEW_lint(sz + 1);
+	nb_fusion_nodes_at_level = NEW_lint(sz + 1);
+	nb_unprocessed_nodes_at_level = NEW_lint(sz + 1);
 	for (i = 0; i < sz + 1; i++) {
 		nb_extension_nodes_at_level_total[i] = 0;
 		nb_extension_nodes_at_level[i] = 0;
@@ -612,19 +612,19 @@ void poset_classification::exit_poset_orbit_node()
 	}
 
 	if (nb_extension_nodes_at_level_total) {
-		FREE_int(nb_extension_nodes_at_level_total);
+		FREE_lint(nb_extension_nodes_at_level_total);
 		nb_extension_nodes_at_level_total = NULL;
 	}
 	if (nb_extension_nodes_at_level) {
-		FREE_int(nb_extension_nodes_at_level);
+		FREE_lint(nb_extension_nodes_at_level);
 		nb_extension_nodes_at_level = NULL;
 	}
 	if (nb_fusion_nodes_at_level) {
-		FREE_int(nb_fusion_nodes_at_level);
+		FREE_lint(nb_fusion_nodes_at_level);
 		nb_fusion_nodes_at_level = NULL;
 	}
 	if (nb_unprocessed_nodes_at_level) {
-		FREE_int(nb_unprocessed_nodes_at_level);
+		FREE_lint(nb_unprocessed_nodes_at_level);
 		nb_unprocessed_nodes_at_level = NULL;
 	}
 }

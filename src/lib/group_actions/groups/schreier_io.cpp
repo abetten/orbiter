@@ -1587,7 +1587,7 @@ void schreier::read_from_file_binary(ifstream &fp, int verbose_level)
 }
 
 
-void schreier::write_file_binary(char *fname, int verbose_level)
+void schreier::write_file_binary(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	file_io Fio;
@@ -1607,7 +1607,7 @@ void schreier::write_file_binary(char *fname, int verbose_level)
 	}
 }
 
-void schreier::read_file_binary(const char *fname, int verbose_level)
+void schreier::read_file_binary(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	file_io Fio;

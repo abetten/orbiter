@@ -49,10 +49,10 @@ void the_end(int t0)
 
 	if (f_v) {
 		int mem_usage;
-		char fname[1000];
+		string fname;
 
 		mem_usage = Os.os_memory_usage();
-		snprintf(fname, 1000, "memory_usage.csv");
+		fname.assign("memory_usage.csv");
 		Fio.int_matrix_write_csv(fname, &mem_usage, 1, 1);
 	}
 }

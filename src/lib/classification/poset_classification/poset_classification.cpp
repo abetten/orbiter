@@ -613,7 +613,7 @@ void poset_classification::poset_orbit_node_depth_breadth_perm_and_inverse(
 	
 }
 
-int poset_classification::count_extension_nodes_at_level(int lvl)
+long int poset_classification::count_extension_nodes_at_level(int lvl)
 {
 	int prev;
 
