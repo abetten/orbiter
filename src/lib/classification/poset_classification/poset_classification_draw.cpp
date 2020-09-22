@@ -938,10 +938,13 @@ void poset_classification::make_flag_orbits_on_relations(
 	}
 
 	for (lvl = 0; lvl <= depth; lvl++) {
-		char fname[1000];
+		string fname;
+		char str[1000];
 		file_io Fio;
 
-		snprintf(fname, 1000, "%s_depth_%d_orbit_lengths.csv", fname_prefix, lvl);
+		fname.assign(fname_prefix);
+		sprintf(str, "_depth_%d_orbit_lengths.csv", lvl);
+		fname.append(str);
 
 		Fio.int_vec_write_csv(Orbit_len[lvl], Nb_orbits[lvl],
 			fname, "Orbit_length");
@@ -959,14 +962,18 @@ void poset_classification::make_flag_orbits_on_relations(
 
 		int *F;
 		int flag_orbit_idx;
-		char fname[1000];
+		string fname;
+		char str[1000];
 
 		if (f_vv) {
 			cout << "poset_classification::make_flag_orbits_on_relations allocating F" << endl;
 		}
 		F = NEW_int(Nb_elements[lvl] * Nb_elements[lvl + 1]);
 		int_vec_zero(F, Nb_elements[lvl] * Nb_elements[lvl + 1]);
-		snprintf(fname, 1000, "%s_depth_%d.csv", fname_prefix, lvl);
+
+		fname.assign(fname_prefix);
+		sprintf(str, "_depth_%d.csv", lvl);
+		fname.append(str);
 
 		flag_orbit_idx = 1;
 		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
@@ -1158,11 +1165,13 @@ void poset_classification::make_flag_orbits_on_relations(
 
 		file_io Fio;
 
-		Fio.int_matrix_write_csv(fname, F, Nb_elements[lvl], Nb_elements[lvl + 1]);
+		Fio.int_matrix_write_csv(fname,
+				F, Nb_elements[lvl], Nb_elements[lvl + 1]);
 		FREE_int(F);
 
 		cout << "poset_classification::make_flag_orbits_on_relations "
-				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
 
 	} // lvl
 
@@ -1966,7 +1975,7 @@ void poset_classification::make_level_graph(int depth,
 	int f_vv = (verbose_level >= 2);
 	int *Nb;
 	int *Fst;
-	int nb_middle;
+	long int nb_middle;
 	int i, lvl, po, so, n, n1, f, l;
 	longinteger_domain D;
 	int nb_layers = 4;

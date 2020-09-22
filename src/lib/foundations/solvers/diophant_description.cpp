@@ -42,17 +42,17 @@ diophant_description::diophant_description()
 	coefficient_matrix_text = NULL;
 
 	f_coefficient_matrix_csv = FALSE;
-	coefficient_matrix_csv = NULL;
+	//coefficient_matrix_csv = NULL;
 
 	f_RHS_constant = FALSE;
-	RHS_constant_text = NULL;
+	//RHS_constant_text = NULL;
 
 
 	f_RHS = FALSE;
-	RHS_text = NULL;
+	//RHS_text = NULL;
 
 	f_RHS_csv = FALSE;
-	RHS_csv_text = NULL;
+	//RHS_csv_text = NULL;
 
 	f_x_max_global = FALSE;
 	x_max_global = 0;
@@ -64,7 +64,7 @@ diophant_description::diophant_description()
 	x_bounds_text = NULL;
 
 	f_x_bounds_csv = FALSE;
-	x_bounds_csv = NULL;
+	//x_bounds_csv = NULL;
 
 	f_has_sum = FALSE;
 	has_sum = 0;
@@ -110,22 +110,22 @@ int diophant_description::read_arguments(
 		}
 		else if (strcmp(argv[i], "-coefficient_matrix_csv") == 0) {
 			f_coefficient_matrix_csv = TRUE;
-			coefficient_matrix_csv = argv[++i];
+			coefficient_matrix_csv.assign(argv[++i]);
 			cout << "-coefficient_matrix_csv " << coefficient_matrix_csv << endl;
 		}
 		else if (strcmp(argv[i], "-RHS") == 0) {
 			f_RHS = TRUE;
-			RHS_text = argv[++i];
+			RHS_text.assign(argv[++i]);
 			cout << "-RHS " << RHS_text << endl;
 		}
 		else if (strcmp(argv[i], "-RHS_csv") == 0) {
 			f_RHS_csv = TRUE;
-			RHS_csv_text = argv[++i];
+			RHS_csv_text.assign(argv[++i]);
 			cout << "-RHS_csv " << RHS_csv_text << endl;
 		}
 		else if (strcmp(argv[i], "-RHS_constant") == 0) {
 			f_RHS_constant = TRUE;
-			RHS_constant_text = argv[++i];
+			RHS_constant_text.assign(argv[++i]);
 			cout << "-RHS_constant " << RHS_constant_text << endl;
 		}
 		else if (strcmp(argv[i], "-x_max_global") == 0) {
@@ -145,7 +145,7 @@ int diophant_description::read_arguments(
 		}
 		else if (strcmp(argv[i], "-x_bounds_csv") == 0) {
 			f_x_bounds_csv = TRUE;
-			x_bounds_csv = argv[++i];
+			x_bounds_csv.assign(argv[++i]);
 			cout << "-x_bounds_csv " << x_bounds_csv << endl;
 		}
 		else if (strcmp(argv[i], "-has_sum") == 0) {

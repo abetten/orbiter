@@ -1341,7 +1341,7 @@ int projective_space::determine_line_in_plane(
 		return FALSE;
 		}
 	F->matrix_get_kernel(system, 2, 3, base_cols, rk, 
-		kernel_m, kernel_n, kernel);
+		kernel_m, kernel_n, kernel, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space::determine_line_in_plane line:" << endl;
 		print_integer_matrix_width(cout, kernel, 1, 3, 3, F->log10_of_q);
@@ -1509,7 +1509,7 @@ int projective_space::determine_conic_in_plane(
 		return FALSE;
 		}
 	F->matrix_get_kernel(system, 5, 6, base_cols, rk, 
-		kernel_m, kernel_n, kernel);
+		kernel_m, kernel_n, kernel, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space::determine_conic_in_plane "
 				"conic:" << endl;
@@ -1596,7 +1596,7 @@ int projective_space::determine_cubic_in_plane(
 
 	F->matrix_get_kernel(System, r, Poly_3_3->get_nb_monomials(),
 		base_cols, r,
-		kernel_m, kernel_n, coeff10);
+		kernel_m, kernel_n, coeff10, 0 /* verbose_level */);
 
 
 	FREE_int(Pt_coord);
@@ -1677,7 +1677,7 @@ void projective_space::determine_quadric_in_solid(
 		exit(1);
 		}
 	F->matrix_get_kernel(system, 9, 10, base_cols, rk, 
-		kernel_m, kernel_n, kernel);
+		kernel_m, kernel_n, kernel, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space::determine_quadric_in_solid "
 				"conic:" << endl;
@@ -1829,7 +1829,7 @@ void projective_space::conic_points(
 		print_integer_matrix_width(cout,
 				Basis, 2, 3, 3, F->log10_of_q);
 		}
-	F->perp(3, 2, Basis, Gram_matrix);
+	F->perp(3, 2, Basis, Gram_matrix, 0 /* verbose_level */);
 	if (f_v) {	
 		cout << "projective_space::conic_points perp:" << endl;
 		print_integer_matrix_width(cout,
@@ -1948,7 +1948,7 @@ void projective_space::find_tangent_lines_to_conic(
 	
 	for (i = 0; i < nb_points; i++) {
 		unrank_point(Basis, points[i]);
-		F->perp(3, 1, Basis, Gram_matrix);
+		F->perp(3, 1, Basis, Gram_matrix, 0 /* verbose_level */);
 		if (f_vv) {	
 			cout << "perp:" << endl;
 			print_integer_matrix_width(cout,
@@ -4026,6 +4026,8 @@ void projective_space::report(ostream &ost)
 	//ost << "\\section{The Finite Field with $" << q << "$ Elements}" << endl;
 	//F->cheat_sheet(ost, verbose_level);
 
+	incidence_matrix_save_csv();
+
 	if (n == 2) {
 		//ost << "\\clearpage" << endl << endl;
 		ost << "\\subsection{The Plane}" << endl;
@@ -4140,6 +4142,42 @@ void projective_space::report(ostream &ost)
 	FREE_OBJECT(Poly4);
 
 }
+
+void projective_space::incidence_matrix_save_csv()
+{
+	int i, j, k;
+	int *T;
+	file_io Fio;
+
+	T = NEW_int(N_points * N_lines);
+	for (i = 0; i < N_points; i++) {
+		for (j = 0; j < N_lines; j++) {
+			if (is_incident(i, j)) {
+				k = 1;
+			}
+			else {
+				k = 0;
+			}
+			T[i * N_lines + j] = k;
+		}
+	}
+	string fname;
+
+	make_fname_incidence_matrix_csv(fname);
+	Fio.int_matrix_write_csv(fname, T, N_points, N_lines);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	FREE_int(T);
+}
+
+void projective_space::make_fname_incidence_matrix_csv(std::string &fname)
+{
+	char str[1000];
+
+	sprintf(str, "PG_n%d_q%d", n, q);
+	fname.assign(str);
+	fname.append("_incidence_matrix.csv");
+}
+
 
 
 

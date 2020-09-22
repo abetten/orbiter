@@ -25,13 +25,13 @@ void exact_cover_arguments::null()
 {
 	f_lift = FALSE;
 	f_has_base_fname = FALSE;
-	base_fname = "";
+	//base_fname = "";
 	f_has_input_prefix = FALSE;
-	input_prefix = "";
+	//input_prefix = "";
 	f_has_output_prefix = FALSE;
-	output_prefix = "";
+	//output_prefix = "";
 	f_has_solution_prefix = FALSE;
-	solution_prefix = "";
+	//solution_prefix = "";
 	f_lift = FALSE;
 	f_starter_size = FALSE;
 	starter_size = 0;
@@ -55,7 +55,7 @@ void exact_cover_arguments::null()
 	solution_test_func_data = NULL;
 	late_cleanup_function = NULL;
 	f_randomized = FALSE;
-	random_permutation_fname = NULL;
+	//random_permutation_fname = NULL;
 }
 
 void exact_cover_arguments::freeself()
@@ -121,22 +121,22 @@ int exact_cover_arguments::read_arguments(int argc, const char **argv,
 		}
 		else if (strcmp(argv[i], "-input_prefix") == 0) {
 			f_has_input_prefix = TRUE;
-			input_prefix = argv[++i];
+			input_prefix.assign(argv[++i]);
 			cout << "-input_prefix " << input_prefix << endl;
 		}
 		else if (strcmp(argv[i], "-output_prefix") == 0) {
 			f_has_output_prefix = TRUE;
-			output_prefix = argv[++i];
+			output_prefix.assign(argv[++i]);
 			cout << "-output_prefix " << output_prefix << endl;
 		}
 		else if (strcmp(argv[i], "-solution_prefix") == 0) {
 			f_has_solution_prefix = TRUE;
-			solution_prefix = argv[++i];
+			solution_prefix.assign(argv[++i]);
 			cout << "-solution_prefix " << solution_prefix << endl;
 		}
 		else if (strcmp(argv[i], "-randomized") == 0) {
 			f_randomized = TRUE;
-			random_permutation_fname = argv[++i];
+			random_permutation_fname.assign(argv[++i]);
 			cout << "-randomized " << random_permutation_fname << endl;
 		}
 		else if (strcmp(argv[i], "-end") == 0) {

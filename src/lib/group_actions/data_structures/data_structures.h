@@ -434,7 +434,7 @@ public:
 	//int f_find_Eckardt_points_from_arc = FALSE;
 
 	int f_intersect_with_set_from_file;
-	const char *intersect_with_set_from_file_fname;
+	std::string intersect_with_set_from_file_fname;
 
 	int f_arc_with_given_set_as_s_lines_after_dualizing;
 	int arc_size;
@@ -750,21 +750,21 @@ public:
 		long int *canonical_labeling,
 		int verbose_level);
 	void merge_packings(
-			const char **fnames, int nb_files,
-			const char *file_of_spreads,
+			std::string *fnames, int nb_files,
+			std::string &file_of_spreads,
 			classify_bitvectors *&CB,
 			int verbose_level);
 	void select_packings(
-			const char *fname,
-			const char *file_of_spreads_original,
+			std::string &fname,
+			std::string &file_of_spreads_original,
 			spread_tables *Spread_tables,
 			int f_self_dual,
 			int f_ago, int select_ago,
 			classify_bitvectors *&CB,
 			int verbose_level);
 	void select_packings_self_dual(
-			const char *fname,
-			const char *file_of_spreads_original,
+			std::string &fname,
+			std::string &file_of_spreads_original,
 			int f_split, int split_r, int split_m,
 			spread_tables *Spread_tables,
 			classify_bitvectors *&CB,

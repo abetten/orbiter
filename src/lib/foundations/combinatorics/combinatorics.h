@@ -183,7 +183,7 @@ public:
 	std::string curve_label;
 	int curve_nb_vars;
 	int curve_degree;
-	const char *curve_coeffs;
+	std::string curve_coeffs;
 
 
 	combinatorial_object_description();

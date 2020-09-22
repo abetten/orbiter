@@ -271,16 +271,18 @@ void classify_bitvectors::save(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname_txt[1000];
-	char fname_csv[1000];
+	string fname_txt;
+	string fname_csv;
 	int i, j;
 	
 	if (f_v) {
 		cout << "classify_bitvectors::save" << endl;
 		}
 
-	snprintf(fname_txt, 1000, "%s_iso.txt", prefix.c_str());
-	snprintf(fname_csv, 1000, "%s_iso.csv", prefix.c_str());
+	fname_txt.assign(prefix);
+	fname_txt.append("_iso.txt");
+	fname_csv.assign(prefix);
+	fname_csv.append("_iso.csv");
 	
 
 	if (perm == NULL) {

@@ -80,7 +80,7 @@ public:
 		longinteger_object &full_group_order, int idx,
 		int verbose_level);
 	int search_data(int *data, int &idx);
-	void save_csv(const char *fname, int verbose_level);
+	void save_csv(std::string &fname, int verbose_level);
 };
 
 int orbit_of_equations_compare_func(void *a, void *b, void *data);

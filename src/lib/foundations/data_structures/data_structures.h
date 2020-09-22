@@ -264,8 +264,8 @@ public:
 	void allocate_and_init(int len, long int *V);
 	void allocate_and_init_int(int len, int *V);
 	void init_permutation_from_string(const char *s);
-	void read_ascii_file(const char *fname);
-	void read_binary_file_int4(const char *fname);
+	void read_ascii_file(std::string &fname);
+	void read_binary_file_int4(std::string &fname);
 	long int &s_i(int i);
 	int &length();
 	void print(std::ostream &ost);
@@ -277,9 +277,9 @@ public:
 	void insert_at(int a, int idx);
 	void insert_if_not_yet_there(int a);
 	void sort_and_remove_duplicates();
-	void write_to_ascii_file(const char *fname);
-	void write_to_binary_file_int4(const char *fname);
-	void write_to_csv_file(const char *fname, const char *label);
+	void write_to_ascii_file(std::string &fname);
+	void write_to_binary_file_int4(std::string &fname);
+	void write_to_csv_file(std::string &fname, const char *label);
 	int hash();
 	int minimum();
 	int maximum();
@@ -415,10 +415,10 @@ class partitionstack {
 	void print_cell(int i);
 	void print_cell_latex(std::ostream &ost, int i);
 	void print_subset();
-	void write_cell_to_file(int i, char *fname, 
-		int verbose_level);
+	void write_cell_to_file(int i,
+			std::string &fname, int verbose_level);
 	void write_cell_to_file_points_or_lines(int i, 
-		char *fname, int verbose_level);
+			std::string &fname, int verbose_level);
 	void refine_arbitrary_set_lint(int size, long int *set, int verbose_level);
 	void refine_arbitrary_set(int size, int *set, int verbose_level);
 	void split_cell(int verbose_level);
@@ -606,11 +606,11 @@ public:
 	void init_basic_constant_size(int underlying_set_size, 
 		int nb_sets, int constant_size, int verbose_level);
 	void init_from_file(int underlying_set_size, 
-		const char *fname, int verbose_level);
+			std::string &fname, int verbose_level);
 	void init_from_csv_file(int underlying_set_size, 
-		const char *fname, int verbose_level);
+			std::string &fname, int verbose_level);
 	void init_from_orbiter_file(int underlying_set_size, 
-		const char *fname, int verbose_level);
+			std::string &fname, int verbose_level);
 	void init_set(int idx_of_set, int *set, int sz, 
 		int verbose_level);
 		// Stores a copy of the given set.
@@ -649,9 +649,9 @@ public:
 		int verbose_level);
 	int has_constant_size_property();
 	int largest_set_size();
-	void save_csv(const char *fname, 
+	void save_csv(std::string &fname,
 		int f_make_heading, int verbose_level);
-	void save_constant_size_csv(const char *fname,
+	void save_constant_size_csv(std::string &fname,
 			int verbose_level);
 	int find_common_element_in_two_sets(int idx1, int idx2, 
 		int &common_elt);
@@ -930,8 +930,8 @@ public:
 	void fill_column_with_row_index(int col_idx, 
 		const char *heading);
 	void add_token(const char *label);
-	void save(const char *fname, int verbose_level);
-	void read_spreadsheet(const char *fname, int verbose_level);
+	void save(std::string &fname, int verbose_level);
+	void read_spreadsheet(std::string &fname, int verbose_level);
 	void print_table(std::ostream &ost, int f_enclose_in_parentheses);
 	void print_table_latex_all_columns(std::ostream &ost,
 		int f_enclose_in_parentheses);
@@ -951,7 +951,7 @@ public:
 	void reallocate_table();
 	void reallocate_table_add_row();
 	int find_by_column(const char *join_by);
-	void tokenize(const char *fname, 
+	void tokenize(std::string &fname,
 		char **&tokens, int &nb_tokens, int verbose_level);
 	void remove_quotes(int verbose_level);
 	void remove_rows(const char *drop_column, const char *drop_label, 

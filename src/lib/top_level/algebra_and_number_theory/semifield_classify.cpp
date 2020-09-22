@@ -30,10 +30,10 @@ semifield_classify::semifield_classify()
 	order = 0;
 
 	//f_level_two_prefix = FALSE;
-	level_two_prefix = NULL;
+	//level_two_prefix = NULL;
 
 	//f_level_three_prefix = FALSE;
-	level_three_prefix = NULL;
+	//level_three_prefix = NULL;
 
 	T = NULL;
 
@@ -738,9 +738,11 @@ void semifield_classify::compute_orbits(int depth, int verbose_level)
 				<< " orbits at depth " << depth << endl;
 	}
 
-	char fname[1000];
+	char str[1000];
+	string fname;
 
-	sprintf(fname, "semifield_list_order%d.csv", order);
+	sprintf(str, "semifield_list_order%d.csv", order);
+	fname.assign(str);
 	{
 		long int *set;
 		long int *Table;
@@ -1402,31 +1404,45 @@ void semifield_classify::candidates_classify_by_first_column(
 }
 
 void semifield_classify::make_fname_candidates_at_level_two_orbit(
-	char *fname, int orbit)
+		std::string &fname, int orbit)
 {
-		sprintf(fname, "%sL2_orbit%d_cand_int8.bin",
-				level_two_prefix, orbit);
+	fname.assign(level_two_prefix);
+	char str[1000];
+	sprintf(str, "L2_orbit%d_cand_int8.bin", orbit);
+	fname.append(str);
+
+	//sprintf(fname, "%sL2_orbit%d_cand_int8.bin", level_two_prefix, orbit);
 }
 
 void semifield_classify::make_fname_candidates_at_level_two_orbit_txt(
-	char *fname, int orbit)
+		std::string &fname, int orbit)
 {
-		sprintf(fname, "%sL2_orbit%d_cand.txt",
-				level_two_prefix, orbit);
+	fname.assign(level_two_prefix);
+	char str[1000];
+	sprintf(str, "L2_orbit%d_cand.txt", orbit);
+	fname.append(str);
+
+	//sprintf(fname, "%sL2_orbit%d_cand.txt", level_two_prefix, orbit);
 }
 
 void semifield_classify::make_fname_candidates_at_level_three_orbit(
-	char *fname, int orbit)
+		std::string &fname, int orbit)
 {
-		sprintf(fname, "%sL3_orbit%d_cand_int8",
-				level_three_prefix, orbit);
+	fname.assign(level_three_prefix);
+	char str[1000];
+	sprintf(str, "L3_orbit%d_cand_int8", orbit);
+	fname.append(str);
+
+	//sprintf(fname, "%sL3_orbit%d_cand_int8", level_three_prefix, orbit);
 }
 
 void semifield_classify::make_fname_candidates_at_level_two_orbit_by_type(
-	char *fname, int orbit, int h)
+	std::string &fname, int orbit, int h)
 {
-		sprintf(fname, "%sL2_orbit%d_type%d_cand_int8.bin",
-				level_two_prefix, orbit, h);
+	fname.assign(level_two_prefix);
+	char str[1000];
+	sprintf(str, "L2_orbit%d_type%d_cand_int8.bin", orbit, h);
+	fname.append(str);
 }
 
 

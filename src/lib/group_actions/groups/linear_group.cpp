@@ -105,8 +105,6 @@ void linear_group::init(
 
 	label.assign(A_linear->label);
 	label_tex.assign(A_linear->label_tex);
-	//strcpy(prefix, A_linear->label);
-	//strcpy(label_latex, A_linear->label_tex);
 
 	Mtx = A_linear->G.matrix_grp;
 	vector_space_dimension = n;

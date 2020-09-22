@@ -39,7 +39,7 @@ interface_combinatorics::interface_combinatorics()
 	bent_n = 0;
 	f_random_permutation = FALSE;
 	random_permutation_degree = 0;
-	random_permutation_fname_csv = NULL;
+	//random_permutation_fname_csv = NULL;
 	f_create_graph = FALSE;
 	CG = NULL;
 	//char fname_graph[1000];
@@ -315,7 +315,7 @@ void interface_combinatorics::read_arguments(int argc,
 		else if (strcmp(argv[i], "-random_permutation") == 0) {
 			f_random_permutation = TRUE;
 			random_permutation_degree = atoi(argv[++i]);
-			random_permutation_fname_csv = argv[++i];
+			random_permutation_fname_csv.assign(argv[++i]);
 			cout << "-random_permutation " << random_permutation_degree << endl;
 		}
 		else if (strcmp(argv[i], "-create_graph") == 0) {
@@ -877,7 +877,7 @@ void interface_combinatorics::do_create_combinatorial_object(int verbose_level)
 		if (f_v) {
 			cout << "We will write to the file " << fname << endl;
 		}
-		Fio.write_set_to_file(fname.c_str(), COC->Pts, COC->nb_pts, verbose_level);
+		Fio.write_set_to_file(fname, COC->Pts, COC->nb_pts, verbose_level);
 		if (f_v) {
 			cout << "Written file " << fname << " of size "
 					<< Fio.file_size(fname) << endl;
@@ -989,7 +989,7 @@ void interface_combinatorics::do_bent(int n, int verbose_level)
 }
 
 void interface_combinatorics::do_random_permutation(int deg,
-		const char *fname_csv, int verbose_level)
+		std::string &fname_csv, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

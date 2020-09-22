@@ -62,7 +62,7 @@ number_theoretic_transform::~number_theoretic_transform()
 {
 }
 
-void number_theoretic_transform::init(const char *fname_code,
+void number_theoretic_transform::init(std::string &fname_code,
 		int k, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -120,10 +120,12 @@ void number_theoretic_transform::init(const char *fname_code,
 	F->make_Fourier_matrices(omega, k, N, A, Av, Omega, verbose_level);
 
 	for (h = k; h >= 1; h--) {
-		char fname[1000];
+		char str[1000];
+		string fname;
 		file_io Fio;
 
-		sprintf(fname, "Fourier_q%d_N%d.csv", q, N[h]);
+		sprintf(str, "Fourier_q%d_N%d.csv", q, N[h]);
+		fname.assign(str);
 		Fio.int_matrix_write_csv(fname, A[h], N[h], N[h]);
 	}
 
@@ -317,23 +319,32 @@ void number_theoretic_transform::init(const char *fname_code,
 	cout << endl;
 
 	file_io Fio;
-	char fname_F[1000];
-	char fname_Fv[1000];
-	char fname_G[1000];
-	char fname_D[1000];
-	char fname_Dv[1000];
-	char fname_T[1000];
-	char fname_Tv[1000];
-	char fname_P[1000];
+	char str[1000];
+	string fname_F;
+	string fname_Fv;
+	string fname_G;
+	string fname_D;
+	string fname_Dv;
+	string fname_T;
+	string fname_Tv;
+	string fname_P;
 
-	snprintf(fname_F, 1000, "ntt_F_k%d.csv", k);
-	snprintf(fname_Fv, 1000, "ntt_Fv_k%d.csv", k);
-	snprintf(fname_G, 1000, "ntt_G_k%d.csv", k);
-	snprintf(fname_D, 1000, "ntt_D_k%d.csv", k);
-	snprintf(fname_Dv, 1000, "ntt_Dv_k%d.csv", k);
-	snprintf(fname_T, 1000, "ntt_T_k%d.csv", k);
-	snprintf(fname_Tv, 1000, "ntt_Tv_k%d.csv", k);
-	snprintf(fname_P, 1000, "ntt_P_k%d.csv", k);
+	sprintf(str, "ntt_F_k%d.csv", k);
+	fname_F.assign(str);
+	sprintf(str, "ntt_Fv_k%d.csv", k);
+	fname_Fv.assign(str);
+	sprintf(str, "ntt_G_k%d.csv", k);
+	fname_G.assign(str);
+	sprintf(str, "ntt_D_k%d.csv", k);
+	fname_D.assign(str);
+	sprintf(str, "ntt_Dv_k%d.csv", k);
+	fname_Dv.assign(str);
+	sprintf(str, "ntt_T_k%d.csv", k);
+	fname_T.assign(str);
+	sprintf(str, "ntt_Tv_k%d.csv", k);
+	fname_Tv.assign(str);
+	sprintf(str, "ntt_P_k%d.csv", k);
+	fname_P.assign(str);
 	Fio.int_matrix_write_csv(fname_F, A[k], N[k], N[k]);
 	Fio.int_matrix_write_csv(fname_Fv, Av[k], N[k], N[k]);
 	Fio.int_matrix_write_csv(fname_G, Gr[k - 1], N[k], N[k]);
@@ -398,7 +409,8 @@ void number_theoretic_transform::init(const char *fname_code,
 	int_matrix_print(the_P, N[k], N[k]);
 	cout << endl;
 
-	snprintf(fname_P, 1000, "ntt_the_P_k%d.csv", k);
+	sprintf(str, "ntt_the_P_k%d.csv", k);
+	fname_P.assign(str);
 	Fio.int_matrix_write_csv(fname_P, the_P, N[k], N[k]);
 	cout << "Written file " << fname_P << " of size " << Fio.file_size(fname_P) << endl;
 
@@ -431,11 +443,12 @@ void number_theoretic_transform::init(const char *fname_code,
 	int_matrix_print(the_L, N[k], N[k]);
 	cout << endl;
 
-	char fname[1000];
+	string fname_L;
 
-	snprintf(fname, 1000, "ntt_L_k%d.csv", k);
-	Fio.int_matrix_write_csv(fname, the_L, N[k], N[k]);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname_P) << endl;
+	sprintf(str, "ntt_L_k%d.csv", k);
+	fname_L.assign(str);
+	Fio.int_matrix_write_csv(fname_L, the_L, N[k], N[k]);
+	cout << "Written file " << fname_L << " of size " << Fio.file_size(fname_L) << endl;
 
 
 	write_code(fname_code, verbose_level);
@@ -472,10 +485,12 @@ void number_theoretic_transform::init(const char *fname_code,
 	int_matrix_print(the_L, N[k], N[k]);
 	cout << endl;
 
+	string fname_AAv;
 
-	snprintf(fname, 1000, "ntt_AAv_k%d.csv", k);
-	Fio.int_matrix_write_csv(fname, the_L, N[k], N[k]);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname_P) << endl;
+	sprintf(str, "ntt_AAv_k%d.csv", k);
+	fname_AAv.assign(str);
+	Fio.int_matrix_write_csv(fname_AAv, the_L, N[k], N[k]);
+	cout << "Written file " << fname_AAv << " of size " << Fio.file_size(fname_AAv) << endl;
 
 
 
@@ -587,7 +602,7 @@ void number_theoretic_transform::init(const char *fname_code,
 }
 
 
-void number_theoretic_transform::write_code(const char *fname_code,
+void number_theoretic_transform::write_code(std::string &fname_code,
 		int verbose_level)
 {
 	int f_v = (verbose_level = 1);
@@ -882,7 +897,7 @@ void number_theoretic_transform::write_code2(ostream &ost,
 }
 
 
-void number_theoretic_transform::write_code_header(ostream &ost, const char *fname_code, int verbose_level)
+void number_theoretic_transform::write_code_header(ostream &ost, std::string &fname_code, int verbose_level)
 {
 	char str[1000];
 	os_interface Os;
@@ -989,6 +1004,7 @@ void number_theoretic_transform::make_level(int s, int verbose_level)
 	int_matrix_print(Pr[s], N[s + 1], N[s + 1]);
 	cout << endl;
 
+#if 0
 	char fname_F[1000];
 	char fname_Fv[1000];
 	char fname_G[1000];
@@ -1006,6 +1022,34 @@ void number_theoretic_transform::make_level(int s, int verbose_level)
 	snprintf(fname_T, 1000, "ntt_Tr_k%d.csv", s + 1);
 	snprintf(fname_Tv, 1000, "ntt_Tvr_k%d.csv", s + 1);
 	snprintf(fname_P, 1000, "ntt_Pr_k%d.csv", s + 1);
+#else
+	char str[1000];
+	string fname_F;
+	string fname_Fv;
+	string fname_G;
+	string fname_D;
+	string fname_Dv;
+	string fname_T;
+	string fname_Tv;
+	string fname_P;
+
+	sprintf(str, "ntt_F_k%d.csv", s + 1);
+	fname_F.assign(str);
+	sprintf(str, "ntt_Fv_k%d.csv", s + 1);
+	fname_Fv.assign(str);
+	sprintf(str, "ntt_Gr_k%d.csv", s + 1);
+	fname_G.assign(str);
+	sprintf(str, "ntt_Dr_k%d.csv", s + 1);
+	fname_D.assign(str);
+	sprintf(str, "ntt_Dvr_k%d.csv", s + 1);
+	fname_Dv.assign(str);
+	sprintf(str, "ntt_Tr_k%d.csv", s + 1);
+	fname_T.assign(str);
+	sprintf(str, "ntt_Tvr_k%d.csv", s + 1);
+	fname_Tv.assign(str);
+	sprintf(str, "ntt_Pr_k%d.csv", s + 1);
+	fname_P.assign(str);
+#endif
 	Fio.int_matrix_write_csv(fname_F, A[s + 1], N[s + 1], N[s + 1]);
 	Fio.int_matrix_write_csv(fname_Fv, Av[s + 1], N[s + 1], N[s + 1]);
 	Fio.int_matrix_write_csv(fname_G, Gr[s], N[s + 1], N[s + 1]);
@@ -1063,12 +1107,27 @@ void number_theoretic_transform::make_level(int s, int verbose_level)
 	cout << endl;
 
 	//snprintf(fname_F, 1000, "ntt_F_k%d.csv", k - 1);
+#if 0
 	snprintf(fname_G, 1000, "ntt_G_k%d.csv", s + 1);
 	snprintf(fname_D, 1000, "ntt_D_k%d.csv", s + 1);
 	snprintf(fname_Dv, 1000, "ntt_Dv_k%d.csv", s + 1);
 	snprintf(fname_T, 1000, "ntt_T_k%d.csv", s + 1);
 	snprintf(fname_Tv, 1000, "ntt_Tv_k%d.csv", s + 1);
 	snprintf(fname_P, 1000, "ntt_P_k%d.csv", s + 1);
+#else
+	sprintf(str, "ntt_G_k%d.csv", s + 1);
+	fname_G.assign(str);
+	sprintf(str, "ntt_D_k%d.csv", s + 1);
+	fname_D.assign(str);
+	sprintf(str, "ntt_Dv_k%d.csv", s + 1);
+	fname_Dv.assign(str);
+	sprintf(str, "ntt_T_k%d.csv", s + 1);
+	fname_T.assign(str);
+	sprintf(str, "ntt_Tv_k%d.csv", s + 1);
+	fname_Tv.assign(str);
+	sprintf(str, "ntt_P_k%d.csv", s + 1);
+	fname_P.assign(str);
+#endif
 	//Fio.int_matrix_write_csv(fname_F, A[k - 1], N[k - 1], N[k - 1]);
 	Fio.int_matrix_write_csv(fname_G, G[s], N[k], N[k]);
 	Fio.int_matrix_write_csv(fname_D, D[s], N[k], N[k]);

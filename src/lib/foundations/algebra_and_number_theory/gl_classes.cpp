@@ -1053,7 +1053,7 @@ void gl_classes::compute_generalized_kernels(
 		rank = F->Gauss_simple(M4, k, k, base_cols, 0 /*verbose_level*/);
 
 		F->matrix_get_kernel_as_int_matrix(M4, k, k,
-				base_cols, rank, &Data->K[cnt]);
+				base_cols, rank, &Data->K[cnt], 0 /* verbose_level */);
 
 		if (f_vv) {
 			cout << "gl_classes::compute_generalized_kernels "

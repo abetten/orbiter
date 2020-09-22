@@ -519,9 +519,11 @@ void surface_classify_using_arc::report_decomposition_matrix(ostream &ost, int v
 	//fp << "$$" << endl;
 
 	file_io Fio;
-	char fname_decomposition[1000];
+	char str[1000];
+	string fname_decomposition;
 
-	sprintf(fname_decomposition, "surfaces_q%d_decomposition_matrix.csv", Surf_A->F->q);
+	sprintf(str, "surfaces_q%d_decomposition_matrix.csv", Surf_A->F->q);
+	fname_decomposition.assign(str);
 
 	Fio.int_matrix_write_csv(fname_decomposition, Decomp,
 			Six_arcs->nb_arcs_not_on_conic, nb_surfaces);

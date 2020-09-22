@@ -149,7 +149,8 @@ public:
 	void gl_random_matrix(int k, int q, int verbose_level);
 	const char *plus_minus_string(int epsilon);
 	const char *plus_minus_letter(int epsilon);
-	void make_Hamming_graph_and_write_file(int n, int q, int f_projective, int verbose_level);
+	void make_Hamming_graph_and_write_file(int n, int q,
+			int f_projective, int verbose_level);
 	int PHG_element_normalize(finite_ring &R, int *v, int stride, int len);
 	// last unit element made one
 	int PHG_element_normalize_from_front(finite_ring &R, int *v,
@@ -406,11 +407,11 @@ public:
 	int dot_product(int len, int *v, int *w);
 	void transpose_matrix(int *A, int *At, int ma, int na);
 	void transpose_matrix_in_place(int *A, int m);
-	void invert_matrix(int *A, int *A_inv, int n);
+	void invert_matrix(int *A, int *A_inv, int n, int verbose_level);
 	void invert_matrix_memory_given(int *A, int *A_inv, int n,
-			int *tmp_A, int *tmp_basecols);
+			int *tmp_A, int *tmp_basecols, int verbose_level);
 	void transform_form_matrix(int *A, int *Gram, 
-		int *new_Gram, int d);
+		int *new_Gram, int d, int verbose_level);
 		// computes new_Gram = A * Gram * A^\top
 	int rank_of_matrix(int *A, int m, int verbose_level);
 	int rank_of_matrix_memory_given(int *A, 
@@ -471,13 +472,12 @@ public:
 		int *base_cols, int *kernel_cols);
 	void matrix_get_kernel_as_int_matrix(int *M, int m, int n, 
 		int *base_cols, int nb_base_cols, 
-		int_matrix *kernel);
+		int_matrix *kernel, int verbose_level);
 	void matrix_get_kernel(int *M, int m, int n, 
 		int *base_cols, int nb_base_cols, 
-		int &kernel_m, int &kernel_n, int *kernel);
-		// kernel must point to the appropriate amount of memory! 
-		// (at least n * (n - nb_base_cols) int's)
-	int perp(int n, int k, int *A, int *Gram);
+		int &kernel_m, int &kernel_n, int *kernel, int verbose_level);
+		// kernel[n * (n - nb_base_cols)]
+	int perp(int n, int k, int *A, int *Gram, int verbose_level);
 	int RREF_and_kernel(int n, int k, int *A, int verbose_level);
 	int perp_standard(int n, int k, int *A, int verbose_level);
 	int perp_standard_with_temporary_data(int n, int k, int *A, 
@@ -492,32 +492,6 @@ public:
 		// from F_q to F_q
 	void projective_action_on_columns_from_the_left(int *A, 
 		int *M, int m, int n, int *perm, int verbose_level);
-	void builtin_transversal_rep_GLnq(int *A, int n, 
-		int f_semilinear, int i, int j, int verbose_level);
-	void affine_translation(int n, int coordinate_idx, 
-		int field_base_idx, int *perm);
-		// perm points to q^n int's
-		// field_base_idx is the base element whose 
-		// translation we compute, 0 \le field_base_idx < e
-		// coordinate_idx is the coordinate in which we shift, 
-		// 0 \le coordinate_idx < n
-	void affine_multiplication(int n, 
-		int multiplication_order, int *perm);
-		// perm points to q^n int's
-		// compute the diagonal multiplication by alpha, i.e. 
-		// the multiplication by alpha of each component
-	void affine_frobenius(int n, int k, int *perm);
-		// perm points to q^n int's
-		// compute the diagonal action of the Frobenius 
-		// automorphism to the power k, i.e., 
-		// raises each component to the p^k-th power
-	int all_affine_translations_nb_gens(int n);
-	void all_affine_translations(int n, int *gens);
-	void affine_generators(int n, int f_translations, 
-		int f_semilinear, int frobenius_power, 
-		int f_multiplication, int multiplication_order, 
-		int &nb_gens, int &degree, int *&gens, 
-		int &base_len, long int *&the_base);
 	int evaluate_bilinear_form(int n, int *v1, int *v2, int *Gram);
 	int evaluate_standard_hyperbolic_bilinear_form(int n, 
 		int *v1, int *v2);
@@ -570,6 +544,7 @@ public:
 		// The result is written to set2.
 		// Returns the rank of the span of the elements in set1.
 	void exterior_square(int *An, int *An2, int n, int verbose_level);
+	void lift_to_Klein_quadric(int *A4, int *A6, int verbose_level);
 
 
 	// #########################################################################
@@ -753,6 +728,32 @@ public:
 		int f_semilinear,
 		int *&data, int &size, int &nb_gens,
 		int verbose_level);
+	void builtin_transversal_rep_GLnq(int *A, int n,
+		int f_semilinear, int i, int j, int verbose_level);
+	void affine_translation(int n, int coordinate_idx,
+		int field_base_idx, int *perm, int verbose_level);
+		// perm points to q^n int's
+		// field_base_idx is the base element whose
+		// translation we compute, 0 \le field_base_idx < e
+		// coordinate_idx is the coordinate in which we shift,
+		// 0 \le coordinate_idx < n
+	void affine_multiplication(int n,
+		int multiplication_order, int *perm, int verbose_level);
+		// perm points to q^n int's
+		// compute the diagonal multiplication by alpha, i.e.
+		// the multiplication by alpha of each component
+	void affine_frobenius(int n, int k, int *perm, int verbose_level);
+		// perm points to q^n int's
+		// compute the diagonal action of the Frobenius
+		// automorphism to the power k, i.e.,
+		// raises each component to the p^k-th power
+	int all_affine_translations_nb_gens(int n);
+	void all_affine_translations(int n, int *gens);
+	void affine_generators(int n, int f_translations,
+		int f_semilinear, int frobenius_power,
+		int f_multiplication, int multiplication_order,
+		int &nb_gens, int &degree, int *&gens,
+		int &base_len, long int *&the_base, int verbose_level);
 
 	// #########################################################################
 	// finite_field_orthogonal.cpp
@@ -879,10 +880,11 @@ public:
 	void create_projective_curve(
 			std::string &variety_label,
 			int curve_nb_vars, int curve_degree,
-			const char *curve_coeffs,
+			std::string &curve_coeffs,
 			monomial_ordering_type Monomial_ordering_type,
 			std::string &fname, int &nb_pts, long int *&Pts,
 			int verbose_level);
+	int test_if_vectors_are_projectively_equal(int *v1, int *v2, int len);
 	void PG_element_normalize(int *v, int stride, int len);
 	// last non-zero element made one
 	void PG_element_normalize_from_front(int *v, int stride, int len);
@@ -1206,10 +1208,10 @@ public:
 	void int_vec_print_field_elements(std::ostream &ost, int *v, int len);
 	void int_vec_print_elements_exponential(std::ostream &ost,
 		int *v, int len, const char *symbol_for_print);
-	void make_fname_addition_table_csv(char *fname);
-	void make_fname_multiplication_table_csv(char *fname);
-	void make_fname_addition_table_reordered_csv(char *fname);
-	void make_fname_multiplication_table_reordered_csv(char *fname);
+	void make_fname_addition_table_csv(std::string &fname);
+	void make_fname_multiplication_table_csv(std::string &fname);
+	void make_fname_addition_table_reordered_csv(std::string &fname);
+	void make_fname_multiplication_table_reordered_csv(std::string &fname);
 	void addition_table_save_csv();
 	void multiplication_table_save_csv();
 	void addition_table_reordered_save_csv();
@@ -1811,6 +1813,8 @@ public:
 			int verbose_level);
 	int square_root_mod(int a, int p, int verbose_level);
 		// solves x^2 = a mod p. Returns x
+
+
 	void calc_roots(longinteger_object &M,
 		longinteger_object &sqrtM,
 		std::vector<int> &primes, std::vector<int> &R1, std::vector<int> &R2,
@@ -1858,6 +1862,7 @@ public:
 		int verbose_level);
 	int jacobi(longinteger_object &a, longinteger_object &m, 
 		int verbose_level);
+
 	void random_number_less_than_n(longinteger_object &n, 
 		longinteger_object &r);
 	void random_number_with_n_decimals(
@@ -2072,15 +2077,15 @@ public:
 
 	number_theoretic_transform();
 	~number_theoretic_transform();
-	void init(const char *fname_code, int k, int q, int verbose_level);
-	void write_code(const char *fname_code,
+	void init(std::string &fname_code, int k, int q, int verbose_level);
+	void write_code(std::string &fname_code,
 			int verbose_level);
 	void write_code2(std::ostream &ost,
 			int f_forward,
 			int &nb_add, int &nb_negate, int &nb_mult,
 			int verbose_level);
 	void write_code_header(std::ostream &ost,
-			const char *fname_code, int verbose_level);
+			std::string &fname_code, int verbose_level);
 	void make_level(int s, int verbose_level);
 	void paste(int **Xr, int **X, int s, int verbose_level);
 	void make_G_matrix(int s, int verbose_level);

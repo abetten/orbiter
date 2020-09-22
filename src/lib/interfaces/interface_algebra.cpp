@@ -45,7 +45,7 @@ interface_algebra::interface_algebra()
 	eigenstuff_n = 0;
 	eigenstuff_q = 0;
 	eigenstuff_coeffs = NULL;
-	eigenstuff_fname = NULL;
+	//eigenstuff_fname = NULL;
 	f_young_symmetrizer = FALSE;
 	young_symmetrizer_n = 0;
 	f_young_symmetrizer_sym_4 = FALSE;
@@ -248,7 +248,7 @@ void interface_algebra::read_arguments(int argc,
 			f_eigenstuff_matrix_from_file = TRUE;
 			eigenstuff_n = atoi(argv[++i]);
 			eigenstuff_q = atoi(argv[++i]);
-			eigenstuff_fname = argv[++i];
+			eigenstuff_fname.assign(argv[++i]);
 			cout << "-eigenstuff_matrix_from_file " << eigenstuff_n
 					<< " " << eigenstuff_q << " " << eigenstuff_fname << endl;
 		}
@@ -340,7 +340,7 @@ void interface_algebra::do_eigenstuff_matrix_direct(
 }
 
 void interface_algebra::do_eigenstuff_matrix_from_file(
-		int n, int q, const char *fname, int verbose_level)
+		int n, int q, std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

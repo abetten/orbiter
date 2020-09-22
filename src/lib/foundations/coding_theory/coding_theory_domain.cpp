@@ -436,7 +436,7 @@ void coding_theory_domain::create_matrix_H_subfield(
 		}
 
 
-	F->invert_matrix(C, C_inv, m);
+	F->invert_matrix(C, C_inv, m, 0 /* verbose_level */);
 
 	if (f_vv) {
 		cout << "C_inv:" << endl;
@@ -800,7 +800,7 @@ void coding_theory_domain::make_tensor_code_9_dimensional(int q,
 	cout << "C:" << endl;
 	print_integer_matrix_width(cout, C, m, m, m, 2);
 
-	F.invert_matrix(C, C_inv, m);
+	F.invert_matrix(C, C_inv, m, 0 /* verbose_level */);
 
 	cout << "C_inv:" << endl;
 	print_integer_matrix_width(cout, C_inv, m, m, m, 2);

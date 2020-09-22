@@ -561,8 +561,8 @@ void projective_space_with_action::save_Levi_graph(std::string &prefix,
 #endif
 
 	Fio.lint_vec_write_csv(canonical_labeling, canonical_labeling_len,
-			fname_labeling.c_str(), "can_lab");
-	Fio.int_matrix_write_csv(fname_csv.c_str(), Incma, nb_rows, nb_cols);
+			fname_labeling, "can_lab");
+	Fio.int_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
 
 
 	colored_graph *CG;
@@ -955,8 +955,8 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 
 
 void projective_space_with_action::merge_packings(
-		const char **fnames, int nb_files,
-		const char *file_of_spreads,
+		std::string *fnames, int nb_files,
+		std::string &file_of_spreads,
 		classify_bitvectors *&CB,
 		int verbose_level)
 {
@@ -1256,8 +1256,8 @@ void projective_space_with_action::merge_packings(
 }
 
 void projective_space_with_action::select_packings(
-		const char *fname,
-		const char *file_of_spreads_original,
+		std::string &fname,
+		std::string &file_of_spreads_original,
 		spread_tables *Spread_tables,
 		int f_self_polar,
 		int f_ago, int select_ago,
@@ -1651,8 +1651,8 @@ void projective_space_with_action::select_packings(
 
 
 void projective_space_with_action::select_packings_self_dual(
-		const char *fname,
-		const char *file_of_spreads_original,
+		std::string &fname,
+		std::string &file_of_spreads_original,
 		int f_split, int split_r, int split_m,
 		spread_tables *Spread_tables,
 		classify_bitvectors *&CB,
@@ -2339,7 +2339,7 @@ void projective_space_with_action::select_packings_self_dual(
 	fname_self_dual.append(str);
 	cout << "saving self_dual_cases to file " << fname_self_dual << endl;
 	Fio.int_vec_write_csv(self_dual_cases, nb_self_dual_cases,
-			fname_self_dual.c_str(), "self_dual_idx");
+			fname_self_dual, "self_dual_idx");
 	cout << "written file " << fname_self_dual
 			<< " of size " << Fio.file_size(fname_self_dual) << endl;
 

@@ -1264,7 +1264,7 @@ void surface_domain::klein_to_wedge_vec(
 	}
 }
 
-void surface_domain::save_lines_in_three_kinds(const char *fname_csv,
+void surface_domain::save_lines_in_three_kinds(std::string &fname_csv,
 	long int *Lines_wedge, long int *Lines, long int *Lines_klein, int nb_lines)
 {
 	spreadsheet *Sp;

@@ -177,6 +177,7 @@ void schreier_sims::init_generators(
 				TRUE /* f_offset */, 1 /* offset */,
 				TRUE /* f_do_it_anyway_even_for_big_degree */,
 				FALSE /* f_print_cycles_of_length_one*/);
+		gens->print_for_make_element(cout);
 		}
 	f_from_generators = TRUE;
 }
@@ -452,9 +453,9 @@ void schreier_sims::closure_group(int verbose_level)
 					<< quo << " remainder " << rem << endl;
 			}
 		cnt++;
-		if (cnt == 100) {
+		if (cnt == 10) {
 			cout << "schreier_sims::closure_group cnt == 100, "
-					"we are breaking off" << endl;
+					"KG_order=" << KG_order << ", we are breaking off" << endl;
 			break;
 			}
 		}

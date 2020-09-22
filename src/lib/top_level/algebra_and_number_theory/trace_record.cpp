@@ -39,12 +39,12 @@ trace_record::~trace_record()
 
 void save_trace_record(
 		trace_record *T,
-		int f_trace_record_prefix, const char *trace_record_prefix,
+		int f_trace_record_prefix, std::string &trace_record_prefix,
 		int iso, int f, int po, int so, int N)
 {
 	long int *M;
 	int w = 10;
-	char fname[1000];
+	string fname;
 	const char *column_label[] = {
 		"coset",
 		"trace_po",
@@ -74,12 +74,18 @@ void save_trace_record(
 		M[i * w + 9] = T[i].f2;
 		}
 
+	char str[1000];
+
+	sprintf(str, "trace_record_%03d_f%05d_po%d_so%d.csv",
+			iso, f, po, so);
+
+
 	if (f_trace_record_prefix) {
-		sprintf(fname, "%strace_record_%03d_f%05d_po%d_so%d.csv",
-				trace_record_prefix, iso, f, po, so);
+		fname.assign(trace_record_prefix);
+		fname.append(str);
 	}
 	else {
-		sprintf(fname, "trace_record_%03d_f%05d_po%d_so%d.csv", iso, f, po, so);
+		fname.assign(str);
 	}
 	Fio.lint_matrix_write_csv_with_labels(fname, M, N, w, column_label);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;

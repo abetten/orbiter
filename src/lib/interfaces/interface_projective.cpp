@@ -81,6 +81,10 @@ interface_projective::interface_projective()
 	line2_to = 0;
 
 	f_make_table_of_surfaces = FALSE;
+
+	f_inverse_isomorphism_klein_quadric = FALSE;
+	// std::string inverse_isomorphism_klein_quadric_matrix_A6;
+
 }
 
 
@@ -123,6 +127,9 @@ void interface_projective::print_help(int argc,
 	else if (strcmp(argv[i], "-make_table_of_surfaces") == 0) {
 		cout << "-make_table_of_surfaces " << endl;
 	}
+	else if (strcmp(argv[i], "-inverse_isomorphism_klein_quadric") == 0) {
+		cout << "-f_inverse_isomorphism_klein_quadric <int : q> <orthogonal 6x6 matrix>" << endl;
+	}
 }
 
 
@@ -164,6 +171,9 @@ int interface_projective::recognize_keyword(int argc,
 		return true;
 	}
 	else if (strcmp(argv[i], "-make_table_of_surfaces") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-inverse_isomorphism_klein_quadric") == 0) {
 		return true;
 	}
 	return false;
@@ -314,6 +324,12 @@ void interface_projective::read_arguments(int argc,
 			f_make_table_of_surfaces = TRUE;
 			cout << "-make_table_of_surfaces" << endl;
 		}
+		else if (strcmp(argv[i], "-inverse_isomorphism_klein_quadric") == 0) {
+			f_inverse_isomorphism_klein_quadric = TRUE;
+			q = atoi(argv[++i]);
+			inverse_isomorphism_klein_quadric_matrix_A6.assign(argv[++i]);
+			cout << "-inverse_isomorphism_klein_quadric " << q << " " << inverse_isomorphism_klein_quadric_matrix_A6 << endl;
+		}
 		else {
 			cout << "interface_projective::read_arguments: unrecognized option "
 					<< argv[i] << ", skipping" << endl;
@@ -379,6 +395,16 @@ void interface_projective::worker(orbiter_session *Session, int verbose_level)
 
 		GG.make_table_of_surfaces(verbose_level);
 	}
+
+	else if (f_inverse_isomorphism_klein_quadric) {
+
+		geometry_global GG;
+
+		GG.do_inverse_isomorphism_klein_quadric(q,
+				inverse_isomorphism_klein_quadric_matrix_A6, verbose_level);
+	}
+
+
 
 	if (f_v) {
 		cout << "interface_projective::worker done" << endl;
@@ -699,7 +725,11 @@ void interface_projective::do_create_points_on_quartic(double desired_distance, 
 		}
 		file_io Fio;
 
-		Fio.double_matrix_write_csv("points.csv", Pts, nb, 2);
+		string fname;
+
+		fname.assign("points.csv");
+
+		Fio.double_matrix_write_csv(fname, Pts, nb, 2);
 
 		cout << "created curve 1 with " << C1.Pts.size() << " many points" << endl;
 		cout << "created curve 2 with " << C2.Pts.size() << " many points" << endl;
@@ -767,8 +797,11 @@ void interface_projective::do_create_points_on_parabola(
 			nb++;
 		}
 		file_io Fio;
-		char fname[1000];
-		snprintf(fname, 1000, "parabola_N%d_%lf_%lf_%lf_points.csv", N, parabola_a, parabola_b, parabola_c);
+		char str[1000];
+		string fname;
+
+		snprintf(str, 1000, "parabola_N%d_%lf_%lf_%lf_points.csv", N, parabola_a, parabola_b, parabola_c);
+		fname.assign(str);
 
 		Fio.double_matrix_write_csv(fname, Pts, nb, 2);
 
@@ -795,8 +828,10 @@ void interface_projective::do_create_points_on_parabola(
 			nb++;
 		}
 		file_io Fio;
-		char fname[1000];
-		snprintf(fname, 1000, "parabola_N%d_%lf_%lf_%lf_projection_from_center.csv", N, parabola_a, parabola_b, parabola_c);
+		char str[1000];
+		string fname;
+		snprintf(str, 1000, "parabola_N%d_%lf_%lf_%lf_projection_from_center.csv", N, parabola_a, parabola_b, parabola_c);
+		fname.assign(str);
 
 		Fio.double_matrix_write_csv(fname, Pts, nb, 6);
 
@@ -831,9 +866,12 @@ void interface_projective::do_create_points_on_parabola(
 			nb++;
 		}
 		file_io Fio;
-		char fname[1000];
-		snprintf(fname, 1000, "parabola_N%d_%lf_%lf_%lf_projection_from_sphere.csv",
-				N, parabola_a, parabola_b, parabola_c);
+
+		char str[1000];
+		string fname;
+		snprintf(str, 1000, "parabola_N%d_%lf_%lf_%lf_projection_from_sphere.csv", N, parabola_a, parabola_b, parabola_c);
+		fname.assign(str);
+
 
 		Fio.double_matrix_write_csv(fname, Pts, nb, 6);
 
@@ -865,9 +903,12 @@ void interface_projective::do_create_points_on_parabola(
 			nb++;
 		}
 		file_io Fio;
-		char fname[1000];
-		snprintf(fname, 1000, "parabola_N%d_%lf_%lf_%lf_points_projected.csv",
-				N, parabola_a, parabola_b, parabola_c);
+
+		char str[1000];
+		string fname;
+		snprintf(str, 1000, "parabola_N%d_%lf_%lf_%lf_points_projected.csv", N, parabola_a, parabola_b, parabola_c);
+		fname.assign(str);
+
 
 		Fio.double_matrix_write_csv(fname, Pts, nb, 3);
 
@@ -953,8 +994,12 @@ void interface_projective::do_smooth_curve(const char *curve_label,
 			}
 		}
 		file_io Fio;
-		char fname[1000];
-		snprintf(fname, 1000, "function_%s_N%d_points.csv", curve_label, N);
+
+		char str[1000];
+		string fname;
+		snprintf(str, 1000, "function_%s_N%d_points.csv", curve_label, N);
+		fname.assign(str);
+
 
 		Fio.double_matrix_write_csv(fname, Pts, nb, nb_dimensions);
 
@@ -992,8 +1037,11 @@ void interface_projective::do_smooth_curve(const char *curve_label,
 			}
 		}
 		file_io Fio;
-		char fname[1000];
-		snprintf(fname, 1000, "function_%s_N%d_points_plus.csv", curve_label, N);
+
+		char str[1000];
+		string fname;
+		snprintf(str, 1000, "function_%s_N%d_points_plus.csv", curve_label, N);
+		fname.assign(str);
 
 		Fio.double_matrix_write_csv(fname, Pts, nb, n);
 

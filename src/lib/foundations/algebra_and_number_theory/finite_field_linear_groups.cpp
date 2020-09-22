@@ -23,6 +23,7 @@ void finite_field::diagonal_orbit_perm(int n,
 		long int *orbit, long int *orbit_inv, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 1);
 	int *v = NEW_int(n + 1);
 	geometry_global Gg;
 	long int l, ll;
@@ -46,14 +47,14 @@ void finite_field::diagonal_orbit_perm(int n,
 		for (j = 1; j < n; j++) {
 			v[j]++;
 			}
-		if (f_v) {
+		if (f_vv) {
 			cout << i << " : ";
 			for (j = 0; j < n; j++) {
 				cout << v[j] << " ";
 				}
 			}
 		PG_element_rank_modified_lint(v, 1, n, a);
-		if (f_v) {
+		if (f_vv) {
 			cout << " : " << a << endl;
 			}
 		b = orbit_inv[a];
@@ -74,6 +75,7 @@ void finite_field::frobenius_orbit_perm(int n,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE;// (verbose_level >= 1);
 	int *v = NEW_int(n);
 	geometry_global Gg;
 	long int l;
@@ -109,14 +111,14 @@ void finite_field::frobenius_orbit_perm(int n,
 				<< n + p << ")" << endl;
 		}
 	for (i = 0; i < ll; i++) {
-		if (f_v) {
+		if (f_vv) {
 			cout << i << " : ";
 			for (j = 0; j < n; j++) {
 				cout << v[j] << " ";
 				}
 			}
 		PG_element_rank_modified_lint(v, 1, n, a);
-		if (f_v) {
+		if (f_vv) {
 			cout << " : " << a << endl;
 			}
 		b = orbit_inv[a];
@@ -141,7 +143,7 @@ void finite_field::projective_matrix_group_base_and_orbits(int n,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	int f_vv = FALSE; //(verbose_level >= 2);
 	int i;
 	geometry_global Gg;
 
@@ -173,19 +175,19 @@ void finite_field::projective_matrix_group_base_and_orbits(int n,
 	for (i = 0; i < n; i++) {
 		transversal_length[i] =
 				Gg.nb_PG_elements_not_in_subspace(n - 1, i - 1, q);
-		if (f_v) {
+		if (f_vv) {
 			cout << "finite_field::projective_matrix_group_base_and_orbits "
 					"transversal " << i << " of length "
 					<< transversal_length[i] << endl;
 			}
-		if (f_v) {
+		if (f_vv) {
 			cout << "finite_field::projective_matrix_group_base_and_orbits "
 					"before PG_element_modified_not_in_subspace_perm" << endl;
 			}
 		PG_element_modified_not_in_subspace_perm(n - 1, i - 1,
 			orbit[i], orbit_inv[i], 0);
 
-		if (f_v) {
+		if (f_vv) {
 			cout << "finite_field::projective_matrix_group_base_and_orbits "
 					"after PG_element_modified_not_in_subspace_perm" << endl;
 			}
@@ -256,7 +258,7 @@ void finite_field::projective_matrix_group_base_and_orbits(int n,
 		cout << "base_len=" << base_len << endl;
 		exit(1);
 	}
-	if (f_v) {
+	if (f_vv) {
 		cout << "finite_field::projective_matrix_group_base_and_orbits base: ";
 		lint_vec_print(cout, base, base_len);
 		cout << endl;
@@ -344,7 +346,7 @@ void finite_field::affine_matrix_group_base_and_transversal_length(int n,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
+	int f_vv = (verbose_level >= 2);
 	int i, c;
 	number_theory_domain NT;
 
@@ -371,7 +373,7 @@ void finite_field::affine_matrix_group_base_and_transversal_length(int n,
 				"c != base_len" << endl;
 		exit(1);
 		}
-	if (f_v) {
+	if (f_vv) {
 		cout << "finite_field::affine_matrix_group_base_and_transversal_length base: ";
 		lint_vec_print(cout, base, base_len);
 		cout << endl;
@@ -393,7 +395,7 @@ void finite_field::general_linear_matrix_group_base_and_transversal_length(int n
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
+	int f_vv = (verbose_level >= 2);
 	int i, c;
 	number_theory_domain NT;
 
@@ -420,7 +422,7 @@ void finite_field::general_linear_matrix_group_base_and_transversal_length(int n
 		cout << "base_len=" << base_len << endl;
 		exit(1);
 		}
-	if (f_v) {
+	if (f_vv) {
 		cout << "finite_field::general_linear_matrix_group_base_and_"
 				"transversal_length base: ";
 		lint_vec_print(cout, base, base_len);
@@ -1242,6 +1244,264 @@ void finite_field::generators_for_stabilizer_of_triangle_in_PGL4(
 	if (f_v) {
 		cout << "finite_field::generators_for_stabilizer_of_triangle_in_PGL4 done" << endl;
 		}
+}
+
+void finite_field::builtin_transversal_rep_GLnq(int *A,
+		int n, int f_semilinear, int i, int j,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	int transversal_length;
+	int ii, jj, i0, a;
+	geometry_global Gg;
+
+	if (f_v) {
+		cout << "finite_field::builtin_transversal_rep_GLnq  "
+				"GL(" << n << "," << q << ") i = " << i
+				<< " j = " << j << endl;
+	}
+
+	// make the n x n identity matrix:
+	for (ii = 0; ii < n * n; ii++) {
+		A[ii] = 0;
+	}
+	for (ii = 0; ii < i; ii++) {
+		A[ii * n + ii] = 1;
+	}
+	if (f_semilinear) {
+		A[n * n] = 0;
+	}
+
+	if ((i == n + 1 && q > 2) || (i == n && q == 2)) {
+		if (!f_semilinear) {
+			cout << "finite_field::builtin_transversal_rep_GLnq "
+					"must be semilinear to access transversal " << n << endl;
+			exit(1);
+		}
+		A[n * n] = j;
+	}
+	else if (i == n && q > 2) {
+		transversal_length = Gg.nb_AG_elements(n - 1, q - 1);
+		if (j >= transversal_length) {
+			cout << "finite_field::builtin_transversal_rep_GLnq "
+					"j = " << j << " >= transversal_length = "
+					<< transversal_length << endl;
+			exit(1);
+		}
+		int *v = NEW_int(n);
+		Gg.AG_element_unrank(q - 1, v, 1, n - 1, j);
+		A[0] = 1;
+		for (jj = 0; jj < n - 1; jj++) {
+			A[(jj + 1) * n + (jj + 1)] = v[jj] + 1;
+		}
+		FREE_int(v);
+	}
+	else {
+		if (i == 0) {
+			PG_element_unrank_modified(A + i, n, n, j);
+		}
+		else {
+			PG_element_unrank_modified_not_in_subspace(
+					A + i, n, n, i - 1, j);
+		}
+		i0 = -1;
+		for (ii = 0; ii < n; ii++) {
+			a = A[ii * n + i];
+			if (ii >= i && i0 == -1 && a != 0) {
+				i0 = ii;
+			}
+		}
+		if (f_vv) {
+			cout << "i0 = " << i0 << endl;
+		}
+		for (jj = i; jj < i0; jj++) {
+			A[jj * n + jj + 1] = 1;
+		}
+		for (jj = i0 + 1; jj < n; jj++) {
+			A[jj * n + jj] = 1;
+		}
+		//int_matrix_transpose(n, A);
+		transpose_matrix_in_place(A, n);
+	}
+
+	if (f_vv) {
+		cout << "transversal_rep_GLnq[" << i << "][" << j << "] = \n";
+		print_integer_matrix(cout, A, n, n);
+	}
+}
+
+void finite_field::affine_translation(int n,
+		int coordinate_idx, int field_base_idx, int *perm, int verbose_level)
+// perm points to q^n int's
+// field_base_idx is the base element whose translation
+// we compute, 0 \le field_base_idx < e
+// coordinate_idx is the coordinate in which we shift,
+// 0 \le coordinate_idx < n
+{
+	int f_v = (verbose_level >= 1);
+	long int i, j, l, a;
+	int *v;
+	number_theory_domain NT;
+	geometry_global Gg;
+
+	if (f_v) {
+		cout << "finite_field::affine_translation "
+				"coordinate_idx=" << coordinate_idx
+				<< " field_base_idx=" << field_base_idx << endl;
+	}
+	v = NEW_int(n);
+	l = Gg.nb_AG_elements(n, q);
+	a = NT.i_power_j(p, field_base_idx);
+	for (i = 0; i < l; i++) {
+		Gg.AG_element_unrank(q, v, 1, l, i);
+		v[coordinate_idx] = add(v[coordinate_idx], a);
+		j = Gg.AG_element_rank(q, v, 1, l);
+		perm[i] = j;
+	}
+	FREE_int(v);
+}
+
+void finite_field::affine_multiplication(int n,
+		int multiplication_order, int *perm, int verbose_level)
+// perm points to q^n int's
+// compute the diagonal multiplication by alpha, i.e.
+// the multiplication by alpha of each component
+{
+	int f_v = (verbose_level >= 1);
+	long int i, j, l, k;
+	int alpha_power, a;
+	int *v;
+	geometry_global Gg;
+
+	if (f_v) {
+		cout << "finite_field::affine_multiplication" << endl;
+	}
+	v = NEW_int(n);
+	alpha_power = (q - 1) / multiplication_order;
+	if (alpha_power * multiplication_order != q - 1) {
+		cout << "finite_field::affine_multiplication: "
+				"multiplication_order does not divide q - 1" << endl;
+		exit(1);
+	}
+	a = power(alpha, alpha_power);
+	l = Gg.nb_AG_elements(n, q);
+	for (i = 0; i < l; i++) {
+		Gg.AG_element_unrank(q, v, 1, l, i);
+		for (k = 0; k < n; k++) {
+			v[k] = mult(v[k], a);
+		}
+		j = Gg.AG_element_rank(q, v, 1, l);
+		perm[i] = j;
+	}
+	FREE_int(v);
+}
+
+void finite_field::affine_frobenius(int n, int k, int *perm, int verbose_level)
+// perm points to q^n int's
+// compute the diagonal action of the Frobenius automorphism
+// to the power k, i.e.,
+// raises each component to the p^k-th power
+{
+	int f_v = (verbose_level >= 1);
+	long int i, j, l, u;
+	int *v;
+	geometry_global Gg;
+
+	if (f_v) {
+		cout << "finite_field::affine_frobenius" << endl;
+	}
+	v = NEW_int(n);
+	l = Gg.nb_AG_elements(n, q);
+	for (i = 0; i < l; i++) {
+		Gg.AG_element_unrank(q, v, 1, l, i);
+		for (u = 0; u < n; u++) {
+			v[u] = frobenius_power(v[u], k);
+		}
+		j = Gg.AG_element_rank(q, v, 1, l);
+		perm[i] = j;
+	}
+	FREE_int(v);
+}
+
+
+int finite_field::all_affine_translations_nb_gens(int n)
+{
+	int nb_gens;
+
+	nb_gens = e * n;
+	return nb_gens;
+}
+
+void finite_field::all_affine_translations(int n, int *gens)
+{
+	int i, j, k = 0;
+	int degree;
+	geometry_global Gg;
+
+	degree = Gg.nb_AG_elements(n, q);
+
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < e; j++, k++) {
+			affine_translation(n, i, j, gens + k * degree, 0 /* verbose_level */);
+		}
+	}
+}
+
+void finite_field::affine_generators(int n,
+	int f_translations,
+	int f_semilinear, int frobenius_power,
+	int f_multiplication, int multiplication_order,
+	int &nb_gens, int &degree, int *&gens,
+	int &base_len, long int *&the_base, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int k, h;
+	geometry_global Gg;
+
+	if (f_v) {
+		cout << "finite_field::affine_generators" << endl;
+	}
+	degree = Gg.nb_AG_elements(n, q);
+	nb_gens = 0;
+	base_len = 0;
+	if (f_translations) {
+		nb_gens += all_affine_translations_nb_gens(n);
+		base_len++;
+	}
+	if (f_multiplication) {
+		nb_gens++;
+		base_len++;
+	}
+	if (f_semilinear) {
+		nb_gens++;
+		base_len++;
+	}
+
+	gens = NEW_int(nb_gens * degree);
+	the_base = NEW_lint(base_len);
+	k = 0;
+	h = 0;
+	if (f_translations) {
+		all_affine_translations(n, gens);
+		k += all_affine_translations_nb_gens(n);
+		the_base[h++] = 0;
+	}
+	if (f_multiplication) {
+		affine_multiplication(n, multiplication_order,
+				gens + k * degree, 0 /* verbose_level */);
+		k++;
+		the_base[h++] = 1;
+	}
+	if (f_semilinear) {
+		affine_frobenius(n, frobenius_power, gens + k * degree, 0 /* verbose_level */);
+		k++;
+		the_base[h++] = p;
+	}
+	if (f_v) {
+		cout << "finite_field::affine_generators done" << endl;
+	}
 }
 
 

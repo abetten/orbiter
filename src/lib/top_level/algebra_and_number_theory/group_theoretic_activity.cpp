@@ -547,7 +547,7 @@ void group_theoretic_activity::create_group_table(int verbose_level)
 	cout << "The group table is:" << endl;
 	int_matrix_print(Table, n, n, 2);
 
-	Fio.int_matrix_write_csv(fname.c_str(), Table, n, n);
+	Fio.int_matrix_write_csv(fname, Table, n, n);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 	FREE_int(Table);
@@ -1367,7 +1367,7 @@ void group_theoretic_activity::conjugacy_class_of(std::string &elt_data, int ver
 	fname.append(elt_data);
 	fname.append(".csv");
 
-	Fio.int_matrix_write_csv(fname.c_str(), M, Orbit.size(), A1->make_element_size);
+	Fio.int_matrix_write_csv(fname, M, Orbit.size(), A1->make_element_size);
 
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
@@ -1391,7 +1391,7 @@ void group_theoretic_activity::conjugacy_class_of(std::string &elt_data, int ver
 void group_theoretic_activity::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE;// (verbose_level >= 2);
+	int f_vv = (verbose_level >= 5);
 
 	if (f_v) {
 		cout << "group_theoretic_activity::isomorphism_Klein_quadric" << endl;
@@ -1414,7 +1414,7 @@ void group_theoretic_activity::isomorphism_Klein_quadric(std::string &fname, int
 
 	int *M;
 	int m, n;
-	Fio.int_matrix_read_csv(fname.c_str(), M, m, n, verbose_level);
+	Fio.int_matrix_read_csv(fname, M, m, n, verbose_level);
 
 	cout << "Read a set of size " << m << endl;
 
@@ -1429,13 +1429,23 @@ void group_theoretic_activity::isomorphism_Klein_quadric(std::string &fname, int
 
 	int i, j, c;
 	int Basis1[] = {
+#if 1
 			1,0,0,0,0,0,
 			0,1,0,0,0,0,
 			0,0,1,0,0,0,
 			0,0,0,1,0,0,
 			0,0,0,0,1,0,
 			0,0,0,0,0,1,
+#else
+			1,0,0,0,0,0,
+			0,0,0,0,0,1,
+			0,1,0,0,0,0,
+			0,0,0,0,-1,0,
+			0,0,1,0,0,0,
+			0,0,0,1,0,0,
+#endif
 	};
+	//int Basis1b[36];
 	int Basis2[36];
 	int An2[37];
 	int v[6];
@@ -1462,6 +1472,17 @@ void group_theoretic_activity::isomorphism_Klein_quadric(std::string &fname, int
 	int Bv[36];
 	sorting Sorting;
 
+#if 0
+	for (i = 0; i < 6; i++) {
+		if (Basis1[i] == -1) {
+			Basis1b[i] = F->negate(1);
+		}
+		else {
+			Basis1b[i] = Basis1[i];
+		}
+	}
+#endif
+
 	for (i = 0; i < 6; i++) {
 		F->klein_to_wedge(Basis1 + i * 6, Basis2 + i * 6);
 	}
@@ -1478,18 +1499,43 @@ void group_theoretic_activity::isomorphism_Klein_quadric(std::string &fname, int
 		}
 
 		if (f_vv) {
-			cout << "Element :" << endl;
+			cout << "Element " << i << " / " << m << endl;
 			A1->element_print(Elt, cout);
 			cout << endl;
 		}
 
 		F->exterior_square(Elt, An2, 4, 0 /*verbose_level*/);
 
+		if (f_vv) {
+			cout << "Exterior square:" << endl;
+			int_matrix_print(An2, 6, 6);
+			cout << endl;
+		}
+
 		for (j = 0; j < 6; j++) {
 			F->mult_vector_from_the_left(Basis2 + j * 6, An2, v, 6, 6);
 					// v[m], A[m][n], vA[n]
-			F->wedge_to_klein(v, w);
+			F->wedge_to_klein(v /* W */, w /*K*/);
 			int_vec_copy(w, C + j * 6, 6);
+		}
+
+		int Gram[] = {
+				0,1,0,0,0,0,
+				1,0,0,0,0,0,
+				0,0,0,1,0,0,
+				0,0,1,0,0,0,
+				0,0,0,0,0,1,
+				0,0,0,0,1,0,
+		};
+		int new_Gram[36];
+
+		F->transform_form_matrix(C, Gram,
+				new_Gram, 6, 0 /* verbose_level*/);
+
+		if (f_vv) {
+			cout << "Transformed Gram matrix:" << endl;
+			int_matrix_print(new_Gram, 6, 6);
+			cout << endl;
 		}
 
 
@@ -1509,6 +1555,27 @@ void group_theoretic_activity::isomorphism_Klein_quadric(std::string &fname, int
 			int_matrix_print(E, 6, 6);
 			cout << endl;
 		}
+
+		int special_Gram[] = {
+				0,0,0,3,4,1,
+				0,0,0,4,1,3,
+				0,0,0,1,3,4,
+				3,4,1,0,0,0,
+				4,1,3,0,0,0,
+				1,3,4,0,0,0,
+		};
+		int new_special_Gram[36];
+
+		F->transform_form_matrix(E, special_Gram,
+				new_special_Gram, 6, 0 /* verbose_level*/);
+
+		if (f_vv) {
+			cout << "Transformed special Gram matrix:" << endl;
+			int_matrix_print(new_special_Gram, 6, 6);
+			cout << endl;
+		}
+
+
 
 		c = Sorting.integer_vec_compare(E, Target, 36);
 		if (c == 0) {
@@ -1614,11 +1681,11 @@ void group_theoretic_activity::orbits_on_set_system_from_file(int verbose_level)
 		cout << endl;
 		//Sch->print_and_list_orbit_tex(i, ost);
 		}
-	char fname[1000];
+	string fname;
 
-	strcpy(fname, Descr->orbits_on_set_system_from_file_fname);
+	fname.assign(Descr->orbits_on_set_system_from_file_fname);
 	chop_off_extension(fname);
-	strcat(fname, "_orbit_reps.txt");
+	fname.append("_orbit_reps.txt");
 
 	{
 		ofstream ost(fname);
@@ -1676,12 +1743,18 @@ void group_theoretic_activity::orbits_on_set_from_file(int verbose_level)
 			orbit_length, set_size, verbose_level);
 	cout << "after OS->get_table_of_orbits" << endl;
 
-	char str[1000];
-	strcpy(str, Descr->orbit_of_set_from_file_fname);
-	chop_off_extension(str);
+	string fname0;
+	fname0.assign(Descr->orbit_of_set_from_file_fname);
+	chop_off_extension(fname0);
 
-	char fname[2000];
-	snprintf(fname, 2000, "orbit_of_%s_under_%s_with_hash.csv", str, LG->label.c_str());
+	string fname;
+
+	fname.assign("orbit_of_");
+	fname.append(fname0);
+	fname.append("_under_");
+	fname.append(LG->label);
+	fname.append("_with_hash.csv");
+	//snprintf(fname, 2000, "orbit_of_%s_under_%s_with_hash.csv", str, LG->label.c_str());
 	cout << "Writing table to file " << fname << endl;
 	Fio.lint_matrix_write_csv(fname,
 			Table, orbit_length, set_size);
@@ -1695,9 +1768,17 @@ void group_theoretic_activity::orbits_on_set_from_file(int verbose_level)
 			orbit_length, set_size, verbose_level);
 	cout << "after OS->get_table_of_orbits" << endl;
 
-	strcpy(str, Descr->orbit_of_set_from_file_fname);
-	chop_off_extension(str);
-	sprintf(fname, "orbit_of_%s_under_%s.txt", str, LG->label.c_str());
+	//strcpy(str, Descr->orbit_of_set_from_file_fname);
+	//chop_off_extension(str);
+
+
+	fname.assign("orbit_of_");
+	fname.append(fname0);
+	fname.append("_under_");
+	fname.append(LG->label);
+	fname.append("_with_hash.txt");
+
+	//sprintf(fname, "orbit_of_%s_under_%s.txt", str, LG->label.c_str());
 	cout << "Writing table to file " << fname << endl;
 	{
 		ofstream ost(fname);
@@ -1881,8 +1962,7 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 		}
 
 
-		Fio.int_vec_write_csv(orbit_reps, Sch->nb_orbits,
-				fname.c_str(), "OrbRep");
+		Fio.int_vec_write_csv(orbit_reps, Sch->nb_orbits, fname, "OrbRep");
 
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
@@ -1906,8 +1986,7 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 		}
 
 
-		Fio.int_vec_write_csv(orbit_reps, Sch->nb_orbits,
-				fname.c_str(), "OrbLen");
+		Fio.int_vec_write_csv(orbit_reps, Sch->nb_orbits, fname, "OrbLen");
 
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
@@ -3429,8 +3508,7 @@ void group_theoretic_activity::do_create_surface(
 		fname_points.assign("surface_");
 		fname_points.append(SC->label_txt);
 		fname_points.append("_points.txt");
-		Fio.write_set_to_file(fname_points.c_str(),
-				SO->Pts, SO->nb_pts, 0 /*verbose_level*/);
+		Fio.write_set_to_file(fname_points, SO->Pts, SO->nb_pts, 0 /*verbose_level*/);
 		cout << "group_theoretic_activity::do_create_surface "
 				"Written file " << fname_points << " of size "
 				<< Fio.file_size(fname_points) << endl;

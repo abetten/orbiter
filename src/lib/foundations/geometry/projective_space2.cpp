@@ -218,7 +218,7 @@ int projective_space::determine_hermitian_form_in_plane(
 		}
 #endif
 	F->matrix_get_kernel(system, MINIMUM(nb_pts, 9), 9, base_cols, rk,
-		kernel_m, kernel_n, kernel);
+		kernel_m, kernel_n, kernel, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space::determine_hermitian_form_"
 				"in_plane kernel:" << endl;
@@ -1761,6 +1761,12 @@ void projective_space::cheat_sheet_subspaces(
 				}
 			}
 		f << "\\end{multicols}" << endl;
+
+
+		if (n == 3 && k == 1) {
+			do_pluecker_reverse(f, Gr, k, nb_k_subspaces);
+		}
+
 	}
 	if (n == 3 && k == 1) {
 		f << "PG$(" << n << ", " << q << ")$ has "
@@ -1813,6 +1819,82 @@ void projective_space::cheat_sheet_subspaces(
 		cout << "projective_space::cheat_sheet_subspaces "
 				"done" << endl;
 		}
+}
+
+void projective_space::do_pluecker_reverse(ostream &ost, grassmann *Gr, int k, int nb_k_subspaces)
+{
+	int i, j;
+	int v6[6];
+	int *T;
+	int *Pos;
+	sorting Sorting;
+
+	T = NEW_int(nb_k_subspaces);
+	Pos = NEW_int(nb_k_subspaces);
+	for (i = 0; i < nb_k_subspaces; i++) {
+		Gr->unrank_lint(i, 0 /* verbose_level*/);
+		Pluecker_coordinates(i, v6, 0 /* verbose_level */);
+		F->PG_element_rank_modified(v6, 1, 6, j);
+		T[i] = j;
+		Pos[i] = i;
+	}
+	Sorting.int_vec_heapsort_with_log(T, Pos, nb_k_subspaces);
+	cout << "after sort:" << endl;
+	for (i = 0; i < nb_k_subspaces; i++) {
+		cout << i << " : " << T[i] << " : " << Pos[i] << endl;
+	}
+
+
+	int u, u0;
+	int n1, k1;
+	int f_need_comma = FALSE;
+
+	n1 = n + 1;
+	k1 = k + 1;
+	v = NEW_int(n1);
+
+	ost << "Lines sorted by Pluecker coordinates\\\\" << endl;
+	ost << "\\begin{multicols}{2}" << endl;
+	for (u0 = 0; u0 < nb_k_subspaces; u0++) {
+		u = Pos[u0];
+		Gr->unrank_lint(u, 0 /* verbose_level*/);
+
+		int v6[6];
+
+		Pluecker_coordinates(u, v6, 0 /* verbose_level */);
+		F->PG_element_normalize(v6, 1, 6);
+		ost << "$" << u0 << "=" << u << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
+				<< v6[2] << "," << v6[3] << "," << v6[4]
+				<< "," << v6[5] << " ";
+		ost << ")=" << endl;
+
+		ost << "L_{" << u << "}=";
+		ost << "\\left[" << endl;
+		ost << "\\begin{array}{c}" << endl;
+		for (i = 0; i < k1; i++) {
+			for (j = 0; j < n1; j++) {
+				ost << Gr->M[i * n1 + j];
+				if (f_need_comma && j < n1 - 1) {
+					ost << ", ";
+					}
+				}
+			ost << "\\\\" << endl;
+			}
+		ost << "\\end{array}" << endl;
+		ost << "\\right]" << endl;
+
+
+		ost << "$\\\\" << endl;
+
+		if (((u + 1) % 1000) == 0) {
+			ost << "\\clearpage" << endl << endl;
+			}
+		}
+	ost << "\\end{multicols}" << endl;
+
+
+	FREE_int(T);
+	FREE_int(Pos);
 }
 
 void projective_space::cheat_sheet_line_intersection(
@@ -4677,7 +4759,7 @@ void projective_space::hyperplane_lifting_with_two_lines_fixed(
 		int_matrix_print(M, 4, 4);
 	}
 
-	F->invert_matrix_memory_given(M, Mv, 4, M_tmp, tmp_basecols);
+	F->invert_matrix_memory_given(M, Mv, 4, M_tmp, tmp_basecols, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
 				"Mv:" << endl;
@@ -4907,7 +4989,7 @@ void projective_space::hyperplane_lifting_with_two_lines_moved(
 		int_matrix_print(M, 4, 4);
 	}
 
-	F->invert_matrix_memory_given(M, Mv, 4, M_tmp, tmp_basecols);
+	F->invert_matrix_memory_given(M, Mv, 4, M_tmp, tmp_basecols, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
 				"Mv:" << endl;

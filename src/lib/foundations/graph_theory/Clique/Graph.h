@@ -7,7 +7,7 @@
 
 
 #include "bitset.h"
-#include "orbiter.h"
+#include "../../foundations.h"
 #include <fstream>
 #include <thread>
 #include <vector>
@@ -134,7 +134,7 @@ public:
                 for (size_t i = 0, k = 0; i < n; i++) {
                     if ((i % nThreads) == tID) {
                         for (size_t j = i + 1; j < n; j++, k++) {
-                            const int aij = bitvector_s_i(bitvector, k);
+                            const int aij = orbiter::foundations::bitvector_s_i(bitvector, k);
                             if (aij) {
                                 adj[tID].set(i*n+j);
                                 adj[tID].set(j*n+i);

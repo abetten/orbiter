@@ -89,10 +89,10 @@ void poset_classification::print_progress(
 void poset_classification::print_progress(double progress)
 {
 	double progress0;
-	int progress1, progress2;
+	long int progress1, progress2;
 
 	progress0 = progress * 100.;
-	progress2 = (int) (progress0 * 100.);
+	progress2 = (long int) (progress0 * 100.);
 	progress1 = progress2 / 100;
 	progress2 = progress2 % 100;
 	cout << "progress: " << progress1 << "."
@@ -171,10 +171,14 @@ void poset_classification::print_statistic_on_callbacks()
 }
 
 
-void poset_classification::prepare_fname_data_file(char *fname1000,
-		const char *fname_base, int depth_completed)
+void poset_classification::prepare_fname_data_file(std::string &fname,
+		std::string &fname_base, int depth_completed)
 {
-	snprintf(fname1000, 1000, "%s_%d.data", fname_base, depth_completed);
+	char str[1000];
+
+	fname.assign(fname_base);
+	sprintf(str, "_%d.data", depth_completed);
+	fname.append(str);
 }
 
 void poset_classification::print_representatives_at_level(int lvl)
@@ -333,7 +337,7 @@ void poset_classification::print_fusion_nodes(int depth)
 void poset_classification::read_data_file(int &depth_completed,
 		std::string &fname, int verbose_level)
 {
-	int f_v = (verbose_level >= 1);
+	int f_v = TRUE; //(verbose_level >= 1);
 	long int size;
 	int nb_group_elements;
 	memory_object *m;
@@ -411,11 +415,11 @@ void poset_classification::read_data_file(int &depth_completed,
 }
 
 void poset_classification::write_data_file(int depth_completed,
-		const char *fname_base, int verbose_level)
+		std::string &fname_base, int verbose_level)
 {
 	memory_object *m;
-	int f_v = (verbose_level >= 1);
-	char fname[1000];
+	int f_v = TRUE; //(verbose_level >= 1);
+	string fname;
 	int nb_group_elements;
 	long int size0;
 	int verbose_level1;
@@ -963,7 +967,7 @@ void poset_classification::housekeeping(int i,
 					"before poset_classification::write_data_file" << endl;
 			}
 		poset_classification::write_data_file(i /* depth_completed */,
-				problem_label_with_path.c_str(), verbose_level);
+				problem_label_with_path, verbose_level);
 
 		if (f_v) {
 			cout << "poset_classification::housekeeping "

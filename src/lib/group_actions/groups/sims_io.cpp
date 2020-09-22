@@ -965,7 +965,7 @@ void sims::read_sgs(const char *fname,
 }
 #endif
 
-void sims::write_as_magma_permutation_group(const char *fname_base,
+void sims::write_as_magma_permutation_group(std::string &fname_base,
 		vector_ge *gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1020,9 +1020,10 @@ void sims::write_as_magma_permutation_group(const char *fname_base,
 > G := PermutationGroup< 12 | (1,6,7)(2,5,8,3,4,9)(11,12),
 >                             (1,3)(4,9,12)(5,8,10,6,7,11) >;
 #endif
-	char fname[1000];
+	string fname;
 
-	sprintf(fname, "%s.magma", fname_base);
+	fname.assign(fname_base);
+	fname.append(".magma");
 	{
 	ofstream fp(fname);
 

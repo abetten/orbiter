@@ -27,13 +27,13 @@ namespace top_level {
 class exact_cover {
 public:
 
-	char input_prefix[1000];
-	char output_prefix[1000];
-	char solution_prefix[1000];
-	char base_fname[1000];
+	std::string input_prefix;
+	std::string output_prefix;
+	std::string solution_prefix;
+	std::string base_fname;
 
-	char fname_solutions[3000];
-	char fname_statistics[3000];
+	std::string fname_solutions;
+	std::string fname_statistics;
 
 	void *user_data;
 
@@ -82,7 +82,7 @@ public:
 	long int *starter; // [starter_size]
 
 	int f_randomized;
-	const char *random_permutation_fname;
+	std::string random_permutation_fname;
 	int *random_permutation;
 
 	exact_cover();
@@ -92,8 +92,8 @@ public:
 	void init_basic(void *user_data, 
 		action *A_base, action *A_on_blocks, 
 		int target_size, int starter_size, 
-		const char *input_prefix, const char *output_prefix, 
-		const char *solution_prefix, const char *base_fname, 
+		std::string &input_prefix, std::string &output_prefix,
+		std::string &solution_prefix, std::string &base_fname,
 		int f_lex, 
 		int verbose_level);
 
@@ -114,7 +114,7 @@ public:
 		int verbose_level);
 	void set_split(int split_r, int split_m, int verbose_level);
 	void set_single_case(int single_case, int verbose_level);
-	void randomize(const char *random_permutation_fname, int verbose_level);
+	void randomize(std::string &random_permutation_fname, int verbose_level);
 	void add_solution_test_function(
 		int (*solution_test_func)(exact_cover *EC, long int *S, int len,
 		void *data, int verbose_level), 
@@ -158,13 +158,13 @@ public:
 	action *A2;
 	void *user_data;
 	int f_has_base_fname;
-	const char *base_fname;
+	std::string base_fname;
 	int f_has_input_prefix;
-	const char *input_prefix;
+	std::string input_prefix;
 	int f_has_output_prefix;
-	const char *output_prefix;
+	std::string output_prefix;
 	int f_has_solution_prefix;
-	const char *solution_prefix;
+	std::string solution_prefix;
 	int f_lift;
 	int f_starter_size;
 	int starter_size;
@@ -200,7 +200,7 @@ public:
 		int starter_case, int verbose_level);
 
 	int f_randomized;
-	const char *random_permutation_fname;
+	std::string random_permutation_fname;
 
 	exact_cover_arguments();
 	~exact_cover_arguments();

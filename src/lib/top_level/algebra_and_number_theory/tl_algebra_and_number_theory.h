@@ -221,11 +221,11 @@ public:
 	int f_orbit_of;
 	int orbit_of_idx;
 	int f_orbits_on_set_system_from_file;
-	const char *orbits_on_set_system_from_file_fname;
+	std::string orbits_on_set_system_from_file_fname;
 	int orbits_on_set_system_first_column;
 	int orbits_on_set_system_number_of_columns;
 	int f_orbit_of_set_from_file;
-	const char *orbit_of_set_from_file_fname;
+	std::string orbit_of_set_from_file_fname;
 	int f_search_subgroup;
 	int f_find_singer_cycle;
 	int f_search_element_of_order;
@@ -489,14 +489,14 @@ public:
 	int f_dim_over_kernel;
 	int dim_over_kernel;
 	int f_prefix;
-	const char *prefix;
+	std::string prefix;
 	int f_orbits_light;
 	int f_test_semifield;
-	const char *test_semifield_data;
+	std::string test_semifield_data;
 	int f_identify_semifield;
-	const char *identify_semifield_data;
+	std::string identify_semifield_data;
 	int f_identify_semifields_from_file;
-	const char *identify_semifields_from_file_fname;
+	std::string identify_semifields_from_file_fname;
 	int f_load_classification;
 	int f_report;
 	int f_decomposition_matrix_level_3;
@@ -506,11 +506,11 @@ public:
 
 
 	int f_trace_record_prefix;
-	const char *trace_record_prefix;
+	std::string trace_record_prefix;
 	int f_FstLen;
-	const char *fname_FstLen;
+	std::string fname_FstLen;
 	int f_Data;
-	const char *fname_Data;
+	std::string fname_Data;
 
 	int p, e, e1, n, k, q, k2;
 
@@ -579,9 +579,9 @@ public:
 	int order; // q^k
 
 
-	const char *level_two_prefix;
+	std::string level_two_prefix;
 
-	const char *level_three_prefix;
+	std::string level_three_prefix;
 
 
 	spread_classify *T;
@@ -680,13 +680,13 @@ public:
 		long int **&Set, int *&Set_sz, int &Nb_sets,
 		int verbose_level);
 	void make_fname_candidates_at_level_two_orbit(
-		char *fname, int orbit);
+			std::string &fname, int orbit);
 	void make_fname_candidates_at_level_two_orbit_txt(
-		char *fname, int orbit);
+			std::string &fname, int orbit);
 	void make_fname_candidates_at_level_three_orbit(
-		char *fname, int orbit);
+			std::string &fname, int orbit);
 	void make_fname_candidates_at_level_two_orbit_by_type(
-		char *fname, int orbit, int h);
+			std::string &fname, int orbit, int h);
 	void compute_orbit_of_subspaces(
 		long int *input_data,
 		strong_generators *stabilizer_gens,
@@ -886,7 +886,7 @@ public:
 	void get_basis_and_pivots(int po,
 			int *basis, int *pivots, int verbose_level);
 	void report(std::ofstream &ost, int verbose_level);
-	void create_fname_level_info_file(char *fname);
+	void create_fname_level_info_file(std::string &fname);
 	void write_level_info_file(int verbose_level);
 	void read_level_info_file(int verbose_level);
 };
@@ -913,7 +913,7 @@ public:
 	int prev_level_nb_orbits;
 
 	int f_prefix;
-	const char *prefix;
+	std::string prefix;
 
 	strong_generators *Prev_stabilizer_gens;
 	long int **Candidates;
@@ -964,7 +964,7 @@ public:
 	semifield_lifting();
 	~semifield_lifting();
 	void init_level_three(semifield_level_two *L2,
-			int f_prefix, const char *prefix,
+			int f_prefix, std::string &prefix,
 			int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
 	void recover_level_three_downstep(int verbose_level);
@@ -1029,11 +1029,11 @@ public:
 	// there is a check if input_basis defines a semifield
 	void deep_search(
 		int orbit_r, int orbit_m,
-		int f_out_path, const char *out_path,
+		int f_out_path, std::string &out_path,
 		int verbose_level);
 	void deep_search_at_level_three(
 		int orbit_r, int orbit_m,
-		int f_out_path, const char *out_path,
+		int f_out_path, std::string &out_path,
 		int &nb_sol,
 		int verbose_level);
 	void print_stabilizer_orders();
@@ -1053,20 +1053,20 @@ public:
 		int verbose_level);
 	void write_level_info_file(int verbose_level);
 	void read_level_info_file(int verbose_level);
-	void make_fname_flag_orbits(char *fname);
+	void make_fname_flag_orbits(std::string &fname);
 	void save_flag_orbits(int verbose_level);
 	void read_flag_orbits(int verbose_level);
 	void save_stabilizers(int verbose_level);
 	void read_stabilizers(int verbose_level);
-	void make_file_name_schreier(char *fname,
+	void make_file_name_schreier(std::string &fname,
 			int level, int orbit_idx);
-	void create_fname_level_info_file(char *fname);
-	void make_fname_stabilizers(char *fname);
-	void make_fname_deep_search_slice_solutions(char *fname,
-			int f_out_path, const char *out_path,
+	void create_fname_level_info_file(std::string &fname);
+	void make_fname_stabilizers(std::string &fname);
+	void make_fname_deep_search_slice_solutions(std::string &fname,
+			int f_out_path, std::string &out_path,
 			int orbit_r, int orbit_m);
-	void make_fname_deep_search_slice_success(char *fname,
-			int f_out_path, const char *out_path,
+	void make_fname_deep_search_slice_success(std::string &fname,
+			int f_out_path, std::string &out_path,
 			int orbit_r, int orbit_m);
 
 };
@@ -1312,7 +1312,7 @@ public:
 
 void save_trace_record(
 		trace_record *T,
-		int f_trace_record_prefix, const char *trace_record_prefix,
+		int f_trace_record_prefix, std::string &trace_record_prefix,
 		int iso, int f, int po, int so, int N);
 
 

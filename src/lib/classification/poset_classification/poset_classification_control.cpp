@@ -55,12 +55,6 @@ poset_classification_control::poset_classification_control()
 	f_has_tools_path = FALSE;
 	tools_path = NULL;
 
-#if 0
-	xmax = 1000000;
-	ymax = 1000000;
-	radius = 300;
-#endif
-
 	f_draw_poset = FALSE;
 	f_draw_full_poset = FALSE;
 	f_plesken = FALSE;
@@ -82,13 +76,6 @@ poset_classification_control::poset_classification_control()
 	f_show_whole_orbit = FALSE;
 
 	nb_recognize = 0;
-
-#if 0
-	scale = 0.2;
-	line_width = 0.5;
-	f_embedded = FALSE;
-	f_sideways = FALSE;
-#endif
 
 	f_export_schreier_trees = FALSE;
 	f_draw_schreier_trees = FALSE;
@@ -250,29 +237,6 @@ int poset_classification_control::read_arguments(
 				cout << "poset_classification_control::read_arguments -Log" << endl;
 			}
 		}
-#if 0
-		else if (strcmp(argv[i], "-x") == 0) {
-			xmax = atoi(argv[i + 1]);
-			i++;
-			if (f_v) {
-				cout << "poset_classification_control::read_arguments -x " << xmax << endl;
-			}
-		}
-		else if (strcmp(argv[i], "-y") == 0) {
-			ymax = atoi(argv[i + 1]);
-			i++;
-			if (f_v) {
-				cout << "poset_classification_control::read_arguments -y " << ymax << endl;
-			}
-		}
-		else if (strcmp(argv[i], "-rad") == 0) {
-			radius = atoi(argv[i + 1]);
-			i++;
-			if (f_v) {
-				cout << "poset_classification_control::read_arguments -rad " << radius << endl;
-			}
-		}
-#endif
 		else if (strcmp(argv[i], "-depth") == 0) {
 			f_depth = TRUE;
 			depth = atoi(argv[++i]);
@@ -394,24 +358,6 @@ int poset_classification_control::read_arguments(
 				cout << "poset_classification_control::read_arguments -tools_path " << tools_path << endl;
 			}
 		}
-#if 0
-		else if (strcmp(argv[i], "-scale") == 0) {
-			scale = atof(argv[++i]);
-			cout << "-scale " << scale << endl;
-			}
-		else if (strcmp(argv[i], "-line_width") == 0) {
-			line_width = atof(argv[++i]);
-			cout << "-line_width " << line_width << endl;
-			}
-		else if (strcmp(argv[i], "-embedded") == 0) {
-			f_embedded = TRUE;
-			cout << "-embedded " << endl;
-			}
-		else if (strcmp(argv[i], "-sideways") == 0) {
-			f_sideways = TRUE;
-			cout << "-sideways " << endl;
-			}
-#endif
 		else if (strcmp(argv[i], "-problem_label") == 0) {
 			f_problem_label = TRUE;
 			problem_label.assign(argv[++i]);

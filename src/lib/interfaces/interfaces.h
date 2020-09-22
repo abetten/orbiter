@@ -61,7 +61,7 @@ class interface_algebra {
 	int eigenstuff_n;
 	int eigenstuff_q;
 	const char *eigenstuff_coeffs;
-	const char *eigenstuff_fname;
+	std::string eigenstuff_fname;
 	int f_young_symmetrizer;
 	int young_symmetrizer_n;
 	int f_young_symmetrizer_sym_4;
@@ -77,7 +77,7 @@ public:
 	void do_eigenstuff_matrix_direct(
 			int n, int q, const char *coeffs_text, int verbose_level);
 	void do_eigenstuff_matrix_from_file(
-			int n, int q, const char *fname, int verbose_level);
+			int n, int q, std::string &fname, int verbose_level);
 	void do_linear_group(
 			linear_group_description *Descr, int verbose_level);
 	void perform_group_theoretic_activity(finite_field *F, linear_group *LG,
@@ -114,11 +114,15 @@ class interface_coding_theory {
 	//int BCH_b;
 	int f_Hamming_graph;
 	int f_NTT;
-	const char *ntt_fname_code;
+	std::string ntt_fname_code;
 	int f_draw_matrix;
 	std::string fname;
 	int box_width;
 	int bit_depth; // 8 or 24
+	int f_draw_matrix_partition;
+	int draw_matrix_partition_width;
+	std::string draw_matrix_partition_rows;
+	std::string draw_matrix_partition_cols;
 
 public:
 	interface_coding_theory();
@@ -157,7 +161,7 @@ class interface_combinatorics {
 	int bent_n;
 	int f_random_permutation;
 	int random_permutation_degree;
-	const char *random_permutation_fname_csv;
+	std::string random_permutation_fname_csv;
 	int f_create_graph;
 	colored_graph *CG;
 	std::string fname_graph;
@@ -214,7 +218,7 @@ public:
 	void do_diophant_activity(diophant_activity_description *Descr, int verbose_level);
 	void do_process_combinatorial_object(int verbose_level);
 	void do_bent(int n, int verbose_level);
-	void do_random_permutation(int deg, const char *fname_csv, int verbose_level);
+	void do_random_permutation(int deg, std::string &fname_csv, int verbose_level);
 	void do_conjugacy_classes_Sym_n(int n, int verbose_level);
 	void do_make_tree_of_all_k_subsets(int n, int k, int verbose_level);
 	void do_Delandtsheer_Doyen(delandtsheer_doyen_description *Descr, int verbose_level);
@@ -316,7 +320,7 @@ class interface_cryptography {
 	const char *miller_rabin_number_text;
 	int f_random;
 	int random_nb;
-	const char *random_fname_csv;
+	std::string random_fname_csv;
 	int f_random_last;
 	int random_last_nb;
 	int f_affine_sequence;
@@ -431,7 +435,7 @@ public:
 	void make_2D_plot(int *orbit, int orbit_len, int cnt,
 			int m, int a, int c, int verbose_level);
 	void do_random_last(int random_nb, int verbose_level);
-	void do_random(int random_nb, const char *fname_csv, int verbose_level);
+	void do_random(int random_nb, std::string &fname_csv, int verbose_level);
 	void do_jacobi(int jacobi_top, int jacobi_bottom, int verbose_level);
 	void do_solovay_strassen(int p, int a, int verbose_level);
 	void do_miller_rabin(int p, int nb_times, int verbose_level);
@@ -549,33 +553,6 @@ class interface_projective {
 	int f_canonical_form_PG;
 	projective_space_object_classifier_description *Canonical_form_PG_Descr;
 
-#if 0
-	int f_input;
-	data_input_stream *Data_input_stream;
-
-	int f_all_k_subsets;
-	int k;
-
-	int f_save_incma_in_and_out;
-	std::string save_incma_in_and_out_prefix;
-
-	int f_classification_prefix;
-	std::string classification_prefix;
-
-	int f_save;
-	std::string save_prefix;
-
-	int fixed_structure_order_list_sz;
-	int fixed_structure_order_list[1000];
-
-	int f_report;
-	std::string report_prefix;
-
-
-	int f_max_TDO_depth;
-	int max_TDO_depth;
-#endif
-
 	int f_classify_cubic_curves;
 	int f_has_control_six_arcs;
 	poset_classification_control *Control_six_arcs;
@@ -601,6 +578,9 @@ class interface_projective {
 	long int line2_to;
 
 	int f_make_table_of_surfaces;
+
+	int f_inverse_isomorphism_klein_quadric;
+	std::string inverse_isomorphism_klein_quadric_matrix_A6;
 
 public:
 

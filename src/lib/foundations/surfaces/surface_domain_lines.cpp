@@ -342,7 +342,7 @@ void surface_domain::build_cubic_surface_from_lines(
 	int kernel_m, kernel_n;
 
 	F->matrix_get_kernel(System, r, nb_monomials, base_cols, r,
-		kernel_m, kernel_n, coeff);
+		kernel_m, kernel_n, coeff, 0 /* verbose_level */);
 
 	//cout << "kernel_m=" << kernel_m << endl;
 	//cout << "kernel_n=" << kernel_n << endl;
@@ -2034,7 +2034,7 @@ long int surface_domain::compute_cij(long int *double_six,
 				"kernel Basis1" << endl;
 	}
 	F->matrix_get_kernel(Basis1, 3, 4, base_cols1, 3,
-		kernel_m, kernel_n, K1);
+		kernel_m, kernel_n, K1, 0 /* verbose_level */);
 	if (kernel_m != 4) {
 		cout << "surface_domain::compute_cij kernel_m != 4 "
 				"when computing K1" << endl;
@@ -2055,7 +2055,7 @@ long int surface_domain::compute_cij(long int *double_six,
 				"get_kernel Basis2" << endl;
 	}
 	F->matrix_get_kernel(Basis2, 3, 4, base_cols2, 3,
-		kernel_m, kernel_n, K2);
+		kernel_m, kernel_n, K2, 0 /* verbose_level */);
 	if (kernel_m != 4) {
 		cout << "surface_domain::compute_cij kernel_m != 4 "
 				"when computing K2" << endl;
@@ -2081,7 +2081,7 @@ long int surface_domain::compute_cij(long int *double_six,
 				"matrix_get_kernel K" << endl;
 	}
 	F->matrix_get_kernel(K, 2, 4, base_cols1, 2,
-		kernel_m, kernel_n, K1);
+		kernel_m, kernel_n, K1, 0 /* verbose_level */);
 	if (kernel_m != 4) {
 		cout << "surface_domain::compute_cij kernel_m != 4 "
 				"when computing final kernel" << endl;

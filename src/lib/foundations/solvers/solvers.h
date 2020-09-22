@@ -121,7 +121,6 @@ public:
 	int input_q;
 	int f_override_polynomial;
 	std::string override_polynomial;
-	//finite_field *F;
 
 	int f_maximal_arc;
 	int maximal_arc_sz;
@@ -131,8 +130,6 @@ public:
 
 	int f_label;
 	std::string label;
-	//int from_scratch_m;
-	//int from_scratch_n;
 
 	int f_coefficient_matrix;
 	int coefficient_matrix_m;
@@ -140,17 +137,17 @@ public:
 	const char *coefficient_matrix_text;
 
 	int f_coefficient_matrix_csv;
-	const char *coefficient_matrix_csv;
+	std::string coefficient_matrix_csv;
 
 
 	int f_RHS;
-	const char *RHS_text;
+	std::string RHS_text;
 
 	int f_RHS_csv;
-	const char *RHS_csv_text;
+	std::string RHS_csv_text;
 
 	int f_RHS_constant;
-	const char *RHS_constant_text;
+	std::string RHS_constant_text;
 
 	int f_x_max_global;
 	int x_max_global;
@@ -162,7 +159,7 @@ public:
 	const char *x_bounds_text;
 
 	int f_x_bounds_csv;
-	const char *x_bounds_csv;
+	std::string x_bounds_csv;
 
 	int f_has_sum;
 	int has_sum;
@@ -371,7 +368,7 @@ public:
 	int test_solution(int *sol, int len, int verbose_level);
 	void get_columns(int *col, int nb_col, set_of_sets *&S, 
 		int verbose_level);
-	void test_solution_file(const char *solution_file, 
+	void test_solution_file(std::string &solution_file,
 		int verbose_level);
 	void analyze(int verbose_level);
 	int is_of_Steiner_type();

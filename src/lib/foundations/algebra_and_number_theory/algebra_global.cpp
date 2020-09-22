@@ -838,10 +838,12 @@ void algebra_global::make_Hamming_graph_and_write_file(int n, int q,
 		}
 	}
 
-	char fname[1000];
+	string fname;
+	char str[1000];
 	file_io Fio;
 
-	snprintf(fname, 1000, "Hamming_n%d_q%d.csv", n, q);
+	sprintf(str, "Hamming_n%d_q%d.csv", n, q);
+	fname.assign(str);
 
 	Fio.int_matrix_write_csv(fname, Table, height, width);
 

@@ -591,7 +591,7 @@ void partitionstack::print_cell_latex(ostream &ost, int i)
 }
 
 void partitionstack::write_cell_to_file(int i,
-		char *fname, int verbose_level)
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int j, first, len;
@@ -613,7 +613,7 @@ void partitionstack::write_cell_to_file(int i,
 }
 
 void partitionstack::write_cell_to_file_points_or_lines(int i,
-		char *fname, int verbose_level)
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int j, first, len, m = 0;

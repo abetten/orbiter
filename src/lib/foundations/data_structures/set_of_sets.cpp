@@ -233,14 +233,14 @@ void set_of_sets::init_basic_constant_size(
 #define MY_BUFSIZE ONE_MILLION
 
 void set_of_sets::init_from_file(int underlying_set_size,
-		const char *fname, int verbose_level)
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "set_of_sets::init_from_file fname=" << fname << endl;
 		}
-	if (is_csv_file(fname)) {
+	if (is_csv_file(fname.c_str())) {
 		if (f_v) {
 			cout << "set_of_sets::init_from_file "
 					"the file is a csv file" << endl;
@@ -260,7 +260,7 @@ void set_of_sets::init_from_file(int underlying_set_size,
 }
 
 void set_of_sets::init_from_csv_file(int underlying_set_size,
-		const char *fname, int verbose_level)
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -297,7 +297,7 @@ void set_of_sets::init_from_csv_file(int underlying_set_size,
 }
 
 void set_of_sets::init_from_orbiter_file(int underlying_set_size,
-		const char *fname, int verbose_level)
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -1271,7 +1271,7 @@ int set_of_sets::largest_set_size()
 	return s;
 }
 
-void set_of_sets::save_csv(const char *fname,
+void set_of_sets::save_csv(std::string &fname,
 		int f_make_heading, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1293,7 +1293,7 @@ void set_of_sets::save_csv(const char *fname,
 		}
 }
 
-void set_of_sets::save_constant_size_csv(const char *fname,
+void set_of_sets::save_constant_size_csv(std::string &fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

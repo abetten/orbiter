@@ -12,6 +12,7 @@ using namespace std;
 namespace orbiter {
 namespace group_actions {
 
+
 void action::init_linear_group(
 	finite_field *F, int m,
 	int f_projective, int f_general, int f_affine,
@@ -338,7 +339,7 @@ void action::init_general_linear_group(int n, finite_field *F,
 		cout << "n=" << n << " q=" << F->q << endl;
 		cout << "f_semilinear=" << f_semilinear << endl;
 		cout << "f_basis=" << f_basis << endl;
-		}
+	}
 
 	M = NEW_OBJECT(matrix_group);
 
@@ -360,13 +361,13 @@ void action::init_general_linear_group(int n, finite_field *F,
 		cout << "action::init_general_linear_group "
 			"low_level_point_size="
 			<< low_level_point_size<< endl;
-		}
+	}
 	label.assign(M->label);
 	label_tex.assign(M->label_tex);
 	if (f_v) {
 		cout << "action::init_general_linear_group "
 				"label=" << label << endl;
-		}
+	}
 
 	degree = M->degree;
 	make_element_size = M->elt_size_int_half;
@@ -382,7 +383,7 @@ void action::init_general_linear_group(int n, finite_field *F,
 	if (f_basis) {
 		setup_linear_group_from_strong_generators(M,
 				nice_gens, f_init_sims, verbose_level);
-		}
+	}
 	if (f_v) {
 		cout << "action::init_general_linear_group, "
 				"finished setting up " << label;
@@ -393,7 +394,7 @@ void action::init_general_linear_group(int n, finite_field *F,
 		//cout << "make_element_size=" << make_element_size << endl;
 		//cout << "base_len=" << base_len << endl;
 		//cout << "f_semilinear=" << f_semilinear << endl;
-		}	
+	}
 }
 
 void action::setup_linear_group_from_strong_generators(matrix_group *M, 
@@ -432,43 +433,6 @@ void action::setup_linear_group_from_strong_generators(matrix_group *M,
 					"after init_sims_from_generators" << endl;
 		}
 
-
-#if 0
-		sims *S;
-
-		S = NEW_OBJECT(sims);
-
-		S->init(this, verbose_level - 2);
-		if (f_v) {
-			cout << "action::setup_linear_group_from_strong_generators "
-					"before S->init_generators" << endl;
-		}
-		S->init_generators(*Strong_gens->gens, 0/*verbose_level*/);
-		if (f_v) {
-			cout << "action::setup_linear_group_from_strong_generators "
-					"after S->init_generators" << endl;
-		}
-		if (f_v) {
-			cout << "action::setup_linear_group_from_strong_generators "
-					"before S->compute_base_orbits_known_length" << endl;
-		}
-		S->compute_base_orbits_known_length(get_transversal_length(), verbose_level);
-		if (f_v) {
-			cout << "action::setup_linear_group_from_strong_generators "
-					"after S->compute_base_orbits_known_length" << endl;
-		}
-
-
-		if (f_v) {
-			cout << "action::setup_linear_group_from_strong_generators "
-					"before init_sims" << endl;
-		}
-		init_sims_only(S, verbose_level);
-		if (f_v) {
-			cout << "action::setup_linear_group_from_strong_generators "
-					"after init_sims" << endl;
-		}
-#endif
 	}
 
 	if (f_v) {
@@ -920,6 +884,7 @@ void action::init_affine_group(int n, int q,
 	int multiplication_order, 
 	int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int nb_gens, degree;
 	int *gens;
 	int given_base_length;
@@ -929,6 +894,9 @@ void action::init_affine_group(int n, int q,
 	char str1[1000];
 	char str2[1000];
 	
+	if (f_v) {
+		cout << "action::init_affine_group" << endl;
+	}
 	sprintf(str1, "AGL_%d_%d", n, q);
 	sprintf(str2, "AGL(%d,%d)", n, q);
 
@@ -942,7 +910,7 @@ void action::init_affine_group(int n, int q,
 		f_semilinear, frobenius_power, 
 		f_multiplication, multiplication_order, 
 		nb_gens, degree, gens, 
-		given_base_length, given_base);
+		given_base_length, given_base, verbose_level - 2);
 
 	init_permutation_group_from_generators(degree, 
 		FALSE, go, 
@@ -952,11 +920,15 @@ void action::init_affine_group(int n, int q,
 
 	FREE_int(gens);
 	FREE_lint(given_base);
+	if (f_v) {
+		cout << "action::init_affine_group done" << endl;
+	}
 }
 
 
 void action::init_symmetric_group(int degree, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int nb_gens, *gens;
 	int given_base_length;
 	long int *given_base;
@@ -966,6 +938,9 @@ void action::init_symmetric_group(int degree, int verbose_level)
 	char str1[1000];
 	char str2[1000];
 	
+	if (f_v) {
+		cout << "action::init_symmetric_group" << endl;
+	}
 	sprintf(str1, "Sym_%d", degree);
 	sprintf(str2, "Sym(%d)", degree);
 
@@ -982,13 +957,13 @@ void action::init_symmetric_group(int degree, int verbose_level)
 	for (i = 0; i < nb_gens; i++) {
 		for (j = 0; j < degree; j++) {
 			gens[i * degree + j] = j;
-			}
+		}
 		gens[i * degree + i] = i + 1;
 		gens[i * degree + i + 1] = i;
-		}
+	}
 	for (i = 0; i < given_base_length; i++) {
 		given_base[i] = i;
-		}
+	}
 	init_permutation_group_from_generators(degree, 
 		TRUE, go,
 		nb_gens, gens, 
@@ -996,6 +971,9 @@ void action::init_symmetric_group(int degree, int verbose_level)
 		verbose_level);
 	FREE_int(gens);
 	FREE_lint(given_base);
+	if (f_v) {
+		cout << "action::init_symmetric_group done" << endl;
+	}
 }
 
 
@@ -1010,7 +988,7 @@ void action::create_sims(int verbose_level)
 	if (!f_has_strong_generators) {
 		cout << "action::create_sims we need strong generators" << endl;
 		exit(1);
-		}
+	}
 
 	S = Strong_gens->create_sims(verbose_level - 1);
 	
@@ -1018,7 +996,7 @@ void action::create_sims(int verbose_level)
 	compute_strong_generators_from_sims(0/*verbose_level - 2*/);
 	if (f_v) {
 		cout << "action::create_sims done" << endl;
-		}
+	}
 }
 
 
@@ -1036,7 +1014,7 @@ void action::create_orthogonal_group(action *subaction,
 
 	if (f_v) {
 		cout << "action::create_orthogonal_group" << endl;
-		}
+	}
 
 	matrix_group *Mtx;
 	int degree_save;
@@ -1047,88 +1025,88 @@ void action::create_orthogonal_group(action *subaction,
 	if (f_v) {
 		cout << "action::create_orthogonal_group "
 				"before Mtx->init_base_projective" << endl;
-		}
+	}
 	Mtx->init_base_projective(this, verbose_level);
 	// initializes base, base_len, degree,
 	// transversal_length, orbit, orbit_inv
 	if (f_v) {
 		cout << "action::create_orthogonal_group "
 				"after Mtx->init_base_projective" << endl;
-		}
+	}
 	degree = degree_save;
 
 
 	if (f_v) {
 		cout << "action::create_orthogonal_group "
 				"before allocating a schreier_sims object" << endl;
-		}
+	}
 
 	{
-	schreier_sims ss;
+		schreier_sims ss;
 
-	if (f_v) {
-		cout << "action::create_orthogonal_group "
-				"before ss.init" << endl;
+		if (f_v) {
+			cout << "action::create_orthogonal_group "
+					"before ss.init" << endl;
 		}
-	ss.init(this, verbose_level - 1);
-	if (f_v) {
-		cout << "action::create_orthogonal_group "
-				"after ss.init" << endl;
+		ss.init(this, verbose_level - 1);
+		if (f_v) {
+			cout << "action::create_orthogonal_group "
+					"after ss.init" << endl;
+		}
+	
+		ss.interested_in_kernel(subaction, verbose_level - 1);
+
+		if (f_has_target_group_order) {
+			ss.init_target_group_order(target_go, verbose_level - 1);
 		}
 
-	ss.interested_in_kernel(subaction, verbose_level - 1);
-	
-	if (f_has_target_group_order) {
-		ss.init_target_group_order(target_go, verbose_level - 1);
+		if (f_v) {
+			cout << "action::create_orthogonal_group "
+					"before ss.init_random_process" << endl;
 		}
-	
-	if (f_v) {
-		cout << "action::create_orthogonal_group "
-				"before ss.init_random_process" << endl;
+		ss.init_random_process(
+			callback_choose_random_generator,
+			&ss,
+			verbose_level - 1);
+		if (f_v) {
+			cout << "action::create_orthogonal_group "
+					"after ss.init_random_process" << endl;
 		}
-	ss.init_random_process(
-		callback_choose_random_generator,
-		&ss, 
-		verbose_level - 1);
-	if (f_v) {
-		cout << "action::create_orthogonal_group "
-				"after ss.init_random_process" << endl;
-		}
-	
-	if (f_v) {
-		cout << "action::create_orthogonal_group "
-				"before ss.create_group" << endl;
-		}
-	ss.create_group(verbose_level - 1);
-	if (f_v) {
-		cout << "action::create_orthogonal_group "
-				"after ss.create_group" << endl;
-		}
-	
-	init_sims_only(ss.G, verbose_level);
-	compute_strong_generators_from_sims(0/*verbose_level - 2*/);
 
-	f_has_kernel = TRUE;
-	Kernel = ss.K;
-
-	ss.K = NULL;
-	ss.G = NULL;
-	
-	//init_transversal_reps_from_stabilizer_chain(G, verbose_level - 2);
-	if (f_v) {
-		cout << "action::create_orthogonal_group after init_sims, "
-				"calling compute_strong_generators_from_sims" << endl;
+		if (f_v) {
+			cout << "action::create_orthogonal_group "
+					"before ss.create_group" << endl;
 		}
-	compute_strong_generators_from_sims(verbose_level - 2);
-	if (f_v) {
-		cout << "action::create_orthogonal_group done, "
-				"freeing schreier_sims object" << endl;
+		ss.create_group(verbose_level - 1);
+		if (f_v) {
+			cout << "action::create_orthogonal_group "
+					"after ss.create_group" << endl;
+		}
+
+		init_sims_only(ss.G, verbose_level);
+		compute_strong_generators_from_sims(0/*verbose_level - 2*/);
+	
+		f_has_kernel = TRUE;
+		Kernel = ss.K;
+	
+		ss.K = NULL;
+		ss.G = NULL;
+
+		//init_transversal_reps_from_stabilizer_chain(G, verbose_level - 2);
+		if (f_v) {
+			cout << "action::create_orthogonal_group after init_sims, "
+					"calling compute_strong_generators_from_sims" << endl;
+		}
+		compute_strong_generators_from_sims(verbose_level - 2);
+		if (f_v) {
+			cout << "action::create_orthogonal_group done, "
+					"freeing schreier_sims object" << endl;
 		}
 	}
 	if (f_v) {
 		cout << "action::create_orthogonal_group "
 				"done" << endl;
-		}
+	}
 }
 
 void action::init_direct_product_group_and_restrict(
@@ -1146,7 +1124,7 @@ void action::init_direct_product_group_and_restrict(
 		cout << "action::init_direct_product_group_and_restrict" << endl;
 		cout << "M1=" << M1->label << endl;
 		cout << "M2=" << M2->label << endl;
-		}
+	}
 	A_direct_product = NEW_OBJECT(action);
 	A_direct_product->init_direct_product_group(M1, M2, verbose_level);
 	if (f_v) {
@@ -1189,7 +1167,7 @@ void action::init_direct_product_group(
 		cout << "action::init_direct_product_group" << endl;
 		cout << "M1=" << M1->label << endl;
 		cout << "M2=" << M2->label << endl;
-		}
+	}
 
 	P = NEW_OBJECT(direct_product);
 
@@ -1202,12 +1180,12 @@ void action::init_direct_product_group(
 	if (f_v) {
 		cout << "action::init_direct_product_group "
 				"before P->init" << endl;
-		}
+	}
 	P->init(M1, M2, verbose_level);
 	if (f_v) {
 		cout << "action::init_direct_product_group "
 				"after P->init" << endl;
-		}
+	}
 
 	f_is_linear = FALSE;
 	dimension = 0;
@@ -1217,7 +1195,7 @@ void action::init_direct_product_group(
 	if (f_v) {
 		cout << "action::init_direct_product_group low_level_point_size="
 			<< low_level_point_size<< endl;
-		}
+	}
 
 	label.assign(P->label);
 	label_tex.assign(P->label_tex);
@@ -1226,7 +1204,7 @@ void action::init_direct_product_group(
 	if (f_v) {
 		cout << "action::init_direct_product_group "
 				"label=" << label << endl;
-		}
+	}
 
 	degree = P->degree_overall;
 	make_element_size = P->make_element_size;
@@ -1245,7 +1223,7 @@ void action::init_direct_product_group(
 	if (f_v) {
 		cout << "action::init_direct_product_group "
 				"degree=" << degree << endl;
-		}
+	}
 
 	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
 	Stabilizer_chain->allocate_base_data(this, P->base_length, verbose_level);
@@ -1253,7 +1231,7 @@ void action::init_direct_product_group(
 	if (f_v) {
 		cout << "action::init_direct_product_group "
 				"base_len=" << base_len() << endl;
-		}
+	}
 
 
 	lint_vec_copy(P->the_base, get_base(), base_len());
@@ -1267,18 +1245,18 @@ void action::init_direct_product_group(
 	if (f_v) {
 		cout << "action::init_direct_product_group "
 				"before W->make_strong_generators_data" << endl;
-		}
+	}
 	P->make_strong_generators_data(gens_data,
 			gens_size, gens_nb, verbose_level - 1);
 	if (f_v) {
 		cout << "action::init_direct_product_group "
 				"after W->make_strong_generators_data" << endl;
-		}
+	}
 	Strong_gens = NEW_OBJECT(strong_generators);
 	if (f_v) {
 		cout << "action::init_direct_product_group "
 				"before Strong_gens->init_from_data" << endl;
-		}
+	}
 
 	vector_ge *nice_gens;
 
@@ -1290,7 +1268,7 @@ void action::init_direct_product_group(
 	if (f_v) {
 		cout << "action::init_direct_product_group "
 				"after Strong_gens->init_from_data" << endl;
-		}
+	}
 	FREE_OBJECT(nice_gens);
 	f_has_strong_generators = TRUE;
 	FREE_int(gens_data);
@@ -1303,34 +1281,34 @@ void action::init_direct_product_group(
 	if (f_v) {
 		cout << "action::init_direct_product_group "
 				"before S->init_generators" << endl;
-		}
+	}
 	S->init_generators(*Strong_gens->gens, verbose_level);
 	if (f_v) {
 		cout << "action::init_direct_product_group "
 				"after S->init_generators" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "action::init_direct_product_group "
 				"before S->compute_base_orbits_known_length" << endl;
-		}
+	}
 	S->compute_base_orbits_known_length(get_transversal_length(), verbose_level);
 	if (f_v) {
 		cout << "action::init_direct_product_group "
 				"after S->compute_base_orbits_known_length" << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "action::init_direct_product_group "
 				"before init_sims_only" << endl;
-		}
+	}
 
 	init_sims_only(S, verbose_level);
 
 	if (f_v) {
 		cout << "action::init_direct_product_group "
 				"after init_sims_only" << endl;
-		}
+	}
 
 	compute_strong_generators_from_sims(0/*verbose_level - 2*/);
 
@@ -1344,7 +1322,7 @@ void action::init_direct_product_group(
 		//cout << "make_element_size=" << make_element_size << endl;
 		//cout << "base_len=" << base_len << endl;
 		//cout << "f_semilinear=" << f_semilinear << endl;
-		}
+	}
 }
 
 void action::init_wreath_product_group_and_restrict(
@@ -1364,7 +1342,7 @@ void action::init_wreath_product_group_and_restrict(
 		cout << "action::init_wreath_product_group_and_restrict" << endl;
 		cout << "nb_factors=" << nb_factors
 				<< " n=" << n << " q=" << F->q << endl;
-		}
+	}
 	A_wreath = NEW_OBJECT(action);
 	if (f_v) {
 		cout << "action::init_wreath_product_group_and_restrict "
@@ -1815,7 +1793,7 @@ void action::init_permutation_representation(action *A_original,
 		//cout << "make_element_size=" << make_element_size << endl;
 		//cout << "base_len=" << base_len << endl;
 		//cout << "f_semilinear=" << f_semilinear << endl;
-		}
+	}
 }
 
 void action::init_orthogonal_group(int epsilon,
@@ -1831,15 +1809,15 @@ void action::init_orthogonal_group(int epsilon,
 	if (f_v) {
 		cout << "action::init_orthogonal_group "
 				"verbose_level=" << verbose_level << endl;
-		}
+	}
 	O = NEW_OBJECT(orthogonal);
 	if (f_vv) {
 		cout << "action::init_orthogonal_group before O->init" << endl;
-		}
+	}
 	O->init(epsilon, n, F, verbose_level);
 	if (f_vv) {
 		cout << "action::init_orthogonal_group after O->init" << endl;
-		}
+	}
 
 	init_orthogonal_group_with_O(O,
 			f_on_points, f_on_lines, f_on_points_and_lines,
@@ -1849,7 +1827,7 @@ void action::init_orthogonal_group(int epsilon,
 
 	if (f_v) {
 		cout << "action::init_orthogonal_group done" << endl;
-		}
+	}
 }
 
 void action::init_orthogonal_group_with_O(orthogonal *O,
@@ -1867,12 +1845,12 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 	if (f_v) {
 		cout << "action::init_orthogonal_group_with_O "
 				"verbose_level=" << verbose_level << endl;
-		}
+	}
 	A = NEW_OBJECT(action);
 	if (f_vv) {
 		cout << "action::init_orthogonal_group_with_O "
 				"before A->init_projective_group" << endl;
-		}
+	}
 	vector_ge *nice_gens;
 	A->init_projective_group(O->n, O->F, f_semilinear,
 			TRUE /* f_basis */, TRUE /* f_init_sims */,
@@ -1881,18 +1859,18 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 	if (f_vv) {
 		cout << "action::init_orthogonal_group_with_O "
 				"after A->init_projective_group" << endl;
-		}
+	}
 	FREE_OBJECT(nice_gens);
 
 	AO = NEW_OBJECT(action_on_orthogonal);
 	if (f_vv) {
 		cout << "action::init_orthogonal_group_with_O before AO->init" << endl;
-		}
+	}
 	AO->init(A, O, f_on_points, f_on_lines,
 			f_on_points_and_lines, verbose_level - 2);
 	if (f_vv) {
 		cout << "action::init_orthogonal_group_with_O after AO->init" << endl;
-		}
+	}
 
 	type_G = action_on_orthogonal_t;
 	G.AO = AO;
@@ -1935,7 +1913,7 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 		if (f_vv) {
 			cout << "action::init_orthogonal_group_with_O "
 					"we will create the orthogonal group now" << endl;
-			}
+		}
 
 		action_global AG;
 
@@ -1943,29 +1921,29 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 			if (f_vv) {
 				cout << "action::init_orthogonal_group_with_O "
 						"with reflections, before order_PO_epsilon" << endl;
-				}
+			}
 			GG.order_PO_epsilon(f_semilinear, O->epsilon, O->n - 1, O->F->q,
 					target_go, verbose_level);
-			}
+		}
 		else {
 			if (f_vv) {
 				cout << "action::init_orthogonal_group_with_O "
 						"without reflections, before order_POmega_epsilon"
 						<< endl;
-				}
+			}
 			GG.order_POmega_epsilon(O->epsilon, O->n - 1,
 					O->F->q, target_go, verbose_level);
-			}
+		}
 
 		if (f_vv) {
 			cout << "action::init_orthogonal_group_with_O "
 					"the target group order is " << target_go << endl;
-			}
+		}
 
 		if (f_vv) {
 			cout << "action::init_orthogonal_group_with_O "
 					"before create_orthogonal_group" << endl;
-			}
+		}
 		create_orthogonal_group(A /*subaction*/,
 			TRUE /* f_has_target_go */, target_go,
 			callback_choose_random_generator_orthogonal,
@@ -1973,12 +1951,12 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 		if (f_vv) {
 			cout << "action::init_orthogonal_group_with_O "
 					"after create_orthogonal_group" << endl;
-			}
 		}
+	}
 
 	if (f_v) {
 		cout << "action::init_orthogonal_group_with_O done" << endl;
-		}
+	}
 }
 
 void action::init_BLT(finite_field *F, int f_basis,
@@ -1995,7 +1973,7 @@ void action::init_BLT(finite_field *F, int f_basis,
 				<< " f_init_hash_table=" << f_init_hash_table << endl;
 		cout << "f_basis=" << f_basis << endl;
 		cout << "verbose_level=" << verbose_level << endl;
-		}
+	}
 	NT.is_prime_power(F->q, p, hh);
 	if (hh > 1)
 		f_semilinear = TRUE;
@@ -2007,7 +1985,7 @@ void action::init_BLT(finite_field *F, int f_basis,
 
 	if (f_v) {
 		cout << "action::init_BLT before init_orthogonal_group" << endl;
-		}
+	}
 	init_orthogonal_group(epsilon, n, F,
 		TRUE /* f_on_points */,
 		FALSE /* f_on_lines */,
@@ -2017,39 +1995,39 @@ void action::init_BLT(finite_field *F, int f_basis,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "action::init_BLT after init_orthogonal_group" << endl;
-		}
+	}
 
 
 
 	if (f_v) {
 		cout << "action::init_BLT computing lex least base" << endl;
-		}
+	}
 	lex_least_base_in_place(verbose_level - 2);
 	if (f_v) {
 		cout << "action::init_BLT computing lex least base done" << endl;
 		cout << "base: ";
 		lint_vec_print(cout, get_base(), base_len());
 		cout << endl;
-		}
+	}
 
 	if (f_v) {
 		print_base();
-		}
+	}
 
 
 	if (f_has_strong_generators) {
 		if (f_v) {
 			cout << "action::init_BLT strong "
 					"generators have been computed" << endl;
-			}
+		}
 		if (f_vv) {
 			Strong_gens->print_generators(cout);
-			}
 		}
+	}
 	else {
 		cout << "action::init_BLT we don't have strong generators" << endl;
 		exit(1);
-		}
+	}
 
 #if 0
 	if (f_init_hash_table) {
@@ -2061,17 +2039,17 @@ void action::init_BLT(finite_field *F, int f_basis,
 
 		if (f_v) {
 			cout << "calling init_hash_table_parabolic" << endl;
-			}
-		init_hash_table_parabolic(*O->F, 4, 0 /* verbose_level */);
 		}
+		init_hash_table_parabolic(*O->F, 4, 0 /* verbose_level */);
+	}
 #endif
 
 	if (f_v) {
 		print_info();
-		}
+	}
 	if (f_v) {
 		cout << "action::init_BLT done" << endl;
-		}
+	}
 }
 
 void action::init_group_from_strong_generators(
@@ -2089,7 +2067,7 @@ void action::init_group_from_strong_generators(
 
 	if (f_v) {
 		cout << "action::init_group_from_strong_generators" << endl;
-		}
+	}
 	label.assign("from sgs");
 	label_tex.assign("from sgs");
 
@@ -2097,14 +2075,14 @@ void action::init_group_from_strong_generators(
 		cout << "generators are" << endl;
 		gens->print(cout);
 		cout << endl;
-		}
+	}
 
 
 	if (f_vv) {
 		cout << "calling allocate_base_data, initial base:";
 		int_vec_print(cout, given_base, given_base_length);
 		cout << " of length " << given_base_length << endl;
-		}
+	}
 	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
 	Stabilizer_chain->allocate_base_data(this, given_base_length, verbose_level);
 	//allocate_base_data(given_base_length);
@@ -2112,7 +2090,7 @@ void action::init_group_from_strong_generators(
 
 	for (i = 0; i < base_len(); i++) {
 		base_i(i) = given_base[i];
-		}
+	}
 
 
 
@@ -2120,7 +2098,7 @@ void action::init_group_from_strong_generators(
 		cout << "action::init_group_from_strong_generators, "
 				"now trying to set up the group "
 				"from the given generators" << endl;
-		}
+	}
 
 	G = NEW_OBJECT(sims);
 
@@ -2140,7 +2118,7 @@ void action::init_group_from_strong_generators(
 	if (f_vvv) {
 		//G.print(TRUE);
 		//G.print_generator_depth_and_perm();
-		}
+	}
 
 	if (f_v) {
 		cout << "init_group_from_strong_generators: "
@@ -2152,21 +2130,21 @@ void action::init_group_from_strong_generators(
 				cout << G->get_orbit_length(t) << ", ";
 			}
 			cout << endl;
-			}
 		}
+	}
 
 	if (f_vv) {
 		cout << "init_sims" << endl;
-		}
+	}
 	init_sims_only(G, 0/*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "after init_sims" << endl;
-		}
+	}
 	compute_strong_generators_from_sims(0/*verbose_level - 2*/);
 
 	if (f_v) {
 		print_info();
-		}
+	}
 }
 
 
@@ -2190,7 +2168,7 @@ sims *action::create_sims_from_generators_with_target_group_order_factorized(
 				"before create_sims_from_generators_randomized" << endl;
 	}
 	S = create_sims_from_generators_randomized(
-		gens, TRUE /* f_target_go */, go, verbose_level);
+		gens, TRUE /* f_target_go */, go, verbose_level - 3);
 	if (f_v) {
 		cout << "action::create_sims_from_generators_with_target_group_order_factorized done" << endl;
 	}
@@ -2204,7 +2182,7 @@ sims *action::create_sims_from_generators_with_target_group_order_lint(
 
 	tgo.create(target_go, __FILE__, __LINE__);
 	return create_sims_from_generators_with_target_group_order(
-			gens, tgo, verbose_level);
+			gens, tgo, verbose_level - 3);
 }
 
 sims *action::create_sims_from_generators_with_target_group_order(
@@ -2212,7 +2190,7 @@ sims *action::create_sims_from_generators_with_target_group_order(
 	int verbose_level)
 {
 	return create_sims_from_generators_randomized(
-		gens, TRUE /* f_target_go */, target_go, verbose_level);
+		gens, TRUE /* f_target_go */, target_go, verbose_level - 3);
 }
 
 sims *action::create_sims_from_generators_without_target_group_order(
@@ -2221,7 +2199,7 @@ sims *action::create_sims_from_generators_without_target_group_order(
 	longinteger_object dummy;
 
 	return create_sims_from_generators_randomized(
-		gens, FALSE /* f_target_go */, dummy, verbose_level);
+		gens, FALSE /* f_target_go */, dummy, verbose_level - 3);
 }
 
 sims *action::create_sims_from_single_generator_without_target_group_order(
@@ -2235,18 +2213,18 @@ sims *action::create_sims_from_single_generator_without_target_group_order(
 	if (f_v) {
 		cout << "action::create_sims_from_single_generator_"
 				"without_target_group_order" << endl;
-		}
+	}
 	gens = NEW_OBJECT(vector_ge);
 	gens->init_single(this, Elt, verbose_level - 2);
 
 	S = create_sims_from_generators_randomized(
-		gens, FALSE /* f_target_go */, dummy, verbose_level);
+		gens, FALSE /* f_target_go */, dummy, verbose_level - 3);
 
 	FREE_OBJECT(gens);
 	if (f_v) {
 		cout << "action::create_sims_from_single_generator_"
 				"without_target_group_order done" << endl;
-		}
+	}
 	return S;
 }
 
@@ -2296,7 +2274,7 @@ sims *action::create_sims_from_generators_randomized(
 	if (f_v) {
 		cout << "action::create_sims_from_generators_randomized before ss->init_generators" << endl;
 	}
-	ss->init_generators(gens, verbose_level);
+	ss->init_generators(gens, verbose_level - 3);
 	if (f_v) {
 		cout << "action::create_sims_from_generators_randomized after ss->init_generators" << endl;
 	}
@@ -2304,7 +2282,7 @@ sims *action::create_sims_from_generators_randomized(
 	if (f_v) {
 		cout << "action::create_sims_from_generators_randomized before ss->create_group" << endl;
 	}
-	ss->create_group(verbose_level - 1);
+	ss->create_group(verbose_level - 10);
 	if (f_v) {
 		cout << "action::create_sims_from_generators_randomized after ss->create_group" << endl;
 	}
@@ -2322,9 +2300,8 @@ sims *action::create_sims_from_generators_randomized(
 	// after FREE_OBJECT ss" << endl;
 
 	if (f_v) {
-		cout << "action::create_sims_from_generators_randomized "
-				"done" << endl;
-		}
+		cout << "action::create_sims_from_generators_randomized done" << endl;
+	}
 	return S;
 }
 
@@ -2340,13 +2317,13 @@ sims *action::create_sims_for_centralizer_of_matrix(
 
 	if (f_v) {
 		cout << "action::create_sims_for_centralizer_of_matrix" << endl;
-		}
+	}
 
 	if (type_G != matrix_group_t) {
 		cout << "action::create_sims_for_centralizer_of_matrix "
 				"action not of type matrix_group" << endl;
 		exit(1);
-		}
+	}
 
 	M = G.matrix_grp;
 	F = M->GFq;
@@ -2358,9 +2335,9 @@ sims *action::create_sims_for_centralizer_of_matrix(
 		if (f_v) {
 			cout << "action::create_sims_for_centralizer_of_matrix "
 					"before M->init_gl_classes" << endl;
-			}
-		M->init_gl_classes(verbose_level - 2);
 		}
+		M->init_gl_classes(verbose_level - 2);
+	}
 
 	C = M->C;
 
@@ -2369,7 +2346,7 @@ sims *action::create_sims_for_centralizer_of_matrix(
 				"d = " << d << " q = " << q << endl;
 		cout << "Mtx=" << endl;
 		int_matrix_print(Mtx, d, d);
-		}
+	}
 
 	//gl_classes C;
 	//gl_class_rep *Reps;
@@ -2384,7 +2361,7 @@ sims *action::create_sims_for_centralizer_of_matrix(
 	if (f_v) {
 		cout << "create_sims_for_centralizer_of_matrix "
 				"There are " << nb_classes << " conjugacy classes" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "create_sims_for_centralizer_of_matrix "
 				"The conjugacy classes are:" << endl;
@@ -2394,8 +2371,8 @@ sims *action::create_sims_for_centralizer_of_matrix(
 					Reps[i].type_coding.m, Reps[i].type_coding.n);
 			cout << "Centralizer order = "
 					<< Reps[i].centralizer_order << endl;
-			}
 		}
+	}
 #endif
 
 
@@ -2421,7 +2398,7 @@ sims *action::create_sims_for_centralizer_of_matrix(
 	if (f_v) {
 		cout << "action::create_sims_for_centralizer_of_matrix "
 				"before generators_for_centralizer" << endl;
-		}
+	}
 	C->generators_for_centralizer(Mtx, R1, Basis, Gens,
 			nb_gens, nb_alloc, verbose_level - 2);
 
@@ -2431,7 +2408,7 @@ sims *action::create_sims_for_centralizer_of_matrix(
 		int_matrix_print(Basis, d, d);
 		cout << "create_sims_for_centralizer_of_matrix "
 				"We found " << nb_gens << " centralizing matrices" << endl;
-		}
+	}
 
 	if (f_vv) {
 		cout << "action::create_sims_for_centralizer_of_matrix "
@@ -2439,8 +2416,8 @@ sims *action::create_sims_for_centralizer_of_matrix(
 		for (i = 0; i < nb_gens; i++) {
 			cout << "Gen " << i << " / " << nb_gens << " is:" << endl;
 			int_matrix_print(Gens[i], d, d);
-			}
 		}
+	}
 
 	for (i = 0; i < nb_gens; i++) {
 		if (!F->test_if_commute(Mtx, Gens[i], d,
@@ -2451,8 +2428,8 @@ sims *action::create_sims_for_centralizer_of_matrix(
 			cout << "Gens[i]=" << endl;
 			int_matrix_print(Gens[i], d, d);
 			exit(1);
-			}
 		}
+	}
 
 	//C.identify_matrix(Elt, R1, verbose_level);
 
@@ -2461,7 +2438,7 @@ sims *action::create_sims_for_centralizer_of_matrix(
 				"consideration is:" << endl;
 		int_matrix_print(R1->type_coding.M,
 				R1->type_coding.m, R1->type_coding.n);
-		}
+	}
 
 
 #if 0
@@ -2471,7 +2448,7 @@ sims *action::create_sims_for_centralizer_of_matrix(
 	if (f_v) {
 		cout << "The index of the class of the "
 				"matrix is = " << class_rep << endl;
-		}
+	}
 #endif
 
 
@@ -2491,18 +2468,18 @@ sims *action::create_sims_for_centralizer_of_matrix(
 	for (i = 0; i < nb_gens; i++) {
 		make_element(Elt1, Gens[i], 0);
 		element_move(Elt1, gens->ith(i), 0);
-		}
+	}
 	sims *Cent;
 
 
 	if (f_v) {
 		cout << "before centralizer_order_Kung" << endl;
-		}
+	}
 	R1->centralizer_order_Kung(C, centralizer_order, verbose_level);
 	if (f_v) {
 		cout << "after centralizer_order_Kung, "
 				"centralizer_order=" << centralizer_order << endl;
-		}
+	}
 
 	Cent = create_sims_from_generators_with_target_group_order(
 			gens,
@@ -2515,14 +2492,14 @@ sims *action::create_sims_for_centralizer_of_matrix(
 	if (f_v) {
 		cout << "action::create_sims_for_centralizer_of_matrix "
 				"The order of the centralizer is " << cent_go << endl;
-		}
+	}
 
 
 
 
 	for (i = 0; i < nb_gens; i++) {
 		FREE_int(Gens[i]);
-		}
+	}
 	FREE_pint(Gens);
 
 	FREE_OBJECT(R1);
@@ -2535,7 +2512,7 @@ sims *action::create_sims_for_centralizer_of_matrix(
 
 	if (f_v) {
 		cout << "action::create_sims_for_centralizer_of_matrix done" << endl;
-		}
+	}
 	return Cent;
 }
 
@@ -2556,7 +2533,7 @@ void action::init_automorphism_group_from_group_table(
 
 	if (f_v) {
 		cout << "action::init_automorphism_group_from_group_table" << endl;
-		}
+	}
 
 	Magma.normalizer_in_Sym_n(fname_base,
 		group_order, Table, gens, nb_gens,
@@ -2619,12 +2596,12 @@ void action::init_automorphism_group_from_group_table(
 		nb_gens /* given_base_length */, gens1 /* given_base */,
 		verbose_level);
 	{
-	longinteger_object go;
-	action::group_order(go);
-	if (f_v) {
-		cout << "action::init_automorphism_group_from_group_table "
-				"The order of the holomorph is " << go << endl;
-	}
+		longinteger_object go;
+		action::group_order(go);
+		if (f_v) {
+			cout << "action::init_automorphism_group_from_group_table "
+					"The order of the holomorph is " << go << endl;
+		}
 	}
 
 	longinteger_object Aut_order;

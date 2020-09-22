@@ -1789,7 +1789,7 @@ void semifield_level_two::allocate_candidates_at_level_two(
 int semifield_level_two::test_if_file_exists_candidates_at_level_two_case(
 	int orbit, int verbose_level)
 {
-	char fname[1000];
+	string fname;
 	int f_v = (verbose_level >= 1);
 	file_io Fio;
 
@@ -1815,7 +1815,7 @@ int semifield_level_two::test_if_file_exists_candidates_at_level_two_case(
 int semifield_level_two::test_if_txt_file_exists_candidates_at_level_two_case(
 	int orbit, int verbose_level)
 {
-	char fname[1000];
+	string fname;
 	int f_v = (verbose_level >= 1);
 	file_io Fio;
 
@@ -1908,7 +1908,7 @@ void semifield_level_two::find_all_candidates_at_level_two(
 			}
 
 
-		char fname_test[1000];
+		string fname_test;
 
 		SC->make_fname_candidates_at_level_two_orbit_by_type(
 				fname_test, orbit, 0);
@@ -1946,7 +1946,7 @@ void semifield_level_two::find_all_candidates_at_level_two(
 				verbose_level);
 
 			for (h = 0; h < Nb_sets; h++) {
-				char fname[1000];
+				string fname;
 
 				SC->make_fname_candidates_at_level_two_orbit_by_type(
 						fname, orbit, h);
@@ -1997,7 +1997,7 @@ void semifield_level_two::read_candidates_at_level_two_case(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname[1000];
+	string fname;
 	file_io Fio;
 
 	if (f_v) {
@@ -2041,7 +2041,7 @@ void semifield_level_two::read_candidates_at_level_two_case_txt_file(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname[1000];
+	string fname;
 	file_io Fio;
 
 	if (f_v) {
@@ -2085,7 +2085,7 @@ void semifield_level_two::write_candidates_at_level_two_case(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname[1000];
+	string fname;
 	file_io Fio;
 
 	if (f_v) {
@@ -2140,7 +2140,7 @@ void semifield_level_two::read_candidates_at_level_two_by_type(
 	Set = NEW_plint(Nb_sets);
 	Set_sz = NEW_int(Nb_sets);
 	for (h = 0; h < Nb_sets; h++) {
-		char fname[1000];
+		string fname;
 
 		SC->make_fname_candidates_at_level_two_orbit_by_type(
 				fname, orbit, h);
@@ -2441,9 +2441,11 @@ void semifield_level_two::report(
 	}
 }
 
-void semifield_level_two::create_fname_level_info_file(char *fname)
+void semifield_level_two::create_fname_level_info_file(std::string &fname)
 {
-		sprintf(fname, "%sLevel_2_info.csv", SC->level_two_prefix);
+	fname.assign(SC->level_two_prefix);
+	fname.append("Level_2_info.csv");
+		//sprintf(fname, "%sLevel_2_info.csv", SC->level_two_prefix);
 }
 
 
@@ -2465,7 +2467,7 @@ void semifield_level_two::write_level_info_file(int verbose_level)
 		"Go",
 		"Pt"
 		};
-	char fname[1000];
+	string fname;
 
 	create_fname_level_info_file(fname);
 
@@ -2501,7 +2503,7 @@ void semifield_level_two::write_level_info_file(int verbose_level)
 void semifield_level_two::read_level_info_file(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char fname[1000];
+	string fname;
 	long int *M;
 	int m, n, i;
 	//int tmp;

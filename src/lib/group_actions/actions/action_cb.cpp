@@ -611,7 +611,7 @@ void action::element_read_file_fp(int *Elt,
 }
 
 void action::element_write_file(int *Elt,
-		const char *fname, int verbose_level)
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	file_io Fio;
@@ -636,7 +636,7 @@ void action::element_write_file(int *Elt,
 }
 
 void action::element_read_file(int *Elt,
-		const char *fname, int verbose_level)
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	file_io Fio;

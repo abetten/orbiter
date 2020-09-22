@@ -355,7 +355,7 @@ void unusual_model::setup2(int q,
 	f.find_hyperbolic_pair(4, nb_terms, 
 		form_i, form_j, form_coeff, Gram, 
 		basis, basis + 4, 0 /*verbose_level - 3*/);
-	f.perp(4, 2, basis, Gram);
+	f.perp(4, 2, basis, Gram, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "basis:" << endl;
 		print_integer_matrix_width(cout, basis, 4, 4, 4, 2);

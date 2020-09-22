@@ -381,7 +381,7 @@ void surfaces_arc_lifting_trace::move_plane_and_arc(long int *P6a, int verbose_l
 		int_matrix_print(The_case.Basis_pi, 4, 4);
 	}
 
-	Up->Lift->Surf_A->Surf->F->invert_matrix(The_case.Basis_pi, The_case.Basis_pi_inv, 4);
+	Up->Lift->Surf_A->Surf->F->invert_matrix(The_case.Basis_pi, The_case.Basis_pi_inv, 4, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::move_plane_and_arc" << endl;
 		cout << "Basis_inv=" << endl;

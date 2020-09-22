@@ -334,7 +334,7 @@ public:
 
 	int f_GFq_is_allocated;
 		// if TRUE, GFq will be destroyed in the destructor
-		// if FALSE, it is the responsability 
+		// if FALSE, it is the responsibility
 		// of someone else to destroy GFq
 	
 	finite_field *GFq;
@@ -963,8 +963,8 @@ public:
 	void print_path(std::ostream &ost, int *path, int l);
 	void write_to_file_binary(std::ofstream &fp, int verbose_level);
 	void read_from_file_binary(std::ifstream &fp, int verbose_level);
-	void write_file_binary(char *fname, int verbose_level);
-	void read_file_binary(const char *fname, int verbose_level);
+	void write_file_binary(std::string &fname, int verbose_level);
+	void read_file_binary(std::string &fname, int verbose_level);
 	void list_elements_as_permutations_vertically(std::ostream &ost);
 };
 
@@ -1458,7 +1458,7 @@ public:
 		int verbose_level);
 	void read_list_of_elements(action *A,
 		char *fname, int verbose_level);
-	void write_as_magma_permutation_group(const char *fname_base,
+	void write_as_magma_permutation_group(std::string &fname_base,
 		vector_ge *gens, int verbose_level);
 	void report(std::ostream &ost,
 			layered_graph_draw_options *LG_Draw_options,
@@ -1985,7 +1985,7 @@ public:
 			int*& result,
 			int &nb_gens, int &degree,
 			int nb_factors,
-			const char *orbits_restricted_fname,
+			std::string &orbits_restricted_fname,
 			int verbose_level);
 	void orbits_restricted_compute(
 			strong_generators* SG,
@@ -1993,7 +1993,7 @@ public:
 			int*& result,
 			int &nb_gens, int &degree,
 			int nb_factors,
-			const char *orbits_restricted_fname,
+			std::string &orbits_restricted_fname,
 			int verbose_level);
 };
 

@@ -356,7 +356,7 @@ void blt_set_classify::create_graphs(
 	//		output_prefix, gen->get_problem_label(), starter_size,
 	//		orbit_at_level_r, orbit_at_level_m);
 
-	nb_orbits = Fio.count_number_of_orbits_in_file(fname.c_str(), 0);
+	nb_orbits = Fio.count_number_of_orbits_in_file(fname, 0);
 	if (f_v) {
 		cout << "blt_set_classify::create_graphs There are "
 				<< nb_orbits << " starters" << endl;
@@ -437,14 +437,14 @@ void blt_set_classify::create_graphs(
 		cout << "blt_set_classify::create_graphs writing file "
 				<< fname_time << endl;
 	}
-	Fio.lint_matrix_write_csv(fname_time.c_str(), Time, time_idx, 2);
+	Fio.lint_matrix_write_csv(fname_time, Time, time_idx, 2);
 	if (f_v) {
 		cout << "blt_set_classify::create_graphs Written file "
 				<< fname_time << " of size "
 				<< Fio.file_size(fname_time) << endl;
 	}
 
-	Fio.write_set_to_file(fname_list_of_cases.c_str(),
+	Fio.write_set_to_file(fname_list_of_cases,
 			list_of_cases, nb_of_cases,
 			0 /*verbose_level */);
 	if (f_v) {
@@ -523,7 +523,7 @@ void blt_set_classify::create_graphs_list_of_cases(
 	//sprintf(fname_list_of_cases, "%s%s_list_of_cases.txt",
 	//		output_prefix, case_label);
 
-	nb_orbits = Fio.count_number_of_orbits_in_file(fname.c_str(), 0);
+	nb_orbits = Fio.count_number_of_orbits_in_file(fname, 0);
 	if (f_v) {
 		cout << "blt_set_classify::create_graphs_list_of_cases "
 				"There are " << nb_orbits << " starters" << endl;
@@ -592,7 +592,7 @@ void blt_set_classify::create_graphs_list_of_cases(
 		}
 	}
 
-	Fio.write_set_to_file(fname_list_of_cases.c_str(),
+	Fio.write_set_to_file(fname_list_of_cases,
 			list_of_cases_created, nb_of_cases_created,
 			0 /*verbose_level */);
 	if (f_v) {

@@ -832,7 +832,7 @@ public:
 	int f_print;
 	int f_sort_by_colors;
 	int f_split;
-	const char *split_file;
+	std::string split_file;
 	int f_save;
 
 

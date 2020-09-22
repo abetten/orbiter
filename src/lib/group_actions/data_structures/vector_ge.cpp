@@ -637,6 +637,19 @@ void vector_ge::print(ostream &ost, int f_print_as_permutation,
 		}
 }
 
+void vector_ge::print_for_make_element(ostream &ost)
+{
+	int i, l;
+
+	l = len;
+	ost << "Strong generators: (" << l << " of them)" << endl;
+	for (i = 0; i < l; i++) {
+		A->element_print_for_make_element(ith(i), ost);
+		ost << "\\\\" << endl;
+		}
+}
+
+
 void vector_ge::write_to_memory_object(memory_object *m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

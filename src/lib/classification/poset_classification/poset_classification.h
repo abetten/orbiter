@@ -478,10 +478,10 @@ private:
 	long int *set1; // [sz + 1] temporary storage
 	long int *set3; // [sz + 1] temporary storage
 	
-	int *nb_extension_nodes_at_level_total;
-	int *nb_extension_nodes_at_level;
-	int *nb_fusion_nodes_at_level;
-	int *nb_unprocessed_nodes_at_level;
+	long int *nb_extension_nodes_at_level_total;
+	long int *nb_extension_nodes_at_level;
+	long int *nb_fusion_nodes_at_level;
+	long int *nb_unprocessed_nodes_at_level;
 
 
 
@@ -573,7 +573,7 @@ public:
 	void poset_orbit_node_depth_breadth_perm_and_inverse(
 		int max_depth,
 		int *&perm, int *&perm_inv, int verbose_level);
-	int count_extension_nodes_at_level(int lvl);
+	long int count_extension_nodes_at_level(int lvl);
 	double level_progress(int lvl);
 	void count_automorphism_group_orders(int lvl, int &nb_agos, 
 		longinteger_object *&agos, int *&multiplicities, 
@@ -879,8 +879,8 @@ public:
 	void print();
 	void print_statistic_on_callbacks_naked();
 	void print_statistic_on_callbacks();
-	void prepare_fname_data_file(char *fname,
-			const char *fname_base, int depth_completed);
+	void prepare_fname_data_file(std::string &fname,
+			std::string &fname_base, int depth_completed);
 	void print_representatives_at_level(int lvl);
 	void print_lex_rank(long int *set, int sz);
 	void print_problem_label();
@@ -896,7 +896,7 @@ public:
 	void read_data_file(int &depth_completed,
 		std::string &fname, int verbose_level);
 	void write_data_file(int depth_completed,
-		const char *fname_base, int verbose_level);
+			std::string &fname_base, int verbose_level);
 	void write_file(std::ofstream &fp, int depth_completed,
 		int verbose_level);
 	void read_file(std::ifstream &fp, int &depth_completed,

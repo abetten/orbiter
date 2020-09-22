@@ -418,7 +418,7 @@ void recoordinatize::compute_live_points(int verbose_level)
 	}
 
 
-	char fname[1000];
+	string fname;
 
 
 #if 0
@@ -470,7 +470,7 @@ void recoordinatize::compute_live_points(int verbose_level)
 #else
 
 
-	sprintf(fname, "live_points.txt");
+	fname.assign("live_points.txt");
 
 	file_io Fio;
 

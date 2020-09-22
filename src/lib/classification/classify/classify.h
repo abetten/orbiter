@@ -51,7 +51,7 @@ public:
 	void read_file(std::ifstream &fp,
 			action *A, action *A2, longinteger_object &go,
 			int verbose_level);
-	void generate_source_code(const char *fname_base, int verbose_level);
+	void generate_source_code(std::string &fname_base, int verbose_level);
 	long int *Rep_ith(int i);
 	void print_group_orders();
 	void print_summary(std::ostream &ost);

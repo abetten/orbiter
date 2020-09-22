@@ -1461,6 +1461,18 @@ void print_incidence_structure(ostream &ost,
 	FREE_int(M);
 }
 
+void int_vec_scan(std::string &s, int *&v, int &len)
+{
+	int verbose_level = 0;
+
+	int f_v = (verbose_level >= 1);
+	if (f_v) {
+		cout << "int_vec_scan: " << s << endl;
+	}
+	istringstream ins(s);
+	int_vec_scan_from_stream(ins, v, len);
+}
+
 
 
 void int_vec_scan(const char *s, int *&v, int &len)
@@ -1474,6 +1486,13 @@ void int_vec_scan(const char *s, int *&v, int &len)
 	istringstream ins(s);
 	int_vec_scan_from_stream(ins, v, len);
 }
+
+void lint_vec_scan(std::string &s, long int *&v, int &len)
+{
+	istringstream ins(s);
+	lint_vec_scan_from_stream(ins, v, len);
+}
+
 
 void lint_vec_scan(const char *s, long int *&v, int &len)
 {
@@ -1988,6 +2007,23 @@ void chop_off_extension(std::string &p)
 	}
 	p = q;
 }
+
+void chop_off_extension_if_present(std::string &p, const char *ext)
+{
+	int l1 = p.length();
+	int l2 = strlen(ext);
+
+	if (l1 > l2) {
+		string q;
+		q = p.substr(l1 - l2, l2);
+		if (strcmp(p.c_str(), ext) == 0) {
+			string r;
+			r = q.substr(0, l1 - l2);
+			p = r;
+		}
+	}
+}
+
 
 void chop_off_extension_if_present(char *p, const char *ext)
 {

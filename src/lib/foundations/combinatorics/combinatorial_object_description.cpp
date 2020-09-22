@@ -111,7 +111,7 @@ combinatorial_object_description::combinatorial_object_description()
 	//curve_label = NULL;
 	curve_nb_vars = 0;
 	curve_degree = 0;
-	curve_coeffs = NULL;
+	//curve_coeffs = NULL;
 
 }
 
@@ -346,7 +346,7 @@ int combinatorial_object_description::read_arguments(int argc, const char **argv
 			curve_label.assign(argv[++i]);
 			curve_nb_vars = atoi(argv[++i]);
 			curve_degree = atoi(argv[++i]);
-			curve_coeffs = argv[++i];
+			curve_coeffs.assign(argv[++i]);
 			cout << "-projective_curve "
 					<< curve_label << " "
 					<< curve_nb_vars << " "

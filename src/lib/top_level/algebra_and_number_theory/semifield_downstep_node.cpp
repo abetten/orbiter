@@ -193,7 +193,7 @@ void semifield_downstep_node::init(
 	else {
 #endif
 		file_io File_io;
-		char fname[1000];
+		string fname;
 
 		SL->make_file_name_schreier(fname, level, orbit_number);
 

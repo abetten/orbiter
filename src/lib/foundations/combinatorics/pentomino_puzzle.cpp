@@ -79,7 +79,9 @@ void pentomino_puzzle::main(int verbose_level)
 
 	{
 
-	const char *fname = "solutions.csv";
+	string fname;
+
+	fname.assign("solutions.csv");
 
 	L->save_csv(fname, TRUE /* f_make_heading */, verbose_level);
 	}

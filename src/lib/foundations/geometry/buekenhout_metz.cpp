@@ -1320,7 +1320,7 @@ void buekenhout_metz::write_unital_to_file()
 	
 	get_name(fname_unital);
 	fname_unital.append(".txt");
-	Fio.write_set_to_file(fname_unital.c_str(), U, sz, 0 /* verbose_level */);
+	Fio.write_set_to_file(fname_unital, U, sz, 0 /* verbose_level */);
 	cout << "written file " << fname_unital << " of size "
 			<< Fio.file_size(fname_unital) << endl;
 }

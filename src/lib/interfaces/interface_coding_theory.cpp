@@ -29,11 +29,15 @@ interface_coding_theory::interface_coding_theory()
 	//BCH_b = 0;
 	f_Hamming_graph = FALSE;
 	f_NTT = FALSE;
-	ntt_fname_code = NULL;
+	//ntt_fname_code = NULL;
 	f_draw_matrix = FALSE;
 	bit_depth = 8;
 	//fname = NULL;
 	box_width = 0;
+	f_draw_matrix_partition = FALSE;
+	draw_matrix_partition_width = 0;
+	//std::string draw_matrix_partition_rows;
+	//std::string draw_matrix_partition_cols;
 }
 
 
@@ -58,8 +62,10 @@ void interface_coding_theory::print_help(int argc,
 	else if (strcmp(argv[i], "-draw_matrix") == 0) {
 		cout << "-draw_matrix <string : fname> <int : box_width> <int : bit_depth>" << endl;
 	}
+	else if (strcmp(argv[i], "-draw_matrix_partition") == 0) {
+		cout << "-draw_matrix_partition <int : width> <string : row partition> <string : col partition> " << endl;
+	}
 }
-
 int interface_coding_theory::recognize_keyword(int argc,
 		const char **argv, int i, int verbose_level)
 {
@@ -82,6 +88,9 @@ int interface_coding_theory::recognize_keyword(int argc,
 		return true;
 	}
 	else if (strcmp(argv[i], "-draw_matrix") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-draw_matrix_partition") == 0) {
 		return true;
 	}
 	return false;
@@ -128,7 +137,7 @@ void interface_coding_theory::read_arguments(int argc,
 			f_NTT = TRUE;
 			n = atoi(argv[++i]);
 			q = atoi(argv[++i]);
-			ntt_fname_code = argv[++i];
+			ntt_fname_code.assign(argv[++i]);
 			cout << "-NTT " << n << " " << q << " " << ntt_fname_code << endl;
 		}
 		else if (strcmp(argv[i], "-draw_matrix") == 0) {
@@ -137,6 +146,13 @@ void interface_coding_theory::read_arguments(int argc,
 			box_width = atoi(argv[++i]);
 			bit_depth = atoi(argv[++i]);
 			cout << "-draw_matrix " << fname << " " << box_width << " " << bit_depth << endl;
+		}
+		else if (strcmp(argv[i], "-draw_matrix_partition") == 0) {
+			f_draw_matrix_partition = TRUE;
+			draw_matrix_partition_width = atoi(argv[++i]);
+			draw_matrix_partition_rows.assign(argv[++i]);
+			draw_matrix_partition_cols.assign(argv[++i]);
+			cout << "-draw_matrix_partition " << draw_matrix_partition_rows << " " << draw_matrix_partition_cols << endl;
 		}
 	}
 }
@@ -170,13 +186,33 @@ void interface_coding_theory::worker(int verbose_level)
 		int *M;
 		int m, n;
 
-		Fio.int_matrix_read_csv(fname.c_str(), M, m, n, verbose_level);
-		draw_bitmap(fname, M, m, n,
-				FALSE, 0, // int f_partition, int part_width,
-				0, NULL, 0, NULL, // int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
-				TRUE /* f_box_width */, box_width,
-				FALSE /* f_invert_colors */, bit_depth,
-				verbose_level);
+		Fio.int_matrix_read_csv(fname, M, m, n, verbose_level);
+
+		if (f_draw_matrix_partition) {
+			int *row_parts;
+			int *col_parts;
+			int nb_row_parts;
+			int nb_col_parts;
+
+			int_vec_scan(draw_matrix_partition_rows.c_str(), row_parts, nb_row_parts);
+			int_vec_scan(draw_matrix_partition_cols.c_str(), col_parts, nb_col_parts);
+			draw_bitmap(fname, M, m, n,
+					TRUE, draw_matrix_partition_width, // int f_partition, int part_width,
+					nb_row_parts, row_parts, nb_col_parts, col_parts, // int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
+					TRUE /* f_box_width */, box_width,
+					FALSE /* f_invert_colors */, bit_depth,
+					verbose_level);
+			FREE_int(row_parts);
+			FREE_int(col_parts);
+		}
+		else {
+			draw_bitmap(fname, M, m, n,
+					FALSE, 0, // int f_partition, int part_width,
+					0, NULL, 0, NULL, // int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
+					TRUE /* f_box_width */, box_width,
+					FALSE /* f_invert_colors */, bit_depth,
+					verbose_level);
+		}
 		FREE_int(M);
 	}
 }

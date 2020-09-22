@@ -704,7 +704,7 @@ void large_set_classify::process_starter_case(
 			Orbits_under_N[2 * i + 0] = a;
 			Orbits_under_N[2 * i + 1] = l;
 		}
-		Fio.lint_matrix_write_csv(fname_out.c_str(), Orbits_under_N, Sch->nb_orbits, 2);
+		Fio.lint_matrix_write_csv(fname_out, Orbits_under_N, Sch->nb_orbits, 2);
 
 		FREE_lint(Orbits_under_N);
 		}
@@ -731,7 +731,7 @@ void large_set_classify::process_starter_case(
 		int *Solutions;
 		int solution_size;
 
-		Fio.read_solutions_from_file_and_get_solution_size(solution_file_name.c_str(),
+		Fio.read_solutions_from_file_and_get_solution_size(solution_file_name,
 				nb_solutions, Solutions, solution_size,
 				verbose_level);
 		cout << "Read the following solutions from file:" << endl;
@@ -783,7 +783,7 @@ void large_set_classify::process_starter_case(
 
 		replace_extension_with(fname_out, "_packings.csv");
 
-		Fio.lint_matrix_write_csv(fname_out.c_str(), Large_sets, nb_solutions, sz);
+		Fio.lint_matrix_write_csv(fname_out, Large_sets, nb_solutions, sz);
 		}
 		long int *Packings_explicit;
 		int Sz = sz * design_size;
@@ -805,7 +805,7 @@ void large_set_classify::process_starter_case(
 		fname_out.assign(solution_file_name);
 		replace_extension_with(fname_out, "_packings_explicit.csv");
 
-		Fio.lint_matrix_write_csv(fname_out.c_str(), Packings_explicit, nb_solutions, Sz);
+		Fio.lint_matrix_write_csv(fname_out, Packings_explicit, nb_solutions, Sz);
 		}
 		FREE_lint(Large_sets);
 		FREE_lint(Packings_explicit);
