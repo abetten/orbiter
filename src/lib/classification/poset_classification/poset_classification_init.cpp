@@ -118,8 +118,9 @@ void poset_classification::null()
 void poset_classification::freeself()
 {
 	int i;
-	int f_v = FALSE;
-	
+	int verbose_level = 1;
+	int f_v = (verbose_level >= 1);
+
 	if (f_v) {
 		cout << "poset_classification::freeself" << endl;
 	}
@@ -130,10 +131,10 @@ void poset_classification::freeself()
 	// do not free Strong_gens
 	
 
-	if (f_v) {
-		cout << "poset_classification::freeself deleting S" << endl;
-	}
 	if (S) {
+		if (f_v) {
+			cout << "poset_classification::freeself deleting S" << endl;
+		}
 		FREE_lint(S);
 	}
 	if (Schreier_vector_handler) {
@@ -555,11 +556,23 @@ void poset_classification::init_root_node(int verbose_level)
 	}
 	if (f_base_case) {
 
+		if (f_v) {
+			cout << "poset_classification::init_root_node before init_root_node_from_base_case" << endl;
+		}
 		init_root_node_from_base_case(verbose_level);
+		if (f_v) {
+			cout << "poset_classification::init_root_node after init_root_node_from_base_case" << endl;
+		}
 
 	}
 	else {
+		if (f_v) {
+			cout << "poset_classification::init_root_node before root[0].init_root_node" << endl;
+		}
 		root[0].init_root_node(this, verbose_level - 1);
+		if (f_v) {
+			cout << "poset_classification::init_root_node after root[0].init_root_node" << endl;
+		}
 	}
 	if (f_v) {
 		cout << "poset_classification::init_root_node done" << endl;
@@ -607,8 +620,21 @@ void poset_classification::init_poset_orbit_node(
 
 void poset_classification::exit_poset_orbit_node()
 {
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_classification::exit_poset_orbit_node" << endl;
+	}
+
 	if (root) {
+		if (f_v) {
+			cout << "poset_classification::exit_poset_orbit_node deleting root" << endl;
+		}
 		FREE_OBJECTS(root);
+		if (f_v) {
+			cout << "poset_classification::exit_poset_orbit_node after deleting root" << endl;
+		}
 		root = NULL;
 	}
 	if (set0) {

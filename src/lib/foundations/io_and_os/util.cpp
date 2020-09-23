@@ -981,7 +981,7 @@ void int_set_print(ostream &ost, int *v, int len)
 	ost << " }";
 }
 
-void lint_set_print(ostream &ost, long int *v, int len)
+void lint_set_print(std::ostream &ost, long int *v, int len)
 {
 	int i;
 
@@ -995,7 +995,35 @@ void lint_set_print(ostream &ost, long int *v, int len)
 	ost << " }";
 }
 
-void int_vec_print(ostream &ost, int *v, int len)
+void int_vec_print(std::ostream &ost, std::vector<int> &v)
+{
+	int i;
+	int len;
+
+	len = v.size();
+	if (len > 50) {
+		ost << "( ";
+		for (i = 0; i < 50; i++) {
+			ost << v[i];
+			if (i < len - 1) {
+				ost << ", ";
+			}
+		}
+		ost << "...";
+		for (i = len - 3; i < len; i++) {
+			ost << v[i];
+			if (i < len - 1) {
+				ost << ", ";
+			}
+		}
+		ost << " )";
+	}
+	else {
+		int_vec_print_fully(ost, v);
+	}
+}
+
+void int_vec_print(std::ostream &ost, int *v, int len)
 {
 	int i;
 	
@@ -1021,7 +1049,7 @@ void int_vec_print(ostream &ost, int *v, int len)
 	}
 }
 
-void lint_vec_print(ostream &ost, long int *v, int len)
+void lint_vec_print(std::ostream &ost, long int *v, int len)
 {
 	int i;
 
@@ -1063,7 +1091,7 @@ void int_vec_print_str(stringstream &ost, int *v, int len)
 
 
 
-void int_vec_print_as_table(ostream &ost, int *v, int len, int width)
+void int_vec_print_as_table(std::ostream &ost, int *v, int len, int width)
 {
 	int i;
 	
@@ -1079,7 +1107,7 @@ void int_vec_print_as_table(ostream &ost, int *v, int len, int width)
 	ost << endl;
 }
 
-void lint_vec_print_as_table(ostream &ost, long int *v, int len, int width)
+void lint_vec_print_as_table(std::ostream &ost, long int *v, int len, int width)
 {
 	int i;
 
@@ -1095,7 +1123,24 @@ void lint_vec_print_as_table(ostream &ost, long int *v, int len, int width)
 	ost << endl;
 }
 
-void int_vec_print_fully(ostream &ost, int *v, int len)
+void int_vec_print_fully(std::ostream &ost, std::vector<int> &v)
+{
+	int i;
+	int len;
+
+
+	len = v.size();
+	ost << "( ";
+	for (i = 0; i < len; i++) {
+		ost << v[i];
+		if (i < len - 1) {
+			ost << ", ";
+		}
+	}
+	ost << " )";
+}
+
+void int_vec_print_fully(std::ostream &ost, int *v, int len)
 {
 	int i;
 	
@@ -1109,7 +1154,7 @@ void int_vec_print_fully(ostream &ost, int *v, int len)
 	ost << " )";
 }
 
-void lint_vec_print_fully(ostream &ost, long int *v, int len)
+void lint_vec_print_fully(std::ostream &ost, long int *v, int len)
 {
 	int i;
 

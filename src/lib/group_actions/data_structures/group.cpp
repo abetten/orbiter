@@ -140,6 +140,38 @@ void group::init_strong_generators(vector_ge &SG, int *tl, int verbose_level)
 	f_has_strong_generators = TRUE;
 }
 
+void group::init_strong_generators_by_handle_and_with_tl(std::vector<int> &gen_handle,
+		std::vector<int> &tl, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+	int *Gen_hdl;
+	int *Tl;
+
+	if (f_v) {
+		cout << "group::init_strong_generators_by_handle" << endl;
+	}
+	Gen_hdl = NEW_int(gen_handle.size());
+	for (i = 0; i < gen_handle.size(); i++) {
+		Gen_hdl[i] = gen_handle[i];
+	}
+
+	Tl = NEW_int(A->base_len());
+	for (i = 0; i < A->base_len(); i++) {
+		Tl[i] = tl[i];
+	}
+
+	init_strong_generators_by_hdl(gen_handle.size(),
+			Gen_hdl, Tl, verbose_level);
+
+	FREE_int(Gen_hdl);
+	FREE_int(Tl);
+
+	if (f_v) {
+		cout << "group::init_strong_generators_by_handle done" << endl;
+	}
+}
+
 void group::init_strong_generators_by_hdl(int nb_gen,
 		int *gen_hdl, int *tl, int verbose_level)
 {

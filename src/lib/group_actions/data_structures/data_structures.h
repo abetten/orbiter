@@ -57,6 +57,9 @@ public:
 	void delete_sims();
 	void init_strong_generators_empty_set(int verbose_level);
 	void init_strong_generators(vector_ge &SG, int *tl, int verbose_level);
+	void init_strong_generators_by_handle_and_with_tl(
+			std::vector<int> &gen_handle,
+			std::vector<int> &tl, int verbose_level);
 	void init_strong_generators_by_hdl(int nb_gen, int *gen_hdl, 
 		int *tl, int verbose_level);
 	void delete_strong_generators();

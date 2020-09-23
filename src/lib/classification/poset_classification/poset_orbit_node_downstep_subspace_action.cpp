@@ -136,12 +136,16 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 				"before Schreier.init" << endl;
 		}
 
+
+
+#if 1
 	if (A_on_upset) {
 		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 				"A_on_upset is already allocated" << endl;
 		FREE_OBJECT(A_on_upset);
 	}
 	A_on_upset = A_factor_space;
+#endif
 
 	Schreier->init(A_factor_space, verbose_level - 2);
 
@@ -150,11 +154,15 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 
 	if (f_v) {
 		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
-				"before Schreier.init_generators_by_hdl" << endl;
+				"before Schreier.init_generators_by_handle" << endl;
 		}
-	Schreier->init_generators_by_hdl(
-			nb_strong_generators,
-			hdl_strong_generators,
+
+	std::vector<int> gen_handle;
+
+	get_strong_generators_handle(gen_handle, verbose_level - 2);
+
+	Schreier->init_generators_by_handle(
+			gen_handle,
 			verbose_level - 1);
 
 	if (f_v) {
@@ -245,6 +253,8 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 
 
 	//FREE_OBJECT(A_factor_space);
+
+
 	//FREE_OBJECT(AF);
 	if (f_v) {
 		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "

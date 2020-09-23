@@ -278,20 +278,20 @@ void upstep_work::handle_extension_unprocessed_type(int verbose_level)
 		gen->print_level_extension_info(size, prev, prev_ex);
 		cout << "upstep_work::handle_extension_unprocessed_type" << endl;
 		cout << "verbose_level = " << verbose_level << endl;
-		}
+	}
 	type = O_prev->get_E(prev_ex)->get_type();
 		
 	if (f_vv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		cout << "with point " << pt << " : " << endl;
-		}
+	}
 	if (type != EXTENSION_TYPE_UNPROCESSED) {
 		cout << "extension not of unprocessed type, error" << endl;
 		cout << "type is ";
 		print_extension_type(cout, type);
 		cout << endl;
 		exit(1);
-		}
+	}
 				
 	// process the node and create a n e w set orbit at level size + 1:
 				
@@ -305,7 +305,7 @@ void upstep_work::handle_extension_unprocessed_type(int verbose_level)
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		cout << "with point " << pt
 				<< " : before init_extension_node" << endl;
-		}
+	}
 	
 	ret = init_extension_node(verbose_level - 3);
 
@@ -313,33 +313,33 @@ void upstep_work::handle_extension_unprocessed_type(int verbose_level)
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		cout << "with point " << pt << " : after init_extension_node ";
 		cout << "nb_cosets_processed=" << nb_cosets_processed << endl;
-		}
+	}
 	if (f_vvv) {
 		cout << "upstep_work::handle_extension_unprocessed_type "
 				"coset_table:" << endl;
 		print_coset_table(coset_table, nb_cosets_processed);
-		}
+	}
 	if (ret) {
 		if (f_vv) {
 			cout << "init_extension_node returns TRUE" << endl;
-			}
 		}
+	}
 	else {
 		if (f_vv) {
 			cout << "init_extension_node returns FALSE, "
 					"the set is not canonical" << endl;
 		//cout << "u=" << gen->split_case << " @(" << prev
 			//<< "," << prev_ex << ") not canonical" << endl;
-			}
+		}
 		if (f_vv) {
 			cout << "the set is not canonical, we skip it" << endl;
-			}
+		}
 		cout << "setting type of extension to "
 				"EXTENSION_TYPE_NOT_CANONICAL" << endl;
 		O_prev->get_E(prev_ex)->set_type(EXTENSION_TYPE_NOT_CANONICAL);
 		cur--;
 		cout << "reducing cur to " << cur << endl;
-		}
+	}
 
 
 	cur++;
@@ -348,13 +348,13 @@ void upstep_work::handle_extension_unprocessed_type(int verbose_level)
 
 	if (f_vvv) {
 		cout << "cur=" << cur << endl;
-		}
+	}
 
 	if (f_v) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		cout << "with point " << pt << " done" << endl;
 		cout << "upstep_work::handle_extension_unprocessed_type done" << endl;
-		}
+	}
 }
 
 int upstep_work::init_extension_node(int verbose_level)
