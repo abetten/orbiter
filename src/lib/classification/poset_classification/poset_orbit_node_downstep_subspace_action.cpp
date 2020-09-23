@@ -817,9 +817,9 @@ void poset_orbit_node::find_extensions_subspace_action(
 
 			
 
-		E[nb_extensions].pt = pt;
-		E[nb_extensions].orbit_len = O.orbit_len[k];
-		E[nb_extensions].type = EXTENSION_TYPE_UNPROCESSED;
+		E[nb_extensions].set_pt(pt);
+		E[nb_extensions].set_orbit_len(O.orbit_len[k]);
+		E[nb_extensions].set_type(EXTENSION_TYPE_UNPROCESSED);
 		nb_extensions++;
 	}
 	
@@ -831,7 +831,7 @@ void poset_orbit_node::find_extensions_subspace_action(
 	E = NEW_OBJECTS(extension, nb_extensions);
 	for (k = 0; k < nb_extensions; k++) {
 		E[k] = E2[k]; 
-		nb_extension_points += E[k].orbit_len;
+		nb_extension_points += E[k].get_orbit_len();
 		}
 	FREE_OBJECTS(E2);
 #endif
@@ -845,8 +845,8 @@ void poset_orbit_node::find_extensions_subspace_action(
 	if (f_vv) {
 		cout << "i : representing point : orbit_length" << endl;
 		for (h = 0; h < nb_extensions; h++) {
-			cout << h << " : " << E[h].pt << " : "
-				<< E[h].orbit_len << endl;
+			cout << h << " : " << E[h].get_pt() << " : "
+				<< E[h].get_orbit_len() << endl;
 		}
 	}
 }

@@ -322,7 +322,7 @@ int poset_classification::poset_classification_apply_isomorphism(
 		cout << endl;
 	}
 
-	Poset->A2->element_retrieve(O->E[current_extension].data, Elt1, 0);
+	Poset->A2->element_retrieve(O->get_E(current_extension)->get_data(), Elt1, 0);
 	
 	if (f_v) {
 		cout << "poset_classification::poset_"
@@ -495,14 +495,14 @@ int poset_classification::trace_set_recursion(
 				"did not find point" << endl;
 		exit(1);
 	}
-	t = O->E[current_extension].type;
+	t = O->get_E(current_extension)->get_type();
 	if (t == EXTENSION_TYPE_EXTENSION) {
 		// extension node
 		if (f_v) {
 			cout << "poset_classification::trace_set_recursion "
 					"EXTENSION_TYPE_EXTENSION" << endl;
 		}
-		next_node = O->E[current_extension].data;
+		next_node = O->get_E(current_extension)->get_data();
 		if (f_v) {
 			cout << "poset_classification::trace_set_recursion "
 					"cur_level = " << cur_level
@@ -720,11 +720,11 @@ long int poset_classification::find_node_for_subspace_by_rank(
 		poset_orbit_node *O;
 
 		O = &root[node];
-		for (j = 0; j < O->nb_extensions; j++) {
-			if (O->E[j].type != EXTENSION_TYPE_EXTENSION) {
+		for (j = 0; j < O->get_nb_of_extensions(); j++) {
+			if (O->get_E(j)->get_type() != EXTENSION_TYPE_EXTENSION) {
 				continue;
 			}
-			pt = O->E[j].pt;
+			pt = O->get_E(j)->get_pt();
 			unrank_point(v, pt);
 			if (!Poset->VS->is_contained_in_subspace(v, basis, len)) {
 				continue;
@@ -733,13 +733,13 @@ long int poset_classification::find_node_for_subspace_by_rank(
 				cout << "poset_classification::find_node_for_subspace_by_rank "
 						"at node " << node << " extension " << j
 						<< " with point " << pt << " to node "
-						<< O->E[j].data << endl;
+						<< O->get_E(j)->get_data() << endl;
 			}
-			node = O->E[j].data;
+			node = O->get_E(j)->get_data();
 			set[i] = pt;
 			break;
 		}
-		if (j == O->nb_extensions) {
+		if (j == O->get_nb_of_extensions()) {
 			cout << "poset_classification::find_node_for_subspace_by_rank "
 					"at node " << node << " fatal, "
 							"could not find extension" << endl;

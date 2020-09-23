@@ -402,7 +402,7 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 		if (f_vv) {
 			cout << "draw_tree_low_level1: i=" << i << endl;
 		}
-		nb_e = root[i].nb_extensions;
+		nb_e = root[i].get_nb_of_extensions();
 		if (f_vv) {
 			cout << "draw_tree_low_level1: nb_e=" << nb_e << endl;
 		}
@@ -415,12 +415,12 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 			dx0 = 0;
 		}
 		for (j = 0; j < nb_e; j++) {
-			Nb_e = root[j].nb_extensions;
+			Nb_e = root[j].get_nb_of_extensions();
 			if (f_vv) {
 				cout << "draw_tree_low_level1: i=" << i
 						<< " j=" << j << " nb_e=" << nb_e <<
 					" Nb_e=" << Nb_e << endl;
-				cout << "root[i].E[j].type=" << root[i].E[j].type << endl;
+				cout << "root[i].get_E(j)->get_type()=" << root[i].get_E(j)->get_type() << endl;
 			}
 
 #if 0
@@ -434,10 +434,10 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 			}
 #endif
 
-			if (root[i].E[j].type == EXTENSION_TYPE_EXTENSION) {
+			if (root[i].get_E(j)->get_type() == EXTENSION_TYPE_EXTENSION) {
 				// extension node
-				pt = root[i].E[j].pt;
-				nxt = root[i].E[j].data;
+				pt = root[i].get_E(j)->get_pt();
+				nxt = root[i].get_E(j)->get_data();
 				if (f_vv) {
 					cout << "extension node: pt=" << pt
 							<< " nxt=" << nxt << endl;
@@ -449,10 +449,8 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 					Qx[1] = Px[perm[nxt]];
 					Qy[1] = Py[perm[nxt]];
 					if (FALSE) {
-						cout << "Qx[0]=" << Qx[0]
-								<< " Qy[0]=" << Qy[0] << endl;
-						cout << "Qx[1]=" << Qx[1]
-								<< " Qy[1]=" << Qy[1] << endl;
+						cout << "Qx[0]=" << Qx[0] << " Qy[0]=" << Qy[0] << endl;
+						cout << "Qx[1]=" << Qx[1] << " Qy[1]=" << Qy[1] << endl;
 					}
 				
 					if (f_draw_points) {
@@ -464,10 +462,8 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 						Qy[1] += y_offset2;
 					}
 					if (FALSE) {
-						cout << "Qx[0]=" << Qx[0]
-							<< " Qy[0]=" << Qy[0] << endl;
-						cout << "Qx[1]=" << Qx[1]
-							<< " Qy[1]=" << Qy[1] << endl;
+						cout << "Qx[0]=" << Qx[0] << " Qy[0]=" << Qy[0] << endl;
+						cout << "Qx[1]=" << Qx[1] << " Qy[1]=" << Qy[1] << endl;
 					}
 				
 					G.polygon2(Qx, Qy, 0, 1);
@@ -476,14 +472,14 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 					}
 				}
 			}
-			else if (root[i].E[j].type == EXTENSION_TYPE_FUSION) {
+			else if (root[i].get_E(j)->get_type() == EXTENSION_TYPE_FUSION) {
 				// fusion node
 				if (f_vv) {
 					cout << "fusion node" << endl;
 				}
-				if (TRUE /*root[i].E[j].pt > root[i].pt*/) {
-					pt = root[i].E[j].pt;
-					hdl = root[i].E[j].data;
+				if (TRUE /*root[i].E[j].get_pt() > root[i].get_pt()*/) {
+					pt = root[i].get_E(j)->get_pt();
+					hdl = root[i].get_E(j)->get_data();
 					depth = root[i].depth_of_node(this);
 					root[i].store_set_to(this, depth - 1, set0);
 					set0[depth] = pt;
@@ -540,7 +536,7 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 						}
 						G.sl_udsty(0);
 					} // if (hdl2 >= 0)
-				} // if (root[i].E[j].pt > root[i].pt)
+				} // if (root[i].E[j].get_pt() > root[i].get_pt())
 			} // if fusion node
 		} // next j
 	} // next i
@@ -589,7 +585,7 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 	for (i = 0; i < nb_nodes; i++) {
 		if (i == 0)
 			continue;
-		pt = root[perm_inv[i]].pt;
+		pt = root[perm_inv[i]].get_pt();
 		snprintf(str, 1000, "%d", pt);
 		//G.aligned_text(Px, Py, i, "", str);
 		if (f_draw_points) {
@@ -634,7 +630,7 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 			cout << "now drawing connections" << endl;
 		}
 		for (i = 0; i < nb_nodes; i++) {
-			nb_e = root[i].nb_extensions;
+			nb_e = root[i].get_nb_of_extensions();
 			if (nb_e) {
 				dx = MINIMUM(Width[i] / nb_e, 200);
 				dx0 = ((nb_e - 1) * dx) >> 1;
@@ -649,7 +645,7 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 			G.circle(x, y, rad);
 
 			for (j = 0; j < nb_e; j++) {
-				pt = root[i].E[j].pt;
+				pt = root[i].get_E(j)->get_pt();
 				snprintf(str, 1000, "%d", pt);
 				x = Px[perm[i]] - dx0 + j * dx;
 				y = Py[perm[i]] - y_offset2;
@@ -994,47 +990,47 @@ void poset_classification::make_flag_orbits_on_relations(
 			int *Down_orbits;
 			int nb_down_orbits;
 
-			Down_orbits = NEW_int(root[n1].nb_extensions);
+			Down_orbits = NEW_int(root[n1].get_nb_of_extensions());
 			nb_down_orbits = 0;
 
-			for (so = 0; so < root[n1].nb_extensions; so++) {
+			for (so = 0; so < root[n1].get_nb_of_extensions(); so++) {
 
 				if (f_vv) {
 					cout << "poset_classification::make_flag_orbits_on_relations "
 							"adding edges lvl=" << lvl
 							<< " po=" << po << " / " << nb_orbits_at_level(lvl)
-							<< " so=" << so << " / " << root[n1].nb_extensions
+							<< " so=" << so << " / " << root[n1].get_nb_of_extensions()
 							<< endl;
 				}
 
 
-				extension *E = root[n1].E + so;
-				if (E->type == EXTENSION_TYPE_EXTENSION) {
+				extension *E = root[n1].get_E(so);
+				if (E->get_type() == EXTENSION_TYPE_EXTENSION) {
 					//cout << "extension node" << endl;
-					n2 = E->data;
+					n2 = E->get_data();
 
 					Down_orbits[nb_down_orbits++] = n2;
 				}
-				else if (E->type == EXTENSION_TYPE_FUSION) {
+				else if (E->get_type() == EXTENSION_TYPE_FUSION) {
 					//cout << "fusion node" << endl;
 					// po = data1
 					// so = data2
 					int n0, so0;
-					n0 = E->data1;
-					so0 = E->data2;
+					n0 = E->get_data1();
+					so0 = E->get_data2();
 					//cout << "fusion (" << n1 << "/" << so << ") "
 					//"-> (" << n0 << "/" << so0 << ")" << endl;
 					extension *E0;
-					E0 = root[n0].E + so0;
-					if (E0->type != EXTENSION_TYPE_EXTENSION) {
+					E0 = root[n0].get_E(so0);
+					if (E0->get_type() != EXTENSION_TYPE_EXTENSION) {
 						cout << "warning: fusion node does not point "
 								"to extension node" << endl;
 						cout << "type = ";
-						print_extension_type(cout, E0->type);
+						print_extension_type(cout, E0->get_type());
 						cout << endl;
 						exit(1);
 					}
-					n2 = E0->data;
+					n2 = E0->get_data();
 					Down_orbits[nb_down_orbits++] = n2;
 				}
 
@@ -1045,7 +1041,7 @@ void poset_classification::make_flag_orbits_on_relations(
 				cout << "poset_classification::make_flag_orbits_on_relations adding edges "
 						"lvl=" << lvl
 						<< " po=" << po << " / " << nb_orbits_at_level(lvl)
-						<< " so=" << so << " / " << root[n1].nb_extensions
+						<< " so=" << so << " / " << root[n1].get_nb_of_extensions()
 						<< " downorbits = ";
 				int_vec_print(cout, Down_orbits, nb_down_orbits);
 				cout << endl;
@@ -1068,7 +1064,7 @@ void poset_classification::make_flag_orbits_on_relations(
 					cout << "poset_classification::make_flag_orbits_on_relations "
 							"adding edges lvl=" << lvl
 							<< " po=" << po << " / " << nb_orbits_at_level(lvl)
-							<< " so=" << so << " / " << root[n1].nb_extensions
+							<< " so=" << so << " / " << root[n1].get_nb_of_extensions()
 							<< " downorbit = " << h << " / " << nb_down_orbits
 							<< " n1=" << n1 << " n2=" << n2
 							<< " po2=" << po2
@@ -1308,10 +1304,10 @@ void poset_classification::make_full_poset_graph(
 			int *Down_orbits;
 			int nb_down_orbits;
 
-			Down_orbits = NEW_int(root[n1].nb_extensions);
+			Down_orbits = NEW_int(root[n1].get_nb_of_extensions());
 			nb_down_orbits = 0;
 
-			for (so = 0; so < root[n1].nb_extensions; so++) {
+			for (so = 0; so < root[n1].get_nb_of_extensions(); so++) {
 
 				if (f_vv) {
 					cout << "poset_classification::make_full_poset_graph "
@@ -1320,33 +1316,33 @@ void poset_classification::make_full_poset_graph(
 				}
 
 
-				extension *E = root[n1].E + so;
-				if (E->type == EXTENSION_TYPE_EXTENSION) {
+				extension *E = root[n1].get_E(so);
+				if (E->get_type() == EXTENSION_TYPE_EXTENSION) {
 					//cout << "extension node" << endl;
-					n2 = E->data;
+					n2 = E->get_data();
 
 					Down_orbits[nb_down_orbits++] = n2;
 				}
-				else if (E->type == EXTENSION_TYPE_FUSION) {
+				else if (E->get_type() == EXTENSION_TYPE_FUSION) {
 					//cout << "fusion node" << endl;
 					// po = data1
 					// so = data2
 					int n0, so0;
-					n0 = E->data1;
-					so0 = E->data2;
+					n0 = E->get_data1();
+					so0 = E->get_data2();
 					//cout << "fusion (" << n1 << "/" << so << ") "
 					//"-> (" << n0 << "/" << so0 << ")" << endl;
 					extension *E0;
-					E0 = root[n0].E + so0;
-					if (E0->type != EXTENSION_TYPE_EXTENSION) {
+					E0 = root[n0].get_E(so0);
+					if (E0->get_type() != EXTENSION_TYPE_EXTENSION) {
 						cout << "warning: fusion node does not point "
 								"to extension node" << endl;
 						cout << "type = ";
-						print_extension_type(cout, E0->type);
+						print_extension_type(cout, E0->get_type());
 						cout << endl;
 						exit(1);
 					}
-					n2 = E0->data;
+					n2 = E0->get_data();
 					Down_orbits[nb_down_orbits++] = n2;
 				}
 
@@ -1611,7 +1607,7 @@ void poset_classification::make_auxiliary_graph(int depth,
 
 			//
 			n = first_poset_orbit_node_at_level[lvl] + po;
-			for (so = 0; so < root[n].nb_extensions; so++) {
+			for (so = 0; so < root[n].get_nb_of_extensions(); so++) {
 
 				if (f_v4) {
 					cout << "poset_classification::make_auxiliary_graph "
@@ -1622,12 +1618,12 @@ void poset_classification::make_auxiliary_graph(int depth,
 				LG->add_edge(2 * lvl, po, 2 * lvl + 1, f + so,
 						verbose_level - 4);
 
-				extension *E = root[n].E + so;
-				if (E->type == EXTENSION_TYPE_EXTENSION) {
+				extension *E = root[n].get_E(so);
+				if (E->get_type() == EXTENSION_TYPE_EXTENSION) {
 					if (f_v4) {
 						cout << "extension node" << endl;
 					}
-					n1 = E->data;
+					n1 = E->get_data();
 					if (f_v4) {
 						cout << "n1=" << n1 << endl;
 					}
@@ -1635,30 +1631,30 @@ void poset_classification::make_auxiliary_graph(int depth,
 							n1 - first_poset_orbit_node_at_level[lvl + 1],
 							verbose_level - 4);
 				}
-				else if (E->type == EXTENSION_TYPE_FUSION) {
+				else if (E->get_type() == EXTENSION_TYPE_FUSION) {
 					if (f_v4) {
 						cout << "fusion node" << endl;
 					}
 					// po = data1
 					// so = data2
 					int n0, so0;
-					n0 = E->data1;
-					so0 = E->data2;
+					n0 = E->get_data1();
+					so0 = E->get_data2();
 					if (f_v4) {
 						cout << "fusion (" << n << "/" << so << ") -> ("
 								<< n0 << "/" << so0 << ")" << endl;
 					}
 					extension *E0;
-					E0 = root[n0].E + so0;
-					if (E0->type != EXTENSION_TYPE_EXTENSION) {
+					E0 = root[n0].get_E(so0);
+					if (E0->get_type() != EXTENSION_TYPE_EXTENSION) {
 						cout << "warning: fusion node does not point "
 								"to extension node" << endl;
 						cout << "type = ";
-						print_extension_type(cout, E0->type);
+						print_extension_type(cout, E0->get_type());
 						cout << endl;
 						exit(1);
 					}
-					n1 = E0->data;
+					n1 = E0->get_data();
 					if (f_v4) {
 						cout << "n1=" << n1
 								<< " first_poset_orbit_node_node_at_level[lvl + 1] = "
@@ -1670,7 +1666,7 @@ void poset_classification::make_auxiliary_graph(int depth,
 				}
 			}
 			
-			f += root[n].nb_extensions;
+			f += root[n].get_nb_of_extensions();
 		}
 		if (f_vv) {
 			cout << "poset_classification::make_auxiliary_graph "
@@ -1709,7 +1705,7 @@ void poset_classification::make_auxiliary_graph(int depth,
 			get_stabilizer_order(lvl, po, go);
 			go.print_to_string(text1);
 			if (lvl) {
-				snprintf(text2, 2000, "$%ld_{%s}$", root[n].pt, text1);
+				snprintf(text2, 2000, "$%ld_{%s}$", root[n].get_pt(), text1);
 			}
 			else {
 				snprintf(text2, 2000, "$\\emptyset_{%s}$", text1);
@@ -1722,26 +1718,26 @@ void poset_classification::make_auxiliary_graph(int depth,
 			LG->add_text(2 * lvl + 0, po, text2, 0/*verbose_level*/);
 
 
-			LG->add_node_data1(2 * lvl + 0, po, root[n].pt,
+			LG->add_node_data1(2 * lvl + 0, po, root[n].get_pt(),
 					0/*verbose_level*/);
 			if (lvl) {
 				LG->add_node_data2(2 * lvl + 0, po, 2 * (lvl - 1),
 						0/*verbose_level*/);
 				LG->add_node_data3(2 * lvl + 0, po,
-						root[n].prev - first_poset_orbit_node_at_level[lvl - 1],
+						root[n].get_prev() - first_poset_orbit_node_at_level[lvl - 1],
 						0/*verbose_level*/);
 			}
 			else {
 				LG->add_node_data2(2 * lvl + 0, po, -1, 0/*verbose_level*/);
 				LG->add_node_data3(2 * lvl + 0, po, -1, 0/*verbose_level*/);
 			}
-			for (so = 0; so < root[n].nb_extensions; so++) {
-				extension *E = root[n].E + so;
-				len = E->orbit_len;
+			for (so = 0; so < root[n].get_nb_of_extensions(); so++) {
+				extension *E = root[n].get_E(so);
+				len = E->get_orbit_len();
 				D.integral_division_by_int(go, len, go1, r);
 
 				go1.print_to_string(text1);
-				snprintf(text2, 2000, "$%ld_{%s}$", E->pt, text1);
+				snprintf(text2, 2000, "$%d_{%s}$", E->get_pt(), text1);
 
 				// set label to be the automorphism group order:
 				//LG->add_text(2 * lvl + 1, f + so, text1, 0/*verbose_level*/);
@@ -1750,7 +1746,7 @@ void poset_classification::make_auxiliary_graph(int depth,
 
 
 			}
-			f += root[n].nb_extensions;
+			f += root[n].get_nb_of_extensions();
 		}
 	}
 	FREE_int(Nb);
@@ -1830,7 +1826,7 @@ void poset_classification::make_graph(int depth,
 
 			//
 			n = first_poset_orbit_node_at_level[lvl] + po;
-			for (so = 0; so < root[n].nb_extensions; so++) {
+			for (so = 0; so < root[n].get_nb_of_extensions(); so++) {
 
 				if (FALSE /*f_v*/) {
 					cout << "poset_classification::make_graph adding edges "
@@ -1839,10 +1835,10 @@ void poset_classification::make_graph(int depth,
 				}
 				//LG->add_edge(2 * lvl, po, 2 * lvl + 1,
 				//f + so, 0 /*verbose_level*/);
-				extension *E = root[n].E + so;
-				if (E->type == EXTENSION_TYPE_EXTENSION) {
+				extension *E = root[n].get_E(so);
+				if (E->get_type() == EXTENSION_TYPE_EXTENSION) {
 					//cout << "extension node" << endl;
-					n1 = E->data;
+					n1 = E->get_data();
 					//cout << "n1=" << n1 << endl;
 					LG->add_edge(lvl, po, lvl + 1,
 							n1 - first_poset_orbit_node_at_level[lvl + 1],
@@ -1850,26 +1846,26 @@ void poset_classification::make_graph(int depth,
 				}
 
 				if (!f_tree) {
-					if (E->type == EXTENSION_TYPE_FUSION) {
+					if (E->get_type() == EXTENSION_TYPE_FUSION) {
 						//cout << "fusion node" << endl;
 						// po = data1
 						// so = data2
 						int n0, so0;
-						n0 = E->data1;
-						so0 = E->data2;
+						n0 = E->get_data1();
+						so0 = E->get_data2();
 						//cout << "fusion (" << n << "/" << so << ") -> ("
 						//<< n0 << "/" << so0 << ")" << endl;
 						extension *E0;
-						E0 = root[n0].E + so0;
-						if (E0->type != EXTENSION_TYPE_EXTENSION) {
+						E0 = root[n0].get_E(so0);
+						if (E0->get_type() != EXTENSION_TYPE_EXTENSION) {
 							cout << "warning: fusion node does not point to "
 									"extension node" << endl;
 							cout << "type = ";
-							print_extension_type(cout, E0->type);
+							print_extension_type(cout, E0->get_type());
 							cout << endl;
 							exit(1);
 						}
-						n1 = E0->data;
+						n1 = E0->get_data();
 						//cout << "n1=" << n1
 						//<< " first_poset_orbit_node_at_level[lvl + 1] = "
 						//<< first_poset_orbit_node_at_level[lvl + 1] << endl;
@@ -1939,7 +1935,7 @@ void poset_classification::make_graph(int depth,
 #if 0
 			if (lvl) {
 				// label the node with the point:
-				LG->add_node_data1(lvl, po, root[n].pt, 0/*verbose_level*/);
+				LG->add_node_data1(lvl, po, root[n].get_pt(), 0/*verbose_level*/);
 			}
 #else
 			// label the node with the group order:
@@ -1948,7 +1944,7 @@ void poset_classification::make_graph(int depth,
 			if (lvl) {
 				LG->add_node_data2(lvl, po, lvl - 1, 0/*verbose_level*/);
 				LG->add_node_data3(lvl, po,
-						root[n].prev - first_poset_orbit_node_at_level[lvl - 1],
+						root[n].get_prev() - first_poset_orbit_node_at_level[lvl - 1],
 						0/*verbose_level*/);
 			}
 			else {
@@ -2042,7 +2038,7 @@ void poset_classification::make_level_graph(int depth,
 
 		//
 		n = first_poset_orbit_node_at_level[level] + po;
-		for (so = 0; so < root[n].nb_extensions; so++) {
+		for (so = 0; so < root[n].get_nb_of_extensions(); so++) {
 
 			if (FALSE /*f_v*/) {
 				cout << "poset_classification::make_level_graph "
@@ -2051,35 +2047,35 @@ void poset_classification::make_level_graph(int depth,
 			}
 			LG->add_edge(0, po, 1, f + so, 0 /*verbose_level*/);
 			LG->add_edge(1, f + so, 2, f + so, 0 /*verbose_level*/);
-			extension *E = root[n].E + so;
-			if (E->type == EXTENSION_TYPE_EXTENSION) {
+			extension *E = root[n].get_E(so);
+			if (E->get_type() == EXTENSION_TYPE_EXTENSION) {
 				//cout << "extension node" << endl;
-				n1 = E->data;
+				n1 = E->get_data();
 				//cout << "n1=" << n1 << endl;
 				LG->add_edge(2, f + so, 3,
 						n1 - first_poset_orbit_node_at_level[level + 1],
 						0 /*verbose_level*/);
 			}
-			else if (E->type == EXTENSION_TYPE_FUSION) {
+			else if (E->get_type() == EXTENSION_TYPE_FUSION) {
 				//cout << "fusion node" << endl;
 				// po = data1
 				// so = data2
 				int n0, so0;
-				n0 = E->data1;
-				so0 = E->data2;
+				n0 = E->get_data1();
+				so0 = E->get_data2();
 				//cout << "fusion (" << n << "/" << so
 				//<< ") -> (" << n0 << "/" << so0 << ")" << endl;
 				extension *E0;
-				E0 = root[n0].E + so0;
-				if (E0->type != EXTENSION_TYPE_EXTENSION) {
+				E0 = root[n0].get_E(so0);
+				if (E0->get_type() != EXTENSION_TYPE_EXTENSION) {
 					cout << "warning: fusion node does not point to "
 							"extension node" << endl;
 					cout << "type = ";
-					print_extension_type(cout, E0->type);
+					print_extension_type(cout, E0->get_type());
 					cout << endl;
 					exit(1);
 				}
-				n1 = E0->data;
+				n1 = E0->get_data();
 				//cout << "n1=" << n1
 				//<< " first_poset_orbit_node_at_level[lvl + 1] = "
 				//<< first_poset_orbit_node_at_level[lvl + 1] << endl;
@@ -2089,7 +2085,7 @@ void poset_classification::make_level_graph(int depth,
 			}
 		}
 			
-		f += root[n].nb_extensions;
+		f += root[n].get_nb_of_extensions();
 	}
 	if (f_vv) {
 		cout << "poset_classification::make_level_graph "
@@ -2136,7 +2132,7 @@ void poset_classification::make_level_graph(int depth,
 			get_stabilizer_order(lvl, po, go);
 			go.print_to_string(text);
 			LG->add_text(l, po, text, 0/*verbose_level*/);
-			LG->add_node_data1(l, po, root[n].pt, 0/*verbose_level*/);
+			LG->add_node_data1(l, po, root[n].get_pt(), 0/*verbose_level*/);
 			
 			get_set_by_level(lvl, po, the_set);
 			LG->add_node_vec_data(l, po, the_set, lvl, 0 /* verbose_level */);
@@ -2155,31 +2151,31 @@ void poset_classification::make_level_graph(int depth,
 #endif
 
 			if (lvl == level) {
-				for (so = 0; so < root[n].nb_extensions; so++) {
-					extension *E = root[n].E + so;
-					len = E->orbit_len;
+				for (so = 0; so < root[n].get_nb_of_extensions(); so++) {
+					extension *E = root[n].get_E(so);
+					len = E->get_orbit_len();
 					D.integral_division_by_int(go, len, go1, r);
 					go1.print_to_string(text);
 					LG->add_text(1, f + so, text, 0/*verbose_level*/);
 					LG->add_text(2, f + so, text, 0/*verbose_level*/);
 					
 					//get_set_by_level(lvl, po, the_set);
-					the_set[lvl] = E->pt;
+					the_set[lvl] = E->get_pt();
 					LG->add_node_vec_data(l + 1, f + so, the_set, lvl + 1,
 							0 /* verbose_level */);
 					LG->set_distinguished_element_index(l + 1, f + so, lvl,
 							0 /* verbose_level */);
 
 
-					if (E->type == EXTENSION_TYPE_EXTENSION) {
-						the_set[lvl] = E->pt;
+					if (E->get_type() == EXTENSION_TYPE_EXTENSION) {
+						the_set[lvl] = E->get_pt();
 						LG->add_node_vec_data(l + 2, f + so, the_set, lvl + 1,
 								0 /* verbose_level */);
 						LG->set_distinguished_element_index(l + 2, f + so, lvl,
 								0 /* verbose_level */);
 					}
-					else if (E->type == EXTENSION_TYPE_FUSION) {
-						Poset->A->element_retrieve(E->data, Elt1, 0);
+					else if (E->get_type() == EXTENSION_TYPE_FUSION) {
+						Poset->A->element_retrieve(E->get_data(), Elt1, 0);
 						Poset->A2->map_a_set(the_set, the_set2, lvl + 1, Elt1, 0);
 						LG->add_node_vec_data(l + 2, f + so, the_set2, lvl + 1,
 								0 /* verbose_level */);
@@ -2187,7 +2183,7 @@ void poset_classification::make_level_graph(int depth,
 								0 /* verbose_level */);
 					}
 				}
-				f += root[n].nb_extensions;
+				f += root[n].get_nb_of_extensions();
 			}
 		}
 	}
@@ -2303,7 +2299,7 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 
 			//
 			n = first_poset_orbit_node_at_level[L] + po;
-			for (so = 0; so < root[n].nb_extensions; so++) {
+			for (so = 0; so < root[n].get_nb_of_extensions(); so++) {
 
 				if (FALSE /*f_v*/) {
 					cout << "poset_classification::make_poset_graph_detailed "
@@ -2314,35 +2310,35 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 						L * 3 + 1, f + so, 0 /*verbose_level*/);
 				LG->add_edge(L * 3 + 1, f + so,
 						L * 3 + 2, f + so, 0 /*verbose_level*/);
-				extension *E = root[n].E + so;
-				if (E->type == EXTENSION_TYPE_EXTENSION) {
+				extension *E = root[n].get_E(so);
+				if (E->get_type() == EXTENSION_TYPE_EXTENSION) {
 					//cout << "extension node" << endl;
-					n1 = E->data;
+					n1 = E->get_data();
 					//cout << "n1=" << n1 << endl;
 					LG->add_edge(L * 3 + 2, f + so, L * 3 + 3,
 							n1 - first_poset_orbit_node_at_level[L + 1],
 							0 /*verbose_level*/);
 				}
-				else if (E->type == EXTENSION_TYPE_FUSION) {
+				else if (E->get_type() == EXTENSION_TYPE_FUSION) {
 					//cout << "fusion node" << endl;
 					// po = data1
 					// so = data2
 					int n0, so0;
-					n0 = E->data1;
-					so0 = E->data2;
+					n0 = E->get_data1();
+					so0 = E->get_data2();
 					//cout << "fusion (" << n << "/" << so
 					//<< ") -> (" << n0 << "/" << so0 << ")" << endl;
 					extension *E0;
-					E0 = root[n0].E + so0;
-					if (E0->type != EXTENSION_TYPE_EXTENSION) {
+					E0 = root[n0].get_E(so0);
+					if (E0->get_type() != EXTENSION_TYPE_EXTENSION) {
 						cout << "warning: fusion node does not point to "
 								"extension node" << endl;
 						cout << "type = ";
-						print_extension_type(cout, E0->type);
+						print_extension_type(cout, E0->get_type());
 						cout << endl;
 						exit(1);
 					}
-					n1 = E0->data;
+					n1 = E0->get_data();
 					//cout << "n1=" << n1
 					//<< " first_poset_orbit_node_at_level[lvl + 1] = "
 					//<< first_poset_orbit_node_at_level[lvl + 1] << endl;
@@ -2352,7 +2348,7 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 				}
 			}
 			
-			f += root[n].nb_extensions;
+			f += root[n].get_nb_of_extensions();
 		}
 		if (f_vv) {
 			cout << "poset_classification::make_poset_graph_detailed "
@@ -2398,7 +2394,7 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 			go.print_to_string(text);
 			LG->add_text(3 * L, po, text, 0/*verbose_level*/);
 			if (L) {
-				LG->add_node_data1(3 * L, po, root[n].pt, 0/*verbose_level*/);
+				LG->add_node_data1(3 * L, po, root[n].get_pt(), 0/*verbose_level*/);
 			}
 			
 			get_set_by_level(L, po, the_set);
@@ -2418,7 +2414,7 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 #endif
 
 			if (L < max_depth) {
-				for (so = 0; so < root[n].nb_extensions; so++) {
+				for (so = 0; so < root[n].get_nb_of_extensions(); so++) {
 					if (f_vv) {
 						cout << "poset_classification::make_poset_graph_detailed "
 								"now making vertex labels level " << L
@@ -2426,30 +2422,30 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 								<< " / " << nb_orbits_at_level(L)
 								<< " so=" << so << endl;
 					}
-					extension *E = root[n].E + so;
-					len = E->orbit_len;
+					extension *E = root[n].get_E(so);
+					len = E->get_orbit_len();
 					D.integral_division_by_int(go, len, go1, r);
 					go1.print_to_string(text);
 					LG->add_text(3 * L + 1, f + so, text, 0/*verbose_level*/);
 					LG->add_text(3 * L + 2, f + so, text, 0/*verbose_level*/);
 					
 					//get_set_by_level(lvl, po, the_set);
-					the_set[L] = E->pt;
+					the_set[L] = E->get_pt();
 					LG->add_node_vec_data(3 * L + 1, f + so, the_set,
 							L + 1, 0 /* verbose_level */);
 					LG->set_distinguished_element_index(3 * L + 1,
 							f + so, L, 0 /* verbose_level */);
 
 
-					if (E->type == EXTENSION_TYPE_EXTENSION) {
-						the_set[L] = E->pt;
+					if (E->get_type() == EXTENSION_TYPE_EXTENSION) {
+						the_set[L] = E->get_pt();
 						LG->add_node_vec_data(3 * L + 2, f + so,
 								the_set, L + 1, 0 /* verbose_level */);
 						LG->set_distinguished_element_index(3 * L + 2,
 								f + so, L, 0 /* verbose_level */);
 					}
-					else if (E->type == EXTENSION_TYPE_FUSION) {
-						Poset->A->element_retrieve(E->data, Elt1, 0);
+					else if (E->get_type() == EXTENSION_TYPE_FUSION) {
+						Poset->A->element_retrieve(E->get_data(), Elt1, 0);
 						Poset->A2->map_a_set(the_set, the_set2, L + 1, Elt1, 0);
 						LG->add_node_vec_data(3 * L + 2, f + so,
 								the_set2, L + 1, 0 /* verbose_level */);
@@ -2457,7 +2453,7 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 								f + so, L, 0 /* verbose_level */);
 					}
 				}
-				f += root[n].nb_extensions;
+				f += root[n].get_nb_of_extensions();
 			} // if (L < max_depth)
 		} // next po
 	} // next L
@@ -2575,7 +2571,7 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 				get_stabilizer_order(lvl, po, go);
 
 
-				for (so = 0; so < root[n].nb_extensions; so++, cnt++) {
+				for (so = 0; so < root[n].get_nb_of_extensions(); so++, cnt++) {
 
 					if (cnt == 25) {
 						print_table_bottom(fp);
@@ -2590,20 +2586,20 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 								"adding edges lvl=" << lvl << " po="
 								<< po << " so=" << so << endl;
 					}
-					extension *E = root[n].E + so;
-					ol = E->orbit_len;
+					extension *E = root[n].get_E(so); // root[n].E + so;
+					ol = E->get_orbit_len();
 
 					D.integral_division_by_int(go, ol, go1, r);
 
-					if (E->type == EXTENSION_TYPE_EXTENSION) {
+					if (E->get_type() == EXTENSION_TYPE_EXTENSION) {
 						//cout << "extension node" << endl;
-						n1 = E->data;
+						n1 = E->get_data();
 
 
 						fp << lvl << " & " << po << " & " << so << " & ";
 
 						root[n].store_set_to(this, lvl - 1, set);
-						set[lvl] = E->pt;
+						set[lvl] = E->get_pt();
 
 						print_set_special(fp, set, lvl + 1);
 						//int_vec_print(fp, set, lvl + 1);
@@ -2629,26 +2625,26 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 
 						//cout << "n1=" << n1 << endl;
 					}
-					else if (E->type == EXTENSION_TYPE_FUSION) {
+					else if (E->get_type() == EXTENSION_TYPE_FUSION) {
 						//cout << "fusion node" << endl;
 						// po = data1
 						// so = data2
 						int n0, so0;
-						n0 = E->data1;
-						so0 = E->data2;
+						n0 = E->get_data1();
+						so0 = E->get_data2();
 						//cout << "fusion (" << n << "/" << so
 						//<< ") -> (" << n0 << "/" << so0 << ")" << endl;
 						extension *E0;
-						E0 = root[n0].E + so0;
-						if (E0->type != EXTENSION_TYPE_EXTENSION) {
+						E0 = root[n0].get_E(so0);
+						if (E0->get_type() != EXTENSION_TYPE_EXTENSION) {
 							cout << "warning: fusion node does not point "
 									"to extension node" << endl;
 							cout << "type = ";
-							print_extension_type(cout, E0->type);
+							print_extension_type(cout, E0->get_type());
 							cout << endl;
 							exit(1);
 						}
-						n1 = E0->data;
+						n1 = E0->get_data();
 						//cout << "n1=" << n1
 						//<< " first_poset_orbit_node_at_level[lvl + 1] = "
 						//<< first_poset_orbit_node_at_level[lvl + 1] << endl;
@@ -2659,13 +2655,13 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 						fp << lvl << " & " << po << " & " << so << " & ";
 
 						root[n].store_set_to(this, lvl - 1, set);
-						set[lvl] = E->pt;
+						set[lvl] = E->get_pt();
 						//int_vec_print(fp, set, lvl + 1);
 						print_set_special(fp, set, lvl + 1);
 
 						fp << " & ";
 
-						hdl = E->data;
+						hdl = E->get_data();
 						Poset->A->element_retrieve(hdl, Elt1, FALSE);
 
 						fp << "$";
@@ -2695,7 +2691,7 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 					}
 				}
 			
-				f += root[n].nb_extensions;
+				f += root[n].get_nb_of_extensions();
 				
 
 			} // next po

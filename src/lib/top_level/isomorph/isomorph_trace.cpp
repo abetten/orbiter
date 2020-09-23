@@ -1246,7 +1246,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 		cout << " : ";
 		cout << "current_extension = " << current_extension << endl;
 		}
-	t = O->E[current_extension].type;
+	t = O->get_E(current_extension)->get_type();
 	if (f_v) {
 		cout << "iso_node " << iso_nodes
 				<< " isomorph::handle_extension_oracle "
@@ -1265,7 +1265,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 			cout << "extension node" << endl;
 			}
 		// extension node
-		d = O->E[current_extension].data;
+		d = O->get_E(current_extension)->get_data();
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes
 					<< " isomorph::handle_extension_oracle "
@@ -1452,7 +1452,7 @@ void isomorph::apply_isomorphism_oracle(
 		}
 	
 	gen->get_A()->element_retrieve(
-			O->E[current_extension].data,
+			O->get_E(current_extension)->get_data(),
 			gen->get_Elt1(), FALSE);
 	
 	gen->get_A2()->map_a_set(canonical_set,

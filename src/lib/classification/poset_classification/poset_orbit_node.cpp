@@ -113,6 +113,43 @@ void poset_orbit_node::init_root_node(
 	
 }
 
+void poset_orbit_node::init_node(int node, int prev, long int pt, int verbose_level)
+{
+	//freeself();
+	poset_orbit_node::node = node;
+	poset_orbit_node::prev = prev;
+	poset_orbit_node::pt = pt;
+	nb_strong_generators = 0;
+	hdl_strong_generators = NULL;
+	tl = NULL;
+	E = NULL;
+	Schreier_vector = NULL;
+}
+
+
+int poset_orbit_node::get_node()
+{
+	return node;
+}
+
+void poset_orbit_node::set_node(int node)
+{
+	poset_orbit_node::node = node;
+}
+
+void poset_orbit_node::delete_Schreier_vector()
+{
+	FREE_OBJECT(Schreier_vector);
+	Schreier_vector = NULL;
+}
+
+
+void poset_orbit_node::allocate_E(int nb_extensions, int verbose_level)
+{
+	E = NEW_OBJECTS(extension, 1);
+	nb_extensions = 1;
+}
+
 int poset_orbit_node::get_level(poset_classification *gen)
 {
 	int l;
@@ -128,6 +165,70 @@ int poset_orbit_node::get_node_in_level(poset_classification *gen)
 	l = depth_of_node(gen);
 	n = node - gen->first_node_at_level(l);
 	return n;
+}
+
+
+void poset_orbit_node::get_strong_generators_handle(std::vector<int> &gen_hdl, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "poset_orbit_node::get_strong_generators_handle" << endl;
+	}
+	for (i = 0; i < nb_strong_generators; i++) {
+		gen_hdl.push_back(hdl_strong_generators[i]);
+	}
+
+	if (f_v) {
+		cout << "poset_orbit_node::get_strong_generators_handle done" << endl;
+	}
+}
+
+void poset_orbit_node::get_tl(std::vector<int> &tl, poset_classification *PC, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "poset_orbit_node::get_tl" << endl;
+	}
+	if (nb_strong_generators) {
+		for (i = 0; i < PC->get_poset()->A->base_len(); i++) {
+			tl.push_back(tl[i]);
+		}
+	}
+	else {
+		for (i = 0; i < PC->get_poset()->A->base_len(); i++) {
+			tl.push_back(1);
+		}
+	}
+
+	if (f_v) {
+		cout << "poset_orbit_node::get_tl done" << endl;
+	}
+}
+
+
+int poset_orbit_node::has_Schreier_vector()
+{
+	if (Schreier_vector == NULL) {
+		return FALSE;
+	}
+	else {
+		return TRUE;
+	}
+}
+
+
+schreier_vector *poset_orbit_node::get_Schreier_vector()
+{
+	return Schreier_vector;
+}
+
+int poset_orbit_node::get_nb_strong_generators()
+{
+	return nb_strong_generators;
 }
 
 int *poset_orbit_node::live_points()
@@ -166,6 +267,44 @@ int poset_orbit_node::get_nb_of_orbits_under_stabilizer()
 	}
 }
 
+int poset_orbit_node::get_nb_of_extensions()
+{
+	return nb_extensions;
+}
+
+
+extension *poset_orbit_node::get_E(int idx)
+{
+	return E + idx;
+}
+
+long int poset_orbit_node::get_pt()
+{
+	return pt;
+}
+
+void poset_orbit_node::set_pt(long int pt)
+{
+	poset_orbit_node::pt = pt;
+}
+
+int poset_orbit_node::get_prev()
+{
+	return prev;
+}
+
+void poset_orbit_node::set_prev(int prev)
+{
+	poset_orbit_node::prev = prev;
+}
+
+int poset_orbit_node::get_tl(int i)
+{
+	return tl[i];
+}
+
+
+
 void poset_orbit_node::poset_orbit_node_depth_breadth_perm_and_inverse(
 	poset_classification *gen, int max_depth,
 	int &idx, int hdl, int cur_depth,
@@ -180,8 +319,8 @@ void poset_orbit_node::poset_orbit_node_depth_breadth_perm_and_inverse(
 		return;
 	}
 	for (i = 0; i < nb_extensions; i++) {
-		if (E[i].type == EXTENSION_TYPE_EXTENSION) {
-			nxt = E[i].data;
+		if (E[i].get_type() == EXTENSION_TYPE_EXTENSION) {
+			nxt = E[i].get_data();
 			if (nxt >= 0) {
 				gen->get_node(nxt)->poset_orbit_node_depth_breadth_perm_and_inverse(gen,
 					max_depth, idx, nxt, cur_depth + 1, perm, perm_inv);
@@ -198,7 +337,7 @@ int poset_orbit_node::find_extension_from_point(
 	int i;
 	
 	for (i = 0; i < nb_extensions; i++) {
-		if (E[i].pt == pt) {
+		if (E[i].get_pt() == pt) {
 			break;
 		}
 	}
@@ -220,22 +359,22 @@ void poset_orbit_node::print_extensions(ostream &ost)
 	ost << "i : pt : orbit_len : type : to where" << endl;
 	for (i = 0; i < nb_extensions; i++) {
 		ost << setw(5) << i << " : " 
-			<< setw(7) << E[i].pt << " : " 
-			<< setw(5) << E[i].orbit_len << " : ";
+			<< setw(7) << E[i].get_pt() << " : "
+			<< setw(5) << E[i].get_orbit_len() << " : ";
 
-		print_extension_type(ost, E[i].type);
-		if (E[i].type == EXTENSION_TYPE_FUSION) {
-			ost << " -> (" << E[i].data1 << ","
-					<< E[i].data2 << ") hdl=" << E[i].data << endl;
+		print_extension_type(ost, E[i].get_type());
+		if (E[i].get_type() == EXTENSION_TYPE_FUSION) {
+			ost << " -> (" << E[i].get_data1() << ","
+					<< E[i].get_data2() << ") hdl=" << E[i].get_data() << endl;
 		}
-		else if (E[i].type == EXTENSION_TYPE_EXTENSION) {
-			ost << " -> " << E[i].data << endl;
+		else if (E[i].get_type() == EXTENSION_TYPE_EXTENSION) {
+			ost << " -> " << E[i].get_data() << endl;
 		}
 		else {
-			ost << setw(5) << E[i].data << endl;
+			ost << setw(5) << E[i].get_data() << endl;
 		}
-		if (E[i].type >= NB_EXTENSION_TYPES) {
-			ost << "E[i].type >= NB_EXTENSION_TYPES" << endl;
+		if (E[i].get_type() >= NB_EXTENSION_TYPES) {
+			ost << "E[i].get_type() >= NB_EXTENSION_TYPES" << endl;
 			exit(1);
 		}
 	}
@@ -797,8 +936,8 @@ void poset_orbit_node::print_extensions(poset_classification *gen)
 	cout << "flag orbits:" << endl;
 	cout << "i : point : orbit length" << endl;
 	for (i = 0; i < nb_extensions; i++) {
-		cout << setw(3) << i << " : " << setw(7) << E[i].pt
-				<< " : " << setw(5) << E[i].orbit_len << endl;
+		cout << setw(3) << i << " : " << setw(7) << E[i].get_pt()
+				<< " : " << setw(5) << E[i].get_orbit_len() << endl;
 	}
 
 #if 0
@@ -916,13 +1055,13 @@ void poset_orbit_node::reconstruct_extensions_from_sv(
 	nb_extensions = nb;
 	E = NEW_OBJECTS(extension, nb);
 	for (i = 0; i < nb; i++) {
-		E[i].orbit_len = 0;
-		E[i].type = EXTENSION_TYPE_UNPROCESSED;
+		E[i].set_orbit_len(0);
+		E[i].set_type(EXTENSION_TYPE_UNPROCESSED);
 	}
 	j = 0;
 	for (i = 0; i < n; i++) {
 		if (prev[i] == -1) {
-			E[j].pt = pts[i];
+			E[j].set_pt(pts[i]);
 			orbit_reps[j] = pts[i];
 			j++;
 		}
@@ -934,7 +1073,7 @@ void poset_orbit_node::reconstruct_extensions_from_sv(
 					"did not find orbit rep" << endl;
 			exit(1);
 		}
-		E[idx].orbit_len++;
+		E[idx].set_orbit_len(E[idx].get_orbit_len() + 1);
 	}
 
 	FREE_int(ancestor);
@@ -949,7 +1088,7 @@ int poset_orbit_node::nb_extension_points()
 
 	n = 0;
 	for (i = 0; i < nb_extensions; i++) {
-		n += E[i].orbit_len;
+		n += E[i].get_orbit_len();
 	}
 	return n;
 

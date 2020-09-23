@@ -55,7 +55,7 @@ void poset_classification::print_progress_by_extension(
 
 	print_level_info(size, prev);
 	cout << " **** Upstep extension " << cur_ex << " / "
-		<< root[prev].nb_extensions << " with "
+		<< root[prev].get_nb_of_extensions() << " with "
 		<< nb_ext_cur << " n e w orbits and "
 		<< nb_fuse_cur << " fusion nodes. We now have "
 		<< cur - first_poset_orbit_node_at_level[size]
@@ -252,7 +252,7 @@ void poset_classification::print_level_extension_info(
 		<< nb_orbits_at_level(prev_level)
 		<< " Extension " << cur_extension
 		<< " / "
-		<< root[prev].nb_extensions
+		<< root[prev].get_nb_of_extensions()
 		<< " : ";
 }
 
@@ -266,7 +266,7 @@ void poset_classification::print_level_extension_coset_info(
 		<< nb_orbits_at_level(prev_level)
 		<< " Extension " << cur_extension
 		<< " / "
-		<< root[prev].nb_extensions
+		<< root[prev].get_nb_of_extensions()
 		<< " : "
 		<< "Coset " << coset << " / " << nb_cosets << " : ";
 }
@@ -320,13 +320,13 @@ void poset_classification::print_fusion_nodes(int depth)
 			poset_orbit_node *O;
 
 			O = &root[f + j];
-			for (h = 0; h < O->nb_extensions; h++) {
-				extension *E = O->E + h;
+			for (h = 0; h < O->get_nb_of_extensions(); h++) {
+				extension *E = O->get_E(h);
 
-				if (E->type == EXTENSION_TYPE_FUSION) {
+				if (E->get_type() == EXTENSION_TYPE_FUSION) {
 					cout << "fusion (" << f + j << "/" << h
-							<< ") -> (" << E->data1 << "/"
-							<< E->data2 << ")" << endl;
+							<< ") -> (" << E->get_data1() << "/"
+							<< E->get_data2() << ")" << endl;
 					}
 				}
 			}
@@ -981,6 +981,7 @@ void poset_classification::housekeeping(int i,
 			}
 		}
 
+#if 0
 	if (Control->f_Log) {
 		int verbose_level = 1;
 		int f = first_poset_orbit_node_at_level[i];
@@ -1008,6 +1009,7 @@ void poset_classification::housekeeping(int i,
 				}
 			}
 		}
+#endif
 
 	if (Control->f_T || (Control->f_t && i == sz)) {
 		if (f_v) {
@@ -1254,8 +1256,9 @@ void poset_classification::read_sv_level_file_binary2(
 					this, 0 /*verbose_level - 1*/);
 			}
 		if (f_dont_keep_sv) {
-			FREE_OBJECT(root[f + i].Schreier_vector);
-			root[f + i].Schreier_vector = NULL;
+			root[f + i].delete_Schreier_vector();
+			//FREE_OBJECT(root[f + i].Schreier_vector);
+			//root[f + i].Schreier_vector = NULL;
 			}
 		}
 	fp.read((char *) &I, sizeof(int));
@@ -1524,7 +1527,7 @@ void poset_classification::write_candidates_binary_using_sv(
 	cand_first = NEW_int(len);
 	for (i = 0; i < len; i++) {
 		node = fst + i;
-		if (root[node].Schreier_vector == NULL) {
+		if (!root[node].has_Schreier_vector()) {
 			cout << "poset_classification::write_candidates_binary_using_sv "
 					"node " << i << " / " << len
 					<< " no schreier vector" << endl;
@@ -1648,6 +1651,7 @@ void poset_classification::read_level_file(int level,
 				0/*verbose_level*/);
 		cout << "J=" << J << endl;
 		
+#if 0
 		O->node = I;
 		O->prev = J;
 		O->pt = sets[i][level - 1];
@@ -1657,6 +1661,9 @@ void poset_classification::read_level_file(int level,
 		O->nb_extensions = 0;
 		O->E = NULL;
 		O->Schreier_vector = NULL;
+#else
+		O->init_node(I /* node*/, J /* prev*/, sets[i][level - 1] /*pt*/, verbose_level);
+#endif
 
 		{
 		group Aut;
@@ -1764,21 +1771,21 @@ void poset_classification::write_lvl_file_with_candidates(
 	sprintf(str, "_lvl_%d_candidates.txt", lvl);
 	fname1.append(str);
 	{
-	ofstream f(fname1);
-	int cur;
-	
-	//f << "# " << lvl << endl; 
-	for (cur = first_poset_orbit_node_at_level[lvl];
-		cur < first_poset_orbit_node_at_level[lvl + 1]; cur++) {
-		root[cur].log_current_node_with_candidates(
-				this, lvl, f, verbose_level - 2);
-		}
-	f << "-1 " << first_poset_orbit_node_at_level[lvl + 1]
-				- first_poset_orbit_node_at_level[lvl]
-		<< " " << first_poset_orbit_node_at_level[lvl] << " in ";
-	Os.time_check(f, t0);
-	f << endl;
-	f << "# in action " << Poset->A->label << endl;
+		ofstream f(fname1);
+		int cur;
+
+		//f << "# " << lvl << endl;
+		for (cur = first_poset_orbit_node_at_level[lvl];
+			cur < first_poset_orbit_node_at_level[lvl + 1]; cur++) {
+			root[cur].log_current_node_with_candidates(
+					this, lvl, f, verbose_level - 2);
+			}
+		f << "-1 " << first_poset_orbit_node_at_level[lvl + 1]
+					- first_poset_orbit_node_at_level[lvl]
+			<< " " << first_poset_orbit_node_at_level[lvl] << " in ";
+		Os.time_check(f, t0);
+		f << endl;
+		f << "# in action " << Poset->A->label << endl;
 	}
 	if (f_v) {
 		cout << "written file " << fname1
@@ -1802,25 +1809,25 @@ void poset_classification::write_lvl_file(
 
 	make_fname_lvl_file(fname1, fname_base, lvl);
 	{
-	ofstream f(fname1);
-	int i, fst, len;
+		ofstream f(fname1);
+		int i, fst, len;
 
 
-	fst = first_poset_orbit_node_at_level[lvl];
-	len = nb_orbits_at_level(lvl);
+		fst = first_poset_orbit_node_at_level[lvl];
+		len = nb_orbits_at_level(lvl);
 
-	f << "# " << lvl << endl; 
-	for (i = 0; i < len; i++) {
-		root[fst + i].log_current_node(this,
-				lvl, f, f_with_stabilizer_generators,
-				f_long_version);
-		}
-	f << "-1 " << len << " "
-			<< first_poset_orbit_node_at_level[lvl] << " in ";
-	Os.time_check(f, t0);
-	compute_and_print_automorphism_group_orders(lvl, f);
-	f << endl;
-	f << "# in action " << Poset->A->label << endl;
+		f << "# " << lvl << endl;
+		for (i = 0; i < len; i++) {
+			root[fst + i].log_current_node(this,
+					lvl, f, f_with_stabilizer_generators,
+					f_long_version);
+			}
+		f << "-1 " << len << " "
+				<< first_poset_orbit_node_at_level[lvl] << " in ";
+		Os.time_check(f, t0);
+		compute_and_print_automorphism_group_orders(lvl, f);
+		f << endl;
+		f << "# in action " << Poset->A->label << endl;
 	}
 	if (f_v) {
 		cout << "written file " << fname1
@@ -1878,10 +1885,10 @@ void poset_classification::log_nodes_for_treefile(
 	
 	if (f_recurse) {
 		//cout << "recursing into dependent nodes" << endl;
-		for (i = 0; i < node->nb_extensions; i++) {
-			if (node->E[i].type == EXTENSION_TYPE_EXTENSION) {
-				if (node->E[i].data >= 0) {
-					next = node->E[i].data;
+		for (i = 0; i < node->get_nb_of_extensions(); i++) {
+			if (node->get_E(i)->get_type() == EXTENSION_TYPE_EXTENSION) {
+				if (node->get_E(i)->get_data() >= 0) {
+					next = node->get_E(i)->get_data();
 					log_nodes_for_treefile(next,
 							depth + 1, f, TRUE, verbose_level);
 					}
@@ -1890,6 +1897,7 @@ void poset_classification::log_nodes_for_treefile(
 		}
 }
 
+#if 0
 void poset_classification::Log_nodes(int cur, int depth,
 		ostream &f, int f_recurse,
 		int verbose_level)
@@ -1949,10 +1957,10 @@ void poset_classification::Log_nodes(int cur, int depth,
 		node->print_extensions(f);
 		f << endl;
 
-		for (i = 0; i < node->nb_extensions; i++) {
-			if (node->E[i].type == EXTENSION_TYPE_FUSION) {
+		for (i = 0; i < node->get_nb_of_extensions(); i++) {
+			if (node->get_E(i)->get_type() == EXTENSION_TYPE_FUSION) {
 				f << "fusion node " << i << ":" << endl;
-				Poset->A->element_retrieve(node->E[i].data, Elt1, 0);
+				Poset->A->element_retrieve(node->get_E(i)->get_data(), Elt1, 0);
 				Poset->A->element_print_verbose(Elt1, f);
 				f << endl;
 				}
@@ -1967,16 +1975,17 @@ void poset_classification::Log_nodes(int cur, int depth,
 	
 	if (f_recurse) {
 		//cout << "recursing into dependent nodes" << endl;
-		for (i = 0; i < node->nb_extensions; i++) {
-			if (node->E[i].type == EXTENSION_TYPE_EXTENSION) {
-				if (node->E[i].data >= 0) {
-					next = node->E[i].data;
+		for (i = 0; i < node->get_nb_of_extensions(); i++) {
+			if (node->get_E(i)->get_type() == EXTENSION_TYPE_EXTENSION) {
+				if (node->get_E(i)->get_data() >= 0) {
+					next = node->get_E(i)->get_data();
 					Log_nodes(next, depth + 1, f, TRUE, verbose_level);
 					}
 				}
 			}
 		}
 }
+#endif
 
 void poset_classification::log_current_node(ostream &f, int size)
 {
@@ -2029,42 +2038,36 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 		nb_orbits = nb_orbits_at_level(level);
 		for (i = 0; i < nb_orbits; i++) {
 			snprintf(str,1000,  "%d", level);
-			Text_level[first + i] =
-					NEW_char(strlen(str) + 1);
+			Text_level[first + i] = NEW_char(strlen(str) + 1);
 			strcpy(Text_level[first + i], str);
 
 			snprintf(str, 1000, "%d", i);
-			Text_node[first + i] =
-					NEW_char(strlen(str) + 1);
+			Text_node[first + i] = NEW_char(strlen(str) + 1);
 			strcpy(Text_node[first + i], str);
 
 			get_set_by_level(level, i, rep);
 			lint_vec_print_to_str(str, rep, level);
-			Text_orbit_reps[first + i] =
-					NEW_char(strlen(str) + 1);
+			Text_orbit_reps[first + i] = NEW_char(strlen(str) + 1);
 			strcpy(Text_orbit_reps[first + i], str);
 			
 			get_orbit_length_and_stabilizer_order(i, level, 
 				stab_order, orbit_length);
 			stab_order.print_to_string(str);
-			Text_stab_order[first + i] =
-					NEW_char(strlen(str) + 1);
+			Text_stab_order[first + i] = NEW_char(strlen(str) + 1);
 			strcpy(Text_stab_order[first + i], str);
 			
 			orbit_length.print_to_string(str);
-			Text_orbit_length[first + i] =
-					NEW_char(strlen(str) + 1);
+			Text_orbit_length[first + i] = NEW_char(strlen(str) + 1);
 			strcpy(Text_orbit_length[first + i], str);
 			
 			O = get_node_ij(level, i);
-			if (O->Schreier_vector) {
+			if (O->has_Schreier_vector()) {
 				schreier_vector_length = O->get_nb_of_live_points();
 			} else {
 				schreier_vector_length = 0;
 			}
 			snprintf(str, 1000, "%d", schreier_vector_length);
-			Text_schreier_vector_length[first + i] =
-					NEW_char(strlen(str) + 1);
+			Text_schreier_vector_length[first + i] = NEW_char(strlen(str) + 1);
 			strcpy(Text_schreier_vector_length[first + i], str);
 			}
 		}
@@ -2196,7 +2199,7 @@ void poset_classification::make_spreadsheet_of_level_info(
 			
 			O = get_node_ij(level, i);
 
-			if (O->Schreier_vector) {
+			if (O->has_Schreier_vector()) {
 				schreier_vector_length_int = O->get_nb_of_live_points();
 
 
@@ -2266,16 +2269,11 @@ void poset_classification::make_spreadsheet_of_level_info(
 	Sp = NEW_OBJECT(spreadsheet);
 	Sp->init_empty_table(nb_rows + 1, 6);
 	Sp->fill_column_with_row_index(0, "Line");
-	Sp->fill_column_with_text(1, (const char **)
-			Text_label, "Level");
-	Sp->fill_column_with_text(2, (const char **)
-			Text_nb_orbits, "Nb_orbits");
-	Sp->fill_column_with_text(3, (const char **)
-			Text_orbit_length_sum, "Orbit_length_sum");
-	Sp->fill_column_with_text(4, (const char **)
-			Text_schreier_vector_length_sum, "Schreier_vector_length_sum");
-	Sp->fill_column_with_text(5, (const char **)
-			Text_binomial, "Binomial");
+	Sp->fill_column_with_text(1, (const char **) Text_label, "Level");
+	Sp->fill_column_with_text(2, (const char **) Text_nb_orbits, "Nb_orbits");
+	Sp->fill_column_with_text(3, (const char **) Text_orbit_length_sum, "Orbit_length_sum");
+	Sp->fill_column_with_text(4, (const char **) Text_schreier_vector_length_sum, "Schreier_vector_length_sum");
+	Sp->fill_column_with_text(5, (const char **) Text_binomial, "Binomial");
 
 
 
@@ -2374,157 +2372,166 @@ void poset_classification::wedge_product_export_magma(
 	snprintf(fname, 1000, "Wedge_n%d_q%d_d%d.magma", n, q, level);
 
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
-	f << "// file " << fname << endl;
-	f << "n := " << n << ";" << endl;
-	f << "q := " << q << ";" << endl;
-	f << "d := " << level << ";" << endl;
-	f << "n2 := " << vector_space_dimension << ";" << endl;
-	f << "V := VectorSpace (GF (q), n2);" << endl;
-	f << endl;
-	f << "/* list of orbit reps */" << endl;
-	f << "L := [" << endl;
-	f << endl;
-
-	for (i = 0; i < len; i++) {
-		O = root + fst + i;
-
-		f << "// orbit rep " << i << endl;
-		f << "[" << endl;
-		O->store_set_to(this, level - 1, the_set);
-	 	for (j = 0; j < level; j++) {
-			a = the_set[j];
-			unrank_point(v, a);
-			f << "[ ";
-			for (h = 0; h < vector_space_dimension; h++) {
-				f << v[h];
-				if (h < vector_space_dimension - 1)
-					f << ", ";
-				}
-			f << " ]";
-			if (j < level - 1) {
-				f << "," << endl;
-				}
-			else {
-				f << "]" << endl;
-				}
-			}
-		if (i < len - 1) {
-			f << "," << endl << endl;
-			}
-		else {
-			f << endl << "];" << endl << endl;
-			}
-		} // next i
-
-	f << "// list of orbit lengths " << endl;
-	f << "len := \[";
-
-	for (i = 0; i < len; i++) {
-
-		if ((i % 20) == 0) {
-			f << endl;
-			f << "// orbits " << i << " and following:" << endl;
-			}
-
-		orbit_length(i, level, go);
-		f << go;
-		if (i < len - 1) {
-			f << ", ";
-			}
-		}
-	f << "];" << endl << endl;
-
-
-	f << "// subspaces of vector space " << endl;
-	f << "L := [sub< V | L[i]>: i in [1..#L]];" << endl;
-
-	f << "// stabilisers " << endl;
-	f << "P := GL(n, q);" << endl;
-	f << "E := ExteriorSquare (P);" << endl;
-
-
-	f << "// base:" << endl;
-	f << "BV := VectorSpace (GF (q), n);" << endl;
-	f << "B := [ BV | " << endl;
-	for (i = 0; i < Poset->A->base_len(); i++) {
-		a = Poset->A->base_i(i);
-		Poset->VS->F->PG_element_unrank_modified(v, 1, n, a);
-		//(*Gen->unrank_point_func)(v, a, Gen->rank_point_data);
-		f << "[ ";
-		for (h = 0; h < n; h++) {
-			f << v[h];
-			if (h < n - 1)
-				f << ", ";
-			}
-        	if (i < Poset->A->base_len() - 1)
-				f << "], " << endl;
-		else f << " ]" << endl;
-		}
-	f << "];" << endl;
-	f << endl;
-	f << "P`Base := B;" << endl;
-
-	f << "// list of stabilizer generators" << endl;
-	f << "S := [" << endl;
-	f << endl;
-
-	for (i = 0; i < len; i++) {
-		O = root + fst + i;
-
-		f << "// orbit rep " << i << " has "
-				<< O->nb_strong_generators << " strong generators";
-		if (O->nb_strong_generators) {
-			f << ", transversal lengths: ";
-			int_vec_print(f, O->tl, Poset->A->base_len());
-			}
+		f << "// file " << fname << endl;
+		f << "n := " << n << ";" << endl;
+		f << "q := " << q << ";" << endl;
+		f << "d := " << level << ";" << endl;
+		f << "n2 := " << vector_space_dimension << ";" << endl;
+		f << "V := VectorSpace (GF (q), n2);" << endl;
 		f << endl;
-		f << "[" << endl;
+		f << "/* list of orbit reps */" << endl;
+		f << "L := [" << endl;
+		f << endl;
 
-	 	for (j = 0; j < O->nb_strong_generators; j++) {
+		for (i = 0; i < len; i++) {
+			O = root + fst + i;
 
-			Poset->A->element_retrieve(
-					O->hdl_strong_generators[j], Elt, 0);
-
-				f << "[";
-			//Gen->A->element_print_quick(Elt, f);
-			for (ii = 0; ii < n; ii++) {
-				f << "[";
-				for (jj = 0; jj < n; jj++) {
-					a = Elt[ii * n + jj];
-					f << a;
-					if (jj < n - 1) {
+			f << "// orbit rep " << i << endl;
+			f << "[" << endl;
+			O->store_set_to(this, level - 1, the_set);
+			for (j = 0; j < level; j++) {
+				a = the_set[j];
+				unrank_point(v, a);
+				f << "[ ";
+				for (h = 0; h < vector_space_dimension; h++) {
+					f << v[h];
+					if (h < vector_space_dimension - 1)
 						f << ", ";
-						}
-					else {
-						f << "]";
-						}
 					}
-				if (ii < n - 1) {
+				f << " ]";
+				if (j < level - 1) {
 					f << "," << endl;
 					}
 				else {
-					f << "]";
+					f << "]" << endl;
+					}
+				}
+			if (i < len - 1) {
+				f << "," << endl << endl;
+				}
+			else {
+				f << endl << "];" << endl << endl;
+				}
+			} // next i
+
+		f << "// list of orbit lengths " << endl;
+		f << "len := \[";
+
+		for (i = 0; i < len; i++) {
+
+			if ((i % 20) == 0) {
+				f << endl;
+				f << "// orbits " << i << " and following:" << endl;
+				}
+
+			orbit_length(i, level, go);
+			f << go;
+			if (i < len - 1) {
+				f << ", ";
+				}
+			}
+		f << "];" << endl << endl;
+
+
+		f << "// subspaces of vector space " << endl;
+		f << "L := [sub< V | L[i]>: i in [1..#L]];" << endl;
+
+		f << "// stabilisers " << endl;
+		f << "P := GL(n, q);" << endl;
+		f << "E := ExteriorSquare (P);" << endl;
+
+
+		f << "// base:" << endl;
+		f << "BV := VectorSpace (GF (q), n);" << endl;
+		f << "B := [ BV | " << endl;
+		for (i = 0; i < Poset->A->base_len(); i++) {
+			a = Poset->A->base_i(i);
+			Poset->VS->F->PG_element_unrank_modified(v, 1, n, a);
+			//(*Gen->unrank_point_func)(v, a, Gen->rank_point_data);
+			f << "[ ";
+			for (h = 0; h < n; h++) {
+				f << v[h];
+				if (h < n - 1)
+					f << ", ";
+				}
+				if (i < Poset->A->base_len() - 1)
+					f << "], " << endl;
+			else f << " ]" << endl;
+			}
+		f << "];" << endl;
+		f << endl;
+		f << "P`Base := B;" << endl;
+
+		f << "// list of stabilizer generators" << endl;
+		f << "S := [" << endl;
+		f << endl;
+
+		for (i = 0; i < len; i++) {
+			O = root + fst + i;
+
+			std::vector<int> gen_hdl;
+			std::vector<int> tl;
+
+			O->get_strong_generators_handle(gen_hdl, verbose_level);
+
+			O->get_tl(tl, this, verbose_level);
+
+			f << "// orbit rep " << i << " has "
+					<< gen_hdl.size() << " strong generators";
+			if (gen_hdl.size()) {
+				f << ", transversal lengths: ";
+				//int_vec_print(f, O->tl, Poset->A->base_len());
+				for (h = 0; h < tl.size(); h++) {
+					f << tl[h];
+				}
+			}
+			f << endl;
+			f << "[" << endl;
+
+			for (j = 0; j < gen_hdl.size(); j++) {
+
+				Poset->A->element_retrieve(gen_hdl[j], Elt, 0);
+
+				f << "[";
+				//Gen->A->element_print_quick(Elt, f);
+				for (ii = 0; ii < n; ii++) {
+					f << "[";
+					for (jj = 0; jj < n; jj++) {
+						a = Elt[ii * n + jj];
+						f << a;
+						if (jj < n - 1) {
+							f << ", ";
+						}
+						else {
+							f << "]";
+						}
+					}
+					if (ii < n - 1) {
+						f << "," << endl;
+					}
+					else {
+						f << "]";
 					}
 				}
 
-			if (j < O->nb_strong_generators - 1) {
-				f << "," << endl;
+				if (j < gen_hdl.size() - 1) {
+					f << "," << endl;
 				}
 			}
 			f << "]" << endl;
-		if (i < len - 1) {
-			f << "," << endl << endl;
+			if (i < len - 1) {
+				f << "," << endl << endl;
 			}
-		else {
-			f << endl << "];" << endl << endl;
+			else {
+				f << endl << "];" << endl << endl;
 			}
 		} // next i
 
-         f << endl << "T := [sub<GL(n, q) | [&cat (s): "
-        		 "s in S[i]]> : i in [1..#S]];"
-        		 << endl << endl;
+		f << endl << "T := [sub<GL(n, q) | [&cat (s): "
+					 "s in S[i]]> : i in [1..#S]];"
+					 << endl << endl;
 	} // file f
 
 	FREE_lint(the_set);

@@ -754,6 +754,7 @@ public:
 			int *elt, int **old_images, int verbose_level);
 	void init_generators_by_hdl(int nb_gen, int *gen_hdl, 
 		int verbose_level);
+	void init_generators_by_handle(std::vector<int> &gen_hdl, int verbose_level);
 	int get_image(int i, int gen_idx, int verbose_level);
 	void swap_points(int i, int j, int verbose_level);
 	void move_point_here(int here, int pt);

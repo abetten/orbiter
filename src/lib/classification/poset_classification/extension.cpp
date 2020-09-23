@@ -26,6 +26,66 @@ extension::~extension()
 {
 }
 
+int extension::get_pt()
+{
+	return pt;
+}
+
+void extension::set_pt(int pt)
+{
+	extension::pt = pt;
+}
+
+int extension::get_type()
+{
+	return type;
+}
+
+void extension::set_type(int type)
+{
+	extension::type = type;
+}
+
+int extension::get_orbit_len()
+{
+	return orbit_len;
+}
+
+void extension::set_orbit_len(int orbit_len)
+{
+	extension::orbit_len = orbit_len;
+}
+
+int extension::get_data()
+{
+	return data;
+}
+
+void extension::set_data(int data)
+{
+	extension::data = data;
+}
+
+
+int extension::get_data1()
+{
+	return data1;
+}
+
+void extension::set_data1(int data1)
+{
+	extension::data1 = data1;
+}
+
+int extension::get_data2()
+{
+	return data2;
+}
+
+void extension::set_data2(int data2)
+{
+	extension::data2 = data2;
+}
 
 
 void print_extension_type(ostream &ost, int t)
@@ -49,7 +109,6 @@ void print_extension_type(ostream &ost, int t)
 		ost << "type=" << t;
 		}
 }
-
 
 
 }}

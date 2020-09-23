@@ -75,7 +75,7 @@ public:
 
 class extension {
 
-public:
+private:
 	long int pt;
 	int orbit_len;
 	int type;
@@ -95,8 +95,22 @@ public:
 		// if EXTENSION_TYPE_FUSION: extension within that 
 		// node to which we are fusing
 
+public:
+
 	extension();
 	~extension();
+	int get_pt();
+	void set_pt(int pt);
+	int get_type();
+	void set_type(int type);
+	int get_orbit_len();
+	void set_orbit_len(int orbit_len);
+	int get_data();
+	void set_data(int data);
+	int get_data1();
+	void set_data1(int data1);
+	int get_data2();
+	void set_data2(int data1);
 };
 
 
@@ -318,7 +332,6 @@ public:
 	const char *tools_path;
 
 
-	//int xmax, ymax, radius;
 
 	int f_recover;
 	std::string recover_fname;
@@ -355,13 +368,6 @@ public:
 
 	int nb_recognize;
 	const char *recognize[CONTROL_MAX_RECOGNIZE];
-
-#if 0
-	double scale;
-	double line_width;
-	int f_embedded;
-	int f_sideways;
-#endif
 
 
 	int f_export_schreier_trees;
@@ -551,7 +557,7 @@ public:
 			int &nb_good_candidates,
 			int verbose_level);
 	int nb_orbits_at_level(int level);
-	int nb_flag_orbits_up_at_level(int level);
+	long int nb_flag_orbits_up_at_level(int level);
 	poset_orbit_node *get_node_ij(int level, int node);
 	int poset_structure_is_contained(long int *set1, int sz1,
 		long int *set2, int sz2, int verbose_level);
@@ -956,8 +962,10 @@ public:
 		int verbose_level);
 	void log_nodes_for_treefile(int cur, int depth, 
 			std::ostream &f, int f_recurse, int verbose_level);
+#if 0
 	void Log_nodes(int cur, int depth, std::ostream &f,
 		int f_recurse, int verbose_level);
+#endif
 	void log_current_node(std::ostream &f, int size);
 	void make_spreadsheet_of_orbit_reps(spreadsheet *&Sp, 
 		int max_depth);
@@ -1058,7 +1066,8 @@ int trace_result_is_no_result(trace_result r);
 
 
 class poset_orbit_node {
-public:
+
+private:
 	int node;
 	int prev;
 	
@@ -1074,6 +1083,8 @@ public:
 	
 	action *A_on_upset;
 
+public:
+
 	// poset_orbit_node.cpp:
 	poset_orbit_node();
 	~poset_orbit_node();
@@ -1082,11 +1093,28 @@ public:
 	void init_root_node(poset_classification *gen, int verbose_level);
 		// copies gen->SG0 and gen->tl into the poset_orbit_node 
 		// structure using store_strong_generators
+	void init_node(int node, int prev, long int pt, int verbose_level);
+	int get_node();
+	void set_node(int node);
+	void delete_Schreier_vector();
+	void allocate_E(int nb_extensions, int verbose_level);
 	int get_level(poset_classification *gen);
 	int get_node_in_level(poset_classification *gen);
+	void get_strong_generators_handle(std::vector<int> &gen_hdl, int verbose_level);
+	void get_tl(std::vector<int> &tl, poset_classification *PC, int verbose_level);
+	int has_Schreier_vector();
+	schreier_vector *get_Schreier_vector();
+	int get_nb_strong_generators();
 	int *live_points();
 	int get_nb_of_live_points();
 	int get_nb_of_orbits_under_stabilizer();
+	int get_nb_of_extensions();
+	extension *get_E(int idx);
+	long int get_pt();
+	void set_pt(long int pt);
+	int get_prev();
+	void set_prev(int prev);
+	int get_tl(int i);
 	void poset_orbit_node_depth_breadth_perm_and_inverse(
 		poset_classification *gen,
 		int max_depth, 
