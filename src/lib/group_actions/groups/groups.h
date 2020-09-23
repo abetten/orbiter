@@ -1502,6 +1502,10 @@ public:
 	strong_generators *create_copy();
 	void init_copy(strong_generators *S, 
 		int verbose_level);
+	void init_by_hdl_and_with_tl(action *A,
+			std::vector<int> &gen_handle,
+			std::vector<int> &tl,
+			int verbose_level);
 	void init_by_hdl(action *A, int *gen_hdl, 
 		int nb_gen, int verbose_level);
 	void init_from_permutation_representation(action *A, 

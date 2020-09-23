@@ -737,12 +737,19 @@ int poset_orbit_node::orbit_representative_and_coset_rep_inv(
 		}
 	}
 	cosetrep = gen->get_Elt1();
+
+
+	std::vector<int> gen_handle;
+
+	get_strong_generators_handle(gen_handle, verbose_level - 2);
+
+
 	pt0 = gen->get_A2()->least_image_of_point_generators_by_handle(
-		nb_strong_generators, 
-		hdl_strong_generators, 
+		gen_handle,
 		pt_to_trace, 
 		gen->get_Elt1(),
 		verbose_level - 1);
+
 	if (f_v) {
 		cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv "
 				"pt_to_trace=" << pt_to_trace

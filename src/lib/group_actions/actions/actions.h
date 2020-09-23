@@ -266,6 +266,9 @@ public:
 	int least_image_of_point(vector_ge &strong_generators, 
 		int pt, int *transporter, 
 		int verbose_level);
+	int least_image_of_point_generators_by_handle(
+		std::vector<int> &gen_handle,
+		int pt, int *transporter, int verbose_level);
 	int least_image_of_point_generators_by_handle(int nb_gen, 
 		int *gen_handle, int pt, int *transporter, 
 		int verbose_level);

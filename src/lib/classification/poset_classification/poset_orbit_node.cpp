@@ -14,7 +14,18 @@ namespace classification {
 
 poset_orbit_node::poset_orbit_node()
 {
-	null();
+	pt = -1;
+	prev = -1;
+	node = -1;
+	nb_strong_generators = 0;
+	first_strong_generator_handle = -1;
+	//hdl_strong_generators = NULL;
+	tl = NULL;
+	nb_extensions = 0;
+	E = NULL;
+	Schreier_vector = NULL;
+	A_on_upset = NULL;
+	//null();
 }
 
 poset_orbit_node::~poset_orbit_node()
@@ -24,53 +35,71 @@ poset_orbit_node::~poset_orbit_node()
 
 void poset_orbit_node::null()
 {
+	pt = -1;
+	prev = -1;
+	node = -1;
 	nb_strong_generators = 0;
-	hdl_strong_generators = NULL;
+	first_strong_generator_handle = -1;
+	//hdl_strong_generators = NULL;
 	tl = NULL;
 	nb_extensions = 0;
 	E = NULL;
-	//sv = NULL;
 	Schreier_vector = NULL;
 	A_on_upset = NULL;
 }
 
 void poset_orbit_node::freeself()
 {
-	if (hdl_strong_generators) {
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_orbit_node::freeself node=" << node << endl;
+	}
 #if 0
-		cout << "poset_orbit_node::freeself "
-				"deleting hdl_strong_generators: ";
-		int_vec_print(cout, hdl_strong_generators, nb_strong_generators);
-		cout << endl;
-		cout << "pointer = ";
-		print_pointer_hex(cout, hdl_strong_generators);
-		cout << endl;
-#endif
+	if (hdl_strong_generators) {
+		if (f_v) {
+			cout << "poset_orbit_node::freeself "
+					"deleting hdl_strong_generators: ";
+			int_vec_print(cout, hdl_strong_generators, nb_strong_generators);
+			cout << endl;
+			cout << "pointer = ";
+			print_pointer_hex(cout, hdl_strong_generators);
+			cout << endl;
+		}
 		FREE_int(hdl_strong_generators);
 		//cout << "poset_orbit_node::freeself() "
 		//"deleting hdl_strong_generators done" << endl;
 		}
+#endif
 	if (tl) {
-		//cout << "poset_orbit_node::freeself deleting tl" << endl;
+		if (f_v) {
+			cout << "poset_orbit_node::freeself deleting tl" << endl;
+		}
 		FREE_int(tl);
 		}
 	if (E) {
-		//cout << "poset_orbit_node::freeself deleting E" << endl;
+		if (f_v) {
+			cout << "poset_orbit_node::freeself deleting E" << endl;
+		}
 		FREE_OBJECTS(E);
-		}
-#if 0
-	if (sv) {
-		//cout << "poset_orbit_node::freeself deleting sv" << endl;
-		FREE_int(sv);
-		}
-#endif
+	}
 	if (Schreier_vector) {
+		if (f_v) {
+			cout << "poset_orbit_node::freeself deleting Schreier_vector" << endl;
+		}
 		FREE_OBJECT(Schreier_vector);
 	}
 	if (A_on_upset) {
+		if (f_v) {
+			cout << "poset_orbit_node::freeself deleting A_on_upset" << endl;
+		}
 		FREE_OBJECT(A_on_upset);
 	}
 	null();
+	if (f_v) {
+		cout << "poset_orbit_node::freeself done" << endl;
+	}
 	//cout << "poset_orbit_node::freeself finished" << endl;
 }
 
@@ -85,7 +114,7 @@ void poset_orbit_node::init_root_node(
 	if (f_v) {
 		cout << "poset_orbit_node::init_root_node "
 				"initializing root node" << endl;
-		}
+	}
 	
 	freeself();
 	
@@ -96,20 +125,25 @@ void poset_orbit_node::init_root_node(
 	
 	longinteger_object go;
 
+	if (f_v) {
+		cout << "poset_orbit_node::init_root_node "
+				"poset " << gen->get_problem_label()
+				<< ", computing the group order of G" << endl;
+	}
 	gen->get_poset()->Strong_gens->group_order(go);
 
 	if (f_v) {
 		cout << "poset_orbit_node::init_root_node "
 				"storing strong generators "
 				"for a group of order " << go << endl;
-		}
+	}
 	store_strong_generators(gen, gen->get_poset()->Strong_gens);
 		// stores the strong generators into
 		// the poset_orbit_node structure,
 		// copies transversal_length into tl
 	if (f_v) {
 		cout << "poset_orbit_node::init_root_node done" << endl;
-		}
+	}
 	
 }
 
@@ -120,7 +154,8 @@ void poset_orbit_node::init_node(int node, int prev, long int pt, int verbose_le
 	poset_orbit_node::prev = prev;
 	poset_orbit_node::pt = pt;
 	nb_strong_generators = 0;
-	hdl_strong_generators = NULL;
+	first_strong_generator_handle = -1;
+	//hdl_strong_generators = NULL;
 	tl = NULL;
 	E = NULL;
 	Schreier_vector = NULL;
@@ -177,7 +212,8 @@ void poset_orbit_node::get_strong_generators_handle(std::vector<int> &gen_hdl, i
 		cout << "poset_orbit_node::get_strong_generators_handle" << endl;
 	}
 	for (i = 0; i < nb_strong_generators; i++) {
-		gen_hdl.push_back(hdl_strong_generators[i]);
+		//gen_hdl.push_back(hdl_strong_generators[i]);
+		gen_hdl.push_back(first_strong_generator_handle + i);
 	}
 
 	if (f_v) {
@@ -195,7 +231,7 @@ void poset_orbit_node::get_tl(std::vector<int> &tl, poset_classification *PC, in
 	}
 	if (nb_strong_generators) {
 		for (i = 0; i < PC->get_poset()->A->base_len(); i++) {
-			tl.push_back(tl[i]);
+			tl.push_back(poset_orbit_node::tl[i]);
 		}
 	}
 	else {
@@ -428,58 +464,69 @@ void poset_orbit_node::log_current_node(poset_classification *gen,
 	if (f_v) {
 		cout << "poset_orbit_node::log_current_node node="
 				<< node << " s=" << s << endl;
-		}
+	}
 	store_set_to(gen, s - 1, gen->get_set0());
 	if (f_v) {
 		cout << "poset_orbit_node::log_current_node node="
 				<< node << " after store_set_to" << endl;
-		}
+	}
 	
 	if (f_v) {
 		f << "# ***** orbit ***** "
 				<< node - gen->first_node_at_level(s)
 				<< " " << endl;
-		}
+	}
 	f << s << " ";
 	for (i = 0; i < s; i++) {
 		f << gen->get_set0()[i] << " ";
-		}
+	}
 		
 	if (nb_strong_generators == 0) {
 		f << " 1" << endl;
 		if (f_v) {
 			cout << "poset_orbit_node::log_current_node "
 					"node=" << node << " done" << endl;
-			}
-		return;
 		}
+		return;
+	}
 
 
 	if (f_v) {
 		cout << "poset_orbit_node::log_current_node "
 				"node=" << node << " creating group" << endl;
-		}
+	}
 
 	group G;
 
 	G.init(gen->get_poset()->A, verbose_level - 2);
+
+
+#if 0
 	G.init_strong_generators_by_hdl(
 			nb_strong_generators, hdl_strong_generators, tl, FALSE);
-
 	if (f_v) {
 		cout << "poset_orbit_node::log_current_node "
 				"node=" << node << " before schreier_sims" << endl;
-		}
+	}
 	G.schreier_sims(0);
 	if (f_v) {
 		cout << "poset_orbit_node::log_current_node "
 				"node=" << node << " after schreier_sims" << endl;
-		}
+	}
 	G.group_order(go);
+
+#else
+
+	get_stabilizer(
+		gen,
+		G, go,
+		verbose_level);
+
+#endif
 	if (f_v) {
 		cout << "poset_orbit_node::log_current_node "
 				"node=" << node << " group order = " << go << endl;
-		}
+	}
 	//if (f_v) {
 		//cout << "poset_orbit_node::log_current_node() "
 		//"stabilizer of order " << go << " reconstructed" << endl;
@@ -488,13 +535,13 @@ void poset_orbit_node::log_current_node(poset_classification *gen,
 		go.print_not_scientific(f);
 		f << endl;
 		//f << go << endl;
-		}
+	}
 	else {
 		G.code_ascii(FALSE);
 		go.print_not_scientific(f);
 		f << " " << G.ascii_coding << endl;
 		//f << go << " " << G.ascii_coding << endl;
-		}
+	}
 
 
 	if (f_with_stabilizer_generators) {
@@ -507,24 +554,25 @@ void poset_orbit_node::log_current_node(poset_classification *gen,
 		cout << "With the following generators:" << endl;
 		Strong_gens->print_generators(cout);
 		FREE_OBJECT(Strong_gens);
-		}
+	}
 
 #if 1
 	if (gen->get_poset()->f_print_function) {
 		f << "# BEGINCOMMENT" << endl;
 		if (gen->get_poset()->f_print_function) {
 			gen->get_poset()->invoke_print_function(f, s, gen->get_set0());
-			}
+		}
 		
 		if (!go.is_one()) {
 			if (f_v) {
 				cout << "poset_orbit_node::log_current_node "
 						"node=" << node << " printing generators" << endl;
-				}
+			}
 			G.require_strong_generators();
 			f << "tl: ";
-			for (i = 0; i < G.A->base_len(); i++)
+			for (i = 0; i < G.A->base_len(); i++) {
 				f << G.tl[i] << " ";
+			}
 			f << endl;
 			f << G.SG->len << " strong generators by rank: " << endl;
 			for (i = 0; i < G.SG->len; i++) {
@@ -540,12 +588,12 @@ void poset_orbit_node::log_current_node(poset_classification *gen,
 				f << "\"" << rk << "\", ";
 				f << endl;
 #endif
-				}
+			}
 			//for (i = 0; i < G.SG->len; i++) {
 				//}
-			}
-		f << "# ENDCOMMENT" << endl;
 		}
+		f << "# ENDCOMMENT" << endl;
+	}
 #endif
 }
 
@@ -588,12 +636,24 @@ void poset_orbit_node::log_current_node_after_applying_group_element(
 	group G;
 
 	G.init(gen->get_poset()->A, verbose_level - 2);
+
+#if 0
 	G.init_strong_generators_by_hdl(
 			nb_strong_generators,
 			hdl_strong_generators, tl,
 			FALSE);
 	G.schreier_sims(0);
 	G.group_order(go);
+#else
+
+	get_stabilizer(
+		gen,
+		G, go,
+		verbose_level);
+
+
+	#endif
+
 	//if (f_v) {
 		//cout << "poset_orbit_node::log_current_node() "
 		//"stabilizer of order " << go << " reconstructed" << endl;

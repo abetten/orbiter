@@ -41,6 +41,7 @@ void poset_orbit_node::read_memory_object(
 				"nb_strong_generators " << nb_strong_generators << endl;
 	}
 	if (nb_strong_generators) {
+#if 0
 		hdl_strong_generators = NEW_int(nb_strong_generators);
 		tl = NEW_int(A->base_len());
 		for (i = 0; i < nb_strong_generators; i++) {
@@ -48,12 +49,27 @@ void poset_orbit_node::read_memory_object(
 			hdl_strong_generators[i] = A->element_store(Elt, FALSE);
 			nb_group_elements++;
 		}
+#else
+		first_strong_generator_handle = -1;
+		tl = NEW_int(A->base_len());
+		for (i = 0; i < nb_strong_generators; i++) {
+			A->element_read_from_memory_object(Elt, m, verbose_level - 2);
+			if (i == 0) {
+				first_strong_generator_handle = A->element_store(Elt, FALSE);
+			}
+			else {
+				A->element_store(Elt, FALSE);
+			}
+			nb_group_elements++;
+		}
+#endif
 		for (i = 0; i < A->base_len(); i++) {
 			m->read_int(&tl[i]);
 		}
 	}
 	else {
-		hdl_strong_generators = NULL;
+		//hdl_strong_generators = NULL;
+		first_strong_generator_handle = -1;
 		tl = NULL;
 	}
 	m->read_int(&nb_extensions);
@@ -147,7 +163,8 @@ void poset_orbit_node::write_memory_object(
 				<< nb_strong_generators << endl;
 	}
 	for (i = 0; i < nb_strong_generators; i++) {
-		A->element_retrieve(hdl_strong_generators[i], Elt, FALSE);
+		//A->element_retrieve(hdl_strong_generators[i], Elt, FALSE);
+		A->element_retrieve(first_strong_generator_handle + i, Elt, FALSE);
 		A->element_write_to_memory_object(Elt, m, verbose_level);
 		nb_group_elements++;
 	}
@@ -269,7 +286,8 @@ void poset_orbit_node::sv_read_file(poset_classification *PC,
 	int hdl;
 
 	if (nb_strong_generators) {
-		hdl = hdl_strong_generators[0];
+		//hdl = hdl_strong_generators[0];
+		hdl = first_strong_generator_handle;
 	}
 	else {
 		hdl = -1;
@@ -329,6 +347,7 @@ void poset_orbit_node::read_file(action *A,
 		cout << "nb_strong_generators " << nb_strong_generators << endl;
 	}
 	if (nb_strong_generators) {
+#if 0
 		hdl_strong_generators = NEW_int(nb_strong_generators);
 		tl = NEW_int(A->base_len());
 		for (i = 0; i < nb_strong_generators; i++) {
@@ -340,6 +359,24 @@ void poset_orbit_node::read_file(action *A,
 			hdl_strong_generators[i] = A->element_store(Elt, FALSE);
 			nb_group_elements++;
 		}
+#else
+		tl = NEW_int(A->base_len());
+		first_strong_generator_handle = -1;
+		for (i = 0; i < nb_strong_generators; i++) {
+			A->element_read_file_fp(Elt, fp, verbose_level);
+			if (f_vv) {
+				cout << "read element" << endl;
+				A->element_print_quick(Elt, cout);
+				}
+			if (i == 0) {
+				first_strong_generator_handle = A->element_store(Elt, FALSE);
+			}
+			else {
+				A->element_store(Elt, FALSE);
+			}
+			nb_group_elements++;
+		}
+#endif
 		for (i = 0; i < A->base_len(); i++) {
 			fp.read((char *) &tl[i], sizeof(int));
 			//tl[i] = Fio.fread_int4(fp);
@@ -349,7 +386,8 @@ void poset_orbit_node::read_file(action *A,
 		}
 	}
 	else {
-		hdl_strong_generators = NULL;
+		//hdl_strong_generators = NULL;
+		first_strong_generator_handle = -1;
 		tl = NULL;
 	}
 	fp.read((char *) &nb_extensions, sizeof(int));
@@ -448,7 +486,7 @@ void poset_orbit_node::write_file(action *A,
 				<< nb_strong_generators << endl;
 	}
 	for (i = 0; i < nb_strong_generators; i++) {
-		A->element_retrieve(hdl_strong_generators[i], Elt, FALSE);
+		A->element_retrieve(first_strong_generator_handle + i, Elt, FALSE);
 		A->element_write_file_fp(Elt, fp, 0);
 		nb_group_elements++;
 	}

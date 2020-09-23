@@ -14,6 +14,7 @@ using namespace std;
 namespace orbiter {
 namespace classification {
 
+
 void poset_orbit_node::store_strong_generators(
 		poset_classification *gen,
 		strong_generators *Strong_gens)
@@ -22,20 +23,28 @@ void poset_orbit_node::store_strong_generators(
 
 	nb_strong_generators = Strong_gens->gens->len;
 	if (nb_strong_generators == 0) {
-		hdl_strong_generators = NULL;
+		first_strong_generator_handle = -1;
+		//hdl_strong_generators = NULL;
 		tl = NULL;
-		}
+	}
 	else {
-		hdl_strong_generators = NEW_int(nb_strong_generators);
+		//hdl_strong_generators = NEW_int(nb_strong_generators);
 		tl = NEW_int(gen->get_A()->base_len());
 		for (i = 0; i < nb_strong_generators; i++) {
-			hdl_strong_generators[i] =
-					gen->get_A()->element_store(
-							Strong_gens->gens->ith(i), FALSE);
+
+			if (i == 0) {
+				first_strong_generator_handle =
+					gen->get_A()->element_store(Strong_gens->gens->ith(i), FALSE);
 			}
-		int_vec_copy(Strong_gens->tl, tl, gen->get_A()->base_len());
+			else {
+				gen->get_A()->element_store(Strong_gens->gens->ith(i), FALSE);
+			}
 		}
+		int_vec_copy(Strong_gens->tl, tl, gen->get_A()->base_len());
+	}
 }
+
+
 
 #if 0
 void poset_orbit_node::get_stabilizer_order(poset_classification *gen, longinteger_object &go)
@@ -60,15 +69,34 @@ void poset_orbit_node::get_stabilizer_order(poset_classification *PC, longintege
 #endif
 
 void poset_orbit_node::get_stabilizer(
-	poset_classification *gen,
+	poset_classification *PC,
 	group &G, longinteger_object &go_G,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
-	G.init(gen->get_A(), verbose_level - 2);
+	if (f_v) {
+		cout << "poset_orbit_node::get_stabilizer, nb_strong_generators=" << nb_strong_generators << endl;
+	}
+	G.init(PC->get_A(), verbose_level - 2);
+
+
+
+#if 0
 	G.init_strong_generators_by_hdl(
 			nb_strong_generators, hdl_strong_generators, tl, 0);
+#else
+
+	std::vector<int> gen_handle;
+	std::vector<int> tl;
+
+	get_strong_generators_handle(gen_handle, verbose_level - 2);
+	get_tl(tl, PC, verbose_level - 2);
+
+	G.init_strong_generators_by_handle_and_with_tl(
+				gen_handle,
+				tl, 0 /*verbose_level*/);
+#endif
 	if (f_v) {
 		cout << "poset_orbit_node::get_stabilizer "
 				"calling schreier_sims for stabilizer with "
@@ -94,12 +122,12 @@ int poset_orbit_node::test_if_stabilizer_is_trivial()
 }
 
 void poset_orbit_node::get_stabilizer_generators(
-	poset_classification *gen,
+	poset_classification *PC,
 	strong_generators *&Strong_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i;
+	//int i;
 
 	if (f_v) {
 		cout << "poset_orbit_node::get_stabilizer_generators" << endl;
@@ -107,22 +135,37 @@ void poset_orbit_node::get_stabilizer_generators(
 				"nb_strong_generators=" << nb_strong_generators << endl;
 		}
 	Strong_gens = NEW_OBJECT(strong_generators);
-	Strong_gens->init_by_hdl(gen->get_A(),
+
+#if 0
+	Strong_gens->init_by_hdl(PC->get_A(),
 			hdl_strong_generators, nb_strong_generators, 0);
 	if (nb_strong_generators == 0) {
-		for (i = 0; i < gen->get_A()->base_len(); i++) {
+		for (i = 0; i < PC->get_A()->base_len(); i++) {
 			Strong_gens->tl[i] = 1;
 			}
 		}
 	else {
-		for (i = 0; i < gen->get_A()->base_len(); i++) {
+		for (i = 0; i < PC->get_A()->base_len(); i++) {
 			Strong_gens->tl[i] = poset_orbit_node::tl[i];
 			}
 		}
+#else
+	std::vector<int> gen_handle;
+	std::vector<int> tl;
+
+	get_strong_generators_handle(gen_handle, verbose_level - 2);
+	get_tl(tl, PC, verbose_level - 2);
+
+	Strong_gens->init_by_hdl_and_with_tl(PC->get_A(),
+			gen_handle,
+			tl,
+			verbose_level - 3);
+#endif
+
 }
 
 void poset_orbit_node::init_extension_node_prepare_G(
-	poset_classification *gen,
+	poset_classification *PC,
 	int prev, int prev_ex, int size,
 	group &G, longinteger_object &go_G,
 	int verbose_level)
@@ -134,61 +177,72 @@ void poset_orbit_node::init_extension_node_prepare_G(
 
 	if (f_v) {
 		cout << "poset_orbit_node::init_extension_node_prepare_G" << endl;
-		}
-	poset_orbit_node *Op = gen->get_node(prev);
+	}
+	poset_orbit_node *Op = PC->get_node(prev);
 
-	G.init(gen->get_A(), verbose_level - 2);
+
+	Op->get_stabilizer(PC, G, go_G, verbose_level);
+
+#if 0
+	G.init(PC->get_A(), verbose_level - 2);
 	if (f_vv) {
-		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		lint_vec_print(cout, gen->get_S(), size);
+		PC->print_level_extension_info(size - 1, prev, prev_ex);
+		lint_vec_print(cout, PC->get_S(), size);
 		cout << "poset_orbit_node::init_extension_node_prepare_G "
 				"calling init_strong_generators_by_hdl" << endl;
+#if 0
 		int_vec_print(cout,
 				Op->hdl_strong_generators,
 				Op->nb_strong_generators);
 		cout << endl;
+#endif
 		cout << "verbose_level=" << verbose_level << endl;
-		}
+	}
+
 	G.init_strong_generators_by_hdl(
 			Op->nb_strong_generators,
 			Op->hdl_strong_generators,
 			Op->tl, verbose_level - 1);
+#endif
+
 	if (f_vvv) {
-		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		lint_vec_print(cout, gen->get_S(), size);
+		PC->print_level_extension_info(size - 1, prev, prev_ex);
+		lint_vec_print(cout, PC->get_S(), size);
 		cout << "poset_orbit_node::init_extension_node_prepare_G "
 				"the strong generators are:" << endl;
 		G.print_strong_generators(cout,
 				FALSE /* f_print_as_permutation */);
-		}
+	}
 
+#if 0
 	if (f_vv) {
-		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		lint_vec_print(cout, gen->get_S(), size);
+		PC->print_level_extension_info(size - 1, prev, prev_ex);
+		lint_vec_print(cout, PC->get_S(), size);
 		cout << "poset_orbit_node::init_extension_node_prepare_G "
 				"before schreier_sims for stabilizer with "
 			<< Op->nb_strong_generators << " strong generators" << endl;
-		}
+	}
 	G.schreier_sims(0 /*verbose_level - 2*/);
 	if (f_vv) {
-		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		lint_vec_print(cout, gen->get_S(), size);
+		PC->print_level_extension_info(size - 1, prev, prev_ex);
+		lint_vec_print(cout, PC->get_S(), size);
 		cout << "poset_orbit_node::init_extension_node_prepare_G "
 				"after schreier_sims" << endl;
-		}
+	}
 
-	G.group_order(go_G);
+	//G.group_order(go_G);
+#endif
 	if (f_vv) {
-		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		lint_vec_print(cout, gen->get_S(), size);
+		PC->print_level_extension_info(size - 1, prev, prev_ex);
+		lint_vec_print(cout, PC->get_S(), size);
 		cout << "_{" << go_G << "}, previous stabilizer "
 				"has been reconstructed" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "poset_orbit_node::init_extension_node_prepare_G "
 				"done" << endl;
-		}
+	}
 
 }
 
@@ -215,7 +269,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 				<< " pt = " << pt
 				<< " pt_orbit_len = " << pt_orbit_len
 				<< endl;
-		}
+	}
 
 
 	if (f_vv) {
@@ -228,10 +282,10 @@ void poset_orbit_node::init_extension_node_prepare_H(
 		if (G.f_has_sims && !go_G.is_one()) {
 			cout << " = ";
 			G.S->print_group_order_factored(cout);
-			}
+		}
 		cout << ")" << endl;
 		cout << "verbose_level=" << verbose_level << endl;
-		}
+	}
 
 	//cout << "computing point stabilizer" << endl;
 	if (f_vv) {
@@ -240,7 +294,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 		cout << "poset_orbit_node::init_extension_node_prepare_H "
 				"computing stabilizer of point " << pt
 				<< " in group of order " << go_G << endl;
-		}
+	}
 
 	if (gen->get_poset()->f_subspace_lattice) {
 
@@ -250,7 +304,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 			cout << "poset_orbit_node::init_extension_node_prepare_H "
 					"before compute_point_stabilizer_in_subspace_setting"
 					<< endl;
-			}
+		}
 		compute_point_stabilizer_in_subspace_setting(gen,
 			prev, prev_ex, size,
 			G, go_G,
@@ -263,9 +317,9 @@ void poset_orbit_node::init_extension_node_prepare_H(
 			cout << "poset_orbit_node::init_extension_node_prepare_H "
 					"after compute_point_stabilizer_in_subspace_setting"
 					<< endl;
-			}
-
 		}
+
+	}
 	else {
 		// action on sets:
 
@@ -275,7 +329,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 			cout << "poset_orbit_node::init_extension_node_prepare_H "
 					"before compute_point_stabilizer_in_standard_setting"
 					<< endl;
-			}
+		}
 		compute_point_stabilizer_in_standard_setting(gen,
 			prev, prev_ex, size,
 			G, go_G,
@@ -288,23 +342,23 @@ void poset_orbit_node::init_extension_node_prepare_H(
 			cout << "poset_orbit_node::init_extension_node_prepare_H "
 					"after compute_point_stabilizer_in_standard_setting"
 					<< endl;
-			}
-
 		}
+
+	}
 	// now H has strong generators only
 
 	if (f_vv) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		cout << "poset_orbit_node::init_extension_node_prepare_H "
 				"calling schreier_sims for point stabilizer" << endl;
-		}
+	}
 	H.schreier_sims(0);
 
 	if (f_vv) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		cout << "poset_orbit_node::init_extension_node_prepare_H "
 				"after schreier_sims for point stabilizer" << endl;
-		}
+	}
 
 
 
@@ -323,7 +377,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 		//cout << endl;
 		cout << ", of index = " << q << " in " << go_G << endl;
 		//H.S->print(TRUE);
-		}
+	}
 	if (q.as_int() != pt_orbit_len) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		lint_vec_print(cout, gen->get_S(), size);
@@ -334,7 +388,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 		cout << "q = " << q << endl;
 		cout << "pt_orbit_len = " << pt_orbit_len << endl;
 		exit(1);
-		}
+	}
 	if (f_vv) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
 		lint_vec_print(cout, gen->get_S(), size);
@@ -343,13 +397,13 @@ void poset_orbit_node::init_extension_node_prepare_H(
 		int f_print_as_permutation = FALSE;
 		if (/*f_v10 &&*/ gen->get_A2()->degree < 100) {
 			f_print_as_permutation = TRUE;
-			}
-		H.print_strong_generators(cout, f_print_as_permutation);
 		}
+		H.print_strong_generators(cout, f_print_as_permutation);
+	}
 
 	if (f_v) {
 		cout << "poset_orbit_node::init_extension_node_prepare_H done" << endl;
-		}
+	}
 }
 
 void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
@@ -471,7 +525,7 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
 			cout << " poset_orbit_node::compute_point_stabilizer_"
 					"in_subspace_setting, "
-					"without early test function,  setting up factor "
+					"without early test function, setting up factor "
 					"space action:" << endl;
 			}
 		Op->setup_factor_space_action(
@@ -709,31 +763,32 @@ void poset_orbit_node::create_schreier_vector_wrapper(
 	int gen_hdl_first;
 
 	if (f_v) {
-		cout << "poset_orbit_node::create_schreier_"
-				"vector_wrapper" << endl;
+		cout << "poset_orbit_node::create_schreier_vector_wrapper" << endl;
 	}
 	if (f_create_schreier_vector) {
 
 		if (f_vv) {
-			cout << "poset_orbit_node::create_schreier_"
-					"vector_wrapper "
+			cout << "poset_orbit_node::create_schreier_vector_wrapper "
 					"calling get_schreier_vector" << endl;
-			}
+		}
 		if (f_vv) {
-			int i;
-			cout << "poset_orbit_node::create_schreier_"
-					"vector_wrapper " << endl;
+			//int i;
+			cout << "poset_orbit_node::create_schreier_vector_wrapper " << endl;
+#if 0
 			for (i = 0; i < nb_strong_generators; i++) {
 				cout << "hdl_strong_generators[" << i << "]="
 						<< hdl_strong_generators[i] << endl;
 			}
+#endif
+
 		}
 		if (nb_strong_generators == 0) {
 			gen_hdl_first = -1;
-			}
+		}
 		else {
-			gen_hdl_first = hdl_strong_generators[0];
-			}
+			//gen_hdl_first = hdl_strong_generators[0];
+			gen_hdl_first = first_strong_generator_handle;
+		}
 
 		// ToDo: set the shallow schreier strategy
 
@@ -755,8 +810,7 @@ void poset_orbit_node::create_schreier_vector_wrapper(
 		Schreier_vector = NULL;
 		}
 	if (f_v) {
-		cout << "poset_orbit_node::create_schreier_"
-				"vector_wrapper "
+		cout << "poset_orbit_node::create_schreier_vector_wrapper "
 				"done" << endl;
 	}
 }
@@ -773,22 +827,22 @@ void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
 	int f_vv = (verbose_level >= 10);
 
 	if (f_v) {
-		cout << "poset_orbit_node::create_schreier_vector_"
-				"wrapper_subspace_action"
+		cout << "poset_orbit_node::create_schreier_vector_wrapper_subspace_action"
 				<< endl;
-		}
+	}
 	if (f_create_schreier_vector) {
 
 		if (f_vv) {
 			cout << "calling get_schreier_vector" << endl;
-			}
+		}
 		int gen_hdl_first;
 		if (nb_strong_generators == 0) {
 			gen_hdl_first = -1;
-			}
+		}
 		else {
-			gen_hdl_first = hdl_strong_generators[0];
-			}
+			//gen_hdl_first = hdl_strong_generators[0];
+			gen_hdl_first = first_strong_generator_handle;
+		}
 
 		enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy =
 				shallow_schreier_tree_standard;
@@ -814,14 +868,12 @@ void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
 			}
 		}
 		if (f_v) {
-			cout << "poset_orbit_node::create_schreier_vector_"
-					"wrapper_subspace_action "
+			cout << "poset_orbit_node::create_schreier_vector_wrapper_subspace_action "
 					"changing point labels:" << endl;
 		}
 		Schreier_vector->relabel_points(AF, 0 /*verbose_level - 4*/);
 		if (f_v) {
-			cout << "poset_orbit_node::create_schreier_vector_"
-					"wrapper_subspace_action "
+			cout << "poset_orbit_node::create_schreier_vector_wrapper_subspace_action "
 					"changing point labels done" << endl;
 		}
 		if (f_vv) {
@@ -838,12 +890,11 @@ void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
 	}
 	else {
 		Schreier_vector = NULL;
-		}
+	}
 	if (f_v) {
-		cout << "poset_orbit_node::create_schreier_vector_"
-				"wrapper_subspace_action "
+		cout << "poset_orbit_node::create_schreier_vector_wrapper_subspace_action "
 				"done" << endl;
-		}
+	}
 }
 
 }}

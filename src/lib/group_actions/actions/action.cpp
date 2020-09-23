@@ -1167,6 +1167,29 @@ int action::least_image_of_point(vector_ge &strong_generators,
 }
 
 int action::least_image_of_point_generators_by_handle(
+	std::vector<int> &gen_handle,
+	int pt, int *transporter, int verbose_level)
+{
+	//int f_v = (verbose_level >= 1);
+	vector_ge gens;
+	int i;
+	int nb_gen;
+
+	nb_gen = gen_handle.size();
+
+	if (nb_gen == 0) {
+		element_one(transporter, 0);
+		return pt;
+	}
+	gens.init(this, verbose_level - 2);
+	gens.allocate(nb_gen, verbose_level - 2);
+	for (i = 0; i < nb_gen; i++) {
+		element_retrieve(gen_handle[i], gens.ith(i), 0);
+	}
+	return least_image_of_point(gens, pt, transporter, verbose_level);
+}
+
+int action::least_image_of_point_generators_by_handle(
 	int nb_gen, int *gen_handle,
 	int pt, int *transporter, int verbose_level)
 {

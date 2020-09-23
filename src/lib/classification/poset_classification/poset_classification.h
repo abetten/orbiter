@@ -1073,7 +1073,8 @@ private:
 	
 	long int pt;
 	int nb_strong_generators;
-	int *hdl_strong_generators;
+	//int *hdl_strong_generators;
+	int first_strong_generator_handle; // if there is a generator
 	int *tl;
 	
 	int nb_extensions;
@@ -1082,6 +1083,10 @@ private:
 	schreier_vector *Schreier_vector;
 	
 	action *A_on_upset;
+	// only used for actions on subspace lattices
+	// it records the action on the factor space modulo the current subspace
+	// used in poset_orbit_node_downstep_subspace_action.cpp
+	// and poset_orbit_node_upstep_subspace_action.cpp
 
 public:
 
@@ -1156,11 +1161,11 @@ public:
 		strong_generators *Strong_gens);
 	void get_stabilizer_order(poset_classification *gen,
 		longinteger_object &go);
-	void get_stabilizer(poset_classification *gen,
+	void get_stabilizer(poset_classification *PC,
 		group &G, longinteger_object &go_G,
 		int verbose_level);
 	int test_if_stabilizer_is_trivial();
-	void get_stabilizer_generators(poset_classification *gen,
+	void get_stabilizer_generators(poset_classification *PC,
 		strong_generators *&Strong_gens,
 		int verbose_level);
 	void init_extension_node_prepare_G(

@@ -64,8 +64,20 @@ void arc_generator::null()
 
 void arc_generator::freeself()
 {
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "arc_generator::freeself" << endl;
+	}
 	if (gen) {
+		if (f_v) {
+			cout << "arc_generator::freeself before FREE_OBJECT(gen)" << endl;
+		}
 		FREE_OBJECT(gen);
+		if (f_v) {
+			cout << "arc_generator::freeself after FREE_OBJECT(gen)" << endl;
+		}
 	}
 	
 	if (Grass) {
@@ -87,6 +99,9 @@ void arc_generator::freeself()
 		FREE_int(line_type);
 	}
 	null();
+	if (f_v) {
+		cout << "arc_generator::freeself done" << endl;
+	}
 }
 
 void arc_generator::main(int verbose_level)

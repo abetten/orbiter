@@ -347,15 +347,20 @@ void poset_orbit_node::compute_schreier_vector(
 
 	if (f_v) {
 		cout << "poset_orbit_node::compute_schreier_vector "
-				"before Schreier->init_generators_by_hdl" << endl;
+				"before Schreier->init_generators_by_handle" << endl;
 	}
-	Schreier->init_generators_by_hdl(
-			nb_strong_generators,
-			hdl_strong_generators,
+
+	std::vector<int> gen_handle;
+
+	get_strong_generators_handle(gen_handle, verbose_level - 2);
+
+
+	Schreier->init_generators_by_handle(
+			gen_handle,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "poset_orbit_node::compute_schreier_vector "
-				"before Schreier->init_generators_by_hdl" << endl;
+				"before Schreier->init_generators_by_handle" << endl;
 	}
 
 	if (f_v) {
@@ -638,14 +643,20 @@ void poset_orbit_node::schreier_forest(
 		gen->print_level_info(lvl, node);
 		cout << " : poset_orbit_node::schreier_forest initializing generators. There are "
 				<< nb_strong_generators  << " strong generators" << endl;
-		cout << "hdl_strong_generators=";
-		int_vec_print(cout, hdl_strong_generators, nb_strong_generators);
-		cout << endl;
+		//cout << "hdl_strong_generators=";
+		//int_vec_print(cout, hdl_strong_generators, nb_strong_generators);
+		//cout << endl;
 		}
 
 
-	Schreier.init_generators_by_hdl(nb_strong_generators,
-			hdl_strong_generators, verbose_level - 1);
+	std::vector<int> gen_handle;
+
+	get_strong_generators_handle(gen_handle, verbose_level - 2);
+
+	Schreier.init_generators_by_handle(
+			gen_handle,
+			verbose_level - 1);
+
 	if (f_v) {
 		gen->print_level_info(lvl, node);
 		cout << " : poset_orbit_node::schreier_forest calling Schreier.compute_all_point_orbits "
@@ -1128,8 +1139,16 @@ int poset_orbit_node::downstep_get_invariant_subset(
 				schreier S;
 
 				S.init(gen->get_A2(), verbose_level - 2);
-				S.init_generators_by_hdl(O->nb_strong_generators, 
-					O->hdl_strong_generators, verbose_level - 1);
+
+				std::vector<int> gen_handle;
+
+				O->get_strong_generators_handle(gen_handle, verbose_level - 2);
+
+				S.init_generators_by_handle(
+						gen_handle,
+						verbose_level - 1);
+
+
 				S.compute_point_orbit(pt, 0/*verbose_level*/);
 				if (S.orbit_len[0] != l) {
 					cout << "poset_orbit_node::downstep_get_invariant_subset "

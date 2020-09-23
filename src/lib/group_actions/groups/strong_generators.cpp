@@ -187,6 +187,38 @@ void strong_generators::init_copy(strong_generators *S,
 	}
 }
 
+void strong_generators::init_by_hdl_and_with_tl(action *A,
+		std::vector<int> &gen_handle,
+		std::vector<int> &tl,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "strong_generators::init_by_hdl_and_with_tl" << endl;
+	}
+
+
+	init(A, 0);
+	strong_generators::tl = NEW_int(A->base_len());
+	for (i = 0; i < A->base_len(); i++) {
+		strong_generators::tl[i] = tl[i];
+	}
+	gens = NEW_OBJECT(vector_ge);
+	gens->init(A, verbose_level - 2);
+	gens->allocate(gen_handle.size(), verbose_level - 2);
+	for (i = 0; i < gen_handle.size(); i++) {
+		A->element_retrieve(gen_handle[i], gens->ith(i), 0);
+	}
+
+
+	if (f_v) {
+		cout << "strong_generators::init_by_hdl_and_with_tl done" << endl;
+	}
+}
+
+
 void strong_generators::init_by_hdl(action *A,
 		int *gen_hdl, int nb_gen, int verbose_level)
 {
