@@ -344,11 +344,18 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 		}
 	}
 	
+
+	O->get_stabilizer(
+			gen,
+			*G, go,
+			verbose_level);
+#if 0
 	G->init(A, verbose_level - 2);
 	G->init_strong_generators_by_hdl(O->nb_strong_generators,
 			O->hdl_strong_generators, O->tl, FALSE);
 	G->schreier_sims(0);
 	G->group_order(go);
+#endif
 
 	if (f_vv) {
 		cout << "stabilizer of the chosen set has order " << go << endl;

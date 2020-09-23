@@ -71,36 +71,45 @@ void poset_orbit_node::read_memory_object(
 			cout << "poset_orbit_node::read_memory_object "
 					"extension " << i << endl;
 		}
-		m->read_lint(&E[i].pt);
+		long int a;
+		int b;
+
+		m->read_lint(&a);
+		E[i].set_pt(a);
 		if (f_v) {
 			cout << "poset_orbit_node::read_memory_object "
-					"pt = " << E[i].pt << endl;
+					"pt = " << E[i].get_pt() << endl;
 		}
-		m->read_int(&E[i].orbit_len);
+		m->read_int(&b);
+		E[i].set_orbit_len(b);
 		if (f_v) {
 			cout << "poset_orbit_node::read_memory_object "
-					"pt = " << E[i].orbit_len << endl;
+					"pt = " << E[i].get_orbit_len() << endl;
 		}
-		m->read_int(&E[i].type);
+		m->read_int(&b);
+		E[i].set_type(b);
 		if (f_v) {
 			cout << "poset_orbit_node::read_memory_object "
-					"type = " << E[i].type << endl;
+					"type = " << E[i].get_type() << endl;
 		}
-		if (E[i].type == EXTENSION_TYPE_EXTENSION) {
+		if (b == EXTENSION_TYPE_EXTENSION) {
 			// extension node
-			m->read_int(&E[i].data); // next poset_orbit_node
+			m->read_int(&b); // next poset_orbit_node
+			E[i].set_data(b);
 		}
-		else if (E[i].type == EXTENSION_TYPE_FUSION) {
+		else if (b == EXTENSION_TYPE_FUSION) {
 			// fusion node
 			A->element_read_from_memory_object(Elt, m, verbose_level - 2);
-			E[i].data = A->element_store(Elt, FALSE);
-			m->read_int(&E[i].data1);
-			m->read_int(&E[i].data2);
+			E[i].set_data(A->element_store(Elt, FALSE));
+			m->read_int(&b);
+			E[i].set_data1(b);
+			m->read_int(&b);
+			E[i].set_data2(b);
 			nb_group_elements++;
 		}
 		else {
 			cout << "poset_orbit_node::read_memory_object type "
-					<< E[i].type << " is illegal" << endl;
+					<< E[i].get_type() << " is illegal" << endl;
 			exit(1);
 		}
 	}
@@ -162,34 +171,34 @@ void poset_orbit_node::write_memory_object(
 		cout << "used_length=" << m->used_length << endl;
 	}
 	for (i = 0; i < nb_extensions; i++) {
-		m->write_lint(E[i].pt);
-		m->write_int(E[i].orbit_len);
-		m->write_int(E[i].type);
+		m->write_lint(E[i].get_pt());
+		m->write_int(E[i].get_orbit_len());
+		m->write_int(E[i].get_type());
 		if (f_v) {
-			cout << i << " : " << E[i].pt << " : "
-					<< E[i].orbit_len << " : " << E[i].type << endl;
+			cout << i << " : " << E[i].get_pt() << " : "
+					<< E[i].get_orbit_len() << " : " << E[i].get_type() << endl;
 		}
-		if (E[i].type == EXTENSION_TYPE_EXTENSION) {
+		if (E[i].get_type() == EXTENSION_TYPE_EXTENSION) {
 			// extension node
-			m->write_int(E[i].data); // next poset_orbit_node
+			m->write_int(E[i].get_data()); // next poset_orbit_node
 			if (f_v) {
-				cout << "extension node, data=" << E[i].data << endl;
+				cout << "extension node, data=" << E[i].get_data() << endl;
 			}
 		}
-		else if (E[i].type == EXTENSION_TYPE_FUSION) {
+		else if (E[i].get_type() == EXTENSION_TYPE_FUSION) {
 			// fusion node
 			if (f_v) {
-				cout << "fusion node, hdl=" << E[i].data << endl;
+				cout << "fusion node, hdl=" << E[i].get_data() << endl;
 			}
-			A->element_retrieve(E[i].data, Elt, FALSE);
+			A->element_retrieve(E[i].get_data(), Elt, FALSE);
 			A->element_write_to_memory_object(Elt, m, verbose_level);
-			m->write_int(E[i].data1);
-			m->write_int(E[i].data2);
+			m->write_int(E[i].get_data1());
+			m->write_int(E[i].get_data2());
 			nb_group_elements++;
 		}
 		else {
 			cout << "poset_orbit_node::write_memory: type "
-						<< E[i].type << " is illegal" << endl;
+						<< E[i].get_type() << " is illegal" << endl;
 			exit(1);
 		}
 	}
@@ -229,12 +238,12 @@ long int poset_orbit_node::calc_size_on_file(action *A, int verbose_level)
 		//m->write_int(E[i].orbit_len);
 		//m->write_int(E[i].type);
 
-		if (E[i].type == EXTENSION_TYPE_EXTENSION) {
+		if (E[i].get_type() == EXTENSION_TYPE_EXTENSION) {
 			// extension node
 			s += sizeof(int); // data
 			//m->write_int(E[i].data); // next poset_orbit_node
 			}
-		else if (E[i].type == EXTENSION_TYPE_FUSION) {
+		else if (E[i].get_type() == EXTENSION_TYPE_FUSION) {
 			// fusion node
 			s += A->coded_elt_size_in_char; // group element
 			//A->element_retrieve(E[i].data, Elt, FALSE);
@@ -356,28 +365,35 @@ void poset_orbit_node::read_file(action *A,
 		if (f_vv) {
 			cout << "poset_orbit_node::read_file extension " << i << endl;
 		}
-		fp.read((char *) &E[i].pt, sizeof(long int));
+		long int a;
+		int b;
+
+		fp.read((char *) &a, sizeof(long int));
+		E[i].set_pt(a);
 		//E[i].pt = Fio.fread_int4(fp);
 		if (f_vv) {
-			cout << "pt = " << E[i].pt << endl;
+			cout << "pt = " << E[i].get_pt() << endl;
 		}
-		fp.read((char *) &E[i].orbit_len, sizeof(int));
+		fp.read((char *) &b, sizeof(int));
+		E[i].set_orbit_len(b);
 		//E[i].orbit_len = Fio.fread_int4(fp);
 		if (f_vv) {
-			cout << "orbit_len = " << E[i].orbit_len << endl;
+			cout << "orbit_len = " << E[i].get_orbit_len() << endl;
 		}
-		fp.read((char *) &E[i].type, sizeof(int));
+		fp.read((char *) &b, sizeof(int));
+		E[i].set_type(b);
 		//E[i].type = Fio.fread_int4(fp);
 		if (f_vv) {
-			cout << "type = " << E[i].type << endl;
+			cout << "type = " << E[i].get_type() << endl;
 		}
-		if (E[i].type == EXTENSION_TYPE_EXTENSION) {
+		if (E[i].get_type() == EXTENSION_TYPE_EXTENSION) {
 			// extension node
-			fp.read((char *) &E[i].data, sizeof(int));
+			fp.read((char *) &b, sizeof(int));
+			E[i].set_data(b);
 			//E[i].data = Fio.fread_int4(fp);
 			// next poset_orbit_node
 		}
-		else if (E[i].type == EXTENSION_TYPE_FUSION) {
+		else if (E[i].get_type() == EXTENSION_TYPE_FUSION) {
 			// fusion node
 			A->element_read_file_fp(Elt, fp, verbose_level);
 			if (f_vv) {
@@ -385,12 +401,14 @@ void poset_orbit_node::read_file(action *A,
 				A->element_print_quick(Elt, cout);
 			}
 			//element_read_file(A, Elt, elt, fp, verbose_level);
-			E[i].data = A->element_store(Elt, FALSE);
-			fp.read((char *) &E[i].data1, sizeof(int));
-			fp.read((char *) &E[i].data2, sizeof(int));
+			E[i].set_data(A->element_store(Elt, FALSE));
+			fp.read((char *) &b, sizeof(int));
+			E[i].set_data1(b);
+			fp.read((char *) &b, sizeof(int));
+			E[i].set_data2(b);
 			nb_group_elements++;
 		}
-		else if (E[i].type == EXTENSION_TYPE_PROCESSING) {
+		else if (E[i].get_type() == EXTENSION_TYPE_PROCESSING) {
 			cout << "poset_orbit_node::read_file: "
 					"type EXTENSION_TYPE_PROCESSING is illegal" << endl;
 			exit(1);
@@ -455,36 +473,45 @@ void poset_orbit_node::write_file(action *A,
 		cout << "nb_extensions=" << nb_extensions << endl;
 	}
 	for (i = 0; i < nb_extensions; i++) {
-		fp.write((char *) &E[i].pt, sizeof(long int));
-		fp.write((char *) &E[i].orbit_len, sizeof(int));
-		fp.write((char *) &E[i].type, sizeof(int));
+		long int a;
+		int b;
+
+		a = E[i].get_pt();
+		fp.write((char *) &a, sizeof(long int));
+		b = E[i].get_orbit_len();
+		fp.write((char *) &b, sizeof(int));
+		b = E[i].get_type();
+		fp.write((char *) &b, sizeof(int));
 		//Fio.fwrite_int4(fp, E[i].pt);
 		//Fio.fwrite_int4(fp, E[i].orbit_len);
 		//Fio.fwrite_int4(fp, E[i].type);
 		if (f_vv) {
-			cout << i << " : " << E[i].pt << " : "
-					<< E[i].orbit_len << " : " << E[i].type << endl;
+			cout << i << " : " << E[i].get_pt() << " : "
+					<< E[i].get_orbit_len() << " : " << E[i].get_type() << endl;
 		}
-		if (E[i].type == EXTENSION_TYPE_EXTENSION) {
+		if (E[i].get_type() == EXTENSION_TYPE_EXTENSION) {
 			// extension node
-			fp.write((char *) &E[i].data, sizeof(int));
+			b = E[i].get_data();
+			fp.write((char *) &b, sizeof(int));
 			//Fio.fwrite_int4(fp, E[i].data);
 			if (f_vv) {
-				cout << "extension node, data=" << E[i].data << endl;
+				cout << "extension node, data=" << E[i].get_data() << endl;
 			}
 		}
-		else if (E[i].type == EXTENSION_TYPE_FUSION) {
+		else if (E[i].get_type() == EXTENSION_TYPE_FUSION) {
 			// fusion node
 			if (f_vv) {
-				cout << "fusion node, hdl=" << E[i].data << endl;
+				cout << "fusion node, hdl=" << E[i].get_data() << endl;
 			}
-			A->element_retrieve(E[i].data, Elt, FALSE);
+			A->element_retrieve(E[i].get_data(), Elt, FALSE);
 			A->element_write_file_fp(Elt, fp, 0);
-			fp.write((char *) &E[i].data1, sizeof(int));
-			fp.write((char *) &E[i].data2, sizeof(int));
+			b = E[i].get_data1();
+			fp.write((char *) &b, sizeof(int));
+			b = E[i].get_data2();
+			fp.write((char *) &b, sizeof(int));
 			nb_group_elements++;
 		}
-		else if (E[i].type == EXTENSION_TYPE_PROCESSING) {
+		else if (E[i].get_type() == EXTENSION_TYPE_PROCESSING) {
 			cout << "poset_orbit_node::write_file: "
 					"type EXTENSION_TYPE_PROCESSING is illegal" << endl;
 			exit(1);

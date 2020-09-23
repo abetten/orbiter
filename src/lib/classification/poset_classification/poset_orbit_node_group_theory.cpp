@@ -37,16 +37,27 @@ void poset_orbit_node::store_strong_generators(
 		}
 }
 
-void poset_orbit_node::get_stabilizer_order(
-		poset_classification *gen,
-		longinteger_object &go)
+#if 0
+void poset_orbit_node::get_stabilizer_order(poset_classification *gen, longinteger_object &go)
 {
 	strong_generators *Strong_gens;
 
 	get_stabilizer_generators(gen,
 		Strong_gens, 0 /*verbose_level*/);
 	Strong_gens->group_order(go);
+	// ToDo: free Strong_gens
 }
+#else
+void poset_orbit_node::get_stabilizer_order(poset_classification *PC, longinteger_object &go)
+{
+	if (nb_strong_generators) {
+		go.create_product(PC->get_poset()->A->base_len(), tl);
+	}
+	else {
+		go.create(1, __FILE__, __LINE__);
+	}
+}
+#endif
 
 void poset_orbit_node::get_stabilizer(
 	poset_classification *gen,

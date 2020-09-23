@@ -694,18 +694,18 @@ void isomorph::create_level_database(int level, int verbose_level)
 
 
 			nb_fusion = 0;
-			for (j = 0; j < O->nb_extensions; j++) {
-				if (O->E[j].type == 2) {
+			for (j = 0; j < O->get_nb_of_extensions(); j++) {
+				if (O->get_E(j)->get_type() == EXTENSION_TYPE_FUSION) {
 					nb_fusion++;
-					}
 				}
+			}
 			
 			len = 1 + 1 + level + 1;
-			if (O->nb_strong_generators) {
+			if (O->get_nb_strong_generators()) {
 				len += gen->get_A()->base_len();
-				}
+			}
 			len += 1;
-			len += 4 * O->nb_extensions;
+			len += 4 * O->get_nb_of_extensions();
 			len += 1; // for the reference of the first group element
 			//len += O->nb_strong_generators;
 			//len += nb_fusion;
@@ -713,27 +713,27 @@ void isomorph::create_level_database(int level, int verbose_level)
 			v.m_l_n(len);
 			idx = 0;
 			v.m_ii(idx++, I);
-			v.m_ii(idx++, O->prev);
+			v.m_ii(idx++, O->get_prev());
 			for (j = 0; j < level; j++) {
 				v.m_ii(idx++, set1[j]);
 				}
-			v.m_ii(idx++, O->nb_strong_generators);
-			if (O->nb_strong_generators) {
+			v.m_ii(idx++, O->get_nb_strong_generators());
+			if (O->get_nb_strong_generators()) {
 				for (j = 0; j < gen->get_A()->base_len(); j++) {
-					v.m_ii(idx++, O->tl[j]);
-					}
+					v.m_ii(idx++, O->get_tl(j));
 				}
-			v.m_ii(idx++, O->nb_extensions);
-			for (j = 0; j < O->nb_extensions; j++) {
-				v.m_ii(idx++, O->E[j].pt);
-				set1[level] = O->E[j].pt;
-				v.m_ii(idx++, O->E[j].orbit_len);
-				v.m_ii(idx++, O->E[j].type);
-				if (O->E[j].type == 1) {
-					v.m_ii(idx++, O->E[j].data);
-					}
-				else if (O->E[j].type == 2) {
-					gen->get_A()->element_retrieve(O->E[j].data, gen->get_Elt1(), FALSE);
+			}
+			v.m_ii(idx++, O->get_nb_of_extensions());
+			for (j = 0; j < O->get_nb_of_extensions(); j++) {
+				v.m_ii(idx++, O->get_E(j)->get_pt());
+				set1[level] = O->get_E(j)->get_pt();
+				v.m_ii(idx++, O->get_E(j)->get_orbit_len());
+				v.m_ii(idx++, O->get_E(j)->get_type());
+				if (O->get_E(j)->get_type() == EXTENSION_TYPE_EXTENSION) {
+					v.m_ii(idx++, O->get_E(j)->get_data());
+				}
+				else if (O->get_E(j)->get_type() == EXTENSION_TYPE_FUSION) {
+					gen->get_A()->element_retrieve(O->get_E(j)->get_data(), gen->get_Elt1(), FALSE);
 
 
 					gen->get_A2()->map_a_set(set1, set2, level + 1, gen->get_Elt1(), 0);
@@ -745,19 +745,19 @@ void isomorph::create_level_database(int level, int verbose_level)
 						cout << " to ";
 						lint_vec_print(cout, set2, level + 1);
 						cout << endl;
-						}
+					}
 		
 		
 					J = gen->find_poset_orbit_node_for_set(level + 1,
 							set2, FALSE /* f_tolerant */, 0);
 					v.m_ii(idx++, J);
-					}
+				}
 				else {
-					cout << "unknown type " << O->E[j].type
+					cout << "unknown type " << O->get_E(j)->get_type()
 							<< " i=" << i << " j=" << j << endl;
 					exit(1);
-					}
 				}
+			}
 #if 0
 			int len_mem, h, idx1;
 			char *mem;
@@ -765,7 +765,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 				cout << "idx != len - 1, idx=" << idx << " len=" << len
 						<< " i=" << i << " j=" << j << endl;
 				exit(1);
-				}
+			}
 			len_mem = (O->nb_strong_generators + nb_fusion) *
 					gen->A->coded_elt_size_in_char;
 			mem = NEW_char(len_mem);
@@ -776,8 +776,8 @@ void isomorph::create_level_database(int level, int verbose_level)
 				gen->A->element_pack(gen->Elt1, elt, FALSE);
 				for (h = 0; h < gen->A->coded_elt_size_in_char; h++) {
 					mem[idx1++] = elt[h];
-					}
 				}
+			}
 			for (j = 0; j < O->nb_extensions; j++) {
 				if (O->E[j].type == 1)
 					continue;
@@ -785,39 +785,46 @@ void isomorph::create_level_database(int level, int verbose_level)
 				gen->A->element_pack(gen->Elt1, elt, FALSE);
 				for (h = 0; h < gen->A->coded_elt_size_in_char; h++) {
 					mem[idx1++] = elt[h];
-					}
 				}
+			}
 			if (idx1 != len_mem) {
 				cout << "idx1 != len_mem idx=" << idx << " len_mem=" << len_mem
 						<< " i=" << i << " j=" << j << endl;
 				exit(1);
-				}
+			}
 			memory M;
 
 			M.init(len_mem, mem);
 			M.swap(v.s_i(idx));
 #else
 			v.m_ii(idx++, cnt);
-			for (j = 0; j < O->nb_strong_generators; j++) {
+
+			std::vector<int> gen_hdl;
+
+			O->get_strong_generators_handle(gen_hdl, verbose_level);
+
+
+			for (j = 0; j < gen_hdl.size(); j++) {
 				gen->get_A()->element_retrieve(
-						O->hdl_strong_generators[j], gen->get_Elt1(),
+						gen_hdl[j], gen->get_Elt1(),
 						FALSE);
 				gen->get_A()->element_write_file_fp(gen->get_Elt1(), fp,
 						0/* verbose_level*/);
 				cnt++;
-				}
-			for (j = 0; j < O->nb_extensions; j++) {
-				if (O->E[j].type == 1)
+			}
+			for (j = 0; j < O->get_nb_of_extensions(); j++) {
+				if (O->get_E(j)->get_type() == EXTENSION_TYPE_EXTENSION) {
 					continue;
-				gen->get_A()->element_retrieve(O->E[j].data, gen->get_Elt1(), FALSE);
+				}
+				gen->get_A()->element_retrieve(O->get_E(j)->get_data(), gen->get_Elt1(), FALSE);
 				gen->get_A()->element_write_file_fp(gen->get_Elt1(), fp,
 						0/* verbose_level*/);
 				cnt++;
-				}
+			}
 			if (idx != len) {
 				cout << "idx != len, idx=" << idx << " len=" << len << endl;
 				exit(1);
-				}
+			}
 #endif
 
 
@@ -828,8 +835,8 @@ void isomorph::create_level_database(int level, int verbose_level)
 				sz = v.csf();
 				cout << "size on file = " << sz << ", group element "
 						"counter = " << cnt << endl;
-				}
 			}
+		}
 
 
 		//fclose(fp);
@@ -845,7 +852,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 		cout << "file size is " << Fio.file_size(fname_db_level_ge) << endl;
 		cout << "gen->A->coded_elt_size_in_char="
 				<< gen->get_A()->coded_elt_size_in_char << endl;
-		}
+	}
 	
 	//FREE_char(elt);
 	
@@ -891,9 +898,8 @@ void isomorph::load_strong_generators_oracle(int cur_level,
 {
 	int f_v = (verbose_level >= 1);
 	poset_orbit_node *O;
-	int *tl;
 	int i, node;
-	longinteger_domain Dom;
+	//longinteger_domain Dom;
 
 	if (f_v) {
 		cout << "isomorph::load_strong_generators_oracle "
@@ -903,26 +909,43 @@ void isomorph::load_strong_generators_oracle(int cur_level,
 
 	node = gen->first_node_at_level(cur_level) + cur_node_local;
 	O = gen->get_node(node);
+
+
+	std::vector<int> gen_hdl;
+
+	O->get_strong_generators_handle(gen_hdl, verbose_level);
+
+
+
+#if 0
 	if (O->nb_strong_generators == 0) {
 		gens.init(gen->get_A(), verbose_level - 2);
 		gens.allocate(0, verbose_level - 2);
 		go.create(1, __FILE__, __LINE__);
 		goto finish;
 		}
+	int *tl;
 	tl = NEW_int(gen->get_A()->base_len());
 	for (i = 0; i < gen->get_A()->base_len(); i++) {
-		tl[i] = O->tl[i];
-		}
+		tl[i] = O->get_tl(i);
+	}
+
 	Dom.multiply_up(go, tl, gen->get_A()->base_len(), 0 /* verbose_level */);
+
 	FREE_int(tl);
+#else
+	O->get_stabilizer_order(gen, go);
+#endif
+
 	gens.init(gen->get_A(), verbose_level - 2);
-	gens.allocate(O->nb_strong_generators, verbose_level - 2);
-	for (i = 0; i < O->nb_strong_generators; i++) {
+	gens.allocate(gen_hdl.size(), verbose_level - 2);
+
+	for (i = 0; i < gen_hdl.size(); i++) {
 		gen->get_A()->element_retrieve(
-				O->hdl_strong_generators[i],
+				gen_hdl[i],
 				gens.ith(i), FALSE);
 		}
-finish:
+//finish:
 	if (f_v) {
 		cout << "isomorph::load_strong_generators_oracle "
 				"cur_level=" << cur_level << " cur_node_local="

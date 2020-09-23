@@ -972,8 +972,8 @@ void poset_orbit_node::find_extensions(poset_classification *gen,
 
 			
 
-		E[nb_extensions].pt = rep;
-		E[nb_extensions].orbit_len = O.orbit_len[k];
+		E[nb_extensions].set_pt(rep);
+		E[nb_extensions].set_orbit_len(O.orbit_len[k]);
 		//E[nb_extensions].type = EXTENSION_TYPE_UNPROCESSED;
 		//E[nb_extensions].data = 0;
 		//E[nb_extensions].data1 = 0;
@@ -1002,7 +1002,7 @@ void poset_orbit_node::find_extensions(poset_classification *gen,
 	if (f_vvv) {
 		cout << "i : orbit_length : representing point" << endl;
 		for (h = 0; h < nb_extensions; h++) {
-			cout << h << " : " << E[h].orbit_len << " : " << E[h].pt << endl;
+			cout << h << " : " << E[h].get_orbit_len() << " : " << E[h].get_pt() << endl;
 			}
 		}
 }
@@ -1105,13 +1105,13 @@ int poset_orbit_node::downstep_get_invariant_subset(
 
 		len = 0;
 		for (i = 0; i < O->nb_extensions; i++) {
-			l = O->E[i].orbit_len;
+			l = O->E[i].get_orbit_len();
 			len += l;
 		}
 		if (f_v && O->nb_extensions < 500) {
 			cout << "len=" << len << "=";
 			for (i = 0; i < O->nb_extensions; i++) {
-				l = O->E[i].orbit_len;
+				l = O->E[i].get_orbit_len();
 				cout << l;
 				if (i < O->nb_extensions - 1)
 					cout << "+";
@@ -1123,8 +1123,8 @@ int poset_orbit_node::downstep_get_invariant_subset(
 		if (O->nb_strong_generators) {
 			cur_length = 0;
 			for (i = 0; i < O->nb_extensions; i++) {
-				l = O->E[i].orbit_len;
-				pt = O->E[i].pt;
+				l = O->E[i].get_orbit_len();
+				pt = O->E[i].get_pt();
 				schreier S;
 
 				S.init(gen->get_A2(), verbose_level - 2);
@@ -1149,7 +1149,7 @@ int poset_orbit_node::downstep_get_invariant_subset(
 		}
 		else {
 			for (i = 0; i < O->nb_extensions; i++) {
-				subset[i] = O->E[i].pt;
+				subset[i] = O->E[i].get_pt();
 			}
 		}
 		Sorting.lint_vec_heapsort(subset, len);

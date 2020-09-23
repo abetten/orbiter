@@ -387,8 +387,8 @@ void poset_classification::generate_history(int level, int verbose_level)
 
 					N = root + first_poset_orbit_node_at_level[lvl] + iso_type;
 
-					flag_orbit_nb[iso_type] = N->nb_extensions;
-					total_number_flag_orbits += N->nb_extensions;
+					flag_orbit_nb[iso_type] = N->get_nb_of_extensions();
+					total_number_flag_orbits += N->get_nb_of_extensions();
 				}
 				flag_orbit_first[0] = 0;
 				for (iso_type = 1; iso_type < nb_iso; iso_type++) {
@@ -437,13 +437,13 @@ void poset_classification::generate_history(int level, int verbose_level)
 
 					N = root + first_poset_orbit_node_at_level[lvl] + po;
 
-					if (so >= N->nb_extensions) {
-						cout << "so >= N->nb_extensions" << endl;
-						cout << "N->nb_extensions=" << N->nb_extensions << endl;
+					if (so >= N->get_nb_of_extensions()) {
+						cout << "so >= N->get_nb_of_extensions()" << endl;
+						cout << "N->get_nb_of_extensions()=" << N->get_nb_of_extensions() << endl;
 						exit(1);
 					}
 
-					fp << N->E[so].type;
+					fp << N->get_E(so)->get_type();
 
 					if (f < total_number_flag_orbits - 1) {
 						fp << ",";
@@ -468,7 +468,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 
 					N = root + first_poset_orbit_node_at_level[lvl] + po;
 
-					fp << N->E[so].pt;
+					fp << N->get_E(so)->get_pt();
 
 					if (f < total_number_flag_orbits - 1) {
 						fp << ",";
@@ -491,7 +491,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 					poset_orbit_node *N;
 
 					N = root + first_poset_orbit_node_at_level[lvl] + po;
-					fp << N->E[so].orbit_len;
+					fp << N->get_E(so)->get_orbit_len();
 
 					if (f < total_number_flag_orbits - 1) {
 						fp << ",";
@@ -518,7 +518,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 					poset_orbit_node *N;
 
 					N = root + first_poset_orbit_node_at_level[lvl] + po;
-					if (N->E[so].type == 2) {
+					if (N->get_E(so)->get_type() == 2) {
 						fusion_idx[f] = nb_fuse;
 						nb_fuse++;
 					}
@@ -541,10 +541,10 @@ void poset_classification::generate_history(int level, int verbose_level)
 					poset_orbit_node *N;
 
 					N = root + first_poset_orbit_node_at_level[lvl] + po;
-					if (N->E[so].type == 1) {
-						fp << N->E[so].data;
+					if (N->get_E(so)->get_type() == 1) {
+						fp << N->get_E(so)->get_data();
 					}
-					else if (N->E[so].type == 2) {
+					else if (N->get_E(so)->get_type() == 2) {
 						fp << nb_fuse;
 						nb_fuse++;
 					}
@@ -576,10 +576,10 @@ void poset_classification::generate_history(int level, int verbose_level)
 					poset_orbit_node *N;
 
 					N = root + first_poset_orbit_node_at_level[lvl] + po;
-					if (N->E[so].type == 2) {
-						fuse_data[nb_fuse * 3 + 0] = N->E[so].data;
-						fuse_data[nb_fuse * 3 + 1] = N->E[so].data1;
-						fuse_data[nb_fuse * 3 + 2] = N->E[so].data2;
+					if (N->get_E(so)->get_type() == 2) {
+						fuse_data[nb_fuse * 3 + 0] = N->get_E(so)->get_data();
+						fuse_data[nb_fuse * 3 + 1] = N->get_E(so)->get_data1();
+						fuse_data[nb_fuse * 3 + 2] = N->get_E(so)->get_data2();
 						nb_fuse++;
 					}
 				}

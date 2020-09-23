@@ -310,18 +310,18 @@ void poset_classification::report(ostream &ost)
 
 			cout << "after get_node_ij" << endl;
 
-			Schreier_vector = O->Schreier_vector;
+			Schreier_vector = O->get_Schreier_vector();
 
 			if (level < depth) {
 				cout << "level < depth" << endl;
 				nb_live_pts = O->get_nb_of_live_points();
-				nb_extensions = O->nb_extensions;
+				nb_extensions = O->get_nb_of_extensions();
 				//nbo = O->get_nb_of_orbits_under_stabilizer();
 				if (Schreier_vector->f_has_local_generators) {
 					nbg = Schreier_vector->local_gens->len;
 				}
 				else {
-					nbg = O->nb_strong_generators;
+					nbg = O->get_nb_strong_generators();
 				}
 			}
 			else {
@@ -329,7 +329,7 @@ void poset_classification::report(ostream &ost)
 				nb_live_pts = -1;
 				nb_extensions = -1;
 				//nbo = -1;
-				nbg = O->nb_strong_generators;
+				nbg = O->get_nb_strong_generators();
 			}
 			cout << "nb_live_pts=" << nb_live_pts
 					<< " nb_extensions=" << nb_extensions
@@ -462,7 +462,7 @@ void poset_classification::report(ostream &ost)
 			O = get_node_ij(level, orbit_at_level);
 
 			create_shallow_schreier_tree_fname_mask_base(
-					fname_mask_base, O->node);
+					fname_mask_base, O->get_node());
 			//create_schreier_tree_fname_mask_base(
 			//fname_mask_base, O->node);
 
@@ -477,10 +477,10 @@ void poset_classification::report(ostream &ost)
 
 			//orbit_length.print_to_string(str);
 
-			Schreier_vector = O->Schreier_vector;
+			Schreier_vector = O->get_Schreier_vector();
 
 
-			ost << "\\subsection*{Node " << O->node << " at Level "
+			ost << "\\subsection*{Node " << O->get_node() << " at Level "
 					<< level << " Orbit " << orbit_at_level
 					<< " / " << nb_orbits << "}" << endl;
 
@@ -499,11 +499,11 @@ void poset_classification::report(ostream &ost)
 
 			nb_gens = gens->gens->len;
 
-			nb_extensions = O->nb_extensions;
+			nb_extensions = O->get_nb_of_extensions();
 			//ost << "There are " << nbo << " orbits\\\\" << endl;
 			ost << "There are " << nb_extensions
 					<< " extensions\\\\" << endl;
-			ost << "Number of generators " << O->nb_strong_generators
+			ost << "Number of generators " << O->get_nb_strong_generators()
 					<< "\\\\" << endl;
 
 			if (Schreier_vector) {

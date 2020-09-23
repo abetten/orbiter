@@ -478,11 +478,18 @@ void poset_classification::init_root_node_from_base_case(int verbose_level)
 	}
 
 	first_poset_orbit_node_at_level[0] = 0;
+#if 0
 	root[0].freeself();
 	root[0].node = 0;
 	root[0].prev = -1;
 	root[0].nb_strong_generators = 0;
 	root[0].Schreier_vector = NULL;
+#else
+	root[0].init_node(0,
+			-1 /* the root node does not have an ancestor */,
+			-1 /* the root node does not have a pt */,
+			verbose_level);
+#endif
 
 	for (i = 0; i < Base_case->size; i++) {
 
@@ -497,23 +504,33 @@ void poset_classification::init_root_node_from_base_case(int verbose_level)
 		}
 		first_poset_orbit_node_at_level[i + 1] =
 				first_poset_orbit_node_at_level[i] + 1;
+#if 0
 		root[i].E = NEW_OBJECTS(extension, 1);
 		root[i].nb_extensions = 1;
-		root[i].E[0].type = EXTENSION_TYPE_EXTENSION;
-		root[i].E[0].data = i + 1;
+#else
+		root[i].allocate_E(1 /* nb_extensions */, verbose_level);
+#endif
+		root[i].get_E(0)->set_type(EXTENSION_TYPE_EXTENSION);
+		root[i].get_E(0)->set_data(i + 1);
+#if 0
 		root[i + 1].freeself();
 		root[i + 1].node = i + 1;
 		root[i + 1].prev = i;
 		root[i + 1].pt = Base_case->orbit_rep[i];
 		root[i + 1].nb_strong_generators = 0;
 		root[i + 1].Schreier_vector = NULL;
+#else
+		root[i + 1].init_node(i + 1,
+					i,
+					Base_case->orbit_rep[i],
+					verbose_level);
+#endif
 	}
 	if (f_v) {
 		cout << "poset_classification::init_root_node_from_base_case "
 				"storing strong poset_classifications" << endl;
 	}
-	root[Base_case->size].store_strong_generators(
-			this, Base_case->Stab_gens);
+	root[Base_case->size].store_strong_generators(this, Base_case->Stab_gens);
 	first_poset_orbit_node_at_level[Base_case->size + 1] =
 			Base_case->size + 1;
 	if (f_v) {
@@ -560,7 +577,7 @@ void poset_classification::init_poset_orbit_node(
 	}
 	root = NEW_OBJECTS(poset_orbit_node, nb_poset_orbit_nodes);
 	for (i = 0; i < nb_poset_orbit_nodes; i++) {
-		root[i].node = i;
+		root[i].set_node(i);
 	}
 	nb_poset_orbit_nodes_allocated = nb_poset_orbit_nodes;
 	nb_poset_orbit_nodes_used = 0;
@@ -634,8 +651,7 @@ void poset_classification::reallocate()
 	int increment_new;
 	int verbose_level = 0;
 	
-	increment_new = poset_orbit_nodes_increment +
-			poset_orbit_nodes_increment_last;
+	increment_new = poset_orbit_nodes_increment + poset_orbit_nodes_increment_last;
 	reallocate_to(nb_poset_orbit_nodes_allocated +
 			poset_orbit_nodes_increment, verbose_level - 1);
 	poset_orbit_nodes_increment_last = poset_orbit_nodes_increment;

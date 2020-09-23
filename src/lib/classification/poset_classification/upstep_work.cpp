@@ -118,23 +118,23 @@ void upstep_work::init(poset_classification *gen,
 	O_prev = gen->get_node(prev);
 
 
-	if (O_prev->nb_extensions > 25) {
+	if (O_prev->get_nb_of_extensions() > 25) {
 		mod_for_printing = 25;
 		}
-	if (O_prev->nb_extensions > 50) {
+	if (O_prev->get_nb_of_extensions() > 50) {
 		mod_for_printing = 50;
 		}
-	if (O_prev->nb_extensions > 100) {
+	if (O_prev->get_nb_of_extensions() > 100) {
 		mod_for_printing = 100;
 		}
-	if (O_prev->nb_extensions > 500) {
+	if (O_prev->get_nb_of_extensions() > 500) {
 		mod_for_printing = 500;
 		}
 
 	path = NEW_int(size + 1);
 	path[size] = prev;
 	for (i = size - 1; i >= 0; i--) {
-		path[i] = gen->get_node(path[i + 1])->prev;
+		path[i] = gen->get_node(path[i + 1])->get_prev();
 		}
 	if (f_v) {
 		cout << "upstep_work::init path: ";
@@ -169,8 +169,8 @@ void upstep_work::handle_extension(
 				<< verbose_level << endl;
 		cout << "prev=" << prev << " prev_ex=" << prev_ex << endl;
 		}
-	pt = O_prev->E[prev_ex].pt;
-	type = O_prev->E[prev_ex].type;
+	pt = O_prev->get_E(prev_ex)->get_pt();
+	type = O_prev->get_E(prev_ex)->get_type();
 
 	if (f_v) {
 		gen->print_level_extension_info(size, prev, prev_ex);
@@ -279,7 +279,7 @@ void upstep_work::handle_extension_unprocessed_type(int verbose_level)
 		cout << "upstep_work::handle_extension_unprocessed_type" << endl;
 		cout << "verbose_level = " << verbose_level << endl;
 		}
-	type = O_prev->E[prev_ex].type;
+	type = O_prev->get_E(prev_ex)->get_type();
 		
 	if (f_vv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
@@ -295,7 +295,7 @@ void upstep_work::handle_extension_unprocessed_type(int verbose_level)
 				
 	// process the node and create a n e w set orbit at level size + 1:
 				
-	pt_orbit_len = O_prev->E[prev_ex].orbit_len;
+	pt_orbit_len = O_prev->get_E(prev_ex)->get_orbit_len();
 
 	size++;
 		// here, size is incremented so we need to subtract
@@ -336,7 +336,7 @@ void upstep_work::handle_extension_unprocessed_type(int verbose_level)
 			}
 		cout << "setting type of extension to "
 				"EXTENSION_TYPE_NOT_CANONICAL" << endl;
-		O_prev->E[prev_ex].type = EXTENSION_TYPE_NOT_CANONICAL;
+		O_prev->get_E(prev_ex)->set_type(EXTENSION_TYPE_NOT_CANONICAL);
 		cur--;
 		cout << "reducing cur to " << cur << endl;
 		}
@@ -412,10 +412,14 @@ int upstep_work::init_extension_node(int verbose_level)
 	O_cur = gen->get_node(cur);
 		
 
+#if 0
 	O_cur->freeself();
 	O_cur->node = cur;
 	O_cur->prev = prev;
 	O_cur->pt = pt;
+#else
+	O_cur->init_node(cur, prev, pt, verbose_level);
+#endif
 
 	//if (f_v) {cout << "after freeself" << endl;}
 	O_cur->store_set(gen, size - 1);
@@ -485,9 +489,9 @@ int upstep_work::init_extension_node(int verbose_level)
 		cout << "(orbit length = " << pt_orbit_len << ")" << endl;
 	}
 	
-	O_prev->E[prev_ex].type = EXTENSION_TYPE_PROCESSING;
+	O_prev->get_E(prev_ex)->set_type(EXTENSION_TYPE_PROCESSING);
 		// currently processing
-	O_prev->E[prev_ex].data = cur;
+	O_prev->get_E(prev_ex)->set_data(cur);
 	
 
 	//group H;

@@ -32,7 +32,7 @@ int poset_orbit_node::apply_isomorphism(poset_classification *gen,
 	set = gen->get_tmp_set_apply_fusion();
 
 	gen->get_A()->element_retrieve(
-			E[current_extension].data,
+			E[current_extension].get_data(),
 			gen->get_Elt1(), 0);
 		// A Betten March 18 2012, this was gen->A2 previously
 	
@@ -132,11 +132,11 @@ void poset_orbit_node::install_fusion_node(
 			<< " my_node=" << my_node 
 			<< " current_extension=" << current_extension 
 			<< " pt0=" << pt0 
-			<< " E[current_extension].pt=" << E[current_extension].pt 
+			<< " E[current_extension].get_pt()=" << E[current_extension].get_pt()
 			<< endl;
 		}
 		
-	if (E[current_extension].pt != pt0) {
+	if (E[current_extension].get_pt() != pt0) {
 		cout << "poset_orbit_node::install_fusion_node "
 				"E[current_extension].pt != pt0" << endl;
 		exit(1);
@@ -185,16 +185,16 @@ void poset_orbit_node::install_fusion_node(
 			current_node, current_extension,
 			EXTENSION_TYPE_FUSION,
 			0/* verbose_level*/);
-	E[current_extension].data = hdl;
-	E[current_extension].data1 = my_node;
-	E[current_extension].data2 = my_extension;
+	E[current_extension].set_data(hdl);
+	E[current_extension].set_data1(my_node);
+	E[current_extension].set_data2(my_extension);
 	if (f_v) {
 		cout << "FUSION NODE at lvl " << lvl
 				<< " node/extension=" << current_node
 				<< "/" << current_extension << " pt=" << pt0
 				<< " hdl=" << hdl << " to node/extension="
-				<< E[current_extension].data1 /*my_node*/
-				<< "/" << E[current_extension].data2 /*my_extension*/
+				<< E[current_extension].get_data1() /*my_node*/
+				<< "/" << E[current_extension].get_data2() /*my_extension*/
 				<< " : ";
 		lint_vec_print(cout, gen->get_set0(), lvl + 1);
 		cout << endl;

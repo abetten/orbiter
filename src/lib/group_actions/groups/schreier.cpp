@@ -508,6 +508,50 @@ void schreier::init_generators_by_hdl(int nb_gen,
 	}
 }
 
+void schreier::init_generators_by_handle(std::vector<int> &gen_hdl, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i;
+	int nb_gen;
+
+	if (f_v) {
+		cout << "schreier::init_generators_by_handle" << endl;
+		cout << "degree = " << degree << endl;
+	}
+
+	nb_gen = gen_hdl.size();
+
+	gens.allocate(nb_gen, verbose_level - 2);
+	gens_inv.allocate(nb_gen, verbose_level - 2);
+	for (i = 0; i < nb_gen; i++) {
+		//cout << "schreier::init_generators_by_hdl "
+		// "i = " << i << endl;
+		A->element_retrieve(gen_hdl[i], gens.ith(i), 0);
+
+		//cout << "schreier::init_generators_by_hdl "
+		// "generator i = " << i << ":" << endl;
+		//A->element_print_quick(gens.ith(i), cout);
+
+		A->element_invert(gens.ith(i), gens_inv.ith(i), 0);
+	}
+	if (f_vv) {
+		cout << "schreier::init_generators_by_handle "
+				"generators:" << endl;
+		gens.print(cout);
+	}
+	if (f_v) {
+		cout << "schreier::init_generators_by_handle "
+				"before init_images()" << endl;
+	}
+	init_images(nb_gen, verbose_level);
+	if (f_v) {
+		cout << "schreier::init_generators_by_handle "
+				"done" << endl;
+	}
+}
+
+
 int schreier::get_image(int i, int gen_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

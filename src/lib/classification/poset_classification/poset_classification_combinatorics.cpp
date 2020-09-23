@@ -406,38 +406,38 @@ void poset_classification::test_for_multi_edge_in_classification_graph(
 			poset_orbit_node *O;
 
 			O = &root[f + j];
-			for (h1 = 0; h1 < O->nb_extensions; h1++) {
-				extension *E1 = O->E + h1;
+			for (h1 = 0; h1 < O->get_nb_of_extensions(); h1++) {
+				extension *E1 = O->get_E(h1); // O->E + h1;
 
-				if (E1->type != EXTENSION_TYPE_FUSION) {
+				if (E1->get_type() != EXTENSION_TYPE_FUSION) {
 					continue;
 				}
 
 				//cout << "fusion (" << f + j << "/" << h1 << ") ->
 				// (" << E1->data1 << "/" << E1->data2 << ")" << endl;
-				if (E1->data1 == f + j) {
+				if (E1->get_data1() == f + j) {
 					cout << "multiedge detected ! level "
 							<< i << " with " << l << " nodes, fusion ("
 							<< j << "/" << h1 << ") -> ("
-							<< E1->data1 - f << "/"
-							<< E1->data2 << ")" << endl;
+							<< E1->get_data1() - f << "/"
+							<< E1->get_data2() << ")" << endl;
 				}
 
 #if 0
-				for (h2 = 0; h2 < O->nb_extensions; h2++) {
+				for (h2 = 0; h2 < O->get_nb_of_extensions(); h2++) {
 					extension *E2 = O->E + h2;
 
-					if (E2->type != EXTENSION_TYPE_FUSION) {
+					if (E2->get_type() != EXTENSION_TYPE_FUSION) {
 						continue;
 
 					if (E2->data1 == E1->data1 && E2->data2 == E1->data2) {
 						cout << "multiedge detected!" << endl;
 						cout << "fusion (" << f + j << "/" << h1
-								<< ") -> (" << E1->data1 << "/"
-								<< E1->data2 << ")" << endl;
+								<< ") -> (" << E1->get_data1() << "/"
+								<< E1->get_data2() << ")" << endl;
 						cout << "fusion (" << f + j << "/" << h2
-								<< ") -> (" << E2->data1 << "/"
-								<< E2->data2 << ")" << endl;
+								<< ") -> (" << E2->get_data1() << "/"
+								<< E2->get_data2() << ")" << endl;
 					}
 				}
 #endif
@@ -493,47 +493,47 @@ void poset_classification::Kramer_Mesner_matrix_neighboring(
 		}
 		I = f1 + i;
 		O = get_node(I);
-		for (k = 0; k < O->nb_extensions; k++) {
+		for (k = 0; k < O->get_nb_of_extensions(); k++) {
 			if (f_vv) {
 				cout << "poset_classification::Kramer_Mesner_matrix_neighboring "
 						"i=" << i << " / " << nb_rows << " extension "
-						<< k << " / " << O->nb_extensions << endl;
+						<< k << " / " << O->get_nb_of_extensions() << endl;
 			}
-			if (O->E[k].type == EXTENSION_TYPE_EXTENSION) {
+			if (O->get_E(k)->get_type() == EXTENSION_TYPE_EXTENSION) {
 				if (f_vv) {
 					cout << "poset_classification::Kramer_Mesner_matrix_neighboring "
 							"i=" << i << " / " << nb_rows << " extension "
-							<< k << " / " << O->nb_extensions
+							<< k << " / " << O->get_nb_of_extensions()
 							<< " type extension node" << endl;
 				}
-				len = O->E[k].orbit_len;
-				J = O->E[k].data;
+				len = O->get_E(k)->get_orbit_len();
+				J = O->get_E(k)->get_data();
 				j = J - f2;
 				M[i * nb_cols + j] += len;
 			}
-			if (O->E[k].type == EXTENSION_TYPE_FUSION) {
+			if (O->get_E(k)->get_type() == EXTENSION_TYPE_FUSION) {
 				if (f_vv) {
 					cout << "poset_classification::Kramer_Mesner_matrix_neighboring "
 							"i=" << i << " / " << nb_rows << " extension "
-							<< k << " / " << O->nb_extensions
+							<< k << " / " << O->get_nb_of_extensions()
 							<< " type fusion" << endl;
 				}
 				// fusion node
-				len = O->E[k].orbit_len;
+				len = O->get_E(k)->get_orbit_len();
 
 				int I1, ext1;
 				poset_orbit_node *O1;
 
-				I1 = O->E[k].data1;
-				ext1 = O->E[k].data2;
+				I1 = O->get_E(k)->get_data1();
+				ext1 = O->get_E(k)->get_data2();
 				O1 = get_node(I1);
-				if (O1->E[ext1].type != EXTENSION_TYPE_EXTENSION) {
+				if (O1->get_E(ext1)->get_type() != EXTENSION_TYPE_EXTENSION) {
 					cout << "poset_classification::Kramer_Mesner_matrix_neighboring "
-							"O1->E[ext1].type != EXTENSION_TYPE_EXTENSION "
+							"O1->get_E(ext1)->type != EXTENSION_TYPE_EXTENSION "
 							"something is wrong" << endl;
 					exit(1);
 				}
-				J = O1->E[ext1].data;
+				J = O1->get_E(ext1)->get_data();
 
 #if 0
 				O->store_set(gen, level - 1);
