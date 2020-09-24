@@ -52,8 +52,8 @@ poset_classification_control::poset_classification_control()
 	f_find_group_order = FALSE;
 	find_group_order = 0;
 
-	f_has_tools_path = FALSE;
-	tools_path = NULL;
+	//f_has_tools_path = FALSE;
+	//tools_path = NULL;
 
 	f_draw_poset = FALSE;
 	f_draw_full_poset = FALSE;
@@ -128,7 +128,7 @@ int poset_classification_control::read_arguments(
 			if (i < argc) {
 				cout << "next argument is " << argv[i] << endl;
 			}
-			cout << "-f_draw_options " << endl;
+			//cout << "-f_draw_options " << endl;
 		}
 		else if (strcmp(argv[i], "-v") == 0) {
 			i++;
@@ -351,6 +351,7 @@ int poset_classification_control::read_arguments(
 				<< " " << schreier_tree_line_width
 				<< endl;
 		}
+#if 0
 		else if (strcmp(argv[i], "-tools_path") == 0) {
 			f_has_tools_path = TRUE;
 			tools_path = argv[++i];
@@ -358,6 +359,7 @@ int poset_classification_control::read_arguments(
 				cout << "poset_classification_control::read_arguments -tools_path " << tools_path << endl;
 			}
 		}
+#endif
 		else if (strcmp(argv[i], "-problem_label") == 0) {
 			f_problem_label = TRUE;
 			problem_label.assign(argv[++i]);

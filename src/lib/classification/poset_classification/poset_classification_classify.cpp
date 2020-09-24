@@ -356,7 +356,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "poset_classification::post_processing" << endl;
+		cout << "poset_classification::post_processing problem_label_with_path=" << problem_label_with_path << " verbose_level=" << verbose_level << endl;
 	}
 
 	if (Control->f_table_of_nodes) {
@@ -498,12 +498,16 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 		if (f_v) {
 			cout << "poset_classification::post_processing before draw_poset" << endl;
 		}
+		if (!Control->f_draw_options) {
+			cout << "poset_classification::post_processing Control->f_draw_poset && !Control->f_draw_options" << endl;
+			exit(1);
+		}
 		draw_poset(get_problem_label_with_path(), actual_size,
 			0 /* data1 */,
 			Control->draw_options,
 			//Control->f_embedded, Control->f_sideways, Control->radius,
 			//Control->scale, Control->line_width,
-			0 /*verbose_level*/);
+			verbose_level);
 		if (f_v) {
 			cout << "poset_classification::post_processing after draw_poset" << endl;
 		}
@@ -518,7 +522,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 				Control->draw_options,
 				//Control->f_embedded, Control->f_sideways, Control->radius,
 				//Control->scale, Control->line_width,
-				1 /* x_stretch */, 0 /*verbose_level*/);
+				1 /* x_stretch */, verbose_level);
 		if (f_v) {
 			cout << "poset_classification::post_processing after draw_full_poset" << endl;
 		}
