@@ -140,7 +140,7 @@ int layered_graph_draw_options::read_arguments(
 			fname = argv[++i];
 			cout << "-file " << fname << endl;
 			}
-		if (strcmp(argv[i], "-xin") == 0) {
+		else if (strcmp(argv[i], "-xin") == 0) {
 			xin = atoi(argv[++i]);
 			cout << "-xin " << xin << endl;
 			}
@@ -173,23 +173,23 @@ int layered_graph_draw_options::read_arguments(
 			cout << "-rad " << rad << endl;
 			}
 		else if (strcmp(argv[i], "-embedded") == 0) {
-			f_embedded = atoi(argv[++i]);
+			f_embedded = TRUE;
 			cout << "-embedded " << endl;
 			}
 		else if (strcmp(argv[i], "-sideways") == 0) {
-			f_sideways = atoi(argv[++i]);
+			f_sideways = TRUE;
 			cout << "-sideways " << endl;
 			}
 		else if (strcmp(argv[i], "-show_level_info") == 0) {
-			f_show_level_info = atoi(argv[++i]);
+			f_show_level_info = TRUE;
 			cout << "-show_level_info " << endl;
 			}
 		else if (strcmp(argv[i], "-label_edges") == 0) {
-			f_label_edges = atoi(argv[++i]);
+			f_label_edges = TRUE;
 			cout << "-label_edges " << endl;
 			}
 		else if (strcmp(argv[i], "-y_stretch") == 0) {
-			f_y_stretch = atoi(argv[++i]);
+			f_y_stretch = TRUE;
 			y_stretch = atof(argv[++i]);
 			cout << "-y_stretch " << endl;
 			}

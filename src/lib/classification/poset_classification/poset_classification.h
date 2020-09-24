@@ -328,8 +328,8 @@ public:
 	int f_find_group_order;
 	int find_group_order;
 
-	int f_has_tools_path;
-	const char *tools_path;
+	//int f_has_tools_path;
+	//const char *tools_path;
 
 
 

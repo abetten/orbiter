@@ -735,7 +735,7 @@ void poset_classification::draw_poset(
 
 	if (f_v) {
 		cout << "poset_classification::draw_poset "
-				"data=" << data << endl;
+				"data=" << data << " fname_base=" << fname_base << endl;
 	}
 
 
