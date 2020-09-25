@@ -773,13 +773,16 @@ void int_matrix_make_block_matrix_2x2(int *Mtx, int k,
 // (C D)
 void int_matrix_delete_column_in_place(int *Mtx, int k, int n, int pivot);
 // afterwards, the matrix is k x (n - 1)
+int int_vec_vec_max_log_of_entries(std::vector<std::vector<int> > &p);
 int int_matrix_max_log_of_entries(int *p, int m, int n);
 int lint_matrix_max_log_of_entries(long int *p, int m, int n);
 void int_matrix_print_ost(std::ostream &ost, int *p, int m, int n);
 void int_matrix_print(int *p, int m, int n);
+void int_vec_vec_print(std::vector<std::vector<int> > &p);
 void lint_matrix_print(long int *p, int m, int n);
 void int_matrix_print_tight(int *p, int m, int n);
 void int_matrix_print_ost(std::ostream &ost, int *p, int m, int n, int w);
+void int_vec_vec_print(std::vector<std::vector<int> > &p, int w);
 void int_matrix_print(int *p, int m, int n, int w);
 void lint_matrix_print(long int *p, int m, int n, int w);
 void int_matrix_print_bitwise(int *p, int m, int n);

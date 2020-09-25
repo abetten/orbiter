@@ -184,6 +184,11 @@ public:
 	void longinteger_collect_print(std::ostream &ost,
 			int &nb_agos, longinteger_object *&agos, int *&multiplicities);
 
+	void make_all_irreducible_polynomials_of_degree_d(
+			finite_field *F, int d, std::vector<std::vector<int> > &Table,
+			int verbose_level);
+	int count_all_irreducible_polynomials_of_degree_d(finite_field *F,
+		int d, int verbose_level);
 
 };
 
@@ -608,10 +613,6 @@ public:
 	void span_cyclic_module(int *A, int *v, int n, int *Mtx, 
 		int verbose_level);
 	void random_invertible_matrix(int *M, int k, int verbose_level);
-	void make_all_irreducible_polynomials_of_degree_d(
-		int d, int &nb, int *&Table, int verbose_level);
-	int count_all_irreducible_polynomials_of_degree_d(
-		int d, int verbose_level);
 	void adjust_basis(int *V, int *U, int n, int k, int d, 
 		int verbose_level);
 	void choose_vector_in_here_but_not_in_here_column_spaces(

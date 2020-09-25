@@ -667,19 +667,27 @@ void interface_algebra::do_make_table_of_irreducible_polynomials(int deg, int q,
 		cout << "q=" << q << endl;
 	}
 	int nb;
-	int *Table;
+	//int *Table;
+	std::vector<std::vector<int>> Table;
 	finite_field F;
+	algebra_global Algebra;
 
 	F.init(q, 0);
 
-	F.make_all_irreducible_polynomials_of_degree_d(deg,
-			nb, Table, verbose_level);
+	Algebra.make_all_irreducible_polynomials_of_degree_d(&F, deg,
+			Table, verbose_level);
+
+	nb = Table.size();
 
 	cout << "The " << nb << " irreducible polynomials of "
 			"degree " << deg << " over F_" << q << " are:" << endl;
-	int_matrix_print(Table, nb, deg + 1);
 
-	FREE_int(Table);
+	int_vec_vec_print(Table);
+
+
+	//int_matrix_print(Table, nb, deg + 1);
+
+	//FREE_int(Table);
 
 	if (f_v) {
 		cout << "interface_algebra::do_make_table_of_irreducible_polynomials done" << endl;

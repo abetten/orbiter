@@ -765,16 +765,18 @@ void strong_generators::generators_for_the_singer_cycle(
 	
 
 	{
-		finite_field Fp;
+		finite_field Fq;
 
+#if 0
 		if (!NT.is_prime(q)) {
 			cout << "strong_generators::generators_for_the_singer_cycle "
 					"field order must be a prime" << endl;
 			exit(1);
 		}
+#endif
 	
-		Fp.init(q, 0 /*verbose_level*/);
-		unipoly_domain FX(&Fp);
+		Fq.init(q, 0 /*verbose_level*/);
+		unipoly_domain FX(&Fq);
 
 		unipoly_object m;
 		longinteger_object rk;
@@ -784,7 +786,7 @@ void strong_generators::generators_for_the_singer_cycle(
 		if (f_v) {
 			cout << "strong_generators::generators_for_the_singer_cycle "
 					"before FX.get_a_primitive_polynomial "
-					"p=" << q << " degree=" << n << endl;
+					"q=" << q << " degree=" << n << endl;
 		}
 		FX.get_a_primitive_polynomial(m, n, verbose_level - 1);
 		if (f_v) {

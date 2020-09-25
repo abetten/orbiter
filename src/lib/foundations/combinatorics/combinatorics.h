@@ -222,8 +222,8 @@ public:
 		// $C_{len}$ acting on the coordinates.
 		// Lueneburg~\cite{Lueneburg87a} p. 118.
 		// v is a vector over $\{0, 1, \ldots , q-1\}$
-	int int_vec_first_regular_word(int *v, int len, int Q, int q);
-	int int_vec_next_regular_word(int *v, int len, int Q, int q);
+	int int_vec_first_regular_word(int *v, int len, int q);
+	int int_vec_next_regular_word(int *v, int len, int q);
 	int is_subset_of(int *A, int sz_A, int *B, int sz_B);
 	int set_find(int *elts, int size, int a);
 	void set_complement(int *subset, int subset_size, int *complement,

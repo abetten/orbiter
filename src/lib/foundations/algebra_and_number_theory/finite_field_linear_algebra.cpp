@@ -548,7 +548,7 @@ void finite_field::matrix_invert(int *A, int *Tmp, int *Tmp_basecols,
 		FALSE /* f_special */, TRUE /*f_complete */, Tmp_basecols,
 		TRUE /* f_P */, Ainv, n, n, n, verbose_level - 2);
 	if (rk < n) {
-		cout << "finite_field::matrix_invert() not invertible" << endl;
+		cout << "finite_field::matrix_invert not invertible" << endl;
 		cout << "input matrix:" << endl;
 		print_integer_matrix_width(cout, A, n, n, n, log10_of_q + 1);
 		cout << "Tmp matrix:" << endl;
@@ -2194,7 +2194,7 @@ int finite_field::RREF_and_kernel(int n, int k,
 	}
 	nb_base_cols = Gauss_int(B,
 		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
-		FALSE /* f_P */, NULL /*P*/, k, n, n, verbose_level);
+		FALSE /* f_P */, NULL /*P*/, k, n, n, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "finite_field::RREF_and_kernel after Gauss_int, "
 				"rank = " << nb_base_cols << endl;
@@ -2239,7 +2239,7 @@ int finite_field::perp_standard(int n, int k,
 	base_cols = NEW_int(n);
 	nb_base_cols = perp_standard_with_temporary_data(n, k, A, 
 		B, K, base_cols, 
-		verbose_level);
+		verbose_level - 3);
 	FREE_int(B);
 	FREE_int(K);
 	FREE_int(base_cols);

@@ -596,7 +596,7 @@ void poset_classification::init_poset_orbit_node(
 	nb_poset_orbit_nodes_used = 0;
 	poset_orbit_nodes_increment = nb_poset_orbit_nodes;
 	poset_orbit_nodes_increment_last = nb_poset_orbit_nodes;
-	first_poset_orbit_node_at_level = NEW_int(sz + 2);
+	first_poset_orbit_node_at_level = NEW_lint(sz + 2);
 	first_poset_orbit_node_at_level[0] = 0;
 	first_poset_orbit_node_at_level[1] = 1;
 	set0 = NEW_lint(sz + 1);
@@ -650,7 +650,7 @@ void poset_classification::exit_poset_orbit_node()
 		set3 = NULL;
 	}
 	if (first_poset_orbit_node_at_level) {
-		FREE_int(first_poset_orbit_node_at_level);
+		FREE_lint(first_poset_orbit_node_at_level);
 		first_poset_orbit_node_at_level = NULL;
 	}
 
@@ -674,18 +674,32 @@ void poset_classification::exit_poset_orbit_node()
 
 void poset_classification::reallocate()
 {
-	int increment_new;
+	long int increment_new;
+	long int length;
 	int verbose_level = 0;
 	
 	increment_new = poset_orbit_nodes_increment + poset_orbit_nodes_increment_last;
-	reallocate_to(nb_poset_orbit_nodes_allocated +
-			poset_orbit_nodes_increment, verbose_level - 1);
+
+
+	length = nb_poset_orbit_nodes_allocated +
+			poset_orbit_nodes_increment;
+
+	if (length > (1L << 31) - 1) {
+		long int length_wanted;
+
+		length_wanted = length;
+		length = (1L << 31) - 1;
+		cout << "poset_classification::reallocate reducing length from " << length_wanted << " to " << length << endl;
+		poset_orbit_nodes_increment = length_wanted - nb_poset_orbit_nodes_allocated;
+	}
+	cout << "poset_classification::reallocate from " << nb_poset_orbit_nodes_allocated << " to " << length << endl;
+	reallocate_to(length, verbose_level - 1);
 	poset_orbit_nodes_increment_last = poset_orbit_nodes_increment;
 	poset_orbit_nodes_increment = increment_new;
 	
 }
 
-void poset_classification::reallocate_to(int new_number_of_nodes,
+void poset_classification::reallocate_to(long int new_number_of_nodes,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -695,9 +709,9 @@ void poset_classification::reallocate_to(int new_number_of_nodes,
 	if (f_v) {
 		cout << "poset_classification::reallocate_to" << endl;
 	}
-	if (new_number_of_nodes < nb_poset_orbit_nodes_allocated) {
+	if (new_number_of_nodes <= nb_poset_orbit_nodes_allocated) {
 		cout << "poset_classification::reallocate_to "
-				"new_number_of_nodes < "
+				"new_number_of_nodes <= "
 				"nb_poset_orbit_nodes_allocated" << endl;
 		exit(1);
 	}
