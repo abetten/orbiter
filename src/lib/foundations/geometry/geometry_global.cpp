@@ -115,6 +115,31 @@ void geometry_global::AG_element_unrank(int q, int *v, int stride, int len, long
 		}
 }
 
+
+int geometry_global::AG_element_next(int q, int *v, int stride, int len)
+{
+	int i;
+
+#if 1
+	if (len <= 0) {
+		cout << "geometry_global::AG_element_next len <= 0" << endl;
+		exit(1);
+		}
+#endif
+	for (i = len - 1; i >= 0; i--) {
+		if (v[i * stride] < q - 1) {
+			v[i * stride]++;
+			return TRUE;
+		}
+		else {
+			v[i * stride] = 0;
+		}
+	}
+	return FALSE;
+}
+
+
+
 void geometry_global::AG_element_rank_longinteger(int q,
 		int *v, int stride, int len, longinteger_object &a)
 {

@@ -683,7 +683,7 @@ void poset_classification::read_memory_object(
 		}
 #endif
 	for (i = 0; i <= depth_completed + 1; i++) {
-		m->read_int(&first_poset_orbit_node_at_level[i]);
+		m->read_lint(&first_poset_orbit_node_at_level[i]);
 		}
 
 
@@ -758,7 +758,7 @@ void poset_classification::write_memory_object(
 	m->write_int(depth_completed);
 	m->write_int(nb_nodes);
 	for (i = 0; i <= depth_completed + 1; i++) {
-		m->write_int(first_poset_orbit_node_at_level[i]);
+		m->write_lint(first_poset_orbit_node_at_level[i]);
 		}
 	if (f_v) {
 		cout << "poset_classification::write_memory_object "
@@ -827,7 +827,7 @@ long int poset_classification::calc_size_on_file(int depth_completed,
 	//m->write_int(depth_completed);
 	//m->write_int(nb_nodes);
 	for (i = 0; i <= depth_completed + 1; i++) {
-		s += sizeof(int);
+		s += sizeof(long int);
 		}
 	for (i = 0; i < nb_nodes; i++) {
 		s += root[i].calc_size_on_file(Poset->A, verbose_level);

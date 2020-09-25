@@ -754,6 +754,29 @@ void int_matrix_delete_column_in_place(int *Mtx,
 	}
 }
 
+int int_vec_vec_max_log_of_entries(std::vector<std::vector<int>> &p)
+{
+	int i, j, a, w = 1, w1;
+	number_theory_domain NT;
+
+	for (i = 0; i < p.size(); i++) {
+		for (j = 0; j < p[i].size(); j++) {
+			a = p[i][j];
+			if (a > 0) {
+				w1 = NT.int_log10(a);
+			}
+			else if (a < 0) {
+				w1 = NT.int_log10(-a) + 1;
+			}
+			else {
+				w1 = 1;
+			}
+			w = MAXIMUM(w, w1);
+		}
+	}
+	return w;
+}
+
 int int_matrix_max_log_of_entries(int *p, int m, int n)
 {
 	int i, j, a, w = 1, w1;
@@ -817,6 +840,15 @@ void int_matrix_print(int *p, int m, int n)
 	int_matrix_print(p, m, n, w);
 }
 
+void int_vec_vec_print(std::vector<std::vector<int>> &p)
+{
+	int w;
+
+	w = int_vec_vec_max_log_of_entries(p);
+	int_vec_vec_print(p, w);
+}
+
+
 void lint_matrix_print(long int *p, int m, int n)
 {
 	int w;
@@ -842,6 +874,21 @@ void int_matrix_print_ost(ostream &ost, int *p, int m, int n, int w)
 			}
 		}
 		ost << endl;
+	}
+}
+
+void int_vec_vec_print(std::vector<std::vector<int>> &p, int w)
+{
+	int i, j;
+
+	for (i = 0; i < p.size(); i++) {
+		for (j = 0; j < p[i].size(); j++) {
+			cout << setw((int) w) << p[i][j];
+			if (w) {
+				cout << " ";
+			}
+		}
+		cout << endl;
 	}
 }
 

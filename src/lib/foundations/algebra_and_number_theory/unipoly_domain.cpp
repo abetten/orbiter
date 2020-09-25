@@ -896,15 +896,25 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 		cout << endl;
 	}
 	
-	power_int(a, F->q, 0 /* verbose_level */);
-	if (f_vv) {
+	if (f_v) {
+		cout << "unipoly_domain::Frobenius_matrix before power_int" << endl;
+	}
+	power_int(a, F->q, verbose_level - 1);
+	if (f_v) {
+		cout << "unipoly_domain::Frobenius_matrix after power_int" << endl;
 		cout << "unipoly_domain::Frobenius_matrix a = x^q = ";
 		print_object(a, cout);
 		cout << endl;
 	}
+	if (f_v) {
+		cout << "unipoly_domain::Frobenius_matrix before division_with_remainder" << endl;
+	}
 	division_with_remainder(a,
 			factor_polynomial,
-			Q, R, 0 /* verbose_level */);
+			Q, R, verbose_level - 1);
+	if (f_v) {
+		cout << "unipoly_domain::Frobenius_matrix after division_with_remainder" << endl;
+	}
 	assign(R, a, verbose_level);
 	if (f_vv) {
 		cout << "unipoly_domain::Frobenius_matrix "
@@ -971,13 +981,9 @@ void unipoly_domain::Berlekamp_matrix(int *&B,
 	int i, m1, a, b;
 	int factor_polynomial_degree;
 	
-#if 0
-	if (!f_factorring) {
-		cout << "unipoly_domain::Berlekamp_matrix "
-				"not a factorring" << endl;
-		exit(1);
+	if (f_v) {
+		cout << "unipoly_domain::Berlekamp_matrix" << endl;
 	}
-#endif
 	factor_polynomial_degree = degree(factor_polynomial);
 	Frobenius_matrix(B, factor_polynomial, verbose_level);
 	m1 = F->negate(1);
@@ -1417,19 +1423,20 @@ void unipoly_domain::compute_normal_basis(int d,
 
 	while (degree(mue) < deg) {
 		i++;
-		if (f_vv) {
+		if (f_v) {
 			cout << "unipoly_domain::compute_normal_basis "
 					"i = " << i << " / " << deg << endl;
+		}
+
+		if (i == deg) {
+			cout << "unipoly_domain::compute_normal_basis "
+					"error: i == deg" << endl;
+			exit(1);
 		}
 
 		if (f_vv) {
 			cout << "unipoly_domain::compute_normal_basis "
 					"before order_ideal_generator" << endl;
-		}
-		if (i == deg) {
-			cout << "unipoly_domain::compute_normal_basis "
-					"error: i == deg" << endl;
-			exit(1);
 		}
 		order_ideal_generator(d, i, lambda, 
 			A, Frobenius, 
@@ -2418,26 +2425,21 @@ void unipoly_domain::get_an_irreducible_polynomial(
 
 void unipoly_domain::power_int(unipoly_object &a,
 		int n, int verbose_level)
+// does not mod out by factor polynomial
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	unipoly_object b, c, d;
 	
 	if (f_v) {
-		cout << "unipoly_domain::power_int" << endl;
+		cout << "unipoly_domain::power_int, verbose_level=" << verbose_level << endl;
 	}
 	if (f_vv) {
 		cout << "unipoly_domain::power_int computing a=";
 		print_object(a, cout);
-		cout << " to the power " << n << " : ";
-		cout << " modulo - (";
-		int_vec_print(cout,
-				factor_coeffs,
-				factor_degree + 1);
-		cout << ")";
-		cout << endl;
+		cout << " to the power " << n << endl;
 	}
-	//cout << "power_int() a=";
+	//cout << "power_int a=";
 	//print_object(a, cout);
 	//cout << " n=" << n << endl;
 	create_object_by_rank(b, 0, __FILE__, __LINE__, verbose_level);
@@ -3227,8 +3229,7 @@ void unipoly_domain::minimum_polynomial_extension_field(
 	unipoly_object mm, h, h2, *sigma;
 
 	if (f_v) {
-		cout << "unipoly_domain::minimum_polynomial_"
-				"extension_field of ";
+		cout << "unipoly_domain::minimum_polynomial_extension_field of ";
 		print_object(g, cout);
 		cout << endl;
 	}
@@ -3398,8 +3399,7 @@ void unipoly_domain::minimum_polynomial_extension_field(
 	}
 	FREE_OBJECTS(sigma);
 	if (f_v) {
-		cout << "unipoly_domain::minimum_polynomial_"
-				"extension_field done" << endl;
+		cout << "unipoly_domain::minimum_polynomial_extension_field done" << endl;
 	}
 }
 

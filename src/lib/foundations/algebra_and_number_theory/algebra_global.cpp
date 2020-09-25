@@ -72,6 +72,9 @@ char *algebra_global::search_for_primitive_polynomial_of_given_degree(
 	int f_v = (verbose_level >= 1);
 	finite_field Fp;
 
+	if (f_v) {
+		cout << "algebra_global::search_for_primitive_polynomial_of_given_degree" << endl;
+	}
 	Fp.init(p, 0 /*verbose_level*/);
 	unipoly_domain FX(&Fp);
 
@@ -103,6 +106,9 @@ char *algebra_global::search_for_primitive_polynomial_of_given_degree(
 		cout << "created string " << s << endl;
 	}
 
+	if (f_v) {
+		cout << "algebra_global::search_for_primitive_polynomial_of_given_degree done" << endl;
+	}
 	return s;
 }
 
@@ -112,7 +118,7 @@ void algebra_global::search_for_primitive_polynomials(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int d, p;
+	int d, q;
 	number_theory_domain NT;
 
 
@@ -124,19 +130,22 @@ void algebra_global::search_for_primitive_polynomials(
 				"p_min=" << p_min << " p_max=" << p_max
 				<< " n_min=" << n_min << " n_max=" << n_max << endl;
 	}
-	for (p = p_min; p <= p_max; p++) {
-		if (!NT.is_prime(p)) {
+	for (q = p_min; q <= p_max; q++) {
+
+
+		if (!NT.is_prime_power(q)) {
 			continue;
 		}
+
 		if (f_v) {
 			cout << "algebra_global::search_for_primitive_polynomials "
-					"considering the prime " << p << endl;
+					"considering the coefficient field of order " << q << endl;
 		}
 
 		{
-			finite_field Fp;
-			Fp.init(p, 0 /*verbose_level*/);
-			unipoly_domain FX(&Fp);
+			finite_field Fq;
+			Fq.init(q, 0 /*verbose_level*/);
+			unipoly_domain FX(&Fq);
 
 			unipoly_object m;
 			longinteger_object rk;
@@ -995,7 +1004,7 @@ void algebra_global::PHG_element_unrank(finite_ring &R,
 	if (len <= 0) {
 		cout << "algebra_global::PHG_element_unrank len <= 0" << endl;
 		exit(1);
-		}
+	}
 
 	w = NEW_int(len - 1);
 	embedding = NEW_int(len - 1);
@@ -1011,19 +1020,19 @@ void algebra_global::PHG_element_unrank(finite_ring &R,
 		cout << "w=";
 		int_vec_print(cout, w, len - 1);
 		cout << endl;
-		}
+	}
 
 	idx = PHG_element_normalize(R, v, stride, len);
 	for (i = 0, j = 0; i < len - 1; i++, j++) {
 		if (i == idx) {
 			j++;
-			}
-		embedding[i] = j;
 		}
+		embedding[i] = j;
+	}
 
 	for (i = 0; i < len - 1; i++) {
 		v[embedding[i] * stride] += w[i] * R.get_p();
-		}
+	}
 
 
 
@@ -1064,10 +1073,10 @@ void algebra_global::display_all_PHG_elements(int n, int q)
 		cout << i << " : ";
 		for (j = 0; j < n + 1; j++) {
 			cout << v[j] << " ";
-			}
+		}
 		a = PHG_element_rank(R, v, 1, n + 1);
 		cout << " : " << a << endl;
-		}
+	}
 	FREE_int(v);
 }
 
@@ -1095,7 +1104,7 @@ void algebra_global::test_unipoly()
 		Fq.create_object_by_rank(elts[i], i, __FILE__, __LINE__, 0);
 		cout << "elt_" << i << " = ";
 		Fq.print_object(elts[i], cout); cout << endl;
-		}
+	}
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
 			Fq.print_object(elts[i], cout);
@@ -1107,8 +1116,8 @@ void algebra_global::test_unipoly()
 
 			FX.mult(elts[i], elts[j], a, verbose_level);
 			FX.print_object(a, cout); cout << endl;
-			}
 		}
+	}
 
 }
 
@@ -1140,14 +1149,14 @@ int algebra_global::is_diagonal_matrix(int *A, int n)
 		for (j = 0; j < n; j++) {
 			if (i == j) {
 				continue;
-				}
+			}
 			else {
 				if (A[i * n + j]) {
 					return FALSE;
-					}
 				}
 			}
 		}
+	}
 	return TRUE;
 }
 
@@ -1160,6 +1169,10 @@ const char *algebra_global::get_primitive_polynomial(int p, int e, int verbose_l
 
 	if (!Sorting.int_vec_search(finitefield_primes, finitefield_nb_primes, p, idx)) {
 		cout << "I don't have prime " << p << " in the tables" << endl;
+
+		exit(1);
+
+
 		cout << "searching for a polynomial of degree " << e << endl;
 
 		algebra_global AG;
@@ -1167,30 +1180,30 @@ const char *algebra_global::get_primitive_polynomial(int p, int e, int verbose_l
 		s = AG.search_for_primitive_polynomial_of_given_degree(p, e, verbose_level);
 		cout << "the search came up with a polynomial of degree " << e << ", coded as " << s << endl;
 		return s;
-		}
+	}
 #if 0
 	for (idx = 0; idx < finitefield_nb_primes; idx++) {
 		if (finitefield_primes[idx] == p)
 			break;
-		}
+	}
 	if (idx == finitefield_nb_primes) {
 		cout << "get_primitive_polynomial() couldn't find prime " << p << endl;
 		exit(1);
-		}
+	}
 #endif
 	if (e > finitefield_largest_degree_irreducible_polynomial[idx]) {
 		cout << "get_primitive_polynomial() I do not have a polynomial\n";
 		cout << "of that degree over that field" << endl;
 		cout << "requested: degree " << e << " polynomial over GF(" << p << ")" << endl;
 		exit(1);
-		}
+	}
 	const char *m = finitefield_primitive_polynomial[idx][e - 2];
 	if (strlen(m) == 0) {
 		cout << "get_primitive_polynomial() I do not have a polynomial\n";
 		cout << "of that degree over that field" << endl;
 		cout << "requested: degree " << e << " polynomial over GF(" << p << ")" << endl;
 		exit(1);
-		}
+	}
 	return m;
 }
 
@@ -1209,7 +1222,7 @@ void algebra_global::test_longinteger()
 		//cout << a << " = " << q << " * " << b << " + " << r << endl;
 		cout << r << endl;
 		q.assign_to(a);
-		}
+	}
 
 	D.multiply_up(a, x, 4, verbose_level);
 	cout << "a=" << a << endl;
@@ -1247,9 +1260,9 @@ void algebra_global::test_longinteger3()
 			D.binomial(a, i, j, FALSE);
 			a.print(cout);
 			cout << " ";
-			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 }
 
 void algebra_global::test_longinteger4()
@@ -1260,16 +1273,18 @@ void algebra_global::test_longinteger4()
 
 	for (k = 0; k <= n; k++) {
 		for (x = 0; x <= n; x++) {
-			if (x > 0 && x < d)
+			if (x > 0 && x < d) {
 				continue;
-			if (q == 2 && EVEN(d) && ODD(x))
+			}
+			if (q == 2 && EVEN(d) && ODD(x)) {
 				continue;
+			}
 			D.krawtchouk(a, n, q, k, x);
 			a.print(cout);
 			cout << " ";
-			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 }
 
 void algebra_global::test_longinteger5()
@@ -1318,16 +1333,16 @@ void algebra_global::test_longinteger7()
 	a.create(15, __FILE__, __LINE__);
 	for (i = 0; i < 15; i++) {
 		mult[i] = 0;
-		}
+	}
 	for (i = 0; i < 10000; i++) {
 		D.random_number_less_than_n(a, b);
 		j = b.as_int();
 		mult[j]++;
 		//cout << b << endl;
-		}
+	}
 	for (i = 0; i < 15; i++) {
 		cout << i << " : " << mult[i] << endl;
-		}
+	}
 
 }
 
@@ -1355,8 +1370,8 @@ void algebra_global::mac_williams_equations(longinteger_object *&M, int n, int k
 	for (i = 0; i <= n; i++) {
 		for (j = 0; j <= n; j++) {
 			D.krawtchouk(M[i * (n + 1) + j], n, q, i, j);
-			}
 		}
+	}
 }
 
 void algebra_global::determine_weight_enumerator()
@@ -1378,7 +1393,7 @@ void algebra_global::determine_weight_enumerator()
 	A2 = NEW_OBJECTS(longinteger_object, n + 1);
 	for (i = 0; i <= n; i++) {
 		A1[i].create(0, __FILE__, __LINE__);
-		}
+	}
 	A1[0].create(1, __FILE__, __LINE__);
 	A1[8].create(78, __FILE__, __LINE__);
 	A1[12].create(48, __FILE__, __LINE__);
@@ -1411,7 +1426,7 @@ void algebra_global::longinteger_collect_free(int &nb_agos,
 	if (nb_agos) {
 		FREE_OBJECTS(agos);
 		FREE_int(multiplicities);
-		}
+	}
 }
 
 void algebra_global::longinteger_collect_add(int &nb_agos,
@@ -1431,7 +1446,7 @@ void algebra_global::longinteger_collect_add(int &nb_agos,
 		if (c >= 0) {
 			if (c == 0) {
 				multiplicities[j]++;
-				}
+			}
 			else {
 				tmp_agos = agos;
 				tmp_multiplicities = multiplicities;
@@ -1440,23 +1455,23 @@ void algebra_global::longinteger_collect_add(int &nb_agos,
 				for (h = 0; h < j; h++) {
 					tmp_agos[h].swap_with(agos[h]);
 					multiplicities[h] = tmp_multiplicities[h];
-					}
+				}
 				ago.swap_with(agos[j]);
 				multiplicities[j] = 1;
 				for (h = j; h < nb_agos; h++) {
 					tmp_agos[h].swap_with(agos[h + 1]);
 					multiplicities[h + 1] = tmp_multiplicities[h];
-					}
+				}
 				nb_agos++;
 				if (tmp_agos) {
 					FREE_OBJECTS(tmp_agos);
 					FREE_int(tmp_multiplicities);
-					}
 				}
+			}
 			f_added = TRUE;
 			break;
-			}
 		}
+	}
 	if (!f_added) {
 		// add at the end (including the case that the list is empty)
 		tmp_agos = agos;
@@ -1466,15 +1481,15 @@ void algebra_global::longinteger_collect_add(int &nb_agos,
 		for (h = 0; h < nb_agos; h++) {
 			tmp_agos[h].swap_with(agos[h]);
 			multiplicities[h] = tmp_multiplicities[h];
-			}
+		}
 		ago.swap_with(agos[nb_agos]);
 		multiplicities[nb_agos] = 1;
 		nb_agos++;
 		if (tmp_agos) {
 			FREE_OBJECTS(tmp_agos);
 			FREE_int(tmp_multiplicities);
-			}
 		}
+	}
 }
 
 void algebra_global::longinteger_collect_print(ostream &ost,
@@ -1486,18 +1501,356 @@ void algebra_global::longinteger_collect_print(ostream &ost,
 	for (j = 0; j < nb_agos; j++) {
 		ost << agos[j];
 		if (multiplicities[j] == 1) {
-			}
+		}
 		else if (multiplicities[j] >= 10) {
 			ost << "^{" << multiplicities[j] << "}";
-			}
+		}
 		else  {
 			ost << "^" << multiplicities[j];
-			}
+		}
 		if (j < nb_agos - 1) {
 			ost << ", ";
-			}
 		}
+	}
 	ost << ")" << endl;
+}
+
+void algebra_global::make_all_irreducible_polynomials_of_degree_d(
+		finite_field *F, int d, std::vector<std::vector<int> > &Table,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i;
+	int cnt;
+	number_theory_domain NT;
+
+	if (f_v) {
+		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
+				"d=" << d << " q=" << F->q << endl;
+		cout << "verbose_level=" << verbose_level << endl;
+	}
+
+#if 0
+	cnt = count_all_irreducible_polynomials_of_degree_d(F, d, verbose_level - 2);
+
+	if (f_v) {
+		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
+				"cnt = " << cnt << endl;
+	}
+
+	nb = cnt;
+
+	Table = NEW_int(nb * (d + 1));
+#endif
+
+	//NT.factor_prime_power(F->q, p, e);
+
+	if (f_v) {
+		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
+				" q=" << F->q << " p=" << F->p << " e=" << F->e << endl;
+	}
+
+	unipoly_domain FX(F);
+
+	const char *poly;
+
+	poly = get_primitive_polynomial(F->q, d, 0 /* verbose_level */);
+
+	unipoly_object m;
+	unipoly_object g;
+	unipoly_object minpol;
+	combinatorics_domain Combi;
+
+
+	FX.create_object_by_rank_string(m, poly, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
+				"chosen irreducible polynomial m = ";
+		FX.print_object(m, cout);
+		cout << endl;
+	}
+
+	FX.create_object_by_rank(g, 0, __FILE__, __LINE__, verbose_level);
+	FX.create_object_by_rank(minpol, 0, __FILE__, __LINE__, verbose_level);
+
+	int *Frobenius;
+	int *Normal_basis;
+	int *v;
+	int *w;
+
+	//Frobenius = NEW_int(d * d);
+	Normal_basis = NEW_int(d * d);
+	v = NEW_int(d);
+	w = NEW_int(d);
+
+	FX.Frobenius_matrix(Frobenius, m, verbose_level - 1);
+	if (f_v) {
+		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
+				"Frobenius_matrix = " << endl;
+		int_matrix_print(Frobenius, d, d);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
+				"before compute_normal_basis" << endl;
+	}
+	FX.compute_normal_basis(d, Normal_basis, Frobenius, verbose_level - 1);
+
+	if (f_v) {
+		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
+				"Normal_basis = " << endl;
+		int_matrix_print(Normal_basis, d, d);
+		cout << endl;
+	}
+
+	cnt = 0;
+
+	Combi.int_vec_first_regular_word(v, d, F->q);
+	while (TRUE) {
+		if (f_vv) {
+			cout << "algebra_global::make_all_irreducible_polynomials_"
+					"of_degree_d regular word " << cnt << " : v = ";
+			int_vec_print(cout, v, d);
+			cout << endl;
+		}
+
+		F->mult_vector_from_the_right(Normal_basis, v, w, d, d);
+		if (f_vv) {
+			cout << "algebra_global::make_all_irreducible_polynomials_"
+					"of_degree_d regular word " << cnt << " : w = ";
+			int_vec_print(cout, w, d);
+			cout << endl;
+		}
+
+		FX.delete_object(g);
+		FX.create_object_of_degree(g, d - 1);
+		for (i = 0; i < d; i++) {
+			((int *) g)[1 + i] = w[i];
+		}
+
+		FX.minimum_polynomial_extension_field(g, m, minpol, d, Frobenius, verbose_level - 3);
+		if (f_vv) {
+			cout << "algebra_global::make_all_irreducible_polynomials_"
+					"of_degree_d regular word " << cnt << " : v = ";
+			int_vec_print(cout, v, d);
+			cout << " irreducible polynomial = ";
+			FX.print_object(minpol, cout);
+			cout << endl;
+		}
+
+		std::vector<int> T;
+
+		for (i = 0; i <= d; i++) {
+			T.push_back(((int *)minpol)[1 + i]);
+			//Table[cnt * (d + 1) + i] = ((int *)minpol)[1 + i];
+		}
+		Table.push_back(T);
+
+
+		cnt++;
+
+
+		if (!Combi.int_vec_next_regular_word(v, d, F->q)) {
+			break;
+		}
+
+	}
+
+	if (f_v) {
+		cout << "algebra_global::make_all_irreducible_polynomials_"
+				"of_degree_d there are " << cnt
+				<< " irreducible polynomials "
+				"of degree " << d << " over " << "F_" << F->q << endl;
+	}
+
+	FREE_int(Frobenius);
+	FREE_int(Normal_basis);
+	FREE_int(v);
+	FREE_int(w);
+	FX.delete_object(m);
+	FX.delete_object(g);
+	FX.delete_object(minpol);
+
+
+	if (f_v) {
+		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
+				"d=" << d << " q=" << F->q << " done" << endl;
+	}
+}
+
+int algebra_global::count_all_irreducible_polynomials_of_degree_d(finite_field *F,
+		int d, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i;
+	int cnt;
+	number_theory_domain NT;
+	combinatorics_domain Combi;
+
+	if (f_v) {
+		cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
+				"d=" << d << " q=" << F->q << endl;
+	}
+
+
+	if (f_v) {
+		cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d " << endl;
+	}
+
+	if (f_v) {
+		cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
+				"p=" << F->p << " e=" << F->e << endl;
+	}
+	if (F->e > 1) {
+		cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
+				"e=" << F->e << " is greater than one" << endl;
+	}
+
+	unipoly_domain FX(F);
+
+	const char *poly;
+
+	poly = get_primitive_polynomial(F->q, d, 0 /* verbose_level */);
+
+	unipoly_object m;
+	unipoly_object g;
+	unipoly_object minpol;
+
+
+	FX.create_object_by_rank_string(m, poly, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
+				"chosen irreducible polynomial m = ";
+		FX.print_object(m, cout);
+		cout << endl;
+	}
+
+	FX.create_object_by_rank(g, 0, __FILE__, __LINE__, verbose_level);
+	FX.create_object_by_rank(minpol, 0, __FILE__, __LINE__, verbose_level);
+
+	int *Frobenius;
+	//int *F2;
+	int *Normal_basis;
+	int *v;
+	int *w;
+
+	//Frobenius = NEW_int(d * d);
+	//F2 = NEW_int(d * d);
+	Normal_basis = NEW_int(d * d);
+	v = NEW_int(d);
+	w = NEW_int(d);
+
+	FX.Frobenius_matrix(Frobenius, m, verbose_level - 3);
+	if (f_v) {
+		cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
+				"Frobenius_matrix = " << endl;
+		int_matrix_print(Frobenius, d, d);
+		cout << endl;
+	}
+
+#if 0
+	F->mult_matrix_matrix(Frobenius, Frobenius, F2, d, d, d,
+			0 /* verbose_level */);
+	if (f_v) {
+		cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
+				"Frobenius^2 = " << endl;
+		int_matrix_print(F2, d, d);
+		cout << endl;
+	}
+#endif
+
+	FX.compute_normal_basis(d, Normal_basis, Frobenius, verbose_level - 3);
+
+	if (f_v) {
+		cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
+				"Normal_basis = " << endl;
+		int_matrix_print(Normal_basis, d, d);
+		cout << endl;
+	}
+
+	cnt = 0;
+	Combi.int_vec_first_regular_word(v, d, F->q);
+	while (TRUE) {
+		if (f_vv) {
+			cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
+					"regular word " << cnt << " : v = ";
+			int_vec_print(cout, v, d);
+			cout << endl;
+		}
+
+		F->mult_vector_from_the_right(Normal_basis, v, w, d, d);
+		if (f_vv) {
+			cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
+					"regular word " << cnt << " : w = ";
+			int_vec_print(cout, w, d);
+			cout << endl;
+		}
+
+		FX.delete_object(g);
+		FX.create_object_of_degree(g, d - 1);
+		for (i = 0; i < d; i++) {
+			((int *) g)[1 + i] = w[i];
+		}
+
+		FX.minimum_polynomial_extension_field(g, m, minpol, d,
+				Frobenius, verbose_level - 3);
+		if (f_vv) {
+			cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
+					"regular word " << cnt << " : v = ";
+			int_vec_print(cout, v, d);
+			cout << " irreducible polynomial = ";
+			FX.print_object(minpol, cout);
+			cout << endl;
+		}
+		if (FX.degree(minpol) != d) {
+			cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
+					"The polynomial does not have degree d"
+					<< endl;
+			FX.print_object(minpol, cout);
+			cout << endl;
+			exit(1);
+		}
+		if (!FX.is_irreducible(minpol, verbose_level)) {
+			cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
+					"The polynomial is not irreducible" << endl;
+			FX.print_object(minpol, cout);
+			cout << endl;
+			exit(1);
+		}
+
+
+		cnt++;
+
+		if (!Combi.int_vec_next_regular_word(v, d, F->q)) {
+			break;
+		}
+
+	}
+
+	if (f_v) {
+		cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
+				"there are " << cnt << " irreducible polynomials "
+				"of degree " << d << " over " << "F_" << F->q << endl;
+	}
+
+	FREE_int(Frobenius);
+	//FREE_int(F2);
+	FREE_int(Normal_basis);
+	FREE_int(v);
+	FREE_int(w);
+	FX.delete_object(m);
+	FX.delete_object(g);
+	FX.delete_object(minpol);
+
+	if (f_v) {
+		cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d done" << endl;
+	}
+	return cnt;
 }
 
 

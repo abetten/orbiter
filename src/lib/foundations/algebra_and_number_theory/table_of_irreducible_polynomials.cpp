@@ -58,6 +58,7 @@ void table_of_irreducible_polynomials::init(int k,
 	int f_v = (verbose_level >= 1);
 	int i, j, d;
 	combinatorics_domain Combi;
+	algebra_global Algebra;
 
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::init" << endl;
@@ -102,8 +103,21 @@ void table_of_irreducible_polynomials::init(int k,
 					"F->make_all_irreducible_polynomials_of_degree_d"
 					<< endl;
 		}
-		F->make_all_irreducible_polynomials_of_degree_d(d,
-				Nb_irred[d], Tables[d], verbose_level - 2);
+
+		vector<vector<int>> T;
+		Algebra.make_all_irreducible_polynomials_of_degree_d(F, d,
+				T, verbose_level - 2);
+
+		Nb_irred[d] = T.size();
+
+		Tables[d] = NEW_int(Nb_irred[d] * (d + 1));
+		for (i = 0; i < Nb_irred[d]; i++) {
+			for (j = 0; j <= d; j++) {
+				Tables[d][i * (d + 1) + j] = T[i][j];
+			}
+		}
+
+
 		if (f_v) {
 			cout << "table_of_irreducible_polynomials::init after "
 					"F->make_all_irreducible_polynomials_of_degree_d"

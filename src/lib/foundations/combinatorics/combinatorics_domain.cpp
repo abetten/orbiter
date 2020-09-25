@@ -31,10 +31,10 @@ int combinatorics_domain::Hamming_distance_binary(int a, int b, int n)
 		v = b % 2;
 		if (u != v) {
 			d++;
-			}
+		}
 		a >>= 1;
 		b >>= 1;
-		}
+	}
 	return d;
 }
 
@@ -45,7 +45,7 @@ int combinatorics_domain::int_factorial(int a)
 	n = 1;
 	for (i = 2; i <= a; i++) {
 		n *= i;
-		}
+	}
 	return n;
 }
 
@@ -56,10 +56,10 @@ int combinatorics_domain::Kung_mue_i(int *part, int i, int m)
 	mue = 0;
 	for (k = 1; k <= i; k++) {
 		mue += part[k - 1] * k;
-		}
+	}
 	for (k = i + 1; k <= m; k++) {
 		mue += part[k - 1] * i;
-		}
+	}
 	return mue;
 }
 
@@ -75,14 +75,14 @@ void combinatorics_domain::partition_dual(
 		cout << "input: ";
 		int_vec_print(cout, part, n);
 		cout << endl;
-		}
+	}
 	int_vec_zero(dual_part, n);
 	j = 0;
 	s = 0;
 	for (i = n; i >= 1; i--) {
 		if (part[i - 1] == 0) {
 			continue;
-			}
+		}
 		if (j) {
 			aj = part[j - 1];
 			s += aj;
@@ -90,10 +90,10 @@ void combinatorics_domain::partition_dual(
 			if (f_vv) {
 				cout << "partition_dual i=" << i << " j=" << j
 						<< " aj=" << aj << " s=" << s << endl;
-				}
 			}
-		j = i;
 		}
+		j = i;
+	}
 	if (j) {
 		aj = part[j - 1];
 		s += aj;
@@ -101,14 +101,14 @@ void combinatorics_domain::partition_dual(
 		if (f_vv) {
 			cout << "partition_dual j=" << j << " aj=" << aj
 					<< " s=" << s << endl;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "partition_dual" << endl;
 		cout << "output: ";
 		int_vec_print(cout, dual_part, n);
 		cout << endl;
-		}
+	}
 }
 
 void combinatorics_domain::make_all_partitions_of_n(int n,
@@ -134,8 +134,8 @@ void combinatorics_domain::make_all_partitions_of_n(int n,
 		cnt++;
 		if (!partition_next(v, n)) {
 			break;
-			}
 		}
+	}
 
 	FREE_int(v);
 	if (f_v) {
@@ -160,9 +160,9 @@ int combinatorics_domain::count_all_partitions_of_n(int n)
 	while (TRUE) {
 		if (!partition_next(v, n)) {
 			break;
-			}
-		cnt++;
 		}
+		cnt++;
+	}
 
 	FREE_int(v);
 	if (f_v) {
@@ -198,10 +198,10 @@ int combinatorics_domain::partition_next(int *v, int n)
 				a = s / (j + 1);
 				s -= a * (j + 1);
 				v[j] = a;
-				}
-			return TRUE;
 			}
+			return TRUE;
 		}
+	}
 	return FALSE;
 }
 
@@ -216,16 +216,16 @@ void combinatorics_domain::partition_print(ostream &ost, int *v, int n)
 		if (a) {
 			if (!f_first) {
 				ost << ", ";
-				}
+			}
 			if (a > 1) {
 				ost << i << "^" << a;
-				}
+			}
 			else {
 				ost << i;
-				}
-			f_first = FALSE;
 			}
+			f_first = FALSE;
 		}
+	}
 	ost << "]";
 }
 
@@ -240,7 +240,7 @@ int combinatorics_domain::int_vec_is_regular_word(int *v, int len, int q)
 	
 	if (len == 1) {
 		return TRUE;
-		}
+	}
 	k = 1;
 	do {
 		i = 0;
@@ -249,36 +249,52 @@ int combinatorics_domain::int_vec_is_regular_word(int *v, int len, int q)
 			i++;
 			if (ipk == len - 1) {
 				ipk = 0;
-				}
+			}
 			else {
 				ipk++;
-				}
 			}
+		}
 		f_is_regular = (v[ipk] < v[i]);
 		k++;
 	} while (f_is_regular && k <= len - 1);
 	return f_is_regular;
 }
 
-int combinatorics_domain::int_vec_first_regular_word(int *v, int len, int Q, int q)
+int combinatorics_domain::int_vec_first_regular_word(int *v, int len, int q)
 {
-	int a;
 	geometry_global Gg;
 
+#if 0
+	int a;
 	for (a = 0; a < Q; a++) {
 		Gg.AG_element_unrank(q, v, 1, len, a);
 		if (int_vec_is_regular_word(v, len, q)) {
 			return TRUE;
-			}
 		}
+	}
 	return FALSE;
+#else
+	int i;
+	for (i = 0; i < len; i++) {
+		v[i] = 0;
+	}
+	while (TRUE) {
+		if (int_vec_is_regular_word(v, len, q)) {
+			return TRUE;
+		}
+		if (!Gg.AG_element_next(q, v, 1, len)) {
+			return FALSE;
+		}
+	}
+#endif
 }
 
-int combinatorics_domain::int_vec_next_regular_word(int *v, int len, int Q, int q)
+int combinatorics_domain::int_vec_next_regular_word(int *v, int len, int q)
 {
-	long int a;
+	//long int a;
 	geometry_global Gg;
 
+#if 0
 	a = Gg.AG_element_rank(q, v, 1, len);
 	//cout << "int_vec_next_regular_word current rank = " << a << endl;
 	for (a++; a < Q; a++) {
@@ -288,9 +304,20 @@ int combinatorics_domain::int_vec_next_regular_word(int *v, int len, int Q, int 
 		//cout << endl;
 		if (int_vec_is_regular_word(v, len, q)) {
 			return TRUE;
-			}
 		}
+	}
 	return FALSE;
+#else
+	while (TRUE) {
+		if (!Gg.AG_element_next(q, v, 1, len)) {
+			return FALSE;
+		}
+		if (int_vec_is_regular_word(v, len, q)) {
+			return TRUE;
+		}
+	}
+
+#endif
 }
 
 int combinatorics_domain::is_subset_of(int *A, int sz_A, int *B, int sz_B)
@@ -303,13 +330,13 @@ int combinatorics_domain::is_subset_of(int *A, int sz_A, int *B, int sz_B)
 	B2 = NEW_int(sz_B);
 	for (i = 0; i < sz_B; i++) {
 		B2[i] = B[i];
-		}
+	}
 	Sorting.int_vec_heapsort(B2, sz_B);
 	for (i = 0; i < sz_A; i++) {
 		if (!Sorting.int_vec_search(B2, sz_B, A[i], idx)) {
 			goto done;
-			}
 		}
+	}
 	ret = TRUE;
 done:
 	FREE_int(B2);
@@ -327,7 +354,7 @@ int combinatorics_domain::set_find(int *elts, int size, int a)
 		int_vec_print(cout, elts, size);
 		cout << endl;
 		exit(1);
-		}
+	}
 	return idx;
 }
 
@@ -345,9 +372,9 @@ void combinatorics_domain::set_complement(
 		if (j < subset_size && subset[j] == i) {
 			j++;
 			continue;
-			}
-		complement[size_complement++] = i;
 		}
+		complement[size_complement++] = i;
+	}
 }
 
 void combinatorics_domain::set_complement_lint(
@@ -364,9 +391,9 @@ void combinatorics_domain::set_complement_lint(
 		if (j < subset_size && subset[j] == i) {
 			j++;
 			continue;
-			}
-		complement[size_complement++] = i;
 		}
+		complement[size_complement++] = i;
+	}
 }
 
 void combinatorics_domain::set_complement_safe(
@@ -389,9 +416,9 @@ void combinatorics_domain::set_complement_safe(
 		if (j < subset_size && subset2[j] == i) {
 			j++;
 			continue;
-			}
-		complement[size_complement++] = i;
 		}
+		complement[size_complement++] = i;
+	}
 	FREE_int(subset2);
 }
 
@@ -403,7 +430,7 @@ void combinatorics_domain::set_add_elements(
 
 	for (i = 0; i < nb_elts_to_add; i++) {
 		set_add_element(elts, size, elts_to_add[i]);
-		}
+	}
 }
 
 void combinatorics_domain::set_add_element(int *elts, int &size, int a)
@@ -413,10 +440,10 @@ void combinatorics_domain::set_add_element(int *elts, int &size, int a)
 	
 	if (Sorting.int_vec_search(elts, size, a, idx)) {
 		return;
-		}
+	}
 	for (i = size; i > idx; i--) {
 		elts[i] = elts[i - 1];
-		}
+	}
 	elts[idx] = a;
 	size++;
 }
@@ -428,7 +455,7 @@ void combinatorics_domain::set_delete_elements(int *elts, int &size,
 
 	for (i = 0; i < nb_elts_to_delete; i++) {
 		set_delete_element(elts, size, elts_to_delete[i]);
-		}
+	}
 }
 
 
@@ -439,10 +466,10 @@ void combinatorics_domain::set_delete_element(int *elts, int &size, int a)
 	
 	if (!Sorting.int_vec_search(elts, size, a, idx)) {
 		return;
-		}
+	}
 	for (i = idx; i < size; i++) {
 		elts[i] = elts[i + 1];
-		}
+	}
 	size--;
 }
 
@@ -456,15 +483,17 @@ int combinatorics_domain::compare_lexicographically(
 	for (i = 0; i < l; i++) {
 		if (a[i] > b[i]) {
 			return 1;
-			}
+		}
 		if (a[i] < b[i]) {
 			return -1;
-			}
 		}
-	if (a_len > l)
+	}
+	if (a_len > l) {
 		return 1;
-	if (b_len > l)
+	}
+	if (b_len > l) {
 		return -1;
+	}
 	return 0;
 }
 
@@ -492,17 +521,17 @@ void combinatorics_domain::make_t_k_incidence_matrix(int v, int t, int k,
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			M[i * n + j] = f_is_subset_of(v, t, k, i, j);
-			}
 		}
+	}
 	if (f_v) {
 		cout << "make_t_k_incidence_matrix computed " << m << " x " << n
 			<< " KM matrix" << endl;
-		}
+	}
 	if (f_vv) {
 		print_k_subsets_by_rank(cout, v, t);
 		print_k_subsets_by_rank(cout, v, k);
 		print_int_matrix(cout, M, m, n);
-		}
+	}
 }
 
 void combinatorics_domain::print_k_subsets_by_rank(ostream &ost, int v, int k)
@@ -517,7 +546,7 @@ void combinatorics_domain::print_k_subsets_by_rank(ostream &ost, int v, int k)
 		cout << i << " : ";
 		int_set_print(ost, set, k);
 		cout << endl;
-		}
+	}
 	FREE_int(set);
 }
 
@@ -536,16 +565,16 @@ int combinatorics_domain::f_is_subset_of(int v, int t, int k,
 		while (j < k) {
 			if (set1[i] == set2[j]) {
 				break;
-				}
-			j++;
 			}
+			j++;
+		}
 		if (j == k) {
 			//cout << "did not find letter " << set1[i] << endl;
 			f_subset = FALSE;
 			break;
-			}
-		j++;
 		}
+		j++;
+	}
 
 	FREE_int(set1);
 	FREE_int(set2);
@@ -568,17 +597,17 @@ void combinatorics_domain::rank_subset_recursion(
 	
 	if (sz == 0) {
 		return;
-		}
+	}
 	r++;
 	for (a = a0; a < n; a++) {
 		if (set[0] == a) {
 			rank_subset_recursion(set + 1, sz - 1, n, a + 1, r);
 			return;
-			}
+		}
 		else {
 			r += NT.i_power_j(2, n - a - 1);
-			}
 		}
+	}
 }
 
 void combinatorics_domain::unrank_subset(int *set, int &sz, int n, int r)
@@ -596,19 +625,19 @@ void combinatorics_domain::unrank_subset_recursion(
 	
 	if (r == 0) {
 		return;
-		}
+	}
 	r--;
 	for (a = a0; a < n; a++) {
 		b = NT.i_power_j(2, n - a - 1);
 		if (r >= b) {
 			r -= b;
-			}
+		}
 		else {
 			set[sz++] = a;
 			unrank_subset_recursion(set, sz, n, a + 1, r);
 			return;
-			}
 		}
+	}
 }
 
 
@@ -625,14 +654,14 @@ int combinatorics_domain::rank_k_subset(int *set, int n, int k)
 		if (set[j] > i) {
 			binomial(a, n - i - 1, k - j - 1, FALSE);
 			r += a.as_int();
-			}
+		}
 		else {
 			j++;
-			}
+		}
 		if (j == k) {
 			break;
-			}
 		}
+	}
 	return r;
 }
 
@@ -651,12 +680,13 @@ void combinatorics_domain::unrank_k_subset(int rk, int *set, int n, int k)
 		if (rk >= r1) {
 			rk -= r1;
 			continue;
-			}
+		}
 		set[j] = i;
 		j++;
-		if (j == k)
+		if (j == k) {
 			break;
 		}
+	}
 }
 
 int combinatorics_domain::first_k_subset(int *set, int n, int k)
@@ -665,10 +695,10 @@ int combinatorics_domain::first_k_subset(int *set, int n, int k)
 	
 	if (k > n) {
 		return FALSE;
-		}
+	}
 	for (i = 0; i < k; i++) {
 		set[i] = i;
-		}
+	}
 	return TRUE;
 }
 
@@ -682,10 +712,10 @@ int combinatorics_domain::next_k_subset(int *set, int n, int k)
 			set[k - 1 - i] = a + 1;
 			for (ii = i - 1; ii >= 0; ii--) {
 				set[k - 1 - ii] = set[k - 1 - ii - 1] + 1;
-				}
-			return TRUE;
 			}
+			return TRUE;
 		}
+	}
 	return FALSE;
 }
 
@@ -701,10 +731,10 @@ int combinatorics_domain::next_k_subset_at_level(
 			set[k - 1 - i] = a + 1;
 			for (ii = i - 1; ii >= 0; ii--) {
 				set[k - 1 - ii] = set[k - 1 - ii - 1] + 1;
-				}
-			return TRUE;
 			}
+			return TRUE;
 		}
+	}
 	return FALSE;
 }
 
@@ -720,16 +750,16 @@ void combinatorics_domain::subset_permute_up_front(int n, int k,
 		for (j++; j < k_subset_idx[i]; j++) {
 			permuted_set[k + ii] = set[j];
 			ii++;
-			}
 		}
+	}
 	for (j++; j < n; j++) {
 		permuted_set[k + ii] = set[j];
 		ii++;
-		}
+	}
 	if (ii != n - k) {
 		cout << "ii != n - k" << endl;
 		exit(1);
-		}
+	}
 }
 
 int combinatorics_domain::ordered_pair_rank(int i, int j, int n)
@@ -739,17 +769,17 @@ int combinatorics_domain::ordered_pair_rank(int i, int j, int n)
 	if (i == j) {
 		cout << "ordered_pair_rank i == j" << endl;
 		exit(1);
-		}
+	}
 	if (i < j) {
 		// without swap:
 		a = ij2k(i, j, n);
 		return 2 * a;
-		}
+	}
 	else {
 		// with swap
 		a = ij2k(j, i, n);
 		return 2 * a + 1;
-		}
+	}
 }
 
 void combinatorics_domain::ordered_pair_unrank(int rk, int &i, int &j, int n)
@@ -764,12 +794,12 @@ void combinatorics_domain::ordered_pair_unrank(int rk, int &i, int &j, int n)
 		k2ij(a, i1, j1, n);
 		i = j1;
 		j = i1;
-		}
+	}
 	else {
 		// without swap
 		a = rk / 2;
 		k2ij(a, i, j, n);
-		}
+	}
 }
 
 int combinatorics_domain::unordered_triple_pair_rank(
@@ -786,26 +816,26 @@ int combinatorics_domain::unordered_triple_pair_rank(
 	if (f_v) {
 		cout << "unordered_triple_pair_rank " << i << j
 			<< "," << k << l << "," << m << n << endl;
-		}
+	}
 	
 	if (i > j) {
 		return unordered_triple_pair_rank(j, i, k, l, m, n);
-		}
+	}
 	if (k > l) {
 		return unordered_triple_pair_rank(i, j, l, k, m, n);
-		}
+	}
 	if (m > n) {
 		return unordered_triple_pair_rank(i, j, k, l, n, m);
-		}
+	}
 	if (k > m) {
 		return unordered_triple_pair_rank(i, j, m, n, k, l);
-		}
+	}
 	if (i > k) {
 		return unordered_triple_pair_rank(k, l, i, j, m, n);
-		}
+	}
 	if (k > m) {
 		return unordered_triple_pair_rank(i, j, m, n, k, l);
-		}
+	}
 	six[0] = m;
 	six[1] = n;
 	sz = 2;
@@ -814,7 +844,7 @@ int combinatorics_domain::unordered_triple_pair_rank(
 	Sorting.int_vec_search(six, sz, l, b);
 	for (u = sz; u > b; u--) {
 		six[u] = six[u - 1];
-		}
+	}
 	six[b] = l;
 	sz++;
 
@@ -822,16 +852,16 @@ int combinatorics_domain::unordered_triple_pair_rank(
 		cout << "unordered_triple_pair_rank : b = " << b << " : ";
 		int_vec_print(cout, six, sz); 
 		cout << endl;
-		}
+	}
 
 	
 	if (k > six[0]) {
 		cout << "unordered_triple_pair_rank k > six[0]" << endl;
 		exit(1);
-		}
+	}
 	for (u = sz; u > 0; u--) {
 		six[u] = six[u - 1];
-		}
+	}
 	six[0] = k;
 	sz++;
 
@@ -839,7 +869,7 @@ int combinatorics_domain::unordered_triple_pair_rank(
 		cout << "unordered_triple_pair_rank : b = " << b << " : ";
 		int_vec_print(cout, six, sz); 
 		cout << endl;
-		}
+	}
 
 
 	Sorting.int_vec_search(six, sz, j, a);
@@ -847,7 +877,7 @@ int combinatorics_domain::unordered_triple_pair_rank(
 	if (f_v) {
 		cout << "unordered_triple_pair_rank : b = " << b
 			<< " a = " << a << endl;
-		}
+	}
 
 
 	rk = a * 3 + b;
@@ -930,7 +960,7 @@ void combinatorics_domain::unordered_triple_pair_unrank(int rk,
 	i = 0;
 	for (u = 0; u < 5; u++) {
 		six[u] = 1 + u;
-		}
+	}
 	sz = 5;
 	j = six[a];
 
@@ -939,7 +969,7 @@ void combinatorics_domain::unordered_triple_pair_unrank(int rk,
 
 	for (u = a + 1; u < sz; u++) {
 		six[u - 1] = six[u];
-		}
+	}
 	sz--;
 	k = six[0];
 
@@ -950,7 +980,7 @@ void combinatorics_domain::unordered_triple_pair_unrank(int rk,
 
 	for (u = 1; u < sz; u++) {
 		six[u - 1] = six[u];
-		}
+	}
 	sz--;
 	l = six[b];
 
@@ -961,12 +991,12 @@ void combinatorics_domain::unordered_triple_pair_unrank(int rk,
 
 	for (u = b + 1; u < sz; u++) {
 		six[u - 1] = six[u];
-		}
+	}
 	sz--;
 	if (sz != 2) {
 		cout << "unordered_triple_pair_unrank sz != 2" << endl;
 		exit(1);
-		}
+	}
 	m = six[0];
 	n = six[1];
 	//int_vec_print(cout, six, sz);
@@ -1002,9 +1032,9 @@ void combinatorics_domain::k2ij_lint(long int k, long int & i, long int & j, lon
 			i = ii;
 			j = k + ii + 1;
 			return;
-			}
-		k -= (n - ii - 1);
 		}
+		k -= (n - ii - 1);
+	}
 	cout << "combinatorics_domain::k2ij_lint k too large: k = " << k_save
 			<< " n = " << n << endl;
 	exit(1);
@@ -1033,9 +1063,9 @@ void combinatorics_domain::k2ij(int k, int & i, int & j, int n)
 			i = ii;
 			j = k + ii + 1;
 			return;
-			}
-		k -= (n - ii - 1);
 		}
+		k -= (n - ii - 1);
+	}
 	cout << "k2ij: k too large: k = " << k_save
 			<< " n = " << n << endl;
 	exit(1);
@@ -1070,32 +1100,33 @@ void combinatorics_domain::random_permutation(int *random_permutation, int n)
 	int *available_digits;
 	os_interface Os;
 
-	if (n == 0)
+	if (n == 0) {
 		return;
+	}
 	if (n == 1) {
 		random_permutation[0] = 0;
 		return;
-		}
+	}
 	available_digits = NEW_int(n);
 	
 	for (i = 0; i < n; i++) {
 		available_digits[i] = i;
-		}
+	}
 	l = n;
 	for (i = 0; i < n; i++) {
 		if ((i % 1000) == 0) {
 			cout << "random_permutation " << i << " / " << n << endl;
-			}
+		}
 		a = Os.random_integer(l);
 		random_permutation[i] = available_digits[a];
 		available_digits[a] = available_digits[l - 1];
 #if 0
 		for (j = a; j < l - 1; j++) {
 			available_digits[j] = available_digits[j + 1];
-			}
+		}
 #endif
 		l--;
-		}
+	}
 	
 	FREE_int(available_digits);
 }
@@ -1106,7 +1137,7 @@ void combinatorics_domain::perm_move(int *from, int *to, int n)
 	
 	for (i = 0; i < n; i++) {
 		to[i] = from[i];
-		}
+	}
 }
 
 void combinatorics_domain::perm_identity(int *a, int n)
@@ -1115,7 +1146,7 @@ void combinatorics_domain::perm_identity(int *a, int n)
 	
 	for (i = 0; i < n; i++) {
 		a[i] = i;
-		}
+	}
 }
 
 int combinatorics_domain::perm_is_identity(int *a, int n)
@@ -1155,15 +1186,15 @@ void combinatorics_domain::perm_mult(int *a, int *b, int *c, int n)
 			cout << "perm_mult a[" << i << "] = " << j
 					<< " out of range" << endl;
 			exit(1);
-			}
+		}
 		k = b[j];
 		if (k < 0 || k >= n) {
 			cout << "perm_mult b[a[" << i << "] = " << j
 					<< "] = " << k << " out of range" << endl;
 			exit(1);
-			}
-		c[i] = k;
 		}
+		c[i] = k;
+	}
 }
 
 void combinatorics_domain::perm_conjugate(int *a, int *b, int *c, int n)
@@ -1177,7 +1208,7 @@ void combinatorics_domain::perm_conjugate(int *a, int *b, int *c, int n)
 		k = a[i];
 		k = b[k];
 		c[j] = k;
-		}
+	}
 }
 
 void combinatorics_domain::perm_inverse(int *a, int *b, int n)
@@ -1188,7 +1219,7 @@ void combinatorics_domain::perm_inverse(int *a, int *b, int n)
 	for (i = 0; i < n; i++) {
 		j = a[i];
 		b[j] = i;
-		}
+	}
 }
 
 void combinatorics_domain::perm_raise(int *a, int *b, int e, int n)
@@ -1200,9 +1231,9 @@ void combinatorics_domain::perm_raise(int *a, int *b, int e, int n)
 		k = i;
 		for (j = 0; j < e; j++) {
 			k = a[k];
-			}
-		b[i] = k;
 		}
+		b[i] = k;
+	}
 }
 
 void combinatorics_domain::perm_direct_product(int n1, int n2,
@@ -1216,8 +1247,8 @@ void combinatorics_domain::perm_direct_product(int n1, int n2,
 			b = perm2[j];
 			c = a * n2 + b;
 			perm3[i * n2 + j] = c;
-			}
 		}
+	}
 }
 
 void combinatorics_domain::perm_print_list(ostream &ost, int *a, int n)
@@ -1229,8 +1260,8 @@ void combinatorics_domain::perm_print_list(ostream &ost, int *a, int n)
 		if (a[i] < 0 || a[i] >= n) {
 			cout << "a[" << i << "] out of range" << endl;
 			exit(1);
-			}
 		}
+	}
 	cout << endl;
 }
 
@@ -1244,8 +1275,8 @@ void combinatorics_domain::perm_print_list_offset(
 		if (a[i] < 0 || a[i] >= n) {
 			cout << "a[" << i << "] out of range" << endl;
 			exit(1);
-			}
 		}
+	}
 	cout << endl;
 }
 
@@ -1311,17 +1342,17 @@ void combinatorics_domain::perm_print_offset(ostream &ost,
 	//cout << "perm_print_offset n=" << n << " offset=" << offset << endl;
 	if (f_orbit_structure) {
 		orbit_length = NEW_int(n);
-		}
+	}
 	have_seen = NEW_int(n);
 	for (l = 0; l < n; l++) {
 		have_seen[l] = FALSE;
-		}
+	}
 	l = 0;
 	while (l < n) {
 		if (have_seen[l]) {
 			l++;
 			continue;
-			}
+		}
 		// work on a next cycle, starting at position l:
 		first = l;
 		//cout << "perm_print_offset cyle starting
@@ -1334,7 +1365,7 @@ void combinatorics_domain::perm_print_offset(ostream &ost,
 						<< first << endl;
 				cout << "l1 = " << l1 << " >= n" << endl;
 				exit(1);
-				}
+			}
 			have_seen[l1] = TRUE;
 			next = a[l1];
 			if (next >= n) {
@@ -1342,10 +1373,10 @@ void combinatorics_domain::perm_print_offset(ostream &ost,
 						<< " >= n = " << n << endl;
 				// print_list(ost);
 				exit(1);
-				}
+			}
 			if (next == first) {
 				break;
-				}
+			}
 			if (have_seen[next]) {
 				cout << "perm_print_offset have_seen[next]" << endl; 
 				cout << "first=" << first << endl;
@@ -1354,26 +1385,26 @@ void combinatorics_domain::perm_print_offset(ostream &ost,
 				cout << "next=" << next << endl;
 				for (i = 0; i < n; i++) {
 					cout << i << " : " << a[i] << endl;
-					}
-				exit(1);
 				}
+				exit(1);
+			}
 			l1 = next;
 			len++;
-			}
+		}
 		//cout << "perm_print_offset cyle starting with "
 		//<< first << " has length " << len << endl;
 		//cout << "nb_orbits=" << nb_orbits << endl;
 		if (f_orbit_structure) {
 			orbit_length[nb_orbits++] = len;
-			}
+		}
 		if (!f_print_cycles_of_length_one) {
 			if (len == 1) {
 				continue;
-				}
+			}
 		}
 		if (f_max_cycle_length && len > max_cycle_length) {
 			continue;
-			}
+		}
 		f_nothing_printed_at_all = FALSE;
 		// print cycle, beginning with first: 
 		l1 = first;
@@ -1391,21 +1422,21 @@ void combinatorics_domain::perm_print_offset(ostream &ost,
 			next = a[l1];
 			if (next == first) {
 				break;
-				}
+			}
 			ost << ", ";
 			l1 = next;
-			}
+		}
 		ost << ")"; //  << endl;
 		if (f_cycle_length) {
 			if (len >= 10) {
 				ost << "_{" << len << "}";
-				}
 			}
+		}
 		//cout << "perm_print_offset done printing cycle" << endl;
 		}
 	if (f_nothing_printed_at_all) {
 		ost << "id";
-		}
+	}
 	if (f_orbit_structure) {
 
 		tally C;
@@ -1418,7 +1449,7 @@ void combinatorics_domain::perm_print_offset(ostream &ost,
 		C.print_naked(FALSE /* f_backwards*/);
 		
 		FREE_int(orbit_length);
-		}
+	}
 	FREE_int(have_seen);
 }
 
@@ -1433,13 +1464,13 @@ void combinatorics_domain::perm_cycle_type(
 	have_seen = NEW_int(degree);
 	for (l = 0; l < degree; l++) {
 		have_seen[l] = FALSE;
-		}
+	}
 	l = 0;
 	while (l < degree) {
 		if (have_seen[l]) {
 			l++;
 			continue;
-			}
+		}
 		// work on a next cycle, starting at position l:
 		first = l;
 		//cout << "perm_cycle_type cycle starting
@@ -1452,7 +1483,7 @@ void combinatorics_domain::perm_cycle_type(
 						<< first << endl;
 				cout << "l1 = " << l1 << " >= degree" << endl;
 				exit(1);
-				}
+			}
 			have_seen[l1] = TRUE;
 			next = perm[l1];
 			if (next >= degree) {
@@ -1460,10 +1491,10 @@ void combinatorics_domain::perm_cycle_type(
 						<< " >= degree = " << degree << endl;
 				// print_list(ost);
 				exit(1);
-				}
+			}
 			if (next == first) {
 				break;
-				}
+			}
 			if (have_seen[next]) {
 				cout << "perm_cycle_type have_seen[next]" << endl;
 				cout << "first=" << first << endl;
@@ -1472,17 +1503,17 @@ void combinatorics_domain::perm_cycle_type(
 				cout << "next=" << next << endl;
 				for (i = 0; i < degree; i++) {
 					cout << i << " : " << perm[i] << endl;
-					}
-				exit(1);
 				}
+				exit(1);
+			}
 			l1 = next;
 			len++;
-			}
+		}
 		//cout << "perm_print_offset cyle starting with "
 		//<< first << " has length " << len << endl;
 		//cout << "nb_orbits=" << nb_orbits << endl;
 		cycles[nb_cycles++] = len;
-		}
+	}
 	FREE_int(have_seen);
 }
 
@@ -1495,13 +1526,13 @@ int combinatorics_domain::perm_order(int *a, int n)
 	have_seen = NEW_int(n);
 	for (l = 0; l < n; l++) {
 		have_seen[l] = FALSE;
-		}
+	}
 	l = 0;
 	while (l < n) {
 		if (have_seen[l]) {
 			l++;
 			continue;
-			}
+		}
 		// work on a next cycle, starting at position l:
 		first = l;
 		l1 = l;
@@ -1514,25 +1545,25 @@ int combinatorics_domain::perm_order(int *a, int n)
 						<< " > n = " << n << endl;
 				// print_list(ost);
 				exit(1);
-				}
+			}
 			if (next == first) {
 				break;
-				}
+			}
 			if (have_seen[next]) {
 				cout << "perm_order: have_seen[next]" << endl; 
 				for (i = 0; i < n; i++) {
 					cout << i << " : " << a[i] << endl;
-					}
-				exit(1);
 				}
+				exit(1);
+			}
 			l1 = next;
 			len++;
-			}
+		}
 		if (len == 1) {
 			continue;
-			}
-		order = len * order / NT.gcd_lint(order, len);
 		}
+		order = len * order / NT.gcd_lint(order, len);
+	}
 	FREE_int(have_seen);
 	return order;
 }
@@ -1551,15 +1582,15 @@ int combinatorics_domain::perm_signum(int *perm, int n)
 			b = perm[j];
 			if (b < a) {
 				f++;
-				}
 			}
 		}
+	}
 	if (EVEN(f)) {
 		return 1;
-		}
+	}
 	else {
 		return -1;
-		}
+	}
 }
 
 int combinatorics_domain::is_permutation(int *perm, int n)
@@ -1591,7 +1622,7 @@ void combinatorics_domain::first_lehmercode(int n, int *v)
 	
 	for (i = 0; i < n; i++) {
 		v[i] = 0;
-		}
+	}
 }
 
 int combinatorics_domain::next_lehmercode(int n, int *v)
@@ -1603,10 +1634,10 @@ int combinatorics_domain::next_lehmercode(int n, int *v)
 			v[i]++;
 			for (i--; i >= 0; i--) {
 				v[i] = 0;
-				}
-			return TRUE;
 			}
+			return TRUE;
 		}
+	}
 	return FALSE;
 }
 
@@ -1619,7 +1650,7 @@ void combinatorics_domain::lehmercode_to_permutation(
 	digits = NEW_int(n);
 	for (i = 0; i < n; i++) {
 		digits[i] = i;
-		}
+	}
 	
 	for (i = 0; i < n; i++) {
 
@@ -1629,8 +1660,8 @@ void combinatorics_domain::lehmercode_to_permutation(
 		perm[i] = digits[k];
 		for (j = k; j < n - i - 1; j++) {
 			digits[j] = digits[j + 1];
-			}
 		}
+	}
 	FREE_int(digits);
 }
 
@@ -1643,10 +1674,10 @@ int combinatorics_domain::disjoint_binary_representation(int u, int v)
 		v1 = v % 2;
 		if (u1 && v1) {
 			return FALSE;
-			}
+		}
 		u = u >> 1;
 		v = v >> 1;
-		}
+	}
 	return TRUE;
 }
 
@@ -1660,16 +1691,16 @@ int combinatorics_domain::hall_test(
 		if (!philip_hall_test(A, n, k, memo, verbose_level - 1)) {
 			if (f_vv) {
 				cout << "Hall test fails, k=" << k << endl;
-				}
-			return FALSE;
 			}
+			return FALSE;
+		}
 		if (!philip_hall_test_dual(A, n, k, memo, verbose_level - 1)) {
 			if (f_vv) {
 				cout << "Hall test fails, k=" << k << ", dual" << endl;
-				}
-			return FALSE;
 			}
+			return FALSE;
 		}
+	}
 	return TRUE;
 }
 
@@ -1681,8 +1712,9 @@ int combinatorics_domain::philip_hall_test(
 	int f_vv = (verbose_level >= 2);
 	int i, j, l, c;
 	
-	if (!first_k_subset(memo, n, k))
+	if (!first_k_subset(memo, n, k)) {
 		return TRUE;
+	}
 	do {
 		c = 0;
 		for (j = 0; j < n; j++) {
@@ -1690,38 +1722,38 @@ int combinatorics_domain::philip_hall_test(
 				i = memo[l];
 				if (A[i * n + j]) {
 					break;
-					}
-				}
-			if (l < k) {
-				c++;
-				}
-			if (c >= k) {
-				break;
 				}
 			}
+			if (l < k) {
+				c++;
+			}
+			if (c >= k) {
+				break;
+			}
+		}
 		if (c < k) {
 			if (f_v) {
 				cout << "Hall test fails for " << k << "-set ";
 				int_set_print(memo, k);
 				cout << " c=" << c << " n=" << n << endl;
-				}
+			}
 			if (f_vv) {
 				for (l = 0; l < k; l++) {
 					i = memo[l];
 					for (j = 0; j < n; j++) {
 						if (A[i * n + j]) {
 							cout << "*";
-							}
+						}
 						else {
 							cout << ".";
-							}
 						}
-					cout << endl;
 					}
+					cout << endl;
 				}
-			return FALSE;
 			}
-		} while (next_k_subset(memo, n, k));
+			return FALSE;
+		}
+	} while (next_k_subset(memo, n, k));
 	return TRUE;
 }
 
@@ -1734,8 +1766,9 @@ int combinatorics_domain::philip_hall_test_dual(
 	int f_vv = (verbose_level >= 2);
 	int i, j, l, c;
 	
-	if (!first_k_subset(memo, n, k))
+	if (!first_k_subset(memo, n, k)) {
 		return TRUE;
+	}
 	do {
 		c = 0;
 		for (j = 0; j < n; j++) {
@@ -1743,38 +1776,38 @@ int combinatorics_domain::philip_hall_test_dual(
 				i = memo[l];
 				if (A[j * n + i]) {
 					break;
-					}
-				}
-			if (l < k) {
-				c++;
-				}
-			if (c >= k) {
-				break;
 				}
 			}
+			if (l < k) {
+				c++;
+			}
+			if (c >= k) {
+				break;
+			}
+		}
 		if (c < k) {
 			if (f_v) {
 				cout << "Hall test fails for " << k << "-set ";
 				int_set_print(memo, k);
 				cout << " c=" << c << " n=" << n << endl;
-				}
+			}
 			if (f_vv) {
 				for (l = 0; l < k; l++) {
 					i = memo[l];
 					for (j = 0; j < n; j++) {
 						if (A[j * n + i]) {
 							cout << "*";
-							}
+						}
 						else {
 							cout << ".";
-							}
 						}
-					cout << endl;
 					}
+					cout << endl;
 				}
-			return FALSE;
 			}
-		} while (next_k_subset(memo, n, k));
+			return FALSE;
+		}
+	} while (next_k_subset(memo, n, k));
 	return TRUE;
 }
 
@@ -1787,13 +1820,13 @@ void combinatorics_domain::print_01_matrix_with_stars(
 		for (j = 0; j < n; j++) {
 			if (A[i * n + j]) {
 				ost << "*";
-				}
+			}
 			else {
 				ost << ".";
-				}
 			}
-		ost << endl;
 		}
+		ost << endl;
+	}
 }
 
 void combinatorics_domain::print_int_matrix(
@@ -1804,9 +1837,9 @@ void combinatorics_domain::print_int_matrix(
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			ost << A[i * n + j] << " ";
-			}
-		ost << endl;
 		}
+		ost << endl;
+	}
 }
 
 int combinatorics_domain::create_roots_H4(
@@ -1825,14 +1858,15 @@ int combinatorics_domain::create_roots_H4(
 	n = 0;
 	for (c = 1; c < F->q; c++) {
 		c2 = F->mult(c, c);
-		if (c2 == 5)
+		if (c2 == 5) {
 			break;
 		}
+	}
 	if (c == F->q) {
 		cout << "create_roots_H4: the field of order " << F->q
 			<< " does not contain a square root of 5" << endl;
 		exit(1);
-		}
+	}
 	//tau = F->mult(F->add(1, c), half);
 	//tau_inv = F->inverse(tau);
 	a = F->mult(F->add(1, c), quarter);
@@ -1851,19 +1885,19 @@ int combinatorics_domain::create_roots_H4(
 		for (j = 0; j < 2; j++) {
 			for (k = 0; k < 4; k++) {
 				v[k] = 0;
-				}
+			}
 			if (j == 0) {
 				v[i] = one;
-				}
+			}
 			else {
 				v[i] = m_one;
-				}
+			}
 			for (k = 0; k < 4; k++) {
 				roots[n * 4 + k] = v[k];
-				}
+			}
 			n++;
-			} // next j
-		} // next i
+		} // next j
+	} // next i
 	
 	// creates the set of vectors 
 	// \{ 1/2 (\pm 1, \pm 1, \pm 1, \pm 1) \}
@@ -1874,7 +1908,7 @@ int combinatorics_domain::create_roots_H4(
 					// the zero vector:
 					for (k = 0; k < 4; k++) {
 						v[k] = 0;
-						}
+					}
 					if (j1 == 0)
 						v[0] = one;
 					else
@@ -1893,12 +1927,12 @@ int combinatorics_domain::create_roots_H4(
 						v[3] = m_one;
 					for (k = 0; k < 4; k++) {
 						roots[n * 4 + k] = F->mult(half, v[k]);
-						}
+					}
 					n++;
-					} // next j4
-				} // next j3
-			} // next j2
-		} // next j1
+				} // next j4
+			} // next j3
+		} // next j2
+	} // next j1
 	
 	// creates the set of vectors 
 	// \{ \sigma ( (\pm a, \pm 1/2, \pm b, 0) ) \mid \sigma \in \Alt_4 \}
@@ -1907,25 +1941,25 @@ int combinatorics_domain::create_roots_H4(
 			for (j3 = 0; j3 < 2; j3++) {
 				for (k = 0; k < 4; k++) {
 					v[k] = 0;
-					}
+				}
 				if (j1 == 0) {
 					v[0] = a;
-					}
+				}
 				else {
 					v[0] = m_a;
-					}
+				}
 				if (j2 == 0) {
 					v[1] = half;
-					}
+				}
 				else {
 					v[1] = m_half;
-					}
+				}
 				if (j3 == 0) {
 					v[2] = b;
-					}
+				}
 				else {
 					v[2] = m_b;
-					}
+				}
 				first_lehmercode(4, L);
 				while (TRUE) {
 					lehmercode_to_permutation(4, L, P);
@@ -1933,16 +1967,16 @@ int combinatorics_domain::create_roots_H4(
 					if (sgn == 1) {
 						for (k = 0; k < 4; k++) {
 							roots[n * 4 + k] = v[P[k]];
-							}
-						n++;
 						}
+						n++;
+					}
 					if (!next_lehmercode(4, L)) {
 						break;
-						}
-					} // while
-				} // next j3
-			} // next j2
-		} // next j1
+					}
+				} // while
+			} // next j3
+		} // next j2
+	} // next j1
 	return n;
 }
 
@@ -1976,14 +2010,14 @@ long int combinatorics_domain::generalized_binomial(int n, int k, int q)
 	if (b != 1) {
 		cout << "error in generalized_binomial b != 1" << endl;
 		exit(1);
-		}
+	}
 	
 	d = a * c;
 	e = d / b;
 	if (e * b != d) {
 		cout << "error in generalized_binomial e * b != d" << endl;
 		exit(1);
-		}
+	}
 	return e;
 }
 
@@ -1997,9 +2031,9 @@ void combinatorics_domain::print_tableau(int *Tableau, int l1, int l2,
 		for (j = 0; j < a; j++) {
 			b = Tableau[i * l2 + j];
 			cout << setw(3) << b << " ";
-			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 }
 
 int combinatorics_domain::ijk_rank(int i, int j, int k, int n)
@@ -2029,8 +2063,8 @@ int combinatorics_domain::largest_binomial2_below(int a2)
 		if (b2 > a2) {
 			//cout << "return " << b - 1 << endl;
 			break;
-			}
 		}
+	}
 	return b - 1;
 }
 
@@ -2044,47 +2078,58 @@ int combinatorics_domain::largest_binomial3_below(int a3)
 		if (b3 > a3) {
 			//cout << "return " << b - 1 << endl;
 			break;
-			}
 		}
+	}
 	return b - 1;
 }
 
 int combinatorics_domain::binomial2(int a)
 {
-	if (a == 0)
+	if (a == 0) {
 		return 0;
-	if (EVEN(a))
+	}
+	if (EVEN(a)) {
 		return (a >> 1) * (a - 1);
-	else
+	}
+	else {
 		return a * (a >> 1);
+	}
 }
 
 int combinatorics_domain::binomial3(int a)
 {
 	int r;
-	if (a <= 2)
+	if (a <= 2) {
 		return 0;
+	}
 	r = a % 6;
-	if (r == 0)
+	if (r == 0) {
 		return (a / 6) * (a - 1) * (a - 2);
-	else if (r == 1)
+	}
+	else if (r == 1) {
 		return a * ((a - 1) / 6) * (a - 2);
-	else if (r == 2)
+	}
+	else if (r == 2) {
 		return a * (a - 1) * ((a - 2) / 6);
-	else if (r == 3)
+	}
+	else if (r == 3) {
 		return (a / 3) * ((a - 1) >> 1) * (a - 2);
-	else if (r == 4)
+	}
+	else if (r == 4) {
 		return (a >> 1) * ((a - 1) / 3) * (a - 2);
-	else if (r == 5)
+	}
+	else if (r == 5) {
 		return a * ((a - 1) >> 1) * ((a - 2) / 3);
+	}
 	cout << "error in binomial3" << endl;
 	exit(1);
 }
 
 int combinatorics_domain::minus_one_if_positive(int i)
 {
-	if (i)
+	if (i) {
 		return i - 1;
+	}
 	return 0;
 }
 
@@ -2218,25 +2263,25 @@ void combinatorics_domain::make_graph_of_disjoint_sets_from_rows_of_matrix(
 
 	if (f_v) {
 		cout << "combinatorics_domain::make_graph_of_disjoint_sets_from_rows_of_matrix" << endl;
-		}
+	}
 	Adj = NEW_int(m * m);
 	for (i = 0; i < m * m; i++) {
 		Adj[i] = 0;
-		}
+	}
 
 	for (i = 0; i < m; i++) {
 		for (j = i + 1; j < m; j++) {
 			if (test_if_sets_are_disjoint_assuming_sorted(
 				M + i * n, M + j * n, n, n)) {
 				a = 1;
-				}
+			}
 			else {
 				a = 0;
-				}
+			}
 			Adj[i * m + j] = a;
 			Adj[j * m + i] = a;
-			}
 		}
+	}
 }
 
 
@@ -2257,17 +2302,16 @@ void combinatorics_domain::make_partitions(int n, int *Part, int cnt)
 	cnt1 = 1;
 	while (TRUE) {
 
-
-
-		if (!next_partition(n, part))
+		if (!next_partition(n, part)) {
 			break;
+		}
 		int_vec_copy(part + 1, Part + cnt1 * n, n);
 		cnt1++;
-		}
+	}
 	if (cnt1 != cnt) {
 		cout << "make_partitions cnt1 != cnt" << endl;
 		exit(1);
-		}
+	}
 }
 
 int combinatorics_domain::count_partitions(int n)
@@ -2288,10 +2332,11 @@ int combinatorics_domain::count_partitions(int n)
 
 	while (TRUE) {
 
-		if (!next_partition(n, part))
+		if (!next_partition(n, part)) {
 			break;
-		cnt++;
 		}
+		cnt++;
+	}
 
 	return cnt;
 }
@@ -2306,17 +2351,17 @@ int combinatorics_domain::next_partition(int n, int *part)
 			s += i;
 			part[i]--;
 			break;
-			}
 		}
+	}
 	if (i == n + 1) {
 		return FALSE;
-		}
+	}
 	for (j = i - 1; j >= 1; j--) {
 		q = s / j;
 		r = s - q * j;
 		part[j] = q;
 		s = r;
-		}
+	}
 	return TRUE;
 }
 

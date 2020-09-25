@@ -472,14 +472,14 @@ private:
 	
 	// the following is maintained
 	// by init_poset_orbit_node / exit_poset_orbit_node:
-	int nb_poset_orbit_nodes_used;
-	int nb_poset_orbit_nodes_allocated;
-	int poset_orbit_nodes_increment;
-	int poset_orbit_nodes_increment_last;
+	long int nb_poset_orbit_nodes_used;
+	long int nb_poset_orbit_nodes_allocated;
+	long int poset_orbit_nodes_increment;
+	long int poset_orbit_nodes_increment_last;
 	
 	poset_orbit_node *root;
 	
-	int *first_poset_orbit_node_at_level;
+	long int *first_poset_orbit_node_at_level;
 	long int *set0; // [sz + 1] temporary storage
 	long int *set1; // [sz + 1] temporary storage
 	long int *set3; // [sz + 1] temporary storage
@@ -506,11 +506,11 @@ private:
 	
 
 
-	int nb_times_image_of_called0;
-	int nb_times_mult_called0;
-	int nb_times_invert_called0;
-	int nb_times_retrieve_called0;
-	int nb_times_store_called0;
+	long int nb_times_image_of_called0;
+	long int nb_times_mult_called0;
+	long int nb_times_invert_called0;
+	long int nb_times_retrieve_called0;
+	long int nb_times_store_called0;
 	
 	double progress_last_time;
 	double progress_epsilon;
@@ -708,7 +708,7 @@ public:
 		int verbose_level);
 	void exit_poset_orbit_node();
 	void reallocate();
-	void reallocate_to(int new_number_of_nodes, int verbose_level);
+	void reallocate_to(long int new_number_of_nodes, int verbose_level);
 	void init_base_case(classification_base_case *Base_case,
 		int verbose_level);
 		// Does not initialize the first starter nodes. 
@@ -962,10 +962,6 @@ public:
 		int verbose_level);
 	void log_nodes_for_treefile(int cur, int depth, 
 			std::ostream &f, int f_recurse, int verbose_level);
-#if 0
-	void Log_nodes(int cur, int depth, std::ostream &f,
-		int f_recurse, int verbose_level);
-#endif
 	void log_current_node(std::ostream &f, int size);
 	void make_spreadsheet_of_orbit_reps(spreadsheet *&Sp, 
 		int max_depth);
@@ -1107,6 +1103,7 @@ public:
 	int get_node_in_level(poset_classification *gen);
 	void get_strong_generators_handle(std::vector<int> &gen_hdl, int verbose_level);
 	void get_tl(std::vector<int> &tl, poset_classification *PC, int verbose_level);
+	int get_tl(int i);
 	int has_Schreier_vector();
 	schreier_vector *get_Schreier_vector();
 	int get_nb_strong_generators();
@@ -1119,7 +1116,6 @@ public:
 	void set_pt(long int pt);
 	int get_prev();
 	void set_prev(int prev);
-	int get_tl(int i);
 	void poset_orbit_node_depth_breadth_perm_and_inverse(
 		poset_classification *gen,
 		int max_depth, 

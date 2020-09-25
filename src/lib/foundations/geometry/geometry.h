@@ -624,6 +624,7 @@ public:
 	long int nb_affine_lines(int n, int q);
 	long int AG_element_rank(int q, int *v, int stride, int len);
 	void AG_element_unrank(int q, int *v, int stride, int len, long int a);
+	int AG_element_next(int q, int *v, int stride, int len);
 	void AG_element_rank_longinteger(int q, int *v, int stride, int len,
 		longinteger_object &a);
 	void AG_element_unrank_longinteger(int q, int *v, int stride, int len,
