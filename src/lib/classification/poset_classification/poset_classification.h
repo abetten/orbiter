@@ -1075,7 +1075,7 @@ private:
 	int nb_strong_generators;
 	//int *hdl_strong_generators;
 	int first_strong_generator_handle; // if there is a generator
-	int *tl;
+	int *tl; // if the group is not trivial
 	
 	int nb_extensions;
 	extension *E;

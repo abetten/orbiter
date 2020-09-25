@@ -245,6 +245,11 @@ void poset_orbit_node::get_tl(std::vector<int> &tl, poset_classification *PC, in
 	}
 }
 
+int poset_orbit_node::get_tl(int i)
+{
+	return tl[i];
+}
+
 
 int poset_orbit_node::has_Schreier_vector()
 {
@@ -332,11 +337,6 @@ int poset_orbit_node::get_prev()
 void poset_orbit_node::set_prev(int prev)
 {
 	poset_orbit_node::prev = prev;
-}
-
-int poset_orbit_node::get_tl(int i)
-{
-	return tl[i];
 }
 
 

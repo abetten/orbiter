@@ -17,16 +17,16 @@ namespace foundations {
 
 
 
-unipoly_domain::unipoly_domain(finite_field *GFq)
+unipoly_domain::unipoly_domain(finite_field *F)
 {
-	gfq = GFq;
+	unipoly_domain::F = F;
 	f_factorring = FALSE;
 	factor_degree = 0;
 	factor_coeffs = NULL;
 	factor_poly = NULL;
 }
 
-unipoly_domain::unipoly_domain(finite_field *GFq, unipoly_object m, int verbose_level)
+unipoly_domain::unipoly_domain(finite_field *F, unipoly_object m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, a, b;
@@ -36,28 +36,28 @@ unipoly_domain::unipoly_domain(finite_field *GFq, unipoly_object m, int verbose_
 		print_object(m, cout);
 		cout << " of degree " << ((int *)m)[0] << endl;
 	}
-	gfq = GFq;
+	unipoly_domain::F = F;
 	f_factorring = TRUE;
 	factor_degree = ((int *)m)[0];
 	factor_coeffs = NEW_int(factor_degree + 1);
 	for (i = 0; i <= factor_degree; i++) {
 		factor_coeffs[i] = ((int *)m)[1 + i];
-		}
+	}
 	//factor_coeffs = ((int *)m) + 1;
 	if (factor_coeffs[factor_degree] != 1) {
 		cout << "unipoly_domain::unipoly_domain "
 				"factor polynomial is not monic" << endl;
 		exit(1);
-		}
+	}
 	for (i = 0; i < factor_degree; i++) {
 		a = factor_coeffs[i];
-		b = gfq->negate(a);
+		b = F->negate(a);
 		factor_coeffs[i] = b;
-		}
+	}
 	create_object_of_degree_no_test(factor_poly, factor_degree);
 	for (i = 0; i <= factor_degree; i++) {
 		((int *)factor_poly)[1 + i] = ((int *)m)[1 + i];
-		}
+	}
 	//factor_poly = m;
 	if (f_v) {
 		cout << "unipoly_domain::unipoly_domain factor_coeffs = ";
@@ -69,6 +69,7 @@ unipoly_domain::unipoly_domain(finite_field *GFq, unipoly_object m, int verbose_
 	}
 }
 
+
 unipoly_domain::~unipoly_domain()
 {
 	//int i, a, b;
@@ -77,6 +78,11 @@ unipoly_domain::~unipoly_domain()
 		FREE_int(factor_coeffs);
 		delete_object(factor_poly);
 	}
+}
+
+finite_field *unipoly_domain::get_F()
+{
+	return F;
 }
 
 void unipoly_domain::create_object_of_degree(
@@ -131,7 +137,7 @@ void unipoly_domain::create_object_by_rank(
 {
 	int f_v = (verbose_level >= 1);
 	number_theory_domain NT;
-	int len = NT.int_logq(rk, gfq->q);
+	int len = NT.int_logq(rk, F->q);
 	
 	if (f_factorring) {
 		if (len > factor_degree) {
@@ -154,8 +160,8 @@ void unipoly_domain::create_object_by_rank(
 	int i = 0;
 	
 	do {
-		coeff[i] = rk % gfq->q;
-		rk /= gfq->q;
+		coeff[i] = rk % F->q;
+		rk /= F->q;
 		i++;
 	} while (rk);
 	rep[0] = i - 1;
@@ -173,7 +179,7 @@ void unipoly_domain::create_object_by_rank_longinteger(
 	longinteger_object rk, rk1;
 	longinteger_domain D;
 	
-	int len = D.logarithm_base_b(rank, gfq->q);
+	int len = D.logarithm_base_b(rank, F->q);
 	//cout << "len = " << len << endl;
 	
 	if (f_v) {
@@ -200,17 +206,17 @@ void unipoly_domain::create_object_by_rank_longinteger(
 	
 	rank.assign_to(rk);
 	do {
-		D.integral_division_by_int(rk, gfq->q, rk1, coeff[i]);
+		D.integral_division_by_int(rk, F->q, rk1, coeff[i]);
 		//cout << "rk=" << rk << " coeff[" << i
 		// << "] = " << coeff[i] << endl;
-		// coeff[i] = rk % gfq->q;
+		// coeff[i] = rk % F->q;
 		if (f_vv) {
 			cout << "unipoly_domain::create_object_by_rank_longinteger "
 					"i=" << i << " rk=" << rk << " quotient " << rk1
 					<< " remainder " << coeff[i] << endl;
 		}
 		rk1.assign_to(rk);
-		//rk /= gfq->q;
+		//rk /= F->q;
 		i++;
 	} while (!rk.is_zero());
 	rep[0] = i - 1;
@@ -241,12 +247,12 @@ void unipoly_domain::create_Dickson_polynomial(
 				"a factorring" << endl;
 		exit(1);
 	}
-	int d = gfq->q - 1;
+	int d = F->q - 1;
 	int *rep = NEW_int(d + 2);
 	rep[0] = d;
 	int *coeff = rep + 1;
 	
-	gfq->Dickson_polynomial(map, coeff);
+	F->Dickson_polynomial(map, coeff);
 	rep[0] = d;
 	p = (void *) rep;
 	degree(p);
@@ -266,8 +272,8 @@ void unipoly_domain::unrank(unipoly_object p, int rk)
 	int i = 0;
 	
 	do {
-		coeff[i] = rk % gfq->q;
-		rk /= gfq->q;
+		coeff[i] = rk % F->q;
+		rk /= F->q;
 		i++;
 		} while (rk);
 	rep[0] = i - 1;
@@ -285,9 +291,9 @@ void unipoly_domain::unrank_longinteger(
 	
 	rank.assign_to(rank1);
 	do {
-		D.integral_division_by_int(rank1, gfq->q, rank2, coeff[i]);
-		//coeff[i] = rk % gfq->q;
-		//rk /= gfq->q;
+		D.integral_division_by_int(rank1, F->q, rank2, coeff[i]);
+		//coeff[i] = rk % F->q;
+		//rk /= F->q;
 		rank2.assign_to(rank1);
 		i++;
 	} while (!rank1.is_zero());
@@ -302,7 +308,7 @@ int unipoly_domain::rank(unipoly_object p)
 	int rk = 0, i;
 	
 	for (i = d; i >= 0; i--) {
-		rk *= gfq->q;
+		rk *= F->q;
 		rk += coeff[i];
 	}
 	return rk;
@@ -319,12 +325,12 @@ void unipoly_domain::rank_longinteger(
 	longinteger_domain D;
 	
 	rk.create(0, __FILE__, __LINE__);
-	q.create(gfq->q, __FILE__, __LINE__);
+	q.create(F->q, __FILE__, __LINE__);
 	for (i = d; i >= 0; i--) {
 		D.mult(rk, q, rk1);
 		c.create(coeff[i], __FILE__, __LINE__);
 		D.add(rk1, c, rk);
-		//rk *= gfq->q;
+		//rk *= F->q;
 		//rk += coeff[i];
 	}
 	rk.assign_to(rank);
@@ -392,7 +398,7 @@ ostream& unipoly_domain::print_object(unipoly_object p, ostream& ost)
 			k = -k;
 		}
 		if (k != 1 || (i == 0 && !unip_f_use_variable_name)) {
-			//l = gfq->log_alpha(k);
+			//l = F->log_alpha(k);
 			//ost << "\\alpha^{" << l << "}";
 			ost << k;
 		}
@@ -511,7 +517,7 @@ void unipoly_domain::m_one(unipoly_object p)
 	for (i = d; i >= 1; i--) {
 		coeff[i] = 0;
 	}
-	coeff[0] = gfq->negate(1);
+	coeff[0] = F->negate(1);
 	rep[0] = 0;
 }
 
@@ -582,7 +588,7 @@ void unipoly_domain::negate(unipoly_object a)
 	int i;
 	
 	for (i = 0; i <= m; i++) {
-		A[i] = gfq->negate(A[i]);
+		A[i] = F->negate(A[i]);
 	}
 }
 
@@ -607,9 +613,9 @@ void unipoly_domain::make_monic(unipoly_object &a)
 	}
 	c = A[m];
 	if (c != 1) {
-		cv = gfq->inverse(c);
+		cv = F->inverse(c);
 		for (i = 0; i <= m; i++) {
-			A[i] = gfq->mult(A[i], cv);
+			A[i] = F->mult(A[i], cv);
 		}
 	}
 }
@@ -652,7 +658,7 @@ void unipoly_domain::add(unipoly_object a,
 			cout << "unipoly_domain::add "
 					"x=" << x << " y=" << y << endl;
 		}
-		C[i] = gfq->add(x, y);
+		C[i] = F->add(x, y);
 	}
 	c = (void *) rc;
 }
@@ -707,12 +713,12 @@ void unipoly_domain::mult_easy(unipoly_object a,
 		for (j = n; j >= 0; j--) {
 			k = i + j;
 			x = C[k];
-			y = gfq->mult(A[i], B[j]);
+			y = F->mult(A[i], B[j]);
 			if (x == 0) {
 				C[k] = y;
 			}
 			else {
-				C[k] = gfq->add(x, y);
+				C[k] = F->add(x, y);
 			}
 		}
 	}
@@ -772,8 +778,8 @@ void unipoly_domain::mult_mod(unipoly_object a,
 	
 	for (i = m; i >= 0; i--) {
 		for (j = 0; j <= n; j++) {
-			c1 = gfq->mult(A[i], B[j]);
-			C[j] = gfq->add(C[j], c1);
+			c1 = F->mult(A[i], B[j]);
+			C[j] = F->add(C[j], c1);
 			if (f_vv) {
 				if (c1) {
 					cout << A[i] << "x^" << i << " * "
@@ -797,15 +803,15 @@ void unipoly_domain::mult_mod(unipoly_object a,
 			if (carry) {
 				if (carry == 1) {
 					for (j = 0; j < factor_polynomial_degree; j++) {
-						C[j] = gfq->add(C[j],
+						C[j] = F->add(C[j],
 								factor_polynomial_coefficients_negated[j]);
 					}
 				}
 				else {
 					for (j = 0; j < factor_polynomial_degree; j++) {
-						c1 = gfq->mult(carry,
+						c1 = F->mult(carry,
 								factor_polynomial_coefficients_negated[j]);
-						C[j] = gfq->add(C[j], c1);
+						C[j] = F->add(C[j], c1);
 					}
 				}
 			}
@@ -829,7 +835,7 @@ void unipoly_domain::Frobenius_matrix_by_rows(int *&Frob,
 	}
 	d = degree(factor_polynomial);
 	Frobenius_matrix(Frob, factor_polynomial, verbose_level);
-	gfq->transpose_matrix_in_place(Frob, d);
+	F->transpose_matrix_in_place(Frob, d);
 	if (f_v) {
 		cout << "unipoly_domain::Frobenius_matrix_by_rows done" << endl;
 	}
@@ -848,7 +854,7 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 	}
 	if (f_v) {
 		cout << "unipoly_domain::Frobenius_matrix "
-			"q=" << gfq->q << endl;
+			"q=" << F->q << endl;
 	}
 #if 0
 	if (!f_factorring) {
@@ -875,7 +881,7 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 			factor_polynomial_degree * factor_polynomial_degree);
 	Frob[0] = 1; // the first column of Frob is (1,0,...,0)
 	
-	create_object_by_rank(a, gfq->q, __FILE__, __LINE__, verbose_level); // the polynomial X
+	create_object_by_rank(a, F->q, __FILE__, __LINE__, verbose_level); // the polynomial X
 	create_object_by_rank(b, 1, __FILE__, __LINE__, verbose_level); // the polynomial 1
 	create_object_by_rank(c, 0, __FILE__, __LINE__, verbose_level);
 	create_object_by_rank(m_mod, 0, __FILE__, __LINE__, verbose_level);
@@ -890,7 +896,7 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 		cout << endl;
 	}
 	
-	power_int(a, gfq->q, 0 /* verbose_level */);
+	power_int(a, F->q, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "unipoly_domain::Frobenius_matrix a = x^q = ";
 		print_object(a, cout);
@@ -974,11 +980,11 @@ void unipoly_domain::Berlekamp_matrix(int *&B,
 #endif
 	factor_polynomial_degree = degree(factor_polynomial);
 	Frobenius_matrix(B, factor_polynomial, verbose_level);
-	m1 = gfq->negate(1);
+	m1 = F->negate(1);
 	
 	for (i = 0; i < factor_polynomial_degree; i++) {
 		a = B[i * factor_polynomial_degree + i];
-		b = gfq->add(m1, a);
+		b = F->add(m1, a);
 		B[i * factor_polynomial_degree + i] = b;
 	}
 	if (f_v) {
@@ -1074,20 +1080,20 @@ void unipoly_domain::division_with_remainder(
 		int i, j, ii, jj, pivot, pivot_inv, x, c, d;
 
 		pivot = B[db];
-		pivot_inv = gfq->inverse(pivot);
+		pivot_inv = F->inverse(pivot);
 	
 		int_vec_zero(Q, dq + 1);
 
 		for (i = da, j = dq; i >= db; i--, j--) {
 			x = R[i];
-			c = gfq->mult(x, pivot_inv);
+			c = F->mult(x, pivot_inv);
 			Q[j] = c;
-			c = gfq->negate(c);
+			c = F->negate(c);
 			//cout << "i=" << i << " c=" << c << endl;
 			for (ii = i, jj = db; jj >= 0; ii--, jj--) {
 				d = B[jj];
-				d = gfq->mult(c, d);
-				R[ii] = gfq->add(d, R[ii]);
+				d = F->mult(c, d);
+				R[ii] = F->add(d, R[ii]);
 			}
 			if (R[i] != 0) {
 				cout << "unipoly::division_with_remainder: R[i] != 0" << endl;
@@ -1109,7 +1115,7 @@ done:
 	}
 }
 
-void unipoly_domain::derive(unipoly_object a, unipoly_object &b)
+void unipoly_domain::derivative(unipoly_object a, unipoly_object &b)
 {
 	int *ra = (int *) a;
 	int *A = ra + 1;
@@ -1122,8 +1128,8 @@ void unipoly_domain::derive(unipoly_object a, unipoly_object &b)
 	
 	for (i = 1; i <= d; i++) {
 		ai = A[i];
-		bi = i % gfq->p;
-		bi = gfq->mult(ai, bi);
+		bi = i % F->p;
+		bi = F->mult(ai, bi);
 		B[i - 1] = bi;
 	}
 	rb[0] = d - 1;
@@ -1339,7 +1345,7 @@ int unipoly_domain::is_squarefree(unipoly_object p, int verbose_level)
 	create_object_by_rank(g, 0, __FILE__, __LINE__, verbose_level);
 	
 	assign(p, a, verbose_level);
-	derive(a, b);
+	derivative(a, b);
 	if (f_v) {
 		cout << "unipoly::is_squarefree derivative p' = ";
 		print_object(b, cout);
@@ -1569,7 +1575,7 @@ void unipoly_domain::compute_normal_basis(int d,
 			// b = b *(lambda/R2)(Frobenius) = v * Q(Frobenius)
 			
 			for (j = 0; j < deg; j++) {
-				v[j] = gfq->add(v[j], b[j]);
+				v[j] = F->add(v[j], b[j]);
 			}
 
 			// Orderideal(v) = Ideal(R * R2), 
@@ -1596,7 +1602,7 @@ void unipoly_domain::compute_normal_basis(int d,
 		cout << "unipoly_domain::compute_normal_basis "
 			"before span_cyclic_module" << endl;
 	}
-	gfq->span_cyclic_module(Normal_basis,
+	F->span_cyclic_module(Normal_basis,
 			v, deg, Frobenius, verbose_level);
 	if (f_vv) {
 		cout << "unipoly_domain::compute_normal_basis "
@@ -1646,7 +1652,7 @@ void unipoly_domain::order_ideal_generator(
 	my_mue = NEW_int(d + 1);
 	
 
-	gfq->order_ideal_generator(d, idx, my_mue, mue_deg, 
+	F->order_ideal_generator(d, idx, my_mue, mue_deg,
 		A, Frobenius, 
 		verbose_level - 1);
 
@@ -1731,7 +1737,7 @@ void unipoly_domain::matrix_apply(unipoly_object &p,
 		int_vec_print(cout, v1, n);
 		cout << endl;
 	}
-	gfq->mult_vector_from_the_right(Mtx, v1, v2, n, n);
+	F->mult_vector_from_the_right(Mtx, v1, v2, n, n);
 	if (f_v) {
 		cout << "unipoly_domain::matrix_apply v2 = ";
 		int_vec_print(cout, v2, n);
@@ -1773,14 +1779,14 @@ void unipoly_domain::substitute_matrix_in_polynomial(
 	h = d;
 	c = coeffs[h];
 	for (i = 0; i < k * k; i++) {
-		M1[i] = gfq->mult(c, Mtx_in[i]);
+		M1[i] = F->mult(c, Mtx_in[i]);
 	}
 	for (h--; h >= 0; h--) {
 		c = coeffs[h];
 		for (i = 0; i < k; i++) {
 			for (j = 0; j < k; j++) {
 				if (i == j) {
-					M2[i * k + j] = gfq->add(c, M1[i * k + j]);
+					M2[i * k + j] = F->add(c, M1[i * k + j]);
 				}
 				else {
 					M2[i * k + j] = M1[i * k + j];
@@ -1788,7 +1794,7 @@ void unipoly_domain::substitute_matrix_in_polynomial(
 			}
 		}
 		if (h) {
-			gfq->mult_matrix_matrix(M2, Mtx_in, M1, k, k, k,
+			F->mult_matrix_matrix(M2, Mtx_in, M1, k, k, k,
 					0 /* verbose_level */);
 		}
 		else {
@@ -1821,12 +1827,12 @@ int unipoly_domain::substitute_scalar_in_polynomial(
 	coeffs = P + 1;
 	h = d;
 	c = coeffs[h];
-	m1 = gfq->mult(c, scalar);
+	m1 = F->mult(c, scalar);
 	for (h--; h >= 0; h--) {
 		c = coeffs[h];
-		m2 = gfq->add(c, m1);
+		m2 = F->add(c, m1);
 		if (h) {
-			m1 = gfq->mult(m2, scalar);
+			m1 = F->mult(m2, scalar);
 		}
 		else {
 			m1 = m2;
@@ -1870,11 +1876,11 @@ void unipoly_domain::module_structure_apply(int *v,
 	c = pp[d];
 	if (c != 1) {
 		for (j = 0; j < n; j++) {
-			v1[j] = gfq->mult(v1[j], c);
+			v1[j] = F->mult(v1[j], c);
 		}
 	}
 #if 0
-	if (!gfq->is_one(pp[d])) {
+	if (!F->is_one(pp[d])) {
 		cout << "unipoly_domain::module_structure_apply "
 			"p is not monic, leading coefficient is "
 			<< pp[d] << endl;
@@ -1891,7 +1897,7 @@ void unipoly_domain::module_structure_apply(int *v,
 			cout << endl;
 		}
 		
-		gfq->mult_vector_from_the_right(Mtx, v1, v2, n, n);
+		F->mult_vector_from_the_right(Mtx, v1, v2, n, n);
 
 		if (f_vv) {
 			cout << "unipoly_domain::module_structure_apply "
@@ -1911,7 +1917,7 @@ void unipoly_domain::module_structure_apply(int *v,
 			cout << " c = " << c << endl;
 		}
 		for (j = 0; j < n; j++) {
-			v1[j] = gfq->add(gfq->mult(v[j], c), v2[j]);
+			v1[j] = F->add(F->mult(v[j], c), v2[j]);
 		}
 
 		if (f_vv) {
@@ -2019,7 +2025,7 @@ int unipoly_domain::is_irreducible(unipoly_object a,
 		cout << "unipoly_domain::is_irreducible is squarefree" << endl;
 	}
 	
-	//unipoly_domain Fq(gfq, a);
+	//unipoly_domain Fq(F, a);
 	
 	if (f_v) {
 		cout << "unipoly_domain::is_irreducible before Berlekamp_matrix" << endl;
@@ -2035,7 +2041,7 @@ int unipoly_domain::is_irreducible(unipoly_object a,
 	
 	base_cols = NEW_int(factor_polynomial_degree);
 	
-	r = gfq->Gauss_int(B,
+	r = F->Gauss_int(B,
 		FALSE /* f_special */,
 		FALSE /* f_complete */,
 		base_cols,
@@ -2096,11 +2102,11 @@ int unipoly_domain::is_primitive(unipoly_object &m,
 	}
 	create_object_of_degree(M, ((int*)m)[0]);
 	assign(m, M, verbose_level);
-	unipoly_domain Fq(gfq, M, verbose_level - 1);
+	unipoly_domain Fq(F, M, verbose_level - 1);
 	
 	if (f_v) {
 		cout << "unipoly_domain::is_primitive "
-			"q=" << gfq->q << endl;
+			"q=" << F->q << endl;
 		cout << "m=";
 		print_object(m, cout);
 		cout << endl;
@@ -2138,7 +2144,7 @@ int unipoly_domain::is_primitive(unipoly_object &m,
 		
 		unipoly_object a;
 		
-		Fq.create_object_by_rank(a, gfq->q, __FILE__, __LINE__, verbose_level); // the polynomial X
+		Fq.create_object_by_rank(a, F->q, __FILE__, __LINE__, verbose_level); // the polynomial X
 		Fq.power_longinteger(a, qm1_over_p, verbose_level - 1);
 		
 		if (f_v) {
@@ -2165,7 +2171,7 @@ int unipoly_domain::is_primitive(unipoly_object &m,
 #if 0
 		unipoly_object a;
 		for (i = 0; i <= qm1.as_int(); i++) {
-			Fq.create_object_by_rank(a, gfq->q); // the polynomial X
+			Fq.create_object_by_rank(a, F->q); // the polynomial X
 			u.create(i);
 			Fq.power_longinteger(a, u);
 			cout << "X^" << u << " = ";
@@ -2199,9 +2205,9 @@ void unipoly_domain::get_a_primitive_polynomial(
 	if (f_v) {
 		cout << "unipoly::get_a_primitive_polynomial" << endl;
 		cout << "Searching for a primitive polynomial of degree " << f <<
-			" over GF(" << gfq->q << ")" << endl;
+			" over GF(" << F->q << ")" << endl;
 	}
-	p = gfq->q;
+	p = F->q;
 	q.create(p, __FILE__, __LINE__);
 	m1.create(-1, __FILE__, __LINE__);
 	D.power_int(q, f);
@@ -2222,9 +2228,9 @@ void unipoly_domain::get_a_primitive_polynomial(
 	//a = primitive_root(p, f_v);
 	if (f_vv) {
 		cout << "unipoly_domain::get_a_primitive_polynomial "
-				"before gfq->primitive_root" << endl;
+				"before F->primitive_root" << endl;
 	}
-	a = gfq->primitive_root();
+	a = F->primitive_root();
 	if (f_vv) {
 		cout << "unipoly_domain::get_a_primitive_polynomial a primitive root is " << a << endl;
 	}
@@ -2276,7 +2282,7 @@ void unipoly_domain::get_a_primitive_polynomial(
 		delete_object(x);
 	}
 
-	low.create(gfq->q, __FILE__, __LINE__);
+	low.create(F->q, __FILE__, __LINE__);
 	one.create(1, __FILE__, __LINE__);
 	D.power_int(low, f);
 
@@ -2362,9 +2368,9 @@ void unipoly_domain::get_an_irreducible_polynomial(
 		cout << "unipoly::get_an_irreducible_polynomial" << endl;
 		cout << "Searching for an irreducible polynomial "
 			"of degree " << f <<
-			" over GF(" << gfq->q << ")" << endl;
+			" over GF(" << F->q << ")" << endl;
 	}
-	low.create(gfq->q, __FILE__, __LINE__);
+	low.create(F->q, __FILE__, __LINE__);
 	one.create(1, __FILE__, __LINE__);
 	D.power_int(low, f);
 
@@ -2540,7 +2546,7 @@ void unipoly_domain::power_coefficients(
 	int i;
 	
 	for (i = 0; i <= m; i++) {
-		A[i] = gfq->power(A[i], n);
+		A[i] = F->power(A[i], n);
 	}
 }
 
@@ -2567,8 +2573,8 @@ void unipoly_domain::minimum_polynomial(
 		cout << "unipoly_domain::minimum_polynomial "
 				"alpha = " << alpha << endl;
 	}
-	q = gfq->q;
-	m_alpha = gfq->negate(alpha);
+	q = F->q;
+	m_alpha = F->negate(alpha);
 	if (f_v) {
 		cout << "unipoly_domain::minimum_polynomial "
 				"m_alpha = " << m_alpha << endl;
@@ -2899,7 +2905,7 @@ void unipoly_domain::BCH_generator_polynomial(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	int p = gfq->q;
+	int p = F->q;
 	int e, i, j, r;
 	longinteger_object q, b, m1, qm1;
 	longinteger_domain D;
@@ -2956,7 +2962,7 @@ void unipoly_domain::BCH_generator_polynomial(
 		print_object(m, cout); cout << endl;
 	}
 
-	unipoly_domain Fq(gfq, M, verbose_level - 1);
+	unipoly_domain Fq(F, M, verbose_level - 1);
 	unipoly_object beta, beta_i, c;
 	if (f_vvv) {
 		cout << "extension field created" << endl;
@@ -3365,7 +3371,7 @@ void unipoly_domain::minimum_polynomial_extension_field(
 		((int *) minpol)[1 + j] = ((int *)sigma[i - j])[1 + 0];
 	}
 	for (j = 0; j <= i; j += 2) {
-		((int *) minpol)[1 + j] = gfq->negate(
+		((int *) minpol)[1 + j] = F->negate(
 				((int *) minpol)[1 + j]);
 	}
 	make_monic(minpol);
@@ -3413,7 +3419,7 @@ void unipoly_domain::characteristic_polynomial(
 		cout << "unipoly_domain::characteristic_polynomial M=" << endl;
 		int_matrix_print(Mtx, k, k);
 	}
-	m_one = gfq->negate(1);
+	m_one = F->negate(1);
 	M = NEW_OBJECTS(unipoly_object, k * k);
 	for (i = 0; i < k; i++) {
 		for (j = 0; j < k; j++) {

@@ -1025,7 +1025,7 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 			cout << endl;
 		}
 
-		FX.gfq->mult_vector_from_the_right(Normal_basis, v, w, d, d);
+		FX.get_F()->mult_vector_from_the_right(Normal_basis, v, w, d, d);
 		if (f_vv) {
 			cout << "finite_field::make_all_irreducible_polynomials_"
 					"of_degree_d regular word " << cnt << " : w = ";
@@ -1194,7 +1194,7 @@ int finite_field::count_all_irreducible_polynomials_of_degree_d(
 			cout << endl;
 		}
 
-		FX.gfq->mult_vector_from_the_right(Normal_basis, v, w, d, d);
+		FX.get_F()->mult_vector_from_the_right(Normal_basis, v, w, d, d);
 		if (f_vv) {
 			cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
 					"regular word " << cnt << " : w = ";

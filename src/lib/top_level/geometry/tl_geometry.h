@@ -1113,8 +1113,8 @@ public:
 	int *line_orbit_reps;
 	int *line_orbit_len;
 	int *line_orbit_first;
-	char **line_orbit_label;
-	char **line_orbit_label_tex;
+	std::string *line_orbit_label;
+	std::string *line_orbit_label_tex;
 	int *line_orbit;
 	int *line_orbit_inv;
 	incidence_structure *Inc;

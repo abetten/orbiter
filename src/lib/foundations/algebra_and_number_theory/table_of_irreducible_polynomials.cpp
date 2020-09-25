@@ -17,7 +17,7 @@ using namespace std;
 namespace orbiter {
 namespace foundations {
 
-static void make_linear_irreducible_polynomials(int q, int &nb,
+static void make_linear_irreducible_polynomials(finite_field *F, int &nb,
 		int *&table, int verbose_level);
 
 table_of_irreducible_polynomials::table_of_irreducible_polynomials()
@@ -61,14 +61,14 @@ void table_of_irreducible_polynomials::init(int k,
 
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::init" << endl;
-		}
+	}
 	table_of_irreducible_polynomials::k = k;
 	table_of_irreducible_polynomials::F = F;
 	q = F->q;
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::init "
 				"k = " << k << " q = " << q << endl;
-		}
+	}
 
 	Nb_irred = NEW_int(k + 1);
 	First_irred = NEW_int(k + 1);
@@ -80,13 +80,13 @@ void table_of_irreducible_polynomials::init(int k,
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::init "
 				"before make_linear_irreducible_polynomials" << endl;
-		}
-	make_linear_irreducible_polynomials(q, Nb_irred[1],
+	}
+	make_linear_irreducible_polynomials(F, Nb_irred[1],
 			Tables[1], verbose_level - 2);
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::init "
 				"after make_linear_irreducible_polynomials" << endl;
-		}
+	}
 	nb_irred += Nb_irred[1];
 	//First_irred[2] = First_irred[1] + Nb_irred[1];
 
@@ -94,34 +94,34 @@ void table_of_irreducible_polynomials::init(int k,
 		if (f_v) {
 			cout << "table_of_irreducible_polynomials::init "
 					"degree " << d << " / " << k << endl;
-			}
+		}
 		First_irred[d] = First_irred[d - 1] + Nb_irred[d - 1];
 
 		if (f_v) {
 			cout << "table_of_irreducible_polynomials::init before "
 					"F->make_all_irreducible_polynomials_of_degree_d"
 					<< endl;
-			}
+		}
 		F->make_all_irreducible_polynomials_of_degree_d(d,
 				Nb_irred[d], Tables[d], verbose_level - 2);
 		if (f_v) {
 			cout << "table_of_irreducible_polynomials::init after "
 					"F->make_all_irreducible_polynomials_of_degree_d"
 					<< endl;
-			}
+		}
 
 		nb_irred += Nb_irred[d];
 		if (f_v) {
 			cout << "table_of_irreducible_polynomials::init "
 					"Nb_irred[" << d << "]=" << Nb_irred[d] << endl;
-			}
 		}
+	}
 
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::init "
 				"k = " << k << " q = " << q
 				<< " nb_irred = " << nb_irred << endl;
-		}
+	}
 
 	Degree = NEW_int(nb_irred);
 
@@ -129,21 +129,20 @@ void table_of_irreducible_polynomials::init(int k,
 	for (d = 1; d <= k; d++) {
 		for (i = 0; i < Nb_irred[d]; i++) {
 			Degree[j + i] = d;
-			}
-		j += Nb_irred[d];
 		}
+		j += Nb_irred[d];
+	}
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::init "
 				"k = " << k << " q = " << q << " Degree = ";
 		int_vec_print(cout, Degree, nb_irred);
 		cout << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::init done" << endl;
-		}
-
+	}
 }
 
 void table_of_irreducible_polynomials::print(ostream &ost)
@@ -178,11 +177,11 @@ void table_of_irreducible_polynomials::print_polynomials(ostream &ost)
 				ost << Tables[d][i * (d + 1) + j];
 				if (j < d) {
 					ost << ", ";
-					}
 				}
-			ost << endl;
 			}
+			ost << endl;
 		}
+	}
 }
 
 int table_of_irreducible_polynomials::select_polynomial_first(
@@ -194,7 +193,7 @@ int table_of_irreducible_polynomials::select_polynomial_first(
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::"
 				"select_polynomial_first" << endl;
-		}
+	}
 	int_vec_zero(Select, nb_irred);
 	for (i = nb_irred - 1; i >= 0; i--) {
 		d = Degree[i];
@@ -203,24 +202,24 @@ int table_of_irreducible_polynomials::select_polynomial_first(
 		k1 -= m * d;
 		if (k1 == 0) {
 			return TRUE;
-			}
 		}
+	}
 	if (k1 == 0) {
 		if (f_v) {
 			cout << "table_of_irreducible_polynomials::"
 					"select_polynomial_first "
 					"returns TRUE" << endl;
-			}
-		return TRUE;
 		}
+		return TRUE;
+	}
 	else {
 		if (f_v) {
 			cout << "table_of_irreducible_polynomials::"
 					"select_polynomial_first "
 					"returns FALSE" << endl;
-			}
-		return FALSE;
 		}
+		return FALSE;
+	}
 }
 
 int table_of_irreducible_polynomials::select_polynomial_next(
@@ -231,9 +230,8 @@ int table_of_irreducible_polynomials::select_polynomial_next(
 	int i, ii, k1, d, m;
 
 	if (f_v) {
-		cout << "table_of_irreducible_polynomials::"
-				"select_polynomial_next" << endl;
-		}
+		cout << "table_of_irreducible_polynomials::select_polynomial_next" << endl;
+	}
 	k1 = Select[0] * Degree[0];
 	Select[0] = 0;
 	do {
@@ -244,18 +242,18 @@ int table_of_irreducible_polynomials::select_polynomial_next(
 				m--;
 				Select[i] = m;
 				break;
-				}
 			}
+		}
 		if (i == nb_irred) {
 			if (f_v) {
 				cout << "gl_classes::select_polynomial_next "
 						"return FALSE" << endl;
-				}
-			return FALSE;
 			}
+			return FALSE;
+		}
 		if (f_vv) {
 			cout << "k1=" << k1 << endl;
-			}
+		}
 		for (ii = i - 1; ii >= 0; ii--) {
 			d = Degree[ii];
 			m = k1 / d;
@@ -264,23 +262,23 @@ int table_of_irreducible_polynomials::select_polynomial_next(
 			if (f_vv) {
 				cout << "Select[" << ii << "]=" << m
 						<< ", k1=" << k1 << endl;
-				}
+			}
 			if (k1 == 0) {
 				if (f_v) {
 					cout << "table_of_irreducible_polynomials::"
 							"select_polynomial_next "
 							"return FALSE" << endl;
-					}
-				return TRUE;
 				}
+				return TRUE;
 			}
+		}
 		k1 += Select[0] * Degree[0];
 		Select[0] = 0;
-		} while (k1);
+	} while (k1);
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::select_polynomial_next "
 				"return FALSE" << endl;
-		}
+	}
 	return FALSE;
 }
 
@@ -296,7 +294,7 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::factorize_polynomial "
 				"k = " << k << " q = " << q << endl;
-		}
+	}
 	U.create_object_by_rank(Poly, 0, __FILE__, __LINE__, verbose_level);
 	U.create_object_by_rank(P, 0, __FILE__, __LINE__, verbose_level);
 	U.create_object_by_rank(Q, 0, __FILE__, __LINE__, verbose_level);
@@ -308,7 +306,7 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 				"Poly = ";
 		U.print_object(Poly, cout);
 		cout << endl;
-		}
+	}
 
 
 	int_vec_zero(Mult, nb_irred);
@@ -355,7 +353,7 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 					"trial division by = ";
 			U.print_object(P, cout);
 			cout << endl;
-			}
+		}
 		U.division_with_remainder(Poly, P, Q, R, verbose_level - 2);
 		if (f_v) {
 			cout << "table_of_irreducible_polynomials::factorize_polynomial "
@@ -389,7 +387,7 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 						"Poly = ";
 				U.print_object(Poly, cout);
 				cout << endl;
-				}
+			}
 		}
 		else {
 			if (f_v) {
@@ -410,7 +408,7 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 		U.print_object(Poly, cout);
 		cout << endl;
 		//print(cout);
-		}
+	}
 
 	U.delete_object(Poly);
 	U.delete_object(P);
@@ -420,20 +418,18 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::factorize_polynomial "
 				"k = " << k << " q = " << q << " done" << endl;
-		}
+	}
 }
 
 //##############################################################################
 // global functions:
 //##############################################################################
 
-static void make_linear_irreducible_polynomials(int q, int &nb,
+static void make_linear_irreducible_polynomials(finite_field *F, int &nb,
 		int *&table, int verbose_level)
 {
 	int i;
 
-	finite_field F;
-	F.init(q, 0 /*verbose_level*/);
 #if 0
 	if (f_no_eigenvalue_one) {
 		nb = q - 2;
@@ -445,10 +441,10 @@ static void make_linear_irreducible_polynomials(int q, int &nb,
 		}
 	else {
 #endif
-		nb = q - 1;
+		nb = F->q - 1;
 		table = NEW_int(nb * 2);
 		for (i = 0; i < nb; i++) {
-			table[i * 2 + 0] = F.negate(i + 1);
+			table[i * 2 + 0] = F->negate(i + 1);
 			table[i * 2 + 1] = 1;
 			}
 #if 0
