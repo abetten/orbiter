@@ -59,64 +59,56 @@ void singer_cycle::freeself()
 {
 	if (poly_coeffs) {
 		FREE_int(poly_coeffs);
-		}
+	}
 	if (Singer_matrix) {
 		FREE_int(Singer_matrix);
-		}
+	}
 	if (nice_gens) {
 		FREE_OBJECT(nice_gens);
-		}
+	}
 	if (SG) {
 		FREE_OBJECT(SG);
-		}
+	}
 	if (singer_point_list) {
 		FREE_int(singer_point_list);
-		}
+	}
 	if (singer_point_list_inv) {
 		FREE_int(singer_point_list_inv);
-		}
+	}
 	if (Sch) {
-		delete Sch;
-		}
+		FREE_OBJECT(Sch);
+	}
 	if (line_orbit_reps) {
 		FREE_int(line_orbit_reps);
-		}
+	}
 	if (line_orbit_len) {
 		FREE_int(line_orbit_len);
-		}
+	}
 	if (line_orbit_first) {
 		FREE_int(line_orbit_first);
-		}
+	}
 	if (line_orbit_label) {
-		int i;
-		for (i = 0; i < P->N_lines; i++) {
-			FREE_char(line_orbit_label[i]);
-			}
-		FREE_pchar(line_orbit_label);
-		}
+		delete [] line_orbit_label;
+	}
 	if (line_orbit_label_tex) {
-		int i;
-		for (i = 0; i < P->N_lines; i++) {
-			FREE_char(line_orbit_label_tex[i]);
-			}
-		FREE_pchar(line_orbit_label_tex);
-		}
+		delete [] line_orbit_label_tex;
+	}
 	if (line_orbit) {
 		FREE_int(line_orbit);
-		}
+	}
 	if (line_orbit_inv) {
 		FREE_int(line_orbit_inv);
-		}
+	}
 	if (Inc) {
 		FREE_OBJECT(Inc);
-		}
+	}
 	if (T) {
 		FREE_OBJECT(T);
-		}
+	}
 			// P must be deleted last:
 	if (P) {
 		FREE_OBJECT(P);
-		}
+	}
 	null();
 }
 
@@ -128,7 +120,7 @@ void singer_cycle::init(int n, finite_field *F, action *A, action *A2, int verbo
 
 	if (f_v) {
 		cout << "singer_cycle::init" << endl;
-		}
+	}
 	singer_cycle::n = n;
 	singer_cycle::q = F->q;
 	singer_cycle::F = F;
@@ -137,25 +129,25 @@ void singer_cycle::init(int n, finite_field *F, action *A, action *A2, int verbo
 	if (F->e > 1) {
 		cout << "singer_cycle::init field must be prime field" << endl;
 		exit(1);
-		}
+	}
 	algebra_global Algebra;
 
 	poly = Algebra.get_primitive_polynomial(q, n, verbose_level);
 	poly_coeffs = NEW_int(n + 1);
 	{
-	//finite_field GFp;
-	
-	//GFp.init(p, 0);
+		//finite_field GFp;
 
-	unipoly_domain FX(F);
-	unipoly_object m;
-
-	FX.create_object_by_rank_string(m, poly, 0);
-	int *rep = (int *) m;
-	int *coeffs = rep + 1;
+		//GFp.init(p, 0);
 	
-	for (i = 0; i <= n; i++) {
-		poly_coeffs[i] = coeffs[i];
+		unipoly_domain FX(F);
+		unipoly_object m;
+	
+		FX.create_object_by_rank_string(m, poly, 0);
+		int *rep = (int *) m;
+		int *coeffs = rep + 1;
+
+		for (i = 0; i <= n; i++) {
+			poly_coeffs[i] = coeffs[i];
 		}
 
 	}
@@ -164,27 +156,27 @@ void singer_cycle::init(int n, finite_field *F, action *A, action *A2, int verbo
 		cout << "singer_cycle::init coefficients: ";
 		int_vec_print(cout, poly_coeffs, n + 1);
 		cout << endl;
-		}
+	}
 
 	Singer_matrix = NEW_int(n * n);
 	for (i = 0; i < n - 1; i++) {
 		for (j = 0; j < n; j++) {
 			if (j == i + 1) {
 				a = 1;
-				}
+			}
 			else {
 				a = 0;
-				}
-			Singer_matrix[i * n + j] = a;
 			}
+			Singer_matrix[i * n + j] = a;
 		}
+	}
 	for (j = 0; j < n; j++) {
 		Singer_matrix[(n - 1) * n + j] = F->negate(poly_coeffs[j]);
-		}
+	}
 	if (f_v) {
 		cout << "singer_cycle::init Singer_matrix: " << endl;
 		int_matrix_print(Singer_matrix, n, n);
-		}
+	}
 	//Elt = NEW_int(A->elt_size_in_int);
 	//A->make_element(Elt, Singer_matrix, verbose_level);
 
@@ -211,10 +203,10 @@ void singer_cycle::init(int n, finite_field *F, action *A, action *A2, int verbo
 		cout << "singer_cycle::init Singer cycle on lines:" << endl;
 		A2->element_print_as_permutation(nice_gens->ith(0), cout);
 		cout << endl;
-		}
+	}
 	if (f_v) {
 		cout << "singer_cycle::init done" << endl;
-		}
+	}
 }
 
 void singer_cycle::init_lines(int verbose_level)
@@ -226,7 +218,7 @@ void singer_cycle::init_lines(int verbose_level)
 
 	if (f_v) {
 		cout << "singer_cycle::init_lines" << endl;
-		}
+	}
 
 	v = NEW_int(n);
 
@@ -247,7 +239,7 @@ void singer_cycle::init_lines(int verbose_level)
 		singer_point_list[1 + i] = b;
 		singer_point_list_inv[b] = i + 1;
 		a = b;
-		}
+	}
 
 	line = NEW_int(P->k);
 
@@ -258,8 +250,8 @@ void singer_cycle::init_lines(int verbose_level)
 			P->unrank_point(v, singer_point_list[i]);
 			int_vec_print(cout, v, n);
 			cout << endl;
-			}
 		}
+	}
 
 	if (f_v) {
 		cout << "Lines on point P_0:" << endl;
@@ -274,13 +266,13 @@ void singer_cycle::init_lines(int verbose_level)
 				c = singer_point_list_inv[b];
 				if (c != 0) {
 					line[h++] = c;
-					}
 				}
+			}
 			cout << "points on this line in powers of singer cycle: ";
 			int_vec_print(cout, line, h);
 			cout << endl;
-			}
 		}
+	}
 
 
 
@@ -293,22 +285,22 @@ void singer_cycle::init_lines(int verbose_level)
 		cout << "Found " << Sch->nb_orbits << " orbits on lines" << endl;
 		for (i = 0; i < Sch->nb_orbits; i++) {
 			cout << "Orbit " << i << " of length " << Sch->orbit_len[i] << endl;
-			}
 		}
+	}
 	nb_line_orbits = Sch->nb_orbits;
 	line_orbit_reps = NEW_int(nb_line_orbits);
 	line_orbit_len = NEW_int(nb_line_orbits);
 	line_orbit_first = NEW_int(nb_line_orbits);
 
-	line_orbit_label = NEW_pchar(P->N_lines);
-	line_orbit_label_tex = NEW_pchar(P->N_lines);
+	line_orbit_label = new string[P->N_lines];
+	line_orbit_label_tex = new string[P->N_lines];
 	line_orbit = NEW_int(P->N_lines);
 	line_orbit_inv = NEW_int(P->N_lines);
 	for (i = 0; i < Sch->nb_orbits; i++) {
 		line_orbit_reps[i] = Sch->orbit[Sch->orbit_first[i]];
 		line_orbit_len[i] = Sch->orbit_len[i];
 		line_orbit_first[i] = Sch->orbit_first[i];
-		}
+	}
 	if (f_v) {
 		cout << "line_orbit_reps:";
 		int_vec_print(cout, line_orbit_reps, nb_line_orbits);
@@ -319,42 +311,44 @@ void singer_cycle::init_lines(int verbose_level)
 		cout << "line_orbit_first:";
 		int_vec_print(cout, line_orbit_first, nb_line_orbits);
 		cout << endl;
-		}
+	}
 	h = 0;
 	for (i = 0; i < nb_line_orbits; i++) {
 		a = line_orbit_reps[i];
 		if (f_v) {
 			cout << "computing orbit of line " << a << " of length "
 					<< line_orbit_len[i] << ":" << endl;
-			}
+		}
 		for (j = 0; j < line_orbit_len[i]; j++) {
 			line_orbit[h] = a;
 			line_orbit_inv[a] = h;
+
 			char str[1000];
 			sprintf(str, "A%d", j);
 			str[0] += i;
 			if (f_v) {
 				cout << "label " << j << " is " << str << endl;
-				}
-			line_orbit_label[h] = NEW_char(strlen(str) + 1);
+			}
+			line_orbit_label[h].assign(str);
+
 			sprintf(str, "A_{%d}", j);
 			str[0] += i;
 			if (f_v) {
 				cout << "label " << j << " in tex is " << str << endl;
-				}
-			line_orbit_label_tex[h] = NEW_char(strlen(str) + 1);
-			strcpy(line_orbit_label_tex[h], str);
+			}
+			line_orbit_label_tex[h].assign(str);
+
 			b = A2->element_image_of(a, nice_gens->ith(0), 0);
 			a = b;
 			h++;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "h=" << h << endl;
 		for (i = 0; i < P->N_lines; i++) {
 			cout << i << " : " << line_orbit_label[i] << " : " << line_orbit[i] << endl;
-			}
 		}
+	}
 
 	int f_combined_action = FALSE;
 
@@ -408,7 +402,7 @@ void singer_cycle::init_lines(int verbose_level)
 #endif
 	if (f_v) {
 		cout << "after incidence_structure_compute_TDA_general" << endl;
-		}
+	}
 
 #if 0
 	//Stack->isolate_point(set_size + 11);
@@ -434,7 +428,7 @@ void singer_cycle::init_lines(int verbose_level)
 	FREE_int(v);
 	if (f_v) {
 		cout << "singer_cycle::init_lines done" << endl;
-		}
+	}
 }
 
 }}

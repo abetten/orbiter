@@ -2337,18 +2337,21 @@ public:
 //! domain of polynomials in one variable over a finite field
 
 class unipoly_domain {
-public:
-	finite_field *gfq;
+
+private:
+	finite_field *F;
 	int f_factorring;
 	int factor_degree;
 	int *factor_coeffs; // [factor_degree + 1]
 	unipoly_object factor_poly;
 		// the coefficients of factor_poly are negated
 		// so that mult_mod is easier
+public:
 
 	unipoly_domain(finite_field *GFq);
 	unipoly_domain(finite_field *GFq, unipoly_object m, int verbose_level);
 	~unipoly_domain();
+	finite_field *get_F();
 	int &s_i(unipoly_object p, int i)
 		{ int *rep = (int *) p; return rep[i + 1]; };
 	void create_object_of_degree(unipoly_object &p, int d);
@@ -2397,7 +2400,7 @@ public:
 		unipoly_object b, unipoly_object &q, int verbose_level);
 	void division_with_remainder(unipoly_object a, unipoly_object b,
 		unipoly_object &q, unipoly_object &r, int verbose_level);
-	void derive(unipoly_object a, unipoly_object &b);
+	void derivative(unipoly_object a, unipoly_object &b);
 	int compare_euclidean(unipoly_object m, unipoly_object n);
 	void greatest_common_divisor(unipoly_object m, unipoly_object n, 
 		unipoly_object &g, int verbose_level);

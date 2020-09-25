@@ -67,24 +67,10 @@ void homogeneous_polynomial_domain::freeself()
 		FREE_int(Monomials);
 	}
 	if (symbols) {
-#if 0
-		for (i = 0; i < nb_variables; i++) {
-			FREE_char(symbols[i]);
-		}
-		FREE_pchar(symbols);
-#else
 		delete [] symbols;
-#endif
 	}
 	if (symbols_latex) {
-#if 0
-		for (i = 0; i < nb_variables; i++) {
-			FREE_char(symbols_latex[i]);
-		}
-		FREE_pchar(symbols_latex);
-#else
 		delete [] symbols_latex;
-#endif
 	}
 	if (monomial_symbols) {
 		for (i = 0; i < nb_monomials; i++) {
@@ -259,51 +245,20 @@ void homogeneous_polynomial_domain::remake_symbols(int symbol_offset,
 	char label[1000];
 
 	if (symbols) {
-#if 0
-		for (i = 0; i < nb_variables; i++) {
-			FREE_char(symbols[i]);
-		}
-		FREE_pchar(symbols);
-#else
 		delete [] symbols;
-#endif
 	}
 	if (symbols_latex) {
-#if 0
-		for (i = 0; i < nb_variables; i++) {
-			FREE_char(symbols_latex[i]);
-		}
-		FREE_pchar(symbols_latex);
-#else
 		delete [] symbols_latex;
-#endif
 	}
-#if 0
-	symbols = NEW_pchar(nb_variables);
-	symbols_latex = NEW_pchar(nb_variables);
-#else
 	symbols = new string [nb_variables];
 	symbols_latex = new string [nb_variables];
-#endif
 	for (i = 0; i < nb_variables; i++) {
 		snprintf(label, 1000, symbol_mask, i + symbol_offset);
-#if 0
-		l = strlen(label);
-		symbols[i] = NEW_char(l + 1);
-		strcpy(symbols[i], label);
-#else
 		symbols[i].assign(label);
-#endif
 	}
 	for (i = 0; i < nb_variables; i++) {
 		snprintf(label, 1000, symbol_mask_latex, i + symbol_offset);
-#if 0
-		l = strlen(label);
-		symbols_latex[i] = NEW_char(l + 1);
-		strcpy(symbols_latex[i], label);
-#else
 		symbols_latex[i].assign(label);
-#endif
 	}
 }
 
@@ -317,21 +272,13 @@ void homogeneous_polynomial_domain::remake_symbols_interval(int symbol_offset,
 
 	for (j = 0; j < len; j++) {
 		i = from + j;
-		//FREE_char(symbols[i]);
 		snprintf(label, 1000, symbol_mask, i + symbol_offset);
 		symbols[i].assign(label);
-		//l = strlen(label);
-		//symbols[i] = NEW_char(l + 1);
-		//strcpy(symbols[i], label);
 	}
 	for (j = 0; j < len; j++) {
 		i = from + j;
-		//FREE_char(symbols_latex[i]);
 		snprintf(label, 1000, symbol_mask_latex, i + symbol_offset);
 		symbols_latex[i].assign(label);
-		//l = strlen(label);
-		//symbols_latex[i] = NEW_char(l + 1);
-		//strcpy(symbols_latex[i], label);
 	}
 
 }
