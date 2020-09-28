@@ -2029,6 +2029,20 @@ void schreier::get_orbit_partition(partitionstack &S,
 	}
 }
 
+void schreier::get_orbit_in_order(std::vector<int> &Orb,
+	int orbit_idx, int verbose_level)
+{
+	int f, l, j, a, pos;
+
+	f = orbit_first[orbit_idx];
+	l = orbit_len[orbit_idx];
+	for (j = 0; j < l; j++) {
+		pos = f + j;
+		a = orbit[pos];
+		Orb.push_back(a);
+	}
+}
+
 strong_generators *schreier::stabilizer_any_point_plus_cosets(
 	action *default_action, 
 	longinteger_object &full_group_order, int pt, vector_ge *&cosets, 

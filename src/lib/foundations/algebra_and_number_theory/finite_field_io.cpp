@@ -592,16 +592,18 @@ void finite_field::print_element_str(stringstream &ost, int a)
 }
 
 void finite_field::print_element_with_symbol(ostream &ost,
-		int a, int f_exponential, int width, const char *symbol)
+		int a, int f_exponential, int width, std::string &symbol)
 {
 	int b;
 
 	if (f_exponential) {
+#if 0
 		if (symbol == NULL) {
 			cout << "finite_field::print_element_with_symbol "
 					"symbol == NULL" << endl;
 			return;
 		}
+#endif
 		if (a == 0) {
 			//print_repeated_character(ost, ' ', width - 1);
 			ost << "0";
@@ -630,16 +632,18 @@ void finite_field::print_element_with_symbol(ostream &ost,
 }
 
 void finite_field::print_element_with_symbol_str(stringstream &ost,
-		int a, int f_exponential, int width, const char *symbol)
+		int a, int f_exponential, int width, std::string &symbol)
 {
 	int b;
 
 	if (f_exponential) {
+#if 0
 		if (symbol == NULL) {
 			cout << "finite_field::print_element_with_symbol_str "
 					"symbol == NULL" << endl;
 			return;
 		}
+#endif
 		if (a == 0) {
 			//print_repeated_character(ost, ' ', width - 1);
 			ost << "0";
@@ -681,7 +685,7 @@ void finite_field::int_vec_print_field_elements(ostream &ost, int *v, int len)
 }
 
 void finite_field::int_vec_print_elements_exponential(ostream &ost,
-		int *v, int len, const char *symbol_for_print)
+		int *v, int len, std::string &symbol_for_print)
 {
 	int i;
 	ost << "(";
@@ -834,7 +838,7 @@ void finite_field::multiplication_table_reordered_save_csv()
 
 
 void finite_field::latex_addition_table(ostream &f,
-		int f_elements_exponential, const char *symbol_for_print)
+		int f_elements_exponential, std::string &symbol_for_print)
 {
 	int i, j, k;
 
@@ -868,7 +872,7 @@ void finite_field::latex_addition_table(ostream &f,
 }
 
 void finite_field::latex_multiplication_table(ostream &f,
-		int f_elements_exponential, const char *symbol_for_print)
+		int f_elements_exponential, std::string &symbol_for_print)
 {
 	int i, j, k;
 
@@ -903,7 +907,7 @@ void finite_field::latex_multiplication_table(ostream &f,
 }
 
 void finite_field::latex_matrix(ostream &f, int f_elements_exponential,
-		const char *symbol_for_print, int *M, int m, int n)
+		std::string &symbol_for_print, int *M, int m, int n)
 {
 	int i, j;
 

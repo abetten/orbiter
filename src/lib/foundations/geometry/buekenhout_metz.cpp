@@ -532,10 +532,13 @@ void buekenhout_metz::create_unital_tex(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 3);
 	int i, j, a, /*b,*/ c1, c2, h;
+	string symbol;
 
 	if (f_v) {
 		cout << "buekenhout_metz::create_unital_tex" << endl;
 		}
+
+	symbol.assign("\\beta");
 
 	w1[0] = 0;
 	w1[1] = 0;
@@ -576,16 +579,16 @@ void buekenhout_metz::create_unital_tex(int verbose_level)
 			}
 		cout << "(";
 		Fq->print_element_with_symbol(cout, w3[0],
-				TRUE /* f_exponential */, 8, "\\beta");
+				TRUE /* f_exponential */, 8, symbol);
 		cout << ",";
 		Fq->print_element_with_symbol(cout, w3[1],
-				TRUE /* f_exponential */, 8, "\\beta");
+				TRUE /* f_exponential */, 8, symbol);
 		cout << ",*,";
 		Fq->print_element_with_symbol(cout, w3[3],
-				TRUE /* f_exponential */, 8, "\\beta");
+				TRUE /* f_exponential */, 8, symbol);
 		cout << ",";
 		Fq->print_element_with_symbol(cout, w3[4],
-				TRUE /* f_exponential */, 8, "\\beta");
+				TRUE /* f_exponential */, 8, symbol);
 		cout << ") ";
 
 		
@@ -694,15 +697,18 @@ void buekenhout_metz::create_unital_Uab_tex(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 3);
 	int i, r, x, y;
+	string symbol;
 
 	if (f_v) {
 		cout << "buekenhout_metz::create_unital_Uab_tex" << endl;
 		}
 
+	symbol.assign("\\beta");
+
 	for (r = 0; r < q; r++) {
 		cout << " & ";
 		Fq->print_element_with_symbol(cout, r,
-				TRUE /* f_exponential */, 8, "\\beta");
+				TRUE /* f_exponential */, 8, symbol);
 		}
 	cout << "\\\\" << endl;
 	cout << "\\hline" << endl;
@@ -715,7 +721,7 @@ void buekenhout_metz::create_unital_Uab_tex(int verbose_level)
 			x = FQ->alpha_power(i - 1);
 			}
 		FQ->print_element_with_symbol(cout, x,
-				TRUE /* f_exponential */, 8, "\\alpha");
+				TRUE /* f_exponential */, 8, symbol);
 
 		for (r = 0; r < q; r++) {
 			cout << " & ";

@@ -394,7 +394,7 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 
 	if (f_v) {
 		cout << "combinatorial_object_create::init done" << endl;
-		}
+	}
 }
 
 #if 0
@@ -405,7 +405,7 @@ void combinatorial_object_create::apply_transformations(const char **transform_c
 
 	if (f_v) {
 		cout << "combinatorial_object_create::apply_transformations done" << endl;
-		}
+	}
 }
 #endif
 

@@ -2109,6 +2109,9 @@ public:
 	// pt_rk is between 0 and q-1.
 	void make_incidence_matrix(int &m, int &n, 
 		int *&Inc, int verbose_level);
+	void make_incidence_matrix(
+		std::vector<int> &Pts, std::vector<int> &Lines,
+		int *&Inc, int verbose_level);
 	int is_incident(int pt, int line);
 	void incidence_m_ii(int pt, int line, int a);
 	void make_incidence_structure_and_partition(

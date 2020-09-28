@@ -224,7 +224,7 @@ void interface_coding_theory::do_make_macwilliams_system(
 		int q, int n, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	combinatorics_domain C;
+	coding_theory_domain C;
 	longinteger_object *M;
 	int i, j;
 

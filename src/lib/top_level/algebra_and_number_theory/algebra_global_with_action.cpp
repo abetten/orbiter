@@ -16,6 +16,221 @@ using namespace orbiter::foundations;
 namespace orbiter {
 namespace top_level {
 
+void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(action *A,
+		sims *override_Sims,
+		std::string &label,
+		std::string &label_tex,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	string prefix;
+	string fname_output;
+	file_io Fio;
+	int d;
+	finite_field *F;
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::conjugacy_classes_based_on_normal_forms" << endl;
+	}
+
+	prefix.assign(label);
+	fname_output.assign(label);
+
+
+	d = A->matrix_group_dimension();
+	F = A->matrix_group_finite_field();
+
+	if (f_v) {
+		cout << "algebra_global_with_action::conjugacy_classes_based_on_normal_forms d=" << d << endl;
+		cout << "algebra_global_with_action::conjugacy_classes_based_on_normal_forms q=" << F->q << endl;
+	}
+
+	gl_classes C;
+	gl_class_rep *R;
+	int nb_classes;
+	int *Mtx;
+	int *Elt;
+	int i, order;
+	long int a;
+
+	char str[1000];
+
+	sprintf(str, "_classes_based_on_normal_forms_%d_%d.tex", d, F->q);
+	fname_output.append("_classes_normal_form.tex");
+
+	C.init(d, F, verbose_level);
+
+	if (f_v) {
+		cout << "before C.make_classes" << endl;
+	}
+	C.make_classes(R, nb_classes, FALSE /*f_no_eigenvalue_one*/, verbose_level);
+	if (f_v) {
+		cout << "after C.make_classes" << endl;
+	}
+
+	Mtx = NEW_int(d * d + 1);
+	Elt = NEW_int(A->elt_size_in_int);
+
+	int *Order;
+
+	Order = NEW_int(nb_classes);
+
+	for (i = 0; i < nb_classes; i++) {
+
+		if (f_v) {
+			cout << "class " << i << " / " << nb_classes << ":" << endl;
+		}
+
+		int_vec_zero(Mtx, d * d + 1);
+		C.make_matrix_from_class_rep(Mtx, R + i, verbose_level - 1);
+
+		A->make_element(Elt, Mtx, 0);
+
+		if (f_v) {
+			cout << "before override_Sims->element_rank_lint" << endl;
+		}
+		a = override_Sims->element_rank_lint(Elt);
+		if (f_v) {
+			cout << "after override_Sims->element_rank_lint" << endl;
+		}
+
+		cout << "Representative of class " << i << " / "
+				<< nb_classes << " has rank " << a << "\\\\" << endl;
+		int_matrix_print(Elt, d, d);
+
+		if (f_v) {
+			cout << "before C.print_matrix_and_centralizer_order_latex" << endl;
+		}
+		C.print_matrix_and_centralizer_order_latex(
+				cout, R + i);
+		if (f_v) {
+			cout << "after C.print_matrix_and_centralizer_order_latex" << endl;
+		}
+
+		if (f_v) {
+			cout << "before A->element_order" << endl;
+		}
+		order = A->element_order(Elt);
+		if (f_v) {
+			cout << "after A->element_order" << endl;
+		}
+
+		cout << "The element order is : " << order << "\\\\" << endl;
+
+		Order[i] = order;
+
+	}
+
+	tally T_order;
+
+	T_order.init(Order, nb_classes, FALSE, 0);
+
+
+	{
+		ofstream ost(fname_output);
+		latex_interface L;
+
+		L.head_easy(ost);
+		//C.report(fp, verbose_level);
+
+
+		ost << "The distribution of element orders is:" << endl;
+#if 0
+		ost << "$$" << endl;
+		T_order.print_file_tex_we_are_in_math_mode(ost, FALSE /* f_backwards */);
+		ost << "$$" << endl;
+#endif
+
+		//ost << "$" << endl;
+		T_order.print_file_tex(ost, FALSE /* f_backwards */);
+		ost << "\\\\" << endl;
+
+		ost << "$$" << endl;
+		T_order.print_array_tex(ost, FALSE /* f_backwards */);
+		ost << "$$" << endl;
+
+
+
+		int t, f, l, a, h, c;
+
+		for (t = 0; t < T_order.nb_types; t++) {
+			f = T_order.type_first[t];
+			l = T_order.type_len[t];
+			a = T_order.data_sorted[f];
+
+			if (f_v) {
+				cout << "class type " << t << " / " << T_order.nb_types << ":" << endl;
+			}
+
+			ost << "\\section{The Classes of Elements of Order $" << a << "$}" << endl;
+
+
+			ost << "There are " << l << " classes of elements of order " << a << "\\\\" << endl;
+
+			for (h = 0; h < l; h++) {
+
+				c = f + h;
+
+				i = T_order.sorting_perm_inv[c];
+
+				if (f_v) {
+					cout << "class " << h << " / " << l << " of elements of order " << a << ":" << endl;
+				}
+
+				int_vec_zero(Mtx, d * d + 1);
+				C.make_matrix_from_class_rep(Mtx, R + i, verbose_level - 1);
+
+				A->make_element(Elt, Mtx, 0);
+
+				if (f_v) {
+					cout << "before override_Sims->element_rank_lint" << endl;
+				}
+				a = override_Sims->element_rank_lint(Elt);
+				if (f_v) {
+					cout << "after override_Sims->element_rank_lint" << endl;
+				}
+
+				ost << "Representative of class " << i << " / "
+						<< nb_classes << " has rank " << a << "\\\\" << endl;
+				int_matrix_print(Elt, d, d);
+
+				if (f_v) {
+					cout << "before C.print_matrix_and_centralizer_order_latex" << endl;
+				}
+				C.print_matrix_and_centralizer_order_latex(ost, R + i);
+				if (f_v) {
+					cout << "after C.print_matrix_and_centralizer_order_latex" << endl;
+				}
+
+				if (f_v) {
+					cout << "before A->element_order" << endl;
+				}
+				order = A->element_order(Elt);
+				if (f_v) {
+					cout << "after A->element_order" << endl;
+				}
+
+				ost << "The element order is : " << order << "\\\\" << endl;
+
+
+			}
+
+		}
+		L.foot(ost);
+	}
+	cout << "Written file " << fname_output << " of size "
+			<< Fio.file_size(fname_output) << endl;
+
+	FREE_int(Mtx);
+	FREE_int(Elt);
+	FREE_OBJECTS(R);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::conjugacy_classes_based_on_normal_forms done" << endl;
+	}
+}
+
 
 
 void algebra_global_with_action::classes_GL(int q, int d,
@@ -79,12 +294,12 @@ void algebra_global_with_action::classes_GL(int q, int d,
 
 	sprintf(fname, "Class_reps_GL_%d_%d.tex", d, q);
 	{
-	ofstream fp(fname);
-	latex_interface L;
+		ofstream fp(fname);
+		latex_interface L;
 
-	L.head_easy(fp);
-	C.report(fp, verbose_level);
-	L.foot(fp);
+		L.head_easy(fp);
+		C.report(fp, verbose_level);
+		L.foot(fp);
 	}
 
 	//make_gl_classes(d, q, f_no_eigenvalue_one, verbose_level);

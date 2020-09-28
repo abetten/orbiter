@@ -159,11 +159,6 @@ int cubic_curve::compute_system_in_RREF(
 		for (j = 0; j < nb_monomials; j++) {
 			System[i * nb_monomials + j] =
 					Poly->evaluate_monomial(j, Pts + i * 3);
-#if 0
-				F->evaluate_monomial(
-					Poly->monomials + j * 3,
-					Pts + i * 3, 3);
-#endif
 		}
 	}
 	if (f_v && FALSE) {

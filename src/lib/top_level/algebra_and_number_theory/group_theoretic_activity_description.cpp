@@ -28,6 +28,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_stabilizer = FALSE;
 	f_orbits_on_subsets = FALSE;
 	orbits_on_subsets_size = 0;
+	f_classes_based_on_normal_form = FALSE;
 	f_classes = FALSE;
 	f_group_table = FALSE;
 	f_normalizer = FALSE;
@@ -258,6 +259,10 @@ int group_theoretic_activity_description::read_arguments(
 			f_test_if_geometric = TRUE;
 			test_if_geometric_depth = atoi(argv[++i]);
 			cout << "-test_if_geometric" << endl;
+		}
+		else if (strcmp(argv[i], "-classes_based_on_normal_form") == 0) {
+			f_classes_based_on_normal_form = TRUE;
+			cout << "-classes_based_on_normal_form" << endl;
 		}
 		else if (strcmp(argv[i], "-classes") == 0) {
 			f_classes = TRUE;

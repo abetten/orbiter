@@ -95,6 +95,10 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		do_export_magma(verbose_level);
 	}
 
+	if (Descr->f_classes_based_on_normal_form) {
+		classes_based_on_normal_form(verbose_level);
+	}
+
 	if (Descr->f_classes) {
 		classes(verbose_level);
 	}
@@ -404,6 +408,31 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	}
 }
 
+
+void group_theoretic_activity::classes_based_on_normal_form(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::classes_based_on_normal_form" << endl;
+	}
+	sims *G;
+	algebra_global_with_action Algebra;
+
+	G = LG->Strong_gens->create_sims(verbose_level);
+
+
+	Algebra.conjugacy_classes_based_on_normal_forms(LG->A_linear,
+			G,
+			LG->label,
+			LG->label_tex,
+			verbose_level);
+
+	FREE_OBJECT(G);
+	if (f_v) {
+		cout << "group_theoretic_activity::classes_based_on_normal_form done" << endl;
+	}
+}
 
 
 void group_theoretic_activity::classes(int verbose_level)

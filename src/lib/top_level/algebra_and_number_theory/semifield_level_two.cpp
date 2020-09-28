@@ -723,7 +723,10 @@ void semifield_level_two::downstep(int verbose_level)
 		if (f_vv) {
 
 			int f_elements_exponential = FALSE;
-			const char *symbol_for_print = "\\alpha";
+			string symbol_for_print;
+
+
+			symbol_for_print.assign("\\alpha");
 
 			cout << "Representative R_i of class " << i
 					<< " / " << nb_classes << " has rank "
@@ -2266,7 +2269,9 @@ void semifield_level_two::report(
 			ost << "\\item" << endl;
 
 			int f_elements_exponential = FALSE;
-			const char *symbol_for_print = "\\alpha";
+			string symbol_for_print;
+
+			symbol_for_print.assign("\\alpha");
 
 
 			a = class_rep_rank[i];
@@ -2391,7 +2396,10 @@ void semifield_level_two::report(
 			//cout << "The stabilizer has order " << go << endl;
 
 			int f_elements_exponential = FALSE;
-			const char *symbol_for_print = "\\alpha";
+			string symbol_for_print;
+
+			symbol_for_print.assign("\\alpha");
+
 
 			ext = defining_flag_orbit[i];
 			idx = flag_orbit_classes[ext * 2 + 0];

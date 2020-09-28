@@ -33,6 +33,12 @@ interface_projective::interface_projective()
 	n = 0;
 	q = 0;
 
+	f_decomposition_by_element = FALSE;
+	decomposition_by_element_power = 1;
+	//std::string decomposition_by_element_data
+	//decomposition_by_element_fname_base
+
+
 	f_canonical_form_PG = FALSE;
 	Canonical_form_PG_Descr = NULL;
 
@@ -94,6 +100,9 @@ void interface_projective::print_help(int argc,
 	if (strcmp(argv[i], "-cheat_sheet_PG") == 0) {
 		cout << "-cheat_sheet_PG" << endl;
 	}
+	else if (strcmp(argv[i], "-decomposition_by_element") == 0) {
+		cout << "-decomposition_by_element <int : power> <string : element> <string : fname_base>" << endl;
+	}
 	else if (strcmp(argv[i], "-canonical_form_PG") == 0) {
 		cout << "-canonical_form_PG <int : n> <int : q> <description>" << endl;
 	}
@@ -141,6 +150,9 @@ int interface_projective::recognize_keyword(int argc,
 		return false;
 	}
 	if (strcmp(argv[i], "-cheat_sheet_PG") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-decomposition_by_element") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-canonical_form_PG") == 0) {
@@ -192,7 +204,17 @@ void interface_projective::read_arguments(int argc,
 			n = atoi(argv[++i]);
 			q = atoi(argv[++i]);
 			cout << "-cheat_sheet_PG " << n << " " <<  q << endl;
-			i++;
+			//i++;
+		}
+		else if (strcmp(argv[i], "-decomposition_by_element") == 0) {
+			f_decomposition_by_element = TRUE;
+			decomposition_by_element_power = atoi(argv[++i]);
+			decomposition_by_element_data.assign(argv[++i]);
+			decomposition_by_element_fname_base.assign(argv[++i]);
+			cout << "-decomposition_by_element " <<  decomposition_by_element_power
+					<< " " << decomposition_by_element_data
+					<< " " << decomposition_by_element_fname_base << endl;
+			//i++;
 		}
 		else if (strcmp(argv[i], "-canonical_form_PG") == 0) {
 			f_canonical_form_PG = TRUE;
@@ -214,7 +236,7 @@ void interface_projective::read_arguments(int argc,
 			f_classify_cubic_curves = TRUE;
 			q = atoi(argv[++i]);
 			cout << "-classify_cubic_curves " <<  q << endl;
-			i++;
+			//i++;
 		}
 		else if (strcmp(argv[i], "-control_six_arcs") == 0) {
 			f_has_control_six_arcs = TRUE;
@@ -233,7 +255,7 @@ void interface_projective::read_arguments(int argc,
 			f_create_points_on_quartic = TRUE;
 			desired_distance = atof(argv[++i]);
 			cout << "-create_points_on_quartic " << desired_distance << endl;
-			i++;
+			//i++;
 		}
 		else if (strcmp(argv[i], "-create_points_on_parabola") == 0) {
 			f_create_points_on_parabola = TRUE;
@@ -245,7 +267,7 @@ void interface_projective::read_arguments(int argc,
 			cout << "-create_points_on_parabola " << desired_distance << " "
 					<< parabola_N << " " << parabola_a << " "
 					<< parabola_b << " " << parabola_c << endl;
-			i++;
+			//i++;
 		}
 		else if (strcmp(argv[i], "-smooth_curve") == 0) {
 			f_smooth_curve = TRUE;
@@ -269,7 +291,7 @@ void interface_projective::read_arguments(int argc,
 					<< smooth_curve_t_min << " "
 					<< smooth_curve_t_max << " "
 					<< endl;
-			i++;
+			//i++;
 		}
 		else if (strcmp(argv[i], "-create_BLT_set") == 0) {
 			f_create_BLT_set = TRUE;
@@ -349,7 +371,10 @@ void interface_projective::worker(orbiter_session *Session, int verbose_level)
 	}
 
 	if (f_cheat_sheet_PG) {
-		do_cheat_sheet_PG(Session, n, q, verbose_level);
+		do_cheat_sheet_PG(Session, n, q,
+				f_decomposition_by_element, decomposition_by_element_power,
+				decomposition_by_element_data, decomposition_by_element_fname_base,
+				verbose_level);
 	}
 	else if (f_canonical_form_PG) {
 		do_canonical_form_PG(Session, n, q, verbose_level);
@@ -413,7 +438,10 @@ void interface_projective::worker(orbiter_session *Session, int verbose_level)
 
 
 void interface_projective::do_cheat_sheet_PG(orbiter_session *Session,
-		int n, int q, int verbose_level)
+		int n, int q,
+		int f_decomposition_by_element, int decomposition_by_element_power,
+		std::string &decomposition_by_element_data, std::string &fname_base,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -433,8 +461,112 @@ void interface_projective::do_cheat_sheet_PG(orbiter_session *Session,
 		F->init(q, 0);
 	}
 
-	F->cheat_sheet_PG(n, verbose_level);
+#if 0
+	projective_space *P;
 
+	P = NEW_OBJECT(projective_space);
+	if (f_v) {
+		cout << "interface_projective::do_cheat_sheet_PG before P->init" << endl;
+	}
+	P->init(n, F,
+		TRUE /* f_init_incidence_structure */,
+		verbose_level /*MINIMUM(2, verbose_level)*/);
+
+	//F->cheat_sheet_PG(n, verbose_level);
+#endif
+
+
+	int f_semilinear;
+	number_theory_domain NT;
+
+
+	if (NT.is_prime(q)) {
+		f_semilinear = FALSE;
+	}
+	else {
+		f_semilinear = TRUE;
+	}
+
+
+	projective_space_with_action *PA;
+
+	PA = NEW_OBJECT(projective_space_with_action);
+
+	PA->init(F, n,
+		f_semilinear,
+		TRUE /*f_init_incidence_structure*/,
+		0 /* verbose_level */);
+
+
+
+	{
+		char str[1000];
+		string fname;
+		char title[1000];
+		char author[1000];
+		//int f_with_group = FALSE;
+		//int f_semilinear = FALSE;
+		//int f_basis = TRUE;
+		//int q = F->q;
+
+		snprintf(str, 1000, "PG_%d_%d.tex", n, q);
+		fname.assign(str);
+		snprintf(title, 1000, "Cheat Sheet PG($%d,%d$)", n, q);
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			PA->P->report(ost);
+
+			if (f_decomposition_by_element) {
+
+				int *Elt;
+
+				Elt = NEW_int(PA->A->elt_size_in_int);
+
+
+				PA->A->make_element_from_string(Elt,
+						decomposition_by_element_data.c_str(), verbose_level);
+
+
+				PA->A->element_power_int_in_place(Elt,
+						decomposition_by_element_power, verbose_level);
+
+				PA->report_decomposition_by_single_automorphism(
+						Elt, ost, fname_base,
+						verbose_level);
+
+				FREE_int(Elt);
+			}
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+	FREE_OBJECT(PA);
+	//FREE_OBJECT(P);
 	FREE_OBJECT(F);
 
 	if (f_v) {

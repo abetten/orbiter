@@ -742,7 +742,7 @@ public:
 		int *Elt, std::ostream &ost,
 		int verbose_level);
 	void report_decomposition_by_single_automorphism(
-		int *Elt, std::ostream &ost,
+		int *Elt, std::ostream &ost, std::string &fname_base,
 		int verbose_level);
 	int process_object(
 		classify_bitvectors *CB,

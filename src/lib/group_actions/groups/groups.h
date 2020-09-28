@@ -812,6 +812,8 @@ public:
 		partitionstack &S, int verbose_level);
 	void get_orbit_partition(partitionstack &S, 
 		int verbose_level);
+	void get_orbit_in_order(std::vector<int> &Orb,
+		int orbit_idx, int verbose_level);
 	strong_generators *stabilizer_any_point_plus_cosets(
 		action *default_action, 
 		longinteger_object &full_group_order, 
