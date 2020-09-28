@@ -154,6 +154,31 @@ void table_of_irreducible_polynomials::init(int k,
 	}
 
 
+	print(cout);
+
+	{
+		unipoly_domain FX(F);
+
+		for (d = 1; d <= k; d++) {
+
+			for (i = 0; i < Nb_irred[d]; i++) {
+
+				unipoly_object poly;
+
+				FX.create_object_of_degree_with_coefficients(
+						poly, d, &Tables[d][i * (d + 1)]);
+
+				if (!is_irreducible(poly, verbose_level)) {
+					cout << "table_of_irreducible_polynomials::init "
+							"polynomial " << i << " among "
+							"the list of polynomials of degree " << d
+							<< " is not irreducible" << endl;
+					exit(1);
+				}
+			}
+		}
+	}
+
 	if (f_v) {
 		cout << "table_of_irreducible_polynomials::init done" << endl;
 	}
@@ -296,6 +321,35 @@ int table_of_irreducible_polynomials::select_polynomial_next(
 	return FALSE;
 }
 
+int table_of_irreducible_polynomials::is_irreducible(unipoly_object &poly, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *Mult;
+	int f_is_irred;
+	int sum, i;
+
+	if (f_v) {
+		cout << "table_of_irreducible_polynomials::is_irreducible" << endl;
+	}
+	Mult = NEW_int(nb_irred);
+	factorize_polynomial(poly, Mult, verbose_level);
+	sum = 0;
+	for (i = 0; i < nb_irred; i++) {
+		sum += Mult[i];
+	}
+	FREE_int(Mult);
+	if (sum > 1) {
+		f_is_irred = FALSE;
+	}
+	else {
+		f_is_irred = TRUE;
+	}
+
+	if (f_v) {
+		cout << "table_of_irreducible_polynomials::is_irreducible done" << endl;
+	}
+	return f_is_irred;
+}
 
 void table_of_irreducible_polynomials::factorize_polynomial(
 		unipoly_object &poly, int *Mult, int verbose_level)
@@ -337,7 +391,7 @@ void table_of_irreducible_polynomials::factorize_polynomial(
 
 		if (d > d_poly) {
 			continue;
-			}
+		}
 
 		tt = i - First_irred[d];
 		if (f_v) {

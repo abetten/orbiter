@@ -103,7 +103,7 @@ void spread_classify::print_isomorphism_type2(isomorph *Iso,
 	int f, l, j, idx, pt;
 	int p, h;
 	int f_elements_exponential = FALSE;
-	const char *symbol_for_print = "\\alpha";
+	string symbol_for_print;
 
 	number_theory_domain NT;
 	sorting Sorting;
@@ -111,6 +111,10 @@ void spread_classify::print_isomorphism_type2(isomorph *Iso,
 	if (f_v) {
 		cout << "spread_classify::print_isomorphism_type2" << endl;
 	}
+
+
+	symbol_for_print.assign("\\alpha");
+
 
 	NT.factor_prime_power(q, p, h);
 	if (h > 1) {

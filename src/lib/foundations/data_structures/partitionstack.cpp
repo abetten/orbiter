@@ -1678,7 +1678,7 @@ void partitionstack::print_row_tactical_decomposition_scheme_tex(
 {
 	int c, i, j;
 	
-	ost << "{\\renewcommand{\\arraycolsep}{1pt}" << endl;
+	ost << "%{\\renewcommand{\\arraycolsep}{1pt}" << endl;
 	if (f_enter_math_mode) {
 		ost << "\\begin{align*}" << endl;
 		}
@@ -1710,7 +1710,7 @@ void partitionstack::print_row_tactical_decomposition_scheme_tex(
 	if (f_enter_math_mode) {
 		ost << "\\end{align*}" << endl;
 		}
-	ost << "}" << endl;
+	ost << "%}" << endl;
 }
 
 void partitionstack::print_column_tactical_decomposition_scheme_tex(
@@ -1721,7 +1721,7 @@ void partitionstack::print_column_tactical_decomposition_scheme_tex(
 {
 	int c, i, j;
 	
-	ost << "{\\renewcommand{\\arraycolsep}{1pt}" << endl;
+	ost << "%{\\renewcommand{\\arraycolsep}{1pt}" << endl;
 	if (f_enter_math_mode) {
 		ost << "\\begin{align*}" << endl;
 		}
@@ -1753,7 +1753,7 @@ void partitionstack::print_column_tactical_decomposition_scheme_tex(
 	if (f_enter_math_mode) {
 		ost << "\\end{align*}" << endl;
 		}
-	ost << "}" << endl;
+	ost << "%}" << endl;
 }
 
 void partitionstack::print_non_tactical_decomposition_scheme_tex(

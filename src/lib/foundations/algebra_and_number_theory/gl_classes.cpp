@@ -84,12 +84,11 @@ void gl_classes::init(int k, finite_field *F, int verbose_level)
 	if (f_v) {
 		cout << "gl_classes before Table_of_polynomials->init" << endl;
 		}
-	Table_of_polynomials->init(k, F, verbose_level);
+	Table_of_polynomials->init(k, F, verbose_level - 2);
 	if (f_v) {
 		cout << "gl_classes after Table_of_polynomials->init" << endl;
 		}
 
-	Table_of_polynomials->print(cout);
 
 	if (f_v) {
 		cout << "gl_classes::init making partitions" << endl;
@@ -211,7 +210,7 @@ void gl_classes::make_matrix_from_class_rep(int *Mtx,
 
 	if (f_v) {
 		cout << "gl_classes::make_matrix_from_class_rep" << endl;
-		}
+	}
 	Select = NEW_int(Table_of_polynomials->nb_irred);
 	Select_Partition = NEW_int(Table_of_polynomials->nb_irred);
 	int_vec_zero(Select, Table_of_polynomials->nb_irred);
@@ -223,15 +222,21 @@ void gl_classes::make_matrix_from_class_rep(int *Mtx,
 		p = R->type_coding.s_ij(i, 2);
 		Select[a] = m;
 		Select_Partition[a] = p;
-		}
+	}
+	if (f_v) {
+		cout << "gl_classes::make_matrix_from_class_rep before make_matrix_in_rational_normal_form" << endl;
+	}
 	make_matrix_in_rational_normal_form(
 			Mtx, Select, Select_Partition,
 			verbose_level - 1);
+	if (f_v) {
+		cout << "gl_classes::make_matrix_from_class_rep after make_matrix_in_rational_normal_form" << endl;
+	}
 	FREE_int(Select);
 	FREE_int(Select_Partition);
 	if (f_v) {
 		cout << "gl_classes::make_matrix_from_class_rep done" << endl;
-		}
+	}
 }
 
 
@@ -1954,10 +1959,13 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 	int *Select_polynomial, *Select_Partition;
 	int i, a, m, p, b;
 	int f_elements_exponential = FALSE;
-	const char *symbol_for_print = "\\alpha";
+	string symbol_for_print;
 	number_theory_domain NT;
 
 	Mtx = NEW_int(k * k);
+
+	symbol_for_print.assign("\\alpha");
+
 
 	Select_polynomial = NEW_int(Table_of_polynomials->nb_irred);
 	Select_Partition = NEW_int(Table_of_polynomials->nb_irred);
@@ -2008,13 +2016,13 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 	F->latex_matrix(ost,
 			f_elements_exponential, symbol_for_print, Mtx, k, k);
 	ost << "\\right]";
-	ost << "_{";
-	ost << co << "}" << endl;
+	//ost << "_{";
+	//ost << co << "}" << endl;
 	ost << "$$" << endl;
 
 	ost << "centralizer order $" << co << "$\\\\";
 	ost << "class size $" << cl << "$\\\\" << endl;
-	ost << endl;
+	//ost << endl;
 
 	FREE_int(Select_polynomial);
 	FREE_int(Select_Partition);

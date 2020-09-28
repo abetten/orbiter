@@ -215,7 +215,7 @@ private:
 	// log_alpha_table[0] = -1
 	int *alpha_power_table; // [q]
 	int *v1, *v2, *v3; // [e], vectors of length e.
-	char *symbol_for_print;
+	std::string symbol_for_print;
 	int f_has_quadratic_subfield; // TRUE if e is even.
 	int *f_belongs_to_quadratic_subfield; // [q]
 
@@ -1158,7 +1158,6 @@ public:
 		int x1, int y1, int z1,
 		int x3, int y3, int z3,
 		int verbose_level);
-	void cheat_sheet_PG(int n, int verbose_level);
 	void simeon(int n, int len, long int *S, int s, int verbose_level);
 	void wedge_to_klein(int *W, int *K);
 	void klein_to_wedge(int *K, int *W);
@@ -1203,12 +1202,12 @@ public:
 	void print_element(std::ostream &ost, int a);
 	void print_element_str(std::stringstream &ost, int a);
 	void print_element_with_symbol(std::ostream &ost,
-		int a, int f_exponential, int width, const char *symbol);
+		int a, int f_exponential, int width, std::string &symbol);
 	void print_element_with_symbol_str(std::stringstream &ost,
-			int a, int f_exponential, int width, const char *symbol);
+			int a, int f_exponential, int width, std::string &symbol);
 	void int_vec_print_field_elements(std::ostream &ost, int *v, int len);
 	void int_vec_print_elements_exponential(std::ostream &ost,
-		int *v, int len, const char *symbol_for_print);
+		int *v, int len, std::string &symbol_for_print);
 	void make_fname_addition_table_csv(std::string &fname);
 	void make_fname_multiplication_table_csv(std::string &fname);
 	void make_fname_addition_table_reordered_csv(std::string &fname);
@@ -1218,11 +1217,11 @@ public:
 	void addition_table_reordered_save_csv();
 	void multiplication_table_reordered_save_csv();
 	void latex_addition_table(std::ostream &f,
-		int f_elements_exponential, const char *symbol_for_print);
+		int f_elements_exponential, std::string &symbol_for_print);
 	void latex_multiplication_table(std::ostream &f,
-		int f_elements_exponential, const char *symbol_for_print);
+		int f_elements_exponential, std::string &symbol_for_print);
 	void latex_matrix(std::ostream &f, int f_elements_exponential,
-		const char *symbol_for_print, int *M, int m, int n);
+			std::string &symbol_for_print, int *M, int m, int n);
 	void power_table(int t, int *power_table, int len);
 	void cheat_sheet(std::ostream &f, int verbose_level);
 	void cheat_sheet_subfields(std::ostream &f, int verbose_level);
@@ -2326,6 +2325,7 @@ public:
 			int *Select, int verbose_level);
 	int select_polynomial_next(
 			int *Select, int verbose_level);
+	int is_irreducible(unipoly_object &poly, int verbose_level);
 	void factorize_polynomial(unipoly_object &char_poly, int *Mult,
 		int verbose_level);
 };
@@ -2463,13 +2463,6 @@ public:
 		longinteger_object &alpha, 
 		longinteger_object &rk_minpoly, 
 		int p, int verbose_level);
-	void BCH_generator_polynomial(unipoly_object &g, int n, 
-		int designed_distance, int &bose_distance, 
-		int &transversal_length, int *&transversal, 
-		longinteger_object *&rank_of_irreducibles, 
-		int verbose_level);
-	void compute_generator_matrix(unipoly_object a, int *&genma, 
-		int n, int &k, int verbose_level);
 	void print_vector_of_polynomials(unipoly_object *sigma, int deg);
 	void minimum_polynomial_extension_field(unipoly_object &g, 
 		unipoly_object m, 

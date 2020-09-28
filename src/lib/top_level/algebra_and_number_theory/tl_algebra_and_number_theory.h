@@ -23,6 +23,11 @@ namespace top_level {
 
 class algebra_global_with_action {
 public:
+	void conjugacy_classes_based_on_normal_forms(action *A,
+			sims *override_Sims,
+			std::string &label,
+			std::string &label_tex,
+			int verbose_level);
 	void classes_GL(int q, int d, int f_no_eigenvalue_one, int verbose_level);
 	void do_normal_form(int q, int d,
 			int f_no_eigenvalue_one, int *data, int data_sz,
@@ -204,6 +209,7 @@ public:
 	int f_stabilizer;
 	int f_orbits_on_subsets;
 	int orbits_on_subsets_size;
+	int f_classes_based_on_normal_form;
 	int f_classes;
 	int f_group_table;
 	int f_normalizer;
@@ -371,6 +377,7 @@ public:
 			finite_field *F, linear_group *LG,
 			int verbose_level);
 	void perform_activity(int verbose_level);
+	void classes_based_on_normal_form(int verbose_level);
 	void classes(int verbose_level);
 	void multiply(int verbose_level);
 	void inverse(int verbose_level);

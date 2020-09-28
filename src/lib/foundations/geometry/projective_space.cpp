@@ -750,7 +750,7 @@ void projective_space::make_incidence_matrix(
 
 	if (f_v) {
 		cout << "projective_space::make_incidence_matrix" << endl;
-		}
+	}
 	m = N_points;
 	n = N_lines;
 	Inc = NEW_int(m * n);
@@ -759,12 +759,42 @@ void projective_space::make_incidence_matrix(
 		for (h = 0; h < r; h++) {
 			j = Lines_on_point[i * r + h];
 			Inc[i * n + j] = 1;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "projective_space::make_incidence_matrix "
 				"done" << endl;
+	}
+}
+
+void projective_space::make_incidence_matrix(
+	std::vector<int> &Pts, std::vector<int> &Lines,
+	int *&Inc, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, a, b;
+	int nb_pts, nb_lines;
+
+	if (f_v) {
+		cout << "projective_space::make_incidence_matrix" << endl;
+	}
+
+	nb_pts = Pts.size();
+	nb_lines = Lines.size();
+	Inc = NEW_int(nb_pts * nb_lines);
+	int_vec_zero(Inc, nb_pts * nb_lines);
+	for (i = 0; i < nb_pts; i++) {
+		a = Pts[i];
+		for (j = 0; j < nb_lines; j++) {
+			b = Lines[j];
+			if (is_incident(a, b)) {
+				Inc[i * nb_lines + j] = 1;
+			}
 		}
+	}
+	if (f_v) {
+		cout << "projective_space::make_incidence_matrix done" << endl;
+	}
 }
 
 int projective_space::is_incident(int pt, int line)
@@ -4040,7 +4070,7 @@ void projective_space::report(ostream &ost)
 		set = NEW_lint(N_points);
 		for (i = 0; i < N_points; i++) {
 			set[i] = i;
-			}
+		}
 		sprintf(str, "plane_of_order_%d", q);
 		fname_base.assign(str);
 
@@ -4058,7 +4088,7 @@ void projective_space::report(ostream &ost)
 		ost << "\\input " << fname_base << "_draw.tex" << endl;
 		ost << "$$" << endl;
 		ost << "}%%" << endl;
-		}
+	}
 
 	//ost << "\\clearpage" << endl << endl;
 	ost << "\\subsection{The Points of ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
@@ -4091,7 +4121,7 @@ void projective_space::report(ostream &ost)
 		}
 		//ost << "\\section{Subspaces of dimension " << k << "}" << endl;
 		cheat_sheet_subspaces(ost, k, verbose_level);
-		}
+	}
 
 
 #if 0
@@ -4099,14 +4129,14 @@ void projective_space::report(ostream &ost)
 		//ost << "\\clearpage" << endl << endl;
 		ost << "\\section{Line intersections}" << endl;
 		cheat_sheet_line_intersection(ost, verbose_level);
-		}
+	}
 
 
 	if (n >= 2 && N_points < 25) {
 		//ost << "\\clearpage" << endl << endl;
 		ost << "\\section{Line through point-pairs}" << endl;
 		cheat_sheet_line_through_pairs_of_points(ost, verbose_level);
-		}
+	}
 #endif
 
 	homogeneous_polynomial_domain *Poly2;

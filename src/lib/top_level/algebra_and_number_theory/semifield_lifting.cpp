@@ -310,11 +310,13 @@ void semifield_lifting::report(ostream &ost, int verbose_level)
 			SC->matrix_unrank(Pt[i], Mtx2);
 
 			int f_elements_exponential = FALSE;
-			const char *symbol_for_print = "\\alpha";
 
 			SC->matrix_unrank(L2->Pt[po], Mtx1);
 
 
+			string symbol_for_print;
+
+			symbol_for_print.assign("\\alpha");
 
 			ost << "$$" << endl;
 			ost << "\\left\\{" << endl;

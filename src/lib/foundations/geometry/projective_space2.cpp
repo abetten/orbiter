@@ -1289,12 +1289,18 @@ void projective_space::klein_correspondence(
 	int *x4, *y4;
 	long int a, b, c;
 	int f_elements_exponential = TRUE;
-	const char *symbol_for_print = "\\alpha";
+	string symbol_for_print;
+
+
 
 
 	if (f_v) {
 		cout << "projective_space::klein_correspondence" << endl;
 		}
+
+
+	symbol_for_print.assign("\\alpha");
+
 	for (h = 0; h < set_size; h++) {
 		a = set_in[h];
 		Grass_lines->unrank_lint(a, 0 /* verbose_level */);
@@ -1347,11 +1353,12 @@ void projective_space::Pluecker_coordinates(
 	int basis8[8];
 	int *x4, *y4;
 	int f_elements_exponential = FALSE;
-	const char *symbol_for_print = "\\alpha";
+	string symbol_for_print;
 
 	if (f_v) {
 		cout << "projective_space::Pluecker_coordinates" << endl;
 		}
+	symbol_for_print.assign("\\alpha");
 	Grass_lines->unrank_lint(line_rk, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << setw(5) << line_rk << " :" << endl;
@@ -1396,12 +1403,13 @@ void projective_space::klein_correspondence_special_model(
 	int a, b, c;
 	int half;
 	int f_elements_exponential = TRUE;
-	const char *symbol_for_print = "\\alpha";
+	string symbol_for_print;
 	//int *table;
 
 	if (f_v) {
 		cout << "projective_space::klein_correspondence" << endl;
 		}
+	symbol_for_print.assign("\\alpha");
 	half = F->inverse(F->add(1, 1));
 	if (f_v) {
 		cout << "half=" << half << endl;
@@ -1476,9 +1484,11 @@ void projective_space::cheat_sheet_points(
 {
 	int i, d;
 	int *v;
+	string symbol_for_print;
 
 	d = n + 1;
 
+	symbol_for_print.assign("\\alpha");
 	v = NEW_int(d);
 
 	f << "PG$(" << n << ", " << q << ")$ has "
@@ -1500,7 +1510,7 @@ void projective_space::cheat_sheet_points(
 			f << "$P_{" << i << "}=";
 			int_vec_print(f, v, d);
 			f << "=";
-			F->int_vec_print_elements_exponential(f, v, d, "\\alpha");
+			F->int_vec_print_elements_exponential(f, v, d, symbol_for_print);
 			f << "$\\\\" << endl;
 			}
 		f << "\\end{multicols}" << endl;
@@ -3053,14 +3063,13 @@ void projective_space::line_plane_incidence_matrix_restricted(
 	int i, j;
 
 	if (f_v) {
-		cout << "projective_space::line_plane_incidence_matrix_"
-				"restricted" << endl;
-		}
+		cout << "projective_space::line_plane_incidence_matrix_restricted" << endl;
+	}
 	if (n <= 2) {
 		cout << "projective_space::line_plane_incidence_matrix_"
 				"restricted n <= 2" << endl;
 		exit(1);
-		}
+	}
 	line_sz = 2 * (n + 1);
 	nb_planes = Nb_subspaces[2];
 
@@ -3073,7 +3082,7 @@ void projective_space::line_plane_incidence_matrix_restricted(
 	int_vec_zero(M, nb_lines * nb_planes);
 	for (i = 0; i < nb_lines; i++) {
 		unrank_line(the_lines + i * line_sz, Lines[i]);
-		}
+	}
 	for (j = 0; j < nb_planes; j++) {
 		unrank_plane(Basis, j);
 		for (i = 0; i < nb_lines; i++) {
@@ -3082,9 +3091,9 @@ void projective_space::line_plane_incidence_matrix_restricted(
 					Work + 3 * (n + 1), line_sz);
 			if (F->Gauss_easy(Work, 5, n + 1) == 3) {
 				M[i * nb_planes + j] = 1;
-				}
 			}
 		}
+	}
 	FREE_int(Work);
 	FREE_int(Basis);
 	FREE_int(the_lines);
@@ -3101,33 +3110,33 @@ int projective_space::test_if_lines_are_skew(
 
 	if (f_v) {
 		cout << "projective_space::test_if_lines_are_skew" << endl;
-		}
+	}
 	if (n != 3) {
 		cout << "projective_space::test_if_lines_are_skew "
 				"n != 3" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "line1=" << line1 << " line2=" << line2 << endl;
-		}
+	}
 	unrank_line(Basis1, line1);
 	if (f_v) {
 		cout << "line1:" << endl;
 		int_matrix_print(Basis1, 2, 4);
-		}
+	}
 	unrank_line(Basis2, line2);
 	if (f_v) {
 		cout << "line2:" << endl;
 		int_matrix_print(Basis2, 2, 4);
-		}
+	}
 	F->intersect_subspaces(4, 2, Basis1, 2, Basis2,
 		rk, M, 0 /* verbose_level */);
 	if (rk == 0) {
 		return TRUE;
-		}
+	}
 	else {
 		return FALSE;
-		}
+	}
 }
 
 int projective_space::point_of_intersection_of_a_line_and_a_line_in_three_space(
@@ -3142,25 +3151,25 @@ int projective_space::point_of_intersection_of_a_line_and_a_line_in_three_space(
 	if (f_v) {
 		cout << "projective_space::point_of_intersection_of_a_"
 				"line_and_a_line_in_three_space" << endl;
-		}
+	}
 	if (n != 3) {
 		cout << "projective_space::point_of_intersection_of_a_"
 				"line_and_a_line_in_three_space n != 3" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "line1=" << line1 << " line2=" << line2 << endl;
-		}
+	}
 	unrank_line(Basis1, line1);
 	if (f_v) {
 		cout << "line1:" << endl;
 		int_matrix_print(Basis1, 2, 4);
-		}
+	}
 	unrank_line(Basis2, line2);
 	if (f_v) {
 		cout << "line2:" << endl;
 		int_matrix_print(Basis2, 2, 4);
-		}
+	}
 	F->intersect_subspaces(4, 2, Basis1, 2, Basis2,
 		rk, M, 0 /* verbose_level */);
 	if (rk != 1) {
@@ -3173,19 +3182,19 @@ int projective_space::point_of_intersection_of_a_line_and_a_line_in_three_space(
 		int_matrix_print(Basis2, 2, 4);
 		cout << "rk = " << rk << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "intersection:" << endl;
 		int_matrix_print(M, 1, 4);
-		}
+	}
 	a = rank_point(M);
 	if (f_v) {
 		cout << "point rank = " << a << endl;
-		}
+	}
 	if (f_v) {
 		cout << "projective_space::point_of_intersection_of_a_"
 				"line_and_a_line_in_three_space done" << endl;
-		}
+	}
 	return a;
 }
 
@@ -3201,44 +3210,44 @@ int projective_space::point_of_intersection_of_a_line_and_a_plane_in_three_space
 	if (f_v) {
 		cout << "projective_space::point_of_intersection_of_a_"
 				"line_and_a_plane_in_three_space" << endl;
-		}
+	}
 	if (n != 3) {
 		cout << "projective_space::point_of_intersection_of_a_"
 				"line_and_a_plane_in_three_space n != 3" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "line=" << line << " plane=" << plane << endl;
-		}
+	}
 	unrank_line(Basis1, line);
 	if (f_v) {
 		cout << "line:" << endl;
 		int_matrix_print(Basis1, 2, 4);
-		}
+	}
 	unrank_plane(Basis2, plane);
 	if (f_v) {
 		cout << "plane:" << endl;
 		int_matrix_print(Basis2, 3, 4);
-		}
+	}
 	F->intersect_subspaces(4, 2, Basis1, 3, Basis2,
 		rk, M, 0 /* verbose_level */);
 	if (rk != 1) {
 		cout << "projective_space::point_of_intersection_of_a_"
 				"line_and_a_plane_in_three_space intersection "
 				"is not a point" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "intersection:" << endl;
 		int_matrix_print(M, 1, 4);
-		}
+	}
 	a = rank_point(M);
 	if (f_v) {
 		cout << "point rank = " << a << endl;
-		}
+	}
 	if (f_v) {
 		cout << "projective_space::point_of_intersection_of_a_"
 				"line_and_a_plane_in_three_space done" << endl;
-		}
+	}
 	return a;
 }
 
@@ -3252,14 +3261,13 @@ long int projective_space::line_of_intersection_of_two_planes_in_three_space(
 	int M[16];
 
 	if (f_v) {
-		cout << "projective_space::line_of_intersection_of_"
-				"two_planes_in_three_space" << endl;
-		}
+		cout << "projective_space::line_of_intersection_of_two_planes_in_three_space" << endl;
+	}
 	if (n != 3) {
 		cout << "projective_space::line_of_intersection_of_"
 				"two_planes_in_three_space n != 3" << endl;
 		exit(1);
-		}
+	}
 	unrank_plane(Basis1, plane1);
 	unrank_plane(Basis2, plane2);
 	F->intersect_subspaces(4, 3, Basis1, 3, Basis2,
@@ -3267,12 +3275,12 @@ long int projective_space::line_of_intersection_of_two_planes_in_three_space(
 	if (rk != 2) {
 		cout << "projective_space::line_of_intersection_of_"
 				"two_planes_in_three_space intersection is not a line" << endl;
-		}
+	}
 	a = rank_line(M);
 	if (f_v) {
 		cout << "projective_space::line_of_intersection_of_"
 				"two_planes_in_three_space done" << endl;
-		}
+	}
 	return a;
 }
 
@@ -3288,13 +3296,13 @@ long int projective_space::line_of_intersection_of_two_planes_in_three_space_usi
 	if (f_v) {
 		cout << "projective_space::line_of_intersection_of_"
 				"two_planes_in_three_space_using_dual_coordinates" << endl;
-		}
+	}
 	if (n != 3) {
 		cout << "projective_space::line_of_intersection_of_"
 				"two_planes_in_three_space_using_dual_coordinates "
 				"n != 3" << endl;
 		exit(1);
-		}
+	}
 
 	unrank_point(Plane1, plane1);
 	unrank_point(Plane2, plane2);
@@ -3318,13 +3326,13 @@ long int projective_space::transversal_to_two_skew_lines_through_a_point(
 	if (f_v) {
 		cout << "projective_space::transversal_to_two_skew_lines_"
 				"through_a_point" << endl;
-		}
+	}
 	if (n != 3) {
 		cout << "projective_space::transversal_to_two_skew_lines_"
 				"through_a_point "
 				"n != 3" << endl;
 		exit(1);
-		}
+	}
 	unrank_line(Basis1, line1);
 	unrank_point(Basis1 + 8, pt);
 	unrank_line(Basis2, line2);
@@ -3339,7 +3347,7 @@ long int projective_space::transversal_to_two_skew_lines_through_a_point(
 		cout << "projective_space::transversal_to_two_skew_lines_"
 				"through_a_point "
 				"done" << endl;
-		}
+	}
 	return a;
 }
 
@@ -3355,7 +3363,7 @@ void projective_space::plane_intersection_matrix_in_three_space(
 	if (f_v) {
 		cout << "projective_space::plane_intersection_matrix_"
 				"in_three_space" << endl;
-		}
+	}
 	Intersection_matrix = NEW_int(nb_planes * nb_planes);
 	for (i = 0; i < nb_planes; i++) {
 		a = Planes[i];
@@ -3366,16 +3374,16 @@ void projective_space::plane_intersection_matrix_in_three_space(
 					a, b, 0 /* verbose_level */);
 			Intersection_matrix[i * nb_planes + j] = rk;
 			Intersection_matrix[j * nb_planes + i] = rk;
-			}
 		}
+	}
 	for (i = 0; i < nb_planes; i++) {
 		Intersection_matrix[i * nb_planes + i] = -1;
-		}
+	}
 
 	if (f_v) {
 		cout << "projective_space::plane_intersection_matrix_"
 				"in_three_space done" << endl;
-		}
+	}
 }
 
 int projective_space::dual_rank_of_plane_in_three_space(
@@ -3388,19 +3396,19 @@ int projective_space::dual_rank_of_plane_in_three_space(
 	if (f_v) {
 		cout << "projective_space::dual_rank_of_plane_"
 				"in_three_space" << endl;
-		}
+	}
 	unrank_plane(Basis, plane_rank);
 	rk = F->RREF_and_kernel(4, 3, Basis, 0 /* verbose_level*/);
 	if (rk != 3) {
 		cout << "projective_space::dual_rank_of_plane_"
 				"in_three_space rk != 3" << endl;
 		exit(1);
-		}
+	}
 	dual_rk = rank_point(Basis + 3 * 4);
 	if (f_v) {
 		cout << "projective_space::dual_rank_of_plane_"
 				"in_three_space done" << endl;
-		}
+	}
 	return dual_rk;
 }
 
@@ -3414,20 +3422,20 @@ void projective_space::plane_equation_from_three_lines_in_three_space(
 	if (f_v) {
 		cout << "projective_space::plane_equation_from_three_"
 				"lines_in_three_space" << endl;
-		}
+	}
 	unrank_lines(Basis, three_lines, 3);
 	rk = F->RREF_and_kernel(4, 6, Basis, 0 /* verbose_level*/);
 	if (rk != 3) {
 		cout << "projective_space::plane_equation_from_three_"
 				"lines_in_three_space rk != 3" << endl;
 		exit(1);
-		}
+	}
 	int_vec_copy(Basis + 3 * 4, plane_eqn4, 4);
 
 	if (f_v) {
 		cout << "projective_space::plane_equation_from_three_"
 				"lines_in_three_space done" << endl;
-		}
+	}
 }
 
 void projective_space::decomposition(
@@ -3444,25 +3452,25 @@ void projective_space::decomposition(
 
 	if (f_v) {
 		cout << "projective_space::decomposition" << endl;
-		}
+	}
 	nb_pts = N_points;
 	nb_lines = N_lines;
 	if (f_v) {
 		cout << "m = N_points = " << nb_pts << endl;
 		cout << "n = N_lines = " << nb_lines << endl;
-		}
+	}
 	part = NEW_int(nb_subsets);
 	Mtx = NEW_int(nb_pts * nb_lines);
 	if (incidence_bitvec == NULL) {
 		cout << "projective_space::decomposition "
 				"incidence_bitvec == NULL" << endl;
 		exit(1);
-		}
+	}
 	for (i = 0; i < nb_pts; i++) {
 		for (j = 0; j < nb_lines; j++) {
 			Mtx[i * nb_lines + j] = is_incident(i, j);
-			}
 		}
+	}
 	Inc = NEW_OBJECT(incidence_structure);
 	Inc->init_by_matrix(nb_pts, nb_lines, Mtx, verbose_level - 2);
 
@@ -3489,14 +3497,14 @@ void projective_space::decomposition(
 			if (sz[level] < l) {
 				Stack->split_cell(subsets[level], sz[level], 0);
 				part[level] = Stack->ht - 1;
-				}
+			}
 			else {
 				part[level] = c;
-				}
 			}
+		}
 		else {
 			part[level] = -1;
-			}
+		}
 
 
 		if (f_v) {
@@ -3506,8 +3514,8 @@ void projective_space::decomposition(
 			cout << "i : part[i]" << endl;
 			for (i = 0; i < nb_subsets; i++) {
 				cout << setw(3) << i << " : " << setw(3) << part[i] << endl;
-				}
 			}
+		}
 
 
 #if 0
@@ -3522,30 +3530,30 @@ void projective_space::decomposition(
 		if (f_vv) {
 			cout << "projective_space::decomposition "
 					"before compute_TDO" << endl;
-			}
+		}
 		hash = Inc->compute_TDO(*Stack, ht0, TDO_depth, verbose_level + 2);
 		if (f_vv) {
 			cout << "projective_space::decomposition "
 					"after compute_TDO" << endl;
-			}
+		}
 
 		if (FALSE) {
 			Inc->print_partitioned(cout, *Stack, f_labeled);
-			}
+		}
 		if (f_v) {
 			Inc->get_and_print_decomposition_schemes(*Stack);
 			Stack->print_classes(cout);
-			}
+		}
 #endif
 
-		}
+	}
 
 
 	FREE_int(part);
 	FREE_int(Mtx);
 	if (f_v) {
 		cout << "projective_space::decomposition done" << endl;
-		}
+	}
 }
 
 void projective_space::arc_lifting_diophant(
@@ -3564,7 +3572,7 @@ void projective_space::arc_lifting_diophant(
 
 	if (f_v) {
 		cout << "projective_space::arc_lifting_diophant" << endl;
-		}
+	}
 
 	free_points = NEW_lint(N_points);
 
@@ -3580,14 +3588,14 @@ void projective_space::arc_lifting_diophant(
 		cout << "line_type: ";
 		int_vec_print_fully(cout, line_type, N_lines);
 		cout << endl;
-		}
+	}
 
 	if (f_vv) {
 		cout << "line type:" << endl;
 		for (i = 0; i < N_lines; i++) {
 			cout << i << " : " << line_type[i] << endl;
-			}
 		}
+	}
 
 	tally C;
 	C.init(line_type, N_lines, FALSE, 0);
@@ -3596,7 +3604,7 @@ void projective_space::arc_lifting_diophant(
 		C.print_naked(TRUE);
 		cout << endl;
 		cout << "nb_free_points=" << nb_free_points << endl;
-		}
+	}
 
 
 	D = NEW_OBJECT(diophant);
@@ -3605,7 +3613,7 @@ void projective_space::arc_lifting_diophant(
 	for (j = 0; j < nb_free_points; j++) {
 		D->x_min[j] = 0;
 		D->x_max[j] = 1;
-		}
+	}
 	D->f_has_sum = TRUE;
 	D->sum = target_sz - arc_sz;
 	h = 0;
@@ -3614,31 +3622,31 @@ void projective_space::arc_lifting_diophant(
 			cout << "projective_space::arc_lifting_diophant "
 					"line_type[i] > k" << endl;
 			exit(1);
-			}
+		}
 	#if 0
 		if (line_type[i] < k - 1) {
 			continue;
-			}
+		}
 	#endif
 		for (j = 0; j < nb_free_points; j++) {
 			pt = free_points[j];
 			if (is_incident(pt, i /* line */)) {
 				D->Aij(h, j) = 1;
-				}
+			}
 			else {
 				D->Aij(h, j) = 0;
-				}
 			}
+		}
 		D->type[h] = t_LE;
 		D->RHSi(h) = target_d - line_type[i];
 		h++;
-		}
+	}
 
 
 	// add one extra row:
 	for (j = 0; j < nb_free_points; j++) {
 		D->Aij(h, j) = 1;
-		}
+	}
 	D->type[h] = t_EQ;
 	D->RHSi(h) = target_sz - arc_sz;
 	h++;
@@ -3651,7 +3659,7 @@ void projective_space::arc_lifting_diophant(
 		cout << "projective_space::arc_lifting_diophant "
 				"The system is:" << endl;
 		D->print_tight();
-		}
+	}
 
 #if 0
 	if (f_save_system) {
@@ -3662,7 +3670,7 @@ void projective_space::arc_lifting_diophant(
 				"to file " << fname_system << " done" << endl;
 		D->print();
 		D->print_tight();
-		}
+	}
 #endif
 
 	FREE_int(line_type);
@@ -3670,7 +3678,7 @@ void projective_space::arc_lifting_diophant(
 
 	if (f_v) {
 		cout << "projective_space::arc_lifting_diophant done" << endl;
-		}
+	}
 
 }
 
@@ -3690,7 +3698,7 @@ void projective_space::arc_with_given_set_of_s_lines_diophant(
 
 	if (f_v) {
 		cout << "projective_space::arc_with_given_set_of_s_lines_diophant" << endl;
-		}
+	}
 
 	other_lines = NEW_lint(N_points);
 
@@ -3713,7 +3721,7 @@ void projective_space::arc_with_given_set_of_s_lines_diophant(
 	for (j = 0; j < N_points; j++) {
 		D->x_min[j] = 0;
 		D->x_max[j] = 1;
-		}
+	}
 	D->f_has_sum = TRUE;
 	D->sum = target_sz;
 	h = 0;
@@ -3727,16 +3735,16 @@ void projective_space::arc_with_given_set_of_s_lines_diophant(
 		for (j = 0; j < N_points; j++) {
 			if (is_incident(j, line)) {
 				a = 1;
-				}
+			}
 			else {
 				a = 0;
-				}
-			D->Aij(h, j) = a;
 			}
+			D->Aij(h, j) = a;
+		}
 		D->type[h] = t_EQ;
 		D->RHSi(h) = arc_s;
 		h++;
-		}
+	}
 	for (i = 0; i < nb_other_lines; i++) {
 		if (f_dualize) {
 			line = Polarity_point_to_hyperplane[other_lines[i]];
@@ -3747,25 +3755,25 @@ void projective_space::arc_with_given_set_of_s_lines_diophant(
 		for (j = 0; j < N_points; j++) {
 			if (is_incident(j, line)) {
 				a = 1;
-				}
+			}
 			else {
 				a = 0;
-				}
-			D->Aij(h, j) = a;
 			}
+			D->Aij(h, j) = a;
+		}
 		D->type[h] = t_INT;
 		D->RHSi(h) = arc_d;
 		D->RHS_low_i(h) = arc_d_low;
 		//D->type[h] = t_LE;
 		//D->RHSi(h) = arc_d;
 		h++;
-		}
+	}
 
 
 	// add one extra row:
 	for (j = 0; j < N_points; j++) {
 		D->Aij(h, j) = 1;
-		}
+	}
 	D->type[h] = t_EQ;
 	D->RHSi(h) = target_sz;
 	h++;
@@ -3778,7 +3786,7 @@ void projective_space::arc_with_given_set_of_s_lines_diophant(
 		cout << "projective_space::arc_with_given_set_of_s_lines_diophant "
 				"The system is:" << endl;
 		D->print_tight();
-		}
+	}
 
 #if 0
 	if (f_save_system) {
@@ -3796,7 +3804,7 @@ void projective_space::arc_with_given_set_of_s_lines_diophant(
 
 	if (f_v) {
 		cout << "projective_space::arc_with_given_set_of_s_lines_diophant done" << endl;
-		}
+	}
 
 }
 
@@ -3819,7 +3827,7 @@ void projective_space::arc_with_two_given_line_sets_diophant(
 
 	if (f_v) {
 		cout << "projective_space::arc_with_two_given_line_sets_diophant" << endl;
-		}
+	}
 
 	other_lines = NEW_lint(N_points);
 
@@ -3846,7 +3854,7 @@ void projective_space::arc_with_two_given_line_sets_diophant(
 	for (j = 0; j < N_points; j++) {
 		D->x_min[j] = 0;
 		D->x_max[j] = 1;
-		}
+	}
 	D->f_has_sum = TRUE;
 	D->sum = target_sz;
 	h = 0;
@@ -3860,16 +3868,16 @@ void projective_space::arc_with_two_given_line_sets_diophant(
 		for (j = 0; j < N_points; j++) {
 			if (is_incident(j, line)) {
 				a = 1;
-				}
+			}
 			else {
 				a = 0;
-				}
-			D->Aij(h, j) = a;
 			}
+			D->Aij(h, j) = a;
+		}
 		D->type[h] = t_EQ;
 		D->RHSi(h) = arc_s;
 		h++;
-		}
+	}
 	for (i = 0; i < nb_t_lines; i++) {
 		if (f_dualize) {
 			line = Polarity_point_to_hyperplane[t_lines[i]];
@@ -3880,16 +3888,16 @@ void projective_space::arc_with_two_given_line_sets_diophant(
 		for (j = 0; j < N_points; j++) {
 			if (is_incident(j, line)) {
 				a = 1;
-				}
+			}
 			else {
 				a = 0;
-				}
-			D->Aij(h, j) = a;
 			}
+			D->Aij(h, j) = a;
+		}
 		D->type[h] = t_EQ;
 		D->RHSi(h) = arc_t;
 		h++;
-		}
+	}
 	for (i = 0; i < nb_other_lines; i++) {
 		int l;
 
@@ -3903,25 +3911,25 @@ void projective_space::arc_with_two_given_line_sets_diophant(
 		for (j = 0; j < N_points; j++) {
 			if (is_incident(j, line)) {
 				a = 1;
-				}
+			}
 			else {
 				a = 0;
-				}
-			D->Aij(h, j) = a;
 			}
+			D->Aij(h, j) = a;
+		}
 		D->type[h] = t_INT;
 		D->RHSi(h) = arc_d;
 		D->RHS_low_i(h) = arc_d_low;
 		//D->type[h] = t_LE;
 		//D->RHSi(h) = arc_d;
 		h++;
-		}
+	}
 
 
 	// add one extra row:
 	for (j = 0; j < N_points; j++) {
 		D->Aij(h, j) = 1;
-		}
+	}
 	D->type[h] = t_EQ;
 	D->RHSi(h) = target_sz;
 	h++;
@@ -3934,7 +3942,7 @@ void projective_space::arc_with_two_given_line_sets_diophant(
 		cout << "projective_space::arc_with_two_given_line_sets_diophant "
 				"The system is:" << endl;
 		D->print_tight();
-		}
+	}
 
 #if 0
 	if (f_save_system) {
@@ -3945,14 +3953,14 @@ void projective_space::arc_with_two_given_line_sets_diophant(
 				"to file " << fname_system << " done" << endl;
 		D->print();
 		D->print_tight();
-		}
+	}
 #endif
 
 	FREE_lint(other_lines);
 
 	if (f_v) {
 		cout << "projective_space::arc_with_two_given_line_sets_diophant done" << endl;
-		}
+	}
 
 }
 
@@ -3975,7 +3983,7 @@ void projective_space::arc_with_three_given_line_sets_diophant(
 
 	if (f_v) {
 		cout << "projective_space::arc_with_three_given_line_sets_diophant" << endl;
-		}
+	}
 
 	other_lines = NEW_lint(N_points);
 
@@ -4003,7 +4011,7 @@ void projective_space::arc_with_three_given_line_sets_diophant(
 	for (j = 0; j < N_points; j++) {
 		D->x_min[j] = 0;
 		D->x_max[j] = 1;
-		}
+	}
 	D->f_has_sum = TRUE;
 	D->sum = target_sz;
 	h = 0;
@@ -4017,16 +4025,16 @@ void projective_space::arc_with_three_given_line_sets_diophant(
 		for (j = 0; j < N_points; j++) {
 			if (is_incident(j, line)) {
 				a = 1;
-				}
+			}
 			else {
 				a = 0;
-				}
-			D->Aij(h, j) = a;
 			}
+			D->Aij(h, j) = a;
+		}
 		D->type[h] = t_EQ;
 		D->RHSi(h) = arc_s;
 		h++;
-		}
+	}
 	for (i = 0; i < nb_t_lines; i++) {
 		if (f_dualize) {
 			line = Polarity_point_to_hyperplane[t_lines[i]];
@@ -4037,16 +4045,16 @@ void projective_space::arc_with_three_given_line_sets_diophant(
 		for (j = 0; j < N_points; j++) {
 			if (is_incident(j, line)) {
 				a = 1;
-				}
+			}
 			else {
 				a = 0;
-				}
-			D->Aij(h, j) = a;
 			}
+			D->Aij(h, j) = a;
+		}
 		D->type[h] = t_EQ;
 		D->RHSi(h) = arc_t;
 		h++;
-		}
+	}
 	for (i = 0; i < nb_u_lines; i++) {
 		if (f_dualize) {
 			line = Polarity_point_to_hyperplane[u_lines[i]];
@@ -4057,16 +4065,16 @@ void projective_space::arc_with_three_given_line_sets_diophant(
 		for (j = 0; j < N_points; j++) {
 			if (is_incident(j, line)) {
 				a = 1;
-				}
+			}
 			else {
 				a = 0;
-				}
-			D->Aij(h, j) = a;
 			}
+			D->Aij(h, j) = a;
+		}
 		D->type[h] = t_EQ;
 		D->RHSi(h) = arc_u;
 		h++;
-		}
+	}
 	for (i = 0; i < nb_other_lines; i++) {
 		int l;
 
@@ -4080,23 +4088,23 @@ void projective_space::arc_with_three_given_line_sets_diophant(
 		for (j = 0; j < N_points; j++) {
 			if (is_incident(j, line)) {
 				a = 1;
-				}
+			}
 			else {
 				a = 0;
-				}
-			D->Aij(h, j) = a;
 			}
+			D->Aij(h, j) = a;
+		}
 		D->type[h] = t_INT;
 		D->RHSi(h) = arc_d;
 		D->RHS_low_i(h) = arc_d_low;
 		h++;
-		}
+	}
 
 
 	// add one extra row:
 	for (j = 0; j < N_points; j++) {
 		D->Aij(h, j) = 1;
-		}
+	}
 	D->type[h] = t_EQ;
 	D->RHSi(h) = target_sz;
 	h++;
@@ -4109,7 +4117,7 @@ void projective_space::arc_with_three_given_line_sets_diophant(
 		cout << "projective_space::arc_with_three_given_line_sets_diophant "
 				"The system is:" << endl;
 		D->print_tight();
-		}
+	}
 
 #if 0
 	if (f_save_system) {
@@ -4120,14 +4128,14 @@ void projective_space::arc_with_three_given_line_sets_diophant(
 				"to file " << fname_system << " done" << endl;
 		D->print();
 		D->print_tight();
-		}
+	}
 #endif
 
 	FREE_lint(other_lines);
 
 	if (f_v) {
 		cout << "projective_space::arc_with_three_given_line_sets_diophant done" << endl;
-		}
+	}
 
 }
 

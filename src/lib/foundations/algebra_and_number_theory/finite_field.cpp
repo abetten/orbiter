@@ -41,7 +41,7 @@ void finite_field::null()
 	v2 = NULL;
 	v3 = NULL;
 	//override_poly = NULL;
-	symbol_for_print = NULL;
+	//symbol_for_print = NULL;
 	f_is_prime_field = FALSE;
 	f_has_quadratic_subfield = FALSE;
 	f_belongs_to_quadratic_subfield = NULL;
@@ -100,9 +100,11 @@ finite_field::~finite_field()
 	if (v3) {
 		FREE_int(v3);
 	}
+#if 0
 	if (symbol_for_print) {
 		FREE_char(symbol_for_print);
 	}
+#endif
 	if (f_belongs_to_quadratic_subfield) {
 		FREE_int(f_belongs_to_quadratic_subfield);
 	}
@@ -190,12 +192,16 @@ void finite_field::set_default_symbol_for_print()
 
 void finite_field::init_symbol_for_print(const char *symbol)
 {
+#if 0
 	if (symbol_for_print) {
 		FREE_char(symbol_for_print);
 		symbol_for_print = NULL;
 	}
 	symbol_for_print = NEW_char(strlen(symbol) + 1);
 	strcpy(symbol_for_print, symbol);
+#else
+	symbol_for_print.assign(symbol);
+#endif
 }
 
 void finite_field::init_override_polynomial(int q,

@@ -224,6 +224,7 @@ public:
 		// v is a vector over $\{0, 1, \ldots , q-1\}$
 	int int_vec_first_regular_word(int *v, int len, int q);
 	int int_vec_next_regular_word(int *v, int len, int q);
+	void int_vec_splice(int *v, int *w, int len, int p);
 	int is_subset_of(int *A, int sz_A, int *B, int sz_B);
 	int set_find(int *elts, int size, int a);
 	void set_complement(int *subset, int subset_size, int *complement,
@@ -358,13 +359,6 @@ public:
 	void krawtchouk_with_table(longinteger_object &a,
 		int n, int q, int k, int x);
 	void krawtchouk(longinteger_object &a, int n, int q, int k, int x);
-	void make_mac_williams_equations(longinteger_object *&M,
-			int n, int k, int q, int verbose_level);
-	int singleton_bound_for_d(int n, int k, int q, int verbose_level);
-	int hamming_bound_for_d(int n, int k, int q, int verbose_level);
-	int plotkin_bound_for_d(int n, int k, int q, int verbose_level);
-	int griesmer_bound_for_d(int n, int k, int q, int verbose_level);
-	int griesmer_bound_for_n(int k, int d, int q, int verbose_level);
 };
 
 // combinatorics.cpp:

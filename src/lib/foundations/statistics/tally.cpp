@@ -488,7 +488,29 @@ void tally::print_array_tex(ostream &ost, int f_backwards)
 			ost << "\\end{array}" << endl;
 			ost << "\\\\" << endl;
 			ost << "\\hline" << endl;
+		}
+	}
+	else {
+		for (i = 0; i < nb_types; i++) {
+			f = type_first[i];
+			l = type_len[i];
+			a = data_sorted[f];
+			ost << "\\hline" << endl;
+			ost << a << " & " << l << " & ";
+			ost << "\\begin{array}{l}" << endl;
+			for (j = 0; j < l; j++) {
+				ost << sorting_perm_inv[f + j];
+				if (j < l - 1) {
+					ost << ", ";
+				}
+				if (((j + 1) % 10) == 0) {
+					ost << "\\\\" << endl;
+				}
 			}
+			ost << "\\end{array}" << endl;
+			ost << "\\\\" << endl;
+			ost << "\\hline" << endl;
+		}
 	}
 	ost << "\\end{array}" << endl;
 }

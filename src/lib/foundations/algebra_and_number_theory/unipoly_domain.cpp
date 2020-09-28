@@ -888,7 +888,7 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 	create_object_by_rank(Q, 0, __FILE__, __LINE__, verbose_level);
 	create_object_by_rank(R, 0, __FILE__, __LINE__, verbose_level);
 	
-	assign(factor_polynomial, m_mod, verbose_level);
+	assign(factor_polynomial, m_mod, 0 /*verbose_level */);
 	negate(m_mod);
 	if (f_v) {
 		cout << "unipoly_domain::Frobenius_matrix m_mod = ";
@@ -899,7 +899,7 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 	if (f_v) {
 		cout << "unipoly_domain::Frobenius_matrix before power_int" << endl;
 	}
-	power_int(a, F->q, verbose_level - 1);
+	power_int(a, F->q, verbose_level - 10);
 	if (f_v) {
 		cout << "unipoly_domain::Frobenius_matrix after power_int" << endl;
 		cout << "unipoly_domain::Frobenius_matrix a = x^q = ";
@@ -911,11 +911,11 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 	}
 	division_with_remainder(a,
 			factor_polynomial,
-			Q, R, verbose_level - 1);
+			Q, R, verbose_level - 10);
 	if (f_v) {
 		cout << "unipoly_domain::Frobenius_matrix after division_with_remainder" << endl;
 	}
-	assign(R, a, verbose_level);
+	assign(R, a, 0 /*verbose_level */);
 	if (f_vv) {
 		cout << "unipoly_domain::Frobenius_matrix "
 				"a = x^q mod m = ";
@@ -939,7 +939,7 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 			print_object(c, cout);
 			cout << endl;
 		}
-		assign(c, b, verbose_level);
+		assign(c, b, 0 /*verbose_level */);
 		// now b = x^{j*q}
 		if (f_vv) {
 			cout << "unipoly_domain::Frobenius_matrix x^{" << j << "*q}=";
@@ -1171,12 +1171,27 @@ void unipoly_domain::greatest_common_divisor(
 		print_object(n, cout);
 		cout << endl;
 	}
+	if (f_v) {
+		cout << "unipoly::greatest_common_divisor before compare_euclidean" << endl;
+	}
 	c = compare_euclidean(m, n);
+	if (f_v) {
+		cout << "unipoly::greatest_common_divisor compare_euclidean returns " << c << endl;
+	}
 	if (c < 0) {
 		return greatest_common_divisor(n, m, g, verbose_level);
 	}
-	if (c == 0 || is_zero(n)) {
-		assign(m, g, verbose_level);
+	if (c == 0 && is_zero(n)) {
+		assign(m, g, 0 /*verbose_level*/);
+		if (f_v) {
+			cout << "unipoly::greatest_common_divisor of m=";
+			print_object(m, cout);
+			cout << " n=";
+			print_object(n, cout);
+			cout << " is ";
+			print_object(g, cout);
+			cout << endl;
+		}
 		return;
 	}
 
@@ -1187,8 +1202,8 @@ void unipoly_domain::greatest_common_divisor(
 	create_object_by_rank(Q, 0, __FILE__, __LINE__, verbose_level);
 	create_object_by_rank(R, 0, __FILE__, __LINE__, verbose_level);
 
-	assign(m, M, verbose_level);
-	assign(n, N, verbose_level);
+	assign(m, M, 0 /*verbose_level*/);
+	assign(n, N, 0 /*verbose_level*/);
 
 	while (TRUE) {
 		if (f_vv) {
@@ -1212,10 +1227,10 @@ void unipoly_domain::greatest_common_divisor(
 		
 		negate(Q);
 
-		assign(N, M, verbose_level);
-		assign(R, N, verbose_level);
+		assign(N, M, 0 /*verbose_level*/);
+		assign(R, N, 0 /*verbose_level*/);
 	}
-	assign(N, g, verbose_level);
+	assign(N, g, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "unipoly::greatest_common_divisor g=";
 		print_object(g, cout);
@@ -1226,6 +1241,17 @@ void unipoly_domain::greatest_common_divisor(
 	delete_object(N);
 	delete_object(Q);
 	delete_object(R);
+
+	if (f_v) {
+		cout << "unipoly::greatest_common_divisor of m=";
+		print_object(m, cout);
+		cout << " n=";
+		print_object(n, cout);
+		cout << " is ";
+		print_object(g, cout);
+		cout << endl;
+	}
+
 }
 
 void unipoly_domain::extended_gcd(
@@ -1247,8 +1273,8 @@ void unipoly_domain::extended_gcd(
 	if (c < 0) {
 		return extended_gcd(n, m, v, u, g, verbose_level);
 	}
-	assign(m, u, verbose_level);
-	assign(n, v, verbose_level);
+	assign(m, u, 0 /*verbose_level*/);
+	assign(n, v, 0 /*verbose_level*/);
 	if (c == 0 || is_zero(n)) {
 		one(u);
 		zero(v);
@@ -1271,8 +1297,8 @@ void unipoly_domain::extended_gcd(
 	create_object_by_rank(v3, 0, __FILE__, __LINE__, verbose_level);
 	create_object_by_rank(tmp, 0, __FILE__, __LINE__, verbose_level);
 	
-	assign(m, M, verbose_level);
-	assign(n, N, verbose_level);
+	assign(m, M, 0 /*verbose_level*/);
+	assign(n, N, 0 /*verbose_level*/);
 
 	while (TRUE) {
 		if (f_v) {
@@ -1304,16 +1330,16 @@ void unipoly_domain::extended_gcd(
 		mult(Q, v2, tmp, verbose_level - 1);
 		add(v1, tmp, v3);
 		
-		assign(N, M, verbose_level);
-		assign(R, N, verbose_level);
-		assign(u2, u1, verbose_level);
-		assign(u3, u2, verbose_level);
-		assign(v2, v1, verbose_level);
-		assign(v3, v2, verbose_level);
+		assign(N, M, 0 /*verbose_level*/);
+		assign(R, N, 0 /*verbose_level*/);
+		assign(u2, u1, 0 /*verbose_level*/);
+		assign(u3, u2, 0 /*verbose_level*/);
+		assign(v2, v1, 0 /*verbose_level*/);
+		assign(v3, v2, 0 /*verbose_level*/);
 	}
-	assign(u2, u, verbose_level);
-	assign(v2, v, verbose_level);
-	assign(N, g, verbose_level);
+	assign(u2, u, 0 /*verbose_level*/);
+	assign(v2, v, 0 /*verbose_level*/);
+	assign(N, g, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "g=";
 		print_object(g, cout);
@@ -1335,7 +1361,9 @@ void unipoly_domain::extended_gcd(
 	delete_object(v2);
 	delete_object(v3);
 	delete_object(tmp);
-
+	if (f_v) {
+		cout << "unipoly::extended_gcd done" << endl;
+	}
 }
 
 int unipoly_domain::is_squarefree(unipoly_object p, int verbose_level)
@@ -1344,13 +1372,16 @@ int unipoly_domain::is_squarefree(unipoly_object p, int verbose_level)
 	unipoly_object a, b, u, v, g;
 	int d;
 	
+	if (f_v) {
+		cout << "unipoly::is_squarefree" << endl;
+	}
 	create_object_by_rank(a, 0, __FILE__, __LINE__, verbose_level);
 	create_object_by_rank(b, 0, __FILE__, __LINE__, verbose_level);
 	create_object_by_rank(u, 0, __FILE__, __LINE__, verbose_level);
 	create_object_by_rank(v, 0, __FILE__, __LINE__, verbose_level);
 	create_object_by_rank(g, 0, __FILE__, __LINE__, verbose_level);
 	
-	assign(p, a, verbose_level);
+	assign(p, a, 0 /*verbose_level*/);
 	derivative(a, b);
 	if (f_v) {
 		cout << "unipoly::is_squarefree derivative p' = ";
@@ -1371,6 +1402,9 @@ int unipoly_domain::is_squarefree(unipoly_object p, int verbose_level)
 	delete_object(v);
 	delete_object(g);
 	
+	if (f_v) {
+		cout << "unipoly::is_squarefree done" << endl;
+	}
 	if (d >= 1) {
 		return FALSE;
 	}
@@ -1410,9 +1444,9 @@ void unipoly_domain::compute_normal_basis(int d,
 	i = 0;
 	order_ideal_generator(d, i, mue, 
 		A, Frobenius, 
-		verbose_level - 2);
+		verbose_level - 10);
 	
-	if (f_vv) {
+	if (f_v) {
 		cout << "unipoly_domain::compute_normal_basis "
 			"Ideal(e_" << i << ") = (";
 		print_object(mue, cout);
@@ -1440,7 +1474,7 @@ void unipoly_domain::compute_normal_basis(int d,
 		}
 		order_ideal_generator(d, i, lambda, 
 			A, Frobenius, 
-			verbose_level - 2);
+			verbose_level - 10);
 		if (f_vv) {
 			cout << "unipoly_domain::compute_normal_basis "
 					"Ideal(e_" << i << ") = ( lambda ),  "
@@ -1461,7 +1495,7 @@ void unipoly_domain::compute_normal_basis(int d,
 			cout << "unipoly_domain::compute_normal_basis "
 				"computing greatest_common_divisor(mue, lambda):" << endl;
 		}
-		greatest_common_divisor(mue, lambda, GCD, verbose_level - 2);
+		greatest_common_divisor(mue, lambda, GCD, verbose_level);
 	
 		if (f_vv) {
 			cout << "unipoly_domain::compute_normal_basis "
@@ -1510,7 +1544,7 @@ void unipoly_domain::compute_normal_basis(int d,
 						"before module_structure_apply" << endl;
 			}
 			module_structure_apply(v,
-					Frobenius, deg, Q, verbose_level - 2);
+					Frobenius, deg, Q, verbose_level - 10);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
 						"after module_structure_apply" << endl;
@@ -1572,7 +1606,7 @@ void unipoly_domain::compute_normal_basis(int d,
 						"before module_structure_apply" << endl;
 			}
 			module_structure_apply(b,
-					Frobenius, deg, Q, verbose_level - 2);
+					Frobenius, deg, Q, verbose_level - 10);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
 						"after module_structure_apply" << endl;
@@ -1588,7 +1622,7 @@ void unipoly_domain::compute_normal_basis(int d,
 			// Orderideal(v) = Ideal(R * R2), 
 			// greatest_common_divisor(R, R2) = 1
 			
-			mult(R, R2, mue, verbose_level - 1);
+			mult(R, R2, mue, verbose_level - 10);
 		} // if
 		if (f_v) {
 			cout << "unipoly_domain::compute_normal_basis "
@@ -1610,7 +1644,7 @@ void unipoly_domain::compute_normal_basis(int d,
 			"before span_cyclic_module" << endl;
 	}
 	F->span_cyclic_module(Normal_basis,
-			v, deg, Frobenius, verbose_level);
+			v, deg, Frobenius, verbose_level - 10);
 	if (f_vv) {
 		cout << "unipoly_domain::compute_normal_basis "
 			"after span_cyclic_module" << endl;
@@ -2895,314 +2929,6 @@ void unipoly_domain::minimum_polynomial_factorring_longinteger(
 	delete_object(c);
 	delete_object(d);
 	rk.assign_to(rk_minpoly);
-}
-
-void unipoly_domain::BCH_generator_polynomial(
-	unipoly_object &g, int n,
-	int designed_distance, int &bose_distance, 
-	int &transversal_length, int *&transversal, 
-	longinteger_object *&rank_of_irreducibles, 
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
-	int p = F->q;
-	int e, i, j, r;
-	longinteger_object q, b, m1, qm1;
-	longinteger_domain D;
-	number_theory_domain NT;
-	
-	if (f_v) {
-		cout << "unipoly_domain::BCH_generator_polynomial "
-				"n=" << n << " designed_distance="
-				<< designed_distance << " p=" << p << endl;
-	}
-	e = NT.order_mod_p(p, n);
-	q.create(p, __FILE__, __LINE__);
-	m1.create(-1, __FILE__, __LINE__);
-	D.power_int(q, e);
-	D.add(q, m1, qm1);
-	// q = i_power_j(p, e);
-	// GF(q)=GF(p^e) has n-th roots of unity
-	D.integral_division_by_int(qm1, n, b, r);
-	//b = (q - 1) / n;
-	if (r != 0) {
-		cout << "unipoly_domain::BCH_generator_polynomial "
-				"r != 0" << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "GF(" << q << ") = GF(" << p << "^" << e
-				<< ") has " << n << "-th roots of unity" << endl;
-		if (b.is_one()) {
-			cout << "this is a primitive BCH code" << endl;
-		}
-		else {
-			cout << "we take as " << n 
-			<< "-th root \\beta = \\alpha^" << b << ", where "
-				"\\alpha is a primitive element of the field" << endl;
-		}
-	}
-
-	algebra_global Algebra;
-	unipoly_object m, M, h1, h2;
-		
-	create_object_by_rank_string(m,
-			Algebra.get_primitive_polynomial(p, e, 0), verbose_level - 2);
-
-	create_object_by_rank_string(M,
-			Algebra.get_primitive_polynomial(p, e, 0), verbose_level - 2);
-
-	create_object_by_rank(g, 1, __FILE__, __LINE__, verbose_level);
-	create_object_by_rank(h1, 0, __FILE__, __LINE__, verbose_level);
-	create_object_by_rank(h2, 0, __FILE__, __LINE__, verbose_level);
-	
-	if (f_vv) {
-		cout << "choosing the following irreducible "
-				"and primitive polynomial:" << endl;
-		print_object(m, cout); cout << endl;
-	}
-
-	unipoly_domain Fq(F, M, verbose_level - 1);
-	unipoly_object beta, beta_i, c;
-	if (f_vvv) {
-		cout << "extension field created" << endl;
-	}
-	Fq.create_object_by_rank(c, 0, __FILE__, __LINE__, verbose_level);
-	Fq.create_object_by_rank(beta, p, __FILE__, __LINE__, verbose_level); // the primitive element alpha
-	Fq.create_object_by_rank(beta_i, 1, __FILE__, __LINE__, verbose_level);
-	if (!b.is_one()) {
-		//Fq.power_int(beta, b, 0 /* verbose_level */);
-		if (f_vvv) {
-			cout << "\\alpha = ";
-			Fq.print_object(beta, cout);
-			cout << endl;
-		}
-		Fq.power_longinteger(beta, b, verbose_level - 1);
-#if 0
-		if (b.as_int() == 11) {
-			for (i = 1; i <= b.as_int(); i++) {
-				Fq.create_object_by_rank(beta, p); // the element alpha
-				Fq.power_int(beta, i, 0 /* verbose_level */);
-				cout << "\\alpha^" << i << " = ";
-				Fq.print_object(beta, cout);
-				cout << endl;
-			}
-		}
-#endif
-		if (f_vvv) {
-			cout << "\\beta = \\alpha^" << b << " = ";
-			Fq.print_object(beta, cout);
-			cout << endl;
-		}
-	}
-	else {
-		if (f_vvv) {
-			cout << "this is a primitive BCH code" << endl;
-		}
-	}
-	
-	// now beta is a primitive n-th root of unity
-
-#if 0
-	if (1 + designed_distance - 2 >= q - 1) {
-		cout << "unipoly_domain::BCH_generator_polynomial "
-				"1 + designed_distance - 2 >= q - 1" << endl;
-		exit(1);
-	}
-#endif
-
-	longinteger_object *beta_rk_table =
-			NEW_OBJECTS(longinteger_object, n);
-	longinteger_object ai, bi;
-
-
-	for (i = 0; i < n; i++) {
-		Fq.rank_longinteger(beta_i, beta_rk_table[i]);
-		
-		if (f_vvv) {
-			cout << "\\beta^" << i << " = ";
-			Fq.print_object(beta_i, cout);
-			cout << " = " << beta_rk_table[i] << endl;
-		}
-		Fq.mult(beta, beta_i, c, verbose_level - 1);
-		Fq.assign(c, beta_i, verbose_level);
-	}
-	if (f_vvv) {
-		for (i = 0; i < n; i++) {
-			cout << "\\beta^" << i << " = ";
-			//Fq.print_object(beta_i, cout);
-			cout << " = " << beta_rk_table[i] << endl;
-		}
-	}
-	
-	
-	int *chosen = NEW_int(n);
-	//int *transversal = NEW_int(n);
-	//int transversal_length = 0, i0;
-	int i0;
-
-	transversal = NEW_int(n);
-	transversal_length = 0;
-
-	for (i = 0; i < n; i++) {
-		chosen[i] = FALSE;
-	}
-	
-	for (i = 1; i <= 1 + designed_distance - 2; i++) {
-		Fq.mult(beta, beta_i, c, verbose_level - 1);
-		Fq.assign(c, beta_i, verbose_level);
-		
-		Fq.rank_longinteger(beta_i, ai);
-		if (f_vvv) {
-			cout << "\\beta^" << i << " = ";
-			Fq.print_object(beta_i, cout);
-			cout << " = " << ai << endl;
-		}
-		if (chosen[i]) {
-			continue;
-		}
-		
-		transversal[transversal_length++] = i;
-		if (f_vv || f_v) {
-			cout << "orbit of conjugate elements "
-					"(in powers of \\beta):" << endl;
-			cout << "{ ";
-		}
-		ai.assign_to(bi);
-		i0 = i;
-		do {
-			chosen[i] = TRUE;
-			Fq.create_object_by_rank_longinteger(c, bi, __FILE__, __LINE__, verbose_level);
-			if (f_vvv) {
-				cout << bi << " = ";
-				Fq.print_object(c, cout);
-			}
-			else if (f_v) {
-				cout << i << " ";
-			}
-			//power_coefficients(c, p);
-			Fq.power_int(c, p, 0 /* verbose_level */);
-			Fq.rank_longinteger(c, bi);
-			for (j = 0; j < n; j++) {
-				if (D.compare(bi, beta_rk_table[j]) == 0) {
-					break;
-				}
-			}
-			if (j == n) {
-				cout << "couldn't find rank in the table (A)" << endl;
-				exit(1);
-			}
-			if (f_vv) {
-				cout << " is \\beta^" << j << endl;
-			}
-			i = j;
-		} while (j != i0);
-		if (f_vv || f_v) {
-			cout << "}" << endl;
-		}
-	}
-
-	// compute the bose_distance:
-	Fq.create_object_by_rank(beta_i, 1, __FILE__, __LINE__, verbose_level);
-	for (i = 1; ; i++) {
-		Fq.mult(beta, beta_i, c, verbose_level - 1);
-		assign(c, beta_i, verbose_level);
-		Fq.rank_longinteger(beta_i, ai);
-		for (j = 0; j < n; j++) {
-			if (D.compare(ai, beta_rk_table[j]) == 0) {
-				break;
-			}
-		}
-		if (j == n) {
-			cout << "couldn't find rank in the table (B)" << endl;
-			exit(1);
-		}
-		if (!chosen[j]) {
-			break;
-		}
-	}
-	bose_distance = i;
-	
-	longinteger_object rk;
-	
-	if (f_vv || f_v) {
-		cout << "taking the minimum polynomials of { ";
-		for (i = 0; i < transversal_length; i++) {
-			cout << transversal[i] << " ";
-		}
-		cout << "}" << endl;
-	}
-
-	rank_of_irreducibles = NEW_OBJECTS(
-			longinteger_object, transversal_length);
-
-	for (i = 0; i < transversal_length; i++) {
-		
-		// minimum_polynomial(h1, ai, p, f_vv);
-		Fq.minimum_polynomial_factorring_longinteger(
-				beta_rk_table[transversal[i]], rk, p, f_vv);
-		create_object_by_rank_longinteger(h1, rk, __FILE__, __LINE__, verbose_level - 2);
-		if (f_vv) {
-			cout << "minimal polynomial of \\beta^"
-					<< transversal[i] << " is ";
-			print_object(h1, cout);
-			cout << " of rank " << rk << endl;
-		}
-		rk.assign_to(rank_of_irreducibles[i]);
-		mult(g, h1, h2, verbose_level - 1);
-		assign(h2, g, verbose_level);
-	}
-
-	Fq.delete_object(c);
-	Fq.delete_object(beta);
-	Fq.delete_object(beta_i);
-	delete_object(h1);
-	delete_object(h2);
-	delete_object(m);
-	FREE_OBJECTS(beta_rk_table);
-	FREE_int(chosen);
-	//delete [] transversal;
-	if (f_v) {
-		cout << "BCH(" << n << "," << p << ","
-				<< designed_distance << ") = ";
-		print_object(g, cout);
-		cout << " bose_distance = " << bose_distance << endl;
-	}
-}
-
-void unipoly_domain::compute_generator_matrix(
-		unipoly_object a, int *&genma, int n, int &k,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int *r = (int *) a;
-	int d = r[0];
-	int *A = r + 1;
-	
-	int i, j, x;
-	
-	k = n - d;
-	if (k < 0) {
-		cout << "unipoly_domain::compute_generator_matrix "
-				"k < 0" << endl;
-		exit(1);
-	}
-	genma = NEW_int(k * n);
-	for (i = 0; i < k * n; i++) {
-		genma[i] = 0;
-	}
-	for (i = 0; i < k; i++) {
-		for (j = 0; j <= d; j++) {
-			x = A[j];
-			genma[i * n + i + j] = x;
-		}
-	}
-	if (f_v) {
-		cout << "generator matrix:" << endl;
-		print_integer_matrix(cout, genma, k, n);
-	}
 }
 
 void unipoly_domain::print_vector_of_polynomials(

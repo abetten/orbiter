@@ -52,9 +52,12 @@ void coding_theory_domain::twisted_tensor_product_codes(
 	int r;
 	int beta, beta_q;
 	int f_elements_exponential = TRUE;
-	const char *symbol_for_print = "\\alpha";
-	const char *symbol_for_print_subfield = "\\omega";
+	string symbol_for_print;
+	string symbol_for_print_subfield;
 
+
+	symbol_for_print.assign("\\alpha");
+	symbol_for_print_subfield.assign("\\omega");
 
 
 	if (f_v) {
@@ -180,7 +183,7 @@ void coding_theory_domain::create_matrix_M(
 	finite_field *F, finite_field *f,
 	int &m, int &n, int &beta, int &r, int *exponents,
 	int f_construction_A, int f_hyperoval, int f_construction_B,
-	int f_elements_exponential, const char *symbol_for_print,
+	int f_elements_exponential, std::string &symbol_for_print,
 	int verbose_level)
 // int exponents[9]
 {
@@ -341,8 +344,8 @@ void coding_theory_domain::create_matrix_H_subfield(
 	finite_field *F, finite_field*f,
 	int *H_subfield, int *C, int *C_inv, int *M,
 	int m, int n, int beta, int beta_q,
-	int f_elements_exponential, const char *symbol_for_print,
-	const char *symbol_for_print_subfield,
+	int f_elements_exponential, std::string &symbol_for_print,
+	std::string &symbol_for_print_subfield,
 	int f_construction_A, int f_hyperoval, int f_construction_B,
 	int verbose_level)
 {
@@ -1459,6 +1462,522 @@ the_end:
 	}
 
 }
+
+void coding_theory_domain::make_mac_williams_equations(longinteger_object *&M,
+		int n, int k, int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	combinatorics_domain Combi;
+
+	if (f_v) {
+		cout << "coding_theory_domain::make_mac_williams_equations" << endl;
+	}
+	M = NEW_OBJECTS(longinteger_object, (n + 1) * (n + 1));
+
+	for (i = 0; i <= n; i++) {
+		for (j = 0; j <= n; j++) {
+			Combi.krawtchouk(M[i * (n + 1) + j], n, q, i, j);
+		}
+	}
+	if (f_v) {
+		cout << "coding_theory_domain::make_mac_williams_equations done" << endl;
+	}
+}
+
+int coding_theory_domain::singleton_bound_for_d(
+		int n, int k, int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int d;
+
+	if (f_v) {
+		cout << "coding_theory_domain::singleton_bound_for_d" << endl;
+	}
+	d = n - k + 1;
+	return d;
+}
+
+
+int coding_theory_domain::hamming_bound_for_d(
+		int n, int k, int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int e, d, t;
+	longinteger_object qnmk, qm1, qm1_power, B, s, a, b;
+	longinteger_domain D;
+	combinatorics_domain Combi;
+
+
+	if (f_v) {
+		cout << "coding_theory_domain::hamming_bound_for_d" << endl;
+	}
+	qnmk.create(q, __FILE__, __LINE__);
+	qm1.create(q - 1, __FILE__, __LINE__);
+	D.power_int(qnmk, n - k);
+	qm1_power.create(1, __FILE__, __LINE__);
+	B.create(0, __FILE__, __LINE__);
+	if (f_vv) {
+		cout << "coding_theory_domain::hamming_bound_for_d: "
+			"q=" << q << " n=" << n << " k=" << k << " "
+			<< q << "^" << n - k << " = " << qnmk << endl;
+	}
+	for (e = 0; ; e++) {
+		Combi.binomial(b, n, e, FALSE);
+		D.mult(b, qm1_power, s);
+		D.add(B, s, a);
+		a.assign_to(B);
+		if (D.compare(B, qnmk) == 1) {
+			// now the size of the Ball of radius e is bigger than q^{n-m}
+			t = e - 1;
+			d = 2 * t + 2;
+			if (f_vv) {
+				cout << "B=" << B << " t=" << t << " d=" << d << endl;
+			}
+			break;
+		}
+		if (f_vv) {
+			cout << "e=" << e << " B=" << B << " is OK" << endl;
+		}
+		D.mult(qm1_power, qm1, s);
+		s.assign_to(qm1_power);
+	}
+	if (f_v) {
+		cout << "coding_theory_domain::hamming_bound_for_d done" << endl;
+	}
+	return d;
+}
+
+int coding_theory_domain::plotkin_bound_for_d(
+		int n, int k, int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int d;
+	longinteger_object qkm1, qk, qm1, a, b, c, Q, R;
+	longinteger_domain D;
+
+	if (f_v) {
+		cout << "coding_theory_domain::plotkin_bound_for_d" << endl;
+	}
+
+	// d \le \frac{n q^{k-1}}{q^k-1}
+
+	qkm1.create(q, __FILE__, __LINE__);
+	D.power_int(qkm1, k - 1);
+	a.create(n, __FILE__, __LINE__);
+	D.mult(a, qkm1, b);
+		// now b = n q^{k-1}
+
+	a.create(q - 1, __FILE__, __LINE__);
+	D.mult(b, a, c);
+		// now c = n q^{k-1} (q - 1)
+
+
+	a.create(q, __FILE__, __LINE__);
+	D.mult(a, qkm1, qk);
+		// now qk = q^k
+
+	a.create(-1, __FILE__, __LINE__);
+	D.add(qk, a, b);
+		// now b = 2^k - 1
+
+	if (f_vv) {
+		cout << "coding_theory_domain::plotkin_bound_for_d "
+				"q=" << q << " n=" << n << " k=" << k << endl;
+	}
+	D.integral_division(c, b, Q, R, FALSE /* verbose_level */);
+	d = Q.as_int();
+	if (f_vv) {
+		cout << c << " / " << b << " = " << d << endl;
+	}
+	if (f_v) {
+		cout << "coding_theory_domain::plotkin_bound_for_d" << endl;
+	}
+	return d;
+}
+
+int coding_theory_domain::griesmer_bound_for_d(
+		int n, int k, int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int d, n1;
+
+	if (f_v) {
+		cout << "coding_theory_domain::griesmer_bound_for_d" << endl;
+	}
+	for (d = 1; d <= n; d++) {
+		n1 = griesmer_bound_for_n(k, d, q, verbose_level - 2);
+		if (n1 > n) {
+			d--;
+			break;
+			}
+	}
+	if (f_v) {
+		cout << "coding_theory_domain::griesmer_bound_for_d done" << endl;
+	}
+	return d;
+}
+
+int coding_theory_domain::griesmer_bound_for_n(
+		int k, int d, int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, n;
+	longinteger_object qq, qi, d1, S, Q, R, one, a, b;
+	longinteger_domain D;
+
+	if (f_v) {
+		cout << "coding_theory_domain::griesmer_bound_for_n" << endl;
+	}
+	one.create(1, __FILE__, __LINE__);
+	d1.create(d, __FILE__, __LINE__);
+	qq.create(q, __FILE__, __LINE__);
+	qi.create(1, __FILE__, __LINE__);
+	S.create(0, __FILE__, __LINE__);
+	if (f_vv) {
+		cout << "coding_theory_domain::griesmer_bound_for_n q=" << q
+				<< " d=" << d << " k=" << k << endl;
+	}
+	for (i = 0; i < k; i++) {
+		D.integral_division(d1, qi, Q, R, FALSE /* verbose_level */);
+		if (!R.is_zero()) {
+			D.add(Q, one, a);
+			D.add(S, a, b);
+		}
+		else {
+			D.add(S, Q, b);
+		}
+		b.assign_to(S);
+		D.mult(qi, qq, a);
+		a.assign_to(qi);
+		if (f_vv) {
+			cout << "i=" << i << " S=" << S << endl;
+		}
+	}
+	n = S.as_int();
+	if (f_v) {
+		cout << "coding_theory_domain::griesmer_bound_for_n" << endl;
+	}
+	return n;
+}
+
+void coding_theory_domain::BCH_generator_polynomial(
+	finite_field *F,
+	unipoly_object &g, int n,
+	int designed_distance, int &bose_distance,
+	int &transversal_length, int *&transversal,
+	longinteger_object *&rank_of_irreducibles,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int p = F->q;
+	int e, i, j, r;
+	longinteger_object q, b, m1, qm1;
+	longinteger_domain D;
+	number_theory_domain NT;
+
+	if (f_v) {
+		cout << "coding_theory_domain::BCH_generator_polynomial "
+				"n=" << n << " designed_distance="
+				<< designed_distance << " p=" << p << endl;
+	}
+
+	unipoly_domain FX(F);
+
+
+	e = NT.order_mod_p(p, n);
+	q.create(p, __FILE__, __LINE__);
+	m1.create(-1, __FILE__, __LINE__);
+	D.power_int(q, e);
+	D.add(q, m1, qm1);
+	// q = i_power_j(p, e);
+	// GF(q)=GF(p^e) has n-th roots of unity
+	D.integral_division_by_int(qm1, n, b, r);
+	//b = (q - 1) / n;
+	if (r != 0) {
+		cout << "coding_theory_domain::BCH_generator_polynomial "
+				"r != 0" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "GF(" << q << ") = GF(" << p << "^" << e
+				<< ") has " << n << "-th roots of unity" << endl;
+		if (b.is_one()) {
+			cout << "this is a primitive BCH code" << endl;
+		}
+		else {
+			cout << "we take as " << n
+			<< "-th root \\beta = \\alpha^" << b << ", where "
+				"\\alpha is a primitive element of the field" << endl;
+		}
+	}
+
+	algebra_global Algebra;
+	unipoly_object m, M, h1, h2;
+
+	FX.create_object_by_rank_string(m,
+			Algebra.get_primitive_polynomial(p, e, 0), verbose_level - 2);
+
+	FX.create_object_by_rank_string(M,
+			Algebra.get_primitive_polynomial(p, e, 0), verbose_level - 2);
+
+	FX.create_object_by_rank(g, 1, __FILE__, __LINE__, verbose_level);
+	FX.create_object_by_rank(h1, 0, __FILE__, __LINE__, verbose_level);
+	FX.create_object_by_rank(h2, 0, __FILE__, __LINE__, verbose_level);
+
+	if (f_vv) {
+		cout << "choosing the following irreducible "
+				"and primitive polynomial:" << endl;
+		FX.print_object(m, cout); cout << endl;
+	}
+
+	unipoly_domain Fq(F, M, verbose_level - 1);
+	unipoly_object beta, beta_i, c;
+	if (f_vvv) {
+		cout << "extension field created" << endl;
+	}
+	Fq.create_object_by_rank(c, 0, __FILE__, __LINE__, verbose_level);
+	Fq.create_object_by_rank(beta, p, __FILE__, __LINE__, verbose_level); // the primitive element alpha
+	Fq.create_object_by_rank(beta_i, 1, __FILE__, __LINE__, verbose_level);
+	if (!b.is_one()) {
+		//Fq.power_int(beta, b, 0 /* verbose_level */);
+		if (f_vvv) {
+			cout << "\\alpha = ";
+			Fq.print_object(beta, cout);
+			cout << endl;
+		}
+		Fq.power_longinteger(beta, b, verbose_level - 1);
+#if 0
+		if (b.as_int() == 11) {
+			for (i = 1; i <= b.as_int(); i++) {
+				Fq.create_object_by_rank(beta, p); // the element alpha
+				Fq.power_int(beta, i, 0 /* verbose_level */);
+				cout << "\\alpha^" << i << " = ";
+				Fq.print_object(beta, cout);
+				cout << endl;
+			}
+		}
+#endif
+		if (f_vvv) {
+			cout << "\\beta = \\alpha^" << b << " = ";
+			Fq.print_object(beta, cout);
+			cout << endl;
+		}
+	}
+	else {
+		if (f_vvv) {
+			cout << "this is a primitive BCH code" << endl;
+		}
+	}
+
+	// now beta is a primitive n-th root of unity
+
+#if 0
+	if (1 + designed_distance - 2 >= q - 1) {
+		cout << "coding_theory_domain::BCH_generator_polynomial "
+				"1 + designed_distance - 2 >= q - 1" << endl;
+		exit(1);
+	}
+#endif
+
+	longinteger_object *beta_rk_table =
+			NEW_OBJECTS(longinteger_object, n);
+	longinteger_object ai, bi;
+
+
+	for (i = 0; i < n; i++) {
+		Fq.rank_longinteger(beta_i, beta_rk_table[i]);
+
+		if (f_vvv) {
+			cout << "\\beta^" << i << " = ";
+			Fq.print_object(beta_i, cout);
+			cout << " = " << beta_rk_table[i] << endl;
+		}
+		Fq.mult(beta, beta_i, c, verbose_level - 1);
+		Fq.assign(c, beta_i, verbose_level);
+	}
+	if (f_vvv) {
+		for (i = 0; i < n; i++) {
+			cout << "\\beta^" << i << " = ";
+			//Fq.print_object(beta_i, cout);
+			cout << " = " << beta_rk_table[i] << endl;
+		}
+	}
+
+
+	int *chosen = NEW_int(n);
+	//int *transversal = NEW_int(n);
+	//int transversal_length = 0, i0;
+	int i0;
+
+	transversal = NEW_int(n);
+	transversal_length = 0;
+
+	for (i = 0; i < n; i++) {
+		chosen[i] = FALSE;
+	}
+
+	for (i = 1; i <= 1 + designed_distance - 2; i++) {
+		Fq.mult(beta, beta_i, c, verbose_level - 1);
+		Fq.assign(c, beta_i, verbose_level);
+
+		Fq.rank_longinteger(beta_i, ai);
+		if (f_vvv) {
+			cout << "\\beta^" << i << " = ";
+			Fq.print_object(beta_i, cout);
+			cout << " = " << ai << endl;
+		}
+		if (chosen[i]) {
+			continue;
+		}
+
+		transversal[transversal_length++] = i;
+		if (f_vv || f_v) {
+			cout << "orbit of conjugate elements "
+					"(in powers of \\beta):" << endl;
+			cout << "{ ";
+		}
+		ai.assign_to(bi);
+		i0 = i;
+		do {
+			chosen[i] = TRUE;
+			Fq.create_object_by_rank_longinteger(c, bi, __FILE__, __LINE__, verbose_level);
+			if (f_vvv) {
+				cout << bi << " = ";
+				Fq.print_object(c, cout);
+			}
+			else if (f_v) {
+				cout << i << " ";
+			}
+			//power_coefficients(c, p);
+			Fq.power_int(c, p, 0 /* verbose_level */);
+			Fq.rank_longinteger(c, bi);
+			for (j = 0; j < n; j++) {
+				if (D.compare(bi, beta_rk_table[j]) == 0) {
+					break;
+				}
+			}
+			if (j == n) {
+				cout << "couldn't find rank in the table (A)" << endl;
+				exit(1);
+			}
+			if (f_vv) {
+				cout << " is \\beta^" << j << endl;
+			}
+			i = j;
+		} while (j != i0);
+		if (f_vv || f_v) {
+			cout << "}" << endl;
+		}
+	}
+
+	// compute the bose_distance:
+	Fq.create_object_by_rank(beta_i, 1, __FILE__, __LINE__, verbose_level);
+	for (i = 1; ; i++) {
+		Fq.mult(beta, beta_i, c, verbose_level - 1);
+		FX.assign(c, beta_i, verbose_level);
+		Fq.rank_longinteger(beta_i, ai);
+		for (j = 0; j < n; j++) {
+			if (D.compare(ai, beta_rk_table[j]) == 0) {
+				break;
+			}
+		}
+		if (j == n) {
+			cout << "couldn't find rank in the table (B)" << endl;
+			exit(1);
+		}
+		if (!chosen[j]) {
+			break;
+		}
+	}
+	bose_distance = i;
+
+	longinteger_object rk;
+
+	if (f_vv || f_v) {
+		cout << "taking the minimum polynomials of { ";
+		for (i = 0; i < transversal_length; i++) {
+			cout << transversal[i] << " ";
+		}
+		cout << "}" << endl;
+	}
+
+	rank_of_irreducibles = NEW_OBJECTS(
+			longinteger_object, transversal_length);
+
+	for (i = 0; i < transversal_length; i++) {
+
+		// minimum_polynomial(h1, ai, p, f_vv);
+		Fq.minimum_polynomial_factorring_longinteger(
+				beta_rk_table[transversal[i]], rk, p, f_vv);
+		FX.create_object_by_rank_longinteger(h1, rk, __FILE__, __LINE__, verbose_level - 2);
+		if (f_vv) {
+			cout << "minimal polynomial of \\beta^"
+					<< transversal[i] << " is ";
+			FX.print_object(h1, cout);
+			cout << " of rank " << rk << endl;
+		}
+		rk.assign_to(rank_of_irreducibles[i]);
+		FX.mult(g, h1, h2, verbose_level - 1);
+		FX.assign(h2, g, verbose_level);
+	}
+
+	Fq.delete_object(c);
+	Fq.delete_object(beta);
+	Fq.delete_object(beta_i);
+	FX.delete_object(h1);
+	FX.delete_object(h2);
+	FX.delete_object(m);
+	FREE_OBJECTS(beta_rk_table);
+	FREE_int(chosen);
+	//delete [] transversal;
+	if (f_v) {
+		cout << "BCH(" << n << "," << p << ","
+				<< designed_distance << ") = ";
+		FX.print_object(g, cout);
+		cout << " bose_distance = " << bose_distance << endl;
+	}
+}
+
+void coding_theory_domain::compute_generator_matrix(
+		unipoly_object a, int *&genma, int n, int &k,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *r = (int *) a;
+	int d = r[0];
+	int *A = r + 1;
+
+	int i, j, x;
+
+	k = n - d;
+	if (k < 0) {
+		cout << "coding_theory_domain::compute_generator_matrix "
+				"k < 0" << endl;
+		exit(1);
+	}
+	genma = NEW_int(k * n);
+	for (i = 0; i < k * n; i++) {
+		genma[i] = 0;
+	}
+	for (i = 0; i < k; i++) {
+		for (j = 0; j <= d; j++) {
+			x = A[j];
+			genma[i * n + i + j] = x;
+		}
+	}
+	if (f_v) {
+		cout << "generator matrix:" << endl;
+		print_integer_matrix(cout, genma, k, n);
+	}
+}
+
+
 
 
 }}

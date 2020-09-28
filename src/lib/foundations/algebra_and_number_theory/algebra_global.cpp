@@ -1557,6 +1557,11 @@ void algebra_global::make_all_irreducible_polynomials_of_degree_d(
 
 	poly = get_primitive_polynomial(F->q, d, 0 /* verbose_level */);
 
+	if (f_v) {
+		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
+				"chosen irreducible polynomial is " << poly << endl;
+	}
+
 	unipoly_object m;
 	unipoly_object g;
 	unipoly_object minpol;
@@ -1585,7 +1590,11 @@ void algebra_global::make_all_irreducible_polynomials_of_degree_d(
 	v = NEW_int(d);
 	w = NEW_int(d);
 
-	FX.Frobenius_matrix(Frobenius, m, verbose_level - 1);
+	if (f_v) {
+		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
+				"before FX.Frobenius_matrix" << endl;
+	}
+	FX.Frobenius_matrix(Frobenius, m, verbose_level - 2);
 	if (f_v) {
 		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
 				"Frobenius_matrix = " << endl;
@@ -1641,6 +1650,8 @@ void algebra_global::make_all_irreducible_polynomials_of_degree_d(
 			cout << endl;
 		}
 
+
+
 		std::vector<int> T;
 
 		for (i = 0; i <= d; i++) {
@@ -1660,8 +1671,8 @@ void algebra_global::make_all_irreducible_polynomials_of_degree_d(
 	}
 
 	if (f_v) {
-		cout << "algebra_global::make_all_irreducible_polynomials_"
-				"of_degree_d there are " << cnt
+		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
+				"there are " << cnt
 				<< " irreducible polynomials "
 				"of degree " << d << " over " << "F_" << F->q << endl;
 	}

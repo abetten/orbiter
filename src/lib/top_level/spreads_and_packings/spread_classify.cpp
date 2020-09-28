@@ -1096,8 +1096,9 @@ void spread_classify::print(ostream &ost, int len, long int *S)
 {
 	int i;
 	int f_elements_exponential = FALSE;
-	const char *symbol_for_print = "\\alpha";
+	string symbol_for_print;
 	
+	symbol_for_print.assign("\\alpha");
 	if (len == 0) {
 		return;
 	}

@@ -39,14 +39,14 @@ public:
 		finite_field *F, finite_field *f,
 		int &m, int &n, int &beta, int &r, int *exponents,
 		int f_construction_A, int f_hyperoval, int f_construction_B,
-		int f_elements_exponential, const char *symbol_for_print,
+		int f_elements_exponential, std::string &symbol_for_print,
 		int verbose_level);
 		// int exponents[9]
 	void create_matrix_H_subfield(finite_field *F, finite_field*f,
 		int *H_subfield, int *C, int *C_inv, int *M, int m, int n,
 		int beta, int beta_q,
-		int f_elements_exponential, const char *symbol_for_print,
-		const char *symbol_for_print_subfield,
+		int f_elements_exponential, std::string &symbol_for_print,
+		std::string &symbol_for_print_subfield,
 		int f_construction_A, int f_hyperoval, int f_construction_B,
 		int verbose_level);
 	void tt_field_reduction(finite_field &F, finite_field &f,
@@ -81,6 +81,23 @@ public:
 	//Main routine for the code minimum distance computation.
 	//The tables are only needed if $q = p^f$ with $f > 1$.
 	//In the GF(p) case, just pass a NULL pointer.
+
+	void make_mac_williams_equations(longinteger_object *&M,
+			int n, int k, int q, int verbose_level);
+	int singleton_bound_for_d(int n, int k, int q, int verbose_level);
+	int hamming_bound_for_d(int n, int k, int q, int verbose_level);
+	int plotkin_bound_for_d(int n, int k, int q, int verbose_level);
+	int griesmer_bound_for_d(int n, int k, int q, int verbose_level);
+	int griesmer_bound_for_n(int k, int d, int q, int verbose_level);
+	void BCH_generator_polynomial(
+			finite_field *F,
+			unipoly_object &g, int n,
+			int designed_distance, int &bose_distance,
+			int &transversal_length, int *&transversal,
+			longinteger_object *&rank_of_irreducibles,
+			int verbose_level);
+	void compute_generator_matrix(unipoly_object a, int *&genma,
+		int n, int &k, int verbose_level);
 
 
 };

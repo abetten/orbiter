@@ -550,6 +550,10 @@ class interface_projective {
 	int f_cheat_sheet_PG;
 	int n;
 	int q;
+	int f_decomposition_by_element;
+	int decomposition_by_element_power;
+	std::string decomposition_by_element_data;
+	std::string decomposition_by_element_fname_base;
 	int f_canonical_form_PG;
 	projective_space_object_classifier_description *Canonical_form_PG_Descr;
 
@@ -612,7 +616,10 @@ public:
 	//int read_canonical_form_arguments(int argc, const char **argv, int i0, int verbose_level);
 	void worker(orbiter_session *Session, int verbose_level);
 	void do_cheat_sheet_PG(orbiter_session *Session,
-			int n, int q, int verbose_level);
+			int n, int q,
+			int f_decomposition_by_element, int decomposition_by_element_power,
+			std::string &decomposition_by_element_data, std::string &fname_base,
+			int verbose_level);
 	void do_canonical_form_PG(orbiter_session *Session,
 			int n, int q, int verbose_level);
 	void do_classify_cubic_curves(int q,
