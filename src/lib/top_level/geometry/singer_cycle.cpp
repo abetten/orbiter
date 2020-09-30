@@ -354,7 +354,7 @@ void singer_cycle::init_lines(int verbose_level)
 
 	Inc = NEW_OBJECT(incidence_structure);
 
-	Inc->init_by_matrix_as_bitvector(P->N_points, P->N_lines, P->incidence_bitvec, 0);
+	Inc->init_by_matrix_as_bitmatrix(P->N_points, P->N_lines, P->Bitmatrix, 0);
 
 	T = NEW_OBJECT(tactical_decomposition);
 	T->init(P->N_points, P->N_lines,

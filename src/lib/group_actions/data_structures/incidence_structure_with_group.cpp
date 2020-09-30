@@ -27,7 +27,7 @@ incidence_structure_with_group::incidence_structure_with_group()
 
 	f_has_canonical_form = FALSE;
 	canonical_form = NULL;
-	canonical_form_len = 0;
+	//canonical_form_len = 0;
 
 	f_has_canonical_labeling = FALSE;
 	canonical_labeling = NULL;
@@ -50,7 +50,7 @@ void incidence_structure_with_group::null()
 
 	f_has_canonical_form = FALSE;
 	canonical_form = NULL;
-	canonical_form_len = 0;
+	//canonical_form_len = 0;
 
 	f_has_canonical_labeling = FALSE;
 	canonical_labeling = NULL;
@@ -61,7 +61,7 @@ void incidence_structure_with_group::null()
 void incidence_structure_with_group::freeself()
 {
 	if (canonical_form) {
-		FREE_uchar(canonical_form);
+		FREE_OBJECT(canonical_form);
 	}
 	if (canonical_labeling) {
 		FREE_lint(canonical_labeling);
@@ -92,6 +92,7 @@ void incidence_structure_with_group::init(incidence_structure *Inc,
 	}
 }
 
+#if 0
 void incidence_structure_with_group::print_canonical_form(ostream &ost)
 {
 	int i;
@@ -104,9 +105,10 @@ void incidence_structure_with_group::print_canonical_form(ostream &ost)
 	}
 	ost << endl;
 }
+#endif
 
 void incidence_structure_with_group::set_stabilizer_and_canonical_form(
-		int f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix,
+		//int f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix,
 		int f_compute_canonical_form,
 		int verbose_level)
 {
@@ -138,7 +140,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 		canonical_labeling[i] = i;
 	}
 
-
+#if 0
 	if (f_save_incma_in_and_out) {
 
 		string fname_csv;
@@ -163,6 +165,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 				verbose_level);
 
 	}
+#endif
 
 
 
@@ -237,7 +240,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 		}
 	}
 
-
+#if 0
 	if (f_save_incma_in_and_out) {
 
 		string fname_csv;
@@ -260,12 +263,14 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 				TRUE, canonical_labeling,
 				verbose_level);
 	}
+#endif
 
 
 
 	if (f_compute_canonical_form) {
 
-		canonical_form = Inc_out->encode_as_bitvector(canonical_form_len);
+		//canonical_form = Inc_out->encode_as_bitvector(canonical_form_len);
+		canonical_form = Inc_out->encode_as_bitvector();
 
 	}
 

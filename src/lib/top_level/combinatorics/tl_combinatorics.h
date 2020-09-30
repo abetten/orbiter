@@ -831,8 +831,8 @@ public:
 	int f_export_csv;
 	int f_print;
 	int f_sort_by_colors;
-	int f_split;
-	std::string split_file;
+	//int f_split;
+	//std::string split_file;
 	int f_save;
 
 
@@ -864,8 +864,9 @@ class hadamard_classify {
 public:
 	int n;
 	int N, N2;
-	int bitvector_length;
-	uchar *bitvector_adjacency;
+	bitvector *Bitvec;
+	//int bitvector_length;
+	//uchar *bitvector_adjacency;
 	colored_graph *CG;
 
 	action *A;
@@ -1032,8 +1033,9 @@ public:
 	action *A_on_designs; // action on designs in Design_table
 
 
-	uchar *bitvector_adjacency;
-	int bitvector_length;
+	bitvector *Bitvec;
+	//uchar *bitvector_adjacency;
+	//int bitvector_length;
 	int *degree;
 
 	poset_classification_control *Control;

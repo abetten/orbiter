@@ -266,10 +266,10 @@ void projective_space_with_action::canonical_labeling(
 strong_generators
 *projective_space_with_action::set_stabilizer_of_object(
 	object_in_projective_space *OiP, 
-	int f_save_incma_in_and_out,
-	std::string &save_incma_in_and_out_prefix,
-	int f_compute_canonical_form,
-	uchar *&canonical_form, int &canonical_form_len,
+	//int f_save_incma_in_and_out,
+	//std::string &save_incma_in_and_out_prefix,
+	int f_compute_canonical_form, bitvector *&Canonical_form,
+	//uchar *&canonical_form, int &canonical_form_len,
 	long int *canonical_labeling, int &canonical_labeling_len,
 	int verbose_level)
 // canonical_labeling[nb_rows + nb_cols] contains the canonical labeling
@@ -297,22 +297,23 @@ strong_generators
 	file_io Fio;
 	nauty_interface Nau;
 
-	A_linear = A;
 
 	if (f_v) {
 		cout << "projective_space_with_action::set_stabilizer_of_object" << endl;
 		cout << "verbose_level = " << verbose_level << endl;
-		}
+	}
+
+	A_linear = A;
 
 	if (f_v) {
 		cout << "projective_space_with_action::set_stabilizer_of_object "
 				"before OiP->encode_incma" << endl;
-		}
+	}
 	OiP->encode_incma(Incma, nb_rows, nb_cols, partition, verbose_level - 1);
 	if (f_v) {
 		cout << "projective_space_with_action::set_stabilizer_of_object "
 				"after OiP->encode_incma" << endl;
-		}
+	}
 	if (verbose_level > 5) {
 		cout << "projective_space_with_action::set_stabilizer_of_object Incma:" << endl;
 		int_matrix_print_tight(Incma, nb_rows, nb_cols);
@@ -323,9 +324,9 @@ strong_generators
 	canonical_labeling_len = nb_rows + nb_cols;
 	for (i = 0; i < canonical_labeling_len; i++) {
 		canonical_labeling[i] = i;
-		}
+	}
 
-
+#if 0
 	if (f_save_incma_in_and_out) {
 		save_Levi_graph(save_incma_in_and_out_prefix,
 				"Incma_in_%d_%d",
@@ -334,6 +335,7 @@ strong_generators
 				verbose_level);
 
 	}
+#endif
 
 	N = canonical_labeling_len;
 	L = nb_rows * nb_cols;
@@ -341,7 +343,7 @@ strong_generators
 	if (f_vv) {
 		cout << "projective_space_with_action::set_stabilizer_of_object "
 				"initializing Aut, Base, Transversal_length" << endl;
-		}
+	}
 	Aut = NEW_int(N * N);
 	Base = NEW_int(N);
 	Base_lint = NEW_lint(N);
@@ -350,7 +352,7 @@ strong_generators
 	if (f_v) {
 		cout << "projective_space_with_action::set_stabilizer_of_object "
 				"calling Nau.nauty_interface_matrix_int" << endl;
-		}
+	}
 	int t0, t1, dt, tps;
 	double delta_t_in_sec;
 	os_interface Os;
@@ -372,7 +374,7 @@ strong_generators
 
 	for (i = 0; i < canonical_labeling_len; i++) {
 		canonical_labeling[i] = can_labeling[i];
-		}
+	}
 	FREE_int(can_labeling);
 
 	int_vec_copy_to_lint(Base, Base_lint, Base_length);
@@ -386,7 +388,7 @@ strong_generators
 				"done with Nau.nauty_interface_matrix_int, "
 				"Ago=" << Ago << " dt=" << dt
 				<< " delta_t_in_sec=" << delta_t_in_sec << endl;
-		}
+	}
 	if (verbose_level > 5) {
 		int h;
 		int degree = nb_rows +  nb_cols;
@@ -406,7 +408,7 @@ strong_generators
 				"labeling:" << endl;
 		lint_vec_print(cout, canonical_labeling, canonical_labeling_len);
 		cout << endl;
-		}
+	}
 
 	Incma_out = NEW_int(L);
 	for (i = 0; i < nb_rows; i++) {
@@ -416,40 +418,44 @@ strong_generators
 			//cout << "i=" << i << " j=" << j << " ii=" << ii
 			//<< " jj=" << jj << endl;
 			Incma_out[i * nb_cols + j] = Incma[ii * nb_cols + jj];
-			}
 		}
+	}
 	if (f_vvv) {
 		cout << "projective_space_with_action::set_stabilizer_of_object "
 				"Incma Out:" << endl;
 		if (nb_rows < 20) {
 			print_integer_matrix_width(cout,
 					Incma_out, nb_rows, nb_cols, nb_cols, 1);
-			}
+		}
 		else {
 			cout << "projective_space_with_action::set_stabilizer_of_object "
 					"too large to print" << endl;
-			}
 		}
+	}
 
 
 
 	if (f_compute_canonical_form) {
 		
-
+#if 0
 		canonical_form = bitvector_allocate_and_coded_length(L, canonical_form_len);
-
+#else
+		Canonical_form = NEW_OBJECT(bitvector);
+		Canonical_form->allocate(L);
+#endif
 		for (i = 0; i < nb_rows; i++) {
 			for (j = 0; j < nb_cols; j++) {
 				if (Incma_out[i * nb_cols + j]) {
 					a = i * nb_cols + j;
-					bitvector_set_bit(canonical_form, a);
-					}
+					//bitvector_set_bit(canonical_form, a);
+					Canonical_form->m_i(a, 1);
 				}
 			}
-
 		}
 
+	}
 
+#if 0
 	if (f_save_incma_in_and_out) {
 		save_Levi_graph(save_incma_in_and_out_prefix,
 				"Incma_out_%d_%d",
@@ -458,6 +464,7 @@ strong_generators
 				verbose_level);
 
 	}
+#endif
 
 	FREE_int(Incma_out);
 
@@ -483,7 +490,7 @@ strong_generators
 	if (f_v) {
 		cout << "projective_space_with_action::set_stabilizer_of_object "
 				"after Nauty.reverse_engineer_linear_group_from_permutation_group" << endl;
-		}
+	}
 
 
 
@@ -514,12 +521,12 @@ strong_generators
 
 	if (f_v) {
 		cout << "projective_space_with_action::set_stabilizer_of_object done" << endl;
-		}
+	}
 	return SG;
 }
 
 
-
+#if 0
 void projective_space_with_action::save_Levi_graph(std::string &prefix,
 		const char *mask,
 		int *Incma, int nb_rows, int nb_cols,
@@ -578,6 +585,7 @@ void projective_space_with_action::save_Levi_graph(std::string &prefix,
 		cout << "projective_space_with_action::save_Levi_graph done" << endl;
 	}
 }
+#endif
 
 void projective_space_with_action::report_fixed_objects_in_PG_3_tex(
 	int *Elt, ostream &ost, 
@@ -1021,7 +1029,7 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 
 
 
-
+#if 0
 void projective_space_with_action::merge_packings(
 		std::string *fnames, int nb_files,
 		std::string &file_of_spreads,
@@ -2421,6 +2429,8 @@ void projective_space_with_action::select_packings_self_dual(
 				"done, nb_self_dual = " << nb_self_dual << endl;
 	}
 }
+#endif
+
 
 object_in_projective_space *
 projective_space_with_action::create_object_from_string(

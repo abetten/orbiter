@@ -20,7 +20,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	projective_space *P,
 	long int *set, int set_size, int &canonical_pt,
 	int *canonical_set_or_NULL,
-	int f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix,
+	//int f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix,
 	int verbose_level)
 // assuming we are in a linear action.
 // added 2/28/2011, called from analyze.cpp
@@ -46,11 +46,6 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		cout << "action::set_stabilizer_in_projective_space" << endl;
 		cout << "verbose_level = " << verbose_level << endl;
 		cout << "set_size = " << set_size << endl;
-		}
-	if (P->incidence_bitvec == NULL) {
-		cout << "action::set_stabilizer_in_projective_space "
-				"P->incidence_bitvec == NULL" << endl;
-		exit(1);
 		}
 
 	if (f_vv) {
@@ -141,6 +136,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		int_matrix_print(Incma, nb_rows, nb_cols);
 	}
 
+#if 0
 	if (f_save_incma_in_and_out) {
 		if (f_vv) {
 			cout << "Incma in:" << endl;
@@ -184,6 +180,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		//FREE_int(Incma);
 		FREE_OBJECT(CG);
 		}
+#endif
 
 	if (f_vv) {
 		cout << "initializing partition" << endl;
@@ -257,6 +254,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		int_matrix_print(Incma_out, nb_rows, nb_cols);
 	}
 
+#if 0
 	if (f_save_incma_in_and_out) {
 		if (f_vv) {
 			cout << "Incma Out:" << endl;
@@ -298,6 +296,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		CG->save(fname_bin, verbose_level);
 		FREE_OBJECT(CG);
 		}
+#endif
 
 	canonical_pt = -1;
 	if (set_size) {

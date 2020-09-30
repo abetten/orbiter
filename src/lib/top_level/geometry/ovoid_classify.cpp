@@ -785,9 +785,10 @@ void ovoid_classify::create_graph(orbiter_data_file *ODF,
 
 	starter_size = ODF->set_sizes[orbit_idx];
 
-	uchar *bitvector_adjacency = NULL;
+	bitvector *Bitvec;
+	//uchar *bitvector_adjacency = NULL;
 	//long int bitvector_length_in_bits;
-	long int bitvector_length;
+	//long int bitvector_length;
 	Pts = NEW_int(nb_points * Descr->d);
 	for (i = 0; i < nb_points; i++) {
 		O->unrank_point(Pts + i * Descr->d, 1, candidates[i], 0);
@@ -795,19 +796,24 @@ void ovoid_classify::create_graph(orbiter_data_file *ODF,
 
 	L = ((long int) nb_points * ((long int) nb_points - 1)) >> 1;
 
+#if 0
 	//bitvector_length_in_bits = L;
 	bitvector_length = (L + 7) >> 3;
 	bitvector_adjacency = NEW_uchar(bitvector_length);
 	for (i = 0; i < bitvector_length; i++) {
 		bitvector_adjacency[i] = 0;
 		}
+#else
+	Bitvec = NEW_OBJECT(bitvector);
+	Bitvec->allocate(L);
+#endif
 
 	k = 0;
 	for (i = 0; i < nb_points; i++) {
 		for (j = i + 1; j < nb_points; j++, k++) {
 			fxy = O->evaluate_bilinear_form(Pts + i * Descr->d, Pts + j * Descr->d, 1);
 			if (fxy != 0) {
-				bitvector_m_ii(bitvector_adjacency, k, 1);
+				Bitvec->m_i(k, 1);
 			}
 		}
 	}
@@ -825,7 +831,7 @@ void ovoid_classify::create_graph(orbiter_data_file *ODF,
 		k = 0;
 		for (i = 0; i < nb_points; i++) {
 			for (j = i + 1; j < nb_points; j++, k++) {
-				if (bitvector_s_i(bitvector_adjacency, k)) {
+				if (Bitvec->s_i(k)) {
 					if (point_color[i] == point_color[j]) {
 						cout << "the coloring is not proper" << endl;
 						cout << "point " << i << " has color "
@@ -845,7 +851,9 @@ void ovoid_classify::create_graph(orbiter_data_file *ODF,
 	CG = NEW_OBJECT(colored_graph);
 
 	CG->init(nb_points, nb_colors_used, 1,
-		point_color, bitvector_adjacency, TRUE, verbose_level - 2);
+		point_color,
+		Bitvec, TRUE /* f_ownership_of_bitvec */,
+		verbose_level - 2);
 		// the adjacency becomes part of the colored_graph object
 
 	lint_vec_copy(candidates, CG->points, nb_candidates);

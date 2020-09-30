@@ -44,8 +44,9 @@ large_set_classify::large_set_classify()
 	A_on_designs = NULL;
 
 
-	bitvector_adjacency = NULL;
-	bitvector_length = 0;
+	Bitvec = NULL;
+	//bitvector_adjacency = NULL;
+	//bitvector_length = 0;
 	degree = 0;
 
 	Control = NULL;
@@ -85,8 +86,8 @@ void large_set_classify::freeself()
 	if (Design_table) {
 		FREE_lint(Design_table);
 	}
-	if (bitvector_adjacency) {
-		FREE_uchar(bitvector_adjacency);
+	if (Bitvec) {
+		FREE_OBJECT(Bitvec);
 		}
 	if (design_color_table) {
 		FREE_int(design_color_table);
@@ -1028,9 +1029,9 @@ void large_set_early_test_function(long int *S, int len,
 			if (b == a) {
 				continue;
 			}
-			if (LS->bitvector_adjacency) {
+			if (LS->Bitvec) {
 				k = Combi.ij2k(a, b, LS->nb_designs);
-				if (bitvector_s_i(LS->bitvector_adjacency, k)) {
+				if (LS->Bitvec->s_i(k)) {
 					good_candidates[nb_good_candidates++] = b;
 				}
 			}

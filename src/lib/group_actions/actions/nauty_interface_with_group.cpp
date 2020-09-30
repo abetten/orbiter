@@ -44,8 +44,8 @@ action *nauty_interface_with_group::create_automorphism_group_of_colored_graph_o
 
 
 	A = create_automorphism_group_and_canonical_labeling_of_colored_graph(
-		CG->nb_points, TRUE /* f_bitvec */,
-		CG->bitvector_adjacency, NULL /* int  *Adj */,
+		CG->nb_points,
+		TRUE /* f_bitvec */, CG->Bitvec, NULL /* int  *Adj */,
 		CG->point_color,
 		labeling,
 		verbose_level);
@@ -70,8 +70,8 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 		}
 
 	A = create_automorphism_group_and_canonical_labeling_of_colored_graph(
-		CG->nb_points, TRUE /* f_bitvec */,
-		CG->bitvector_adjacency, NULL /* int  *Adj */,
+		CG->nb_points,
+		TRUE /* f_bitvec */, CG->Bitvec, NULL /* int  *Adj */,
 		CG->point_color,
 		labeling,
 		verbose_level);
@@ -84,18 +84,19 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 }
 
 action *nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_colored_graph(
-	int n, int f_bitvec, uchar *Adj_bitvec, int *Adj,
+	int n, int f_bitvec, bitvector *Bitvec, int *Adj,
 	int *vertex_colors,
 	int *labeling,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
-	uchar *Adj1;
+	//uchar *Adj1;
+	bitvector *Adj1;
 	//int *labeling;
 	int *parts;
 	int nb_parts;
-	int i, j, k, n1, N, len, f_on = 0, c, nb_edges;
+	int i, j, k, n1, N, f_on = 0, c, nb_edges;
 	combinatorics_domain Combi;
 
 	//labeling = NEW_int(n);
@@ -126,11 +127,16 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 		}
 
 	N = (n1 * (n1 - 1)) >> 1;
+#if 0
 	len = (N + 7) >> 3;
 	Adj1 = NEW_uchar(len);
 	for (i = 0; i < len; i++) {
 		Adj1[i] = 0;
 		}
+#else
+	Adj1 = NEW_OBJECT(bitvector);
+	Adj1->allocate(N);
+#endif
 
 	nb_edges = 0;
 	for (i = 0; i < n; i++) {
@@ -138,7 +144,7 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 			f_on = FALSE;
 			k = Combi.ij2k(i, j, n);
 			if (f_bitvec) {
-				if (bitvector_s_i(Adj_bitvec, k)) {
+				if (Bitvec->s_i(k)) {
 					f_on = TRUE;
 					}
 				}
@@ -147,7 +153,7 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 				}
 			if (f_on) {
 				k = Combi.ij2k(i, j, n1);
-				bitvector_m_ii(Adj1, k, 1);
+				Adj1->m_i(k, 1);
 				nb_edges++;
 				}
 			}
@@ -156,7 +162,7 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 		c = C.class_of(i);
 		j = n + c;
 		k = Combi.ij2k(i, j, n1);
-		bitvector_m_ii(Adj1, k, 1);
+		Adj1->m_i(k, 1);
 		}
 
 
@@ -168,7 +174,7 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 		}
 
 
-
+#if 0
 	if (f_v) {
 		cout << "nauty_interface_with_group::create_automorphism_group_"
 				"and_canonical_labeling_of_colored_graph "
@@ -195,6 +201,8 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 			cout << endl;
 		}
 	}
+#endif
+
 	A = create_automorphism_group_of_graph_with_partition_and_labeling(
 			n1, TRUE, Adj1, NULL,
 			nb_parts, parts, labeling, verbose_level);
@@ -205,12 +213,13 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 
 	FREE_int(parts);
 	//FREE_int(labeling);
-	FREE_uchar(Adj1);
+	//FREE_uchar(Adj1);
+	FREE_OBJECT(Adj1);
 	return A;
 }
 
 action *nauty_interface_with_group::create_automorphism_group_of_graph_bitvec(
-	int n, uchar *Adj_bitvec,
+	int n, bitvector *Bitvec,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -225,7 +234,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph_bitvec(
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_bitvec" << endl;
 		}
 	A = create_automorphism_group_of_graph_with_partition_and_labeling(
-			n, TRUE, Adj_bitvec, NULL,
+			n, TRUE, Bitvec, NULL,
 			1, parts, labeling, verbose_level);
 	if (f_v) {
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_bitvec done" << endl;
@@ -236,7 +245,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph_bitvec(
 
 action *nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling(
 	int n,
-	int f_bitvector, uchar *Adj_bitvec, int *Adj,
+	int f_bitvector, bitvector *Bitvec, int *Adj,
 	int nb_parts, int *parts,
 	int *labeling,
 	int verbose_level)
@@ -294,7 +303,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph_with_part
 					"partition_and_labeling "
 					"before nauty_interface_graph_bitvec" << endl;
 			}
-		Nau.nauty_interface_graph_bitvec(n, Adj_bitvec,
+		Nau.nauty_interface_graph_bitvec(n, Bitvec,
 			labeling, partitions,
 			Aut, Aut_counter,
 			Base, Base_length,

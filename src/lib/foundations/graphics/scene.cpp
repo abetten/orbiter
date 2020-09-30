@@ -3235,17 +3235,17 @@ void scene::clebsch_cubic_version2_Hessian()
 	cubic(Eqn);
 }
 
-#define alpha ((1. + sqrt(5)) * .5)
-#define beta ((-1. + sqrt(5)) * .5)
+#define scene_alpha ((1. + sqrt(5)) * .5)
+#define scene_beta ((-1. + sqrt(5)) * .5)
 
 void scene::clebsch_cubic_version2_lines_a()
 {
-	double A[] = {beta, -1, 0, 1, -1, beta, 1, 0,
-		beta, -1, 1, -beta, -1, beta, 0, -beta,
-		beta, -1, -beta, 0, -1, beta, -beta, 1,
-		-1, -alpha, 0, 1, -alpha, -1, 1, 0,
-		-1, -alpha, 1, alpha, -alpha, -1, 0, alpha,
-		-1, -alpha, alpha, 0, -alpha, -1, alpha, 1};
+	double A[] = {scene_beta, -1, 0, 1, -1, scene_beta, 1, 0,
+		scene_beta, -1, 1, -scene_beta, -1, scene_beta, 0, -scene_beta,
+		scene_beta, -1, -scene_beta, 0, -1, scene_beta, -scene_beta, 1,
+		-1, -scene_alpha, 0, 1, -scene_alpha, -1, 1, 0,
+		-1, -scene_alpha, 1, scene_alpha, -scene_alpha, -1, 0, scene_alpha,
+		-1, -scene_alpha, scene_alpha, 0, -scene_alpha, -1, scene_alpha, 1};
 	int i, j;
 	double L[8];
 	double a, av;
@@ -3273,12 +3273,12 @@ void scene::clebsch_cubic_version2_lines_a()
 
 void scene::clebsch_cubic_version2_lines_b()
 {
-	double B[] = {-1, -alpha, 1, 0, -alpha, -1, 0, 1,
-			-1, -alpha, 0, alpha, -alpha, -1, 1, alpha,
-        	-1, -alpha, alpha, 1, -alpha, -1, alpha, 0,
-        	-1, beta, 0, 1, beta, -1, 1, 0,
-        	-1, beta, 1, -beta, beta, -1, 0, -beta,
-        	-1, beta, -beta, 0, beta, -1, -beta, 1};
+	double B[] = {-1, -scene_alpha, 1, 0, -scene_alpha, -1, 0, 1,
+			-1, -scene_alpha, 0, scene_alpha, -scene_alpha, -1, 1, scene_alpha,
+        	-1, -scene_alpha, scene_alpha, 1, -scene_alpha, -1, scene_alpha, 0,
+        	-1, scene_beta, 0, 1, scene_beta, -1, 1, 0,
+        	-1, scene_beta, 1, -scene_beta, scene_beta, -1, 0, -scene_beta,
+        	-1, scene_beta, -scene_beta, 0, scene_beta, -1, -scene_beta, 1};
 	int i, j;
 	double L[8];
 	double a, av;

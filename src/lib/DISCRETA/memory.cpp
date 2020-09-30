@@ -268,11 +268,12 @@ void memory::read_char(char *c)
 void memory::write_int(int i)
 {
 	int_4 i1 = (int_4) i;
+	os_interface Os;
 	
 #ifdef DEBUG_WRITE_int
 	cout << "memory::write_int(), at " << used_length() << ", writing int " << i1 << endl;
 #endif
-	block_swap_chars((char *) &i1, 4, 1);
+	Os.block_swap_chars((char *) &i1, 4, 1);
 	append(4, (char *) &i1);
 }
 
@@ -281,6 +282,7 @@ void memory::read_int(int *i)
 	int_4 i1;
 	int l1, j, cur_p, l;
 	char *cp, *cp1;
+	os_interface Os;
 	
 	cur_p = cur_pointer();
 	l = used_length();
@@ -297,7 +299,7 @@ void memory::read_int(int *i)
 		cp++;
 		}
 	/* i1 = *(int *) (cp + cur_p); */
-	block_swap_chars((char *) &i1, 4, 1);
+	Os.block_swap_chars((char *) &i1, 4, 1);
 #ifdef DEBUG_WRITE_int
 	cout << "memory::read_int(), at " << cur_pointer() << ", reading " << i1 << endl;
 #endif

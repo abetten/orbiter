@@ -39,9 +39,38 @@ public:
 	void print();
 	void zero_out();
 	int s_ij(int i, int j);
-	void m_iji(int i, int j, int a);
+	void m_ij(int i, int j, int a);
 	void mult_int_matrix_from_the_left(int *A, int Am, int An,
 			bitmatrix *Out, int verbose_level);
+
+};
+
+// #############################################################################
+// bitvector.cpp
+// #############################################################################
+
+//! bitvectors: compact storage of 0/1-vectors
+
+class bitvector {
+
+private:
+	uchar *data; // [allocated_length]
+	long int length; // number of bits used
+	long int allocated_length;
+
+
+public:
+
+	bitvector();
+	~bitvector();
+	void allocate(long int length);
+	long int get_allocated_length();
+	uchar *get_data();
+	void m_i(long int i, int a);
+	void set_bit(long int i);
+	int s_i(long int i);
+	void save(std::ofstream &fp);
+	void load(std::ifstream &fp);
 
 };
 
@@ -200,6 +229,24 @@ public:
 		int verbose_level);
 };
 
+
+// #############################################################################
+// data_structures_global.cpp:
+// #############################################################################
+
+
+//! a catch-all container class for everything related to data structures
+
+
+class data_structures_global {
+public:
+	data_structures_global();
+	~data_structures_global();
+	void bitvector_m_ii(uchar *bitvec, long int i, int a);
+	void bitvector_set_bit(uchar *bitvec, long int i);
+	int bitvector_s_i(uchar *bitvec, long int i);
+
+};
 
 // #############################################################################
 // fancy_set.cpp

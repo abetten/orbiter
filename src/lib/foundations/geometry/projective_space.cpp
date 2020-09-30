@@ -20,22 +20,13 @@ namespace foundations {
 
 projective_space::projective_space()
 {
-	null();
-};
-
-projective_space::~projective_space()
-{
-	freeself();
-}
-
-void projective_space::null()
-{
 	Grass_lines = NULL;
 	Grass_planes = NULL;
 	F = NULL;
 	Go = NULL;
 	Nb_subspaces = NULL;
-	incidence_bitvec = NULL;
+	Bitmatrix = NULL;
+	//incidence_bitvec = NULL;
 	Line_through_two_points = NULL;
 	Line_intersection = NULL;
 	Lines = NULL;
@@ -46,6 +37,16 @@ void projective_space::null()
 	w = NULL;
 	Mtx = NULL;
 	Mtx2 = NULL;
+	null();
+};
+
+projective_space::~projective_space()
+{
+	freeself();
+}
+
+void projective_space::null()
+{
 }
 
 void projective_space::freeself()
@@ -54,75 +55,80 @@ void projective_space::freeself()
 
 	if (f_v) {
 		cout << "projective_space::freeself" << endl;
-		}
+	}
 	if (Go) {
 		if (f_v) {
 			cout << "projective_space::freeself deleting Go" << endl;
-			}
-		FREE_OBJECT(Go);
 		}
+		FREE_OBJECT(Go);
+	}
 	if (Nb_subspaces) {
 		FREE_lint(Nb_subspaces);
-		}
+	}
 	if (v) {
 		if (f_v) {
 			cout << "projective_space::freeself deleting v" << endl;
-			}
-		FREE_int(v);
 		}
+		FREE_int(v);
+	}
 	if (w) {
 		FREE_int(w);
-		}
+	}
 	if (Mtx) {
 		FREE_int(Mtx);
-		}
+	}
 	if (Mtx2) {
 		FREE_int(Mtx2);
-		}
+	}
 
 	if (Grass_lines) {
 		if (f_v) {
 			cout << "projective_space::freeself "
 					"deleting Grass_lines" << endl;
-			}
-		FREE_OBJECT(Grass_lines);
 		}
+		FREE_OBJECT(Grass_lines);
+	}
 	if (Grass_planes) {
 		if (f_v) {
 			cout << "projective_space::freeself "
 					"deleting Grass_planes" << endl;
-			}
-		FREE_OBJECT(Grass_planes);
 		}
+		FREE_OBJECT(Grass_planes);
+	}
+	if (Bitmatrix) {
+		FREE_OBJECT(Bitmatrix);
+	}
+#if 0
 	if (incidence_bitvec) {
 		FREE_uchar(incidence_bitvec);
-		}
+	}
+#endif
 	if (Line_through_two_points) {
 		FREE_int(Line_through_two_points);
-		}
+	}
 	if (Line_intersection) {
 		FREE_int(Line_intersection);
-		}
+	}
 	if (Lines) {
 		FREE_int(Lines);
-		}
+	}
 	if (Lines_on_point) {
 		if (f_v) {
 			cout << "projective_space::freeself "
 					"deleting Lines_on_point" << endl;
-			}
-		FREE_int(Lines_on_point);
 		}
+		FREE_int(Lines_on_point);
+	}
 	if (Polarity_point_to_hyperplane) {
 		FREE_int(Polarity_point_to_hyperplane);
-		}
+	}
 	if (Polarity_hyperplane_to_point) {
 		FREE_int(Polarity_hyperplane_to_point);
-		}
+	}
 	null();
 	if (f_v) {
 		cout << "projective_space::freeself done" << endl;
-		}
+	}
 }
 
 void projective_space::init(int n, finite_field *F, 
@@ -253,6 +259,7 @@ void projective_space::init_incidence_structure(int verbose_level)
 			cout << "projective_space::init_incidence_structure "
 					"allocating Incidence (bitvector)" << endl;
 		}
+#if 0
 		long int len = ((long int) N_points * (long int) N_lines + 7) >> 3;
 		if (f_v) {
 			cout << "projective_space::init_incidence_structure "
@@ -265,7 +272,10 @@ void projective_space::init_incidence_structure(int verbose_level)
 		for (i = 0; i < len; i++) {
 			incidence_bitvec[i] = 0;
 		}
-
+#else
+		Bitmatrix = NEW_OBJECT(bitmatrix);
+		Bitmatrix->init(N_points, N_lines, verbose_level);
+#endif
 	}
 	else {
 		if (f_v) {
@@ -274,7 +284,8 @@ void projective_space::init_incidence_structure(int verbose_level)
 				"incidence matrix" << endl;
 		}
 		//return;
-		incidence_bitvec = NULL;
+		//incidence_bitvec = NULL;
+		Bitmatrix = NULL;
 	}
 
 
@@ -391,7 +402,7 @@ void projective_space::init_incidence_structure(int verbose_level)
 
 
 
-	if (Lines || incidence_bitvec || Lines_on_point) {
+	if (Lines || Bitmatrix || Lines_on_point) {
 
 
 		if (f_v) {
@@ -400,8 +411,8 @@ void projective_space::init_incidence_structure(int verbose_level)
 			if (Lines) {
 				cout << "Lines is allocated" << endl;
 			}
-			if (incidence_bitvec) {
-				cout << "incidence_bitvec is allocated" << endl;
+			if (Bitmatrix) {
+				cout << "Bitmatrix is allocated" << endl;
 			}
 			if (Lines_on_point) {
 				cout << "Lines_on_point is allocated" << endl;
@@ -448,8 +459,8 @@ void projective_space::init_incidence_structure(int verbose_level)
 				F->mult_matrix_matrix(v, Grass_lines->M, w, 1, 2, n + 1,
 						0 /* verbose_level */);
 				F->PG_element_rank_modified(w, 1, n + 1, b);
-				if (incidence_bitvec) {
-					incidence_m_ii(b, i, 1);
+				if (Bitmatrix) {
+					Bitmatrix->m_ij(b, i, 1);
 				}
 
 				if (Lines) {
@@ -698,7 +709,7 @@ void projective_space::create_points_on_line(
 				0 /* verbose_level */);
 		F->PG_element_rank_modified(w, 1, n + 1, b);
 		line[a] = b;
-		}
+	}
 }
 
 int projective_space::create_point_on_line(
@@ -711,19 +722,19 @@ int projective_space::create_point_on_line(
 
 	if (f_v) {
 		cout << "projective_space::create_point_on_line" << endl;
-		}
+	}
 	Grass_lines->unrank_lint(line_rk, 0/*verbose_level - 4*/);
 	if (f_v) {
 		cout << "projective_space::create_point_on_line line:" << endl;
 		int_matrix_print(Grass_lines->M, 2, n + 1);
-		}
+	}
 
 	F->PG_element_unrank_modified(v, 1, 2, pt_rk);
 	if (f_v) {
 		cout << "projective_space::create_point_on_line v=" << endl;
 		int_vec_print(cout, v, 2);
 		cout << endl;
-		}
+	}
 
 	F->mult_matrix_matrix(v, Grass_lines->M, w, 1, 2, n + 1,
 			0 /* verbose_level */);
@@ -731,13 +742,13 @@ int projective_space::create_point_on_line(
 		cout << "projective_space::create_point_on_line w=" << endl;
 		int_vec_print(cout, w, n + 1);
 		cout << endl;
-		}
+	}
 
 	F->PG_element_rank_modified(w, 1, n + 1, b);
 
 	if (f_v) {
 		cout << "projective_space::create_point_on_line b = " << b << endl;
-		}
+	}
 	return b;
 }
 
@@ -800,7 +811,7 @@ void projective_space::make_incidence_matrix(
 int projective_space::is_incident(int pt, int line)
 {
 	int f_v = FALSE;
-	long int a, rk;
+	long int rk;
 
 	if (TRUE /*incidence_bitvec == NULL*/) {
 #if 0
@@ -837,22 +848,25 @@ int projective_space::is_incident(int pt, int line)
 		}
 	}
 	else {
-		a = (long int) pt * (long int) N_lines + (long int) line;
-		return bitvector_s_i(incidence_bitvec, a);
+		//a = (long int) pt * (long int) N_lines + (long int) line;
+		//return bitvector_s_i(incidence_bitvec, a);
+		return Bitmatrix->s_ij(pt, line);
 	}
 }
 
 void projective_space::incidence_m_ii(int pt, int line, int a)
 {
-	long int b;
+	//long int b;
 
-	if (incidence_bitvec == 0) {
+	if (Bitmatrix == NULL) {
 		cout << "projective_space::incidence_m_ii "
-				"incidence_bitvec == 0" << endl;
+				"Bitmatrix == NULL" << endl;
 		exit(1);
 		}
-	b = (long int) pt * (long int) N_lines + (long int) line;
-	bitvector_m_ii(incidence_bitvec, b, a);
+	//b = (long int) pt * (long int) N_lines + (long int) line;
+	//bitvector_m_ii(incidence_bitvec, b, a);
+
+	Bitmatrix->m_ij(pt, N_lines, a);
 }
 
 void projective_space::make_incidence_structure_and_partition(
@@ -865,11 +879,10 @@ void projective_space::make_incidence_structure_and_partition(
 	int i, j, h;
 
 	if (f_v) {
-		cout << "projective_space::make_incidence_structure_"
-				"and_partition" << endl;
+		cout << "projective_space::make_incidence_structure_and_partition" << endl;
 		cout << "N_points=" << N_points << endl;
 		cout << "N_lines=" << N_lines << endl;
-		}
+	}
 	Inc = NEW_OBJECT(incidence_structure);
 
 	
@@ -877,35 +890,35 @@ void projective_space::make_incidence_structure_and_partition(
 		cout << "projective_space::make_incidence_structure_and_"
 				"partition allocating M of size "
 				<< N_points * N_lines << endl;
-		}
+	}
 	M = NEW_int(N_points * N_lines);
 	if (f_v) {
 		cout << "projective_space::make_incidence_structure_and_"
 				"partition after allocating M of size "
 				<< N_points * N_lines << endl;
-		}
+	}
 	int_vec_zero(M, N_points * N_lines);
 
 	if (Lines_on_point == NULL) {
 		cout << "projective_space::make_incidence_structure_and_"
 				"partition Lines_on_point == NULL" << endl;
 		exit(1);
-		}
+	}
 	for (i = 0; i < N_points; i++) {
 		for (h = 0; h < r; h++) {
 			j = Lines_on_point[i * r + h];
 			M[i * N_lines + j] = 1;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "projective_space::make_incidence_structure_and_"
 				"partition before Inc->init_by_matrix" << endl;
-		}
+	}
 	Inc->init_by_matrix(N_points, N_lines, M, verbose_level - 1);
 	if (f_v) {
 		cout << "projective_space::make_incidence_structure_and_"
 				"partition after Inc->init_by_matrix" << endl;
-		}
+	}
 	FREE_int(M);
 
 
@@ -916,9 +929,8 @@ void projective_space::make_incidence_structure_and_partition(
 	Stack->sort_cells();
 	
 	if (f_v) {
-		cout << "projective_space::make_incidence_structure_and_"
-				"partition done" << endl;
-		}
+		cout << "projective_space::make_incidence_structure_and_partition done" << endl;
+	}
 }
 
 void projective_space::incma_for_type_ij(
@@ -939,7 +951,7 @@ void projective_space::incma_for_type_ij(
 		cout << "projective_space::incma_for_type_ij" << endl;
 		cout << "row_type = " << row_type << endl;
 		cout << "col_type = " << col_type << endl;
-		}
+	}
 	if (col_type < row_type) {
 		cout << "projective_space::incma_for_type_ij "
 				"col_type < row_type" << endl;
@@ -1011,7 +1023,7 @@ void projective_space::incma_for_type_ij(
 	FREE_int(base_cols);
 	if (f_v) {
 		cout << "projective_space::incma_for_type_ij done" << endl;
-		}
+	}
 }
 
 void projective_space::incidence_and_stack_for_type_ij(
@@ -1034,13 +1046,13 @@ void projective_space::incidence_and_stack_for_type_ij(
 	if (f_v) {
 		cout << "projective_space::incidence_and_stack_for_type_ij "
 				"before Inc->init_by_matrix" << endl;
-		}
+	}
 	Inc = NEW_OBJECT(incidence_structure);
 	Inc->init_by_matrix(nb_rows, nb_cols, Incma, verbose_level - 1);
 	if (f_v) {
 		cout << "projective_space::incidence_and_stack_for_type_ij "
 				"after Inc->init_by_matrix" << endl;
-		}
+	}
 	FREE_int(Incma);
 
 
@@ -1051,8 +1063,7 @@ void projective_space::incidence_and_stack_for_type_ij(
 	Stack->sort_cells();
 
 	if (f_v) {
-		cout << "projective_space::incidence_and_stack_for_type_ij "
-				"done" << endl;
+		cout << "projective_space::incidence_and_stack_for_type_ij done" << endl;
 	}
 }
 long int projective_space::nb_rk_k_subspaces_as_lint(int k)
@@ -1086,7 +1097,7 @@ void projective_space::print_set_of_points(ostream &ost, long int *Pts, int nb_p
 		ost << h << " & " << Pts[h] << " & ";
 		int_vec_print(ost, v, n + 1);
 		ost << "\\\\" << endl;
-		}
+	}
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
 	ost << "$$" << endl;
@@ -1151,7 +1162,7 @@ void projective_space::unrank_lines(int *v, long int *Rk, int nb)
 	for (i = 0; i < nb; i++) {
 		Grass_lines->unrank_lint_here(
 				v + i * 2 * (n + 1), Rk[i], 0 /* verbose_level */);
-		}
+	}
 }
 
 long int projective_space::rank_plane(int *basis)
@@ -1162,7 +1173,7 @@ long int projective_space::rank_plane(int *basis)
 		cout << "projective_space::rank_plane "
 				"Grass_planes == NULL" << endl;
 		exit(1);
-		}
+	}
 	b = Grass_planes->rank_lint_here(basis, 0/*verbose_level - 4*/);
 	return b;
 }
@@ -1173,7 +1184,7 @@ void projective_space::unrank_plane(int *basis, long int rk)
 		cout << "projective_space::unrank_plane "
 				"Grass_planes == NULL" << endl;
 		exit(1);
-		}
+	}
 	Grass_planes->unrank_lint_here(basis, rk, 0/*verbose_level - 4*/);
 }
 
@@ -1194,10 +1205,10 @@ int projective_space::test_if_lines_are_disjoint(
 	if (Lines) {
 		return test_if_sets_are_disjoint_assuming_sorted(
 				Lines + l1 * k, Lines + l2 * k, k, k);
-		}
+	}
 	else {
 		return test_if_lines_are_disjoint_from_scratch(l1, l2);
-		}
+	}
 }
 
 int projective_space::test_if_lines_are_disjoint_from_scratch(
@@ -1214,10 +1225,10 @@ int projective_space::test_if_lines_are_disjoint_from_scratch(
 	FREE_int(Mtx);
 	if (rk == 4) {
 		return TRUE;
-		}
+	}
 	else {
 		return FALSE;
-		}
+	}
 }
 
 int projective_space::intersection_of_two_lines(long int l1, long int l2)
@@ -1245,12 +1256,12 @@ int projective_space::intersection_of_two_lines(long int l1, long int l2)
 		cout << "projective_space::intersection_of_two_lines r < d - 1, "
 				"the lines do not intersect" << endl;
 		exit(1);
-		}
+	}
 	if (r > d - 1) {
 		cout << "projective_space::intersection_of_two_lines r > d - 1, "
 				"something is wrong" << endl;
 		exit(1);
-		}
+	}
 	F->perp_standard(d, d - 1, Mtx3, 0);
 	b = rank_point(Mtx3 + (d - 1) * d);
 
@@ -1273,16 +1284,16 @@ int projective_space::arc_test(long int *input_pts, int nb_pts,
 
 	if (f_v) {
 		cout << "projective_space::arc_test" << endl;
-		}
+	}
 	if (n != 2) {
 		cout << "projective_space::arc_test n != 2" << endl;
 		exit(1);
-		}
+	}
 	Pts = NEW_int(nb_pts * 3);
 	Mtx = NEW_int(3 * 3);
 	for (i = 0; i < nb_pts; i++) {
 		unrank_point(Pts + i * 3, input_pts[i]);
-		}
+	}
 	N = Combi.int_n_choose_k(nb_pts, 3);
 	for (h = 0; h < N; h++) {
 		Combi.unrank_k_subset(h, set, nb_pts, 3);
@@ -1293,16 +1304,16 @@ int projective_space::arc_test(long int *input_pts, int nb_pts,
 			if (f_v) {
 				cout << "Points P_" << set[0] << ", P_" << set[1]
 					<< " and P_" << set[2] << " are collinear" << endl;
-				}
-			ret = FALSE;
 			}
+			ret = FALSE;
 		}
+	}
 
 	FREE_int(Pts);
 	FREE_int(Mtx);
 	if (f_v) {
 		cout << "projective_space::arc_test done" << endl;
-		}
+	}
 	return ret;
 }
 
@@ -1325,12 +1336,12 @@ int projective_space::determine_line_in_plane(
 
 	if (f_v) {
 		cout << "projective_space::determine_line_in_plane" << endl;
-		}
+	}
 	if (n != 2) {
 		cout << "projective_space::determine_line_in_plane "
 				"n != 2" << endl;
 		exit(1);
-		}
+	}
 
 
 
@@ -1338,13 +1349,13 @@ int projective_space::determine_line_in_plane(
 	system = NEW_int(nb_pts * 3);
 	for (i = 0; i < nb_pts; i++) {
 		unrank_point(coords + i * 3, two_input_pts[i]);
-		}
+	}
 	if (f_vv) {
 		cout << "projective_space::determine_line_in_plane "
 				"points:" << endl;
 		print_integer_matrix_width(cout,
 				coords, nb_pts, 3, 3, F->log10_of_q);
-		}
+	}
 	for (i = 0; i < nb_pts; i++) {
 		x = coords[i * 3 + 0];
 		y = coords[i * 3 + 1];
@@ -1352,12 +1363,12 @@ int projective_space::determine_line_in_plane(
 		system[i * 3 + 0] = x;
 		system[i * 3 + 1] = y;
 		system[i * 3 + 2] = z;
-		}
+	}
 	if (f_v) {
 		cout << "projective_space::determine_line_in_plane system:" << endl;
 		print_integer_matrix_width(cout,
 				system, nb_pts, 3, 3, F->log10_of_q);
-		}
+	}
 
 
 
@@ -1367,18 +1378,18 @@ int projective_space::determine_line_in_plane(
 		if (f_v) {
 			cout << "projective_space::determine_line_in_plane "
 					"system underdetermined" << endl;
-			}
-		return FALSE;
 		}
+		return FALSE;
+	}
 	F->matrix_get_kernel(system, 2, 3, base_cols, rk, 
 		kernel_m, kernel_n, kernel, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space::determine_line_in_plane line:" << endl;
 		print_integer_matrix_width(cout, kernel, 1, 3, 3, F->log10_of_q);
-		}
+	}
 	for (i = 0; i < 3; i++) {
 		three_coeffs[i] = kernel[i];
-		}
+	}
 	FREE_int(coords);
 	FREE_int(system);
 	return TRUE;

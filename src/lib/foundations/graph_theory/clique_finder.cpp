@@ -30,7 +30,9 @@ clique_finder::clique_finder()
 	f_write_tree = FALSE;
 	fp_tree = NULL;
 
-	f_has_bitmatrix = FALSE;
+	//f_has_bitmatrix = FALSE;
+	//Bitmatrix_adjacency = NULL;
+	//bitmatrix_adjacency = NULL;
 
 	f_has_row_by_row_adjacency_matrix = FALSE;
 	row_by_row_adjacency_matrix = NULL;
@@ -38,7 +40,7 @@ clique_finder::clique_finder()
 	point_labels = NULL;
 	point_is_suspicous = NULL;
 
-	bitmatrix_adjacency = NULL;
+
 	pt_list = NULL;
 	pt_list_inv = NULL;
 	nb_points = NULL;
@@ -85,11 +87,11 @@ void clique_finder::free()
 	if (point_is_suspicous) {
 		FREE_int(point_is_suspicous);
 	}
-
-	if (bitmatrix_adjacency) {
-		//delete [] adjacency;
-		FREE_uchar(bitmatrix_adjacency);
+#if 0
+	if (Bitmatrix_adjacency) {
+		FREE_OBJECT(Bitmatrix_adjacency);
 	}
+#endif
 	if (pt_list) {
 		FREE_int(pt_list);
 	}
@@ -140,7 +142,7 @@ void clique_finder::free()
 void clique_finder::init(std::string &label, int n,
 	int target_depth, 
 	int f_has_adj_list, int *adj_list_coded, 
-	int f_has_bitvector, uchar *bitvector_adjacency, 
+	int f_has_bitvector, bitvector *Bitvec_adjacency,
 	int print_interval, 
 	int f_maxdepth, int maxdepth, 
 	int f_store_solutions, 
@@ -163,7 +165,7 @@ void clique_finder::init(std::string &label, int n,
 	clique_finder::f_has_adj_list = f_has_adj_list;
 	clique_finder::adj_list_coded = adj_list_coded;
 	clique_finder::f_has_bitvector = f_has_bitvector;
-	clique_finder::bitvector_adjacency = bitvector_adjacency;
+	clique_finder::Bitvec_adjacency = Bitvec_adjacency;
 
 	f_has_row_by_row_adjacency_matrix = FALSE;
 	row_by_row_adjacency_matrix = NULL;
@@ -1731,6 +1733,7 @@ void clique_finder::write_entry_to_tree_file(int depth,
 	}
 }
 
+#if 0
 void clique_finder::m_iji(int i, int j, int a)
 {
 	int m, n; //, N; //, jj, bit;
@@ -1766,6 +1769,7 @@ void clique_finder::m_iji(int i, int j, int a)
 		}
 #endif
 }
+#endif
 
 int clique_finder::s_ij(int i, int j)
 {
@@ -1790,9 +1794,11 @@ int clique_finder::s_ij(int i, int j)
 	if (f_has_row_by_row_adjacency_matrix) {
 		return row_by_row_adjacency_matrix[i][j];
 	}
+#if 0
 	else if (f_has_bitmatrix) {
 		return bitvector_s_i(bitmatrix_adjacency, i * n + j);
 	}
+#endif
 	else if (f_has_adj_list) {
 		if (i == j) {
 			return 0;
@@ -1806,7 +1812,7 @@ int clique_finder::s_ij(int i, int j)
 			return 0;
 		}
 		k = Combi.ij2k_lint(i, j, n);
-		aij = bitvector_s_i(bitvector_adjacency, k);
+		aij = Bitvec_adjacency->s_i(k);
 		return aij;
 	}
 	else {
@@ -1847,7 +1853,7 @@ void clique_finder::delinearize_adjacency_list(int verbose_level)
 	for (i = 0; i < n; i++) {
 		for (j = i + 1; j < n; j++) {
 			if (f_has_bitvector) {
-				aij = bitvector_s_i(bitvector_adjacency, k);
+				aij = Bitvec_adjacency->s_i(k);
 			}
 			else if (f_has_adj_list) {
 				aij = adj_list_coded[k];
@@ -1870,6 +1876,7 @@ void clique_finder::delinearize_adjacency_list(int verbose_level)
 	}
 }
 
+#if 0
 void clique_finder::allocate_bitmatrix(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1924,7 +1931,7 @@ void clique_finder::allocate_bitmatrix(int verbose_level)
 					aij = adj_list_coded[k];
 				}
 				else if (f_has_bitvector) {
-					aij = bitvector_s_i(bitvector_adjacency, k);
+					aij = Bitvec_adjacency->s_i(k);
 				}
 				m_iji(i, j, aij);
 				m_iji(j, i, aij);
@@ -1936,6 +1943,7 @@ void clique_finder::allocate_bitmatrix(int verbose_level)
 		cout << "clique_finder::allocate_bitmatrix done" << endl;
 	}
 }
+#endif
 
 
 

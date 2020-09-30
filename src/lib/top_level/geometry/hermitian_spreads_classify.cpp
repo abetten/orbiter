@@ -259,7 +259,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 
 	int canonical_pt;
 	sg = A->set_stabilizer_in_projective_space(P,
-			Pts, nb_pts, canonical_pt, NULL, FALSE, NULL,
+			Pts, nb_pts, canonical_pt, NULL,
 			verbose_level);
 	//GU = P->set_stabilizer(Pts, nb_pts, verbose_level);
 	longinteger_object go;

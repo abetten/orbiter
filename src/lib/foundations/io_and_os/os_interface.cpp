@@ -334,6 +334,113 @@ void os_interface::get_string_from_command_line(std::string &p, int argc, const 
 	}
 }
 
+static const char *ascii_code = "abcdefghijklmnop";
+
+static int f_has_swap_initialized = FALSE;
+static int f_has_swap = 0;
+	// indicates if char swap is present
+	// i.e., little endian / big endian
+
+void os_interface::test_swap()
+{
+	//unsigned long test_long = 0x11223344L;
+	int_4 test = 0x11223344L;
+	char *ptr;
+
+	ptr = (char *) &test;
+	if (ptr[0] == 0x44) {
+		f_has_swap = TRUE;
+		cout << "we have a swap" << endl;
+	}
+	else if (ptr[0] == 0x11) {
+		f_has_swap = FALSE;
+		cout << "we don't have a swap" << endl;
+	}
+	else {
+		cout << "The test_swap test is inconclusive" << endl;
+		exit(1);
+	}
+	f_has_swap_initialized = TRUE;
+}
+
+// block_swap_chars:
+// switches the chars in the buffer pointed to by "ptr".
+// There are "no" intervals of size "size".
+// This routine is due to Roland Grund
+
+void os_interface::block_swap_chars(char *ptr, int size, int no)
+{
+	char *ptr_end, *ptr_start;
+	char chr;
+	int i;
+
+	if (!f_has_swap_initialized) {
+		test_swap();
+	}
+	if ((f_has_swap) && (size > 1)) {
+
+		for (; no--; ) {
+
+			ptr_start = ptr;
+			ptr_end = ptr_start + (size - 1);
+			for (i = size / 2; i--; ) {
+				chr = *ptr_start;
+				*ptr_start++ = *ptr_end;
+				*ptr_end-- = chr;
+			}
+			ptr += size;
+		}
+	}
+}
+
+void os_interface::code_int4(char *&p, int_4 i)
+{
+	int_4 ii = i;
+
+	//cout << "code_int4 " << i << endl;
+	uchar *q = (uchar *) &ii;
+	//block_swap_chars((SCHAR *)&ii, 4, 1);
+	code_uchar(p, q[0]);
+	code_uchar(p, q[1]);
+	code_uchar(p, q[2]);
+	code_uchar(p, q[3]);
+}
+
+int_4 os_interface::decode_int4(char *&p)
+{
+	int_4 ii;
+	uchar *q = (uchar *) &ii;
+	decode_uchar(p, q[0]);
+	decode_uchar(p, q[1]);
+	decode_uchar(p, q[2]);
+	decode_uchar(p, q[3]);
+	//block_swap_chars((SCHAR *)&ii, 4, 1);
+	//cout << "decode_int4 " << ii << endl;
+	return ii;
+}
+
+void os_interface::code_uchar(char *&p, uchar a)
+{
+	//cout << "code_uchar " << (int) a << endl;
+	int a_high = a >> 4;
+	int a_low = a & 15;
+	*p++ = ascii_code[a_high];
+	*p++ = ascii_code[a_low];
+}
+
+void os_interface::decode_uchar(char *&p, uchar &a)
+{
+	int a_high = (int)(*p++ - 'a');
+	int a_low = (int)(*p++ - 'a');
+	int i;
+	//cout << "decode_uchar a_high = " << a_high << endl;
+	//cout << "decode_uchar a_low = " << a_low << endl;
+	i = (a_high << 4) | a_low;
+	//cout << "decode_uchar i = " << i << endl;
+	//cout << "decode_uchar " << (int) i << endl;
+	a = (uchar)i;
+}
+
 
 
 }}

@@ -80,7 +80,7 @@ void bitmatrix::unrank_PG_elements_in_columns_consecutively(
 		F->PG_element_unrank_modified_lint(v, 1, m, start_value + j);
 		for (i = 0; i < m; i++) {
 			if (v[i]) {
-				m_iji(i, j, 1);
+				m_ij(i, j, 1);
 			}
 		}
 	}
@@ -190,17 +190,17 @@ int bitmatrix::s_ij(int i, int j)
 		return 0;
 }
 
-void bitmatrix::m_iji(int i, int j, int a)
+void bitmatrix::m_ij(int i, int j, int a)
 {
 	int jj, bit;
 	uint32_t mask;
 
 	if (i < 0 || i >= m) {
-		cout << "bitmatrix::m_iji addressing error, i = " << i << ", m = " << m << endl;
+		cout << "bitmatrix::m_ij addressing error, i = " << i << ", m = " << m << endl;
 		exit(1);
 		}
 	if ( j < 0 || j >= n ) {
-		cout << "bitmatrix::m_iji addressing error, j = " << j << ", n = " << n << endl;
+		cout << "bitmatrix::m_ij addressing error, j = " << j << ", n = " << n << endl;
 		exit(1);
 		}
 	jj = j >> 5;

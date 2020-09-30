@@ -112,8 +112,9 @@ public:
 	int *partition;
 
 	int f_has_canonical_form;
-	uchar *canonical_form; // [canonical_form_len]
-	int canonical_form_len;
+	bitvector *canonical_form;
+	//uchar *canonical_form; // [canonical_form_len]
+	//int canonical_form_len;
 
 	int f_has_canonical_labeling;
 	long int *canonical_labeling;  // [nb_rows + nb_cols]
@@ -127,9 +128,9 @@ public:
 	void init(incidence_structure *Inc,
 		int *partition,
 		int verbose_level);
-	void print_canonical_form(std::ostream &ost);
+	//void print_canonical_form(std::ostream &ost);
 	void set_stabilizer_and_canonical_form(
-			int f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix,
+			//int f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix,
 			int f_compute_canonical_form,
 			int verbose_level);
 };
@@ -717,11 +718,10 @@ public:
 		int verbose_level);
 	strong_generators *set_stabilizer_of_object(
 		object_in_projective_space *OiP, 
-		int f_save_incma_in_and_out, 
-		std::string &save_incma_in_and_out_prefix,
-		int f_compute_canonical_form, 
-		uchar *&canonical_form, 
-		int &canonical_form_len,
+		//int f_save_incma_in_and_out,
+		//std::string &save_incma_in_and_out_prefix,
+		int f_compute_canonical_form, bitvector *&Canonical_form,
+		//uchar *&canonical_form, int &canonical_form_len,
 		long int *canonical_labeling, int &canonical_labeling_len,
 		int verbose_level);
 		// canonical_labeling[nb_rows + nb_cols] contains the canonical labeling
@@ -730,11 +730,13 @@ public:
 		// object_in_projective_space::encoding_size(
 		//   int &nb_rows, int &nb_cols,
 		//   int verbose_level)
+#if 0
 	void save_Levi_graph(std::string &prefix,
 			const char *mask,
 			int *Incma, int nb_rows, int nb_cols,
 			long int *canonical_labeling, int canonical_labeling_len,
 			int verbose_level);
+#endif
 	void report_fixed_objects_in_PG_3_tex(
 		int *Elt, std::ostream &ost,
 		int verbose_level);
@@ -752,6 +754,7 @@ public:
 		strong_generators *&SG,
 		long int *canonical_labeling,
 		int verbose_level);
+#if 0
 	void merge_packings(
 			std::string *fnames, int nb_files,
 			std::string &file_of_spreads,
@@ -772,6 +775,7 @@ public:
 			spread_tables *Spread_tables,
 			classify_bitvectors *&CB,
 			int verbose_level);
+#endif
 	object_in_projective_space *create_object_from_string(
 		int type, std::string &input_fname, int input_idx,
 		std::string &set_as_string, int verbose_level);

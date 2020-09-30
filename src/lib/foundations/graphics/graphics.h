@@ -535,7 +535,7 @@ public:
 		int f_partition, int nb_row_parts, int *row_part_first,
 		int nb_col_parts, int *col_part_first,
 		int f_row_grid, int f_col_grid,
-		int f_bitmatrix, uchar *D, int *M,
+		int f_bitmatrix, bitmatrix *Bitmatrix, int *M,
 		int m, int n, int xmax, int ymax,
 		int f_has_labels, int *labels);
 

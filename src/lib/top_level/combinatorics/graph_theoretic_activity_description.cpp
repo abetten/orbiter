@@ -26,7 +26,7 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 	f_export_csv = FALSE;
 	f_print = FALSE;
 	f_sort_by_colors = FALSE;
-	f_split = FALSE;
+	//f_split = FALSE;
 	//split_file = NULL;
 	f_save = FALSE;
 }
@@ -119,11 +119,13 @@ int graph_theoretic_activity_description::read_arguments(
 			f_sort_by_colors = TRUE;
 			cout << "-sort_by_colors " << endl;
 		}
+#if 0
 		else if (strcmp(argv[i], "-split") == 0) {
 			f_split = TRUE;
 			split_file.assign(argv[++i]);
 			cout << "-split " << endl;
 		}
+#endif
 		else if (strcmp(argv[i], "-save") == 0) {
 			f_save = TRUE;
 			cout << "-save " << endl;

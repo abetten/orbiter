@@ -69,7 +69,7 @@ static void nauty_interface_free_data();
 typedef unsigned char uchar;
 
 
-void nauty_interface::nauty_interface_graph_bitvec(int v, unsigned char *bitvector_adjacency,
+void nauty_interface::nauty_interface_graph_bitvec(int v, bitvector *Bitvec,
 	int *labeling, int *partition, 
 	int *Aut, int &Aut_counter, 
 	int *Base, int &Base_length, 
@@ -110,7 +110,7 @@ void nauty_interface::nauty_interface_graph_bitvec(int v, unsigned char *bitvect
 	for (i = 0; i < v; i++) {
 		for (j = i + 1; j < v; j++) {
 			k = callback_ij2k(i, j, v);
-			if (bitvector_s_i(bitvector_adjacency, k)) {
+			if (Bitvec->s_i(k)) {
 				row = GRAPHROW(g, i, m);
 				ADDELEMENT(row, j);
 				row = GRAPHROW(g, j, m);
@@ -168,6 +168,7 @@ void nauty_interface::nauty_interface_graph_bitvec(int v, unsigned char *bitvect
 		}
 #endif
 }
+
 
 void nauty_interface::nauty_interface_graph_int(int v, int *Adj,
 	int *labeling, int *partition, 

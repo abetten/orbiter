@@ -284,7 +284,7 @@ void clique_finder_control::do_Sajeeb(colored_graph *CG, int verbose_level)
 	for (size_t i=0; i<G.nb_vertices; ++i) G.vertex_label[i] = CG->points[i];
 	for (size_t i=0; i<G.nb_colors; ++i) G.vertex_color[i] = CG->point_color[i];
 
-	G.set_edge_from_bitvector_adjacency(CG->bitvector_adjacency);
+	G.set_edge_from_bitvector_adjacency(CG->Bitvec);
 
 	// Create the solution storage. The base type of the solution
 	// storage must be the same as data type of the vertex label
@@ -329,7 +329,7 @@ void clique_finder_control::do_Sajeeb_black_and_white(colored_graph *CG,
 	Graph<long int, int> G (CG->nb_points, CG->nb_colors, CG->nb_colors_per_vertex);
 	G.set_vertex_labels(CG->points);
 	G.set_vertex_colors(CG->point_color);
-	G.set_edge_from_bitvector_adjacency(CG->bitvector_adjacency);
+	G.set_edge_from_bitvector_adjacency(CG->Bitvec);
 
     // Call the Rainbow Clique finding algorithm
 	KClique::find_cliques(G, solutions, clique_size);

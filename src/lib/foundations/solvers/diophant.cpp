@@ -2552,6 +2552,7 @@ void diophant::get_coefficient_matrix(int *&M,
 	}
 }
 
+#if 0
 void diophant::save_as_Levi_graph(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2591,6 +2592,7 @@ void diophant::save_as_Levi_graph(std::string &fname, int verbose_level)
 		cout << "diophant::save_as_Levi_graph done" << endl;
 	}
 }
+#endif
 
 #if 0
 void diophant::save_in_compact_format(const char *fname, int verbose_level)
@@ -4310,7 +4312,7 @@ int diophant::is_of_Steiner_type()
 	return TRUE;
 }
 
-void diophant::make_clique_graph_adjacency_matrix(uchar *&Adj,
+void diophant::make_clique_graph_adjacency_matrix(bitvector *&Adj,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4328,11 +4330,15 @@ void diophant::make_clique_graph_adjacency_matrix(uchar *&Adj,
 		}
 #endif
 	L = (n * (n - 1)) >> 1;
+#if 0
 	//length = (L + 7) >> 3;
 	Adj = bitvector_allocate(L);
 	for (i = 0; i < L; i++) {
 		bitvector_m_ii(Adj, i, 1);
 	}
+#else
+	Adj->allocate(L);
+#endif
 	for (i = 0; i < m; i++) {
 		for (j1 = 0; j1 < n; j1++) {
 			if (Aij(i, j1) == 0) {
@@ -4344,13 +4350,12 @@ void diophant::make_clique_graph_adjacency_matrix(uchar *&Adj,
 				}
 				// now: j1 and j2 do not go together
 				k = Combi.ij2k(j1, j2, n);
-				bitvector_m_ii(Adj, k, 0);
+				Adj->m_i(k, 0);
 			}
 		}
 	}
 	if (f_v) {
-		cout << "diophant::make_clique_graph_adjacency_"
-				"matrix done" << endl;
+		cout << "diophant::make_clique_graph_adjacency_matrix done" << endl;
 	}
 }
 
@@ -4358,7 +4363,7 @@ void diophant::make_clique_graph_adjacency_matrix(uchar *&Adj,
 void diophant::make_clique_graph(colored_graph *&CG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	uchar *Adj;
+	bitvector *Adj;
 
 	if (f_v) {
 		cout << "diophant::make_clique_graph" << endl;

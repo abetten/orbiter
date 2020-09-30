@@ -97,9 +97,15 @@ void spread_tables::init(finite_field *F,
 	q = F->q;
 	d = 4; // = 4
 	P = NEW_OBJECT(projective_space);
+	if (f_v) {
+		cout << "spread_tables::init before P->init" << endl;
+	}
 	P->init(3, F,
 		TRUE /* f_init_incidence_structure */,
-		0 /* verbose_level - 2 */);
+		verbose_level - 1);
+	if (f_v) {
+		cout << "spread_tables::init after P->init" << endl;
+	}
 
 
 	Gr = NEW_OBJECT(grassmann);
@@ -475,8 +481,8 @@ void spread_tables::load(int verbose_level)
 
 
 void spread_tables::compute_adjacency_matrix(
-		uchar *&bitvector_adjacency,
-		long int &bitvector_length,
+		bitvector *&Bitvec,
+		//uchar *&bitvector_adjacency, long int &bitvector_length,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -485,6 +491,8 @@ void spread_tables::compute_adjacency_matrix(
 	if (f_v) {
 		cout << "spread_tables::compute_adjacency_matrix" << endl;
 	}
+
+#if 0
 
 	N2 = ((long int) nb_spreads * (long int) nb_spreads) >> 1;
 
@@ -499,6 +507,7 @@ void spread_tables::compute_adjacency_matrix(
 	k = 0;
 	//cnt = 0;
 	for (i = 0; i < nb_spreads; i++) {
+
 		for (j = i + 1; j < nb_spreads; j++) {
 
 
@@ -516,7 +525,35 @@ void spread_tables::compute_adjacency_matrix(
 			}
 		}
 	}
+#else
+	N2 = ((long int) nb_spreads * (long int) nb_spreads) >> 1;
 
+	Bitvec = NEW_OBJECT(bitvector);
+	Bitvec->allocate(N2);
+
+	k = 0;
+	//cnt = 0;
+	for (i = 0; i < nb_spreads; i++) {
+
+		for (j = i + 1; j < nb_spreads; j++) {
+
+
+			if (test_if_spreads_are_disjoint(i, j)) {
+				Bitvec->m_i(k, 1);
+				//cnt++;
+			}
+			else {
+				Bitvec->m_i(k, 0);
+			}
+
+			k++;
+			if ((k & ((1 << 21) - 1)) == 0) {
+				cout << "i=" << i << " j=" << j << " k=" << k << " / " << N2 << endl;
+			}
+		}
+	}
+
+#endif
 
 
 
@@ -533,7 +570,7 @@ void spread_tables::compute_adjacency_matrix(
 		int_vec_zero(color, nb_spreads);
 
 		CG->init(nb_spreads, 1, 1,
-				color, bitvector_adjacency,
+				color, Bitvec,
 				FALSE, verbose_level);
 
 		fname.assign(prefix);

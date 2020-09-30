@@ -929,8 +929,7 @@ public:
 		projective_space *P,
 		long int *set, int set_size, int &canonical_pt,
 		int *canonical_set_or_NULL,
-		int f_save_incma_in_and_out,
-		const char *save_incma_in_and_out_prefix,
+		//int f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix,
 		int verbose_level);
 	int reverse_engineer_semilinear_map(
 		projective_space *P,
@@ -1096,16 +1095,16 @@ public:
 	action *create_automorphism_group_and_canonical_labeling_of_colored_graph_object(
 			colored_graph *CG, int *labeling, int verbose_level);
 	action *create_automorphism_group_and_canonical_labeling_of_colored_graph(
-		int n, int f_bitvec, uchar *Adj_bitvec, int *Adj,
+		int n, int f_bitvec, bitvector *Bitvec, int *Adj,
 		int *vertex_colors,
 		int *labeling,
 		int verbose_level);
 	action *create_automorphism_group_of_graph_bitvec(
-		int n, uchar *Adj_bitvec,
+		int n, bitvector *Bitvec,
 		int verbose_level);
 	action *create_automorphism_group_of_graph_with_partition_and_labeling(
 		int n,
-		int f_bitvector, uchar *Adj_bitvec, int *Adj,
+		int f_bitvector, bitvector *Bitvec, int *Adj,
 		int nb_parts, int *parts,
 		int *labeling,
 		int verbose_level);
