@@ -164,8 +164,9 @@ public:
 		int verbose_level);
 	void compute_adjacency_list_fast(int first_point_of_starter,
 		long int *points, int nb_points, int *point_color,
-		uchar *&bitvector_adjacency,
-		long int &bitvector_length_in_bits, long int &bitvector_length,
+		bitvector *&Bitvec,
+		//uchar *&bitvector_adjacency,
+		//long int &bitvector_length_in_bits, long int &bitvector_length,
 		int verbose_level);
 	void compute_colors(int orbit_at_level,
 		long int *starter, int starter_sz,
@@ -911,7 +912,7 @@ public:
 class incidence_structure {
 	public:
 
-	char label[1000];
+	std::string label;
 
 
 	int nb_rows;
@@ -955,8 +956,8 @@ class incidence_structure {
 		int verbose_level);
 	void init_by_set_of_sets(set_of_sets *SoS, int verbose_level);
 	void init_by_matrix(int m, int n, int *M, int verbose_level);
-	void init_by_matrix_as_bitvector(int m, int n, uchar *M_bitvec, 
-		int verbose_level);
+	void init_by_matrix_as_bitmatrix(
+			int m, int n, bitmatrix *Bitmatrix, int verbose_level);
 	void init_by_matrix2(int verbose_level);
 	int nb_points();
 	int nb_lines();
@@ -1137,13 +1138,15 @@ class incidence_structure {
 		int **distinguished_line_sets, 
 		int *distinguished_line_set_size, 
 		int verbose_level);
-	uchar *encode_as_bitvector(int &encoding_length_in_uchar);
+	bitvector *encode_as_bitvector();
 	incidence_structure *apply_canonical_labeling(
 			long int *canonical_labeling, int verbose_level);
 	void save_as_csv(std::string &fname_csv, int verbose_level);
+#if 0
 	void save_as_Levi_graph(std::string &fname_bin,
 			int f_point_labels, long int *point_labels,
 			int verbose_level);
+#endif
 	void init_large_set(
 			long int *blocks,
 			int N_points, int design_b, int design_k, int partition_class_size,
@@ -1422,7 +1425,8 @@ public:
 			int verbose_level);
 	void canonical_form_given_canonical_labeling(
 			long int *canonical_labeling,
-			uchar *&canonical_form, int &canonical_form_len,
+			bitvector *&B,
+			//uchar *&canonical_form, int &canonical_form_len,
 			int verbose_level);
 	void encode_incma(int *&Incma, int &nb_rows, int &nb_cols, 
 		int *&partition, int verbose_level);
@@ -2076,7 +2080,8 @@ public:
 	int k; // number of points on a line
 
 
-	uchar *incidence_bitvec; // N_points * N_lines bits
+	bitmatrix *Bitmatrix;
+	//uchar *incidence_bitvec; // N_points * N_lines bits
 	int *Lines; // [N_lines * k]
 	int *Lines_on_point; // [N_points * r]
 	int *Line_through_two_points; // [N_points * N_points]
@@ -2500,8 +2505,8 @@ public:
 	void save(int verbose_level);
 	void load(int verbose_level);
 	void compute_adjacency_matrix(
-			uchar *&bitvector_adjacency,
-			long int &bitvector_length,
+			bitvector *&Bitvec,
+			//uchar *&bitvector_adjacency, long int &bitvector_length,
 			int verbose_level);
 	int test_if_spreads_are_disjoint(int a, int b);
 	void compute_dual_spreads(long int **Sets,

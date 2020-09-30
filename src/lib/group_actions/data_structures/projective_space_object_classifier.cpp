@@ -1191,9 +1191,9 @@ int projective_space_object_classifier::process_object(
 
 	longinteger_object go;
 
-
-	uchar *canonical_form;
-	int canonical_form_len;
+	bitvector *Canonical_form;
+	//uchar *canonical_form;
+	//int canonical_form_len;
 
 
 	if (f_v) {
@@ -1203,27 +1203,27 @@ int projective_space_object_classifier::process_object(
 
 	SG = PA->set_stabilizer_of_object(
 		OiP,
-		Descr->f_save_incma_in_and_out, Descr->save_incma_in_and_out_prefix,
-		TRUE /* f_compute_canonical_form */,
-		canonical_form, canonical_form_len,
+		//Descr->f_save_incma_in_and_out, Descr->save_incma_in_and_out_prefix,
+		TRUE /* f_compute_canonical_form */, Canonical_form,
+		//canonical_form, canonical_form_len,
 		canonical_labeling, canonical_labeling_len,
 		verbose_level - 2);
 
 
 	if (f_v) {
 		cout << "projective_space_object_classifier::process_object "
-				"after PA->set_stabilizer_of_object, canonical_form_len=" << canonical_form_len << endl;
+				"after PA->set_stabilizer_of_object" << endl;
 	}
 
 
 	SG->group_order(go);
 
 	if (CB->n == 0) {
-		CB->init(nb_objects_to_test, canonical_form_len, verbose_level);
+		CB->init(nb_objects_to_test, Canonical_form->get_allocated_length(), verbose_level);
 	}
 	int f_found;
 
-	CB->search_and_add_if_new(canonical_form, OiP, f_found, idx, verbose_level);
+	CB->search_and_add_if_new(Canonical_form->get_data(), OiP, f_found, idx, verbose_level);
 
 
 	//delete SG;
@@ -1252,8 +1252,8 @@ int projective_space_object_classifier::process_object_with_known_canonical_labe
 	//int *Extra_data;
 
 
-	uchar *canonical_form;
-	int canonical_form_len;
+	//uchar *canonical_form;
+	//int canonical_form_len;
 
 
 #if 0
@@ -1283,9 +1283,12 @@ int projective_space_object_classifier::process_object_with_known_canonical_labe
 				"before OiP->canonical_form_given_canonical_labeling" << endl;
 		}
 
+	bitvector *Bitvec_canonical_form;
+
 	OiP->canonical_form_given_canonical_labeling(
 				canonical_labeling,
-				canonical_form, canonical_form_len,
+				Bitvec_canonical_form,
+				//canonical_form, canonical_form_len,
 				verbose_level);
 
 
@@ -1301,14 +1304,16 @@ int projective_space_object_classifier::process_object_with_known_canonical_labe
 
 
 	if (CB->n == 0) {
-		CB->init(nb_objects_to_test, canonical_form_len, verbose_level);
+		CB->init(nb_objects_to_test, Bitvec_canonical_form->get_allocated_length() /*canonical_form_len*/, verbose_level);
 	}
 	int f_found;
 
-	CB->search_and_add_if_new(canonical_form, OiP, f_found, idx, verbose_level);
+	CB->search_and_add_if_new(Bitvec_canonical_form->get_data(), OiP, f_found, idx, verbose_level);
 
 
 	//delete SG;
+
+	FREE_OBJECT(Bitvec_canonical_form);
 
 	if (f_v) {
 		cout << "projective_space_object_classifier::process_object_with_known_canonical_labeling done" << endl;
@@ -1525,8 +1530,9 @@ void projective_space_object_classifier::latex_report(
 			longinteger_object go;
 
 
-			uchar *canonical_form;
-			int canonical_form_len;
+			bitvector *Canonical_form;
+			//uchar *canonical_form;
+			//int canonical_form_len;
 
 			int nb_r, nb_c;
 			long int *canonical_labeling;
@@ -1538,13 +1544,19 @@ void projective_space_object_classifier::latex_report(
 			canonical_labeling = NEW_lint(nb_r + nb_c);
 
 #if 1
+			if (f_v) {
+				cout << "projective_space_object_classifier::latex_report before PA->set_stabilizer_of_object" << endl;
+			}
 			SG = PA->set_stabilizer_of_object(
 				OiP,
-				Descr->f_save_incma_in_and_out, Descr->save_incma_in_and_out_prefix,
-				TRUE /* f_compute_canonical_form */,
-				canonical_form, canonical_form_len,
+				//Descr->f_save_incma_in_and_out, Descr->save_incma_in_and_out_prefix,
+				TRUE /* f_compute_canonical_form */, Canonical_form,
+				//canonical_form, canonical_form_len,
 				canonical_labeling, canonical_labeling_len,
-				0 /* verbose_level */);
+				verbose_level - 2);
+			if (f_v) {
+				cout << "projective_space_object_classifier::latex_report after PA->set_stabilizer_of_object" << endl;
+			}
 
 			FREE_lint(canonical_labeling);
 
@@ -1645,9 +1657,11 @@ void projective_space_object_classifier::latex_report(
 			fp << "Stabilizer:\\\\" << endl;
 			SG->print_generators_tex(fp);
 
-			fp << "Stabilizer, all elements:\\\\" << endl;
+
+#if 0
+			//fp << "Stabilizer, all elements:\\\\" << endl;
 			//SG->print_elements_ost(fp);
-			SG->print_elements_with_special_orthogonal_action_ost(fp);
+			//SG->print_elements_with_special_orthogonal_action_ost(fp);
 
 			{
 				action *A_conj;
@@ -1688,6 +1702,7 @@ void projective_space_object_classifier::latex_report(
 				FREE_OBJECT(A_conj);
 				FREE_OBJECT(Base_group);
 			}
+#endif
 
 
 			int *Incma;

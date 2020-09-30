@@ -634,6 +634,12 @@ public:
 	int os_seconds_past_1970();
 	void get_string_from_command_line(std::string &p, int argc, const char **argv,
 			int &i, int verbose_level);
+	void test_swap();
+	void block_swap_chars(char *ptr, int size, int no);
+	void code_int4(char *&p, int_4 i);
+	int_4 decode_int4(char *&p);
+	void code_uchar(char *&p, uchar a);
+	void decode_uchar(char *&p, uchar &a);
 
 };
 
@@ -712,12 +718,6 @@ void int_vec_copy_to_lint(int *from, long int *to, int len);
 void lint_vec_copy_to_int(long int *from, int *to, int len);
 void int_vec_swap(int *v1, int *v2, int len);
 void int_vec_delete_element_assume_sorted(int *v, int &len, int a);
-uchar *bitvector_allocate(long int length);
-uchar *bitvector_allocate_and_coded_length(long int length, int &coded_length);
-void bitvector_m_ii(uchar *bitvec, long int i, int a);
-void bitvector_set_bit(uchar *bitvec, long int i);
-int bitvector_s_i(uchar *bitvec, long int i);
-// returns 0 or 1
 uint32_t int_vec_hash(int *data, int len);
 uint32_t lint_vec_hash(long int *data, int len);
 uint32_t char_vec_hash(char *data, int len);
@@ -804,11 +804,6 @@ void pint_matrix_shorten_rows(pint *&p, int m, int n);
 
 void print_set(std::ostream &ost, int size, long int *set);
 void print_set_lint(std::ostream &ost, int size, long int *set);
-void block_swap_chars(char *ptr, int size, int no);
-void code_int4(char *&p, int_4 i);
-int_4 decode_int4(char *&p);
-void code_uchar(char *&p, uchar a);
-void decode_uchar(char *&p, uchar &a);
 void print_incidence_structure(std::ostream &ost,
 		int m, int n, int len, int *S);
 void int_vec_scan(std::string &s, int *&v, int &len);

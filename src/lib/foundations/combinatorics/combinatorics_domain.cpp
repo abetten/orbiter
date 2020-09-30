@@ -2153,8 +2153,7 @@ int combinatorics_domain::minus_one_if_positive(int i)
 void combinatorics_domain::compute_adjacency_matrix(
 		int *Table, int nb_sets, int set_size,
 		std::string &prefix_for_graph,
-		uchar *&bitvector_adjacency,
-		int &bitvector_length,
+		bitvector *&B,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2170,13 +2169,19 @@ void combinatorics_domain::compute_adjacency_matrix(
 	}
 	N2_100 = (N2 / 100) + 1;
 
-	bitvector_length = (N2 + 7) >> 3;
+	B = NEW_OBJECT(bitvector);
+
+	B->allocate(N2);
+
+#if 0
+	//bitvector_length = (N2 + 7) >> 3;
 
 	if (f_v) {
 		cout << "combinatorics_domain::compute_adjacency_matrix allocating bitvector of length " << bitvector_length << endl;
 	}
 
-	bitvector_adjacency = NEW_uchar(bitvector_length);
+	//bitvector_adjacency = NEW_uchar(bitvector_length);
+#endif
 
 	if (f_v) {
 		cout << "combinatorics_domain::compute_adjacency_matrix after allocating adjacency bitvector" << endl;
@@ -2211,11 +2216,11 @@ void combinatorics_domain::compute_adjacency_matrix(
 				}
 			}
 			if (u + v < 2 * set_size) {
-				bitvector_m_ii(bitvector_adjacency, k, 0);
+				B->m_i(k, 0);
 
 			}
 			else {
-				bitvector_m_ii(bitvector_adjacency, k, 1);
+				B->m_i(k, 1);
 				cnt++;
 			}
 
@@ -2249,7 +2254,7 @@ void combinatorics_domain::compute_adjacency_matrix(
 	int_vec_zero(color, nb_sets);
 
 	CG->init(nb_sets, 1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
-			color, bitvector_adjacency,
+			color, B,
 			FALSE, verbose_level);
 
 	fname.assign(prefix_for_graph);

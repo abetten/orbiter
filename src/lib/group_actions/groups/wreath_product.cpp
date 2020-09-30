@@ -804,6 +804,7 @@ void wreath_product::element_unpack(uchar *elt, int *Elt)
 
 void wreath_product::put_digit(uchar *elt, int f, int i, int j, int d)
 {
+	data_structures_global D;
 	int h0 = (int) (f * dimension_of_matrix_group * dimension_of_matrix_group +
 			(i * dimension_of_matrix_group + j)) * bits_per_digit;
 	int h, h1, a;
@@ -817,13 +818,14 @@ void wreath_product::put_digit(uchar *elt, int f, int i, int j, int d)
 		else {
 			a = 0;
 		}
-		bitvector_m_ii(elt + nb_factors, h1, a);
+		D.bitvector_m_ii(elt + nb_factors, h1, a);
 		d >>= 1;
 	}
 }
 
 int wreath_product::get_digit(uchar *elt, int f, int i, int j)
 {
+	data_structures_global D;
 	int h0 = (int) (f * dimension_of_matrix_group * dimension_of_matrix_group +
 			(i * dimension_of_matrix_group + j)) * bits_per_digit;
 	int h, h1, a, d;
@@ -832,7 +834,7 @@ int wreath_product::get_digit(uchar *elt, int f, int i, int j)
 	for (h = bits_per_digit - 1; h >= 0; h--) {
 		h1 = h0 + h;
 
-		a = bitvector_s_i(elt + nb_factors, h1);
+		a = D.bitvector_s_i(elt + nb_factors, h1);
 		d <<= 1;
 		if (a) {
 			d |= 1;

@@ -48,16 +48,20 @@ public:
 	int verbose_level;
 	
 
-	int f_has_bitmatrix;
+	//int f_has_bitmatrix;
+	//bitmatrix *Bitmatrix_adjacency;
+#if 0
 	int bitmatrix_m;
 	int bitmatrix_n;
 	int bitmatrix_N;
 	uchar *bitmatrix_adjacency;
+#endif
 
 	int f_has_adj_list;
 	int *adj_list_coded;
 	int f_has_bitvector;
-	uchar *bitvector_adjacency;
+	bitvector *Bitvec_adjacency;
+	//uchar *bitvector_adjacency;
 
 	int f_has_row_by_row_adjacency_matrix;
 	char **row_by_row_adjacency_matrix; // [n][n]
@@ -126,7 +130,7 @@ public:
 	void init(std::string &label, int n,
 		int target_depth, 
 		int f_has_adj_list, int *adj_list_coded, 
-		int f_has_bitvector, uchar *bitvector_adjacency, 
+		int f_has_bitvector, bitvector *Bitvec_adjacency,
 		int print_interval, 
 		int f_maxdepth, int maxdepth, 
 		int f_store_solutions, 
@@ -160,10 +164,10 @@ public:
 	int is_adjacent(int depth, int i, int j);
 	int is_viable(int depth, int pt);
 	void write_entry_to_tree_file(int depth, int verbose_level);
-	void m_iji(int i, int j, int a);
+	//void m_iji(int i, int j, int a);
 	int s_ij(int i, int j);
 	void delinearize_adjacency_list(int verbose_level);
-	void allocate_bitmatrix(int verbose_level);
+	//void allocate_bitmatrix(int verbose_level);
 
 private:
 	void parallel_delinearize_adjacency_list();
@@ -248,7 +252,7 @@ public:
 	int nb_colors;
 	int nb_colors_per_vertex; // = 1 by default
 	
-	long int bitvector_length;
+	//long int bitvector_length;
 	long int L;
 	
 	long int *points; // [nb_points]
@@ -259,7 +263,8 @@ public:
 	long int *user_data; // [user_data_size]
 
 	int f_ownership_of_bitvec;
-	uchar *bitvector_adjacency;
+	bitvector *Bitvec;
+	//uchar *bitvector_adjacency;
 
 	int f_has_list_of_edges;
 	int nb_edges;
@@ -288,13 +293,13 @@ public:
 	void print_points_and_colors();
 	void print_adjacency_list();
 	void init(int nb_points, int nb_colors, int nb_colors_per_vertex,
-		int *colors, uchar *bitvec, int f_ownership_of_bitvec, 
+		int *colors, bitvector *Bitvec, int f_ownership_of_bitvec,
 		int verbose_level);
 	void init_with_point_labels(int nb_points, int nb_colors, int nb_colors_per_vertex,
-		int *colors, uchar *bitvec, int f_ownership_of_bitvec, 
+		int *colors, bitvector *Bitvec, int f_ownership_of_bitvec,
 		long int *point_labels,
 		int verbose_level);
-	void init_no_colors(int nb_points, uchar *bitvec, 
+	void init_no_colors(int nb_points, bitvector *Bitvec,
 		int f_ownership_of_bitvec, 
 		int verbose_level);
 	void init_adjacency(int nb_points, int nb_colors, int nb_colors_per_vertex,
@@ -374,6 +379,7 @@ public:
 		int f_labels, 
 		double scale, double line_width, 
 		int verbose_level);
+#if 0
 	colored_graph *compute_neighborhood_subgraph(int pt, 
 		fancy_set *&vertex_subset, fancy_set *&color_subset, 
 		int verbose_level);
@@ -385,6 +391,7 @@ public:
 		int pt, void *test_function_data, int verbose_level),
 		void *test_function_data, 
 		int verbose_level);
+#endif
 	void export_to_magma(std::string &fname, int verbose_level);
 	void export_to_maple(std::string &fname, int verbose_level);
 	void export_to_file(std::string &fname, int verbose_level);
@@ -410,11 +417,12 @@ public:
 		int xmax_in, int ymax_in, int xmax_out, int ymax_out, 
 		double scale, double line_width, int verbose_level);
 	//int rainbow_cliques_nonrecursive(int &nb_backtrack_nodes, int verbose_level);
+#if 0
 	void create_Levi_graph_from_incidence_matrix(
 		int *M, int nb_rows, int nb_cols,
 		int f_point_labels, long int *point_labels,
 		int verbose_level);
-
+#endif
 };
 
 void call_back_clique_found_using_file_output(clique_finder *CF, 
@@ -566,18 +574,19 @@ public:
 		int verbose_level);
 	void save_as_colored_graph_easy(std::string &fname_base,
 			int n, int *Adj, int verbose_level);
-	void save_colored_graph(const char *fname,
-		int nb_vertices, int nb_colors, int nb_colors_per_vertex,
-		long int *vertex_labels, int *vertex_colors,
-		long int *data, int data_sz,
-		uchar *bitvector_adjacency, long int bitvector_length,
-		int verbose_level);
-	void load_colored_graph(const char *fname,
-		int &nb_vertices, int &nb_colors, int &nb_colors_per_vertex,
-		long int *&vertex_labels, int *&vertex_colors,
-		long int *&user_data, int &user_data_size,
-		uchar *&bitvector_adjacency, long int &bitvector_length,
-		int verbose_level);
+	void save_colored_graph(std::string &fname,
+			int nb_vertices, int nb_colors, int nb_colors_per_vertex,
+			long int *points, int *point_color,
+			long int *data, int data_sz,
+			bitvector *Bitvec,
+			int verbose_level);
+	void load_colored_graph(std::string &fname,
+			int &nb_vertices, int &nb_colors, int &nb_colors_per_vertex,
+			long int *&vertex_labels, int *&vertex_colors, long int *&user_data,
+			int &user_data_size,
+			bitvector *&Bitvec,
+			int verbose_level);
+#if 0
 	void write_colored_graph(std::ofstream &ost,
 		char *label,
 		int point_offset,
@@ -590,6 +599,7 @@ public:
 		void *is_adjacent_callback_data,
 		int f_colors, int nb_colors, int *point_color,
 		int f_point_labels, long int *point_label);
+#endif
 	int is_association_scheme(int *color_graph, int n, int *&Pijk,
 		int *&colors, int &nb_colors, int verbose_level);
 	void print_Pijk(int *Pijk, int nb_colors);
@@ -601,7 +611,7 @@ public:
 			int f_partition, int nb_row_parts, int *row_part_first,
 			int nb_col_parts, int *col_part_first,
 			int f_row_grid, int f_col_grid,
-			int f_bitmatrix, uchar *D,
+			int f_bitmatrix, bitmatrix *Bitmatrix,
 			int *M, int m, int n,
 			int xmax_in, int ymax_in, int xmax, int ymax,
 			double scale, double line_width,

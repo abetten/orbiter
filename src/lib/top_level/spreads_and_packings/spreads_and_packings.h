@@ -1061,8 +1061,9 @@ public:
 	spread_tables *Spread_tables;
 	int *tmp_isomorphism_type_of_spread; // for packing_swap_func
 
-	uchar *bitvector_adjacency;
-	long int bitvector_length;
+	bitvector *Bitvec;
+	//uchar *bitvector_adjacency;
+	//long int bitvector_length;
 
 	action *A_on_spreads;
 

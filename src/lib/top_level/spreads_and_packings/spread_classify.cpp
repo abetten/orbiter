@@ -1009,7 +1009,7 @@ void spread_classify::lifting_prepare_function_new(
 		cout << endl;
 	}
 
-	uchar *Adj;
+	bitvector *Adj;
 	
 	if (f_v) {
 		cout << "spread_classify::lifting_prepare_function_new "
@@ -1030,7 +1030,8 @@ void spread_classify::lifting_prepare_function_new(
 				"before CG->init_with_point_labels" << endl;
 	}
 	CG->init_with_point_labels(SL->nb_cols, nb_colors, 1,
-		col_color, Adj, TRUE /* f_ownership_of_bitvec */, 
+		col_color,
+		Adj, TRUE /* f_ownership_of_bitvec */,
 		SL->col_labels /* point_labels */, 
 		verbose_level);
 	if (f_v) {
@@ -1045,8 +1046,6 @@ void spread_classify::lifting_prepare_function_new(
 	fname_clique_graph.assign(E->output_prefix);
 	sprintf(str, "graph_%d.bin", starter_case);
 	fname_clique_graph.append(str);
-	//snprintf(fname_clique_graph, 2000, "%sgraph_%d.bin",
-	//		E->output_prefix, starter_case);
 	CG->save(fname_clique_graph, verbose_level - 1);
 	if (f_v) {
 		cout << "Written file " << fname_clique_graph

@@ -42,8 +42,9 @@ spread_table_with_selection::spread_table_with_selection()
 	Spread_tables = NULL;
 	tmp_isomorphism_type_of_spread = NULL;
 
-	bitvector_adjacency = NULL;
-	bitvector_length = 0;
+	Bitvec = NULL;
+	//bitvector_adjacency = NULL;
+	//bitvector_length = 0;
 
 	A_on_spreads = NULL;
 
@@ -73,8 +74,8 @@ spread_table_with_selection::~spread_table_with_selection()
 	if (Spread_tables) {
 		FREE_OBJECT(Spread_tables);
 	}
-	if (bitvector_adjacency) {
-		FREE_uchar(bitvector_adjacency);
+	if (Bitvec) {
+		FREE_OBJECT(Bitvec);
 	}
 }
 
@@ -800,8 +801,7 @@ void spread_table_with_selection::compute_adjacency_matrix(int verbose_level)
 	}
 
 	Spread_tables->compute_adjacency_matrix(
-			bitvector_adjacency,
-			bitvector_length,
+			Bitvec,
 			verbose_level);
 
 
@@ -821,9 +821,9 @@ int spread_table_with_selection::is_adjacent(int i, int j)
 		return FALSE;
 	}
 #if 1
-	if (bitvector_adjacency) {
+	if (Bitvec) {
 		k = Combi.ij2k(i, j, Spread_tables->nb_spreads);
-		if (bitvector_s_i(bitvector_adjacency, k)) {
+		if (Bitvec->s_i(k)) {
 			return TRUE;
 		}
 		else {

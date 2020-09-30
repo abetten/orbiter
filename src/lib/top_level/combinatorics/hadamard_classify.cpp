@@ -25,6 +25,7 @@ void hadamard_classify::init(int n, int f_draw,
 	int i, j, k, d, cnt, cnt1;
 	geometry_global Gg;
 
+
 	if (n > (int)sizeof(int) * 8) {
 		cout << "n > sizeof(uint) * 8" << endl;
 		exit(1);
@@ -62,10 +63,11 @@ void hadamard_classify::init(int n, int f_draw,
 			}
 		}
 
+	Bitvec = NEW_OBJECT(bitvector);
+	Bitvec->allocate(N2);
+	//bitvector_length = (N2 + 7) >> 3;
 
-	bitvector_length = (N2 + 7) >> 3;
-
-	bitvector_adjacency = NEW_uchar(bitvector_length);
+	//bitvector_adjacency = NEW_uchar(bitvector_length);
 
 	if (f_v) {
 		cout << "after allocating adjacency bitvector" << endl;
@@ -83,11 +85,11 @@ void hadamard_classify::init(int n, int f_draw,
 				}
 
 			if (d == 0) {
-				bitvector_m_ii(bitvector_adjacency, k, 1);
+				Bitvec->m_i(k, 1);
 				cnt++;
 				}
 			else {
-				bitvector_m_ii(bitvector_adjacency, k, 0);
+				Bitvec->m_i(k, 0);
 				}
 			k++;
 			if ((k & ((1 << 13) - 1)) == 0) {
@@ -131,26 +133,26 @@ void hadamard_classify::init(int n, int f_draw,
 #endif
 
 	{
-	colored_graph *CG;
-	char str[1000];
-	string fname;
+		colored_graph *CG;
+		char str[1000];
+		string fname;
 
-	CG = NEW_OBJECT(colored_graph);
-	int *color;
+		CG = NEW_OBJECT(colored_graph);
+		int *color;
 
-	color = NEW_int(N);
-	int_vec_zero(color, N);
+		color = NEW_int(N);
+		int_vec_zero(color, N);
 
-	CG->init(N, 1, 1, color, bitvector_adjacency, FALSE, verbose_level);
+		CG->init(N, 1, 1, color, Bitvec, FALSE, verbose_level);
 
-	sprintf(str, "Hadamard_graph_%d.colored_graph", n);
-	fname.assign(str);
+		sprintf(str, "Hadamard_graph_%d.colored_graph", n);
+		fname.assign(str);
 
-	CG->save(fname, verbose_level);
+		CG->save(fname, verbose_level);
 
 
-	FREE_int(color);
-	FREE_OBJECT(CG);
+		FREE_int(color);
+		FREE_OBJECT(CG);
 	}
 
 
@@ -167,7 +169,7 @@ void hadamard_classify::init(int n, int f_draw,
 	color = NEW_int(N);
 	int_vec_zero(color, N);
 
-	CG->init(N, 1, 1, color, bitvector_adjacency, FALSE, verbose_level);
+	CG->init(N, 1, 1, color, Bitvec, FALSE, verbose_level);
 
 	if (f_v) {
 		cout << "initializing colored graph done" << endl;
@@ -189,7 +191,7 @@ void hadamard_classify::init(int n, int f_draw,
 	cnt1 = 0;
 	for (i = 0; i < N; i++) {
 		for (j = i + 1; j < N; j++) {
-			if (bitvector_s_i(bitvector_adjacency, k)) {
+			if (Bitvec->s_i(k)) {
 				cnt1++;
 				color_graph[i * N + j] = 2;
 				color_graph[j * N + i] = 2;
@@ -280,7 +282,7 @@ void hadamard_classify::init(int n, int f_draw,
 
 
 	A = Nauty.create_automorphism_group_of_graph_bitvec(
-		CG->nb_points, bitvector_adjacency,
+		CG->nb_points, Bitvec,
 		verbose_level);
 
 	longinteger_object go;
@@ -404,7 +406,7 @@ int hadamard_classify::clique_test(long int *set, int sz)
 		for (j = i + 1; j < n; j++) {
 			b = set[j];
 			idx = Combi.ij2k_lint(a, b, N);
-			if (bitvector_s_i(bitvector_adjacency, idx)) {
+			if (Bitvec->s_i(idx)) {
 				//cout << "pair (" << i << "," << j << ") vertices " << a << " and " << b << " are adjacent" << endl;
 				}
 			else {

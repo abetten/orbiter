@@ -440,6 +440,7 @@ void direct_product::put_digit(uchar *elt, int f, int i, int d)
 	int h0 = 0;
 	int h, h1, a;
 	int nb_bits = 0;
+	data_structures_global D;
 
 	if (f == 0) {
 		nb_bits = bits_per_digit1;
@@ -458,7 +459,7 @@ void direct_product::put_digit(uchar *elt, int f, int i, int d)
 		else {
 			a = 0;
 		}
-		bitvector_m_ii(elt, h1, a);
+		D.bitvector_m_ii(elt, h1, a);
 		d >>= 1;
 	}
 }
@@ -468,6 +469,7 @@ int direct_product::get_digit(uchar *elt, int f, int i)
 	int h0 = 0;
 	int h, h1, a, d;
 	int nb_bits = 0;
+	data_structures_global D;
 
 	if (f == 0) {
 		nb_bits = bits_per_digit1;
@@ -481,7 +483,7 @@ int direct_product::get_digit(uchar *elt, int f, int i)
 	for (h = nb_bits - 1; h >= 0; h--) {
 		h1 = h0 + h;
 
-		a = bitvector_s_i(elt, h1);
+		a = D.bitvector_s_i(elt, h1);
 		d <<= 1;
 		if (a) {
 			d |= 1;

@@ -210,6 +210,7 @@ void action_on_wedge_product::compute_image_int_low_level(
 					v = F->mult(akj, ali);
 					w = F->add(u, F->negate(v));
 #endif
+
 	
 					w = element_entry_ijkl(A, Elt, i, j, k, l, verbose_level - 3);
 					// now w is the matrix entry

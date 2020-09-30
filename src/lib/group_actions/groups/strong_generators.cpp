@@ -2070,7 +2070,8 @@ void strong_generators::orbits_light(action *A_given,
 {
 	int f_v = (verbose_level >= 1);	
 	int f_vv = FALSE; //(verbose_level >= 2);	
-	uchar *reached;
+	bitvector *Has_been_reached;
+	//uchar *reached;
 	int Orbit_allocated;
 	int Orbit_len;
 	int *Orbit;
@@ -2105,7 +2106,12 @@ void strong_generators::orbits_light(action *A_given,
 	for (pt = 0; pt < A_given->degree; pt++) {
 		Generator_idx[pt] = -1;
 	}
+#if 0
 	reached = bitvector_allocate(A_given->degree);
+#else
+	Has_been_reached = NEW_OBJECT(bitvector);
+	Has_been_reached->allocate(A_given->degree);
+#endif
 	nb_reached = 0;
 
 	Orbit_allocated = 1024;
@@ -2125,7 +2131,7 @@ void strong_generators::orbits_light(action *A_given,
 	Pts_per_generator = NEW_pint(nb_gens);
 
 	for (pt = 0; pt < A_given->degree; pt++) {
-		if (bitvector_s_i(reached, pt)) {
+		if (Has_been_reached->s_i(pt)) {
 			continue;
 		}
 		if (f_vv) {
@@ -2191,7 +2197,7 @@ void strong_generators::orbits_light(action *A_given,
 						cout << endl;
 					}
 
-					bitvector_m_ii(reached, b, 1);
+					Has_been_reached->m_i(b, 1);
 					nb_reached++;
 					if (f_v && ((nb_reached & ((1 << 18) - 1)) == 0)) {
 						cout << "strong_generators::orbits_light "
@@ -2287,7 +2293,8 @@ void strong_generators::orbits_light(action *A_given,
 
 	FREE_int(Orbit);
 	FREE_int(Q);
-	FREE_uchar(reached);
+	//FREE_uchar(reached);
+	FREE_OBJECT(Has_been_reached);
 	FREE_int(Generator_idx);
 	//FREE_int(Nb_per_generator);
 	if (f_v) {
@@ -2599,6 +2606,7 @@ void strong_generators::compute_ascii_coding(
 	int f_v = (verbose_level >= 1);
 	int sz, i, j;
 	char *p;
+	os_interface Os;
 
 	if (f_v) {
 		cout << "strong_generators::compute_ascii_coding" << endl;
@@ -2607,19 +2615,19 @@ void strong_generators::compute_ascii_coding(
 			A->coded_elt_size_in_char * gens->len) + 1;
 	ascii_coding = NEW_char(sz);
 	p = ascii_coding;
-	code_int4(p, (int_4) A->base_len());
+	Os.code_int4(p, (int_4) A->base_len());
 
-	code_int4(p, (int_4) gens->len);
+	Os.code_int4(p, (int_4) gens->len);
 	for (i = 0; i < A->base_len(); i++) {
-		code_int4(p, (int_4) A->base_i(i));
+		Os.code_int4(p, (int_4) A->base_i(i));
 	}
 	for (i = 0; i < A->base_len(); i++) {
-		code_int4(p, (int_4) tl[i]);
+		Os.code_int4(p, (int_4) tl[i]);
 	}
 	for (i = 0; i < gens->len; i++) {
 		A->element_pack(gens->ith(i), A->elt1, FALSE);
 		for (j = 0; j < A->coded_elt_size_in_char; j++) {
-			code_uchar(p, A->elt1[j]);
+			Os.code_uchar(p, A->elt1[j]);
 		}
 	}
 	*p++ = 0;
@@ -2644,6 +2652,7 @@ void strong_generators::decode_ascii_coding(
 	char *p, *p0;
 	action *A_save;
 	int *base1;
+	os_interface Os;
 
 	if (f_v) {
 		cout << "strong_generators::decode_ascii_coding" << endl;
@@ -2657,8 +2666,8 @@ void strong_generators::decode_ascii_coding(
 	p = ascii_coding;
 	p0 = p;
 	str_len = strlen(ascii_coding);
-	len = decode_int4(p);
-	nbsg = decode_int4(p);
+	len = Os.decode_int4(p);
+	nbsg = Os.decode_int4(p);
 	if (len != A->base_len()) {
 		cout << "strong_generators::decode_ascii_coding "
 				"len != A->base_len" << endl;
@@ -2673,7 +2682,7 @@ void strong_generators::decode_ascii_coding(
 	base1 = NEW_int(A->base_len());
 	tl = NEW_int(A->base_len());
 	for (i = 0; i < A->base_len(); i++) {
-		base1[i] = decode_int4(p);
+		base1[i] = Os.decode_int4(p);
 		}
 	for (i = 0; i < A->base_len(); i++) {
 		if (base1[i] != A->base_i(i)) {
@@ -2684,11 +2693,11 @@ void strong_generators::decode_ascii_coding(
 		}
 	}
 	for (i = 0; i < A->base_len(); i++) {
-		tl[i] = decode_int4(p);
+		tl[i] = Os.decode_int4(p);
 	}
 	for (i = 0; i < nbsg; i++) {
 		for (j = 0; j < A->coded_elt_size_in_char; j++) {
-			decode_uchar(p, A->elt1[j]);
+			Os.decode_uchar(p, A->elt1[j]);
 		}
 		A->element_unpack(A->elt1, gens->ith(i), FALSE);
 	}

@@ -328,9 +328,10 @@ void memory_object::read_lint(long int *i)
 
 void memory_object::write_int(int i)
 {
+	os_interface Os;
 	int_4 i1 = (int_4) i;
 	
-	block_swap_chars((char *) &i1, 4, 1);
+	Os.block_swap_chars((char *) &i1, 4, 1);
 	append(4, (char *) &i1, 0);
 }
 
@@ -340,6 +341,7 @@ void memory_object::read_int(int *i)
 	int_4 i1;
 	long int l1, j, cur_p, l;
 	char *cp, *cp1;
+	os_interface Os;
 	
 	if (f_v) {
 		cout << "memory_object::read_int" << endl;
@@ -362,7 +364,7 @@ void memory_object::read_int(int *i)
 	if (f_v) {
 		cout << "memory_object::read_int before swap: i1 = " << i1 << endl;
 		}
-	block_swap_chars((char *) &i1, 4, 1);
+	Os.block_swap_chars((char *) &i1, 4, 1);
 	if (f_v) {
 		cout << "memory_object::read_int after swap: i1 = " << i1 << endl;
 		}

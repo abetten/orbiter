@@ -7,9 +7,11 @@ LFLAGS = -lm
 
 MODULES = \
 	bitmatrix.o \
+	bitvector.o \
 	classify_bitvectors.o \
 	data_file.o \
 	data_input_stream.o \
+	data_structures_global.o \
 	fancy_set.o \
 	int_matrix.o \
 	int_vector.o \

@@ -22,6 +22,14 @@ namespace foundations {
 
 incidence_structure::incidence_structure()
 {
+	//label[0] = 0;
+	M = NULL;
+	O = NULL;
+	H = NULL;
+	nb_lines_on_point = NULL;
+	nb_points_on_line = NULL;
+	lines_on_point = NULL;
+	points_on_line = NULL;
 	null();
 }
 
@@ -32,14 +40,6 @@ incidence_structure::~incidence_structure()
 
 void incidence_structure::null()
 {
-	label[0] = 0;
-	M = NULL;
-	O = NULL;
-	H = NULL;
-	nb_lines_on_point = NULL;
-	nb_points_on_line = NULL;
-	lines_on_point = NULL;
-	points_on_line = NULL;
 }
 
 void incidence_structure::freeself()
@@ -327,8 +327,8 @@ void incidence_structure::init_by_matrix(
 	}
 }
 
-void incidence_structure::init_by_matrix_as_bitvector(
-		int m, int n, uchar *M_bitvec, int verbose_level)
+void incidence_structure::init_by_matrix_as_bitmatrix(
+		int m, int n, bitmatrix *Bitmatrix, int verbose_level)
 {
 	int i, j;
 	int f_v = (verbose_level >= 1);
@@ -341,13 +341,12 @@ void incidence_structure::init_by_matrix_as_bitvector(
 	realization_type = INCIDENCE_STRUCTURE_REALIZATION_BY_MATRIX;
 	nb_rows = m;
 	nb_cols = n;
-	incidence_structure::M = NEW_int(m * n);
+	M = NEW_int(m * n);
 	nb_lines_on_point = NEW_int(nb_rows);
 	nb_points_on_line = NEW_int(nb_cols);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			incidence_structure::M[i] =
-					bitvector_s_i(M_bitvec, i * n + j);
+			M[i] = Bitmatrix->s_ij(i, j);
 		}
 	}
 	init_by_matrix2(verbose_level);
@@ -2810,7 +2809,7 @@ void incidence_structure::compute_tdo(partitionstack &S,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	char fname[2000];
+	string fname;
 	int f_list_incidences = FALSE;
 	file_io Fio;
 
@@ -2856,7 +2855,8 @@ void incidence_structure::compute_tdo(partitionstack &S,
 	}
 
 	if (f_write_tdo_files) {
-		snprintf(fname, 2000, "%s_tdo_scheme.tex", label);
+		fname.assign(label);
+		fname.append("_tdo_scheme.tex");
 		{
 			ofstream fp(fname);
 
@@ -2870,7 +2870,8 @@ void incidence_structure::compute_tdo(partitionstack &S,
 					<< Fio.file_size(fname) << endl;
 		}
 
-		snprintf(fname, 2000, "%s_tdo.tex", label);
+		fname.assign(label);
+		fname.append("_tdo.tex");
 		{
 			ofstream fp(fname);
 
@@ -2907,10 +2908,10 @@ void incidence_structure::compute_tdo_stepwise(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	char fname[2000];
-	char fname_pic[2000];
-	char fname_scheme[2000];
-	char fname_extra[2000];
+	string fname;
+	string fname_pic;
+	string fname_scheme;
+	string fname_extra;
 	int step, f_refine, f_refine_prev, f_done;
 	int f_local_coordinates = FALSE;
 	int f_list_incidences = FALSE;
@@ -2954,10 +2955,25 @@ void incidence_structure::compute_tdo_stepwise(
 			S.print_classes_points_and_lines(cout);
 		}
 		if (f_write_tdo_files) {
-			snprintf(fname, 2000, "%s_tdo_step_%d.tex", label, step);
-			snprintf(fname_pic, 2000, "%s_tdo_step_%d_pic.tex", label, step);
-			snprintf(fname_scheme, 2000, "%s_tdo_step_%d_scheme.tex", label, step);
-			snprintf(fname_extra, 2000, "%s_tdo_step_%d_extra.tex", label, step);
+
+			char str[1000];
+
+			sprintf(str, "_tdo_step_%d.tex", step);
+			fname.assign(label);
+			fname.append(str);
+
+			sprintf(str, "_tdo_step_%d_pic.tex", step);
+			fname_pic.assign(label);
+			fname_pic.append(str);
+
+			sprintf(str, "_tdo_step_%d_scheme.tex", step);
+			fname_scheme.assign(label);
+			fname_scheme.append(str);
+
+			sprintf(str, "_tdo_step_%d_extra.tex", step);
+			fname_extra.assign(label);
+			fname_extra.append(str);
+
 			{
 				ofstream fp(fname);
 				ofstream fp_pic(fname_pic);
@@ -3067,9 +3083,15 @@ void incidence_structure::compute_tdo_stepwise(
 	}
 
 	if (f_write_tdo_files) {
-		snprintf(fname, 2000, "%s_tdo.tex", label);
-		snprintf(fname_pic, 2000, "%s_tdo_pic.tex", label);
-		snprintf(fname_scheme, 2000, "%s_tdo_scheme.tex", label);
+		fname.assign(label);
+		fname.append("_tdo.tex");
+
+		fname_pic.assign(label);
+		fname_pic.append("_tdo_pic.tex");
+
+		fname_scheme.assign(label);
+		fname_scheme.append("_tdo_scheme.tex");
+
 		{
 			ofstream fp(fname);
 			ofstream fp_pic(fname_pic);
@@ -3671,23 +3693,31 @@ void incidence_structure::compute_extended_matrix(
 }
 
 
-uchar *incidence_structure::encode_as_bitvector(int &encoding_length_in_uchar)
+bitvector *incidence_structure::encode_as_bitvector()
 {
 	int i, j, a;
-	uchar *bitvec;
+	//uchar *bitvec;
+	bitvector *B;
 
-	bitvec = bitvector_allocate_and_coded_length(
-			nb_rows * nb_cols, encoding_length_in_uchar);
+	//bitvec = bitvector_allocate_and_coded_length(
+	//		nb_rows * nb_cols, encoding_length_in_uchar);
+
+	B = NEW_OBJECT(bitvector);
+	B->allocate(nb_rows * nb_cols);
+
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < nb_cols; j++) {
 			if (M[i * nb_cols + j]) {
 				a = i * nb_cols + j;
-				bitvector_set_bit(bitvec, a);
+				//bitvector_set_bit(bitvec, a);
+				B->m_i(a, 1);
 			}
 		}
 	}
-	return bitvec;
+	//return bitvec;
+	return B;
 }
+
 
 incidence_structure *incidence_structure::apply_canonical_labeling(
 		long int *canonical_labeling, int verbose_level)
@@ -3739,6 +3769,7 @@ void incidence_structure::save_as_csv(std::string &fname_csv, int verbose_level)
 	Fio.int_matrix_write_csv(fname_csv, M, nb_rows, nb_cols);
 }
 
+#if 0
 void incidence_structure::save_as_Levi_graph(std::string &fname_bin,
 		int f_point_labels, long int *point_labels,
 		int verbose_level)
@@ -3756,6 +3787,7 @@ void incidence_structure::save_as_Levi_graph(std::string &fname_bin,
 
 	FREE_OBJECT(CG);
 }
+#endif
 
 void incidence_structure::init_large_set(
 		long int *blocks,

@@ -325,7 +325,7 @@ public:
 	int maximum_number_of_non_zero_coefficients_in_row();
 	void get_coefficient_matrix(int *&M, int &nb_rows, int &nb_cols, 
 		int verbose_level);
-	void save_as_Levi_graph(std::string &fname, int verbose_level);
+	//void save_as_Levi_graph(std::string &fname, int verbose_level);
 	//void save_in_compact_format(const char *fname, int verbose_level);
 	//void read_compact_format(const char *fname, int verbose_level);
 	void save_in_general_format(std::string &fname, int verbose_level);
@@ -372,7 +372,7 @@ public:
 		int verbose_level);
 	void analyze(int verbose_level);
 	int is_of_Steiner_type();
-	void make_clique_graph_adjacency_matrix(uchar *&Adj, 
+	void make_clique_graph_adjacency_matrix(bitvector *&Adj,
 		int verbose_level);
 	void make_clique_graph(colored_graph *&CG, int verbose_level);
 	void make_clique_graph_and_save(std::string &clique_graph_fname,

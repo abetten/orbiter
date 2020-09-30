@@ -506,9 +506,10 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 				"orbit_length=" << orbit_length << endl;
 	}
 	int nb_points;
-	uchar *bitvector_adjacency;
+	bitvector *Bitvec;
+	//uchar *bitvector_adjacency;
 	//long int bitvector_length_in_bits;
-	long int bitvector_length;
+	//long int bitvector_length;
 	long int L, L100;
 	long int i, j, k;
 	int a, b, c;
@@ -519,6 +520,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	int t0, t1, dt;
 	int *point_color;
 	os_interface Os;
+	//data_structures_global D;
 
 	type_idx = get_orbit_type_index(orbit_length);
 	nb_points = Orbits_classified->Set_size[type_idx];
@@ -556,18 +558,22 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 
 	L100 = L / 100 + 1;
 
-	//bitvector_length_in_bits = L;
-	bitvector_length = (L + 7) >> 3;
 	if (f_v) {
 		cout << "L = " << L << endl;
 		cout << "L100 = " << L100 << endl;
-		cout << "allocating bitvector of length "
-				<< bitvector_length << " char" << endl;
 	}
+
+	Bitvec = NEW_OBJECT(bitvector);
+	Bitvec->allocate(L);
+
+#if 0
+	//bitvector_length_in_bits = L;
+	bitvector_length = (L + 7) >> 3;
 	bitvector_adjacency = NEW_uchar(bitvector_length);
 	for (i = 0; i < bitvector_length; i++) {
 		bitvector_adjacency[i] = 0;
 	}
+#endif
 
 	k = 0;
 	for (i = 0; i < nb_points; i++) {
@@ -602,11 +608,11 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 
 			if ((*test_function)(orbit1, orbit_length, orbit2, orbit_length, test_function_data)) {
 				//cout << "is adjacent" << endl;
-				bitvector_m_ii(bitvector_adjacency, k, 1);
+				Bitvec->m_i(k, 1);
 			}
 			else {
 				//cout << "is NOT adjacent" << endl;
-				bitvector_m_ii(bitvector_adjacency, k, 0);
+				Bitvec->m_i(k, 0);
 				// not needed becaude we initialize with zero.
 			}
 		k++;
@@ -625,7 +631,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 
 	CG->init_with_point_labels(nb_points, number_colors, orbit_length,
 		point_color,
-		bitvector_adjacency, FALSE,
+		Bitvec, TRUE /* f_ownership_of_bitvec */,
 		Orbits_classified->Sets[type_idx] /* point_labels */,
 		verbose_level - 2);
 		// the adjacency becomes part of the colored_graph object
@@ -746,9 +752,10 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 				"orbit_length=" << orbit_length << endl;
 	}
 	int nb_points;
-	uchar *bitvector_adjacency;
+	bitvector *Bitvec;
+	//uchar *bitvector_adjacency;
 	//long int bitvector_length_in_bits;
-	long int bitvector_length;
+	//long int bitvector_length;
 	long int L, L100;
 	long int i, j, k;
 	int a, b;
@@ -774,17 +781,21 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 	L100 = L / 100;
 
 	//bitvector_length_in_bits = L;
-	bitvector_length = (L + 7) >> 3;
 	if (f_v) {
 		cout << "L = " << L << endl;
 		cout << "L100 = " << L100 << endl;
-		cout << "allocating bitvector of length "
-				<< bitvector_length << " char" << endl;
 	}
+
+#if 0
+	bitvector_length = (L + 7) >> 3;
 	bitvector_adjacency = NEW_uchar(bitvector_length);
 	for (i = 0; i < bitvector_length; i++) {
 		bitvector_adjacency[i] = 0;
 	}
+#else
+	Bitvec = NEW_OBJECT(bitvector);
+	Bitvec->allocate(L);
+#endif
 
 	t0 = Os.os_ticks();
 	k = 0;
@@ -820,11 +831,13 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 
 			if ((*test_function)(orbit1, orbit_length, orbit2, orbit_length, test_function_data)) {
 				//cout << "is adjacent" << endl;
-				bitvector_m_ii(bitvector_adjacency, k, 1);
+				Bitvec->m_i(k, 1);
+				//bitvector_m_ii(bitvector_adjacency, k, 1);
 			}
 			else {
 				//cout << "is NOT adjacent" << endl;
-				bitvector_m_ii(bitvector_adjacency, k, 0);
+				Bitvec->m_i(k, 0);
+				//bitvector_m_ii(bitvector_adjacency, k, 0);
 				// not needed because we initialize with zero.
 			}
 		k++;
@@ -843,7 +856,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 
 	CG->init_with_point_labels(nb_points, 1, 1,
 		NULL /*point_color*/,
-		bitvector_adjacency, FALSE,
+		Bitvec, TRUE /* f_ownership_of_bitvec */,
 		my_orbits_classified->Sets[type_idx],
 		verbose_level - 2);
 		// the adjacency becomes part of the colored_graph object

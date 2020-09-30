@@ -1711,14 +1711,14 @@ void projective_space::cheat_sheet_subspaces(
 	if (f_v) {
 		cout << "projective_space::cheat_sheet_subspaces "
 				"k=" << k << endl;
-		}
+	}
 	n1 = n + 1;
 	k1 = k + 1;
 	v = NEW_int(n1);
 
 	if (F->q >= 10) {
 		f_need_comma = TRUE;
-		}
+	}
 
 	Gr = NEW_OBJECT(grassmann);
 	Gr->init(n1, k1, F, 0 /*verbose_level*/);
@@ -1747,10 +1747,10 @@ void projective_space::cheat_sheet_subspaces(
 					f << Gr->M[i * n1 + j];
 					if (f_need_comma && j < n1 - 1) {
 						f << ", ";
-						}
 					}
-				f << "\\\\" << endl;
 				}
+				f << "\\\\" << endl;
+			}
 			f << "\\end{array}" << endl;
 			f << "\\right]" << endl;
 
@@ -1763,13 +1763,13 @@ void projective_space::cheat_sheet_subspaces(
 						<< "," << v6[5] << " ";
 				f << ")" << endl;
 
-				}
+			}
 			f << "$\\\\" << endl;
 
 			if (((u + 1) % 1000) == 0) {
 				f << "\\clearpage" << endl << endl;
-				}
 			}
+		}
 		f << "\\end{multicols}" << endl;
 
 
@@ -3461,11 +3461,6 @@ void projective_space::decomposition(
 	}
 	part = NEW_int(nb_subsets);
 	Mtx = NEW_int(nb_pts * nb_lines);
-	if (incidence_bitvec == NULL) {
-		cout << "projective_space::decomposition "
-				"incidence_bitvec == NULL" << endl;
-		exit(1);
-	}
 	for (i = 0; i < nb_pts; i++) {
 		for (j = 0; j < nb_lines; j++) {
 			Mtx[i * nb_lines + j] = is_incident(i, j);

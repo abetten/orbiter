@@ -590,7 +590,8 @@ void object_in_projective_space::encoding_size_packing(
 
 void object_in_projective_space::canonical_form_given_canonical_labeling(
 		long int *canonical_labeling,
-		uchar *&canonical_form, int &canonical_form_len,
+		bitvector *&B,
+		//uchar *&canonical_form, int &canonical_form_len,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -611,7 +612,7 @@ void object_in_projective_space::canonical_form_given_canonical_labeling(
 
 	int *Incma_out;
 	int i, j, ii, jj, a;
-	int L;
+	long int L;
 
 	L = nb_rows * nb_cols;
 
@@ -625,6 +626,7 @@ void object_in_projective_space::canonical_form_given_canonical_labeling(
 			Incma_out[i * nb_cols + j] = Incma[ii * nb_cols + jj];
 			}
 		}
+#if 0
 	canonical_form = bitvector_allocate_and_coded_length(L, canonical_form_len);
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < nb_cols; j++) {
@@ -634,6 +636,17 @@ void object_in_projective_space::canonical_form_given_canonical_labeling(
 				}
 			}
 		}
+#else
+	B->allocate(L);
+	for (i = 0; i < nb_rows; i++) {
+		for (j = 0; j < nb_cols; j++) {
+			if (Incma_out[i * nb_cols + j]) {
+				a = i * nb_cols + j;
+				B->m_i(a, 1);
+				}
+			}
+		}
+#endif
 
 	FREE_int(partition);
 	FREE_int(Incma);

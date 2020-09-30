@@ -164,9 +164,10 @@ void blt_set_domain::init(orthogonal *O,
 void blt_set_domain::compute_adjacency_list_fast(
 	int first_point_of_starter,
 	long int *points, int nb_points, int *point_color,
-	uchar *&bitvector_adjacency,
-	long int &bitvector_length_in_bits,
-	long int &bitvector_length,
+	bitvector *&Bitvec,
+	//uchar *&bitvector_adjacency,
+	//long int &bitvector_length_in_bits,
+	//long int &bitvector_length,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -188,12 +189,15 @@ void blt_set_domain::compute_adjacency_list_fast(
 		}
 	L = ((long int) nb_points * ((long int) nb_points - 1)) >> 1;
 
+	Bitvec->allocate(L);
+#if 0
 	bitvector_length_in_bits = L;
 	bitvector_length = (L + 7) >> 3;
 	bitvector_adjacency = NEW_uchar(bitvector_length);
 	for (i = 0; i < bitvector_length; i++) {
 		bitvector_adjacency[i] = 0;
 	}
+#endif
 
 	Pts = NEW_int(nb_points * 5);
 	form_value = NEW_int(nb_points);
@@ -237,7 +241,8 @@ void blt_set_domain::compute_adjacency_list_fast(
 			}
 			c2 = point_color[j];
 			if (c1 == c2) {
-				bitvector_m_ii(bitvector_adjacency, k, 0);
+				//bitvector_m_ii(bitvector_adjacency, k, 0);
+				Bitvec->m_i(k, 0);
 				continue;
 			}
 			f13 = form_value[j];
@@ -251,14 +256,17 @@ void blt_set_domain::compute_adjacency_list_fast(
 				);
 			d = F->product3(f12, f13, f23);
 			if (d == 0) {
-				bitvector_m_ii(bitvector_adjacency, k, 0);
+				//bitvector_m_ii(bitvector_adjacency, k, 0);
+				Bitvec->m_i(k, 0);
 			}
 			else {
 				if (O->f_is_minus_square[d]) {
-					bitvector_m_ii(bitvector_adjacency, k, 0);
+					//bitvector_m_ii(bitvector_adjacency, k, 0);
+					Bitvec->m_i(k, 0);
 				}
 				else {
-					bitvector_m_ii(bitvector_adjacency, k, 1);
+					//bitvector_m_ii(bitvector_adjacency, k, 1);
+					Bitvec->m_i(k, 1);
 				}
 			}
 
@@ -959,22 +967,29 @@ int blt_set_domain::create_graph(
 						"nb_points=" << nb_candidates << endl;
 	}
 
+#if 0
 	uchar *bitvector_adjacency;
 	long int bitvector_length_in_bits;
 	long int bitvector_length;
+#else
+	bitvector *Bitvec;
+#endif
 
 	compute_adjacency_list_fast(Starter_set[0],
 			candidates, nb_candidates, point_color,
-			bitvector_adjacency, bitvector_length_in_bits, bitvector_length,
+			Bitvec,
+			//bitvector_adjacency, bitvector_length_in_bits, bitvector_length,
 			verbose_level - 2);
 
 	if (f_vv) {
 		cout << "blt_set_domain::create_graph Case " << case_number
 				<< " / " << nb_cases_total << " Computing adjacency "
 						"list done" << endl;
+#if 0
 		cout << "blt_set_domain::create_graph Case " << case_number
 				<< " / " << nb_cases_total << " bitvector_length="
 				<< bitvector_length << endl;
+#endif
 	}
 
 
@@ -985,7 +1000,7 @@ int blt_set_domain::create_graph(
 	CG = NEW_OBJECT(colored_graph);
 
 	CG->init(nb_candidates /* nb_points */, nb_colors, 1 /* nb_colors_per_vertex */,
-		point_color, bitvector_adjacency, TRUE, verbose_level - 2);
+		point_color, Bitvec, TRUE, verbose_level - 2);
 		// the adjacency becomes part of the colored_graph object
 
 	int i;

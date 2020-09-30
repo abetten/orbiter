@@ -49,9 +49,11 @@ MODULES= \
 		foundations/combinatorics/tdo_refinement.o \
 		foundations/combinatorics/tdo_scheme.o \
 		foundations/data_structures/bitmatrix.o \
+		foundations/data_structures/bitvector.o \
 		foundations/data_structures/classify_bitvectors.o \
 		foundations/data_structures/data_file.o \
 		foundations/data_structures/data_input_stream.o \
+		foundations/data_structures/data_structures_global.o \
 		foundations/data_structures/fancy_set.o \
 		foundations/data_structures/int_matrix.o \
 		foundations/data_structures/int_vector.o \

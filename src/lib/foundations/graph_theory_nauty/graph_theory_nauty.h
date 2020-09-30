@@ -30,7 +30,7 @@ class nauty_interface {
 
 public:
 
-	void nauty_interface_graph_bitvec(int v, unsigned char *bitvector_adjacency,
+	void nauty_interface_graph_bitvec(int v, bitvector *Bitvec,
 		int *labeling, int *partition,
 		int *Aut, int &Aut_counter,
 		int *Base, int &Base_length,

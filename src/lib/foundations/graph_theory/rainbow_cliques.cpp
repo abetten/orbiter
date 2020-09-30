@@ -154,7 +154,7 @@ void rainbow_cliques::search_with_additional_test_function(
 	CF->init(graph->fname_base, graph->nb_points,
 		target_depth, 
 		FALSE, NULL, 
-		TRUE, graph->bitvector_adjacency, 
+		TRUE, graph->Bitvec,
 		print_interval, 
 		f_maxdepth, maxdepth, 
 		FALSE /* f_store_solutions */, 

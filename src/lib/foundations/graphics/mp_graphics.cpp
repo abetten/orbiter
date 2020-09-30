@@ -3119,7 +3119,7 @@ void mp_graphics::draw_bitmatrix2(int f_dots,
 	int f_partition, int nb_row_parts, int *row_part_first,
 	int nb_col_parts, int *col_part_first,
 	int f_row_grid, int f_col_grid,
-	int f_bitmatrix, uchar *D, int *M,
+	int f_bitmatrix, bitmatrix *Bitmatrix, int *M,
 	int m, int n, int xmax, int ymax,
 	int f_has_labels, int *labels)
 {
@@ -3258,7 +3258,8 @@ void mp_graphics::draw_bitmatrix2(int f_dots,
 			//a = Aij(i, j);
 
 			if (f_bitmatrix) {
-				a = bitvector_s_i(D, i * n + j);
+				a = Bitmatrix->s_ij(i, j);
+				//a = bitvector_s_i(D, i * n + j);
 				}
 			else {
 				a = M[i * n + j];

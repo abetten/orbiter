@@ -747,13 +747,14 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 
 		if (f_save) {
 		
+
 			if (f_v) {
-				cout << "exact_cover::compute_liftings_single_case_new "
-						"before save_as_Levi_graph, fname=" << fname_Levi << endl;
+				cout << "exact_cover::compute_liftings_single_case_new " << endl;
+						//"before save_as_Levi_graph, fname=" << fname_Levi << endl;
 				}
 
 			
-			Dio->save_as_Levi_graph(fname_Levi, verbose_level - 1);
+			//Dio->save_as_Levi_graph(fname_Levi, verbose_level - 1);
 
 			if (f_v) {
 				cout << "exact_cover::compute_liftings_single_case_new "

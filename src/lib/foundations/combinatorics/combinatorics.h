@@ -336,8 +336,7 @@ public:
 	void compute_adjacency_matrix(
 			int *Table, int nb_sets, int set_size,
 			std::string &prefix_for_graph,
-			uchar *&bitvector_adjacency,
-			int &bitvector_length,
+			bitvector *&B,
 			int verbose_level);
 	void make_graph_of_disjoint_sets_from_rows_of_matrix(
 		int *M, int m, int n,

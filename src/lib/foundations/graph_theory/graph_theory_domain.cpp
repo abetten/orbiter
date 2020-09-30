@@ -334,11 +334,14 @@ void graph_theory_domain::save_as_colored_graph_easy(std::string &fname_base,
 	}
 }
 
-void graph_theory_domain::save_colored_graph(const char *fname, int nb_vertices,
-		int nb_colors, int nb_colors_per_vertex, long int *points,
-		int *point_color, long int *data, int data_sz,
-		uchar *bitvector_adjacency, long int bitvector_length,
-		int verbose_level) {
+void graph_theory_domain::save_colored_graph(std::string &fname,
+		int nb_vertices, int nb_colors, int nb_colors_per_vertex,
+		long int *points, int *point_color,
+		long int *data, int data_sz,
+		bitvector *Bitvec,
+		//uchar *bitvector_adjacency, long int bitvector_length,
+		int verbose_level)
+{
 	int f_v = (verbose_level >= 1);
 	int i, j, a, b;
 
@@ -349,8 +352,7 @@ void graph_theory_domain::save_colored_graph(const char *fname, int nb_vertices,
 		cout << "save_colored_graph nb_colors=" << nb_colors << endl;
 		cout << "save_colored_graph nb_colors_per_vertex="
 				<< nb_colors_per_vertex << endl;
-		cout << "save_colored_graph bitvector_length=" << bitvector_length
-				<< endl;
+		//cout << "save_colored_graph bitvector_length=" << bitvector_length << endl;
 	}
 
 	{
@@ -381,7 +383,8 @@ void graph_theory_domain::save_colored_graph(const char *fname, int nb_vertices,
 						sizeof(int));
 			}
 		}
-		fp.write((char*) bitvector_adjacency, bitvector_length);
+		//Bitvec->save(fp);
+		fp.write((char*) Bitvec->get_data(), Bitvec->get_allocated_length());
 	}
 
 	if (f_v) {
@@ -389,11 +392,13 @@ void graph_theory_domain::save_colored_graph(const char *fname, int nb_vertices,
 	}
 }
 
-void graph_theory_domain::load_colored_graph(const char *fname,
+void graph_theory_domain::load_colored_graph(std::string &fname,
 		int &nb_vertices, int &nb_colors, int &nb_colors_per_vertex,
 		long int *&vertex_labels, int *&vertex_colors, long int *&user_data,
-		int &user_data_size, uchar *&bitvector_adjacency,
-		long int &bitvector_length, int verbose_level) {
+		int &user_data_size,
+		bitvector *&Bitvec,
+		int verbose_level)
+{
 	int f_v = (verbose_level >= 1);
 	long int L;
 	int i, j, a, b;
@@ -441,11 +446,13 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 
 			L = ((long int) nb_vertices * (long int) (nb_vertices - 1)) >> 1;
 
+#if 0
 			bitvector_length = (L + 7) >> 3;
 			if (f_v) {
 				cout << "load_colored_graph bitvector_length="
 						<< bitvector_length << endl;
 				}
+#endif
 
 			fp.read((char *) &user_data_size, sizeof(int));
 			if (f_v) {
@@ -500,11 +507,13 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 
 			L = ((long int) nb_vertices * (long int) (nb_vertices - 1)) >> 1;
 
+#if 0
 			bitvector_length = (L + 7) >> 3;
 			if (f_v) {
 				cout << "load_colored_graph bitvector_length="
 						<< bitvector_length << endl;
 				}
+#endif
 
 			fp.read((char *) &user_data_size, sizeof(int));
 			if (f_v) {
@@ -542,8 +551,10 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 		if (f_v) {
 			cout << "graph_theory_domain::load_colored_graph before allocating bitvector_adjacency" << endl;
 			}
-		bitvector_adjacency = NEW_uchar(bitvector_length);
-		fp.read((char *) bitvector_adjacency, bitvector_length);
+		Bitvec = NEW_OBJECT(bitvector);
+		Bitvec->allocate(L);
+		//bitvector_adjacency = NEW_uchar(bitvector_length);
+		fp.read((char *) Bitvec->get_data(), Bitvec->get_allocated_length());
 	}
 
 
@@ -552,8 +563,10 @@ void graph_theory_domain::load_colored_graph(const char *fname,
 	}
 }
 
+#if 0
 void graph_theory_domain::write_colored_graph(ofstream &ost, char *label,
-		int point_offset, int nb_points, int f_has_adjacency_matrix, int *Adj,
+		int point_offset, int nb_points,
+		int f_has_adjacency_matrix, int *Adj,
 		int f_has_adjacency_list, int *adj_list, int f_has_bitvector,
 		uchar *bitvector_adjacency, int f_has_is_adjacent_callback,
 		int (*is_adjacent_callback)(int i, int j, void *data),
@@ -681,6 +694,7 @@ void graph_theory_domain::write_colored_graph(ofstream &ost, char *label,
 	ost << "</GRAPH>" << endl;
 
 }
+#endif
 
 int graph_theory_domain::is_association_scheme(int *color_graph, int n,
 		int *&Pijk, int *&colors, int &nb_colors, int verbose_level)
@@ -902,7 +916,7 @@ void graph_theory_domain::draw_bitmatrix(
 		int f_dots,
 		int f_partition, int nb_row_parts, int *row_part_first,
 		int nb_col_parts, int *col_part_first, int f_row_grid, int f_col_grid,
-		int f_bitmatrix, uchar *D,
+		int f_bitmatrix, bitmatrix *Bitmatrix,
 		int *M, int m, int n, int xmax_in,
 		int ymax_in, int xmax_out, int ymax_out, double scale,
 		double line_width, int f_has_labels, int *labels,
@@ -931,7 +945,7 @@ void graph_theory_domain::draw_bitmatrix(
 
 		G.draw_bitmatrix2(f_dots, f_partition, nb_row_parts, row_part_first,
 				nb_col_parts, col_part_first, f_row_grid, f_col_grid,
-				f_bitmatrix, D, M, m, n, xmax_in, ymax_in, f_has_labels,
+				f_bitmatrix, Bitmatrix, M, m, n, xmax_in, ymax_in, f_has_labels,
 				labels);
 
 		G.finish(cout, TRUE);

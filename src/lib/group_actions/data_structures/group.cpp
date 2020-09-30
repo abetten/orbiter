@@ -325,6 +325,7 @@ void group::code_ascii(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int sz, i, j;
 	char *p;
+	os_interface Os;
 
 	if (f_v) {
 		cout << "group::code_ascii action " << A->label
@@ -337,20 +338,20 @@ void group::code_ascii(int verbose_level)
 	p = ascii_coding;
 
 	//cout << "group::code_ascii action A->base_len=" << A->base_len << endl;
-	code_int4(p, (int_4) A->base_len());
+	Os.code_int4(p, (int_4) A->base_len());
 
 	//cout << "group::code_ascii action SG->len=" << SG->len << endl;
-	code_int4(p, (int_4) SG->len);
+	Os.code_int4(p, (int_4) SG->len);
 	for (i = 0; i < A->base_len(); i++) {
-		code_int4(p, (int_4) A->base_i(i));
+		Os.code_int4(p, (int_4) A->base_i(i));
 	}
 	for (i = 0; i < A->base_len(); i++) {
-		code_int4(p, (int_4) tl[i]);
+		Os.code_int4(p, (int_4) tl[i]);
 	}
 	for (i = 0; i < SG->len; i++) {
 		A->element_pack(SG->ith(i), A->elt1, FALSE);
 		for (j = 0; j < A->coded_elt_size_in_char; j++) {
-			code_uchar(p, A->elt1[j]);
+			Os.code_uchar(p, A->elt1[j]);
 		}
 	}
 	*p++ = 0;
@@ -372,14 +373,15 @@ void group::decode_ascii(int verbose_level)
 	int *base1;
 	char *p, *p0;
 	int str_len;
+	os_interface Os;
 
 	require_ascii_coding();
 	//cout << "group::decode_ascii ascii_coding=" << ascii_coding << endl;
 	p = ascii_coding;
 	p0 = p;
 	str_len = strlen(ascii_coding);
-	len = decode_int4(p);
-	nbsg = decode_int4(p);
+	len = Os.decode_int4(p);
+	nbsg = Os.decode_int4(p);
 	if (len != A->base_len()) {
 		cout << "group::decode_ascii len != A->base_len" << endl;
 		cout << "len=" << len << " (from file)" << endl;
@@ -394,7 +396,7 @@ void group::decode_ascii(int verbose_level)
 	base1 = NEW_int(A->base_len());
 	tl = NEW_int(A->base_len());
 	for (i = 0; i < A->base_len(); i++) {
-		base1[i] = decode_int4(p);
+		base1[i] = Os.decode_int4(p);
 	}
 	for (i = 0; i < A->base_len(); i++) {
 		if (base1[i] != A->base_i(i)) {
@@ -403,11 +405,11 @@ void group::decode_ascii(int verbose_level)
 		}
 	}
 	for (i = 0; i < A->base_len(); i++) {
-		tl[i] = decode_int4(p);
+		tl[i] = Os.decode_int4(p);
 	}
 	for (i = 0; i < nbsg; i++) {
 		for (j = 0; j < A->coded_elt_size_in_char; j++) {
-			decode_uchar(p, A->elt1[j]);
+			Os.decode_uchar(p, A->elt1[j]);
 		}
 		A->element_unpack(A->elt1, SG->ith(i), FALSE);
 	}

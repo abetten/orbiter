@@ -691,6 +691,7 @@ void interface_combinatorics::do_graph_theoretic_activity(
 		FREE_OBJECT(CG2);
 	}
 
+#if 0
 	if (Descr->f_split) {
 		cout << "splitting by file " << Descr->split_file << endl;
 		file_io Fio;
@@ -723,6 +724,8 @@ void interface_combinatorics::do_graph_theoretic_activity(
 			Subgraph->save(fname_out, verbose_level - 2);
 		}
 	}
+#endif
+
 	if (Descr->f_save) {
 		cout << "before save fname_graph=" << fname_graph << endl;
 		CG->save(fname_graph, verbose_level);
@@ -912,7 +915,8 @@ void interface_combinatorics::do_diophant(diophant_description *Descr, int verbo
 	}
 }
 
-void interface_combinatorics::do_diophant_activity(diophant_activity_description *Descr, int verbose_level)
+void interface_combinatorics::do_diophant_activity(
+		diophant_activity_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -946,11 +950,13 @@ void interface_combinatorics::do_process_combinatorial_object(int verbose_level)
 		exit(1);
 	}
 	if (!Job->f_n) {
-		cout << "please use option -n <n> to specify the projective dimension within the job description" << endl;
+		cout << "please use option -n <n> to specify the projective "
+				"dimension within the job description" << endl;
 		exit(1);
 	}
 	if (!Job->f_fname_base_out) {
-		cout << "please use option -fname_base_out <fname_base_out> within the job description" << endl;
+		cout << "please use option -fname_base_out <fname_base_out> "
+				"within the job description" << endl;
 		exit(1);
 	}
 
