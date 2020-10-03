@@ -19,6 +19,18 @@ namespace group_actions {
 
 orbit_rep::orbit_rep()
 {
+	A = NULL;
+	early_test_func_callback = NULL;
+	early_test_func_callback_data = NULL;
+	level = 0;
+	orbit_at_level = 0;
+	nb_cases = 0;
+	rep = NULL;
+	Stab = NULL;
+	Strong_gens = NULL;
+	stab_go = NULL;
+	candidates = NULL;
+	nb_candidates = 0;
 	null();
 }
 
@@ -29,12 +41,6 @@ orbit_rep::~orbit_rep()
 
 void orbit_rep::null()
 {
-	rep = NULL;
-	Stab = NULL;
-	Strong_gens = NULL;
-	candidates = NULL;
-	stab_go = NULL;
-	nb_cases = 0;
 }
 
 void orbit_rep::freeself()

@@ -123,7 +123,7 @@ void action::report(ostream &ost, int f_sims, sims *S,
 		if (f_v) {
 			cout << "action::report before S->report" << endl;
 		}
-		S->report(ost, LG_Draw_options, verbose_level - 2);
+		S->report(ost, label, LG_Draw_options, verbose_level - 2);
 		if (f_v) {
 			cout << "action::report after S->report" << endl;
 		}

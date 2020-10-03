@@ -216,7 +216,7 @@ void geometry_global::test_PG(int n, int q)
 		cout << "all elements of PG_" << n << "(" << q << "), "
 			"not in a subspace of dimension " << m << endl;
 		F.display_all_PG_elements_not_in_subspace(n, m);
-		}
+	}
 
 }
 

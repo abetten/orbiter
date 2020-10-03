@@ -193,6 +193,13 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	else if (Descr->f_orbits_on_subspaces) {
 		orbits_on_subspaces(verbose_level);
 	}
+	else if (Descr->f_reverse_isomorphism_exterior_square) {
+		do_reverse_isomorphism_exterior_square(verbose_level);
+	}
+
+
+
+
 
 	// classification of:
 
@@ -835,18 +842,15 @@ void group_theoretic_activity::report(layered_graph_draw_options *draw_option, i
 	const char *author = "Orbiter";
 	const char *extras_for_preamble = "";
 
-	//double tikz_global_scale = 0.3;
-	//double tikz_global_line_width = 1.;
-	//int factor1000 = 1000;
-
-
 	sprintf(fname, "%s_report.tex", LG->label.c_str());
 	sprintf(title, "The group $%s$", LG->label_tex.c_str());
 
 	{
 		ofstream fp(fname);
 		latex_interface L;
+
 		//latex_head_easy(fp);
+
 		L.head(fp,
 			FALSE /* f_book */, TRUE /* f_title */,
 			title, author,
@@ -857,7 +861,6 @@ void group_theoretic_activity::report(layered_graph_draw_options *draw_option, i
 		LG->report(fp, Descr->f_sylow, Descr->f_group_table,
 				Descr->f_classes,
 				draw_option,
-				//tikz_global_scale, tikz_global_line_width, factor1000,
 				verbose_level);
 
 		L.foot(fp);
@@ -1416,6 +1419,36 @@ void group_theoretic_activity::conjugacy_class_of(std::string &elt_data, int ver
 	}
 }
 
+
+void group_theoretic_activity::do_reverse_isomorphism_exterior_square(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 5);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_reverse_isomorphism_exterior_square" << endl;
+	}
+
+
+	if (LG->f_has_nice_gens) {
+		if (f_v) {
+			cout << "group_theoretic_activity::do_reverse_isomorphism_exterior_square nice generators are:" << endl;
+			LG->nice_gens->print(cout);
+		}
+		LG->nice_gens->reverse_isomorphism_exterior_square(verbose_level);
+	}
+	else {
+		if (f_v) {
+			cout << "group_theoretic_activity::do_reverse_isomorphism_exterior_square strong generators are:" << endl;
+			LG->Strong_gens->print_generators_in_latex_individually(cout);
+		}
+		LG->Strong_gens->reverse_isomorphism_exterior_square(verbose_level);
+	}
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_reverse_isomorphism_exterior_square done" << endl;
+	}
+}
 
 void group_theoretic_activity::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
 {

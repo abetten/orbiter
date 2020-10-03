@@ -168,6 +168,7 @@ public:
 	int f_special;
 
 	int f_wedge_action;
+	int f_wedge_action_detached;
 	int f_PGL2OnConic;
 	int f_monomial_group;
 	int f_diagonal_group;
@@ -256,6 +257,7 @@ public:
 		int verbose_level);
 	void init_PGL2q_OnConic(int verbose_level);
 	void init_wedge_action(int verbose_level);
+	void init_wedge_action_detached(int verbose_level);
 	void init_monomial_group(int verbose_level);
 	void init_diagonal_group(int verbose_level);
 	void init_singer_group(int singer_power, int verbose_level);
@@ -1259,6 +1261,7 @@ public:
 	int get_orbit(int i, int j);
 	int get_orbit_inv(int i, int j);
 	int get_orbit_length(int i);
+	void get_orbit(int orbit_idx, std::vector<int> &Orb, int verbose_level);
 
 
 	// sims_main.cpp:
@@ -1464,6 +1467,7 @@ public:
 	void write_as_magma_permutation_group(std::string &fname_base,
 		vector_ge *gens, int verbose_level);
 	void report(std::ostream &ost,
+			std::string &prefix,
 			layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
 
@@ -1668,6 +1672,7 @@ public:
 			std::ostream &ost,
 			projective_space *P3,
 			int verbose_level);
+	void reverse_isomorphism_exterior_square(int verbose_level);
 
 	// strong_generators_groups.cpp
 	void init_linear_group_from_scratch(action *&A, 
@@ -1781,7 +1786,11 @@ public:
 		strong_generators *SG_hyperplane,
 		projective_space *P, int line1, int line2,
 		int verbose_level);
-
+	void exterior_square(
+			action *A_detached,
+			strong_generators *SG_original,
+			vector_ge *&nice_gens,
+			int verbose_level);
 
 };
 

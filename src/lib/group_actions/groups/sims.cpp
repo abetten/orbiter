@@ -2182,6 +2182,24 @@ int sims::get_orbit_length(int i)
 	return orbit_len[i];
 }
 
+void sims::get_orbit(int orbit_idx, std::vector<int> &Orb, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "sims::get_orbit" << endl;
+	}
+	int len, i;
+
+	len = orbit_len[orbit_idx];
+	for (i = 0; i < len; i++) {
+		Orb.push_back(orbit[orbit_idx][i]);
+	}
+	if (f_v) {
+		cout << "sims::get_orbit done" << endl;
+	}
+}
+
 }}
 
 

@@ -66,7 +66,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_isomorphism_Klein_quadric = FALSE;
 	//std::string isomorphism_Klein_quadric_fname;
 
-
 	f_linear_codes = FALSE;
 	linear_codes_minimum_distance = 0;
 	linear_codes_target_size = 0;
@@ -81,6 +80,11 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_export_magma = FALSE;
 	f_order_of_products = FALSE;
 	order_of_products_elements = NULL;
+	f_reverse_isomorphism_exterior_square = FALSE;
+
+
+	// classification:
+
 	f_classify_arcs = FALSE;
 	Arc_generator_description = NULL;
 	f_exact_cover = FALSE;
@@ -396,6 +400,12 @@ int group_theoretic_activity_description::read_arguments(
 			f_export_magma = TRUE;
 			cout << "-export_magma " << endl;
 		}
+		else if (strcmp(argv[i], "-reverse_isomorphism_exterior_square") == 0) {
+			f_reverse_isomorphism_exterior_square = TRUE;
+			cout << "-reverse_isomorphism_exterior_square " << endl;
+		}
+
+
 
 		// classification tasks:
 

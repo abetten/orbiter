@@ -17,8 +17,28 @@ namespace group_actions {
 
 linear_group::linear_group()
 {
+	description = NULL;
+	n = 0;
+	input_q = 0;
+	F = NULL;
+	f_semilinear = FALSE;
+	// label
+	// label_tex
+	initial_strong_gens = NULL;
+	A_linear = NULL;
+	Mtx = NULL;
+	f_has_strong_generators = FALSE;
+	Strong_gens = NULL;
+	A2 = NULL;
+	vector_space_dimension = 0;
+	q = 0;
+	f_has_nice_gens = FALSE;
+	nice_gens = NULL;
 	null();
 }
+
+
+
 
 linear_group::~linear_group()
 {
@@ -27,15 +47,6 @@ linear_group::~linear_group()
 
 void linear_group::null()
 {
-	description = NULL;
-	initial_strong_gens = NULL;
-	A_linear = NULL;
-	A2 = NULL;
-	Mtx = NULL;
-	f_has_strong_generators = FALSE;
-	Strong_gens = NULL;
-	f_has_nice_gens = FALSE;
-	nice_gens = NULL;
 }
 
 void linear_group::freeself()
@@ -132,6 +143,18 @@ void linear_group::init(
 		if (f_v) {
 			cout << "linear_group::init "
 					"after init_wedge_action" << endl;
+		}
+		f_OK = TRUE;
+		}
+	if (description->f_wedge_action_detached) {
+		if (f_v) {
+			cout << "linear_group::init "
+					"before init_wedge_action_detached" << endl;
+		}
+		init_wedge_action_detached(verbose_level);
+		if (f_v) {
+			cout << "linear_group::init "
+					"after init_wedge_action_detached" << endl;
 		}
 		f_OK = TRUE;
 		}
@@ -450,7 +473,7 @@ void linear_group::init(
 		//Strong_gens = initial_strong_gens;
 
 		A2 = A3;
-	if (f_v) {
+		if (f_v) {
 			cout << "linear_group::init "
 					"after restricted_action" << endl;
 		}
@@ -464,7 +487,7 @@ void linear_group::init(
 		Strong_gens = initial_strong_gens;
 		//sprintf(prefix, "PGL_%d_%d", n, input_q);
 		//sprintf(label_latex, "\\PGL(%d,%d)", n, input_q);
-		}
+	}
 
 
 	if (description->f_export_magma) {
@@ -548,7 +571,6 @@ void linear_group::init_wedge_action(int verbose_level)
 	if (!A_linear->f_has_strong_generators) {
 		cout << "linear_group::init_wedge_action "
 				"A_linear does not have strong generators" << endl;
-		//>create_sims(verbose_level);
 		exit(1);
 		}
 	A2 = NEW_OBJECT(action);
@@ -595,6 +617,99 @@ void linear_group::init_wedge_action(int verbose_level)
 	label_tex.append(str2);
 	if (f_v) {
 		cout << "linear_group::init_wedge_action "
+				"created group " << label << endl;
+		}
+}
+
+void linear_group::init_wedge_action_detached(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "linear_group::init_wedge_action_detached "
+				"initializing wedge action" << endl;
+		}
+	if (!A_linear->f_has_strong_generators) {
+		cout << "linear_group::init_wedge_action_detached "
+				"A_linear does not have strong generators" << endl;
+		exit(1);
+		}
+	A2 = NEW_OBJECT(action);
+
+	if (f_v) {
+		cout << "linear_group::init_wedge_action_detached initializing projective group" << endl;
+		}
+
+
+	strong_generators *secondary_strong_gens;
+	strong_generators *exterior_square_strong_gens;
+	vector_ge *secondary_nice_gens;
+	int n2;
+
+	combinatorics_domain Combi;
+
+	n2 = Combi.binomial2(n);
+
+	secondary_strong_gens = NEW_OBJECT(strong_generators);
+	exterior_square_strong_gens = NEW_OBJECT(strong_generators);
+
+	if (f_v) {
+		cout << "linear_group::init_wedge_action_detached before "
+				"initial_strong_gens->init_linear_group_from_scratch" << endl;
+	}
+
+	secondary_strong_gens->init_linear_group_from_scratch(
+			A2,
+			F, n2,
+			description->f_projective,
+			description->f_general,
+			description->f_affine,
+			description->f_semilinear,
+			description->f_special,
+			description->f_GL_d_q_wr_Sym_n,
+			description->GL_wreath_Sym_d, description->GL_wreath_Sym_n,
+			secondary_nice_gens,
+			verbose_level);
+
+	if (f_v) {
+		cout << "linear_group::init_wedge_action_detached after "
+				"initial_strong_gens->init_linear_group_from_scratch" << endl;
+	}
+
+
+
+	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens->init(A2, verbose_level);
+	Strong_gens->exterior_square(
+				A2,
+				A_linear->Strong_gens,
+				nice_gens,
+				verbose_level);
+
+
+	f_has_nice_gens = TRUE;
+
+	if (f_v) {
+		cout << "linear_group::init_wedge_action_detached "
+				"nice generators are:" << endl;
+		nice_gens->print(cout);
+		}
+
+
+	if (f_v) {
+		cout << "linear_group::init_wedge_action_detached "
+				"created detached wedge action:" << endl;
+		A2->print_info();
+		}
+	char str1[1000];
+	char str2[1000];
+
+	sprintf(str1, "_Wedge_%d_%d_detached", n, q);
+	sprintf(str2, "{\\rm WedgeDetached}(%d,%d)", n, q);
+	label.append(str1);
+	label_tex.append(str2);
+	if (f_v) {
+		cout << "linear_group::init_wedge_action_detached "
 				"created group " << label << endl;
 		}
 }
@@ -1145,7 +1260,8 @@ void linear_group::init_subgroup_Janko1(int verbose_level)
 		}
 }
 
-void linear_group::report(std::ostream &fp, int f_sylow, int f_group_table,
+void linear_group::report(std::ostream &fp,
+		int f_sylow, int f_group_table,
 		int f_conjugacy_classes_and_normalizers,
 		layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)

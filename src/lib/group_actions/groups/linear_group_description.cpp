@@ -31,6 +31,7 @@ linear_group_description::linear_group_description()
 	f_special = FALSE;
 	
 	f_wedge_action = FALSE;
+	f_wedge_action_detached = FALSE;
 	f_PGL2OnConic = FALSE;
 	f_monomial_group = FALSE;
 	f_diagonal_group = FALSE;
@@ -285,6 +286,10 @@ int linear_group_description::read_arguments(
 		else if (strcmp(argv[i], "-wedge") == 0) {
 			f_wedge_action = TRUE;
 			cout << "-wedge" << endl;
+		}
+		else if (strcmp(argv[i], "-wedge_detached") == 0) {
+			f_wedge_action_detached = TRUE;
+			cout << "-wedge_detached" << endl;
 		}
 		else if (strcmp(argv[i], "-PGL2OnConic") == 0) {
 			f_PGL2OnConic = TRUE;

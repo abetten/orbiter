@@ -516,8 +516,7 @@ void klein_correspondence::Pluecker_to_line(int *v6, int *basis_line, int verbos
 	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 	int p12, p34, p13, p24, p14, p23;
-	int x2, x3, x4;
-	int y2, y3, y4;
+	int v[6];
 
 	if (f_v) {
 		cout << "klein_correspondence::Pluecker_to_line" << endl;
@@ -530,12 +529,49 @@ void klein_correspondence::Pluecker_to_line(int *v6, int *basis_line, int verbos
 	p14 = v6[4];
 	p23 = v6[5];
 
+	v[0] = p12;
+	v[1] = p13;
+	v[2] = p14;
+	v[3] = p23;
+	v[4] = p24;
+	v[5] = p34;
+
+	exterior_square_to_line(
+			v,
+			basis_line, verbose_level);
+
+
+	if (f_v) {
+		cout << "klein_correspondence::Pluecker_to_line done" << endl;
+	}
+}
+
+void klein_correspondence::exterior_square_to_line(int *v, int *basis_line, int verbose_level)
+{
+	//verbose_level = 1;
+	int f_v = (verbose_level >= 1);
+	int p12, p13, p14, p23, p24, p34;
+	int x2, x3, x4;
+	int y2, y3, y4;
+
+	if (f_v) {
+		cout << "klein_correspondence::exterior_square_to_line" << endl;
+	}
+
+	p12 = v[0];
+	p13 = v[1];
+	p14 = v[2];
+	p23 = v[3];
+	p24 = v[4];
+	p34 = v[5];
+
+
 	int_vec_zero(basis_line, 8);
 
 	if (p12 == 0 && p13 == 0 && p14 == 0) {
 		// this means that x1 = 0
 		if (f_v) {
-			cout << "klein_correspondence::Pluecker_to_line x1=0" << endl;
+			cout << "klein_correspondence::exterior_square_to_line x1=0" << endl;
 		}
 
 		if (p23 == 0 && p24 == 0) {
@@ -563,7 +599,7 @@ void klein_correspondence::Pluecker_to_line(int *v6, int *basis_line, int verbos
 		// at least one of p12, p13, p14 is nonzero,
 		// which means that x1 \neq 0
 		if (f_v) {
-			cout << "klein_correspondence::Pluecker_to_line x1=1" << endl;
+			cout << "klein_correspondence::exterior_square_to_line x1=1" << endl;
 		}
 
 		y2 = p12;
@@ -599,7 +635,7 @@ void klein_correspondence::Pluecker_to_line(int *v6, int *basis_line, int verbos
 
 	}
 	if (f_v) {
-		cout << "klein_correspondence::Pluecker_to_line done" << endl;
+		cout << "klein_correspondence::exterior_square_to_line done" << endl;
 	}
 
 }
@@ -787,15 +823,17 @@ void klein_correspondence::identify_external_lines_and_spreads(
 void klein_correspondence::reverse_isomorphism(int *A6, int *A4, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int A6_copy[36];
-	int A[16];
-	int Av[16];
-	int B[16];
-	int C[16];
-	int B1[16];
-	int C1[16];
+	//int A6_copy[36];
+	int X[16];
+	int Xv[16];
+	int Y[16];
+	int Z[16];
+	int Yv[16];
+	int Zv[16];
+	int XYv[16];
+	int XZv[16];
 	int D[16];
-	int i, u1, u2;
+	//int i, u1, u2;
 
 	if (f_v) {
 		cout << "klein_correspondence::reverse_isomorphism" << endl;
@@ -833,9 +871,10 @@ void klein_correspondence::reverse_isomorphism(int *A6, int *A4, int verbose_lev
 	}
 #endif
 
-#if 1
+#if 0
 	int_vec_copy(A6, A6_copy, 36);
 
+#if 0
 	for (i = 0; i < 6; i++) {
 		u1 = A6_copy[3 * 6 + i];
 		u2 = F->negate(u1);
@@ -847,6 +886,7 @@ void klein_correspondence::reverse_isomorphism(int *A6, int *A4, int verbose_lev
 		u2 = F->negate(u1);
 		A6_copy[i * 6 + 3] = u2;
 	}
+#endif
 	if (f_v) {
 		cout << "A6_copy=" << endl;
 		int_matrix_print(A6_copy, 6, 6);
@@ -854,47 +894,157 @@ void klein_correspondence::reverse_isomorphism(int *A6, int *A4, int verbose_lev
 #endif
 
 	// 12,34:
-	Pluecker_to_line(A6_copy, A, 0 /* verbose_level*/);
-	Pluecker_to_line(A6_copy + 1 * 6, A + 8, 0 /* verbose_level*/);
+	exterior_square_to_line(A6, X, 0 /* verbose_level*/);
+	exterior_square_to_line(A6 + 5 * 6, X + 8, 0 /* verbose_level*/);
 
 	// 13,24
-	Pluecker_to_line(A6_copy + 2 * 6, B, 0 /* verbose_level*/);
-	Pluecker_to_line(A6_copy + 3 * 6, B + 8, 0 /* verbose_level*/);
+	exterior_square_to_line(A6 + 1 * 6, Y, 0 /* verbose_level*/);
+	exterior_square_to_line(A6 + 4 * 6, Y + 8, 0 /* verbose_level*/);
 
 	// 14,23
-	Pluecker_to_line(A6_copy + 4 * 6, C, 0 /* verbose_level*/);
-	Pluecker_to_line(A6_copy + 5 * 6, C + 8, 0 /* verbose_level*/);
+	exterior_square_to_line(A6 + 2 * 6, Z, 0 /* verbose_level*/);
+	exterior_square_to_line(A6 + 3 * 6, Z + 8, 0 /* verbose_level*/);
 
 	if (f_v) {
-		cout << "A=" << endl;
-		int_matrix_print(A, 4, 4);
-		cout << "B=" << endl;
-		int_matrix_print(B, 4, 4);
-		cout << "C=" << endl;
-		int_matrix_print(C, 4, 4);
+		cout << "X=" << endl;
+		int_matrix_print(X, 4, 4);
+		cout << "Y=" << endl;
+		int_matrix_print(Y, 4, 4);
+		cout << "Z=" << endl;
+		int_matrix_print(Z, 4, 4);
 	}
 
-	F->invert_matrix(A, Av, 4, 0 /* verbose_level*/);
-	F->invert_matrix(A, Av, 4, 0 /* verbose_level*/);
+	F->invert_matrix(X, Xv, 4, 0 /* verbose_level*/);
+	F->invert_matrix(Y, Yv, 4, 0 /* verbose_level*/);
+	F->invert_matrix(Z, Zv, 4, 0 /* verbose_level*/);
+	//F->invert_matrix(A, Av, 4, 0 /* verbose_level*/);
+	if (f_v) {
+		cout << "Xv=" << endl;
+		int_matrix_print(Xv, 4, 4);
+		cout << "Yv=" << endl;
+		int_matrix_print(Yv, 4, 4);
+		cout << "Zv=" << endl;
+		int_matrix_print(Zv, 4, 4);
+	}
 
-	F->mult_matrix_matrix(Av, B, B1, 4, 4, 4, 0 /* verbose_level*/);
-	F->mult_matrix_matrix(Av, C, C1, 4, 4, 4, 0 /* verbose_level*/);
+	F->mult_matrix_matrix(X, Yv, XYv, 4, 4, 4, 0 /* verbose_level*/);
 
 	if (f_v) {
-		cout << "B1=" << endl;
-		int_matrix_print(B1, 4, 4);
-		cout << "C1=" << endl;
-		int_matrix_print(C1, 4, 4);
+		cout << "XYv=" << endl;
+		int_matrix_print(XYv, 4, 4);
 	}
+
+	F->mult_matrix_matrix(X, Zv, XZv, 4, 4, 4, 0 /* verbose_level*/);
+
+	if (f_v) {
+		cout << "XZv=" << endl;
+		int_matrix_print(XZv, 4, 4);
+	}
+
+	//int a, b, c, d, e, f, g, h;
+
+	int M[16 * 8];
+
+	int_vec_zero(M, 16 * 8);
+
+	M[0 * 8 + 0] = XYv[0 * 4 + 2];
+	M[0 * 8 + 1] = XYv[1 * 4 + 2];
+	M[1 * 8 + 0] = XYv[0 * 4 + 3];
+	M[1 * 8 + 1] = XYv[1 * 4 + 3];
+	M[2 * 8 + 4] = XYv[2 * 4 + 2];
+	M[2 * 8 + 5] = XYv[3 * 4 + 2];
+	M[3 * 8 + 4] = XYv[2 * 4 + 3];
+	M[3 * 8 + 5] = XYv[3 * 4 + 3];
+	M[4 * 8 + 2] = XYv[0 * 4 + 0];
+	M[4 * 8 + 3] = XYv[1 * 4 + 0];
+	M[5 * 8 + 2] = XYv[0 * 4 + 1];
+	M[5 * 8 + 3] = XYv[1 * 4 + 1];
+	M[6 * 8 + 6] = XYv[2 * 4 + 0];
+	M[6 * 8 + 7] = XYv[3 * 4 + 0];
+	M[7 * 8 + 6] = XYv[2 * 4 + 1];
+	M[7 * 8 + 7] = XYv[3 * 4 + 1];
+
+	M[8 * 8 + 0] = XZv[0 * 4 + 2];
+	M[8 * 8 + 1] = XZv[1 * 4 + 2];
+	M[9 * 8 + 0] = XZv[0 * 4 + 3];
+	M[9 * 8 + 1] = XZv[1 * 4 + 3];
+	M[10 * 8 + 6] = XZv[2 * 4 + 2];
+	M[10 * 8 + 7] = XZv[3 * 4 + 2];
+	M[11 * 8 + 6] = XZv[2 * 4 + 3];
+	M[11 * 8 + 7] = XZv[3 * 4 + 3];
+	M[12 * 8 + 2] = XZv[0 * 4 + 0];
+	M[12 * 8 + 3] = XZv[1 * 4 + 0];
+	M[13 * 8 + 2] = XZv[0 * 4 + 1];
+	M[13 * 8 + 3] = XZv[1 * 4 + 1];
+	M[14 * 8 + 4] = XZv[2 * 4 + 0];
+	M[14 * 8 + 5] = XZv[3 * 4 + 0];
+	M[15 * 8 + 4] = XZv[2 * 4 + 1];
+	M[15 * 8 + 5] = XZv[3 * 4 + 1];
+
+	int_vec_zero(A4, 4 * 4);
+
+
+	if (f_v) {
+		cout << "M=" << endl;
+		int_matrix_print(M, 16, 8);
+	}
+
+	int rk;
+	int base_cols[8];
+
+	rk = F->Gauss_simple(M, 16, 8, base_cols, verbose_level);
+
+	//rk = F->RREF_and_kernel(16, 8, M, verbose_level);
+
+	if (f_v) {
+		cout << "has rank " << rk << endl;
+		int_matrix_print(M, rk, 8);
+	}
+	if (f_v) {
+		cout << "base columns: " << endl;
+		int_vec_print(cout, base_cols, rk);
+		cout << endl;
+	}
+
+	int kernel_m, kernel_n;
+	int K[8 * 8];
+	int i, j;
+
+	F->matrix_get_kernel(M, 16, 8, base_cols, rk,
+		kernel_m, kernel_n, K, 0 /* verbose_level */);
+
+
+	if (f_v) {
+		cout << "kernel: " << endl;
+		int_matrix_print(K, 8, kernel_n);
+	}
+
+
+	int abcdefgh[8];
 	int a, b, c, d, e, f, g, h;
-	a = B1[0 * 4 + 0];
-	b = B1[0 * 4 + 1];
-	c = B1[2 * 4 + 0];
-	d = B1[2 * 4 + 1];
-	e = B1[1 * 4 + 2];
-	f = B1[1 * 4 + 3];
-	g = B1[3 * 4 + 2];
-	h = B1[3 * 4 + 3];
+
+	for (i = 0; i < 8; i++) {
+		abcdefgh[i] = 0;
+	}
+
+
+	for (j = 0; j < kernel_n; j++) {
+		for (i = 0; i < 8; i++) {
+			if (K[i * kernel_n + j]) {
+				abcdefgh[i] = K[i * kernel_n + j];
+			}
+		}
+	}
+
+	a = abcdefgh[0];
+	b = abcdefgh[1];
+	c = abcdefgh[2];
+	d = abcdefgh[3];
+	e = abcdefgh[4];
+	f = abcdefgh[5];
+	g = abcdefgh[6];
+	h = abcdefgh[7];
+
 
 	int_vec_zero(D, 16);
 	D[0 * 4 + 0] = a;
@@ -911,12 +1061,18 @@ void klein_correspondence::reverse_isomorphism(int *A6, int *A4, int verbose_lev
 		int_matrix_print(D, 4, 4);
 	}
 
-	F->mult_matrix_matrix(D, A, A4, 4, 4, 4, 0 /* verbose_level*/);
+	F->mult_matrix_matrix(D, X, A4, 4, 4, 4, 0 /* verbose_level*/);
+
+	if (f_v) {
+		cout << "A4=" << endl;
+		int_matrix_print(A4, 4, 4);
+	}
+
 
 	int A6b[36];
 
-	//F->exterior_square(A4, A6b, 4, 0 /* verbose_level*/);
-	F->lift_to_Klein_quadric(A4, A6b, 0 /* verbose_level*/);
+	F->exterior_square(A4, A6b, 4, 0 /* verbose_level*/);
+	//F->lift_to_Klein_quadric(A4, A6b, 0 /* verbose_level*/);
 
 	if (f_v) {
 		cout << "A6b=" << endl;
