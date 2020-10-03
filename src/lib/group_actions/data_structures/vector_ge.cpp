@@ -815,11 +815,11 @@ schreier *vector_ge::orbits_on_points_schreier(
 	schreier *Sch;
 
 	if (f_v) {
-		cout << "strong_generators::orbits_on_points_schreier "
+		cout << "vector_ge::orbits_on_points_schreier "
 				"degree = " << A_given->degree << endl;
 		}
 	if (f_v) {
-		cout << "strong_generators::orbits_on_points_schreier "
+		cout << "vector_ge::orbits_on_points_schreier "
 				"action ";
 		A_given->print_info();
 		cout << endl;
@@ -833,10 +833,53 @@ schreier *vector_ge::orbits_on_points_schreier(
 	Sch->compute_all_point_orbits(verbose_level);
 
 	if (f_v) {
-		cout << "strong_generators::orbits_on_points_schreier "
+		cout << "vector_ge::orbits_on_points_schreier "
 				"done, we found " << Sch->nb_orbits << " orbits" << endl;
 		}
 	return Sch;
+}
+
+void vector_ge::reverse_isomorphism_exterior_square(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+	finite_field *F;
+
+	if (f_v) {
+		cout << "vector_ge::reverse_isomorphism_exterior_square" << endl;
+	}
+
+	klein_correspondence *K;
+	orthogonal *O;
+	int A4[17];
+
+
+	F = A->matrix_group_finite_field();
+
+	O = NEW_OBJECT(orthogonal);
+	O->init(1 /* epsilon */, 6 /* n */, F, verbose_level);
+
+	K = NEW_OBJECT(klein_correspondence);
+	K->init(F, O, verbose_level);
+
+
+	for (i = 0; i < len; i++) {
+
+		K->reverse_isomorphism(ith(i), A4, verbose_level);
+		cout << "generator " << i << " / " << len << ":" << endl;
+
+		cout << "before:" << endl;
+		int_matrix_print(ith(i), 6, 6);
+
+		cout << "after:" << endl;
+		int_matrix_print(A4, 4, 4);
+	}
+
+	FREE_OBJECT(K);
+	FREE_OBJECT(O);
+	if (f_v) {
+		cout << "vector_ge::reverse_isomorphism_exterior_square" << endl;
+	}
 }
 
 

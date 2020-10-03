@@ -141,9 +141,11 @@ void knarr::init(finite_field *F, int BLT_no, int verbose_level)
 
 	if (f_v) {
 		cout << "knarr::init q=" << q << " BLT_no=" << BLT_no << endl;
+#if 0
 		if (f_poly) {
 			cout << "poly = " << poly << endl;
 			}
+#endif
 		}
 
 	W = NEW_OBJECT(W3q);
@@ -269,11 +271,6 @@ void knarr::points_and_lines(int verbose_level)
 			}
 
 		int_vec_zero(Basis2, 3 * 6);
-#if 0
-		for (hh = 0; hh < 3 * 6; hh++) {
-			Basis2[hh] = 0;
-			}
-#endif
 		Basis2[0] = 1;
 		for (i = 0; i < 2; i++) {
 			for (j = 0; j < 4; j++) {
@@ -288,13 +285,8 @@ void knarr::points_and_lines(int verbose_level)
 			}
 
 
-#if 0
-		for (i = 0; i < 3 * 6; i++) {
-			G63->M[i] = Basis2[i];
-			}
-#else
 		int_vec_copy(Basis2, G63->M, 3 * 6);
-#endif
+
 		i = G63->rank_lint(0);
 		if (f_v4) {
 			cout << "This plane has rank " << i
@@ -315,11 +307,6 @@ void knarr::points_and_lines(int verbose_level)
 		for (jj = 0; jj < Gre->degree; jj++) {
 			Gre->unrank_lint(subspace_basis, jj, 0);
 			int_vec_copy(subspace_basis, P5->Grass_lines->M, 2 * 6);
-#if 0
-			for (hh = 0; hh < 2 * 6; hh++) {
-				P5->Grass_lines->M[hh] = subspace_basis[hh];
-				}
-#endif
 			j = P5->Grass_lines->rank_lint(0);
 			if (f_v4) {
 				cout << "Subspace " << jj << " has a basis:" << endl;
@@ -328,11 +315,6 @@ void knarr::points_and_lines(int verbose_level)
 				cout << "and has rank " << j << endl;
 				}
 			int_vec_zero(subspace_basis + 2 * 6, 6);
-#if 0
-			for (hh = 0; hh < 6; hh++) {
-				subspace_basis[2 * 6 + hh] = 0;
-				}
-#endif
 			subspace_basis[2 * 6 + 0] = 1;
 			rk = F->Gauss_easy(subspace_basis, 3, 6);
 			if (rk <= 2) {

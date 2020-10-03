@@ -646,18 +646,6 @@ void sims::read_list_of_elements(action *A, char *fname,
 	init(A, verbose_level - 2);
 	init_trivial_group(verbose_level - 1);
 
-#if 0
-	FILE *f2;
-	f2 = fopen(fname, "rb");
-
-	for (i = 0; i < goi; i++) {
-		A->element_read_file_fp(Elt1, f2, 0/* verbose_level*/);
-		//cout << "element " << i << ":" << endl;
-		//A->element_print(Elt1, cout);
-		strip_and_add(Elt1, Elt2, verbose_level - 1);
-		}
-	fclose(f2);
-#else
 	{
 		ifstream fp(fname, ios::binary);
 
@@ -668,7 +656,7 @@ void sims::read_list_of_elements(action *A, char *fname,
 			strip_and_add(Elt1, Elt2, verbose_level - 1);
 			}
 	}
-#endif
+
 	FREE_int(Elt1);
 	FREE_int(Elt2);
 	if (f_v) {
@@ -677,293 +665,6 @@ void sims::read_list_of_elements(action *A, char *fname,
 		}
 }
 
-#if 0
-void sims::write_sgs(const char *fname, int verbose_level)
-// used by compute_stabilizer::update_stabilizer
-{
-	int f_v = (verbose_level >= 1);
-	int *Elt;
-	char *elt;
-	longinteger_object go;
-	int i;
-	vector_ge SG;
-	int *tl;
-	file_io Fio;
-
-	if (f_v) {
-		cout << "sims::write_sgs fname=" << fname << endl;
-		}
-	Elt = NEW_int(A->elt_size_in_int);
-	elt = NEW_char(A->coded_elt_size_in_char);
-	group_order(go);
-
-	tl = NEW_int(A->base_len());
-	extract_strong_generators_in_order(SG, tl, 0 /*verbose_level*/);
-
-
-	{
-	ofstream fp(fname);
-	fp << "# group of order " << go << endl;
-	fp << "# action: " << A->label << endl;
-	fp << "# action: " << A->label_tex << endl;
-	fp << "# base length: " << endl;
-	fp << A->base_len() << endl;
-	fp << "# base: " << endl;
-	for (i = 0; i < A->base_len(); i++) {
-		fp << setw(5) << A->base_i(i) << ", ";
-		}
-	fp << endl;
-	fp << "# transversal lengths: " << endl;
-	for (i = 0; i < A->base_len(); i++) {
-		fp << setw(5) << tl[i] << ", ";
-		}
-	fp << endl;
-	fp << "# number of generators: " << endl;
-	fp << SG.len << endl;
-	fp << "# make_element_size: " << endl;
-	fp << A->make_element_size << endl;
-	fp << "# generators are:" << endl;
-	for (i = 0; i < SG.len; i++) {
-		A->element_print_for_make_element(SG.ith(i), fp);
-		fp << endl;
-		}
-	}
-	if (f_v) {
-		cout << "written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-		}
-	FREE_int(Elt);
-	FREE_char(elt);
-}
-
-
-
-#define READ_SGS_BUF_SIZE 50000
-
-
-void sims::read_sgs(const char *fname,
-		vector_ge *SG, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int *Elt;
-	char *elt;
-	longinteger_object go;
-	int i, j;
-	char label[1000];
-	char *buf;
-	int base_length;
-	int *base1; // [base_length]
-	int *tl; //[base_length]
-	int nb_gens;
-	int make_element_size1;
-	int *data; // [nb_gens * make_element_size1]
-	//char str[1000];
-	file_io Fio;
-
-	if (f_v) {
-		cout << "sims::read_sgs fname=" << fname << endl;
-		}
-
-	buf = NEW_char(READ_SGS_BUF_SIZE);
-	Elt = NEW_int(A->elt_size_in_int);
-	elt = NEW_char(A->coded_elt_size_in_char);
-	//group_order(go);
-
-	if (f_v) {
-		cout << "reading file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-		}
-	{
-		ifstream fp(fname);
-		//string str;
-		char *p_buf;
-
-		// reading a comment line: "group of order ..."
-		fp.getline(buf, READ_SGS_BUF_SIZE, '\n');
-		// reading action
-		fp.getline(buf, READ_SGS_BUF_SIZE, '\n');
-		strcpy(label, buf + 10);
-		cout << "action: " << label << endl;
-		if (strcmp(label, A->label)) {
-			cout << "actions do not match" << endl;
-			cout << "action on file: " << label << endl;
-			cout << "current action: " << A->label << endl;
-			exit(1);
-			}
-		// reading action
-		fp.getline(buf, READ_SGS_BUF_SIZE, '\n');
-		// reading comment "base_len ..."
-		fp.getline(buf, READ_SGS_BUF_SIZE, '\n');
-		// reading base_len
-		fp.getline(buf, READ_SGS_BUF_SIZE, '\n');
-		base_length = atoi(buf);
-		if (f_vv) {
-			cout << "base_length=" << base_length << endl;
-			}
-
-		base1 = NEW_int(base_length);
-		// reading comment
-		fp.getline(buf, READ_SGS_BUF_SIZE, '\n');
-		// reading base
-		fp.getline(buf, READ_SGS_BUF_SIZE, '\n');
-		p_buf = buf;
-		for (i = 0; i < base_length; i++) {
-			if (!s_scan_int(&p_buf, &base1[i])) {
-				cout << "error reading base" << endl;
-				exit(1);
-				}
-			}
-		if (f_vv) {
-			cout << "read base: ";
-			int_vec_print(cout, base1, base_length);
-			cout << endl;
-			}
-
-		tl = NEW_int(base_length);
-
-		// reading comment "transversal lengths ..."
-		fp.getline(buf, READ_SGS_BUF_SIZE, '\n');
-		// reading transversal lengths
-		fp.getline(buf, READ_SGS_BUF_SIZE, '\n');
-		p_buf = buf;
-		for (i = 0; i < base_length; i++) {
-			if (!s_scan_int(&p_buf, &tl[i])) {
-				cout << "error reading tl[" << i << "]" << endl;
-				exit(1);
-				}
-			if (f_vv) {
-				cout << "read tl[" << i << "]=" << tl[i] << endl;
-				//cout << "remaining string: '" << p_buf << "'" << endl;
-				}
-			}
-		if (f_vv) {
-			cout << "read tl: ";
-			int_vec_print(cout, tl, base_length);
-			cout << endl;
-			}
-
-		// reading comment line "number of generators ..."
-		fp.getline(buf, READ_SGS_BUF_SIZE, '\n');
-		// reading number of generators
-		fp.getline(buf, READ_SGS_BUF_SIZE, '\n');
-		nb_gens = atoi(buf);
-		if (f_vv) {
-			cout << "nb_gens=" << nb_gens << endl;
-			}
-		// reading comment "make element size ..."
-		fp.getline(buf, READ_SGS_BUF_SIZE, '\n');
-		// reading make_element_size1
-		fp.getline(buf, READ_SGS_BUF_SIZE, '\n');
-		make_element_size1 = atoi(buf);
-		if (f_vv) {
-			cout << "make_element_size=" << make_element_size1 << endl;
-			}
-		if (make_element_size1 != A->make_element_size) {
-			cout << "make element size does not match" << endl;
-			exit(1);
-			}
-
-		// reading comment "generators are ..."
-		fp.getline(buf, READ_SGS_BUF_SIZE, '\n');
-
-		data = NEW_int(nb_gens * make_element_size1);
-		for (i = 0; i < nb_gens; i++) {
-			// reading generator i:
-			if (f_vv) {
-				cout << "reading generator " << i << ":" << endl;
-				}
-			fp.getline(buf, READ_SGS_BUF_SIZE, '\n');
-			p_buf = buf;
-			for (j = 0; j < make_element_size1; j++) {
-				if (!s_scan_int(&p_buf, &data[i * make_element_size1 + j])) {
-					cout << "error reading generator "
-							<< i << " integer " << j << endl;
-					exit(1);
-					}
-				}
-			}
-	}
-
-	if (f_v) {
-		cout << "parsing generators:" << endl;
-		}
-	SG->init(A, verbose_level - 2);
-	SG->allocate(nb_gens, verbose_level - 2);
-	for (i = 0; i < nb_gens; i++) {
-		A->make_element(Elt, data + i * make_element_size1, 0);
-		A->element_move(Elt, SG->ith(i), 0);
-		if (f_vv) {
-			cout << "generator " << i << ":" << endl;
-			A->element_print_quick(SG->ith(i), cout);
-			cout << endl;
-			}
-		}
-
-	if (A->f_has_base()) {
-		if (base_length != A->base_len()) {
-			cout << "base_len does not match" << endl;
-			cout << "A->base_len=" << A->base_len() << endl;
-			cout << "read " << base_length << endl;
-			exit(1);
-			}
-		for (i = 0; i < base_length; i++) {
-			if (base1[i] != A->base_i(i)) {
-				cout << "base does not match" << endl;
-				cout << "A->base[" << i << "]=" << A->base_i(i) << endl;
-				cout << "base1[" << i << "]=" << base1[i] << endl;
-				exit(1);
-				}
-			}
-		}
-	else {
-		if (f_v) {
-			cout << "action does not have a base, "
-					"we will initialize with the base from file" << endl;
-			}
-		A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-		A->Stabilizer_chain->allocate_base_data(A, base_length, verbose_level);
-		//A->allocate_base_data(base_length);
-		//A->Stabilizer_chain->base_len = base_length;
-		for (i = 0; i < base_length; i++) {
-			A->Stabilizer_chain->base_i(i) = base1[i];
-			}
-		if (f_vv) {
-			cout << "the base is: ";
-			int_vec_print(cout, A->get_base(), A->base_len());
-			cout << endl;
-
-			cout << "rallocating base:" << endl;
-			}
-		reallocate_base(0, verbose_level - 1);
-		}
-
-	if (f_v) {
-		cout << "before init_trivial_group" << endl;
-		}
-	init_trivial_group(verbose_level - 2);
-	if (f_v) {
-		cout << "before init_generators" << endl;
-		}
-	init_generators(*SG, verbose_level - 2);
-	if (f_v) {
-		cout << "before compute_base_orbits_known_length" << endl;
-		}
-	compute_base_orbits_known_length(tl, verbose_level - 2);
-	group_order(go);
-	if (f_v) {
-		cout << "sims::read_sgs created a group of order "
-				<< go << endl;
-		}
-
-	FREE_int(data);
-	FREE_int(tl);
-	FREE_int(base1);
-	FREE_int(Elt);
-	FREE_char(elt);
-	FREE_char(buf);
-}
-#endif
 
 void sims::write_as_magma_permutation_group(std::string &fname_base,
 		vector_ge *gens, int verbose_level)
@@ -1049,6 +750,7 @@ void sims::write_as_magma_permutation_group(std::string &fname_base,
 }
 
 void sims::report(std::ostream &ost,
+		std::string &prefix,
 		layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
@@ -1057,7 +759,7 @@ void sims::report(std::ostream &ost,
 	if (f_v) {
 		cout << "sims::report" << endl;
 	}
-	int i;
+	//int i;
 	sorting Sorting;
 
 	ost << endl << "\\subsection*{Stabilizer chain}" << endl << endl;
@@ -1070,7 +772,7 @@ void sims::report(std::ostream &ost,
 	ost << "\\mbox{Level} & \\mbox{Base pt} & \\mbox{Orbit length} & \\mbox{Subgroup order}\\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\hline" << endl;
-	for (i = 0; i < my_base_len; i++) {
+	for (int i = 0; i < my_base_len; i++) {
 
 
 
@@ -1088,22 +790,25 @@ void sims::report(std::ostream &ost,
 	string fname_base;
 	char str[1000];
 
+	int orbit_idx;
 
-	for (i = 0; i < my_base_len; i++) {
+	for (orbit_idx = 0; orbit_idx < my_base_len; orbit_idx++) {
 
 		if (f_v) {
-			cout << "sims::report tree " << i << " / " << my_base_len << endl;
+			cout << "sims::report tree " << orbit_idx << " / " << my_base_len << endl;
 		}
-		ost << endl << "\\subsection*{Basic Orbit " << i << "}" << endl << endl;
+		ost << endl << "\\subsection*{Basic Orbit " << orbit_idx << "}" << endl << endl;
 
-		if (orbit_len[i] < 1000) {
+		if (orbit_len[orbit_idx] < 1000) {
 
-			sprintf(str, "sims_%d", i);
-			fname_base.assign(str);
+			sprintf(str, "_sims_%d", orbit_idx);
+
+			fname_base.assign(prefix);
+			fname_base.append(str);
 
 			layered_graph *LG;
 			Sorting.schreier_vector_tree(
-				orbit_len[i], orbit[i], prev[i], TRUE /* f_use_pts_inv */, orbit_inv[i],
+				orbit_len[orbit_idx], orbit[orbit_idx], prev[orbit_idx], TRUE /* f_use_pts_inv */, orbit_inv[orbit_idx],
 				fname_base,
 				LG_Draw_options,
 				LG,
@@ -1113,10 +818,33 @@ void sims::report(std::ostream &ost,
 
 			ost << "\\input " << fname_base << ".tex" << endl;
 			ost << endl;
+
+			std::vector<int> Orb;
+			int *O;
+			sorting Sorting;
+
+			get_orbit(orbit_idx, Orb, verbose_level);
+
+			ost << "Basic orbit " << orbit_idx << " has size " << Orb.size() << "\\\\" << endl;
+
+			O = NEW_int(Orb.size());
+			for (int i = 0; i < Orb.size(); i++) {
+				O[i] = Orb[i];
+			}
+			Sorting.int_vec_heapsort(O, Orb.size());
+			for (int i = 0; i < Orb.size(); i++) {
+				ost << O[i];
+				if (i < Orb.size() - 1) {
+					ost << ", ";
+				}
+			}
+			ost << "\\\\" << endl;
+			FREE_int(O);
+
 		}
 		ost << "\\bigskip" << endl;
 		if (f_v) {
-			cout << "sims::report tree " << i << " / " << my_base_len << " done" << endl;
+			cout << "sims::report tree " << orbit_idx << " / " << my_base_len << " done" << endl;
 		}
 
 	}

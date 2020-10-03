@@ -119,7 +119,7 @@ void schreier_sims::init(action *A, int verbose_level)
 	if (f_v) {
 		cout << "schreier_sims::init before G->init_trivial_group" << endl;
 		}
-	G->init_trivial_group(verbose_level);
+	G->init_trivial_group(0 /*verbose_level*/);
 	if (f_v) {
 		cout << "schreier_sims::init after G->init_trivial_group" << endl;
 		}

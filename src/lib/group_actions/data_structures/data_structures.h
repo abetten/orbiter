@@ -188,7 +188,7 @@ public:
 
 class orbit_rep {
 public:
-	char prefix[1000];
+	//std::string prefix;
 	action *A;
 	void (*early_test_func_callback)(long int *S, int len,
 		long int *candidates, int nb_candidates,

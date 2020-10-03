@@ -259,6 +259,8 @@ public:
 		long int *set, int sz, int verbose_level);
 	schreier *orbits_on_points_schreier(
 			action *A_given, int verbose_level);
+	void reverse_isomorphism_exterior_square(int verbose_level);
+
 };
 
 }}

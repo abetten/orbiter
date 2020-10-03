@@ -3242,6 +3242,31 @@ void strong_generators::report_fixed_objects_in_P3(
 	}
 }
 
+void strong_generators::reverse_isomorphism_exterior_square(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::reverse_isomorphism_exterior_square" << endl;
+	}
+
+	if (f_v) {
+		cout << "strong_generators::reverse_isomorphism_exterior_square "
+				"before gens->reverse_isomorphism_exterior_square" << endl;
+	}
+
+	gens->reverse_isomorphism_exterior_square(verbose_level);
+
+	if (f_v) {
+		cout << "strong_generators::reverse_isomorphism_exterior_square "
+				"after gens->reverse_isomorphism_exterior_square" << endl;
+	}
+
+	if (f_v) {
+		cout << "strong_generators::reverse_isomorphism_exterior_square" << endl;
+	}
+}
+
 
 
 

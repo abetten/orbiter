@@ -255,6 +255,7 @@ public:
 	int f_export_magma;
 	int f_order_of_products;
 	const char *order_of_products_elements;
+	int f_reverse_isomorphism_exterior_square;
 
 	// classification of optimal linear codes:
 	int f_linear_codes;
@@ -405,6 +406,7 @@ public:
 	void element_rank(std::string &elt_data, int verbose_level);
 	void element_unrank(std::string &rank_string, int verbose_level);
 	void conjugacy_class_of(std::string &rank_string, int verbose_level);
+	void do_reverse_isomorphism_exterior_square(int verbose_level);
 	void isomorphism_Klein_quadric(std::string &fname, int verbose_level);
 	void orbits_on_set_system_from_file(int verbose_level);
 	void orbits_on_set_from_file(int verbose_level);

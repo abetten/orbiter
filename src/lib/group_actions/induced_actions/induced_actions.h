@@ -545,7 +545,6 @@ public:
 	
 	action *A;
 	grassmann *G;
-	//matrix_group *M;
 	int *M1;
 	int *M2;
 

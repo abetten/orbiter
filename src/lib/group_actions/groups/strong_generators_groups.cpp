@@ -3556,6 +3556,146 @@ void strong_generators::hyperplane_lifting_with_two_lines_fixed(
 	}
 }
 
+void strong_generators::exterior_square(
+		action *A_detached,
+		strong_generators *SG_original,
+		vector_ge *&nice_gens,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	vector_ge *gens;
+
+	if (f_v) {
+		cout << "strong_generators::exterior_square" << endl;
+	}
+
+
+
+	gens = NEW_OBJECT(vector_ge);
+	gens->init(A_detached, verbose_level - 2);
+
+	int i, n, n2;
+	int f_semilinear = FALSE;
+	int frobenius = 0;
+	int *An2;
+	finite_field *F;
+
+	n = SG_original->A->matrix_group_dimension();
+	F = A->matrix_group_finite_field();
+	if (f_v) {
+		cout << "strong_generators::exterior_square n = " << n << endl;
+	}
+
+	combinatorics_domain Combi;
+
+	n2 = Combi.binomial2(n);
+
+	An2 = NEW_int(n2 * n2 + 1); // in case of semilinear
+
+	f_semilinear = SG_original->A->is_semilinear_matrix_group();
+	if (f_v) {
+		cout << "strong_generators::exterior_square "
+				"f_semilinear = " << f_semilinear << endl;
+		cout << "generators SG_original:" << endl;
+		SG_original->print_generators(cout);
+	}
+
+	gens->allocate(SG_original->gens->len, verbose_level - 2);
+	for (i = 0; i < SG_original->gens->len; i++) {
+		if (f_v) {
+			cout << "strong_generators::exterior_square "
+					"lifting generator "
+					<< i << " / " << SG_original->gens->len << endl;
+			}
+		if (f_semilinear) {
+			frobenius = SG_original->gens->ith(i)[n * n];
+			if (f_v) {
+				if (f_semilinear) {
+					cout << "strong_generators::exterior_square "
+							" frobenius = " << frobenius << endl;
+				}
+			}
+		}
+		else {
+			frobenius = 0;
+		}
+
+		if (f_v) {
+			cout << "strong_generators::exterior_square "
+					"lifting generator "
+					<< i << " / " << SG_original->gens->len
+					<< " before P->exterior_square" << endl;
+			}
+
+		int_vec_zero(An2, n2 * n2 + 1);
+		F->exterior_square(SG_original->gens->ith(i), An2, n, verbose_level - 2);
+
+		An2[n2 * n2] = frobenius;
+
+		if (f_v) {
+			cout << "strong_generators::exterior_square "
+					"lifting generator "
+					<< i << " / " << SG_original->gens->len
+					<< " after P->exterior_square" << endl;
+			}
+		A_detached->make_element(gens->ith(i), An2, 0);
+		if (f_v) {
+			cout << "strong_generators::exterior_square "
+					"generator "
+					<< i << " / " << SG_original->gens->len
+					<< " lifts to " << endl;
+			A_detached->element_print(gens->ith(i), cout);
+			}
+		}
+
+	if (f_v) {
+		cout << "strong_generators::exterior_square "
+				"generators are:" << endl;
+		gens->print(cout);
+	}
+
+	gens->copy(nice_gens, verbose_level);
+
+
+	longinteger_object target_go;
+
+
+	SG_original->group_order(target_go);
+
+
+	if (f_v) {
+		cout << "strong_generators::exterior_square "
+				"target_go=" << target_go << endl;
+	}
+
+
+	if (f_v) {
+		cout << "strong_generators::exterior_square "
+				"before generators_to_strong_generators" << endl;
+	}
+
+	strong_generators *SG;
+
+	A->generators_to_strong_generators(
+		TRUE /* f_target_go */, target_go,
+		gens, SG, verbose_level - 3);
+
+	if (f_v) {
+		cout << "strong_generators::exterior_square "
+				"after generators_to_strong_generators" << endl;
+	}
+
+	init_copy(SG, 0);
+
+
+	FREE_OBJECT(SG);
+	FREE_OBJECT(gens);
+
+	if (f_v) {
+		cout << "strong_generators::exterior_square done" << endl;
+	}
+}
+
 
 
 }}

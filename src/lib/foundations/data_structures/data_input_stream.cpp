@@ -85,7 +85,17 @@ int data_input_stream::read_arguments(
 
 		if (strcmp(argv[i], "-set_of_points") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_SET_OF_POINTS;
-			input_string[nb_inputs].assign(argv[++i]);
+
+			//input_string[nb_inputs].assign(argv[++i]);
+
+			os_interface Os;
+
+			i++;
+			Os.get_string_from_command_line(input_string[nb_inputs], argc, argv,
+					i, verbose_level);
+			i--;
+
+
 			input_string2[nb_inputs].assign("");
 			cout << "data_input_stream::read_arguments -set_of_points " << input_string[nb_inputs] << endl;
 			nb_inputs++;
@@ -170,7 +180,7 @@ int data_input_stream::read_arguments(
 		}
 	} // next i
 	cout << "data_input_stream::read_arguments done" << endl;
-	return i + 1;
+	return i;
 }
 
 int data_input_stream::count_number_of_objects_to_test(

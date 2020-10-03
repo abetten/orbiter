@@ -3559,6 +3559,12 @@ void finite_field::exterior_square(int *An, int *An2, int n, int verbose_level)
 	int n2;
 	combinatorics_domain Combi;
 
+	if (f_v) {
+		cout << "finite_field::exterior_square input matrix:" << endl;
+		int_matrix_print(An, n, n);
+	}
+
+
 	n2 = (n * (n - 1)) >> 1;
 	// (i,j) = row index
 	for (i = 0; i < n; i++) {
@@ -3573,11 +3579,18 @@ void finite_field::exterior_square(int *An, int *An2, int n, int verbose_level)
 
 					// a_{k,i}a_{l,j} - a_{k,j}a_{l,i}
 					// = matrix entry at position (ij,kl)
-
+#if 0
 					aki = An[k * n + i];
 					alj = An[l * n + j];
 					akj = An[k * n + j];
 					ali = An[l * n + i];
+#else
+					// transposed:
+					aki = An[i * n + k];
+					alj = An[j * n + l];
+					akj = An[j * n + k];
+					ali = An[i * n + l];
+#endif
 					u = mult(aki, alj);
 					v = mult(akj, ali);
 					w = add(u, negate(v));
@@ -3590,6 +3603,10 @@ void finite_field::exterior_square(int *An, int *An2, int n, int verbose_level)
 			} // next j
 		} // next i
 
+	if (f_v) {
+		cout << "finite_field::exterior_square output matrix:" << endl;
+		int_matrix_print(An2, n2, n2);
+	}
 
 	if (f_v) {
 		cout << "finite_field::exterior_square done" << endl;

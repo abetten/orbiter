@@ -187,16 +187,11 @@ public:
 		// element_read_from_memory_object
 
 	
-	///** a label for the group which can be used in filenames */
-	//char group_prefix[1000];
-	//std::string group_prefix;
 
 	/** a fancy label for the group */
-	//char label[1000];
 	std::string label;
 
 	/** a fancy label for the group for latex */
-	//char label_tex[1000];
 	std::string label_tex;
 
 
@@ -515,7 +510,7 @@ public:
 		int multiplication_order, int verbose_level);
 
 
-	/** Create the symmetric group of degree degree
+	/** Create the symmetric group
 	 * as abstract permutation group */
 	void init_symmetric_group(int degree, int verbose_level);
 

@@ -1221,6 +1221,7 @@ public:
 	void line_to_Pluecker(long int line_rk, int *v6, int verbose_level);
 	long int point_on_quadric_to_line(long int point_rk, int verbose_level);
 	void Pluecker_to_line(int *v6, int *basis_line, int verbose_level);
+	void exterior_square_to_line(int *v, int *basis_line, int verbose_level);
 	void compute_external_lines(std::vector<long int> &External_lines, int verbose_level);
 	void identify_external_lines_and_spreads(
 			spread_tables *T,
@@ -1249,8 +1250,8 @@ public:
 class knarr {
 public:
 	int q;
-	int f_poly;
-	char *poly;
+	//int f_poly;
+	//char *poly;
 	int BLT_no;
 	
 	W3q *W;
