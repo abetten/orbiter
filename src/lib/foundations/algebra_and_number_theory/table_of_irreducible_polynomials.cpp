@@ -100,7 +100,7 @@ void table_of_irreducible_polynomials::init(int k,
 
 		if (f_v) {
 			cout << "table_of_irreducible_polynomials::init before "
-					"F->make_all_irreducible_polynomials_of_degree_d"
+					"Algebra.make_all_irreducible_polynomials_of_degree_d"
 					<< endl;
 		}
 
@@ -120,7 +120,7 @@ void table_of_irreducible_polynomials::init(int k,
 
 		if (f_v) {
 			cout << "table_of_irreducible_polynomials::init after "
-					"F->make_all_irreducible_polynomials_of_degree_d"
+					"Algebra.make_all_irreducible_polynomials_of_degree_d"
 					<< endl;
 		}
 
@@ -230,8 +230,7 @@ int table_of_irreducible_polynomials::select_polynomial_first(
 	int i, k1 = k, d, m;
 
 	if (f_v) {
-		cout << "table_of_irreducible_polynomials::"
-				"select_polynomial_first" << endl;
+		cout << "table_of_irreducible_polynomials::select_polynomial_first" << endl;
 	}
 	int_vec_zero(Select, nb_irred);
 	for (i = nb_irred - 1; i >= 0; i--) {
@@ -245,16 +244,14 @@ int table_of_irreducible_polynomials::select_polynomial_first(
 	}
 	if (k1 == 0) {
 		if (f_v) {
-			cout << "table_of_irreducible_polynomials::"
-					"select_polynomial_first "
+			cout << "table_of_irreducible_polynomials::select_polynomial_first "
 					"returns TRUE" << endl;
 		}
 		return TRUE;
 	}
 	else {
 		if (f_v) {
-			cout << "table_of_irreducible_polynomials::"
-					"select_polynomial_first "
+			cout << "table_of_irreducible_polynomials::select_polynomial_first "
 					"returns FALSE" << endl;
 		}
 		return FALSE;
@@ -285,7 +282,7 @@ int table_of_irreducible_polynomials::select_polynomial_next(
 		}
 		if (i == nb_irred) {
 			if (f_v) {
-				cout << "gl_classes::select_polynomial_next "
+				cout << "table_of_irreducible_polynomials::select_polynomial_next "
 						"return FALSE" << endl;
 			}
 			return FALSE;
@@ -304,8 +301,7 @@ int table_of_irreducible_polynomials::select_polynomial_next(
 			}
 			if (k1 == 0) {
 				if (f_v) {
-					cout << "table_of_irreducible_polynomials::"
-							"select_polynomial_next "
+					cout << "table_of_irreducible_polynomials::select_polynomial_next "
 							"return FALSE" << endl;
 				}
 				return TRUE;

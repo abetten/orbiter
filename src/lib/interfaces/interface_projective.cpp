@@ -86,6 +86,13 @@ interface_projective::interface_projective()
 	line1_to = 0;
 	line2_to = 0;
 
+	f_move_two_lines_in_hyperplane_stabilizer_text = FALSE;
+	//std:string line1_from_text;
+	//std:string line2_from_text;
+	//std:string line1_to_text;
+	//std:string line2_to_text;
+
+
 	f_make_table_of_surfaces = FALSE;
 
 	f_inverse_isomorphism_klein_quadric = FALSE;
@@ -132,6 +139,9 @@ void interface_projective::print_help(int argc,
 	}
 	else if (strcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer") == 0) {
 		cout << "-move_two_lines_in_hyperplane_stabilizer <int : q>  <int : line1_from> <int : line2_from> <int : line1_to> <int : line2_to> " << endl;
+	}
+	else if (strcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer_text") == 0) {
+		cout << "-move_two_lines_in_hyperplane_stabilizer_text <int : q>  <string : line1_from> <string : line2_from> <string : line1_to> <string : line2_to> " << endl;
 	}
 	else if (strcmp(argv[i], "-make_table_of_surfaces") == 0) {
 		cout << "-make_table_of_surfaces " << endl;
@@ -180,6 +190,9 @@ int interface_projective::recognize_keyword(int argc,
 		return true;
 	}
 	else if (strcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer_text") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-make_table_of_surfaces") == 0) {
@@ -342,6 +355,18 @@ void interface_projective::read_arguments(int argc,
 					<< " " << line1_to << " " << line2_to
 					<< endl;
 		}
+		else if (strcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer_text") == 0) {
+			f_move_two_lines_in_hyperplane_stabilizer_text = TRUE;
+			q = atoi(argv[++i]);
+			line1_from_text.assign(argv[++i]);
+			line2_from_text.assign(argv[++i]);
+			line1_to_text.assign(argv[++i]);
+			line2_to_text.assign(argv[++i]);
+			cout << "-move_two_lines_in_hyperplane_stabilizer_text" << q
+					<< " " << line1_from_text << " " << line1_from_text
+					<< " " << line1_to_text << " " << line2_to_text
+					<< endl;
+		}
 		else if (strcmp(argv[i], "-make_table_of_surfaces") == 0) {
 			f_make_table_of_surfaces = TRUE;
 			cout << "-make_table_of_surfaces" << endl;
@@ -413,6 +438,12 @@ void interface_projective::worker(orbiter_session *Session, int verbose_level)
 				q,
 				line1_from, line2_from,
 				line1_to, line2_to, verbose_level);
+	}
+	else if (f_move_two_lines_in_hyperplane_stabilizer_text) {
+		do_move_two_lines_in_hyperplane_stabilizer_text(
+				q,
+				line1_from_text, line2_from_text,
+				line1_to_text, line2_to_text, verbose_level);
 	}
 	else if (f_make_table_of_surfaces) {
 
@@ -1418,6 +1449,82 @@ void interface_projective::do_move_two_lines_in_hyperplane_stabilizer(
 
 	if (f_v) {
 		cout << "interface_projective::do_move_two_lines_in_hyperplane_stabilizer done" << endl;
+	}
+}
+
+void interface_projective::do_move_two_lines_in_hyperplane_stabilizer_text(
+		int q,
+		std::string line1_from_text, std::string line2_from_text,
+		std::string line1_to_text, std::string line2_to_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_projective::do_move_two_lines_in_hyperplane_stabilizer_text" << endl;
+	}
+
+	finite_field *F;
+	projective_space *P;
+	int A4[16];
+
+	F = NEW_OBJECT(finite_field);
+	F->init(q, 0);
+
+	P = NEW_OBJECT(projective_space);
+	P->init(3, F,
+			FALSE /* f_init_incidence_structure */,
+			0 /*verbose_level*/);
+
+	int *line1_from_data;
+	int *line2_from_data;
+	int *line1_to_data;
+	int *line2_to_data;
+	int sz;
+
+	int_vec_scan(line1_from_text.c_str(), line1_from_data, sz);
+	if (sz != 8) {
+		cout << "line1_from_text must contain exactly 8 integers" << endl;
+		exit(1);
+	}
+	int_vec_scan(line2_from_text.c_str(), line2_from_data, sz);
+	if (sz != 8) {
+		cout << "line2_from_text must contain exactly 8 integers" << endl;
+		exit(1);
+	}
+	int_vec_scan(line1_to_text.c_str(), line1_to_data, sz);
+	if (sz != 8) {
+		cout << "line1_to_text must contain exactly 8 integers" << endl;
+		exit(1);
+	}
+	int_vec_scan(line2_to_text.c_str(), line2_to_data, sz);
+	if (sz != 8) {
+		cout << "line2_to_text must contain exactly 8 integers" << endl;
+		exit(1);
+	}
+
+	long int line1_from;
+	long int line2_from;
+	long int line1_to;
+	long int line2_to;
+
+	line1_from = P->rank_line(line1_from_data);
+	line2_from = P->rank_line(line2_from_data);
+	line1_to = P->rank_line(line1_to_data);
+	line2_to = P->rank_line(line2_to_data);
+
+
+	P->hyperplane_lifting_with_two_lines_moved(
+			line1_from, line1_to,
+			line2_from, line2_to,
+			A4,
+			verbose_level);
+
+	cout << "interface_projective::do_move_two_lines_in_hyperplane_stabilizer_text A4=" << endl;
+	int_matrix_print(A4, 4, 4);
+
+	if (f_v) {
+		cout << "interface_projective::do_move_two_lines_in_hyperplane_stabilizer_text done" << endl;
 	}
 }
 

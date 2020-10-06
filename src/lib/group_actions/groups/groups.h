@@ -879,7 +879,9 @@ public:
 	void print_orbit_reps(std::ostream &ost);
 	void print(std::ostream &ost);
 	void print_and_list_orbits(std::ostream &ost);
+	void print_and_list_orbits_with_original_labels(std::ostream &ost);
 	void print_and_list_orbits_tex(std::ostream &ost);
+	void print_and_list_orbits_with_original_labels_tex(std::ostream &ost);
 	void print_and_list_orbits_of_given_length(std::ostream &ost,
 		int len);
 	void print_and_list_orbits_and_stabilizer(std::ostream &ost,
@@ -896,6 +898,7 @@ public:
 	void print_orbit(int orbit_no);
 	void print_orbit_using_labels(int orbit_no, long int *labels);
 	void print_orbit(std::ostream &ost, int orbit_no);
+	void print_orbit_with_original_labels(std::ostream &ost, int orbit_no);
 	void print_orbit_tex(std::ostream &ost, int orbit_no);
 	void print_orbit_sorted_tex(std::ostream &ost, int orbit_no, int f_truncate, int max_length);
 	void print_and_list_orbit_and_stabilizer_tex(int i,
@@ -916,6 +919,8 @@ public:
 		action *default_action, strong_generators *gens_full_group);
 	void print_and_list_orbits_sorted_by_length(std::ostream &ost);
 	void print_and_list_orbits_sorted_by_length(std::ostream &ost, int f_tex);
+	void print_orbit_sorted_with_original_labels_tex(std::ostream &ost,
+			int orbit_no, int f_truncate, int max_length);
 	void print_orbit_using_labels(std::ostream &ost, int orbit_no, long int *labels);
 	void print_orbit_using_callback(std::ostream &ost, int orbit_no,
 		void (*print_point)(std::ostream &ost, int pt, void *data),

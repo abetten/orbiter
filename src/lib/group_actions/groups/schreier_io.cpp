@@ -219,17 +219,55 @@ void schreier::print_and_list_orbits(ostream &ost)
 	ost << endl;
 }
 
-void schreier::print_and_list_orbits_tex(ostream &ost)
+void schreier::print_and_list_orbits_with_original_labels(ostream &ost)
 {
 	int i;
+
+	ost << nb_orbits << " orbits" << endl;
+	ost << "orbit group with " << gens.len << " generators:" << endl;
+	ost << "i : orbit_first[i] : orbit_len[i]" << endl;
+	for (i = 0; i < nb_orbits; i++) {
+		ost << " Orbit " << i << " / " << nb_orbits
+				<< " : " << orbit_first[i] << " : " << orbit_len[i];
+		ost << " : ";
+		print_orbit(ost, i);
+		ost << endl;
+	}
+	ost << endl;
+
+}
+
+
+void schreier::print_and_list_orbits_tex(ostream &ost)
+{
+	int orbit_no;
 
 	ost << nb_orbits << " orbits:\\\\" << endl;
 	ost << "orbits under a group with " << gens.len
 			<< " generators acting on a set of size "
 			<< A->degree << ":\\\\" << endl;
 	//ost << "i : orbit_first[i] : orbit_len[i]" << endl;
-	for (i = 0; i < nb_orbits; i++) {
-		print_and_list_orbit_tex(i, ost);
+	for (orbit_no = 0; orbit_no < nb_orbits; orbit_no++) {
+		print_and_list_orbit_tex(orbit_no, ost);
+	}
+	ost << endl;
+}
+
+void schreier::print_and_list_orbits_with_original_labels_tex(ostream &ost)
+{
+	int orbit_no;
+
+	ost << nb_orbits << " orbits:\\\\" << endl;
+	ost << "orbits under a group with " << gens.len
+			<< " generators acting on a set of size "
+			<< A->degree << ":\\\\" << endl;
+	//ost << "i : orbit_first[i] : orbit_len[i]" << endl;
+	for (orbit_no = 0; orbit_no < nb_orbits; orbit_no++) {
+		ost << " Orbit " << orbit_no << " / " << nb_orbits << " of size " << orbit_len[orbit_no] << " : ";
+		//print_and_list_orbit_tex(i, ost);
+		print_orbit_sorted_with_original_labels_tex(ost,
+				orbit_no, FALSE /* f_truncate */, 0 /* max_length*/);
+		ost << "\\\\" << endl;
 	}
 	ost << endl;
 }
@@ -238,7 +276,7 @@ void schreier::print_and_list_orbit_tex(int i, ostream &ost)
 {
 	ost << " Orbit " << i << " / " << nb_orbits << " of size " << orbit_len[i] << " : ";
 	//print_orbit_tex(ost, i);
-	print_orbit_sorted_tex(ost, i, TRUE, 10);
+	print_orbit_sorted_tex(ost, i, FALSE /* f_truncate */, 0 /* max_length*/);
 	ost << "\\\\" << endl;
 }
 
@@ -734,19 +772,43 @@ void schreier::print_orbit_using_labels(
 void schreier::print_orbit(ostream &ost, int orbit_no)
 {
 	int i, first, len;
-	int *v;
+	long int *v;
 
 	first = orbit_first[orbit_no];
 	len = orbit_len[orbit_no];
-	v = NEW_int(len);
+	v = NEW_lint(len);
 	for (i = 0; i < len; i++) {
 		v[i] = orbit[first + i];
 	}
 	//int_vec_print(ost, v, len);
 	//int_vec_heapsort(v, len);
-	int_vec_print_fully(ost, v, len);
+	lint_vec_print_fully(ost, v, len);
 
-	FREE_int(v);
+	FREE_lint(v);
+}
+
+void schreier::print_orbit_with_original_labels(ostream &ost, int orbit_no)
+{
+	int i, first, len;
+	long int *v;
+	long int *w;
+
+	first = orbit_first[orbit_no];
+	len = orbit_len[orbit_no];
+	v = NEW_lint(len);
+	for (i = 0; i < len; i++) {
+		v[i] = orbit[first + i];
+	}
+
+	A->original_point_labels(v, len, w, 0 /*verbose_level*/);
+
+
+	//int_vec_print(ost, v, len);
+	//int_vec_heapsort(v, len);
+	lint_vec_print_fully(ost, w, len);
+
+	FREE_lint(v);
+	FREE_lint(w);
 }
 
 void schreier::print_orbit_tex(ostream &ost, int orbit_no)
@@ -795,6 +857,40 @@ void schreier::print_orbit_sorted_tex(ostream &ost,
 	}
 
 	FREE_int(v);
+}
+
+void schreier::print_orbit_sorted_with_original_labels_tex(ostream &ost,
+		int orbit_no, int f_truncate, int max_length)
+{
+	latex_interface L;
+	int i, first, len;
+	long int *v;
+	long int *w;
+	sorting Sorting;
+
+	first = orbit_first[orbit_no];
+	len = orbit_len[orbit_no];
+	v = NEW_lint(len);
+	for (i = 0; i < len; i++) {
+		v[i] = orbit[first + i];
+	}
+
+	//int_vec_print(ost, v, len);
+	Sorting.lint_vec_heapsort(v, len);
+	//int_vec_print_fully(ost, v, len);
+
+	A->original_point_labels(v, len, w, 0 /*verbose_level*/);
+
+	if (f_truncate && len > max_length) {
+		L.lint_set_print_tex(ost, w, max_length);
+		ost << "truncated after " << max_length << " elements";
+	}
+	else {
+		L.lint_set_print_tex(ost, w, len);
+	}
+
+	FREE_lint(v);
+	FREE_lint(w);
 }
 
 

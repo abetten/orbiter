@@ -682,6 +682,7 @@ public:
 	void latex_table_of_half_double_sixes(std::ostream &ost);
 	void print_Steiner_and_Eckardt(std::ostream &ost);
 	void latex_abstract_trihedral_pair(std::ostream &ost, int t_idx);
+	void latex_table_of_Schlaefli_labeling_of_lines(std::ostream &ost);
 	void latex_trihedral_pair(std::ostream &ost, int *T, long int *TE);
 	void latex_table_of_trihedral_pairs(std::ostream &ost);
 	void print_trihedral_pairs(std::ostream &ost);
@@ -708,8 +709,14 @@ public:
 
 
 	// surface_domain_families.cpp:
+	void create_equation_bes(int a, int c, int *coeff, int verbose_level);
 	void create_equation_F13(int a, int *coeff, int verbose_level);
 	void create_equation_G13(int a, int *coeff, int verbose_level);
+	int create_surface_bes(int a, int c,
+		int *coeff20,
+		long int *Lines27,
+		int &nb_E,
+		int verbose_level);
 	int create_surface_F13(int a,
 		int *coeff20,
 		long int *Lines27,

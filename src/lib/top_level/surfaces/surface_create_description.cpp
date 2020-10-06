@@ -41,6 +41,9 @@ void surface_create_description::null()
 	family_G13_a = 0;
 	f_family_F13 = FALSE;
 	family_F13_a = 0;
+	f_family_bes = FALSE;
+	family_bes_a = 0;
+	family_bes_c = 0;
 	f_arc_lifting = FALSE;
 	arc_lifting_text = NULL;
 	arc_lifting_two_lines_text = NULL;
@@ -94,6 +97,12 @@ int surface_create_description::read_arguments(int argc, const char **argv,
 			f_family_F13 = TRUE;
 			family_F13_a = atoi(argv[++i]);
 			cout << "-family_F13 " << family_F13_a << endl;
+		}
+		else if (strcmp(argv[i], "-family_bes") == 0) {
+			f_family_bes = TRUE;
+			family_bes_a = atoi(argv[++i]);
+			family_bes_c = atoi(argv[++i]);
+			cout << "-family_bes " << family_bes_a << " " << family_bes_c << endl;
 		}
 		else if (strcmp(argv[i], "-arc_lifting") == 0) {
 			f_arc_lifting = TRUE;

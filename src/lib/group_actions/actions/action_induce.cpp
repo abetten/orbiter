@@ -1600,6 +1600,38 @@ void action::induced_action_by_restriction_on_orbit_with_schreier_vector(
 		}
 }
 
+void action::original_point_labels(long int *points, int nb_points,
+		long int *&original_points, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action::original_point_labels" << endl;
+	}
+	if (type_G == action_by_restriction_t) {
+		action_by_restriction *ABR;
+
+		original_points = NEW_lint(nb_points);
+
+		ABR = G.ABR;
+
+
+		int i;
+		long int a, b;
+
+		for (i = 0; i < nb_points; i++) {
+			a = points[i];
+			b = ABR->original_point(a);
+			original_points[i] = b;
+		}
+	}
+	else {
+		cout << "action::original_point_labels type must be action_by_restriction_t" << endl;
+		exit(1);
+	}
+
+}
+
 action *action::restricted_action(
 		long int *points, int nb_points, int verbose_level)
 {

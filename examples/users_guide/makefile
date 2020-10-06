@@ -181,6 +181,14 @@ search_primitive_poly_32:
 #############################################################################################################
 # Section 5: Finite Projective Spaces
 
+
+PG_1_16:
+	$(ORBITER_PATH)/orbiter.out -cheat_sheet_PG 1 16
+	pdflatex PG_1_16.tex 
+	open PG_1_16.pdf
+
+
+
 PG_2_4:
 	$(ORBITER_PATH)/orbiter.out -cheat_sheet_PG 2 4 \
 		-decomposition_by_element 1 "0,1,0, 0,0,1, 2,1,1, 0" "PG_2_4_singer"
@@ -336,9 +344,48 @@ octic_prepare:
 PGL_4_2:
 	$(ORBITER_PATH)/orbiter.out -v 2 -linear_group -PGL 4 2 -end
 
+
+PGL_4_2_wd:
+	$(ORBITER_PATH)/orbiter.out -v 12 -linear_group -PGL 4 2 -wedge_detached -end \
+		-group_theoretic_activities \
+		-report \
+		-draw_options -rad 200 -end \
+		-end
+	pdflatex PGL_4_2_Wedge_4_0_detached_report.tex
+	open PGL_4_2_Wedge_4_0_detached_report.pdf
+
+PGL_4_2_wd_ideal:
+	$(ORBITER_PATH)/orbiter.out -v 5 \
+		-process_combinatorial_objects -n 5 -q 2 \
+			-input \
+			-set_of_points \
+				-long_string \
+				"0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 18, 21, " \
+				"22, 25, 26, 31, 32, 34, 36, 38, 40, 42, 45, 47, 48, " \
+				"51, 52, 55, 56, 59, 61, 62" \
+				-end_string \
+			-end \
+		-ideal_PART 2 \
+		-fname_base_out "form" \
+		-end
+	#pdflatex form.tex
+	#open form.pdf
+
+#invariant form:
+#X_0X_5 + X_1X_4 + X_2X_3
+
+
+PGL_4_2_wd_reverse:
+	$(ORBITER_PATH)/orbiter.out -v 12 -linear_group -PGL 4 2 -wedge_detached -end \
+		-group_theoretic_activities \
+		-reverse_isomorphism_exterior_square \
+		-end
+
+	
 PGGL_3_4:
 	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 3 4 -end \
-		-group_theoretic_activities -report \
+		-group_theoretic_activities \
+		-report \
 		-sylow -classes \
 		-draw_options -end \
 		-end
@@ -2353,6 +2400,199 @@ test_432_t:
 		"1,2,0,0,3,0,0,0,0,0,2,0,0,0,0,2,0" \
 		"0,0,3,0,0,0,0,3,1,2,0,0,0,1,0,0,0" \
 		-end \
+		
+		
+# 5 Eckardt points:
+
+surface_16_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs  -end \
+		-create_surface -q 16 -catalogue 2 \
+		-end \
+		-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
+		-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
+		-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" 
+	pdflatex surface_catalogue_q16_iso2.tex
+	open surface_catalogue_q16_iso2.pdf
+
+#		-transform_inverse "1,0,5,0,0,1,15,0,0,0,1,0,0,0,0,1,0" 
+
+
+
+PGGL_2_16:
+	$(ORBITER_PATH)/orbiter.out -v 5 \
+		-linear_group -PGGL 2 16 -end \
+		-group_theoretic_activities \
+			-report \
+			-draw_options -rad 200 -end \
+			-orbits_on_points \
+			-stabilizer \ 
+		-end 
+	pdflatex PGGL_2_16_report.tex
+	open PGGL_2_16_report.pdf
+		
+
+#stabilizer of point 0 has order 960:
+#1,0,0,1,2,\\
+#1,0,0,1,3,\\
+#1,0,0,8,2,\\
+#1,0,0,7,2,\\
+#1,0,3,5,0,\\
+
+
+PGGL_2_16_pt_stab:
+	$(ORBITER_PATH)/orbiter.out -v 10 \
+		-linear_group -PGGL 2 16 \
+			-subgroup_by_generators "stab_of_0" "960" 5 \
+				"1,0,0,1,2" \
+				"1,0,0,1,3" \
+				"1,0,0,8,2" \
+				"1,0,0,7,2" \
+				"1,0,3,5,0" \
+		-end \
+		-group_theoretic_activities \
+			-report \
+			-draw_options -rad 200 -end \
+			-orbits_on_subsets 4 \
+			-poset_classification_control -recognize "2,5,7,15" -end \
+		-end 
+		
+no:
+	pdflatex PGGL_2_16_Subgroup_stab_of_0_960_report.tex
+	open PGGL_2_16_Subgroup_stab_of_0_960_report.pdf
+
+
+surface_16_2d:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs  -end \
+		-create_surface -q 16 -catalogue 2 \
+			-select_double_six "24,25,8,18,2,14, 22,23,9,17,3,13" \
+		-end \
+		-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
+		-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
+		-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" \
+		-transform "7,1,0,0, 0,1,0,0, 0,1,7,0, 0,0,0,1, 3" 
+	pdflatex surface_catalogue_q16_iso2.tex
+	open surface_catalogue_q16_iso2.pdf
+
+
+
+arc_lifting_with_lines_16:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16  -end \
+		-group_theoretic_activities \
+		-control_six_arcs  -end \
+		-create_surface -q 16 -arc_lifting_with_two_lines "164,148,14,11,35,83" "31526,41802" \
+		-end
+
+#		-create_surface -q 16 -arc_lifting_with_two_lines "162,146,13,10,34,81" "31526,41802" \
+
+
+
+nc_arcs_16_again:
+	$(ORBITER_PATH)/orbiter.out -v 8 \
+		-linear_group -PGGL 3 16 -end \
+		-group_theoretic_activities \
+			-poset_classification_control -problem_label nc_arcs_q16_d2 -W -depth 6 \
+				-recognize "162,146,13,10,34,81" \
+				-recognize "0,1,2,3,52,101" \
+			-end \
+			-classify_arcs \
+				-target_size 6 \
+				-q 16 \
+				-n 3 \
+				-d 2 \
+				-conic_test \
+			-end \
+		-end
+		
+# stabilizer of the arc has order 4:
+#0,1,0,1,0,0,1,1,1,0,\\
+#1,1,1,0,0,1,0,1,0,0,\\
+
+
+
+arc_lifting_with_lines_16_again:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16  -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs  -end \
+		-create_surface -q 16 -arc_lifting_with_two_lines "0,2,36,1,54,103" "266,60589" -end \
+		-draw_options -embedded -rad 250 -end \
+		-surface_report
+
+
+
+
+surface_16_2e:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs  -end \
+		-create_surface -q 16 -catalogue 2 \
+			-select_double_six "24,25,8,18,2,14, 22,23,9,17,3,13" \
+		-end \
+		-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
+		-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
+		-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" \
+		-transform "7,1,0,0, 0,1,0,0, 0,1,7,0, 0,0,0,1, 3" \
+		-transform "12,1,12,0, 15,0,15,0, 15,0,14,0, 0,0,0,1, 1"
+	pdflatex surface_catalogue_q16_iso2.tex
+	open surface_catalogue_q16_iso2.pdf
+
+
+surface_16_2f:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs  -end \
+		-create_surface -q 16 -catalogue 2 \
+			-select_double_six "24,25,8,18,2,14, 22,23,9,17,3,13" \
+			-select_double_six "4,5,2,3,0,1, 10,11,8,9,6,7" \
+		-end \
+		-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
+		-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
+		-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" \
+		-transform "7,1,0,0, 0,1,0,0, 0,1,7,0, 0,0,0,1, 3" \
+		-transform "12,1,12,0, 15,0,15,0, 15,0,14,0, 0,0,0,1, 1"
+	pdflatex surface_catalogue_q16_iso2.tex
+	open surface_catalogue_q16_iso2.pdf
+
+
+
+surface_16_2_move_two_lines:
+	$(ORBITER_PATH)/orbiter.out -v 5 -move_two_lines_in_hyperplane_stabilizer_text 16 "1,0,9,0,0,0,0,1" "1,0,13,0,0,1,9,9" "1,0,9,0,0,0,0,1" "1,0,13,0,0,1,0,1"
+
+surface_16_2g:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs  -end \
+		-create_surface -q 16 -catalogue 2 \
+			-select_double_six "24,25,8,18,2,14, 22,23,9,17,3,13" \
+			-select_double_six "4,5,2,3,0,1, 10,11,8,9,6,7" \
+		-end \
+		-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
+		-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
+		-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" \
+		-transform "7,1,0,0, 0,1,0,0, 0,1,7,0, 0,0,0,1, 3" \
+		-transform "12,1,12,0, 15,0,15,0, 15,0,14,0, 0,0,0,1, 1" \
+		-transform "1,0,0,0, 0,1,0,0, 0,0,1,0, 6,0,4,13, 0"
+	pdflatex surface_catalogue_q16_iso2.tex
+	open surface_catalogue_q16_iso2.pdf
+
+
+
+
+Family_bes_16_a3_c4:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_bes 3 4 -q 16 -end
+		
+no:
+	pdflatex surface_family_bes_q16_a3_c4.tex
+	open surface_family_bes_q16_a3_c4.pdf
+
+
+
 
 #############################################################################################################
 # Section 15:  Number Theory
