@@ -17,6 +17,54 @@ namespace orbiter {
 namespace foundations {
 
 
+void surface_domain::create_equation_bes(int a, int c, int *coeff, int verbose_level)
+// bes means five in Turkish
+{
+	int f_v = (verbose_level >= 1);
+	int ap1c, apc, acp1;
+	int a2, a3, a4;
+	int w1, w2;
+	int alpha, beta, gamma, delta, epsilon;
+
+	if (f_v) {
+		cout << "surface_domain::create_equation_bes" << endl;
+	}
+
+	a2 = F->mult(a, a);
+	a3 = F->mult(a2, a);
+	a4 = F->mult(a3, a);
+
+	w1 = F->add6(a4, F->mult(a3, c), F->mult(a2, c), F->mult(a, c), c, 1);
+
+	w2 = F->add6(F->mult(a4, c), a4, a3, a2, a, c);
+
+
+	ap1c = F->power(F->add(a, 1), 3);
+	apc = F->add(a, c);
+	acp1 = F->add(F->mult(a, c), 1);
+
+	alpha = F->mult(ap1c, apc);
+	beta = w1;
+	gamma = F->mult(ap1c, acp1);
+	delta = w2;
+	epsilon = F->mult(ap1c, F->mult(a, c));
+
+	int_vec_zero(coeff, nb_monomials);
+
+	coeff[4] = coeff[7] = coeff[8] = coeff[11] = coeff[12] = alpha;
+	coeff[17] = beta;
+	coeff[18] = gamma;
+	coeff[19] = delta;
+	coeff[15] = epsilon;
+
+
+	if (f_v) {
+		cout << "surface_domain::create_equation_bes done" << endl;
+	}
+}
+
+
+
 void surface_domain::create_equation_F13(int a, int *coeff, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -59,6 +107,58 @@ void surface_domain::create_equation_G13(int a, int *coeff, int verbose_level)
 	if (f_v) {
 		cout << "surface_domain::create_equation_G13 done" << endl;
 	}
+}
+
+int surface_domain::create_surface_bes(int a, int c,
+	int *coeff20,
+	long int *Lines27,
+	int &nb_E,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_bes" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_bes before create_equation_bes" << endl;
+	}
+	create_equation_bes(a, c, coeff20, verbose_level);
+	if (f_v) {
+		cout << "surface_domain::create_surface_bes after create_equation_bes" << endl;
+	}
+
+	surface_object *SO;
+
+	SO = NEW_OBJECT(surface_object);
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_bes before SO->init_equation" << endl;
+	}
+	if (!SO->init_equation(this, coeff20, verbose_level)) {
+		if (f_v) {
+			cout << "surface_domain::create_surface_bes SO->init_equation returns FALSE, returning" << endl;
+		}
+		FREE_OBJECT(SO);
+		return FALSE;
+	}
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_bes after SO->init_equation" << endl;
+	}
+
+	nb_E = SO->nb_Eckardt_points;
+
+	lint_vec_copy(SO->Lines, Lines27, 27);
+
+	FREE_OBJECT(SO);
+
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_bes done" << endl;
+	}
+	return TRUE;
 }
 
 

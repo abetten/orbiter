@@ -752,6 +752,9 @@ public:
 	int family_G13_a;
 	int f_family_F13;
 	int family_F13_a;
+	int f_family_bes;
+	int family_bes_a;
+	int family_bes_c;
 	int f_arc_lifting;
 	const char *arc_lifting_text;
 	const char *arc_lifting_two_lines_text;

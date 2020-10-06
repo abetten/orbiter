@@ -918,6 +918,7 @@ void klein_correspondence::reverse_isomorphism(int *A6, int *A4, int verbose_lev
 	F->invert_matrix(Y, Yv, 4, 0 /* verbose_level*/);
 	F->invert_matrix(Z, Zv, 4, 0 /* verbose_level*/);
 	//F->invert_matrix(A, Av, 4, 0 /* verbose_level*/);
+
 	if (f_v) {
 		cout << "Xv=" << endl;
 		int_matrix_print(Xv, 4, 4);

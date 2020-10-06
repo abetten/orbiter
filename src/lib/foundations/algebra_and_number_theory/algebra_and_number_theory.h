@@ -214,7 +214,7 @@ private:
 	// log_alpha_table[i] = the integer k s.t. alpha^k = i (if i > 0)
 	// log_alpha_table[0] = -1
 	int *alpha_power_table; // [q]
-	int *v1, *v2, *v3; // [e], vectors of length e.
+	int *v1, *v2, *v3; // [e]
 	std::string symbol_for_print;
 	int f_has_quadratic_subfield; // TRUE if e is even.
 	int *f_belongs_to_quadratic_subfield; // [q]
@@ -784,7 +784,8 @@ public:
 		// the form is
 		// \sum_{i=0}^n x_{2i}x_{2i+1} + c1 x_{2n}^2 +
 		// c2 x_{2n} x_{2n+1} + c3 x_{2n+1}^2
-	long int Qminus_rank(int *v, int stride, int k, int c1, int c2, int c3, int verbose_level);
+	long int Qminus_rank(int *v, int stride,
+			int k, int c1, int c2, int c3, int verbose_level);
 	void S_unrank(int *v, int stride, int n, long int a);
 	void S_rank(int *v, int stride, int n, long int &a);
 	void N_unrank(int *v, int stride, int n, long int a);

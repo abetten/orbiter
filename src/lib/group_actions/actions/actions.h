@@ -681,6 +681,8 @@ public:
 		int f_induce_action, sims *old_G, 
 		schreier_vector *Schreier_vector,
 		int pt, int verbose_level);
+	void original_point_labels(long int *points, int nb_points,
+			long int *&original_points, int verbose_level);
 	action *restricted_action(long int *points, int nb_points,
 		int verbose_level);
 	action *create_induced_action_by_restriction(

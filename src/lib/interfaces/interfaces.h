@@ -581,6 +581,12 @@ class interface_projective {
 	long int line1_to;
 	long int line2_to;
 
+	int f_move_two_lines_in_hyperplane_stabilizer_text;
+	std::string line1_from_text;
+	std::string line2_from_text;
+	std::string line1_to_text;
+	std::string line2_to_text;
+
 	int f_make_table_of_surfaces;
 
 	int f_inverse_isomorphism_klein_quadric;
@@ -639,6 +645,11 @@ public:
 			int q,
 			long int line1_from, long int line2_from,
 			long int line1_to, long int line2_to, int verbose_level);
+	void do_move_two_lines_in_hyperplane_stabilizer_text(
+			int q,
+			std::string line1_from_text, std::string line2_from_text,
+			std::string line1_to_text, std::string line2_to_text,
+			int verbose_level);
 };
 
 

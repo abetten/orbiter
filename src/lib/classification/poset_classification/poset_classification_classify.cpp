@@ -564,6 +564,17 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			Elt_transporter = NEW_int(get_A()->elt_size_in_int);
 			Elt_transporter_inv = NEW_int(get_A()->elt_size_in_int);
 
+
+			set_and_stabilizer *SaS;
+			int orbit_at_level;
+
+
+			SaS = identify_and_get_stabilizer(
+					recognize_set, recognize_set_sz, Elt_transporter,
+					orbit_at_level,
+					verbose_level);
+
+
 			orb = trace_set(recognize_set,
 				recognize_set_sz, recognize_set_sz /* level */,
 				canonical_set, Elt_transporter,
@@ -583,6 +594,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			cout << "transporter inverse:" << endl;
 			get_A()->element_print_quick(Elt_transporter_inv, cout);
 
+			SaS->print_generators_tex(cout);
 
 			FREE_lint(canonical_set);
 			FREE_int(Elt_transporter);

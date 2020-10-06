@@ -159,7 +159,7 @@ void finite_field::projective_matrix_group_base_and_orbits(int n,
 		transversal_length[i] = i;
 	}
 	if (f_v) {
-		cout << "projective_matrix_group_base_and_orbits "
+		cout << "finite_field::projective_matrix_group_base_and_orbits "
 				"transversal_length: ";
 		int_vec_print(cout, transversal_length, base_len);
 		cout << endl;
@@ -401,8 +401,7 @@ void finite_field::general_linear_matrix_group_base_and_transversal_length(int n
 
 
 	if (f_v) {
-		cout << "finite_field::general_linear_matrix_group_base_and_"
-				"transversal_length" << endl;
+		cout << "finite_field::general_linear_matrix_group_base_and_transversal_length" << endl;
 		}
 	c = 0;
 	for (i = 0; i < n; i++) {
@@ -433,8 +432,7 @@ void finite_field::general_linear_matrix_group_base_and_transversal_length(int n
 		cout << endl;
 		}
 	if (f_v) {
-		cout << "finite_field::general_linear_matrix_group_base_and_"
-				"transversal_length done" << endl;
+		cout << "finite_field::general_linear_matrix_group_base_and_transversal_length done" << endl;
 		}
 }
 

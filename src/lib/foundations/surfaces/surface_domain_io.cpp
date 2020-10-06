@@ -193,6 +193,20 @@ void surface_domain::latex_abstract_trihedral_pair(ostream &ost, int t_idx)
 		Trihedral_to_Eckardt + t_idx * 6);
 }
 
+void surface_domain::latex_table_of_Schlaefli_labeling_of_lines(ostream &ost)
+{
+	int i;
+
+	ost << "\\begin{multicols}{5}" << endl;
+	ost << "\\noindent";
+	for (i = 0; i < 27; i++) {
+		ost << "$" << i << " = ";
+		print_line(ost, i);
+		ost << "$\\\\" << endl;
+	}
+	ost << "\\end{multicols}" << endl;
+}
+
 void surface_domain::latex_trihedral_pair(ostream &ost, int *T, long int *TE)
 {
 	int i, j;

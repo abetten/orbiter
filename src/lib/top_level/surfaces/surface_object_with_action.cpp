@@ -908,22 +908,32 @@ void surface_object_with_action::print_automorphism_group(
 	ost << "\\subsection*{Orbits on points}" << endl;
 	//Orbits_on_points->print_and_list_orbits_and_
 	//stabilizer_sorted_by_length(ost, TRUE, Surf_A->A, go);
-	Orbits_on_points->print_and_list_orbits_sorted_by_length_tex(ost);
+	Orbits_on_points->print_and_list_orbits_with_original_labels_tex(ost);
+
+
 
 	ost << "\\subsection*{Orbits on Eckardt points}" << endl;
-	Orbits_on_Eckardt_points->print_and_list_orbits_sorted_by_length_tex(ost);
+	Orbits_on_Eckardt_points->print_and_list_orbits_with_original_labels_tex(ost);
 
 
 	ost << "\\subsection*{Orbits on Double points}" << endl;
-	Orbits_on_Double_points->print_and_list_orbits_sorted_by_length_tex(ost);
+	Orbits_on_Double_points->print_and_list_orbits_with_original_labels_tex(ost);
 
 	ost << "\\subsection*{Orbits on points not on lines}" << endl;
 	//Orbits_on_points_not_on_lines->print_and_list_orbits_sorted_by_length_tex(ost);
-	Orbits_on_points_not_on_lines->print_and_list_orbits_sorted_by_length_tex(ost);
+	Orbits_on_points_not_on_lines->print_and_list_orbits_with_original_labels_tex(ost);
 
 
 	ost << "\\subsection*{Orbits on lines}" << endl;
-	Orbits_on_lines->print_and_list_orbits_sorted_by_length_tex(ost);
+	Orbits_on_lines->print_and_list_orbits_tex(ost);
+
+	ost << "\\bigskip" << endl;
+
+	Surf->latex_table_of_Schlaefli_labeling_of_lines(ost);
+
+	ost << "\\bigskip" << endl;
+
+	Orbits_on_lines->print_and_list_orbits_with_original_labels_tex(ost);
 
 	int *Decomp_scheme;
 	int nb;
@@ -940,7 +950,7 @@ void surface_object_with_action::print_automorphism_group(
 	
 
 	ost << "\\subsection*{Orbits on single sixes}" << endl;
-	Orbits_on_single_sixes->print_and_list_orbits_sorted_by_length_tex(ost);
+	Orbits_on_single_sixes->print_and_list_orbits_tex(ost);
 
 	if (f_print_orbits) {
 
@@ -993,10 +1003,10 @@ void surface_object_with_action::print_automorphism_group(
 
 	
 	ost << "\\subsection*{Orbits on tritangent planes}" << endl;
-	Orbits_on_tritangent_planes->print_and_list_orbits_sorted_by_length_tex(ost);
+	Orbits_on_tritangent_planes->print_and_list_orbits_tex(ost);
 
 	ost << "\\subsection*{Orbits on trihedral pairs}" << endl;
-	Orbits_on_trihedral_pairs->print_and_list_orbits_sorted_by_length_tex(ost);
+	Orbits_on_trihedral_pairs->print_and_list_orbits_tex(ost);
 
 }
 
