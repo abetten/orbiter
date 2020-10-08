@@ -56,7 +56,7 @@ public:
 
 	int f_no_arc_testing;
 	int f_has_forbidden_point_set;
-	const char *forbidden_point_set_string;
+	std::string forbidden_point_set_string;
 
 
 	arc_generator_description();

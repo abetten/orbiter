@@ -95,6 +95,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_surface_report = FALSE;
 	f_surface_identify_HCV = FALSE;
 	f_surface_identify_F13 = FALSE;
+	f_surface_identify_Bes = FALSE;
 	f_surface_isomorphism_testing = FALSE;
 		surface_descr_isomorph1 = NULL;
 		surface_descr_isomorph2 = NULL;
@@ -482,6 +483,10 @@ int group_theoretic_activity_description::read_arguments(
 		else if (strcmp(argv[i], "-surface_identify_F13") == 0) {
 			f_surface_identify_F13 = TRUE;
 			cout << "-surface_identify_F13 " << endl;
+		}
+		else if (strcmp(argv[i], "-surface_identify_Bes") == 0) {
+			f_surface_identify_Bes = TRUE;
+			cout << "-surface_identify_Bes " << endl;
 		}
 		else if (strcmp(argv[i], "-surface_isomorphism_testing") == 0) {
 			f_surface_isomorphism_testing = TRUE;

@@ -16,17 +16,116 @@ update_all:
 
 test:
 	$(ORBITER_PATH)/orbiter.out
-	
-	
+
+
 #############################################################################################################
-# Section 3: Orbiter Session
+# Section 4: Orbiter Session
 	
 test:
 	$(ORBITER_PATH)/orbiter.out
 
 		
+		
+
+
 #############################################################################################################
-# Section 4: Finite Fields
+# Section 5: Irreducible Polynomials over Finite Fields
+
+
+
+# degree and then order of the field of coefficients:
+
+irred_4_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -make_table_of_irreducible_polynomials 4 2
+
+# 3 polys
+
+irred_5_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -make_table_of_irreducible_polynomials 5 2
+
+# 6 polys
+
+irred_6_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -make_table_of_irreducible_polynomials 6 2
+
+# 9 polys
+
+irred_7_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -make_table_of_irreducible_polynomials 7 2
+
+# 18 polys
+
+irred_8_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -make_table_of_irreducible_polynomials 8 2
+
+# 30 polys
+
+irred_9_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -make_table_of_irreducible_polynomials 9 2
+
+# 56 polys
+
+irred_10_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -make_table_of_irreducible_polynomials 10 2
+
+# 99 polys
+
+irred_2_4:
+	$(ORBITER_PATH)/orbiter.out -v 3 -make_table_of_irreducible_polynomials 2 4
+
+# 6 polys
+
+
+irred_3_4:
+	$(ORBITER_PATH)/orbiter.out -v 6 -make_table_of_irreducible_polynomials 3 4
+
+# 20 polys
+
+
+search_primitive_poly_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -search_for_primitive_polynomial_in_range 2 2 2 10
+
+# stuck in factoring 2^61-1
+
+search_primitive_poly_3:
+	$(ORBITER_PATH)/orbiter.out -v 6 -search_for_primitive_polynomial_in_range 3 3 2 60
+	
+
+search_primitive_poly_4:
+	$(ORBITER_PATH)/orbiter.out -v 6 -search_for_primitive_polynomial_in_range 4 4 2 30
+	
+search_primitive_poly_5:
+	$(ORBITER_PATH)/orbiter.out -v 6 -search_for_primitive_polynomial_in_range 5 5 2 30
+	
+
+search_primitive_poly_7:
+	$(ORBITER_PATH)/orbiter.out -v 6 -search_for_primitive_polynomial_in_range 7 7 2 20
+	
+
+search_primitive_poly_8:
+	$(ORBITER_PATH)/orbiter.out -v 6 -search_for_primitive_polynomial_in_range 8 8 2 20
+	
+search_primitive_poly_9:
+	$(ORBITER_PATH)/orbiter.out -v 6 -search_for_primitive_polynomial_in_range 9 9 2 15
+	
+search_primitive_poly_11:
+	$(ORBITER_PATH)/orbiter.out -v 6 -search_for_primitive_polynomial_in_range 11 11 2 15
+	
+search_primitive_poly_13:
+	$(ORBITER_PATH)/orbiter.out -v 6 -search_for_primitive_polynomial_in_range 13 13 2 15
+	
+search_primitive_poly_16:
+	$(ORBITER_PATH)/orbiter.out -v 6 -search_for_primitive_polynomial_in_range 16 16 2 20
+	
+search_primitive_poly_32:
+	$(ORBITER_PATH)/orbiter.out -v 6 -search_for_primitive_polynomial_in_range 32 32 2 10
+	
+
+
+
+
+#############################################################################################################
+# Section 6: Finite Fields
 
 
 F_2:
@@ -89,97 +188,13 @@ F_256:
 	open GF_256.pdf
 
 
-# degree and then order of the field of coefficients:
 
-irred_4_2:
-	$(ORBITER_PATH)/orbiter.out -v 3 -make_table_of_irreducible_polynomials 4 2
-
-# 3 polys
-
-irred_5_2:
-	$(ORBITER_PATH)/orbiter.out -v 3 -make_table_of_irreducible_polynomials 5 2
-
-# 6 polys
-
-irred_6_2:
-	$(ORBITER_PATH)/orbiter.out -v 3 -make_table_of_irreducible_polynomials 6 2
-
-# 9 polys
-
-irred_7_2:
-	$(ORBITER_PATH)/orbiter.out -v 3 -make_table_of_irreducible_polynomials 7 2
-
-# 18 polys
-
-irred_8_2:
-	$(ORBITER_PATH)/orbiter.out -v 3 -make_table_of_irreducible_polynomials 8 2
-
-# 30 polys
-
-irred_9_2:
-	$(ORBITER_PATH)/orbiter.out -v 3 -make_table_of_irreducible_polynomials 9 2
-
-# 56 polys
-
-irred_10_2:
-	$(ORBITER_PATH)/orbiter.out -v 3 -make_table_of_irreducible_polynomials 10 2
-
-# 99 polys
-
-irred_2_4:
-	$(ORBITER_PATH)/orbiter.out -v 3 -make_table_of_irreducible_polynomials 2 4
-
-# 6 polys
-
-
-irred_3_4:
-	$(ORBITER_PATH)/orbiter.out -v 6 -make_table_of_irreducible_polynomials 3 4
-
-# 20 polys
-
-
-search_primitive_poly_2:
-	$(ORBITER_PATH)/orbiter.out -v 3 -search_for_primitive_polynomial_in_range 2 2 61 61
-
-# stuck in factoring 2^61-1
-
-search_primitive_poly_3:
-	$(ORBITER_PATH)/orbiter.out -v 6 -search_for_primitive_polynomial_in_range 3 3 2 60
-	
-
-search_primitive_poly_4:
-	$(ORBITER_PATH)/orbiter.out -v 6 -search_for_primitive_polynomial_in_range 4 4 2 30
-	
-search_primitive_poly_5:
-	$(ORBITER_PATH)/orbiter.out -v 6 -search_for_primitive_polynomial_in_range 5 5 2 30
-	
-
-search_primitive_poly_7:
-	$(ORBITER_PATH)/orbiter.out -v 6 -search_for_primitive_polynomial_in_range 7 7 2 20
-	
-
-search_primitive_poly_8:
-	$(ORBITER_PATH)/orbiter.out -v 6 -search_for_primitive_polynomial_in_range 8 8 2 20
-	
-search_primitive_poly_9:
-	$(ORBITER_PATH)/orbiter.out -v 6 -search_for_primitive_polynomial_in_range 9 9 2 15
-	
-search_primitive_poly_11:
-	$(ORBITER_PATH)/orbiter.out -v 6 -search_for_primitive_polynomial_in_range 11 11 2 15
-	
-search_primitive_poly_13:
-	$(ORBITER_PATH)/orbiter.out -v 6 -search_for_primitive_polynomial_in_range 13 13 2 15
-	
-search_primitive_poly_16:
-	$(ORBITER_PATH)/orbiter.out -v 6 -search_for_primitive_polynomial_in_range 16 16 2 20
-	
-search_primitive_poly_32:
-	$(ORBITER_PATH)/orbiter.out -v 6 -search_for_primitive_polynomial_in_range 32 32 2 10
-	
+#############################################################################################################
+# Section 7: Linear Algebra over Finite Fields
 
 
 #############################################################################################################
-# Section 5: Finite Projective Spaces
+# Section 8: Finite Projective Spaces
 
 
 PG_1_16:
@@ -296,7 +311,7 @@ PG_4_3:
 
 
 #############################################################################################################
-# Section 6: Algebraic Sets
+# Section 9: Algebraic Sets
 
 
 EC1:
@@ -338,7 +353,7 @@ octic_prepare:
 
 
 #############################################################################################################
-# Section 7: Linear Groups
+# Section 10: Linear Groups
 
 
 PGL_4_2:
@@ -417,6 +432,12 @@ PGL_3_11_singer:
 PG_2_4_order_21:
 	$(ORBITER_PATH)/orbiter.out -v 5 -linear_group -PGL 3 4  -end \
 		-group_theoretic_activities -search_element_of_order 21
+
+
+#############################################################################################################
+# Section 11:  Group Theoretic Activities
+
+
 
 PG_2_4_singer:
 	$(ORBITER_PATH)/orbiter.out -v 5 -linear_group -PGL 3 4  -end \
@@ -1108,13 +1129,13 @@ Ree_27:
 
 
 #############################################################################################################
-# Section 8: Poset Classification
+# Section 12: Poset Classification
 
 
 
 
 #############################################################################################################
-# Section 9: Orbits on Subsets
+# Section 13: Orbits on Subsets
 
 
 
@@ -1143,7 +1164,7 @@ orb16:
 
 
 #############################################################################################################
-# Section 10: Orbits on Subspaces
+# Section 14: Orbits on Subspaces
 
 
 subspaces_orthogonal:
@@ -1237,7 +1258,7 @@ Op_6_11:
 
 
 #############################################################################################################
-# Section 11: Graph Theory
+# Section 15: Graph Theory
 
 
 
@@ -1296,7 +1317,7 @@ small_graph_cliques_Sajeeb:
 
 
 #############################################################################################################
-# Section 12: Objects in Projective Geometry
+# Section 16: Objects in Projective Geometry
 
 
 
@@ -1305,11 +1326,16 @@ EC:
 	$(ORBITER_PATH)/orbiter.out -v 5 -create_combinatorial_object -q 11 \
 		-elliptic_curve 1 3 -end \
 		-save "./"
+		
+		
+EC_draw:
 	$(ORBITER_PATH)/orbiter.out -v 2 -process_combinatorial_objects -q 11 -n 2  \
 		-draw_points_in_plane EC_11_1_3 \
 		-fname_base_out EC_11_1_3 -embedded \
 		-input -file_of_points elliptic_curve_b1_c3_q11.txt -end \
 		-end
+
+EC_canon:
 	$(ORBITER_PATH)/orbiter.out -v 2 -canonical_form_PG  2 11 \
 		-input -file_of_points elliptic_curve_b1_c3_q11.txt -end \
 		-classification_prefix elliptic_curve_b1_c3_q11 \
@@ -1379,7 +1405,7 @@ Hirschfeld16c:
 
 
 #############################################################################################################
-# Section 13: Arcs
+# Section 17: Arcs
 
 
 
@@ -1436,7 +1462,10 @@ arcs_AG_4_3:
 				-q 3 \
 				-n 5 \
 				-d 2 \
-				-forbidden_point_set "1,2,3,4,10,13,18,21,24,27,30,33,36,39,44,47,50,53,56,59,62,65,68,71,74,77,80,82,85,88,91,94,97,100,103,106,109,112,115,118" \
+				-forbidden_point_set -long_string \
+				"1,2,3,4,10,13,18,21,24,27,30,33,36,39,44,47,50,53,56,59,62," \
+				"65,68,71,74,77,80,82,85,88,91,94,97,100,103,106,109,112,115,118" \
+				-end_string \
 			-end \
 		-end \
 		
@@ -1770,7 +1799,7 @@ no:
 		-end
 
 #############################################################################################################
-# Section 14: Cubic Surfaces
+# Section 18: Cubic Surfaces
 
 
 surface_7:
@@ -2540,6 +2569,51 @@ surface_16_2e:
 	open surface_catalogue_q16_iso2.pdf
 
 
+
+surface_16_2ef:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs  -end \
+		-create_surface -q 16 -catalogue 2 \
+			-select_double_six "24,25,8,18,2,14, 22,23,9,17,3,13" \
+			-select_double_six "11,10,8,9,6,7, 5,4,2,3,0,1" \
+		-end \
+		-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
+		-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
+		-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" \
+		-transform "7,1,0,0, 0,1,0,0, 0,1,7,0, 0,0,0,1, 3" \
+		-transform "12,1,12,0, 15,0,15,0, 15,0,14,0, 0,0,0,1, 1"
+	pdflatex surface_catalogue_q16_iso2.tex
+	open surface_catalogue_q16_iso2.pdf
+
+
+
+surface_16_2_move_two_lines:
+	$(ORBITER_PATH)/orbiter.out -v 5 -move_two_lines_in_hyperplane_stabilizer_text \
+	16 "1,0,0,0, 0,0,1,4" "1,9,0,14, 0,0,1,0" "1,0,0,0, 0,0,0,1" "0,0,1,0,0,1,0,1"
+
+
+surface_16_2efg:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs  -end \
+		-create_surface -q 16 -catalogue 2 \
+			-select_double_six "24,25,8,18,2,14, 22,23,9,17,3,13" \
+			-select_double_six "11,10,8,9,6,7, 5,4,2,3,0,1" \
+		-end \
+		-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
+		-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
+		-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" \
+		-transform "7,1,0,0, 0,1,0,0, 0,1,7,0, 0,0,0,1, 3" \
+		-transform "12,1,12,0, 15,0,15,0, 15,0,14,0, 0,0,0,1, 1" \
+		-transform "1,0,0,0, 0,1,0,0, 0,0,1,0, 7,0,6,13, 0"
+	pdflatex surface_catalogue_q16_iso2.tex
+	open surface_catalogue_q16_iso2.pdf
+
+
+########
+#old, bad stuff:
+
 surface_16_2f:
 	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
 		-group_theoretic_activities \
@@ -2558,8 +2632,10 @@ surface_16_2f:
 
 
 
-surface_16_2_move_two_lines:
-	$(ORBITER_PATH)/orbiter.out -v 5 -move_two_lines_in_hyperplane_stabilizer_text 16 "1,0,9,0,0,0,0,1" "1,0,13,0,0,1,9,9" "1,0,9,0,0,0,0,1" "1,0,13,0,0,1,0,1"
+
+#surface_16_2_move_two_lines:
+#	$(ORBITER_PATH)/orbiter.out -v 5 -move_two_lines_in_hyperplane_stabilizer_text \
+#	16 "1,0,9,0,0,0,0,1" "1,0,13,0,0,1,9,9" "1,0,9,0,0,0,0,1" "1,0,13,0,0,1,0,1"
 
 surface_16_2g:
 	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
@@ -2579,13 +2655,19 @@ surface_16_2g:
 	open surface_catalogue_q16_iso2.pdf
 
 
+#surface_16_2_move_two_lines_again:
+#	$(ORBITER_PATH)/orbiter.out -v 5 -move_two_lines_in_hyperplane_stabilizer_text \
+#	16 "1,0,9,0,0,0,0,1" "1,0,13,0,0,1,0,1" "1,0,0,0,0,0,0,1" "0,0,1,0,0,1,0,1"
+
+
+
 
 
 Family_bes_16_a3_c4:
 	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
 		-group_theoretic_activities \
 		-control_six_arcs -end \
-		-create_surface -family_bes 3 4 -q 16 -end
+		-create_surface -family_bes 3 4 -q 16 -end 
 		
 no:
 	pdflatex surface_family_bes_q16_a3_c4.tex
@@ -2593,9 +2675,38 @@ no:
 
 
 
+identify_Bes_16:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
+		-group_theoretic_activities \
+		-surface_identify_Bes
+
+# 17 minutes
+
+
+arc_lifting_with_lines_Bes_16:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16  -end \
+		-group_theoretic_activities \
+		-control_six_arcs  -end \
+		-create_surface -q 16 -arc_lifting_with_two_lines "0,1,2,36,54,103" "0,0" \
+		-end
+
+
+arc_lifting_two_lines_16_E5:
+	$(ORBITER_PATH)/orbiter.out -v 4 -linear_group -PGGL 4 16 -end \
+		-group_theoretic_activities \
+		-control_six_arcs -problem_label sixarcs_q16 -end \
+		-classify_surfaces_through_arcs_and_two_lines \
+		-test_nb_Eckardt_points 5 \
+		-draw_options -end \
+		-report \
+		-end
+	pdflatex surfaces_arc_lifting_16.tex
+	open surfaces_arc_lifting_16.pdf
+
+
 
 #############################################################################################################
-# Section 15:  Number Theory
+# Section 19:  Number Theory
 
 
 inverse_mod:
@@ -2608,7 +2719,7 @@ jacobi:
 
 
 #############################################################################################################
-# Section 16: Cryptography 
+# Section 20: Cryptography 
 
 
 EC_add:
@@ -2634,7 +2745,7 @@ EC_bsgs_decode:
 
 
 #############################################################################################################
-# Section 17: Coding Theory
+# Section 21: Coding Theory
 
 
 BCH15:
@@ -2741,7 +2852,7 @@ codes_d4:
 
 
 #############################################################################################################
-# Section 18: Diophantine Systems
+# Section 22: Diophantine Systems
 
 
 linsp7:
@@ -2820,7 +2931,7 @@ linsp30_pt_distribution:
 
 
 #############################################################################################################
-# Section 19: Design Theory
+# Section 23: Design Theory
 
 
 design_PG_2_3:
@@ -2913,7 +3024,7 @@ STS13:
 
 
 #############################################################################################################
-# Section 20: Linear Spaces and Tactical Decompositions
+# Section 24: Linear Spaces and Tactical Decompositions
 
 
 
@@ -3166,7 +3277,7 @@ max_arc_lift:
 
 
 #############################################################################################################
-# Section 21: Spreads
+# Section 25: Spreads
 
 
 
@@ -3274,7 +3385,7 @@ line_spreads_PG5_2:
 
 
 #############################################################################################################
-# Section 22: Packings
+# Section 26: Packings
 
 
 
@@ -3942,10 +4053,20 @@ packing_5_reg_31_prepare:
 #				-cliques_on_fixpoint_graph_control -W -problem_label PGL_4_31_Subgroup_31_uniform_reg_fixp_graph_cliques -end \
 #				-fixp_clique_types_save_individually \
 
+#############################################################################################################
+# Section 27: Tikz Drawing
 
+tikz:
+	$(ORBITER_PATH)/orbiter.out -v 12 -linear_group -PGL 4 2 -wedge_detached -end \
+		-group_theoretic_activities \
+		-report \
+		-draw_options -rad 200 -end \
+		-end
+	pdflatex PGL_4_2_Wedge_4_0_detached_report.tex 
+	open PGL_4_2_Wedge_4_0_detached_report.pdf
 
 #############################################################################################################
-# Section 23: The Povray Interface
+# Section 28: The Povray Interface
 
 cube:
 	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
@@ -4522,6 +4643,17 @@ ntt4.out:  ntt4.o ;
 	$(DISCRETA_CPP)  ntt4.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
+
+PGL_3_16_singer:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 3 16 -singer 13 -end \
+		-group_theoretic_activities \
+		-report \
+		-draw_options -rad 200 -end \
+		-orbits_on_points \
+		-end
+	pdflatex PGGL_3_16_Singer_3_16_13_report.tex
+	open PGGL_3_16_Singer_3_16_13_report.pdf
+		
 
 
 

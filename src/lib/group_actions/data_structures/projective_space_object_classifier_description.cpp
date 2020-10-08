@@ -22,8 +22,7 @@ projective_space_object_classifier_description::projective_space_object_classifi
 	f_input = FALSE;
 	Data = NULL;
 
-
-	f_save = FALSE;
+	f_save_classification = FALSE;
 	//std::string save_prefix;
 
 	f_report = FALSE;
@@ -38,7 +37,7 @@ projective_space_object_classifier_description::projective_space_object_classifi
 	f_classification_prefix = FALSE;
 	//std::string classification_prefix;
 
-	f_save_incma_in_and_out = FALSE;
+	//f_save_incma_in_and_out = FALSE;
 	//std::string save_incma_in_and_out_prefix;
 
 	f_save_canonical_labeling = FALSE;
@@ -89,11 +88,12 @@ int projective_space_object_classifier_description::read_arguments(
 		}
 
 
-		else if (strcmp(argv[i], "-save") == 0) {
-			f_save = TRUE;
+		else if (strcmp(argv[i], "-save_classification") == 0) {
+			f_save_classification = TRUE;
 			save_prefix.assign(argv[++i]);
-			cout << "-save " << save_prefix << endl;
+			cout << "-save_classification" << save_prefix << endl;
 		}
+
 
 
 #if 0
@@ -128,11 +128,13 @@ int projective_space_object_classifier_description::read_arguments(
 			cout << "-classification_prefix " << classification_prefix << endl;
 		}
 
+#if 0
 		else if (strcmp(argv[i], "-save_incma_in_and_out") == 0) {
 			f_save_incma_in_and_out = TRUE;
 			save_incma_in_and_out_prefix.assign(argv[++i]);
 			cout << "-save_incma_in_and_out" << save_incma_in_and_out_prefix << endl;
 		}
+#endif
 
 		else if (strcmp(argv[i], "-save_canonical_labeling") == 0) {
 			f_save_canonical_labeling = TRUE;

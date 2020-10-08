@@ -111,7 +111,7 @@ void projective_space_object_classifier::do_the_work(
 
 
 
-	if (Descr->f_save) {
+	if (Descr->f_save_classification) {
 		cout << "projective_space_object_classifier::do_the_work "
 				"Saving the classification with save_prefix " << Descr->save_prefix << endl;
 		save(Descr->save_prefix, verbose_level);

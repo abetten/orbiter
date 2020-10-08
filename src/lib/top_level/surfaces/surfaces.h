@@ -552,8 +552,11 @@ public:
 		int verbose_level);
 	void identify_HCV_and_print_table(int verbose_level);
 	void identify_F13_and_print_table(int verbose_level);
+	void identify_Bes_and_print_table(int verbose_level);
 	void identify_HCV(int *Iso_type, int *Nb_E, int verbose_level);
 	void identify_F13(
+		int *Iso_type, int *Nb_E, int verbose_level);
+	void identify_Bes(
 		int *Iso_type, int *Nb_E, int verbose_level);
 	int isomorphism_test_pairwise(
 		surface_create *SC1, surface_create *SC2,
