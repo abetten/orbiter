@@ -35,7 +35,7 @@ arc_generator_description::arc_generator_description()
 	f_affine = FALSE;
 	f_no_arc_testing = FALSE;
 	f_has_forbidden_point_set = FALSE;
-	forbidden_point_set_string = NULL;
+	//forbidden_point_set_string = NULL;
 
 }
 
@@ -92,7 +92,13 @@ int arc_generator_description::read_arguments(int argc, const char **argv,
 		}
 		else if (strcmp(argv[i], "-forbidden_point_set") == 0) {
 			f_has_forbidden_point_set = TRUE;
-			forbidden_point_set_string = argv[++i];
+			//forbidden_point_set_string = argv[++i];
+			os_interface Os;
+
+			i++;
+
+			Os.get_string_from_command_line(forbidden_point_set_string, argc, argv, i, verbose_level);
+			i--;
 			cout << "-f_has_forbidden_point_set " << forbidden_point_set_string << endl;
 		}
 		else if (strcmp(argv[i], "-end") == 0) {

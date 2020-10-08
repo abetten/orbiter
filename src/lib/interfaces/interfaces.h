@@ -558,8 +558,8 @@ class interface_projective {
 	projective_space_object_classifier_description *Canonical_form_PG_Descr;
 
 	int f_classify_cubic_curves;
-	int f_has_control_six_arcs;
-	poset_classification_control *Control_six_arcs;
+	int f_control_arcs;
+	poset_classification_control *Control_arcs;
 
 	int f_create_points_on_quartic;
 	double desired_distance;

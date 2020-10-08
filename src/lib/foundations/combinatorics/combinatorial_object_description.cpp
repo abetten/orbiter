@@ -51,10 +51,12 @@ combinatorial_object_description::combinatorial_object_description()
 	BLT_k = 0;
 	f_BLT_in_PG = FALSE;
 
+#if 0
 	f_BLT_Linear = FALSE;
 	f_BLT_Fisher = FALSE;
 	f_BLT_Mondello = FALSE;
 	f_BLT_FTWKB = FALSE;
+#endif
 
 	f_ovoid = FALSE;
 
@@ -197,6 +199,7 @@ int combinatorial_object_description::read_arguments(int argc, const char **argv
 			cout << "-BLT_in_PG " << endl;
 		}
 
+#if 0
 		else if (strcmp(argv[i], "-BLT_Linear") == 0) {
 			f_BLT_Linear = TRUE;
 			cout << "-BLT_Linear " << endl;
@@ -213,6 +216,7 @@ int combinatorial_object_description::read_arguments(int argc, const char **argv
 			f_BLT_FTWKB = TRUE;
 			cout << "-BLT_FTWKB " << endl;
 		}
+#endif
 
 		else if (strcmp(argv[i], "-ovoid") == 0) {
 			f_ovoid = TRUE;

@@ -123,10 +123,12 @@ public:
 	int BLT_k;
 	int f_BLT_in_PG;
 
+#if 0
 	int f_BLT_Linear;
 	int f_BLT_Fisher;
 	int f_BLT_Mondello;
 	int f_BLT_FTWKB;
+#endif
 
 	int f_ovoid;
 

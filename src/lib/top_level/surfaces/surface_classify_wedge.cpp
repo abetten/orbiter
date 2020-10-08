@@ -1217,6 +1217,49 @@ void surface_classify_wedge::identify_F13_and_print_table(int verbose_level)
 	}
 }
 
+void surface_classify_wedge::identify_Bes_and_print_table(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int a, c;
+
+	if (f_v) {
+		cout << "surface_classify_wedge::identify_Bes_and_print_table" << endl;
+	}
+
+	int *Iso_type;
+	int *Nb_E;
+
+	Iso_type = NEW_int(q * q);
+	Nb_E = NEW_int(q * q);
+
+	for (a = 0; a < q * q; a++) {
+		Iso_type[a] = -1;
+		Nb_E[a] = -1;
+	}
+
+	identify_Bes(Iso_type, Nb_E, verbose_level);
+
+
+	//cout << "\\begin{array}{|c|c|c|c|}" << endl;
+	//cout << "\\hline" << endl;
+	cout << "(a,c) ; (a,c) ; \\# E & \\mbox{OCN} \\\\" << endl;
+	//cout << "\\hline" << endl;
+	for (a = 2; a < q; a++) {
+		for (c = 2; c < q; c++) {
+			cout << "(" << a << "," << c << "); (";
+			F->print_element(cout, a);
+			cout << ", ";
+			F->print_element(cout, c);
+			cout << "); " << Nb_E[a * q + c] << "; " << Iso_type[a * q + c] << "\\\\" << endl;
+		}
+	}
+	//cout << "\\hline" << endl;
+	//cout << "\\end{array}" << endl;
+	if (f_v) {
+		cout << "surface_classify_wedge::identify_Bes_and_print_table done" << endl;
+	}
+}
+
 void surface_classify_wedge::identify_HCV(
 	int *Iso_type, int *Nb_E, int verbose_level)
 {
@@ -1335,6 +1378,74 @@ void surface_classify_wedge::identify_F13(
 	}
 }
 
+void surface_classify_wedge::identify_Bes(
+	int *Iso_type, int *Nb_E, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, a, c, nb_E;
+	int *coeff;
+	int iso_type;
+	int *Elt;
+
+	if (f_v) {
+		cout << "surface_classify_wedge::identify_Bes" << endl;
+	}
+
+	coeff = NEW_int(Surf->nb_monomials);
+	Elt = NEW_int(A->elt_size_in_int);
+	cout << "surface_classify_wedge::identify_Bes "
+			"looping over all a:" << endl;
+
+	for (i = 0; i < q * q; i++) {
+		Iso_type[i] = -1;
+		Nb_E[i] = -1;
+	}
+	for (a = 2; a < q; a++) {
+		cout << "surface_classify_wedge::identify_Bes "
+				"a = " << a << endl;
+
+		for (c = 2; c < q; c++) {
+			cout << "surface_classify_wedge::identify_Bes "
+					"a = " << a << " c = " << c << endl;
+
+			Iso_type[a * q + c] = -1;
+			Nb_E[a * q + c] = -1;
+
+			long int Lines27[27];
+
+			if (!Surf->create_surface_bes(a, c,
+					coeff,
+					Lines27,
+					nb_E,
+					verbose_level)) {
+				cout << "surface_classify_wedge::identify_Bes "
+						"a = " << a << " does not work" << endl;
+				continue;
+			}
+
+			cout << "surface_classify_wedge::identify_Bes "
+					"nb_E = " << nb_E << endl;
+
+			identify_surface(coeff,
+				iso_type, Elt,
+				verbose_level);
+
+			cout << "surface_classify_wedge::identify_Bes "
+				"a = " << a << " c = " << c << " is isomorphic to iso_type "
+				<< iso_type << ", nb_E = " << nb_E << ", an isomorphism is:" << endl;
+			A->element_print_quick(Elt, cout);
+
+			Iso_type[a * q + c] = iso_type;
+			Nb_E[a * q + c] = nb_E;
+		}
+	}
+
+	FREE_int(coeff);
+	FREE_int(Elt);
+	if (f_v) {
+		cout << "surface_classify_wedge::identify_Bes done" << endl;
+	}
+}
 int surface_classify_wedge::isomorphism_test_pairwise(
 	surface_create *SC1, surface_create *SC2,
 	int &isomorphic_to1, int &isomorphic_to2,

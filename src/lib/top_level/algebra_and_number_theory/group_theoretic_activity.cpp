@@ -245,6 +245,9 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	else if (Descr->f_surface_identify_F13) {
 		do_surface_identify_F13(verbose_level);
 	}
+	else if (Descr->f_surface_identify_Bes) {
+		do_surface_identify_Bes(verbose_level);
+	}
 	else if (Descr->f_surface_isomorphism_testing) {
 		do_surface_isomorphism_testing(
 				Descr->surface_descr_isomorph1,
@@ -2993,6 +2996,63 @@ void group_theoretic_activity::do_surface_identify_F13(int verbose_level)
 	FREE_OBJECT(Surf);
 	if (f_v) {
 		cout << "group_theoretic_activity::do_surface_identify_F13 done" << endl;
+	}
+}
+
+void group_theoretic_activity::do_surface_identify_Bes(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_surface_identify_Bes" << endl;
+	}
+
+	algebra_global_with_action Algebra;
+	surface_domain *Surf;
+	surface_with_action *Surf_A;
+	surface_classify_wedge *SCW;
+	poset_classification_control *Control;
+
+	if (Descr->f_poset_classification_control) {
+		Control = Descr->Control;
+	}
+	else {
+		Control = NEW_OBJECT(poset_classification_control);
+	}
+
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_surface_identify_Bes "
+				"before Algebra.classify_surfaces" << endl;
+	}
+	Algebra.classify_surfaces(
+			F, LG,
+			Control,
+			Surf, Surf_A,
+			SCW,
+			verbose_level - 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_surface_identify_Bes "
+				"after Algebra.classify_surfaces" << endl;
+	}
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_surface_identify_Bes "
+				"before SCW->identify_HCV_and_print_table" << endl;
+	}
+	SCW->identify_Bes_and_print_table(verbose_level);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_surface_identify_Bes "
+				"after SCW->identify_HCV_and_print_table" << endl;
+	}
+
+
+	FREE_OBJECT(SCW);
+	FREE_OBJECT(Surf_A);
+	FREE_OBJECT(Surf);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_surface_identify_Bes done" << endl;
 	}
 }
 

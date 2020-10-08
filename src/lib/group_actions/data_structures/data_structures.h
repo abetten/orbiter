@@ -545,7 +545,7 @@ public:
 	data_input_stream *Data;
 
 
-	int f_save;
+	int f_save_classification;
 	std::string save_prefix;
 
 	int f_report;
@@ -560,8 +560,10 @@ public:
 	int f_classification_prefix;
 	std::string classification_prefix;
 
+#if 0
 	int f_save_incma_in_and_out;
 	std::string save_incma_in_and_out_prefix;
+#endif
 
 	int f_save_canonical_labeling;
 

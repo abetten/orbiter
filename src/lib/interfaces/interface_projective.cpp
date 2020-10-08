@@ -44,8 +44,8 @@ interface_projective::interface_projective()
 
 
 	f_classify_cubic_curves = FALSE;
-	f_has_control_six_arcs = FALSE;
-	Control_six_arcs = NULL;;
+	f_control_arcs = FALSE;
+	Control_arcs = NULL;;
 
 	f_create_points_on_quartic = FALSE;
 	desired_distance = 0;
@@ -116,6 +116,9 @@ void interface_projective::print_help(int argc,
 	else if (strcmp(argv[i], "-classify_cubic_curves") == 0) {
 		cout << "-classify_cubic_curves" << endl;
 	}
+	else if (strcmp(argv[i], "-control_arcs") == 0) {
+		cout << "-control_arcs <description>" << endl;
+	}
 	else if (strcmp(argv[i], "-create_points_on_quartic") == 0) {
 		cout << "-create_points_on_quartic <double : desired_distance>" << endl;
 	}
@@ -133,9 +136,6 @@ void interface_projective::print_help(int argc,
 	}
 	else if (strcmp(argv[i], "-study_surface") == 0) {
 		cout << "-study_surface <int : q> <int : nb>" << endl;
-	}
-	else if (strcmp(argv[i], "-prefix") == 0) {
-		cout << "-prefix <string : prefix>" << endl;
 	}
 	else if (strcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer") == 0) {
 		cout << "-move_two_lines_in_hyperplane_stabilizer <int : q>  <int : line1_from> <int : line2_from> <int : line1_to> <int : line2_to> " << endl;
@@ -169,6 +169,9 @@ int interface_projective::recognize_keyword(int argc,
 		return true;
 	}
 	else if (strcmp(argv[i], "-classify_cubic_curves") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-control_arcs") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-create_points_on_quartic") == 0) {
@@ -251,10 +254,10 @@ void interface_projective::read_arguments(int argc,
 			cout << "-classify_cubic_curves " <<  q << endl;
 			//i++;
 		}
-		else if (strcmp(argv[i], "-control_six_arcs") == 0) {
-			f_has_control_six_arcs = TRUE;
-			Control_six_arcs = NEW_OBJECT(poset_classification_control);
-			i += Control_six_arcs->read_arguments(argc - (i + 1),
+		else if (strcmp(argv[i], "-control_arcs") == 0) {
+			f_control_arcs = TRUE;
+			Control_arcs = NEW_OBJECT(poset_classification_control);
+			i += Control_arcs->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
 			cout << "done reading -control_six_arcs " << endl;
@@ -405,11 +408,11 @@ void interface_projective::worker(orbiter_session *Session, int verbose_level)
 		do_canonical_form_PG(Session, n, q, verbose_level);
 	}
 	else if (f_classify_cubic_curves) {
-		if (!f_has_control_six_arcs) {
-			cout << "please use -control_six_arcs <description> -end" << endl;
+		if (!f_control_arcs) {
+			cout << "please use -control_arcs <description> -end" << endl;
 			exit(1);
 		}
-		do_classify_cubic_curves(q, Control_six_arcs, verbose_level);
+		do_classify_cubic_curves(q, Control_arcs, verbose_level);
 	}
 	else if (f_create_points_on_quartic) {
 		do_create_points_on_quartic(desired_distance, verbose_level);

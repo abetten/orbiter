@@ -179,7 +179,7 @@ void blt_set_domain::compute_adjacency_list_fast(
 	int v1[5];
 	int m[5];
 	int f12, f13, f23, d;
-	uint cnt;
+	long int cnt;
 	int two;
 	int *Pi, *Pj;
 	combinatorics_domain Combi;
