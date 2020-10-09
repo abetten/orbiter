@@ -636,8 +636,8 @@ public:
 	uchar *elt1; // [char_per_elt]
 
 
-	char label[1000];
-	char label_tex[1000];
+	std::string label;
+	std::string label_tex;
 
 	page_storage *PS;
 

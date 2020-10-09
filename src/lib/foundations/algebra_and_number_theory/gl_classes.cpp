@@ -1939,6 +1939,44 @@ void gl_classes::report(ostream &ost, int verbose_level)
 	int i;
 
 	ost << "\\section{All conjugacy Classes of GL$(" << k << "," << q << ")$}" << endl;
+
+
+	int *M;
+	int f_elements_exponential = FALSE;
+	string symbol_for_print;
+
+
+	symbol_for_print.assign("\\alpha");
+
+	M = NEW_int(k * k);
+
+	ost << "$$" << endl;
+	for (i = 0; i < nb_classes; i++) {
+
+
+		make_matrix_from_class_rep(M, R + i, 0 /* verbose_level */);
+
+
+		ost << "\\left[" << endl;
+		F->latex_matrix(ost,
+				f_elements_exponential, symbol_for_print, M, k, k);
+		ost << "\\right]" << endl;
+		if (i < nb_classes - 1) {
+			ost << ", " << endl;
+		}
+		if ((i + 1) % 5 == 0) {
+			ost << "$$" << endl;
+			ost << "$$" << endl;
+		}
+
+	}
+	ost << "$$" << endl;
+	ost << "\\bigskip" << endl;
+
+	FREE_int(M);
+
+
+
 	for (i = 0; i < nb_classes; i++) {
 		ost << "Representative " << i << " / "
 				<< nb_classes << "\\\\" << endl;

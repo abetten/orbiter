@@ -28,7 +28,7 @@ interface_algebra::interface_algebra()
 	Group_theoretic_activity_description = NULL;
 	f_cheat_sheet_GF = FALSE;
 	q = 0;
-	f_classes_GL = FALSE;
+	f_all_rational_normal_forms = FALSE;
 	d = 0;
 	f_search_for_primitive_polynomial_in_range = FALSE;
 	p_min = 0;
@@ -40,8 +40,8 @@ interface_algebra::interface_algebra()
 	q = 0;
 	f_make_character_table_symmetric_group = FALSE;
 	f_make_A5_in_PSL_2_q = FALSE;
-	f_eigenstuff_matrix_direct = FALSE;
-	f_eigenstuff_matrix_from_file = FALSE;
+	f_eigenstuff = FALSE;
+	f_eigenstuff_from_file = FALSE;
 	eigenstuff_n = 0;
 	eigenstuff_q = 0;
 	eigenstuff_coeffs = NULL;
@@ -66,8 +66,8 @@ void interface_algebra::print_help(int argc,
 	else if (strcmp(argv[i], "-cheat_sheet_GF") == 0) {
 		cout << "-cheat_sheet_GF <int : q>" << endl;
 	}
-	else if (strcmp(argv[i], "-classes_GL") == 0) {
-		cout << "-classes_GL <int : d> <int : q>" << endl;
+	else if (strcmp(argv[i], "-all_rational_normal_forms") == 0) {
+		cout << "-all_rational_normal_forms <int : d> <int : q>" << endl;
 	}
 	else if (strcmp(argv[i], "-override_polynomial") == 0) {
 		cout << "-override_polynomial <polynomial in decimal>" << endl;
@@ -84,11 +84,11 @@ void interface_algebra::print_help(int argc,
 	else if (strcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
 		cout << "-make_A5_in_PSL_2_q <int : q> " << endl;
 	}
-	else if (strcmp(argv[i], "-eigenstuff_matrix_direct") == 0) {
-		cout << "-eigenstuff_matrix_direct <int : m> <int : q> <string : coeffs> " << endl;
+	else if (strcmp(argv[i], "-eigenstuff") == 0) {
+		cout << "-eigenstuff <int : m> <int : q> <string : coeffs> " << endl;
 	}
-	else if (strcmp(argv[i], "-eigenstuff_matrix_from_file") == 0) {
-		cout << "-eigenstuff_matrix_from_file <int : m> <int : q>  <string : fname> " << endl;
+	else if (strcmp(argv[i], "-eigenstuff_from_file") == 0) {
+		cout << "-eigenstuff_from_file <int : m> <int : q>  <string : fname> " << endl;
 	}
 	else if (strcmp(argv[i], "-young_symmetrizer") == 0) {
 		cout << "-young_symmetrizer <int : n>" << endl;
@@ -116,7 +116,7 @@ int interface_algebra::recognize_keyword(int argc,
 	else if (strcmp(argv[i], "-cheat_sheet_GF") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-classes_GL") == 0) {
+	else if (strcmp(argv[i], "-all_rational_normal_forms") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-override_polynomial") == 0) {
@@ -134,10 +134,10 @@ int interface_algebra::recognize_keyword(int argc,
 	else if (strcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-eigenstuff_matrix_direct") == 0) {
+	else if (strcmp(argv[i], "-eigenstuff") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-eigenstuff_matrix_from_file") == 0) {
+	else if (strcmp(argv[i], "-eigenstuff_from_file") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-young_symmetrizer") == 0) {
@@ -205,11 +205,11 @@ void interface_algebra::read_arguments(int argc,
 			q = atoi(argv[++i]);
 			cout << "-cheat_sheet_GF " << q << endl;
 		}
-		else if (strcmp(argv[i], "-classes_GL") == 0) {
-			f_classes_GL = TRUE;
+		else if (strcmp(argv[i], "-all_rational_normal_forms") == 0) {
+			f_all_rational_normal_forms = TRUE;
 			d = atoi(argv[++i]);
 			q = atoi(argv[++i]);
-			cout << "-classes_GL " << d << " " << q << endl;
+			cout << "-f_all_rational_normal_forms " << d << " " << q << endl;
 		}
 		else if (strcmp(argv[i], "-search_for_primitive_polynomial_in_range") == 0) {
 			f_search_for_primitive_polynomial_in_range = TRUE;
@@ -236,20 +236,20 @@ void interface_algebra::read_arguments(int argc,
 			q = atoi(argv[++i]);
 			cout << "-make_A5_in_PSL_2_q " << q << endl;
 		}
-		else if (strcmp(argv[i], "-eigenstuff_matrix_direct") == 0) {
-			f_eigenstuff_matrix_direct = TRUE;
+		else if (strcmp(argv[i], "-eigenstuff") == 0) {
+			f_eigenstuff = TRUE;
 			eigenstuff_n = atoi(argv[++i]);
 			eigenstuff_q = atoi(argv[++i]);
 			eigenstuff_coeffs = argv[++i];
-			cout << "-eigenstuff_matrix_direct " << eigenstuff_n
+			cout << "-eigenstuff " << eigenstuff_n
 					<< " " << eigenstuff_q << " " << eigenstuff_coeffs << endl;
 		}
 		else if (strcmp(argv[i], "-eigenstuff_matrix_from_file") == 0) {
-			f_eigenstuff_matrix_from_file = TRUE;
+			f_eigenstuff_from_file = TRUE;
 			eigenstuff_n = atoi(argv[++i]);
 			eigenstuff_q = atoi(argv[++i]);
 			eigenstuff_fname.assign(argv[++i]);
-			cout << "-eigenstuff_matrix_from_file " << eigenstuff_n
+			cout << "-eigenstuff_from_file " << eigenstuff_n
 					<< " " << eigenstuff_q << " " << eigenstuff_fname << endl;
 		}
 
@@ -277,8 +277,8 @@ void interface_algebra::worker(orbiter_session *Session, int verbose_level)
 				Session->f_override_polynomial, Session->override_polynomial,
 				verbose_level);
 	}
-	else if (f_classes_GL) {
-		do_classes_GL(d, q,
+	else if (f_all_rational_normal_forms) {
+		do_all_rational_normal_forms(d, q,
 				Session->f_override_polynomial, Session->override_polynomial,
 				verbose_level);
 	}
@@ -294,11 +294,11 @@ void interface_algebra::worker(orbiter_session *Session, int verbose_level)
 	else if (f_make_A5_in_PSL_2_q) {
 		do_make_A5_in_PSL_2_q(q, verbose_level);
 	}
-	else if (f_eigenstuff_matrix_direct) {
-		do_eigenstuff_matrix_direct(eigenstuff_n, eigenstuff_q, eigenstuff_coeffs, verbose_level);
+	else if (f_eigenstuff) {
+		do_eigenstuff(eigenstuff_n, eigenstuff_q, eigenstuff_coeffs, verbose_level);
 	}
-	else if (f_eigenstuff_matrix_from_file) {
-		do_eigenstuff_matrix_from_file(eigenstuff_n, eigenstuff_q, eigenstuff_fname, verbose_level);
+	else if (f_eigenstuff_from_file) {
+		do_eigenstuff_from_file(eigenstuff_n, eigenstuff_q, eigenstuff_fname, verbose_level);
 	}
 	else if (f_young_symmetrizer) {
 		algebra_global_with_action Algebra;
@@ -312,13 +312,13 @@ void interface_algebra::worker(orbiter_session *Session, int verbose_level)
 	}
 }
 
-void interface_algebra::do_eigenstuff_matrix_direct(
+void interface_algebra::do_eigenstuff(
 		int n, int q, const char *coeffs_text, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "interface_algebra::do_eigenstuff_matrix_direct" << endl;
+		cout << "interface_algebra::do_eigenstuff" << endl;
 	}
 	int *Data;
 	int len;
@@ -335,17 +335,17 @@ void interface_algebra::do_eigenstuff_matrix_direct(
 
 	FREE_int(Data);
 	if (f_v) {
-		cout << "interface_algebra::do_eigenstuff_matrix_direct done" << endl;
+		cout << "interface_algebra::do_eigenstuff done" << endl;
 	}
 }
 
-void interface_algebra::do_eigenstuff_matrix_from_file(
+void interface_algebra::do_eigenstuff_from_file(
 		int n, int q, std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "interface_algebra::do_eigenstuff_matrix_from_file" << endl;
+		cout << "interface_algebra::do_eigenstuff_from_file" << endl;
 	}
 
 	file_io Fio;
@@ -368,7 +368,7 @@ void interface_algebra::do_eigenstuff_matrix_from_file(
 
 
 	if (f_v) {
-		cout << "interface_algebra::do_eigenstuff_matrix_from_file done" << endl;
+		cout << "interface_algebra::do_eigenstuff_from_file done" << endl;
 	}
 }
 
@@ -600,12 +600,12 @@ void interface_algebra::do_cheat_sheet_GF(int q, int f_poly, std::string &poly, 
 	}
 }
 
-void interface_algebra::do_classes_GL(int d, int q, int f_poly, std::string &poly, int verbose_level)
+void interface_algebra::do_all_rational_normal_forms(int d, int q, int f_poly, std::string &poly, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "interface_algebra::do_classes_GL d=" << d << " q=" << q << endl;
+		cout << "interface_algebra::do_all_rational_normal_forms d=" << d << " q=" << q << endl;
 	}
 	algebra_global_with_action Algebra;
 
@@ -613,7 +613,7 @@ void interface_algebra::do_classes_GL(int d, int q, int f_poly, std::string &pol
 			FALSE /* f_no_eigenvalue_one */, verbose_level);
 
 	if (f_v) {
-		cout << "interface_algebra::do_classes_GL done" << endl;
+		cout << "interface_algebra::do_all_rational_normal_forms done" << endl;
 	}
 }
 

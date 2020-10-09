@@ -336,6 +336,8 @@ public:
 		int f_classify_ovoids;
 		ovoid_classify_description *Ovoid_classify_description;
 
+		int f_classify_cubic_curves;
+
 
 	group_theoretic_activity_description();
 	~group_theoretic_activity_description();
@@ -469,6 +471,10 @@ public:
 			poset_classification_control *Control,
 			ovoid_classify_description *Ovoid_classify_description,
 			int verbose_level);
+	void do_classify_cubic_curves(
+			arc_generator_description *Arc_generator_description,
+			int verbose_level);
+
 };
 
 long int gta_subspace_orbits_rank_point_func(int *v, void *data);

@@ -48,7 +48,7 @@ class interface_algebra {
 	group_theoretic_activity_description *Group_theoretic_activity_description;
 	int f_cheat_sheet_GF;
 	int q;
-	int f_classes_GL;
+	int f_all_rational_normal_forms;
 	int d;
 	int f_search_for_primitive_polynomial_in_range;
 	int p_min, p_max, deg_min, deg_max;
@@ -56,8 +56,8 @@ class interface_algebra {
 	int deg;
 	int f_make_character_table_symmetric_group;
 	int f_make_A5_in_PSL_2_q;
-	int f_eigenstuff_matrix_direct;
-	int f_eigenstuff_matrix_from_file;
+	int f_eigenstuff;
+	int f_eigenstuff_from_file;
 	int eigenstuff_n;
 	int eigenstuff_q;
 	const char *eigenstuff_coeffs;
@@ -74,9 +74,9 @@ public:
 	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
 	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
 	void worker(orbiter_session *Session, int verbose_level);
-	void do_eigenstuff_matrix_direct(
+	void do_eigenstuff(
 			int n, int q, const char *coeffs_text, int verbose_level);
-	void do_eigenstuff_matrix_from_file(
+	void do_eigenstuff_from_file(
 			int n, int q, std::string &fname, int verbose_level);
 	void do_linear_group(
 			linear_group_description *Descr, int verbose_level);
@@ -84,7 +84,7 @@ public:
 			group_theoretic_activity_description *Group_theoretic_activity_description,
 			int verbose_level);
 	void do_cheat_sheet_GF(int q, int f_poly, std::string &poly, int verbose_level);
-	void do_classes_GL(int d, int q, int f_poly, std::string &poly, int verbose_level);
+	void do_all_rational_normal_forms(int d, int q, int f_poly, std::string &poly, int verbose_level);
 	void do_search_for_primitive_polynomial_in_range(int p_min, int p_max,
 			int deg_min, int deg_max, int verbose_level);
 	void do_make_table_of_irreducible_polynomials(int deg, int q, int verbose_level);
@@ -557,10 +557,6 @@ class interface_projective {
 	int f_canonical_form_PG;
 	projective_space_object_classifier_description *Canonical_form_PG_Descr;
 
-	int f_classify_cubic_curves;
-	int f_control_arcs;
-	poset_classification_control *Control_arcs;
-
 	int f_create_points_on_quartic;
 	double desired_distance;
 
@@ -619,7 +615,6 @@ public:
 	void print_help(int argc, const char **argv, int i, int verbose_level);
 	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
 	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
-	//int read_canonical_form_arguments(int argc, const char **argv, int i0, int verbose_level);
 	void worker(orbiter_session *Session, int verbose_level);
 	void do_cheat_sheet_PG(orbiter_session *Session,
 			int n, int q,
@@ -628,8 +623,6 @@ public:
 			int verbose_level);
 	void do_canonical_form_PG(orbiter_session *Session,
 			int n, int q, int verbose_level);
-	void do_classify_cubic_curves(int q,
-			poset_classification_control *Control_six_arcs, int verbose_level);
 	void do_create_points_on_quartic(double desired_distance, int verbose_level);
 	void do_create_points_on_parabola(double desired_distance, int N,
 			double a, double b, double c, int verbose_level);

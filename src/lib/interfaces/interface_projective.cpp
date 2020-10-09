@@ -42,11 +42,6 @@ interface_projective::interface_projective()
 	f_canonical_form_PG = FALSE;
 	Canonical_form_PG_Descr = NULL;
 
-
-	f_classify_cubic_curves = FALSE;
-	f_control_arcs = FALSE;
-	Control_arcs = NULL;;
-
 	f_create_points_on_quartic = FALSE;
 	desired_distance = 0;
 
@@ -248,25 +243,6 @@ void interface_projective::read_arguments(int argc,
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-classify_cubic_curves") == 0) {
-			f_classify_cubic_curves = TRUE;
-			q = atoi(argv[++i]);
-			cout << "-classify_cubic_curves " <<  q << endl;
-			//i++;
-		}
-		else if (strcmp(argv[i], "-control_arcs") == 0) {
-			f_control_arcs = TRUE;
-			Control_arcs = NEW_OBJECT(poset_classification_control);
-			i += Control_arcs->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			cout << "done reading -control_six_arcs " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
 		else if (strcmp(argv[i], "-create_points_on_quartic") == 0) {
 			f_create_points_on_quartic = TRUE;
 			desired_distance = atof(argv[++i]);
@@ -406,13 +382,6 @@ void interface_projective::worker(orbiter_session *Session, int verbose_level)
 	}
 	else if (f_canonical_form_PG) {
 		do_canonical_form_PG(Session, n, q, verbose_level);
-	}
-	else if (f_classify_cubic_curves) {
-		if (!f_control_arcs) {
-			cout << "please use -control_arcs <description> -end" << endl;
-			exit(1);
-		}
-		do_classify_cubic_curves(q, Control_arcs, verbose_level);
 	}
 	else if (f_create_points_on_quartic) {
 		do_create_points_on_quartic(desired_distance, verbose_level);
@@ -676,115 +645,6 @@ void interface_projective::do_canonical_form_PG(orbiter_session *Session,
 
 	if (f_v) {
 		cout << "interface_projective::do_canonical_form_PG done" << endl;
-	}
-}
-
-void interface_projective::do_classify_cubic_curves(int q,
-		poset_classification_control *Control_six_arcs, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_projective::do_classify_cubic_curves" << endl;
-	}
-
-	//const char *starter_directory_name = "";
-	//char base_fname[1000];
-
-	//snprintf(base_fname, 1000, "cubic_curves_%d", q);
-
-
-	int f_semilinear = FALSE;
-	number_theory_domain NT;
-
-	if (!NT.is_prime(q)) {
-		f_semilinear = TRUE;
-	}
-	finite_field *F;
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q, 0);
-
-	cubic_curve *CC;
-
-	CC = NEW_OBJECT(cubic_curve);
-
-	CC->init(F, verbose_level);
-
-
-	cubic_curve_with_action *CCA;
-
-	CCA = NEW_OBJECT(cubic_curve_with_action);
-
-	CCA->init(CC, f_semilinear, verbose_level);
-
-	group_theoretic_activity *GTA;
-
-	GTA = NEW_OBJECT(group_theoretic_activity);
-
-	classify_cubic_curves *CCC;
-
-	CCC = NEW_OBJECT(classify_cubic_curves);
-
-
-	CCC->init(
-			GTA,
-			CCA,
-			//starter_directory_name,
-			//base_fname,
-			Control_six_arcs,
-			verbose_level);
-
-	CCC->compute_starter(verbose_level);
-
-	CCC->test_orbits(verbose_level);
-
-	CCC->do_classify(verbose_level);
-
-
-	char fname[1000];
-	char title[1000];
-	char author[1000];
-	snprintf(title, 1000, "Cubic Curves in PG$(2,%d)$", q);
-	strcpy(author, "");
-	snprintf(fname, 1000, "Cubic_curves_q%d.tex", q);
-
-	{
-		ofstream fp(fname);
-		latex_interface L;
-
-		//latex_head_easy(fp);
-		L.head(fp,
-			FALSE /* f_book */,
-			TRUE /* f_title */,
-			title, author,
-			FALSE /*f_toc */,
-			FALSE /* f_landscape */,
-			FALSE /* f_12pt */,
-			TRUE /*f_enlarged_page */,
-			TRUE /* f_pagenumbers*/,
-			NULL /* extra_praeamble */);
-
-		fp << "\\subsection*{" << title << "}" << endl;
-
-		CCC->report(fp, verbose_level);
-
-		L.foot(fp);
-	}
-
-	file_io Fio;
-
-	cout << "Written file " << fname << " of size "
-		<< Fio.file_size(fname) << endl;
-
-	if (f_v) {
-		cout << "classify_cubic_curves writing cheat sheet on "
-				"cubic curves done" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "interface_projective::do_classify_cubic_curves done" << endl;
 	}
 }
 

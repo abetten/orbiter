@@ -113,8 +113,6 @@ public:
 
 	int f_has_canonical_form;
 	bitvector *canonical_form;
-	//uchar *canonical_form; // [canonical_form_len]
-	//int canonical_form_len;
 
 	int f_has_canonical_labeling;
 	long int *canonical_labeling;  // [nb_rows + nb_cols]
@@ -188,7 +186,6 @@ public:
 
 class orbit_rep {
 public:
-	//std::string prefix;
 	action *A;
 	void (*early_test_func_callback)(long int *S, int len,
 		long int *candidates, int nb_candidates,

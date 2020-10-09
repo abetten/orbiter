@@ -21,6 +21,8 @@ arc_generator_description::arc_generator_description()
 	LG = NULL;
 	F = NULL;
 	q = 0;
+
+	f_poset_classification_control = FALSE;
 	Control = NULL;
 	f_d = FALSE;
 	d = 0;
@@ -56,6 +58,21 @@ int arc_generator_description::read_arguments(int argc, const char **argv,
 		if (strcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
 			q = atoi(argv[++i]);
+			cout << "-q " << q << endl;
+		}
+		else if (strcmp(argv[i], "-poset_classification_control") == 0) {
+			f_poset_classification_control = TRUE;
+			Control = NEW_OBJECT(poset_classification_control);
+			cout << "-poset_classification_control " << endl;
+			i += Control->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -poset_classification_control " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
 			cout << "-q " << q << endl;
 		}
 		else if (strcmp(argv[i], "-d") == 0) {

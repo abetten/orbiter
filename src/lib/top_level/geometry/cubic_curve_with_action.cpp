@@ -55,8 +55,8 @@ void cubic_curve_with_action::freeself()
 	null();
 }
 
-void cubic_curve_with_action::init(cubic_curve *CC,
-		int f_semilinear, int verbose_level)
+void cubic_curve_with_action::init(cubic_curve *CC, action *A,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -64,11 +64,25 @@ void cubic_curve_with_action::init(cubic_curve *CC,
 		cout << "cubic_curve_with_action::init" << endl;
 	}
 	cubic_curve_with_action::CC = CC;
-	cubic_curve_with_action::f_semilinear = f_semilinear;
+	cubic_curve_with_action::A = A;
+	//cubic_curve_with_action::f_semilinear = f_semilinear;
 	F = CC->F;
 	q = F->q;
 
-	init_group(f_semilinear, verbose_level);
+
+	if (f_v) {
+		cout << "cubic_curve_with_action::init "
+				"creating action on lines" << endl;
+	}
+	A2 = A->induced_action_on_grassmannian(2, verbose_level);
+	if (f_v) {
+		cout << "cubic_curve_with_action::init "
+				"creating action on lines done" << endl;
+	}
+
+
+
+	//init_group(f_semilinear, verbose_level);
 
 	Elt1 = NEW_int(A->elt_size_in_int);
 
@@ -85,6 +99,7 @@ void cubic_curve_with_action::init(cubic_curve *CC,
 	}
 }
 
+#if 0
 void cubic_curve_with_action::init_group(int f_semilinear,
 		int verbose_level)
 {
@@ -136,7 +151,7 @@ void cubic_curve_with_action::init_group(int f_semilinear,
 		cout << "cubic_curve_with_action::init_group done" << endl;
 	}
 }
-
+#endif
 
 }}
 
