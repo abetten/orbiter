@@ -31,6 +31,8 @@ public:
 	int f_q;
 	int q;
 	finite_field *F;
+
+	int f_poset_classification_control;
 	poset_classification_control *Control;
 
 	int f_d;
@@ -562,9 +564,7 @@ public:
 	void init(
 			group_theoretic_activity *GTA,
 			cubic_curve_with_action *CCA,
-			//const char *starter_directory_name,
-			//const char *base_fname,
-			poset_classification_control *Control,
+			arc_generator_description *Descr,
 			int verbose_level);
 	void compute_starter(int verbose_level);
 	void test_orbits(int verbose_level);
@@ -601,7 +601,7 @@ public:
 
 	int q;
 	finite_field *F; // do not free
-	int f_semilinear;
+	//int f_semilinear;
 
 	cubic_curve *CC; // do not free
 
@@ -618,9 +618,7 @@ public:
 	~cubic_curve_with_action();
 	void null();
 	void freeself();
-	void init(cubic_curve *CC, int f_semilinear, int verbose_level);
-	void init_group(int f_semilinear,
-			int verbose_level);
+	void init(cubic_curve *CC, action *A, int verbose_level);
 
 };
 

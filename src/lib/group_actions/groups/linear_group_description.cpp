@@ -385,7 +385,6 @@ int linear_group_description::read_arguments(
 			subgroup_label = argv[++i];
 			subgroup_order_text = argv[++i];
 			nb_subgroup_generators = atoi(argv[++i]);
-			//subgroup_generators_as_string = (const char **) NEW_pchar(nb_subgroup_generators);
 			subgroup_generators_as_string = new std::string [nb_subgroup_generators];
 
 			os_interface Os;

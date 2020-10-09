@@ -240,14 +240,17 @@ void arc_generator::init(
 	nb_points_total = Gg.nb_PG_elements(Descr->n - 1, Descr->q);
 		// q * q + q + 1 for planes (n=3)
 
-	if (Descr->f_affine) {
-		nb_affine_lines = Gg.nb_affine_lines(Descr->n - 1, Descr->q);
-	}
-
 	if (f_v) {
 		cout << "arc_generator::init nb_points_total = " << nb_points_total << endl;
-		cout << "arc_generator::init nb_affine_lines = " << nb_affine_lines << endl;
 	}
+
+	if (Descr->f_affine) {
+		nb_affine_lines = Gg.nb_affine_lines(Descr->n - 1, Descr->q);
+		if (f_v) {
+			cout << "arc_generator::init nb_affine_lines = " << nb_affine_lines << endl;
+		}
+	}
+
 
 
 	if (f_v) {

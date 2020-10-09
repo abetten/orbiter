@@ -148,6 +148,8 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	f_classify_ovoids = FALSE;
 	Ovoid_classify_description = NULL;
+
+	f_classify_cubic_curves = FALSE;
 }
 
 group_theoretic_activity_description::~group_theoretic_activity_description()
@@ -705,6 +707,22 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 
+		// cubic curves
+		else if (strcmp(argv[i], "-classify_cubic_curves") == 0) {
+			f_classify_cubic_curves = TRUE;
+			Arc_generator_description = NEW_OBJECT(arc_generator_description);
+			cout << "-classify_cubic_curves" << endl;
+			i += Arc_generator_description->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -classify_cubic_curves " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-classify_cubic_curves " << endl;
+		}
 
 
 		else if (strcmp(argv[i], "-end") == 0) {

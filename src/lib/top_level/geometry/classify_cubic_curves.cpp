@@ -73,9 +73,7 @@ void classify_cubic_curves::freeself()
 void classify_cubic_curves::init(
 		group_theoretic_activity *GTA,
 		cubic_curve_with_action *CCA,
-		//const char *starter_directory_name,
-		//const char *base_fname,
-		poset_classification_control *Control,
+		arc_generator_description *Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -100,6 +98,11 @@ void classify_cubic_curves::init(
 
 
 	// ToDo
+
+	Arc_gen->init(
+			Descr,
+			A, A->Strong_gens,
+			verbose_level);
 
 #if 0
 	Arc_gen->init(GTA,
