@@ -189,6 +189,10 @@ public:
 			int verbose_level);
 	int count_all_irreducible_polynomials_of_degree_d(finite_field *F,
 		int d, int verbose_level);
+	void polynomial_division(int q,
+			std::string &A_coeffs, std::string &B_coeffs, int verbose_level);
+	void extended_gcd_for_polynomials(int q,
+			std::string &A_coeffs, std::string &B_coeffs, int verbose_level);
 
 };
 
@@ -2387,7 +2391,7 @@ public:
 	void add(unipoly_object a, unipoly_object b, unipoly_object &c);
 	void mult(unipoly_object a, unipoly_object b, unipoly_object &c, int verbose_level);
 	void mult_easy(unipoly_object a, unipoly_object b, unipoly_object &c);
-	void mult_mod(unipoly_object a, unipoly_object b, unipoly_object &c, 
+	void mult_mod_negated(unipoly_object a, unipoly_object b, unipoly_object &c,
 		int factor_polynomial_degree, 
 		int *factor_polynomial_coefficients_negated,
 		int verbose_level);

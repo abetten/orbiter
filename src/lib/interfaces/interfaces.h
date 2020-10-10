@@ -54,7 +54,7 @@ class interface_algebra {
 	int p_min, p_max, deg_min, deg_max;
 	int f_make_table_of_irreducible_polynomials;
 	int deg;
-	int f_make_character_table_symmetric_group;
+	int f_character_table_symmetric_group;
 	int f_make_A5_in_PSL_2_q;
 	int f_eigenstuff;
 	int f_eigenstuff_from_file;
@@ -67,6 +67,11 @@ class interface_algebra {
 	int f_young_symmetrizer_sym_4;
 	int f_poset_classification_control;
 	poset_classification_control *Control;
+	int f_polynomial_division;
+	int polynomial_division_q;
+	std::string polynomial_division_A;
+	std::string polynomial_division_B;
+	int f_extended_gcd_for_polynomials;
 
 public:
 	interface_algebra();
@@ -88,7 +93,7 @@ public:
 	void do_search_for_primitive_polynomial_in_range(int p_min, int p_max,
 			int deg_min, int deg_max, int verbose_level);
 	void do_make_table_of_irreducible_polynomials(int deg, int q, int verbose_level);
-	void do_make_character_table_symmetric_group(int deg, int verbose_level);
+	void do_character_table_symmetric_group(int deg, int verbose_level);
 	void do_make_A5_in_PSL_2_q(int q, int verbose_level);
 
 };

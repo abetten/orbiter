@@ -1864,8 +1864,242 @@ int algebra_global::count_all_irreducible_polynomials_of_degree_d(finite_field *
 	return cnt;
 }
 
+void algebra_global::polynomial_division(int q,
+		std::string &A_coeffs, std::string &B_coeffs, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_division" << endl;
+	}
 
 
+	int *data_A;
+	int *data_B;
+	int sz_A, sz_B;
+
+	int_vec_scan(A_coeffs, data_A, sz_A);
+	int_vec_scan(B_coeffs, data_B, sz_B);
+
+	finite_field *F;
+
+	F = NEW_OBJECT(finite_field);
+	F->init(q);
+
+
+
+	unipoly_domain FX(F);
+	unipoly_object A, B, Q, R;
+
+
+	int da = sz_A - 1;
+	int db = sz_B - 1;
+	int i;
+
+	FX.create_object_of_degree(A, da);
+
+	for (i = 0; i <= da; i++) {
+		FX.s_i(A, i) = data_A[i];
+	}
+
+	FX.create_object_of_degree(B, da);
+
+	for (i = 0; i <= db; i++) {
+		FX.s_i(B, i) = data_B[i];
+	}
+
+	cout << "A(X)=";
+	FX.print_object(A, cout);
+	cout << endl;
+
+
+	cout << "B(X)=";
+	FX.print_object(B, cout);
+	cout << endl;
+
+	FX.create_object_of_degree(Q, da);
+
+	FX.create_object_of_degree(R, da);
+
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_division before FX.division_with_remainder" << endl;
+	}
+
+	FX.division_with_remainder(
+		A, B,
+		Q, R,
+		verbose_level);
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_division after FX.division_with_remainder" << endl;
+	}
+
+	cout << "A(X)=";
+	FX.print_object(A, cout);
+	cout << endl;
+
+	cout << "Q(X)=";
+	FX.print_object(Q, cout);
+	cout << endl;
+
+	cout << "R(X)=";
+	FX.print_object(R, cout);
+	cout << endl;
+
+
+	FREE_OBJECT(F);
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_division done" << endl;
+	}
+}
+
+void algebra_global::extended_gcd_for_polynomials(int q,
+		std::string &A_coeffs, std::string &B_coeffs, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::extended_gcd_for_polynomials" << endl;
+	}
+
+
+	int *data_A;
+	int *data_B;
+	int sz_A, sz_B;
+
+	int_vec_scan(A_coeffs, data_A, sz_A);
+	int_vec_scan(B_coeffs, data_B, sz_B);
+
+	finite_field *F;
+	number_theory_domain NT;
+
+	F = NEW_OBJECT(finite_field);
+	F->init(q);
+
+
+
+	unipoly_domain FX(F);
+	unipoly_object A, B, U, V, G;
+
+
+	int da = sz_A - 1;
+	int db = sz_B - 1;
+	int i;
+
+	FX.create_object_of_degree(A, da);
+
+	for (i = 0; i <= da; i++) {
+		if (data_A[i] < 0 || data_A[i] >= q) {
+			data_A[i] = NT.mod(data_A[i], q);
+		}
+		FX.s_i(A, i) = data_A[i];
+	}
+
+	FX.create_object_of_degree(B, da);
+
+	for (i = 0; i <= db; i++) {
+		if (data_B[i] < 0 || data_B[i] >= q) {
+			data_B[i] = NT.mod(data_B[i], q);
+		}
+		FX.s_i(B, i) = data_B[i];
+	}
+
+	cout << "A(X)=";
+	FX.print_object(A, cout);
+	cout << endl;
+
+
+	cout << "B(X)=";
+	FX.print_object(B, cout);
+	cout << endl;
+
+	FX.create_object_of_degree(U, da);
+
+	FX.create_object_of_degree(V, da);
+
+	FX.create_object_of_degree(G, da);
+
+
+	if (f_v) {
+		cout << "algebra_global::extended_gcd_for_polynomials before FX.extended_gcd" << endl;
+	}
+
+	{
+		FX.extended_gcd(
+			A, B,
+			U, V, G, verbose_level);
+	}
+
+	if (f_v) {
+		cout << "algebra_global::extended_gcd_for_polynomials after FX.extended_gcd" << endl;
+	}
+
+	cout << "U(X)=";
+	FX.print_object(U, cout);
+	cout << endl;
+
+	cout << "V(X)=";
+	FX.print_object(V, cout);
+	cout << endl;
+
+	cout << "G(X)=";
+	FX.print_object(G, cout);
+	cout << endl;
+
+	cout << "deg G(X) = " << FX.degree(G) << endl;
+
+	if (FX.degree(G) == 0) {
+		int c, cv, d;
+
+		c = FX.s_i(G, 0);
+		if (c != 1) {
+			cout << "normalization:" << endl;
+			cv = F->inverse(c);
+			cout << "cv=" << cv << endl;
+
+			d = FX.degree(U);
+			for (i = 0; i <= d; i++) {
+				FX.s_i(U, i) = F->mult(cv, FX.s_i(U, i));
+			}
+
+			d = FX.degree(V);
+			for (i = 0; i <= d; i++) {
+				FX.s_i(V, i) = F->mult(cv, FX.s_i(V, i));
+			}
+
+			d = FX.degree(G);
+			for (i = 0; i <= d; i++) {
+				FX.s_i(G, i) = F->mult(cv, FX.s_i(G, i));
+			}
+
+
+
+			cout << "after normalization:" << endl;
+
+			cout << "U(X)=";
+			FX.print_object(U, cout);
+			cout << endl;
+
+			cout << "V(X)=";
+			FX.print_object(V, cout);
+			cout << endl;
+
+			cout << "G(X)=";
+			FX.print_object(G, cout);
+			cout << endl;
+		}
+
+}
+
+
+	FREE_OBJECT(F);
+
+	if (f_v) {
+		cout << "algebra_global::extended_gcd_for_polynomials done" << endl;
+	}
+}
 
 
 }}

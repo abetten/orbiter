@@ -1644,20 +1644,30 @@ void action::init_permutation_representation(action *A_original,
 		int_vec_copy(W->the_transversal_length,
 				get_transversal_length(), base_len());
 
-		sprintf(str1, "%s_induced%d_prev", P->label, degree);
-		sprintf(str2, "%s induced%d prev", P->label_tex, degree);
-		label.assign(str1);
-		label_tex.assign(str2);
+		sprintf(str1, "_induced%d_prev", degree);
+		sprintf(str2, " induced%d prev", degree);
+
+		label.assign(P->label);
+		label.assign(P->label_tex);
+
+		label.append(str1);
+		label_tex.append(str2);
 	}
 	else {
 		f_is_linear = FALSE;
 		dimension = 0;
 		low_level_point_size = 0;
 		action::degree = degree;
-		sprintf(str1, "%s_induced%d", P->label, degree);
-		sprintf(str2, "%s induced%d", P->label_tex, degree);
-		label.assign(str1);
-		label_tex.assign(str2);
+
+		sprintf(str1, "_induced%d", degree);
+		sprintf(str2, " induced%d", degree);
+
+		label.assign(P->label);
+		label_tex.assign(P->label_tex);
+
+
+		label.append(str1);
+		label_tex.append(str2);
 
 	}
 

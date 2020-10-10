@@ -24,8 +24,8 @@ void character_table_burnside::do_it(int n, int verbose_level)
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "do_it" << endl;
-		}
+		cout << "character_table_burnside::do_it" << endl;
+	}
 
 	a_domain *D;
 
@@ -302,6 +302,16 @@ void character_table_burnside::do_it(int n, int verbose_level)
 		}
 
 
+	cout << "character table:" << endl;
+	int_matrix_print(character_table, nb_classes, nb_classes);
+
+
+	latex_interface L;
+
+	L.print_integer_matrix_tex(cout, character_table, nb_classes, nb_classes);
+
+
+
 
 	FREE_int(Distribution);
 	for (i = 0; i < nb_gens; i++) {
@@ -328,6 +338,9 @@ void character_table_burnside::do_it(int n, int verbose_level)
 	FREE_int(Elt);
 	FREE_OBJECT(A);
 	FREE_OBJECT(D);
+	if (f_v) {
+		cout << "character_table_burnside::do_it" << endl;
+	}
 }
 
 void character_table_burnside::create_matrix(discreta_matrix &M, int i, int *S, int nb_classes,
