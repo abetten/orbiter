@@ -675,7 +675,7 @@ void unipoly_domain::mult(unipoly_object a,
 		if (f_v) {
 			cout << "unipoly_domain::mult before mult_mod" << endl;
 		}
-		mult_mod(a, b, c, factor_degree, factor_coeffs, verbose_level);
+		mult_mod_negated(a, b, c, factor_degree, factor_coeffs, verbose_level);
 		if (f_v) {
 			cout << "unipoly_domain::mult after mult_mod" << endl;
 		}
@@ -725,7 +725,7 @@ void unipoly_domain::mult_easy(unipoly_object a,
 	c = (void *) rc;
 }
 
-void unipoly_domain::mult_mod(unipoly_object a,
+void unipoly_domain::mult_mod_negated(unipoly_object a,
 	unipoly_object b, unipoly_object &c,
 	int factor_polynomial_degree,
 	int *factor_polynomial_coefficients_negated,
@@ -745,10 +745,10 @@ void unipoly_domain::mult_mod(unipoly_object a,
 	int i, j;
 	
 	if (f_v) {
-		cout << "unipoly_domain::mult_mod" << endl;
+		cout << "unipoly_domain::mult_mod_negated" << endl;
 	}
 	if (f_vv) {
-		cout << "unipoly_domain::mult_mod computing ";
+		cout << "unipoly_domain::mult_mod_negated computing ";
 		print_object(ra, cout);
 		cout << " x ";
 		print_object(rb, cout);
@@ -761,7 +761,7 @@ void unipoly_domain::mult_mod(unipoly_object a,
 	}
 #if 0
 	if (!f_factorring) {
-		cout << "unipoly_domain::mult_mod not a factorring" << endl;
+		cout << "unipoly_domain::mult_mod_negated not a factorring" << endl;
 		exit(1);
 	}
 #endif
@@ -819,7 +819,7 @@ void unipoly_domain::mult_mod(unipoly_object a,
 	}
 	c = rc;
 	if (f_v) {
-		cout << "unipoly_domain::mult_mod done" << endl;
+		cout << "unipoly_domain::mult_mod_negated done" << endl;
 	}
 }
 
@@ -932,7 +932,7 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 			print_object(a, cout);
 			cout << endl;
 		}
-		mult_mod(b, a, c,
+		mult_mod_negated(b, a, c,
 				factor_polynomial_degree, ((int *)m_mod) + 1, 0);
 		if (f_vv) {
 			cout << "c = ";
@@ -3022,7 +3022,7 @@ void unipoly_domain::minimum_polynomial_extension_field(
 					"extension_field i = " << i
 					<< " before mult_mod" << endl;
 		}
-		mult_mod(g, sigma[i - 1], sigma[i],
+		mult_mod_negated(g, sigma[i - 1], sigma[i],
 				degree(mm), ((int *)mm) + 1,
 				verbose_level - 2);
 		if (f_vv) {
@@ -3044,7 +3044,7 @@ void unipoly_domain::minimum_polynomial_extension_field(
 						"extension_field i = " << i << " j = "
 						<< j << " before mult_mod" << endl;
 			}
-			mult_mod(g, sigma[j - 1], h, degree(mm), ((int *)mm) + 1, 0);
+			mult_mod_negated(g, sigma[j - 1], h, degree(mm), ((int *)mm) + 1, 0);
 			if (f_vv) {
 				cout << "unipoly_domain::minimum_polynomial_"
 						"extension_field i = " << i << " j = "

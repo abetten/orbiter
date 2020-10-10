@@ -38,7 +38,7 @@ interface_algebra::interface_algebra()
 	f_make_table_of_irreducible_polynomials = FALSE;
 	deg = 0;
 	q = 0;
-	f_make_character_table_symmetric_group = FALSE;
+	f_character_table_symmetric_group = FALSE;
 	f_make_A5_in_PSL_2_q = FALSE;
 	f_eigenstuff = FALSE;
 	f_eigenstuff_from_file = FALSE;
@@ -51,6 +51,11 @@ interface_algebra::interface_algebra()
 	f_young_symmetrizer_sym_4 = FALSE;
 	f_poset_classification_control = FALSE;
 	Control = NULL;
+	f_polynomial_division = FALSE;
+	polynomial_division_q = 0;
+	//polynomial_division_A;
+	//polynomial_division_B;
+	f_extended_gcd_for_polynomials = FALSE;
 }
 
 
@@ -78,8 +83,8 @@ void interface_algebra::print_help(int argc,
 	else if (strcmp(argv[i], "-make_table_of_irreducible_polynomials") == 0) {
 		cout << "-table_of_irreducible_polynomials <int : deg> <int : q> " << endl;
 	}
-	else if (strcmp(argv[i], "-make_character_table_symmetric_group") == 0) {
-		cout << "-make_character_table_symmetric_group <int : deg> " << endl;
+	else if (strcmp(argv[i], "-character_table_symmetric_group") == 0) {
+		cout << "-character_table_symmetric_group <int : deg> " << endl;
 	}
 	else if (strcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
 		cout << "-make_A5_in_PSL_2_q <int : q> " << endl;
@@ -98,6 +103,12 @@ void interface_algebra::print_help(int argc,
 	}
 	else if (strcmp(argv[i], "-poset_classification_control") == 0) {
 		cout << "-poset_classification_control <description>" << endl;
+	}
+	else if (strcmp(argv[i], "-polynomial_division") == 0) {
+		cout << "-polynomial_division <int : q> <string : A> <string : B>" << endl;
+	}
+	else if (strcmp(argv[i], "-extended_gcd_for_polynomials") == 0) {
+		cout << "-extended_gcd_for_polynomials <int : q> <string : A> <string : B>" << endl;
 	}
 }
 
@@ -128,7 +139,7 @@ int interface_algebra::recognize_keyword(int argc,
 	else if (strcmp(argv[i], "-make_table_of_irreducible_polynomials") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-make_character_table_symmetric_group") == 0) {
+	else if (strcmp(argv[i], "-character_table_symmetric_group") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
@@ -147,6 +158,12 @@ int interface_algebra::recognize_keyword(int argc,
 		return true;
 	}
 	else if (strcmp(argv[i], "-poset_classification_control") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-polynomial_division") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-extended_gcd_for_polynomials") == 0) {
 		return true;
 	}
 	return false;
@@ -226,10 +243,10 @@ void interface_algebra::read_arguments(int argc,
 			q = atoi(argv[++i]);
 			cout << "-make_table_of_irreducible_polynomials " << deg << " " << q << " " << endl;
 		}
-		else if (strcmp(argv[i], "-make_character_table_symmetric_group") == 0) {
-			f_make_character_table_symmetric_group = TRUE;
+		else if (strcmp(argv[i], "-character_table_symmetric_group") == 0) {
+			f_character_table_symmetric_group = TRUE;
 			deg = atoi(argv[++i]);
-			cout << "-make_character_table_symmetric_group " << deg << endl;
+			cout << "-character_table_symmetric_group " << deg << endl;
 		}
 		else if (strcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
 			f_make_A5_in_PSL_2_q = TRUE;
@@ -262,6 +279,20 @@ void interface_algebra::read_arguments(int argc,
 			f_young_symmetrizer_sym_4 = TRUE;
 			cout << "-young_symmetrizer_sym_4 " << endl;
 		}
+		else if (strcmp(argv[i], "-polynomial_division") == 0) {
+			f_polynomial_division = TRUE;
+			polynomial_division_q = atoi(argv[++i]);
+			polynomial_division_A.assign(argv[++i]);
+			polynomial_division_B.assign(argv[++i]);
+			cout << "-polynomial_division " << polynomial_division_q << " " << polynomial_division_A << " " << polynomial_division_B << endl;
+		}
+		else if (strcmp(argv[i], "-extended_gcd_for_polynomials") == 0) {
+			f_extended_gcd_for_polynomials = TRUE;
+			polynomial_division_q = atoi(argv[++i]);
+			polynomial_division_A.assign(argv[++i]);
+			polynomial_division_B.assign(argv[++i]);
+			cout << "-extended_gcd_for_polynomials " << polynomial_division_q << " " << polynomial_division_A << " " << polynomial_division_B << endl;
+		}
 	}
 }
 
@@ -288,8 +319,8 @@ void interface_algebra::worker(orbiter_session *Session, int verbose_level)
 	else if (f_make_table_of_irreducible_polynomials) {
 		do_make_table_of_irreducible_polynomials(deg, q, verbose_level);
 	}
-	else if (f_make_character_table_symmetric_group) {
-		do_make_character_table_symmetric_group(deg, verbose_level);
+	else if (f_character_table_symmetric_group) {
+		do_character_table_symmetric_group(deg, verbose_level);
 	}
 	else if (f_make_A5_in_PSL_2_q) {
 		do_make_A5_in_PSL_2_q(q, verbose_level);
@@ -310,6 +341,17 @@ void interface_algebra::worker(orbiter_session *Session, int verbose_level)
 
 		Algebra.young_symmetrizer_sym_4(verbose_level);
 	}
+	else if (f_polynomial_division) {
+		algebra_global Algebra;
+
+		Algebra.polynomial_division(polynomial_division_q, polynomial_division_A, polynomial_division_B, verbose_level);
+	}
+	else if (f_extended_gcd_for_polynomials) {
+		algebra_global Algebra;
+
+		Algebra.extended_gcd_for_polynomials(polynomial_division_q, polynomial_division_A, polynomial_division_B, verbose_level);
+	}
+
 }
 
 void interface_algebra::do_eigenstuff(
@@ -694,12 +736,12 @@ void interface_algebra::do_make_table_of_irreducible_polynomials(int deg, int q,
 	}
 }
 
-void interface_algebra::do_make_character_table_symmetric_group(int deg, int verbose_level)
+void interface_algebra::do_character_table_symmetric_group(int deg, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "interface_algebra::do_make_character_table_symmetric_group" << endl;
+		cout << "interface_algebra::do_character_table_symmetric_group" << endl;
 		cout << "deg=" << deg << endl;
 	}
 
@@ -712,7 +754,7 @@ void interface_algebra::do_make_character_table_symmetric_group(int deg, int ver
 	FREE_OBJECT(CTB);
 
 	if (f_v) {
-		cout << "interface_algebra::do_make_character_table_symmetric_group done" << endl;
+		cout << "interface_algebra::do_character_table_symmetric_group done" << endl;
 	}
 }
 
