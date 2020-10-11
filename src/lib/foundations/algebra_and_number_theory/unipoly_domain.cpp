@@ -725,6 +725,39 @@ void unipoly_domain::mult_easy(unipoly_object a,
 	c = (void *) rc;
 }
 
+void unipoly_domain::mult_mod(unipoly_object a,
+	unipoly_object b, unipoly_object &c, unipoly_object m,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "unipoly_domain::mult_mod" << endl;
+	}
+
+	int d;
+	int *factor_polynomial_coefficients_negated;
+	int i;
+
+
+	d = degree(m);
+	factor_polynomial_coefficients_negated = NEW_int(d + 1);
+	for (i = 0; i <= d; i++) {
+		factor_polynomial_coefficients_negated[i] = F->negate(s_i(m, i));
+	}
+
+	mult_mod_negated(a, b, c,
+		d,
+		factor_polynomial_coefficients_negated,
+		verbose_level);
+
+	FREE_int(factor_polynomial_coefficients_negated);
+
+	if (f_v) {
+		cout << "unipoly_domain::mult_mod done" << endl;
+	}
+}
+
 void unipoly_domain::mult_mod_negated(unipoly_object a,
 	unipoly_object b, unipoly_object &c,
 	int factor_polynomial_degree,
@@ -3301,7 +3334,44 @@ void unipoly_domain::deletion_matrix(unipoly_object *M,
 	
 }
 
+void unipoly_domain::center_lift_coordinates(unipoly_object a, int q)
+{
+	//int verbose_level = 0;
+	//int f_v = (verbose_level >= 1);
+	int *ra = (int *) a;
+	int m = ra[0];
+	int q2;
 
+	q2 = q >> 1;
+
+	int *A = ra + 1;
+	int i, x;
+
+	for (i = 0; i <= m; i++) {
+		x = A[i];
+		if (x > q2) {
+			x -= q;
+		}
+		A[i] = x;
+	}
 }
+
+void unipoly_domain::reduce_modulo_p(unipoly_object a, int p)
+{
+	//int verbose_level = 0;
+	//int f_v = (verbose_level >= 1);
+	int *ra = (int *) a;
+	int m = ra[0];
+
+	int *A = ra + 1;
+	int i, x;
+
+	for (i = 0; i <= m; i++) {
+		x = A[i];
+		A[i] = x % p;
+	}
 }
+
+
+}}
 
