@@ -193,6 +193,16 @@ public:
 			std::string &A_coeffs, std::string &B_coeffs, int verbose_level);
 	void extended_gcd_for_polynomials(int q,
 			std::string &A_coeffs, std::string &B_coeffs, int verbose_level);
+	void polynomial_mult_mod(int q,
+			std::string &A_coeffs, std::string &B_coeffs, std::string &M_coeffs,
+			int verbose_level);
+	void NTRU_encrypt(int N, int p, int q,
+			std::string &H_coeffs, std::string &R_coeffs, std::string &Msg_coeffs,
+			int verbose_level);
+	void polynomial_center_lift(std::string &A_coeffs, int q,
+			int verbose_level);
+	void polynomial_reduce_mod_p(std::string &A_coeffs, int p,
+			int verbose_level);
 
 };
 
@@ -2391,6 +2401,9 @@ public:
 	void add(unipoly_object a, unipoly_object b, unipoly_object &c);
 	void mult(unipoly_object a, unipoly_object b, unipoly_object &c, int verbose_level);
 	void mult_easy(unipoly_object a, unipoly_object b, unipoly_object &c);
+	void mult_mod(unipoly_object a,
+		unipoly_object b, unipoly_object &c, unipoly_object m,
+		int verbose_level);
 	void mult_mod_negated(unipoly_object a, unipoly_object b, unipoly_object &c,
 		int factor_polynomial_degree, 
 		int *factor_polynomial_coefficients_negated,
@@ -2481,6 +2494,8 @@ public:
 		int verbose_level);
 	void deletion_matrix(unipoly_object *M, int k, int delete_row, 
 		int delete_column, unipoly_object *&N, int verbose_level);
+	void center_lift_coordinates(unipoly_object a, int q);
+	void reduce_modulo_p(unipoly_object a, int p);
 
 };
 

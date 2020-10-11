@@ -2102,5 +2102,381 @@ void algebra_global::extended_gcd_for_polynomials(int q,
 }
 
 
+void algebra_global::polynomial_mult_mod(int q,
+		std::string &A_coeffs, std::string &B_coeffs, std::string &M_coeffs,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_mult_mod" << endl;
+	}
+
+
+	int *data_A;
+	int *data_B;
+	int *data_M;
+	int sz_A, sz_B, sz_M;
+
+	int_vec_scan(A_coeffs, data_A, sz_A);
+	int_vec_scan(B_coeffs, data_B, sz_B);
+	int_vec_scan(M_coeffs, data_M, sz_M);
+
+	finite_field *F;
+	number_theory_domain NT;
+
+	F = NEW_OBJECT(finite_field);
+	F->init(q);
+
+
+
+	unipoly_domain FX(F);
+	unipoly_object A, B, M, C;
+
+
+	int da = sz_A - 1;
+	int db = sz_B - 1;
+	int dm = sz_M - 1;
+	int i;
+
+	FX.create_object_of_degree(A, da);
+
+	for (i = 0; i <= da; i++) {
+		if (data_A[i] < 0 || data_A[i] >= q) {
+			data_A[i] = NT.mod(data_A[i], q);
+		}
+		FX.s_i(A, i) = data_A[i];
+	}
+
+	FX.create_object_of_degree(B, da);
+
+	for (i = 0; i <= db; i++) {
+		if (data_B[i] < 0 || data_B[i] >= q) {
+			data_B[i] = NT.mod(data_B[i], q);
+		}
+		FX.s_i(B, i) = data_B[i];
+	}
+
+	FX.create_object_of_degree(M, dm);
+
+	for (i = 0; i <= dm; i++) {
+		if (data_M[i] < 0 || data_M[i] >= q) {
+			data_M[i] = NT.mod(data_M[i], q);
+		}
+		FX.s_i(M, i) = data_M[i];
+	}
+
+	cout << "A(X)=";
+	FX.print_object(A, cout);
+	cout << endl;
+
+
+	cout << "B(X)=";
+	FX.print_object(B, cout);
+	cout << endl;
+
+	cout << "M(X)=";
+	FX.print_object(M, cout);
+	cout << endl;
+
+	FX.create_object_of_degree(C, da + db);
+
+
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_mult_mod before FX.mult_mod" << endl;
+	}
+
+	{
+		FX.mult_mod(A, B, C, M, verbose_level);
+	}
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_mult_mod after FX.mult_mod" << endl;
+	}
+
+	cout << "C(X)=";
+	FX.print_object(C, cout);
+	cout << endl;
+
+	cout << "deg C(X) = " << FX.degree(C) << endl;
+
+
+
+
+
+	FREE_OBJECT(F);
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_mult_mod done" << endl;
+	}
+}
+
+
+void algebra_global::NTRU_encrypt(int N, int p, int q,
+		std::string &H_coeffs, std::string &R_coeffs, std::string &Msg_coeffs,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::NTRU_encrypt" << endl;
+	}
+
+
+	int *data_H;
+	int *data_R;
+	int *data_Msg;
+	int sz_H, sz_R, sz_Msg;
+
+	int_vec_scan(H_coeffs, data_H, sz_H);
+	int_vec_scan(R_coeffs, data_R, sz_R);
+	int_vec_scan(Msg_coeffs, data_Msg, sz_Msg);
+
+	finite_field *F;
+	number_theory_domain NT;
+
+	F = NEW_OBJECT(finite_field);
+	F->init(q);
+
+
+
+	unipoly_domain FX(F);
+	unipoly_object H, R, Msg, M, C, D;
+
+
+	int dh = sz_H - 1;
+	int dr = sz_R - 1;
+	int dm = sz_Msg - 1;
+	int i;
+
+	FX.create_object_of_degree(H, dh);
+
+	for (i = 0; i <= dh; i++) {
+		if (data_H[i] < 0 || data_H[i] >= q) {
+			data_H[i] = NT.mod(data_H[i], q);
+		}
+		FX.s_i(H, i) = data_H[i];
+	}
+
+	FX.create_object_of_degree(R, dr);
+
+	for (i = 0; i <= dr; i++) {
+		if (data_R[i] < 0 || data_R[i] >= q) {
+			data_R[i] = NT.mod(data_R[i], q);
+		}
+		FX.s_i(R, i) = data_R[i];
+	}
+
+	FX.create_object_of_degree(Msg, dm);
+
+	for (i = 0; i <= dm; i++) {
+		if (data_Msg[i] < 0 || data_Msg[i] >= q) {
+			data_Msg[i] = NT.mod(data_Msg[i], q);
+		}
+		FX.s_i(Msg, i) = data_Msg[i];
+	}
+
+	FX.create_object_of_degree(M, N);
+	for (i = 0; i <= N; i++) {
+		FX.s_i(M, i) = 0;
+	}
+	FX.s_i(M, 0) = F->negate(1);
+	FX.s_i(M, N) = 1;
+
+	cout << "H(X)=";
+	FX.print_object(H, cout);
+	cout << endl;
+
+
+	cout << "R(X)=";
+	FX.print_object(R, cout);
+	cout << endl;
+
+	cout << "Msg(X)=";
+	FX.print_object(Msg, cout);
+	cout << endl;
+
+	FX.create_object_of_degree(C, dh);
+
+	FX.create_object_of_degree(D, dh);
+
+
+
+	if (f_v) {
+		cout << "algebra_global::NTRU_encrypt before FX.mult_mod" << endl;
+	}
+
+	{
+		FX.mult_mod(R, H, C, M, verbose_level);
+		int d;
+
+		d = FX.degree(C);
+
+		for (i = 0; i <= d; i++) {
+			FX.s_i(C, i) = F->mult(p, FX.s_i(C, i));
+		}
+
+		FX.add(C, Msg, D);
+
+	}
+
+	if (f_v) {
+		cout << "algebra_global::NTRU_encrypt after FX.mult_mod" << endl;
+	}
+
+	cout << "D(X)=";
+	FX.print_object(D, cout);
+	cout << endl;
+
+	cout << "deg D(X) = " << FX.degree(D) << endl;
+
+
+
+
+
+	FREE_OBJECT(F);
+
+	if (f_v) {
+		cout << "algebra_global::NTRU_encrypt done" << endl;
+	}
+}
+
+
+void algebra_global::polynomial_center_lift(std::string &A_coeffs, int q,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_center_lift" << endl;
+	}
+
+
+	int *data_A;
+	int sz_A;
+
+	int_vec_scan(A_coeffs, data_A, sz_A);
+
+	finite_field *F;
+	number_theory_domain NT;
+
+	F = NEW_OBJECT(finite_field);
+	F->init(q);
+
+
+
+	unipoly_domain FX(F);
+	unipoly_object A;
+
+
+	int da = sz_A - 1;
+	int i;
+
+	FX.create_object_of_degree(A, da);
+
+	for (i = 0; i <= da; i++) {
+		if (data_A[i] < 0 || data_A[i] >= q) {
+			data_A[i] = NT.mod(data_A[i], q);
+		}
+		FX.s_i(A, i) = data_A[i];
+	}
+
+
+	cout << "A(X)=";
+	FX.print_object(A, cout);
+	cout << endl;
+
+
+
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_center_lift before FX.mult_mod" << endl;
+	}
+
+	{
+		FX.center_lift_coordinates(A, q);
+
+	}
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_center_lift after FX.mult_mod" << endl;
+	}
+
+	cout << "A(X)=";
+	FX.print_object(A, cout);
+	cout << endl;
+
+
+
+
+
+
+	FREE_OBJECT(F);
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_center_lift done" << endl;
+	}
+}
+
+
+void algebra_global::polynomial_reduce_mod_p(std::string &A_coeffs, int p,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_reduce_mod_p" << endl;
+	}
+
+
+	int *data_A;
+	int sz_A;
+
+	int_vec_scan(A_coeffs, data_A, sz_A);
+
+	finite_field *F;
+	number_theory_domain NT;
+
+	F = NEW_OBJECT(finite_field);
+	F->init(p);
+
+
+
+	unipoly_domain FX(F);
+	unipoly_object A;
+
+
+	int da = sz_A - 1;
+	int i;
+
+	FX.create_object_of_degree(A, da);
+
+	for (i = 0; i <= da; i++) {
+		data_A[i] = NT.mod(data_A[i], p);
+		FX.s_i(A, i) = data_A[i];
+	}
+
+
+	cout << "A(X)=";
+	FX.print_object(A, cout);
+	cout << endl;
+
+
+
+
+
+
+
+	FREE_OBJECT(F);
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_reduce_mod_p done" << endl;
+	}
+}
+
+
+
+
 }}
 

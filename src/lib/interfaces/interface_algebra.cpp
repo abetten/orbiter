@@ -56,6 +56,24 @@ interface_algebra::interface_algebra()
 	//polynomial_division_A;
 	//polynomial_division_B;
 	f_extended_gcd_for_polynomials = FALSE;
+
+	f_polynomial_mult_mod = FALSE;
+	polynomial_mult_mod_q = 0;
+	//std::string polynomial_mult_mod_A;
+	//std::string polynomial_mult_mod_B;
+	//std::string polynomial_mult_mod_M;
+	f_NTRU_encrypt = FALSE;
+	NTRU_encrypt_N = 0;
+	NTRU_encrypt_p = 0;
+	NTRU_encrypt_q = 0;
+	//NTRU_encrypt_H, NTRU_encrypt_R, NTRU_encrypt_Msg
+	f_polynomial_center_lift = FALSE;
+	polynomial_center_lift_q = 0;
+	//polynomial_center_lift_A
+	f_polynomial_reduce_mod_p = FALSE;
+	polynomial_reduce_mod_p = 0;
+	//polynomial_reduce_mod_p_A;
+
 }
 
 
@@ -109,6 +127,18 @@ void interface_algebra::print_help(int argc,
 	}
 	else if (strcmp(argv[i], "-extended_gcd_for_polynomials") == 0) {
 		cout << "-extended_gcd_for_polynomials <int : q> <string : A> <string : B>" << endl;
+	}
+	else if (strcmp(argv[i], "-polynomial_mult_mod") == 0) {
+		cout << "-polynomial_mult_mod <int : q> <string : A> <string : B> <string : M>" << endl;
+	}
+	else if (strcmp(argv[i], "-NTRU_encrypt") == 0) {
+		cout << "-NTRU_encrypt <int : N> <int : p> <int : q> <string : H> <string : R> <string : Msg>" << endl;
+	}
+	else if (strcmp(argv[i], "-polynomial_center_lift") == 0) {
+		cout << "-polynomial_center_lift <int : q> <string : A>" << endl;
+	}
+	else if (strcmp(argv[i], "-polynomial_reduce_mod_p") == 0) {
+		cout << "-polynomial_reduce_mod_p <int : p> <string : A>" << endl;
 	}
 }
 
@@ -164,6 +194,18 @@ int interface_algebra::recognize_keyword(int argc,
 		return true;
 	}
 	else if (strcmp(argv[i], "-extended_gcd_for_polynomials") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-polynomial_mult_mod") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-NTRU_encrypt") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-polynomial_center_lift") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-polynomial_reduce_mod_p") == 0) {
 		return true;
 	}
 	return false;
@@ -293,6 +335,46 @@ void interface_algebra::read_arguments(int argc,
 			polynomial_division_B.assign(argv[++i]);
 			cout << "-extended_gcd_for_polynomials " << polynomial_division_q << " " << polynomial_division_A << " " << polynomial_division_B << endl;
 		}
+		else if (strcmp(argv[i], "-polynomial_mult_mod") == 0) {
+			f_polynomial_mult_mod = TRUE;
+			polynomial_mult_mod_q = atoi(argv[++i]);
+			polynomial_mult_mod_A.assign(argv[++i]);
+			polynomial_mult_mod_B.assign(argv[++i]);
+			polynomial_mult_mod_M.assign(argv[++i]);
+			cout << "-polynomial_mult_mod " << polynomial_mult_mod_q
+					<< " " << polynomial_mult_mod_A
+					<< " " << polynomial_mult_mod_B
+					<< " " << polynomial_mult_mod_M << endl;
+		}
+		else if (strcmp(argv[i], "-NTRU_encrypt") == 0) {
+			f_NTRU_encrypt = TRUE;
+			NTRU_encrypt_N = atoi(argv[++i]);
+			NTRU_encrypt_p = atoi(argv[++i]);
+			NTRU_encrypt_q = atoi(argv[++i]);
+			NTRU_encrypt_H.assign(argv[++i]);
+			NTRU_encrypt_R.assign(argv[++i]);
+			NTRU_encrypt_Msg.assign(argv[++i]);
+			cout << "-polynomial_mult_mod " << NTRU_encrypt_N
+					<< " " << NTRU_encrypt_p
+					<< " " << NTRU_encrypt_q
+					<< " " << NTRU_encrypt_H
+					<< " " << NTRU_encrypt_R
+					<< " " << NTRU_encrypt_Msg << endl;
+		}
+		else if (strcmp(argv[i], "-polynomial_center_lift") == 0) {
+			f_polynomial_center_lift = TRUE;
+			polynomial_center_lift_q = atoi(argv[++i]);
+			polynomial_center_lift_A.assign(argv[++i]);
+			cout << "-polynomial_center_lift " << polynomial_center_lift_q
+					<< " " << polynomial_center_lift_A << endl;
+		}
+		else if (strcmp(argv[i], "-polynomial_reduce_mod_p") == 0) {
+			f_polynomial_reduce_mod_p = TRUE;
+			polynomial_reduce_mod_p = atoi(argv[++i]);
+			polynomial_reduce_mod_p_A.assign(argv[++i]);
+			cout << "-polynomial_reduce_mod_p " << polynomial_reduce_mod_p
+					<< " " << polynomial_reduce_mod_p_A << endl;
+		}
 	}
 }
 
@@ -351,6 +433,31 @@ void interface_algebra::worker(orbiter_session *Session, int verbose_level)
 
 		Algebra.extended_gcd_for_polynomials(polynomial_division_q, polynomial_division_A, polynomial_division_B, verbose_level);
 	}
+
+	else if (f_polynomial_mult_mod) {
+		algebra_global Algebra;
+
+		Algebra.polynomial_mult_mod(polynomial_mult_mod_q, polynomial_mult_mod_A, polynomial_mult_mod_B, polynomial_mult_mod_M, verbose_level);
+	}
+	else if (f_NTRU_encrypt) {
+		algebra_global Algebra;
+
+		Algebra.NTRU_encrypt(NTRU_encrypt_N, NTRU_encrypt_p, NTRU_encrypt_q,
+				NTRU_encrypt_H, NTRU_encrypt_R, NTRU_encrypt_Msg,
+				verbose_level);
+	}
+	else if (f_polynomial_center_lift) {
+		algebra_global Algebra;
+
+		Algebra.polynomial_center_lift(polynomial_center_lift_A, polynomial_center_lift_q, verbose_level);
+	}
+	else if (f_polynomial_reduce_mod_p) {
+		algebra_global Algebra;
+
+		Algebra.polynomial_reduce_mod_p(polynomial_reduce_mod_p_A, polynomial_reduce_mod_p, verbose_level);
+	}
+
+
 
 }
 
