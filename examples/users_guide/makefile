@@ -21,6 +21,9 @@ test:
 #############################################################################################################
 # Section 4: Orbiter Session
 	
+	
+SESSION:
+	
 test:
 	$(ORBITER_PATH)/orbiter.out
 
@@ -31,7 +34,7 @@ test:
 #############################################################################################################
 # Section 5: Irreducible Polynomials over Finite Fields
 
-
+POLYNOMIALS:
 
 # degree and then order of the field of coefficients:
 
@@ -123,10 +126,11 @@ search_primitive_poly_32:
 
 
 
-
 #############################################################################################################
 # Section 6: Finite Fields
 
+FINITEFIELDS:
+	
 
 F_2:
 	$(ORBITER_PATH)/orbiter.out -v 3 -cheat_sheet_GF 2
@@ -193,9 +197,42 @@ F_256:
 # Section 7: Linear Algebra over Finite Fields
 
 
+LINEARALGEBRA:
+	
+	
+RREF:
+	$(ORBITER_PATH)/orbiter.out -v 2 -RREF 2 2 5 "1,1,1,1,0,1,1,0,0,1" -normalize_from_the_right
+	
+eigen:
+	$(ORBITER_PATH)/orbiter.out -v 6  -eigenstuff 4 5 "0,1,0,2,0,1,2,1,4,2,3,1,2,0,4,3"
+
+RNF_GL_3_2:
+	$(ORBITER_PATH)/orbiter.out -v 7 \
+		-all_rational_normal_forms 3 2
+	pdflatex Class_reps_GL_3_2.tex
+	open Class_reps_GL_3_2.pdf
+
+
+RNF_GL_4_2:
+	$(ORBITER_PATH)/orbiter.out -v 7 \
+		-all_rational_normal_forms 4 2
+	pdflatex Class_reps_GL_4_2.tex
+	open Class_reps_GL_4_2.pdf
+
+Char_Sym_4:
+	$(ORBITER_PATH)/orbiter.out -v 2 -character_table_symmetric_group 4
+	
+Char_Sym_5:
+	$(ORBITER_PATH)/orbiter.out -v 2 -character_table_symmetric_group 5
+	
+Char_Sym_6:
+	$(ORBITER_PATH)/orbiter.out -v 2 -character_table_symmetric_group 6
+	
+
 #############################################################################################################
 # Section 8: Finite Projective Spaces
 
+FINITEPROJECTVESPACES:
 
 PG_1_16:
 	$(ORBITER_PATH)/orbiter.out -cheat_sheet_PG 1 16
@@ -314,6 +351,8 @@ PG_4_3:
 # Section 9: Algebraic Sets
 
 
+ALGEBRAICSETS:
+
 EC1:
 	$(ORBITER_PATH)/orbiter.out -v 2 -create_combinatorial_object -q 11 -n 2 \
 		-projective_variety "EC" 3 "1,0,3,2,10,6,1,7"	-monomial_type_PART -end
@@ -355,6 +394,8 @@ octic_prepare:
 #############################################################################################################
 # Section 10: Linear Groups
 
+
+LINEARGROUPS:
 
 PGL_4_2:
 	$(ORBITER_PATH)/orbiter.out -v 2 -linear_group -PGL 4 2 -end
@@ -438,6 +479,7 @@ PG_2_4_order_21:
 # Section 11:  Group Theoretic Activities
 
 
+GROUPTHEORETICACTIVITIES:
 
 PG_2_4_singer:
 	$(ORBITER_PATH)/orbiter.out -v 5 -linear_group -PGL 3 4  -end \
@@ -604,7 +646,7 @@ normal_forms_PGL_4_4:
 
 classes_PGL_4_4:
 	$(ORBITER_PATH)/orbiter.out -v 7 \
-		-classes_GL 4 4
+		-all_rational_normal_forms 4 4
 
 
 # 252 classes
@@ -957,10 +999,10 @@ PGL_4_5_3B_class:
 
 
 eigen_3A:
-	$(ORBITER_PATH)/orbiter.out -v 6  -eigenstuff_matrix_direct 4 5 "0,1,0,2,0,1,2,1,4,2,3,1,2,0,4,3"
+	$(ORBITER_PATH)/orbiter.out -v 6  -eigenstuff 4 5 "0,1,0,2,0,1,2,1,4,2,3,1,2,0,4,3"
 	
 eigen_3B:
-	$(ORBITER_PATH)/orbiter.out -v 6  -eigenstuff_matrix_direct 4 5 "0,0,0,1,2,3,0,1,0,3,4,4,0,1,2,1"
+	$(ORBITER_PATH)/orbiter.out -v 6  -eigenstuff 4 5 "0,0,0,1,2,3,0,1,0,3,4,4,0,1,2,1"
 	
 
 # element of order 31 in PGL(4,5):
@@ -978,7 +1020,7 @@ normal_forms_PGL_4_5:
 
 
 PGL_4_5_classes:
-	$(ORBITER_PATH)/orbiter.out -v 3 -classes_GL 4 5
+	$(ORBITER_PATH)/orbiter.out -v 3 -all_rational_normal_forms 4 5
 	pdflatex Class_reps_GL_4_5.tex
 	open Class_reps_GL_4_5.pdf
 
@@ -1132,13 +1174,15 @@ Ree_27:
 # Section 12: Poset Classification
 
 
-
+POSETCLASSIFICATION:
+	
 
 #############################################################################################################
 # Section 13: Orbits on Subsets
 
 
-
+ORBITSONSUBSETS:
+	
 
 orb:
 	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -GL 2 2 -singer 1 -end  \
@@ -1166,6 +1210,9 @@ orb16:
 #############################################################################################################
 # Section 14: Orbits on Subspaces
 
+
+ORBITSONSUBSPACES:
+	
 
 subspaces_orthogonal:
 		$(ORBITER_PATH)/orbiter.out -v 5 -linear_group -PGL 4 2 -orthogonal 1 -end \
@@ -1261,7 +1308,8 @@ Op_6_11:
 # Section 15: Graph Theory
 
 
-
+GRAPHTHEORY:
+	
 
 petersen:
 	$(ORBITER_PATH)/orbiter.out -v 2 -create_graph -Johnson 5 2 0 -end \
@@ -1319,7 +1367,7 @@ small_graph_cliques_Sajeeb:
 #############################################################################################################
 # Section 16: Objects in Projective Geometry
 
-
+OBJECTSINPG:
 
 
 EC:
@@ -1407,6 +1455,8 @@ Hirschfeld16c:
 #############################################################################################################
 # Section 17: Arcs
 
+
+ARCS:
 
 
 
@@ -1802,6 +1852,8 @@ no:
 # Section 18: Cubic Surfaces
 
 
+CUBICSURFACES:
+	
 surface_7:
 	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 7 -wedge -end \
 		-group_theoretic_activities \
@@ -2014,6 +2066,7 @@ arc_lifting_32:
 	open arc_lifting_q32.pdf
 	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix surfaces_q4_decomposition_matrix.csv 20 8
 
+# 9 min 25 sec on slipslide (Oct 9, 2020)
 # 13 min 32 sec on Mac 
 # 11 surfaces, 200 nonconical 6-arcs
 
@@ -2709,13 +2762,91 @@ arc_lifting_two_lines_16_E5:
 # Section 19:  Number Theory
 
 
+NUMBERTHEORY:
+	
+
 inverse_mod:
 	$(ORBITER_PATH)/orbiter.out -v 2 -inverse_mod 18059241 58014043
 
 jacobi:
 	$(ORBITER_PATH)/orbiter.out -v 5 -jacobi 2221 7817
 
+poly_division:
+	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_division 2 "1,0,0,0,0,0,0,0,0,0,1" "1,0,1,1"
+	
+poly_gcd:
+	$(ORBITER_PATH)/orbiter.out -v 2  -extended_gcd_for_polynomials 2 "1,0,0,0,0,0,0,0,0,0,1" "1,0,1,1"
 
+NTRU_N=7
+NTRU_P=3
+NTRU_Q=41
+NTRU_D=2
+NTRUE_XN1="-1,0,0,0,0,0,0,1,"
+# D + 1 plus ones and D minus ones
+ALICE_PRIVATE_F="-1,0,1,1,-1,0,1"
+# D plus ones and D minus ones
+ALICE_PRIVATE_G="0,-1,-1,0,1,0,1"
+
+NTRU_Alice1:
+	$(ORBITER_PATH)/orbiter.out -v 2  -extended_gcd_for_polynomials $(NTRU_Q) $(NTRUE_XN1) $(ALICE_PRIVATE_F)
+
+#F_q(x) = 8X^{6} + 26X^{5} + 31X^{4} + 21X^{3} + 40X^{2} + 2X + 37
+ALICE_PRIVATE_FQ="37,2,40,21,31,26,8"
+
+
+NTRU_Alice2:
+	$(ORBITER_PATH)/orbiter.out -v 2  -extended_gcd_for_polynomials $(NTRU_P) $(NTRUE_XN1) $(ALICE_PRIVATE_F)
+
+#F_p(x) = X^{6} + 2X^{5} + X^{3} + X^{2} + X + 1
+ALICE_PRIVATE_FP="1,1,1,1,0,2,1"
+
+NTRU_Alice_public_key:
+	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_mult_mod $(NTRU_Q) $(ALICE_PRIVATE_F) $(ALICE_PRIVATE_G) $(NTRUE_XN1) 
+
+#C(X)=20X^{6} + 40X^{5} + 2X^{4} + 38X^{3} + 8X^{2} + 26X + 30
+ALICE_PUBLIC_KEY="30,26,8,38,2,40,20"
+
+BOB_MESSAGE="1,-1,1,1,0,-1"
+BOB_ONE_TIME_KEY="-1,1,0,0,0,-1,1"
+
+
+NTRU_encrypt:
+	$(ORBITER_PATH)/orbiter.out -v 2  -NTRU_encrypt $(NTRU_N) $(NTRU_P) $(NTRU_Q) $(ALICE_PUBLIC_KEY) $(BOB_ONE_TIME_KEY) $(BOB_MESSAGE) 
+
+# E(X) = 31X^{6} + 19X^{5} + 4X^{4} + 2X^{3} + 40X^{2} + 3X + 25
+BOB_E = "25,3,40,2,4,19,31"
+
+
+NTRU_decrypt1:
+	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_mult_mod $(NTRU_Q) $(ALICE_PRIVATE_F) $(BOB_E) $(NTRUE_XN1) 
+
+#C(X)=X^{6} + 10X^{5} + 33X^{4} + 40X^{3} + 40X^{2} + X + 40
+ALICE_C1="40,1,40,40,33,10,1"
+
+NTRU_decrypt2:
+	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_center_lift $(NTRU_Q) $(ALICE_C1) 
+
+#A(X)=X^{6} + 10X^{5} - 8X^{4} - X^{3} - X^{2} + X - 1
+ALICE_C2="-1,1,-1,-1,-8,10,1"
+
+NTRU_decrypt3:
+	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_reduce_mod_p $(NTRU_P) $(ALICE_C2) 
+
+#A(X)=X^{6} + X^{5} + X^{4} + 2X^{3} + 2X^{2} + X + 2
+ALICE_C3="2,1,2,2,1,1,1"
+
+NTRU_decrypt4:
+	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_mult_mod $(NTRU_P) $(ALICE_PRIVATE_FP) $(ALICE_C3) $(NTRUE_XN1) 
+
+#C(X)=2X^{5} + X^{3} + X^{2} + 2X + 1
+ALICE_C4="1,2,1,1,0,2"
+
+
+NTRU_decrypt5:
+	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_center_lift $(NTRU_P) $(ALICE_C4) 
+
+#A(X)= - X^{5} + X^{3} + X^{2} - X + 1
+#plaintext BOB_MESSAGE
 
 
 #############################################################################################################
@@ -2747,6 +2878,7 @@ EC_bsgs_decode:
 #############################################################################################################
 # Section 21: Coding Theory
 
+CODINGTHEORY:
 
 BCH15:
 	$(ORBITER_PATH)/orbiter.out -BCH 15 2 3 
@@ -2854,6 +2986,8 @@ codes_d4:
 #############################################################################################################
 # Section 22: Diophantine Systems
 
+DIOPHANT:
+	
 
 linsp7:
 	$(ORBITER_PATH)/orbiter.out -v 4 -diophant -label linsp7  \
@@ -2932,6 +3066,8 @@ linsp30_pt_distribution:
 
 #############################################################################################################
 # Section 23: Design Theory
+
+DESGNTHEORY:
 
 
 design_PG_2_3:
@@ -3279,7 +3415,8 @@ max_arc_lift:
 #############################################################################################################
 # Section 25: Spreads
 
-
+SPREADS:
+	
 
 
 spreads4:
@@ -3387,6 +3524,8 @@ line_spreads_PG5_2:
 #############################################################################################################
 # Section 26: Packings
 
+
+PACKINGS:
 
 
 packing:
@@ -4056,6 +4195,9 @@ packing_5_reg_31_prepare:
 #############################################################################################################
 # Section 27: Tikz Drawing
 
+TIKZDRAWING:
+	
+
 tikz:
 	$(ORBITER_PATH)/orbiter.out -v 12 -linear_group -PGL 4 2 -wedge_detached -end \
 		-group_theoretic_activities \
@@ -4068,6 +4210,10 @@ tikz:
 #############################################################################################################
 # Section 28: The Povray Interface
 
+
+POVRAY:
+	
+	
 cube:
 	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
 		-round 0 -nb_frames_default 30 -output_mask cube_%d_%03d.pov \
@@ -4456,7 +4602,7 @@ endrass8:
 
 #############
 
-
+LEFTOVER:
 
 no:
 			-exact_cover \
@@ -4656,4 +4802,61 @@ PGL_3_16_singer:
 		
 
 
+cubic_curves_PG_2_8:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 3 8 -end \
+		-group_theoretic_activities \
+		-classify_cubic_curves -q 8 -target_size 9 -n 3 -d 3 \
+			-poset_classification_control -problem_label cc_8 -W -depth 9 \
+				-draw_options -rad 200 -embedded -end \
+				-draw_poset \
+			-end \
+		-end
+	pdflatex Cubic_curves_q8.tex
+	open Cubic_curves_q8.pdf
+	pdflatex cc_8_tree_lvl_9.tex
+	open cc_8_tree_lvl_9.pdf
+	
+cubic_curves_PG_2_8_canon:
+	$(ORBITER_PATH)/orbiter.out -v 6 -canonical_form_PG  2 8  \
+		-input -set_of_points "2,3,28,46,51,61,40,71" -end \
+		-classification_prefix cc_8 \
+		-report \
+		-end 
 
+arcs_q8_6_3:
+	$(ORBITER_PATH)/orbiter.out -v 4 \
+		-linear_group -PGGL 3 8 -end \
+		-group_theoretic_activities \
+			-poset_classification_control -problem_label arcs_q8_d3 \
+			-W -depth 6 -recognize "0,1,2,3,35,28" -end \
+			-classify_arcs \
+				-target_size 6 \
+				-q 8 \
+				-n 3 \
+				-d 3 \
+			-end \
+		-draw_options -end \
+		-end
+		#-report \
+	#pdflatex nc_arcs_q8_d2_poset.tex
+	#open nc_arcs_q8_d2_poset.pdf
+	
+arcs_q8_8_3:
+	$(ORBITER_PATH)/orbiter.out -v 4 \
+		-linear_group -PGGL 3 8 -end \
+		-group_theoretic_activities \
+			-poset_classification_control -problem_label arcs_q8_d3 \
+			-W -depth 8  \
+				-draw_options -rad 200 -embedded -end \
+				-draw_poset \
+			-end \
+			-classify_arcs \
+				-target_size 8 \
+				-q 8 \
+				-n 3 \
+				-d 3 \
+			-end \
+		-draw_options -end \
+		-end
+	pdflatex arcs_q8_d3_tree_lvl_8.tex
+	open arcs_q8_d3_tree_lvl_8.pdf
