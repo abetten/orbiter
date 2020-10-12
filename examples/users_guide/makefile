@@ -1385,12 +1385,100 @@ EC_draw:
 
 EC_canon:
 	$(ORBITER_PATH)/orbiter.out -v 2 -canonical_form_PG  2 11 \
-		-input -file_of_points elliptic_curve_b1_c3_q11.txt -end \
+		-input -file_of_points elliptic_curve_b1_c3_q11.txt \
+		-end \
 		-classification_prefix elliptic_curve_b1_c3_q11 \
 		-report \
 		-end 
 	pdflatex elliptic_curve_b1_c3_q11_classification.tex
 	open elliptic_curve_b1_c3_q11_classification.pdf
+
+
+
+cuspidal_cubic_q8:
+	$(ORBITER_PATH)/orbiter.out -v 5 -create_combinatorial_object -q 8 -n 2 \
+		-cuspidal_cubic -end \
+		-save "./"
+
+
+cuspidal_cubic_q8_canonical:
+	$(ORBITER_PATH)/orbiter.out -v 2 -canonical_form_PG  2 8 \
+		-input -file_of_points cuspidal_cubic_8.txt \
+		-end \
+		-classification_prefix cuspidal_cubic_q8 \
+		-report \
+		-end 
+	pdflatex cuspidal_cubic_q8_classification.tex
+	open cuspidal_cubic_q8_classification.pdf
+
+
+# group of order 21:
+#1,0,0,0,1,0,0,0,1,1, 
+#1,0,0,0,6,0,0,0,7,0,
+# acting on set of size 9: 0, 2, 3, 46, 51, 71, 61, 40, 28
+
+cuspidal_group:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 3 8 \
+		-subgroup_by_generators "cuspidal_group" "21" 2 \
+		"1,0,0,0,1,0,0,0,1,1" \
+		"1,0,0,0,6,0,0,0,7,0" \
+		-end \
+		-group_theoretic_activities \
+		-print_elements_tex \
+		-draw_options -end \
+		-report
+	pdflatex PGGL_3_8_Subgroup_cuspidal_group_21_elements.tex
+	open PGGL_3_8_Subgroup_cuspidal_group_21_elements.pdf
+
+
+
+cuspidal_group_orbits:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 3 8 \
+		-subgroup_by_generators "cuspidal_group" "21" 2 \
+		"1,0,0,0,1,0,0,0,1,1" \
+		"1,0,0,0,6,0,0,0,7,0" \
+		-end \
+		-group_theoretic_activities \
+			-poset_classification_control -problem_label cuspidal_group -W -depth 6 -end \
+			-orbits_on_subsets 6 \
+			-draw_poset \
+			-draw_options -end \
+			-report
+		-end
+
+
+
+cuspidal_cubic_q8_subsets_canonical:
+	$(ORBITER_PATH)/orbiter.out -v 2 -canonical_form_PG  2 8 \
+		-input -file_of_points cuspidal_cubic_8_subsets_6.txt \
+		-end \
+		-classification_prefix cuspidal_cubic_q8 \
+		-report \
+		-end 
+	pdflatex cuspidal_cubic_q8_classification.tex
+	open cuspidal_cubic_q8_classification.pdf
+
+
+
+
+cuspidal_cubic_q16:
+	$(ORBITER_PATH)/orbiter.out -v 5 -create_combinatorial_object -q 16 -n 2 \
+		-cuspidal_cubic -end \
+		-save "./"
+
+#cuspidal_cubic_16.txt
+#cuspidal_cubic_16_subsets_6.txt
+
+cuspidal_cubic_q16_subsets_canonical:
+	$(ORBITER_PATH)/orbiter.out -v 2 -canonical_form_PG  2 8 \
+		-input -file_of_points cuspidal_cubic_16_subsets_6.txt \
+		-end \
+		-classification_prefix cuspidal_cubic_q16 \
+		-report \
+		-end 
+	pdflatex cuspidal_cubic_q16_classification.tex
+	open cuspidal_cubic_q16_classification.pdf
+
 
 
 no:
@@ -1970,6 +2058,19 @@ arc_lifting_two_lines_8_PGGL:
 		-end
 	pdflatex surfaces_arc_lifting_8.tex
 	open surfaces_arc_lifting_8.pdf
+
+
+
+arc_lifting_11:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 11 -end \
+		-group_theoretic_activities \
+		-trihedra1_control -problem_label tri1_q11 -end \
+		-trihedra2_control -problem_label tri2_q11 -end \
+		-control_six_arcs -problem_label sixarcs_q11 -end \
+		-classify_surfaces_through_arcs_and_trihedral_pairs 11 \
+		-end
+	pdflatex arc_lifting_q11.tex
+	open arc_lifting_q11.pdf
 
 
 
@@ -2758,6 +2859,32 @@ arc_lifting_two_lines_16_E5:
 
 
 
+Family_general_T1:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 8 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 2 3 3 2 -q 8 -end 
+
+Family_general_F7:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 7 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 2 3 3 4 -q 7 -end 
+
+# Fermat
+
+Family_general_7_rec:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 7 -wedge -end \
+		-group_theoretic_activities -surface_recognize -q 7 \
+		-by_coefficients "3,14,1,17,3,18,3,19" -end -end
+
+Family_general_2453:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 8 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 2 4 5 3 -q 8 -end 
+
+
 #############################################################################################################
 # Section 19:  Number Theory
 
@@ -2777,76 +2904,6 @@ poly_division:
 poly_gcd:
 	$(ORBITER_PATH)/orbiter.out -v 2  -extended_gcd_for_polynomials 2 "1,0,0,0,0,0,0,0,0,0,1" "1,0,1,1"
 
-NTRU_N=7
-NTRU_P=3
-NTRU_Q=41
-NTRU_D=2
-NTRUE_XN1="-1,0,0,0,0,0,0,1,"
-# D + 1 plus ones and D minus ones
-ALICE_PRIVATE_F="-1,0,1,1,-1,0,1"
-# D plus ones and D minus ones
-ALICE_PRIVATE_G="0,-1,-1,0,1,0,1"
-
-NTRU_Alice1:
-	$(ORBITER_PATH)/orbiter.out -v 2  -extended_gcd_for_polynomials $(NTRU_Q) $(NTRUE_XN1) $(ALICE_PRIVATE_F)
-
-#F_q(x) = 8X^{6} + 26X^{5} + 31X^{4} + 21X^{3} + 40X^{2} + 2X + 37
-ALICE_PRIVATE_FQ="37,2,40,21,31,26,8"
-
-
-NTRU_Alice2:
-	$(ORBITER_PATH)/orbiter.out -v 2  -extended_gcd_for_polynomials $(NTRU_P) $(NTRUE_XN1) $(ALICE_PRIVATE_F)
-
-#F_p(x) = X^{6} + 2X^{5} + X^{3} + X^{2} + X + 1
-ALICE_PRIVATE_FP="1,1,1,1,0,2,1"
-
-NTRU_Alice_public_key:
-	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_mult_mod $(NTRU_Q) $(ALICE_PRIVATE_F) $(ALICE_PRIVATE_G) $(NTRUE_XN1) 
-
-#C(X)=20X^{6} + 40X^{5} + 2X^{4} + 38X^{3} + 8X^{2} + 26X + 30
-ALICE_PUBLIC_KEY="30,26,8,38,2,40,20"
-
-BOB_MESSAGE="1,-1,1,1,0,-1"
-BOB_ONE_TIME_KEY="-1,1,0,0,0,-1,1"
-
-
-NTRU_encrypt:
-	$(ORBITER_PATH)/orbiter.out -v 2  -NTRU_encrypt $(NTRU_N) $(NTRU_P) $(NTRU_Q) $(ALICE_PUBLIC_KEY) $(BOB_ONE_TIME_KEY) $(BOB_MESSAGE) 
-
-# E(X) = 31X^{6} + 19X^{5} + 4X^{4} + 2X^{3} + 40X^{2} + 3X + 25
-BOB_E = "25,3,40,2,4,19,31"
-
-
-NTRU_decrypt1:
-	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_mult_mod $(NTRU_Q) $(ALICE_PRIVATE_F) $(BOB_E) $(NTRUE_XN1) 
-
-#C(X)=X^{6} + 10X^{5} + 33X^{4} + 40X^{3} + 40X^{2} + X + 40
-ALICE_C1="40,1,40,40,33,10,1"
-
-NTRU_decrypt2:
-	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_center_lift $(NTRU_Q) $(ALICE_C1) 
-
-#A(X)=X^{6} + 10X^{5} - 8X^{4} - X^{3} - X^{2} + X - 1
-ALICE_C2="-1,1,-1,-1,-8,10,1"
-
-NTRU_decrypt3:
-	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_reduce_mod_p $(NTRU_P) $(ALICE_C2) 
-
-#A(X)=X^{6} + X^{5} + X^{4} + 2X^{3} + 2X^{2} + X + 2
-ALICE_C3="2,1,2,2,1,1,1"
-
-NTRU_decrypt4:
-	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_mult_mod $(NTRU_P) $(ALICE_PRIVATE_FP) $(ALICE_C3) $(NTRUE_XN1) 
-
-#C(X)=2X^{5} + X^{3} + X^{2} + 2X + 1
-ALICE_C4="1,2,1,1,0,2"
-
-
-NTRU_decrypt5:
-	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_center_lift $(NTRU_P) $(ALICE_C4) 
-
-#A(X)= - X^{5} + X^{3} + X^{2} - X + 1
-#plaintext BOB_MESSAGE
 
 
 #############################################################################################################
@@ -2873,6 +2930,90 @@ EC_bsgs_decode:
 	$(ORBITER_PATH)/orbiter.out -v 2 -EC_bsgs_decode 199 5 7 "129,176" 212 \
 		"127,188,51,141,85,29,106,90,41,105,179,71,171,2,16,197,183,72,27,129,37,10" \
 		"50,179,169,13,153,169,115,116,188,110,176"
+
+
+
+
+
+NTRU_N=7
+NTRU_P=3
+NTRU_Q=41
+NTRU_D=2
+NTRUE_XN1="-1,0,0,0,0,0,0,1,"
+# D + 1 plus ones and D minus ones
+ALICE_PRIVATE_F="-1,0,1,1,-1,0,1"
+# D plus ones and D minus ones
+ALICE_PRIVATE_G="0,-1,-1,0,1,0,1"
+
+NTRU_Alice1:
+	$(ORBITER_PATH)/orbiter.out -v 2  -extended_gcd_for_polynomials $(NTRU_Q) $(NTRUE_XN1) $(ALICE_PRIVATE_F)
+
+#F_q(x) = 8X^{6} + 26X^{5} + 31X^{4} + 21X^{3} + 40X^{2} + 2X + 37
+ALICE_PRIVATE_FQ="37,2,40,21,31,26,8"
+
+
+NTRU_Alice2:
+	$(ORBITER_PATH)/orbiter.out -v 2  -extended_gcd_for_polynomials \
+		$(NTRU_P) $(NTRUE_XN1) $(ALICE_PRIVATE_F)
+
+#F_p(x) = X^{6} + 2X^{5} + X^{3} + X^{2} + X + 1
+ALICE_PRIVATE_FP="1,1,1,1,0,2,1"
+
+NTRU_Alice_public_key:
+	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_mult_mod $(NTRU_Q) \
+		$(ALICE_PRIVATE_F) $(ALICE_PRIVATE_G) $(NTRUE_XN1) 
+
+#C(X)=20X^{6} + 40X^{5} + 2X^{4} + 38X^{3} + 8X^{2} + 26X + 30
+ALICE_PUBLIC_KEY="30,26,8,38,2,40,20"
+
+BOB_MESSAGE="1,-1,1,1,0,-1"
+BOB_ONE_TIME_KEY="-1,1,0,0,0,-1,1"
+
+
+NTRU_encrypt:
+	$(ORBITER_PATH)/orbiter.out -v 2  -NTRU_encrypt $(NTRU_N) \
+		$(NTRU_P) $(NTRU_Q) $(ALICE_PUBLIC_KEY) \
+		$(BOB_ONE_TIME_KEY) $(BOB_MESSAGE) 
+
+# E(X) = 31X^{6} + 19X^{5} + 4X^{4} + 2X^{3} + 40X^{2} + 3X + 25
+BOB_ENCRYPT = "25,3,40,2,4,19,31"
+
+
+NTRU_decrypt1:
+	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_mult_mod $(NTRU_Q) \
+		$(ALICE_PRIVATE_F) $(BOB_ENCRYPT) $(NTRUE_XN1) 
+
+#C(X)=X^{6} + 10X^{5} + 33X^{4} + 40X^{3} + 40X^{2} + X + 40
+ALICE_C1="40,1,40,40,33,10,1"
+
+NTRU_decrypt2:
+	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_center_lift $(NTRU_Q) $(ALICE_C1) 
+
+#A(X)=X^{6} + 10X^{5} - 8X^{4} - X^{3} - X^{2} + X - 1
+ALICE_C2="-1,1,-1,-1,-8,10,1"
+
+NTRU_decrypt3:
+	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_reduce_mod_p $(NTRU_P) $(ALICE_C2) 
+
+#A(X)=X^{6} + X^{5} + X^{4} + 2X^{3} + 2X^{2} + X + 2
+ALICE_C3="2,1,2,2,1,1,1"
+
+NTRU_decrypt4:
+	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_mult_mod $(NTRU_P) \
+		$(ALICE_PRIVATE_FP) $(ALICE_C3) $(NTRUE_XN1) 
+
+#C(X)=2X^{5} + X^{3} + X^{2} + 2X + 1
+ALICE_C4="1,2,1,1,0,2"
+
+
+NTRU_decrypt5:
+	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_center_lift \
+		$(NTRU_P) $(ALICE_C4) 
+
+#A(X)= - X^{5} + X^{3} + X^{2} - X + 1
+#plaintext BOB_MESSAGE
+
+
 
 
 #############################################################################################################
@@ -2929,6 +3070,12 @@ codes_8_4_4:
 	pdflatex codes_8_4_4_poset_lvl_8.tex
 	open codes_8_4_4_poset_lvl_8.pdf
 
+codes_8_4_4_draw:
+	$(ORBITER_PATH)/orbiter.out -v 3 -draw_layered_graph codes_8_4_4_poset_lvl_8.layered_graph \
+		-rad 200 -embedded -line_width 0.3  -y_stretch 1.3 -scale 0.5 \
+		-end
+	pdflatex codes_8_4_4_poset_lvl_8_draw.tex
+	open codes_8_4_4_poset_lvl_8_draw.pdf
 
 
 
@@ -4802,19 +4949,62 @@ PGL_3_16_singer:
 		
 
 
+
+cubic_curves_PG_2_4:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 3 4 -end \
+		-group_theoretic_activities \
+		-classify_cubic_curves -q 4 -target_size 9 -n 3 -d 3 \
+			-poset_classification_control -problem_label cc_4 -W -depth 9 \
+				-draw_options -rad 200 -embedded -end \
+				-draw_poset \
+			-end \
+		-end
+	pdflatex Cubic_curves_q4.tex
+	#open Cubic_curves_q4.pdf
+	pdflatex cc_4_poset_lvl_9.tex
+	#open cc_4_poset_lvl_9.pdf
+
+cubic_curves_PG_2_4_draw:
+	$(ORBITER_PATH)/orbiter.out -v 3 -draw_layered_graph cc_4_poset_lvl_9.layered_graph \
+		-rad 200 -embedded -line_width 0.3  -y_stretch 1.3 -scale 0.5 \
+		-paths_in_between 6 4 9 0 \
+		-end
+	pdflatex cc_4_poset_lvl_9_draw.tex
+	open cc_4_poset_lvl_9_draw.pdf
+
+
 cubic_curves_PG_2_8:
 	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 3 8 -end \
 		-group_theoretic_activities \
 		-classify_cubic_curves -q 8 -target_size 9 -n 3 -d 3 \
 			-poset_classification_control -problem_label cc_8 -W -depth 9 \
 				-draw_options -rad 200 -embedded -end \
+				-recognize "0,1,2,3,35,28" \
+				-recognize "1,2,3,51,28,61,46,71,40" \
 				-draw_poset \
+				-Kramer_Mesner_matrix 6 9 \
 			-end \
 		-end
-	pdflatex Cubic_curves_q8.tex
-	open Cubic_curves_q8.pdf
-	pdflatex cc_8_tree_lvl_9.tex
-	open cc_8_tree_lvl_9.pdf
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix cc_8_KM_6_9.csv 50 3
+	#pdflatex Cubic_curves_q8.tex
+	#open Cubic_curves_q8.pdf
+	#pdflatex cc_8_tree_lvl_9.tex
+	#open cc_8_tree_lvl_9.pdf
+	
+# the 6-set is orbit 7
+# the 9-set is orbit 1
+
+
+cubic_curves_PG_2_8_draw:
+	$(ORBITER_PATH)/orbiter.out -v 3 -draw_layered_graph cc_8_poset_lvl_9.layered_graph \
+		-rad 2 -embedded -line_width 0.01  -y_stretch 1.3 -scale 0.5 \
+		-paths_in_between 6 7 9 1 \
+		-end
+	pdflatex cc_8_poset_lvl_9_draw.tex
+	open cc_8_poset_lvl_9_draw.pdf
+
+#cc_8_poset_lvl_9.layered_graph
+#cc_8_poset_detailed_lvl_9.layered_graph
 	
 cubic_curves_PG_2_8_canon:
 	$(ORBITER_PATH)/orbiter.out -v 6 -canonical_form_PG  2 8  \
@@ -4860,3 +5050,64 @@ arcs_q8_8_3:
 		-end
 	pdflatex arcs_q8_d3_tree_lvl_8.tex
 	open arcs_q8_d3_tree_lvl_8.pdf
+
+
+cuspidal_cubic_q11:
+	$(ORBITER_PATH)/orbiter.out -v 5 -create_combinatorial_object -q 11 -n 2 \
+		-cuspidal_cubic -end \
+		-save "./"
+
+
+
+
+cubic_curves_PG_2_11:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 3 11 -end \
+		-group_theoretic_activities \
+		-classify_cubic_curves -q 11 -target_size 9 -n 3 -d 3 \
+			-poset_classification_control -problem_label cc_11 -W -depth 9 \
+				-draw_options -rad 200 -embedded -end \
+				-recognize "0,1,2,3,37,47" \
+				-recognize "0, 1, 2, 3, 4, 16, 26, 88, 90" \
+				-draw_poset \
+			-end \
+		-end
+	#pdflatex Cubic_curves_q8.tex
+	#open Cubic_curves_q8.pdf
+	#pdflatex cc_8_tree_lvl_9.tex
+	#open cc_8_tree_lvl_9.pdf
+
+
+
+cubic_curves_PG_2_11_draw:
+	$(ORBITER_PATH)/orbiter.out -v 3 -draw_layered_graph cc_11_poset_lvl_9.layered_graph \
+		-rad 200 -embedded -line_width 0.3  -y_stretch 1.3 -scale 0.5 \
+		-paths_in_between 6 38 9 32307 \
+		-end
+	pdflatex cc_11_poset_lvl_9_draw.tex
+	open cc_11_poset_lvl_9_draw.pdf
+
+
+
+cuspidal_cubic_q11:
+	$(ORBITER_PATH)/orbiter.out -v 5 -create_combinatorial_object -q 11 -n 2 \
+		-cuspidal_cubic -end \
+		-save "./"
+
+#cuspidal_cubic_11_subsets_6.txt
+
+
+
+cuspidal_cubic_q11_subsets_canonical:
+	$(ORBITER_PATH)/orbiter.out -v 10 -canonical_form_PG  2 11 \
+		-input \
+			-set_of_points "0,1,2,3,37,47"  \
+			-file_of_points cuspidal_cubic_11_subsets_6.txt \
+		-end \
+		-classification_prefix cuspidal_cubic_q11 \
+		-report \
+		-end 
+	pdflatex cuspidal_cubic_q11_classification.tex
+	open cuspidal_cubic_q11_classification.pdf
+
+
+
