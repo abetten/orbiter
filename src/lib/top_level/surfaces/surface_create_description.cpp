@@ -44,6 +44,11 @@ void surface_create_description::null()
 	f_family_bes = FALSE;
 	family_bes_a = 0;
 	family_bes_c = 0;
+	f_family_general_abcd = FALSE;
+	family_general_abcd_a = 0;
+	family_general_abcd_b = 0;
+	family_general_abcd_c = 0;
+	family_general_abcd_d = 0;
 	f_arc_lifting = FALSE;
 	arc_lifting_text = NULL;
 	arc_lifting_two_lines_text = NULL;
@@ -103,6 +108,17 @@ int surface_create_description::read_arguments(int argc, const char **argv,
 			family_bes_a = atoi(argv[++i]);
 			family_bes_c = atoi(argv[++i]);
 			cout << "-family_bes " << family_bes_a << " " << family_bes_c << endl;
+		}
+		else if (strcmp(argv[i], "-family_general_abcd") == 0) {
+			f_family_general_abcd = TRUE;
+			family_general_abcd_a = atoi(argv[++i]);
+			family_general_abcd_b = atoi(argv[++i]);
+			family_general_abcd_c = atoi(argv[++i]);
+			family_general_abcd_d = atoi(argv[++i]);
+			cout << "-family_general_abcd "
+					<< family_general_abcd_a << " " << family_general_abcd_b
+					<< family_general_abcd_c << " " << family_general_abcd_d
+					<< endl;
 		}
 		else if (strcmp(argv[i], "-arc_lifting") == 0) {
 			f_arc_lifting = TRUE;

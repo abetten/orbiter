@@ -394,6 +394,7 @@ class orbiter_session;
 class data_input_stream;
 class bitvector;
 class data_structures_global;
+class graphical_output;
 
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)

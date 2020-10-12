@@ -236,8 +236,8 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 			fname, nb_pts, Pts,
 			verbose_level);
 	}
-	else if (Descr->f_cubic) {
-		F->create_cubic(
+	else if (Descr->f_cuspidal_cubic) {
+		F->create_cuspidal_cubic(
 			fname, nb_pts, Pts,
 			verbose_level);
 	}

@@ -288,6 +288,8 @@ public:
 	int mult3(int a1, int a2, int a3);
 	int product3(int a1, int a2, int a3);
 	int mult4(int a1, int a2, int a3, int a4);
+	int mult5(int a1, int a2, int a3, int a4, int a5);
+	int mult6(int a1, int a2, int a3, int a4, int a5, int a6);
 	int product4(int a1, int a2, int a3, int a4);
 	int product5(int a1, int a2, int a3, int a4, int a5);
 	int product_n(int *a, int n);
@@ -1050,7 +1052,7 @@ public:
 	void create_hermitian(int n,
 			std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
-	void create_cubic(
+	void create_cuspidal_cubic(
 			std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_twisted_cubic(

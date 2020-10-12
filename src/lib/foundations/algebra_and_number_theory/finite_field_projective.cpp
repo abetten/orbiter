@@ -3282,14 +3282,14 @@ void finite_field::create_hermitian(int n,
 	//FREE_int(L);
 }
 
-void finite_field::create_cubic(
+void finite_field::create_cuspidal_cubic(
 		std::string &fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	projective_space *P;
 	int n = 2;
-	long int i, j, a, d, s, t;
+	long int i, a, d, s, t;
 	int *v;
 	int v2[2];
 
@@ -3312,9 +3312,14 @@ void finite_field::create_cubic(
 		PG_element_unrank_modified(v2, 1, 2, i);
 		s = v2[0];
 		t = v2[1];
+		v[0] = mult(power(s, 3), power(t, 0));
+		v[1] = mult(power(s, 2), power(t, 1));
+		v[2] = mult(power(s, 0), power(t, 3));
+#if 0
 		for (j = 0; j < d; j++) {
 			v[j] = mult(power(s, n - j), power(t, j));
 		}
+#endif
 		a = P->rank_point(v);
 		Pts[i] = a;
 		if (f_v) {
@@ -3334,9 +3339,54 @@ void finite_field::create_cubic(
 #endif
 
 	char str[1000];
-	sprintf(str, "cubic_%d.txt", q);
+	sprintf(str, "cuspidal_cubic_%d.txt", q);
 	fname.assign(str);
 	//write_set_to_file(fname, L, N, verbose_level);
+
+
+	long int nCk;
+	combinatorics_domain Combi;
+	int k = 6;
+	int rk;
+	int idx[6];
+	int *subsets;
+
+	nCk = Combi.int_n_choose_k(nb_pts, k);
+	subsets = NEW_int(nCk * k);
+	for (rk = 0; rk < nCk; rk++) {
+		Combi.unrank_k_subset(rk, idx, nb_pts, k);
+		for (i = 0; i < k; i++) {
+			subsets[rk * k + i] = Pts[idx[i]];
+		}
+	}
+
+	string fname2;
+
+	sprintf(str, "cuspidal_cubic_%d_subsets_%d.txt", q, k);
+	fname2.assign(str);
+
+	{
+
+		ofstream fp(fname2);
+
+		for (rk = 0; rk < nCk; rk++) {
+			fp << k;
+			for (i = 0; i < k; i++) {
+				fp << " " << subsets[rk * k + i];
+			}
+			fp << endl;
+		}
+		fp << -1 << endl;
+
+	}
+
+	file_io Fio;
+
+	cout << "Written file " << fname2 << " of size " << Fio.file_size(fname2) << endl;
+
+
+
+
 
 	FREE_OBJECT(P);
 	FREE_int(v);

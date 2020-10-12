@@ -440,6 +440,80 @@ void surface_create::init2(int verbose_level)
 	}
 
 
+	else if (Descr->f_family_general_abcd) {
+
+		if (f_v) {
+			cout << "surface_create::init2 before Surf->create_surface_general_abcd a="
+					<< Descr->family_general_abcd_a << " b=" << Descr->family_general_abcd_b << " c="
+					<< Descr->family_general_abcd_c << " d=" << Descr->family_general_abcd_d
+					<< endl;
+		}
+
+		int nb_E = 0;
+
+		if (!Surf->create_surface_general_abcd(
+				Descr->family_general_abcd_a, Descr->family_general_abcd_b,
+				Descr->family_general_abcd_c, Descr->family_general_abcd_d,
+				coeffs,
+				Lines,
+				nb_E,
+				verbose_level)) {
+			cout << "surface_create::init2 the surface could not be created" << endl;
+			exit(1);
+		}
+
+		if (f_v) {
+			cout << "surface_create::init2 after Surf->create_surface_general_abcd" << endl;
+		}
+
+		f_has_lines = TRUE;
+
+
+
+#if 0
+		Sg = NEW_OBJECT(strong_generators);
+		//Sg->init(Surf_A->A, verbose_level);
+		if (f_v) {
+			cout << "surface_create::init2 before Sg->stabilizer_of_surface" << endl;
+		}
+		Sg->stabilizer_of_F13_surface(
+			Surf_A->A,
+			F, Descr->family_F13_a,
+			nice_gens,
+			verbose_level);
+		if (f_v) {
+			cout << "surface_create::init2 after Sg->stabilizer_of_F13_surface" << endl;
+		}
+#endif
+		f_has_group = FALSE;
+		f_has_nice_gens = TRUE;
+
+		char str_q[1000];
+		char str[1000];
+		char str2[1000];
+
+		sprintf(str_q, "%d", F->q);
+		sprintf(str, "_a%d_b%d_c%d_d%d", Descr->family_general_abcd_a, Descr->family_general_abcd_b, Descr->family_general_abcd_c, Descr->family_general_abcd_d);
+		sprintf(str2, "\\_a%d\\_b%d\\_c%d\\_d%d", Descr->family_general_abcd_a, Descr->family_general_abcd_b, Descr->family_general_abcd_c, Descr->family_general_abcd_d);
+
+
+
+		prefix.assign("family_general_abcd_q");
+		prefix.append(str_q);
+		prefix.append(str);
+
+		label_txt.assign("family_general_abcd_q");
+		label_txt.append(str_q);
+		label_txt.append(str);
+
+		label_tex.assign("family\\_general\\_abcd_\\_q");
+		label_tex.append(str_q);
+		label_tex.append(str2);
+
+
+	}
+
+
 
 	else if (Descr->f_by_coefficients) {
 

@@ -709,9 +709,15 @@ public:
 
 
 	// surface_domain_families.cpp:
+	void create_equation_general_abcd(int a, int b, int c, int d, int *coeff, int verbose_level);
 	void create_equation_bes(int a, int c, int *coeff, int verbose_level);
 	void create_equation_F13(int a, int *coeff, int verbose_level);
 	void create_equation_G13(int a, int *coeff, int verbose_level);
+	int create_surface_general_abcd(int a, int b, int c, int d,
+		int *coeff20,
+		long int *Lines27,
+		int &nb_E,
+		int verbose_level);
 	int create_surface_bes(int a, int c,
 		int *coeff20,
 		long int *Lines27,

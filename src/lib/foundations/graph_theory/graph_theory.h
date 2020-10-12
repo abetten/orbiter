@@ -485,7 +485,7 @@ public:
 
 	int f_has_distinguished_element; // refers to vec_data
 	int distinguished_element_index;
-		
+
 	int layer;
 	int neighbor_list_allocated;
 	int nb_neighbors;
@@ -517,6 +517,8 @@ public:
 	void write_memory_object(memory_object *m, int verbose_level);
 	void read_memory_object(memory_object *m, int verbose_level);
 	void allocate_tree_structure(int verbose_level);
+	int remove_neighbor(layered_graph *G, int id, int verbose_level);
+	void find_all_parents(layered_graph *G, std::vector<int> &All_Parents, int verbose_level);
 	int find_parent(layered_graph *G, int verbose_level);
 	void register_child(layered_graph *G, int id_child, int verbose_level);
 	void place_x_based_on_tree(layered_graph *G, double left, double right, 
@@ -648,6 +650,7 @@ public:
 	void init(int nb_layers, int *Nb_nodes_layer, 
 			std::string &fname_base, int verbose_level);
 	int nb_nodes();
+	void print_nb_nodes_per_level();
 	double average_word_length();
 	void place(int verbose_level);
 	void place_with_y_stretch(double y_stretch, int verbose_level);
@@ -674,6 +677,21 @@ public:
 	void read_file(std::string &fname, int verbose_level);
 	void write_memory_object(memory_object *m, int verbose_level);
 	void read_memory_object(memory_object *m, int verbose_level);
+	void remove_edges(int layer1, int node1, int layer2, int node2,
+			std::vector<std::vector<int> > &All_Paths,
+			int verbose_level);
+	void remove_edge(int layer1, int node1, int layer2, int node2,
+			int verbose_level);
+	void find_all_paths_between(int layer1, int node1, int layer2, int node2,
+			std::vector<std::vector<int> > &All_Paths,
+			int verbose_level);
+	void find_all_paths_between_recursion(
+			int layer1, int node1,
+			int layer2, int node2,
+			int l0, int n0,
+			std::vector<std::vector<int> > &All_Paths,
+			std::vector<int> &Path,
+			int verbose_level);
 	void create_spanning_tree(int f_place_x, int verbose_level);
 	void compute_depth_first_ranks(int verbose_level);
 	void set_radius_factor_for_all_nodes_at_level(int lvl, 
@@ -696,8 +714,6 @@ public:
 	int f_file;
 	const char *fname;
 
-
-
 	int xin;
 	int yin;
 	int xout;
@@ -706,9 +722,6 @@ public:
 
 	int f_spanning_tree;
 
-
-	//int xmax = 1000000;
-	//int ymax = 1000000;
 
 	int f_circle;
 	int f_corners;
@@ -719,23 +732,13 @@ public:
 	int f_label_edges;
 	int f_y_stretch;
 	double y_stretch;
-	//int f_x_stretch = FALSE;
-	//double x_stretch = 1.;
 	int f_scale;
 	double scale;
 	int f_line_width;
 	double line_width;
 	int f_rotated;
 
-#if 0
-	int xmax;
-	int ymax;
-	int x_max;
-	int y_max;
-#endif
 	
-	//int f_circle;
-	//int f_corners;
 	int f_nodes_empty;
 	int f_select_layers;
 	const char *select_layers;
@@ -753,15 +756,9 @@ public:
 	void (*draw_vertex_callback)(layered_graph *LG, mp_graphics *G, 
 		int layer, int node, int x, int y, int dx, int dy);
 	
-	//int f_show_level_info;
-	//int f_embedded;
-	//int f_sideways;
-	//int f_label_edges;
-	//int f_rotated;
-	
-
-	//double global_scale;
-	//double global_line_width;
+	int f_paths_in_between;
+	int layer1, node1;
+	int layer2, node2;
 
 	layered_graph_draw_options();
 	~layered_graph_draw_options();

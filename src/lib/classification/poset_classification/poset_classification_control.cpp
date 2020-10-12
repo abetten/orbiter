@@ -324,7 +324,7 @@ int poset_classification_control::read_arguments(
 				exit(1);
 			}
 			recognize[nb_recognize++] = argv[++i];
-			cout << "-recognize" << recognize[nb_recognize - 1] << endl;
+			cout << "-recognize " << recognize[nb_recognize - 1] << endl;
 		}
 		else if (strcmp(argv[i], "-export_schreier_trees") == 0) {
 			f_export_schreier_trees = TRUE;

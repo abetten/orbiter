@@ -139,7 +139,7 @@ public:
 
 	int f_hermitian;
 
-	int f_cubic; // twisted cubic in PG(2,q)
+	int f_cuspidal_cubic; // twisted cubic in PG(2,q)
 	int f_twisted_cubic; // twisted cubic in PG(3,q)
 
 	int f_elliptic_curve;
