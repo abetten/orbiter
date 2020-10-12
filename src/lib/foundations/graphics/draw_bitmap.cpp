@@ -283,7 +283,8 @@ std::vector<int> get_color(int bit_depth, int max_value, int loopCount, int f_in
 
 void fillBitmap(BMP &image, int i, int j, std::vector<int> color)
 {
-	// The pixel is set using its image location and stacks 3 variables (RGB) into the vector word.
+	// The pixel is set using its image
+	// location and stacks 3 variables (RGB) into the vector word.
 	image(i, j)->Red = color[0];
 	image(i, j)->Green = color[1];
 	image(i, j)->Blue = color[2];

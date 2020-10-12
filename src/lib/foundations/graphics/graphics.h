@@ -198,6 +198,27 @@ public:
 
 
 // #############################################################################
+// graphical_output.cpp
+// #############################################################################
+
+//! a catch-all class for things related to 2D graphics
+
+
+class graphical_output {
+
+private:
+
+public:
+
+	graphical_output();
+	~graphical_output();
+	void draw_layered_graph_from_file(std::string &fname,
+			layered_graph_draw_options *Opt,
+			int verbose_level);
+};
+
+
+// #############################################################################
 // mp_graphics.cpp
 // #############################################################################
 

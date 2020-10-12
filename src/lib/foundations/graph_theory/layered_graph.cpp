@@ -81,6 +81,17 @@ int layered_graph::nb_nodes()
 	return N;
 }
 
+void layered_graph::print_nb_nodes_per_level()
+{
+	int i;
+
+	cout << "layered_graph::print_nb_nodes_per_level" << endl;
+	cout << "level & number of nodes " << endl;
+	for (i = 0; i < nb_layers; i++) {
+		cout << i << " & " <<  L[i].nb_nodes << "\\\\" << endl;
+	}
+}
+
 double layered_graph::average_word_length()
 {
 	double s = 0.;
@@ -285,7 +296,7 @@ void layered_graph::add_node_data3(int l, int n, int data, int verbose_level)
 void layered_graph::draw_with_options(std::string &fname,
 		layered_graph_draw_options *O, int verbose_level)
 {
-	int f_v = TRUE;//(verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	int x_min = 0; //, x_max = 10000;
 	int y_min = 0; //, y_max = 10000;
@@ -402,8 +413,7 @@ void layered_graph::draw_with_options(std::string &fname,
 				if (L[i].nb_nodes > threshold) {
 					if (j > 0 && j < L[i].nb_nodes - 1) {
 						if (f_v) {
-							cout << "skipping node " << j
-									<< " in layer " << i << endl;
+							cout << "skipping node " << j << " in layer " << i << endl;
 						}
 						continue;
 					}
@@ -987,6 +997,165 @@ void layered_graph::read_memory_object(
 		}
 }
 
+void layered_graph::remove_edges(int layer1, int node1, int layer2, int node2,
+		std::vector<std::vector<int> > &All_Paths,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "layered_graph::remove_edges" << endl;
+		cout << "layer1 = " << layer1 << " node1=" << node1 << " layer2=" << layer2 << " node2=" << node2 << endl;
+	}
+	int l, n, j, id, l1, n1;
+	int f_found;
+	int h, d;
+
+
+	for (l = layer1; l < layer2; l++) {
+		for (n = 0; n < L[l].nb_nodes; n++) {
+			for (j = 0; j < L[l].Nodes[n].nb_neighbors; j++) {
+				id = L[l].Nodes[n].neighbor_list[j];
+				find_node_by_id(id, l1, n1);
+				if (l1 < l) {
+					continue;
+				}
+				f_found = FALSE;
+				d = layer2 - l1;
+				for (h = 0; h < All_Paths.size(); h++) {
+					if (All_Paths[h][d] == n1 && All_Paths[h][d + 1] == n) {
+						f_found = TRUE;
+						break;
+					}
+				}
+				if (!f_found) {
+					// we need to remove the edge (l,n), (l+1, n1)
+					remove_edge(l, n, l1, n1, verbose_level - 2);
+					j--;
+				}
+			}
+		}
+	}
+	if (f_v) {
+		cout << "layered_graph::remove_edges done" << endl;
+	}
+}
+
+void layered_graph::remove_edge(int layer1, int node1, int layer2, int node2,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "layered_graph::remove_edge" << endl;
+	}
+	if (!L[layer1].Nodes[node1].remove_neighbor(this, L[layer2].Nodes[node2].id, verbose_level - 2)) {
+		cout << "layered_graph::remove_edge could not remove neighbor (1)" << endl;
+		cout << "layer1 = " << layer1 << " node1=" << node1 << " layer2=" << layer2 << " node2=" << node2 << endl;
+		exit(1);
+	}
+	if (!L[layer2].Nodes[node2].remove_neighbor(this, L[layer1].Nodes[node1].id, verbose_level - 2)) {
+		cout << "layered_graph::remove_edge could not remove neighbor (2)" << endl;
+		cout << "layer1 = " << layer1 << " node1=" << node1 << " layer2=" << layer2 << " node2=" << node2 << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "layered_graph::remove_edge done" << endl;
+	}
+}
+
+void layered_graph::find_all_paths_between(int layer1, int node1, int layer2, int node2,
+		std::vector<std::vector<int> > &All_Paths,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "layered_graph::find_all_paths_between" << endl;
+		cout << "layer1 = " << layer1 << " node1=" << node1 << " layer2=" << layer2 << " node2=" << node2 << endl;
+	}
+
+	vector<int> Path;
+
+	Path.resize(layer2 - layer1 + 1);
+
+
+	find_all_paths_between_recursion(layer1, node1, layer2, node2,
+			layer2, node2,
+			All_Paths, Path,
+			verbose_level);
+
+	cout << "We found the following " << All_Paths.size()
+			<< " paths between node " << node2 << " at layer " << layer2
+			<< " and node " << node1 << " at layer " << layer1 << ":" << endl;
+
+	int i;
+
+	for (i = 0; i < All_Paths.size(); i++) {
+		cout << "path " << i << " is: ";
+
+		int_vec_print(cout, All_Paths[i]);
+
+		cout << "\\\\" << endl;
+
+	}
+	if (f_v) {
+		cout << "layered_graph::find_all_paths_between done" << endl;
+	}
+}
+
+void layered_graph::find_all_paths_between_recursion(
+		int layer1, int node1,
+		int layer2, int node2,
+		int l0, int n0,
+		std::vector<std::vector<int> > &All_Paths,
+		std::vector<int> &Path,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int id, l1, n1;
+
+	if (f_v) {
+		cout << "layered_graph::find_all_paths_between_recursion" << endl;
+		cout << "layer1 = " << layer1 << " node1=" << node1 << " layer2=" << layer2 << " node2=" << node2 << " l0=" << l0 << " n0=" << n0 << endl;
+	}
+
+	graph_node *N = &L[l0].Nodes[n0];
+
+	Path[layer2 - l0] = n0;
+
+	std::vector<int> All_Parents;
+	int i;
+
+	N->find_all_parents(this, All_Parents, verbose_level);
+	if (f_v) {
+		cout << "layered_graph::find_all_paths_between_recursion All_Parents=";
+		int_vec_print(cout, All_Parents);
+		cout << endl;
+	}
+
+	for (i = 0; i < All_Parents.size(); i++) {
+		id = All_Parents[i];
+		find_node_by_id(id, l1, n1);
+		if (l1 == layer1 && n1 == node1) {
+			Path[layer2 - l1] = n1;
+			All_Paths.push_back(Path);
+		}
+		if (l1 > layer1) {
+			find_all_paths_between_recursion(layer1, node1, layer2, node2,
+					l1, n1,
+					All_Paths, Path,
+					verbose_level);
+		}
+	}
+
+
+
+
+	if (f_v) {
+		cout << "layered_graph::find_all_paths_between_recursion done" << endl;
+	}
+}
 
 void layered_graph::create_spanning_tree(
 		int f_place_x, int verbose_level)

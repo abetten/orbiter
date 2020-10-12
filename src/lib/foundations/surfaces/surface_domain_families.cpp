@@ -17,6 +17,97 @@ namespace orbiter {
 namespace foundations {
 
 
+void surface_domain::create_equation_general_abcd(int a, int b, int c, int d, int *coeff, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "surface_domain::create_equation_general_abcd" << endl;
+	}
+
+
+	int m1 = F->negate(1);
+	int two = F->add(1, 1);
+	int four = F->add(two, two);
+
+	int amc = F->add(a, F->negate(c));
+	int bmd = F->add(b, F->negate(d));
+
+	int abc = F->mult3(a, b, c);
+	int abd = F->mult3(a, b, d);
+	int mabd = F->mult4(m1, a, b, d);
+	int macd = F->mult4(m1, a, c, d);
+	int bcd = F->mult3(b, c, d);
+	int admcb = F->add(F->mult(a, d), F->mult3(m1, c, b));
+	int A = F->add5(abc, mabd, macd, bcd, admcb);
+
+	int aac = F->mult3(a, a, c);
+	int aad = F->mult3(a, a, d);
+	int acc = F->mult3(a, c, c);
+	int bcc = F->mult3(b, c, c);
+	int B = F->add4(aac, bcc, admcb, F->negate(F->add(aad, acc)));
+
+	int aacd = F->mult4(a, a, c, d);
+	int abcc = F->mult4(a, b, c, c);
+
+	int C = F->add4(aacd, abd, bcc, F->negate(F->add3(abcc, aad, bcd)));
+
+	int D = F->add4(admcb, b, c, F->negate(F->add(a, d)));
+
+	int two_aabcd = F->mult6(two, a, a, b, c, d);
+	int abbcd = F->mult5(a, b, b, c, d);
+	int two_abccd = F->mult6(two, a, b, c, c, d);
+	int abcdd = F->mult5(a, b, c, d, d);
+
+	int aadd = F->mult4(a, a, d, d);
+	int abbc = F->mult4(a, b, b, c);
+	int acdd = F->mult4(a, c, d, d);
+	int bbcc = F->mult4(b, b, c, c);
+
+	int aabdd = F->mult5(a, a, b, d, d);
+	int two_aacdd = F->mult6(two, a, a, c, d, d);
+	int two_abbcc = F->mult6(two, a, b, b, c, c);
+	int bbccd = F->mult5(b, b, c, c, d);
+	int aabc = F->mult4(a, a, b, c);
+	int four_abcd = F->mult5(four, a, b, c, d);
+	int accd = F->mult4(a, c, c, d);
+
+	int E_plus1 = F->add5(two_aabcd, abbcd, two_abccd, abcdd, aacd);
+	int E_plus2 = F->add5(aadd, abbc, abcc, acdd, bbcc);
+	int E_plus = F->add(E_plus1, E_plus2);
+
+	cout << "E_plus1 = " << E_plus1 << endl;
+	cout << "E_plus2 = " << E_plus2 << endl;
+	cout << "E_plus = " << E_plus << endl;
+
+	int E_minus1 = F->add4(aabdd, two_aacdd, two_abbcc, bbccd);
+	int E_minus2 = F->add3(aabc, four_abcd, accd);
+	int E_minus = F->add(E_minus1, E_minus2);
+
+	int E = F->add(E_plus, F->negate(E_minus));
+
+	int_vec_zero(coeff, nb_monomials);
+
+	coeff[5] = F->mult3(m1, A, bmd);
+	coeff[16] = F->mult(A, F->add4(a, b, F->negate(c), F->negate(d)));
+	coeff[17] = F->mult(B, bmd);
+	coeff[10] = F->mult3(m1, A, admcb);
+	coeff[18] = F->mult3(m1, C, bmd);
+	coeff[8] = coeff[9] = F->mult3(m1, amc, A);
+	coeff[11] = F->mult(A, admcb);
+	coeff[14] = F->mult4(c, a, D, bmd);
+	coeff[19] = E;
+
+
+
+	if (f_v) {
+		cout << "surface_domain::create_equation_general_abcd done" << endl;
+	}
+}
+
+
+
 void surface_domain::create_equation_bes(int a, int c, int *coeff, int verbose_level)
 // bes means five in Turkish
 {
@@ -108,6 +199,60 @@ void surface_domain::create_equation_G13(int a, int *coeff, int verbose_level)
 		cout << "surface_domain::create_equation_G13 done" << endl;
 	}
 }
+
+int surface_domain::create_surface_general_abcd(int a, int b, int c, int d,
+	int *coeff20,
+	long int *Lines27,
+	int &nb_E,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_general_abcd" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_general_abcd before create_equation_general_abcd" << endl;
+	}
+	create_equation_general_abcd(a, b, c, d, coeff20, verbose_level);
+	if (f_v) {
+		cout << "surface_domain::create_surface_general_abcd after create_equation_general_abcd" << endl;
+	}
+
+	surface_object *SO;
+
+	SO = NEW_OBJECT(surface_object);
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_general_abcd before SO->init_equation" << endl;
+	}
+	if (!SO->init_equation(this, coeff20, verbose_level)) {
+		if (f_v) {
+			cout << "surface_domain::create_surface_general_abcd SO->init_equation returns FALSE, returning" << endl;
+		}
+		FREE_OBJECT(SO);
+		return FALSE;
+	}
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_general_abcd after SO->init_equation" << endl;
+	}
+
+	nb_E = SO->nb_Eckardt_points;
+
+	lint_vec_copy(SO->Lines, Lines27, 27);
+
+	FREE_OBJECT(SO);
+
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_general_abcd done" << endl;
+	}
+	return TRUE;
+}
+
+
 
 int surface_domain::create_surface_bes(int a, int c,
 	int *coeff20,

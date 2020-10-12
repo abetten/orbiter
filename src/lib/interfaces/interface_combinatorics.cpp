@@ -79,6 +79,10 @@ interface_combinatorics::interface_combinatorics()
 
 	f_create_files = FALSE;
 	Create_file_description = NULL;
+
+	f_draw_layered_graph = FALSE;
+	//draw_layered_graph_fname;
+	Layered_graph_draw_options = NULL;
 }
 
 
@@ -156,6 +160,9 @@ void interface_combinatorics::print_help(int argc,
 	}
 	else if (strcmp(argv[i], "-create_files") == 0) {
 		cout << "-create_files <description>" << endl;
+	}
+	else if (strcmp(argv[i], "-draw_layered_graph") == 0) {
+		cout << "-draw_layered_graph <string : fname> <layered_graph_options>" << endl;
 	}
 }
 
@@ -237,6 +244,9 @@ int interface_combinatorics::recognize_keyword(int argc,
 	else if (strcmp(argv[i], "-create_files") == 0) {
 		return true;
 	}
+	else if (strcmp(argv[i], "-draw_layered_graph") == 0) {
+		return true;
+	}
 	return false;
 }
 
@@ -253,7 +263,7 @@ void interface_combinatorics::read_arguments(int argc,
 			cout << "-create_combinatorial_object " << endl;
 			Combinatorial_object_description = NEW_OBJECT(combinatorial_object_description);
 			i += Combinatorial_object_description->read_arguments(argc - i - 1,
-					argv + i + 1, verbose_level) - 1;
+					argv + i + 1, verbose_level);
 			cout << "interface_combinatorics::read_arguments finished reading -create_combinatorial_object" << endl;
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
@@ -468,6 +478,20 @@ void interface_combinatorics::read_arguments(int argc,
 
 			cout << "-create_files " <<endl;
 		}
+		else if (strcmp(argv[i], "-draw_layered_graph") == 0) {
+			f_draw_layered_graph = TRUE;
+			draw_layered_graph_fname.assign(argv[++i]);
+			cout << "-draw_layered_graph " << endl;
+			Layered_graph_draw_options = NEW_OBJECT(layered_graph_draw_options);
+			i += Layered_graph_draw_options->read_arguments(argc - i - 1,
+					argv + i + 1, verbose_level);
+			cout << "interface_combinatorics::read_arguments finished reading -draw_layered_graph" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
 	}
 	cout << "interface_combinatorics::read_arguments done" << endl;
 }
@@ -589,6 +613,14 @@ void interface_combinatorics::worker(int verbose_level)
 		file_io Fio;
 
 		Fio.create_file(Create_file_description, verbose_level);
+	}
+	else if (f_draw_layered_graph) {
+		graphical_output GO;
+
+		GO.draw_layered_graph_from_file(draw_layered_graph_fname,
+				Layered_graph_draw_options,
+				verbose_level);
+
 	}
 }
 

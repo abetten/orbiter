@@ -79,7 +79,7 @@ int projective_space_object_classifier_description::read_arguments(
 			Data = NEW_OBJECT(data_input_stream);
 			i += Data->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
-			cout << "-input" << endl;
+			cout << "done rading -input" << endl;
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {

@@ -69,7 +69,8 @@ void projective_space_object_classifier::do_the_work(
 
 
 
-	cout << "projective_space_object_classifier::do_the_work We found " << CB->nb_types << " types" << endl;
+	cout << "projective_space_object_classifier::do_the_work We found "
+			<< CB->nb_types << " types" << endl;
 
 
 #if 0
@@ -556,7 +557,7 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 	cout << "projective_space_object_classifier::process_multiple_objects_from_file "
 			"processing " << SoS->nb_sets << " objects" << endl;
 
-
+	{
 	vector<long int> Ago;
 	vector<vector<int>> The_canonical_labeling;
 	int canonical_labeling_len;
@@ -861,7 +862,10 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 	if (f_v) {
 		cout << "projective_space_object_classifier::process_multiple_objects_from_file done" << endl;
 	}
-
+	}
+	if (f_v) {
+		cout << "projective_space_object_classifier::process_multiple_objects_from_file really done" << endl;
+	}
 }
 
 

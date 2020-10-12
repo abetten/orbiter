@@ -127,6 +127,7 @@ MODULES= \
 		foundations/graphics/draw_bitmap.o \
 		foundations/graphics/drawable_set_of_objects.o \
 		foundations/graphics/EasyBMP.o \
+		foundations/graphics/graphical_output.o \
 		foundations/graphics/mp_graphics.o \
 		foundations/graphics/parametric_curve_point.o \
 		foundations/graphics/parametric_curve.o \

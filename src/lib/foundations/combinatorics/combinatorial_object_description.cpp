@@ -67,7 +67,7 @@ combinatorial_object_description::combinatorial_object_description()
 
 	f_hermitian = FALSE;
 
-	f_cubic = FALSE; // twisted cubic in PG(2,q)
+	f_cuspidal_cubic = FALSE; // cuspidal cubic in PG(2,q)
 	f_twisted_cubic = FALSE; // twisted cubic in PG(3,q)
 
 	f_elliptic_curve = FALSE;
@@ -235,9 +235,9 @@ int combinatorial_object_description::read_arguments(int argc, const char **argv
 			f_hermitian = TRUE;
 			cout << "-hermitian" << endl;
 		}
-		else if (strcmp(argv[i], "-cubic") == 0) {
-			f_cubic = TRUE;
-			cout << "-cubic " << endl;
+		else if (strcmp(argv[i], "-cuspidal_cubic") == 0) {
+			f_cuspidal_cubic = TRUE;
+			cout << "-cuspidal_cubic " << endl;
 		}
 		else if (strcmp(argv[i], "-twisted_cubic") == 0) {
 			f_twisted_cubic = TRUE;

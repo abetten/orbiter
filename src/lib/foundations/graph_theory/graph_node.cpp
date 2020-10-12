@@ -257,6 +257,64 @@ void graph_node::allocate_tree_structure(int verbose_level)
 		}
 }
 
+int graph_node::remove_neighbor(layered_graph *G, int id, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+
+	if (f_v) {
+		cout << "graph_node::remove_neighbor" << endl;
+	}
+
+	for (i = 0; i < nb_neighbors; i++) {
+		if (neighbor_list[i] == id) {
+			for (j = i + 1; j < nb_neighbors; j++) {
+				neighbor_list[j - 1] = neighbor_list[j];
+			}
+			nb_neighbors--;
+			return TRUE;
+		}
+	}
+
+	if (f_v) {
+		cout << "graph_node::remove_neighbor done" << endl;
+	}
+	return FALSE;
+}
+
+void graph_node::find_all_parents(layered_graph *G, std::vector<int> &All_Parents, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, id = 0, l, n, my_layer;
+
+	if (f_v) {
+		cout << "graph_node::find_parent layer = " << layer << endl;
+	}
+
+	G->find_node_by_id(graph_node::id, my_layer, n);
+	if (f_v) {
+		cout << "graph_node::find_parent my_layer = " << my_layer << endl;
+	}
+
+	for (i = 0; i < nb_neighbors; i++) {
+		id = neighbor_list[i];
+		G->find_node_by_id(id, l, n);
+
+		if (f_v) {
+			cout << "graph_node::find_parent i=" << i << " / " << nb_neighbors
+					<< " id=" << id << " l=" << l << " n=" << n << endl;
+		}
+
+		if (l < my_layer) {
+			All_Parents.push_back(id);
+		}
+	}
+
+	if (f_v) {
+		cout << "graph_node::find_parent done" << endl;
+	}
+}
+
 int graph_node::find_parent(layered_graph *G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -223,6 +223,10 @@ class interface_combinatorics {
 	int f_create_files;
 	create_file_description *Create_file_description;
 
+	int f_draw_layered_graph;
+	std::string draw_layered_graph_fname;
+	layered_graph_draw_options *Layered_graph_draw_options;
+
 
 public:
 	interface_combinatorics();

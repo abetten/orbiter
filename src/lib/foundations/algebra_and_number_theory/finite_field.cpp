@@ -945,6 +945,29 @@ int finite_field::mult4(int a1, int a2, int a3, int a4)
 	return x;
 }
 
+int finite_field::mult5(int a1, int a2, int a3, int a4, int a5)
+{
+	int x;
+
+	x = mult(a1, a2);
+	x = mult(x, a3);
+	x = mult(x, a4);
+	x = mult(x, a5);
+	return x;
+}
+
+int finite_field::mult6(int a1, int a2, int a3, int a4, int a5, int a6)
+{
+	int x;
+
+	x = mult(a1, a2);
+	x = mult(x, a3);
+	x = mult(x, a4);
+	x = mult(x, a5);
+	x = mult(x, a6);
+	return x;
+}
+
 int finite_field::product4(int a1, int a2, int a3, int a4)
 {
 	int x;

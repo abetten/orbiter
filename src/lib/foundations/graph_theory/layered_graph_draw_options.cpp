@@ -60,6 +60,11 @@ layered_graph_draw_options::layered_graph_draw_options()
 	f_has_draw_vertex_callback = FALSE;
 	draw_vertex_callback = NULL;
 
+	f_paths_in_between = FALSE;
+	layer1 = 0;
+	node1 = 0;;
+	layer2 = 0;
+	node2 = 0;
 }
 
 layered_graph_draw_options::~layered_graph_draw_options()
@@ -160,7 +165,14 @@ int layered_graph_draw_options::read_arguments(
 			int_vec_print(cout, layer_select, nb_layer_select);
 			cout << endl;
 			}
-
+		else if (strcmp(argv[i], "-paths_in_between") == 0) {
+			f_paths_in_between = TRUE;
+			layer1 = atoi(argv[++i]);
+			node1 = atoi(argv[++i]);
+			layer2 = atoi(argv[++i]);
+			node2 = atoi(argv[++i]);
+			cout << "-paths_in_between " << layer1 << " " << node1 << " " << layer2 << " " << node2 << endl;
+		}
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;

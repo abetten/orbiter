@@ -180,7 +180,7 @@ int data_input_stream::read_arguments(
 		}
 	} // next i
 	cout << "data_input_stream::read_arguments done" << endl;
-	return i;
+	return i + 1;
 }
 
 int data_input_stream::count_number_of_objects_to_test(

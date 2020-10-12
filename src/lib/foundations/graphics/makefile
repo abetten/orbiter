@@ -10,6 +10,7 @@ MODULES = \
 	draw_bitmap.o \
 	drawable_set_of_objects.o \
 	EasyBMP.o \
+	graphical_output.o \
 	mp_graphics.o \
 	parametric_curve_point.o \
 	parametric_curve.o \
