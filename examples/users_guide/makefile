@@ -2927,6 +2927,28 @@ identify_general_abcd_q8:
 
 
 
+orbits_cubics_q2:
+	$(ORBITER_PATH)/orbiter.out -v 4 \
+		-linear_group -PGL 4 2 \
+		-end \
+		-group_theoretic_activities \
+		-orbits_on_polynomials 3 \
+		-end 
+	pdflatex poly_orbits_d3_n3_q2.tex
+	open poly_orbits_d3_n3_q2.pdf
+
+orbits_cubics_q3:
+	$(ORBITER_PATH)/orbiter.out -v 4 \
+		-linear_group -PGL 4 3 \
+		-end \
+		-group_theoretic_activities \
+		-orbits_on_polynomials 3 \
+		-end 
+	pdflatex poly_orbits_d3_n3_q3.tex
+	open poly_orbits_d3_n3_q3.pdf
+
+
+
 #############################################################################################################
 # Section 19:  Number Theory
 

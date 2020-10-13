@@ -421,6 +421,12 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 				verbose_level);
 	}
 
+	else if (Descr->f_orbits_on_polynomials) {
+		do_orbits_on_polynomials(
+				Descr->orbits_on_polynomials_degree,
+				verbose_level);
+	}
+
 
 	if (f_v) {
 		cout << "group_theoretic_activity::perform_activity done" << endl;
@@ -4618,6 +4624,28 @@ void group_theoretic_activity::do_classify_cubic_curves(
 }
 
 
+void group_theoretic_activity::do_orbits_on_polynomials(
+		int degree,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_orbits_on_polynomials" << endl;
+	}
+
+	algebra_global_with_action Algebra;
+
+
+	Algebra.orbits_on_polynomials(
+			LG,
+			degree /* degree_of_poly */,
+			verbose_level);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_orbits_on_polynomials done" << endl;
+	}
+}
 
 
 // #############################################################################

@@ -106,6 +106,11 @@ public:
 	void relative_order_vector_of_cosets(
 			action *A, strong_generators *SG,
 			vector_ge *cosets, int *&relative_order_table, int verbose_level);
+	void orbits_on_polynomials(
+			linear_group *LG,
+			int degree_of_poly,
+			int verbose_level);
+
 };
 
 
@@ -339,6 +344,9 @@ public:
 
 		int f_classify_cubic_curves;
 
+		int f_orbits_on_polynomials;
+		int orbits_on_polynomials_degree;
+
 
 	group_theoretic_activity_description();
 	~group_theoretic_activity_description();
@@ -475,6 +483,9 @@ public:
 			int verbose_level);
 	void do_classify_cubic_curves(
 			arc_generator_description *Arc_generator_description,
+			int verbose_level);
+	void do_orbits_on_polynomials(
+			int degree,
 			int verbose_level);
 
 };
