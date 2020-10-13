@@ -151,6 +151,9 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	Ovoid_classify_description = NULL;
 
 	f_classify_cubic_curves = FALSE;
+
+	f_orbits_on_polynomials = FALSE;
+	orbits_on_polynomials_degree = 0;
 }
 
 group_theoretic_activity_description::~group_theoretic_activity_description()
@@ -727,6 +730,11 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "next argument is " << argv[i] << endl;
 			}
 			cout << "-classify_cubic_curves " << endl;
+		}
+		else if (strcmp(argv[i], "-orbits_on_polynomials") == 0) {
+			f_orbits_on_polynomials = TRUE;
+			orbits_on_polynomials_degree = atoi(argv[++i]);
+			cout << "-orbits_on_polynomials " << endl;
 		}
 
 

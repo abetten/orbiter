@@ -2204,25 +2204,6 @@ void surface_classify_wedge::report_surface(
 	}
 	SO->compute_properties(verbose_level - 2);
 
-#if 0
-	if (f_v) {
-		cout << "surface_classify_wedge::report_surface "
-				"before SO->compute_tritangent_planes_by_rank" << endl;
-	}
-	SO->compute_tritangent_planes_by_rank(0 /*verbose_level*/);
-
-	if (f_v) {
-		cout << "surface_classify_wedge::report_surface "
-				"before SO->compute_Lines_in_tritangent_planes" << endl;
-	}
-	SO->compute_Lines_in_tritangent_planes(0 /*verbose_level*/);
-
-	if (f_v) {
-		cout << "surface_classify_wedge::report_surface "
-				"before SO->compute_Trihedral_pairs_as_tritangent_planes" << endl;
-	}
-	SO->compute_Trihedral_pairs_as_tritangent_planes(0 /*verbose_level*/);
-#endif
 
 	SO->SOP->print_equation(ost);
 
