@@ -286,9 +286,23 @@ void surface_object_tangent_cone::quartic(ostream &ost, int verbose_level)
 
 	cout << "surface_object_tangent_cone::quartic "
 			"before Surf->Poly2_4->enumerate_points" << endl;
-	SOA->Surf->Poly2_4->enumerate_points(tangent_quadric,
-			Pts_on_tangent_quadric, nb_pts_on_tangent_quadric,
-			0 /* verbose_level */);
+
+	{
+		vector<long int> Points;
+		int h;
+
+		SOA->Surf->Poly2_4->enumerate_points(tangent_quadric,
+				Points,
+				0 /* verbose_level */);
+
+		nb_pts_on_tangent_quadric = Points.size();
+
+		for (h = 0; h < nb_pts_on_tangent_quadric; h++) {
+			Pts_on_tangent_quadric[h] = Points[h];
+		}
+	}
+
+
 	cout << "We found " << nb_pts_on_tangent_quadric
 			<< " points on the tangent quadric." << endl;
 
@@ -384,8 +398,18 @@ void surface_object_tangent_cone::quartic(ostream &ost, int verbose_level)
 
 	cout << "surface_object_tangent_cone::quartic before "
 			"Surf->Poly4_x123->enumerate_points" << endl;
-	SOA->Surf->Poly4_x123->enumerate_points(curve, Pts_on_curve,
-			sz_curve, 0 /* verbose_level */);
+
+	vector<long int> Points;
+	int h;
+
+	SOA->Surf->Poly4_x123->enumerate_points(curve, Points, 0 /* verbose_level */);
+
+	sz_curve = Points.size();
+	for (h = 0; h < nb_pts_on_tangent_quadric; h++) {
+		Pts_on_curve[h] = Points[h];
+	}
+
+
 	cout << "We found " << sz_curve
 			<< " points on the quartic quadric." << endl;
 
@@ -499,7 +523,7 @@ void surface_object_tangent_cone::compute_quartic(int pt_orbit,
 	v[3] = 0;
 	pt_B = SOA->Surf->rank_point(v);
 	i = SOA->Orbits_on_points_not_on_lines->orbit[0];
-	pt_A = SOA->SO->Pts_not_on_lines[i];
+	pt_A = SOA->SO->SOP->Pts_not_on_lines[i];
 
 	cout << "surface_object_tangent_cone::compute_quartic "
 			"pt_A = " << pt_A << " pt_B=" << pt_B << endl;
@@ -702,9 +726,26 @@ void surface_object_tangent_cone::cheat_sheet_quartic_curve(
 
 	cout << "surface_object_tangent_cone::cheat_sheet_quartic_curve "
 			"before Surf->Poly2_4->enumerate_points" << endl;
-	SOA->Surf->Poly2_4->enumerate_points(tangent_quadric,
-			Pts_on_tangent_quadric, nb_pts_on_tangent_quadric,
-			0 /* verbose_level */);
+
+
+
+
+	{
+		vector<long int> Points;
+		int h;
+
+		SOA->Surf->Poly2_4->enumerate_points(tangent_quadric,
+				Points,
+				0 /* verbose_level */);
+
+		nb_pts_on_tangent_quadric = Points.size();
+
+		for (h = 0; h < nb_pts_on_tangent_quadric; h++) {
+			Pts_on_tangent_quadric[h] = Points[h];
+		}
+	}
+
+
 	cout << "We found " << nb_pts_on_tangent_quadric
 			<< " points on the tangent quadric." << endl;
 
@@ -765,8 +806,20 @@ void surface_object_tangent_cone::cheat_sheet_quartic_curve(
 
 	cout << "surface_object_tangent_cone::cheat_sheet_quartic_curve "
 			"before Surf->Poly4_x123->enumerate_points" << endl;
-	SOA->Surf->Poly4_x123->enumerate_points(curve,
-			Pts_on_curve, sz_curve, 0 /* verbose_level */);
+
+
+
+	vector<long int> Points;
+	int h;
+
+	SOA->Surf->Poly4_x123->enumerate_points(curve, Points, 0 /* verbose_level */);
+
+	sz_curve = Points.size();
+	for (h = 0; h < nb_pts_on_tangent_quadric; h++) {
+		Pts_on_curve[h] = Points[h];
+	}
+
+
 	cout << "We found " << sz_curve << " points on "
 			"the quartic quadric." << endl;
 

@@ -280,6 +280,7 @@ public:
 	int f_surface_identify_HCV;
 	int f_surface_identify_F13;
 	int f_surface_identify_Bes;
+	int f_surface_identify_general_abcd;
 	int f_surface_isomorphism_testing;
 		surface_create_description *surface_descr_isomorph1;
 		surface_create_description *surface_descr_isomorph2;
@@ -429,6 +430,7 @@ public:
 	void do_surface_identify_HCV(int verbose_level);
 	void do_surface_identify_F13(int verbose_level);
 	void do_surface_identify_Bes(int verbose_level);
+	void do_surface_identify_general_abcd(int verbose_level);
 	void do_surface_isomorphism_testing(
 			surface_create_description *surface_descr_isomorph1,
 			surface_create_description *surface_descr_isomorph2,

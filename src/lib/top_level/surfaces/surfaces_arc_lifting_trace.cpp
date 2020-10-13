@@ -365,7 +365,7 @@ void surfaces_arc_lifting_trace::move_plane_and_arc(long int *P6a, int verbose_l
 
 	int i;
 
-	The_case.tritangent_plane_rk = Up->D->SO->Tritangent_plane_rk[Up->tritangent_plane_idx];
+	The_case.tritangent_plane_rk = Up->D->SO->SOP->Tritangent_plane_rk[Up->tritangent_plane_idx];
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting_upstep::move_plane_and_arc" << endl;

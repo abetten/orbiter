@@ -109,7 +109,7 @@ void surface_clebsch_map::report(std::ostream &ost, int verbose_level)
 	lint_vec_print(ost, Blown_up_lines, 6);
 	ost << "\\\\" << endl;
 
-	SOA->SO->clebsch_map_latex(ost, Clebsch_map, Clebsch_coeff);
+	SOA->SO->SOP->clebsch_map_latex(ost, Clebsch_map, Clebsch_coeff);
 
 }
 
@@ -193,7 +193,7 @@ void surface_clebsch_map::init(surface_object_with_action *SOA, int orbit_idx, i
 	//plane_rk_global = SOA->SO->Tritangent_planes[
 	//		SOA->SO->Eckardt_to_Tritangent_plane[plane_rk]];
 
-	plane_rk_global = SOA->SO->Tritangent_plane_rk[plane_rk];
+	plane_rk_global = SOA->SO->SOP->Tritangent_plane_rk[plane_rk];
 
 	if (f_v) {
 		cout << "surface_with_action::arc_lifting_and_classify "
@@ -228,7 +228,7 @@ void surface_clebsch_map::init(surface_object_with_action *SOA, int orbit_idx, i
 	if (f_v) {
 		cout << "surface_clebsch_map::init "
 				"Lines with points on them:" << endl;
-		SOA->SO->print_lines_with_points_on_them(cout);
+		SOA->SO->SOP->print_lines_with_points_on_them(cout);
 		cout << "The half double six is no " << k
 				<< "$ = " << SOA->Surf->Half_double_six_label_tex[k]
 				<< "$ : $";
@@ -309,7 +309,7 @@ void surface_clebsch_map::init(surface_object_with_action *SOA, int orbit_idx, i
 			<< line2 << " = " << SOA->Surf->Line_label_tex[line2]
 			<< " before clebsch_map_print_fibers:" << endl;
 	}
-	SOA->SO->clebsch_map_print_fibers(Clebsch_map);
+	SOA->SO->SOP->clebsch_map_print_fibers(Clebsch_map);
 
 	if (f_v) {
 		cout << "clebsch map for lines " << line1
@@ -318,7 +318,7 @@ void surface_clebsch_map::init(surface_object_with_action *SOA, int orbit_idx, i
 			<< "  before clebsch_map_find_arc_and_lines:" << endl;
 	}
 
-	SOA->SO->clebsch_map_find_arc_and_lines(Clebsch_map,
+	SOA->SO->SOP->clebsch_map_find_arc_and_lines(Clebsch_map,
 			Arc, Blown_up_lines, 0 /* verbose_level */);
 
 

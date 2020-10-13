@@ -136,10 +136,10 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 
 	if (f_v) {
 		cout << "surface_create_by_arc_lifting::init "
-				"before SOA->init" << endl;
+				"before SOA->init_with_27_lines" << endl;
 	}
 
-	SOA->init(SCA->Surf_A,
+	SOA->init_with_27_lines(SCA->Surf_A,
 		AL->Web->Lines27, AL->the_equation,
 		AL->Trihedral_pair->Aut_gens,
 		FALSE /* f_find_double_six_and_rearrange_lines */,
@@ -147,7 +147,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 		verbose_level);
 	if (f_v) {
 		cout << "surface_create_by_arc_lifting::init "
-				"after SOA->init" << endl;
+				"after SOA->init_with_27_lines" << endl;
 	}
 
 
@@ -292,7 +292,7 @@ void surface_create_by_arc_lifting::report_summary(std::ostream &ost, int verbos
 		cout << "surface_create_by_arc_lifting::report_summary "
 				"before SOA->SO->print_Eckardt_points" << endl;
 	}
-	SOA->SO->print_Eckardt_points(ost);
+	SOA->SO->SOP->print_Eckardt_points(ost);
 	if (f_v) {
 		cout << "surface_create_by_arc_lifting::report_summary "
 				"after SOA->SO->print_Eckardt_points" << endl;
@@ -375,7 +375,7 @@ void surface_create_by_arc_lifting::report(std::ostream &ost, int verbose_level)
 		cout << "surface_create_by_arc_lifting::report "
 				"before report_properties" << endl;
 	}
-	SOA->SO->report_properties(ost, verbose_level);
+	SOA->SO->SOP->report_properties(ost, verbose_level);
 	if (f_v) {
 		cout << "surface_create_by_arc_lifting::report "
 				"after report_properties" << endl;

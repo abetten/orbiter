@@ -16,6 +16,7 @@ MODULES = \
 	surface_domain_lines.o \
 	surface_domain.o \
 	surface_domain2.o \
+	surface_object_properties.o \
 	surface_object.o \
 	web_of_cubic_curves.o 
 

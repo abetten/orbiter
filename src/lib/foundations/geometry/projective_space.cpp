@@ -3185,8 +3185,10 @@ void projective_space::line_intersection_type_through_hyperplane(
 		}
 }
 
-void projective_space::find_secant_lines(long int *set, int set_size,
-	long int *lines, int &nb_lines, int max_lines, int verbose_level)
+void projective_space::find_secant_lines(
+		long int *set, int set_size,
+		long int *lines, int &nb_lines, int max_lines,
+		int verbose_level)
 // finds the secant lines as an ordered set (secant variety).
 // this is done by looping over all pairs of points and creating the
 // line that is spanned by the two points.
@@ -3221,7 +3223,6 @@ void projective_space::find_secant_lines(long int *set, int set_size,
 				lines[idx] = rk;
 				nb_lines++;
 				}
-			//lines[nb_lines++] = rk;
 			}
 		}
 	FREE_int(M);
@@ -3231,11 +3232,12 @@ void projective_space::find_secant_lines(long int *set, int set_size,
 }
 
 void projective_space::find_lines_which_are_contained(
-	long int *set, int set_size,
-	long int *lines, int &nb_lines, int max_lines,
+		std::vector<long int> &Points,
+		std::vector<long int> &Lines,
+	//long int *set, int set_size,
+	//long int *lines, int &nb_lines, int max_lines,
 	int verbose_level)
 // finds all lines which are completely contained in the set of points
-// given in set[set_size].
 // First, finds all lines in the set which lie
 // in the hyperplane x_d = 0.
 // Then finds all remaining lines.
@@ -3258,30 +3260,30 @@ void projective_space::find_lines_which_are_contained(
 
 	if (f_v) {
 		cout << "projective_space::find_lines_which_are_contained "
-				"set_size=" << set_size << endl;
-		}
-	nb_lines = 0;
+				"set_size=" << Points.size() << endl;
+	}
+	//nb_lines = 0;
 	d = n + 1;
 	M = NEW_int(3 * d);
 	M2 = NEW_int(3 * d);
-	set1 = NEW_lint(set_size);
-	set2 = NEW_lint(set_size);
+	set1 = NEW_lint(Points.size());
+	set2 = NEW_lint(Points.size());
 	sz1 = 0;
 	sz2 = 0;
-	for (i = 0; i < set_size; i++) {
-		unrank_point(M, set[i]);
+	for (i = 0; i < Points.size(); i++) {
+		unrank_point(M, Points[i]);
 		if (f_vv) {
-			cout << set[i] << " : ";
+			cout << Points[i] << " : ";
 			int_vec_print(cout, M, d);
 			cout << endl;
-			}
-		if (M[d - 1] == 0) {
-			set1[sz1++] = set[i];
-			}
-		else {
-			set2[sz2++] = set[i];
-			}
 		}
+		if (M[d - 1] == 0) {
+			set1[sz1++] = Points[i];
+		}
+		else {
+			set2[sz2++] = Points[i];
+		}
+	}
 
 	// set1 is the set of points whose last coordinate is zero.
 	// set2 is the set of points whose last coordinate is nonzero.
@@ -3291,7 +3293,7 @@ void projective_space::find_lines_which_are_contained(
 	if (f_vv) {
 		cout << "projective_space::find_lines_which_are_contained "
 				"sz1=" << sz1 << " sz2=" << sz2 << endl;
-		}
+	}
 	
 
 	// find all secants in the hyperplane:
@@ -3302,20 +3304,32 @@ void projective_space::find_lines_which_are_contained(
 	// n2 is an upper bound on the number of secant lines
 
 	secants = NEW_lint(n2);
+
+
+	if (f_v) {
+		cout << "projective_space::find_lines_which_are_contained "
+				"before find_secant_lines" << endl;
+	}
+
 	find_secant_lines(set1, sz1,
-			secants, nb_secants,
-			n2,
+			secants, nb_secants, n2,
 			verbose_level);
+
+	if (f_v) {
+		cout << "projective_space::find_lines_which_are_contained "
+				"after find_secant_lines" << endl;
+	}
+
 	if (f_vv) {
 		cout << "projective_space::find_lines_which_are_contained "
-				"we found " << nb_lines
+				"we found " << nb_secants
 				<< " secants in the hyperplane" << endl;
-		}
+	}
 
 	// first we test the secants and
 	// find those which are lines on the surface:
 
-	nb_lines = 0;
+	//nb_lines = 0;
 	for (i = 0; i < nb_secants; i++) {
 		rk = secants[i];
 		Grass_lines->unrank_lint_here(M, rk, 0 /* verbose_level */);
@@ -3323,7 +3337,7 @@ void projective_space::find_lines_which_are_contained(
 			cout << "testing secant " << i << " / " << nb_secants
 					<< " which is line " << rk << ":" << endl;
 			int_matrix_print(M, 2, d);
-			}
+		}
 
 		int coeffs[2];
 
@@ -3341,30 +3355,34 @@ void projective_space::find_lines_which_are_contained(
 				M2[2 * d + h] = F->add(
 						F->mult(coeffs[0], M2[0 * d + h]),
 						F->mult(coeffs[1], M2[1 * d + h]));
-				}
+			}
 
 			// rank the test point and see
 			// if it belongs to the surface:
 			F->PG_element_rank_modified_lint(M2 + 2 * d, 1, d, b);
 			if (!Sorting.lint_vec_search(set1, sz1, b, idx, 0)) {
 				break;
-				}
 			}
+		}
 		if (a == q + 1) {
 			// all q + 1 points of the secant line
 			// belong to the surface, so we
 			// found a line on the surface in the hyperplane.
-			lines[nb_lines++] = rk;
+			//lines[nb_lines++] = rk;
+			if (f_vv) {
+				cout << "secant " << i << " / " << nb_secants << " of rank " << rk << " is contained, adding" << endl;
 			}
+			Lines.push_back(rk);
 		}
+	}
 	FREE_lint(secants);
 
 	if (f_v) {
 		cout << "projective_space::find_lines_which_are_contained "
-				"We found " << nb_lines << " in the hyperplane" << endl;
-		lint_vec_print(cout, lines, nb_lines);
+				"We found " << Lines.size() << " in the hyperplane" << endl;
+		//lint_vec_print(cout, lines, nb_lines);
 		cout << endl;
-		}
+	}
 	
 	
 
@@ -3373,10 +3391,10 @@ void projective_space::find_lines_which_are_contained(
 	
 	for (i = 0; i < sz1; i++) {
 		unrank_point(Pts1 + i * d, set1[i]);
-		}
+	}
 	for (i = 0; i < sz2; i++) {
 		unrank_point(Pts2 + i * d, set2[i]);
-		}
+	}
 
 	f_taken = NEW_int(sz2);
 	for (i = 0; i < sz1; i++) {
@@ -3384,7 +3402,7 @@ void projective_space::find_lines_which_are_contained(
 			cout << "projective_space::find_lines_which_are_contained "
 					"checking lines through hyperplane point " << i
 					<< " / " << sz1 << ":" << endl;
-			}
+		}
 
 		// consider a point P1 on the surface and in the hyperplane
 
@@ -3392,12 +3410,11 @@ void projective_space::find_lines_which_are_contained(
 		for (j = 0; j < sz2; j++) {
 			if (f_taken[j]) {
 				continue;
-				}
+			}
 			if (f_vv) {
 				cout << "projective_space::find_lines_which_are_contained "
-						"i=" << i << " j=" << j << " / "
-						<< sz2 << ":" << endl;
-				}
+						"i=" << i << " j=" << j << " / " << sz2 << ":" << endl;
+			}
 
 			// consider a point P2 on the surface
 			// but not in the hyperplane:
@@ -3409,13 +3426,13 @@ void projective_space::find_lines_which_are_contained(
 
 			if (f_vv) {
 				int_matrix_print(M, 2, d);
-				}
+			}
 
 			rk = Grass_lines->rank_lint_here(M, 0 /* verbose_level */);
 			if (f_vv) {
 				cout << "projective_space::find_lines_which_are_contained "
 						"line rk=" << rk << ":" << endl;
-				}
+			}
 
 			// test the q-1 points on the line through the P1 and P2
 			// (but excluding P1 and P2 themselves):
@@ -3428,47 +3445,54 @@ void projective_space::find_lines_which_are_contained(
 						F->add(
 								M2[0 * d + h],
 								F->mult(a, M2[1 * d + h]));
-					}
+				}
 				// row 2 of M2 contains the coordinates of the point P3:
 				F->PG_element_rank_modified_lint(M2 + 2 * d, 1, d, b);
 				if (!Sorting.lint_vec_search(set2, sz2, b, idx, 0)) {
 					break;
-					}
+				}
 				else {
 					if (f_vv) {
 						cout << "eliminating point " << idx << endl;
-						}
+					}
 					// we don't need to consider this point for P2:
 					f_taken[idx] = TRUE;
-					}
 				}
+			}
 			if (a == q) {
 				// The line P1P2 is contained in the surface.
 				// Add it to lines[]
+#if 0
 				if (nb_lines == max_lines) {
 					cout << "projective_space::find_lines_which_are_"
 							"contained nb_lines == max_lines" << endl;
 					exit(1);
-					}
+				}
+#endif
+				//lines[nb_lines++] = rk;
 				if (f_v) {
 					cout << "adding line " << rk << " nb_lines="
-							<< nb_lines << endl;
-					}
-				lines[nb_lines++] = rk;
+							<< Lines.size() << endl;
+				}
+				Lines.push_back(rk);
+				if (f_v) {
+					cout << "adding line " << rk << " nb_lines="
+							<< Lines.size() << " done" << endl;
 				}
 			}
 		}
+	}
 	FREE_int(M);
 	FREE_int(M2);
 	FREE_lint(set1);
 	FREE_lint(set2);
 	FREE_int(Pts1);
 	FREE_int(Pts2);
+	FREE_int(f_taken);
 
 	if (f_v) {
-		cout << "projective_space::find_lines_which_are_"
-				"contained done" << endl;
-		}
+		cout << "projective_space::find_lines_which_are_contained done" << endl;
+	}
 }
 
 

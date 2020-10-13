@@ -1104,25 +1104,33 @@ void homogeneous_polynomial_domain::polynomial_function(int *coeff, int *f, int 
 	}
 }
 void homogeneous_polynomial_domain::enumerate_points(int *coeff,
-		long int *Pts, int &nb_pts, int verbose_level)
+		std::vector<long int> &Pts,
+		//long int *Pts, int &nb_pts,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	long int rk, a;
+	int f_vv = (verbose_level >= 2);
+	long int rk;
+	int a;
 
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::enumerate_points "
-				"P->N_points=" << P->N_points << endl;
+		cout << "homogeneous_polynomial_domain::enumerate_points" << endl;
+	}
+	if (f_vv) {
+		cout << "homogeneous_polynomial_domain::enumerate_points P->N_points=" << P->N_points << endl;
+#if 0
 		print_equation_with_line_breaks_tex(cout,
 				coeff, 8 /* nb_terms_per_line*/,
 				"\\\\\n");
 		cout << endl;
+#endif
 	}
-	nb_pts = 0;
+	//nb_pts = 0;
 	for (rk = 0; rk < P->N_points; rk++) {
 		unrank_point(v, rk);
 		a = evaluate_at_a_point(coeff, v);
 		if (a == 0) {
-			Pts[nb_pts++] = rk;
+			Pts.push_back(rk);
 		}
 	}
 
@@ -1839,20 +1847,21 @@ void HPD_callback_print_function2(
 
 	int *coeff;
 	int *i_data = (int *) data;
-	long int *Pts;
-	int nb_pts;
+	//long int *Pts;
+	//int nb_pts;
+	vector<long int> Points;
 
-	Pts = NEW_lint(HPD->get_P()->N_points);
+	//Pts = NEW_lint(HPD->get_P()->N_points);
 	coeff = NEW_int(HPD->get_nb_monomials());
 	HPD->unrank_coeff_vector(coeff, i_data[0]);
-	HPD->enumerate_points(coeff, Pts, nb_pts,  0 /*verbose_level*/);
-	ost << nb_pts;
+	HPD->enumerate_points(coeff, Points,  0 /*verbose_level*/);
+	ost << Points.size();
 	//int_vec_print(cout, coeff, HPD->nb_monomials);
 	//cout << " = ";
 	//HPD->print_equation_str(ost, coeff);
 	//ost << endl;
 	FREE_int(coeff);
-	FREE_lint(Pts);
+	//FREE_lint(Pts);
 }
 
 

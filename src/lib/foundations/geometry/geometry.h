@@ -2218,11 +2218,14 @@ public:
 		long int *set, int set_size,
 		int *type, int verbose_level);
 		// type[N_lines]
-	void find_secant_lines(long int *set, int set_size, long int *lines,
-		int &nb_lines, int max_lines, int verbose_level);
-	void find_lines_which_are_contained(long int *set, int set_size,
-		long int *lines, int &nb_lines, int max_lines,
-		int verbose_level);
+	void find_secant_lines(
+			long int *set, int set_size,
+			long int *lines, int &nb_lines, int max_lines,
+			int verbose_level);
+	void find_lines_which_are_contained(
+			std::vector<long int> &Points,
+			std::vector<long int> &Lines,
+			int verbose_level);
 	void plane_intersection_type_basic(long int *set, int set_size,
 		int *type, int verbose_level);
 		// type[N_planes]
@@ -2244,8 +2247,9 @@ public:
 	void find_tangent_lines(long int *set, int set_size,
 		long int *tangent_lines, int &nb_tangent_lines,
 		int verbose_level);
-	void find_secant_lines(long int *set, int set_size,
-		long int *secant_lines, int &nb_secant_lines,
+	void find_secant_lines(
+			long int *set, int set_size,
+			long int *secant_lines, int &nb_secant_lines,
 		int verbose_level);
 	void find_k_secant_lines(long int *set, int set_size, int k,
 		long int *secant_lines, int &nb_secant_lines,

@@ -168,6 +168,7 @@ MODULES= \
 		foundations/surfaces/surface_domain_lines.o \
 		foundations/surfaces/surface_domain.o \
 		foundations/surfaces/surface_domain2.o \
+		foundations/surfaces/surface_object_properties.o \
 		foundations/surfaces/surface_object.o \
 		foundations/surfaces/web_of_cubic_curves.o \
 		foundations/BitSet/bitset.o	\

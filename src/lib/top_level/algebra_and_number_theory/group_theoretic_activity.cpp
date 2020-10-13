@@ -248,6 +248,9 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	else if (Descr->f_surface_identify_Bes) {
 		do_surface_identify_Bes(verbose_level);
 	}
+	else if (Descr->f_surface_identify_general_abcd) {
+		do_surface_identify_general_abcd(verbose_level);
+	}
 	else if (Descr->f_surface_isomorphism_testing) {
 		do_surface_isomorphism_testing(
 				Descr->surface_descr_isomorph1,
@@ -3045,12 +3048,12 @@ void group_theoretic_activity::do_surface_identify_Bes(int verbose_level)
 
 	if (f_v) {
 		cout << "group_theoretic_activity::do_surface_identify_Bes "
-				"before SCW->identify_HCV_and_print_table" << endl;
+				"before SCW->identify_Bes_and_print_table" << endl;
 	}
 	SCW->identify_Bes_and_print_table(verbose_level);
 	if (f_v) {
 		cout << "group_theoretic_activity::do_surface_identify_Bes "
-				"after SCW->identify_HCV_and_print_table" << endl;
+				"after SCW->identify_Bes_and_print_table" << endl;
 	}
 
 
@@ -3059,6 +3062,63 @@ void group_theoretic_activity::do_surface_identify_Bes(int verbose_level)
 	FREE_OBJECT(Surf);
 	if (f_v) {
 		cout << "group_theoretic_activity::do_surface_identify_Bes done" << endl;
+	}
+}
+
+void group_theoretic_activity::do_surface_identify_general_abcd(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_surface_identify_general_abcd" << endl;
+	}
+
+	algebra_global_with_action Algebra;
+	surface_domain *Surf;
+	surface_with_action *Surf_A;
+	surface_classify_wedge *SCW;
+	poset_classification_control *Control;
+
+	if (Descr->f_poset_classification_control) {
+		Control = Descr->Control;
+	}
+	else {
+		Control = NEW_OBJECT(poset_classification_control);
+	}
+
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_surface_identify_general_abcd "
+				"before Algebra.classify_surfaces" << endl;
+	}
+	Algebra.classify_surfaces(
+			F, LG,
+			Control,
+			Surf, Surf_A,
+			SCW,
+			verbose_level - 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_surface_identify_general_abcd "
+				"after Algebra.classify_surfaces" << endl;
+	}
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_surface_identify_general_abcd "
+				"before SCW->identify_general_abcd_and_print_table" << endl;
+	}
+	SCW->identify_general_abcd_and_print_table(verbose_level);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_surface_identify_general_abcd "
+				"after SCW->identify_general_abcd_and_print_table" << endl;
+	}
+
+
+	FREE_OBJECT(SCW);
+	FREE_OBJECT(Surf_A);
+	FREE_OBJECT(Surf);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_surface_identify_general_abcd done" << endl;
 	}
 }
 
@@ -3512,9 +3572,13 @@ void group_theoretic_activity::do_create_surface(
 	surface_create *SC;
 	SC = NEW_OBJECT(surface_create);
 
-	cout << "before SC->init" << endl;
+	if (f_v) {
+		cout << "group_theoretic_activity::do_create_surface before SC->init" << endl;
+	}
 	SC->init(Surface_Descr, Surf_A, verbose_level);
-	cout << "after SC->init" << endl;
+	if (f_v) {
+		cout << "group_theoretic_activity::do_create_surface after SC->init" << endl;
+	}
 
 	if (Descr->nb_transform) {
 		cout << "group_theoretic_activity::do_create_surface "
@@ -3540,17 +3604,17 @@ void group_theoretic_activity::do_create_surface(
 		SC->F->f_print_as_exponentials = FALSE;
 	}
 
-	SC->F->PG_element_normalize(SC->coeffs, 1, 20);
+	SC->F->PG_element_normalize(SC->SO->eqn, 1, 20);
 
 	cout << "group_theoretic_activity::do_create_surface "
 			"We have created the following surface:" << endl;
 	cout << "$$" << endl;
-	SC->Surf->print_equation_tex(cout, SC->coeffs);
+	SC->Surf->print_equation_tex(cout, SC->SO->eqn);
 	cout << endl;
 	cout << "$$" << endl;
 
 	cout << "$$" << endl;
-	int_vec_print(cout, SC->coeffs, 20);
+	int_vec_print(cout, SC->SO->eqn, 20);
 	cout << endl;
 	cout << "$$" << endl;
 
@@ -3569,11 +3633,11 @@ void group_theoretic_activity::do_create_surface(
 
 			M = A->G.matrix_grp;
 			M->substitute_surface_equation(Elt2,
-					SC->coeffs, coeffs_out, SC->Surf,
+					SC->SO->eqn, coeffs_out, SC->Surf,
 					verbose_level - 1);
 
 
-			if (int_vec_compare(SC->coeffs, coeffs_out, 20)) {
+			if (int_vec_compare(SC->SO->eqn, coeffs_out, 20)) {
 				cout << "group_theoretic_activity::do_create_surface error, "
 						"the transformation does not preserve "
 						"the equation of the surface" << endl;
@@ -3594,7 +3658,7 @@ void group_theoretic_activity::do_create_surface(
 	cout << "group_theoretic_activity::do_create_surface We have created "
 			"the surface " << SC->label_txt << ":" << endl;
 	cout << "$$" << endl;
-	SC->Surf->print_equation_tex(cout, SC->coeffs);
+	SC->Surf->print_equation_tex(cout, SC->SO->eqn);
 	cout << endl;
 	cout << "$$" << endl;
 
@@ -3611,11 +3675,12 @@ void group_theoretic_activity::do_create_surface(
 		}
 	}
 
+#if 0
 	if (SC->f_has_lines) {
 		if (f_v) {
 			cout << "group_theoretic_activity::do_create_surface "
 					"The lines are:" << endl;
-			SC->Surf->Gr->print_set_tex(cout, SC->Lines, 27);
+			SC->Surf->Gr->print_set_tex(cout, SC->SO->Lines, SC->SO->nb_lines);
 		}
 
 
@@ -3623,12 +3688,12 @@ void group_theoretic_activity::do_create_surface(
 
 		SO = NEW_OBJECT(surface_object);
 		if (f_v) {
-			cout << "group_theoretic_activity::do_create_surface before SO->init" << endl;
+			cout << "group_theoretic_activity::do_create_surface before SO->init_with_27_lines" << endl;
 			}
-		SO->init(SC->Surf, SC->Lines, SC->coeffs,
+		SO->init_with_27_lines(SC->Surf, SC->Lines, SC->coeffs,
 				FALSE /*f_find_double_six_and_rearrange_lines */, verbose_level);
 		if (f_v) {
-			cout << "group_theoretic_activity::do_create_surface after SO->init" << endl;
+			cout << "group_theoretic_activity::do_create_surface after SO->init_with_27_lines" << endl;
 			}
 
 		string fname_points;
@@ -3646,6 +3711,18 @@ void group_theoretic_activity::do_create_surface(
 				"The surface " << SC->label_txt
 				<< " does not come with lines" << endl;
 	}
+#else
+	string fname_points;
+
+	fname_points.assign("surface_");
+	fname_points.append(SC->label_txt);
+	fname_points.append("_points.txt");
+	Fio.write_set_to_file(fname_points, SC->SO->Pts, SC->SO->nb_pts, 0 /*verbose_level*/);
+	cout << "group_theoretic_activity::do_create_surface "
+			"Written file " << fname_points << " of size "
+			<< Fio.file_size(fname_points) << endl;
+
+#endif
 
 
 
@@ -3661,20 +3738,21 @@ void group_theoretic_activity::do_create_surface(
 
 		SoA = NEW_OBJECT(surface_object_with_action);
 
+#if 0
 		if (SC->f_has_lines) {
 			if (f_v) {
 				cout << "group_theoretic_activity::do_create_surface creating "
 						"surface using the known lines (which are "
 						"arranged with respect to a double six):" << endl;
 			}
-			SoA->init(SC->Surf_A,
+			SoA->init_with_27_lines(SC->Surf_A,
 				SC->Lines,
 				SC->coeffs,
 				SC->Sg,
 				FALSE /*f_find_double_six_and_rearrange_lines*/,
 				SC->f_has_nice_gens, SC->nice_gens,
 				verbose_level);
-			}
+		}
 		else {
 			if (f_v) {
 				cout << "group_theoretic_activity::do_create_surface "
@@ -3685,7 +3763,28 @@ void group_theoretic_activity::do_create_surface(
 				SC->coeffs,
 				SC->Sg,
 				verbose_level);
+		}
+#else
+		if (SC->SO->nb_lines == 27) {
+			if (f_v) {
+				cout << "group_theoretic_activity::do_create_surface before SoA->init_with_27_lines" << endl;
 			}
+			SoA->init_with_27_lines(SC->Surf_A,
+				SC->SO->Lines,
+				SC->SO->eqn,
+				SC->Sg,
+				FALSE /*f_find_double_six_and_rearrange_lines*/,
+				SC->f_has_nice_gens, SC->nice_gens,
+				verbose_level - 1);
+			if (f_v) {
+				cout << "group_theoretic_activity::do_create_surface after SoA->init_with_27_lines" << endl;
+			}
+		}
+		else {
+			cout << "The surface does not have 27 lines, cannot initialize surface_object_with_action" << endl;
+			exit(1);
+		}
+#endif
 		if (f_v) {
 			cout << "group_theoretic_activity::do_create_surface "
 					"The surface has been created." << endl;

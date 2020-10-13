@@ -89,7 +89,15 @@ void finite_field::create_projective_variety(
 		cout << "finite_field::create_projective_variety "
 				"before HPD->enumerate_points" << endl;
 	}
-	HPD->enumerate_points(coeff, Pts, nb_pts, verbose_level);
+
+	vector<long int> Points;
+
+	HPD->enumerate_points(coeff, Points, verbose_level);
+	nb_pts = Points.size();
+	Pts = NEW_lint(nb_pts);
+	for (i = 0; i < nb_pts; i++) {
+		Pts[i] = Points[i];
+	}
 	if (f_v) {
 		cout << "finite_field::create_projective_variety "
 				"after HPD->enumerate_points, nb_pts = " << nb_pts << endl;
@@ -5444,13 +5452,23 @@ void finite_field::do_ideal(int n,
 		cout << endl;
 		}
 
-	Pts = NEW_lint(HPD->get_P()->N_points);
 	cout << "looping over all generators of the ideal:" << endl;
 	for (h = 0; h < ns; h++) {
 		cout << "generator " << h << " / " << ns << ":" << endl;
 
+		vector<long int> Points;
+		int i;
+
 		HPD->enumerate_points(Kernel + h * HPD->get_nb_monomials(),
-				Pts, nb_pts, verbose_level);
+				Points, verbose_level);
+		nb_pts = Points.size();
+
+		Pts = NEW_lint(nb_pts);
+		for (i = 0; i < nb_pts; i++) {
+			Pts[i] = Points[i];
+		}
+
+
 		cout << "We found " << nb_pts << " points on the curve" << endl;
 		cout << "They are : ";
 		lint_vec_print(cout, Pts, nb_pts);
@@ -5468,9 +5486,9 @@ void finite_field::do_ideal(int n,
 			}
 			break;
 		}
+		FREE_lint(Pts);
 
 	}
-	FREE_lint(Pts);
 
 #if 0
 	int N;

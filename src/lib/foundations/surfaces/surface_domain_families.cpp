@@ -77,9 +77,9 @@ void surface_domain::create_equation_general_abcd(int a, int b, int c, int d, in
 	int E_plus2 = F->add5(aadd, abbc, abcc, acdd, bbcc);
 	int E_plus = F->add(E_plus1, E_plus2);
 
-	cout << "E_plus1 = " << E_plus1 << endl;
-	cout << "E_plus2 = " << E_plus2 << endl;
-	cout << "E_plus = " << E_plus << endl;
+	//cout << "E_plus1 = " << E_plus1 << endl;
+	//cout << "E_plus2 = " << E_plus2 << endl;
+	//cout << "E_plus = " << E_plus << endl;
 
 	int E_minus1 = F->add4(aabdd, two_aacdd, two_abbcc, bbccd);
 	int E_minus2 = F->add3(aabc, four_abcd, accd);
@@ -200,10 +200,7 @@ void surface_domain::create_equation_G13(int a, int *coeff, int verbose_level)
 	}
 }
 
-int surface_domain::create_surface_general_abcd(int a, int b, int c, int d,
-	int *coeff20,
-	long int *Lines27,
-	int &nb_E,
+surface_object *surface_domain::create_surface_general_abcd(int a, int b, int c, int d,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -211,6 +208,7 @@ int surface_domain::create_surface_general_abcd(int a, int b, int c, int d,
 	if (f_v) {
 		cout << "surface_domain::create_surface_general_abcd" << endl;
 	}
+	int coeff20[20];
 
 	if (f_v) {
 		cout << "surface_domain::create_surface_general_abcd before create_equation_general_abcd" << endl;
@@ -227,9 +225,19 @@ int surface_domain::create_surface_general_abcd(int a, int b, int c, int d,
 	if (f_v) {
 		cout << "surface_domain::create_surface_general_abcd before SO->init_equation" << endl;
 	}
-	if (!SO->init_equation(this, coeff20, verbose_level)) {
+	SO->init_equation(this, coeff20, verbose_level);
+
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_general_abcd done" << endl;
+	}
+	return SO;
+
+#if 0
+	nb_lines = SO->nb_lines;
+	if (SO->nb_lines != 27) {
 		if (f_v) {
-			cout << "surface_domain::create_surface_general_abcd SO->init_equation returns FALSE, returning" << endl;
+			cout << "surface_domain::create_surface_general_abcd nb_lines = " << nb_lines << " is not 27, returning" << endl;
 		}
 		FREE_OBJECT(SO);
 		return FALSE;
@@ -250,14 +258,12 @@ int surface_domain::create_surface_general_abcd(int a, int b, int c, int d,
 		cout << "surface_domain::create_surface_general_abcd done" << endl;
 	}
 	return TRUE;
+#endif
 }
 
 
 
-int surface_domain::create_surface_bes(int a, int c,
-	int *coeff20,
-	long int *Lines27,
-	int &nb_E,
+surface_object *surface_domain::create_surface_bes(int a, int c,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -265,6 +271,7 @@ int surface_domain::create_surface_bes(int a, int c,
 	if (f_v) {
 		cout << "surface_domain::create_surface_bes" << endl;
 	}
+	int coeff20[20];
 
 	if (f_v) {
 		cout << "surface_domain::create_surface_bes before create_equation_bes" << endl;
@@ -281,9 +288,19 @@ int surface_domain::create_surface_bes(int a, int c,
 	if (f_v) {
 		cout << "surface_domain::create_surface_bes before SO->init_equation" << endl;
 	}
-	if (!SO->init_equation(this, coeff20, verbose_level)) {
+	SO->init_equation(this, coeff20, verbose_level);
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_bes done" << endl;
+	}
+	return SO;
+
+#if 0
+	nb_lines = SO->nb_lines;
+
+	if (SO->nb_lines != 27) {
 		if (f_v) {
-			cout << "surface_domain::create_surface_bes SO->init_equation returns FALSE, returning" << endl;
+			cout << "surface_domain::create_surface_bes SO->nb_lines != 27, returning" << endl;
 		}
 		FREE_OBJECT(SO);
 		return FALSE;
@@ -304,20 +321,18 @@ int surface_domain::create_surface_bes(int a, int c,
 		cout << "surface_domain::create_surface_bes done" << endl;
 	}
 	return TRUE;
+#endif
 }
 
 
-int surface_domain::create_surface_F13(int a,
-	int *coeff20,
-	long int *Lines27,
-	int &nb_E,
-	int verbose_level)
+surface_object *surface_domain::create_surface_F13(int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "surface_domain::create_surface_F13" << endl;
 	}
+	int coeff20[20];
 
 	if (f_v) {
 		cout << "surface_domain::create_surface_F13 before create_equation_F13" << endl;
@@ -334,9 +349,19 @@ int surface_domain::create_surface_F13(int a,
 	if (f_v) {
 		cout << "surface_domain::create_surface_F13 before SO->init_equation" << endl;
 	}
-	if (!SO->init_equation(this, coeff20, verbose_level)) {
+	SO->init_equation(this, coeff20, verbose_level);
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_F13 done" << endl;
+	}
+	return SO;
+
+#if 0
+	nb_lines = SO->nb_lines;
+
+	if (SO->nb_lines != 27) {
 		if (f_v) {
-			cout << "surface_domain::create_surface_F13 SO->init_equation returns FALSE, returning" << endl;
+			cout << "surface_domain::create_surface_F13 SO->nb_lines != 27, returning" << endl;
 		}
 		FREE_OBJECT(SO);
 		return FALSE;
@@ -357,19 +382,17 @@ int surface_domain::create_surface_F13(int a,
 		cout << "surface_domain::create_surface_F13 done" << endl;
 	}
 	return TRUE;
+#endif
 }
 
-int surface_domain::create_surface_G13(int a,
-	int *coeff20,
-	long int *Lines27,
-	int &nb_E,
-	int verbose_level)
+surface_object *surface_domain::create_surface_G13(int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "surface_domain::create_surface_G13" << endl;
 	}
+	int coeff20[20];
 
 	if (f_v) {
 		cout << "surface_domain::create_surface_G13 before create_equation_G13" << endl;
@@ -386,9 +409,19 @@ int surface_domain::create_surface_G13(int a,
 	if (f_v) {
 		cout << "surface_domain::create_surface_G13 before SO->init_equation" << endl;
 	}
-	if (!SO->init_equation(this, coeff20, verbose_level)) {
+	SO->init_equation(this, coeff20, verbose_level);
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_G13 done" << endl;
+	}
+	return SO;
+
+#if 0
+	nb_lines = SO->nb_lines;
+
+	if (SO->nb_lines != 27) {
 		if (f_v) {
-			cout << "surface_domain::create_surface_G13 SO->init_equation returns FALSE, returning" << endl;
+			cout << "surface_domain::create_surface_G13 SO->nb_lines != 27, returning" << endl;
 		}
 		FREE_OBJECT(SO);
 		return FALSE;
@@ -409,7 +442,358 @@ int surface_domain::create_surface_G13(int a,
 		cout << "surface_domain::create_surface_G13 done" << endl;
 	}
 	return TRUE;
+#endif
 }
+
+surface_object *surface_domain::create_surface_HCV(int a, int b,
+	int &alpha, int &beta,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int alpha0, beta0;
+	//int line_rk;
+	//int Basis[8];
+	long int Lines27[27];
+	//int nb, i, e, ee, nb_lines, rk, nb_pts;
+	int i, rk, nb;
+	//int *coeff;
+	//long int *Pts;
+	//int v[4];
+	geometry_global Gg;
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV" << endl;
+	}
+	alpha = -1;
+	beta = -1;
+	//nb_E = -1;
+
+	int a2, a2p1, a2m1;
+
+	a2 = F->mult(a, a);
+	a2p1 = F->add(a2, 1);
+	a2m1 = F->add(a2, F->negate(1));
+	if (a2p1 == 0 || a2m1 == 0) {
+		cout << "surface_domain::create_surface_HCV "
+				"a2p1 == 0 || a2m1 == 0" << endl;
+		return FALSE;
+	}
+
+
+	//Pts = NEW_lint(Gg.nb_PG_elements(3, F->q));
+
+	//coeff = NEW_int(20);
+	alpha0 = F->negate(F->mult(b, b));
+	beta0 = F->mult(F->mult(F->power(b, 3),
+		F->add(1, F->mult(a, a))), F->inverse(a));
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV a="
+			<< a << " b=" << b << " alpha0=" << alpha0
+			<< " beta0=" << beta0 << endl;
+	}
+
+#if 0
+	int_vec_zero(Basis, 8);
+	Basis[0 * 4 + 0] = 1;
+	Basis[0 * 4 + 1] = a;
+	Basis[1 * 4 + 2] = 1;
+	Basis[1 * 4 + 3] = b;
+	line_rk = Gr->rank_int_here(Basis, 0);
+#endif
+
+
+#if 0
+	//int_vec_copy(desired_lines, Lines, 3);
+	//nb = 3;
+
+	cout << "The triangle lines are:" << endl;
+	Gr->print_set(desired_lines, 3);
+#endif
+
+
+	long int *Oab;
+
+	Oab = NEW_lint(12);
+	create_HCV_double_six(Oab, a, b, 0 /* verbose_level */);
+
+#if 0
+	if (!test_if_sets_are_equal(Oab, Lines, 12)) {
+		cout << "the sets are not equal" << endl;
+		exit(1);
+	}
+#endif
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV The double six is:" << endl;
+		Gr->print_set(Oab, 12);
+	}
+
+
+	lint_vec_copy(Oab, Lines27, 12);
+	FREE_lint(Oab);
+
+
+	nb = 12;
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV We have a set of "
+				"lines of size " << nb << ":";
+		lint_vec_print(cout, Lines27, nb);
+		cout << endl;
+	}
+
+	create_remaining_fifteen_lines(Lines27,
+		Lines27 + 12, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV The remaining 15 lines are:";
+		lint_vec_print(cout, Lines27 + 12, 15);
+		cout << endl;
+		Gr->print_set(Lines27 + 12, 15);
+	}
+
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV before create_HCV_"
+				"fifteen_lines" << endl;
+	}
+
+	long int special_lines[15];
+
+	create_HCV_fifteen_lines(special_lines, a, b, verbose_level);
+	for (i = 0; i < 15; i++) {
+		if (special_lines[i] != Lines27[12 + i]) {
+			cout << "surface_domain::create_surface_HCV something is wrong "
+					"with the special line " << i << " / 15 " << endl;
+			exit(1);
+		}
+	}
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV after create_special_"
+				"fifteen_lines" << endl;
+	}
+
+	rk = compute_system_in_RREF(27, Lines27, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV a=" << a
+			<< " b=" << b << " rk=" << rk << endl;
+	}
+
+	if (rk != 19) {
+		cout << "surface_domain::create_surface_HCV rk != 19" << endl;
+		//FREE_lint(Pts);
+		//FREE_int(coeff);
+		exit(1);
+	}
+
+	int coeff20[20];
+
+	build_cubic_surface_from_lines(27, Lines27, coeff20,
+			0 /* verbose_level */);
+	F->PG_element_normalize_from_front(coeff20, 1, 20);
+
+
+
+#if 0
+	vector<long int> Points;
+	enumerate_points(coeff20, Points, 0 /* verbose_level */);
+
+	Sorting.lint_vec_heapsort(Pts, nb_pts);
+
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV "
+				"a=" << a << " b=" << b << " equation: ";
+		print_equation(cout, coeff20);
+		cout << endl;
+	}
+
+	if (nb_pts != nb_pts_on_surface) {
+		cout << "surface_domain::create_surface_HCV degenerate surface" << endl;
+		cout << "nb_pts=" << nb_pts << endl;
+		cout << "should be =" << nb_pts_on_surface << endl;
+		alpha = -1;
+		beta = -1;
+		nb_E = -1;
+		return FALSE;
+	}
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV Pts: " << endl;
+		lint_vec_print_as_table(cout, Pts, nb_pts, 10);
+	}
+
+
+	int *Adj;
+	int *Intersection_pt;
+	int *Intersection_pt_idx;
+
+	compute_adjacency_matrix_of_line_intersection_graph(
+		Adj, Lines27, 27, verbose_level);
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV "
+				"The adjacency matrix is:" << endl;
+		int_matrix_print(Adj, 27, 27);
+	}
+
+
+	compute_intersection_points_and_indices(
+		Adj, Pts, nb_pts, Lines27, 27,
+		Intersection_pt, Intersection_pt_idx,
+		verbose_level);
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV "
+				"The intersection points are:" << endl;
+		int_matrix_print(Intersection_pt_idx, 27, 27);
+	}
+
+
+	tally C;
+
+	C.init(Intersection_pt_idx, 27 * 27, FALSE, 0);
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV "
+				"classification of points by multiplicity:" << endl;
+		C.print_naked(TRUE);
+		cout << endl;
+	}
+#endif
+
+
+
+
+	if (!test_HCV_form_alpha_beta(coeff20, alpha, beta,
+		0 /* verbose_level */)) {
+		cout << "surface_domain::create_surface_HCV not of special form" << endl;
+		exit(1);
+	}
+
+
+	if (alpha != alpha0) {
+		cout << "surface_domain::create_surface_HCV alpha != alpha0" << endl;
+		exit(1);
+	}
+	if (beta != beta0) {
+		cout << "surface_domain::create_surface_HCV beta != beta0" << endl;
+		exit(1);
+	}
+
+
+#if 0
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV "
+				"determining all lines on the surface:" << endl;
+	}
+	{
+		long int Lines2[27];
+		P->find_lines_which_are_contained(Pts, nb_pts,
+			Lines2, nb_lines, 27 /* max_lines */,
+			0 /* verbose_level */);
+	}
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV "
+				"nb_lines = " << nb_lines << endl;
+	}
+	if (nb_lines != 27) {
+		cout << "surface_domain::create_surface_HCV "
+				"nb_lines != 27, something is wrong "
+				"with the surface" << endl;
+		exit(1);
+	}
+	set_of_sets *pts_on_lines;
+	set_of_sets *lines_on_pt;
+
+	compute_points_on_lines(Pts, nb_pts,
+		Lines27, nb_lines,
+		pts_on_lines,
+		verbose_level);
+
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV pts_on_lines: " << endl;
+		pts_on_lines->print_table();
+	}
+
+	int *E;
+
+	pts_on_lines->get_eckardt_points(E, nb_E, 0 /* verbose_level */);
+	//nb_E = pts_on_lines->number_of_eckardt_points(verbose_level);
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV The surface contains "
+			<< nb_E << " Eckardt points" << endl;
+	}
+
+#if 0
+	if (a == 2 && b == 1) {
+		exit(1);
+	}
+#endif
+
+
+	pts_on_lines->dualize(lines_on_pt, 0 /* verbose_level */);
+
+#if 0
+	cout << "lines_on_pt: " << endl;
+	lines_on_pt->print_table();
+#endif
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV "
+				"The Eckardt points are:" << endl;
+		for (i = 0; i < nb_E; i++) {
+			e = E[i];
+			ee = Pts[e];
+			unrank_point(v, ee);
+			cout << i << " : " << ee << " : ";
+			int_vec_print(cout, v, 4);
+			cout << " on lines: ";
+			lint_vec_print(cout, lines_on_pt->Sets[e],
+				lines_on_pt->Set_size[e]);
+			cout << endl;
+		}
+	}
+
+#endif
+
+
+	surface_object *SO;
+
+	SO = NEW_OBJECT(surface_object);
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV before SO->init_with_27_lines" << endl;
+	}
+	//SO->init_equation(this, coeff20, verbose_level);
+	SO->init_with_27_lines(this,
+		Lines27, coeff20,
+		FALSE /* f_find_double_six_and_rearrange_lines */,
+		verbose_level);
+
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV done" << endl;
+	}
+	return SO;
+
+
+
+	//FREE_int(E);
+	//FREE_int(coeff);
+	//FREE_lint(Pts);
+	//FREE_int(Intersection_pt);
+	//FREE_int(Intersection_pt_idx);
+	//FREE_OBJECT(pts_on_lines);
+	//FREE_OBJECT(lines_on_pt);
+#if 0
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV done" << endl;
+	}
+	return TRUE;
+#endif
+}
+
 
 void surface_domain::create_equation_HCV(int a, int b,
 		int *coeff, int verbose_level)
@@ -673,7 +1057,7 @@ void surface_domain::create_HCV_fifteen_lines(long int *fifteen_lines,
 	}
 }
 
-
+#if 0
 void surface_domain::create_surface_family_HCV(int a,
 	long int *Lines27,
 	int *equation20, int verbose_level)
@@ -697,7 +1081,7 @@ void surface_domain::create_surface_family_HCV(int a,
 		equation20,
 		Lines27,
 		alpha, beta, nb_E,
-		0 /* verbose_level */);
+		verbose_level - 1);
 
 	if (f_v) {
 		cout << "surface_domain::create_surface_family_HCV "
@@ -713,323 +1097,9 @@ void surface_domain::create_surface_family_HCV(int a,
 				"done" << endl;
 	}
 }
-int surface_domain::create_surface_HCV(int a, int b,
-	int *coeff20,
-	long int *Lines27,
-	int &alpha, int &beta, int &nb_E,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int alpha0, beta0;
-	//int line_rk;
-	//int Basis[8];
-	//int Lines[27];
-	int nb, i, e, ee, nb_lines, rk, nb_pts;
-	//int *coeff;
-	long int *Pts;
-	int v[4];
-	geometry_global Gg;
-	sorting Sorting;
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV" << endl;
-	}
-	alpha = -1;
-	beta = -1;
-	nb_E = -1;
-
-	int a2, a2p1, a2m1;
-
-	a2 = F->mult(a, a);
-	a2p1 = F->add(a2, 1);
-	a2m1 = F->add(a2, F->negate(1));
-	if (a2p1 == 0 || a2m1 == 0) {
-		cout << "surface_domain::create_surface_HCV "
-				"a2p1 == 0 || a2m1 == 0" << endl;
-		return FALSE;
-	}
-
-
-	Pts = NEW_lint(Gg.nb_PG_elements(3, F->q));
-
-	//coeff = NEW_int(20);
-	alpha0 = F->negate(F->mult(b, b));
-	beta0 = F->mult(F->mult(F->power(b, 3),
-		F->add(1, F->mult(a, a))), F->inverse(a));
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV a="
-			<< a << " b=" << b << " alpha0=" << alpha0
-			<< " beta0=" << beta0 << endl;
-	}
-
-#if 0
-	int_vec_zero(Basis, 8);
-	Basis[0 * 4 + 0] = 1;
-	Basis[0 * 4 + 1] = a;
-	Basis[1 * 4 + 2] = 1;
-	Basis[1 * 4 + 3] = b;
-	line_rk = Gr->rank_int_here(Basis, 0);
 #endif
 
 
-#if 0
-	//int_vec_copy(desired_lines, Lines, 3);
-	//nb = 3;
-
-	cout << "The triangle lines are:" << endl;
-	Gr->print_set(desired_lines, 3);
-#endif
-
-
-	long int *Oab;
-
-	Oab = NEW_lint(12);
-	create_HCV_double_six(Oab, a, b, 0 /* verbose_level */);
-
-#if 0
-	if (!test_if_sets_are_equal(Oab, Lines, 12)) {
-		cout << "the sets are not equal" << endl;
-		exit(1);
-	}
-#endif
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV The double six is:" << endl;
-		Gr->print_set(Oab, 12);
-	}
-
-
-	lint_vec_copy(Oab, Lines27, 12);
-	FREE_lint(Oab);
-
-
-	nb = 12;
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV We have a set of "
-				"lines of size " << nb << ":";
-		lint_vec_print(cout, Lines27, nb);
-		cout << endl;
-	}
-
-	create_remaining_fifteen_lines(Lines27,
-		Lines27 + 12, 0 /* verbose_level */);
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV The remaining 15 lines are:";
-		lint_vec_print(cout, Lines27 + 12, 15);
-		cout << endl;
-		Gr->print_set(Lines27 + 12, 15);
-	}
-
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV before create_HCV_"
-				"fifteen_lines" << endl;
-	}
-
-	long int special_lines[15];
-
-	create_HCV_fifteen_lines(special_lines, a, b, verbose_level);
-	for (i = 0; i < 15; i++) {
-		if (special_lines[i] != Lines27[12 + i]) {
-			cout << "surface_domain::create_surface_HCV something is wrong "
-					"with the special line " << i << " / 15 " << endl;
-			exit(1);
-		}
-	}
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV after create_special_"
-				"fifteen_lines" << endl;
-	}
-
-	rk = compute_system_in_RREF(27, Lines27, 0 /* verbose_level */);
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV a=" << a
-			<< " b=" << b << " rk=" << rk << endl;
-	}
-
-	if (rk != 19) {
-		cout << "surface_domain::create_surface_HCV rk != 19" << endl;
-		FREE_lint(Pts);
-		//FREE_int(coeff);
-		exit(1);
-	}
-	build_cubic_surface_from_lines(27, Lines27, coeff20,
-			0 /* verbose_level */);
-	F->PG_element_normalize_from_front(coeff20, 1, 20);
-
-
-
-	enumerate_points(coeff20, Pts, nb_pts, 0 /* verbose_level */);
-	Sorting.lint_vec_heapsort(Pts, nb_pts);
-
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV "
-				"a=" << a << " b=" << b << " equation: ";
-		print_equation(cout, coeff20);
-		cout << endl;
-	}
-
-	if (nb_pts != nb_pts_on_surface) {
-		cout << "surface_domain::create_surface_HCV degenerate surface" << endl;
-		cout << "nb_pts=" << nb_pts << endl;
-		cout << "should be =" << nb_pts_on_surface << endl;
-		alpha = -1;
-		beta = -1;
-		nb_E = -1;
-		return FALSE;
-	}
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV Pts: " << endl;
-		lint_vec_print_as_table(cout, Pts, nb_pts, 10);
-	}
-
-
-	int *Adj;
-	int *Intersection_pt;
-	int *Intersection_pt_idx;
-
-	compute_adjacency_matrix_of_line_intersection_graph(
-		Adj, Lines27, 27, verbose_level);
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV "
-				"The adjacency matrix is:" << endl;
-		int_matrix_print(Adj, 27, 27);
-	}
-
-
-
-	compute_intersection_points_and_indices(
-		Adj, Pts, nb_pts, Lines27, 27,
-		Intersection_pt, Intersection_pt_idx,
-		verbose_level);
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV "
-				"The intersection points are:" << endl;
-		int_matrix_print(Intersection_pt_idx, 27, 27);
-	}
-
-
-	tally C;
-
-	C.init(Intersection_pt_idx, 27 * 27, FALSE, 0);
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV "
-				"classification of points by multiplicity:" << endl;
-		C.print_naked(TRUE);
-		cout << endl;
-	}
-
-
-
-
-	if (!test_HCV_form_alpha_beta(coeff20, alpha, beta,
-		0 /* verbose_level */)) {
-		cout << "surface_domain::create_surface_HCV not of special form" << endl;
-		exit(1);
-	}
-
-
-	if (alpha != alpha0) {
-		cout << "surface_domain::create_surface_HCV alpha != alpha0" << endl;
-		exit(1);
-	}
-	if (beta != beta0) {
-		cout << "surface_domain::create_surface_HCV beta != beta0" << endl;
-		exit(1);
-	}
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV "
-				"determining all lines on the surface:" << endl;
-	}
-	{
-		long int Lines2[27];
-		P->find_lines_which_are_contained(Pts, nb_pts,
-			Lines2, nb_lines, 27 /* max_lines */,
-			0 /* verbose_level */);
-	}
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV "
-				"nb_lines = " << nb_lines << endl;
-	}
-	if (nb_lines != 27) {
-		cout << "surface_domain::create_surface_HCV "
-				"nb_lines != 27, something is wrong "
-				"with the surface" << endl;
-		exit(1);
-	}
-	set_of_sets *pts_on_lines;
-	set_of_sets *lines_on_pt;
-
-	compute_points_on_lines(Pts, nb_pts,
-		Lines27, nb_lines,
-		pts_on_lines,
-		verbose_level);
-
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV pts_on_lines: " << endl;
-		pts_on_lines->print_table();
-	}
-
-	int *E;
-
-	pts_on_lines->get_eckardt_points(E, nb_E, 0 /* verbose_level */);
-	//nb_E = pts_on_lines->number_of_eckardt_points(verbose_level);
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV The surface contains "
-			<< nb_E << " Eckardt points" << endl;
-	}
-
-#if 0
-	if (a == 2 && b == 1) {
-		exit(1);
-	}
-#endif
-
-
-	pts_on_lines->dualize(lines_on_pt, 0 /* verbose_level */);
-
-#if 0
-	cout << "lines_on_pt: " << endl;
-	lines_on_pt->print_table();
-#endif
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV "
-				"The Eckardt points are:" << endl;
-		for (i = 0; i < nb_E; i++) {
-			e = E[i];
-			ee = Pts[e];
-			unrank_point(v, ee);
-			cout << i << " : " << ee << " : ";
-			int_vec_print(cout, v, 4);
-			cout << " on lines: ";
-			lint_vec_print(cout, lines_on_pt->Sets[e],
-				lines_on_pt->Set_size[e]);
-			cout << endl;
-		}
-	}
-
-
-	FREE_int(E);
-	//FREE_int(coeff);
-	FREE_lint(Pts);
-	FREE_int(Intersection_pt);
-	FREE_int(Intersection_pt_idx);
-	FREE_OBJECT(pts_on_lines);
-	FREE_OBJECT(lines_on_pt);
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV done" << endl;
-	}
-	return TRUE;
-}
 
 
 }}

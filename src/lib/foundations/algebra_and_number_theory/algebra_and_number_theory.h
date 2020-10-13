@@ -1714,8 +1714,10 @@ public:
 	void algebraic_set(int *Eqns, int nb_eqns,
 			long int *Pts, int &nb_pts, int verbose_level);
 	void polynomial_function(int *coeff, int *f, int verbose_level);
-	void enumerate_points(int *coeff, long int *Pts, int &nb_pts,
-		int verbose_level);
+	void enumerate_points(int *coeff,
+			std::vector<long int> &Pts,
+			//long int *Pts, int &nb_pts,
+			int verbose_level);
 	int evaluate_at_a_point_by_rank(int *coeff, int pt);
 	int evaluate_at_a_point(int *coeff, int *pt_vec);
 	void substitute_linear(int *coeff_in, int *coeff_out, 

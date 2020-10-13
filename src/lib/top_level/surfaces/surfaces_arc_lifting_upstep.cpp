@@ -212,7 +212,7 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(int verbose_level)
 
 	D = NEW_OBJECT(surfaces_arc_lifting_definition_node);
 
-	D->init(Lift,
+	D->init_with_27_lines(Lift,
 			f, Lift->Surfaces->nb_orbits, Lines, eqn20,
 			verbose_level);
 
@@ -251,7 +251,7 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(int verbose_level)
 
 	{
 
-		D->SOA->init(Lift->Surf_A,
+		D->SOA->init_with_27_lines(Lift->Surf_A,
 				Lines, eqn20,
 				Aut_gens,
 				FALSE /*f_find_double_six_and_rearrange_lines*/,
@@ -607,7 +607,7 @@ void surfaces_arc_lifting_upstep::make_seventytwo_cases(int verbose_level)
 		line_l1_l2_idx = 0;
 
 		for (l1 = 0; l1 < 27; l1++) {
-			if (D->SO->Adj_ij(l1, m1) == 0) {
+			if (D->SO->SOP->Adj_ij(l1, m1) == 0) {
 				continue;
 			}
 			if (l1 == m1) {
@@ -620,7 +620,7 @@ void surfaces_arc_lifting_upstep::make_seventytwo_cases(int verbose_level)
 				continue;
 			}
 			for (l2 = l1 + 1; l2 < 27; l2++) {
-				if (D->SO->Adj_ij(l2, m1) == 0) {
+				if (D->SO->SOP->Adj_ij(l2, m1) == 0) {
 					continue;
 				}
 				if (l2 == m1) {
@@ -635,7 +635,7 @@ void surfaces_arc_lifting_upstep::make_seventytwo_cases(int verbose_level)
 				if (l2 == l1) {
 					continue;
 				}
-				if (D->SO->Adj_ij(l1, l2)) {
+				if (D->SO->SOP->Adj_ij(l1, l2)) {
 					continue;
 				}
 
