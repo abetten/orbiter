@@ -2259,7 +2259,7 @@ HCV_13:
 	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 13 -wedge -end \
 		-group_theoretic_activities \
 		-control_six_arcs -end \
-		-create_surface -family_HCV 3 -q 13 -end
+		-create_surface -family_HCV 3 1 -q 13 -end
 	pdflatex surface_family_q13_a3.tex
 	open surface_family_q13_a3.pdf
 
@@ -2360,7 +2360,7 @@ surface_isomorph_16:
 			-q 16 -by_coefficients "1,5,1,8,1,9,1,10,1,11,1,12,6,14,6,15,7,18,7,19" -end \
 			-q 16 -by_coefficients "13,6,3,8,3,11,13,13,1,19" -end 
 
-
+# 1 min 8 sec on Mac from scratch (with all data files removed)
 
 
 # clean equation for Tekirdag-2:
@@ -2832,7 +2832,8 @@ no:
 identify_Bes_16:
 	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
 		-group_theoretic_activities \
-		-surface_identify_Bes
+		-surface_identify_Bes \
+		-end
 
 # 17 minutes
 
@@ -2865,24 +2866,65 @@ Family_general_T1:
 		-control_six_arcs -end \
 		-create_surface -family_general_abcd 2 3 3 2 -q 8 -end 
 
+# 13 Eckardt points
+
+
+
 Family_general_F7:
 	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 7 -wedge -end \
 		-group_theoretic_activities \
 		-control_six_arcs -end \
 		-create_surface -family_general_abcd 2 3 3 4 -q 7 -end 
 
-# Fermat
+# Fermat with 18 Eckardt points
+
+
+surface_recognize_q7_abcd_2_3_3_4:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 7 -wedge -end \
+		-group_theoretic_activities \
+			-surface_recognize -q 7 \
+			-family_general_abcd 2 3 3 4 \
+			-end \
+		-end
+
+
+
 
 Family_general_7_rec:
-	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 7 -wedge -end \
+	$(ORBITER_PATH)/orbiter.out -v 5 -linear_group -PGL 4 7 -wedge -end \
 		-group_theoretic_activities -surface_recognize -q 7 \
 		-by_coefficients "3,14,1,17,3,18,3,19" -end -end
+
+# has 73 lines
+
+
 
 Family_general_2453:
 	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 8 -wedge -end \
 		-group_theoretic_activities \
 		-control_six_arcs -end \
-		-create_surface -family_general_abcd 2 4 5 3 -q 8 -end 
+		-create_surface -family_general_abcd 2 4 5 3 -q 8 \
+		-end \
+		-end 
+
+#( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 6, 1, 7 )
+# has 91 lines
+
+
+
+
+identify_general_abcd_q7:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 7 -wedge -end \
+		-group_theoretic_activities \
+		-surface_identify_general_abcd \
+		-end
+
+identify_general_abcd_q8:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 8 -wedge -end \
+		-group_theoretic_activities \
+		-surface_identify_general_abcd \
+		-end
+
 
 
 #############################################################################################################
