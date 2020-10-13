@@ -143,14 +143,16 @@ int surface_object_with_action::init_equation(
 		cout << "surface_object_with_action::init_equation "
 				"before SO->init_equation" << endl;
 	}
-	if (!SO->init_equation(Surf_A->Surf, eqn, verbose_level)) {
-		cout << "surface_object_with_action::init_equation "
-				"the surface does not have 27 lines" << endl;
-		return FALSE;
-	}
+	SO->init_equation(Surf_A->Surf, eqn, verbose_level);
 	if (f_v) {
 		cout << "surface_object_with_action::init_equation "
 				"after SO->init_equation" << endl;
+	}
+
+	if (SO->nb_lines != 27) {
+		cout << "surface_object_with_action::init_equation "
+				"the surface does not have 27 lines" << endl;
+		return FALSE;
 	}
 
 	
@@ -232,8 +234,8 @@ void surface_object_with_action::init_with_surface_object(surface_with_action *S
 }
 
 
-void surface_object_with_action::init(surface_with_action *Surf_A, 
-	long int *Lines, int *eqn,
+void surface_object_with_action::init_with_27_lines(surface_with_action *Surf_A,
+	long int *Lines27, int *eqn,
 	strong_generators *Aut_gens,
 	int f_find_double_six_and_rearrange_lines,
 	int f_has_nice_gens, vector_ge *nice_gens,
@@ -242,24 +244,24 @@ void surface_object_with_action::init(surface_with_action *Surf_A,
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surface_object_with_action::init" << endl;
+		cout << "surface_object_with_action::init_with_27_lines" << endl;
 	}
 
 	surface_object *SO;
 	SO = NEW_OBJECT(surface_object);
 	if (f_v) {
-		cout << "surface_object_with_action::init "
-				"before SO->init" << endl;
+		cout << "surface_object_with_action::init_with_27_lines "
+				"before SO->init_with_27_lines" << endl;
 	}
-	SO->init(Surf_A->Surf, Lines, eqn,
+	SO->init_with_27_lines(Surf_A->Surf, Lines27, eqn,
 			f_find_double_six_and_rearrange_lines, verbose_level);
 	if (f_v) {
-		cout << "surface_object_with_action::init "
-				"after SO->init" << endl;
+		cout << "surface_object_with_action::init_with_27_lines "
+				"after SO->init_with_27_lines" << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_object_with_action::init "
+		cout << "surface_object_with_action::init_with_27_lines "
 				"before SO->init_with_surface_object" << endl;
 	}
 
@@ -270,12 +272,12 @@ void surface_object_with_action::init(surface_with_action *Surf_A,
 			verbose_level);
 
 	if (f_v) {
-		cout << "surface_object_with_action::init "
+		cout << "surface_object_with_action::init_with_27_lines "
 				"after SO->init_with_surface_object" << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_object_with_action::init done" << endl;
+		cout << "surface_object_with_action::init_with_27_lines done" << endl;
 	}
 }
 
@@ -568,7 +570,7 @@ void surface_object_with_action::init_orbits_on_Eckardt_points(
 		cout << "creating action on Eckardt points:" << endl;
 	}
 	A_on_Eckardt_points = Surf_A->A->restricted_action(
-			SO->Eckardt_points, SO->nb_Eckardt_points, 0 /*verbose_level*/);
+			SO->SOP->Eckardt_points, SO->SOP->nb_Eckardt_points, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on Eckardt points done" << endl;
 	}
@@ -612,7 +614,7 @@ void surface_object_with_action::init_orbits_on_Double_points(
 		cout << "creating action on Double points:" << endl;
 	}
 	A_on_Double_points = Surf_A->A->restricted_action(
-			SO->Double_points, SO->nb_Double_points,
+			SO->SOP->Double_points, SO->SOP->nb_Double_points,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on Double points done" << endl;
@@ -737,11 +739,11 @@ void surface_object_with_action::init_orbits_on_tritangent_planes(
 
 	if (f_v) {
 		cout << "creating action on tritangent planes:" << endl;
-		cout << "SO->nb_tritangent_planes = "
-				<< SO->nb_tritangent_planes << endl;
+		cout << "SO->SOP->nb_tritangent_planes = "
+				<< SO->SOP->nb_tritangent_planes << endl;
 	}
 	A_on_tritangent_planes = A_on_the_lines->create_induced_action_on_sets(
-			SO->nb_tritangent_planes, 3,
+			SO->SOP->nb_tritangent_planes, 3,
 			//SO->Lines_in_tritangent_planes,
 			Surf->Lines_in_tritangent_planes,
 			0 /*verbose_level*/);
@@ -759,7 +761,7 @@ void surface_object_with_action::init_orbits_on_tritangent_planes(
 	}
 	if (f_v) {
 		cout << "We found " << Orbits_on_tritangent_planes->nb_orbits
-				<< " orbits on the set of " << SO->nb_tritangent_planes
+				<< " orbits on the set of " << SO->SOP->nb_tritangent_planes
 				<< " tritangent planes" << endl;
 	}
 
@@ -825,7 +827,7 @@ void surface_object_with_action::init_orbits_on_points_not_on_lines(
 		cout << "creating action on points not on lines:" << endl;
 	}
 	A_on_pts_not_on_lines = Surf_A->A->restricted_action(
-			SO->Pts_not_on_lines, SO->nb_pts_not_on_lines,
+			SO->SOP->Pts_not_on_lines, SO->SOP->nb_pts_not_on_lines,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on points not on lines done" << endl;
@@ -940,7 +942,7 @@ void surface_object_with_action::print_automorphism_group(
 	int block_width = 10;
 	nb = Orbits_on_lines->nb_orbits;
 	Orbits_on_lines->get_orbit_decomposition_scheme_of_graph(
-			SO->Adj_line_intersection_graph, 27, Decomp_scheme,
+			SO->SOP->Adj_line_intersection_graph, 27, Decomp_scheme,
 			0 /*verbose_level*/);
 	ost << "\\subsection*{Decomposition scheme of line intersection graph}" << endl;
 	ost << "Decomposition scheme of line intersection graph:" << endl;
@@ -1096,7 +1098,7 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 		cout << "surface_object_with_action::cheat_sheet "
 				"before SO->print_equation" << endl;
 	}
-	SO->print_equation(ost);
+	SO->SOP->print_equation(ost);
 	if (f_v) {
 		cout << "surface_object_with_action::cheat_sheet "
 				"after SO->print_equation" << endl;
@@ -1184,7 +1186,7 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 				"before SO->print_everything" << endl;
 	}
 
-	SO->print_everything(ost, 0 /* verbose_level */);
+	SO->SOP->print_everything(ost, verbose_level - 1);
 
 	if (f_v) {
 		cout << "surface_object_with_action::cheat_sheet "
@@ -1363,7 +1365,7 @@ void surface_object_with_action::investigate_surface_and_write_report2(
 		ost << "\\section{Points on the surface}" << endl;
 		ost << endl;
 
-		SO->print_affine_points_in_source_code(ost);
+		SO->SOP->print_affine_points_in_source_code(ost);
 
 
 		ost << endl;

@@ -1537,9 +1537,9 @@ void surfaces_arc_lifting::report_surfaces_in_detail(ostream &ost, int verbose_l
 		D = (surfaces_arc_lifting_definition_node *) Surfaces->Orbit[i].extra_data;
 
 
-		D->SO->print_lines(ost);
+		D->SO->SOP->print_lines(ost);
 
-		D->SO->print_tritangent_planes(ost);
+		D->SO->SOP->print_tritangent_planes(ost);
 
 		D->report_Clebsch_maps(ost, verbose_level);
 		// too much output!

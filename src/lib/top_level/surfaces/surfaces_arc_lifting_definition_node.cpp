@@ -49,14 +49,14 @@ surfaces_arc_lifting_definition_node::~surfaces_arc_lifting_definition_node()
 {
 }
 
-void surfaces_arc_lifting_definition_node::init(surfaces_arc_lifting *Lift,
-		int f, int orbit_idx, long int *Lines, int *eqn20,
+void surfaces_arc_lifting_definition_node::init_with_27_lines(surfaces_arc_lifting *Lift,
+		int f, int orbit_idx, long int *Lines27, int *eqn20,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_definition_node::init" << endl;
+		cout << "surfaces_arc_lifting_definition_node::init_with_27_lines" << endl;
 	}
 
 	surfaces_arc_lifting_definition_node::Lift = Lift;
@@ -67,19 +67,19 @@ void surfaces_arc_lifting_definition_node::init(surfaces_arc_lifting *Lift,
 	SO = NEW_OBJECT(surface_object);
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_definition_node::init before SO->init" << endl;
+		cout << "surfaces_arc_lifting_definition_node::init_with_27_lines before SO->init_with_27_lines" << endl;
 	}
-	SO->init(Lift->Surf_A->Surf, Lines, eqn20,
+	SO->init_with_27_lines(Lift->Surf_A->Surf, Lines27, eqn20,
 			FALSE /* f_find_double_six_and_rearrange_lines */,
 			verbose_level - 2);
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_definition_node::init after SO->init" << endl;
+		cout << "surfaces_arc_lifting_definition_node::init_with_27_lines after SO->init_with_27_lines" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_definition_node::init done" << endl;
+		cout << "surfaces_arc_lifting_definition_node::init_with_27_lines done" << endl;
 	}
 }
 

@@ -147,10 +147,11 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 	int f_vv = FALSE; // (verbose_level >= 2);
 	int i, r;
 	long int S[9];
-	long int *Pts_on_curve;
-	long int *singular_Pts;
+	//long int *Pts_on_curve;
+	vector<long int> Pts_on_curve;
+	//long int *singular_Pts;
 	int *type;
-	int nb_pts_on_curve; //, nb_singular_pts;
+	//int nb_pts_on_curve; //, nb_singular_pts;
 
 	if (f_v) {
 		cout << "classify_cubic_curves::test_orbits" << endl;
@@ -158,8 +159,8 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 	}
 	nb_orbits_on_sets = Arc_gen->gen->nb_orbits_at_level(9);
 
-	Pts_on_curve = NEW_lint(CC->P->N_points);
-	singular_Pts = NEW_lint(CC->P->N_points);
+	//Pts_on_curve = NEW_lint(CC->P->N_points);
+	//singular_Pts = NEW_lint(CC->P->N_points);
 	type = NEW_int(CC->P->N_lines);
 
 	if (f_v) {
@@ -208,12 +209,22 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 					verbose_level - 5);
 
 			CC->Poly->enumerate_points(eqn,
-					Pts_on_curve, nb_pts_on_curve,
+					Pts_on_curve,
 					verbose_level - 2);
 
+			long int *Pts;
+			int h;
+
+			Pts = NEW_lint(Pts_on_curve.size());
+			for (h = 0; h < Pts_on_curve.size(); h++) {
+				Pts[h] = Pts_on_curve[h];
+			}
+
 			CC->P->line_intersection_type(
-					Pts_on_curve, nb_pts_on_curve /* set_size */,
+					Pts, Pts_on_curve.size() /* set_size */,
 					type, 0 /*verbose_level*/);
+
+			FREE_lint(Pts);
 
 			tally Cl;
 
@@ -250,8 +261,8 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 		cout << endl;
 	}
 
-	FREE_lint(Pts_on_curve);
-	FREE_lint(singular_Pts);
+	//FREE_lint(Pts_on_curve);
+	//FREE_lint(singular_Pts);
 	FREE_int(type);
 
 	if (f_v) {
@@ -519,13 +530,21 @@ void classify_cubic_curves::upstep(int verbose_level)
 
 		nb_coset_reps = 0;
 
+		vector<long int> Points;
 		int nb_pts;
 		int N;
 		int orbit_index;
 		int f2;
+		int h;
 
-		CCA->CC->Poly->enumerate_points(eqn, Pts, nb_pts,
+		CCA->CC->Poly->enumerate_points(eqn, Points,
 				verbose_level - 2);
+
+		nb_pts = Points.size();
+
+		for (h = 0; h < nb_pts; h++) {
+			Pts[h] = Points[h];
+		}
 		if (f_v) {
 			cout << "po=" << po << " so=" << so
 					<< " we found a curve with " << nb_pts
@@ -798,9 +817,20 @@ int classify_cubic_curves::recognize(int *eqn_in,
 	int N;
 	int orbit_index;
 	int f2;
+	int h;
 
-	CCA->CC->Poly->enumerate_points(eqn_in, Pts_on_curve, nb_pts_on_curve,
+	vector<long int> Points;
+
+	CCA->CC->Poly->enumerate_points(eqn_in, Points,
 			verbose_level - 2);
+
+
+	nb_pts_on_curve = Points.size();
+
+	for (h = 0; h < nb_pts_on_curve; h++) {
+		Pts_on_curve[h] = Points[h];
+	}
+
 	if (f_v) {
 		cout << "classify_cubic_curves::recognize"
 				<< " we found a curve with " << nb_pts_on_curve
@@ -1398,9 +1428,17 @@ void classify_cubic_curves::report(ostream &ost, int verbose_level)
 		ost << "&&";
 
 
+		vector<long int> Points;
+		int h;
+
 		CCA->CC->Poly->enumerate_points(eqn,
-				Pts_on_curve, nb_pts_on_curve,
+				Points,
 				verbose_level - 2);
+
+		nb_pts_on_curve = Points.size();
+		for (h = 0; h < nb_pts_on_curve; h++) {
+			Pts_on_curve[h] = Points[h];
+		}
 
 		Nb_points[i] = nb_pts_on_curve;
 
@@ -1483,10 +1521,17 @@ void classify_cubic_curves::report(ostream &ost, int verbose_level)
 			ost << "&&";
 
 
+			vector<long int> Points;
+
+
 			CCA->CC->Poly->enumerate_points(transformed_eqn,
-					Pts_on_curve, nb_pts_on_curve,
+					Points,
 					verbose_level - 2);
 
+			nb_pts_on_curve = Points.size();
+			for (h = 0; h < nb_pts_on_curve; h++) {
+				Pts_on_curve[h] = Points[h];
+			}
 
 			CC->Poly->print_equation_with_line_breaks_tex(ost,
 					transformed_eqn,

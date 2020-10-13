@@ -553,11 +553,14 @@ public:
 	void identify_HCV_and_print_table(int verbose_level);
 	void identify_F13_and_print_table(int verbose_level);
 	void identify_Bes_and_print_table(int verbose_level);
-	void identify_HCV(int *Iso_type, int *Nb_E, int verbose_level);
+	void identify_general_abcd_and_print_table(int verbose_level);
+	void identify_HCV(int *Iso_type, int *Nb_lines, int verbose_level);
 	void identify_F13(
-		int *Iso_type, int *Nb_E, int verbose_level);
+		int *Iso_type, int *Nb_lines, int verbose_level);
 	void identify_Bes(
-		int *Iso_type, int *Nb_E, int verbose_level);
+		int *Iso_type, int *Nb_lines, int verbose_level);
+	void identify_general_abcd(
+		int *Iso_type, int *Nb_lines, int verbose_level);
 	int isomorphism_test_pairwise(
 		surface_create *SC1, surface_create *SC2,
 		int &isomorphic_to1, int &isomorphic_to2,
@@ -701,10 +704,13 @@ public:
 
 	surface_with_action *Surf_A;
 
+	surface_object *SO;
 
+#if 0
 	int coeffs[20];
 	int f_has_lines;
 	long int Lines[27];
+#endif
 	int f_has_group;
 	strong_generators *Sg;
 	int f_has_nice_gens;
@@ -751,6 +757,7 @@ public:
 	const char *coefficients_text;
 	int f_family_HCV;
 	int family_HCV_a;
+	int family_HCV_b;
 	int f_family_G13;
 	int family_G13_a;
 	int f_family_F13;
@@ -908,8 +915,8 @@ public:
 			strong_generators *Aut_gens,
 			int f_has_nice_gens, vector_ge *nice_gens,
 			int verbose_level);
-	void init(surface_with_action *Surf_A,
-		long int *Lines, int *eqn,
+	void init_with_27_lines(surface_with_action *Surf_A,
+		long int *Lines27, int *eqn,
 		strong_generators *Aut_gens,
 		int f_find_double_six_and_rearrange_lines,
 		int f_has_nice_gens, vector_ge *nice_gens,
@@ -1147,8 +1154,8 @@ public:
 
 	surfaces_arc_lifting_definition_node();
 	~surfaces_arc_lifting_definition_node();
-	void init(surfaces_arc_lifting *Lift,
-			int f, int orbit_idx, long int *Lines, int *eqn20,
+	void init_with_27_lines(surfaces_arc_lifting *Lift,
+			int f, int orbit_idx, long int *Lines27, int *eqn20,
 			int verbose_level);
 	void tally_f2(int verbose_level);
 	void report(int verbose_level);

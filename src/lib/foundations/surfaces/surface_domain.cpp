@@ -1045,7 +1045,9 @@ int surface_domain::test(int len, long int *S, int verbose_level)
 }
 
 void surface_domain::enumerate_points(int *coeff,
-	long int *Pts, int &nb_pts, int verbose_level)
+		std::vector<long int> &Pts,
+		//long int *Pts, int &nb_pts,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1053,7 +1055,7 @@ void surface_domain::enumerate_points(int *coeff,
 		cout << "surface_domain::enumerate_points" << endl;
 	}
 
-	Poly3_4->enumerate_points(coeff, Pts, nb_pts, verbose_level);
+	Poly3_4->enumerate_points(coeff, Pts, verbose_level);
 	if (f_v) {
 		cout << "surface_domain::enumerate_points done" << endl;
 	}

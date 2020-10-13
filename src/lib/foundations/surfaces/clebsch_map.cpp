@@ -115,7 +115,7 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 	//plane_rk_global = SO->Tritangent_planes[
 	//		SO->Eckardt_to_Tritangent_plane[tritangent_plane_idx]];
 
-	plane_rk_global = SO->Tritangent_plane_rk[tritangent_plane_idx];
+	plane_rk_global = SO->SOP->Tritangent_plane_rk[tritangent_plane_idx];
 
 
 	int u, a, h;
@@ -140,7 +140,7 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 	if (f_v) {
 		cout << "surface_with_action::arc_lifting_and_classify "
 				"Lines with points on them:" << endl;
-		SO->print_lines_with_points_on_them(cout);
+		SO->SOP->print_lines_with_points_on_them(cout);
 		cout << "The half double six is no " << hds
 				<< "$ = " << Surf->Half_double_six_label_tex[hds]
 				<< "$ : $";

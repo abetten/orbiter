@@ -1000,6 +1000,33 @@ void lint_vec_print(std::ostream &ost, long int *v, int len)
 	}
 }
 
+void lint_vec_print(std::ostream &ost, std::vector<long int> &v)
+{
+	int i, len;
+
+	len = v.size();
+	if (len > 50) {
+		ost << "( ";
+		for (i = 0; i < 50; i++) {
+			ost << v[i];
+			if (i < len - 1) {
+				ost << ", ";
+			}
+		}
+		ost << "...";
+		for (i = len - 3; i < len; i++) {
+			ost << v[i];
+			if (i < len - 1) {
+				ost << ", ";
+			}
+		}
+		ost << " )";
+	}
+	else {
+		lint_vec_print_fully(ost, v);
+	}
+}
+
 void int_vec_print_str(stringstream &ost, int *v, int len)
 {
 	int i;
@@ -1083,6 +1110,21 @@ void lint_vec_print_fully(std::ostream &ost, long int *v, int len)
 {
 	int i;
 
+	ost << "( ";
+	for (i = 0; i < len; i++) {
+		ost << v[i];
+		if (i < len - 1) {
+			ost << ", ";
+		}
+	}
+	ost << " )";
+}
+
+void lint_vec_print_fully(std::ostream &ost, std::vector<long int> &v)
+{
+	int i, len;
+
+	len = v.size();
 	ost << "( ";
 	for (i = 0; i < len; i++) {
 		ost << v[i];

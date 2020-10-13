@@ -133,7 +133,7 @@ void seventytwo_cases::compute_arc(surface_object *SO, int verbose_level)
 		if (i == l1 || i == l2) {
 			continue;
 		}
-		if (SO->Adj_ij(i, l1) && SO->Adj_ij(i, l2)) {
+		if (SO->SOP->Adj_ij(i, l1) && SO->SOP->Adj_ij(i, l2)) {
 			transversals[nb_t++] = i;
 		}
 	}
@@ -190,7 +190,7 @@ void seventytwo_cases::compute_arc(surface_object *SO, int verbose_level)
 		if (f_taken[i]) {
 			continue;
 		}
-		if (SO->Adj_ij(transversals4[i], m2)) {
+		if (SO->SOP->Adj_ij(transversals4[i], m2)) {
 			P6[nb++] = SO->Surf->P->intersection_of_two_lines(
 					SO->Lines[transversals4[i]], SO->Lines[m2]);
 			f_taken[i] = TRUE;
@@ -204,7 +204,7 @@ void seventytwo_cases::compute_arc(surface_object *SO, int verbose_level)
 		if (f_taken[i]) {
 			continue;
 		}
-		if (SO->Adj_ij(transversals4[i], m3)) {
+		if (SO->SOP->Adj_ij(transversals4[i], m3)) {
 			P6[nb++] = SO->Surf->P->intersection_of_two_lines(
 					SO->Lines[transversals4[i]], SO->Lines[m3]);
 			f_taken[i] = TRUE;
@@ -371,7 +371,7 @@ void seventytwo_cases::report_Clebsch_map_details(ostream &ost, surface_object *
 	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[l2]);
 	ost << "$\\\\" << endl;
 
-	SO->print_single_tritangent_planes(ost, tritangent_plane_idx);
+	SO->SOP->print_single_tritangent_planes(ost, tritangent_plane_idx);
 
 	ost << "$m_1=" << Surf->Line_label_tex[m1] << " = " << SO->Lines[m1] << " = ";
 	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[m1]);

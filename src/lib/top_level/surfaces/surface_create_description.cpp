@@ -37,6 +37,7 @@ void surface_create_description::null()
 	coefficients_text = NULL;
 	f_family_HCV = FALSE;
 	family_HCV_a = 0;
+	family_HCV_b = 0;
 	f_family_G13 = FALSE;
 	family_G13_a = 0;
 	f_family_F13 = FALSE;
@@ -91,7 +92,8 @@ int surface_create_description::read_arguments(int argc, const char **argv,
 		else if (strcmp(argv[i], "-family_HCV") == 0) {
 			f_family_HCV = TRUE;
 			family_HCV_a = atoi(argv[++i]);
-			cout << "-family_HCV " << family_HCV_a << endl;
+			family_HCV_b = atoi(argv[++i]);
+			cout << "-family_HCV " << family_HCV_a << " " << family_HCV_b << endl;
 		}
 		else if (strcmp(argv[i], "-family_G13") == 0) {
 			f_family_G13 = TRUE;
