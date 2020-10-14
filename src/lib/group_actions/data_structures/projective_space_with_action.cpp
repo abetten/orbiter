@@ -2532,7 +2532,7 @@ void OiPA_group_order(void *extra_data,
 }
 
 void print_summary_table_entry(int *Table,
-		int m, int n, int i, int j, int val, char *output, void *data)
+		int m, int n, int i, int j, int val, std::string &output, void *data)
 {
 	classify_bitvectors *CB;
 	object_in_projective_space_with_action *OiPA;
@@ -2540,30 +2540,31 @@ void print_summary_table_entry(int *Table,
 	longinteger_object go;
 	int h;
 	sorting Sorting;
+	char str[1000];
 
 	CB = (classify_bitvectors *) data;
 
 	if (i == -1) {
 		if (j == -1) {
-			sprintf(output, "\\mbox{Orbit}");
+			sprintf(str, "\\mbox{Orbit}");
 			}
 		else if (j == 0) {
-			sprintf(output, "\\mbox{Rep}");
+			sprintf(str, "\\mbox{Rep}");
 			}
 		else if (j == 1) {
-			sprintf(output, "\\#");
+			sprintf(str, "\\#");
 			}
 		else if (j == 2) {
-			sprintf(output, "\\mbox{Ago}");
+			sprintf(str, "\\mbox{Ago}");
 			}
 		else if (j == 3) {
-			sprintf(output, "\\mbox{Objects}");
+			sprintf(str, "\\mbox{Objects}");
 			}
 		}
 	else {
 		//cout << "print_summary_table_entry i=" << i << " j=" << j << endl;
 		if (j == -1) {
-			sprintf(output, "%d", i);
+			sprintf(str, "%d", i);
 			}
 		else if (j == 2) {
 			extra_data = CB->Type_extra_data[CB->perm[i]];
@@ -2571,7 +2572,7 @@ void print_summary_table_entry(int *Table,
 			OiPA = (object_in_projective_space_with_action *) extra_data;
 			go.create(OiPA->ago, __FILE__, __LINE__);
 			//OiPA->Aut_gens->group_order(go);
-			go.print_to_string(output);
+			go.print_to_string(str);
 			}
 		else if (j == 3) {
 
@@ -2584,12 +2585,12 @@ void print_summary_table_entry(int *Table,
 
 			output[0] = 0;
 			for (h = 0; h < nb_input_objects; h++) {
-				sprintf(output + strlen(output), "%d", Input_objects[h]);
+				sprintf(str + strlen(str), "%d", Input_objects[h]);
 				if (h < nb_input_objects - 1) {
-					strcat(output, ", ");
+					strcat(str, ", ");
 					}
 				if (h == 10) {
-					strcat(output, "\\ldots");
+					strcat(str, "\\ldots");
 					break;
 					}
 				}
@@ -2597,9 +2598,10 @@ void print_summary_table_entry(int *Table,
 			FREE_int(Input_objects);
 			}
 		else {
-			sprintf(output, "%d", val);
+			sprintf(str, "%d", val);
 			}
 		}
+	output.assign(str);
 }
 
 

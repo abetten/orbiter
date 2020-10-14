@@ -13,7 +13,7 @@ namespace foundations {
 
 static void intersection_matrix_entry_print(int *p,
 	int m, int n, int i, int j, int val,
-	char *output1000, void *data);
+	std::string &output, void *data);
 
 eckardt_point_info::eckardt_point_info()
 {
@@ -460,29 +460,31 @@ void eckardt_point_info::print_Eckardt_points(ostream &ost, int verbose_level)
 
 static void intersection_matrix_entry_print(int *p,
 	int m, int n, int i, int j, int val,
-	char *output1000, void *data)
+	std::string &output, void *data)
 {
 	//eckardt_point_info *E;
 	//E = (eckardt_point_info *) data;
 	int a, b;
 	combinatorics_domain Combi;
+	char str[1000];
 
 	if (i == -1) {
 		Combi.k2ij(j, a, b, 6);
-		snprintf(output1000, 1000, "P_%dP_%d", a + 1, b + 1);
+		sprintf(str, "P_%dP_%d", a + 1, b + 1);
 	}
 	else if (j == -1) {
 		Combi.k2ij(i, a, b, 6);
-		snprintf(output1000, 1000, "P_%dP_%d", a + 1, b + 1);
+		sprintf(str, "P_%dP_%d", a + 1, b + 1);
 	}
 	else {
 		if (val == -1) {
-			snprintf(output1000, 1000, ".");
+			sprintf(str, ".");
 		}
 		else {
-			snprintf(output1000, 1000, "%d", val);
+			sprintf(str, "%d", val);
 		}
 	}
+	output.assign(str);
 }
 
 

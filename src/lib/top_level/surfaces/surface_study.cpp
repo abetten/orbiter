@@ -1600,25 +1600,27 @@ void move_point_set(action *A2,
 
 void matrix_entry_print(long int *p,
 		int m, int n, int i, int j, int val,
-		char *output, void *data)
+		std::string &output, void *data)
 {
 	surface_domain *Surf;
 	Surf = (surface_domain *) data;
+	char str[1000];
 
 	if (i == -1) {
-		strcpy(output, Surf->Schlaefli->Line_label_tex[val].c_str());
+		strcpy(str, Surf->Schlaefli->Line_label_tex[val].c_str());
 		}
 	else if (j == -1) {
-		strcpy(output, Surf->Schlaefli->Line_label_tex[val].c_str());
+		strcpy(str, Surf->Schlaefli->Line_label_tex[val].c_str());
 		}
 	else {
 		if (val == -1) {
-			strcpy(output, ".");
+			strcpy(str, ".");
 			}
 		else {
-			sprintf(output, "%d", val);
+			sprintf(str, "%d", val);
 			}
 		}
+	output.assign(str);
 }
 
 

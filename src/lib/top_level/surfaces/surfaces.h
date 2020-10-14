@@ -60,7 +60,7 @@ public:
 // arc_orbits_on_pairs.cpp
 // #############################################################################
 
-//! orbits on pairs of points of a nonconical six-arc
+//! orbits on pairs of points of a nonconical six-arc in PG(2,q)
 
 
 class arc_orbits_on_pairs {
@@ -611,27 +611,8 @@ public:
 
 	int orbit_idx;
 	int f, l, hds;
-	//int line1, line2, transversal;
 
 	clebsch_map *Clebsch_map;
-#if 0
-	long int *Clebsch_map;
-	int *Clebsch_coeff;
-#endif
-
-	//int plane_rk_global;
-
-	//long int plane_rk, plane_rk_global;
-	//int line_idx[2];
-	//long int Arc[6];
-	//long int Blown_up_lines[6];
-	//int orbit_at_level;
-	//int ds, ds_row;
-	//int intersection_points[6];
-	//int v[4];
-	//int Plane[16];
-	//int base_cols[4];
-	//int coefficients[3];
 
 
 	surface_clebsch_map();
@@ -640,30 +621,6 @@ public:
 	void init(surface_object_with_action *SOA, int orbit_idx, int verbose_level);
 
 };
-
-#if 0
-surface_domain *Surf;
-surface_object *SO;
-finite_field *F;
-
-int hds, ds, ds_row;
-
-int line1, line2;
-int transversal;
-int tritangent_plane_idx;
-
-int line_idx[2];
-int plane_rk_global;
-
-int intersection_points[6];
-int intersection_points_local[6];
-int Plane[16];
-int base_cols[4];
-
-
-long int *Clebsch_map; // [SO->nb_pts]
-int *Clebsch_coeff; // [SO->nb_pts * 4]
-#endif
 
 
 // #############################################################################
@@ -734,11 +691,6 @@ public:
 
 	surface_object *SO;
 
-#if 0
-	int coeffs[20];
-	int f_has_lines;
-	long int Lines[27];
-#endif
 	int f_has_group;
 	strong_generators *Sg;
 	int f_has_nice_gens;
@@ -757,7 +709,13 @@ public:
 	void init(surface_create_description *Descr,
 		surface_with_action *Surf_A,
 		int verbose_level);
-	void init2(int verbose_level);
+	void create_surface_from_description(int verbose_level);
+	void create_surface_HCV(int a, int b, int verbose_level);
+	void create_surface_G13(int a, int verbose_level);
+	void create_surface_F13(int a, int verbose_level);
+	void create_surface_bes(int a, int c, int verbose_level);
+	void create_surface_general_abcd(int a, int b, int c, int d, int verbose_level);
+	void create_surface_by_coefficients(std::string &coefficients_text, int verbose_level);
 	void apply_transformations(const char **transform_coeffs,
 		int *f_inverse_transform, int nb_transform, int verbose_level);
 };
@@ -782,7 +740,7 @@ public:
 	int f_catalogue;
 	int iso;
 	int f_by_coefficients;
-	const char *coefficients_text;
+	std::string coefficients_text;
 	int f_family_HCV;
 	int family_HCV_a;
 	int family_HCV_b;
@@ -1070,7 +1028,7 @@ void move_point_set(action *A2,
 	int verbose_level);
 void matrix_entry_print(long int *p,
 		int m, int n, int i, int j, int val,
-		char *output, void *data);
+		std::string &output, void *data);
 
 
 
@@ -1167,6 +1125,8 @@ public:
 
 
 	seventytwo_cases Seventytwo[45 * 72];
+		// for each of the 45 tritangent planes,
+		// there are 72 Clebsch maps
 
 
 	int nb_coset_reps;

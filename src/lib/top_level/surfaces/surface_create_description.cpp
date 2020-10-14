@@ -34,7 +34,7 @@ void surface_create_description::null()
 	f_catalogue = FALSE;
 	iso = 0;
 	f_by_coefficients = FALSE;
-	coefficients_text = NULL;
+	//coefficients_text = NULL;
 	f_family_HCV = FALSE;
 	family_HCV_a = 0;
 	family_HCV_b = 0;
@@ -86,7 +86,7 @@ int surface_create_description::read_arguments(int argc, const char **argv,
 		}
 		else if (strcmp(argv[i], "-by_coefficients") == 0) {
 			f_by_coefficients = TRUE;
-			coefficients_text = argv[++i];
+			coefficients_text.assign(argv[++i]);
 			cout << "-by_coefficients " << coefficients_text << endl;
 		}
 		else if (strcmp(argv[i], "-family_HCV") == 0) {

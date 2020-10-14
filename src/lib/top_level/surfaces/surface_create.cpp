@@ -103,12 +103,12 @@ void surface_create::init_with_data(
 
 	if (f_v) {
 		cout << "surface_create::init_with_data "
-				"before init2" << endl;
+				"before create_surface_from_description" << endl;
 	}
-	init2(verbose_level - 1);
+	create_surface_from_description(verbose_level - 1);
 	if (f_v) {
 		cout << "surface_create::init_with_data "
-				"after init2" << endl;
+				"after create_surface_from_description" << endl;
 	}
 
 	if (f_v) {
@@ -156,11 +156,11 @@ void surface_create::init(surface_create_description *Descr,
 
 
 	if (f_v) {
-		cout << "surface_create::init before init2" << endl;
+		cout << "surface_create::init before create_surface_from_description" << endl;
 	}
-	init2(verbose_level);
+	create_surface_from_description(verbose_level);
 	if (f_v) {
-		cout << "surface_create::init after init2" << endl;
+		cout << "surface_create::init after create_surface_from_description" << endl;
 	}
 
 
@@ -169,288 +169,40 @@ void surface_create::init(surface_create_description *Descr,
 	}
 }
 
-void surface_create::init2(int verbose_level)
+void surface_create::create_surface_from_description(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	
 	if (f_v) {
-		cout << "surface_create::init2" << endl;
+		cout << "surface_create::create_surface_from_description" << endl;
 	}
 
 
 	if (Descr->f_family_HCV) {
 
-		int alpha, beta;
 
-		if (f_v) {
-			cout << "surface_create::init2 before Surf->create_surface_family_HCV "
-					"a=" << Descr->family_HCV_a << " b=" << Descr->family_HCV_b << endl;
-		}
-		SO = Surf->create_surface_HCV(Descr->family_HCV_a, Descr->family_HCV_b,
-				alpha, beta,
-				verbose_level);
-
-#if 0
-		Surf->create_surface_family_HCV(Descr->family_HCV_a,
-				/*Lines, coeffs, */ verbose_level - 1);
-#endif
-		if (f_v) {
-			cout << "surface_create::init2 after Surf->create_surface_family_HCV" << endl;
-		}
-
-
-
-		//f_has_lines = TRUE;
-
-		Sg = NEW_OBJECT(strong_generators);
-		//Sg->init(Surf_A->A, verbose_level);
-		if (f_v) {
-			cout << "surface_create::init2 before Sg->stabilizer_of_HCV_surface" << endl;
-		}
-
-
-
-		Sg->stabilizer_of_HCV_surface(
-			Surf_A->A,
-			F, FALSE /* f_with_normalizer */,
-			f_semilinear,
-			nice_gens,
-			verbose_level);
-		if (f_v) {
-			cout << "surface_create::init2 after Sg->stabilizer_of_HCV_surface" << endl;
-		}
-		f_has_group = TRUE;
-		f_has_nice_gens = TRUE;
-
-		char str_q[1000];
-		char str_a[1000];
-		char str_b[1000];
-
-		sprintf(str_q, "%d", F->q);
-		sprintf(str_a, "%d", Descr->family_HCV_a);
-		sprintf(str_b, "%d", Descr->family_HCV_b);
-
-
-		prefix.assign("family_HCV_q");
-		prefix.append(str_q);
-		prefix.append("_a");
-		prefix.append(str_a);
-		prefix.append("_b");
-		prefix.append(str_b);
-
-		label_txt.assign("family_HCV_q");
-		label_txt.append(str_q);
-		label_txt.append("_a");
-		label_txt.append(str_a);
-		label_txt.append("_b");
-		label_txt.append(str_b);
-
-		label_tex.assign("family\\_HCV\\_q");
-		label_tex.append(str_q);
-		label_tex.append("\\_a");
-		label_tex.append(str_a);
-		label_tex.append("\\_b");
-		label_tex.append(str_b);
-
+		create_surface_HCV(Descr->family_HCV_a, Descr->family_HCV_b, verbose_level);
 		
 	}
 	else if (Descr->f_family_G13) {
 
-		if (f_v) {
-			cout << "surface_create::init2 before Surf->create_surface_G13 a=" << Descr->family_G13_a << endl;
-		}
 
-		//int nb_lines = 0;
-		//int nb_E = 0;
-
-		if (f_v) {
-			cout << "surface_create::init2 before Surf->create_surface_G13" << endl;
-		}
-
-		SO = Surf->create_surface_G13(Descr->family_G13_a, verbose_level);
-
-		if (f_v) {
-			cout << "surface_create::init2 after Surf->create_surface_G13" << endl;
-		}
-
-		//f_has_lines = TRUE;
-
-		Sg = NEW_OBJECT(strong_generators);
-		//Sg->init(Surf_A->A, verbose_level);
-		if (f_v) {
-			cout << "surface_create::init2 before Sg->stabilizer_of_G13_surface" << endl;
-		}
-
-
-
-		Sg->stabilizer_of_G13_surface(
-			Surf_A->A,
-			F, Descr->family_G13_a,
-			nice_gens,
-			verbose_level);
-		if (f_v) {
-			cout << "surface_create::init2 after Sg->stabilizer_of_G13_surface" << endl;
-		}
-		f_has_group = TRUE;
-		f_has_nice_gens = TRUE;
-
-		char str_q[1000];
-		char str_a[1000];
-
-		sprintf(str_q, "%d", F->q);
-		sprintf(str_a, "%d", Descr->family_G13_a);
-
-
-
-		prefix.assign("family_G13_q");
-		prefix.append(str_q);
-		prefix.append("_a");
-		prefix.append(str_a);
-
-		label_txt.assign("family_G13_q");
-		label_txt.append(str_q);
-		label_txt.append("_a");
-		label_txt.append(str_a);
-
-		label_tex.assign("family\\_G13\\_q");
-		label_tex.append(str_q);
-		label_tex.append("\\_a");
-		label_tex.append(str_a);
-
+		create_surface_G13(Descr->family_G13_a, verbose_level);
 
 	}
 
 	else if (Descr->f_family_F13) {
 
-		if (f_v) {
-			cout << "surface_create::init2 before Surf->create_surface_F13 a=" << Descr->family_F13_a << endl;
-		}
-
-		//int nb_lines = 0;
-		//int nb_E = 0;
-		if (f_v) {
-			cout << "surface_create::init2 before Surf->create_surface_F13" << endl;
-		}
-
-		SO = Surf->create_surface_F13(Descr->family_F13_a, verbose_level);
-
-		if (f_v) {
-			cout << "surface_create::init2 after Surf->create_surface_F13" << endl;
-		}
-
-		//f_has_lines = TRUE;
-
-		Sg = NEW_OBJECT(strong_generators);
-		//Sg->init(Surf_A->A, verbose_level);
-		if (f_v) {
-			cout << "surface_create::init2 before Sg->stabilizer_of_F13_surface" << endl;
-		}
-
-
-
-		Sg->stabilizer_of_F13_surface(
-			Surf_A->A,
-			F, Descr->family_F13_a,
-			nice_gens,
-			verbose_level);
-		if (f_v) {
-			cout << "surface_create::init2 after Sg->stabilizer_of_F13_surface" << endl;
-		}
-		f_has_group = TRUE;
-		f_has_nice_gens = TRUE;
-
-		char str_q[1000];
-		char str_a[1000];
-
-		sprintf(str_q, "%d", F->q);
-		sprintf(str_a, "%d", Descr->family_F13_a);
-
-
-
-		prefix.assign("family_F13_q");
-		prefix.append(str_q);
-		prefix.append("_a");
-		prefix.append(str_a);
-
-		label_txt.assign("family_F13_q");
-		label_txt.append(str_q);
-		label_txt.append("_a");
-		label_txt.append(str_a);
-
-		label_tex.assign("family\\_F13\\_q");
-		label_tex.append(str_q);
-		label_tex.append("\\_a");
-		label_tex.append(str_a);
-
+		create_surface_F13(Descr->family_F13_a, verbose_level);
 
 	}
 
 
 	else if (Descr->f_family_bes) {
 
-		if (f_v) {
-			cout << "surface_create::init2 before Surf->create_surface_bes "
-					"a=" << Descr->family_bes_a << " " << Descr->family_bes_c << endl;
-		}
+		create_surface_bes(Descr->family_bes_a, Descr->family_bes_c, verbose_level);
 
-		//int nb_lines = 0;
-		//int nb_E = 0;
-
-		if (f_v) {
-			cout << "surface_create::init2 before Surf->create_surface_bes" << endl;
-		}
-
-		SO = Surf->create_surface_bes(Descr->family_bes_a, Descr->family_bes_c,
-				verbose_level);
-
-		if (f_v) {
-			cout << "surface_create::init2 after Surf->create_surface_bes" << endl;
-		}
-
-		//f_has_lines = TRUE;
-
-
-
-#if 0
-		Sg = NEW_OBJECT(strong_generators);
-		//Sg->init(Surf_A->A, verbose_level);
-		if (f_v) {
-			cout << "surface_create::init2 before Sg->stabilizer_of_bes_surface" << endl;
-		}
-		Sg->stabilizer_of_F13_surface(
-			Surf_A->A,
-			F, Descr->family_F13_a,
-			nice_gens,
-			verbose_level);
-#endif
-		if (f_v) {
-			cout << "surface_create::init2 after Sg->stabilizer_of_F13_surface" << endl;
-		}
-		f_has_group = FALSE;
-		f_has_nice_gens = TRUE;
-
-		char str_q[1000];
-		char str[1000];
-		char str2[1000];
-
-		sprintf(str_q, "%d", F->q);
-		sprintf(str, "_a%d_c%d", Descr->family_bes_a, Descr->family_bes_c);
-		sprintf(str2, "\\_a%d\\_c%d", Descr->family_bes_a, Descr->family_bes_c);
-
-
-
-		prefix.assign("family_bes_q");
-		prefix.append(str_q);
-		prefix.append(str);
-
-		label_txt.assign("family_bes_q");
-		label_txt.append(str_q);
-		label_txt.append(str);
-
-		label_tex.assign("family\\_bes\\_q");
-		label_tex.append(str_q);
-		label_tex.append(str2);
 
 
 	}
@@ -458,72 +210,11 @@ void surface_create::init2(int verbose_level)
 
 	else if (Descr->f_family_general_abcd) {
 
-		if (f_v) {
-			cout << "surface_create::init2 before Surf->create_surface_general_abcd a="
-					<< Descr->family_general_abcd_a << " b=" << Descr->family_general_abcd_b << " c="
-					<< Descr->family_general_abcd_c << " d=" << Descr->family_general_abcd_d
-					<< endl;
-		}
-
-		//int nb_lines = 0;
-		//int nb_E = 0;
-
-		if (f_v) {
-			cout << "surface_create::init2 before Surf->create_surface_general_abcd" << endl;
-		}
-
-		SO = Surf->create_surface_general_abcd(
+		create_surface_general_abcd(
 				Descr->family_general_abcd_a, Descr->family_general_abcd_b,
 				Descr->family_general_abcd_c, Descr->family_general_abcd_d,
 				verbose_level);
 
-		if (f_v) {
-			cout << "surface_create::init2 after Surf->create_surface_general_abcd" << endl;
-		}
-
-		//f_has_lines = TRUE;
-
-
-
-#if 0
-		Sg = NEW_OBJECT(strong_generators);
-		//Sg->init(Surf_A->A, verbose_level);
-		if (f_v) {
-			cout << "surface_create::init2 before Sg->stabilizer_of_surface" << endl;
-		}
-		Sg->stabilizer_of_F13_surface(
-			Surf_A->A,
-			F, Descr->family_F13_a,
-			nice_gens,
-			verbose_level);
-		if (f_v) {
-			cout << "surface_create::init2 after Sg->stabilizer_of_F13_surface" << endl;
-		}
-#endif
-		f_has_group = FALSE;
-		f_has_nice_gens = TRUE;
-
-		char str_q[1000];
-		char str[1000];
-		char str2[1000];
-
-		sprintf(str_q, "%d", F->q);
-		sprintf(str, "_a%d_b%d_c%d_d%d", Descr->family_general_abcd_a, Descr->family_general_abcd_b, Descr->family_general_abcd_c, Descr->family_general_abcd_d);
-		sprintf(str2, "\\_a%d\\_b%d\\_c%d\\_d%d", Descr->family_general_abcd_a, Descr->family_general_abcd_b, Descr->family_general_abcd_c, Descr->family_general_abcd_d);
-
-
-
-		prefix.assign("family_general_abcd_q");
-		prefix.append(str_q);
-		prefix.append(str);
-
-		label_txt.assign("family_general_abcd_q");
-		label_txt.append(str_q);
-		label_txt.append(str);
-
-		label_tex.assign("family\\_general\\_abcd_\\_q");
-		label_tex.append(str_q);
-		label_tex.append(str2);
 
 
 	}
@@ -532,68 +223,11 @@ void surface_create::init2(int verbose_level)
 
 	else if (Descr->f_by_coefficients) {
 
-		if (f_v) {
-			cout << "surface_create::init2 surface is given "
-					"by the coefficients" << endl;
-		}
 
-		int coeffs20[20];
-		int *surface_coeffs;
-		int nb_coeffs, nb_terms;	
-		int i, a, b;
-	
-		int_vec_scan(Descr->coefficients_text, surface_coeffs, nb_coeffs);
-		if (ODD(nb_coeffs)) {
-			cout << "surface_create::init2 number of surface "
-					"coefficients must be even" << endl;
-			exit(1);
-		}
-		int_vec_zero(coeffs20, 20);
-		nb_terms = nb_coeffs >> 1;
-		for (i = 0; i < nb_terms; i++) {
-			a = surface_coeffs[2 * i + 0];
-			b = surface_coeffs[2 * i + 1];
-			if (a < 0 || a >= q) {
-				cout << "surface_create::init2 "
-						"coefficient out of range" << endl;
-				exit(1);
-			}
-			if (b < 0 || b >= 20) {
-				cout << "surface_create::init2 "
-						"variable index out of range" << endl;
-				exit(1);
-			}
-			coeffs20[b] = a;
-		}
-		FREE_int(surface_coeffs);
+		create_surface_by_coefficients(
+				Descr->coefficients_text,
+				verbose_level);
 
-
-		SO = NEW_OBJECT(surface_object);
-
-		if (f_v) {
-			cout << "surface_create::init2 before SO->init_equation" << endl;
-		}
-		SO->init_equation(Surf, coeffs20, verbose_level);
-		if (f_v) {
-			cout << "surface_create::init2 after SO->init_equation" << endl;
-		}
-
-		//f_has_lines = FALSE;
-
-
-		char str_q[1000];
-
-		sprintf(str_q, "%d", F->q);
-
-
-		prefix.assign("by_coefficients_q");
-		prefix.append(str_q);
-
-		label_txt.assign("by_coefficients_q");
-		label_txt.append(str_q);
-
-		label_tex.assign("by\\_coefficients\\_q");
-		label_tex.append(str_q);
 
 	}
 	else if (Descr->f_catalogue) {
@@ -676,7 +310,6 @@ void surface_create::init2(int verbose_level)
 		if (f_v) {
 			cout << "surface_create::init2 before SO->init_with_27_lines" << endl;
 		}
-		//SO->init_equation(this, coeff20, verbose_level);
 		SO->init_with_27_lines(Surf,
 			Lines27, coeffs20,
 			FALSE /* f_find_double_six_and_rearrange_lines */,
@@ -685,8 +318,6 @@ void surface_create::init2(int verbose_level)
 			cout << "surface_create::init2 after SO->init_with_27_lines" << endl;
 		}
 
-
-		//f_has_lines = TRUE;
 
 		Sg = NEW_OBJECT(strong_generators);
 		//Sg->init(Surf_A->A, verbose_level);
@@ -798,7 +429,6 @@ void surface_create::init2(int verbose_level)
 		if (f_v) {
 			cout << "surface_create::init2 before SO->init_with_27_lines" << endl;
 		}
-		//SO->init_equation(this, coeff20, verbose_level);
 		SO->init_with_27_lines(Surf,
 			Lines27, coeffs20,
 			FALSE /* f_find_double_six_and_rearrange_lines */,
@@ -810,7 +440,6 @@ void surface_create::init2(int verbose_level)
 
 		Sg = AL->Trihedral_pair->Aut_gens->create_copy();
 		f_has_group = TRUE;
-		//f_has_lines = FALSE;
 
 
 		char str_q[1000];
@@ -920,7 +549,7 @@ void surface_create::init2(int verbose_level)
 		if (f_v) {
 			cout << "surface_create::init2 before SO->init_with_27_lines" << endl;
 		}
-		//SO->init_equation(this, coeff20, verbose_level);
+
 		SO->init_with_27_lines(Surf,
 			Lines27, coeffs20,
 			FALSE /* f_find_double_six_and_rearrange_lines */,
@@ -930,11 +559,7 @@ void surface_create::init2(int verbose_level)
 		}
 
 
-		//Sg = AL->Aut_gens->create_copy();
 		f_has_group = FALSE;
-		//f_has_lines = TRUE;
-
-
 
 		char str_q[1000];
 		char str_lines[1000];
@@ -1009,6 +634,445 @@ void surface_create::init2(int verbose_level)
 	if (f_v) {
 		cout << "surface_create::init2 done" << endl;
 	}
+}
+
+void surface_create::create_surface_HCV(int a, int b, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int alpha, beta;
+
+	if (f_v) {
+		cout << "surface_create::create_surface_HCV "
+				"a=" << Descr->family_HCV_a << " b=" << Descr->family_HCV_b << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_HCV before Surf->create_surface_HCV" << endl;
+	}
+
+	SO = Surf->create_surface_HCV(a, b,
+			alpha, beta,
+			verbose_level);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_HCV after Surf->create_surface_family_HCV" << endl;
+	}
+
+
+
+
+	Sg = NEW_OBJECT(strong_generators);
+
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_HCV before Sg->stabilizer_of_HCV_surface" << endl;
+	}
+
+	Sg->stabilizer_of_HCV_surface(
+		Surf_A->A,
+		F, FALSE /* f_with_normalizer */,
+		f_semilinear,
+		nice_gens,
+		verbose_level);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_HCV after Sg->stabilizer_of_HCV_surface" << endl;
+	}
+
+	f_has_group = TRUE;
+	f_has_nice_gens = TRUE;
+
+	char str_q[1000];
+	char str_a[1000];
+	char str_b[1000];
+
+	sprintf(str_q, "%d", F->q);
+	sprintf(str_a, "%d", a);
+	sprintf(str_b, "%d", b);
+
+
+	prefix.assign("family_HCV_q");
+	prefix.append(str_q);
+	prefix.append("_a");
+	prefix.append(str_a);
+	prefix.append("_b");
+	prefix.append(str_b);
+
+	label_txt.assign("family_HCV_q");
+	label_txt.append(str_q);
+	label_txt.append("_a");
+	label_txt.append(str_a);
+	label_txt.append("_b");
+	label_txt.append(str_b);
+
+	label_tex.assign("family\\_HCV\\_q");
+	label_tex.append(str_q);
+	label_tex.append("\\_a");
+	label_tex.append(str_a);
+	label_tex.append("\\_b");
+	label_tex.append(str_b);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_HCV done" << endl;
+	}
+
+}
+
+void surface_create::create_surface_G13(int a, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_G13" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_create::create_surface_G13 before Surf->create_surface_G13 a=" << Descr->family_G13_a << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_create::create_surface_G13 before Surf->create_surface_G13" << endl;
+	}
+
+	SO = Surf->create_surface_G13(a, verbose_level);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_G13 after Surf->create_surface_G13" << endl;
+	}
+
+	Sg = NEW_OBJECT(strong_generators);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_G13 before Sg->stabilizer_of_G13_surface" << endl;
+	}
+
+	Sg->stabilizer_of_G13_surface(
+		Surf_A->A,
+		F, Descr->family_G13_a,
+		nice_gens,
+		verbose_level);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_G13 after Sg->stabilizer_of_G13_surface" << endl;
+	}
+
+	f_has_group = TRUE;
+	f_has_nice_gens = TRUE;
+
+	char str_q[1000];
+	char str_a[1000];
+
+	sprintf(str_q, "%d", F->q);
+	sprintf(str_a, "%d", a);
+
+
+
+	prefix.assign("family_G13_q");
+	prefix.append(str_q);
+	prefix.append("_a");
+	prefix.append(str_a);
+
+	label_txt.assign("family_G13_q");
+	label_txt.append(str_q);
+	label_txt.append("_a");
+	label_txt.append(str_a);
+
+	label_tex.assign("family\\_G13\\_q");
+	label_tex.append(str_q);
+	label_tex.append("\\_a");
+	label_tex.append(str_a);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_G13 done" << endl;
+	}
+}
+
+void surface_create::create_surface_F13(int a, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_F13" << endl;
+	}
+	if (f_v) {
+		cout << "surface_create::create_surface_F13 before Surf->create_surface_F13 a=" << a << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_create::create_surface_F13 before Surf->create_surface_F13" << endl;
+	}
+
+	SO = Surf->create_surface_F13(1, verbose_level);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_F13 after Surf->create_surface_F13" << endl;
+	}
+
+
+	Sg = NEW_OBJECT(strong_generators);
+	if (f_v) {
+		cout << "surface_create::create_surface_F13 before Sg->stabilizer_of_F13_surface" << endl;
+	}
+
+	Sg->stabilizer_of_F13_surface(
+		Surf_A->A,
+		F, a,
+		nice_gens,
+		verbose_level);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_F13 after Sg->stabilizer_of_F13_surface" << endl;
+	}
+
+	f_has_group = TRUE;
+	f_has_nice_gens = TRUE;
+
+	char str_q[1000];
+	char str_a[1000];
+
+	sprintf(str_q, "%d", F->q);
+	sprintf(str_a, "%d", a);
+
+
+
+	prefix.assign("family_F13_q");
+	prefix.append(str_q);
+	prefix.append("_a");
+	prefix.append(str_a);
+
+	label_txt.assign("family_F13_q");
+	label_txt.append(str_q);
+	label_txt.append("_a");
+	label_txt.append(str_a);
+
+	label_tex.assign("family\\_F13\\_q");
+	label_tex.append(str_q);
+	label_tex.append("\\_a");
+	label_tex.append(str_a);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_F13 done" << endl;
+	}
+
+}
+
+void surface_create::create_surface_bes(int a, int c, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_bes" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_create::create_surface_bes before Surf->create_surface_bes "
+				"a=" << Descr->family_bes_a << " " << Descr->family_bes_c << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_create::create_surface_bes before Surf->create_surface_bes" << endl;
+	}
+
+	SO = Surf->create_surface_bes(a, c, verbose_level);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_bes after Surf->create_surface_bes" << endl;
+	}
+
+
+#if 0
+	Sg = NEW_OBJECT(strong_generators);
+	//Sg->init(Surf_A->A, verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_bes before Sg->stabilizer_of_bes_surface" << endl;
+	}
+	Sg->stabilizer_of_F13_surface(
+		Surf_A->A,
+		F, a,
+		nice_gens,
+		verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_bes after Sg->stabilizer_of_bes_surface" << endl;
+	}
+#endif
+	f_has_group = FALSE;
+	f_has_nice_gens = TRUE;
+
+	char str_q[1000];
+	char str[1000];
+	char str2[1000];
+
+	sprintf(str_q, "%d", F->q);
+	sprintf(str, "_a%d_c%d", a, c);
+	sprintf(str2, "\\_a%d\\_c%d", a, c);
+
+
+
+	prefix.assign("family_bes_q");
+	prefix.append(str_q);
+	prefix.append(str);
+
+	label_txt.assign("family_bes_q");
+	label_txt.append(str_q);
+	label_txt.append(str);
+
+	label_tex.assign("family\\_bes\\_q");
+	label_tex.append(str_q);
+	label_tex.append(str2);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_bes done" << endl;
+	}
+}
+
+
+void surface_create::create_surface_general_abcd(int a, int b, int c, int d, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_general_abcd" << endl;
+	}
+	if (f_v) {
+		cout << "surface_create::create_surface_general_abcd before Surf->create_surface_general_abcd a="
+				<< a << " b=" << b << " c="
+				<< c << " d=" << d
+				<< endl;
+	}
+
+	if (f_v) {
+		cout << "surface_create::create_surface_general_abcd before Surf->create_surface_general_abcd" << endl;
+	}
+
+	SO = Surf->create_surface_general_abcd(a, b, c, d, verbose_level);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_general_abcd after Surf->create_surface_general_abcd" << endl;
+	}
+
+
+
+#if 0
+	Sg = NEW_OBJECT(strong_generators);
+	//Sg->init(Surf_A->A, verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_general_abcd before Sg->stabilizer_of_surface" << endl;
+	}
+	Sg->stabilizer_of_F13_surface(
+		Surf_A->A,
+		F, Descr->family_F13_a,
+		nice_gens,
+		verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_general_abcd after Sg->stabilizer_of_surface" << endl;
+	}
+#endif
+
+	f_has_group = FALSE;
+	f_has_nice_gens = TRUE;
+
+	char str_q[1000];
+	char str[1000];
+	char str2[1000];
+
+	sprintf(str_q, "%d", F->q);
+	sprintf(str, "_a%d_b%d_c%d_d%d", a, b, c, d);
+	sprintf(str2, "\\_a%d\\_b%d\\_c%d\\_d%d", a, b, c, d);
+
+
+
+	prefix.assign("family_general_abcd_q");
+	prefix.append(str_q);
+	prefix.append(str);
+
+	label_txt.assign("family_general_abcd_q");
+	label_txt.append(str_q);
+	label_txt.append(str);
+
+	label_tex.assign("family\\_general\\_abcd_\\_q");
+	label_tex.append(str_q);
+	label_tex.append(str2);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_general_abcd done" << endl;
+	}
+}
+
+void surface_create::create_surface_by_coefficients(std::string &coefficients_text, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_coefficients" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_coefficients surface is given "
+				"by the coefficients" << endl;
+	}
+
+	int coeffs20[20];
+	int *surface_coeffs;
+	int nb_coeffs, nb_terms;
+	int i, a, b;
+
+	int_vec_scan(coefficients_text, surface_coeffs, nb_coeffs);
+	if (ODD(nb_coeffs)) {
+		cout << "surface_create::create_surface_by_coefficients number of surface "
+				"coefficients must be even" << endl;
+		exit(1);
+	}
+	int_vec_zero(coeffs20, 20);
+	nb_terms = nb_coeffs >> 1;
+	for (i = 0; i < nb_terms; i++) {
+		a = surface_coeffs[2 * i + 0];
+		b = surface_coeffs[2 * i + 1];
+		if (a < 0 || a >= q) {
+			cout << "surface_create::create_surface_by_coefficients "
+					"coefficient out of range" << endl;
+			exit(1);
+		}
+		if (b < 0 || b >= 20) {
+			cout << "surface_create::create_surface_by_coefficients "
+					"variable index out of range" << endl;
+			exit(1);
+		}
+		coeffs20[b] = a;
+	}
+	FREE_int(surface_coeffs);
+
+
+	SO = NEW_OBJECT(surface_object);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_coefficients before SO->init_equation" << endl;
+	}
+	SO->init_equation(Surf, coeffs20, verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_coefficients after SO->init_equation" << endl;
+	}
+
+
+	char str_q[1000];
+
+	sprintf(str_q, "%d", F->q);
+
+
+	prefix.assign("by_coefficients_q");
+	prefix.append(str_q);
+
+	label_txt.assign("by_coefficients_q");
+	label_txt.append(str_q);
+
+	label_tex.assign("by\\_coefficients\\_q");
+	label_tex.append(str_q);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_coefficients done" << endl;
+	}
+
 }
 
 void surface_create::apply_transformations(
@@ -1128,19 +1192,17 @@ void surface_create::apply_transformations(
 		// ToDo: need to conjugate nice_gens
 
 
-		//if (f_has_lines) {
-			cout << "surface_create::apply_transformations Lines = ";
-			lint_vec_print(cout, SO->Lines, SO->nb_lines);
-			cout << endl;
-			int i;
-			for (i = 0; i < SO->nb_lines; i++) {
-				cout << "line " << i << ":" << endl;
-				Surf_A->Surf->P->Grass_lines->print_single_generator_matrix_tex(cout, SO->Lines[i]);
-				SO->Lines[i] = Surf_A->A2->element_image_of(SO->Lines[i], Elt2, verbose_level);
-				cout << "maps to " << endl;
-				Surf_A->Surf->P->Grass_lines->print_single_generator_matrix_tex(cout, SO->Lines[i]);
-			}
-		//}
+		cout << "surface_create::apply_transformations Lines = ";
+		lint_vec_print(cout, SO->Lines, SO->nb_lines);
+		cout << endl;
+		int i;
+		for (i = 0; i < SO->nb_lines; i++) {
+			cout << "line " << i << ":" << endl;
+			Surf_A->Surf->P->Grass_lines->print_single_generator_matrix_tex(cout, SO->Lines[i]);
+			SO->Lines[i] = Surf_A->A2->element_image_of(SO->Lines[i], Elt2, verbose_level);
+			cout << "maps to " << endl;
+			Surf_A->Surf->P->Grass_lines->print_single_generator_matrix_tex(cout, SO->Lines[i]);
+		}
 
 		FREE_int(transformation_coeffs);
 		} // next h
