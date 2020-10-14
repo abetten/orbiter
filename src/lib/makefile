@@ -162,6 +162,7 @@ MODULES= \
 		foundations/surfaces/clebsch_map.o \
 		foundations/surfaces/eckardt_point_info.o \
 		foundations/surfaces/eckardt_point.o \
+		foundations/surfaces/schlaefli.o \
 		foundations/surfaces/seventytwo_cases.o \
 		foundations/surfaces/surface_domain_families.o \
 		foundations/surfaces/surface_domain_io.o \

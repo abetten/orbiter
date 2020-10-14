@@ -1693,10 +1693,11 @@ public:
 	void affine_evaluation_kernel(
 			int *&Kernel, int &dim_kernel, int verbose_level);
 	void print_monomial(std::ostream &ost, int i);
-	void print_monomial_latex(std::ostream &ost, int i);
 	void print_monomial(std::ostream &ost, int *mon);
 	void print_monomial_latex(std::ostream &ost, int *mon);
-	void print_monomial(char *str, int i);
+	void print_monomial_latex(std::ostream &ost, int i);
+	void print_monomial_latex(std::string &s, int *mon);
+	void print_monomial_latex(std::string &s, int i);
 	void print_monomial_str(std::stringstream &ost, int i);
 	void print_monomial_latex_str(std::stringstream &ost, int i);
 	void print_equation(std::ostream &ost, int *coeffs);

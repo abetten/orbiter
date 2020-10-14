@@ -209,19 +209,19 @@ void eckardt_point::three_lines(surface_domain *S, int *three_lines)
 	combinatorics_domain Combi;
 
 	if (len == 2) {
-		three_lines[0] = S->line_ai(index[0]);
-		three_lines[1] = S->line_bi(index[1]);
-		three_lines[2] = S->line_cij(index[0], index[1]);
+		three_lines[0] = S->Schlaefli->line_ai(index[0]);
+		three_lines[1] = S->Schlaefli->line_bi(index[1]);
+		three_lines[2] = S->Schlaefli->line_cij(index[0], index[1]);
 		}
 	else if (len == 3) {
 		int i, j;
 
 		Combi.k2ij(index[0], i, j, 6);
-		three_lines[0] = S->line_cij(i, j);
+		three_lines[0] = S->Schlaefli->line_cij(i, j);
 		Combi.k2ij(index[1], i, j, 6);
-		three_lines[1] = S->line_cij(i, j);
+		three_lines[1] = S->Schlaefli->line_cij(i, j);
 		Combi.k2ij(index[2], i, j, 6);
-		three_lines[2] = S->line_cij(i, j);
+		three_lines[2] = S->Schlaefli->line_cij(i, j);
 		}
 	else {
 		cout << "eckardt_point::three_lines len must be 2 or 3" << endl;

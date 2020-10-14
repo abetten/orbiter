@@ -217,7 +217,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 			exit(1);
 		}
 #else
-		SCA->Six_arcs->recognize(Clebsch[orbit_idx].Arc, SCA->transporter,
+		SCA->Six_arcs->recognize(Clebsch[orbit_idx].Clebsch_map->Arc, SCA->transporter,
 				Other_arc_idx[orbit_idx], verbose_level - 2);
 
 #endif

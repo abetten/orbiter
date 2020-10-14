@@ -502,7 +502,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 
 
 			for (j = 0; j < 12; j++) {
-				double_six[j] = Lines[Surf->Double_six[i * 12 + j]];
+				double_six[j] = Lines[Surf->Schlaefli->Double_six[i * 12 + j]];
 			}
 			if (f_v) {
 				cout << "f=" << f << " / "

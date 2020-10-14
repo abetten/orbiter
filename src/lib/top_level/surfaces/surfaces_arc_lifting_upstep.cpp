@@ -446,7 +446,7 @@ void surfaces_arc_lifting_upstep::process_tritangent_plane(
 	}
 
 
-	Lift->Surf_A->Surf->Eckardt_points[tritangent_plane_idx].three_lines(
+	Lift->Surf_A->Surf->Schlaefli->Eckardt_points[tritangent_plane_idx].three_lines(
 			Lift->Surf_A->Surf, three_lines_idx);
 
 

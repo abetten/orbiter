@@ -696,7 +696,7 @@ void surface_object_with_action::init_orbits_on_half_double_sixes(
 		cout << "creating action on half double sixes:" << endl;
 	}
 	A_single_sixes = A_on_the_lines->create_induced_action_on_sets(
-			72, 6, Surf->Double_six, 0 /*verbose_level*/);
+			72, 6, Surf->Schlaefli->Double_six, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on half double sixes done" << endl;
 	}
@@ -745,7 +745,7 @@ void surface_object_with_action::init_orbits_on_tritangent_planes(
 	A_on_tritangent_planes = A_on_the_lines->create_induced_action_on_sets(
 			SO->SOP->nb_tritangent_planes, 3,
 			//SO->Lines_in_tritangent_planes,
-			Surf->Lines_in_tritangent_planes,
+			Surf->Schlaefli->Lines_in_tritangent_planes,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "action on tritangent planes done" << endl;
@@ -788,7 +788,7 @@ void surface_object_with_action::init_orbits_on_trihedral_pairs(
 			A_on_tritangent_planes->create_induced_action_on_sets(
 					120, 6,
 					//SO->Trihedral_pairs_as_tritangent_planes,
-					Surf->Trihedral_to_Eckardt,
+					Surf->Schlaefli->Trihedral_to_Eckardt,
 					0 /*verbose_level*/);
 	if (f_v) {
 		cout << "action on trihedral pairs created" << endl;
@@ -931,7 +931,7 @@ void surface_object_with_action::print_automorphism_group(
 
 	ost << "\\bigskip" << endl;
 
-	Surf->latex_table_of_Schlaefli_labeling_of_lines(ost);
+	Surf->Schlaefli->latex_table_of_Schlaefli_labeling_of_lines(ost);
 
 	ost << "\\bigskip" << endl;
 
@@ -1070,7 +1070,7 @@ void surface_object_with_action::cheat_sheet_basic(ostream &ost, int verbose_lev
 
 		ost << "orbit rep:" << endl;
 		ost << "$$" << endl;
-		Surf->latex_half_double_six(ost, idx);
+		Surf->Schlaefli->latex_half_double_six(ost, idx);
 		ost << "$$" << endl;
 
 	}
@@ -1374,7 +1374,7 @@ void surface_object_with_action::investigate_surface_and_write_report2(
 
 		ost << "\\section{Clebsch maps}" << endl;
 
-		SC->Surf->latex_table_of_clebsch_maps(ost);
+		SC->Surf->Schlaefli->latex_table_of_clebsch_maps(ost);
 
 
 		ost << endl;
