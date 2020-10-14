@@ -789,7 +789,7 @@ void OiPA_encode(void *extra_data,
 void OiPA_group_order(void *extra_data,
 	longinteger_object &go, void *global_data);
 void print_summary_table_entry(int *Table,
-	int m, int n, int i, int j, int val, char *output, void *data);
+	int m, int n, int i, int j, int val, std::string &output, void *data);
 void compute_ago_distribution(
 	classify_bitvectors *CB, tally *&C_ago, int verbose_level);
 void compute_ago_distribution_permuted(
