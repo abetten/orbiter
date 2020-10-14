@@ -272,19 +272,19 @@ public:
 	void k2ij(int k, int & i, int & j, int n);
 	int ijk2h(int i, int j, int k, int n);
 	void h2ijk(int h, int &i, int &j, int &k, int n);
-	void random_permutation(int *random_permutation, int n);
-	void perm_move(int *from, int *to, int n);
-	void perm_identity(int *a, int n);
-	int perm_is_identity(int *a, int n);
-	void perm_elementary_transposition(int *a, int n, int f);
-	void perm_mult(int *a, int *b, int *c, int n);
-	void perm_conjugate(int *a, int *b, int *c, int n);
+	void random_permutation(int *random_permutation, long int n);
+	void perm_move(int *from, int *to, long int n);
+	void perm_identity(int *a, long int n);
+	int perm_is_identity(int *a, long int n);
+	void perm_elementary_transposition(int *a, long int n, int f);
+	void perm_mult(int *a, int *b, int *c, long int n);
+	void perm_conjugate(int *a, int *b, int *c, long int n);
 	// c := a^b = b^-1 * a * b
-	void perm_inverse(int *a, int *b, int n);
+	void perm_inverse(int *a, int *b, long int n);
 	// b := a^-1
-	void perm_raise(int *a, int *b, int e, int n);
+	void perm_raise(int *a, int *b, int e, long int n);
 	// b := a^e (e >= 0)
-	void perm_direct_product(int n1, int n2, int *perm1, int *perm2, int *perm3);
+	void perm_direct_product(long int n1, long int n2, int *perm1, int *perm2, int *perm3);
 	void perm_print_list(std::ostream &ost, int *a, int n);
 	void perm_print_list_offset(std::ostream &ost, int *a, int n, int offset);
 	void perm_print_product_action(std::ostream &ost, int *a, int m_plus_n, int m,
@@ -307,10 +307,10 @@ public:
 		int f_orbit_structure,
 		void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 		void *point_label_data);
-	void perm_cycle_type(int *perm, int degree, int *cycles, int &nb_cycles);
-	int perm_order(int *a, int n);
-	int perm_signum(int *perm, int n);
-	int is_permutation(int *perm, int n);
+	void perm_cycle_type(int *perm, long int degree, int *cycles, int &nb_cycles);
+	int perm_order(int *a, long int n);
+	int perm_signum(int *perm, long int n);
+	int is_permutation(int *perm, long int n);
 	void first_lehmercode(int n, int *v);
 	int next_lehmercode(int n, int *v);
 	void lehmercode_to_permutation(int n, int *code, int *perm);
@@ -328,10 +328,10 @@ public:
 		int *row_parts, int *col_parts);
 	int ijk_rank(int i, int j, int k, int n);
 	void ijk_unrank(int &i, int &j, int &k, int n, int rk);
-	int largest_binomial2_below(int a2);
-	int largest_binomial3_below(int a3);
-	int binomial2(int a);
-	int binomial3(int a);
+	long int largest_binomial2_below(int a2);
+	long int largest_binomial3_below(int a3);
+	long int binomial2(int a);
+	long int binomial3(int a);
 	int minus_one_if_positive(int i);
 	//int int_ij2k(int i, int j, int n);
 	//void int_k2ij(int k, int & i, int & j, int n);
