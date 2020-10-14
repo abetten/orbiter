@@ -107,7 +107,7 @@ void schreier::delete_images()
 void schreier::init_images(int nb_images, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j;
+	long int i, j;
 	
 	if (f_v) {
 		cout << "schreier::init_images" << endl;
@@ -122,6 +122,9 @@ void schreier::init_images(int nb_images, int verbose_level)
 	schreier::nb_images = nb_images;
 	images = NEW_pint(nb_images);
 	for (i = 0; i < nb_images; i++) {
+		if (f_v) {
+			cout << "schreier::init_images allocating images[i], i=" << i << endl;
+		}
 		images[i] = NEW_int(2 * degree);
 		for (j = 0; j < 2 * degree; j++) {
 			images[i][j] = -1;
@@ -133,7 +136,7 @@ void schreier::init_images(int nb_images, int verbose_level)
 }
 
 void schreier::init_images_only(int nb_images,
-		int degree, int *images, int verbose_level)
+		long int degree, int *images, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -148,6 +151,9 @@ void schreier::init_images_only(int nb_images,
 	schreier::nb_images = nb_images;
 	schreier::images = NEW_pint(nb_images);
 	for (i = 0; i < nb_images; i++) {
+		if (f_v) {
+			cout << "schreier::init_images_only allocating images[i], i=" << i << endl;
+		}
 		schreier::images[i] = NEW_int(2 * degree);
 		int_vec_copy(images + i * degree, schreier::images[i], degree);
 		Combi.perm_inverse(schreier::images[i], schreier::images[i] + degree, degree);
@@ -164,7 +170,7 @@ void schreier::init_images_recycle(int nb_images,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j;
+	long int i, j;
 
 	if (f_v) {
 		cout << "schreier::init_images_recycle" << endl;
@@ -179,6 +185,9 @@ void schreier::init_images_recycle(int nb_images,
 	schreier::nb_images = nb_images;
 	images = NEW_pint(nb_images);
 	for (i = 0; i < nb_images; i++) {
+		if (f_v) {
+			cout << "schreier::init_images_recycle allocating images[i], i=" << i << endl;
+		}
 		images[i] = NEW_int(2 * degree);
 		if (i == idx_deleted_generator) {
 			for (j = 0; j < 2 * degree; j++) {
@@ -208,11 +217,11 @@ void schreier::init_images_recycle(int nb_images,
 		int **old_images, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j;
+	long int i, j;
 
 	if (f_v) {
 		cout << "schreier::init_images_recycle" << endl;
-		}
+	}
 #if 0
 	if (A == NULL) {
 		cout << "schreier::init_images_recycle action is NULL" << endl;
@@ -223,6 +232,9 @@ void schreier::init_images_recycle(int nb_images,
 	schreier::nb_images = nb_images;
 	images = NEW_pint(nb_images);
 	for (i = 0; i < nb_images; i++) {
+		if (f_v) {
+			cout << "schreier::init_images_recycle allocating images[i], i=" << i << endl;
+		}
 		images[i] = NEW_int(2 * degree);
 		if (old_images[i]) {
 			int_vec_copy(old_images[i], images[i], 2 * degree);
@@ -241,8 +253,14 @@ void schreier::init_images_recycle(int nb_images,
 
 
 
-void schreier::images_append()
+void schreier::images_append(int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "schreier::images_append" << endl;
+	}
+
 	int **new_images = NEW_pint(nb_images + 1);
 	int i, j;
 	
@@ -262,6 +280,11 @@ void schreier::init(action *A, int verbose_level)
 {
 	schreier::A = A;
 	degree = A->degree;
+
+	if (degree > INT_MAX) {
+		cout << "schreier::init degree > INT_MAX" << endl;
+		exit(1);
+	}
 	allocate_tables();
 	gens.init(A, verbose_level - 2);
 	gens_inv.init(A, verbose_level - 2);
@@ -293,7 +316,7 @@ void schreier::init2()
 void schreier::initialize_tables()
 {
 	combinatorics_domain Combi;
-	int i;
+	long int i;
 	
 	nb_orbits = 0;
 	Combi.perm_identity(orbit, degree);
@@ -389,18 +412,25 @@ void schreier::init_generators(int nb, int *elt, int verbose_level)
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "schreier::init_generators" << endl;
+		cout << "schreier::init_generators, nb=" << nb << endl;
 	}
 	
 	gens.allocate(nb, verbose_level - 2);
 	gens_inv.allocate(nb, verbose_level - 2);
 	for (i = 0; i < nb; i++) {
-		//cout << "schreier::init_generators i = " << i << endl;
+		if (f_v) {
+			cout << "schreier::init_generators i = " << i << " / " << nb << endl;
+		}
 		gens.copy_in(i, elt + i * A->elt_size_in_int);
-		A->element_invert(elt + i * A->elt_size_in_int,
-				gens_inv.ith(i), 0);
+		A->element_invert(elt + i * A->elt_size_in_int, gens_inv.ith(i), 0);
+	}
+	if (f_v) {
+		cout << "schreier::init_generators, before init_images" << endl;
 	}
 	init_images(nb, 0 /* verbose_level */);	
+	if (f_v) {
+		cout << "schreier::init_generators, after init_images" << endl;
+	}
 	if (f_v) {
 		cout << "schreier::init_generators done" << endl;
 	}
@@ -552,10 +582,10 @@ void schreier::init_generators_by_handle(std::vector<int> &gen_hdl, int verbose_
 }
 
 
-int schreier::get_image(int i, int gen_idx, int verbose_level)
+long int schreier::get_image(long int i, int gen_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int a;
+	long int a;
 	
 	if (f_v) {
 		cout << "schreier::get_image computing image of point "
@@ -680,8 +710,7 @@ void schreier::transporter_from_orbit_rep_to_point(int pt,
 	int pos;
 
 	if (f_v) {
-		cout << "schreier::transporter_from_orbit_"
-				"rep_to_point" << endl;
+		cout << "schreier::transporter_from_orbit_rep_to_point" << endl;
 	}
 	if (f_images_only) {
 		cout << "schreier::transporter_from_orbit_rep_to_point is not "
@@ -746,7 +775,9 @@ void schreier::coset_rep(int j, int verbose_level)
 	}
 	if (prev[j] != -1) {
 		if (f_v) {
-			cout << "schreier::coset_rep j=" << j << " pt=" << orbit[j] << " prev[j]=" << prev[j] << " orbit_inv[prev[j]]=" << orbit_inv[prev[j]] << " label[j]=" << label[j] << endl;
+			cout << "schreier::coset_rep j=" << j << " pt=" << orbit[j];
+			cout << " prev[j]=" << prev[j] << " orbit_inv[prev[j]]=";
+			cout << orbit_inv[prev[j]] << " label[j]=" << label[j] << endl;
 		}
 		coset_rep(orbit_inv[prev[j]], verbose_level);
 		gen = gens.ith(label[j]);
@@ -841,13 +872,15 @@ void schreier::coset_rep_inv(int j, int verbose_level)
 void schreier::extend_orbit(int *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
-	//int f_vvv = (verbose_level >= 3);
+	int f_vv = (verbose_level >= 3);
 	int cur, total0, total, cur_pt;
 	int gen_first, i, next_pt, next_pt_loc;
 	
 	if (f_v) {
-		cout << "extend_orbit() extending orbit "
+		cout << "schreier::extend_orbit" << endl;
+	}
+	if (f_vv) {
+		cout << "schreier::extend_orbit extending orbit "
 				<< nb_orbits - 1 << " of length "
 			<< orbit_len[nb_orbits - 1] << endl;
 	}
@@ -855,7 +888,7 @@ void schreier::extend_orbit(int *elt, int verbose_level)
 	gens.append(elt, verbose_level - 2);
 	A->element_invert(elt, A->Elt1, FALSE);
 	gens_inv.append(A->Elt1, verbose_level - 2);
-	images_append();
+	images_append(verbose_level - 2);
 	
 	cur = orbit_first[nb_orbits - 1];
 	total = total0 = orbit_first[nb_orbits];
@@ -917,6 +950,9 @@ void schreier::extend_orbit(int *elt, int verbose_level)
 			}
 		}
 		cout << " }" << endl;
+	}
+	if (f_v) {
+		cout << "schreier::extend_orbit done" << endl;
 	}
 }
 

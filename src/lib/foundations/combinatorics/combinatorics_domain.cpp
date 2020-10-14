@@ -1111,9 +1111,9 @@ void combinatorics_domain::h2ijk(int h, int &i, int &j, int &k, int n)
 }
 
 
-void combinatorics_domain::random_permutation(int *random_permutation, int n)
+void combinatorics_domain::random_permutation(int *random_permutation, long int n)
 {
-	int i, l, a;
+	long int i, l, a;
 	int *available_digits;
 	os_interface Os;
 
@@ -1148,27 +1148,27 @@ void combinatorics_domain::random_permutation(int *random_permutation, int n)
 	FREE_int(available_digits);
 }
 
-void combinatorics_domain::perm_move(int *from, int *to, int n)
+void combinatorics_domain::perm_move(int *from, int *to, long int n)
 {
-	int i;
+	long int i;
 	
 	for (i = 0; i < n; i++) {
 		to[i] = from[i];
 	}
 }
 
-void combinatorics_domain::perm_identity(int *a, int n)
+void combinatorics_domain::perm_identity(int *a, long int n)
 {
-	int i;
+	long int i;
 	
 	for (i = 0; i < n; i++) {
 		a[i] = i;
 	}
 }
 
-int combinatorics_domain::perm_is_identity(int *a, int n)
+int combinatorics_domain::perm_is_identity(int *a, long int n)
 {
-	int i;
+	long int i;
 
 	for (i = 0; i < n; i++) {
 		if (a[i] != i) {
@@ -1178,9 +1178,9 @@ int combinatorics_domain::perm_is_identity(int *a, int n)
 	return TRUE;
 }
 
-void combinatorics_domain::perm_elementary_transposition(int *a, int n, int f)
+void combinatorics_domain::perm_elementary_transposition(int *a, long int n, int f)
 {
-	int i;
+	long int i;
 
 	if (f >= n - 1) {
 		cout << "perm_elementary_transposition f >= n - 1" << endl;
@@ -1193,9 +1193,9 @@ void combinatorics_domain::perm_elementary_transposition(int *a, int n, int f)
 	a[f + 1] = f;
 }
 
-void combinatorics_domain::perm_mult(int *a, int *b, int *c, int n)
+void combinatorics_domain::perm_mult(int *a, int *b, int *c, long int n)
 {
-	int i, j, k;
+	long int i, j, k;
 	
 	for (i = 0; i < n; i++) {
 		j = a[i];
@@ -1214,10 +1214,10 @@ void combinatorics_domain::perm_mult(int *a, int *b, int *c, int n)
 	}
 }
 
-void combinatorics_domain::perm_conjugate(int *a, int *b, int *c, int n)
+void combinatorics_domain::perm_conjugate(int *a, int *b, int *c, long int n)
 // c := a^b = b^-1 * a * b
 {
-	int i, j, k;
+	long int i, j, k;
 	
 	for (i = 0; i < n; i++) {
 		j = b[i];
@@ -1228,10 +1228,10 @@ void combinatorics_domain::perm_conjugate(int *a, int *b, int *c, int n)
 	}
 }
 
-void combinatorics_domain::perm_inverse(int *a, int *b, int n)
+void combinatorics_domain::perm_inverse(int *a, int *b, long int n)
 // b := a^-1
 {
-	int i, j;
+	long int i, j;
 	
 	for (i = 0; i < n; i++) {
 		j = a[i];
@@ -1239,10 +1239,10 @@ void combinatorics_domain::perm_inverse(int *a, int *b, int n)
 	}
 }
 
-void combinatorics_domain::perm_raise(int *a, int *b, int e, int n)
+void combinatorics_domain::perm_raise(int *a, int *b, int e, long int n)
 // b := a^e (e >= 0)
 {
-	int i, j, k;
+	long int i, j, k;
 	
 	for (i = 0; i < n; i++) {
 		k = i;
@@ -1253,10 +1253,10 @@ void combinatorics_domain::perm_raise(int *a, int *b, int e, int n)
 	}
 }
 
-void combinatorics_domain::perm_direct_product(int n1, int n2,
+void combinatorics_domain::perm_direct_product(long int n1, long int n2,
 		int *perm1, int *perm2, int *perm3)
 {
-	int i, j, a, b, c;
+	long int i, j, a, b, c;
 	
 	for (i = 0; i < n1; i++) {
 		for (j = 0; j < n2; j++) {
@@ -1471,10 +1471,10 @@ void combinatorics_domain::perm_print_offset(ostream &ost,
 }
 
 void combinatorics_domain::perm_cycle_type(
-		int *perm, int degree, int *cycles, int &nb_cycles)
+		int *perm, long int degree, int *cycles, int &nb_cycles)
 {
 	int *have_seen;
-	int i, l, l1, first, next, len;
+	long int i, l, l1, first, next, len;
 
 	//cout << "perm_cycle_type degree=" << degree << endl;
 	nb_cycles = 0;
@@ -1534,7 +1534,7 @@ void combinatorics_domain::perm_cycle_type(
 	FREE_int(have_seen);
 }
 
-int combinatorics_domain::perm_order(int *a, int n)
+int combinatorics_domain::perm_order(int *a, long int n)
 {
 	int *have_seen;
 	long int i, l, l1, first, next, len, order = 1;
@@ -1585,9 +1585,9 @@ int combinatorics_domain::perm_order(int *a, int n)
 	return order;
 }
 
-int combinatorics_domain::perm_signum(int *perm, int n)
+int combinatorics_domain::perm_signum(int *perm, long int n)
 {
-	int i, j, a, b, f;
+	long int i, j, a, b, f;
 	// f = number of inversions
 	
 
@@ -1610,10 +1610,10 @@ int combinatorics_domain::perm_signum(int *perm, int n)
 	}
 }
 
-int combinatorics_domain::is_permutation(int *perm, int n)
+int combinatorics_domain::is_permutation(int *perm, long int n)
 {
 	int *perm2;
-	int i;
+	long int i;
 	sorting Sorting;
 
 	perm2 = NEW_int(n);
@@ -2070,9 +2070,9 @@ void combinatorics_domain::ijk_unrank(int &i, int &j, int &k, int n, int rk)
 	unrank_k_subset(rk, set, n, 3);
 }
 
-int combinatorics_domain::largest_binomial2_below(int a2)
+long int combinatorics_domain::largest_binomial2_below(int a2)
 {
-	int b, b2;
+	long int b, b2;
 
 	for (b = 1; ; b++) {
 		b2 = binomial2(b);
@@ -2085,9 +2085,9 @@ int combinatorics_domain::largest_binomial2_below(int a2)
 	return b - 1;
 }
 
-int combinatorics_domain::largest_binomial3_below(int a3)
+long int combinatorics_domain::largest_binomial3_below(int a3)
 {
-	int b, b3;
+	long int b, b3;
 
 	for (b = 1; ; b++) {
 		b3 = binomial3(b);
@@ -2100,7 +2100,7 @@ int combinatorics_domain::largest_binomial3_below(int a3)
 	return b - 1;
 }
 
-int combinatorics_domain::binomial2(int a)
+long int combinatorics_domain::binomial2(int a)
 {
 	if (a == 0) {
 		return 0;
@@ -2113,7 +2113,7 @@ int combinatorics_domain::binomial2(int a)
 	}
 }
 
-int combinatorics_domain::binomial3(int a)
+long int combinatorics_domain::binomial3(int a)
 {
 	int r;
 	if (a <= 2) {

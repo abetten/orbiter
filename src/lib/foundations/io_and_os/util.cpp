@@ -152,7 +152,7 @@ int int_vec_find_first_nonzero_entry(int *v, int len)
 	exit(1);
 }
 
-void int_vec_zero(int *v, int len)
+void int_vec_zero(int *v, long int len)
 {
 	int i;
 	int *p;
@@ -162,7 +162,7 @@ void int_vec_zero(int *v, int len)
 	}
 }
 
-void lint_vec_zero(long int *v, int len)
+void lint_vec_zero(long int *v, long int len)
 {
 	int i;
 	long int *p;
@@ -172,7 +172,7 @@ void lint_vec_zero(long int *v, int len)
 	}
 }
 
-void int_vec_mone(int *v, int len)
+void int_vec_mone(int *v, long int len)
 {
 	int i;
 	int *p;
@@ -182,7 +182,7 @@ void int_vec_mone(int *v, int len)
 	}
 }
 
-void lint_vec_mone(long int *v, int len)
+void lint_vec_mone(long int *v, long int len)
 {
 	int i;
 	long int *p;
@@ -192,7 +192,7 @@ void lint_vec_mone(long int *v, int len)
 	}
 }
 
-void int_vec_copy(int *from, int *to, int len)
+void int_vec_copy(int *from, int *to, long int len)
 {
 	int i;
 	int *p, *q;
@@ -202,7 +202,7 @@ void int_vec_copy(int *from, int *to, int len)
 	}
 }
 
-void lint_vec_copy(long int *from, long int *to, int len)
+void lint_vec_copy(long int *from, long int *to, long int len)
 {
 	int i;
 	long int *p, *q;
@@ -212,7 +212,7 @@ void lint_vec_copy(long int *from, long int *to, int len)
 	}
 }
 
-void int_vec_copy_to_lint(int *from, long int *to, int len)
+void int_vec_copy_to_lint(int *from, long int *to, long int len)
 {
 	int i;
 	int *p;
@@ -223,7 +223,7 @@ void int_vec_copy_to_lint(int *from, long int *to, int len)
 	}
 }
 
-void lint_vec_copy_to_int(long int *from, int *to, int len)
+void lint_vec_copy_to_int(long int *from, int *to, long int len)
 {
 	int i;
 	long int *p;
@@ -234,7 +234,7 @@ void lint_vec_copy_to_int(long int *from, int *to, int len)
 	}
 }
 
-void int_vec_swap(int *v1, int *v2, int len)
+void int_vec_swap(int *v1, int *v2, long int len)
 {
 	int i, a;
 	int *p, *q;
