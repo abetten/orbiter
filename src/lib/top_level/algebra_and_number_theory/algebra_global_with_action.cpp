@@ -3195,8 +3195,8 @@ void algebra_global_with_action::orbits_on_polynomials(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_stabilizer = TRUE;
-	int f_draw_tree = TRUE;
+	//int f_stabilizer = TRUE;
+	//int f_draw_tree = TRUE;
 
 
 	if (f_v) {

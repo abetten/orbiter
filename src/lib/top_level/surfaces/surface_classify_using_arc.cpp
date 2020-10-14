@@ -193,11 +193,6 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 					"after SCAL[nb_surfaces].init nb_surfaces = " << nb_surfaces << endl;
 		}
 
-
-
-
-
-
 		nb_surfaces++;
 
 	} // next arc_idx

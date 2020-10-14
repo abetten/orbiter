@@ -10,6 +10,7 @@ MODULES = \
 	clebsch_map.o \
 	eckardt_point_info.o \
 	eckardt_point.o \
+	schlaefli.o \
 	seventytwo_cases.o \
 	surface_domain_families.o \
 	surface_domain_io.o \

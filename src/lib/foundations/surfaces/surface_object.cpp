@@ -1748,7 +1748,7 @@ void surface_object::print_nine_lines_latex(ostream &ost,
 		for (j = 0; j < 3; j++) {
 
 			idx = nine_lines_idx[i * 3 + j];
-			ost << Surf->Line_label_tex[idx];
+			ost << Surf->Schlaefli->Line_label_tex[idx];
 			if (j < 3 - 1) {
 				ost << " & ";
 				}

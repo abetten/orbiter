@@ -1132,18 +1132,18 @@ void latex_interface::lint_vec_print_as_matrix(ostream &ost,
 }
 
 
-void latex_interface::int_matrix_print_with_labels_and_partition(ostream &ost,
+void latex_interface::int_matrix_print_with_labels_and_partition(std::ostream &ost,
 	int *p, int m, int n,
 	int *row_labels, int *col_labels,
 	int *row_part_first, int *row_part_len, int nb_row_parts,
 	int *col_part_first, int *col_part_len, int nb_col_parts,
 	void (*process_function_or_NULL)(int *p, int m, int n,
-		int i, int j, int val, char *output, void *data),
+		int i, int j, int val, std::string &output, void *data),
 	void *data,
 	int f_tex)
 {
 	int i, j, I, J, u, v;
-	char output[1000];
+	string output;
 
 	if (f_tex) {
 		ost << "\\begin{array}{r|";
@@ -1160,6 +1160,7 @@ void latex_interface::int_matrix_print_with_labels_and_partition(ostream &ost,
 		else {
 			ost << " ";
 			}
+		output.assign("");
 		if (process_function_or_NULL) {
 			(*process_function_or_NULL)(
 				p, m, n, -1, j,
@@ -1181,6 +1182,7 @@ void latex_interface::int_matrix_print_with_labels_and_partition(ostream &ost,
 		for (u = 0; u < row_part_len[I]; u++) {
 			i = row_part_first[I] + u;
 
+			output.assign("");
 			if (process_function_or_NULL) {
 				(*process_function_or_NULL)(
 					p, m, n, i, -1,
@@ -1200,6 +1202,7 @@ void latex_interface::int_matrix_print_with_labels_and_partition(ostream &ost,
 					else {
 						ost << " ";
 						}
+					output.assign("");
 					if (process_function_or_NULL) {
 						(*process_function_or_NULL)(
 						p, m, n, i, j, p[i * n + j],
@@ -1226,18 +1229,18 @@ void latex_interface::int_matrix_print_with_labels_and_partition(ostream &ost,
 		}
 }
 
-void latex_interface::lint_matrix_print_with_labels_and_partition(ostream &ost,
+void latex_interface::lint_matrix_print_with_labels_and_partition(std::ostream &ost,
 	long int *p, int m, int n,
 	int *row_labels, int *col_labels,
 	int *row_part_first, int *row_part_len, int nb_row_parts,
 	int *col_part_first, int *col_part_len, int nb_col_parts,
 	void (*process_function_or_NULL)(long int *p, int m, int n,
-		int i, int j, int val, char *output, void *data),
+		int i, int j, int val, std::string &output, void *data),
 	void *data,
 	int f_tex)
 {
 	int i, j, I, J, u, v;
-	char output[1000];
+	string output;
 
 	if (f_tex) {
 		ost << "\\begin{array}{r|";
@@ -1254,6 +1257,7 @@ void latex_interface::lint_matrix_print_with_labels_and_partition(ostream &ost,
 		else {
 			ost << " ";
 			}
+		output.assign("");
 		if (process_function_or_NULL) {
 			(*process_function_or_NULL)(
 				p, m, n, -1, j,
@@ -1275,6 +1279,7 @@ void latex_interface::lint_matrix_print_with_labels_and_partition(ostream &ost,
 		for (u = 0; u < row_part_len[I]; u++) {
 			i = row_part_first[I] + u;
 
+			output.assign("");
 			if (process_function_or_NULL) {
 				(*process_function_or_NULL)(
 					p, m, n, i, -1,
@@ -1294,6 +1299,7 @@ void latex_interface::lint_matrix_print_with_labels_and_partition(ostream &ost,
 					else {
 						ost << " ";
 						}
+					output.assign("");
 					if (process_function_or_NULL) {
 						(*process_function_or_NULL)(
 						p, m, n, i, j, p[i * n + j],

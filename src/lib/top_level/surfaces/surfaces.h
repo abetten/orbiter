@@ -610,24 +610,28 @@ public:
 	surface_object_with_action *SOA;
 
 	int orbit_idx;
-	int f, l, k;
-	int line1, line2, transversal;
+	int f, l, hds;
+	//int line1, line2, transversal;
 
+	clebsch_map *Clebsch_map;
+#if 0
 	long int *Clebsch_map;
 	int *Clebsch_coeff;
+#endif
 
-	long int plane_rk, plane_rk_global;
-	int line_idx[2];
-	long int Arc[6];
-	long int Blown_up_lines[6];
+	//int plane_rk_global;
+
+	//long int plane_rk, plane_rk_global;
+	//int line_idx[2];
+	//long int Arc[6];
+	//long int Blown_up_lines[6];
 	//int orbit_at_level;
-	int ds, ds_row;
-	int intersection_points[6];
-	//int intersection_points_local[6];
-	int v[4];
-	int Plane[16];
-	int base_cols[4];
-	int coefficients[3];
+	//int ds, ds_row;
+	//int intersection_points[6];
+	//int v[4];
+	//int Plane[16];
+	//int base_cols[4];
+	//int coefficients[3];
 
 
 	surface_clebsch_map();
@@ -636,6 +640,30 @@ public:
 	void init(surface_object_with_action *SOA, int orbit_idx, int verbose_level);
 
 };
+
+#if 0
+surface_domain *Surf;
+surface_object *SO;
+finite_field *F;
+
+int hds, ds, ds_row;
+
+int line1, line2;
+int transversal;
+int tritangent_plane_idx;
+
+int line_idx[2];
+int plane_rk_global;
+
+int intersection_points[6];
+int intersection_points_local[6];
+int Plane[16];
+int base_cols[4];
+
+
+long int *Clebsch_map; // [SO->nb_pts]
+int *Clebsch_coeff; // [SO->nb_pts * 4]
+#endif
 
 
 // #############################################################################

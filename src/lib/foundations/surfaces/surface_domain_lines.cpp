@@ -18,286 +18,26 @@ namespace orbiter {
 namespace foundations {
 
 
-void surface_domain::init_line_data(int verbose_level)
+
+void surface_domain::init_Schlaefli(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	latex_interface L;
-
-	int i, j, h, h2;
 
 	if (f_v) {
-		cout << "surface_domain::init_line_data" << endl;
+		cout << "surface_domain::init_Schlaefli" << endl;
 	}
 
-	Sets = NEW_lint(30 * 2);
-	M = NEW_int(6 * 6);
-	int_vec_zero(M, 6 * 6);
+	Schlaefli = NEW_OBJECT(schlaefli);
 
-	h = 0;
-	for (i = 0; i < 6; i++) {
-		for (j = 0; j < 6; j++) {
-			if (j == i) {
-				continue;
-			}
-			M[i * 6 + j] = h;
-			Sets[h * 2 + 0] = i;
-			Sets[h * 2 + 1] = 6 + j;
-			h++;
-		}
-	}
-
-
-	if (h != 30) {
-		cout << "h != 30" << endl;
-		exit(1);
-	}
+	Schlaefli->init(this, verbose_level);
 
 
 	if (f_v) {
-		cout << "surface_domain::init_line_data Sets:" << endl;
-		L.print_lint_matrix_with_standard_labels(cout,
-			Sets, 30, 2, FALSE /* f_tex */);
-		//int_matrix_print(Sets, 30, 2);
-	}
-
-
-	Sets2 = NEW_lint(15 * 2);
-	h2 = 0;
-	for (i = 0; i < 6; i++) {
-		for (j = i + 1; j < 6; j++) {
-			Sets2[h2 * 2 + 0] = M[i * 6 + j];
-			Sets2[h2 * 2 + 1] = M[j * 6 + i];
-			h2++;
-		}
-	}
-	if (h2 != 15) {
-		cout << "h2 != 15" << endl;
-		exit(1);
-	}
-
-	if (f_v) {
-		cout << "Sets2:" << endl;
-		L.print_lint_matrix_with_standard_labels(cout,
-			Sets2, 15, 2, FALSE /* f_tex */);
-		//int_matrix_print(Sets2, 15, 2);
-	}
-	if (f_v) {
-		cout << "surface_domain::init_line_data done" << endl;
+		cout << "surface_domain::init_Schlaefli done" << endl;
 	}
 }
 
-void surface_domain::init_Schlaefli_labels(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	latex_interface L;
 
-	int i, h;
-
-	if (f_v) {
-		cout << "surface_domain::init_Schlaefli_labels" << endl;
-		}
-	Line_label = new std::string[27];
-	Line_label_tex = new std::string[27];
-	char str[1000];
-	int a, b, c;
-
-	for (i = 0; i < 27; i++) {
-		if (i < 6) {
-			snprintf(str, 1000, "a_%d", i + 1);
-			}
-		else if (i < 12) {
-			snprintf(str, 1000, "b_%d", i - 6 + 1);
-			}
-		else {
-			h = i - 12;
-			c = Sets2[h * 2 + 0];
-			a = Sets[c * 2 + 0] + 1;
-			b = Sets[c * 2 + 1] - 6 + 1;
-			snprintf(str, 1000, "c_{%d%d}", a, b);
-			}
-		if (f_v) {
-			cout << "creating label " << str
-				<< " for line " << i << endl;
-			}
-		Line_label[i].assign(str);
-		}
-
-	for (i = 0; i < 27; i++) {
-		if (i < 6) {
-			snprintf(str, 1000, "a_{%d}", i + 1);
-			}
-		else if (i < 12) {
-			snprintf(str, 1000, "b_{%d}", i - 6 + 1);
-			}
-		else {
-			h = i - 12;
-			c = Sets2[h * 2 + 0];
-			a = Sets[c * 2 + 0] + 1;
-			b = Sets[c * 2 + 1] - 6 + 1;
-			snprintf(str, 1000, "c_{%d%d}", a, b);
-			}
-		if (f_v) {
-			cout << "creating label " << str
-				<< " for line " << i << endl;
-			}
-		Line_label_tex[i].assign(str);
-		}
-
-	if (f_v) {
-		cout << "surface_domain::init_Schlaefli_labels done" << endl;
-		}
-}
-
-int surface_domain::line_ai(int i)
-{
-	if (i >= 6) {
-		cout << "surface_domain::line_ai i >= 6" << endl;
-		exit(1);
-		}
-	return i;
-}
-
-int surface_domain::line_bi(int i)
-{
-	if (i >= 6) {
-		cout << "surface_domain::line_bi i >= 6" << endl;
-		exit(1);
-		}
-	return 6 + i;
-}
-
-int surface_domain::line_cij(int i, int j)
-{
-	int a;
-	combinatorics_domain Combi;
-
-	if (i > j) {
-		return line_cij(j, i);
-		}
-	if (i == j) {
-		cout << "surface_domain::line_cij i==j" << endl;
-		exit(1);
-		}
-	if (i >= 6) {
-		cout << "surface_domain::line_cij i >= 6" << endl;
-		exit(1);
-		}
-	if (j >= 6) {
-		cout << "surface_domain::line_cij j >= 6" << endl;
-		exit(1);
-		}
-	a = Combi.ij2k(i, j, 6);
-	return 12 + a;
-}
-
-int surface_domain::type_of_line(int line)
-// 0 = a_i, 1 = b_i, 2 = c_ij
-{
-	if (line < 6) {
-		return 0;
-		}
-	else if (line < 12) {
-		return 1;
-		}
-	else if (line < 27) {
-		return 2;
-		}
-	else {
-		cout << "surface_domain::type_of_line error" << endl;
-		exit(1);
-		}
-}
-
-void surface_domain::index_of_line(int line, int &i, int &j)
-// returns i for a_i, i for b_i and (i,j) for c_ij
-{
-	int a;
-	combinatorics_domain Combi;
-
-	if (line < 6) { // ai
-		i = line;
-		}
-	else if (line < 12) { // bj
-		i = line - 6;
-		}
-	else if (line < 27) { // c_ij
-		a = line - 12;
-		Combi.k2ij(a, i, j, 6);
-		}
-	else {
-		cout << "surface_domain::index_of_line error" << endl;
-		exit(1);
-		}
-}
-
-int surface_domain::third_line_in_tritangent_plane(int l1, int l2, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int h, i, j, k, l, m, n;
-
-	if (f_v) {
-		cout << "surface_domain::third_line_in_tritangent_plane" << endl;
-	}
-	if (l1 > l2) {
-		int t = l1;
-		l1 = l2;
-		l2 = t;
-	}
-	// now l1 < l2.
-	if (l1 < 6) {
-		// l1 = ai line
-		i = l1;
-		if (l2 < 6) {
-			cout << "surface_domain::third_line_in_tritangent_plane impossible (1)" << endl;
-			exit(1);
-		}
-		if (l2 < 12) {
-			j = l2 - 6;
-			return line_cij(i, j);
-		}
-		else {
-			index_of_line(l2, h, k);
-			if (h == i) {
-				return line_bi(k);
-			}
-			else if (k == i) {
-				return line_bi(h);
-			}
-			else {
-				cout << "surface_domain::third_line_in_tritangent_plane impossible (2)" << endl;
-				exit(1);
-			}
-		}
-	}
-	else if (l1 < 12) {
-		// l1 = bh line
-		h = l1 - 6;
-		if (l2 < 12) {
-			cout << "surface_domain::third_line_in_tritangent_plane impossible (3)" << endl;
-			exit(1);
-		}
-		index_of_line(l2, i, j);
-		if (i == h) {
-			return line_ai(j);
-		}
-		else if (h == j) {
-			return line_ai(i);
-		}
-		else {
-			cout << "surface_domain::third_line_in_tritangent_plane impossible (4)" << endl;
-			exit(1);
-		}
-	}
-	else {
-		// now we must be in a tritangent plane c_{ij,kl,mn}
-		index_of_line(l1, i, j);
-		index_of_line(l2, k, l);
-
-		ijkl2mn(i, j, k, l, m, n);
-
-		return line_cij(m, n);
-	}
-}
 
 void surface_domain::unrank_line(int *v, long int rk)
 {
@@ -1116,8 +856,8 @@ void surface_domain::create_the_fifteen_other_lines(
 		cout << "creating the 30 planes:" << endl;
 		}
 	for (h = 0; h < 30; h++) {
-		i = Sets[h * 2 + 0];
-		j = Sets[h * 2 + 1];
+		i = Schlaefli->Sets[h * 2 + 0];
+		j = Schlaefli->Sets[h * 2 + 1];
 		Gr->unrank_lint_here(Basis0, double_six[i],
 				0/* verbose_level*/);
 		Gr->unrank_lint_here(Basis0 + 8, double_six[j],
@@ -1140,8 +880,8 @@ void surface_domain::create_the_fifteen_other_lines(
 		cout << "creating the 15 lines:" << endl;
 		}
 	for (h = 0; h < 15; h++) {
-		i = Sets2[h * 2 + 0];
-		j = Sets2[h * 2 + 1];
+		i = Schlaefli->Sets2[h * 2 + 0];
+		j = Schlaefli->Sets2[h * 2 + 1];
 		Gr3->unrank_lint_here(Basis1, Planes[i],
 				0/* verbose_level*/);
 		Gr3->unrank_lint_here(Basis2, Planes[j],
@@ -1179,166 +919,6 @@ void surface_domain::create_the_fifteen_other_lines(
 
 }
 
-void surface_domain::init_adjacency_matrix_of_lines(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j, k, l;
-
-	if (f_v) {
-		cout << "surface_domain::init_adjacency_matrix_of_lines" << endl;
-	}
-
-	adjacency_matrix_of_lines = NEW_int(27 * 27);
-	int_vec_zero(adjacency_matrix_of_lines, 27 * 27);
-
-	// the ai lines:
-	for (i = 0; i < 6; i++) {
-		for (j = 0; j < 6; j++) {
-			if (j == i) {
-				continue;
-			}
-			set_adjacency_matrix_of_lines(line_ai(i), line_bi(j));
-		}
-		for (k = 0; k < 6; k++) {
-			if (k == i) {
-				continue;
-			}
-			set_adjacency_matrix_of_lines(line_ai(i), line_cij(i, k));
-		}
-	}
-
-
-	// the bi lines:
-	for (i = 0; i < 6; i++) {
-		for (j = 0; j < 6; j++) {
-			if (j == i) {
-				continue;
-			}
-			set_adjacency_matrix_of_lines(line_bi(i), line_ai(j));
-		}
-		for (k = 0; k < 6; k++) {
-			if (k == i) {
-				continue;
-			}
-			set_adjacency_matrix_of_lines(line_bi(i), line_cij(i, k));
-		}
-	}
-
-
-
-
-	// the cij lines:
-	for (i = 0; i < 6; i++) {
-		for (j = 0; j < 6; j++) {
-			if (j == i) {
-				continue;
-			}
-			for (k = 0; k < 6; k++) {
-				if (k == i) {
-					continue;
-				}
-				if (k == j) {
-					continue;
-				}
-				for (l = 0; l < 6; l++) {
-					if (l == i) {
-						continue;
-					}
-					if (l == j) {
-						continue;
-					}
-					if (k == l) {
-						continue;
-					}
-					set_adjacency_matrix_of_lines(
-							line_cij(i, j), line_cij(k, l));
-				} // next l
-			} // next k
-		} // next j
-	} // next i
-
-	int r, c;
-
-	for (i = 0; i < 27; i++) {
-		r = 0;
-		for (j = 0; j < 27; j++) {
-			if (get_adjacency_matrix_of_lines(i, j)) {
-				r++;
-			}
-		}
-		if (r != 10) {
-			cout << "surface_domain::init_adjacency_matrix_of_lines "
-					"row sum r != 10, r = " << r << " in row " << i << endl;
-		}
-	}
-
-	for (j = 0; j < 27; j++) {
-		c = 0;
-		for (i = 0; i < 27; i++) {
-			if (get_adjacency_matrix_of_lines(i, j)) {
-				c++;
-			}
-		}
-		if (c != 10) {
-			cout << "surface_domain::init_adjacency_matrix_of_lines "
-					"col sum c != 10, c = " << c << " in col " << j << endl;
-		}
-	}
-
-	if (f_v) {
-		cout << "surface_domain::init_adjacency_matrix_of_lines done" << endl;
-		}
-}
-
-void surface_domain::init_incidence_matrix_of_lines_vs_tritangent_planes(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j, h;
-	int three_lines[3];
-
-	if (f_v) {
-		cout << "surface_domain::init_incidence_matrix_of_lines_vs_tritangent_planes" << endl;
-	}
-
-	incidence_lines_vs_tritangent_planes = NEW_int(27 * 45);
-	int_vec_zero(incidence_lines_vs_tritangent_planes, 27 * 45);
-
-
-	Lines_in_tritangent_planes = NEW_lint(45 * 3);
-	lint_vec_zero(Lines_in_tritangent_planes, 45 * 3);
-
-	for (j = 0; j < nb_Eckardt_points; j++) {
-		eckardt_point *E;
-
-		E = Eckardt_points + j;
-		E->three_lines(this, three_lines);
-		for (h = 0; h < 3; h++) {
-			Lines_in_tritangent_planes[j * 3 + h] = three_lines[h];
-				// conversion to long int
-		}
-		for (h = 0; h < 3; h++) {
-			i = three_lines[h];
-			incidence_lines_vs_tritangent_planes[i * 45 + j] = 1;
-		}
-	}
-
-
-
-	if (f_v) {
-		cout << "surface_domain::init_incidence_matrix_of_lines_vs_tritangent_planes done" << endl;
-	}
-}
-
-void surface_domain::set_adjacency_matrix_of_lines(int i, int j)
-{
-	adjacency_matrix_of_lines[i * 27 + j] = 1;
-	adjacency_matrix_of_lines[j * 27 + i] = 1;
-}
-
-int surface_domain::get_adjacency_matrix_of_lines(int i, int j)
-{
-	return adjacency_matrix_of_lines[i * 27 + j];
-}
 
 void surface_domain::compute_adjacency_matrix_of_line_intersection_graph(
 	int *&Adj, long int *S, int n, int verbose_level)
@@ -1848,7 +1428,7 @@ void surface_domain::create_lines_from_plane_equations(
 	}
 
 	for (line_idx = 0; line_idx < 27; line_idx++) {
-		find_tritangent_planes_intersecting_in_a_line(
+		Schlaefli->find_tritangent_planes_intersecting_in_a_line(
 			line_idx, plane1, plane2, 0 /* verbose_level */);
 		int_vec_copy(The_plane_equations + plane1 * 4, Basis, 4);
 		int_vec_copy(The_plane_equations + plane2 * 4, Basis + 4, 4);

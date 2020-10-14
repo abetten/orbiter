@@ -290,7 +290,7 @@ void surfaces_arc_lifting_definition_node::report_HDS_top(ostream &ost)
 	ost << "\\begin{array}{|c|c|c|c|c|c|c|c|}" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\multicolumn{8}{|c|}{\\mbox{Tritangent Plane}\\; \\pi_{" << t
-			<< "} = \\pi_{" << Lift->Surf->Eckard_point_label_tex[t] << "}}\\\\" << endl;
+			<< "} = \\pi_{" << Lift->Surf->Schlaefli->Eckard_point_label_tex[t] << "}}\\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\mbox{Coset} & \\mbox{Clebsch} & (m_1,m_2,m_3) & "
 			"(\\ell_1',\\ell_2') & (t_3',t_4',t_5',t_6') & DS & HDS & \\mbox{r.o.}\\\\" << endl;

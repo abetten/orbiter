@@ -349,13 +349,13 @@ public:
 		int *v, int len, int width, int f_tex);
 	void lint_vec_print_as_matrix(std::ostream &ost,
 		long int *v, int len, int width, int f_tex);
-	void int_matrix_print_with_labels_and_partition(std::ostream &ost, int *p,
-		int m, int n,
+	void int_matrix_print_with_labels_and_partition(std::ostream &ost,
+		int *p, int m, int n,
 		int *row_labels, int *col_labels,
 		int *row_part_first, int *row_part_len, int nb_row_parts,
 		int *col_part_first, int *col_part_len, int nb_col_parts,
-		void (*process_function_or_NULL)(int *p, int m, int n, int i, int j,
-			int val, char *output, void *data),
+		void (*process_function_or_NULL)(int *p, int m, int n,
+			int i, int j, int val, std::string &output, void *data),
 		void *data,
 		int f_tex);
 	void lint_matrix_print_with_labels_and_partition(std::ostream &ost,
@@ -364,7 +364,7 @@ public:
 		int *row_part_first, int *row_part_len, int nb_row_parts,
 		int *col_part_first, int *col_part_len, int nb_col_parts,
 		void (*process_function_or_NULL)(long int *p, int m, int n,
-			int i, int j, int val, char *output, void *data),
+			int i, int j, int val, std::string &output, void *data),
 		void *data,
 		int f_tex);
 	void int_matrix_print_tex(std::ostream &ost, int *p, int m, int n);

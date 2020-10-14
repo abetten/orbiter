@@ -727,6 +727,7 @@ void homogeneous_polynomial_domain::print_monomial(ostream &ost, int i)
 	}
 }
 
+#if 0
 void homogeneous_polynomial_domain::print_monomial_latex(ostream &ost, int i)
 {
 	int j, a;
@@ -742,6 +743,7 @@ void homogeneous_polynomial_domain::print_monomial_latex(ostream &ost, int i)
 		}
 	}
 }
+#endif
 
 void homogeneous_polynomial_domain::print_monomial(ostream &ost, int *mon)
 {
@@ -765,7 +767,7 @@ void homogeneous_polynomial_domain::print_monomial(ostream &ost, int *mon)
 	}
 }
 
-void homogeneous_polynomial_domain::print_monomial_latex(ostream &ost, int *mon)
+void homogeneous_polynomial_domain::print_monomial_latex(std::ostream &ost, int *mon)
 {
 	int j, a;
 
@@ -775,12 +777,57 @@ void homogeneous_polynomial_domain::print_monomial_latex(ostream &ost, int *mon)
 			continue;
 		}
 		ost << symbols_latex[j];
-		if (a > 1) {
+		if (a >= 10) {
+			ost << "^{" << a << "}";
+		}
+		else if (a > 1) {
 			ost << "^" << a;
 		}
 	}
 }
 
+void homogeneous_polynomial_domain::print_monomial_latex(std::ostream &ost, int i)
+{
+	int *mon;
+
+	mon = Monomials + i * nb_variables;
+	print_monomial_latex(ost, mon);
+}
+
+void homogeneous_polynomial_domain::print_monomial_latex(std::string &s, int *mon)
+{
+	int j, a;
+
+	for (j = 0; j < nb_variables; j++) {
+		a = mon[j];
+		if (a == 0) {
+			continue;
+		}
+		s.append(symbols_latex[j]);
+
+		char str[1000];
+
+
+		if (a >= 10) {
+			sprintf(str, "^{%d}", a);
+		}
+		else if (a > 1) {
+			sprintf(str, "^%d", a);
+		}
+		s.append(str);
+	}
+}
+
+void homogeneous_polynomial_domain::print_monomial_latex(std::string &s, int i)
+{
+	int *mon;
+
+	mon = Monomials + i * nb_variables;
+	print_monomial_latex(s, mon);
+}
+
+
+#if 0
 void homogeneous_polynomial_domain::print_monomial(char *str, int i)
 {
 	int j, a;
@@ -800,6 +847,7 @@ void homogeneous_polynomial_domain::print_monomial(char *str, int i)
 		}
 	}
 }
+#endif
 
 void homogeneous_polynomial_domain::print_monomial_str(stringstream &ost, int i)
 {

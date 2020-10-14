@@ -166,7 +166,6 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 
 	orbits_on_trihedra_type1->compute_orbits_on_subsets(
 		3, /* target_depth */
-		//"", /* const char *prefix, */
 		Control1,
 		Poset1,
 		verbose_level - 1);
@@ -197,7 +196,6 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 
 	orbits_on_trihedra_type2->compute_orbits_on_subsets(
 		3, /* target_depth */
-		//"", /* const char *prefix, */
 		Control2,
 		Poset2,
 		verbose_level - 1);
@@ -215,7 +213,7 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 	}
 }
 
-void classify_trihedral_pairs::report_summary(ostream &ost)
+void classify_trihedral_pairs::report_summary(std::ostream &ost)
 {
 	cout << "classify_trihedral_pairs::report "
 			"before list_orbits_on_trihedra_type1" << endl;
@@ -264,7 +262,7 @@ void classify_trihedral_pairs::report(ostream &ost)
 #endif
 }
 
-void classify_trihedral_pairs::list_orbits_on_trihedra_type1(ostream &ost, int f_detailed)
+void classify_trihedral_pairs::list_orbits_on_trihedra_type1(std::ostream &ost, int f_detailed)
 {
 	int i, l;
 
@@ -326,7 +324,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type1(ostream &ost, int f
 	}
 }
 
-void classify_trihedral_pairs::list_orbits_on_trihedra_type2(ostream &ost, int f_detailed)
+void classify_trihedral_pairs::list_orbits_on_trihedra_type2(std::ostream &ost, int f_detailed)
 {
 	int i, l;
 
@@ -1248,7 +1246,8 @@ void classify_trihedral_pairs::identify_trihedral_pair(long int *planes6,
 			0 /* verbose_level */);
 	}
 	else {
-		cout << "type must be either 1 or 2." << endl;
+		cout << "classify_trihedral_pairs::identify_trihedral_pair "
+				"type must be either 1 or 2." << endl;
 		exit(1);
 	}
 	A->element_mult(Elt1, Elt2, Elt3, 0);
