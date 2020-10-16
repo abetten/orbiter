@@ -153,12 +153,16 @@ int video_draw_options::read_arguments(
 		int argc, const char **argv,
 		int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i;
 
+	if (f_v) {
+		cout << "video_draw_options::read_arguments" << endl;
+	}
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
-			cout << "video_draw_options::read_arguments -v " << verbose_level << endl;
+			cout << "-v " << verbose_level << endl;
 		}
 		else if (strcmp(argv[i], "-do_not_rotate") == 0) {
 			f_rotate = FALSE;
@@ -167,61 +171,61 @@ int video_draw_options::read_arguments(
 		else if (strcmp(argv[i], "-rotate_about_z_axis") == 0) {
 			f_rotate = TRUE;
 			rotation_axis_type = 2;
-			cout << "video_draw_options::read_arguments -rotate_about_z_axis " << endl;
+			cout << "-rotate_about_z_axis " << endl;
 		}
 		else if (strcmp(argv[i], "-rotate_about_111") == 0) {
 			f_rotate = TRUE;
 			rotation_axis_type = 1;
-			cout << "video_draw_options::read_arguments -rotate_about_111 " << endl;
+			cout << "-rotate_about_111 " << endl;
 		}
 		else if (strcmp(argv[i], "-rotate_about_custom_axis") == 0) {
 			f_rotate = TRUE;
 			rotation_axis_type = 3;
 
 			text_to_three_double(argv[++i], rotation_axis_custom);
-			cout << "video_draw_options::read_arguments -rotate_about_custom_axis " << endl;
+			cout << "-rotate_about_custom_axis " << endl;
 		}
 		else if (strcmp(argv[i], "-boundary_none") == 0) {
 			boundary_type = 3;
-			cout << "video_draw_options::read_arguments -boundary_none " << endl;
+			cout << "-boundary_none " << endl;
 		}
 		else if (strcmp(argv[i], "-boundary_box") == 0) {
 			boundary_type = 2;
-			cout << "video_draw_options::read_arguments -boundary_box " << endl;
+			cout << "-boundary_box " << endl;
 		}
 		else if (strcmp(argv[i], "-boundary_sphere") == 0) {
 			boundary_type = 1;
-			cout << "video_draw_options::read_arguments -boundary_sphere " << endl;
+			cout << "-boundary_sphere " << endl;
 		}
 		else if (strcmp(argv[i], "-font_size") == 0) {
 			f_has_font_size = TRUE;
 			font_size = atoi(argv[++i]);
-			cout << "video_draw_options::read_arguments -font_size " << font_size << endl;
+			cout << "-font_size " << font_size << endl;
 		}
 		else if (strcmp(argv[i], "-stroke_width") == 0) {
 			f_has_stroke_width = TRUE;
 			stroke_width = atoi(argv[++i]);
-			cout << "video_draw_options::read_arguments -stroke_width " << stroke_width << endl;
+			cout << "-stroke_width " << stroke_width << endl;
 		}
 		else if (strcmp(argv[i], "-omit_bottom_plane") == 0) {
 			f_omit_bottom_plane = TRUE;
-			cout << "video_draw_options::read_arguments -omit_bottom_plane " << endl;
+			cout << "-omit_bottom_plane " << endl;
 		}
 
 		else if (strcmp(argv[i], "-W") == 0) {
 			f_W = TRUE;
 			W = atoi(argv[++i]);
-			cout << "video_draw_options::read_arguments -W " << W << endl;
+			cout << "-W " << W << endl;
 		}
 		else if (strcmp(argv[i], "-H") == 0) {
 			f_H = TRUE;
 			H = atoi(argv[++i]);
-			cout << "video_draw_options::read_arguments -H " << H << endl;
+			cout << "-H " << H << endl;
 		}
 		else if (strcmp(argv[i], "-nb_frames") == 0) {
 			nb_frames_round[cnt_nb_frames] = atoi(argv[++i]);
 			nb_frames_value[cnt_nb_frames] = atoi(argv[++i]);
-			cout << "video_draw_options::read_arguments -nb_frames "
+			cout << "-nb_frames "
 				<< nb_frames_round[cnt_nb_frames] << " "
 				<< nb_frames_value[cnt_nb_frames] << endl;
 			cnt_nb_frames++;
@@ -240,7 +244,7 @@ int video_draw_options::read_arguments(
 			i++;
 			sscanf(argv[i], "%lf", &d);
 			zoom_clipping_end[nb_zoom] = d;
-			cout << "video_draw_options::read_arguments -zoom "
+			cout << "-zoom "
 				<< zoom_round[nb_zoom] << " "
 				<< zoom_start[nb_zoom] << " "
 				<< zoom_end[nb_zoom] << " "
@@ -252,7 +256,7 @@ int video_draw_options::read_arguments(
 		else if (strcmp(argv[i], "-zoom_sequence") == 0) {
 			zoom_sequence_round[nb_zoom_sequence] = atoi(argv[++i]);
 			zoom_sequence_text[nb_zoom_sequence] = argv[++i];
-			cout << "video_draw_options::read_arguments -zoom_sequence "
+			cout << "-zoom_sequence "
 				<< zoom_sequence_round[nb_zoom_sequence] << " "
 				<< zoom_sequence_text[nb_zoom_sequence] << endl;
 			nb_zoom_sequence++;
@@ -288,7 +292,7 @@ int video_draw_options::read_arguments(
 			text_to_three_double(argv[++i], pan_to + nb_pan * 3);
 			text_to_three_double(argv[++i], pan_center + nb_pan * 3);
 
-			cout << "video_draw_options::read_arguments -pan_reverse "
+			cout << "-pan_reverse "
 				<< pan_round[nb_pan];
 			cout << " ";
 			Num.vec_print(pan_from + 3 * nb_pan, 3);
@@ -301,13 +305,13 @@ int video_draw_options::read_arguments(
 		}
 		else if (strcmp(argv[i], "-no_background") == 0) {
 			no_background_round[nb_no_background] = atoi(argv[++i]);
-			cout << "video_draw_options::read_arguments -no_background "
+			cout << "-no_background "
 				<< no_background_round[nb_no_background] << endl;
 			nb_no_background++;
 		}
 		else if (strcmp(argv[i], "-no_bottom_plane") == 0) {
 			no_bottom_plane_round[nb_no_bottom_plane] = atoi(argv[++i]);
-			cout << "video_draw_options::read_arguments -no_bottom_plane "
+			cout << "-no_bottom_plane "
 				<< no_bottom_plane_round[nb_no_bottom_plane] << endl;
 			nb_no_bottom_plane++;
 		}
@@ -320,7 +324,7 @@ int video_draw_options::read_arguments(
 			text_to_three_double(argv[++i], camera_location + nb_camera * 3);
 			text_to_three_double(argv[++i], camera_look_at + nb_camera * 3);
 
-			cout << "video_draw_options::read_arguments -camera "
+			cout << "-camera "
 					<< camera_round[nb_camera] << " "
 					<< camera_sky[nb_camera * 3 + 0] << " "
 					<< camera_sky[nb_camera * 3 + 1] << " "
@@ -345,7 +349,7 @@ int video_draw_options::read_arguments(
 			double d;
 			sscanf(argv[++i], "%lf", &d);
 			clipping_value[nb_clipping] = d;
-			cout << "video_draw_options::read_arguments -clipping "
+			cout << "-clipping "
 				<< clipping_round[nb_clipping] << " "
 				<< clipping_value[nb_clipping] << endl;
 			nb_clipping++;
@@ -354,7 +358,7 @@ int video_draw_options::read_arguments(
 			round_text_round[nb_round_text] = atoi(argv[++i]);
 			round_text_sustain[nb_round_text] = atoi(argv[++i]);
 			round_text_text[nb_round_text] = argv[++i];
-			cout << "video_draw_options::read_arguments -text "
+			cout << "-text "
 				<< round_text_round[nb_round_text] << " "
 				<< round_text_sustain[nb_round_text] << " "
 				<< round_text_text[nb_round_text] << endl;
@@ -366,7 +370,7 @@ int video_draw_options::read_arguments(
 			label_sustain[nb_label] = atoi(argv[++i]);
 			label_gravity[nb_label] = argv[++i];
 			label_text[nb_label] = argv[++i];
-			cout << "video_draw_options::read_arguments -label "
+			cout << "-label "
 				<< label_round[nb_label] << " "
 				<< label_start[nb_label] << " "
 				<< label_sustain[nb_label] << " "
@@ -384,7 +388,7 @@ int video_draw_options::read_arguments(
 			latex_label_text[nb_latex_label] = argv[++i];
 			latex_f_label_has_been_prepared[nb_latex_label] = FALSE;
 			latex_fname_base[nb_latex_label] = NEW_char(1000);
-			cout << "video_draw_options::read_arguments -latex "
+			cout << "-latex "
 				<< latex_label_round[nb_latex_label] << " "
 				<< latex_label_start[nb_latex_label] << " "
 				<< latex_label_sustain[nb_latex_label] << " "
@@ -399,7 +403,7 @@ int video_draw_options::read_arguments(
 			double d;
 			sscanf(argv[++i], "%lf", &d);
 			global_picture_scale = d;
-			cout << "video_draw_options::read_arguments -global_picture_scale " << d << endl;
+			cout << "-global_picture_scale " << d << endl;
 		}
 		else if (strcmp(argv[i], "-picture") == 0) {
 			picture_round[nb_picture] = atoi(argv[++i]);
@@ -408,7 +412,7 @@ int video_draw_options::read_arguments(
 			picture_scale[nb_picture] = d;
 			picture_fname[nb_picture] = argv[++i];
 			picture_options[nb_picture] = argv[++i];
-			cout << "video_draw_options::read_arguments -picture "
+			cout << "-picture "
 				<< picture_round[nb_picture] << " "
 				<< picture_scale[nb_picture] << " "
 				<< picture_fname[nb_picture] << " "
@@ -421,31 +425,31 @@ int video_draw_options::read_arguments(
 
 
 			text_to_three_double(argv[++i], look_at);
-			cout << "video_draw_options::read_arguments -look_at "
+			cout << "-look_at "
 					<< look_at[0] << " " << look_at[1] << " " << look_at[2] << " " << endl;
 		}
 
 		else if (strcmp(argv[i], "-default_angle") == 0) {
 			f_default_angle = TRUE;
 			default_angle = atoi(argv[++i]);
-			cout << "video_draw_options::read_arguments -default_angle " << default_angle << endl;
+			cout << "-default_angle " << default_angle << endl;
 		}
 		else if (strcmp(argv[i], "-clipping_radius") == 0) {
 			f_clipping_radius = TRUE;
 			sscanf(argv[++i], "%lf", &clipping_radius);
-			cout << "video_draw_options::read_arguments -clipping_radius " << clipping_radius << endl;
+			cout << "-clipping_radius " << clipping_radius << endl;
 		}
 		else if (strcmp(argv[i], "-scale_factor") == 0) {
 			scale_factor = atof(argv[++i]);
-			cout << "video_draw_options::read_arguments -scale_factor " << scale_factor << endl;
+			cout << "-scale_factor " << scale_factor << endl;
 		}
 		else if (strcmp(argv[i], "-line_radius") == 0) {
 			f_line_radius = TRUE;
 			line_radius = atof(argv[++i]);
-			cout << "video_draw_options::read_arguments -line_radius " << line_radius << endl;
+			cout << "-line_radius " << line_radius << endl;
 		}
 		else if (strcmp(argv[i], "-end") == 0) {
-			cout << "video_draw_options::read_arguments -end" << endl;
+			cout << "-end" << endl;
 			return i;
 		}
 		else {

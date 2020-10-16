@@ -716,6 +716,16 @@ public:
 	void create_surface_bes(int a, int c, int verbose_level);
 	void create_surface_general_abcd(int a, int b, int c, int d, int verbose_level);
 	void create_surface_by_coefficients(std::string &coefficients_text, int verbose_level);
+	void create_surface_from_catalogue(int iso,
+			std::vector<std::string> &select_double_six_string,
+			int verbose_level);
+	void create_surface_by_arc_lifting(
+			std::string &arc_lifting_text,
+			int verbose_level);
+	void create_surface_by_arc_lifting_with_two_lines(
+			std::string &arc_lifting_text,
+			std::string &arc_lifting_two_lines_text,
+			int verbose_level);
 	void apply_transformations(const char **transform_coeffs,
 		int *f_inverse_transform, int nb_transform, int verbose_level);
 };
@@ -725,7 +735,6 @@ public:
 // surface_create_description.cpp
 // #############################################################################
 
-#define SURFACE_CREATE_MAX_SELECT_DOUBLE_SIX 1000
 
 
 //! to describe a cubic surface from the command line
@@ -757,12 +766,12 @@ public:
 	int family_general_abcd_c;
 	int family_general_abcd_d;
 	int f_arc_lifting;
-	const char *arc_lifting_text;
-	const char *arc_lifting_two_lines_text;
+	std::string arc_lifting_text;
+	std::string arc_lifting_two_lines_text;
 	int f_arc_lifting_with_two_lines;
 	//int f_select_double_six;
-	int nb_select_double_six;
-	const char *select_double_six_string[SURFACE_CREATE_MAX_SELECT_DOUBLE_SIX];
+	//int nb_select_double_six;
+	std::vector<std::string> select_double_six_string;
 
 
 	surface_create_description();

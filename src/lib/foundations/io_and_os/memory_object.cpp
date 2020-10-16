@@ -133,7 +133,7 @@ void memory_object::append(long int length,
 
 void memory_object::realloc(long int &new_length, int verbose_level)
 {
-	int f_v = TRUE; //(verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	long int old_length;
 	long int old_cur_pointer;
 	long int i;

@@ -615,6 +615,11 @@ class interface_projective {
 	int f_inverse_isomorphism_klein_quadric;
 	std::string inverse_isomorphism_klein_quadric_matrix_A6;
 
+	int f_rank_point_in_PG;
+	int rank_point_in_PG_q;
+	int rank_point_in_PG_n;
+	std::string rank_point_in_PG_text;
+
 public:
 
 	int parabola_N;

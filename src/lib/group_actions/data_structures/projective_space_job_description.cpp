@@ -172,39 +172,39 @@ int projective_space_job_description::read_arguments(
 
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
-			cout << "projective_space_job_description::read_arguments -v " << verbose_level << endl;
+			cout << "-v " << verbose_level << endl;
 		}
 		else if (strcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
 			q = atoi(argv[++i]);
-			cout << "projective_space_job_description::read_arguments -q " << q << endl;
+			cout << "-q " << q << endl;
 		}
 		else if (strcmp(argv[i], "-Q") == 0) {
 			f_Q = TRUE;
 			Q = atoi(argv[++i]);
-			cout << "projective_space_job_description::read_arguments -Q " << Q << endl;
+			cout << "-Q " << Q << endl;
 		}
 		else if (strcmp(argv[i], "-n") == 0) {
 			f_n = TRUE;
 			n = atoi(argv[++i]);
-			cout << "projective_space_job_description::read_arguments -n " << n << endl;
+			cout << "-n " << n << endl;
 		}
 		else if (strcmp(argv[i], "-poly") == 0) {
 			f_poly = TRUE;
 			poly.assign(argv[++i]);
-			cout << "projective_space_job_description::read_arguments -poly " << poly << endl;
+			cout << "-poly " << poly << endl;
 		}
 		else if (strcmp(argv[i], "-poly_Q") == 0) {
 			f_poly_Q = TRUE;
 			poly_Q.assign(argv[++i]);
-			cout << "projective_space_job_description::read_arguments -poly_Q " << poly_Q << endl;
+			cout << "-poly_Q " << poly_Q << endl;
 		}
 		else if (strcmp(argv[i], "-input") == 0) {
 			f_input = TRUE;
 			Data = NEW_OBJECT(data_input_stream);
-			cout << "projective_space_job_description::read_arguments -input" << endl;
+			cout << "-input" << endl;
 			i += Data->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level) + 1;
+				argv + i + 1, verbose_level);
 			cout << "projective_space_job_description::read_arguments finished reading -input" << endl;
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
@@ -215,7 +215,7 @@ int projective_space_job_description::read_arguments(
 		else if (strcmp(argv[i], "-fname_base_out") == 0) {
 			f_fname_base_out = TRUE;
 			fname_base_out = argv[++i];
-			cout << "projective_space_job_description::read_arguments -fname_base_out " << fname_base_out << endl;
+			cout << "-fname_base_out " << fname_base_out << endl;
 		}
 		else if (strcmp(argv[i], "-embed") == 0) {
 			f_embed = TRUE;
@@ -224,125 +224,125 @@ int projective_space_job_description::read_arguments(
 		else if (strcmp(argv[i], "-orthogonal") == 0) {
 			f_orthogonal = TRUE;
 			orthogonal_epsilon = atoi(argv[++i]);
-			cout << "projective_space_job_description::read_arguments -orthogonal " << orthogonal_epsilon << endl;
+			cout << "-orthogonal " << orthogonal_epsilon << endl;
 		}
 		else if (strcmp(argv[i], "-homogeneous_polynomials_LEX") == 0) {
 			f_homogeneous_polynomials_LEX = TRUE;
 			homogeneous_polynomials_degree = atoi(argv[++i]);
-			cout << "projective_space_job_description::read_arguments -homogeneous_polynomials_LEX " << homogeneous_polynomials_degree << endl;
+			cout << "-homogeneous_polynomials_LEX " << homogeneous_polynomials_degree << endl;
 		}
 		else if (strcmp(argv[i], "-homogeneous_polynomials_PART") == 0) {
 			f_homogeneous_polynomials_PART = TRUE;
 			homogeneous_polynomials_degree = atoi(argv[++i]);
-			cout << "projective_space_job_description::read_arguments -homogeneous_polynomials_PART " << homogeneous_polynomials_degree << endl;
+			cout << "-homogeneous_polynomials_PART " << homogeneous_polynomials_degree << endl;
 		}
 		else if (strcmp(argv[i], "-andre") == 0) {
 			f_andre = TRUE;
-			cout << "projective_space_job_description::read_arguments -andre " << endl;
+			cout << "-andre " << endl;
 		}
 		else if (strcmp(argv[i], "-print") == 0) {
 			f_print = TRUE;
-			cout << "projective_space_job_description::read_arguments -print " << endl;
+			cout << "-print " << endl;
 		}
 		else if (strcmp(argv[i], "-lines_in_PG") == 0) {
 			f_lines_in_PG = TRUE;
-			cout << "projective_space_job_description::read_arguments -lines_in_PG " << endl;
+			cout << "-lines_in_PG " << endl;
 		}
 		else if (strcmp(argv[i], "-points_in_PG") == 0) {
 			f_points_in_PG = TRUE;
-			cout << "projective_space_job_description::read_arguments -points_in_PG " << endl;
+			cout << "-points_in_PG " << endl;
 		}
 		else if (strcmp(argv[i], "-points_on_grassmannian") == 0) {
 			f_points_on_grassmannian = TRUE;
 			points_on_grassmannian_k = atoi(argv[++i]);
-			cout << "projective_space_job_description::read_arguments -points_on_grassmannian " << points_on_grassmannian_k << endl;
+			cout << "-points_on_grassmannian " << points_on_grassmannian_k << endl;
 		}
 		else if (strcmp(argv[i], "-list_group_elements") == 0) {
 			f_list_group_elements = TRUE;
-			cout << "projective_space_job_description::read_arguments -list_group_elements" << endl;
+			cout << "-list_group_elements" << endl;
 		}
 		else if (strcmp(argv[i], "-line_type") == 0) {
 			f_line_type = TRUE;
-			cout << "projective_space_job_description::read_arguments -line_type" << endl;
+			cout << "-line_type" << endl;
 		}
 		else if (strcmp(argv[i], "-plane_type") == 0) {
 			f_plane_type = TRUE;
-			cout << "projective_space_job_description::read_arguments -plane_type" << endl;
+			cout << "-plane_type" << endl;
 		}
 		else if (strcmp(argv[i], "-plane_type_failsafe") == 0) {
 			f_plane_type_failsafe = TRUE;
-			cout << "projective_space_job_description::read_arguments -plane_type_failsafe" << endl;
+			cout << "-plane_type_failsafe" << endl;
 		}
 		else if (strcmp(argv[i], "-conic_type") == 0) {
 			f_conic_type = TRUE;
-			cout << "projective_space_job_description::read_arguments -conic_type " << endl;
+			cout << "-conic_type " << endl;
 		}
 		else if (strcmp(argv[i], "-randomized") == 0) {
 			f_randomized = TRUE;
 			nb_times = atoi(argv[++i]);
-			cout << "projective_space_job_description::read_arguments -randomized " << nb_times << endl;
+			cout << "-randomized " << nb_times << endl;
 		}
 		else if (strcmp(argv[i], "-hyperplane_type") == 0) {
 			f_hyperplane_type = TRUE;
-			cout << "projective_space_job_description::read_arguments -hyperplane_type" << endl;
+			cout << "-hyperplane_type" << endl;
 		}
 		else if (strcmp(argv[i], "-show") == 0) {
 			f_show = TRUE;
-			cout << "projective_space_job_description::read_arguments -show" << endl;
+			cout << "-show" << endl;
 		}
 		else if (strcmp(argv[i], "-cone_over") == 0) {
 			f_cone_over = TRUE;
-			cout << "projective_space_job_description::read_arguments -cone_over" << endl;
+			cout << "-cone_over" << endl;
 		}
 		else if (strcmp(argv[i], "-bsf3") == 0) {
 			f_bsf3 = TRUE;
-			cout << "projective_space_job_description::read_arguments -bsf3" << endl;
+			cout << "-bsf3" << endl;
 		}
 		else if (strcmp(argv[i], "-test_diagonals") == 0) {
 			f_test_diagonals = TRUE;
 			test_diagonals_fname.assign(argv[++i]);
-			cout << "projective_space_job_description::read_arguments -test_diagonals " << test_diagonals_fname << endl;
+			cout << "-test_diagonals " << test_diagonals_fname << endl;
 		}
 		else if (strcmp(argv[i], "-klein") == 0) {
 			f_klein = TRUE;
-			cout << "projective_space_job_description::read_arguments -klein" << endl;
+			cout << "-klein" << endl;
 		}
 		else if (strcmp(argv[i], "-draw_points_in_plane") == 0) {
 			f_draw_points_in_plane = TRUE;
 			draw_points_in_plane_fname_base.assign(argv[++i]);
-			cout << "projective_space_job_description::read_arguments -draw_points_in_plane" << draw_points_in_plane_fname_base << endl;
+			cout << "-draw_points_in_plane" << draw_points_in_plane_fname_base << endl;
 		}
 		else if (strcmp(argv[i], "-point_labels") == 0) {
 			f_point_labels = TRUE;
-			cout << "projective_space_job_description::read_arguments -point_labels" << endl;
+			cout << "-point_labels" << endl;
 		}
 		else if (strcmp(argv[i], "-canonical_form") == 0) {
 			f_canonical_form = TRUE;
 			canonical_form_fname_base = argv[++i];
-			cout << "projective_space_job_description::read_arguments -canonical_form" << canonical_form_fname_base << endl;
+			cout << "-canonical_form" << canonical_form_fname_base << endl;
 		}
 		else if (strcmp(argv[i], "-ideal_LEX") == 0) {
 			f_ideal_LEX = TRUE;
 			ideal_degree = atoi(argv[++i]);
-			cout << "projective_space_job_description::read_arguments -ideal_LEX " << ideal_degree << endl;
+			cout << "-ideal_LEX " << ideal_degree << endl;
 		}
 		else if (strcmp(argv[i], "-ideal_PART") == 0) {
 			f_ideal_PART = TRUE;
 			ideal_degree = atoi(argv[++i]);
-			cout << "projective_space_job_description::read_arguments -ideal_PART " << ideal_degree << endl;
+			cout << "-ideal_PART " << ideal_degree << endl;
 		}
 		else if (strcmp(argv[i], "-embedded") == 0) {
 			f_embedded = TRUE;
-			cout << "projective_space_job_description::read_arguments -embedded" << endl;
+			cout << "-embedded" << endl;
 		}
 		else if (strcmp(argv[i], "-sideways") == 0) {
 			f_sideways = TRUE;
-			cout << "projective_space_job_description::read_arguments -sideways" << endl;
+			cout << "-sideways" << endl;
 		}
 		else if (strcmp(argv[i], "-intersect_with_set_from_file") == 0) {
 			f_intersect_with_set_from_file = TRUE;
 			intersect_with_set_from_file_fname.assign(argv[++i]);
-			cout << "projective_space_job_description::read_arguments -intersect_with_set_from_file " << intersect_with_set_from_file_fname << endl;
+			cout << "-intersect_with_set_from_file " << intersect_with_set_from_file_fname << endl;
 		}
 		else if (strcmp(argv[i], "-arc_with_given_set_as_s_lines_after_dualizing") == 0) {
 			f_arc_with_given_set_as_s_lines_after_dualizing = TRUE;
@@ -350,7 +350,7 @@ int projective_space_job_description::read_arguments(
 			arc_d = atoi(argv[++i]);
 			arc_d_low = atoi(argv[++i]);
 			arc_s = atoi(argv[++i]);
-			cout << "projective_space_job_description::read_arguments -arc_with_given_set_as_s_lines_after_dualizing "
+			cout << "-arc_with_given_set_as_s_lines_after_dualizing "
 					<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << endl;
 		}
 		else if (strcmp(argv[i], "-arc_with_two_given_sets_of_lines_after_dualizing") == 0) {
@@ -361,7 +361,7 @@ int projective_space_job_description::read_arguments(
 			arc_s = atoi(argv[++i]);
 			arc_t = atoi(argv[++i]);
 			t_lines_string = argv[++i];
-			cout << "projective_space_job_description::read_arguments -arc_with_two_given_sets_of_lines_after_dualizing src_size="
+			cout << "-arc_with_two_given_sets_of_lines_after_dualizing src_size="
 					<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << " t=" << arc_t << " " << t_lines_string << endl;
 		}
 		else if (strcmp(argv[i], "-arc_with_three_given_sets_of_lines_after_dualizing") == 0) {
@@ -374,21 +374,21 @@ int projective_space_job_description::read_arguments(
 			t_lines_string = argv[++i];
 			arc_u = atoi(argv[++i]);
 			u_lines_string = argv[++i];
-			cout << "projective_space_job_description::read_arguments -arc_with_three_given_sets_of_lines_after_dualizing "
+			cout << "-arc_with_three_given_sets_of_lines_after_dualizing "
 					<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << endl;
 			cout << "arc_t = " << arc_t << " t_lines_string = " << t_lines_string << endl;
 			cout << "arc_u = " << arc_u << " u_lines_string = " << u_lines_string << endl;
 		}
 		else if (strcmp(argv[i], "-dualize_hyperplanes_to_points") == 0) {
 			f_dualize_hyperplanes_to_points = TRUE;
-			cout << "projective_space_job_description::read_arguments -dualize_hyperplanes_to_points" << endl;
+			cout << "-dualize_hyperplanes_to_points" << endl;
 		}
 		else if (strcmp(argv[i], "-dualize_points_to_hyperplanes") == 0) {
 			f_dualize_points_to_hyperplanes = TRUE;
-			cout << "projective_space_job_description::read_arguments -dualize_points_to_hyperplanes" << endl;
+			cout << "-dualize_points_to_hyperplanes" << endl;
 		}
 		else if (strcmp(argv[i], "-end") == 0) {
-			cout << "projective_space_job_description::read_arguments -end" << endl;
+			cout << "-end" << endl;
 			break;
 		}
 		else {
@@ -399,7 +399,7 @@ int projective_space_job_description::read_arguments(
 		cout << "projective_space_job_description::read_arguments looping, i=" << i << endl;
 	} // next i
 	cout << "projective_space_job_description::read_arguments done" << endl;
-	return i;
+	return i + 1;
 }
 
 

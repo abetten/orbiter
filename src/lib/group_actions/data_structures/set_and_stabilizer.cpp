@@ -576,6 +576,7 @@ void set_and_stabilizer::test_if_group_acts(int verbose_level)
 		}
 }
 
+#if 0
 void set_and_stabilizer::init_surface(surface_domain *Surf,
 		action *A, action *A2, int q, int no,
 		int verbose_level)
@@ -660,7 +661,7 @@ void set_and_stabilizer::init_surface(surface_domain *Surf,
 		cout << "set_and_stabilizer::init_surface done" << endl;
 		}
 }
-
+#endif
 
 int set_and_stabilizer::find(long int pt)
 {

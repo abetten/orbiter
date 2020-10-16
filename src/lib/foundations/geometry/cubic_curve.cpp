@@ -183,8 +183,7 @@ int cubic_curve::compute_system_in_RREF(
 	return r;
 }
 
-void cubic_curve::compute_gradient(
-		int *eqn_in, int verbose_level)
+void cubic_curve::compute_gradient(int *eqn_in, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

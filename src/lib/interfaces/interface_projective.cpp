@@ -93,6 +93,11 @@ interface_projective::interface_projective()
 	f_inverse_isomorphism_klein_quadric = FALSE;
 	// std::string inverse_isomorphism_klein_quadric_matrix_A6;
 
+	f_rank_point_in_PG = FALSE;
+	rank_point_in_PG_q = 0;
+	rank_point_in_PG_n = 0;
+	//rank_point_in_PG_text;
+
 }
 
 
@@ -142,7 +147,10 @@ void interface_projective::print_help(int argc,
 		cout << "-make_table_of_surfaces " << endl;
 	}
 	else if (strcmp(argv[i], "-inverse_isomorphism_klein_quadric") == 0) {
-		cout << "-f_inverse_isomorphism_klein_quadric <int : q> <orthogonal 6x6 matrix>" << endl;
+		cout << "-inverse_isomorphism_klein_quadric <int : q> <orthogonal 6x6 matrix>" << endl;
+	}
+	else if (strcmp(argv[i], "-rank_point_in_PG") == 0) {
+		cout << "-rank_point_in_PG <int : q> <int : n> <intvec : coeffs>" << endl;
 	}
 }
 
@@ -197,6 +205,9 @@ int interface_projective::recognize_keyword(int argc,
 		return true;
 	}
 	else if (strcmp(argv[i], "-inverse_isomorphism_klein_quadric") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-rank_point_in_PG") == 0) {
 		return true;
 	}
 	return false;
@@ -356,6 +367,13 @@ void interface_projective::read_arguments(int argc,
 			inverse_isomorphism_klein_quadric_matrix_A6.assign(argv[++i]);
 			cout << "-inverse_isomorphism_klein_quadric " << q << " " << inverse_isomorphism_klein_quadric_matrix_A6 << endl;
 		}
+		else if (strcmp(argv[i], "-rank_point_in_PG") == 0) {
+			f_rank_point_in_PG = TRUE;
+			rank_point_in_PG_q = atoi(argv[++i]);
+			rank_point_in_PG_n = atoi(argv[++i]);
+			rank_point_in_PG_text.assign(argv[++i]);
+			cout << "-rank_point_in_PG " << rank_point_in_PG_q << " " << rank_point_in_PG_n << " " << rank_point_in_PG_text << endl;
+		}
 		else {
 			cout << "interface_projective::read_arguments: unrecognized option "
 					<< argv[i] << ", skipping" << endl;
@@ -431,6 +449,15 @@ void interface_projective::worker(orbiter_session *Session, int verbose_level)
 		GG.do_inverse_isomorphism_klein_quadric(q,
 				inverse_isomorphism_klein_quadric_matrix_A6, verbose_level);
 	}
+	else if (f_rank_point_in_PG) {
+
+		geometry_global GG;
+
+		GG.do_rank_point_in_PG(rank_point_in_PG_q, rank_point_in_PG_n,
+				rank_point_in_PG_text,
+				verbose_level);
+	}
+
 
 
 
