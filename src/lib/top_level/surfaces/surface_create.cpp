@@ -24,7 +24,6 @@ surface_create::surface_create()
 	Surf = NULL;
 	Surf_A = NULL;
 	SO = NULL;
-	//f_has_lines = FALSE;
 	f_has_group = FALSE;
 	Sg = NULL;
 	f_has_nice_gens = FALSE;
@@ -216,7 +215,6 @@ void surface_create::create_surface_from_description(int verbose_level)
 				verbose_level);
 
 
-
 	}
 
 
@@ -232,376 +230,33 @@ void surface_create::create_surface_from_description(int verbose_level)
 	}
 	else if (Descr->f_catalogue) {
 
-		if (f_v) {
-			cout << "surface_create::init2 surface from catalogue" << endl;
-		}
-		long int *p_lines;
-		long int Lines27[27];
-		int nb_iso;
-		//int nb_E = 0;
-		knowledge_base K;
 
-		nb_iso = K.cubic_surface_nb_reps(q);
-		if (Descr->iso >= nb_iso) {
-			cout << "surface_create::init2 iso >= nb_iso, "
-					"this cubic surface does not exist" << endl;
-			exit(1);
-		}
-		p_lines = K.cubic_surface_Lines(q, Descr->iso);
-		lint_vec_copy(p_lines, Lines27, 27);
-		//nb_E = cubic_surface_nb_Eckardt_points(q, Descr->iso);
-
-		if (f_v) {
-			cout << "surface_create::init2 before Surf->rearrange_lines_according_to_double_six" << endl;
-		}
-		Surf->rearrange_lines_according_to_double_six(
-				Lines27, 0 /* verbose_level */);
-		if (f_v) {
-			cout << "surface_create::init2 after Surf->rearrange_lines_according_to_double_six" << endl;
-		}
-		
-		if (Descr->nb_select_double_six) {
-			int i;
-
-			for (i = 0; i < Descr->nb_select_double_six; i++) {
-				int *select_double_six;
-				int sz;
-				long int New_lines[27];
-
-				if (f_v) {
-					cout << "surface_create::init2 selecting double six " << i << " / " << Descr->nb_select_double_six << endl;
-				}
-				int_vec_scan(Descr->select_double_six_string[i], select_double_six, sz);
-				if (sz != 12) {
-					cout << "surface_create::init2 f_select_double_six double six must consist of 12 numbers" << endl;
-					exit(1);
-				}
-
-				if (f_v) {
-					cout << "surface_create::init2 select_double_six = ";
-					int_vec_print(cout, select_double_six, 12);
-					cout << endl;
-				}
+		create_surface_from_catalogue(
+				Descr->iso,
+				Descr->select_double_six_string,
+				verbose_level);
 
 
-				if (f_v) {
-					cout << "surface_create::init2 before Surf->rearrange_lines_according_to_a_given_double_six" << endl;
-				}
-				Surf->rearrange_lines_according_to_a_given_double_six(
-						Lines27, select_double_six, New_lines, 0 /* verbose_level */);
-
-				lint_vec_copy(New_lines, Lines27, 27);
-				FREE_int(select_double_six);
-			}
-		}
-
-		int coeffs20[20];
-
-		if (f_v) {
-			cout << "surface_create::init2 before Surf->build_cubic_surface_from_lines" << endl;
-		}
-		Surf->build_cubic_surface_from_lines(27, Lines27, coeffs20, 0 /* verbose_level */);
-		if (f_v) {
-			cout << "surface_create::init2 after Surf->build_cubic_surface_from_lines" << endl;
-		}
-
-		SO = NEW_OBJECT(surface_object);
-
-		if (f_v) {
-			cout << "surface_create::init2 before SO->init_with_27_lines" << endl;
-		}
-		SO->init_with_27_lines(Surf,
-			Lines27, coeffs20,
-			FALSE /* f_find_double_six_and_rearrange_lines */,
-			verbose_level);
-		if (f_v) {
-			cout << "surface_create::init2 after SO->init_with_27_lines" << endl;
-		}
-
-
-		Sg = NEW_OBJECT(strong_generators);
-		//Sg->init(Surf_A->A, verbose_level);
-		if (f_v) {
-			cout << "surface_create::init2 before Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
-		}
-		Sg->stabilizer_of_cubic_surface_from_catalogue(Surf_A->A,
-			F, Descr->iso, 
-			verbose_level);
-		f_has_group = TRUE;
-
-		if (f_v) {
-			cout << "surface_create::init2 after Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
-		}
-
-		char str_q[1000];
-		char str_a[1000];
-
-		sprintf(str_q, "%d", F->q);
-		sprintf(str_a, "%d", Descr->iso);
-
-
-
-		prefix.assign("catalogue_q");
-		prefix.append(str_q);
-		prefix.append("_iso");
-		prefix.append(str_a);
-
-		label_txt.assign("catalogue_q");
-		label_txt.append(str_q);
-		label_txt.append("_iso");
-		label_txt.append(str_a);
-
-		label_tex.assign("catalogue\\_q");
-		label_tex.append(str_q);
-		label_tex.append("\\_iso");
-		label_tex.append(str_a);
 
 
 	}
 	else if (Descr->f_arc_lifting) {
 
-		if (f_v) {
-			cout << "surface_create::init2 by arc lifting" << endl;
-		}
 
-		long int *arc;
-		int arc_size;
-
-		lint_vec_scan(Descr->arc_lifting_text, arc, arc_size);
-
-		if (arc_size != 6) {
-			cout << "surface_create::init arc_size != 6" << endl;
-			exit(1);
-		}
-		
-		if (f_v) {
-			cout << "surface_create::init2 arc: ";
-			lint_vec_print(cout, arc, 6);
-			cout << endl;
-		}
-
-		poset_classification_control *Control1;
-		poset_classification_control *Control2;
-
-		Control1 = NEW_OBJECT(poset_classification_control);
-		Control2 = NEW_OBJECT(poset_classification_control);
-
-#if 1
-		// classifying the trihedral pairs is expensive:
-		if (f_v) {
-			cout << "surface_create::init2 before Surf_A->"
-					"Classify_trihedral_pairs->classify" << endl;
-		}
-		Surf_A->Classify_trihedral_pairs->classify(Control1, Control2, 0 /*verbose_level*/);
-		if (f_v) {
-			cout << "surface_create::init2 after Surf_A->"
-					"Classify_trihedral_pairs->classify" << endl;
-		}
-#endif
+		create_surface_by_arc_lifting(
+				Descr->arc_lifting_text,
+				verbose_level);
 
 
-		arc_lifting *AL;
-		int coeffs20[20];
-		long int Lines27[27];
-
-		AL = NEW_OBJECT(arc_lifting);
-
-
-		if (f_v) {
-			cout << "surface_create::init2 before "
-					"AL->create_surface" << endl;
-		}
-		AL->create_surface_and_group(Surf_A, arc, verbose_level);
-		if (f_v) {
-			cout << "surface_create::init2 after "
-					"AL->create_surface" << endl;
-		}
-
-		AL->Web->print_Eckardt_point_data(cout, verbose_level);
-
-		int_vec_copy(AL->Trihedral_pair->The_surface_equations
-				+ AL->Trihedral_pair->lambda_rk * 20, coeffs20, 20);
-
-		lint_vec_copy(AL->Web->Lines27, Lines27, 27);
-
-		SO = NEW_OBJECT(surface_object);
-
-		if (f_v) {
-			cout << "surface_create::init2 before SO->init_with_27_lines" << endl;
-		}
-		SO->init_with_27_lines(Surf,
-			Lines27, coeffs20,
-			FALSE /* f_find_double_six_and_rearrange_lines */,
-			verbose_level);
-		if (f_v) {
-			cout << "surface_create::init2 after SO->init_with_27_lines" << endl;
-		}
-
-
-		Sg = AL->Trihedral_pair->Aut_gens->create_copy();
-		f_has_group = TRUE;
-
-
-		char str_q[1000];
-		char str_a[1000];
-
-		sprintf(str_q, "%d", F->q);
-		sprintf(str_a, "%ld_%ld_%ld_%ld_%ld_%ld", arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
-
-
-		prefix.assign("arc_lifting_trihedral_q");
-		prefix.append(str_q);
-		prefix.append("_arc");
-		prefix.append(str_a);
-
-		label_txt.assign("arc_lifting_trihedral_q");
-		label_txt.append(str_q);
-		label_txt.append("_arc");
-		label_txt.append(str_a);
-
-		label_tex.assign("arc\\_lifting\\_trihedral\\_q");
-		label_tex.append(str_q);
-		label_tex.append("\\_arc");
-		label_tex.append(str_a);
-
-		//AL->print(fp);
-
-
-		FREE_OBJECT(AL);
-		FREE_OBJECT(Control1);
-		FREE_OBJECT(Control2);
-		
-
-		FREE_lint(arc);
 	}
 	else if (Descr->f_arc_lifting_with_two_lines) {
 
-		if (f_v) {
-			cout << "surface_create::init2 by "
-					"arc lifting with two lines" << endl;
-		}
 
-		long int *arc;
-		int arc_size, lines_size;
-		long int line1, line2;
-		long int *lines;
+		create_surface_by_arc_lifting_with_two_lines(
+				Descr->arc_lifting_text,
+				Descr->arc_lifting_two_lines_text,
+				verbose_level);
 
-		lint_vec_scan(Descr->arc_lifting_text, arc, arc_size);
-
-		if (arc_size != 6) {
-			cout << "surface_create::init arc_size != 6" << endl;
-			exit(1);
-		}
-
-		lint_vec_scan(Descr->arc_lifting_two_lines_text, lines, lines_size);
-
-		if (lines_size != 2) {
-			cout << "surface_create::init lines_size != 2" << endl;
-			exit(1);
-		}
-
-
-		line1 = lines[0];
-		line2 = lines[1];
-
-		if (f_v) {
-			cout << "surface_create::init2 arc: ";
-			lint_vec_print(cout, arc, 6);
-			cout << endl;
-			cout << "surface_create::init2 lines: ";
-			lint_vec_print(cout, lines, 2);
-			cout << endl;
-		}
-
-#if 0
-		if (f_v) {
-			cout << "surface_create::init2 before Surf_A->"
-					"Classify_trihedral_pairs->classify" << endl;
-		}
-		Surf_A->Classify_trihedral_pairs->classify(0 /*verbose_level*/);
-		if (f_v) {
-			cout << "surface_create::init2 after Surf_A->"
-					"Classify_trihedral_pairs->classify" << endl;
-		}
-#endif
-
-
-		arc_lifting_with_two_lines *AL;
-		int coeffs20[20];
-		long int Lines27[27];
-
-		AL = NEW_OBJECT(arc_lifting_with_two_lines);
-
-
-		if (f_v) {
-			cout << "surface_create::init2 before "
-					"AL->create_surface" << endl;
-		}
-		AL->create_surface(Surf, arc, line1, line2, verbose_level);
-		if (f_v) {
-			cout << "surface_create::init2 after "
-					"AL->create_surface" << endl;
-		}
-
-		int_vec_copy(AL->coeff, coeffs20, 20);
-		lint_vec_copy(AL->lines27, Lines27, 27);
-
-		if (f_v) {
-			cout << "surface_create::init2 before SO->init_with_27_lines" << endl;
-		}
-
-		SO->init_with_27_lines(Surf,
-			Lines27, coeffs20,
-			FALSE /* f_find_double_six_and_rearrange_lines */,
-			verbose_level);
-		if (f_v) {
-			cout << "surface_create::init2 after SO->init_with_27_lines" << endl;
-		}
-
-
-		f_has_group = FALSE;
-
-		char str_q[1000];
-		char str_lines[1000];
-		char str_a[1000];
-
-		sprintf(str_q, "%d", F->q);
-		sprintf(str_lines, "%ld_%ld", line1, line2);
-		sprintf(str_a, "%ld_%ld_%ld_%ld_%ld_%ld", arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
-
-
-		prefix.assign("arc_lifting_with_two_lines_q");
-		prefix.append(str_q);
-		prefix.append("_lines");
-		prefix.append(str_lines);
-		prefix.append("_arc");
-		prefix.append(str_a);
-
-		label_txt.assign("arc_lifting_with_two_lines_q");
-		label_txt.append(str_q);
-		label_txt.append("_lines");
-		label_txt.append(str_lines);
-		label_txt.append("_arc");
-		label_txt.append(str_a);
-
-		label_tex.assign("arc\\_lifting\\_with\\_two\\_lines\\_q");
-		label_tex.append(str_q);
-		label_tex.append("\\_lines");
-		label_tex.append(str_lines);
-		label_tex.append("\\_arc");
-		label_tex.append(str_a);
-
-
-
-
-		//AL->print(fp);
-
-
-		FREE_OBJECT(AL);
-
-
-		FREE_lint(arc);
-		FREE_lint(lines);
 	}
 	else {
 		cout << "surface_create::init2 we do not "
@@ -643,7 +298,8 @@ void surface_create::create_surface_HCV(int a, int b, int verbose_level)
 
 	if (f_v) {
 		cout << "surface_create::create_surface_HCV "
-				"a=" << Descr->family_HCV_a << " b=" << Descr->family_HCV_b << endl;
+				"a=" << Descr->family_HCV_a
+				<< " b=" << Descr->family_HCV_b << endl;
 	}
 
 
@@ -1073,6 +729,400 @@ void surface_create::create_surface_by_coefficients(std::string &coefficients_te
 		cout << "surface_create::create_surface_by_coefficients done" << endl;
 	}
 
+}
+
+void surface_create::create_surface_from_catalogue(int iso,
+		std::vector<std::string> &select_double_six_string,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_from_catalogue" << endl;
+	}
+	if (f_v) {
+		cout << "surface_create::create_surface_from_catalogue surface from catalogue" << endl;
+	}
+
+	int nb_select_double_six;
+
+	nb_select_double_six = select_double_six_string.size();
+	long int *p_lines;
+	long int Lines27[27];
+	int nb_iso;
+	//int nb_E = 0;
+	knowledge_base K;
+
+	nb_iso = K.cubic_surface_nb_reps(q);
+	if (Descr->iso >= nb_iso) {
+		cout << "surface_create::create_surface_from_catalogue iso >= nb_iso, "
+				"this cubic surface does not exist" << endl;
+		exit(1);
+	}
+	p_lines = K.cubic_surface_Lines(q, iso);
+	lint_vec_copy(p_lines, Lines27, 27);
+	//nb_E = cubic_surface_nb_Eckardt_points(q, Descr->iso);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_from_catalogue before Surf->rearrange_lines_according_to_double_six" << endl;
+	}
+	Surf->rearrange_lines_according_to_double_six(
+			Lines27, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_create::create_surface_from_catalogue after Surf->rearrange_lines_according_to_double_six" << endl;
+	}
+
+	if (nb_select_double_six) {
+		int i;
+
+		for (i = 0; i < nb_select_double_six; i++) {
+			int *select_double_six;
+			int sz;
+			long int New_lines[27];
+
+			if (f_v) {
+				cout << "surface_create::create_surface_from_catalogue selecting double six " << i << " / " << nb_select_double_six << endl;
+			}
+			int_vec_scan(select_double_six_string[i], select_double_six, sz);
+			if (sz != 12) {
+				cout << "surface_create::create_surface_from_catalogue f_select_double_six double six must consist of 12 numbers" << endl;
+				exit(1);
+			}
+
+			if (f_v) {
+				cout << "surface_create::create_surface_from_catalogue select_double_six = ";
+				int_vec_print(cout, select_double_six, 12);
+				cout << endl;
+			}
+
+
+			if (f_v) {
+				cout << "surface_create::create_surface_from_catalogue before Surf->rearrange_lines_according_to_a_given_double_six" << endl;
+			}
+			Surf->rearrange_lines_according_to_a_given_double_six(
+					Lines27, select_double_six, New_lines, 0 /* verbose_level */);
+
+			lint_vec_copy(New_lines, Lines27, 27);
+			FREE_int(select_double_six);
+		}
+	}
+
+	int coeffs20[20];
+
+	if (f_v) {
+		cout << "surface_create::create_surface_from_catalogue before Surf->build_cubic_surface_from_lines" << endl;
+	}
+	Surf->build_cubic_surface_from_lines(27, Lines27, coeffs20, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_create::create_surface_from_catalogue after Surf->build_cubic_surface_from_lines" << endl;
+	}
+
+	SO = NEW_OBJECT(surface_object);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_from_catalogue before SO->init_with_27_lines" << endl;
+	}
+	SO->init_with_27_lines(Surf,
+		Lines27, coeffs20,
+		FALSE /* f_find_double_six_and_rearrange_lines */,
+		verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_from_catalogue after SO->init_with_27_lines" << endl;
+	}
+
+
+	Sg = NEW_OBJECT(strong_generators);
+	//Sg->init(Surf_A->A, verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_from_catalogue before Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
+	}
+	Sg->stabilizer_of_cubic_surface_from_catalogue(Surf_A->A,
+		F, iso,
+		verbose_level);
+	f_has_group = TRUE;
+
+	if (f_v) {
+		cout << "surface_create::create_surface_from_catalogue after Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
+	}
+
+	char str_q[1000];
+	char str_a[1000];
+
+	sprintf(str_q, "%d", F->q);
+	sprintf(str_a, "%d", iso);
+
+
+
+	prefix.assign("catalogue_q");
+	prefix.append(str_q);
+	prefix.append("_iso");
+	prefix.append(str_a);
+
+	label_txt.assign("catalogue_q");
+	label_txt.append(str_q);
+	label_txt.append("_iso");
+	label_txt.append(str_a);
+
+	label_tex.assign("catalogue\\_q");
+	label_tex.append(str_q);
+	label_tex.append("\\_iso");
+	label_tex.append(str_a);
+	if (f_v) {
+		cout << "surface_create::create_surface_from_catalogue done" << endl;
+	}
+}
+
+void surface_create::create_surface_by_arc_lifting(
+		std::string &arc_lifting_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_arc_lifting" << endl;
+	}
+
+	long int *arc;
+	int arc_size;
+
+	lint_vec_scan(Descr->arc_lifting_text, arc, arc_size);
+
+	if (arc_size != 6) {
+		cout << "surface_create::create_surface_by_arc_lifting arc_size != 6" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "surface_create::init2 arc: ";
+		lint_vec_print(cout, arc, 6);
+		cout << endl;
+	}
+
+	poset_classification_control *Control1;
+	poset_classification_control *Control2;
+
+	Control1 = NEW_OBJECT(poset_classification_control);
+	Control2 = NEW_OBJECT(poset_classification_control);
+
+#if 1
+	// classifying the trihedral pairs is expensive:
+	if (f_v) {
+		cout << "surface_create::create_surface_by_arc_lifting before Surf_A->"
+				"Classify_trihedral_pairs->classify" << endl;
+	}
+	Surf_A->Classify_trihedral_pairs->classify(Control1, Control2, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_arc_lifting after Surf_A->"
+				"Classify_trihedral_pairs->classify" << endl;
+	}
+#endif
+
+
+	arc_lifting *AL;
+	int coeffs20[20];
+	long int Lines27[27];
+
+	AL = NEW_OBJECT(arc_lifting);
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_arc_lifting before "
+				"AL->create_surface" << endl;
+	}
+	AL->create_surface_and_group(Surf_A, arc, verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_arc_lifting after "
+				"AL->create_surface" << endl;
+	}
+
+	AL->Web->print_Eckardt_point_data(cout, verbose_level);
+
+	int_vec_copy(AL->Trihedral_pair->The_surface_equations
+			+ AL->Trihedral_pair->lambda_rk * 20, coeffs20, 20);
+
+	lint_vec_copy(AL->Web->Lines27, Lines27, 27);
+
+	SO = NEW_OBJECT(surface_object);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_arc_lifting before SO->init_with_27_lines" << endl;
+	}
+	SO->init_with_27_lines(Surf,
+		Lines27, coeffs20,
+		FALSE /* f_find_double_six_and_rearrange_lines */,
+		verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_arc_lifting after SO->init_with_27_lines" << endl;
+	}
+
+
+	Sg = AL->Trihedral_pair->Aut_gens->create_copy();
+	f_has_group = TRUE;
+
+
+	char str_q[1000];
+	char str_a[1000];
+
+	sprintf(str_q, "%d", F->q);
+	sprintf(str_a, "%ld_%ld_%ld_%ld_%ld_%ld", arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
+
+
+	prefix.assign("arc_lifting_trihedral_q");
+	prefix.append(str_q);
+	prefix.append("_arc");
+	prefix.append(str_a);
+
+	label_txt.assign("arc_lifting_trihedral_q");
+	label_txt.append(str_q);
+	label_txt.append("_arc");
+	label_txt.append(str_a);
+
+	label_tex.assign("arc\\_lifting\\_trihedral\\_q");
+	label_tex.append(str_q);
+	label_tex.append("\\_arc");
+	label_tex.append(str_a);
+
+	//AL->print(fp);
+
+
+	FREE_OBJECT(AL);
+	FREE_OBJECT(Control1);
+	FREE_OBJECT(Control2);
+
+
+	FREE_lint(arc);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_arc_lifting done" << endl;
+	}
+}
+
+void surface_create::create_surface_by_arc_lifting_with_two_lines(
+		std::string &arc_lifting_text,
+		std::string &arc_lifting_two_lines_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines" << endl;
+	}
+	if (f_v) {
+		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines by "
+				"arc lifting with two lines" << endl;
+	}
+
+	long int *arc;
+	int arc_size, lines_size;
+	long int line1, line2;
+	long int *lines;
+
+	lint_vec_scan(arc_lifting_text, arc, arc_size);
+
+	if (arc_size != 6) {
+		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines arc_size != 6" << endl;
+		exit(1);
+	}
+
+	lint_vec_scan(arc_lifting_two_lines_text, lines, lines_size);
+
+	if (lines_size != 2) {
+		cout << "surface_create::init lines_size != 2" << endl;
+		exit(1);
+	}
+
+
+	line1 = lines[0];
+	line2 = lines[1];
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines arc: ";
+		lint_vec_print(cout, arc, 6);
+		cout << endl;
+		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines lines: ";
+		lint_vec_print(cout, lines, 2);
+		cout << endl;
+	}
+
+	arc_lifting_with_two_lines *AL;
+	int coeffs20[20];
+	long int Lines27[27];
+
+	AL = NEW_OBJECT(arc_lifting_with_two_lines);
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines before "
+				"AL->create_surface" << endl;
+	}
+	AL->create_surface(Surf, arc, line1, line2, verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines after "
+				"AL->create_surface" << endl;
+	}
+
+	int_vec_copy(AL->coeff, coeffs20, 20);
+	lint_vec_copy(AL->lines27, Lines27, 27);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines before SO->init_with_27_lines" << endl;
+	}
+
+	SO->init_with_27_lines(Surf,
+		Lines27, coeffs20,
+		FALSE /* f_find_double_six_and_rearrange_lines */,
+		verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines after SO->init_with_27_lines" << endl;
+	}
+
+
+	f_has_group = FALSE;
+
+	char str_q[1000];
+	char str_lines[1000];
+	char str_a[1000];
+
+	sprintf(str_q, "%d", F->q);
+	sprintf(str_lines, "%ld_%ld", line1, line2);
+	sprintf(str_a, "%ld_%ld_%ld_%ld_%ld_%ld", arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
+
+
+	prefix.assign("arc_lifting_with_two_lines_q");
+	prefix.append(str_q);
+	prefix.append("_lines");
+	prefix.append(str_lines);
+	prefix.append("_arc");
+	prefix.append(str_a);
+
+	label_txt.assign("arc_lifting_with_two_lines_q");
+	label_txt.append(str_q);
+	label_txt.append("_lines");
+	label_txt.append(str_lines);
+	label_txt.append("_arc");
+	label_txt.append(str_a);
+
+	label_tex.assign("arc\\_lifting\\_with\\_two\\_lines\\_q");
+	label_tex.append(str_q);
+	label_tex.append("\\_lines");
+	label_tex.append(str_lines);
+	label_tex.append("\\_arc");
+	label_tex.append(str_a);
+
+
+
+
+	//AL->print(fp);
+
+
+	FREE_OBJECT(AL);
+
+
+	FREE_lint(arc);
+	FREE_lint(lines);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines done" << endl;
+	}
 }
 
 void surface_create::apply_transformations(

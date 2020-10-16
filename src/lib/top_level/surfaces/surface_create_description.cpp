@@ -51,10 +51,10 @@ void surface_create_description::null()
 	family_general_abcd_c = 0;
 	family_general_abcd_d = 0;
 	f_arc_lifting = FALSE;
-	arc_lifting_text = NULL;
-	arc_lifting_two_lines_text = NULL;
+	//arc_lifting_text = NULL;
+	//arc_lifting_two_lines_text = NULL;
 	f_arc_lifting_with_two_lines = FALSE;
-	nb_select_double_six = 0;
+	//nb_select_double_six = 0;
 	//select_double_six_string[];
 }
 
@@ -124,23 +124,22 @@ int surface_create_description::read_arguments(int argc, const char **argv,
 		}
 		else if (strcmp(argv[i], "-arc_lifting") == 0) {
 			f_arc_lifting = TRUE;
-			arc_lifting_text = argv[++i];
+			arc_lifting_text.assign(argv[++i]);
 			cout << "-arc_lifting " << arc_lifting_text << endl;
 		}
 		else if (strcmp(argv[i], "-arc_lifting_with_two_lines") == 0) {
 			f_arc_lifting_with_two_lines = TRUE;
-			arc_lifting_text = argv[++i];
-			arc_lifting_two_lines_text = argv[++i];
+			arc_lifting_text.assign(argv[++i]);
+			arc_lifting_two_lines_text.assign(argv[++i]);
 			cout << "-arc_lifting_with_two_lines " << arc_lifting_text << " " << arc_lifting_two_lines_text << endl;
 		}
 		else if (strcmp(argv[i], "-select_double_six") == 0) {
 			//f_select_double_six = TRUE;
-			if (nb_select_double_six == SURFACE_CREATE_MAX_SELECT_DOUBLE_SIX) {
-				cout << "too many -select_double_six options" << endl;
-				exit(1);
-			}
-			select_double_six_string[nb_select_double_six++] = argv[++i];
-			cout << "-select_double_six " << select_double_six_string[nb_select_double_six - 1] << endl;
+			string s;
+
+			s.assign(argv[++i]);
+			select_double_six_string.push_back(s);
+			cout << "-select_double_six " << select_double_six_string[select_double_six_string.size() - 1] << endl;
 		}
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;

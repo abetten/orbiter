@@ -3376,6 +3376,47 @@ void algebra_global_with_action::orbits_on_polynomials(
 
 	Sch->print_orbit_reps(cout);
 
+	{
+	int pt = 814083;
+	if (Sch->degree >= pt) {
+		int orbit_idx;
+		orbit_idx = Sch->orbit_number(pt);
+		cout << "point " << pt << " lies in orbit " << orbit_idx << endl;
+	}
+	}
+	{
+	int pt = 577680;
+	if (Sch->degree >= pt) {
+		int orbit_idx;
+		orbit_idx = Sch->orbit_number(pt);
+		cout << "point " << pt << " lies in orbit " << orbit_idx << endl;
+	}
+	}
+	{
+	int pt = 288258;
+	if (Sch->degree >= pt) {
+		int orbit_idx;
+		orbit_idx = Sch->orbit_number(pt);
+		cout << "point " << pt << " lies in orbit " << orbit_idx << endl;
+	}
+	}
+	{
+	int pt = 308226;
+	if (Sch->degree >= pt) {
+		int orbit_idx;
+		orbit_idx = Sch->orbit_number(pt);
+		cout << "point " << pt << " lies in orbit " << orbit_idx << endl;
+	}
+	}
+	{
+	int pt = 271362;
+	if (Sch->degree >= pt) {
+		int orbit_idx;
+		orbit_idx = Sch->orbit_number(pt);
+		cout << "point " << pt << " lies in orbit " << orbit_idx << endl;
+	}
+	}
+
 	cout << "orbit reps:" << endl;
 
 	char fname[1000];

@@ -4554,6 +4554,7 @@ void group_theoretic_activity::do_classify_cubic_curves(
 		cout << "group_theoretic_activity::do_classify_cubic_curves after CCC->compute_starter" << endl;
 	}
 
+#if 0
 	if (f_v) {
 		cout << "group_theoretic_activity::do_classify_cubic_curves before CCC->test_orbits" << endl;
 	}
@@ -4561,6 +4562,7 @@ void group_theoretic_activity::do_classify_cubic_curves(
 	if (f_v) {
 		cout << "group_theoretic_activity::do_classify_cubic_curves after CCC->test_orbits" << endl;
 	}
+#endif
 
 	if (f_v) {
 		cout << "group_theoretic_activity::do_classify_cubic_curves before CCC->do_classify" << endl;
@@ -4571,6 +4573,9 @@ void group_theoretic_activity::do_classify_cubic_curves(
 	}
 
 
+	if (f_v) {
+		cout << "group_theoretic_activity::do_classify_cubic_curves creating cheat sheet" << endl;
+	}
 	char fname[1000];
 	char title[1000];
 	char author[1000];

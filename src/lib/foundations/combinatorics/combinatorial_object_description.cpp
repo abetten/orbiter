@@ -370,7 +370,7 @@ int combinatorial_object_description::read_arguments(int argc, const char **argv
 			}
 		} // next i
 	cout << "combinatorial_object_description::read_arguments done" << endl;
-	return i;
+	return i + 1;
 }
 
 

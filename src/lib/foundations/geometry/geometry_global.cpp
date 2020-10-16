@@ -1865,6 +1865,50 @@ void geometry_global::do_inverse_isomorphism_klein_quadric(int q,
 	}
 }
 
+void geometry_global::do_rank_point_in_PG(int q, int n,
+		std::string &coeff_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometry_global::do_rank_point_in_PG" << endl;
+	}
+
+	finite_field *F;
+
+	F = NEW_OBJECT(finite_field);
+	F->init(q, verbose_level);
+
+	int *coeff;
+	int sz;
+
+	int_vec_scan(coeff_text, coeff, sz);
+	if (sz != n + 1) {
+		cout << "geometry_global::do_rank_point_in_PG sz != n + 1" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "geometry_global::do_rank_point_in_PG coeff: ";
+		int_vec_print(cout, coeff, sz);
+		cout << endl;
+	}
+
+	long int a;
+
+	F->PG_element_rank_modified_lint(coeff, 1, n + 1, a);
+
+
+	if (f_v) {
+		cout << "geometry_global::do_rank_point_in_PG coeff: ";
+		int_vec_print(cout, coeff, sz);
+		cout << " has rank " << a << endl;
+	}
+
+	FREE_OBJECT(F);
+
+}
+
 
 
 }}

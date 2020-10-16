@@ -705,6 +705,9 @@ public:
 	void do_inverse_isomorphism_klein_quadric(int q,
 			std::string &inverse_isomorphism_klein_quadric_matrix_A6,
 			int verbose_level);
+	void do_rank_point_in_PG(int q, int n,
+			std::string &coeff_text,
+			int verbose_level);
 };
 
 
