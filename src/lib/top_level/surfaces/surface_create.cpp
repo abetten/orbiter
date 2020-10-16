@@ -143,9 +143,17 @@ void surface_create::init(surface_create_description *Descr,
 	surface_create::Surf = Surf_A->Surf;
 	surface_create::F = Surf->F;
 	if (F->q != q) {
-		cout << "surface_create::init F->q != q" << endl;
+		cout << "surface_create::init q = " << q << endl;
 		exit(1);
 	}
+
+
+	if (f_v) {
+		cout << "surface_create::init Surf->Poly2_4->get_nb_monomials() = " << Surf->Poly2_4->get_nb_monomials() << endl;
+	}
+
+
+
 	if (NT.is_prime(q)) {
 		f_semilinear = FALSE;
 	}

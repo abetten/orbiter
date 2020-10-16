@@ -925,14 +925,20 @@ void surface_domain::compute_adjacency_matrix_of_line_intersection_graph(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
+	long int *o_rank;
 
 	if (f_v) {
 		cout << "surface_domain::compute_adjacency_matrix_of_line_intersection_graph" << endl;
 	}
+
+#if 0
 	if (n > 27) {
 		cout << "surface_domain::compute_adjacency_matrix_of_line_intersection_graph n > 27" << endl;
 		exit(1);
 	}
+#endif
+
+	o_rank = NEW_lint(n);
 	for (i = 0; i < n; i++) {
 		o_rank[i] = Klein->line_to_point_on_quadric(S[i], 0 /* verbose_level*/);
 	}
@@ -948,6 +954,7 @@ void surface_domain::compute_adjacency_matrix_of_line_intersection_graph(
 			}
 		}
 	}
+	FREE_lint(o_rank);
 	if (f_v) {
 		cout << "surface_domain::compute_adjacency_matrix_of_line_intersection_graph done" << endl;
 	}
@@ -958,14 +965,20 @@ void surface_domain::compute_adjacency_matrix_of_line_disjointness_graph(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
+	long int *o_rank;
 
 	if (f_v) {
 		cout << "surface_domain::compute_adjacency_matrix_of_line_disjointness_graph" << endl;
 	}
+
+#if 0
 	if (n > 27) {
 		cout << "surface_domain::compute_adjacency_matrix_of_line_disjointness_graph n > 27" << endl;
 		exit(1);
 	}
+#endif
+
+	o_rank = NEW_lint(n);
 	for (i = 0; i < n; i++) {
 		o_rank[i] = Klein->line_to_point_on_quadric(S[i], 0 /* verbose_level*/);
 	}
@@ -981,6 +994,7 @@ void surface_domain::compute_adjacency_matrix_of_line_disjointness_graph(
 			}
 		}
 	}
+	FREE_lint(o_rank);
 	if (f_v) {
 		cout << "surface_domain::compute_adjacency_matrix_of_line_disjointness_graph done" << endl;
 	}

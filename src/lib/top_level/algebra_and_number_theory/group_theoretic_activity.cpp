@@ -3559,7 +3559,7 @@ void group_theoretic_activity::do_create_surface(
 		cout << "group_theoretic_activity::do_create_surface before Surf->init" << endl;
 		}
 	Surf = NEW_OBJECT(surface_domain);
-	Surf->init(F, 0/*verbose_level - 1*/);
+	Surf->init(F, verbose_level - 1);
 	if (f_v) {
 		cout << "group_theoretic_activity::do_create_surface after Surf->init" << endl;
 		}
@@ -3729,6 +3729,92 @@ void group_theoretic_activity::do_create_surface(
 			<< Fio.file_size(fname_points) << endl;
 
 #endif
+
+	{
+		string fname_report;
+
+		fname_report.assign("surface_");
+		fname_report.append(SC->label_txt);
+		fname_report.append("_report.tex");
+
+		{
+			ofstream ost(fname_report);
+
+
+			char title[1000];
+			char author[1000];
+			snprintf(title, 1000, "Surface over GF(%d)", F->q);
+			strcpy(author, "");
+
+			latex_interface L;
+
+			//latex_head_easy(fp);
+			L.head(ost,
+				FALSE /* f_book */,
+				TRUE /* f_title */,
+				title, author,
+				FALSE /*f_toc */,
+				FALSE /* f_landscape */,
+				FALSE /* f_12pt */,
+				TRUE /*f_enlarged_page */,
+				TRUE /* f_pagenumbers*/,
+				NULL /* extra_praeamble */);
+
+			ost << "\\subsection*{The surface $" << SC->label_tex << "$}" << endl;
+
+
+			if (SC->SO->SOP == NULL) {
+				cout << "group_theoretic_activity::do_create_surface SC->SO->SOP == NULL" << endl;
+				exit(1);
+			}
+
+			SC->SO->SOP->print_general(ost);
+
+
+			if (f_v) {
+				cout << "group_theoretic_activity::do_create_surface "
+						"before SC->SO->SOP->print_lines" << endl;
+			}
+			SC->SO->SOP->print_lines(ost);
+
+			if (f_v) {
+				cout << "group_theoretic_activity::do_create_surface "
+						"before SC->SO->SOP->print_points" << endl;
+				}
+			SC->SO->SOP->print_points(ost);
+
+			if (f_v) {
+				cout << "group_theoretic_activity::do_create_surface "
+						"before SC->SO->SOP->print_neighbor_sets" << endl;
+				}
+			SC->SO->SOP->print_neighbor_sets(ost);
+
+
+			if (f_v) {
+				cout << "group_theoretic_activity::do_create_surface "
+						"before SC->SO->SOP->print_adjacency_matrix_with_intersection_points" << endl;
+				}
+			SC->SO->SOP->print_adjacency_matrix_with_intersection_points(ost);
+
+
+			if (f_v) {
+				cout << "group_theoretic_activity::do_create_surface "
+						"before SO->print_tritangent_planes" << endl;
+			}
+			//SC->SO->SOP->print_tritangent_planes(ost);
+
+
+			L.foot(ost);
+}
+		file_io Fio;
+
+		cout << "Written file " << fname_report << " of size "
+			<< Fio.file_size(fname_report) << endl;
+
+
+	}
+
+
 
 
 

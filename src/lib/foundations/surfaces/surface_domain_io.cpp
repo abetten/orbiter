@@ -201,17 +201,21 @@ void surface_domain::print_equation_wrapped(ostream &ost, int *the_equation)
 	ost << "\\end{align*}" << endl;
 }
 
-void surface_domain::print_lines_tex(ostream &ost, long int *Lines)
+void surface_domain::print_lines_tex(ostream &ost, long int *Lines, int nb_lines)
 {
 	int i;
 	latex_interface L;
 
-	for (i = 0; i < 27; i++) {
+	for (i = 0; i < nb_lines; i++) {
 		//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
 		Gr->unrank_lint(Lines[i], 0 /*verbose_level*/);
 		ost << "$$" << endl;
-		ost << "\\ell_{" << i << "} = "
-			<< Schlaefli->Line_label_tex[i] << " = " << endl;
+		ost << "\\ell_{" << i << "}";
+
+		if (nb_lines == 27) {
+			ost << " = " << Schlaefli->Line_label_tex[i];
+		}
+		ost << " = " << endl;
 		//print_integer_matrix_width(cout,
 		// Gr->M, k, n, n, F->log10_of_q + 1);
 		Gr->latex_matrix(ost, Gr->M);

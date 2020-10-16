@@ -48,6 +48,8 @@ surface_domain::surface_domain()
 	Poly2_4 = NULL;
 	Poly3_4 = NULL;
 
+	Partials = NULL;
+
 	f_has_large_polynomial_domains = FALSE;
 	Poly2_27 = NULL;
 	Poly4_27 = NULL;
@@ -154,6 +156,10 @@ void surface_domain::freeself()
 	}
 	if (Poly3_4) {
 		FREE_OBJECT(Poly3_4);
+	}
+
+	if (Partials) {
+		FREE_OBJECTS(Partials);
 	}
 
 	if (f_has_large_polynomial_domains) {
@@ -473,8 +479,29 @@ void surface_domain::init_polynomial_domains(int verbose_level)
 	nb_monomials = Poly3_4->get_nb_monomials();
 
 	if (f_v) {
-		cout << "nb_monomials = " << nb_monomials << endl;
+		cout << "Poly3_4->nb_monomials = " << nb_monomials << endl;
+		cout << "Poly2_4->nb_monomials = " << Poly2_4->get_nb_monomials() << endl;
 	}
+
+
+
+	Partials = NEW_OBJECTS(partial_derivative, 4);
+
+	int i;
+
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains initializing partials" << endl;
+	}
+	for (i = 0; i < 4; i++) {
+		Partials[i].init(Poly3_4, Poly2_4, i, verbose_level);
+	}
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains initializing partials done" << endl;
+	}
+
+
+
+
 	if (f_v) {
 		cout << "surface_domain::init_polynomial_domains done" << endl;
 	}

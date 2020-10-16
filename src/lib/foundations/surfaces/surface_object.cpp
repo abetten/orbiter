@@ -141,22 +141,22 @@ void surface_object::init_equation(surface_domain *Surf, int *eqn,
 			lint_vec_print(cout, Lines, 27);
 			cout << endl;
 		}
-		if (f_v) {
-			cout << "surface_object::init_equation before "
-					"compute_properties" << endl;
-		}
-		compute_properties(verbose_level - 2);
-		if (f_v) {
-			cout << "surface_object::init_equation after "
-					"compute_properties" << endl;
-		}
 	}
 	else {
 		cout << "The surface does not have 27 lines. nb_lines=" << nb_lines
-				<< " Properties have not been computed" << endl;
+				<< " A double six has not been computed" << endl;
 	}
 
 
+	if (f_v) {
+		cout << "surface_object::init_equation before "
+				"compute_properties" << endl;
+	}
+	compute_properties(verbose_level - 2);
+	if (f_v) {
+		cout << "surface_object::init_equation after "
+				"compute_properties" << endl;
+	}
 
 
 
@@ -165,6 +165,7 @@ void surface_object::init_equation(surface_domain *Surf, int *eqn,
 				"enumerate_points" << endl;
 	}
 }
+
 
 
 void surface_object::enumerate_points(int verbose_level)
@@ -205,6 +206,8 @@ void surface_object::enumerate_points(int verbose_level)
 		cout << "surface_object::enumerate_points done" << endl;
 	}
 }
+
+
 
 void surface_object::enumerate_points_and_lines(int verbose_level)
 {
@@ -275,7 +278,7 @@ void surface_object::enumerate_points_and_lines(int verbose_level)
 		cout << "surface_object::enumerate_points_and_lines nb_pts=" << nb_pts << " nb_lines=" << nb_lines << endl;
 		cout << "Lines:";
 		lint_vec_print(cout, Lines, nb_lines);
-		//cout << endl;
+		cout << endl;
 	}
 
 

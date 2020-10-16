@@ -893,7 +893,7 @@ void homogeneous_polynomial_domain::print_equation(ostream &ost, int *coeffs)
 	int i, c;
 	int f_first = TRUE;
 
-
+	cout << "homogeneous_polynomial_domain::print_equation" << endl;
 	for (i = 0; i < nb_monomials; i++) {
 		c = coeffs[i];
 		if (c == 0) {
