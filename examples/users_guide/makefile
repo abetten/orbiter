@@ -2173,26 +2173,6 @@ cuspidal_cubic_q11_subsets_canonical:
 CUBICSURFACESCREATION:
 
 
-arc_lifting_two_lines_64_E13:
-	$(ORBITER_PATH)/orbiter.out -v 4 -linear_group -PGGL 4 64 -end \
-		-group_theoretic_activities \
-		-control_six_arcs -problem_label sixarcs_q64 -end \
-		-classify_surfaces_through_arcs_and_two_lines \
-		-test_nb_Eckardt_points 13 \
-		-draw_options -end \
-		-report \
-		-end
-	pdflatex surfaces_arc_lifting_64.tex
-	open surfaces_arc_lifting_64.pdf
-
-
-# q=128
-# 3 surfaces with 13 Eckardt points
-# 929 surfaces total
-
-
-# the classification of cubic surfaces for q=128 takes 3 days on a big machine.
-
 
 
 
@@ -2201,8 +2181,8 @@ HCV_13:
 		-group_theoretic_activities \
 		-control_six_arcs -end \
 		-create_surface -family_HCV 3 1 -q 13 -end
-	pdflatex surface_family_q13_a3.tex
-	open surface_family_q13_a3.pdf
+	pdflatex surface_family_HCV_q13_a3_b1.tex
+	open surface_family_HCV_q13_a3_b1.pdf
 
 
 surface_4_0:
@@ -2926,13 +2906,15 @@ Family_general_7_rec:
 
 
 
-Family_general_2453:
+Family_general_q8_2453:
 	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 8 -wedge -end \
 		-group_theoretic_activities \
 		-control_six_arcs -end \
 		-create_surface -family_general_abcd 2 4 5 3 -q 8 \
 		-end \
 		-end 
+	pdflatex surface_family_general_abcd_q8_a2_b4_c5_d3_report.tex
+	open surface_family_general_abcd_q8_a2_b4_c5_d3_report.pdf
 
 #( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 6, 1, 7 )
 # has 91 lines
@@ -2941,8 +2923,72 @@ Family_general_2453:
 
 
 
+D1="1,4,1,7,1,12,1,15"
+D2=	"1,1,1,2,1,3,1,4,1,7,1,11,1,14,1,15,1,19"
+D3="1,4,1,7,1,12,1,14,1,15,1,19"
+D4="1,3,1,4,1,8,1,9,1,10,1,14,1,17,1,18,1,19"
+D5="1,2,1,3,1,4,1,7,1,15"
+D6="1,2,1,3,1,5,1,9,1,10,1,14,1,15"
+D7="1,3,1,4,1,5,1,7,1,10,1,11,1,19"
+D8="1,3,1,4,1,7,1,11,1,12,1,15,1,19"
+D9="1,4,1,7,1,8,1,9,1,10,1,13,1,15,1,16,1,17"
+D10:="1,4,1,7,1,8,1,10,1,13,1,14,1,15,1,16,1,17"
+D11="1,4,1,6,1,7,1,8,1,9,1,10,1,15,1,16,1,17"
+D12="1,6,1,8,1,9,1,10,1,15,1,16,1,17"
+D13="1,6,1,7,1,10,1,11,1,14,1,15"
+D14="1,4,1,5,1,6,1,8,1,12,1,14,1,16"
+D15="1,4,1,5,1,8,1,12,1,13,1,14,1,16"
+D16="1,4,1,5,1,8,1,9,1,12,1,13,1,16"
+D17=""
+D18=""
+D19="1,4,1,5,1,6,1,7,1,8,1,10,1,13,1,14,1,15"
+D20="1,5,1,6,1,8,1,10,1,13,1,14,1,15"
+D21="1,4,1,5,1,7,1,9,1,10,1,11,1,13,1,14,1,15,1,18,1,19"
+D22="1,4,1,7,1,9,1,11,1,13,1,14,1,15,1,18,1,19"
+D23="1,5,1,8,1,9,1,10,1,13,1,14,1,15,1,18,1,19"
+D24="1,4,1,5,1,7,1,10,1,11,1,12,1,13,1,14,1,17,1,18"
+D25="1,4,1,5,1,7,1,10,1,11,1,13,1,14,1,15,1,17,1,18"
+D26="1,4,1,5,1,6,1,7,1,10,1,11,1,14,1,15,1,17,1,18"
+D27="1,4,1,7,1,5,1,10,1,6,1,11,1,9,1,15,1,17,1,18"
+D28="1,4,1,7,1,13,1,11,1,9,1,15,1,17,1,18"
+D29="1,0,1,1,1,2,1,5,1,7,1,11,1,13,1,14,1,15,1,17,1,18,1,19"
+D30="1,0,1,1,1,2,1,3,1,7,1,8,1,10,1,11,1,12,1,15,1,16,1,19"
+D31="1,0,1,1,1,2,1,3,1,6,1,7,1,10,1,12,1,13,1,15,1,16,1,19"
+D32="1,0,1,1,1,2,1,3,1,6,1,7,1,8,1,11,1,13,1,15"
+D33="1,0,1,1,1,2,1,3,1,7,1,15"
+D34="1,0,1,1,1,2,1,3,1,7,1,12,1,15,1,19"
+D35="1,0,1,1,1,2,1,3,1,6,1,7,1,12,1,13,1,15,1,19"
+D36="1,0,1,1,1,2,1,3,1,5,1,7,1,10,1,12,1,15,1,19"
+D37="1,0,1,1,1,2,1,3,1,7,1,8,1,11,1,19"
+D38="1,0,1,1,1,2,1,3,1,6,1,7,1,8,1,11,1,13,1,19"
+D39="1,0,1,1,1,2,1,3,1,5,1,7,1,8,1,10,1,11,1,19"
+D40="1,0,1,1,1,2,1,3,1,7,1,8,1,11,1,19"
+D41="1,0,1,1,1,2,1,3,1,7,1,12,1,15,1,19"
+D42="1,2,1,4,1,7,1,5,1,10,1,11,1,14,1,19"
+D43="1,2,1,4,1,7,1,11,1,12,1,14,1,15,1,19"
+D44="1,0,1,1,1,2,1,6,1,8,1,11,1,12,1,14"
+D45="1,6,1,8,1,9,1,11,1,12,1,13,1,14,1,15,1,16,1,17,1,18,1,19"
+
+D3_q4:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 4 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -by_coefficients $(D3) -q 4 \
+		-end \
+		-end 
+	pdflatex surface_by_coefficients_q4_report.tex
+	open surface_by_coefficients_q4_report.pdf
 
 
+D1_q8:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 8 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -by_coefficients $(D1) -q 8 \
+		-end \
+		-end 
+	pdflatex surface_by_coefficients_q8_report.tex
+	open surface_by_coefficients_q8_report.pdf
 
 
 
@@ -2953,12 +2999,6 @@ Family_general_2453:
 
 CUBICSURFACESCLASSIFICATION:
 
-surface_7:
-	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 7 -wedge -end \
-		-group_theoretic_activities \
-			-poset_classification_control -W -end \
-		-surface_classify -end
-	
 
 surface_4:
 	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 4 -wedge -end \
@@ -3020,6 +3060,18 @@ arc_lifting_two_lines_4_PGGL:
 		-end
 	pdflatex surfaces_arc_lifting_4.tex
 	open surfaces_arc_lifting_4.pdf
+
+
+
+
+
+surface_7:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 7 -wedge -end \
+		-group_theoretic_activities \
+			-poset_classification_control -W -end \
+		-surface_classify -end
+	
+
 
 
 
@@ -3240,6 +3292,29 @@ surface_64:
 
 # 3 surfaces with 13 Eckardt points (Tekirdag 1 over q=8 and Kapadokya 1 and 2)
 # 1 Hirschfeld with 45 Eckardt points
+
+
+
+
+arc_lifting_two_lines_64_E13:
+	$(ORBITER_PATH)/orbiter.out -v 4 -linear_group -PGGL 4 64 -end \
+		-group_theoretic_activities \
+		-control_six_arcs -problem_label sixarcs_q64 -end \
+		-classify_surfaces_through_arcs_and_two_lines \
+		-test_nb_Eckardt_points 13 \
+		-draw_options -end \
+		-report \
+		-end
+	pdflatex surfaces_arc_lifting_64.tex
+	open surfaces_arc_lifting_64.pdf
+
+
+# q=128
+# 3 surfaces with 13 Eckardt points
+# 929 surfaces total
+
+
+# the classification of cubic surfaces for q=128 takes 3 days on a big machine.
 
 
 

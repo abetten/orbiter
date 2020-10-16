@@ -498,7 +498,7 @@ public:
 	int Basis0[16];
 	int Basis1[16];
 	int Basis2[16];
-	int o_rank[27];
+	//int o_rank[27];
 
 	int *v; // [n]
 	int *v2; // [(n * (n-1)) / 2]
@@ -541,6 +541,7 @@ public:
 	homogeneous_polynomial_domain *Poly3_4;
 		// cubic polynomials in four variables
 
+	partial_derivative *Partials;
 
 
 	int f_has_large_polynomial_domains;
@@ -749,7 +750,7 @@ public:
 	void print_equation_in_trihedral_form(std::ostream &ost,
 		int *the_six_plane_equations, int lambda, int *the_equation);
 	void print_equation_wrapped(std::ostream &ost, int *the_equation);
-	void print_lines_tex(std::ostream &ost, long int *Lines);
+	void print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines);
 	void print_clebsch_P(std::ostream &ost);
 	void print_clebsch_P_matrix_only(std::ostream &ost);
 	void print_clebsch_cubics(std::ostream &ost);
@@ -836,16 +837,24 @@ public:
 	long int *All_Planes; // [nb_trihedral_pairs * 6]
 	int *Dual_point_ranks; // [nb_trihedral_pairs * 6]
 
-	int *Adj_line_intersection_graph; // [27 * 27]
+	int *Adj_line_intersection_graph; // [SO->nb_lines * SO->nb_lines]
 	set_of_sets *Line_neighbors;
-	int *Line_intersection_pt; // [27 * 27]
-	int *Line_intersection_pt_idx; // [27 * 27]
+	int *Line_intersection_pt; // [SO->nb_lines * SO->nb_lines]
+	int *Line_intersection_pt_idx; // [SO->nb_lines * SO->nb_lines]
+
+
+	int *gradient;
+
+	long int *singular_pts;
+	int nb_singular_pts;
 
 
 	surface_object_properties();
 	~surface_object_properties();
 	void init(surface_object *SO, int verbose_level);
 	void compute_properties(int verbose_level);
+	void compute_gradient(int verbose_level);
+	void compute_singular_points(int verbose_level);
 	void compute_adjacency_matrix_of_line_intersection_graph(
 		int verbose_level);
 	int Adj_ij(int i, int j);
@@ -876,6 +885,7 @@ public:
 	void print_affine_points_in_source_code(std::ostream &ost);
 	void print_points(std::ostream &ost);
 	void print_Eckardt_points(std::ostream &ost);
+	void print_singular_points(std::ostream &ost);
 	void print_double_points(std::ostream &ost);
 	void print_points_on_surface(std::ostream &ost);
 	void print_points_on_lines(std::ostream &ost);
@@ -939,6 +949,7 @@ public:
 	int eqn[20];
 
 	surface_object_properties *SOP;
+
 
 
 	surface_object();

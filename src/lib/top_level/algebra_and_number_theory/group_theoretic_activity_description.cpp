@@ -117,6 +117,8 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_six_arcs = FALSE;
 	f_filter_by_nb_Eckardt_points = FALSE;
 	nb_Eckardt_points = 0;
+
+
 	f_surface_quartic = FALSE;
 	f_surface_clebsch = FALSE;
 	f_surface_codes = FALSE;
