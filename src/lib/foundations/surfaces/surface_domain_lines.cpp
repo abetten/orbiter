@@ -67,103 +67,179 @@ void surface_domain::build_cubic_surface_from_lines(
 {
 	int f_v = (verbose_level >= 1);
 	int r;
+	int *System;
+	int nb_rows;
 
 	if (f_v) {
 		cout << "surface_domain::build_cubic_surface_from_lines" << endl;
-		}
-	r = compute_system_in_RREF(len, S, verbose_level);
+	}
+
+	if (f_v) {
+		cout << "surface_domain::build_cubic_surface_from_lines before create_system" << endl;
+	}
+	create_system(len, S, System, nb_rows, verbose_level);
+
+
+	int base_cols[20];
+
+	r = F->Gauss_simple(System, nb_rows, nb_monomials,
+		base_cols, 0 /* verbose_level */);
+
+	if (FALSE) {
+		cout << "surface_domain::create_system "
+				"The system in RREF:" << endl;
+		int_matrix_print(System, nb_rows, nb_monomials);
+	}
+	if (f_v) {
+		cout << "surface_domain::create_system "
+				"The system has rank " << r << endl;
+	}
+
+
 	if (r != nb_monomials - 1) {
 		cout << "surface_domain::build_cubic_surface_from_lines "
 				"r != nb_monomials - 1" << endl;
 		cout << "r=" << r << endl;
 		exit(1);
-		}
+	}
 
 	int kernel_m, kernel_n;
 
 	F->matrix_get_kernel(System, r, nb_monomials, base_cols, r,
 		kernel_m, kernel_n, coeff, 0 /* verbose_level */);
 
+	FREE_int(System);
+
 	//cout << "kernel_m=" << kernel_m << endl;
 	//cout << "kernel_n=" << kernel_n << endl;
 	if (f_v) {
 		cout << "surface_domain::build_cubic_surface_from_lines done" << endl;
-		}
+	}
 }
 
-int surface_domain::compute_system_in_RREF(
-		int len, long int *S, int verbose_level)
+int surface_domain::rank_of_system(int len, long int *S,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *System;
+	int nb_rows;
+	int r;
+
+	if (f_v) {
+		cout << "surface_domain::rank_of_system" << endl;
+	}
+	create_system(len, S, System, nb_rows, verbose_level);
+
+
+	int base_cols[20];
+
+	r = F->Gauss_simple(System, nb_rows, nb_monomials,
+		base_cols, 0 /* verbose_level */);
+
+
+	FREE_int(System);
+
+	if (f_v) {
+		cout << "surface_domain::rank_of_system done" << endl;
+	}
+
+	return r;
+}
+
+void surface_domain::create_system(int len, long int *S,
+		int *&System, int &nb_rows, int verbose_level)
 {
 	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
-	long int i, j, nb_pts, a, r;
+	long int a;
+	int i, j;
 
 	if (f_v) {
-		cout << "surface_domain::compute_system_in_RREF" << endl;
-		}
+		cout << "surface_domain::create_system" << endl;
+	}
+#if 0
 	if (len > 27) {
-		cout << "surface_domain::compute_system_in_RREF len > 27" << endl;
+		cout << "surface_domain::create_system len > 27" << endl;
 		exit(1);
 		}
+#endif
 
-	nb_pts = 0;
+	vector<int> Pts;
+	long int *pts_on_line;
+	int *Pt_coords;
+
+
+	pts_on_line = NEW_lint(P->k);
+	//nb_pts = 0;
 	for (i = 0; i < len; i++) {
 		a = S[i];
 
 		if (P->Lines) {
 			for (j = 0; j < P->k; j++) {
-				pt_list[nb_pts++] = P->Lines[a * P->k + j];
-				}
-			}
-		else {
-			P->create_points_on_line(a,
-				pt_list + nb_pts,
-				0 /* verbose_level */);
-			nb_pts += P->k;
+				Pts.push_back(P->Lines[a * P->k + j]);
+				//pt_list[nb_pts++] = P->Lines[a * P->k + j];
 			}
 		}
+		else {
+			P->create_points_on_line(a,
+					pts_on_line, //pt_list + nb_pts,
+					0 /* verbose_level */);
+			//nb_pts += P->k;
+			for (j = 0; j < P->k; j++) {
+				Pts.push_back(pts_on_line[j]);
+			}
+		}
+	}
+	FREE_lint(pts_on_line);
 
+#if 0
 	if (nb_pts > max_pts) {
-		cout << "surface_domain::compute_system_in_RREF "
+		cout << "surface_domain::create_system "
 				"nb_pts > max_pts" << endl;
 		exit(1);
 		}
 	if (FALSE) {
-		cout << "surface_domain::compute_system_in_RREF list of "
+		cout << "surface_domain::create_system list of "
 				"covered points by lines:" << endl;
 		lint_matrix_print(pt_list, len, P->k);
 		}
-	for (i = 0; i < nb_pts; i++) {
-		unrank_point(Pts + i * n, pt_list[i]);
-		}
-	if (f_v && FALSE) {
-		cout << "surface_domain::compute_system_in_RREF list of "
-				"covered points in coordinates:" << endl;
-		int_matrix_print(Pts, nb_pts, n);
-		}
+#endif
 
-	for (i = 0; i < nb_pts; i++) {
-		for (j = 0; j < nb_monomials; j++) {
-			System[i * nb_monomials + j] = Poly3_4->evaluate_monomial(j, Pts + i * n);
-			}
-		}
+
+	Pt_coords = NEW_int(nb_rows * n);
+
+	nb_rows = Pts.size();
+
+	for (i = 0; i < nb_rows; i++) {
+		unrank_point(Pt_coords + i * n, Pts[i]);
+	}
+
 	if (f_v && FALSE) {
-		cout << "surface_domain::compute_system_in_RREF "
+		cout << "surface_domain::create_system list of "
+				"covered points in coordinates:" << endl;
+		int_matrix_print(Pt_coords, nb_rows, n);
+	}
+
+
+	System = NEW_int(nb_rows * nb_monomials);
+
+	for (i = 0; i < nb_rows; i++) {
+		for (j = 0; j < nb_monomials; j++) {
+			System[i * nb_monomials + j] = Poly3_4->evaluate_monomial(j, Pt_coords + i * n);
+		}
+	}
+	FREE_int(Pt_coords);
+
+
+	if (f_v && FALSE) {
+		cout << "surface_domain::create_system "
 				"The system:" << endl;
-		int_matrix_print(System, nb_pts, nb_monomials);
-		}
-	r = F->Gauss_simple(System, nb_pts, nb_monomials,
-		base_cols, 0 /* verbose_level */);
-	if (FALSE) {
-		cout << "surface_domain::compute_system_in_RREF "
-				"The system in RREF:" << endl;
-		int_matrix_print(System, nb_pts, nb_monomials);
-		}
+		int_matrix_print(System, nb_rows, nb_monomials);
+	}
+
 	if (f_v) {
-		cout << "surface_domain::compute_system_in_RREF "
-				"The system has rank " << r << endl;
-		}
-	return r;
+		cout << "surface_domain::create_system done" << endl;
+	}
 }
 
 void surface_domain::compute_intersection_points(int *Adj,

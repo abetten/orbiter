@@ -671,7 +671,7 @@ void classify_double_sixes::test_orbits(int verbose_level)
 		}
 #endif
 
-		r = Surf->compute_system_in_RREF(6,
+		r = Surf->rank_of_system(6,
 				S2, 0 /*verbose_level*/);
 		if (f_vv) {
 			cout << "classify_double_sixes::test_orbits orbit "

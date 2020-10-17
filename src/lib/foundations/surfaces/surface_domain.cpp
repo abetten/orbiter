@@ -29,11 +29,12 @@ surface_domain::surface_domain()
 	O = NULL;
 	Klein = NULL;
 
-
+#if 0
 	Pts = NULL;
 	pt_list = NULL;
 	System = NULL;
 	base_cols = NULL;
+#endif
 
 	Schlaefli = NULL;
 
@@ -105,6 +106,7 @@ void surface_domain::freeself()
 		FREE_OBJECT(Klein);
 	}
 
+#if 0
 	if (Pts) {
 		FREE_int(Pts);
 	}
@@ -117,7 +119,7 @@ void surface_domain::freeself()
 	if (base_cols) {
 		FREE_int(base_cols);
 	}
-
+#endif
 
 	if (Schlaefli) {
 		FREE_OBJECT(Schlaefli);
@@ -213,10 +215,10 @@ void surface_domain::init(finite_field *F, int verbose_level)
 	n2 = 2 * n;
 	surface_domain::F = F;
 	q = F->q;
-	nb_pts_on_surface = q * q + 7 * q + 1;
+	nb_pts_on_surface_with_27_lines = q * q + 7 * q + 1;
 	if (f_v) {
-		cout << "surface::init nb_pts_on_surface = "
-				<< nb_pts_on_surface << endl;
+		cout << "surface::init nb_pts_on_surface_with_27_lines = "
+				<< nb_pts_on_surface_with_27_lines << endl;
 	}
 
 	v = NEW_int(n);
@@ -294,6 +296,7 @@ void surface_domain::init(finite_field *F, int verbose_level)
 
 	//init_large_polynomial_domains(verbose_level);
 
+#if 0
 	if (f_v) {
 		cout << "surface::init before init_system" << endl;
 	}
@@ -301,7 +304,7 @@ void surface_domain::init(finite_field *F, int verbose_level)
 	if (f_v) {
 		cout << "surface::init after init_system" << endl;
 	}
-
+#endif
 
 
 
@@ -738,6 +741,8 @@ void surface_domain::label_variables_24(
 	}
 }
 
+
+#if 0
 void surface_domain::init_system(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -756,7 +761,7 @@ void surface_domain::init_system(int verbose_level)
 		cout << "surface_domain::init_system done" << endl;
 	}
 }
-
+#endif
 
 int surface_domain::index_of_monomial(int *v)
 {
@@ -789,6 +794,7 @@ long int surface_domain::rank_plane(int *v)
 	return rk;
 }
 
+#if 0
 int surface_domain::test(int len, long int *S, int verbose_level)
 {
 	//verbose_level = 1;
@@ -814,6 +820,7 @@ int surface_domain::test(int len, long int *S, int verbose_level)
 	}
 	return ret;
 }
+#endif
 
 void surface_domain::enumerate_points(int *coeff,
 		std::vector<long int> &Pts,
@@ -881,7 +888,7 @@ void surface_domain::list_starter_configurations(
 				S3[h] = Lines[subset2[h]];
 			}
 			S3[5] = Lines[i];
-			r = compute_system_in_RREF(6, S3, 0 /*verbose_level*/);
+			r = rank_of_system(6, S3, 0 /*verbose_level*/);
 			if (r == 19) {
 				N++;
 			}
@@ -908,7 +915,7 @@ void surface_domain::list_starter_configurations(
 				S3[h] = Lines[subset2[h]];
 			}
 			S3[5] = Lines[i];
-			r = compute_system_in_RREF(6, S3, 0 /*verbose_level*/);
+			r = rank_of_system(6, S3, 0 /*verbose_level*/);
 			if (r == 19) {
 				Table[N1 * 2 + 0] = i;
 				Table[N1 * 2 + 1] = j;

@@ -27,10 +27,10 @@ surface_object_properties::surface_object_properties()
 {
 	SO = NULL;
 
-	nb_planes = 0;
-
 	pts_on_lines = NULL;
 	lines_on_point = NULL;
+	Type_pts_on_lines = NULL;
+	Type_lines_on_point = NULL;
 
 	Eckardt_points = NULL;
 	Eckardt_points_index = NULL;
@@ -42,33 +42,14 @@ surface_object_properties::surface_object_properties()
 	Pts_not_on_lines = NULL;
 	nb_pts_not_on_lines = 0;
 
-	plane_type_by_points = NULL;
+	nb_planes = 0;
+
 	plane_type_by_lines = NULL;
+	plane_type_by_points = NULL;
 	C_plane_type_by_points = NULL;
-	Type_pts_on_lines = NULL;
-	Type_lines_on_point = NULL;
+
 	Tritangent_plane_rk = NULL;
 	nb_tritangent_planes = 0;
-
-#if 0
-	Tritangent_planes = NULL;
-	nb_tritangent_planes = 0;
-	Lines_in_tritangent_plane = NULL;
-	Tritangent_plane_dual = NULL;
-
-	iso_type_of_tritangent_plane = NULL;
-	Type_iso_tritangent_planes = NULL;
-
-	Unitangent_planes = NULL;
-	nb_unitangent_planes = 0;
-	Line_in_unitangent_plane = NULL;
-
-	Tritangent_planes_on_lines = NULL;
-	Tritangent_plane_to_Eckardt = NULL;
-	Eckardt_to_Tritangent_plane = NULL;
-	Trihedral_pairs_as_tritangent_planes = NULL;
-	Unitangent_planes_on_lines = NULL;
-#endif
 
 	Lines_in_tritangent_planes = NULL;
 
@@ -181,11 +162,6 @@ void surface_object_properties::init(surface_object *SO, int verbose_level)
 		cout << "surface_object_properties::init" << endl;
 	}
 	surface_object_properties::SO = SO;
-
-
-	nb_planes = SO->Surf->P->Nb_subspaces[2];
-	plane_type_by_points = NEW_int(nb_planes);
-	plane_type_by_lines = NEW_int(nb_planes);
 
 
 
@@ -622,15 +598,16 @@ int surface_object_properties::Adj_ij(int i, int j)
 void surface_object_properties::compute_plane_type_by_points(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int N_planes;
 
 	if (f_v) {
 		cout << "surface_object_properties::compute_plane_type_by_points" << endl;
 	}
 
-	N_planes = SO->Surf->P->nb_rk_k_subspaces_as_lint(3);
+	nb_planes = SO->Surf->P->Nb_subspaces[2];
+	plane_type_by_points = NEW_int(nb_planes);
+	plane_type_by_lines = NEW_int(nb_planes);
 
-	if (N_planes < MAX_NUMBER_OF_PLANES_FOR_PLANE_TYPE) {
+	if (nb_planes < MAX_NUMBER_OF_PLANES_FOR_PLANE_TYPE) {
 		SO->Surf->P->plane_intersection_type_basic(SO->Pts, SO->nb_pts,
 			plane_type_by_points, 0 /* verbose_level */);
 
@@ -655,6 +632,7 @@ void surface_object_properties::compute_plane_type_by_points(int verbose_level)
 	}
 }
 
+
 void surface_object_properties::compute_tritangent_planes_by_rank(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -665,7 +643,8 @@ void surface_object_properties::compute_tritangent_planes_by_rank(int verbose_le
 
 
 	if (SO->nb_lines != 27) {
-		cout << "surface_object_properties::compute_tritangent_planes_by_rank SO->nb_lines != 27 we don't compute the tritangent planes" << endl;
+		cout << "surface_object_properties::compute_tritangent_planes_by_rank "
+				"SO->nb_lines != 27 we don't compute the tritangent planes" << endl;
 		nb_tritangent_planes = 0;
 		return;
 	}
@@ -784,8 +763,8 @@ void surface_object_properties::compute_planes_and_dual_point_ranks(int verbose_
 		// << Surf->nb_trihedral_pairs << endl;
 		for (j = 0; j < 6; j++) {
 			Dual_point_ranks[i * 6 + j] =
-					SO->Surf->P->dual_rank_of_plane_in_three_space(
-				All_Planes[i * 6 + j], 0 /* verbose_level */);
+				SO->Surf->P->dual_rank_of_plane_in_three_space(
+						All_Planes[i * 6 + j], 0 /* verbose_level */);
 		}
 
 	}
@@ -992,7 +971,13 @@ void surface_object_properties::print_adjacency_list(std::ostream &ost)
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 	for (i = 0; i < m; i++) {
-		ost << i << " & " << SO->Surf->Schlaefli->Line_label_tex[i];
+		ost << i << " & ";
+		if (SO->nb_lines == 27) {
+			ost << SO->Surf->Schlaefli->Line_label_tex[i];
+		}
+		else {
+			ost << i;
+		}
 		ost << " & ";
 		h = 0;
 		for (j = 0; j < n; j++) {
@@ -1001,7 +986,12 @@ void surface_object_properties::print_adjacency_list(std::ostream &ost)
 			}
 		}
 		for (j = 0; j < h; j++) {
-			ost << SO->Surf->Schlaefli->Line_label_tex[set[j]];
+			if (SO->nb_lines == 27) {
+				ost << SO->Surf->Schlaefli->Line_label_tex[set[j]];
+			}
+			else {
+				ost << set[j];
+			}
 			if (j < h - 1) {
 				ost << ", ";
 			}
@@ -1014,7 +1004,12 @@ void surface_object_properties::print_adjacency_list(std::ostream &ost)
 			}
 		}
 		for (j = 0; j < h; j++) {
-			ost << SO->Surf->Schlaefli->Line_label_tex[set[j]];
+			if (SO->nb_lines == 27) {
+				ost << SO->Surf->Schlaefli->Line_label_tex[set[j]];
+			}
+			else {
+				ost << set[j];
+			}
 			if (j < h - 1) {
 				ost << ", ";
 			}
@@ -1047,14 +1042,19 @@ void surface_object_properties::print_adjacency_matrix(std::ostream &ost)
 		ost << " & " << j;
 		}
 	ost << "\\\\" << endl;
-	ost << " & ";
-	for (j = 0; j < n; j++) {
-		ost << " & " << SO->Surf->Schlaefli->Line_label_tex[j];
-		}
-	ost << "\\\\" << endl;
+	if (SO->nb_lines == 27) {
+		ost << " & ";
+		for (j = 0; j < n; j++) {
+			ost << " & " << SO->Surf->Schlaefli->Line_label_tex[j];
+			}
+		ost << "\\\\" << endl;
+	}
 	ost << "\\hline" << endl;
 	for (i = 0; i < m; i++) {
-		ost << i << " & " << SO->Surf->Schlaefli->Line_label_tex[i];
+		ost << i << " & ";
+		if (SO->nb_lines == 27) {
+			ost << SO->Surf->Schlaefli->Line_label_tex[i];
+		}
 		for (j = 0; j < n; j++) {
 			ost << " & " << p[i * n + j];
 			}
@@ -2089,7 +2089,8 @@ void surface_object_properties::latex_table_of_trihedral_pairs_and_clebsch_syste
 
 		ost << "$" << t << " / " << nb_T << "$ ";
 		ost << "$T_{" << t_idx << "} = T_{"
-			<< SO->Surf->Schlaefli->Trihedral_pair_labels[t_idx] << "} = \\\\" << endl;
+			<< SO->Surf->Schlaefli->Trihedral_pair_labels[t_idx]
+			<< "} = \\\\" << endl;
 		latex_trihedral_pair(ost, t_idx);
 		ost << "$\\\\" << endl;
 		ost << "$";

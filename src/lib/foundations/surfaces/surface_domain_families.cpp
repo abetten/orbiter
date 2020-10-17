@@ -232,33 +232,6 @@ surface_object *surface_domain::create_surface_general_abcd(int a, int b, int c,
 		cout << "surface_domain::create_surface_general_abcd done" << endl;
 	}
 	return SO;
-
-#if 0
-	nb_lines = SO->nb_lines;
-	if (SO->nb_lines != 27) {
-		if (f_v) {
-			cout << "surface_domain::create_surface_general_abcd nb_lines = " << nb_lines << " is not 27, returning" << endl;
-		}
-		FREE_OBJECT(SO);
-		return FALSE;
-	}
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_general_abcd after SO->init_equation" << endl;
-	}
-
-	nb_E = SO->nb_Eckardt_points;
-
-	lint_vec_copy(SO->Lines, Lines27, 27);
-
-	FREE_OBJECT(SO);
-
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_general_abcd done" << endl;
-	}
-	return TRUE;
-#endif
 }
 
 
@@ -294,34 +267,6 @@ surface_object *surface_domain::create_surface_bes(int a, int c,
 		cout << "surface_domain::create_surface_bes done" << endl;
 	}
 	return SO;
-
-#if 0
-	nb_lines = SO->nb_lines;
-
-	if (SO->nb_lines != 27) {
-		if (f_v) {
-			cout << "surface_domain::create_surface_bes SO->nb_lines != 27, returning" << endl;
-		}
-		FREE_OBJECT(SO);
-		return FALSE;
-	}
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_bes after SO->init_equation" << endl;
-	}
-
-	nb_E = SO->nb_Eckardt_points;
-
-	lint_vec_copy(SO->Lines, Lines27, 27);
-
-	FREE_OBJECT(SO);
-
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_bes done" << endl;
-	}
-	return TRUE;
-#endif
 }
 
 
@@ -355,34 +300,6 @@ surface_object *surface_domain::create_surface_F13(int a, int verbose_level)
 		cout << "surface_domain::create_surface_F13 done" << endl;
 	}
 	return SO;
-
-#if 0
-	nb_lines = SO->nb_lines;
-
-	if (SO->nb_lines != 27) {
-		if (f_v) {
-			cout << "surface_domain::create_surface_F13 SO->nb_lines != 27, returning" << endl;
-		}
-		FREE_OBJECT(SO);
-		return FALSE;
-	}
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_F13 after SO->init_equation" << endl;
-	}
-
-	nb_E = SO->nb_Eckardt_points;
-
-	lint_vec_copy(SO->Lines, Lines27, 27);
-
-	FREE_OBJECT(SO);
-
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_F13 done" << endl;
-	}
-	return TRUE;
-#endif
 }
 
 surface_object *surface_domain::create_surface_G13(int a, int verbose_level)
@@ -415,34 +332,6 @@ surface_object *surface_domain::create_surface_G13(int a, int verbose_level)
 		cout << "surface_domain::create_surface_G13 done" << endl;
 	}
 	return SO;
-
-#if 0
-	nb_lines = SO->nb_lines;
-
-	if (SO->nb_lines != 27) {
-		if (f_v) {
-			cout << "surface_domain::create_surface_G13 SO->nb_lines != 27, returning" << endl;
-		}
-		FREE_OBJECT(SO);
-		return FALSE;
-	}
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_G13 after SO->init_equation" << endl;
-	}
-
-	nb_E = SO->nb_Eckardt_points;
-
-	lint_vec_copy(SO->Lines, Lines27, 27);
-
-	FREE_OBJECT(SO);
-
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_G13 done" << endl;
-	}
-	return TRUE;
-#endif
 }
 
 surface_object *surface_domain::create_surface_HCV(int a, int b,
@@ -555,8 +444,7 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 
 
 	if (f_v) {
-		cout << "surface_domain::create_surface_HCV before create_HCV_"
-				"fifteen_lines" << endl;
+		cout << "surface_domain::create_surface_HCV before create_HCV_fifteen_lines" << endl;
 	}
 
 	long int special_lines[15];
@@ -570,20 +458,17 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 		}
 	}
 	if (f_v) {
-		cout << "surface_domain::create_surface_HCV after create_special_"
-				"fifteen_lines" << endl;
+		cout << "surface_domain::create_surface_HCV after create_special_fifteen_lines" << endl;
 	}
 
-	rk = compute_system_in_RREF(27, Lines27, 0 /* verbose_level */);
+	rk = rank_of_system(27, Lines27, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "surface_domain::create_surface_HCV a=" << a
-			<< " b=" << b << " rk=" << rk << endl;
+		cout << "surface_domain::create_surface_HCV "
+				"a=" << a << " b=" << b << " rk=" << rk << endl;
 	}
 
 	if (rk != 19) {
 		cout << "surface_domain::create_surface_HCV rk != 19" << endl;
-		//FREE_lint(Pts);
-		//FREE_int(coeff);
 		exit(1);
 	}
 
@@ -593,73 +478,6 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 			0 /* verbose_level */);
 	F->PG_element_normalize_from_front(coeff20, 1, 20);
 
-
-
-#if 0
-	vector<long int> Points;
-	enumerate_points(coeff20, Points, 0 /* verbose_level */);
-
-	Sorting.lint_vec_heapsort(Pts, nb_pts);
-
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV "
-				"a=" << a << " b=" << b << " equation: ";
-		print_equation(cout, coeff20);
-		cout << endl;
-	}
-
-	if (nb_pts != nb_pts_on_surface) {
-		cout << "surface_domain::create_surface_HCV degenerate surface" << endl;
-		cout << "nb_pts=" << nb_pts << endl;
-		cout << "should be =" << nb_pts_on_surface << endl;
-		alpha = -1;
-		beta = -1;
-		nb_E = -1;
-		return FALSE;
-	}
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV Pts: " << endl;
-		lint_vec_print_as_table(cout, Pts, nb_pts, 10);
-	}
-
-
-	int *Adj;
-	int *Intersection_pt;
-	int *Intersection_pt_idx;
-
-	compute_adjacency_matrix_of_line_intersection_graph(
-		Adj, Lines27, 27, verbose_level);
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV "
-				"The adjacency matrix is:" << endl;
-		int_matrix_print(Adj, 27, 27);
-	}
-
-
-	compute_intersection_points_and_indices(
-		Adj, Pts, nb_pts, Lines27, 27,
-		Intersection_pt, Intersection_pt_idx,
-		verbose_level);
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV "
-				"The intersection points are:" << endl;
-		int_matrix_print(Intersection_pt_idx, 27, 27);
-	}
-
-
-	tally C;
-
-	C.init(Intersection_pt_idx, 27 * 27, FALSE, 0);
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV "
-				"classification of points by multiplicity:" << endl;
-		C.print_naked(TRUE);
-		cout << endl;
-	}
-#endif
 
 
 
@@ -681,83 +499,6 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 	}
 
 
-#if 0
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV "
-				"determining all lines on the surface:" << endl;
-	}
-	{
-		long int Lines2[27];
-		P->find_lines_which_are_contained(Pts, nb_pts,
-			Lines2, nb_lines, 27 /* max_lines */,
-			0 /* verbose_level */);
-	}
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV "
-				"nb_lines = " << nb_lines << endl;
-	}
-	if (nb_lines != 27) {
-		cout << "surface_domain::create_surface_HCV "
-				"nb_lines != 27, something is wrong "
-				"with the surface" << endl;
-		exit(1);
-	}
-	set_of_sets *pts_on_lines;
-	set_of_sets *lines_on_pt;
-
-	compute_points_on_lines(Pts, nb_pts,
-		Lines27, nb_lines,
-		pts_on_lines,
-		verbose_level);
-
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV pts_on_lines: " << endl;
-		pts_on_lines->print_table();
-	}
-
-	int *E;
-
-	pts_on_lines->get_eckardt_points(E, nb_E, 0 /* verbose_level */);
-	//nb_E = pts_on_lines->number_of_eckardt_points(verbose_level);
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV The surface contains "
-			<< nb_E << " Eckardt points" << endl;
-	}
-
-#if 0
-	if (a == 2 && b == 1) {
-		exit(1);
-	}
-#endif
-
-
-	pts_on_lines->dualize(lines_on_pt, 0 /* verbose_level */);
-
-#if 0
-	cout << "lines_on_pt: " << endl;
-	lines_on_pt->print_table();
-#endif
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV "
-				"The Eckardt points are:" << endl;
-		for (i = 0; i < nb_E; i++) {
-			e = E[i];
-			ee = Pts[e];
-			unrank_point(v, ee);
-			cout << i << " : " << ee << " : ";
-			int_vec_print(cout, v, 4);
-			cout << " on lines: ";
-			lint_vec_print(cout, lines_on_pt->Sets[e],
-				lines_on_pt->Set_size[e]);
-			cout << endl;
-		}
-	}
-
-#endif
-
 
 	surface_object *SO;
 
@@ -766,7 +507,6 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 	if (f_v) {
 		cout << "surface_domain::create_surface_HCV before SO->init_with_27_lines" << endl;
 	}
-	//SO->init_equation(this, coeff20, verbose_level);
 	SO->init_with_27_lines(this,
 		Lines27, coeff20,
 		FALSE /* f_find_double_six_and_rearrange_lines */,
@@ -776,22 +516,6 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 		cout << "surface_domain::create_surface_HCV done" << endl;
 	}
 	return SO;
-
-
-
-	//FREE_int(E);
-	//FREE_int(coeff);
-	//FREE_lint(Pts);
-	//FREE_int(Intersection_pt);
-	//FREE_int(Intersection_pt_idx);
-	//FREE_OBJECT(pts_on_lines);
-	//FREE_OBJECT(lines_on_pt);
-#if 0
-	if (f_v) {
-		cout << "surface_domain::create_surface_HCV done" << endl;
-	}
-	return TRUE;
-#endif
 }
 
 
