@@ -2408,7 +2408,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 					Lines, equation, 0 /* verbose_level */);
 			F->PG_element_normalize_from_front(equation, 1, 20);
 
-			Pts = NEW_lint(Surf->nb_pts_on_surface);
+			Pts = NEW_lint(Surf->nb_pts_on_surface_with_27_lines);
 
 			vector<long int> Points;
 			int h;
@@ -2423,9 +2423,9 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 			}
 
 
-			if (nb_pts != Surf->nb_pts_on_surface) {
+			if (nb_pts != Surf->nb_pts_on_surface_with_27_lines) {
 				cout << "surface_classify_wedge::generate_source_code "
-						"nb_pts != Surf->nb_pts_on_surface" << endl;
+						"nb_pts != Surf->nb_pts_on_surface_with_27_lines" << endl;
 				exit(1);
 			}
 			Surf->compute_points_on_lines(Pts, nb_pts,

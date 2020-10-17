@@ -3510,7 +3510,7 @@ void projective_space::plane_intersection_type_basic(
 
 	if (f_v) {
 		cout << "projective_space::plane_intersection_type_basic" << endl;
-		}
+	}
 	d = n + 1;
 	M1 = NEW_int(4 * d);
 	M2 = NEW_int(4 * d);
@@ -3523,7 +3523,7 @@ void projective_space::plane_intersection_type_basic(
 	if (f_v) {
 		cout << "projective_space::plane_intersection_type_basic "
 				"N_planes=" << N_planes << endl;
-		}
+	}
 
 	// unrank all point here so we don't
 	// have to do it again in the loop
@@ -3535,7 +3535,7 @@ void projective_space::plane_intersection_type_basic(
 		if (rk && (rk % ONE_MILLION) == 0) {
 			cout << "projective_space::plane_intersection_type_basic "
 					"rk=" << rk << endl;
-			}
+		}
 		type[rk] = 0;
 		G->unrank_lint_here(M1, rk, 0 /* verbose_level */);
 
@@ -3559,6 +3559,9 @@ void projective_space::plane_intersection_type_basic(
 	FREE_int(M2);
 	FREE_int(Pts);
 	FREE_OBJECT(G);
+	if (f_v) {
+		cout << "projective_space::plane_intersection_type_basic done" << endl;
+	}
 }
 
 void projective_space::hyperplane_intersection_type_basic(

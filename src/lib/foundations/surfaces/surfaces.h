@@ -489,7 +489,7 @@ public:
 	grassmann *Gr; // Gr_{4,2}
 	grassmann *Gr3; // Gr_{4,3}
 	long int nb_lines_PG_3;
-	int nb_pts_on_surface; // q^2 + 7q + 1
+	int nb_pts_on_surface_with_27_lines; // q^2 + 7q + 1
 
 	orthogonal *O;
 	klein_correspondence *Klein;
@@ -506,6 +506,7 @@ public:
 
 	int nb_monomials;
 
+#if 0
 	int max_pts; // 27 * (q + 1)
 	int *Pts; // [max_pts * n] point coordinates
 	long int *pt_list;
@@ -513,7 +514,7 @@ public:
 		// used only in compute_system_in_RREF
 	int *System; // [max_pts * nb_monomials]
 	int *base_cols; // [nb_monomials]
-
+#endif
 
 	schlaefli *Schlaefli;
 
@@ -577,13 +578,13 @@ public:
 		int verbose_level);
 	void label_variables_24(homogeneous_polynomial_domain *HPD,
 		int verbose_level);
-	void init_system(int verbose_level);
+	//void init_system(int verbose_level);
 	int index_of_monomial(int *v);
 	void unrank_point(int *v, int rk);
 	int rank_point(int *v);
 	void unrank_plane(int *v, long int rk);
 	long int rank_plane(int *v);
-	int test(int len, long int *S, int verbose_level);
+	//int test(int len, long int *S, int verbose_level);
 	void enumerate_points(int *coeff,
 			std::vector<long int> &Pts,
 			int verbose_level);
@@ -670,7 +671,10 @@ public:
 	long int rank_line(int *v);
 	void build_cubic_surface_from_lines(int len, long int *S, int *coeff,
 		int verbose_level);
-	int compute_system_in_RREF(int len, long int *S, int verbose_level);
+	int rank_of_system(int len, long int *S,
+			int verbose_level);
+	void create_system(int len, long int *S,
+			int *&System, int &nb_rows, int verbose_level);
 	void compute_intersection_points(int *Adj,
 		long int *Lines, int nb_lines,
 		long int *&Intersection_pt,
@@ -801,11 +805,12 @@ public:
 
 	surface_object *SO;
 
-	int nb_planes;
 
 	set_of_sets *pts_on_lines;
 		// points are stored as indices into Pts[]
 	set_of_sets *lines_on_point;
+	tally *Type_pts_on_lines;
+	tally *Type_lines_on_point;
 
 	long int *Eckardt_points;
 	int *Eckardt_points_index;
@@ -818,12 +823,10 @@ public:
 	long int *Pts_not_on_lines;
 	int nb_pts_not_on_lines;
 
+	int nb_planes;
 	int *plane_type_by_points;
 	int *plane_type_by_lines;
-
 	tally *C_plane_type_by_points;
-	tally *Type_pts_on_lines;
-	tally *Type_lines_on_point;
 
 	long int *Tritangent_plane_rk; // [45]
 		// list of tritangent planes in Schlaefli labeling
