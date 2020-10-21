@@ -148,6 +148,8 @@ interface_cryptography::interface_cryptography()
 	f_EC_baby_step_giant_step_decode = FALSE;
 	EC_bsgs_A = NULL;
 	EC_bsgs_keys = NULL;
+
+
 	f_nullspace = FALSE;
 	nullspace_q = 0;
 	nullspace_m = 0;
@@ -179,6 +181,17 @@ interface_cryptography::interface_cryptography()
 	count_subprimitive_Q_max = 0;
 	count_subprimitive_H_max = 0;
 	//cout << "interface_cryptography::interface_cryptography done" << endl;
+	f_NTRU_encrypt = FALSE;
+	NTRU_encrypt_N = 0;
+	NTRU_encrypt_p = 0;
+	NTRU_encrypt_q = 0;
+	//NTRU_encrypt_H, NTRU_encrypt_R, NTRU_encrypt_Msg
+	f_polynomial_center_lift = FALSE;
+	polynomial_center_lift_q = 0;
+	//polynomial_center_lift_A
+	f_polynomial_reduce_mod_p = FALSE;
+	polynomial_reduce_mod_p = 0;
+	//polynomial_reduce_mod_p_A;
 
 }
 
@@ -368,6 +381,15 @@ void interface_cryptography::print_help(int argc, const char **argv, int i, int 
 	else if (strcmp(argv[i], "-count_subprimitive") == 0) {
 		cout << "-count_subprimitive <int : Q_max> <int : H_max>" << endl;
 	}
+	else if (strcmp(argv[i], "-NTRU_encrypt") == 0) {
+		cout << "-NTRU_encrypt <int : N> <int : p> <int : q> <string : H> <string : R> <string : Msg>" << endl;
+	}
+	else if (strcmp(argv[i], "-polynomial_center_lift") == 0) {
+		cout << "-polynomial_center_lift <int : q> <string : A>" << endl;
+	}
+	else if (strcmp(argv[i], "-polynomial_reduce_mod_p") == 0) {
+		cout << "-polynomial_reduce_mod_p <int : p> <string : A>" << endl;
+	}
 #if 0
 	else if (strcmp(argv[i], "-ntt") == 0) {
 		cout << "-ntt <int : t> <int : q>" << endl;
@@ -533,6 +555,15 @@ int interface_cryptography::recognize_keyword(int argc, const char **argv, int i
 		return true;
 	}
 	else if (strcmp(argv[i], "-count_subprimitive") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-NTRU_encrypt") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-polynomial_center_lift") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-polynomial_reduce_mod_p") == 0) {
 		return true;
 	}
 #if 0
@@ -957,7 +988,37 @@ void interface_cryptography::read_arguments(int argc, const char **argv, int i0,
 					<< " " << count_subprimitive_H_max
 					<< endl;
 		}
-#if 0
+		else if (strcmp(argv[i], "-NTRU_encrypt") == 0) {
+			f_NTRU_encrypt = TRUE;
+			NTRU_encrypt_N = atoi(argv[++i]);
+			NTRU_encrypt_p = atoi(argv[++i]);
+			NTRU_encrypt_q = atoi(argv[++i]);
+			NTRU_encrypt_H.assign(argv[++i]);
+			NTRU_encrypt_R.assign(argv[++i]);
+			NTRU_encrypt_Msg.assign(argv[++i]);
+			cout << "-polynomial_mult_mod " << NTRU_encrypt_N
+					<< " " << NTRU_encrypt_p
+					<< " " << NTRU_encrypt_q
+					<< " " << NTRU_encrypt_H
+					<< " " << NTRU_encrypt_R
+					<< " " << NTRU_encrypt_Msg << endl;
+		}
+		else if (strcmp(argv[i], "-polynomial_center_lift") == 0) {
+			f_polynomial_center_lift = TRUE;
+			polynomial_center_lift_q = atoi(argv[++i]);
+			polynomial_center_lift_A.assign(argv[++i]);
+			cout << "-polynomial_center_lift " << polynomial_center_lift_q
+					<< " " << polynomial_center_lift_A << endl;
+		}
+		else if (strcmp(argv[i], "-polynomial_reduce_mod_p") == 0) {
+			f_polynomial_reduce_mod_p = TRUE;
+			polynomial_reduce_mod_p = atoi(argv[++i]);
+			polynomial_reduce_mod_p_A.assign(argv[++i]);
+			cout << "-polynomial_reduce_mod_p " << polynomial_reduce_mod_p
+					<< " " << polynomial_reduce_mod_p_A << endl;
+		}
+
+		#if 0
 		else if (strcmp(argv[i], "-ntt") == 0) {
 			f_ntt = TRUE;
 			ntt_t = atoi(argv[++i]);
@@ -1199,6 +1260,23 @@ void interface_cryptography::worker(int verbose_level)
 	else if (f_count_subprimitive) {
 		algebra_global AG;
 		AG.count_subprimitive(count_subprimitive_Q_max, count_subprimitive_H_max);
+	}
+	else if (f_NTRU_encrypt) {
+		algebra_global Algebra;
+
+		Algebra.NTRU_encrypt(NTRU_encrypt_N, NTRU_encrypt_p, NTRU_encrypt_q,
+				NTRU_encrypt_H, NTRU_encrypt_R, NTRU_encrypt_Msg,
+				verbose_level);
+	}
+	else if (f_polynomial_center_lift) {
+		algebra_global Algebra;
+
+		Algebra.polynomial_center_lift(polynomial_center_lift_A, polynomial_center_lift_q, verbose_level);
+	}
+	else if (f_polynomial_reduce_mod_p) {
+		algebra_global Algebra;
+
+		Algebra.polynomial_reduce_mod_p(polynomial_reduce_mod_p_A, polynomial_reduce_mod_p, verbose_level);
 	}
 #if 0
 	else if (f_ntt) {

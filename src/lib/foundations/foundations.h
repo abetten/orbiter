@@ -549,6 +549,7 @@ public:
 	void create_from_base_b_representation(int b, int *rep, int len);
 	void create_from_base_10_string(const char *str, int verbose_level);
 	void create_from_base_10_string(const char *str);
+	void create_from_base_10_string(std::string &str);
 	int as_int();
 	long int as_lint();
 	void as_longinteger(longinteger_object &a);

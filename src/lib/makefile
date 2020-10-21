@@ -311,6 +311,7 @@ MODULES= \
 		top_level/algebra_and_number_theory/factor_group.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity_description.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity.o \
+		top_level/algebra_and_number_theory/group_theoretic_activity_for_surfaces.o \
 		top_level/algebra_and_number_theory/semifield_classify_with_substructure.o \
 		top_level/algebra_and_number_theory/semifield_classify.o \
 		top_level/algebra_and_number_theory/semifield_downstep_node.o \

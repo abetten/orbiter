@@ -46,8 +46,8 @@ linear_group_description::linear_group_description()
 	f_borel_subgroup_upper = FALSE;
 	f_borel_subgroup_lower = FALSE;
 	f_identity_group = FALSE;
-	subgroup_fname = NULL;
-	subgroup_label = NULL;
+	//subgroup_fname = NULL;
+	//subgroup_label = NULL;
 	f_orthogonal_group = FALSE;
 	orthogonal_group_epsilon = 0;
 
@@ -58,7 +58,7 @@ linear_group_description::linear_group_description()
 	f_on_rank_one_tensors = FALSE;
 
 	f_subgroup_by_generators = FALSE;
-	subgroup_order_text = NULL;
+	//subgroup_order_text = NULL;
 	nb_subgroup_generators = 0;
 	subgroup_generators_as_string = NULL;
 
@@ -328,8 +328,8 @@ int linear_group_description::read_arguments(
 		}
 		else if (strcmp(argv[i], "-subgroup_from_file") == 0) {
 			f_subgroup_from_file = TRUE;
-			subgroup_fname = argv[++i];
-			subgroup_label = argv[++i];
+			subgroup_fname.assign(argv[++i]);
+			subgroup_label.assign(argv[++i]);
 			cout << "-subgroup_from_file " << subgroup_fname
 					<< " " << subgroup_label << endl;
 		}
@@ -382,8 +382,8 @@ int linear_group_description::read_arguments(
 		}
 		else if (strcmp(argv[i], "-subgroup_by_generators") == 0) {
 			f_subgroup_by_generators = TRUE;
-			subgroup_label = argv[++i];
-			subgroup_order_text = argv[++i];
+			subgroup_label.assign(argv[++i]);
+			subgroup_order_text.assign(argv[++i]);
 			nb_subgroup_generators = atoi(argv[++i]);
 			subgroup_generators_as_string = new std::string [nb_subgroup_generators];
 

@@ -11,6 +11,7 @@ MODULES = \
 	factor_group.o \
 	group_theoretic_activity_description.o \
 	group_theoretic_activity.o \
+	group_theoretic_activity_for_surfaces.o \
 	semifield_classify_with_substructure.o \
 	semifield_classify.o \
 	semifield_downstep_node.o \

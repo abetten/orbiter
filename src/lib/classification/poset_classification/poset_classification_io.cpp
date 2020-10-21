@@ -2311,19 +2311,45 @@ void poset_classification::make_spreadsheet_of_level_info(
 
 
 void poset_classification::create_schreier_tree_fname_mask_base(
-		std::string &fname_mask, int node)
+		std::string &fname_mask)
 {
 
-	fname_mask.assign(Control->schreier_tree_prefix);
+	fname_mask.assign(problem_label_with_path);
+	fname_mask.append(Control->schreier_tree_prefix);
 	fname_mask.append("schreier_tree_node_%d_%d");
 }
 
-void poset_classification::create_shallow_schreier_tree_fname_mask_base(
-		std::string &fname_mask, int node)
+void poset_classification::create_schreier_tree_fname_mask_base_tex(
+		std::string &fname_mask)
 {
 
-	fname_mask.assign(Control->schreier_tree_prefix);
+	fname_mask.assign(problem_label_with_path);
+	fname_mask.append(Control->schreier_tree_prefix);
+	fname_mask.append("schreier_tree_node_%d.tex");
+}
+
+void poset_classification::create_shallow_schreier_tree_fname_mask_base(
+		std::string &fname_mask)
+{
+
+	fname_mask.assign(problem_label_with_path);
+	fname_mask.append(Control->schreier_tree_prefix);
 	fname_mask.append("shallow_schreier_tree_node_%d_%d");
+
+}
+
+void poset_classification::create_shallow_schreier_tree_fname_mask(
+		std::string &fname, int node)
+{
+
+	char str[1000];
+
+	sprintf(str, "%d", node);
+	fname.assign(problem_label_with_path);
+	fname.append(Control->schreier_tree_prefix);
+	fname.append("shallow_schreier_tree_node_");
+	fname.append(str);
+	fname.append("_%d");
 
 }
 

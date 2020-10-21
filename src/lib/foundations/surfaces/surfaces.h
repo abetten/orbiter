@@ -498,23 +498,13 @@ public:
 	int Basis0[16];
 	int Basis1[16];
 	int Basis2[16];
-	//int o_rank[27];
 
+	// used in line_to_wedge and klein_to_wedge:
 	int *v; // [n]
 	int *v2; // [(n * (n-1)) / 2]
 	int *w2; // [(n * (n-1)) / 2]
 
-	int nb_monomials;
-
-#if 0
-	int max_pts; // 27 * (q + 1)
-	int *Pts; // [max_pts * n] point coordinates
-	long int *pt_list;
-		// [max_pts] list of points,
-		// used only in compute_system_in_RREF
-	int *System; // [max_pts * nb_monomials]
-	int *base_cols; // [nb_monomials]
-#endif
+	int nb_monomials; // = 20
 
 	schlaefli *Schlaefli;
 
@@ -542,7 +532,7 @@ public:
 	homogeneous_polynomial_domain *Poly3_4;
 		// cubic polynomials in four variables
 
-	partial_derivative *Partials;
+	partial_derivative *Partials; // [4]
 
 
 	int f_has_large_polynomial_domains;
@@ -578,13 +568,11 @@ public:
 		int verbose_level);
 	void label_variables_24(homogeneous_polynomial_domain *HPD,
 		int verbose_level);
-	//void init_system(int verbose_level);
 	int index_of_monomial(int *v);
 	void unrank_point(int *v, int rk);
 	int rank_point(int *v);
 	void unrank_plane(int *v, long int rk);
 	long int rank_plane(int *v);
-	//int test(int len, long int *S, int verbose_level);
 	void enumerate_points(int *coeff,
 			std::vector<long int> &Pts,
 			int verbose_level);
@@ -624,16 +612,18 @@ public:
 		int *The_six_plane_equations, int *The_surface_equations,
 		int verbose_level);
 		// The_surface_equations[(q + 1) * 20]
-	int plane_from_three_lines(long int *three_lines, int verbose_level);
+	long int plane_from_three_lines(long int *three_lines, int verbose_level);
 	void Trihedral_pairs_to_planes(long int *Lines, long int *Planes_by_rank,
 		int verbose_level);
 		// Planes_by_rank[nb_trihedral_pairs * 6]
+#if 0
 	void compute_tritangent_planes_slow(long int *Lines,
 		long int *&Tritangent_planes, int &nb_tritangent_planes,
 		long int *&Unitangent_planes, int &nb_unitangent_planes,
 		long int *&Lines_in_tritangent_plane,
 		long int *&Line_in_unitangent_plane,
 		int verbose_level);
+#endif
 	void clebsch_cubics(int verbose_level);
 	void multiply_222_27_and_add(int *M1, int *M2, int *M3,
 		int scalar, int *MM, int verbose_level);
@@ -732,8 +722,8 @@ public:
 		long int *New_lines, long int *double_six, int verbose_level);
 	void create_lines_from_plane_equations(int *The_plane_equations,
 		long int *Lines, int verbose_level);
-	int identify_two_lines(long int *lines, int verbose_level);
-	int identify_three_lines(long int *lines, int verbose_level);
+	//int identify_two_lines(long int *lines, int verbose_level);
+	//int identify_three_lines(long int *lines, int verbose_level);
 	void create_remaining_fifteen_lines(
 		long int *double_six, long int *fifteen_lines,
 		int verbose_level);
@@ -850,14 +840,17 @@ public:
 
 	long int *singular_pts;
 	int nb_singular_pts;
+	int nb_non_singular_pts;
 
+	long int *tangent_plane_rank_global; // [SO->nb_pts]
+	long int *tangent_plane_rank_dual; // [nb_non_singular_pts]
 
 	surface_object_properties();
 	~surface_object_properties();
 	void init(surface_object *SO, int verbose_level);
 	void compute_properties(int verbose_level);
 	void compute_gradient(int verbose_level);
-	void compute_singular_points(int verbose_level);
+	void compute_singular_points_and_tangent_planes(int verbose_level);
 	void compute_adjacency_matrix_of_line_intersection_graph(
 		int verbose_level);
 	int Adj_ij(int i, int j);
@@ -965,41 +958,8 @@ public:
 	void init_with_27_lines(surface_domain *Surf, long int *Lines27, int *eqn,
 		int f_find_double_six_and_rearrange_lines, int verbose_level);
 	void compute_properties(int verbose_level);
+	void recompute_properties(int verbose_level);
 	void find_double_six_and_rearrange_lines(long int *Lines, int verbose_level);
-
-#if 0
-	void identify_double_six_from_trihedral_pair(int *Lines,
-		int t_idx, int *nine_lines, int *double_sixes,
-		int verbose_level);
-	void identify_double_six_from_trihedral_pair_type_one(int *Lines,
-		int t_idx, int *nine_line_idx, int *double_sixes,
-		int verbose_level);
-	void identify_double_six_from_trihedral_pair_type_two(int *Lines,
-		int t_idx, int *nine_line_idx, int *double_sixes,
-		int verbose_level);
-	void identify_double_six_from_trihedral_pair_type_three(int *Lines,
-		int t_idx, int *nine_line_idx, int *double_sixes,
-		int verbose_level);
-	void find_common_transversals_to_two_disjoint_lines(int a, int b,
-		int *transversals5);
-	void find_common_transversals_to_three_disjoint_lines(int a1, int a2,
-		int a3, int *transversals3);
-	void find_common_transversals_to_four_disjoint_lines(int a1, int a2,
-		int a3, int a4, int *transversals2);
-	int find_tritangent_plane_through_two_lines(int line_a, int line_b);
-	void get_planes_through_line(int *new_lines,
-		int line_idx, int *planes5);
-	void find_two_lines_in_plane(int plane_idx, int forbidden_line,
-		int &line1, int &line2);
-	int find_unique_line_in_plane(int plane_idx, int forbidden_line1,
-		int forbidden_line2);
-	int choose_tritangent_plane(int line_a, int line_b,
-		int transversal_line, int verbose_level);
-	void find_all_tritangent_planes(
-		int line_a, int line_b, int transversal_line,
-		int *tritangent_planes3,
-		int verbose_level);
-#endif
 	void identify_lines(long int *lines, int nb_lines, int *line_idx,
 		int verbose_level);
 	void print_nine_lines_latex(std::ostream &ost, long int *nine_lines,

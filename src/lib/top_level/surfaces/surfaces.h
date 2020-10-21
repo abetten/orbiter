@@ -471,8 +471,12 @@ public:
 			surface_with_action *Surf_A,
 			int f_test_nb_Eckardt_points, int nb_E,
 			int verbose_level);
-	void report(int verbose_level);
-	void report2(std::ostream &ost, int verbose_level);
+	void report(
+			layered_graph_draw_options *Opt,
+			int verbose_level);
+	void report2(std::ostream &ost,
+			layered_graph_draw_options *Opt,
+			int verbose_level);
 	void report_decomposition_matrix(std::ostream &ost, int verbose_level);
 };
 
@@ -512,13 +516,13 @@ public:
 	classification_step *Surfaces;
 
 
-
+#if 0
 	int nb_identify;
 	char **Identify_label;
 	int **Identify_coeff;
 	int **Identify_monomial;
 	int *Identify_length;
-
+#endif
 
 	surface_classify_wedge();
 	~surface_classify_wedge();
@@ -539,7 +543,7 @@ public:
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp, int verbose_level);
 
-
+#if 0
 	void identify_surfaces(int verbose_level);
 	void identify(int nb_identify,
 		char **Identify_label,
@@ -550,6 +554,7 @@ public:
 	void identify_surface_command_line(int cnt,
 		int &isomorphic_to, int *Elt_isomorphism,
 		int verbose_level);
+#endif
 	void identify_HCV_and_print_table(int verbose_level);
 	void identify_F13_and_print_table(int verbose_level);
 	void identify_Bes_and_print_table(int verbose_level);
@@ -657,7 +662,9 @@ public:
 	void init(int arc_idx,
 			surface_classify_using_arc *SCA, int verbose_level);
 	void report_summary(std::ostream &ost, int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
+	void report(std::ostream &ost,
+			layered_graph_draw_options *Opt,
+			int verbose_level);
 
 };
 
@@ -726,8 +733,10 @@ public:
 			std::string &arc_lifting_text,
 			std::string &arc_lifting_two_lines_text,
 			int verbose_level);
-	void apply_transformations(const char **transform_coeffs,
-		int *f_inverse_transform, int nb_transform, int verbose_level);
+	void apply_transformations(
+		std::vector<std::string> &transform_coeffs,
+		std::vector<int> &f_inverse_transform,
+		int verbose_level);
 };
 
 
@@ -772,6 +781,9 @@ public:
 	//int f_select_double_six;
 	//int nb_select_double_six;
 	std::vector<std::string> select_double_six_string;
+
+	std::vector<std::string> transform_coeffs;
+	std::vector<int> f_inverse_transform;
 
 
 	surface_create_description();
@@ -903,19 +915,19 @@ public:
 	~surface_object_with_action();
 	void null();
 	void freeself();
-	int init_equation(surface_with_action *Surf_A, int *eqn,
+	void init_equation(surface_with_action *Surf_A, int *eqn,
 		strong_generators *Aut_gens, int verbose_level);
+	void init_with_group(surface_with_action *Surf_A,
+		long int *Lines, int nb_lines, int *eqn,
+		strong_generators *Aut_gens,
+		int f_find_double_six_and_rearrange_lines,
+		int f_has_nice_gens, vector_ge *nice_gens,
+		int verbose_level);
 	void init_with_surface_object(surface_with_action *Surf_A,
 			surface_object *SO,
 			strong_generators *Aut_gens,
 			int f_has_nice_gens, vector_ge *nice_gens,
 			int verbose_level);
-	void init_with_27_lines(surface_with_action *Surf_A,
-		long int *Lines27, int *eqn,
-		strong_generators *Aut_gens,
-		int f_find_double_six_and_rearrange_lines,
-		int f_has_nice_gens, vector_ge *nice_gens,
-		int verbose_level);
 	void init_surface_object(surface_with_action *Surf_A,
 		surface_object *SO,
 		strong_generators *Aut_gens, int verbose_level);
@@ -938,13 +950,17 @@ public:
 			strong_generators *Aut_gens,
 			int verbose_level);
 	void print_automorphism_group(std::ostream &ost,
-		int f_print_orbits, const char *fname_mask);
+		int f_print_orbits, std::string &fname_mask,
+		layered_graph_draw_options *Opt);
 	void cheat_sheet_basic(std::ostream &ost, int verbose_level);
 	void cheat_sheet(std::ostream &ost,
-		const char *label_txt, const char *label_tex,
-		int f_print_orbits, const char *fname_mask,
-		int verbose_level);
+			std::string &label_txt,
+			std::string &label_tex,
+			int f_print_orbits, std::string &fname_mask,
+			layered_graph_draw_options *Opt,
+			int verbose_level);
 	void investigate_surface_and_write_report(
+			layered_graph_draw_options *Opt,
 			action *A,
 			surface_create *SC,
 			six_arcs_not_on_a_conic *Six_arcs,
@@ -954,15 +970,16 @@ public:
 			int verbose_level);
 	void investigate_surface_and_write_report2(
 			std::ostream &ost,
+			layered_graph_draw_options *Opt,
 			action *A,
 			surface_create *SC,
 			six_arcs_not_on_a_conic *Six_arcs,
 			int f_surface_clebsch,
 			int f_surface_codes,
 			int f_surface_quartic,
-			char fname_mask[2000],
-			char label[2000],
-			char label_tex[2000],
+			std::string &fname_mask,
+			std::string &label,
+			std::string &label_tex,
 			int verbose_level);
 };
 

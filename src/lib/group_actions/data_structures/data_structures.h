@@ -917,7 +917,7 @@ public:
 	// initializes local_gens
 	void export_tree_as_layered_graph(
 			int orbit_no, int orbit_rep,
-			const char *fname_mask,
+			std::string &fname_mask,
 			int verbose_level);
 	void trace_back(int pt, int &depth);
 	void print();

@@ -122,9 +122,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_surface_quartic = FALSE;
 	f_surface_clebsch = FALSE;
 	f_surface_codes = FALSE;
-	nb_transform = 0;
-	//const char *transform_coeffs[1000];
-	//int f_inverse_transform[1000];
 
 
 	f_orbits_on_subspaces = FALSE;
@@ -506,15 +503,20 @@ int group_theoretic_activity_description::read_arguments(
 			surface_descr_isomorph1 = NEW_OBJECT(surface_create_description);
 			i += surface_descr_isomorph1->
 					read_arguments(argc - (i - 1), argv + i,
-					verbose_level) - 1;
-			cout << "-isomorph after reading description of first surface" << endl;
-			i += 2;
+					verbose_level);
+			cout << "-surface_isomorphism_testing after reading description of first surface" << endl;
 			cout << "the current argument is " << argv[i] << endl;
-			cout << "-isomorph reading description of second surface" << endl;
+			cout << "-surface_isomorphism_testing reading description of second surface" << endl;
 			surface_descr_isomorph2 = NEW_OBJECT(surface_create_description);
 			i += surface_descr_isomorph2->
 					read_arguments(argc - (i - 1), argv + i,
 					verbose_level);
+			cout << "done with -surface_isomorphism_testing" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
 			cout << "-surface_isomorphism_testing " << endl;
 		}
 		else if (strcmp(argv[i], "-surface_recognize") == 0) {
@@ -524,7 +526,12 @@ int group_theoretic_activity_description::read_arguments(
 			i += surface_descr->
 					read_arguments(argc - (i - 1), argv + i,
 					verbose_level);
-			//i += 2;
+			cout << "done with -surface_recognize" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
 			cout << "-surface_recognize " << endl;
 		}
 		else if (strcmp(argv[i], "-classify_surfaces_through_arcs_and_two_lines") == 0) {
@@ -575,19 +582,6 @@ int group_theoretic_activity_description::read_arguments(
 		else if (strcmp(argv[i], "-surface_codes") == 0) {
 			f_surface_codes = TRUE;
 			cout << "-surface_codes" << endl;
-		}
-		else if (strcmp(argv[i], "-transform") == 0) {
-			transform_coeffs[nb_transform] = argv[++i];
-			f_inverse_transform[nb_transform] = FALSE;
-			cout << "-transform " << transform_coeffs[nb_transform] << endl;
-			nb_transform++;
-		}
-		else if (strcmp(argv[i], "-transform_inverse") == 0) {
-			transform_coeffs[nb_transform] = argv[++i];
-			f_inverse_transform[nb_transform] = TRUE;
-			cout << "-transform_inverse "
-					<< transform_coeffs[nb_transform] << endl;
-			nb_transform++;
 		}
 		else if (strcmp(argv[i], "-trihedra1_control") == 0) {
 			f_trihedra1_control = TRUE;

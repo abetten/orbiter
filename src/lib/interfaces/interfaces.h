@@ -77,19 +77,6 @@ class interface_algebra {
 	std::string polynomial_mult_mod_A;
 	std::string polynomial_mult_mod_B;
 	std::string polynomial_mult_mod_M;
-	int f_NTRU_encrypt;
-	int NTRU_encrypt_N;
-	int NTRU_encrypt_p;
-	int NTRU_encrypt_q;
-	std::string NTRU_encrypt_H;
-	std::string NTRU_encrypt_R;
-	std::string NTRU_encrypt_Msg;
-	int f_polynomial_center_lift;
-	int polynomial_center_lift_q;
-	std::string polynomial_center_lift_A;
-	int f_polynomial_reduce_mod_p;
-	int polynomial_reduce_mod_p;
-	std::string polynomial_reduce_mod_p_A;
 
 public:
 	interface_algebra();
@@ -406,6 +393,19 @@ class interface_cryptography {
 	int f_count_subprimitive;
 	int count_subprimitive_Q_max;
 	int count_subprimitive_H_max;
+	int f_NTRU_encrypt;
+	int NTRU_encrypt_N;
+	int NTRU_encrypt_p;
+	int NTRU_encrypt_q;
+	std::string NTRU_encrypt_H;
+	std::string NTRU_encrypt_R;
+	std::string NTRU_encrypt_Msg;
+	int f_polynomial_center_lift;
+	int polynomial_center_lift_q;
+	std::string polynomial_center_lift_A;
+	int f_polynomial_reduce_mod_p;
+	int polynomial_reduce_mod_p;
+	std::string polynomial_reduce_mod_p_A;
 
 public:
 	interface_cryptography();

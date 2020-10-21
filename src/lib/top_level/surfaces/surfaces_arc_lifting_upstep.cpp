@@ -245,14 +245,14 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(int verbose_level)
 	D->SOA = NEW_OBJECT(surface_object_with_action);
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_upstep::process_flag_orbit before D->SOA->init" << endl;
+		cout << "surfaces_arc_lifting_upstep::process_flag_orbit before D->SOA->init_with_group" << endl;
 	}
 
 
 	{
 
-		D->SOA->init_with_27_lines(Lift->Surf_A,
-				Lines, eqn20,
+		D->SOA->init_with_group(Lift->Surf_A,
+				Lines, 27, eqn20,
 				Aut_gens,
 				FALSE /*f_find_double_six_and_rearrange_lines*/,
 				FALSE /*f_has_nice_gens*/, NULL /*vector_ge *nice_gens*/,
@@ -268,7 +268,7 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(int verbose_level)
 
 
 	if (f_v) {
-		cout << "surfaces_arc_lifting_upstep::process_flag_orbit after D->SOA->init" << endl;
+		cout << "surfaces_arc_lifting_upstep::process_flag_orbit after D->SOA->init_with_group" << endl;
 	}
 
 	Lift->Surfaces->nb_orbits++;

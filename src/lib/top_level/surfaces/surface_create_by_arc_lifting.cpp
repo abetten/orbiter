@@ -112,10 +112,16 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 				"after AL->create_surface_and_group" << endl;
 	}
 
-	char magma_fname[1000];
+	string magma_fname;
 	file_io Fio;
 
-	sprintf(magma_fname, "surface_q%d_iso%d_group.magma", SCA->Surf_A->F->q, SCA->nb_surfaces);
+	magma_fname.assign("surface_q");
+	sprintf(str, "%d", SCA->Surf_A->F->q);
+	magma_fname.append(str);
+	magma_fname.append("_iso");
+	sprintf(str, "%d", SCA->nb_surfaces);
+	magma_fname.append("_group.magma");
+
 	AL->Trihedral_pair->Aut_gens->export_permutation_group_to_magma(
 			magma_fname, verbose_level - 2);
 
@@ -139,8 +145,8 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 				"before SOA->init_with_27_lines" << endl;
 	}
 
-	SOA->init_with_27_lines(SCA->Surf_A,
-		AL->Web->Lines27, AL->the_equation,
+	SOA->init_with_group(SCA->Surf_A,
+		AL->Web->Lines27, 27, AL->the_equation,
 		AL->Trihedral_pair->Aut_gens,
 		FALSE /* f_find_double_six_and_rearrange_lines */,
 		FALSE, NULL,
@@ -301,7 +307,9 @@ void surface_create_by_arc_lifting::report_summary(std::ostream &ost, int verbos
 
 }
 
-void surface_create_by_arc_lifting::report(std::ostream &ost, int verbose_level)
+void surface_create_by_arc_lifting::report(std::ostream &ost,
+		layered_graph_draw_options *Opt,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -396,12 +404,20 @@ void surface_create_by_arc_lifting::report(std::ostream &ost, int verbose_level)
 			"before SOA->print_automorphism_group" << endl;
 	}
 
-	char fname_mask[1000];
+	string fname_mask;
+	char str[1000];
 
-	sprintf(fname_mask, "orbit_half_double_sixes_q%d_iso%d_%%d", SCA->Surf_A->F->q, SCA->nb_surfaces);
+	fname_mask.assign("orbit_half_double_sixes_q");
+	sprintf(str, "%d", SCA->Surf_A->F->q);
+	fname_mask.append(str);
+	fname_mask.append("_iso_");
+	sprintf(str, "%d", SCA->nb_surfaces);
+	fname_mask.append(str);
+	fname_mask.append("_%d");
+
 	SOA->print_automorphism_group(ost,
 		TRUE /* f_print_orbits */,
-		fname_mask);
+		fname_mask, Opt);
 
 	ost << "arc " << arc_label << " yields a surface with "
 		<< AL->Web->E->nb_E << " Eckardt points and a "

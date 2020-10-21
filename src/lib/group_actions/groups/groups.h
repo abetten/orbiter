@@ -183,8 +183,8 @@ public:
 	int f_borel_subgroup_upper;
 	int f_borel_subgroup_lower;
 	int f_identity_group;
-	const char *subgroup_fname;
-	const char *subgroup_label;
+	std::string subgroup_fname;
+	std::string subgroup_label;
 	int f_orthogonal_group;
 	int orthogonal_group_epsilon;
 
@@ -195,7 +195,7 @@ public:
 	int f_on_rank_one_tensors;
 
 	int f_subgroup_by_generators;
-	const char *subgroup_order_text;
+	std::string subgroup_order_text;
 	int nb_subgroup_generators;
 	std::string *subgroup_generators_as_string;
 
@@ -269,14 +269,15 @@ public:
 	void init_subfield_structure_action(int s, int verbose_level);
 	void init_orthogonal_group(int epsilon, int verbose_level);
 	void init_subgroup_from_file(
-			const char *subgroup_fname, const char *subgroup_label,
+			std::string &subgroup_fname,
+			std::string &subgroup_label,
 			int verbose_level);
 	void init_subgroup_by_generators(
-		const char *subgroup_label,
-		const char *subgroup_order_text,
-		int nb_subgroup_generators,
-		std::string *subgroup_generators_as_string,
-		int verbose_level);
+			std::string &subgroup_label,
+			std::string &subgroup_order_text,
+			int nb_subgroup_generators,
+			std::string *subgroup_generators_as_string,
+			int verbose_level);
 	void init_subgroup_Janko1(int verbose_level);
 	void report(std::ostream &fp, int f_sylow, int f_group_table,
 			int f_conjugacy_classes_and_normalizers,
@@ -872,7 +873,7 @@ public:
 			int verbose_level);
 
 	// schreier_io.cpp:
-	void latex(const char *fname);
+	void latex(std::string &fname);
 	void print_orbit_lengths(std::ostream &ost);
 	void print_orbit_lengths_tex(std::ostream &ost);
 	void print_orbit_length_distribution(std::ostream &ost);
@@ -935,36 +936,32 @@ public:
 	void export_tree_as_layered_graph(int orbit_no,
 			std::string &fname_mask,
 			int verbose_level);
-	void draw_forest(const char *fname_mask,
-		int xmax, int ymax,
-		int f_circletext, int rad,
-		int f_embedded, int f_sideways,
-		double scale, double line_width,
-		int f_has_point_labels, long int *point_labels,
-		int verbose_level);
-	void draw_tree(const char *fname, int orbit_no,
-		int xmax, int ymax, int f_circletext, int rad,
-		int f_embedded, int f_sideways,
-		double scale, double line_width,
-		int f_has_point_labels, long int *point_labels,
-		int verbose_level);
-	void draw_tree2(const char *fname, int xmax, int ymax,
-		int f_circletext,
-		int *weight, int *placement_x, int max_depth,
-		int i, int last, int rad,
-		int f_embedded, int f_sideways,
-		double scale, double line_width,
-		int f_has_point_labels, long int *point_labels,
-		int verbose_level);
-	void subtree_draw_lines(mp_graphics &G, int f_circletext,
-		int parent_x, int parent_y, int *weight,
-		int *placement_x, int max_depth, int i, int last,
-		int verbose_level);
+	void draw_forest(std::string &fname_mask,
+			layered_graph_draw_options *Opt,
+			int f_has_point_labels, long int *point_labels,
+			int verbose_level);
+	void draw_tree(std::string &fname,
+			layered_graph_draw_options *Opt,
+			int orbit_no,
+			int f_has_point_labels, long int *point_labels,
+			int verbose_level);
+	void draw_tree2(std::string &fname,
+			layered_graph_draw_options *Opt,
+			int *weight, int *placement_x, int max_depth,
+			int i, int last,
+			int f_has_point_labels, long int *point_labels,
+			int verbose_level);
+	void subtree_draw_lines(mp_graphics &G,
+			layered_graph_draw_options *Opt,
+			int parent_x, int parent_y, int *weight,
+			int *placement_x, int max_depth, int i, int last,
+			int verbose_level);
 	void subtree_draw_vertices(mp_graphics &G,
-		int f_circletext, int parent_x, int parent_y, int *weight,
-		int *placement_x, int max_depth, int i, int last, int rad,
-		int f_has_point_labels, long int *point_labels,
-		int verbose_level);
+			layered_graph_draw_options *Opt,
+			int parent_x, int parent_y, int *weight,
+			int *placement_x, int max_depth, int i, int last,
+			int f_has_point_labels, long int *point_labels,
+			int verbose_level);
 	void subtree_place(int *weight, int *placement_x,
 		int left, int right, int i, int last);
 	int subtree_calc_weight(int *weight, int &max_depth,
@@ -1572,7 +1569,7 @@ public:
 	void init_subgroup_by_generators(action *A,
 		int nb_subgroup_gens,
 		std::string *subgroup_gens,
-		const char *subgroup_order_text,
+		std::string &subgroup_order_text,
 		vector_ge *&nice_gens,
 		int verbose_level);
 	sims *create_sims(int verbose_level);
@@ -1641,13 +1638,13 @@ public:
 	void write_to_file_binary(std::ofstream &fp, int verbose_level);
 	void read_from_file_binary(action *A, std::ifstream &fp,
 		int verbose_level);
-	void write_file(const char *fname, int verbose_level);
-	void read_file(action *A, const char *fname, int verbose_level);
+	void write_file(std::string &fname, int verbose_level);
+	void read_file(action *A, std::string &fname, int verbose_level);
 	void compute_ascii_coding(char *&ascii_coding, int verbose_level);
 	void decode_ascii_coding(char *ascii_coding, int verbose_level);
-	void export_permutation_group_to_magma(const char *fname, 
+	void export_permutation_group_to_magma(std::string &fname,
 		int verbose_level);
-	void export_permutation_group_to_GAP(const char *fname,
+	void export_permutation_group_to_GAP(std::string &fname,
 		int verbose_level);
 	void compute_and_print_orbits_on_a_given_set(action *A_given,
 		long int *set, int len, int verbose_level);
@@ -1662,15 +1659,15 @@ public:
 	void make_element_which_moves_a_point_from_A_to_B(action *A_given, 
 		int pt_A, int pt_B, int *Elt, int verbose_level);
 	void export_group_to_magma_and_copy_to_latex(
-			const char *label_txt,
+			std::string &label_txt,
 			std::ostream &ost,
 			int verbose_level);
 	void export_group_to_GAP_and_copy_to_latex(
-			const char *label_txt,
+			std::string &label_txt,
 			std::ostream &ost,
 			int verbose_level);
 	void export_group_and_copy_to_latex(
-			const char *label_txt,
+			std::string &label_txt,
 			std::ostream &ost,
 			int verbose_level);
 	void report_fixed_objects_in_P3(

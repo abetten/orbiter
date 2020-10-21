@@ -375,6 +375,28 @@ void surface_object::compute_properties(int verbose_level)
 	}
 }
 
+void surface_object::recompute_properties(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object::recompute_properties" << endl;
+	}
+
+	if (SOP) {
+		FREE_OBJECT(SOP);
+		SOP = NULL;
+	}
+
+	SOP = NEW_OBJECT(surface_object_properties);
+
+	SOP->init(this, verbose_level);
+
+	if (f_v) {
+		cout << "surface_object::recompute_properties done" << endl;
+	}
+}
+
 
 
 void surface_object::find_double_six_and_rearrange_lines(

@@ -1034,8 +1034,6 @@ public:
 
 
 	bitvector *Bitvec;
-	//uchar *bitvector_adjacency;
-	//int bitvector_length;
 	int *degree;
 
 	poset_classification_control *Control;

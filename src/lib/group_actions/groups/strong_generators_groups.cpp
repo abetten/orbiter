@@ -2468,8 +2468,8 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 	}
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_stabilizer_of_triangle_in_PGL4 before generators_for_"
-				"stabilizer_of_triangle_in_PGL4" << endl;
+		cout << "strong_generators::generators_for_stabilizer_of_triangle_in_PGL4 "
+				"before generators_for_stabilizer_of_triangle_in_PGL4" << endl;
 	}
 
 	F->generators_for_stabilizer_of_triangle_in_PGL4(
@@ -2486,8 +2486,8 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 	
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_stabilizer_of_triangle_in_PGL4 after generators_for_stabilizer_"
-				"of_triangle_in_PGL4" << endl;
+		cout << "strong_generators::generators_for_stabilizer_of_triangle_in_PGL4 "
+				"after generators_for_stabilizer_of_triangle_in_PGL4" << endl;
 	}
 
 	longinteger_object target_go, a, b, c, f;
@@ -2507,8 +2507,8 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 	}
 	
 	if (f_v) {
-		cout << "strong_generators::generators_for_stabilizer_of_triangle_in_PGL4 before generators_to_"
-				"strong_generators target_go=" << target_go << endl;
+		cout << "strong_generators::generators_for_stabilizer_of_triangle_in_PGL4 "
+				"before generators_to_strong_generators target_go=" << target_go << endl;
 	}
 	
 	strong_generators *SG;
@@ -2518,8 +2518,8 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 		my_gens, SG, verbose_level - 3);
 	
 	if (f_v) {
-		cout << "strong_generators::generators_for_stabilizer_of_triangle_in_PGL4 after generators_"
-				"to_strong_generators" << endl;
+		cout << "strong_generators::generators_for_stabilizer_of_triangle_in_PGL4 "
+				"after generators_to_strong_generators" << endl;
 	}
 
 	init_copy(SG, 0);
@@ -2577,8 +2577,8 @@ void strong_generators::generators_for_the_orthogonal_group(
 	A2->Sims->group_order(target_go);
 
 	if (f_v) {
-		cout << "strong_generators::generators_for_the_orthogonal_group before generators_to_"
-				"strong_generators" << endl;
+		cout << "strong_generators::generators_for_the_orthogonal_group "
+				"before generators_to_strong_generators" << endl;
 	}
 	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
@@ -2989,8 +2989,10 @@ void strong_generators::stabilizer_of_spread_from_catalogue(
 	K.Spread_stab_gens(q, k, iso, data, nb_gens, data_size, ascii_target_go);
 
 	if (f_v) {
-		cout << "strong_generators::stabilizer_of_spread_from_catalogue data_size=" << data_size << endl;
-		cout << "strong_generators::stabilizer_of_spread_from_catalogue nb_gens=" << nb_gens << endl;
+		cout << "strong_generators::stabilizer_of_spread_from_catalogue "
+				"data_size=" << data_size << endl;
+		cout << "strong_generators::stabilizer_of_spread_from_catalogue "
+				"nb_gens=" << nb_gens << endl;
 	}
 
 	vector_ge *gens;

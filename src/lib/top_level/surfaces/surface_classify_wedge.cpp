@@ -41,11 +41,13 @@ surface_classify_wedge::surface_classify_wedge()
 	Flag_orbits = NULL;
 	Surfaces = NULL;
 	
+#if 0
 	nb_identify = 0;
 	Identify_label = NULL;
 	Identify_coeff = NULL;
 	Identify_monomial = NULL;
 	Identify_length = NULL;
+#endif
 	//null();
 
 }
@@ -63,6 +65,8 @@ void surface_classify_wedge::freeself()
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
+
+
 #if 0
 	if (Surf) {
 		FREE_OBJECT(Surf);
@@ -71,6 +75,7 @@ void surface_classify_wedge::freeself()
 		FREE_OBJECT(Surf_A);
 	}
 #endif
+
 	if (f_v) {
 		cout << "surface_classify_wedge::freeself" << endl;
 	}
@@ -921,7 +926,7 @@ void surface_classify_wedge::read_file(
 
 
 
-
+#if 0
 void surface_classify_wedge::identify_surfaces(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1118,6 +1123,7 @@ void surface_classify_wedge::identify_surface_command_line(
 		cout << "surface_classify_wedge::identify_surface_command_line done" << endl;
 	}
 }
+#endif
 
 void surface_classify_wedge::identify_HCV_and_print_table(int verbose_level)
 {
@@ -1812,7 +1818,8 @@ void surface_classify_wedge::identify_surface(
 	line_intersections = NEW_OBJECT(set_of_sets);
 
 	line_intersections->init_from_adjacency_matrix(
-		27 /* nb_lines*/, Adj, 0 /* verbose_level */);
+		27 /* nb_lines*/, Adj,
+		0 /* verbose_level */);
 
 	Surf->list_starter_configurations(Lines, 27,
 		line_intersections, Starter_Table, nb_starter,
@@ -2226,10 +2233,8 @@ void surface_classify_wedge::report_surface(
 
 	longinteger_object ago;
 	SaS->Strong_gens->group_order(ago);
-	ost << "The automorphism group of the surface has order "
-			<< ago << "\\\\" << endl;
-	ost << "The automorphism group is the following group\\\\"
-			<< endl;
+	ost << "The automorphism group of the surface has order " << ago << "\\\\" << endl;
+	ost << "The automorphism group is the following group\\\\" << endl;
 
 	if (f_v) {
 		cout << "surface_classify_wedge::report_surface "
@@ -2272,13 +2277,13 @@ void surface_classify_wedge::report_surface(
 				"before SO->print_generalized_quadrangle" << endl;
 	}
 	SO->print_generalized_quadrangle(ost);
-#endif
 
 	if (f_v) {
 		cout << "surface_classify_wedge::report_surface "
 				"before SOA->quartic" << endl;
 	}
-	//SOA->quartic(ost,  verbose_level);
+	SOA->quartic(ost,  verbose_level);
+#endif
 
 	FREE_OBJECT(SOA);
 	FREE_OBJECT(SO);

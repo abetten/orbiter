@@ -957,7 +957,7 @@ void schreier_vector::init_shallow_schreier_forest(schreier *S,
 
 void schreier_vector::export_tree_as_layered_graph(
 		int orbit_no, int orbit_rep,
-		const char *fname_mask,
+		std::string &fname_mask,
 		int verbose_level)
 {
 	//verbose_level = 3;
@@ -1151,7 +1151,7 @@ void schreier_vector::export_tree_as_layered_graph(
 	char str[1000];
 	string fname;
 
-	sprintf(str, fname_mask, orbit_no);
+	sprintf(str, fname_mask.c_str(), orbit_no);
 	fname.assign(str);
 	LG->write_file(fname, 0 /*verbose_level*/);
 	FREE_OBJECT(LG);

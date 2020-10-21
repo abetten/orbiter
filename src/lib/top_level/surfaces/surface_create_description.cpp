@@ -19,16 +19,6 @@ namespace top_level {
 
 surface_create_description::surface_create_description()
 {
-	null();
-}
-
-surface_create_description::~surface_create_description()
-{
-	freeself();
-}
-
-void surface_create_description::null()
-{
 	f_q = FALSE;
 	q = 0;
 	f_catalogue = FALSE;
@@ -56,6 +46,20 @@ void surface_create_description::null()
 	f_arc_lifting_with_two_lines = FALSE;
 	//nb_select_double_six = 0;
 	//select_double_six_string[];
+
+	//std::vector<std::string> transform_coeffs;
+	//std::vector<int> f_inverse_transform;
+
+	//null();
+}
+
+surface_create_description::~surface_create_description()
+{
+	freeself();
+}
+
+void surface_create_description::null()
+{
 }
 
 void surface_create_description::freeself()
@@ -141,13 +145,33 @@ int surface_create_description::read_arguments(int argc, const char **argv,
 			select_double_six_string.push_back(s);
 			cout << "-select_double_six " << select_double_six_string[select_double_six_string.size() - 1] << endl;
 		}
+		else if (strcmp(argv[i], "-transform") == 0) {
+
+			string s;
+
+			s.assign(argv[++i]);
+			transform_coeffs.push_back(s);
+			f_inverse_transform.push_back(FALSE);
+			cout << "-transform " << transform_coeffs[transform_coeffs.size() - 1]
+					<< " " << f_inverse_transform[transform_coeffs.size() - 1] << endl;
+		}
+		else if (strcmp(argv[i], "-transform_inverse") == 0) {
+
+			string s;
+
+			s.assign(argv[++i]);
+			transform_coeffs.push_back(s);
+			f_inverse_transform.push_back(TRUE);
+			cout << "-transform_inverse " << transform_coeffs[transform_coeffs.size() - 1]
+					<< " " << f_inverse_transform[transform_coeffs.size() - 1] << endl;
+		}
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}
 	} // next i
 	cout << "surface_create_description::read_arguments done" << endl;
-	return i;
+	return i + 1;
 }
 
 

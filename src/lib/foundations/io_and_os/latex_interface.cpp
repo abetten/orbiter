@@ -38,7 +38,7 @@ void latex_interface::head_easy(ostream& ost)
 		FALSE /* f_landscape */,
 		FALSE /* f_12pt */,
 		FALSE /* f_enlarged_page */,
-		FALSE /* f_pagenumbers */,
+		TRUE /* f_pagenumbers */,
 		NULL /* extras_for_preamble */);
 
 }
@@ -54,7 +54,7 @@ void latex_interface::head_easy_with_extras_in_the_praeamble(
 		FALSE /* f_landscape */,
 		FALSE /* f_12pt */,
 		FALSE /* f_enlarged_page */,
-		FALSE /* f_pagenumbers */,
+		TRUE /* f_pagenumbers */,
 		extras /* extras_for_preamble */);
 
 }
@@ -68,7 +68,7 @@ void latex_interface::head_easy_sideways(ostream& ost)
 		TRUE /* f_landscape */,
 		FALSE /* f_12pt */,
 		FALSE /* f_enlarged_page */,
-		FALSE /* f_pagenumbers */,
+		TRUE /* f_pagenumbers */,
 		NULL /* extras_for_preamble */);
 
 }
@@ -90,51 +90,51 @@ void latex_interface::head(ostream& ost,
 		ost << "book";
 	else
 		ost << "article";
-	ost << "}\n";
-	ost << "% a4paper\n";
+	ost << "}" << endl;
+	ost << "% a4paper" << endl;
 	ost << endl;
-	ost << "%\\usepackage[dvips]{epsfig}\n";
-	ost << "%\\usepackage{cours11, cours}\n";
-	ost << "%\\usepackage{fancyheadings}\n";
-	ost << "%\\usepackage{calc}\n";
-	ost << "\\usepackage{amsmath}\n";
-	ost << "\\usepackage{amssymb}\n";
-	ost << "\\usepackage{latexsym}\n";
-	ost << "\\usepackage{epsfig}\n";
-	ost << "\\usepackage{enumerate}\n";
-	ost << "%\\usepackage{supertabular}\n";
-	ost << "%\\usepackage{wrapfig}\n";
-	ost << "%\\usepackage{blackbrd}\n";
-	ost << "%\\usepackage{epic,eepic}\n";
-	ost << "\\usepackage{rotating}\n";
-	ost << "\\usepackage{multicol}\n";
-	ost << "%\\usepackage{multirow}\n";
-	ost << "\\usepackage{makeidx} % additional command see\n";
-	ost << "\\usepackage{rotating}\n";
-	ost << "\\usepackage{array}\n";
-	ost << "\\usepackage{tikz}\n";
-	ost << "\\usepackage{longtable}\n";
-	ost << "\\usepackage{anyfontsize}\n";
-	ost << "\\usepackage{t1enc}\n";
-	ost << "%\\usepackage{amsmath,amsfonts} \n";
+	ost << "%\\usepackage[dvips]{epsfig}" << endl;
+	ost << "%\\usepackage{cours11, cours}" << endl;
+	ost << "%\\usepackage{fancyheadings}" << endl;
+	ost << "%\\usepackage{calc}" << endl;
+	ost << "\\usepackage{amsmath}" << endl;
+	ost << "\\usepackage{amssymb}" << endl;
+	ost << "\\usepackage{latexsym}" << endl;
+	ost << "\\usepackage{epsfig}" << endl;
+	ost << "\\usepackage{enumerate}" << endl;
+	ost << "%\\usepackage{supertabular}" << endl;
+	ost << "%\\usepackage{wrapfig}" << endl;
+	ost << "%\\usepackage{blackbrd}" << endl;
+	ost << "%\\usepackage{epic,eepic}" << endl;
+	ost << "\\usepackage{rotating}" << endl;
+	ost << "\\usepackage{multicol}" << endl;
+	ost << "%\\usepackage{multirow}" << endl;
+	ost << "\\usepackage{makeidx} % additional command see" << endl;
+	ost << "\\usepackage{rotating}" << endl;
+	ost << "\\usepackage{array}" << endl;
+	ost << "\\usepackage{tikz}" << endl;
+	ost << "\\usepackage{longtable}" << endl;
+	ost << "\\usepackage{anyfontsize}" << endl;
+	ost << "\\usepackage{t1enc}" << endl;
+	ost << "%\\usepackage{amsmath,amsfonts}" << endl;
 	ost << endl;
 	ost << endl;
-	ost << "%\\usepackage[mtbold,mtplusscr]{mathtime}\n";
-	ost << "% lucidacal,lucidascr,\n";
+	ost << "%\\usepackage[mtbold,mtplusscr]{mathtime}" << endl;
+	ost << "% lucidacal,lucidascr," << endl;
 	ost << endl;
-	ost << "%\\usepackage{mathtimy}\n";
-	ost << "%\\usepackage{bm}\n";
-	ost << "%\\usepackage{avant}\n";
-	ost << "%\\usepackage{basker}\n";
-	ost << "%\\usepackage{bembo}\n";
-	ost << "%\\usepackage{bookman}\n";
-	ost << "%\\usepackage{chancery}\n";
-	ost << "%\\usepackage{garamond}\n";
-	ost << "%\\usepackage{helvet}\n";
-	ost << "%\\usepackage{newcent}\n";
-	ost << "%\\usepackage{palatino}\n";
-	ost << "%\\usepackage{times}\n";
-	ost << "%\\usepackage{pifont}\n";
+	ost << "%\\usepackage{mathtimy}" << endl;
+	ost << "%\\usepackage{bm}" << endl;
+	ost << "%\\usepackage{avant}" << endl;
+	ost << "%\\usepackage{basker}" << endl;
+	ost << "%\\usepackage{bembo}" << endl;
+	ost << "%\\usepackage{bookman}" << endl;
+	ost << "%\\usepackage{chancery}" << endl;
+	ost << "%\\usepackage{garamond}" << endl;
+	ost << "%\\usepackage{helvet}" << endl;
+	ost << "%\\usepackage{newcent}" << endl;
+	ost << "%\\usepackage{palatino}" << endl;
+	ost << "%\\usepackage{times}" << endl;
+	ost << "%\\usepackage{pifont}" << endl;
 	if (f_enlarged_page) {
 		ost << "\\usepackage{fullpage}" << endl;
 		ost << "\\usepackage[top=1in,bottom=1in,right=1in,left=1in]{geometry}" << endl;

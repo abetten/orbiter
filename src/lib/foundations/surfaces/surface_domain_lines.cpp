@@ -157,14 +157,8 @@ void surface_domain::create_system(int len, long int *S,
 	if (f_v) {
 		cout << "surface_domain::create_system" << endl;
 	}
-#if 0
-	if (len > 27) {
-		cout << "surface_domain::create_system len > 27" << endl;
-		exit(1);
-		}
-#endif
 
-	vector<int> Pts;
+	vector<long int> Pts;
 	long int *pts_on_line;
 	int *Pt_coords;
 
@@ -206,9 +200,10 @@ void surface_domain::create_system(int len, long int *S,
 #endif
 
 
-	Pt_coords = NEW_int(nb_rows * n);
 
 	nb_rows = Pts.size();
+
+	Pt_coords = NEW_int(nb_rows * n);
 
 	for (i = 0; i < nb_rows; i++) {
 		unrank_point(Pt_coords + i * n, Pts[i]);
@@ -907,8 +902,7 @@ free_it:
 
 
 	if (f_v) {
-		cout << "surface_domain::create_double_six_from_six_"
-				"disjoint_lines done" << endl;
+		cout << "surface_domain::create_double_six_from_six_disjoint_lines done" << endl;
 		}
 	return ret;
 }
@@ -1490,8 +1484,7 @@ void surface_domain::rearrange_lines_according_to_a_given_double_six(
 	for (i = 0; i < 6; i++) {
 		for (j = i + 1; j < 6; j++, h++) {
 			New_lines[12 + h] = compute_cij(
-				New_lines /*double_six */,
-				i, j, 0 /* verbose_level */);
+				New_lines /*double_six */, i, j, 0 /* verbose_level */);
 		}
 	}
 	if (f_v) {
@@ -1531,6 +1524,7 @@ void surface_domain::create_lines_from_plane_equations(
 	}
 }
 
+#if 0
 int surface_domain::identify_two_lines(long int *lines, int verbose_level)
 // bad! Why compute the adjacency matrix? This function should be in class surface_object
 {
@@ -1634,6 +1628,7 @@ int surface_domain::identify_three_lines(long int *lines, int verbose_level)
 	}
 	return iso;
 }
+#endif
 
 
 void surface_domain::create_remaining_fifteen_lines(

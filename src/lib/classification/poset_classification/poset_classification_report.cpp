@@ -201,21 +201,85 @@ void poset_classification::report_schreier_trees(
 }
 #endif
 
-void poset_classification::report(ostream &ost)
+void poset_classification::report(std::ostream &ost)
 {
-	int i;
-	int *N;
 
 
 
 	ost << "Poset classification up to depth " << depth << "\\\\" << endl;
 
 	ost << endl;
-	ost << "\\section{The orbits}" << endl;
+	ost << "\\section{The Orbits}" << endl;
 	ost << endl;
 
 
-	ost << "\\subsection{Number of orbits at depth}" << endl;
+	ost << "\\subsection{Number of Orbits By Level}" << endl;
+
+	report_number_of_orbits_at_level(ost);
+
+	ost << endl;
+	ost << "\\subsection{Summary of Orbit Representatives}" << endl;
+	ost << endl;
+
+	report_orbits_summary(ost);
+
+
+	ost << endl;
+
+
+
+	if (Control->f_draw_poset) {
+
+		ost << "\\section{The Poset of Orbits: Diagram}" << endl;
+
+		report_poset_of_orbits(ost);
+
+	}
+	else {
+		cout << "please use option -draw_poset if you want to draw the poset" << endl;
+	}
+
+
+
+	ost << endl;
+	ost << "\\section{Poset of Orbits in Detail}" << endl;
+	ost << endl;
+
+	int orbit_at_level;
+	int level;
+	int nb_orbits;
+
+	for (level = 0; level <= depth; level++) {
+
+
+		ost << endl;
+		ost << "\\subsection{Orbits at Level " << level << "}" << endl;
+		ost << endl;
+
+
+		nb_orbits = nb_orbits_at_level(level);
+
+		ost << "There are " << nb_orbits << " orbits at level " << level << ".\\\\" << endl;
+		ost << "\\bigskip" << endl;
+
+		for (orbit_at_level = 0;
+				orbit_at_level < nb_orbits;
+				orbit_at_level++) {
+
+			report_orbit(level, orbit_at_level, ost);
+
+		}
+	}
+
+
+}
+
+
+void poset_classification::report_number_of_orbits_at_level(std::ostream &ost)
+{
+	int *N;
+	int i;
+
 	N = NEW_int(depth + 1);
 	for (i = 0; i <= depth; i++) {
 		N[i] = nb_orbits_at_level(i);
@@ -234,9 +298,12 @@ void poset_classification::report(ostream &ost)
 	ost << "$$" << endl;
 
 	ost << endl;
-	ost << "\\subsection{Orbit representatives: overview}" << endl;
-	ost << endl;
+	FREE_int(N);
 
+}
+
+void poset_classification::report_orbits_summary(std::ostream &ost)
+{
 	ost << "N = node\\\\" << endl;
 	ost << "D = depth or level\\\\" << endl;
 	ost << "O = orbit with a level\\\\" << endl;
@@ -268,6 +335,7 @@ void poset_classification::report(ostream &ost)
 	ost << "\\hline \\hline" << endl;
 	ost << "\\endlastfoot" << endl;
 
+	int i;
 	int level, nb_orbits, cnt, nb_live_pts, nb_extensions, /*nbo,*/ nbg;
 	long int *rep = NULL;
 	char str[1000];
@@ -376,310 +444,314 @@ void poset_classification::report(ostream &ost)
 	ost << "\\end{longtable}" << endl;
 	ost << "\\end{center}" << endl;
 	ost << endl;
-	ost << "\\section{The poset of orbits}" << endl;
-	ost << endl;
 
-
-
-	string fname_base;
-
-	draw_poset_fname_base_poset_lvl(fname_base, depth);
-
-#if 0
-	string cmd;
-
-	snprintf(cmd, 10000, "cp %s.layered_graph ./poset.layered_graph", fname_base);
-	cout << "executing: " << cmd << endl;
-	system(cmd);
-
-
-
-	if (Control->f_has_tools_path) {
-		snprintf(cmd, 10000, "%s/layered_graph_main.out -v 2 "
-			"-file poset.layered_graph "
-			"-xin 1000000 -yin 1000000 "
-			"-xout 1000000 -yout 1000000 "
-			"-y_stretch 0.75 "
-			"-rad 20000 "
-			//"-nodes_empty "
-			//"-corners "
-			//"-embedded "
-			"-line_width 0.30 "
-			"-spanning_tree",
-			Control->tools_path);
-	}
-	else {
-		snprintf(cmd, 10000, "layered_graph_main.out -v 2 "
-			"-file poset.layered_graph "
-			"-xin 1000000 -yin 1000000 "
-			"-xout 1000000 -yout 1000000 "
-			"-y_stretch 0.75 "
-			"-rad 20000 "
-			//"-nodes_empty "
-			//"-corners "
-			//"-embedded "
-			"-line_width 0.30 "
-			"-spanning_tree");
-
-	}
-	cout << "executing: " << cmd << endl;
-	system(cmd);
-
-	snprintf(cmd, 10000, "mpost -tex=latex poset_draw_tree.mp");
-	cout << "executing: " << cmd << endl;
-	system(cmd);
-
-
-	//ost << "\\input " << fname_tex << endl;
-	ost << "\\includegraphics[width=160mm]{poset_draw_tree.1}\\" << endl;
-
-
-#endif
-
-
-	ost << endl;
-	ost << "\\section{Stabilizers and Schreier trees}" << endl;
-	ost << endl;
-
-	int orbit_at_level, /*j,*/ nb_gens;
-
-	cnt = 0;
-	for (level = 0; level <= depth; level++) {
-
-
-		ost << endl;
-		ost << "\\subsection{Stabilizers and Schreier trees "
-				"at level " << level << "}" << endl;
-		ost << endl;
-
-
-		nb_orbits = nb_orbits_at_level(level);
-		for (orbit_at_level = 0;
-				orbit_at_level < nb_orbits;
-				orbit_at_level++) {
-
-			string fname_mask_base;
-			O = get_node_ij(level, orbit_at_level);
-
-			create_shallow_schreier_tree_fname_mask_base(
-					fname_mask_base, O->get_node());
-			//create_schreier_tree_fname_mask_base(
-			//fname_mask_base, O->node);
-
-			strong_generators *gens;
-
-			get_stabilizer_generators(gens,
-					level, orbit_at_level, Control->verbose_level);
-			get_orbit_length_and_stabilizer_order(orbit_at_level, level,
-				stab_order, orbit_length);
-
-			stab_order.print_to_string(str);
-
-			//orbit_length.print_to_string(str);
-
-			Schreier_vector = O->get_Schreier_vector();
-
-
-			ost << "\\subsection*{Node " << O->get_node() << " at Level "
-					<< level << " Orbit " << orbit_at_level
-					<< " / " << nb_orbits << "}" << endl;
-
-			get_set_by_level(level, orbit_at_level, rep);
-
-			ost << "$$" << endl;
-			L.lint_set_print_tex(ost, rep, level);
-			ost << "_{";
-			ost << str;
-			ost << "}";
-			ost << "$$" << endl;
-
-			ost << "{\\small\\arraycolsep=2pt" << endl;
-			gens->print_generators_tex(ost);
-			ost << "}" << endl;
-
-			nb_gens = gens->gens->len;
-
-			nb_extensions = O->get_nb_of_extensions();
-			//ost << "There are " << nbo << " orbits\\\\" << endl;
-			ost << "There are " << nb_extensions
-					<< " extensions\\\\" << endl;
-			ost << "Number of generators " << O->get_nb_strong_generators()
-					<< "\\\\" << endl;
-
-			if (Schreier_vector) {
-				int nb_orbits_sv = Schreier_vector->number_of_orbits;
-
-				if (Schreier_vector->f_has_local_generators) {
-
-					ost << "Generators for the Schreier trees:\\\\" << endl;
-					ost << "{\\small\\arraycolsep=2pt" << endl;
-					Schreier_vector->local_gens->print_generators_tex(stab_order, ost);
-					ost << "}" << endl;
-
-					nb_gens = Schreier_vector->local_gens->len;
-				}
-
-				int nb_o, h;
-				int *orbit_reps;
-				int *orbit_length;
-				int *total_depth;
-				Schreier_vector->orbit_stats(
-						nb_o, orbit_reps, orbit_length, total_depth,
-						0 /*verbose_level*/);
-				if (nb_o != nb_orbits_sv) {
-					cout << "nb_o != nb_orbits_sv" << endl;
-					exit(1);
-				}
-				for (h = 0; h < nb_o; h++) {
-					ost << "\\noindent Orbit " << h << " / " << nb_o
-							<< ": Point " << orbit_reps[h]
-							<< " lies in an orbit of length "
-							<< orbit_length[h] << " with average word length "
-							<< (double) total_depth[h] / (double) orbit_length[h];
-					if (nb_gens > 1) {
-						ost << " $H_{" << nb_gens << "} = "
-							<< (double) log(total_depth[h]) / log(nb_gens) << "$";
-					}
-					double delta = (double) total_depth[h] / (double) orbit_length[h];
-					delta -= ((double) log(total_depth[h]) / log(nb_gens));
-					ost << ", $\\Delta = " << delta << "$";
-					ost << "\\\\" << endl;
-				}
-
-
-#if 0
-				for (j = 0; j < nb_orbits_sv; j++) {
-
-					//char fname_base[1000];
-					char fname_layered_graph[2000];
-					char fname_tex[2000];
-					char fname_mp[2000];
-					char fname_1[2000];
-
-					snprintf(fname_base, 1000, fname_mask_base, j);
-					snprintf(fname_layered_graph, 2000, "%s.layered_graph",
-							fname_base);
-					snprintf(fname_tex, 2000, "%s_draw_tree.tex", fname_base);
-					snprintf(fname_mp, 2000, "%s_draw_tree.mp", fname_base);
-					snprintf(fname_1, 2000, "%s_draw_tree.1", fname_base);
-
-					if (Control->f_has_tools_path) {
-						snprintf(cmd, 10000, "%s/layered_graph_main.out -v 2 "
-							"-file %s "
-							"-xin 1000000 -yin 1000000 "
-							"-xout 1000000 -yout 1000000 "
-							"-y_stretch 0.3 "
-							"-rad 2000 "
-							"-nodes_empty "
-							"-corners "
-							//"-embedded "
-							"-line_width 0.30 "
-							"-spanning_tree",
-							Control->tools_path, fname_layered_graph);
-						cout << "executing: " << cmd << endl;
-						system(cmd);
-
-						snprintf(cmd, 10000, "mpost %s", fname_mp);
-						cout << "executing: " << cmd << endl;
-						system(cmd);
-
-						ost << "\\subsubsection*{Node " << O->node << " at Level "
-								<< level << " Orbit " << orbit_at_level
-								<< " / " << nb_orbits
-								<< " Tree " << j << " / " << nb_orbits_sv << "}" << endl;
-
-						//nbo = Schreier_vector->number_of_orbits;
-						if (Schreier_vector->f_has_local_generators) {
-							nbg = Schreier_vector->local_gens->len;
-						}
-						else {
-							nbg = O->nb_strong_generators;
-						}
-						ost << "Number of generators " << nbg
-								<< "\\\\" << endl;
-
-
-						//ost << "\\input " << fname_tex << endl;
-						ost << "\\includegraphics[width=160mm]{"
-								<< fname_1 << "}\\" << endl;
-					}
-					else {
-						//cout << "please set tools path using "
-						//		"-tools_path <tools_path>" << endl;
-						//exit(1);
-					}
-
-					int e;
-
-					e = O->find_extension_from_point(this, orbit_reps[j],
-							0 /* verbose_level */);
-
-					if (e >= 0) {
-						ost << endl;
-						ost << "\\noindent Extension number " << e << "\\\\" << endl;
-						ost << "Orbit representative " << orbit_reps[j] << "\\\\" << endl;
-						ost << "Flag orbit length " << O->E[e].orbit_len << "\\\\" << endl;
-
-						if (O->E[e].type == EXTENSION_TYPE_UNPROCESSED) {
-							ost << "Flag orbit is unprocessed.\\\\" << endl;
-						}
-						else if (O->E[e].type == EXTENSION_TYPE_EXTENSION) {
-							ost << "Flag orbit is defining new orbit " << O->E[e].data << " at level " << level + 1 << "\\\\" << endl;
-						}
-						else if (O->E[e].type == EXTENSION_TYPE_FUSION) {
-							ost << "Flag orbit is fused to node " << O->E[e].data1 << " extension " << O->E[e].data2 << "\\\\" << endl;
-							ost << "Fusion element:\\\\" << endl;
-							ost << "$$" << endl;
-
-							Poset->A->element_retrieve(O->E[e].data, Elt1, 0);
-
-							Poset->A->element_print_latex(Elt1, ost);
-							ost << "$$" << endl;
-							Poset->A->element_print_for_make_element(Elt1, ost);
-							ost << "\\\\" << endl;
-						}
-					}
-					else {
-						ost << endl;
-						ost << "Cannot find an extension for point " << orbit_reps[j] << "\\\\" << endl;
-					}
-#if 0
-					int pt;
-					int orbit_len;
-					int type;
-						// EXTENSION_TYPE_UNPROCESSED = unprocessed
-						// EXTENSION_TYPE_EXTENSION = extension node
-						// EXTENSION_TYPE_FUSION = fusion node
-						// EXTENSION_TYPE_PROCESSING = currently processing
-						// EXTENSION_TYPE_NOT_CANONICAL = no extension formed
-						// because it is not canonical
-					int data;
-						// if EXTENSION_TYPE_EXTENSION: a handle to the next
-						//  poset_orbit_node
-						// if EXTENSION_TYPE_FUSION: a handle to a fusion element
-					int data1;
-						// if EXTENSION_TYPE_FUSION: node to which we are fusing
-					int data2;
-						// if EXTENSION_TYPE_FUSION: extension within that
-						// node to which we are fusing
-#endif
-
-				}
-#endif
-
-
-				FREE_int(orbit_reps);
-				FREE_int(orbit_length);
-				FREE_int(total_depth);
-			}
-			FREE_OBJECT(gens);
-		}
-	}
 	FREE_lint(rep);
-
 
 }
 
+
+void poset_classification::report_poset_of_orbits(std::ostream &ost)
+{
+
+
+	string fname_base;
+	string fname_poset;
+	string fname_mp;
+
+	draw_poset_fname_base_poset_lvl(fname_base, depth);
+	draw_poset_fname_poset(fname_poset, depth);
+	draw_poset_fname_base_poset_lvl(fname_mp, depth);
+
+	fname_mp.append("_draw_tree");
+
+	string cmd;
+
+#if 0
+	snprintf(cmd, 10000, "cp %s.layered_graph ./poset.layered_graph", fname_base);
+	cout << "executing: " << cmd << endl;
+	system(cmd);
+#endif
+
+
+	if (The_Orbiter_session->f_orbiter_path) {
+
+		cmd.assign(The_Orbiter_session->orbiter_path);
+
+	}
+	else {
+		cmd.assign("");
+
+	}
+
+	cmd.append("/orbiter.out -v 3 -draw_layered_graph ");
+	cmd.append(fname_poset);
+	cmd.append(" "
+		"-xin 1000000 -yin 1000000 "
+		"-xout 1000000 -yout 1000000 "
+		"-y_stretch 0.75 "
+		"-rad 20000 "
+		//"-nodes_empty "
+		//"-corners "
+		//"-embedded "
+		"-line_width 0.30 "
+		"-spanning_tree");
+
+	cout << "executing: " << cmd << endl;
+	system(cmd.c_str());
+
+	cmd.assign("mpost -tex=latex ");
+	cmd.append(fname_mp);
+	cmd.append(".mp");
+	cout << "executing: " << cmd << endl;
+	system(cmd.c_str());
+
+
+	ost << "\\input " << fname_mp << ".tex" << endl;
+	//ost << "\\includegraphics[width=160mm]{" << fname_mp << ".1}\\\\" << endl;
+
+}
+
+
+void poset_classification::report_orbit(int level, int orbit_at_level, std::ostream &ost)
+{
+	int nb_orbits;
+	int nb_gens;
+	int nb_extensions;
+	poset_orbit_node *O;
+	longinteger_object stab_order, orbit_length;
+	char str[1000];
+	long int *rep = NULL;
+	schreier_vector *Schreier_vector;
+	latex_interface L;
+
+	rep = NEW_lint(depth + 1);
+
+
+	nb_orbits = nb_orbits_at_level(level);
+
+	O = get_node_ij(level, orbit_at_level);
+
+	ost << "\\subsection*{Orbit " << orbit_at_level
+			<< " / " << nb_orbits << " at Level " << level << "}" << endl;
+
+
+	ost << "Node number: " << O->get_node() << "\\\\" << endl;
+
+
+
+
+	strong_generators *gens;
+
+	get_stabilizer_generators(gens,
+			level, orbit_at_level, Control->verbose_level);
+	get_orbit_length_and_stabilizer_order(orbit_at_level, level,
+		stab_order, orbit_length);
+
+	stab_order.print_to_string(str);
+
+	//orbit_length.print_to_string(str);
+
+	Schreier_vector = O->get_Schreier_vector();
+
+
+	get_set_by_level(level, orbit_at_level, rep);
+
+	ost << "$$" << endl;
+	L.lint_set_print_tex(ost, rep, level);
+	ost << "_{";
+	ost << str;
+	ost << "}";
+	ost << "$$" << endl;
+
+	ost << "{\\small\\arraycolsep=2pt" << endl;
+	gens->print_generators_tex(ost);
+	ost << "}" << endl;
+
+	nb_gens = gens->gens->len;
+
+	nb_extensions = O->get_nb_of_extensions();
+	//ost << "There are " << nbo << " orbits\\\\" << endl;
+	ost << "There are " << nb_extensions
+			<< " extensions\\\\" << endl;
+	ost << "Number of generators " << O->get_nb_strong_generators()
+			<< "\\\\" << endl;
+
+	if (Schreier_vector) {
+		int nb_orbits_sv = Schreier_vector->number_of_orbits;
+
+		if (Schreier_vector->f_has_local_generators) {
+
+			ost << "Generators for the Schreier trees:\\\\" << endl;
+			ost << "{\\small\\arraycolsep=2pt" << endl;
+			Schreier_vector->local_gens->print_generators_tex(stab_order, ost);
+			ost << "}" << endl;
+
+			nb_gens = Schreier_vector->local_gens->len;
+		}
+
+		int nb_o, h;
+		int *orbit_reps;
+		int *orbit_length;
+		int *total_depth;
+		Schreier_vector->orbit_stats(
+				nb_o, orbit_reps, orbit_length, total_depth,
+				0 /*verbose_level*/);
+		if (nb_o != nb_orbits_sv) {
+			cout << "nb_o != nb_orbits_sv" << endl;
+			exit(1);
+		}
+		for (h = 0; h < nb_o; h++) {
+			ost << "\\noindent Orbit " << h << " / " << nb_o
+					<< ": Point " << orbit_reps[h]
+					<< " lies in an orbit of length "
+					<< orbit_length[h] << " with average word length "
+					<< (double) total_depth[h] / (double) orbit_length[h];
+			if (nb_gens > 1) {
+				ost << " $H_{" << nb_gens << "} = "
+					<< (double) log(total_depth[h]) / log(nb_gens) << "$";
+			}
+			double delta = (double) total_depth[h] / (double) orbit_length[h];
+			delta -= ((double) log(total_depth[h]) / log(nb_gens));
+			ost << ", $\\Delta = " << delta << "$";
+			ost << "\\\\" << endl;
+		}
+
+
+#if 0
+		string fname_mask_base;
+
+		create_shallow_schreier_tree_fname_mask_base(
+				fname_mask_base, O->get_node());
+		//create_schreier_tree_fname_mask_base(
+		//fname_mask_base, O->node);
+
+		for (j = 0; j < nb_orbits_sv; j++) {
+
+			//char fname_base[1000];
+			char fname_layered_graph[2000];
+			char fname_tex[2000];
+			char fname_mp[2000];
+			char fname_1[2000];
+
+			snprintf(fname_base, 1000, fname_mask_base, j);
+			snprintf(fname_layered_graph, 2000, "%s.layered_graph",
+					fname_base);
+			snprintf(fname_tex, 2000, "%s_draw_tree.tex", fname_base);
+			snprintf(fname_mp, 2000, "%s_draw_tree.mp", fname_base);
+			snprintf(fname_1, 2000, "%s_draw_tree.1", fname_base);
+
+			if (Control->f_has_tools_path) {
+				snprintf(cmd, 10000, "%s/layered_graph_main.out -v 2 "
+					"-file %s "
+					"-xin 1000000 -yin 1000000 "
+					"-xout 1000000 -yout 1000000 "
+					"-y_stretch 0.3 "
+					"-rad 2000 "
+					"-nodes_empty "
+					"-corners "
+					//"-embedded "
+					"-line_width 0.30 "
+					"-spanning_tree",
+					Control->tools_path, fname_layered_graph);
+				cout << "executing: " << cmd << endl;
+				system(cmd);
+
+				snprintf(cmd, 10000, "mpost %s", fname_mp);
+				cout << "executing: " << cmd << endl;
+				system(cmd);
+
+				ost << "\\subsubsection*{Node " << O->node << " at Level "
+						<< level << " Orbit " << orbit_at_level
+						<< " / " << nb_orbits
+						<< " Tree " << j << " / " << nb_orbits_sv << "}" << endl;
+
+				//nbo = Schreier_vector->number_of_orbits;
+				if (Schreier_vector->f_has_local_generators) {
+					nbg = Schreier_vector->local_gens->len;
+				}
+				else {
+					nbg = O->nb_strong_generators;
+				}
+				ost << "Number of generators " << nbg
+						<< "\\\\" << endl;
+
+
+				//ost << "\\input " << fname_tex << endl;
+				ost << "\\includegraphics[width=160mm]{"
+						<< fname_1 << "}\\" << endl;
+			}
+			else {
+				//cout << "please set tools path using "
+				//		"-tools_path <tools_path>" << endl;
+				//exit(1);
+			}
+
+			int e;
+
+			e = O->find_extension_from_point(this, orbit_reps[j],
+					0 /* verbose_level */);
+
+			if (e >= 0) {
+				ost << endl;
+				ost << "\\noindent Extension number " << e << "\\\\" << endl;
+				ost << "Orbit representative " << orbit_reps[j] << "\\\\" << endl;
+				ost << "Flag orbit length " << O->E[e].orbit_len << "\\\\" << endl;
+
+				if (O->E[e].type == EXTENSION_TYPE_UNPROCESSED) {
+					ost << "Flag orbit is unprocessed.\\\\" << endl;
+				}
+				else if (O->E[e].type == EXTENSION_TYPE_EXTENSION) {
+					ost << "Flag orbit is defining new orbit " << O->E[e].data << " at level " << level + 1 << "\\\\" << endl;
+				}
+				else if (O->E[e].type == EXTENSION_TYPE_FUSION) {
+					ost << "Flag orbit is fused to node " << O->E[e].data1 << " extension " << O->E[e].data2 << "\\\\" << endl;
+					ost << "Fusion element:\\\\" << endl;
+					ost << "$$" << endl;
+
+					Poset->A->element_retrieve(O->E[e].data, Elt1, 0);
+
+					Poset->A->element_print_latex(Elt1, ost);
+					ost << "$$" << endl;
+					Poset->A->element_print_for_make_element(Elt1, ost);
+					ost << "\\\\" << endl;
+				}
+			}
+			else {
+				ost << endl;
+				ost << "Cannot find an extension for point " << orbit_reps[j] << "\\\\" << endl;
+			}
+#if 0
+			int pt;
+			int orbit_len;
+			int type;
+				// EXTENSION_TYPE_UNPROCESSED = unprocessed
+				// EXTENSION_TYPE_EXTENSION = extension node
+				// EXTENSION_TYPE_FUSION = fusion node
+				// EXTENSION_TYPE_PROCESSING = currently processing
+				// EXTENSION_TYPE_NOT_CANONICAL = no extension formed
+				// because it is not canonical
+			int data;
+				// if EXTENSION_TYPE_EXTENSION: a handle to the next
+				//  poset_orbit_node
+				// if EXTENSION_TYPE_FUSION: a handle to a fusion element
+			int data1;
+				// if EXTENSION_TYPE_FUSION: node to which we are fusing
+			int data2;
+				// if EXTENSION_TYPE_FUSION: extension within that
+				// node to which we are fusing
+#endif
+
+		}
+#endif
+
+
+		FREE_int(orbit_reps);
+		FREE_int(orbit_length);
+		FREE_int(total_depth);
+	}
+	FREE_OBJECT(gens);
+	FREE_lint(rep);
+}
 
 
 }}

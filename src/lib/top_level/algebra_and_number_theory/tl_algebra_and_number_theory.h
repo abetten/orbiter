@@ -310,9 +310,6 @@ public:
 	int f_surface_clebsch;
 	int f_surface_codes;
 
-	int nb_transform;
-	const char *transform_coeffs[1000];
-	int f_inverse_transform[1000];
 
 		// subspace orbits:
 		int f_orbits_on_subspaces;
@@ -433,39 +430,6 @@ public:
 	void do_classify_arcs(
 			arc_generator_description *Arc_generator_description,
 			int verbose_level);
-	void do_surface_classify(int verbose_level);
-	void do_surface_report(int verbose_level);
-	void do_surface_identify_HCV(int verbose_level);
-	void do_surface_identify_F13(int verbose_level);
-	void do_surface_identify_Bes(int verbose_level);
-	void do_surface_identify_general_abcd(int verbose_level);
-	void do_surface_isomorphism_testing(
-			surface_create_description *surface_descr_isomorph1,
-			surface_create_description *surface_descr_isomorph2,
-			int verbose_level);
-	void do_surface_recognize(
-			surface_create_description *surface_descr,
-			int verbose_level);
-	int subspace_orbits_test_set(
-			int len, long int *S, int verbose_level);
-	void do_classify_surfaces_through_arcs_and_two_lines(
-			poset_classification_control *Control_six_arcs,
-			int f_test_nb_Eckardt_points, int nb_E,
-			int verbose_level);
-	void do_classify_surfaces_through_arcs_and_trihedral_pairs(
-			poset_classification_control *Control1,
-			poset_classification_control *Control2,
-			poset_classification_control *Control_six_arcs,
-			int f_test_nb_Eckardt_points, int nb_E,
-			int verbose_level);
-	void do_create_surface(
-			surface_create_description *Descr,
-			poset_classification_control *Control_six_arcs,
-			int verbose_level);
-	void do_six_arcs(
-			poset_classification_control *Control_six_arcs,
-			int f_filter_by_nb_Eckardt_points, int nb_Eckardt_points,
-			int verbose_level);
 	void do_spread_classify(int k, int verbose_level);
 	void do_packing_classify(int dimension_of_spread_elements,
 			std::string &spread_selection_text,
@@ -487,6 +451,44 @@ public:
 	void do_orbits_on_polynomials(
 			int degree,
 			int verbose_level);
+	int subspace_orbits_test_set(
+			int len, long int *S, int verbose_level);
+
+
+	// group_theoretic_activity_for_surfaces.cpp:
+
+	void do_create_surface(
+			surface_create_description *Descr,
+			poset_classification_control *Control_six_arcs,
+			int verbose_level);
+	void do_surface_classify(int verbose_level);
+	void do_surface_report(int verbose_level);
+	void do_surface_identify_HCV(int verbose_level);
+	void do_surface_identify_F13(int verbose_level);
+	void do_surface_identify_Bes(int verbose_level);
+	void do_surface_identify_general_abcd(int verbose_level);
+	void do_surface_isomorphism_testing(
+			surface_create_description *surface_descr_isomorph1,
+			surface_create_description *surface_descr_isomorph2,
+			int verbose_level);
+	void do_surface_recognize(
+			surface_create_description *surface_descr,
+			int verbose_level);
+	void do_classify_surfaces_through_arcs_and_two_lines(
+			poset_classification_control *Control_six_arcs,
+			int f_test_nb_Eckardt_points, int nb_E,
+			int verbose_level);
+	void do_classify_surfaces_through_arcs_and_trihedral_pairs(
+			poset_classification_control *Control1,
+			poset_classification_control *Control2,
+			poset_classification_control *Control_six_arcs,
+			int f_test_nb_Eckardt_points, int nb_E,
+			int verbose_level);
+	void do_six_arcs(
+			poset_classification_control *Control_six_arcs,
+			int f_filter_by_nb_Eckardt_points, int nb_Eckardt_points,
+			int verbose_level);
+
 
 };
 
