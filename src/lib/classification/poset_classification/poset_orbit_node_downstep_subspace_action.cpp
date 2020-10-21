@@ -683,6 +683,7 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 		}
 	}
 
+#if 0
 	if (FALSE) {
 		cout << "Schreier structure generators:" << endl;
 		Schreier.list_elements_as_permutations_vertically(cout);
@@ -715,6 +716,9 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 				0 /*verbose_level */);
 		}
 	}
+#endif
+
+
 #if 0
 	if (f_v10) {
 		Schreier.print(cout);

@@ -813,8 +813,7 @@ long int action_on_factor_space::project_onto_Gauss_reduced_vector(
 	return rk1;
 }
 
-long int action_on_factor_space::project(
-		long int rk, int verbose_level)
+long int action_on_factor_space::project(long int rk, int verbose_level)
 // returns the rank in the factor space
 // of the vector rk in the large space
 // after reduction modulo the subspace

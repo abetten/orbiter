@@ -340,14 +340,8 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 {
 	int f_v = (verbose_level >= 1);
 	int alpha0, beta0;
-	//int line_rk;
-	//int Basis[8];
 	long int Lines27[27];
-	//int nb, i, e, ee, nb_lines, rk, nb_pts;
 	int i, rk, nb;
-	//int *coeff;
-	//long int *Pts;
-	//int v[4];
 	geometry_global Gg;
 	sorting Sorting;
 
@@ -461,6 +455,9 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 		cout << "surface_domain::create_surface_HCV after create_special_fifteen_lines" << endl;
 	}
 
+	if (f_v) {
+		cout << "surface_domain::create_surface_HCV before rank_of_system" << endl;
+	}
 	rk = rank_of_system(27, Lines27, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "surface_domain::create_surface_HCV "
@@ -781,47 +778,6 @@ void surface_domain::create_HCV_fifteen_lines(long int *fifteen_lines,
 	}
 }
 
-#if 0
-void surface_domain::create_surface_family_HCV(int a,
-	long int *Lines27,
-	int *equation20, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_family_HCV" << endl;
-	}
-
-	int nb_E = 0;
-	int b = 1;
-	int alpha, beta;
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_family_HCV "
-				"before create_surface_HCV for a=" << a << ":" << endl;
-	}
-
-	create_surface_HCV(a, b,
-		equation20,
-		Lines27,
-		alpha, beta, nb_E,
-		verbose_level - 1);
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_family_HCV "
-				"The double six is:" << endl;
-		lint_matrix_print(Lines27, 2, 6);
-		cout << "The lines are : ";
-		lint_vec_print(cout, Lines27, 27);
-		cout << endl;
-	}
-
-	if (f_v) {
-		cout << "surface_domain::create_surface_family_HCV "
-				"done" << endl;
-	}
-}
-#endif
 
 
 

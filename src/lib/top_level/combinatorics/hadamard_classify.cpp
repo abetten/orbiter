@@ -292,10 +292,14 @@ void hadamard_classify::init(int n, int f_draw,
 				"uncolored graph done, group order = " << go << endl;
 		}
 
-	char fname_group[1000];
+	string fname_group;
 
 
-	sprintf(fname_group, "Hadamard_group_%d.magma", n);
+	fname_group.assign("Hadamard_group_");
+	sprintf(str, "%d", n);
+	fname_group.append(str);
+	fname_group.append(".magma");
+
 	A->Strong_gens->export_permutation_group_to_magma(
 			fname_group, 1 /* verbose_level */);
 

@@ -1100,7 +1100,7 @@ void linear_group::init_orthogonal_group(int epsilon, int verbose_level)
 
 
 void linear_group::init_subgroup_from_file(
-	const char *subgroup_fname, const char *subgroup_label, 
+	std::string &subgroup_fname, std::string &subgroup_label,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1151,11 +1151,11 @@ void linear_group::init_subgroup_from_file(
 }
 
 void linear_group::init_subgroup_by_generators(
-	const char *subgroup_label,
-	const char *subgroup_order_text,
-	int nb_subgroup_generators,
-	std::string *subgroup_generators_as_string,
-	int verbose_level)
+		std::string &subgroup_label,
+		std::string &subgroup_order_text,
+		int nb_subgroup_generators,
+		std::string *subgroup_generators_as_string,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1194,17 +1194,21 @@ void linear_group::init_subgroup_by_generators(
 	int line_skip = 0;
 
 
-	L.latexable_string(str, subgroup_label, max_len, line_skip);
+	L.latexable_string(str, subgroup_label.c_str(), max_len, line_skip);
 
 
 
-	char str1[1000];
-	char str2[1000];
+	label.append("_Subgroup_");
+	label.append(subgroup_label);
+	label.append("_");
+	label.append(subgroup_order_text);
 
-	sprintf(str1, "_Subgroup_%s_%s", subgroup_label, subgroup_order_text);
-	sprintf(str2, "{\\rm Subgroup %s order %s}", str.str().c_str(), subgroup_order_text);
-	label.append(str1);
-	label_tex.append(str2);
+
+	label_tex.append("{\\rm Subgroup ");
+	label_tex.append(str.str());
+	label_tex.append(" order ");
+	label_tex.append(subgroup_order_text);
+
 	if (f_v) {
 		cout << "linear_group::init_subgroup_by_generators "
 				"created group " << label << endl;

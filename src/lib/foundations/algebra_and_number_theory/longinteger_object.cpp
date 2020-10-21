@@ -182,6 +182,11 @@ void longinteger_object::create_from_base_10_string(const char *str)
 	create_from_base_10_string(str, 0);
 }
 
+void longinteger_object::create_from_base_10_string(std::string &str)
+{
+	create_from_base_10_string(str.c_str(), 0);
+}
+
 int longinteger_object::as_int()
 {
 	int i, x = 0;

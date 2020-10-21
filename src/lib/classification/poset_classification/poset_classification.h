@@ -322,8 +322,8 @@ public:
 	int f_write_data_files;
 	int f_T; // draw tree file (each level)
 	int f_t; // draw tree file (only last level)
-	int f_Log; // log nodes (each level)
-	int f_log; // log nodes (only last level)
+	//int f_Log; // log nodes (each level)
+	//int f_log; // log nodes (only last level)
 	int f_print_only;
 	int f_find_group_order;
 	int find_group_order;
@@ -372,7 +372,9 @@ public:
 
 	int f_export_schreier_trees;
 	int f_draw_schreier_trees;
-		char schreier_tree_prefix[1000];
+		std::string schreier_tree_prefix;
+			// comes after problem_label_with_path
+#if 0
 		int schreier_tree_xmax; // = 1000000;
 		int schreier_tree_ymax; // =  500000;
 		int schreier_tree_f_circletext; // = TRUE;
@@ -381,6 +383,7 @@ public:
 		int schreier_tree_f_sideways;
 		double schreier_tree_scale;
 		double schreier_tree_line_width;
+#endif
 
 		int f_problem_label;
 		std::string problem_label;
@@ -807,6 +810,10 @@ public:
 	void draw_poset_fname_base_poset_lvl(std::string &fname, int depth);
 	void draw_poset_fname_base_tree_lvl(std::string &fname, int depth);
 	void draw_poset_fname_base_poset_detailed_lvl(std::string &fname, int depth);
+	void draw_poset_fname_aux_poset(std::string &fname, int depth);
+	void draw_poset_fname_poset(std::string &fname, int depth);
+	void draw_poset_fname_tree(std::string &fname, int depth);
+	void draw_poset_fname_poset_detailed(std::string &fname, int depth);
 	void write_treefile_and_draw_tree(std::string &fname_base,
 		int lvl,
 		layered_graph_draw_options *draw_options,
@@ -968,9 +975,13 @@ public:
 	void make_spreadsheet_of_level_info(spreadsheet *&Sp, 
 		int max_depth, int verbose_level);
 	void create_schreier_tree_fname_mask_base(
-			std::string &fname_mask, int node);
+			std::string &fname_mask);
+	void create_schreier_tree_fname_mask_base_tex(
+			std::string &fname_mask);
 	void create_shallow_schreier_tree_fname_mask_base(
-			std::string &fname_mask, int node);
+			std::string &fname_mask);
+	void create_shallow_schreier_tree_fname_mask(
+			std::string &fname, int node);
 	void make_fname_candidates_file_default(char *fname2000, int level);
 	void wedge_product_export_magma(
 			int n, int q, int vector_space_dimension,
@@ -1005,6 +1016,10 @@ public:
 	// in poset_classification_report.cpp:
 	//void report_schreier_trees(std::ostream &ost, int verbose_level);
 	void report(std::ostream &ost);
+	void report_number_of_orbits_at_level(std::ostream &ost);
+	void report_orbits_summary(std::ostream &ost);
+	void report_poset_of_orbits(std::ostream &ost);
+	void report_orbit(int level, int orbit_at_level, std::ostream &ost);
 
 	// poset_classification_trace.cpp:
 	int find_isomorphism(long int *set1, long int *set2, int sz,

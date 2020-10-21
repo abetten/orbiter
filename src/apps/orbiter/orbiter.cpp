@@ -127,6 +127,9 @@ void work(orbiter_session *Session, int argc, const char **argv, int i, int verb
 
 		interface_algebra Interface_algebra;
 		if (Interface_algebra.recognize_keyword(argc, argv, i, verbose_level)) {
+			if (f_v) {
+				cout << "recognizing keyword from Interface_algebra" << endl;
+			}
 			Interface_algebra.read_arguments(argc, argv, i, verbose_level);
 			Interface_algebra.worker(Session, verbose_level);
 		}
@@ -139,6 +142,9 @@ void work(orbiter_session *Session, int argc, const char **argv, int i, int verb
 
 		interface_cryptography Interface_cryptography;
 		if (Interface_cryptography.recognize_keyword(argc, argv, i, verbose_level)) {
+			if (f_v) {
+				cout << "recognizing keyword from Interface_cryptography" << endl;
+			}
 			Interface_cryptography.read_arguments(argc, argv, i, verbose_level);
 			Interface_cryptography.worker(verbose_level);
 		}
@@ -151,6 +157,9 @@ void work(orbiter_session *Session, int argc, const char **argv, int i, int verb
 
 		interface_combinatorics Interface_combinatorics;
 		if (Interface_combinatorics.recognize_keyword(argc, argv, i, verbose_level)) {
+			if (f_v) {
+				cout << "recognizing keyword from Interface_combinatorics" << endl;
+			}
 			Interface_combinatorics.read_arguments(argc, argv, i, verbose_level);
 			Interface_combinatorics.worker(verbose_level);
 		}
@@ -163,6 +172,9 @@ void work(orbiter_session *Session, int argc, const char **argv, int i, int verb
 
 		interface_coding_theory Interface_coding_theory;
 		if (Interface_coding_theory.recognize_keyword(argc, argv, i, verbose_level)) {
+			if (f_v) {
+				cout << "recognizing keyword from Interface_coding_theory" << endl;
+			}
 			Interface_coding_theory.read_arguments(argc, argv, i, verbose_level);
 			Interface_coding_theory.worker(verbose_level);
 		}
@@ -175,6 +187,9 @@ void work(orbiter_session *Session, int argc, const char **argv, int i, int verb
 
 		interface_povray Interface_povray;
 		if (Interface_povray.recognize_keyword(argc, argv, i, verbose_level)) {
+			if (f_v) {
+				cout << "recognizing keyword from Interface_povray" << endl;
+			}
 			Interface_povray.read_arguments(argc, argv, i, verbose_level);
 			Interface_povray.worker(verbose_level);
 		}

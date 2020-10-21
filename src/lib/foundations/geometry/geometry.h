@@ -2386,7 +2386,9 @@ public:
 		long int *Planes,
 		int nb_planes, int *&Intersection_matrix,
 		int verbose_level);
-	int dual_rank_of_plane_in_three_space(int plane_rank, 
+	long int plane_rank_using_dual_coordinates_in_three_space(
+		int *eqn4, int verbose_level);
+	long int dual_rank_of_plane_in_three_space(long int plane_rank,
 		int verbose_level);
 	void plane_equation_from_three_lines_in_three_space(
 		long int *three_lines,
@@ -2446,6 +2448,9 @@ public:
 	void andre_preimage(projective_space *P4,
 		long int *set2, int sz2, long int *set4, int &sz4, int verbose_level);
 	// we must be a projective plane
+	void planes_through_a_line(
+		long int line_rk, std::vector<long int> &plane_ranks,
+		int verbose_level);
 };
 
 // #############################################################################

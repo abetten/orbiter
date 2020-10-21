@@ -46,8 +46,8 @@ poset_classification_control::poset_classification_control()
 	f_write_data_files = FALSE;
 	f_t = FALSE;
 	f_T = FALSE;
-	f_log = FALSE;
-	f_Log = FALSE;
+	//f_log = FALSE;
+	//f_Log = FALSE;
 	f_print_only = FALSE;
 	f_find_group_order = FALSE;
 	find_group_order = 0;
@@ -79,7 +79,8 @@ poset_classification_control::poset_classification_control()
 
 	f_export_schreier_trees = FALSE;
 	f_draw_schreier_trees = FALSE;
-	schreier_tree_prefix[0] = 0;
+	//schreier_tree_prefix[0] = 0;
+#if 0
 	schreier_tree_xmax = 1000000;
 	schreier_tree_ymax =  500000;
 	schreier_tree_f_circletext = TRUE;
@@ -88,6 +89,7 @@ poset_classification_control::poset_classification_control()
 	schreier_tree_f_sideways = FALSE;
 	schreier_tree_scale = 0.3;
 	schreier_tree_line_width = 1.;
+#endif
 
 	f_problem_label = FALSE;
 	//problem_label = NULL;
@@ -225,6 +227,7 @@ int poset_classification_control::read_arguments(
 				cout << "-T" << endl;
 			}
 		}
+#if 0
 		else if (strcmp(argv[i], "-log") == 0) {
 			f_log = TRUE;
 			if (f_v) {
@@ -237,6 +240,7 @@ int poset_classification_control::read_arguments(
 				cout << "-Log" << endl;
 			}
 		}
+#endif
 		else if (strcmp(argv[i], "-depth") == 0) {
 			f_depth = TRUE;
 			depth = atoi(argv[++i]);
@@ -332,7 +336,8 @@ int poset_classification_control::read_arguments(
 		}
 		else if (strcmp(argv[i], "-draw_schreier_trees") == 0) {
 			f_draw_schreier_trees = TRUE;
-			strcpy(schreier_tree_prefix, argv[++i]);
+			schreier_tree_prefix.assign(argv[++i]);
+#if 0
 			schreier_tree_xmax = atoi(argv[++i]);
 			schreier_tree_ymax = atoi(argv[++i]);
 			schreier_tree_f_circletext = atoi(argv[++i]);
@@ -341,7 +346,9 @@ int poset_classification_control::read_arguments(
 			schreier_tree_f_sideways = atoi(argv[++i]);
 			schreier_tree_scale = atoi(argv[++i]) * 0.01;
 			schreier_tree_line_width = atoi(argv[++i]) * 0.01;
-			cout << "-draw_schreier_trees " << schreier_tree_prefix
+#endif
+			cout << "-draw_schreier_trees " << schreier_tree_prefix << endl;
+#if 0
 				<< " " << schreier_tree_xmax
 				<< " " << schreier_tree_ymax
 				<< " " << schreier_tree_f_circletext
@@ -350,6 +357,7 @@ int poset_classification_control::read_arguments(
 				<< " " << schreier_tree_scale
 				<< " " << schreier_tree_line_width
 				<< endl;
+#endif
 		}
 #if 0
 		else if (strcmp(argv[i], "-tools_path") == 0) {
@@ -414,6 +422,7 @@ void poset_classification_control::print()
 	if (f_t) {
 		cout << "-t" << endl;
 	}
+#if 0
 	if (f_Log) {
 		cout << "-Log" << endl;
 	}
@@ -423,6 +432,7 @@ void poset_classification_control::print()
 	if (f_log) {
 		cout << "-log" << endl;
 	}
+#endif
 	if (f_print_only) {
 		cout << "-print_only" << endl;
 	}

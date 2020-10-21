@@ -29,13 +29,6 @@ surface_domain::surface_domain()
 	O = NULL;
 	Klein = NULL;
 
-#if 0
-	Pts = NULL;
-	pt_list = NULL;
-	System = NULL;
-	base_cols = NULL;
-#endif
-
 	Schlaefli = NULL;
 
 	Poly1 = NULL;
@@ -106,27 +99,12 @@ void surface_domain::freeself()
 		FREE_OBJECT(Klein);
 	}
 
-#if 0
-	if (Pts) {
-		FREE_int(Pts);
-	}
-	if (pt_list) {
-		FREE_lint(pt_list);
-	}
-	if (System) {
-		FREE_int(System);
-	}
-	if (base_cols) {
-		FREE_int(base_cols);
-	}
-#endif
-
 	if (Schlaefli) {
 		FREE_OBJECT(Schlaefli);
 	}
 
 	if (f_v) {
-		cout << "before FREE_pchar(Line_label);" << endl;
+		cout << "before Poly1" << endl;
 	}
 
 	if (Poly1) {
@@ -273,49 +251,33 @@ void surface_domain::init(finite_field *F, int verbose_level)
 	Klein = NEW_OBJECT(klein_correspondence);
 
 	if (f_v) {
-		cout << "surface::init initializing "
-				"Klein correspondence" << endl;
+		cout << "surface::init before Klein->init" << endl;
 	}
 	Klein->init(F, O, verbose_level - 2);
 	if (f_v) {
-		cout << "surface::init initializing "
-				"Klein correspondence done" << endl;
+		cout << "surface::init after Klein->init" << endl;
 	}
 
 
 
 	if (f_v) {
-		cout << "surface::init before "
-				"init_polynomial_domains" << endl;
+		cout << "surface::init before init_polynomial_domains" << endl;
 	}
 	init_polynomial_domains(verbose_level);
 	if (f_v) {
-		cout << "surface::init after "
-				"init_polynomial_domains" << endl;
+		cout << "surface::init after init_polynomial_domains" << endl;
 	}
 
 	//init_large_polynomial_domains(verbose_level);
 
-#if 0
-	if (f_v) {
-		cout << "surface::init before init_system" << endl;
-	}
-	init_system(verbose_level);
-	if (f_v) {
-		cout << "surface::init after init_system" << endl;
-	}
-#endif
-
 
 
 	if (f_v) {
-		cout << "surface::init before "
-				"init_Schlaefli" << endl;
+		cout << "surface::init before init_Schlaefli" << endl;
 	}
 	init_Schlaefli(verbose_level);
 	if (f_v) {
-		cout << "surface::init after "
-				"init_Schlaefli" << endl;
+		cout << "surface::init after init_Schlaefli" << endl;
 	}
 
 
@@ -742,27 +704,6 @@ void surface_domain::label_variables_24(
 }
 
 
-#if 0
-void surface_domain::init_system(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "surface_domain::init_system" << endl;
-	}
-
-	max_pts = 27 * (q + 1);
-	Pts = NEW_int(max_pts * n);
-	pt_list = NEW_lint(max_pts);
-	System = NEW_int(max_pts * nb_monomials);
-	base_cols = NEW_int(nb_monomials);
-	
-	if (f_v) {
-		cout << "surface_domain::init_system done" << endl;
-	}
-}
-#endif
-
 int surface_domain::index_of_monomial(int *v)
 {
 	return Poly3_4->index_of_monomial(v);
@@ -794,37 +735,8 @@ long int surface_domain::rank_plane(int *v)
 	return rk;
 }
 
-#if 0
-int surface_domain::test(int len, long int *S, int verbose_level)
-{
-	//verbose_level = 1;
-	int f_v = (verbose_level >= 1);
-	int r, ret;
-
-	if (f_v) {
-		cout << "surface_domain::test" << endl;
-	}
-
-	r = compute_system_in_RREF(len, S, 0 /*verbose_level*/);
-	if (f_v) {
-		cout << "surface_domain::test The system has rank " << r << endl;
-	}
-	if (r < nb_monomials) {
-		ret = TRUE;
-	}
-	else {
-		ret = FALSE;
-	}
-	if (f_v) {
-		cout << "surface_domain::test done ret = " << ret << endl;
-	}
-	return ret;
-}
-#endif
-
 void surface_domain::enumerate_points(int *coeff,
 		std::vector<long int> &Pts,
-		//long int *Pts, int &nb_pts,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

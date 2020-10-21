@@ -38,28 +38,28 @@ grassmann::~grassmann()
 	//cout << "grassmann::~grassmann 1" << endl;
 	if (base_cols) {
 		FREE_int(base_cols);
-		}
+	}
 	//cout << "grassmann::~grassmann 2" << endl;
 	if (coset) {
 		FREE_int(coset);
-		}
+	}
 	//cout << "grassmann::~grassmann 3" << endl;
 	if (M) {
 		FREE_int(M);
-		}
+	}
 	if (M2) {
 		FREE_int(M2);
-		}
+	}
 	if (v) {
 		FREE_int(v);
-		}
+	}
 	if (w) {
 		FREE_int(w);
-		}
+	}
 	//cout << "grassmann::~grassmann 4" << endl;
 	if (G) {
 		FREE_OBJECT(G);
-		}
+	}
 }
 
 void grassmann::init(int n, int k, finite_field *F, int verbose_level)
@@ -69,7 +69,7 @@ void grassmann::init(int n, int k, finite_field *F, int verbose_level)
 	if (f_v) {
 		cout << "grassmann::init n=" << n
 				<< " k=" << k << " q=" << F->q << endl;
-		}
+	}
 
 
 	grassmann::n = n;
@@ -82,7 +82,7 @@ void grassmann::init(int n, int k, finite_field *F, int verbose_level)
 	D.q_binomial(nCkq, n, k, q, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "grassmann::init nCkq=" << nCkq << endl;
-		}
+	}
 	
 
 
@@ -97,10 +97,10 @@ void grassmann::init(int n, int k, finite_field *F, int verbose_level)
 	if (k > 1) {
 		G = NEW_OBJECT(grassmann);
 		G->init(n - 1, k - 1, F, verbose_level);
-		}
+	}
 	else {
 		G = NULL;
-		}
+	}
 }
 
 long int grassmann::nb_of_subspaces(int verbose_level)
@@ -141,7 +141,7 @@ void grassmann::print_set(long int *v, int len)
 		latex_matrix(cout, M);
 		//print_integer_matrix_width(cout, M,
 		//		k, n, n, F->log10_of_q + 1);
-		}
+	}
 }
 
 void grassmann::print_set_tex(ostream &ost, long int *v, int len)
@@ -160,7 +160,7 @@ void grassmann::print_set_tex(ostream &ost, long int *v, int len)
 		//ost << "\\right]" << endl;
 		latex_matrix(ost, M);
 		ost << "$$" << endl;
-		}
+	}
 }
 
 int grassmann::nb_points_covered(int verbose_level)
@@ -183,7 +183,7 @@ void grassmann::points_covered(long int *the_points, int verbose_level)
 		F->mult_vector_from_the_left(v, M, w, k, n);
 		F->PG_element_rank_modified_lint(w, 1, n, a);
 		the_points[i] = a;
-		}
+	}
 }
 
 void grassmann::unrank_lint_here(int *Mtx, long int rk, int verbose_level)
@@ -229,7 +229,7 @@ long int grassmann::rank_embedded_subspace_lint(int verbose_level)
 	
 	if (f_v) {
 		cout << "grassmann::rank_embedded_subspace_lint " << endl;
-		}
+	}
 	rk = rank_lint(verbose_level);
 	return rk;
 	
@@ -242,7 +242,7 @@ void grassmann::unrank_embedded_subspace_lint_here(int *Basis, long int rk, int 
 
 	if (f_v) {
 		cout << "grassmann::unrank_embedded_subspace_int_here " << rk << endl;
-		}
+	}
 	unrank_lint_here(Basis, rk, verbose_level);
 	int_vec_zero(Basis + k * n, (n - k) * n);
 	if (k == 0) {
@@ -310,13 +310,13 @@ void grassmann::unrank_lint(long int rk, int verbose_level)
 			cout << "r=" << r << endl;
 		}
 		h++;
-		}
+	}
 	if (h == n) {
 		cout << "grassmann::unrank_lint h == n" << endl;
 		cout << "h=" << h << endl;
 		cout << "r=" << r << endl;
 		exit(1);
-		}
+	}
 	
 	// now h has been determined
 	if (f_v) {
@@ -342,7 +342,7 @@ void grassmann::unrank_lint(long int rk, int verbose_level)
 		cout << "grassmann::unrank_lint coset " << b << " = ";
 		int_vec_print(cout, coset, nb_free_cols);
 		cout << endl;
-		}
+	}
 	
 	//unrank the subspace (if there is one)
 	if (k > 1) {
@@ -350,7 +350,7 @@ void grassmann::unrank_lint(long int rk, int verbose_level)
 		G->unrank_lint(c, verbose_level - 1);
 		for (j = 0; j < k - 1; j++) {
 			base_cols[j + 1] = G->base_cols[j] + h + 1;
-			}
+		}
 	}
 	if (f_v) {
 		cout << "grassmann::unrank_lint calling "
@@ -369,8 +369,8 @@ void grassmann::unrank_lint(long int rk, int verbose_level)
 	else {
 		for (j = 0; j < nb_free_cols; j++) {
 			M[h + 1 + G->base_cols[G->k + j]] = coset[j];
-			}
 		}
+	}
 
 
 	// copy the subspace (rows i=1,..,k-1):
@@ -936,15 +936,15 @@ void grassmann::line_regulus_in_PG_3_q(
 
 	if (f_v) {
 		cout << "grassmann::line_regulus_in_PG_3_q" << endl;
-		}
+	}
 	if (n != 4) {
 		cout << "grassmann::line_regulus_in_PG_3_q n != 4" << endl;
 		exit(1);
-		}
+	}
 	if (k != 2) {
 		cout << "grassmann::line_regulus_in_PG_3_q k != 2" << endl;
 		exit(1);
-		}
+	}
 	regulus_size = q + 1;
 	regulus = NEW_int(regulus_size);
 	// the equation of the hyperboloid is x_0x_3-x_1x_2 = 0
@@ -956,7 +956,7 @@ void grassmann::line_regulus_in_PG_3_q(
 			// [0,0,0,1]
 			M[0 * 4 + 2] = 1;
 			M[1 * 4 + 3] = 1;
-			}
+		}
 		else {
 			// create
 			// [1,0,a,0]
@@ -966,24 +966,24 @@ void grassmann::line_regulus_in_PG_3_q(
 			M[1 * 4 + 1] = 1;
 			M[0 * 4 + 2] = a;
 			M[1 * 4 + 3] = a;
-			}
+		}
 		
 		if (f_v3) {
 			cout << "grassmann::line_regulus_in_PG_3_q "
 					"regulus element " << u << ":" << endl;
 			int_matrix_print(M, 2, 4);
-			}
+		}
 		regulus[u] = rank_lint_here(M, 0);
 
-		} // next u
+	} // next u
 	if (f_vv) {
 		cout << "grassmann::line_regulus_in_PG_3_q regulus:" << endl;
 		int_vec_print(cout, regulus, regulus_size);
 		cout << endl;
-		}
+	}
 	if (f_v) {
 		cout << "grassmann::line_regulus_in_PG_3_q done" << endl;
-		}
+	}
 }
 
 void grassmann::compute_dual_line_idx(int *&dual_line_idx,
@@ -998,7 +998,7 @@ void grassmann::compute_dual_line_idx(int *&dual_line_idx,
 
 	if (f_v) {
 		cout << "grassmann::compute_dual_line_idx" << endl;
-		}
+	}
 	if (2 * k != n) {
 		cout << "grassmann::compute_dual_line_idx need 2 * k == n" << endl;
 		exit(1);
@@ -1015,19 +1015,19 @@ void grassmann::compute_dual_line_idx(int *&dual_line_idx,
 			cout << "line " << a << " / " << nb_lines << ":" << endl;
 			cout << "line is generated by" << endl;
 			int_matrix_print(Basis, k, n);
-			}
+		}
 		F->perp_standard(n, k, Basis, 0 /*verbose_level*/);
 		if (f_vv) {
 			cout << "after perp:" << endl;
 			int_matrix_print(Basis, n, n);
-			}
+		}
 		b = rank_lint_here(Basis + k * n, 0/*verbose_level - 4*/);
 		if (f_vv) {
 			cout << "line " << a << " / " << nb_lines
 					<< " the dual is " << b << endl;
 			cout << "dual line is generated by" << endl;
 			int_matrix_print(Basis + k * n, k, n);
-			}
+		}
 		dual_line_idx[a] = b;
 		if (b == a) {
 			self_dual_lines[nb_self_dual_lines++] = a;
@@ -1035,7 +1035,7 @@ void grassmann::compute_dual_line_idx(int *&dual_line_idx,
 	}
 	if (f_v) {
 		cout << "grassmann::compute_dual_line_idx done" << endl;
-		}
+	}
 }
 
 void grassmann::compute_dual_spread(
@@ -1049,18 +1049,18 @@ void grassmann::compute_dual_spread(
 
 	if (f_v) {
 		cout << "grassmann::compute_dual_spread" << endl;
-		}
+	}
 	if (2 * k != n) {
 		cout << "grassmann::compute_dual_spread, need 2 * k == n" << endl;
 		exit(1);
-		}
+	}
 	//Basis = NEW_int(n * n);
 	Basis = M2;
 	if (f_v) {
 		cout << "grassmann::compute_dual_spread The spread is : ";
 		int_vec_print(cout, spread, spread_size);
 		cout << endl;
-		}
+	}
 	for (i = 0; i < spread_size; i++) {
 		a = spread[i];
 		unrank_lint_here(Basis, a, 0/*verbose_level - 4*/);
@@ -1068,30 +1068,30 @@ void grassmann::compute_dual_spread(
 			cout << i << "-th Line has rank " << a
 					<< " and is generated by" << endl;
 			int_matrix_print(Basis, k, n);
-			}
+		}
 		F->perp_standard(n, k, Basis, 0 /*verbose_level*/);
 		if (f_vv) {
 			cout << "after perp:" << endl;
 			int_matrix_print(Basis, n, n);
-			}
+		}
 		b = rank_lint_here(Basis + k * n, 0/*verbose_level - 4*/);
 		if (f_vv) {
 			cout << i << "-th Line dual has rank " << b
 					<< " and is generated by" << endl;
 			int_matrix_print(Basis + k * n, k, n);
-			}
-		dual_spread[i] = b;
 		}
+		dual_spread[i] = b;
+	}
 	if (f_v) {
 		cout << "grassmann::compute_dual_spread The dual spread is : ";
 		int_vec_print(cout, dual_spread, spread_size);
 		cout << endl;
-		}
+	}
 	
 	//FREE_int(Basis);
 	if (f_v) {
 		cout << "grassmann::compute_dual_spread done" << endl;
-		}
+	}
 }
 
 
@@ -1106,10 +1106,10 @@ void grassmann::latex_matrix(ostream &ost, int *p)
 			F->print_element(ost, p[i * n + j]);
 			if (j < n - 1) {
 				ost << "  & ";
-				}
 			}
-		ost << "\\\\" << endl;
 		}
+		ost << "\\\\" << endl;
+	}
 	ost << "\\end{array}" << endl;
 	ost << "\\right]" << endl;
 }
@@ -1125,10 +1125,10 @@ void grassmann::latex_matrix_numerical(ostream &ost, int *p)
 			ost << p[i * n + j];
 			if (j < n - 1) {
 				ost << "  & ";
-				}
 			}
-		ost << "\\\\" << endl;
 		}
+		ost << "\\\\" << endl;
+	}
 	ost << "\\end{array}" << endl;
 	ost << "\\right]" << endl;
 }

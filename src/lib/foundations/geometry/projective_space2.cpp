@@ -3386,16 +3386,40 @@ void projective_space::plane_intersection_matrix_in_three_space(
 	}
 }
 
-int projective_space::dual_rank_of_plane_in_three_space(
-	int plane_rank, int verbose_level)
+long int projective_space::plane_rank_using_dual_coordinates_in_three_space(
+	int *eqn4, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int Basis[4 * 4];
-	int rk, dual_rk;
+	int rk;
+	long int plane_rk;
 
 	if (f_v) {
-		cout << "projective_space::dual_rank_of_plane_"
-				"in_three_space" << endl;
+		cout << "projective_space::plane_rank_using_dual_coordinates_in_three_space" << endl;
+	}
+	int_vec_copy(eqn4, Basis, 4);
+	rk = F->RREF_and_kernel(4, 1, Basis, 0 /* verbose_level*/);
+	if (rk != 1) {
+		cout << "projective_space::plane_rank_using_dual_coordinates_in_three_space rk != 1" << endl;
+		exit(1);
+	}
+	plane_rk = rank_plane(Basis + 1 * 4);
+	if (f_v) {
+		cout << "projective_space::plane_rank_using_dual_coordinates_in_three_space" << endl;
+	}
+	return plane_rk;
+}
+
+long int projective_space::dual_rank_of_plane_in_three_space(
+	long int plane_rank, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int Basis[4 * 4];
+	int rk;
+	long int dual_rk;
+
+	if (f_v) {
+		cout << "projective_space::dual_rank_of_plane_in_three_space" << endl;
 	}
 	unrank_plane(Basis, plane_rank);
 	rk = F->RREF_and_kernel(4, 3, Basis, 0 /* verbose_level*/);
@@ -3406,8 +3430,7 @@ int projective_space::dual_rank_of_plane_in_three_space(
 	}
 	dual_rk = rank_point(Basis + 3 * 4);
 	if (f_v) {
-		cout << "projective_space::dual_rank_of_plane_"
-				"in_three_space done" << endl;
+		cout << "projective_space::dual_rank_of_plane_in_three_space done" << endl;
 	}
 	return dual_rk;
 }
@@ -5239,5 +5262,87 @@ void projective_space::andre_preimage(projective_space *P4,
 		cout << "projective_space::andre_preimage done" << endl;
 	}
 }
+
+void projective_space::planes_through_a_line(
+	long int line_rk, std::vector<long int> &plane_ranks,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int rk;
+	int h, d, j, r;
+	int *M1;
+	int *M2;
+	int *base_cols;
+	int *embedding;
+	int *w;
+	int *v;
+	int N;
+	geometry_global Gg;
+
+	if (f_v) {
+		cout << "projective_space::planes_through_a_line" << endl;
+	}
+	d = n + 1;
+	M1 = NEW_int(3 * d);
+	M2 = NEW_int(3 * d);
+	base_cols = NEW_int(d);
+	embedding = NEW_int(d);
+	w = NEW_int(d);
+	v = NEW_int(d);
+	Grass_lines->unrank_lint_here(M1, line_rk, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "projective_space::planes_through_a_line M1=" << endl;
+		int_matrix_print(M1, 2, d);
+	}
+
+	r = F->base_cols_and_embedding(2, d, M1,
+			base_cols, embedding, 0 /* verbose_level */);
+	if (r != 2) {
+		cout << "projective_space::planes_through_a_line r != 2" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "projective_space::planes_through_a_line after RREF, M1=" << endl;
+		int_matrix_print(M1, 2, d);
+	}
+	N = Gg.nb_PG_elements(n - 2, F->q);
+
+	for (h = 0; h < N; h++) {
+
+		F->PG_element_unrank_modified(w, 1, d - 2, h);
+		int_vec_zero(v, d);
+		for (j = 0; j < d - 2; j++) {
+			v[embedding[j]] = w[j];
+		}
+		int_vec_copy(M1, M2, 2 * d);
+		int_vec_copy(v, M2 + 2 * d, d);
+		if (f_v) {
+			cout << "projective_space::planes_through_a_line h = " << h << ", M2=" << endl;
+			int_matrix_print(M2, 3, d);
+		}
+		if (F->rank_of_rectangular_matrix(M2,
+				3, d, 0 /*verbose_level*/) == 3) {
+			if (f_v) {
+				cout << "projective_space::planes_through_a_line h = " << h << ", M2=" << endl;
+				int_matrix_print(M2, 3, d);
+			}
+			rk = Grass_planes->rank_lint_here(M2, 0 /* verbose_level */);
+			if (f_v) {
+				cout << "projective_space::planes_through_a_line h = " << h << " rk=" << rk << endl;
+			}
+			plane_ranks.push_back(rk);
+			}
+		} // next h
+	FREE_int(M1);
+	FREE_int(M2);
+	FREE_int(base_cols);
+	FREE_int(embedding);
+	FREE_int(w);
+	FREE_int(v);
+	if (f_v) {
+		cout << "projective_space::planes_through_a_line done" << endl;
+	}
+}
+
 
 }}

@@ -985,6 +985,8 @@ void surface_create::create_surface_by_arc_lifting(
 	label_txt.append("_arc");
 	label_txt.append(str_a);
 
+	sprintf(str_a, "\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld", arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
+
 	label_tex.assign("arc\\_lifting\\_trihedral\\_q");
 	label_tex.append(str_q);
 	label_tex.append("\\_arc");
@@ -1071,6 +1073,9 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 	int_vec_copy(AL->coeff, coeffs20, 20);
 	lint_vec_copy(AL->lines27, Lines27, 27);
 
+	SO = NEW_OBJECT(surface_object);
+
+
 	if (f_v) {
 		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines before SO->init_with_27_lines" << endl;
 	}
@@ -1079,6 +1084,7 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 		Lines27, coeffs20,
 		FALSE /* f_find_double_six_and_rearrange_lines */,
 		verbose_level);
+
 	if (f_v) {
 		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines after SO->init_with_27_lines" << endl;
 	}
@@ -1109,6 +1115,9 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 	label_txt.append("_arc");
 	label_txt.append(str_a);
 
+	sprintf(str_lines, "\\_%ld\\_%ld", line1, line2);
+	sprintf(str_a, "\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld\\_%ld", arc[0], arc[1], arc[2], arc[3], arc[4], arc[5]);
+
 	label_tex.assign("arc\\_lifting\\_with\\_two\\_lines\\_q");
 	label_tex.append(str_q);
 	label_tex.append("\\_lines");
@@ -1134,10 +1143,12 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 }
 
 void surface_create::apply_transformations(
-	const char **transform_coeffs,
-	int *f_inverse_transform, int nb_transform, int verbose_level)
+	std::vector<std::string> &transform_coeffs,
+	std::vector<int> &f_inverse_transform,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 5);
 	int h;
 	int *Elt1;
 	int *Elt2;
@@ -1147,6 +1158,7 @@ void surface_create::apply_transformations(
 	
 	if (f_v) {
 		cout << "surface_create::apply_transformations" << endl;
+		cout << "surface_create::apply_transformations verbose_level = " << verbose_level << endl;
 	}
 	
 	A = Surf_A->A;
@@ -1163,107 +1175,150 @@ void surface_create::apply_transformations(
 	}
 
 
-	for (h = 0; h < nb_transform; h++) {
-		int *transformation_coeffs;
-		int sz;
-		int coeffs_out[20];
+	if (transform_coeffs.size()) {
+
+		for (h = 0; h < transform_coeffs.size(); h++) {
+			int *transformation_coeffs;
+			int sz;
+			int coeffs_out[20];
+
+			if (f_v) {
+				cout << "surface_create::apply_transformations "
+						"applying transformation " << h << " / "
+						<< transform_coeffs.size() << ":" << endl;
+			}
+
+			int_vec_scan(transform_coeffs[h], transformation_coeffs, sz);
+
+			if (sz != desired_sz) {
+				cout << "surface_create::apply_transformations "
+						"need exactly " << desired_sz
+						<< " coefficients for the transformation" << endl;
+				cout << "transform_coeffs[h]=" << transform_coeffs[h] << endl;
+				cout << "sz=" << sz << endl;
+				exit(1);
+			}
+
+			A->make_element(Elt1, transformation_coeffs, verbose_level);
+
+			if (f_inverse_transform[h]) {
+				A->element_invert(Elt1, Elt2, 0 /*verbose_level*/);
+			}
+			else {
+				A->element_move(Elt1, Elt2, 0 /*verbose_level*/);
+			}
+
+			A->element_invert(Elt2, Elt3, 0 /*verbose_level*/);
+
+			if (f_v) {
+				cout << "surface_create::apply_transformations "
+						"applying the transformation given by:" << endl;
+				cout << "$$" << endl;
+				A->print_quick(cout, Elt2);
+				cout << endl;
+				cout << "$$" << endl;
+				cout << "surface_create::apply_transformations "
+						"The inverse is:" << endl;
+				cout << "$$" << endl;
+				A->print_quick(cout, Elt3);
+				cout << endl;
+				cout << "$$" << endl;
+			}
+
+			// apply the transformation to the equation of the surface:
+
+			matrix_group *M;
 	
-		if (f_v) {
-			cout << "surface_create::apply_transformations "
-					"applying transformation " << h << " / "
-					<< nb_transform << ":" << endl;
-		}
+			M = A->G.matrix_grp;
+			M->substitute_surface_equation(Elt3,
+					SO->eqn, coeffs_out, Surf,
+					verbose_level - 1);
 		
-		int_vec_scan(transform_coeffs[h], transformation_coeffs, sz);
+			if (f_v) {
+				cout << "surface_create::apply_transformations "
+						"The equation of the transformed surface is:" << endl;
+				cout << "$$" << endl;
+				Surf->print_equation_tex(cout, coeffs_out);
+				cout << endl;
+				cout << "$$" << endl;
+			}
 
-		if (sz != desired_sz) {
-			cout << "surface_create::apply_transformations "
-					"need exactly " << desired_sz
-					<< " coefficients for the transformation" << endl;
-			cout << "transform_coeffs[h]=" << transform_coeffs[h] << endl;
-			cout << "sz=" << sz << endl;
-			exit(1);
-		}
+			int_vec_copy(coeffs_out, SO->eqn, 20);
 
-		A->make_element(Elt1, transformation_coeffs, verbose_level);
 
-		if (f_inverse_transform[h]) {
-			A->element_invert(Elt1, Elt2, 0 /*verbose_level*/);
-		}
-		else {
-			A->element_move(Elt1, Elt2, 0 /*verbose_level*/);
-		}
-		
-		A->element_invert(Elt2, Elt3, 0 /*verbose_level*/);
 
-		if (f_v) {
-			cout << "surface_create::apply_transformations "
-					"applying the transformation given by:" << endl;
-			cout << "$$" << endl;
-			A->print_quick(cout, Elt2);
-			cout << endl;
-			cout << "$$" << endl;
-			cout << "surface_create::apply_transformations "
-					"The inverse is:" << endl;
-			cout << "$$" << endl;
-			A->print_quick(cout, Elt3);
-			cout << endl;
-			cout << "$$" << endl;
-		}
-		
-		matrix_group *M;
+			// apply the transformation to the set of generators:
 
-		M = A->G.matrix_grp;
-		M->substitute_surface_equation(Elt3,
-				SO->eqn, coeffs_out, Surf,
-				verbose_level - 1);
+			strong_generators *SG2;
+
+			SG2 = NEW_OBJECT(strong_generators);
+			if (f_v) {
+				cout << "surface_create::apply_transformations "
+						"before SG2->init_generators_for_the_conjugate_group_avGa" << endl;
+			}
+			SG2->init_generators_for_the_conjugate_group_avGa(Sg, Elt2, verbose_level);
+
+			if (f_v) {
+				cout << "surface_create::apply_transformations "
+						"after SG2->init_generators_for_the_conjugate_group_avGa" << endl;
+			}
+
+			FREE_OBJECT(Sg);
+			Sg = SG2;
+
+			f_has_nice_gens = FALSE;
+			// ToDo: need to conjugate nice_gens
+
 	
-		if (f_v) {
-			cout << "surface_create::apply_transformations "
-					"The equation of the transformed surface is:" << endl;
-			cout << "$$" << endl;
-			Surf->print_equation_tex(cout, coeffs_out);
-			cout << endl;
-			cout << "$$" << endl;
-		}
+			if (f_vv) {
+				cout << "surface_create::apply_transformations Lines = ";
+				lint_vec_print(cout, SO->Lines, SO->nb_lines);
+				cout << endl;
+			}
+			int i;
 
-		int_vec_copy(coeffs_out, SO->eqn, 20);
-
-		strong_generators *SG2;
-		
-		SG2 = NEW_OBJECT(strong_generators);
-		if (f_v) {
-			cout << "surface_create::apply_transformations "
-					"before SG2->init_generators_for_the_conjugate_group_avGa" << endl;
-		}
-		SG2->init_generators_for_the_conjugate_group_avGa(Sg, Elt2, verbose_level);
-
-		if (f_v) {
-			cout << "surface_create::apply_transformations "
-					"after SG2->init_generators_for_the_conjugate_group_avGa" << endl;
-		}
-
-		FREE_OBJECT(Sg);
-		Sg = SG2;
-
-		f_has_nice_gens = FALSE;
-		// ToDo: need to conjugate nice_gens
+			// apply the transformation to the set of lines:
 
 
-		cout << "surface_create::apply_transformations Lines = ";
-		lint_vec_print(cout, SO->Lines, SO->nb_lines);
-		cout << endl;
-		int i;
-		for (i = 0; i < SO->nb_lines; i++) {
-			cout << "line " << i << ":" << endl;
-			Surf_A->Surf->P->Grass_lines->print_single_generator_matrix_tex(cout, SO->Lines[i]);
-			SO->Lines[i] = Surf_A->A2->element_image_of(SO->Lines[i], Elt2, verbose_level);
-			cout << "maps to " << endl;
-			Surf_A->Surf->P->Grass_lines->print_single_generator_matrix_tex(cout, SO->Lines[i]);
-		}
+			for (i = 0; i < SO->nb_lines; i++) {
+				if (f_vv) {
+					cout << "line " << i << ":" << endl;
+					Surf_A->Surf->P->Grass_lines->print_single_generator_matrix_tex(cout, SO->Lines[i]);
+				}
+				SO->Lines[i] = Surf_A->A2->element_image_of(SO->Lines[i], Elt2, 0 /*verbose_level*/);
+				if (f_vv) {
+					cout << "maps to " << endl;
+					Surf_A->Surf->P->Grass_lines->print_single_generator_matrix_tex(cout, SO->Lines[i]);
+				}
+			}
 
-		FREE_int(transformation_coeffs);
+			// apply the transformation to the set of points:
+
+			for (i = 0; i < SO->nb_pts; i++) {
+				if (f_vv) {
+					cout << "point" << i << " = " << SO->Pts[i] << endl;
+				}
+				SO->Pts[i] = Surf_A->A->element_image_of(SO->Pts[i], Elt2, 0 /*verbose_level*/);
+				if (f_vv) {
+					cout << "maps to " << SO->Pts[i] << endl;
+				}
+			}
+			sorting Sorting;
+
+			Sorting.lint_vec_heapsort(SO->Pts, SO->nb_pts);
+
+
+			FREE_int(transformation_coeffs);
 		} // next h
+
+		SO->recompute_properties(verbose_level);
+
+	}
+	else {
+		if (f_v) {
+			cout << "surface_create::apply_transformations nothing to do" << endl;
+		}
+	}
 
 
 	FREE_int(Elt1);

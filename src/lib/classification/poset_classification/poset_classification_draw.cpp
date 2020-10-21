@@ -62,6 +62,34 @@ void poset_classification::draw_poset_fname_base_poset_detailed_lvl(
 	fname.append(str);
 }
 
+void poset_classification::draw_poset_fname_aux_poset(
+		std::string &fname, int depth)
+{
+	draw_poset_fname_base_aux_poset(fname, depth);
+	fname.append(".layered_graph");
+}
+
+void poset_classification::draw_poset_fname_poset(
+		std::string &fname, int depth)
+{
+	draw_poset_fname_base_poset_lvl(fname, depth);
+	fname.append(".layered_graph");
+}
+
+void poset_classification::draw_poset_fname_tree(
+		std::string &fname, int depth)
+{
+	draw_poset_fname_base_tree_lvl(fname, depth);
+	fname.append(".layered_graph");
+}
+
+void poset_classification::draw_poset_fname_poset_detailed(
+		std::string &fname, int depth)
+{
+	draw_poset_fname_base_poset_detailed_lvl(fname, depth);
+	fname.append(".layered_graph");
+}
+
 
 void poset_classification::write_treefile_and_draw_tree(
 		std::string &fname_base, int lvl,

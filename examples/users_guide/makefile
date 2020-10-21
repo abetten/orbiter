@@ -28,13 +28,64 @@ test:
 	$(ORBITER_PATH)/orbiter.out
 
 		
-		
+
+#############################################################################################################
+# Section 5: Basic Number Theory
+
+BASICNUMBERTHEORY:
+
+
+
+PR2:
+		$(ORBITER_PATH)/orbiter.out -v 5 -primitive_root 915839
+
+#a primitive root modulo 915839 is 43085
+
+PM2:
+		$(ORBITER_PATH)/orbiter.out -v 5 -power_mod 43085 49842 915839
+
+#the power of 43085 to the 49842 mod 915839 is 487320
+	
+DL2:
+		$(ORBITER_PATH)/orbiter.out -v 5 -discrete_log 487320 43085 915839
+
+
+#The discrete log is 49842 since 487320 = 43085^49842 mod 915839, time: 0:22
+
+
+
+
+IM:
+	$(ORBITER_PATH)/orbiter.out -v 5 -inverse_mod 1865025205 2147483647
+
+IM_gcd:
+	$(ORBITER_PATH)/orbiter.out -v 5 -extended_gcd 1865025205 2147483647
+
+
+PM3a:
+		$(ORBITER_PATH)/orbiter.out -v 5 -power_mod 16807 1073741823 2147483647
+
+sqrt_mod:
+		$(ORBITER_PATH)/orbiter.out -v 2 -square_root_mod 33 41
 
 
 #############################################################################################################
-# Section 5: Irreducible Polynomials over Finite Fields
+# Section 6: Polynomials over Finite Fields
 
 POLYNOMIALS:
+
+
+
+
+
+poly_division:
+	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_division 2 "1,0,0,0,0,0,0,0,0,0,1" "1,0,1,1"
+	
+poly_gcd:
+	$(ORBITER_PATH)/orbiter.out -v 2  -extended_gcd_for_polynomials 2 "1,0,0,0,0,0,0,0,0,0,1" "1,0,1,1"
+
+
+
 
 # degree and then order of the field of coefficients:
 
@@ -127,7 +178,7 @@ search_primitive_poly_32:
 
 
 #############################################################################################################
-# Section 6: Finite Fields
+# Section 7: Finite Fields
 
 FINITEFIELDS:
 	
@@ -170,6 +221,10 @@ F_8:
 
 F_16:
 	$(ORBITER_PATH)/orbiter.out -v 3 -cheat_sheet_GF 16  
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q16_addition_table.csv 40 24
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q16_multiplication_table.csv 40 24
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q16_addition_table_reordered.csv 40 24
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q16_multiplication_table_reordered.csv 40 24
 	pdflatex GF_16.tex
 	open GF_16.pdf
 
@@ -194,7 +249,7 @@ F_256:
 
 
 #############################################################################################################
-# Section 7: Linear Algebra over Finite Fields
+# Section 8: Linear Algebra over Finite Fields
 
 
 LINEARALGEBRA:
@@ -221,7 +276,7 @@ RNF_GL_4_2:
 
 
 #############################################################################################################
-# Section 8: Representation Theory
+# Section 9: Representation Theory
 
 REPRESENTATIONTHEORY:
 
@@ -237,7 +292,7 @@ Char_Sym_6:
 	
 
 #############################################################################################################
-# Section 9: Finite Projective Spaces
+# Section 10: Finite Projective Spaces
 
 FINITEPROJECTVESPACES:
 
@@ -325,6 +380,12 @@ PG_3_4:
 	open PG_3_4.pdf
 
 
+PG_3_5:
+	$(ORBITER_PATH)/orbiter.out -cheat_sheet_PG 3 5
+	pdflatex PG_3_5.tex 
+	open PG_3_5.pdf
+
+
 PG_3_8:
 	$(ORBITER_PATH)/orbiter.out -cheat_sheet_PG 3 8
 	pdflatex PG_3_8.tex 
@@ -355,7 +416,7 @@ PG_4_3:
 
 
 #############################################################################################################
-# Section 10: Algebraic Sets
+# Section 11: Algebraic Sets
 
 
 ALGEBRAICSETS:
@@ -399,7 +460,7 @@ octic_prepare:
 
 
 #############################################################################################################
-# Section 11: Linear Groups
+# Section 12: Linear Groups
 
 
 LINEARGROUPS:
@@ -483,7 +544,7 @@ PG_2_4_order_21:
 
 
 #############################################################################################################
-# Section 12:  Group Theoretic Activities
+# Section 13:  Group Theoretic Activities
 
 
 GROUPTHEORETICACTIVITIES:
@@ -1178,14 +1239,14 @@ Ree_27:
 
 
 #############################################################################################################
-# Section 13: Poset Classification
+# Section 14: Poset Classification
 
 
 POSETCLASSIFICATION:
 	
 
 #############################################################################################################
-# Section 14: Orbits on Subsets
+# Section 15: Orbits on Subsets
 
 
 ORBITSONSUBSETS:
@@ -1263,7 +1324,7 @@ no:
 
 
 #############################################################################################################
-# Section 15: Orbits on Subspaces
+# Section 16: Orbits on Subspaces
 
 
 ORBITSONSUBSPACES:
@@ -1360,7 +1421,7 @@ Op_6_11:
 
 
 #############################################################################################################
-# Section 16: Graph Theory
+# Section 17: Graph Theory
 
 
 GRAPHTHEORY:
@@ -1420,7 +1481,7 @@ small_graph_cliques_Sajeeb:
 
 
 #############################################################################################################
-# Section 17: Objects in Projective Geometry
+# Section 18: Objects in Projective Geometry
 
 OBJECTSINPG:
 
@@ -1596,10 +1657,27 @@ Hirschfeld16c:
 
 
 #############################################################################################################
-# Section 18: Arcs
+# Section 19: Arcs
 
 
 ARCS:
+
+
+arcs_4:
+	$(ORBITER_PATH)/orbiter.out -v 8 \
+		-orbiter_path $(ORBITER_PATH) \
+		-linear_group -PGGL 3 8 -end \
+		-group_theoretic_activities \
+				-poset_classification_control -problem_label arcs_q8_d2 -W -depth 5 -report -draw_poset -draw_options -end -end \
+			-classify_arcs \
+				-target_size 5 \
+				-q 8 \
+				-n 3 \
+				-d 2 \
+			-end \
+		-end
+	pdflatex arcs_q8_d2_poset.tex
+	open arcs_q8_d2_poset.pdf
 
 
 
@@ -1996,7 +2074,7 @@ no:
 
 
 #############################################################################################################
-# Section 19: Cubic Curves
+# Section 20: Cubic Curves
 
 CUBICCURVES:
 
@@ -2017,7 +2095,7 @@ cubic_curves_PG_2_4:
 
 cubic_curves_PG_2_4_draw:
 	$(ORBITER_PATH)/orbiter.out -v 3 -draw_layered_graph cc_4_poset_lvl_9.layered_graph \
-		-rad 200 -embedded -line_width 0.3  -y_stretch 1.3 -scale 0.5 \
+		-rad 300 -embedded -line_width 1.1  -y_stretch 0.9 -scale 0.25 \
 		-paths_in_between 6 4 9 0 \
 		-end
 	pdflatex cc_4_poset_lvl_9_draw.tex
@@ -2167,22 +2245,209 @@ cuspidal_cubic_q11_subsets_canonical:
 
 
 #############################################################################################################
-# Section 20: Cubic Surfaces Creation
+# Section 21: Cubic Surfaces Creation
 
 
 CUBICSURFACESCREATION:
 
 
 
+surface_table:
+	$(ORBITER_PATH)/orbiter.out -v 3 -make_table_of_surfaces
+	pdflatex surfaces_report.tex
+	open surfaces_report.pdf
 
 
-HCV_13:
-	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 13 -wedge -end \
+
+
+
+# Dickson:
+
+D1="1,4,1,7,1,12,1,15"
+D2=	"1,1,1,2,1,3,1,4,1,7,1,11,1,14,1,15,1,19"
+D3="1,4,1,7,1,12,1,14,1,15,1,19"
+D4="1,3,1,4,1,8,1,9,1,10,1,14,1,17,1,18,1,19"
+D5="1,2,1,3,1,4,1,7,1,15"
+D6="1,2,1,3,1,5,1,9,1,10,1,14,1,15"
+D7="1,3,1,4,1,5,1,7,1,10,1,11,1,19"
+D8="1,3,1,4,1,7,1,11,1,12,1,15,1,19"
+D9="1,4,1,7,1,8,1,9,1,10,1,13,1,15,1,16,1,17"
+D10:="1,4,1,7,1,8,1,10,1,13,1,14,1,15,1,16,1,17"
+D11="1,4,1,6,1,7,1,8,1,9,1,10,1,15,1,16,1,17"
+D12="1,6,1,8,1,9,1,10,1,15,1,16,1,17"
+D13="1,6,1,7,1,10,1,11,1,14,1,15"
+D14="1,4,1,5,1,6,1,8,1,12,1,14,1,16"
+D15="1,4,1,5,1,8,1,12,1,13,1,14,1,16"
+D16="1,4,1,5,1,8,1,9,1,12,1,13,1,16"
+D17=""
+D18=""
+D19="1,4,1,5,1,6,1,7,1,8,1,10,1,13,1,14,1,15"
+D20="1,5,1,6,1,8,1,10,1,13,1,14,1,15"
+D21="1,4,1,5,1,7,1,9,1,10,1,11,1,13,1,14,1,15,1,18,1,19"
+D22="1,4,1,7,1,9,1,11,1,13,1,14,1,15,1,18,1,19"
+D23="1,5,1,8,1,9,1,10,1,13,1,14,1,15,1,18,1,19"
+D24="1,4,1,5,1,7,1,10,1,11,1,12,1,13,1,14,1,17,1,18"
+D25="1,4,1,5,1,7,1,10,1,11,1,13,1,14,1,15,1,17,1,18"
+D26="1,4,1,5,1,6,1,7,1,10,1,11,1,14,1,15,1,17,1,18"
+D27="1,4,1,7,1,5,1,10,1,6,1,11,1,9,1,15,1,17,1,18"
+D28="1,4,1,7,1,13,1,11,1,9,1,15,1,17,1,18"
+D29="1,0,1,1,1,2,1,5,1,7,1,11,1,13,1,14,1,15,1,17,1,18,1,19"
+D30="1,0,1,1,1,2,1,3,1,7,1,8,1,10,1,11,1,12,1,15,1,16,1,19"
+D31="1,0,1,1,1,2,1,3,1,6,1,7,1,10,1,12,1,13,1,15,1,16,1,19"
+D32="1,0,1,1,1,2,1,3,1,6,1,7,1,8,1,11,1,13,1,15"
+D33="1,0,1,1,1,2,1,3,1,7,1,15"
+D34="1,0,1,1,1,2,1,3,1,7,1,12,1,15,1,19"
+D35="1,0,1,1,1,2,1,3,1,6,1,7,1,12,1,13,1,15,1,19"
+D36="1,0,1,1,1,2,1,3,1,5,1,7,1,10,1,12,1,15,1,19"
+D37="1,0,1,1,1,2,1,3,1,7,1,8,1,11,1,19"
+D38="1,0,1,1,1,2,1,3,1,6,1,7,1,8,1,11,1,13,1,19"
+D39="1,0,1,1,1,2,1,3,1,5,1,7,1,8,1,10,1,11,1,19"
+D40="1,0,1,1,1,2,1,3,1,7,1,8,1,11,1,19"
+D41="1,0,1,1,1,2,1,3,1,7,1,12,1,15,1,19"
+D42="1,2,1,4,1,7,1,5,1,10,1,11,1,14,1,19"
+D43="1,2,1,4,1,7,1,11,1,12,1,14,1,15,1,19"
+D44="1,0,1,1,1,2,1,6,1,8,1,11,1,12,1,14"
+D45="1,6,1,8,1,9,1,11,1,12,1,13,1,14,1,15,1,16,1,17,1,18,1,19"
+
+
+D6_q2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 2 -wedge -end \
 		-group_theoretic_activities \
 		-control_six_arcs -end \
-		-create_surface -family_HCV 3 1 -q 13 -end
-	pdflatex surface_family_HCV_q13_a3_b1.tex
-	open surface_family_HCV_q13_a3_b1.pdf
+		-create_surface -by_coefficients $(D6) -q 2 \
+		-end \
+		-end 
+	pdflatex surface_by_coefficients_q2_report.tex
+	open surface_by_coefficients_q2_report.pdf
+	mv surface_by_coefficients_q2_points.txt surface_by_coefficients_q2_D6_points.txt
+
+
+# 1 line over GF(2)
+
+D3_q4:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 4 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -by_coefficients $(D3) -q 4 \
+		-end \
+		-end 
+	pdflatex surface_by_coefficients_q4_report.tex
+	open surface_by_coefficients_q4_report.pdf
+	mv surface_by_coefficients_q4_points.txt surface_by_coefficients_q4_D3_points.txt
+
+#surface_by_coefficients_q4_points.txt
+
+
+D3_q4_canonical:
+	$(ORBITER_PATH)/orbiter.out -v 10 -canonical_form_PG  3 4 \
+		-input -file_of_points surface_by_coefficients_q4_points.txt -end \
+		-classification_prefix surface_by_coefficients_q4_points \
+		-report \
+		-end 
+	pdflatex surface_by_coefficients_q4_points_classification.tex
+	open surface_by_coefficients_q4_points_classification.pdf
+
+# group order 24
+
+
+
+
+D4_q8:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 8 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -by_coefficients $(D4) -q 8 \
+		-end \
+		-end 
+	pdflatex surface_by_coefficients_q8_report.tex
+	open surface_by_coefficients_q8_report.pdf
+	mv surface_by_coefficients_q8_points.txt surface_by_coefficients_q8_D4_points.txt
+
+
+
+
+
+D6_q4:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 4 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -by_coefficients $(D6) -q 4 \
+		-end \
+		-end 
+	pdflatex surface_by_coefficients_q4_report.tex
+	open surface_by_coefficients_q4_report.pdf
+	mv surface_by_coefficients_q4_points.txt surface_by_coefficients_q4_D6_points.txt
+
+# D6 has 7 lines over GF(4)
+
+
+
+D6_q4_canonical:
+	$(ORBITER_PATH)/orbiter.out -v 10 -canonical_form_PG  3 4 \
+		-input -file_of_points surface_by_coefficients_q4_D6_points.txt -end \
+		-classification_prefix surface_by_coefficients_q4_points \
+		-report \
+		-end 
+	pdflatex surface_by_coefficients_q4_points_classification.tex
+	open surface_by_coefficients_q4_points_classification.pdf
+
+
+# group order 384 = 192 * 2
+
+
+
+D8_q4:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 4 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -by_coefficients $(D8) -q 4 \
+		-end \
+		-end 
+	pdflatex surface_by_coefficients_q4_report.tex
+	open surface_by_coefficients_q4_report.pdf
+	mv surface_by_coefficients_q4_points.txt surface_by_coefficients_q4_D8_points.txt
+
+
+D_3_8_q4_canonical:
+	$(ORBITER_PATH)/orbiter.out -v 10 -canonical_form_PG  3 4 \
+		-input \
+			-file_of_points surface_by_coefficients_q4_D3_points.txt \
+			-file_of_points surface_by_coefficients_q4_D8_points.txt \
+		-end \
+		-classification_prefix surface_by_coefficients_q4_points \
+		-report \
+		-end 
+	pdflatex surface_by_coefficients_q4_points_classification.tex
+	open surface_by_coefficients_q4_points_classification.pdf
+
+# D3 and D8 are isomorphic over GF(4)
+
+
+D1_q8:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 8 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -by_coefficients $(D1) -q 8 \
+		-end \
+		-end 
+	pdflatex surface_by_coefficients_q8_report.tex
+	open surface_by_coefficients_q8_report.pdf
+
+#surface_by_coefficients_q8_points.txt
+
+
+D1_q8_canonical:
+	$(ORBITER_PATH)/orbiter.out -v 10 -canonical_form_PG  3 8 \
+		-input -file_of_points surface_by_coefficients_q8_points.txt -end \
+		-classification_prefix surface_by_coefficients_q8_points \
+		-report \
+		-end 
+	pdflatex surface_by_coefficients_q8_points_classification.tex
+	open surface_by_coefficients_q8_points_classification.pdf
+
+# group order 2160
+
+
 
 
 surface_4_0:
@@ -2190,8 +2455,8 @@ surface_4_0:
 		-group_theoretic_activities \
 		-control_six_arcs  -end \
 		-create_surface -q 4 -catalogue 0 -end
-	pdflatex surface_catalogue_q4_0.tex
-	open surface_catalogue_q4_0.pdf
+	pdflatex surface_catalogue_q4_iso0_report.tex
+	open surface_catalogue_q4_iso0_report.pdf
 
 
 # this gives good Eckardt points:
@@ -2200,6 +2465,81 @@ surface_4_0:
 # b2 = [0,1,0,0,0,0,0,1]
 # the last transformation cleans up the lines b1 and b2.
 
+
+
+Family_general_F7:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 7 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 2 3 3 4 -q 7 -end 
+		pdflatex surface_family_general_abcd_q7_a2_b3_c3_d4_report.tex
+		open surface_family_general_abcd_q7_a2_b3_c3_d4_report.pdf
+
+# Fermat with 18 Eckardt points
+
+
+
+
+
+Family_general_F7_tangents:
+	$(ORBITER_PATH)/orbiter.out -v 5 \
+		-process_combinatorial_objects -n 3 -q 7 \
+			-input \
+			-set_of_points "56, 0, 3, 156, 350, 23, 212, 216, 284, 321, 70, 261, 384, 149, 381, 297, 234, 63" \
+			-end \
+		-ideal_PART 3 \
+		-fname_base_out "form" \
+		-end
+
+
+
+surface_recognize_q7_abcd_2_3_3_4:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 7 -wedge -end \
+		-group_theoretic_activities \
+			-surface_recognize -q 7 \
+			-family_general_abcd 2 3 3 4 \
+			-end \
+		-end
+
+
+
+
+Family_general_7_rec:
+	$(ORBITER_PATH)/orbiter.out -v 5 -linear_group -PGL 4 7 -wedge -end \
+		-group_theoretic_activities -surface_recognize -q 7 \
+		-by_coefficients "3,14,1,17,3,18,3,19" -end -end
+
+# has 73 lines
+
+
+
+Family_general_q8_2453:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 8 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 2 4 5 3 -q 8 \
+		-end \
+		-end 
+	pdflatex surface_family_general_abcd_q8_a2_b4_c5_d3_report.tex
+	open surface_family_general_abcd_q8_a2_b4_c5_d3_report.pdf
+
+#( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 6, 1, 7 )
+# has 91 lines
+
+
+
+surface_8_0_unclean:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 8 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs  -end \
+		-create_surface -q 8 -catalogue 0 \
+			-draw_options -end \
+		-end
+	pdflatex surface_catalogue_q8_iso0_report.tex
+	open surface_catalogue_q8_iso0_report.pdf
+
+
+
 surface_8_0:
 	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 8 -wedge -end \
 		-group_theoretic_activities \
@@ -2207,12 +2547,13 @@ surface_8_0:
 		-create_surface -q 8 -catalogue 0 \
 			-select_double_six "15,11,22,19,24,5,16,10,23,20,25,4" \
 			-select_double_six "3,2,1,0,5,4,9,8,7,6,11,10" \
-		-end \
-		-transform_inverse "1,4,4,0,6,0,0,0,6,2,0,1,7,0,4,0,0" \
-		-transform "4,4,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0" \
-		-transform_inverse "2,0,0,0,0,2,0,0,0,0,2,0,1,1,2,3,0"
-	pdflatex surface_catalogue_q8_0.tex
-	open surface_catalogue_q8_0.pdf
+			-transform_inverse "1,4,4,0,6,0,0,0,6,2,0,1,7,0,4,0,0" \
+			-transform "4,4,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0" \
+			-transform_inverse "2,0,0,0,0,2,0,0,0,0,2,0,1,1,2,3,0" \
+			-draw_options -end \
+		-end
+	pdflatex surface_catalogue_q8_iso0_report.tex
+	open surface_catalogue_q8_iso0_report.pdf
 
 
 
@@ -2225,10 +2566,10 @@ surface_8_0b:
 		-create_surface -q 8 -catalogue 0 \
 			-select_double_six "15,11,22,19,24,5,16,10,23,20,25,4" \
 			-select_double_six "3,2,1,0,5,4,9,8,7,6,11,10" \
-		-end \
-		-transform "1,0,0,0,0,1,0,6,0,0,1,6,0,0,0,1,0" \
-		-transform_inverse "3,1,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0" \
-		-transform_inverse "2,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0" 
+			-transform "1,0,0,0,0,1,0,6,0,0,1,6,0,0,0,1,0" \
+			-transform_inverse "3,1,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0" \
+			-transform_inverse "2,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0" \
+		-end 
 	pdflatex surface_catalogue_q8_0.tex
 	open surface_catalogue_q8_0.pdf
 
@@ -2252,11 +2593,13 @@ surface_8_from_arc_old:
 
 
 surface_8_from_arc_new:
-	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 8  -end \
+	$(ORBITER_PATH)/orbiter.out -v 10 -linear_group -PGGL 4 8  -end \
 		-group_theoretic_activities \
 		-control_six_arcs  -end \
 		-create_surface -q 8 -arc_lifting_with_two_lines "0,1,2,20,30,37" "24,1898" \
 		-end
+	pdflatex surface_arc_lifting_with_two_lines_q8_lines24_1898_arc0_1_2_20_30_37_report.tex
+	open surface_arc_lifting_with_two_lines_q8_lines24_1898_arc0_1_2_20_30_37_report.pdf
 
 arc_lifting_with_lines_8:
 	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 8  -end \
@@ -2271,6 +2614,37 @@ surface_isomorph_8:
 		-group_theoretic_activities -surface_isomorphism_testing \
 			-q 8 -by_coefficients "1,5,1,8,1,9,1,10,1,11,1,12,6,14,6,15,7,18,7,19" -end \
 			-q 8 -by_coefficients "1,6,1,8,1,11,1,13,1,19" -end 
+
+
+
+
+
+
+
+
+HCV_13:
+	$(ORBITER_PATH)/orbiter.out -v 5 -linear_group -PGL 4 13 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_HCV 3 1 -q 13 -end
+	pdflatex surface_family_HCV_q13_a3_b1_report.tex
+	open surface_family_HCV_q13_a3_b1_report.pdf
+
+# writes tangents.txt
+
+HCV_tangents_ideal:
+	$(ORBITER_PATH)/orbiter.out -v 5 \
+		-process_combinatorial_objects -n 3 -q 13 \
+			-input \
+			-file_of_points "tangents.txt" \
+			-end \
+		-ideal_PART 4 \
+		-fname_base_out "form" \
+		-end
+
+
+
+
 
 
 
@@ -2292,9 +2666,9 @@ surface_16_0:
 		-group_theoretic_activities \
 		-control_six_arcs  -end \
 		-create_surface -q 16 -catalogue 0 \
-		-end \
 		-transform "1,0,0,0,0,1,0,12,0,0,1,12,0,0,0,1,0" \
-		-transform "15,11,4,0,0,0,12,0,0,12,0,0,0,0,0,1,3" 
+		-transform "15,11,4,0,0,0,12,0,0,12,0,0,0,0,0,1,3" \
+		-end
 	pdflatex surface_catalogue_q16_0.tex
 	open surface_catalogue_q16_0.pdf
 
@@ -2395,8 +2769,8 @@ Colorado1:
 		-group_theoretic_activities \
 		-control_six_arcs -end \
 		-create_surface -q 128 -catalogue 0 \
-		-end \
-		-transform_inverse "1,0,0,0,0,1,0,96,0,0,1,96,0,0,0,1,0"
+			-transform_inverse "1,0,0,0,0,1,0,96,0,0,1,96,0,0,0,1,0" \
+		-end 
 	pdflatex surface_catalogue_q128_0.tex
 	open surface_catalogue_q128_0.pdf
 
@@ -2428,8 +2802,8 @@ Colorado2:
 		-group_theoretic_activities \
 		-control_six_arcs -end \
 		-create_surface -q 128 -catalogue 926 \
-		-end \
-		-transform_inverse "1,0,0,0,0,1,0,32,0,0,1,32,0,0,0,1,0"
+			-transform_inverse "1,0,0,0,0,1,0,32,0,0,1,32,0,0,0,1,0" \
+		-end 
 	pdflatex surface_catalogue_q128_926.tex
 	open surface_catalogue_q128_926.pdf
 
@@ -2438,8 +2812,8 @@ Colorado3:
 		-group_theoretic_activities \
 		-control_six_arcs -end \
 		-create_surface -q 128 -catalogue 928 \
-		-end \
-		-transform_inverse "1,0,0,0,0,1,0,59,0,0,1,59,0,0,0,1,0"
+			-transform_inverse "1,0,0,0,0,1,0,59,0,0,1,59,0,0,0,1,0" \
+		-end 
 	pdflatex surface_catalogue_q128_928.tex
 	open surface_catalogue_q128_928.pdf
 
@@ -2473,10 +2847,6 @@ move_two_lines:
 	$(ORBITER_PATH)/orbiter.out -v 5 -move_two_lines_in_hyperplane_stabilizer 8 65 4680 72 657
 
 
-surface_table:
-	$(ORBITER_PATH)/orbiter.out -v 3 -make_table_of_surfaces
-	pdflatex surfaces_report.tex
-	open surfaces_report.pdf
 
 
 test_432:
@@ -2524,8 +2894,8 @@ surface_16_2b:
 		-group_theoretic_activities \
 		-control_six_arcs  -end \
 		-create_surface -q 16 -catalogue 2 \
-		-end \
-		-transform "1,0,0,10, 0,1,0,0, 0,0,0,1, 0,0,1,0, 0"
+			-transform "1,0,0,10, 0,1,0,0, 0,0,0,1, 0,0,1,0, 0" \
+		-end 
 	pdflatex surface_catalogue_q16_iso2.tex
 	open surface_catalogue_q16_iso2.pdf
 
@@ -2535,9 +2905,9 @@ surface_16_2c:
 		-group_theoretic_activities \
 		-control_six_arcs  -end \
 		-create_surface -q 16 -catalogue 2 \
+			-transform "1,0,0,10, 0,1,0,0, 0,0,0,1, 0,0,1,0, 0" \
+			-transform "5,0,0,0, 0,15,0,0, 1,1,1,0, 0,0,0,1, 0" \
 		-end \
-		-transform "1,0,0,10, 0,1,0,0, 0,0,0,1, 0,0,1,0, 0" \
-		-transform "5,0,0,0, 0,15,0,0, 1,1,1,0, 0,0,0,1, 0"
 	pdflatex surface_catalogue_q16_iso2.tex
 	open surface_catalogue_q16_iso2.pdf
 
@@ -2548,9 +2918,9 @@ surface_16_2d:
 		-control_six_arcs  -end \
 		-create_surface -q 16 -catalogue 2 \
 			-select_double_six "17,20,3,4,0,23, 11,8,15,14,24,7" \
-		-end \
-		-transform "1,0,0,10, 0,1,0,0, 0,0,0,1, 0,0,1,0, 0" \
-		-transform "5,0,0,0, 0,15,0,0, 1,1,1,0, 0,0,0,1, 0"
+			-transform "1,0,0,10, 0,1,0,0, 0,0,0,1, 0,0,1,0, 0" \
+			-transform "5,0,0,0, 0,15,0,0, 1,1,1,0, 0,0,0,1, 0" \
+		-end
 	pdflatex surface_catalogue_q16_iso2.tex
 	open surface_catalogue_q16_iso2.pdf
 
@@ -2564,10 +2934,10 @@ surface_16_2e:
 		-control_six_arcs  -end \
 		-create_surface -q 16 -catalogue 2 \
 			-select_double_six "17,20,3,4,0,23, 11,8,15,14,24,7" \
+			-transform "1,0,0,10, 0,1,0,0, 0,0,0,1, 0,0,1,0, 0" \
+			-transform "5,0,0,0, 0,15,0,0, 1,1,1,0, 0,0,0,1, 0" \
+			-transform "1,0,0,0, 0,1,0,0, 0,0,1,0, 12,0,0,12, 0" \
 		-end \
-		-transform "1,0,0,10, 0,1,0,0, 0,0,0,1, 0,0,1,0, 0" \
-		-transform "5,0,0,0, 0,15,0,0, 1,1,1,0, 0,0,0,1, 0" \
-		-transform "1,0,0,0, 0,1,0,0, 0,0,1,0, 12,0,0,12, 0"
 	pdflatex surface_catalogue_q16_iso2.tex
 	open surface_catalogue_q16_iso2.pdf
 
@@ -2579,10 +2949,10 @@ bad_surface_16_2:
 		-group_theoretic_activities \
 		-control_six_arcs  -end \
 		-create_surface -q 16 -catalogue 2 \
-		-end \
-		-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
-		-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
-		-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" 
+			-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
+			-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
+			-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" \
+		-end 
 	pdflatex surface_catalogue_q16_iso2.tex
 	open surface_catalogue_q16_iso2.pdf
 
@@ -2639,11 +3009,11 @@ bad_surface_16_2d:
 		-control_six_arcs  -end \
 		-create_surface -q 16 -catalogue 2 \
 			-select_double_six "24,25,8,18,2,14, 22,23,9,17,3,13" \
-		-end \
-		-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
-		-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
-		-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" \
-		-transform "7,1,0,0, 0,1,0,0, 0,1,7,0, 0,0,0,1, 3" 
+			-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
+			-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
+			-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" \
+			-transform "7,1,0,0, 0,1,0,0, 0,1,7,0, 0,0,0,1, 3" \
+		-end 
 	pdflatex surface_catalogue_q16_iso2.tex
 	open surface_catalogue_q16_iso2.pdf
 
@@ -2700,12 +3070,12 @@ bad_surface_16_2e:
 		-control_six_arcs  -end \
 		-create_surface -q 16 -catalogue 2 \
 			-select_double_six "24,25,8,18,2,14, 22,23,9,17,3,13" \
-		-end \
-		-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
-		-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
-		-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" \
-		-transform "7,1,0,0, 0,1,0,0, 0,1,7,0, 0,0,0,1, 3" \
-		-transform "12,1,12,0, 15,0,15,0, 15,0,14,0, 0,0,0,1, 1"
+			-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
+			-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
+			-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" \
+			-transform "7,1,0,0, 0,1,0,0, 0,1,7,0, 0,0,0,1, 3" \
+			-transform "12,1,12,0, 15,0,15,0, 15,0,14,0, 0,0,0,1, 1" \
+		-end 
 	pdflatex surface_catalogue_q16_iso2.tex
 	open surface_catalogue_q16_iso2.pdf
 
@@ -2718,12 +3088,12 @@ bad_surface_16_2ef:
 		-create_surface -q 16 -catalogue 2 \
 			-select_double_six "24,25,8,18,2,14, 22,23,9,17,3,13" \
 			-select_double_six "11,10,8,9,6,7, 5,4,2,3,0,1" \
-		-end \
-		-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
-		-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
-		-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" \
-		-transform "7,1,0,0, 0,1,0,0, 0,1,7,0, 0,0,0,1, 3" \
-		-transform "12,1,12,0, 15,0,15,0, 15,0,14,0, 0,0,0,1, 1"
+			-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
+			-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
+			-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" \
+			-transform "7,1,0,0, 0,1,0,0, 0,1,7,0, 0,0,0,1, 3" \
+			-transform "12,1,12,0, 15,0,15,0, 15,0,14,0, 0,0,0,1, 1" \
+		-end 
 	pdflatex surface_catalogue_q16_iso2.tex
 	open surface_catalogue_q16_iso2.pdf
 
@@ -2741,13 +3111,13 @@ bad_surface_16_2efg:
 		-create_surface -q 16 -catalogue 2 \
 			-select_double_six "24,25,8,18,2,14, 22,23,9,17,3,13" \
 			-select_double_six "11,10,8,9,6,7, 5,4,2,3,0,1" \
-		-end \
-		-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
-		-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
-		-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" \
-		-transform "7,1,0,0, 0,1,0,0, 0,1,7,0, 0,0,0,1, 3" \
-		-transform "12,1,12,0, 15,0,15,0, 15,0,14,0, 0,0,0,1, 1" \
-		-transform "1,0,0,0, 0,1,0,0, 0,0,1,0, 7,0,6,13, 0"
+			-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
+			-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
+			-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" \
+			-transform "7,1,0,0, 0,1,0,0, 0,1,7,0, 0,0,0,1, 3" \
+			-transform "12,1,12,0, 15,0,15,0, 15,0,14,0, 0,0,0,1, 1" \
+			-transform "1,0,0,0, 0,1,0,0, 0,0,1,0, 7,0,6,13, 0" \
+		-end 
 	pdflatex surface_catalogue_q16_iso2.tex
 	open surface_catalogue_q16_iso2.pdf
 
@@ -2760,14 +3130,14 @@ surface_16_2efgh:
 		-create_surface -q 16 -catalogue 2 \
 			-select_double_six "24,25,8,18,2,14, 22,23,9,17,3,13" \
 			-select_double_six "11,10,8,9,6,7, 5,4,2,3,0,1" \
-		-end \
-		-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
-		-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
-		-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" \
-		-transform "7,1,0,0, 0,1,0,0, 0,1,7,0, 0,0,0,1, 3" \
-		-transform "12,1,12,0, 15,0,15,0, 15,0,14,0, 0,0,0,1, 1" \
-		-transform "1,0,0,0, 0,1,0,0, 0,0,1,0, 7,0,6,13, 0" \
-		-transform "0,0,1,0, 1,1,1,0, 1,0,0,0, 0,1,1,1, 0"
+			-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
+			-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
+			-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" \
+			-transform "7,1,0,0, 0,1,0,0, 0,1,7,0, 0,0,0,1, 3" \
+			-transform "12,1,12,0, 15,0,15,0, 15,0,14,0, 0,0,0,1, 1" \
+			-transform "1,0,0,0, 0,1,0,0, 0,0,1,0, 7,0,6,13, 0" \
+			-transform "0,0,1,0, 1,1,1,0, 1,0,0,0, 0,1,1,1, 0" \
+		-end 
 	pdflatex surface_catalogue_q16_iso2.tex
 	open surface_catalogue_q16_iso2.pdf
 
@@ -2782,12 +3152,12 @@ surface_16_2f:
 		-create_surface -q 16 -catalogue 2 \
 			-select_double_six "24,25,8,18,2,14, 22,23,9,17,3,13" \
 			-select_double_six "4,5,2,3,0,1, 10,11,8,9,6,7" \
-		-end \
-		-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
-		-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
-		-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" \
-		-transform "7,1,0,0, 0,1,0,0, 0,1,7,0, 0,0,0,1, 3" \
-		-transform "12,1,12,0, 15,0,15,0, 15,0,14,0, 0,0,0,1, 1"
+			-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
+			-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
+			-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" \
+			-transform "7,1,0,0, 0,1,0,0, 0,1,7,0, 0,0,0,1, 3" \
+			-transform "12,1,12,0, 15,0,15,0, 15,0,14,0, 0,0,0,1, 1" \
+		-end 
 	pdflatex surface_catalogue_q16_iso2.tex
 	open surface_catalogue_q16_iso2.pdf
 
@@ -2805,13 +3175,13 @@ surface_16_2g:
 		-create_surface -q 16 -catalogue 2 \
 			-select_double_six "24,25,8,18,2,14, 22,23,9,17,3,13" \
 			-select_double_six "4,5,2,3,0,1, 10,11,8,9,6,7" \
-		-end \
-		-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
-		-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
-		-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" \
-		-transform "7,1,0,0, 0,1,0,0, 0,1,7,0, 0,0,0,1, 3" \
-		-transform "12,1,12,0, 15,0,15,0, 15,0,14,0, 0,0,0,1, 1" \
-		-transform "1,0,0,0, 0,1,0,0, 0,0,1,0, 6,0,4,13, 0"
+			-transform "1,0,0,10,0,1,0,0,0,0,0,1,0,0,1,0,0" \
+			-transform "5,0,0,0, 14,14,1,0, 1,1,0,0, 0,0,0,1, 0" \
+			-transform "1,0,0,0, 1,1,1,0, 0,0,1,0, 0,0,0,1, 0" \
+			-transform "7,1,0,0, 0,1,0,0, 0,1,7,0, 0,0,0,1, 3" \
+			-transform "12,1,12,0, 15,0,15,0, 15,0,14,0, 0,0,0,1, 1" \
+			-transform "1,0,0,0, 0,1,0,0, 0,0,1,0, 6,0,4,13, 0" \
+		-end 
 	pdflatex surface_catalogue_q16_iso2.tex
 	open surface_catalogue_q16_iso2.pdf
 
@@ -2877,124 +3247,9 @@ Family_general_T1:
 
 
 
-Family_general_F7:
-	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 7 -wedge -end \
-		-group_theoretic_activities \
-		-control_six_arcs -end \
-		-create_surface -family_general_abcd 2 3 3 4 -q 7 -end 
-
-# Fermat with 18 Eckardt points
-
-
-surface_recognize_q7_abcd_2_3_3_4:
-	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 7 -wedge -end \
-		-group_theoretic_activities \
-			-surface_recognize -q 7 \
-			-family_general_abcd 2 3 3 4 \
-			-end \
-		-end
-
-
-
-
-Family_general_7_rec:
-	$(ORBITER_PATH)/orbiter.out -v 5 -linear_group -PGL 4 7 -wedge -end \
-		-group_theoretic_activities -surface_recognize -q 7 \
-		-by_coefficients "3,14,1,17,3,18,3,19" -end -end
-
-# has 73 lines
-
-
-
-Family_general_q8_2453:
-	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 8 -wedge -end \
-		-group_theoretic_activities \
-		-control_six_arcs -end \
-		-create_surface -family_general_abcd 2 4 5 3 -q 8 \
-		-end \
-		-end 
-	pdflatex surface_family_general_abcd_q8_a2_b4_c5_d3_report.tex
-	open surface_family_general_abcd_q8_a2_b4_c5_d3_report.pdf
-
-#( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 6, 1, 7 )
-# has 91 lines
-
-
-
-
-
-D1="1,4,1,7,1,12,1,15"
-D2=	"1,1,1,2,1,3,1,4,1,7,1,11,1,14,1,15,1,19"
-D3="1,4,1,7,1,12,1,14,1,15,1,19"
-D4="1,3,1,4,1,8,1,9,1,10,1,14,1,17,1,18,1,19"
-D5="1,2,1,3,1,4,1,7,1,15"
-D6="1,2,1,3,1,5,1,9,1,10,1,14,1,15"
-D7="1,3,1,4,1,5,1,7,1,10,1,11,1,19"
-D8="1,3,1,4,1,7,1,11,1,12,1,15,1,19"
-D9="1,4,1,7,1,8,1,9,1,10,1,13,1,15,1,16,1,17"
-D10:="1,4,1,7,1,8,1,10,1,13,1,14,1,15,1,16,1,17"
-D11="1,4,1,6,1,7,1,8,1,9,1,10,1,15,1,16,1,17"
-D12="1,6,1,8,1,9,1,10,1,15,1,16,1,17"
-D13="1,6,1,7,1,10,1,11,1,14,1,15"
-D14="1,4,1,5,1,6,1,8,1,12,1,14,1,16"
-D15="1,4,1,5,1,8,1,12,1,13,1,14,1,16"
-D16="1,4,1,5,1,8,1,9,1,12,1,13,1,16"
-D17=""
-D18=""
-D19="1,4,1,5,1,6,1,7,1,8,1,10,1,13,1,14,1,15"
-D20="1,5,1,6,1,8,1,10,1,13,1,14,1,15"
-D21="1,4,1,5,1,7,1,9,1,10,1,11,1,13,1,14,1,15,1,18,1,19"
-D22="1,4,1,7,1,9,1,11,1,13,1,14,1,15,1,18,1,19"
-D23="1,5,1,8,1,9,1,10,1,13,1,14,1,15,1,18,1,19"
-D24="1,4,1,5,1,7,1,10,1,11,1,12,1,13,1,14,1,17,1,18"
-D25="1,4,1,5,1,7,1,10,1,11,1,13,1,14,1,15,1,17,1,18"
-D26="1,4,1,5,1,6,1,7,1,10,1,11,1,14,1,15,1,17,1,18"
-D27="1,4,1,7,1,5,1,10,1,6,1,11,1,9,1,15,1,17,1,18"
-D28="1,4,1,7,1,13,1,11,1,9,1,15,1,17,1,18"
-D29="1,0,1,1,1,2,1,5,1,7,1,11,1,13,1,14,1,15,1,17,1,18,1,19"
-D30="1,0,1,1,1,2,1,3,1,7,1,8,1,10,1,11,1,12,1,15,1,16,1,19"
-D31="1,0,1,1,1,2,1,3,1,6,1,7,1,10,1,12,1,13,1,15,1,16,1,19"
-D32="1,0,1,1,1,2,1,3,1,6,1,7,1,8,1,11,1,13,1,15"
-D33="1,0,1,1,1,2,1,3,1,7,1,15"
-D34="1,0,1,1,1,2,1,3,1,7,1,12,1,15,1,19"
-D35="1,0,1,1,1,2,1,3,1,6,1,7,1,12,1,13,1,15,1,19"
-D36="1,0,1,1,1,2,1,3,1,5,1,7,1,10,1,12,1,15,1,19"
-D37="1,0,1,1,1,2,1,3,1,7,1,8,1,11,1,19"
-D38="1,0,1,1,1,2,1,3,1,6,1,7,1,8,1,11,1,13,1,19"
-D39="1,0,1,1,1,2,1,3,1,5,1,7,1,8,1,10,1,11,1,19"
-D40="1,0,1,1,1,2,1,3,1,7,1,8,1,11,1,19"
-D41="1,0,1,1,1,2,1,3,1,7,1,12,1,15,1,19"
-D42="1,2,1,4,1,7,1,5,1,10,1,11,1,14,1,19"
-D43="1,2,1,4,1,7,1,11,1,12,1,14,1,15,1,19"
-D44="1,0,1,1,1,2,1,6,1,8,1,11,1,12,1,14"
-D45="1,6,1,8,1,9,1,11,1,12,1,13,1,14,1,15,1,16,1,17,1,18,1,19"
-
-D3_q4:
-	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 4 -wedge -end \
-		-group_theoretic_activities \
-		-control_six_arcs -end \
-		-create_surface -by_coefficients $(D3) -q 4 \
-		-end \
-		-end 
-	pdflatex surface_by_coefficients_q4_report.tex
-	open surface_by_coefficients_q4_report.pdf
-
-
-D1_q8:
-	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 8 -wedge -end \
-		-group_theoretic_activities \
-		-control_six_arcs -end \
-		-create_surface -by_coefficients $(D1) -q 8 \
-		-end \
-		-end 
-	pdflatex surface_by_coefficients_q8_report.tex
-	open surface_by_coefficients_q8_report.pdf
-
-
-
 
 #############################################################################################################
-# Section 21: Cubic Surfaces Classification
+# Section 22: Cubic Surfaces Classification
 
 
 CUBICSURFACESCLASSIFICATION:
@@ -3320,7 +3575,7 @@ arc_lifting_two_lines_64_E13:
 
 
 #############################################################################################################
-# Section 22:  Number Theory
+# Section 23:  Number Theory
 
 
 NUMBERTHEORY:
@@ -3332,16 +3587,11 @@ inverse_mod:
 jacobi:
 	$(ORBITER_PATH)/orbiter.out -v 5 -jacobi 2221 7817
 
-poly_division:
-	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_division 2 "1,0,0,0,0,0,0,0,0,0,1" "1,0,1,1"
-	
-poly_gcd:
-	$(ORBITER_PATH)/orbiter.out -v 2  -extended_gcd_for_polynomials 2 "1,0,0,0,0,0,0,0,0,0,1" "1,0,1,1"
 
 
 
 #############################################################################################################
-# Section 23: Cryptography 
+# Section 24: Cryptography 
 
 
 EC_add:
@@ -3451,7 +3701,7 @@ NTRU_decrypt5:
 
 
 #############################################################################################################
-# Section 24: Coding Theory
+# Section 25: Coding Theory
 
 CODINGTHEORY:
 
@@ -3565,7 +3815,7 @@ codes_d4:
 
 
 #############################################################################################################
-# Section 25: Diophantine Systems
+# Section 26: Diophantine Systems
 
 DIOPHANT:
 	
@@ -3646,7 +3896,7 @@ linsp30_pt_distribution:
 
 
 #############################################################################################################
-# Section 26: Design Theory
+# Section 27: Design Theory
 
 DESGNTHEORY:
 
@@ -3741,7 +3991,7 @@ STS13:
 
 
 #############################################################################################################
-# Section 27: Linear Spaces and Tactical Decompositions
+# Section 28: Linear Spaces and Tactical Decompositions
 
 
 
@@ -3994,7 +4244,7 @@ max_arc_lift:
 
 
 #############################################################################################################
-# Section 28: Spreads
+# Section 29: Spreads
 
 SPREADS:
 	
@@ -4103,7 +4353,7 @@ line_spreads_PG5_2:
 
 
 #############################################################################################################
-# Section 29: Packings
+# Section 30: Packings
 
 
 PACKINGS:
@@ -4774,7 +5024,7 @@ packing_5_reg_31_prepare:
 #				-fixp_clique_types_save_individually \
 
 #############################################################################################################
-# Section 30: Tikz Drawing
+# Section 31: Tikz Drawing
 
 TIKZDRAWING:
 	
@@ -4789,7 +5039,7 @@ tikz:
 	open PGL_4_2_Wedge_4_0_detached_report.pdf
 
 #############################################################################################################
-# Section 31: The Povray Interface
+# Section 32: The Povray Interface
 
 
 POVRAY:

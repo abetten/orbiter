@@ -5422,23 +5422,35 @@ void finite_field::do_ideal(int n,
 
 	if (f_v) {
 		cout << "finite_field::do_ideal" << endl;
-		}
+	}
 
 	size_out = 0;
 
 	HPD = NEW_OBJECT(homogeneous_polynomial_domain);
 
+	if (f_v) {
+		cout << "finite_field::do_ideal before HPD->init" << endl;
+	}
 	HPD->init(this, n + 1, degree,
 		FALSE /* f_init_incidence_structure */,
 		Monomial_ordering_type,
-		verbose_level);
+		verbose_level - 2);
+	if (f_v) {
+		cout << "finite_field::do_ideal after HPD->init" << endl;
+	}
 
 	Kernel = NEW_int(HPD->get_nb_monomials() * HPD->get_nb_monomials());
 	w1 = NEW_int(HPD->get_nb_monomials());
 	w2 = NEW_int(HPD->get_nb_monomials());
 
+	if (f_v) {
+		cout << "finite_field::do_ideal before HPD->vanishing_ideal" << endl;
+	}
 	HPD->vanishing_ideal(set_in, set_size,
 			r, Kernel, 0 /*verbose_level */);
+	if (f_v) {
+		cout << "finite_field::do_ideal after HPD->vanishing_ideal" << endl;
+	}
 
 	ns = HPD->get_nb_monomials() - r; // dimension of null space
 	cout << "The system has rank " << r << endl;
@@ -5469,7 +5481,7 @@ void finite_field::do_ideal(int n,
 		}
 
 
-		cout << "We found " << nb_pts << " points on the curve" << endl;
+		cout << "We found " << nb_pts << " points on the generator of the ideal" << endl;
 		cout << "They are : ";
 		lint_vec_print(cout, Pts, nb_pts);
 		cout << endl;
@@ -5484,7 +5496,7 @@ void finite_field::do_ideal(int n,
 			for (u = 0; u < size_out; u++) {
 				set_out[u] = Kernel[h * HPD->get_nb_monomials() + u];
 			}
-			break;
+			//break;
 		}
 		FREE_lint(Pts);
 

@@ -69,6 +69,10 @@ surface_object_properties::surface_object_properties()
 	singular_pts = NULL;
 
 	nb_singular_pts = 0;
+	nb_non_singular_pts = 0;
+
+	tangent_plane_rank_global = NULL;
+	tangent_plane_rank_dual = NULL;
 
 }
 
@@ -148,6 +152,13 @@ surface_object_properties::~surface_object_properties()
 
 	if (singular_pts) {
 		FREE_lint(singular_pts);
+	}
+
+	if (tangent_plane_rank_global) {
+		FREE_lint(tangent_plane_rank_global);
+	}
+	if (tangent_plane_rank_dual) {
+		FREE_lint(tangent_plane_rank_dual);
 	}
 
 
@@ -244,13 +255,6 @@ void surface_object_properties::compute_properties(int verbose_level)
 		exit(1);
 	}
 
-#if 0
-	if (SO->nb_pts != SO->Surf->nb_pts_on_surface) {
-		cout << "surface_object_properties::compute_properties nb_pts != "
-				"Surf->nb_pts_on_surface" << endl;
-		exit(1);
-	}
-#endif
 
 	Sorting.lint_vec_heapsort(SO->Pts, SO->nb_pts);
 	if (f_v) {
@@ -266,11 +270,11 @@ void surface_object_properties::compute_properties(int verbose_level)
 
 
 	if (f_v) {
-		cout << "surface_object::compute_properties before compute_singular_points" << endl;
+		cout << "surface_object::compute_properties before compute_singular_points_and_tangent_planes" << endl;
 	}
-	compute_singular_points(verbose_level);
+	compute_singular_points_and_tangent_planes(verbose_level);
 	if (f_v) {
-		cout << "surface_object::compute_properties after compute_singular_points" << endl;
+		cout << "surface_object::compute_properties after compute_singular_points_and_tangent_planes" << endl;
 	}
 
 
@@ -455,86 +459,153 @@ void surface_object_properties::compute_gradient(int verbose_level)
 	}
 }
 
-void surface_object_properties::compute_singular_points(int verbose_level)
+
+
+void surface_object_properties::compute_singular_points_and_tangent_planes(int verbose_level)
 // a singular point is a point where all partials vanish
 // We compute the set of singular points into Pts[nb_pts]
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);
-	int h, i, a, rk;
-	int nb_eqns = 4;
-	int v[4];
 
 	if (f_v) {
-		cout << "surface_object_properties::compute_singular_points" << endl;
+		cout << "surface_object_properties::compute_singular_points_and_tangent_planes" << endl;
 	}
+	int h, i;
+	long int rk;
+	int nb_eqns = 4;
+	int v[4];
+	int w[4];
+
+
 	if (f_v) {
-		cout << "surface_object_properties::compute_singular_points before compute_gradient" << endl;
+		cout << "surface_object_properties::compute_singular_points_and_tangent_planes before compute_gradient" << endl;
 	}
 	compute_gradient(verbose_level);
 	if (f_v) {
-		cout << "surface_object_properties::compute_singular_points after compute_gradient" << endl;
+		cout << "surface_object_properties::compute_singular_points_and_tangent_planes after compute_gradient" << endl;
 	}
 
 	nb_singular_pts = 0;
+	nb_non_singular_pts = 0;
 
 	singular_pts = NEW_lint(SO->nb_pts);
-
+	tangent_plane_rank_global = NEW_lint(SO->nb_pts);
+	tangent_plane_rank_dual = NEW_lint(SO->nb_pts);
 	for (h = 0; h < SO->nb_pts; h++) {
 		if (f_vv) {
-			cout << "surface_object_properties::compute_singular_points "
+			cout << "surface_object_properties::compute_singular_points_and_tangent_planes "
 					"h=" << h << " / " << SO->nb_pts << endl;
 		}
 		rk = SO->Pts[h];
 		if (f_vv) {
-			cout << "surface_object_properties::compute_singular_points "
+			cout << "surface_object_properties::compute_singular_points_and_tangent_planes "
 					"rk=" << rk << endl;
 		}
 		SO->Surf->unrank_point(v, rk);
 		if (f_vv) {
-			cout << "surface_object_properties::compute_singular_points "
+			cout << "surface_object_properties::compute_singular_points_and_tangent_planes "
 					"v=";
 			int_vec_print(cout, v, 4);
 			cout << endl;
 		}
 		for (i = 0; i < nb_eqns; i++) {
 			if (f_vv) {
-				cout << "surface_object_properties::compute_singular_points "
+				cout << "surface_object_properties::compute_singular_points_and_tangent_planes "
 						"gradient i=" << i << " / " << nb_eqns << endl;
 			}
-			if (f_vv) {
-				cout << "surface_object_properties::compute_singular_points "
+			if (FALSE) {
+				cout << "surface_object_properties::compute_singular_points_and_tangent_planes "
 						"gradient " << i << " = ";
 				int_vec_print(cout,
 						gradient + i * SO->Surf->Poly2_4->get_nb_monomials(),
 						SO->Surf->Poly2_4->get_nb_monomials());
 				cout << endl;
 			}
-			a = SO->Surf->Poly2_4->evaluate_at_a_point(
+			w[i] = SO->Surf->Poly2_4->evaluate_at_a_point(
 					gradient + i * SO->Surf->Poly2_4->get_nb_monomials(), v);
 			if (f_vv) {
-				cout << "surface_object_properties::compute_singular_points "
-						"value = " << a << endl;
+				cout << "surface_object_properties::compute_singular_points_and_tangent_planes "
+						"value = " << w[i] << endl;
 			}
-			if (a) {
+		}
+		for (i = 0; i < nb_eqns; i++) {
+			if (w[i]) {
 				break;
 			}
 		}
+
 		if (i == nb_eqns) {
 			singular_pts[nb_singular_pts++] = rk;
+			tangent_plane_rank_global[h] = -1;
+		}
+		else {
+			long int plane_rk;
+
+			plane_rk = SO->Surf->P->plane_rank_using_dual_coordinates_in_three_space(
+					w /* eqn4 */,
+					0 /* verbose_level*/);
+			tangent_plane_rank_global[h] = plane_rk;
+			tangent_plane_rank_dual[nb_non_singular_pts++] =
+					SO->Surf->P->dual_rank_of_plane_in_three_space(
+							plane_rk, 0 /* verbose_level*/);
 		}
 	}
 
+	sorting Sorting;
+	int nb_tangent_planes;
+
+	nb_tangent_planes = nb_non_singular_pts;
+
+	Sorting.lint_vec_sort_and_remove_duplicates(tangent_plane_rank_dual, nb_tangent_planes);
+
+
+	string fname_tangents;
+	file_io Fio;
+
+	fname_tangents.assign("tangents.txt");
+
+	Fio.write_set_to_file_lint(fname_tangents,
+			tangent_plane_rank_dual, nb_tangent_planes, verbose_level);
+
+	cout << "Written file " << fname_tangents << " of size " << Fio.file_size(fname_tangents) << endl;
+
+
+	int *Kernel;
+	int *w1;
+	int *w2;
+	int r, ns;
+
+	Kernel = NEW_int(SO->Surf->Poly3_4->get_nb_monomials() * SO->Surf->Poly3_4->get_nb_monomials());
+	w1 = NEW_int(SO->Surf->Poly3_4->get_nb_monomials());
+	w2 = NEW_int(SO->Surf->Poly3_4->get_nb_monomials());
+
+
+
+	SO->Surf->Poly3_4->vanishing_ideal(tangent_plane_rank_dual, nb_non_singular_pts,
+			r, Kernel, 0 /*verbose_level */);
+
+	ns = SO->Surf->Poly3_4->get_nb_monomials() - r; // dimension of null space
+	cout << "The system has rank " << r << endl;
+	cout << "The ideal has dimension " << ns << endl;
+	cout << "and is generated by:" << endl;
+	int_matrix_print(Kernel, ns, SO->Surf->Poly3_4->get_nb_monomials());
+	cout << "corresponding to the following basis "
+			"of polynomials:" << endl;
+	for (h = 0; h < ns; h++) {
+		SO->Surf->Poly3_4->print_equation(cout, Kernel + h * SO->Surf->Poly3_4->get_nb_monomials());
+		cout << endl;
+		}
+
+	FREE_int(Kernel);
+	FREE_int(w1);
+	FREE_int(w2);
+
+
 	if (f_v) {
-		cout << "surface_object_properties::compute_singular_points "
-				"We found " << nb_singular_pts << " singular points" << endl;
-	}
-	if (f_v) {
-		cout << "surface_object_properties::compute_singular_points done" << endl;
+		cout << "surface_object_properties::compute_singular_points_and_tangent_planes done" << endl;
 	}
 }
-
-
 
 void surface_object_properties::compute_adjacency_matrix_of_line_intersection_graph(
 	int verbose_level)
@@ -815,7 +886,18 @@ void surface_object_properties::print_everything(ostream &ost, int verbose_level
 	}
 	print_line_intersection_graph(ost);
 
+	if (f_v) {
+		cout << "surface_object_properties::print_everything "
+				"before print_adjacency_matrix_with_intersection_points" << endl;
+	}
+	print_adjacency_matrix_with_intersection_points(ost);
 
+
+	if (f_v) {
+		cout << "surface_object_properties::print_everything "
+				"before print_neighbor_sets" << endl;
+	}
+	print_neighbor_sets(ost);
 
 	if (f_v) {
 		cout << "surface_object_properties::print_everything "
@@ -1356,10 +1438,13 @@ void surface_object_properties::print_lines(std::ostream &ost)
 
 void surface_object_properties::print_lines_with_points_on_them(std::ostream &ost)
 {
+	int verbose_level = 2;
 	latex_interface L;
 
 	ost << "\\subsection*{The " << SO->nb_lines << " lines with points on them}" << endl;
-	int i;
+	int i, j;
+	int pt;
+
 
 	for (i = 0; i < SO->nb_lines; i++) {
 		//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
@@ -1382,6 +1467,38 @@ void surface_object_properties::print_lines_with_points_on_them(std::ostream &os
 				pts_on_lines->Set_size[i]);
 		ost << "\\}." << endl;
 		ost << "$$" << endl;
+
+		{
+			std::vector<long int> plane_ranks;
+
+			SO->Surf->P->planes_through_a_line(
+					SO->Lines[i], plane_ranks,
+					verbose_level);
+
+			// print the tangent planes associated with the points on the line:
+			ost << "The tangent planes associated with the points on this line are:\\\\" << endl;
+			for (j = 0; j < pts_on_lines->Set_size[i]; j++) {
+
+				int w[4];
+
+				pt = pts_on_lines->Sets[i][j];
+				ost << j << " : " << pt << " : ";
+				SO->Surf->unrank_point(w, SO->Pts[pt]);
+				int_vec_print(ost, w, 4);
+				ost << " : ";
+				if (tangent_plane_rank_global[pt] == -1) {
+					ost << " is singular\\\\" << endl;
+				}
+				else {
+					ost << tangent_plane_rank_global[pt] << "\\\\" << endl;
+				}
+			}
+			ost << "The planes in the pencil through the line are:\\\\" << endl;
+			for (j = 0; j < plane_ranks.size(); j++) {
+				ost << j << " : " << plane_ranks[j] << "\\\\" << endl;
+
+			}
+		}
 	}
 }
 
@@ -1509,7 +1626,7 @@ void surface_object_properties::print_Eckardt_points(std::ostream &ost)
 	for (i = 0; i < nb_Eckardt_points; i++) {
 		p = Eckardt_points_index[i];
 		SO->Surf->unrank_point(v, Eckardt_points[i]);
-		ost << "E_{" << i << "} &= P_{" << Eckardt_points[i] << "}=\\bP(";
+		ost << "E_{" << i << "} &= P_{" << p << "} = P_{" << Eckardt_points[i] << "}=\\bP(";
 		//int_vec_print_fully(ost, v, 4);
 		for (j = 0; j < 4; j++) {
 			SO->F->print_element(ost, v[j]);
@@ -1552,9 +1669,30 @@ void surface_object_properties::print_Eckardt_points(std::ostream &ost)
 		else {
 			ost << ".";
 		}
+		if (tangent_plane_rank_global[p] == -1) {
+			cout << "Eckardt point is singular. This should not happen" << endl;
+			exit(1);
+		}
+		else {
+			ost << " T= " << tangent_plane_rank_global[p];
+		}
 		ost << "\\\\" << endl;
 		}
 	ost << "\\end{align*}" << endl;
+
+
+	//latex_interface L;
+	long int *T;
+
+	T = NEW_lint(nb_Eckardt_points);
+	for (i = 0; i < nb_Eckardt_points; i++) {
+		p = Eckardt_points_index[i];
+		T[i] = tangent_plane_rank_global[p];
+	}
+	ost << "Set of tangent planes: $";
+	L.lint_set_print_tex(ost, T, nb_Eckardt_points);
+	ost << "$\\\\" << endl;
+	FREE_lint(T);
 }
 
 
@@ -1794,37 +1932,6 @@ void surface_object_properties::print_double_sixes(std::ostream &ost)
 	SO->Surf->Schlaefli->latex_table_of_double_sixes(ost);
 
 
-
-
-#if 0
-	ost << "\\subsection*{Double sixes}" << endl;
-	ost << "The double sixes are:\\\\" << endl;
-	ost << "$$" << endl;
-	L.print_lint_matrix_with_standard_labels(ost,
-		Surf->Double_six, 36, 12, TRUE /* f_tex */);
-	ost << "$$" << endl;
-	ost << "$$" << endl;
-	ost << "\\begin{array}{|r||*{6}{c|}|*{6}{c|}}" << endl;
-	ost << "\\hline" << endl;
-	for (j = 0; j < 12; j++) {
-		ost << " & " << j;
-		}
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < 36; i++) {
-		ost << i;
-		for (j = 0; j < 12; j++) {
-			a = Surf->Double_six[i * 12 + j];
-			ost << " & " << Surf->Line_label_tex[a];
-			}
-		ost << "\\\\" << endl;
-		}
-	ost << "\\hline" << endl;
-	ost << "\\end{array}" << endl;
-	ost << "$$" << endl;
-	//ost << "\\clearpage" << endl;
-#endif
-
 }
 
 void surface_object_properties::print_half_double_sixes(std::ostream &ost)
@@ -1839,64 +1946,6 @@ void surface_object_properties::print_half_double_sixes(std::ostream &ost)
 
 	SO->Surf->Schlaefli->latex_table_of_half_double_sixes(ost);
 
-#if 0
-	ost << "The half double sixes are:\\\\" << endl;
-	ost << "$$" << endl;
-	L.print_lint_matrix_with_standard_labels(ost,
-		Surf->Double_six, 36, 6, TRUE /* f_tex */);
-	ost << "$$" << endl;
-
-	ost << "$$" << endl;
-	L.print_lint_matrix_with_standard_labels(ost,
-		Surf->Double_six + 36 * 6, 36, 6, TRUE /* f_tex */);
-	ost << "$$" << endl;
-
-
-	ost << "$$" << endl;
-	ost << "\\begin{array}{|r||*{6}{c|}}" << endl;
-	ost << "\\hline" << endl;
-	for (j = 0; j < 6; j++) {
-		ost << " & " << j;
-		}
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
-	for (h = 0; h < 18; h++) {
-		for (i = 0; i < 2; i++) {
-			ost << 2 * h + i;
-			for (j = 0; j < 6; j++) {
-				a = Surf->Double_six[h * 12 + i * 6 + j];
-				ost << " & " << Surf->Line_label_tex[a];
-				}
-			ost << "\\\\" << endl;
-		}
-	}
-	ost << "\\hline" << endl;
-	ost << "\\end{array}" << endl;
-	ost << "$$" << endl;
-
-
-	ost << "$$" << endl;
-	ost << "\\begin{array}{|r||*{6}{c|}}" << endl;
-	ost << "\\hline" << endl;
-	for (j = 0; j < 6; j++) {
-		ost << " & " << j;
-		}
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
-	for (h = 18; h < 36; h++) {
-		for (i = 0; i < 2; i++) {
-			ost << 2 * h + i;
-			for (j = 0; j < 6; j++) {
-				a = Surf->Double_six[h * 12 + i * 6 + j];
-				ost << " & " << Surf->Line_label_tex[a];
-				}
-			ost << "\\\\" << endl;
-		}
-	}
-	ost << "\\hline" << endl;
-	ost << "\\end{array}" << endl;
-	ost << "$$" << endl;
-#endif
 
 	//ost << "\\clearpage" << endl;
 
@@ -2448,82 +2497,6 @@ void surface_object_properties::compute_transversal_lines(
 
 
 
-#if 0
-void surface_object_properties::compute_clebsch_map(int line_a, int line_b,
-	int transversal_line,
-	long int &tritangent_plane_rk,
-	long int *Clebsch_map, int *Clebsch_coeff,
-	int verbose_level)
-// Clebsch_map[nb_pts]
-// Clebsch_coeff[nb_pts * 4]
-{
-	int f_v = (verbose_level >= 1);
-	int line_idx[2];
-	long int plane_rk_global;
-
-	if (f_v) {
-		cout << "surface_object_properties::compute_clebsch_map" << endl;
-		}
-
-	if (Adj_line_intersection_graph[line_a * 27 + line_b] == 1) {
-		cout << "surface_object::compute_clebsch_map the lines "
-				"are adjacent" << endl;
-		exit(1);
-		}
-
-	line_idx[0] = line_a;
-	line_idx[1] = line_b;
-
-	if (f_v) {
-		cout << "#######################" << endl;
-		cout << "clebsch map for lines " << line_a << ", " << line_b
-				<< " with transversal " << transversal_line << ":" << endl;
-		}
-
-	//transversal_line = compute_transversal_line(line_a, line_b,
-	//0 /* verbose_level */);
-
-
-#if 0
-	tritangent_plane_rk = choose_tritangent_plane(line_a, line_b,
-			transversal_line, 0 /* verbose_level */);
-#else
-	tritangent_plane_rk = SO->Surf->Schlaefli->choose_tritangent_plane_for_Clebsch_map(
-			line_a, line_b,
-			transversal_line, verbose_level);
-#endif
-
-#if 0
-	plane_rk_global = Tritangent_planes[
-			Eckardt_to_Tritangent_plane[tritangent_plane_rk]];
-#else
-	plane_rk_global = Tritangent_plane_rk[tritangent_plane_rk];
-#endif
-
-
-	if (f_v) {
-		cout << "transversal\\_line = " << transversal_line
-				<< "\\\\" << endl;
-		cout << "tritangent\\_plane\\_rank = " << tritangent_plane_rk
-				<< " = " << plane_rk_global << "\\\\" << endl;
-		}
-
-
-	if (!SO->Surf->Schlaefli->clebsch_map(SO->Lines, SO->Pts, SO->nb_pts,
-			line_idx, plane_rk_global,
-			Clebsch_map, Clebsch_coeff,
-			0 /*verbose_level*/)) {
-		cout << "surface_object_properties::compute_clebsch_map The plane "
-				"contains one of the lines, this should "
-				"not happen" << endl;
-		exit(1);
-		}
-
-	if (f_v) {
-		cout << "surface_object_properties::compute_clebsch_map done" << endl;
-		}
-}
-#endif
 
 void surface_object_properties::clebsch_map_latex(std::ostream &ost,
 	long int *Clebsch_map, int *Clebsch_coeff)

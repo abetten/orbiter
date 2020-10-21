@@ -237,7 +237,9 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 }
 
 
-void surface_classify_using_arc::report(int verbose_level)
+void surface_classify_using_arc::report(
+		layered_graph_draw_options *Opt,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -248,12 +250,18 @@ void surface_classify_using_arc::report(int verbose_level)
 	//surface_domain *Surf;
 	finite_field *F;
 
-	char fname_arc_lifting[1000];
 
 
 	F = Surf_A->F;
 	//Surf = Surf_A->Surf;
 
+	string fname_arc_lifting;
+	char str[1000];
+
+	sprintf(str, "%d", F->q);
+	fname_arc_lifting.assign("arc_lifting_q");
+	fname_arc_lifting.append(str);
+	fname_arc_lifting.append(".tex");
 
 	{
 		char title[1000];
@@ -261,7 +269,7 @@ void surface_classify_using_arc::report(int verbose_level)
 		snprintf(title, 1000, "Arc lifting over GF(%d) ", F->q);
 		strcpy(author, "");
 
-		snprintf(fname_arc_lifting, 1000, "arc_lifting_q%d.tex", F->q);
+
 		ofstream fp(fname_arc_lifting);
 		latex_interface L;
 
@@ -278,7 +286,7 @@ void surface_classify_using_arc::report(int verbose_level)
 			NULL /* extra_praeamble */);
 
 
-		report2(fp, verbose_level);
+		report2(fp, Opt, verbose_level);
 
 
 		L.foot(fp);
@@ -297,7 +305,9 @@ void surface_classify_using_arc::report(int verbose_level)
 }
 
 
-void surface_classify_using_arc::report2(ostream &ost, int verbose_level)
+void surface_classify_using_arc::report2(ostream &ost,
+		layered_graph_draw_options *Opt,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -439,7 +449,7 @@ void surface_classify_using_arc::report2(ostream &ost, int verbose_level)
 		if (f_v) {
 			cout << "surface_classify_using_arc::report2 before SCAL[" << surface_idx << "].report" << endl;
 		}
-		SCAL[surface_idx].report(ost, verbose_level);
+		SCAL[surface_idx].report(ost, Opt, verbose_level);
 		if (f_v) {
 			cout << "surface_classify_using_arc::report2 after SCAL[" << surface_idx << "].report" << endl;
 		}

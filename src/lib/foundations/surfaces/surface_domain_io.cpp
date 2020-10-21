@@ -43,7 +43,7 @@ void surface_domain::latex_double_six(ostream &ost, long int *double_six)
 			a = double_six[j * 6 + i];
 			Gr->unrank_lint(a, 0);
 			ost << "\\left[" << endl;
-			ost << "\\begin{array}{*{6}{c}}" << endl;
+			ost << "\\begin{array}{*{4}{c}}" << endl;
 			for (u = 0; u < 2; u++) {
 				for (v = 0; v < 4; v++) {
 					ost << Gr->M[u * 4 + v];

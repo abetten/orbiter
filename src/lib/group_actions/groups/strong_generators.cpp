@@ -960,7 +960,7 @@ void strong_generators::init_subgroup(action *A,
 void strong_generators::init_subgroup_by_generators(action *A,
 	int nb_subgroup_gens,
 	std::string *subgroup_gens,
-	const char *subgroup_order_text,
+	std::string &subgroup_order_text,
 	vector_ge *&nice_gens,
 	int verbose_level)
 {
@@ -2106,12 +2106,9 @@ void strong_generators::orbits_light(action *A_given,
 	for (pt = 0; pt < A_given->degree; pt++) {
 		Generator_idx[pt] = -1;
 	}
-#if 0
-	reached = bitvector_allocate(A_given->degree);
-#else
 	Has_been_reached = NEW_OBJECT(bitvector);
 	Has_been_reached->allocate(A_given->degree);
-#endif
+
 	nb_reached = 0;
 
 	Orbit_allocated = 1024;
@@ -2396,7 +2393,7 @@ void strong_generators::read_from_file_binary(
 	}
 }
 
-void strong_generators::write_file(const char *fname, int verbose_level)
+void strong_generators::write_file(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	file_io Fio;
@@ -2419,7 +2416,7 @@ void strong_generators::write_file(const char *fname, int verbose_level)
 }
 
 void strong_generators::read_file(action *A,
-		const char *fname, int verbose_level)
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	file_io Fio;
@@ -2435,8 +2432,7 @@ void strong_generators::read_file(action *A,
 		exit(1);
 		}
 	if (f_v) {
-		cout << "strong_generators::read_file "
-				"reading file " << fname << endl;
+		cout << "strong_generators::read_file reading file " << fname << endl;
 	}
 
 	{
@@ -2715,7 +2711,7 @@ void strong_generators::decode_ascii_coding(
 }
 
 void strong_generators::export_permutation_group_to_magma(
-		const char *fname, int verbose_level)
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -2753,7 +2749,7 @@ void strong_generators::export_permutation_group_to_magma(
 }
 
 void strong_generators::export_permutation_group_to_GAP(
-		const char *fname, int verbose_level)
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -3096,7 +3092,7 @@ void strong_generators::make_element_which_moves_a_point_from_A_to_B(
 }
 
 void strong_generators::export_group_to_magma_and_copy_to_latex(
-		const char *label_txt,
+		std::string &label_txt,
 		ostream &ost,
 		int verbose_level)
 {
@@ -3107,9 +3103,11 @@ void strong_generators::export_group_to_magma_and_copy_to_latex(
 	if (f_v) {
 		cout << "strong_generators::export_group_to_magma_and_copy_to_latex" << endl;
 	}
-	char export_fname[1000];
+	string export_fname;
 
-	sprintf(export_fname, "%s_group.magma", label_txt);
+	export_fname.assign(label_txt);
+	export_fname.append("_group.magma");
+
 	export_permutation_group_to_magma(
 			export_fname, verbose_level - 2);
 	if (f_v) {
@@ -3146,7 +3144,7 @@ void strong_generators::export_group_to_magma_and_copy_to_latex(
 }
 
 void strong_generators::export_group_to_GAP_and_copy_to_latex(
-		const char *label_txt,
+		std::string &label_txt,
 		ostream &ost,
 		int verbose_level)
 {
@@ -3157,9 +3155,11 @@ void strong_generators::export_group_to_GAP_and_copy_to_latex(
 	if (f_v) {
 		cout << "strong_generators::export_group_to_GAP_and_copy_to_latex" << endl;
 	}
-	char export_fname[1000];
+	string export_fname;
 
-	sprintf(export_fname, "%s_group.gap", label_txt);
+	export_fname.assign(label_txt);
+	export_fname.append("_group.gap");
+
 	export_permutation_group_to_GAP(
 			export_fname, verbose_level - 2);
 	if (f_v) {
@@ -3196,7 +3196,7 @@ void strong_generators::export_group_to_GAP_and_copy_to_latex(
 }
 
 void strong_generators::export_group_and_copy_to_latex(
-		const char *label_txt,
+		std::string &label_txt,
 		ostream &ost,
 		int verbose_level)
 {

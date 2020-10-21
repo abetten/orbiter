@@ -477,10 +477,6 @@ void poset_orbit_node::write_file(action *A,
 	fp.write((char *) &prev, sizeof(int));
 	fp.write((char *) &pt, sizeof(long int));
 	fp.write((char *) &nb_strong_generators, sizeof(int));
-	//Fio.fwrite_int4(fp, node);
-	//Fio.fwrite_int4(fp, prev);
-	//Fio.fwrite_int4(fp, pt);
-	//Fio.fwrite_int4(fp, nb_strong_generators);
 	if (f_v) {
 		cout << node << " " << prev << " " << pt << " "
 				<< nb_strong_generators << endl;
@@ -496,7 +492,6 @@ void poset_orbit_node::write_file(action *A,
 		}
 		for (i = 0; i < A->base_len(); i++) {
 			fp.write((char *) &tl[i], sizeof(int));
-			//Fio.fwrite_int4(fp, tl[i]);
 			if (f_vv) {
 				cout << tl[i] << " ";
 			}
@@ -506,7 +501,6 @@ void poset_orbit_node::write_file(action *A,
 		}
 	}
 	fp.write((char *) &nb_extensions, sizeof(int));
-	//Fio.fwrite_int4(fp, nb_extensions);
 	if (f_vv) {
 		cout << "nb_extensions=" << nb_extensions << endl;
 	}
@@ -520,9 +514,6 @@ void poset_orbit_node::write_file(action *A,
 		fp.write((char *) &b, sizeof(int));
 		b = E[i].get_type();
 		fp.write((char *) &b, sizeof(int));
-		//Fio.fwrite_int4(fp, E[i].pt);
-		//Fio.fwrite_int4(fp, E[i].orbit_len);
-		//Fio.fwrite_int4(fp, E[i].type);
 		if (f_vv) {
 			cout << i << " : " << E[i].get_pt() << " : "
 					<< E[i].get_orbit_len() << " : " << E[i].get_type() << endl;
@@ -531,7 +522,6 @@ void poset_orbit_node::write_file(action *A,
 			// extension node
 			b = E[i].get_data();
 			fp.write((char *) &b, sizeof(int));
-			//Fio.fwrite_int4(fp, E[i].data);
 			if (f_vv) {
 				cout << "extension node, data=" << E[i].get_data() << endl;
 			}
@@ -578,17 +568,18 @@ void poset_orbit_node::save_schreier_forest(
 
 		nb_orbits = Schreier->nb_orbits;
 		for (orbit_no = 0; orbit_no < nb_orbits; orbit_no++) {
-			string fname_mask_base;
-			string fname_mask;
+			string fname;
+			string fname_mask_full;
 
-			PC->create_schreier_tree_fname_mask_base(
-					fname_mask_base, node);
+			PC->create_shallow_schreier_tree_fname_mask(
+					fname, node);
 
-			fname_mask.assign(fname_mask_base);
-			fname_mask.append(".layered_graph");
+
+			fname_mask_full.assign(fname);
+			fname_mask_full.append(".layered_graph");
 
 			Schreier->export_tree_as_layered_graph(orbit_no,
-					fname_mask,
+					fname_mask_full,
 					verbose_level);
 		}
 	}
@@ -620,19 +611,19 @@ void poset_orbit_node::save_shallow_schreier_forest(
 		Schreier_vector->count_number_of_orbits_and_get_orbit_reps(
 					orbit_reps, nb_orbits);
 		for (orbit_no = 0; orbit_no < nb_orbits; orbit_no++) {
-			string fname_mask_base;
-			string fname_mask;
+			string fname;
+			string fname_mask_full;
 
-			PC->create_shallow_schreier_tree_fname_mask_base(
-					fname_mask_base, node);
+			PC->create_shallow_schreier_tree_fname_mask(
+					fname, node);
 
 
-			fname_mask.assign(fname_mask_base);
-			fname_mask.append(".layered_graph");
+			fname_mask_full.assign(fname);
+			fname_mask_full.append(".layered_graph");
 
 			Schreier_vector->export_tree_as_layered_graph(
 					orbit_no, orbit_reps[orbit_no],
-					fname_mask.c_str(),
+					fname_mask_full,
 					verbose_level);
 		}
 	}
@@ -655,24 +646,41 @@ void poset_orbit_node::draw_schreier_forest(
 				<< endl;
 	}
 	if (PC->get_control()->f_draw_schreier_trees) {
+
+
 		int orbit_no, nb_orbits;
+		char str[2000];
+
+		string fname_mask_latex;
+		PC->create_schreier_tree_fname_mask_base_tex(fname_mask_latex);
+
+		snprintf(str, 2000, fname_mask_latex.c_str(), node);
+		string label_tex;
+
+		label_tex.assign(str);
+
 
 		nb_orbits = Schreier->nb_orbits;
 		for (orbit_no = 0; orbit_no < nb_orbits; orbit_no++) {
-			char label[2000];
-			int xmax = PC->get_control()->schreier_tree_xmax;
-			int ymax =  PC->get_control()->schreier_tree_ymax;
-			int f_circletext = PC->get_control()->schreier_tree_f_circletext;
-			int rad = PC->get_control()->schreier_tree_rad;
-			int f_embedded = PC->get_control()->schreier_tree_f_embedded;
-			int f_sideways = PC->get_control()->schreier_tree_f_sideways;
-			double scale = PC->get_control()->schreier_tree_scale;
-			double line_width = PC->get_control()->schreier_tree_line_width;
+
 			int f_has_point_labels = FALSE;
 			long int *point_labels = NULL;
 
-			snprintf(label, 2000, "%sschreier_tree_node_%d_%d",
-					PC->get_control()->schreier_tree_prefix, node, orbit_no);
+			string fname_mask;
+			PC->create_schreier_tree_fname_mask_base(fname_mask);
+
+			snprintf(str, 2000, fname_mask.c_str(), node, orbit_no);
+			string label;
+
+			label.assign(str);
+
+
+			//snprintf(str, 2000, "%sschreier_tree_node_%d_%d",
+			//		PC->get_control()->schreier_tree_prefix, node, orbit_no);
+
+
+
+
 
 			if (f_using_invariant_subset) {
 				f_has_point_labels = TRUE;
@@ -685,18 +693,20 @@ void poset_orbit_node::draw_schreier_forest(
 				cout << "Node " << node << " " << orbit_no
 						<< " drawing schreier tree" << endl;
 			}
-			Schreier->draw_tree(label, orbit_no, xmax, ymax,
-				f_circletext, rad,
-				f_embedded, f_sideways,
-				scale, line_width,
-				f_has_point_labels, point_labels,
-				verbose_level - 1);
+
+
+			Schreier->draw_tree(label,
+					PC->get_control()->draw_options,
+					orbit_no,
+					f_has_point_labels, point_labels,
+					verbose_level - 1);
 			}
 
-		char label_data[2000];
-		snprintf(label_data, 2000, "%sschreier_data_node_%d.tex",
-				PC->get_control()->schreier_tree_prefix, node);
-		Schreier->latex(label_data);
+		//char label_data[2000];
+
+		//snprintf(label_data, 2000, "%sschreier_data_node_%d.tex",
+		//		PC->get_control()->schreier_tree_prefix, node);
+		Schreier->latex(label_tex);
 		}
 
 	if (f_v) {

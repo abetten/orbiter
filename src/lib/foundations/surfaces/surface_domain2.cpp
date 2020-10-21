@@ -289,7 +289,7 @@ void surface_domain::create_equations_for_pencil_of_surfaces_from_trihedral_pair
 
 
 
-int surface_domain::plane_from_three_lines(long int *three_lines,
+long int surface_domain::plane_from_three_lines(long int *three_lines,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -318,8 +318,9 @@ void surface_domain::Trihedral_pairs_to_planes(long int *Lines, long int *Planes
 // Planes_by_rank[nb_trihedral_pairs * 6]
 {
 	int f_v = (verbose_level >= 1);
-	int t, i, j, rk;
-	int lines_in_tritangent_plane[3];
+	int t, i, j;
+	long int rk;
+	long int lines_in_tritangent_plane[3];
 	long int three_lines[3];
 	latex_interface L;
 
@@ -355,7 +356,7 @@ void surface_domain::Trihedral_pairs_to_planes(long int *Lines, long int *Planes
 }
 
 
-
+#if 0
 void surface_domain::compute_tritangent_planes_slow(long int *Lines,
 	long int *&Tritangent_planes, int &nb_tritangent_planes,
 	long int *&Unitangent_planes, int &nb_unitangent_planes,
@@ -454,6 +455,7 @@ void surface_domain::compute_tritangent_planes_slow(long int *Lines,
 		cout << "surface_domain::compute_tritangent_planes_slow done" << endl;
 	}
 }
+#endif
 
 
 

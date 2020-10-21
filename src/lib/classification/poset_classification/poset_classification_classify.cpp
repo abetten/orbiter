@@ -723,7 +723,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 				L.head_easy(ost);
 
 				if (f_v) {
-					cout << "group_theoretic_activity::orbits_on_poset_post_processing "
+					cout << "poset_classification::post_processing "
 							"before get_A()->report" << endl;
 				}
 
@@ -736,7 +736,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 						verbose_level - 1);
 
 				if (f_v) {
-					cout << "group_theoretic_activity::orbits_on_poset_post_processing "
+					cout << "poset_classification::post_processing "
 							"after LG->A_linear->report" << endl;
 				}
 
