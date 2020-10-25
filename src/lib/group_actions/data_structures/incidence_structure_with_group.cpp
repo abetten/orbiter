@@ -121,7 +121,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	int *Base, Base_length;
 	long int *Base_lint;
 	int *Transversal_length;
-	long int ago;
+	longinteger_object Ago;
 	int i;
 
 
@@ -197,7 +197,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 		can_labeling, partition,
 		Aut, Aut_counter,
 		Base, Base_length,
-		Transversal_length, ago, verbose_level - 3);
+		Transversal_length, Ago, verbose_level - 3);
 
 	for (i = 0; i < N; i++) {
 		canonical_labeling[i] = can_labeling[i];
@@ -209,7 +209,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	if (f_v) {
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form "
 				"done with nauty_interface_matrix_int, "
-				"Ago=" << ago << endl;
+				"Ago=" << Ago << endl;
 	}
 	if (verbose_level > 5) {
 		int h;
@@ -279,15 +279,13 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 
 	FREE_OBJECT(Inc_out);
 
-	longinteger_object Ago;
-
 
 	A_perm = NEW_OBJECT(action);
 
 	if (f_v) {
 		cout << "set_stabilizer_of_incma_object before init_permutation_group_from_generators" << endl;
 	}
-	Ago.create(ago, __FILE__, __LINE__);
+
 	A_perm->init_permutation_group_from_generators(N,
 		TRUE, Ago,
 		Aut_counter, Aut,
