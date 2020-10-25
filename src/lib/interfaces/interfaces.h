@@ -581,6 +581,8 @@ class interface_projective {
 	int decomposition_by_element_power;
 	std::string decomposition_by_element_data;
 	std::string decomposition_by_element_fname_base;
+
+
 	int f_canonical_form_PG;
 	projective_space_object_classifier_description *Canonical_form_PG_Descr;
 

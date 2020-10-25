@@ -906,6 +906,10 @@ public:
 		action *default_action,
 		longinteger_object &full_group_order,
 		std::ostream &ost);
+	void write_orbit_summary(std::string &fname,
+			action *default_action,
+			longinteger_object &full_group_order,
+			int verbose_level);
 	void print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 		int i, action *default_action,
 		strong_generators *gens, std::ostream &ost);

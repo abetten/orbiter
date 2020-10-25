@@ -257,7 +257,8 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph_with_part
 	int *Aut;
 	int *Base, *Transversal_length, *partitions;
 	long int *Base_lint;
-	int Aut_counter = 0, Base_length = 0, Ago = 0;
+	int Aut_counter = 0, Base_length = 0;
+	longinteger_object Ago;
 	int i, u, a;
 	longinteger_object ago;
 	nauty_interface Nau;
@@ -366,7 +367,8 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph_with_part
 
 	A = NEW_OBJECT(action);
 
-	ago.create(Ago, __FILE__, __LINE__);
+	Ago.assign_to(ago);
+	//ago.create(Ago, __FILE__, __LINE__);
 
 	A->init_permutation_group_from_generators(n,
 		FALSE, ago,
@@ -461,7 +463,8 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph(
 	int *Aut;
 	int *Base, *Transversal_length, *partition;
 	long int *Base_lint;
-	int Aut_counter = 0, Base_length = 0, Ago = 0;
+	int Aut_counter = 0, Base_length = 0;
+	longinteger_object Ago;
 	int i;
 	nauty_interface Nau;
 
@@ -500,8 +503,8 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph(
 	action *A;
 	longinteger_object ago;
 
-
-	ago.create(Ago, __FILE__, __LINE__);
+	Ago.assign_to(ago);
+	//ago.create(Ago, __FILE__, __LINE__);
 	A = NEW_OBJECT(action);
 
 	if (f_v) {
@@ -555,7 +558,8 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 	int *Aut;
 	int *Base, *Transversal_length, *partition;
 	long int *Base_lint;
-	int Aut_counter = 0, Base_length = 0, Ago = 0;
+	int Aut_counter = 0, Base_length = 0;
+	longinteger_object Ago;
 	int i;
 	nauty_interface Nau;
 
@@ -597,7 +601,8 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 
 	A = NEW_OBJECT(action);
 
-	ago.create(Ago, __FILE__, __LINE__);
+	ago.assign_to(Ago);
+	//ago.create(Ago, __FILE__, __LINE__);
 	A->init_permutation_group_from_generators(n,
 		TRUE, ago,
 		Aut_counter, Aut,
@@ -838,7 +843,8 @@ action *nauty_interface_with_group::create_automorphism_group_of_incidence_struc
 	int *Aut;
 	int *Base, *Transversal_length;
 	long int *Base_lint;
-	int Aut_counter = 0, Base_length = 0, Ago = 0;
+	int Aut_counter = 0, Base_length = 0;
+	longinteger_object Ago;
 	nauty_interface Nau;
 
 
@@ -912,7 +918,8 @@ action *nauty_interface_with_group::create_automorphism_group_of_incidence_struc
 
 	A = NEW_OBJECT(action);
 
-	ago.create(Ago, __FILE__, __LINE__);
+	Ago.assign_to(ago);
+	//ago.create(Ago, __FILE__, __LINE__);
 	A->init_permutation_group_from_generators(m + n,
 		TRUE, ago,
 		Aut_counter, Aut,
@@ -996,7 +1003,8 @@ void nauty_interface_with_group::do_self_dual_self_polar(int input_no,
 	int *Aut;
 	int *Base, *Transversal_length, *partitions;
 	long int *Base_lint;
-	int Aut_counter = 0, Base_length = 0, Ago = 0;
+	int Aut_counter = 0, Base_length = 0;
+	longinteger_object Ago;
 	int i; //, j;
 	nauty_interface Nau;
 
@@ -1118,7 +1126,9 @@ void nauty_interface_with_group::do_self_dual_self_polar(int input_no,
 
 
 
-	ago.create(Ago, __FILE__, __LINE__);
+	Ago.assign_to(ago);
+
+	//ago.create(Ago, __FILE__, __LINE__);
 	A.init_permutation_group_from_generators(m + n,
 		TRUE, ago,
 		Aut_counter, Aut,
@@ -1275,7 +1285,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 		int *Aut, int Aut_counter,
 		int *Base, int Base_length,
 		long int *Base_lint,
-		int *Transversal_length, int Ago,
+		int *Transversal_length, longinteger_object &Ago,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1301,7 +1311,8 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
 				"before init_permutation_group_from_generators" << endl;
 		}
-	ago.create(Ago, __FILE__, __LINE__);
+	Ago.assign_to(ago);
+	//ago.create(Ago, __FILE__, __LINE__);
 	A_perm->init_permutation_group_from_generators(N,
 		TRUE, ago,
 		Aut_counter, Aut,

@@ -309,6 +309,9 @@ public:
 	int f_surface_quartic;
 	int f_surface_clebsch;
 	int f_surface_codes;
+	int f_cubic_surface_properties;
+	std::string cubic_surface_properties_fname_csv;
+	int cubic_surface_properties_defining_q;
 
 
 		// subspace orbits:
@@ -487,6 +490,9 @@ public:
 	void do_six_arcs(
 			poset_classification_control *Control_six_arcs,
 			int f_filter_by_nb_Eckardt_points, int nb_Eckardt_points,
+			int verbose_level);
+	void do_cubic_surface_properties(
+			std::string fname_csv, int defining_q,
 			int verbose_level);
 
 

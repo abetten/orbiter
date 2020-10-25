@@ -60,13 +60,17 @@ void projective_space_object_classifier::do_the_work(
 
 
 
-	cout << "projective_space_object_classifier::do_the_work "
-			"before PA->classify_objects_using_nauty" << endl;
-	classify_objects_using_nauty(
-		verbose_level - 1);
-	cout << "projective_space_object_classifier::do_the_work "
-			"after PA->classify_objects_using_nauty" << endl;
+	if (f_v) {
+		cout << "projective_space_object_classifier::do_the_work "
+				"before PA->classify_objects_using_nauty" << endl;
+	}
 
+	classify_objects_using_nauty(verbose_level - 1);
+
+	if (f_v) {
+		cout << "projective_space_object_classifier::do_the_work "
+			"after PA->classify_objects_using_nauty" << endl;
+	}
 
 
 	cout << "projective_space_object_classifier::do_the_work We found "
@@ -181,15 +185,21 @@ void projective_space_object_classifier::classify_objects_using_nauty(
 
 	if (f_v) {
 		cout << "projective_space_object_classifier::classify_objects_using_nauty" << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "projective_space_object_classifier::classify_objects_using_nauty "
 				"before count_number_of_objects_to_test" << endl;
-		}
+	}
 	nb_objects_to_test = Descr->Data->count_number_of_objects_to_test(
 		verbose_level - 1);
+
+	if (f_v) {
+		cout << "projective_space_object_classifier::classify_objects_using_nauty "
+				"nb_objects_to_test = " << nb_objects_to_test << endl;
+	}
+
 
 	t0 = Os.os_ticks();
 
@@ -688,6 +698,9 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 		OiP->encoding_size(nb_rows, nb_cols, 0 /*verbose_level*/);
 		canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
+		strong_generators *SG;
+
+		SG = NULL;
 
 		if (Descr->f_load_canonical_labeling) {
 			ret = process_object_with_known_canonical_labeling(
@@ -708,14 +721,13 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 			}
 		}
 		else {
-			strong_generators *SG;
 			ret = process_object(OiP,
 					SG,
 					canonical_labeling, canonical_labeling_len,
 					idx,
 					verbose_level - 3);
 			Ago.push_back(SG->group_order_as_lint());
-			FREE_OBJECT(SG);
+			//FREE_OBJECT(SG);
 		}
 
 
@@ -729,7 +741,7 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 		if (ret) {
 
 			FREE_OBJECT(OiP);
-			//FREE_OBJECT(SG);
+			FREE_OBJECT(SG);
 			FREE_lint(canonical_labeling);
 			Fibration[idx].push_back(make_pair(file_idx, h));
 			}
@@ -778,7 +790,7 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 			OiPA = NEW_OBJECT(object_in_projective_space_with_action);
 
 			//cout << "before OiPA->init" << endl;
-			OiPA->init(OiP, Ago[h], nb_rows, nb_cols,
+			OiPA->init(OiP, Ago[h], SG, nb_rows, nb_cols,
 					canonical_labeling, 0/*verbose_level*/);
 			//cout << "after OiPA->init" << endl;
 			idx = CB->type_of[CB->n - 1];
@@ -940,9 +952,9 @@ void projective_space_object_classifier::process_set_of_points(
 
 		OiPA = NEW_OBJECT(object_in_projective_space_with_action);
 
-		OiPA->init(OiP, SG->group_order_as_lint(), nb_rows, nb_cols,
+		OiPA->init(OiP, SG->group_order_as_lint(), SG, nb_rows, nb_cols,
 				canonical_labeling, verbose_level);
-		FREE_OBJECT(SG);
+		//FREE_OBJECT(SG);
 		idx = CB->type_of[CB->n - 1];
 		CB->Type_extra_data[idx] = OiPA;
 
@@ -1029,9 +1041,9 @@ void projective_space_object_classifier::process_set_of_points_from_file(
 
 		OiPA = NEW_OBJECT(object_in_projective_space_with_action);
 
-		OiPA->init(OiP, SG->group_order_as_lint(), nb_rows, nb_cols,
+		OiPA->init(OiP, SG->group_order_as_lint(), SG, nb_rows, nb_cols,
 				canonical_labeling, verbose_level);
-		FREE_OBJECT(SG);
+		//FREE_OBJECT(SG);
 		idx = CB->type_of[CB->n - 1];
 		CB->Type_extra_data[idx] = OiPA;
 
@@ -1096,9 +1108,9 @@ void projective_space_object_classifier::process_set_of_lines_from_file(
 
 		OiPA = NEW_OBJECT(object_in_projective_space_with_action);
 
-		OiPA->init(OiP, SG->group_order_as_lint(), nb_rows, nb_cols,
+		OiPA->init(OiP, SG->group_order_as_lint(), SG, nb_rows, nb_cols,
 				canonical_labeling, verbose_level);
-		FREE_OBJECT(SG);
+		//FREE_OBJECT(SG);
 		idx = CB->type_of[CB->n - 1];
 		CB->Type_extra_data[idx] = OiPA;
 
@@ -1163,9 +1175,9 @@ void projective_space_object_classifier::process_set_of_packing(
 
 		OiPA = NEW_OBJECT(object_in_projective_space_with_action);
 
-		OiPA->init(OiP, SG->group_order_as_lint(), nb_rows, nb_cols,
+		OiPA->init(OiP, SG->group_order_as_lint(), SG, nb_rows, nb_cols,
 				canonical_labeling, verbose_level);
-		FREE_OBJECT(SG);
+		//FREE_OBJECT(SG);
 		idx = CB->type_of[CB->n - 1];
 		CB->Type_extra_data[idx] = OiPA;
 

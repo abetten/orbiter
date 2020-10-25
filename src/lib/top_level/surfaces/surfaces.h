@@ -737,6 +737,9 @@ public:
 		std::vector<std::string> &transform_coeffs,
 		std::vector<int> &f_inverse_transform,
 		int verbose_level);
+	void compute_group(projective_space_with_action *PA,
+			int verbose_level);
+
 };
 
 

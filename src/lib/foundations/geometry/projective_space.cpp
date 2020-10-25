@@ -4074,9 +4074,13 @@ void projective_space::report_summary(ostream &ost)
 	ost << "Number of points on a line = " << k << "\\\\" << endl;
 }
 
-void projective_space::report(ostream &ost)
+void projective_space::report(ostream &ost, int verbose_level)
 {
-	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::report" << endl;
+	}
 
 	ost << "\\small" << endl;
 	ost << "\\arraycolsep=2pt" << endl;
@@ -4094,7 +4098,15 @@ void projective_space::report(ostream &ost)
 	//ost << "\\section{The Finite Field with $" << q << "$ Elements}" << endl;
 	//F->cheat_sheet(ost, verbose_level);
 
+#if 0
+	if (f_v) {
+		cout << "projective_space::report before incidence_matrix_save_csv" << endl;
+	}
 	incidence_matrix_save_csv();
+	if (f_v) {
+		cout << "projective_space::report after incidence_matrix_save_csv" << endl;
+	}
+#endif
 
 	if (n == 2) {
 		//ost << "\\clearpage" << endl << endl;
@@ -4158,7 +4170,13 @@ void projective_space::report(ostream &ost)
 			ost << "\\subsection{The Subspaces of dimension " << k << " of ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
 		}
 		//ost << "\\section{Subspaces of dimension " << k << "}" << endl;
+		if (f_v) {
+			cout << "projective_space::report before cheat_sheet_subspaces, k=" << k << endl;
+		}
 		cheat_sheet_subspaces(ost, k, verbose_level);
+		if (f_v) {
+			cout << "projective_space::report after cheat_sheet_subspaces, k=" << k << endl;
+		}
 	}
 
 
@@ -4208,6 +4226,10 @@ void projective_space::report(ostream &ost)
 	FREE_OBJECT(Poly2);
 	FREE_OBJECT(Poly3);
 	FREE_OBJECT(Poly4);
+
+	if (f_v) {
+		cout << "projective_space::report done" << endl;
+	}
 
 }
 

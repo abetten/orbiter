@@ -148,7 +148,7 @@ public:
 
 	object_in_projective_space *OiP;
 		// do not free
-	//strong_generators *Aut_gens;
+	strong_generators *Aut_gens;
 		// generators for the automorphism group
 	long int ago;
 	int nb_rows, nb_cols;
@@ -160,11 +160,11 @@ public:
 	void null();
 	void freeself();
 	void init(object_in_projective_space *OiP,
-		//strong_generators *Aut_gens,
-		long int ago,
-		int nb_rows, int nb_cols,
-		long int *canonical_labeling,
-		int verbose_level);
+			long int ago,
+			strong_generators *Aut_gens,
+			int nb_rows, int nb_cols,
+			long int *canonical_labeling,
+			int verbose_level);
 #if 0
 	void init_known_ago(
 		object_in_projective_space *OiP,

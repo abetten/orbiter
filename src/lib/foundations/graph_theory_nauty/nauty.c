@@ -252,7 +252,7 @@ int *aut;
 int aut_counter;
 int *base;
 int base_length;
-int ago;
+long int ago;
 int *transversal_length;
 /* Abdullah 2019 */
 

@@ -1151,7 +1151,7 @@ public:
 			int *Aut, int Aut_counter,
 			int *Base, int Base_length,
 			long int *Base_lint,
-			int *Transversal_length, int Ago,
+			int *Transversal_length, longinteger_object &Ago,
 			int verbose_level);
 
 };

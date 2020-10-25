@@ -322,16 +322,9 @@ public:
 	int f_write_data_files;
 	int f_T; // draw tree file (each level)
 	int f_t; // draw tree file (only last level)
-	//int f_Log; // log nodes (each level)
-	//int f_log; // log nodes (only last level)
 	int f_print_only;
 	int f_find_group_order;
 	int find_group_order;
-
-	//int f_has_tools_path;
-	//const char *tools_path;
-
-
 
 	int f_recover;
 	std::string recover_fname;
@@ -374,22 +367,12 @@ public:
 	int f_draw_schreier_trees;
 		std::string schreier_tree_prefix;
 			// comes after problem_label_with_path
-#if 0
-		int schreier_tree_xmax; // = 1000000;
-		int schreier_tree_ymax; // =  500000;
-		int schreier_tree_f_circletext; // = TRUE;
-		int schreier_tree_rad; // = 25000;
-		int schreier_tree_f_embedded;
-		int schreier_tree_f_sideways;
-		double schreier_tree_scale;
-		double schreier_tree_line_width;
-#endif
 
-		int f_problem_label;
-		std::string problem_label;
+	int f_problem_label;
+	std::string problem_label;
 
-		int f_path;
-		std::string path;
+	int f_path;
+	std::string path;
 
 
 	poset_classification_control();

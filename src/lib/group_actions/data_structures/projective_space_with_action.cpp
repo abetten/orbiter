@@ -170,7 +170,8 @@ void projective_space_with_action::canonical_labeling(
 	int nb_rows, nb_cols;
 	int *Aut, Aut_counter;
 	int *Base, Base_length;
-	int *Transversal_length, Ago;
+	int *Transversal_length;
+	longinteger_object Ago;
 	int N, i;
 	nauty_interface Nau;
 
@@ -291,7 +292,8 @@ strong_generators
 	int *Aut, Aut_counter;
 	int *Base, Base_length;
 	long int *Base_lint;
-	int *Transversal_length, Ago;
+	int *Transversal_length;
+	longinteger_object Ago;
 	int N, i, j, a, L;
 	combinatorics_domain Combi;
 	file_io Fio;
@@ -316,7 +318,7 @@ strong_generators
 	}
 	if (verbose_level > 5) {
 		cout << "projective_space_with_action::set_stabilizer_of_object Incma:" << endl;
-		int_matrix_print_tight(Incma, nb_rows, nb_cols);
+		//int_matrix_print_tight(Incma, nb_rows, nb_cols);
 	}
 
 	//canonical_labeling = NEW_int(nb_rows + nb_cols);
@@ -391,12 +393,12 @@ strong_generators
 	}
 	if (verbose_level > 5) {
 		int h;
-		int degree = nb_rows +  nb_cols;
+		//int degree = nb_rows +  nb_cols;
 
 		for (h = 0; h < Aut_counter; h++) {
 			cout << "aut generator " << h << " / "
 					<< Aut_counter << " : " << endl;
-			Combi.perm_print(cout, Aut + h * degree, degree);
+			//Combi.perm_print(cout, Aut + h * degree, degree);
 			cout << endl;
 		}
 	}
@@ -406,7 +408,7 @@ strong_generators
 	if (f_vvv) {
 		cout << "projective_space_with_action::set_stabilizer_of_object "
 				"labeling:" << endl;
-		lint_vec_print(cout, canonical_labeling, canonical_labeling_len);
+		//lint_vec_print(cout, canonical_labeling, canonical_labeling_len);
 		cout << endl;
 	}
 

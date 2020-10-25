@@ -1208,6 +1208,7 @@ void linear_group::init_subgroup_by_generators(
 	label_tex.append(str.str());
 	label_tex.append(" order ");
 	label_tex.append(subgroup_order_text);
+	label_tex.append("}");
 
 	if (f_v) {
 		cout << "linear_group::init_subgroup_by_generators "

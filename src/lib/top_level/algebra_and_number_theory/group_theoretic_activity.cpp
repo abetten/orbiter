@@ -131,7 +131,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 	if (Descr->f_report) {
 		if (!Descr->f_draw_options) {
-			cout << "please use -draw_options" << endl;
+			cout << "for a report, please use -draw_options" << endl;
 			exit(1);
 		}
 		report(Descr->draw_options, verbose_level);
@@ -307,6 +307,10 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		do_six_arcs(Descr->Control_six_arcs,
 				Descr->f_filter_by_nb_Eckardt_points, Descr->nb_Eckardt_points,
 				verbose_level);
+	}
+	else if (Descr->f_cubic_surface_properties) {
+		do_cubic_surface_properties(Descr->cubic_surface_properties_fname_csv,
+				Descr->cubic_surface_properties_defining_q, verbose_level);
 	}
 
 	// spreads:
@@ -2211,7 +2215,9 @@ void group_theoretic_activity::orbits_on_subspaces(int verbose_level)
 		Control = Descr->Control;
 	}
 	else {
-		Control = NEW_OBJECT(poset_classification_control);
+		cout << "please use option -poset_classification_control" << endl;
+		exit(1);
+		//Control = NEW_OBJECT(poset_classification_control);
 	}
 
 	Control->f_depth = TRUE;

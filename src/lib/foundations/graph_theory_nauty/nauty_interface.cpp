@@ -26,6 +26,7 @@ using namespace std;
 
 #define MAXN 22000
 
+
 // must be defined before reading nauty.h
 
 
@@ -73,7 +74,8 @@ void nauty_interface::nauty_interface_graph_bitvec(int v, bitvector *Bitvec,
 	int *labeling, int *partition, 
 	int *Aut, int &Aut_counter, 
 	int *Base, int &Base_length, 
-	int *Transversal_length, int &Ago, int verbose_level)
+	int *Transversal_length, longinteger_object &Ago,
+	int verbose_level)
 {
 #if HAS_NAUTY
 	int f_v = (verbose_level >= 1);
@@ -148,7 +150,10 @@ void nauty_interface::nauty_interface_graph_bitvec(int v, bitvector *Bitvec,
 		labeling[i] = lab[i];
 		}
 #if 1
-	Ago = ago;
+	//Ago = ago;
+	longinteger_domain Dom;
+
+	Dom.multiply_up(Ago, transversal_length, base_length, 0 /* verbose_level*/);
 	Base_length = base_length;
 	for (i = base_length - 1; i >= 0; i--) {
 		Base[base_length - 1 - i] = base[i];
@@ -174,7 +179,8 @@ void nauty_interface::nauty_interface_graph_int(int v, int *Adj,
 	int *labeling, int *partition, 
 	int *Aut, int &Aut_counter, 
 	int *Base, int &Base_length, 
-	int *Transversal_length, int &Ago, int verbose_level)
+	int *Transversal_length, longinteger_object &Ago,
+	int verbose_level)
 {
 #if HAS_NAUTY
 	int f_v = (verbose_level >= 1);
@@ -238,7 +244,10 @@ void nauty_interface::nauty_interface_graph_int(int v, int *Adj,
 		labeling[i] = lab[i];
 		}
 #if 1
-	Ago = ago;
+	//Ago = ago;
+	longinteger_domain Dom;
+
+	Dom.multiply_up(Ago, transversal_length, base_length, 0 /* verbose_level*/);
 	Base_length = base_length;
 	for (i = base_length - 1; i >= 0; i--) {
 		Base[base_length - 1 - i] = base[i];
@@ -264,7 +273,7 @@ void nauty_interface::nauty_interface_int(int v, int b, int *X, int nb_inc,
 	int *labeling, int *partition, 
 	int *Aut, int &Aut_counter, 
 	int *Base, int &Base_length, 
-	int *Transversal_length, int &Ago)
+	int *Transversal_length, longinteger_object &Ago)
 {
 #if HAS_NAUTY
 	static DEFAULTOPTIONS(options);
@@ -335,7 +344,10 @@ void nauty_interface::nauty_interface_int(int v, int b, int *X, int nb_inc,
 		labeling[i] = lab[i];
 		}
 #if 1
-	Ago = ago;
+	//Ago = ago;
+	longinteger_domain Dom;
+
+	Dom.multiply_up(Ago, transversal_length, base_length, 0 /* verbose_level*/);
 	Base_length = base_length;
 	for (i = base_length - 1; i >= 0; i--) {
 		Base[base_length - 1 - i] = base[i];
@@ -357,7 +369,7 @@ void nauty_interface::nauty_interface_low_level(int v, int b, int *X, int nb_inc
 	int *labeling, int *partition, 
 	int *Aut, int &Aut_counter, 
 	int *Base, int &Base_length, 
-	int *Transversal_length, int &Ago)
+	int *Transversal_length, longinteger_object &Ago)
 {
 #if HAS_NAUTY
 	static DEFAULTOPTIONS(options);
@@ -429,7 +441,10 @@ void nauty_interface::nauty_interface_low_level(int v, int b, int *X, int nb_inc
 		labeling[i] = lab[i];
 	}
 #if 1
-	Ago = ago;
+	//Ago = ago;
+	longinteger_domain Dom;
+
+	Dom.multiply_up(Ago, transversal_length, base_length, 0 /* verbose_level*/);
 	Base_length = base_length;
 	for (i = base_length - 1; i >= 0; i--) {
 		Base[base_length - 1 - i] = base[i];
@@ -451,7 +466,7 @@ void nauty_interface::nauty_interface_matrix(int *M, int v, int b,
 	int *labeling, int *partition, 
 	int *Aut, int &Aut_counter, 
 	int *Base, int &Base_length, 
-	int *Transversal_length, int &Ago)
+	int *Transversal_length, longinteger_object &Ago)
 {
 #if HAS_NAUTY
 	static DEFAULTOPTIONS(options);
@@ -512,7 +527,10 @@ void nauty_interface::nauty_interface_matrix(int *M, int v, int b,
 		labeling[i] = lab[i];
 	}
 #if 1
-	Ago = ago;
+	//Ago = ago;
+	longinteger_domain Dom;
+
+	Dom.multiply_up(Ago, transversal_length, base_length, 0 /* verbose_level*/);
 	Base_length = base_length;
 	for (i = base_length - 1; i >= 0; i--) {
 		Base[base_length - 1 - i] = base[i];
@@ -534,7 +552,7 @@ void nauty_interface::nauty_interface_matrix_int(int *M, int v, int b,
 	int *labeling, int *partition, 
 	int *Aut, int &Aut_counter, 
 	int *Base, int &Base_length, 
-	int *Transversal_length, int &Ago, int verbose_level)
+	int *Transversal_length, longinteger_object &Ago, int verbose_level)
 {
 #if HAS_NAUTY
 	int f_v = (verbose_level >= 1);
@@ -545,7 +563,7 @@ void nauty_interface::nauty_interface_matrix_int(int *M, int v, int b,
 	int m, n, i, j, p1, p2;
 
 	if (f_v) {
-		cout << "nauty_interface_matrix_int "
+		cout << "nauty_interface::nauty_interface_matrix_int "
 				"v=" << v << " b=" << b << endl;
 	}
 	options.getcanon = TRUE;
@@ -559,11 +577,11 @@ void nauty_interface::nauty_interface_matrix_int(int *M, int v, int b,
 
 	// global variables in nauty.c:
 	if (f_vv) {
-		cout << "nauty_interface_matrix_int before nauty_interface_allocate_data" << endl;
+		cout << "nauty_interface::nauty_interface_matrix_int before nauty_interface_allocate_data" << endl;
 	}
 	nauty_interface_allocate_data(n);
 	if (f_vv) {
-		cout << "nauty_interface_matrix_int after nauty_interface_allocate_data" << endl;
+		cout << "nauty_interface::nauty_interface_matrix_int after nauty_interface_allocate_data" << endl;
 	}
 
 
@@ -571,13 +589,13 @@ void nauty_interface::nauty_interface_matrix_int(int *M, int v, int b,
 
 	m = (n + WORDSIZE - 1) / WORDSIZE;
 	if (n >= MAXN) {
-		cout << "nauty_interface_matrix_int n >= MAXN" << endl;
-		cout << "nauty_interface_matrix_int n = " << n << endl;
-		cout << "nauty_interface_matrix_int MAXN = " << (int)MAXN << endl;
+		cout << "nauty_interface::nauty_interface_matrix_int n >= MAXN" << endl;
+		cout << "nauty_interface::nauty_interface_matrix_int n = " << n << endl;
+		cout << "nauty_interface::nauty_interface_matrix_int MAXN = " << (int)MAXN << endl;
 		exit(1);
 	}
 	if (f_vv) {
-		cout << "nauty_interface_matrix_int n = " << n << " m=" << m << endl;
+		cout << "nauty_interface::nauty_interface_matrix_int n = " << n << " m=" << m << endl;
 	}
 	for (i = 0; i < n; i++) {
 		row = GRAPHROW(g, i, m);
@@ -585,7 +603,7 @@ void nauty_interface::nauty_interface_matrix_int(int *M, int v, int b,
 	}
 
 	if (f_vv) {
-		cout << "nauty_interface_matrix_int init adjacency" << endl;
+		cout << "nauty_interface::nauty_interface_matrix_int init adjacency" << endl;
 	}
 
 	for (i = 0; i < v; i++) {
@@ -603,7 +621,7 @@ void nauty_interface::nauty_interface_matrix_int(int *M, int v, int b,
 	}
 
 	if (f_vv) {
-		cout << "nauty_interface_matrix_int init lab[] and ptn[]" << endl;
+		cout << "nauty_interface::nauty_interface_matrix_int init lab[] and ptn[]" << endl;
 	}
 	for (i = 0; i < n; i++) {
 		lab[i] = i;
@@ -611,25 +629,38 @@ void nauty_interface::nauty_interface_matrix_int(int *M, int v, int b,
 	}
 	//ptn[v - 1] = 0;
 	if (f_vv) {
-		cout << "nauty_interface_matrix_int, calling densenauty" << endl;
+		cout << "nauty_interface::nauty_interface_matrix_int, calling densenauty" << endl;
 	}
 	//	nauty(g, lab, ptn, NILSET, orbits,
 	//&options, &stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
 	densenauty(g, lab, ptn, orbits, &options, &stats, m, n, canong);
 	if (f_vv) {
-		cout << "nauty_interface_matrix_int, after densenauty" << endl;
-		cout << "nauty_interface_matrix_int, ago=" << ago << endl;
-		cout << "nauty_interface_matrix_int, numnodes=" << stats.numnodes << endl;
+		cout << "nauty_interface::nauty_interface_matrix_int, after densenauty" << endl;
+		cout << "nauty_interface::nauty_interface_matrix_int, ago=" << ago << endl;
+		cout << "nauty_interface::nauty_interface_matrix_int, numnodes=" << stats.numnodes << endl;
 	}
 	for (i = 0; i < n; i++) {
 		labeling[i] = lab[i];
 	}
 #if 1
-	Ago = ago;
+	//Ago = ago;
+	longinteger_domain Dom;
+
+	Dom.multiply_up(Ago, transversal_length, base_length, 0 /* verbose_level*/);
 	Base_length = base_length;
 	for (i = base_length - 1; i >= 0; i--) {
 		Base[base_length - 1 - i] = base[i];
 		Transversal_length[base_length - 1 - i] = transversal_length[i];
+	}
+	if (f_vv) {
+		cout << "transversal_length : ";
+		for (i = base_length - 1; i >= 0; i--) {
+			cout << transversal_length[i];
+			if (i > 0) {
+				cout << " * ";
+			}
+		}
+		cout << endl;
 	}
 
 	for (i = 0; i < aut_counter; i++) {
@@ -641,6 +672,9 @@ void nauty_interface::nauty_interface_matrix_int(int *M, int v, int b,
 #endif
 	nauty_interface_free_data();
 #endif
+	if (f_v) {
+		cout << "nauty_interface::nauty_interface_matrix_int done" << endl;
+	}
 }
 
 #if 1
