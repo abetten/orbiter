@@ -298,6 +298,62 @@ void schreier::print_and_list_orbit_and_stabilizer_tex(int i,
 	FREE_OBJECT(gens);
 }
 
+void schreier::write_orbit_summary(std::string &fname,
+		action *default_action,
+		longinteger_object &full_group_order,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "schreier::write_orbit_summary" << endl;
+	}
+	long int *Rep;
+	long int *Stab_order;
+	long int *Orbit_length;
+	int orbit_no;
+
+	Rep = NEW_lint(nb_orbits);
+	Stab_order = NEW_lint(nb_orbits);
+	Orbit_length = NEW_lint(nb_orbits);
+
+	for (orbit_no = 0; orbit_no < nb_orbits; orbit_no++) {
+		Rep[orbit_no] = orbit[orbit_first[orbit_no]];
+		Orbit_length[orbit_no] = orbit_len[orbit_no];
+
+		strong_generators *gens;
+
+		gens = stabilizer_orbit_rep(default_action,
+			full_group_order, orbit_no, 0 /*verbose_level */);
+
+		Stab_order[orbit_no] = gens->group_order_as_lint();
+
+	}
+
+	file_io Fio;
+	long int *Vec[3];
+	const char *column_label[] = {"Rep", "StabOrder", "OrbitLength"};
+
+	Vec[0] = Rep;
+	Vec[1] = Stab_order;
+	Vec[2] = Orbit_length;
+
+	Fio.lint_vec_array_write_csv(3 /* nb_vecs */, Vec, nb_orbits,
+			fname, column_label);
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+	FREE_lint(Rep);
+	FREE_lint(Stab_order);
+	FREE_lint(Orbit_length);
+	if (f_v) {
+		cout << "schreier::write_orbit_summary done" << endl;
+	}
+}
+
 void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 	int i, action *default_action,
 	strong_generators *gens, std::ostream &ost)

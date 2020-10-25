@@ -3205,101 +3205,17 @@ void algebra_global_with_action::orbits_on_polynomials(
 	//linear_group_description *Descr;
 	//linear_group *LG;
 
-#if 0
-	int f_linear = FALSE;
-	int q;
-	int f_degree = FALSE;
-	int degree = 0;
-	int nb_identify = 0;
-	const char *Identify_label[1000];
-	const char *Identify_coeff_text[1000];
-	int f_stabilizer = FALSE;
-	int f_draw_tree = FALSE;
-	int f_test_orbit = FALSE;
-	int test_orbit_idx = 0;
-
-
-	int i;
-
-	for (i = 1; i < argc; i++) {
-		if (strcmp(argv[i], "-v") == 0) {
-			verbose_level = atoi(argv[++i]);
-			cout << "-v " << verbose_level << endl;
-			}
-		else if (strcmp(argv[i], "-degree") == 0) {
-			f_degree = TRUE;
-			degree = atoi(argv[++i]);
-			cout << "-degree " << degree << endl;
-			}
-		else if (strcmp(argv[i], "-linear") == 0) {
-			f_linear = TRUE;
-			Descr = new linear_group_description;
-			i += Descr->read_arguments(argc - (i - 1),
-					argv + i, verbose_level);
-
-			cout << "after Descr->read_arguments" << endl;
-			}
-		else if (strcmp(argv[i], "-identify") == 0) {
-			Identify_label[nb_identify] = argv[++i];
-			Identify_coeff_text[nb_identify] = argv[++i];
-			cout << "-identify " << Identify_label[nb_identify]
-				<< " " << Identify_coeff_text[nb_identify] << endl;
-			nb_identify++;
-
-			}
-		else if (strcmp(argv[i], "-stabilizer") == 0) {
-			f_stabilizer = TRUE;
-			cout << "-stabilizer " << endl;
-			}
-		else if (strcmp(argv[i], "-draw_tree") == 0) {
-			f_draw_tree = TRUE;
-			cout << "-draw_tree " << endl;
-			}
-		else if (strcmp(argv[i], "-test_orbit") == 0) {
-			f_test_orbit = TRUE;
-			test_orbit_idx = atoi(argv[++i]);
-			cout << "-test_orbit " << test_orbit_idx << endl;
-			}
-		}
-
-	if (!f_linear) {
-		cout << "please use option -linear ..." << endl;
-		exit(1);
-		}
-	if (!f_degree) {
-		cout << "please use option -degree <degree>" << endl;
-		exit(1);
-		}
-
-	//int f_v = (verbose_level >= 1);
-
-
-	F = NEW_OBJECT(finite_field);
-	F->init(Descr->input_q, 0);
-
-	Descr->F = F;
-	q = Descr->input_q;
-
-
-
-	LG = NEW_OBJECT(linear_group);
-	if (f_v) {
-		cout << "before LG->init, creating the group" << endl;
-		}
-
-	LG->init(Descr, verbose_level);
-
-	cout << "after LG->init" << endl;
-#endif
 
 	finite_field *F;
 	action *A;
 	//matrix_group *M;
 	int n;
 	//int degree;
+	longinteger_object go;
 
 	A = LG->A_linear;
 	F = A->matrix_group_finite_field();
+	A->group_order(go);
 
 	n = A->matrix_group_dimension();
 
@@ -3355,9 +3271,40 @@ void algebra_global_with_action::orbits_on_polynomials(
 	//Sch = new schreier;
 	//A2->all_point_orbits(*Sch, verbose_level);
 
-	cout << "computing orbits:" << endl;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_on_polynomials "
+				"before A->Strong_gens->orbits_on_points_schreier" << endl;
+	}
+
 
 	Sch = A->Strong_gens->orbits_on_points_schreier(A2, verbose_level);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_on_polynomials "
+				"after A->Strong_gens->orbits_on_points_schreier" << endl;
+	}
+
+
+	char str[1000];
+	string fname;
+
+	sprintf(str, "poly_orbits_d%d_n%d_q%d.csv", degree_of_poly, n - 1, F->q);
+	fname.assign(str);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_on_polynomials "
+				"before Sch->write_orbit_summary" << endl;
+	}
+	Sch->write_orbit_summary(fname,
+			A /*default_action*/,
+			go,
+			verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_on_polynomials "
+				"after Sch->write_orbit_summary" << endl;
+	}
+
 
 	orbit_transversal *T;
 
@@ -3376,6 +3323,7 @@ void algebra_global_with_action::orbits_on_polynomials(
 
 	Sch->print_orbit_reps(cout);
 
+#if 0
 	{
 	int pt = 814083;
 	if (Sch->degree >= pt) {
@@ -3416,14 +3364,16 @@ void algebra_global_with_action::orbits_on_polynomials(
 		cout << "point " << pt << " lies in orbit " << orbit_idx << endl;
 	}
 	}
+#endif
 
 	cout << "orbit reps:" << endl;
 
-	char fname[1000];
 	char title[1000];
 	char author[1000];
 
-	sprintf(fname, "poly_orbits_d%d_n%d_q%d.tex", degree_of_poly, n - 1, F->q);
+	sprintf(str, "poly_orbits_d%d_n%d_q%d.tex", degree_of_poly, n - 1, F->q);
+	fname.assign(str);
+
 	sprintf(title, "Varieties of degree %d in PG(%d,%d)", degree_of_poly, n - 1, F->q);
 	sprintf(author, "Orbiter");
 	{
@@ -3576,7 +3526,7 @@ void algebra_global_with_action::orbits_on_polynomials(
 				f << "$\\\\" << endl;
 
 
-				cout << "We found " << nb_pts << " points on the curve" << endl;
+				cout << "We found " << nb_pts << " points in the variety" << endl;
 				cout << "They are : ";
 				lint_vec_print(cout, Pts, nb_pts);
 				cout << endl;
@@ -4135,51 +4085,6 @@ void algebra_global_with_action::orbits_on_polynomials(
 		cout << "algebra_global_with_action::orbits_on_polynomials done" << endl;
 	}
 }
-
-#if 0
-void polynomial_orbits_callback_print_function(
-		stringstream &ost, void *data, void *callback_data)
-{
-	homogeneous_polynomial_domain *HPD =
-			(homogeneous_polynomial_domain *) callback_data;
-
-	int *coeff;
-	int *i_data = (int *) data;
-
-	coeff = NEW_int(HPD->get_nb_monomials());
-	HPD->unrank_coeff_vector(coeff, i_data[0]);
-	//int_vec_print(cout, coeff, HPD->nb_monomials);
-	//cout << " = ";
-	HPD->print_equation_str(ost, coeff);
-	//ost << endl;
-	FREE_int(coeff);
-}
-
-void polynomial_orbits_callback_print_function2(
-		stringstream &ost, void *data, void *callback_data)
-{
-	homogeneous_polynomial_domain *HPD =
-			(homogeneous_polynomial_domain *) callback_data;
-
-	int *coeff;
-	int *i_data = (int *) data;
-	std::vector<long int> Points;
-	//long int *Pts;
-	//int nb_pts;
-
-	//Pts = NEW_lint(HPD->P->N_points);
-	coeff = NEW_int(HPD->get_nb_monomials());
-	HPD->unrank_coeff_vector(coeff, i_data[0]);
-	HPD->enumerate_points(coeff, Points,  0 /*verbose_level*/);
-	ost << Points.size();
-	//int_vec_print(cout, coeff, HPD->nb_monomials);
-	//cout << " = ";
-	//HPD->print_equation_str(ost, coeff);
-	//ost << endl;
-	FREE_int(coeff);
-	//FREE_lint(Pts);
-}
-#endif
 
 
 

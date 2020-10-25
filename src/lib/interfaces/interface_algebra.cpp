@@ -193,6 +193,7 @@ void interface_algebra::read_arguments(int argc,
 		if (strcmp(argv[i], "-linear_group") == 0) {
 			f_linear_group = TRUE;
 			Linear_group_description = NEW_OBJECT(linear_group_description);
+			cout << "reading -linear_group" << endl;
 			i += Linear_group_description->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
@@ -207,6 +208,7 @@ void interface_algebra::read_arguments(int argc,
 			f_group_theoretic_activity = TRUE;
 			Group_theoretic_activity_description =
 					NEW_OBJECT(group_theoretic_activity_description);
+			cout << "reading -group_theoretic_activities" << endl;
 			i += Group_theoretic_activity_description->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
@@ -220,6 +222,7 @@ void interface_algebra::read_arguments(int argc,
 		else if (strcmp(argv[i], "-poset_classification_control") == 0) {
 			f_poset_classification_control = TRUE;
 			Control = NEW_OBJECT(poset_classification_control);
+			cout << "reading -poset_classification_control" << endl;
 			i += Control->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
@@ -629,39 +632,39 @@ void interface_algebra::do_cheat_sheet_GF(int q, int f_poly, std::string &poly, 
 
 
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
 
-	//algebra_global AG;
+		//algebra_global AG;
 
-	//AG.cheat_sheet_GF(q, f_override_poly, my_override_poly, verbose_level);
-	latex_interface L;
+		//AG.cheat_sheet_GF(q, f_override_poly, my_override_poly, verbose_level);
+		latex_interface L;
 
-	//F.init(q), verbose_level - 2);
+		//F.init(q), verbose_level - 2);
 
-	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
-		title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
-			TRUE /* f_12pt */,
-			TRUE /* f_enlarged_page */,
-			TRUE /* f_pagenumbers */,
-			NULL /* extra_praeamble */);
-
-
-	F.cheat_sheet(f, verbose_level);
-
-	F.cheat_sheet_main_table(f, verbose_level);
-
-	F.cheat_sheet_addition_table(f, verbose_level);
-
-	F.cheat_sheet_multiplication_table(f, verbose_level);
-
-	F.cheat_sheet_power_table(f, verbose_level);
+		L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
+			title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
+				TRUE /* f_12pt */,
+				TRUE /* f_enlarged_page */,
+				TRUE /* f_pagenumbers */,
+				NULL /* extra_praeamble */);
 
 
+		F.cheat_sheet(f, verbose_level);
+
+		F.cheat_sheet_main_table(f, verbose_level);
+
+		F.cheat_sheet_addition_table(f, verbose_level);
+
+		F.cheat_sheet_multiplication_table(f, verbose_level);
+
+		F.cheat_sheet_power_table(f, verbose_level);
 
 
 
-	L.foot(f);
+
+
+		L.foot(f);
 	}
 
 	file_io Fio;

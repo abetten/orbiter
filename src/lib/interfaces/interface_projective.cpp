@@ -477,7 +477,8 @@ void interface_projective::do_cheat_sheet_PG(orbiter_session *Session,
 
 
 	if (f_v) {
-		cout << "interface_projective::do_cheat_sheet_PG" << endl;
+		cout << "interface_projective::do_cheat_sheet_PG verbose_level="
+				<< verbose_level << endl;
 	}
 	finite_field *F;
 
@@ -522,10 +523,16 @@ void interface_projective::do_cheat_sheet_PG(orbiter_session *Session,
 
 	PA = NEW_OBJECT(projective_space_with_action);
 
+	if (f_v) {
+		cout << "interface_projective::do_cheat_sheet_PG before PA->init" << endl;
+	}
 	PA->init(F, n,
 		f_semilinear,
 		TRUE /*f_init_incidence_structure*/,
 		0 /* verbose_level */);
+	if (f_v) {
+		cout << "interface_projective::do_cheat_sheet_PG after PA->init" << endl;
+	}
 
 
 
@@ -562,9 +569,19 @@ void interface_projective::do_cheat_sheet_PG(orbiter_session *Session,
 					NULL /* extra_praeamble */);
 
 
-			PA->P->report(ost);
+			if (f_v) {
+				cout << "interface_projective::do_cheat_sheet_PG before PA->P->report" << endl;
+			}
+			PA->P->report(ost, verbose_level);
+			if (f_v) {
+				cout << "interface_projective::do_cheat_sheet_PG after PA->P->report" << endl;
+			}
 
 			if (f_decomposition_by_element) {
+
+				if (f_v) {
+					cout << "interface_projective::do_cheat_sheet_PG f_decomposition_by_element" << endl;
+				}
 
 				int *Elt;
 

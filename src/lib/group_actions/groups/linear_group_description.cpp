@@ -425,7 +425,7 @@ int linear_group_description::read_arguments(
 		}
 	} // next i
 	cout << "linear_group_description::read_arguments done" << endl;
-	return i;
+	return i + 1;
 }
 
 }}

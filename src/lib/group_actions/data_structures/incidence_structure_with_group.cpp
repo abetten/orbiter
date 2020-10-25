@@ -121,7 +121,8 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	int *Base, Base_length;
 	long int *Base_lint;
 	int *Transversal_length;
-	int ago, i;
+	long int ago;
+	int i;
 
 
 	if (f_v) {

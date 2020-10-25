@@ -148,10 +148,6 @@ void surface_create::init(surface_create_description *Descr,
 	}
 
 
-	if (f_v) {
-		cout << "surface_create::init Surf->Poly2_4->get_nb_monomials() = " << Surf->Poly2_4->get_nb_monomials() << endl;
-	}
-
 
 
 	if (NT.is_prime(q)) {
@@ -1329,6 +1325,87 @@ void surface_create::apply_transformations(
 		cout << "surface_create::apply_transformations done" << endl;
 	}
 }
+
+
+void surface_create::compute_group(projective_space_with_action *PA,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+	long int a;
+	action *A;
+	char str[1000];
+
+	if (f_v) {
+		cout << "surface_create::compute_group" << endl;
+	}
+
+	A = Surf_A->A;
+
+	projective_space_object_classifier_description *Descr;
+	projective_space_object_classifier *Classifier;
+
+	Descr = NEW_OBJECT(projective_space_object_classifier_description);
+	Classifier = NEW_OBJECT(projective_space_object_classifier);
+
+	Descr->f_input = TRUE;
+	Descr->Data = NEW_OBJECT(data_input_stream);
+	Descr->Data->input_type[Descr->Data->nb_inputs] = INPUT_TYPE_SET_OF_POINTS;
+	Descr->Data->input_string[Descr->Data->nb_inputs].assign("");
+	for (i = 0; i < SO->nb_pts; i++) {
+		a = SO->Pts[i];
+		sprintf(str, "%ld", a);
+		Descr->Data->input_string[Descr->Data->nb_inputs].append(str);
+		if (i < SO->nb_pts - 1) {
+			Descr->Data->input_string[Descr->Data->nb_inputs].append(",");
+		}
+	}
+	Descr->Data->input_string2[Descr->Data->nb_inputs].assign("");
+	Descr->Data->nb_inputs++;
+
+	if (f_v) {
+		cout << "surface_create::compute_group before Classifier->do_the_work" << endl;
+	}
+
+	Classifier->do_the_work(
+			Descr,
+			PA,
+			verbose_level);
+
+	if (f_v) {
+		cout << "surface_create::compute_group after Classifier->do_the_work" << endl;
+	}
+
+	int idx;
+	long int ago;
+
+	idx = Classifier->CB->type_of[Classifier->CB->n - 1];
+
+
+	object_in_projective_space_with_action *OiPA;
+
+	OiPA = (object_in_projective_space_with_action *) Classifier->CB->Type_extra_data[idx];
+
+
+	ago = OiPA->ago;
+
+	Sg = OiPA->Aut_gens;
+
+	Sg->A = A;
+	f_has_group = TRUE;
+
+
+	if (f_v) {
+		cout << "surface_create::compute_group ago = " << ago << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "surface_create::compute_group done" << endl;
+	}
+}
+
 
 }}
 

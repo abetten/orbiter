@@ -1380,6 +1380,268 @@ void group_theoretic_activity::do_six_arcs(
 
 }
 
+void group_theoretic_activity::do_cubic_surface_properties(
+		std::string fname_csv, int defining_q,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_cubic_surface_properties" << endl;
+	}
+
+	int i;
+	finite_field *F0;
+	finite_field *F;
+	surface_domain *Surf;
+	surface_with_action *Surf_A;
+	projective_space_with_action *PA;
+	number_theory_domain NT;
+	sorting Sorting;
+	file_io Fio;
+	int f_semilinear;
+
+
+
+	F0 = NEW_OBJECT(finite_field);
+	F0->init(defining_q, 0);
+
+	F = LG->F;
+
+	f_semilinear = LG->A_linear->is_semilinear_matrix_group();
+
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_cubic_surface_properties before Surf->init" << endl;
+	}
+	Surf = NEW_OBJECT(surface_domain);
+	Surf->init(F, verbose_level - 1);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_cubic_surface_properties after Surf->init" << endl;
+	}
+
+	Surf_A = NEW_OBJECT(surface_with_action);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_cubic_surface_properties before Surf_A->init" << endl;
+	}
+	Surf_A->init(Surf, LG, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_cubic_surface_properties after Surf_A->init" << endl;
+	}
+
+	PA = NEW_OBJECT(projective_space_with_action);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_cubic_surface_properties before PA->init" << endl;
+	}
+	PA->init(
+		F, 3 /*n*/, f_semilinear,
+		TRUE /* f_init_incidence_structure */,
+		verbose_level);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_cubic_surface_properties after PA->init" << endl;
+	}
+
+
+
+	long int *M;
+	int nb_orbits, n;
+
+	Fio.lint_matrix_read_csv(fname_csv, M, nb_orbits, n, verbose_level);
+
+	if (n != 3) {
+		cout << "group_theoretic_activity::do_cubic_surface_properties n != 3" << endl;
+		exit(1);
+	}
+
+	int orbit_idx;
+
+	long int *Rep;
+	long int *Stab_order;
+	long int *Orbit_length;
+	long int *Nb_pts;
+	long int *Nb_lines;
+	long int *Nb_Eckardt_points;
+	long int *Nb_singular_pts;
+	long int *Nb_Double_points;
+	long int *Ago;
+
+	Rep = NEW_lint(nb_orbits);
+	Stab_order = NEW_lint(nb_orbits);
+	Orbit_length = NEW_lint(nb_orbits);
+	Nb_pts = NEW_lint(nb_orbits);
+	Nb_lines = NEW_lint(nb_orbits);
+	Nb_Eckardt_points = NEW_lint(nb_orbits);
+	Nb_singular_pts = NEW_lint(nb_orbits);
+	Nb_Double_points = NEW_lint(nb_orbits);
+	Ago = NEW_lint(nb_orbits);
+
+	for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
+		if (f_v) {
+			cout << "group_theoretic_activity::do_cubic_surface_properties orbit_idx = " << orbit_idx << " / " << nb_orbits << endl;
+		}
+		int coeff20[20];
+		char str[1000];
+
+
+		Rep[orbit_idx] = M[orbit_idx * 3 + 0];
+		Stab_order[orbit_idx] = M[orbit_idx * 3 + 1];
+		Orbit_length[orbit_idx] = M[orbit_idx * 3 + 2];
+
+		cout << "Rep=" << Rep[orbit_idx] << endl;
+		F0->PG_element_unrank_modified_lint(coeff20, 1, 20, Rep[orbit_idx]);
+		cout << "coeff20=";
+		int_vec_print(cout, coeff20, 20);
+		cout << endl;
+
+		surface_create_description *Descr;
+
+		Descr = NEW_OBJECT(surface_create_description);
+		Descr->f_q = TRUE;
+		Descr->q = F->q;
+		Descr->f_by_coefficients = TRUE;
+		sprintf(str, "%d,0", coeff20[0]);
+		Descr->coefficients_text.assign(str);
+		for (i = 1; i < 20; i++) {
+			sprintf(str, ",%d,%d", coeff20[i], i);
+			Descr->coefficients_text.append(str);
+		}
+		cout << "Descr->coefficients_text = " << Descr->coefficients_text << endl;
+
+
+		surface_create *SC;
+		SC = NEW_OBJECT(surface_create);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::do_cubic_surface_properties before SC->init" << endl;
+		}
+		SC->init(Descr, Surf_A, verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::do_cubic_surface_properties after SC->init" << endl;
+		}
+
+
+		if (SC->F->e == 1) {
+			SC->F->f_print_as_exponentials = FALSE;
+		}
+
+		SC->F->PG_element_normalize(SC->SO->eqn, 1, 20);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::do_cubic_surface_properties "
+					"We have created the following surface:" << endl;
+			cout << "$$" << endl;
+			SC->Surf->print_equation_tex(cout, SC->SO->eqn);
+			cout << endl;
+			cout << "$$" << endl;
+
+			cout << "$$" << endl;
+			int_vec_print(cout, SC->SO->eqn, 20);
+			cout << endl;
+			cout << "$$" << endl;
+		}
+
+
+		// compute the group of the surface:
+
+		if (f_v) {
+			cout << "group_theoretic_activity::do_cubic_surface_properties "
+					"before SC->compute_group" << endl;
+		}
+		SC->compute_group(PA, verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::do_cubic_surface_properties "
+					"after SC->compute_group" << endl;
+		}
+
+
+		Nb_pts[orbit_idx] = SC->SO->nb_pts;
+		Nb_lines[orbit_idx] = SC->SO->nb_lines;
+		Nb_Eckardt_points[orbit_idx] = SC->SO->SOP->nb_Eckardt_points;
+		Nb_singular_pts[orbit_idx] = SC->SO->SOP->nb_singular_pts;
+		Nb_Double_points[orbit_idx] = SC->SO->SOP->nb_Double_points;
+		Ago[orbit_idx] = SC->Sg->group_order_as_lint();
+
+		//SC->SO->SOP->print_everything(ost, verbose_level);
+
+
+
+
+
+
+		FREE_OBJECT(SC);
+		FREE_OBJECT(Descr);
+
+
+	}
+
+
+	string fname_data;
+
+	fname_data.assign(fname_csv);
+	chop_off_extension(fname_data);
+
+	char str[1000];
+	sprintf(str, "_F%d.csv", F->q);
+	fname_data.append(str);
+
+	long int *Vec[9];
+	char str_A[1000];
+	char str_P[1000];
+	char str_L[1000];
+	char str_E[1000];
+	char str_S[1000];
+	char str_D[1000];
+	sprintf(str_A, "Ago-%d", F->q);
+	sprintf(str_P, "Nb_P-%d", F->q);
+	sprintf(str_L, "Nb_L-%d", F->q);
+	sprintf(str_E, "Nb_E-%d", F->q);
+	sprintf(str_S, "Nb_S-%d", F->q);
+	sprintf(str_D, "Nb_D-%d", F->q);
+	const char *column_label[] = {
+			"Rep",
+			"StabOrder",
+			"OrbitLength",
+			str_A,
+			str_P,
+			str_L,
+			str_E,
+			str_S,
+			str_D,
+	};
+
+	Vec[0] = Rep;
+	Vec[1] = Stab_order;
+	Vec[2] = Orbit_length;
+	Vec[3] = Ago;
+	Vec[4] = Nb_pts;
+	Vec[5] = Nb_lines;
+	Vec[6] = Nb_Eckardt_points;
+	Vec[7] = Nb_singular_pts;
+	Vec[8] = Nb_Double_points;
+
+	Fio.lint_vec_array_write_csv(9 /* nb_vecs */, Vec, nb_orbits,
+			fname_data, column_label);
+
+	if (f_v) {
+		cout << "Written file " << fname_data << " of size " << Fio.file_size(fname_data) << endl;
+	}
+
+
+
+	FREE_lint(M);
+	FREE_OBJECT(PA);
+	FREE_OBJECT(F0);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_cubic_surface_properties done" << endl;
+	}
+}
+
+
+
+
 
 
 }}

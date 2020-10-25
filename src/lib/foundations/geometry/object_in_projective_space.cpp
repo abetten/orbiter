@@ -702,26 +702,31 @@ void object_in_projective_space::encode_point_set(
 
 	if (f_v) {
 		cout << "object_in_projective_space::encode_point_set" << endl;
-		}
+	}
 	int i, j;
 	int f_vvv = (verbose_level >= 3);
 	
 
 	C = NEW_OBJECT(tally);
 
+	if (f_v) {
+		cout << "object_in_projective_space::encode_point_set set=";
+		lint_vec_print(cout, set, sz);
+		cout << endl;
+	}
 	C->init_lint(set, sz, TRUE, 0);
 	if (C->second_nb_types > 1) {
 		cout << "object_in_projective_space::encode_point_set "
 				"The set is a multiset:" << endl;
 		C->print(FALSE /*f_backwards*/);
-		}
+	}
 
 
 	if (f_v) {
 		cout << "The type of the set is:" << endl;
 		C->print(FALSE /*f_backwards*/);
 		cout << "C->second_nb_types = " << C->second_nb_types << endl;
-		}
+	}
 
 	nb_rows = P->N_points + 1;
 	nb_cols = P->N_lines + C->second_nb_types;
@@ -739,8 +744,8 @@ void object_in_projective_space::encode_point_set(
 	for (i = 0; i < P->N_points; i++) {
 		for (j = 0; j < P->N_lines; j++) {
 			Incma[i * nb_cols + j] = P->is_incident(i, j);
-			}
 		}
+	}
 
 #if 0
 	// last columns, make zero:
@@ -766,7 +771,7 @@ void object_in_projective_space::encode_point_set(
 		if (f_vvv) {
 			cout << "j=" << j << " f2=" << f2 << " l2=" << l2
 					<< " multiplicity=" << m << endl;
-			}
+		}
 		for (h = 0; h < l2; h++) {
 			idx = C->second_sorting_perm_inv[f2 + h];
 			f = C->type_first[idx];
@@ -775,21 +780,36 @@ void object_in_projective_space::encode_point_set(
 			if (f_vvv) {
 				cout << "h=" << h << " idx=" << idx << " f=" << f
 						<< " l=" << l << " i=" << i << endl;
-				}
+			}
+			if (i > P->N_points) {
+				cout << "object_in_projective_space::encode_point_set i > P->N_points" << endl;
+				cout << "i = " << i << endl;
+				cout << "P->N_points = " << P->N_points << endl;
+				cout << "h=" << h << " idx=" << idx << " f=" << f
+						<< " l=" << l << " i=" << i << endl;
+				exit(1);
+			}
 			Incma[i * nb_cols + P->N_lines + j] = 1;
-			}	
+		}
 #if 0
 		for (h = 0; h < set_size; h++) {
 			i = set[h];
 			Incma[i * nb_cols + N_lines + j] = 1;
-			}
-#endif
 		}
+#endif
+	}
+
+	if (f_v) {
+		cout << "object_in_projective_space::encode_point_set bottom right entries" << endl;
+	}
 	// bottom right entries:
 	for (j = 0; j < C->second_nb_types; j++) {
 		Incma[P->N_points * nb_cols + P->N_lines + j] = 1;
 		}
 
+	if (f_v) {
+		cout << "object_in_projective_space::encode_point_set partition" << endl;
+	}
 	for (i = 0; i < N; i++) {
 		partition[i] = 1;
 		}
@@ -798,7 +818,7 @@ void object_in_projective_space::encode_point_set(
 	partition[nb_rows + P->N_lines - 1] = 0;
 	for (j = 0; j < C->second_nb_types; j++) {
 		partition[nb_rows + P->N_lines + j] = 0;
-		}
+	}
 	if (f_vvv) {
 		cout << "object_in_projective_space::encode_point_set "
 				"partition:" << endl;

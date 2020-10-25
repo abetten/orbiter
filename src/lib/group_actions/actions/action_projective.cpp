@@ -38,7 +38,8 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	int *Aut, Aut_counter;
 	int *Base, Base_length;
 	long int *Base_lint;
-	int *Transversal_length, Ago;
+	int *Transversal_length;
+	longinteger_object Ago;
 	int N, i, j, h;
 	file_io Fio;
 
@@ -49,7 +50,8 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		}
 
 	if (f_vv) {
-		cout << "computing the type of the set" << endl;
+		cout << "action::set_stabilizer_in_projective_space "
+				"computing the type of the set" << endl;
 		}
 
 	tally C;
@@ -62,12 +64,14 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		}
 
 	if (f_vv) {
-		cout << "The type of the set is:" << endl;
+		cout << "action::set_stabilizer_in_projective_space "
+				"The type of the set is:" << endl;
 		C.print(FALSE /*f_backwards*/);
 		cout << "C.second_nb_types = " << C.second_nb_types << endl;
 		}
 	if (f_vv) {
-		cout << "allocating data" << endl;
+		cout << "action::set_stabilizer_in_projective_space "
+				"allocating data" << endl;
 		}
 	nb_rows = P->N_points + 1;
 	nb_cols = P->N_lines + C.second_nb_types;
@@ -77,7 +81,8 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	vertex_labeling = NEW_lint(nb_rows + nb_cols);
 
 	if (f_vv) {
-		cout << "Initializing Incma" << endl;
+		cout << "action::set_stabilizer_in_projective_space "
+				"Initializing Incma" << endl;
 		}
 
 	for (i = 0; i < P->N_points; i++) {
@@ -132,8 +137,8 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		}
 
 	if (f_vvv) {
-		cout << "set_stabilizer_in_projective_space Incma:" << endl;
-		int_matrix_print(Incma, nb_rows, nb_cols);
+		cout << "action::set_stabilizer_in_projective_space Incma:" << endl;
+		//int_matrix_print(Incma, nb_rows, nb_cols);
 	}
 
 #if 0
@@ -183,7 +188,8 @@ strong_generators *action::set_stabilizer_in_projective_space(
 #endif
 
 	if (f_vv) {
-		cout << "initializing partition" << endl;
+		cout << "action::set_stabilizer_in_projective_space "
+				"initializing partition" << endl;
 		}
 	N = nb_rows + nb_cols;
 	for (i = 0; i < N; i++) {
@@ -205,7 +211,8 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		}
 
 	if (f_vv) {
-		cout << "initializing Aut, Base, Transversal_length" << endl;
+		cout << "action::set_stabilizer_in_projective_space "
+				"initializing Aut, Base, Transversal_length" << endl;
 		}
 	Aut = NEW_int(N * N);
 	Base = NEW_int(N);
@@ -214,7 +221,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	nauty_interface Nau;
 
 	if (f_v) {
-		cout << "set_stabilizer_in_projective_space, "
+		cout << "action::set_stabilizer_in_projective_space, "
 				"calling nauty_interface_matrix_int" << endl;
 		}
 	Nau.nauty_interface_matrix_int(Incma, nb_rows, nb_cols,
@@ -232,8 +239,8 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	int *Incma_out;
 	int ii, jj;
 	if (f_vvv) {
-		cout << "labeling:" << endl;
-		int_vec_print(cout, labeling, nb_rows + nb_cols);
+		cout << "action::set_stabilizer_in_projective_space labeling:" << endl;
+		//int_vec_print(cout, labeling, nb_rows + nb_cols);
 		cout << endl;
 		}
 
@@ -251,7 +258,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 
 	if (f_vvv) {
 		cout << "action::set_stabilizer_in_projective_space Incma_out:" << endl;
-		int_matrix_print(Incma_out, nb_rows, nb_cols);
+		//int_matrix_print(Incma_out, nb_rows, nb_cols);
 	}
 
 #if 0
@@ -320,7 +327,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 				}
 			}
 			if (h != set_size) {
-				cout << "set_stabilizer_in_projective_space "
+				cout << "action::set_stabilizer_in_projective_space "
 						"h != set_size" << endl;
 				cout << "h=" << h << endl;
 				cout << "set_size=" << set_size << endl;
@@ -342,7 +349,8 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		cout << "action::set_stabilizer_in_projective_space "
 				"before init_permutation_group_from_generators" << endl;
 		}
-	ago.create(Ago, __FILE__, __LINE__);
+	Ago.assign_to(ago);
+	//ago.create(Ago, __FILE__, __LINE__);
 	A_perm->init_permutation_group_from_generators(N,
 		TRUE, ago,
 		Aut_counter, Aut,
@@ -393,7 +401,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		if (f_vv) {
 			cout << "action::set_stabilizer_in_projective_space: "
 					"strong generator " << g << ":" << endl;
-			A_perm->element_print(gens->ith(g), cout);
+			//A_perm->element_print(gens->ith(g), cout);
 			cout << endl;
 			}
 
@@ -405,7 +413,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 			make_element(Elt1, Mtx, 0 /*verbose_level - 2*/);
 			if (f_vv) {
 				cout << "semi-linear group element:" << endl;
-				element_print(Elt1, cout);
+				//element_print(Elt1, cout);
 				}
 			element_move(Elt1, gens1->ith(pos), 0);
 
@@ -423,16 +431,17 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		}
 	gens1->reallocate(pos, verbose_level - 2);
 	if (f_vv) {
-		cout << "we found " << gens1->len << " generators" << endl;
+		cout << "action::set_stabilizer_in_projective_space "
+				"we found " << gens1->len << " generators" << endl;
 		}
 
 	if (f_vvv) {
-		gens1->print(cout);
+		//gens1->print(cout);
 		}
 
 
 	if (f_vv) {
-		cout << "set_stabilizer_in_projective_space: "
+		cout << "action::set_stabilizer_in_projective_space: "
 				"we are now testing the generators:" << endl;
 		}
 	int j1, j2;
@@ -446,7 +455,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 			j1 = element_image_of(i, gens1->ith(g), 0);
 			j2 = A_perm->element_image_of(i, gens->ith(g), 0);
 			if (j1 != j2) {
-				cout << "set_stabilizer_in_projective_space "
+				cout << "action::set_stabilizer_in_projective_space "
 						"problem with generator: j1 != j2" << endl;
 				cout << "i=" << i << endl;
 				cout << "j1=" << j1 << endl;
@@ -457,7 +466,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 			}
 		}
 	if (f_vv) {
-		cout << "set_stabilizer_in_projective_space: "
+		cout << "action::set_stabilizer_in_projective_space: "
 				"the generators are OK" << endl;
 		}
 
@@ -467,7 +476,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	longinteger_object go;
 
 	if (f_vv) {
-		cout << "set_stabilizer_in_projective_space: "
+		cout << "action::set_stabilizer_in_projective_space: "
 				"we are now creating the group" << endl;
 		}
 
@@ -484,10 +493,10 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	if (f_vvv) {
 		cout << "action::set_stabilizer_in_projective_space: "
 				"strong generators are:" << endl;
-		S->print_generators();
+		//S->print_generators();
 		cout << "set_stabilizer_in_projective_space: "
 				"strong generators are (in tex):" << endl;
-		S->print_generators_tex(cout);
+		//S->print_generators_tex(cout);
 		}
 
 

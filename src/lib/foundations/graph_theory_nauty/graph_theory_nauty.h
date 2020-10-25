@@ -34,32 +34,32 @@ public:
 		int *labeling, int *partition,
 		int *Aut, int &Aut_counter,
 		int *Base, int &Base_length,
-		int *Transversal_length, int &Ago, int verbose_level);
+		int *Transversal_length, longinteger_object &Ago, int verbose_level);
 	void nauty_interface_graph_int(int v, int *Adj,
 		int *labeling, int *partition,
 		int *Aut, int &Aut_counter,
 		int *Base, int &Base_length,
-		int *Transversal_length, int &Ago, int verbose_level);
+		int *Transversal_length, longinteger_object &Ago, int verbose_level);
 	void nauty_interface_int(int v, int b, int *X, int nb_inc,
 		int *labeling, int *partition,
 		int *Aut, int &Aut_counter,
 		int *Base, int &Base_length,
-		int *Transversal_length, int &Ago);
+		int *Transversal_length, longinteger_object &Ago);
 	void nauty_interface_low_level(int v, int b, int *X, int nb_inc,
 		int *labeling, int *partition,
 		int *Aut, int &Aut_counter,
 		int *Base, int &Base_length,
-		int *Transversal_length, int &Ago);
+		int *Transversal_length, longinteger_object &Ago);
 	void nauty_interface_matrix(int *M, int v, int b,
 		int *labeling, int *partition,
 		int *Aut, int &Aut_counter,
 		int *Base, int &Base_length,
-		int *Transversal_length, int &Ago);
+		int *Transversal_length, longinteger_object &Ago);
 	void nauty_interface_matrix_int(int *M, int v, int b,
 		int *labeling, int *partition,
 		int *Aut, int &Aut_counter,
 		int *Base, int &Base_length,
-		int *Transversal_length, int &Ago, int verbose_level);
+		int *Transversal_length, longinteger_object &Ago, int verbose_level);
 
 
 };

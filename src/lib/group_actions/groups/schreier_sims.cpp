@@ -498,7 +498,7 @@ void schreier_sims::create_group(int verbose_level)
 			cout << "schreier_sims::create_group "
 					"iteration " << iteration << endl;
 			G->print_generator_depth_and_perm();
-			}
+		}
 		if (f_has_target_group_order && iteration > 10000) {
 			cout << "schreier_sims::create_group iteration > 1000, "
 					"something seems to be wrong" << endl;
@@ -506,39 +506,39 @@ void schreier_sims::create_group(int verbose_level)
 			cout << "KG_order = " << KG_order << endl;		
 			//test_if_subgroup(old_G, 2);
 			exit(1);
-			}
+		}
 
 		if (!f_has_target_group_order && iteration == 10000) {
 			if (f_v) {
 				cout << "schreier_sims::create_group "
 						"iteration == 1000, we seem to be done" << endl;
-				}
-			break;
 			}
+			break;
+		}
 
 		if (f_vv) {
 			cout << "schreier_sims::create_group "
 					"iteration " << iteration
 					<< " before get_generator" << endl;
 			//GA->element_print_quick(Elt1, cout);
-			}
+		}
 		get_generator(Elt1, verbose_level - 3);
 		if (f_vv) {
 			cout << "schreier_sims::create_group "
 					"iteration " << iteration
 					<< " after get_generator" << endl;
-			}
+		}
 		if (f_vv) {
 			cout << "schreier_sims::create_group "
 					"iteration " << iteration
 					<< " generator: " << endl;
 			GA->element_print_quick(Elt1, cout);
-			}
+		}
 
 		if (f_vv) {
 			cout << "schreier_sims::create_group "
 					"calling strip:" << endl;
-			}
+		}
 		if (G->strip(Elt1, Elt2, drop_out_level,
 				image, 0 /*verbose_level - 2*/)) {
 			if (f_vv) {
@@ -549,42 +549,42 @@ void schreier_sims::create_group(int verbose_level)
 							"residue = " << endl;
 					GA->element_print_quick(Elt2, cout);
 					cout << endl;
-					}
 				}
+			}
 			f_added = FALSE;
 			if (!GA->element_is_one(Elt2, 0)) {
 				if (f_vvv) {
 					cout << "schreier_sims::create_group: "
 							"the residue is not trivial, "
 							"we need to choose another base point" << endl;
-					}
+				}
 				if (f_override_choose_next_base_point_method) {
 					if (f_vv) {
 						cout << "schreier_sims::create_group "
 								"before (*choose_next_base_point_method)" << endl;
-						}
+					}
 					b = (*choose_next_base_point_method)(GA,
 							Elt2, verbose_level - 5);
-					}
+				}
 				else {
 					if (f_vv) {
 						cout << "schreier_sims::create_group "
 								"before GA->choose_next_base_point_default_method" << endl;
-						}
+					}
 					b = GA->choose_next_base_point_default_method(
 							Elt2, verbose_level - 5);
-					}
+				}
 
 				if (f_vv) {
 					cout << "schreier_sims::create_group: "
 							"next suggested base point is "
 							<< b << endl;
-					}
+				}
 				if (b == -1) {
 					if (f_vv) {
 						cout << "schreier_sims::create_group: "
 								"cannot find next base point" << endl;
-						}
+					}
 					if (K->strip(Elt2, Elt3, drop_out_level,
 							image, 0/*verbose_level - 3*/)) {
 						if (f_vv) {
@@ -605,8 +605,8 @@ void schreier_sims::create_group(int verbose_level)
 										"Elt2" << endl;
 								KA->element_print_image_of_set(
 										Elt2, KA->base_len(), KA->get_base());
-								}
 							}
+						}
 						if (!KA->element_is_one(Elt3, 0)) {
 							cout << "schreier_sims::create_group: "
 									"element strips through kernel, "
@@ -619,12 +619,12 @@ void schreier_sims::create_group(int verbose_level)
 							print_group_orders();
 
 							exit(1);
-							}
 						}
+					}
 					if (f_vv) {
 						cout << "schreier_sims::create_group: "
 								"before K->add_generator_at_level" << endl;
-						}
+					}
 					K->add_generator_at_level(Elt3,
 							drop_out_level, verbose_level - 3);
 					if (f_vvv) {
@@ -632,23 +632,23 @@ void schreier_sims::create_group(int verbose_level)
 								"the residue has been added as "
 								"kernel generator at level "
 								<< drop_out_level << endl;
-						}
-					f_added = TRUE;
 					}
+					f_added = TRUE;
+				}
 				else {
 					if (f_vvv) {
 						cout << "schreier_sims::create_group: "
 								"choosing n e w base point " << b << endl;
-						}
+					}
 					old_base_len = GA->base_len();
 					GA->Stabilizer_chain->reallocate_base(b);
 					if (f_vvv) {
 						//cout << "after reallocate_base 1" << endl;
-						}
+					}
 					G->reallocate_base(old_base_len, verbose_level - 1);
 					if (f_vvv) {
 						//cout << "after reallocate_base 2" << endl;
-						}
+					}
 					if (f_vv) {
 						cout << "schreier_sims::create_group: "
 								"n e w base point " << b
@@ -656,24 +656,24 @@ void schreier_sims::create_group(int verbose_level)
 							<< GA->base_len() << endl;
 						cout << "schreier_sims::create_group: "
 								"calling add_generator_at_level" << endl;
-						}
+					}
 					G->add_generator_at_level(Elt2,
 							GA->base_len() - 1, verbose_level - 3);
 					if (f_vv) {
 						cout << "schreier_sims::create_group: "
 								"the residue has been added "
 								"at level " << GA->base_len() - 1 << endl;
-						}
-					} // if b
-				} // if ! element is one
+					}
+				} // if b
+			} // if ! element is one
 			else {
 				if (f_vv) {
 					cout << "schreier_sims::create_group: "
 							"the residue is trivial" << endl;
-					}
 				}
-			//G->closure_group(10, verbose_level - 2);
 			}
+			//G->closure_group(10, verbose_level - 2);
+		}
 		else {
 			f_added = TRUE;
 			if (f_vv) {
@@ -683,10 +683,10 @@ void schreier_sims::create_group(int verbose_level)
 					<< image << endl;
 					GA->element_print(Elt2, cout);
 					cout  << endl;
-				}
+			}
 			G->add_generator_at_level(Elt2,
 					drop_out_level, verbose_level - 3);
-			}
+		}
 		
 		compute_group_orders();
 
@@ -695,7 +695,7 @@ void schreier_sims::create_group(int verbose_level)
 			cout << "schreier_sims::create_group: "
 					"n e w group order is ";
 			print_group_orders();
-			}
+		}
 		iteration++;
 
 		if (f_has_target_group_order) {
@@ -705,9 +705,9 @@ void schreier_sims::create_group(int verbose_level)
 					cout << "schreier_sims::create_group: "
 							"reached the full group after "
 							<< iteration << " iterations" << endl;
-					}
-				break;
 				}
+				break;
+			}
 			if (c < 0) {
 				if (TRUE) {
 					cout << "schreier_sims::create_group "
@@ -717,28 +717,32 @@ void schreier_sims::create_group(int verbose_level)
 					if (KG_order.as_int() < 100) {
 						cout << "schreier_sims::create_group so far, "
 								"the group elements are:" << endl;
-						G->print_all_group_elements();
+						//G->print_all_group_elements();
 					}
-					}
+				}
 				//break;
 				exit(1);
-				}
-			else {
-				closure_group(verbose_level - 2);
-				}
 			}
-		else {
-			if (f_vv) {
-				cout << "schreier_sims::create_group: "
-						"before closure_group" << endl;
+			else {
+				if (f_vv) {
+					cout << "schreier_sims::create_group: before closure_group" << endl;
 				}
-			closure_group(verbose_level - 2);
-			if (f_vv) {
-				cout << "schreier_sims::create_group: "
-						"after closure_group" << endl;
+				closure_group(verbose_level - 2);
+				if (f_vv) {
+					cout << "schreier_sims::create_group: after closure_group" << endl;
 				}
 			}
 		}
+		else {
+			if (f_vv) {
+				cout << "schreier_sims::create_group: before closure_group" << endl;
+			}
+			closure_group(verbose_level - 2);
+			if (f_vv) {
+				cout << "schreier_sims::create_group: after closure_group" << endl;
+			}
+		}
+	}
 	if (f_v) {
 		cout << "schreier_sims::create_group finished:";
 		print_group_orders();
@@ -746,7 +750,7 @@ void schreier_sims::create_group(int verbose_level)
 		cout << "the n e w action has base ";
 		lint_vec_print(cout, GA->get_base(), GA->base_len());
 		cout << " of length " << GA->base_len()  << endl;
-		}
+	}
 }
 
 }}

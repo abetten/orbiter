@@ -2262,7 +2262,7 @@ public:
 	int is_contained_in_Baer_subline(long int *pts, int nb_pts,
 		int verbose_level);
 	void report_summary(std::ostream &ost);
-	void report(std::ostream &ost);
+	void report(std::ostream &ost, int verbose_level);
 	void incidence_matrix_save_csv();
 	void make_fname_incidence_matrix_csv(std::string &fname);
 
