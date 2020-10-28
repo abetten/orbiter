@@ -245,6 +245,11 @@ public:
 	void bitvector_m_ii(uchar *bitvec, long int i, int a);
 	void bitvector_set_bit(uchar *bitvec, long int i);
 	int bitvector_s_i(uchar *bitvec, long int i);
+	uint32_t int_vec_hash(int *data, int len);
+	uint32_t lint_vec_hash(long int *data, int len);
+	uint32_t char_vec_hash(char *data, int len);
+	int int_vec_hash_after_sorting(int *data, int len);
+	int lint_vec_hash_after_sorting(long int *data, int len);
 
 };
 
@@ -327,7 +332,7 @@ public:
 	void write_to_ascii_file(std::string &fname);
 	void write_to_binary_file_int4(std::string &fname);
 	void write_to_csv_file(std::string &fname, const char *label);
-	int hash();
+	uint32_t hash();
 	int minimum();
 	int maximum();
 

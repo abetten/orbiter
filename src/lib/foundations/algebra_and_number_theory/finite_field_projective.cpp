@@ -824,7 +824,7 @@ void finite_field::PG_element_unrank_modified_lint(
 	a--;
 
 	l = 1;
-	ql = q;
+	ql = q; // q to the power of l
 	sql = 1;
 	// sql = q^0 + q^1 + \cdots + q^{l-1}
 	while (l < n) {
@@ -861,7 +861,11 @@ void finite_field::PG_element_unrank_modified_lint(
 	cout << "finite_field::PG_element_unrank_modified_lint "
 			"a too large" << endl;
 	cout << "len = " << len << endl;
+	cout << "l = " << l << endl;
 	cout << "a = " << a1 << endl;
+	cout << "q = " << q << endl;
+	cout << "ql = " << ql << endl;
+	cout << "sql = q^0 + q^1 + \\cdots + q^{l-1} = " << sql << endl;
 	exit(1);
 }
 

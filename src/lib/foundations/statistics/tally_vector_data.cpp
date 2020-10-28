@@ -192,10 +192,10 @@ int tally_vector_data::hash_and_find(int *data,
 		int &idx, uint32_t &h, int verbose_level)
 {
 	int f_found;
+	data_structures_global D;
 
 
-
-	h = int_vec_hash(data, data_set_sz);
+	h = D.int_vec_hash(data, data_set_sz);
 
     map<uint32_t, int>::iterator itr, itr1, itr2;
 

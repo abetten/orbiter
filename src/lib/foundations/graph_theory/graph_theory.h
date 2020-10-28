@@ -48,20 +48,10 @@ public:
 	int verbose_level;
 	
 
-	//int f_has_bitmatrix;
-	//bitmatrix *Bitmatrix_adjacency;
-#if 0
-	int bitmatrix_m;
-	int bitmatrix_n;
-	int bitmatrix_N;
-	uchar *bitmatrix_adjacency;
-#endif
-
 	int f_has_adj_list;
 	int *adj_list_coded;
 	int f_has_bitvector;
 	bitvector *Bitvec_adjacency;
-	//uchar *bitvector_adjacency;
 
 	int f_has_row_by_row_adjacency_matrix;
 	char **row_by_row_adjacency_matrix; // [n][n]
@@ -252,7 +242,6 @@ public:
 	int nb_colors;
 	int nb_colors_per_vertex; // = 1 by default
 	
-	//long int bitvector_length;
 	long int L;
 	
 	long int *points; // [nb_points]
@@ -264,7 +253,6 @@ public:
 
 	int f_ownership_of_bitvec;
 	bitvector *Bitvec;
-	//uchar *bitvector_adjacency;
 
 	int f_has_list_of_edges;
 	int nb_edges;
@@ -588,20 +576,6 @@ public:
 			int &user_data_size,
 			bitvector *&Bitvec,
 			int verbose_level);
-#if 0
-	void write_colored_graph(std::ofstream &ost,
-		char *label,
-		int point_offset,
-		int nb_points,
-		int f_has_adjacency_matrix, int *Adj,
-		int f_has_adjacency_list, int *adj_list,
-		int f_has_bitvector, uchar *bitvector_adjacency,
-		int f_has_is_adjacent_callback,
-		int (*is_adjacent_callback)(int i, int j, void *data),
-		void *is_adjacent_callback_data,
-		int f_colors, int nb_colors, int *point_color,
-		int f_point_labels, long int *point_label);
-#endif
 	int is_association_scheme(int *color_graph, int n, int *&Pijk,
 		int *&colors, int &nb_colors, int verbose_level);
 	void print_Pijk(int *Pijk, int nb_colors);
@@ -712,7 +686,7 @@ class layered_graph_draw_options {
 public:
 
 	int f_file;
-	const char *fname;
+	std::string fname;
 
 	int xin;
 	int yin;
@@ -741,7 +715,7 @@ public:
 	
 	int f_nodes_empty;
 	int f_select_layers;
-	const char *select_layers;
+	std::string select_layers;
 	int nb_layer_select;
 	int *layer_select;
 
@@ -762,35 +736,10 @@ public:
 
 	layered_graph_draw_options();
 	~layered_graph_draw_options();
-#if 0
-	void init(
-		int xmax, int ymax, int x_max, int y_max, int rad, 
-		int f_circle, int f_corners, int f_nodes_empty, 
-		int f_select_layers, int nb_layer_select, int *layer_select, 
-		int f_has_draw_begining_callback, 
-		void (*draw_begining_callback)(layered_graph *LG, 
-			mp_graphics *G, 
-			int x_max, int y_max, int f_rotated, 
-			int dx, int dy), 
-		int f_has_draw_ending_callback, 
-		void (*draw_ending_callback)(layered_graph *LG, 
-			mp_graphics *G, 
-			int x_max, int y_max, int f_rotated, 
-			int dx, int dy), 
-		int f_has_draw_vertex_callback, 
-		void (*draw_vertex_callback)(layered_graph *LG, 
-			mp_graphics *G, 
-			int layer, int node, 
-			int x, int y, int dx, int dy), 
-		int f_show_level_info, 
-		int f_embedded, int f_sideways, 
-		int f_label_edges, 
-		int f_rotated, 
-		double global_scale, double global_line_width);
-#endif
 	int read_arguments(
 		int argc, const char **argv,
 		int verbose_level);
+	void print();
 };
 
 // #############################################################################

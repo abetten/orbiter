@@ -1639,10 +1639,404 @@ void group_theoretic_activity::do_cubic_surface_properties(
 	}
 }
 
+struct cubic_surface_data_set {
+
+	int orbit_idx;
+	long int Rep;
+	long int Stab_order;
+	long int Orbit_length;
+	long int Ago;
+	long int Nb_pts;
+	long int Nb_lines;
+	long int Nb_Eckardt_points;
+	long int Nb_singular_pts;
+	long int Nb_Double_points;
+
+};
+
+void group_theoretic_activity::do_cubic_surface_properties_analyze(
+		std::string fname_csv, int defining_q,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_cubic_surface_properties_analyze" << endl;
+	}
+
+	//int i;
+	finite_field *F0;
+	finite_field *F;
+	surface_domain *Surf;
+	surface_with_action *Surf_A;
+	projective_space_with_action *PA;
+	number_theory_domain NT;
+	sorting Sorting;
+	file_io Fio;
+	int f_semilinear;
+
+
+
+	F0 = NEW_OBJECT(finite_field);
+	F0->init(defining_q, 0);
+
+	F = LG->F;
+
+	f_semilinear = LG->A_linear->is_semilinear_matrix_group();
+
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_cubic_surface_properties_analyze before Surf->init" << endl;
+	}
+	Surf = NEW_OBJECT(surface_domain);
+	Surf->init(F, verbose_level - 1);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_cubic_surface_properties_analyze after Surf->init" << endl;
+	}
+
+	Surf_A = NEW_OBJECT(surface_with_action);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_cubic_surface_properties_analyze before Surf_A->init" << endl;
+	}
+	Surf_A->init(Surf, LG, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_cubic_surface_properties_analyze after Surf_A->init" << endl;
+	}
+
+	PA = NEW_OBJECT(projective_space_with_action);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_cubic_surface_properties_analyze before PA->init" << endl;
+	}
+	PA->init(
+		F, 3 /*n*/, f_semilinear,
+		TRUE /* f_init_incidence_structure */,
+		verbose_level);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_cubic_surface_properties_analyze after PA->init" << endl;
+	}
+
+	int nb_orbits, n;
+	int orbit_idx;
+	struct cubic_surface_data_set *Data;
+
+	{
+		long int *M;
+
+		Fio.lint_matrix_read_csv(fname_csv, M, nb_orbits, n, verbose_level);
+
+		if (n != 9) {
+			cout << "group_theoretic_activity::do_cubic_surface_properties_analyze n != 9" << endl;
+			exit(1);
+		}
 
 
 
 
 
+		Data = new struct cubic_surface_data_set [nb_orbits];
+
+		for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
+			Data[orbit_idx].orbit_idx = orbit_idx;
+			Data[orbit_idx].Rep = M[orbit_idx * n + 0];
+			Data[orbit_idx].Stab_order = M[orbit_idx * n + 1];
+			Data[orbit_idx].Orbit_length = M[orbit_idx * n + 2];
+			Data[orbit_idx].Ago = M[orbit_idx * n + 3];
+			Data[orbit_idx].Nb_pts = M[orbit_idx * n + 4];
+			Data[orbit_idx].Nb_lines = M[orbit_idx * n + 5];
+			Data[orbit_idx].Nb_Eckardt_points = M[orbit_idx * n + 6];
+			Data[orbit_idx].Nb_singular_pts = M[orbit_idx * n + 7];
+			Data[orbit_idx].Nb_Double_points = M[orbit_idx * n + 8];
+		}
+		FREE_lint(M);
+	}
+	long int *Nb_singular_pts;
+
+	Nb_singular_pts = NEW_lint(nb_orbits);
+	for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
+		Nb_singular_pts[orbit_idx] = Data[orbit_idx].Nb_singular_pts;
+	}
+
+
+	tally T_S;
+
+	T_S.init_lint(Nb_singular_pts, nb_orbits, FALSE, 0);
+
+	cout << "Classification by the number of singular points:" << endl;
+	T_S.print(TRUE /* f_backwards */);
+
+	{
+		string fname_report;
+		fname_report.assign(fname_csv);
+		chop_off_extension(fname_report);
+		fname_report.append("_report.tex");
+		latex_interface L;
+		file_io Fio;
+
+		{
+			ofstream ost(fname_report);
+			L.head_easy(ost);
+
+#if 0
+			if (f_v) {
+				cout << "group_theoretic_activity::do_cubic_surface_properties_analyze "
+						"before get_A()->report" << endl;
+			}
+
+			if (!Descr->f_draw_options) {
+				cout << "please use -draw_options" << endl;
+				exit(1);
+			}
+			PA->A->report(ost,
+					FALSE /* f_sims */,
+					NULL, //A1/*LG->A_linear*/->Sims,
+					FALSE /* f_strong_gens */,
+					NULL,
+					Descr->draw_options,
+					verbose_level - 1);
+
+			if (f_v) {
+				cout << "group_theoretic_activity::do_cubic_surface_properties_analyze "
+						"after LG->A_linear->report" << endl;
+			}
+#endif
+
+			if (f_v) {
+				cout << "group_theoretic_activity::do_cubic_surface_properties_analyze "
+						"before report" << endl;
+			}
+
+
+			ost << "\\section{Surfaces over ${\\mathbb F}_{" << F->q << "}$}" << endl;
+
+
+			ost << "Number of surfaces: " << nb_orbits << "\\\\" << endl;
+			ost << "Classification by the number of singular points:" << endl;
+			ost << "$$" << endl;
+			T_S.print_file_tex_we_are_in_math_mode(ost, TRUE /* f_backwards */);
+			ost << "$$" << endl;
+
+
+			ost << "\\section{Singular Surfaces}" << endl;
+
+			report_singular_surfaces(ost, Data, nb_orbits, verbose_level);
+
+			ost << "\\section{Nonsingular Surfaces}" << endl;
+
+			report_non_singular_surfaces(ost, Data, nb_orbits, verbose_level);
+
+
+
+			if (f_v) {
+				cout << "group_theoretic_activity::do_cubic_surface_properties_analyze "
+						"after report" << endl;
+			}
+
+			L.foot(ost);
+		}
+		cout << "Written file " << fname_report << " of size "
+				<< Fio.file_size(fname_report) << endl;
+	}
+
+
+
+
+
+	FREE_OBJECT(PA);
+	FREE_OBJECT(F0);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_cubic_surface_properties_analyze done" << endl;
+	}
+}
+
+void group_theoretic_activity::report_singular_surfaces(std::ostream &ost,
+		struct cubic_surface_data_set *Data, int nb_orbits, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::report_singular_surfaces" << endl;
+	}
+
+	struct cubic_surface_data_set *Data_S;
+	int nb_S, h, orbit_idx;
+
+
+	nb_S = 0;
+	for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
+		if (Data[orbit_idx].Nb_singular_pts) {
+			nb_S++;
+		}
+	}
+
+
+	Data_S = new struct cubic_surface_data_set [nb_S];
+
+	h = 0;
+	for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
+		if (Data[orbit_idx].Nb_singular_pts) {
+			Data_S[h] = Data[orbit_idx];
+			h++;
+		}
+	}
+	if (h != nb_S) {
+		cout << "h != nb_S" << endl;
+		exit(1);
+	}
+
+	long int *Selected_Nb_lines;
+
+
+	Selected_Nb_lines = NEW_lint(nb_S);
+
+
+	for (h = 0; h < nb_S; h++) {
+		Selected_Nb_lines[h] = Data_S[h].Nb_lines;
+	}
+
+	tally T_L;
+
+	T_L.init_lint(Selected_Nb_lines, nb_S, FALSE, 0);
+
+	ost << "Number of surfaces: " << nb_S << "\\\\" << endl;
+	ost << "Classification by the number of lines:" << endl;
+	ost << "$$" << endl;
+	T_L.print_file_tex_we_are_in_math_mode(ost, TRUE /* f_backwards */);
+	ost << "$$" << endl;
+
+	report_surfaces_by_lines(ost, Data_S, T_L, verbose_level);
+
+
+
+	FREE_lint(Selected_Nb_lines);
+	delete [] Data_S;
+
+	if (f_v) {
+		cout << "group_theoretic_activity::report_singular_surfaces done" << endl;
+	}
+}
+
+
+void group_theoretic_activity::report_non_singular_surfaces(std::ostream &ost,
+		struct cubic_surface_data_set *Data, int nb_orbits, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::report_non_singular_surfaces" << endl;
+	}
+
+	struct cubic_surface_data_set *Data_NS;
+	int nb_NS, h, orbit_idx;
+
+
+	nb_NS = 0;
+	for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
+		if (Data[orbit_idx].Nb_singular_pts == 0) {
+			nb_NS++;
+		}
+	}
+
+
+	Data_NS = new struct cubic_surface_data_set [nb_NS];
+
+	h = 0;
+	for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
+		if (Data[orbit_idx].Nb_singular_pts == 0) {
+			Data_NS[h] = Data[orbit_idx];
+			h++;
+		}
+	}
+	if (h != nb_NS) {
+		cout << "h != nb_NS" << endl;
+		exit(1);
+	}
+
+	long int *Selected_Nb_lines;
+
+
+	Selected_Nb_lines = NEW_lint(nb_NS);
+
+
+	for (h = 0; h < nb_NS; h++) {
+		Selected_Nb_lines[h] = Data_NS[h].Nb_lines;
+	}
+
+	for (h = 0; h < nb_NS; h++) {
+		cout << h << " : " << Data_NS[h].orbit_idx << " : " << Data_NS[h].Nb_lines << endl;
+	}
+
+	tally T_L;
+
+	T_L.init_lint(Selected_Nb_lines, nb_NS, FALSE, 0);
+
+	ost << "Number of surfaces: " << nb_NS << "\\\\" << endl;
+	ost << "Classification by the number of lines:" << endl;
+	ost << "$$" << endl;
+	T_L.print_file_tex_we_are_in_math_mode(ost, TRUE /* f_backwards */);
+	ost << "$$" << endl;
+
+
+	report_surfaces_by_lines(ost, Data_NS, T_L, verbose_level);
+
+
+	FREE_lint(Selected_Nb_lines);
+	delete [] Data_NS;
+
+	if (f_v) {
+		cout << "group_theoretic_activity::report_non_singular_surfaces done" << endl;
+	}
+}
+
+void group_theoretic_activity::report_surfaces_by_lines(std::ostream &ost,
+		struct cubic_surface_data_set *Data, tally &T, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::report_non_singular_surfaces" << endl;
+	}
+
+	int i, j, f, l, a, idx;
+
+	for (i = T.nb_types - 1; i >= 0; i--) {
+		f = T.type_first[i];
+		l = T.type_len[i];
+		a = T.data_sorted[f];
+
+		int nb_L;
+		struct cubic_surface_data_set *Data_L;
+
+		nb_L = l;
+
+		Data_L = new struct cubic_surface_data_set [nb_L];
+
+		ost << "The number of surfaces with exactly " << a << " lines is " << nb_L << ": \\\\" << endl;
+
+		for (j = 0; j < l; j++) {
+			idx = T.sorting_perm_inv[f + j];
+			Data_L[j] = Data[idx];
+
+		}
+
+
+		for (j = 0; j < l; j++) {
+			ost << j
+					<< " : id=" << Data_L[j].orbit_idx
+					<< " : P=" << Data_L[j].Nb_pts
+					<< " : S=" << Data_L[j].Nb_singular_pts
+					<< " : E=" << Data_L[j].Nb_Eckardt_points
+					<< " : D=" << Data_L[j].Nb_Double_points
+					<< " : ago=" << Data_L[j].Ago
+					<< " : Rep=" << Data_L[j].Rep
+				<< "\\\\" << endl;
+		}
+
+		delete [] Data_L;
+	}
+
+}
 }}
 

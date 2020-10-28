@@ -512,6 +512,7 @@ void isomorph::add_solutions_to_database(int *Solutions,
 	int f_vvv = (verbose_level >= 3);
 	int u, v;
 	long int *data;
+	data_structures_global Data;
 	
 	if (f_v) {
 		cout << "isomorph::add_solutions_to_database "
@@ -529,7 +530,7 @@ void isomorph::add_solutions_to_database(int *Solutions,
 			}
 		id = solution_first[data[0]] + u;
 
-		hs = lint_vec_hash_after_sorting(data + 1, size);
+		hs = Data.lint_vec_hash_after_sorting(data + 1, size);
 		if (f_vvv) {
 			cout << "isomorph::add_solutions_to_database "
 					"case " << the_case << " u=" << u << " id=" << id
@@ -581,7 +582,7 @@ void isomorph::build_up_database(int nb_files,
 	int nb_fail = 0;
 	sorting Sorting;
 	file_io Fio;
-
+	data_structures_global Data;
 	
 	if (f_v) {
 		cout << "isomorph::build_up_database "
@@ -684,7 +685,7 @@ void isomorph::build_up_database(int nb_files,
 			id = solution_first[data[0]] + nb;
 			
 
-			h = lint_vec_hash_after_sorting(data + 1, size);
+			h = Data.lint_vec_hash_after_sorting(data + 1, size);
 			
 			add_solution_to_database(data, 
 				nb, id, nb_total, N, h, datref, print_mod,

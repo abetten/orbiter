@@ -196,6 +196,9 @@ public:
 	void polynomial_mult_mod(int q,
 			std::string &A_coeffs, std::string &B_coeffs, std::string &M_coeffs,
 			int verbose_level);
+	void Berlekamp_matrix(int q,
+			std::string &Berlekamp_matrix_coeffs,
+			int verbose_level);
 	void NTRU_encrypt(int N, int p, int q,
 			std::string &H_coeffs, std::string &R_coeffs, std::string &Msg_coeffs,
 			int verbose_level);
@@ -203,6 +206,32 @@ public:
 			int verbose_level);
 	void polynomial_reduce_mod_p(std::string &A_coeffs, int p,
 			int verbose_level);
+	void compute_normal_basis(finite_field *F, int d, int verbose_level);
+	void do_EC_Koblitz_encoding(int q,
+			int EC_b, int EC_c, int EC_s,
+			const char *pt_text, const char *EC_message,
+			int verbose_level);
+	void do_EC_points(int q, int EC_b, int EC_c, int verbose_level);
+	int EC_evaluate_RHS(finite_field *F, int EC_b, int EC_c, int x);
+	// evaluates x^3 + bx + c
+	void do_EC_add(int q, int EC_b, int EC_c,
+			const char *pt1_text, const char *pt2_text, int verbose_level);
+	void do_EC_cyclic_subgroup(int q, int EC_b, int EC_c,
+			const char *pt_text, int verbose_level);
+	void do_EC_multiple_of(int q, int EC_b, int EC_c,
+			const char *pt_text, int n, int verbose_level);
+	void do_EC_discrete_log(int q, int EC_b, int EC_c,
+			const char *base_pt_text, const char *pt_text, int verbose_level);
+	void do_EC_baby_step_giant_step(int EC_q, int EC_b, int EC_c,
+			const char *EC_bsgs_G, int EC_bsgs_N, const char *EC_bsgs_cipher_text,
+			int verbose_level);
+	void do_EC_baby_step_giant_step_decode(int EC_q, int EC_b, int EC_c,
+			const char *EC_bsgs_A, int EC_bsgs_N,
+			const char *EC_bsgs_cipher_text_T, const char *EC_bsgs_keys,
+			int verbose_level);
+	void do_RSA_encrypt_text(long int RSA_d, long int RSA_m,
+			int RSA_block_size, const char * RSA_encrypt_text, int verbose_level);
+	void do_RSA(long int RSA_d, long int RSA_m, const char *RSA_text, int verbose_level);
 
 };
 

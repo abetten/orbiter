@@ -1605,6 +1605,7 @@ void isomorph::test_hash(int verbose_level)
 	int id, case_nb, f, l, i;
 	int *H;
 	sorting Sorting;
+	data_structures_global Data;
 
 
 	if (f_v) {
@@ -1624,7 +1625,7 @@ void isomorph::test_hash(int verbose_level)
 			id = f + i;
 			load_solution(id, data);
 			Sorting.lint_vec_heapsort(data, size);
-			H[i] = lint_vec_hash(data, size);
+			H[i] = Data.lint_vec_hash(data, size);
 			}
 		{
 		tally C;

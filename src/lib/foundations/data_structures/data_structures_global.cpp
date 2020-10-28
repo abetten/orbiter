@@ -74,5 +74,64 @@ int data_structures_global::bitvector_s_i(uchar *bitvec, long int i)
 }
 
 
+
+uint32_t data_structures_global::int_vec_hash(int *data, int len)
+{
+	uint32_t h;
+
+	h = SuperFastHash ((const char *) data, (uint32_t) len * sizeof(int));
+	return h;
+}
+
+uint32_t data_structures_global::lint_vec_hash(long int *data, int len)
+{
+	uint32_t h;
+
+	h = SuperFastHash ((const char *) data, (uint32_t) len * sizeof(long int));
+	return h;
+}
+
+uint32_t data_structures_global::char_vec_hash(char *data, int len)
+{
+	uint32_t h;
+
+	h = SuperFastHash ((const char *) data, (uint32_t) len);
+	return h;
+}
+
+int data_structures_global::int_vec_hash_after_sorting(int *data, int len)
+{
+	int *data2;
+	int i, h;
+	sorting Sorting;
+
+	data2 = NEW_int(len);
+	for (i = 0; i < len; i++) {
+		data2[i] = data[i];
+	}
+	Sorting.int_vec_heapsort(data2, len);
+	h = int_vec_hash(data2, len);
+	FREE_int(data2);
+	return h;
+}
+
+int data_structures_global::lint_vec_hash_after_sorting(long int *data, int len)
+{
+	long int *data2;
+	int i, h;
+	sorting Sorting;
+
+	data2 = NEW_lint(len);
+	for (i = 0; i < len; i++) {
+		data2[i] = data[i];
+	}
+	Sorting.lint_vec_heapsort(data2, len);
+	h = lint_vec_hash(data2, len);
+	FREE_lint(data2);
+	return h;
+}
+
+
+
 }}
 

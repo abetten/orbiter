@@ -312,6 +312,10 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		do_cubic_surface_properties(Descr->cubic_surface_properties_fname_csv,
 				Descr->cubic_surface_properties_defining_q, verbose_level);
 	}
+	else if (Descr->f_cubic_surface_properties_analyze) {
+		do_cubic_surface_properties_analyze(Descr->cubic_surface_properties_fname_csv,
+				Descr->cubic_surface_properties_defining_q, verbose_level);
+	}
 
 	// spreads:
 

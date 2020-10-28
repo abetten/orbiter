@@ -971,7 +971,7 @@ void surfaces_arc_lifting::report2(ostream &ost,
 
 	ost << "\\section{Six-Arcs in Detail}" << endl << endl;
 
-	Six_arcs->Gen->gen->report(ost);
+	Six_arcs->Gen->gen->report(ost, verbose_level);
 
 
 

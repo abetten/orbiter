@@ -684,6 +684,8 @@ void interface_projective::do_canonical_form_PG(orbiter_session *Session,
 	}
 
 	FREE_OBJECT(OC);
+	FREE_OBJECT(PA);
+	FREE_OBJECT(F);
 
 
 

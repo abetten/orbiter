@@ -126,8 +126,9 @@ void orbit_of_sets::compute(int verbose_level)
 
 
 	uint32_t h;
+	data_structures_global Data;
 
-	h = lint_vec_hash(Sets[0], sz);
+	h = Data.lint_vec_hash(Sets[0], sz);
 	Hashing.insert(pair<uint32_t, int>(h, 0));
 
 	used_length = 1;
@@ -157,7 +158,7 @@ void orbit_of_sets::compute(int verbose_level)
 			A2->map_a_set(cur_set, new_set, sz, gens->ith(j),
 					0 /* verbose_level*/);
 			Sorting.lint_vec_heapsort(new_set, sz);
-			h = lint_vec_hash(new_set, sz);
+			h = Data.lint_vec_hash(new_set, sz);
 
 		    map<uint32_t, int>::iterator itr, itr1, itr2;
 		    int pos, f_found;
@@ -304,13 +305,14 @@ void orbit_of_sets::dump_tables_of_hash_values()
     map<uint32_t, int>::iterator itr;
     int pos;
     uint32_t h;
+    data_structures_global Data;
 
     int cnt;
 
     for (itr = Hashing.begin(), cnt = 0; itr != Hashing.end(); ++itr, cnt++) {
     	cout << cnt << " : " << itr->first << " : " << itr->second << endl;
     	pos = itr->second;
-    	h = lint_vec_hash(Sets[pos], sz);
+    	h = Data.lint_vec_hash(Sets[pos], sz);
     	if (h != itr->first) {
     		cout << "h != itr->first" << endl;
     		exit(1);
@@ -349,6 +351,7 @@ void orbit_of_sets::get_table_of_orbits_and_hash_values(long int *&Table,
 	int f_v = (verbose_level >= 1);
 	int i, j;
 	uint32_t h;
+	data_structures_global Data;
 
 	set_size = sz + 1;
 	orbit_length = used_length;
@@ -359,7 +362,7 @@ void orbit_of_sets::get_table_of_orbits_and_hash_values(long int *&Table,
 	Table = NEW_lint(orbit_length * set_size);
 	for (i = 0; i < orbit_length; i++) {
 
-		h = lint_vec_hash(Sets[i], sz);
+		h = Data.lint_vec_hash(Sets[i], sz);
 
 		Table[i * set_size + 0] = h;
 		for (j = 1; j < set_size; j++) {

@@ -1011,7 +1011,7 @@ void schreier_vector::export_tree_as_layered_graph(
 			max_depth = MAX(max_depth, orbit_depth[j]);
 		}
 
-		if (f_vv) {
+		if (FALSE) {
 			cout << "j : orbit_elts[j] : orbit_prev[j] : orbit_depth[j]" << endl;
 			for (j = 0; j < len; j++) {
 				cout << j << " : " << orbit_elts[j] << " : "

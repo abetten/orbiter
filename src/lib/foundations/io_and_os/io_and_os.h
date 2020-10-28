@@ -718,11 +718,6 @@ void int_vec_copy_to_lint(int *from, long int *to, long int len);
 void lint_vec_copy_to_int(long int *from, int *to, long int len);
 void int_vec_swap(int *v1, int *v2, long int len);
 void int_vec_delete_element_assume_sorted(int *v, int &len, int a);
-uint32_t int_vec_hash(int *data, int len);
-uint32_t lint_vec_hash(long int *data, int len);
-uint32_t char_vec_hash(char *data, int len);
-int int_vec_hash_after_sorting(int *data, int len);
-int lint_vec_hash_after_sorting(long int *data, int len);
 void int_vec_complement(int *v, int n, int k);
 // computes the complement to v + k (v must be allocated to n lements)
 void int_vec_complement(int *v, int *w, int n, int k);

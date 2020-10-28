@@ -70,7 +70,7 @@ poset_classification_control::poset_classification_control()
 	f_save_stab = FALSE;
 	f_show_whole_orbit = FALSE;
 
-	nb_recognize = 0;
+	//nb_recognize = 0;
 
 	f_export_schreier_trees = FALSE;
 	f_draw_schreier_trees = FALSE;
@@ -212,20 +212,6 @@ int poset_classification_control::read_arguments(
 				cout << "-T" << endl;
 			}
 		}
-#if 0
-		else if (strcmp(argv[i], "-log") == 0) {
-			f_log = TRUE;
-			if (f_v) {
-				cout << "-log" << endl;
-			}
-		}
-		else if (strcmp(argv[i], "-Log") == 0) {
-			f_Log = TRUE;
-			if (f_v) {
-				cout << "-Log" << endl;
-			}
-		}
-#endif
 		else if (strcmp(argv[i], "-depth") == 0) {
 			f_depth = TRUE;
 			depth = atoi(argv[++i]);
@@ -308,12 +294,11 @@ int poset_classification_control::read_arguments(
 		}
 		else if (strcmp(argv[i], "-recognize") == 0) {
 
-			if (nb_recognize == CONTROL_MAX_RECOGNIZE) {
-				cout << "too many -recognize" << endl;
-				exit(1);
-			}
-			recognize[nb_recognize++] = argv[++i];
-			cout << "-recognize " << recognize[nb_recognize - 1] << endl;
+			string s;
+
+			s.assign(argv[++i]);
+			recognize.push_back(s);
+			cout << "-recognize " << recognize[recognize.size() - 1] << endl;
 		}
 		else if (strcmp(argv[i], "-export_schreier_trees") == 0) {
 			f_export_schreier_trees = TRUE;
@@ -359,6 +344,7 @@ void poset_classification_control::print()
 
 	if (f_draw_options) {
 		cout << "-draw_options" << endl;
+		draw_options->print();
 	}
 	if (f_lex) {
 		cout << "-lex" << endl;
@@ -378,17 +364,6 @@ void poset_classification_control::print()
 	if (f_t) {
 		cout << "-t" << endl;
 	}
-#if 0
-	if (f_Log) {
-		cout << "-Log" << endl;
-	}
-	if (f_log) {
-		cout << "-log" << endl;
-	}
-	if (f_log) {
-		cout << "-log" << endl;
-	}
-#endif
 	if (f_print_only) {
 		cout << "-print_only" << endl;
 	}
