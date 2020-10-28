@@ -594,12 +594,17 @@ void poset_orbit_node::save_shallow_schreier_forest(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "poset_orbit_node::save_shallow_schreier_forest"
 				<< endl;
 	}
 	if (PC->get_control()->f_export_schreier_trees) {
+		if (f_v) {
+			cout << "poset_orbit_node::save_shallow_schreier_forest "
+					"f_export_schreier_trees is TRUE" << endl;
+		}
 		int orbit_no, nb_orbits;
 		int *orbit_reps;
 
@@ -610,7 +615,18 @@ void poset_orbit_node::save_shallow_schreier_forest(
 		}
 		Schreier_vector->count_number_of_orbits_and_get_orbit_reps(
 					orbit_reps, nb_orbits);
+		if (f_v) {
+			cout << "poset_orbit_node::save_shallow_schreier_forest "
+					"nb_orbits = " << nb_orbits << endl;
+		}
 		for (orbit_no = 0; orbit_no < nb_orbits; orbit_no++) {
+
+
+			if (f_vv) {
+				cout << "poset_orbit_node::save_shallow_schreier_forest "
+						"orbit " << orbit_no << " / " << nb_orbits << endl;
+			}
+
 			string fname;
 			string fname_mask_full;
 
@@ -624,8 +640,9 @@ void poset_orbit_node::save_shallow_schreier_forest(
 			Schreier_vector->export_tree_as_layered_graph(
 					orbit_no, orbit_reps[orbit_no],
 					fname_mask_full,
-					verbose_level);
+					verbose_level - 3);
 		}
+		FREE_int(orbit_reps);
 	}
 	if (f_v) {
 		cout << "poset_orbit_node::save_shallow_schreier_forest "

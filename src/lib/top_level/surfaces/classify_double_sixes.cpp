@@ -540,7 +540,7 @@ void classify_double_sixes::report(std::ostream &ost,
 	if (f_v) {
 		cout << "classify_double_sixes::report before Five_plus_one->report" << endl;
 	}
-	Five_plus_one->report(ost);
+	Five_plus_one->report(ost, verbose_level);
 
 
 	if (f_v) {

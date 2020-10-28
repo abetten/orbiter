@@ -513,8 +513,12 @@ void linear_set_classify::do_classify(int verbose_level)
 		Gen->get_A2()->print_info();
 	}
 
-	Gen->compute_orbits(0, depth,
-		verbose_level);
+	int schreier_depth = depth;
+	int f_use_invariant_subset_if_available = TRUE;
+
+
+	Gen->compute_orbits(0, depth, schreier_depth, f_use_invariant_subset_if_available,
+			verbose_level);
 
 #if 0
 	Gen->main(t0,

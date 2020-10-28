@@ -201,10 +201,13 @@ void poset_classification::report_schreier_trees(
 }
 #endif
 
-void poset_classification::report(std::ostream &ost)
+void poset_classification::report(std::ostream &ost, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 
-
+	if (f_v) {
+		cout << "poset_classification::report" << endl;
+	}
 
 	ost << "Poset classification up to depth " << depth << "\\\\" << endl;
 
@@ -213,15 +216,28 @@ void poset_classification::report(std::ostream &ost)
 	ost << endl;
 
 
+	if (f_v) {
+		cout << "poset_classification::report before section Number of Orbits By Level" << endl;
+	}
+
+
 	ost << "\\subsection{Number of Orbits By Level}" << endl;
 
 	report_number_of_orbits_at_level(ost);
+
+
+
+	if (f_v) {
+		cout << "poset_classification::report before section Summary of Orbit Representatives" << endl;
+	}
+
+
 
 	ost << endl;
 	ost << "\\subsection{Summary of Orbit Representatives}" << endl;
 	ost << endl;
 
-	report_orbits_summary(ost);
+	report_orbits_summary(ost, verbose_level);
 
 
 	ost << endl;
@@ -230,6 +246,9 @@ void poset_classification::report(std::ostream &ost)
 
 	if (Control->f_draw_poset) {
 
+		if (f_v) {
+			cout << "poset_classification::report before section The Poset of Orbits: Diagram" << endl;
+		}
 		ost << "\\section{The Poset of Orbits: Diagram}" << endl;
 
 		report_poset_of_orbits(ost);
@@ -239,6 +258,10 @@ void poset_classification::report(std::ostream &ost)
 		cout << "please use option -draw_poset if you want to draw the poset" << endl;
 	}
 
+
+	if (f_v) {
+		cout << "poset_classification::report before section Poset of Orbits in Detail" << endl;
+	}
 
 
 	ost << endl;
@@ -271,6 +294,9 @@ void poset_classification::report(std::ostream &ost)
 		}
 	}
 
+	if (f_v) {
+		cout << "poset_classification::report done" << endl;
+	}
 
 }
 
@@ -302,8 +328,15 @@ void poset_classification::report_number_of_orbits_at_level(std::ostream &ost)
 
 }
 
-void poset_classification::report_orbits_summary(std::ostream &ost)
+void poset_classification::report_orbits_summary(std::ostream &ost, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_classification::report_orbits_summary" << endl;
+	}
+
 	ost << "N = node\\\\" << endl;
 	ost << "D = depth or level\\\\" << endl;
 	ost << "O = orbit with a level\\\\" << endl;
@@ -347,28 +380,38 @@ void poset_classification::report_orbits_summary(std::ostream &ost)
 
 	rep = NEW_lint(depth + 1);
 
-	cout << "printing orbit representative" << endl;
+	if (f_vv) {
+		cout << "printing orbit representative" << endl;
+	}
 
 	cnt = 0;
 	for (level = 0; level <= depth; level++) {
 
-		cout << "printing orbit representative at level " << level << endl;
+		if (f_vv) {
+			cout << "printing orbit representative at level " << level << endl;
+		}
 
 		nb_orbits = nb_orbits_at_level(level);
 		for (i = 0; i < nb_orbits; i++) {
 
-			cout << "printing orbit representative at level " << level << " orbit " << i << endl;
+			if (f_vv) {
+				cout << "printing orbit representative at level " << level << " orbit " << i << endl;
+			}
 
 			get_set_by_level(level, i, rep);
 
 			lint_vec_print_to_str_naked(str, rep, level);
 
-			cout << "set: '" << str << "'" << endl;
+			if (f_vv) {
+				cout << "set: '" << str << "'" << endl;
+			}
 
 			get_orbit_length_and_stabilizer_order(i, level,
 				stab_order, orbit_length);
 
-			cout << "after get_orbit_length_and_stabilizer_order" << endl;
+			if (f_vv) {
+				cout << "after get_orbit_length_and_stabilizer_order" << endl;
+			}
 
 			//stab_order.print_to_string(str);
 
@@ -376,12 +419,16 @@ void poset_classification::report_orbits_summary(std::ostream &ost)
 
 			O = get_node_ij(level, i);
 
-			cout << "after get_node_ij" << endl;
+			if (f_vv) {
+				cout << "after get_node_ij" << endl;
+			}
 
 			Schreier_vector = O->get_Schreier_vector();
 
 			if (level < depth) {
-				cout << "level < depth" << endl;
+				if (f_vv) {
+					cout << "level < depth" << endl;
+				}
 				nb_live_pts = O->get_nb_of_live_points();
 				nb_extensions = O->get_nb_of_extensions();
 				//nbo = O->get_nb_of_orbits_under_stabilizer();
@@ -393,15 +440,19 @@ void poset_classification::report_orbits_summary(std::ostream &ost)
 				}
 			}
 			else {
-				cout << "level < depth is false" << endl;
+				if (f_vv) {
+					cout << "level < depth is false" << endl;
+				}
 				nb_live_pts = -1;
 				nb_extensions = -1;
 				//nbo = -1;
 				nbg = O->get_nb_strong_generators();
 			}
-			cout << "nb_live_pts=" << nb_live_pts
+			if (f_vv) {
+				cout << "nb_live_pts=" << nb_live_pts
 					<< " nb_extensions=" << nb_extensions
 					<< " nbg=" << nbg << endl;
+			}
 
 			ost << cnt << " & " << level << " & " << i
 					<< " & $\\{$ " << str << " $\\}$ & ("
@@ -447,6 +498,11 @@ void poset_classification::report_orbits_summary(std::ostream &ost)
 
 	FREE_lint(rep);
 
+	if (f_v) {
+		cout << "poset_classification::report_orbits_summary done" << endl;
+	}
+
+
 }
 
 
@@ -456,13 +512,13 @@ void poset_classification::report_poset_of_orbits(std::ostream &ost)
 
 	string fname_base;
 	string fname_poset;
-	string fname_mp;
+	string fname_out_base;
 
 	draw_poset_fname_base_poset_lvl(fname_base, depth);
 	draw_poset_fname_poset(fname_poset, depth);
-	draw_poset_fname_base_poset_lvl(fname_mp, depth);
+	draw_poset_fname_base_poset_lvl(fname_out_base, depth);
 
-	fname_mp.append("_draw_tree");
+	fname_out_base.append("_draw");
 
 	string cmd;
 
@@ -485,28 +541,64 @@ void poset_classification::report_poset_of_orbits(std::ostream &ost)
 
 	cmd.append("/orbiter.out -v 3 -draw_layered_graph ");
 	cmd.append(fname_poset);
-	cmd.append(" "
-		"-xin 1000000 -yin 1000000 "
-		"-xout 1000000 -yout 1000000 "
-		"-y_stretch 0.75 "
-		"-rad 20000 "
-		//"-nodes_empty "
-		//"-corners "
-		//"-embedded "
-		"-line_width 0.30 "
-		"-spanning_tree");
+
+	char str[1000];
+
+	if (Control->f_draw_options) {
+		sprintf(str, " -xin %d -yin %d -xout %d -yout %d -rad %d",
+				Control->draw_options->xin,
+				Control->draw_options->yin,
+				Control->draw_options->xout,
+				Control->draw_options->yout,
+				Control->draw_options->rad);
+		cmd.append(str);
+	}
+	else {
+		cmd.append(" "
+			"-xin 1000000 -yin 1000000 "
+			"-xout 1000000 -yout 1000000 -rad 20000 ");
+	}
+
+	if (Control->f_draw_options) {
+		if (Control->draw_options->f_y_stretch) {
+			sprintf(str, " -y_stretch %lf ", Control->draw_options->y_stretch);
+			cmd.append(str);
+		}
+	}
+	else {
+		cmd.append(" -y_stretch 0.75 ");
+	}
+
+	if (Control->f_draw_options) {
+		if (Control->draw_options->f_line_width) {
+			sprintf(str, " -line_width %lf ", Control->draw_options->line_width);
+			cmd.append(str);
+		}
+	}
+	else {
+		cmd.append(" -line_width 0.5 ");
+	}
+
+	if (Control->f_draw_options) {
+		if (Control->draw_options->f_spanning_tree) {
+			sprintf(str, " -spanning_tree ");
+			cmd.append(str);
+		}
+	}
+	else {
+	}
 
 	cout << "executing: " << cmd << endl;
 	system(cmd.c_str());
 
 	cmd.assign("mpost -tex=latex ");
-	cmd.append(fname_mp);
+	cmd.append(fname_out_base);
 	cmd.append(".mp");
 	cout << "executing: " << cmd << endl;
 	system(cmd.c_str());
 
 
-	ost << "\\input " << fname_mp << ".tex" << endl;
+	ost << "\\input " << fname_out_base << ".tex" << endl;
 	//ost << "\\includegraphics[width=160mm]{" << fname_mp << ".1}\\\\" << endl;
 
 }

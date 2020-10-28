@@ -265,62 +265,6 @@ void int_vec_delete_element_assume_sorted(int *v,
 
 
 
-uint32_t int_vec_hash(int *data, int len)
-{
-	uint32_t h;
-
-	h = SuperFastHash ((const char *) data, (uint32_t) len * sizeof(int));
-	return h;
-}
-
-uint32_t lint_vec_hash(long int *data, int len)
-{
-	uint32_t h;
-
-	h = SuperFastHash ((const char *) data, (uint32_t) len * sizeof(long int));
-	return h;
-}
-
-uint32_t char_vec_hash(char *data, int len)
-{
-	uint32_t h;
-
-	h = SuperFastHash ((const char *) data, (uint32_t) len);
-	return h;
-}
-
-int int_vec_hash_after_sorting(int *data, int len)
-{
-	int *data2;
-	int i, h;
-	sorting Sorting;
-
-	data2 = NEW_int(len);
-	for (i = 0; i < len; i++) {
-		data2[i] = data[i];
-	}
-	Sorting.int_vec_heapsort(data2, len);
-	h = int_vec_hash(data2, len);
-	FREE_int(data2);
-	return h;
-}
-
-int lint_vec_hash_after_sorting(long int *data, int len)
-{
-	long int *data2;
-	int i, h;
-	sorting Sorting;
-
-	data2 = NEW_lint(len);
-	for (i = 0; i < len; i++) {
-		data2[i] = data[i];
-	}
-	Sorting.lint_vec_heapsort(data2, len);
-	h = lint_vec_hash(data2, len);
-	FREE_lint(data2);
-	return h;
-}
-
 void int_vec_complement(int *v, int n, int k)
 // computes the complement to v + k (v must be allocated to n lements)
 // the first k elements of v[] must be in increasing order.

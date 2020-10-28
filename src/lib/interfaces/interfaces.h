@@ -77,6 +77,42 @@ class interface_algebra {
 	std::string polynomial_mult_mod_A;
 	std::string polynomial_mult_mod_B;
 	std::string polynomial_mult_mod_M;
+	int f_Berlekamp_matrix;
+	int Berlekamp_matrix_q;
+	std::string Berlekamp_matrix_coeffs;
+	int f_normal_basis;
+	int normal_basis_q;
+	int normal_basis_d;
+
+	int f_nullspace;
+	int nullspace_q;
+	int nullspace_m;
+	int nullspace_n;
+	const char *nullspace_text;
+	int f_RREF;
+	int RREF_q;
+	int RREF_m;
+	int RREF_n;
+	const char *RREF_text;
+	int f_weight_enumerator;
+	int f_normalize_from_the_right;
+	int f_normalize_from_the_left;
+	int f_transversal;
+	int transversal_q;
+	const char *transversal_line_1_basis;
+	const char *transversal_line_2_basis;
+	const char *transversal_point;
+	int f_intersection_of_two_lines;
+	int intersection_of_two_lines_q;
+	const char *line_1_basis;
+	const char *line_2_basis;
+	int f_trace;
+	int trace_q;
+	int f_norm;
+	int norm_q;
+	int f_count_subprimitive;
+	int count_subprimitive_Q_max;
+	int count_subprimitive_H_max;
 
 public:
 	interface_algebra();
@@ -100,6 +136,28 @@ public:
 	void do_make_table_of_irreducible_polynomials(int deg, int q, int verbose_level);
 	void do_character_table_symmetric_group(int deg, int verbose_level);
 	void do_make_A5_in_PSL_2_q(int q, int verbose_level);
+	void do_nullspace(int q, int m, int n, const char *text,
+			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int verbose_level);
+	void do_RREF(int q, int m, int n, const char *text,
+			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int verbose_level);
+	void do_weight_enumerator(int q, int m, int n, const char *text,
+			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int verbose_level);
+	void do_trace(int q, int verbose_level);
+	void do_norm(int q, int verbose_level);
+	void do_intersection_of_two_lines(int q,
+			const char *line_1_basis,
+			const char *line_2_basis,
+			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int verbose_level);
+	void do_transversal(int q,
+			const char *line_1_basis,
+			const char *line_2_basis,
+			const char *point,
+			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int verbose_level);
 
 };
 
@@ -364,35 +422,10 @@ class interface_cryptography {
 	int f_EC_baby_step_giant_step_decode;
 	const char *EC_bsgs_A;
 	const char *EC_bsgs_keys;
-	int f_nullspace;
-	int nullspace_q;
-	int nullspace_m;
-	int nullspace_n;
-	const char *nullspace_text;
-	int f_RREF;
-	int RREF_q;
-	int RREF_m;
-	int RREF_n;
-	const char *RREF_text;
-	int f_weight_enumerator;
-	int f_normalize_from_the_right;
-	int f_normalize_from_the_left;
-	int f_transversal;
-	int transversal_q;
-	const char *transversal_line_1_basis;
-	const char *transversal_line_2_basis;
-	const char *transversal_point;
-	int f_intersection_of_two_lines;
-	int intersection_of_two_lines_q;
-	const char *line_1_basis;
-	const char *line_2_basis;
-	int f_trace;
-	int trace_q;
-	int f_norm;
-	int norm_q;
-	int f_count_subprimitive;
-	int count_subprimitive_Q_max;
-	int count_subprimitive_H_max;
+
+
+
+
 	int f_NTRU_encrypt;
 	int NTRU_encrypt_N;
 	int NTRU_encrypt_p;
@@ -414,50 +447,6 @@ public:
 	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
 	void worker(int verbose_level);
 
-	void do_trace(int q, int verbose_level);
-	void do_norm(int q, int verbose_level);
-	void do_intersection_of_two_lines(int q,
-			const char *line_1_basis,
-			const char *line_2_basis,
-			int f_normalize_from_the_left, int f_normalize_from_the_right,
-			int verbose_level);
-	void do_transversal(int q,
-			const char *line_1_basis,
-			const char *line_2_basis,
-			const char *point,
-			int f_normalize_from_the_left, int f_normalize_from_the_right,
-			int verbose_level);
-	void do_nullspace(int q, int m, int n, const char *text,
-			int f_normalize_from_the_left, int f_normalize_from_the_right,
-			int verbose_level);
-	void do_RREF(int q, int m, int n, const char *text,
-			int f_normalize_from_the_left, int f_normalize_from_the_right,
-			int verbose_level);
-	void do_weight_enumerator(int q, int m, int n, const char *text,
-			int f_normalize_from_the_left, int f_normalize_from_the_right,
-			int verbose_level);
-	void do_EC_Koblitz_encoding(int q,
-			int EC_b, int EC_c, int EC_s,
-			const char *pt_text, const char *EC_message,
-			int verbose_level);
-	void do_EC_points(int q, int EC_b, int EC_c, int verbose_level);
-	int EC_evaluate_RHS(finite_field *F, int EC_b, int EC_c, int x);
-	// evaluates x^3 + bx + c
-	void do_EC_add(int q, int EC_b, int EC_c,
-			const char *pt1_text, const char *pt2_text, int verbose_level);
-	void do_EC_cyclic_subgroup(int q, int EC_b, int EC_c,
-			const char *pt_text, int verbose_level);
-	void do_EC_multiple_of(int q, int EC_b, int EC_c,
-			const char *pt_text, int n, int verbose_level);
-	void do_EC_discrete_log(int q, int EC_b, int EC_c,
-			const char *base_pt_text, const char *pt_text, int verbose_level);
-	void do_EC_baby_step_giant_step(int EC_q, int EC_b, int EC_c,
-			const char *EC_bsgs_G, int EC_bsgs_N, const char *EC_bsgs_cipher_text,
-			int verbose_level);
-	void do_EC_baby_step_giant_step_decode(int EC_q, int EC_b, int EC_c,
-			const char *EC_bsgs_A, int EC_bsgs_N,
-			const char *EC_bsgs_cipher_text_T, const char *EC_bsgs_keys,
-			int verbose_level);
 	void make_affine_sequence(int a, int c, int m, int verbose_level);
 	void make_2D_plot(int *orbit, int orbit_len, int cnt,
 			int m, int a, int c, int verbose_level);
@@ -492,9 +481,6 @@ public:
 	void do_inverse_mod(long int a, long int n, int verbose_level);
 	void do_extended_gcd(int a, int b, int verbose_level);
 	void do_power_mod(long int a, long int k, long int n, int verbose_level);
-	void do_RSA_encrypt_text(long int RSA_d, long int RSA_m,
-			int RSA_block_size, const char * RSA_encrypt_text, int verbose_level);
-	void do_RSA(long int RSA_d, long int RSA_m, const char *RSA_text, int verbose_level);
 	void affine_cipher(char *ptext, char *ctext, int a, int b);
 	void affine_decipher(char *ctext, char *ptext, char *guess);
 	void vigenere_cipher(char *ptext, char *ctext, char *key);

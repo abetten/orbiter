@@ -600,6 +600,7 @@ void boolean_function::search_for_bent_functions(int verbose_level)
 	uint32_t h;
 	geometry_global Gg;
 	longinteger_domain D;
+	data_structures_global Data;
 	vector<int> orbit_first;
 	vector<int> orbit_length;
 
@@ -644,7 +645,7 @@ void boolean_function::search_for_bent_functions(int verbose_level)
 			cout << " is bent " << nb_sol;
 			nb_sol++;
 
-			h = int_vec_hash(f, Q);
+			h = Data.int_vec_hash(f, Q);
 
 		    map<uint32_t, int>::iterator itr, itr1, itr2;
 		    int pos, f_found;
@@ -722,7 +723,7 @@ void boolean_function::search_for_bent_functions(int verbose_level)
 						w.push_back(Orb->Equations[i][1 + j]);
 					}
 
-					h = int_vec_hash(f_proj, Q);
+					h = Data.int_vec_hash(f_proj, Q);
 					Hashing.insert(pair<uint32_t, int>(h, Bent_function_table.size()));
 
 					Bent_function_table.push_back(v);

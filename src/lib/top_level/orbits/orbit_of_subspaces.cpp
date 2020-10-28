@@ -349,12 +349,13 @@ void orbit_of_subspaces::rank_subspace(
 uint32_t orbit_of_subspaces::hash_subspace()
 {
 	uint32_t h;
+	data_structures_global Data;
 
 	if (f_lint) {
-		h = lint_vec_hash(subspace_by_rank_lint, sz);
+		h = Data.lint_vec_hash(subspace_by_rank_lint, sz);
 	}
 	else {
-		h = int_vec_hash(subspace_by_rank, sz);
+		h = Data.int_vec_hash(subspace_by_rank, sz);
 	}
 	return h;
 }

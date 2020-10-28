@@ -22,7 +22,7 @@ namespace foundations {
 layered_graph_draw_options::layered_graph_draw_options()
 {
 	f_file = FALSE;
-	fname = NULL;
+	//fname = NULL;
 
 	xin = 10000;
 	yin = 10000;
@@ -49,7 +49,7 @@ layered_graph_draw_options::layered_graph_draw_options()
 
 	f_nodes_empty = FALSE;
 	f_select_layers = FALSE;
-	select_layers = NULL;
+	//select_layers = NULL;
 	nb_layer_select = 0;
 	layer_select = NULL;
 
@@ -83,7 +83,7 @@ int layered_graph_draw_options::read_arguments(
 
 		if (strcmp(argv[i], "-file") == 0) {
 			f_file = TRUE;
-			fname = argv[++i];
+			fname.assign(argv[++i]);
 			cout << "-file " << fname << endl;
 			}
 		else if (strcmp(argv[i], "-xin") == 0) {
@@ -159,7 +159,7 @@ int layered_graph_draw_options::read_arguments(
 			}
 		else if (strcmp(argv[i], "-select_layers") == 0) {
 			f_select_layers = atoi(argv[++i]);
-			select_layers = argv[++i];
+			select_layers.assign(argv[++i]);
 			int_vec_scan(select_layers, layer_select, nb_layer_select);
 			cout << "-select_layers ";
 			int_vec_print(cout, layer_select, nb_layer_select);
@@ -185,6 +185,53 @@ int layered_graph_draw_options::read_arguments(
 	cout << "layered_graph_draw_options::read_arguments done" << endl;
 	return i + 1;
 }
+
+
+void layered_graph_draw_options::print()
+{
+	cout << "layered_graph_draw_options::print:" << endl;
+
+	if (f_file) {
+		cout << "file name: " << fname << endl;
+	}
+	cout << "xin, xout, yin, yout=" << xin << ", " << xout << ", " << yin << ", " << yout << endl;
+	cout << "f_spanning_tree=" << f_spanning_tree << endl;
+	cout << "f_circle=" << f_circle << endl;
+	cout << "f_corners=" << f_corners << endl;
+	cout << "rad=" << rad << endl;
+	cout << "f_embedded=" << f_embedded << endl;
+	cout << "f_sideways=" << f_sideways << endl;
+	cout << "f_show_level_info=" << f_show_level_info << endl;
+	cout << "f_label_edges=" << f_label_edges << endl;
+	if (f_y_stretch) {
+		cout << "y_stretch=" << y_stretch << endl;
+	}
+	if (f_scale) {
+		cout << "scale=" << scale << endl;
+	}
+	if (f_line_width) {
+		cout << "line_width=" << line_width << endl;
+	}
+	cout << "f_rotated=" << f_rotated << endl;
+	cout << "f_nodes_empty=" << f_nodes_empty << endl;
+	if (f_select_layers) {
+		cout << "select_layers=" << select_layers << endl;
+	}
+	if (nb_layer_select) {
+		cout << "layer_select=";
+		int_vec_print(cout, layer_select, nb_layer_select);
+		cout << endl;
+	}
+	if (f_paths_in_between) {
+		cout << "f_paths_in_between" << endl;
+		cout << "layer1=" << layer1 << endl;
+		cout << "node1=" << node1 << endl;
+		cout << "layer2=" << layer2 << endl;
+		cout << "node2=" << node2 << endl;
+	}
+}
+
+
 
 
 

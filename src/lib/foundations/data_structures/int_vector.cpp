@@ -221,9 +221,11 @@ void int_vector::write_to_csv_file(std::string &fname, const char *label)
 	Fio.lint_vec_write_csv(M, m, fname, label);
 }
 
-int int_vector::hash()
+uint32_t int_vector::hash()
 {
-	return lint_vec_hash(M, m);
+	data_structures_global D;
+
+	return D.lint_vec_hash(M, m);
 }
 
 int int_vector::minimum()

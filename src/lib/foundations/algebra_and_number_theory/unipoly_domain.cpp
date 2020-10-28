@@ -951,7 +951,7 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 	assign(R, a, 0 /*verbose_level */);
 	if (f_vv) {
 		cout << "unipoly_domain::Frobenius_matrix "
-				"a = x^q mod m = ";
+				"a(X) = X^q mod m(X) = ";
 		print_object(a, cout);
 		cout << endl;
 	}
@@ -973,9 +973,9 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 			cout << endl;
 		}
 		assign(c, b, 0 /*verbose_level */);
-		// now b = x^{j*q}
+		// now b = X^{j*q}
 		if (f_vv) {
-			cout << "unipoly_domain::Frobenius_matrix x^{" << j << "*q}=";
+			cout << "unipoly_domain::Frobenius_matrix X^{" << j << "*q}=";
 			print_object(b, cout);
 			cout << endl;
 		}
@@ -1007,8 +1007,7 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 
 void unipoly_domain::Berlekamp_matrix(int *&B,
 	unipoly_object factor_polynomial, int verbose_level)
-// subtracts the identity matrix off the
-// given matrix (which should be the Frobenius matrix)
+// subtracts the identity matrix off the Frobenius matrix
 {
 	int f_v = (verbose_level >= 1);
 	int i, m1, a, b;
@@ -1543,8 +1542,7 @@ void unipoly_domain::compute_normal_basis(int d,
 			int_vec_zero(b, deg);
 			b[i] = 1;
 			
-			exact_division(lambda,
-					GCD, Q, 0 /* verbose_level - 2 */);
+			exact_division(lambda, GCD, Q, 0 /* verbose_level - 2 */);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
 						"Q = lambda / GCD = ";
@@ -1553,8 +1551,7 @@ void unipoly_domain::compute_normal_basis(int d,
 			}
 
 
-			take_away_all_factors_from_b(mue,
-					Q, R, 0 /* verbose_level - 2 */);
+			take_away_all_factors_from_b(mue, Q, R, 0 /* verbose_level - 2 */);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
 						"R = take_away_all_factors_from_b(mue, Q) = ";
@@ -1562,8 +1559,7 @@ void unipoly_domain::compute_normal_basis(int d,
 				cout << endl;
 			}
 
-			exact_division(mue,
-					R, Q, 0 /* verbose_level - 2 */);
+			exact_division(mue, R, Q, 0 /* verbose_level - 2 */);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
 						"Q = mue / R = ";
@@ -1576,8 +1572,7 @@ void unipoly_domain::compute_normal_basis(int d,
 				cout << "unipoly_domain::compute_normal_basis "
 						"before module_structure_apply" << endl;
 			}
-			module_structure_apply(v,
-					Frobenius, deg, Q, verbose_level - 10);
+			module_structure_apply(v, Frobenius, deg, Q, 0 /* verbose_level */);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
 						"after module_structure_apply" << endl;
@@ -1639,7 +1634,7 @@ void unipoly_domain::compute_normal_basis(int d,
 						"before module_structure_apply" << endl;
 			}
 			module_structure_apply(b,
-					Frobenius, deg, Q, verbose_level - 10);
+					Frobenius, deg, Q, 0 /* verbose_level */);
 			if (f_vv) {
 				cout << "unipoly_domain::compute_normal_basis "
 						"after module_structure_apply" << endl;
@@ -1655,7 +1650,7 @@ void unipoly_domain::compute_normal_basis(int d,
 			// Orderideal(v) = Ideal(R * R2), 
 			// greatest_common_divisor(R, R2) = 1
 			
-			mult(R, R2, mue, verbose_level - 10);
+			mult(R, R2, mue, 0 /* verbose_level */);
 		} // if
 		if (f_v) {
 			cout << "unipoly_domain::compute_normal_basis "
@@ -1677,7 +1672,7 @@ void unipoly_domain::compute_normal_basis(int d,
 			"before span_cyclic_module" << endl;
 	}
 	F->span_cyclic_module(Normal_basis,
-			v, deg, Frobenius, verbose_level - 10);
+			v, deg, Frobenius, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "unipoly_domain::compute_normal_basis "
 			"after span_cyclic_module" << endl;
@@ -2306,7 +2301,8 @@ void unipoly_domain::get_a_primitive_polynomial(
 	}
 	a = F->primitive_root();
 	if (f_vv) {
-		cout << "unipoly_domain::get_a_primitive_polynomial a primitive root is " << a << endl;
+		cout << "unipoly_domain::get_a_primitive_polynomial "
+				"a primitive root is " << a << endl;
 	}
 	
 	for (b = 0; b < p; b++) {
@@ -2577,11 +2573,15 @@ void unipoly_domain::power_int(unipoly_object &a,
 void unipoly_domain::power_longinteger(
 	unipoly_object &a, longinteger_object &n, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	longinteger_object m, q;
 	longinteger_domain D;
 	unipoly_object b, c, d;
 	int r;
 	
+	if (f_v) {
+		cout << "unipoly_domain::power_longinteger" << endl;
+	}
 	//cout << "power_int() a=";
 	//print_object(a, cout);
 	//cout << " n=" << n << endl;
@@ -2604,6 +2604,9 @@ void unipoly_domain::power_longinteger(
 	delete_object(b);
 	delete_object(c);
 	delete_object(d);
+	if (f_v) {
+		cout << "unipoly_domain::power_longinteger done" << endl;
+	}
 }
 
 void unipoly_domain::power_coefficients(
@@ -2913,8 +2916,8 @@ void unipoly_domain::minimum_polynomial_factorring_longinteger(
 		}
 		
 		if (i == factor_degree) {
-			cout << "unipoly_domain::minimum_polynomial_factorring_"
-					"longinteger i == factor_degree && ai != a0" << endl;
+			cout << "unipoly_domain::minimum_polynomial_factorring_longinteger "
+					"i == factor_degree && ai != a0" << endl;
 			exit(1);
 		}
 		
@@ -3009,8 +3012,8 @@ void unipoly_domain::minimum_polynomial_extension_field(
 	assign(m, mm, verbose_level);
 	negate(mm);
 	if (f_v) {
-		cout << "unipoly_domain::minimum_polynomial_"
-				"extension_field we are working modulo - (";
+		cout << "unipoly_domain::minimum_polynomial_extension_field "
+				"we are working modulo - (";
 		print_object(mm, cout);
 		cout << ")" << endl;
 	}
@@ -3022,8 +3025,8 @@ void unipoly_domain::minimum_polynomial_extension_field(
 		i++;
 
 		if (f_vv) {
-			cout << "unipoly_domain::minimum_polynomial_"
-					"extension_field i = " << i << " : g = ";
+			cout << "unipoly_domain::minimum_polynomial_extension_field "
+					"i = " << i << " : g = ";
 			print_object(g, cout);
 			cout << endl;
 			cout << "sigma=" << endl;
@@ -3031,36 +3034,34 @@ void unipoly_domain::minimum_polynomial_extension_field(
 		}
 
 		if (f_vv) {
-			cout << "unipoly_domain::minimum_polynomial_"
-					"extension_field i = " << i
-					<< " before matrix_apply" << endl;
+			cout << "unipoly_domain::minimum_polynomial_extension_field "
+					"i = " << i << " before matrix_apply" << endl;
 		}
 		matrix_apply(g, Frobenius, deg, verbose_level - 2);
 		if (f_vv) {
-			cout << "unipoly_domain::minimum_polynomial_"
-					"extension_field i = " << i
-					<< " after matrix_apply" << endl;
+			cout << "unipoly_domain::minimum_polynomial_extension_field "
+					"i = " << i << " after matrix_apply" << endl;
 		}
 
 		if (f_vv) {
-			cout << "unipoly_domain::minimum_polynomial_"
-					"extension_field i = " << i << " : g=";
+			cout << "unipoly_domain::minimum_polynomial_extension_field "
+					"i = " << i << " : g=";
 			print_object(g, cout);
 			cout << endl;
 		}
 		
 		
 		if (f_vv) {
-			cout << "unipoly_domain::minimum_polynomial_"
-					"extension_field i = " << i
+			cout << "unipoly_domain::minimum_polynomial_extension_field "
+					"i = " << i
 					<< " before mult_mod" << endl;
 		}
 		mult_mod_negated(g, sigma[i - 1], sigma[i],
 				degree(mm), ((int *)mm) + 1,
 				verbose_level - 2);
 		if (f_vv) {
-			cout << "unipoly_domain::minimum_polynomial_"
-					"extension_field i = " << i
+			cout << "unipoly_domain::minimum_polynomial_extension_field "
+					"i = " << i
 					<< " after mult_mod" << endl;
 			cout << "sigma=" << endl;
 			print_vector_of_polynomials(sigma, deg);
@@ -3068,51 +3069,51 @@ void unipoly_domain::minimum_polynomial_extension_field(
 
 		for (j = i - 1; j >= 1; j--) {
 			if (f_vv) {
-				cout << "unipoly_domain::minimum_polynomial_"
-						"extension_field i = " << i << " j = "
+				cout << "unipoly_domain::minimum_polynomial_extension_field "
+						"i = " << i << " j = "
 						<< j << endl;
 			}
 			if (f_vv) {
-				cout << "unipoly_domain::minimum_polynomial_"
-						"extension_field i = " << i << " j = "
+				cout << "unipoly_domain::minimum_polynomial_extension_field "
+						"i = " << i << " j = "
 						<< j << " before mult_mod" << endl;
 			}
 			mult_mod_negated(g, sigma[j - 1], h, degree(mm), ((int *)mm) + 1, 0);
 			if (f_vv) {
-				cout << "unipoly_domain::minimum_polynomial_"
-						"extension_field i = " << i << " j = "
+				cout << "unipoly_domain::minimum_polynomial_extension_field "
+						"i = " << i << " j = "
 						<< j << " after mult_mod" << endl;
 				cout << "sigma=" << endl;
 				print_vector_of_polynomials(sigma, deg);
 			}
 			if (f_vv) {
-				cout << "unipoly_domain::minimum_polynomial_"
-						"extension_field i = " << i << " j = "
+				cout << "unipoly_domain::minimum_polynomial_extension_field "
+						"i = " << i << " j = "
 						<< j << " before add" << endl;
 			}
 			add(sigma[j], h, h2);
 			if (f_vv) {
-				cout << "unipoly_domain::minimum_polynomial_"
-						"extension_field i = " << i << " j = "
+				cout << "unipoly_domain::minimum_polynomial_extension_field "
+						"i = " << i << " j = "
 						<< j << " after add" << endl;
 			}
 			if (f_vv) {
-				cout << "unipoly_domain::minimum_polynomial_"
-						"extension_field i = " << i << " j = "
+				cout << "unipoly_domain::minimum_polynomial_extension_field "
+						"i = " << i << " j = "
 						<< j << " before assign" << endl;
 				cout << "sigma=" << endl;
 				print_vector_of_polynomials(sigma, deg);
 			}
 			assign(h2, sigma[j], verbose_level);
 			if (f_vv) {
-				cout << "unipoly_domain::minimum_polynomial_"
-						"extension_field i = " << i << " j = "
+				cout << "unipoly_domain::minimum_polynomial_extension_field "
+						"i = " << i << " j = "
 						<< j << " after assign" << endl;
 			}
 
 			if (f_vv) {
-				cout << "unipoly_domain::minimum_polynomial_"
-						"extension_field i = " << i << " j = "
+				cout << "unipoly_domain::minimum_polynomial_extension_field "
+						"i = " << i << " j = "
 						<< j << " iteration finished" << endl;
 			}
 		}
@@ -3136,16 +3137,16 @@ void unipoly_domain::minimum_polynomial_extension_field(
 	}
 	make_monic(minpol);
 	if (f_vv) {
-		cout << "unipoly_domain::minimum_polynomial_"
-				"extension_field after make_monic";
+		cout << "unipoly_domain::minimum_polynomial_extension_field "
+				"after make_monic";
 		cout << "minpol=";
 		print_object(minpol, cout);
 		cout << endl;
 	}
 
 	if (f_v) {
-		cout << "unipoly_domain::minimum_polynomial_"
-				"extension_field minpol is ";
+		cout << "unipoly_domain::minimum_polynomial_extension_field "
+				"minpol is ";
 		print_object(minpol, cout);
 		cout << endl;
 	}
@@ -3230,6 +3231,7 @@ void unipoly_domain::characteristic_polynomial(
 }
 
 void unipoly_domain::print_matrix(unipoly_object *M, int k)
+// M is a matrix with polynomial entries
 {
 	int i, j;
 
@@ -3248,6 +3250,7 @@ void unipoly_domain::determinant(
 		unipoly_object *M,
 		int k, unipoly_object &p,
 		int verbose_level)
+// M is a matrix with polynomial entries
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;

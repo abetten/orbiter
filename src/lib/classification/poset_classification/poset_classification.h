@@ -299,7 +299,6 @@ public:
 // poset_classification_control.cpp
 // #############################################################################
 
-#define CONTROL_MAX_RECOGNIZE 1000
 
 //! to control the bahavior of the poset classification algorithm
 
@@ -359,13 +358,13 @@ public:
 	int f_show_whole_orbit;
 
 
-	int nb_recognize;
-	const char *recognize[CONTROL_MAX_RECOGNIZE];
+	//int nb_recognize;
+	std::vector<std::string> recognize;
 
 
 	int f_export_schreier_trees;
 	int f_draw_schreier_trees;
-		std::string schreier_tree_prefix;
+	std::string schreier_tree_prefix;
 			// comes after problem_label_with_path
 
 	int f_problem_label;
@@ -703,16 +702,9 @@ public:
 	// poset_classification_classify.cpp:
 	void compute_orbits_on_subsets(
 		int target_depth,
-		//const char *prefix,
-		//int f_W, int f_w,
 		poset_classification_control *PC_control,
 		poset *Poset,
 		int verbose_level);
-	int compute_orbits(int from_level, int to_level, 
-		int verbose_level);
-		// returns TRUE if there is at least one orbit 
-		// at level to_level, 
-		// FALSE otherwise
 	int main(int t0, 
 		int schreier_depth, 
 		int f_use_invariant_subset_if_available, 
@@ -728,7 +720,14 @@ public:
 		// (using Schreier.orbits_on_invariant_subset_fast).
 		// The set of possible points is stored 
 		// inside the schreier vector data structure (sv).
+	int compute_orbits(int from_level, int to_level,
+			int schreier_depth,
+			int f_use_invariant_subset_if_available,
+			int verbose_level);
+			// returns the last level that has at least one orbit
 	void post_processing(int actual_size, int verbose_level);
+	void recognize(std::string &set_to_recognize,
+			int h, int nb_to_recognize, int verbose_level);
 	void extend_level(int size, 
 		int f_create_schreier_vector, 
 		int f_use_invariant_subset_if_available, 
@@ -998,9 +997,9 @@ public:
 
 	// in poset_classification_report.cpp:
 	//void report_schreier_trees(std::ostream &ost, int verbose_level);
-	void report(std::ostream &ost);
+	void report(std::ostream &ost, int verbose_level);
 	void report_number_of_orbits_at_level(std::ostream &ost);
-	void report_orbits_summary(std::ostream &ost);
+	void report_orbits_summary(std::ostream &ost, int verbose_level);
 	void report_poset_of_orbits(std::ostream &ost);
 	void report_orbit(int level, int orbit_at_level, std::ostream &ost);
 

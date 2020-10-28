@@ -413,8 +413,9 @@ int isomorph::find_extension_easy_new(long int *set,
 	Sorting.lint_vec_heapsort(set + level, size - level);
 	
 	int h;
+	data_structures_global Data;
 
-	h = lint_vec_hash_after_sorting(set, size);
+	h = Data.lint_vec_hash_after_sorting(set, size);
 	if (f_v) {
 		cout << "isomorph::find_extension_easy_new h=" << h << endl;
 		}

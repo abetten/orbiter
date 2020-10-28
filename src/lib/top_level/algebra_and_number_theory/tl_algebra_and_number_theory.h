@@ -312,6 +312,7 @@ public:
 	int f_cubic_surface_properties;
 	std::string cubic_surface_properties_fname_csv;
 	int cubic_surface_properties_defining_q;
+	int f_cubic_surface_properties_analyze;
 
 
 		// subspace orbits:
@@ -494,6 +495,17 @@ public:
 	void do_cubic_surface_properties(
 			std::string fname_csv, int defining_q,
 			int verbose_level);
+	void do_cubic_surface_properties_analyze(
+			std::string fname_csv, int defining_q,
+			int verbose_level);
+	void report_singular_surfaces(std::ostream &ost,
+			struct cubic_surface_data_set *Data, int nb_orbits,
+			int verbose_level);
+	void report_non_singular_surfaces(std::ostream &ost,
+			struct cubic_surface_data_set *Data, int nb_orbits,
+			int verbose_level);
+	void report_surfaces_by_lines(std::ostream &ost,
+			struct cubic_surface_data_set *Data, tally &T, int verbose_level);
 
 
 };

@@ -1363,6 +1363,56 @@ void surface_classify_wedge::identify_general_abcd_and_print_table(int verbose_l
 	//cout << "\\hline" << endl;
 	//cout << "\\end{array}" << endl;
 
+	int *Table;
+	int h = 0;
+	int nb_lines, iso, nb_e;
+	knowledge_base K;
+	file_io Fio;
+
+	Table = NEW_int(q4 * 7);
+
+
+	for (a = 1; a < q; a++) {
+		for (b = 1; b < q; b++) {
+			for (c = 1; c < q; c++) {
+				for (d = 1; d < q; d++) {
+					nb_lines = Nb_lines[a * q3 + b * q2 + c * q + d];
+					iso = Iso_type[a * q3 + b * q2 + c * q + d];
+
+					if (iso == -1) {
+						continue;
+					}
+
+					if (iso >= 0) {
+						nb_e = K.cubic_surface_nb_Eckardt_points(q, iso);
+					}
+					else {
+						nb_e = -1;
+					}
+
+					Table[h * 7 + 0] = a;
+					Table[h * 7 + 1] = b;
+					Table[h * 7 + 2] = c;
+					Table[h * 7 + 3] = d;
+					Table[h * 7 + 4] = nb_lines;
+					Table[h * 7 + 5] = iso;
+					Table[h * 7 + 6] = nb_e;
+					h++;
+				}
+			}
+		}
+	}
+
+	char str[1000];
+	string fname;
+
+	sprintf(str, "surface_recognize_abcd_q%d.csv", q);
+	fname.assign(str);
+
+	Fio.int_matrix_write_csv(fname, Table, h, 7);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname);
+
+
 
 	FREE_int(Iso_type);
 	FREE_int(Nb_lines);
@@ -1566,19 +1616,93 @@ void surface_classify_wedge::identify_general_abcd(
 		cout << "surface_classify_wedge::identify_general_abcd "
 				"a = " << a << endl;
 
+		if (a == 0 || a == 1) {
+			continue;
+		}
+
 		for (b = 1; b < q; b++) {
 			cout << "surface_classify_wedge::identify_general_abcd "
 					" b = " << b << endl;
+
+			if (b == 0 || b == 1) {
+				continue;
+			}
+
+			if (b == a) {
+				continue;
+			}
+
 
 			for (c = 1; c < q; c++) {
 				cout << "surface_classify_wedge::identify_general_abcd "
 						"a = " << a << " b = " << b << " c = " << c << endl;
 
+
+				if (c == 0 || c == 1) {
+					continue;
+				}
+
+				if (c == a) {
+					continue;
+				}
+
+
+
 				for (d = 1; d < q; d++) {
 					cout << "surface_classify_wedge::identify_general_abcd "
 							"a = " << a << " b = " << b << " c = " << c << " d = " << d << endl;
 
-					Iso_type[a * q3 + b * q2 + c * q + d] = -1;
+					if (d == 0 || d == 1) {
+						continue;
+					}
+
+					if (d == b) {
+						continue;
+					}
+
+					if (d == c) {
+						continue;
+					}
+
+					int admbc;
+					int m1;
+					int a1, b1, c1, d1;
+					int a1d1, b1c1;
+					int ad, bc;
+					int adb1c1, bca1d1;
+
+
+					m1 = F->negate(1);
+
+					a1 = F->add(a, m1);
+					b1 = F->add(b, m1);
+					c1 = F->add(c, m1);
+					d1 = F->add(d, m1);
+
+					ad = F->mult(a, d);
+					bc = F->mult(b, c);
+
+					adb1c1 = F->mult3(ad, b1, c1);
+					bca1d1 = F->mult3(bc, a1, d1);
+
+					a1d1 = F->mult(a1, d1);
+					b1c1 = F->mult(b1, c1);
+					if (a1d1 == b1c1) {
+						continue;
+					}
+					if (adb1c1 == bca1d1) {
+						continue;
+					}
+
+
+
+					admbc = F->add(F->mult(a, d), F->negate(F->mult(b, c)));
+
+					if (admbc == 0) {
+						continue;
+					}
+
+					Iso_type[a * q3 + b * q2 + c * q + d] = -2;
 					Nb_lines[a * q3 + b * q2 + c * q + d] = -1;
 					//Nb_E[a * q3 + b * q2 + c * q + d] = -1;
 
