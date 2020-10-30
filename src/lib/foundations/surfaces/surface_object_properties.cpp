@@ -851,6 +851,15 @@ void surface_object_properties::print_everything(ostream &ost, int verbose_level
 	if (f_v) {
 		cout << "surface_object_properties::print_everything" << endl;
 	}
+
+	if (f_v) {
+		cout << "surface_object_properties::print_everything before print_equation" << endl;
+	}
+	print_equation(ost);
+	if (f_v) {
+		cout << "surface_object_properties::print_everything after print_equation" << endl;
+	}
+
 	if (f_v) {
 		cout << "surface_object_properties::print_everything "
 				"before print_general" << endl;
@@ -1518,6 +1527,8 @@ void surface_object_properties::print_equation(std::ostream &ost)
 void surface_object_properties::print_general(std::ostream &ost)
 {
 	ost << "\\subsection*{General information}" << endl;
+
+
 
 	if (C_plane_type_by_points) {
 		ost << "Plane types by points: ";
