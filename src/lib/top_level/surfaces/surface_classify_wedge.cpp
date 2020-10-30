@@ -1410,7 +1410,7 @@ void surface_classify_wedge::identify_general_abcd_and_print_table(int verbose_l
 	fname.assign(str);
 
 	Fio.int_matrix_write_csv(fname, Table, h, 7);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 
 
@@ -1590,6 +1590,7 @@ void surface_classify_wedge::identify_general_abcd(
 {
 	int f_v = (verbose_level >= 1);
 	int i, a, b, c, d;
+	int a0, b0; //, c0, d0;
 	int iso_type;
 	int *Elt;
 	int q2, q3, q4;
@@ -1632,6 +1633,19 @@ void surface_classify_wedge::identify_general_abcd(
 				continue;
 			}
 
+			F->minimal_orbit_rep_under_stabilizer_of_frame(a, b,
+					a0, b0, verbose_level);
+
+			cout << "a=" << a << " b=" << b << " a0=" << a0 << " b0=" << b0 << endl;
+
+			if (a0 < a) {
+				cout << "skipping" << endl;
+				continue;
+			}
+			if (a0 == a && b0 < b) {
+				cout << "skipping" << endl;
+				continue;
+			}
 
 			for (c = 1; c < q; c++) {
 				cout << "surface_classify_wedge::identify_general_abcd "
@@ -1663,6 +1677,32 @@ void surface_classify_wedge::identify_general_abcd(
 					if (d == c) {
 						continue;
 					}
+
+
+					// ToDo
+					// warning: special case
+
+					if (d != a) {
+						continue;
+					}
+
+#if 0
+					F->minimal_orbit_rep_under_stabilizer_of_frame(c, d,
+							c0, d0, verbose_level);
+
+					cout << "c=" << c << " d=" << d << " c0=" << c0 << " d0=" << d0 << endl;
+
+
+					if (c0 < c) {
+						cout << "skipping" << endl;
+						continue;
+					}
+					if (c0 == c && d0 < d) {
+						cout << "skipping" << endl;
+						continue;
+					}
+#endif
+
 
 					int admbc;
 					int m1;
@@ -1734,6 +1774,7 @@ void surface_classify_wedge::identify_general_abcd(
 		cout << "surface_classify_wedge::identify_general_abcd done" << endl;
 	}
 }
+
 
 int surface_classify_wedge::isomorphism_test_pairwise(
 	surface_create *SC1, surface_create *SC2,

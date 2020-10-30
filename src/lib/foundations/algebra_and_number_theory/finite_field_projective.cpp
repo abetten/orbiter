@@ -6296,6 +6296,44 @@ void finite_field::isomorphism_to_special_orthogonal(int *A4, int *A6, int verbo
 }
 
 
+void finite_field::minimal_orbit_rep_under_stabilizer_of_frame(int x, int y,
+		int &a, int &b, int verbose_level)
+{
+	int X[6];
+	int i, i0;
+
+	X[0] = x;
+	X[1] = add(x, 1);
+	X[2] = mult(x, inverse(y));
+	X[3] = mult(add(x, y), inverse(add(y, 1)));
+	X[4] = mult(1, inverse(y));
+	X[5] = mult(add(x, y), inverse(x));
+	i0 = 0;
+	for (i = 1; i < 6; i++) {
+		if (X[i] < X[i0]) {
+			i0 = i;
+		}
+	}
+	a = X[i0];
+	if (i0 == 0) {
+		b = y;
+	}
+	else if (i0 == 1) {
+		b = add(y, 1);
+	}
+	else if (i0 == 2) {
+		b = mult(1, inverse(y));
+	}
+	else if (i0 == 3) {
+		b = mult(y, inverse(add(y, 1)));
+	}
+	else if (i0 == 4) {
+		b = mult(x, inverse(y));
+	}
+	else if (i0 == 5) {
+		b = mult(add(x, 1), inverse(x));
+	}
+}
 
 
 }}

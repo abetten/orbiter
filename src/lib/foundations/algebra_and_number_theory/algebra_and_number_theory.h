@@ -1208,6 +1208,8 @@ public:
 	void wedge_to_klein(int *W, int *K);
 	void klein_to_wedge(int *K, int *W);
 	void isomorphism_to_special_orthogonal(int *A4, int *A6, int verbose_level);
+	void minimal_orbit_rep_under_stabilizer_of_frame(int x, int y,
+			int &a, int &b, int verbose_level);
 
 
 
