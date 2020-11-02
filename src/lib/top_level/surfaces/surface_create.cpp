@@ -1144,7 +1144,7 @@ void surface_create::apply_transformations(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 5);
+	int f_vv = (verbose_level >= 2);
 	int h;
 	int *Elt1;
 	int *Elt2;
@@ -1203,6 +1203,8 @@ void surface_create::apply_transformations(
 			else {
 				A->element_move(Elt1, Elt2, 0 /*verbose_level*/);
 			}
+
+			//A->element_transpose(Elt2, Elt3, 0 /*verbose_level*/);
 
 			A->element_invert(Elt2, Elt3, 0 /*verbose_level*/);
 
@@ -1298,6 +1300,14 @@ void surface_create::apply_transformations(
 				if (f_vv) {
 					cout << "maps to " << SO->Pts[i] << endl;
 				}
+				int a;
+
+				a = Surf->Poly3_4->evaluate_at_a_point_by_rank(coeffs_out, SO->Pts[i]);
+				if (a) {
+					cout << "surface_create::apply_transformations something is wrong, the image point does not lie on the transformed surface" << endl;
+					exit(1);
+				}
+
 			}
 			sorting Sorting;
 
@@ -1307,7 +1317,13 @@ void surface_create::apply_transformations(
 			FREE_int(transformation_coeffs);
 		} // next h
 
-		SO->recompute_properties(verbose_level);
+		if (f_v) {
+			cout << "surface_create::apply_transformations before SO->recompute_properties" << endl;
+		}
+		SO->recompute_properties(verbose_level - 3);
+		if (f_v) {
+			cout << "surface_create::apply_transformations after SO->recompute_properties" << endl;
+		}
 
 	}
 	else {

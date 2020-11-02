@@ -135,7 +135,8 @@ int surface_create_description::read_arguments(int argc, const char **argv,
 			f_arc_lifting_with_two_lines = TRUE;
 			arc_lifting_text.assign(argv[++i]);
 			arc_lifting_two_lines_text.assign(argv[++i]);
-			cout << "-arc_lifting_with_two_lines " << arc_lifting_text << " " << arc_lifting_two_lines_text << endl;
+			cout << "-arc_lifting_with_two_lines " << arc_lifting_text
+					<< " " << arc_lifting_two_lines_text << endl;
 		}
 		else if (strcmp(argv[i], "-select_double_six") == 0) {
 			//f_select_double_six = TRUE;
@@ -143,7 +144,8 @@ int surface_create_description::read_arguments(int argc, const char **argv,
 
 			s.assign(argv[++i]);
 			select_double_six_string.push_back(s);
-			cout << "-select_double_six " << select_double_six_string[select_double_six_string.size() - 1] << endl;
+			cout << "-select_double_six "
+					<< select_double_six_string[select_double_six_string.size() - 1] << endl;
 		}
 		else if (strcmp(argv[i], "-transform") == 0) {
 

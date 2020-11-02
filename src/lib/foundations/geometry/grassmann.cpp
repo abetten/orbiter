@@ -147,20 +147,44 @@ void grassmann::print_set(long int *v, int len)
 void grassmann::print_set_tex(ostream &ost, long int *v, int len)
 {
 	int i;
+	int *Mtx;
 	
+	Mtx = NEW_int(n * n);
+
 	for (i = 0; i < len; i++) {
-		ost << "subspace " << i << " / " << len << " is "
+		ost << "subspace " << i << " / " << len << " and its dual  are "
 				<< v[i] << ":\\\\" << endl;
-		unrank_lint(v[i], 0 /*verbose_level*/);
+		//unrank_lint(v[i], 0 /*verbose_level*/);
+
+		unrank_lint_here_and_compute_perp(
+				Mtx, v[i], 0 /*verbose_level*/);
+
+
 		ost << "$$" << endl;
 		//ost << "\\left[" << endl;
 		//print_integer_matrix_width(cout,
 		// M, k, n, n, F->log10_of_q + 1);
 		//print_integer_matrix_tex(ost, M, k, n);
 		//ost << "\\right]" << endl;
-		latex_matrix(ost, M);
+		//latex_matrix(ost, Mtx);
+
+		F->print_matrix_latex(ost, Mtx, k, n);
+
+		ost << "\\qquad" << endl;
+
+		F->print_matrix_numerical_latex(ost, Mtx, k, n);
+
+		ost << "\\qquad" << endl;
+
+		F->print_matrix_latex(ost, Mtx + k * n, n - k, n);
+
+		ost << "\\qquad" << endl;
+
+		F->print_matrix_numerical_latex(ost, Mtx + k * n, n - k, n);
+
 		ost << "$$" << endl;
 	}
+	FREE_int(Mtx);
 }
 
 int grassmann::nb_points_covered(int verbose_level)
@@ -1097,6 +1121,8 @@ void grassmann::compute_dual_spread(
 
 void grassmann::latex_matrix(ostream &ost, int *p)
 {
+
+#if 0
 	int i, j;
 
 	ost << "\\left[" << endl;
@@ -1112,10 +1138,14 @@ void grassmann::latex_matrix(ostream &ost, int *p)
 	}
 	ost << "\\end{array}" << endl;
 	ost << "\\right]" << endl;
+#else
+	F->print_matrix_latex(ost, p, k, n);
+#endif
 }
 
 void grassmann::latex_matrix_numerical(ostream &ost, int *p)
 {
+#if 0
 	int i, j;
 
 	ost << "\\left[" << endl;
@@ -1131,6 +1161,9 @@ void grassmann::latex_matrix_numerical(ostream &ost, int *p)
 	}
 	ost << "\\end{array}" << endl;
 	ost << "\\right]" << endl;
+#else
+	F->print_matrix_numerical_latex(ost, p, k, n);
+#endif
 }
 
 

@@ -34,7 +34,16 @@ surface_object_properties::surface_object_properties()
 
 	Eckardt_points = NULL;
 	Eckardt_points_index = NULL;
+	Eckardt_points_schlaefli_labels = NULL;
 	nb_Eckardt_points = 0;
+
+	Eckardt_points_line_type = NULL;
+	Eckardt_points_plane_type = NULL;
+
+	Hesse_planes = NULL;
+	nb_Hesse_planes = 0;
+
+
 	Double_points = NULL;
 	Double_points_index = NULL;
 	nb_Double_points = 0;
@@ -83,6 +92,18 @@ surface_object_properties::~surface_object_properties()
 	}
 	if (Eckardt_points_index) {
 		FREE_int(Eckardt_points_index);
+	}
+	if (Eckardt_points_schlaefli_labels) {
+		FREE_int(Eckardt_points_schlaefli_labels);
+	}
+	if (Eckardt_points_line_type) {
+		FREE_int(Eckardt_points_line_type);
+	}
+	if (Eckardt_points_plane_type) {
+		FREE_int(Eckardt_points_plane_type);
+	}
+	if (Hesse_planes) {
+		FREE_lint(Hesse_planes);
 	}
 	if (Double_points) {
 		FREE_lint(Double_points);
@@ -295,7 +316,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 	pts_on_lines->sort();
 
 	if (f_vvv) {
-		cout << "pts_on_lines:" << endl;
+		cout << "surface_object::compute_properties pts_on_lines:" << endl;
 		pts_on_lines->print_table();
 	}
 
@@ -310,7 +331,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 
 	pts_on_lines->dualize(lines_on_point, 0 /* verbose_level */);
 	if (f_vvv) {
-		cout << "lines_on_point:" << endl;
+		cout << "surface_object::compute_properties lines_on_point:" << endl;
 		lines_on_point->print_table();
 	}
 
@@ -318,23 +339,23 @@ void surface_object_properties::compute_properties(int verbose_level)
 	Type_lines_on_point->init_lint(lines_on_point->Set_size,
 		lines_on_point->nb_sets, FALSE, 0);
 	if (f_v) {
-		cout << "type of lines_on_point:" << endl;
+		cout << "surface_object::compute_properties type of lines_on_point:" << endl;
 		Type_lines_on_point->print_naked_tex(cout, TRUE);
 		cout << endl;
 	}
 
 	if (f_v) {
-		cout << "computing Eckardt points:" << endl;
+		cout << "surface_object::compute_properties computing Eckardt points:" << endl;
 	}
 	Type_lines_on_point->get_class_by_value(Eckardt_points_index,
 		nb_Eckardt_points, 3 /* value */, 0 /* verbose_level */);
 	Sorting.int_vec_heapsort(Eckardt_points_index, nb_Eckardt_points);
 	if (f_v) {
-		cout << "computing Eckardt points done, we found "
+		cout << "surface_object::compute_properties computing Eckardt points done, we found "
 				<< nb_Eckardt_points << " Eckardt points" << endl;
 	}
 	if (f_vvv) {
-		cout << "Eckardt_points_index=";
+		cout << "surface_object::compute_properties Eckardt_points_index=";
 		int_vec_print(cout, Eckardt_points_index, nb_Eckardt_points);
 		cout << endl;
 	}
@@ -342,14 +363,43 @@ void surface_object_properties::compute_properties(int verbose_level)
 	int_vec_apply_lint(Eckardt_points_index, SO->Pts,
 		Eckardt_points, nb_Eckardt_points);
 	if (f_v) {
-		cout << "computing Eckardt points done, we found "
+		cout << "surface_object::compute_properties computing Eckardt points done, we found "
 				<< nb_Eckardt_points << " Eckardt points" << endl;
 	}
 	if (f_vvv) {
-		cout << "Eckardt_points=";
+		cout << "surface_object::compute_properties Eckardt_points=";
 		lint_vec_print(cout, Eckardt_points, nb_Eckardt_points);
 		cout << endl;
 	}
+
+
+	if (SO->nb_lines == 27) {
+		int p, a, b, c, idx, i;
+
+		Eckardt_points_schlaefli_labels = NEW_int(nb_Eckardt_points);
+
+		for (p = 0; p < nb_Eckardt_points; p++) {
+
+			i = Eckardt_points_index[p];
+			if (lines_on_point->Set_size[i] != 3) {
+				cout << "surface_object::compute_properties Eckardt point is not on three lines" << endl;
+				exit(1);
+			}
+			a = lines_on_point->Sets[i][0];
+			b = lines_on_point->Sets[i][1];
+			c = lines_on_point->Sets[i][2];
+
+
+			idx = SO->Surf->Schlaefli->identify_Eckardt_point(a, b, c, 0 /*verbose_level*/);
+
+			Eckardt_points_schlaefli_labels[p]= idx;
+		}
+	}
+	else {
+		Eckardt_points_schlaefli_labels = NULL;
+	}
+
+
 
 	if (f_v) {
 		cout << "computing Double points:" << endl;
@@ -405,6 +455,50 @@ void surface_object_properties::compute_properties(int verbose_level)
 	}
 
 
+	Eckardt_points_line_type = NEW_int(nb_Eckardt_points + 1);
+
+	Eckardt_points_plane_type = NEW_int(SO->Surf->P->Nb_subspaces[2]);
+
+	if (f_v) {
+		cout << "surface_object_properties::compute_properties computing line type" << endl;
+	}
+	SO->Surf->P->line_intersection_type_collected(Eckardt_points, nb_Eckardt_points,
+			Eckardt_points_line_type, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_object_properties::compute_properties computing line type done" << endl;
+	}
+	if (f_v) {
+		cout << "surface_object_properties::compute_properties computing plane type" << endl;
+	}
+	SO->Surf->P->plane_intersection_type_basic(
+			Eckardt_points, nb_Eckardt_points,
+			Eckardt_points_plane_type, 0 /* verbose_level */);
+	// type[N_planes]
+	if (f_v) {
+		cout << "surface_object_properties::compute_properties computing plane type done" << endl;
+	}
+
+	{
+		tally T_planes;
+		int *H_planes;
+		sorting Sorting;
+
+		T_planes.init(Eckardt_points_plane_type, SO->Surf->P->Nb_subspaces[2], FALSE, 0);
+
+		T_planes.get_class_by_value(H_planes, nb_Hesse_planes, 9 /* value */,
+				0 /* verbose_level */);
+
+		Sorting.int_vec_heapsort(H_planes, nb_Hesse_planes);
+
+		Hesse_planes = NEW_lint(nb_Hesse_planes);
+		for (i = 0; i < nb_Hesse_planes; i++) {
+			Hesse_planes[i] = H_planes[i];
+		}
+		FREE_int(H_planes);
+
+		//T_planes.print_file_tex_we_are_in_math_mode(ost, TRUE);
+	}
+
 
 	if (f_v) {
 		cout << "surface_object_properties::compute_properties done" << endl;
@@ -443,7 +537,8 @@ void surface_object_properties::compute_gradient(int verbose_level)
 				gradient + i * SO->Surf->Poly2_4->get_nb_monomials(),
 				verbose_level - 2);
 		if (f_v) {
-			cout << "surface_object_properties::compute_gradient partial=";
+			cout << "surface_object_properties::compute_gradient "
+					"partial=";
 			int_vec_print(cout, gradient + i * SO->Surf->Poly2_4->get_nb_monomials(),
 					SO->Surf->Poly2_4->get_nb_monomials());
 			cout << " = ";
@@ -568,7 +663,9 @@ void surface_object_properties::compute_singular_points_and_tangent_planes(int v
 	Fio.write_set_to_file_lint(fname_tangents,
 			tangent_plane_rank_dual, nb_tangent_planes, verbose_level);
 
-	cout << "Written file " << fname_tangents << " of size " << Fio.file_size(fname_tangents) << endl;
+	if (f_v) {
+		cout << "Written file " << fname_tangents << " of size " << Fio.file_size(fname_tangents) << endl;
+	}
 
 
 	int *Kernel;
@@ -586,16 +683,18 @@ void surface_object_properties::compute_singular_points_and_tangent_planes(int v
 			r, Kernel, 0 /*verbose_level */);
 
 	ns = SO->Surf->Poly3_4->get_nb_monomials() - r; // dimension of null space
-	cout << "The system has rank " << r << endl;
-	cout << "The ideal has dimension " << ns << endl;
-	cout << "and is generated by:" << endl;
-	int_matrix_print(Kernel, ns, SO->Surf->Poly3_4->get_nb_monomials());
-	cout << "corresponding to the following basis "
-			"of polynomials:" << endl;
-	for (h = 0; h < ns; h++) {
-		SO->Surf->Poly3_4->print_equation(cout, Kernel + h * SO->Surf->Poly3_4->get_nb_monomials());
-		cout << endl;
+	if (f_v) {
+		cout << "The system has rank " << r << endl;
+		cout << "The ideal has dimension " << ns << endl;
+		cout << "and is generated by:" << endl;
+		int_matrix_print(Kernel, ns, SO->Surf->Poly3_4->get_nb_monomials());
+		cout << "corresponding to the following basis "
+				"of polynomials:" << endl;
+		for (h = 0; h < ns; h++) {
+			SO->Surf->Poly3_4->print_equation(cout, Kernel + h * SO->Surf->Poly3_4->get_nb_monomials());
+			cout << endl;
 		}
+	}
 
 	FREE_int(Kernel);
 	FREE_int(w1);
@@ -707,6 +806,7 @@ void surface_object_properties::compute_plane_type_by_points(int verbose_level)
 void surface_object_properties::compute_tritangent_planes_by_rank(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "surface_object_properties::compute_tritangent_planes_by_rank" << endl;
@@ -752,7 +852,7 @@ void surface_object_properties::compute_tritangent_planes_by_rank(int verbose_le
 		Tritangent_plane_rk[tritangent_plane_idx] =
 				SO->Surf->Gr3->rank_lint_here(Basis, 0 /* verbose_level */);
 	}
-	if (TRUE) {
+	if (f_vv) {
 		cout << "surface_object_properties::compute_tritangent_planes_by_rank" << endl;
 		for (tritangent_plane_idx = 0;
 				tritangent_plane_idx < 45;
@@ -1447,7 +1547,6 @@ void surface_object_properties::print_lines(std::ostream &ost)
 
 void surface_object_properties::print_lines_with_points_on_them(std::ostream &ost)
 {
-	int verbose_level = 2;
 	latex_interface L;
 
 	ost << "\\subsection*{The " << SO->nb_lines << " lines with points on them}" << endl;
@@ -1482,7 +1581,7 @@ void surface_object_properties::print_lines_with_points_on_them(std::ostream &os
 
 			SO->Surf->P->planes_through_a_line(
 					SO->Lines[i], plane_ranks,
-					verbose_level);
+					0 /*verbose_level*/);
 
 			// print the tangent planes associated with the points on the line:
 			ost << "The tangent planes associated with the points on this line are:\\\\" << endl;
@@ -1636,8 +1735,35 @@ void surface_object_properties::print_Eckardt_points(std::ostream &ost)
 	ost << "\\begin{align*}" << endl;
 	for (i = 0; i < nb_Eckardt_points; i++) {
 		p = Eckardt_points_index[i];
+
 		SO->Surf->unrank_point(v, Eckardt_points[i]);
-		ost << "E_{" << i << "} &= P_{" << p << "} = P_{" << Eckardt_points[i] << "}=\\bP(";
+
+		ost << i << " &: ";
+		if (SO->nb_lines == 27) {
+			ost << "E_{" << SO->Surf->Schlaefli->Eckard_point_label_tex[Eckardt_points_schlaefli_labels[i]] << "}=";
+		}
+		if (lines_on_point->Set_size[p] != 3) {
+			cout << "surface_object_properties::print_Eckardt_points Eckardt point is not on three lines" << endl;
+			exit(1);
+		}
+		a = lines_on_point->Sets[p][0];
+		b = lines_on_point->Sets[p][1];
+		c = lines_on_point->Sets[p][2];
+
+
+		if (SO->nb_lines == 27) {
+			//ost << "\\ell_{" << a << "} \\cap ";
+			//ost << "\\ell_{" << b << "} \\cap ";
+			//ost << "\\ell_{" << c << "}";
+			//ost << " = ";
+			ost << SO->Surf->Schlaefli->Line_label_tex[a] << " \\cap ";
+			ost << SO->Surf->Schlaefli->Line_label_tex[b] << " \\cap ";
+			ost << SO->Surf->Schlaefli->Line_label_tex[c];
+			ost << " = ";
+		}
+		ost << "P_{" << p << "} = ";
+		ost << "P_{" << Eckardt_points[i] << "}=";
+		ost << "\\bP(";
 		//int_vec_print_fully(ost, v, 4);
 		for (j = 0; j < 4; j++) {
 			SO->F->print_element(ost, v[j]);
@@ -1655,25 +1781,6 @@ void surface_object_properties::print_Eckardt_points(std::ostream &ost)
 		}
 		ost << ")";
 
-		if (lines_on_point->Set_size[p] != 3) {
-			cout << "Eckardt point is not on three lines" << endl;
-			exit(1);
-		}
-		a = lines_on_point->Sets[p][0];
-		b = lines_on_point->Sets[p][1];
-		c = lines_on_point->Sets[p][2];
-
-
-		if (SO->nb_lines == 27) {
-			ost << " = ";
-			//ost << "\\ell_{" << a << "} \\cap ";
-			//ost << "\\ell_{" << b << "} \\cap ";
-			//ost << "\\ell_{" << c << "}";
-			//ost << " = ";
-			ost << SO->Surf->Schlaefli->Line_label_tex[a] << " \\cap ";
-			ost << SO->Surf->Schlaefli->Line_label_tex[b] << " \\cap ";
-			ost << SO->Surf->Schlaefli->Line_label_tex[c];
-		}
 		if (i < nb_Eckardt_points - 1) {
 			ost << ",";
 		}
@@ -1685,7 +1792,7 @@ void surface_object_properties::print_Eckardt_points(std::ostream &ost)
 			exit(1);
 		}
 		else {
-			ost << " T= " << tangent_plane_rank_global[p];
+			ost << "\\; T= " << tangent_plane_rank_global[p];
 		}
 		ost << "\\\\" << endl;
 		}
@@ -1703,6 +1810,33 @@ void surface_object_properties::print_Eckardt_points(std::ostream &ost)
 	ost << "Set of tangent planes: $";
 	L.lint_set_print_tex(ost, T, nb_Eckardt_points);
 	ost << "$\\\\" << endl;
+
+	ost << "Line type of Eckardt points: $";
+	L.print_type_vector_tex(ost, Eckardt_points_line_type, nb_Eckardt_points);
+	ost << "$\\\\" << endl;
+
+
+	{
+		ost << "Plane type of Eckardt points: $";
+		tally T_planes;
+
+		T_planes.init(Eckardt_points_plane_type, SO->Surf->P->Nb_subspaces[2], FALSE, 0);
+
+
+		T_planes.print_file_tex_we_are_in_math_mode(ost, TRUE);
+		ost << "$\\\\" << endl;
+	}
+
+
+	ost << "Hesse planes: \\\\";
+	ost << "Number of Hesse planes: " << nb_Hesse_planes << "\\\\";
+	ost << "Set of Hesse planes: $";
+	L.lint_set_print_tex(ost, Hesse_planes, nb_Hesse_planes);
+	ost << "$\\\\" << endl;
+
+	SO->Surf->Gr3->print_set_tex(ost, Hesse_planes, nb_Hesse_planes);
+
+
 	FREE_lint(T);
 }
 

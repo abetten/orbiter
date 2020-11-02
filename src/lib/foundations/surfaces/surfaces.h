@@ -352,6 +352,7 @@ public:
 	void print_set_of_lines_tex(std::ostream &ost, long int *v, int len);
 	void latex_table_of_clebsch_maps(std::ostream &ost);
 	void print_half_double_sixes_in_GAP();
+	int identify_Eckardt_point(int line1, int line2, int line3, int verbose_level);
 
 };
 
@@ -802,9 +803,17 @@ public:
 	tally *Type_pts_on_lines;
 	tally *Type_lines_on_point;
 
-	long int *Eckardt_points;
-	int *Eckardt_points_index;
+	long int *Eckardt_points; // the orbiter rank of the Eckardt points
+	int *Eckardt_points_index; // index into SO->Pts
+	int *Eckardt_points_schlaefli_labels; // Schlaefli labels
 	int nb_Eckardt_points;
+
+	int *Eckardt_points_line_type; // [nb_Eckardt_points + 1]
+	int *Eckardt_points_plane_type; // [SO->Surf->P->Nb_subspaces[2]]
+
+	long int *Hesse_planes;
+	int nb_Hesse_planes;
+
 
 	long int *Double_points;
 	int *Double_points_index;
@@ -825,7 +834,6 @@ public:
 	long int *Lines_in_tritangent_planes; // [nb_tritangent_planes * 3]
 
 	long int *Trihedral_pairs_as_tritangent_planes; // [nb_trihedral_pairs * 6]
-
 
 	long int *All_Planes; // [nb_trihedral_pairs * 6]
 	int *Dual_point_ranks; // [nb_trihedral_pairs * 6]

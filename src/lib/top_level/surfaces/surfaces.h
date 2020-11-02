@@ -781,8 +781,6 @@ public:
 	std::string arc_lifting_text;
 	std::string arc_lifting_two_lines_text;
 	int f_arc_lifting_with_two_lines;
-	//int f_select_double_six;
-	//int nb_select_double_six;
 	std::vector<std::string> select_double_six_string;
 
 	std::vector<std::string> transform_coeffs;
@@ -899,6 +897,7 @@ public:
 	action *A_on_the_lines;
 	action *A_single_sixes;
 	action *A_on_tritangent_planes;
+	action *A_on_Hesse_planes;
 	action *A_on_trihedral_pairs;
 	action *A_on_pts_not_on_lines;
 
@@ -909,6 +908,7 @@ public:
 	schreier *Orbits_on_lines;
 	schreier *Orbits_on_single_sixes;
 	schreier *Orbits_on_tritangent_planes;
+	schreier *Orbits_on_Hesse_planes;
 	schreier *Orbits_on_trihedral_pairs;
 	schreier *Orbits_on_points_not_on_lines;
 
@@ -942,6 +942,7 @@ public:
 	void init_orbits_on_lines(int verbose_level);
 	void init_orbits_on_half_double_sixes(int verbose_level);
 	void init_orbits_on_tritangent_planes(int verbose_level);
+	void init_orbits_on_Hesse_planes(int verbose_level);
 	void init_orbits_on_trihedral_pairs(int verbose_level);
 	void init_orbits_on_points_not_on_lines(int verbose_level);
 	void print_generators_on_lines(
@@ -954,7 +955,8 @@ public:
 			int verbose_level);
 	void print_automorphism_group(std::ostream &ost,
 		int f_print_orbits, std::string &fname_mask,
-		layered_graph_draw_options *Opt);
+		layered_graph_draw_options *Opt,
+		int verbose_level);
 	void cheat_sheet_basic(std::ostream &ost, int verbose_level);
 	void cheat_sheet(std::ostream &ost,
 			std::string &label_txt,
@@ -1081,6 +1083,7 @@ public:
 
 	action *A; // linear group PGGL(4,q)
 	action *A2; // linear group PGGL(4,q) acting on lines
+	action *A_on_planes; // linear group PGGL(4,q) acting on planes
 	//sims *S; // linear group PGGL(4,q)
 
 	int *Elt1;

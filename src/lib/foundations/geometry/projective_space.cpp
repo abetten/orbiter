@@ -3576,9 +3576,8 @@ void projective_space::hyperplane_intersection_type_basic(
 	grassmann *G;
 
 	if (f_v) {
-		cout << "projective_space::hyperplane_"
-				"intersection_type_basic" << endl;
-		}
+		cout << "projective_space::hyperplane_intersection_type_basic" << endl;
+	}
 	d = n + 1;
 	M = NEW_int(4 * d);
 	Pts = NEW_int(set_size * d);
@@ -3617,6 +3616,9 @@ void projective_space::hyperplane_intersection_type_basic(
 	FREE_int(M);
 	FREE_int(Pts);
 	FREE_OBJECT(G);
+	if (f_v) {
+		cout << "projective_space::hyperplane_intersection_type_basic done" << endl;
+	}
 }
 
 
@@ -3632,9 +3634,8 @@ void projective_space::line_intersection_type_collected(
 	int *Pts;
 
 	if (f_v) {
-		cout << "projective_space::line_intersection_"
-				"type_collected" << endl;
-		}
+		cout << "projective_space::line_intersection_type_collected" << endl;
+	}
 	d = n + 1;
 	M = NEW_int(3 * d);
 	Pts = NEW_int(set_size * d);
@@ -3666,16 +3667,19 @@ void projective_space::line_intersection_type_collected(
 
 				// yes, increment the counter
 				cnt++;
-				}
-			} // next h
+			}
+		} // next h
 
 		// cnt is the number of points on the line:
 		// increment the line type vector at cnt:
 		type_collected[cnt]++;
 
-		} // next rk
+	} // next rk
 	FREE_int(M);
 	FREE_int(Pts);
+	if (f_v) {
+		cout << "projective_space::line_intersection_type_collected done" << endl;
+	}
 }
 
 void projective_space::point_types_of_line_set(
