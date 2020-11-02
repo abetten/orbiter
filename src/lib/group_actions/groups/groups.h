@@ -292,7 +292,7 @@ public:
 // matrix_group.cpp
 // #############################################################################
 
-//! a matrix group over a finite field in projective, linear or affine action
+//! a matrix group over a finite field in projective, vector space or affine action
 
 class matrix_group {
 
@@ -882,6 +882,12 @@ public:
 	void print_and_list_orbits(std::ostream &ost);
 	void print_and_list_orbits_with_original_labels(std::ostream &ost);
 	void print_and_list_orbits_tex(std::ostream &ost);
+	void print_and_list_all_orbits_and_stabilizers_with_list_of_elements_tex(
+			std::ostream &ost, action *default_action, strong_generators *gens,
+			int verbose_level);
+	void make_orbit_trees(std::ostream &ost,
+			std::string &fname_mask, layered_graph_draw_options *Opt,
+			int verbose_level);
 	void print_and_list_orbits_with_original_labels_tex(std::ostream &ost);
 	void print_and_list_orbits_of_given_length(std::ostream &ost,
 		int len);
@@ -959,12 +965,14 @@ public:
 			layered_graph_draw_options *Opt,
 			int parent_x, int parent_y, int *weight,
 			int *placement_x, int max_depth, int i, int last,
+			int y_max,
 			int verbose_level);
 	void subtree_draw_vertices(mp_graphics &G,
 			layered_graph_draw_options *Opt,
 			int parent_x, int parent_y, int *weight,
 			int *placement_x, int max_depth, int i, int last,
 			int f_has_point_labels, long int *point_labels,
+			int y_max,
 			int verbose_level);
 	void subtree_place(int *weight, int *placement_x,
 		int left, int right, int i, int last);

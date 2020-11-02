@@ -16,6 +16,8 @@ namespace orbiter {
 namespace top_level {
 
 
+
+
 void group_theoretic_activity::do_create_surface(
 		surface_create_description *Surface_Descr,
 		poset_classification_control *Control_six_arcs,
@@ -425,6 +427,7 @@ void group_theoretic_activity::do_create_surface(
 		}
 		else {
 			cout << "use -draw_options to specify the drawing option for the report" << endl;
+			exit(1);
 		}
 
 		FREE_OBJECT(SoA);

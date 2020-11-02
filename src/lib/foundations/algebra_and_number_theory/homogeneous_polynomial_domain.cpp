@@ -1684,6 +1684,7 @@ void homogeneous_polynomial_domain::vanishing_ideal(long int *Pts,
 		int nb_pts, int &r, int *Kernel, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE;//(verbose_level >= 1);
 	int i, j;
 	int *System;
 
@@ -1698,7 +1699,7 @@ void homogeneous_polynomial_domain::vanishing_ideal(long int *Pts,
 					F->evaluate_monomial(Monomials + j * nb_variables, v, nb_variables);
 		}
 	}
-	if (f_v && FALSE) {
+	if (f_vv) {
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
 				"The system:" << endl;
 		int_matrix_print(System, nb_pts, nb_monomials);
@@ -1714,7 +1715,7 @@ void homogeneous_polynomial_domain::vanishing_ideal(long int *Pts,
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
 				"The system has rank " << r << endl;
 	}
-	if (TRUE) {
+	if (f_vv) {
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
 				"The system in RREF:" << endl;
 		int_matrix_print(System, r, nb_monomials);
@@ -1726,6 +1727,9 @@ void homogeneous_polynomial_domain::vanishing_ideal(long int *Pts,
 	int_vec_copy(System + r * nb_monomials, Kernel,
 			(nb_monomials - r) * nb_monomials);
 	FREE_int(System);
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::vanishing_ideal done" << endl;
+	}
 }
 
 int homogeneous_polynomial_domain::compare_monomials(int *M1, int *M2)

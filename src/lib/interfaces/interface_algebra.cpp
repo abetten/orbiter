@@ -1424,7 +1424,23 @@ void interface_algebra::do_trace(int q, int verbose_level)
 
 	F->init(q, 0);
 	for (s = 0; s < q; s++) {
-		t = F->absolute_trace(s);
+		int s2, s3, s4, s8, s2p1, s2p1t7, s2p1t6, s2p1t4, f;
+
+		s2 = F->mult(s, s);
+		s2p1 = F->add(s2, 1);
+		s2p1t7 = F->power(s2p1, 7);
+		s2p1t6 = F->power(s2p1, 6);
+		s2p1t4 = F->power(s2p1, 4);
+		s3 = F->power(s, 3);
+		s4 = F->power(s, 4);
+		s8 = F->power(s, 8);
+
+		f = F->add4(F->mult(s, s2p1t7), F->mult(s2, s2p1t6), F->mult(s4, s2p1t4), s8);
+
+		//f = F->mult(top, F->inverse(bot));
+
+		t = F->absolute_trace(f);
+		//t = F->absolute_trace(s);
 		if (t == 1) {
 			T1[nb_T1++] = s;
 		}

@@ -1564,6 +1564,29 @@ void finite_field::print_matrix_latex(std::ostream &ost, int *A, int m, int n)
 
 }
 
+void finite_field::print_matrix_numerical_latex(std::ostream &ost, int *A, int m, int n)
+{
+	int i, j, a;
+
+	ost << "\\left[" << endl;
+	ost << "\\begin{array}{*{" << n << "}{r}}" << endl;
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			a = A[i * n + j];
+
+
+			ost << a;
+			if (j < n - 1)
+				ost << " & ";
+		}
+		ost << "\\\\" << endl;
+	}
+	ost << "\\end{array}" << endl;
+	ost << "\\right]" << endl;
+
+}
+
+
 
 }}
 

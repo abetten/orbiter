@@ -26,6 +26,7 @@ surface_with_action::surface_with_action()
 	Surf = NULL;
 	A = NULL;
 	A2 = NULL;
+	A_on_planes = NULL;
 	//S = NULL;
 	Elt1 = NULL;
 	AonHPD_3_4 = NULL;
@@ -54,6 +55,9 @@ void surface_with_action::freeself()
 	}
 	if (A2) {
 		FREE_OBJECT(A2);
+	}
+	if (A_on_planes) {
+		FREE_OBJECT(A_on_planes);
 	}
 #if 0
 	if (S) {
@@ -106,6 +110,16 @@ void surface_with_action::init(surface_domain *Surf,
 	if (f_v) {
 		cout << "surface_with_action::init "
 				"creating action on lines done" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_with_action::init "
+				"creating action A_on_planes" << endl;
+	}
+	A_on_planes = A->induced_action_on_grassmannian(3, verbose_level);
+	if (f_v) {
+		cout << "surface_with_action::init "
+				"creating action A_on_planes done" << endl;
 	}
 
 

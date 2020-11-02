@@ -39,6 +39,7 @@ surface_object_with_action::surface_object_with_action()
 	A_on_the_lines = NULL;
 	A_single_sixes = NULL;
 	A_on_tritangent_planes = NULL;
+	A_on_Hesse_planes = NULL;
 	A_on_trihedral_pairs = NULL;
 	A_on_pts_not_on_lines = NULL;
 
@@ -49,6 +50,7 @@ surface_object_with_action::surface_object_with_action()
 	Orbits_on_lines = NULL;
 	Orbits_on_single_sixes = NULL;
 	Orbits_on_tritangent_planes = NULL;
+	Orbits_on_Hesse_planes = NULL;
 	Orbits_on_trihedral_pairs = NULL;
 	Orbits_on_points_not_on_lines = NULL;
 	null();
@@ -89,6 +91,9 @@ void surface_object_with_action::freeself()
 	if (A_on_tritangent_planes) {
 		FREE_OBJECT(A_on_tritangent_planes);
 	}
+	if (A_on_Hesse_planes) {
+		FREE_OBJECT(A_on_Hesse_planes);
+	}
 	if (A_on_trihedral_pairs) {
 		FREE_OBJECT(A_on_trihedral_pairs);
 	}
@@ -112,6 +117,9 @@ void surface_object_with_action::freeself()
 	}
 	if (Orbits_on_tritangent_planes) {
 		FREE_OBJECT(Orbits_on_tritangent_planes);
+	}
+	if (Orbits_on_Hesse_planes) {
+		FREE_OBJECT(Orbits_on_Hesse_planes);
 	}
 	if (Orbits_on_trihedral_pairs) {
 		FREE_OBJECT(Orbits_on_trihedral_pairs);
@@ -500,6 +508,15 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(
 		init_orbits_on_tritangent_planes(verbose_level);
 
 
+		// orbits on Hesse planes:
+
+		if (f_v) {
+			cout << "surface_object_with_action::compute_orbits_of_automorphism_group "
+					"orbits on Hesse planes" << endl;
+		}
+		init_orbits_on_Hesse_planes(verbose_level);
+
+
 		// orbits on trihedral pairs:
 
 		if (f_v) {
@@ -792,6 +809,47 @@ void surface_object_with_action::init_orbits_on_tritangent_planes(
 	}
 }
 
+void surface_object_with_action::init_orbits_on_Hesse_planes(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_action::init_orbits_on_Hesse_planes" << endl;
+	}
+
+	if (f_v) {
+		cout << "creating action on Hesse planes:" << endl;
+		cout << "SO->SOP->nb_Hesse_planes = "
+				<< SO->SOP->nb_Hesse_planes << endl;
+	}
+	A_on_Hesse_planes = Surf_A->A_on_planes->restricted_action(
+			SO->SOP->Hesse_planes, SO->SOP->nb_Hesse_planes, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "action on Hesse planes done" << endl;
+	}
+
+	if (f_has_nice_gens) {
+		Orbits_on_Hesse_planes = nice_gens->orbits_on_points_schreier(
+				A_on_Hesse_planes, 0 /*verbose_level*/);
+	}
+	else {
+		Orbits_on_Hesse_planes = Aut_gens->orbits_on_points_schreier(
+				A_on_Hesse_planes, 0 /*verbose_level*/);
+	}
+	if (f_v) {
+		cout << "We found " << Orbits_on_Hesse_planes->nb_orbits
+				<< " orbits on the set of " << SO->SOP->nb_Hesse_planes
+				<< " Hesse planes" << endl;
+	}
+
+	Orbits_on_Hesse_planes->print_and_list_orbits(cout);
+
+	if (f_v) {
+		cout << "surface_object_with_action::init_orbits_on_Hesse_planes done" << endl;
+	}
+}
+
 void surface_object_with_action::init_orbits_on_trihedral_pairs(
 		int verbose_level)
 {
@@ -915,7 +973,8 @@ void surface_object_with_action::print_elements_on_lines(
 
 void surface_object_with_action::print_automorphism_group(
 	std::ostream &ost,
-	int f_print_orbits, std::string &fname_mask, layered_graph_draw_options *Opt)
+	int f_print_orbits, std::string &fname_mask, layered_graph_draw_options *Opt,
+	int verbose_level)
 {
 	longinteger_object go;
 	latex_interface L;
@@ -935,6 +994,21 @@ void surface_object_with_action::print_automorphism_group(
 
 	ost << "\\subsection*{Orbits on Eckardt points}" << endl;
 	Orbits_on_Eckardt_points->print_and_list_orbits_with_original_labels_tex(ost);
+	if (f_print_orbits) {
+
+		string my_fname_mask;
+
+		my_fname_mask.assign(fname_mask);
+		my_fname_mask.append("_Eckardt_points");
+
+		Orbits_on_Eckardt_points->make_orbit_trees(ost,
+				my_fname_mask, Opt,
+				verbose_level);
+	}
+
+	Orbits_on_Eckardt_points->print_and_list_all_orbits_and_stabilizers_with_list_of_elements_tex(
+			ost, Surf_A->A, Aut_gens,
+			verbose_level);
 
 
 	ost << "\\subsection*{Orbits on Double points}" << endl;
@@ -947,12 +1021,30 @@ void surface_object_with_action::print_automorphism_group(
 
 	ost << "\\subsection*{Orbits on lines}" << endl;
 	Orbits_on_lines->print_and_list_orbits_tex(ost);
+	if (f_print_orbits) {
+
+		string my_fname_mask;
+
+		my_fname_mask.assign(fname_mask);
+		my_fname_mask.append("_on_lines");
+
+		Orbits_on_lines->make_orbit_trees(ost,
+				my_fname_mask, Opt,
+				verbose_level);
+	}
+
 
 	ost << "\\bigskip" << endl;
 
 	Surf->Schlaefli->latex_table_of_Schlaefli_labeling_of_lines(ost);
 
 	ost << "\\bigskip" << endl;
+
+#if 0
+	Orbits_on_lines->print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
+		int i, action *default_action,
+		strong_generators *gens, std::ostream &ost);
+#endif
 
 	Orbits_on_lines->print_and_list_orbits_with_original_labels_tex(ost);
 
@@ -976,45 +1068,48 @@ void surface_object_with_action::print_automorphism_group(
 
 		if (f_print_orbits) {
 
-			int f_has_point_labels = FALSE;
-			long int *point_labels = NULL;
 
-			Orbits_on_single_sixes->draw_forest(fname_mask,
-				Opt,
-				f_has_point_labels, point_labels,
-				0 /*verbose_level*/);
+			string my_fname_mask;
 
+			my_fname_mask.assign(fname_mask);
+			my_fname_mask.append("_single_sixes");
 
-			int i;
-			for (i = 0; i < Orbits_on_single_sixes->nb_orbits; i++) {
-				char fname[1000];
-
-				sprintf(fname, fname_mask.c_str(), i);
-				ost << "" << endl;
-				ost << "\\bigskip" << endl;
-				ost << "" << endl;
-				ost << "Orbit " << i << " consisting of the following "
-						<< Orbits_on_single_sixes->orbit_len[i]
-						<< " half double sixes:" << endl;
-				ost << "$$" << endl;
-				L.int_set_print_tex(ost,
-					Orbits_on_single_sixes->orbit +
-						Orbits_on_single_sixes->orbit_first[i],
-					Orbits_on_single_sixes->orbit_len[i]);
-				ost << "$$" << endl;
-				ost << "" << endl;
-				ost << "\\begin{center}" << endl;
-				ost << "\\input " << fname << endl;
-				ost << "\\end{center}" << endl;
-				ost << "" << endl;
-				}
-
-	
-			}
+			Orbits_on_single_sixes->make_orbit_trees(ost,
+					my_fname_mask, Opt,
+					verbose_level);
+		}
 	
 
 		ost << "\\subsection*{Orbits on tritangent planes}" << endl;
 		Orbits_on_tritangent_planes->print_and_list_orbits_tex(ost);
+		if (f_print_orbits) {
+
+			string my_fname_mask;
+
+			my_fname_mask.assign(fname_mask);
+			my_fname_mask.append("_tritangent_planes");
+
+			Orbits_on_tritangent_planes->make_orbit_trees(ost,
+					my_fname_mask, Opt,
+					verbose_level);
+		}
+
+		ost << "\\subsection*{Orbits on Hesse planes}" << endl;
+		Orbits_on_Hesse_planes->print_and_list_orbits_tex(ost);
+		if (f_print_orbits) {
+
+			string my_fname_mask;
+
+			my_fname_mask.assign(fname_mask);
+			my_fname_mask.append("_Hesse_planes");
+
+			Orbits_on_Hesse_planes->make_orbit_trees(ost,
+					my_fname_mask, Opt,
+					verbose_level);
+		}
+		Orbits_on_Hesse_planes->print_and_list_all_orbits_and_stabilizers_with_list_of_elements_tex(
+				ost, Surf_A->A, Aut_gens,
+				verbose_level);
 
 		ost << "\\subsection*{Orbits on trihedral pairs}" << endl;
 		Orbits_on_trihedral_pairs->print_and_list_orbits_tex(ost);
@@ -1106,6 +1201,7 @@ void surface_object_with_action::cheat_sheet(std::ostream &ost,
 
 	if (f_v) {
 		cout << "surface_object_with_action::cheat_sheet" << endl;
+		cout << "surface_object_with_action::cheat_sheet verbose_level = " << verbose_level << endl;
 	}
 
 	if (f_v) {
@@ -1219,7 +1315,7 @@ void surface_object_with_action::cheat_sheet(std::ostream &ost,
 		cout << "surface_object_with_action::cheat_sheet "
 				"before print_automorphism_group" << endl;
 	}
-	print_automorphism_group(ost, f_print_orbits, fname_mask, Opt);
+	print_automorphism_group(ost, f_print_orbits, fname_mask, Opt, verbose_level - 1);
 	
 
 #if 0

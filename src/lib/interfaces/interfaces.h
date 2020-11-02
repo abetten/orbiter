@@ -608,6 +608,10 @@ class interface_projective {
 	int rank_point_in_PG_n;
 	std::string rank_point_in_PG_text;
 
+	int f_create_surface_reports;
+	int f_create_surface_atlas;
+	int create_surface_atlas_q_max;
+
 public:
 
 	int parabola_N;
@@ -663,6 +667,15 @@ public:
 			std::string line1_from_text, std::string line2_from_text,
 			std::string line1_to_text, std::string line2_to_text,
 			int verbose_level);
+	void do_create_surface_reports(int q_max, int verbose_level);
+	void do_create_surface_atlas(int q_max, int verbose_level);
+	void do_create_surface_atlas_q_e(int q_max,
+			struct table_surfaces_field_order *T, int nb_e, int *Idx, int nb,
+			std::string &fname_report_tex,
+			int verbose_level);
+	void make_fname_surface_report_tex(std::string &fname, int q, int ocn);
+	void make_fname_surface_report_pdf(std::string &fname, int q, int ocn);
+
 };
 
 

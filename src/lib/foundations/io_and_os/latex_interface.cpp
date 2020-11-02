@@ -1393,7 +1393,7 @@ void latex_interface::int_set_print_tex(ostream &ost, int *v, int len)
 	ost << " \\}";
 }
 
-void latex_interface::lint_set_print_tex(ostream &ost, long int *v, int len)
+void latex_interface::lint_set_print_tex(std::ostream &ost, long int *v, int len)
 {
 	int i;
 
@@ -1404,6 +1404,33 @@ void latex_interface::lint_set_print_tex(ostream &ost, long int *v, int len)
 			ost << ", ";
 		}
 	ost << " \\}";
+}
+
+void latex_interface::print_type_vector_tex(std::ostream &ost, int *v, int len)
+// v[len + 1]
+{
+	int i, a;
+	int f_first = TRUE;
+
+
+	for (i = len; i >= 0; i--) {
+		a = v[i];
+		//ost << "$" << a;
+		if (a == 0) {
+			continue;
+		}
+		if (f_first) {
+			ost << ",\\,";
+			f_first = FALSE;
+		}
+		ost << i;
+		if (a > 9) {
+			ost << "^{" << a << "}";
+		}
+		else if (a > 1) {
+			ost << "^" << a;
+		}
+	}
 }
 
 void latex_interface::int_set_print_masked_tex(ostream &ost,

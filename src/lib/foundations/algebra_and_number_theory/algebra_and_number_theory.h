@@ -1289,6 +1289,7 @@ public:
 	void export_magma(int d, long int *Pts, int nb_pts, std::string &fname);
 	void export_gap(int d, long int *Pts, int nb_pts, std::string &fname);
 	void print_matrix_latex(std::ostream &ost, int *A, int m, int n);
+	void print_matrix_numerical_latex(std::ostream &ost, int *A, int m, int n);
 };
 
 extern int nb_calls_to_finite_field_init;

@@ -2525,5 +2525,56 @@ void schlaefli::print_half_double_sixes_in_GAP()
 	cout << "];" << endl;
 }
 
+int schlaefli::identify_Eckardt_point(int line1, int line2, int line3, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int lines[3];
+	sorting Sorting;
+	combinatorics_domain Combi;
+	int idx;
+
+	if (f_v) {
+		cout << "schlaefli::identify_Eckardt_point" << endl;
+	}
+	lines[0] = line1;
+	lines[1] = line2;
+	lines[2] = line3;
+	Sorting.int_vec_heapsort(lines, 3);
+	line1 = lines[0];
+	line2 = lines[1];
+	line3 = lines[2];
+	if (line1 < 6) {
+		if (line2 < 6) {
+			cout << "schlaefli::identify_Eckardt_point line1 < 6 and line2 < 6" << endl;
+			exit(1);
+		}
+		idx = Combi.ordered_pair_rank(line1, line2 - 6, 6);
+	}
+	else {
+		int i, j, k, l, m, n;
+
+		if (line1 < 12) {
+			cout << "schlaefli::identify_Eckardt_point second case, line1 < 12" << endl;
+			exit(1);
+		}
+		if (line2 < 12) {
+			cout << "schlaefli::identify_Eckardt_point second case, line2 < 12" << endl;
+			exit(1);
+		}
+		if (line3 < 12) {
+			cout << "schlaefli::identify_Eckardt_point second case, line3 < 12" << endl;
+			exit(1);
+		}
+		Combi.k2ij(line1 - 12, i, j, 6);
+		Combi.k2ij(line2 - 12, k, l, 6);
+		Combi.k2ij(line3 - 12, m, n, 6);
+		idx = 30 + Combi.unordered_triple_pair_rank(i, j, k, l, m, n);
+	}
+	if (f_v) {
+		cout << "schlaefli::identify_Eckardt_point done" << endl;
+	}
+	return idx;
+}
+
 
 }}

@@ -253,6 +253,70 @@ void schreier::print_and_list_orbits_tex(std::ostream &ost)
 	ost << endl;
 }
 
+void schreier::print_and_list_all_orbits_and_stabilizers_with_list_of_elements_tex(
+		std::ostream &ost, action *default_action, strong_generators *gens,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "schreier::print_and_list_all_orbits_and_stabilizers_with_list_of_elements_tex" << endl;
+	}
+	for (i = 0; i < nb_orbits; i++) {
+		print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
+				i, default_action,
+				gens, ost);
+	}
+}
+
+void schreier::make_orbit_trees(std::ostream &ost,
+		std::string &fname_mask, layered_graph_draw_options *Opt,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	latex_interface L;
+
+	if (f_v) {
+		cout << "schreier::make_orbit_trees" << endl;
+	}
+	int f_has_point_labels = FALSE;
+	long int *point_labels = NULL;
+
+	draw_forest(fname_mask,
+		Opt,
+		f_has_point_labels, point_labels,
+		verbose_level - 1);
+
+
+	int i;
+	for (i = 0; i < nb_orbits; i++) {
+		char fname[1000];
+
+		sprintf(fname, fname_mask.c_str(), i);
+		ost << "" << endl;
+		ost << "\\bigskip" << endl;
+		ost << "" << endl;
+		ost << "Orbit " << i << " consisting of the following "
+				<< orbit_len[i]
+				<< " half double sixes:" << endl;
+		ost << "$$" << endl;
+		L.int_set_print_tex(ost,
+			orbit + orbit_first[i], orbit_len[i]);
+		ost << "$$" << endl;
+		ost << "" << endl;
+		ost << "\\begin{center}" << endl;
+		ost << "\\input " << fname << endl;
+		ost << "\\end{center}" << endl;
+		ost << "" << endl;
+		}
+
+
+	if (f_v) {
+		cout << "schreier::make_orbit_trees" << endl;
+	}
+}
+
 void schreier::print_and_list_orbits_with_original_labels_tex(std::ostream &ost)
 {
 	int orbit_no;
@@ -1306,6 +1370,10 @@ void schreier::draw_tree(std::string &fname,
 	if (f_v) {
 		cout << "schreier::draw_tree" << endl;
 	}
+	if (f_v) {
+		cout << "schreier::draw_tree Opt:" << endl;
+		Opt->print();
+	}
 	path = NEW_int(A->degree);
 	weight = NEW_int(A->degree);
 	placement_x = NEW_int(A->degree);
@@ -1326,7 +1394,7 @@ void schreier::draw_tree(std::string &fname,
 		cout << endl;
 		cout << "max_depth = " << max_depth << endl;
 	}
-	subtree_place(weight, placement_x, 0, 1000000, i, last);
+	subtree_place(weight, placement_x, 0, Opt->xin, i, last);
 	if (f_vv) {
 		for (j = i; j < last; j++) {
 			cout << j << " : " << placement_x[j] << endl;
@@ -1357,13 +1425,14 @@ void schreier::draw_tree(std::string &fname,
 	}
 }
 
-static void calc_y_coordinate(int &y, int l, int max_depth)
+static void calc_y_coordinate(int &y, int l, int max_depth, int y_max)
 {
 	int dy;
 
-	dy = (int)((double)1000000 / (double)max_depth);
+	dy = (int)((double)y_max / (double)max_depth);
+	//dy = (int)((double)1000000 / (double)max_depth);
 	y = (int)(dy * ((double)l + 0.5));
-	y = 1000000 - y;
+	y = y_max - y;
 }
 
 void schreier::draw_tree2(std::string &fname,
@@ -1399,19 +1468,22 @@ void schreier::draw_tree2(std::string &fname,
 	G.header();
 	G.begin_figure(factor_1000);
 
-	int x = 500000, y;
-	calc_y_coordinate(y, 0, max_depth);
+	int x = x_max / 2;
+	int y;
+	calc_y_coordinate(y, 0, max_depth, y_max);
 
 
 	subtree_draw_lines(G, Opt,
 			x, y, weight,
 			placement_x, max_depth, i, last,
+			y_max,
 			verbose_level);
 
 	subtree_draw_vertices(G, Opt,
 			x, y, weight,
 			placement_x, max_depth, i, last,
 			f_has_point_labels, point_labels,
+			y_max,
 			verbose_level);
 
 	int j, L, l, N;
@@ -1424,8 +1496,9 @@ void schreier::draw_tree2(std::string &fname,
 		L += l;
 	}
 	avg = (double) L / (double)N;
-	x = 500000;
-	calc_y_coordinate(y, max_depth + 1, max_depth);
+	// x = 500000;
+	x = x_max / 2;
+	calc_y_coordinate(y, max_depth + 1, max_depth, y_max);
 	char str[1000];
 	int nb_gens;
 	double H; // entropy
@@ -1463,6 +1536,7 @@ void schreier::subtree_draw_lines(mp_graphics &G,
 		layered_graph_draw_options *Opt,
 		int parent_x, int parent_y, int *weight,
 		int *placement_x, int max_depth, int i, int last,
+		int y_max,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1476,7 +1550,7 @@ void schreier::subtree_draw_lines(mp_graphics &G,
 	trace_back(NULL, pt, l);
 	// l is 1 if pt is the root.
 	x = placement_x[pt];
-	calc_y_coordinate(y, l, max_depth);
+	calc_y_coordinate(y, l, max_depth, y_max);
 
 	//G.circle(x, y, 2000);
 	Px[0] = parent_x;
@@ -1511,7 +1585,9 @@ void schreier::subtree_draw_lines(mp_graphics &G,
 		if (prev[ii] == pt) {
 			subtree_draw_lines(G, Opt,
 					x, y, weight, placement_x,
-					max_depth, ii, last, verbose_level);
+					max_depth, ii, last,
+					y_max,
+					verbose_level);
 		}
 	}
 
@@ -1525,6 +1601,7 @@ void schreier::subtree_draw_vertices(mp_graphics &G,
 		int parent_x, int parent_y, int *weight,
 		int *placement_x, int max_depth, int i, int last,
 		int f_has_point_labels, long int *point_labels,
+		int y_max,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1538,7 +1615,7 @@ void schreier::subtree_draw_vertices(mp_graphics &G,
 	}
 	trace_back(NULL, pt, l);
 	x = placement_x[pt];
-	calc_y_coordinate(y, l, max_depth);
+	calc_y_coordinate(y, l, max_depth, y_max);
 
 #if 0
 	Px[0] = parent_x;
@@ -1556,6 +1633,7 @@ void schreier::subtree_draw_vertices(mp_graphics &G,
 				x, y, weight, placement_x,
 				max_depth, ii, last,
 				f_has_point_labels, point_labels,
+				y_max,
 				verbose_level);
 		}
 	}

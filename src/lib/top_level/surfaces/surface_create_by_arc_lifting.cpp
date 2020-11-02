@@ -417,7 +417,8 @@ void surface_create_by_arc_lifting::report(std::ostream &ost,
 
 	SOA->print_automorphism_group(ost,
 		TRUE /* f_print_orbits */,
-		fname_mask, Opt);
+		fname_mask, Opt,
+		verbose_level - 1);
 
 	ost << "arc " << arc_label << " yields a surface with "
 		<< AL->Web->E->nb_E << " Eckardt points and a "

@@ -562,7 +562,7 @@ int group_theoretic_activity_description::read_arguments(
 			surface_description = NEW_OBJECT(surface_create_description);
 			cout << "-create_surface" << endl;
 			i += surface_description->read_arguments(
-					argc - (i - 1), argv + i,
+					argc - (i + 1), argv + i + 1,
 					verbose_level);
 			cout << "done with -create_surface" << endl;
 			cout << "i = " << i << endl;
