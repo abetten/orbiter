@@ -90,6 +90,28 @@ poly_mult_mod1:
 poly_mult_mod2:
 	$(ORBITER_PATH)/orbiter.out -v 2  -polynomial_mult_mod 7 "3,1,2" "5,3,4" "6,0,0,1"
 
+Berlekamp_matrix_2_3:
+	$(ORBITER_PATH)/orbiter.out -v 2  -Berlekamp_matrix 2 "1,1,0,1"
+
+# the polynomial X^3+X+1 is irreducible over GF(2) because the rank of the Berlekamp matrix is 2.
+
+Berlekamp_matrix_2_4:
+	$(ORBITER_PATH)/orbiter.out -v 2  -Berlekamp_matrix 2 "1,1,0,0,1"
+
+# the polynomial X^4+X+1 is irreducible over GF(2) because the rank of the Berlekamp matrix is 3.
+
+
+Berlekamp_matrix_4_3a:
+	$(ORBITER_PATH)/orbiter.out -v 2  -Berlekamp_matrix 4 "1,3,0,1"
+
+Berlekamp_matrix_4_3b:
+	$(ORBITER_PATH)/orbiter.out -v 2  -Berlekamp_matrix 4 "1,3,1,1"
+
+
+
+normal_basis_2_3:
+	$(ORBITER_PATH)/orbiter.out -v 2  -normal_basis 2 3
+
 
 
 # degree and then order of the field of coefficients:
@@ -240,6 +262,11 @@ F_16:
 	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q16_multiplication_table_reordered.csv 40 24
 	pdflatex GF_16.tex
 	open GF_16.pdf
+
+F_32:
+	$(ORBITER_PATH)/orbiter.out -v 3 -cheat_sheet_GF 32 
+	pdflatex GF_32.tex
+	open GF_32.pdf
 
 F_64:
 	$(ORBITER_PATH)/orbiter.out -v 3 -cheat_sheet_GF 64 
@@ -638,6 +665,33 @@ tetra_group:
 	open GL_3_3_Subgroup_tetra_12_report.pdf
 	pdflatex GL_3_3_Subgroup_tetra_12_elements.tex
 	open GL_3_3_Subgroup_tetra_12_elements.pdf
+
+Hesse_group:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 3 4 \
+		-subgroup_by_generators "Hesse" "432" 7 \
+		"3,0,0,0,3,0,0,0,3,0" \
+		"2,0,0,0,2,0,1,2,3,0" \
+		"1,0,0,0,1,0,0,1,1,1" \
+		"1,0,0,0,2,2,0,2,0,0" \
+		"1,0,0,2,3,1,2,0,1,0" \
+		"0,3,3,1,0,0,3,2,1,1" \
+		"2,2,0,0,0,1,1,3,3,1" \
+		-end \
+		-group_theoretic_activities \
+		-print_elements_tex \
+		-draw_options -end \
+		-report
+	pdflatex PGGL_3_4_Subgroup_Hesse_432_report.tex
+	open PGGL_3_4_Subgroup_Hesse_432_report.pdf
+
+#Hesse group:
+#1,0,0,0,0,1,0,0,0,0,1,0,3,2,3,2,0, 
+#1,0,0,0,0,1,0,0,3,1,2,0,1,0,1,3,0, 
+#1,0,0,0,0,1,0,0,0,1,1,0,0,0,0,1,1, 
+#1,0,0,0,0,2,2,0,0,2,0,0,0,0,0,1,0, 
+#1,0,0,0,2,3,1,0,2,0,1,0,3,1,3,1,0, 
+#0,1,1,0,2,0,0,0,1,3,2,0,2,1,1,2,1, 
+#1,1,0,0,0,0,3,0,3,2,2,0,1,2,3,3,1,
 
 
 
@@ -1860,6 +1914,42 @@ hyperoval_8:
 		-end
 
 
+frame_stabilizer_PGGL:
+	$(ORBITER_PATH)/orbiter.out -v 4 \
+		-linear_group -PGGL 3 8 -end \
+		-group_theoretic_activities \
+				-poset_classification_control -problem_label frame_q8 -W -depth 4 \
+				-draw_options -end \
+				-report \
+				-end \
+			-classify_arcs \
+				-target_size 4 \
+				-q 8 \
+				-n 3 \
+				-d 2 \
+			-end \
+		-end
+	pdflatex frame_q8_poset.tex
+	open frame_q8_poset.pdf
+
+frame_stabilizer_PGL:
+	$(ORBITER_PATH)/orbiter.out -v 4 \
+		-linear_group -PGL 3 8 -end \
+		-group_theoretic_activities \
+				-poset_classification_control -problem_label frame_q8 -W -depth 4 \
+				-draw_options -end \
+				-report \
+				-end \
+			-classify_arcs \
+				-target_size 4 \
+				-q 8 \
+				-n 3 \
+				-d 2 \
+			-end \
+		-end
+	pdflatex frame_q8_poset.tex
+	open frame_q8_poset.pdf
+
 
 
 hyperoval_16:
@@ -1958,7 +2048,7 @@ nc_arcs_13:
 
 
 nc_arcs_16:
-	$(ORBITER_PATH)/orbiter.out -v 4 \
+	$(ORBITER_PATH)/orbiter.out -v 10 \
 		-linear_group -PGGL 3 16 -end \
 		-group_theoretic_activities \
 			-poset_classification_control -problem_label nc_arcs_q16_d2 -W -depth 6 -recognize "0,1,2,70,148,40" -end \
@@ -3280,8 +3370,9 @@ Family_general_T1:
 
 # 13 Eckardt points
 
-
-
+surface_atlas:
+	$(ORBITER_PATH)/orbiter.out -v 3 -create_surface_atlas 32
+	~/bin/tth surface_atlas.tex
 
 #############################################################################################################
 # Section 22: Cubic Surfaces Classification
@@ -3607,6 +3698,208 @@ arc_lifting_two_lines_64_E13:
 # the classification of cubic surfaces for q=128 takes 3 days on a big machine.
 
 
+identify_general_4:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 4 -wedge -end \
+		-group_theoretic_activities \
+		-surface_identify_general_abcd \
+		-end
+
+
+identify_general_8:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 8 -wedge -end \
+		-group_theoretic_activities \
+		-surface_identify_general_abcd \
+		-end
+
+
+
+identify_general_16:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
+		-group_theoretic_activities \
+		-surface_identify_general_abcd \
+		-end
+
+
+identify_general_32:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 32 -wedge -end \
+		-group_theoretic_activities \
+		-surface_identify_general_abcd \
+		-end
+
+
+example_general_q16_10_11_11_10:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 10 11 11 10 -q 16 \
+		-end \
+		-end 
+	pdflatex surface_family_general_abcd_q16_a10_b11_c11_d10_report.tex
+	open surface_family_general_abcd_q16_a10_b11_c11_d10_report.pdf
+
+
+
+example_q16_iso0:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -catalogue 0 -q 16 \
+		-end \
+		-end 
+	pdflatex surface_catalogue_q16_iso0_report.tex
+	open surface_catalogue_q16_iso0_report.pdf
+
+example_q16_iso3:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -catalogue 3 -q 16 \
+		-end \
+		-end 
+	pdflatex surface_catalogue_q16_iso3_report.tex
+	open surface_catalogue_q16_iso3_report.pdf
+
+# Hirschfeld in F_4:
+
+example_q4_iso0:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 4 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -catalogue 0 -q 4 \
+		-end \
+		-draw_options -end \
+		-end 
+	pdflatex surface_catalogue_q4_iso0_report.tex
+	open surface_catalogue_q4_iso0_report.pdf
+	pdflatex surface_catalogue_q4_iso0_with_group.tex
+	open surface_catalogue_q4_iso0_with_group.pdf
+
+
+example_q4_iso0_relabel_E42:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 4 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -catalogue 0 -q 4 \
+		-select_double_six "23,26,6,25,0,20,13,15,11,14,5,12" \
+		-end \
+		-draw_options -end \
+		-end 
+	pdflatex surface_catalogue_q4_iso0_report.tex
+	open surface_catalogue_q4_iso0_report.pdf
+	pdflatex surface_catalogue_q4_iso0_with_group.tex
+	open surface_catalogue_q4_iso0_with_group.pdf
+
+example_q4_iso0_relabel_E42_transform:
+	$(ORBITER_PATH)/orbiter.out -v 4 -linear_group -PGGL 4 4 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -catalogue 0 -q 4 \
+		-select_double_six "23,26,6,25,0,20,13,15,11,14,5,12" \
+		-transform "1,0,0,1, 0,1,0,1, 0,0,1,2, 0,0,0,1, 0" \
+		-end \
+		-draw_options -end \
+		-end 
+	pdflatex surface_catalogue_q4_iso0_report.tex
+	open surface_catalogue_q4_iso0_report.pdf
+	pdflatex surface_catalogue_q4_iso0_with_group.tex
+	open surface_catalogue_q4_iso0_with_group.pdf
+
+
+#Hesse group:
+#1,0,0,0,0,1,0,0,0,0,1,0,3,2,3,2,0, 
+#1,0,0,0,0,1,0,0,3,1,2,0,1,0,1,3,0, 
+#1,0,0,0,0,1,0,0,0,1,1,0,0,0,0,1,1, 
+#1,0,0,0,0,2,2,0,0,2,0,0,0,0,0,1,0, 
+#1,0,0,0,2,3,1,0,2,0,1,0,3,1,3,1,0, 
+#0,1,1,0,2,0,0,0,1,3,2,0,2,1,1,2,1, 
+#1,1,0,0,0,0,3,0,3,2,2,0,1,2,3,3,1,
+
+# Hirschfeld in F_16:
+
+example_q16_iso4:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -catalogue 4 -q 16 \
+		-end \
+		-draw_options -end \
+		-end 
+	pdflatex surface_catalogue_q16_iso4_report.tex
+	open surface_catalogue_q16_iso4_report.pdf
+	pdflatex surface_catalogue_q16_iso4_with_group.tex
+	open surface_catalogue_q16_iso4_with_group.pdf
+
+
+example_q7_iso0:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 7 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -catalogue 0 -q 7 \
+		-end \
+		-draw_options -end \
+		-end 
+
+
+example_general_q16_2_3_3_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 2 3 3 2 -q 16 \
+		-end \
+		-end 
+	pdflatex surface_family_general_abcd_q16_a2_b3_c3_d2_report.tex
+	open surface_family_general_abcd_q16_a2_b3_c3_d2_report.pdf
+
+example_general_q16_2_7_5_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 2 7 5 2 -q 16 \
+		-end \
+		-end 
+	pdflatex surface_family_general_abcd_q16_a2_b7_c5_d2_report.tex
+	open surface_family_general_abcd_q16_a2_b7_c5_d2_report.pdf
+
+example_general_q16_2_5_5_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 2 5 5 2 -q 16 \
+		-end \
+		-end 
+	pdflatex surface_family_general_abcd_q16_a2_b5_c5_d2_report.tex
+	open surface_family_general_abcd_q16_a2_b5_c5_d2_report.pdf
+
+example_general_q16_2_3_9_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 16 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 2 3 9 2 -q 16 \
+		-end \
+		-end 
+	pdflatex surface_family_general_abcd_q16_a2_b3_c9_d2_report.tex
+	open surface_family_general_abcd_q16_a2_b3_c9_d2_report.pdf
+
+example_general_q32_2_3_5_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 32 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 2 3 5 2 -q 32 \
+		-end \
+		-end 
+	pdflatex surface_family_general_abcd_q32_a2_b3_c5_d2_report.tex
+	open surface_family_general_abcd_q32_a2_b3_c5_d2_report.pdf
+
+example_general_q32_2_3_5_18:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 32 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 2 3 5 18 -q 32 \
+		-end \
+		-end 
+	pdflatex surface_family_general_abcd_q32_a2_b3_c5_d18_report.tex
+	open surface_family_general_abcd_q32_a2_b3_c5_d18_report.pdf
+
 
 
 #############################################################################################################
@@ -3621,6 +3914,12 @@ inverse_mod:
 
 jacobi:
 	$(ORBITER_PATH)/orbiter.out -v 5 -jacobi 2221 7817
+
+sqrt_mod_7817:
+		$(ORBITER_PATH)/orbiter.out -v 2 -square_root_mod 2221 7817
+
+trace:
+		$(ORBITER_PATH)/orbiter.out -v 2 -trace 16
 
 
 
@@ -3779,19 +4078,23 @@ Hamming_4_2:
 
 codes_8_4_4:
 	$(ORBITER_PATH)/orbiter.out -v 6 \
+		-orbiter_path $(ORBITER_PATH) \
 		-linear_group -PGL 4 2 -end \
 		-group_theoretic_activities \
 		-poset_classification_control -problem_label codes_8_4_4 \
-			-draw_poset -draw_options -embedded -rad 250 \
-			-end \
+			-draw_poset \
+			-draw_options -embedded -rad 250 -line_width 1.0 -spanning_tree -end \
+			-report \
 		-end \
 		-linear_codes 3 8 
 	pdflatex codes_8_4_4_poset_lvl_8.tex
 	open codes_8_4_4_poset_lvl_8.pdf
+	pdflatex codes_8_4_4_poset.tex
+	open codes_8_4_4_poset.pdf
 
 codes_8_4_4_draw:
 	$(ORBITER_PATH)/orbiter.out -v 3 -draw_layered_graph codes_8_4_4_poset_lvl_8.layered_graph \
-		-rad 200 -embedded -line_width 0.3  -y_stretch 1.3 -scale 0.5 \
+		-rad 250 -embedded -line_width 1.0  -y_stretch 1.0 -scale 0.5 \
 		-end
 	pdflatex codes_8_4_4_poset_lvl_8_draw.tex
 	open codes_8_4_4_poset_lvl_8_draw.pdf
@@ -3847,6 +4150,21 @@ codes_d4:
 		-problem_label codes_r4_d4 -draw_poset \
 		-draw_options -end \
 		-embedded -end -linear_codes 4 100 -end
+
+
+codes_24_12_8:
+	$(ORBITER_PATH)/orbiter.out -v 6 \
+		-orbiter_path $(ORBITER_PATH) \
+		-linear_group -PGL 12 2 -end \
+		-group_theoretic_activities \
+		-poset_classification_control -problem_label codes_24_12_8 \
+			-draw_poset \
+			-draw_options -embedded -rad 250 -line_width 1.0 -spanning_tree -end \
+			-report \
+		-end \
+		-linear_codes 8 24 
+	pdflatex codes_24_12_8_poset.tex
+	open codes_24_12_8_poset.pdf
 
 
 #############################################################################################################
@@ -5672,22 +5990,13 @@ PGL_3_16_singer:
 
 
 #############################################################################################################
-# Fatma
+# 
+
+DICKSON:
 
 
 #
 
-identify_general_abcd_q7:
-	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 7 -wedge -end \
-		-group_theoretic_activities \
-		-surface_identify_general_abcd \
-		-end
-
-identify_general_abcd_q8:
-	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 8 -wedge -end \
-		-group_theoretic_activities \
-		-surface_identify_general_abcd \
-		-end
 
 
 
@@ -5736,6 +6045,8 @@ orbits_cubic_surfaces_q3:
 		-end 
 	pdflatex poly_orbits_d3_n3_q3.tex
 	open poly_orbits_d3_n3_q3.pdf
+	
+# this takes 3 days and about 150 GB memory on ripoff
 
 orbits_cubic_curves_q2:
 	$(ORBITER_PATH)/orbiter.out -v 4 \
@@ -5777,6 +6088,17 @@ Dickson_q2:
 		-cubic_surface_properties poly_orbits_d3_n3_q2.csv 2 \
 		-end 
 
+Dickson_q2_analyze:
+	$(ORBITER_PATH)/orbiter.out -v 4 \
+		-linear_group -PGL 4 2 \
+		-end \
+		-group_theoretic_activities \
+		-cubic_surface_properties_analyze poly_orbits_d3_n3_q2_F2.csv 2 \
+		-draw_options -end \
+		-end 
+	pdflatex poly_orbits_d3_n3_q2_F2_report.tex
+	open poly_orbits_d3_n3_q2_F2_report.pdf
+
 Dickson_q4:
 	$(ORBITER_PATH)/orbiter.out -v 4 \
 		-linear_group -PGGL 4 4 \
@@ -5785,6 +6107,16 @@ Dickson_q4:
 		-cubic_surface_properties poly_orbits_d3_n3_q2.csv 2 \
 		-end 
 
+Dickson_q4_analyze:
+	$(ORBITER_PATH)/orbiter.out -v 4 \
+		-linear_group -PGGL 4 4 \
+		-end \
+		-group_theoretic_activities \
+		-cubic_surface_properties_analyze poly_orbits_d3_n3_q2_F4.csv 2 \
+		-end 
+	pdflatex poly_orbits_d3_n3_q2_F4_report.tex
+	open poly_orbits_d3_n3_q2_F4_report.pdf
+
 Dickson_q8:
 	$(ORBITER_PATH)/orbiter.out -v 4 \
 		-linear_group -PGGL 4 8 \
@@ -5792,6 +6124,16 @@ Dickson_q8:
 		-group_theoretic_activities \
 		-cubic_surface_properties poly_orbits_d3_n3_q2.csv 2 \
 		-end 
+
+Dickson_q8_analyze:
+	$(ORBITER_PATH)/orbiter.out -v 4 \
+		-linear_group -PGGL 4 8 \
+		-end \
+		-group_theoretic_activities \
+		-cubic_surface_properties_analyze poly_orbits_d3_n3_q2_F8.csv 2 \
+		-end 
+	pdflatex poly_orbits_d3_n3_q2_F8_report.tex
+	open poly_orbits_d3_n3_q2_F8_report.pdf
 
 Dickson_q8_surface_canonical:
 	$(ORBITER_PATH)/orbiter.out -v 10 -canonical_form_PG  3 8 \
@@ -5815,3 +6157,41 @@ Dickson_q16:
 # too big for nauty
 
 
+Surfaces_q3:
+	$(ORBITER_PATH)/orbiter.out -v 4 \
+		-linear_group -PGL 4 3 \
+		-end \
+		-group_theoretic_activities \
+		-cubic_surface_properties poly_orbits_d3_n3_q3.csv 3 \
+		-end 
+
+Surfaces_q3_analyze:
+	$(ORBITER_PATH)/orbiter.out -v 4 \
+		-linear_group -PGL 4 3 \
+		-end \
+		-group_theoretic_activities \
+		-cubic_surface_properties_analyze poly_orbits_d3_n3_q3_F3.csv 2 \
+		-draw_options -end \
+		-end 
+	pdflatex poly_orbits_d3_n3_q3_F3_report.tex
+	open poly_orbits_d3_n3_q3_F3_report.pdf
+
+
+Surfaces_q9:
+	$(ORBITER_PATH)/orbiter.out -v 4 \
+		-linear_group -PGGL 4 9 \
+		-end \
+		-group_theoretic_activities \
+		-cubic_surface_properties poly_orbits_d3_n3_q3.csv 3 \
+		-end 
+
+Surfaces_q9_analyze:
+	$(ORBITER_PATH)/orbiter.out -v 4 \
+		-linear_group -PGGL 4 9 \
+		-end \
+		-group_theoretic_activities \
+		-cubic_surface_properties_analyze poly_orbits_d3_n3_q3_F9.csv 2 \
+		-draw_options -end \
+		-end 
+	pdflatex poly_orbits_d3_n3_q3_F9_report.tex
+	open poly_orbits_d3_n3_q3_F9_report.pdf
