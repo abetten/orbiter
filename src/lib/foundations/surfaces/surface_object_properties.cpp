@@ -898,9 +898,7 @@ void surface_object_properties::compute_Trihedral_pairs_as_tritangent_planes(int
 		cout << "surface_object_properties::compute_Trihedral_pairs_as_tritangent_planes" << endl;
 	}
 	Trihedral_pairs_as_tritangent_planes = NEW_lint(120 * 6);
-	for (i = 0;
-			i < 120;
-			i++) {
+	for (i = 0; i < 120; i++) {
 		for (j = 0; j < 6; j++) {
 			Trihedral_pairs_as_tritangent_planes[i * 6 + j] =
 					Tritangent_plane_rk[SO->Surf->Schlaefli->Trihedral_to_Eckardt[i * 6 + j]];
@@ -1231,13 +1229,13 @@ void surface_object_properties::print_adjacency_matrix(std::ostream &ost)
 	ost << " & ";
 	for (j = 0; j < n; j++) {
 		ost << " & " << j;
-		}
+	}
 	ost << "\\\\" << endl;
 	if (SO->nb_lines == 27) {
 		ost << " & ";
 		for (j = 0; j < n; j++) {
 			ost << " & " << SO->Surf->Schlaefli->Line_label_tex[j];
-			}
+		}
 		ost << "\\\\" << endl;
 	}
 	ost << "\\hline" << endl;
@@ -1248,10 +1246,10 @@ void surface_object_properties::print_adjacency_matrix(std::ostream &ost)
 		}
 		for (j = 0; j < n; j++) {
 			ost << " & " << p[i * n + j];
-			}
+		}
 		ost << "\\\\";
 		ost << endl;
-		}
+	}
 	ost << "\\end{array}" << endl;
 	ost << "$$" << endl;
 	ost << "}%%" << endl;
@@ -1272,14 +1270,14 @@ void surface_object_properties::print_adjacency_matrix_with_intersection_points(
 	ost << " & ";
 	for (j = 0; j < n; j++) {
 		ost << " & " << j;
-		}
+	}
 	ost << "\\\\" << endl;
 
 	if (SO->nb_lines == 27) {
 		ost << " & ";
 		for (j = 0; j < n; j++) {
 			ost << " & " << SO->Surf->Schlaefli->Line_label_tex[j];
-			}
+		}
 		ost << "\\\\" << endl;
 	}
 	ost << "\\hline" << endl;
@@ -1297,14 +1295,14 @@ void surface_object_properties::print_adjacency_matrix_with_intersection_points(
 				//a = Line_intersection_pt[i * n + j];
 				idx = Line_intersection_pt_idx[i * n + j];
 				ost << "P_{" << idx << "}";
-				}
+			}
 			else {
 				ost << ".";
-				}
 			}
+		}
 		ost << "\\\\";
 		ost << endl;
-		}
+	}
 	ost << "\\end{array}" << endl;
 	ost << "$$" << endl;
 	ost << "}%%" << endl;
@@ -1330,7 +1328,7 @@ void surface_object_properties::print_neighbor_sets(std::ostream &ost)
 		for (h = 0; h < Line_neighbors->Set_size[i]; h++) {
 			j = Line_neighbors->Sets[i][h];
 			ost << " & " << j;
-			}
+		}
 		ost << "\\\\" << endl;
 		ost << "\\hline" << endl;
 		ost << "\\mbox{in point} ";
@@ -1341,14 +1339,14 @@ void surface_object_properties::print_neighbor_sets(std::ostream &ost)
 				cout << "surface_object::print_line_intersection_graph "
 						"did not find intersection point" << endl;
 				exit(1);
-				}
-			ost << " & " << idx;
 			}
+			ost << " & " << idx;
+		}
 		ost << "\\\\" << endl;
 		ost << "\\hline" << endl;
 		ost << "\\end{array}" << endl;
 		ost << "$$" << endl;
-		}
+	}
 }
 
 void surface_object_properties::print_planes_in_trihedral_pairs(std::ostream &ost)
@@ -1406,7 +1404,7 @@ void surface_object_properties::print_tritangent_planes(std::ostream &ost)
 			"planes are:\\\\" << endl;
 	for (i = 0; i < nb_tritangent_planes; i++) {
 		print_single_tritangent_plane(ost, i);
-		}
+	}
 
 #if 0
 	ost << "$$" << endl;
@@ -1975,13 +1973,14 @@ void surface_object_properties::print_double_points(std::ostream &ost)
 
 void surface_object_properties::print_points_on_surface(std::ostream &ost)
 {
-	latex_interface L;
-	int i;
-	int v[4];
+	//latex_interface L;
+	//int i;
+	//int v[4];
 
 	//ost << "\\clearpage" << endl;
-	ost << "The surface has " << SO->nb_pts << " points:\\\\" << endl;
+	ost << "The surface has " << SO->nb_pts << " points\\\\" << endl;
 
+#if 0
 	if (SO->nb_pts < 1000) {
 		ost << "$$" << endl;
 		L.lint_vec_print_as_matrix(ost, SO->Pts, SO->nb_pts, 10, TRUE /* f_tex */);
@@ -2001,6 +2000,7 @@ void surface_object_properties::print_points_on_surface(std::ostream &ost)
 	else {
 		ost << "Too many to print.\\\\" << endl;
 	}
+#endif
 }
 
 void surface_object_properties::print_points_on_lines(std::ostream &ost)
@@ -2025,7 +2025,7 @@ void surface_object_properties::print_points_on_lines(std::ostream &ost)
 		L.lint_set_print_tex(ost, pts_on_lines->Sets[i],
 				pts_on_lines->Set_size[i]);
 		ost << "\\}$\\\\" << endl;
-		}
+	}
 
 	//ost << "\\clearpage" << endl;
 }
@@ -2247,7 +2247,7 @@ void surface_object_properties::print_trihedral_pairs_numerically(std::ostream &
 
 
 
-#if 1
+
 void surface_object_properties::latex_table_of_trihedral_pairs_and_clebsch_system(
 	std::ostream &ost, int *T, int nb_T)
 {
@@ -2297,9 +2297,9 @@ void surface_object_properties::latex_table_of_trihedral_pairs_and_clebsch_syste
 		FREE_int(system);
 
 
-		}
+	}
 }
-#endif
+
 
 void surface_object_properties::latex_table_of_trihedral_pairs(std::ostream &ost,
 		int *T, int nb_T)
@@ -2322,7 +2322,7 @@ void surface_object_properties::latex_table_of_trihedral_pairs(std::ostream &ost
 		ost << "$";
 		make_and_print_equation_in_trihedral_form(ost, t_idx);
 		ost << "$\\\\" << endl;
-		}
+	}
 	ost << "Dual point ranks: \\\\" << endl;
 	for (i = 0; i < SO->Surf->Schlaefli->nb_trihedral_pairs; i++) {
 		ost << "$T_{" << i << "} = T_{"
@@ -2332,10 +2332,10 @@ void surface_object_properties::latex_table_of_trihedral_pairs(std::ostream &ost
 			ost << Dual_point_ranks[i * 6 + j];
 			if (j < 6 - 1) {
 				ost << ", ";
-				}
 			}
-		ost << "$\\\\" << endl;
 		}
+		ost << "$\\\\" << endl;
+	}
 
 
 #if 0
@@ -2354,8 +2354,8 @@ void surface_object_properties::latex_table_of_trihedral_pairs(std::ostream &ost
 			print_integer_matrix_tex(ost, Surf->Gr3->M, 3, 4);
 			ost << "\\right]";
 			ost << "$\\\\" << endl;
-			}
 		}
+	}
 #endif
 	//ost << "\\end{multicols}" << endl;
 	cout << "surface_object_properties::latex_table_of_trihedral_pairs done" << endl;
@@ -2379,7 +2379,7 @@ void surface_object_properties::latex_trihedral_pair(std::ostream &ost, int t_id
 			ost << "\\left[" << endl;
 			SO->Surf->Gr->print_single_generator_matrix_tex(ost, SO->Lines[a]);
 			ost << "\\right]}" << endl;
-			}
+		}
 		e = SO->Surf->Schlaefli->Trihedral_to_Eckardt[t_idx * 6 + i];
 		ost << " & {\\pi_{" << e << "} =\\atop";
 #if 0
@@ -2394,7 +2394,7 @@ void surface_object_properties::latex_trihedral_pair(std::ostream &ost, int t_id
 		ost << " & ";
 		a = Dual_point_ranks[t_idx * 6 + i];
 		ost << a << "\\\\" << endl;
-		}
+	}
 	ost << "\\hline" << endl;
 	for (j = 0; j < 3; j++) {
 		e = SO->Surf->Schlaefli->Trihedral_to_Eckardt[t_idx * 6 + 3 + j];
@@ -2408,12 +2408,12 @@ void surface_object_properties::latex_trihedral_pair(std::ostream &ost, int t_id
 		ost << "\\left[" << endl;
 		SO->Surf->Gr3->print_single_generator_matrix_tex(ost, a);
 		ost << "\\right]}" << endl;
-		}
+	}
 	ost << " & & \\\\" << endl;
 	for (j = 0; j < 3; j++) {
 		a = Dual_point_ranks[t_idx * 6 + 3 + j];
 		ost << " & " << a;
-		}
+	}
 	ost << " & & \\\\" << endl;
 	//Surf->latex_trihedral_pair(ost, Surf->Trihedral_pairs + h * 9);
 	ost << "\\end{array}" << endl;
@@ -2573,7 +2573,7 @@ int surface_object_properties::compute_transversal_line(
 
 	if (f_v) {
 		cout << "surface_object_properties::compute_transversal_line" << endl;
-		}
+	}
 	if (SO->nb_lines != 27) {
 		cout << "surface_object_properties::compute_transversal_line SO->nb_lines != 27" << endl;
 		exit(1);
@@ -2581,24 +2581,24 @@ int surface_object_properties::compute_transversal_line(
 	for (i = 0; i < 27; i++) {
 		if (i == line_a) {
 			continue;
-			}
+		}
 		if (i == line_b) {
 			continue;
-			}
+		}
 		if (Adj_line_intersection_graph[i * 27 + line_a] &&
 				Adj_line_intersection_graph[i * 27 + line_b]) {
 			break;
-			}
 		}
+	}
 	if (i == 27) {
 		cout << "surface_object_properties::compute_transversal_line "
 				"did not find transversal line" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "surface_object_properties::compute_transversal_line "
 				"done" << endl;
-		}
+	}
 	return i;
 }
 
@@ -2612,7 +2612,7 @@ void surface_object_properties::compute_transversal_lines(
 
 	if (f_v) {
 		cout << "surface_object_properties::compute_transversal_lines" << endl;
-		}
+	}
 	if (SO->nb_lines != 27) {
 		cout << "surface_object_properties::compute_transversal_lines SO->nb_lines != 27" << endl;
 		exit(1);
@@ -2620,24 +2620,24 @@ void surface_object_properties::compute_transversal_lines(
 	for (i = 0; i < 27; i++) {
 		if (i == line_a) {
 			continue;
-			}
+		}
 		if (i == line_b) {
 			continue;
-			}
+		}
 		if (Adj_line_intersection_graph[i * 27 + line_a] &&
 				Adj_line_intersection_graph[i * 27 + line_b]) {
 			transversals5[nb_trans++] = i;
-			}
 		}
+	}
 	if (nb_trans != 5) {
 		cout << "surface_object_properties::compute_transversal_lines "
 				"nb_trans != 5" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "surface_object_properties::compute_transversal_lines "
 				"done" << endl;
-		}
+	}
 }
 
 
@@ -2668,25 +2668,25 @@ void surface_object_properties::clebsch_map_latex(std::ostream &ost,
 			ost << SO->Surf->Schlaefli->Line_label_tex[a];
 			if (j < lines_on_point->Set_size[i] - 1) {
 				ost << ", ";
-				}
 			}
+		}
 		ost << " & ";
 
 
 		if (Clebsch_map[i] >= 0) {
 			int_vec_print(ost, Clebsch_coeff + i * 4, 4);
-			}
+		}
 		else {
 			ost << "\\mbox{undef}";
-			}
+		}
 		ost << " & ";
 		if (Clebsch_map[i] >= 0) {
 			SO->Surf->P2->unrank_point(w, Clebsch_map[i]);
 			int_vec_print(ost, w, 3);
-			}
+		}
 		else {
 			ost << "\\mbox{undef}";
-			}
+		}
 		ost << "\\\\" << endl;
 		if (((i + 1) % 30) == 0) {
 			ost << "\\hline" << endl;
@@ -2698,8 +2698,8 @@ void surface_object_properties::clebsch_map_latex(std::ostream &ost,
 			ost << "i & P_i & \\mbox{lines} & \\Phi(P_i) & "
 					"\\Phi(P_i)\\\\" << endl;
 			ost << "\\hline" << endl;
-			}
 		}
+	}
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
 	ost << "$$" << endl;
@@ -2748,7 +2748,7 @@ void surface_object_properties::latex_table_of_trihedral_pairs(std::ostream &ost
 		int_vec_print(ost, Trihedral_to_Eckardt + i * 6, 6);
 		ost << "$\\\\" << endl;
 #endif
-		}
+	}
 	//ost << "\\end{multicols}" << endl;
 
 	//print_trihedral_pairs(ost);

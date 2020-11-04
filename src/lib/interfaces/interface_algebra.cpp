@@ -44,7 +44,7 @@ interface_algebra::interface_algebra()
 	f_eigenstuff_from_file = FALSE;
 	eigenstuff_n = 0;
 	eigenstuff_q = 0;
-	eigenstuff_coeffs = NULL;
+	//eigenstuff_coeffs = NULL;
 	//eigenstuff_fname = NULL;
 	f_young_symmetrizer = FALSE;
 	young_symmetrizer_n = 0;
@@ -71,29 +71,23 @@ interface_algebra::interface_algebra()
 	normal_basis_q = 0;
 	normal_basis_d = 0;
 
+	f_normalize_from_the_right = FALSE;
+	f_normalize_from_the_left = FALSE;
+
+
 	f_nullspace = FALSE;
 	nullspace_q = 0;
 	nullspace_m = 0;
 	nullspace_n = 0;
-	nullspace_text = NULL;
+	//nullspace_text = NULL;
+
 	f_RREF = FALSE;
 	RREF_q = 0;
 	RREF_m = 0;
 	RREF_n = 0;
 	//cout << "interface_cryptography::interface_cryptography 3" << endl;
-	RREF_text = NULL;
+	//RREF_text = NULL;
 	f_weight_enumerator = FALSE;
-	f_normalize_from_the_right = FALSE;
-	f_normalize_from_the_left = FALSE;
-	f_transversal = FALSE;
-	transversal_q = 0;
-	transversal_line_1_basis = NULL;
-	transversal_line_2_basis = NULL;
-	transversal_point = NULL;
-	f_intersection_of_two_lines = FALSE;
-	intersection_of_two_lines_q = 0;
-	line_1_basis = NULL;
-	line_2_basis = NULL;
 	f_trace = FALSE;
 	trace_q = 0;
 	f_norm = FALSE;
@@ -101,6 +95,8 @@ interface_algebra::interface_algebra()
 	f_count_subprimitive = FALSE;
 	count_subprimitive_Q_max = 0;
 	count_subprimitive_H_max = 0;
+	f_equivalence_class_of_fractions = FALSE;
+	equivalence_class_of_fractions_N = 0;
 }
 
 
@@ -164,6 +160,12 @@ void interface_algebra::print_help(int argc,
 	else if (strcmp(argv[i], "-normal_basis") == 0) {
 		cout << "-normal_basis <int : q> <int : degree>" << endl;
 	}
+	else if (strcmp(argv[i], "-normalize_from_the_right") == 0) {
+		cout << "-normalize_from_the_right" << endl;
+	}
+	else if (strcmp(argv[i], "-normalize_from_the_left") == 0) {
+		cout << "-normalize_from_the_left" << endl;
+	}
 	else if (strcmp(argv[i], "-nullspace") == 0) {
 		cout << "-nullspace <int : q> <int : m> <int : n> <string : coeff_matrix>" << endl;
 	}
@@ -173,18 +175,6 @@ void interface_algebra::print_help(int argc,
 	else if (strcmp(argv[i], "-weight_enumerator") == 0) {
 		cout << "-weight_enumerator <int : q> <int : m> <int : n> <string : coeff_matrix>" << endl;
 	}
-	else if (strcmp(argv[i], "-normalize_from_the_right") == 0) {
-		cout << "-normalize_from_the_right" << endl;
-	}
-	else if (strcmp(argv[i], "-normalize_from_the_left") == 0) {
-		cout << "-normalize_from_the_left" << endl;
-	}
-	else if (strcmp(argv[i], "-transversal") == 0) {
-		cout << "-transversal <int : q> <string : line_1> <string : line_2> <string : pt>" << endl;
-	}
-	else if (strcmp(argv[i], "-intersection_of_two_lines") == 0) {
-		cout << "-intersection_of_two_lines <int : q> <string : line_1> <string : line_2>" << endl;
-	}
 	else if (strcmp(argv[i], "-trace") == 0) {
 		cout << "-trace <int : q>" << endl;
 	}
@@ -193,6 +183,9 @@ void interface_algebra::print_help(int argc,
 	}
 	else if (strcmp(argv[i], "-count_subprimitive") == 0) {
 		cout << "-count_subprimitive <int : Q_max> <int : H_max>" << endl;
+	}
+	else if (strcmp(argv[i], "-equivalence_class_of_fractions") == 0) {
+		cout << "-equivalence_class_of_fractions <int : N> " << endl;
 	}
 }
 
@@ -259,6 +252,12 @@ int interface_algebra::recognize_keyword(int argc,
 	else if (strcmp(argv[i], "-normal_basis") == 0) {
 		return true;
 	}
+	else if (strcmp(argv[i], "-normalize_from_the_right") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-normalize_from_the_left") == 0) {
+		return true;
+	}
 	else if (strcmp(argv[i], "-nullspace") == 0) {
 		return true;
 	}
@@ -268,18 +267,6 @@ int interface_algebra::recognize_keyword(int argc,
 	else if (strcmp(argv[i], "-weight_enumerator") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-normalize_from_the_right") == 0) {
-		return true;
-	}
-	else if (strcmp(argv[i], "-normalize_from_the_left") == 0) {
-		return true;
-	}
-	else if (strcmp(argv[i], "-transversal") == 0) {
-		return true;
-	}
-	else if (strcmp(argv[i], "-intersection_of_two_lines") == 0) {
-		return true;
-	}
 	else if (strcmp(argv[i], "-trace") == 0) {
 		return true;
 	}
@@ -287,6 +274,9 @@ int interface_algebra::recognize_keyword(int argc,
 		return true;
 	}
 	else if (strcmp(argv[i], "-count_subprimitive") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-equivalence_class_of_fractions") == 0) {
 		return true;
 	}
 	return false;
@@ -383,7 +373,7 @@ void interface_algebra::read_arguments(int argc,
 			f_eigenstuff = TRUE;
 			eigenstuff_n = atoi(argv[++i]);
 			eigenstuff_q = atoi(argv[++i]);
-			eigenstuff_coeffs = argv[++i];
+			eigenstuff_coeffs.assign(argv[++i]);
 			cout << "-eigenstuff " << eigenstuff_n
 					<< " " << eigenstuff_q << " " << eigenstuff_coeffs << endl;
 		}
@@ -444,12 +434,20 @@ void interface_algebra::read_arguments(int argc,
 			cout << "-normal_basis " << normal_basis_q
 					<< " " << normal_basis_d << endl;
 		}
+		else if (strcmp(argv[i], "-normalize_from_the_right") == 0) {
+			f_normalize_from_the_right = TRUE;
+			cout << "-normalize_from_the_right " << endl;
+		}
+		else if (strcmp(argv[i], "-normalize_from_the_left") == 0) {
+			f_normalize_from_the_left = TRUE;
+			cout << "-normalize_from_the_left " << endl;
+		}
 		else if (strcmp(argv[i], "-nullspace") == 0) {
 			f_nullspace = TRUE;
 			nullspace_q = atoi(argv[++i]);
 			nullspace_m = atoi(argv[++i]);
 			nullspace_n = atoi(argv[++i]);
-			nullspace_text = argv[++i];
+			nullspace_text.assign(argv[++i]);
 			cout << "-nullspace " << nullspace_q
 					<< " " << nullspace_m << " " << nullspace_n << " " << nullspace_text << endl;
 		}
@@ -458,7 +456,7 @@ void interface_algebra::read_arguments(int argc,
 			RREF_q = atoi(argv[++i]);
 			RREF_m = atoi(argv[++i]);
 			RREF_n = atoi(argv[++i]);
-			RREF_text = argv[++i];
+			RREF_text.assign(argv[++i]);
 			cout << "-RREF " << RREF_q
 					<< " " << RREF_m << " " << RREF_n << " " << RREF_text << endl;
 		}
@@ -470,35 +468,6 @@ void interface_algebra::read_arguments(int argc,
 			RREF_text = argv[++i];
 			cout << "-weight_enumerator " << RREF_q
 					<< " " << RREF_m << " " << RREF_n << " " << RREF_text << endl;
-		}
-		else if (strcmp(argv[i], "-normalize_from_the_right") == 0) {
-			f_normalize_from_the_right = TRUE;
-			cout << "-normalize_from_the_right " << endl;
-		}
-		else if (strcmp(argv[i], "-normalize_from_the_left") == 0) {
-			f_normalize_from_the_left = TRUE;
-			cout << "-normalize_from_the_left " << endl;
-		}
-		else if (strcmp(argv[i], "-transversal") == 0) {
-			f_transversal = TRUE;
-			transversal_q = atoi(argv[++i]);
-			transversal_line_1_basis = argv[++i];
-			transversal_line_2_basis = argv[++i];
-			transversal_point = argv[++i];
-			cout << "-transversal " << transversal_q
-					<< " " << transversal_line_1_basis
-					<< " " << transversal_line_2_basis
-					<< " " << transversal_point << endl;
-		}
-		else if (strcmp(argv[i], "-intersection_of_two_lines") == 0) {
-			f_intersection_of_two_lines = TRUE;
-			intersection_of_two_lines_q = atoi(argv[++i]);
-			line_1_basis = argv[++i];
-			line_2_basis = argv[++i];
-			cout << "-intersection_of_two_lines " << intersection_of_two_lines_q
-					<< " " << line_1_basis
-					<< " " << line_2_basis
-					<< endl;
 		}
 		else if (strcmp(argv[i], "-trace") == 0) {
 			f_trace = TRUE;
@@ -518,6 +487,12 @@ void interface_algebra::read_arguments(int argc,
 			count_subprimitive_H_max = atoi(argv[++i]);
 			cout << "-count_subprimitive " << count_subprimitive_Q_max
 					<< " " << count_subprimitive_H_max
+					<< endl;
+		}
+		else if (strcmp(argv[i], "-equivalence_class_of_fractions") == 0) {
+			f_equivalence_class_of_fractions = TRUE;
+			equivalence_class_of_fractions_N = atoi(argv[++i]);
+			cout << "-equivalence_class_of_fractions " << equivalence_class_of_fractions_N
 					<< endl;
 		}
 	}
@@ -571,23 +546,28 @@ void interface_algebra::worker(orbiter_session *Session, int verbose_level)
 	else if (f_polynomial_division) {
 		algebra_global Algebra;
 
-		Algebra.polynomial_division(polynomial_division_q, polynomial_division_A, polynomial_division_B, verbose_level);
+		Algebra.polynomial_division(polynomial_division_q,
+				polynomial_division_A, polynomial_division_B, verbose_level);
 	}
 	else if (f_extended_gcd_for_polynomials) {
 		algebra_global Algebra;
 
-		Algebra.extended_gcd_for_polynomials(polynomial_division_q, polynomial_division_A, polynomial_division_B, verbose_level);
+		Algebra.extended_gcd_for_polynomials(polynomial_division_q,
+				polynomial_division_A, polynomial_division_B, verbose_level);
 	}
 
 	else if (f_polynomial_mult_mod) {
 		algebra_global Algebra;
 
-		Algebra.polynomial_mult_mod(polynomial_mult_mod_q, polynomial_mult_mod_A, polynomial_mult_mod_B, polynomial_mult_mod_M, verbose_level);
+		Algebra.polynomial_mult_mod(polynomial_mult_mod_q,
+				polynomial_mult_mod_A, polynomial_mult_mod_B,
+				polynomial_mult_mod_M, verbose_level);
 	}
 	else if (f_Berlekamp_matrix) {
 		algebra_global Algebra;
 
-		Algebra.Berlekamp_matrix(Berlekamp_matrix_q, Berlekamp_matrix_coeffs, verbose_level);
+		Algebra.Berlekamp_matrix(Berlekamp_matrix_q,
+				Berlekamp_matrix_coeffs, verbose_level);
 	}
 	else if (f_normal_basis) {
 		algebra_global Algebra;
@@ -602,42 +582,53 @@ void interface_algebra::worker(orbiter_session *Session, int verbose_level)
 		FREE_OBJECT(F);
 	}
 	else if (f_nullspace) {
-		do_nullspace(nullspace_q, nullspace_m, nullspace_n,
-				nullspace_text, f_normalize_from_the_left,
+
+		algebra_global Algebra;
+
+		Algebra.do_nullspace(nullspace_q, nullspace_m, nullspace_n,
+				nullspace_text,
+				f_normalize_from_the_left,
 				f_normalize_from_the_right, verbose_level);
 	}
 	else if (f_RREF) {
-		do_RREF(RREF_q, RREF_m, RREF_n, RREF_text,
-				f_normalize_from_the_left, f_normalize_from_the_right, verbose_level);
-	}
-	else if (f_weight_enumerator) {
-		do_weight_enumerator(RREF_q, RREF_m, RREF_n, RREF_text,
-				f_normalize_from_the_left, f_normalize_from_the_right, verbose_level);
-	}
-	else if (f_transversal) {
-		do_transversal(transversal_q,
-				transversal_line_1_basis,
-				transversal_line_2_basis,
-				transversal_point,
-				f_normalize_from_the_left, f_normalize_from_the_right,
+
+		algebra_global Algebra;
+
+
+		Algebra.do_RREF(RREF_q, RREF_m, RREF_n, RREF_text,
+				f_normalize_from_the_left,
+				f_normalize_from_the_right,
 				verbose_level);
 	}
-	else if (f_intersection_of_two_lines) {
-		do_intersection_of_two_lines(intersection_of_two_lines_q,
-				line_1_basis,
-				line_2_basis,
-				f_normalize_from_the_left, f_normalize_from_the_right,
+	else if (f_weight_enumerator) {
+
+		algebra_global Algebra;
+
+		Algebra.do_weight_enumerator(RREF_q, RREF_m, RREF_n, RREF_text,
+				f_normalize_from_the_left,
+				f_normalize_from_the_right,
 				verbose_level);
 	}
 	else if (f_trace) {
-		do_trace(trace_q, verbose_level);
+
+		algebra_global Algebra;
+
+		Algebra.do_trace(trace_q, verbose_level);
 	}
 	else if (f_norm) {
-		do_norm(norm_q, verbose_level);
+
+		algebra_global Algebra;
+
+		Algebra.do_norm(norm_q, verbose_level);
 	}
 	else if (f_count_subprimitive) {
 		algebra_global AG;
 		AG.count_subprimitive(count_subprimitive_Q_max, count_subprimitive_H_max);
+	}
+	else if (f_equivalence_class_of_fractions) {
+		algebra_global Algebra;
+
+		Algebra.do_equivalence_class_of_fractions(equivalence_class_of_fractions_N, verbose_level);
 	}
 
 
@@ -645,7 +636,7 @@ void interface_algebra::worker(orbiter_session *Session, int verbose_level)
 }
 
 void interface_algebra::do_eigenstuff(
-		int n, int q, const char *coeffs_text, int verbose_level)
+		int n, int q, std::string &coeffs_text, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1066,698 +1057,6 @@ void interface_algebra::do_make_A5_in_PSL_2_q(int q, int verbose_level)
 	}
 }
 
-void interface_algebra::do_nullspace(int q,
-		int m, int n, const char *text,
-		int f_normalize_from_the_left, int f_normalize_from_the_right,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	finite_field *F;
-	int *M;
-	int *A;
-	int *base_cols;
-	int len, rk, i, rk1;
-	latex_interface Li;
-
-	if (f_v) {
-		cout << "do_nullspace" << endl;
-	}
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level);
-
-	int_vec_scan(text, M, len);
-	if (len != m * n) {
-		cout << "number of coordinates received differs from m * n" << endl;
-		cout << "received " << len << endl;
-		exit(1);
-	}
-
-	if (m > n) {
-		cout << "nullspace needs m < n" << endl;
-		exit(1);
-	}
-
-	A = NEW_int(n * n);
-	base_cols = NEW_int(n);
-	int_vec_copy(M, A, m * n);
-
-	rk = F->perp_standard(n, m, A, verbose_level);
-
-
-	cout << "after perp_standard:" << endl;
-	int_matrix_print(A, n, n);
-	cout << "rk=" << rk << endl;
-
-	cout << "after RREF" << endl;
-	rk1 = F->Gauss_int(A + rk * n,
-		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
-		FALSE /* f_P */, NULL /*P*/, n - rk, n, n,
-		0 /*verbose_level*/);
-
-
-	cout << "after RREF" << endl;
-	int_matrix_print(A + rk * n, rk1, n);
-	cout << "rank of nullspace = " << rk1 << endl;
-
-	cout << "coefficients:" << endl;
-	int_vec_print(cout, A + rk * n, rk1 * n);
-	cout << endl;
-
-	cout << "$$" << endl;
-	cout << "\\left[" << endl;
-	Li.int_matrix_print_tex(cout, A + rk * n, rk1, n);
-	cout << "\\right]" << endl;
-	cout << "$$" << endl;
-
-	if (f_normalize_from_the_left) {
-		cout << "normalizing from the left" << endl;
-		for (i = rk; i < n; i++) {
-			F->PG_element_normalize_from_front(
-					A + i * n, 1, n);
-		}
-
-		cout << "after normalize from the left:" << endl;
-		int_matrix_print(A, n, n);
-		cout << "rk=" << rk << endl;
-
-		cout << "$$" << endl;
-		cout << "\\left[" << endl;
-		Li.int_matrix_print_tex(cout, A + rk * n, rk1, n);
-		cout << "\\right]" << endl;
-		cout << "$$" << endl;
-
-	}
-
-	if (f_normalize_from_the_right) {
-		cout << "normalizing from the right" << endl;
-		for (i = rk; i < n; i++) {
-			F->PG_element_normalize(
-					A + i * n, 1, n);
-		}
-
-		cout << "after normalize from the right:" << endl;
-		int_matrix_print(A, n, n);
-		cout << "rk=" << rk << endl;
-
-		cout << "$$" << endl;
-		cout << "\\left[" << endl;
-		Li.int_matrix_print_tex(cout, A + rk * n, rk1, n);
-		cout << "\\right]" << endl;
-		cout << "$$" << endl;
-	}
-
-
-	FREE_int(M);
-	FREE_int(A);
-	FREE_int(base_cols);
-
-	if (f_v) {
-		cout << "do_nullspace done" << endl;
-	}
-}
-
-void interface_algebra::do_RREF(int q,
-		int m, int n, const char *text,
-		int f_normalize_from_the_left, int f_normalize_from_the_right,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	finite_field *F;
-	int *M;
-	int *A;
-	int *base_cols;
-	int len, rk, i;
-	latex_interface Li;
-
-	if (f_v) {
-		cout << "do_RREF" << endl;
-	}
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level);
-
-	int_vec_scan(text, M, len);
-	if (len != m * n) {
-		cout << "number of coordinates received differs from m * n" << endl;
-		cout << "received " << len << endl;
-		exit(1);
-	}
-
-
-	A = NEW_int(n * n);
-	base_cols = NEW_int(n);
-	int_vec_copy(M, A, m * n);
-
-	rk = F->Gauss_int(A,
-		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
-		FALSE /* f_P */, NULL /*P*/, m, n, n,
-		0 /*verbose_level*/);
-
-
-	cout << "after RREF:" << endl;
-	int_matrix_print(A, rk, n);
-	cout << "rk=" << rk << endl;
-
-	cout << "coefficients:" << endl;
-	int_vec_print(cout, A, rk * n);
-	cout << endl;
-
-	cout << "$$" << endl;
-	cout << "\\left[" << endl;
-	Li.int_matrix_print_tex(cout, A, rk, n);
-	cout << "\\right]" << endl;
-	cout << "$$" << endl;
-
-	if (f_normalize_from_the_left) {
-		cout << "normalizing from the left" << endl;
-		for (i = 0; i < rk; i++) {
-			F->PG_element_normalize_from_front(
-					A + i * n, 1, n);
-		}
-
-		cout << "after normalize from the left:" << endl;
-		int_matrix_print(A, rk, n);
-		cout << "rk=" << rk << endl;
-
-	}
-
-	if (f_normalize_from_the_right) {
-		cout << "normalizing from the right" << endl;
-		for (i = 0; i < rk; i++) {
-			F->PG_element_normalize(
-					A + i * n, 1, n);
-		}
-
-		cout << "after normalize from the right:" << endl;
-		int_matrix_print(A, rk, n);
-		cout << "rk=" << rk << endl;
-
-	}
-
-
-	FREE_int(M);
-	FREE_int(A);
-	FREE_int(base_cols);
-
-	if (f_v) {
-		cout << "do_RREF done" << endl;
-	}
-}
-
-void interface_algebra::do_weight_enumerator(int q,
-		int m, int n, const char *text,
-		int f_normalize_from_the_left, int f_normalize_from_the_right,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	finite_field *F;
-	int *M;
-	int *A;
-	int *base_cols;
-	int *weight_enumerator;
-	int len, rk, i;
-
-	if (f_v) {
-		cout << "do_weight_enumerator" << endl;
-	}
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level);
-
-	int_vec_scan(text, M, len);
-	if (len != m * n) {
-		cout << "number of coordinates received differs from m * n" << endl;
-		cout << "received " << len << endl;
-		exit(1);
-	}
-
-
-	A = NEW_int(n * n);
-	base_cols = NEW_int(n);
-	weight_enumerator = NEW_int(n + 1);
-	int_vec_copy(M, A, m * n);
-
-	rk = F->Gauss_int(A,
-		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
-		FALSE /* f_P */, NULL /*P*/, m, n, n,
-		0 /*verbose_level*/);
-
-
-	cout << "after RREF:" << endl;
-	int_matrix_print(A, rk, n);
-	cout << "rk=" << rk << endl;
-
-	cout << "coefficients:" << endl;
-	int_vec_print(cout, A, rk * n);
-	cout << endl;
-
-
-	F->code_weight_enumerator(n, rk,
-		A /* code */, // [k * n]
-		weight_enumerator, // [n + 1]
-		verbose_level);
-
-	cout << "The weight enumerator is:" << endl;
-	for (i = 0; i <= n; i++) {
-		cout << i << " : " << weight_enumerator[i] << endl;
-	}
-
-	int f_first = TRUE;
-
-	for (i = 0; i <= n; i++) {
-		if (weight_enumerator[i] == 0) {
-			continue;
-		}
-		if (f_first) {
-			f_first = FALSE;
-		}
-		else {
-			cout << " + ";
-		}
-		cout << weight_enumerator[i];
-		if (i) {
-			cout << "*";
-			cout << "x";
-			if (i > 1) {
-				cout << "^";
-				if (i < 10) {
-					cout << i;
-				}
-				else {
-					cout << "(" << i << ")";
-				}
-			}
-		}
-		if (n - i) {
-			cout << "*";
-			cout << "y";
-			if (n - i > 1) {
-				cout << "^";
-				if (n - i < 10) {
-					cout << n - i;
-				}
-				else {
-					cout << "(" << n - i << ")";
-				}
-			}
-		}
-
-	}
-	cout << endl;
-
-
-	if (f_normalize_from_the_left) {
-		cout << "normalizing from the left" << endl;
-		for (i = 0; i < rk; i++) {
-			F->PG_element_normalize_from_front(
-					A + i * n, 1, n);
-		}
-
-		cout << "after normalize from the left:" << endl;
-		int_matrix_print(A, rk, n);
-		cout << "rk=" << rk << endl;
-
-	}
-
-	if (f_normalize_from_the_right) {
-		cout << "normalizing from the right" << endl;
-		for (i = 0; i < rk; i++) {
-			F->PG_element_normalize(
-					A + i * n, 1, n);
-		}
-
-		cout << "after normalize from the right:" << endl;
-		int_matrix_print(A, rk, n);
-		cout << "rk=" << rk << endl;
-
-	}
-
-
-	FREE_int(M);
-	FREE_int(A);
-	FREE_int(base_cols);
-	FREE_int(weight_enumerator);
-
-	if (f_v) {
-		cout << "do_weight_enumerator done" << endl;
-	}
-}
-
-void interface_algebra::do_trace(int q, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	finite_field *F;
-	int s, t;
-	int *T0 = NULL;
-	int *T1 = NULL;
-	int nb_T0 = 0;
-	int nb_T1 = 0;
-
-	if (f_v) {
-		cout << "do_trace" << endl;
-	}
-	F = NEW_OBJECT(finite_field);
-
-	T0 = NEW_int(q);
-	T1 = NEW_int(q);
-
-	F->init(q, 0);
-	for (s = 0; s < q; s++) {
-		int s2, s3, s4, s8, s2p1, s2p1t7, s2p1t6, s2p1t4, f;
-
-		s2 = F->mult(s, s);
-		s2p1 = F->add(s2, 1);
-		s2p1t7 = F->power(s2p1, 7);
-		s2p1t6 = F->power(s2p1, 6);
-		s2p1t4 = F->power(s2p1, 4);
-		s3 = F->power(s, 3);
-		s4 = F->power(s, 4);
-		s8 = F->power(s, 8);
-
-		f = F->add4(F->mult(s, s2p1t7), F->mult(s2, s2p1t6), F->mult(s4, s2p1t4), s8);
-
-		//f = F->mult(top, F->inverse(bot));
-
-		t = F->absolute_trace(f);
-		//t = F->absolute_trace(s);
-		if (t == 1) {
-			T1[nb_T1++] = s;
-		}
-		else {
-			T0[nb_T0++] = s;
-		}
-	}
-
-	cout << "Trace 0:" << endl;
-	int_vec_print_fully(cout, T0, nb_T0);
-	cout << endl;
-
-	cout << "Trace 1:" << endl;
-	int_vec_print_fully(cout, T1, nb_T1);
-	cout << endl;
-
-	char str[1000];
-	string fname_csv;
-	file_io Fio;
-
-	snprintf(str, 1000, "F_q%d_trace_0.csv", q);
-	fname_csv.assign(str);
-	Fio.int_vec_write_csv(T0, nb_T0,
-			fname_csv, "Trace_0");
-	cout << "written file " << fname_csv << " of size "
-			<< Fio.file_size(fname_csv) << endl;
-
-	snprintf(str, 1000, "F_q%d_trace_1.csv", q);
-	fname_csv.assign(str);
-	Fio.int_vec_write_csv(T1, nb_T1,
-			fname_csv, "Trace_1");
-	cout << "written file " << fname_csv << " of size "
-			<< Fio.file_size(fname_csv) << endl;
-
-
-	FREE_OBJECT(F);
-	if (f_v) {
-		cout << "do_trace done" << endl;
-	}
-}
-
-void interface_algebra::do_norm(int q, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	finite_field *F;
-	int s, t;
-	int *T0 = NULL;
-	int *T1 = NULL;
-	int nb_T0 = 0;
-	int nb_T1 = 0;
-
-	if (f_v) {
-		cout << "do_norm" << endl;
-	}
-	F = NEW_OBJECT(finite_field);
-
-	T0 = NEW_int(q);
-	T1 = NEW_int(q);
-
-	F->init(q, 0);
-	for (s = 0; s < q; s++) {
-		t = F->absolute_norm(s);
-		if (t == 1) {
-			T1[nb_T1++] = s;
-		}
-		else {
-			T0[nb_T0++] = s;
-		}
-	}
-
-	cout << "Norm 0:" << endl;
-	int_vec_print_fully(cout, T0, nb_T0);
-	cout << endl;
-
-	cout << "Norm 1:" << endl;
-	int_vec_print_fully(cout, T1, nb_T1);
-	cout << endl;
-
-
-	char str[1000];
-	string fname_csv;
-	file_io Fio;
-
-	snprintf(str, 1000, "F_q%d_norm_0.csv", q);
-	fname_csv.assign(str);
-	Fio.int_vec_write_csv(T0, nb_T0,
-			fname_csv, "Norm_0");
-	cout << "written file " << fname_csv << " of size " << Fio.file_size(fname_csv) << endl;
-
-	snprintf(str, 1000, "F_q%d_norm_1.csv", q);
-	fname_csv.assign(str);
-	Fio.int_vec_write_csv(T1, nb_T1,
-			fname_csv, "Norm_1");
-	cout << "written file " << fname_csv << " of size " << Fio.file_size(fname_csv) << endl;
-
-
-	FREE_OBJECT(F);
-	if (f_v) {
-		cout << "do_norm done" << endl;
-	}
-}
-
-void interface_algebra::do_intersection_of_two_lines(int q,
-		const char *line_1_basis,
-		const char *line_2_basis,
-		int f_normalize_from_the_left, int f_normalize_from_the_right,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	finite_field *F;
-	int *Line1;
-	int *Line2;
-	int *A;
-	int *B;
-	int *C;
-	int len, rk, i;
-
-	if (f_v) {
-		cout << "do_intersecton_of_two_lines" << endl;
-	}
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level);
-
-	int_vec_scan(line_1_basis, Line1, len);
-	if (len != 8) {
-		cout << "do_intersecton_of_two_lines len != 8" << endl;
-		cout << "received " << len << endl;
-		exit(1);
-	}
-	int_vec_scan(line_2_basis, Line2, len);
-	if (len != 8) {
-		cout << "do_intersecton_of_two_lines len != 8" << endl;
-		cout << "received " << len << endl;
-		exit(1);
-	}
-	A = NEW_int(16);
-	B = NEW_int(16);
-	C = NEW_int(16);
-
-	// Line 1
-	int_vec_copy(Line1, A, 8);
-	rk = F->perp_standard(4, 2, A, verbose_level);
-	if (rk != 2) {
-		cout << "do_intersecton_of_two_lines rk != 2" << endl;
-		cout << "rk= " << rk << endl;
-		exit(1);
-	}
-
-	// Line 2
-	int_vec_copy(Line2, B, 8);
-	rk = F->perp_standard(4, 2, B, verbose_level);
-	if (rk != 2) {
-		cout << "do_intersecton_of_two_lines rk != 2" << endl;
-		cout << "rk= " << rk << endl;
-		exit(1);
-	}
-
-
-	int_vec_copy(A + 8, C, 8);
-	int_vec_copy(B + 8, C + 8, 8);
-	rk = F->perp_standard(4, 4, C, verbose_level);
-	if (rk != 3) {
-		cout << "do_intersecton_of_two_lines rk != 3" << endl;
-		cout << "rk= " << rk << endl;
-		exit(1);
-	}
-
-	if (f_normalize_from_the_left) {
-		cout << "normalizing from the left" << endl;
-		for (i = 3; i < 4; i++) {
-			F->PG_element_normalize_from_front(
-					C + i * 4, 1, 4);
-		}
-
-		cout << "after normalize from the left:" << endl;
-		int_matrix_print(C + 12, 1, 4);
-		cout << "rk=" << rk << endl;
-
-	}
-
-	if (f_normalize_from_the_right) {
-		cout << "normalizing from the right" << endl;
-		for (i = 3; i < 4; i++) {
-			F->PG_element_normalize(
-					C + i * 4, 1, 4);
-		}
-
-		cout << "after normalize from the right:" << endl;
-		int_matrix_print(C + 12, 1, 4);
-		cout << "rk=" << rk << endl;
-
-	}
-
-
-	FREE_int(Line1);
-	FREE_int(Line2);
-	FREE_int(A);
-	FREE_int(B);
-	FREE_int(C);
-
-	if (f_v) {
-		cout << "do_intersecton_of_two_lines done" << endl;
-	}
-
-}
-
-void interface_algebra::do_transversal(int q,
-		const char *line_1_basis,
-		const char *line_2_basis,
-		const char *point,
-		int f_normalize_from_the_left, int f_normalize_from_the_right,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	finite_field *F;
-	int *Line1;
-	int *Line2;
-	int *Pt;
-	int *A;
-	int *B;
-	int len, rk, i;
-
-	if (f_v) {
-		cout << "do_transversal" << endl;
-	}
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level);
-
-	int_vec_scan(line_1_basis, Line1, len);
-	if (len != 8) {
-		cout << "do_transversal len != 8" << endl;
-		cout << "received " << len << endl;
-		exit(1);
-	}
-	int_vec_scan(line_2_basis, Line2, len);
-	if (len != 8) {
-		cout << "do_transversal len != 8" << endl;
-		cout << "received " << len << endl;
-		exit(1);
-	}
-	int_vec_scan(point, Pt, len);
-	if (len != 4) {
-		cout << "do_transversal len != 4" << endl;
-		cout << "received " << len << endl;
-		exit(1);
-	}
-	A = NEW_int(16);
-	B = NEW_int(16);
-
-	// Line 1
-	int_vec_copy(Line1, A, 8);
-	int_vec_copy(Pt, A + 8, 4);
-	rk = F->perp_standard(4, 3, A, verbose_level);
-	if (rk != 3) {
-		cout << "do_transversal rk != 3" << endl;
-		cout << "rk= " << rk << endl;
-		exit(1);
-	}
-	int_vec_copy(A + 12, B, 4);
-
-	// Line 2
-	int_vec_copy(Line2, A, 8);
-	int_vec_copy(Pt, A + 8, 4);
-	rk = F->perp_standard(4, 3, A, verbose_level);
-	if (rk != 3) {
-		cout << "do_transversal rk != 3" << endl;
-		cout << "rk= " << rk << endl;
-		exit(1);
-	}
-	int_vec_copy(A + 12, B + 4, 4);
-
-	// B
-	rk = F->perp_standard(4, 2, B, verbose_level);
-	if (rk != 2) {
-		cout << "do_transversal rk != 2" << endl;
-		cout << "rk= " << rk << endl;
-		exit(1);
-	}
-	if (f_normalize_from_the_left) {
-		cout << "normalizing from the left" << endl;
-		for (i = 2; i < 4; i++) {
-			F->PG_element_normalize_from_front(
-					B + i * 4, 1, 4);
-		}
-
-		cout << "after normalize from the left:" << endl;
-		int_matrix_print(B + 8, 2, 4);
-		cout << "rk=" << rk << endl;
-
-	}
-
-	if (f_normalize_from_the_right) {
-		cout << "normalizing from the right" << endl;
-		for (i = 2; i < 4; i++) {
-			F->PG_element_normalize(
-					B + i * 4, 1, 4);
-		}
-
-		cout << "after normalize from the right:" << endl;
-		int_matrix_print(B + 8, 2, 4);
-		cout << "rk=" << rk << endl;
-
-	}
-
-
-	FREE_int(Line1);
-	FREE_int(Line2);
-	FREE_int(Pt);
-	FREE_int(A);
-	FREE_int(B);
-
-	if (f_v) {
-		cout << "do_transversal done" << endl;
-	}
-}
 
 
 

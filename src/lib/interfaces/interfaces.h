@@ -60,13 +60,14 @@ class interface_algebra {
 	int f_eigenstuff_from_file;
 	int eigenstuff_n;
 	int eigenstuff_q;
-	const char *eigenstuff_coeffs;
+	std::string eigenstuff_coeffs;
 	std::string eigenstuff_fname;
 	int f_young_symmetrizer;
 	int young_symmetrizer_n;
 	int f_young_symmetrizer_sym_4;
 	int f_poset_classification_control;
 	poset_classification_control *Control;
+
 	int f_polynomial_division;
 	int polynomial_division_q;
 	std::string polynomial_division_A;
@@ -84,28 +85,22 @@ class interface_algebra {
 	int normal_basis_q;
 	int normal_basis_d;
 
+	int f_normalize_from_the_right;
+	int f_normalize_from_the_left;
+
 	int f_nullspace;
 	int nullspace_q;
 	int nullspace_m;
 	int nullspace_n;
-	const char *nullspace_text;
+	std::string nullspace_text;
+
 	int f_RREF;
 	int RREF_q;
 	int RREF_m;
 	int RREF_n;
-	const char *RREF_text;
+	std::string RREF_text;
+
 	int f_weight_enumerator;
-	int f_normalize_from_the_right;
-	int f_normalize_from_the_left;
-	int f_transversal;
-	int transversal_q;
-	const char *transversal_line_1_basis;
-	const char *transversal_line_2_basis;
-	const char *transversal_point;
-	int f_intersection_of_two_lines;
-	int intersection_of_two_lines_q;
-	const char *line_1_basis;
-	const char *line_2_basis;
 	int f_trace;
 	int trace_q;
 	int f_norm;
@@ -113,6 +108,8 @@ class interface_algebra {
 	int f_count_subprimitive;
 	int count_subprimitive_Q_max;
 	int count_subprimitive_H_max;
+	int f_equivalence_class_of_fractions;
+	int equivalence_class_of_fractions_N;
 
 public:
 	interface_algebra();
@@ -121,7 +118,7 @@ public:
 	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
 	void worker(orbiter_session *Session, int verbose_level);
 	void do_eigenstuff(
-			int n, int q, const char *coeffs_text, int verbose_level);
+			int n, int q, std::string &coeffs_text, int verbose_level);
 	void do_eigenstuff_from_file(
 			int n, int q, std::string &fname, int verbose_level);
 	void do_linear_group(
@@ -136,28 +133,6 @@ public:
 	void do_make_table_of_irreducible_polynomials(int deg, int q, int verbose_level);
 	void do_character_table_symmetric_group(int deg, int verbose_level);
 	void do_make_A5_in_PSL_2_q(int q, int verbose_level);
-	void do_nullspace(int q, int m, int n, const char *text,
-			int f_normalize_from_the_left, int f_normalize_from_the_right,
-			int verbose_level);
-	void do_RREF(int q, int m, int n, const char *text,
-			int f_normalize_from_the_left, int f_normalize_from_the_right,
-			int verbose_level);
-	void do_weight_enumerator(int q, int m, int n, const char *text,
-			int f_normalize_from_the_left, int f_normalize_from_the_right,
-			int verbose_level);
-	void do_trace(int q, int verbose_level);
-	void do_norm(int q, int verbose_level);
-	void do_intersection_of_two_lines(int q,
-			const char *line_1_basis,
-			const char *line_2_basis,
-			int f_normalize_from_the_left, int f_normalize_from_the_right,
-			int verbose_level);
-	void do_transversal(int q,
-			const char *line_1_basis,
-			const char *line_2_basis,
-			const char *point,
-			int f_normalize_from_the_left, int f_normalize_from_the_right,
-			int verbose_level);
 
 };
 
@@ -272,6 +247,10 @@ class interface_combinatorics {
 	std::string draw_layered_graph_fname;
 	layered_graph_draw_options *Layered_graph_draw_options;
 
+	int f_read_solutions_and_tally;
+	std::string read_solutions_and_tally_fname;
+	int read_solutions_and_tally_sz;
+
 
 public:
 	interface_combinatorics();
@@ -295,8 +274,6 @@ public:
 	void do_make_tree_of_all_k_subsets(int n, int k, int verbose_level);
 	void do_Delandtsheer_Doyen(delandtsheer_doyen_description *Descr, int verbose_level);
 	void do_graph_classify(graph_classify_description *Descr, int verbose_level);
-	void do_tdo_refinement(tdo_refinement_description *Descr, int verbose_level);
-	void do_tdo_print(const char *fname, int verbose_level);
 	void do_create_design(design_create_description *Descr, int verbose_level);
 	void convert_stack_to_tdo(const char *stack_fname, int verbose_level);
 	void do_parameters_maximal_arc(int q, int r, int verbose_level);
@@ -576,8 +553,21 @@ class interface_projective {
 	double desired_distance;
 
 	int f_create_points_on_parabola;
+	int parabola_N;
+	double parabola_a;
+	double parabola_b;
+	double parabola_c;
 
 	int f_smooth_curve;
+	const char *smooth_curve_label;
+	int smooth_curve_N;
+	double smooth_curve_boundary;
+	double smooth_curve_t_min;
+	double smooth_curve_t_max;
+	function_polish_description *FP_descr;
+	//function_polish *smooth_curve_Polish;
+
+
 
 	int f_create_spread;
 	spread_create_description *Spread_create_description;
@@ -612,20 +602,22 @@ class interface_projective {
 	int f_create_surface_atlas;
 	int create_surface_atlas_q_max;
 
-public:
+	int f_normalize_from_the_right;
+	int f_normalize_from_the_left;
+	int f_transversal;
+	int transversal_q;
+	std::string transversal_line_1_basis;
+	std::string transversal_line_2_basis;
+	std::string transversal_point;
+	int f_intersection_of_two_lines;
+	int intersection_of_two_lines_q;
+	std::string line_1_basis;
+	std::string line_2_basis;
 
-	int parabola_N;
-	double parabola_a;
-	double parabola_b;
-	double parabola_c;
 
-	int smooth_curve_N;
-	function_polish_description *FP_descr;
-	double smooth_curve_t_min;
-	double smooth_curve_t_max;
-	double smooth_curve_boundary;
-	function_polish *smooth_curve_Polish;
-	const char *smooth_curve_label;
+
+
+
 	int f_create_BLT_set;
 	BLT_set_create_description *BLT_set_descr;
 	int nb_transform;
@@ -633,6 +625,7 @@ public:
 	int f_inverse_transform[1000];
 
 
+public:
 
 
 	interface_projective();
@@ -647,26 +640,10 @@ public:
 			int verbose_level);
 	void do_canonical_form_PG(orbiter_session *Session,
 			int n, int q, int verbose_level);
-	void do_create_points_on_quartic(double desired_distance, int verbose_level);
-	void do_create_points_on_parabola(double desired_distance, int N,
-			double a, double b, double c, int verbose_level);
-	void do_smooth_curve(const char *curve_label,
-			double desired_distance, int N,
-			double t_min, double t_max, double boundary,
-			function_polish_description *FP_descr, int verbose_level);
 	void do_create_BLT_set(BLT_set_create_description *Descr, int verbose_level);
 	void do_create_spread(spread_create_description *Descr, int verbose_level);
 	void do_create_surface(surface_create_description *Descr, int verbose_level);
 	void do_study_surface(int q, int nb, int verbose_level);
-	void do_move_two_lines_in_hyperplane_stabilizer(
-			int q,
-			long int line1_from, long int line2_from,
-			long int line1_to, long int line2_to, int verbose_level);
-	void do_move_two_lines_in_hyperplane_stabilizer_text(
-			int q,
-			std::string line1_from_text, std::string line2_from_text,
-			std::string line1_to_text, std::string line2_to_text,
-			int verbose_level);
 	void do_create_surface_reports(int q_max, int verbose_level);
 	void do_create_surface_atlas(int q_max, int verbose_level);
 	void do_create_surface_atlas_q_e(int q_max,

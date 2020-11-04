@@ -312,15 +312,6 @@ MODULES= \
 		top_level/algebra_and_number_theory/group_theoretic_activity_description.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity_for_surfaces.o \
-		top_level/algebra_and_number_theory/semifield_classify_with_substructure.o \
-		top_level/algebra_and_number_theory/semifield_classify.o \
-		top_level/algebra_and_number_theory/semifield_downstep_node.o \
-		top_level/algebra_and_number_theory/semifield_flag_orbit_node.o \
-		top_level/algebra_and_number_theory/semifield_level_two.o \
-		top_level/algebra_and_number_theory/semifield_lifting.o \
-		top_level/algebra_and_number_theory/semifield_substructure.o \
-		top_level/algebra_and_number_theory/semifield_trace.o \
-		top_level/algebra_and_number_theory/trace_record.o \
 		top_level/algebra_and_number_theory/young.o \
 		top_level/combinatorics/boolean_function.o \
 		top_level/combinatorics/cayley_graph_search.o \
@@ -370,6 +361,15 @@ MODULES= \
 		top_level/orbits/orbit_of_equations.o \
 		top_level/orbits/orbit_of_sets.o \
 		top_level/orbits/orbit_of_subspaces.o \
+		top_level/semifields/semifield_classify_with_substructure.o \
+		top_level/semifields/semifield_classify.o \
+		top_level/semifields/semifield_downstep_node.o \
+		top_level/semifields/semifield_flag_orbit_node.o \
+		top_level/semifields/semifield_level_two.o \
+		top_level/semifields/semifield_lifting.o \
+		top_level/semifields/semifield_substructure.o \
+		top_level/semifields/semifield_trace.o \
+		top_level/semifields/trace_record.o \
 		top_level/solver/exact_cover.o \
 		top_level/solver/exact_cover_arguments.o \
 		top_level/spreads_and_packings/invariants_packing.o \

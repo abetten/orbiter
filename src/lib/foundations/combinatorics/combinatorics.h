@@ -360,6 +360,8 @@ public:
 	void krawtchouk_with_table(longinteger_object &a,
 		int n, int q, int k, int x);
 	void krawtchouk(longinteger_object &a, int n, int q, int k, int x);
+	void do_tdo_refinement(tdo_refinement_description *Descr, int verbose_level);
+	void do_tdo_print(const char *fname, int verbose_level);
 };
 
 // combinatorics.cpp:

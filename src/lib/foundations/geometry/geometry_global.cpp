@@ -1909,6 +1909,334 @@ void geometry_global::do_rank_point_in_PG(int q, int n,
 
 }
 
+void geometry_global::do_intersection_of_two_lines(int q,
+		std::string &line_1_basis,
+		std::string &line_2_basis,
+		int f_normalize_from_the_left, int f_normalize_from_the_right,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	finite_field *F;
+	int *Line1;
+	int *Line2;
+	int *A;
+	int *B;
+	int *C;
+	int len, rk, i;
+
+	if (f_v) {
+		cout << "geometry_global::do_intersection_of_two_lines" << endl;
+	}
+
+	F = NEW_OBJECT(finite_field);
+	F->init(q, verbose_level);
+
+	int_vec_scan(line_1_basis, Line1, len);
+	if (len != 8) {
+		cout << "geometry_global::do_intersection_of_two_lines len != 8" << endl;
+		cout << "received " << len << endl;
+		exit(1);
+	}
+	int_vec_scan(line_2_basis, Line2, len);
+	if (len != 8) {
+		cout << "geometry_global::do_intersection_of_two_lines len != 8" << endl;
+		cout << "received " << len << endl;
+		exit(1);
+	}
+	A = NEW_int(16);
+	B = NEW_int(16);
+	C = NEW_int(16);
+
+	// Line 1
+	int_vec_copy(Line1, A, 8);
+	rk = F->perp_standard(4, 2, A, verbose_level);
+	if (rk != 2) {
+		cout << "geometry_global::do_intersection_of_two_lines rk != 2" << endl;
+		cout << "rk= " << rk << endl;
+		exit(1);
+	}
+
+	// Line 2
+	int_vec_copy(Line2, B, 8);
+	rk = F->perp_standard(4, 2, B, verbose_level);
+	if (rk != 2) {
+		cout << "geometry_global::do_intersection_of_two_lines rk != 2" << endl;
+		cout << "rk= " << rk << endl;
+		exit(1);
+	}
+
+
+	int_vec_copy(A + 8, C, 8);
+	int_vec_copy(B + 8, C + 8, 8);
+	rk = F->perp_standard(4, 4, C, verbose_level);
+	if (rk != 3) {
+		cout << "geometry_global::do_intersection_of_two_lines rk != 3" << endl;
+		cout << "rk= " << rk << endl;
+		exit(1);
+	}
+
+	if (f_normalize_from_the_left) {
+		cout << "geometry_global::do_intersection_of_two_lines normalizing from the left" << endl;
+		for (i = 3; i < 4; i++) {
+			F->PG_element_normalize_from_front(
+					C + i * 4, 1, 4);
+		}
+
+		cout << "geometry_global::do_intersection_of_two_lines after normalize from the left:" << endl;
+		int_matrix_print(C + 12, 1, 4);
+		cout << "rk=" << rk << endl;
+
+	}
+
+	if (f_normalize_from_the_right) {
+		cout << "geometry_global::do_intersection_of_two_lines normalizing from the right" << endl;
+		for (i = 3; i < 4; i++) {
+			F->PG_element_normalize(
+					C + i * 4, 1, 4);
+		}
+
+		cout << "geometry_global::do_intersection_of_two_lines after normalize from the right:" << endl;
+		int_matrix_print(C + 12, 1, 4);
+		cout << "rk=" << rk << endl;
+
+	}
+
+
+	FREE_int(Line1);
+	FREE_int(Line2);
+	FREE_int(A);
+	FREE_int(B);
+	FREE_int(C);
+
+	if (f_v) {
+		cout << "geometry_global::do_intersection_of_two_lines done" << endl;
+	}
+
+}
+
+void geometry_global::do_transversal(int q,
+		std::string &line_1_basis,
+		std::string &line_2_basis,
+		std::string &point,
+		int f_normalize_from_the_left, int f_normalize_from_the_right,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	finite_field *F;
+	int *Line1;
+	int *Line2;
+	int *Pt;
+	int *A;
+	int *B;
+	int len, rk, i;
+
+	if (f_v) {
+		cout << "geometry_global::do_transversal" << endl;
+	}
+
+	F = NEW_OBJECT(finite_field);
+	F->init(q, verbose_level);
+
+	int_vec_scan(line_1_basis, Line1, len);
+	if (len != 8) {
+		cout << "geometry_global::do_transversal len != 8" << endl;
+		cout << "received " << len << endl;
+		exit(1);
+	}
+	int_vec_scan(line_2_basis, Line2, len);
+	if (len != 8) {
+		cout << "geometry_global::do_transversal len != 8" << endl;
+		cout << "received " << len << endl;
+		exit(1);
+	}
+	int_vec_scan(point, Pt, len);
+	if (len != 4) {
+		cout << "geometry_global::do_transversal len != 4" << endl;
+		cout << "received " << len << endl;
+		exit(1);
+	}
+	A = NEW_int(16);
+	B = NEW_int(16);
+
+	// Line 1
+	int_vec_copy(Line1, A, 8);
+	int_vec_copy(Pt, A + 8, 4);
+	rk = F->perp_standard(4, 3, A, verbose_level);
+	if (rk != 3) {
+		cout << "geometry_global::do_transversal rk != 3" << endl;
+		cout << "rk= " << rk << endl;
+		exit(1);
+	}
+	int_vec_copy(A + 12, B, 4);
+
+	// Line 2
+	int_vec_copy(Line2, A, 8);
+	int_vec_copy(Pt, A + 8, 4);
+	rk = F->perp_standard(4, 3, A, verbose_level);
+	if (rk != 3) {
+		cout << "geometry_global::do_transversal rk != 3" << endl;
+		cout << "rk= " << rk << endl;
+		exit(1);
+	}
+	int_vec_copy(A + 12, B + 4, 4);
+
+	// B
+	rk = F->perp_standard(4, 2, B, verbose_level);
+	if (rk != 2) {
+		cout << "geometry_global::do_transversal rk != 2" << endl;
+		cout << "rk= " << rk << endl;
+		exit(1);
+	}
+	if (f_normalize_from_the_left) {
+		cout << "geometry_global::do_transversal normalizing from the left" << endl;
+		for (i = 2; i < 4; i++) {
+			F->PG_element_normalize_from_front(
+					B + i * 4, 1, 4);
+		}
+
+		cout << "geometry_global::do_transversal after normalize from the left:" << endl;
+		int_matrix_print(B + 8, 2, 4);
+		cout << "rk=" << rk << endl;
+
+	}
+
+	if (f_normalize_from_the_right) {
+		cout << "geometry_global::do_transversal normalizing from the right" << endl;
+		for (i = 2; i < 4; i++) {
+			F->PG_element_normalize(
+					B + i * 4, 1, 4);
+		}
+
+		cout << "geometry_global::do_transversal after normalize from the right:" << endl;
+		int_matrix_print(B + 8, 2, 4);
+		cout << "rk=" << rk << endl;
+
+	}
+
+
+	FREE_int(Line1);
+	FREE_int(Line2);
+	FREE_int(Pt);
+	FREE_int(A);
+	FREE_int(B);
+
+	if (f_v) {
+		cout << "geometry_global::do_transversal done" << endl;
+	}
+}
+
+
+void geometry_global::do_move_two_lines_in_hyperplane_stabilizer(
+		int q,
+		long int line1_from, long int line2_from,
+		long int line1_to, long int line2_to, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer" << endl;
+	}
+
+	finite_field *F;
+	projective_space *P;
+	int A4[16];
+
+	F = NEW_OBJECT(finite_field);
+	F->init(q, 0);
+
+	P = NEW_OBJECT(projective_space);
+	P->init(3, F,
+			FALSE /* f_init_incidence_structure */,
+			0 /*verbose_level*/);
+	P->hyperplane_lifting_with_two_lines_moved(
+			line1_from, line1_to,
+			line2_from, line2_to,
+			A4,
+			verbose_level);
+
+	cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer A4=" << endl;
+	int_matrix_print(A4, 4, 4);
+
+	if (f_v) {
+		cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer done" << endl;
+	}
+}
+
+void geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text(
+		int q,
+		std::string line1_from_text, std::string line2_from_text,
+		std::string line1_to_text, std::string line2_to_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text" << endl;
+	}
+
+	finite_field *F;
+	projective_space *P;
+	int A4[16];
+
+	F = NEW_OBJECT(finite_field);
+	F->init(q, 0);
+
+	P = NEW_OBJECT(projective_space);
+	P->init(3, F,
+			FALSE /* f_init_incidence_structure */,
+			0 /*verbose_level*/);
+
+	int *line1_from_data;
+	int *line2_from_data;
+	int *line1_to_data;
+	int *line2_to_data;
+	int sz;
+
+	int_vec_scan(line1_from_text.c_str(), line1_from_data, sz);
+	if (sz != 8) {
+		cout << "line1_from_text must contain exactly 8 integers" << endl;
+		exit(1);
+	}
+	int_vec_scan(line2_from_text.c_str(), line2_from_data, sz);
+	if (sz != 8) {
+		cout << "line2_from_text must contain exactly 8 integers" << endl;
+		exit(1);
+	}
+	int_vec_scan(line1_to_text.c_str(), line1_to_data, sz);
+	if (sz != 8) {
+		cout << "line1_to_text must contain exactly 8 integers" << endl;
+		exit(1);
+	}
+	int_vec_scan(line2_to_text.c_str(), line2_to_data, sz);
+	if (sz != 8) {
+		cout << "line2_to_text must contain exactly 8 integers" << endl;
+		exit(1);
+	}
+
+	long int line1_from;
+	long int line2_from;
+	long int line1_to;
+	long int line2_to;
+
+	line1_from = P->rank_line(line1_from_data);
+	line2_from = P->rank_line(line2_from_data);
+	line1_to = P->rank_line(line1_to_data);
+	line2_to = P->rank_line(line2_to_data);
+
+
+	P->hyperplane_lifting_with_two_lines_moved(
+			line1_from, line1_to,
+			line2_from, line2_to,
+			A4,
+			verbose_level);
+
+	cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text A4=" << endl;
+	int_matrix_print(A4, 4, 4);
+
+	if (f_v) {
+		cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text done" << endl;
+	}
+}
 
 
 }}

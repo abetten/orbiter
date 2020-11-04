@@ -232,6 +232,7 @@ std::vector<int> get_color(int bit_depth, int max_value, int loopCount, int f_in
 			0,0,128
 	};
 
+
 	if (loopCount < 16 && bit_depth == 8) {
 		r = table[loopCount * 3 + 0];
 		g = table[loopCount * 3 + 1];

@@ -232,6 +232,18 @@ public:
 	void do_RSA_encrypt_text(long int RSA_d, long int RSA_m,
 			int RSA_block_size, const char * RSA_encrypt_text, int verbose_level);
 	void do_RSA(long int RSA_d, long int RSA_m, const char *RSA_text, int verbose_level);
+	void do_nullspace(int q, int m, int n, std::string &text,
+			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int verbose_level);
+	void do_RREF(int q, int m, int n, std::string &text,
+			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int verbose_level);
+	void do_weight_enumerator(int q, int m, int n, std::string &text,
+			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int verbose_level);
+	void do_trace(int q, int verbose_level);
+	void do_norm(int q, int verbose_level);
+	void do_equivalence_class_of_fractions(int N, int verbose_level);
 
 };
 

@@ -2857,6 +2857,332 @@ void combinatorics_domain::krawtchouk(longinteger_object &a,
 }
 
 
+void combinatorics_domain::do_tdo_refinement(tdo_refinement_description *Descr, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::do_tdo_refinement" << endl;
+	}
+
+	tdo_refinement *R;
+
+	R = NEW_OBJECT(tdo_refinement);
+
+	R->init(Descr, verbose_level);
+	R->main_loop(verbose_level);
+
+	FREE_OBJECT(R);
+
+	if (f_v) {
+		cout << "combinatorics_domain::do_tdo_refinement done" << endl;
+	}
+}
+
+void combinatorics_domain::do_tdo_print(const char *fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int cnt;
+	char str[1000];
+	char ext[1000];
+	//char fname_out[1000];
+	int f_widor = FALSE;
+	int f_doit = FALSE;
+
+	if (f_v) {
+		cout << "combinatorics_domain::do_tdo_print" << endl;
+	}
+
+	cout << "opening file " << fname << " for reading" << endl;
+	ifstream f(fname);
+	//ofstream *g = NULL;
+
+	//ofstream *texfile;
+
+
+
+	strcpy(str, fname);
+	get_extension_if_present(str, ext);
+	chop_off_extension_if_present(str, ext);
+
+#if 0
+	sprintf(fname_out, "%sw.tdo", str);
+	if (f_w) {
+		g = new ofstream(fname_out);
+		}
+	if (f_texfile) {
+		texfile = new ofstream(texfile_name);
+		}
+#endif
+
+
+	geo_parameter GP;
+	tdo_scheme G;
+
+
+	//Vector vm, VM, VM_mult;
+	//discreta_base mu;
+
+#if 0
+	if (f_intersection) {
+		VM.m_l(0);
+		VM_mult.m_l(0);
+		}
+#endif
+
+	for (cnt = 0; ; cnt++) {
+		if (f.eof()) {
+			cout << "eof reached" << endl;
+			break;
+			}
+		if (f_widor) {
+			if (!GP.input(f)) {
+				//cout << "GP.input returns FALSE" << endl;
+				break;
+				}
+			}
+		else {
+			if (!GP.input_mode_stack(f, verbose_level - 1)) {
+				//cout << "GP.input_mode_stack returns FALSE" << endl;
+				break;
+				}
+			}
+		//if (f_v) {
+			//cout << "read decomposition " << cnt << endl;
+			//}
+
+		f_doit = TRUE;
+#if 0
+		if (f_range) {
+			if (cnt < range_first || cnt >= range_first + range_len)
+				f_doit = FALSE;
+			}
+		if (f_select) {
+			if (strcmp(GP.label, select_label))
+				continue;
+			}
+		if (f_nt) {
+			if (GP.row_level == GP.col_level)
+				continue;
+			}
+#endif
+
+		if (!f_doit) {
+			continue;
+			}
+		//cout << "before convert_single_to_stack" << endl;
+		//GP.convert_single_to_stack();
+		//cout << "after convert_single_to_stack" << endl;
+		//sprintf(label, "%s.%d", str, i);
+		//GP.write(g, label);
+		if (f_vv) {
+			cout << "before init_tdo_scheme" << endl;
+			}
+		GP.init_tdo_scheme(G, verbose_level - 1);
+		if (f_vv) {
+			cout << "after init_tdo_scheme" << endl;
+			}
+		GP.print_schemes(G);
+
+#if 0
+		if (f_C) {
+			GP.print_C_source();
+			}
+#endif
+		if (TRUE /* f_tex */) {
+			GP.print_scheme_tex(cout, G, ROW);
+			GP.print_scheme_tex(cout, G, COL);
+			}
+#if 0
+		if (f_texfile) {
+			if (f_ROW) {
+				GP.print_scheme_tex(*texfile, G, ROW);
+				}
+			if (f_COL) {
+				GP.print_scheme_tex(*texfile, G, COL);
+				}
+			}
+		if (f_Tex) {
+			char fname[1000];
+
+			sprintf(fname, "%s.tex", GP.label);
+			ofstream f(fname);
+
+			GP.print_scheme_tex(f, G, ROW);
+			GP.print_scheme_tex(f, G, COL);
+			}
+		if (f_intersection) {
+			Vector V, M;
+			intersection_of_columns(GP, G,
+				intersection_j1, intersection_j2, V, M, verbose_level - 1);
+			vm.m_l(2);
+			vm.s_i(0).swap(V);
+			vm.s_i(1).swap(M);
+			cout << "vm:" << vm << endl;
+			int idx;
+			mu.m_i_i(1);
+			if (VM.search(vm, &idx)) {
+				VM_mult.m_ii(idx, VM_mult.s_ii(idx) + 1);
+				}
+			else {
+				cout << "inserting at position " << idx << endl;
+				VM.insert_element(idx, vm);
+				VM_mult.insert_element(idx, mu);
+				}
+			}
+		if (f_w) {
+			GP.write_mode_stack(*g, GP.label);
+			nb_written++;
+			}
+#endif
+		}
+
+#if 0
+	if (f_w) {
+		*g << "-1 " << nb_written << endl;
+		delete g;
+
+		}
+
+	if (f_texfile) {
+		delete texfile;
+		}
+
+	if (f_intersection) {
+		int cl, c, l, j, L;
+		cout << "the intersection types are:" << endl;
+		for (i = 0; i < VM.s_l(); i++) {
+			//cout << setw(5) << VM_mult.s_ii(i) << " x " << VM.s_i(i) << endl;
+			cout << "intersection type " << i + 1 << ":" << endl;
+			Vector &V = VM.s_i(i).as_vector().s_i(0).as_vector();
+			Vector &M = VM.s_i(i).as_vector().s_i(1).as_vector();
+			//cout << "V=" << V << endl;
+			//cout << "M=" << M << endl;
+			cl = V.s_l();
+			for (c = 0; c < cl; c++) {
+				Vector &Vc = V.s_i(c).as_vector();
+				Vector &Mc = M.s_i(c).as_vector();
+				//cout << c << " : " << Vc << "," << Mc << endl;
+				l = Vc.s_l();
+				for (j = 0; j < l; j++) {
+					Vector &the_type = Vc.s_i(j).as_vector();
+					int mult = Mc.s_ii(j);
+					cout << setw(5) << mult << " x " << the_type << endl;
+					}
+				cout << "--------------------------" << endl;
+				}
+			cout << "appears " << setw(5) << VM_mult.s_ii(i) << " times" << endl;
+
+			classify *C;
+			classify *C_pencil;
+			int f_second = FALSE;
+			int *pencil_data;
+			int pencil_data_size = 0;
+			int pos, b, hh;
+
+			C = new classify[cl];
+			C_pencil = new classify;
+
+			for (c = 0; c < cl; c++) {
+				Vector &Vc = V.s_i(c).as_vector();
+				Vector &Mc = M.s_i(c).as_vector();
+				//cout << c << " : " << Vc << "," << Mc << endl;
+				l = Vc.s_l();
+				L = 0;
+				for (j = 0; j < l; j++) {
+					Vector &the_type = Vc.s_i(j).as_vector();
+					int mult = Mc.s_ii(j);
+					if (the_type.s_ii(1) == 1 && the_type.s_ii(0)) {
+						pencil_data_size += mult;
+						}
+					}
+				}
+			//cout << "pencil_data_size=" << pencil_data_size << endl;
+			pencil_data = new int[pencil_data_size];
+			pos = 0;
+
+			for (c = 0; c < cl; c++) {
+				Vector &Vc = V.s_i(c).as_vector();
+				Vector &Mc = M.s_i(c).as_vector();
+				//cout << c << " : " << Vc << "," << Mc << endl;
+				l = Vc.s_l();
+				L = 0;
+				for (j = 0; j < l; j++) {
+					Vector &the_type = Vc.s_i(j).as_vector();
+					int mult = Mc.s_ii(j);
+					if (the_type.s_ii(1) == 1 && the_type.s_ii(0)) {
+						b = the_type.s_ii(0);
+						for (hh = 0; hh < mult; hh++) {
+							pencil_data[pos++] = b;
+							}
+						}
+					}
+				}
+			//cout << "pencil_data: ";
+			//int_vec_print(cout, pencil_data, pencil_data_size);
+			//cout << endl;
+			C_pencil->init(pencil_data, pencil_data_size, FALSE /*f_second */, verbose_level - 2);
+			delete [] pencil_data;
+
+			for (c = 0; c < cl; c++) {
+				Vector &Vc = V.s_i(c).as_vector();
+				Vector &Mc = M.s_i(c).as_vector();
+				//cout << c << " : " << Vc << "," << Mc << endl;
+				l = Vc.s_l();
+				L = 0;
+				for (j = 0; j < l; j++) {
+					Vector &the_type = Vc.s_i(j).as_vector();
+					if (the_type.s_ii(1))
+						continue;
+					int mult = Mc.s_ii(j);
+					L += mult;
+					}
+				int *data;
+				int k, h, a;
+
+				data = new int[L];
+				k = 0;
+				for (j = 0; j < l; j++) {
+					Vector &the_type = Vc.s_i(j).as_vector();
+					int mult = Mc.s_ii(j);
+					if (the_type.s_ii(1))
+						continue;
+					a = the_type.s_ii(0);
+					for (h = 0; h < mult; h++) {
+						data[k++] = a;
+						}
+					}
+				//cout << "data: ";
+				//int_vec_print(cout, data, L);
+				//cout << endl;
+				C[c].init(data, L, f_second, verbose_level - 2);
+				delete [] data;
+				}
+
+			cout << "Intersection type " << i + 1 << ": pencil type: (";
+			C_pencil->print_naked(FALSE /*f_backwards*/);
+			cout << ") ";
+			cout << "intersection type: (";
+			for (c = 0; c < cl; c++) {
+				C[c].print_naked(FALSE /*f_backwards*/);
+				if (c < cl - 1)
+					cout << " | ";
+				}
+			cout << ") appears " << VM_mult.s_ii(i) << " times" << endl;
+			//C_pencil->print();
+			delete [] C;
+			delete C_pencil;
+			}
+		}
+#endif
+
+	if (f_v) {
+		cout << "combinatorics_domain::do_tdo_print done" << endl;
+	}
+}
+
+
 
 //##############################################################################
 // global functions, for instance for nauty_interface.cpp:

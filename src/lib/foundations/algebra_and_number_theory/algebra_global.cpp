@@ -2601,13 +2601,9 @@ void algebra_global::compute_normal_basis(finite_field *F, int d, int verbose_le
 
 	int *Frobenius;
 	int *Normal_basis;
-	int *v;
-	int *w;
 
 	//Frobenius = NEW_int(d * d);
 	Normal_basis = NEW_int(d * d);
-	v = NEW_int(d);
-	w = NEW_int(d);
 
 	if (f_v) {
 		cout << "algebra_global::compute_normal_basis "
@@ -3642,6 +3638,541 @@ void algebra_global::do_RSA(long int RSA_d, long int RSA_m, const char *RSA_text
 	}
 	cout << endl;
 }
+
+void algebra_global::do_nullspace(int q,
+		int m, int n, std::string &text,
+		int f_normalize_from_the_left, int f_normalize_from_the_right,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	finite_field *F;
+	int *M;
+	int *A;
+	int *base_cols;
+	int len, rk, i, rk1;
+	latex_interface Li;
+
+	if (f_v) {
+		cout << "do_nullspace" << endl;
+	}
+
+	F = NEW_OBJECT(finite_field);
+	F->init(q, verbose_level);
+
+	int_vec_scan(text, M, len);
+	if (len != m * n) {
+		cout << "number of coordinates received differs from m * n" << endl;
+		cout << "received " << len << endl;
+		exit(1);
+	}
+
+	if (m > n) {
+		cout << "nullspace needs m < n" << endl;
+		exit(1);
+	}
+
+	A = NEW_int(n * n);
+	base_cols = NEW_int(n);
+	int_vec_copy(M, A, m * n);
+
+	rk = F->perp_standard(n, m, A, verbose_level);
+
+
+	cout << "after perp_standard:" << endl;
+	int_matrix_print(A, n, n);
+	cout << "rk=" << rk << endl;
+
+	cout << "after RREF" << endl;
+	rk1 = F->Gauss_int(A + rk * n,
+		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
+		FALSE /* f_P */, NULL /*P*/, n - rk, n, n,
+		0 /*verbose_level*/);
+
+
+	cout << "after RREF" << endl;
+	int_matrix_print(A + rk * n, rk1, n);
+	cout << "rank of nullspace = " << rk1 << endl;
+
+	cout << "coefficients:" << endl;
+	int_vec_print(cout, A + rk * n, rk1 * n);
+	cout << endl;
+
+	cout << "$$" << endl;
+	cout << "\\left[" << endl;
+	Li.int_matrix_print_tex(cout, A + rk * n, rk1, n);
+	cout << "\\right]" << endl;
+	cout << "$$" << endl;
+
+	if (f_normalize_from_the_left) {
+		cout << "normalizing from the left" << endl;
+		for (i = rk; i < n; i++) {
+			F->PG_element_normalize_from_front(
+					A + i * n, 1, n);
+		}
+
+		cout << "after normalize from the left:" << endl;
+		int_matrix_print(A, n, n);
+		cout << "rk=" << rk << endl;
+
+		cout << "$$" << endl;
+		cout << "\\left[" << endl;
+		Li.int_matrix_print_tex(cout, A + rk * n, rk1, n);
+		cout << "\\right]" << endl;
+		cout << "$$" << endl;
+
+	}
+
+	if (f_normalize_from_the_right) {
+		cout << "normalizing from the right" << endl;
+		for (i = rk; i < n; i++) {
+			F->PG_element_normalize(
+					A + i * n, 1, n);
+		}
+
+		cout << "after normalize from the right:" << endl;
+		int_matrix_print(A, n, n);
+		cout << "rk=" << rk << endl;
+
+		cout << "$$" << endl;
+		cout << "\\left[" << endl;
+		Li.int_matrix_print_tex(cout, A + rk * n, rk1, n);
+		cout << "\\right]" << endl;
+		cout << "$$" << endl;
+	}
+
+
+	FREE_int(M);
+	FREE_int(A);
+	FREE_int(base_cols);
+
+	if (f_v) {
+		cout << "do_nullspace done" << endl;
+	}
+}
+
+void algebra_global::do_RREF(int q,
+		int m, int n, std::string &text,
+		int f_normalize_from_the_left, int f_normalize_from_the_right,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	finite_field *F;
+	int *M;
+	int *A;
+	int *base_cols;
+	int len, rk, i;
+	latex_interface Li;
+
+	if (f_v) {
+		cout << "do_RREF" << endl;
+	}
+
+	F = NEW_OBJECT(finite_field);
+	F->init(q, verbose_level);
+
+	int_vec_scan(text, M, len);
+	if (len != m * n) {
+		cout << "number of coordinates received differs from m * n" << endl;
+		cout << "received " << len << endl;
+		exit(1);
+	}
+
+
+	A = NEW_int(n * n);
+	base_cols = NEW_int(n);
+	int_vec_copy(M, A, m * n);
+
+	rk = F->Gauss_int(A,
+		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
+		FALSE /* f_P */, NULL /*P*/, m, n, n,
+		0 /*verbose_level*/);
+
+
+	cout << "after RREF:" << endl;
+	int_matrix_print(A, rk, n);
+	cout << "rk=" << rk << endl;
+
+	cout << "coefficients:" << endl;
+	int_vec_print(cout, A, rk * n);
+	cout << endl;
+
+	cout << "$$" << endl;
+	cout << "\\left[" << endl;
+	Li.int_matrix_print_tex(cout, A, rk, n);
+	cout << "\\right]" << endl;
+	cout << "$$" << endl;
+
+	if (f_normalize_from_the_left) {
+		cout << "normalizing from the left" << endl;
+		for (i = 0; i < rk; i++) {
+			F->PG_element_normalize_from_front(
+					A + i * n, 1, n);
+		}
+
+		cout << "after normalize from the left:" << endl;
+		int_matrix_print(A, rk, n);
+		cout << "rk=" << rk << endl;
+
+	}
+
+	if (f_normalize_from_the_right) {
+		cout << "normalizing from the right" << endl;
+		for (i = 0; i < rk; i++) {
+			F->PG_element_normalize(
+					A + i * n, 1, n);
+		}
+
+		cout << "after normalize from the right:" << endl;
+		int_matrix_print(A, rk, n);
+		cout << "rk=" << rk << endl;
+
+	}
+
+
+	FREE_int(M);
+	FREE_int(A);
+	FREE_int(base_cols);
+
+	if (f_v) {
+		cout << "do_RREF done" << endl;
+	}
+}
+
+void algebra_global::do_weight_enumerator(int q,
+		int m, int n, std::string &text,
+		int f_normalize_from_the_left, int f_normalize_from_the_right,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	finite_field *F;
+	int *M;
+	int *A;
+	int *base_cols;
+	int *weight_enumerator;
+	int len, rk, i;
+
+	if (f_v) {
+		cout << "do_weight_enumerator" << endl;
+	}
+
+	F = NEW_OBJECT(finite_field);
+	F->init(q, verbose_level);
+
+	int_vec_scan(text, M, len);
+	if (len != m * n) {
+		cout << "number of coordinates received differs from m * n" << endl;
+		cout << "received " << len << endl;
+		exit(1);
+	}
+
+
+	A = NEW_int(n * n);
+	base_cols = NEW_int(n);
+	weight_enumerator = NEW_int(n + 1);
+	int_vec_copy(M, A, m * n);
+
+	rk = F->Gauss_int(A,
+		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
+		FALSE /* f_P */, NULL /*P*/, m, n, n,
+		0 /*verbose_level*/);
+
+
+	cout << "after RREF:" << endl;
+	int_matrix_print(A, rk, n);
+	cout << "rk=" << rk << endl;
+
+	cout << "coefficients:" << endl;
+	int_vec_print(cout, A, rk * n);
+	cout << endl;
+
+
+	F->code_weight_enumerator(n, rk,
+		A /* code */, // [k * n]
+		weight_enumerator, // [n + 1]
+		verbose_level);
+
+	cout << "The weight enumerator is:" << endl;
+	for (i = 0; i <= n; i++) {
+		cout << i << " : " << weight_enumerator[i] << endl;
+	}
+
+	int f_first = TRUE;
+
+	for (i = 0; i <= n; i++) {
+		if (weight_enumerator[i] == 0) {
+			continue;
+		}
+		if (f_first) {
+			f_first = FALSE;
+		}
+		else {
+			cout << " + ";
+		}
+		cout << weight_enumerator[i];
+		if (i) {
+			cout << "*";
+			cout << "x";
+			if (i > 1) {
+				cout << "^";
+				if (i < 10) {
+					cout << i;
+				}
+				else {
+					cout << "(" << i << ")";
+				}
+			}
+		}
+		if (n - i) {
+			cout << "*";
+			cout << "y";
+			if (n - i > 1) {
+				cout << "^";
+				if (n - i < 10) {
+					cout << n - i;
+				}
+				else {
+					cout << "(" << n - i << ")";
+				}
+			}
+		}
+
+	}
+	cout << endl;
+
+
+	if (f_normalize_from_the_left) {
+		cout << "normalizing from the left" << endl;
+		for (i = 0; i < rk; i++) {
+			F->PG_element_normalize_from_front(
+					A + i * n, 1, n);
+		}
+
+		cout << "after normalize from the left:" << endl;
+		int_matrix_print(A, rk, n);
+		cout << "rk=" << rk << endl;
+
+	}
+
+	if (f_normalize_from_the_right) {
+		cout << "normalizing from the right" << endl;
+		for (i = 0; i < rk; i++) {
+			F->PG_element_normalize(
+					A + i * n, 1, n);
+		}
+
+		cout << "after normalize from the right:" << endl;
+		int_matrix_print(A, rk, n);
+		cout << "rk=" << rk << endl;
+
+	}
+
+
+	FREE_int(M);
+	FREE_int(A);
+	FREE_int(base_cols);
+	FREE_int(weight_enumerator);
+
+	if (f_v) {
+		cout << "do_weight_enumerator done" << endl;
+	}
+}
+
+void algebra_global::do_trace(int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	finite_field *F;
+	int s, t;
+	int *T0 = NULL;
+	int *T1 = NULL;
+	int nb_T0 = 0;
+	int nb_T1 = 0;
+
+	if (f_v) {
+		cout << "do_trace" << endl;
+	}
+	F = NEW_OBJECT(finite_field);
+
+	T0 = NEW_int(q);
+	T1 = NEW_int(q);
+
+	F->init(q, 0);
+	for (s = 0; s < q; s++) {
+		int s2, s3, s4, s8, s2p1, s2p1t7, s2p1t6, s2p1t4, f;
+
+		s2 = F->mult(s, s);
+		s2p1 = F->add(s2, 1);
+		s2p1t7 = F->power(s2p1, 7);
+		s2p1t6 = F->power(s2p1, 6);
+		s2p1t4 = F->power(s2p1, 4);
+		s3 = F->power(s, 3);
+		s4 = F->power(s, 4);
+		s8 = F->power(s, 8);
+
+		f = F->add4(F->mult(s, s2p1t7), F->mult(s2, s2p1t6), F->mult(s4, s2p1t4), s8);
+
+		//f = F->mult(top, F->inverse(bot));
+
+		t = F->absolute_trace(f);
+		//t = F->absolute_trace(s);
+		if (t == 1) {
+			T1[nb_T1++] = s;
+		}
+		else {
+			T0[nb_T0++] = s;
+		}
+	}
+
+	cout << "Trace 0:" << endl;
+	int_vec_print_fully(cout, T0, nb_T0);
+	cout << endl;
+
+	cout << "Trace 1:" << endl;
+	int_vec_print_fully(cout, T1, nb_T1);
+	cout << endl;
+
+	char str[1000];
+	string fname_csv;
+	file_io Fio;
+
+	snprintf(str, 1000, "F_q%d_trace_0.csv", q);
+	fname_csv.assign(str);
+	Fio.int_vec_write_csv(T0, nb_T0,
+			fname_csv, "Trace_0");
+	cout << "written file " << fname_csv << " of size "
+			<< Fio.file_size(fname_csv) << endl;
+
+	snprintf(str, 1000, "F_q%d_trace_1.csv", q);
+	fname_csv.assign(str);
+	Fio.int_vec_write_csv(T1, nb_T1,
+			fname_csv, "Trace_1");
+	cout << "written file " << fname_csv << " of size "
+			<< Fio.file_size(fname_csv) << endl;
+
+
+	FREE_OBJECT(F);
+	if (f_v) {
+		cout << "do_trace done" << endl;
+	}
+}
+
+void algebra_global::do_norm(int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	finite_field *F;
+	int s, t;
+	int *T0 = NULL;
+	int *T1 = NULL;
+	int nb_T0 = 0;
+	int nb_T1 = 0;
+
+	if (f_v) {
+		cout << "do_norm" << endl;
+	}
+	F = NEW_OBJECT(finite_field);
+
+	T0 = NEW_int(q);
+	T1 = NEW_int(q);
+
+	F->init(q, 0);
+	for (s = 0; s < q; s++) {
+		t = F->absolute_norm(s);
+		if (t == 1) {
+			T1[nb_T1++] = s;
+		}
+		else {
+			T0[nb_T0++] = s;
+		}
+	}
+
+	cout << "Norm 0:" << endl;
+	int_vec_print_fully(cout, T0, nb_T0);
+	cout << endl;
+
+	cout << "Norm 1:" << endl;
+	int_vec_print_fully(cout, T1, nb_T1);
+	cout << endl;
+
+
+	char str[1000];
+	string fname_csv;
+	file_io Fio;
+
+	snprintf(str, 1000, "F_q%d_norm_0.csv", q);
+	fname_csv.assign(str);
+	Fio.int_vec_write_csv(T0, nb_T0,
+			fname_csv, "Norm_0");
+	cout << "written file " << fname_csv << " of size " << Fio.file_size(fname_csv) << endl;
+
+	snprintf(str, 1000, "F_q%d_norm_1.csv", q);
+	fname_csv.assign(str);
+	Fio.int_vec_write_csv(T1, nb_T1,
+			fname_csv, "Norm_1");
+	cout << "written file " << fname_csv << " of size " << Fio.file_size(fname_csv) << endl;
+
+
+	FREE_OBJECT(F);
+	if (f_v) {
+		cout << "do_norm done" << endl;
+	}
+}
+
+void algebra_global::do_equivalence_class_of_fractions(int N, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, h, a, b, ap, bp, g;
+	number_theory_domain NT;
+	file_io Fio;
+
+	if (f_v) {
+		cout << "do_equivalence_class_of_fractions" << endl;
+	}
+
+	int *Pairs;
+	int *Table;
+	int length;
+
+	Table = NEW_int(N * N);
+	Pairs = NEW_int(N * N);
+	length = 0;
+
+	for (i = 0; i < N; i++) {
+		a = i + 1;
+		for (j = 0; j < N; j++) {
+			b = j + 1;
+			g = NT.gcd_lint(a, b);
+			ap = a / g;
+			bp = b / g;
+			for (h = 0; h < length; h++) {
+				if (Pairs[h * 2 + 0] == ap && Pairs[h * 2 + 1] == bp) {
+					Table[i * N + j] = h;
+					break;
+				}
+			}
+			if (h == length) {
+				Pairs[h * 2 + 0] = ap;
+				Pairs[h * 2 + 1] = bp;
+				Table[i * N + j] = h;
+				length++;
+			}
+		}
+	}
+
+	char str[1000];
+	string fname;
+
+	sprintf(str, "table_fractions_N%d.csv", N);
+	fname.assign(str);
+	Fio.int_matrix_write_csv(fname, Table, N, N);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	FREE_int(Table);
+	FREE_int(Pairs);
+
+	if (f_v) {
+		cout << "do_equivalence_class_of_fractions done" << endl;
+	}
+}
+
 
 
 

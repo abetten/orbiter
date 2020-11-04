@@ -55,7 +55,7 @@ void clebsch_map::freeself()
 
 	if (f_v) {
 		cout << "clebsch_map::freeself" << endl;
-		}
+	}
 }
 
 void clebsch_map::init_half_double_six(surface_object *SO,
@@ -65,7 +65,7 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 
 	if (f_v) {
 		cout << "clebsch_map::init_half_double_six" << endl;
-		}
+	}
 
 
 	clebsch_map::SO = SO;
@@ -77,18 +77,18 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 	if (f_v) {
 		cout << "clebsch_map::init_half_double_six hds = " << hds
 				<< " double six = " << ds << " row = " << ds_row << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "clebsch_map::init_half_double_six "
 				"before Surf->prepare_clebsch_map" << endl;
-		}
+	}
 	Surf->Schlaefli->prepare_clebsch_map(ds, ds_row, line1, line2,
 			transversal, verbose_level);
 	if (f_v) {
 		cout << "clebsch_map::init_half_double_six "
 				"after Surf->prepare_clebsch_map" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "clebsch_map::init_half_double_six "
@@ -99,7 +99,7 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 			<< " transversal=" << transversal
 			<< " = " << Surf->Schlaefli->Line_label_tex[transversal]
 			<< endl;
-		}
+	}
 
 	line_idx[0] = line1;
 	line_idx[1] = line2;
@@ -126,7 +126,7 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 				"base_cols: ";
 		int_vec_print(cout, base_cols, 3);
 		cout << endl;
-		}
+	}
 
 
 	if (f_v) {
@@ -143,23 +143,23 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 					Surf->Schlaefli->Half_double_sixes[hds * 6 + h]];
 			if (h < 6 - 1) {
 				cout << ", ";
-				}
 			}
-		cout << "\\}$\\\\" << endl;
 		}
+		cout << "\\}$\\\\" << endl;
+	}
 
 	for (u = 0; u < 6; u++) {
 
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify u="
 					<< u << " / 6" << endl;
-			}
+		}
 		a = SO->Lines[Surf->Schlaefli->Half_double_sixes[hds * 6 + u]];
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
 					"intersecting line " << a << " and plane "
 					<< plane_rk_global << endl;
-			}
+		}
 		intersection_points[u] =
 				Surf->P->point_of_intersection_of_a_line_and_a_plane_in_three_space(
 						a, plane_rk_global,
@@ -167,14 +167,14 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
 					"intersection point " << intersection_points[u] << endl;
-			}
+		}
 		Surf->P->unrank_point(v, intersection_points[u]);
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
 					"which is ";
 			int_vec_print(cout, v, 4);
 			cout << endl;
-			}
+		}
 		F->reduce_mod_subspace_and_get_coefficient_vector(
 			3, 4, Plane, base_cols,
 			v, coefficients,
@@ -184,16 +184,16 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 					"local coefficients ";
 			int_vec_print(cout, coefficients, 3);
 			cout << endl;
-			}
-		intersection_points_local[u] = Surf->P2->rank_point(coefficients);
 		}
+		intersection_points_local[u] = Surf->P2->rank_point(coefficients);
+	}
 
 
 
 
 	if (f_v) {
 		cout << "clebsch_map::init_half_double_six done" << endl;
-		}
+	}
 }
 
 void clebsch_map::compute_Clebsch_map_down(int verbose_level)
@@ -336,7 +336,8 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 
 		int_vec_zero(Image_coeff + h * 4, 4);
 		if (f_v) {
-			cout << "clebsch_map::compute_Clebsch_map_down_worker pt " << h << " / " << SO->nb_pts << " is " << pt << " = ";
+			cout << "clebsch_map::compute_Clebsch_map_down_worker "
+					"pt " << h << " / " << SO->nb_pts << " is " << pt << " = ";
 			int_vec_print(cout, v, 4);
 			cout << ":" << endl;
 		}
@@ -409,7 +410,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		if (r < 3) {
 			if (f_v) {
 				cout << "The line is contained in the plane" << endl;
-				}
+			}
 			Image_rk[h] = -1;
 			continue;
 		}
@@ -447,46 +448,46 @@ void clebsch_map::clebsch_map_print_fibers()
 
 	cout << "clebsch_map::clebsch_map_print_fibers" << endl;
 	{
-	tally C2;
+		tally C2;
 
-	C2.init_lint(Clebsch_map, SO->nb_pts, TRUE, 0);
-	cout << "clebsch_map::clebsch_map_print_fibers The fibers "
-			"have the following sizes: ";
-	C2.print_naked(TRUE);
-	cout << endl;
+		C2.init_lint(Clebsch_map, SO->nb_pts, TRUE, 0);
+		cout << "clebsch_map::clebsch_map_print_fibers The fibers "
+				"have the following sizes: ";
+		C2.print_naked(TRUE);
+		cout << endl;
 
-	int t2, f2, l2, sz;
-	int t1, f1, l1;
+		int t2, f2, l2, sz;
+		int t1, f1, l1;
 
-	for (t2 = 0; t2 < C2.second_nb_types; t2++) {
-		f2 = C2.second_type_first[t2];
-		l2 = C2.second_type_len[t2];
-		sz = C2.second_data_sorted[f2];
-		cout << "clebsch_map::clebsch_map_print_fibers fibers "
-				"of size " << sz << ":" << endl;
-		if (sz == 1) {
-			continue;
+		for (t2 = 0; t2 < C2.second_nb_types; t2++) {
+			f2 = C2.second_type_first[t2];
+			l2 = C2.second_type_len[t2];
+			sz = C2.second_data_sorted[f2];
+			cout << "clebsch_map::clebsch_map_print_fibers fibers "
+					"of size " << sz << ":" << endl;
+			if (sz == 1) {
+				continue;
 			}
-		for (i = 0; i < l2; i++) {
-			t1 = C2.second_sorting_perm_inv[f2 + i];
-			f1 = C2.type_first[t1];
-			l1 = C2.type_len[t1];
-			pt = C2.data_sorted[f1];
-			cout << "arc point " << pt << " belongs to the " << l1
-				<< " surface points in the list of Pts "
-				"(local numbering): ";
-			for (j = 0; j < l1; j++) {
-				u = C2.sorting_perm_inv[f1 + j];
-				cout << u;
-				//cout << Pts[u];
-				if (j < l1 - 1) {
-					cout << ", ";
+			for (i = 0; i < l2; i++) {
+				t1 = C2.second_sorting_perm_inv[f2 + i];
+				f1 = C2.type_first[t1];
+				l1 = C2.type_len[t1];
+				pt = C2.data_sorted[f1];
+				cout << "arc point " << pt << " belongs to the " << l1
+					<< " surface points in the list of Pts "
+					"(local numbering): ";
+				for (j = 0; j < l1; j++) {
+					u = C2.sorting_perm_inv[f1 + j];
+					cout << u;
+					//cout << Pts[u];
+					if (j < l1 - 1) {
+						cout << ", ";
 					}
 				}
-			cout << endl;
+				cout << endl;
 			}
 		}
-	cout << endl;
+		cout << endl;
 	}
 }
 
@@ -499,187 +500,187 @@ void clebsch_map::clebsch_map_find_arc_and_lines(
 
 	if (f_v) {
 		cout << "clebsch_map::clebsch_map_find_arc_and_lines" << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "lines_on_point:" << endl;
 		SO->SOP->lines_on_point->print_table();
-		}
+	}
 
 	{
-	tally C2;
+		tally C2;
 
-	C2.init_lint(Clebsch_map, SO->nb_pts, TRUE, 0);
-	if (f_v) {
-		cout << "clebsch_map::clebsch_map_find_arc_and_lines "
-				"The fibers have the following sizes: ";
-		C2.print_naked(TRUE);
-		cout << endl;
-		}
-
-	int t2, f2, l2, sz;
-	int t1, f1, l1;
-	int fiber[2];
-	int common_elt;
-	int u; //, v, w;
-
-
-
-
-	nb_blow_up_lines = 0;
-	for (t2 = 0; t2 < C2.second_nb_types; t2++) {
-		f2 = C2.second_type_first[t2];
-		l2 = C2.second_type_len[t2];
-		sz = C2.second_data_sorted[f2];
+		C2.init_lint(Clebsch_map, SO->nb_pts, TRUE, 0);
 		if (f_v) {
 			cout << "clebsch_map::clebsch_map_find_arc_and_lines "
-					"fibers of size " << sz << ":" << endl;
+					"The fibers have the following sizes: ";
+			C2.print_naked(TRUE);
+			cout << endl;
+		}
+
+		int t2, f2, l2, sz;
+		int t1, f1, l1;
+		int fiber[2];
+		int common_elt;
+		int u; //, v, w;
+
+
+
+
+		nb_blow_up_lines = 0;
+		for (t2 = 0; t2 < C2.second_nb_types; t2++) {
+			f2 = C2.second_type_first[t2];
+			l2 = C2.second_type_len[t2];
+			sz = C2.second_data_sorted[f2];
+			if (f_v) {
+				cout << "clebsch_map::clebsch_map_find_arc_and_lines "
+						"fibers of size " << sz << ":" << endl;
 			}
-		if (sz == 1) {
-			continue;
+			if (sz == 1) {
+				continue;
 			}
 
-		if (f_v) {
+			if (f_v) {
+				for (i = 0; i < l2; i++) {
+					t1 = C2.second_sorting_perm_inv[f2 + i];
+					f1 = C2.type_first[t1];
+					l1 = C2.type_len[t1];
+					pt = C2.data_sorted[f1];
+					cout << "arc point " << pt << " belongs to the " << l1
+							<< " surface points in the list of Pts "
+							"(point indices): ";
+					for (j = 0; j < l1; j++) {
+						u = C2.sorting_perm_inv[f1 + j];
+						cout << u;
+						//cout << Pts[u];
+						if (j < l1 - 1) {
+							cout << ", ";
+						}
+					}
+					cout << endl;
+				}
+			}
+
+
 			for (i = 0; i < l2; i++) {
 				t1 = C2.second_sorting_perm_inv[f2 + i];
 				f1 = C2.type_first[t1];
 				l1 = C2.type_len[t1];
 				pt = C2.data_sorted[f1];
-				cout << "arc point " << pt << " belongs to the " << l1
-						<< " surface points in the list of Pts "
-						"(point indices): ";
-				for (j = 0; j < l1; j++) {
-					u = C2.sorting_perm_inv[f1 + j];
-					cout << u;
-					//cout << Pts[u];
-					if (j < l1 - 1) {
-						cout << ", ";
-						}
-					}
-				cout << endl;
+
+				if (pt == -1) {
+					continue;
 				}
-			}
+				fiber[0] = C2.sorting_perm_inv[f1 + 0];
+				fiber[1] = C2.sorting_perm_inv[f1 + 1];
 
-
-		for (i = 0; i < l2; i++) {
-			t1 = C2.second_sorting_perm_inv[f2 + i];
-			f1 = C2.type_first[t1];
-			l1 = C2.type_len[t1];
-			pt = C2.data_sorted[f1];
-
-			if (pt == -1) {
-				continue;
-				}
-			fiber[0] = C2.sorting_perm_inv[f1 + 0];
-			fiber[1] = C2.sorting_perm_inv[f1 + 1];
-
-			if (f_v) {
-				cout << "lines through point fiber[0]="
-						<< fiber[0] << " : ";
-				SO->Surf->Schlaefli->print_set_of_lines_tex(cout,
-						SO->SOP->lines_on_point->Sets[fiber[0]],
-						SO->SOP->lines_on_point->Set_size[fiber[0]]);
-				cout << endl;
-				cout << "lines through point fiber[1]="
-						<< fiber[1] << " : ";
-				SO->Surf->Schlaefli->print_set_of_lines_tex(cout,
-						SO->SOP->lines_on_point->Sets[fiber[1]],
-						SO->SOP->lines_on_point->Set_size[fiber[1]]);
-				cout << endl;
+				if (f_v) {
+					cout << "lines through point fiber[0]="
+							<< fiber[0] << " : ";
+					SO->Surf->Schlaefli->print_set_of_lines_tex(cout,
+							SO->SOP->lines_on_point->Sets[fiber[0]],
+							SO->SOP->lines_on_point->Set_size[fiber[0]]);
+					cout << endl;
+					cout << "lines through point fiber[1]="
+							<< fiber[1] << " : ";
+					SO->Surf->Schlaefli->print_set_of_lines_tex(cout,
+							SO->SOP->lines_on_point->Sets[fiber[1]],
+							SO->SOP->lines_on_point->Set_size[fiber[1]]);
+					cout << endl;
 				}
 
-			// find the unique line which passes through
-			// the surface points fiber[0] and fiber[1]:
-			if (!SO->SOP->lines_on_point->find_common_element_in_two_sets(
-					fiber[0], fiber[1], common_elt)) {
-				cout << "The fiber does not seem to come "
-						"from a line, i=" << i << endl;
+				// find the unique line which passes through
+				// the surface points fiber[0] and fiber[1]:
+				if (!SO->SOP->lines_on_point->find_common_element_in_two_sets(
+						fiber[0], fiber[1], common_elt)) {
+					cout << "The fiber does not seem to come "
+							"from a line, i=" << i << endl;
 
 
 #if 1
-				cout << "The fiber does not seem to come "
-						"from a line" << endl;
-				cout << "i=" << i << " / " << l2 << endl;
-				cout << "pt=" << pt << endl;
-				cout << "fiber[0]=" << fiber[0] << endl;
-				cout << "fiber[1]=" << fiber[1] << endl;
-				cout << "lines through point fiber[0]=" << fiber[0] << " : ";
-				SO->Surf->Schlaefli->print_set_of_lines_tex(cout,
-						SO->SOP->lines_on_point->Sets[fiber[0]],
-						SO->SOP->lines_on_point->Set_size[fiber[0]]);
-				cout << endl;
-				cout << "lines through point fiber[1]=" << fiber[1] << " : ";
-				SO->Surf->Schlaefli->print_set_of_lines_tex(cout,
-						SO->SOP->lines_on_point->Sets[fiber[1]],
-						SO->SOP->lines_on_point->Set_size[fiber[1]]);
-				cout << endl;
-				//exit(1);
+					cout << "The fiber does not seem to come "
+							"from a line" << endl;
+					cout << "i=" << i << " / " << l2 << endl;
+					cout << "pt=" << pt << endl;
+					cout << "fiber[0]=" << fiber[0] << endl;
+					cout << "fiber[1]=" << fiber[1] << endl;
+					cout << "lines through point fiber[0]=" << fiber[0] << " : ";
+					SO->Surf->Schlaefli->print_set_of_lines_tex(cout,
+							SO->SOP->lines_on_point->Sets[fiber[0]],
+							SO->SOP->lines_on_point->Set_size[fiber[0]]);
+					cout << endl;
+					cout << "lines through point fiber[1]=" << fiber[1] << " : ";
+					SO->Surf->Schlaefli->print_set_of_lines_tex(cout,
+							SO->SOP->lines_on_point->Sets[fiber[1]],
+							SO->SOP->lines_on_point->Set_size[fiber[1]]);
+					cout << endl;
+					//exit(1);
 #endif
 				}
-			else {
-				if (nb_blow_up_lines == 6) {
-					cout << "too many long fibers" << endl;
-					exit(1);
-					}
-				cout << "i=" << i << " fiber[0]=" << fiber[0]
-					<< " fiber[1]=" << fiber[1]
-					<< " common_elt=" << common_elt << endl;
-				Arc[nb_blow_up_lines] = pt;
-				Blown_up_lines[nb_blow_up_lines] = common_elt;
-				nb_blow_up_lines++;
-				}
-
-#if 0
-			w = 0;
-			for (u = 0; u < l2; u++) {
-				fiber[0] = C2.sorting_perm_inv[f1 + u];
-				for (v = u + 1; v < l2; v++, w++) {
-					fiber[1] = C2.sorting_perm_inv[f1 + v];
-					Fiber_recognize[w] = -1;
-					if (!lines_on_point->find_common_element_in_two_sets(
-							fiber[0], fiber[1], common_elt)) {
-#if 0
-						cout << "The fiber does not seem to "
-								"come from a line" << endl;
-						cout << "i=" << i << " / " << l2 << endl;
-						cout << "pt=" << pt << endl;
-						cout << "fiber[0]=" << fiber[0] << endl;
-						cout << "fiber[1]=" << fiber[1] << endl;
-						cout << "lines_on_point:" << endl;
-						lines_on_point->print_table();
+				else {
+					if (nb_blow_up_lines == 6) {
+						cout << "too many long fibers" << endl;
 						exit(1);
+					}
+					cout << "i=" << i << " fiber[0]=" << fiber[0]
+						<< " fiber[1]=" << fiber[1]
+						<< " common_elt=" << common_elt << endl;
+					Arc[nb_blow_up_lines] = pt;
+					Blown_up_lines[nb_blow_up_lines] = common_elt;
+					nb_blow_up_lines++;
+				}
+
+#if 0
+				w = 0;
+				for (u = 0; u < l2; u++) {
+					fiber[0] = C2.sorting_perm_inv[f1 + u];
+					for (v = u + 1; v < l2; v++, w++) {
+						fiber[1] = C2.sorting_perm_inv[f1 + v];
+						Fiber_recognize[w] = -1;
+						if (!lines_on_point->find_common_element_in_two_sets(
+								fiber[0], fiber[1], common_elt)) {
+#if 0
+							cout << "The fiber does not seem to "
+									"come from a line" << endl;
+							cout << "i=" << i << " / " << l2 << endl;
+							cout << "pt=" << pt << endl;
+							cout << "fiber[0]=" << fiber[0] << endl;
+							cout << "fiber[1]=" << fiber[1] << endl;
+							cout << "lines_on_point:" << endl;
+							lines_on_point->print_table();
+							exit(1);
 #endif
 						}
-					else {
-						Fiber_recognize[w] = common_elt;
+						else {
+							Fiber_recognize[w] = common_elt;
 						}
 					}
 				}
-			{
-				tally C_fiber;
+				{
+					tally C_fiber;
 
-				C_fiber.init(Fiber_recognize, w, FALSE, 0);
-				cout << "The fiber type is : ";
-				C_fiber.print_naked(TRUE);
-				cout << endl;
-			}
-			Blown_up_lines[i] = -1;
+					C_fiber.init(Fiber_recognize, w, FALSE, 0);
+					cout << "The fiber type is : ";
+					C_fiber.print_naked(TRUE);
+					cout << endl;
+				}
+				Blown_up_lines[i] = -1;
 #endif
 
-			} // next i
-		}
+				} // next i
+			}
 
-	if (nb_blow_up_lines != 6) {
-		cout << "nb_blow_up_lines != 6" << endl;
-		cout << "nb_blow_up_lines = " << nb_blow_up_lines << endl;
-		exit(1);
+		if (nb_blow_up_lines != 6) {
+			cout << "nb_blow_up_lines != 6" << endl;
+			cout << "nb_blow_up_lines = " << nb_blow_up_lines << endl;
+			exit(1);
 		}
 	} // end of classify C2
 	if (f_v) {
 		cout << "clebsch_map::clebsch_map_find_arc_and_lines "
 				"done" << endl;
-		}
+	}
 }
 
 void clebsch_map::report(std::ostream &ost, int verbose_level)
