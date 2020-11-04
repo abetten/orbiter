@@ -210,11 +210,24 @@ private:
 
 public:
 
+	function_polish *smooth_curve_Polish;
+	double parabola_a;
+	double parabola_b;
+	double parabola_c;
+
+
 	graphical_output();
 	~graphical_output();
 	void draw_layered_graph_from_file(std::string &fname,
 			layered_graph_draw_options *Opt,
 			int verbose_level);
+	void do_create_points_on_quartic(double desired_distance, int verbose_level);
+	void do_create_points_on_parabola(double desired_distance, int N,
+			double a, double b, double c, int verbose_level);
+	void do_smooth_curve(const char *curve_label,
+			double desired_distance, int N,
+			double t_min, double t_max, double boundary,
+			function_polish_description *FP_descr, int verbose_level);
 };
 
 

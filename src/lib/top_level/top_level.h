@@ -237,6 +237,7 @@ public:
 #include "./geometry/tl_geometry.h"
 #include "./isomorph/isomorph.h"
 #include "./orbits/orbits.h"
+#include "./semifields/semifields.h"
 #include "./solver/solver.h"
 #include "./spreads_and_packings/spreads_and_packings.h"
 #include "./surfaces/surfaces.h"

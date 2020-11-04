@@ -18,12 +18,6 @@ namespace orbiter {
 namespace interfaces {
 
 
-static int do_create_points_on_quartic_compute_point_function(double t,
-		double *pt, void *extra_data, int verbose_level);
-static int do_create_points_on_parabola_compute_point_function(double t,
-		double *pt, void *extra_data, int verbose_level);
-static int do_create_points_smooth_curve_compute_point_function(double t,
-		double *output, void *extra_data, int verbose_level);
 
 
 interface_projective::interface_projective()
@@ -46,21 +40,19 @@ interface_projective::interface_projective()
 	desired_distance = 0;
 
 	f_create_points_on_parabola = FALSE;
-
-	f_smooth_curve = FALSE;
-
 	parabola_N = 0;
 	parabola_a = 0;
 	parabola_b = 0.;
 	parabola_c = 0.;
 
+	f_smooth_curve = FALSE;
+	smooth_curve_label = NULL;
 	smooth_curve_N = 0;
-	FP_descr = NULL;
 	smooth_curve_t_min = 0;
 	smooth_curve_t_max = 0;
 	smooth_curve_boundary = 0;
-	smooth_curve_Polish = NULL;
-	smooth_curve_label = NULL;
+	//smooth_curve_Polish = NULL;
+	FP_descr = NULL;
 
 	f_create_BLT_set = FALSE;
 	BLT_set_descr = NULL;
@@ -101,6 +93,18 @@ interface_projective::interface_projective()
 	f_create_surface_reports = FALSE;
 	f_create_surface_atlas = FALSE;
 	create_surface_atlas_q_max = 0;
+
+	f_normalize_from_the_right = FALSE;
+	f_normalize_from_the_left = FALSE;
+	f_transversal = FALSE;
+	transversal_q = 0;
+	//transversal_line_1_basis = NULL;
+	//transversal_line_2_basis = NULL;
+	//transversal_point = NULL;
+	f_intersection_of_two_lines = FALSE;
+	intersection_of_two_lines_q = 0;
+	//line_1_basis = NULL;
+	//line_2_basis = NULL;
 
 }
 
@@ -161,6 +165,18 @@ void interface_projective::print_help(int argc,
 	}
 	else if (strcmp(argv[i], "-create_surface_atlas") == 0) {
 		cout << "-create_surface_atlas <int : q_max>" << endl;
+	}
+	else if (strcmp(argv[i], "-normalize_from_the_right") == 0) {
+		cout << "-normalize_from_the_right" << endl;
+	}
+	else if (strcmp(argv[i], "-normalize_from_the_left") == 0) {
+		cout << "-normalize_from_the_left" << endl;
+	}
+	else if (strcmp(argv[i], "-transversal") == 0) {
+		cout << "-transversal <int : q> <string : line_1> <string : line_2> <string : pt>" << endl;
+	}
+	else if (strcmp(argv[i], "-intersection_of_two_lines") == 0) {
+		cout << "-intersection_of_two_lines <int : q> <string : line_1> <string : line_2>" << endl;
 	}
 }
 
@@ -224,6 +240,18 @@ int interface_projective::recognize_keyword(int argc,
 		return true;
 	}
 	else if (strcmp(argv[i], "-create_surface_atlas") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-normalize_from_the_right") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-normalize_from_the_left") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-transversal") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-intersection_of_two_lines") == 0) {
 		return true;
 	}
 	return false;
@@ -400,6 +428,35 @@ void interface_projective::read_arguments(int argc,
 			create_surface_atlas_q_max = atoi(argv[++i]);
 			cout << "-create_surface_reports " << create_surface_atlas_q_max << endl;
 		}
+		else if (strcmp(argv[i], "-normalize_from_the_right") == 0) {
+			f_normalize_from_the_right = TRUE;
+			cout << "-normalize_from_the_right " << endl;
+		}
+		else if (strcmp(argv[i], "-normalize_from_the_left") == 0) {
+			f_normalize_from_the_left = TRUE;
+			cout << "-normalize_from_the_left " << endl;
+		}
+		else if (strcmp(argv[i], "-transversal") == 0) {
+			f_transversal = TRUE;
+			transversal_q = atoi(argv[++i]);
+			transversal_line_1_basis.assign(argv[++i]);
+			transversal_line_2_basis.assign(argv[++i]);
+			transversal_point.assign(argv[++i]);
+			cout << "-transversal " << transversal_q
+					<< " " << transversal_line_1_basis
+					<< " " << transversal_line_2_basis
+					<< " " << transversal_point << endl;
+		}
+		else if (strcmp(argv[i], "-intersection_of_two_lines") == 0) {
+			f_intersection_of_two_lines = TRUE;
+			intersection_of_two_lines_q = atoi(argv[++i]);
+			line_1_basis.assign(argv[++i]);
+			line_2_basis.assign(argv[++i]);
+			cout << "-intersection_of_two_lines " << intersection_of_two_lines_q
+					<< " " << line_1_basis
+					<< " " << line_2_basis
+					<< endl;
+		}
 		else {
 			cout << "interface_projective::read_arguments: unrecognized option "
 					<< argv[i] << ", skipping" << endl;
@@ -428,14 +485,23 @@ void interface_projective::worker(orbiter_session *Session, int verbose_level)
 		do_canonical_form_PG(Session, n, q, verbose_level);
 	}
 	else if (f_create_points_on_quartic) {
-		do_create_points_on_quartic(desired_distance, verbose_level);
+
+		graphical_output GO;
+
+		GO.do_create_points_on_quartic(desired_distance, verbose_level);
 	}
 	else if (f_create_points_on_parabola) {
-		do_create_points_on_parabola(desired_distance,
+
+		graphical_output GO;
+
+		GO.do_create_points_on_parabola(desired_distance,
 				parabola_N, parabola_a, parabola_b, parabola_c, verbose_level);
 	}
 	else if (f_smooth_curve) {
-		do_smooth_curve(smooth_curve_label,
+
+		graphical_output GO;
+
+		GO.do_smooth_curve(smooth_curve_label,
 				desired_distance, smooth_curve_N,
 				smooth_curve_t_min, smooth_curve_t_max, smooth_curve_boundary,
 				FP_descr, verbose_level);
@@ -450,13 +516,21 @@ void interface_projective::worker(orbiter_session *Session, int verbose_level)
 		do_study_surface(study_surface_q, study_surface_nb, verbose_level);
 	}
 	else if (f_move_two_lines_in_hyperplane_stabilizer) {
-		do_move_two_lines_in_hyperplane_stabilizer(
+
+		geometry_global GG;
+
+
+		GG.do_move_two_lines_in_hyperplane_stabilizer(
 				q,
 				line1_from, line2_from,
 				line1_to, line2_to, verbose_level);
 	}
 	else if (f_move_two_lines_in_hyperplane_stabilizer_text) {
-		do_move_two_lines_in_hyperplane_stabilizer_text(
+
+		geometry_global GG;
+
+
+		GG.do_move_two_lines_in_hyperplane_stabilizer_text(
 				q,
 				line1_from_text, line2_from_text,
 				line1_to_text, line2_to_text, verbose_level);
@@ -494,6 +568,27 @@ void interface_projective::worker(orbiter_session *Session, int verbose_level)
 
 		do_create_surface_atlas(create_surface_atlas_q_max, verbose_level);
 
+	}
+	else if (f_transversal) {
+
+		geometry_global GG;
+
+		GG.do_transversal(transversal_q,
+				transversal_line_1_basis,
+				transversal_line_2_basis,
+				transversal_point,
+				f_normalize_from_the_left, f_normalize_from_the_right,
+				verbose_level);
+	}
+	else if (f_intersection_of_two_lines) {
+
+		geometry_global GG;
+
+		GG.do_intersection_of_two_lines(intersection_of_two_lines_q,
+				line_1_basis,
+				line_2_basis,
+				f_normalize_from_the_left, f_normalize_from_the_right,
+				verbose_level);
 	}
 
 
@@ -733,441 +828,6 @@ void interface_projective::do_canonical_form_PG(orbiter_session *Session,
 }
 
 
-void interface_projective::do_create_points_on_quartic(double desired_distance, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_projective::do_create_points_on_quartic" << endl;
-	}
-
-	double amin, amid, amax;
-	//double epsilon = 0.001;
-	int N = 200;
-	int i;
-
-	//a0 = 16. / 25.;
-	//b0 = 16. / 25.;
-
-	amin = 0;
-	amid = 16. / 25.;
-	amax = 100;
-
-	int nb;
-
-	{
-		parametric_curve C1;
-		parametric_curve C2;
-
-		C1.init(2 /* nb_dimensions */,
-				desired_distance,
-				amin, amid,
-				do_create_points_on_quartic_compute_point_function,
-				this /* extra_data */,
-				100. /* boundary */,
-				N,
-				verbose_level);
-
-		cout << "after parametric_curve::init, C1.Pts.size()=" << C1.Pts.size() << endl;
-
-
-		C2.init(2 /* nb_dimensions */,
-				desired_distance,
-				amid, amax,
-				do_create_points_on_quartic_compute_point_function,
-				this /* extra_data */,
-				100. /* boundary */,
-				N,
-				verbose_level);
-
-		cout << "after parametric_curve::init, C2.Pts.size()=" << C2.Pts.size() << endl;
-
-
-		for (i = 0; i < (int) C1.Pts.size(); i++) {
-			cout << C1.Pts[i].t << " : " << C1.Pts[i].coords[0] << ", " << C1.Pts[i].coords[1] << endl;
-		}
-
-		double *Pts;
-		int nb_pts;
-
-		nb_pts = 4 * (C1.Pts.size() + C2.Pts.size());
-		Pts = new double[nb_pts * 2];
-		nb = 0;
-		for (i = 0; i < (int) C1.Pts.size(); i++) {
-			Pts[nb * 2 + 0] = C1.Pts[i].coords[0];
-			Pts[nb * 2 + 1] = C1.Pts[i].coords[1];
-			nb++;
-		}
-		for (i = 0; i < (int) C1.Pts.size(); i++) {
-			Pts[nb * 2 + 0] = -1 * C1.Pts[i].coords[0];
-			Pts[nb * 2 + 1] = C1.Pts[i].coords[1];
-			nb++;
-		}
-		for (i = 0; i < (int) C1.Pts.size(); i++) {
-			Pts[nb * 2 + 0] = C1.Pts[i].coords[0];
-			Pts[nb * 2 + 1] = -1 * C1.Pts[i].coords[1];
-			nb++;
-		}
-		for (i = 0; i < (int) C1.Pts.size(); i++) {
-			Pts[nb * 2 + 0] = -1 * C1.Pts[i].coords[0];
-			Pts[nb * 2 + 1] = -1 * C1.Pts[i].coords[1];
-			nb++;
-		}
-		for (i = 0; i < (int) C2.Pts.size(); i++) {
-			Pts[nb * 2 + 0] = C2.Pts[i].coords[0];
-			Pts[nb * 2 + 1] = C2.Pts[i].coords[1];
-			nb++;
-		}
-		for (i = 0; i < (int) C2.Pts.size(); i++) {
-			Pts[nb * 2 + 0] = -1 * C2.Pts[i].coords[0];
-			Pts[nb * 2 + 1] = C2.Pts[i].coords[1];
-			nb++;
-		}
-		for (i = 0; i < (int) C2.Pts.size(); i++) {
-			Pts[nb * 2 + 0] = C2.Pts[i].coords[0];
-			Pts[nb * 2 + 1] = -1 * C2.Pts[i].coords[1];
-			nb++;
-		}
-		for (i = 0; i < (int) C2.Pts.size(); i++) {
-			Pts[nb * 2 + 0] = -1 * C2.Pts[i].coords[0];
-			Pts[nb * 2 + 1] = -1 * C2.Pts[i].coords[1];
-			nb++;
-		}
-		file_io Fio;
-
-		string fname;
-
-		fname.assign("points.csv");
-
-		Fio.double_matrix_write_csv(fname, Pts, nb, 2);
-
-		cout << "created curve 1 with " << C1.Pts.size() << " many points" << endl;
-		cout << "created curve 2 with " << C2.Pts.size() << " many points" << endl;
-	}
-	cout << "created 4  curves with " << nb << " many points" << endl;
-
-
-
-	if (f_v) {
-		cout << "interface_projective::do_create_points_on_quartic done" << endl;
-	}
-}
-
-void interface_projective::do_create_points_on_parabola(
-		double desired_distance, int N,
-		double a, double b, double c, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_projective::do_create_points_on_parabola" << endl;
-	}
-
-	double amin, amax;
-	double boundary;
-	int i;
-
-	amin = -10;
-	amax = 3.08;
-	boundary = 10;
-
-	int nb;
-
-	{
-		parametric_curve C;
-
-		C.init(2 /* nb_dimensions */,
-				desired_distance,
-				amin, amax,
-				do_create_points_on_parabola_compute_point_function,
-				this /* extra_data */,
-				boundary,
-				N,
-				verbose_level);
-
-		cout << "after parametric_curve::init, C.Pts.size()=" << C.Pts.size() << endl;
-
-
-
-
-		for (i = 0; i < (int) C.Pts.size(); i++) {
-			cout << C.Pts[i].t << " : " << C.Pts[i].coords[0] << ", " << C.Pts[i].coords[1] << endl;
-		}
-
-		{
-		double *Pts;
-		int nb_pts;
-
-		nb_pts = C.Pts.size();
-		Pts = new double[nb_pts * 2];
-		nb = 0;
-		for (i = 0; i < (int) C.Pts.size(); i++) {
-			Pts[nb * 2 + 0] = C.Pts[i].coords[0];
-			Pts[nb * 2 + 1] = C.Pts[i].coords[1];
-			nb++;
-		}
-		file_io Fio;
-		char str[1000];
-		string fname;
-
-		snprintf(str, 1000, "parabola_N%d_%lf_%lf_%lf_points.csv", N, parabola_a, parabola_b, parabola_c);
-		fname.assign(str);
-
-		Fio.double_matrix_write_csv(fname, Pts, nb, 2);
-
-		cout << "created curve 1 with " << C.Pts.size() << " many points" << endl;
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-		delete [] Pts;
-		}
-
-		{
-		double *Pts;
-		int nb_pts;
-
-		nb_pts = C.Pts.size();
-		Pts = new double[nb_pts * 6];
-		nb = 0;
-		for (i = 0; i < (int) C.Pts.size(); i++) {
-			Pts[nb * 6 + 0] = C.Pts[i].coords[0];
-			Pts[nb * 6 + 1] = C.Pts[i].coords[1];
-			Pts[nb * 6 + 2] = 0.;
-			Pts[nb * 6 + 3] = 0.;
-			Pts[nb * 6 + 4] = 0.;
-			Pts[nb * 6 + 5] = 1.;
-			nb++;
-		}
-		file_io Fio;
-		char str[1000];
-		string fname;
-		snprintf(str, 1000, "parabola_N%d_%lf_%lf_%lf_projection_from_center.csv", N, parabola_a, parabola_b, parabola_c);
-		fname.assign(str);
-
-		Fio.double_matrix_write_csv(fname, Pts, nb, 6);
-
-		cout << "created family of lines 1 with " << C.Pts.size() << " many lines" << endl;
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-		delete [] Pts;
-		}
-
-		{
-		double *Pts;
-		int nb_pts;
-		double x, y, H, f;
-		double h = 1.;
-
-		nb_pts = C.Pts.size();
-		Pts = new double[nb_pts * 6];
-		nb = 0;
-		for (i = 0; i < (int) C.Pts.size(); i++) {
-			x = C.Pts[i].coords[0];
-			y = C.Pts[i].coords[1];
-			Pts[nb * 6 + 0] = x;
-			Pts[nb * 6 + 1] = y;
-			Pts[nb * 6 + 2] = 0.;
-
-			H = sqrt(h * h + x * x + y * y);
-			f = h / H;
-
-			Pts[nb * 6 + 3] = x * f;
-			Pts[nb * 6 + 4] = y * f;
-			Pts[nb * 6 + 5] = 1. - f;
-			nb++;
-		}
-		file_io Fio;
-
-		char str[1000];
-		string fname;
-		snprintf(str, 1000, "parabola_N%d_%lf_%lf_%lf_projection_from_sphere.csv", N, parabola_a, parabola_b, parabola_c);
-		fname.assign(str);
-
-
-		Fio.double_matrix_write_csv(fname, Pts, nb, 6);
-
-		cout << "created family of lines 1 with " << C.Pts.size() << " many lines" << endl;
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-		delete [] Pts;
-		}
-
-		{
-		double *Pts;
-		int nb_pts;
-		double x, y, H, f;
-		double h = 1.;
-
-		nb_pts = C.Pts.size();
-		Pts = new double[nb_pts * 3];
-		nb = 0;
-		for (i = 0; i < (int) C.Pts.size(); i++) {
-			x = C.Pts[i].coords[0];
-			y = C.Pts[i].coords[1];
-
-			H = sqrt(h * h + x * x + y * y);
-			f = h / H;
-
-			Pts[nb * 3 + 0] = x * f;
-			Pts[nb * 3 + 1] = y * f;
-			Pts[nb * 3 + 2] = 1. - f;
-			nb++;
-		}
-		file_io Fio;
-
-		char str[1000];
-		string fname;
-		snprintf(str, 1000, "parabola_N%d_%lf_%lf_%lf_points_projected.csv", N, parabola_a, parabola_b, parabola_c);
-		fname.assign(str);
-
-
-		Fio.double_matrix_write_csv(fname, Pts, nb, 3);
-
-		cout << "created family of lines 1 with " << C.Pts.size() << " many lines" << endl;
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-		delete [] Pts;
-		}
-
-
-	}
-	cout << "created curve with " << nb << " many points" << endl;
-
-
-
-	if (f_v) {
-		cout << "interface_projective::do_create_points_on_parabola done" << endl;
-	}
-}
-
-void interface_projective::do_smooth_curve(const char *curve_label,
-		double desired_distance, int N,
-		double t_min, double t_max, double boundary,
-		function_polish_description *FP_descr, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int nb_dimensions;
-
-	if (f_v) {
-		cout << "interface_projective::do_smooth_curve" << endl;
-	}
-
-	smooth_curve_Polish = NEW_OBJECT(function_polish);
-
-	if (f_v) {
-		cout << "interface_projective::do_smooth_curve before smooth_curve_Polish->init_from_description" << endl;
-	}
-	smooth_curve_Polish->init_from_description(FP_descr, verbose_level);
-	if (f_v) {
-		cout << "interface_projective::do_smooth_curve after smooth_curve_Polish->init_from_description" << endl;
-	}
-#if 0
-	if (smooth_curve_Polish->Variables.size() != 1) {
-		cout << "interface_projective::do_smooth_curve number of variables should be 1, is "
-				<< smooth_curve_Polish->Variables.size() << endl;
-		exit(1);
-	}
-#endif
-	nb_dimensions = smooth_curve_Polish->Entry.size();
-	if (f_v) {
-		cout << "interface_projective::do_smooth_curve nb_dimensions = " << nb_dimensions << endl;
-	}
-
-
-	{
-		parametric_curve C;
-
-		C.init(nb_dimensions,
-				desired_distance,
-				t_min, t_max,
-				do_create_points_smooth_curve_compute_point_function,
-				this /* extra_data */,
-				boundary,
-				N,
-				verbose_level);
-
-		cout << "after parametric_curve::init, C.Pts.size()=" << C.Pts.size() << endl;
-
-		{
-		double *Pts;
-		int nb_pts;
-		int i, j, nb;
-
-		nb_pts = C.Pts.size();
-		Pts = new double[nb_pts * nb_dimensions];
-		nb = 0;
-		for (i = 0; i < (int) C.Pts.size(); i++) {
-			if (C.Pts[i].f_is_valid) {
-				for (j = 0; j < nb_dimensions; j++) {
-					Pts[nb * nb_dimensions + j] = C.Pts[i].coords[j];
-				}
-				nb++;
-			}
-		}
-		file_io Fio;
-
-		char str[1000];
-		string fname;
-		snprintf(str, 1000, "function_%s_N%d_points.csv", curve_label, N);
-		fname.assign(str);
-
-
-		Fio.double_matrix_write_csv(fname, Pts, nb, nb_dimensions);
-
-		cout << "created curve 1 with " << C.Pts.size() << " many points" << endl;
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-		delete [] Pts;
-		}
-
-		{
-		double *Pts;
-		int nb_pts;
-		int i, j, nb, n;
-		double d; // euclidean distance to the previous point
-		numerics Num;
-
-		nb_pts = C.Pts.size();
-		n = 1 + nb_dimensions + 1;
-		Pts = new double[nb_pts * n];
-		nb = 0;
-		for (i = 0; i < (int) C.Pts.size(); i++) {
-			if (C.Pts[i].f_is_valid) {
-				Pts[nb * n + 0] = C.Pts[i].t;
-				for (j = 0; j < nb_dimensions; j++) {
-					Pts[nb * n + 1 + j] = C.Pts[i].coords[j];
-				}
-				if (nb) {
-					d = Num.distance_euclidean(Pts + (nb - 1) * n + 1, Pts + nb * n + 1, 3);
-				}
-				else {
-					d = 0;
-				}
-				Pts[nb * n + 1 + 4 + 0] = d;
-				nb++;
-			}
-		}
-		file_io Fio;
-
-		char str[1000];
-		string fname;
-		snprintf(str, 1000, "function_%s_N%d_points_plus.csv", curve_label, N);
-		fname.assign(str);
-
-		Fio.double_matrix_write_csv(fname, Pts, nb, n);
-
-		cout << "created curve 1 with " << C.Pts.size() << " many points" << endl;
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-		delete [] Pts;
-		}
-
-	}
-
-	if (f_v) {
-		cout << "interface_projective::do_smooth_curve done" << endl;
-	}
-}
-
 
 void interface_projective::do_create_BLT_set(BLT_set_create_description *Descr, int verbose_level)
 {
@@ -1363,204 +1023,8 @@ void interface_projective::do_study_surface(int q, int nb, int verbose_level)
 }
 
 
-void interface_projective::do_move_two_lines_in_hyperplane_stabilizer(
-		int q,
-		long int line1_from, long int line2_from,
-		long int line1_to, long int line2_to, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_projective::do_move_two_lines_in_hyperplane_stabilizer" << endl;
-	}
-
-	finite_field *F;
-	projective_space *P;
-	int A4[16];
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q, 0);
-
-	P = NEW_OBJECT(projective_space);
-	P->init(3, F,
-			FALSE /* f_init_incidence_structure */,
-			0 /*verbose_level*/);
-	P->hyperplane_lifting_with_two_lines_moved(
-			line1_from, line1_to,
-			line2_from, line2_to,
-			A4,
-			verbose_level);
-
-	cout << "interface_projective::do_move_two_lines_in_hyperplane_stabilizer A4=" << endl;
-	int_matrix_print(A4, 4, 4);
-
-	if (f_v) {
-		cout << "interface_projective::do_move_two_lines_in_hyperplane_stabilizer done" << endl;
-	}
-}
-
-void interface_projective::do_move_two_lines_in_hyperplane_stabilizer_text(
-		int q,
-		std::string line1_from_text, std::string line2_from_text,
-		std::string line1_to_text, std::string line2_to_text,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_projective::do_move_two_lines_in_hyperplane_stabilizer_text" << endl;
-	}
-
-	finite_field *F;
-	projective_space *P;
-	int A4[16];
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q, 0);
-
-	P = NEW_OBJECT(projective_space);
-	P->init(3, F,
-			FALSE /* f_init_incidence_structure */,
-			0 /*verbose_level*/);
-
-	int *line1_from_data;
-	int *line2_from_data;
-	int *line1_to_data;
-	int *line2_to_data;
-	int sz;
-
-	int_vec_scan(line1_from_text.c_str(), line1_from_data, sz);
-	if (sz != 8) {
-		cout << "line1_from_text must contain exactly 8 integers" << endl;
-		exit(1);
-	}
-	int_vec_scan(line2_from_text.c_str(), line2_from_data, sz);
-	if (sz != 8) {
-		cout << "line2_from_text must contain exactly 8 integers" << endl;
-		exit(1);
-	}
-	int_vec_scan(line1_to_text.c_str(), line1_to_data, sz);
-	if (sz != 8) {
-		cout << "line1_to_text must contain exactly 8 integers" << endl;
-		exit(1);
-	}
-	int_vec_scan(line2_to_text.c_str(), line2_to_data, sz);
-	if (sz != 8) {
-		cout << "line2_to_text must contain exactly 8 integers" << endl;
-		exit(1);
-	}
-
-	long int line1_from;
-	long int line2_from;
-	long int line1_to;
-	long int line2_to;
-
-	line1_from = P->rank_line(line1_from_data);
-	line2_from = P->rank_line(line2_from_data);
-	line1_to = P->rank_line(line1_to_data);
-	line2_to = P->rank_line(line2_to_data);
 
 
-	P->hyperplane_lifting_with_two_lines_moved(
-			line1_from, line1_to,
-			line2_from, line2_to,
-			A4,
-			verbose_level);
-
-	cout << "interface_projective::do_move_two_lines_in_hyperplane_stabilizer_text A4=" << endl;
-	int_matrix_print(A4, 4, 4);
-
-	if (f_v) {
-		cout << "interface_projective::do_move_two_lines_in_hyperplane_stabilizer_text done" << endl;
-	}
-}
-
-
-static int do_create_points_on_quartic_compute_point_function(double t,
-		double *pt, void *extra_data, int verbose_level)
-{
-	double num, denom, b;
-	double epsilon = 0.00001;
-
-	num = 4. - 4. * t;
-	denom = 4. - 25. * t * 0.25;
-	if (ABS(denom) < epsilon) {
-		return FALSE;
-	}
-	else {
-		b = num / denom;
-		if (b < 0) {
-			return FALSE;
-		}
-		else {
-			pt[0] = sqrt(t);
-			pt[1] = sqrt(b);
-		}
-	}
-	cout << "created point " << pt[0] << ", " << pt[1] << endl;
-	return TRUE;
-}
-
-static int do_create_points_on_parabola_compute_point_function(double t,
-		double *pt, void *extra_data, int verbose_level)
-{
-	interface_projective *I = (interface_projective *) extra_data;
-	double a = I->parabola_a;
-	double b = I->parabola_b;
-	double c = I->parabola_c;
-
-	pt[0] = t;
-	pt[1] = a * t * t + b * t + c;
-	//cout << "created point " << pt[0] << ", " << pt[1] << endl;
-	return TRUE;
-}
-
-
-static int do_create_points_smooth_curve_compute_point_function(double t,
-		double *output, void *extra_data, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	interface_projective *I = (interface_projective *) extra_data;
-	int ret = FALSE;
-	double epsilon = 0.0001;
-	double *input; // to store the input variable and all local variables during evaluate
-
-
-	if (f_v) {
-		cout << "do_create_points_smooth_curve_compute_point_function t = " << t << endl;
-	}
-	if (f_v) {
-		cout << "do_create_points_smooth_curve_compute_point_function before evaluate" << endl;
-	}
-	input = new double[I->smooth_curve_Polish->Variables.size()];
-	input[0] = t;
-	I->smooth_curve_Polish->evaluate(
-			input /* variable_values */,
-			output,
-			verbose_level);
-	delete [] input;
-
-	if (I->smooth_curve_Polish->Entry.size() == 4) {
-		if (ABS(output[3]) < epsilon) {
-			ret = FALSE;
-		}
-		else {
-			double av = 1. / output[3];
-			output[0] *= av;
-			output[1] *= av;
-			output[2] *= av;
-			output[3] *= av;
-			ret = TRUE;
-		}
-	}
-	else {
-		ret = TRUE;
-	}
-	if (f_v) {
-		cout << "do_create_points_smooth_curve_compute_point_function after evaluate t = " << t << endl;
-	}
-	return ret;
-}
 
 struct table_surfaces_field_order {
 	int q;

@@ -708,6 +708,26 @@ public:
 	void do_rank_point_in_PG(int q, int n,
 			std::string &coeff_text,
 			int verbose_level);
+	void do_intersection_of_two_lines(int q,
+			std::string &line_1_basis,
+			std::string &line_2_basis,
+			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int verbose_level);
+	void do_transversal(int q,
+			std::string &line_1_basis,
+			std::string &line_2_basis,
+			std::string &point,
+			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int verbose_level);
+	void do_move_two_lines_in_hyperplane_stabilizer(
+			int q,
+			long int line1_from, long int line2_from,
+			long int line1_to, long int line2_to, int verbose_level);
+	void do_move_two_lines_in_hyperplane_stabilizer_text(
+			int q,
+			std::string line1_from_text, std::string line2_from_text,
+			std::string line1_to_text, std::string line2_to_text,
+			int verbose_level);
 };
 
 

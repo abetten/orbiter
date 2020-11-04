@@ -74,13 +74,6 @@ public:
 		int f_poly, std::string &poly,
 		int verbose_level);
 
-	// mindist.cpp:
-	int mindist(int n, int k, int q, int *G,
-		int f_verbose_level, int idx_zero, int idx_one,
-		int *add_table, int *mult_table);
-	//Main routine for the code minimum distance computation.
-	//The tables are only needed if $q = p^f$ with $f > 1$.
-	//In the GF(p) case, just pass a NULL pointer.
 
 	void make_mac_williams_equations(longinteger_object *&M,
 			int n, int k, int q, int verbose_level);
@@ -99,6 +92,14 @@ public:
 	void compute_generator_matrix(unipoly_object a, int *&genma,
 		int n, int &k, int verbose_level);
 
+
+	// mindist.cpp:
+	int mindist(int n, int k, int q, int *G,
+		int f_verbose_level, int idx_zero, int idx_one,
+		int *add_table, int *mult_table);
+	//Main routine for the code minimum distance computation.
+	//The tables are only needed if $q = p^f$ with $f > 1$.
+	//In the GF(p) case, just pass a NULL pointer.
 
 };
 
