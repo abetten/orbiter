@@ -768,103 +768,6 @@ const char *algebra_global::plus_minus_letter(int epsilon)
 	exit(1);
 }
 
-void algebra_global::make_Hamming_graph_and_write_file(int n, int q,
-		int f_projective, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	int width, height;
-	int *v;
-	int *w;
-	int *Table;
-	//int *Adj = NULL;
-	geometry_global Gg;
-	finite_field *F = NULL;
-
-	if (f_v) {
-		cout << "algebra_global::make_Hamming_graph_and_write_file" << endl;
-	}
-
-	v = NEW_int(n);
-	w = NEW_int(n);
-
-	if (f_projective) {
-		width = height = Gg.nb_PG_elements(n - 1, q);
-		F = NEW_OBJECT(finite_field);
-		F->init(q);
-	}
-	else {
-		width = height = Gg.nb_AG_elements(n, q);
-	}
-
-#if 0
-	int N;
-	N = width;
-	if (f_graph) {
-		Adj = NEW_int(N * N);
-		int_vec_zero(Adj, N * N);
-	}
-#endif
-
-	cout << "width=" << width << endl;
-
-	int i, j, d, h;
-
-	Table = NEW_int(height * width);
-	for (i = 0; i < height; i++) {
-
-		if (f_projective) {
-			F->PG_element_unrank_modified(v, 1 /*stride*/, n, i);
-		}
-		else {
-			Gg.AG_element_unrank(q, v, 1, n, i);
-		}
-
-		for (j = 0; j < width; j++) {
-
-			if (f_projective) {
-				F->PG_element_unrank_modified(w, 1 /*stride*/, n, j);
-			}
-			else {
-				Gg.AG_element_unrank(q, w, 1, n, j);
-			}
-
-			d = 0;
-			for (h = 0; h < n; h++) {
-				if (v[h] != w[h]) {
-					d++;
-				}
-			}
-
-#if 0
-			if (f_graph && d == 1) {
-				Adj[i * N + j] = 1;
-			}
-#endif
-
-			Table[i * width + j] = d;
-
-		}
-	}
-
-	string fname;
-	char str[1000];
-	file_io Fio;
-
-	sprintf(str, "Hamming_n%d_q%d.csv", n, q);
-	fname.assign(str);
-
-	Fio.int_matrix_write_csv(fname, Table, height, width);
-
-	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-	}
-
-	if (f_v) {
-		cout << "algebra_global::make_Hamming_graph_and_write_file" << endl;
-	}
-
-}
 
 
 int algebra_global::PHG_element_normalize(finite_ring &R,
@@ -2296,268 +2199,6 @@ void algebra_global::Berlekamp_matrix(int q,
 
 
 
-void algebra_global::NTRU_encrypt(int N, int p, int q,
-		std::string &H_coeffs, std::string &R_coeffs, std::string &Msg_coeffs,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "algebra_global::NTRU_encrypt" << endl;
-	}
-
-
-	int *data_H;
-	int *data_R;
-	int *data_Msg;
-	int sz_H, sz_R, sz_Msg;
-
-	int_vec_scan(H_coeffs, data_H, sz_H);
-	int_vec_scan(R_coeffs, data_R, sz_R);
-	int_vec_scan(Msg_coeffs, data_Msg, sz_Msg);
-
-	finite_field *F;
-	number_theory_domain NT;
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q);
-
-
-
-	unipoly_domain FX(F);
-	unipoly_object H, R, Msg, M, C, D;
-
-
-	int dh = sz_H - 1;
-	int dr = sz_R - 1;
-	int dm = sz_Msg - 1;
-	int i;
-
-	FX.create_object_of_degree(H, dh);
-
-	for (i = 0; i <= dh; i++) {
-		if (data_H[i] < 0 || data_H[i] >= q) {
-			data_H[i] = NT.mod(data_H[i], q);
-		}
-		FX.s_i(H, i) = data_H[i];
-	}
-
-	FX.create_object_of_degree(R, dr);
-
-	for (i = 0; i <= dr; i++) {
-		if (data_R[i] < 0 || data_R[i] >= q) {
-			data_R[i] = NT.mod(data_R[i], q);
-		}
-		FX.s_i(R, i) = data_R[i];
-	}
-
-	FX.create_object_of_degree(Msg, dm);
-
-	for (i = 0; i <= dm; i++) {
-		if (data_Msg[i] < 0 || data_Msg[i] >= q) {
-			data_Msg[i] = NT.mod(data_Msg[i], q);
-		}
-		FX.s_i(Msg, i) = data_Msg[i];
-	}
-
-	FX.create_object_of_degree(M, N);
-	for (i = 0; i <= N; i++) {
-		FX.s_i(M, i) = 0;
-	}
-	FX.s_i(M, 0) = F->negate(1);
-	FX.s_i(M, N) = 1;
-
-	cout << "H(X)=";
-	FX.print_object(H, cout);
-	cout << endl;
-
-
-	cout << "R(X)=";
-	FX.print_object(R, cout);
-	cout << endl;
-
-	cout << "Msg(X)=";
-	FX.print_object(Msg, cout);
-	cout << endl;
-
-	FX.create_object_of_degree(C, dh);
-
-	FX.create_object_of_degree(D, dh);
-
-
-
-	if (f_v) {
-		cout << "algebra_global::NTRU_encrypt before FX.mult_mod" << endl;
-	}
-
-	{
-		FX.mult_mod(R, H, C, M, verbose_level);
-		int d;
-
-		d = FX.degree(C);
-
-		for (i = 0; i <= d; i++) {
-			FX.s_i(C, i) = F->mult(p, FX.s_i(C, i));
-		}
-
-		FX.add(C, Msg, D);
-
-	}
-
-	if (f_v) {
-		cout << "algebra_global::NTRU_encrypt after FX.mult_mod" << endl;
-	}
-
-	cout << "D(X)=";
-	FX.print_object(D, cout);
-	cout << endl;
-
-	cout << "deg D(X) = " << FX.degree(D) << endl;
-
-
-
-
-
-	FREE_OBJECT(F);
-
-	if (f_v) {
-		cout << "algebra_global::NTRU_encrypt done" << endl;
-	}
-}
-
-
-void algebra_global::polynomial_center_lift(std::string &A_coeffs, int q,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "algebra_global::polynomial_center_lift" << endl;
-	}
-
-
-	int *data_A;
-	int sz_A;
-
-	int_vec_scan(A_coeffs, data_A, sz_A);
-
-	finite_field *F;
-	number_theory_domain NT;
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q);
-
-
-
-	unipoly_domain FX(F);
-	unipoly_object A;
-
-
-	int da = sz_A - 1;
-	int i;
-
-	FX.create_object_of_degree(A, da);
-
-	for (i = 0; i <= da; i++) {
-		if (data_A[i] < 0 || data_A[i] >= q) {
-			data_A[i] = NT.mod(data_A[i], q);
-		}
-		FX.s_i(A, i) = data_A[i];
-	}
-
-
-	cout << "A(X)=";
-	FX.print_object(A, cout);
-	cout << endl;
-
-
-
-
-	if (f_v) {
-		cout << "algebra_global::polynomial_center_lift before FX.mult_mod" << endl;
-	}
-
-	{
-		FX.center_lift_coordinates(A, q);
-
-	}
-
-	if (f_v) {
-		cout << "algebra_global::polynomial_center_lift after FX.mult_mod" << endl;
-	}
-
-	cout << "A(X)=";
-	FX.print_object(A, cout);
-	cout << endl;
-
-
-
-
-
-
-	FREE_OBJECT(F);
-
-	if (f_v) {
-		cout << "algebra_global::polynomial_center_lift done" << endl;
-	}
-}
-
-
-void algebra_global::polynomial_reduce_mod_p(std::string &A_coeffs, int p,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "algebra_global::polynomial_reduce_mod_p" << endl;
-	}
-
-
-	int *data_A;
-	int sz_A;
-
-	int_vec_scan(A_coeffs, data_A, sz_A);
-
-	finite_field *F;
-	number_theory_domain NT;
-
-	F = NEW_OBJECT(finite_field);
-	F->init(p);
-
-
-
-	unipoly_domain FX(F);
-	unipoly_object A;
-
-
-	int da = sz_A - 1;
-	int i;
-
-	FX.create_object_of_degree(A, da);
-
-	for (i = 0; i <= da; i++) {
-		data_A[i] = NT.mod(data_A[i], p);
-		FX.s_i(A, i) = data_A[i];
-	}
-
-
-	cout << "A(X)=";
-	FX.print_object(A, cout);
-	cout << endl;
-
-
-
-
-
-
-
-	FREE_OBJECT(F);
-
-	if (f_v) {
-		cout << "algebra_global::polynomial_reduce_mod_p done" << endl;
-	}
-}
-
 void algebra_global::compute_normal_basis(finite_field *F, int d, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2636,1008 +2277,6 @@ void algebra_global::compute_normal_basis(finite_field *F, int d, int verbose_le
 	}
 }
 
-
-void algebra_global::do_EC_Koblitz_encoding(int q,
-		int EC_b, int EC_c, int EC_s,
-		const char *pt_text, const char *EC_message,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	finite_field *F;
-	int x0, x, y;
-
-	if (f_v) {
-		cout << "do_EC_Koblitz_encoding" << endl;
-	}
-	if (f_v) {
-		cout << "do_EC_Koblitz_encoding b = " << EC_b << endl;
-		cout << "do_EC_Koblitz_encoding c = " << EC_c << endl;
-		cout << "do_EC_Koblitz_encoding s = " << EC_s << endl;
-	}
-
-	vector<vector<int>> Encoding;
-	vector<int> J;
-
-	int u, i, j, r;
-
-	u = q / 27;
-	if (f_v) {
-		cout << "do_EC_Koblitz_encoding u = " << u << endl;
-	}
-
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q, 0 /*verbose_level*/);
-	for (i = 1; i <= 26; i++) {
-		x0 = i * u;
-		for (j = 0; j < u; j++) {
-			x = x0 + j;
-			r = EC_evaluate_RHS(F, EC_b, EC_c, x);
-			if (F->square_root(r, y)) {
-				break;
-			}
-		}
-		if (j < u) {
-			{
-				vector<int> pt;
-
-				J.push_back(j);
-				pt.push_back(x);
-				pt.push_back(y);
-				pt.push_back(1);
-				Encoding.push_back(pt);
-			}
-		}
-		else {
-			cout << "failure to encode letter " << i << endl;
-			exit(1);
-		}
-	}
-	for (i = 0; i < 26; i++) {
-
-
-		x = (i + 1) * u + J[i];
-
-		r = EC_evaluate_RHS(F, EC_b, EC_c, x);
-
-		F->square_root(r, y);
-
-		cout << (char)('A' + i) << " & " << i + 1 << " & " << J[i] << " & " << x
-				<< " & " << r
-				<< " & " << y
-				<< " & $(" << Encoding[i][0] << "," << Encoding[i][1] << ")$ "
-				<< "\\\\" << endl;
-
-	}
-
-	cout << "without j:" << endl;
-	for (i = 0; i < 26; i++) {
-		cout << (char)('A' + i) << " & $(" << Encoding[i][0] << "," << Encoding[i][1] << ")$ \\\\" << endl;
-
-	}
-
-
-
-	vector<vector<int>> Pts;
-	int order;
-	int *v;
-	int len;
-	int Gx, Gy, Gz;
-	int Mx, My, Mz;
-	int Rx, Ry, Rz;
-	int Ax, Ay, Az;
-	int Cx, Cy, Cz;
-	int Tx, Ty, Tz;
-	int Dx, Dy, Dz;
-	int msRx, msRy, msRz;
-	int m, k, plain;
-	os_interface Os;
-
-	int_vec_scan(pt_text, v, len);
-	if (len != 2) {
-		cout << "point should have just two coordinates" << endl;
-		exit(1);
-	}
-	Gx = v[0];
-	Gy = v[1];
-	Gz = 1;
-	FREE_int(v);
-	cout << "G = (" << Gx << "," << Gy << "," << Gz << ")" << endl;
-
-
-	F->elliptic_curve_all_point_multiples(
-			EC_b, EC_c, order,
-			Gx, Gy, Gz,
-			Pts,
-			verbose_level);
-
-
-	int minus_s;
-
-	minus_s = order - EC_s;
-
-	cout << "order = " << order << endl;
-	cout << "minus_s = " << minus_s << endl;
-
-	Ax = Pts[EC_s - 1][0];
-	Ay = Pts[EC_s - 1][1];
-	Az = 1;
-	cout << "A = (" << Ax << "," << Ay << "," << Az << ")" << endl;
-
-	len = strlen(EC_message);
-
-	F->nb_calls_to_elliptic_curve_addition() = 0;
-
-	vector<vector<int>> Ciphertext;
-
-	for (i = 0; i < len; i++) {
-		if (EC_message[i] < 'A' || EC_message[i] > 'Z') {
-			continue;
-		}
-		m = EC_message[i] - 'A' + 1;
-		k = 1 + Os.random_integer(order - 1);
-
-		Mx = Encoding[m - 1][0];
-		My = Encoding[m - 1][1];
-		Mz = 1;
-
-		// R := k * G
-		//cout << "$R=" << k << "*G$\\\\" << endl;
-
-		F->elliptic_curve_point_multiple /*_with_log*/(
-					EC_b, EC_c, k,
-					Gx, Gy, Gz,
-					Rx, Ry, Rz,
-					0 /*verbose_level*/);
-		//cout << "$R=" << k << "*G=(" << Rx << "," << Ry << "," << Rz << ")$\\\\" << endl;
-
-		// C := k * A
-		//cout << "$C=" << k << "*A$\\\\" << endl;
-		F->elliptic_curve_point_multiple /*_with_log*/(
-					EC_b, EC_c, k,
-					Ax, Ay, Az,
-					Cx, Cy, Cz,
-					0 /*verbose_level*/);
-		//cout << "$C=" << k << "*A=(" << Cx << "," << Cy << "," << Cz << ")$\\\\" << endl;
-
-		// T := C + M
-		F->elliptic_curve_addition(EC_b, EC_c,
-				Cx, Cy, Cz,
-				Mx, My, Mz,
-				Tx, Ty, Tz,
-				0 /*verbose_level*/);
-		//cout << "$T=C+M=(" << Tx << "," << Ty << "," << Tz << ")$\\\\" << endl;
-		{
-		vector<int> cipher;
-
-		cipher.push_back(Rx);
-		cipher.push_back(Ry);
-		cipher.push_back(Tx);
-		cipher.push_back(Ty);
-		Ciphertext.push_back(cipher);
-		}
-
-		cout << setw(4) << i << " & " << EC_message[i] << " & " << setw(4) << m << " & " << setw(4) << k
-				<< "& (" << setw(4) << Mx << "," << setw(4) << My << "," << setw(4) << Mz << ") "
-				<< "& (" << setw(4) << Rx << "," << setw(4) << Ry << "," << setw(4) << Rz << ") "
-				<< "& (" << setw(4) << Cx << "," << setw(4) << Cy << "," << setw(4) << Cz << ") "
-				<< "& (" << setw(4) << Tx << "," << setw(4) << Ty << "," << setw(4) << Tz << ") "
-				<< "\\\\"
-				<< endl;
-
-	}
-
-	cout << "Ciphertext:\\\\" << endl;
-	for (i = 0; i < (int) Ciphertext.size(); i++) {
-		cout << Ciphertext[i][0] << ",";
-		cout << Ciphertext[i][1] << ",";
-		cout << Ciphertext[i][2] << ",";
-		cout << Ciphertext[i][3] << "\\\\" << endl;
-	}
-
-	for (i = 0; i < (int) Ciphertext.size(); i++) {
-		Rx = Ciphertext[i][0];
-		Ry = Ciphertext[i][1];
-		Tx = Ciphertext[i][2];
-		Ty = Ciphertext[i][3];
-
-		// msR := -s * R
-		F->elliptic_curve_point_multiple(
-					EC_b, EC_c, minus_s,
-					Rx, Ry, Rz,
-					msRx, msRy, msRz,
-					0 /*verbose_level*/);
-
-		// D := msR + T
-		F->elliptic_curve_addition(EC_b, EC_c,
-				msRx, msRy, msRz,
-				Tx, Ty, Tz,
-				Dx, Dy, Dz,
-				0 /*verbose_level*/);
-
-		plain = Dx / u;
-
-		cout << setw(4) << i << " & (" << Rx << "," << Ry << "," << Tx << "," << Ty << ") "
-				<< "& (" << setw(4) << msRx << "," << setw(4) << msRy << "," << setw(4) << msRz << ") "
-				<< "& (" << setw(4) << Dx << "," << setw(4) << Dy << "," << setw(4) << Dz << ") "
-				<< " & " << plain << " & " << (char)('A' - 1 + plain)
-				<< "\\\\"
-				<< endl;
-
-	}
-
-	cout << "nb_calls_to_elliptic_curve_addition="
-			<< F->nb_calls_to_elliptic_curve_addition() << endl;
-
-
-	if (f_v) {
-		cout << "do_EC_Koblitz_encoding done" << endl;
-	}
-}
-
-void algebra_global::do_EC_points(int q,
-		int EC_b, int EC_c, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	finite_field *F;
-	int x, y, r, y1, y2;
-
-	if (f_v) {
-		cout << "do_EC_points" << endl;
-	}
-	vector<vector<int>> Pts;
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level);
-
-	for (x = 0; x < q; x++) {
-		r = EC_evaluate_RHS(F, EC_b, EC_c, x);
-		if (r == 0) {
-
-			{
-				vector<int> pt;
-
-				pt.push_back(x);
-				pt.push_back(0);
-				pt.push_back(1);
-				Pts.push_back(pt);
-			}
-		}
-		else {
-			if (F->square_root(r, y)) {
-				y1 = y;
-				y2 = F->negate(y);
-				if (y2 == y1) {
-					{
-						vector<int> pt;
-
-						pt.push_back(x);
-						pt.push_back(y1);
-						pt.push_back(1);
-						Pts.push_back(pt);
-					}
-				}
-				else {
-					if (y2 < y1) {
-						y1 = y2;
-						y2 = y;
-					}
-					{
-						vector<int> pt;
-
-						pt.push_back(x);
-						pt.push_back(y1);
-						pt.push_back(1);
-						Pts.push_back(pt);
-					}
-					{
-						vector<int> pt;
-
-						pt.push_back(x);
-						pt.push_back(y2);
-						pt.push_back(1);
-						Pts.push_back(pt);
-					}
-				}
-			}
-			else {
-				// no point for this x coordinate
-			}
-
-#if 0
-			if (p != 2) {
-				l = Legendre(r, q, 0);
-
-				if (l == 1) {
-					y = sqrt_mod_involved(r, q);
-						// DISCRETA/global.cpp
-
-					if (F->mult(y, y) != r) {
-						cout << "There is a problem "
-								"with the square root" << endl;
-						exit(1);
-					}
-					y1 = y;
-					y2 = F->negate(y);
-					if (y2 < y1) {
-						y1 = y2;
-						y2 = y;
-					}
-					add_point_to_table(x, y1, 1);
-					if (nb == bound) {
-						cout << "The number of points "
-								"exceeds the bound" << endl;
-						exit(1);
-					}
-					add_point_to_table(x, y2, 1);
-					if (nb == bound) {
-						cout << "The number of points "
-								"exceeds the bound" << endl;
-						exit(1);
-					}
-					//cout << nb++ << " : (" << x << ","
-					// << y << ",1)" << endl;
-					//cout << nb++ << " : (" << x << ","
-					// << F.negate(y) << ",1)" << endl;
-				}
-			}
-			else {
-				y = F->frobenius_power(r, e - 1);
-				add_point_to_table(x, y, 1);
-				if (nb == bound) {
-					cout << "The number of points exceeds "
-							"the bound" << endl;
-					exit(1);
-				}
-				//cout << nb++ << " : (" << x << ","
-				// << y << ",1)" << endl;
-			}
-#endif
-
-		}
-	}
-	{
-		vector<int> pt;
-
-		pt.push_back(0);
-		pt.push_back(1);
-		pt.push_back(0);
-		Pts.push_back(pt);
-	}
-	int i;
-	cout << "We found " << Pts.size() << " points:" << endl;
-
-	for (i = 0; i < (int) Pts.size(); i++) {
-		if (i == (int) Pts.size()) {
-
-			cout << i << " : {\\cal O} : 1\\\\" << endl;
-
-		}
-		else {
-			{
-			vector<vector<int>> Multiples;
-			int order;
-
-
-			F->elliptic_curve_all_point_multiples(
-					EC_b, EC_c, order,
-					Pts[i][0], Pts[i][1], 1,
-					Multiples,
-					0 /*verbose_level*/);
-
-			//cout << "we found that the point has order " << order << endl;
-
-			cout << i << " : $(" << Pts[i][0] << "," << Pts[i][1] << ")$ : " << order << "\\\\" << endl;
-			}
-		}
-	}
-
-
-	if (f_v) {
-		cout << "do_EC_points done" << endl;
-	}
-}
-
-int algebra_global::EC_evaluate_RHS(finite_field *F,
-		int EC_b, int EC_c, int x)
-// evaluates x^3 + bx + c
-{
-	int x2, x3, t;
-
-	x2 = F->mult(x, x);
-	x3 = F->mult(x2, x);
-	t = F->add(x3, F->mult(EC_b, x));
-	t = F->add(t, EC_c);
-	return t;
-}
-
-
-void algebra_global::do_EC_add(int q,
-		int EC_b, int EC_c,
-		const char *pt1_text, const char *pt2_text,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	finite_field *F;
-	int x1, y1, z1;
-	int x2, y2, z2;
-	int x3, y3, z3;
-	int *v;
-	int len;
-	//sscanf(p1, "(%d,%d,%d)", &x1, &y1, &z1);
-
-	if (f_v) {
-		cout << "do_EC_add" << endl;
-	}
-	vector<vector<int>> Pts;
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level);
-
-	int_vec_scan(pt1_text, v, len);
-	if (len != 2) {
-		cout << "point should have just two ccordinates" << endl;
-		exit(1);
-	}
-	x1 = v[0];
-	y1 = v[1];
-	z1 = 1;
-	FREE_int(v);
-
-	int_vec_scan(pt2_text, v, len);
-	if (len != 2) {
-		cout << "point should have just two ccordinates" << endl;
-		exit(1);
-	}
-	x2 = v[0];
-	y2 = v[1];
-	z2 = 1;
-	FREE_int(v);
-
-
-	F->elliptic_curve_addition(EC_b, EC_c,
-			x1, y1, z1,
-			x2, y2, z2,
-			x3, y3, z3,
-			verbose_level);
-	cout << "(" << x1 << "," << y1 << "," << z1 << ")";
-	cout << " + ";
-	cout << "(" << x2 << "," << y2 << "," << z2 << ")";
-	cout << " = ";
-	cout << "(" << x3 << "," << y3 << "," << z3 << ")";
-	cout << endl;
-
-
-	FREE_OBJECT(F);
-
-	if (f_v) {
-		cout << "do_EC_add done" << endl;
-	}
-}
-
-void algebra_global::do_EC_cyclic_subgroup(int q,
-		int EC_b, int EC_c, const char *pt_text, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	finite_field *F;
-	int x1, y1, z1;
-	int *v;
-	int len, i;
-	//sscanf(p1, "(%d,%d,%d)", &x1, &y1, &z1);
-
-	if (f_v) {
-		cout << "do_EC_cyclic_subgroup" << endl;
-	}
-	vector<vector<int>> Pts;
-	int order;
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level);
-
-	int_vec_scan(pt_text, v, len);
-	if (len != 2) {
-		cout << "point should have just two ccordinates" << endl;
-		exit(1);
-	}
-	x1 = v[0];
-	y1 = v[1];
-	z1 = 1;
-	FREE_int(v);
-
-
-	F->elliptic_curve_all_point_multiples(
-			EC_b, EC_c, order,
-			x1, y1, z1,
-			Pts,
-			verbose_level);
-
-	cout << "we found that the point has order " << order << endl;
-	cout << "The multiples are:" << endl;
-	cout << "i : (" << x1 << "," << y1 << ")" << endl;
-	for (i = 0; i < (int) Pts.size(); i++) {
-
-		vector<int> pts = Pts[i];
-
-		if (i < (int) Pts.size() - 1) {
-			cout << setw(3) << i + 1 << " : ";
-			cout << "$(" << pts[0] << "," << pts[1] << ")$";
-			cout << "\\\\" << endl;
-		}
-		else {
-			cout << setw(3) << i + 1 << " : ";
-			cout << "${\\cal O}$";
-			cout << "\\\\" << endl;
-
-		}
-	}
-
-	FREE_OBJECT(F);
-
-	if (f_v) {
-		cout << "do_EC_cyclic_subgroup done" << endl;
-	}
-}
-
-void algebra_global::do_EC_multiple_of(int q,
-		int EC_b, int EC_c, const char *pt_text, int n, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	finite_field *F;
-	int x1, y1, z1;
-	int x3, y3, z3;
-	int *v;
-	int len;
-
-	if (f_v) {
-		cout << "do_EC_multiple_of" << endl;
-	}
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level);
-
-	int_vec_scan(pt_text, v, len);
-	if (len != 2) {
-		cout << "point should have just two ccordinates" << endl;
-		exit(1);
-	}
-	x1 = v[0];
-	y1 = v[1];
-	z1 = 1;
-	FREE_int(v);
-
-
-	F->elliptic_curve_point_multiple(
-			EC_b, EC_c, n,
-			x1, y1, z1,
-			x3, y3, z3,
-			verbose_level);
-
-	cout << "The " << n << "-fold multiple of (" << x1 << "," << y1 << ") is ";
-	if (z3 == 0) {
-
-	}
-	else {
-		if (z3 != 1) {
-			cout << "z1 != 1" << endl;
-			exit(1);
-		}
-		cout << "(" << x3 << "," << y3 << ")" << endl;
-	}
-
-	FREE_OBJECT(F);
-
-	if (f_v) {
-		cout << "do_EC_multiple_of done" << endl;
-	}
-}
-
-void algebra_global::do_EC_discrete_log(int q,
-		int EC_b, int EC_c,
-		const char *base_pt_text, const char *pt_text, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	finite_field *F;
-	int x1, y1, z1;
-	int x3, y3, z3;
-	int *v;
-	int len;
-	int n;
-
-	if (f_v) {
-		cout << "do_EC_multiple_of" << endl;
-	}
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level);
-
-	int_vec_scan(base_pt_text, v, len);
-	if (len != 2) {
-		cout << "point should have just two ccordinates" << endl;
-		exit(1);
-	}
-	x1 = v[0];
-	y1 = v[1];
-	z1 = 1;
-	FREE_int(v);
-
-
-	int_vec_scan(pt_text, v, len);
-	if (len == 2) {
-		x3 = v[0];
-		y3 = v[1];
-		z3 = 1;
-	}
-	else if (len == 3) {
-		x3 = v[0];
-		y3 = v[1];
-		z3 = v[2];
-	}
-	else {
-		cout << "the point should have either two or three coordinates" << endl;
-		exit(1);
-	}
-	FREE_int(v);
-
-
-	n = F->elliptic_curve_discrete_log(
-			EC_b, EC_c,
-			x1, y1, z1,
-			x3, y3, z3,
-			verbose_level);
-
-
-	cout << "The discrete log of (" << x3 << "," << y3 << "," << z3 << ") "
-			"w.r.t. (" << x1 << "," << y1 << "," << z1 << ") "
-			"is " << n << endl;
-
-	FREE_OBJECT(F);
-
-	if (f_v) {
-		cout << "do_EC_multiple_of done" << endl;
-	}
-}
-
-void algebra_global::do_EC_baby_step_giant_step(int EC_q, int EC_b, int EC_c,
-		const char *EC_bsgs_G, int EC_bsgs_N, const char *EC_bsgs_cipher_text,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	finite_field *F;
-	int Gx, Gy, Gz;
-	int nGx, nGy, nGz;
-	int Cx, Cy, Cz;
-	int Mx, My, Mz;
-	int Ax, Ay, Az;
-	int *v;
-	int len;
-	int n;
-
-	if (f_v) {
-		cout << "algebra_global::do_EC_baby_step_giant_step" << endl;
-	}
-
-	F = NEW_OBJECT(finite_field);
-	F->init(EC_q, 0 /*verbose_level*/);
-
-
-	int_vec_scan(EC_bsgs_G, v, len);
-	if (len != 2) {
-		cout << "point should have just two coordinates" << endl;
-		exit(1);
-	}
-	Gx = v[0];
-	Gy = v[1];
-	Gz = 1;
-	FREE_int(v);
-
-	n = (int) sqrt((double) EC_bsgs_N) + 1;
-	if (f_v) {
-		cout << "algebra_global::do_EC_baby_step_giant_step N = " << EC_bsgs_N << endl;
-		cout << "algebra_global::do_EC_baby_step_giant_step n = " << n << endl;
-	}
-
-	int_vec_scan(EC_bsgs_cipher_text, v, len);
-
-	int cipher_text_length = len >> 1;
-	int h, i;
-
-	if (f_v) {
-		cout << "algebra_global::do_EC_baby_step_giant_step "
-				"cipher_text_length = " << cipher_text_length << endl;
-	}
-
-	F->elliptic_curve_point_multiple(
-			EC_b, EC_c, n,
-			Gx, Gy, Gz,
-			nGx, nGy, nGz,
-			0 /*verbose_level*/);
-
-	cout << "$" << n << " * G = (" << nGx << "," << nGy << ")$\\\\" << endl;
-
-	cout << " & ";
-	for (h = 0; h < cipher_text_length; h++) {
-		Cx = v[2 * h + 0];
-		Cy = v[2 * h + 1];
-		Cz = 1;
-		cout << " & (" << Cx << "," << Cy << ")";
-	}
-	cout << endl;
-
-	for (i = 1; i <= n + 1; i++) {
-
-		F->elliptic_curve_point_multiple(
-				EC_b, EC_c, i,
-				Gx, Gy, Gz,
-				Mx, My, Mz,
-				0 /*verbose_level*/);
-
-		cout << i << " & (" << Mx << "," << My << ")";
-
-		for (h = 0; h < cipher_text_length; h++) {
-			Cx = v[2 * h + 0];
-			Cy = v[2 * h + 1];
-			Cz = 1;
-
-			F->elliptic_curve_point_multiple(
-					EC_b, EC_c, i,
-					nGx, nGy, nGz,
-					Mx, My, Mz,
-					0 /*verbose_level*/);
-
-			My = F->negate(My);
-
-
-
-			F->elliptic_curve_addition(EC_b, EC_c,
-					Cx, Cy, Cz,
-					Mx, My, Mz,
-					Ax, Ay, Az,
-					0 /*verbose_level*/);
-
-			cout << " & (" << Ax << "," << Ay << ")";
-
-		}
-		cout << "\\\\" << endl;
-	}
-
-
-
-	FREE_int(v);
-
-	if (f_v) {
-		cout << "algebra_global::do_EC_baby_step_giant_step done" << endl;
-	}
-}
-
-void algebra_global::do_EC_baby_step_giant_step_decode(
-		int EC_q, int EC_b, int EC_c,
-		const char *EC_bsgs_A, int EC_bsgs_N,
-		const char *EC_bsgs_cipher_text, const char *EC_bsgs_keys,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	finite_field *F;
-	int Ax, Ay, Az;
-	int Tx, Ty, Tz;
-	int Cx, Cy, Cz;
-	int Mx, My, Mz;
-	int *v;
-	int len;
-	int n;
-	int *keys;
-	int nb_keys;
-	int u, plain;
-
-	if (f_v) {
-		cout << "algebra_global::do_EC_baby_step_giant_step_decode" << endl;
-	}
-
-	F = NEW_OBJECT(finite_field);
-	F->init(EC_q, 0 /*verbose_level*/);
-
-	u = EC_q / 27;
-	if (f_v) {
-		cout << "algebra_global::do_EC_baby_step_giant_step_decode u = " << u << endl;
-	}
-
-
-	int_vec_scan(EC_bsgs_A, v, len);
-	if (len != 2) {
-		cout << "point should have just two coordinates" << endl;
-		exit(1);
-	}
-	Ax = v[0];
-	Ay = v[1];
-	Az = 1;
-	FREE_int(v);
-
-	int_vec_scan(EC_bsgs_keys, keys, nb_keys);
-
-
-	n = (int) sqrt((double) EC_bsgs_N) + 1;
-	if (f_v) {
-		cout << "algebra_global::do_EC_baby_step_giant_step_decode N = " << EC_bsgs_N << endl;
-		cout << "algebra_global::do_EC_baby_step_giant_step_decode n = " << n << endl;
-	}
-
-	int_vec_scan(EC_bsgs_cipher_text, v, len);
-
-	int cipher_text_length = len >> 1;
-	int h;
-
-	if (f_v) {
-		cout << "algebra_global::do_EC_baby_step_giant_step_decode "
-				"cipher_text_length = " << cipher_text_length << endl;
-		cout << "algebra_global::do_EC_baby_step_giant_step_decode "
-				"nb_keys = " << nb_keys << endl;
-	}
-	if (nb_keys != cipher_text_length) {
-		cout << "nb_keys != cipher_text_length" << endl;
-		exit(1);
-	}
-
-
-	for (h = 0; h < cipher_text_length; h++) {
-		Tx = v[2 * h + 0];
-		Ty = v[2 * h + 1];
-		Tz = 1;
-		cout << h << " & (" << Tx << "," << Ty << ")\\\\" << endl;;
-	}
-	cout << endl;
-
-
-	for (h = 0; h < cipher_text_length; h++) {
-
-
-
-		Tx = v[2 * h + 0];
-		Ty = v[2 * h + 1];
-		Tz = 1;
-
-
-		F->elliptic_curve_point_multiple(
-				EC_b, EC_c, keys[h],
-				Ax, Ay, Az,
-				Cx, Cy, Cz,
-				0 /*verbose_level*/);
-
-		Cy = F->negate(Cy);
-
-
-		cout << h << " & " << keys[h]
-			<< " & (" << Tx << "," << Ty << ")"
-			<< " & (" << Cx << "," << Cy << ")";
-
-
-		F->elliptic_curve_addition(EC_b, EC_c,
-				Tx, Ty, Tz,
-				Cx, Cy, Cz,
-				Mx, My, Mz,
-				0 /*verbose_level*/);
-
-		cout << " & (" << Mx << "," << My << ")";
-
-		plain = Mx / u;
-		cout << " & " << plain << " & " << (char)('A' - 1 + plain) << "\\\\" << endl;
-
-	}
-
-
-	FREE_int(v);
-	FREE_int(keys);
-
-	if (f_v) {
-		cout << "algebra_global::do_EC_baby_step_giant_step_decode done" << endl;
-	}
-}
-
-void algebra_global::do_RSA_encrypt_text(long int RSA_d, long int RSA_m,
-		int RSA_block_size, const char * RSA_encrypt_text, int verbose_level)
-{
-	int i, j, l, nb_blocks;
-	long int a;
-	char c;
-	long int *Data;
-
-	l = strlen(RSA_encrypt_text);
-	nb_blocks = (l + RSA_block_size - 1) /  RSA_block_size;
-	Data = NEW_lint(nb_blocks);
-	for (i = 0; i < nb_blocks; i++) {
-		a = 0;
-		for (j = 0; j < RSA_block_size; j++) {
-			c = RSA_encrypt_text[i * RSA_block_size + j];
-			if (c >= 'a' && c <= 'z') {
-				a *= 100;
-				a += (int) (c - 'a') + 1;
-			}
-		Data[i] = a;
-		}
-	}
-
-	longinteger_domain D;
-	longinteger_object A, M;
-
-	M.create(RSA_m, __FILE__, __LINE__);
-
-	for (i = 0; i < nb_blocks; i++) {
-		A.create(Data[i], __FILE__, __LINE__);
-		D.power_int_mod(
-				A, RSA_d, M);
-		cout << A;
-		if (i < nb_blocks - 1) {
-			cout << ",";
-		}
-	}
-	cout << endl;
-}
-
-void algebra_global::do_RSA(long int RSA_d, long int RSA_m, const char *RSA_text, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	long int *data;
-	int data_sz;
-	int i;
-
-	if (f_v) {
-		cout << "do_RSA RSA_d=" << RSA_d << " RSA_m=" << RSA_m << endl;
-	}
-	lint_vec_scan(RSA_text, data, data_sz);
-	if (f_v) {
-		cout << "text: ";
-		lint_vec_print(cout, data, data_sz);
-		cout << endl;
-	}
-
-	longinteger_domain D;
-	longinteger_object A, M;
-
-	M.create(RSA_m, __FILE__, __LINE__);
-	for (i = 0; i < data_sz; i++) {
-		A.create(data[i], __FILE__, __LINE__);
-		D.power_int_mod(
-				A, RSA_d, M);
-		cout << i << " : " << data[i] << " : " << A << endl;
-	}
-	for (i = 0; i < data_sz; i++) {
-		A.create(data[i], __FILE__, __LINE__);
-		D.power_int_mod(
-				A, RSA_d, M);
-		cout << A;
-		if (i < data_sz - 1) {
-			cout << ",";
-		}
-	}
-	cout << endl;
-
-	long int a;
-	int b, j, h;
-	char str[1000];
-
-	for (i = 0; i < data_sz; i++) {
-		A.create(data[i], __FILE__, __LINE__);
-		D.power_int_mod(
-				A, RSA_d, M);
-		//cout << A;
-		a = A.as_lint();
-		j = 0;
-		while (a) {
-			b = a % 100;
-			if (b > 26 || b == 0) {
-				cout << "out of range" << endl;
-				exit(1);
-			}
-			str[j] = 'a' + b - 1;
-			j++;
-			str[j] = 0;
-			a -= b;
-			a /= 100;
-		}
-		for (h = j - 1; h >= 0; h--) {
-			cout << str[h];
-		}
-	}
-	cout << endl;
-}
 
 void algebra_global::do_nullspace(int q,
 		int m, int n, std::string &text,
@@ -4173,6 +2812,165 @@ void algebra_global::do_equivalence_class_of_fractions(int N, int verbose_level)
 	}
 }
 
+
+void algebra_global::do_cheat_sheet_GF(int q, int f_poly, std::string &poly, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::do_cheat_sheet_GF q=" << q << endl;
+	}
+
+	//int i;
+	//int f_poly = FALSE;
+	//const char *poly = NULL;
+
+	char fname[1000];
+	char title[1000];
+	char author[1000];
+
+	snprintf(fname, 1000, "GF_%d.tex", q);
+	snprintf(title, 1000, "Cheat Sheet GF($%d$)", q);
+	//sprintf(author, "");
+	author[0] = 0;
+
+	finite_field F;
+
+	if (f_poly) {
+		F.init_override_polynomial(q, poly, verbose_level);
+	}
+	else {
+		F.init(q, 0 /* verbose_level */);
+	}
+
+
+	F.addition_table_save_csv();
+
+	F.multiplication_table_save_csv();
+
+	F.addition_table_reordered_save_csv();
+
+	F.multiplication_table_reordered_save_csv();
+
+
+	{
+		ofstream f(fname);
+
+
+		//algebra_global AG;
+
+		//AG.cheat_sheet_GF(q, f_override_poly, my_override_poly, verbose_level);
+		latex_interface L;
+
+		//F.init(q), verbose_level - 2);
+
+		L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
+			title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
+				TRUE /* f_12pt */,
+				TRUE /* f_enlarged_page */,
+				TRUE /* f_pagenumbers */,
+				NULL /* extra_praeamble */);
+
+
+		F.cheat_sheet(f, verbose_level);
+
+		F.cheat_sheet_main_table(f, verbose_level);
+
+		F.cheat_sheet_addition_table(f, verbose_level);
+
+		F.cheat_sheet_multiplication_table(f, verbose_level);
+
+		F.cheat_sheet_power_table(f, verbose_level);
+
+
+
+
+
+		L.foot(f);
+	}
+
+	file_io Fio;
+
+	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+	if (f_v) {
+		cout << "algebra_global::do_cheat_sheet_GF q=" << q << " done" << endl;
+	}
+}
+
+void algebra_global::do_search_for_primitive_polynomial_in_range(int p_min, int p_max,
+		int deg_min, int deg_max, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::do_search_for_primitive_polynomial_in_range" << endl;
+		cout << "p_min=" << p_min << endl;
+		cout << "p_max=" << p_max << endl;
+		cout << "deg_min=" << deg_min << endl;
+		cout << "deg_max=" << deg_max << endl;
+	}
+
+
+	if (deg_min == deg_max && p_min == p_max) {
+		char *poly;
+
+
+
+		poly = search_for_primitive_polynomial_of_given_degree(
+				p_min, deg_min, verbose_level);
+
+		cout << "poly = " << poly << endl;
+
+	}
+	else {
+
+		search_for_primitive_polynomials(p_min, p_max,
+				deg_min, deg_max,
+				verbose_level);
+	}
+
+	if (f_v) {
+		cout << "algebra_global::do_search_for_primitive_polynomial_in_range done" << endl;
+	}
+}
+
+void algebra_global::do_make_table_of_irreducible_polynomials(int deg, int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::do_make_table_of_irreducible_polynomials" << endl;
+		cout << "deg=" << deg << endl;
+		cout << "q=" << q << endl;
+	}
+	int nb;
+	//int *Table;
+	std::vector<std::vector<int>> Table;
+	finite_field F;
+
+	F.init(q, 0);
+
+	make_all_irreducible_polynomials_of_degree_d(&F, deg,
+			Table, verbose_level);
+
+	nb = Table.size();
+
+	cout << "The " << nb << " irreducible polynomials of "
+			"degree " << deg << " over F_" << q << " are:" << endl;
+
+	int_vec_vec_print(Table);
+
+
+	//int_matrix_print(Table, nb, deg + 1);
+
+	//FREE_int(Table);
+
+	if (f_v) {
+		cout << "algebra_global::do_make_table_of_irreducible_polynomials done" << endl;
+	}
+}
 
 
 

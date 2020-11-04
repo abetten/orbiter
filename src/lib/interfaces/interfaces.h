@@ -117,20 +117,12 @@ public:
 	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
 	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
 	void worker(orbiter_session *Session, int verbose_level);
-	void do_eigenstuff(
-			int n, int q, std::string &coeffs_text, int verbose_level);
-	void do_eigenstuff_from_file(
-			int n, int q, std::string &fname, int verbose_level);
 	void do_linear_group(
 			linear_group_description *Descr, int verbose_level);
 	void perform_group_theoretic_activity(finite_field *F, linear_group *LG,
 			group_theoretic_activity_description *Group_theoretic_activity_description,
 			int verbose_level);
-	void do_cheat_sheet_GF(int q, int f_poly, std::string &poly, int verbose_level);
 	void do_all_rational_normal_forms(int d, int q, int f_poly, std::string &poly, int verbose_level);
-	void do_search_for_primitive_polynomial_in_range(int p_min, int p_max,
-			int deg_min, int deg_max, int verbose_level);
-	void do_make_table_of_irreducible_polynomials(int deg, int q, int verbose_level);
 	void do_character_table_symmetric_group(int deg, int verbose_level);
 	void do_make_A5_in_PSL_2_q(int q, int verbose_level);
 
@@ -173,8 +165,6 @@ public:
 	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
 	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
 	void worker(int verbose_level);
-	void do_make_macwilliams_system(int q, int n, int k, int verbose_level);
-	void make_BCH_codes(int n, int q, int t, int b, int f_dual, int verbose_level);
 };
 
 
@@ -309,7 +299,7 @@ class interface_cryptography {
 	int f_RSA;
 	long int RSA_d;
 	long int RSA_m;
-	const char *RSA_text;
+	std::string RSA_text;
 	int f_primitive_root;
 	int primitive_root_p;
 	int f_inverse_mod;
@@ -332,16 +322,16 @@ class interface_cryptography {
 	int RSA_setup_f_miller_rabin_test;
 	int f_RSA_encrypt_text;
 	int RSA_block_size;
-	const char *RSA_encrypt_text;
+	std::string RSA_encrypt_text;
 	int f_sift_smooth;
 	int sift_smooth_from;
 	int sift_smooth_len;
-	const char *sift_smooth_factor_base;
+	std::string sift_smooth_factor_base;
 	int f_square_root;
-	const char *square_root_number;
+	std::string square_root_number;
 	int f_square_root_mod;
-	const char *square_root_mod_a;
-	const char *square_root_mod_m;
+	std::string square_root_mod_a;
+	std::string square_root_mod_m;
 	int f_quadratic_sieve;
 	int quadratic_sieve_n;
 	int quadratic_sieve_factorbase;
@@ -366,7 +356,7 @@ class interface_cryptography {
 	int f_find_strong_pseudoprime;
 	int f_miller_rabin_text;
 	int miller_rabin_text_nb_times;
-	const char *miller_rabin_number_text;
+	std::string miller_rabin_number_text;
 	int f_random;
 	int random_nb;
 	std::string random_fname_csv;
@@ -377,28 +367,28 @@ class interface_cryptography {
 	int affine_sequence_c;
 	int affine_sequence_m;
 	int f_EC_Koblitz_encoding;
-	const char *EC_message;
+	std::string EC_message;
 	int EC_s;
 	int f_EC_points;
 	int f_EC_add;
-	const char *EC_pt1_text;
-	const char *EC_pt2_text;
+	std::string EC_pt1_text;
+	std::string EC_pt2_text;
 	int f_EC_cyclic_subgroup;
 	int EC_q;
 	int EC_b;
 	int EC_c;
-	const char *EC_pt_text;
+	std::string EC_pt_text;
 	int f_EC_multiple_of;
 	int EC_multiple_of_n;
 	int f_EC_discrete_log;
-	const char *EC_discrete_log_pt_text;
+	std::string EC_discrete_log_pt_text;
 	int f_EC_baby_step_giant_step;
-	const char *EC_bsgs_G;
+	std::string EC_bsgs_G;
 	int EC_bsgs_N;
-	const char *EC_bsgs_cipher_text;
+	std::string EC_bsgs_cipher_text;
 	int f_EC_baby_step_giant_step_decode;
-	const char *EC_bsgs_A;
-	const char *EC_bsgs_keys;
+	std::string EC_bsgs_A;
+	std::string EC_bsgs_keys;
 
 
 
@@ -424,64 +414,6 @@ public:
 	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
 	void worker(int verbose_level);
 
-	void make_affine_sequence(int a, int c, int m, int verbose_level);
-	void make_2D_plot(int *orbit, int orbit_len, int cnt,
-			int m, int a, int c, int verbose_level);
-	void do_random_last(int random_nb, int verbose_level);
-	void do_random(int random_nb, std::string &fname_csv, int verbose_level);
-	void do_jacobi(int jacobi_top, int jacobi_bottom, int verbose_level);
-	void do_solovay_strassen(int p, int a, int verbose_level);
-	void do_miller_rabin(int p, int nb_times, int verbose_level);
-	void do_fermat_test(int p, int nb_times, int verbose_level);
-	void do_find_pseudoprime(int nb_digits, int nb_fermat,
-			int nb_miller_rabin, int nb_solovay_strassen, int verbose_level);
-	void do_find_strong_pseudoprime(int nb_digits,
-			int nb_fermat, int nb_miller_rabin, int verbose_level);
-	void do_miller_rabin_text(const char *number_text,
-			int nb_miller_rabin, int verbose_level);
-	void quadratic_sieve(int n, int factorbase,
-			int x0, int verbose_level);
-	void calc_log2(std::vector<int> &primes,
-			std::vector<int> &primes_log2, int verbose_level);
-	void square_root(const char *square_root_number, int verbose_level);
-	void square_root_mod(const char *square_root_number,
-			const char *mod_number, int verbose_level);
-	void reduce_primes(std::vector<int> &primes,
-			longinteger_object &M,
-			int &f_found_small_factor, int &small_factor,
-			int verbose_level);
-	void do_sift_smooth(int sift_smooth_from,
-			int sift_smooth_len,
-			const char *sift_smooth_factor_base, int verbose_level);
-	void do_discrete_log(long int y, long int a, long int p, int verbose_level);
-	void do_primitive_root(long int p, int verbose_level);
-	void do_inverse_mod(long int a, long int n, int verbose_level);
-	void do_extended_gcd(int a, int b, int verbose_level);
-	void do_power_mod(long int a, long int k, long int n, int verbose_level);
-	void affine_cipher(char *ptext, char *ctext, int a, int b);
-	void affine_decipher(char *ctext, char *ptext, char *guess);
-	void vigenere_cipher(char *ptext, char *ctext, char *key);
-	void vigenere_decipher(char *ctext, char *ptext, char *key);
-	void vigenere_analysis(char *ctext);
-	void vigenere_analysis2(char *ctext, int key_length);
-	int kasiski_test(char *ctext, int threshold);
-	void print_candidates(char *ctext,
-			int i, int h, int nb_candidates, int *candidates);
-	void print_set(int l, int *s);
-	void print_on_top(char *text1, char *text2);
-	void decipher(char *ctext, char *ptext, char *guess);
-	void analyze(char *text);
-	double friedman_index(int *mult, int n);
-	double friedman_index_shifted(int *mult, int n, int shift);
-	void print_frequencies(int *mult);
-	void single_frequencies(char *text, int *mult);
-	void single_frequencies2(char *text, int stride, int n, int *mult);
-	void double_frequencies(char *text, int *mult);
-	void substition_cipher(char *ptext, char *ctext, char *key);
-	char lower_case(char c);
-	char upper_case(char c);
-	char is_alnum(char c);
-	void get_random_permutation(char *p);
 
 };
 

@@ -1978,6 +1978,199 @@ void coding_theory_domain::compute_generator_matrix(
 }
 
 
+void coding_theory_domain::do_make_macwilliams_system(
+		int q, int n, int k, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	coding_theory_domain C;
+	longinteger_object *M;
+	int i, j;
+
+	if (f_v) {
+		cout << "interface_coding_theory::do_make_macwilliams_system" << endl;
+	}
+
+	C.make_mac_williams_equations(M, n, k, q, verbose_level);
+
+	cout << "\\begin{array}{r|*{" << n << "}{r}}" << endl;
+	for (i = 0; i <= n; i++) {
+		for (j = 0; j <= n; j++) {
+			cout << M[i * (n + 1) + j];
+			if (j < n) {
+				cout << " & ";
+			}
+		}
+		cout << "\\\\" << endl;
+	}
+	cout << "\\end{array}" << endl;
+
+	cout << "[";
+	for (i = 0; i <= n; i++) {
+		cout << "[";
+		for (j = 0; j <= n; j++) {
+			cout << M[i * (n + 1) + j];
+			if (j < n) {
+				cout << ",";
+			}
+		}
+		cout << "]";
+		if (i < n) {
+			cout << ",";
+		}
+	}
+	cout << "]" << endl;
+
+
+	if (f_v) {
+		cout << "coding_theory_domain::do_make_macwilliams_system done" << endl;
+	}
+}
+
+
+void coding_theory_domain::make_BCH_codes(int n, int q, int t, int b, int f_dual, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::make_BCH_codes" << endl;
+	}
+
+	char fname[1000];
+	number_theory_domain NT;
+	int *roots;
+	int nb_roots;
+	int i, j;
+
+	roots = NEW_int(t - 1);
+	nb_roots = t - 1;
+	for (i = 0; i < t - 1; i++) {
+		j = NT.mod(b + i, n);
+		roots[i] = j;
+		}
+	snprintf(fname, 1000, "BCH_%d_%d.txt", n, t);
+
+	cout << "roots: ";
+	int_vec_print(cout, roots, nb_roots);
+	cout << endl;
+
+	coding_theory_domain Codes;
+
+	string dummy;
+
+	dummy.assign("");
+
+	Codes.make_cyclic_code(n, q, t, roots, nb_roots,
+			FALSE /*f_poly*/, dummy /*poly*/, f_dual,
+			fname, verbose_level);
+
+	FREE_int(roots);
+
+	if (f_v) {
+		cout << "coding_theory_domain::make_BCH_codes done" << endl;
+	}
+}
+
+void coding_theory_domain::make_Hamming_graph_and_write_file(int n, int q,
+		int f_projective, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	int width, height;
+	int *v;
+	int *w;
+	int *Table;
+	//int *Adj = NULL;
+	geometry_global Gg;
+	finite_field *F = NULL;
+
+	if (f_v) {
+		cout << "coding_theory_domain::make_Hamming_graph_and_write_file" << endl;
+	}
+
+	v = NEW_int(n);
+	w = NEW_int(n);
+
+	if (f_projective) {
+		width = height = Gg.nb_PG_elements(n - 1, q);
+		F = NEW_OBJECT(finite_field);
+		F->init(q);
+	}
+	else {
+		width = height = Gg.nb_AG_elements(n, q);
+	}
+
+#if 0
+	int N;
+	N = width;
+	if (f_graph) {
+		Adj = NEW_int(N * N);
+		int_vec_zero(Adj, N * N);
+	}
+#endif
+
+	cout << "width=" << width << endl;
+
+	int i, j, d, h;
+
+	Table = NEW_int(height * width);
+	for (i = 0; i < height; i++) {
+
+		if (f_projective) {
+			F->PG_element_unrank_modified(v, 1 /*stride*/, n, i);
+		}
+		else {
+			Gg.AG_element_unrank(q, v, 1, n, i);
+		}
+
+		for (j = 0; j < width; j++) {
+
+			if (f_projective) {
+				F->PG_element_unrank_modified(w, 1 /*stride*/, n, j);
+			}
+			else {
+				Gg.AG_element_unrank(q, w, 1, n, j);
+			}
+
+			d = 0;
+			for (h = 0; h < n; h++) {
+				if (v[h] != w[h]) {
+					d++;
+				}
+			}
+
+#if 0
+			if (f_graph && d == 1) {
+				Adj[i * N + j] = 1;
+			}
+#endif
+
+			Table[i * width + j] = d;
+
+		}
+	}
+
+	string fname;
+	char str[1000];
+	file_io Fio;
+
+	sprintf(str, "Hamming_n%d_q%d.csv", n, q);
+	fname.assign(str);
+
+	Fio.int_matrix_write_csv(fname, Table, height, width);
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "coding_theory_domain::make_Hamming_graph_and_write_file" << endl;
+	}
+
+}
+
+
+
+
 
 
 }}

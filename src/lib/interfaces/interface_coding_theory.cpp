@@ -161,19 +161,28 @@ void interface_coding_theory::read_arguments(int argc,
 void interface_coding_theory::worker(int verbose_level)
 {
 	if (f_make_macwilliams_system) {
-		do_make_macwilliams_system(q, n, k, verbose_level);
+
+		coding_theory_domain Coding;
+
+		Coding.do_make_macwilliams_system(q, n, k, verbose_level);
 	}
 	else if (f_BCH) {
-		make_BCH_codes(n, q, BCH_t, 1, FALSE, verbose_level);
+
+		coding_theory_domain Coding;
+
+		Coding.make_BCH_codes(n, q, BCH_t, 1, FALSE, verbose_level);
 	}
 	else if (f_BCH_dual) {
-		make_BCH_codes(n, q, BCH_t, 1, TRUE, verbose_level);
+
+		coding_theory_domain Coding;
+
+		Coding.make_BCH_codes(n, q, BCH_t, 1, TRUE, verbose_level);
 	}
 	else if (f_Hamming_graph) {
 
-		algebra_global Algebra;
+		coding_theory_domain Coding;
 
-		Algebra.make_Hamming_graph_and_write_file(n, q,
+		Coding.make_Hamming_graph_and_write_file(n, q,
 				FALSE /* f_projective*/, verbose_level);
 	}
 	else if (f_NTT) {
@@ -218,99 +227,6 @@ void interface_coding_theory::worker(int verbose_level)
 }
 
 
-
-
-void interface_coding_theory::do_make_macwilliams_system(
-		int q, int n, int k, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	coding_theory_domain C;
-	longinteger_object *M;
-	int i, j;
-
-	if (f_v) {
-		cout << "interface_coding_theory::do_make_macwilliams_system" << endl;
-	}
-
-	C.make_mac_williams_equations(M, n, k, q, verbose_level);
-
-	cout << "\\begin{array}{r|*{" << n << "}{r}}" << endl;
-	for (i = 0; i <= n; i++) {
-		for (j = 0; j <= n; j++) {
-			cout << M[i * (n + 1) + j];
-			if (j < n) {
-				cout << " & ";
-			}
-		}
-		cout << "\\\\" << endl;
-	}
-	cout << "\\end{array}" << endl;
-
-	cout << "[";
-	for (i = 0; i <= n; i++) {
-		cout << "[";
-		for (j = 0; j <= n; j++) {
-			cout << M[i * (n + 1) + j];
-			if (j < n) {
-				cout << ",";
-			}
-		}
-		cout << "]";
-		if (i < n) {
-			cout << ",";
-		}
-	}
-	cout << "]" << endl;
-
-
-	if (f_v) {
-		cout << "interface_coding_theory::do_make_macwilliams_system done" << endl;
-	}
-}
-
-
-void interface_coding_theory::make_BCH_codes(int n, int q, int t, int b, int f_dual, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_coding_theory::make_BCH_codes" << endl;
-	}
-
-	char fname[1000];
-	number_theory_domain NT;
-	int *roots;
-	int nb_roots;
-	int i, j;
-
-	roots = NEW_int(t - 1);
-	nb_roots = t - 1;
-	for (i = 0; i < t - 1; i++) {
-		j = NT.mod(b + i, n);
-		roots[i] = j;
-		}
-	snprintf(fname, 1000, "BCH_%d_%d.txt", n, t);
-
-	cout << "roots: ";
-	int_vec_print(cout, roots, nb_roots);
-	cout << endl;
-
-	coding_theory_domain Codes;
-
-	string dummy;
-
-	dummy.assign("");
-
-	Codes.make_cyclic_code(n, q, t, roots, nb_roots,
-			FALSE /*f_poly*/, dummy /*poly*/, f_dual,
-			fname, verbose_level);
-
-	FREE_int(roots);
-
-	if (f_v) {
-		cout << "interface_coding_theory::make_BCH_codes done" << endl;
-	}
-}
 
 
 

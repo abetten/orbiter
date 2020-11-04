@@ -149,8 +149,6 @@ public:
 	void gl_random_matrix(int k, int q, int verbose_level);
 	const char *plus_minus_string(int epsilon);
 	const char *plus_minus_letter(int epsilon);
-	void make_Hamming_graph_and_write_file(int n, int q,
-			int f_projective, int verbose_level);
 	int PHG_element_normalize(finite_ring &R, int *v, int stride, int len);
 	// last unit element made one
 	int PHG_element_normalize_from_front(finite_ring &R, int *v,
@@ -199,39 +197,7 @@ public:
 	void Berlekamp_matrix(int q,
 			std::string &Berlekamp_matrix_coeffs,
 			int verbose_level);
-	void NTRU_encrypt(int N, int p, int q,
-			std::string &H_coeffs, std::string &R_coeffs, std::string &Msg_coeffs,
-			int verbose_level);
-	void polynomial_center_lift(std::string &A_coeffs, int q,
-			int verbose_level);
-	void polynomial_reduce_mod_p(std::string &A_coeffs, int p,
-			int verbose_level);
 	void compute_normal_basis(finite_field *F, int d, int verbose_level);
-	void do_EC_Koblitz_encoding(int q,
-			int EC_b, int EC_c, int EC_s,
-			const char *pt_text, const char *EC_message,
-			int verbose_level);
-	void do_EC_points(int q, int EC_b, int EC_c, int verbose_level);
-	int EC_evaluate_RHS(finite_field *F, int EC_b, int EC_c, int x);
-	// evaluates x^3 + bx + c
-	void do_EC_add(int q, int EC_b, int EC_c,
-			const char *pt1_text, const char *pt2_text, int verbose_level);
-	void do_EC_cyclic_subgroup(int q, int EC_b, int EC_c,
-			const char *pt_text, int verbose_level);
-	void do_EC_multiple_of(int q, int EC_b, int EC_c,
-			const char *pt_text, int n, int verbose_level);
-	void do_EC_discrete_log(int q, int EC_b, int EC_c,
-			const char *base_pt_text, const char *pt_text, int verbose_level);
-	void do_EC_baby_step_giant_step(int EC_q, int EC_b, int EC_c,
-			const char *EC_bsgs_G, int EC_bsgs_N, const char *EC_bsgs_cipher_text,
-			int verbose_level);
-	void do_EC_baby_step_giant_step_decode(int EC_q, int EC_b, int EC_c,
-			const char *EC_bsgs_A, int EC_bsgs_N,
-			const char *EC_bsgs_cipher_text_T, const char *EC_bsgs_keys,
-			int verbose_level);
-	void do_RSA_encrypt_text(long int RSA_d, long int RSA_m,
-			int RSA_block_size, const char * RSA_encrypt_text, int verbose_level);
-	void do_RSA(long int RSA_d, long int RSA_m, const char *RSA_text, int verbose_level);
 	void do_nullspace(int q, int m, int n, std::string &text,
 			int f_normalize_from_the_left, int f_normalize_from_the_right,
 			int verbose_level);
@@ -244,6 +210,10 @@ public:
 	void do_trace(int q, int verbose_level);
 	void do_norm(int q, int verbose_level);
 	void do_equivalence_class_of_fractions(int N, int verbose_level);
+	void do_cheat_sheet_GF(int q, int f_poly, std::string &poly, int verbose_level);
+	void do_search_for_primitive_polynomial_in_range(int p_min, int p_max,
+			int deg_min, int deg_max, int verbose_level);
+	void do_make_table_of_irreducible_polynomials(int deg, int q, int verbose_level);
 
 };
 
