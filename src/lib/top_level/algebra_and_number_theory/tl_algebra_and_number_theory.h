@@ -110,6 +110,10 @@ public:
 			linear_group *LG,
 			int degree_of_poly,
 			int verbose_level);
+	void do_eigenstuff_with_coefficients(
+			int n, int q, std::string &coeffs_text, int verbose_level);
+	void do_eigenstuff_from_file(
+			int n, int q, std::string &fname, int verbose_level);
 
 };
 

@@ -397,6 +397,7 @@ class data_structures_global;
 class graphical_output;
 class surface_object_properties;
 class schlaefli;
+class cryptography_domain;
 
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)
@@ -584,6 +585,7 @@ std::ostream& operator<<(std::ostream& ost, longinteger_object& p);
 #include "./algebra_and_number_theory/algebra_and_number_theory.h"
 #include "./coding_theory/coding_theory.h"
 #include "./combinatorics/combinatorics.h"
+#include "./cryptography/cryptography.h"
 #include "./data_structures/data_structures.h"
 #include "./geometry/geometry.h"
 #include "./globals/globals.h"

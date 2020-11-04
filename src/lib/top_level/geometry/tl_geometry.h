@@ -709,9 +709,9 @@ void append_orbit_and_adjust_size(schreier *Orb, int idx, int *set, int &sz);
 
 class linear_set_classify {
 public:
-	int s;
-	int n;
-	int m; // n = s * m
+	int s; // s divides n
+	int n; // n = s * m
+	int m; // = n / s
 	int q;
 	int Q; // Q = q^s
 	int depth;
@@ -730,19 +730,33 @@ public:
 	finite_field *FQ;
 	subfield_structure *SubS;
 	projective_space *P;
-	action *Aq;
-	action *AQ;
-	action *A_PGLQ;
+
+
+	// the groups we need:
+
+	action *Aq; // GL(n,q)
+
+	action *AQ; // GL(m, Q)
+
+	action *A_PGLQ; // PGL(m,Q)
+
 	vector_space *VS;
 	poset_classification_control *Control1;
 	poset *Poset1;
 	poset_classification *Gen;
 	int vector_space_dimension; // = n
-	strong_generators *Strong_gens;
-	desarguesian_spread *D;
-	int n1;
-	int m1;
-	desarguesian_spread *D1;
+
+	// the generators:
+
+	strong_generators *Strong_gens; // generators for GL(m,Q) field reduced into GL(n,q)
+
+	desarguesian_spread *D; // n, m, s
+
+	int n1; // = s * m1;
+	int m1; // = m + 1
+
+	desarguesian_spread *D1; // n1, m1, s
+
 	int *spread_embedding; // [D->N]
 
 	int f_identify;
@@ -772,7 +786,7 @@ public:
 	~linear_set_classify();
 	void null();
 	void freeself();
-	void init(//int argc, const char **argv,
+	void init(
 		int s, int n, int q,
 		std::string &poly_q, std::string &poly_Q,
 		int depth, int f_identify, int verbose_level);

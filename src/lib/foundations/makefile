@@ -9,6 +9,7 @@ LFLAGS = -lm
 all: algebra_and_number_theory \
 	coding_theory \
 	combinatorics \
+	cryptography \
 	data_structures \
 	geometry \
 	globals \
@@ -27,6 +28,7 @@ all: algebra_and_number_theory \
 algebra_and_number_theory : algebra_and_number_theory2 
 coding_theory : coding_theory2 
 combinatorics : combinatorics2  
+cryptography : cryptography2
 data_structures : data_structures2  
 geometry : geometry2 
 globals : globals2 
@@ -42,6 +44,7 @@ BitSet	:	BitSet2
 algebra_and_number_theory2 : ; cd algebra_and_number_theory; $(MAKE)
 coding_theory2 : ; cd coding_theory; $(MAKE)
 combinatorics2 : ; cd combinatorics; $(MAKE)
+cryptography2 : ; cd cryptography; $(MAKE)
 data_structures2 : ; cd data_structures; $(MAKE)
 geometry2 : ; cd geometry; $(MAKE)
 globals2 : ; cd globals; $(MAKE)
@@ -58,6 +61,7 @@ clean:
 	cd algebra_and_number_theory; $(MAKE) clean
 	cd coding_theory; $(MAKE) clean
 	cd combinatorics; $(MAKE) clean
+	cd cryptography; $(MAKE) clean
 	cd data_structures; $(MAKE) clean
 	cd geometry; $(MAKE) clean
 	cd globals; $(MAKE) clean

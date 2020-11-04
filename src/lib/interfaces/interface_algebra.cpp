@@ -506,7 +506,10 @@ void interface_algebra::worker(orbiter_session *Session, int verbose_level)
 	}
 
 	else if (f_cheat_sheet_GF) {
-		do_cheat_sheet_GF(q,
+
+		algebra_global Algebra;
+
+		Algebra.do_cheat_sheet_GF(q,
 				Session->f_override_polynomial, Session->override_polynomial,
 				verbose_level);
 	}
@@ -516,10 +519,18 @@ void interface_algebra::worker(orbiter_session *Session, int verbose_level)
 				verbose_level);
 	}
 	else if (f_search_for_primitive_polynomial_in_range) {
-		do_search_for_primitive_polynomial_in_range(p_min, p_max, deg_min, deg_max, verbose_level);
+
+		algebra_global Algebra;
+
+		Algebra.do_search_for_primitive_polynomial_in_range(
+				p_min, p_max, deg_min, deg_max, verbose_level);
 	}
 	else if (f_make_table_of_irreducible_polynomials) {
-		do_make_table_of_irreducible_polynomials(deg, q, verbose_level);
+
+		algebra_global Algebra;
+
+		Algebra.do_make_table_of_irreducible_polynomials(
+				deg, q, verbose_level);
 	}
 	else if (f_character_table_symmetric_group) {
 		do_character_table_symmetric_group(deg, verbose_level);
@@ -528,10 +539,18 @@ void interface_algebra::worker(orbiter_session *Session, int verbose_level)
 		do_make_A5_in_PSL_2_q(q, verbose_level);
 	}
 	else if (f_eigenstuff) {
-		do_eigenstuff(eigenstuff_n, eigenstuff_q, eigenstuff_coeffs, verbose_level);
+
+		algebra_global_with_action Algebra;
+
+		Algebra.do_eigenstuff_with_coefficients(eigenstuff_n,
+				eigenstuff_q, eigenstuff_coeffs, verbose_level);
 	}
 	else if (f_eigenstuff_from_file) {
-		do_eigenstuff_from_file(eigenstuff_n, eigenstuff_q, eigenstuff_fname, verbose_level);
+
+		algebra_global_with_action Algebra;
+
+		Algebra.do_eigenstuff_from_file(eigenstuff_n,
+				eigenstuff_q, eigenstuff_fname, verbose_level);
 	}
 	else if (f_young_symmetrizer) {
 		algebra_global_with_action Algebra;
@@ -570,6 +589,7 @@ void interface_algebra::worker(orbiter_session *Session, int verbose_level)
 				Berlekamp_matrix_coeffs, verbose_level);
 	}
 	else if (f_normal_basis) {
+
 		algebra_global Algebra;
 
 		F = NEW_OBJECT(finite_field);
@@ -622,10 +642,13 @@ void interface_algebra::worker(orbiter_session *Session, int verbose_level)
 		Algebra.do_norm(norm_q, verbose_level);
 	}
 	else if (f_count_subprimitive) {
-		algebra_global AG;
-		AG.count_subprimitive(count_subprimitive_Q_max, count_subprimitive_H_max);
+
+		algebra_global Algebra;
+
+		Algebra.count_subprimitive(count_subprimitive_Q_max, count_subprimitive_H_max);
 	}
 	else if (f_equivalence_class_of_fractions) {
+
 		algebra_global Algebra;
 
 		Algebra.do_equivalence_class_of_fractions(equivalence_class_of_fractions_N, verbose_level);
@@ -635,65 +658,6 @@ void interface_algebra::worker(orbiter_session *Session, int verbose_level)
 
 }
 
-void interface_algebra::do_eigenstuff(
-		int n, int q, std::string &coeffs_text, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_algebra::do_eigenstuff" << endl;
-	}
-	int *Data;
-	int len;
-
-	int_vec_scan(coeffs_text, Data, len);
-	if (len != n * n) {
-		cout << "len != n * n " << len << endl;
-		exit(1);
-	}
-
-	algebra_global_with_action A;
-
-	A.do_eigenstuff(q, n, Data, verbose_level);
-
-	FREE_int(Data);
-	if (f_v) {
-		cout << "interface_algebra::do_eigenstuff done" << endl;
-	}
-}
-
-void interface_algebra::do_eigenstuff_from_file(
-		int n, int q, std::string &fname, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_algebra::do_eigenstuff_from_file" << endl;
-	}
-
-	file_io Fio;
-	int *Data;
-	int mtx_m, mtx_n;
-
-	Fio.int_matrix_read_csv(fname, Data, mtx_m, mtx_n, verbose_level - 1);
-	if (mtx_m != n) {
-		cout << "mtx_m != n" << endl;
-		exit(1);
-	}
-	if (mtx_n != n) {
-		cout << "mtx_n != n" << endl;
-		exit(1);
-	}
-
-	algebra_global_with_action A;
-
-	A.do_eigenstuff(q, n, Data, verbose_level);
-
-
-	if (f_v) {
-		cout << "interface_algebra::do_eigenstuff_from_file done" << endl;
-	}
-}
 
 void interface_algebra::do_linear_group(
 		linear_group_description *Descr, int verbose_level)
@@ -837,91 +801,6 @@ void interface_algebra::perform_group_theoretic_activity(
 	}
 }
 
-void interface_algebra::do_cheat_sheet_GF(int q, int f_poly, std::string &poly, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_algebra::do_cheat_sheet_GF q=" << q << endl;
-	}
-
-	//int i;
-	//int f_poly = FALSE;
-	//const char *poly = NULL;
-
-	char fname[1000];
-	char title[1000];
-	char author[1000];
-
-	snprintf(fname, 1000, "GF_%d.tex", q);
-	snprintf(title, 1000, "Cheat Sheet GF($%d$)", q);
-	//sprintf(author, "");
-	author[0] = 0;
-
-	finite_field F;
-
-	if (f_poly) {
-		F.init_override_polynomial(q, poly, verbose_level);
-	}
-	else {
-		F.init(q, 0 /* verbose_level */);
-	}
-
-
-	F.addition_table_save_csv();
-
-	F.multiplication_table_save_csv();
-
-	F.addition_table_reordered_save_csv();
-
-	F.multiplication_table_reordered_save_csv();
-
-
-	{
-		ofstream f(fname);
-
-
-		//algebra_global AG;
-
-		//AG.cheat_sheet_GF(q, f_override_poly, my_override_poly, verbose_level);
-		latex_interface L;
-
-		//F.init(q), verbose_level - 2);
-
-		L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
-			title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
-				TRUE /* f_12pt */,
-				TRUE /* f_enlarged_page */,
-				TRUE /* f_pagenumbers */,
-				NULL /* extra_praeamble */);
-
-
-		F.cheat_sheet(f, verbose_level);
-
-		F.cheat_sheet_main_table(f, verbose_level);
-
-		F.cheat_sheet_addition_table(f, verbose_level);
-
-		F.cheat_sheet_multiplication_table(f, verbose_level);
-
-		F.cheat_sheet_power_table(f, verbose_level);
-
-
-
-
-
-		L.foot(f);
-	}
-
-	file_io Fio;
-
-	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-
-	if (f_v) {
-		cout << "interface_algebra::do_cheat_sheet_GF q=" << q << " done" << endl;
-	}
-}
 
 void interface_algebra::do_all_rational_normal_forms(int d, int q, int f_poly, std::string &poly, int verbose_level)
 {
@@ -940,82 +819,6 @@ void interface_algebra::do_all_rational_normal_forms(int d, int q, int f_poly, s
 	}
 }
 
-
-void interface_algebra::do_search_for_primitive_polynomial_in_range(int p_min, int p_max,
-		int deg_min, int deg_max, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_algebra::do_search_for_primitive_polynomial_in_range" << endl;
-		cout << "p_min=" << p_min << endl;
-		cout << "p_max=" << p_max << endl;
-		cout << "deg_min=" << deg_min << endl;
-		cout << "deg_max=" << deg_max << endl;
-	}
-
-
-	if (deg_min == deg_max && p_min == p_max) {
-		char *poly;
-
-		algebra_global AG;
-
-
-		poly = AG.search_for_primitive_polynomial_of_given_degree(
-				p_min, deg_min, verbose_level);
-
-		cout << "poly = " << poly << endl;
-
-	}
-	else {
-		algebra_global AG;
-
-		AG.search_for_primitive_polynomials(p_min, p_max,
-				deg_min, deg_max,
-				verbose_level);
-	}
-
-	if (f_v) {
-		cout << "interface_algebra::do_search_for_primitive_polynomial_in_range done" << endl;
-	}
-}
-
-void interface_algebra::do_make_table_of_irreducible_polynomials(int deg, int q, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_algebra::do_make_table_of_irreducible_polynomials" << endl;
-		cout << "deg=" << deg << endl;
-		cout << "q=" << q << endl;
-	}
-	int nb;
-	//int *Table;
-	std::vector<std::vector<int>> Table;
-	finite_field F;
-	algebra_global Algebra;
-
-	F.init(q, 0);
-
-	Algebra.make_all_irreducible_polynomials_of_degree_d(&F, deg,
-			Table, verbose_level);
-
-	nb = Table.size();
-
-	cout << "The " << nb << " irreducible polynomials of "
-			"degree " << deg << " over F_" << q << " are:" << endl;
-
-	int_vec_vec_print(Table);
-
-
-	//int_matrix_print(Table, nb, deg + 1);
-
-	//FREE_int(Table);
-
-	if (f_v) {
-		cout << "interface_algebra::do_make_table_of_irreducible_polynomials done" << endl;
-	}
-}
 
 void interface_algebra::do_character_table_symmetric_group(int deg, int verbose_level)
 {

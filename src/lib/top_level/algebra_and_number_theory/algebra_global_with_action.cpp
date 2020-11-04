@@ -4087,6 +4087,65 @@ void algebra_global_with_action::orbits_on_polynomials(
 }
 
 
+void algebra_global_with_action::do_eigenstuff_with_coefficients(
+		int n, int q, std::string &coeffs_text, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::do_eigenstuff_with_coefficients" << endl;
+	}
+	int *Data;
+	int len;
+
+	int_vec_scan(coeffs_text, Data, len);
+	if (len != n * n) {
+		cout << "len != n * n " << len << endl;
+		exit(1);
+	}
+
+	algebra_global_with_action A;
+
+	A.do_eigenstuff(q, n, Data, verbose_level);
+
+	FREE_int(Data);
+	if (f_v) {
+		cout << "algebra_global_with_action::do_eigenstuff_with_coefficients done" << endl;
+	}
+}
+
+void algebra_global_with_action::do_eigenstuff_from_file(
+		int n, int q, std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::do_eigenstuff_from_file" << endl;
+	}
+
+	file_io Fio;
+	int *Data;
+	int mtx_m, mtx_n;
+
+	Fio.int_matrix_read_csv(fname, Data, mtx_m, mtx_n, verbose_level - 1);
+	if (mtx_m != n) {
+		cout << "mtx_m != n" << endl;
+		exit(1);
+	}
+	if (mtx_n != n) {
+		cout << "mtx_n != n" << endl;
+		exit(1);
+	}
+
+	algebra_global_with_action A;
+
+	A.do_eigenstuff(q, n, Data, verbose_level);
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::do_eigenstuff_from_file done" << endl;
+	}
+}
 
 
 

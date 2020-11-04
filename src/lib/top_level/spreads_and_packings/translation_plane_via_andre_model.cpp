@@ -521,8 +521,7 @@ void translation_plane_via_andre_model::classify_arcs(
 
 
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::"
-				"classify_arcs "
+		cout << "translation_plane_via_andre_model::classify_arcs "
 				"before generator_main" << endl;
 		}
 
@@ -557,8 +556,7 @@ void translation_plane_via_andre_model::classify_arcs(
 #endif
 
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::"
-				"classify_arcs done" << endl;
+		cout << "translation_plane_via_andre_model::classify_arcs done" << endl;
 		}
 
 }
@@ -573,14 +571,12 @@ void translation_plane_via_andre_model::classify_subplanes(
 	//char fname_base[1000];
 
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::"
-				"classify_subplanes" << endl;
+		cout << "translation_plane_via_andre_model::classify_subplanes" << endl;
 		}
 
 
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::"
-				"classify_subplanes "
+		cout << "translation_plane_via_andre_model::classify_subplanes "
 				"before gen->initialize" << endl;
 		}
 
@@ -635,8 +631,7 @@ void translation_plane_via_andre_model::classify_subplanes(
 
 
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::"
-				"classify_subplanes "
+		cout << "translation_plane_via_andre_model::classify_subplanes "
 				"before generator_main" << endl;
 		}
 
@@ -672,8 +667,7 @@ void translation_plane_via_andre_model::classify_subplanes(
 #endif
 
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::"
-				"classify_subplanes done" << endl;
+		cout << "translation_plane_via_andre_model::classify_subplanes done" << endl;
 		}
 
 }
@@ -687,8 +681,7 @@ int translation_plane_via_andre_model::check_arc(
 	int i, j, h, a, b, c, l;
 
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::"
-				"check_arc" << endl;
+		cout << "translation_plane_via_andre_model::check_arc" << endl;
 		}
 	if (f_vv) {
 		cout << "translation_plane_via_andre_model::"
@@ -725,8 +718,7 @@ int translation_plane_via_andre_model::check_arc(
 
 finish:
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::"
-				"check_arc done ret=" << ret << endl;
+		cout << "translation_plane_via_andre_model::check_arc done ret=" << ret << endl;
 		}
 	return ret;
 }
@@ -742,8 +734,7 @@ int translation_plane_via_andre_model::check_subplane(
 	int *L;
 
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::"
-				"check_subplane" << endl;
+		cout << "translation_plane_via_andre_model::check_subplane" << endl;
 		}
 	if (f_vv) {
 		cout << "translation_plane_via_andre_model::"
@@ -836,8 +827,7 @@ int translation_plane_via_andre_model::check_subplane(
 finish:
 	FREE_int(L);
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::"
-				"check_subplane done ret=" << ret << endl;
+		cout << "translation_plane_via_andre_model::check_subplane done ret=" << ret << endl;
 		}
 	return ret;
 }
@@ -851,12 +841,10 @@ int translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane(
 	int i, j, h, a, b, l[6], d1, d2, d3, dl;
 
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::"
-				"check_if_quadrangle_defines_a_subplane" << endl;
+		cout << "translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane" << endl;
 		}
 	if (f_vv) {
-		cout << "translation_plane_via_andre_model::"
-				"check_if_quadrangle_defines_a_subplane the set is";
+		cout << "translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane the set is";
 		lint_vec_print(cout, S, 4);
 		cout << endl;
 		}
@@ -870,8 +858,7 @@ int translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane(
 			}
 		}
 	if (h != 6) {
-		cout << "translation_plane_via_andre_model::"
-				"check_if_quadrangle_defines_a_subplane" << endl;
+		cout << "translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane" << endl;
 		exit(1);
 		}
 	d1 = Line_intersection[l[0] * N + l[5]];
@@ -893,8 +880,7 @@ int translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane(
 
 //finish:
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::check_"
-				"if_quadrangle_defines_a_subplane "
+		cout << "translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane "
 				"done ret=" << ret << endl;
 		}
 	return ret;
@@ -939,8 +925,7 @@ int translation_plane_via_andre_model_check_subplane(
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "translation_plane_via_andre_model_"
-				"check_subplane checking set ";
+		cout << "translation_plane_via_andre_model_check_subplane checking set ";
 		lint_vec_print(cout, S, len);
 		cout << endl;
 		}
