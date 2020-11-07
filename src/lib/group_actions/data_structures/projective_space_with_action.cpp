@@ -72,14 +72,13 @@ void projective_space_with_action::init(
 
 	if (f_v) {
 		cout << "projective_space_with_action::init" << endl;
-		}
-	projective_space_with_action::f_init_incidence_structure
-		= f_init_incidence_structure;
+	}
+	projective_space_with_action::f_init_incidence_structure = f_init_incidence_structure;
 	projective_space_with_action::n = n;
-	d = n + 1;
 	projective_space_with_action::F = F;
-	q = F->q;
 	projective_space_with_action::f_semilinear = f_semilinear;
+	d = n + 1;
+	q = F->q;
 	
 	P = NEW_OBJECT(projective_space);
 	P->init(n, F, 
@@ -93,7 +92,7 @@ void projective_space_with_action::init(
 
 	if (f_v) {
 		cout << "projective_space_with_action::init done" << endl;
-		}
+	}
 }
 
 void projective_space_with_action::init_group(
@@ -103,11 +102,11 @@ void projective_space_with_action::init_group(
 	
 	if (f_v) {
 		cout << "projective_space_with_action::init_group" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "projective_space_with_action::init_group "
 				"creating linear group" << endl;
-		}
+	}
 
 	vector_ge *nice_gens;
 
@@ -124,18 +123,18 @@ void projective_space_with_action::init_group(
 	if (f_v) {
 		cout << "projective_space_with_action::init_group "
 				"creating linear group done" << endl;
-		}
+	}
 #if 0
 	if (f_v) {
 		cout << "projective_space_with_action::init_group "
 				"before create_sims" << endl;
-		}
+	}
 	S = A->Strong_gens->create_sims(verbose_level - 2);
 
 	if (f_v) {
 		cout << "projective_space_with_action::init_group "
 				"after create_sims" << endl;
-		}
+	}
 #endif
 	FREE_OBJECT(nice_gens);
 
@@ -143,17 +142,17 @@ void projective_space_with_action::init_group(
 	if (f_v) {
 		cout << "projective_space_with_action::init_group "
 				"creating action on lines" << endl;
-		}
+	}
 	A_on_lines = A->induced_action_on_grassmannian(2, verbose_level);
 	if (f_v) {
 		cout << "projective_space_with_action::init_group "
 				"creating action on lines done" << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "projective_space_with_action::init_group done" << endl;
-		}
+	}
 }
 
 
@@ -180,18 +179,18 @@ void projective_space_with_action::canonical_labeling(
 		cout << "projective_space_with_action::canonical_labeling"
 				<< endl;
 		cout << "verbose_level = " << verbose_level << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_labeling "
 				"before OiP->encode_incma" << endl;
-		}
+	}
 	OiP->encode_incma(Incma, nb_rows, nb_cols,
 			partition, verbose_level - 1);
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_labeling "
 				"after OiP->encode_incma" << endl;
-		}
+	}
 	if (verbose_level > 5) {
 		cout << "projective_space_with_action::canonical_labeling "
 				"Incma:" << endl;
@@ -201,7 +200,7 @@ void projective_space_with_action::canonical_labeling(
 	//canonical_labeling = NEW_int(nb_rows + nb_cols);
 	for (i = 0; i < nb_rows + nb_cols; i++) {
 		canonical_labeling[i] = i;
-		}
+	}
 
 
 	N = nb_rows + nb_cols;
@@ -211,7 +210,7 @@ void projective_space_with_action::canonical_labeling(
 		cout << "projective_space_with_action::canonical_labeling "
 				"initializing Aut, Base, "
 				"Transversal_length" << endl;
-		}
+	}
 	Aut = NEW_int(N * N);
 	Base = NEW_int(N);
 	Transversal_length = NEW_int(N);
@@ -219,7 +218,7 @@ void projective_space_with_action::canonical_labeling(
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_labeling "
 				"calling nauty_interface_matrix_int" << endl;
-		}
+	}
 
 
 	int t0, t1, dt; //, tps;
@@ -245,14 +244,14 @@ void projective_space_with_action::canonical_labeling(
 				"done with nauty_interface_matrix_int, "
 				"Ago=" << Ago << " dt=" << dt
 				<< " delta_t_in_sec=" << delta_t_in_sec << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_labeling "
 				"done with nauty_interface_matrix_int, "
 				"Ago=" << Ago << endl;
-		}
+	}
 	FREE_int(Aut);
 	FREE_int(Base);
 	FREE_int(Transversal_length);
@@ -261,7 +260,7 @@ void projective_space_with_action::canonical_labeling(
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_labeling done"
 				<< endl;
-		}
+	}
 }
 
 strong_generators
@@ -597,12 +596,12 @@ void projective_space_with_action::report_fixed_objects_in_PG_3_tex(
 
 	if (f_v) {
 		cout << "projective_space_with_action::report_fixed_objects_in_PG_3_tex" << endl;
-		}
+	}
 
 	if (P->n != 3) {
 		cout << "projective_space_with_action::report_fixed_objects_in_PG_3_tex P->n != 3" << endl;
 		exit(1);
-		}
+	}
 	projective_space *P3;
 	int i, j, cnt;
 	int v[4];
@@ -627,8 +626,8 @@ void projective_space_with_action::report_fixed_objects_in_PG_3_tex(
 		j = A->element_image_of(i, Elt, 0 /* verbose_level */);
 		if (j == i) {
 			cnt++;
-			}
 		}
+	}
 
 	ost << "There are " << cnt << " fixed points, they are: \\\\" << endl;
 	for (i = 0; i < P3->N_points; i++) {
@@ -639,72 +638,72 @@ void projective_space_with_action::report_fixed_objects_in_PG_3_tex(
 			int_vec_print(ost, v, 4);
 			ost << "\\\\" << endl;
 			cnt++;
-			}
 		}
+	}
 
 	ost << "Fixed Lines:\\\\" << endl;
 
 	{
-	action *A2;
+		action *A2;
+
+		A2 = A->induced_action_on_grassmannian(2, 0 /* verbose_level*/);
 	
-	A2 = A->induced_action_on_grassmannian(2, 0 /* verbose_level*/);
-
-	cnt = 0;
-	for (i = 0; i < A2->degree; i++) {
-		j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
-		if (j == i) {
-			cnt++;
+		cnt = 0;
+		for (i = 0; i < A2->degree; i++) {
+			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
+			if (j == i) {
+				cnt++;
+				}
 			}
-		}
 
-	ost << "There are " << cnt << " fixed lines, they are: \\\\" << endl;
-	cnt = 0;
-	for (i = 0; i < A2->degree; i++) {
-		j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
-		if (j == i) {
-			ost << i << " : $\\left[";
-			A2->G.AG->G->print_single_generator_matrix_tex(ost, i);
-			ost << "\\right]$\\\\" << endl;
-			cnt++;
+		ost << "There are " << cnt << " fixed lines, they are: \\\\" << endl;
+		cnt = 0;
+		for (i = 0; i < A2->degree; i++) {
+			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
+			if (j == i) {
+				ost << i << " : $\\left[";
+				A2->G.AG->G->print_single_generator_matrix_tex(ost, i);
+				ost << "\\right]$\\\\" << endl;
+				cnt++;
+				}
 			}
-		}
 
-	FREE_OBJECT(A2);
+		FREE_OBJECT(A2);
 	}
 
 	ost << "Fixed Planes:\\\\" << endl;
 
 	{
-	action *A2;
+		action *A2;
+
+		A2 = A->induced_action_on_grassmannian(3, 0 /* verbose_level*/);
 	
-	A2 = A->induced_action_on_grassmannian(3, 0 /* verbose_level*/);
-
-	cnt = 0;
-	for (i = 0; i < A2->degree; i++) {
-		j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
-		if (j == i) {
-			cnt++;
+		cnt = 0;
+		for (i = 0; i < A2->degree; i++) {
+			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
+			if (j == i) {
+				cnt++;
 			}
 		}
 
-	ost << "There are " << cnt << " fixed planes, they are: \\\\" << endl;
-	cnt = 0;
-	for (i = 0; i < A2->degree; i++) {
-		j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
-		if (j == i) {
-			ost << i << " : $\\left[";
-			A2->G.AG->G->print_single_generator_matrix_tex(ost, i);
-			ost << "\\right]$\\\\" << endl;
-			cnt++;
+		ost << "There are " << cnt << " fixed planes, they are: \\\\" << endl;
+		cnt = 0;
+		for (i = 0; i < A2->degree; i++) {
+			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
+			if (j == i) {
+				ost << i << " : $\\left[";
+				A2->G.AG->G->print_single_generator_matrix_tex(ost, i);
+				ost << "\\right]$\\\\" << endl;
+				cnt++;
 			}
 		}
 
-	FREE_OBJECT(A2);
+		FREE_OBJECT(A2);
 	}
 
 	if (f_v) {
 		cout << "projective_space_with_action::report_fixed_objects_in_PG_3_tex done" << endl;
-		}
+	}
 }
 
 void projective_space_with_action::report_orbits_in_PG_3_tex(
@@ -714,15 +713,13 @@ void projective_space_with_action::report_orbits_in_PG_3_tex(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "projective_space_with_action::"
-				"report_orbits_in_PG_3_tex" << endl;
-		}
+		cout << "projective_space_with_action::report_orbits_in_PG_3_tex" << endl;
+	}
 
 	if (P->n != 3) {
-		cout << "projective_space_with_action::"
-				"report_orbits_in_PG_3_tex P->n != 3" << endl;
+		cout << "projective_space_with_action::report_orbits_in_PG_3_tex P->n != 3" << endl;
 		exit(1);
-		}
+	}
 	//projective_space *P3;
 	int order;
 
@@ -760,46 +757,45 @@ void projective_space_with_action::report_orbits_in_PG_3_tex(
 	ost << "Orbits on lines:\\\\" << endl;
 
 	{
-	action *A2;
-	schreier *Sch;
+		action *A2;
+		schreier *Sch;
 
-	A2 = A->induced_action_on_grassmannian(2, 0 /* verbose_level*/);
+		A2 = A->induced_action_on_grassmannian(2, 0 /* verbose_level*/);
 
-	Sch = NEW_OBJECT(schreier);
-	A2->all_point_orbits_from_single_generator(*Sch,
-			Elt,
-			0 /*verbose_level*/);
-	Sch->print_orbit_lengths_tex(ost);
+		Sch = NEW_OBJECT(schreier);
+		A2->all_point_orbits_from_single_generator(*Sch,
+				Elt,
+				0 /*verbose_level*/);
+		Sch->print_orbit_lengths_tex(ost);
 
 
-	FREE_OBJECT(Sch);
-	FREE_OBJECT(A2);
+		FREE_OBJECT(Sch);
+		FREE_OBJECT(A2);
 	}
 
 	ost << "Orbits on planes:\\\\" << endl;
 
 	{
-	action *A2;
-	schreier *Sch;
+		action *A2;
+		schreier *Sch;
 
 
-	A2 = A->induced_action_on_grassmannian(3, 0 /* verbose_level*/);
+		A2 = A->induced_action_on_grassmannian(3, 0 /* verbose_level*/);
 
-	Sch = NEW_OBJECT(schreier);
-	A2->all_point_orbits_from_single_generator(*Sch,
-			Elt,
-			0 /*verbose_level*/);
-	Sch->print_orbit_lengths_tex(ost);
+		Sch = NEW_OBJECT(schreier);
+		A2->all_point_orbits_from_single_generator(*Sch,
+				Elt,
+				0 /*verbose_level*/);
+		Sch->print_orbit_lengths_tex(ost);
 
 
-	FREE_OBJECT(Sch);
-	FREE_OBJECT(A2);
+		FREE_OBJECT(Sch);
+		FREE_OBJECT(A2);
 	}
 
 	if (f_v) {
-		cout << "projective_space_with_action::"
-				"report_orbits_in_PG_3_tex done" << endl;
-		}
+		cout << "projective_space_with_action::report_orbits_in_PG_3_tex done" << endl;
+	}
 }
 
 void projective_space_with_action::report_decomposition_by_single_automorphism(
@@ -865,7 +861,7 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 	if (f_v) {
 		cout << "projective_space_with_action::report_decomposition_by_single_automorphism "
 				"before incidence_and_stack_for_type_ij" << endl;
-		}
+	}
 	P->incidence_and_stack_for_type_ij(
 		1 /* row_type */, 2 /* col_type */,
 		Inc,
@@ -874,36 +870,36 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 	if (f_v) {
 		cout << "projective_space_with_action::report_decomposition_by_single_automorphism "
 				"after incidence_and_stack_for_type_ij" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "projective_space_with_action::report_decomposition_by_single_automorphism "
 				"before S1.allocate" << endl;
-		}
+	}
 	S1.allocate(A->degree, 0 /* verbose_level */);
 	S2.allocate(A_on_lines->degree, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "projective_space_with_action::report_decomposition_by_single_automorphism "
 				"before Sch1->get_orbit_partition" << endl;
-		}
+	}
 	Sch1->get_orbit_partition(S1, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "projective_space_with_action::report_decomposition_by_single_automorphism "
 				"before Sch2->get_orbit_partition" << endl;
-		}
+	}
 	Sch2->get_orbit_partition(S2, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "projective_space_with_action::report_decomposition_by_single_automorphism "
 				"after Sch2->get_orbit_partition" << endl;
-		}
+	}
 	int i, j, sz;
 
 	for (i = 1; i < S1.ht; i++) {
 		if (f_v) {
 			cout << "projective_space_with_action::report_decomposition_by_single_automorphism "
 					"before Stack->split_cell (S1) i=" << i << endl;
-			}
+		}
 		Stack->split_cell(
 				S1.pointList + S1.startCell[i],
 				S1.cellSize[i], verbose_level);
@@ -919,7 +915,7 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 		if (f_v) {
 			cout << "projective_space_with_action::report_decomposition_by_single_automorphism "
 					"before Stack->split_cell (S2) i=" << i << endl;
-			}
+		}
 		Stack->split_cell(set, sz, 0 /*verbose_level*/);
 	}
 	FREE_int(set);
@@ -1026,7 +1022,7 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 
 	if (f_v) {
 		cout << "projective_space_with_action::report_decomposition_by_single_automorphism done" << endl;
-		}
+	}
 }
 
 
@@ -2444,7 +2440,7 @@ projective_space_with_action::create_object_from_string(
 	if (f_v) {
 		cout << "projective_space_with_action::create_object_from_string" << endl;
 		cout << "type=" << type << endl;
-		}
+	}
 
 
 	object_in_projective_space *OiP;
@@ -2459,7 +2455,7 @@ projective_space_with_action::create_object_from_string(
 	if (f_v) {
 		cout << "projective_space_with_action::create_object_from_string"
 				" done" << endl;
-		}
+	}
 	return OiP;
 }
 
@@ -2473,7 +2469,7 @@ projective_space_with_action::create_object_from_int_vec(
 	if (f_v) {
 		cout << "projective_space_with_action::create_object_from_int_vec" << endl;
 		cout << "type=" << type << endl;
-		}
+	}
 
 
 	object_in_projective_space *OiP;
@@ -2488,7 +2484,7 @@ projective_space_with_action::create_object_from_int_vec(
 	if (f_v) {
 		cout << "projective_space_with_action::create_object_from_int_vec"
 				" done" << endl;
-		}
+	}
 	return OiP;
 }
 
@@ -2549,25 +2545,25 @@ void print_summary_table_entry(int *Table,
 	if (i == -1) {
 		if (j == -1) {
 			sprintf(str, "\\mbox{Orbit}");
-			}
+		}
 		else if (j == 0) {
 			sprintf(str, "\\mbox{Rep}");
-			}
+		}
 		else if (j == 1) {
 			sprintf(str, "\\#");
-			}
+		}
 		else if (j == 2) {
 			sprintf(str, "\\mbox{Ago}");
-			}
+		}
 		else if (j == 3) {
 			sprintf(str, "\\mbox{Objects}");
-			}
 		}
+	}
 	else {
 		//cout << "print_summary_table_entry i=" << i << " j=" << j << endl;
 		if (j == -1) {
 			sprintf(str, "%d", i);
-			}
+		}
 		else if (j == 2) {
 			extra_data = CB->Type_extra_data[CB->perm[i]];
 
@@ -2575,7 +2571,7 @@ void print_summary_table_entry(int *Table,
 			go.create(OiPA->ago, __FILE__, __LINE__);
 			//OiPA->Aut_gens->group_order(go);
 			go.print_to_string(str);
-			}
+		}
 		else if (j == 3) {
 
 
@@ -2590,19 +2586,19 @@ void print_summary_table_entry(int *Table,
 				sprintf(str + strlen(str), "%d", Input_objects[h]);
 				if (h < nb_input_objects - 1) {
 					strcat(str, ", ");
-					}
+				}
 				if (h == 10) {
 					strcat(str, "\\ldots");
 					break;
-					}
 				}
+			}
 
 			FREE_int(Input_objects);
-			}
+		}
 		else {
 			sprintf(str, "%d", val);
-			}
 		}
+	}
 	output.assign(str);
 }
 
@@ -2614,7 +2610,7 @@ void compute_ago_distribution(
 
 	if (f_v) {
 		cout << "compute_ago_distribution" << endl;
-		}
+	}
 	long int *Ago;
 	int i;
 
@@ -2625,13 +2621,13 @@ void compute_ago_distribution(
 		OiPA = (object_in_projective_space_with_action *)
 				CB->Type_extra_data[i];
 		Ago[i] = OiPA->ago; //OiPA->Aut_gens->group_order_as_lint();
-		}
+	}
 	C_ago = NEW_OBJECT(tally);
 	C_ago->init_lint(Ago, CB->nb_types, FALSE, 0);
 	FREE_lint(Ago);
 	if (f_v) {
 		cout << "compute_ago_distribution done" << endl;
-		}
+	}
 }
 
 void compute_ago_distribution_permuted(
@@ -2641,7 +2637,7 @@ void compute_ago_distribution_permuted(
 
 	if (f_v) {
 		cout << "compute_ago_distribution_permuted" << endl;
-		}
+	}
 	long int *Ago;
 	int i;
 
@@ -2652,13 +2648,13 @@ void compute_ago_distribution_permuted(
 		OiPA = (object_in_projective_space_with_action *)
 				CB->Type_extra_data[CB->perm[i]];
 		Ago[i] = OiPA->ago; //OiPA->Aut_gens->group_order_as_lint();
-		}
+	}
 	C_ago = NEW_OBJECT(tally);
 	C_ago->init_lint(Ago, CB->nb_types, FALSE, 0);
 	FREE_lint(Ago);
 	if (f_v) {
 		cout << "compute_ago_distribution_permuted done" << endl;
-		}
+	}
 }
 
 void compute_and_print_ago_distribution(ostream &ost,
@@ -2668,7 +2664,7 @@ void compute_and_print_ago_distribution(ostream &ost,
 
 	if (f_v) {
 		cout << "compute_and_print_ago_distribution" << endl;
-		}
+	}
 	tally *C_ago;
 	compute_ago_distribution(CB, C_ago, verbose_level);
 	ost << "ago distribution: " << endl;
@@ -2688,7 +2684,7 @@ void compute_and_print_ago_distribution_with_classes(ostream &ost,
 
 	if (f_v) {
 		cout << "compute_and_print_ago_distribution_with_classes" << endl;
-		}
+	}
 	tally *C_ago;
 	compute_ago_distribution_permuted(CB, C_ago, verbose_level);
 	ost << "Ago distribution: " << endl;
@@ -2715,7 +2711,7 @@ void compute_and_print_ago_distribution_with_classes(ostream &ost,
 		//SoS->Set_size[i], 10 /* width */, TRUE /* f_tex */);
 		//ost << "$$" << endl;
 
-		}
+	}
 
 	FREE_int(types);
 	FREE_OBJECT(SoS);

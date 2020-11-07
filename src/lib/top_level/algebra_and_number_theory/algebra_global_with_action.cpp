@@ -235,17 +235,14 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(action 
 
 
 
-void algebra_global_with_action::classes_GL(int q, int d,
+void algebra_global_with_action::classes_GL(finite_field *F, int d,
 		int f_no_eigenvalue_one, int verbose_level)
 {
 	gl_classes C;
 	gl_class_rep *R;
 	int nb_classes;
-	finite_field *F;
 	int i;
 
-	F = NEW_OBJECT(finite_field);
-	F->init(q, 0);
 
 	C.init(d, F, verbose_level);
 
@@ -294,7 +291,7 @@ void algebra_global_with_action::classes_GL(int q, int d,
 
 	char fname[1000];
 
-	sprintf(fname, "Class_reps_GL_%d_%d.tex", d, q);
+	sprintf(fname, "Class_reps_GL_%d_%d.tex", d, F->q);
 	{
 		ofstream fp(fname);
 		latex_interface L;
@@ -310,7 +307,6 @@ void algebra_global_with_action::classes_GL(int q, int d,
 	FREE_int(Elt);
 	FREE_OBJECTS(R);
 	FREE_OBJECT(A);
-	FREE_OBJECT(F);
 }
 
 void algebra_global_with_action::do_normal_form(int q, int d,
@@ -327,7 +323,7 @@ void algebra_global_with_action::do_normal_form(int q, int d,
 		cout << "algebra_global_with_action::do_normal_form" << endl;
 		}
 	F = NEW_OBJECT(finite_field);
-	F->init(q, 0);
+	F->finite_field_init(q, 0);
 
 	if (f_v) {
 		cout << "algebra_global_with_action::do_normal_form before C.init" << endl;
@@ -417,7 +413,7 @@ void algebra_global_with_action::do_identify_one(int q, int d,
 	finite_field *F;
 
 	F = NEW_OBJECT(finite_field);
-	F->init(q, 0);
+	F->finite_field_init(q, 0);
 
 	C.init(d, F, verbose_level);
 
@@ -488,7 +484,7 @@ void algebra_global_with_action::do_identify_all(int q, int d,
 	finite_field *F;
 
 	F = NEW_OBJECT(finite_field);
-	F->init(q, 0);
+	F->finite_field_init(q, 0);
 
 	C.init(d, F, verbose_level);
 
@@ -573,7 +569,7 @@ void algebra_global_with_action::do_random(int q, int d, int f_no_eigenvalue_one
 	finite_field *F;
 
 	F = NEW_OBJECT(finite_field);
-	F->init(q, 0);
+	F->finite_field_init(q, 0);
 	C.init(d, F, verbose_level);
 
 	C.make_classes(Reps, nb_classes, f_no_eigenvalue_one, verbose_level);
@@ -625,7 +621,7 @@ void algebra_global_with_action::group_table(int q, int d, int f_poly, std::stri
 		F->init_override_polynomial(q, poly, 0);
 		}
 	else {
-		F->init(q, 0);
+		F->finite_field_init(q, 0);
 		}
 
 	C.init(d, F, verbose_level);
@@ -807,6 +803,8 @@ void algebra_global_with_action::group_table(int q, int d, int f_poly, std::stri
 
 void algebra_global_with_action::centralizer_brute_force(int q, int d,
 		int elt_idx, int verbose_level)
+// problem elt_idx does not describe the group element uniquely.
+// Reason: the sims chain is not canonical.
 {
 	action *A;
 	longinteger_object Go;
@@ -814,7 +812,7 @@ void algebra_global_with_action::centralizer_brute_force(int q, int d,
 	vector_ge *nice_gens;
 
 	F = NEW_OBJECT(finite_field);
-	F->init(q, 0);
+	F->finite_field_init(q, 0);
 
 	A = NEW_OBJECT(action);
 	A->init_projective_group(d /* n */, F,
@@ -943,7 +941,7 @@ void algebra_global_with_action::centralizer(int q, int d,
 	vector_ge *nice_gens;
 
 	F = NEW_OBJECT(finite_field);
-	F->init(q, 0);
+	F->finite_field_init(q, 0);
 
 	A_PGL = NEW_OBJECT(action);
 	A_PGL->init_projective_group(d /* n */, F,
@@ -1017,7 +1015,7 @@ void algebra_global_with_action::centralizer(int q, int d, int verbose_level)
 	int go, i;
 
 	F = NEW_OBJECT(finite_field);
-	F->init(q, 0);
+	F->finite_field_init(q, 0);
 	A = NEW_OBJECT(action);
 	A->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */,
@@ -1366,7 +1364,8 @@ void algebra_global_with_action::analyze_group(action *A, sims *S,
 	FREE_int(tlF2);
 }
 
-void algebra_global_with_action::compute_regular_representation(action *A, sims *S,
+void algebra_global_with_action::compute_regular_representation(
+		action *A, sims *S,
 		vector_ge *SG, int *&perm, int verbose_level)
 {
 	longinteger_object go;
@@ -1395,7 +1394,8 @@ void algebra_global_with_action::compute_regular_representation(action *A, sims 
 		}
 }
 
-void algebra_global_with_action::presentation(action *A, sims *S, int goi,
+void algebra_global_with_action::presentation(
+		action *A, sims *S, int goi,
 		vector_ge *gens, int *primes, int verbose_level)
 {
 	int *Elt1, *Elt2, *Elt3, *Elt4;
@@ -1531,12 +1531,11 @@ void algebra_global_with_action::presentation(action *A, sims *S, int goi,
 }
 
 
-void algebra_global_with_action::do_eigenstuff(int q, int size, int *Data, int verbose_level)
+void algebra_global_with_action::do_eigenstuff(finite_field *F, int size, int *Data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	discreta_matrix M;
-	int i, j, k, a, p, h;
-	finite_field Fq;
+	int i, j, k, a, h;
 	//unipoly_domain U;
 	//unipoly_object char_poly;
 	number_theory_domain NT;
@@ -1558,20 +1557,8 @@ void algebra_global_with_action::do_eigenstuff(int q, int size, int *Data, int v
 		cout << M << endl;
 	}
 
-	if (!NT.is_prime_power(q, p, h)) {
-		cout << "q is not prime power, we need a prime power" << endl;
-		exit(1);
-	}
-#if 0
-	if (h > 1) {
-		cout << "prime powers are not implemented yet" << endl;
-		exit(1);
-	}
-#endif
-	Fq.init(q, verbose_level);
-
 	//domain d(q);
-	domain d(&Fq);
+	domain d(F);
 	with w(&d);
 
 #if 0
@@ -1632,11 +1619,11 @@ void algebra_global_with_action::do_eigenstuff(int q, int size, int *Data, int v
 	cout << "has degree " << deg << endl;
 	l = charpoly.s_ii(deg);
 	cout << "leading coefficient " << l << endl;
-	lv = Fq.inverse(l);
+	lv = F->inverse(l);
 	cout << "leading coefficient inverse " << lv << endl;
 	for (i = 0; i <= deg; i++) {
 		b = charpoly.s_ii(i);
-		c = Fq.mult(b, lv);
+		c = F->mult(b, lv);
 		charpoly.m_ii(i, c);
 	}
 	cout << "monic characteristic polynomial:" << charpoly << endl;
@@ -1645,9 +1632,9 @@ void algebra_global_with_action::do_eigenstuff(int q, int size, int *Data, int v
 	int *roots;
 	int nb_roots = 0;
 
-	roots = new int[q];
+	roots = new int[F->q];
 
-	for (a = 0; a < q; a++) {
+	for (a = 0; a < F->q; a++) {
 		x.m_i(a);
 		charpoly.evaluate_at(x, y);
 		if (y.s_i() == 0) {
@@ -1665,7 +1652,7 @@ void algebra_global_with_action::do_eigenstuff(int q, int size, int *Data, int v
 		eigenvalue = roots[h];
 		cout << "looking at eigenvalue " << eigenvalue << endl;
 		int *A, *B, *Bt;
-		eigenvalue_negative = Fq.negate(eigenvalue);
+		eigenvalue_negative = F->negate(eigenvalue);
 		A = new int[size * size];
 		B = new int[size * size];
 		Bt = new int[size * size];
@@ -1676,24 +1663,24 @@ void algebra_global_with_action::do_eigenstuff(int q, int size, int *Data, int v
 		}
 		cout << "A:" << endl;
 		print_integer_matrix_width(cout, A,
-				size, size, size, Fq.log10_of_q);
+				size, size, size, F->log10_of_q);
 		for (i = 0; i < size; i++) {
 			for (j = 0; j < size; j++) {
 				a = A[i * size + j];
 				if (j == i) {
-					a = Fq.add(a, eigenvalue_negative);
+					a = F->add(a, eigenvalue_negative);
 				}
 				B[i * size + j] = a;
 			}
 		}
 		cout << "B = A - eigenvalue * I:" << endl;
 		print_integer_matrix_width(cout, B,
-				size, size, size, Fq.log10_of_q);
+				size, size, size, F->log10_of_q);
 
 		cout << "B transposed:" << endl;
-		Fq.transpose_matrix(B, Bt, size, size);
+		F->transpose_matrix(B, Bt, size, size);
 		print_integer_matrix_width(cout, Bt,
-				size, size, size, Fq.log10_of_q);
+				size, size, size, F->log10_of_q);
 
 		int f_special = FALSE;
 		int f_complete = TRUE;
@@ -1705,17 +1692,17 @@ void algebra_global_with_action::do_eigenstuff(int q, int size, int *Data, int v
 		base_cols = new int[size];
 		kernel = new int[size * size];
 
-		nb_base_cols = Fq.Gauss_int(Bt,
+		nb_base_cols = F->Gauss_int(Bt,
 			f_special, f_complete, base_cols,
 			f_P, NULL, size, size, size,
 			verbose_level - 1);
 		cout << "rank = " << nb_base_cols << endl;
 
-		Fq.matrix_get_kernel(Bt, size, size, base_cols, nb_base_cols,
+		F->matrix_get_kernel(Bt, size, size, base_cols, nb_base_cols,
 			kernel_m, kernel_n, kernel, 0 /* verbose_level */);
 		cout << "kernel = left eigenvectors:" << endl;
 		print_integer_matrix_width(cout, kernel,
-				size, kernel_n, kernel_n, Fq.log10_of_q);
+				size, kernel_n, kernel_n, F->log10_of_q);
 
 		int *vec1, *vec2;
 		vec1 = new int[size];
@@ -1725,22 +1712,22 @@ void algebra_global_with_action::do_eigenstuff(int q, int size, int *Data, int v
 			}
 		int_vec_print(cout, vec1, size);
 		cout << endl;
-		Fq.PG_element_normalize_from_front(vec1, 1, size);
+		F->PG_element_normalize_from_front(vec1, 1, size);
 		int_vec_print(cout, vec1, size);
 		cout << endl;
-		Fq.PG_element_rank_modified(vec1, 1, size, a);
+		F->PG_element_rank_modified(vec1, 1, size, a);
 		cout << "has rank " << a << endl;
 
 
 		cout << "computing xA" << endl;
 
-		Fq.mult_vector_from_the_left(vec1, A, vec2, size, size);
+		F->mult_vector_from_the_left(vec1, A, vec2, size, size);
 		int_vec_print(cout, vec2, size);
 		cout << endl;
-		Fq.PG_element_normalize_from_front(vec2, 1, size);
+		F->PG_element_normalize_from_front(vec2, 1, size);
 		int_vec_print(cout, vec2, size);
 		cout << endl;
-		Fq.PG_element_rank_modified(vec2, 1, size, a);
+		F->PG_element_rank_modified(vec2, 1, size, a);
 		cout << "has rank " << a << endl;
 
 		delete [] vec1;
@@ -2924,8 +2911,8 @@ void algebra_global_with_action::packing_init(
 
 void algebra_global_with_action::centralizer_of_element(
 		action *A, sims *S,
-		const char *element_description,
-		const char *label, int verbose_level)
+		std::string &element_description,
+		std::string &label, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt;
@@ -3008,8 +2995,8 @@ void algebra_global_with_action::centralizer_of_element(
 
 void algebra_global_with_action::normalizer_of_cyclic_subgroup(
 		action *A, sims *S,
-		const char *element_description,
-		const char *label, int verbose_level)
+		std::string &element_description,
+		std::string &label, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt;
@@ -4088,7 +4075,7 @@ void algebra_global_with_action::orbits_on_polynomials(
 
 
 void algebra_global_with_action::do_eigenstuff_with_coefficients(
-		int n, int q, std::string &coeffs_text, int verbose_level)
+		finite_field *F, int n, std::string &coeffs_text, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4106,7 +4093,7 @@ void algebra_global_with_action::do_eigenstuff_with_coefficients(
 
 	algebra_global_with_action A;
 
-	A.do_eigenstuff(q, n, Data, verbose_level);
+	A.do_eigenstuff(F, n, Data, verbose_level);
 
 	FREE_int(Data);
 	if (f_v) {
@@ -4115,7 +4102,7 @@ void algebra_global_with_action::do_eigenstuff_with_coefficients(
 }
 
 void algebra_global_with_action::do_eigenstuff_from_file(
-		int n, int q, std::string &fname, int verbose_level)
+		finite_field *F, int n, std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4139,13 +4126,253 @@ void algebra_global_with_action::do_eigenstuff_from_file(
 
 	algebra_global_with_action A;
 
-	A.do_eigenstuff(q, n, Data, verbose_level);
+	A.do_eigenstuff(F, n, Data, verbose_level);
 
 
 	if (f_v) {
 		cout << "algebra_global_with_action::do_eigenstuff_from_file done" << endl;
 	}
 }
+
+void algebra_global_with_action::do_cheat_sheet_PG(finite_field *F,
+		int n,
+		int f_decomposition_by_element, int decomposition_by_element_power,
+		std::string &decomposition_by_element_data, std::string &fname_base,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::do_cheat_sheet_PG verbose_level="
+				<< verbose_level << endl;
+	}
+
+
+
+	int f_semilinear;
+	number_theory_domain NT;
+
+
+	if (NT.is_prime(F->q)) {
+		f_semilinear = FALSE;
+	}
+	else {
+		f_semilinear = TRUE;
+	}
+
+
+	projective_space_with_action *PA;
+
+	PA = NEW_OBJECT(projective_space_with_action);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::do_cheat_sheet_PG before PA->init" << endl;
+	}
+	PA->init(F, n,
+		f_semilinear,
+		TRUE /*f_init_incidence_structure*/,
+		0 /* verbose_level */);
+	if (f_v) {
+		cout << "algebra_global_with_action::do_cheat_sheet_PG after PA->init" << endl;
+	}
+
+
+
+	{
+		char str[1000];
+		string fname;
+		char title[1000];
+		char author[1000];
+		//int f_with_group = FALSE;
+		//int f_semilinear = FALSE;
+		//int f_basis = TRUE;
+		//int q = F->q;
+
+		snprintf(str, 1000, "PG_%d_%d.tex", n, F->q);
+		fname.assign(str);
+		snprintf(title, 1000, "Cheat Sheet PG($%d,%d$)", n, F->q);
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "algebra_global_with_action::do_cheat_sheet_PG before PA->P->report" << endl;
+			}
+			PA->P->report(ost, verbose_level);
+			if (f_v) {
+				cout << "algebra_global_with_action::do_cheat_sheet_PG after PA->P->report" << endl;
+			}
+
+			if (f_decomposition_by_element) {
+
+				if (f_v) {
+					cout << "algebra_global_with_action::do_cheat_sheet_PG f_decomposition_by_element" << endl;
+				}
+
+				int *Elt;
+
+				Elt = NEW_int(PA->A->elt_size_in_int);
+
+
+				PA->A->make_element_from_string(Elt,
+						decomposition_by_element_data, verbose_level);
+
+
+				PA->A->element_power_int_in_place(Elt,
+						decomposition_by_element_power, verbose_level);
+
+				PA->report_decomposition_by_single_automorphism(
+						Elt, ost, fname_base,
+						verbose_level);
+
+				FREE_int(Elt);
+			}
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+	FREE_OBJECT(PA);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::do_cheat_sheet_PG done" << endl;
+	}
+
+}
+
+void algebra_global_with_action::do_canonical_form_PG(finite_field *F,
+		projective_space_object_classifier_description *Canonical_form_PG_Descr,
+		int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int i;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::do_canonical_form_PG" << endl;
+	}
+
+
+
+	int f_semilinear;
+	number_theory_domain NT;
+
+
+	if (NT.is_prime(F->q)) {
+		f_semilinear = FALSE;
+	}
+	else {
+		f_semilinear = TRUE;
+	}
+
+
+	projective_space_with_action *PA;
+
+	PA = NEW_OBJECT(projective_space_with_action);
+
+	PA->init(F, n,
+		f_semilinear,
+		TRUE /*f_init_incidence_structure*/,
+		0 /* verbose_level */);
+
+
+
+	projective_space_object_classifier *OC;
+
+	OC = NEW_OBJECT(projective_space_object_classifier);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::do_canonical_form_PG before OC->do_the_work" << endl;
+	}
+	OC->do_the_work(
+			Canonical_form_PG_Descr,
+			PA,
+			verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::do_canonical_form_PG after OC->do_the_work" << endl;
+	}
+
+	FREE_OBJECT(OC);
+	FREE_OBJECT(PA);
+
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::do_canonical_form_PG done" << endl;
+	}
+}
+
+void algebra_global_with_action::do_study_surface(finite_field *F, int nb, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::do_study_surface" << endl;
+	}
+
+	surface_study *study;
+
+	study = NEW_OBJECT(surface_study);
+
+	cout << "before study->init" << endl;
+	study->init(F, nb, verbose_level);
+	cout << "after study->init" << endl;
+
+	cout << "before study->study_intersection_points" << endl;
+	study->study_intersection_points(verbose_level);
+	cout << "after study->study_intersection_points" << endl;
+
+	cout << "before study->study_line_orbits" << endl;
+	study->study_line_orbits(verbose_level);
+	cout << "after study->study_line_orbits" << endl;
+
+	cout << "before study->study_group" << endl;
+	study->study_group(verbose_level);
+	cout << "after study->study_group" << endl;
+
+	cout << "before study->study_orbits_on_lines" << endl;
+	study->study_orbits_on_lines(verbose_level);
+	cout << "after study->study_orbits_on_lines" << endl;
+
+	cout << "before study->study_find_eckardt_points" << endl;
+	study->study_find_eckardt_points(verbose_level);
+	cout << "after study->study_find_eckardt_points" << endl;
+
+#if 0
+	if (study->nb_Eckardt_pts == 6) {
+		cout << "before study->study_surface_with_6_eckardt_points" << endl;
+		study->study_surface_with_6_eckardt_points(verbose_level);
+		cout << "after study->study_surface_with_6_eckardt_points" << endl;
+		}
+#endif
+
+	if (f_v) {
+		cout << "algebra_global_with_action::do_study_surface done" << endl;
+	}
+}
+
 
 
 

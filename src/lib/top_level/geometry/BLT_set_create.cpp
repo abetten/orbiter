@@ -68,7 +68,7 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 		cout << "BLT_set_create::init q = " << q << endl;
 	}
 	F = NEW_OBJECT(finite_field);
-	F->init(q, 0);
+	F->finite_field_init(q, 0);
 	
 
 

@@ -274,7 +274,8 @@ void interface_combinatorics::read_arguments(int argc,
 			Combinatorial_object_description = NEW_OBJECT(combinatorial_object_description);
 			i += Combinatorial_object_description->read_arguments(argc - i - 1,
 					argv + i + 1, verbose_level);
-			cout << "interface_combinatorics::read_arguments finished reading -create_combinatorial_object" << endl;
+			cout << "interface_combinatorics::read_arguments finished "
+					"reading -create_combinatorial_object" << endl;
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -320,7 +321,8 @@ void interface_combinatorics::read_arguments(int argc,
 			Job = NEW_OBJECT(projective_space_job_description);
 			i += Job->read_arguments(argc - i - 1,
 				argv + i + 1, verbose_level) + 1;
-			cout << "interface_combinatorics::read_arguments finished reading -process_combinatorial_objects" << endl;
+			cout << "interface_combinatorics::read_arguments finished "
+					"reading -process_combinatorial_objects" << endl;
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -357,7 +359,8 @@ void interface_combinatorics::read_arguments(int argc,
 			f_grouping = TRUE;
 			read_poset_file_fname = argv[++i];
 			x_stretch = atof(argv[++i]);
-			cout << "-read_poset_file_with_grouping " << read_poset_file_fname << " " << x_stretch << endl;
+			cout << "-read_poset_file_with_grouping "
+					<< read_poset_file_fname << " " << x_stretch << endl;
 		}
 		else if (strcmp(argv[i], "-graph_theoretic_activity") == 0) {
 			f_graph_theoretic_activity_description = TRUE;
@@ -413,7 +416,8 @@ void interface_combinatorics::read_arguments(int argc,
 			Tdo_refinement_descr = NEW_OBJECT(tdo_refinement_description);
 			i += Tdo_refinement_descr->read_arguments(argc - i - 1,
 					argv + i + 1, verbose_level) - 1;
-			cout << "interface_combinatorics::read_arguments finished reading -tdo_refinement" << endl;
+			cout << "interface_combinatorics::read_arguments finished "
+					"reading -tdo_refinement" << endl;
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {

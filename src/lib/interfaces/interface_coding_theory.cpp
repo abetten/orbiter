@@ -63,7 +63,8 @@ void interface_coding_theory::print_help(int argc,
 		cout << "-draw_matrix <string : fname> <int : box_width> <int : bit_depth>" << endl;
 	}
 	else if (strcmp(argv[i], "-draw_matrix_partition") == 0) {
-		cout << "-draw_matrix_partition <int : width> <string : row partition> <string : col partition> " << endl;
+		cout << "-draw_matrix_partition <int : width> "
+				"<string : row partition> <string : col partition> " << endl;
 	}
 }
 int interface_coding_theory::recognize_keyword(int argc,

@@ -981,7 +981,7 @@ void strong_generators::init_subgroup_by_generators(action *A,
 	nice_gens->allocate(nb_subgroup_gens, verbose_level - 2);
 	for (int h = 0; h < nb_subgroup_gens; h++) {
 		A->make_element_from_string(nice_gens->ith(h),
-				subgroup_gens[h].c_str(), verbose_level);
+				subgroup_gens[h], verbose_level);
 	}
 
 

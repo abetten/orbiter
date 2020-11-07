@@ -148,10 +148,10 @@ void boolean_function::init(int n, int verbose_level)
 	}
 
 	Fq = NEW_OBJECT(finite_field);
-	Fq->init(2, 0);
+	Fq->finite_field_init(2, 0);
 
 	FQ = NEW_OBJECT(finite_field);
-	FQ->init(Q, 0);
+	FQ->finite_field_init(Q, 0);
 
 	affine_points = NEW_lint(Q);
 

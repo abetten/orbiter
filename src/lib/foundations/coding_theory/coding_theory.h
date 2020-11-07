@@ -96,6 +96,38 @@ public:
 	void make_BCH_codes(int n, int q, int t, int b, int f_dual, int verbose_level);
 	void make_Hamming_graph_and_write_file(int n, int q,
 			int f_projective, int verbose_level);
+	void compute_and_print_projective_weights(
+			std::ostream &ost, finite_field *F, int *M, int n, int k);
+	int code_minimum_distance(finite_field *F, int n, int k,
+		int *code, int verbose_level);
+		// code[k * n]
+	void codewords_affine(finite_field *F, int n, int k,
+		int *code, // [k * n]
+		int *codewords, // q^k
+		int verbose_level);
+	void code_projective_weight_enumerator(finite_field *F, int n, int k,
+		int *code, // [k * n]
+		int *weight_enumerator, // [n + 1]
+		int verbose_level);
+	void code_weight_enumerator(finite_field *F, int n, int k,
+		int *code, // [k * n]
+		int *weight_enumerator, // [n + 1]
+		int verbose_level);
+	void code_weight_enumerator_fast(finite_field *F, int n, int k,
+		int *code, // [k * n]
+		int *weight_enumerator, // [n + 1]
+		int verbose_level);
+	void code_projective_weights(finite_field *F, int n, int k,
+		int *code, // [k * n]
+		int *&weights,
+			// will be allocated [N]
+			// where N = theta_{k-1}
+		int verbose_level);
+	void mac_williams_equations(longinteger_object *&M, int n, int k, int q);
+	void determine_weight_enumerator();
+	void do_weight_enumerator(finite_field *F, int m, int n, std::string &text,
+			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int verbose_level);
 
 
 	// mindist.cpp:

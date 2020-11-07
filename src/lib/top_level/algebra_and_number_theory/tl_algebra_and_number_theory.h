@@ -28,7 +28,7 @@ public:
 			std::string &label,
 			std::string &label_tex,
 			int verbose_level);
-	void classes_GL(int q, int d, int f_no_eigenvalue_one, int verbose_level);
+	void classes_GL(finite_field *F, int d, int f_no_eigenvalue_one, int verbose_level);
 	void do_normal_form(int q, int d,
 			int f_no_eigenvalue_one, int *data, int data_sz,
 			int verbose_level);
@@ -51,7 +51,7 @@ public:
 		vector_ge *SG, int *&perm, int verbose_level);
 	void presentation(action *A, sims *S, int goi, vector_ge *gens,
 		int *primes, int verbose_level);
-	void do_eigenstuff(int q, int size, int *Data, int verbose_level);
+	void do_eigenstuff(finite_field *F, int size, int *Data, int verbose_level);
 	void A5_in_PSL_(int q, int verbose_level);
 	void A5_in_PSL_2_q(int q,
 			discreta_matrix & A, discreta_matrix & B, domain *dom_GFq, int verbose_level);
@@ -89,12 +89,12 @@ public:
 			int verbose_level);
 	void centralizer_of_element(
 			action *A, sims *S,
-			const char *element_description,
-			const char *label, int verbose_level);
+			std::string &element_description,
+			std::string &label, int verbose_level);
 	void normalizer_of_cyclic_subgroup(
 			action *A, sims *S,
-			const char *element_description,
-			const char *label, int verbose_level);
+			std::string &element_description,
+			std::string &label, int verbose_level);
 	void find_subgroups(
 			action *A, sims *S,
 			int subgroup_order,
@@ -111,9 +111,18 @@ public:
 			int degree_of_poly,
 			int verbose_level);
 	void do_eigenstuff_with_coefficients(
-			int n, int q, std::string &coeffs_text, int verbose_level);
+			finite_field *F, int n, std::string &coeffs_text, int verbose_level);
 	void do_eigenstuff_from_file(
-			int n, int q, std::string &fname, int verbose_level);
+			finite_field *F, int n, std::string &fname, int verbose_level);
+	void do_cheat_sheet_PG(finite_field *F,
+			int n,
+			int f_decomposition_by_element, int decomposition_by_element_power,
+			std::string &decomposition_by_element_data, std::string &fname_base,
+			int verbose_level);
+	void do_canonical_form_PG(finite_field *F,
+			projective_space_object_classifier_description *Canonical_form_PG_Descr,
+			int n, int verbose_level);
+	void do_study_surface(finite_field *F, int nb, int verbose_level);
 
 };
 
@@ -197,6 +206,190 @@ void create_factor_group(action *A, sims *S, long int goi,
 
 
 // #############################################################################
+// finite_field_activity_description.cpp
+// #############################################################################
+
+
+//! description of a finite field actvity
+
+class finite_field_activity_description {
+public:
+
+	int f_q;
+	int q;
+
+	int f_override_polynomial;
+	std::string override_polynomial;
+
+	int f_cheat_sheet_GF;
+	int f_all_rational_normal_forms;
+	int d;
+
+	int f_polynomial_division;
+	std::string polynomial_division_A;
+	std::string polynomial_division_B;
+
+	int f_extended_gcd_for_polynomials;
+
+	int f_polynomial_mult_mod;
+	std::string polynomial_mult_mod_A;
+	std::string polynomial_mult_mod_B;
+	std::string polynomial_mult_mod_M;
+
+	int f_Berlekamp_matrix;
+	std::string Berlekamp_matrix_coeffs;
+
+	int f_normal_basis;
+	int normal_basis_d;
+
+	int f_normalize_from_the_right;
+	int f_normalize_from_the_left;
+
+	int f_nullspace;
+	int nullspace_m;
+	int nullspace_n;
+	std::string nullspace_text;
+
+	int f_RREF;
+	int RREF_m;
+	int RREF_n;
+	std::string RREF_text;
+
+	int f_weight_enumerator;
+
+	int f_trace;
+
+	int f_norm;
+
+	int f_make_table_of_irreducible_polynomials;
+	int make_table_of_irreducible_polynomials_degree;
+
+	int f_EC_Koblitz_encoding;
+	std::string EC_message;
+	int EC_s;
+	int f_EC_points;
+	int f_EC_add;
+	std::string EC_pt1_text;
+	std::string EC_pt2_text;
+
+	int f_EC_cyclic_subgroup;
+	int EC_b;
+	int EC_c;
+	std::string EC_pt_text;
+
+	int f_EC_multiple_of;
+	int EC_multiple_of_n;
+	int f_EC_discrete_log;
+	std::string EC_discrete_log_pt_text;
+
+	int f_EC_baby_step_giant_step;
+	std::string EC_bsgs_G;
+	int EC_bsgs_N;
+	std::string EC_bsgs_cipher_text;
+
+	int f_EC_baby_step_giant_step_decode;
+	std::string EC_bsgs_A;
+	std::string EC_bsgs_keys;
+
+
+
+
+	int f_NTRU_encrypt;
+	int NTRU_encrypt_N;
+	int NTRU_encrypt_p;
+	std::string NTRU_encrypt_H;
+	std::string NTRU_encrypt_R;
+	std::string NTRU_encrypt_Msg;
+	int f_polynomial_center_lift;
+	std::string polynomial_center_lift_A;
+	int f_polynomial_reduce_mod_p;
+	std::string polynomial_reduce_mod_p_A;
+
+	int f_cheat_sheet_PG;
+	int cheat_sheet_PG_n;
+
+	int f_decomposition_by_element;
+	int decomposition_by_element_power;
+	std::string decomposition_by_element_data;
+	std::string decomposition_by_element_fname_base;
+
+	int f_canonical_form_PG;
+	int canonical_form_PG_n;
+	projective_space_object_classifier_description *Canonical_form_PG_Descr;
+
+
+	int f_transversal;
+	std::string transversal_line_1_basis;
+	std::string transversal_line_2_basis;
+	std::string transversal_point;
+
+	int f_intersection_of_two_lines;
+	std::string line_1_basis;
+	std::string line_2_basis;
+
+	int f_move_two_lines_in_hyperplane_stabilizer;
+	long int line1_from;
+	long int line2_from;
+	long int line1_to;
+	long int line2_to;
+
+	int f_move_two_lines_in_hyperplane_stabilizer_text;
+	std::string line1_from_text;
+	std::string line2_from_text;
+	std::string line1_to_text;
+	std::string line2_to_text;
+
+	int f_study_surface;
+	int study_surface_nb;
+
+	int f_inverse_isomorphism_klein_quadric;
+	std::string inverse_isomorphism_klein_quadric_matrix_A6;
+
+	int f_rank_point_in_PG;
+	int rank_point_in_PG_n;
+	std::string rank_point_in_PG_text;
+
+
+	int f_eigenstuff;
+	int f_eigenstuff_from_file;
+	int eigenstuff_n;
+	std::string eigenstuff_coeffs;
+	std::string eigenstuff_fname;
+
+
+	finite_field_activity_description();
+	~finite_field_activity_description();
+	int read_arguments(
+		int argc, const char **argv,
+		int verbose_level);
+
+};
+
+
+
+// #############################################################################
+// finite_field_activity.cpp
+// #############################################################################
+
+
+//! perform a finite field activity
+
+class finite_field_activity {
+public:
+	finite_field_activity_description *Descr;
+	finite_field *F;
+
+	finite_field_activity();
+	~finite_field_activity();
+	void init(finite_field_activity_description *Descr,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+
+
+};
+
+
+// #############################################################################
 // group_theoretic_activity_description.cpp
 // #############################################################################
 
@@ -223,8 +416,8 @@ public:
 	int f_group_table;
 	int f_normalizer;
 	int f_centralizer_of_element;
-	const char *element_description_text;
-	const char *element_label;
+	std::string element_description_text;
+	std::string element_label;
 	int f_normalizer_of_cyclic_subgroup;
 	int f_find_subgroup;
 	int find_subgroup_order;
@@ -256,14 +449,14 @@ public:
 	int f_print_elements;
 	int f_print_elements_tex;
 	int f_multiply;
-	const char *multiply_a;
-	const char *multiply_b;
+	std::string multiply_a;
+	std::string multiply_b;
 	int f_inverse;
-	const char *inverse_a;
+	std::string inverse_a;
 	int f_export_gap;
 	int f_export_magma;
 	int f_order_of_products;
-	const char *order_of_products_elements;
+	std::string order_of_products_elements;
 	int f_reverse_isomorphism_exterior_square;
 
 	// classification of optimal linear codes:
@@ -404,12 +597,12 @@ public:
 	void create_group_table(int verbose_level);
 	void normalizer(int verbose_level);
 	void centralizer(
-			const char *element_label,
-			const char *element_description_text,
+			std::string &element_label,
+			std::string &element_description_text,
 			int verbose_level);
 	void normalizer_of_cyclic_subgroup(
-			const char *element_label,
-			const char *element_description_text,
+			std::string &element_label,
+			std::string &element_description_text,
 			int verbose_level);
 	void do_find_subgroups(
 			int order_of_subgroup,

@@ -125,43 +125,6 @@ interface_cryptography::interface_cryptography()
 	//cout << "interface_cryptography::interface_cryptography 2" << endl;
 	affine_sequence_c = 0;
 	affine_sequence_m = 0;
-	f_EC_Koblitz_encoding = FALSE;
-	EC_s = 0;
-	//EC_message = NULL;
-	f_EC_points = FALSE;
-	f_EC_add = FALSE;
-	//EC_pt1_text = NULL;
-	//EC_pt2_text = NULL;
-	f_EC_cyclic_subgroup = FALSE;
-	EC_q = 0;
-	EC_b = 0;
-	EC_c = 0;
-	//EC_pt_text = NULL;
-	f_EC_multiple_of = FALSE;
-	EC_multiple_of_n = 0;
-	f_EC_discrete_log = FALSE;
-	//EC_discrete_log_pt_text = NULL;
-	f_EC_baby_step_giant_step = FALSE;
-	//EC_bsgs_G = NULL;
-	EC_bsgs_N = 0;
-	//EC_bsgs_cipher_text = NULL;
-	f_EC_baby_step_giant_step_decode = FALSE;
-	//EC_bsgs_A = NULL;
-	//EC_bsgs_keys = NULL;
-
-
-	//cout << "interface_cryptography::interface_cryptography done" << endl;
-	f_NTRU_encrypt = FALSE;
-	NTRU_encrypt_N = 0;
-	NTRU_encrypt_p = 0;
-	NTRU_encrypt_q = 0;
-	//NTRU_encrypt_H, NTRU_encrypt_R, NTRU_encrypt_Msg
-	f_polynomial_center_lift = FALSE;
-	polynomial_center_lift_q = 0;
-	//polynomial_center_lift_A
-	f_polynomial_reduce_mod_p = FALSE;
-	polynomial_reduce_mod_p = 0;
-	//polynomial_reduce_mod_p_A;
 
 }
 
@@ -268,6 +231,7 @@ void interface_cryptography::print_help(int argc, const char **argv, int i, int 
 	else if (strcmp(argv[i], "-affine_sequence") == 0) {
 		cout << "-affine_sequence <int : a> <int : c> <int : m>" << endl;
 	}
+#if 0
 	else if (strcmp(argv[i], "-EC_Koblitz_encoding") == 0) {
 		cout << "-EC_points <int : q> <int : b> <int : c> <int : s> <string : pt_G> <string : message> " << endl;
 	}
@@ -301,6 +265,8 @@ void interface_cryptography::print_help(int argc, const char **argv, int i, int 
 	else if (strcmp(argv[i], "-polynomial_reduce_mod_p") == 0) {
 		cout << "-polynomial_reduce_mod_p <int : p> <string : A>" << endl;
 	}
+#endif
+
 #if 0
 	else if (strcmp(argv[i], "-ntt") == 0) {
 		cout << "-ntt <int : t> <int : q>" << endl;
@@ -414,6 +380,7 @@ int interface_cryptography::recognize_keyword(int argc, const char **argv, int i
 	else if (strcmp(argv[i], "-affine_sequence") == 0) {
 		return true;
 	}
+#if 0
 	else if (strcmp(argv[i], "-EC_Koblitz_encoding") == 0) {
 		return true;
 	}
@@ -447,6 +414,8 @@ int interface_cryptography::recognize_keyword(int argc, const char **argv, int i
 	else if (strcmp(argv[i], "-polynomial_reduce_mod_p") == 0) {
 		return true;
 	}
+#endif
+
 #if 0
 	else if (strcmp(argv[i], "-ntt") == 0) {
 		return true;
@@ -561,14 +530,17 @@ void interface_cryptography::read_arguments(int argc, const char **argv, int i0,
 			RSA_m = atol(argv[++i]);
 			RSA_block_size = atoi(argv[++i]);
 			RSA_encrypt_text.assign(argv[++i]);
-			cout << "-RSA_encrypt_text " << RSA_d << " " << RSA_m << " " << RSA_encrypt_text << endl;
+			cout << "-RSA_encrypt_text " << RSA_d << " "
+					<< RSA_m << " " << RSA_encrypt_text << endl;
 		}
 		else if (strcmp(argv[i], "-RSA_setup") == 0) {
 			f_RSA_setup = TRUE;
 			RSA_setup_nb_bits = atoi(argv[++i]);
 			RSA_setup_nb_tests_solovay_strassen = atoi(argv[++i]);
 			RSA_setup_f_miller_rabin_test = atoi(argv[++i]);
-			cout << "-RSA_setup " << RSA_setup_nb_bits << " " << RSA_setup_nb_tests_solovay_strassen << " " << RSA_setup_f_miller_rabin_test << endl;
+			cout << "-RSA_setup " << RSA_setup_nb_bits << " "
+					<< RSA_setup_nb_tests_solovay_strassen << " "
+					<< RSA_setup_f_miller_rabin_test << endl;
 		}
 		else if (strcmp(argv[i], "-primitive_root") == 0) {
 			f_primitive_root = TRUE;
@@ -599,14 +571,16 @@ void interface_cryptography::read_arguments(int argc, const char **argv, int i0,
 			discrete_log_y = atol(argv[++i]);
 			discrete_log_a = atol(argv[++i]);
 			discrete_log_m = atol(argv[++i]);
-			cout << "-discrete_log " << discrete_log_y << " " << discrete_log_a << " " << discrete_log_m << endl;
+			cout << "-discrete_log " << discrete_log_y << " "
+					<< discrete_log_a << " " << discrete_log_m << endl;
 		}
 		else if (strcmp(argv[i], "-sift_smooth") == 0) {
 			f_sift_smooth = TRUE;
 			sift_smooth_from = atol(argv[++i]);
 			sift_smooth_len = atol(argv[++i]);
 			sift_smooth_factor_base = argv[++i];
-			cout << "-sift_smooth " << sift_smooth_from << " " << sift_smooth_len << " " << sift_smooth_factor_base << endl;
+			cout << "-sift_smooth " << sift_smooth_from << " "
+					<< sift_smooth_len << " " << sift_smooth_factor_base << endl;
 		}
 		else if (strcmp(argv[i], "-square_root") == 0) {
 			f_square_root = TRUE;
@@ -617,7 +591,8 @@ void interface_cryptography::read_arguments(int argc, const char **argv, int i0,
 			f_square_root_mod = TRUE;
 			square_root_mod_a.assign(argv[++i]);
 			square_root_mod_m.assign(argv[++i]);
-			cout << "-square_root_mod " << square_root_mod_a << " " << square_root_mod_m << endl;
+			cout << "-square_root_mod " << square_root_mod_a << " "
+					<< square_root_mod_m << endl;
 		}
 		else if (strcmp(argv[i], "-quadratic_sieve") == 0) {
 			f_quadratic_sieve = TRUE;
@@ -700,127 +675,6 @@ void interface_cryptography::read_arguments(int argc, const char **argv, int i0,
 			affine_sequence_m = atoi(argv[++i]);
 			cout << "-affine_sequence " << affine_sequence_a
 					<< " " << affine_sequence_c << " " << affine_sequence_m << endl;
-		}
-		else if (strcmp(argv[i], "-EC_Koblitz_encoding") == 0) {
-			f_EC_Koblitz_encoding = TRUE;
-			EC_q = atoi(argv[++i]);
-			EC_b = atoi(argv[++i]);
-			EC_c = atoi(argv[++i]);
-			EC_s = atoi(argv[++i]);
-			EC_pt_text.assign(argv[++i]);
-			EC_message.assign(argv[++i]);
-			cout << "-EC_Koblitz_encoding " << EC_q
-					<< " " << EC_b << " " << EC_c << " " << EC_s << " "
-					<< EC_pt_text << " " << EC_message << endl;
-		}
-		else if (strcmp(argv[i], "-EC_points") == 0) {
-			f_EC_points = TRUE;
-			EC_q = atoi(argv[++i]);
-			EC_b = atoi(argv[++i]);
-			EC_c = atoi(argv[++i]);
-			cout << "-EC_points " << EC_q
-					<< " " << EC_b << " " << EC_c << endl;
-		}
-		else if (strcmp(argv[i], "-EC_add") == 0) {
-			f_EC_add = TRUE;
-			EC_q = atoi(argv[++i]);
-			EC_b = atoi(argv[++i]);
-			EC_c = atoi(argv[++i]);
-			EC_pt1_text.assign(argv[++i]);
-			EC_pt2_text.assign(argv[++i]);
-			cout << "-EC_add " << EC_q
-					<< " " << EC_b << " " << EC_c << " " << EC_pt1_text << " " << EC_pt2_text << endl;
-		}
-		else if (strcmp(argv[i], "-EC_cyclic_subgroup") == 0) {
-			f_EC_cyclic_subgroup = TRUE;
-			EC_q = atoi(argv[++i]);
-			EC_b = atoi(argv[++i]);
-			EC_c = atoi(argv[++i]);
-			EC_pt_text.assign(argv[++i]);
-			cout << "-EC_cyclic_subgroup " << EC_q
-					<< " " << EC_b << " " << EC_c << " " << EC_pt_text << endl;
-		}
-		else if (strcmp(argv[i], "-EC_multiple_of") == 0) {
-			f_EC_multiple_of = TRUE;
-			EC_q = atoi(argv[++i]);
-			EC_b = atoi(argv[++i]);
-			EC_c = atoi(argv[++i]);
-			EC_pt_text.assign(argv[++i]);
-			EC_multiple_of_n = atoi(argv[++i]);
-			cout << "-EC_multiple_of " << EC_q
-					<< " " << EC_b << " " << EC_c << " " << EC_pt_text
-					<< " " << EC_multiple_of_n << endl;
-		}
-		else if (strcmp(argv[i], "-EC_discrete_log") == 0) {
-			f_EC_discrete_log = TRUE;
-			EC_q = atoi(argv[++i]);
-			EC_b = atoi(argv[++i]);
-			EC_c = atoi(argv[++i]);
-			EC_pt_text.assign(argv[++i]);
-			EC_discrete_log_pt_text = argv[++i];
-			cout << "-EC_discrete_log " << EC_q
-					<< " " << EC_b << " " << EC_c << " " << EC_pt_text << " "
-					<< EC_discrete_log_pt_text << endl;
-		}
-		else if (strcmp(argv[i], "-EC_bsgs") == 0) {
-			f_EC_baby_step_giant_step = TRUE;
-			EC_q = atoi(argv[++i]);
-			EC_b = atoi(argv[++i]);
-			EC_c = atoi(argv[++i]);
-			EC_bsgs_G.assign(argv[++i]);
-			EC_bsgs_N = atoi(argv[++i]);
-			EC_bsgs_cipher_text.assign(argv[++i]);
-			cout << "-EC_baby_step_giant_step " << EC_q
-					<< " " << EC_b << " " << EC_c << " "
-					<< EC_bsgs_G << " "
-					<< EC_bsgs_N << " "
-					<< EC_bsgs_cipher_text << endl;
-		}
-		else if (strcmp(argv[i], "-EC_bsgs_decode") == 0) {
-			f_EC_baby_step_giant_step_decode = TRUE;
-			EC_q = atoi(argv[++i]);
-			EC_b = atoi(argv[++i]);
-			EC_c = atoi(argv[++i]);
-			EC_bsgs_A.assign(argv[++i]);
-			EC_bsgs_N = atoi(argv[++i]);
-			EC_bsgs_cipher_text.assign(argv[++i]);
-			EC_bsgs_keys.assign(argv[++i]);
-			cout << "-EC_baby_step_giant_step_decode " << EC_q
-					<< " " << EC_b << " " << EC_c << " "
-					<< EC_bsgs_A << " "
-					<< EC_bsgs_N << " "
-					<< EC_bsgs_cipher_text << " "
-					<< EC_bsgs_keys << " "
-					<< endl;
-		}
-		else if (strcmp(argv[i], "-NTRU_encrypt") == 0) {
-			f_NTRU_encrypt = TRUE;
-			NTRU_encrypt_N = atoi(argv[++i]);
-			NTRU_encrypt_p = atoi(argv[++i]);
-			NTRU_encrypt_q = atoi(argv[++i]);
-			NTRU_encrypt_H.assign(argv[++i]);
-			NTRU_encrypt_R.assign(argv[++i]);
-			NTRU_encrypt_Msg.assign(argv[++i]);
-			cout << "-polynomial_mult_mod " << NTRU_encrypt_N
-					<< " " << NTRU_encrypt_p
-					<< " " << NTRU_encrypt_q
-					<< " " << NTRU_encrypt_H
-					<< " " << NTRU_encrypt_R
-					<< " " << NTRU_encrypt_Msg << endl;
-		}
-		else if (strcmp(argv[i], "-polynomial_center_lift") == 0) {
-			f_polynomial_center_lift = TRUE;
-			polynomial_center_lift_q = atoi(argv[++i]);
-			polynomial_center_lift_A.assign(argv[++i]);
-			cout << "-polynomial_center_lift " << polynomial_center_lift_q
-					<< " " << polynomial_center_lift_A << endl;
-		}
-		else if (strcmp(argv[i], "-polynomial_reduce_mod_p") == 0) {
-			f_polynomial_reduce_mod_p = TRUE;
-			polynomial_reduce_mod_p = atoi(argv[++i]);
-			polynomial_reduce_mod_p_A.assign(argv[++i]);
-			cout << "-polynomial_reduce_mod_p " << polynomial_reduce_mod_p
-					<< " " << polynomial_reduce_mod_p_A << endl;
 		}
 
 #if 0
@@ -1077,83 +931,6 @@ void interface_cryptography::worker(int verbose_level)
 
 		Crypto.make_affine_sequence(affine_sequence_a,
 				affine_sequence_c, affine_sequence_m, verbose_level);
-	}
-	else if (f_EC_Koblitz_encoding) {
-
-		cryptography_domain Crypto;
-
-		Crypto.do_EC_Koblitz_encoding(EC_q, EC_b, EC_c,
-				EC_s, EC_pt_text, EC_message, verbose_level);
-	}
-	else if (f_EC_points) {
-
-		cryptography_domain Crypto;
-
-		Crypto.do_EC_points(EC_q, EC_b, EC_c, verbose_level);
-	}
-	else if (f_EC_add) {
-
-		cryptography_domain Crypto;
-
-		Crypto.do_EC_add(EC_q, EC_b, EC_c, EC_pt1_text, EC_pt2_text, verbose_level);
-	}
-	else if (f_EC_cyclic_subgroup) {
-
-		cryptography_domain Crypto;
-
-		Crypto.do_EC_cyclic_subgroup(EC_q, EC_b, EC_c, EC_pt_text, verbose_level);
-	}
-	else if (f_EC_multiple_of) {
-
-		cryptography_domain Crypto;
-
-		Crypto.do_EC_multiple_of(EC_q, EC_b, EC_c,
-				EC_pt_text, EC_multiple_of_n, verbose_level);
-	}
-	else if (f_EC_discrete_log) {
-
-		cryptography_domain Crypto;
-
-		Crypto.do_EC_discrete_log(EC_q, EC_b, EC_c, EC_pt_text,
-				EC_discrete_log_pt_text, verbose_level);
-	}
-	else if (f_EC_baby_step_giant_step) {
-
-		cryptography_domain Crypto;
-
-		Crypto.do_EC_baby_step_giant_step(EC_q, EC_b, EC_c,
-				EC_bsgs_G, EC_bsgs_N, EC_bsgs_cipher_text,
-				verbose_level);
-	}
-	else if (f_EC_baby_step_giant_step_decode) {
-
-		cryptography_domain Crypto;
-
-		Crypto.do_EC_baby_step_giant_step_decode(EC_q, EC_b, EC_c,
-				EC_bsgs_A, EC_bsgs_N, EC_bsgs_cipher_text, EC_bsgs_keys,
-				verbose_level);
-	}
-	else if (f_NTRU_encrypt) {
-
-		cryptography_domain Crypto;
-
-		Crypto.NTRU_encrypt(NTRU_encrypt_N, NTRU_encrypt_p, NTRU_encrypt_q,
-				NTRU_encrypt_H, NTRU_encrypt_R, NTRU_encrypt_Msg,
-				verbose_level);
-	}
-	else if (f_polynomial_center_lift) {
-
-		cryptography_domain Crypto;
-
-		Crypto.polynomial_center_lift(polynomial_center_lift_A,
-				polynomial_center_lift_q, verbose_level);
-	}
-	else if (f_polynomial_reduce_mod_p) {
-
-		cryptography_domain Crypto;
-
-		Crypto.polynomial_reduce_mod_p(polynomial_reduce_mod_p_A,
-				polynomial_reduce_mod_p, verbose_level);
 	}
 #if 0
 	else if (f_ntt) {

@@ -1803,7 +1803,7 @@ void action::make_element_2x2(int *Elt, int a0, int a1, int a2, int a3)
 }
 
 void action::make_element_from_string(int *Elt,
-		const char *data_string, int verbose_level)
+		std::string &data_string, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3256,7 +3256,7 @@ void action::perform_tests(strong_generators *SG, int verbose_level)
 }
 
 
-void action::multiply_based_on_text(const char *data_A, const char *data_B, int verbose_level)
+void action::multiply_based_on_text(std::string &data_A, std::string &data_B, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3303,7 +3303,7 @@ void action::multiply_based_on_text(const char *data_A, const char *data_B, int 
 	}
 }
 
-void action::inverse_based_on_text(const char *data_A, int verbose_level)
+void action::inverse_based_on_text(std::string &data_A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

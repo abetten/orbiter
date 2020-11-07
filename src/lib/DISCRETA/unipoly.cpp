@@ -1032,7 +1032,7 @@ void unipoly::charpoly(int q, int size, int *mtx, int verbose_level)
 		cout << "q is not prime, we need a prime" << endl;
 		exit(1);
 		}
-	Fq.init(q, verbose_level - 1);
+	Fq.finite_field_init(q, verbose_level - 1);
 
 	domain d(q);
 	with w(&d);

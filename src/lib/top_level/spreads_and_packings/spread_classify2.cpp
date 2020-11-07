@@ -1608,7 +1608,7 @@ void spread_classify::HMO(std::string &fname, int verbose_level)
 	q2 = q * q;
 	Fq2 = NEW_OBJECT(finite_field);
 	Sub = NEW_OBJECT(subfield_structure);
-	Fq2->init(q2, verbose_level);
+	Fq2->finite_field_init(q2, verbose_level);
 	Sub->init(Fq2, Mtx->GFq, verbose_level);
 	for (i = 0; i < q * q; i++) {
 		Ge[i] = Sub->FQ_embedding[G[i]];

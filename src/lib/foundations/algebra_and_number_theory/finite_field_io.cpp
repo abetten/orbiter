@@ -34,7 +34,7 @@ void finite_field::cheat_sheet_PG(int n,
 
 	P = NEW_OBJECT(projective_space);
 	cout << "before P->init" << endl;
-	P->init(n, this,
+	P->finite_field_init(n, this,
 		TRUE /* f_init_incidence_structure */,
 		verbose_level/*MINIMUM(2, verbose_level)*/);
 
@@ -146,15 +146,15 @@ void finite_field::cheat_sheet_PG(int n,
 	Poly3 = NEW_OBJECT(homogeneous_polynomial_domain);
 	Poly4 = NEW_OBJECT(homogeneous_polynomial_domain);
 
-	Poly2->init(this,
+	Poly2->finite_field_init(this,
 			n + 1 /* nb_vars */, 2 /* degree */,
 			FALSE /* f_init_incidence_structure */,
 			verbose_level);
-	Poly3->init(this,
+	Poly3->finite_field_init(this,
 			n + 1 /* nb_vars */, 3 /* degree */,
 			FALSE /* f_init_incidence_structure */,
 			verbose_level);
-	Poly4->init(this,
+	Poly4->finite_field_init(this,
 			n + 1 /* nb_vars */, 4 /* degree */,
 			FALSE /* f_init_incidence_structure */,
 			verbose_level);
@@ -171,7 +171,7 @@ void finite_field::cheat_sheet_PG(int n,
 		surface_domain *S;
 
 		S = NEW_OBJECT(surface_domain);
-		S->init(this, verbose_level + 2);
+		S->finite_field_init(this, verbose_level + 2);
 
 		f << "\\clearpage" << endl << endl;
 		f << "\\section{Surface}" << endl;
@@ -227,7 +227,7 @@ void finite_field::print_minimum_polynomial(int p, const char *polynomial)
 {
 	finite_field GFp;
 
-	GFp.init(p, 0);
+	GFp.finite_field_init(p, 0);
 
 	unipoly_domain FX(&GFp);
 	unipoly_object m, n;
@@ -317,7 +317,7 @@ void finite_field::print_tables_extension_field(const char *poly)
 	int verbose_level = 0;
 
 	finite_field GFp;
-	GFp.init(p, 0);
+	GFp.finite_field_init(p, 0);
 
 	unipoly_domain FX(&GFp);
 	unipoly_object m;
@@ -979,7 +979,7 @@ void finite_field::cheat_sheet_subfields(ostream &f, int verbose_level)
 	if (!f_is_prime_field) {
 		f << "polynomial: ";
 		finite_field GFp;
-		GFp.init(p, 0);
+		GFp.finite_field_init(p, 0);
 
 		unipoly_domain FX(&GFp);
 		unipoly_object m;
@@ -1028,7 +1028,7 @@ void finite_field::report_subfields(ostream &f, int verbose_level)
 					NT.i_power_j(p, h), verbose_level);
 			{
 				finite_field GFp;
-				GFp.init(p, 0);
+				GFp.finite_field_init(p, 0);
 
 				unipoly_domain FX(&GFp);
 				unipoly_object m;

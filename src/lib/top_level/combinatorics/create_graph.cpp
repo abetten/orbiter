@@ -279,7 +279,7 @@ void create_graph::create_Paley(int &N, int *&Adj,
 	int i, j, a;
 
 	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level);
+	F->finite_field_init(q, verbose_level);
 
 	f_is_square = NEW_int(q);
 	int_vec_zero(f_is_square, q);
@@ -345,7 +345,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	int f_basis = TRUE;
 
 	F = NEW_OBJECT(finite_field);
-	F->init(q, 0);
+	F->finite_field_init(q, 0);
 	//F->init_override_polynomial(q, override_poly, verbose_level);
 
 	A = NEW_OBJECT(action);
@@ -684,7 +684,7 @@ void create_graph::create_Schlaefli(int &N, int *&Adj,
 
 
 	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level);
+	F->finite_field_init(q, verbose_level);
 
 	Gr = NEW_OBJECT(grassmann);
 	Gr->init(n, k, F, verbose_level);
@@ -969,7 +969,7 @@ void create_graph::create_Winnie_Li(int &N, int *&Adj,
 
 
 	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level - 1);
+	F->finite_field_init(q, verbose_level - 1);
 	p = F->p;
 
 #if 0
@@ -1065,7 +1065,7 @@ void create_graph::create_Grassmann(int &N, int *&Adj,
 	combinatorics_domain Combi;
 
 	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level);
+	F->finite_field_init(q, verbose_level);
 
 
 	Gr = NEW_OBJECT(grassmann);
@@ -1150,7 +1150,7 @@ void create_graph::create_coll_orthogonal(int &N, int *&Adj,
 
 	F = NEW_OBJECT(finite_field);
 
-	F->init(q, verbose_level - 1);
+	F->finite_field_init(q, verbose_level - 1);
 	F->print();
 
 	if (epsilon == 0) {

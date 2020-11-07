@@ -310,6 +310,8 @@ MODULES= \
 		top_level/algebra_and_number_theory/algebra_global_with_action.o \
 		top_level/algebra_and_number_theory/character_table_burnside.o \
 		top_level/algebra_and_number_theory/factor_group.o \
+		top_level/algebra_and_number_theory/finite_field_activity_description.o \
+		top_level/algebra_and_number_theory/finite_field_activity.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity_description.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity_for_surfaces.o \

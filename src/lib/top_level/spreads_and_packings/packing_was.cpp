@@ -1078,7 +1078,7 @@ void packing_was::report_orbit_invariant(ostream &ost)
 			number_theory_domain NT;
 
 			Fq3 = NEW_OBJECT(finite_field);
-			Fq3->init(NT.i_power_j(P->F->q, 3), 0);
+			Fq3->finite_field_init(NT.i_power_j(P->F->q, 3), 0);
 
 			ost << "Orbits of length one:\\\\" << endl;
 			for (j = 0; j < l; j++) {

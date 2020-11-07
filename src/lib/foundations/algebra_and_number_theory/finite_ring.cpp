@@ -72,7 +72,7 @@ void finite_ring::init(int q, int verbose_level)
 		f_chain_ring = TRUE;
 		NT.factor_prime_power(q, p, e);
 		Fp = NEW_OBJECT(finite_field);
-		Fp->init(p, verbose_level);
+		Fp->finite_field_init(p, verbose_level);
 	}
 	else {
 		f_chain_ring = FALSE;

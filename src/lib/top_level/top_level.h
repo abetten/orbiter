@@ -157,6 +157,8 @@ typedef class surfaces_arc_lifting_trace psurfaces_arc_lifting_trace;
 class surfaces_arc_lifting_definition_node;
 class packing_long_orbits_description;
 class regular_packing;
+class finite_field_activity_description;
+class finite_field_activity;
 
 
 // #############################################################################

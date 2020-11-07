@@ -33,8 +33,8 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_group_table = FALSE;
 	f_normalizer = FALSE;
 	f_centralizer_of_element = FALSE;
-	element_description_text = NULL;
-	element_label = NULL;
+	//element_description_text = NULL;
+	//element_label = NULL;
 	f_normalizer_of_cyclic_subgroup = FALSE;
 	f_find_subgroup = FALSE;
 	find_subgroup_order = 0;
@@ -72,14 +72,14 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_print_elements = FALSE;
 	f_print_elements_tex = FALSE;
 	f_multiply = FALSE;
-	multiply_a = NULL;
-	multiply_b = NULL;
+	//multiply_a = NULL;
+	//multiply_b = NULL;
 	f_inverse = FALSE;
-	inverse_a = NULL;
+	//inverse_a = NULL;
 	f_export_gap = FALSE;
 	f_export_magma = FALSE;
 	f_order_of_products = FALSE;
-	order_of_products_elements = NULL;
+	//order_of_products_elements = NULL;
 	f_reverse_isomorphism_exterior_square = FALSE;
 
 
@@ -297,15 +297,15 @@ int group_theoretic_activity_description::read_arguments(
 		}
 		else if (strcmp(argv[i], "-centralizer_of_element") == 0) {
 			f_centralizer_of_element = TRUE;
-			element_label = argv[++i];
-			element_description_text = argv[++i];
+			element_label.assign(argv[++i]);
+			element_description_text.assign(argv[++i]);
 			cout << "-centralizer_of_element " << element_label
 					<< " " << element_description_text << endl;
 		}
 		else if (strcmp(argv[i], "-normalizer_of_cyclic_subgroup") == 0) {
 			f_normalizer_of_cyclic_subgroup = TRUE;
-			element_label = argv[++i];
-			element_description_text = argv[++i];
+			element_label.assign(argv[++i]);
+			element_description_text.assign(argv[++i]);
 			cout << "-normalizer_of_cyclic_subgroup " << element_label
 					<< " " << element_description_text << endl;
 		}
@@ -393,18 +393,18 @@ int group_theoretic_activity_description::read_arguments(
 		}
 		else if (strcmp(argv[i], "-order_of_products") == 0) {
 			f_order_of_products = TRUE;
-			order_of_products_elements = argv[++i];
+			order_of_products_elements.assign(argv[++i]);
 			cout << "-order_of_products " << order_of_products_elements << endl;
 		}
 		else if (strcmp(argv[i], "-multiply") == 0) {
 			f_multiply = TRUE;
-			multiply_a = argv[++i];
-			multiply_b = argv[++i];
+			multiply_a.assign(argv[++i]);
+			multiply_b.assign(argv[++i]);
 			cout << "-multiply " << multiply_a << " " << multiply_b << endl;
 		}
 		else if (strcmp(argv[i], "-inverse") == 0) {
 			f_inverse = TRUE;
-			inverse_a = argv[++i];
+			inverse_a.assign(argv[++i]);
 			cout << "-inverse " << inverse_a << endl;
 		}
 		else if (strcmp(argv[i], "-export_gap") == 0) {

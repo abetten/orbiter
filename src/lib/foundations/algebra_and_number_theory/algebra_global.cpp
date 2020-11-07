@@ -18,54 +18,6 @@ namespace orbiter {
 namespace foundations {
 
 
-void algebra_global::cheat_sheet_GF(int q,
-		int f_override_polynomial,
-		std::string &override_polynomial,
-		int verbose_level)
-{
-	char fname[1000];
-	char title[1000];
-	char author[1000];
-
-	snprintf(fname, 1000, "GF_%d.tex", q);
-	snprintf(title, 1000, "Cheat Sheet GF($%d$)", q);
-	author[0] = 0;
-	author[0] = 0;
-	finite_field F;
-
-	{
-	ofstream f(fname);
-	latex_interface L;
-
-	//F.init(q), verbose_level - 2);
-	if (f_override_polynomial) {
-		F.init_override_polynomial(q, override_polynomial, verbose_level);
-	}
-	else {
-		F.init(q, verbose_level);
-	}
-	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
-		title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
-			TRUE /* f_12pt */,
-			TRUE /* f_enlarged_page */,
-			TRUE /* f_pagenumbers */,
-			NULL /* extra_praeamble */);
-
-
-	F.cheat_sheet(f, verbose_level);
-
-
-	L.foot(f);
-	}
-
-	file_io Fio;
-
-	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-
-	//F.compute_subfields(verbose_level);
-}
-
 char *algebra_global::search_for_primitive_polynomial_of_given_degree(
 		int p, int degree, int verbose_level)
 {
@@ -75,7 +27,7 @@ char *algebra_global::search_for_primitive_polynomial_of_given_degree(
 	if (f_v) {
 		cout << "algebra_global::search_for_primitive_polynomial_of_given_degree" << endl;
 	}
-	Fp.init(p, 0 /*verbose_level*/);
+	Fp.finite_field_init(p, 0 /*verbose_level*/);
 	unipoly_domain FX(&Fp);
 
 	unipoly_object m;
@@ -144,7 +96,7 @@ void algebra_global::search_for_primitive_polynomials(
 
 		{
 			finite_field Fq;
-			Fq.init(q, 0 /*verbose_level*/);
+			Fq.finite_field_init(q, 0 /*verbose_level*/);
 			unipoly_domain FX(&Fq);
 
 			unipoly_object m;
@@ -209,9 +161,9 @@ void algebra_global::factor_cyclotomic(int n, int q, int d,
 		Fq.init_override_polynomial(q, poly, verbose_level - 1);
 	}
 	else {
-		Fq.init(q, verbose_level - 2);
+		Fq.finite_field_init(q, verbose_level - 2);
 	}
-	FQ.init(Q, verbose_level - 2);
+	FQ.finite_field_init(Q, verbose_level - 2);
 
 	FQ.compute_subfields(verbose_level);
 
@@ -703,7 +655,7 @@ void algebra_global::gl_random_matrix(int k, int q, int verbose_level)
 	if (f_v) {
 		cout << "gl_random_matrix" << endl;
 		}
-	F.init(q, 0 /*verbose_level*/);
+	F.finite_field_init(q, 0 /*verbose_level*/);
 	M = NEW_int(k * k);
 	M2 = NEW_int(k * k);
 
@@ -992,7 +944,7 @@ void algebra_global::test_unipoly()
 	int i, j;
 	int verbose_level = 0;
 
-	GFp.init(p, verbose_level);
+	GFp.finite_field_init(p, verbose_level);
 	unipoly_domain FX(&GFp);
 
 	FX.create_object_by_rank(m, 7, __FILE__, __LINE__, 0);
@@ -1030,7 +982,7 @@ void algebra_global::test_unipoly2()
 	int q = 4, p = 2, i;
 	int verbose_level = 0;
 
-	Fq.init(q, verbose_level);
+	Fq.finite_field_init(q, verbose_level);
 	unipoly_domain FX(&Fq);
 
 	unipoly_object a;
@@ -1261,58 +1213,6 @@ void algebra_global::test_longinteger8()
 	a.create(197659, __FILE__, __LINE__);
 	D.find_probable_prime_above(a, nb_solovay_strassen_tests,
 		f_miller_rabin_test, verbose_level);
-}
-
-void algebra_global::mac_williams_equations(longinteger_object *&M, int n, int k, int q)
-{
-	combinatorics_domain D;
-	int i, j;
-
-	M = NEW_OBJECTS(longinteger_object, (n + 1) * (n + 1));
-
-	for (i = 0; i <= n; i++) {
-		for (j = 0; j <= n; j++) {
-			D.krawtchouk(M[i * (n + 1) + j], n, q, i, j);
-		}
-	}
-}
-
-void algebra_global::determine_weight_enumerator()
-{
-	int n = 19, k = 7, q = 2;
-	longinteger_domain D;
-	longinteger_object *M, *A1, *A2, qk;
-	int i;
-
-	qk.create(q, __FILE__, __LINE__);
-	D.power_int(qk, k);
-	cout << q << "^" << k << " = " << qk << endl;
-
-	mac_williams_equations(M, n, k, q);
-
-	D.matrix_print_tex(cout, M, n + 1, n + 1);
-
-	A1 = NEW_OBJECTS(longinteger_object, n + 1);
-	A2 = NEW_OBJECTS(longinteger_object, n + 1);
-	for (i = 0; i <= n; i++) {
-		A1[i].create(0, __FILE__, __LINE__);
-	}
-	A1[0].create(1, __FILE__, __LINE__);
-	A1[8].create(78, __FILE__, __LINE__);
-	A1[12].create(48, __FILE__, __LINE__);
-	A1[16].create(1, __FILE__, __LINE__);
-	D.matrix_print_tex(cout, A1, n + 1, 1);
-
-	D.matrix_product(M, A1, A2, n + 1, n + 1, 1);
-	D.matrix_print_tex(cout, A2, n + 1, 1);
-
-	D.matrix_entries_integral_division_exact(A2, qk, n + 1, 1);
-
-	D.matrix_print_tex(cout, A2, n + 1, 1);
-
-	FREE_OBJECTS(M);
-	FREE_OBJECTS(A1);
-	FREE_OBJECTS(A2);
 }
 
 void algebra_global::longinteger_collect_setup(int &nb_agos,
@@ -1767,7 +1667,7 @@ int algebra_global::count_all_irreducible_polynomials_of_degree_d(finite_field *
 	return cnt;
 }
 
-void algebra_global::polynomial_division(int q,
+void algebra_global::polynomial_division(finite_field *F,
 		std::string &A_coeffs, std::string &B_coeffs, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1776,6 +1676,7 @@ void algebra_global::polynomial_division(int q,
 		cout << "algebra_global::polynomial_division" << endl;
 	}
 
+	//int q = F->q;
 
 	int *data_A;
 	int *data_B;
@@ -1783,11 +1684,6 @@ void algebra_global::polynomial_division(int q,
 
 	int_vec_scan(A_coeffs, data_A, sz_A);
 	int_vec_scan(B_coeffs, data_B, sz_B);
-
-	finite_field *F;
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q);
 
 
 
@@ -1811,14 +1707,18 @@ void algebra_global::polynomial_division(int q,
 		FX.s_i(B, i) = data_B[i];
 	}
 
-	cout << "A(X)=";
-	FX.print_object(A, cout);
-	cout << endl;
+	if (f_v) {
+		cout << "A(X)=";
+		FX.print_object(A, cout);
+		cout << endl;
+	}
 
 
-	cout << "B(X)=";
-	FX.print_object(B, cout);
-	cout << endl;
+	if (f_v) {
+		cout << "B(X)=";
+		FX.print_object(B, cout);
+		cout << endl;
+		}
 
 	FX.create_object_of_degree(Q, da);
 
@@ -1838,27 +1738,26 @@ void algebra_global::polynomial_division(int q,
 		cout << "algebra_global::polynomial_division after FX.division_with_remainder" << endl;
 	}
 
-	cout << "A(X)=";
-	FX.print_object(A, cout);
-	cout << endl;
+	if (f_v) {
+		cout << "A(X)=";
+		FX.print_object(A, cout);
+		cout << endl;
 
-	cout << "Q(X)=";
-	FX.print_object(Q, cout);
-	cout << endl;
+		cout << "Q(X)=";
+		FX.print_object(Q, cout);
+		cout << endl;
 
-	cout << "R(X)=";
-	FX.print_object(R, cout);
-	cout << endl;
-
-
-	FREE_OBJECT(F);
+		cout << "R(X)=";
+		FX.print_object(R, cout);
+		cout << endl;
+	}
 
 	if (f_v) {
 		cout << "algebra_global::polynomial_division done" << endl;
 	}
 }
 
-void algebra_global::extended_gcd_for_polynomials(int q,
+void algebra_global::extended_gcd_for_polynomials(finite_field *F,
 		std::string &A_coeffs, std::string &B_coeffs, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1868,6 +1767,8 @@ void algebra_global::extended_gcd_for_polynomials(int q,
 	}
 
 
+	int q = F->q;
+
 	int *data_A;
 	int *data_B;
 	int sz_A, sz_B;
@@ -1875,11 +1776,8 @@ void algebra_global::extended_gcd_for_polynomials(int q,
 	int_vec_scan(A_coeffs, data_A, sz_A);
 	int_vec_scan(B_coeffs, data_B, sz_B);
 
-	finite_field *F;
 	number_theory_domain NT;
 
-	F = NEW_OBJECT(finite_field);
-	F->init(q);
 
 
 
@@ -1909,14 +1807,16 @@ void algebra_global::extended_gcd_for_polynomials(int q,
 		FX.s_i(B, i) = data_B[i];
 	}
 
-	cout << "A(X)=";
-	FX.print_object(A, cout);
-	cout << endl;
+	if (f_v) {
+		cout << "A(X)=";
+		FX.print_object(A, cout);
+		cout << endl;
 
 
-	cout << "B(X)=";
-	FX.print_object(B, cout);
-	cout << endl;
+		cout << "B(X)=";
+		FX.print_object(B, cout);
+		cout << endl;
+	}
 
 	FX.create_object_of_degree(U, da);
 
@@ -1939,28 +1839,34 @@ void algebra_global::extended_gcd_for_polynomials(int q,
 		cout << "algebra_global::extended_gcd_for_polynomials after FX.extended_gcd" << endl;
 	}
 
-	cout << "U(X)=";
-	FX.print_object(U, cout);
-	cout << endl;
+	if (f_v) {
+		cout << "U(X)=";
+		FX.print_object(U, cout);
+		cout << endl;
 
-	cout << "V(X)=";
-	FX.print_object(V, cout);
-	cout << endl;
+		cout << "V(X)=";
+		FX.print_object(V, cout);
+		cout << endl;
 
-	cout << "G(X)=";
-	FX.print_object(G, cout);
-	cout << endl;
+		cout << "G(X)=";
+		FX.print_object(G, cout);
+		cout << endl;
 
-	cout << "deg G(X) = " << FX.degree(G) << endl;
+		cout << "deg G(X) = " << FX.degree(G) << endl;
+	}
 
 	if (FX.degree(G) == 0) {
 		int c, cv, d;
 
 		c = FX.s_i(G, 0);
 		if (c != 1) {
-			cout << "normalization:" << endl;
+			if (f_v) {
+				cout << "normalization:" << endl;
+			}
 			cv = F->inverse(c);
-			cout << "cv=" << cv << endl;
+			if (f_v) {
+				cout << "cv=" << cv << endl;
+			}
 
 			d = FX.degree(U);
 			for (i = 0; i <= d; i++) {
@@ -1979,25 +1885,24 @@ void algebra_global::extended_gcd_for_polynomials(int q,
 
 
 
-			cout << "after normalization:" << endl;
+			if (f_v) {
+				cout << "after normalization:" << endl;
 
-			cout << "U(X)=";
-			FX.print_object(U, cout);
-			cout << endl;
+				cout << "U(X)=";
+				FX.print_object(U, cout);
+				cout << endl;
 
-			cout << "V(X)=";
-			FX.print_object(V, cout);
-			cout << endl;
+				cout << "V(X)=";
+				FX.print_object(V, cout);
+				cout << endl;
 
-			cout << "G(X)=";
-			FX.print_object(G, cout);
-			cout << endl;
+				cout << "G(X)=";
+				FX.print_object(G, cout);
+				cout << endl;
+			}
 		}
 
-}
-
-
-	FREE_OBJECT(F);
+	}
 
 	if (f_v) {
 		cout << "algebra_global::extended_gcd_for_polynomials done" << endl;
@@ -2005,7 +1910,7 @@ void algebra_global::extended_gcd_for_polynomials(int q,
 }
 
 
-void algebra_global::polynomial_mult_mod(int q,
+void algebra_global::polynomial_mult_mod(finite_field *F,
 		std::string &A_coeffs, std::string &B_coeffs, std::string &M_coeffs,
 		int verbose_level)
 {
@@ -2015,6 +1920,7 @@ void algebra_global::polynomial_mult_mod(int q,
 		cout << "algebra_global::polynomial_mult_mod" << endl;
 	}
 
+	int q = F->q;
 
 	int *data_A;
 	int *data_B;
@@ -2025,11 +1931,8 @@ void algebra_global::polynomial_mult_mod(int q,
 	int_vec_scan(B_coeffs, data_B, sz_B);
 	int_vec_scan(M_coeffs, data_M, sz_M);
 
-	finite_field *F;
 	number_theory_domain NT;
 
-	F = NEW_OBJECT(finite_field);
-	F->init(q);
 
 
 
@@ -2069,18 +1972,20 @@ void algebra_global::polynomial_mult_mod(int q,
 		FX.s_i(M, i) = data_M[i];
 	}
 
-	cout << "A(X)=";
-	FX.print_object(A, cout);
-	cout << endl;
+	if (f_v) {
+		cout << "A(X)=";
+		FX.print_object(A, cout);
+		cout << endl;
 
 
-	cout << "B(X)=";
-	FX.print_object(B, cout);
-	cout << endl;
+		cout << "B(X)=";
+		FX.print_object(B, cout);
+		cout << endl;
 
-	cout << "M(X)=";
-	FX.print_object(M, cout);
-	cout << endl;
+		cout << "M(X)=";
+		FX.print_object(M, cout);
+		cout << endl;
+	}
 
 	FX.create_object_of_degree(C, da + db);
 
@@ -2098,24 +2003,20 @@ void algebra_global::polynomial_mult_mod(int q,
 		cout << "algebra_global::polynomial_mult_mod after FX.mult_mod" << endl;
 	}
 
-	cout << "C(X)=";
-	FX.print_object(C, cout);
-	cout << endl;
+	if (f_v) {
+		cout << "C(X)=";
+		FX.print_object(C, cout);
+		cout << endl;
 
-	cout << "deg C(X) = " << FX.degree(C) << endl;
-
-
-
-
-
-	FREE_OBJECT(F);
+		cout << "deg C(X) = " << FX.degree(C) << endl;
+	}
 
 	if (f_v) {
 		cout << "algebra_global::polynomial_mult_mod done" << endl;
 	}
 }
 
-void algebra_global::Berlekamp_matrix(int q,
+void algebra_global::Berlekamp_matrix(finite_field *F,
 		std::string &Berlekamp_matrix_coeffs,
 		int verbose_level)
 {
@@ -2125,17 +2026,14 @@ void algebra_global::Berlekamp_matrix(int q,
 		cout << "algebra_global::Berlekamp_matrix" << endl;
 	}
 
-
+	int q = F->q;
 	int *data_A;
 	int sz_A;
 
 	int_vec_scan(Berlekamp_matrix_coeffs, data_A, sz_A);
 
-	finite_field *F;
 	number_theory_domain NT;
 
-	F = NEW_OBJECT(finite_field);
-	F->init(q);
 
 
 
@@ -2157,9 +2055,11 @@ void algebra_global::Berlekamp_matrix(int q,
 
 
 
-	cout << "A(X)=";
-	FX.print_object(A, cout);
-	cout << endl;
+	if (f_v) {
+		cout << "A(X)=";
+		FX.print_object(A, cout);
+		cout << endl;
+	}
 
 
 	int *B;
@@ -2179,17 +2079,19 @@ void algebra_global::Berlekamp_matrix(int q,
 		cout << "algebra_global::Berlekamp_matrix after FX.Berlekamp_matrix" << endl;
 	}
 
-	cout << "B=" << endl;
-	int_matrix_print(B, da, da);
-	cout << endl;
+	if (f_v) {
+		cout << "B=" << endl;
+		int_matrix_print(B, da, da);
+		cout << endl;
+	}
 
 	r = F->rank_of_matrix(B, da, 0 /* verbose_level */);
 
-	cout << "The matrix B has rank " << r << endl;
-
+	if (f_v) {
+		cout << "The matrix B has rank " << r << endl;
+	}
 
 	FREE_int(B);
-	FREE_OBJECT(F);
 
 	if (f_v) {
 		cout << "algebra_global::Berlekamp_matrix done" << endl;
@@ -2278,25 +2180,23 @@ void algebra_global::compute_normal_basis(finite_field *F, int d, int verbose_le
 }
 
 
-void algebra_global::do_nullspace(int q,
+void algebra_global::do_nullspace(finite_field *F,
 		int m, int n, std::string &text,
 		int f_normalize_from_the_left, int f_normalize_from_the_right,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	finite_field *F;
 	int *M;
 	int *A;
 	int *base_cols;
 	int len, rk, i, rk1;
+
 	latex_interface Li;
 
 	if (f_v) {
 		cout << "do_nullspace" << endl;
 	}
 
-	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level);
 
 	int_vec_scan(text, M, len);
 	if (len != m * n) {
@@ -2317,66 +2217,76 @@ void algebra_global::do_nullspace(int q,
 	rk = F->perp_standard(n, m, A, verbose_level);
 
 
-	cout << "after perp_standard:" << endl;
-	int_matrix_print(A, n, n);
-	cout << "rk=" << rk << endl;
+	if (f_v) {
+		cout << "after perp_standard:" << endl;
+		int_matrix_print(A, n, n);
+		cout << "rk=" << rk << endl;
+	}
 
-	cout << "after RREF" << endl;
 	rk1 = F->Gauss_int(A + rk * n,
 		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
 		FALSE /* f_P */, NULL /*P*/, n - rk, n, n,
 		0 /*verbose_level*/);
 
 
-	cout << "after RREF" << endl;
-	int_matrix_print(A + rk * n, rk1, n);
-	cout << "rank of nullspace = " << rk1 << endl;
+	if (f_v) {
+		cout << "after RREF" << endl;
+		int_matrix_print(A + rk * n, rk1, n);
+		cout << "rank of nullspace = " << rk1 << endl;
 
-	cout << "coefficients:" << endl;
-	int_vec_print(cout, A + rk * n, rk1 * n);
-	cout << endl;
+		cout << "coefficients:" << endl;
+		int_vec_print(cout, A + rk * n, rk1 * n);
+		cout << endl;
 
-	cout << "$$" << endl;
-	cout << "\\left[" << endl;
-	Li.int_matrix_print_tex(cout, A + rk * n, rk1, n);
-	cout << "\\right]" << endl;
-	cout << "$$" << endl;
+		cout << "$$" << endl;
+		cout << "\\left[" << endl;
+		Li.int_matrix_print_tex(cout, A + rk * n, rk1, n);
+		cout << "\\right]" << endl;
+		cout << "$$" << endl;
+	}
 
 	if (f_normalize_from_the_left) {
-		cout << "normalizing from the left" << endl;
+		if (f_v) {
+			cout << "normalizing from the left" << endl;
+		}
 		for (i = rk; i < n; i++) {
 			F->PG_element_normalize_from_front(
 					A + i * n, 1, n);
 		}
 
-		cout << "after normalize from the left:" << endl;
-		int_matrix_print(A, n, n);
-		cout << "rk=" << rk << endl;
+		if (f_v) {
+			cout << "after normalize from the left:" << endl;
+			int_matrix_print(A, n, n);
+			cout << "rk=" << rk << endl;
 
-		cout << "$$" << endl;
-		cout << "\\left[" << endl;
-		Li.int_matrix_print_tex(cout, A + rk * n, rk1, n);
-		cout << "\\right]" << endl;
-		cout << "$$" << endl;
-
+			cout << "$$" << endl;
+			cout << "\\left[" << endl;
+			Li.int_matrix_print_tex(cout, A + rk * n, rk1, n);
+			cout << "\\right]" << endl;
+			cout << "$$" << endl;
+		}
 	}
 
 	if (f_normalize_from_the_right) {
-		cout << "normalizing from the right" << endl;
+		if (f_v) {
+			cout << "normalizing from the right" << endl;
+		}
 		for (i = rk; i < n; i++) {
 			F->PG_element_normalize(
 					A + i * n, 1, n);
 		}
 
-		cout << "after normalize from the right:" << endl;
-		int_matrix_print(A, n, n);
-		cout << "rk=" << rk << endl;
+		if (f_v) {
+			cout << "after normalize from the right:" << endl;
+			int_matrix_print(A, n, n);
+			cout << "rk=" << rk << endl;
 
-		cout << "$$" << endl;
-		cout << "\\left[" << endl;
-		Li.int_matrix_print_tex(cout, A + rk * n, rk1, n);
-		cout << "\\right]" << endl;
-		cout << "$$" << endl;
+			cout << "$$" << endl;
+			cout << "\\left[" << endl;
+			Li.int_matrix_print_tex(cout, A + rk * n, rk1, n);
+			cout << "\\right]" << endl;
+			cout << "$$" << endl;
+		}
 	}
 
 
@@ -2389,13 +2299,12 @@ void algebra_global::do_nullspace(int q,
 	}
 }
 
-void algebra_global::do_RREF(int q,
+void algebra_global::do_RREF(finite_field *F,
 		int m, int n, std::string &text,
 		int f_normalize_from_the_left, int f_normalize_from_the_right,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	finite_field *F;
 	int *M;
 	int *A;
 	int *base_cols;
@@ -2406,8 +2315,6 @@ void algebra_global::do_RREF(int q,
 		cout << "do_RREF" << endl;
 	}
 
-	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level);
 
 	int_vec_scan(text, M, len);
 	if (len != m * n) {
@@ -2427,44 +2334,52 @@ void algebra_global::do_RREF(int q,
 		0 /*verbose_level*/);
 
 
-	cout << "after RREF:" << endl;
-	int_matrix_print(A, rk, n);
-	cout << "rk=" << rk << endl;
+	if (f_v) {
+		cout << "after RREF:" << endl;
+		int_matrix_print(A, rk, n);
+		cout << "rk=" << rk << endl;
 
-	cout << "coefficients:" << endl;
-	int_vec_print(cout, A, rk * n);
-	cout << endl;
+		cout << "coefficients:" << endl;
+		int_vec_print(cout, A, rk * n);
+		cout << endl;
 
-	cout << "$$" << endl;
-	cout << "\\left[" << endl;
-	Li.int_matrix_print_tex(cout, A, rk, n);
-	cout << "\\right]" << endl;
-	cout << "$$" << endl;
+		cout << "$$" << endl;
+		cout << "\\left[" << endl;
+		Li.int_matrix_print_tex(cout, A, rk, n);
+		cout << "\\right]" << endl;
+		cout << "$$" << endl;
+	}
 
 	if (f_normalize_from_the_left) {
-		cout << "normalizing from the left" << endl;
+		if (f_v) {
+			cout << "normalizing from the left" << endl;
+		}
 		for (i = 0; i < rk; i++) {
 			F->PG_element_normalize_from_front(
 					A + i * n, 1, n);
 		}
 
-		cout << "after normalize from the left:" << endl;
-		int_matrix_print(A, rk, n);
-		cout << "rk=" << rk << endl;
-
+		if (f_v) {
+			cout << "after normalize from the left:" << endl;
+			int_matrix_print(A, rk, n);
+			cout << "rk=" << rk << endl;
+		}
 	}
 
 	if (f_normalize_from_the_right) {
-		cout << "normalizing from the right" << endl;
+		if (f_v) {
+			cout << "normalizing from the right" << endl;
+		}
 		for (i = 0; i < rk; i++) {
 			F->PG_element_normalize(
 					A + i * n, 1, n);
 		}
 
-		cout << "after normalize from the right:" << endl;
-		int_matrix_print(A, rk, n);
-		cout << "rk=" << rk << endl;
-
+		if (f_v) {
+			cout << "after normalize from the right:" << endl;
+			int_matrix_print(A, rk, n);
+			cout << "rk=" << rk << endl;
+		}
 	}
 
 
@@ -2477,164 +2392,26 @@ void algebra_global::do_RREF(int q,
 	}
 }
 
-void algebra_global::do_weight_enumerator(int q,
-		int m, int n, std::string &text,
-		int f_normalize_from_the_left, int f_normalize_from_the_right,
-		int verbose_level)
+
+void algebra_global::do_trace(finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	finite_field *F;
-	int *M;
-	int *A;
-	int *base_cols;
-	int *weight_enumerator;
-	int len, rk, i;
-
-	if (f_v) {
-		cout << "do_weight_enumerator" << endl;
-	}
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level);
-
-	int_vec_scan(text, M, len);
-	if (len != m * n) {
-		cout << "number of coordinates received differs from m * n" << endl;
-		cout << "received " << len << endl;
-		exit(1);
-	}
-
-
-	A = NEW_int(n * n);
-	base_cols = NEW_int(n);
-	weight_enumerator = NEW_int(n + 1);
-	int_vec_copy(M, A, m * n);
-
-	rk = F->Gauss_int(A,
-		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
-		FALSE /* f_P */, NULL /*P*/, m, n, n,
-		0 /*verbose_level*/);
-
-
-	cout << "after RREF:" << endl;
-	int_matrix_print(A, rk, n);
-	cout << "rk=" << rk << endl;
-
-	cout << "coefficients:" << endl;
-	int_vec_print(cout, A, rk * n);
-	cout << endl;
-
-
-	F->code_weight_enumerator(n, rk,
-		A /* code */, // [k * n]
-		weight_enumerator, // [n + 1]
-		verbose_level);
-
-	cout << "The weight enumerator is:" << endl;
-	for (i = 0; i <= n; i++) {
-		cout << i << " : " << weight_enumerator[i] << endl;
-	}
-
-	int f_first = TRUE;
-
-	for (i = 0; i <= n; i++) {
-		if (weight_enumerator[i] == 0) {
-			continue;
-		}
-		if (f_first) {
-			f_first = FALSE;
-		}
-		else {
-			cout << " + ";
-		}
-		cout << weight_enumerator[i];
-		if (i) {
-			cout << "*";
-			cout << "x";
-			if (i > 1) {
-				cout << "^";
-				if (i < 10) {
-					cout << i;
-				}
-				else {
-					cout << "(" << i << ")";
-				}
-			}
-		}
-		if (n - i) {
-			cout << "*";
-			cout << "y";
-			if (n - i > 1) {
-				cout << "^";
-				if (n - i < 10) {
-					cout << n - i;
-				}
-				else {
-					cout << "(" << n - i << ")";
-				}
-			}
-		}
-
-	}
-	cout << endl;
-
-
-	if (f_normalize_from_the_left) {
-		cout << "normalizing from the left" << endl;
-		for (i = 0; i < rk; i++) {
-			F->PG_element_normalize_from_front(
-					A + i * n, 1, n);
-		}
-
-		cout << "after normalize from the left:" << endl;
-		int_matrix_print(A, rk, n);
-		cout << "rk=" << rk << endl;
-
-	}
-
-	if (f_normalize_from_the_right) {
-		cout << "normalizing from the right" << endl;
-		for (i = 0; i < rk; i++) {
-			F->PG_element_normalize(
-					A + i * n, 1, n);
-		}
-
-		cout << "after normalize from the right:" << endl;
-		int_matrix_print(A, rk, n);
-		cout << "rk=" << rk << endl;
-
-	}
-
-
-	FREE_int(M);
-	FREE_int(A);
-	FREE_int(base_cols);
-	FREE_int(weight_enumerator);
-
-	if (f_v) {
-		cout << "do_weight_enumerator done" << endl;
-	}
-}
-
-void algebra_global::do_trace(int q, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	finite_field *F;
 	int s, t;
 	int *T0 = NULL;
 	int *T1 = NULL;
 	int nb_T0 = 0;
 	int nb_T1 = 0;
 
+
 	if (f_v) {
 		cout << "do_trace" << endl;
 	}
-	F = NEW_OBJECT(finite_field);
+
+	int q = F->q;
 
 	T0 = NEW_int(q);
 	T1 = NEW_int(q);
 
-	F->init(q, 0);
 	for (s = 0; s < q; s++) {
 		int s2, s3, s4, s8, s2p1, s2p1t7, s2p1t6, s2p1t4, f;
 
@@ -2688,16 +2465,14 @@ void algebra_global::do_trace(int q, int verbose_level)
 			<< Fio.file_size(fname_csv) << endl;
 
 
-	FREE_OBJECT(F);
 	if (f_v) {
 		cout << "do_trace done" << endl;
 	}
 }
 
-void algebra_global::do_norm(int q, int verbose_level)
+void algebra_global::do_norm(finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	finite_field *F;
 	int s, t;
 	int *T0 = NULL;
 	int *T1 = NULL;
@@ -2707,12 +2482,12 @@ void algebra_global::do_norm(int q, int verbose_level)
 	if (f_v) {
 		cout << "do_norm" << endl;
 	}
-	F = NEW_OBJECT(finite_field);
+
+	int q = F->q;
 
 	T0 = NEW_int(q);
 	T1 = NEW_int(q);
 
-	F->init(q, 0);
 	for (s = 0; s < q; s++) {
 		t = F->absolute_norm(s);
 		if (t == 1) {
@@ -2749,7 +2524,6 @@ void algebra_global::do_norm(int q, int verbose_level)
 	cout << "written file " << fname_csv << " of size " << Fio.file_size(fname_csv) << endl;
 
 
-	FREE_OBJECT(F);
 	if (f_v) {
 		cout << "do_norm done" << endl;
 	}
@@ -2813,12 +2587,12 @@ void algebra_global::do_equivalence_class_of_fractions(int N, int verbose_level)
 }
 
 
-void algebra_global::do_cheat_sheet_GF(int q, int f_poly, std::string &poly, int verbose_level)
+void algebra_global::do_cheat_sheet_GF(finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "algebra_global::do_cheat_sheet_GF q=" << q << endl;
+		cout << "algebra_global::do_cheat_sheet_GF q=" << F->q << endl;
 	}
 
 	//int i;
@@ -2829,28 +2603,20 @@ void algebra_global::do_cheat_sheet_GF(int q, int f_poly, std::string &poly, int
 	char title[1000];
 	char author[1000];
 
-	snprintf(fname, 1000, "GF_%d.tex", q);
-	snprintf(title, 1000, "Cheat Sheet GF($%d$)", q);
+	snprintf(fname, 1000, "GF_%d.tex", F->q);
+	snprintf(title, 1000, "Cheat Sheet GF($%d$)", F->q);
 	//sprintf(author, "");
 	author[0] = 0;
 
-	finite_field F;
-
-	if (f_poly) {
-		F.init_override_polynomial(q, poly, verbose_level);
-	}
-	else {
-		F.init(q, 0 /* verbose_level */);
-	}
 
 
-	F.addition_table_save_csv();
+	F->addition_table_save_csv();
 
-	F.multiplication_table_save_csv();
+	F->multiplication_table_save_csv();
 
-	F.addition_table_reordered_save_csv();
+	F->addition_table_reordered_save_csv();
 
-	F.multiplication_table_reordered_save_csv();
+	F->multiplication_table_reordered_save_csv();
 
 
 	{
@@ -2872,15 +2638,15 @@ void algebra_global::do_cheat_sheet_GF(int q, int f_poly, std::string &poly, int
 				NULL /* extra_praeamble */);
 
 
-		F.cheat_sheet(f, verbose_level);
+		F->cheat_sheet(f, verbose_level);
 
-		F.cheat_sheet_main_table(f, verbose_level);
+		F->cheat_sheet_main_table(f, verbose_level);
 
-		F.cheat_sheet_addition_table(f, verbose_level);
+		F->cheat_sheet_addition_table(f, verbose_level);
 
-		F.cheat_sheet_multiplication_table(f, verbose_level);
+		F->cheat_sheet_multiplication_table(f, verbose_level);
 
-		F.cheat_sheet_power_table(f, verbose_level);
+		F->cheat_sheet_power_table(f, verbose_level);
 
 
 
@@ -2895,12 +2661,14 @@ void algebra_global::do_cheat_sheet_GF(int q, int f_poly, std::string &poly, int
 
 
 	if (f_v) {
-		cout << "algebra_global::do_cheat_sheet_GF q=" << q << " done" << endl;
+		cout << "algebra_global::do_cheat_sheet_GF q=" << F->q << " done" << endl;
 	}
 }
 
-void algebra_global::do_search_for_primitive_polynomial_in_range(int p_min, int p_max,
-		int deg_min, int deg_max, int verbose_level)
+void algebra_global::do_search_for_primitive_polynomial_in_range(
+		int p_min, int p_max,
+		int deg_min, int deg_max,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2936,29 +2704,26 @@ void algebra_global::do_search_for_primitive_polynomial_in_range(int p_min, int 
 	}
 }
 
-void algebra_global::do_make_table_of_irreducible_polynomials(int deg, int q, int verbose_level)
+void algebra_global::do_make_table_of_irreducible_polynomials(int deg, finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "algebra_global::do_make_table_of_irreducible_polynomials" << endl;
 		cout << "deg=" << deg << endl;
-		cout << "q=" << q << endl;
+		cout << "q=" << F->q << endl;
 	}
 	int nb;
 	//int *Table;
 	std::vector<std::vector<int>> Table;
-	finite_field F;
 
-	F.init(q, 0);
-
-	make_all_irreducible_polynomials_of_degree_d(&F, deg,
+	make_all_irreducible_polynomials_of_degree_d(F, deg,
 			Table, verbose_level);
 
 	nb = Table.size();
 
 	cout << "The " << nb << " irreducible polynomials of "
-			"degree " << deg << " over F_" << q << " are:" << endl;
+			"degree " << deg << " over F_" << F->q << " are:" << endl;
 
 	int_vec_vec_print(Table);
 

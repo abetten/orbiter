@@ -45,7 +45,7 @@ void Hill_cap56(
 	An = NEW_OBJECT(action);
 	F = NEW_OBJECT(finite_field);
 
-	F->init(q, 0);
+	F->finite_field_init(q, 0);
 	if (f_v) {
 		cout << "Hill_cap before init_orthogonal" << endl;
 		}

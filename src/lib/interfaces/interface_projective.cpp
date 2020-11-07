@@ -23,19 +23,6 @@ namespace interfaces {
 interface_projective::interface_projective()
 {
 
-	f_cheat_sheet_PG = FALSE;
-	n = 0;
-	q = 0;
-
-	f_decomposition_by_element = FALSE;
-	decomposition_by_element_power = 1;
-	//std::string decomposition_by_element_data
-	//decomposition_by_element_fname_base
-
-
-	f_canonical_form_PG = FALSE;
-	Canonical_form_PG_Descr = NULL;
-
 	f_create_points_on_quartic = FALSE;
 	desired_distance = 0;
 
@@ -63,48 +50,16 @@ interface_projective::interface_projective()
 	f_create_spread = FALSE;
 	Spread_create_description = FALSE;
 
-	f_study_surface = FALSE;
-	study_surface_q = 0;
-	study_surface_nb = 0;
 
-	f_move_two_lines_in_hyperplane_stabilizer = FALSE;
-	line1_from = 0;
-	line2_from = 0;
-	line1_to = 0;
-	line2_to = 0;
-
-	f_move_two_lines_in_hyperplane_stabilizer_text = FALSE;
-	//std:string line1_from_text;
-	//std:string line2_from_text;
-	//std:string line1_to_text;
-	//std:string line2_to_text;
 
 
 	f_make_table_of_surfaces = FALSE;
 
-	f_inverse_isomorphism_klein_quadric = FALSE;
-	// std::string inverse_isomorphism_klein_quadric_matrix_A6;
-
-	f_rank_point_in_PG = FALSE;
-	rank_point_in_PG_q = 0;
-	rank_point_in_PG_n = 0;
-	//rank_point_in_PG_text;
 
 	f_create_surface_reports = FALSE;
 	f_create_surface_atlas = FALSE;
 	create_surface_atlas_q_max = 0;
 
-	f_normalize_from_the_right = FALSE;
-	f_normalize_from_the_left = FALSE;
-	f_transversal = FALSE;
-	transversal_q = 0;
-	//transversal_line_1_basis = NULL;
-	//transversal_line_2_basis = NULL;
-	//transversal_point = NULL;
-	f_intersection_of_two_lines = FALSE;
-	intersection_of_two_lines_q = 0;
-	//line_1_basis = NULL;
-	//line_2_basis = NULL;
 
 }
 
@@ -112,16 +67,7 @@ interface_projective::interface_projective()
 void interface_projective::print_help(int argc,
 		const char **argv, int i, int verbose_level)
 {
-	if (strcmp(argv[i], "-cheat_sheet_PG") == 0) {
-		cout << "-cheat_sheet_PG" << endl;
-	}
-	else if (strcmp(argv[i], "-decomposition_by_element") == 0) {
-		cout << "-decomposition_by_element <int : power> <string : element> <string : fname_base>" << endl;
-	}
-	else if (strcmp(argv[i], "-canonical_form_PG") == 0) {
-		cout << "-canonical_form_PG <int : n> <int : q> <description>" << endl;
-	}
-	else if (strcmp(argv[i], "-classify_cubic_curves") == 0) {
+	if (strcmp(argv[i], "-classify_cubic_curves") == 0) {
 		cout << "-classify_cubic_curves" << endl;
 	}
 	else if (strcmp(argv[i], "-control_arcs") == 0) {
@@ -142,41 +88,14 @@ void interface_projective::print_help(int argc,
 	else if (strcmp(argv[i], "-create_spread") == 0) {
 		cout << "-create_spread <description>" << endl;
 	}
-	else if (strcmp(argv[i], "-study_surface") == 0) {
-		cout << "-study_surface <int : q> <int : nb>" << endl;
-	}
-	else if (strcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer") == 0) {
-		cout << "-move_two_lines_in_hyperplane_stabilizer <int : q>  <int : line1_from> <int : line2_from> <int : line1_to> <int : line2_to> " << endl;
-	}
-	else if (strcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer_text") == 0) {
-		cout << "-move_two_lines_in_hyperplane_stabilizer_text <int : q>  <string : line1_from> <string : line2_from> <string : line1_to> <string : line2_to> " << endl;
-	}
 	else if (strcmp(argv[i], "-make_table_of_surfaces") == 0) {
 		cout << "-make_table_of_surfaces " << endl;
-	}
-	else if (strcmp(argv[i], "-inverse_isomorphism_klein_quadric") == 0) {
-		cout << "-inverse_isomorphism_klein_quadric <int : q> <orthogonal 6x6 matrix>" << endl;
-	}
-	else if (strcmp(argv[i], "-rank_point_in_PG") == 0) {
-		cout << "-rank_point_in_PG <int : q> <int : n> <intvec : coeffs>" << endl;
 	}
 	else if (strcmp(argv[i], "-create_surface_reports") == 0) {
 		cout << "-create_surface_reports <int : q_max>" << endl;
 	}
 	else if (strcmp(argv[i], "-create_surface_atlas") == 0) {
 		cout << "-create_surface_atlas <int : q_max>" << endl;
-	}
-	else if (strcmp(argv[i], "-normalize_from_the_right") == 0) {
-		cout << "-normalize_from_the_right" << endl;
-	}
-	else if (strcmp(argv[i], "-normalize_from_the_left") == 0) {
-		cout << "-normalize_from_the_left" << endl;
-	}
-	else if (strcmp(argv[i], "-transversal") == 0) {
-		cout << "-transversal <int : q> <string : line_1> <string : line_2> <string : pt>" << endl;
-	}
-	else if (strcmp(argv[i], "-intersection_of_two_lines") == 0) {
-		cout << "-intersection_of_two_lines <int : q> <string : line_1> <string : line_2>" << endl;
 	}
 }
 
@@ -188,16 +107,7 @@ int interface_projective::recognize_keyword(int argc,
 	if (i >= argc) {
 		return false;
 	}
-	if (strcmp(argv[i], "-cheat_sheet_PG") == 0) {
-		return true;
-	}
-	else if (strcmp(argv[i], "-decomposition_by_element") == 0) {
-		return true;
-	}
-	else if (strcmp(argv[i], "-canonical_form_PG") == 0) {
-		return true;
-	}
-	else if (strcmp(argv[i], "-classify_cubic_curves") == 0) {
+	if (strcmp(argv[i], "-classify_cubic_curves") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-control_arcs") == 0) {
@@ -218,40 +128,13 @@ int interface_projective::recognize_keyword(int argc,
 	else if (strcmp(argv[i], "-create_spread") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-study_surface") == 0) {
-		return true;
-	}
-	else if (strcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer") == 0) {
-		return true;
-	}
-	else if (strcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer_text") == 0) {
-		return true;
-	}
 	else if (strcmp(argv[i], "-make_table_of_surfaces") == 0) {
-		return true;
-	}
-	else if (strcmp(argv[i], "-inverse_isomorphism_klein_quadric") == 0) {
-		return true;
-	}
-	else if (strcmp(argv[i], "-rank_point_in_PG") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-create_surface_reports") == 0) {
 		return true;
 	}
 	else if (strcmp(argv[i], "-create_surface_atlas") == 0) {
-		return true;
-	}
-	else if (strcmp(argv[i], "-normalize_from_the_right") == 0) {
-		return true;
-	}
-	else if (strcmp(argv[i], "-normalize_from_the_left") == 0) {
-		return true;
-	}
-	else if (strcmp(argv[i], "-transversal") == 0) {
-		return true;
-	}
-	else if (strcmp(argv[i], "-intersection_of_two_lines") == 0) {
 		return true;
 	}
 	return false;
@@ -265,40 +148,7 @@ void interface_projective::read_arguments(int argc,
 	cout << "interface_projective::read_arguments" << endl;
 
 	for (i = i0; i < argc; i++) {
-		if (strcmp(argv[i], "-cheat_sheet_PG") == 0) {
-			f_cheat_sheet_PG = TRUE;
-			n = atoi(argv[++i]);
-			q = atoi(argv[++i]);
-			cout << "-cheat_sheet_PG " << n << " " <<  q << endl;
-			//i++;
-		}
-		else if (strcmp(argv[i], "-decomposition_by_element") == 0) {
-			f_decomposition_by_element = TRUE;
-			decomposition_by_element_power = atoi(argv[++i]);
-			decomposition_by_element_data.assign(argv[++i]);
-			decomposition_by_element_fname_base.assign(argv[++i]);
-			cout << "-decomposition_by_element " <<  decomposition_by_element_power
-					<< " " << decomposition_by_element_data
-					<< " " << decomposition_by_element_fname_base << endl;
-			//i++;
-		}
-		else if (strcmp(argv[i], "-canonical_form_PG") == 0) {
-			f_canonical_form_PG = TRUE;
-			n = atoi(argv[++i]);
-			q = atoi(argv[++i]);
-			cout << "-canonical_form_PG " << n << " " <<  q << ", reading extra arguments" << endl;
-
-			Canonical_form_PG_Descr = NEW_OBJECT(projective_space_object_classifier_description);
-
-			i += Canonical_form_PG_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
-			cout << "done reading -Canonical_form_PG_Descr " << n << " " <<  q << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-		else if (strcmp(argv[i], "-create_points_on_quartic") == 0) {
+		if (strcmp(argv[i], "-create_points_on_quartic") == 0) {
 			f_create_points_on_quartic = TRUE;
 			desired_distance = atof(argv[++i]);
 			cout << "-create_points_on_quartic " << desired_distance << endl;
@@ -371,52 +221,9 @@ void interface_projective::read_arguments(int argc,
 					<< transform_coeffs[nb_transform] << endl;
 			nb_transform++;
 		}
-		else if (strcmp(argv[i], "-study_surface") == 0) {
-			f_study_surface = TRUE;
-			study_surface_q = atoi(argv[++i]);
-			study_surface_nb = atoi(argv[++i]);
-			cout << "-study_surface" << study_surface_q << " " << study_surface_nb << endl;
-		}
-		else if (strcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer") == 0) {
-			f_move_two_lines_in_hyperplane_stabilizer = TRUE;
-			q = atoi(argv[++i]);
-			line1_from = atoi(argv[++i]);
-			line2_from = atoi(argv[++i]);
-			line1_to = atoi(argv[++i]);
-			line2_to = atoi(argv[++i]);
-			cout << "-move_two_lines_in_hyperplane_stabilizer" << q
-					<< " " << line1_from << " " << line1_from
-					<< " " << line1_to << " " << line2_to
-					<< endl;
-		}
-		else if (strcmp(argv[i], "-move_two_lines_in_hyperplane_stabilizer_text") == 0) {
-			f_move_two_lines_in_hyperplane_stabilizer_text = TRUE;
-			q = atoi(argv[++i]);
-			line1_from_text.assign(argv[++i]);
-			line2_from_text.assign(argv[++i]);
-			line1_to_text.assign(argv[++i]);
-			line2_to_text.assign(argv[++i]);
-			cout << "-move_two_lines_in_hyperplane_stabilizer_text" << q
-					<< " " << line1_from_text << " " << line1_from_text
-					<< " " << line1_to_text << " " << line2_to_text
-					<< endl;
-		}
 		else if (strcmp(argv[i], "-make_table_of_surfaces") == 0) {
 			f_make_table_of_surfaces = TRUE;
 			cout << "-make_table_of_surfaces" << endl;
-		}
-		else if (strcmp(argv[i], "-inverse_isomorphism_klein_quadric") == 0) {
-			f_inverse_isomorphism_klein_quadric = TRUE;
-			q = atoi(argv[++i]);
-			inverse_isomorphism_klein_quadric_matrix_A6.assign(argv[++i]);
-			cout << "-inverse_isomorphism_klein_quadric " << q << " " << inverse_isomorphism_klein_quadric_matrix_A6 << endl;
-		}
-		else if (strcmp(argv[i], "-rank_point_in_PG") == 0) {
-			f_rank_point_in_PG = TRUE;
-			rank_point_in_PG_q = atoi(argv[++i]);
-			rank_point_in_PG_n = atoi(argv[++i]);
-			rank_point_in_PG_text.assign(argv[++i]);
-			cout << "-rank_point_in_PG " << rank_point_in_PG_q << " " << rank_point_in_PG_n << " " << rank_point_in_PG_text << endl;
 		}
 		else if (strcmp(argv[i], "-create_surface_atlas") == 0) {
 			f_create_surface_atlas = TRUE;
@@ -427,35 +234,6 @@ void interface_projective::read_arguments(int argc,
 			f_create_surface_reports = TRUE;
 			create_surface_atlas_q_max = atoi(argv[++i]);
 			cout << "-create_surface_reports " << create_surface_atlas_q_max << endl;
-		}
-		else if (strcmp(argv[i], "-normalize_from_the_right") == 0) {
-			f_normalize_from_the_right = TRUE;
-			cout << "-normalize_from_the_right " << endl;
-		}
-		else if (strcmp(argv[i], "-normalize_from_the_left") == 0) {
-			f_normalize_from_the_left = TRUE;
-			cout << "-normalize_from_the_left " << endl;
-		}
-		else if (strcmp(argv[i], "-transversal") == 0) {
-			f_transversal = TRUE;
-			transversal_q = atoi(argv[++i]);
-			transversal_line_1_basis.assign(argv[++i]);
-			transversal_line_2_basis.assign(argv[++i]);
-			transversal_point.assign(argv[++i]);
-			cout << "-transversal " << transversal_q
-					<< " " << transversal_line_1_basis
-					<< " " << transversal_line_2_basis
-					<< " " << transversal_point << endl;
-		}
-		else if (strcmp(argv[i], "-intersection_of_two_lines") == 0) {
-			f_intersection_of_two_lines = TRUE;
-			intersection_of_two_lines_q = atoi(argv[++i]);
-			line_1_basis.assign(argv[++i]);
-			line_2_basis.assign(argv[++i]);
-			cout << "-intersection_of_two_lines " << intersection_of_two_lines_q
-					<< " " << line_1_basis
-					<< " " << line_2_basis
-					<< endl;
 		}
 		else {
 			cout << "interface_projective::read_arguments: unrecognized option "
@@ -475,16 +253,7 @@ void interface_projective::worker(orbiter_session *Session, int verbose_level)
 		cout << "interface_projective::worker" << endl;
 	}
 
-	if (f_cheat_sheet_PG) {
-		do_cheat_sheet_PG(Session, n, q,
-				f_decomposition_by_element, decomposition_by_element_power,
-				decomposition_by_element_data, decomposition_by_element_fname_base,
-				verbose_level);
-	}
-	else if (f_canonical_form_PG) {
-		do_canonical_form_PG(Session, n, q, verbose_level);
-	}
-	else if (f_create_points_on_quartic) {
+	if (f_create_points_on_quartic) {
 
 		graphical_output GO;
 
@@ -512,50 +281,13 @@ void interface_projective::worker(orbiter_session *Session, int verbose_level)
 	else if (f_create_spread) {
 		do_create_spread(Spread_create_description, verbose_level);
 	}
-	else if (f_study_surface) {
-		do_study_surface(study_surface_q, study_surface_nb, verbose_level);
-	}
-	else if (f_move_two_lines_in_hyperplane_stabilizer) {
-
-		geometry_global GG;
 
 
-		GG.do_move_two_lines_in_hyperplane_stabilizer(
-				q,
-				line1_from, line2_from,
-				line1_to, line2_to, verbose_level);
-	}
-	else if (f_move_two_lines_in_hyperplane_stabilizer_text) {
-
-		geometry_global GG;
-
-
-		GG.do_move_two_lines_in_hyperplane_stabilizer_text(
-				q,
-				line1_from_text, line2_from_text,
-				line1_to_text, line2_to_text, verbose_level);
-	}
 	else if (f_make_table_of_surfaces) {
 
-		geometry_global GG;
+		surface_domain Surf;
 
-		GG.make_table_of_surfaces(verbose_level);
-	}
-
-	else if (f_inverse_isomorphism_klein_quadric) {
-
-		geometry_global GG;
-
-		GG.do_inverse_isomorphism_klein_quadric(q,
-				inverse_isomorphism_klein_quadric_matrix_A6, verbose_level);
-	}
-	else if (f_rank_point_in_PG) {
-
-		geometry_global GG;
-
-		GG.do_rank_point_in_PG(rank_point_in_PG_q, rank_point_in_PG_n,
-				rank_point_in_PG_text,
-				verbose_level);
+		Surf.make_table_of_surfaces(verbose_level);
 	}
 
 	else if (f_create_surface_reports) {
@@ -569,27 +301,6 @@ void interface_projective::worker(orbiter_session *Session, int verbose_level)
 		do_create_surface_atlas(create_surface_atlas_q_max, verbose_level);
 
 	}
-	else if (f_transversal) {
-
-		geometry_global GG;
-
-		GG.do_transversal(transversal_q,
-				transversal_line_1_basis,
-				transversal_line_2_basis,
-				transversal_point,
-				f_normalize_from_the_left, f_normalize_from_the_right,
-				verbose_level);
-	}
-	else if (f_intersection_of_two_lines) {
-
-		geometry_global GG;
-
-		GG.do_intersection_of_two_lines(intersection_of_two_lines_q,
-				line_1_basis,
-				line_2_basis,
-				f_normalize_from_the_left, f_normalize_from_the_right,
-				verbose_level);
-	}
 
 
 
@@ -600,232 +311,6 @@ void interface_projective::worker(orbiter_session *Session, int verbose_level)
 }
 
 
-void interface_projective::do_cheat_sheet_PG(orbiter_session *Session,
-		int n, int q,
-		int f_decomposition_by_element, int decomposition_by_element_power,
-		std::string &decomposition_by_element_data, std::string &fname_base,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-
-	if (f_v) {
-		cout << "interface_projective::do_cheat_sheet_PG verbose_level="
-				<< verbose_level << endl;
-	}
-	finite_field *F;
-
-	F = NEW_OBJECT(finite_field);
-
-
-	if (Session->f_override_polynomial) {
-		F->init_override_polynomial(q, Session->override_polynomial, 0);
-	}
-	else {
-		F->init(q, 0);
-	}
-
-#if 0
-	projective_space *P;
-
-	P = NEW_OBJECT(projective_space);
-	if (f_v) {
-		cout << "interface_projective::do_cheat_sheet_PG before P->init" << endl;
-	}
-	P->init(n, F,
-		TRUE /* f_init_incidence_structure */,
-		verbose_level /*MINIMUM(2, verbose_level)*/);
-
-	//F->cheat_sheet_PG(n, verbose_level);
-#endif
-
-
-	int f_semilinear;
-	number_theory_domain NT;
-
-
-	if (NT.is_prime(q)) {
-		f_semilinear = FALSE;
-	}
-	else {
-		f_semilinear = TRUE;
-	}
-
-
-	projective_space_with_action *PA;
-
-	PA = NEW_OBJECT(projective_space_with_action);
-
-	if (f_v) {
-		cout << "interface_projective::do_cheat_sheet_PG before PA->init" << endl;
-	}
-	PA->init(F, n,
-		f_semilinear,
-		TRUE /*f_init_incidence_structure*/,
-		0 /* verbose_level */);
-	if (f_v) {
-		cout << "interface_projective::do_cheat_sheet_PG after PA->init" << endl;
-	}
-
-
-
-	{
-		char str[1000];
-		string fname;
-		char title[1000];
-		char author[1000];
-		//int f_with_group = FALSE;
-		//int f_semilinear = FALSE;
-		//int f_basis = TRUE;
-		//int q = F->q;
-
-		snprintf(str, 1000, "PG_%d_%d.tex", n, q);
-		fname.assign(str);
-		snprintf(title, 1000, "Cheat Sheet PG($%d,%d$)", n, q);
-		//strcpy(author, "");
-		author[0] = 0;
-
-
-		{
-			ofstream ost(fname);
-			latex_interface L;
-
-			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
-					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
-
-
-			if (f_v) {
-				cout << "interface_projective::do_cheat_sheet_PG before PA->P->report" << endl;
-			}
-			PA->P->report(ost, verbose_level);
-			if (f_v) {
-				cout << "interface_projective::do_cheat_sheet_PG after PA->P->report" << endl;
-			}
-
-			if (f_decomposition_by_element) {
-
-				if (f_v) {
-					cout << "interface_projective::do_cheat_sheet_PG f_decomposition_by_element" << endl;
-				}
-
-				int *Elt;
-
-				Elt = NEW_int(PA->A->elt_size_in_int);
-
-
-				PA->A->make_element_from_string(Elt,
-						decomposition_by_element_data.c_str(), verbose_level);
-
-
-				PA->A->element_power_int_in_place(Elt,
-						decomposition_by_element_power, verbose_level);
-
-				PA->report_decomposition_by_single_automorphism(
-						Elt, ost, fname_base,
-						verbose_level);
-
-				FREE_int(Elt);
-			}
-
-			L.foot(ost);
-
-		}
-		file_io Fio;
-
-		cout << "written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-	}
-
-
-	FREE_OBJECT(PA);
-	//FREE_OBJECT(P);
-	FREE_OBJECT(F);
-
-	if (f_v) {
-		cout << "interface_projective::do_cheat_sheet_PG done" << endl;
-	}
-
-}
-
-void interface_projective::do_canonical_form_PG(orbiter_session *Session,
-		int n, int q, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//int i;
-
-	if (f_v) {
-		cout << "interface_projective::do_canonical_form_PG" << endl;
-	}
-
-
-	finite_field *F;
-
-	F = NEW_OBJECT(finite_field);
-
-	if (Session->f_override_polynomial) {
-		F->init_override_polynomial(q, Session->override_polynomial, 0);
-	}
-	else {
-		F->init(q, 0);
-	}
-	//F->init_override_polynomial(q, poly, 0);
-
-	int f_semilinear;
-	number_theory_domain NT;
-
-
-	if (NT.is_prime(q)) {
-		f_semilinear = FALSE;
-	}
-	else {
-		f_semilinear = TRUE;
-	}
-
-
-	projective_space_with_action *PA;
-
-	PA = NEW_OBJECT(projective_space_with_action);
-
-	PA->init(F, n,
-		f_semilinear,
-		TRUE /*f_init_incidence_structure*/,
-		0 /* verbose_level */);
-
-
-
-	projective_space_object_classifier *OC;
-
-	OC = NEW_OBJECT(projective_space_object_classifier);
-
-	if (f_v) {
-		cout << "interface_projective::do_canonical_form_PG before OC->do_the_work" << endl;
-	}
-	OC->do_the_work(
-			Canonical_form_PG_Descr,
-			PA,
-			verbose_level);
-	if (f_v) {
-		cout << "interface_projective::do_canonical_form_PG after OC->do_the_work" << endl;
-	}
-
-	FREE_OBJECT(OC);
-	FREE_OBJECT(PA);
-	FREE_OBJECT(F);
-
-
-
-	if (f_v) {
-		cout << "interface_projective::do_canonical_form_PG done" << endl;
-	}
-}
 
 
 
@@ -973,54 +458,6 @@ void interface_projective::do_create_spread(spread_create_description *Descr, in
 }
 
 
-void interface_projective::do_study_surface(int q, int nb, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_projective::do_study_surface" << endl;
-	}
-
-	surface_study *study;
-
-	study = NEW_OBJECT(surface_study);
-
-	cout << "before study->init" << endl;
-	study->init(q, nb, verbose_level);
-	cout << "after study->init" << endl;
-
-	cout << "before study->study_intersection_points" << endl;
-	study->study_intersection_points(verbose_level);
-	cout << "after study->study_intersection_points" << endl;
-
-	cout << "before study->study_line_orbits" << endl;
-	study->study_line_orbits(verbose_level);
-	cout << "after study->study_line_orbits" << endl;
-
-	cout << "before study->study_group" << endl;
-	study->study_group(verbose_level);
-	cout << "after study->study_group" << endl;
-
-	cout << "before study->study_orbits_on_lines" << endl;
-	study->study_orbits_on_lines(verbose_level);
-	cout << "after study->study_orbits_on_lines" << endl;
-
-	cout << "before study->study_find_eckardt_points" << endl;
-	study->study_find_eckardt_points(verbose_level);
-	cout << "after study->study_find_eckardt_points" << endl;
-
-#if 0
-	if (study->nb_Eckardt_pts == 6) {
-		cout << "before study->study_surface_with_6_eckardt_points" << endl;
-		study->study_surface_with_6_eckardt_points(verbose_level);
-		cout << "after study->study_surface_with_6_eckardt_points" << endl;
-		}
-#endif
-
-	if (f_v) {
-		cout << "interface_projective::do_study_surface done" << endl;
-	}
-}
 
 
 
@@ -1203,7 +640,7 @@ void interface_projective::do_create_surface_atlas(int q_max, int verbose_level)
 		T[cur].Descr->f_special = FALSE;
 
 		T[cur].F = NEW_OBJECT(finite_field);
-		T[cur].F->init(q, 0);
+		T[cur].F->finite_field_init(q, 0);
 
 		T[cur].Descr->F = T[cur].F;
 

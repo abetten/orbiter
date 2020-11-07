@@ -998,7 +998,7 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	if (f_v) {
 		cout << "creating the finite field of order " << p << endl;
 	}
-	Fp.init(p, verbose_level - 1);
+	Fp.finite_field_init(p, verbose_level - 1);
 
 	algebra_global Algebra;
 	unipoly_domain FpX(&Fp);
@@ -2093,7 +2093,7 @@ void coding_theory_domain::make_Hamming_graph_and_write_file(int n, int q,
 	if (f_projective) {
 		width = height = Gg.nb_PG_elements(n - 1, q);
 		F = NEW_OBJECT(finite_field);
-		F->init(q);
+		F->finite_field_init(q, 0 /* verbose_level */);
 	}
 	else {
 		width = height = Gg.nb_AG_elements(n, q);
@@ -2166,6 +2166,578 @@ void coding_theory_domain::make_Hamming_graph_and_write_file(int n, int q,
 		cout << "coding_theory_domain::make_Hamming_graph_and_write_file" << endl;
 	}
 
+}
+
+
+void coding_theory_domain::compute_and_print_projective_weights(
+		ostream &ost, finite_field *F, int *M, int n, int k)
+{
+	int i;
+	int *weights;
+
+	weights = NEW_int(n + 1);
+	code_projective_weight_enumerator(F, n, k,
+		M, // [k * n]
+		weights, // [n + 1]
+		0 /*verbose_level*/);
+
+
+	ost << "projective weights: " << endl;
+	for (i = 0; i <= n; i++) {
+		if (weights[i] == 0) {
+			continue;
+		}
+		ost << i << " : " << weights[i] << endl;
+	}
+	FREE_int(weights);
+}
+
+int coding_theory_domain::code_minimum_distance(finite_field *F, int n, int k,
+		int *code, int verbose_level)
+	// code[k * n]
+{
+	int f_v = (verbose_level >= 1);
+	int *weight_enumerator;
+	int i;
+
+	if (f_v) {
+		cout << "coding_theory_domain::code_minimum_distance" << endl;
+	}
+	weight_enumerator = NEW_int(n + 1);
+	int_vec_zero(weight_enumerator, n + 1);
+	code_weight_enumerator_fast(F, n, k,
+		code, // [k * n]
+		weight_enumerator, // [n + 1]
+		verbose_level);
+	for (i = 1; i <= n; i++) {
+		if (weight_enumerator[i]) {
+			break;
+		}
+	}
+	if (i == n + 1) {
+		cout << "coding_theory_domain::code_minimum_distance "
+				"the minimum weight is undefined" << endl;
+		exit(1);
+	}
+	FREE_int(weight_enumerator);
+	return i;
+}
+
+void coding_theory_domain::codewords_affine(finite_field *F, int n, int k,
+	int *code, // [k * n]
+	int *codewords, // q^k
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int N, h, rk;
+	int *msg;
+	int *word;
+	geometry_global Gg;
+
+	if (f_v) {
+		cout << "coding_theory_domain::codewords_affine" << endl;
+	}
+	N = Gg.nb_AG_elements(k, F->q);
+	if (f_v) {
+		cout << N << " messages" << endl;
+	}
+	msg = NEW_int(k);
+	word = NEW_int(n);
+
+	for (h = 0; h < N; h++) {
+		Gg.AG_element_unrank(F->q, msg, 1, k, h);
+		F->mult_vector_from_the_left(msg, code, word, k, n);
+		rk = Gg.AG_element_rank(F->q, word, 1, n);
+		codewords[h] = rk;
+	}
+	FREE_int(msg);
+	FREE_int(word);
+	if (f_v) {
+		cout << "coding_theory_domain::codewords_affine done" << endl;
+	}
+}
+
+void coding_theory_domain::code_projective_weight_enumerator(finite_field *F,
+	int n, int k,
+	int *code, // [k * n]
+	int *weight_enumerator, // [n + 1]
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 1);
+	int N, h, wt, i;
+	int *msg;
+	int *word;
+	int t0, t1, dt;
+	geometry_global Gg;
+	os_interface Os;
+
+	t0 = Os.os_ticks();
+
+	if (f_v) {
+		cout << "coding_theory_domain::code_projective_weight_enumerator" << endl;
+	}
+	N = Gg.nb_AG_elements(k, F->q);
+	if (f_v) {
+		cout << N << " messages" << endl;
+	}
+	msg = NEW_int(k);
+	word = NEW_int(n);
+
+	int_vec_zero(weight_enumerator, n + 1);
+
+	for (h = 0; h < N; h++) {
+		if (f_v && (h % ONE_MILLION) == 0) {
+			t1 = Os.os_ticks();
+			dt = t1 - t0;
+			cout << setw(10) << h << " / " << setw(10) << N << " : ";
+			Os.time_check_delta(cout, dt);
+			cout << endl;
+			if (f_vv) {
+				cout << "so far, the weight enumerator is:" << endl;
+				for (i = 0; i <= n; i++) {
+					if (weight_enumerator[i] == 0)
+						continue;
+					cout << setw(5) << i << " : " << setw(10)
+							<< weight_enumerator[i] << endl;
+				}
+			}
+		}
+		Gg.AG_element_unrank(F->q, msg, 1, k, h);
+		F->mult_vector_from_the_left(msg, code, word, k, n);
+		wt = 0;
+		for (i = 0; i < n; i++) {
+			if (word[i]) {
+				wt++;
+			}
+		}
+		weight_enumerator[wt]++;
+	}
+	if (f_v) {
+		cout << "the weight enumerator is:" << endl;
+		for (i = 0; i <= n; i++) {
+			if (weight_enumerator[i] == 0) {
+				continue;
+			}
+			cout << setw(5) << i << " : " << setw(10)
+					<< weight_enumerator[i] << endl;
+		}
+	}
+
+
+	FREE_int(msg);
+	FREE_int(word);
+}
+
+void coding_theory_domain::code_weight_enumerator(finite_field *F,
+	int n, int k,
+	int *code, // [k * n]
+	int *weight_enumerator, // [n + 1]
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 1);
+	int N, h, wt, i;
+	int *msg;
+	int *word;
+	int t0, t1, dt;
+	geometry_global Gg;
+	os_interface Os;
+
+	t0 = Os.os_ticks();
+
+	if (f_v) {
+		cout << "coding_theory_domain::code_weight_enumerator" << endl;
+	}
+	N = Gg.nb_AG_elements(k, F->q);
+	if (f_v) {
+		cout << N << " messages" << endl;
+	}
+	msg = NEW_int(k);
+	word = NEW_int(n);
+
+	int_vec_zero(weight_enumerator, n + 1);
+
+	for (h = 0; h < N; h++) {
+		if ((h % ONE_MILLION) == 0) {
+			t1 = Os.os_ticks();
+			dt = t1 - t0;
+			cout << setw(10) << h << " / " << setw(10) << N << " : ";
+			Os.time_check_delta(cout, dt);
+			cout << endl;
+			if (f_vv) {
+				cout << "so far, the weight enumerator is:" << endl;
+				for (i = 0; i <= n; i++) {
+					if (weight_enumerator[i] == 0)
+						continue;
+					cout << setw(5) << i << " : " << setw(10)
+							<< weight_enumerator[i] << endl;
+				}
+			}
+		}
+		Gg.AG_element_unrank(F->q, msg, 1, k, h);
+		F->mult_vector_from_the_left(msg, code, word, k, n);
+		wt = 0;
+		for (i = 0; i < n; i++) {
+			if (word[i]) {
+				wt++;
+			}
+		}
+		weight_enumerator[wt]++;
+		}
+	if (f_v) {
+		cout << "the weight enumerator is:" << endl;
+		for (i = 0; i <= n; i++) {
+			if (weight_enumerator[i] == 0) {
+				continue;
+			}
+			cout << setw(5) << i << " : " << setw(10)
+					<< weight_enumerator[i] << endl;
+		}
+	}
+
+
+	FREE_int(msg);
+	FREE_int(word);
+}
+
+
+void coding_theory_domain::code_weight_enumerator_fast(finite_field *F,
+		int n, int k,
+	int *code, // [k * n]
+	int *weight_enumerator, // [n + 1]
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int N, h, wt, i;
+	int *msg;
+	int *word;
+	int t0, t1, dt;
+	geometry_global Gg;
+	os_interface Os;
+
+	t0 = Os.os_ticks();
+
+	if (f_v) {
+		cout << "coding_theory_domain::code_weight_enumerator_fast" << endl;
+	}
+	N = Gg.nb_PG_elements(k - 1, F->q);
+	if (f_v) {
+		cout << N << " projective messages" << endl;
+	}
+	msg = NEW_int(k);
+	word = NEW_int(n);
+
+
+	int_vec_zero(weight_enumerator, n + 1);
+
+	for (h = 0; h < N; h++) {
+		if (((h % ONE_MILLION) == 0) && h) {
+			t1 = Os.os_ticks();
+			dt = t1 - t0;
+			cout << setw(10) << h << " / " << setw(10) << N << " : ";
+			Os.time_check_delta(cout, dt);
+			cout << endl;
+			if (f_vv) {
+				cout << "so far, the weight enumerator is:" << endl;
+				for (i = 0; i <= n; i++) {
+					if (weight_enumerator[i] == 0)
+						continue;
+					cout << setw(5) << i << " : " << setw(10)
+							<< (F->q - 1) * weight_enumerator[i] << endl;
+				}
+			}
+		}
+		F->PG_element_unrank_modified(msg, 1, k, h);
+		//AG_element_unrank(q, msg, 1, k, h);
+		F->mult_vector_from_the_left(msg, code, word, k, n);
+		wt = 0;
+		for (i = 0; i < n; i++) {
+			if (word[i]) {
+				wt++;
+			}
+		}
+		weight_enumerator[wt]++;
+		if (f_vv) {
+			cout << h << " / " << N << " msg: ";
+			int_vec_print(cout, msg, k);
+			cout << " codeword ";
+			int_vec_print(cout, word, n);
+			cout << " weight " << wt << endl;
+		}
+	}
+	weight_enumerator[0] = 1;
+	for (i = 1; i <= n; i++) {
+		weight_enumerator[i] *= F->q - 1;
+	}
+	if (f_v) {
+		cout << "the weight enumerator is:" << endl;
+		for (i = 0; i <= n; i++) {
+			if (weight_enumerator[i] == 0) {
+				continue;
+			}
+			cout << setw(5) << i << " : " << setw(10)
+					<< weight_enumerator[i] << endl;
+		}
+	}
+
+
+	FREE_int(msg);
+	FREE_int(word);
+}
+
+void coding_theory_domain::code_projective_weights(finite_field *F,
+	int n, int k,
+	int *code, // [k * n]
+	int *&weights, // will be allocated [N]
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 1);
+	int N, h, wt, i;
+	int *msg;
+	int *word;
+	int t0, t1, dt;
+	geometry_global Gg;
+	os_interface Os;
+
+	t0 = Os.os_ticks();
+
+	if (f_v) {
+		cout << "coding_theory_domain::code_projective_weights" << endl;
+	}
+	N = Gg.nb_PG_elements(k - 1, F->q);
+	if (f_v) {
+		cout << N << " projective messages" << endl;
+	}
+	weights = NEW_int(N);
+	msg = NEW_int(k);
+	word = NEW_int(n);
+
+	for (h = 0; h < N; h++) {
+		if ((h % ONE_MILLION) == 0) {
+			t1 = Os.os_ticks();
+			dt = t1 - t0;
+			cout << setw(10) << h << " / " << setw(10) << N << " : ";
+			Os.time_check_delta(cout, dt);
+			cout << endl;
+		}
+		F->PG_element_unrank_modified(msg, 1, k, h);
+		//AG_element_unrank(q, msg, 1, k, h);
+		F->mult_vector_from_the_left(msg, code, word, k, n);
+		wt = 0;
+		for (i = 0; i < n; i++) {
+			if (word[i]) {
+				wt++;
+			}
+		}
+		weights[h] = wt;
+	}
+	if (f_v) {
+		cout << "coding_theory_domain::code_projective_weights done" << endl;
+	}
+
+
+	FREE_int(msg);
+	FREE_int(word);
+}
+
+void coding_theory_domain::mac_williams_equations(longinteger_object *&M, int n, int k, int q)
+{
+	combinatorics_domain D;
+	int i, j;
+
+	M = NEW_OBJECTS(longinteger_object, (n + 1) * (n + 1));
+
+	for (i = 0; i <= n; i++) {
+		for (j = 0; j <= n; j++) {
+			D.krawtchouk(M[i * (n + 1) + j], n, q, i, j);
+		}
+	}
+}
+
+void coding_theory_domain::determine_weight_enumerator()
+{
+	int n = 19, k = 7, q = 2;
+	longinteger_domain D;
+	longinteger_object *M, *A1, *A2, qk;
+	int i;
+
+	qk.create(q, __FILE__, __LINE__);
+	D.power_int(qk, k);
+	cout << q << "^" << k << " = " << qk << endl;
+
+	mac_williams_equations(M, n, k, q);
+
+	D.matrix_print_tex(cout, M, n + 1, n + 1);
+
+	A1 = NEW_OBJECTS(longinteger_object, n + 1);
+	A2 = NEW_OBJECTS(longinteger_object, n + 1);
+	for (i = 0; i <= n; i++) {
+		A1[i].create(0, __FILE__, __LINE__);
+	}
+	A1[0].create(1, __FILE__, __LINE__);
+	A1[8].create(78, __FILE__, __LINE__);
+	A1[12].create(48, __FILE__, __LINE__);
+	A1[16].create(1, __FILE__, __LINE__);
+	D.matrix_print_tex(cout, A1, n + 1, 1);
+
+	D.matrix_product(M, A1, A2, n + 1, n + 1, 1);
+	D.matrix_print_tex(cout, A2, n + 1, 1);
+
+	D.matrix_entries_integral_division_exact(A2, qk, n + 1, 1);
+
+	D.matrix_print_tex(cout, A2, n + 1, 1);
+
+	FREE_OBJECTS(M);
+	FREE_OBJECTS(A1);
+	FREE_OBJECTS(A2);
+}
+
+
+void coding_theory_domain::do_weight_enumerator(finite_field *F,
+		int m, int n, std::string &text,
+		int f_normalize_from_the_left, int f_normalize_from_the_right,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *M;
+	int *A;
+	int *base_cols;
+	int *weight_enumerator;
+	int len, rk, i;
+
+	if (f_v) {
+		cout << "do_weight_enumerator" << endl;
+	}
+
+	int_vec_scan(text, M, len);
+	if (len != m * n) {
+		cout << "number of coordinates received differs from m * n" << endl;
+		cout << "received " << len << endl;
+		exit(1);
+	}
+
+
+	A = NEW_int(n * n);
+	base_cols = NEW_int(n);
+	weight_enumerator = NEW_int(n + 1);
+	int_vec_copy(M, A, m * n);
+
+	rk = F->Gauss_int(A,
+		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
+		FALSE /* f_P */, NULL /*P*/, m, n, n,
+		0 /*verbose_level*/);
+
+
+	if (f_v) {
+		cout << "after RREF:" << endl;
+		int_matrix_print(A, rk, n);
+		cout << "rk=" << rk << endl;
+
+		cout << "coefficients:" << endl;
+		int_vec_print(cout, A, rk * n);
+		cout << endl;
+	}
+
+	code_weight_enumerator(F, n, rk,
+		A /* code */, // [k * n]
+		weight_enumerator, // [n + 1]
+		verbose_level);
+
+	if (f_v) {
+		cout << "The weight enumerator is:" << endl;
+		for (i = 0; i <= n; i++) {
+			cout << i << " : " << weight_enumerator[i] << endl;
+		}
+
+		int f_first = TRUE;
+
+		for (i = 0; i <= n; i++) {
+			if (weight_enumerator[i] == 0) {
+				continue;
+			}
+			if (f_first) {
+				f_first = FALSE;
+			}
+			else {
+				cout << " + ";
+			}
+			cout << weight_enumerator[i];
+			if (i) {
+				cout << "*";
+				cout << "x";
+				if (i > 1) {
+					cout << "^";
+					if (i < 10) {
+						cout << i;
+					}
+					else {
+						cout << "(" << i << ")";
+					}
+				}
+			}
+			if (n - i) {
+				cout << "*";
+				cout << "y";
+				if (n - i > 1) {
+					cout << "^";
+					if (n - i < 10) {
+						cout << n - i;
+					}
+					else {
+						cout << "(" << n - i << ")";
+					}
+				}
+			}
+
+		}
+		cout << endl;
+	}
+
+
+	if (f_normalize_from_the_left) {
+		if (f_v) {
+			cout << "normalizing from the left" << endl;
+		}
+		for (i = 0; i < rk; i++) {
+			F->PG_element_normalize_from_front(
+					A + i * n, 1, n);
+		}
+
+		if (f_v) {
+			cout << "after normalize from the left:" << endl;
+			int_matrix_print(A, rk, n);
+			cout << "rk=" << rk << endl;
+		}
+	}
+
+	if (f_normalize_from_the_right) {
+		if (f_v) {
+			cout << "normalizing from the right" << endl;
+		}
+		for (i = 0; i < rk; i++) {
+			F->PG_element_normalize(
+					A + i * n, 1, n);
+		}
+
+		if (f_v) {
+			cout << "after normalize from the right:" << endl;
+			int_matrix_print(A, rk, n);
+			cout << "rk=" << rk << endl;
+		}
+	}
+
+
+	FREE_int(M);
+	FREE_int(A);
+	FREE_int(base_cols);
+	FREE_int(weight_enumerator);
+
+	if (f_v) {
+		cout << "do_weight_enumerator done" << endl;
+	}
 }
 
 

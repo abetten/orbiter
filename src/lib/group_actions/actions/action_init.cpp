@@ -903,7 +903,7 @@ void action::init_affine_group(int n, int q,
 	label.assign(str1);
 	label_tex.assign(str2);
 
-	F.init(q, verbose_level - 1);
+	F.finite_field_init(q, verbose_level - 1);
 	
 	
 	F.affine_generators(n, f_translations, 
@@ -1753,7 +1753,7 @@ void action::init_permutation_representation(action *A_original,
 
 		S = NEW_OBJECT(sims);
 
-		S->init(this, verbose_level - 2);
+		S->finite_field_init(this, verbose_level - 2);
 		if (f_v) {
 			cout << "action::init_permutation_representation "
 					"before S->init_generators" << endl;
