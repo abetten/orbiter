@@ -101,7 +101,7 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 		//cout << "design_create::init k = " << k << endl;
 	}
 	F = NEW_OBJECT(finite_field);
-	F->init(q, 0);
+	F->finite_field_init(q, 0);
 
 	if (Descr->f_family) {
 		if (f_v) {
@@ -226,7 +226,7 @@ void design_create::create_design_PG_2_q(finite_field *F,
 	k = q + 1;
 #if 0
 	P = NEW_OBJECT(projective_space);
-	P->init(2, F,
+	P->finite_field_init(2, F,
 			TRUE /* f_init_incidence_structure */,
 			verbose_level);
 #endif

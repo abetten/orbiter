@@ -983,8 +983,8 @@ void delandtsheer_doyen::create_action(int verbose_level)
 
 		vector_ge *nice_gens;
 
-		F1->init(2, 0);
-		F2->init(2, 0);
+		F1->finite_field_init(2, 0);
+		F2->finite_field_init(2, 0);
 
 		cout << "initializing projective groups:" << endl;
 
@@ -1020,8 +1020,8 @@ void delandtsheer_doyen::create_action(int verbose_level)
 
 
 
-		F1->init(Descr->q1, 0);
-		F2->init(Descr->q2, 0);
+		F1->finite_field_init(Descr->q1, 0);
+		F2->finite_field_init(Descr->q2, 0);
 
 
 

@@ -805,13 +805,12 @@ void cryptography_domain::do_random(int random_nb, std::string &fname_csv, int v
 
 }
 
-void cryptography_domain::do_EC_Koblitz_encoding(int q,
+void cryptography_domain::do_EC_Koblitz_encoding(finite_field *F,
 		int EC_b, int EC_c, int EC_s,
 		std::string &pt_text, std::string &EC_message,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	finite_field *F;
 	int x0, x, y;
 
 	if (f_v) {
@@ -828,14 +827,12 @@ void cryptography_domain::do_EC_Koblitz_encoding(int q,
 
 	int u, i, j, r;
 
-	u = q / 27;
+	u = F->q / 27;
 	if (f_v) {
 		cout << "do_EC_Koblitz_encoding u = " << u << endl;
 	}
 
 
-	F = NEW_OBJECT(finite_field);
-	F->init(q, 0 /*verbose_level*/);
 	for (i = 1; i <= 26; i++) {
 		x0 = i * u;
 		for (j = 0; j < u; j++) {
@@ -1043,11 +1040,10 @@ void cryptography_domain::do_EC_Koblitz_encoding(int q,
 	}
 }
 
-void cryptography_domain::do_EC_points(int q,
+void cryptography_domain::do_EC_points(finite_field *F,
 		int EC_b, int EC_c, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	finite_field *F;
 	int x, y, r, y1, y2;
 
 	if (f_v) {
@@ -1055,10 +1051,7 @@ void cryptography_domain::do_EC_points(int q,
 	}
 	vector<vector<int>> Pts;
 
-	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level);
-
-	for (x = 0; x < q; x++) {
+	for (x = 0; x < F->q; x++) {
 		r = EC_evaluate_RHS(F, EC_b, EC_c, x);
 		if (r == 0) {
 
@@ -1220,13 +1213,12 @@ int cryptography_domain::EC_evaluate_RHS(finite_field *F,
 }
 
 
-void cryptography_domain::do_EC_add(int q,
+void cryptography_domain::do_EC_add(finite_field *F,
 		int EC_b, int EC_c,
 		std::string &pt1_text, std::string &pt2_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	finite_field *F;
 	int x1, y1, z1;
 	int x2, y2, z2;
 	int x3, y3, z3;
@@ -1238,9 +1230,6 @@ void cryptography_domain::do_EC_add(int q,
 		cout << "do_EC_add" << endl;
 	}
 	vector<vector<int>> Pts;
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level);
 
 	int_vec_scan(pt1_text, v, len);
 	if (len != 2) {
@@ -1283,11 +1272,10 @@ void cryptography_domain::do_EC_add(int q,
 	}
 }
 
-void cryptography_domain::do_EC_cyclic_subgroup(int q,
+void cryptography_domain::do_EC_cyclic_subgroup(finite_field *F,
 		int EC_b, int EC_c, std::string &pt_text, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	finite_field *F;
 	int x1, y1, z1;
 	int *v;
 	int len, i;
@@ -1298,9 +1286,6 @@ void cryptography_domain::do_EC_cyclic_subgroup(int q,
 	}
 	vector<vector<int>> Pts;
 	int order;
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level);
 
 	int_vec_scan(pt_text, v, len);
 	if (len != 2) {
@@ -1339,18 +1324,15 @@ void cryptography_domain::do_EC_cyclic_subgroup(int q,
 		}
 	}
 
-	FREE_OBJECT(F);
-
 	if (f_v) {
 		cout << "do_EC_cyclic_subgroup done" << endl;
 	}
 }
 
-void cryptography_domain::do_EC_multiple_of(int q,
+void cryptography_domain::do_EC_multiple_of(finite_field *F,
 		int EC_b, int EC_c, std::string &pt_text, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	finite_field *F;
 	int x1, y1, z1;
 	int x3, y3, z3;
 	int *v;
@@ -1359,9 +1341,6 @@ void cryptography_domain::do_EC_multiple_of(int q,
 	if (f_v) {
 		cout << "do_EC_multiple_of" << endl;
 	}
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level);
 
 	int_vec_scan(pt_text, v, len);
 	if (len != 2) {
@@ -1392,19 +1371,16 @@ void cryptography_domain::do_EC_multiple_of(int q,
 		cout << "(" << x3 << "," << y3 << ")" << endl;
 	}
 
-	FREE_OBJECT(F);
-
 	if (f_v) {
 		cout << "do_EC_multiple_of done" << endl;
 	}
 }
 
-void cryptography_domain::do_EC_discrete_log(int q,
+void cryptography_domain::do_EC_discrete_log(finite_field *F,
 		int EC_b, int EC_c,
 		std::string &base_pt_text, std::string &pt_text, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	finite_field *F;
 	int x1, y1, z1;
 	int x3, y3, z3;
 	int *v;
@@ -1414,9 +1390,6 @@ void cryptography_domain::do_EC_discrete_log(int q,
 	if (f_v) {
 		cout << "do_EC_multiple_of" << endl;
 	}
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q, verbose_level);
 
 	int_vec_scan(base_pt_text, v, len);
 	if (len != 2) {
@@ -1458,20 +1431,17 @@ void cryptography_domain::do_EC_discrete_log(int q,
 			"w.r.t. (" << x1 << "," << y1 << "," << z1 << ") "
 			"is " << n << endl;
 
-	FREE_OBJECT(F);
-
 	if (f_v) {
 		cout << "do_EC_multiple_of done" << endl;
 	}
 }
 
-void cryptography_domain::do_EC_baby_step_giant_step(int EC_q, int EC_b, int EC_c,
+void cryptography_domain::do_EC_baby_step_giant_step(finite_field *F, int EC_b, int EC_c,
 		std::string &EC_bsgs_G, int EC_bsgs_N,
 		std::string &EC_bsgs_cipher_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	finite_field *F;
 	int Gx, Gy, Gz;
 	int nGx, nGy, nGz;
 	int Cx, Cy, Cz;
@@ -1484,9 +1454,6 @@ void cryptography_domain::do_EC_baby_step_giant_step(int EC_q, int EC_b, int EC_
 	if (f_v) {
 		cout << "algebra_global::do_EC_baby_step_giant_step" << endl;
 	}
-
-	F = NEW_OBJECT(finite_field);
-	F->init(EC_q, 0 /*verbose_level*/);
 
 
 	int_vec_scan(EC_bsgs_G, v, len);
@@ -1579,13 +1546,12 @@ void cryptography_domain::do_EC_baby_step_giant_step(int EC_q, int EC_b, int EC_
 }
 
 void cryptography_domain::do_EC_baby_step_giant_step_decode(
-		int EC_q, int EC_b, int EC_c,
+		finite_field *F, int EC_b, int EC_c,
 		std::string &EC_bsgs_A, int EC_bsgs_N,
 		std::string &EC_bsgs_cipher_text, std::string &EC_bsgs_keys,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	finite_field *F;
 	int Ax, Ay, Az;
 	int Tx, Ty, Tz;
 	int Cx, Cy, Cz;
@@ -1601,10 +1567,7 @@ void cryptography_domain::do_EC_baby_step_giant_step_decode(
 		cout << "algebra_global::do_EC_baby_step_giant_step_decode" << endl;
 	}
 
-	F = NEW_OBJECT(finite_field);
-	F->init(EC_q, 0 /*verbose_level*/);
-
-	u = EC_q / 27;
+	u = F->q / 27;
 	if (f_v) {
 		cout << "algebra_global::do_EC_baby_step_giant_step_decode u = " << u << endl;
 	}
@@ -1810,7 +1773,7 @@ void cryptography_domain::do_RSA(long int RSA_d, long int RSA_m,
 }
 
 
-void cryptography_domain::NTRU_encrypt(int N, int p, int q,
+void cryptography_domain::NTRU_encrypt(int N, int p, finite_field *Fq,
 		std::string &H_coeffs, std::string &R_coeffs, std::string &Msg_coeffs,
 		int verbose_level)
 {
@@ -1830,15 +1793,11 @@ void cryptography_domain::NTRU_encrypt(int N, int p, int q,
 	int_vec_scan(R_coeffs, data_R, sz_R);
 	int_vec_scan(Msg_coeffs, data_Msg, sz_Msg);
 
-	finite_field *F;
 	number_theory_domain NT;
 
-	F = NEW_OBJECT(finite_field);
-	F->init(q);
 
 
-
-	unipoly_domain FX(F);
+	unipoly_domain FX(Fq);
 	unipoly_object H, R, Msg, M, C, D;
 
 
@@ -1850,8 +1809,8 @@ void cryptography_domain::NTRU_encrypt(int N, int p, int q,
 	FX.create_object_of_degree(H, dh);
 
 	for (i = 0; i <= dh; i++) {
-		if (data_H[i] < 0 || data_H[i] >= q) {
-			data_H[i] = NT.mod(data_H[i], q);
+		if (data_H[i] < 0 || data_H[i] >= Fq->q) {
+			data_H[i] = NT.mod(data_H[i], Fq->q);
 		}
 		FX.s_i(H, i) = data_H[i];
 	}
@@ -1859,8 +1818,8 @@ void cryptography_domain::NTRU_encrypt(int N, int p, int q,
 	FX.create_object_of_degree(R, dr);
 
 	for (i = 0; i <= dr; i++) {
-		if (data_R[i] < 0 || data_R[i] >= q) {
-			data_R[i] = NT.mod(data_R[i], q);
+		if (data_R[i] < 0 || data_R[i] >= Fq->q) {
+			data_R[i] = NT.mod(data_R[i], Fq->q);
 		}
 		FX.s_i(R, i) = data_R[i];
 	}
@@ -1868,8 +1827,8 @@ void cryptography_domain::NTRU_encrypt(int N, int p, int q,
 	FX.create_object_of_degree(Msg, dm);
 
 	for (i = 0; i <= dm; i++) {
-		if (data_Msg[i] < 0 || data_Msg[i] >= q) {
-			data_Msg[i] = NT.mod(data_Msg[i], q);
+		if (data_Msg[i] < 0 || data_Msg[i] >= Fq->q) {
+			data_Msg[i] = NT.mod(data_Msg[i], Fq->q);
 		}
 		FX.s_i(Msg, i) = data_Msg[i];
 	}
@@ -1878,7 +1837,7 @@ void cryptography_domain::NTRU_encrypt(int N, int p, int q,
 	for (i = 0; i <= N; i++) {
 		FX.s_i(M, i) = 0;
 	}
-	FX.s_i(M, 0) = F->negate(1);
+	FX.s_i(M, 0) = Fq->negate(1);
 	FX.s_i(M, N) = 1;
 
 	cout << "H(X)=";
@@ -1911,7 +1870,7 @@ void cryptography_domain::NTRU_encrypt(int N, int p, int q,
 		d = FX.degree(C);
 
 		for (i = 0; i <= d; i++) {
-			FX.s_i(C, i) = F->mult(p, FX.s_i(C, i));
+			FX.s_i(C, i) = Fq->mult(p, FX.s_i(C, i));
 		}
 
 		FX.add(C, Msg, D);
@@ -1932,7 +1891,6 @@ void cryptography_domain::NTRU_encrypt(int N, int p, int q,
 
 
 
-	FREE_OBJECT(F);
 
 	if (f_v) {
 		cout << "cryptography_domain::NTRU_encrypt done" << endl;
@@ -1940,7 +1898,7 @@ void cryptography_domain::NTRU_encrypt(int N, int p, int q,
 }
 
 
-void cryptography_domain::polynomial_center_lift(std::string &A_coeffs, int q,
+void cryptography_domain::polynomial_center_lift(std::string &A_coeffs, finite_field *F,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1955,11 +1913,7 @@ void cryptography_domain::polynomial_center_lift(std::string &A_coeffs, int q,
 
 	int_vec_scan(A_coeffs, data_A, sz_A);
 
-	finite_field *F;
 	number_theory_domain NT;
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q);
 
 
 
@@ -1973,8 +1927,8 @@ void cryptography_domain::polynomial_center_lift(std::string &A_coeffs, int q,
 	FX.create_object_of_degree(A, da);
 
 	for (i = 0; i <= da; i++) {
-		if (data_A[i] < 0 || data_A[i] >= q) {
-			data_A[i] = NT.mod(data_A[i], q);
+		if (data_A[i] < 0 || data_A[i] >= F->q) {
+			data_A[i] = NT.mod(data_A[i], F->q);
 		}
 		FX.s_i(A, i) = data_A[i];
 	}
@@ -1992,7 +1946,7 @@ void cryptography_domain::polynomial_center_lift(std::string &A_coeffs, int q,
 	}
 
 	{
-		FX.center_lift_coordinates(A, q);
+		FX.center_lift_coordinates(A, F->q);
 
 	}
 
@@ -2007,17 +1961,13 @@ void cryptography_domain::polynomial_center_lift(std::string &A_coeffs, int q,
 
 
 
-
-
-	FREE_OBJECT(F);
-
 	if (f_v) {
 		cout << "cryptography_domain::polynomial_center_lift done" << endl;
 	}
 }
 
 
-void cryptography_domain::polynomial_reduce_mod_p(std::string &A_coeffs, int p,
+void cryptography_domain::polynomial_reduce_mod_p(std::string &A_coeffs, finite_field *F,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2032,11 +1982,7 @@ void cryptography_domain::polynomial_reduce_mod_p(std::string &A_coeffs, int p,
 
 	int_vec_scan(A_coeffs, data_A, sz_A);
 
-	finite_field *F;
 	number_theory_domain NT;
-
-	F = NEW_OBJECT(finite_field);
-	F->init(p);
 
 
 
@@ -2050,7 +1996,7 @@ void cryptography_domain::polynomial_reduce_mod_p(std::string &A_coeffs, int p,
 	FX.create_object_of_degree(A, da);
 
 	for (i = 0; i <= da; i++) {
-		data_A[i] = NT.mod(data_A[i], p);
+		data_A[i] = NT.mod(data_A[i], F->q);
 		FX.s_i(A, i) = data_A[i];
 	}
 
@@ -2061,11 +2007,6 @@ void cryptography_domain::polynomial_reduce_mod_p(std::string &A_coeffs, int p,
 
 
 
-
-
-
-
-	FREE_OBJECT(F);
 
 	if (f_v) {
 		cout << "cryptography_domain::polynomial_reduce_mod_p done" << endl;
@@ -2090,12 +2031,8 @@ void cryptography_domain::do_jacobi(int jacobi_top, int jacobi_bottom, int verbo
 	ofstream f(fname);
 
 
-	//algebra_global AG;
-
-	//AG.cheat_sheet_GF(q, f_override_poly, my_override_poly, verbose_level);
 	latex_interface L;
 
-	//F.init(q), verbose_level - 2);
 
 	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
 		title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
@@ -2146,12 +2083,8 @@ void cryptography_domain::do_solovay_strassen(int p, int a, int verbose_level)
 	ofstream f(fname);
 
 
-	//algebra_global AG;
-
-	//AG.cheat_sheet_GF(q, f_override_poly, my_override_poly, verbose_level);
 	latex_interface L;
 
-	//F.init(q), verbose_level - 2);
 
 	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
 		title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
@@ -2203,12 +2136,8 @@ void cryptography_domain::do_miller_rabin(int p, int nb_times, int verbose_level
 	ofstream f(fname);
 
 
-	//algebra_global AG;
-
-	//AG.cheat_sheet_GF(q, f_override_poly, my_override_poly, verbose_level);
 	latex_interface L;
 
-	//F.init(q), verbose_level - 2);
 
 	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
 		title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
@@ -2269,12 +2198,8 @@ void cryptography_domain::do_fermat_test(int p, int nb_times, int verbose_level)
 	ofstream f(fname);
 
 
-	//algebra_global AG;
-
-	//AG.cheat_sheet_GF(q, f_override_poly, my_override_poly, verbose_level);
 	latex_interface L;
 
-	//F.init(q), verbose_level - 2);
 
 	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
 		title, author, FALSE /* f_toc */, FALSE /* f_landscape */,

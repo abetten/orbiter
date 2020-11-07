@@ -708,8 +708,8 @@ void group_theoretic_activity::normalizer(int verbose_level)
 }
 
 void group_theoretic_activity::centralizer(
-		const char *element_label,
-		const char *element_description_text,
+		std::string &element_label,
+		std::string &element_description_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -736,8 +736,8 @@ void group_theoretic_activity::centralizer(
 }
 
 void group_theoretic_activity::normalizer_of_cyclic_subgroup(
-		const char *element_label,
-		const char *element_description_text,
+		std::string &element_label,
+		std::string &element_description_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1258,7 +1258,7 @@ void group_theoretic_activity::element_rank(std::string &elt_data, int verbose_l
 	int *Elt;
 
 	Elt = NEW_int(A1->elt_size_in_int);
-	A1->make_element_from_string(Elt, elt_data.c_str(), 0);
+	A1->make_element_from_string(Elt, elt_data, 0);
 
 	cout << "Element :" << endl;
 	A1->element_print(Elt, cout);
@@ -1343,7 +1343,7 @@ void group_theoretic_activity::conjugacy_class_of(std::string &elt_data, int ver
 #if 1
 	cout << "creating element " << elt_data << endl;
 
-	A1->make_element_from_string(Elt, elt_data.c_str(), 0);
+	A1->make_element_from_string(Elt, elt_data, 0);
 
 	H->element_rank(a, Elt);
 

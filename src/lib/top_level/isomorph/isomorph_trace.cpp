@@ -724,7 +724,7 @@ int isomorph::trace_next_point(int cur_level,
 					<< " isomorph::trace_next_point ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
-			cout << "cur_level <= depth_completed, using oracle" << endl;
+			cout << "cur_level <= depth_completed" << endl;
 			}
 		
 		poset_orbit_node *O = gen->get_node(cur_node_global);
@@ -740,7 +740,7 @@ int isomorph::trace_next_point(int cur_level,
 					<< " isomorph::trace_next_point ";
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
-			cout << "cur_level <= depth_completed, using oracle" << endl;
+			cout << "cur_level <= depth_completed" << endl;
 			return FALSE;
 			}
 		if (f_v) {

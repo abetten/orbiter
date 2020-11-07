@@ -634,10 +634,8 @@ void isomorph::orbits_of_stabilizer(int verbose_level)
 		flag_orbit_fst[i] = nb_orbits;
 		flag_orbit_len[i] = 0;
 
-		//oracle *O;
 		vector_ge gens;
 		
-		//O = &gen->root[gen->first_oracle_node_at_level[level] + i];
 		
 		
 		load_strong_generators(level, 
@@ -812,7 +810,6 @@ void isomorph::orbits_of_stabilizer_case(int the_case,
 		vector_ge &gens, int verbose_level)
 {
 	Vector v;
-	//oracle *O;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v4 = (verbose_level >= 4);
@@ -823,7 +820,6 @@ void isomorph::orbits_of_stabilizer_case(int the_case,
 				<< the_case << " / " << nb_starter << endl;
 		}
 	
-	//O = &gen->root[gen->first_oracle_node_at_level[level] + the_case];
 	f = solution_first[the_case];
 	l = solution_len[the_case];
 	if (f_v) {

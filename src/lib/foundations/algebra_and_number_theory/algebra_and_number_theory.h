@@ -128,10 +128,6 @@ public:
 
 class algebra_global {
 public:
-	void cheat_sheet_GF(int q,
-			int f_override_polynomial,
-			std::string &my_override_polynomial,
-			int verbose_level);
 	char *search_for_primitive_polynomial_of_given_degree(int p,
 		int degree, int verbose_level);
 	void search_for_primitive_polynomials(int p_min, int p_max,
@@ -170,8 +166,6 @@ public:
 	void test_longinteger6();
 	void test_longinteger7();
 	void test_longinteger8();
-	void mac_williams_equations(longinteger_object *&M, int n, int k, int q);
-	void determine_weight_enumerator();
 	void longinteger_collect_setup(int &nb_agos,
 			longinteger_object *&agos, int *&multiplicities);
 	void longinteger_collect_free(int &nb_agos,
@@ -187,33 +181,30 @@ public:
 			int verbose_level);
 	int count_all_irreducible_polynomials_of_degree_d(finite_field *F,
 		int d, int verbose_level);
-	void polynomial_division(int q,
+	void polynomial_division(finite_field *F,
 			std::string &A_coeffs, std::string &B_coeffs, int verbose_level);
-	void extended_gcd_for_polynomials(int q,
+	void extended_gcd_for_polynomials(finite_field *F,
 			std::string &A_coeffs, std::string &B_coeffs, int verbose_level);
-	void polynomial_mult_mod(int q,
+	void polynomial_mult_mod(finite_field *F,
 			std::string &A_coeffs, std::string &B_coeffs, std::string &M_coeffs,
 			int verbose_level);
-	void Berlekamp_matrix(int q,
+	void Berlekamp_matrix(finite_field *F,
 			std::string &Berlekamp_matrix_coeffs,
 			int verbose_level);
 	void compute_normal_basis(finite_field *F, int d, int verbose_level);
-	void do_nullspace(int q, int m, int n, std::string &text,
+	void do_nullspace(finite_field *F, int m, int n, std::string &text,
 			int f_normalize_from_the_left, int f_normalize_from_the_right,
 			int verbose_level);
-	void do_RREF(int q, int m, int n, std::string &text,
+	void do_RREF(finite_field *F, int m, int n, std::string &text,
 			int f_normalize_from_the_left, int f_normalize_from_the_right,
 			int verbose_level);
-	void do_weight_enumerator(int q, int m, int n, std::string &text,
-			int f_normalize_from_the_left, int f_normalize_from_the_right,
-			int verbose_level);
-	void do_trace(int q, int verbose_level);
-	void do_norm(int q, int verbose_level);
+	void do_trace(finite_field *F, int verbose_level);
+	void do_norm(finite_field *F, int verbose_level);
 	void do_equivalence_class_of_fractions(int N, int verbose_level);
-	void do_cheat_sheet_GF(int q, int f_poly, std::string &poly, int verbose_level);
+	void do_cheat_sheet_GF(finite_field *F, int verbose_level);
 	void do_search_for_primitive_polynomial_in_range(int p_min, int p_max,
 			int deg_min, int deg_max, int verbose_level);
-	void do_make_table_of_irreducible_polynomials(int deg, int q, int verbose_level);
+	void do_make_table_of_irreducible_polynomials(int deg, finite_field *F, int verbose_level);
 
 };
 
@@ -270,8 +261,7 @@ public:
 	~finite_field();
 	void print_call_stats(std::ostream &ost);
 	int &nb_calls_to_elliptic_curve_addition();
-	void init(int q);
-	void init(int q, int verbose_level);
+	void finite_field_init(int q, int verbose_level);
 	void set_default_symbol_for_print();
 	void init_symbol_for_print(const char *symbol);
 	void init_override_polynomial(int q, std::string &poly,
@@ -592,33 +582,6 @@ public:
 	int is_contained_in_subspace(int k, 
 		int len, int *basis, int *base_cols, 
 		int *v, int verbose_level);
-	void compute_and_print_projective_weights(
-			std::ostream &ost, int *M, int n, int k);
-	int code_minimum_distance(int n, int k, 
-		int *code, int verbose_level);
-		// code[k * n]
-	void codewords_affine(int n, int k, 
-		int *code, // [k * n]
-		int *codewords, // q^k
-		int verbose_level);
-	void code_projective_weight_enumerator(int n, int k, 
-		int *code, // [k * n]
-		int *weight_enumerator, // [n + 1]
-		int verbose_level);
-	void code_weight_enumerator(int n, int k, 
-		int *code, // [k * n]
-		int *weight_enumerator, // [n + 1]
-		int verbose_level);
-	void code_weight_enumerator_fast(int n, int k, 
-		int *code, // [k * n]
-		int *weight_enumerator, // [n + 1]
-		int verbose_level);
-	void code_projective_weights(int n, int k, 
-		int *code, // [k * n]
-		int *&weights,
-			// will be allocated [N] 
-			// where N = theta_{k-1}
-		int verbose_level);
 	int is_subspace(int d, int dim_U, int *Basis_U, int dim_V, 
 		int *Basis_V, int verbose_level);
 	void Kronecker_product(int *A, int *B, int n, int *AB);
@@ -1627,7 +1590,7 @@ public:
 // homogeneous_polynomial_domain.cpp
 // #############################################################################
 
-//! homogeneous polynomials of degree degree in nb_variables variables over a finite field GF(q)
+//! homogeneous polynomials of a given degree in a given number of variables over a finite field GF(q)
 
 
 class homogeneous_polynomial_domain {
@@ -1638,8 +1601,6 @@ private:
 	int nb_monomials;
 	int *Monomials; // [nb_monomials * nb_variables]
 
-	//char **symbols;
-	//char **symbols_latex;
 	std::string *symbols;
 	std::string *symbols_latex;
 

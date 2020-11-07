@@ -1043,7 +1043,7 @@ public:
 	int nb_Eckardt_pts;
 
 
-	void init(int q, int nb, int verbose_level);
+	void init(finite_field *F, int nb, int verbose_level);
 	void study_intersection_points(int verbose_level);
 	void study_line_orbits(int verbose_level);
 	void study_group(int verbose_level);

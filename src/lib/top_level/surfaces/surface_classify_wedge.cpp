@@ -1663,8 +1663,6 @@ void surface_classify_wedge::identify_general_abcd(
 
 
 				for (d = 1; d < q; d++) {
-					cout << "surface_classify_wedge::identify_general_abcd "
-							"a = " << a << " b = " << b << " c = " << c << " d = " << d << endl;
 
 					if (d == 0 || d == 1) {
 						continue;
@@ -1678,13 +1676,29 @@ void surface_classify_wedge::identify_general_abcd(
 						continue;
 					}
 
-
+#if 1
 					// ToDo
 					// warning: special case
 
 					if (d != a) {
 						continue;
 					}
+#endif
+					int b2, b2v, x1, x2, m1;
+
+					m1= F->negate(1);
+					b2 = F->mult(b, b);
+					b2v = F->inverse(b2);
+					x1 = F->add(F->mult(2, b), m1);
+					x2 = F->mult(x1, b2v);
+
+					if (c != x2) {
+						continue;
+					}
+
+
+					cout << "surface_classify_wedge::identify_general_abcd "
+							"a = " << a << " b = " << b << " c = " << c << " d = " << d << endl;
 
 #if 0
 					F->minimal_orbit_rep_under_stabilizer_of_frame(c, d,
@@ -1705,14 +1719,14 @@ void surface_classify_wedge::identify_general_abcd(
 
 
 					int admbc;
-					int m1;
+					//int m1;
 					int a1, b1, c1, d1;
 					int a1d1, b1c1;
 					int ad, bc;
 					int adb1c1, bca1d1;
 
 
-					m1 = F->negate(1);
+					//m1 = F->negate(1);
 
 					a1 = F->add(a, m1);
 					b1 = F->add(b, m1);
@@ -1774,6 +1788,7 @@ void surface_classify_wedge::identify_general_abcd(
 		cout << "surface_classify_wedge::identify_general_abcd done" << endl;
 	}
 }
+
 
 
 int surface_classify_wedge::isomorphism_test_pairwise(

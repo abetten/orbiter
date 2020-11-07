@@ -58,26 +58,26 @@ public:
 	void do_random_last(int random_nb, int verbose_level);
 	void do_random(int random_nb, std::string &fname_csv, int verbose_level);
 
-	void do_EC_Koblitz_encoding(int q,
+	void do_EC_Koblitz_encoding(finite_field *F,
 			int EC_b, int EC_c, int EC_s,
 			std::string &pt_text, std::string &EC_message,
 			int verbose_level);
-	void do_EC_points(int q, int EC_b, int EC_c, int verbose_level);
+	void do_EC_points(finite_field *F, int EC_b, int EC_c, int verbose_level);
 	int EC_evaluate_RHS(finite_field *F, int EC_b, int EC_c, int x);
 	// evaluates x^3 + bx + c
-	void do_EC_add(int q, int EC_b, int EC_c,
+	void do_EC_add(finite_field *F, int EC_b, int EC_c,
 			std::string &pt1_text, std::string &pt2_text, int verbose_level);
-	void do_EC_cyclic_subgroup(int q, int EC_b, int EC_c,
+	void do_EC_cyclic_subgroup(finite_field *F, int EC_b, int EC_c,
 			std::string &pt_text, int verbose_level);
-	void do_EC_multiple_of(int q, int EC_b, int EC_c,
+	void do_EC_multiple_of(finite_field *F, int EC_b, int EC_c,
 			std::string &pt_text, int n, int verbose_level);
-	void do_EC_discrete_log(int q, int EC_b, int EC_c,
+	void do_EC_discrete_log(finite_field *F, int EC_b, int EC_c,
 			std::string &base_pt_text, std::string &pt_text, int verbose_level);
-	void do_EC_baby_step_giant_step(int EC_q, int EC_b, int EC_c,
+	void do_EC_baby_step_giant_step(finite_field *F, int EC_b, int EC_c,
 			std::string &EC_bsgs_G, int EC_bsgs_N,
 			std::string &EC_bsgs_cipher_text,
 			int verbose_level);
-	void do_EC_baby_step_giant_step_decode(int EC_q, int EC_b, int EC_c,
+	void do_EC_baby_step_giant_step_decode(finite_field *F, int EC_b, int EC_c,
 			std::string &EC_bsgs_A, int EC_bsgs_N,
 			std::string &EC_bsgs_cipher_text_T, std::string &EC_bsgs_keys,
 			int verbose_level);
@@ -86,12 +86,12 @@ public:
 	void do_RSA(long int RSA_d, long int RSA_m,
 			std::string &RSA_text, int verbose_level);
 
-	void NTRU_encrypt(int N, int p, int q,
+	void NTRU_encrypt(int N, int p, finite_field *Fq,
 			std::string &H_coeffs, std::string &R_coeffs, std::string &Msg_coeffs,
 			int verbose_level);
-	void polynomial_center_lift(std::string &A_coeffs, int q,
+	void polynomial_center_lift(std::string &A_coeffs, finite_field *F,
 			int verbose_level);
-	void polynomial_reduce_mod_p(std::string &A_coeffs, int p,
+	void polynomial_reduce_mod_p(std::string &A_coeffs, finite_field *F,
 			int verbose_level);
 
 	void do_jacobi(int jacobi_top, int jacobi_bottom, int verbose_level);

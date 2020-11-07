@@ -127,13 +127,7 @@ int &finite_field::nb_calls_to_elliptic_curve_addition()
 	return my_nb_calls_to_elliptic_curve_addition;
 }
 
-void finite_field::init(int q)
-{
-	init(q, 0);
-}
-
-
-void finite_field::init(int q, int verbose_level)
+void finite_field::finite_field_init(int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string poly;
@@ -421,7 +415,7 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 	}
 
 	finite_field GFp;
-	GFp.init(p, 0);
+	GFp.finite_field_init(p, 0);
 
 	unipoly_domain FX(&GFp);
 	unipoly_object m;
@@ -543,7 +537,7 @@ void finite_field::compute_subfields(int verbose_level)
 	cout << "subfields of F_{" << q << "}:" << endl;
 	
 	finite_field GFp;
-	GFp.init(p, 0);
+	GFp.finite_field_init(p, 0);
 
 	unipoly_domain FX(&GFp);
 	unipoly_object m;
@@ -614,7 +608,7 @@ void finite_field::create_alpha_table_extension_field(int verbose_level)
 
 
 	finite_field GFp;
-	GFp.init(p, 0);
+	GFp.finite_field_init(p, 0);
 
 	unipoly_domain FX(&GFp);
 	unipoly_object m;

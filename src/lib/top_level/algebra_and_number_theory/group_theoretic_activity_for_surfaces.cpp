@@ -1407,7 +1407,7 @@ void group_theoretic_activity::do_cubic_surface_properties(
 
 
 	F0 = NEW_OBJECT(finite_field);
-	F0->init(defining_q, 0);
+	F0->finite_field_init(defining_q, 0);
 
 	F = LG->F;
 
@@ -1681,7 +1681,7 @@ void group_theoretic_activity::do_cubic_surface_properties_analyze(
 
 
 	F0 = NEW_OBJECT(finite_field);
-	F0->init(defining_q, 0);
+	F0->finite_field_init(defining_q, 0);
 
 	F = LG->F;
 

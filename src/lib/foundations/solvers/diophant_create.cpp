@@ -62,7 +62,7 @@ void diophant_create::init(
 			cout << "diophant_create::init creating finite field "
 					"of order q=" << Descr->input_q
 					<< " using the default polynomial (if necessary)" << endl;
-			F->init(Descr->input_q, 0);
+			F->finite_field_init(Descr->input_q, 0);
 		}
 
 	}

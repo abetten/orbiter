@@ -46,70 +46,31 @@ class interface_algebra {
 
 	int f_group_theoretic_activity;
 	group_theoretic_activity_description *Group_theoretic_activity_description;
-	int f_cheat_sheet_GF;
-	int q;
-	int f_all_rational_normal_forms;
-	int d;
-	int f_search_for_primitive_polynomial_in_range;
-	int p_min, p_max, deg_min, deg_max;
-	int f_make_table_of_irreducible_polynomials;
-	int deg;
-	int f_character_table_symmetric_group;
-	int f_make_A5_in_PSL_2_q;
-	int f_eigenstuff;
-	int f_eigenstuff_from_file;
-	int eigenstuff_n;
-	int eigenstuff_q;
-	std::string eigenstuff_coeffs;
-	std::string eigenstuff_fname;
-	int f_young_symmetrizer;
-	int young_symmetrizer_n;
-	int f_young_symmetrizer_sym_4;
+
+	int f_finite_field_activity;
+	finite_field_activity_description *Finite_field_activity_description;
+
 	int f_poset_classification_control;
 	poset_classification_control *Control;
 
-	int f_polynomial_division;
-	int polynomial_division_q;
-	std::string polynomial_division_A;
-	std::string polynomial_division_B;
-	int f_extended_gcd_for_polynomials;
-	int f_polynomial_mult_mod;
-	int polynomial_mult_mod_q;
-	std::string polynomial_mult_mod_A;
-	std::string polynomial_mult_mod_B;
-	std::string polynomial_mult_mod_M;
-	int f_Berlekamp_matrix;
-	int Berlekamp_matrix_q;
-	std::string Berlekamp_matrix_coeffs;
-	int f_normal_basis;
-	int normal_basis_q;
-	int normal_basis_d;
-
-	int f_normalize_from_the_right;
-	int f_normalize_from_the_left;
-
-	int f_nullspace;
-	int nullspace_q;
-	int nullspace_m;
-	int nullspace_n;
-	std::string nullspace_text;
-
-	int f_RREF;
-	int RREF_q;
-	int RREF_m;
-	int RREF_n;
-	std::string RREF_text;
-
-	int f_weight_enumerator;
-	int f_trace;
-	int trace_q;
-	int f_norm;
-	int norm_q;
 	int f_count_subprimitive;
 	int count_subprimitive_Q_max;
 	int count_subprimitive_H_max;
 	int f_equivalence_class_of_fractions;
 	int equivalence_class_of_fractions_N;
+
+	int f_character_table_symmetric_group;
+	int deg;
+	int f_make_A5_in_PSL_2_q;
+	int q;
+
+	int f_search_for_primitive_polynomial_in_range;
+	int p_min, p_max, deg_min, deg_max;
+
+
+	int f_young_symmetrizer;
+	int young_symmetrizer_n;
+	int f_young_symmetrizer_sym_4;
 
 public:
 	interface_algebra();
@@ -122,7 +83,6 @@ public:
 	void perform_group_theoretic_activity(finite_field *F, linear_group *LG,
 			group_theoretic_activity_description *Group_theoretic_activity_description,
 			int verbose_level);
-	void do_all_rational_normal_forms(int d, int q, int f_poly, std::string &poly, int verbose_level);
 	void do_character_table_symmetric_group(int deg, int verbose_level);
 	void do_make_A5_in_PSL_2_q(int q, int verbose_level);
 
@@ -366,46 +326,6 @@ class interface_cryptography {
 	int affine_sequence_a;
 	int affine_sequence_c;
 	int affine_sequence_m;
-	int f_EC_Koblitz_encoding;
-	std::string EC_message;
-	int EC_s;
-	int f_EC_points;
-	int f_EC_add;
-	std::string EC_pt1_text;
-	std::string EC_pt2_text;
-	int f_EC_cyclic_subgroup;
-	int EC_q;
-	int EC_b;
-	int EC_c;
-	std::string EC_pt_text;
-	int f_EC_multiple_of;
-	int EC_multiple_of_n;
-	int f_EC_discrete_log;
-	std::string EC_discrete_log_pt_text;
-	int f_EC_baby_step_giant_step;
-	std::string EC_bsgs_G;
-	int EC_bsgs_N;
-	std::string EC_bsgs_cipher_text;
-	int f_EC_baby_step_giant_step_decode;
-	std::string EC_bsgs_A;
-	std::string EC_bsgs_keys;
-
-
-
-
-	int f_NTRU_encrypt;
-	int NTRU_encrypt_N;
-	int NTRU_encrypt_p;
-	int NTRU_encrypt_q;
-	std::string NTRU_encrypt_H;
-	std::string NTRU_encrypt_R;
-	std::string NTRU_encrypt_Msg;
-	int f_polynomial_center_lift;
-	int polynomial_center_lift_q;
-	std::string polynomial_center_lift_A;
-	int f_polynomial_reduce_mod_p;
-	int polynomial_reduce_mod_p;
-	std::string polynomial_reduce_mod_p_A;
 
 public:
 	interface_cryptography();
@@ -469,17 +389,6 @@ void interface_povray_draw_frame(
 
 class interface_projective {
 
-	int f_cheat_sheet_PG;
-	int n;
-	int q;
-	int f_decomposition_by_element;
-	int decomposition_by_element_power;
-	std::string decomposition_by_element_data;
-	std::string decomposition_by_element_fname_base;
-
-
-	int f_canonical_form_PG;
-	projective_space_object_classifier_description *Canonical_form_PG_Descr;
 
 	int f_create_points_on_quartic;
 	double desired_distance;
@@ -497,57 +406,17 @@ class interface_projective {
 	double smooth_curve_t_min;
 	double smooth_curve_t_max;
 	function_polish_description *FP_descr;
-	//function_polish *smooth_curve_Polish;
 
 
 
 	int f_create_spread;
 	spread_create_description *Spread_create_description;
 
-	int f_study_surface;
-	int study_surface_q;
-	int study_surface_nb;
-
-	int f_move_two_lines_in_hyperplane_stabilizer;
-	long int line1_from;
-	long int line2_from;
-	long int line1_to;
-	long int line2_to;
-
-	int f_move_two_lines_in_hyperplane_stabilizer_text;
-	std::string line1_from_text;
-	std::string line2_from_text;
-	std::string line1_to_text;
-	std::string line2_to_text;
-
 	int f_make_table_of_surfaces;
-
-	int f_inverse_isomorphism_klein_quadric;
-	std::string inverse_isomorphism_klein_quadric_matrix_A6;
-
-	int f_rank_point_in_PG;
-	int rank_point_in_PG_q;
-	int rank_point_in_PG_n;
-	std::string rank_point_in_PG_text;
 
 	int f_create_surface_reports;
 	int f_create_surface_atlas;
 	int create_surface_atlas_q_max;
-
-	int f_normalize_from_the_right;
-	int f_normalize_from_the_left;
-	int f_transversal;
-	int transversal_q;
-	std::string transversal_line_1_basis;
-	std::string transversal_line_2_basis;
-	std::string transversal_point;
-	int f_intersection_of_two_lines;
-	int intersection_of_two_lines_q;
-	std::string line_1_basis;
-	std::string line_2_basis;
-
-
-
 
 
 	int f_create_BLT_set;
@@ -575,7 +444,6 @@ public:
 	void do_create_BLT_set(BLT_set_create_description *Descr, int verbose_level);
 	void do_create_spread(spread_create_description *Descr, int verbose_level);
 	void do_create_surface(surface_create_description *Descr, int verbose_level);
-	void do_study_surface(int q, int nb, int verbose_level);
 	void do_create_surface_reports(int q_max, int verbose_level);
 	void do_create_surface_atlas(int q_max, int verbose_level);
 	void do_create_surface_atlas_q_e(int q_max,

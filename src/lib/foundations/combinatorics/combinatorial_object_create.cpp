@@ -49,11 +49,6 @@ void combinatorial_object_create::freeself()
 	if (Pts) {
 		FREE_lint(Pts);
 		}
-#if 0
-	if (Sg) {
-		delete Sg;
-		}
-#endif
 	null();
 }
 
@@ -76,7 +71,7 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 		cout << "combinatorial_object_create::init q = " << q << endl;
 		}
 	F = NEW_OBJECT(finite_field);
-	F->init(q, 0);
+	F->finite_field_init(q, 0);
 
 
 
@@ -377,19 +372,6 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 		cout << endl;
 		}
 
-#if 0
-	set = NEW_lint(nb_pts);
-	lint_vec_copy(Pts, set, nb_pts);
-	set_size = nb_pts;
-
-	FREE_lint(Pts);
-
-	if (f_has_group) {
-		cout << "combinatorial_object_create::init the stabilizer is:" << endl;
-		Sg->print_generators_tex(cout);
-		}
-#endif
-
 
 
 	if (f_v) {
@@ -397,17 +379,6 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 	}
 }
 
-#if 0
-void combinatorial_object_create::apply_transformations(const char **transform_coeffs,
-	int *f_inverse_transform, int nb_transform, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "combinatorial_object_create::apply_transformations done" << endl;
-	}
-}
-#endif
 
 
 }}

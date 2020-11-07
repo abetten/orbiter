@@ -641,7 +641,9 @@ void poset_classification::read_memory_object(
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	int i, nb_nodes, version, magic_sync;
+	long int i;
+	long int nb_nodes;
+	int version, magic_sync;
 
 	if (f_v) {
 		cout << "poset_classification::read_memory_object, "
@@ -670,7 +672,7 @@ void poset_classification::read_memory_object(
 		cout << "poset_classification::read_memory_object "
 				"before m->read_int" << endl;
 	}
-	m->read_int(&nb_nodes);
+	m->read_lint(&nb_nodes);
 	if (f_v) {
 		cout << "poset_classification::read_memory_object "
 				"nb_nodes = " << nb_nodes << endl;
@@ -746,7 +748,8 @@ void poset_classification::write_memory_object(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, nb_nodes;
+	long int i;
+	long int nb_nodes;
 
 	nb_nodes = first_poset_orbit_node_at_level[depth_completed + 1];
 	if (f_v) {
@@ -756,7 +759,7 @@ void poset_classification::write_memory_object(
 	nb_group_elements = 0;
 	m->write_int(1); // version number of this file format
 	m->write_int(depth_completed);
-	m->write_int(nb_nodes);
+	m->write_lint(nb_nodes);
 	for (i = 0; i <= depth_completed + 1; i++) {
 		m->write_lint(first_poset_orbit_node_at_level[i]);
 		}

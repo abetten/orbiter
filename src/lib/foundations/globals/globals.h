@@ -350,7 +350,6 @@ public:
 
 	int f_override_polynomial;
 	std::string override_polynomial;
-		// used in interface_algebra::do_cheat_sheet_GF
 
 	int f_orbiter_path;
 	std::string orbiter_path;

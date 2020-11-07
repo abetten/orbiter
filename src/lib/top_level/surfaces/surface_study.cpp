@@ -19,13 +19,18 @@ namespace orbiter {
 namespace top_level {
 
 
-void surface_study::init(int q, int nb, int verbose_level)
+void surface_study::init(finite_field *F, int nb, int verbose_level)
 {
-	cout << "init q=" << q << endl;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_study::init" << endl;
+	}
+	q = F->q;
+	cout << "q=" << q << endl;
 	cout << "nb=" << nb << endl;
 
 
-	int f_v = (verbose_level >= 1);
 	int i;
 	number_theory_domain NT;
 	knowledge_base K;
@@ -41,10 +46,6 @@ void surface_study::init(int q, int nb, int verbose_level)
 	prefix.append(str_q);
 	prefix.append("_nb");
 	prefix.append(str_nb);
-
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q, 0);
 
 
 
@@ -76,7 +77,7 @@ void surface_study::init(int q, int nb, int verbose_level)
 
 	A = NEW_OBJECT(action);
 
-	A->init_linear_group(//S,
+	A->init_linear_group(
 		F, 4,
 		TRUE /*f_projective*/,
 		FALSE /* f_general*/,
@@ -84,6 +85,7 @@ void surface_study::init(int q, int nb, int verbose_level)
 		f_semilinear, FALSE /* f_special */,
 		nice_gens,
 		0 /*verbose_level*/);
+
 	S = A->Strong_gens->create_sims(verbose_level - 2);
 	FREE_OBJECT(nice_gens);
 	cout << "creating linear group done" << endl;
