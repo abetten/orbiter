@@ -588,6 +588,72 @@ class partitionstack {
 };
 
 // #############################################################################
+// set_builder_description.cpp
+// #############################################################################
+
+
+
+//! to define a set of integers for class set_builder
+
+
+class set_builder_description {
+public:
+
+	int f_index_set_loop;
+	int index_set_loop_low;
+	int index_set_loop_upper_bound;
+	int index_set_loop_increment;
+
+	int f_affine_function;
+	int affine_function_a;
+	int affine_function_b;
+
+	int f_clone_with_affine_function;
+	int clone_with_affine_function_a;
+	int clone_with_affine_function_b;
+
+	int f_set_builder;
+	set_builder_description *Descr;
+
+	int f_index_set;
+	std::string index_set_text;
+
+	set_builder_description();
+	~set_builder_description();
+	int read_arguments(
+		int argc, const char **argv,
+		int verbose_level);
+	void print();
+};
+
+
+
+// #############################################################################
+// set_builder.cpp
+// #############################################################################
+
+
+
+//! to create a set of integers from class set_builder_description
+
+
+class set_builder {
+public:
+
+	set_builder_description *Descr;
+
+	long int *set;
+	int sz;
+
+	set_builder();
+	~set_builder();
+	void init(set_builder_description *Descr, int verbose_level);
+	long int process_transformations(long int x);
+	long int clone_with_affine_function(long int x);
+};
+
+
+// #############################################################################
 // set_of_sets_lint.cpp
 // #############################################################################
 

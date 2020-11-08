@@ -398,6 +398,9 @@ class graphical_output;
 class surface_object_properties;
 class schlaefli;
 class cryptography_domain;
+class boolean_function_domain;
+class set_builder;
+class set_builder_description;
 
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)

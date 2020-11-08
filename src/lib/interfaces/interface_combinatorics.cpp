@@ -1084,14 +1084,21 @@ void interface_combinatorics::do_bent(int n, int verbose_level)
 	}
 
 	{
-		boolean_function *BF;
+		boolean_function_domain *BF;
 
-		BF = NEW_OBJECT(boolean_function);
+		BF = NEW_OBJECT(boolean_function_domain);
 
 		BF->init(n, verbose_level);
 
-		BF->search_for_bent_functions(verbose_level);
+		boolean_function_classify *BFC;
 
+		BFC = NEW_OBJECT(boolean_function_classify);
+
+		BFC->init_group(BF, verbose_level);
+
+		BFC->search_for_bent_functions(verbose_level);
+
+		FREE_OBJECT(BFC);
 		FREE_OBJECT(BF);
 	}
 

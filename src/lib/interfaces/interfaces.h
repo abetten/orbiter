@@ -72,6 +72,7 @@ class interface_algebra {
 	int young_symmetrizer_n;
 	int f_young_symmetrizer_sym_4;
 
+
 public:
 	interface_algebra();
 	void print_help(int argc, const char **argv, int i, int verbose_level);
@@ -118,6 +119,18 @@ class interface_coding_theory {
 	int draw_matrix_partition_width;
 	std::string draw_matrix_partition_rows;
 	std::string draw_matrix_partition_cols;
+
+	int f_general_code_binary;
+	int general_code_binary_n;
+	std::string general_code_binary_text;
+
+	int f_linear_code_through_basis;
+	int linear_code_through_basis_n;
+	std::string linear_code_through_basis_text;
+
+	int f_long_code;
+	int long_code_n;
+	std::vector<std::string> long_code_generators;
 
 public:
 	interface_coding_theory();

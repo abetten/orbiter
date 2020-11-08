@@ -19,6 +19,67 @@ namespace foundations {
 
 
 // #############################################################################
+// boolean_function_domain.cpp
+// #############################################################################
+
+//! boolean functions
+
+class boolean_function_domain {
+
+public:
+	int n;
+	int n2; // n / 2
+	int Q; // 2^n
+	int Q2; // 2^{n/2}
+	//int NN;
+	longinteger_object NN; // 2^Q
+	int N; // size of PG(n,2)
+
+	finite_field *Fq; // the field F2
+	finite_field *FQ; // the field of order 2^n
+
+	homogeneous_polynomial_domain *Poly;
+		// Poly[i] = polynomial of degree i in n + 1 variables.
+		// i = 1,..,n
+	int **A_poly;
+	int **B_poly;
+	int *Kernel;
+	int dim_kernel;
+
+
+	long int *affine_points; // [Q]
+
+
+
+	int *v; // [n]
+	int *v1; // [n + 1]
+	int *w; // [n]
+	int *f; // [Q]
+	int *f2; // [Q]
+	int *F; // [Q]
+	int *T; // [Q]
+	int *W; // [Q * Q]
+	int *f_proj;
+	int *f_proj2;
+
+
+
+	boolean_function_domain();
+	~boolean_function_domain();
+	void init(int n, int verbose_level);
+	void setup_polynomial_rings(int verbose_level);
+	void compute_polynomial_representation(int *func, int *coeff, int verbose_level);
+	void evaluate_projectively(int *coeff, int *f);
+	void evaluate(int *coeff, int *f);
+	void raise(int *in, int *out);
+	void apply_Walsh_transform(int *in, int *out);
+	int is_bent(int *T);
+};
+
+
+
+
+// #############################################################################
 // brick_domain.cpp
 // #############################################################################
 

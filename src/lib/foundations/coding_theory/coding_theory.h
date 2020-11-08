@@ -129,6 +129,39 @@ public:
 			int f_normalize_from_the_left, int f_normalize_from_the_right,
 			int verbose_level);
 
+	void do_linear_code_through_basis(
+			int n,
+			long int *basis_set, int k,
+			int f_embellish,
+			int verbose_level);
+	void do_polynomial(
+			int n,
+			int polynomial_degree,
+			int polynomial_nb_vars,
+			const char *polynomial_text,
+			int f_embellish,
+			int verbose_level);
+	void do_sylvester_hadamard(int n,
+			int f_embellish,
+			int verbose_level);
+	void do_long_code(
+			int n,
+			std::vector<std::string> &long_code_generators_text,
+			int f_nearest_codeword,
+			const char *nearest_codeword_text,
+			int verbose_level);
+	void investigate_code(long int *Words, int nb_words, int n, int f_embellish, int verbose_level);
+	void embellish(int *M, int nb_rows, int nb_cols, int i0, int j0, int a);
+	void place_entry(int *M, int nb_rows, int nb_cols, int i, int j, int a);
+	void do_it(int n, int r, int a, int c, int seed, int verbose_level);
+	void dimensions(int n, int &nb_rows, int &nb_cols);
+	void dimensions_N(int N, int &nb_rows, int &nb_cols);
+	void print_binary(int n, int *v);
+	void convert_to_binary(int n, long int h, int *v);
+	int distance(int n, int a, int b);
+	void place_binary(long int h, int &i, int &j);
+
+
 
 	// mindist.cpp:
 	int mindist(int n, int k, int q, int *G,

@@ -38,6 +38,7 @@ MODULES= \
 		foundations/algebra_and_number_theory/vector_space.o \
 		foundations/coding_theory/coding_theory_domain.o \
 		foundations/coding_theory/mindist.o \
+		foundations/combinatorics/boolean_function_domain.o \
 		foundations/combinatorics/brick_domain.o \
 		foundations/combinatorics/combinatorial_object_create.o \
 		foundations/combinatorics/combinatorial_object_description.o \
@@ -60,6 +61,8 @@ MODULES= \
 		foundations/data_structures/int_vector.o \
 		foundations/data_structures/page_storage.o \
 		foundations/data_structures/partitionstack.o \
+		foundations/data_structures/set_builder_description.o \
+		foundations/data_structures/set_builder.o \
 		foundations/data_structures/set_of_sets_lint.o \
 		foundations/data_structures/set_of_sets.o \
 		foundations/data_structures/sorting.o \
@@ -316,7 +319,7 @@ MODULES= \
 		top_level/algebra_and_number_theory/group_theoretic_activity.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity_for_surfaces.o \
 		top_level/algebra_and_number_theory/young.o \
-		top_level/combinatorics/boolean_function.o \
+		top_level/combinatorics/boolean_function_classify.o \
 		top_level/combinatorics/cayley_graph_search.o \
 		top_level/combinatorics/create_graph_description.o \
 		top_level/combinatorics/create_graph.o \
