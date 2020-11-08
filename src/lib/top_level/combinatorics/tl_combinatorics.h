@@ -14,34 +14,20 @@ namespace top_level {
 
 
 // #############################################################################
-// boolean_function.cpp
+// boolean_function_classify.cpp
 // #############################################################################
 
 
-//! boolean function
+//! classification of boolean functions
 
 
-class boolean_function {
+class boolean_function_classify {
+
 public:
-	int n;
-	int n2; // n / 2
-	int Q; // 2^n
-	int Q2; // 2^{n/2}
-	//int NN;
-	longinteger_object NN; // 2^Q
-	int N; // size of PG(n,2)
 
-	finite_field *Fq; // the field F2
-	finite_field *FQ; // the field of order 2^n
+	boolean_function_domain *BF;
 
-	homogeneous_polynomial_domain *Poly;
-		// Poly[i] = polynomial of degree i in n + 1 variables.
-		// i = 1,..,n
-	int **A_poly;
-	int **B_poly;
-	int *Kernel;
-	int dim_kernel;
-
+	// group stuff:
 	action *A;
 	vector_ge *nice_gens;
 
@@ -49,40 +35,20 @@ public:
 	strong_generators *SG;
 	longinteger_object go;
 
-	long int *affine_points; // [Q]
 	action *A_affine; // restricted action on affine points
 
+	boolean_function_classify();
+	~boolean_function_classify();
 
-	int *v; // [n]
-	int *v1; // [n + 1]
-	int *w; // [n]
-	int *f; // [Q]
-	int *f2; // [Q]
-	int *F; // [Q]
-	int *T; // [Q]
-	int *W; // [Q * Q]
-	int *f_proj;
-	int *f_proj2;
-
-
-
-	boolean_function();
-	~boolean_function();
-	void init(int n, int verbose_level);
-	void init_group(int verbose_level);
-	void setup_polynomial_rings(int verbose_level);
-	void compute_polynomial_representation(int *func, int *coeff, int verbose_level);
-	void evaluate_projectively(int *coeff, int *f);
-	void evaluate(int *coeff, int *f);
-	void raise(int *in, int *out);
-	void apply_Walsh_transform(int *in, int *out);
-	int is_bent(int *T);
+	void init_group(boolean_function_domain *BF, int verbose_level);
 	void search_for_bent_functions(int verbose_level);
+
 };
 
 
-void boolean_function_print_function(int *poly, int sz, void *data);
-void boolean_function_reduction_function(int *poly, void *data);
+
+void boolean_function_classify_print_function(int *poly, int sz, void *data);
+void boolean_function_classify_reduction_function(int *poly, void *data);
 
 
 // #############################################################################

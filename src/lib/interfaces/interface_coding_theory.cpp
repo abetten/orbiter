@@ -38,6 +38,19 @@ interface_coding_theory::interface_coding_theory()
 	draw_matrix_partition_width = 0;
 	//std::string draw_matrix_partition_rows;
 	//std::string draw_matrix_partition_cols;
+
+	f_general_code_binary = FALSE;
+	general_code_binary_n = 0;
+	//std::string general_code_binary_text;
+
+	f_linear_code_through_basis = FALSE;
+	linear_code_through_basis_n = 0;
+	//std::string linear_code_through_basis_text;
+
+	f_long_code = FALSE;
+	long_code_n = 0;
+	//long_code_generators;
+
 }
 
 
@@ -66,10 +79,25 @@ void interface_coding_theory::print_help(int argc,
 		cout << "-draw_matrix_partition <int : width> "
 				"<string : row partition> <string : col partition> " << endl;
 	}
+	else if (strcmp(argv[i], "-general_code_binary") == 0) {
+		cout << "-general_code_binary <int : n> <string : set> " << endl;
+	}
+	else if (strcmp(argv[i], "-linear_code_through_basis") == 0) {
+		cout << "-linear_code_through_basis <int : n> <string : set> " << endl;
+	}
+	else if (strcmp(argv[i], "-long_code") == 0) {
+		cout << "-long_code <int : n> <int : nb_generators=k> <string : generator1> .. <string : generatork>" << endl;
+	}
 }
+
 int interface_coding_theory::recognize_keyword(int argc,
 		const char **argv, int i, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_coding_theory::recognize_keyword" << endl;
+	}
 	if (i >= argc) {
 		return false;
 	}
@@ -93,6 +121,18 @@ int interface_coding_theory::recognize_keyword(int argc,
 	}
 	else if (strcmp(argv[i], "-draw_matrix_partition") == 0) {
 		return true;
+	}
+	else if (strcmp(argv[i], "-general_code_binary") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-linear_code_through_basis") == 0) {
+		return true;
+	}
+	else if (strcmp(argv[i], "-long_code") == 0) {
+		return true;
+	}
+	if (f_v) {
+		cout << "interface_coding_theory::recognize_keyword unrecognized" << endl;
 	}
 	return false;
 }
@@ -154,6 +194,70 @@ void interface_coding_theory::read_arguments(int argc,
 			draw_matrix_partition_rows.assign(argv[++i]);
 			draw_matrix_partition_cols.assign(argv[++i]);
 			cout << "-draw_matrix_partition " << draw_matrix_partition_rows << " " << draw_matrix_partition_cols << endl;
+		}
+		else if (strcmp(argv[i], "-general_code_binary") == 0) {
+			f_general_code_binary = TRUE;
+			general_code_binary_n = atoi(argv[++i]);
+			general_code_binary_text.assign(argv[++i]);
+			cout << "-general_code_binary " << general_code_binary_n << " " << general_code_binary_text << endl;
+		}
+		else if (strcmp(argv[i], "-linear_code_through_basis") == 0) {
+			f_linear_code_through_basis = TRUE;
+			linear_code_through_basis_n = atoi(argv[++i]);
+			linear_code_through_basis_text.assign(argv[++i]);
+			cout << "-linear_code_through_basis " << linear_code_through_basis_n << " " << linear_code_through_basis_text << endl;
+		}
+		else if (strcmp(argv[i], "-long_code") == 0) {
+			f_long_code = TRUE;
+			long_code_n = atoi(argv[++i]);
+
+			int n, h;
+			n = atoi(argv[++i]);
+			for (h = 0; h < n; h++) {
+				string s;
+
+				s.assign(argv[++i]);
+				if (strcmp(s.c_str(), "-set_builder") == 0) {
+					set_builder_description Descr;
+
+					cout << "reading -set_builder" << endl;
+					i += Descr.read_arguments(argc - (i + 1),
+						argv + i + 1, verbose_level);
+
+					cout << "-set_builder" << endl;
+					cout << "i = " << i << endl;
+					cout << "argc = " << argc << endl;
+					if (i < argc) {
+						cout << "next argument is " << argv[i] << endl;
+					}
+					set_builder S;
+
+					S.init(&Descr, verbose_level);
+
+					cout << "set_builder found the following set of size " << S.sz << endl;
+					lint_vec_print(cout, S.set, S.sz);
+					cout << endl;
+
+					s.assign("");
+					int j;
+					char str[1000];
+
+					for (j = 0; j < S.sz; j++) {
+						if (j) {
+							s.append(",");
+						}
+						sprintf(str, "%ld", S.set[j]);
+						s.append(str);
+					}
+					cout << "as string: " << s << endl;
+
+				}
+				long_code_generators.push_back(s);
+			}
+			cout << "-long_code " << long_code_n << endl;
+			for (i = 0; i < n; i++) {
+				cout << " " << long_code_generators[i] << endl;
+			}
 		}
 	}
 }
@@ -224,6 +328,52 @@ void interface_coding_theory::worker(int verbose_level)
 					verbose_level);
 		}
 		FREE_int(M);
+	}
+	else if (f_general_code_binary) {
+			long int *set;
+			int sz;
+			int f_embellish = FALSE;
+
+			coding_theory_domain Codes;
+
+
+			lint_vec_scan(general_code_binary_text, set, sz);
+
+			Codes.investigate_code(set, sz, general_code_binary_n, f_embellish, verbose_level);
+
+			FREE_lint(set);
+
+	}
+	else if (f_linear_code_through_basis) {
+			long int *set;
+			int sz;
+			int f_embellish = FALSE;
+
+			coding_theory_domain Codes;
+
+
+			lint_vec_scan(linear_code_through_basis_text, set, sz);
+
+			Codes.do_linear_code_through_basis(
+					linear_code_through_basis_n,
+					set, sz /*k*/,
+					f_embellish,
+					verbose_level);
+
+			FREE_lint(set);
+
+	}
+	else if (f_long_code) {
+			coding_theory_domain Codes;
+
+
+			Codes.do_long_code(
+					long_code_n,
+					long_code_generators,
+					FALSE /* f_nearest_codeword */,
+					NULL /* const char *nearest_codeword_text */,
+					verbose_level);
+
 	}
 }
 
