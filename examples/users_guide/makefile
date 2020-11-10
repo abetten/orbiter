@@ -119,6 +119,26 @@ normal_basis_2_3:
 	$(ORBITER_PATH)/orbiter.out -v 2 -finite_field_activity -q 2 \
 		-normal_basis 3 -end
 
+find_roots_a:
+	$(ORBITER_PATH)/orbiter.out -v 2 -finite_field_activity -q 19 \
+		-polynomial_find_roots "18,1,1" -end
+
+find_roots_b:
+	$(ORBITER_PATH)/orbiter.out -v 2 -finite_field_activity -q 19 \
+		-polynomial_find_roots "1,3,1" -end
+
+find_roots_c:
+	$(ORBITER_PATH)/orbiter.out -v 2 -finite_field_activity -q 19 \
+		-polynomial_find_roots "1,16,1" -end
+
+find_roots_d:
+	$(ORBITER_PATH)/orbiter.out -v 2 -finite_field_activity -q 19 \
+		-polynomial_find_roots "1,18,1" -end
+
+find_roots_e:
+	$(ORBITER_PATH)/orbiter.out -v 2 -finite_field_activity -q 19 \
+		-polynomial_find_roots "1,16,3" -end
+
 
 
 # degree and then order of the field of coefficients:
@@ -231,8 +251,8 @@ F_4:
 
 F_7:
 	$(ORBITER_PATH)/orbiter.out -v 3 -finite_field_activity -q 7 -cheat_sheet_GF -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_addition_table.csv 40 24
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_multiplication_table.csv 40 24
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_addition_table.csv 40 24 -draw_matrix_partition 3 7 7 
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_multiplication_table.csv 40 24 -draw_matrix_partition 3 6 6
 	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_addition_table_reordered.csv 40 24
 	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_multiplication_table_reordered.csv 40 24
 	pdflatex GF_7.tex
@@ -270,6 +290,12 @@ F_16:
 	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q16_multiplication_table_reordered.csv 40 24
 	pdflatex GF_16.tex
 	open GF_16.pdf
+
+
+F_19:
+	$(ORBITER_PATH)/orbiter.out -v 3 -finite_field_activity -q 19 -cheat_sheet_GF -end 
+	pdflatex GF_19.tex
+	open GF_19.pdf
 
 F_32:
 	$(ORBITER_PATH)/orbiter.out -v 3 -finite_field_activity -q 32 -cheat_sheet_GF -end 
@@ -409,6 +435,13 @@ PG_2_4_incma:
 #PG_n2_q4_incidence_matrix.csv
 
 
+PG_2_7:
+	$(ORBITER_PATH)/orbiter.out -finite_field_activity -q 7 -cheat_sheet_PG 2 -end
+	pdflatex PG_2_7.tex 
+	open PG_2_7.pdf
+
+
+
 PG_2_8:
 	$(ORBITER_PATH)/orbiter.out -finite_field_activity -q 8 -cheat_sheet_PG 2 -end
 	pdflatex PG_2_8.tex 
@@ -465,6 +498,10 @@ PG_4_3:
 
 
 
+PG_4_3:
+	$(ORBITER_PATH)/orbiter.out -finite_field_activity -q 3 -cheat_sheet_PG 4 -end
+	pdflatex PG_4_3.tex 
+	open PG_4_3.pdf
 
 
 
@@ -482,6 +519,13 @@ ALGEBRAICSETS:
 EC1:
 	$(ORBITER_PATH)/orbiter.out -v 2 -create_combinatorial_object -q 11 -n 2 \
 		-projective_variety "EC" 3 "1,0,3,2,10,6,1,7"	-monomial_type_PART -end
+
+
+Frame_complement:
+	$(ORBITER_PATH)/orbiter.out -v 2 -create_combinatorial_object -q 11 -n 2 \
+		-intersection_of_zariski_open_sets "frame_complement" 1 4 \
+		"1,0" "1,1" "1,2" "1,0,1,1,1,2" -monomial_type_PART -end
+
 
 
 
@@ -1818,7 +1862,24 @@ Hirschfeld16c:
 ARCS:
 
 
-arcs_4:
+arcs_q7_6:
+	$(ORBITER_PATH)/orbiter.out -v 7 \
+		-orbiter_path $(ORBITER_PATH) \
+		-linear_group -PGL 3 7 -end \
+		-group_theoretic_activities \
+				-poset_classification_control -problem_label arcs_q7_d2 -W -depth 6 -report -draw_poset -draw_options -end -end \
+			-classify_arcs \
+				-target_size 6 \
+				-q 7 \
+				-n 3 \
+				-d 2 \
+			-end \
+		-end
+	pdflatex arcs_q7_d2_poset.tex
+	open arcs_q7_d2_poset.pdf
+
+
+arcs_4_q8:
 	$(ORBITER_PATH)/orbiter.out -v 8 \
 		-orbiter_path $(ORBITER_PATH) \
 		-linear_group -PGGL 3 8 -end \
@@ -3800,6 +3861,14 @@ identify_general_19:
 		-end
 
 
+identify_general_29:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 29 -wedge -end \
+		-group_theoretic_activities \
+		-surface_identify_general_abcd \
+		-end
+
+
+
 identify_general_32:
 	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 32 -wedge -end \
 		-group_theoretic_activities \
@@ -4264,7 +4333,78 @@ codes_24_12_8:
 	open codes_24_12_8_poset.pdf
 
 
-#############################################################################################################
+code_6:
+	$(ORBITER_PATH)/orbiter.out -v 2 -general_code_binary 6 "0,60,50,41,14,21,27,39"
+	$(ORBITER_PATH)/orbiter.out -draw_matrix code_matrix_8_8.csv 20 25 \
+		-draw_matrix_partition 2 "1,1,1,1,1,1,1,1" "1,1,1,1,1,1,1,1" 
+	pdflatex code_6_8.tex
+	open code_6_8.pdf
+	open code_matrix_8_8_draw.bmp
+
+
+# linear code with generator matrix
+# 111100
+# 110010
+# 101001
+
+
+
+
+code_Hamming:
+	$(ORBITER_PATH)/orbiter.out -v 2 -linear_code_through_basis 7  "67,37,22,15"
+	$(ORBITER_PATH)/orbiter.out -draw_matrix code_matrix_16_8.csv 25 8 -draw_matrix_partition 2 16 8
+	open code_matrix_16_8_draw.bmp
+	pdflatex code_7_16.tex
+	open code_7_16.pdf
+
+
+#	$(DRAW_PATH)/draw_matrix.out -read code_matrix_256_256.csv -box_width 10 
+
+# 1 0 0 0 0 1 1 = 67
+# 0 1 0 0 1 0 1 = 37
+# 0 0 1 0 1 1 0 = 22
+# 0 0 0 1 1 1 1 = 15
+
+
+RM_6:
+	$(ORBITER_PATH)/orbiter.out -v 2 -long_code 64 7 \
+		"0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63" \
+		"1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63" \
+		"2,3,6,7,18,19,22,23,10,11,14,15,26,27,30,31,34,35,38,39,42,43,46,47,50,51,54,55,58,59,62,63" \
+		"4,6,12,14,36,38,52,54,5,7,13,15,37,39,53,55,20,22,28,30,44,46,60,62,21,23,29,31,45,47,61,63" \
+		"8,9,12,13,24,25,28,29,10,11,14,15,26,27,30,31,40,41,44,45,56,57,60,61,42,43,46,47,58,59,62,63" \
+		"16,18,24,26,48,50,56,58,17,19,25,27,49,51,57,59,20,22,28,30,52,54,60,62,21,23,29,31,53,55,61,63" \
+		"32,34,48,50,33,35,49,51,36,38,52,54,37,39,53,55,40,42,56,58,41,43,57,59,44,46,60,62,45,47,61,63" 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7.csv 25 8 -draw_matrix_partition 3 7 64
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_0.csv 25 8 -draw_matrix_partition 3 8 8
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_1.csv 25 8 -draw_matrix_partition 3 8 8
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_2.csv 25 8 -draw_matrix_partition 3 8 8		
+
+
+Reed_Muller_6:
+	$(ORBITER_PATH)/orbiter.out -v 2 -long_code 64 7 \
+		-set_builder -loop 0 64 1 -end \
+		-set_builder -loop 0 32 1 -affine_function 2 1 -end \
+		-set_builder -loop 0 16 1 -affine_function 4 2 -clone_with_affine_function 4 3 -end \
+		-set_builder -set_builder -set_builder -loop 0 4 1 -affine_function 1 4 \
+			-clone_with_affine_function 1 12 -end -clone_with_affine_function 1 16 \
+			-end -clone_with_affine_function 1 32 -end\
+		-set_builder -set_builder -loop 0 8 1 -affine_function 1 8 \
+			-clone_with_affine_function 1 24 -end -clone_with_affine_function 1 32 -end\
+		-set_builder -loop 0 16 1 -affine_function 1 16 -clone_with_affine_function 1 48 -end \
+		-set_builder -loop 0 32 1 -affine_function 1 32 -end 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7.csv 25 8 -draw_matrix_partition 3 7 64
+	open long_code_genma_n64_k7_draw.bmp
+
+
+
+no:
+		-nearest_codeword "8,16,32,24,40,48,56,1,2,4,3,5,6,7,9,18,36,27,45,54,63,33,42,20,11,53,62,31"
+
+
+
+
+########################################################################################################
 # Section 26: Diophantine Systems
 
 DIOPHANT:
@@ -6307,3 +6447,107 @@ Surfaces_q9_analyze:
 		-end 
 	pdflatex poly_orbits_d3_n3_q3_F9_report.tex
 	open poly_orbits_d3_n3_q3_F9_report.pdf
+
+
+
+####
+
+
+
+
+# odd characteristic
+# q=19
+
+# E = 2
+
+Family_general_q19_2_3_3_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 19 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 2 3 3 2 -q 19 -end 
+		pdflatex surface_family_general_abcd_q19_a2_b3_c3_d2_report.tex
+		open surface_family_general_abcd_q19_a2_b3_c3_d2_report.pdf
+
+
+
+# E = 4:
+
+Family_general_q19_4_2_2_4:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 19 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 4 2 2 4 -q 19 -end 
+		pdflatex surface_family_general_abcd_q19_a4_b2_c2_d4_report.tex
+		open surface_family_general_abcd_q19_a4_b2_c2_d4_report.pdf
+
+
+# E = 6
+
+
+Family_general_q19_11_2_15_11:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 19 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 11 2 15 11 -q 19 -end 
+		pdflatex surface_family_general_abcd_q19_a11_b2_c15_d11_report.tex
+		open surface_family_general_abcd_q19_a11_b2_c15_d11_report.pdf
+
+
+# E = 9:
+
+Family_general_q19_6_2_3_6:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 19 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 6 2 3 6 -q 19 -end 
+		pdflatex surface_family_general_abcd_q19_a6_b2_c3_d6_report.tex
+		open surface_family_general_abcd_q19_a6_b2_c3_d6_report.pdf
+
+
+
+# E = 10:
+
+Family_general_q19_6_5_5_6:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 19 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 6 5 5 6 -q 19 -end 
+		pdflatex surface_family_general_abcd_q19_a6_b5_c5_d6_report.tex
+		open surface_family_general_abcd_q19_a6_b5_c5_d6_report.pdf
+
+# E = 18:
+
+Family_general_q19_5_2_12_5:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 19 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 5 2 12 5 -q 19 -end 
+		pdflatex surface_family_general_abcd_q19_a5_b2_c12_d5_report.tex
+		open surface_family_general_abcd_q19_a5_b2_c12_d5_report.pdf
+
+
+# q=29
+
+Family_general_q19_2_5_7_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 29 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 2 5 7 2 -q 29 -end 
+		pdflatex surface_family_general_abcd_q29_a2_b5_c7_d2_report.tex
+		open surface_family_general_abcd_q29_a2_b5_c7_d2_report.pdf
+
+
+
+arc_lifting_two_lines_29_E1:
+	$(ORBITER_PATH)/orbiter.out -v 4 -linear_group -PGL 4 29 -end \
+		-group_theoretic_activities \
+		-control_six_arcs -problem_label sixarcs_q29 -end \
+		-classify_surfaces_through_arcs_and_two_lines \
+		-test_nb_Eckardt_points 1 \
+		-draw_options -end \
+		-report \
+		-end
+	pdflatex surfaces_arc_lifting_29.tex
+	open surfaces_arc_lifting_29.pdf
+
+

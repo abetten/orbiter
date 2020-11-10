@@ -1151,9 +1151,9 @@ void homogeneous_polynomial_domain::polynomial_function(int *coeff, int *f, int 
 		f[rk] = a;
 	}
 }
+
 void homogeneous_polynomial_domain::enumerate_points(int *coeff,
 		std::vector<long int> &Pts,
-		//long int *Pts, int &nb_pts,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1184,6 +1184,42 @@ void homogeneous_polynomial_domain::enumerate_points(int *coeff,
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::enumerate_points "
+				"done" << endl;
+	}
+}
+
+void homogeneous_polynomial_domain::enumerate_points_zariski_open_set(int *coeff,
+		std::vector<long int> &Pts,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	long int rk;
+	int a;
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::enumerate_points_zariski_open_set" << endl;
+	}
+	if (f_vv) {
+		cout << "homogeneous_polynomial_domain::enumerate_points_zariski_open_set "
+				"P->N_points=" << P->N_points << endl;
+#if 0
+		print_equation_with_line_breaks_tex(cout,
+				coeff, 8 /* nb_terms_per_line*/,
+				"\\\\\n");
+		cout << endl;
+#endif
+	}
+	for (rk = 0; rk < P->N_points; rk++) {
+		unrank_point(v, rk);
+		a = evaluate_at_a_point(coeff, v);
+		if (a) {
+			Pts.push_back(rk);
+		}
+	}
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::enumerate_points_zariski_open_set "
 				"done" << endl;
 	}
 }
@@ -1800,25 +1836,34 @@ the_end:
 
 void homogeneous_polynomial_domain::print_monomial_ordering(ostream &ost)
 {
-	int h;
+	int h, i, l;
 	
 	//ost << "The ordering of monomials is:\\\\" << endl;
-	ost << "$$" << endl;
-	ost << "\\begin{array}{|r|r|r|}" << endl;
-	ost << "\\hline" << endl;
-	ost << "h &  \\mbox{monomial} & \\mbox{vector} \\\\" << endl;
-	ost << "\\hline" << endl;
-	ost << "\\hline" << endl;
-	for (h = 0; h < nb_monomials; h++) {
-		ost << h << " & ";
-		print_monomial_latex(ost, h);
-		ost << " & ";
-		int_vec_print(ost, Monomials + h * nb_variables, nb_variables);
-		ost << "\\\\" << endl; 
+
+	for (i = 0; i < (nb_monomials + 24) / 25; i++) {
+
+		l = MINIMUM((i + 1) * 25, nb_monomials) - i * 25;
+
+		ost << "$$" << endl;
+		ost << "\\begin{array}{|r|r|r|}" << endl;
+		ost << "\\hline" << endl;
+		ost << "h &  \\mbox{monomial} & \\mbox{vector} \\\\" << endl;
+		ost << "\\hline" << endl;
+		ost << "\\hline" << endl;
+
+		for (h = 0; h < l; h++) {
+			ost << i * 25 + h << " & ";
+			print_monomial_latex(ost, i * 25 + h);
+			ost << " & ";
+			int_vec_print(ost, Monomials + (i * 25 + h) * nb_variables, nb_variables);
+			ost << "\\\\" << endl;
+		}
+		ost << "\\hline" << endl;
+		ost << "\\end{array}" << endl;
+		ost << "$$" << endl;
+
+		ost << "\\clearpage" << endl;
 	}
-	ost << "\\hline" << endl;
-	ost << "\\end{array}" << endl;
-	ost << "$$" << endl;
 }
 
 

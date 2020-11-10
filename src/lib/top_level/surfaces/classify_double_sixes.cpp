@@ -1640,7 +1640,7 @@ void classify_double_sixes::read_file(ifstream &fp, int verbose_level)
 	if (f_v) {
 		cout << "classify_double_sixes::read_file before Five_plus_one->read_file" << endl;
 	}
-	Five_plus_one->read_file(fp, depth_completed, 0/*verbose_level*/);
+	Five_plus_one->read_file(fp, depth_completed, verbose_level);
 	if (f_v) {
 		cout << "classify_double_sixes::read_file after Five_plus_one->read_file" << endl;
 	}

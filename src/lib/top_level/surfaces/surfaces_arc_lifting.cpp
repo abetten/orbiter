@@ -142,6 +142,9 @@ void surfaces_arc_lifting::init(
 		cout << "surfaces_arc_lifting::init A4 = " << A4->label << endl;
 		cout << "surfaces_arc_lifting::init A4 = " << A4->label_tex << endl;
 	}
+	if (f_test_nb_Eckardt_points) {
+		cout << "f_test_nb_Eckardt_points is on, testing for " << nb_E << " Eckardt points" << endl;
+	}
 
 	f_semilinear = A4->is_semilinear_matrix_group();
 

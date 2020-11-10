@@ -2737,6 +2737,78 @@ void algebra_global::do_make_table_of_irreducible_polynomials(int deg, finite_fi
 	}
 }
 
+void algebra_global::polynomial_find_roots(finite_field *F,
+		std::string &A_coeffs,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_find_roots" << endl;
+	}
+
+	int q = F->q;
+
+	int *data_A;
+	int sz_A;
+
+	int_vec_scan(A_coeffs, data_A, sz_A);
+
+	number_theory_domain NT;
+
+
+
+
+	unipoly_domain FX(F);
+	unipoly_object A;
+
+
+	int da = sz_A - 1;
+	int i;
+
+	FX.create_object_of_degree(A, da);
+
+	for (i = 0; i <= da; i++) {
+		if (data_A[i] < 0 || data_A[i] >= q) {
+			data_A[i] = NT.mod(data_A[i], q);
+		}
+		FX.s_i(A, i) = data_A[i];
+	}
+
+
+	if (f_v) {
+		cout << "A(X)=";
+		FX.print_object(A, cout);
+		cout << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_find_roots before FX.mult_mod" << endl;
+	}
+
+	{
+		int a, b;
+
+		for (a = 0; a < q; a++) {
+			b = FX.substitute_scalar_in_polynomial(
+				A, a, 0 /* verbose_level*/);
+			if (b == 0) {
+				cout << "a root is " << a << endl;
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_find_roots after FX.mult_mod" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_find_roots done" << endl;
+	}
+}
 
 
 

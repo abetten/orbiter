@@ -242,6 +242,10 @@ public:
 	int f_normal_basis;
 	int normal_basis_d;
 
+	int f_polynomial_find_roots;
+	std::string polynomial_find_roots_A;
+
+
 	int f_normalize_from_the_right;
 	int f_normalize_from_the_left;
 
