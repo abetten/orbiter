@@ -205,6 +205,9 @@ public:
 	void do_search_for_primitive_polynomial_in_range(int p_min, int p_max,
 			int deg_min, int deg_max, int verbose_level);
 	void do_make_table_of_irreducible_polynomials(int deg, finite_field *F, int verbose_level);
+	void polynomial_find_roots(finite_field *F,
+			std::string &A_coeffs,
+			int verbose_level);
 
 };
 
@@ -860,8 +863,14 @@ public:
 	// finite_field_projective.cpp
 	// #########################################################################
 
-	void PG_element_apply_frobenius(int n,
-			int *v, int f);
+	void PG_element_apply_frobenius(int n, int *v, int f);
+	void create_intersection_of_zariski_open_sets(
+			std::string &variety_label,
+			int variety_nb_vars, int variety_degree,
+			std::vector<std::string> &Variety_coeffs,
+			monomial_ordering_type Monomial_ordering_type,
+			std::string &fname, int &nb_pts, long int *&Pts,
+			int verbose_level);
 	void create_projective_variety(
 			std::string &variety_label,
 			int variety_nb_vars, int variety_degree,
@@ -1153,7 +1162,7 @@ public:
 	void wedge_to_klein(int *W, int *K);
 	void klein_to_wedge(int *K, int *W);
 	void isomorphism_to_special_orthogonal(int *A4, int *A6, int verbose_level);
-	void minimal_orbit_rep_under_stabilizer_of_frame(int x, int y,
+	void minimal_orbit_rep_under_stabilizer_of_frame_characteristic_two(int x, int y,
 			int &a, int &b, int verbose_level);
 
 
@@ -1693,6 +1702,9 @@ public:
 	void enumerate_points(int *coeff,
 			std::vector<long int> &Pts,
 			//long int *Pts, int &nb_pts,
+			int verbose_level);
+	void enumerate_points_zariski_open_set(int *coeff,
+			std::vector<long int> &Pts,
 			int verbose_level);
 	int evaluate_at_a_point_by_rank(int *coeff, int pt);
 	int evaluate_at_a_point(int *coeff, int *pt_vec);

@@ -43,6 +43,9 @@ finite_field_activity_description::finite_field_activity_description()
 	f_normal_basis = FALSE;
 	normal_basis_d = 0;
 
+	f_polynomial_find_roots = FALSE;
+	//polynomial_find_roots_A;
+
 	f_normalize_from_the_right = FALSE;
 	f_normalize_from_the_left = FALSE;
 
@@ -233,6 +236,11 @@ int finite_field_activity_description::read_arguments(
 			nullspace_text.assign(argv[++i]);
 			cout << "-nullspace " << nullspace_m << " "
 					<< nullspace_n << " " << nullspace_text << endl;
+		}
+		else if (strcmp(argv[i], "-polynomial_find_roots") == 0) {
+			f_polynomial_find_roots = TRUE;
+			polynomial_find_roots_A.assign(argv[++i]);
+			cout << "-polynomial_find_roots " << polynomial_find_roots_A << endl;
 		}
 		else if (strcmp(argv[i], "-RREF") == 0) {
 			f_RREF = TRUE;

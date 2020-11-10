@@ -351,6 +351,15 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 				fname, nb_pts, Pts,
 				verbose_level);
 	}
+	else if (Descr->f_intersection_of_zariski_open_sets) {
+		F->create_intersection_of_zariski_open_sets(
+				Descr->variety_label,
+				Descr->n + 1, Descr->variety_degree,
+				Descr->Variety_coeffs,
+				Descr->Monomial_ordering_type,
+				fname, nb_pts, Pts,
+				verbose_level);
+	}
 	else if (Descr->f_projective_curve) {
 		F->create_projective_curve(
 				Descr->curve_label,

@@ -4199,14 +4199,21 @@ void projective_space::report(ostream &ost, int verbose_level)
 	}
 #endif
 
+	homogeneous_polynomial_domain *Poly1;
 	homogeneous_polynomial_domain *Poly2;
 	homogeneous_polynomial_domain *Poly3;
 	homogeneous_polynomial_domain *Poly4;
 
+	Poly1 = NEW_OBJECT(homogeneous_polynomial_domain);
 	Poly2 = NEW_OBJECT(homogeneous_polynomial_domain);
 	Poly3 = NEW_OBJECT(homogeneous_polynomial_domain);
 	Poly4 = NEW_OBJECT(homogeneous_polynomial_domain);
 
+	Poly1->init(F,
+			n + 1 /* nb_vars */, 1 /* degree */,
+			FALSE /* f_init_incidence_structure */,
+			t_PART,
+			verbose_level);
 	Poly2->init(F,
 			n + 1 /* nb_vars */, 2 /* degree */,
 			FALSE /* f_init_incidence_structure */,
@@ -4223,10 +4230,12 @@ void projective_space::report(ostream &ost, int verbose_level)
 			t_PART,
 			verbose_level);
 
+	Poly1->print_monomial_ordering(ost);
 	Poly2->print_monomial_ordering(ost);
 	Poly3->print_monomial_ordering(ost);
 	Poly4->print_monomial_ordering(ost);
 
+	FREE_OBJECT(Poly1);
 	FREE_OBJECT(Poly2);
 	FREE_OBJECT(Poly3);
 	FREE_OBJECT(Poly4);

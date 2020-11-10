@@ -27,6 +27,147 @@ void finite_field::PG_element_apply_frobenius(int n,
 		}
 }
 
+void finite_field::create_intersection_of_zariski_open_sets(
+		std::string &variety_label,
+		int variety_nb_vars, int variety_degree,
+		std::vector<std::string> &Variety_coeffs,
+		monomial_ordering_type Monomial_ordering_type,
+		std::string &fname, int &nb_pts, long int *&Pts,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::create_intersection_of_zariski_open_sets" << endl;
+	}
+	homogeneous_polynomial_domain *HPD;
+	number_theory_domain NT;
+	int *coeff;
+	int h;
+	long int *Pts1;
+	int sz1;
+	long int *Pts2;
+	int sz2;
+	sorting Sorting;
+
+	HPD = NEW_OBJECT(homogeneous_polynomial_domain);
+
+	HPD->init(this, variety_nb_vars, variety_degree,
+			FALSE /* f_init_incidence_structure */,
+			Monomial_ordering_type,
+			verbose_level);
+
+	HPD->print_monomial_ordering(cout);
+
+	coeff = NEW_int(HPD->get_nb_monomials());
+	int_vec_zero(coeff, HPD->get_nb_monomials());
+
+	fname.assign(variety_label);
+	fname.append(".txt");
+
+	for (h = 0; h < Variety_coeffs.size(); h++) {
+
+		if (f_v) {
+			cout << "finite_field::create_intersection_of_zariski_open_sets h=" << h << " / " << Variety_coeffs.size() << " : ";
+			cout << Variety_coeffs[h] << endl;
+		}
+
+		{
+			int *coeff_pairs;
+			int len;
+			int a, b, i;
+
+			int_vec_scan(Variety_coeffs[h].c_str(), coeff_pairs, len);
+			for (i = 0; i < len / 2; i++) {
+				a = coeff_pairs[2 * i];
+				b = coeff_pairs[2 * i + 1];
+				if (b >= HPD->get_nb_monomials()) {
+					cout << "b >= HPD->get_nb_monomials()" << endl;
+					exit(1);
+				}
+				if (b < 0) {
+					cout << "b < 0" << endl;
+					exit(1);
+				}
+				if (a < 0 || a >= q) {
+					if (e > 1) {
+						cout << "In a field extension, what do you mean by " << a << endl;
+						exit(1);
+					}
+					a = NT.mod(a, q);
+				}
+				coeff[b] = a;
+
+			}
+			FREE_int(coeff_pairs);
+		}
+		if (f_v) {
+			cout << "finite_field::create_intersection_of_zariski_open_sets h=" << h << " / " << Variety_coeffs.size() << " coeff:";
+			int_vec_print(cout, coeff, HPD->get_nb_monomials());
+			cout << endl;
+		}
+
+		Pts = NEW_lint(HPD->get_P()->N_points);
+
+		if (f_v) {
+			cout << "finite_field::create_intersection_of_zariski_open_sets "
+					"before HPD->enumerate_points_zariski_open_set" << endl;
+		}
+
+		vector<long int> Points;
+
+		HPD->enumerate_points_zariski_open_set(coeff, Points, verbose_level);
+
+		if (h ==0) {
+			int i;
+			nb_pts = Points.size();
+			Pts1 = NEW_lint(nb_pts);
+			Pts2 = NEW_lint(nb_pts);
+			for (i = 0; i < nb_pts; i++) {
+				Pts1[i] = Points[i];
+			}
+			sz1 = nb_pts;
+		}
+		else {
+			int i, idx;
+			long int a;
+			nb_pts = Points.size();
+			sz2 = 0;
+			for (i = 0; i < nb_pts; i++) {
+				a = Points[i];
+				if (Sorting.lint_vec_search(Pts1, sz1, a, idx, 0)) {
+					Pts2[sz2++] = a;
+				}
+			}
+			lint_vec_copy(Pts2, Pts1, sz2);
+			sz1 = sz2;
+		}
+		if (f_v) {
+			cout << "finite_field::create_intersection_of_zariski_open_sets "
+					"after HPD->enumerate_points_zariski_open_set, "
+					"nb_pts = " << nb_pts << endl;
+		}
+	} // next h
+
+	nb_pts = sz1;
+	Pts = NEW_lint(sz1);
+	lint_vec_copy(Pts1, Pts, sz1);
+
+	display_table_of_projective_points(
+			cout, Pts, nb_pts, variety_nb_vars);
+
+	FREE_OBJECT(HPD);
+	FREE_int(coeff);
+	FREE_lint(Pts1);
+	FREE_lint(Pts2);
+
+
+
+	if (f_v) {
+		cout << "finite_field::create_intersection_of_zariski_open_sets done" << endl;
+	}
+}
+
 
 void finite_field::create_projective_variety(
 		std::string &variety_label,
@@ -43,6 +184,7 @@ void finite_field::create_projective_variety(
 	}
 
 	homogeneous_polynomial_domain *HPD;
+	number_theory_domain NT;
 	int *coeff;
 
 	HPD = NEW_OBJECT(homogeneous_polynomial_domain);
@@ -75,7 +217,15 @@ void finite_field::create_projective_variety(
 			cout << "b < 0" << endl;
 			exit(1);
 		}
+		if (a < 0 || a >= q) {
+			if (e > 1) {
+				cout << "In a field extension, what do you mean by " << a << endl;
+				exit(1);
+			}
+			a = NT.mod(a, q);
+		}
 		coeff[b] = a;
+
 	}
 	if (f_v) {
 		cout << "finite_field::create_projective_variety coeff:";
@@ -6296,7 +6446,7 @@ void finite_field::isomorphism_to_special_orthogonal(int *A4, int *A6, int verbo
 }
 
 
-void finite_field::minimal_orbit_rep_under_stabilizer_of_frame(int x, int y,
+void finite_field::minimal_orbit_rep_under_stabilizer_of_frame_characteristic_two(int x, int y,
 		int &a, int &b, int verbose_level)
 {
 	int X[6];

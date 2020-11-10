@@ -241,6 +241,9 @@ public:
 	std::string variety_coeffs;
 	monomial_ordering_type Monomial_ordering_type;
 
+	int f_intersection_of_zariski_open_sets;
+	std::vector<std::string> Variety_coeffs;
+
 
 	int f_projective_curve;
 	std::string curve_label;

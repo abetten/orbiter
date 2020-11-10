@@ -1633,18 +1633,20 @@ void surface_classify_wedge::identify_general_abcd(
 				continue;
 			}
 
-			F->minimal_orbit_rep_under_stabilizer_of_frame(a, b,
-					a0, b0, verbose_level);
+			if (EVEN(q)) {
+				F->minimal_orbit_rep_under_stabilizer_of_frame_characteristic_two(a, b,
+						a0, b0, verbose_level);
 
-			cout << "a=" << a << " b=" << b << " a0=" << a0 << " b0=" << b0 << endl;
+				cout << "a=" << a << " b=" << b << " a0=" << a0 << " b0=" << b0 << endl;
 
-			if (a0 < a) {
-				cout << "skipping" << endl;
-				continue;
-			}
-			if (a0 == a && b0 < b) {
-				cout << "skipping" << endl;
-				continue;
+				if (a0 < a) {
+					cout << "skipping" << endl;
+					continue;
+				}
+				if (a0 == a && b0 < b) {
+					cout << "skipping" << endl;
+					continue;
+				}
 			}
 
 			for (c = 1; c < q; c++) {
@@ -1684,21 +1686,35 @@ void surface_classify_wedge::identify_general_abcd(
 						continue;
 					}
 #endif
-					int b2, b2v, x1, x2, m1;
 
-					m1= F->negate(1);
+					cout << "surface_classify_wedge::identify_general_abcd "
+							"a = " << a << " b = " << b << " c = " << c << " d = " << d << endl;
+
+					int m1;
+
+
+					m1 = F->negate(1);
+
+
+#if 0
+					// this is a test for having 6 Eckardt points:
+					int b2, b2v, x1, x2;
+
 					b2 = F->mult(b, b);
+					//cout << "b2=" << b2 << endl;
 					b2v = F->inverse(b2);
+					//cout << "b2v=" << b2v << endl;
+
 					x1 = F->add(F->mult(2, b), m1);
 					x2 = F->mult(x1, b2v);
 
 					if (c != x2) {
+						cout << "skipping" << endl;
 						continue;
 					}
+#endif
 
 
-					cout << "surface_classify_wedge::identify_general_abcd "
-							"a = " << a << " b = " << b << " c = " << c << " d = " << d << endl;
 
 #if 0
 					F->minimal_orbit_rep_under_stabilizer_of_frame(c, d,
@@ -1717,6 +1733,8 @@ void surface_classify_wedge::identify_general_abcd(
 					}
 #endif
 
+
+					cout << "nonconical test" << endl;
 
 					int admbc;
 					//int m1;

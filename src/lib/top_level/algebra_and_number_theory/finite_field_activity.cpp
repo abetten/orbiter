@@ -114,6 +114,17 @@ void finite_field_activity::perform_activity(int verbose_level)
 		Algebra.compute_normal_basis(F, Descr->normal_basis_d, verbose_level);
 
 	}
+	else if (Descr->f_polynomial_find_roots) {
+
+		algebra_global Algebra;
+
+
+
+		Algebra.polynomial_find_roots(F,
+				Descr->polynomial_find_roots_A,
+				verbose_level);
+	}
+
 	else if (Descr->f_nullspace) {
 
 		algebra_global Algebra;
