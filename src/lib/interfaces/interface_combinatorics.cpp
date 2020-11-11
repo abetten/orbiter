@@ -940,7 +940,7 @@ void interface_combinatorics::do_read_poset_file(const char *fname,
 void interface_combinatorics::do_create_combinatorial_object(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i;
+	//int i;
 
 	if (f_v) {
 		cout << "interface_combinatorics::do_create_combinatorial_object" << endl;
@@ -963,6 +963,8 @@ void interface_combinatorics::do_create_combinatorial_object(int verbose_level)
 	if (f_v) {
 		cout << "we created a set of " << COC->nb_pts
 				<< " points, called " << COC->fname << endl;
+
+#if 0
 		cout << "list of points:" << endl;
 
 		cout << COC->nb_pts << endl;
@@ -970,6 +972,7 @@ void interface_combinatorics::do_create_combinatorial_object(int verbose_level)
 			cout << COC->Pts[i] << " ";
 			}
 		cout << endl;
+#endif
 	}
 
 

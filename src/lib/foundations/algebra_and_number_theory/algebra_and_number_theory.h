@@ -864,6 +864,14 @@ public:
 	// #########################################################################
 
 	void PG_element_apply_frobenius(int n, int *v, int f);
+	void number_of_conditions_satisfied(
+			std::string &variety_label,
+			int variety_nb_vars, int variety_degree,
+			std::vector<std::string> &Variety_coeffs,
+			monomial_ordering_type Monomial_ordering_type,
+			std::string &number_of_conditions_satisfied_fname,
+			std::string &fname, int &nb_pts, long int *&Pts,
+			int verbose_level);
 	void create_intersection_of_zariski_open_sets(
 			std::string &variety_label,
 			int variety_nb_vars, int variety_degree,

@@ -360,6 +360,20 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 				fname, nb_pts, Pts,
 				verbose_level);
 	}
+	else if (Descr->f_number_of_conditions_satisfied) {
+		F->number_of_conditions_satisfied(
+				Descr->variety_label,
+				Descr->n + 1, Descr->variety_degree,
+				Descr->Variety_coeffs,
+				Descr->Monomial_ordering_type,
+				Descr->number_of_conditions_satisfied_fname,
+				fname,
+				nb_pts, Pts,
+				verbose_level);
+	}
+
+
+
 	else if (Descr->f_projective_curve) {
 		F->create_projective_curve(
 				Descr->curve_label,
@@ -376,9 +390,9 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 
 
 	if (f_v) {
-		cout << "combinatorial_object_create::init set = ";
-		lint_vec_print(cout, Pts, nb_pts);
-		cout << endl;
+		cout << "combinatorial_object_create::init created a set of size " << nb_pts << endl;
+		//lint_vec_print(cout, Pts, nb_pts);
+		//cout << endl;
 		}
 
 
