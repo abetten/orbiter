@@ -1203,12 +1203,10 @@ void homogeneous_polynomial_domain::enumerate_points_zariski_open_set(int *coeff
 	if (f_vv) {
 		cout << "homogeneous_polynomial_domain::enumerate_points_zariski_open_set "
 				"P->N_points=" << P->N_points << endl;
-#if 0
 		print_equation_with_line_breaks_tex(cout,
 				coeff, 8 /* nb_terms_per_line*/,
 				"\\\\\n");
 		cout << endl;
-#endif
 	}
 	for (rk = 0; rk < P->N_points; rk++) {
 		unrank_point(v, rk);

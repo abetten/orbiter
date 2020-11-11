@@ -111,6 +111,9 @@ combinatorial_object_description::combinatorial_object_description()
 	f_intersection_of_zariski_open_sets = FALSE;
 	//Variety_coeffs
 
+	f_number_of_conditions_satisfied = FALSE;
+	//std::string number_of_conditions_satisfied_fname;
+
 
 	f_projective_curve = FALSE;
 	//curve_label = NULL;
@@ -365,6 +368,8 @@ int combinatorial_object_description::read_arguments(int argc, const char **argv
 			for (j = 0; j < n; j++) {
 				string s;
 
+				cout << "reading argument " << j << " / " << n << " : " << argv[i] << endl;
+
 				Os.get_string_from_command_line(s, argc, argv, i, verbose_level);
 				Variety_coeffs.push_back(s);
 			}
@@ -380,6 +385,46 @@ int combinatorial_object_description::read_arguments(int argc, const char **argv
 				cout << j << " : " << Variety_coeffs[j] << endl;
 			}
 		}
+
+
+		else if (strcmp(argv[i], "-number_of_conditions_satisfied") == 0) {
+			f_number_of_conditions_satisfied = TRUE;
+			variety_label.assign(argv[++i]);
+			variety_degree = atoi(argv[++i]);
+
+			number_of_conditions_satisfied_fname.assign(argv[++i]);
+
+			//variety_coeffs = argv[++i];
+
+			int n, j;
+
+			n = atoi(argv[++i]);
+
+			os_interface Os;
+
+			i++;
+
+			for (j = 0; j < n; j++) {
+				string s;
+
+				cout << "reading argument " << j << " / " << n << " : " << argv[i] << endl;
+
+				Os.get_string_from_command_line(s, argc, argv, i, verbose_level);
+				Variety_coeffs.push_back(s);
+			}
+
+			i--;
+
+
+			cout << "-number_of_conditions_satisfied "
+					<< variety_label << " "
+					<< variety_degree << " "
+					<< n << endl;
+			for (j = 0; j < n; j++) {
+				cout << j << " : " << Variety_coeffs[j] << endl;
+			}
+		}
+
 
 
 		else if (strcmp(argv[i], "-projective_curve") == 0) {

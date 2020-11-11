@@ -27,6 +27,184 @@ void finite_field::PG_element_apply_frobenius(int n,
 		}
 }
 
+
+
+void finite_field::number_of_conditions_satisfied(
+		std::string &variety_label,
+		int variety_nb_vars, int variety_degree,
+		std::vector<std::string> &Variety_coeffs,
+		monomial_ordering_type Monomial_ordering_type,
+		std::string &number_of_conditions_satisfied_fname,
+		std::string &fname, int &nb_pts, long int *&Pts,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	file_io Fio;
+
+	if (f_v) {
+		cout << "finite_field::number_of_conditions_satisfied" << endl;
+	}
+
+	//long int *Pts;
+	//int nb_pts;
+
+	if (f_v) {
+		cout << "Reading file " << number_of_conditions_satisfied_fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+	Fio.read_set_from_file(number_of_conditions_satisfied_fname, Pts, nb_pts, verbose_level);
+
+	int *Cnt;
+
+	Cnt = NEW_int(nb_pts);
+	int_vec_zero(Cnt, nb_pts);
+
+
+	homogeneous_polynomial_domain *HPD;
+	number_theory_domain NT;
+	int *coeff;
+	int h, i, a;
+	long int rk;
+	int *v;
+
+	v = NEW_int(variety_nb_vars);
+
+	HPD = NEW_OBJECT(homogeneous_polynomial_domain);
+
+	HPD->init(this, variety_nb_vars, variety_degree,
+			FALSE /* f_init_incidence_structure */,
+			Monomial_ordering_type,
+			0 /*verbose_level*/);
+
+	HPD->print_monomial_ordering(cout);
+
+	coeff = NEW_int(HPD->get_nb_monomials());
+
+	fname.assign(variety_label);
+	//fname.append(".txt");
+
+
+
+	for (h = 0; h < Variety_coeffs.size(); h++) {
+
+		if (f_v) {
+			cout << "finite_field::number_of_conditions_satisfied h=" << h << " / " << Variety_coeffs.size() << " : ";
+			cout << Variety_coeffs[h] << endl;
+		}
+
+		int_vec_zero(coeff, HPD->get_nb_monomials());
+
+		{
+			int *coeff_pairs;
+			int len;
+			int a, b, i;
+
+			int_vec_scan(Variety_coeffs[h].c_str(), coeff_pairs, len);
+			for (i = 0; i < len / 2; i++) {
+				a = coeff_pairs[2 * i];
+				b = coeff_pairs[2 * i + 1];
+				if (b >= HPD->get_nb_monomials()) {
+					cout << "b >= HPD->get_nb_monomials()" << endl;
+					exit(1);
+				}
+				if (b < 0) {
+					cout << "b < 0" << endl;
+					exit(1);
+				}
+				if (a < 0 || a >= q) {
+					if (e > 1) {
+						cout << "In a field extension, what do you mean by " << a << endl;
+						exit(1);
+					}
+					a = NT.mod(a, q);
+				}
+				coeff[b] = a;
+
+			}
+			FREE_int(coeff_pairs);
+		}
+		if (f_v) {
+			cout << "finite_field::number_of_conditions_satisfied h=" << h << " / " << Variety_coeffs.size() << " coeff:";
+			int_vec_print(cout, coeff, HPD->get_nb_monomials());
+			cout << endl;
+		}
+
+		for (i = 0; i < nb_pts; i++) {
+			rk = Pts[i];
+			HPD->unrank_point(v, rk);
+			a = HPD->evaluate_at_a_point(coeff, v);
+			if (a == 0) {
+				Cnt[i]++;
+			}
+		}
+
+
+
+	} // next h
+
+
+	tally T;
+
+	T.init(Cnt, nb_pts, FALSE, 0);
+
+	cout << "Number of conditions satisfied:" << endl;
+	T.print_naked(TRUE);
+	cout << endl;
+
+	//T.save_classes_individually(fname);
+
+	int f, l, t, j, pos;
+
+	// go through classes in reverse order:
+	for (i = T.nb_types - 1; i >= 0; i--) {
+
+		f = T.type_first[i];
+		l = T.type_len[i];
+		t = T.data_sorted[f];
+
+
+		string fname2;
+		char str[10000];
+
+		fname2.assign(fname);
+		sprintf(str, "%d", t);
+		fname2.append(str);
+		fname2.append(".csv");
+
+
+
+		long int *the_class;
+
+		the_class = NEW_lint(l);
+		for (j = 0; j < l; j++) {
+			pos = T.sorting_perm_inv[f + j];
+			the_class[j] = Pts[pos];
+		}
+
+		Fio.lint_vec_write_csv(the_class, l, fname2, "case");
+
+		cout << "class of type " << t << " contains " << l << " elements:" << endl;
+		display_table_of_projective_points(
+				cout, the_class, l, variety_nb_vars);
+
+		FREE_lint(the_class);
+
+	}
+
+
+
+	FREE_OBJECT(HPD);
+	FREE_int(coeff);
+	FREE_int(Cnt);
+
+	FREE_int(v);
+
+	if (f_v) {
+		cout << "finite_field::number_of_conditions_satisfied done" << endl;
+	}
+}
+
+
 void finite_field::create_intersection_of_zariski_open_sets(
 		std::string &variety_label,
 		int variety_nb_vars, int variety_degree,
@@ -60,7 +238,6 @@ void finite_field::create_intersection_of_zariski_open_sets(
 	HPD->print_monomial_ordering(cout);
 
 	coeff = NEW_int(HPD->get_nb_monomials());
-	int_vec_zero(coeff, HPD->get_nb_monomials());
 
 	fname.assign(variety_label);
 	fname.append(".txt");
@@ -71,6 +248,8 @@ void finite_field::create_intersection_of_zariski_open_sets(
 			cout << "finite_field::create_intersection_of_zariski_open_sets h=" << h << " / " << Variety_coeffs.size() << " : ";
 			cout << Variety_coeffs[h] << endl;
 		}
+
+		int_vec_zero(coeff, HPD->get_nb_monomials());
 
 		{
 			int *coeff_pairs;
@@ -116,7 +295,9 @@ void finite_field::create_intersection_of_zariski_open_sets(
 
 		vector<long int> Points;
 
+
 		HPD->enumerate_points_zariski_open_set(coeff, Points, verbose_level);
+
 
 		if (h ==0) {
 			int i;

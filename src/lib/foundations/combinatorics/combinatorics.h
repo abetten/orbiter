@@ -244,6 +244,9 @@ public:
 	int f_intersection_of_zariski_open_sets;
 	std::vector<std::string> Variety_coeffs;
 
+	int f_number_of_conditions_satisfied;
+	std::string number_of_conditions_satisfied_fname;
+
 
 	int f_projective_curve;
 	std::string curve_label;
