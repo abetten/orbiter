@@ -718,6 +718,7 @@ public:
 			std::string line1_from_text, std::string line2_from_text,
 			std::string line1_to_text, std::string line2_to_text,
 			int verbose_level);
+	void Walsh_matrix(finite_field *F, int n, int *W, int verbose_level);
 };
 
 
@@ -2237,6 +2238,10 @@ public:
 			std::vector<long int> &Points,
 			std::vector<long int> &Lines,
 			int verbose_level);
+	void point_plane_incidence_matrix(
+			long int *point_rks, int nb_points,
+			long int *plane_rks, int nb_planes,
+			int *&M, int verbose_level);
 	void plane_intersection_type_basic(long int *set, int set_size,
 		int *type, int verbose_level);
 		// type[N_planes]

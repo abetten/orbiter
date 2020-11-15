@@ -228,6 +228,7 @@ void surface_create::create_surface_from_description(int verbose_level)
 
 		create_surface_by_coefficients(
 				Descr->coefficients_text,
+				Descr->select_double_six_string,
 				verbose_level);
 
 
@@ -660,7 +661,9 @@ void surface_create::create_surface_general_abcd(int a, int b, int c, int d, int
 	}
 }
 
-void surface_create::create_surface_by_coefficients(std::string &coefficients_text, int verbose_level)
+void surface_create::create_surface_by_coefficients(std::string &coefficients_text,
+		std::vector<std::string> &select_double_six_string,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -713,6 +716,63 @@ void surface_create::create_surface_by_coefficients(std::string &coefficients_te
 	if (f_v) {
 		cout << "surface_create::create_surface_by_coefficients after SO->init_equation" << endl;
 	}
+
+	int nb_select_double_six;
+
+	nb_select_double_six = select_double_six_string.size();
+
+	if (nb_select_double_six) {
+		int i;
+
+		for (i = 0; i < nb_select_double_six; i++) {
+			int *select_double_six;
+			int sz;
+			long int New_lines[27];
+
+			if (f_v) {
+				cout << "surface_create::create_surface_by_coefficients selecting double six " << i << " / " << nb_select_double_six << endl;
+			}
+			int_vec_scan(select_double_six_string[i], select_double_six, sz);
+			if (sz != 12) {
+				cout << "surface_create::create_surface_by_coefficients f_select_double_six double six must consist of 12 numbers" << endl;
+				exit(1);
+			}
+
+			if (f_v) {
+				cout << "surface_create::create_surface_by_coefficients select_double_six = ";
+				int_vec_print(cout, select_double_six, 12);
+				cout << endl;
+			}
+
+
+			if (f_v) {
+				cout << "surface_create::create_surface_by_coefficients before Surf->rearrange_lines_according_to_a_given_double_six" << endl;
+			}
+			Surf->rearrange_lines_according_to_a_given_double_six(
+					SO->Lines, select_double_six, New_lines, 0 /* verbose_level */);
+
+			lint_vec_copy(New_lines, SO->Lines, 27);
+			FREE_int(select_double_six);
+
+
+		}
+
+
+		if (f_v) {
+			cout << "surface_create::create_surface_by_coefficients before "
+					"compute_properties" << endl;
+		}
+		SO->compute_properties(verbose_level - 2);
+		if (f_v) {
+			cout << "surface_create::create_surface_by_coefficients after "
+					"compute_properties" << endl;
+		}
+
+
+	}
+
+
+
 
 
 	char str_q[1000];
@@ -1245,27 +1305,30 @@ void surface_create::apply_transformations(
 
 
 
-			// apply the transformation to the set of generators:
+			if (f_has_group) {
 
-			strong_generators *SG2;
+				// apply the transformation to the set of generators:
 
-			SG2 = NEW_OBJECT(strong_generators);
-			if (f_v) {
-				cout << "surface_create::apply_transformations "
-						"before SG2->init_generators_for_the_conjugate_group_avGa" << endl;
+				strong_generators *SG2;
+
+				SG2 = NEW_OBJECT(strong_generators);
+				if (f_v) {
+					cout << "surface_create::apply_transformations "
+							"before SG2->init_generators_for_the_conjugate_group_avGa" << endl;
+				}
+				SG2->init_generators_for_the_conjugate_group_avGa(Sg, Elt2, verbose_level);
+
+				if (f_v) {
+					cout << "surface_create::apply_transformations "
+							"after SG2->init_generators_for_the_conjugate_group_avGa" << endl;
+				}
+
+				FREE_OBJECT(Sg);
+				Sg = SG2;
+
+				f_has_nice_gens = FALSE;
+				// ToDo: need to conjugate nice_gens
 			}
-			SG2->init_generators_for_the_conjugate_group_avGa(Sg, Elt2, verbose_level);
-
-			if (f_v) {
-				cout << "surface_create::apply_transformations "
-						"after SG2->init_generators_for_the_conjugate_group_avGa" << endl;
-			}
-
-			FREE_OBJECT(Sg);
-			Sg = SG2;
-
-			f_has_nice_gens = FALSE;
-			// ToDo: need to conjugate nice_gens
 
 	
 			if (f_vv) {
@@ -1304,7 +1367,8 @@ void surface_create::apply_transformations(
 
 				a = Surf->Poly3_4->evaluate_at_a_point_by_rank(coeffs_out, SO->Pts[i]);
 				if (a) {
-					cout << "surface_create::apply_transformations something is wrong, the image point does not lie on the transformed surface" << endl;
+					cout << "surface_create::apply_transformations something is wrong, "
+							"the image point does not lie on the transformed surface" << endl;
 					exit(1);
 				}
 

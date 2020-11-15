@@ -31,6 +31,10 @@ schlaefli::schlaefli()
 	Trihedral_pairs = NULL;
 	Trihedral_pair_labels = NULL;
 	nb_trihedral_pairs = 0;
+
+	Triads = NULL;
+	nb_triads = 0;
+
 	Trihedral_pairs_row_sets = NULL;
 	Trihedral_pairs_col_sets = NULL;
 	Classify_trihedral_pairs_row_values = NULL;
@@ -109,6 +113,11 @@ schlaefli::~schlaefli()
 	if (Trihedral_pair_labels) {
 		delete [] Trihedral_pair_labels;
 	}
+
+	if (Triads) {
+		FREE_int(Triads);
+	}
+
 	if (Trihedral_pairs_row_sets) {
 		FREE_int(Trihedral_pairs_row_sets);
 	}
@@ -194,6 +203,14 @@ void schlaefli::init(surface_domain *Surf, int verbose_level)
 	make_trihedral_pairs(verbose_level);
 	if (f_v) {
 		cout << "schlaefli::init after make_trihedral_pairs" << endl;
+	}
+
+	if (f_v) {
+		cout << "schlaefli::init before make_triads" << endl;
+	}
+	make_triads(verbose_level);
+	if (f_v) {
+		cout << "schlaefli::init after make_triads" << endl;
 	}
 
 	if (f_v) {
@@ -431,6 +448,97 @@ void schlaefli::find_tritangent_planes_intersecting_in_a_line(
 	exit(1);
 }
 
+void schlaefli::make_triads(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	sorting Sorting;
+	int *Adj;
+	int i, j, h, u;
+
+	if (f_v) {
+		cout << "schlaefli::make_triads" << endl;
+	}
+	make_trihedral_pair_disjointness_graph(Adj, verbose_level);
+	Triads = NEW_int(40 * 3);
+	h = 0;
+	for (i = 0; i < nb_trihedral_pairs; i++) {
+		for (j = 0; j < i; j++) {
+			if (Adj[j * nb_trihedral_pairs + i]) {
+				break;
+			}
+		}
+		if (j < i) {
+			continue;
+		}
+		Triads[h * 3 + 0] = i;
+		u = 1;
+		for (j = i + 1; j < nb_trihedral_pairs; j++) {
+			if (Adj[i * nb_trihedral_pairs + j]) {
+				Triads[h * 3 + u] = j;
+				u++;
+			}
+		}
+		if (u != 3) {
+			cout << "schlaefli::make_triads u != 3" << endl;
+			exit(1);
+		}
+		h++;
+	}
+	if (h != 40) {
+		cout << "schlaefli::make_triads h != 40" << endl;
+		exit(1);
+	}
+	nb_triads = h;
+	if (f_v) {
+		cout << "schlaefli::make_triads done" << endl;
+	}
+}
+
+void schlaefli::make_trihedral_pair_disjointness_graph(int *&Adj, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	sorting Sorting;
+	int *T;
+	int i, j;
+
+	if (f_v) {
+		cout << "schlaefli::make_trihedral_pair_disjointness_graph" << endl;
+		cout << "nb_trihedral_pairs=" << nb_trihedral_pairs << endl;
+	}
+	Adj = NEW_int(nb_trihedral_pairs * nb_trihedral_pairs);
+	T = NEW_int(nb_trihedral_pairs * 9);
+	for (i = 0; i < nb_trihedral_pairs; i++) {
+		int_vec_copy(Trihedral_pairs + i * 9, T + i * 9, 9);
+		Sorting.int_vec_heapsort(T + i * 9, 9);
+	}
+	int_vec_zero(Adj, nb_trihedral_pairs * nb_trihedral_pairs);
+	for (i = 0; i < nb_trihedral_pairs; i++) {
+		for (j = i + 1; j < nb_trihedral_pairs; j++) {
+			if (Sorting.int_vecs_are_disjoint(T + i * 9, 9, T + j * 9, 9)) {
+				Adj[i * nb_trihedral_pairs + j] = 1;
+				Adj[j * nb_trihedral_pairs + 1] = 1;
+			}
+			else {
+			}
+		}
+	}
+	FREE_int(T);
+#if 0
+	colored_graph *CG;
+
+	CG = NEW_OBJECT(colored_graph);
+
+	CG->init_adjacency_no_colors(nb_trihedral_pairs, Adj,
+			verbose_level);
+
+	FREE_int(Adj);
+#endif
+
+	if (f_v) {
+		cout << "schlaefli::make_trihedral_pair_disjointness_graph done" << endl;
+	}
+	//return CG;
+}
 
 void schlaefli::make_trihedral_pairs(int verbose_level)
 {
@@ -913,6 +1021,7 @@ int schlaefli::Eckardt_point_from_tritangent_plane(int *tritangent_plane)
 	rk = E.rank();
 	return rk;
 }
+
 
 void schlaefli::init_collinear_Eckardt_triples(int verbose_level)
 {
@@ -1956,6 +2065,10 @@ void schlaefli::print_Steiner_and_Eckardt(std::ostream &ost)
 	ost << "\\section*{Steiner Trihedral Pairs}" << endl;
 	latex_table_of_trihedral_pairs(ost);
 
+	ost << "\\clearpage" << endl << endl;
+	ost << "\\section*{Triads}" << endl;
+	latex_triads(ost);
+
 }
 
 void schlaefli::latex_abstract_trihedral_pair(std::ostream &ost, int t_idx)
@@ -2031,6 +2144,150 @@ void schlaefli::latex_table_of_trihedral_pairs(std::ostream &ost)
 	cout << "schlaefli::latex_table_of_trihedral_pairs done" << endl;
 }
 
+void schlaefli::latex_triads(std::ostream &ost)
+{
+	latex_interface L;
+	int i, j, a;
+
+	cout << "schlaefli::latex_triads" << endl;
+
+	ost << "\\subsection*{Triads}" << endl;
+	ost << "The 40 triads are:\\\\" << endl;
+
+	ost << "$$" << endl;
+	L.print_integer_matrix_with_standard_labels_and_offset(ost,
+			Triads, 40, 3, 0, 0, TRUE /* f_tex*/);
+	ost << "$$";
+
+	ost << "\\begin{multicols}{2}" << endl;
+	for (i = 0; i < nb_triads; i++) {
+		ost << "\\noindent ${\\cal T}_{" << i << "} = \\{";
+		for (j = 0; j < 3; j++) {
+			a = Triads[i * 3 + j];
+			ost << "T_{" << Trihedral_pair_labels[a] << "}";
+			if (j < 3 - 1) {
+				ost << ", ";
+			}
+		}
+		ost << "\\}$\\\\" << endl;
+		}
+	ost << "\\end{multicols}" << endl;
+
+	cout << "schlaefli::latex_triads done" << endl;
+}
+
+void schlaefli::print_trihedral_pairs(std::ostream &ost)
+{
+	latex_interface L;
+	int i, j, a;
+
+	//ost << "\\clearpage" << endl;
+
+	ost << "\\bigskip" << endl;
+
+
+	ost << "\\subsection*{Trihedral pairs}" << endl;
+	ost << "The 120 trihedral pairs are:\\\\" << endl;
+	ost << "{\\renewcommand{\\arraystretch}{1.3}" << endl;
+	ost << "$$" << endl;
+
+	int n = 6;
+	int n_offset = 0;
+	int m = 40;
+	int m_offset = 0;
+	long int *p = Trihedral_to_Eckardt;
+
+	ost << "\\begin{array}{|r|r|*{" << n << "}r|}" << endl;
+	ost << "\\hline" << endl;
+	ost << " & ";
+	for (j = 0; j < n; j++) {
+		ost << " & " << n_offset + j;
+		}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < m; i++) {
+		ost << m_offset + i << " & S_{";
+		ost << Trihedral_pair_labels[m_offset + i] << "}";
+		for (j = 0; j < n; j++) {
+			a = p[i * n + j];
+			ost << " & \\pi_{" << Eckard_point_label_tex[a] << "}";
+			}
+		ost << "\\\\";
+		ost << endl;
+		}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+
+	//L.print_integer_matrix_with_standard_labels(ost,
+	//	Surf->Trihedral_to_Eckardt, 40, 6, TRUE /* f_tex */);
+	ost << "$$" << endl;
+
+
+	ost << "$$" << endl;
+
+	m_offset = 40;
+	p = Trihedral_to_Eckardt + 40 * 6;
+
+	ost << "\\begin{array}{|r|r|*{" << n << "}r|}" << endl;
+	ost << "\\hline" << endl;
+	ost << " & ";
+	for (j = 0; j < n; j++) {
+		ost << " & " << n_offset + j;
+		}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < m; i++) {
+		ost << m_offset + i << " & S_{";
+		ost << Trihedral_pair_labels[m_offset + i] << "}";
+		for (j = 0; j < n; j++) {
+			a = p[i * n + j];
+			ost << " & \\pi_{" << Eckard_point_label_tex[a] << "}";
+			}
+		ost << "\\\\";
+		ost << endl;
+		}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+
+
+	//L.print_integer_matrix_with_standard_labels_and_offset(ost,
+	//	Surf->Trihedral_to_Eckardt + 40 * 6, 40, 6, 40, 0,
+	//	TRUE /* f_tex */);
+	ost << "$$" << endl;
+	ost << "$$" << endl;
+
+	m_offset = 80;
+	p = Trihedral_to_Eckardt + 80 * 6;
+
+	ost << "\\begin{array}{|r|r|*{" << n << "}r|}" << endl;
+	ost << "\\hline" << endl;
+	ost << " & ";
+	for (j = 0; j < n; j++) {
+		ost << " & " << n_offset + j;
+		}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < m; i++) {
+		ost << m_offset + i << " & S_{";
+		ost << Trihedral_pair_labels[m_offset + i] << "}";
+		for (j = 0; j < n; j++) {
+			a = p[i * n + j];
+			ost << " & \\pi_{" << Eckard_point_label_tex[a] << "}";
+			}
+		ost << "\\\\";
+		ost << endl;
+		}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+
+
+	//L.print_integer_matrix_with_standard_labels_and_offset(ost,
+	//	Surf->Trihedral_to_Eckardt + 80 * 6, 40, 6, 80, 0,
+	//	TRUE /* f_tex */);
+	ost << "$$}" << endl;
+}
+
+#if 0
 void schlaefli::print_trihedral_pairs(std::ostream &ost)
 {
 	latex_interface L;
@@ -2069,6 +2326,7 @@ void schlaefli::print_trihedral_pairs(std::ostream &ost)
 		Trihedral_to_Eckardt + 80 * 6, 40, 6, 80, 0, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 }
+#endif
 
 void schlaefli::latex_table_of_double_sixes(std::ostream &ost)
 {

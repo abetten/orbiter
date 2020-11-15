@@ -231,6 +231,9 @@ public:
 	int *Trihedral_pairs_col_sets; // [nb_trihedral_pairs * 3]
 	int nb_trihedral_pairs; // = 120
 
+	int *Triads;
+	int nb_triads; // = 40
+
 	tally *Classify_trihedral_pairs_row_values;
 	tally *Classify_trihedral_pairs_col_values;
 
@@ -288,6 +291,7 @@ public:
 		// long int so that we can induce the action on it
 
 
+
 	schlaefli();
 	~schlaefli();
 	void init(surface_domain *Surf, int verbose_level);
@@ -296,6 +300,8 @@ public:
 	void find_tritangent_planes_intersecting_in_a_line(
 		int line_idx,
 		int &plane1, int &plane2, int verbose_level);
+	void make_triads(int verbose_level);
+	void make_trihedral_pair_disjointness_graph(int *&Adj, int verbose_level);
 	void make_trihedral_pairs(int verbose_level);
 	void process_trihedral_pairs(int verbose_level);
 	int line_ai(int i);
@@ -343,6 +349,7 @@ public:
 	void latex_table_of_Schlaefli_labeling_of_lines(std::ostream &ost);
 	void latex_trihedral_pair(std::ostream &ost, int *T, long int *TE);
 	void latex_table_of_trihedral_pairs(std::ostream &ost);
+	void latex_triads(std::ostream &ost);
 	void print_trihedral_pairs(std::ostream &ost);
 	void latex_half_double_six(std::ostream &ost, int idx);
 	void latex_table_of_Eckardt_points(std::ostream &ost);
@@ -816,6 +823,8 @@ public:
 	long int *Eckardt_points; // the orbiter rank of the Eckardt points
 	int *Eckardt_points_index; // index into SO->Pts
 	int *Eckardt_points_schlaefli_labels; // Schlaefli labels
+	int *Eckardt_point_bitvector_in_Schlaefli_labeling;
+		// true if the i-th Eckardt point in the Schlaefli labeling is present
 	int nb_Eckardt_points;
 
 	int *Eckardt_points_line_type; // [nb_Eckardt_points + 1]
@@ -823,6 +832,13 @@ public:
 
 	long int *Hesse_planes;
 	int nb_Hesse_planes;
+	int *Eckardt_point_Hesse_plane_incidence; // [nb_Eckardt_points * nb_Hesse_planes]
+
+
+	int nb_axes;
+	int *Axes_index; // [nb_axes] two times the index into trihedral pairs + 0 or +1
+	long int *Axes_Eckardt_points; // [nb_axes * 3] the Eckardt points in Schlaefli labels that lie on the axes
+	long int *Axes_line_rank;
 
 
 	long int *Double_points;
@@ -867,6 +883,7 @@ public:
 	~surface_object_properties();
 	void init(surface_object *SO, int verbose_level);
 	void compute_properties(int verbose_level);
+	void compute_axes(int verbose_level);
 	void compute_gradient(int verbose_level);
 	void compute_singular_points_and_tangent_planes(int verbose_level);
 	void compute_adjacency_matrix_of_line_intersection_graph(
@@ -899,6 +916,8 @@ public:
 	void print_affine_points_in_source_code(std::ostream &ost);
 	void print_points(std::ostream &ost);
 	void print_Eckardt_points(std::ostream &ost);
+	void print_Hesse_planes(std::ostream &ost);
+	void print_axes(std::ostream &ost);
 	void print_singular_points(std::ostream &ost);
 	void print_double_points(std::ostream &ost);
 	void print_points_on_surface(std::ostream &ost);

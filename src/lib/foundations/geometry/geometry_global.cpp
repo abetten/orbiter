@@ -1803,6 +1803,40 @@ void geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text(
 	}
 }
 
+void geometry_global::Walsh_matrix(finite_field *F, int n, int *W, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int Q;
+	int *v;
+	int *w;
+	int i, j, a;
+
+	if (f_v) {
+		cout << "geometry_global::Walsh_matrix" << endl;
+	}
+	v = NEW_int(n);
+	w = NEW_int(n);
+	Q = 1 << n;
+	for (i = 0; i < Q; i++) {
+		AG_element_unrank(2, v, 1, n, i);
+		for (j = 0; j < Q; j++) {
+			AG_element_unrank(2, w, 1, n, j);
+			a = F->dot_product(n, v, w);
+			if (a) {
+				W[i * Q + j] = -1;
+			}
+			else {
+				W[i * Q + j] = 1;
+			}
+		}
+	}
+	FREE_int(v);
+	FREE_int(w);
+	if (f_v) {
+		cout << "geometry_global::Walsh_matrix done" << endl;
+	}
+}
+
 
 }}
 

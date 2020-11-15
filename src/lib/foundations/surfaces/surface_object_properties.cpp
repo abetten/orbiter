@@ -35,6 +35,7 @@ surface_object_properties::surface_object_properties()
 	Eckardt_points = NULL;
 	Eckardt_points_index = NULL;
 	Eckardt_points_schlaefli_labels = NULL;
+	Eckardt_point_bitvector_in_Schlaefli_labeling = NULL;
 	nb_Eckardt_points = 0;
 
 	Eckardt_points_line_type = NULL;
@@ -42,6 +43,13 @@ surface_object_properties::surface_object_properties()
 
 	Hesse_planes = NULL;
 	nb_Hesse_planes = 0;
+	Eckardt_point_Hesse_plane_incidence = NULL;
+
+	nb_axes = 0;
+	Axes_index = NULL;
+	Axes_Eckardt_points = NULL;
+	Axes_line_rank = NULL;
+
 
 
 	Double_points = NULL;
@@ -96,6 +104,9 @@ surface_object_properties::~surface_object_properties()
 	if (Eckardt_points_schlaefli_labels) {
 		FREE_int(Eckardt_points_schlaefli_labels);
 	}
+	if (Eckardt_point_bitvector_in_Schlaefli_labeling) {
+		FREE_int(Eckardt_point_bitvector_in_Schlaefli_labeling);
+	}
 	if (Eckardt_points_line_type) {
 		FREE_int(Eckardt_points_line_type);
 	}
@@ -104,6 +115,18 @@ surface_object_properties::~surface_object_properties()
 	}
 	if (Hesse_planes) {
 		FREE_lint(Hesse_planes);
+	}
+	if (Eckardt_point_Hesse_plane_incidence) {
+		FREE_int(Eckardt_point_Hesse_plane_incidence);
+	}
+	if (Axes_index) {
+		FREE_int(Axes_index);
+	}
+	if (Axes_Eckardt_points) {
+		FREE_lint(Axes_Eckardt_points);
+	}
+	if (Axes_line_rank) {
+		FREE_lint(Axes_line_rank);
 	}
 	if (Double_points) {
 		FREE_lint(Double_points);
@@ -392,12 +415,28 @@ void surface_object_properties::compute_properties(int verbose_level)
 
 			idx = SO->Surf->Schlaefli->identify_Eckardt_point(a, b, c, 0 /*verbose_level*/);
 
-			Eckardt_points_schlaefli_labels[p]= idx;
+			Eckardt_points_schlaefli_labels[p] = idx;
 		}
+		Eckardt_point_bitvector_in_Schlaefli_labeling = NEW_int(45);
+		int_vec_zero(Eckardt_point_bitvector_in_Schlaefli_labeling, 45);
+		for (p = 0; p < nb_Eckardt_points; p++) {
+			idx = Eckardt_points_schlaefli_labels[p];
+			Eckardt_point_bitvector_in_Schlaefli_labeling[idx] = TRUE;
+		}
+
+		if (f_v) {
+			cout << "surface_object::compute_properties computing axes:" << endl;
+		}
+		compute_axes(verbose_level);
+		if (f_v) {
+			cout << "surface_object::compute_properties computing axes done" << endl;
+		}
+
 	}
 	else {
 		Eckardt_points_schlaefli_labels = NULL;
 	}
+
 
 
 
@@ -496,12 +535,54 @@ void surface_object_properties::compute_properties(int verbose_level)
 		}
 		FREE_int(H_planes);
 
+
+		SO->Surf->P->point_plane_incidence_matrix(
+					Eckardt_points, nb_Eckardt_points,
+					Hesse_planes, nb_Hesse_planes,
+					Eckardt_point_Hesse_plane_incidence,
+					verbose_level);
+
 		//T_planes.print_file_tex_we_are_in_math_mode(ost, TRUE);
 	}
 
 
 	if (f_v) {
 		cout << "surface_object_properties::compute_properties done" << endl;
+	}
+}
+
+void surface_object_properties::compute_axes(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int t, i, h, idx;
+
+	if (f_v) {
+		cout << "surface_object_properties::compute_axes" << endl;
+	}
+	nb_axes = 0;
+	Axes_index = NEW_int(SO->Surf->Schlaefli->nb_trihedral_pairs * 2);
+	Axes_Eckardt_points = NEW_lint(SO->Surf->Schlaefli->nb_trihedral_pairs * 2 * 3);
+	for (t = 0; t < SO->Surf->Schlaefli->nb_trihedral_pairs; t++) {
+		for (i = 0; i < 2; i++) {
+			for (h = 0; h < 3; h++) {
+				idx = SO->Surf->Schlaefli->Trihedral_to_Eckardt[6 * t + i * 3 + h];
+				if (!Eckardt_point_bitvector_in_Schlaefli_labeling[idx]) {
+					break;
+				}
+			}
+			if (h == 3) {
+				Axes_index[nb_axes] = 2 * t + i;
+				lint_vec_copy(SO->Surf->Schlaefli->Trihedral_to_Eckardt + t * 6 + i * 3,
+						Axes_Eckardt_points + nb_axes * 3, 3);
+				nb_axes++;
+			}
+		}
+	}
+	if (f_v) {
+		cout << "we found " << nb_axes << " axes" << endl;
+	}
+	if (f_v) {
+		cout << "surface_object_properties::compute_axes done" << endl;
 	}
 }
 
@@ -1796,18 +1877,20 @@ void surface_object_properties::print_Eckardt_points(std::ostream &ost)
 		}
 	ost << "\\end{align*}" << endl;
 
+	{
+		//latex_interface L;
+		long int *T;
 
-	//latex_interface L;
-	long int *T;
-
-	T = NEW_lint(nb_Eckardt_points);
-	for (i = 0; i < nb_Eckardt_points; i++) {
-		p = Eckardt_points_index[i];
-		T[i] = tangent_plane_rank_global[p];
+		T = NEW_lint(nb_Eckardt_points);
+		for (i = 0; i < nb_Eckardt_points; i++) {
+			p = Eckardt_points_index[i];
+			T[i] = tangent_plane_rank_global[p];
+		}
+		ost << "Set of tangent planes: $";
+		L.lint_set_print_tex(ost, T, nb_Eckardt_points);
+		ost << "$\\\\" << endl;
+		FREE_lint(T);
 	}
-	ost << "Set of tangent planes: $";
-	L.lint_set_print_tex(ost, T, nb_Eckardt_points);
-	ost << "$\\\\" << endl;
 
 	ost << "Line type of Eckardt points: $";
 	L.print_type_vector_tex(ost, Eckardt_points_line_type, nb_Eckardt_points);
@@ -1825,6 +1908,16 @@ void surface_object_properties::print_Eckardt_points(std::ostream &ost)
 		ost << "$\\\\" << endl;
 	}
 
+	print_Hesse_planes(ost);
+
+	print_axes(ost);
+
+}
+
+void surface_object_properties::print_Hesse_planes(std::ostream &ost)
+{
+	latex_interface L;
+	int i, j;
 
 	ost << "Hesse planes: \\\\";
 	ost << "Number of Hesse planes: " << nb_Hesse_planes << "\\\\";
@@ -1835,9 +1928,63 @@ void surface_object_properties::print_Eckardt_points(std::ostream &ost)
 	SO->Surf->Gr3->print_set_tex(ost, Hesse_planes, nb_Hesse_planes);
 
 
-	FREE_lint(T);
+
+	cout << "Hesse plane : rank : Incident Eckardt points\\\\" << endl;
+
+	for (j = 0; j < nb_Hesse_planes; j++) {
+
+		int H[9], cnt, h;
+
+		cnt = 0;
+		for (i = 0; i < nb_Eckardt_points; i++) {
+			if (Eckardt_point_Hesse_plane_incidence[i * nb_Hesse_planes + j]) {
+				if (cnt == 9) {
+					cout << "too many points per Hesse plane" << endl;
+					exit(1);
+				}
+				H[cnt++] = i;
+			}
+		}
+		if (cnt != 9) {
+			cout << "cnt != 9" << endl;
+			exit(1);
+		}
+		ost << j << " : " << Hesse_planes[j] << " : ";
+
+		for (h = 0; h < 9; h++) {
+			i = H[h];
+			ost << "$E_{" << SO->Surf->Schlaefli->Eckard_point_label_tex[Eckardt_points_schlaefli_labels[i]] << "}";
+			if (h < 9 - 1) {
+				ost << ",$ ";
+			}
+		}
+		ost << "$\\\\" << endl;
+	}
 }
 
+void surface_object_properties::print_axes(std::ostream &ost)
+{
+	latex_interface L;
+	int i, j, idx, t_idx, t_r, a;
+
+	ost << "Axes: \\\\";
+	ost << "Number of axes: " << nb_axes << "\\\\";
+	ost << "Axes: \\\\";
+	for (i = 0; i < nb_axes; i++) {
+		idx = Axes_index[i];
+		t_idx = idx / 2;
+		t_r = idx % 2;
+		ost << i << " : " << idx << " = " << t_idx << "," << t_r << " = $" << endl;
+		for (j = 0; j < 3; j++) {
+			a = Axes_Eckardt_points[i * 3 + j];
+			ost << "E_{" << SO->Surf->Schlaefli->Eckard_point_label_tex[a] << "}";
+			if (j < 3 - 1) {
+				ost << ", ";
+			}
+		}
+		ost << "$\\\\" << endl;
+	}
+}
 
 void surface_object_properties::print_singular_points(std::ostream &ost)
 {
@@ -2114,113 +2261,10 @@ void surface_object_properties::print_half_double_sixes_numerically(std::ostream
 
 void surface_object_properties::print_trihedral_pairs(std::ostream &ost)
 {
-	latex_interface L;
-	int i, j, a;
 
-	//ost << "\\clearpage" << endl;
+	SO->Surf->Schlaefli->print_trihedral_pairs(ost);
 
-	ost << "\\bigskip" << endl;
-
-
-	ost << "\\subsection*{Trihedral pairs}" << endl;
-	ost << "The 120 trihedral pairs are:\\\\" << endl;
-	ost << "{\\renewcommand{\\arraystretch}{1.3}" << endl;
-	ost << "$$" << endl;
-
-	int n = 6;
-	int n_offset = 0;
-	int m = 40;
-	int m_offset = 0;
-	long int *p = SO->Surf->Schlaefli->Trihedral_to_Eckardt;
-
-	ost << "\\begin{array}{|r|r|*{" << n << "}r|}" << endl;
-	ost << "\\hline" << endl;
-	ost << " & ";
-	for (j = 0; j < n; j++) {
-		ost << " & " << n_offset + j;
-		}
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < m; i++) {
-		ost << m_offset + i << " & S_{";
-		ost << SO->Surf->Schlaefli->Trihedral_pair_labels[m_offset + i] << "}";
-		for (j = 0; j < n; j++) {
-			a = p[i * n + j];
-			ost << " & \\pi_{" << SO->Surf->Schlaefli->Eckard_point_label_tex[a] << "}";
-			}
-		ost << "\\\\";
-		ost << endl;
-		}
-	ost << "\\hline" << endl;
-	ost << "\\end{array}" << endl;
-
-	//L.print_integer_matrix_with_standard_labels(ost,
-	//	Surf->Trihedral_to_Eckardt, 40, 6, TRUE /* f_tex */);
-	ost << "$$" << endl;
-
-
-	ost << "$$" << endl;
-
-	m_offset = 40;
-	p = SO->Surf->Schlaefli->Trihedral_to_Eckardt + 40 * 6;
-
-	ost << "\\begin{array}{|r|r|*{" << n << "}r|}" << endl;
-	ost << "\\hline" << endl;
-	ost << " & ";
-	for (j = 0; j < n; j++) {
-		ost << " & " << n_offset + j;
-		}
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < m; i++) {
-		ost << m_offset + i << " & S_{";
-		ost << SO->Surf->Schlaefli->Trihedral_pair_labels[m_offset + i] << "}";
-		for (j = 0; j < n; j++) {
-			a = p[i * n + j];
-			ost << " & \\pi_{" << SO->Surf->Schlaefli->Eckard_point_label_tex[a] << "}";
-			}
-		ost << "\\\\";
-		ost << endl;
-		}
-	ost << "\\hline" << endl;
-	ost << "\\end{array}" << endl;
-
-
-	//L.print_integer_matrix_with_standard_labels_and_offset(ost,
-	//	Surf->Trihedral_to_Eckardt + 40 * 6, 40, 6, 40, 0,
-	//	TRUE /* f_tex */);
-	ost << "$$" << endl;
-	ost << "$$" << endl;
-
-	m_offset = 80;
-	p = SO->Surf->Schlaefli->Trihedral_to_Eckardt + 80 * 6;
-
-	ost << "\\begin{array}{|r|r|*{" << n << "}r|}" << endl;
-	ost << "\\hline" << endl;
-	ost << " & ";
-	for (j = 0; j < n; j++) {
-		ost << " & " << n_offset + j;
-		}
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < m; i++) {
-		ost << m_offset + i << " & S_{";
-		ost << SO->Surf->Schlaefli->Trihedral_pair_labels[m_offset + i] << "}";
-		for (j = 0; j < n; j++) {
-			a = p[i * n + j];
-			ost << " & \\pi_{" << SO->Surf->Schlaefli->Eckard_point_label_tex[a] << "}";
-			}
-		ost << "\\\\";
-		ost << endl;
-		}
-	ost << "\\hline" << endl;
-	ost << "\\end{array}" << endl;
-
-
-	//L.print_integer_matrix_with_standard_labels_and_offset(ost,
-	//	Surf->Trihedral_to_Eckardt + 80 * 6, 40, 6, 80, 0,
-	//	TRUE /* f_tex */);
-	ost << "$$}" << endl;
+	SO->Surf->Schlaefli->latex_triads(ost);
 }
 
 void surface_object_properties::print_trihedral_pairs_numerically(std::ostream &ost)

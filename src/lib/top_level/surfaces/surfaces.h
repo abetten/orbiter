@@ -722,7 +722,9 @@ public:
 	void create_surface_F13(int a, int verbose_level);
 	void create_surface_bes(int a, int c, int verbose_level);
 	void create_surface_general_abcd(int a, int b, int c, int d, int verbose_level);
-	void create_surface_by_coefficients(std::string &coefficients_text, int verbose_level);
+	void create_surface_by_coefficients(std::string &coefficients_text,
+			std::vector<std::string> &select_double_six_string,
+			int verbose_level);
 	void create_surface_from_catalogue(int iso,
 			std::vector<std::string> &select_double_six_string,
 			int verbose_level);

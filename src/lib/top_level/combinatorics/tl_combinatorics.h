@@ -188,6 +188,8 @@ public:
 	int coll_orthogonal_d;
 	int coll_orthogonal_q;
 
+	int f_trihedral_pair_disjointness_graph;
+
 
 	create_graph_description();
 	void read_arguments_from_string(

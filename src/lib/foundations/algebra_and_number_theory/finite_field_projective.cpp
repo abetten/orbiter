@@ -24,7 +24,7 @@ void finite_field::PG_element_apply_frobenius(int n,
 
 	for (i = 0; i < n; i++) {
 		v[i] = frobenius_power(v[i], f);
-		}
+	}
 }
 
 
@@ -45,8 +45,6 @@ void finite_field::number_of_conditions_satisfied(
 		cout << "finite_field::number_of_conditions_satisfied" << endl;
 	}
 
-	//long int *Pts;
-	//int nb_pts;
 
 	if (f_v) {
 		cout << "Reading file " << number_of_conditions_satisfied_fname << " of size "
@@ -62,7 +60,6 @@ void finite_field::number_of_conditions_satisfied(
 
 	homogeneous_polynomial_domain *HPD;
 	number_theory_domain NT;
-	int *coeff;
 	int h, i, a;
 	long int rk;
 	int *v;
@@ -78,7 +75,6 @@ void finite_field::number_of_conditions_satisfied(
 
 	HPD->print_monomial_ordering(cout);
 
-	coeff = NEW_int(HPD->get_nb_monomials());
 
 	fname.assign(variety_label);
 	//fname.append(".txt");
@@ -88,43 +84,18 @@ void finite_field::number_of_conditions_satisfied(
 	for (h = 0; h < Variety_coeffs.size(); h++) {
 
 		if (f_v) {
-			cout << "finite_field::number_of_conditions_satisfied h=" << h << " / " << Variety_coeffs.size() << " : ";
+			cout << "finite_field::number_of_conditions_satisfied "
+					"h=" << h << " / " << Variety_coeffs.size() << " : ";
 			cout << Variety_coeffs[h] << endl;
 		}
 
-		int_vec_zero(coeff, HPD->get_nb_monomials());
+		int *coeff;
 
-		{
-			int *coeff_pairs;
-			int len;
-			int a, b, i;
+		coeff = HPD->read_from_string_coefficient_pairs(Variety_coeffs[h], verbose_level - 2);
 
-			int_vec_scan(Variety_coeffs[h].c_str(), coeff_pairs, len);
-			for (i = 0; i < len / 2; i++) {
-				a = coeff_pairs[2 * i];
-				b = coeff_pairs[2 * i + 1];
-				if (b >= HPD->get_nb_monomials()) {
-					cout << "b >= HPD->get_nb_monomials()" << endl;
-					exit(1);
-				}
-				if (b < 0) {
-					cout << "b < 0" << endl;
-					exit(1);
-				}
-				if (a < 0 || a >= q) {
-					if (e > 1) {
-						cout << "In a field extension, what do you mean by " << a << endl;
-						exit(1);
-					}
-					a = NT.mod(a, q);
-				}
-				coeff[b] = a;
-
-			}
-			FREE_int(coeff_pairs);
-		}
 		if (f_v) {
-			cout << "finite_field::number_of_conditions_satisfied h=" << h << " / " << Variety_coeffs.size() << " coeff:";
+			cout << "finite_field::number_of_conditions_satisfied "
+					"h=" << h << " / " << Variety_coeffs.size() << " coeff:";
 			int_vec_print(cout, coeff, HPD->get_nb_monomials());
 			cout << endl;
 		}
@@ -138,6 +109,7 @@ void finite_field::number_of_conditions_satisfied(
 			}
 		}
 
+		FREE_int(coeff);
 
 
 	} // next h
@@ -194,7 +166,6 @@ void finite_field::number_of_conditions_satisfied(
 
 
 	FREE_OBJECT(HPD);
-	FREE_int(coeff);
 	FREE_int(Cnt);
 
 	FREE_int(v);
@@ -220,7 +191,6 @@ void finite_field::create_intersection_of_zariski_open_sets(
 	}
 	homogeneous_polynomial_domain *HPD;
 	number_theory_domain NT;
-	int *coeff;
 	int h;
 	long int *Pts1;
 	int sz1;
@@ -237,7 +207,6 @@ void finite_field::create_intersection_of_zariski_open_sets(
 
 	HPD->print_monomial_ordering(cout);
 
-	coeff = NEW_int(HPD->get_nb_monomials());
 
 	fname.assign(variety_label);
 	fname.append(".txt");
@@ -245,43 +214,17 @@ void finite_field::create_intersection_of_zariski_open_sets(
 	for (h = 0; h < Variety_coeffs.size(); h++) {
 
 		if (f_v) {
-			cout << "finite_field::create_intersection_of_zariski_open_sets h=" << h << " / " << Variety_coeffs.size() << " : ";
+			cout << "finite_field::create_intersection_of_zariski_open_sets "
+					"h=" << h << " / " << Variety_coeffs.size() << " : ";
 			cout << Variety_coeffs[h] << endl;
 		}
 
-		int_vec_zero(coeff, HPD->get_nb_monomials());
+		int *coeff;
 
-		{
-			int *coeff_pairs;
-			int len;
-			int a, b, i;
-
-			int_vec_scan(Variety_coeffs[h].c_str(), coeff_pairs, len);
-			for (i = 0; i < len / 2; i++) {
-				a = coeff_pairs[2 * i];
-				b = coeff_pairs[2 * i + 1];
-				if (b >= HPD->get_nb_monomials()) {
-					cout << "b >= HPD->get_nb_monomials()" << endl;
-					exit(1);
-				}
-				if (b < 0) {
-					cout << "b < 0" << endl;
-					exit(1);
-				}
-				if (a < 0 || a >= q) {
-					if (e > 1) {
-						cout << "In a field extension, what do you mean by " << a << endl;
-						exit(1);
-					}
-					a = NT.mod(a, q);
-				}
-				coeff[b] = a;
-
-			}
-			FREE_int(coeff_pairs);
-		}
+		coeff = HPD->read_from_string_coefficient_pairs(Variety_coeffs[h], verbose_level - 2);
 		if (f_v) {
-			cout << "finite_field::create_intersection_of_zariski_open_sets h=" << h << " / " << Variety_coeffs.size() << " coeff:";
+			cout << "finite_field::create_intersection_of_zariski_open_sets "
+					"h=" << h << " / " << Variety_coeffs.size() << " coeff:";
 			int_vec_print(cout, coeff, HPD->get_nb_monomials());
 			cout << endl;
 		}
@@ -298,6 +241,7 @@ void finite_field::create_intersection_of_zariski_open_sets(
 
 		HPD->enumerate_points_zariski_open_set(coeff, Points, verbose_level);
 
+		FREE_int(coeff);
 
 		if (h ==0) {
 			int i;
@@ -338,7 +282,6 @@ void finite_field::create_intersection_of_zariski_open_sets(
 			cout, Pts, nb_pts, variety_nb_vars);
 
 	FREE_OBJECT(HPD);
-	FREE_int(coeff);
 	FREE_lint(Pts1);
 	FREE_lint(Pts2);
 
@@ -366,7 +309,6 @@ void finite_field::create_projective_variety(
 
 	homogeneous_polynomial_domain *HPD;
 	number_theory_domain NT;
-	int *coeff;
 
 	HPD = NEW_OBJECT(homogeneous_polynomial_domain);
 
@@ -377,37 +319,13 @@ void finite_field::create_projective_variety(
 
 	HPD->print_monomial_ordering(cout);
 
-	coeff = NEW_int(HPD->get_nb_monomials());
-	int_vec_zero(coeff, HPD->get_nb_monomials());
-
 	fname.assign(variety_label);
 	fname.append(".txt");
-	int *coeff_pairs;
-	int len;
-	int a, b, i;
 
-	int_vec_scan(variety_coeffs.c_str(), coeff_pairs, len);
-	for (i = 0; i < len / 2; i++) {
-		a = coeff_pairs[2 * i];
-		b = coeff_pairs[2 * i + 1];
-		if (b >= HPD->get_nb_monomials()) {
-			cout << "b >= HPD->get_nb_monomials()" << endl;
-			exit(1);
-		}
-		if (b < 0) {
-			cout << "b < 0" << endl;
-			exit(1);
-		}
-		if (a < 0 || a >= q) {
-			if (e > 1) {
-				cout << "In a field extension, what do you mean by " << a << endl;
-				exit(1);
-			}
-			a = NT.mod(a, q);
-		}
-		coeff[b] = a;
+	int *coeff;
 
-	}
+	coeff = HPD->read_from_string_coefficient_pairs(variety_coeffs, verbose_level - 2);
+
 	if (f_v) {
 		cout << "finite_field::create_projective_variety coeff:";
 		int_vec_print(cout, coeff, HPD->get_nb_monomials());
@@ -422,6 +340,7 @@ void finite_field::create_projective_variety(
 	}
 
 	vector<long int> Points;
+	int i;
 
 	HPD->enumerate_points(coeff, Points, verbose_level);
 	nb_pts = Points.size();
@@ -437,7 +356,6 @@ void finite_field::create_projective_variety(
 	display_table_of_projective_points(
 			cout, Pts, nb_pts, variety_nb_vars);
 
-	FREE_int(coeff_pairs);
 	FREE_int(coeff);
 	FREE_OBJECT(HPD);
 
