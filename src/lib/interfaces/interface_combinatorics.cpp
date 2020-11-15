@@ -342,11 +342,20 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 		else if (strcmp(argv[i], "-create_graph") == 0) {
 			f_create_graph = TRUE;
-			Create_graph_description = NEW_OBJECT(create_graph_description);
-			i += Create_graph_description->read_arguments(argc - (i - 1),
-					argv + i, verbose_level) - 1;
 
-			cout << "-create_graph" << endl;
+			cout << "-create_graph " << endl;
+
+			Create_graph_description = NEW_OBJECT(create_graph_description);
+			i += Create_graph_description->read_arguments(argc - (i + 1),
+					argv + i + 1, verbose_level);
+
+			cout << "interface_combinatorics::read_arguments finished "
+					"reading -create_graph" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
 		}
 		else if (strcmp(argv[i], "-read_poset_file") == 0) {
 			f_read_poset_file = TRUE;
@@ -364,11 +373,20 @@ void interface_combinatorics::read_arguments(int argc,
 		}
 		else if (strcmp(argv[i], "-graph_theoretic_activity") == 0) {
 			f_graph_theoretic_activity_description = TRUE;
-			Graph_theoretic_activity_description = NEW_OBJECT(graph_theoretic_activity_description);
-			i += Graph_theoretic_activity_description->read_arguments(argc - (i - 1),
-					argv + i, verbose_level) - 1;
 
-			cout << "-graph_activity" << endl;
+			cout << "-graph_theoretic_activity " << endl;
+
+			Graph_theoretic_activity_description = NEW_OBJECT(graph_theoretic_activity_description);
+			i += Graph_theoretic_activity_description->read_arguments(argc - (i + 1),
+					argv + i + 1, verbose_level);
+
+			cout << "interface_combinatorics::read_arguments finished "
+					"reading -graph_theoretic_activity" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
 		}
 		else if (strcmp(argv[i], "-list_parameters_of_SRG") == 0) {
 			f_list_parameters_of_SRG = TRUE;

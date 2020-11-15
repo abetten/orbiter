@@ -258,6 +258,10 @@ F_7:
 	pdflatex GF_7.tex
 	open GF_7.pdf
 
+F_9:
+	$(ORBITER_PATH)/orbiter.out -v 3 -finite_field_activity -q 9 -cheat_sheet_GF -end
+	pdflatex GF_9.tex
+	open GF_9.pdf
 
 
 F_13:
@@ -1633,6 +1637,14 @@ Paley13:
 	open Paley_13_draw.bmp
 
 
+trihedal_pair_graph:
+	$(ORBITER_PATH)/orbiter.out -v 2 -create_graph -trihedral_pair_disjointness_graph  -end \
+		-graph_theoretic_activity -export_csv  -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix trihedral_pair_disjointness.csv 20 8
+	open trihedral_pair_disjointness_draw.bmp
+
+
+
 graph_classify_4:
 	$(ORBITER_PATH)/orbiter.out -v 2 -graph_classify -n 4
 
@@ -2719,9 +2731,10 @@ surface_4_0:
 	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGGL 4 4 -wedge -end \
 		-group_theoretic_activities \
 		-control_six_arcs  -end \
-		-create_surface -q 4 -catalogue 0 -end
-	pdflatex surface_catalogue_q4_iso0_report.tex
-	open surface_catalogue_q4_iso0_report.pdf
+		-create_surface -q 4 -catalogue 0 -end \
+		-draw_options -end
+	pdflatex surface_catalogue_q4_iso0_with_group.tex
+	open surface_catalogue_q4_iso0_with_group.pdf
 
 
 # this gives good Eckardt points:
@@ -2893,8 +2906,8 @@ HCV_13:
 		-control_six_arcs -end \
 		-create_surface -family_HCV 3 1 -q 13 -end \
 		-draw_options -end
-	pdflatex surface_family_HCV_q13_a3_b1_report.tex
-	open surface_family_HCV_q13_a3_b1_report.pdf
+	pdflatex surface_family_HCV_q13_a3_b1_with_group.tex
+	open surface_family_HCV_q13_a3_b1_with_group.pdf
 
 # writes tangents.txt
 
@@ -6654,3 +6667,105 @@ Eckardt_conditions_29:
 		$(E30) $(E31) $(E32) $(E33) $(E34) $(E35) $(E36) $(E37) $(E38) $(E39) \
 		$(E40) $(E41) $(E42) $(E43) $(E44) \
 		 -monomial_type_PART -end
+
+
+
+surface_q9_Hirschfeld_book:
+	$(ORBITER_PATH)/orbiter.out -v 5 -linear_group -PGGL 4 9 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -q 9 -by_coefficients "1,1,1,4,2,6,2,10,2,12,1,13" -end \
+		-draw_options -end
+	pdflatex surface_by_coefficients_q9_report.tex
+	open surface_by_coefficients_q9_report.pdf
+
+
+surface_q9_Hirschfeld_book_a:
+	$(ORBITER_PATH)/orbiter.out -v 5 -linear_group -PGGL 4 9 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -q 9 -by_coefficients "1,1,1,4,2,6,2,10,2,12,1,13" \
+			-select_double_six "0,2,4,5,3,1,6,8,10,11,9,7" \
+		-end \
+		-draw_options -end
+	pdflatex surface_by_coefficients_q9_report.tex
+	open surface_by_coefficients_q9_report.pdf
+
+surface_q9_Hirschfeld_book_ab:
+	$(ORBITER_PATH)/orbiter.out -v 5 -linear_group -PGGL 4 9 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -q 9 -by_coefficients "1,1,1,4,2,6,2,10,2,12,1,13" \
+			-select_double_six "0,2,4,5,3,1,6,8,10,11,9,7" \
+			-transform_inverse "1,0,0,5, 0,1,0,2, 0,0,1,1, 0,0,0,1, 0" \
+		-end \
+		-draw_options -end
+	pdflatex surface_by_coefficients_q9_report.tex
+	open surface_by_coefficients_q9_report.pdf
+
+
+surface_q9_Hirschfeld_book_ab_nullspace:
+	$(ORBITER_PATH)/orbiter.out -v 2 -finite_field_activity -q 9 \
+		-nullspace 3 4 "6,0,1,6, 7,2,0,5, 1,1,1,1" \
+		-normalize_from_the_right \
+		-end
+
+
+
+surface_q9_Hirschfeld_book_abc:
+	$(ORBITER_PATH)/orbiter.out -v 5 -linear_group -PGGL 4 9 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -q 9 -by_coefficients "1,1,1,4,2,6,2,10,2,12,1,13" \
+			-select_double_six "0,2,4,5,3,1,6,8,10,11,9,7" \
+			-transform_inverse "1,0,0,5, 0,1,0,2, 0,0,1,1, 0,0,0,1, 0" \
+			-transform_inverse "7,4,6,0, 0,3,6,0, 8,0,8,0, 0,0,0,1, 0" \
+		-end \
+		-draw_options -end
+	pdflatex surface_by_coefficients_q9_report.tex
+	open surface_by_coefficients_q9_report.pdf
+
+
+surface_q9_Hirschfeld_book_abc_move_two_lines:
+	$(ORBITER_PATH)/orbiter.out -v 5 -finite_field_activity -q 9 \
+		-move_two_lines_in_hyperplane_stabilizer_text  \
+		"1,0,0,0, 0,1,4,5"  "1,0,2,7, 0,1,0,0" "1,0,0,0, 0,0,0,1" "0,1,0,0, 0,0,2,1" \
+		-end
+
+
+surface_q9_Hirschfeld_book_abcd:
+	$(ORBITER_PATH)/orbiter.out -v 5 -linear_group -PGGL 4 9 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -q 9 -by_coefficients "1,1,1,4,2,6,2,10,2,12,1,13" \
+			-select_double_six "0,2,4,5,3,1,6,8,10,11,9,7" \
+			-transform_inverse "1,0,0,5, 0,1,0,2, 0,0,1,1, 0,0,0,1, 0" \
+			-transform_inverse "7,4,6,0, 0,3,6,0, 8,0,8,0, 0,0,0,1, 0" \
+			-transform "1,0,0,0, 0,1,0,0, 0,0,1,0, 7,5,6,8, 0" \
+		-end \
+		-draw_options -end
+	pdflatex surface_by_coefficients_q9_report.tex
+	open surface_by_coefficients_q9_report.pdf
+
+
+## bad:
+
+
+
+
+surface_q9_Hirschfeld_book_abcde:
+	$(ORBITER_PATH)/orbiter.out -v 5 -linear_group -PGGL 4 9 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -q 9 -by_coefficients "1,1,1,4,2,6,2,10,2,12,1,13" \
+			-select_double_six "0,2,4,5,3,1,6,8,10,11,9,7" \
+			-transform_inverse "1,0,0,5, 0,1,0,5, 0,0,1,0, 0,0,0,1, 0" \
+			-transform_inverse "0,0,1,0, 1,4,5,0, 0,1,3,0, 0,0,0,1, 0" \
+			-transform "1,0,0,0, 0,1,0,0, 0,0,1,0, 5,1,7,6, 0" \
+			-transform "4,0,0,0, 0,4,0,0, 0,0,1,0, 0,0,0,1, 0" \
+		-end \
+		-draw_options -end
+	pdflatex surface_by_coefficients_q9_report.tex
+	open surface_by_coefficients_q9_report.pdf
+
+

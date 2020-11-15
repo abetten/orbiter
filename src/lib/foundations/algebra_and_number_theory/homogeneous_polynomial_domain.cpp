@@ -1864,7 +1864,58 @@ void homogeneous_polynomial_domain::print_monomial_ordering(ostream &ost)
 	}
 }
 
+int *homogeneous_polynomial_domain::read_from_string_coefficient_pairs(std::string &str, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::read_from_string_coefficient_pairs" << endl;
+	}
+
+	int *coeff;
+	number_theory_domain NT;
+
+	coeff = NEW_int(get_nb_monomials());
+
+	int_vec_zero(coeff, get_nb_monomials());
+
+	{
+		int *coeff_pairs;
+		int len;
+		int a, b, i;
+
+		int_vec_scan(str, coeff_pairs, len);
+		for (i = 0; i < len / 2; i++) {
+			a = coeff_pairs[2 * i];
+			b = coeff_pairs[2 * i + 1];
+			if (b >= get_nb_monomials()) {
+				cout << "homogeneous_polynomial_domain::read_from_string_coefficient_pairs "
+						"b >= get_nb_monomials()" << endl;
+				exit(1);
+			}
+			if (b < 0) {
+				cout << "homogeneous_polynomial_domain::read_from_string_coefficient_pairs "
+						"b < 0" << endl;
+				exit(1);
+			}
+			if (a < 0 || a >= F->q) {
+				if (F->e > 1) {
+					cout << "homogeneous_polynomial_domain::read_from_string_coefficient_pairs "
+							"In a field extension, what do you mean by " << a << endl;
+					exit(1);
+				}
+				a = NT.mod(a, F->q);
+			}
+			coeff[b] = a;
+
+		}
+		FREE_int(coeff_pairs);
+	}
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::read_from_string_coefficient_pairs done" << endl;
+	}
+	return coeff;
+}
 
 
 int homogeneous_polynomial_domain_compare_monomial_with(

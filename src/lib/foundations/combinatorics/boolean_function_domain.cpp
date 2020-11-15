@@ -144,12 +144,13 @@ void boolean_function_domain::init(int n, int verbose_level)
 	f_proj = NEW_int(N);
 	f_proj2 = NEW_int(N);
 
-	int i, j, a;
+	int i;
+	long int a;
 
 	for (i = 0; i < Q; i++) {
 		Gg.AG_element_unrank(2, v1, 1, n, i);
 		v1[n] = 1;
-		Fq->PG_element_rank_modified(v1, 1, n + 1, a);
+		Fq->PG_element_rank_modified_lint(v1, 1, n + 1, a);
 		affine_points[i] = a;
 	}
 	if (f_v) {
@@ -162,20 +163,10 @@ void boolean_function_domain::init(int n, int verbose_level)
 		}
 	}
 
-	// setup the Wash matrix:
-	for (i = 0; i < Q; i++) {
-		Gg.AG_element_unrank(2, v, 1, n, i);
-		for (j = 0; j < Q; j++) {
-			Gg.AG_element_unrank(2, w, 1, n, j);
-			a = Fq->dot_product(n, v, w);
-			if (a) {
-				W[i * Q + j] = -1;
-			}
-			else {
-				W[i * Q + j] = 1;
-			}
-		}
-	}
+	// setup the Walsh matrix:
+
+	Gg.Walsh_matrix(Fq, n, W, verbose_level);
+
 
 	setup_polynomial_rings(verbose_level);
 

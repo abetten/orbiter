@@ -59,6 +59,8 @@ create_graph_description::create_graph_description()
 	coll_orthogonal_epsilon = 0;
 	coll_orthogonal_d = 0;
 	coll_orthogonal_q = 0;
+
+	f_trihedral_pair_disjointness_graph = FALSE;
 }
 
 
@@ -182,9 +184,13 @@ int create_graph_description::read_arguments(
 					<< " " << coll_orthogonal_d
 					<< " " << coll_orthogonal_q << endl;
 		}
+		else if (strcmp(argv[i], "-trihedral_pair_disjointness_graph") == 0) {
+			f_trihedral_pair_disjointness_graph = TRUE;
+			cout << "-trihedral_pair_disjointness_graph " << endl;
+		}
 		else if (strcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
-			return i;
+			break;
 		}
 		else {
 			cout << "create_graph_description::read_arguments "
@@ -192,7 +198,7 @@ int create_graph_description::read_arguments(
 		}
 	} // next i
 	cout << "create_graph_description::read_arguments done" << endl;
-	return i;
+	return i + 1;
 }
 
 

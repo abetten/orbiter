@@ -1744,6 +1744,7 @@ public:
 	int compare_monomials(int *M1, int *M2);
 	int compare_monomials_PART(int *M1, int *M2);
 	void print_monomial_ordering(std::ostream &ost);
+	int *read_from_string_coefficient_pairs(std::string &str, int verbose_level);
 
 
 };

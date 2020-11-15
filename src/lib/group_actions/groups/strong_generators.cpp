@@ -503,6 +503,9 @@ void strong_generators::init_generators_for_the_conjugate_group_avGa(
 	}
 	
 	SG->group_order(go);
+	if (f_v) {
+		cout << "strong_generators::init_generators_for_the_conjugate_group_avGa go=" << go << endl;
+	}
 	gens = NEW_OBJECT(vector_ge);
 
 #if 0
@@ -513,7 +516,13 @@ void strong_generators::init_generators_for_the_conjugate_group_avGa(
 				gens->ith(i), 0 /* verbose_level */);
 	}
 #else
+	if (f_v) {
+		cout << "strong_generators::init_generators_for_the_conjugate_group_avGa before gens->init_conjugate_svas_of" << endl;
+	}
 	gens->init_conjugate_svas_of(SG->gens, Elt_a, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::init_generators_for_the_conjugate_group_avGa after gens->init_conjugate_svas_of" << endl;
+	}
 #endif
 
 	strong_generators *SG1;

@@ -122,6 +122,13 @@ void create_graph::init(
 		create_Johnson(N, Adj, description->Johnson_n,
 				description->Johnson_k, description->Johnson_s,
 				verbose_level);
+		char str[1000];
+		sprintf(str, "Johnson_n%d_k%d_s%d", description->Johnson_n,
+				description->Johnson_k, description->Johnson_s);
+		label.assign(str);
+		sprintf(str, "Johnson\\_n%d\\_k%d\\_s%d", description->Johnson_n,
+				description->Johnson_k, description->Johnson_s);
+		label_tex.assign(str);
 		if (f_v) {
 			cout << "create_graph::init after create_Johnson" << endl;
 		}
@@ -132,6 +139,11 @@ void create_graph::init(
 		}
 		create_Paley(N, Adj, description->Paley_q,
 				verbose_level);
+		char str[1000];
+		sprintf(str, "Paley_q%d", description->Paley_q);
+		label.assign(str);
+		sprintf(str, "Paley\\_q%d", description->Paley_q);
+		label_tex.assign(str);
 		if (f_v) {
 			cout << "create_graph::init after create_Paley" << endl;
 		}
@@ -142,6 +154,11 @@ void create_graph::init(
 		}
 		create_Sarnak(N, Adj, description->Sarnak_p, description->Sarnak_q,
 				verbose_level);
+		char str[1000];
+		sprintf(str, "Sarnak_p%d_q%d", description->Sarnak_p, description->Sarnak_q);
+		label.assign(str);
+		sprintf(str, "Sarnak\\_p%d\\_q%d", description->Sarnak_p, description->Sarnak_q);
+		label_tex.assign(str);
 		if (f_v) {
 			cout << "create_graph::init after create_Sarnak" << endl;
 		}
@@ -152,6 +169,8 @@ void create_graph::init(
 		}
 		create_Schlaefli(N, Adj, description->Schlaefli_q,
 				verbose_level);
+		label.assign("Schlaefli");
+		label_tex.assign("Schlaefli");
 		if (f_v) {
 			cout << "create_graph::init after create_Schlaefli" << endl;
 		}
@@ -161,6 +180,8 @@ void create_graph::init(
 			cout << "create_graph::init before create_Shrikhande" << endl;
 		}
 		create_Shrikhande(N, Adj, verbose_level);
+		label.assign("Shrikhande");
+		label_tex.assign("Shrikhande");
 		if (f_v) {
 			cout << "create_graph::init after create_Shrikhande" << endl;
 		}
@@ -170,6 +191,11 @@ void create_graph::init(
 			cout << "create_graph::init before create_Winnie_Li" << endl;
 		}
 		create_Winnie_Li(N, Adj, description->Winnie_Li_q, description->Winnie_Li_index, verbose_level);
+		char str[1000];
+		sprintf(str, "Winnie_Li_q%d_index%d", description->Winnie_Li_q, description->Winnie_Li_index);
+		label.assign(str);
+		sprintf(str, "Winnie\\_Li\\_q%d\\_index%d", description->Winnie_Li_q, description->Winnie_Li_index);
+		label_tex.assign(str);
 		if (f_v) {
 			cout << "create_graph::init after create_Winnie_Li" << endl;
 		}
@@ -180,6 +206,13 @@ void create_graph::init(
 		}
 		create_Grassmann(N, Adj, description->Grassmann_n, description->Grassmann_k,
 				description->Grassmann_q, description->Grassmann_r, verbose_level);
+		char str[1000];
+		sprintf(str, "Grassmann_n%d_k%d_q%d_r%d", description->Grassmann_n, description->Grassmann_k,
+				description->Grassmann_q, description->Grassmann_r);
+		label.assign(str);
+		sprintf(str, "Grassmann\\_n%d\\_k%d\\_q%d\\_r%d", description->Grassmann_n, description->Grassmann_k,
+				description->Grassmann_q, description->Grassmann_r);
+		label_tex.assign(str);
 		if (f_v) {
 			cout << "create_graph::init after create_Grassmann" << endl;
 		}
@@ -191,9 +224,37 @@ void create_graph::init(
 		create_coll_orthogonal(N, Adj, description->coll_orthogonal_epsilon,
 				description->coll_orthogonal_d,
 				description->coll_orthogonal_q, verbose_level);
+		char str[1000];
+		sprintf(str, "Orthogonal_e%d_d%d_q%d", description->coll_orthogonal_epsilon,
+				description->coll_orthogonal_d,
+				description->coll_orthogonal_q);
+		label.assign(str);
+		sprintf(str, "Orthogonal\\_e%d\\_d%d\\_q%d", description->coll_orthogonal_epsilon,
+				description->coll_orthogonal_d,
+				description->coll_orthogonal_q);
+		label_tex.assign(str);
 		if (f_v) {
 			cout << "create_graph::init after create_coll_orthogonal" << endl;
 		}
+	}
+	else if (description->f_trihedral_pair_disjointness_graph) {
+
+		surface_domain *Surf;
+		finite_field *F;
+
+		F = NEW_OBJECT(finite_field);
+		Surf = NEW_OBJECT(surface_domain);
+
+		F->finite_field_init(5, 0);
+		Surf->init(F, verbose_level);
+
+		Surf->Schlaefli->make_trihedral_pair_disjointness_graph(Adj, verbose_level);
+		N = 120;
+		label.assign("trihedral_pair_disjointness");
+		label_tex.assign("trihedral\\_pair\\_disjointness");
+
+		FREE_OBJECT(Surf);
+		FREE_OBJECT(F);
 	}
 
 	if (f_v) {

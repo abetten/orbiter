@@ -3496,6 +3496,74 @@ void projective_space::find_lines_which_are_contained(
 }
 
 
+void projective_space::point_plane_incidence_matrix(
+		long int *point_rks, int nb_points,
+		long int *plane_rks, int nb_planes,
+		int *&M, int verbose_level)
+// M[nb_points * nb_planes]
+{
+	int f_v = (verbose_level >= 1);
+	int rk, d, i, j;
+	int *M1;
+	int *M2;
+	int *Pts;
+	grassmann *G;
+
+	if (f_v) {
+		cout << "projective_space::plane_intersection_type_basic" << endl;
+	}
+	d = n + 1;
+	M1 = NEW_int(4 * d);
+	M2 = NEW_int(4 * d);
+	Pts = NEW_int(nb_points * d);
+	G = NEW_OBJECT(grassmann);
+
+	G->init(d, 3, F, 0 /* verbose_level */);
+
+	M = NEW_int(nb_points * nb_planes);
+	int_vec_zero(M, nb_points * nb_planes);
+
+	// unrank all point here so we don't
+	// have to do it again in the loop
+	for (i = 0; i < nb_points; i++) {
+		unrank_point(Pts + i * d, point_rks[i]);
+	}
+
+	for (j = 0; j < nb_planes; j++) {
+		if (rk && (rk % ONE_MILLION) == 0) {
+			cout << "projective_space::plane_intersection_type_basic "
+					"rk=" << rk << endl;
+		}
+		rk = plane_rks[j];
+		G->unrank_lint_here(M1, rk, 0 /* verbose_level */);
+
+		// check which points are contained in the plane:
+		for (i = 0; i < nb_points; i++) {
+
+			int_vec_copy(M1, M2, 3 * d);
+			//unrank_point(M2 + 3 * d, set[h]);
+			int_vec_copy(Pts + i * d, M2 + 3 * d, d);
+
+			if (F->rank_of_rectangular_matrix(M2,
+					4, d, 0 /*verbose_level*/) == 3) {
+				// the point lies in the plane,
+				// increment the intersection count:
+				M[i * nb_planes + j] = 1;
+			}
+		} // next h
+
+	} // next rk
+	FREE_int(M1);
+	FREE_int(M2);
+	FREE_int(Pts);
+	FREE_OBJECT(G);
+	if (f_v) {
+		cout << "projective_space::plane_intersection_type_basic done" << endl;
+	}
+}
+
+
+
 void projective_space::plane_intersection_type_basic(
 	long int *set, int set_size,
 	int *type, int verbose_level)
