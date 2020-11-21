@@ -366,7 +366,7 @@ public:
 	void probe(int flag_orbit, int subset_rk, 
 		int f_implicit_fusion, int verbose_level);
 	void isomorph_testing(int t0, int f_play_back, 
-		const char *play_back_file_name, 
+			std::string &play_back_file_name,
 		int f_implicit_fusion, int print_mod, int verbose_level);
 	void write_classification_matrix(int verbose_level);
 	void write_classification_graph(int verbose_level);
@@ -707,7 +707,7 @@ public:
 	int f_isomorph_testing;
 	int f_classification_graph;
 	int f_event_file; // -e <event file> option
-	const char *event_file_name;
+	std::string event_file_name;
 	int print_mod;
 	int f_isomorph_report;
 	int f_subset_orbits;
@@ -745,7 +745,7 @@ public:
 	~isomorph_arguments();
 	void null();
 	void freeself();
-	int read_arguments(int argc, const char **argv,
+	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 	void init(action *A, action *A2, poset_classification *gen,
 		int target_size,
@@ -820,7 +820,7 @@ struct isomorph_worker_data {
 		action *A, poset_classification *gen,
 		int size, std::string &prefix_classify,
 		std::string &prefix_iso, int level,
-		int f_play_back, const char *old_event_file,
+		int f_play_back, std::string &old_event_file,
 		int print_mod, int verbose_level);
 	void isomorph_classification_graph(action *A_base,
 		action *A, poset_classification *gen,

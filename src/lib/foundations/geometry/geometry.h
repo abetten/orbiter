@@ -2095,6 +2095,7 @@ public:
 
 	bitmatrix *Bitmatrix;
 	//uchar *incidence_bitvec; // N_points * N_lines bits
+
 	int *Lines; // [N_lines * k]
 	int *Lines_on_point; // [N_points * r]
 	int *Line_through_two_points; // [N_points * N_points]
@@ -2438,8 +2439,8 @@ public:
 			int verbose_level);
 	void maximal_arc_by_diophant(
 			int arc_sz, int arc_d,
-			const char *secant_lines_text,
-			const char *external_lines_as_subset_of_secants_text,
+			std::string &secant_lines_text,
+			std::string &external_lines_as_subset_of_secants_text,
 			diophant *&D,
 			int verbose_level);
 	void rearrange_arc_for_lifting(long int *Arc6,

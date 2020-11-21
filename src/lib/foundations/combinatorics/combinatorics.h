@@ -257,7 +257,7 @@ public:
 
 	combinatorial_object_description();
 	~combinatorial_object_description();
-	int read_arguments(int argc, const char **argv,
+	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 };
 
@@ -428,7 +428,7 @@ public:
 		int n, int q, int k, int x);
 	void krawtchouk(longinteger_object &a, int n, int q, int k, int x);
 	void do_tdo_refinement(tdo_refinement_description *Descr, int verbose_level);
-	void do_tdo_print(const char *fname, int verbose_level);
+	void do_tdo_print(std::string &fname, int verbose_level);
 };
 
 // combinatorics.cpp:
@@ -468,7 +468,7 @@ public:
 	int v, b;
 
 	int mode;
-	char label[1000];
+	std::string label;
 
 	// for MODE_SINGLE
 	int nb_V, nb_B;
@@ -496,9 +496,9 @@ public:
 	~geo_parameter();
 	void append_to_part(int a);
 	void append_to_entries(int a1, int a2, int a3, int a4);
-	void write(std::ofstream &aStream, char *label);
-	void write_mode_single(std::ofstream &aStream, char *label);
-	void write_mode_stack(std::ofstream &aStream, char *label);
+	void write(std::ofstream &aStream, std::string &label);
+	void write_mode_single(std::ofstream &aStream, std::string &label);
+	void write_mode_stack(std::ofstream &aStream, std::string &label);
 	void convert_single_to_stack(int verbose_level);
 	int partition_number_row(int row_idx);
 	int partition_number_col(int col_idx);
@@ -640,7 +640,7 @@ public:
 		int *classes_len, int f_scale, int scaling,
 		int *&line_types, int &nb_line_types,
 		int *&distributions, int &nb_distributions,
-		const char *solution_file_name);
+		std::string &solution_file_name);
 	void solve_second_system(int verbose_level,
 		int f_use_mckay_solver, int f_once,
 		int *classes_len, int f_scale, int scaling,
@@ -666,7 +666,7 @@ class tdo_refinement_description {
 	int f_range;
 	int range_first, range_len;
 	int f_select;
-	const char *select_label;
+	std::string select_label;
 	int f_omit1;
 	int omit1;
 	int f_omit2;
@@ -681,13 +681,13 @@ class tdo_refinement_description {
 	int f_once;
 	int f_use_mckay_solver;
 	int f_input_file;
-	const char *fname_in;
+	std::string fname_in;
 
 	solution_file_data *Sol;
 
 	tdo_refinement_description();
 	~tdo_refinement_description();
-	int read_arguments(int argc, const char **argv, int verbose_level);
+	int read_arguments(int argc, std::string *argv, int verbose_level);
 
 };
 
@@ -708,10 +708,8 @@ class tdo_refinement {
 
 	tdo_refinement_description *Descr;
 
-	char *p_buf;
-	char str[1000];
-	char ext[1000];
-	char fname_out[1000];
+	std::string fname;
+	std::string fname_out;
 
 
 
@@ -728,25 +726,31 @@ class tdo_refinement {
 	tdo_refinement();
 	~tdo_refinement();
 	void init(tdo_refinement_description *Descr, int verbose_level);
-	void read_arguments(int argc, char **argv);
 	void main_loop(int verbose_level);
 	void do_it(std::ofstream &g, int verbose_level);
-	void do_row_refinement(std::ofstream &g, tdo_scheme &G, partitionstack &P, int verbose_level);
-	void do_col_refinement(std::ofstream &g, tdo_scheme &G, partitionstack &P, int verbose_level);
-	void do_all_row_refinements(char *label_in, std::ofstream &g, tdo_scheme &G,
+	void do_row_refinement(std::ofstream &g, tdo_scheme &G, partitionstack &P,
+			int verbose_level);
+	void do_col_refinement(std::ofstream &g, tdo_scheme &G, partitionstack &P,
+			int verbose_level);
+	void do_all_row_refinements(std::string &label_in, std::ofstream &g, tdo_scheme &G,
 		int *point_types, int nb_point_types, int point_type_len,
-		int *distributions, int nb_distributions, int &nb_tactical, int verbose_level);
-	void do_all_column_refinements(char *label_in, std::ofstream &g, tdo_scheme &G,
+		int *distributions, int nb_distributions, int &nb_tactical,
+		int verbose_level);
+	void do_all_column_refinements(std::string &label_in, std::ofstream &g, tdo_scheme &G,
 		int *line_types, int nb_line_types, int line_type_len,
-		int *distributions, int nb_distributions, int &nb_tactical, int verbose_level);
-	int do_row_refinement(int t, char *label_in, std::ofstream &g, tdo_scheme &G,
+		int *distributions, int nb_distributions, int &nb_tactical,
+		int verbose_level);
+	int do_row_refinement(int t, std::string &label_in, std::ofstream &g, tdo_scheme &G,
 		int *point_types, int nb_point_types, int point_type_len,
-		int *distributions, int nb_distributions, int verbose_level);
+		int *distributions, int nb_distributions,
+		int verbose_level);
 		// returns TRUE or FALSE depending on whether the
 		// refinement gave a tactical decomposition
-	int do_column_refinement(int t, char *label_in, std::ofstream &g, tdo_scheme &G,
+	int do_column_refinement(int t, std::string &label_in,
+			std::ofstream &g, tdo_scheme &G,
 		int *line_types, int nb_line_types, int line_type_len,
-		int *distributions, int nb_distributions, int verbose_level);
+		int *distributions, int nb_distributions,
+		int verbose_level);
 		// returns TRUE or FALSE depending on whether the
 		// refinement gave a tactical decomposition
 };
@@ -767,14 +771,13 @@ void distribution_reverse_sorting(int f_increasing,
 // #############################################################################
 
 
-#define MAX_SOLUTION_FILE 100
 
 #define NUMBER_OF_SCHEMES 5
-#define ROW 0
-#define COL 1
-#define LAMBDA 2
-#define EXTRA_ROW 3
-#define EXTRA_COL 4
+#define ROW_SCHEME 0
+#define COL_SCHEME 1
+#define LAMBDA_SCHEME 2
+#define EXTRA_ROW_SCHEME 3
+#define EXTRA_COL_SCHEME 4
 
 
 //! internal class related to tdo_data
@@ -782,8 +785,8 @@ void distribution_reverse_sorting(int f_increasing,
 
 struct solution_file_data {
 	int nb_solution_files;
-	int system_no[MAX_SOLUTION_FILE];
-	const char *solution_file[MAX_SOLUTION_FILE];
+	std::vector<int> system_no;
+	std::vector<std::string> solution_file;
 };
 
 //! canonical tactical decomposition of an incidence structure
@@ -830,10 +833,10 @@ public:
 	int *the_col_scheme;
 	int *the_extra_row_scheme;
 	int *the_extra_col_scheme;
-	int *the_row_scheme_cur; // [m * nb_col_classes[ROW]]
-	int *the_col_scheme_cur; // [n * nb_row_classes[COL]]
-	int *the_extra_row_scheme_cur; // [m * nb_col_classes[EXTRA_ROW]]
-	int *the_extra_col_scheme_cur; // [n * nb_row_classes[EXTRA_COL]]
+	int *the_row_scheme_cur; // [m * nb_col_classes[ROW_SCHEME]]
+	int *the_col_scheme_cur; // [n * nb_row_classes[COL_SCHEME]]
+	int *the_extra_row_scheme_cur; // [m * nb_col_classes[EXTRA_ROW_SCHEME]]
+	int *the_extra_col_scheme_cur; // [n * nb_row_classes[EXTRA_COL_SCHEME]]
 
 	// end of TDO process data
 
@@ -861,7 +864,7 @@ public:
 	void print_scheme(int h, int verbose_level);
 	void print_scheme_tex(std::ostream &ost, int h);
 	void print_scheme_tex_fancy(std::ostream &ost,
-			int h, int f_label, char *label);
+			int h, int f_label, std::string &label);
 	void compute_whether_first_inc_must_be_moved(
 			int *f_first_inc_must_be_moved, int verbose_level);
 	int count_nb_inc_from_row_scheme(int verbose_level);
@@ -995,7 +998,8 @@ public:
 		int nb_vars, int Nb_vars,
 		int *&point_types, int &nb_point_types, int eqn_offset);
 	int td3_refine_columns(int verbose_level, int f_once,
-		int lambda3, int block_size, int f_scale, int scaling,
+		int lambda3, int block_size,
+		int f_scale, int scaling,
 		int *&line_types, int &nb_line_types, int &line_type_len,
 		int *&distributions, int &nb_distributions);
 	int td3_columns_setup_first_system(int verbose_level,

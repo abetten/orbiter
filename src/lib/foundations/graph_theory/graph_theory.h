@@ -185,12 +185,12 @@ public:
 	int f_target_size;
 	int target_size;
 	int f_weighted;
-	const char *weights_string;
+	std::string weights_string;
 	int f_Sajeeb;
 	int f_nonrecursive;
 	int f_output_solution_raw;
 	int f_output_file;
-	const char *output_file;
+	std::string output_file;
 	int f_maxdepth;
 	int maxdepth;
 	int f_restrictions;
@@ -209,7 +209,7 @@ public:
 	clique_finder_control();
 	~clique_finder_control();
 	int parse_arguments(
-			int argc, const char **argv);
+			int argc, std::string *argv);
 	void all_cliques(colored_graph *CG,
 			std::string &fname_graph,
 			int verbose_level);
@@ -672,7 +672,7 @@ public:
 		double radius_factor, int verbose_level);
 	void make_subset_lattice(int n, int depth, int f_tree,
 		int f_depth_first, int f_breadth_first, int verbose_level);
-	void init_poset_from_file(const char *fname,
+	void init_poset_from_file(std::string &fname,
 			int f_grouping, double x_stretch, int verbose_level);
 };
 
@@ -737,7 +737,7 @@ public:
 	layered_graph_draw_options();
 	~layered_graph_draw_options();
 	int read_arguments(
-		int argc, const char **argv,
+		int argc, std::string *argv,
 		int verbose_level);
 	void print();
 };

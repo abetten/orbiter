@@ -28,7 +28,7 @@ namespace foundations {
 class animate {
 public:
 	scene *S;
-	const char *output_mask;
+	std::string output_mask;
 	char fname_makefile[1000];
 	int nb_frames;
 	video_draw_options *Opt;
@@ -44,7 +44,7 @@ public:
 	animate();
 	~animate();
 	void init(scene *S,
-			const char *output_mask,
+			std::string &output_mask,
 			int nb_frames,
 			video_draw_options *Opt,
 			void *extra_data,
@@ -224,7 +224,7 @@ public:
 	void do_create_points_on_quartic(double desired_distance, int verbose_level);
 	void do_create_points_on_parabola(double desired_distance, int N,
 			double a, double b, double c, int verbose_level);
-	void do_smooth_curve(const char *curve_label,
+	void do_smooth_curve(std::string &curve_label,
 			double desired_distance, int N,
 			double t_min, double t_max, double boundary,
 			function_polish_description *FP_descr, int verbose_level);
@@ -1106,9 +1106,10 @@ public:
 	void add_a_group_of_things(int *Idx, int sz, int verbose_level);
 	void create_regulus(int idx, int nb_lines, int verbose_level);
 	void clipping_by_cylinder(int line_idx, double r, std::ostream &ost);
-	int scan1(int argc, const char **argv, int &i, int verbose_level);
-	int scan2(int argc, const char **argv, int &i, int verbose_level);
-	int read_scene_objects(int argc, const char **argv, int i0, int verbose_level);
+	int scan1(int argc, std::string *argv, int &i, int verbose_level);
+	int scan2(int argc, std::string *argv, int &i, int verbose_level);
+	int read_scene_objects(int argc, std::string *argv,
+			int i0, int verbose_level);
 };
 
 
@@ -1289,7 +1290,7 @@ public:
 
 	int nb_zoom_sequence;
 	int zoom_sequence_round[1000];
-	const char *zoom_sequence_text[1000];
+	std::string zoom_sequence_text[1000];
 
 	int nb_pan;
 	int pan_round[1000];
@@ -1311,31 +1312,31 @@ public:
 	int nb_round_text;
 	int round_text_round[1000];
 	int round_text_sustain[1000];
-	const char *round_text_text[1000];
+	std::string round_text_text[1000];
 
 	int nb_label;
 	int label_round[1000];
 	int label_start[1000];
 	int label_sustain[1000];
-	const char *label_gravity[1000];
-	const char *label_text[1000];
+	std::string label_gravity[1000];
+	std::string label_text[1000];
 
 	int nb_latex_label;
 	int latex_label_round[1000];
 	int latex_label_start[1000];
 	int latex_label_sustain[1000];
-	const char *latex_extras_for_praeamble[1000];
-	const char *latex_label_gravity[1000];
-	const char *latex_label_text[1000];
+	std::string latex_extras_for_praeamble[1000];
+	std::string latex_label_gravity[1000];
+	std::string latex_label_text[1000];
 	int latex_f_label_has_been_prepared[1000];
-	char *latex_fname_base[1000];
+	std::string latex_fname_base[1000];
 
 
 	int nb_picture;
 	int picture_round[1000];
 	double picture_scale[1000];
-	const char *picture_fname[1000];
-	const char *picture_options[1000];
+	std::string picture_fname[1000];
+	std::string picture_options[1000];
 
 	int latex_file_count;
 	int f_omit_bottom_plane;
@@ -1355,7 +1356,7 @@ public:
 	video_draw_options();
 	~video_draw_options();
 	int read_arguments(
-			int argc, const char **argv,
+			int argc, std::string *argv,
 			int verbose_level);
 };
 

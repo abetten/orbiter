@@ -3015,7 +3015,7 @@ void file_io::create_file(create_file_description *Descr, int verbose_level)
 	if (Descr->f_read_cases) {
 
 		cout << "Descr->f_read_cases" << endl;
-		char fname[1000];
+		string fname;
 		char str[1000];
 		//int *Cases;
 		int nb_cases;
@@ -3056,7 +3056,8 @@ void file_io::create_file(create_file_description *Descr, int verbose_level)
 		for (c = 0; c < nb_cases; c++) {
 
 			//i = Cases[c];
-			sprintf(fname, Descr->file_mask, c);
+			sprintf(str, Descr->file_mask.c_str(), c);
+			fname.assign(str);
 
 
 			{
@@ -3064,10 +3065,10 @@ void file_io::create_file(create_file_description *Descr, int verbose_level)
 
 				for (j = 0; j < Descr->nb_lines; j++) {
 					if (Descr->f_line_numeric[j]) {
-						sprintf(str, Descr->lines[j], c);
+						sprintf(str, Descr->lines[j].c_str(), c);
 					}
 					else {
-						sprintf(str, Descr->lines[j], S.get_string(c, 0));
+						sprintf(str, Descr->lines[j].c_str(), S.get_string(c, 0));
 					}
 					fp << str << endl;
 				}
@@ -3137,7 +3138,7 @@ void file_io::create_files(create_file_description *Descr,
 	int i, j;
 	file_io Fio;
 
-	char fname[1000];
+	string fname;
 	char str[1000];
 	int r;
 
@@ -3151,14 +3152,15 @@ void file_io::create_files(create_file_description *Descr,
 
 	for (i = 0; i < Descr->N; i++) {
 
-		sprintf(fname, Descr->file_mask, i);
+		sprintf(str, Descr->file_mask.c_str(), i);
+		fname.assign(str);
 
 		fp_makefile << "\tsbatch " << fname << endl;
 		{
 			ofstream fp(fname);
 
 			for (j = 0; j < Descr->nb_lines; j++) {
-				sprintf(str, Descr->lines[j], i, i, i, i, i, i, i, i);
+				sprintf(str, Descr->lines[j].c_str(), i, i, i, i, i, i, i, i);
 				fp << str << endl;
 			}
 			if (Descr->f_repeat) {
@@ -3166,7 +3168,7 @@ void file_io::create_files(create_file_description *Descr,
 					for (r = 0; r < Descr->split_m; r++) {
 						for (j = 0; j < Descr->repeat_N; j++) {
 							if ((j % Descr->split_m) == r) {
-								sprintf(str, Descr->repeat_mask, j);
+								sprintf(str, Descr->repeat_mask.c_str(), j);
 								fp << str << endl;
 							}
 						}
@@ -3176,7 +3178,7 @@ void file_io::create_files(create_file_description *Descr,
 				else {
 					int c;
 
-					sprintf(str, Descr->repeat_mask, Descr->repeat_N);
+					sprintf(str, Descr->repeat_mask.c_str(), Descr->repeat_N);
 					fp << str << endl;
 					if (!Descr->f_command) {
 						cout << "please use option -command when using -repeat" << endl;
@@ -3184,7 +3186,7 @@ void file_io::create_files(create_file_description *Descr,
 					}
 					for (j = 0; j < Descr->repeat_N; j++) {
 						c = Descr->repeat_start + j * Descr->repeat_increment;
-						sprintf(str, Descr->command, i, i, c, c);
+						sprintf(str, Descr->command.c_str(), i, i, c, c);
 						fp << str << endl;
 					}
 				}
@@ -3214,7 +3216,7 @@ void file_io::create_files_list_of_cases(spreadsheet *S,
 	int f_v = (verbose_level >= 1);
 	int i, j;
 
-	char fname[1000];
+	string fname;
 	char str[1000];
 	file_io Fio;
 
@@ -3235,7 +3237,8 @@ void file_io::create_files_list_of_cases(spreadsheet *S,
 		fp_submit_script << "#!/bin/bash" << endl;
 		for (i = 0; i < Descr->N; i++) {
 
-			sprintf(fname, Descr->file_mask, i);
+			sprintf(str, Descr->file_mask.c_str(), i);
+			fname.assign(str);
 
 			fp_makefile << "\tsbatch " << fname << endl;
 			fp_submit_script << "sbatch " << fname << endl;
@@ -3243,7 +3246,7 @@ void file_io::create_files_list_of_cases(spreadsheet *S,
 				ofstream fp(fname);
 
 				for (j = 0; j < Descr->nb_lines; j++) {
-					sprintf(str, Descr->lines[j], i, i, i, i, i, i, i, i);
+					sprintf(str, Descr->lines[j].c_str(), i, i, i, i, i, i, i, i);
 					fp << str << endl;
 				}
 
@@ -3252,11 +3255,11 @@ void file_io::create_files_list_of_cases(spreadsheet *S,
 					int t;
 					//int NT;
 
-					sprintf(str, Descr->tasks_line, Descr->nb_tasks);
+					sprintf(str, Descr->tasks_line.c_str(), Descr->nb_tasks);
 					fp << str << endl;
 					//NT = Descr->N * Descr->nb_tasks;
 					for (t = 0; t < Descr->nb_tasks; t++) {
-						sprintf(str, Descr->command, i, t, i, t);
+						sprintf(str, Descr->command.c_str(), i, t, i, t);
 						fp << str; // << " \\" << endl;
 						for (j = 0; j < nb_cases; j++) {
 							if ((j % Descr->N) != i) {
@@ -3284,7 +3287,7 @@ void file_io::create_files_list_of_cases(spreadsheet *S,
 					}
 				} // if
 				else {
-					sprintf(str, Descr->command, i);
+					sprintf(str, Descr->command.c_str(), i);
 					fp << str << " \\" << endl;
 					//fp << command << " \\" << endl;
 					for (j = 0; j < nb_cases; j++) {
@@ -3311,7 +3314,7 @@ void file_io::create_files_list_of_cases(spreadsheet *S,
 				} // else
 
 				for (j = 0; j < Descr->nb_final_lines; j++) {
-					sprintf(str, Descr->final_lines[j], i, i, i, i, i, i, i, i);
+					sprintf(str, Descr->final_lines[j].c_str(), i, i, i, i, i, i, i, i);
 					fp << str << endl;
 				} // next j
 
@@ -3340,7 +3343,8 @@ void file_io::create_files_list_of_cases(spreadsheet *S,
 			fp_submit_script << "#!/bin/bash" << endl;
 			for (i = 0; i < N1; i++) {
 
-				sprintf(fname, Descr->file_mask, h * N1 + i);
+				sprintf(str, Descr->file_mask.c_str(), h * N1 + i);
+				fname.assign(str);
 
 				fp_submit_script << "sbatch " << fname;
 				if (i < N1 - 1) {

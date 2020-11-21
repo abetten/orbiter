@@ -793,7 +793,7 @@ public:
 	~surface_create_description();
 	void null();
 	void freeself();
-	int read_arguments(int argc, const char **argv,
+	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 	int get_q();
 };

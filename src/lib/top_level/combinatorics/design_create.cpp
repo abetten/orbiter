@@ -108,7 +108,7 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 			cout << "design_create::init "
 					"family_name=" << Descr->family_name << endl;
 		}
-		if (strcmp(Descr->family_name, "PG_2_q") == 0) {
+		if (strcmp(Descr->family_name.c_str(), "PG_2_q") == 0) {
 			if (f_v) {
 				cout << "design_create::init PG(2," << q << ")" << endl;
 			}

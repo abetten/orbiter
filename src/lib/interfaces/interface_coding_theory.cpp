@@ -55,43 +55,43 @@ interface_coding_theory::interface_coding_theory()
 
 
 void interface_coding_theory::print_help(int argc,
-		const char **argv, int i, int verbose_level)
+		std::string *argv, int i, int verbose_level)
 {
-	if (strcmp(argv[i], "-make_macwilliams_system") == 0) {
+	if (stringcmp(argv[i], "-make_macwilliams_system") == 0) {
 		cout << "-make_macwilliams_system <int : q> <int : n> <int k>" << endl;
 	}
-	else if (strcmp(argv[i], "-BCH") == 0) {
+	else if (stringcmp(argv[i], "-BCH") == 0) {
 		cout << "-BCH <int : n> <int : q> <int t>" << endl;
 	}
-	else if (strcmp(argv[i], "-BCH_dual") == 0) {
+	else if (stringcmp(argv[i], "-BCH_dual") == 0) {
 		cout << "-BCH_dual <int : n> <int : q> <int t>" << endl;
 	}
-	else if (strcmp(argv[i], "-Hamming_graph") == 0) {
+	else if (stringcmp(argv[i], "-Hamming_graph") == 0) {
 		cout << "-Hamming_graph <int : n> <int : q>" << endl;
 	}
-	else if (strcmp(argv[i], "-NTT") == 0) {
+	else if (stringcmp(argv[i], "-NTT") == 0) {
 		cout << "-NTT <int : n> <int : q> <string : fname_code> " << endl;
 	}
-	else if (strcmp(argv[i], "-draw_matrix") == 0) {
+	else if (stringcmp(argv[i], "-draw_matrix") == 0) {
 		cout << "-draw_matrix <string : fname> <int : box_width> <int : bit_depth>" << endl;
 	}
-	else if (strcmp(argv[i], "-draw_matrix_partition") == 0) {
+	else if (stringcmp(argv[i], "-draw_matrix_partition") == 0) {
 		cout << "-draw_matrix_partition <int : width> "
 				"<string : row partition> <string : col partition> " << endl;
 	}
-	else if (strcmp(argv[i], "-general_code_binary") == 0) {
+	else if (stringcmp(argv[i], "-general_code_binary") == 0) {
 		cout << "-general_code_binary <int : n> <string : set> " << endl;
 	}
-	else if (strcmp(argv[i], "-linear_code_through_basis") == 0) {
+	else if (stringcmp(argv[i], "-linear_code_through_basis") == 0) {
 		cout << "-linear_code_through_basis <int : n> <string : set> " << endl;
 	}
-	else if (strcmp(argv[i], "-long_code") == 0) {
+	else if (stringcmp(argv[i], "-long_code") == 0) {
 		cout << "-long_code <int : n> <int : nb_generators=k> <string : generator1> .. <string : generatork>" << endl;
 	}
 }
 
 int interface_coding_theory::recognize_keyword(int argc,
-		const char **argv, int i, int verbose_level)
+		std::string *argv, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -101,34 +101,34 @@ int interface_coding_theory::recognize_keyword(int argc,
 	if (i >= argc) {
 		return false;
 	}
-	if (strcmp(argv[i], "-make_macwilliams_system") == 0) {
+	if (stringcmp(argv[i], "-make_macwilliams_system") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-BCH") == 0) {
+	else if (stringcmp(argv[i], "-BCH") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-BCH_dual") == 0) {
+	else if (stringcmp(argv[i], "-BCH_dual") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-Hamming_graph") == 0) {
+	else if (stringcmp(argv[i], "-Hamming_graph") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-NTT") == 0) {
+	else if (stringcmp(argv[i], "-NTT") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-draw_matrix") == 0) {
+	else if (stringcmp(argv[i], "-draw_matrix") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-draw_matrix_partition") == 0) {
+	else if (stringcmp(argv[i], "-draw_matrix_partition") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-general_code_binary") == 0) {
+	else if (stringcmp(argv[i], "-general_code_binary") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-linear_code_through_basis") == 0) {
+	else if (stringcmp(argv[i], "-linear_code_through_basis") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-long_code") == 0) {
+	else if (stringcmp(argv[i], "-long_code") == 0) {
 		return true;
 	}
 	if (f_v) {
@@ -138,86 +138,89 @@ int interface_coding_theory::recognize_keyword(int argc,
 }
 
 void interface_coding_theory::read_arguments(int argc,
-		const char **argv, int i0, int verbose_level)
+		std::string *argv, int i0, int verbose_level)
 {
 	int i;
 
 	cout << "interface_coding_theory::read_arguments" << endl;
 
 	for (i = i0; i < argc; i++) {
-		if (strcmp(argv[i], "-make_macwilliams_system") == 0) {
+		if (stringcmp(argv[i], "-make_macwilliams_system") == 0) {
 			f_make_macwilliams_system = TRUE;
-			q = atoi(argv[++i]);
-			n = atoi(argv[++i]);
-			k = atoi(argv[++i]);
+			q = strtoi(argv[++i]);
+			n = strtoi(argv[++i]);
+			k = strtoi(argv[++i]);
 			cout << "-make_macwilliams_system " << q << " " << n << " " << k << endl;
 		}
-		else if (strcmp(argv[i], "-BCH") == 0) {
+		else if (stringcmp(argv[i], "-BCH") == 0) {
 			f_BCH = TRUE;
-			n = atoi(argv[++i]);
-			q = atoi(argv[++i]);
-			BCH_t = atoi(argv[++i]);
+			n = strtoi(argv[++i]);
+			q = strtoi(argv[++i]);
+			BCH_t = strtoi(argv[++i]);
 			//BCH_b = atoi(argv[++i]);
 			cout << "-BCH " << n << " " << q << " " << BCH_t << endl;
 		}
-		else if (strcmp(argv[i], "-BCH_dual") == 0) {
+		else if (stringcmp(argv[i], "-BCH_dual") == 0) {
 			f_BCH_dual = TRUE;
-			n = atoi(argv[++i]);
-			q = atoi(argv[++i]);
-			BCH_t = atoi(argv[++i]);
+			n = strtoi(argv[++i]);
+			q = strtoi(argv[++i]);
+			BCH_t = strtoi(argv[++i]);
 			//BCH_b = atoi(argv[++i]);
 			cout << "-BCH " << n << " " << q << " " << BCH_t << endl;
 		}
-		else if (strcmp(argv[i], "-Hamming_graph") == 0) {
+		else if (stringcmp(argv[i], "-Hamming_graph") == 0) {
 			f_Hamming_graph = TRUE;
-			n = atoi(argv[++i]);
-			q = atoi(argv[++i]);
+			n = strtoi(argv[++i]);
+			q = strtoi(argv[++i]);
 			cout << "-Hamming_graph " << n << " " << q << endl;
 		}
-		else if (strcmp(argv[i], "-NTT") == 0) {
+		else if (stringcmp(argv[i], "-NTT") == 0) {
 			f_NTT = TRUE;
-			n = atoi(argv[++i]);
-			q = atoi(argv[++i]);
+			n = strtoi(argv[++i]);
+			q = strtoi(argv[++i]);
 			ntt_fname_code.assign(argv[++i]);
 			cout << "-NTT " << n << " " << q << " " << ntt_fname_code << endl;
 		}
-		else if (strcmp(argv[i], "-draw_matrix") == 0) {
+		else if (stringcmp(argv[i], "-draw_matrix") == 0) {
 			f_draw_matrix = TRUE;
 			fname.assign(argv[++i]);
-			box_width = atoi(argv[++i]);
-			bit_depth = atoi(argv[++i]);
+			box_width = strtoi(argv[++i]);
+			bit_depth = strtoi(argv[++i]);
 			cout << "-draw_matrix " << fname << " " << box_width << " " << bit_depth << endl;
 		}
-		else if (strcmp(argv[i], "-draw_matrix_partition") == 0) {
+		else if (stringcmp(argv[i], "-draw_matrix_partition") == 0) {
 			f_draw_matrix_partition = TRUE;
-			draw_matrix_partition_width = atoi(argv[++i]);
+			draw_matrix_partition_width = strtoi(argv[++i]);
 			draw_matrix_partition_rows.assign(argv[++i]);
 			draw_matrix_partition_cols.assign(argv[++i]);
-			cout << "-draw_matrix_partition " << draw_matrix_partition_rows << " " << draw_matrix_partition_cols << endl;
+			cout << "-draw_matrix_partition " << draw_matrix_partition_rows
+					<< " " << draw_matrix_partition_cols << endl;
 		}
-		else if (strcmp(argv[i], "-general_code_binary") == 0) {
+		else if (stringcmp(argv[i], "-general_code_binary") == 0) {
 			f_general_code_binary = TRUE;
-			general_code_binary_n = atoi(argv[++i]);
+			general_code_binary_n = strtoi(argv[++i]);
 			general_code_binary_text.assign(argv[++i]);
-			cout << "-general_code_binary " << general_code_binary_n << " " << general_code_binary_text << endl;
+			cout << "-general_code_binary " << general_code_binary_n << " "
+					<< general_code_binary_text << endl;
 		}
-		else if (strcmp(argv[i], "-linear_code_through_basis") == 0) {
+		else if (stringcmp(argv[i], "-linear_code_through_basis") == 0) {
 			f_linear_code_through_basis = TRUE;
-			linear_code_through_basis_n = atoi(argv[++i]);
+			linear_code_through_basis_n = strtoi(argv[++i]);
 			linear_code_through_basis_text.assign(argv[++i]);
-			cout << "-linear_code_through_basis " << linear_code_through_basis_n << " " << linear_code_through_basis_text << endl;
+			cout << "-linear_code_through_basis " << linear_code_through_basis_n
+					<< " " << linear_code_through_basis_text << endl;
 		}
-		else if (strcmp(argv[i], "-long_code") == 0) {
+		else if (stringcmp(argv[i], "-long_code") == 0) {
 			f_long_code = TRUE;
-			long_code_n = atoi(argv[++i]);
+			long_code_n = strtoi(argv[++i]);
 
 			int n, h;
-			n = atoi(argv[++i]);
+			n = strtoi(argv[++i]);
 			for (h = 0; h < n; h++) {
 				string s;
 
 				s.assign(argv[++i]);
-				if (strcmp(s.c_str(), "-set_builder") == 0) {
+				if (stringcmp(s, "-set_builder") == 0) {
 					set_builder_description Descr;
 
 					cout << "reading -set_builder" << endl;
@@ -308,8 +311,8 @@ void interface_coding_theory::worker(int verbose_level)
 			int nb_row_parts;
 			int nb_col_parts;
 
-			int_vec_scan(draw_matrix_partition_rows.c_str(), row_parts, nb_row_parts);
-			int_vec_scan(draw_matrix_partition_cols.c_str(), col_parts, nb_col_parts);
+			int_vec_scan(draw_matrix_partition_rows, row_parts, nb_row_parts);
+			int_vec_scan(draw_matrix_partition_cols, col_parts, nb_col_parts);
 			draw_bitmap(fname, M, m, n,
 					TRUE, draw_matrix_partition_width, // int f_partition, int part_width,
 					nb_row_parts, row_parts, nb_col_parts, col_parts, // int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
@@ -365,13 +368,13 @@ void interface_coding_theory::worker(int verbose_level)
 	}
 	else if (f_long_code) {
 			coding_theory_domain Codes;
-
+			string dummy;
 
 			Codes.do_long_code(
 					long_code_n,
 					long_code_generators,
 					FALSE /* f_nearest_codeword */,
-					NULL /* const char *nearest_codeword_text */,
+					dummy /* const char *nearest_codeword_text */,
 					verbose_level);
 
 	}

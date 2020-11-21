@@ -54,7 +54,7 @@ graph_classify_description::~graph_classify_description()
 {
 }
 
-int graph_classify_description::read_arguments(int argc, const char **argv,
+int graph_classify_description::read_arguments(int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;
@@ -64,12 +64,12 @@ int graph_classify_description::read_arguments(int argc, const char **argv,
 	cout << "graph_classify_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-		if (strcmp(argv[i], "-regular") == 0) {
+		if (stringcmp(argv[i], "-regular") == 0) {
 			f_regular = TRUE;
-			sscanf(argv[++i], "%d", &regularity);
+			regularity = strtoi(argv[++i]);
 			cout << "-regular " << regularity << endl;
 		}
-		else if (strcmp(argv[i], "-poset_classification_control") == 0) {
+		else if (stringcmp(argv[i], "-poset_classification_control") == 0) {
 			f_control = TRUE;
 			Control = NEW_OBJECT(poset_classification_control);
 			i += Control->read_arguments(argc - (i + 1),
@@ -82,49 +82,49 @@ int graph_classify_description::read_arguments(int argc, const char **argv,
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-n") == 0) {
+		else if (stringcmp(argv[i], "-n") == 0) {
 			f_n = TRUE;
-			sscanf(argv[++i], "%d", &n);
+			n = strtoi(argv[++i]);
 			cout << "-n " << n << endl;
 		}
-		else if (strcmp(argv[i], "-girth") == 0) {
+		else if (stringcmp(argv[i], "-girth") == 0) {
 			f_girth = TRUE;
-			sscanf(argv[++i], "%d", &girth);
+			girth = strtoi(argv[++i]);
 			cout << "-girth " << girth << endl;
 		}
-		else if (strcmp(argv[i], "-draw_graphs") == 0) {
+		else if (stringcmp(argv[i], "-draw_graphs") == 0) {
 			f_draw_graphs = TRUE;
 			cout << "-draw_graphs " << endl;
 		}
-		else if (strcmp(argv[i], "-draw_graphs_at_level") == 0) {
+		else if (stringcmp(argv[i], "-draw_graphs_at_level") == 0) {
 			f_draw_graphs_at_level = TRUE;
-			level = atoi(argv[++i]);
+			level = strtoi(argv[++i]);
 			cout << "-draw_graphs_at_level " << level << endl;
 		}
-		else if (strcmp(argv[i], "-tournament") == 0) {
+		else if (stringcmp(argv[i], "-tournament") == 0) {
 			f_tournament = TRUE;
 			cout << "-tournament " << endl;
 		}
-		else if (strcmp(argv[i], "-no_transmitter") == 0) {
+		else if (stringcmp(argv[i], "-no_transmitter") == 0) {
 			f_no_superking = TRUE;
 			cout << "-no_superking " << endl;
 		}
-		else if (strcmp(argv[i], "-test_multi_edge") == 0) {
+		else if (stringcmp(argv[i], "-test_multi_edge") == 0) {
 			f_test_multi_edge = TRUE;
 			cout << "-test_multi_edge " << endl;
 		}
-		else if (strcmp(argv[i], "-draw_level_graph") == 0) {
+		else if (stringcmp(argv[i], "-draw_level_graph") == 0) {
 			f_draw_level_graph = TRUE;
-			sscanf(argv[++i], "%d", &level_graph_level);
+			level_graph_level = strtoi(argv[++i]);
 			cout << "-draw_level_graph " << level_graph_level << endl;
 		}
-		else if (strcmp(argv[i], "-identify") == 0) {
+		else if (stringcmp(argv[i], "-identify") == 0) {
 			int a, j;
 
 			f_identify = TRUE;
 			j = 0;
 			while (TRUE) {
-				a = atoi(argv[++i]);
+				a = strtoi(argv[++i]);
 				if (a == -1) {
 					break;
 				}
@@ -135,18 +135,18 @@ int graph_classify_description::read_arguments(int argc, const char **argv,
 			lint_vec_print(cout, identify_data, identify_data_sz);
 			cout << endl;
 		}
-		else if (strcmp(argv[i], "-depth") == 0) {
+		else if (stringcmp(argv[i], "-depth") == 0) {
 			f_depth = TRUE;
-			sscanf(argv[++i], "%d", &depth);
+			depth = strtoi(argv[++i]);
 			cout << "-depth " << depth << endl;
 		}
-		else if (strcmp(argv[i], "-x_stretch") == 0) {
+		else if (stringcmp(argv[i], "-x_stretch") == 0) {
 			f_x_stretch = TRUE;
-			sscanf(argv[++i], "%lf", &x_stretch);
+			x_stretch = strtof(argv[++i]);
 			cout << "-x_stretch " << endl;
 		}
 
-		else if (strcmp(argv[i], "-draw_options") == 0) {
+		else if (stringcmp(argv[i], "-draw_options") == 0) {
 			f_draw_options = TRUE;
 
 			draw_options = NEW_OBJECT(layered_graph_draw_options);
@@ -163,7 +163,7 @@ int graph_classify_description::read_arguments(int argc, const char **argv,
 			cout << "-f_draw_options " << endl;
 		}
 
-		else if (strcmp(argv[i], "-end") == 0) {
+		else if (stringcmp(argv[i], "-end") == 0) {
 			break;
 		}
 		else {
@@ -179,7 +179,7 @@ int graph_classify_description::read_arguments(int argc, const char **argv,
 	}
 
 	cout << "graph_classify_description::read_arguments done" << endl;
-	return i;
+	return i + 1;
 }
 
 

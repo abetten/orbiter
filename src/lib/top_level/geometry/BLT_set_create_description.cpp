@@ -24,7 +24,7 @@ BLT_set_create_description::BLT_set_create_description()
 	f_catalogue = FALSE;
 	iso = 0;
 	f_family = FALSE;
-	//family_name = NULL;
+	//family_name;
 	null();
 }
 
@@ -42,7 +42,7 @@ void BLT_set_create_description::freeself()
 	null();
 }
 
-int BLT_set_create_description::read_arguments(int argc, const char **argv, 
+int BLT_set_create_description::read_arguments(int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;
@@ -50,30 +50,28 @@ int BLT_set_create_description::read_arguments(int argc, const char **argv,
 	cout << "BLT_set_create_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-		if (argv[i][0] != '-') {
-			continue;
-		}
-		else if (strcmp(argv[i], "-q") == 0) {
+		if (stringcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
-			q = atoi(argv[++i]);
+			q = strtoi(argv[++i]);
 			cout << "-q " << q << endl;
 		}
-		else if (strcmp(argv[i], "-catalogue") == 0) {
+		else if (stringcmp(argv[i], "-catalogue") == 0) {
 			f_catalogue = TRUE;
-			iso = atoi(argv[++i]);
+			iso = strtoi(argv[++i]);
 			cout << "-catalogue " << iso << endl;
 		}
-		else if (strcmp(argv[i], "-family") == 0) {
+		else if (stringcmp(argv[i], "-family") == 0) {
 			f_family = TRUE;
 			family_name.assign(argv[++i]);
 			cout << "-family " << family_name << endl;
 		}
-		else if (strcmp(argv[i], "-end") == 0) {
-			return i;
+		else if (stringcmp(argv[i], "-end") == 0) {
+			cout << "-end" << endl;
+			break;
 		}
 	} // next i
 	cout << "BLT_set_create_description::read_arguments done" << endl;
-	return i;
+	return i + 1;
 }
 
 }}

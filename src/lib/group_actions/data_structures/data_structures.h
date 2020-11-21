@@ -358,7 +358,7 @@ public:
 
 
 	int f_fname_base_out;
-	const char *fname_base_out;
+	std::string fname_base_out;
 
 
 	int f_q;
@@ -428,7 +428,7 @@ public:
 		int f_sideways;
 
 	int f_canonical_form;
-	const char *canonical_form_fname_base;
+	std::string canonical_form_fname_base;
 	int f_ideal_LEX;
 	int f_ideal_PART;
 	int ideal_degree;
@@ -445,11 +445,11 @@ public:
 
 	int f_arc_with_two_given_sets_of_lines_after_dualizing;
 	int arc_t;
-	const char *t_lines_string;
+	std::string t_lines_string;
 
 	int f_arc_with_three_given_sets_of_lines_after_dualizing;
 	int arc_u;
-	const char *u_lines_string;
+	std::string u_lines_string;
 
 	int f_dualize_hyperplanes_to_points;
 	int f_dualize_points_to_hyperplanes;
@@ -459,10 +459,12 @@ public:
 
 	projective_space_job_description();
 	~projective_space_job_description();
+#if 0
 	void read_arguments_from_string(
 			const char *str, int verbose_level);
+#endif
 	int read_arguments(
-		int argc, const char **argv,
+		int argc, std::string *argv,
 		int verbose_level);
 
 };
@@ -519,7 +521,7 @@ public:
 		int verbose_level);
 	void do_canonical_form(
 		long int *set, int set_size, int f_semilinear,
-		const char *fname_base, int verbose_level);
+		std::string &fname_base, int verbose_level);
 
 };
 
@@ -586,7 +588,7 @@ public:
 	projective_space_object_classifier_description();
 	~projective_space_object_classifier_description();
 	int read_arguments(
-		int argc, const char **argv,
+		int argc, std::string *argv,
 		int verbose_level);
 
 };
@@ -699,7 +701,6 @@ public:
 
 	action *A; // linear group PGGL(d,q) in the action on points
 	action *A_on_lines; // linear group PGGL(d,q) acting on lines
-	//sims *S; // linear group PGGL(d,q)
 
 	int *Elt1;
 
@@ -977,9 +978,6 @@ public:
 	action *create_restricted_action_on_the_set(int verbose_level);
 	void print_restricted_action_on_the_set(int verbose_level);
 	void test_if_group_acts(int verbose_level);
-	
-	//void init_surface(surface_domain *Surf, action *A, action *A2,
-	//	int q, int no, int verbose_level);
 	int find(long int pt);
 };
 

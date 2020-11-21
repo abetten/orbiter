@@ -60,42 +60,42 @@ interface_algebra::interface_algebra()
 
 
 void interface_algebra::print_help(int argc,
-		const char **argv, int i, int verbose_level)
+		std::string *argv, int i, int verbose_level)
 {
-	if (strcmp(argv[i], "-linear_group") == 0) {
+	if (stringcmp(argv[i], "-linear_group") == 0) {
 		cout << "-linear_group <description>" << endl;
 	}
-	else if (strcmp(argv[i], "-group_theoretic_activity") == 0) {
+	else if (stringcmp(argv[i], "-group_theoretic_activity") == 0) {
 		cout << "-group_theoretic_activity <description>" << endl;
 	}
-	else if (strcmp(argv[i], "-finite_field_activity") == 0) {
+	else if (stringcmp(argv[i], "-finite_field_activity") == 0) {
 		cout << "-finite_field_activity <description>" << endl;
 	}
-	else if (strcmp(argv[i], "-count_subprimitive") == 0) {
+	else if (stringcmp(argv[i], "-count_subprimitive") == 0) {
 		cout << "-count_subprimitive <int : Q_max> <int : H_max>" << endl;
 	}
-	else if (strcmp(argv[i], "-equivalence_class_of_fractions") == 0) {
+	else if (stringcmp(argv[i], "-equivalence_class_of_fractions") == 0) {
 		cout << "-equivalence_class_of_fractions <int : N> " << endl;
 	}
-	else if (strcmp(argv[i], "-character_table_symmetric_group") == 0) {
+	else if (stringcmp(argv[i], "-character_table_symmetric_group") == 0) {
 		cout << "-character_table_symmetric_group <int : deg> " << endl;
 	}
-	else if (strcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
+	else if (stringcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
 		cout << "-make_A5_in_PSL_2_q <int : q> " << endl;
 	}
-	else if (strcmp(argv[i], "-search_for_primitive_polynomial_in_range") == 0) {
+	else if (stringcmp(argv[i], "-search_for_primitive_polynomial_in_range") == 0) {
 		cout << "-search_for_primitive_polynomial_in_range  " << endl;
 	}
-	else if (strcmp(argv[i], "-young_symmetrizer") == 0) {
+	else if (stringcmp(argv[i], "-young_symmetrizer") == 0) {
 		cout << "-young_symmetrizer  " << endl;
 	}
-	else if (strcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
+	else if (stringcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
 		cout << "-young_symmetrizer_sym_4  " << endl;
 	}
 }
 
 int interface_algebra::recognize_keyword(int argc,
-		const char **argv, int i, int verbose_level)
+		std::string *argv, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -105,34 +105,34 @@ int interface_algebra::recognize_keyword(int argc,
 	if (i >= argc) {
 		return false;
 	}
-	if (strcmp(argv[i], "-linear_group") == 0) {
+	if (stringcmp(argv[i], "-linear_group") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-group_theoretic_activity") == 0) {
+	else if (stringcmp(argv[i], "-group_theoretic_activity") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-finite_field_activity") == 0) {
+	else if (stringcmp(argv[i], "-finite_field_activity") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-count_subprimitive") == 0) {
+	else if (stringcmp(argv[i], "-count_subprimitive") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-equivalence_class_of_fractions") == 0) {
+	else if (stringcmp(argv[i], "-equivalence_class_of_fractions") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-character_table_symmetric_group") == 0) {
+	else if (stringcmp(argv[i], "-character_table_symmetric_group") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
+	else if (stringcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-search_for_primitive_polynomial_in_range") == 0) {
+	else if (stringcmp(argv[i], "-search_for_primitive_polynomial_in_range") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-young_symmetrizer") == 0) {
+	else if (stringcmp(argv[i], "-young_symmetrizer") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
+	else if (stringcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
 		return true;
 	}
 	if (f_v) {
@@ -142,14 +142,14 @@ int interface_algebra::recognize_keyword(int argc,
 }
 
 void interface_algebra::read_arguments(int argc,
-		const char **argv, int i0, int verbose_level)
+		std::string *argv, int i0, int verbose_level)
 {
 	int i;
 
 	cout << "interface_algebra::read_arguments" << endl;
 
 	for (i = i0; i < argc; i++) {
-		if (strcmp(argv[i], "-linear_group") == 0) {
+		if (stringcmp(argv[i], "-linear_group") == 0) {
 			f_linear_group = TRUE;
 			Linear_group_description = NEW_OBJECT(linear_group_description);
 			cout << "reading -linear_group" << endl;
@@ -163,7 +163,7 @@ void interface_algebra::read_arguments(int argc,
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-group_theoretic_activities") == 0) {
+		else if (stringcmp(argv[i], "-group_theoretic_activities") == 0) {
 			f_group_theoretic_activity = TRUE;
 			Group_theoretic_activity_description =
 					NEW_OBJECT(group_theoretic_activity_description);
@@ -178,7 +178,7 @@ void interface_algebra::read_arguments(int argc,
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-finite_field_activity") == 0) {
+		else if (stringcmp(argv[i], "-finite_field_activity") == 0) {
 			f_finite_field_activity = TRUE;
 			Finite_field_activity_description =
 					NEW_OBJECT(finite_field_activity_description);
@@ -193,7 +193,7 @@ void interface_algebra::read_arguments(int argc,
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-poset_classification_control") == 0) {
+		else if (stringcmp(argv[i], "-poset_classification_control") == 0) {
 			f_poset_classification_control = TRUE;
 			Control = NEW_OBJECT(poset_classification_control);
 			cout << "reading -poset_classification_control" << endl;
@@ -207,47 +207,47 @@ void interface_algebra::read_arguments(int argc,
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-count_subprimitive") == 0) {
+		else if (stringcmp(argv[i], "-count_subprimitive") == 0) {
 			f_count_subprimitive = TRUE;
-			count_subprimitive_Q_max = atoi(argv[++i]);
-			count_subprimitive_H_max = atoi(argv[++i]);
+			count_subprimitive_Q_max = strtoi(argv[++i]);
+			count_subprimitive_H_max = strtoi(argv[++i]);
 			cout << "-count_subprimitive "
 					<< count_subprimitive_Q_max
 					<< " " << count_subprimitive_H_max
 					<< endl;
 		}
-		else if (strcmp(argv[i], "-equivalence_class_of_fractions") == 0) {
+		else if (stringcmp(argv[i], "-equivalence_class_of_fractions") == 0) {
 			f_equivalence_class_of_fractions = TRUE;
-			equivalence_class_of_fractions_N = atoi(argv[++i]);
+			equivalence_class_of_fractions_N = strtoi(argv[++i]);
 			cout << "-equivalence_class_of_fractions " << equivalence_class_of_fractions_N
 					<< endl;
 		}
-		else if (strcmp(argv[i], "-character_table_symmetric_group") == 0) {
+		else if (stringcmp(argv[i], "-character_table_symmetric_group") == 0) {
 			f_character_table_symmetric_group = TRUE;
-			deg = atoi(argv[++i]);
+			deg = strtoi(argv[++i]);
 			cout << "-character_table_symmetric_group " << deg << endl;
 		}
-		else if (strcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
+		else if (stringcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
 			f_make_A5_in_PSL_2_q = TRUE;
-			q = atoi(argv[++i]);
+			q = strtoi(argv[++i]);
 			cout << "-make_A5_in_PSL_2_q " << q << endl;
 		}
-		else if (strcmp(argv[i], "-search_for_primitive_polynomial_in_range") == 0) {
+		else if (stringcmp(argv[i], "-search_for_primitive_polynomial_in_range") == 0) {
 			f_search_for_primitive_polynomial_in_range = TRUE;
-			p_min = atoi(argv[++i]);
-			p_max = atoi(argv[++i]);
-			deg_min = atoi(argv[++i]);
-			deg_max = atoi(argv[++i]);
+			p_min = strtoi(argv[++i]);
+			p_max = strtoi(argv[++i]);
+			deg_min = strtoi(argv[++i]);
+			deg_max = strtoi(argv[++i]);
 			cout << "-search_for_primitive_polynomial_in_range " << p_min
 					<< " " << p_max << " " << deg_min << " " << deg_max << " " << endl;
 		}
 
-		else if (strcmp(argv[i], "-young_symmetrizer") == 0) {
+		else if (stringcmp(argv[i], "-young_symmetrizer") == 0) {
 			f_young_symmetrizer = TRUE;
-			young_symmetrizer_n = atoi(argv[++i]);
+			young_symmetrizer_n = strtoi(argv[++i]);
 			cout << "-young_symmetrizer " << young_symmetrizer_n << endl;
 		}
-		else if (strcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
+		else if (stringcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
 			f_young_symmetrizer_sym_4 = TRUE;
 			cout << "-young_symmetrizer_sym_4 " << endl;
 		}

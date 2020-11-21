@@ -42,37 +42,37 @@ void tdo_data::free()
 	if (types_first) {
 		FREE_int(types_first);
 		types_first = NULL;
-		}
+	}
 	if (types_len) {
 		FREE_int(types_len);
 		types_len = NULL;
-		}
+	}
 	if (only_one_type) {
 		FREE_int(only_one_type);
 		only_one_type = NULL;
-		}
+	}
 	if (multiple_types) {
 		FREE_int(multiple_types);
 		multiple_types = NULL;
-		}
+	}
 	if (types_first2) {
 		FREE_int(types_first2);
 		types_first2 = NULL;
-		}
+	}
 	if (f_v) {
 		cout << "tdo_data::free before D1" << endl;
 	}
 	if (D1) {
 		FREE_OBJECT(D1);
 		D1 = NULL;
-		}
+	}
 	if (f_v) {
 		cout << "tdo_data::free before D2" << endl;
 	}
 	if (D2) {
 		FREE_OBJECT(D2);
 		D2 = NULL;
-		}
+	}
 	if (f_v) {
 		cout << "tdo_data::free done" << endl;
 	}
@@ -139,6 +139,9 @@ int tdo_data::solve_first_system(int verbose_level,
 	if (f_vv) {
 		cout << "tdo_data::solve_first_system: found " << nb_sol
 			<< " refined types" << endl;
+	}
+	if (f_v) {
+		cout << "tdo_data::solve_first_system done" << endl;
 	}
 	return nb_sol;
 }
@@ -275,7 +278,7 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 		if (f_vv) {
 			cout << "after projection:" << endl;
 			DD.print();
-			}
+		}
 		if (f_bad) {
 			cout << "solutions does not extend (bad RHS in eqn "
 					<< i << "), skipping" << endl;
@@ -362,7 +365,7 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 		D.print();
 		D.solve_first(verbose_level);
 		FREE_int(eqns_replaced);
-		}
+	}
 #endif
 }
 
@@ -399,7 +402,7 @@ void tdo_data::solve_second_system_from_file(int verbose_level,
 	int *classes_len, int f_scale, int scaling,
 	int *&line_types, int &nb_line_types, 
 	int *&distributions, int &nb_distributions,
-	const char *solution_file_name)
+	std::string &solution_file_name)
 {
 	int f_v = (verbose_level >= 1);
 	int cnt, i, j, a, nb_sol, *the_solution;
@@ -410,68 +413,76 @@ void tdo_data::solve_second_system_from_file(int verbose_level,
 	Nb_vars = D2->n;
 	the_solution = NEW_int(Nb_vars);
 	{
-	ifstream ff(solution_file_name);
-	
-	for (i = 0; TRUE; i++) {
-		if (ff.eof()) {
-			break;
+		ifstream ff(solution_file_name);
+
+		for (i = 0; TRUE; i++) {
+			if (ff.eof()) {
+				break;
 			}
-		ff >> a;
-		if (a == -1)
-			break;
-		for (j = 1; j < Nb_vars; j++) 
 			ff >> a;
+			if (a == -1) {
+				break;
+			}
+			for (j = 1; j < Nb_vars; j++) {
+				ff >> a;
+			}
 		}
 	}
 	nb_sol = i;
-	cout << "the solution file " << solution_file_name
+
+	if (f_v) {
+		cout << "the solution file " << solution_file_name
 			<< " contains " << nb_sol << " solutions" << endl;
+	}
 	distributions_allocated = nb_sol;
 	nb_distributions = 0;
 	distributions = NEW_int(distributions_allocated * nb_line_types);
 	{
-	ifstream ff(solution_file_name);
-	for (cnt = 0; cnt < nb_sol; cnt++) {
-		for (j = 0; j < Nb_vars; j++) 
-			ff >> the_solution[j];
-		
-		for (h = 0; h < nb_only_one_type; h++) {
-			r = only_one_type[h];
-			u = types_first[r];
-			//cout << "only one type, r=" << r << " u=" << u << endl;
-			distributions[nb_distributions * nb_line_types + u] = 
-				classes_len[r];
+		ifstream ff(solution_file_name);
+		for (cnt = 0; cnt < nb_sol; cnt++) {
+			for (j = 0; j < Nb_vars; j++) {
+				ff >> the_solution[j];
 			}
-		for (i = 0; i < nb_multiple_types; i++) {
-			r = multiple_types[i];
-			f = types_first2[i];
-			first = types_first[r];
-			l = types_len[r];
-			//cout << "multiple types, r=" << r
-			//<< " first=" << first << endl;
-			for (j = 0; j < l; j++) {
-				a = the_solution[f + j];
-				if (f_scale)
-					a *= scaling;
-				distributions[nb_distributions * nb_line_types
-							  + first + j] = a;
+
+			for (h = 0; h < nb_only_one_type; h++) {
+				r = only_one_type[h];
+				u = types_first[r];
+				//cout << "only one type, r=" << r << " u=" << u << endl;
+				distributions[nb_distributions * nb_line_types + u] =
+					classes_len[r];
+			}
+			for (i = 0; i < nb_multiple_types; i++) {
+				r = multiple_types[i];
+				f = types_first2[i];
+				first = types_first[r];
+				l = types_len[r];
+				//cout << "multiple types, r=" << r
+				//<< " first=" << first << endl;
+				for (j = 0; j < l; j++) {
+					a = the_solution[f + j];
+					if (f_scale) {
+						a *= scaling;
+					}
+					distributions[nb_distributions * nb_line_types
+								  + first + j] = a;
 				}
 			}
-		nb_distributions++;
-		
+			nb_distributions++;
+
 		}
-	
+		
 	}
 	FREE_int(the_solution);
 	if (f_v) {
 		cout << "solve_second_system_from_file: found "
 				<< nb_distributions << " distributions." << endl;
-		}
+	}
 }
 
 void tdo_data::solve_second_system(int verbose_level,
 	int f_use_mckay_solver, int f_once, 
-	int *classes_len, int f_scale, int scaling,
+	int *classes_len,
+	int f_scale, int scaling,
 	int *&line_types, int &nb_line_types, 
 	int *&distributions, int &nb_distributions)
 {
@@ -486,7 +497,7 @@ void tdo_data::solve_second_system(int verbose_level,
 		cout << "tdo_data::solve_second_system" << endl;
 		cout << "f_use_mckay_solver=" << f_use_mckay_solver << endl;
 		cout << "f_once=" << f_once << endl;
-		}
+	}
 	//Nb_eqns = D2->m;
 	Nb_vars = D2->n;
 
@@ -500,10 +511,10 @@ void tdo_data::solve_second_system(int verbose_level,
 	if (f_use_mckay_solver) {
 		ret = D2->solve_first_mckay_once_option/*betten*/(
 			f_once, 0/*verbose_level - 4*/);
-		}
+	}
 	else {
 		ret = D2->solve_first_betten(0/*verbose_level - 4*/);
-		}
+	}
 	if (ret) {
 	
 		nb_steps += D2->nb_steps_betten;
@@ -511,30 +522,29 @@ void tdo_data::solve_second_system(int verbose_level,
 			if (nb_distributions && (nb_distributions % 1000) == 0) {
 				cout << "solve_second_system: " << nb_distributions
 					<< " distributions" << endl;
-				}
+			}
 			if (nb_distributions >= distributions_allocated) {
 				int new_nb_distributions = distributions_allocated + 100;
 				if (f_vv) {
-					cout << "reallocating to "
-						<< new_nb_distributions << endl;
-					}
+					cout << "reallocating to " << new_nb_distributions << endl;
+				}
 				
 				int *new_distributions = NEW_int(
 						new_nb_distributions * nb_line_types);
 				for (i = 0; i < nb_distributions * nb_line_types; i++) {
 					new_distributions[i] = distributions[i];
-					}
+				}
 				FREE_int(distributions);
 				distributions = new_distributions;
 				distributions_allocated = new_nb_distributions;
-				}
+			}
 			if (f_vvv) {
 				cout << nb_sol << " : ";
 				for (i = 0; i < Nb_vars; i++) {
 					cout << " " << setw(2) << D2->x[i];
-					}
-				cout << endl;
 				}
+				cout << endl;
+			}
 			
 
 			for (h = 0; h < nb_only_one_type; h++) {
@@ -543,7 +553,7 @@ void tdo_data::solve_second_system(int verbose_level,
 				//cout << "only one type, r=" << r << " u=" << u << endl;
 				distributions[nb_distributions * nb_line_types + u] = 
 					classes_len[r];
-				}
+			}
 			for (i = 0; i < nb_multiple_types; i++) {
 				r = multiple_types[i];
 				f = types_first2[i];
@@ -555,37 +565,37 @@ void tdo_data::solve_second_system(int verbose_level,
 					a = D2->x[f + j];
 					if (f_scale) {
 						a *= scaling;
-						}
+					}
 					distributions[nb_distributions * nb_line_types
 						+ first + j] = a;
-					}
 				}
+			}
 			nb_distributions++;
 			
 			nb_sol++;
 			if (f_once) {
 				ret = FALSE;
-				}
+			}
 			else {
 				if (f_use_mckay_solver) {
 					ret = D2->solve_next_mckay(0/*verbose_level - 5*/);
-					}
+				}
 				else {
 					ret = D2->solve_next_betten(0/*verbose_level - 5*/);
-					}
 				}
+			}
 			if (!ret) {
 				break;
-				}
-			nb_steps += D2->nb_steps_betten;
 			}
+			nb_steps += D2->nb_steps_betten;
 		}
+	}
 	
 	nb_steps += D2->nb_steps_betten;
 	if (f_v) {
 		cout << "solve_second_system: found " << nb_distributions
 			<< " distributions in " << nb_steps << " steps" << endl;
-		}
+	}
 }
 
 

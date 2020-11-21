@@ -2879,13 +2879,13 @@ void combinatorics_domain::do_tdo_refinement(tdo_refinement_description *Descr, 
 	}
 }
 
-void combinatorics_domain::do_tdo_print(const char *fname, int verbose_level)
+void combinatorics_domain::do_tdo_print(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int cnt;
-	char str[1000];
-	char ext[1000];
+	//char str[1000];
+	//char ext[1000];
 	//char fname_out[1000];
 	int f_widor = FALSE;
 	int f_doit = FALSE;
@@ -2901,10 +2901,11 @@ void combinatorics_domain::do_tdo_print(const char *fname, int verbose_level)
 	//ofstream *texfile;
 
 
-
+#if 0
 	strcpy(str, fname);
 	get_extension_if_present(str, ext);
 	chop_off_extension_if_present(str, ext);
+#endif
 
 #if 0
 	sprintf(fname_out, "%sw.tdo", str);
@@ -2991,16 +2992,16 @@ void combinatorics_domain::do_tdo_print(const char *fname, int verbose_level)
 			}
 #endif
 		if (TRUE /* f_tex */) {
-			GP.print_scheme_tex(cout, G, ROW);
-			GP.print_scheme_tex(cout, G, COL);
+			GP.print_scheme_tex(cout, G, ROW_SCHEME);
+			GP.print_scheme_tex(cout, G, COL_SCHEME);
 			}
 #if 0
 		if (f_texfile) {
 			if (f_ROW) {
-				GP.print_scheme_tex(*texfile, G, ROW);
+				GP.print_scheme_tex(*texfile, G, ROW_SCHEME);
 				}
 			if (f_COL) {
-				GP.print_scheme_tex(*texfile, G, COL);
+				GP.print_scheme_tex(*texfile, G, COL_SCHEME);
 				}
 			}
 		if (f_Tex) {

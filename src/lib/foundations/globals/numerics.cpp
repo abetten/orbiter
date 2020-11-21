@@ -2213,6 +2213,13 @@ void numerics::vec_scan(const char *s, double *&v, int &len)
 	vec_scan_from_stream(ins, v, len);
 }
 
+void numerics::vec_scan(std::string &s, double *&v, int &len)
+{
+
+	istringstream ins(s);
+	vec_scan_from_stream(ins, v, len);
+}
+
 void numerics::vec_scan_from_stream(istream & is, double *&v, int &len)
 {
 	int verbose_level = 0;

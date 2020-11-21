@@ -92,7 +92,7 @@ poset_classification_control::~poset_classification_control()
 
 
 int poset_classification_control::read_arguments(
-	int argc, const char **argv,
+	int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;
@@ -101,7 +101,7 @@ int poset_classification_control::read_arguments(
 	cout << "poset_classification_control::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-		if (strcmp(argv[i], "-draw_options") == 0) {
+		if (stringcmp(argv[i], "-draw_options") == 0) {
 			f_draw_options = TRUE;
 
 			draw_options = NEW_OBJECT(layered_graph_draw_options);
@@ -117,115 +117,115 @@ int poset_classification_control::read_arguments(
 			}
 			//cout << "-f_draw_options " << endl;
 		}
-		else if (strcmp(argv[i], "-v") == 0) {
+		else if (stringcmp(argv[i], "-v") == 0) {
 			i++;
-			poset_classification_control::verbose_level = atoi(argv[i]);
+			poset_classification_control::verbose_level = strtoi(argv[i]);
 			if (f_v) {
 				cout << "-v " << poset_classification_control::verbose_level << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-gv") == 0) {
+		else if (stringcmp(argv[i], "-gv") == 0) {
 			i++;
-			verbose_level_group_theory = atoi(argv[i]);
+			verbose_level_group_theory = strtoi(argv[i]);
 			if (f_v) {
 				cout << "-gv " << verbose_level_group_theory << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-lex") == 0) {
+		else if (stringcmp(argv[i], "-lex") == 0) {
 			f_lex = TRUE;
 			if (f_v) {
 				cout << "-lex" << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-w") == 0) {
+		else if (stringcmp(argv[i], "-w") == 0) {
 			f_w = TRUE;
 			if (f_v) {
 				cout << "-w" << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-W") == 0) {
+		else if (stringcmp(argv[i], "-W") == 0) {
 			f_W = TRUE;
 			if (f_v) {
 				cout << "-W" << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-level_summary_csv") == 0) {
+		else if (stringcmp(argv[i], "-level_summary_csv") == 0) {
 			f_level_summary_csv = TRUE;
 			if (f_v) {
 				cout << "-level_summary_csv" << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-orbit_reps_csv") == 0) {
+		else if (stringcmp(argv[i], "-orbit_reps_csv") == 0) {
 			f_orbit_reps_csv = TRUE;
 			if (f_v) {
 				cout << "-orbit_reps_csv" << endl;
 			}
 		}
 
-		else if (strcmp(argv[i], "-report") == 0) {
+		else if (stringcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			if (f_v) {
 				cout << "-report" << endl;
 			}
 		}
 
-		else if (strcmp(argv[i], "-show_orbit_decomposition") == 0) {
+		else if (stringcmp(argv[i], "-show_orbit_decomposition") == 0) {
 			f_show_orbit_decomposition = TRUE;
 			if (f_v) {
 				cout << "-show_orbit_decomposition" << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-show_stab") == 0) {
+		else if (stringcmp(argv[i], "-show_stab") == 0) {
 			f_show_stab = TRUE;
 			if (f_v) {
 				cout << "-show_stab" << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-save_stab") == 0) {
+		else if (stringcmp(argv[i], "-save_stab") == 0) {
 			f_save_stab = TRUE;
 			if (f_v) {
 				cout << "-save_stab" << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-show_whole_orbit") == 0) {
+		else if (stringcmp(argv[i], "-show_whole_orbit") == 0) {
 			f_show_whole_orbit = TRUE;
 			if (f_v) {
 				cout << "-show_whole_orbit" << endl;
 			}
 		}
 
-		else if (strcmp(argv[i], "-write_data_files") == 0) {
+		else if (stringcmp(argv[i], "-write_data_files") == 0) {
 			f_write_data_files = TRUE;
 			if (f_v) {
 				cout << "-write_data_files" << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-t") == 0) {
+		else if (stringcmp(argv[i], "-t") == 0) {
 			f_t = TRUE;
 			if (f_v) {
 				cout << "-t" << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-T") == 0) {
+		else if (stringcmp(argv[i], "-T") == 0) {
 			f_T = TRUE;
 			if (f_v) {
 				cout << "-T" << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-depth") == 0) {
+		else if (stringcmp(argv[i], "-depth") == 0) {
 			f_depth = TRUE;
-			depth = atoi(argv[++i]);
+			depth = strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-depth " << depth << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-extend") == 0) {
+		else if (stringcmp(argv[i], "-extend") == 0) {
 			f_extend = TRUE;
-			extend_from = atoi(argv[++i]);
-			extend_to = atoi(argv[++i]);
-			extend_r = atoi(argv[++i]);
-			extend_m = atoi(argv[++i]);
-			strcpy(extend_fname, argv[++i]);
+			extend_from = strtoi(argv[++i]);
+			extend_to = strtoi(argv[++i]);
+			extend_r = strtoi(argv[++i]);
+			extend_m = strtoi(argv[++i]);
+			extend_fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-extend from level " << extend_from
 					<< " to level " << extend_to
@@ -234,65 +234,65 @@ int poset_classification_control::read_arguments(
 					<< " from file " << extend_fname << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-recover") == 0) {
+		else if (stringcmp(argv[i], "-recover") == 0) {
 			f_recover = TRUE;
 			recover_fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-recover " << recover_fname << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-printonly") == 0) {
+		else if (stringcmp(argv[i], "-printonly") == 0) {
 			f_print_only = TRUE;
 			if (f_v) {
 				cout << "-printonly" << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-findgroup") == 0) {
+		else if (stringcmp(argv[i], "-findgroup") == 0) {
 			f_find_group_order = TRUE;
-			find_group_order = atoi(argv[++i]);
+			find_group_order = strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-findgroup " << find_group_order << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-draw_poset") == 0) {
+		else if (stringcmp(argv[i], "-draw_poset") == 0) {
 			f_draw_poset = TRUE;
 			cout << "-draw_poset " << endl;
 		}
-		else if (strcmp(argv[i], "-draw_full_poset") == 0) {
+		else if (stringcmp(argv[i], "-draw_full_poset") == 0) {
 			f_draw_full_poset = TRUE;
 			cout << "-draw_full_poset " << endl;
 		}
-		else if (strcmp(argv[i], "-plesken") == 0) {
+		else if (stringcmp(argv[i], "-plesken") == 0) {
 			f_plesken = TRUE;
 			cout << "-plesken " << endl;
 		}
-		else if (strcmp(argv[i], "-Kramer_Mesner_matrix") == 0) {
+		else if (stringcmp(argv[i], "-Kramer_Mesner_matrix") == 0) {
 			f_Kramer_Mesner_matrix = TRUE;
-			Kramer_Mesner_t = atoi(argv[++i]);
-			Kramer_Mesner_k = atoi(argv[++i]);
+			Kramer_Mesner_t = strtoi(argv[++i]);
+			Kramer_Mesner_k = strtoi(argv[++i]);
 			cout << "-Kramer_Mesner_matrix " << Kramer_Mesner_t << " " << Kramer_Mesner_k << endl;
 		}
-		else if (strcmp(argv[i], "-print_data_structure") == 0) {
+		else if (stringcmp(argv[i], "-print_data_structure") == 0) {
 			f_print_data_structure = TRUE;
 			cout << "-print_data_structure " << endl;
 		}
-		else if (strcmp(argv[i], "-list") == 0) {
+		else if (stringcmp(argv[i], "-list") == 0) {
 			f_list = TRUE;
 			cout << "-list" << endl;
 		}
-		else if (strcmp(argv[i], "-list_all") == 0) {
+		else if (stringcmp(argv[i], "-list_all") == 0) {
 			f_list_all = TRUE;
 			cout << "-list_all" << endl;
 		}
-		else if (strcmp(argv[i], "-table_of_nodes") == 0) {
+		else if (stringcmp(argv[i], "-table_of_nodes") == 0) {
 			f_table_of_nodes = TRUE;
 			cout << "-table_of_nodes" << endl;
 		}
-		else if (strcmp(argv[i], "-make_relations_with_flag_orbits") == 0) {
+		else if (stringcmp(argv[i], "-make_relations_with_flag_orbits") == 0) {
 			f_make_relations_with_flag_orbits = TRUE;
 			cout << "-make_relation_with_flag_orbits" << endl;
 		}
-		else if (strcmp(argv[i], "-recognize") == 0) {
+		else if (stringcmp(argv[i], "-recognize") == 0) {
 
 			string s;
 
@@ -300,30 +300,30 @@ int poset_classification_control::read_arguments(
 			recognize.push_back(s);
 			cout << "-recognize " << recognize[recognize.size() - 1] << endl;
 		}
-		else if (strcmp(argv[i], "-export_schreier_trees") == 0) {
+		else if (stringcmp(argv[i], "-export_schreier_trees") == 0) {
 			f_export_schreier_trees = TRUE;
 			cout << "-export_schreier_trees" << endl;
 		}
-		else if (strcmp(argv[i], "-draw_schreier_trees") == 0) {
+		else if (stringcmp(argv[i], "-draw_schreier_trees") == 0) {
 			f_draw_schreier_trees = TRUE;
 			schreier_tree_prefix.assign(argv[++i]);
 			cout << "-draw_schreier_trees " << schreier_tree_prefix << endl;
 		}
-		else if (strcmp(argv[i], "-problem_label") == 0) {
+		else if (stringcmp(argv[i], "-problem_label") == 0) {
 			f_problem_label = TRUE;
 			problem_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-problem_label " << problem_label << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-path") == 0) {
+		else if (stringcmp(argv[i], "-path") == 0) {
 			f_path = TRUE;
 			path.assign(argv[++i]);
 			if (f_v) {
 				cout << "-path " << path << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-end") == 0) {
+		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}

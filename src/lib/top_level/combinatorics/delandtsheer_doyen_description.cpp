@@ -87,7 +87,7 @@ delandtsheer_doyen_description::~delandtsheer_doyen_description()
 
 
 int delandtsheer_doyen_description::read_arguments(
-	int argc, const char **argv,
+	int argc, std::string *argv,
 	int verbose_level)
 {
 	int i, j;
@@ -101,113 +101,108 @@ int delandtsheer_doyen_description::read_arguments(
 
 	for (i = 0; i < argc; i++) {
 
-#if 0
-		if (argv[i][0] != '-') {
-			continue;
-			}
-#endif
 
-		if (strcmp(argv[i], "-group_label") == 0) {
+		if (stringcmp(argv[i], "-group_label") == 0) {
 			f_group_label = TRUE;
 			group_label.assign(argv[++i]);
 			cout << "-group_label " << group_label << endl;
 		}
-		else if (strcmp(argv[i], "-mask_label") == 0) {
+		else if (stringcmp(argv[i], "-mask_label") == 0) {
 			f_mask_label = TRUE;
 			mask_label.assign(argv[++i]);
 			cout << "-mask_label " << mask_label << endl;
 		}
-		else if (strcmp(argv[i], "-depth") == 0) {
+		else if (stringcmp(argv[i], "-depth") == 0) {
 			f_depth = TRUE;
-			depth = atoi(argv[++i]);
+			depth = strtoi(argv[++i]);
 			cout << "-depth " << depth << endl;
 		}
-		else if (strcmp(argv[i], "-d1") == 0) {
+		else if (stringcmp(argv[i], "-d1") == 0) {
 			f_d1 = TRUE;
-			d1 = atoi(argv[++i]);
+			d1 = strtoi(argv[++i]);
 			cout << "-d1 " << d1 << endl;
 		}
-		else if (strcmp(argv[i], "-d2") == 0) {
+		else if (stringcmp(argv[i], "-d2") == 0) {
 			f_d2 = TRUE;
-			d2 = atoi(argv[++i]);
+			d2 = strtoi(argv[++i]);
 			cout << "-d2 " << d2 << endl;
 		}
-		else if (strcmp(argv[i], "-q1") == 0) {
+		else if (stringcmp(argv[i], "-q1") == 0) {
 			f_q1 = TRUE;
-			q1 = atoi(argv[++i]);
+			q1 = strtoi(argv[++i]);
 			cout << "-q1 " << q1 << endl;
 		}
-		else if (strcmp(argv[i], "-q2") == 0) {
+		else if (stringcmp(argv[i], "-q2") == 0) {
 			f_q2 = TRUE;
-			q2 = atoi(argv[++i]);
+			q2 = strtoi(argv[++i]);
 			cout << "-q2 " << q2 << endl;
 		}
-		else if (strcmp(argv[i], "-DDx") == 0) {
-			DELANDTSHEER_DOYEN_X = atoi(argv[++i]);
+		else if (stringcmp(argv[i], "-DDx") == 0) {
+			DELANDTSHEER_DOYEN_X = strtoi(argv[++i]);
 			cout << "-DDx " << DELANDTSHEER_DOYEN_X << endl;
 		}
-		else if (strcmp(argv[i], "-DDy") == 0) {
-			DELANDTSHEER_DOYEN_Y = atoi(argv[++i]);
+		else if (stringcmp(argv[i], "-DDy") == 0) {
+			DELANDTSHEER_DOYEN_Y = strtoi(argv[++i]);
 			cout << "-DDy " << DELANDTSHEER_DOYEN_Y << endl;
 		}
-		else if (strcmp(argv[i], "-K") == 0) {
+		else if (stringcmp(argv[i], "-K") == 0) {
 			f_K = TRUE;
-			K = atoi(argv[++i]);
+			K = strtoi(argv[++i]);
 			cout << "-K " << K << endl;
 		}
-		else if (strcmp(argv[i], "-R") == 0) {
+		else if (stringcmp(argv[i], "-R") == 0) {
 			f_R = TRUE;
-			nb_row_types = atoi(argv[++i]);
+			nb_row_types = strtoi(argv[++i]);
 			row_type = NEW_int(nb_row_types + 1);
 			row_type[0] = 0;
 			for (j = 1; j <= nb_row_types; j++) {
-				row_type[j] = atoi(argv[++i]);
+				row_type[j] = strtoi(argv[++i]);
 				//row_type_cur[j] = 0;
 				}
 			cout << "-R ";
 			int_vec_print(cout, row_type + 1, nb_row_types);
 			cout << endl;
 		}
-		else if (strcmp(argv[i], "-C") == 0) {
+		else if (stringcmp(argv[i], "-C") == 0) {
 			f_C = TRUE;
-			nb_col_types = atoi(argv[++i]);
+			nb_col_types = strtoi(argv[++i]);
 			col_type = NEW_int(nb_col_types + 1);
 			col_type[0] = 0;
 			for (j = 1; j <= nb_col_types; j++) {
-				col_type[j] = atoi(argv[++i]);
+				col_type[j] = strtoi(argv[++i]);
 				//col_type_cur[j] = 0;
 				}
 			cout << "-C ";
 			int_vec_print(cout, col_type + 1, nb_col_types);
 			cout << endl;
 		}
-		else if (strcmp(argv[i], "-masktest") == 0) {
-			const char *who;
-			const char *what;
+		else if (stringcmp(argv[i], "-masktest") == 0) {
+			string who;
+			string what;
 
-			mask_test_level[nb_mask_tests] = atoi(argv[++i]);
-			who = argv[++i];
-			what = argv[++i];
-			mask_test_value[nb_mask_tests] = atoi(argv[++i]);
+			mask_test_level[nb_mask_tests] = strtoi(argv[++i]);
+			who.assign(argv[++i]);
+			what.assign(argv[++i]);
+			mask_test_value[nb_mask_tests] = strtoi(argv[++i]);
 
-			if (strcmp(who, "x") == 0)
+			if (stringcmp(who, "x") == 0)
 				mask_test_who[nb_mask_tests] = 1;
-			else if (strcmp(who, "y") == 0)
+			else if (stringcmp(who, "y") == 0)
 				mask_test_who[nb_mask_tests] = 2;
-			else if (strcmp(who, "x+y") == 0)
+			else if (stringcmp(who, "x+y") == 0)
 				mask_test_who[nb_mask_tests] = 3;
-			else if (strcmp(who, "s") == 0)
+			else if (stringcmp(who, "s") == 0)
 				mask_test_who[nb_mask_tests] = 4;
 			else {
 				cout << "masktest: unknown 'who' option: " << who << endl;
 				cout << "must be one of 'x', 'y', 'x+y' or 's'" << endl;
 				exit(1);
 				}
-			if (strcmp(what, "eq") == 0)
+			if (stringcmp(what, "eq") == 0)
 				mask_test_what[nb_mask_tests] = 1;
-			else if (strcmp(what, "ge") == 0)
+			else if (stringcmp(what, "ge") == 0)
 				mask_test_what[nb_mask_tests] = 2;
-			else if (strcmp(what, "le") == 0)
+			else if (stringcmp(what, "le") == 0)
 				mask_test_what[nb_mask_tests] = 3;
 			else {
 				cout << "masktest: unknown 'what' option: " << who << endl;
@@ -222,17 +217,17 @@ int delandtsheer_doyen_description::read_arguments(
 			nb_mask_tests++;
 			cout << "nb_mask_tests=" << nb_mask_tests << endl;
 		}
-		else if (strcmp(argv[i], "-singletons") == 0) {
+		else if (stringcmp(argv[i], "-singletons") == 0) {
 			f_singletons = TRUE;
 			cout << "-singletons" << endl;
 		}
-		else if (strcmp(argv[i], "-subgroup") == 0) {
+		else if (stringcmp(argv[i], "-subgroup") == 0) {
 			f_subgroup = TRUE;
 			subgroup_gens.assign(argv[++i]);
 			subgroup_order.assign(argv[++i]);
 			cout << "-subgroup " << subgroup_gens << " " << subgroup_order << endl;
 		}
-		else if (strcmp(argv[i], "-pair_search_control") == 0) {
+		else if (stringcmp(argv[i], "-pair_search_control") == 0) {
 			f_pair_search_control = TRUE;
 			Pair_search_control = NEW_OBJECT(poset_classification_control);
 			i += Pair_search_control->read_arguments(argc - (i + 1),
@@ -245,7 +240,7 @@ int delandtsheer_doyen_description::read_arguments(
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-search_control") == 0) {
+		else if (stringcmp(argv[i], "-search_control") == 0) {
 			f_search_control = TRUE;
 			Search_control = NEW_OBJECT(poset_classification_control);
 			i += Search_control->read_arguments(argc - (i + 1),
@@ -258,7 +253,7 @@ int delandtsheer_doyen_description::read_arguments(
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-end") == 0) {
+		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}

@@ -1366,7 +1366,7 @@ void layered_graph::make_subset_lattice(int n, int depth, int f_tree,
 }
 
 
-void layered_graph::init_poset_from_file(const char *fname,
+void layered_graph::init_poset_from_file(std::string &fname,
 		int f_grouping, double x_stretch, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

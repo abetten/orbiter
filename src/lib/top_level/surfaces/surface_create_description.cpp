@@ -67,7 +67,7 @@ void surface_create_description::freeself()
 	null();
 }
 
-int surface_create_description::read_arguments(int argc, const char **argv, 
+int surface_create_description::read_arguments(int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;
@@ -75,70 +75,67 @@ int surface_create_description::read_arguments(int argc, const char **argv,
 	cout << "surface_create_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-		if (argv[i][0] != '-') {
-			continue;
-		}
-		else if (strcmp(argv[i], "-q") == 0) {
+		if (stringcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
-			q = atoi(argv[++i]);
+			q = strtoi(argv[++i]);
 			cout << "-q " << q << endl;
 		}
-		else if (strcmp(argv[i], "-catalogue") == 0) {
+		else if (stringcmp(argv[i], "-catalogue") == 0) {
 			f_catalogue = TRUE;
-			iso = atoi(argv[++i]);
+			iso = strtoi(argv[++i]);
 			cout << "-catalogue " << iso << endl;
 		}
-		else if (strcmp(argv[i], "-by_coefficients") == 0) {
+		else if (stringcmp(argv[i], "-by_coefficients") == 0) {
 			f_by_coefficients = TRUE;
 			coefficients_text.assign(argv[++i]);
 			cout << "-by_coefficients " << coefficients_text << endl;
 		}
-		else if (strcmp(argv[i], "-family_HCV") == 0) {
+		else if (stringcmp(argv[i], "-family_HCV") == 0) {
 			f_family_HCV = TRUE;
-			family_HCV_a = atoi(argv[++i]);
-			family_HCV_b = atoi(argv[++i]);
+			family_HCV_a = strtoi(argv[++i]);
+			family_HCV_b = strtoi(argv[++i]);
 			cout << "-family_HCV " << family_HCV_a << " " << family_HCV_b << endl;
 		}
-		else if (strcmp(argv[i], "-family_G13") == 0) {
+		else if (stringcmp(argv[i], "-family_G13") == 0) {
 			f_family_G13 = TRUE;
-			family_G13_a = atoi(argv[++i]);
+			family_G13_a = strtoi(argv[++i]);
 			cout << "-family_G13 " << family_G13_a << endl;
 		}
-		else if (strcmp(argv[i], "-family_F13") == 0) {
+		else if (stringcmp(argv[i], "-family_F13") == 0) {
 			f_family_F13 = TRUE;
-			family_F13_a = atoi(argv[++i]);
+			family_F13_a = strtoi(argv[++i]);
 			cout << "-family_F13 " << family_F13_a << endl;
 		}
-		else if (strcmp(argv[i], "-family_bes") == 0) {
+		else if (stringcmp(argv[i], "-family_bes") == 0) {
 			f_family_bes = TRUE;
-			family_bes_a = atoi(argv[++i]);
-			family_bes_c = atoi(argv[++i]);
+			family_bes_a = strtoi(argv[++i]);
+			family_bes_c = strtoi(argv[++i]);
 			cout << "-family_bes " << family_bes_a << " " << family_bes_c << endl;
 		}
-		else if (strcmp(argv[i], "-family_general_abcd") == 0) {
+		else if (stringcmp(argv[i], "-family_general_abcd") == 0) {
 			f_family_general_abcd = TRUE;
-			family_general_abcd_a = atoi(argv[++i]);
-			family_general_abcd_b = atoi(argv[++i]);
-			family_general_abcd_c = atoi(argv[++i]);
-			family_general_abcd_d = atoi(argv[++i]);
+			family_general_abcd_a = strtoi(argv[++i]);
+			family_general_abcd_b = strtoi(argv[++i]);
+			family_general_abcd_c = strtoi(argv[++i]);
+			family_general_abcd_d = strtoi(argv[++i]);
 			cout << "-family_general_abcd "
 					<< family_general_abcd_a << " " << family_general_abcd_b
 					<< family_general_abcd_c << " " << family_general_abcd_d
 					<< endl;
 		}
-		else if (strcmp(argv[i], "-arc_lifting") == 0) {
+		else if (stringcmp(argv[i], "-arc_lifting") == 0) {
 			f_arc_lifting = TRUE;
 			arc_lifting_text.assign(argv[++i]);
 			cout << "-arc_lifting " << arc_lifting_text << endl;
 		}
-		else if (strcmp(argv[i], "-arc_lifting_with_two_lines") == 0) {
+		else if (stringcmp(argv[i], "-arc_lifting_with_two_lines") == 0) {
 			f_arc_lifting_with_two_lines = TRUE;
 			arc_lifting_text.assign(argv[++i]);
 			arc_lifting_two_lines_text.assign(argv[++i]);
 			cout << "-arc_lifting_with_two_lines " << arc_lifting_text
 					<< " " << arc_lifting_two_lines_text << endl;
 		}
-		else if (strcmp(argv[i], "-select_double_six") == 0) {
+		else if (stringcmp(argv[i], "-select_double_six") == 0) {
 			//f_select_double_six = TRUE;
 			string s;
 
@@ -147,7 +144,7 @@ int surface_create_description::read_arguments(int argc, const char **argv,
 			cout << "-select_double_six "
 					<< select_double_six_string[select_double_six_string.size() - 1] << endl;
 		}
-		else if (strcmp(argv[i], "-transform") == 0) {
+		else if (stringcmp(argv[i], "-transform") == 0) {
 
 			string s;
 
@@ -157,7 +154,7 @@ int surface_create_description::read_arguments(int argc, const char **argv,
 			cout << "-transform " << transform_coeffs[transform_coeffs.size() - 1]
 					<< " " << f_inverse_transform[transform_coeffs.size() - 1] << endl;
 		}
-		else if (strcmp(argv[i], "-transform_inverse") == 0) {
+		else if (stringcmp(argv[i], "-transform_inverse") == 0) {
 
 			string s;
 
@@ -167,7 +164,7 @@ int surface_create_description::read_arguments(int argc, const char **argv,
 			cout << "-transform_inverse " << transform_coeffs[transform_coeffs.size() - 1]
 					<< " " << f_inverse_transform[transform_coeffs.size() - 1] << endl;
 		}
-		else if (strcmp(argv[i], "-end") == 0) {
+		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}

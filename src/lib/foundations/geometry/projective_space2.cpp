@@ -4160,8 +4160,8 @@ void projective_space::arc_with_three_given_line_sets_diophant(
 
 void projective_space::maximal_arc_by_diophant(
 		int arc_sz, int arc_d,
-		const char *secant_lines_text,
-		const char *external_lines_as_subset_of_secants_text,
+		std::string &secant_lines_text,
+		std::string &external_lines_as_subset_of_secants_text,
 		diophant *&D,
 		int verbose_level)
 {

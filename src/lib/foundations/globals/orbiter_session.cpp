@@ -68,66 +68,66 @@ orbiter_session::~orbiter_session()
 
 
 void orbiter_session::print_help(int argc,
-		const char **argv, int i, int verbose_level)
+		std::string *argv, int i, int verbose_level)
 {
-	if (strcmp(argv[i], "-v") == 0) {
+	if (stringcmp(argv[i], "-v") == 0) {
 		cout << "-v <int : verbosity>" << endl;
 	}
-	else if (strcmp(argv[i], "-list_arguments") == 0) {
+	else if (stringcmp(argv[i], "-list_arguments") == 0) {
 		cout << "-list_arguments" << endl;
 	}
-	else if (strcmp(argv[i], "-seed") == 0) {
+	else if (stringcmp(argv[i], "-seed") == 0) {
 		cout << "-seed <int : seed>" << endl;
 	}
-	else if (strcmp(argv[i], "-memory_debug") == 0) {
+	else if (stringcmp(argv[i], "-memory_debug") == 0) {
 		cout << "-memory_debug <int : memory_debug_verbose_level>" << endl;
 	}
-	else if (strcmp(argv[i], "-override_polynomial") == 0) {
+	else if (stringcmp(argv[i], "-override_polynomial") == 0) {
 		cout << "-override_polynomial <string : polynomial in decimal>" << endl;
 	}
-	else if (strcmp(argv[i], "-orbiter_path") == 0) {
+	else if (stringcmp(argv[i], "-orbiter_path") == 0) {
 		cout << "-orbiter_path <string : path>" << endl;
 	}
-	else if (strcmp(argv[i], "-magma_path") == 0) {
+	else if (stringcmp(argv[i], "-magma_path") == 0) {
 		cout << "-magma_path <string : path>" << endl;
 	}
-	else if (strcmp(argv[i], "-fork") == 0) {
+	else if (stringcmp(argv[i], "-fork") == 0) {
 		cout << "-fork <string : variable> <string : logfile_mask> <int : from> <int : to> <int : step>" << endl;
 	}
 }
 
 int orbiter_session::recognize_keyword(int argc,
-		const char **argv, int i, int verbose_level)
+		std::string *argv, int i, int verbose_level)
 {
-	if (strcmp(argv[i], "-v") == 0) {
+	if (stringcmp(argv[i], "-v") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-list_arguments") == 0) {
+	else if (stringcmp(argv[i], "-list_arguments") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-seed") == 0) {
+	else if (stringcmp(argv[i], "-seed") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-memory_debug") == 0) {
+	else if (stringcmp(argv[i], "-memory_debug") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-override_polynomial") == 0) {
+	else if (stringcmp(argv[i], "-override_polynomial") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-orbiter_path") == 0) {
+	else if (stringcmp(argv[i], "-orbiter_path") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-magma_path") == 0) {
+	else if (stringcmp(argv[i], "-magma_path") == 0) {
 		return true;
 	}
-	else if (strcmp(argv[i], "-fork") == 0) {
+	else if (stringcmp(argv[i], "-fork") == 0) {
 		return true;
 	}
 	return false;
 }
 
 int orbiter_session::read_arguments(int argc,
-		const char **argv, int i0)
+		std::string *argv, int i0)
 {
 	int i;
 
@@ -138,47 +138,47 @@ int orbiter_session::read_arguments(int argc,
 	t0 = Os.os_ticks();
 
 	for (i = i0; i < argc; i++) {
-		if (strcmp(argv[i], "-v") == 0) {
-			verbose_level = atoi(argv[++i]);
+		if (stringcmp(argv[i], "-v") == 0) {
+			verbose_level = strtoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
 		}
-		else if (strcmp(argv[i], "-list_arguments") == 0) {
+		else if (stringcmp(argv[i], "-list_arguments") == 0) {
 			f_list_arguments = TRUE;
 			cout << "-list_arguments " << endl;
 		}
-		else if (strcmp(argv[i], "-seed") == 0) {
+		else if (stringcmp(argv[i], "-seed") == 0) {
 			f_seed = TRUE;
-			the_seed = atoi(argv[++i]);
+			the_seed = strtoi(argv[++i]);
 			cout << "-seed " << the_seed << endl;
 		}
-		else if (strcmp(argv[i], "-memory_debug") == 0) {
+		else if (stringcmp(argv[i], "-memory_debug") == 0) {
 			f_memory_debug = TRUE;
-			memory_debug_verbose_level = atoi(argv[++i]);
+			memory_debug_verbose_level = strtoi(argv[++i]);
 			cout << "-memory_debug " << memory_debug_verbose_level << endl;
 		}
-		else if (strcmp(argv[i], "-override_polynomial") == 0) {
+		else if (stringcmp(argv[i], "-override_polynomial") == 0) {
 			f_override_polynomial = TRUE;
 			override_polynomial.assign(argv[++i]);
 			cout << "-override_polynomial " << override_polynomial << endl;
 		}
-		else if (strcmp(argv[i], "-orbiter_path") == 0) {
+		else if (stringcmp(argv[i], "-orbiter_path") == 0) {
 			f_orbiter_path = TRUE;
 			orbiter_path.assign(argv[++i]);
 			cout << "-orbiter_path " << orbiter_path << endl;
 		}
-		else if (strcmp(argv[i], "-magma_path") == 0) {
+		else if (stringcmp(argv[i], "-magma_path") == 0) {
 			f_magma_path = TRUE;
 			magma_path.assign(argv[++i]);
 			cout << "-magma_path " << magma_path << endl;
 		}
-		else if (strcmp(argv[i], "-fork") == 0) {
+		else if (stringcmp(argv[i], "-fork") == 0) {
 			f_fork = TRUE;
 			fork_argument_idx = i;
 			fork_variable.assign(argv[++i]);
 			fork_logfile_mask.assign(argv[++i]);
-			fork_from = atoi(argv[++i]);
-			fork_to = atoi(argv[++i]);
-			fork_step = atoi(argv[++i]);
+			fork_from = strtoi(argv[++i]);
+			fork_to = strtoi(argv[++i]);
+			fork_step = strtoi(argv[++i]);
 			cout << "-fork " << fork_variable << " " << fork_logfile_mask << " " << fork_from << " " << fork_to << " " << fork_step << endl;
 		}
 		else {
@@ -190,7 +190,7 @@ int orbiter_session::read_arguments(int argc,
 	return i;
 }
 
-void orbiter_session::fork(int argc, const char **argv, int verbose_level)
+void orbiter_session::fork(int argc, std::string *argv, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -203,7 +203,7 @@ void orbiter_session::fork(int argc, const char **argv, int verbose_level)
 	vector<int> places;
 
 	for (j = 1; j < argc; j++) {
-		if (strcmp(fork_variable.c_str(), argv[j]) == 0) {
+		if (stringcmp(argv[j], fork_variable.c_str()) == 0) {
 			if (j != fork_argument_idx + 1) {
 				places.push_back(j);
 			}

@@ -32,21 +32,21 @@ namespace foundations {
 class create_file_description {
 public:
 	int f_file_mask;
-	const char *file_mask;
+	std::string file_mask;
 	int f_N;
 	int N;
 	int nb_lines;
-	const char *lines[MAX_LINES];
+	std::string lines[MAX_LINES];
 	int f_line_numeric[MAX_LINES];
 	int nb_final_lines;
-	const char *final_lines[MAX_LINES];
+	std::string final_lines[MAX_LINES];
 	int f_command;
-	const char *command;
+	std::string command;
 	int f_repeat;
 	int repeat_N;
 	int repeat_start;
 	int repeat_increment;
-	const char *repeat_mask;
+	std::string repeat_mask;
 	int f_split;
 	int split_m;
 	int f_read_cases;
@@ -56,12 +56,12 @@ public:
 	int read_cases_column_of_fname;
 	int f_tasks;
 	int nb_tasks;
-	const char *tasks_line;
+	std::string tasks_line;
 
 	create_file_description();
 	~create_file_description();
 	int read_arguments(
-		int argc, const char **argv,
+		int argc, std::string *argv,
 		int verbose_level);
 
 };
@@ -633,7 +633,7 @@ public:
 	int random_integer(int p);
 	void os_date_string(char *str, int sz);
 	int os_seconds_past_1970();
-	void get_string_from_command_line(std::string &p, int argc, const char **argv,
+	void get_string_from_command_line(std::string &p, int argc, std::string *argv,
 			int &i, int verbose_level);
 	void test_swap();
 	void block_swap_chars(char *ptr, int size, int no);
@@ -676,9 +676,9 @@ public:
 	int nb_inputs;
 	int input_first[1000];
 	int input_len[1000];
-	const char *input_mask[1000];
+	std::string input_mask[1000];
 	int f_o;
-	const char *output_mask;
+	std::string output_mask;
 	int f_output_starts_at;
 	int output_starts_at;
 	int f_step;
@@ -686,7 +686,7 @@ public:
 
 	prepare_frames();
 	~prepare_frames();
-	int parse_arguments(int argc, const char **argv);
+	int parse_arguments(int argc, std::string *argv);
 	void do_the_work(int verbose_level);
 };
 
@@ -864,7 +864,11 @@ int strcmp_with_or_without(char *p, char *q);
 uint32_t root_of_tree_uint32_t (uint32_t* S, uint32_t i);
 int util_compare_func(void *a, void *b, void *data);
 void text_to_three_double(const char *text, double *d);
-
+void text_to_three_double(std::string &text, double *d);
+void convert_arguments(int argc, const char **argv, std::string *&Argv);
+int stringcmp(std::string &str, const char *p);
+int strtoi(std::string &str);
+double strtof(std::string &str);
 
 
 

@@ -274,7 +274,7 @@ public:
 
 	packing_long_orbits_description();
 	~packing_long_orbits_description();
-	int read_arguments(int argc, const char **argv,
+	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 };
 
@@ -397,7 +397,7 @@ public:
 
 	packing_was_description();
 	~packing_was_description();
-	int read_arguments(int argc, const char **argv,
+	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 
 };
@@ -901,7 +901,7 @@ public:
 	int f_catalogue;
 	int iso;
 	int f_family;
-	const char *family_name;
+	std::string family_name;
 
 
 
@@ -909,7 +909,7 @@ public:
 	~spread_create_description();
 	void null();
 	void freeself();
-	int read_arguments(int argc, const char **argv,
+	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 };
 
@@ -953,8 +953,9 @@ public:
 	void null();
 	void freeself();
 	void init(spread_create_description *Descr, int verbose_level);
-	void apply_transformations(const char **transform_coeffs,
-		int *f_inverse_transform, int nb_transform, int verbose_level);
+	void apply_transformations(
+			std::vector<std::string> transform_coeffs,
+			std::vector<int> f_inverse_transform, int verbose_level);
 };
 
 

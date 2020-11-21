@@ -20,7 +20,7 @@ geo_parameter::geo_parameter()
 	b = 0;
 
 	mode = 0;
-	label[0] = 0;
+	//label;
 
 	nb_V = 0;
 	nb_B = 0;
@@ -124,7 +124,7 @@ void geo_parameter::append_to_entries(int a1, int a2, int a3, int a4)
 	nb_entries++;
 }
 
-void geo_parameter::write(ofstream &aStream, char *label)
+void geo_parameter::write(ofstream &aStream, std::string &label)
 {
 	
 	if (mode == MODE_SINGLE) {
@@ -139,7 +139,7 @@ void geo_parameter::write(ofstream &aStream, char *label)
 		}
 }
 
-void geo_parameter::write_mode_single(ofstream &aStream, char *label)
+void geo_parameter::write_mode_single(ofstream &aStream, std::string &label)
 {
 	int i, j, sum, pt_level = -1, bt_level = -1, xy, x, y, z, w;
 
@@ -203,7 +203,7 @@ void geo_parameter::write_mode_single(ofstream &aStream, char *label)
 		extra_row_level << " " << extra_col_level << endl;
 }
 
-void geo_parameter::write_mode_stack(ofstream &aStream, char *label)
+void geo_parameter::write_mode_stack(ofstream &aStream, std::string &label)
 {
 	int i;
 	
@@ -734,11 +734,11 @@ void geo_parameter::init_tdo_scheme(tdo_scheme &G, int verbose_level)
 	G.extra_col_level = extra_col_level;
 	G.lambda_level = lambda_level;
 	
-	G.level[ROW] = row_level;
-	G.level[COL] = col_level;
-	G.level[EXTRA_ROW] = extra_row_level;
-	G.level[EXTRA_COL] = extra_col_level;
-	G.level[LAMBDA] = lambda_level;
+	G.level[ROW_SCHEME] = row_level;
+	G.level[COL_SCHEME] = col_level;
+	G.level[EXTRA_ROW_SCHEME] = extra_row_level;
+	G.level[EXTRA_COL_SCHEME] = extra_col_level;
+	G.level[LAMBDA_SCHEME] = lambda_level;
 
 	if (f_v) {
 		cout << "geo_parameter::init_tdo_scheme "
@@ -754,36 +754,36 @@ void geo_parameter::print_schemes(tdo_scheme &G)
 {
 	cout << "geo_parameter::print_schemes" << endl;
 	cout << "decomposition " << label << ":" << endl;
-	G.print_scheme(LAMBDA, FALSE);
+	G.print_scheme(LAMBDA_SCHEME, FALSE);
 	if (row_level >= 2) {
-		G.print_scheme(ROW, FALSE);
+		G.print_scheme(ROW_SCHEME, FALSE);
 		}
 	if (col_level >= 2) {
-		G.print_scheme(COL, FALSE);
+		G.print_scheme(COL_SCHEME, FALSE);
 		}
 	if (extra_row_level > 2) {
-		G.print_scheme(EXTRA_ROW, FALSE);
+		G.print_scheme(EXTRA_ROW_SCHEME, FALSE);
 		}
 	if (extra_col_level > 2) {
-		G.print_scheme(EXTRA_COL, FALSE);
+		G.print_scheme(EXTRA_COL_SCHEME, FALSE);
 		}
 }
 
 void geo_parameter::print_schemes_tex(tdo_scheme &G)
 {
 	cout << "decomposition " << label << ":" << endl;
-	G.print_scheme_tex_fancy(cout, LAMBDA, TRUE, label);
+	G.print_scheme_tex_fancy(cout, LAMBDA_SCHEME, TRUE, label);
 	if (row_level >= 2) {
-		G.print_scheme_tex_fancy(cout, ROW, TRUE, label);
+		G.print_scheme_tex_fancy(cout, ROW_SCHEME, TRUE, label);
 		}
 	if (col_level >= 2) {
-		G.print_scheme_tex_fancy(cout, COL, TRUE, label);
+		G.print_scheme_tex_fancy(cout, COL_SCHEME, TRUE, label);
 		}
 	if (extra_row_level > 2) {
-		G.print_scheme_tex_fancy(cout, EXTRA_ROW, TRUE, label);
+		G.print_scheme_tex_fancy(cout, EXTRA_ROW_SCHEME, TRUE, label);
 		}
 	if (extra_col_level > 2) {
-		G.print_scheme_tex_fancy(cout, EXTRA_COL, TRUE, label);
+		G.print_scheme_tex_fancy(cout, EXTRA_COL_SCHEME, TRUE, label);
 		}
 
 }
@@ -861,7 +861,7 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(
 				"pointtactical decomposition" << endl;
 		}
 	init_tdo_scheme(G, verbose_level);
-	h = ROW;
+	h = ROW_SCHEME;
 			
 	class_first = NEW_int(nb_V);
 	class_len = NEW_int(nb_V);
@@ -1076,7 +1076,7 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 				"blocktactical decomposition" << endl;
 		}
 	init_tdo_scheme(G, verbose_level);
-	h = COL;
+	h = COL_SCHEME;
 	class_first = NEW_int(nb_B);
 	class_len = NEW_int(nb_B);
 	block_length = NEW_int(nb_B);
@@ -1356,7 +1356,7 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 		cout << endl;
 		}
 	init_tdo_scheme(G, 0 /*verbose_level*/);
-	h = ROW;
+	h = ROW_SCHEME;
 			
 	class_relabel = NEW_int(nb_V + nb_B);
 	for (i = 0; i < nb_V + nb_B; i++)
@@ -1646,42 +1646,45 @@ void geo_parameter::cut_off_two_lines(geo_parameter &GP2,
 	
 	if (f_v) {
 		cout << "geo_parameter::cut_off_two_lines" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "row_level = " << row_level << endl;
 		cout << "col_level = " << col_level << endl;
 		cout << "extra_row_level = " << extra_row_level << endl;
 		cout << "extra_col_level = " << extra_col_level << endl;
 		cout << "lambda_level = " << lambda_level << endl;
-        }
+       }
 	Part = NEW_int(nb_parts + 1);
 	Entries = NEW_int(4 * nb_entries + 1);
 	for (i = 0; i < nb_parts; i++) {
 		Part[i] = part[i];
-		}
+	}
 	Part[nb_parts] = -1;
 	for (i = 0; i < 4 * nb_entries; i++) {
 		Entries[i] = entries[i];
-		}
+	}
 	Entries[4 * nb_entries] = -1;
 	
 	TDO.init_TDO(Part, Entries, row_level, col_level, 
 		extra_row_level, extra_col_level, 
 		lambda_level, 0/*verbose_level - 1*/);
+
 	FREE_int(Part);
 	FREE_int(Entries);
 	w = 0;
-	for (j = TDO.nb_col_classes[COL] - 1; j >= 0; j--) {
+	for (j = TDO.nb_col_classes[COL_SCHEME] - 1; j >= 0; j--) {
 		S = 0;
-		for (i = 0; i < TDO.nb_row_classes[COL]; i++) 
-			S += TDO.the_col_scheme[i * TDO.nb_col_classes[COL] + j];
-		if (S != 2)
-			break;
-		w += TDO.col_classes_len[COL][j];
+		for (i = 0; i < TDO.nb_row_classes[COL_SCHEME]; i++) {
+			S += TDO.the_col_scheme[i * TDO.nb_col_classes[COL_SCHEME] + j];
 		}
+		if (S != 2) {
+			break;
+		}
+		w += TDO.col_classes_len[COL_SCHEME][j];
+	}
 	if (f_v) {
 		cout << "cutting off " << w << " columns" << endl;
-		}
+	}
 	cut_off(GP2, w, part_relabel, part_length, verbose_level);
 }
 
@@ -1710,7 +1713,7 @@ void geo_parameter::cut_off(geo_parameter &GP2, int w,
 	if (f_v) {
 		cout << "geo_parameter::cut_off cutting off "
 				"w=" << w << " columns" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "row_level = " << row_level << endl;
 		cout << "col_level = " << col_level << endl;
@@ -1718,13 +1721,13 @@ void geo_parameter::cut_off(geo_parameter &GP2, int w,
 		cout << "extra_col_level = " << extra_col_level << endl;
 		cout << "lambda_level = " << lambda_level << endl;
 		cout << "label = " << label << endl;
-		}
+	}
 	GP2.decomposition_type = decomposition_type;
 	GP2.fuse_type = fuse_type;
 	GP2.v = v;
 	GP2.b = GP2.b - w;
 	GP2.mode = MODE_STACK;	
-	strcpy(GP2.label, label);
+	GP2.label.assign(label);
 	
 	part_relabel = NEW_int(nb_parts + 1);
 	part_length = NEW_int(nb_parts + 1);
@@ -1739,20 +1742,21 @@ void geo_parameter::cut_off(geo_parameter &GP2, int w,
 	part_length[0] = 0;
 	for (i = 1; i <= nb_parts; i++) {
 		part_length[i] = GP2.nb_parts;
-		if (i == nb_parts)
+		if (i == nb_parts) {
 			break;
+		}
 		a = part[i];
 		if (a >= W) {
 			part_relabel[i] = -1;
-			}
+		}
 		else {
 			part_relabel[i] = GP2.nb_parts;
 			GP2.append_to_part(a);
 			//GP2.part.push_back(a);
 			//new_part[u] = a;
 			//u++;
-			}
 		}
+	}
 	//new_nb_parts = u;
 	//GP2.nb_parts = u;
 	//new_part[new_nb_parts] = -1;
@@ -1763,8 +1767,8 @@ void geo_parameter::cut_off(geo_parameter &GP2, int w,
 		cout << "part_relabel:" << endl;
 		for (i = 0; i < nb_parts; i++) {
 			cout << i << " : " << part_relabel[i] << endl;
-			}
 		}
+	}
 	GP2.nb_entries = 0;
 	GP2.entries = NULL;
 	//u = 0;
@@ -1781,7 +1785,7 @@ void geo_parameter::cut_off(geo_parameter &GP2, int w,
 				cout << a << " " << b << " " << c << " " << d
 						<< " -> " << A << " " << B << " " << C
 						<< " " << d << endl;
-				}
+			}
 			GP2.append_to_entries(A, B, C, d);
 			//GP2.entries.push_back(A);
 			//GP2.entries.push_back(B);
@@ -1792,41 +1796,41 @@ void geo_parameter::cut_off(geo_parameter &GP2, int w,
 			//new_entries[u * 4 + 2] = C;
 			//new_entries[u * 4 + 3] = d;
 			//u++;
-			}
+		}
 		else {
 			if (f_vv) {
 				cout << a << " " << b << " " << c << " " << d
 						<< " eliminated" << endl;
-				}
 			}
 		}
+	}
 	//new_nb_entries = u;
 	//GP2.nb_entries = u;
 	//new_entries[new_nb_entries * 4] = -1;
 	//GP2.entries.push_back(-1);
 	if (f_vv) {
 		cout << "new_nb_entries = " << GP2.nb_entries << endl;
-		}
+	}
 	if (row_level >= 0) {
 		GP2.row_level = part_length[row_level];
-		}
+	}
 	else {
 		GP2.row_level = row_level;
-		}
+	}
 	if (col_level >= 0) {
 		GP2.col_level = part_length[col_level];
-		}
+	}
 	else {
 		GP2.col_level = col_level;
-		}
+	}
 	GP2.extra_row_level = -1;
 	GP2.extra_col_level = -1;
 	if (lambda_level >= 0) {
 		GP2.lambda_level = part_length[lambda_level];
-		}
+	}
 	else {
 		GP2.lambda_level = lambda_level;
-		}
+	}
 #if 0
 	if (extra_row_level >= 0) {
 		GP2.extra_row_level = part_length[extra_row_level];
@@ -1851,23 +1855,24 @@ void geo_parameter::cut_off(geo_parameter &GP2, int w,
 	if (f_v) {
 		int j;
 		cout << "new_part:" << endl;
-		for (i = 0; i < GP2.nb_parts; i++) 
+		for (i = 0; i < GP2.nb_parts; i++)  {
 			cout << GP2.part[i] << " ";
+		}
 		cout << endl;
 		cout << "new_entries:" << endl;
 		for (i = 0; i < GP2.nb_entries; i++) {
 			for (j = 0; j < 4; j++) {
 				cout << GP2.entries[i * 4 + j] << " ";
-				}
-			cout << endl;
 			}
-		cout << endl;
+			cout << endl;
 		}
+		cout << endl;
+	}
 #endif
 	if (f_v) {
 		cout << "calling GP2.print_schemes" << endl;
 		GP2.print_schemes();
-		}	
+	}
 }
 
 void geo_parameter::copy(geo_parameter &GP2)
@@ -1879,7 +1884,7 @@ void geo_parameter::copy(geo_parameter &GP2)
 	GP2.v = v;
 	GP2.b = b;
 	GP2.mode = MODE_STACK;	
-	strcpy(GP2.label, label);
+	GP2.label.assign(label);
 	GP2.lambda_level = lambda_level;
 	GP2.row_level = row_level;
 	GP2.col_level = col_level;
@@ -1890,7 +1895,7 @@ void geo_parameter::copy(geo_parameter &GP2)
 	for (i = 0; i < nb_parts; i++) {
 		GP2.append_to_part(part[i]);
 		//GP2.part.push_back(part[i]);
-		}
+	}
 	//GP2.part.push_back(-1);
 	//GP2.nb_parts = nb_parts;
 	GP2.nb_entries = 0;
@@ -1901,7 +1906,7 @@ void geo_parameter::copy(geo_parameter &GP2)
 				entries[4 * i + 2],
 				entries[4 * i + 3]);
 		//GP2.entries.push_back(entries[i]);
-		}
+	}
 	//GP2.entries.push_back(-1);
 	//GP2.nb_entries = nb_entries;
 }
@@ -1918,11 +1923,11 @@ void geo_parameter::print_schemes()
 	Entries = NEW_int(4 * nb_entries + 1);
 	for (i = 0; i < nb_parts; i++) {
 		Part[i] = part[i];
-		}
+	}
 	Part[nb_parts] = -1;
 	for (i = 0; i < 4 * nb_entries; i++) {
 		Entries[i] = entries[i];
-		}
+	}
 	Entries[4 * nb_entries] = -1;
 	
 	
@@ -1950,7 +1955,6 @@ void geo_parameter::print_schemes()
 #endif
 }
 
-}
-}
+}}
 
 

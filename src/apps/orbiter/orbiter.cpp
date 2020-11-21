@@ -15,7 +15,7 @@ int build_number =
 #include "../../../build_number"
 ;
 
-void work(orbiter_session *Session, int argc, const char **argv, int i, int verbose_level);
+void work(orbiter_session *Session, int argc, std::string *Argv, int i, int verbose_level);
 
 
 int main(int argc, const char **argv)
@@ -38,7 +38,12 @@ int main(int argc, const char **argv)
 	cout << "An example makefile with many commands from the user's guide is here: " << endl;
 	cout << "https://github.com/abetten/orbiter/tree/master/examples/users_guide/makefile" << endl;
 
-	i = Session.read_arguments(argc, argv, 1);
+
+	std::string *Argv;
+
+	convert_arguments(argc, argv, Argv);
+
+	i = Session.read_arguments(argc, Argv, 1);
 
 
 	int verbose_level;
@@ -53,7 +58,7 @@ int main(int argc, const char **argv)
 
 		cout << "argument list:" << endl;
 		for (j = 0; j < argc; j++) {
-			cout << j << " : " << argv[j] << endl;
+			cout << j << " : " << Argv[j] << endl;
 		}
 #if 0
 		string cmd;
@@ -74,7 +79,7 @@ int main(int argc, const char **argv)
 		if (f_v) {
 			cout << "before Session.fork" << endl;
 		}
-		Session.fork(argc, argv, verbose_level);
+		Session.fork(argc, Argv, verbose_level);
 		if (f_v) {
 			cout << "after Session.fork" << endl;
 		}
@@ -92,7 +97,7 @@ int main(int argc, const char **argv)
 
 		// main dispatch:
 
-		work(&Session, argc, argv, i, verbose_level);
+		work(&Session, argc, Argv, i, verbose_level);
 
 
 		// finish:
@@ -109,7 +114,7 @@ int main(int argc, const char **argv)
 }
 
 
-void work(orbiter_session *Session, int argc, const char **argv, int i, int verbose_level)
+void work(orbiter_session *Session, int argc, std::string *Argv, int i, int verbose_level)
 {
 	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
@@ -119,18 +124,17 @@ void work(orbiter_session *Session, int argc, const char **argv, int i, int verb
 	}
 
 
-
 	if (f_v) {
 		cout << "work before Interface_algebra" << endl;
 	}
 	{
 
 		interface_algebra Interface_algebra;
-		if (Interface_algebra.recognize_keyword(argc, argv, i, verbose_level)) {
+		if (Interface_algebra.recognize_keyword(argc, Argv, i, verbose_level)) {
 			if (f_v) {
 				cout << "recognizing keyword from Interface_algebra" << endl;
 			}
-			Interface_algebra.read_arguments(argc, argv, i, verbose_level);
+			Interface_algebra.read_arguments(argc, Argv, i, verbose_level);
 			Interface_algebra.worker(Session, verbose_level);
 		}
 	}
@@ -141,11 +145,11 @@ void work(orbiter_session *Session, int argc, const char **argv, int i, int verb
 	{
 
 		interface_cryptography Interface_cryptography;
-		if (Interface_cryptography.recognize_keyword(argc, argv, i, verbose_level)) {
+		if (Interface_cryptography.recognize_keyword(argc, Argv, i, verbose_level)) {
 			if (f_v) {
 				cout << "recognizing keyword from Interface_cryptography" << endl;
 			}
-			Interface_cryptography.read_arguments(argc, argv, i, verbose_level);
+			Interface_cryptography.read_arguments(argc, Argv, i, verbose_level);
 			Interface_cryptography.worker(verbose_level);
 		}
 	}
@@ -156,11 +160,11 @@ void work(orbiter_session *Session, int argc, const char **argv, int i, int verb
 	{
 
 		interface_combinatorics Interface_combinatorics;
-		if (Interface_combinatorics.recognize_keyword(argc, argv, i, verbose_level)) {
+		if (Interface_combinatorics.recognize_keyword(argc, Argv, i, verbose_level)) {
 			if (f_v) {
 				cout << "recognizing keyword from Interface_combinatorics" << endl;
 			}
-			Interface_combinatorics.read_arguments(argc, argv, i, verbose_level);
+			Interface_combinatorics.read_arguments(argc, Argv, i, verbose_level);
 			Interface_combinatorics.worker(verbose_level);
 		}
 	}
@@ -171,11 +175,11 @@ void work(orbiter_session *Session, int argc, const char **argv, int i, int verb
 	{
 
 		interface_coding_theory Interface_coding_theory;
-		if (Interface_coding_theory.recognize_keyword(argc, argv, i, verbose_level)) {
+		if (Interface_coding_theory.recognize_keyword(argc, Argv, i, verbose_level)) {
 			if (f_v) {
 				cout << "recognizing keyword from Interface_coding_theory" << endl;
 			}
-			Interface_coding_theory.read_arguments(argc, argv, i, verbose_level);
+			Interface_coding_theory.read_arguments(argc, Argv, i, verbose_level);
 			Interface_coding_theory.worker(verbose_level);
 		}
 	}
@@ -186,11 +190,11 @@ void work(orbiter_session *Session, int argc, const char **argv, int i, int verb
 	{
 
 		interface_povray Interface_povray;
-		if (Interface_povray.recognize_keyword(argc, argv, i, verbose_level)) {
+		if (Interface_povray.recognize_keyword(argc, Argv, i, verbose_level)) {
 			if (f_v) {
 				cout << "recognizing keyword from Interface_povray" << endl;
 			}
-			Interface_povray.read_arguments(argc, argv, i, verbose_level);
+			Interface_povray.read_arguments(argc, Argv, i, verbose_level);
 			Interface_povray.worker(verbose_level);
 		}
 	}
@@ -201,8 +205,8 @@ void work(orbiter_session *Session, int argc, const char **argv, int i, int verb
 	{
 
 		interface_projective Interface_projective;
-		if (Interface_projective.recognize_keyword(argc, argv, i, verbose_level)) {
-			Interface_projective.read_arguments(argc, argv, i, verbose_level);
+		if (Interface_projective.recognize_keyword(argc, Argv, i, verbose_level)) {
+			Interface_projective.read_arguments(argc, Argv, i, verbose_level);
 			Interface_projective.worker(Session, verbose_level);
 		}
 	}

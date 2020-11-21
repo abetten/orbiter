@@ -22,7 +22,7 @@ namespace foundations {
 create_file_description::create_file_description()
 {
 	f_file_mask = FALSE;
-	file_mask = NULL;
+	//file_mask ;
 	f_N = FALSE;
 	N = 0;
 	nb_lines = 0;
@@ -30,12 +30,12 @@ create_file_description::create_file_description()
 	nb_final_lines = 0;
 	//const char *final_lines[MAX_LINES];
 	f_command = FALSE;
-	command = NULL;
+	//command;
 	f_repeat = FALSE;
 	repeat_N = 0;
 	repeat_start = 0;
 	repeat_increment = 0;
-	repeat_mask = NULL;
+	//repeat_mask;
 	f_split = FALSE;
 	split_m = 0;
 	f_read_cases = FALSE;
@@ -45,7 +45,7 @@ create_file_description::create_file_description()
 	read_cases_column_of_fname = 0;
 	f_tasks = FALSE;
 	nb_tasks = 0;
-	tasks_line = NULL;
+	//tasks_line;
 
 }
 
@@ -56,83 +56,83 @@ create_file_description::~create_file_description()
 
 
 int create_file_description::read_arguments(
-	int argc, const char **argv,
+	int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;
 
 	cout << "create_file_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
-		if (strcmp(argv[i], "-file_mask") == 0) {
+		if (stringcmp(argv[i], "-file_mask") == 0) {
 			f_file_mask = TRUE;
-			file_mask = argv[++i];
+			file_mask.assign(argv[++i]);
 			cout << "-file_mask " << file_mask << endl;
 		}
-		else if (strcmp(argv[i], "-N") == 0) {
+		else if (stringcmp(argv[i], "-N") == 0) {
 			f_N = TRUE;
-			N = atoi(argv[++i]);
+			N = strtoi(argv[++i]);
 			cout << "-N " << N << endl;
 		}
-		else if (strcmp(argv[i], "-read_cases") == 0) {
+		else if (stringcmp(argv[i], "-read_cases") == 0) {
 			f_read_cases = TRUE;
-			read_cases_fname = argv[++i];
+			read_cases_fname.assign(argv[++i]);
 			cout << "-read_cases " << read_cases_fname << endl;
 		}
-		else if (strcmp(argv[i], "-read_cases_text") == 0) {
+		else if (stringcmp(argv[i], "-read_cases_text") == 0) {
 			f_read_cases_text = TRUE;
 			read_cases_fname.assign(argv[++i]);
-			read_cases_column_of_case = atoi(argv[++i]);
-			read_cases_column_of_fname = atoi(argv[++i]);
+			read_cases_column_of_case = strtoi(argv[++i]);
+			read_cases_column_of_fname = strtoi(argv[++i]);
 			cout << "-read_cases_text " << read_cases_fname << " "
 					<< read_cases_column_of_case << " "
 					<< read_cases_column_of_fname << endl;
 		}
-		else if (strcmp(argv[i], "-line") == 0) {
-			lines[nb_lines] = argv[++i];
+		else if (stringcmp(argv[i], "-line") == 0) {
+			lines[nb_lines].assign(argv[++i]);
 			f_line_numeric[nb_lines] = FALSE;
 			cout << "-line " << lines[nb_lines] << endl;
 			nb_lines++;
 		}
-		else if (strcmp(argv[i], "-line_numeric") == 0) {
-			lines[nb_lines] = argv[++i];
+		else if (stringcmp(argv[i], "-line_numeric") == 0) {
+			lines[nb_lines].assign(argv[++i]);
 			f_line_numeric[nb_lines] = TRUE;
 			cout << "-line_numeric " << lines[nb_lines] << endl;
 			nb_lines++;
 		}
-		else if (strcmp(argv[i], "-final_line") == 0) {
-			final_lines[nb_final_lines] = argv[++i];
+		else if (stringcmp(argv[i], "-final_line") == 0) {
+			final_lines[nb_final_lines].assign(argv[++i]);
 			cout << "-final_line " << final_lines[nb_final_lines] << endl;
 			nb_final_lines++;
 		}
-		else if (strcmp(argv[i], "-command") == 0) {
+		else if (stringcmp(argv[i], "-command") == 0) {
 			f_command = TRUE;
-			command = argv[++i];
+			command.assign(argv[++i]);
 			cout << "-command " << command << endl;
 		}
-		else if (strcmp(argv[i], "-repeat") == 0) {
+		else if (stringcmp(argv[i], "-repeat") == 0) {
 			f_repeat = TRUE;
-			repeat_N = atoi(argv[++i]);
-			repeat_start = atoi(argv[++i]);
-			repeat_increment = atoi(argv[++i]);
-			repeat_mask = argv[++i];
+			repeat_N = strtoi(argv[++i]);
+			repeat_start = strtoi(argv[++i]);
+			repeat_increment = strtoi(argv[++i]);
+			repeat_mask.assign(argv[++i]);
 			cout << "-repeat " << repeat_N
 					<< " " << repeat_start
 					<< " " << repeat_increment
 					<< " " << repeat_mask
 					<< endl;
 		}
-		else if (strcmp(argv[i], "-split") == 0) {
+		else if (stringcmp(argv[i], "-split") == 0) {
 			f_split = TRUE;
-			split_m = atoi(argv[++i]);
+			split_m = strtoi(argv[++i]);
 			cout << "-split " << split_m << endl;
 		}
-		else if (strcmp(argv[i], "-tasks") == 0) {
+		else if (stringcmp(argv[i], "-tasks") == 0) {
 			f_tasks = TRUE;
-			nb_tasks = atoi(argv[++i]);
-			tasks_line = argv[++i];
+			nb_tasks = strtoi(argv[++i]);
+			tasks_line.assign(argv[++i]);
 			cout << "-tasks " << nb_tasks << " " << tasks_line << endl;
 		}
-		else if (strcmp(argv[i], "-end") == 0) {
+		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}

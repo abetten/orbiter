@@ -27,6 +27,7 @@ function_polish::~function_polish()
 {
 }
 
+#if 0
 void function_polish::init_from_description(
 		function_polish_description *Descr,
 		int verbose_level)
@@ -38,6 +39,7 @@ void function_polish::init_from_description(
 	}
 
 	function_polish::Descr = Descr;
+
 
 	if (f_v) {
 		cout << "function_polish::init_from_description before init" << endl;
@@ -56,11 +58,15 @@ void function_polish::init_from_description(
 		cout << "function_polish::init_from_description done" << endl;
 	}
 }
+#endif
 
 void function_polish::init(
+		function_polish_description *Descr,
+#if 0
 		int nb_variables, char **variable_names,
 		int nb_constants, char **constant_names, char **constant_values,
 		int nb_commands, char **cmds,
+#endif
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -68,35 +74,36 @@ void function_polish::init(
 	int entry, len;
 	int i;
 
+
 	if (f_v) {
 		cout << "function_polish::init" << endl;
-		cout << "function_polish::nb_variables = " << nb_variables << endl;
-		cout << "function_polish::nb_constants = " << nb_constants << endl;
-		cout << "function_polish::nb_commands = " << nb_commands << endl;
+		cout << "function_polish::nb_variables = " << Descr->nb_variables << endl;
+		cout << "function_polish::nb_constants = " << Descr->nb_constants << endl;
+		cout << "function_polish::nb_commands = " << Descr->code_sz << endl;
 		cout << "variables:" << endl;
-		for (i = 0; i < nb_variables; i++) {
-			cout << i << " : " << variable_names[i] << endl;
+		for (i = 0; i < Descr->nb_variables; i++) {
+			cout << i << " : " << Descr->variable_names[i] << endl;
 		}
 		cout << "constants:" << endl;
-		for (i = 0; i < nb_constants; i++) {
-			cout << i << " : " << constant_names[i] << " = " << constant_values[i] << endl;
+		for (i = 0; i < Descr->nb_constants; i++) {
+			cout << i << " : " << Descr->const_names[i] << " = " << Descr->const_values[i] << endl;
 		}
 		cout << "commands:" << endl;
-		for (i = 0; i < nb_commands; i++) {
-			cout << i << " : " << cmds[i] << endl;
+		for (i = 0; i < Descr->code_sz; i++) {
+			cout << i << " : " << Descr->code[i] << endl;
 		}
 	}
 
-	for (i = 0; i < nb_variables; i++) {
-		string S(variable_names[i]);
+	for (i = 0; i < Descr->nb_variables; i++) {
+		string S(Descr->variable_names[i]);
 		Variables.push_back(S);
 	}
 
-	for (i = 0; i < nb_constants; i++) {
+	for (i = 0; i < Descr->nb_constants; i++) {
 		double f;
 
-		f = atof(constant_values[i]);
-		pair<string, double> P(constant_names[i], f);
+		f = strtof(Descr->const_values[i]);
+		pair<string, double> P(Descr->const_names[i], f);
 		Constants.push_back(P);
 	}
 
@@ -106,14 +113,14 @@ void function_polish::init(
 	}
 	entry = 0;
 	len = 0;
-	for (i = 0; i < nb_commands; i++) {
+	for (i = 0; i < Descr->code_sz; i++) {
 		function_command cmd;
 
 		len++;
 
-		if (strcmp(cmds[i], "push") == 0) {
+		if (stringcmp(Descr->code[i], "push") == 0) {
 
-			string S(cmds[++i]);
+			string S(Descr->code[++i]);
 
 			int j;
 
@@ -152,9 +159,9 @@ void function_polish::init(
 				}
 			}
 		}
-		else if (strcmp(cmds[i], "store") == 0) {
+		else if (stringcmp(Descr->code[i], "store") == 0) {
 			int j;
-			string S(cmds[++i]);
+			string S(Descr->code[++i]);
 
 			for (j = 0; j < (int) Variables.size(); j++) {
 				if (strcmp(Variables[j].c_str(), S.c_str()) == 0) {
@@ -171,34 +178,34 @@ void function_polish::init(
 				cout << "store command, cannot find variable with label " << S << endl;
 			}
 		}
-		else if (strcmp(cmds[i], "mult") == 0) {
+		else if (stringcmp(Descr->code[i], "mult") == 0) {
 			cmd.init_simple(5);
 			if (f_v) {
 				cout << "mult" << endl;
 			}
 		}
-		else if (strcmp(cmds[i], "add") == 0) {
+		else if (stringcmp(Descr->code[i], "add") == 0) {
 			cmd.init_simple(6);
 			if (f_v) {
 				cout << "add" << endl;
 			}
 		}
-		else if (strcmp(cmds[i], "cos") == 0) {
+		else if (stringcmp(Descr->code[i], "cos") == 0) {
 			cmd.init_simple(7);
 		}
-		else if (strcmp(cmds[i], "sin") == 0) {
+		else if (stringcmp(Descr->code[i], "sin") == 0) {
 			cmd.init_simple(8);
 			if (f_v) {
 				cout << "cos" << endl;
 			}
 		}
-		else if (strcmp(cmds[i], "sqrt") == 0) {
+		else if (stringcmp(Descr->code[i], "sqrt") == 0) {
 			cmd.init_simple(10);
 			if (f_v) {
 				cout << "sqrt" << endl;
 			}
 		}
-		else if (strcmp(cmds[i], "return") == 0) {
+		else if (stringcmp(Descr->code[i], "return") == 0) {
 			cmd.init_simple(9);
 			if (f_v) {
 				cout << "return" << endl;
@@ -209,7 +216,7 @@ void function_polish::init(
 			len = 0;
 		}
 		else {
-			cout << "unrecognized command " << cmds[i] << endl;
+			cout << "unrecognized command " << Descr->code[i] << endl;
 			exit(1);
 		}
 		Code.push_back(cmd);

@@ -364,7 +364,7 @@ public:
 	finite_field_activity_description();
 	~finite_field_activity_description();
 	int read_arguments(
-		int argc, const char **argv,
+		int argc, std::string *argv,
 		int verbose_level);
 
 };
@@ -554,10 +554,8 @@ public:
 	~group_theoretic_activity_description();
 	void null();
 	void freeself();
-	void read_arguments_from_string(
-			const char *str, int verbose_level);
 	int read_arguments(
-		int argc, const char **argv,
+		int argc, std::string *argv,
 		int verbose_level);
 
 };

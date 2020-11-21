@@ -98,11 +98,6 @@ void projective_space::freeself()
 	if (Bitmatrix) {
 		FREE_OBJECT(Bitmatrix);
 	}
-#if 0
-	if (incidence_bitvec) {
-		FREE_uchar(incidence_bitvec);
-	}
-#endif
 	if (Line_through_two_points) {
 		FREE_int(Line_through_two_points);
 	}
@@ -1605,11 +1600,6 @@ int projective_space::determine_cubic_in_plane(
 		for (j = 0; j < Poly_3_3->get_nb_monomials(); j++) {
 			System[i * Poly_3_3->get_nb_monomials() + j] =
 					Poly_3_3->evaluate_monomial(j, Pt_coord + i * d);
-#if 0
-				F->evaluate_monomial(
-					Poly_3_3->Monomials + j * d,
-					Pt_coord + i * d, d);
-#endif
 			}
 		}
 	if (f_v) {

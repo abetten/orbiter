@@ -125,8 +125,8 @@ public:
 		int starter_case, int verbose_level)
 		);
 	void compute_liftings_new(int f_solve, int f_save, int f_read_instead, 
-		int f_draw_system, const char *fname_system, 
-		int f_write_tree, const char *fname_tree, int verbose_level);
+		int f_draw_system, std::string &fname_system,
+		int f_write_tree, std::string &fname_tree, int verbose_level);
 	void compute_liftings_single_case_new(int starter_case, 
 		int f_solve, int f_save, int f_read_instead, 
 		int &nb_col, 
@@ -177,9 +177,9 @@ public:
 	int f_save;
 	int f_read;
 	int f_draw_system;
-	const char *fname_system;
+	std::string fname_system;
 	int f_write_tree;
-	const char *fname_tree;
+	std::string fname_tree;
 	void (*prepare_function_new)(exact_cover *E, int starter_case, 
 		long int *candidates, int nb_candidates,
 		strong_generators *Strong_gens, 
@@ -206,7 +206,7 @@ public:
 	~exact_cover_arguments();
 	void null();
 	void freeself();
-	int read_arguments(int argc, const char **argv,
+	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 	void compute_lifts(int verbose_level);
 };

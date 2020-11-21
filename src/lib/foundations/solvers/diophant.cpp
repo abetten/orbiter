@@ -4522,16 +4522,16 @@ void diophant_callback_solution_found(int *sol, int len,
 	lo.resize(D->n);
 	for (j = 0; j < D->n; j++) {
 		lo[j] = 0;
-		}
+	}
 	for (j = 0; j < len; j++) {
 		lo[sol[j]] = 1;
-		}
+	}
 	D->_results.push_back(lo);
 	D->_resultanz++;
 
 	if (diophant_user_callback_solution_found) {
 		(*diophant_user_callback_solution_found)(sol, len, nb_sol, data);
-		}
+	}
 	//D->test_if_the_last_solution_is_unique();
 }
 

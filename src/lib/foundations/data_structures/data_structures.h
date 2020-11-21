@@ -221,9 +221,11 @@ public:
 	~data_input_stream();
 	void null();
 	void freeself();
+#if 0
 	void read_arguments_from_string(
 			const char *str, int verbose_level);
-	int read_arguments(int argc, const char **argv,
+#endif
+	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 	int count_number_of_objects_to_test(
 		int verbose_level);
@@ -621,7 +623,7 @@ public:
 	set_builder_description();
 	~set_builder_description();
 	int read_arguments(
-		int argc, const char **argv,
+		int argc, std::string *argv,
 		int verbose_level);
 	void print();
 };

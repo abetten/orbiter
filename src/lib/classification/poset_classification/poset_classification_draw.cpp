@@ -2288,14 +2288,14 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 	for (i = 0; i < nb_layers; i++) {
 		if ((i % 3) == 0) {
 			LG->set_radius_factor_for_all_nodes_at_level(
-					i, 5. /* radius_factor */, 0 /* verbose_level */);
+					i, .9 /* radius_factor */, 0 /* verbose_level */);
 		}
 		else {
 			// .9 means we don't draw a label at that node
 			//LG->set_radius_factor_for_all_nodes_at_level(
 			// i, .9 /* radius_factor */, 0 /* verbose_level */);
 			LG->set_radius_factor_for_all_nodes_at_level(
-					i, 4 /* radius_factor */, 0 /* verbose_level */);
+					i, 0.9 /* radius_factor */, 0 /* verbose_level */);
 		}
 	}
 	
