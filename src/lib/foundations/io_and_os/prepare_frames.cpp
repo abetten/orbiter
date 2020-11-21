@@ -27,7 +27,7 @@ prepare_frames::prepare_frames()
 	//int input_len[1000];
 	//const char *input_mask[1000];
 	f_o = FALSE;
-	output_mask = NULL;
+	//output_mask;
 	f_output_starts_at = FALSE;
 	output_starts_at = 0;
 	f_step = FALSE;
@@ -40,35 +40,35 @@ prepare_frames::~prepare_frames()
 
 }
 
-int prepare_frames::parse_arguments(int argc, const char **argv)
+int prepare_frames::parse_arguments(int argc, std::string *argv)
 {
 	int i;
 
 	cout << "prepare_frames::parse_arguments" << endl;
 	for (i = 0; i < argc; i++) {
-		if (strcmp(argv[i], "-i") == 0) {
-			input_first[nb_inputs] = atoi(argv[++i]);
-			input_len[nb_inputs] = atoi(argv[++i]);
-			input_mask[nb_inputs] = argv[++i];
+		if (stringcmp(argv[i], "-i") == 0) {
+			input_first[nb_inputs] = strtoi(argv[++i]);
+			input_len[nb_inputs] = strtoi(argv[++i]);
+			input_mask[nb_inputs].assign(argv[++i]);
 			cout << "-i " << input_first[nb_inputs] << " " << input_len[nb_inputs] << " " << input_mask[nb_inputs] << endl;
 			nb_inputs++;
 		}
-		else if (strcmp(argv[i], "-step") == 0) {
+		else if (stringcmp(argv[i], "-step") == 0) {
 			f_step = TRUE;
-			step = atoi(argv[++i]);
+			step = strtoi(argv[++i]);
 			cout << "-step " << step << endl;
 		}
-		else if (strcmp(argv[i], "-o") == 0) {
+		else if (stringcmp(argv[i], "-o") == 0) {
 			f_o = TRUE;
-			output_mask = argv[++i];
+			output_mask.assign(argv[++i]);
 			cout << "-o " << output_mask << endl;
 		}
-		else if (strcmp(argv[i], "-output_starts_at") == 0) {
+		else if (stringcmp(argv[i], "-output_starts_at") == 0) {
 			f_output_starts_at = TRUE;
-			output_starts_at = atoi(argv[++i]);
+			output_starts_at = strtoi(argv[++i]);
 			cout << "-output_starts_at " << output_starts_at << endl;
 		}
-		else if (strcmp(argv[i], "-end") == 0) {
+		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}
@@ -77,7 +77,7 @@ int prepare_frames::parse_arguments(int argc, const char **argv)
 					"unrecognized option " << argv[i] << endl;
 		}
 	}
-	return i;
+	return i + 1;
 }
 
 void prepare_frames::do_the_work(int verbose_level)
@@ -108,8 +108,8 @@ void prepare_frames::do_the_work(int verbose_level)
 			if (f_step) {
 				j *= step;
 			}
-			sprintf(input_fname, input_mask[i], (int) j);
-			sprintf(output_fname, output_mask, (int) h);
+			sprintf(input_fname, input_mask[i].c_str(), (int) j);
+			sprintf(output_fname, output_mask.c_str(), (int) h);
 			sprintf(cmd, "cp %s %s", input_fname, output_fname);
 			system(cmd);
 			h++;

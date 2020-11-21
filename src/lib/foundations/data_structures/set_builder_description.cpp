@@ -48,35 +48,35 @@ set_builder_description::~set_builder_description()
 
 
 int set_builder_description::read_arguments(
-	int argc, const char **argv,
+	int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;
 
 	cout << "set_builder_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
-		if (strcmp(argv[i], "-loop") == 0) {
+		if (stringcmp(argv[i], "-loop") == 0) {
 			f_index_set_loop = TRUE;
-			index_set_loop_low = atoi(argv[++i]);
-			index_set_loop_upper_bound = atoi(argv[++i]);
-			index_set_loop_increment = atoi(argv[++i]);
+			index_set_loop_low = strtoi(argv[++i]);
+			index_set_loop_upper_bound = strtoi(argv[++i]);
+			index_set_loop_increment = strtoi(argv[++i]);
 			cout << "-loop " << index_set_loop_low << " "
 					<< index_set_loop_upper_bound << " "
 					<< index_set_loop_increment << endl;
 		}
-		else if (strcmp(argv[i], "-affine_function") == 0) {
+		else if (stringcmp(argv[i], "-affine_function") == 0) {
 			f_affine_function = TRUE;
-			affine_function_a = atoi(argv[++i]);
-			affine_function_b = atoi(argv[++i]);
+			affine_function_a = strtoi(argv[++i]);
+			affine_function_b = strtoi(argv[++i]);
 			cout << "-affine_function " << affine_function_a << " " << affine_function_b << endl;
 		}
-		else if (strcmp(argv[i], "-clone_with_affine_function") == 0) {
+		else if (stringcmp(argv[i], "-clone_with_affine_function") == 0) {
 			f_clone_with_affine_function = TRUE;
-			clone_with_affine_function_a = atoi(argv[++i]);
-			clone_with_affine_function_b = atoi(argv[++i]);
+			clone_with_affine_function_a = strtoi(argv[++i]);
+			clone_with_affine_function_b = strtoi(argv[++i]);
 			cout << "-clone_with_affine_function " << clone_with_affine_function_a << " " << clone_with_affine_function_b << endl;
 		}
-		else if (strcmp(argv[i], "-set_builder") == 0) {
+		else if (stringcmp(argv[i], "-set_builder") == 0) {
 			f_set_builder = TRUE;
 			Descr = NEW_OBJECT(set_builder_description);
 			cout << "reading -set_builder" << endl;
@@ -92,13 +92,13 @@ int set_builder_description::read_arguments(
 			cout << "-set_builder " << endl;
 			Descr->print();
 		}
-		else if (strcmp(argv[i], "-index_set") == 0) {
+		else if (stringcmp(argv[i], "-index_set") == 0) {
 			f_index_set = TRUE;
 			index_set_text.assign(argv[++i]);
 			cout << "-index_set " << index_set_text << endl;
 		}
 
-		else if (strcmp(argv[i], "-end") == 0) {
+		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}

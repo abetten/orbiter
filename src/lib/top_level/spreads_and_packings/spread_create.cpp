@@ -174,9 +174,8 @@ void spread_create::init(spread_create_description *Descr, int verbose_level)
 }
 
 void spread_create::apply_transformations(
-	const char **transform_coeffs,
-	int *f_inverse_transform, int nb_transform,
-	int verbose_level)
+		std::vector<std::string> transform_coeffs,
+		std::vector<int> f_inverse_transform, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

@@ -180,7 +180,7 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 }
 
 void isomorph::isomorph_testing(int t0, 
-	int f_play_back, const char *play_back_file_name, 
+	int f_play_back, std::string &play_back_file_name,
 	int f_implicit_fusion, int print_mod, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

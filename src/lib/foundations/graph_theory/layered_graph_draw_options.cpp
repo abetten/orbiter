@@ -72,7 +72,7 @@ layered_graph_draw_options::~layered_graph_draw_options()
 };
 
 int layered_graph_draw_options::read_arguments(
-	int argc, const char **argv,
+	int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;
@@ -81,99 +81,99 @@ int layered_graph_draw_options::read_arguments(
 	cout << "layered_graph_draw_options::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-		if (strcmp(argv[i], "-file") == 0) {
+		if (stringcmp(argv[i], "-file") == 0) {
 			f_file = TRUE;
 			fname.assign(argv[++i]);
 			cout << "-file " << fname << endl;
 			}
-		else if (strcmp(argv[i], "-xin") == 0) {
-			xin = atoi(argv[++i]);
+		else if (stringcmp(argv[i], "-xin") == 0) {
+			xin = strtoi(argv[++i]);
 			cout << "-xin " << xin << endl;
 			}
-		else if (strcmp(argv[i], "-yin") == 0) {
-			yin = atoi(argv[++i]);
+		else if (stringcmp(argv[i], "-yin") == 0) {
+			yin = strtoi(argv[++i]);
 			cout << "-yin " << yin << endl;
 			}
-		else if (strcmp(argv[i], "-xout") == 0) {
-			xout = atoi(argv[++i]);
+		else if (stringcmp(argv[i], "-xout") == 0) {
+			xout = strtoi(argv[++i]);
 			cout << "-xout " << xout << endl;
 			}
-		else if (strcmp(argv[i], "-yout") == 0) {
-			yout = atoi(argv[++i]);
+		else if (stringcmp(argv[i], "-yout") == 0) {
+			yout = strtoi(argv[++i]);
 			cout << "-yout " << yout << endl;
 			}
-		else if (strcmp(argv[i], "-spanning_tree") == 0) {
+		else if (stringcmp(argv[i], "-spanning_tree") == 0) {
 			f_spanning_tree = TRUE;
 			cout << "-spanning_tree " << endl;
 			}
-		else if (strcmp(argv[i], "-circle") == 0) {
+		else if (stringcmp(argv[i], "-circle") == 0) {
 			f_circle = TRUE;
 			cout << "-circle " << endl;
 			}
-		else if (strcmp(argv[i], "-corners") == 0) {
+		else if (stringcmp(argv[i], "-corners") == 0) {
 			f_corners = TRUE;
 			cout << "-corners " << endl;
 			}
-		else if (strcmp(argv[i], "-rad") == 0) {
-			rad = atoi(argv[++i]);
+		else if (stringcmp(argv[i], "-rad") == 0) {
+			rad = strtoi(argv[++i]);
 			cout << "-rad " << rad << endl;
 			}
-		else if (strcmp(argv[i], "-embedded") == 0) {
+		else if (stringcmp(argv[i], "-embedded") == 0) {
 			f_embedded = TRUE;
 			cout << "-embedded " << endl;
 			}
-		else if (strcmp(argv[i], "-sideways") == 0) {
+		else if (stringcmp(argv[i], "-sideways") == 0) {
 			f_sideways = TRUE;
 			cout << "-sideways " << endl;
 			}
-		else if (strcmp(argv[i], "-show_level_info") == 0) {
+		else if (stringcmp(argv[i], "-show_level_info") == 0) {
 			f_show_level_info = TRUE;
 			cout << "-show_level_info " << endl;
 			}
-		else if (strcmp(argv[i], "-label_edges") == 0) {
+		else if (stringcmp(argv[i], "-label_edges") == 0) {
 			f_label_edges = TRUE;
 			cout << "-label_edges " << endl;
 			}
-		else if (strcmp(argv[i], "-y_stretch") == 0) {
+		else if (stringcmp(argv[i], "-y_stretch") == 0) {
 			f_y_stretch = TRUE;
-			y_stretch = atof(argv[++i]);
+			y_stretch = strtof(argv[++i]);
 			cout << "-y_stretch " << endl;
 			}
-		else if (strcmp(argv[i], "-scale") == 0) {
+		else if (stringcmp(argv[i], "-scale") == 0) {
 			f_scale = TRUE;
-			sscanf(argv[++i], "%lf", &scale);
+			scale = strtof(argv[++i]);
 			cout << "-scale " << scale << endl;
 			}
-		else if (strcmp(argv[i], "-line_width") == 0) {
+		else if (stringcmp(argv[i], "-line_width") == 0) {
 			f_line_width = TRUE;
-			sscanf(argv[++i], "%lf", &line_width);
+			line_width = strtof(argv[++i]);
 			cout << "-line_width " << line_width << endl;
 			}
-		else if (strcmp(argv[i], "-rotated") == 0) {
-			f_rotated = atoi(argv[++i]);
+		else if (stringcmp(argv[i], "-rotated") == 0) {
+			f_rotated = strtoi(argv[++i]);
 			cout << "-rotated " << endl;
 			}
-		else if (strcmp(argv[i], "-nodes_empty") == 0) {
-			f_nodes_empty = atoi(argv[++i]);
+		else if (stringcmp(argv[i], "-nodes_empty") == 0) {
+			f_nodes_empty = strtoi(argv[++i]);
 			cout << "-nodes_empty " << endl;
 			}
-		else if (strcmp(argv[i], "-select_layers") == 0) {
-			f_select_layers = atoi(argv[++i]);
+		else if (stringcmp(argv[i], "-select_layers") == 0) {
+			f_select_layers = strtoi(argv[++i]);
 			select_layers.assign(argv[++i]);
 			int_vec_scan(select_layers, layer_select, nb_layer_select);
 			cout << "-select_layers ";
 			int_vec_print(cout, layer_select, nb_layer_select);
 			cout << endl;
 			}
-		else if (strcmp(argv[i], "-paths_in_between") == 0) {
+		else if (stringcmp(argv[i], "-paths_in_between") == 0) {
 			f_paths_in_between = TRUE;
-			layer1 = atoi(argv[++i]);
-			node1 = atoi(argv[++i]);
-			layer2 = atoi(argv[++i]);
-			node2 = atoi(argv[++i]);
+			layer1 = strtoi(argv[++i]);
+			node1 = strtoi(argv[++i]);
+			layer2 = strtoi(argv[++i]);
+			node2 = strtoi(argv[++i]);
 			cout << "-paths_in_between " << layer1 << " " << node1 << " " << layer2 << " " << node2 << endl;
 		}
-		else if (strcmp(argv[i], "-end") == 0) {
+		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}

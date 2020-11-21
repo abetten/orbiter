@@ -37,7 +37,6 @@ void projective_space_with_action::null()
 	P = NULL;
 	A = NULL;
 	A_on_lines = NULL;
-	//S = NULL;
 	Elt1 = NULL;
 }
 
@@ -45,21 +44,16 @@ void projective_space_with_action::freeself()
 {
 	if (P) {
 		FREE_OBJECT(P);
-		}
+	}
 	if (A) {
 		FREE_OBJECT(A);
-		}
+	}
 	if (A_on_lines) {
 		FREE_OBJECT(A_on_lines);
-		}
-#if 0
-	if (S) {
-		FREE_OBJECT(S);
-		}
-#endif
+	}
 	if (Elt1) {
 		FREE_int(Elt1);
-		}
+	}
 	null();
 }
 
@@ -111,7 +105,7 @@ void projective_space_with_action::init_group(
 	vector_ge *nice_gens;
 
 	A = NEW_OBJECT(action);
-	A->init_linear_group(//S,
+	A->init_linear_group(
 		F, d, 
 		TRUE /*f_projective*/,
 		FALSE /* f_general*/,
@@ -438,12 +432,8 @@ strong_generators
 
 	if (f_compute_canonical_form) {
 		
-#if 0
-		canonical_form = bitvector_allocate_and_coded_length(L, canonical_form_len);
-#else
 		Canonical_form = NEW_OBJECT(bitvector);
 		Canonical_form->allocate(L);
-#endif
 		for (i = 0; i < nb_rows; i++) {
 			for (j = 0; j < nb_cols; j++) {
 				if (Incma_out[i * nb_cols + j]) {
@@ -2541,6 +2531,8 @@ void print_summary_table_entry(int *Table,
 	char str[1000];
 
 	CB = (classify_bitvectors *) data;
+
+	str[0] = 0;
 
 	if (i == -1) {
 		if (j == -1) {

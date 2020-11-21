@@ -138,7 +138,7 @@ public:
 			int n,
 			int polynomial_degree,
 			int polynomial_nb_vars,
-			const char *polynomial_text,
+			std::string &polynomial_text,
 			int f_embellish,
 			int verbose_level);
 	void do_sylvester_hadamard(int n,
@@ -148,7 +148,7 @@ public:
 			int n,
 			std::vector<std::string> &long_code_generators_text,
 			int f_nearest_codeword,
-			const char *nearest_codeword_text,
+			std::string &nearest_codeword_text,
 			int verbose_level);
 	void investigate_code(long int *Words, int nb_words, int n, int f_embellish, int verbose_level);
 	void embellish(int *M, int nb_rows, int nb_cols, int i0, int j0, int a);

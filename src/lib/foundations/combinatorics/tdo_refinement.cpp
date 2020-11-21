@@ -23,7 +23,7 @@ tdo_refinement::tdo_refinement()
 
 	t0 = 0;
 	cnt = 0;
-	p_buf = NULL;
+	//p_buf = NULL;
 
 
 	//geo_parameter GP;
@@ -87,20 +87,27 @@ void tdo_refinement::main_loop(int verbose_level)
 			"opening file " << Descr->fname_in << " for reading" << endl;
 	}
 	ifstream f(Descr->fname_in);
+	char str[1000];
 
-	strcpy(str, Descr->fname_in);
-	get_extension_if_present(str, ext);
-	chop_off_extension_if_present(str, ext);
+	fname.assign(Descr->fname_in);
+	//strcpy(str, Descr->fname_in);
+	//get_extension_if_present(str, ext);
+	//chop_off_extension_if_present(str, ext);
+	chop_off_extension(fname);
 
 
-	sprintf(fname_out, "%s", str);
+	fname_out.assign(fname);
+	//sprintf(fname_out, "%s", str);
 	if (Descr->f_range) {
-		sprintf(fname_out + strlen(fname_out), "_r%d_%d", Descr->range_first, Descr->range_len);
-		}
+		sprintf(str, "_r%d_%d", Descr->range_first, Descr->range_len);
+		fname_out.append(str);
+	}
 	if (Descr->f_select) {
-		sprintf(fname_out + strlen(fname_out), "_S%s", Descr->select_label);
-		}
-	sprintf(fname_out + strlen(fname_out), "r.tdo");
+		fname_out.append("_S");
+		fname_out.append(Descr->select_label);
+	}
+	fname_out.append("r.tdo");
+	//sprintf(fname_out + strlen(fname_out), "r.tdo");
 	{
 
 		if (f_v) {
@@ -119,7 +126,7 @@ void tdo_refinement::main_loop(int verbose_level)
 			if (f.eof()) {
 				cout << "eof reached" << endl;
 				break;
-				}
+			}
 
 	#if 0
 			if (cnt && (cnt % 1000) == 0) {
@@ -131,7 +138,7 @@ void tdo_refinement::main_loop(int verbose_level)
 			if (!GP.input_mode_stack(f, 0 /*verbose_level - 1*/)) {
 				//cout << "GP.input_mode_stack returns FALSE" << endl;
 				break;
-				}
+			}
 
 			if (f) {
 				cout << "tdo_refinement::main_loop "
@@ -140,29 +147,31 @@ void tdo_refinement::main_loop(int verbose_level)
 
 			f_doit = TRUE;
 			if (Descr->f_range) {
-				if (cnt + 1 < Descr->range_first || cnt + 1 >= Descr->range_first + Descr->range_len)
+				if (cnt + 1 < Descr->range_first || cnt + 1 >= Descr->range_first + Descr->range_len) {
 					f_doit = FALSE;
 				}
+			}
 			if (Descr->f_select) {
-				if (strcmp(GP.label, Descr->select_label))
+				if (strcmp(GP.label.c_str(), Descr->select_label.c_str())) {
 					continue;
 				}
+			}
 			if (f_doit) {
 				if (f_v) {
 					cout << "tdo_refinement::main_loop "
 							"read decomposition " << cnt << endl;
-					}
+				}
 				if (f_vv) {
 					GP.print_schemes();
-					}
+				}
 				if (FALSE) {
 					cout << "after print_schemes" << endl;
-					}
-				do_it(g, verbose_level - 1);
 				}
+				do_it(g, verbose_level - 1);
+			}
 
 
-			} // next cnt
+		} // next cnt
 
 
 
@@ -187,50 +196,50 @@ void tdo_refinement::do_it(ofstream &g, int verbose_level)
 	if (f_v) {
 		cout << "tdo_refinement::do_it "
 				"read TDO " << cnt << " " << GP.label << endl;
-		}
+	}
 
 	GP.init_tdo_scheme(G, verbose_level - 1);
 	if (f_vv) {
 		cout << "tdo_refinement::do_it "
 				"after init_tdo_scheme" << endl;
 		GP.print_schemes(G);
-		}
+	}
 
 
 	if (f_vvv) {
 		cout << "tdo_refinement::do_it "
 				"calling init_partition_stack" << endl;
-		}
+	}
 	G.init_partition_stack(verbose_level - 4);
 	if (f_vvv) {
 		cout << "tdo_refinement::do_it "
 				"row_level=" << GP.row_level << endl;
 		cout << "tdo_parameter_calculation::do_it "
 				"col_level=" << GP.col_level << endl;
-		}
+	}
 
 	if (GP.col_level > GP.row_level) {
 		if (f_vvv) {
 			cout << "tdo_refinement::do_it "
 					"calling do_row_refinement" << endl;
-			}
+		}
 		do_row_refinement(g, G, P, verbose_level);
 		if (f_vvv) {
 			cout << "tdo_refinement::do_it "
 					"after do_row_refinement" << endl;
-			}
 		}
+	}
 	else if (GP.col_level < GP.row_level) {
 		if (f_vvv) {
 			cout << "tdo_refinement::do_it "
 					"calling do_col_refinement" << endl;
-			}
+		}
 		do_col_refinement(g, G, P, verbose_level);
 		if (f_vvv) {
 			cout << "tdo_refinement::do_it "
 					"after do_col_refinement" << endl;
-			}
 		}
+	}
 	else {
 		GP.write_mode_stack(g, GP.label);
 #if 0
@@ -241,21 +250,21 @@ void tdo_refinement::do_it(ofstream &g, int verbose_level)
 		if (f_vv) {
 			cout << "tdo_refinement::do_it "
 					<< GP.label << " written" << endl;
-			}
+		}
 		nb_written++;
 		nb_written_tactical++;
-		}
+	}
 
 	if (f_v) {
 		cout << "tdo_refinement::do_it done" << endl;
-		}
-
+	}
 
 }
 
 void tdo_refinement::do_row_refinement(
 	ofstream &g, tdo_scheme &G,
-	partitionstack &P, int verbose_level)
+	partitionstack &P,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -264,7 +273,7 @@ void tdo_refinement::do_row_refinement(
 	if (f_v) {
 		cout << "tdo_refinement::do_row_refinement "
 				"col_level > row_level" << endl;
-		}
+	}
 	int *point_types, nb_point_types, point_type_len;
 	int *distributions, nb_distributions;
 	int f_success;
@@ -273,7 +282,7 @@ void tdo_refinement::do_row_refinement(
 		if (f_v) {
 			cout << "tdo_refinement::do_row_refinement "
 					"before G.td3_refine_rows" << endl;
-			}
+		}
 		f_success = G.td3_refine_rows(verbose_level - 1, Descr->f_once,
 				Descr->lambda3, Descr->block_size,
 			point_types, nb_point_types, point_type_len,
@@ -281,13 +290,13 @@ void tdo_refinement::do_row_refinement(
 		if (f_v) {
 			cout << "tdo_refinement::do_row_refinement "
 					"after G.td3_refine_rows" << endl;
-			}
 		}
+	}
 	else {
 		if (f_v) {
 			cout << "tdo_refinement::do_row_refinement "
 					"before G.refine_rows" << endl;
-			}
+		}
 		f_success = G.refine_rows(verbose_level - 1,
 				Descr->f_use_mckay_solver, Descr->f_once, P,
 			point_types, nb_point_types, point_type_len,
@@ -300,20 +309,20 @@ void tdo_refinement::do_row_refinement(
 		if (f_v) {
 			cout << "tdo_refinement::do_row_refinement "
 					"after G.refine_rows" << endl;
-			}
 		}
+	}
 
 	if (f_success) {
 		if (Descr->f_reverse || Descr->f_reverse_inverse) {
 			distribution_reverse_sorting(Descr->f_reverse_inverse,
 				point_types, nb_point_types, point_type_len,
 				distributions, nb_distributions);
-			}
+		}
 		if (verbose_level >= 5) {
 			print_distribution(cout,
 				point_types, nb_point_types, point_type_len,
 				distributions, nb_distributions);
-			}
+		}
 
 		if (f_v) {
 			cout << "tdo_refinement::do_row_refinement "
@@ -327,24 +336,24 @@ void tdo_refinement::do_row_refinement(
 			cout << "tdo_refinement::do_row_refinement "
 					"after do_all_row_refinements, found "
 					<< nb_distributions << " refinements" << endl;
-			}
+		}
 
 		nb_written += nb_distributions;
 		nb_written_tactical += nb_tactical;
 		FREE_int(point_types);
 		FREE_int(distributions);
-		}
+	}
 	else {
 		if (f_v) {
 			cout << "tdo_refinement::do_row_refinement "
 					"Case " << GP.label << ", found " << 0
 				<< " row refinements, out of which "
 				<< 0 << " are tactical" << endl;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "tdo_refinement::do_row_refinement done" << endl;
-		}
+	}
 }
 
 void tdo_refinement::do_col_refinement(
@@ -362,27 +371,32 @@ void tdo_refinement::do_col_refinement(
 	if (f_v) {
 		cout << "tdo_refinement::do_col_refinement "
 				"col_level < row_level" << endl;
-		}
+	}
 	if (Descr->f_lambda3) {
 		if (f_v) {
 			cout << "tdo_refinement::do_col_refinement "
 					"before G.td3_refine_columns" << endl;
-			}
-		f_success = G.td3_refine_columns(verbose_level - 1, Descr->f_once,
-				Descr->lambda3, Descr->block_size, Descr->f_scale, Descr->scaling,
+		}
+
+		f_success = G.td3_refine_columns(verbose_level - 1,
+				Descr->f_once,
+				Descr->lambda3, Descr->block_size,
+				Descr->f_scale, Descr->scaling,
 			line_types, nb_line_types, line_type_len,
 			distributions, nb_distributions);
+
 		if (f_v) {
 			cout << "tdo_refinement::do_col_refinement "
 					"after G.td3_refine_columns" << endl;
-			}
 		}
+	}
 	else {
 		if (f_v) {
 			cout << "tdo_refinement::do_col_refinement "
 					"before G.refine_columns" << endl;
 			}
-		f_success = G.refine_columns(verbose_level - 1, Descr->f_once, P,
+		f_success = G.refine_columns(verbose_level - 1,
+				Descr->f_once, P,
 			line_types, nb_line_types, line_type_len,
 			distributions, nb_distributions,
 			cnt_second_system, Descr->Sol,
@@ -446,7 +460,7 @@ void tdo_refinement::do_col_refinement(
 }
 
 void tdo_refinement::do_all_row_refinements(
-	char *label_in, ofstream &g, tdo_scheme &G,
+	std::string &label_in, ofstream &g, tdo_scheme &G,
 	int *point_types, int nb_point_types, int point_type_len,
 	int *distributions, int nb_distributions, int &nb_tactical,
 	int verbose_level)
@@ -458,24 +472,27 @@ void tdo_refinement::do_all_row_refinements(
 		cout << "tdo_refinement::do_all_row_refinements" << endl;
 	}
 	nb_tactical = 0;
-	for (i = 0; i < GP.nb_parts; i++)
+	for (i = 0; i < GP.nb_parts; i++) {
 		GP2.part[i] = GP.part[i];
-	for (i = 0; i < 4 * GP.nb_entries; i++)
+	}
+	for (i = 0; i < 4 * GP.nb_entries; i++) {
 		GP2.entries[i] = GP.entries[i];
+	}
 
 	for (t = 0; t < nb_distributions; t++) {
 
 		if (do_row_refinement(t, label_in, g, G, point_types, nb_point_types,
 			point_type_len, distributions, nb_distributions,
-			verbose_level - 5))
+			verbose_level - 5)) {
 			nb_tactical++;
-
 		}
+
+	}
 	if (f_v) {
 		cout << "Case " << label_in << ", found " << nb_distributions
 			<< " row refinements, out of which "
 			<< nb_tactical << " are tactical" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "tdo_refinement::do_all_row_refinements done" << endl;
 	}
@@ -483,7 +500,7 @@ void tdo_refinement::do_all_row_refinements(
 }
 
 void tdo_refinement::do_all_column_refinements(
-	char *label_in, ofstream &g, tdo_scheme &G,
+		std::string &label_in, ofstream &g, tdo_scheme &G,
 	int *line_types, int nb_line_types, int line_type_len,
 	int *distributions, int nb_distributions, int &nb_tactical,
 	int verbose_level)
@@ -496,20 +513,23 @@ void tdo_refinement::do_all_column_refinements(
 		cout << "tdo_refinement::do_all_column_refinements" << endl;
 	}
 	nb_tactical = 0;
-	for (i = 0; i < GP.nb_parts; i++)
+	for (i = 0; i < GP.nb_parts; i++) {
 		GP2.part[i] = GP.part[i];
-	for (i = 0; i < 4 * GP.nb_entries; i++)
+	}
+	for (i = 0; i < 4 * GP.nb_entries; i++) {
 		GP2.entries[i] = GP.entries[i];
+	}
 
 	for (t = 0; t < nb_distributions; t++) {
 
 		//cout << "tdo_refinement::do_all_column_refinements t=" << t << endl;
 		if (do_column_refinement(t, label_in, g, G, line_types, nb_line_types,
 			line_type_len, distributions, nb_distributions,
-			verbose_level - 5))
+			verbose_level - 5)) {
 			nb_tactical++;
-
 		}
+
+	}
 	if (f_v) {
 		cout << "Case " << label_in << ", found " << nb_distributions
 			<< " column refinements, out of which "
@@ -522,9 +542,10 @@ void tdo_refinement::do_all_column_refinements(
 
 
 int tdo_refinement::do_row_refinement(
-	int t, char *label_in, ofstream &g, tdo_scheme &G,
+	int t, std::string &label_in, ofstream &g, tdo_scheme &G,
 	int *point_types, int nb_point_types, int point_type_len,
-	int *distributions, int nb_distributions, int verbose_level)
+	int *distributions, int nb_distributions,
+	int verbose_level)
 // returns TRUE or FALSE depending on whether the
 // refinement gave a tactical decomposition
 {
@@ -538,64 +559,66 @@ int tdo_refinement::do_row_refinement(
 
 	if (f_v) {
 		cout << "tdo_refinement::do_row_refinement t=" << t << endl;
-		}
+	}
 
 	type_index = NEW_int(nb_point_types);
-	for (i = 0; i < nb_point_types; i++)
+	for (i = 0; i < nb_point_types; i++) {
 		type_index[i] = -1;
+	}
 
 	new_nb_parts = GP.nb_parts;
 	if (G.row_level >= 2) {
-		R = G.nb_row_classes[ROW];
-		}
+		R = G.nb_row_classes[ROW_SCHEME];
+	}
 	else {
 		R = 1;
-		}
+	}
 	i = 0;
 	h = 0;
 	S = 0;
 	for (r = 0; r < R; r++) {
 		if (G.row_level >= 2) {
-			l = G.row_classes_len[ROW][r];
-			}
+			l = G.row_classes_len[ROW_SCHEME][r];
+		}
 		else {
 			//partitionstack &P = G.PB.P;
 			l = G.P->startCell[1];
-			}
+		}
 		s = 0;
 		if (f_vv) {
 			cout << "r=" << r << " l=" << l << endl;
-			}
+		}
 		while (i < nb_point_types) {
 			a = distributions[t * nb_point_types + i];
 			if (a == 0) {
 				i++;
 				continue;
-				}
+			}
 			if (f_vv) {
 				cout << "h=" << h << " i=" << i << " a=" << a << " s=" << s << " S=" << S << endl;
-				}
+			}
 			type_index[h++] = i;
 			if (s == 0) {
-				}
+			}
 			else {
 				GP2.part[new_nb_parts++] = S + s;
-				}
+			}
 			s += a;
 			i++;
-			if (s == l)
+			if (s == l) {
 				break;
+			}
 			if (s > l) {
 				cout << "tdo_refinement::do_row_refinement: s > l" << endl;
 				exit(1);
-				}
 			}
-		S += l;
 		}
+		S += l;
+	}
 	if (S != G.m) {
 		cout << "tdo_refinement::do_row_refinement: S != G.m" << endl;
 		exit(1);
-		}
+	}
 
 	new_nb_entries = GP.nb_entries;
 	GP2.part[new_nb_parts] = -1;
@@ -609,7 +632,7 @@ int tdo_refinement::do_row_refinement(
 		for (i = 0; i < h; i++)
 			cout << type_index[i] << " ";
 		cout << endl;
-		}
+	}
 
 
 
@@ -623,46 +646,52 @@ int tdo_refinement::do_row_refinement(
 		G2.extra_row_level = G.row_level; // GP.extra_row_level;
 		G2.extra_col_level = GP.extra_col_level;
 		G2.lambda_level = G.lambda_level;
-		G2.level[ROW] = new_nb_parts;
-		G2.level[COL] = G.col_level;
-		G2.level[EXTRA_ROW] = G.row_level; // G.extra_row_level;
-		G2.level[EXTRA_COL] = G.extra_col_level;
-		G2.level[LAMBDA] = G.lambda_level;
+		G2.level[ROW_SCHEME] = new_nb_parts;
+		G2.level[COL_SCHEME] = G.col_level;
+		G2.level[EXTRA_ROW_SCHEME] = G.row_level; // G.extra_row_level;
+		G2.level[EXTRA_COL_SCHEME] = G.extra_col_level;
+		G2.level[LAMBDA_SCHEME] = G.lambda_level;
 
 		G2.init_partition_stack(verbose_level - 2);
 
 		if (f_v) {
-			cout << "found a " << G2.nb_row_classes[ROW] << " x " << G2.nb_col_classes[ROW] << " scheme" << endl;
-			}
-		for (i = 0; i < G2.nb_row_classes[ROW]; i++) {
-			c1 = G2.row_classes[ROW][i];
+			cout << "found a " << G2.nb_row_classes[ROW_SCHEME] << " x " << G2.nb_col_classes[ROW_SCHEME] << " scheme" << endl;
+		}
+		for (i = 0; i < G2.nb_row_classes[ROW_SCHEME]; i++) {
+			c1 = G2.row_classes[ROW_SCHEME][i];
 			for (j = 0; j < point_type_len /*G2.nb_col_classes[ROW]*/; j++) {
-				c2 = G2.col_classes[ROW][j];
+				c2 = G2.col_classes[ROW_SCHEME][j];
 				idx = type_index[i];
-				if (idx == -1)
+				if (idx == -1) {
 					continue;
+				}
 				a = point_types[idx * point_type_len + j];
 				if (f_vv) {
 					cout << "i=" << i << " j=" << j << " idx=" << idx << " a=" << a << endl;
-					}
+				}
 				GP2.entries[new_nb_entries * 4 + 0] = new_nb_parts;
 				GP2.entries[new_nb_entries * 4 + 1] = c1;
 				GP2.entries[new_nb_entries * 4 + 2] = c2;
 				GP2.entries[new_nb_entries * 4 + 3] = a;
 				new_nb_entries++;
-				}
 			}
+		}
 
 		if (f_vvv) {
 			for (i = 0; i < new_nb_entries; i++) {
 				for (j = 0; j < 4; j++) {
 					cout << setw(2) << GP2.entries[i * 4 + j] << " ";
-					}
-				cout << endl;
 				}
+				cout << endl;
 			}
+		}
 
-		sprintf(GP2.label, "%s.%d", label_in, t + 1);
+		char str[1000];
+
+		//sprintf(GP2.label, "%s.%d", label_in, t + 1);
+		sprintf(str, ".%d", t + 1);
+		GP2.label.assign(label_in);
+		GP2.label.append(str);
 
 		GP2.nb_parts = new_nb_parts;
 		GP2.nb_entries = new_nb_entries;
@@ -683,24 +712,28 @@ int tdo_refinement::do_row_refinement(
 
 		if (f_vv) {
 			cout << GP2.label << " written" << endl;
-			}
-		if (new_nb_parts == G.col_level)
+		}
+		if (new_nb_parts == G.col_level) {
 			f_tactical = TRUE;
-		else
+		}
+		else {
 			f_tactical = FALSE;
+		}
 	}
 
 	FREE_int(type_index);
 	if (f_v) {
 		cout << "tdo_refinement::do_row_refinement t=" << t << " done" << endl;
-		}
+	}
 	return f_tactical;
 }
 
 int tdo_refinement::do_column_refinement(
-	int t, char *label_in, ofstream &g, tdo_scheme &G,
+	int t, std::string &label_in,
+	ofstream &g, tdo_scheme &G,
 	int *line_types, int nb_line_types, int line_type_len,
-	int *distributions, int nb_distributions, int verbose_level)
+	int *distributions, int nb_distributions,
+	int verbose_level)
 // returns TRUE or FALSE depending on whether the
 // refinement gave a tactical decomposition
 {
@@ -714,42 +747,44 @@ int tdo_refinement::do_column_refinement(
 
 	if (f_v) {
 		cout << "tdo_refinement::do_column_refinement t=" << t << endl;
-		}
+	}
 
 	type_index = NEW_int(nb_line_types);
 
-	for (i = 0; i < nb_line_types; i++)
+	for (i = 0; i < nb_line_types; i++) {
 		type_index[i] = -1;
+	}
 	new_nb_parts = GP.nb_parts;
-	R = G.nb_col_classes[COL];
+	R = G.nb_col_classes[COL_SCHEME];
 	i = 0;
 	h = 0;
 	S = G.m;
 	for (r = 0; r < R; r++) {
-		l = G.col_classes_len[COL][r];
+		l = G.col_classes_len[COL_SCHEME][r];
 		s = 0;
 		if (f_vv) {
 			cout << "r=" << r << " l=" << l << endl;
-			}
+		}
 		while (i < nb_line_types) {
 			a = distributions[t * nb_line_types + i];
 			if (a == 0) {
 				i++;
 				continue;
-				}
+			}
 			if (f_vv) {
 				cout << "h=" << h << " i=" << i << " a=" << a << " s=" << s << " S=" << S << endl;
-				}
+			}
 			type_index[h++] = i;
 			if (s == 0) {
-				}
+			}
 			else {
 				GP2.part[new_nb_parts++] = S + s;
-				}
+			}
 			s += a;
 			i++;
-			if (s == l)
+			if (s == l) {
 				break;
+			}
 			if (s > l) {
 				cout << "tdo_refinement::do_column_refinement: s > l" << endl;
 				cout << "r=" << r << endl;
@@ -759,28 +794,30 @@ int tdo_refinement::do_column_refinement(
 				int_vec_print(cout, distributions + t * nb_line_types, nb_line_types);
 				cout << endl;
 				exit(1);
-				}
 			}
-		S += l;
 		}
+		S += l;
+	}
 	if (S != G.m + G.n) {
 		cout << "tdo_refinement::do_column_refinement: S != G.m + G.n" << endl;
 		exit(1);
-		}
+	}
 
 	new_nb_entries = G.nb_entries;
 	GP2.part[new_nb_parts] = -1;
 	GP2.entries[new_nb_entries * 4 + 0] = -1;
 	if (f_vv) {
 		cout << "new_part:" << endl;
-		for (i = 0; i < new_nb_parts; i++)
+		for (i = 0; i < new_nb_parts; i++) {
 			cout << GP2.part[i] << " ";
+		}
 		cout << endl;
 		cout << "type_index:" << endl;
-		for (i = 0; i < h; i++)
+		for (i = 0; i < h; i++) {
 			cout << type_index[i] << " ";
-		cout << endl;
 		}
+		cout << endl;
+	}
 
 	{
 		tdo_scheme *G2;
@@ -794,46 +831,52 @@ int tdo_refinement::do_column_refinement(
 		G2->extra_row_level = GP.extra_row_level;
 		G2->extra_col_level = GP.col_level; // GP.extra_col_level;
 		G2->lambda_level = G.lambda_level;
-		G2->level[ROW] = G.row_level;
-		G2->level[COL] = new_nb_parts;
-		G2->level[EXTRA_ROW] = G.extra_row_level;
-		G2->level[EXTRA_COL] = GP.col_level; // G.extra_col_level;
-		G2->level[LAMBDA] = G.lambda_level;
+		G2->level[ROW_SCHEME] = G.row_level;
+		G2->level[COL_SCHEME] = new_nb_parts;
+		G2->level[EXTRA_ROW_SCHEME] = G.extra_row_level;
+		G2->level[EXTRA_COL_SCHEME] = GP.col_level; // G.extra_col_level;
+		G2->level[LAMBDA_SCHEME] = G.lambda_level;
 
 		G2->init_partition_stack(verbose_level - 2);
 
 		if (f_v) {
-			cout << "found a " << G2->nb_row_classes[COL] << " x " << G2->nb_col_classes[COL] << " scheme" << endl;
-			}
-		for (i = 0; i < G2->nb_row_classes[COL]; i++) {
-			c1 = G2->row_classes[COL][i];
-			for (j = 0; j < G2->nb_col_classes[COL]; j++) {
-				c2 = G2->col_classes[COL][j];
+			cout << "found a " << G2->nb_row_classes[COL_SCHEME] << " x " << G2->nb_col_classes[COL_SCHEME] << " scheme" << endl;
+		}
+		for (i = 0; i < G2->nb_row_classes[COL_SCHEME]; i++) {
+			c1 = G2->row_classes[COL_SCHEME][i];
+			for (j = 0; j < G2->nb_col_classes[COL_SCHEME]; j++) {
+				c2 = G2->col_classes[COL_SCHEME][j];
 				idx = type_index[j];
-				if (idx == -1)
+				if (idx == -1) {
 					continue;
+				}
 				a = line_types[idx * line_type_len + i];
 				if (f_vv) {
 					cout << "i=" << i << " j=" << j << " idx=" << idx << " a=" << a << endl;
-					}
+				}
 				GP2.entries[new_nb_entries * 4 + 0] = new_nb_parts;
 				GP2.entries[new_nb_entries * 4 + 1] = c2;
 				GP2.entries[new_nb_entries * 4 + 2] = c1;
 				GP2.entries[new_nb_entries * 4 + 3] = a;
 				new_nb_entries++;
-				}
 			}
+		}
 
 		if (f_vvv) {
 			for (i = 0; i < new_nb_entries; i++) {
 				for (j = 0; j < 4; j++) {
 					cout << setw(2) << GP2.entries[i * 4 + j] << " ";
-					}
-				cout << endl;
 				}
+				cout << endl;
 			}
+		}
 
-		sprintf(GP2.label, "%s.%d", label_in, t + 1);
+		char str[1000];
+
+		//sprintf(GP2.label, "%s.%d", label_in, t + 1);
+		sprintf(str, ".%d", t + 1);
+		GP2.label.assign(label_in);
+		GP2.label.append(str);
 
 		GP2.nb_parts = new_nb_parts;
 		GP2.nb_entries = new_nb_entries;
@@ -854,18 +897,20 @@ int tdo_refinement::do_column_refinement(
 
 		if (f_vv) {
 			cout << GP2.label << " written" << endl;
-			}
-		if (new_nb_parts == G.row_level)
-			f_tactical = TRUE;
-		else
-			f_tactical = FALSE;
-		FREE_OBJECT(G2);
 		}
+		if (new_nb_parts == G.row_level) {
+			f_tactical = TRUE;
+		}
+		else {
+			f_tactical = FALSE;
+		}
+		FREE_OBJECT(G2);
+	}
 
 	FREE_int(type_index);
 	if (f_v) {
 		cout << "tdo_refinement::do_column_refinement t=" << t << " done" << endl;
-		}
+	}
 	return f_tactical;
 }
 
@@ -884,9 +929,9 @@ void print_distribution(ostream &ost,
 		ost << setw(3) << i + 1 << " : ";
 		for (j = 0; j < type_len; j++) {
 			ost << setw(3) << types[i * type_len + j];
-			}
-		ost << endl;
 		}
+		ost << endl;
+	}
 	ost << endl;
 
 
@@ -894,11 +939,12 @@ void print_distribution(ostream &ost,
 		ost << setw(3) << j + 1 << " & ";
 		for (i = 0; i < nb_types; i++) {
 			ost << setw(2) << types[i * type_len + j];
-			if (i < nb_types - 1)
+			if (i < nb_types - 1) {
 				ost << " & ";
 			}
-		ost << "\\\\" << endl;
 		}
+		ost << "\\\\" << endl;
+	}
 	ost << endl;
 
 	ost << "distributions:" << endl;
@@ -906,19 +952,20 @@ void print_distribution(ostream &ost,
 		ost << setw(3) << i + 1 << " : ";
 		for (j = 0; j < nb_types; j++) {
 			ost << setw(3) << distributions[i * nb_types + j];
-			}
-		ost << endl;
 		}
+		ost << endl;
+	}
 	ost << endl;
 	for (i = 0; i < nb_distributions; i++) {
 		ost << setw(3) << i + 1 << " & ";
 		for (j = 0; j < nb_types; j++) {
 			ost << setw(2) << distributions[i * nb_types + j];
-			if (j < nb_types - 1)
+			if (j < nb_types - 1) {
 				ost << " & ";
 			}
-		ost << "\\\\" << endl;
 		}
+		ost << "\\\\" << endl;
+	}
 	ost << endl;
 
 	ost << "distributions (in compact format):" << endl;
@@ -928,16 +975,17 @@ void print_distribution(ostream &ost,
 		f_first = TRUE;
 		for (j = 0; j < nb_types; j++) {
 			a = distributions[i * nb_types + j];
-			if (a == 0)
+			if (a == 0) {
 				continue;
+			}
 			if (!f_first) {
 				ost << ",";
-				}
+			}
 			ost << nb_types - 1 - j << "^{" << a << "}";
 			f_first = FALSE;
-			}
-		ost << "\\\\" << endl;
 		}
+		ost << "\\\\" << endl;
+	}
 	ost << endl;
 }
 
@@ -951,11 +999,13 @@ int compare_func_int_vec(void *a, void *b, void *data)
 	int i;
 
 	for (i = 0; i < size; i++) {
-		if (p[i] > q[i])
+		if (p[i] > q[i]) {
 			return -1;
-		if (p[i] < q[i])
+		}
+		if (p[i] < q[i]) {
 			return 1;
 		}
+	}
 	return 0;
 }
 
@@ -968,11 +1018,13 @@ int compare_func_int_vec_inverse(void *a, void *b, void *data)
 	int i;
 
 	for (i = 0; i < size; i++) {
-		if (p[i] > q[i])
+		if (p[i] > q[i]) {
 			return 1;
-		if (p[i] < q[i])
+		}
+		if (p[i] < q[i]) {
 			return -1;
 		}
+	}
 	return 0;
 }
 
@@ -992,8 +1044,8 @@ void distribution_reverse_sorting(int f_increasing,
 		P[i] = D + i * nb_types;
 		for (j = 0; j < nb_types; j++) {
 			D[i * nb_types + nb_types - 1 - j] = distributions[i * nb_types + j];
-			}
 		}
+	}
 
 	int p[1];
 
@@ -1002,17 +1054,17 @@ void distribution_reverse_sorting(int f_increasing,
 	if (f_increasing) {
 		Sorting.quicksort_array(nb_distributions, (void **) P,
 				compare_func_int_vec_inverse, (void *)p);
-		}
+	}
 	else {
 		Sorting.quicksort_array(nb_distributions, (void **) P,
 				compare_func_int_vec, (void *)p);
-		}
+	}
 
 	for (i = 0; i < nb_distributions; i++) {
 		for (j = 0; j < nb_types; j++) {
 			distributions[i * nb_types + j] = P[i][nb_types - 1 - j];
-			}
 		}
+	}
 	FREE_int(D);
 	FREE_pint(P);
 

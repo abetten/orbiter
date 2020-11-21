@@ -34,6 +34,7 @@ void data_input_stream::freeself()
 	null();
 }
 
+#if 0
 void data_input_stream::read_arguments_from_string(
 		const char *str, int verbose_level)
 {
@@ -70,9 +71,10 @@ void data_input_stream::read_arguments_from_string(
 				"done" << endl;
 	}
 }
+#endif
 
 int data_input_stream::read_arguments(
-	int argc, const char **argv,
+	int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;
@@ -83,7 +85,7 @@ int data_input_stream::read_arguments(
 	}
 	for (i = 0; i < argc; i++) {
 
-		if (strcmp(argv[i], "-set_of_points") == 0) {
+		if (stringcmp(argv[i], "-set_of_points") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_SET_OF_POINTS;
 
 			//input_string[nb_inputs].assign(argv[++i]);
@@ -100,42 +102,42 @@ int data_input_stream::read_arguments(
 			cout << "-set_of_points " << input_string[nb_inputs] << endl;
 			nb_inputs++;
 			}
-		else if (strcmp(argv[i], "-set_of_lines") == 0) {
+		else if (stringcmp(argv[i], "-set_of_lines") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_SET_OF_LINES;
 			input_string[nb_inputs].assign(argv[++i]);
 			input_string2[nb_inputs].assign("");
 			cout << "-set_of_lines " << input_string[nb_inputs] << endl;
 			nb_inputs++;
 			}
-		else if (strcmp(argv[i], "-set_of_packing") == 0) {
+		else if (stringcmp(argv[i], "-set_of_packing") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_SET_OF_PACKING;
 			input_string[nb_inputs].assign(argv[++i]);
 			input_string2[nb_inputs].assign("");
 			cout << "-set_of_packing " << input_string[nb_inputs] << endl;
 			nb_inputs++;
 			}
-		else if (strcmp(argv[i], "-file_of_points") == 0) {
+		else if (stringcmp(argv[i], "-file_of_points") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_POINTS;
 			input_string[nb_inputs].assign(argv[++i]);
 			input_string2[nb_inputs].assign("");
 			cout << "-file_of_points " << input_string[nb_inputs] << endl;
 			nb_inputs++;
 			}
-		else if (strcmp(argv[i], "-file_of_lines") == 0) {
+		else if (stringcmp(argv[i], "-file_of_lines") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_LINES;
 			input_string[nb_inputs].assign(argv[++i]);
 			input_string2[nb_inputs].assign("");
 			cout << "-file_of_lines " << input_string[nb_inputs] << endl;
 			nb_inputs++;
 			}
-		else if (strcmp(argv[i], "-file_of_packings") == 0) {
+		else if (stringcmp(argv[i], "-file_of_packings") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_PACKINGS;
 			input_string[nb_inputs].assign(argv[++i]);
 			input_string2[nb_inputs].assign("");
 			cout << "-file_of_packings " << input_string[nb_inputs] << endl;
 			nb_inputs++;
 			}
-		else if (strcmp(argv[i],
+		else if (stringcmp(argv[i],
 				"-file_of_packings_through_spread_table") == 0) {
 			input_type[nb_inputs] =
 					INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE;
@@ -146,20 +148,20 @@ int data_input_stream::read_arguments(
 				<< input_string2[nb_inputs] << endl;
 			nb_inputs++;
 			}
-		else if (strcmp(argv[i], "-file_of_point_set") == 0) {
+		else if (stringcmp(argv[i], "-file_of_point_set") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_POINT_SET;
 			input_string[nb_inputs].assign(argv[++i]);
 			input_string2[nb_inputs].assign("");
 			cout << "-file_of_point_set " << input_string[nb_inputs] << endl;
 			nb_inputs++;
 			}
-		else if (strcmp(argv[i], "-file_of_designs") == 0) {
+		else if (stringcmp(argv[i], "-file_of_designs") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_DESIGNS;
-			input_string[nb_inputs] = argv[++i];
-			input_data1[nb_inputs] = atoi(argv[++i]); // N_points
-			input_data2[nb_inputs] = atoi(argv[++i]); // b = number of blocks
-			input_data3[nb_inputs] = atoi(argv[++i]); // k = block size
-			input_data4[nb_inputs] = atoi(argv[++i]); // partition class size
+			input_string[nb_inputs].assign(argv[++i]);
+			input_data1[nb_inputs] = strtoi(argv[++i]); // N_points
+			input_data2[nb_inputs] = strtoi(argv[++i]); // b = number of blocks
+			input_data3[nb_inputs] = strtoi(argv[++i]); // k = block size
+			input_data4[nb_inputs] = strtoi(argv[++i]); // partition class size
 
 			cout << "-file_of_point_set " << input_string[nb_inputs]
 					<< " " << input_data1[nb_inputs]
@@ -169,7 +171,7 @@ int data_input_stream::read_arguments(
 					<< endl;
 			nb_inputs++;
 			}
-		else if (strcmp(argv[i], "-end") == 0) {
+		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 			}

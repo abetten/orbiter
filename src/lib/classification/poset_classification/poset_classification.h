@@ -331,7 +331,7 @@ public:
 	int f_extend;
 	int extend_from, extend_to;
 	int extend_r, extend_m;
-	char extend_fname[1000];
+	std::string extend_fname;
 
 	int f_depth;
 	int depth;
@@ -377,7 +377,7 @@ public:
 	poset_classification_control();
 	~poset_classification_control();
 	int read_arguments(
-		int argc, const char **argv,
+		int argc, std::string *argv,
 		int verbose_level);
 	void print();
 

@@ -43,9 +43,9 @@ void exact_cover_arguments::null()
 	f_save = FALSE;
 	f_read = FALSE;
 	f_draw_system = FALSE;
-	fname_system = NULL;
+	//fname_system = NULL;
 	f_write_tree = FALSE;
-	fname_tree = NULL;
+	//fname_tree = NULL;
 	f_has_solution_test_function = FALSE;
 	f_has_late_cleanup_function = FALSE;
 	prepare_function_new = NULL;
@@ -63,83 +63,80 @@ void exact_cover_arguments::freeself()
 	null();
 }
 
-int exact_cover_arguments::read_arguments(int argc, const char **argv,
+int exact_cover_arguments::read_arguments(int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;
 
 	for (i = 1; i < argc; i++) {
-		if (argv[i][0] != '-') {
-			continue;
-		}
-		else if (strcmp(argv[i], "-starter_size") == 0) {
+		if (stringcmp(argv[i], "-starter_size") == 0) {
 			f_starter_size = TRUE;
-			starter_size = atoi(argv[++i]);
+			starter_size = strtoi(argv[++i]);
 			cout << "-starter_size " << starter_size << endl;
 		}
-		else if (strcmp(argv[i], "-lift") == 0) {
+		else if (stringcmp(argv[i], "-lift") == 0) {
 			f_lift = TRUE;
 			//lift_prefix = argv[++i]; 
 			cout << "-lift " << endl;
 		}
-		else if (strcmp(argv[i], "-lex") == 0) {
+		else if (stringcmp(argv[i], "-lex") == 0) {
 			f_lex = TRUE;
 			cout << "-lex" << endl;
 		}
-		else if (strcmp(argv[i], "-solve") == 0) {
+		else if (stringcmp(argv[i], "-solve") == 0) {
 			f_solve = TRUE;
 			cout << "-solve" << endl;
 		}
-		else if (strcmp(argv[i], "-save") == 0) {
+		else if (stringcmp(argv[i], "-save") == 0) {
 			f_save = TRUE;
 			cout << "-save" << endl;
 		}
-		else if (strcmp(argv[i], "-read") == 0) {
+		else if (stringcmp(argv[i], "-read") == 0) {
 			f_read = TRUE;
 			cout << "-read" << endl;
 		}
-		else if (strcmp(argv[i], "-split") == 0) {
+		else if (stringcmp(argv[i], "-split") == 0) {
 			f_split = TRUE;
-			split_r = atoi(argv[++i]);
-			split_m = atoi(argv[++i]);
+			split_r = strtoi(argv[++i]);
+			split_m = strtoi(argv[++i]);
 			cout << "-split " << split_r << " " << split_m << endl;
 		}
-		else if (strcmp(argv[i], "-draw_system") == 0) {
+		else if (stringcmp(argv[i], "-draw_system") == 0) {
 			f_draw_system = TRUE;
-			fname_system = argv[++i];
+			fname_system.assign(argv[++i]);
 			cout << "-draw_system " << fname_system << endl;
 		}
-		else if (strcmp(argv[i], "-write_tree") == 0) {
+		else if (stringcmp(argv[i], "-write_tree") == 0) {
 			f_write_tree = TRUE;
-			fname_tree = argv[++i];
+			fname_tree.assign(argv[++i]);
 			cout << "-write_tree " << fname_tree << endl;
 		}
-		else if (strcmp(argv[i], "-base_fname") == 0) {
+		else if (stringcmp(argv[i], "-base_fname") == 0) {
 			f_has_base_fname = TRUE;
 			base_fname = argv[++i];
 			cout << "-base_fname " << base_fname << endl;
 		}
-		else if (strcmp(argv[i], "-input_prefix") == 0) {
+		else if (stringcmp(argv[i], "-input_prefix") == 0) {
 			f_has_input_prefix = TRUE;
 			input_prefix.assign(argv[++i]);
 			cout << "-input_prefix " << input_prefix << endl;
 		}
-		else if (strcmp(argv[i], "-output_prefix") == 0) {
+		else if (stringcmp(argv[i], "-output_prefix") == 0) {
 			f_has_output_prefix = TRUE;
 			output_prefix.assign(argv[++i]);
 			cout << "-output_prefix " << output_prefix << endl;
 		}
-		else if (strcmp(argv[i], "-solution_prefix") == 0) {
+		else if (stringcmp(argv[i], "-solution_prefix") == 0) {
 			f_has_solution_prefix = TRUE;
 			solution_prefix.assign(argv[++i]);
 			cout << "-solution_prefix " << solution_prefix << endl;
 		}
-		else if (strcmp(argv[i], "-randomized") == 0) {
+		else if (stringcmp(argv[i], "-randomized") == 0) {
 			f_randomized = TRUE;
 			random_permutation_fname.assign(argv[++i]);
 			cout << "-randomized " << random_permutation_fname << endl;
 		}
-		else if (strcmp(argv[i], "-end") == 0) {
+		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}

@@ -63,7 +63,7 @@ public:
 
 	arc_generator_description();
 	~arc_generator_description();
-	int read_arguments(int argc, const char **argv, int verbose_level);
+	int read_arguments(int argc, std::string *argv, int verbose_level);
 
 
 };
@@ -346,7 +346,7 @@ public:
 	~BLT_set_create_description();
 	void null();
 	void freeself();
-	int read_arguments(int argc, const char **argv,
+	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 };
 
@@ -391,8 +391,9 @@ public:
 	void null();
 	void freeself();
 	void init(BLT_set_create_description *Descr, int verbose_level);
-	void apply_transformations(const char **transform_coeffs,
-		int *f_inverse_transform, int nb_transform, int verbose_level);
+	void apply_transformations(
+			std::vector<std::string> transform_coeffs,
+			std::vector<int> f_inverse_transform, int verbose_level);
 };
 
 // #############################################################################
@@ -663,7 +664,7 @@ public:
 	void null();
 	void freeself();
 	void init(int n, int Q, int verbose_level);
-	void read_arguments(int argc, const char **argv);
+	void read_arguments(int argc, std::string *argv);
 	void init2(int verbose_level);
 	void compute(int depth, int verbose_level);
 	void early_test_func(long int *S, int len,
@@ -861,7 +862,7 @@ public:
 
 	ovoid_classify_description();
 	~ovoid_classify_description();
-	int read_arguments(int argc, const char **argv,
+	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 
 };

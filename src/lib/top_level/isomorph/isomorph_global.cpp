@@ -697,7 +697,7 @@ void isomorph_testing(
 	action *A_base, action *A, poset_classification *gen,
 	int size, std::string &prefix_classify,
 	std::string &prefix_iso, int level,
-	int f_play_back, const char *old_event_file,
+	int f_play_back, std::string &old_event_file,
 	int print_mod, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

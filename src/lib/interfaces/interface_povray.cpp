@@ -23,13 +23,13 @@ interface_povray::interface_povray()
 {
 	f_povray = FALSE;
 	f_output_mask = FALSE;
-	output_mask = NULL;
+	//output_mask;
 	f_nb_frames_default = FALSE;
 	nb_frames_default = 0;
 	f_round = FALSE;
 	round = 0;
 	f_rounds = FALSE;
-	rounds_as_string = NULL;
+	//rounds_as_string;
 	Opt = NULL;
 
 
@@ -41,38 +41,38 @@ interface_povray::interface_povray()
 }
 
 
-void interface_povray::print_help(int argc, const char **argv, int i, int verbose_level)
+void interface_povray::print_help(int argc, std::string *argv, int i, int verbose_level)
 {
-	if (strcmp(argv[i], "-povray") == 0) {
+	if (stringcmp(argv[i], "-povray") == 0) {
 		cout << "-povray" << endl;
 	}
-	else if (strcmp(argv[i], "-prepare_frames") == 0) {
+	else if (stringcmp(argv[i], "-prepare_frames") == 0) {
 		cout << "-prepare_frames <description> -end" << endl;
 	}
 }
 
-int interface_povray::recognize_keyword(int argc, const char **argv, int i, int verbose_level)
+int interface_povray::recognize_keyword(int argc, std::string *argv, int i, int verbose_level)
 {
 	if (i >= argc) {
 		return false;
 	}
-	if (strcmp(argv[i], "-povray") == 0) {
+	if (stringcmp(argv[i], "-povray") == 0) {
 		return true;
 	}
-	if (strcmp(argv[i], "-prepare_frames") == 0) {
+	if (stringcmp(argv[i], "-prepare_frames") == 0) {
 		return true;
 	}
 	return false;
 }
 
-void interface_povray::read_arguments(int argc, const char **argv, int i0, int verbose_level)
+void interface_povray::read_arguments(int argc, std::string *argv, int i0, int verbose_level)
 {
 	int i;
 
 	cout << "interface_povray::read_arguments" << endl;
 
 	for (i = i0; i < argc; i++) {
-		if (strcmp(argv[i], "-povray") == 0) {
+		if (stringcmp(argv[i], "-povray") == 0) {
 			f_povray = TRUE;
 			cout << "-povray " << endl;
 			i++;
@@ -82,10 +82,10 @@ void interface_povray::read_arguments(int argc, const char **argv, int i0, int v
 			S->init(verbose_level);
 
 			for (; i < argc; i++) {
-				if (strcmp(argv[i], "-video_options") == 0) {
+				if (stringcmp(argv[i], "-video_options") == 0) {
 					Opt = NEW_OBJECT(video_draw_options);
 					i += Opt->read_arguments(argc - (i - 1),
-						argv + i, verbose_level);
+						argv + i + 1, verbose_level);
 
 					cout << "-video_options" << endl;
 					cout << "done with -video_options " << endl;
@@ -95,28 +95,28 @@ void interface_povray::read_arguments(int argc, const char **argv, int i0, int v
 						cout << "next argument is " << argv[i] << endl;
 					}
 				}
-				else if (strcmp(argv[i], "-round") == 0) {
+				else if (stringcmp(argv[i], "-round") == 0) {
 					f_round = TRUE;
-					round = atoi(argv[++i]);
+					round = strtoi(argv[++i]);
 					cout << "-round " << round << endl;
 				}
 
-				else if (strcmp(argv[i], "-rounds") == 0) {
+				else if (stringcmp(argv[i], "-rounds") == 0) {
 					f_rounds = TRUE;
-					rounds_as_string = argv[++i];
+					rounds_as_string.assign(argv[++i]);
 					cout << "-rounds " << rounds_as_string << endl;
 				}
-				else if (strcmp(argv[i], "-nb_frames_default") == 0) {
+				else if (stringcmp(argv[i], "-nb_frames_default") == 0) {
 					f_nb_frames_default = TRUE;
-					nb_frames_default = atoi(argv[++i]);
+					nb_frames_default = strtoi(argv[++i]);
 					cout << "-nb_frames_default " << nb_frames_default << endl;
 				}
-				else if (strcmp(argv[i], "-output_mask") == 0) {
+				else if (stringcmp(argv[i], "-output_mask") == 0) {
 					f_output_mask = TRUE;
-					output_mask = argv[++i];
+					output_mask.assign(argv[++i]);
 					cout << "-output_mask " << output_mask << endl;
 				}
-				else if (strcmp(argv[i], "-scene_objects") == 0) {
+				else if (stringcmp(argv[i], "-scene_objects") == 0) {
 					cout << "-scene_objects " << endl;
 					i++;
 					i = S->read_scene_objects(argc, argv, i, verbose_level);
@@ -127,9 +127,8 @@ void interface_povray::read_arguments(int argc, const char **argv, int i0, int v
 						cout << "next argument is " << argv[i] << endl;
 					}
 				}
-				else if (strcmp(argv[i], "-povray_end") == 0) {
+				else if (stringcmp(argv[i], "-povray_end") == 0) {
 					cout << "-povray_end " << endl;
-					i++;
 					break;
 				}
 				else {
@@ -154,7 +153,7 @@ void interface_povray::read_arguments(int argc, const char **argv, int i0, int v
 				exit(1);
 				}
 		}
-		else if (strcmp(argv[i], "-prepare_frames") == 0) {
+		else if (stringcmp(argv[i], "-prepare_frames") == 0) {
 			f_prepare_frames = TRUE;
 			Prepare_frames = NEW_OBJECT(prepare_frames);
 			i += Prepare_frames->parse_arguments(argc - (i + 1), argv + i + 1);

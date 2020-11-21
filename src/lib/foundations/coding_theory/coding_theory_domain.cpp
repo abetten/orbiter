@@ -2801,7 +2801,7 @@ void coding_theory_domain::do_polynomial(
 		int n,
 		int polynomial_degree,
 		int polynomial_nb_vars,
-		const char *polynomial_text,
+		std::string &polynomial_text,
 		int f_embellish,
 		int verbose_level)
 {
@@ -3207,7 +3207,7 @@ void coding_theory_domain::do_long_code(
 		int n,
 		std::vector<std::string> &long_code_generators_text,
 		int f_nearest_codeword,
-		const char *nearest_codeword_text,
+		std::string &nearest_codeword_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

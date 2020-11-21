@@ -898,7 +898,7 @@ void projective_space_job::perform_job_for_one_set(
 			cout << "perform_job_for_one_set saving the system "
 					"to file " << fname_system << " done" << endl;
 			//D->print();
-			}
+		}
 
 		long int nb_backtrack_nodes;
 		long int *Sol;
@@ -908,11 +908,11 @@ void projective_space_job::perform_job_for_one_set(
 
 		if (f_v) {
 			cout << "before D->get_solutions" << endl;
-			}
+		}
 		D->get_solutions(Sol, nb_sol, verbose_level);
 		if (f_v) {
 			cout << "after D->get_solutions, nb_sol=" << nb_sol << endl;
-			}
+		}
 		char fname_solutions[1000];
 
 		sprintf(fname_solutions, "system_%d.solutions", back_end_counter);
@@ -926,9 +926,9 @@ void projective_space_job::perform_job_for_one_set(
 				for (j = 0; j < D->sum; j++) {
 					a = Sol[i * D->sum + j];
 					fp << " " << a;
-					}
-				fp << endl;
 				}
+				fp << endl;
+			}
 			fp << -1 << " " << nb_sol << endl;
 		}
 		file_io Fio;
@@ -989,7 +989,7 @@ void projective_space_job::perform_job_for_one_set(
 					"to file " << fname_system << " done" << endl;
 			//D->print();
 			//D->print_tight();
-			}
+		}
 
 		long int nb_backtrack_nodes;
 		long int *Sol;
@@ -999,11 +999,11 @@ void projective_space_job::perform_job_for_one_set(
 
 		if (f_v) {
 			cout << "before D->get_solutions" << endl;
-			}
+		}
 		D->get_solutions(Sol, nb_sol, verbose_level);
 		if (f_v) {
 			cout << "after D->get_solutions, nb_sol=" << nb_sol << endl;
-			}
+		}
 		char fname_solutions[1000];
 
 		sprintf(fname_solutions, "system_%d.solutions", back_end_counter);
@@ -1017,9 +1017,9 @@ void projective_space_job::perform_job_for_one_set(
 				for (j = 0; j < D->sum; j++) {
 					a = Sol[i * D->sum + j];
 					fp << " " << a;
-					}
-				fp << endl;
 				}
+				fp << endl;
+			}
 			fp << -1 << " " << nb_sol << endl;
 		}
 		file_io Fio;
@@ -1092,7 +1092,7 @@ void projective_space_job::perform_job_for_one_set(
 
 void projective_space_job::do_canonical_form(
 	long int *set, int set_size, int f_semilinear,
-	const char *fname_base, int verbose_level)
+	std::string &fname_base, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);

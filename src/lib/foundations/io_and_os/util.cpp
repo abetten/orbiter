@@ -2759,6 +2759,55 @@ void text_to_three_double(const char *text, double *d)
 
 }
 
+void text_to_three_double(std::string &text, double *d)
+{
+	double *data;
+	int data_sz;
+	numerics Num;
+
+	Num.vec_scan(text.c_str(), data, data_sz);
+	if (data_sz != 3) {
+		cout << "text_to_three_double; is " << data_sz << endl;
+		exit(1);
+	}
+	d[0] = data[0];
+	d[1] = data[1];
+	d[2] = data[2];
+	delete [] data;
+
+}
+
+
+void convert_arguments(int argc, const char **argv, std::string *&Argv)
+{
+	int i;
+
+	Argv = new string[argc];
+	for (i = 0; i < argc; i++) {
+		Argv[i].assign(argv[i]);
+	}
+}
+
+int stringcmp(std::string &str, const char *p)
+{
+	return strcmp(str.c_str(), p);
+}
+
+int strtoi(std::string &str)
+{
+	int i;
+
+	i = atoi(str.c_str());
+	return i;
+}
+
+double strtof(std::string &str)
+{
+	double f;
+
+	f = atof(str.c_str());
+	return f;
+}
 
 
 

@@ -710,11 +710,13 @@ void surface_create::create_surface_by_coefficients(std::string &coefficients_te
 	SO = NEW_OBJECT(surface_object);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_by_coefficients before SO->init_equation" << endl;
+		cout << "surface_create::create_surface_by_coefficients "
+				"before SO->init_equation" << endl;
 	}
 	SO->init_equation(Surf, coeffs20, verbose_level);
 	if (f_v) {
-		cout << "surface_create::create_surface_by_coefficients after SO->init_equation" << endl;
+		cout << "surface_create::create_surface_by_coefficients "
+				"after SO->init_equation" << endl;
 	}
 
 	int nb_select_double_six;
@@ -730,11 +732,13 @@ void surface_create::create_surface_by_coefficients(std::string &coefficients_te
 			long int New_lines[27];
 
 			if (f_v) {
-				cout << "surface_create::create_surface_by_coefficients selecting double six " << i << " / " << nb_select_double_six << endl;
+				cout << "surface_create::create_surface_by_coefficients selecting "
+						"double six " << i << " / " << nb_select_double_six << endl;
 			}
 			int_vec_scan(select_double_six_string[i], select_double_six, sz);
 			if (sz != 12) {
-				cout << "surface_create::create_surface_by_coefficients f_select_double_six double six must consist of 12 numbers" << endl;
+				cout << "surface_create::create_surface_by_coefficients "
+						"f_select_double_six double six must consist of 12 numbers" << endl;
 				exit(1);
 			}
 
@@ -746,7 +750,8 @@ void surface_create::create_surface_by_coefficients(std::string &coefficients_te
 
 
 			if (f_v) {
-				cout << "surface_create::create_surface_by_coefficients before Surf->rearrange_lines_according_to_a_given_double_six" << endl;
+				cout << "surface_create::create_surface_by_coefficients before "
+						"Surf->rearrange_lines_according_to_a_given_double_six" << endl;
 			}
 			Surf->rearrange_lines_according_to_a_given_double_six(
 					SO->Lines, select_double_six, New_lines, 0 /* verbose_level */);

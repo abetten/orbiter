@@ -296,8 +296,8 @@ void exact_cover::add_late_cleanup_function(
 
 void exact_cover::compute_liftings_new(int f_solve,
 	int f_save, int f_read_instead,
-	int f_draw_system, const char *fname_system, 
-	int f_write_tree, const char *fname_tree, int verbose_level)
+	int f_draw_system, std::string &fname_system,
+	int f_write_tree, std::string &fname_tree, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);

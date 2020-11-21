@@ -54,7 +54,7 @@ public:
 	diophant_activity_description();
 	~diophant_activity_description();
 	int read_arguments(
-		int argc, const char **argv,
+		int argc, std::string *argv,
 		int verbose_level);
 
 
@@ -125,8 +125,8 @@ public:
 	int f_maximal_arc;
 	int maximal_arc_sz;
 	int maximal_arc_d;
-	const char *maximal_arc_secants_text;
-	const char *external_lines_as_subset_of_secants_text;
+	std::string maximal_arc_secants_text;
+	std::string external_lines_as_subset_of_secants_text;
 
 	int f_label;
 	std::string label;
@@ -134,7 +134,7 @@ public:
 	int f_coefficient_matrix;
 	int coefficient_matrix_m;
 	int coefficient_matrix_n;
-	const char *coefficient_matrix_text;
+	std::string coefficient_matrix_text;
 
 	int f_coefficient_matrix_csv;
 	std::string coefficient_matrix_csv;
@@ -156,7 +156,7 @@ public:
 	int x_min_global;
 
 	int f_x_bounds;
-	const char *x_bounds_text;
+	std::string x_bounds_text;
 
 	int f_x_bounds_csv;
 	std::string x_bounds_csv;
@@ -168,7 +168,7 @@ public:
 	diophant_description();
 	~diophant_description();
 	int read_arguments(
-		int argc, const char **argv,
+		int argc, std::string *argv,
 		int verbose_level);
 
 

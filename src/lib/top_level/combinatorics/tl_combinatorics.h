@@ -150,10 +150,10 @@ public:
 
 	int f_edge_list;
 	int n;
-	const char *edge_list_text;
+	std::string edge_list_text;
 
 	int f_edges_as_pairs;
-	const char *edges_as_pairs_text;
+	std::string edges_as_pairs_text;
 
 
 	int f_Johnson;
@@ -192,10 +192,12 @@ public:
 
 
 	create_graph_description();
+#if 0
 	void read_arguments_from_string(
 			const char *str, int verbose_level);
+#endif
 	int read_arguments(
-		int argc, const char **argv,
+		int argc, std::string *argv,
 		int verbose_level);
 
 
@@ -322,7 +324,7 @@ public:
 	delandtsheer_doyen_description();
 	~delandtsheer_doyen_description();
 	int read_arguments(
-		int argc, const char **argv,
+		int argc, std::string *argv,
 		int verbose_level);
 
 };
@@ -475,7 +477,7 @@ public:
 	int f_catalogue;
 	int iso;
 	int f_family;
-	const char *family_name;
+	std::string family_name;
 
 
 
@@ -483,7 +485,7 @@ public:
 	~design_create_description();
 	void null();
 	void freeself();
-	int read_arguments(int argc, const char **argv,
+	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 	int get_q();
 };
@@ -706,7 +708,7 @@ public:
 
 	graph_classify_description();
 	~graph_classify_description();
-	int read_arguments(int argc, const char **argv,
+	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 
 };
@@ -808,10 +810,8 @@ public:
 	~graph_theoretic_activity_description();
 	void null();
 	void freeself();
-	void read_arguments_from_string(
-			const char *str, int verbose_level);
 	int read_arguments(
-		int argc, const char **argv,
+		int argc, std::string *argv,
 		int verbose_level);
 
 
@@ -1127,7 +1127,7 @@ public:
 	void read_arguments_from_string(
 			const char *str, int verbose_level);
 	int read_arguments(
-		int argc, const char **argv,
+		int argc, std::string *argv,
 		int verbose_level);
 
 

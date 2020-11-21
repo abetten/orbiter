@@ -75,9 +75,9 @@ class interface_algebra {
 
 public:
 	interface_algebra();
-	void print_help(int argc, const char **argv, int i, int verbose_level);
-	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
-	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
+	void print_help(int argc, std::string *argv, int i, int verbose_level);
+	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
+	void read_arguments(int argc, std::string *argv, int i0, int verbose_level);
 	void worker(orbiter_session *Session, int verbose_level);
 	void do_linear_group(
 			linear_group_description *Descr, int verbose_level);
@@ -134,9 +134,9 @@ class interface_coding_theory {
 
 public:
 	interface_coding_theory();
-	void print_help(int argc, const char **argv, int i, int verbose_level);
-	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
-	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
+	void print_help(int argc, std::string *argv, int i, int verbose_level);
+	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
+	void read_arguments(int argc, std::string *argv, int i0, int verbose_level);
 	void worker(int verbose_level);
 };
 
@@ -160,44 +160,66 @@ class interface_combinatorics {
 	diophant_activity_description *Diophant_activity_description;
 
 	int f_save;
-	const char *fname_prefix;
+	std::string fname_prefix;
+
 	int f_process_combinatorial_objects;
 	projective_space_job_description *Job;
+
 	int f_bent;
 	int bent_n;
+
 	int f_random_permutation;
 	int random_permutation_degree;
 	std::string random_permutation_fname_csv;
+
 	int f_create_graph;
 	colored_graph *CG;
 	std::string fname_graph;
 	create_graph_description *Create_graph_description;
+
 	int f_read_poset_file;
-	const char *read_poset_file_fname;
+	std::string read_poset_file_fname;
+
 	int f_grouping;
 	double x_stretch;
+
 	int f_graph_theoretic_activity_description;
 	graph_theoretic_activity_description *Graph_theoretic_activity_description;
+
 	int f_list_parameters_of_SRG;
 	int v_max;
+
 	int f_conjugacy_classes_Sym_n;
 	int n;
+
 	int f_tree_of_all_k_subsets;
 	int tree_n, tree_k;
+
 	int f_Delandtsheer_Doyen;
 	delandtsheer_doyen_description *Delandtsheer_Doyen_description;
+
 	int f_graph_classify;
 	graph_classify_description *Graph_classify_description;
+
 	int f_tdo_refinement;
 	tdo_refinement_description *Tdo_refinement_descr;
+
 	int f_tdo_print;
-	const char *tdo_print_fname;
+	std::string tdo_print_fname;
+
 	int f_create_design;
 	design_create_description *Design_create_description;
+
 	int f_convert_stack_to_tdo;
-	const char *stack_fname;
+	std::string stack_fname;
+
 	int f_maximal_arc_parameters;
 	int maximal_arc_parameters_q, maximal_arc_parameters_r;
+
+	int f_arc_parameters;
+	int arc_parameters_q, arc_parameters_s, arc_parameters_r;
+
+
 	int f_pentomino_puzzle;
 
 	int f_regular_linear_space_classify;
@@ -217,15 +239,15 @@ class interface_combinatorics {
 
 public:
 	interface_combinatorics();
-	void print_help(int argc, const char **argv, int i, int verbose_level);
-	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
-	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
+	void print_help(int argc, std::string *argv, int i, int verbose_level);
+	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
+	void read_arguments(int argc, std::string *argv, int i0, int verbose_level);
 	void worker(int verbose_level);
 	void do_graph_theoretic_activity(
 			graph_theoretic_activity_description *Descr, int verbose_level);
 	void do_create_graph(
 			create_graph_description *Create_graph_description, int verbose_level);
-	void do_read_poset_file(const char *fname,
+	void do_read_poset_file(std::string &fname,
 			int f_grouping, double x_stretch, int verbose_level);
 	void do_create_combinatorial_object(int verbose_level);
 	void do_diophant(diophant_description *Descr, int verbose_level);
@@ -238,8 +260,9 @@ public:
 	void do_Delandtsheer_Doyen(delandtsheer_doyen_description *Descr, int verbose_level);
 	void do_graph_classify(graph_classify_description *Descr, int verbose_level);
 	void do_create_design(design_create_description *Descr, int verbose_level);
-	void convert_stack_to_tdo(const char *stack_fname, int verbose_level);
+	void convert_stack_to_tdo(std::string &stack_fname, int verbose_level);
 	void do_parameters_maximal_arc(int q, int r, int verbose_level);
+	void do_parameters_arc(int q, int s, int r, int verbose_level);
 };
 
 
@@ -342,9 +365,9 @@ class interface_cryptography {
 
 public:
 	interface_cryptography();
-	void print_help(int argc, const char **argv, int i, int verbose_level);
-	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
-	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
+	void print_help(int argc, std::string *argv, int i, int verbose_level);
+	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
+	void read_arguments(int argc, std::string *argv, int i0, int verbose_level);
 	void worker(int verbose_level);
 
 
@@ -361,13 +384,13 @@ class interface_povray {
 
 	int f_povray;
 	int f_output_mask;
-	const char *output_mask;
+	std::string output_mask;
 	int f_nb_frames_default;
 	int nb_frames_default;
 	int f_round;
 	int round;
 	int f_rounds;
-	const char *rounds_as_string;
+	std::string rounds_as_string;
 	video_draw_options *Opt;
 
 	// for povray_worker:
@@ -379,9 +402,9 @@ class interface_povray {
 
 public:
 	interface_povray();
-	void print_help(int argc, const char **argv, int i, int verbose_level);
-	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
-	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
+	void print_help(int argc, std::string *argv, int i, int verbose_level);
+	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
+	void read_arguments(int argc, std::string *argv, int i0, int verbose_level);
 	void worker(int verbose_level);
 };
 
@@ -413,7 +436,7 @@ class interface_projective {
 	double parabola_c;
 
 	int f_smooth_curve;
-	const char *smooth_curve_label;
+	std::string smooth_curve_label;
 	int smooth_curve_N;
 	double smooth_curve_boundary;
 	double smooth_curve_t_min;
@@ -434,18 +457,18 @@ class interface_projective {
 
 	int f_create_BLT_set;
 	BLT_set_create_description *BLT_set_descr;
-	int nb_transform;
-	const char *transform_coeffs[1000];
-	int f_inverse_transform[1000];
+
+	std::vector<std::string> transform_coeffs;
+	std::vector<int> f_inverse_transform;
 
 
 public:
 
 
 	interface_projective();
-	void print_help(int argc, const char **argv, int i, int verbose_level);
-	int recognize_keyword(int argc, const char **argv, int i, int verbose_level);
-	void read_arguments(int argc, const char **argv, int i0, int verbose_level);
+	void print_help(int argc, std::string *argv, int i, int verbose_level);
+	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
+	void read_arguments(int argc, std::string *argv, int i0, int verbose_level);
 	void worker(orbiter_session *Session, int verbose_level);
 	void do_cheat_sheet_PG(orbiter_session *Session,
 			int n, int q,

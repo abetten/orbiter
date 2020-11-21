@@ -470,7 +470,7 @@ void graphical_output::do_create_points_on_parabola(
 	}
 }
 
-void graphical_output::do_smooth_curve(const char *curve_label,
+void graphical_output::do_smooth_curve(std::string &curve_label,
 		double desired_distance, int N,
 		double t_min, double t_max, double boundary,
 		function_polish_description *FP_descr, int verbose_level)
@@ -485,11 +485,11 @@ void graphical_output::do_smooth_curve(const char *curve_label,
 	smooth_curve_Polish = NEW_OBJECT(function_polish);
 
 	if (f_v) {
-		cout << "graphical_output::do_smooth_curve before smooth_curve_Polish->init_from_description" << endl;
+		cout << "graphical_output::do_smooth_curve before smooth_curve_Polish->init" << endl;
 	}
-	smooth_curve_Polish->init_from_description(FP_descr, verbose_level);
+	smooth_curve_Polish->init(FP_descr, verbose_level);
 	if (f_v) {
-		cout << "graphical_output::do_smooth_curve after smooth_curve_Polish->init_from_description" << endl;
+		cout << "graphical_output::do_smooth_curve after smooth_curve_Polish->init" << endl;
 	}
 #if 0
 	if (smooth_curve_Polish->Variables.size() != 1) {
@@ -538,7 +538,7 @@ void graphical_output::do_smooth_curve(const char *curve_label,
 
 		char str[1000];
 		string fname;
-		snprintf(str, 1000, "function_%s_N%d_points.csv", curve_label, N);
+		snprintf(str, 1000, "function_%s_N%d_points.csv", curve_label.c_str(), N);
 		fname.assign(str);
 
 
@@ -581,7 +581,7 @@ void graphical_output::do_smooth_curve(const char *curve_label,
 
 		char str[1000];
 		string fname;
-		snprintf(str, 1000, "function_%s_N%d_points_plus.csv", curve_label, N);
+		snprintf(str, 1000, "function_%s_N%d_points_plus.csv", curve_label.c_str(), N);
 		fname.assign(str);
 
 		Fio.double_matrix_write_csv(fname, Pts, nb, n);

@@ -21,7 +21,7 @@ namespace foundations {
 animate::animate()
 {
 	S = NULL;
-	output_mask = NULL;
+	//output_mask;
 	fname_makefile[0] = 0;
 	nb_frames = 30;
 	Opt = NULL;
@@ -38,7 +38,7 @@ animate::~animate()
 }
 
 void animate::init(scene *S,
-		const char *output_mask,
+		std::string &output_mask,
 		int nb_frames,
 		video_draw_options *Opt,
 		void *extra_data,
@@ -50,7 +50,7 @@ void animate::init(scene *S,
 		cout << "animate::init" << endl;
 	}
 	animate::S = S;
-	animate::output_mask = output_mask;
+	animate::output_mask.assign(output_mask);
 	animate::nb_frames = nb_frames;
 	animate::Opt = Opt;
 	animate::extra_data = extra_data;
@@ -309,8 +309,8 @@ void animate::animate_one_round(
 			}
 		//sprintf(povray_opts, "");
 		// for instance -W1920 -H1200  for larger pictures
-		sprintf(fname_pov, output_mask, round, h);
-		sprintf(fname_png, output_mask, round, h);
+		sprintf(fname_pov, output_mask.c_str(), round, h);
+		sprintf(fname_png, output_mask.c_str(), round, h);
 		replace_extension_with(fname_png, ".png");
 
 		cout << "round " << round << ", frame " << h << " / "
@@ -505,9 +505,9 @@ void animate::animate_one_round(
 				scale *= 100.;
 				snprintf(cmd, 5000, "composite \\( %s "
 						"-resize %lf%% \\)  %s    %s   tmp.png",
-					Opt->picture_fname[i],
+					Opt->picture_fname[i].c_str(),
 					scale, //Opt->picture_scale[i] * 100.,
-					Opt->picture_options[i],
+					Opt->picture_options[i].c_str(),
 					fname_png);
 				//cout << "system: " << cmd << endl;
 				//system(cmd);
@@ -523,9 +523,8 @@ void animate::animate_one_round(
 
 			if (Opt->round_text_round[i] == round) {
 				char str[2000];
-				char cmd[10000];
 
-				strcpy(str, Opt->round_text_text[i]);
+				strcpy(str, Opt->round_text_text[i].c_str());
 				if ((int) strlen(str) > h) {
 					str[h] = 0;
 					}
@@ -541,6 +540,9 @@ void animate::animate_one_round(
 					if (Opt->f_has_stroke_width) {
 						stroke_width = Opt->stroke_width;
 						}
+
+					char cmd[10000];
+
 					snprintf(cmd, 10000, "convert -background none  -fill white "
 							"-stroke black -strokewidth %d -font "
 							"Courier-10-Pitch-Bold  -pointsize %d   "
@@ -568,10 +570,11 @@ void animate::animate_one_round(
 		for (i = 0; i < Opt->nb_label; i++) {
 
 			if (Opt->label_round[i] == round) {
+				string label;
+				string cmd;
 				char str[1000];
-				char cmd[10000];
 
-				strcpy(str, Opt->label_text[i]);
+				label.assign(Opt->label_text[i]);
 
 				if (h >= Opt->label_start[i]
 					&& h < Opt->label_start[i] + Opt->label_sustain[i]) {
@@ -584,23 +587,26 @@ void animate::animate_one_round(
 					if (Opt->f_has_stroke_width) {
 						stroke_width = Opt->stroke_width;
 						}
-					snprintf(cmd, 10000, "convert -background none  -fill white "
+					snprintf(str, 1000, "convert -background none  -fill white "
 							"-stroke black -strokewidth %d -font "
 							"Courier-10-Pitch-Bold  -pointsize %d   "
 							"label:'%s'   overlay.png",
-							stroke_width, font_size, str);
+							stroke_width, font_size, label.c_str());
+					cmd.assign(str);
 					//cout << "system: " << cmd << endl;
 					//system(cmd);
 					*fpm << "\t" << cmd << endl;
 
 
-					snprintf(cmd, 10000, "composite %s overlay.png   %s   tmp.png",
-							Opt->label_gravity[i], fname_png);
+					snprintf(str, 1000, "composite %s overlay.png   %s   tmp.png",
+							Opt->label_gravity[i].c_str(), fname_png);
+					cmd.assign(str);
 					//cout << "system: " << cmd << endl;
 					//system(cmd);
 					*fpm << "\t" << cmd << endl;
 
-					snprintf(cmd, 10000, "mv tmp.png %s", fname_png);
+					snprintf(str, 10000, "mv tmp.png %s", fname_png);
+					cmd.assign(str);
 					//cout << "system: " << cmd << endl;
 					//system(cmd);
 					*fpm << "\t" << cmd << endl;
@@ -620,22 +626,33 @@ void animate::animate_one_round(
 
 					if (!Opt->latex_f_label_has_been_prepared[i]) {
 
+						char str[1000];
+
+
 						cout << "creating latex label " << i << endl;
-						sprintf(Opt->latex_fname_base[i],
-								output_mask, round, h);
+						sprintf(str, output_mask.c_str(), round, h);
+
+						Opt->latex_fname_base[i].assign(str);
+
 						chop_off_extension(Opt->latex_fname_base[i]);
-						sprintf(Opt->latex_fname_base[i] +
-							strlen(Opt->latex_fname_base[i]),
-							"_%04d", i);
+						sprintf(str, "_%04d", i);
+						Opt->latex_fname_base[i].append(str);
+
+						//sprintf(Opt->latex_fname_base[i] +
+						//	strlen(Opt->latex_fname_base[i]), "_%04d", i);
 
 						cout << "latex_fname_base=" <<
 								Opt->latex_fname_base[i] << endl;
-						char cmd[10000];
-						char fname_tex[2000];
-						char fname_pdf[2000];
+						string cmd;
+						string fname_tex;
+						string fname_pdf;
 
-						snprintf(fname_tex, 2000, "%s.tex", Opt->latex_fname_base[i]);
-						snprintf(fname_pdf, 2000, "%s.pdf", Opt->latex_fname_base[i]);
+						fname_tex.assign(Opt->latex_fname_base[i]);
+						fname_tex.append(".tex");
+						fname_pdf.assign(Opt->latex_fname_base[i]);
+						fname_pdf.append(".pdf");
+						//snprintf(fname_tex, 2000, "%s.tex", Opt->latex_fname_base[i]);
+						//snprintf(fname_pdf, 2000, "%s.pdf", Opt->latex_fname_base[i]);
 
 						cout << "begin latex source:" << endl;
 						cout << Opt->latex_label_text[i] << endl;
@@ -645,45 +662,55 @@ void animate::animate_one_round(
 							latex_interface L;
 							//latex_head_easy(fp);
 							L.head_easy_with_extras_in_the_praeamble(fp,
-									Opt->latex_extras_for_praeamble[i]);
+									Opt->latex_extras_for_praeamble[i].c_str());
 							fp << Opt->latex_label_text[i] << endl;
 							L.foot(fp);
 
 
 						}
 
-						snprintf(cmd, 10000, "pdflatex %s", fname_tex);
+						cmd.assign("pdflatex ");
+						cmd.append(fname_tex);
+
+						//snprintf(cmd, 10000, "pdflatex %s", fname_tex);
 						//cout << "system: " << cmd << endl;
-						system(cmd);
+						system(cmd.c_str());
 						//fpm << "\t" << cmd << endl;
 
 						Opt->latex_f_label_has_been_prepared[i] = TRUE;
 						}
 					else {
 
-						char cmd[10000];
-						char fname_pdf[2000];
-						char fname_label_png[2000];
+						string cmd;
+						string fname_pdf;
+						string fname_label_png;
 
-						snprintf(fname_pdf, 2000, "%s.pdf",
-								Opt->latex_fname_base[i]);
-						snprintf(fname_label_png, 2000, "label.png");
+						fname_pdf.assign(Opt->latex_fname_base[i]);
+						fname_pdf.append(".pdf");
+						fname_label_png.assign("label.png");
 
-						sprintf(cmd, "convert -trim %s %s",
-								fname_pdf, fname_label_png);
+						cmd.assign("convert -trim ");
+						cmd.append(fname_pdf);
+						cmd.append(" ");
+						cmd.append(fname_label_png);
+						//cout << "system: " << cmd << endl;
+						//system(cmd.c_str());
+						*fpm << "\t" << cmd << endl;
+
+
+						cmd.assign("composite ");
+						cmd.append(Opt->latex_label_gravity[i]);
+						cmd.append(" ");
+						cmd.append(fname_label_png);
+						cmd.append(" ");
+						cmd.append(fname_png);
+						cmd.append(" tmp.png");
 						//cout << "system: " << cmd << endl;
 						//system(cmd);
 						*fpm << "\t" << cmd << endl;
 
-
-						snprintf(cmd, 10000, "composite %s %s   %s   tmp.png",
-								Opt->latex_label_gravity[i],
-								fname_label_png, fname_png);
-						//cout << "system: " << cmd << endl;
-						//system(cmd);
-						*fpm << "\t" << cmd << endl;
-
-						snprintf(cmd, 10000, "mv tmp.png %s", fname_png);
+						cmd.assign("mv tmp.png ");
+						cmd.append(fname_png);
 						//cout << "system: " << cmd << endl;
 						//system(cmd);
 						*fpm << "\t" << cmd << endl;

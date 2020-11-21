@@ -52,7 +52,7 @@ regular_linear_space_description::~regular_linear_space_description()
 
 
 int regular_linear_space_description::read_arguments(
-	int argc, const char **argv,
+	int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;
@@ -60,32 +60,32 @@ int regular_linear_space_description::read_arguments(
 	cout << "regular_linear_space_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-		if (strcmp(argv[i], "-m") == 0) {
+		if (stringcmp(argv[i], "-m") == 0) {
 			f_m = TRUE;
-			m = atoi(argv[++i]);
+			m = strtoi(argv[++i]);
 			cout << "-m " << m << endl;
 		}
-		else if (strcmp(argv[i], "-n") == 0) {
+		else if (stringcmp(argv[i], "-n") == 0) {
 			f_n = TRUE;
-			n = atoi(argv[++i]);
+			n = strtoi(argv[++i]);
 			cout << "-n " << n << endl;
 		}
-		else if (strcmp(argv[i], "-k") == 0) {
+		else if (stringcmp(argv[i], "-k") == 0) {
 			f_k = TRUE;
-			k = atoi(argv[++i]);
+			k = strtoi(argv[++i]);
 			cout << "-k " << k << endl;
 		}
-		else if (strcmp(argv[i], "-r") == 0) {
+		else if (stringcmp(argv[i], "-r") == 0) {
 			f_r = TRUE;
-			r = atoi(argv[++i]);
+			r = strtoi(argv[++i]);
 			cout << "-r " << r << endl;
 		}
-		else if (strcmp(argv[i], "-target_size") == 0) {
+		else if (stringcmp(argv[i], "-target_size") == 0) {
 			f_target_size = TRUE;
-			target_size = atoi(argv[++i]);
+			target_size = strtoi(argv[++i]);
 			cout << "-target_size " << target_size << endl;
 		}
-		else if (strcmp(argv[i], "-control") == 0) {
+		else if (stringcmp(argv[i], "-control") == 0) {
 			f_has_control = TRUE;
 			Control = NEW_OBJECT(poset_classification_control);
 			i += Control->read_arguments(argc - (i + 1),
@@ -98,9 +98,9 @@ int regular_linear_space_description::read_arguments(
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
-		else if (strcmp(argv[i], "-end") == 0) {
+		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
-			return i;
+			break;
 		}
 		else {
 			cout << "regular_linear_space_description::read_arguments "
@@ -108,7 +108,7 @@ int regular_linear_space_description::read_arguments(
 		}
 	} // next i
 	cout << "regular_linear_space_description::read_arguments done" << endl;
-	return i;
+	return i + 1;
 }
 
 }}

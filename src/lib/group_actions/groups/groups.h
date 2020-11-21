@@ -202,7 +202,7 @@ public:
 	int f_Janko1;
 
 	int f_restricted_action;
-	const char *restricted_action_text;
+	std::string restricted_action_text;
 
 	int f_export_magma;
 
@@ -211,9 +211,7 @@ public:
 	~linear_group_description();
 	void null();
 	void freeself();
-	void read_arguments_from_string(
-			const char *str, int verbose_level);
-	int read_arguments(int argc, const char **argv, 
+	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 };
 

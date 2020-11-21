@@ -45,77 +45,40 @@ void graph_theoretic_activity_description::freeself()
 	null();
 }
 
-void graph_theoretic_activity_description::read_arguments_from_string(
-		const char *str, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-
-	int argc;
-	char **argv;
-	int i;
-
-	if (f_v) {
-		cout << "graph_theoretic_activity_description::read_arguments_from_string" << endl;
-	}
-	chop_string(str, argc, argv);
-
-	if (f_vv) {
-		cout << "argv:" << endl;
-		for (i = 0; i < argc; i++) {
-			cout << i << " : " << argv[i] << endl;
-		}
-	}
-
-
-	read_arguments(
-		argc, (const char **) argv,
-		verbose_level);
-
-	for (i = 0; i < argc; i++) {
-		FREE_char(argv[i]);
-	}
-	FREE_pchar(argv);
-	if (f_v) {
-		cout << "graph_theoretic_activity_description::read_arguments_from_string "
-				"done" << endl;
-	}
-}
-
 int graph_theoretic_activity_description::read_arguments(
-	int argc, const char **argv,
+	int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;
 
 	cout << "graph_theoretic_activity_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
-		if (strcmp(argv[i], "-find_cliques") == 0) {
+		if (stringcmp(argv[i], "-find_cliques") == 0) {
 			f_find_cliques = TRUE;
 			Clique_finder_control = NEW_OBJECT(clique_finder_control);
 			i += Clique_finder_control->parse_arguments(argc - i, argv + i);
 		}
-		else if (strcmp(argv[i], "-export_magma") == 0) {
+		else if (stringcmp(argv[i], "-export_magma") == 0) {
 			f_export_magma = TRUE;
 			cout << "-export_magma" << endl;
 		}
-		else if (strcmp(argv[i], "-export_maple") == 0) {
+		else if (stringcmp(argv[i], "-export_maple") == 0) {
 			f_export_maple = TRUE;
 			cout << "-export_maple" << endl;
 		}
-		else if (strcmp(argv[i], "-export_csv") == 0) {
+		else if (stringcmp(argv[i], "-export_csv") == 0) {
 			f_export_csv = TRUE;
 			cout << "-export_csv" << endl;
 		}
-		else if (strcmp(argv[i], "-print") == 0) {
+		else if (stringcmp(argv[i], "-print") == 0) {
 			f_print = TRUE;
 			cout << "-print" << endl;
 		}
-		else if (strcmp(argv[i], "-end") == 0) {
+		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			return i;
 			}
-		else if (strcmp(argv[i], "-sort_by_colors") == 0) {
+		else if (stringcmp(argv[i], "-sort_by_colors") == 0) {
 			f_sort_by_colors = TRUE;
 			cout << "-sort_by_colors " << endl;
 		}
@@ -126,7 +89,7 @@ int graph_theoretic_activity_description::read_arguments(
 			cout << "-split " << endl;
 		}
 #endif
-		else if (strcmp(argv[i], "-save") == 0) {
+		else if (stringcmp(argv[i], "-save") == 0) {
 			f_save = TRUE;
 			cout << "-save " << endl;
 		}
