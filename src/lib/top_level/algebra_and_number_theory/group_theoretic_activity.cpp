@@ -429,6 +429,14 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 				verbose_level);
 	}
 
+	else if (Descr->f_classify_semifields) {
+		do_classify_semifields(
+				Descr->Semifield_classify_description,
+				Descr->Control,
+				verbose_level);
+
+	}
+
 	else if (Descr->f_orbits_on_polynomials) {
 		do_orbits_on_polynomials(
 				Descr->orbits_on_polynomials_degree,
@@ -2824,6 +2832,7 @@ void group_theoretic_activity::do_spread_classify(int k, int verbose_level)
 			LG,
 			k,
 			Control,
+			TRUE /* f_recoordinatize */,
 			verbose_level - 1);
 
 
@@ -3272,6 +3281,39 @@ void group_theoretic_activity::do_classify_cubic_curves(
 	}
 }
 
+
+void group_theoretic_activity::do_classify_semifields(
+		semifield_classify_description *Semifield_classify_description,
+		poset_classification_control *Control,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_classify_semifields" << endl;
+	}
+
+
+	semifield_classify_with_substructure *S;
+
+	S = NEW_OBJECT(semifield_classify_with_substructure);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_classify_semifields before S->init" << endl;
+	}
+	S->init(
+			Semifield_classify_description,
+			LG,
+			Control,
+			verbose_level);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_classify_semifields after S->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_classify_semifields done" << endl;
+	}
+}
 
 void group_theoretic_activity::do_orbits_on_polynomials(
 		int degree,

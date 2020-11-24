@@ -2235,7 +2235,7 @@ void algebra_global_with_action::classify_surfaces(
 	if (f_v) {
 		cout << "algebra_global_with_action::classify_surfaces before Surf_A->init" << endl;
 	}
-	Surf_A->init(Surf, LG, verbose_level - 3);
+	Surf_A->init(Surf, LG, TRUE /* f_recoordinatize */, verbose_level - 3);
 	if (f_v) {
 		cout << "algebra_global_with_action::classify_surfaces after Surf_A->init" << endl;
 	}
@@ -2843,7 +2843,7 @@ void algebra_global_with_action::packing_init(
 	}
 
 
-	T->init(LG, dimension_of_spread_elements, Control, verbose_level - 1);
+	T->init(LG, dimension_of_spread_elements, Control, TRUE /* f_recoordinatize */, verbose_level - 1);
 
 	if (f_v) {
 		cout << "algebra_global_with_action::packing_init after T->init" << endl;

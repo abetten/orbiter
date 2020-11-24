@@ -1106,8 +1106,8 @@ public:
 	void freeself();
 	void init(surface_domain *Surf,
 			linear_group *LG,
+			int f_recoordinatize,
 			int verbose_level);
-	//void init_group(int f_semilinear, int verbose_level);
 	int create_double_six_safely(
 		long int *five_lines, long int transversal_line,
 		long int *double_six, int verbose_level);

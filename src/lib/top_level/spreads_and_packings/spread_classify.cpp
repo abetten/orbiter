@@ -150,6 +150,7 @@ void spread_classify::freeself()
 void spread_classify::init(
 		linear_group *LG,
 		int k, poset_classification_control *Control,
+		int f_recoordinatize,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -192,6 +193,7 @@ void spread_classify::init(
 
 	kn = k * n;
 	
+#if 0
 	if (k == (n >> 1)) {
 		f_recoordinatize = TRUE;
 	}
@@ -202,6 +204,7 @@ void spread_classify::init(
 	if (f_v) {
 		cout << "spread_classify::init f_recoordinatize = " << f_recoordinatize << endl;
 	}
+#endif
 
 
 
@@ -286,7 +289,7 @@ void spread_classify::init(
 	
 
 
-	if (TRUE) {
+	if (f_vv) {
 		int f_print_as_permutation = TRUE;
 		int f_offset = FALSE;
 		int offset = 1;
@@ -315,6 +318,7 @@ void spread_classify::init(
 #endif
 
 
+#if 0
 	if (nb_pts < 50) {
 		print_points();
 	}
@@ -325,6 +329,7 @@ void spread_classify::init(
 		print_elements();
 		print_elements_and_points();
 	}
+#endif
 
 
 	if (TRUE /*f_v*/) {
@@ -339,10 +344,17 @@ void spread_classify::init(
 		if (f_v) {
 			cout << "spread_classify::init before recoordinatize::init" << endl;
 		}
+		char str[1000];
+		string fname_live_points;
+
+		sprintf(str, "live_points_q%d", q);
+		fname_live_points.assign(str);
+
 		R = NEW_OBJECT(recoordinatize);
 		R->init(n, k, Mtx->GFq, Grass, A, A2,
 			TRUE /*f_projective*/, Mtx->f_semilinear,
 			callback_incremental_check_function, (void *) this,
+			fname_live_points,
 			verbose_level);
 
 		if (f_v) {

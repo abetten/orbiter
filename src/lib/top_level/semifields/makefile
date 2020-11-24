@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	semifield_classify_description.o \
 	semifield_classify_with_substructure.o \
 	semifield_classify.o \
 	semifield_downstep_node.o \

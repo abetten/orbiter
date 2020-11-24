@@ -689,7 +689,7 @@ void interface_projective::do_create_surface_atlas(int q_max, int verbose_level)
 		if (f_v) {
 			cout << "do_create_surface_atlas before Surf_A->init" << endl;
 		}
-		T[cur].Surf_A->init(T[cur].Surf, T[cur].LG, 0 /*verbose_level*/);
+		T[cur].Surf_A->init(T[cur].Surf, T[cur].LG, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
 		if (f_v) {
 			cout << "do_create_surface_atlas after Surf_A->init" << endl;
 		}

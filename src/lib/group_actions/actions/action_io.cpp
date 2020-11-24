@@ -682,11 +682,11 @@ void action::print_info()
 		//int_vec_print(cout, Sims->orbit_len, base_len());
 		for (int t = 0; t < base_len(); t++) {
 			cout << Sims->get_orbit_length(t);
-			if (t < base_len()) {
+			if (t < base_len() - 1) {
 				cout << " * ";
 			}
 		}
-		cout << endl;
+		//cout << endl;
 	}
 	cout << endl;
 

@@ -157,6 +157,9 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	f_classify_cubic_curves = FALSE;
 
+	f_classify_semifields = FALSE;
+	Semifield_classify_description = NULL;
+
 	f_orbits_on_polynomials = FALSE;
 	orbits_on_polynomials_degree = 0;
 
@@ -714,6 +717,23 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "next argument is " << argv[i] << endl;
 			}
 			cout << "-classify_cubic_curves " << endl;
+		}
+
+		// semifields
+		else if (stringcmp(argv[i], "-classify_semifields") == 0) {
+			f_classify_semifields = TRUE;
+			Semifield_classify_description = NEW_OBJECT(semifield_classify_description);
+			cout << "-classify_semifields" << endl;
+			i += Semifield_classify_description->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -classify_semifields " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-classify_semifields " << endl;
 		}
 
 

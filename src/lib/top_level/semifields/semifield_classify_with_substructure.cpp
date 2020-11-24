@@ -19,7 +19,7 @@ namespace top_level {
 
 semifield_classify_with_substructure::semifield_classify_with_substructure()
 {
-
+	Descr = NULL;
 	LG = NULL;
 	Mtx = NULL;
 	//F = NULL;
@@ -29,22 +29,6 @@ semifield_classify_with_substructure::semifield_classify_with_substructure()
 	//argv = NULL;
 	//f_poly = FALSE;
 	//poly = NULL;
-	f_order = FALSE;
-	order = 0;
-	f_dim_over_kernel = FALSE;
-	dim_over_kernel = 0;
-	f_prefix = FALSE;
-	//prefix = "";
-	f_orbits_light = FALSE;
-	f_test_semifield = FALSE;
-	//test_semifield_data = NULL;
-	f_identify_semifield = FALSE;
-	//identify_semifield_data = NULL;
-	f_identify_semifields_from_file = FALSE;
-	//identify_semifields_from_file_fname = NULL;
-	f_load_classification = FALSE;
-	f_report = FALSE;
-	f_decomposition_matrix_level_3 = FALSE;
 
 	identify_semifields_from_file_Po = NULL;
 	identify_semifields_from_file_m = 0;
@@ -83,95 +67,8 @@ semifield_classify_with_substructure::~semifield_classify_with_substructure()
 
 }
 
-#if 0
-void semifield_classify_with_substructure::read_arguments(
-		int argc, const char **argv, int &verbose_level)
-{
-	int i;
-	os_interface Os;
-
-	t0 = Os.os_ticks();
-	semifield_classify_with_substructure::argc = argc;
-	semifield_classify_with_substructure::argv = argv;
-
-	for (i = 1; i < argc; i++) {
-		if (strcmp(argv[i], "-v") == 0) {
-			verbose_level = atoi(argv[++i]);
-			cout << "-v " << verbose_level << endl;
-			}
-		else if (strcmp(argv[i], "-poly") == 0) {
-			f_poly = TRUE;
-			poly = argv[++i];
-			cout << "-poly " << poly << endl;
-			}
-		else if (strcmp(argv[i], "-order") == 0) {
-			f_order = TRUE;
-			order = atoi(argv[++i]);
-			cout << "-order " << order << endl;
-			}
-		else if (strcmp(argv[i], "-dim_over_kernel") == 0) {
-			f_dim_over_kernel = TRUE;
-			dim_over_kernel = atoi(argv[++i]);
-			cout << "-dim_over_kernel " << dim_over_kernel << endl;
-			}
-		else if (strcmp(argv[i], "-prefix") == 0) {
-			f_prefix = TRUE;
-			prefix = argv[++i];
-			cout << "-prefix " << prefix << endl;
-			}
-		else if (strcmp(argv[i], "-orbits_light") == 0) {
-			f_orbits_light = TRUE;
-			cout << "-orbits_light " << endl;
-			}
-		else if (strcmp(argv[i], "-test_semifield") == 0) {
-			f_test_semifield = TRUE;
-			test_semifield_data = argv[++i];
-			cout << "-test_semifield " << test_semifield_data << endl;
-			}
-		else if (strcmp(argv[i], "-identify_semifield") == 0) {
-			f_identify_semifield = TRUE;
-			identify_semifield_data = argv[++i];
-			cout << "-identify_semifield " << identify_semifield_data << endl;
-			}
-		else if (strcmp(argv[i], "-identify_semifields_from_file") == 0) {
-			f_identify_semifields_from_file = TRUE;
-			identify_semifields_from_file_fname = argv[++i];
-			cout << "-identify_semifields_from_file "
-					<< identify_semifields_from_file_fname << endl;
-			}
-		else if (strcmp(argv[i], "-trace_record_prefix") == 0) {
-			f_trace_record_prefix = TRUE;
-			trace_record_prefix = argv[++i];
-			cout << "-trace_record_prefix " << trace_record_prefix << endl;
-			}
-		else if (strcmp(argv[i], "-FstLen") == 0) {
-			f_FstLen = TRUE;
-			fname_FstLen = argv[++i];
-			cout << "-FstLen " << fname_FstLen << endl;
-			}
-		else if (strcmp(argv[i], "-Data") == 0) {
-			f_Data = TRUE;
-			fname_Data = argv[++i];
-			cout << "-Data " << fname_Data << endl;
-			}
-		else if (strcmp(argv[i], "-load_classification") == 0) {
-			f_load_classification = TRUE;
-			cout << "-load_classification " << endl;
-			}
-		else if (strcmp(argv[i], "-report") == 0) {
-			f_report = TRUE;
-			cout << "-report " << endl;
-			}
-		else if (strcmp(argv[i], "-decomposition_matrix_level_3") == 0) {
-			f_decomposition_matrix_level_3 = TRUE;
-			cout << "-decomposition_matrix_level_3 " << endl;
-			}
-		}
-
-}
-#endif
-
 void semifield_classify_with_substructure::init(
+		semifield_classify_description *Descr,
 		linear_group *LG,
 		poset_classification_control *Control,
 		int verbose_level)
@@ -184,33 +81,40 @@ void semifield_classify_with_substructure::init(
 	number_theory_domain NT;
 
 
-	//semifield_classify_with_substructure::F = F;
+	semifield_classify_with_substructure::Descr = Descr;
+
 	semifield_classify_with_substructure::LG = LG;
 	Mtx = LG->A_linear->get_matrix_group();
 	semifield_classify_with_substructure::Control = Control;
 
-	NT.factor_prime_power(order, p, e);
-	cout << "order = " << order << " = " << p << "^" << e << endl;
+	NT.factor_prime_power(Descr->order, p, e);
+	if (f_v) {
+		cout << "order = " << Descr->order << " = " << p << "^" << e << endl;
+	}
 
-	if (f_dim_over_kernel) {
-		if (e % dim_over_kernel) {
+	if (Descr->f_dim_over_kernel) {
+		if (e % Descr->dim_over_kernel) {
 			cout << "dim_over_kernel does not divide e" << endl;
 			exit(1);
-			}
-		e1 = e / dim_over_kernel;
-		n = 2 * dim_over_kernel;
-		k = dim_over_kernel;
-		q = NT.i_power_j(p, e1);
-		cout << "order=" << order << " n=" << n
-			<< " k=" << k << " q=" << q << endl;
 		}
+		e1 = e / Descr->dim_over_kernel;
+		n = 2 * Descr->dim_over_kernel;
+		k = Descr->dim_over_kernel;
+		q = NT.i_power_j(p, e1);
+		if (f_v) {
+			cout << "order=" << Descr->order << " n=" << n
+				<< " k=" << k << " q=" << q << endl;
+		}
+	}
 	else {
 		n = 2 * e;
 		k = e;
 		q = p;
-		cout << "order=" << order << " n=" << n
-			<< " k=" << k << " q=" << q << endl;
+		if (f_v) {
+			cout << "order=" << Descr->order << " n=" << n
+				<< " k=" << k << " q=" << q << endl;
 		}
+	}
 	k2 = k * k;
 
 
@@ -223,24 +127,37 @@ void semifield_classify_with_substructure::init(
 
 
 	Sub->SC = NEW_OBJECT(semifield_classify);
-	cout << "before SC->init" << endl;
 
+	if (!Descr->f_level_two_prefix) {
+		Descr->f_level_two_prefix = TRUE;
+		Descr->level_two_prefix.assign("L2");
+	}
+	if (!Descr->f_level_three_prefix) {
+		Descr->f_level_three_prefix = TRUE;
+		Descr->level_three_prefix.assign("L3");
+	}
+
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::init before Sub->SC->init" << endl;
+	}
 	Sub->SC->init(LG, k, Control,
-			"L2" /* level_two_prefix */,
-			"L3" /* level_three_prefix */,
+			Descr->level_two_prefix,
+			Descr->level_three_prefix,
 			verbose_level - 1);
-	cout << "after SC->init" << endl;
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::init after Sub->SC->init" << endl;
+	}
 
 
 
 
-	if (f_test_semifield) {
+	if (Descr->f_test_semifield) {
 		long int *data = NULL;
 		int data_len = 0;
 		int i;
 
-		cout << "f_test_semifield" << endl;
-		lint_vec_scan(test_semifield_data, data, data_len);
+		cout << "semifield_classify_with_substructure::init f_test_semifield" << endl;
+		lint_vec_scan(Descr->test_semifield_data, data, data_len);
 		cout << "input semifield:" << endl;
 		for (i = 0; i < data_len; i++) {
 			cout << i << " : " << data[i] << endl;
@@ -257,26 +174,39 @@ void semifield_classify_with_substructure::init(
 
 
 	L2 = NEW_OBJECT(semifield_level_two);
-	cout << "before L2->init" << endl;
+
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::init before L2->init" << endl;
+	}
 	L2->init(Sub->SC, verbose_level);
-	cout << "after L2->init" << endl;
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::init after L2->init" << endl;
+	}
 
 
 #if 1
-	cout << "before L2->compute_level_two" << endl;
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::init before L2->compute_level_two" << endl;
+	}
 	L2->compute_level_two(4, verbose_level);
-	cout << "after L2->compute_level_two" << endl;
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::init after L2->compute_level_two" << endl;
+	}
 #else
 	L2->read_level_info_file(verbose_level);
 #endif
 
 	Sub->L3 = NEW_OBJECT(semifield_lifting);
 
-	cout << "before L3->init_level_three" << endl;
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::init before L3->init_level_three" << endl;
+	}
 	Sub->L3->init_level_three(L2,
 			true /* f_prefix */, Sub->SC->level_three_prefix,
 			verbose_level);
-	cout << "after L3->init_level_three" << endl;
+	if (f_v) {
+		cout << "semifield_classify_with_substructure::init after L3->init_level_three" << endl;
+	}
 
 
 
@@ -297,7 +227,7 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 	if (f_v) {
 		cout << "before reading files " << fname_FstLen
 			<< " and " << fname_Data << endl;
-		}
+	}
 
 
 
@@ -320,7 +250,7 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 	Sub->Len = NEW_int(Sub->nb_orbits_at_level_3);
 	for (i = 0; i < Sub->nb_orbits_at_level_3; i++) {
 		Sub->Len[i] = Sub->FstLen[i * 2 + 1];
-		}
+	}
 	Fio.lint_matrix_read_csv(fname_Data, Sub->Data,
 			Sub->nb_solutions, Sub->data_size, verbose_level);
 
@@ -329,7 +259,7 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 		cout << "Read " << Sub->nb_solutions
 			<< " solutions arising from "
 			<< Sub->nb_orbits_at_level_3 << " orbits" << endl;
-		}
+	}
 
 
 
@@ -340,11 +270,11 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 		cout << "classification of Len:" << endl;
 		C.print_naked(TRUE);
 		cout << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "computing existing cases:" << endl;
-		}
+	}
 
 
 	Existing_cases = NEW_int(Sub->nb_orbits_at_level_3);
@@ -353,23 +283,23 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 	for (i = 0; i < Sub->nb_orbits_at_level_3; i++) {
 		if (Sub->Len[i]) {
 			Existing_cases[nb_existing_cases++] = i;
-			}
 		}
+	}
 	Existing_cases_fst = NEW_int(nb_existing_cases);
 	Existing_cases_len = NEW_int(nb_existing_cases);
 	for (i = 0; i < nb_existing_cases; i++) {
 		a = Existing_cases[i];
 		Existing_cases_fst[i] = Sub->FstLen[2 * a + 0];
 		Existing_cases_len[i] = Sub->FstLen[2 * a + 1];
-		}
+	}
 	if (f_v) {
 		cout << "There are " << nb_existing_cases
 			<< " cases which exist" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "computing non-unique cases:" << endl;
-		}
+	}
 
 	Non_unique_cases = NEW_int(nb_existing_cases);
 	nb_non_unique_cases = 0;
@@ -377,13 +307,13 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 		a = Existing_cases[i];
 		if (Existing_cases_len[i] > 1) {
 			Non_unique_cases[nb_non_unique_cases++] = a;
-			}
 		}
+	}
 
 	if (f_v) {
 		cout << "There are " << nb_non_unique_cases
 			<< " cases which have more than one solution" << endl;
-		}
+	}
 	Non_unique_cases_fst = NEW_int(nb_non_unique_cases);
 	Non_unique_cases_len = NEW_int(nb_non_unique_cases);
 	Non_unique_cases_go = NEW_lint(nb_non_unique_cases);
@@ -393,7 +323,7 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 		Non_unique_cases_len[i] = Sub->FstLen[2 * a + 1];
 		Non_unique_cases_go[i] =
 			Sub->L3->Stabilizer_gens[a].group_order_as_lint();
-		}
+	}
 
 	{
 		tally C;
@@ -406,14 +336,14 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 		}
 	}
 	{
-	tally C;
+		tally C;
 
-	C.init_lint(Non_unique_cases_go, nb_non_unique_cases, FALSE, 0);
-	if (f_v) {
-		cout << "classification of group orders amongst "
-				"the non-unique cases:" << endl;
-		C.print_naked(TRUE);
-		cout << endl;
+		C.init_lint(Non_unique_cases_go, nb_non_unique_cases, FALSE, 0);
+		if (f_v) {
+			cout << "classification of group orders amongst "
+					"the non-unique cases:" << endl;
+			C.print_naked(TRUE);
+			cout << endl;
 		}
 	}
 
@@ -459,25 +389,25 @@ void semifield_classify_with_substructure::classify_semifields(int verbose_level
 	Sub->do_classify(verbose_level);
 
 	{
-	char fname[1000];
-	create_fname_for_classification(fname);
-	{
-		ofstream fp(fname, ios::binary);
+		char fname[1000];
+		create_fname_for_classification(fname);
+		{
+			ofstream fp(fname, ios::binary);
 
-		Semifields->write_file(fp, verbose_level);
-	}
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+			Semifields->write_file(fp, verbose_level);
+		}
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
 
 	{
-	char fname[1000];
-	create_fname_for_flag_orbits(fname);
-	{
-		ofstream fp(fname, ios::binary);
+		char fname[1000];
+		create_fname_for_flag_orbits(fname);
+		{
+			ofstream fp(fname, ios::binary);
 
-		Sub->Flag_orbits->write_file(fp, verbose_level);
-	}
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+			Sub->Flag_orbits->write_file(fp, verbose_level);
+		}
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
 
 	if (f_v) {
@@ -502,14 +432,14 @@ void semifield_classify_with_substructure::load_classification(int verbose_level
 
 
 	{
-	char fname[1000];
-	create_fname_for_classification(fname);
-	{
-		ifstream fp(fname, ios::binary);
+		char fname[1000];
+		create_fname_for_classification(fname);
+		{
+			ifstream fp(fname, ios::binary);
 
-		cout << "Reading file " << fname << " of size " << Fio.file_size(fname) << endl;
-		Semifields->read_file(fp, Sub->SC->A, Sub->SC->AS, go, verbose_level);
-	}
+			cout << "Reading file " << fname << " of size " << Fio.file_size(fname) << endl;
+			Semifields->read_file(fp, Sub->SC->A, Sub->SC->AS, go, verbose_level);
+		}
 	}
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::load_classification "
@@ -534,14 +464,14 @@ void semifield_classify_with_substructure::load_flag_orbits(int verbose_level)
 
 
 	{
-	char fname[1000];
-	create_fname_for_flag_orbits(fname);
-	{
-		ifstream fp(fname, ios::binary);
+		char fname[1000];
+		create_fname_for_flag_orbits(fname);
+		{
+			ifstream fp(fname, ios::binary);
 
-		cout << "Reading file " << fname << " of size " << Fio.file_size(fname) << endl;
-		Sub->Flag_orbits->read_file(fp, Sub->SC->A, Sub->SC->AS, verbose_level);
-	}
+			cout << "Reading file " << fname << " of size " << Fio.file_size(fname) << endl;
+			Sub->Flag_orbits->read_file(fp, Sub->SC->A, Sub->SC->AS, verbose_level);
+		}
 	}
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::load_flag_orbits "
@@ -565,11 +495,11 @@ void semifield_classify_with_substructure::identify_semifield(int verbose_level)
 		cout << "semifield_classify_with_substructure::identify_semifield" << endl;
 	}
 
-	if (f_identify_semifield) {
+	if (Descr->f_identify_semifield) {
 		long int *data = NULL;
 		int data_len = 0;
 		cout << "f_identify_semifield" << endl;
-		lint_vec_scan(identify_semifield_data, data, data_len);
+		lint_vec_scan(Descr->identify_semifield_data, data, data_len);
 		cout << "input semifield:" << endl;
 		for (i = 0; i < data_len; i++) {
 			cout << i << " : " << data[i] << endl;
@@ -635,13 +565,13 @@ void semifield_classify_with_substructure::identify_semifields_from_file(
 
 	identify_semifields_from_file_Po = NULL;
 
-	if (f_identify_semifields_from_file) {
+	if (Descr->f_identify_semifields_from_file) {
 		cout << "f_identify_semifield_from_file" << endl;
 
 		long int *Data;
 		int n;
 
-		Fio.lint_matrix_read_csv(identify_semifields_from_file_fname, Data,
+		Fio.lint_matrix_read_csv(Descr->identify_semifields_from_file_fname, Data,
 				identify_semifields_from_file_m, n, verbose_level);
 		if (n != Sub->SC->k) {
 			cout << "n != Sub->SC->k" << endl;
@@ -691,7 +621,7 @@ void semifield_classify_with_substructure::identify_semifields_from_file(
 		}
 		string fname;
 
-		fname.assign(identify_semifields_from_file_fname);
+		fname.assign(Descr->identify_semifields_from_file_fname);
 		chop_off_extension(fname);
 		fname.append("_identification.csv");
 		Fio.int_matrix_write_csv(fname, identify_semifields_from_file_Po,
@@ -717,9 +647,9 @@ void semifield_classify_with_substructure::latex_report(
 	char title[1000];
 	char author[1000];
 	char fname[1000];
-	sprintf(title, "Isotopy classes of semifields of order %d", order);
-	sprintf(author, "Anton Betten");
-	sprintf(fname, "Semifields_%d.tex", order);
+	sprintf(title, "Isotopy classes of semifields of order %d", Descr->order);
+	sprintf(author, "Orbiter");
+	sprintf(fname, "Semifields_%d.tex", Descr->order);
 
 	if (f_v) {
 		cout << "writing latex file " << fname << endl;
@@ -763,17 +693,20 @@ void semifield_classify_with_substructure::latex_report(
 		fp << "$$" << endl;
 
 		if (f_v) {
-			cout << "semifield_classify_with_substructure::latex_report before L2->print_representatives" << endl;
+			cout << "semifield_classify_with_substructure::latex_report "
+					"before L2->print_representatives" << endl;
 			}
 
 		L2->report(fp, verbose_level);
 
 		if (f_v) {
-			cout << "semifield_classify_with_substructure::latex_report after L2->print_representatives" << endl;
+			cout << "semifield_classify_with_substructure::latex_report "
+					"after L2->print_representatives" << endl;
 			}
 
 		if (f_v) {
-			cout << "semifield_classify_with_substructure::latex_report before Semifields->print_latex" << endl;
+			cout << "semifield_classify_with_substructure::latex_report "
+					"before Semifields->print_latex" << endl;
 			}
 
 		Semifields->print_latex(fp,
@@ -785,10 +718,11 @@ void semifield_classify_with_substructure::latex_report(
 
 
 		if (f_v) {
-			cout << "semifield_classify_with_substructure::latex_report after Semifields->print_latex" << endl;
+			cout << "semifield_classify_with_substructure::latex_report "
+					"after Semifields->print_latex" << endl;
 			}
 
-		if (f_identify_semifields_from_file) {
+		if (Descr->f_identify_semifields_from_file) {
 			fp << "\\clearpage" << endl;
 			fp << "\\section*{Identification of Rua types}" << endl;
 			fp << "The $i$-th row, $j$-th column of the table is the number $c$ "
@@ -808,7 +742,8 @@ void semifield_classify_with_substructure::latex_report(
 
 
 		if (f_v) {
-			cout << "semifield_classify_with_substructure::latex_report substructures of dimension two" << endl;
+			cout << "semifield_classify_with_substructure::latex_report "
+					"substructures of dimension two" << endl;
 			}
 
 		int *Po2;
@@ -856,7 +791,7 @@ void semifield_classify_with_substructure::latex_report(
 		char str[1000];
 		string fname;
 
-		sprintf(str, "Semifields_%d_2structure.tex", order);
+		sprintf(str, "Semifields_%d_2structure.tex", Descr->order);
 		fname.assign(str);
 		Fio.int_matrix_write_csv(fname, PO2, Semifields->nb_orbits, Sub->N2);
 		}
@@ -870,7 +805,7 @@ void semifield_classify_with_substructure::latex_report(
 
 	if (f_v) {
 		cout << "writing latex file " << fname << " done" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::latex_report" << endl;
 	}
@@ -882,12 +817,11 @@ void semifield_classify_with_substructure::generate_source_code(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "semifield_classify_with_substructure::generate_"
-				"source_code" << endl;
+		cout << "semifield_classify_with_substructure::generate_source_code" << endl;
 	}
 	string fname_base;
 	char str[1000];
-	sprintf(str, "semifields_%d", order);
+	sprintf(str, "semifields_%d", Descr->order);
 	fname_base.assign(str);
 
 	if (f_v) {
@@ -900,8 +834,7 @@ void semifield_classify_with_substructure::generate_source_code(
 		cout << "after Semifields->generate_source_code " << fname_base << endl;
 		}
 	if (f_v) {
-		cout << "semifield_classify_with_substructure::generate_"
-				"source_code done" << endl;
+		cout << "semifield_classify_with_substructure::generate_source_code done" << endl;
 	}
 }
 
@@ -1086,7 +1019,7 @@ void semifield_print_function_callback(ostream &ost, int orbit_idx,
 		ost << "$";
 		ost << "\\\\" << endl;
 	}
-	if (SCWS->f_identify_semifields_from_file) {
+	if (SCWS->Descr->f_identify_semifields_from_file) {
 		ost << "R\\'ua type: ";
 		for (i = 0; i < SCWS->identify_semifields_from_file_m; i++) {
 			for (j = 0; j < 6; j++) {

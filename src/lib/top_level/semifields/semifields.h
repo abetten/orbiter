@@ -13,22 +13,15 @@
 namespace orbiter {
 namespace top_level {
 
-
 // #############################################################################
-// semifield_classify_with_substructure.cpp
+// semifield_classify_description.cpp
 // #############################################################################
 
 
-//! classification of semifields using substructure
+//! description of a semifield classification problem
 
-class semifield_classify_with_substructure {
+class semifield_classify_description {
 public:
-
-	int t0;
-
-	linear_group *LG;
-	matrix_group *Mtx;
-	poset_classification_control *Control;
 
 	int f_order;
 	int order;
@@ -46,6 +39,41 @@ public:
 	int f_load_classification;
 	int f_report;
 	int f_decomposition_matrix_level_3;
+
+	int f_level_two_prefix;
+	std::string level_two_prefix;
+	int f_level_three_prefix;
+	std::string level_three_prefix;
+
+
+	semifield_classify_description();
+	~semifield_classify_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+
+};
+
+
+
+// #############################################################################
+// semifield_classify_with_substructure.cpp
+// #############################################################################
+
+
+//! classification of semifields using substructure
+
+class semifield_classify_with_substructure {
+public:
+
+	int t0;
+
+	semifield_classify_description *Descr;
+
+	linear_group *LG;
+	matrix_group *Mtx;
+	poset_classification_control *Control;
+
 
 	int *identify_semifields_from_file_Po;
 	int identify_semifields_from_file_m;
@@ -83,6 +111,7 @@ public:
 	semifield_classify_with_substructure();
 	~semifield_classify_with_substructure();
 	void init(
+			semifield_classify_description *Descr,
 			linear_group *LG,
 			poset_classification_control *Control,
 			int verbose_level);
@@ -177,9 +206,10 @@ public:
 	void freeself();
 	void init(
 			linear_group *LG,
-			int k, poset_classification_control *Control,
-			const char *level_two_prefix,
-			const char *level_three_prefix,
+			int k,
+			poset_classification_control *Control,
+			std::string &level_two_prefix,
+			std::string &level_three_prefix,
 			int verbose_level);
 	void report(std::ostream &ost, int level,
 			semifield_level_two *L2,
@@ -187,7 +217,7 @@ public:
 			layered_graph_draw_options *draw_options,
 			int verbose_level);
 	void init_poset_classification(
-			const char *prefix,
+			poset_classification_control *Control,
 			int verbose_level);
 	void compute_orbits(int depth, int verbose_level);
 	void list_points();
@@ -365,7 +395,7 @@ public:
 		// chosen orbit representatives at level two
 
 	int *E1, *E2, *E3, *E4;
-	int *Mnn;
+	//int *Mnn;
 	int *Mtx1, *Mtx2, *Mtx3, *Mtx4, *Mtx5, *Mtx6;
 	int *ELT1, *ELT2, *ELT3;
 	int *M1;
@@ -390,9 +420,6 @@ public:
 	void downstep(int verbose_level);
 	void compute_stabilizers_downstep(int verbose_level);
 	void upstep(int verbose_level);
-	void setup_stabilizer(
-			strong_generators *Sk, strong_generators *Sn,
-			int verbose_level);
 	void trace(int f, int coset,
 			long int a, long int b, int &f_automorphism, int *&Aut,
 			int verbose_level);
