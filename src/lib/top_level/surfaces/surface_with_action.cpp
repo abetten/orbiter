@@ -84,6 +84,7 @@ void surface_with_action::freeself()
 
 void surface_with_action::init(surface_domain *Surf,
 		linear_group *LG,
+		int f_recoordinatize,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -95,6 +96,8 @@ void surface_with_action::init(surface_domain *Surf,
 	F = Surf->F;
 	q = F->q;
 	
+
+
 	//init_group(f_semilinear, verbose_level);
 	A = LG->A_linear;
 	f_semilinear = A->is_semilinear_matrix_group();
@@ -142,22 +145,37 @@ void surface_with_action::init(surface_domain *Surf,
 	Classify_trihedral_pairs->init(this, verbose_level);
 #endif
 
-	Recoordinatize = NEW_OBJECT(recoordinatize);
+	if (f_recoordinatize) {
+		char str[1000];
+		string fname_live_points;
 
-	if (f_v) {
-		cout << "surface_with_action::init "
-				"before Recoordinatize->init" << endl;
+		sprintf(str, "live_points_q%d", q);
+		fname_live_points.assign(str);
+
+		Recoordinatize = NEW_OBJECT(recoordinatize);
+
+		if (f_v) {
+			cout << "surface_with_action::init "
+					"before Recoordinatize->init" << endl;
+		}
+		Recoordinatize->init(4 /*n*/, 2 /*k*/,
+			F, Surf->Gr, A, A2,
+			TRUE /* f_projective */, f_semilinear,
+			NULL /*int (*check_function_incremental)(int len,
+				int *S, void *data, int verbose_level)*/,
+			NULL /*void *check_function_incremental_data */,
+			fname_live_points,
+			verbose_level);
+		if (f_v) {
+			cout << "surface_with_action::init after "
+					"Recoordinatize->init" << endl;
+		}
 	}
-	Recoordinatize->init(4 /*n*/, 2 /*k*/,
-		F, Surf->Gr, A, A2,
-		TRUE /* f_projective */, f_semilinear, 
-		NULL /*int (*check_function_incremental)(int len,
-			int *S, void *data, int verbose_level)*/,
-		NULL /*void *check_function_incremental_data */, 
-		verbose_level);
-	if (f_v) {
-		cout << "surface_with_action::init after "
-				"Recoordinatize->init" << endl;
+	else {
+		if (f_v) {
+			cout << "surface_with_action::init not f_recoordinatize" << endl;
+		}
+
 	}
 
 	if (f_v) {
@@ -280,6 +298,16 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	int nb_pts;
 	combinatorics_domain Combi;
 	
+	if (f_v) {
+		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal" << endl;
+	}
+
+	if (Recoordinatize == NULL) {
+		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal Recoordinatize == NULL" << endl;
+		exit(1);
+	}
+
+
 	if (f_v) {
 		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal" << endl;
 		cout << "The five lines are ";

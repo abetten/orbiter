@@ -3699,5 +3699,92 @@ void strong_generators::exterior_square(
 }
 
 
+void strong_generators::diagonally_repeat(
+		action *An,
+		strong_generators *Sn,
+		int verbose_level)
+// Embeds all generators from Sk in GL(k,q) into GL(n,k)
+// by repeating each matrix A twice on the diagonal
+// to form
+// diag(A,A).
+// The new group is isomorphic to the old one,
+// but has twice the dimension.
+// This function is used in upstep
+// to compute the stabilizer of the flag
+// from the original generators of the centralizer.
+{
+	int f_v = (verbose_level >= 1);
+	vector_ge *gens;
+	int h, l, i, j, a, n, k;
+	int *M;
+	int *Elt;
+	longinteger_object go;
+	sims *Sims;
+
+
+	if (f_v) {
+		cout << "strong_generators::diagonally_repeat" << endl;
+	}
+	k = A->matrix_group_dimension();
+	n = An->matrix_group_dimension();
+	M = NEW_int(n * n);
+	gens = NEW_OBJECT(vector_ge);
+
+	gens->init(An, verbose_level - 2);
+	l = gens->len;
+	if (f_v) {
+		cout << "strong_generators::diagonally_repeat l=" << l << endl;
+	}
+	gens->allocate(l, verbose_level - 2);
+	for (h = 0; h < l; h++) {
+		Elt = gens->ith(h);
+		int_vec_zero(M, n * n);
+		for (i = 0; i < k; i++) {
+			for (j = 0; j < k; j++) {
+				a = Elt[i * k + j];
+				M[i * n + j] = a;
+				M[(k + i) * n + k + j] = a;
+			}
+		}
+		An->make_element(gens->ith(h), M, 0);
+	}
+	group_order(go);
+
+	FREE_int(M);
+
+	if (f_v) {
+		cout << "strong_generators::diagonally_repeat "
+				"before A->create_sims_from_generators_with_target_group_order" << endl;
+	}
+
+	Sims = An->create_sims_from_generators_with_target_group_order(
+		gens, go, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::diagonally_repeat "
+				"after A->create_sims_from_generators_with_target_group_order" << endl;
+	}
+
+	if (f_v) {
+		cout << "strong_generators::diagonally_repeat "
+				"before Sn->init_from_sims" << endl;
+	}
+	Sn->init_from_sims(Sims, verbose_level - 2);
+	if (f_v) {
+		cout << "strong_generators::diagonally_repeat "
+				"after Sn->init_from_sims" << endl;
+	}
+
+	FREE_OBJECT(gens);
+	FREE_OBJECT(Sims);
+
+	if (f_v) {
+		cout << "The old stabilizer has order " << go << endl;
+	}
+	if (f_v) {
+		cout << "strong_generators::diagonally_repeat end" << endl;
+	}
+}
+
+
 
 }}

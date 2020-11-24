@@ -32,6 +32,8 @@ recoordinatize::recoordinatize()
 	check_function_incremental = NULL;
 	check_function_incremental_data = NULL;
 
+	//fname_live_points
+
 	f_data_is_allocated = FALSE;
 	M = M1 = AA = AAv = TT = TTv = B = C = N = Elt = NULL;
 
@@ -89,6 +91,7 @@ void recoordinatize::init(int n, int k,
 	int (*check_function_incremental)(int len,
 			long int *S, void *data, int verbose_level),
 	void *check_function_incremental_data, 
+	std::string &fname_live_points,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -111,10 +114,11 @@ void recoordinatize::init(int n, int k,
 		= check_function_incremental;
 	recoordinatize::check_function_incremental_data
 		= check_function_incremental_data;
+	recoordinatize::fname_live_points.assign(fname_live_points);
 	nCkq = Combi.generalized_binomial(n, k, q);
 
 	if (f_v) {
-		cout << "recoordinatize::init n=" << n << " k=" << k << endl;
+		cout << "recoordinatize::init n=" << n << " k=" << k << " fname_live_points=" << fname_live_points << endl;
 	}
 	
 
@@ -418,7 +422,7 @@ void recoordinatize::compute_live_points(int verbose_level)
 	}
 
 
-	string fname;
+	//string fname;
 
 
 #if 0
@@ -470,30 +474,43 @@ void recoordinatize::compute_live_points(int verbose_level)
 #else
 
 
-	fname.assign("live_points.txt");
 
 	file_io Fio;
 
-	if (Fio.file_size(fname) > 1) {
-		cout << "recoordinatize::compute_live_points "
-				"reading live points from file " << fname << endl;
-		Fio.read_set_from_file(fname,
-				live_points, nb_live_points, verbose_level);
-		cout << "recoordinatize::compute_live_points "
-				"we found " << nb_live_points << " live points" << endl;
-		return;
-	}
-	else {
-		cout << "recoordinatize::compute_live_points "
-				"befor we compute_live_points_low_level" << endl;
-		compute_live_points_low_level(
-				live_points, nb_live_points, verbose_level - 1);
-
-		Fio.write_set_to_file(fname,
+	if (Fio.file_size(fname_live_points) > 1) {
+		if (f_v) {
+			cout << "recoordinatize::compute_live_points "
+					"reading live points from file " << fname_live_points << endl;
+		}
+		Fio.read_set_from_file(fname_live_points,
 				live_points, nb_live_points, verbose_level);
 		if (f_v) {
 			cout << "recoordinatize::compute_live_points "
-					"written file " << fname << endl;
+					"we found " << nb_live_points << " live points" << endl;
+		}
+		return;
+	}
+	else {
+		if (f_v) {
+			cout << "recoordinatize::compute_live_points "
+					"before compute_live_points_low_level" << endl;
+		}
+		compute_live_points_low_level(
+				live_points, nb_live_points, verbose_level - 1);
+		if (f_v) {
+			cout << "recoordinatize::compute_live_points "
+					"after compute_live_points_low_level" << endl;
+		}
+
+		if (f_v) {
+			cout << "recoordinatize::compute_live_points "
+					"before Fio.write_set_to_file" << endl;
+		}
+		Fio.write_set_to_file(fname_live_points,
+				live_points, nb_live_points, verbose_level);
+		if (f_v) {
+			cout << "recoordinatize::compute_live_points "
+					"written file " << fname_live_points << endl;
 		}
 	}
 

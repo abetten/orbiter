@@ -167,9 +167,10 @@ void semifield_classify::freeself()
 
 void semifield_classify::init(
 		linear_group *LG,
-		int k, poset_classification_control *Control,
-		const char *level_two_prefix,
-		const char *level_three_prefix,
+		int k,
+		poset_classification_control *Control,
+		std::string &level_two_prefix,
+		std::string &level_three_prefix,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -231,6 +232,9 @@ void semifield_classify::init(
 		}
 	}
 #endif
+	semifield_classify::level_two_prefix.assign(level_two_prefix);
+	semifield_classify::level_three_prefix.assign(level_three_prefix);
+
 
 	vector_space_dimension = k2;
 
@@ -253,11 +257,8 @@ void semifield_classify::init(
 
 	//int max_depth = k + 1;
 
-	T->init(LG, k, Control,
-		//max_depth,
-		//F, FALSE /* f_recoordinatize */,
-		//"TP_STARTER", "TP", order + 1,
-		0 /*verbose_level - 2*/);
+	T->init(LG, k, Control, FALSE /* f_recoordinatize */,
+			0 /*verbose_level - 2*/);
 
 	if (f_v) {
 		cout << "semifield_classify::init after T->init" << endl;
@@ -626,8 +627,7 @@ void semifield_classify::report(std::ostream &ost, int level,
 
 
 void semifield_classify::init_poset_classification(
-		//int argc, const char **argv,
-		const char *prefix,
+		poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -638,9 +638,6 @@ void semifield_classify::init_poset_classification(
 	}
 
 	Poset = NEW_OBJECT(poset);
-	Control = NEW_OBJECT(poset_classification_control);
-	Control->problem_label = prefix;
-	Control->f_problem_label = TRUE;
 
 	vector_space *VS;
 	VS = NEW_OBJECT(vector_space);
@@ -1015,12 +1012,10 @@ int semifield_classify::test_partial_semifield_numerical_data(
 	int ret, i;
 
 	if (f_v) {
-		cout << "semifield_classify::test_partial_"
-				"semifield_numerical_data" << endl;
+		cout << "semifield_classify::test_partial_semifield_numerical_data" << endl;
 	}
 	if (data_sz > k) {
-		cout << "semifield_classify::test_partial_"
-				"semifield_numerical_data data_sz > k" << endl;
+		cout << "semifield_classify::test_partial_semifield_numerical_data data_sz > k" << endl;
 		exit(1);
 	}
 	Basis = test_Basis;
@@ -1043,8 +1038,7 @@ int semifield_classify::test_partial_semifield_numerical_data(
 
 	//FREE_int(Basis);
 	if (f_v) {
-		cout << "semifield_classify::test_partial_"
-				"semifield_numerical_data done" << endl;
+		cout << "semifield_classify::test_partial_semifield_numerical_data done" << endl;
 	}
 	return ret;
 }

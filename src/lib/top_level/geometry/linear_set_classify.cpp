@@ -465,7 +465,8 @@ void linear_set_classify::init(
 		LG = NEW_OBJECT(linear_group); // hack !!! ToDo
 
 		T->init(LG, k, Control,
-			MINIMUM(verbose_level - 1, 2));
+				TRUE /* f_recoordinatize */,
+				verbose_level - 2);
 
 #if 0
 		T->init(order, n, k, max_depth,

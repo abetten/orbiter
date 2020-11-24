@@ -69,7 +69,7 @@ void group_theoretic_activity::do_create_surface(
 	if (f_v) {
 		cout << "group_theoretic_activity::do_create_surface before Surf_A->init" << endl;
 		}
-	Surf_A->init(Surf, LG, 0 /*verbose_level*/);
+	Surf_A->init(Surf, LG, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "group_theoretic_activity::do_create_surface after Surf_A->init" << endl;
 		}
@@ -976,7 +976,7 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines(
 		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines "
 				"before Surf_A->init" << endl;
 	}
-	Surf_A->init(Surf, LG, 0 /*verbose_level - 1*/);
+	Surf_A->init(Surf, LG, TRUE /* f_recoordinatize */, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines "
 				"after Surf_A->init" << endl;
@@ -1072,7 +1072,7 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_p
 		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs "
 				"before Surf_A->init" << endl;
 	}
-	Surf_A->init(Surf, LG, verbose_level - 1);
+	Surf_A->init(Surf, LG, TRUE /* f_recoordinatize */, verbose_level - 1);
 	if (f_v) {
 		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs "
 				"after Surf_A->init" << endl;
@@ -1428,7 +1428,7 @@ void group_theoretic_activity::do_cubic_surface_properties(
 	if (f_v) {
 		cout << "group_theoretic_activity::do_cubic_surface_properties before Surf_A->init" << endl;
 	}
-	Surf_A->init(Surf, LG, 0 /*verbose_level*/);
+	Surf_A->init(Surf, LG, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "group_theoretic_activity::do_cubic_surface_properties after Surf_A->init" << endl;
 	}
@@ -1702,7 +1702,7 @@ void group_theoretic_activity::do_cubic_surface_properties_analyze(
 	if (f_v) {
 		cout << "group_theoretic_activity::do_cubic_surface_properties_analyze before Surf_A->init" << endl;
 	}
-	Surf_A->init(Surf, LG, 0 /*verbose_level*/);
+	Surf_A->init(Surf, LG, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "group_theoretic_activity::do_cubic_surface_properties_analyze after Surf_A->init" << endl;
 	}

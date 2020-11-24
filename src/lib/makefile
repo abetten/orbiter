@@ -367,6 +367,7 @@ MODULES= \
 		top_level/orbits/orbit_of_equations.o \
 		top_level/orbits/orbit_of_sets.o \
 		top_level/orbits/orbit_of_subspaces.o \
+		top_level/semifields/semifield_classify_description.o \
 		top_level/semifields/semifield_classify_with_substructure.o \
 		top_level/semifields/semifield_classify.o \
 		top_level/semifields/semifield_downstep_node.o \

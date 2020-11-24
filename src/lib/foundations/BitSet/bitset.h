@@ -12,7 +12,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
-#include <alloca.h>
+//#include <alloca.h>
 #include <math.h>
 
 using std::cout;

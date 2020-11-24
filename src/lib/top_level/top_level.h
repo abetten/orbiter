@@ -159,7 +159,7 @@ class packing_long_orbits_description;
 class regular_packing;
 class finite_field_activity_description;
 class finite_field_activity;
-
+class semifield_classify_description;
 
 // #############################################################################
 // representatives.cpp

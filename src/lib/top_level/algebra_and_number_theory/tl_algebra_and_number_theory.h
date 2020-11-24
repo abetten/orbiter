@@ -546,6 +546,9 @@ public:
 
 		int f_classify_cubic_curves;
 
+		int f_classify_semifields;
+		semifield_classify_description *Semifield_classify_description;
+
 		int f_orbits_on_polynomials;
 		int orbits_on_polynomials_degree;
 
@@ -650,6 +653,10 @@ public:
 			int verbose_level);
 	void do_classify_cubic_curves(
 			arc_generator_description *Arc_generator_description,
+			int verbose_level);
+	void do_classify_semifields(
+			semifield_classify_description *Semifield_classify_description,
+			poset_classification_control *Control,
 			int verbose_level);
 	void do_orbits_on_polynomials(
 			int degree,

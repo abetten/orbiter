@@ -1803,6 +1803,10 @@ public:
 			strong_generators *SG_original,
 			vector_ge *&nice_gens,
 			int verbose_level);
+	void diagonally_repeat(
+			action *An,
+			strong_generators *Sn,
+			int verbose_level);
 
 };
 
