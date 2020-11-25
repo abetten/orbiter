@@ -21,8 +21,10 @@ using namespace std;
 #include <fcntl.h>
 
 #ifdef SYSTEMUNIX
+#ifndef SYSTEMWINDOWS
 #include <sys/times.h>
 	/* for times() */
+#endif
 #endif
 #include <time.h>
 	/* for time() */
