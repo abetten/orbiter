@@ -1428,7 +1428,7 @@ void discreta_base::save_ascii(ostream & f)
 	int f_v = FALSE, f_vv = FALSE;
 	int size, debug_depth;
 	int i;
-	uint a, a1, a2;
+	unsigned int a, a1, a2;
 	uchar *pc, c1, c2;
 
 	if (f_v) {
@@ -1460,8 +1460,8 @@ void discreta_base::save_ascii(ostream & f)
 	
 	f << "ASCII " << size << endl;
 	for (i = 0; i < size; i++) {
-		a = (uint) pc[i];
-		a1 = a % (uint) 16;
+		a = (unsigned int) pc[i];
+		a1 = a % (unsigned int) 16;
 		a2 = a >> 4;
 		c1 = '0' + a1;
 		c2 = '0' + a2;
@@ -1486,7 +1486,7 @@ void discreta_base::load_ascii(istream & f)
 	uchar *pc;
 	uchar c;
 	int a;
-	uint a1, a2;
+	unsigned int a1, a2;
 	char cc;
 		
 	f.getline(buf, sizeof(buf));
@@ -1516,14 +1516,14 @@ void discreta_base::load_ascii(istream & f)
 				continue;
 			break;
 			}
-		a1 = (uint) cc;
+		a1 = (unsigned int) cc;
 		if (f.eof()) {
 			cout << "discreta_base::load_ascii "
 					"primature EOF" << endl;
 			exit(1);
 			}
 		f >> cc;
-		a2 = (uint) cc;
+		a2 = (unsigned int) cc;
 		a1 = a1 - '0';
 		a2 = a2 - '0';
 		a = a2 << 4;
