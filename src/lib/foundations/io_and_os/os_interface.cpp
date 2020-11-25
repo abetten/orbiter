@@ -116,6 +116,7 @@ int os_interface::os_memory_usage()
 int os_interface::os_ticks()
 {
 #ifdef SYSTEMUNIX
+#ifndef SYSTEMWINDOWS
 	struct tms tms_buffer;
 	int t;
 
@@ -124,6 +125,7 @@ int os_interface::os_ticks()
 	t = tms_buffer.tms_utime;
 	//cout << "os_ticks " << t << endl;
 	return t;
+#endif
 #endif
 #ifdef SYSTEMMAC
 	clock_t t;
