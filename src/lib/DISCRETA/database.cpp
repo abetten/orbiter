@@ -996,8 +996,8 @@ void database::add_data_DB_compact(void *d,
 	file_seek(old_file_size);
 	file_write(data2, 1, total);
 	*datref = (uint_4)(old_file_size >> size_of_header_log());
-	if (((int)((uint)*datref << size_of_header_log())) != old_file_size) {
-		cout << "database::add_data_DB_compact ((uint)*datref << size_of_header_log()) != old_file_size" << endl;
+	if (((int)((unsigned int)*datref << size_of_header_log())) != old_file_size) {
+		cout << "database::add_data_DB_compact ((unsigned int)*datref << size_of_header_log()) != old_file_size" << endl;
 		cout << "old_file_size=" << old_file_size << endl;
 		cout << "*datref=" << *datref << endl;
 		cout << "size_of_header_log()=" << size_of_header_log() << endl;
@@ -1066,7 +1066,7 @@ void database::free_data_DB(uint_4 datref, int size, int verbose_level)
 	header[1] = FALSE;
 	header[5] = FALSE;
 	Os.block_swap_chars((char *)header, 4, 8);
-	file_seek(((uint)datref) << size_of_header_log());
+	file_seek(((unsigned int)datref) << size_of_header_log());
 	file_write(header, 1, total);
 }
 
