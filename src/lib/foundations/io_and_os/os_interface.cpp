@@ -160,6 +160,7 @@ int os_interface::os_ticks_per_second()
 	static int f_tps_computed = FALSE;
 	static int tps = 0;
 #ifdef SYSTEMUNIX
+#ifndef SYSTEMWINDOWS
 	int clk_tck = 1;
 
 	if (f_tps_computed)
@@ -171,6 +172,7 @@ int os_interface::os_ticks_per_second()
 		//cout << endl << "clock ticks per second = " << tps << endl;
 		return(clk_tck);
 		}
+#endif
 #endif
 #ifdef SYSTEMWINDOWS
 	return 1;
