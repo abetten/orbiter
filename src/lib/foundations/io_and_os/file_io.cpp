@@ -2788,12 +2788,13 @@ long int file_io::file_size(const char *name)
 #endif
 #ifdef SYSTEMWINDOWS
 
-	//cout << "Windows mode" << endl;
+	cout << "file_io::file_size SYSTEMWINDOWS" << endl;
+	exit(1);
 
-	int handle = _open(name, _O_RDONLY);
-	int size   = _lseek(handle, 0, SEEK_END);
-	close (handle);
-	return size;
+	//int handle = _open(name, _O_RDONLY);
+	//int size   = _lseek(handle, 0, SEEK_END);
+	//close (handle);
+	//return size;
 #endif
 }
 
