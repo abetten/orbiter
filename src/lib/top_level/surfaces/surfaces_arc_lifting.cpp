@@ -1591,12 +1591,12 @@ void callback_surfaces_arc_lifting_report(std::ostream &ost, int i,
 	int verbose_level = 0;
 	void *data;
 	surfaces_arc_lifting_definition_node *D;
-	surfaces_arc_lifting *SAL;
+	//surfaces_arc_lifting *SAL;
 
 
 	data = Step->Orbit[i].extra_data;
 	D = (surfaces_arc_lifting_definition_node *) data;
-	SAL = (surfaces_arc_lifting *) print_function_data;
+	//SAL = (surfaces_arc_lifting *) print_function_data;
 
 	D->report_tally_F2(ost, verbose_level);
 }
@@ -1608,10 +1608,10 @@ void callback_surfaces_arc_lifting_free_trace_result(void *ptr, void *data, int 
 	if (f_v) {
 		cout << "callback_surfaces_arc_lifting_free_trace_result" << endl;
 	}
-	surfaces_arc_lifting *SAL;
+	//surfaces_arc_lifting *SAL;
 	surfaces_arc_lifting_trace *T;
 
-	SAL = (surfaces_arc_lifting *) data;
+	//SAL = (surfaces_arc_lifting *) data;
 	T = (surfaces_arc_lifting_trace *) ptr;
 
 	FREE_OBJECT(T);
