@@ -826,6 +826,11 @@ public:
 	set_and_stabilizer *get_orbit_rep(action *default_action,
 			longinteger_object &full_group_order,
 			int orbit_idx, int verbose_level);
+	void get_orbit_rep_to(action *default_action,
+			longinteger_object &full_group_order,
+			int orbit_idx,
+			set_and_stabilizer *Rep,
+			int verbose_level);
 	strong_generators *stabilizer_orbit_rep(
 		action *default_action, 
 		longinteger_object &full_group_order, 

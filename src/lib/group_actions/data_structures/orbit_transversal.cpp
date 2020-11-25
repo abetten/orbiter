@@ -47,7 +47,7 @@ void orbit_transversal::init_from_schreier(
 {
 	int f_v = (verbose_level >= 1);
 	int orbit_idx;
-	set_and_stabilizer *R;
+	//set_and_stabilizer *R;
 
 	if (f_v) {
 		cout << "orbit_transversal::init_from_schreier" << endl;
@@ -57,13 +57,17 @@ void orbit_transversal::init_from_schreier(
 	nb_orbits = Sch->nb_orbits;
 	Reps = NEW_OBJECTS(set_and_stabilizer, nb_orbits);
 	for (orbit_idx = 0; orbit_idx < nb_orbits; orbit_idx++) {
-		R = Sch->get_orbit_rep(default_action,
+		Sch->get_orbit_rep_to(default_action,
 				full_group_order,
-				orbit_idx, verbose_level);
-		memcpy(Reps + orbit_idx, R, sizeof(set_and_stabilizer));
+				orbit_idx,
+				Reps + orbit_idx,
+				verbose_level);
+		//memcpy(Reps + orbit_idx, R, sizeof(set_and_stabilizer));
+		//ToDo
+
 		//Reps[orbit_idx] = R;
-		R->null();
-		FREE_OBJECT(R);
+		//R->null();
+		//FREE_OBJECT(R);
 	}
 	if (f_v) {
 		cout << "orbit_transversal::init_from_schreier done" << endl;

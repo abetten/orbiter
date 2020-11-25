@@ -2249,6 +2249,32 @@ set_and_stabilizer *schreier::get_orbit_rep(action *default_action,
 	return SaS;
 }
 
+void schreier::get_orbit_rep_to(action *default_action,
+		longinteger_object &full_group_order,
+		int orbit_idx,
+		set_and_stabilizer *Rep,
+		int verbose_level)
+{
+	//set_and_stabilizer *SaS;
+	strong_generators *SG;
+	long int *Set;
+
+	if (f_images_only) {
+		cout << "schreier::get_orbit_rep is not "
+				"allowed if f_images_only is TRUE" << endl;
+		exit(1);
+	}
+	//SaS = NEW_OBJECT(set_and_stabilizer);
+	SG = stabilizer_orbit_rep(default_action,
+			full_group_order, orbit_idx, verbose_level);
+	Set = NEW_lint(1);
+	Set[0] = orbit[orbit_first[orbit_idx]];
+	Rep->init_everything(default_action, A, Set, 1 /* set_sz */,
+			SG, verbose_level);
+	//return SaS;
+}
+
+
 strong_generators *schreier::stabilizer_orbit_rep(
 	action *default_action, 
 	longinteger_object &full_group_order, int orbit_idx, 
