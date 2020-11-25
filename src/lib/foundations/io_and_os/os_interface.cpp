@@ -50,11 +50,14 @@ namespace foundations {
 
 void os_interface::runtime(long *l)
 {
+	*l = 0;
 #ifdef SYSTEMUNIX
+#ifndef SYSTEMWINDOWS
 	struct tms *buffer = (struct tms *) malloc(sizeof(struct tms));
 	times(buffer);
 	*l = (long) buffer->tms_utime;
 	free(buffer);
+#endif
 #endif
 #ifdef SYSTEMMAC
 	*l = 0;
