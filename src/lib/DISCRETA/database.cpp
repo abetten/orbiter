@@ -1031,7 +1031,7 @@ void database::free_data_DB(uint_4 datref, int size, int verbose_level)
 		}
 	if (file_type() == DB_FILE_TYPE_COMPACT)
 		return;
-	file_seek(((uint)datref) << size_of_header_log());
+	file_seek(((unsigned int)datref) << size_of_header_log());
 	total = 8 * 4;
 	file_read(header, 1, total);
 	Os.block_swap_chars((char *)header, 4, 8);
