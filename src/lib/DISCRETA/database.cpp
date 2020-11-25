@@ -414,7 +414,7 @@ void database::get_object(DATATYPE *data_type, Vector &the_object,
 	
 	d = new char[total];
 	
-	file_seek(((uint)data_type->datref) << size_of_header_log());
+	file_seek(((unsigned int)data_type->datref) << size_of_header_log());
 	file_read(d, 1, total);
 	
 	if (file_type() == DB_FILE_TYPE_STANDARD) {
@@ -813,7 +813,7 @@ int database::get_size_from_datref(uint_4 datref, int verbose_level)
 		}
 	if (file_type() == DB_FILE_TYPE_STANDARD) {
 		header = new int_4[8];
-		file_seek(((uint)datref) << size_of_header_log());
+		file_seek(((unsigned int)datref) << size_of_header_log());
 		file_read((char *)header, 1, 8 * 4);
 		Os.block_swap_chars((char *)header, sizeof(int_4), 8);
 		if (header[0] != MAGIC_SYNC) {
@@ -830,7 +830,7 @@ int database::get_size_from_datref(uint_4 datref, int verbose_level)
 		}
 	else if (file_type() == DB_FILE_TYPE_COMPACT) {
 		header = new int_4[2];
-		file_seek(((uint)datref) << size_of_header_log());
+		file_seek(((unsigned int)datref) << size_of_header_log());
 		file_read((char *)header, 1, 4 * 2);
 		Os.block_swap_chars((char *)header, sizeof(int_4), 2);
 		if (header[0] != MAGIC_SYNC) {
@@ -925,8 +925,8 @@ void database::add_data_DB_standard(void *d,
 	file_seek(old_file_size);
 	file_write(data2, 1, total);
 	*datref = (uint_4)(old_file_size >> size_of_header_log());
-	if (((int)((uint)*datref << size_of_header_log())) != old_file_size) {
-		cout << "database::add_data_DB_standard ((uint)*datref << size_of_header_log()) != old_file_size" << endl;
+	if (((int)((unsigned int)*datref << size_of_header_log())) != old_file_size) {
+		cout << "database::add_data_DB_standard ((unsigned int)*datref << size_of_header_log()) != old_file_size" << endl;
 		cout << "old_file_size=" << old_file_size << endl;
 		cout << "*datref=" << *datref << endl;
 		cout << "size_of_header_log()=" << size_of_header_log() << endl;
