@@ -31,6 +31,13 @@ Optional:
 latex, povray
 
 
+Windows binary:
+===============
+
+https://www.math.colostate.edu/~betten/orbiter/WINDOWS_BINARIES/BUILD_NUMBER_1147/orbiter.out
+
+
+
 
   
 
