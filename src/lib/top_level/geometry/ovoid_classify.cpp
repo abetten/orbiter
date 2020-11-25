@@ -99,7 +99,7 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 	int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 4);
 
-	int f_semilinear;
+	//int f_semilinear;
 	//int f_basis = TRUE;
 	number_theory_domain NT;
 	geometry_global Gg;
@@ -119,13 +119,14 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 	int p, h;
 	NT.is_prime_power(LG->F->q, p, h);
 
-
+#if 0
 	if (h > 1) {
 		f_semilinear = TRUE;
 	}
 	else {
 		f_semilinear = FALSE;
 	}
+#endif
 
 
 	//f_semilinear = TRUE;
