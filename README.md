@@ -35,7 +35,7 @@ Windows binary:
 ===============
 
 Build number 1147 date: 11/24/2020:
-https://www.math.colostate.edu/~betten/orbiter/WINDOWS_BINARIES/BUILD_NUMBER_1147/orbiter.out
+https://www.math.colostate.edu/~betten/orbiter/WINDOWS_BINARIES/BUILD_NUMBER_1147/orbiter.zip
 
 
 
