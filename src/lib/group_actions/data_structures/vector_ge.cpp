@@ -878,7 +878,37 @@ void vector_ge::reverse_isomorphism_exterior_square(int verbose_level)
 	FREE_OBJECT(K);
 	FREE_OBJECT(O);
 	if (f_v) {
-		cout << "vector_ge::reverse_isomorphism_exterior_square" << endl;
+		cout << "vector_ge::reverse_isomorphism_exterior_square done" << endl;
+	}
+}
+
+void vector_ge::matrix_representation(
+		action_on_homogeneous_polynomials *A_on_HPD, int *&M, int &nb_gens,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+	int n;
+
+	if (f_v) {
+		cout << "vector_ge::matrix_representation" << endl;
+	}
+
+	nb_gens = len;
+
+	n = A_on_HPD->dimension;
+
+	M = NEW_int(len * n * n);
+
+	for (i = 0; i < len; i++) {
+
+		A_on_HPD->compute_representation(ith(i),
+				M + i * n * n, verbose_level);
+
+	}
+
+	if (f_v) {
+		cout << "vector_ge::matrix_representation done" << endl;
 	}
 }
 

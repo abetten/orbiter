@@ -782,6 +782,9 @@ public:
 	object_in_projective_space *create_object_from_int_vec(
 		int type, std::string &input_fname, int input_idx,
 		long int *the_set, int set_sz, int verbose_level);
+	void compute_group_of_set(long int *set, int set_sz,
+			strong_generators *&Sg,
+			int verbose_level);
 };
 
 //globals:

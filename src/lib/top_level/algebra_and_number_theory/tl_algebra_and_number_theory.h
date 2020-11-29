@@ -51,6 +51,7 @@ public:
 		vector_ge *SG, int *&perm, int verbose_level);
 	void presentation(action *A, sims *S, int goi, vector_ge *gens,
 		int *primes, int verbose_level);
+
 	void do_eigenstuff(finite_field *F, int size, int *Data, int verbose_level);
 	void A5_in_PSL_(int q, int verbose_level);
 	void A5_in_PSL_2_q(int q,
@@ -64,6 +65,8 @@ public:
 	void elementwise_power_int(discreta_matrix &A, int k);
 	int is_in_center(discreta_matrix &B);
 	void matrix_convert_to_numerical(discreta_matrix &A, int *AA, int q);
+
+
 	void classify_surfaces(
 			finite_field *F, linear_group *LG,
 			poset_classification_control *Control,
@@ -106,14 +109,21 @@ public:
 	void relative_order_vector_of_cosets(
 			action *A, strong_generators *SG,
 			vector_ge *cosets, int *&relative_order_table, int verbose_level);
-	void orbits_on_polynomials(
+	void do_orbits_on_polynomials(
+			linear_group *LG,
+			int degree_of_poly,
+			int f_recognize, std::string &recognize_text,
+			int verbose_level);
+	void representation_on_polynomials(
 			linear_group *LG,
 			int degree_of_poly,
 			int verbose_level);
+
 	void do_eigenstuff_with_coefficients(
 			finite_field *F, int n, std::string &coeffs_text, int verbose_level);
 	void do_eigenstuff_from_file(
 			finite_field *F, int n, std::string &fname, int verbose_level);
+
 	void do_cheat_sheet_PG(finite_field *F,
 			int n,
 			int f_decomposition_by_element, int decomposition_by_element_power,
@@ -137,6 +147,7 @@ public:
 
 class character_table_burnside {
 public:
+
 	void do_it(int n, int verbose_level);
 	void create_matrix(discreta_matrix &M, int i, int *S, int nb_classes,
 		int *character_degree, int *class_size,
@@ -176,6 +187,7 @@ public:
 	void matrix_get_kernel(double *M, int m, int n, int *base_cols, int nb_base_cols,
 		int &kernel_m, int &kernel_n, double *kernel);
 	int double_as_int(double x);
+
 };
 
 
@@ -352,6 +364,10 @@ public:
 	int f_rank_point_in_PG;
 	int rank_point_in_PG_n;
 	std::string rank_point_in_PG_text;
+
+	int f_rank_point_in_PG_given_as_pairs;
+	int rank_point_in_PG_given_as_pairs_n;
+	std::string rank_point_in_PG_given_as_pairs_text;
 
 
 	int f_eigenstuff;
@@ -551,6 +567,12 @@ public:
 
 		int f_orbits_on_polynomials;
 		int orbits_on_polynomials_degree;
+		int f_recognize_orbits_on_polynomials;
+		std::string recognize_orbits_on_polynomials_text;
+
+		int f_representation_on_polynomials;
+		int representation_on_polynomials_degree;
+
 
 
 	group_theoretic_activity_description();
@@ -660,6 +682,10 @@ public:
 			int verbose_level);
 	void do_orbits_on_polynomials(
 			int degree,
+			int f_recognize_orbits_on_polynomials, std::string &recognize_orbits_on_polynomials_text,
+			int verbose_level);
+	void do_representation_on_polynomials(
+			int degree,
 			int verbose_level);
 	int subspace_orbits_test_set(
 			int len, long int *S, int verbose_level);
@@ -723,6 +749,60 @@ void gta_subspace_orbits_early_test_func(long int *S, int len,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 
+
+// #############################################################################
+// orbits_on_polynomials.cpp
+// #############################################################################
+
+
+//! orbits of a group on polynomials using Cchreier orbits
+
+class orbits_on_polynomials {
+public:
+
+	linear_group *LG;
+	int degree_of_poly;
+
+	finite_field *F;
+	action *A;
+	//matrix_group *M;
+	int n;
+	//int degree;
+	longinteger_object go;
+
+	homogeneous_polynomial_domain *HPD;
+
+	action *A2;
+
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+
+	schreier *Sch;
+	longinteger_object full_go;
+
+	std::string fname_csv;
+	std::string fname_report;
+
+	orbit_transversal *T;
+	int *Nb_pts; // [T->nb_orbits]
+	std::vector<std::vector<long int> > Points;
+
+
+	orbits_on_polynomials();
+	~orbits_on_polynomials();
+	void init(
+			linear_group *LG,
+			int degree_of_poly,
+			int f_recognize, std::string &recognize_text,
+			int verbose_level);
+	void compute_points(int verbose_level);
+	void report(int verbose_level);
+	void report_detailed_list(std::ostream &ost,
+			int verbose_level);
+
+
+};
 
 
 

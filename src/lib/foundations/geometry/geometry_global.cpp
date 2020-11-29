@@ -1488,7 +1488,77 @@ void geometry_global::do_rank_point_in_PG(finite_field *F, int n,
 		cout << " has rank " << a << endl;
 	}
 
+	FREE_int(coeff);
+
 }
+
+void geometry_global::do_rank_point_in_PG_given_as_pairs(finite_field *F, int n,
+		std::string &coeff_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometry_global::do_rank_point_in_PG_given_as_pairs" << endl;
+	}
+
+	int *coeff;
+
+	{
+		int *coeff_pairs;
+		int sz, sz2;
+		int i, a, b;
+
+		int_vec_scan(coeff_text, coeff_pairs, sz);
+		coeff = NEW_int(n + 1);
+		int_vec_zero(coeff, n + 1);
+
+		sz2 = sz >> 1;
+
+		for (i = 0; i < sz2; i++) {
+			a = coeff_pairs[2 * i + 0];
+			b = coeff_pairs[2 * i + 1];
+			if (b >= n + 1) {
+				cout << "geometry_global::do_rank_point_in_PG_given_as_pairs b >= n + 1" << endl;
+				exit(1);
+			}
+			if (b < 0) {
+				cout << "geometry_global::do_rank_point_in_PG_given_as_pairs b < 0" << endl;
+				exit(1);
+			}
+			if (a < 0) {
+				cout << "geometry_global::do_rank_point_in_PG_given_as_pairs a < 0" << endl;
+				exit(1);
+			}
+			if (a >= F->q) {
+				cout << "geometry_global::do_rank_point_in_PG_given_as_pairs a >= F->q" << endl;
+				exit(1);
+			}
+			coeff[b] = a;
+		}
+		if (f_v) {
+			cout << "geometry_global::do_rank_point_in_PG_given_as_pairs coeff: ";
+			int_vec_print(cout, coeff, n + 1);
+			cout << endl;
+		}
+		FREE_int(coeff_pairs);
+	}
+
+	long int a;
+
+	F->PG_element_rank_modified_lint(coeff, 1, n + 1, a);
+
+
+	if (f_v) {
+		cout << "geometry_global::do_rank_point_in_PG_given_as_pairs coeff: ";
+		int_vec_print(cout, coeff, n + 1);
+		cout << " has rank " << a << endl;
+	}
+
+	FREE_int(coeff);
+}
+
+
 
 void geometry_global::do_intersection_of_two_lines(finite_field *F,
 		std::string &line_1_basis,

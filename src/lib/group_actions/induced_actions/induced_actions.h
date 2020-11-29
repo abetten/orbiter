@@ -621,6 +621,8 @@ public:
 	long int compute_image_int(int *Elt, long int a, int verbose_level);
 	void compute_image_int_low_level(
 		int *Elt, int *input, int *output, int verbose_level);
+	void compute_representation(
+		int *Elt, int *M, int verbose_level);
 };
 
 // #############################################################################

@@ -259,5 +259,34 @@ void action_on_homogeneous_polynomials::compute_image_int_low_level(
 	}
 }
 
+void action_on_homogeneous_polynomials::compute_representation(
+	int *Elt, int *M, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "action_on_homogeneous_polynomials::compute_representation" << endl;
+	}
+	if (A->type_G != matrix_group_t) {
+		cout << "action_on_homogeneous_polynomials::compute_representation "
+				"A->type_G != matrix_group_t" << endl;
+		exit(1);
+	}
+
+
+	for (i = 0; i < dimension; i++) {
+		int_vec_zero(v1, dimension);
+		v1[i] = 1;
+		compute_image_int_low_level(
+			Elt, v1, M + i * dimension, 0 /* verbose_level */);
+	}
+
+	if (f_v) {
+		cout << "action_on_homogeneous_polynomials::compute_representation done" << endl;
+	}
+}
+
+
 }}
 

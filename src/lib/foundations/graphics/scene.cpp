@@ -3509,7 +3509,7 @@ void scene::create_Hilbert_model(int verbose_level)
 	point(-10,1,-5); // 23
 
 	if (f_v) {
-		cout << "scene::create_Hilbert_model creating the terahedron" << endl;
+		cout << "scene::create_Hilbert_model creating the tetrahedron" << endl;
 	}
 	// the tetrahedron:
 	face3(0, 6, 3 ); // 6, left

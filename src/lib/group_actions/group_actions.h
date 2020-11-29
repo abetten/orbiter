@@ -260,6 +260,9 @@ public:
 	schreier *orbits_on_points_schreier(
 			action *A_given, int verbose_level);
 	void reverse_isomorphism_exterior_square(int verbose_level);
+	void matrix_representation(
+			action_on_homogeneous_polynomials *A_on_HPD, int *&M, int &nb_gens,
+			int verbose_level);
 
 };
 

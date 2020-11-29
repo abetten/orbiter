@@ -397,6 +397,7 @@ void character_table_burnside::create_matrix(discreta_matrix &M, int i, int *S, 
 		}
 }
 
+
 void character_table_burnside::compute_character_table(a_domain *D, int nb_classes, int *Omega,
 	int *character_degree, int *class_size,
 	int *&character_table, int verbose_level)
@@ -878,6 +879,7 @@ void character_table_burnside::create_generators(action *A, int n, int **&Elt, i
 }
 
 
+
 void character_table_burnside::integral_eigenvalues(int *M, int n,
 	int *&Lambda,
 	int &nb_lambda,
@@ -1066,6 +1068,7 @@ void character_table_burnside::characteristic_poly(int *N, int size, unipoly &ch
 		cout << "character_table_burnside::characteristic_poly done" << endl;
 		}
 }
+
 
 
 void character_table_burnside::double_swap(double &a, double &b)
@@ -1350,7 +1353,6 @@ int character_table_burnside::double_as_int(double x)
 	cout << "error in double_as_int" << endl;
 	exit(1);
 }
-
 
 
 

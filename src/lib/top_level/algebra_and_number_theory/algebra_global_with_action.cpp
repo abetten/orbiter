@@ -2108,7 +2108,6 @@ int algebra_global_with_action::proj_order(discreta_matrix &A)
 	}
 	return ord;
 }
-
 void algebra_global_with_action::trace(discreta_matrix &A, discreta_base &tr)
 {
 	int i, m, n;
@@ -2198,6 +2197,8 @@ void algebra_global_with_action::matrix_convert_to_numerical(discreta_matrix &A,
 		}
 	}
 }
+
+
 
 
 void algebra_global_with_action::classify_surfaces(
@@ -3176,7 +3177,39 @@ void algebra_global_with_action::relative_order_vector_of_cosets(
 	}
 }
 
-void algebra_global_with_action::orbits_on_polynomials(
+void algebra_global_with_action::do_orbits_on_polynomials(
+		linear_group *LG,
+		int degree_of_poly,
+		int f_recognize, std::string &recognize_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::do_orbits_on_polynomials" << endl;
+	}
+
+	orbits_on_polynomials *O;
+
+	O = NEW_OBJECT(orbits_on_polynomials);
+
+	O->init(LG,
+			degree_of_poly,
+			f_recognize, recognize_text,
+			verbose_level);
+
+	O->report(verbose_level);
+
+	FREE_OBJECT(O);
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::do_orbits_on_polynomials done" << endl;
+	}
+}
+
+void algebra_global_with_action::representation_on_polynomials(
 		linear_group *LG,
 		int degree_of_poly,
 		int verbose_level)
@@ -3187,10 +3220,8 @@ void algebra_global_with_action::orbits_on_polynomials(
 
 
 	if (f_v) {
-		cout << "algebra_global_with_action::orbits_on_polynomials" << endl;
+		cout << "algebra_global_with_action::representation_on_polynomials" << endl;
 	}
-	//linear_group_description *Descr;
-	//linear_group *LG;
 
 
 	finite_field *F;
@@ -3237,841 +3268,49 @@ void algebra_global_with_action::orbits_on_polynomials(
 	A2->print_info();
 
 
-	int *Elt1;
-	int *Elt2;
-	int *Elt3;
-
-	Elt1 = NEW_int(A->elt_size_in_int);
-	Elt2 = NEW_int(A->elt_size_in_int);
-	Elt3 = NEW_int(A->elt_size_in_int);
-
-
-
-#if 0
-	action_on_homogeneous_polynomials *OnHP;
-
-	OnHP = A2->G.OnHP;
-#endif
-	schreier *Sch;
-	longinteger_object full_go;
-
-	//Sch = new schreier;
-	//A2->all_point_orbits(*Sch, verbose_level);
-
-
-	if (f_v) {
-		cout << "algebra_global_with_action::orbits_on_polynomials "
-				"before A->Strong_gens->orbits_on_points_schreier" << endl;
-	}
-
-
-	Sch = A->Strong_gens->orbits_on_points_schreier(A2, verbose_level);
-
-	if (f_v) {
-		cout << "algebra_global_with_action::orbits_on_polynomials "
-				"after A->Strong_gens->orbits_on_points_schreier" << endl;
-	}
-
-
-	char str[1000];
-	string fname;
-
-	sprintf(str, "poly_orbits_d%d_n%d_q%d.csv", degree_of_poly, n - 1, F->q);
-	fname.assign(str);
-
-	if (f_v) {
-		cout << "algebra_global_with_action::orbits_on_polynomials "
-				"before Sch->write_orbit_summary" << endl;
-	}
-	Sch->write_orbit_summary(fname,
-			A /*default_action*/,
-			go,
-			verbose_level);
-	if (f_v) {
-		cout << "algebra_global_with_action::orbits_on_polynomials "
-				"after Sch->write_orbit_summary" << endl;
-	}
-
-
-	orbit_transversal *T;
-
-	A->group_order(full_go);
-	T = NEW_OBJECT(orbit_transversal);
-
-	cout << "before T->init_from_schreier" << endl;
-
-	T->init_from_schreier(
-			Sch,
-			A,
-			full_go,
-			verbose_level);
-
-	cout << "after T->init_from_schreier" << endl;
-
-	Sch->print_orbit_reps(cout);
-
-#if 0
-	{
-	int pt = 814083;
-	if (Sch->degree >= pt) {
-		int orbit_idx;
-		orbit_idx = Sch->orbit_number(pt);
-		cout << "point " << pt << " lies in orbit " << orbit_idx << endl;
-	}
-	}
-	{
-	int pt = 577680;
-	if (Sch->degree >= pt) {
-		int orbit_idx;
-		orbit_idx = Sch->orbit_number(pt);
-		cout << "point " << pt << " lies in orbit " << orbit_idx << endl;
-	}
-	}
-	{
-	int pt = 288258;
-	if (Sch->degree >= pt) {
-		int orbit_idx;
-		orbit_idx = Sch->orbit_number(pt);
-		cout << "point " << pt << " lies in orbit " << orbit_idx << endl;
-	}
-	}
-	{
-	int pt = 308226;
-	if (Sch->degree >= pt) {
-		int orbit_idx;
-		orbit_idx = Sch->orbit_number(pt);
-		cout << "point " << pt << " lies in orbit " << orbit_idx << endl;
-	}
-	}
-	{
-	int pt = 271362;
-	if (Sch->degree >= pt) {
-		int orbit_idx;
-		orbit_idx = Sch->orbit_number(pt);
-		cout << "point " << pt << " lies in orbit " << orbit_idx << endl;
-	}
-	}
-#endif
-
-	cout << "orbit reps:" << endl;
-
-	char title[1000];
-	char author[1000];
-
-	sprintf(str, "poly_orbits_d%d_n%d_q%d.tex", degree_of_poly, n - 1, F->q);
-	fname.assign(str);
-
-	sprintf(title, "Varieties of degree %d in PG(%d,%d)", degree_of_poly, n - 1, F->q);
-	sprintf(author, "Orbiter");
-	{
-		ofstream f(fname);
-		latex_interface L;
-
-		L.head(f,
-				FALSE /* f_book*/,
-				TRUE /* f_title */,
-				title, author,
-				FALSE /* f_toc */,
-				FALSE /* f_landscape */,
-				TRUE /* f_12pt */,
-				TRUE /* f_enlarged_page */,
-				TRUE /* f_pagenumbers */,
-				NULL /* extra_praeamble */);
-
-		f << "\\small" << endl;
-		f << "\\arraycolsep=2pt" << endl;
-		f << "\\parindent=0pt" << endl;
-		f << "$q = " << F->q << "$\\\\" << endl;
-		f << "$n = " << n - 1 << "$\\\\" << endl;
-		f << "degree of poly $ = " << degree_of_poly << "$\\\\" << endl;
-
-		f << "\\clearpage" << endl << endl;
-		f << "\\section{The Varieties of degree $" << degree_of_poly
-				<< "$ in $PG(" << n - 1 << ", " << F->q << ")$, summary}" << endl;
-
-#if 0
-		T->print_table_latex(
-				f,
-				TRUE /* f_has_callback */,
-				polynomial_orbits_callback_print_function2,
-				HPD /* callback_data */,
-				TRUE /* f_has_callback */,
-				polynomial_orbits_callback_print_function,
-				HPD /* callback_data */,
-				verbose_level);
-#else
-		int *coeff;
-		int i;
-		int *Nb_pts;
-
-		coeff = NEW_int(HPD->get_nb_monomials());
-		Nb_pts = NEW_int(T->nb_orbits);
-
-		f << "orbit : rep : go : nb pts : poly\\\\" << endl;
-		for (i = 0; i < T->nb_orbits; i++) {
-
-			longinteger_object go;
-			T->Reps[i].Strong_gens->group_order(go);
-
-			f << i << " : ";
-			lint_vec_print(f, T->Reps[i].data, T->Reps[i].sz);
-			f << " : ";
-			f << go;
-
-			f << " : ";
-
-			HPD->unrank_coeff_vector(coeff, T->Reps[i].data[0]);
-
-			vector<long int> Points;
-			int nb_pts;
-
-			HPD->enumerate_points(coeff, Points, verbose_level);
-
-			nb_pts = Points.size();
-			Nb_pts[i] = nb_pts;
-
-			f << nb_pts;
-			f << " : ";
-
-			f << T->Reps[i].data[0] << "=$";
-			HPD->print_equation_tex(f, coeff);
-			//int_vec_print(f, coeff, HPD->get_nb_monomials());
-			//cout << " = ";
-			//HPD->print_equation_str(ost, coeff);
-
-			//f << " & ";
-			//Reps[i].Strong_gens->print_generators_tex(f);
-			f << "$";
-			f << "\\\\" << endl;
-		}
-
-#endif
-
-		FREE_int(coeff);
-
-
-		tally T1;
-
-		T1.init(Nb_pts, T->nb_orbits, FALSE, 0);
-		f << "Distribution of the number of points: $";
-		T1.print_naked_tex(f, TRUE);
-		f << "$\\\\" << endl;
-
-		f << "\\section{The Varieties of degree $" << degree_of_poly
-				<< "$ in $PG(" << n - 1 << ", " << F->q << ")$, "
-						"detailed listing}" << endl;
-		{
-			int fst, l, a, r;
-			longinteger_object go, go1;
-			longinteger_domain D;
-			int *coeff;
-			int *line_type;
-			long int *Pts;
-			int nb_pts;
-			int *Kernel;
-			int *v;
-			int i;
-			//int h, pt, orbit_idx;
-
-			A->group_order(go);
-			Pts = NEW_lint(HPD->get_P()->N_points);
-			coeff = NEW_int(HPD->get_nb_monomials());
-			line_type = NEW_int(HPD->get_P()->N_lines);
-			Kernel = NEW_int(HPD->get_nb_monomials() * HPD->get_nb_monomials());
-			v = NEW_int(n);
-
-			for (i = 0; i < Sch->nb_orbits; i++) {
-				f << "\\subsection*{Orbit " << i << " / "
-						<< Sch->nb_orbits << "}" << endl;
-				fst = Sch->orbit_first[i];
-				l = Sch->orbit_len[i];
-
-				D.integral_division_by_int(go, l, go1, r);
-				a = Sch->orbit[fst];
-				HPD->unrank_coeff_vector(coeff, a);
-
-
-				vector<long int> Points;
-
-				HPD->enumerate_points(coeff, Points, verbose_level);
-
-				nb_pts = Points.size();
-				Pts = NEW_lint(nb_pts);
-				for (int u = 0; u < nb_pts; u++) {
-					Pts[u] = Points[u];
-				}
-
-				f << "stab order " << go1 << "\\\\" << endl;
-				f << "orbit length = " << l << "\\\\" << endl;
-				f << "orbit rep = " << a << "\\\\" << endl;
-				f << "number of points = " << nb_pts << "\\\\" << endl;
-
-				f << "$";
-				int_vec_print(f, coeff, HPD->get_nb_monomials());
-				f << " = ";
-				HPD->print_equation(f, coeff);
-				f << "$\\\\" << endl;
-
-
-				cout << "We found " << nb_pts << " points in the variety" << endl;
-				cout << "They are : ";
-				lint_vec_print(cout, Pts, nb_pts);
-				cout << endl;
-				HPD->get_P()->print_set_numerical(cout, Pts, nb_pts);
-
-				F->display_table_of_projective_points(
-					f, Pts, nb_pts, n);
-
-				HPD->get_P()->line_intersection_type(Pts, nb_pts,
-						line_type, 0 /* verbose_level */);
-
-				f << "The line type is: ";
-
-				stringstream sstr;
-				int_vec_print_classified_str(sstr,
-						line_type, HPD->get_P()->N_lines, TRUE /* f_backwards*/);
-				string s = sstr.str();
-				f << "$" << s << "$\\\\" << endl;
-				//int_vec_print_classified(line_type, HPD->P->N_lines);
-				//cout << "after int_vec_print_classified" << endl;
-
-				f << "The stabilizer is generated by:" << endl;
-				T->Reps[i].Strong_gens->print_generators_tex(f);
-			} // next i
-
-			FREE_lint(Pts);
-			FREE_int(coeff);
-			FREE_int(line_type);
-			FREE_int(Kernel);
-			FREE_int(v);
-			}
-		L.foot(f);
-
-	}
-	file_io Fio;
-
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-
-#if 0
-	int f, l, a, r;
-	longinteger_object go, go1;
-	longinteger_domain D;
-	int *coeff;
-	int *line_type;
-	long int *Pts;
-	int nb_pts;
-	int *Kernel;
-	//int h, pt, orbit_idx;
-	sorting Sorting;
+	action_on_homogeneous_polynomials *A_on_HPD;
+	int *M;
+	int nb_gens;
 	int i;
 
+	A_on_HPD = A2->G.OnHP;
 
-	Pts = NEW_lint(HPD->get_P()->N_points);
-	coeff = NEW_int(HPD->get_nb_monomials());
-	line_type = NEW_int(HPD->get_P()->N_lines);
-	Kernel = NEW_int(HPD->get_nb_monomials() * HPD->get_nb_monomials());
-
-
-	A->group_order(go);
-
-	for (i = 0; i < Sch->nb_orbits; i++) {
-		cout << "Orbit " << i << " / " << Sch->nb_orbits << ":" << endl;
-		f = Sch->orbit_first[i];
-		l = Sch->orbit_len[i];
-
-		D.integral_division_by_int(go, l, go1, r);
-
-		cout << "stab order " << go1 << endl;
-		a = Sch->orbit[f];
-		cout << "orbit length = " << l << endl;
-		cout << "orbit rep = " << a << endl;
-
-		HPD->unrank_coeff_vector(coeff, a);
-		int_vec_print(cout, coeff, HPD->get_nb_monomials());
-		cout << " = ";
-		HPD->print_equation(cout, coeff);
-		cout << endl;
-
-
-		vector<long int> Points;
-
-		HPD->enumerate_points(coeff, Points, verbose_level);
-
-		nb_pts = Points.size();
-		Pts = NEW_lint(nb_pts);
-		for (int u = 0; u < nb_pts; u++) {
-			Pts[u] = Points[u];
+	if (LG->f_has_nice_gens) {
+		if (f_v) {
+			cout << "algebra_global_with_action::representation_on_polynomials using nice generators" << endl;
 		}
-
-
-		cout << "We found " << nb_pts << " points on the curve" << endl;
-		cout << "They are : ";
-		lint_vec_print(cout, Pts, nb_pts);
-		cout << endl;
-		HPD->get_P()->print_set_numerical(cout, Pts, nb_pts);
-
-		HPD->get_P()->line_intersection_type(Pts, nb_pts,
-				line_type, 0 /* verbose_level */);
-
-		cout << "The line type is: ";
-		int_vec_print_classified(line_type, HPD->get_P()->N_lines);
-		cout << "after int_vec_print_classified" << endl;
-
-		cout << "The stabilizer is generated by:" << endl;
-		T->Reps[i].Strong_gens->print_generators_tex(cout);
-
-
-#if 0
-		HPD->vanishing_ideal(Pts, nb_pts, r, Kernel, 0 /*verbose_level */);
-
-		cout << "The system has rank " << r << endl;
-		cout << "The ideal has dimension " << HPD->nb_monomials - r << endl;
-		cout << "and is generated by:" << endl;
-		int_matrix_print(Kernel, HPD->nb_monomials - r, HPD->nb_monomials);
-		cout << "corresponding to the following basis of polynomials:" << endl;
-		for (h = 0; h < HPD->nb_monomials - r; h++) {
-			HPD->print_equation(cout, Kernel + h * HPD->nb_monomials);
-			cout << endl;
-			}
-#endif
-
-
-
-		if (f_stabilizer) {
-			strong_generators *SG;
-			longinteger_object stab_go;
-			int canonical_pt;
-
-			cout << "before set_stabilizer_in_projective_space" << endl;
-			SG = A->set_stabilizer_in_projective_space(
-				HPD->get_P(),
-				Pts, nb_pts,
-				canonical_pt, NULL,
-				//FALSE, NULL,
-				0 /*verbose_level */);
-
-
-
-
-			SG->group_order(stab_go);
-
-			cout << "stabilizer order = " << stab_go << endl;
-			cout << "stabilizer generators:" << endl;
-			SG->print_generators_tex();
-			FREE_OBJECT(SG);
-			}
-
-
-		if (f_draw_tree) {
-			{
-
-			char label[1000];
-			char fname[1000];
-			int xmax = 1000000;
-			int ymax =  500000;
-#if 0
-			int f_circletext = TRUE;
-			int rad = 30000;
-#else
-			int f_circletext = FALSE;
-			int rad = 2000;
-#endif
-
-			cout << "before Sch->draw_tree" << endl;
-			sprintf(label, "orbit_tree_q%d_d%d_%d", F->q, n, i);
-			sprintf(fname, "orbit_tree_q%d_d%d_%d_tables.tex", F->q, n, i);
-			Sch->draw_tree(label,
-				i, xmax, ymax,
-				f_circletext, rad,
-				TRUE /* f_embedded */, FALSE /* f_sideways */,
-				0.3 /* scale */, 1. /* line_width */,
-				FALSE, NULL,
-				0 /*verbose_level */);
-
-			{
-			ofstream fp(fname);
-			latex_interface L;
-
-			L.head_easy(fp);
-
-
-			A->Strong_gens->print_generators_tex(fp);
-
-			Sch->print_and_list_orbits_tex(fp);
-
-			Sch->print_tables_latex(fp, TRUE /* f_with_cosetrep */);
-
-			L.foot(fp);
-			}
-			cout << "Written file " << fname << " of size "
-					<< Fio.file_size(fname) << endl;
-
-			}
-			}
-
-
-
+		LG->nice_gens->matrix_representation(A_on_HPD, M, nb_gens, verbose_level);
+	}
+	else {
+		if (f_v) {
+			cout << "algebra_global_with_action::representation_on_polynomials using strong generators" << endl;
 		}
-#endif
-
-#if 0
-	if (nb_identify) {
-		cout << "starting the identification:" << endl;
-		for (h = 0; h < nb_identify; h++) {
-
-
-
-			cout << "Trying to identify " << h << " / "
-				<< nb_identify << endl;
-
-			cout << "which is "
-				<< Identify_label[h] << " : "
-				<< Identify_coeff_text[h] << endl;
-
-			int *coeff_list;
-			int nb_coeffs;
-			int a, b;
-
-			int_vec_scan(Identify_coeff_text[h],
-					coeff_list, nb_coeffs);
-			if (ODD(nb_coeffs)) {
-				cout << "number of coefficients must be even" << endl;
-				exit(1);
-				}
-
-			int_vec_zero(coeff, HPD->nb_monomials);
-			for (i = 0; i < nb_coeffs >> 1; i++) {
-				a = coeff_list[2 * i + 0];
-				b = coeff_list[2 * i + 1];
-				if (b >= HPD->nb_monomials) {
-					cout << "b >= HPD->nb_monomials" << endl;
-					exit(1);
-					}
-				coeff[b] = a;
-				}
-
-			cout << "The equation of the input surface is:" << endl;
-			int_vec_print(cout, coeff, HPD->nb_monomials);
-			cout << endl;
-
-
-			pt = HPD->rank_coeff_vector(coeff);
-			cout << "pt=" << pt << endl;
-
-
-			HPD->enumerate_points(coeff, Pts, nb_pts, verbose_level);
-			cout << "We found " << nb_pts << " points on the curve" << endl;
-			cout << "They are : ";
-			lint_vec_print(cout, Pts, nb_pts);
-			cout << endl;
-			HPD->P->print_set_numerical(cout, Pts, nb_pts);
-
-			char fname[1000];
-
-			sprintf(fname, "point_set_identify_%d", h);
-			//draw_point_set_in_plane(HPD, Pts, nb_pts,
-			//fname, TRUE /* f_with_points */);
-
-			cout << "before HPD->P->draw_point_set_in_plane" << endl;
-			HPD->P->draw_point_set_in_plane(fname,
-					Pts, nb_pts,
-					TRUE /* f_with_points */,
-					FALSE /* f_point_labels */,
-					TRUE /* f_embedded */,
-					FALSE /* f_sideways */,
-					17000 /* rad */,
-					verbose_level);
-			cout << "after HPD->P->draw_point_set_in_plane" << endl;
-
-			strong_generators *SG;
-			longinteger_object ago;
-			cout << "before Sch->transporter_from_point_to_orbit_rep" << endl;
-			Sch->transporter_from_point_to_orbit_rep(pt,
-					orbit_idx, Elt1, 5 /* verbose_level */);
-			cout << "after Sch->transporter_from_point_to_orbit_rep" << endl;
-
-
-
-			SG = NEW_OBJECT(strong_generators);
-			SG->init(A);
-			cout << "before SG->init_point_stabilizer_of_arbitrary_"
-					"point_through_schreier" << endl;
-			SG->init_point_stabilizer_of_arbitrary_point_through_schreier(
-				Sch,
-				pt, orbit_idx, go /*full_group_order */,
-				0 /* verbose_level */);
-			cout << "The given pt " << pt << " lies in orbit " << orbit_idx << endl;
-			cout << "orbit has length " << Sch->orbit_len[orbit_idx] << endl;
-			cout << "A transporter from the point to the orbit rep is:" << endl;
-			A->element_print(Elt1, cout);
-
-			Sch->print_generators();
-
-			char label[1000];
-			int xmax = 1000000;
-			int ymax =  500000;
-			int f_circletext = FALSE;
-			int rad = 2000;
-
-			sprintf(label, "orbit_tree_q%d_d%d_%d", q, degree, orbit_idx);
-			cout << "before Sch->draw_tree" << endl;
-			Sch->draw_tree(label,
-				orbit_idx, xmax, ymax, f_circletext, rad,
-				TRUE /* f_embedded */, FALSE /* f_sideways */,
-				0.3 /* scale */, 1. /* line_width */,
-				FALSE, NULL,
-				0 /*verbose_level */);
-
-
-			SG->group_order(ago);
-			cout << "The stabilizer is a group of order " << ago << endl;
-
-			cout << "generators for the stabilizer of "
-					"pt = " << pt << " are:" << endl;
-			SG->print_generators();
-
-
-			cout << "before set_stabilizer_in_projective_space" << endl;
-			strong_generators *SG2;
-			longinteger_object stab_go;
-			int canonical_pt;
-			SG2 = A->set_stabilizer_in_projective_space(
-				HPD->P,
-				Pts, nb_pts, canonical_pt, NULL,
-				FALSE, NULL,
-				verbose_level + 3);
-
-			SG2->group_order(stab_go);
-
-			cout << "stabilizer order = " << stab_go << endl;
-			cout << "stabilizer generators:" << endl;
-			SG2->print_generators_tex();
-			FREE_OBJECT(SG2);
-
-			//sims *Stab;
-			//action *AR;
-			int *perm;
-			int *Elt;
-
-			Elt = NEW_int(A->elt_size_in_int);
-			perm = NEW_int(nb_pts);
-			//Stab = SG->create_sims(0 /*verbose_level*/);
-			cout << "creating restricted action on the curve:" << endl;
-			//AR = A->restricted_action(Pts, nb_pts, 0 /* verbose_level */);
-
-
-			int a1, a2, a3, a4, a6;
-			//int A6[6];
-
-			if (!HPD->test_weierstrass_form(pt,
-				a1, a2, a3, a4, a6, 0 /* verbose_level */)) {
-				cout << "Not in Weierstrass form" << endl;
-				exit(1);
-				}
-			cout << "The curve is in Weierstrass form: "
-					"a1=" << a1
-					<< " a2=" << a2
-					<< " a3=" << a3
-					<< " a4=" << a4
-					<< " a6=" << a6 << endl;
-#if 0
-			A6[0] = a1;
-			A6[1] = a2;
-			A6[2] = a3;
-			A6[3] = a4;
-			A6[4] = 0;
-			A6[5] = a6;
-#endif
-
-			//c = HPD->P->elliptic_curve_addition(A6,
-			//Pts[0], Pts[1], 2 /*verbose_level*/);
-			//cout << "c=" << c << endl;
-
-#if 0
-			int *Table;
-			cout << "before HPD->P->elliptic_curve_addition_table" << endl;
-			HPD->P->elliptic_curve_addition_table(A6,
-					Pts, nb_pts, Table, verbose_level);
-			cout << "The addition table:" << endl;
-			int_matrix_print(Table, nb_pts, nb_pts);
-			int_matrix_print_tex(cout, Table, nb_pts, nb_pts);
-
-
-			cout << "The group elements acting on the curve:" << endl;
-			Stab->print_all_group_elements_as_permutations_in_special_action(AR);
-
-			int order, k, idx;
-			int *Idx;
-
-			Idx = NEW_int(nb_pts);
-			for (k = 0; k < nb_pts; k++) {
-				Idx[k] = -1;
-				}
-
-			order = ago.as_int();
-			for (i = 0; i < order; i++) {
-				cout << "elt " << i << " / " << order << " : ";
-				Stab->element_as_permutation(AR, i, perm, 0 /*verbose_level */);
-				for (j = 0; j < nb_pts; j++) {
-					cout << perm[j] << ", ";
-					}
-				cout << " ; ";
-				for (k = 0; k < nb_pts; k++) {
-					if (int_vec_compare(perm, Table + k * nb_pts, nb_pts) == 0) {
-						cout << k << " ";
-						Idx[k] = i;
-						}
-					}
-				cout << endl;
-				}
-
-			for (i = 0; i < nb_pts; i++) {
-				idx = Idx[i];
-				cout << "point " << i << " / " << nb_pts
-						<< " corresponds to element " << idx << ":" << endl;
-				Stab->element_unrank_int(idx, Elt);
-				cout << "which is:" << endl;
-				A->element_print(Elt, cout);
-				cout << endl;
-				}
-#endif
-
-			FREE_OBJECT(SG);
-			FREE_int(perm);
-			FREE_int(Elt);
-
-			}
+		LG->Strong_gens->gens->matrix_representation(A_on_HPD, M, nb_gens, verbose_level);
 	}
 
-	if (f_test_orbit) {
-		cout << "test_orbit_idx = " << test_orbit_idx << endl;
+	for (i = 0; i < nb_gens; i++) {
+		cout << "matrix " << i << " / " << nb_gens << ":" << endl;
+		int_matrix_print(M + i * A_on_HPD->dimension * A_on_HPD->dimension,
+				A_on_HPD->dimension, A_on_HPD->dimension);
+	}
 
-		f = Sch->orbit_first[test_orbit_idx];
-		l = Sch->orbit_len[test_orbit_idx];
+	for (i = 0; i < nb_gens; i++) {
+		string fname;
+		char str[1000];
+		file_io Fio;
 
-		D.integral_division_by_int(go, l, go1, r);
-
-		cout << "stab order " << go1 << endl;
-		a = Sch->orbit[f];
-		cout << "orbit length = " << l << endl;
-		cout << "orbit rep = " << a << endl;
-
-		HPD->unrank_coeff_vector(coeff, a);
-
-		cout << "orbit rep is " << a << " which is ";
-		int_vec_print(cout, coeff, HPD->nb_monomials);
-		cout << " = ";
-		HPD->print_equation(cout, coeff);
-		cout << endl;
-
-		long int *Pts2;
-		long int *Pts3;
-		int nb_pts2;
-		int *coeff2;
-		int r, b, orbit_idx;
-
-		Pts2 = NEW_lint(HPD->P->N_points);
-		Pts3 = NEW_lint(HPD->P->N_points);
-		coeff2 = NEW_int(HPD->nb_monomials);
-
-		HPD->enumerate_points(coeff, Pts, nb_pts, verbose_level);
-		cout << "We found " << nb_pts << " points on the curve" << endl;
-
-		Sorting.lint_vec_heapsort(Pts, nb_pts);
-
-		cout << "They are : ";
-		lint_vec_print(cout, Pts, nb_pts);
-		cout << endl;
-		HPD->P->print_set_numerical(cout, Pts, nb_pts);
-
-		//r = random_integer(l);
-		//cout << "Picking random integer " << r << endl;
-
-
-		for (r = 0; r < l; r++) {
-			cout << "orbit element " << r << " / " << l << endl;
-
-			b = Sch->orbit[f + r];
-			cout << "b=" << b << endl;
-
-			HPD->unrank_coeff_vector(coeff2, b);
-
-
-			cout << "orbit element " << b << " is ";
-			int_vec_print(cout, coeff2, HPD->nb_monomials);
-			cout << " = ";
-			HPD->print_equation(cout, coeff2);
-			cout << endl;
-
-
-
-			HPD->enumerate_points(coeff2, Pts2, nb_pts2, verbose_level);
-			cout << "We found " << nb_pts2
-					<< " points on the curve" << endl;
-
-			Sorting.lint_vec_heapsort(Pts2, nb_pts);
-
-			cout << "They are : ";
-			lint_vec_print(cout, Pts2, nb_pts2);
-			cout << endl;
-			HPD->P->print_set_numerical(cout, Pts2, nb_pts2);
-			if (nb_pts2 != nb_pts) {
-				cout << "nb_pts2 != nb_pts" << endl;
-				exit(1);
-				}
-
-
-			Sch->transporter_from_orbit_rep_to_point(b /* pt */,
-					orbit_idx, Elt1, verbose_level);
-			cout << "transporter = " << endl;
-			A->element_print_quick(Elt1, cout);
-
-			A->element_invert(Elt1, Elt2, 0);
-
-			cout << "transporter inv = " << endl;
-			A->element_print_quick(Elt2, cout);
-
-			A->map_a_set_and_reorder(Pts, Pts3, nb_pts, Elt1,
-					verbose_level);
-			Sorting.lint_vec_heapsort(Pts3, nb_pts);
-
-			cout << "after apply : ";
-			lint_vec_print(cout, Pts3, nb_pts);
-			cout << endl;
-
-
-			if (lint_vec_compare(Pts3, Pts2, nb_pts)) {
-				cout << "The sets are different" << endl;
-				exit(1);
-				}
-
-			cout << "The element maps the orbit representative "
-					"to the new set, which is good" << endl;
-			}
-
-		FREE_lint(Pts2);
-		FREE_lint(Pts3);
-		FREE_int(coeff2);
-		}
-#endif
-
-
-	FREE_int(Elt1);
-	FREE_int(Elt2);
-	FREE_int(Elt3);
-
-#if 0
-	FREE_lint(Pts);
-	FREE_int(coeff);
-	FREE_int(line_type);
-	FREE_int(Kernel);
-#endif
-
+		fname.assign(LG->label);
+		sprintf(str, "_rep_%d_%d.csv", degree_of_poly, i);
+		fname.append(str);
+		Fio.int_matrix_write_csv(fname, M + i * A_on_HPD->dimension * A_on_HPD->dimension,
+				A_on_HPD->dimension, A_on_HPD->dimension);
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
 	if (f_v) {
-		cout << "algebra_global_with_action::orbits_on_polynomials done" << endl;
+		cout << "algebra_global_with_action::representation_on_polynomials done" << endl;
 	}
 }
+
 
 
 void algebra_global_with_action::do_eigenstuff_with_coefficients(
@@ -4133,6 +3372,7 @@ void algebra_global_with_action::do_eigenstuff_from_file(
 		cout << "algebra_global_with_action::do_eigenstuff_from_file done" << endl;
 	}
 }
+
 
 void algebra_global_with_action::do_cheat_sheet_PG(finite_field *F,
 		int n,

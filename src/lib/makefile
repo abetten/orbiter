@@ -318,6 +318,7 @@ MODULES= \
 		top_level/algebra_and_number_theory/group_theoretic_activity_description.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity_for_surfaces.o \
+		top_level/algebra_and_number_theory/orbits_on_polynomials.o \
 		top_level/algebra_and_number_theory/young.o \
 		top_level/combinatorics/boolean_function_classify.o \
 		top_level/combinatorics/cayley_graph_search.o \

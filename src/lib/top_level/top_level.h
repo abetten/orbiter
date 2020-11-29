@@ -160,6 +160,7 @@ class regular_packing;
 class finite_field_activity_description;
 class finite_field_activity;
 class semifield_classify_description;
+class orbits_on_polynomials;
 
 // #############################################################################
 // representatives.cpp

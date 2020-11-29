@@ -719,6 +719,40 @@ void surface_create::create_surface_by_coefficients(std::string &coefficients_te
 				"after SO->init_equation" << endl;
 	}
 
+#if 0
+	// compute the group of the surface:
+	projective_space_with_action *PA;
+
+	PA = NEW_OBJECT(projective_space_with_action);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_cubic_surface_properties before PA->init" << endl;
+	}
+	PA->init(
+		F, 3 /*n*/, f_semilinear,
+		TRUE /* f_init_incidence_structure */,
+		verbose_level);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_cubic_surface_properties after PA->init" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_coefficients "
+				"before SC->compute_group" << endl;
+	}
+	compute_group(PA, verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_coefficients "
+				"after SC->compute_group" << endl;
+	}
+
+	FREE_OBJECT(PA);
+#endif
+
+
+
+
 	int nb_select_double_six;
 
 	nb_select_double_six = select_double_six_string.size();
