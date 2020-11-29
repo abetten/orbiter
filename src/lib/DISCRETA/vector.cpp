@@ -1259,29 +1259,6 @@ void Vector::extract_subvector(Vector & v, int first, int len)
 		}
 }
 
-#if 0
-int nb_PG_elements(int n, int q)
-// $\frac{q^{n+1} - 1}{q-1} = \sum_{i=0}^{n} q^i $
-{
-	int qhl, l, deg;
-	
-	l = 0;
-	qhl = 1;
-	deg = 0;
-	while (l <= n) {
-		deg += qhl;
-		qhl *= q;
-		l++;
-		}	
-	return deg;
-}
-
-int nb_AG_elements(int n, int q)
-// $q^n$
-{
-	return i_power_j(q, n);
-}
-#endif
 
 void Vector::PG_element_normalize()
 // top (=highest) element which is different from zero becomes one
@@ -1672,7 +1649,7 @@ int Vector::vector_of_vectors_overall_length()
 	for (i = 0; i < l; i++) {
 		Vector &v = s_i(i).as_vector();
 		if (v.s_kind() != VECTOR) {
-			cout << "vector::vector_of_vectors_overall_length() element is not a vector" << endl;
+			cout << "vector::vector_of_vectors_overall_length element is not a vector" << endl;
 			cout << *this << endl;
 			exit(1);
 			}

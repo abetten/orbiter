@@ -14,6 +14,7 @@ MODULES = \
 	group_theoretic_activity_description.o \
 	group_theoretic_activity.o \
 	group_theoretic_activity_for_surfaces.o \
+	orbits_on_polynomials.o \
 	young.o 
 
 

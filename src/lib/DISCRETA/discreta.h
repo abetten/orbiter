@@ -183,11 +183,6 @@ class discreta_matrix;			// derived from base
 	// matrix access (via s_ij or via operator[]) 
 	// is range checked.
 
-//class bitmatrix;		// derived from base
-	// self is a pointer to BITMATRIX_REPRESENTATION
-	// which contains integers m, n, N and an array p of uint4s 
-	// holding the bits in a row by row fashion.
-
 class Vector;			// derived from base
 	// self is a pointer obtained from 
 	// calloc_nobjects_plus_length().
@@ -226,17 +221,7 @@ class hollerith;		// derived from base
 		//                      or PARTITION_TYPE_EXPONENT)
 		// offset 1: the self part holding the parts
 		
-	//class pc_presentation;		// derived from vector
-	//class pc_subgroup;		// derived from vector
-	//class group_word;		// derived from vector
-	//class group_table;		// derived from vector
 	class unipoly;			// derived from vector
-	//class perm_group;		// derived from vector
-	//class perm_group_stab_chain;	// derived from vector
-	//class action;			// derived from vector
-	//class geometry;			// derived from vector
-	//class group_selection;		// derived from vector
-	//class solid;			// derived from vector
 	class bt_key;			// derived from vector
 	class database;			// derived from vector
 	class btree;			// derived from vector
@@ -256,7 +241,6 @@ class matrix_access;
 class domain;
 class with;
 class printing_mode;
-//class mp_graphics;
 
 
 
@@ -265,9 +249,6 @@ class printing_mode;
 extern const char *discreta_home;
 extern const char *discreta_arch;
 
-typedef class labelled_branching labelled_branching;
-typedef class base_change base_change;
-typedef class point_orbits point_orbits;
 
 /************************* Prototypes of global functions ******************/
 
@@ -378,7 +359,6 @@ typedef union {
 	discreta_base *vector_pointer;
 	discreta_base *matrix_pointer;
 	LONGINTEGER_REPRESENTATION *longinteger_rep;
-	//BITMATRIX_REPRESENTATION *bitmatrix_rep;
 } OBJECTSELF;
 
 //! DISCRETA internal class to represent long integers
@@ -390,18 +370,6 @@ struct longinteger_representation {
 	char p[1];
 };
 
-
-#if 0
-//! DISCRETA internal class to represent bitmatrices
-
-
-struct bitmatrix_representation {
-	int m;
-	int n;
-	int N;
-	uint4 p[1];
-};
-#endif
 
 
 // public class definitions:
@@ -440,20 +408,10 @@ class discreta_base
 	
 	number_partition& as_number_partition() { return *(number_partition *)this; }
 	discreta_matrix& as_matrix() { return *(discreta_matrix *)this; }
-	//bitmatrix& as_bitmatrix() { return *(bitmatrix *)this; }
-	//pc_presentation& as_pc_presentation() { return *(pc_presentation *)this; }
-	//pc_subgroup& as_pc_subgroup() { return *(pc_subgroup *)this; }
-	//group_word& as_group_word() { return *(group_word *)this; }
-	//group_table& as_group_table() { return *(group_table *)this; }
 	unipoly& as_unipoly() { return *(unipoly *)this; }
-	//perm_group& as_perm_group() { return *(perm_group *)this; }
-	//perm_group_stab_chain& as_perm_group_stab_chain() { return *(perm_group_stab_chain *)this; }
 	memory& as_memory() { return *(memory *)this; }
 	action& as_action() { return *(action *)this; }
-	//geometry& as_geometry() { return *(geometry *)this; }
 	hollerith& as_hollerith() { return *(hollerith *)this; }
-	//group_selection& as_group_selection() { return *(group_selection *)this; }
-	//solid& as_solid() { return *(solid *)this; }
 	bt_key& as_bt_key() { return *(bt_key *)this; }
 	database& as_database() { return *(database *)this; }
 	btree& as_btree() { return *(btree *)this; }
@@ -466,20 +424,9 @@ class discreta_base
 	permutation& change_to_permutation() { freeself(); c_kind(PERMUTATION); return as_permutation(); }
 	number_partition& change_to_number_partition() { freeself(); c_kind(NUMBER_PARTITION); return as_number_partition(); }
 	discreta_matrix& change_to_matrix() { freeself(); c_kind(MATRIX); return as_matrix(); }
-	//bitmatrix& change_to_bitmatrix() { freeself(); c_kind(BITMATRIX); return as_bitmatrix(); }
-	//pc_presentation& change_to_pc_presentation() { freeself(); c_kind(PC_PRESENTATION); return as_pc_presentation(); }
-	//pc_subgroup& change_to_pc_subgroup() { freeself(); c_kind(PC_SUBGROUP); return as_pc_subgroup(); }
-	//group_word& change_to_group_word() { freeself(); c_kind(GROUP_WORD); return as_group_word(); }
-	//group_table& change_to_group_table() { freeself(); c_kind(GROUP_TABLE); return as_group_table(); }
 	unipoly& change_to_unipoly() { freeself(); c_kind(UNIPOLY); return as_unipoly(); }
-	//perm_group& change_to_perm_group() { freeself(); c_kind(PERM_GROUP); return as_perm_group(); }
-	//perm_group_stab_chain& change_to_perm_group_stab_chain() { freeself(); c_kind(PERM_GROUP_STAB_CHAIN); return as_perm_group_stab_chain(); }
 	memory& change_to_memory() { freeself(); c_kind(MEMORY); return as_memory(); }
-	//action& change_to_action() { freeself(); c_kind(ACTION); return as_action(); }
-	//geometry& change_to_geometry() { freeself(); c_kind(GEOMETRY); return as_geometry(); }
 	hollerith& change_to_hollerith() { freeself(); c_kind(HOLLERITH); return as_hollerith(); }
-	//group_selection& change_to_group_selection() { freeself(); c_kind(GROUP_SELECTION); return as_group_selection(); }
-	//solid& change_to_solid() { freeself(); c_kind(SOLID); return as_solid(); }
 	bt_key& change_to_bt_key() { freeself(); c_kind(BT_KEY); return as_bt_key(); }
 	database& change_to_database() { freeself(); c_kind(DATABASE); return as_database(); }
 	btree& change_to_btree() { freeself(); c_kind(BTREE); return as_btree(); }
@@ -1287,59 +1234,6 @@ void determinant_map(discreta_base & x, discreta_base &d);
 int nb_PG_lines(int n, int q);
 
 
-#if 0
-//! DISCRETA bitmatrix class
-
-
-
-
-class bitmatrix: public discreta_base
-{
-	public:
-	bitmatrix();
-		// constructor, sets the bitmatrix_pointer to NULL
-	bitmatrix(const discreta_base& x);
-		// copy constructor
-	bitmatrix& operator = (const discreta_base &x);
-		// copy assignment
-
-	void *operator new(size_t, void *p) { return p; } 
-	void settype_bitmatrix();
-
-	~bitmatrix();
-	void freeself_bitmatrix();
-		// delete the matrix
-	kind s_virtual_kind();
-	void copyobject_to(discreta_base &x);
-
-	ostream& print(ostream&);
-
-	bitmatrix& m_mn(int m, int n);
-		// make matrix of format m times n
-		// allocates the memory
-	bitmatrix& m_mn_n(int m, int n);
-
-
-	int s_m();
-	int s_n();
-	int s_N();
-	uint4& s_i(int i);
-	int s_ij(int i, int j);
-		// select (i,j)-th matrix element
-	void m_iji(int i, int j, int a);
-		// make (i,j)-th vector element as integer (set value)
-
-	void mult_to(discreta_base &x, discreta_base &y);
-	void bitmatrix_mult_to(bitmatrix &x, discreta_base &y);
-	
-	int gauss(int f_complete, Vector& base_cols, int f_v);
-	int get_kernel(Vector& base_cols, bitmatrix& kernel);
-
-	void write_mem(memory & M, int debug_depth);
-	void read_mem(memory & M, int debug_depth);
-	int csf();
-};
-#endif
 
 //! DISCRETA class for poynomials in one variable
 

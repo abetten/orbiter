@@ -146,6 +146,10 @@ finite_field_activity_description::finite_field_activity_description()
 	rank_point_in_PG_n = 0;
 	//rank_point_in_PG_text;
 
+	f_rank_point_in_PG_given_as_pairs = FALSE;
+	rank_point_in_PG_given_as_pairs_n = 0;
+	//std::string f_rank_point_in_PG_given_as_pairs_text;
+
 	f_eigenstuff = FALSE;
 	f_eigenstuff_from_file = FALSE;
 	eigenstuff_n = 0;
@@ -463,6 +467,12 @@ int finite_field_activity_description::read_arguments(
 			rank_point_in_PG_n = strtoi(argv[++i]);
 			rank_point_in_PG_text.assign(argv[++i]);
 			cout << "-rank_point_in_PG " << rank_point_in_PG_n << " " << rank_point_in_PG_text << endl;
+		}
+		else if (stringcmp(argv[i], "-rank_point_in_PG_given_as_pairs") == 0) {
+			f_rank_point_in_PG_given_as_pairs = TRUE;
+			rank_point_in_PG_given_as_pairs_n = strtoi(argv[++i]);
+			rank_point_in_PG_given_as_pairs_text.assign(argv[++i]);
+			cout << "-rank_point_in_PG " << rank_point_in_PG_given_as_pairs_n << " " << rank_point_in_PG_given_as_pairs_text << endl;
 		}
 		else if (stringcmp(argv[i], "-eigenstuff") == 0) {
 			f_eigenstuff = TRUE;

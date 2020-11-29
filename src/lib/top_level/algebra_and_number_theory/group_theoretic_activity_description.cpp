@@ -162,6 +162,11 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	f_orbits_on_polynomials = FALSE;
 	orbits_on_polynomials_degree = 0;
+	f_recognize_orbits_on_polynomials = FALSE;
+	//std::string recognize_orbits_on_polynomials_text;
+
+	f_representation_on_polynomials = FALSE;
+	representation_on_polynomials_degree = 0;
 
 
 
@@ -742,6 +747,18 @@ int group_theoretic_activity_description::read_arguments(
 			f_orbits_on_polynomials = TRUE;
 			orbits_on_polynomials_degree = strtoi(argv[++i]);
 			cout << "-orbits_on_polynomials " << endl;
+		}
+		else if (stringcmp(argv[i], "-recognize_orbits_on_polynomials") == 0) {
+			f_recognize_orbits_on_polynomials = TRUE;
+			recognize_orbits_on_polynomials_text.assign(argv[++i]);
+			cout << "-recognize_orbits_on_polynomials " << endl;
+		}
+
+
+		else if (stringcmp(argv[i], "-representation_on_polynomials") == 0) {
+			f_representation_on_polynomials = TRUE;
+			representation_on_polynomials_degree = strtoi(argv[++i]);
+			cout << "-representation_on_polynomials " << endl;
 		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {

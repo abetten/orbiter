@@ -2479,6 +2479,81 @@ projective_space_with_action::create_object_from_int_vec(
 }
 
 
+void projective_space_with_action::compute_group_of_set(long int *set, int set_sz,
+		strong_generators *&Sg,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+	long int a;
+	char str[1000];
+
+	if (f_v) {
+		cout << "projective_space_with_action::compute_group_of_set" << endl;
+	}
+
+	projective_space_object_classifier_description *Descr;
+	projective_space_object_classifier *Classifier;
+
+	Descr = NEW_OBJECT(projective_space_object_classifier_description);
+	Classifier = NEW_OBJECT(projective_space_object_classifier);
+
+	Descr->f_input = TRUE;
+	Descr->Data = NEW_OBJECT(data_input_stream);
+	Descr->Data->input_type[Descr->Data->nb_inputs] = INPUT_TYPE_SET_OF_POINTS;
+	Descr->Data->input_string[Descr->Data->nb_inputs].assign("");
+	for (i = 0; i < set_sz; i++) {
+		a = set[i];
+		sprintf(str, "%ld", a);
+		Descr->Data->input_string[Descr->Data->nb_inputs].append(str);
+		if (i < set_sz - 1) {
+			Descr->Data->input_string[Descr->Data->nb_inputs].append(",");
+		}
+	}
+	Descr->Data->input_string2[Descr->Data->nb_inputs].assign("");
+	Descr->Data->nb_inputs++;
+
+	if (f_v) {
+		cout << "projective_space_with_action::compute_group_of_set before Classifier->do_the_work" << endl;
+	}
+
+	Classifier->do_the_work(
+			Descr,
+			this,
+			verbose_level);
+
+	if (f_v) {
+		cout << "projective_space_with_action::compute_group_of_set after Classifier->do_the_work" << endl;
+	}
+
+	int idx;
+	long int ago;
+
+	idx = Classifier->CB->type_of[Classifier->CB->n - 1];
+
+
+	object_in_projective_space_with_action *OiPA;
+
+	OiPA = (object_in_projective_space_with_action *) Classifier->CB->Type_extra_data[idx];
+
+
+	ago = OiPA->ago;
+
+	Sg = OiPA->Aut_gens;
+
+	Sg->A = A;
+
+
+	if (f_v) {
+		cout << "projective_space_with_action::compute_group_of_set ago = " << ago << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "projective_space_with_action::compute_group_of_set done" << endl;
+	}
+}
 
 
 

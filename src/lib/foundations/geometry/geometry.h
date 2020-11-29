@@ -698,6 +698,9 @@ public:
 	void do_rank_point_in_PG(finite_field *F, int n,
 			std::string &coeff_text,
 			int verbose_level);
+	void do_rank_point_in_PG_given_as_pairs(finite_field *F, int n,
+			std::string &coeff_text,
+			int verbose_level);
 	void do_intersection_of_two_lines(finite_field *F,
 			std::string &line_1_basis,
 			std::string &line_2_basis,
