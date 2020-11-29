@@ -416,6 +416,54 @@ Char_Sym_6:
 	$(ORBITER_PATH)/orbiter.out -v 2 -character_table_symmetric_group 6
 	
 
+
+
+representation_on_polynomials_of_degree_3:
+	$(ORBITER_PATH)/orbiter.out -v 4 \
+		-linear_group -PGL 4 3 \
+		-end \
+		-group_theoretic_activities \
+		-representation_on_polynomials 3 \
+		-end 
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PGL_4_3_rep_3_0.csv 20 3 -draw_matrix_partition 3 20 20
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PGL_4_3_rep_3_1.csv 20 3 -draw_matrix_partition 3 20 20
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PGL_4_3_rep_3_2.csv 20 3 -draw_matrix_partition 3 20 20
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PGL_4_3_rep_3_3.csv 20 3 -draw_matrix_partition 3 20 20
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PGL_4_3_rep_3_4.csv 20 3 -draw_matrix_partition 3 20 20
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PGL_4_3_rep_3_5.csv 20 3 -draw_matrix_partition 3 20 20
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PGL_4_3_rep_3_6.csv 20 3 -draw_matrix_partition 3 20 20
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PGL_4_3_rep_3_7.csv 20 3 -draw_matrix_partition 3 20 20
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PGL_4_3_rep_3_8.csv 20 3 -draw_matrix_partition 3 20 20
+	open PGL_4_3_rep_3_0_draw.bmp
+	open PGL_4_3_rep_3_1_draw.bmp
+	open PGL_4_3_rep_3_2_draw.bmp
+	open PGL_4_3_rep_3_3_draw.bmp
+	open PGL_4_3_rep_3_4_draw.bmp
+	open PGL_4_3_rep_3_5_draw.bmp
+	open PGL_4_3_rep_3_6_draw.bmp
+	open PGL_4_3_rep_3_7_draw.bmp
+	open PGL_4_3_rep_3_8_draw.bmp
+
+# write PGL_4_3_rep_3_0.csv, ... PGL_4_3_rep_3_8.csv
+
+
+representation_tetrahedral_group_on_polynomials_of_degree_3:
+	$(ORBITER_PATH)/orbiter.out -v 4 -linear_group -GL 3 3 \
+		-subgroup_by_generators "tetra" "12" 2 \
+		"0,1,0,0,0,1,1,0,0" \
+		"0,0,1,2,0,0,0,2,0" \
+		-end \
+		-group_theoretic_activities \
+		-representation_on_polynomials 3 \
+		-end 
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GL_3_3_Subgroup_tetra_12_rep_3_0.csv 20 3 -draw_matrix_partition 3 10 10
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GL_3_3_Subgroup_tetra_12_rep_3_1.csv 20 3 -draw_matrix_partition 3 10 10
+	open GL_3_3_Subgroup_tetra_12_rep_3_0_draw.bmp
+	open GL_3_3_Subgroup_tetra_12_rep_3_1_draw.bmp
+
+# write GL_3_3_Subgroup_tetra_12_rep_3_0.csv
+
+
 #############################################################################################################
 # Section 10: Finite Projective Spaces
 
@@ -609,7 +657,11 @@ octic_prepare:
 LINEAR_GROUPS:
 
 PGL_4_2:
-	$(ORBITER_PATH)/orbiter.out -v 2 -linear_group -PGL 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -linear_group -PGL 4 2 -end \
+		-group_theoretic_activities \
+		-report \
+		-draw_options -rad 200 -end \
+		-end
 
 
 PGL_4_2_wd:
@@ -1426,6 +1478,8 @@ orbits_cubic_surfaces_q2:
 		-end 
 	pdflatex poly_orbits_d3_n3_q2.tex
 	open poly_orbits_d3_n3_q2.pdf
+
+
 
 
 
