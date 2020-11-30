@@ -3375,6 +3375,152 @@ int file_io::number_of_vertices_in_colored_graph(std::string &fname, int verbose
 	return CG.nb_points;
 }
 
+void file_io::do_csv_file_select_rows(std::string &fname,
+		std::string &rows_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::do_csv_file_select_rows" << endl;
+	}
+	int *Rows;
+	int nb_rows;
+
+	int_vec_scan(rows_text, Rows, nb_rows);
+
+	spreadsheet S;
+
+	S.read_spreadsheet(fname, verbose_level);
+
+
+	int i;
+
+
+
+	string fname_out;
+
+	fname_out.assign(fname);
+	chop_off_extension(fname_out);
+	fname_out.append("_select.csv");
+
+	{
+		ofstream ost(fname_out);
+		ost << "Row,";
+		S.print_table_row(0, FALSE, ost);
+		for (i = 0; i < nb_rows; i++) {
+			ost << i << ",";
+			S.print_table_row(Rows[i] + 1, FALSE, ost);
+			}
+		ost << "END" << endl;
+	}
+	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
+
+
+	if (f_v) {
+		cout << "file_io::do_csv_file_select_rows done" << endl;
+	}
+}
+
+void file_io::do_csv_file_join(
+		std::vector<std::string> &csv_file_join_fname,
+		std::vector<std::string> &csv_file_join_identifier, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::do_csv_file_join" << endl;
+	}
+
+	int nb_files;
+	int i;
+
+	nb_files = csv_file_join_fname.size();
+
+	spreadsheet *S;
+	int *identifier_column;
+
+	S = new spreadsheet[nb_files];
+	identifier_column = NEW_int(nb_files);
+
+	for (i = 0; i < nb_files; i++) {
+		cout << "Reading table " << csv_file_join_fname[i] << endl;
+		S[i].read_spreadsheet(csv_file_join_fname[i], 0 /*verbose_level*/);
+		cout << "Table " << csv_file_join_fname[i] << " has been read" << endl;
+#if 0
+		if (i == 0) {
+			cout << "The first table is:" << endl;
+			S[0].print_table(cout, FALSE);
+			}
+#endif
+		if (FALSE) {
+			cout << "The " << i << "th table is:" << endl;
+			S[i].print_table(cout, FALSE);
+			}
+
+
+		}
+
+#if 0
+	cout << "adding " << nb_with << " -with entries" << endl;
+	for (i = 0; i < nb_with; i++) {
+		S[with_table[i]].add_column_with_constant_value(with_label[i], with_value[i]);
+		}
+#endif
+
+	for (i = 0; i < nb_files; i++) {
+		identifier_column[i] = S[i].find_by_column(csv_file_join_identifier[i].c_str());
+		cout << "Table " << csv_file_join_fname[i] << ", identifier " << identifier_column[i] << endl;
+		}
+
+#if 0
+	for (i = 0; i < nb_files; i++) {
+		by_column[i] = S[i].find_by_column(join_by);
+		cout << "File " << fname[i] << " by_column[" << i << "]=" << by_column[i] << endl;
+		}
+#endif
+
+	cout << "joining " << nb_files << " files" << endl;
+	for (i = 1; i < nb_files; i++) {
+		cout << "Joining table " << 0 << " = " << csv_file_join_fname[0] << " with table " << i << " = " << csv_file_join_fname[i] << endl;
+		S[0].join_with(S + i, identifier_column[0], identifier_column[i], verbose_level - 2);
+		cout << "joining " << csv_file_join_fname[0] << " with table " << csv_file_join_fname[i] << " done" << endl;
+#if 1
+		cout << "After join, the table is:" << endl;
+		S[0].print_table(cout, FALSE);
+#endif
+		}
+
+
+
+
+
+
+#if 0
+	if (f_drop) {
+		S[0].remove_rows(drop_column, drop_label, verbose_level);
+		}
+#endif
+
+
+	string save_fname;
+
+	save_fname.assign(csv_file_join_fname[0]);
+	chop_off_extension(save_fname);
+	save_fname.append("_joined.csv");
+
+	{
+		ofstream f(save_fname);
+		S[0].print_table(f, FALSE);
+	}
+	cout << "Written file " << save_fname << " of size " << file_size(save_fname) << endl;
+
+
+	if (f_v) {
+		cout << "file_io::do_csv_file_join done" << endl;
+	}
+}
+
 }}
 
 

@@ -424,7 +424,8 @@ MODULES= \
 		interfaces/interface_combinatorics.o \
 		interfaces/interface_cryptography.o \
 		interfaces/interface_povray.o \
-		interfaces/interface_projective.o
+		interfaces/interface_projective.o \
+		interfaces/interface_toolkit.o
 
 
 all:

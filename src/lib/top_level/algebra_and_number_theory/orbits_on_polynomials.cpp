@@ -32,6 +32,7 @@ orbits_on_polynomials::orbits_on_polynomials()
 	Elt1 = Elt2 = Elt3 = NULL;
 	Sch = NULL;
 	// full_go
+	//fname_base
 	//fname_csv
 	//fname_report
 	T = NULL;
@@ -100,8 +101,10 @@ void orbits_on_polynomials::init(
 
 	char str[1000];
 
-	sprintf(str, "poly_orbits_d%d_n%d_q%d.csv", degree_of_poly, n - 1, F->q);
-	fname_csv.assign(str);
+	sprintf(str, "poly_orbits_d%d_n%d_q%d", degree_of_poly, n - 1, F->q);
+	fname_base.assign(str);
+	fname_csv.assign(fname_base);
+	fname_csv.append(".csv");
 
 
 	//Sch = new schreier;
@@ -177,16 +180,28 @@ void orbits_on_polynomials::init(
 		int len;
 		int i;
 
+		int *Idx;
+
+
 		cout << "orbits_on_polynomials::init recognition:" << endl;
 		lint_vec_scan(recognize_text, Rank, len);
+
+		Idx = NEW_int(len);
 
 		for (i = 0; i < len; i++) {
 			//cout << "recognizing object " << i << " / " << len << " which is " << Rank[i] << endl;
 			int orbit_idx;
 			orbit_idx = Sch->orbit_number(Rank[i]);
+			Idx[i] = orbit_idx;
 			cout << "recognizing object " << i << " / " << len << ", point " << Rank[i] << " lies in orbit " << orbit_idx << endl;
-
 		}
+		file_io Fio;
+		std::string fname;
+
+		fname.assign(fname_base);
+		fname.append("_recognition.csv");
+
+		Fio.int_vec_write_csv(Idx, len, fname, "Idx");
 
 		FREE_lint(Rank);
 

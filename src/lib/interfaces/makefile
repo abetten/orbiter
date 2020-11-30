@@ -11,7 +11,8 @@ MODULES = \
 	interface_combinatorics.o \
 	interface_cryptography.o \
 	interface_povray.o \
-	interface_projective.o
+	interface_projective.o \
+	interface_toolkit.o
 
 
 all : $(MODULES)

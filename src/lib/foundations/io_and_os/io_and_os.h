@@ -242,6 +242,13 @@ public:
 	void create_files_list_of_cases(spreadsheet *S,
 			create_file_description *Descr, int verbose_level);
 	int number_of_vertices_in_colored_graph(std::string &fname, int verbose_level);
+	void do_csv_file_select_rows(std::string &fname,
+			std::string &rows_text,
+			int verbose_level);
+	void do_csv_file_join(
+			std::vector<std::string> &csv_file_join_fname,
+			std::vector<std::string> &csv_file_join_identifier, int verbose_level);
+
 };
 
 
