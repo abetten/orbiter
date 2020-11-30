@@ -212,6 +212,18 @@ void work(orbiter_session *Session, int argc, std::string *Argv, int i, int verb
 	}
 
 	if (f_v) {
+		cout << "work before Interface_toolkit" << endl;
+	}
+	{
+
+		interface_toolkit Interface_toolkit;
+		if (Interface_toolkit.recognize_keyword(argc, Argv, i, verbose_level)) {
+			Interface_toolkit.read_arguments(argc, Argv, i, verbose_level);
+			Interface_toolkit.worker(Session, verbose_level);
+		}
+	}
+
+	if (f_v) {
 		cout << "work done" << endl;
 	}
 }

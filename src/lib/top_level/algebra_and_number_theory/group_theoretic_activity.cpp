@@ -309,12 +309,27 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 				verbose_level);
 	}
 	else if (Descr->f_cubic_surface_properties) {
-		do_cubic_surface_properties(Descr->cubic_surface_properties_fname_csv,
-				Descr->cubic_surface_properties_defining_q, verbose_level);
+
+		algebra_global_with_action Algebra;
+
+
+		Algebra.do_cubic_surface_properties(
+				LG,
+				Descr->cubic_surface_properties_fname_csv,
+				Descr->cubic_surface_properties_defining_q,
+				Descr->cubic_surface_properties_column_offset,
+				verbose_level);
+
 	}
 	else if (Descr->f_cubic_surface_properties_analyze) {
-		do_cubic_surface_properties_analyze(Descr->cubic_surface_properties_fname_csv,
-				Descr->cubic_surface_properties_defining_q, verbose_level);
+
+		algebra_global_with_action Algebra;
+
+		Algebra.do_cubic_surface_properties_analyze(
+				LG,
+				Descr->cubic_surface_properties_fname_csv,
+				Descr->cubic_surface_properties_defining_q,
+				verbose_level);
 	}
 
 	// spreads:

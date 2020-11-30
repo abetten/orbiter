@@ -126,6 +126,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_cubic_surface_properties = FALSE;
 	//std::string cubic_surface_properties_fname_csv;
 	cubic_surface_properties_defining_q = 0;
+	cubic_surface_properties_column_offset = 0;
 
 	f_cubic_surface_properties_analyze = FALSE;
 
@@ -607,8 +608,10 @@ int group_theoretic_activity_description::read_arguments(
 			f_cubic_surface_properties = TRUE;
 			cubic_surface_properties_fname_csv.assign(argv[++i]);
 			cubic_surface_properties_defining_q = strtoi(argv[++i]);
+			cubic_surface_properties_column_offset = strtoi(argv[++i]);
 			cout << "-cubic_surface_properties " << cubic_surface_properties_fname_csv
-					<< " " << cubic_surface_properties_defining_q << endl;
+					<< " " << cubic_surface_properties_defining_q << " "
+					<< cubic_surface_properties_column_offset << endl;
 		}
 		else if (stringcmp(argv[i], "-cubic_surface_properties_analyze") == 0) {
 			f_cubic_surface_properties_analyze = TRUE;

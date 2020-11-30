@@ -597,7 +597,6 @@ void surface_object_properties::compute_gradient(int verbose_level)
 
 
 	if (f_v) {
-		cout << "surface_object_properties::compute_gradient SO->Surf->Poly2_4 = " << SO->Surf->Poly2_4 << endl;
 		cout << "surface_object_properties::compute_gradient SO->Surf->Poly2_4->get_nb_monomials() = " << SO->Surf->Poly2_4->get_nb_monomials() << endl;
 	}
 

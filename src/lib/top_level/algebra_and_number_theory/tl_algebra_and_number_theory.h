@@ -133,6 +133,23 @@ public:
 			projective_space_object_classifier_description *Canonical_form_PG_Descr,
 			int n, int verbose_level);
 	void do_study_surface(finite_field *F, int nb, int verbose_level);
+	void do_cubic_surface_properties(
+			linear_group *LG,
+			std::string fname_csv, int defining_q,
+			int column_offset,
+			int verbose_level);
+	void do_cubic_surface_properties_analyze(
+			linear_group *LG,
+			std::string fname_csv, int defining_q,
+			int verbose_level);
+	void report_singular_surfaces(std::ostream &ost,
+			struct cubic_surface_data_set *Data, int nb_orbits,
+			int verbose_level);
+	void report_non_singular_surfaces(std::ostream &ost,
+			struct cubic_surface_data_set *Data, int nb_orbits,
+			int verbose_level);
+	void report_surfaces_by_lines(std::ostream &ost,
+			struct cubic_surface_data_set *Data, tally &T, int verbose_level);
 
 };
 
@@ -316,8 +333,10 @@ public:
 	std::string NTRU_encrypt_H;
 	std::string NTRU_encrypt_R;
 	std::string NTRU_encrypt_Msg;
+
 	int f_polynomial_center_lift;
 	std::string polynomial_center_lift_A;
+
 	int f_polynomial_reduce_mod_p;
 	std::string polynomial_reduce_mod_p_A;
 
@@ -526,9 +545,11 @@ public:
 	int f_surface_quartic;
 	int f_surface_clebsch;
 	int f_surface_codes;
+
 	int f_cubic_surface_properties;
 	std::string cubic_surface_properties_fname_csv;
 	int cubic_surface_properties_defining_q;
+	int cubic_surface_properties_column_offset;
 	int f_cubic_surface_properties_analyze;
 
 
@@ -682,7 +703,8 @@ public:
 			int verbose_level);
 	void do_orbits_on_polynomials(
 			int degree,
-			int f_recognize_orbits_on_polynomials, std::string &recognize_orbits_on_polynomials_text,
+			int f_recognize_orbits_on_polynomials,
+			std::string &recognize_orbits_on_polynomials_text,
 			int verbose_level);
 	void do_representation_on_polynomials(
 			int degree,
@@ -724,20 +746,6 @@ public:
 			poset_classification_control *Control_six_arcs,
 			int f_filter_by_nb_Eckardt_points, int nb_Eckardt_points,
 			int verbose_level);
-	void do_cubic_surface_properties(
-			std::string fname_csv, int defining_q,
-			int verbose_level);
-	void do_cubic_surface_properties_analyze(
-			std::string fname_csv, int defining_q,
-			int verbose_level);
-	void report_singular_surfaces(std::ostream &ost,
-			struct cubic_surface_data_set *Data, int nb_orbits,
-			int verbose_level);
-	void report_non_singular_surfaces(std::ostream &ost,
-			struct cubic_surface_data_set *Data, int nb_orbits,
-			int verbose_level);
-	void report_surfaces_by_lines(std::ostream &ost,
-			struct cubic_surface_data_set *Data, tally &T, int verbose_level);
 
 
 };
@@ -755,7 +763,7 @@ void gta_subspace_orbits_early_test_func(long int *S, int len,
 // #############################################################################
 
 
-//! orbits of a group on polynomials using Cchreier orbits
+//! orbits of a group on polynomials using Schreier orbits
 
 class orbits_on_polynomials {
 public:
@@ -781,6 +789,7 @@ public:
 	schreier *Sch;
 	longinteger_object full_go;
 
+	std::string fname_base;
 	std::string fname_csv;
 	std::string fname_report;
 

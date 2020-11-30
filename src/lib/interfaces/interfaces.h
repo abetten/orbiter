@@ -28,6 +28,7 @@ class interface_combinatorics;
 class interface_cryptography;
 class interface_povray;
 class interface_projective;
+class interface_toolkit;
 
 
 // #############################################################################
@@ -490,6 +491,37 @@ public:
 	void make_fname_surface_report_pdf(std::string &fname, int q, int ocn);
 
 };
+
+
+// #############################################################################
+// interface_toolkit.cpp
+// #############################################################################
+
+//! interface to the general toolkit
+
+
+class interface_toolkit {
+
+	int f_csv_file_select_rows;
+	std::string csv_file_select_rows_fname;
+	std::string csv_file_select_rows_text;
+
+	int f_csv_file_join;
+	std::vector<std::string> csv_file_join_fname;
+	std::vector<std::string> csv_file_join_identifier;
+
+
+public:
+
+
+	interface_toolkit();
+	void print_help(int argc, std::string *argv, int i, int verbose_level);
+	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
+	void read_arguments(int argc, std::string *argv, int i0, int verbose_level);
+	void worker(orbiter_session *Session, int verbose_level);
+
+};
+
 
 
 
