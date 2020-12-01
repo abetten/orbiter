@@ -3181,6 +3181,7 @@ void algebra_global_with_action::do_orbits_on_polynomials(
 		linear_group *LG,
 		int degree_of_poly,
 		int f_recognize, std::string &recognize_text,
+		int f_draw_tree, int draw_tree_idx, layered_graph_draw_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3198,6 +3199,24 @@ void algebra_global_with_action::do_orbits_on_polynomials(
 			degree_of_poly,
 			f_recognize, recognize_text,
 			verbose_level);
+
+	if (f_draw_tree) {
+
+		string fname;
+		char str[1000];
+
+
+		sprintf(str, "_orbit_%d_tree", draw_tree_idx);
+
+		fname.assign(O->fname_base);
+		fname.append(str);
+
+		O->Sch->draw_tree(fname,
+				Opt,
+				draw_tree_idx,
+				FALSE /* f_has_point_labels */, NULL /* long int *point_labels*/,
+				verbose_level);
+	}
 
 	O->report(verbose_level);
 

@@ -113,6 +113,7 @@ public:
 			linear_group *LG,
 			int degree_of_poly,
 			int f_recognize, std::string &recognize_text,
+			int f_draw_tree, int draw_tree_idx, layered_graph_draw_options *Opt,
 			int verbose_level);
 	void representation_on_polynomials(
 			linear_group *LG,
@@ -591,6 +592,10 @@ public:
 		int f_recognize_orbits_on_polynomials;
 		std::string recognize_orbits_on_polynomials_text;
 
+		int f_orbits_on_polynomials_draw_tree;
+		int orbits_on_polynomials_draw_tree_idx;
+
+
 		int f_representation_on_polynomials;
 		int representation_on_polynomials_degree;
 
@@ -700,14 +705,6 @@ public:
 	void do_classify_semifields(
 			semifield_classify_description *Semifield_classify_description,
 			poset_classification_control *Control,
-			int verbose_level);
-	void do_orbits_on_polynomials(
-			int degree,
-			int f_recognize_orbits_on_polynomials,
-			std::string &recognize_orbits_on_polynomials_text,
-			int verbose_level);
-	void do_representation_on_polynomials(
-			int degree,
 			int verbose_level);
 	int subspace_orbits_test_set(
 			int len, long int *S, int verbose_level);
