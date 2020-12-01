@@ -117,6 +117,8 @@ orbits_cubic_surfaces_q2:
 		-end \
 		-group_theoretic_activities \
 		-orbits_on_polynomials 3 \
+		-orbits_on_polynomials_draw_tree 6 \
+		-draw_options -yout 500000 -rad 15 -nodes_empty -line_width 0.5 -y_stretch 0.25 -embedded -end \
 		-end 
 	pdflatex poly_orbits_d3_n3_q2.tex
 	open poly_orbits_d3_n3_q2.pdf

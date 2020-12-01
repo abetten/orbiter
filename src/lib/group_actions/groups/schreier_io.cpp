@@ -1573,12 +1573,18 @@ void schreier::subtree_draw_lines(mp_graphics &G,
 		G.polygon2(Px, Py, 0, 1);
 		}
 #endif
+
 	if (l > 1) {
-		char str[1000];
-		// if pt is not the root node:
 		G.polygon2(Px, Py, 0, 1);
-		sprintf(str, "$\\alpha_{%d}$", label[i]);
-		G.aligned_text(Px[2], Py[2], "", str);
+	}
+
+	if (Opt->f_label_edges) {
+		if (l > 1) {
+			char str[1000];
+			// if pt is not the root node:
+			sprintf(str, "$\\alpha_{%d}$", label[i]);
+			G.aligned_text(Px[2], Py[2], "", str);
+		}
 	}
 
 	for (ii = i + 1; ii < last; ii++) {
@@ -1648,13 +1654,13 @@ void schreier::subtree_draw_vertices(mp_graphics &G,
 	else {
 		sprintf(str, "%d", pt);
 	}
-	if (Opt->f_circle) {
-		G.circle_text(x, y, Opt->rad, str);
-	}
-	else {
+	if (Opt->f_nodes_empty) {
 		G.circle_text(x, y, Opt->rad, "");
 		//G.circle(x, y, rad);
 		//G.aligned_text(Px, Py, 1, "tl", str);
+	}
+	else {
+		G.circle_text(x, y, Opt->rad, str);
 	}
 	if (f_v) {
 		cout << "schreier::subtree_draw_vertices done" << endl;
