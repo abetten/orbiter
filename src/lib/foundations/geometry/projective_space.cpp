@@ -1076,26 +1076,30 @@ long int projective_space::nb_rk_k_subspaces_as_lint(int k)
 
 void projective_space::print_set_of_points(ostream &ost, long int *Pts, int nb_pts)
 {
-	int h;
+	int h, I;
 	int *v;
 
 	v = NEW_int(n + 1);
 
-	ost << "$$" << endl;
-	ost << "\\begin{array}{|r|r|r|}" << endl;
-	ost << "\\hline" << endl;
-	ost << "i & \\mbox{Rank} & \\mbox{Point} \\\\" << endl;
-	ost << "\\hline" << endl;
-	ost << "\\hline" << endl;
-	for (h = 0; h < nb_pts; h++) {
-		unrank_point(v, Pts[h]);
-		ost << h << " & " << Pts[h] << " & ";
-		int_vec_print(ost, v, n + 1);
-		ost << "\\\\" << endl;
+	for (I = 0; I < (nb_pts + 39) / 40; I++) {
+		ost << "$$" << endl;
+		ost << "\\begin{array}{|r|r|r|}" << endl;
+		ost << "\\hline" << endl;
+		ost << "i & \\mbox{Rank} & \\mbox{Point} \\\\" << endl;
+		ost << "\\hline" << endl;
+		ost << "\\hline" << endl;
+		for (h = 0; h < 40; h++) {
+			if (I * 40 + h < nb_pts) {
+				unrank_point(v, Pts[I * 40 + h]);
+				ost << I * 40 + h << " & " << Pts[I * 40 + h] << " & ";
+				int_vec_print(ost, v, n + 1);
+				ost << "\\\\" << endl;
+			}
+		}
+		ost << "\\hline" << endl;
+		ost << "\\end{array}" << endl;
+		ost << "$$" << endl;
 	}
-	ost << "\\hline" << endl;
-	ost << "\\end{array}" << endl;
-	ost << "$$" << endl;
 	FREE_int(v);
 }
 
