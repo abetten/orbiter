@@ -249,7 +249,8 @@ FINITE_FIELDS:
 	
 
 F_2:
-	$(ORBITER_PATH)/orbiter.out -v 3 -finite_field_activity -q 2 -cheat_sheet_GF -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F2 -finite_field -q 2 -end -end \
+		-with F2 -do -finite_field_activity -cheat_sheet_GF -end
 	pdflatex GF_2.tex
 	open GF_2.pdf
 
@@ -368,16 +369,25 @@ F_289:
 
 
 LINEAR_ALGEBRA:
-	
-	
+
+
 RREF:
+	$(ORBITER_PATH)/orbiter.out -v 2 -define F2 -finite_field -q 2 -end -end \
+		-with F2 -do -finite_field_activity \
+		-RREF 2 5 "1,1,1,1,0,1,1,0,0,1" -normalize_from_the_right \
+		-end
+
+	
+	
+RREF_old:
 	$(ORBITER_PATH)/orbiter.out -v 2 -finite_field_activity -q 2 \
 		-RREF 2 5 "1,1,1,1,0,1,1,0,0,1" -normalize_from_the_right \
 		-end
 
 nullspace:
-	$(ORBITER_PATH)/orbiter.out -v 2 -finite_field_activity -q 5 \
-		-nullspace 2 2 "1,1,1,1,0,1,1,0,0,1" \
+	$(ORBITER_PATH)/orbiter.out -v 2 -define F2 -finite_field -q 2 -end -end \
+		-with F2 -do -finite_field_activity  \
+		-nullspace 2 5 "1,1,1,1,0,1,1,0,0,1" \
 		-normalize_from_the_right \
 		-end
 
@@ -417,8 +427,15 @@ Char_Sym_6:
 	
 
 
-
 representation_on_polynomials_of_degree_3:
+	$(ORBITER_PATH)/orbiter.out -v 4 -define G -linear_group -PGL 4 3 -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+			-representation_on_polynomials 3 \
+		-end 
+
+
+representation_on_polynomials_of_degree_3_old:
 	$(ORBITER_PATH)/orbiter.out -v 4 \
 		-linear_group -PGL 4 3 \
 		-end \
@@ -1091,6 +1108,7 @@ classes_PGGL_4_4:
 		-group_theoretic_activities \
 		-classes
 
+# group order 1974067200 = 2^13 * 3^4 * 5^2 * 7 * 17
 
 #	pdflatex PGGL_4_4_classes_out.tex
 #	open PGGL_4_4_classes_out.pdf
@@ -1471,10 +1489,12 @@ PGL_4_5_norm_31:
 
 orbits_cubic_surfaces_q2:
 	$(ORBITER_PATH)/orbiter.out -v 4 \
-		-linear_group -PGL 4 2 \
-		-end \
+		-define G -linear_group -PGL 4 2 -end -end \
+		-with G -do \
 		-group_theoretic_activities \
 		-orbits_on_polynomials 3 \
+		-orbits_on_polynomials_draw_tree 6 \
+		-draw_options -yout 500000 -rad 15 -nodes_empty -line_width 0.5 -y_stretch 0.25 -embedded -end \
 		-end 
 	pdflatex poly_orbits_d3_n3_q2.tex
 	open poly_orbits_d3_n3_q2.pdf
@@ -1801,8 +1821,8 @@ EC:
 	$(ORBITER_PATH)/orbiter.out -v 5 -create_combinatorial_object -q 11 \
 		-elliptic_curve 1 3 -end \
 		-save "./"
-		
-		
+
+
 EC_draw:
 	$(ORBITER_PATH)/orbiter.out -v 2 -process_combinatorial_objects -q 11 -n 2  \
 		-draw_points_in_plane EC_11_1_3 \
@@ -6458,8 +6478,8 @@ Dickson_13_ideal:
 
 orbits_cubic_surfaces_q3:
 	$(ORBITER_PATH)/orbiter.out -v 4 \
-		-linear_group -PGL 4 3 \
-		-end \
+		-define G -linear_group -PGL 4 3 -end -end \
+		-with G -do \
 		-group_theoretic_activities \
 		-orbits_on_polynomials 3 \
 		-end 
