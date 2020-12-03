@@ -127,6 +127,29 @@ int &finite_field::nb_calls_to_elliptic_curve_addition()
 	return my_nb_calls_to_elliptic_curve_addition;
 }
 
+void finite_field::init(finite_field_description *Descr, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::init" << endl;
+	}
+	if (!Descr->f_q) {
+		cout << "finite_field::init !Descr->f_q" << endl;
+		exit(1);
+	}
+	if (Descr->f_override_polynomial) {
+		init_override_polynomial(Descr->q,
+				Descr->override_polynomial, verbose_level);
+	}
+	else {
+		finite_field_init(Descr->q, verbose_level);
+	}
+	if (f_v) {
+		cout << "finite_field::init done" << endl;
+	}
+}
+
 void finite_field::finite_field_init(int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

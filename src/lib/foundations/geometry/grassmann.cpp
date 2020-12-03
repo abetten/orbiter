@@ -1166,6 +1166,83 @@ void grassmann::latex_matrix_numerical(ostream &ost, int *p)
 #endif
 }
 
+void grassmann::create_Schlaefli_graph(int *&Adj, int &sz, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "grassmann::create_Schlaefli_graph" << endl;
+	}
+
+	long int i, j, N;
+	int rr;
+	int *M1;
+	int *M2;
+	int *M;
+	int v[2];
+	int w[4];
+	int *List;
+	combinatorics_domain Combi;
+
+
+	M1 = NEW_int(k * n);
+	M2 = NEW_int(k * n);
+	M = NEW_int(2 * k * n);
+
+	N = Combi.generalized_binomial(n, k, q);
+
+	List = NEW_int(N);
+	sz = 0;
+
+	for (i = 0; i < N; i++) {
+		unrank_lint_here(M1, i, 0 /* verbose_level */);
+
+		for (j = 0; j < q + 1; j++) {
+			F->unrank_point_in_PG(v, 2, j);
+			F->mult_vector_from_the_left(v, M1, w, k, n);
+			if (F->evaluate_Fermat_cubic(w)) {
+				break;
+			}
+		}
+		if (j == q + 1) {
+			List[sz++] = i;
+		}
+	}
+	if (f_v) {
+		cout << "create_graph::create_Schlaefli We found " << sz << " lines on the surface" << endl;
+	}
+
+
+	Adj = NEW_int(sz * sz);
+	int_vec_zero(Adj, sz * sz);
+
+	for (i = 0; i < sz; i++) {
+		unrank_lint_here(M1, List[i], 0 /* verbose_level */);
+
+		for (j = i + 1; j < sz; j++) {
+			unrank_lint_here(M2, List[j], 0 /* verbose_level */);
+
+			int_vec_copy(M1, M, k * n);
+			int_vec_copy(M2, M + k * n, k * n);
+
+			rr = F->rank_of_rectangular_matrix(M, 2 * k, n, 0 /* verbose_level */);
+			if (rr == 2 * k) {
+				Adj[i * sz + j] = 1;
+				Adj[j * sz + i] = 1;
+			}
+		}
+	}
+
+
+	FREE_int(List);
+	FREE_int(M1);
+	FREE_int(M2);
+	FREE_int(M);
+	if (f_v) {
+		cout << "grassmann::create_Schlaefli_graph done" << endl;
+	}
+
+}
 
 
 }}

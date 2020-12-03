@@ -2113,6 +2113,61 @@ void sims::dimino(
 		}
 }
 
+void sims::Cayley_graph(int *&Adj, int &sz, vector_ge *gens_S,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "sims::Cayley_graph" << endl;
+	}
+	int *Elt1, *Elt2;
+	long int i, j;
+	int h;
+	int nb_S;
+
+
+	nb_S = gens_S->len;
+	sz = group_order_lint();
+
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Adj = NEW_int(sz * sz);
+
+	int_vec_zero(Adj, sz * sz);
+
+	if (f_v) {
+		cout << "Computing the Cayley graph:" << endl;
+	}
+	for (i = 0; i < sz; i++) {
+		element_unrank_lint(i, Elt1);
+		//cout << "i=" << i << endl;
+		for (h = 0; h < nb_S; h++) {
+			A->element_mult(Elt1, gens_S->ith(h), Elt2, 0);
+#if 0
+			cout << "i=" << i << " h=" << h << endl;
+			cout << "Elt1=" << endl;
+			A->element_print_quick(Elt1, cout);
+			cout << "g_h=" << endl;
+			A->element_print_quick(gens->ith(h), cout);
+			cout << "Elt2=" << endl;
+			A->element_print_quick(Elt2, cout);
+#endif
+			j = element_rank_lint(Elt2);
+			Adj[i * sz + j] = Adj[j * sz + i] = 1;
+			if (i == 0) {
+				if (f_v) {
+					cout << "edge " << i << " " << j << endl;
+				}
+			}
+		}
+	}
+	if (f_v) {
+		cout << "sims::Cayley_graph done" << endl;
+	}
+
+}
+
 
 }}
 

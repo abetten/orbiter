@@ -212,6 +212,32 @@ public:
 };
 
 // #############################################################################
+// finite_field_description.cpp
+// #############################################################################
+
+
+//! description of a finite field
+
+class finite_field_description {
+public:
+
+	int f_q;
+	int q;
+
+	int f_override_polynomial;
+	std::string override_polynomial;
+
+	finite_field_description();
+	~finite_field_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+// #############################################################################
 // finite_field.cpp
 // #############################################################################
 
@@ -264,6 +290,7 @@ public:
 	~finite_field();
 	void print_call_stats(std::ostream &ost);
 	int &nb_calls_to_elliptic_curve_addition();
+	void init(finite_field_description *Descr, int verbose_level);
 	void finite_field_init(int q, int verbose_level);
 	void set_default_symbol_for_print();
 	void init_symbol_for_print(const char *symbol);
@@ -1172,6 +1199,7 @@ public:
 	void isomorphism_to_special_orthogonal(int *A4, int *A6, int verbose_level);
 	void minimal_orbit_rep_under_stabilizer_of_frame_characteristic_two(int x, int y,
 			int &a, int &b, int verbose_level);
+	int evaluate_Fermat_cubic(int *v);
 
 
 

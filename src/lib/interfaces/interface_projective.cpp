@@ -140,7 +140,7 @@ int interface_projective::recognize_keyword(int argc,
 	return false;
 }
 
-void interface_projective::read_arguments(int argc,
+int interface_projective::read_arguments(int argc,
 		std::string *argv, int i0, int verbose_level)
 {
 	int i;
@@ -252,16 +252,15 @@ void interface_projective::read_arguments(int argc,
 			cout << "-create_surface_reports " << create_surface_atlas_q_max << endl;
 		}
 		else {
-			cout << "interface_projective::read_arguments: unrecognized option "
-					<< argv[i] << ", skipping" << endl;
-			//exit(1);
+			break;
 		}
 	}
 	cout << "interface_projective::read_arguments done" << endl;
+	return i;
 }
 
 
-void interface_projective::worker(orbiter_session *Session, int verbose_level)
+void interface_projective::worker(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

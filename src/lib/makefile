@@ -7,6 +7,7 @@ LFLAGS = -lm
 MODULES= \
 		foundations/algebra_and_number_theory/a_domain.o \
 		foundations/algebra_and_number_theory/algebra_global.o \
+		foundations/algebra_and_number_theory/finite_field_description.o \
 		foundations/algebra_and_number_theory/finite_field_io.o \
 		foundations/algebra_and_number_theory/finite_field_linear_algebra.o \
 		foundations/algebra_and_number_theory/finite_field_linear_algebra2.o \
@@ -109,6 +110,8 @@ MODULES= \
 		foundations/globals/magma_interface.o \
 		foundations/globals/numerics.o \
 		foundations/globals/orbiter_session.o \
+		foundations/globals/orbiter_symbol_table_entry.o \
+		foundations/globals/orbiter_symbol_table.o \
 		foundations/globals/polynomial_double_domain.o \
 		foundations/globals/polynomial_double.o \
 		foundations/graph_theory/clique_finder.o \
@@ -425,7 +428,9 @@ MODULES= \
 		interfaces/interface_cryptography.o \
 		interfaces/interface_povray.o \
 		interfaces/interface_projective.o \
-		interfaces/interface_toolkit.o
+		interfaces/interface_symbol_table.o \
+		interfaces/interface_toolkit.o \
+		interfaces/orbiter_top_level_session.o
 
 
 all:

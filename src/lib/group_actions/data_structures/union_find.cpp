@@ -22,7 +22,7 @@ union_find::union_find()
 union_find::~union_find()
 {
 	freeself();
-};
+}
 
 void union_find::freeself()
 {

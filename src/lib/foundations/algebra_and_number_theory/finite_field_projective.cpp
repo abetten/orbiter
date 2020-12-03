@@ -6584,6 +6584,19 @@ void finite_field::minimal_orbit_rep_under_stabilizer_of_frame_characteristic_tw
 	}
 }
 
+int finite_field::evaluate_Fermat_cubic(int *v)
+// used to create the Schlaefli graph
+{
+	int a, i;
+
+	a = 0;
+	for (i = 0; i < 4; i++) {
+		a = add(a, power(v[i], 3));
+	}
+	return a;
+}
+
+
 
 }}
 

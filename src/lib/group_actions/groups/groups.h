@@ -1446,6 +1446,8 @@ public:
 		int new_gen,
 		int *group, int &group_sz,
 		int verbose_level);
+	void Cayley_graph(int *&Adj, int &sz, vector_ge *gens_S,
+		int verbose_level);
 
 
 	// sims_io.cpp:

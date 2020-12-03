@@ -12,7 +12,9 @@ MODULES = \
 	interface_cryptography.o \
 	interface_povray.o \
 	interface_projective.o \
-	interface_toolkit.o
+	interface_symbol_table.o \
+	interface_toolkit.o \
+	orbiter_top_level_session.o
 
 
 all : $(MODULES)

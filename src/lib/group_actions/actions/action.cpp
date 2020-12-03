@@ -2193,6 +2193,15 @@ void action::group_order(longinteger_object &go)
 	}
 }
 
+long int action::group_order_lint()
+{
+	longinteger_object go;
+
+	group_order(go);
+	return go.as_lint();
+}
+
+
 
 
 void action::element_print_base_images(int *Elt)

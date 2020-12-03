@@ -44,22 +44,22 @@ void W3q::freeself()
 {
 	if (P3) {
 		FREE_OBJECT(P3);
-		}
+	}
 	if (Q4) {
 		FREE_OBJECT(Q4);
-		}
+	}
 	if (Basis) {
 		FREE_int(Basis);
-		}
+	}
 	if (Lines) {
 		FREE_int(Lines);
-		}
+	}
 	if (Q4_rk) {
 		FREE_int(Q4_rk);
-		}
+	}
 	if (Line_idx) {
 		FREE_int(Line_idx);
-		}
+	}
 	null();
 }
 
@@ -75,7 +75,7 @@ void W3q::init(finite_field *F, int verbose_level)
 
 	if (f_v) {
 		cout << "W3q::init" << endl;
-		}
+	}
 	P3 = NEW_OBJECT(projective_space);
 	Q4 = NEW_OBJECT(orthogonal);
 	Basis = NEW_int(2 * 4);
@@ -89,11 +89,11 @@ void W3q::init(finite_field *F, int verbose_level)
 
 	if (f_v) {
 		cout << "W3q::init before find_lines" << endl;
-		}
+	}
 	find_lines(verbose_level);
 	if (f_v) {
 		cout << "W3q::init after find_lines" << endl;
-		}
+	}
 
 
 	if (f_v) {
@@ -109,7 +109,7 @@ void W3q::init(finite_field *F, int verbose_level)
 	if (nb_lines != Q4->nb_points) {
 		cout << "W3q::init nb_lines != Q4->nb_points" << endl;
 		exit(1);
-		}
+	}
 	Q4_rk = NEW_int(nb_lines);
 	Line_idx = NEW_int(nb_lines);
 
@@ -121,7 +121,7 @@ void W3q::init(finite_field *F, int verbose_level)
 			print_integer_matrix_width(cout,
 					Basis, 2, 4, 4, F->log10_of_q);
 			cout << endl;
-			}
+		}
 
 		isomorphism_Q4q(Basis, Basis + 4, v5);
 
@@ -129,17 +129,17 @@ void W3q::init(finite_field *F, int verbose_level)
 			cout << "v5=";
 			int_vec_print(cout, v5, 5);
 			cout << endl;
-			}
+		}
 		
 		rk = Q4->rank_point(v5, 1, 0);
 
 		if (f_vvv) {
 			cout << "orthogonal point rank " << rk << endl;
-			}
+		}
 		
 		Q4_rk[h] = rk;
 		Line_idx[rk] = h;
-		}
+	}
 	
 
 }
@@ -160,9 +160,9 @@ void W3q::find_lines(int verbose_level)
 		//c = F->evaluate_symmetric_form(2, Basis, Basis + 4);
 		if (c) {
 			continue;
-			}
-		Lines[nb_lines++] = h;
 		}
+		Lines[nb_lines++] = h;
+	}
 	cout << "We found " << nb_lines << " absolute lines" << endl;
 	if (f_v) {
 		cout << "W3q::find_lines done" << endl;
@@ -225,7 +225,7 @@ void W3q::print_by_lines()
 		cout << " : ";
 		int_vec_print(cout, v5, 5);
 		cout << endl;
-		}
+	}
 }
 
 void W3q::print_by_points()
@@ -247,7 +247,7 @@ void W3q::print_by_points()
 		cout << " : ";
 		int_vec_print(cout, v5, 5);
 		cout << endl;
-		}
+	}
 }
 
 int W3q::find_line(int line)

@@ -58,12 +58,17 @@ orbiter_session::orbiter_session()
 	fork_from = 0;
 	fork_to = 0;
 	fork_step = 0;
+
+	Orbiter_symbol_table = NULL;
 }
 
 
 orbiter_session::~orbiter_session()
 {
 	The_Orbiter_session = NULL;
+	if (Orbiter_symbol_table) {
+		FREE_OBJECT(Orbiter_symbol_table);
+	}
 }
 
 
@@ -136,6 +141,8 @@ int orbiter_session::read_arguments(int argc,
 	os_interface Os;
 
 	t0 = Os.os_ticks();
+
+	Orbiter_symbol_table = NEW_OBJECT(orbiter_symbol_table);
 
 	for (i = i0; i < argc; i++) {
 		if (stringcmp(argv[i], "-v") == 0) {

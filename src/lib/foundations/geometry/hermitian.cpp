@@ -39,28 +39,28 @@ hermitian::~hermitian()
 {
 	if (cnt_N) {
 		FREE_int(cnt_N);
-		}
+	}
 	if (cnt_N1) {
 		FREE_int(cnt_N1);
-		}
+	}
 	if (cnt_S) {
 		FREE_int(cnt_S);
-		}
+	}
 	if (cnt_Sbar) {
 		FREE_int(cnt_Sbar);
-		}
+	}
 	if (norm_one_elements) {
 		FREE_int(norm_one_elements);
-		}
+	}
 	if (index_of_norm_one_element) {
 		FREE_int(index_of_norm_one_element);
-		}
+	}
 	if (log_beta) {
 		FREE_int(log_beta);
-		}
+	}
 	if (beta_power) {
 		FREE_int(beta_power);
-		}
+	}
 	null();
 }
 

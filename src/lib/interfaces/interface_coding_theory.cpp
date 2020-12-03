@@ -137,7 +137,7 @@ int interface_coding_theory::recognize_keyword(int argc,
 	return false;
 }
 
-void interface_coding_theory::read_arguments(int argc,
+int interface_coding_theory::read_arguments(int argc,
 		std::string *argv, int i0, int verbose_level)
 {
 	int i;
@@ -262,7 +262,11 @@ void interface_coding_theory::read_arguments(int argc,
 				cout << " " << long_code_generators[i] << endl;
 			}
 		}
+		else {
+			break;
+		}
 	}
+	return i;
 }
 
 

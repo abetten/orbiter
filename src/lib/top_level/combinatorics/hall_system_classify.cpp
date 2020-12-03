@@ -152,7 +152,7 @@ void hall_system_classify::init(
 
 	if (f_v) {
 		cout << "hall_system_classify::init before computing triples" << endl;
-		}
+	}
 	for (i = 0; i < N; i++) {
 		if (f_v) {
 			cout << "triple " << i << " / " << N << ":" << endl;
@@ -203,7 +203,7 @@ void hall_system_classify::init(
 	if (f_v) {
 		cout << "hall_system_classify::init "
 				"creating Strong_gens_normalizer" << endl;
-		}
+	}
 
 	Strong_gens_normalizer = NEW_OBJECT(strong_generators);
 	Strong_gens_normalizer->init(A);
@@ -213,49 +213,49 @@ void hall_system_classify::init(
 	if (f_v) {
 		cout << "hall_system_classify::init "
 				"before Strong_gens->create_sims" << endl;
-		}
+	}
 	S = Strong_gens_normalizer->create_sims(verbose_level - 1);
 	if (f_v) {
 		cout << "hall_system_classify::init "
 				"after Strong_gens->create_sims" << endl;
-		}
+	}
 
 	A_on_triples = NEW_OBJECT(action);
 	if (f_v) {
 		cout << "hall_system_classify::init "
 				"before A_on_triples->induced_action_on_sets" << endl;
-		}
+	}
 	A_on_triples->induced_action_on_sets(*A, S /*sims *old_G*/,
 			N /* nb_sets*/, 3 /* set_size */, triples,
 			FALSE /* f_induce_action*/, verbose_level - 1);
 	if (f_v) {
 		cout << "hall_system_classify::init "
 				"after A2->induced_action_on_sets" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "hall_system_classify::init "
 				"before orbits_on_triples" << endl;
-		}
+	}
 	orbits_on_triples(verbose_level);
 	if (f_v) {
 		cout << "hall_system_classify::init "
 				"after orbits_on_triples" << endl;
-		}
+	}
 
 
 	Poset = NEW_OBJECT(poset);
 	if (f_v) {
 		cout << "hall_system_classify::init "
 				"before Poset->init_subset_lattice" << endl;
-		}
+	}
 	Poset->init_subset_lattice(A, A_on_orbits,
 			Strong_gens_normalizer,
 			verbose_level);
 	if (f_v) {
 		cout << "hall_system_classify::init "
 				"after Poset->init_subset_lattice" << endl;
-		}
+	}
 	Poset->add_testing_without_group(
 			hall_system_early_test_function,
 				this /* void *data */,
@@ -271,11 +271,11 @@ void hall_system_classify::init(
 	//PC->read_arguments(argc, argv, 0);
 	if (f_v) {
 		cout << "hall_system_classify::init before PC->initialize_and_allocate_root_node" << endl;
-		}
+	}
 	PC->initialize_and_allocate_root_node(Control, Poset, depth, verbose_level - 3);
 	if (f_v) {
 		cout << "hall_system_classify::init after PC->initialize_and_allocate_root_node" << endl;
-		}
+	}
 
 
 	int depth_completed;
@@ -290,7 +290,7 @@ void hall_system_classify::init(
 	if (f_v) {
 		cout << "hall_system_classify::init_generator "
 				"before PC->main" << endl;
-		}
+	}
 	depth_completed = PC->main(t0, schreier_depth,
 		f_use_invariant_subset_if_available,
 		f_debug,
@@ -298,13 +298,13 @@ void hall_system_classify::init(
 	if (f_v) {
 		cout << "hall_system_classify::init_generator "
 				"after PC->main" << endl;
-		}
+	}
 	cout << "hall_system_classify returns "
 			"depth_completed=" << depth_completed << endl;
 
 	if (f_v) {
 		cout << "hall_system_classify::init done" << endl;
-		}
+	}
 }
 
 void hall_system_classify::orbits_on_triples(int verbose_level)
@@ -314,7 +314,7 @@ void hall_system_classify::orbits_on_triples(int verbose_level)
 
 	if (f_v) {
 		cout << "hall_system_classify::orbits_on_triples" << endl;
-		}
+	}
 
 	fname_orbits_on_triples.assign(prefix);
 	fname_orbits_on_triples.append("_orbits_on_triples.bin");
@@ -326,7 +326,7 @@ void hall_system_classify::orbits_on_triples(int verbose_level)
 			cout << "hall_system_classify::orbits_on_triples "
 					"reading orbits from file "
 					<< fname_orbits_on_triples << endl;
-			}
+		}
 
 		Orbits_on_triples = NEW_OBJECT(schreier);
 
@@ -335,21 +335,21 @@ void hall_system_classify::orbits_on_triples(int verbose_level)
 		Orbits_on_triples->init_generators(
 				*Strong_gens_Hall_reflection->gens, verbose_level - 2);
 		{
-		ifstream fp(fname_orbits_on_triples);
-		Orbits_on_triples->read_from_file_binary(fp, verbose_level);
+			ifstream fp(fname_orbits_on_triples);
+			Orbits_on_triples->read_from_file_binary(fp, verbose_level);
 		}
 		if (f_v) {
 			cout << "hall_system_classify::orbits_on_triples "
 					"read orbits from file "
 					<< fname_orbits_on_triples << endl;
-			}
 		}
+	}
 	else {
 
 		if (f_v) {
 			cout << "hall_system_classify::orbits_on_triples "
 					"computing orbits of the selected group" << endl;
-			}
+		}
 
 		Orbits_on_triples =
 				Strong_gens_Hall_reflection->orbits_on_points_schreier(
@@ -360,16 +360,16 @@ void hall_system_classify::orbits_on_triples(int verbose_level)
 					"computing orbits done" << endl;
 			cout << "We found " << Orbits_on_triples->nb_orbits
 					<< " orbits of the selected group on lines" << endl;
-			}
+		}
 
 
 		{
-		ofstream fp(fname_orbits_on_triples);
-		Orbits_on_triples->write_to_file_binary(fp, verbose_level);
+			ofstream fp(fname_orbits_on_triples);
+			Orbits_on_triples->write_to_file_binary(fp, verbose_level);
 		}
 		cout << "Written file " << fname_orbits_on_triples << " of size "
 				<< Fio.file_size(fname_orbits_on_triples) << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "Orbits_on_triples:" << endl;
@@ -383,13 +383,13 @@ void hall_system_classify::orbits_on_triples(int verbose_level)
 		cout << "hall_system_classify::orbits_on_triples "
 				"created action on orbits of degree "
 				<< A_on_orbits->degree << endl;
-		}
+	}
 
 
 
 	if (f_v) {
 		cout << "hall_system_classify::orbits_on_triples done" << endl;
-		}
+	}
 }
 
 
@@ -402,7 +402,7 @@ void hall_system_classify::print(ostream &ost, long int *S, int len)
 
 	for (i = 0; i < len; i++) {
 		ost << S[i] << " ";
-		}
+	}
 	ost << endl;
 	for (i = 0; i < len; i++) {
 
@@ -489,7 +489,7 @@ void hall_system_classify::early_test_func(long int *S, int len,
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
 		lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
-		}
+	}
 
 
 	int_vec_zero(row_sum, nm1);
@@ -523,7 +523,7 @@ void hall_system_classify::early_test_func(long int *S, int len,
 		cout << "pair_covering: " << endl;
 		int_vec_print(cout, pair_covering, nb_pairs2);
 		cout << endl;
-		}
+	}
 
 
 	nb_good_candidates = 0;
@@ -568,6 +568,7 @@ void hall_system_classify::early_test_func(long int *S, int len,
 				break;
 			}
 		} // next h
+
 		if (f_OK) {
 			for (h = 0; h < l; h++ ) {
 				t = Orbits_on_triples->orbit[f + h];
@@ -634,14 +635,14 @@ void hall_system_early_test_function(long int *S, int len,
 		cout << "hall_system_early_test_function for set ";
 		print_set(cout, len, S);
 		cout << endl;
-		}
+	}
 	H->early_test_func(S, len,
 		candidates, nb_candidates,
 		good_candidates, nb_good_candidates,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "hall_system_early_test_function done" << endl;
-		}
+	}
 }
 
 
