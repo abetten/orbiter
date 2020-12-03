@@ -98,13 +98,17 @@ PGL_4_2:
 
 
 PG_3_2_subsets:
-	$(ORBITER_PATH)/orbiter.out -v 10 -linear_group -PGL 4 2 -end  \
-			-group_theoretic_activities \
-			-poset_classification_control -problem_label PGL_4_2 -depth 15 -draw_poset -draw_options -rad 200 -embedded -end -end \
+	$(ORBITER_PATH)/orbiter.out -v 4 -define G -linear_group -PGL 4 2 -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+			-poset_classification_control -problem_label PGL_4_2 -depth 15 -draw_poset \
+				-draw_options -rad 200 -embedded -end \
+			-end \
 			-orbits_on_subsets 15 \
 			-draw_poset \
 			-draw_options -end \
-			-report
+			-report \
+		-end
 	pdflatex PGL_4_2_poset_lvl_15.tex
 	open PGL_4_2_poset_lvl_15.pdf
 	#pdflatex PGL_4_2_poset_detailed_lvl_15.tex
@@ -113,8 +117,8 @@ PG_3_2_subsets:
 
 orbits_cubic_surfaces_q2:
 	$(ORBITER_PATH)/orbiter.out -v 4 \
-		-linear_group -PGL 4 2 \
-		-end \
+		-define G -linear_group -PGL 4 2 -end -end \
+		-with G -do \
 		-group_theoretic_activities \
 		-orbits_on_polynomials 3 \
 		-orbits_on_polynomials_draw_tree 6 \
