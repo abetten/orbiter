@@ -429,6 +429,19 @@ public:
 	void krawtchouk(longinteger_object &a, int n, int q, int k, int x);
 	void do_tdo_refinement(tdo_refinement_description *Descr, int verbose_level);
 	void do_tdo_print(std::string &fname, int verbose_level);
+	void make_Johnson_graph(int *&Adj, int &N,
+			int n, int k, int s, int verbose_level);
+	void make_Paley_graph(int *&Adj, int &N,
+			int q, int verbose_level);
+	void make_Schlaefli_graph(int *&Adj, int &N,
+			int q, int verbose_level);
+	void make_Winnie_Li_graph(int *&Adj, int &N,
+			int q, int index, int verbose_level);
+	void make_Grassmann_graph(int *&Adj, int &N,
+			int n, int k, int q, int r, int verbose_level);
+	void make_orthogonal_collinearity_graph(int *&Adj, int &N,
+			int epsilon, int d, int q, int verbose_level);
+
 };
 
 // combinatorics.cpp:

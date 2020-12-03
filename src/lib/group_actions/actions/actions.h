@@ -324,6 +324,7 @@ public:
 			vector_ge *gens, strong_generators *&Strong_gens_out,
 			int verbose_level);
 	void group_order(longinteger_object &go);
+	long int group_order_lint();
 	void element_print_base_images(int *Elt);
 	void element_print_base_images(int *Elt, std::ostream &ost);
 	void element_print_base_images_verbose(int *Elt, 

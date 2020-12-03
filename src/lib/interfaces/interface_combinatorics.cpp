@@ -287,7 +287,7 @@ int interface_combinatorics::recognize_keyword(int argc,
 	return false;
 }
 
-void interface_combinatorics::read_arguments(int argc,
+int interface_combinatorics::read_arguments(int argc,
 		std::string *argv, int i0, int verbose_level)
 {
 	int i;
@@ -572,8 +572,12 @@ void interface_combinatorics::read_arguments(int argc,
 			cout << "-read_solutions_and_tally " << read_solutions_and_tally_fname
 					<< " " << read_solutions_and_tally_sz << endl;
 		}
+		else {
+			break;
+		}
 	}
 	cout << "interface_combinatorics::read_arguments done" << endl;
+	return i;
 }
 
 

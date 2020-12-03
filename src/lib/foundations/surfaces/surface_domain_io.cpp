@@ -602,7 +602,7 @@ void surface_domain::make_table_of_surfaces2(ostream &ost,
 			}
 		tally C;
 
-		C.finite_field_init(Ago, nb_reps, FALSE, 0);
+		C.init(Ago, nb_reps, FALSE, 0);
 		f << q << ", ";
 		C.print_naked_tex(f, TRUE /* f_backwards*/);
 		f << endl;

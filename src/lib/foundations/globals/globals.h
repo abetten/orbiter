@@ -373,6 +373,9 @@ public:
 	int fork_to;
 	int fork_step;
 
+	orbiter_symbol_table *Orbiter_symbol_table;
+
+
 
 	orbiter_session();
 	~orbiter_session();
@@ -384,6 +387,80 @@ public:
 			std::string *argv, int i0);
 	void fork(int argc, std::string *argv, int verbose_level);
 };
+
+
+// #############################################################################
+// orbiter_symbol_table_entry.cpp
+// #############################################################################
+
+
+enum symbol_table_entry_type {
+	t_nothing,
+	t_intvec,
+	t_object,
+	t_string,
+};
+
+enum symbol_table_object_type {
+	t_nothing_object,
+	t_finite_field,
+	t_linear_group,
+	t_action,
+	t_poset,
+	t_poset_classification,
+};
+
+
+
+//! symbol table to store data entries for the orbiter run-time system
+
+
+class orbiter_symbol_table_entry {
+public:
+	std::string label;
+	enum symbol_table_entry_type type;
+	enum symbol_table_object_type object_type ;
+	int *vec;
+	int vec_len;
+	std::string str;
+	void *ptr;
+
+	orbiter_symbol_table_entry();
+	~orbiter_symbol_table_entry();
+	void freeself();
+	void init(std::string &str_label);
+	void init_finite_field(std::string &label,
+			finite_field *F, int verbose_level);
+	void init_linear_group(std::string &label,
+			void *p, int verbose_level);
+	void print();
+};
+
+
+// #############################################################################
+// orbiter_symbol_table.cpp
+// #############################################################################
+
+
+
+
+//! symbol table to store data entries for the orbiter run-time system
+
+
+class orbiter_symbol_table {
+public:
+	std::vector<orbiter_symbol_table_entry> Table;
+
+	orbiter_symbol_table();
+	~orbiter_symbol_table();
+	int find_symbol(std::string &str);
+	void add_symbol_table_entry(std::string &str,
+			orbiter_symbol_table_entry *Symb, int verbose_level);
+	void print_symbol_table();
+	void *get_object(int idx);
+
+};
+
 
 
 

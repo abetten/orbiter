@@ -240,7 +240,7 @@ void create_factor_group(action *A, sims *S, long int goi,
 // #############################################################################
 
 
-//! description of a finite field actvity
+//! description of a finite field activity
 
 class finite_field_activity_description {
 public:

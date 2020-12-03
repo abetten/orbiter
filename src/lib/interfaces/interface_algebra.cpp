@@ -141,7 +141,7 @@ int interface_algebra::recognize_keyword(int argc,
 	return false;
 }
 
-void interface_algebra::read_arguments(int argc,
+int interface_algebra::read_arguments(int argc,
 		std::string *argv, int i0, int verbose_level)
 {
 	int i;
@@ -251,11 +251,15 @@ void interface_algebra::read_arguments(int argc,
 			f_young_symmetrizer_sym_4 = TRUE;
 			cout << "-young_symmetrizer_sym_4 " << endl;
 		}
+		else {
+			break;
+		}
 	}
+	return i;
 }
 
 
-void interface_algebra::worker(orbiter_session *Session, int verbose_level)
+void interface_algebra::worker(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

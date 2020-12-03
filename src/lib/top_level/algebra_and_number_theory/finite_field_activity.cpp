@@ -356,7 +356,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->rank_point_in_PG_given_as_pairs_text,
 				verbose_level);
 	}
-#if 0
 	else if (Descr->f_eigenstuff) {
 
 		algebra_global_with_action Algebra;
@@ -377,7 +376,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->eigenstuff_fname,
 				verbose_level);
 	}
-#endif
 
 	if (f_v) {
 		cout << "finite_field_activity::perform_activity done" << endl;

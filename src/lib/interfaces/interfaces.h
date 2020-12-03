@@ -29,6 +29,7 @@ class interface_cryptography;
 class interface_povray;
 class interface_projective;
 class interface_toolkit;
+class orbiter_top_level_session;
 
 
 // #############################################################################
@@ -78,8 +79,8 @@ public:
 	interface_algebra();
 	void print_help(int argc, std::string *argv, int i, int verbose_level);
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
-	void read_arguments(int argc, std::string *argv, int i0, int verbose_level);
-	void worker(orbiter_session *Session, int verbose_level);
+	int read_arguments(int argc, std::string *argv, int i0, int verbose_level);
+	void worker(int verbose_level);
 	void do_linear_group(
 			linear_group_description *Descr, int verbose_level);
 	void perform_group_theoretic_activity(finite_field *F, linear_group *LG,
@@ -137,7 +138,7 @@ public:
 	interface_coding_theory();
 	void print_help(int argc, std::string *argv, int i, int verbose_level);
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
-	void read_arguments(int argc, std::string *argv, int i0, int verbose_level);
+	int read_arguments(int argc, std::string *argv, int i0, int verbose_level);
 	void worker(int verbose_level);
 };
 
@@ -242,7 +243,7 @@ public:
 	interface_combinatorics();
 	void print_help(int argc, std::string *argv, int i, int verbose_level);
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
-	void read_arguments(int argc, std::string *argv, int i0, int verbose_level);
+	int read_arguments(int argc, std::string *argv, int i0, int verbose_level);
 	void worker(int verbose_level);
 	void do_graph_theoretic_activity(
 			graph_theoretic_activity_description *Descr, int verbose_level);
@@ -368,7 +369,7 @@ public:
 	interface_cryptography();
 	void print_help(int argc, std::string *argv, int i, int verbose_level);
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
-	void read_arguments(int argc, std::string *argv, int i0, int verbose_level);
+	int read_arguments(int argc, std::string *argv, int i0, int verbose_level);
 	void worker(int verbose_level);
 
 
@@ -405,7 +406,7 @@ public:
 	interface_povray();
 	void print_help(int argc, std::string *argv, int i, int verbose_level);
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
-	void read_arguments(int argc, std::string *argv, int i0, int verbose_level);
+	int read_arguments(int argc, std::string *argv, int i0, int verbose_level);
 	void worker(int verbose_level);
 };
 
@@ -469,8 +470,8 @@ public:
 	interface_projective();
 	void print_help(int argc, std::string *argv, int i, int verbose_level);
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
-	void read_arguments(int argc, std::string *argv, int i0, int verbose_level);
-	void worker(orbiter_session *Session, int verbose_level);
+	int read_arguments(int argc, std::string *argv, int i0, int verbose_level);
+	void worker(int verbose_level);
 	void do_cheat_sheet_PG(orbiter_session *Session,
 			int n, int q,
 			int f_decomposition_by_element, int decomposition_by_element_power,
@@ -491,6 +492,48 @@ public:
 	void make_fname_surface_report_pdf(std::string &fname, int q, int ocn);
 
 };
+
+// #############################################################################
+// interface_symbol_table.cpp
+// #############################################################################
+
+//! interface to the orbiter symbol table
+
+
+class interface_symbol_table {
+
+	int f_define;
+	std::string define_label;
+
+	int f_finite_field;
+	finite_field_description *Finite_field_description;
+
+	int f_linear_group;
+	linear_group_description *Linear_group_description;
+
+
+	int f_print_symbols;
+	int f_with;
+	std::vector<std::string> with_labels;
+
+	int f_finite_field_activity;
+	finite_field_activity_description *Finite_field_activity_description;
+
+	int f_group_theoretic_activity;
+	group_theoretic_activity_description *Group_theoretic_activity_description;
+
+
+public:
+
+
+	interface_symbol_table();
+	void print_help(int argc, std::string *argv, int i, int verbose_level);
+	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
+	int read_arguments(int argc, std::string *argv, int i0, int verbose_level);
+	void worker(orbiter_top_level_session *Orbiter_top_level_session, int verbose_level);
+
+};
+
 
 
 // #############################################################################
@@ -517,10 +560,40 @@ public:
 	interface_toolkit();
 	void print_help(int argc, std::string *argv, int i, int verbose_level);
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
-	void read_arguments(int argc, std::string *argv, int i0, int verbose_level);
-	void worker(orbiter_session *Session, int verbose_level);
+	int read_arguments(int argc, std::string *argv, int i0, int verbose_level);
+	void worker(int verbose_level);
 
 };
+
+
+// #############################################################################
+// orbiter_top_level_session.cpp
+// #############################################################################
+
+
+extern orbiter_top_level_session *The_Orbiter_top_level_session; // global top level Orbiter session
+
+//! The top level orbiter session is reponsible for the command line interface and the program execution and for the orbiter_session
+
+
+class orbiter_top_level_session {
+
+public:
+
+
+	orbiter_session *Orbiter_session;
+
+	orbiter_top_level_session();
+	~orbiter_top_level_session();
+	int startup_and_read_arguments(int argc,
+			std::string *argv, int i0);
+	void handle_everything(int argc, std::string *Argv, int i, int verbose_level);
+	void parse_and_execute(int argc, std::string *Argv, int i, int verbose_level);
+
+};
+
+
+
 
 
 

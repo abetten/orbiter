@@ -17,8 +17,6 @@ namespace orbiter {
 namespace top_level {
 
 
-static int evaluate_cubic_form(finite_field *F, int *v);
-
 create_graph::create_graph()
 {
 	description = NULL;
@@ -116,123 +114,99 @@ void create_graph::init(
 		label_tex.assign(str);
 		}
 	else if (description->f_Johnson) {
+
 		if (f_v) {
 			cout << "create_graph::init before create_Johnson" << endl;
 		}
 		create_Johnson(N, Adj, description->Johnson_n,
 				description->Johnson_k, description->Johnson_s,
 				verbose_level);
-		char str[1000];
-		sprintf(str, "Johnson_n%d_k%d_s%d", description->Johnson_n,
-				description->Johnson_k, description->Johnson_s);
-		label.assign(str);
-		sprintf(str, "Johnson\\_n%d\\_k%d\\_s%d", description->Johnson_n,
-				description->Johnson_k, description->Johnson_s);
-		label_tex.assign(str);
+
+
 		if (f_v) {
 			cout << "create_graph::init after create_Johnson" << endl;
 		}
 	}
 	else if (description->f_Paley) {
+
 		if (f_v) {
 			cout << "create_graph::init before create_Paley" << endl;
 		}
 		create_Paley(N, Adj, description->Paley_q,
 				verbose_level);
-		char str[1000];
-		sprintf(str, "Paley_q%d", description->Paley_q);
-		label.assign(str);
-		sprintf(str, "Paley\\_q%d", description->Paley_q);
-		label_tex.assign(str);
+
+
 		if (f_v) {
 			cout << "create_graph::init after create_Paley" << endl;
 		}
 	}
 	else if (description->f_Sarnak) {
+
 		if (f_v) {
 			cout << "create_graph::init before create_Sarnak" << endl;
 		}
 		create_Sarnak(N, Adj, description->Sarnak_p, description->Sarnak_q,
 				verbose_level);
-		char str[1000];
-		sprintf(str, "Sarnak_p%d_q%d", description->Sarnak_p, description->Sarnak_q);
-		label.assign(str);
-		sprintf(str, "Sarnak\\_p%d\\_q%d", description->Sarnak_p, description->Sarnak_q);
-		label_tex.assign(str);
+
+
 		if (f_v) {
 			cout << "create_graph::init after create_Sarnak" << endl;
 		}
 	}
 	else if (description->f_Schlaefli) {
+
 		if (f_v) {
 			cout << "create_graph::init before create_Schlaefli" << endl;
 		}
 		create_Schlaefli(N, Adj, description->Schlaefli_q,
 				verbose_level);
-		label.assign("Schlaefli");
-		label_tex.assign("Schlaefli");
 		if (f_v) {
 			cout << "create_graph::init after create_Schlaefli" << endl;
 		}
 	}
 	else if (description->f_Shrikhande) {
+
 		if (f_v) {
 			cout << "create_graph::init before create_Shrikhande" << endl;
 		}
 		create_Shrikhande(N, Adj, verbose_level);
-		label.assign("Shrikhande");
-		label_tex.assign("Shrikhande");
+
 		if (f_v) {
 			cout << "create_graph::init after create_Shrikhande" << endl;
 		}
 	}
 	else if (description->f_Winnie_Li) {
+
 		if (f_v) {
 			cout << "create_graph::init before create_Winnie_Li" << endl;
 		}
 		create_Winnie_Li(N, Adj, description->Winnie_Li_q, description->Winnie_Li_index, verbose_level);
-		char str[1000];
-		sprintf(str, "Winnie_Li_q%d_index%d", description->Winnie_Li_q, description->Winnie_Li_index);
-		label.assign(str);
-		sprintf(str, "Winnie\\_Li\\_q%d\\_index%d", description->Winnie_Li_q, description->Winnie_Li_index);
-		label_tex.assign(str);
+
 		if (f_v) {
 			cout << "create_graph::init after create_Winnie_Li" << endl;
 		}
 	}
 	else if (description->f_Grassmann) {
+
 		if (f_v) {
 			cout << "create_graph::init before create_Grassmann" << endl;
 		}
 		create_Grassmann(N, Adj, description->Grassmann_n, description->Grassmann_k,
 				description->Grassmann_q, description->Grassmann_r, verbose_level);
-		char str[1000];
-		sprintf(str, "Grassmann_n%d_k%d_q%d_r%d", description->Grassmann_n, description->Grassmann_k,
-				description->Grassmann_q, description->Grassmann_r);
-		label.assign(str);
-		sprintf(str, "Grassmann\\_n%d\\_k%d\\_q%d\\_r%d", description->Grassmann_n, description->Grassmann_k,
-				description->Grassmann_q, description->Grassmann_r);
-		label_tex.assign(str);
+
 		if (f_v) {
 			cout << "create_graph::init after create_Grassmann" << endl;
 		}
 	}
 	else if (description->f_coll_orthogonal) {
+
 		if (f_v) {
 			cout << "create_graph::init before create_coll_orthogonal" << endl;
 		}
 		create_coll_orthogonal(N, Adj, description->coll_orthogonal_epsilon,
 				description->coll_orthogonal_d,
 				description->coll_orthogonal_q, verbose_level);
-		char str[1000];
-		sprintf(str, "Orthogonal_e%d_d%d_q%d", description->coll_orthogonal_epsilon,
-				description->coll_orthogonal_d,
-				description->coll_orthogonal_q);
-		label.assign(str);
-		sprintf(str, "Orthogonal\\_e%d\\_d%d\\_q%d", description->coll_orthogonal_epsilon,
-				description->coll_orthogonal_d,
-				description->coll_orthogonal_q);
-		label_tex.assign(str);
+
 		if (f_v) {
 			cout << "create_graph::init after create_coll_orthogonal" << endl;
 		}
@@ -273,34 +247,15 @@ void create_graph::create_Johnson(int &N, int *&Adj,
 	}
 
 	combinatorics_domain Combi;
-	sorting Sorting;
-	int *set1;
-	int *set2;
-	int *set3;
-	int i, j, sz;
-
-	N = Combi.int_n_choose_k(n, k);
 
 
-	Adj = NEW_int(N * N);
-	int_vec_zero(Adj, N * N);
-
-	set1 = NEW_int(k);
-	set2 = NEW_int(k);
-	set3 = NEW_int(k);
-
-	for (i = 0; i < N; i++) {
-		Combi.unrank_k_subset(i, set1, n, k);
-		for (j = i + 1; j < N; j++) {
-			Combi.unrank_k_subset(j, set2, n, k);
-
-			Sorting.int_vec_intersect_sorted_vectors(set1, k, set2, k, set3, sz);
-			if (sz == s) {
-				Adj[i * N + j] = 1;
-				Adj[j * N + i] = 1;
-				}
-			}
-		}
+	if (f_v) {
+		cout << "create_graph::create_Johnson before Combi.make_Johnson_graph" << endl;
+	}
+	Combi.make_Johnson_graph(Adj, N, n, k, s, verbose_level);
+	if (f_v) {
+		cout << "create_graph::create_Johnson after Combi.make_Johnson_graph" << endl;
+	}
 
 	char str[1000];
 	sprintf(str, "Johnson_%d_%d_%d", n, k, s);
@@ -308,9 +263,6 @@ void create_graph::create_Johnson(int &N, int *&Adj,
 	sprintf(str, "Johnson\\_%d\\_%d\\_%d", n, k, s);
 	label_tex.assign(str);
 
-	FREE_int(set1);
-	FREE_int(set2);
-	FREE_int(set3);
 
 	if (f_v) {
 		cout << "create_graph::create_Johnson done" << endl;
@@ -327,42 +279,16 @@ void create_graph::create_Paley(int &N, int *&Adj,
 	}
 
 
-	if (EVEN(q)) {
-		cout << "create_graph::create_Paley q must be odd" << endl;
-		exit(1);
+	combinatorics_domain Combi;
+
+
+	if (f_v) {
+		cout << "create_graph::create_Paley before Combi.make_Paley_graph" << endl;
 	}
-	if (!DOUBLYEVEN(q - 1)) {
-		cout << "create_graph::create_Paley q must be congruent to 1 modulo 4" << endl;
+	Combi.make_Paley_graph(Adj, N, q, verbose_level);
+	if (f_v) {
+		cout << "create_graph::create_Paley after Combi.make_Paley_graph" << endl;
 	}
-
-	finite_field *F;
-	int *f_is_square;
-	int i, j, a;
-
-	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, verbose_level);
-
-	f_is_square = NEW_int(q);
-	int_vec_zero(f_is_square, q);
-
-	for (i = 0; i < q; i++) {
-		j = F->mult(i, i);
-		f_is_square[j] = TRUE;
-	}
-
-	Adj = NEW_int(q * q);
-	int_vec_zero(Adj, q * q);
-
-	for (i = 0; i < q; i++) {
-		for (j = i + 1; j < q; j++) {
-			a = F->add(i, F->negate(j));
-			if (f_is_square[a]) {
-				Adj[i * q + j] = 1;
-				Adj[j * q + i] = 1;
-			}
-		}
-	}
-	N = q;
 
 	char str[1000];
 	sprintf(str, "Paley_%d", q);
@@ -370,8 +296,6 @@ void create_graph::create_Paley(int &N, int *&Adj,
 	sprintf(str, "Paley\\_%d", q);
 	label_tex.assign(str);
 
-	FREE_OBJECT(F);
-	FREE_int(f_is_square);
 
 	if (f_v) {
 		cout << "create_graph::create_Paley done" << endl;
@@ -389,7 +313,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 
 
 	int f_vv = (verbose_level >= 2);
-	int i, j, h, l, f_special = FALSE;
+	int i, l, f_special = FALSE;
 	number_theory_domain NT;
 
 
@@ -443,14 +367,14 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	Sims = A->Sims;
 
 
-	longinteger_object go;
-	int goi;
-	Sims->group_order(go);
+	//longinteger_object go;
+	long int goi;
+
+	goi = Sims->group_order_lint();
 
 	if (f_v) {
-		cout << "found a group of order " << go << endl;
+		cout << "found a group of order " << goi << endl;
 	}
-	goi = go.as_int();
 
 
 
@@ -462,6 +386,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	int I;
 	int *A4;
 	int nb_A4 = 0;
+	int j;
 
 	A4 = NEW_int((p + 1) * 4);
 	sqrt_mod_q = NEW_int(q);
@@ -650,35 +575,14 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 		A->element_move(Elt1, gens->ith(i), 0);
 	}
 
-
-	Adj = NEW_int(goi * goi);
-
-	int_vec_zero(Adj, goi * goi);
-
 	if (f_v) {
-		cout << "Computing the Cayley graph:" << endl;
+		cout << "create_graph::create_Sarnak before Sims->Cayley_graph" << endl;
 	}
-	for (i = 0; i < goi; i++) {
-		Sims->element_unrank_lint(i, Elt1);
-		//cout << "i=" << i << endl;
-		for (h = 0; h < nb_A4; h++) {
-			A->element_mult(Elt1, gens->ith(h), Elt2, 0);
-#if 0
-			cout << "i=" << i << " h=" << h << endl;
-			cout << "Elt1=" << endl;
-			A->element_print_quick(Elt1, cout);
-			cout << "g_h=" << endl;
-			A->element_print_quick(gens->ith(h), cout);
-			cout << "Elt2=" << endl;
-			A->element_print_quick(Elt2, cout);
-#endif
-			j = Sims->element_rank_lint(Elt2);
-			Adj[i * goi + j] = Adj[j * goi + i] = 1;
-			if (i == 0) {
-				cout << "edge " << i << " " << j << endl;
-			}
-		}
+	Sims->Cayley_graph(Adj, N, gens, verbose_level);
+	if (f_v) {
+		cout << "create_graph::create_Sarnak after Sims->Cayley_graph" << endl;
 	}
+
 
 	if (f_v) {
 		cout << "create_graph::create_Sarnak The adjacency matrix of a graph with " << goi
@@ -688,17 +592,17 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 
 	int k;
 	k = 0;
-	for (i = 0; i < goi; i++) {
-		if (Adj[0 * goi + i]) {
+	for (i = 0; i < N; i++) {
+		if (Adj[0 * N + i]) {
 			k++;
 		}
 	}
 	if (f_v) {
-		cout << "k=" << k << endl;
+		cout << "create_graph::create_Sarnak the graph is regular of degree " << k << endl;
 	}
 
 
-	N = goi;
+	//N = goi;
 
 	char str[1000];
 	sprintf(str, "Sarnak_%d_%d", p, q);
@@ -729,87 +633,24 @@ void create_graph::create_Schlaefli(int &N, int *&Adj,
 		cout << "create_graph::create_Schlaefli" << endl;
 	}
 
-	int i, j, rr, sz;
-	finite_field *F;
-	grassmann *Gr;
-	int *M1;
-	int *M2;
-	int *M;
-	int v[2];
-	int w[4];
-	int *List;
-	int n = 4;
-	int k = 2;
 	combinatorics_domain Combi;
 
 
-
-	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, verbose_level);
-
-	Gr = NEW_OBJECT(grassmann);
-	Gr->init(n, k, F, verbose_level);
-
-	M1 = NEW_int(k * n);
-	M2 = NEW_int(k * n);
-	M = NEW_int(2 * k * n);
-
-	N = Combi.generalized_binomial(n, k, q);
-
-	List = NEW_int(N);
-	sz = 0;
-
-	for (i = 0; i < N; i++) {
-		Gr->unrank_lint_here(M1, i, 0 /* verbose_level */);
-
-		for (j = 0; j < q + 1; j++) {
-			F->unrank_point_in_PG(v, 2, j);
-			F->mult_vector_from_the_left(v, M1, w, k, n);
-			if (evaluate_cubic_form(F, w)) {
-				break;
-				}
-			}
-		if (j == q + 1) {
-			List[sz++] = i;
-		}
+	if (f_v) {
+		cout << "create_graph::create_Schlaefli before Combi.make_Schlaefli_graph" << endl;
 	}
-	cout << "We found " << sz << " lines" << endl;
-
-
-	Adj = NEW_int(sz * sz);
-	int_vec_zero(Adj, sz * sz);
-	N = sz;
-
-	for (i = 0; i < sz; i++) {
-		Gr->unrank_lint_here(M1, List[i], 0 /* verbose_level */);
-
-		for (j = i + 1; j < sz; j++) {
-			Gr->unrank_lint_here(M2, List[j], 0 /* verbose_level */);
-
-			int_vec_copy(M1, M, k * n);
-			int_vec_copy(M2, M + k * n, k * n);
-
-			rr = F->rank_of_rectangular_matrix(M, 2 * k, n, 0 /* verbose_level */);
-			if (rr == 2 * k) {
-				Adj[i * sz + j] = 1;
-				Adj[j * sz + i] = 1;
-			}
-		}
+	Combi.make_Schlaefli_graph(Adj, N, q, verbose_level);
+	if (f_v) {
+		cout << "create_graph::create_Schlaefli after Combi.make_Schlaefli_graph" << endl;
 	}
 
 	char str[1000];
+
 	sprintf(str, "Schlaefli_%d", q);
 	label.assign(str);
 	sprintf(str, "Schlaefli\\_%d", q);
 	label_tex.assign(str);
 
-
-	FREE_int(List);
-	FREE_int(M1);
-	FREE_int(M2);
-	FREE_int(M);
-	FREE_OBJECT(Gr);
-	FREE_OBJECT(F);
 
 	if (f_v) {
 		cout << "create_graph::create_Schlaefli done" << endl;
@@ -825,34 +666,35 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 	}
 
 	action *A;
-	longinteger_object go;
-	int goi;
-	int **Elt_S;
 	vector_ge *gens_G;
+	vector_ge *gens_S;
 	int *v;
 	int n = 8;
-	int i, j, h;
+	int i, j;
 	int nb_G, nb_S;
+	long int goi;
 
 	A = NEW_OBJECT(action);
 	A->init_symmetric_group(n, verbose_level);
-	A->group_order(go);
+	goi = A->group_order_lint();
 
-	goi = go.as_int();
-	cout << "Created group Sym(" << n << ") of size " << goi << endl;
-
+	if (f_v) {
+		cout << "create_graph::create_Shrikhande "
+				"Created group Sym(" << n << ") of size " << goi << endl;
+	}
 
 	nb_G = 2;
 	nb_S = 6;
+
 	gens_G = NEW_OBJECT(vector_ge);
 	gens_G->init(A, verbose_level - 2);
 	gens_G->allocate(nb_G, verbose_level - 2);
 
 
-	Elt_S = NEW_pint(nb_S);
-	for (i = 0; i < nb_S; i++) {
-		Elt_S[i] = NEW_int(A->elt_size_in_int);
-	}
+	gens_S = NEW_OBJECT(vector_ge);
+	gens_S->init(A, verbose_level - 2);
+	gens_S->allocate(nb_S, verbose_level - 2);
+
 	v = NEW_int(n);
 
 
@@ -876,10 +718,13 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 		A->make_element(gens_G->ith(i), v, 0 /* verbose_level */);
 	}
 
-	cout << "generators for G:" << endl;
-	for (i = 0; i < nb_G; i++) {
-		cout << "generator " << i << ":" << endl;
-		A->element_print(gens_G->ith(i), cout);
+	if (f_v) {
+		cout << "create_graph::create_Shrikhande "
+				"generators for G:" << endl;
+		for (i = 0; i < nb_G; i++) {
+			cout << "generator " << i << ":" << endl;
+			A->element_print(gens_G->ith(i), cout);
+		}
 	}
 
 	for (i = 0; i < nb_S; i++) {
@@ -931,13 +776,16 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 				v[4 + j] = 4 + ((4 + j - 1) % 4);
 			}
 		}
-		A->make_element(Elt_S[i], v, 0 /* verbose_level */);
+		A->make_element(gens_S->ith(i), v, 0 /* verbose_level */);
 	}
 
-	cout << "generators for S:" << endl;
-	for (i = 0; i < nb_S; i++) {
-		cout << "generator " << i << ":" << endl;
-		A->element_print(Elt_S[i], cout);
+	if (f_v) {
+		cout << "create_graph::create_Shrikhande "
+				"generators for S:" << endl;
+		for (i = 0; i < nb_S; i++) {
+			cout << "generator " << i << ":" << endl;
+			A->element_print(gens_S->ith(i), cout);
+		}
 	}
 
 	sims *G;
@@ -946,52 +794,25 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 	G = A->create_sims_from_generators_with_target_group_order_lint(
 		gens_G, 16, verbose_level);
 
-	G->group_order(go);
 
-	goi = go.as_int();
 
-	cout << "created group of order " << goi << endl;
-
-	if (goi != 16) {
-		cout << "group order is wrong" << endl;
-		exit(1);
+	if (f_v) {
+		cout << "create_graph::create_Shrikhande before G->Cayley_graph" << endl;
+	}
+	G->Cayley_graph(Adj, N, gens_S, verbose_level);
+	if (f_v) {
+		cout << "create_graph::create_Shrikhande after G->Cayley_graph" << endl;
 	}
 
-	int *Elt1, *Elt2;
 
-	Elt1 = NEW_int(A->elt_size_in_int);
-	Elt2 = NEW_int(A->elt_size_in_int);
-	Adj = NEW_int(goi * goi);
 
-	int_vec_zero(Adj, goi * goi);
-
-	cout << "Computing the Cayley graph:" << endl;
-	for (i = 0; i < goi; i++) {
-		G->element_unrank_lint(i, Elt1);
-		//cout << "i=" << i << endl;
-		for (h = 0; h < nb_S; h++) {
-			A->element_mult(Elt1, Elt_S[h], Elt2, 0);
-#if 0
-			cout << "i=" << i << " h=" << h << endl;
-			cout << "Elt1=" << endl;
-			A->element_print_quick(Elt1, cout);
-			cout << "g_h=" << endl;
-			A->element_print_quick(gens->ith(h), cout);
-			cout << "Elt2=" << endl;
-			A->element_print_quick(Elt2, cout);
-#endif
-			j = G->element_rank_lint(Elt2);
-			Adj[i * goi + j] = Adj[j * goi + i] = 1;
-			if (i == 0) {
-				cout << "edge " << i << " " << j << endl;
-			}
-		}
+	if (f_v) {
+		cout << "create_graph::create_Shrikhande The adjacency matrix of a graph with " <<
+				goi << " vertices has been computed" << endl;
+		//int_matrix_print(Adj, goi, goi);
 	}
 
-	cout << "The adjacency matrix of a graph with " << goi << " vertices has been computed" << endl;
-	//int_matrix_print(Adj, goi, goi);
-
-	N = goi;
+	//N = goi;
 
 	char str[1000];
 	sprintf(str, "Shrikhande");
@@ -1000,14 +821,9 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 	label_tex.assign(str);
 
 
-	FREE_int(Elt1);
-	FREE_int(Elt2);
 	FREE_int(v);
 	FREE_OBJECT(gens_G);
-	for (i = 0; i < nb_S; i++) {
-		FREE_int(Elt_S[i]);
-	}
-	FREE_pint(Elt_S);
+	FREE_OBJECT(gens_S);
 
 	if (f_v) {
 		cout << "create_graph::create_Shrikhande done" << endl;
@@ -1023,72 +839,16 @@ void create_graph::create_Winnie_Li(int &N, int *&Adj,
 		cout << "create_graph::create_Winnie_Li" << endl;
 	}
 
-	finite_field *F;
-	int i, j, h, u, p, k, co_index, q1, relative_norm;
-	int *N1;
-	number_theory_domain NT;
+	combinatorics_domain Combi;
 
 
-	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, verbose_level - 1);
-	p = F->p;
-
-#if 0
-	if (!f_index) {
-		index = F->e;
-		}
-#endif
-
-	co_index = F->e / index;
-
-	if (co_index * index != F->e) {
-		cout << "the index has to divide the field degree" << endl;
-		exit(1);
+	if (f_v) {
+		cout << "create_graph::create_Winnie_Li before Combi.make_Winnie_Li_graph" << endl;
 	}
-	q1 = NT.i_power_j(p, co_index);
-
-	k = (q - 1) / (q1 - 1);
-
-	cout << "q=" << q << endl;
-	cout << "index=" << index << endl;
-	cout << "co_index=" << co_index << endl;
-	cout << "q1=" << q1 << endl;
-	cout << "k=" << k << endl;
-
-	relative_norm = 0;
-	j = 1;
-	for (i = 0; i < index; i++) {
-		relative_norm += j;
-		j *= q1;
+	Combi.make_Winnie_Li_graph(Adj, N, q, index, verbose_level);
+	if (f_v) {
+		cout << "create_graph::create_Winnie_Li after Combi.make_Winnie_Li_graph" << endl;
 	}
-	cout << "relative_norm=" << relative_norm << endl;
-
-	N1 = NEW_int(k);
-	j = 0;
-	for (i = 0; i < q; i++) {
-		if (F->power(i, relative_norm) == 1) {
-			N1[j++] = i;
-		}
-	}
-	if (j != k) {
-		cout << "j != k" << endl;
-		exit(1);
-	}
-	cout << "found " << k << " norm-one elements:" << endl;
-	int_vec_print(cout, N1, k);
-	cout << endl;
-
-	Adj = NEW_int(q * q);
-	for (i = 0; i < q; i++) {
-		for (h = 0; h < k; h++) {
-			j = N1[h];
-			u = F->add(i, j);
-			Adj[i * q + u] = 1;
-			Adj[u * q + i] = 1;
-		}
-	}
-
-	N = q;
 
 
 	char str[1000];
@@ -1097,9 +857,6 @@ void create_graph::create_Winnie_Li(int &N, int *&Adj,
 	sprintf(str, "Winnie_Li\\_%d\\_%d", q, index);
 	label_tex.assign(str);
 
-
-	FREE_int(N1);
-	FREE_OBJECT(F);
 
 
 	if (f_v) {
@@ -1117,47 +874,15 @@ void create_graph::create_Grassmann(int &N, int *&Adj,
 	}
 
 
-	finite_field *F;
-	grassmann *Gr;
-	int i, j, rr;
-	int *M1; // [k * n]
-	int *M2; // [k * n]
-	int *M; // [2 * k * n]
 	combinatorics_domain Combi;
 
-	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, verbose_level);
 
-
-	Gr = NEW_OBJECT(grassmann);
-	Gr->init(n, k, F, verbose_level);
-
-	N = Combi.generalized_binomial(n, k, q);
-
-	M1 = NEW_int(k * n);
-	M2 = NEW_int(k * n);
-	M = NEW_int(2 * k * n);
-
-	Adj = NEW_int(N * N);
-	int_vec_zero(Adj, N * N);
-
-	for (i = 0; i < N; i++) {
-
-		Gr->unrank_lint_here(M1, i, 0 /* verbose_level */);
-
-		for (j = i + 1; j < N; j++) {
-
-			Gr->unrank_lint_here(M2, j, 0 /* verbose_level */);
-
-			int_vec_copy(M1, M, k * n);
-			int_vec_copy(M2, M + k * n, k * n);
-
-			rr = F->rank_of_rectangular_matrix(M, 2 * k, n, 0 /* verbose_level */);
-			if (rr == r) {
-				Adj[i * N + j] = 1;
-				Adj[j * N + i] = 1;
-			}
-		}
+	if (f_v) {
+		cout << "create_graph::create_Grassmann before Combi.make_Grassmann_graph" << endl;
+	}
+	Combi.make_Grassmann_graph(Adj, N, n, k, q, r, verbose_level);
+	if (f_v) {
+		cout << "create_graph::create_Grassmann after Combi.make_Grassmann_graph" << endl;
 	}
 
 
@@ -1167,12 +892,6 @@ void create_graph::create_Grassmann(int &N, int *&Adj,
 	sprintf(str, "Grassmann\\_%d\\_%d\\_%d\\_%d", n, k, q, r);
 	label_tex.assign(str);
 
-
-	FREE_int(M1);
-	FREE_int(M2);
-	FREE_int(M);
-	FREE_OBJECT(Gr);
-	FREE_OBJECT(F);
 
 	if (f_v) {
 		cout << "create_graph::create_Grassmann done" << endl;
@@ -1188,91 +907,19 @@ void create_graph::create_coll_orthogonal(int &N, int *&Adj,
 		cout << "create_graph::create_coll_orthogonal" << endl;
 	}
 
-	finite_field *F;
-	int i, j;
-	int n, a, nb_e, nb_inc;
-	int c1 = 0, c2 = 0, c3 = 0;
-	int *v, *v2;
-	int *Gram; // Gram matrix
-	geometry_global Gg;
+	combinatorics_domain Combi;
 
 
-	n = d - 1; // projective dimension
-
-	v = NEW_int(d);
-	v2 = NEW_int(d);
-	Gram = NEW_int(d * d);
-
-	cout << "epsilon=" << epsilon << " n=" << n << " q=" << q << endl;
-
-	N = Gg.nb_pts_Qepsilon(epsilon, n, q);
-
-	cout << "number of points = " << N << endl;
-
-	F = NEW_OBJECT(finite_field);
-
-	F->finite_field_init(q, verbose_level - 1);
-	F->print();
-
-	if (epsilon == 0) {
-		c1 = 1;
+	if (f_v) {
+		cout << "create_graph::create_coll_orthogonal before "
+				"Combi.make_orthogonal_collinearity_graph" << endl;
 	}
-	else if (epsilon == -1) {
-		F->choose_anisotropic_form(c1, c2, c3, verbose_level - 2);
-		//cout << "incma.cpp: epsilon == -1, need irreducible polynomial" << endl;
-		//exit(1);
+	Combi.make_orthogonal_collinearity_graph(Adj, N,
+			epsilon, d, q, verbose_level);
+	if (f_v) {
+		cout << "create_graph::create_coll_orthogonal after "
+				"Combi.make_orthogonal_collinearity_graph" << endl;
 	}
-	F->Gram_matrix(epsilon, n, c1, c2, c3, Gram);
-	cout << "Gram matrix" << endl;
-	print_integer_matrix_width(cout, Gram, d, d, d, 2);
-
-#if 0
-	if (f_list_points) {
-		for (i = 0; i < N; i++) {
-			F->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
-			cout << i << " : ";
-			int_vec_print(cout, v, n + 1);
-			j = F->Q_epsilon_rank(v, 1, epsilon, n, c1, c2, c3, 0 /* verbose_level */);
-			cout << " : " << j << endl;
-
-			}
-		}
-#endif
-
-
-	cout << "allocating adjacency matrix" << endl;
-	Adj = NEW_int(N * N);
-	cout << "allocating adjacency matrix was successful" << endl;
-	nb_e = 0;
-	nb_inc = 0;
-	for (i = 0; i < N; i++) {
-		//cout << i << " : ";
-		F->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
-		for (j = i + 1; j < N; j++) {
-			F->Q_epsilon_unrank(v2, 1, epsilon, n, c1, c2, c3, j, 0 /* verbose_level */);
-			a = F->evaluate_bilinear_form(v, v2, n + 1, Gram);
-			if (a == 0) {
-				//cout << j << " ";
-				//k = ij2k(i, j, N);
-				//cout << k << ", ";
-				nb_e++;
-				//if ((nb_e % 50) == 0)
-					//cout << endl;
-				Adj[i * N + j] = 1;
-				Adj[j * N + i] = 1;
-			}
-			else {
-				Adj[i * N + j] = 0;
-				Adj[j * N + i] = 0;
-				; //cout << " 0";
-				nb_inc++;
-			}
-		}
-		//cout << endl;
-		Adj[i * N + i] = 0;
-	}
-	//cout << endl;
-	cout << "The adjacency matrix of the collinearity graph has been computed" << endl;
 
 
 	char str[1000];
@@ -1281,26 +928,9 @@ void create_graph::create_coll_orthogonal(int &N, int *&Adj,
 	sprintf(str, "Coll_orthogonal\\_%d\\_%d\\_%d", epsilon, d, q);
 	label_tex.assign(str);
 
-
-	FREE_int(v);
-	FREE_int(v2);
-	FREE_int(Gram);
-	FREE_OBJECT(F);
-
 	if (f_v) {
 		cout << "create_graph::create_coll_orthogonal done" << endl;
 	}
-}
-
-static int evaluate_cubic_form(finite_field *F, int *v)
-{
-	int a, i;
-
-	a = 0;
-	for (i = 0; i < 4; i++) {
-		a = F->add(a, F->power(v[i], 3));
-	}
-	return a;
 }
 
 

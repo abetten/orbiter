@@ -59,7 +59,7 @@ int interface_toolkit::recognize_keyword(int argc,
 	return false;
 }
 
-void interface_toolkit::read_arguments(int argc,
+int interface_toolkit::read_arguments(int argc,
 		std::string *argv, int i0, int verbose_level)
 {
 	int i;
@@ -85,15 +85,14 @@ void interface_toolkit::read_arguments(int argc,
 					<< csv_file_join_identifier[csv_file_join_identifier.size() - 1] << endl;
 		}
 		else {
-			cout << "interface_toolkit::read_arguments: unrecognized option "
-					<< argv[i] << ", skipping" << endl;
-			//exit(1);
+			break;
 		}
 	}
 	cout << "interface_toolkit::read_arguments done" << endl;
+	return i;
 }
 
-void interface_toolkit::worker(orbiter_session *Session, int verbose_level)
+void interface_toolkit::worker(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

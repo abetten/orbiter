@@ -254,23 +254,8 @@ void projective_space::init_incidence_structure(int verbose_level)
 			cout << "projective_space::init_incidence_structure "
 					"allocating Incidence (bitvector)" << endl;
 		}
-#if 0
-		long int len = ((long int) N_points * (long int) N_lines + 7) >> 3;
-		if (f_v) {
-			cout << "projective_space::init_incidence_structure "
-					"allocating Incidence (bitvector) "
-					"len = " << len << endl;
-		}
-		//Incidence = NEW_int(N_points * N_lines);
-		//int_vec_zero(Incidence, N_points * N_points);
-		incidence_bitvec = NEW_uchar(len);
-		for (i = 0; i < len; i++) {
-			incidence_bitvec[i] = 0;
-		}
-#else
 		Bitmatrix = NEW_OBJECT(bitmatrix);
 		Bitmatrix->init(N_points, N_lines, verbose_level);
-#endif
 	}
 	else {
 		if (f_v) {
@@ -278,8 +263,6 @@ void projective_space::init_incidence_structure(int verbose_level)
 				"N_lines too big, we do not initialize the "
 				"incidence matrix" << endl;
 		}
-		//return;
-		//incidence_bitvec = NULL;
 		Bitmatrix = NULL;
 	}
 
@@ -592,8 +575,9 @@ void projective_space::init_incidence_structure(int verbose_level)
 				j = Lines_on_point[i1 * r + a];
 				for (b = 0; b < k; b++) {
 					i2 = Lines[j * k + b];
-					if (i2 == i1)
+					if (i2 == i1) {
 						continue;
+					}
 					Line_through_two_points[i1 * N_points + i2] = j;
 					Line_through_two_points[i2 * N_points + i1] = j;
 				}
@@ -629,8 +613,9 @@ void projective_space::init_incidence_structure(int verbose_level)
 				i = Lines[j1 * k + a];
 				for (b = 0; b < r; b++) {
 					j2 = Lines_on_point[i * r + b];
-					if (j2 == j1)
+					if (j2 == j1) {
 						continue;
+					}
 					Line_intersection[j1 * N_lines + j2] = i;
 					Line_intersection[j2 * N_lines + j1] = i;
 				}
@@ -1473,7 +1458,7 @@ int projective_space::determine_conic_in_plane(
 	long int *input_pts, int nb_pts,
 	int *six_coeffs, 
 	int verbose_level)
-// returns FALSE is the rank of the coefficient
+// returns FALSE if the rank of the coefficient
 // matrix is not 5. TRUE otherwise.
 {
 	int f_v = (verbose_level >= 1);
@@ -1487,17 +1472,17 @@ int projective_space::determine_conic_in_plane(
 
 	if (f_v) {
 		cout << "projective_space::determine_conic_in_plane" << endl;
-		}
+	}
 	if (n != 2) {
 		cout << "projective_space::determine_conic_in_plane "
 				"n != 2" << endl;
 		exit(1);
-		}
+	}
 	if (nb_pts < 5) {
 		cout << "projective_space::determine_conic_in_plane "
 				"need at least 5 points" << endl;
 		exit(1);
-		}
+	}
 
 	if (!arc_test(input_pts, nb_pts, verbose_level)) {
 		if (f_v) {
@@ -1505,20 +1490,20 @@ int projective_space::determine_conic_in_plane(
 					"some 3 of the points are collinear" << endl;
 		}
 		return FALSE;
-		}
+	}
 
 
 	coords = NEW_int(nb_pts * 3);
 	system = NEW_int(nb_pts * 6);
 	for (i = 0; i < nb_pts; i++) {
 		unrank_point(coords + i * 3, input_pts[i]);
-		}
+	}
 	if (f_vv) {
 		cout << "projective_space::determine_conic_in_plane "
 				"points:" << endl;
 		print_integer_matrix_width(cout,
 				coords, nb_pts, 3, 3, F->log10_of_q);
-		}
+	}
 	for (i = 0; i < nb_pts; i++) {
 		x = coords[i * 3 + 0];
 		y = coords[i * 3 + 1];
@@ -1529,13 +1514,13 @@ int projective_space::determine_conic_in_plane(
 		system[i * 6 + 3] = F->mult(x, y);
 		system[i * 6 + 4] = F->mult(x, z);
 		system[i * 6 + 5] = F->mult(y, z);
-		}
+	}
 	if (f_v) {
 		cout << "projective_space::determine_conic_in_plane "
 				"system:" << endl;
 		print_integer_matrix_width(cout,
 				system, nb_pts, 6, 6, F->log10_of_q);
-		}
+	}
 
 
 
@@ -1545,9 +1530,9 @@ int projective_space::determine_conic_in_plane(
 		if (f_v) {
 			cout << "projective_space::determine_conic_in_plane "
 					"system underdetermined" << endl;
-			}
-		return FALSE;
 		}
+		return FALSE;
+	}
 	F->matrix_get_kernel(system, 5, 6, base_cols, rk, 
 		kernel_m, kernel_n, kernel, 0 /* verbose_level */);
 	if (f_v) {
@@ -1555,10 +1540,10 @@ int projective_space::determine_conic_in_plane(
 				"conic:" << endl;
 		print_integer_matrix_width(cout,
 				kernel, 1, 6, 6, F->log10_of_q);
-		}
+	}
 	for (i = 0; i < 6; i++) {
 		six_coeffs[i] = kernel[i];
-		}
+	}
 	FREE_int(coords);
 	FREE_int(system);
 	return TRUE;
@@ -1579,7 +1564,7 @@ int projective_space::determine_cubic_in_plane(
 
 	if (f_v) {
 		cout << "projective_space::determine_cubic_in_plane" << endl;
-		}
+	}
 	d = n + 1;
 	Pt_coord = NEW_int(nb_pts * d);
 	System = NEW_int(nb_pts * Poly_3_3->get_nb_monomials());
@@ -1590,38 +1575,38 @@ int projective_space::determine_cubic_in_plane(
 				"points:" << endl;
 		lint_vec_print(cout, Pts, nb_pts);
 		cout << endl;
-		}
+	}
 	for (i = 0; i < nb_pts; i++) {
 		unrank_point(Pt_coord + i * d, Pts[i]);
-		}
+	}
 	if (f_v) {
 		cout << "projective_space::determine_cubic_in_plane matrix of "
 				"point coordinates:" << endl;
 		int_matrix_print(Pt_coord, nb_pts, d);
-		}
+	}
 
 	for (i = 0; i < nb_pts; i++) {
 		for (j = 0; j < Poly_3_3->get_nb_monomials(); j++) {
 			System[i * Poly_3_3->get_nb_monomials() + j] =
 					Poly_3_3->evaluate_monomial(j, Pt_coord + i * d);
-			}
 		}
+	}
 	if (f_v) {
 		cout << "projective_space::determine_cubic_in_plane "
 				"The system:" << endl;
 		int_matrix_print(System, nb_pts, Poly_3_3->get_nb_monomials());
-		}
+	}
 	r = F->Gauss_simple(System, nb_pts, Poly_3_3->get_nb_monomials(),
 		base_cols, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space::determine_cubic_in_plane "
 				"The system in RREF:" << endl;
 		int_matrix_print(System, r, Poly_3_3->get_nb_monomials());
-		}
+	}
 	if (f_v) {
 		cout << "projective_space::determine_cubic_in_plane "
 				"The system has rank " << r << endl;
-		}
+	}
 
 	if (r != 9) {
 		cout << "r != 9" << endl;
@@ -1656,28 +1641,28 @@ void projective_space::determine_quadric_in_solid(
 
 	if (f_v) {
 		cout << "projective_space::determine_quadric_in_solid" << endl;
-		}
+	}
 	if (n != 3) {
 		cout << "projective_space::determine_quadric_in_solid "
 				"n != 3" << endl;
 		exit(1);
-		}
+	}
 	if (nb_pts < 9) {
 		cout << "projective_space::determine_quadric_in_solid "
 				"you need to give at least 9 points" << endl;
 		exit(1);
-		}
+	}
 	coords = NEW_int(nb_pts * 4);
 	system = NEW_int(nb_pts * 10);
 	for (i = 0; i < nb_pts; i++) {
 		unrank_point(coords + i * 4, nine_pts_or_more[i]);
-		}
+	}
 	if (f_vv) {
 		cout << "projective_space::determine_quadric_in_solid "
 				"points:" << endl;
 		print_integer_matrix_width(cout,
 				coords, nb_pts, 4, 4, F->log10_of_q);
-		}
+	}
 	for (i = 0; i < nb_pts; i++) {
 		x = coords[i * 4 + 0];
 		y = coords[i * 4 + 1];
@@ -1693,13 +1678,13 @@ void projective_space::determine_quadric_in_solid(
 		system[i * 10 + 7] = F->mult(y, z);
 		system[i * 10 + 8] = F->mult(y, w);
 		system[i * 10 + 9] = F->mult(z, w);
-		}
+	}
 	if (f_v) {
 		cout << "projective_space::determine_quadric_in_solid "
 				"system:" << endl;
 		print_integer_matrix_width(cout,
 				system, nb_pts, 10, 10, F->log10_of_q);
-		}
+	}
 
 
 
@@ -1710,7 +1695,7 @@ void projective_space::determine_quadric_in_solid(
 				"system underdetermined" << endl;
 		cout << "rk=" << rk << endl;
 		exit(1);
-		}
+	}
 	F->matrix_get_kernel(system, 9, 10, base_cols, rk, 
 		kernel_m, kernel_n, kernel, 0 /* verbose_level */);
 	if (f_v) {
@@ -1718,10 +1703,10 @@ void projective_space::determine_quadric_in_solid(
 				"conic:" << endl;
 		print_integer_matrix_width(cout,
 				kernel, 1, 10, 10, F->log10_of_q);
-		}
+	}
 	for (i = 0; i < 10; i++) {
 		ten_coeffs[i] = kernel[i];
-		}
+	}
 }
 
 void projective_space::conic_points_brute_force(
@@ -1735,7 +1720,7 @@ void projective_space::conic_points_brute_force(
 
 	if (f_v) {
 		cout << "projective_space::conic_points_brute_force" << endl;
-		}
+	}
 	nb_points = 0;
 	for (i = 0; i < N_points; i++) {
 		unrank_point(v, i);
@@ -1744,25 +1729,25 @@ void projective_space::conic_points_brute_force(
 			cout << "point " << i << " = ";
 			int_vec_print(cout, v, 3);
 			cout << " gives a value of " << a << endl;
-			}
+		}
 		if (a == 0) {
 			if (f_vv) {
 				cout << "point " << i << " = ";
 				int_vec_print(cout, v, 3);
 				cout << " lies on the conic" << endl;
-				}
-			points[nb_points++] = i;
 			}
+			points[nb_points++] = i;
 		}
+	}
 	if (f_v) {
 		cout << "projective_space::conic_points_brute_force done, "
 				"we found " << nb_points << " points" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "They are : ";
 		lint_vec_print(cout, points, nb_points);
 		cout << endl;
-		}
+	}
 }
 
 void projective_space::quadric_points_brute_force(
@@ -1777,7 +1762,7 @@ void projective_space::quadric_points_brute_force(
 
 	if (f_v) {
 		cout << "projective_space::quadric_points_brute_force" << endl;
-		}
+	}
 	nb_points = 0;
 	for (i = 0; i < N_points; i++) {
 		unrank_point(v, i);
@@ -1786,25 +1771,25 @@ void projective_space::quadric_points_brute_force(
 			cout << "point " << i << " = ";
 			int_vec_print(cout, v, 3);
 			cout << " gives a value of " << a << endl;
-			}
+		}
 		if (a == 0) {
 			if (f_vv) {
 				cout << "point " << i << " = ";
 				int_vec_print(cout, v, 4);
 				cout << " lies on the quadric" << endl;
-				}
-			points[nb_points++] = i;
 			}
+			points[nb_points++] = i;
 		}
+	}
 	if (f_v) {
 		cout << "projective_space::quadric_points_brute_force done, "
 				"we found " << nb_points << " points" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "They are : ";
 		lint_vec_print(cout, points, nb_points);
 		cout << endl;
-		}
+	}
 }
 
 void projective_space::conic_points(
@@ -1822,11 +1807,11 @@ void projective_space::conic_points(
 	
 	if (f_v) {
 		cout << "projective_space::conic_points" << endl;
-		}
+	}
 	if (n != 2) {
 		cout << "projective_space::conic_points n != 2" << endl;
 		exit(1);
-		}
+	}
 	Gram_matrix[0 * 3 + 0] = F->add(six_coeffs[0], six_coeffs[0]);
 	Gram_matrix[1 * 3 + 1] = F->add(six_coeffs[1], six_coeffs[1]);
 	Gram_matrix[2 * 3 + 2] = F->add(six_coeffs[2], six_coeffs[2]);
@@ -1837,7 +1822,7 @@ void projective_space::conic_points(
 		cout << "projective_space::conic_points Gram matrix:" << endl;
 		print_integer_matrix_width(cout,
 				Gram_matrix, 3, 3, 3, F->log10_of_q);
-		}
+	}
 	
 	unrank_point(Basis, five_pts[0]);
 	for (i = 1; i < 5; i++) {
@@ -1845,42 +1830,42 @@ void projective_space::conic_points(
 		a = F->evaluate_bilinear_form(3, Basis, Basis + 3, Gram_matrix);
 		if (a) {
 			break;
-			}
 		}
+	}
 	if (i == 5) {
 		cout << "projective_space::conic_points did not "
 				"find non-orthogonal vector" << endl;
 		exit(1);
-		}
+	}
 	if (a != 1) {
 		av = F->inverse(a);
 		for (i = 0; i < 3; i++) {
 			Basis[3 + i] = F->mult(av, Basis[3 + i]);
-			}
 		}
+	}
 	if (f_v) {	
 		cout << "projective_space::conic_points "
 				"Hyperbolic pair:" << endl;
 		print_integer_matrix_width(cout,
 				Basis, 2, 3, 3, F->log10_of_q);
-		}
+	}
 	F->perp(3, 2, Basis, Gram_matrix, 0 /* verbose_level */);
 	if (f_v) {	
 		cout << "projective_space::conic_points perp:" << endl;
 		print_integer_matrix_width(cout,
 				Basis, 3, 3, 3, F->log10_of_q);
-		}
+	}
 	a = F->evaluate_conic_form(six_coeffs, Basis + 6);
 	if (f_v) {	
 		cout << "projective_space::conic_points "
 				"form value = " << a << endl;
-		}
+	}
 	if (a == 0) {
 		cout << "projective_space::conic_points "
 				"the form is degenerate or we are in "
 				"characteristic zero" << endl;
 		exit(1);
-		}
+	}
 	l = F->log_alpha(a);
 	if ((l % 2) == 0) {
 		j = l / 2;
@@ -1888,26 +1873,26 @@ void projective_space::conic_points(
 		bv = F->inverse(b);
 		for (i = 0; i < 3; i++) {
 			Basis[6 + i] = F->mult(bv, Basis[6 + i]);
-			}
+		}
 		a = F->evaluate_conic_form(six_coeffs, Basis + 6);
 		if (f_v) {	
 			cout << "form value = " << a << endl;
-			}
 		}
+	}
 	for (i = 0; i < 3; i++) {
 		Basis2[3 + i] = Basis[6 + i];
-		}
+	}
 	for (i = 0; i < 3; i++) {
 		Basis2[0 + i] = Basis[0 + i];
-		}
+	}
 	for (i = 0; i < 3; i++) {
 		Basis2[6 + i] = Basis[3 + i];
-		}
+	}
 	if (f_v) {	
 		cout << "Basis2:" << endl;
 		print_integer_matrix_width(cout,
 				Basis2, 3, 3, 3, F->log10_of_q);
-		}
+	}
 	// Now the form is a^{-1}y_1^2 = y_0y_2 
 	// (or, equivalently, a^{-1}y_1^2 - y_0y_2 = 0)
 	// and  the quadratic form on (0,1,0) in y-coordinates is a.
@@ -1926,7 +1911,7 @@ void projective_space::conic_points(
 		cout << "vector corresponding to 100:" << endl;
 		int_vec_print(cout, w, 3);
 		cout << endl;
-		}
+	}
 	b = rank_point(w);
 	points[0] = b;
 	nb_points = 1;
@@ -1942,16 +1927,15 @@ void projective_space::conic_points(
 			cout << "vector corresponding to t=" << t << ":" << endl;
 			int_vec_print(cout, w, 3);
 			cout << endl;
-			}
+		}
 		b = rank_point(w);
 		points[nb_points++] = b;
-		}
+	}
 	if (f_vv) {	
 		cout << "projective_space::conic_points conic points:" << endl;
 		lint_vec_print(cout, points, nb_points);
 		cout << endl;
-		}
-	
+	}
 }
 
 void projective_space::find_tangent_lines_to_conic(
@@ -1968,12 +1952,12 @@ void projective_space::find_tangent_lines_to_conic(
 	
 	if (f_v) {
 		cout << "projective_space::find_tangent_lines_to_conic" << endl;
-		}
+	}
 	if (n != 2) {
 		cout << "projective_space::find_tangent_lines_to_conic "
 				"n != 2" << endl;
 		exit(1);
-		}
+	}
 	Gram_matrix[0 * 3 + 0] = F->add(six_coeffs[0], six_coeffs[0]);
 	Gram_matrix[1 * 3 + 1] = F->add(six_coeffs[1], six_coeffs[1]);
 	Gram_matrix[2 * 3 + 2] = F->add(six_coeffs[2], six_coeffs[2]);
@@ -1988,13 +1972,13 @@ void projective_space::find_tangent_lines_to_conic(
 			cout << "perp:" << endl;
 			print_integer_matrix_width(cout,
 					Basis, 3, 3, 3, F->log10_of_q);
-			}
+		}
 		tangents[i] = rank_line(Basis + 3);
 		if (f_vv) {	
 			cout << "tangent at point " << i << " is "
 					<< tangents[i] << endl;
-			}
 		}
+	}
 }
 
 void projective_space::compute_bisecants_and_conics(
@@ -2010,7 +1994,7 @@ void projective_space::compute_bisecants_and_conics(
 
 	if (f_v) {
 		cout << "projective_space::compute_bisecants_and_conics" << endl;
-		}
+	}
 	bisecants = NEW_int(15 * 3);
 	conics = NEW_int(6 * 6);
 	
@@ -2026,13 +2010,13 @@ void projective_space::compute_bisecants_and_conics(
 				0 /* verbose_level */);
 			F->PG_element_normalize_from_front(
 				bisecants + h * 3, 1, 3);
-			}
 		}
+	}
 	if (f_v) {
 		cout << "projective_space::compute_bisecants_and_conics "
 				"bisecants:" << endl;
 		int_matrix_print(bisecants, 15, 3);
-		}
+	}
 
 	for (j = 0; j < 6; j++) {
 		//int deleted_point;
@@ -2051,18 +2035,18 @@ void projective_space::compute_bisecants_and_conics(
 				six_coeffs, 0 /* verbose_level */);
 		F->PG_element_normalize_from_front(six_coeffs, 1, 6);
 		int_vec_copy(six_coeffs, conics + j * 6, 6);
-		}
+	}
 
 	if (f_v) {
 		cout << "projective_space::compute_bisecants_and_conics "
 				"conics:" << endl;
 		int_matrix_print(conics, 6, 6);
-		}
+	}
 
 	if (f_v) {
 		cout << "projective_space::compute_bisecants_and_conics "
 				"done" << endl;
-		}
+	}
 }
 
 eckardt_point_info *projective_space::compute_eckardt_point_info(
@@ -2111,15 +2095,15 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
 		cout << "projective_space::PG_2_8_create_conic_"
 				"plus_nucleus_arc_1 n != 2" << endl;
 		exit(1);
-		}
+	}
 	if (q != 8) {
 		cout << "projective_space::PG_2_8_create_conic_"
 				"plus_nucleus_arc_1 q != 8" << endl;
 		exit(1);
-		}
+	}
 	for (i = 0; i < 4; i++) {
 		frame[i] = rank_point(frame_data + i * 3);
-		}
+	}
 
 	cout << "frame: ";
 	int_vec_print(cout, frame, 4);
@@ -2137,14 +2121,14 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
 			b = Lines[L[h] * r + i];
 			if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
 				continue;
-				}
+			}
 			for (j = size; j > idx; j--) {
 				the_arc[j] = the_arc[j - 1];
-				}
+			}
 			the_arc[idx] = b;
 			size++;
-			}
 		}
+	}
 	cout << "there are " << size << " points on the three lines: ";
 	lint_vec_print(cout, the_arc, size);
 	cout << endl;
@@ -2157,14 +2141,14 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
 		b = rank_point(v);
 		if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
 			continue;
-			}
+		}
 		for (j = size; j > idx; j--) {
 			the_arc[j] = the_arc[j - 1];
-			}
+		}
 		the_arc[idx] = b;
 		size++;
 		
-		}
+	}
 
 	cout << "projective_space::PG_2_8_create_conic_"
 			"plus_nucleus_arc_1: after adding the rest of the "
@@ -2187,15 +2171,15 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 		cout << "projective_space::PG_2_8_create_conic_plus_"
 				"nucleus_arc_2 n != 2" << endl;
 		exit(1);
-		}
+	}
 	if (q != 8) {
 		cout << "projective_space::PG_2_8_create_conic_plus_"
 				"nucleus_arc_2 q != 8" << endl;
 		exit(1);
-		}
+	}
 	for (i = 0; i < 4; i++) {
 		frame[i] = rank_point(frame_data + i * 3);
-		}
+	}
 
 	cout << "frame: ";
 	int_vec_print(cout, frame, 4);
@@ -2213,14 +2197,14 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 			b = Lines[L[h] * r + i];
 			if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
 				continue;
-				}
+			}
 			for (j = size; j > idx; j--) {
 				the_arc[j] = the_arc[j - 1];
-				}
+			}
 			the_arc[idx] = b;
 			size++;
-			}
 		}
+	}
 	cout << "there are " << size << " points on the three lines: ";
 	lint_vec_print(cout, the_arc, size);
 	cout << endl;
@@ -2231,23 +2215,23 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 			v[0] = 0;
 			v[1] = 1;
 			v[2] = 0;
-			}
+		}
 		else {
 			v[0] = 1;
 			v[1] = i;
 			v[2] = F->mult(i, i);
-			}
+		}
 		b = rank_point(v);
 		if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
 			continue;
-			}
+		}
 		for (j = size; j > idx; j--) {
 			the_arc[j] = the_arc[j - 1];
-			}
+		}
 		the_arc[idx] = b;
 		size++;
 		
-		}
+	}
 
 	cout << "projective_space::PG_2_8_create_conic_plus_"
 			"nucleus_arc_2: after adding the rest of the conic, "
@@ -2278,23 +2262,23 @@ void projective_space::create_Maruta_Hamada_arc(
 		cout << "projective_space::create_Maruta_Hamada_arc "
 				"n != 2" << endl;
 		exit(1);
-		}
+	}
 	if (q != 13) {
 		cout << "projective_space::create_Maruta_Hamada_arc "
 				"q != 13" << endl;
 		exit(1);
-		}
+	}
 	for (i = 0; i < 22; i++) {
 		points[i] = rank_point(data + i * 3);
 		cout << "point " << i << " has rank " << points[i] << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "projective_space::create_Maruta_Hamada_arc "
 				"points: ";
 		int_vec_print(cout, points, 22);
 		cout << endl;
-		}
+	}
 	
 	L[0] = Line_through_two_points[1 * N_points + 2];
 	L[1] = Line_through_two_points[0 * N_points + 2];
@@ -2305,7 +2289,7 @@ void projective_space::create_Maruta_Hamada_arc(
 		cout << "L:";
 		lint_vec_print(cout, L, 4);
 		cout << endl;
-		}
+	}
 
 	for (h = 0; h < 4; h++) {
 		cout << "h=" << h << " : L[h]=" << L[h] << " : " << endl;
@@ -2316,29 +2300,29 @@ void projective_space::create_Maruta_Hamada_arc(
 			F->PG_element_normalize_from_front(v, 1, 3);
 			int_vec_print(cout, v, 3);
 			cout << endl;
-			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 	size = 0;	
 	for (h = 0; h < 4; h++) {
 		for (i = 0; i < r; i++) {
 			b = Lines[L[h] * r + i];
 			if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
 				continue;
-				}
+			}
 			for (j = size; j > idx; j--) {
 				the_arc[j] = the_arc[j - 1];
-				}
+			}
 			the_arc[idx] = b;
 			size++;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "there are " << size
 				<< " points on the quadrilateral: ";
 		lint_vec_print(cout, the_arc, size);
 		cout << endl;
-		}
+	}
 
 
 	// remove the first 16 points:
@@ -2348,25 +2332,25 @@ void projective_space::create_Maruta_Hamada_arc(
 		if (!Sorting.lint_vec_search(the_arc, size, points[i], idx, 0)) {
 			cout << "error, cannot find point to be removed" << endl;
 			exit(1);
-			}
+		}
 		for (j = idx; j < size; j++) {
 			the_arc[j] = the_arc[j + 1];
-			}
-		size--;
 		}
+		size--;
+	}
 
 	// add points 16-19:
 	for (i = 16; i < 20; i++) {
 		if (Sorting.lint_vec_search(the_arc, size, points[i], idx, 0)) {
 			cout << "error, special point already there" << endl;
 			exit(1);
-			}
+		}
 		for (j = size; j > idx; j--) {
 			the_arc[j] = the_arc[j - 1];
-			}
+		}
 		the_arc[idx] = points[i];
 		size++;
-		}
+	}
 		
 	if (f_v) {
 		cout << "projective_space::create_Maruta_Hamada_arc: "
@@ -2374,7 +2358,7 @@ void projective_space::create_Maruta_Hamada_arc(
 				<< size << " points on the arc: ";
 		lint_vec_print(cout, the_arc, size);
 		cout << endl;
-		}
+	}
 
 }
 
@@ -2395,42 +2379,42 @@ void projective_space::create_Maruta_Hamada_arc2(
 		cout << "projective_space::create_Maruta_Hamada_arc2 "
 				"n != 2" << endl;
 		exit(1);
-		}
+	}
 	if (q != 13) {
 		cout << "projective_space::create_Maruta_Hamada_arc2 "
 				"q != 13" << endl;
 		exit(1);
-		}
+	}
 	for (i = 0; i < 24; i++) {
 		points[i] = rank_point(data + i * 3);
 		cout << "point " << i << " has rank " << points[i] << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "projective_space::create_Maruta_Hamada_arc2 "
 				"points: ";
 		int_vec_print(cout, points, 25);
 		cout << endl;
-		}
+	}
 	for (i = 0; i < 9; i++) {
 		L[i] = Polarity_point_to_hyperplane[points[i]];
-		}
+	}
 	size = 0;
 	for (i = 0; i < 9; i++) {
 		for (j = i + 1; j < 9; j++) {
 			a = intersection_of_two_lines(L[i], L[j]);
 			the_arc[size++] = a;
-			}
 		}
+	}
 	for (i = 9; i < 24; i++) {
 		the_arc[size++] = points[i];
-		}
+	}
 	if (f_v) {
 		cout << "projective_space::create_Maruta_Hamada_arc2: "
 				"there are " << size << " points on the arc: ";
 		lint_vec_print(cout, the_arc, size);
 		cout << endl;
-		}
+	}
 }
 
 
@@ -2448,23 +2432,23 @@ void projective_space::create_pasch_arc(
 		cout << "projective_space::create_pasch_arc "
 				"n != 2" << endl;
 		exit(1);
-		}
+	}
 #if 0
 	if (q != 8) {
 		cout << "projective_space::create_pasch_arc "
 				"q != 8" << endl;
 		exit(1);
-		}
+	}
 #endif
 	for (i = 0; i < 5; i++) {
 		points[i] = rank_point(data + i * 3);
-		}
+	}
 
 	if (f_v) {
 		cout << "projective_space::create_pasch_arc() points: ";
 		int_vec_print(cout, points, 5);
 		cout << endl;
-		}
+	}
 	
 	L[0] = Line_through_two_points[points[0] * N_points + points[1]];
 	L[1] = Line_through_two_points[points[0] * N_points + points[3]];
@@ -2475,7 +2459,7 @@ void projective_space::create_pasch_arc(
 		cout << "L:";
 		int_vec_print(cout, L, 4);
 		cout << endl;
-		}
+	}
 
 	size = 0;	
 	for (h = 0; h < 4; h++) {
@@ -2483,19 +2467,19 @@ void projective_space::create_pasch_arc(
 			b = Lines[L[h] * r + i];
 			if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
 				continue;
-				}
+			}
 			for (j = size; j > idx; j--) {
 				the_arc[j] = the_arc[j - 1];
-				}
+			}
 			the_arc[idx] = b;
 			size++;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "there are " << size << " points on the pasch lines: ";
 		lint_vec_print(cout, the_arc, size);
 		cout << endl;
-		}
+	}
 
 	
 	v[0] = 1;
@@ -2505,10 +2489,10 @@ void projective_space::create_pasch_arc(
 	if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
 		cout << "error, special point already there" << endl;
 		exit(1);
-		}
+	}
 	for (j = size; j > idx; j--) {
 		the_arc[j] = the_arc[j - 1];
-		}
+	}
 	the_arc[idx] = b;
 	size++;
 		
@@ -2518,8 +2502,7 @@ void projective_space::create_pasch_arc(
 				<< size << " points on the arc: ";
 		lint_vec_print(cout, the_arc, size);
 		cout << endl;
-		}
-
+	}
 }
 
 void projective_space::create_Cheon_arc(
@@ -2537,12 +2520,12 @@ void projective_space::create_Cheon_arc(
 	if (n != 2) {
 		cout << "projective_space::create_Cheon_arc n != 2" << endl;
 		exit(1);
-		}
+	}
 #if 0
 	if (q != 8) {
 		cout << "projective_space::create_Cheon_arc q != 8" << endl;
 		exit(1);
-		}
+	}
 #endif
 	for (i = 0; i < 9; i++) {
 		pencil[i] = 0;
@@ -2552,13 +2535,13 @@ void projective_space::create_Cheon_arc(
 	}
 	for (i = 0; i < 3; i++) {
 		points[i] = rank_point(data + i * 3);
-		}
+	}
 
 	if (f_v) {
 		cout << "points: ";
 		int_vec_print(cout, points, 5);
 		cout << endl;
-		}
+	}
 	
 	L[0] = Line_through_two_points[points[0] * N_points + points[1]];
 	L[1] = Line_through_two_points[points[1] * N_points + points[2]];
@@ -2568,7 +2551,7 @@ void projective_space::create_Cheon_arc(
 		cout << "L:";
 		int_vec_print(cout, L, 3);
 		cout << endl;
-		}
+	}
 
 	size = 0;	
 	for (h = 0; h < 3; h++) {
@@ -2576,21 +2559,21 @@ void projective_space::create_Cheon_arc(
 			b = Lines[L[h] * r + i];
 			if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
 				continue;
-				}
+			}
 			for (j = size; j > idx; j--) {
 				the_arc[j] = the_arc[j - 1];
-				}
+			}
 			the_arc[idx] = b;
 			size++;
-			}
 		}
+	}
 
 	if (f_v) {
 		cout << "projective_space::create_Cheon_arc there are "
 				<< size << " points on the 3 lines: ";
 		lint_vec_print(cout, the_arc, size);
 		cout << endl;
-		}
+	}
 
 
 
@@ -2599,11 +2582,11 @@ void projective_space::create_Cheon_arc(
 
 		if (f_v) {
 			cout << "h=" << h << endl;
-			}
+		}
 
 		for (i = 0; i < r; i++) {
 			pencil[i] = Lines_on_point[points[h] * r + i];
-			}
+		}
 
 
 		j = 0;
@@ -2613,16 +2596,16 @@ void projective_space::create_Cheon_arc(
 				continue;
 			Pencil[h * 7 + j] = b;
 			j++;
-			}
+		}
 		if (j != 7) {
 			cout << "j=" << j << endl;
 			exit(1);
-			}
 		}
+	}
 	if (f_v) {
 		cout << "Pencil:" << endl;
 		print_integer_matrix_width(cout, Pencil, 3, 7, 7, 4);
-		}
+	}
 
 	for (i = 0; i < 7; i++) {
 		a = Pencil[0 * 7 + i];
@@ -2631,31 +2614,31 @@ void projective_space::create_Cheon_arc(
 			if (f_v) {
 				cout << "i=" << i << " a=" << a << " j="
 						<< j << " b=" << b << endl;
-				}
+			}
 			c = Line_intersection[a * N_lines + b];
 			if (f_v) {
 				cout << "c=" << c << endl;
-				}
+			}
 			if (Sorting.lint_vec_search(the_arc, size, c, idx, 0)) {
 				continue;
-				}
+			}
 			for (t = size; t > idx; t--) {
 				the_arc[t] = the_arc[t - 1];
-				}
+			}
 			the_arc[idx] = c;
 			size++;
 #if 0
 			if (size > 31) {
 				cout << "create_Cheon_arc size=" << size << endl;
-				}
-#endif
 			}
+#endif
 		}
+	}
 	if (f_v) {
 		cout << "there are " << size << " points on the Cheon lines: ";
 		lint_vec_print(cout, the_arc, size);
 		cout << endl;
-		}
+	}
 
 	
 }
@@ -2672,14 +2655,14 @@ void projective_space::create_regular_hyperoval(
 		cout << "projective_space::create_regular_hyperoval "
 				"n != 2" << endl;
 		exit(1);
-		}
+	}
 
 	for (i = 0; i < q; i++) {
 		v[0] = F->mult(i, i);
 		v[1] = i;
 		v[2] = 1;
 		the_arc[i] = rank_point(v);		
-		}
+	}
 	v[0] = 1;
 	v[1] = 0;
 	v[2] = 0;
@@ -2697,7 +2680,7 @@ void projective_space::create_regular_hyperoval(
 				"there are " << size << " points on the arc: ";
 		lint_vec_print(cout, the_arc, size);
 		cout << endl;
-		}
+	}
 }
 
 void projective_space::create_translation_hyperoval(
@@ -2711,19 +2694,19 @@ void projective_space::create_translation_hyperoval(
 	if (f_v) {
 		cout << "projective_space::create_translation_hyperoval" << endl;
 		cout << "exponent = " << exponent << endl;
-		}
+	}
 	if (n != 2) {
 		cout << "projective_space::create_translation_hyperoval "
 				"n != 2" << endl;
 		exit(1);
-		}
+	}
 
 	for (i = 0; i < q; i++) {
 		v[0] = F->frobenius_power(i, exponent);
 		v[1] = i;
 		v[2] = 1;
 		the_arc[i] = rank_point(v);		
-		}
+	}
 	v[0] = 1;
 	v[1] = 0;
 	v[2] = 0;
@@ -2741,11 +2724,11 @@ void projective_space::create_translation_hyperoval(
 				"there are " << size << " points on the arc: ";
 		lint_vec_print(cout, the_arc, size);
 		cout << endl;
-		}
+	}
 	if (f_v) {
 		cout << "projective_space::create_translation_hyperoval "
 				"done" << endl;
-		}
+	}
 }
 
 void projective_space::create_Segre_hyperoval(
@@ -2759,14 +2742,14 @@ void projective_space::create_Segre_hyperoval(
 		cout << "projective_space::create_Segre_hyperoval "
 				"n != 2" << endl;
 		exit(1);
-		}
+	}
 
 	for (i = 0; i < q; i++) {
 		v[0] = F->power(i, 6);
 		v[1] = i;
 		v[2] = 1;
 		the_arc[i] = rank_point(v);		
-		}
+	}
 	v[0] = 1;
 	v[1] = 0;
 	v[2] = 0;
@@ -2784,7 +2767,7 @@ void projective_space::create_Segre_hyperoval(
 				"there are " << size << " points on the arc: ";
 		lint_vec_print(cout, the_arc, size);
 		cout << endl;
-		}
+	}
 }
 
 void projective_space::create_Payne_hyperoval(
@@ -2800,11 +2783,11 @@ void projective_space::create_Payne_hyperoval(
 
 	if (f_v) {
 		cout << "projective_space::create_Payne_hyperoval" << endl;
-		}
+	}
 	if (n != 2) {
 		cout << "projective_space::create_Payne_hyperoval n != 2" << endl;
 		exit(1);
-		}
+	}
 	exponent = q - 1;
 	a.create(6, __FILE__, __LINE__);
 	b.create(exponent, __FILE__, __LINE__);
@@ -2813,25 +2796,25 @@ void projective_space::create_Payne_hyperoval(
 	one_sixth = u.as_int();
 	while (one_sixth < 0) {
 		one_sixth += exponent;
-		}
+	}
 	if (f_v) {
 		cout << "one_sixth = " << one_sixth << endl;
-		}
+	}
 
 	a.create(2, __FILE__, __LINE__);
 	D.extended_gcd(a, b, g, u, u2, 0 /* verbose_level */);
 	one_half = u.as_int();
 	while (one_half < 0) {
 		one_half += exponent;
-		}
+	}
 	if (f_v) {
 		cout << "one_half = " << one_half << endl;
-		}
+	}
 
 	five_sixth = (5 * one_sixth) % exponent;
 	if (f_v) {
 		cout << "five_sixth = " << five_sixth << endl;
-		}
+	}
 
 	for (i = 0; i < q; i++) {
 		v[0] = F->add3(
@@ -2841,7 +2824,7 @@ void projective_space::create_Payne_hyperoval(
 		v[1] = i;
 		v[2] = 1;
 		the_arc[i] = rank_point(v);		
-		}
+	}
 	v[0] = 1;
 	v[1] = 0;
 	v[2] = 0;
@@ -2859,7 +2842,7 @@ void projective_space::create_Payne_hyperoval(
 				"there are " << size << " points on the arc: ";
 		lint_vec_print(cout, the_arc, size);
 		cout << endl;
-		}
+	}
 }
 
 void projective_space::create_Cherowitzo_hyperoval(
@@ -2875,23 +2858,23 @@ void projective_space::create_Cherowitzo_hyperoval(
 
 	if (f_v) {
 		cout << "projective_space::create_Cherowitzo_hyperoval" << endl;
-		}
+	}
 	if (n != 2) {
 		cout << "projective_space::create_Cherowitzo_hyperoval "
 				"n != 2" << endl;
 		exit(1);
-		}
+	}
 	h = F->e;
 	if (EVEN(h)) {
 		cout << "projective_space::create_Cherowitzo_hyperoval "
 				"field degree must be odd" << endl;
 		exit(1);
-		}
+	}
 	if (F->p != 2) {
 		cout << "projective_space::create_Cherowitzo_hyperoval "
 				"needs characteristic 2" << endl;
 		exit(1);
-		}
+	}
 	exponent = q - 1;
 	one_half = (h + 1) >> 1;
 	sigma = NT.i_power_j(2, one_half);
@@ -2907,7 +2890,7 @@ void projective_space::create_Cherowitzo_hyperoval(
 		v[1] = i;
 		v[2] = 1;
 		the_arc[i] = rank_point(v);		
-		}
+	}
 	v[0] = 1;
 	v[1] = 0;
 	v[2] = 0;
@@ -2925,7 +2908,7 @@ void projective_space::create_Cherowitzo_hyperoval(
 				"there are " << size << " points on the arc: ";
 		lint_vec_print(cout, the_arc, size);
 		cout << endl;
-		}
+	}
 }
 
 void projective_space::create_OKeefe_Penttila_hyperoval_32(
@@ -2938,24 +2921,24 @@ void projective_space::create_OKeefe_Penttila_hyperoval_32(
 	if (f_v) {
 		cout << "projective_space::create_OKeefe_Penttila_hyperoval_32"
 				<< endl;
-		}
+	}
 	if (n != 2) {
 		cout << "projective_space::create_OKeefe_Penttila_hyperoval_32 "
 				"n != 2" << endl;
 		exit(1);
-		}
+	}
 	if (F->q != 32) {
 		cout << "projective_space::create_OKeefe_Penttila_hyperoval_32 "
 				"needs q=32" << endl;
 		exit(1);
-		}
+	}
 
 	for (i = 0; i < q; i++) {
 		v[0] = F->OKeefe_Penttila_32(i);
 		v[1] = i;
 		v[2] = 1;
 		the_arc[i] = rank_point(v);		
-		}
+	}
 	v[0] = 1;
 	v[1] = 0;
 	v[2] = 0;
@@ -2973,7 +2956,7 @@ void projective_space::create_OKeefe_Penttila_hyperoval_32(
 				"there are " << size << " points on the arc: ";
 		lint_vec_print(cout, the_arc, size);
 		cout << endl;
-		}
+	}
 }
 
 
@@ -2988,22 +2971,22 @@ void projective_space::line_intersection_type(
 
 	if (f_v) {
 		cout << "projective_space::line_intersection_type" << endl;
-		}
+	}
 	if (Lines_on_point == NULL) {
 		line_intersection_type_basic(set, set_size, type, verbose_level);
-		}
+	}
 	else {
 		for (i = 0; i < N_lines; i++) {
 			type[i] = 0;
-			}
+		}
 		for (i = 0; i < set_size; i++) {
 			a = set[i];
 			for (j = 0; j < r; j++) {
 				b = Lines_on_point[a * r + j];
 				type[b]++;
-				}
 			}
 		}
+	}
 }
 
 void projective_space::line_intersection_type_basic(
@@ -3016,7 +2999,7 @@ void projective_space::line_intersection_type_basic(
 
 	if (f_v) {
 		cout << "projective_space::line_intersection_type_basic" << endl;
-		}
+	}
 	d = n + 1;
 	M = NEW_int(3 * d);
 	for (rk = 0; rk < N_lines; rk++) {
@@ -3026,15 +3009,15 @@ void projective_space::line_intersection_type_basic(
 			for (i = 0; i < 2; i++) {
 				for (j = 0; j < d; j++) {
 					M[i * d + j] = Grass_lines->M[i * d + j];
-					}
 				}
+			}
 			unrank_point(M + 2 * d, set[h]);
 			if (F->rank_of_rectangular_matrix(M,
 					3, d, 0 /*verbose_level*/) == 2) {
 				type[rk]++;
-				}
-			} // next h
-		} // next rk
+			}
+		} // next h
+	} // next rk
 	FREE_int(M);
 }
 
@@ -3062,7 +3045,7 @@ void projective_space::line_intersection_type_through_hyperplane(
 	if (f_v) {
 		cout << "projective_space::line_intersection_type_through_"
 				"hyperplane set_size=" << set_size << endl;
-		}
+	}
 	d = n + 1;
 	M = NEW_int(3 * d);
 	M2 = NEW_int(3 * d);
@@ -3076,21 +3059,21 @@ void projective_space::line_intersection_type_through_hyperplane(
 			cout << set[i] << " : ";
 			int_vec_print(cout, M, d);
 			cout << endl;
-			}
+		}
 		if (M[d - 1] == 0) {
 			set1[sz1++] = set[i];
-			}
+		}
 		else {
 			set2[sz2++] = set[i];
-			}
 		}
+	}
 
 	Sorting.lint_vec_heapsort(set1, sz1);
 	
 	if (f_vv) {
 		cout << "projective_space::line_intersection_type_through_"
 				"hyperplane sz1=" << sz1 << " sz2=" << sz2 << endl;
-		}
+	}
 	
 
 	// do the line type in the hyperplane:
@@ -3100,7 +3083,7 @@ void projective_space::line_intersection_type_through_hyperplane(
 		cout << "projective_space::line_intersection_type_through_"
 				"hyperplane nb_pts_in_hyperplane="
 				<< nb_pts_in_hyperplane << endl;
-		}
+	}
 
 	cnt1 = NEW_int(nb_pts_in_hyperplane);
 	Pts1 = NEW_int(nb_pts_in_hyperplane * d);
@@ -3117,11 +3100,11 @@ void projective_space::line_intersection_type_through_hyperplane(
 		//unrank_point(Pts1 + i * d, set1[i]);
 		if (Sorting.lint_vec_search(set1, sz1, i1, idx, 0)) {
 			cnt1[i] = 1;
-			}
 		}
+	}
 	for (i = 0; i < sz2; i++) {
 		unrank_point(Pts2 + i * d, set2[i]);
-		}
+	}
 
 	f_taken = NEW_int(sz2);
 	for (i = 0; i < nb_pts_in_hyperplane; i++) {
@@ -3129,28 +3112,28 @@ void projective_space::line_intersection_type_through_hyperplane(
 			cout << "projective_space::line_intersection_type_through_"
 					"hyperplane checking lines through point " << i
 					<< " / " << nb_pts_in_hyperplane << ":" << endl;
-			}
+		}
 		int_vec_zero(f_taken, sz2);
 		for (j = 0; j < sz2; j++) {
 			if (f_taken[j]) {
 				continue;
-				}
+			}
 			if (f_vv) {
 				cout << "projective_space::line_intersection_type_through_"
 						"hyperplane j=" << j << " / " << sz2 << ":" << endl;
-				}
+			}
 			int_vec_copy(Pts1 + i * d, M, d);
 			int_vec_copy(Pts2 + j * d, M + d, d);
 			f_taken[j] = TRUE;
 			if (f_vv) {
 				int_matrix_print(M, 2, d);
-				}
+			}
 			rk = Grass_lines->rank_lint_here(M, 0 /* verbose_level */);
 			if (f_vv) {
 				cout << "projective_space::line_intersection_type_through_"
 						"hyperplane line rk=" << rk << " cnt1="
 						<< cnt1[rk] << ":" << endl;
-				}
+			}
 			cnt = 1 + cnt1[i];
 			for (h = j + 1; h < sz2; h++) {
 				int_vec_copy(M, M2, 2 * d);
@@ -3159,11 +3142,11 @@ void projective_space::line_intersection_type_through_hyperplane(
 						3, d, 0 /*verbose_level*/) == 2) {
 					cnt++;
 					f_taken[h] = TRUE;
-					}
 				}
-			type[rk] = cnt;
 			}
+			type[rk] = cnt;
 		}
+	}
 	FREE_int(f_taken);
 	FREE_int(M);
 	FREE_int(M2);
@@ -3176,7 +3159,7 @@ void projective_space::line_intersection_type_through_hyperplane(
 	if (f_v) {
 		cout << "projective_space::line_intersection_type_through_"
 				"hyperplane done" << endl;
-		}
+	}
 }
 
 void projective_space::find_secant_lines(
@@ -3195,7 +3178,7 @@ void projective_space::find_secant_lines(
 	if (f_v) {
 		cout << "projective_space::find_secant_lines "
 				"set_size=" << set_size << endl;
-		}
+	}
 	d = n + 1;
 	M = NEW_int(2 * d);
 	nb_lines = 0;
@@ -3210,19 +3193,19 @@ void projective_space::find_secant_lines(
 					cout << "projective_space::find_secant_lines "
 							"nb_lines == max_lines" << endl;
 					exit(1);
-					}
+				}
 				for (h = nb_lines; h > idx; h--) {
 					lines[h] = lines[h - 1];
-					}
+				}
 				lines[idx] = rk;
 				nb_lines++;
-				}
 			}
 		}
+	}
 	FREE_int(M);
 	if (f_v) {
 		cout << "projective_space::find_secant_lines done" << endl;
-		}
+	}
 }
 
 void projective_space::find_lines_which_are_contained(
@@ -3752,14 +3735,14 @@ void projective_space::point_types_of_line_set(
 
 	for (i = 0; i < N_points; i++) {
 		type[i] = 0;
-		}
+	}
 	for (i = 0; i < set_size; i++) {
 		a = set_of_lines[i];
 		for (j = 0; j < k; j++) {
 			b = Lines[a * k + j];
 			type[b]++;
-			}
 		}
+	}
 }
 
 void projective_space::point_types_of_line_set_int(
@@ -3770,14 +3753,14 @@ void projective_space::point_types_of_line_set_int(
 
 	for (i = 0; i < N_points; i++) {
 		type[i] = 0;
-		}
+	}
 	for (i = 0; i < set_size; i++) {
 		a = set_of_lines[i];
 		for (j = 0; j < k; j++) {
 			b = Lines[a * k + j];
 			type[b]++;
-			}
 		}
+	}
 }
 
 void projective_space::find_external_lines(
@@ -3794,9 +3777,9 @@ void projective_space::find_external_lines(
 	for (i = 0; i < N_lines; i++) {
 		if (type[i]) {
 			continue;
-			}
-		external_lines[nb_external_lines++] = i;
 		}
+		external_lines[nb_external_lines++] = i;
+	}
 	FREE_int(type);
 }
 
@@ -3814,9 +3797,9 @@ void projective_space::find_tangent_lines(
 	for (i = 0; i < N_lines; i++) {
 		if (type[i] != 1) {
 			continue;
-			}
-		tangent_lines[nb_tangent_lines++] = i;
 		}
+		tangent_lines[nb_tangent_lines++] = i;
+	}
 	FREE_int(type);
 }
 
@@ -3834,9 +3817,9 @@ void projective_space::find_secant_lines(
 	for (i = 0; i < N_lines; i++) {
 		if (type[i] != 2) {
 			continue;
-			}
-		secant_lines[nb_secant_lines++] = i;
 		}
+		secant_lines[nb_secant_lines++] = i;
+	}
 	FREE_int(type);
 }
 
@@ -3854,9 +3837,9 @@ void projective_space::find_k_secant_lines(
 	for (i = 0; i < N_lines; i++) {
 		if (type[i] != k) {
 			continue;
-			}
-		secant_lines[nb_secant_lines++] = i;
 		}
+		secant_lines[nb_secant_lines++] = i;
+	}
 	FREE_int(type);
 }
 
@@ -3879,26 +3862,26 @@ void projective_space::Baer_subline(long int *pts3,
 
 	if (f_v) {
 		cout << "projective_space::Baer_subline" << endl;
-		}
+	}
 	if (ODD(F->e)) {
 		cout << "projective_space::Baer_subline field degree "
 				"must be even (because we need a "
 				"quadratic subfield)" << endl;
 		exit(1);
-		}
+	}
 	len = n + 1;
 	M = NEW_int(3 * len);
 	base_cols = NEW_int(len);
 	z = NEW_int(len);
 	for (j = 0; j < 3; j++) {
 		unrank_point(M + j * len, pts3[j]);
-		}
+	}
 	if (f_vv) {
 		cout << "projective_space::Baer_subline" << endl;
 		cout << "M=" << endl;
 		print_integer_matrix_width(cout,
 				M, 3, len, len, F->log10_of_q);
-		}
+	}
 	rk = F->Gauss_simple(M,
 			3, len, base_cols, verbose_level - 3);
 	if (f_vv) {
@@ -3910,23 +3893,23 @@ void projective_space::Baer_subline(long int *pts3,
 		cout << "basis:" << endl;
 		print_integer_matrix_width(cout,
 				M, rk, len, len, F->log10_of_q);
-		}
+	}
 
 	if (rk != 2) {
 		cout << "projective_space::Baer_subline: rk should "
 				"be 2 (points are not collinear)" << endl;
 		exit(1);
-		}
+	}
 	
 	Basis = NEW_int(rk * len);
 	for (j = 0; j < rk * len; j++) {
 		Basis[j] = M[j];
-		}
+	}
 	if (f_vv) {
 		cout << "projective_space::Baer_subline basis:" << endl;
 		print_integer_matrix_width(cout,
 				Basis, rk, len, len, F->log10_of_q);
-		}
+	}
 		
 	N = NEW_int(3 * rk);
 	for (j = 0; j < 3; j++) {
@@ -3941,7 +3924,7 @@ void projective_space::Baer_subline(long int *pts3,
 		F->reduce_mod_subspace_and_get_coefficient_vector(
 			rk, len, Basis, base_cols, 
 			M + j * len, N + j * rk, verbose_level - 3);
-		}
+	}
 	//cout << "after reduce_mod_subspace_and_get_
 	//coefficient_vector: M=" << endl;
 	//print_integer_matrix_width(cout, M, 3, len, len, F->log10_of_q);
@@ -3951,7 +3934,7 @@ void projective_space::Baer_subline(long int *pts3,
 				"local coordinates in the subspace are N=" << endl;
 		print_integer_matrix_width(cout,
 				N, 3, rk, rk, F->log10_of_q);
-		}
+	}
 	int *Frame;
 	int *base_cols2;
 	int rk2, a;
@@ -3961,21 +3944,21 @@ void projective_space::Baer_subline(long int *pts3,
 	for (j = 0; j < 3; j++) {
 		for (i = 0; i < 2; i++) {
 			Frame[i * 3 + j] = N[j * 2 + i];
-			}
 		}
+	}
 	if (f_vv) {
 		cout << "projective_space::Baer_subline "
 				"Frame=" << endl;
 		print_integer_matrix_width(cout,
 				Frame, 2, 3, 3, F->log10_of_q);
-		}
+	}
 	rk2 = F->Gauss_simple(Frame,
 			2, 3, base_cols2, verbose_level - 3);
 	if (rk2 != 2) {
 		cout << "projective_space::Baer_subline: "
 				"rk2 should be 2" << endl;
 		exit(1);
-		}
+	}
 	if (f_vv) {
 		cout << "projective_space::Baer_subline "
 				"after Gauss Frame=" << endl;
@@ -3985,18 +3968,18 @@ void projective_space::Baer_subline(long int *pts3,
 				"base_cols2=";
 		int_vec_print(cout, base_cols2, rk2);
 		cout << endl;
-		}
+	}
 	for (i = 0; i < 2; i++) {
 		a = Frame[i * 3 + 2];
 		for (j = 0; j < 2; j++) {
 			N[i * 2 + j] = F->mult(a, N[i * 2 + j]);
-			}
 		}
+	}
 	if (f_vv) {
 		cout << "projective_space::Baer_subline "
 				"local coordinates in the subspace are N=" << endl;
 		print_integer_matrix_width(cout, N, 3, rk, rk, F->log10_of_q);
-		}
+	}
 
 #if 0
 	int *Local_pts;
@@ -4010,11 +3993,11 @@ void projective_space::Baer_subline(long int *pts3,
 	for (i = 0; i < nb_pts; i++) {
 		for (j = 0; j < 2; j++) {
 			w[j] = N[i * 2 + j];
-			}
+		}
 		PG_element_rank_modified(*F, w, 1, 2, a);
 		Local_pts[i] = a;
 		Local_pts_sorted[i] = a;
-		}
+	}
 	int_vec_heapsort(Local_pts_sorted, nb_pts);
 	if (f_vv) {
 		cout << "Local_pts=" << endl;
@@ -4023,7 +4006,7 @@ void projective_space::Baer_subline(long int *pts3,
 		cout << "Local_pts_sorted=" << endl;
 		int_vec_print(cout, Local_pts_sorted, nb_pts);
 		cout << endl;
-		}
+	}
 #endif
 
 
@@ -4041,58 +4024,58 @@ void projective_space::Baer_subline(long int *pts3,
 		cout << "projective_space::Baer_subline q0=" << q0 << endl;
 		cout << "projective_space::Baer_subline index=" << index << endl;
 		cout << "projective_space::Baer_subline nb_pts=" << nb_pts << endl;
-		}
+	}
 
 #if 0
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < len; j++) {
 			if (i < 2) {
 				z[j] = Basis[i * len + j];
-				}
+			}
 			else {
 				z[j] = F->add(Basis[0 * len + j], Basis[1 * len + j]);
-				}
 			}
-		pts[i] = rank_point(z);
 		}
+		pts[i] = rank_point(z);
+	}
 #endif
 	for (t = 0; t < 3; t++) {
 		if (f_vvv) {
 			cout << "t=" << t << endl;
-			}
+		}
 		F->mult_vector_from_the_left(N + t * 2, Basis, z, 2, len);
 		if (f_vvv) {
 			cout << "z=w*Basis";
 			int_vec_print(cout, z, len);
 			cout << endl;
-			}
+		}
 		a = rank_point(z);
 		pts[t] = a;
-		}
+	}
 	for (t = 2; t < q0; t++) {
 		a = F->alpha_power((t - 1) * index);
 		if (f_vvv) {
 			cout << "t=" << t << " a=" << a << endl;
-			}
+		}
 		for (j = 0; j < 2; j++) {
 			w[j] = F->add(N[0 * 2 + j], F->mult(a, N[1 * 2 + j]));
-			}
+		}
 		if (f_vvv) {
 			cout << "w=";
 			int_vec_print(cout, w, 2);
 			cout << endl;
-			}
+		}
 		F->mult_vector_from_the_left(w, Basis, z, 2, len);
 		if (f_vvv) {
 			cout << "z=w*Basis";
 			int_vec_print(cout, z, len);
 			cout << endl;
-			}
+		}
 		a = rank_point(z);
 		pts[t + 1] = a;
 		if (f_vvv) {
 			cout << "rank=" << a << endl;
-			}
+		}
 #if 0
 		PG_element_rank_modified(*F, w, 1, 2, a);
 		pts[t] = a;
@@ -4101,19 +4084,19 @@ void projective_space::Baer_subline(long int *pts3,
 			if (f_vv) {
 				cout << "did not find this point in the list of "
 						"points, hence not contained in Baer subline" << endl;
-				}
-			goto done;
 			}
+			goto done;
+		}
 #endif
 		
-		}
+	}
 
 	if (f_vv) {
 		cout << "projective_space::Baer_subline The Baer subline is";
 		lint_vec_print(cout, pts, nb_pts);
 		cout << endl;
 		print_set(pts, nb_pts);
-		}
+	}
 	
 
 

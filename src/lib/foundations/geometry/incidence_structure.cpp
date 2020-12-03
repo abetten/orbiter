@@ -156,8 +156,9 @@ void incidence_structure::init_hjelmslev(hjelmslev *H, int verbose_level)
 			cout << "the rank is " << mtx_rk << endl;
 
 			for (h = 0; h < n; h++) {
-				if (Mtx[k * n + h])
+				if (Mtx[k * n + h]) {
 					break;
+				}
 			}
 			if (h < n) {
 				if (f_v) {

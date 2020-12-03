@@ -401,6 +401,10 @@ class cryptography_domain;
 class boolean_function_domain;
 class set_builder;
 class set_builder_description;
+class finite_field_description;
+class orbiter_symbol_table_entry;
+class orbiter_symbol_table;
+
 
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)

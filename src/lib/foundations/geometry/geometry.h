@@ -788,6 +788,8 @@ public:
 		int spread_size, int verbose_level);
 	void latex_matrix(std::ostream &ost, int *p);
 	void latex_matrix_numerical(std::ostream &ost, int *p);
+	void create_Schlaefli_graph(int *&Adj, int &sz, int verbose_level);
+
 };
 
 
