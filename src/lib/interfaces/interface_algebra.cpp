@@ -345,14 +345,14 @@ void interface_algebra::do_linear_group(
 	if (Descr->f_override_polynomial) {
 		cout << "creating finite field of order q=" << Descr->input_q
 				<< " using override polynomial " << Descr->override_polynomial << endl;
-		F->init_override_polynomial(Descr->input_q,
+		F->init_override_polynomial(strtoi(Descr->input_q),
 				Descr->override_polynomial, verbose_level - 3);
 	}
 	else {
 		cout << "interface_algebra::do_linear_group creating finite field "
 				"of order q=" << Descr->input_q
 				<< " using the default polynomial (if necessary)" << endl;
-		F->finite_field_init(Descr->input_q, 0);
+		F->finite_field_init(strtoi(Descr->input_q), 0);
 	}
 
 	Descr->F = F;
@@ -363,14 +363,14 @@ void interface_algebra::do_linear_group(
 	LG = NEW_OBJECT(linear_group);
 	if (f_v) {
 		cout << "interface_algebra::do_linear_group before LG->init, "
-				"creating the group" << endl;
-		}
+				"before LG->linear_group_init" << endl;
+	}
 
-	LG->init(Descr, verbose_level - 5);
+	LG->linear_group_init(Descr, verbose_level - 5);
 
 	if (f_v) {
-		cout << "interface_algebra::do_linear_group after LG->init" << endl;
-		}
+		cout << "interface_algebra::do_linear_group after LG->linear_group_init" << endl;
+	}
 
 	action *A;
 
@@ -397,8 +397,8 @@ void interface_algebra::do_linear_group(
 			if (((i + 1) % 3) == 0 && i < LG->nice_gens->len - 1) {
 				cout << "$$" << endl;
 				cout << "$$" << endl;
-				}
 			}
+		}
 		cout << "$$" << endl;
 		LG->nice_gens->print_as_permutation(cout);
 	}

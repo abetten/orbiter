@@ -160,7 +160,11 @@ public:
 
 
 	int n;
-	int input_q;
+
+	// change input_q to string so that we can allow symbols:
+	//int input_q;
+	std::string input_q;
+
 	int f_override_polynomial;
 	std::string override_polynomial;
 	finite_field *F;
@@ -251,7 +255,7 @@ public:
 	~linear_group();
 	void null();
 	void freeself();
-	void init(linear_group_description *description,
+	void linear_group_init(linear_group_description *description,
 		int verbose_level);
 	void init_PGL2q_OnConic(int verbose_level);
 	void init_wedge_action(int verbose_level);

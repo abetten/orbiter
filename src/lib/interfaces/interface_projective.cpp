@@ -663,8 +663,8 @@ void interface_projective::do_create_surface_atlas(int q_max, int verbose_level)
 
 		T[cur].LG = NEW_OBJECT(linear_group);
 
-		cout << "before LG->init" << endl;
-		T[cur].LG->init(T[cur].Descr, verbose_level);
+		cout << "before LG->linear_group_init" << endl;
+		T[cur].LG->linear_group_init(T[cur].Descr, verbose_level);
 
 
 

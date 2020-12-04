@@ -321,16 +321,16 @@ void packing_was::init_N(int verbose_level)
 					"creating the group" << endl;
 			}
 
-		if (P->q != Descr->N_Descr->input_q) {
+		if (P->q != strtoi(Descr->N_Descr->input_q)) {
 			cout << "packing_was::init_N "
 					"q != N_Descr->input_q" << endl;
 			exit(1);
 		}
 		Descr->N_Descr->F = P->F;
-		N_LG->init(Descr->N_Descr, verbose_level - 1);
+		N_LG->linear_group_init(Descr->N_Descr, verbose_level - 1);
 
 		if (f_v) {
-			cout << "packing_was::init_N after N_LG->init" << endl;
+			cout << "packing_was::init_N after N_LG->linear_group_init" << endl;
 			}
 		N_A = N_LG->A2;
 
@@ -382,10 +382,10 @@ void packing_was::init_H(int verbose_level)
 				"creating the group" << endl;
 	}
 
-	H_LG->init(Descr->H_Descr, verbose_level - 1);
+	H_LG->linear_group_init(Descr->H_Descr, verbose_level - 1);
 
 	if (f_v) {
-		cout << "packing_was::init_H after H_LG->init" << endl;
+		cout << "packing_was::init_H after H_LG->linear_group_init" << endl;
 	}
 
 
