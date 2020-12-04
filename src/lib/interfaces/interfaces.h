@@ -530,7 +530,15 @@ public:
 	void print_help(int argc, std::string *argv, int i, int verbose_level);
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
 	int read_arguments(int argc, std::string *argv, int i0, int verbose_level);
+	void read_activity_arguments(int argc,
+			std::string *argv, int &i, int verbose_level);
 	void worker(orbiter_top_level_session *Orbiter_top_level_session, int verbose_level);
+	void definition(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void do_finite_field_activity(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void do_group_theoretic_activity(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
 
 };
 
@@ -589,6 +597,12 @@ public:
 			std::string *argv, int i0);
 	void handle_everything(int argc, std::string *Argv, int i, int verbose_level);
 	void parse_and_execute(int argc, std::string *Argv, int i, int verbose_level);
+	void *get_object(int idx);
+	int find_symbol(std::string &label);
+	void find_symbols(std::vector<std::string> &Labels, int *&Idx);
+	void print_symbol_table();
+	void add_symbol_table_entry(std::string &label,
+			orbiter_symbol_table_entry *Symb, int verbose_level);
 
 };
 

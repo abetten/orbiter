@@ -2809,8 +2809,18 @@ double strtof(std::string &str)
 	return f;
 }
 
+int string_starts_with_a_number(std::string &str)
+{
+	char c;
 
-
+	c = str.c_str()[0];
+	if (c >= '0' && c <= '9') {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
 
 }}
 

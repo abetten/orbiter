@@ -23,7 +23,7 @@ linear_group_description::linear_group_description()
 	GL_wreath_Sym_n = 0;
 
 	n = 0;
-	input_q = 0;
+	//input_q = 0;
 	f_override_polynomial = FALSE;
 	//override_polynomial;
 	F = NULL;
@@ -99,7 +99,7 @@ int linear_group_description::read_arguments(
 		// GL, GGL, SL, SSL
 		if (stringcmp(argv[i], "-GL") == 0) {
 			n = strtoi(argv[++i]);
-			input_q = strtoi(argv[++i]);
+			input_q.assign(argv[++i]);
 			f_projective = FALSE;
 			f_general = TRUE;
 			f_affine = FALSE;
@@ -109,7 +109,7 @@ int linear_group_description::read_arguments(
 		}
 		else if (stringcmp(argv[i], "-GGL") == 0) {
 			n = strtoi(argv[++i]);
-			input_q = strtoi(argv[++i]);
+			input_q.assign(argv[++i]);
 			f_projective = FALSE;
 			f_general = TRUE;
 			f_affine = FALSE;
@@ -119,7 +119,7 @@ int linear_group_description::read_arguments(
 		}
 		else if (stringcmp(argv[i], "-SL") == 0) {
 			n = strtoi(argv[++i]);
-			input_q = strtoi(argv[++i]);
+			input_q.assign(argv[++i]);
 			f_projective = FALSE;
 			f_general = TRUE;
 			f_affine = FALSE;
@@ -129,7 +129,7 @@ int linear_group_description::read_arguments(
 		}
 		else if (stringcmp(argv[i], "-SSL") == 0) {
 			n = strtoi(argv[++i]);
-			input_q = strtoi(argv[++i]);
+			input_q.assign(argv[++i]);
 			f_projective = FALSE;
 			f_general = TRUE;
 			f_affine = FALSE;
@@ -143,7 +143,7 @@ int linear_group_description::read_arguments(
 		// PGL, PGGL, PSL, PSSL
 		else if (stringcmp(argv[i], "-PGL") == 0) {
 			n = strtoi(argv[++i]);
-			input_q = strtoi(argv[++i]);
+			input_q.assign(argv[++i]);
 			f_projective = TRUE;
 			f_general = FALSE;
 			f_affine = FALSE;
@@ -153,7 +153,7 @@ int linear_group_description::read_arguments(
 		}
 		else if (stringcmp(argv[i], "-PGGL") == 0) {
 			n = strtoi(argv[++i]);
-			input_q = strtoi(argv[++i]);
+			input_q.assign(argv[++i]);
 			f_projective = TRUE;
 			f_general = FALSE;
 			f_affine = FALSE;
@@ -163,7 +163,7 @@ int linear_group_description::read_arguments(
 		}
 		else if (stringcmp(argv[i], "-PSL") == 0) {
 			n = strtoi(argv[++i]);
-			input_q = strtoi(argv[++i]);
+			input_q.assign(argv[++i]);
 			f_projective = TRUE;
 			f_general = FALSE;
 			f_affine = FALSE;
@@ -173,7 +173,7 @@ int linear_group_description::read_arguments(
 		}
 		else if (stringcmp(argv[i], "-PSSL") == 0) {
 			n = strtoi(argv[++i]);
-			input_q = strtoi(argv[++i]);
+			input_q.assign(argv[++i]);
 			f_projective = TRUE;
 			f_general = FALSE;
 			f_affine = FALSE;
@@ -188,7 +188,7 @@ int linear_group_description::read_arguments(
 		// AGL, AGGL, ASL, ASSL
 		else if (stringcmp(argv[i], "-AGL") == 0) {
 			n = strtoi(argv[++i]);
-			input_q = strtoi(argv[++i]);
+			input_q.assign(argv[++i]);
 			f_projective = FALSE;
 			f_general = FALSE;
 			f_affine = TRUE;
@@ -198,7 +198,7 @@ int linear_group_description::read_arguments(
 		}
 		else if (stringcmp(argv[i], "-AGGL") == 0) {
 			n = strtoi(argv[++i]);
-			input_q = strtoi(argv[++i]);
+			input_q.assign(argv[++i]);
 			f_projective = FALSE;
 			f_general = FALSE;
 			f_affine = TRUE;
@@ -208,7 +208,7 @@ int linear_group_description::read_arguments(
 		}
 		else if (stringcmp(argv[i], "-ASL") == 0) {
 			n = strtoi(argv[++i]);
-			input_q = strtoi(argv[++i]);
+			input_q.assign(argv[++i]);
 			f_projective = FALSE;
 			f_general = FALSE;
 			f_affine = TRUE;
@@ -218,7 +218,7 @@ int linear_group_description::read_arguments(
 		}
 		else if (stringcmp(argv[i], "-ASSL") == 0) {
 			n = strtoi(argv[++i]);
-			input_q = strtoi(argv[++i]);
+			input_q.assign(argv[++i]);
 			f_projective = FALSE;
 			f_general = FALSE;
 			f_affine = TRUE;
@@ -234,7 +234,7 @@ int linear_group_description::read_arguments(
 		else if (stringcmp(argv[i], "-GL_d_q_wr_Sym_n") == 0) {
 			f_GL_d_q_wr_Sym_n = TRUE;
 			GL_wreath_Sym_d = strtoi(argv[++i]);
-			input_q = strtoi(argv[++i]);
+			input_q.assign(argv[++i]);
 			GL_wreath_Sym_n = strtoi(argv[++i]);
 			cout << "-GL_d_q_wr_Sym_n " << GL_wreath_Sym_d
 					<< " " << input_q << " " << GL_wreath_Sym_n << endl;

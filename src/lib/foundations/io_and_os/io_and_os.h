@@ -876,6 +876,7 @@ void convert_arguments(int argc, const char **argv, std::string *&Argv);
 int stringcmp(std::string &str, const char *p);
 int strtoi(std::string &str);
 double strtof(std::string &str);
+int string_starts_with_a_number(std::string &str);
 
 
 
