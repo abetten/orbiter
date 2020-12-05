@@ -119,6 +119,8 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 {
 	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
+	long int cnt = 0;
+	int i_prev = i;
 
 	if (f_v) {
 		cout << "orbiter_top_level_session::parse_and_execute" << endl;
@@ -126,6 +128,15 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 
 
 	while (i < argc) {
+		if (f_v) {
+			cout << "orbiter_top_level_session::parse_and_execute "
+					"cnt = " << cnt << ", i = " << i << endl;
+		}
+		if (cnt > 10 && i_prev == i) {
+			cout << "we seem to be stuck in a look" << endl;
+			exit(1);
+		}
+		i_prev = i;
 		if (f_v) {
 			cout << "orbiter_top_level_session::parse_and_execute before Interface_symbol_table, i = " << i << endl;
 		}
@@ -243,6 +254,7 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 				Interface_toolkit.worker(verbose_level);
 			}
 		}
+		cnt++;
 	}
 
 	if (f_v) {

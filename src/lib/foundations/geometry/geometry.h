@@ -722,6 +722,13 @@ public:
 			std::string line1_to_text, std::string line2_to_text,
 			int verbose_level);
 	void Walsh_matrix(finite_field *F, int n, int *W, int verbose_level);
+	void do_cheat_sheet_PG(finite_field *F,
+			int n,
+			int verbose_level);
+	void do_cheat_sheet_Gr(finite_field *F,
+			int n, int k,
+			int verbose_level);
+
 };
 
 
@@ -2284,6 +2291,8 @@ public:
 	void report(std::ostream &ost, int verbose_level);
 	void incidence_matrix_save_csv();
 	void make_fname_incidence_matrix_csv(std::string &fname);
+	void create_latex_report(int verbose_level);
+	void create_latex_report_for_Grassmannian(int k, int verbose_level);
 
 	// projective_space2.cpp:
 	void print_set_numerical(std::ostream &ost, long int *set, int set_size);

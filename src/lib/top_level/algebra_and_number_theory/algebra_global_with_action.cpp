@@ -3393,9 +3393,9 @@ void algebra_global_with_action::do_eigenstuff_from_file(
 }
 
 
-void algebra_global_with_action::do_cheat_sheet_PG(finite_field *F,
+void algebra_global_with_action::do_cheat_sheet_for_decomposition_by_element_PG(finite_field *F,
 		int n,
-		int f_decomposition_by_element, int decomposition_by_element_power,
+		int decomposition_by_element_power,
 		std::string &decomposition_by_element_data, std::string &fname_base,
 		int verbose_level)
 {
@@ -3403,7 +3403,7 @@ void algebra_global_with_action::do_cheat_sheet_PG(finite_field *F,
 
 
 	if (f_v) {
-		cout << "algebra_global_with_action::do_cheat_sheet_PG verbose_level="
+		cout << "algebra_global_with_action::do_cheat_sheet_for_decomposition_by_element_PG verbose_level="
 				<< verbose_level << endl;
 	}
 
@@ -3426,14 +3426,14 @@ void algebra_global_with_action::do_cheat_sheet_PG(finite_field *F,
 	PA = NEW_OBJECT(projective_space_with_action);
 
 	if (f_v) {
-		cout << "algebra_global_with_action::do_cheat_sheet_PG before PA->init" << endl;
+		cout << "algebra_global_with_action::do_cheat_sheet_for_decomposition_by_element_PG before PA->init" << endl;
 	}
 	PA->init(F, n,
 		f_semilinear,
 		TRUE /*f_init_incidence_structure*/,
 		0 /* verbose_level */);
 	if (f_v) {
-		cout << "algebra_global_with_action::do_cheat_sheet_PG after PA->init" << endl;
+		cout << "algebra_global_with_action::do_cheat_sheet_for_decomposition_by_element_PG after PA->init" << endl;
 	}
 
 
@@ -3470,7 +3470,7 @@ void algebra_global_with_action::do_cheat_sheet_PG(finite_field *F,
 					TRUE /* f_pagenumbers */,
 					NULL /* extra_praeamble */);
 
-
+#if 0
 			if (f_v) {
 				cout << "algebra_global_with_action::do_cheat_sheet_PG before PA->P->report" << endl;
 			}
@@ -3478,31 +3478,30 @@ void algebra_global_with_action::do_cheat_sheet_PG(finite_field *F,
 			if (f_v) {
 				cout << "algebra_global_with_action::do_cheat_sheet_PG after PA->P->report" << endl;
 			}
+#endif
 
-			if (f_decomposition_by_element) {
-
-				if (f_v) {
-					cout << "algebra_global_with_action::do_cheat_sheet_PG f_decomposition_by_element" << endl;
-				}
-
-				int *Elt;
-
-				Elt = NEW_int(PA->A->elt_size_in_int);
-
-
-				PA->A->make_element_from_string(Elt,
-						decomposition_by_element_data, verbose_level);
-
-
-				PA->A->element_power_int_in_place(Elt,
-						decomposition_by_element_power, verbose_level);
-
-				PA->report_decomposition_by_single_automorphism(
-						Elt, ost, fname_base,
-						verbose_level);
-
-				FREE_int(Elt);
+			if (f_v) {
+				cout << "algebra_global_with_action::do_cheat_sheet_for_decomposition_by_element_PG f_decomposition_by_element" << endl;
 			}
+
+			int *Elt;
+
+			Elt = NEW_int(PA->A->elt_size_in_int);
+
+
+			PA->A->make_element_from_string(Elt,
+					decomposition_by_element_data, verbose_level);
+
+
+			PA->A->element_power_int_in_place(Elt,
+					decomposition_by_element_power, verbose_level);
+
+			PA->report_decomposition_by_single_automorphism(
+					Elt, ost, fname_base,
+					verbose_level);
+
+			FREE_int(Elt);
+
 
 			L.foot(ost);
 
@@ -3517,7 +3516,7 @@ void algebra_global_with_action::do_cheat_sheet_PG(finite_field *F,
 	FREE_OBJECT(PA);
 
 	if (f_v) {
-		cout << "algebra_global_with_action::do_cheat_sheet_PG done" << endl;
+		cout << "algebra_global_with_action::do_cheat_sheet_for_decomposition_by_element_PG done" << endl;
 	}
 
 }

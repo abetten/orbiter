@@ -1907,6 +1907,96 @@ void geometry_global::Walsh_matrix(finite_field *F, int n, int *W, int verbose_l
 	}
 }
 
+void geometry_global::do_cheat_sheet_PG(finite_field *F,
+		int n,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_PG verbose_level="
+				<< verbose_level << endl;
+	}
+
+
+	projective_space *P;
+
+	P = NEW_OBJECT(projective_space);
+
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_PG before P->init" << endl;
+	}
+	P->init(n, F,
+		TRUE /*f_init_incidence_structure*/,
+		0 /* verbose_level */);
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_PG after P->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_PG before P->create_latex_report" << endl;
+	}
+	P->create_latex_report(verbose_level);
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_PG after P->create_latex_report" << endl;
+	}
+
+
+
+	FREE_OBJECT(P);
+
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_PG done" << endl;
+	}
+
+}
+
+void geometry_global::do_cheat_sheet_Gr(finite_field *F,
+		int n, int k,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_Gr verbose_level="
+				<< verbose_level << endl;
+	}
+
+
+	projective_space *P;
+
+	P = NEW_OBJECT(projective_space);
+
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_Gr before P->init" << endl;
+	}
+	P->init(n - 1, F,
+		TRUE /*f_init_incidence_structure*/,
+		0 /* verbose_level */);
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_Gr after P->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_Gr before P->create_latex_report_for_Grassmannian" << endl;
+	}
+	P->create_latex_report_for_Grassmannian(k, verbose_level);
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_Gr after P->create_latex_report_for_Grassmannian" << endl;
+	}
+
+
+
+	FREE_OBJECT(P);
+
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_PG done" << endl;
+	}
+
+}
+
 
 }}
 

@@ -359,11 +359,13 @@ void finite_field::init_override_polynomial(int q,
 		cout << "finite_field::init_override_polynomial field of order "
 				<< q << " initialized" << endl;
 		if (f_vv && f_has_table) {
-			if (e > 1) {
-				print_tables_extension_field(my_poly.c_str());
-			}
-			else {
-				print_tables();
+			if (FALSE) {
+				if (e > 1) {
+					print_tables_extension_field(my_poly.c_str());
+				}
+				else {
+					print_tables();
+				}
 			}
 		}
 	}
@@ -604,10 +606,10 @@ void finite_field::create_alpha_table(int verbose_level)
 				<< " p=" << p << " e=" << e << endl;
 	}
 	if (f_is_prime_field) {
-		create_alpha_table_prime_field(verbose_level);
+		create_alpha_table_prime_field(verbose_level - 5);
 	}
 	else {
-		create_alpha_table_extension_field(verbose_level);
+		create_alpha_table_extension_field(verbose_level - 5);
 	}
 	if (f_v) {
 		cout << "alpha table created" << endl;
