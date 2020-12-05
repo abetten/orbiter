@@ -1735,7 +1735,7 @@ void projective_space::cheat_sheet_subspaces(
 		f << "Too many to print \\\\" << endl;
 	}
 	else {
-		f << "\\begin{multicols}{2}" << endl;
+		f << "%\\begin{multicols}{2}" << endl;
 		for (u = 0; u < nb_k_subspaces; u++) {
 			Gr->unrank_lint(u, 0 /* verbose_level*/);
 			f << "$L_{" << u << "}=";
@@ -1769,7 +1769,7 @@ void projective_space::cheat_sheet_subspaces(
 				f << "\\clearpage" << endl << endl;
 			}
 		}
-		f << "\\end{multicols}" << endl;
+		f << "%\\end{multicols}" << endl;
 
 
 		if (n == 3 && k == 1) {
@@ -1863,7 +1863,7 @@ void projective_space::do_pluecker_reverse(ostream &ost, grassmann *Gr, int k, i
 	v = NEW_int(n1);
 
 	ost << "Lines sorted by Pluecker coordinates\\\\" << endl;
-	ost << "\\begin{multicols}{2}" << endl;
+	ost << "%\\begin{multicols}{2}" << endl;
 	for (u0 = 0; u0 < nb_k_subspaces; u0++) {
 		u = Pos[u0];
 		Gr->unrank_lint(u, 0 /* verbose_level*/);
@@ -1872,7 +1872,8 @@ void projective_space::do_pluecker_reverse(ostream &ost, grassmann *Gr, int k, i
 
 		Pluecker_coordinates(u, v6, 0 /* verbose_level */);
 		F->PG_element_normalize(v6, 1, 6);
-		ost << "$" << u0 << "=" << u << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
+		ost << "$" << u0 << /*"=" << u <<*/
+				"={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
 				<< v6[2] << "," << v6[3] << "," << v6[4]
 				<< "," << v6[5] << " ";
 		ost << ")=" << endl;
@@ -1899,7 +1900,7 @@ void projective_space::do_pluecker_reverse(ostream &ost, grassmann *Gr, int k, i
 			ost << "\\clearpage" << endl << endl;
 		}
 	}
-	ost << "\\end{multicols}" << endl;
+	ost << "%\\end{multicols}" << endl;
 
 
 	FREE_int(T);

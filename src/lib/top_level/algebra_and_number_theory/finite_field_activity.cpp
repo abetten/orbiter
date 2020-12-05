@@ -260,10 +260,24 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_cheat_sheet_PG) {
 
+		geometry_global Geo;
+
+		Geo.do_cheat_sheet_PG(F, Descr->cheat_sheet_PG_n,
+				verbose_level);
+	}
+	else if (Descr->f_cheat_sheet_Gr) {
+
+		geometry_global Geo;
+
+		Geo.do_cheat_sheet_Gr(F, Descr->cheat_sheet_Gr_n, Descr->cheat_sheet_Gr_k,
+				verbose_level);
+	}
+	else if (Descr->f_decomposition_by_element) {
+
 		algebra_global_with_action Algebra;
 
-		Algebra.do_cheat_sheet_PG(F, Descr->cheat_sheet_PG_n,
-				Descr->f_decomposition_by_element,
+		Algebra.do_cheat_sheet_for_decomposition_by_element_PG(F,
+				Descr->decomposition_by_element_n,
 				Descr->decomposition_by_element_power,
 				Descr->decomposition_by_element_data,
 				Descr->decomposition_by_element_fname_base,

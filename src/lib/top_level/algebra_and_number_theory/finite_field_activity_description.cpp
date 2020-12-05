@@ -106,7 +106,12 @@ finite_field_activity_description::finite_field_activity_description()
 	f_cheat_sheet_PG = FALSE;
 	cheat_sheet_PG_n = 0;
 
+	f_cheat_sheet_Gr = FALSE;
+	cheat_sheet_Gr_n = 0;
+	cheat_sheet_Gr_k = 0;
+
 	f_decomposition_by_element = FALSE;
+	decomposition_by_element_n = 0;
 	decomposition_by_element_power = 1;
 	//std::string decomposition_by_element_data
 	//decomposition_by_element_fname_base
@@ -382,8 +387,15 @@ int finite_field_activity_description::read_arguments(
 			cheat_sheet_PG_n = strtoi(argv[++i]);
 			cout << "-cheat_sheet_PG " << cheat_sheet_PG_n << endl;
 		}
+		else if (stringcmp(argv[i], "-cheat_sheet_Gr") == 0) {
+			f_cheat_sheet_Gr = TRUE;
+			cheat_sheet_Gr_n = strtoi(argv[++i]);
+			cheat_sheet_Gr_k = strtoi(argv[++i]);
+			cout << "-cheat_sheet_Gr " << cheat_sheet_Gr_n << " " << cheat_sheet_Gr_k << endl;
+		}
 		else if (stringcmp(argv[i], "-decomposition_by_element") == 0) {
 			f_decomposition_by_element = TRUE;
+			decomposition_by_element_n = strtoi(argv[++i]);
 			decomposition_by_element_power = strtoi(argv[++i]);
 			decomposition_by_element_data.assign(argv[++i]);
 			decomposition_by_element_fname_base.assign(argv[++i]);
@@ -399,7 +411,7 @@ int finite_field_activity_description::read_arguments(
 			Canonical_form_PG_Descr = NEW_OBJECT(projective_space_object_classifier_description);
 
 			i += Canonical_form_PG_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
-			cout << "done reading -Canonical_form_PG_Descr " << canonical_form_PG_n << endl;
+			cout << "done reading -canonical_form_PG " << canonical_form_PG_n << endl;
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {

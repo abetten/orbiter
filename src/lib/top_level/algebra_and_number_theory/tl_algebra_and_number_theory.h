@@ -125,9 +125,9 @@ public:
 	void do_eigenstuff_from_file(
 			finite_field *F, int n, std::string &fname, int verbose_level);
 
-	void do_cheat_sheet_PG(finite_field *F,
+	void do_cheat_sheet_for_decomposition_by_element_PG(finite_field *F,
 			int n,
-			int f_decomposition_by_element, int decomposition_by_element_power,
+			int decomposition_by_element_power,
 			std::string &decomposition_by_element_data, std::string &fname_base,
 			int verbose_level);
 	void do_canonical_form_PG(finite_field *F,
@@ -344,7 +344,12 @@ public:
 	int f_cheat_sheet_PG;
 	int cheat_sheet_PG_n;
 
+	int f_cheat_sheet_Gr;
+	int cheat_sheet_Gr_n;
+	int cheat_sheet_Gr_k;
+
 	int f_decomposition_by_element;
+	int decomposition_by_element_n;
 	int decomposition_by_element_power;
 	std::string decomposition_by_element_data;
 	std::string decomposition_by_element_fname_base;
