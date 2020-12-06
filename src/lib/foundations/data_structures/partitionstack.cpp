@@ -1671,7 +1671,7 @@ void partitionstack::print_tactical_decomposition_scheme_tex_internal(
 }
 
 void partitionstack::print_row_tactical_decomposition_scheme_tex(
-	ostream &ost, int f_enter_math_mode, 
+	std::ostream &ost, int f_enter_math_mode,
 	int *row_classes, int nb_row_classes,
 	int *col_classes, int nb_col_classes, 
 	int *row_scheme, int f_print_subscripts)

@@ -508,10 +508,77 @@ PG_1_16:
 
 
 
+
+PG_3_2:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -cheat_sheet_PG 3 -end
+	pdflatex PG_3_2.tex 
+	open PG_3_2.pdf
+
+PG_3_4:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 4 -end -end \
+		-with F -do -finite_field_activity -cheat_sheet_PG 3 -end
+	pdflatex PG_3_4.tex 
+	open PG_3_4.pdf
+
+
+PG_3_5:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 5 -end -end \
+		-with F -do -finite_field_activity -cheat_sheet_PG 3 -end
+	pdflatex PG_3_5.tex 
+	open PG_3_5.pdf
+
+
+PG_3_8:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 8 -end -end \
+		-with F -do -finite_field_activity -cheat_sheet_PG 3 -end
+	pdflatex PG_3_8.tex 
+	open PG_3_8.pdf
+
+
+PG_3_16:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 16 -end -end \
+		-with F -do -finite_field_activity -cheat_sheet_PG 3 -end
+	pdflatex PG_3_16.tex 
+	open PG_3_16.pdf
+
+
+PG_4_3:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 3 -end -end \
+		-with F -do -finite_field_activity -cheat_sheet_PG 4 -end
+	pdflatex PG_4_3.tex 
+	open PG_4_3.pdf
+
+
+
+
+
+PG_4_3:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 3 -end -end \
+		-with F -do -finite_field_activity -cheat_sheet_PG 4 -end
+	pdflatex PG_4_3.tex 
+	open PG_4_3.pdf
+
+
+
+#############################################################################################################
+# Section 11: Projective Planes
+
+
+PROJECTIVE_PLANES:
+
+
 PG_2_4:
 	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 4 -end -end \
-		-with F -do -finite_field_activity -cheat_sheet_PG 2 \
-		-decomposition_by_element 1 "0,1,0, 0,0,1, 2,1,1, 0" "PG_2_4_singer" -end
+		-with F -do -finite_field_activity -cheat_sheet_PG 2 -end
+	pdflatex PG_2_4.tex 
+	open PG_2_4.pdf
+
+
+PG_2_4_with_decomposition:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 4 -end -end \
+		-with F -do -finite_field_activity \
+		-decomposition_by_element 2 1 "0,1,0, 0,0,1, 2,1,1, 0" "PG_2_4_singer" -end
 	pdflatex PG_2_4.tex 
 	open PG_2_4.pdf
 
@@ -588,63 +655,10 @@ PG_2_128:
 
 
 
-PG_3_2:
-	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 2 -end -end \
-		-with F -do -finite_field_activity -cheat_sheet_PG 3 -end
-	pdflatex PG_3_2.tex 
-	open PG_3_2.pdf
-
-PG_3_4:
-	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 4 -end -end \
-		-with F -do -finite_field_activity -cheat_sheet_PG 3 -end
-	pdflatex PG_3_4.tex 
-	open PG_3_4.pdf
-
-
-PG_3_5:
-	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 5 -end -end \
-		-with F -do -finite_field_activity -cheat_sheet_PG 3 -end
-	pdflatex PG_3_5.tex 
-	open PG_3_5.pdf
-
-
-PG_3_8:
-	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 8 -end -end \
-		-with F -do -finite_field_activity -cheat_sheet_PG 3 -end
-	pdflatex PG_3_8.tex 
-	open PG_3_8.pdf
-
-
-PG_3_16:
-	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 16 -end -end \
-		-with F -do -finite_field_activity -cheat_sheet_PG 3 -end
-	pdflatex PG_3_16.tex 
-	open PG_3_16.pdf
-
-
-PG_4_3:
-	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 3 -end -end \
-		-with F -do -finite_field_activity -cheat_sheet_PG 4 -end
-	pdflatex PG_4_3.tex 
-	open PG_4_3.pdf
-
-
-
-
-
-PG_4_3:
-	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 3 -end -end \
-		-with F -do -finite_field_activity -cheat_sheet_PG 4 -end
-	pdflatex PG_4_3.tex 
-	open PG_4_3.pdf
-
-
-
-
 
 
 #############################################################################################################
-# Section 11: The Grassmannian
+# Section 12: The Grassmannian
 
 
 GRASSMANNIAN:
@@ -657,7 +671,7 @@ GR_3_2_2:
 
 
 #############################################################################################################
-# Section 12: Algebraic Sets
+# Section 13: Algebraic Sets
 
 
 ALGEBRAIC_SETS:
@@ -707,7 +721,7 @@ octic_prepare:
 
 
 #############################################################################################################
-# Section 13: The Klein Quadric and Pluecker coordinates
+# Section 14: The Klein Quadric and Pluecker coordinates
 
 
 KLEIN_QUADRIC_AND_PLUECKER_COORDINATES:
@@ -721,10 +735,32 @@ GR_4_2_2:
 	open Gr_4_2_2.pdf
 
 
+#############################################################################################################
+# Section 15: Orthogonal spaces
+
+
+ORTHOGONAL_SPACES:
+
+
+
+Op_4_2:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -cheat_sheet_orthogonal 1 4 -end
+	pdflatex O_1_4_2.tex 
+	open O_1_4_2.pdf
+
+
+Op_6_2:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -cheat_sheet_orthogonal 1 6 -end
+	pdflatex O_1_6_2.tex 
+	open O_1_6_2.pdf
+
+
 
 
 #############################################################################################################
-# Section 14: Linear Groups
+# Section 16: Linear Groups
 
 
 LINEAR_GROUPS:
@@ -855,7 +891,7 @@ quaternion:
 
 
 #############################################################################################################
-# Section 15:  Linear Groups, Advanced Topics
+# Section 17:  Linear Groups, Advanced Topics
 
 
 LINEAR_GROUPS_ADVANCED_TOPICS:
@@ -1071,15 +1107,18 @@ Co3:
 			-end -end \
 		-with G -do \
 		-group_theoretic_activities \
-		-draw_options -end \
+		-draw_options -nodes_empty -end \
 			-report
-			
+	pdflatex PGL_22_2_Subgroup_Co3_495766656000_report.tex
+	open PGL_22_2_Subgroup_Co3_495766656000_report.pdf
+
 
 
 Ree_27:
-	$(ORBITER_PATH)/orbiter.out -v 6 -define G \
-		-linear_group -override_polynomial "34" -PGL 7 27 \
-		-subgroup_by_generators "Ree_27" "10073444472" 2 \
+	$(ORBITER_PATH)/orbiter.out -v 6 \
+		-define F -finite_field -q 27 -override_polynomial "34" -end -end \
+		-define G -linear_group -PGL 7 F \
+			-subgroup_by_generators "Ree_27" "10073444472" 2 \
 			-long_string \
 			"21,5,1,6,17,1,1, 3,13,5,21,6,6,18, 21,3,21,21,22,6,14, " \
 			"14,18,1,5,13,6,7, 3,3,2,1,24,16,3, 17,3,22,10,16,24,26, " \
@@ -1094,18 +1133,50 @@ Ree_27:
 		-with G -do \
 		-group_theoretic_activities \
 		-draw_options -end \
-			-report
+			-report \
+			-end
 
 
 #############################################################################################################
-# Section 16:  Induced Actions
+# Section 18:  Induced Actions
 
 
 INDUCED_ACTIONS:
 
 
+
+T4:
+	$(ORBITER_PATH)/orbiter.out -v 4 -define G \
+		-linear_group -GL_d_q_wr_Sym_n 2 2 4 -on_tensors -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-orbits_on_points
+	pdflatex GL_2_2_wreath_Sym4_res65535_orbits.tex
+	open GL_2_2_wreath_Sym4_res65535_orbits.pdf
+
+T4r1:
+	$(ORBITER_PATH)/orbiter.out -v 4 -define G \
+		-linear_group -GL_d_q_wr_Sym_n 2 2 4 -on_rank_one_tensors -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-orbits_on_points
+	pdflatex GL_2_2_wreath_Sym4_res81_orbits.tex
+	open GL_2_2_wreath_Sym4_res81_orbits.pdf
+
+T4r1_orbits:
+	$(ORBITER_PATH)/orbiter.out -v 4 -define G \
+		-linear_group -GL_d_q_wr_Sym_n 2 2 4 -on_rank_one_tensors -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-orbits_on_subsets 4 \
+		-draw_options -end \
+		-report
+
+
+
+
 #############################################################################################################
-# Section 17:  Group Theoretic Activities
+# Section 19:  Group Theoretic Activities
 
 
 GROUP_THEORETIC_ACTIVITIES:
@@ -1134,33 +1205,6 @@ PSL_3_2_classes:
 
 	
 			
-
-T4:
-	$(ORBITER_PATH)/orbiter.out -v 4 -define G \
-		-linear_group -GL_d_q_wr_Sym_n 2 2 4 -on_tensors -end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-orbits_on_points
-	pdflatex GL_2_2_wreath_Sym4_res65535_orbits.tex
-	open GL_2_2_wreath_Sym4_res65535_orbits.pdf
-
-T4r1:
-	$(ORBITER_PATH)/orbiter.out -v 4 -define G \
-		-linear_group -GL_d_q_wr_Sym_n 2 2 4 -on_rank_one_tensors -end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-orbits_on_points
-	pdflatex GL_2_2_wreath_Sym4_res81_orbits.tex
-	open GL_2_2_wreath_Sym4_res81_orbits.pdf
-
-T4r1_orbits:
-	$(ORBITER_PATH)/orbiter.out -v 4 -define G \
-		-linear_group -GL_d_q_wr_Sym_n 2 2 4 -on_rank_one_tensors -end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-orbits_on_subsets 4 \
-		-draw_options -end \
-		-report
 
 
 
@@ -1638,7 +1682,7 @@ orbits_cubic_surfaces_q2:
 
 
 #############################################################################################################
-# Section 18: Poset Classification
+# Section 20: Poset Classification
 
 
 POSET_CLASSIFICATION:
@@ -1683,7 +1727,7 @@ poset_of_5subsets_draw:
 
 
 #############################################################################################################
-# Section 19: Orbits on Subsets
+# Section 21: Orbits on Subsets
 
 
 ORBITS_ON_SUBSETS:
@@ -1796,7 +1840,7 @@ PG_3_4_subsets:
 
 
 #############################################################################################################
-# Section 20: Orbits on Subspaces
+# Section 22: Orbits on Subspaces
 
 
 ORBITS_ON_SUBSPACES:
@@ -1853,7 +1897,7 @@ sub_8_2_singer:
 # May 7, 2020: 16 sec on Mac
 
 
-Op_6_2:
+Op_6_2_orbits:
 	$(ORBITER_PATH)/orbiter.out -v 5 -define G -linear_group -PGL 6 2 -orthogonal 1 -end -end \
 		-with G -do \
 		-group_theoretic_activities \
@@ -1867,7 +1911,7 @@ Op_6_2:
 
 
 
-Op_6_3:
+Op_6_3_orbits:
 	$(ORBITER_PATH)/orbiter.out -v 5 -define G -linear_group -PGL 6 3 -orthogonal 1 -end -end \
 		-with G -do \
 		-group_theoretic_activities \
@@ -1883,13 +1927,13 @@ Op_6_3:
 
 
 
-Op_6_11:
+Op_6_11_orbits:
 	$(ORBITER_PATH)/orbiter.out -v 5 -define G -linear_group -PGL 6 11 -orthogonal 1 -end -end \
 		-with G -do \
 		-group_theoretic_activities \
 		-poset_classification_control -problem_label Op_6_11 -W -depth 8 -end \
 		-orbits_on_subspaces 3 \
-		-draw_options -end \
+		-draw_options -nodes_empty -end \
 		-report
 	pdflatex PGL_6_11_Orthogonal_plus_6_11_report.tex
 	open PGL_6_11_Orthogonal_plus_6_11_report.pdf
@@ -1901,7 +1945,7 @@ Op_6_11:
 
 
 #############################################################################################################
-# Section 21: Creating Objects in Projective Geometry
+# Section 23: Creating Objects in Projective Geometry
 
 CREATING_OBJECTS_IN_PG:
 
@@ -2003,7 +2047,7 @@ Hirschfeld16:
 
 
 #############################################################################################################
-# Section 22: Canonical Forms of Objects in Finite Projective Spaces
+# Section 24: Canonical Forms of Objects in Finite Projective Spaces
 
 
 CANONICAL_FORMS:
@@ -2193,7 +2237,7 @@ cuspidal_cubic_q16_subsets_canonical:
 
 
 #############################################################################################################
-# Section 23: Arcs
+# Section 25: Arcs
 
 
 ARCS:
@@ -2699,7 +2743,7 @@ awss:
 
 
 #############################################################################################################
-# Section 24: Cubic Curves
+# Section 26: Cubic Curves
 
 CUBIC_CURVES:
 
@@ -2886,7 +2930,7 @@ cuspidal_cubic_q11_subsets_canonical:
 
 
 #############################################################################################################
-# Section 25: Cubic Surfaces Creation
+# Section 27: Cubic Surfaces Creation
 
 
 CUBIC_SURFACES_CREATION:
@@ -3958,7 +4002,7 @@ surface_reports:
 
 
 #############################################################################################################
-# Section 26: Cubic Surfaces Classification
+# Section 28: Cubic Surfaces Classification
 
 
 CUBIC_SURFACES_CLASSIFICATION:
@@ -4549,7 +4593,7 @@ example_general_q32_2_3_5_18:
 
 
 #############################################################################################################
-# Section 27:  Number Theory
+# Section 29:  Number Theory
 
 
 NUMBER_THEORY:
@@ -4575,7 +4619,7 @@ equivalence_class_of_fractions_draw:
 
 
 #############################################################################################################
-# Section 28: Cryptography 
+# Section 30: Cryptography 
 
 
 CRYPTOGRAPHY:
@@ -4698,7 +4742,7 @@ NTRU_decrypt5:
 
 
 #############################################################################################################
-# Section 29: Coding Theory
+# Section 31: Coding Theory
 
 CODING_THEORY:
 
@@ -4909,7 +4953,7 @@ Reed_Muller_6:
 
 
 ########################################################################################################
-# Section 30: Diophantine Systems
+# Section 32: Diophantine Systems
 
 DIOPHANT:
 	
@@ -4951,7 +4995,7 @@ octic_monomials_solve:
 
 
 ########################################################################################################
-# Section 31: Combinatorial Linear Spaces
+# Section 33: Combinatorial Linear Spaces
 
 COMBINATORIAL_LINEAR_SPACES:
 	
@@ -5004,7 +5048,7 @@ linsp30_pt_distribution:
 
 
 #############################################################################################################
-# Section 32: Design Theory
+# Section 34: Design Theory
 
 DESIGN_THEORY:
 
@@ -5101,7 +5145,7 @@ STS13:
 
 
 #############################################################################################################
-# Section 33: Tactical Decompositions
+# Section 35: Tactical Decompositions
 
 TACTICAL_DECOMPOSITIONS:
 
@@ -5359,7 +5403,7 @@ max_arc_lift:
 
 
 #############################################################################################################
-# Section 34: Spreads
+# Section 36: Spreads
 
 SPREADS:
 	
@@ -5480,7 +5524,7 @@ line_spreads_PG5_2:
 
 
 #############################################################################################################
-# Section 35: Packings
+# Section 37: Packings
 
 
 PACKINGS:
@@ -6183,7 +6227,7 @@ packing_solution_tally:
 		-read_solutions_and_tally PGL_4_5_Subgroup_3B_3_reg_spreads_fpc0_sol.txt 10
 		
 #############################################################################################################
-# Section 36: Graph Theory
+# Section 38: Graph Theory
 
 
 GRAPH_THEORY:
@@ -6253,7 +6297,7 @@ small_graph_cliques_Sajeeb:
 
 
 #############################################################################################################
-# Section 37: Graphical Output
+# Section 39: Graphical Output
 
 GRAPHICAL_OUTPUT:
 	
@@ -6293,7 +6337,7 @@ schreier_tree:
 
 
 #############################################################################################################
-# Section 38: The Povray Interface
+# Section 40: The Povray Interface
 
 
 POVRAY:

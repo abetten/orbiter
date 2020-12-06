@@ -110,6 +110,10 @@ finite_field_activity_description::finite_field_activity_description()
 	cheat_sheet_Gr_n = 0;
 	cheat_sheet_Gr_k = 0;
 
+	f_cheat_sheet_orthogonal = FALSE;
+	cheat_sheet_orthogonal_epsilon = 0;
+	cheat_sheet_orthogonal_n = 0;
+
 	f_decomposition_by_element = FALSE;
 	decomposition_by_element_n = 0;
 	decomposition_by_element_power = 1;
@@ -392,6 +396,12 @@ int finite_field_activity_description::read_arguments(
 			cheat_sheet_Gr_n = strtoi(argv[++i]);
 			cheat_sheet_Gr_k = strtoi(argv[++i]);
 			cout << "-cheat_sheet_Gr " << cheat_sheet_Gr_n << " " << cheat_sheet_Gr_k << endl;
+		}
+		else if (stringcmp(argv[i], "-cheat_sheet_orthogonal") == 0) {
+			f_cheat_sheet_orthogonal = TRUE;
+			cheat_sheet_orthogonal_epsilon = strtoi(argv[++i]);
+			cheat_sheet_orthogonal_n = strtoi(argv[++i]);
+			cout << "-cheat_sheet_orthogonal " << cheat_sheet_orthogonal_epsilon << " " << cheat_sheet_orthogonal_n << endl;
 		}
 		else if (stringcmp(argv[i], "-decomposition_by_element") == 0) {
 			f_decomposition_by_element = TRUE;
