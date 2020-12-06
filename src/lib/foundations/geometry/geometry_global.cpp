@@ -1997,6 +1997,49 @@ void geometry_global::do_cheat_sheet_Gr(finite_field *F,
 
 }
 
+void geometry_global::do_cheat_sheet_orthogonal(finite_field *F,
+		int epsilon, int n,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_orthogonal verbose_level="
+				<< verbose_level << endl;
+	}
+
+
+	orthogonal *O;
+
+	O = NEW_OBJECT(orthogonal);
+
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_orthogonal before O->init" << endl;
+	}
+	O->init(epsilon, n, F, verbose_level);
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_orthogonal after O->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_orthogonal before O->create_latex_report" << endl;
+	}
+	O->create_latex_report(verbose_level);
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_orthogonal after O->create_latex_report" << endl;
+	}
+
+
+
+	FREE_OBJECT(O);
+
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_orthogonal done" << endl;
+	}
+
+}
+
 
 }}
 

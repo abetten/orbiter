@@ -272,6 +272,16 @@ void finite_field_activity::perform_activity(int verbose_level)
 		Geo.do_cheat_sheet_Gr(F, Descr->cheat_sheet_Gr_n, Descr->cheat_sheet_Gr_k,
 				verbose_level);
 	}
+	else if (Descr->f_cheat_sheet_orthogonal) {
+
+		geometry_global Geo;
+
+		Geo.do_cheat_sheet_orthogonal(F,
+				Descr->cheat_sheet_orthogonal_epsilon,
+				Descr->cheat_sheet_orthogonal_n,
+				verbose_level);
+	}
+
 	else if (Descr->f_decomposition_by_element) {
 
 		algebra_global_with_action Algebra;

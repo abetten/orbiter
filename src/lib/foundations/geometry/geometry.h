@@ -728,6 +728,9 @@ public:
 	void do_cheat_sheet_Gr(finite_field *F,
 			int n, int k,
 			int verbose_level);
+	void do_cheat_sheet_orthogonal(finite_field *F,
+			int epsilon, int n,
+			int verbose_level);
 
 };
 
@@ -1726,7 +1729,8 @@ public:
 
 
 	// orthogonal_hyperbolic.cpp:
-	long int hyperbolic_type_and_index_to_point_rk(long int type, long int index, int verbose_level);
+	long int hyperbolic_type_and_index_to_point_rk(long int type,
+			long int index, int verbose_level);
 	void hyperbolic_point_rk_to_type_and_index(long int rk,
 			long int &type, long int &index);
 
@@ -1777,12 +1781,19 @@ public:
 
 	// orthogonal_io.cpp:
 	void list_points_by_type(int verbose_level);
+	void report_points_by_type(std::ostream &ost, int verbose_level);
 	void list_points_of_given_type(int t,
 		int verbose_level);
+	void report_points_of_given_type(std::ostream &ost, int t, int verbose_level);
+	void report_points(std::ostream &ost, int verbose_level);
+	void report_lines(std::ostream &ost, int verbose_level);
 	void list_all_points_vs_points(int verbose_level);
 	void list_points_vs_points(int t1, int t2,
 		int verbose_level);
 	void print_schemes();
+	void report(std::ostream &ost, int verbose_level);
+	void report_schemes(std::ostream &ost);
+	void create_latex_report(int verbose_level);
 
 
 	// orthogonal_parabolic.cpp:
