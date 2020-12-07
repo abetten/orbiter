@@ -288,8 +288,8 @@ void orthogonal::report_schemes(std::ostream &ost)
 {
 	int i, j;
 	int f, l;
-	int nb_rows = nb_points;
-	int nb_cols = nb_lines;
+	int nb_rows = 0;
+	int nb_cols = 0;
 	partitionstack *Stack;
 	int *set;
 	int *row_classes;
@@ -298,8 +298,8 @@ void orthogonal::report_schemes(std::ostream &ost)
 	int *col_scheme;
 
 	Stack = NEW_OBJECT(partitionstack);
-	Stack->allocate(nb_rows + nb_cols, 0 /* verbose_level */);
-	Stack->subset_continguous(nb_rows, nb_cols);
+	Stack->allocate(nb_points + nb_lines, 0 /* verbose_level */);
+	Stack->subset_continguous(nb_points, nb_lines);
 	Stack->split_cell(0 /* verbose_level */);
 	Stack->sort_cells();
 #if 0
@@ -312,20 +312,45 @@ void orthogonal::report_schemes(std::ostream &ost)
 		col_classes[i] = L[i];
 	}
 #endif
-	row_scheme = NEW_int(nb_point_classes * nb_line_classes);
-	for (i = 0; i < nb_point_classes * nb_line_classes; i++) {
-		row_scheme[i] = A[i];
+
+	int *original_row_class;
+	int *original_col_class;
+
+	original_row_class = NEW_int(nb_point_classes);
+	original_col_class = NEW_int(nb_line_classes);
+	nb_rows = 0;
+	for (i = 0; i < nb_point_classes; i++) {
+		if (P[i]) {
+			original_row_class[nb_rows] = i;
+			nb_rows++;
+		}
 	}
-	col_scheme = NEW_int(nb_point_classes * nb_line_classes);
-	for (i = 0; i < nb_point_classes * nb_line_classes; i++) {
-		col_scheme[i] = B[i];
+	nb_cols = 0;
+	for (i = 0; i < nb_line_classes; i++) {
+		if (L[i]) {
+			original_col_class[nb_cols] = i;
+			nb_cols++;
+		}
 	}
-	set = NEW_int(nb_rows);
+	row_scheme = NEW_int(nb_rows * nb_cols);
+	for (i = 0; i < nb_rows; i++) {
+		for (j = 0; j < nb_cols; j++) {
+			row_scheme[i * nb_cols + j] = A[original_row_class[i] * nb_line_classes + original_col_class[j]];
+		}
+	}
+	col_scheme = NEW_int(nb_rows * nb_cols);
+	for (i = 0; i < nb_rows; i++) {
+		for (j = 0; j < nb_cols; j++) {
+			col_scheme[i * nb_cols + j] = B[original_row_class[i] * nb_line_classes + original_col_class[j]];
+		}
+	}
+	set = NEW_int(nb_points);
 	f = 0;
-	for (i = 0; i < nb_point_classes - 1; i++) {
-		l = P[i];
+	for (i = 0; i < nb_rows - 1; i++) {
+		l = P[original_row_class[i]];
 		if (l == 0) {
-			continue;
+			cout << "l == 0" << endl;
+			exit(1);
 		}
 		for (j = 0; j < l; j++) {
 			set[j] = f + j;
@@ -336,10 +361,11 @@ void orthogonal::report_schemes(std::ostream &ost)
 	FREE_int(set);
 	set = NEW_int(nb_lines);
 	f = nb_points;
-	for (i = 0; i < nb_line_classes - 1; i++) {
-		l = L[i];
+	for (i = 0; i < nb_cols - 1; i++) {
+		l = L[original_col_class[i]];
 		if (l == 0) {
-			continue;
+			cout << "l == 0" << endl;
+			exit(1);
 		}
 		for (j = 0; j < l; j++) {
 			set[j] = f + j;
@@ -375,7 +401,10 @@ void orthogonal::report_schemes(std::ostream &ost)
 	FREE_int(row_scheme);
 	FREE_int(col_scheme);
 
-#if 0
+	FREE_int(original_row_class);
+	FREE_int(original_col_class);
+
+#if 1
 	ost << "$$" << endl;
 	ost << "\\begin{array}{r||*{" << nb_line_classes << "}{r}}" << endl;
 	ost << "       ";
@@ -457,11 +486,11 @@ void orthogonal::create_latex_report(int verbose_level)
 
 
 			if (f_v) {
-				cout << "orthogonal::create_latex_report before P->report" << endl;
+				cout << "orthogonal::create_latex_report before report" << endl;
 			}
 			report(ost, verbose_level);
 			if (f_v) {
-				cout << "orthogonal::create_latex_report after P->report" << endl;
+				cout << "orthogonal::create_latex_report after report" << endl;
 			}
 
 

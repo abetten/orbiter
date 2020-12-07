@@ -967,6 +967,123 @@ int hermitian::Sbar_rank(int *v, int len, int verbose_level)
 	return rk;
 }
 
+void hermitian::create_latex_report(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "hermitian::create_latex_report" << endl;
+	}
+
+	{
+		char str[1000];
+		string fname;
+		char title[1000];
+		char author[1000];
+
+		snprintf(str, 1000, "H_%d_%d.tex", k - 1, Q);
+		fname.assign(str);
+		snprintf(title, 1000, "Hermitian Variety  ${\\rm H}(%d,%d)$", k - 1, Q);
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "hermitian::create_latex_report before report" << endl;
+			}
+			report(ost, verbose_level);
+			if (f_v) {
+				cout << "hermitian::create_latex_report after report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "hermitian::create_latex_report done" << endl;
+	}
+}
+
+void hermitian::report(std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "hermitian::report" << endl;
+	}
+
+	//report_schemes(ost);
+
+	report_points(ost, verbose_level);
+
+	//report_points_by_type(ost, verbose_level);
+
+	//report_lines(ost, verbose_level);
+
+	if (f_v) {
+		cout << "hermitian::report done" << endl;
+	}
+}
+
+void hermitian::report_points(std::ostream &ost, int verbose_level)
+{
+	long int rk;
+	long int *rk_in_PG;
+	long int nb_pts;
+
+	int *v;
+
+	v = NEW_int(k);
+	nb_pts = nb_points();
+
+	rk_in_PG = NEW_lint(nb_pts);
+
+
+	ost << "The Hermitian variety ${\\rm H}(" << k - 1 << "," << Q << ")$ "
+			"contains " << nb_pts << " points:\\\\" << endl;
+	ost << "\\begin{multicols}{2}" << endl;
+	ost << "\\noindent" << endl;
+	for (rk = 0; rk < nb_pts; rk++) {
+		unrank_point(v, rk);
+		F->PG_element_rank_modified_lint(v, 1, k, rk_in_PG[rk]);
+		ost << "$P_{" << rk << "} = ";
+		int_vec_print(ost, v, k);
+		ost << "=" << rk_in_PG[rk] << "$\\\\" << endl;
+	}
+	ost << "\\end{multicols}" << endl;
+	ost << "All points: ";
+	lint_vec_print(ost, rk_in_PG, nb_pts);
+	ost << "\\\\" << endl;
+
+	FREE_int(v);
+	FREE_lint(rk_in_PG);
+}
+
+
 
 }
 }

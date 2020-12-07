@@ -2040,6 +2040,49 @@ void geometry_global::do_cheat_sheet_orthogonal(finite_field *F,
 
 }
 
+void geometry_global::do_cheat_sheet_hermitian(finite_field *F,
+		int projective_dimension,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_hermitian verbose_level="
+				<< verbose_level << endl;
+	}
+
+	hermitian *H;
+
+	H = NEW_OBJECT(hermitian);
+
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_hermitian before H->init" << endl;
+	}
+	H->init(F, projective_dimension + 1, verbose_level - 2);
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_hermitian after H->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_hermitian before H->create_latex_report" << endl;
+	}
+	H->create_latex_report(verbose_level);
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_hermitian after H->create_latex_report" << endl;
+	}
+
+
+
+	FREE_OBJECT(H);
+
+	if (f_v) {
+		cout << "geometry_global::do_cheat_sheet_hermitian done" << endl;
+	}
+
+}
+
+
 
 }}
 

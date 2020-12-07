@@ -32,10 +32,10 @@ using namespace std;
 #include <io.h>
 #include <process.h>
 #endif
-#ifdef SYSTEMMAC
-#include <console.h>
+#ifdef SYSTEM_IS_MACINTOSH
+//#include <console.h>
 #include <time.h> // for clock()
-#include <unix.h>
+//#include <unix.h>
 #endif
 #ifdef MSDOS
 #include <time.h> // for clock()
@@ -59,7 +59,7 @@ void os_interface::runtime(long *l)
 	free(buffer);
 #endif
 #endif
-#ifdef SYSTEMMAC
+#ifdef SYSTEM_IS_MACINTOSH
 	*l = 0;
 #endif
 #ifdef MSDOS
@@ -71,6 +71,7 @@ void os_interface::runtime(long *l)
 int os_interface::os_memory_usage()
 {
 #ifdef SYSTEM_IS_MACINTOSH
+#if 0
 	struct task_basic_info t_info;
 	mach_msg_type_number_t t_info_count = TASK_BASIC_INFO_COUNT;
 
@@ -78,7 +79,7 @@ int os_interface::os_memory_usage()
 		                      TASK_BASIC_INFO, (task_info_t)&t_info,
 		                      &t_info_count))
 	{
-		cout << "os_memory_usage() error in task_info" << endl;
+		cout << "os_interface::os_memory_usage error in task_info" << endl;
 		exit(1);
 	}
 	// resident size is in t_info.resident_size;
@@ -88,6 +89,7 @@ int os_interface::os_memory_usage()
 	//cout << "resident_size=" << t_info.resident_size << endl;
 	//cout << "virtual_size=" << t_info.virtual_size << endl;
 	return t_info.resident_size;
+#endif
 #endif
 #ifdef SYSTEM_LINUX
 	int chars = 128;
@@ -127,11 +129,13 @@ int os_interface::os_ticks()
 	return t;
 #endif
 #endif
-#ifdef SYSTEMMAC
+#ifdef SYSTEM_IS_MACINTOSH
+#if 0
 	clock_t t;
 
 	t = clock();
 	return((int)t);
+#endif
 #endif
 #ifdef SYSTEMWINDOWS
 	return 0;

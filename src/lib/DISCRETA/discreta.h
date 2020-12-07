@@ -36,9 +36,6 @@ namespace discreta {
 
 
 #define BITS_OF_int 32
-#define SYSTEMUNIX
-#undef SYSTEMMAC
-#undef SYSTEMWINDOWS
 #define SAVE_ASCII_USE_COMPRESS
 
 
