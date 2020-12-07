@@ -281,6 +281,14 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->cheat_sheet_orthogonal_n,
 				verbose_level);
 	}
+	else if (Descr->f_cheat_sheet_hermitian) {
+
+		geometry_global Geo;
+
+		Geo.do_cheat_sheet_hermitian(F,
+				Descr->cheat_sheet_hermitian_projective_dimension,
+				verbose_level);
+	}
 
 	else if (Descr->f_decomposition_by_element) {
 

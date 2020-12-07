@@ -731,6 +731,9 @@ public:
 	void do_cheat_sheet_orthogonal(finite_field *F,
 			int epsilon, int n,
 			int verbose_level);
+	void do_cheat_sheet_hermitian(finite_field *F,
+			int projective_dimension,
+			int verbose_level);
 
 };
 
@@ -875,6 +878,8 @@ public:
 	int beta; // alpha^(q+1), a primitive element for GF(q)
 	int *log_beta; // [Q]
 	int *beta_power; // [q - 1]
+		// beta_power[i] = beta to the power i = j
+		// log_beta[j] = i
 	
 	hermitian();
 	~hermitian();
@@ -898,6 +903,10 @@ public:
 	int S_rank(int *v, int len, int verbose_level);
 	void Sbar_unrank(int *v, int len, int rk, int verbose_level);
 	int Sbar_rank(int *v, int len, int verbose_level);
+	void create_latex_report(int verbose_level);
+	void report(std::ostream &ost, int verbose_level);
+	void report_points(std::ostream &ost, int verbose_level);
+
 };
 
 // #############################################################################

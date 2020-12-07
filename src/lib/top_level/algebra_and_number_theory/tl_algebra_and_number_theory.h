@@ -352,6 +352,9 @@ public:
 	int cheat_sheet_orthogonal_epsilon;
 	int cheat_sheet_orthogonal_n;
 
+	int f_cheat_sheet_hermitian;
+	int cheat_sheet_hermitian_projective_dimension;
+
 	int f_decomposition_by_element;
 	int decomposition_by_element_n;
 	int decomposition_by_element_power;

@@ -145,7 +145,7 @@
 
 #if defined(__APPLE__) || defined(__MACH__)
 #define SYSTEMUNIX
-#define SYSTEM_IS_MACintOSH
+#define SYSTEM_IS_MACINTOSH
 	// use Mac specific stuff like asking how much memory the process uses.
 #endif
 

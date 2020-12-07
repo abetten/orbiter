@@ -36,6 +36,15 @@ int main(int argc, const char **argv)
 	cout << "https://github.com/abetten/orbiter" << endl;
 	cout << "An example makefile with many commands from the user's guide is here: " << endl;
 	cout << "https://github.com/abetten/orbiter/tree/master/examples/users_guide/makefile" << endl;
+#ifdef SYSTEMUNIX
+	cout << "SYSTEMUNIX is defined" << endl;
+#endif
+#ifdef SYSTEMWINDOWS
+	cout << "SYSTEMWINDOWS is defined" << endl;
+#endif
+#ifdef SYSTEM_IS_MACINTOSH
+	cout << "SYSTEM_IS_MACINTOSH is defined" << endl;
+#endif
 
 
 	std::string *Argv;
