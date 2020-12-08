@@ -21,6 +21,7 @@ finite_field_activity::finite_field_activity()
 {
 	Descr = NULL;
 	F = NULL;
+	F_secondary = NULL;
 }
 
 finite_field_activity::~finite_field_activity()
@@ -287,6 +288,18 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		Geo.do_cheat_sheet_hermitian(F,
 				Descr->cheat_sheet_hermitian_projective_dimension,
+				verbose_level);
+	}
+	else if (Descr->f_cheat_sheet_desarguesian_spread) {
+
+		geometry_global Geo;
+
+		if (F_secondary == NULL) {
+			cout << "F_secondary == NULL" << endl;
+			exit(1);
+		}
+		Geo.do_create_desarguesian_spread(F, F_secondary,
+				Descr->cheat_sheet_desarguesian_spread_m,
 				verbose_level);
 	}
 

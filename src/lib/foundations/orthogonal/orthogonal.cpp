@@ -321,89 +321,95 @@ void orthogonal::init(int epsilon, int n,
 	if (epsilon == -1) {
 		F->choose_anisotropic_form(
 				form_c1, form_c2, form_c3, verbose_level);
-		}
+	}
 	if (f_v) {
 		cout << "orthogonal::init computing Gram matrix" << endl;
-		}
+	}
 	F->Gram_matrix(
 			epsilon, n - 1,
 			form_c1, form_c2, form_c3, Gram_matrix);
 	if (f_v) {
 		cout << "orthogonal::init "
 				"computing Gram matrix done" << endl;
-		}
+	}
 
 	T1_m = Gg.count_T1(epsilon, m, q);
 	if (f_vvv) {
 		cout << "T1_m(" << epsilon << ","
 				<< m << "," << q << ") = " << T1_m << endl;
-		}
+	}
 	T1_mm1 = Gg.count_T1(epsilon, m - 1, q);
 	if (f_vvv) {
 		cout << "T1_mm1(" << epsilon << ","
 				<< m - 1 << "," << q << ") = " << T1_mm1 << endl;
-		}
+	}
 	if (m > 1) {
 		T1_mm2 = Gg.count_T1(epsilon, m - 2, q);
 		if (f_vvv) {
 			cout << "T1_mm2(" << epsilon << ","
 					<< m - 2 << "," << q << ") = " << T1_mm2 << endl;
-			}
 		}
+	}
 	else {
 		T1_mm2 = 0;
-		}
+	}
 	T2_m = Gg.count_T2(m, q);
 	T2_mm1 = Gg.count_T2(m - 1, q);
 	if (m > 1) {
 		T2_mm2 = Gg.count_T2(m - 2, q);
-		}
+	}
 	else {
 		T2_mm2 = 0;
-		}
+	}
 	N1_m = Gg.count_N1(m, q);
 	N1_mm1 = Gg.count_N1(m - 1, q);
 	if (m > 1) {
 		N1_mm2 = Gg.count_N1(m - 2, q);
-		}
+	}
 	else {
 		N1_mm2 = 0;
-		}
+	}
 	S_m = Gg.count_S(m, q);
 	S_mm1 = Gg.count_S(m - 1, q);
 	if (m > 1) {
 		S_mm2 = Gg.count_S(m - 2, q);
-		}
+	}
 	else {
 		S_mm2 = 0;
-		}
+	}
 	Sbar_m = Gg.count_Sbar(m, q);
 	Sbar_mm1 = Gg.count_Sbar(m - 1, q);
 	if (m > 1) {
 		Sbar_mm2 = Gg.count_Sbar(m - 2, q);
-		}
+	}
 	else {
 		Sbar_mm2 = 0;
-		}
+	}
 
 	if (f_vvv) {
 		cout << "T1(" << m << "," << q << ") = " << T1_m << endl;
-		if (m >= 1)
+		if (m >= 1) {
 			cout << "T1(" << m - 1 << "," << q << ") = " << T1_mm1 << endl;
-		if (m >= 2)
+		}
+		if (m >= 2) {
 			cout << "T1(" << m - 2 << "," << q << ") = " << T1_mm2 << endl;
+		}
 		cout << "T2(" << m << "," << q << ") = " << T2_m << endl;
-		if (m >= 1)
+		if (m >= 1) {
 			cout << "T2(" << m - 1 << "," << q << ") = " << T2_mm1 << endl;
-		if (m >= 2)
+		}
+		if (m >= 2) {
 			cout << "T2(" << m - 2 << "," << q << ") = " << T2_mm2 << endl;
+		}
 		cout << "nb_pts_N1(" << m << "," << q << ") = " << N1_m << endl;
-		if (m >= 1)
+		if (m >= 1) {
 			cout << "nb_pts_N1(" << m - 1 << "," << q << ") = "
 			<< N1_mm1 << endl;
-		if (m >= 2)
+		}
+		if (m >= 2) {
 			cout << "nb_pts_N1(" << m - 2 << "," << q << ") = "
 			<< N1_mm2 << endl;
+		}
 		cout << "S_m=" << S_m << endl;
 		cout << "S_mm1=" << S_mm1 << endl;
 		cout << "S_mm2=" << S_mm2 << endl;
@@ -413,7 +419,7 @@ void orthogonal::init(int epsilon, int n,
 		cout << "N1_m=" << N1_m << endl;
 		cout << "N1_mm1=" << N1_mm1 << endl;
 		cout << "N1_mm2=" << N1_mm2 << endl;
-		}
+	}
 
 
 	if (epsilon == 1) {
@@ -426,41 +432,41 @@ void orthogonal::init(int epsilon, int n,
 			cout << "T1_m=" << T1_m << endl;
 			cout << "u=" << u << endl;
 			exit(1);
-			}
+		}
 #endif
 		init_hyperbolic(verbose_level - 3);
 		if (f_v) {
 			cout << "after init_hyperbolic" << endl;
-			}
 		}
+	}
 	else if (epsilon == 0) {
 		init_parabolic(verbose_level /*- 3*/);
 		if (f_v) {
 			cout << "after init_parabolic" << endl;
-			}
 		}
+	}
 	else if (epsilon == -1) {
 		nb_points = Gg.nb_pts_Qepsilon(epsilon, n - 1, q);
 		nb_lines = 0;
 		if (f_v) {
 			cout << "nb_points=" << nb_points << endl;
-			}
+		}
 		//cout << "elliptic type not yet implemented" << endl;
 		return;
 		//exit(1);
-		}
+	}
 	else {
 		cout << "epsilon = " << epsilon << " unknown" << endl;
-		}
+	}
 
 	nb_points = 0;
 	for (i = 0; i < nb_point_classes; i++) {
 		nb_points += P[i];
-		}
+	}
 	nb_lines = 0;
 	for (i = 0; i < nb_line_classes; i++) {
 		nb_lines += L[i];
-		}
+	}
 	lines_on_point_coords1 = NEW_int(alpha * n);
 	lines_on_point_coords2 = NEW_int(alpha * n);
 
@@ -468,21 +474,21 @@ void orthogonal::init(int epsilon, int n,
 		subspace = NEW_OBJECT(orthogonal);
 		if (f_v) {
 			cout << "initializing subspace" << endl;
-			}
+		}
 		subspace->init(epsilon, n - 2, F, 0 /*verbose_level - 1*/);
 		if (f_v) {
 			cout << "initializing subspace finished" << endl;
 			cout << "subspace->epsilon=" << subspace->epsilon << endl;
 			cout << "subspace->n=" << subspace->n << endl;
 			cout << "subspace->m=" << subspace->m << endl;
-			}
 		}
+	}
 	else {
 		if (f_v) {
 			cout << "no subspace" << endl;
-			}
-		subspace = NULL;
 		}
+		subspace = NULL;
+	}
 
 	if (f_v) {
 		cout << "O^" << epsilon << "(" << n << "," << q << ")" << endl;
@@ -495,21 +501,21 @@ void orthogonal::init(int epsilon, int n,
 		cout << "alpha = " << alpha << endl;
 		cout << "beta = " << beta << endl;
 		cout << "gamma = " << gamma << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "before allocating line_pencil of size " << alpha << endl;
-		}
+	}
 	line_pencil = NEW_lint(alpha);
 	if (f_v) {
 		cout << "before allocating Perp1 of size "
 				<< alpha * (q + 1) << endl;
-		}
+	}
 	Perp1 = NEW_lint(alpha * (q + 1));
 	if (f_v) {
 		cout << "after allocating Perp1" << endl;
-		}
+	}
 
 
 
@@ -518,7 +524,7 @@ void orthogonal::init(int epsilon, int n,
 		cout << "Gram matrix:" << endl;
 		print_integer_matrix_width(cout,
 				Gram_matrix, n, n, n, F->log10_of_q + 1);
-		}
+	}
 	if (FALSE) {
 		for (i = 0; i < T1_m; i++) {
 			F->Q_epsilon_unrank(v1, 1, epsilon, n - 1,
@@ -528,28 +534,28 @@ void orthogonal::init(int epsilon, int n,
 			j = F->Q_epsilon_rank(v1, 1, epsilon, n - 1,
 					form_c1, form_c2, form_c3, verbose_level);
 			cout << " : " << j << endl;
-			}
 		}
+	}
 	if (FALSE) {
 		if (nb_points < 300) {
 			cout << "points of O^" << epsilon
 					<< "(" << n << "," << q << ") by type:" << endl;
 			list_points_by_type(verbose_level);
-			}
+		}
 		if (nb_points < 300 && nb_lines < 300) {
 			cout << "points and lines of O^" << epsilon
 					<< "(" << n << "," << q << ") by type:" << endl;
 			list_all_points_vs_points(verbose_level);
-			}
 		}
+	}
 	if (f_v) {
 		cout << "orthogonal::init finished" << endl;
 		if (subspace) {
 			cout << "subspace->epsilon=" << subspace->epsilon << endl;
 			cout << "subspace->n=" << subspace->n << endl;
 			cout << "subspace->m=" << subspace->m << endl;
-			}
 		}
+	}
 }
 
 void orthogonal::init_parabolic(int verbose_level)

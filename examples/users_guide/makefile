@@ -5462,6 +5462,29 @@ max_arc_lift:
 
 SPREADS:
 	
+desarguesian_spread_in_PG_3_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define FQ -finite_field -q 4 -end -end \
+		-define Fq -finite_field -q 2 -end -end \
+		-with FQ -and Fq -do -finite_field_activity -cheat_sheet_desarguesian_spread 2 -end
+	pdflatex Desarguesian_Spread_3_2.tex
+	open Desarguesian_Spread_3_2.pdf
+
+desarguesian_spread_in_PG_5_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define FQ -finite_field -q 8 -end -end \
+		-define Fq -finite_field -q 2 -end -end \
+		-with FQ -and Fq -do -finite_field_activity -cheat_sheet_desarguesian_spread 2 -end
+	pdflatex Desarguesian_Spread_5_2.tex
+	open Desarguesian_Spread_5_2.pdf
+
+desarguesian_spread_in_PG_3_4:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define FQ -finite_field -q 16 -end -end \
+		-define Fq -finite_field -q 4 -end -end \
+		-with FQ -and Fq -do -finite_field_activity -cheat_sheet_desarguesian_spread 2 -end
+	pdflatex Desarguesian_Spread_3_4.tex
+	open Desarguesian_Spread_3_4.pdf
 
 
 spreads4:

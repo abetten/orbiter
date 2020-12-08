@@ -600,6 +600,7 @@ std::ostream& operator<<(std::ostream& ost, longinteger_object& p);
 #include "./graph_theory_nauty/graph_theory_nauty.h"
 #include "./graphics/graphics.h"
 #include "./io_and_os/io_and_os.h"
+#include "./orthogonal/orthogonal.h"
 #include "./solvers/solvers.h"
 #include "./statistics/statistics.h"
 #include "./surfaces/surfaces.h"

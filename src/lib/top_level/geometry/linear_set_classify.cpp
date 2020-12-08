@@ -194,6 +194,7 @@ void linear_set_classify::freeself()
 void linear_set_classify::init(
 	int s, int n, int q, std::string &poly_q, std::string &poly_Q,
 	int depth, int f_identify, int verbose_level)
+// Q = q^s and n = m * s
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

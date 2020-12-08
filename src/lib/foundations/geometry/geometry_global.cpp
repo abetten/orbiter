@@ -2082,6 +2082,69 @@ void geometry_global::do_cheat_sheet_hermitian(finite_field *F,
 
 }
 
+void geometry_global::do_create_desarguesian_spread(finite_field *FQ, finite_field *Fq,
+		int m,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "geometry_global::do_create_desarguesian_spread" << endl;
+		cout << "geometry_global::do_create_desarguesian_spread Q=" << FQ->q << " q=" << Fq->q << " m=" << m << endl;
+	}
+
+	int s, n;
+
+	if (FQ->p != Fq->p) {
+		cout << "geometry_global::do_create_desarguesian_spread the fields must have the same characteristic" << endl;
+		exit(1);
+	}
+	s = FQ->e / Fq->e;
+
+	if (s * Fq->e != FQ->e) {
+		cout << "geometry_global::do_create_desarguesian_spread Fq is not a subfield of FQ" << endl;
+		exit(1);
+	}
+
+	n = m * s;
+	subfield_structure *SubS;
+	desarguesian_spread *D;
+
+	SubS = NEW_OBJECT(subfield_structure);
+	if (f_v) {
+		cout << "geometry_global::do_create_desarguesian_spread before SubS->init" << endl;
+	}
+	SubS->init(FQ, Fq, verbose_level - 2);
+
+	if (f_v) {
+		cout << "Field-basis: ";
+		int_vec_print(cout, SubS->Basis, s);
+		cout << endl;
+	}
+
+	D = NEW_OBJECT(desarguesian_spread);
+	if (f_v) {
+		cout << "geometry_global::do_create_desarguesian_spread before D->init" << endl;
+	}
+	D->init(n, m, s,
+		SubS,
+		verbose_level - 2);
+	if (f_v) {
+		cout << "geometry_global::do_create_desarguesian_spread after D->init" << endl;
+	}
+
+
+	D->create_latex_report(verbose_level);
+
+	FREE_OBJECT(D);
+	FREE_OBJECT(SubS);
+
+	if (f_v) {
+		cout << "geometry_global::do_create_desarguesian_spread done" << endl;
+	}
+}
+
 
 
 }}
