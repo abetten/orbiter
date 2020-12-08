@@ -36,7 +36,7 @@ void finite_field::Q_epsilon_unrank(
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_unrank after Q_unrank" << endl;
 		}
-		}
+	}
 	else if (epsilon == 1) {
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_unrank before Qplus_unrank" << endl;
@@ -45,7 +45,7 @@ void finite_field::Q_epsilon_unrank(
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_unrank after Qplus_unrank" << endl;
 		}
-		}
+	}
 	else if (epsilon == -1) {
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_unrank before Qminus_unrank" << endl;
@@ -54,11 +54,11 @@ void finite_field::Q_epsilon_unrank(
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_unrank after Qminus_unrank" << endl;
 		}
-		}
+	}
 	else {
 		cout << "Q_epsilon_unrank epsilon is wrong" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "finite_field::Q_epsilon_unrank done" << endl;
 	}
@@ -82,7 +82,7 @@ long int finite_field::Q_epsilon_rank(
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_rank after Q_rank" << endl;
 		}
-		}
+	}
 	else if (epsilon == 1) {
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_rank before Qplus_rank" << endl;
@@ -91,7 +91,7 @@ long int finite_field::Q_epsilon_rank(
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_rank after Qplus_rank" << endl;
 		}
-		}
+	}
 	else if (epsilon == -1) {
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_rank before Qminus_rank" << endl;
@@ -100,11 +100,11 @@ long int finite_field::Q_epsilon_rank(
 		if (f_v) {
 			cout << "finite_field::Q_epsilon_rank after Qminus_rank" << endl;
 		}
-		}
+	}
 	else {
 		cout << "Q_epsilon_unrank epsilon is wrong" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "finite_field::Q_epsilon_rank done" << endl;
 	}

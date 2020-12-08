@@ -16,8 +16,22 @@ namespace foundations {
 
 desarguesian_spread::desarguesian_spread()
 {
-	null();
+	n = m = s = q = Q = 0;
+	Fq = NULL;
+	FQ = NULL;
+	SubS = NULL;
+	Gr = NULL;
+	N = 0;
+	nb_points = 0;
+	nb_points_per_spread_element = 0;
+	spread_element_size = 0;
+	Spread_elements = NULL;
+	Rk = NULL;
+	List_of_points = NULL;
+	//null();
 };
+
+
 
 desarguesian_spread::~desarguesian_spread()
 {
@@ -26,19 +40,24 @@ desarguesian_spread::~desarguesian_spread()
 
 void desarguesian_spread::null()
 {
-	SubS = NULL;
-	Spread_elements = NULL;
-	List_of_points = NULL;
 }
 
 void desarguesian_spread::freeself()
 {
+#if 0
 	if (SubS) {
 		FREE_OBJECT(SubS);
 	}
+#endif
+	if (Gr) {
+		FREE_OBJECT(Gr);
+	}
 	if (Spread_elements) {
 		FREE_int(Spread_elements);
-		}
+	}
+	if (Rk) {
+		FREE_lint(Rk);
+	}
 	if (List_of_points) {
 		FREE_int(List_of_points);
 	}
@@ -61,6 +80,7 @@ void desarguesian_spread::init(int n, int m, int s,
 	desarguesian_spread::m = m;
 	desarguesian_spread::s = s;
 	desarguesian_spread::SubS = SubS;
+
 	FQ = SubS->FQ;
 	Fq = SubS->Fq;
 	q = Fq->q;
@@ -75,10 +95,15 @@ void desarguesian_spread::init(int n, int m, int s,
 		exit(1);
 		}
 	if (s != SubS->s) {
-		cout << "desarguesian_spread::init "
-				"s != SubS->s" << endl;
+		cout << "desarguesian_spread::init s != SubS->s" << endl;
 		exit(1);
 		}
+
+	Gr = NEW_OBJECT(grassmann);
+	Gr->init(n, s /*k*/, Fq, verbose_level);
+
+
+
 	nb_points = Gg.nb_PG_elements(n - 1, q);
 	if (f_v) {
 		cout << "desarguesian_spread::init "
@@ -127,6 +152,7 @@ void desarguesian_spread::calculate_spread_elements(
 		}
 	spread_element_size = s * n;
 	Spread_elements = NEW_int(N * spread_element_size);
+	Rk = NEW_lint(N);
 
 	v = NEW_int(m);
 	w = NEW_int(m);
@@ -176,6 +202,8 @@ void desarguesian_spread::calculate_spread_elements(
 		int_vec_copy(z,
 			Spread_elements + h * spread_element_size,
 			spread_element_size);
+
+		Rk[h] = Gr->rank_lint_here(Spread_elements + h * spread_element_size, 0 /* verbose_level */);
 		}
 	FREE_int(v);
 	FREE_int(w);
@@ -347,7 +375,7 @@ void desarguesian_spread::compute_linear_set(int *Basis, int basis_sz,
 		}
 }
 
-void desarguesian_spread::print_spread_element_table_tex()
+void desarguesian_spread::print_spread_element_table_tex(std::ostream &ost)
 {
 	int a, b, i, j;
 	int *v;
@@ -355,31 +383,68 @@ void desarguesian_spread::print_spread_element_table_tex()
 	v = NEW_int(m);
 	for (a = 0; a < N; a++) {
 		FQ->PG_element_unrank_modified(v, 1, m, a);
-		cout << "$";
-		int_vec_print(cout, v, m);
-		cout << "$";
-		cout << " & ";
-		cout << "$";
-		cout << "\\left[" << endl;
-		cout << "\\begin{array}{*{" << n << "}{c}}" << endl;
+		ost << "$";
+		int_vec_print(ost, v, m);
+		ost << "$";
+		ost << " & ";
+		ost << "$";
+		ost << "\\left[" << endl;
+		ost << "\\begin{array}{*{" << n << "}{c}}" << endl;
 		for (i = 0; i < s; i++) {
 			for (j = 0; j < n; j++) {
 				b = Spread_elements[a * spread_element_size + i * n + j];
-				cout << b << " ";
+				ost << b << " ";
 				if (j < n - 1) {
-					cout << "& ";
+					ost << "& ";
 					}
 				}
-			cout << "\\\\" << endl;
+			ost << "\\\\" << endl;
 			}
-		cout << "\\end{array}" << endl;
-		cout << "\\right]" << endl;
-		cout << "$";
-		cout << "\\\\" << endl;
-		cout << "\\hline" << endl;
+		ost << "\\end{array}" << endl;
+		ost << "\\right]" << endl;
+		ost << "$";
+		ost << "\\\\" << endl;
+		ost << "\\hline" << endl;
 		}
 	FREE_int(v);
 }
+
+void desarguesian_spread::print_spread_elements_tex(std::ostream &ost)
+{
+	int a, b, i, j;
+	int *v;
+
+	v = NEW_int(m);
+	ost << "\\noindent" << endl;
+	for (a = 0; a < N; a++) {
+		ost << "Spread element " << a << " is ";
+		FQ->PG_element_unrank_modified(v, 1, m, a);
+		ost << "$";
+		int_vec_print(ost, v, m);
+		ost << "=";
+		ost << "\\left[" << endl;
+		ost << "\\begin{array}{*{" << n << "}{c}}" << endl;
+		for (i = 0; i < s; i++) {
+			for (j = 0; j < n; j++) {
+				b = Spread_elements[a * spread_element_size + i * n + j];
+				ost << b << " ";
+				if (j < n - 1) {
+					ost << "& ";
+					}
+				}
+			ost << "\\\\" << endl;
+			}
+		ost << "\\end{array}" << endl;
+		ost << "\\right]_{" << Rk[a] << "}" << endl;
+		ost << "$";
+		ost << "\\\\" << endl;
+		}
+	ost << "Spread elements by rank: ";
+	lint_vec_print(ost, Rk, N);
+	ost << "\\\\" << endl;
+	FREE_int(v);
+}
+
 
 void desarguesian_spread::print_linear_set_tex(long int *set, int sz)
 {
@@ -405,6 +470,86 @@ void desarguesian_spread::print_linear_set_element_tex(long int a, int sz)
 
 	FREE_int(v);
 }
+
+
+void desarguesian_spread::create_latex_report(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "desarguesian_spread::create_latex_report" << endl;
+	}
+
+	{
+		char str[1000];
+		string fname;
+		char title[1000];
+		char author[1000];
+
+		snprintf(str, 1000, "Desarguesian_Spread_%d_%d.tex", n - 1, q);
+		fname.assign(str);
+		snprintf(title, 1000, "Desarguesian Spread in  ${\\rm PG}(%d,%d)$", n - 1, q);
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "desarguesian_spread::create_latex_report before report" << endl;
+			}
+			report(ost, verbose_level);
+			if (f_v) {
+				cout << "desarguesian_spread::create_latex_report after report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "desarguesian_spread::create_latex_report done" << endl;
+	}
+}
+
+void desarguesian_spread::report(std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "desarguesian_spread::report" << endl;
+	}
+
+
+	print_spread_elements_tex(ost);
+
+	if (f_v) {
+		cout << "desarguesian_spread::report done" << endl;
+	}
+}
+
+
 
 }
 }

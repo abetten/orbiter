@@ -19,8 +19,20 @@ namespace foundations {
 
 subfield_structure::subfield_structure()
 {
-	 null();
+	FQ = NULL;
+	Fq = NULL;
+	Q = q = s = 0;
+	Basis = NULL;
+	embedding = NULL;
+	embedding_inv = NULL;
+	components = NULL;
+	FQ_embedding = NULL;
+	Fq_element = NULL;
+	v = NULL;
+	//null();
 }
+
+
 
 subfield_structure::~subfield_structure()
 {
@@ -29,13 +41,6 @@ subfield_structure::~subfield_structure()
 
 void subfield_structure::null()
 {
-	Basis = NULL;
-	embedding = NULL;
-	embedding_inv = NULL;
-	components = NULL;
-	FQ_embedding = NULL;
-	Fq_element = NULL;
-	v = NULL;
 }
 
 void subfield_structure::freeself()

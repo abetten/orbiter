@@ -375,8 +375,8 @@ void interface_symbol_table::do_finite_field_activity(
 
 	Orbiter_top_level_session->find_symbols(with_labels, Idx);
 
-	if (with_labels.size() != 1) {
-		cout << "-finite_field_activity requires exactly one input" << endl;
+	if (with_labels.size() < 1) {
+		cout << "-finite_field_activity requires at least one input" << endl;
 		exit(1);
 	}
 	finite_field *F;
@@ -389,6 +389,14 @@ void interface_symbol_table::do_finite_field_activity(
 	Finite_field_activity_description->q = F->q;
 	FA.Descr = Finite_field_activity_description;
 	FA.F = F;
+
+	if (with_labels.size() == 2) {
+		cout << "-finite_field_activity has two inputs" << endl;
+		FA.F_secondary = (finite_field *) Orbiter_top_level_session->get_object(Idx[1]);
+	}
+
+
+
 	if (f_v) {
 		cout << "interface_symbol_table::do_finite_field_activity "
 				"before FA.perform_activity" << endl;

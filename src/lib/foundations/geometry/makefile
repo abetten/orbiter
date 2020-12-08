@@ -27,13 +27,6 @@ MODULES = \
 	knarr.o \
 	knowledge_base.o \
 	object_in_projective_space.o \
-	orthogonal_blt.o \
-	orthogonal_group.o \
-	orthogonal_hyperbolic.o \
-	orthogonal_io.o \
-	orthogonal_parabolic.o \
-	orthogonal_rank_unrank.o \
-	orthogonal.o \
 	point_line.o \
 	projective_space.o \
 	projective_space2.o \

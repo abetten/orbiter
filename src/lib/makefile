@@ -91,13 +91,6 @@ MODULES= \
 		foundations/geometry/knarr.o \
 		foundations/geometry/knowledge_base.o \
 		foundations/geometry/object_in_projective_space.o \
-		foundations/geometry/orthogonal_blt.o \
-		foundations/geometry/orthogonal_group.o \
-		foundations/geometry/orthogonal_hyperbolic.o \
-		foundations/geometry/orthogonal_io.o \
-		foundations/geometry/orthogonal_parabolic.o \
-		foundations/geometry/orthogonal_rank_unrank.o \
-		foundations/geometry/orthogonal.o \
 		foundations/geometry/point_line.o \
 		foundations/geometry/projective_space.o \
 		foundations/geometry/projective_space2.o \
@@ -156,6 +149,13 @@ MODULES= \
 		foundations/io_and_os/override_double.o \
 		foundations/io_and_os/prepare_frames.o \
 		foundations/io_and_os/util.o \
+		foundations/orthogonal/orthogonal_blt.o \
+		foundations/orthogonal/orthogonal_group.o \
+		foundations/orthogonal/orthogonal_hyperbolic.o \
+		foundations/orthogonal/orthogonal_io.o \
+		foundations/orthogonal/orthogonal_parabolic.o \
+		foundations/orthogonal/orthogonal_rank_unrank.o \
+		foundations/orthogonal/orthogonal.o \
 		foundations/solvers/diophant_activity_description.o \
 		foundations/solvers/diophant_activity.o \
 		foundations/solvers/diophant_create.o \

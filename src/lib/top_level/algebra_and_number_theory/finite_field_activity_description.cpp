@@ -117,6 +117,9 @@ finite_field_activity_description::finite_field_activity_description()
 	f_cheat_sheet_hermitian = FALSE;
 	cheat_sheet_hermitian_projective_dimension = 0;
 
+	f_cheat_sheet_desarguesian_spread = FALSE;
+	cheat_sheet_desarguesian_spread_m = 0;
+
 	f_decomposition_by_element = FALSE;
 	decomposition_by_element_n = 0;
 	decomposition_by_element_power = 1;
@@ -410,6 +413,11 @@ int finite_field_activity_description::read_arguments(
 			f_cheat_sheet_hermitian = TRUE;
 			cheat_sheet_hermitian_projective_dimension = strtoi(argv[++i]);
 			cout << "-cheat_sheet_hermitian " << cheat_sheet_hermitian_projective_dimension << endl;
+		}
+		else if (stringcmp(argv[i], "-cheat_sheet_desarguesian_spread") == 0) {
+			f_cheat_sheet_desarguesian_spread = TRUE;
+			cheat_sheet_desarguesian_spread_m = strtoi(argv[++i]);
+			cout << "-cheat_sheet_desarguesian_spread " << cheat_sheet_desarguesian_spread_m << endl;
 		}
 		else if (stringcmp(argv[i], "-decomposition_by_element") == 0) {
 			f_decomposition_by_element = TRUE;
