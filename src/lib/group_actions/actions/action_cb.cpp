@@ -148,6 +148,7 @@ void action::print_as_permutation(
 void action::print_point(
 		int a, ostream &ost)
 {
+	//cout << "action::print_point" << endl;
 	(*ptr->ptr_print_point)(*this, a, ost);
 }
 

@@ -493,6 +493,10 @@ public:
 			int f_load_save,
 			std::string &prefix,
 			int verbose_level);
+	void idx_of_points_in_orbits_of_length_l(
+			long int *set, int set_sz, int go, int l,
+			std::vector<int> &Idx,
+			int verbose_level);
 	void orbit_type_of_set(
 			long int *set, int set_sz, int go,
 			long int *orbit_type,
@@ -544,6 +548,9 @@ public:
 			set_of_sets *&Orbit_invariant,
 			int (*evaluate_orbit_invariant_function)(int a, int i, int j, void *evaluate_data, int verbose_level),
 			void *evaluate_data, int verbose_level);
+	void create_latex_report(int verbose_level);
+	void report(std::ostream &ost, int verbose_level);
+
 };
 
 

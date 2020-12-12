@@ -259,19 +259,89 @@ void orbit_type_repository::init(
 	}
 }
 
-void orbit_type_repository::report(ostream &ost)
+
+void orbit_type_repository::create_latex_report(std::string &prefix, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	string fname_tex;
+
+	if (f_v) {
+		cout << "orbit_type_repository::create_latex_report" << endl;
+	}
+	fname_tex.assign(prefix);
+	fname_tex.append("_orbit_types_report.tex");
+
+	{
+		char title[1000];
+		char author[1000];
+
+		snprintf(title, 1000, "Orbits");
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname_tex);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "orbits_on_something::create_latex_report before report" << endl;
+			}
+			report(ost, verbose_level);
+			if (f_v) {
+				cout << "orbits_on_something::create_latex_report after report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		cout << "written file " << fname_tex << " of size "
+				<< Fio.file_size(fname_tex) << endl;
+	}
+
+	if (f_v) {
+		cout << "orbit_type_repository::create_latex_report done" << endl;
+	}
+}
+
+
+
+
+void orbit_type_repository::report(ostream &ost, int verbose_level)
 {
 	int type_idx;
+	layered_graph_draw_options LG_Draw_options;
+
+
+	Oos->A->report(ost, FALSE /* f_sims*/, NULL /* sims *S*/,
+			TRUE /* f_strong_gens */, Oos->SG,
+			&LG_Draw_options,
+			0 /* verbose_level*/);
 
 	ost << "\\begin{enumerate}[(1)]" << endl;
 	for (type_idx = 0; type_idx < nb_types; type_idx++) {
-		report_one_type(ost, type_idx);
+		report_one_type(ost, type_idx, verbose_level);
 	}
 	ost << "\\end{enumerate}" << endl;
 
 }
 
-void orbit_type_repository::report_one_type(ostream &ost, int type_idx)
+void orbit_type_repository::report_one_type(ostream &ost, int type_idx, int verbose_level)
 {
 	int /*f,*/ l;
 
@@ -280,7 +350,7 @@ void orbit_type_repository::report_one_type(ostream &ost, int type_idx)
 	ost << "\\item" << endl;
 	ost << "Orbit type " << type_idx << " / " << nb_types << ":\\\\" << endl;
 	ost << "There are " << l << " sets of the following type: \\\\";
-	ost << "$" << endl;
+	ost << "$$" << endl;
 	Oos->report_type(ost, Type_representatives + type_idx * orbit_type_size, goi);
 #if 0
 	ost << "\\left[" << endl;
@@ -289,9 +359,112 @@ void orbit_type_repository::report_one_type(ostream &ost, int type_idx)
 			goi + 1, goi);
 	ost << "\\right]" << endl;
 #endif
-	ost << "$" << endl;
+	ost << "$$" << endl;
 
+
+	if (l < 25) {
+		int idx, i;
+		long int *set2;
+		int *v;
+
+		set2 = NEW_lint(set_size);
+		v = NEW_int(set_size);
+
+		for (i = 0; i < nb_sets; i++) {
+			if (type[i] == type_idx) {
+				long int *set;
+				int l;
+
+				set = Sets + i * set_size;
+				//orbit_type_sz = (goi + 1) * goi;
+				//lint_vec_zero(orbit_type, orbit_type_sz);
+
+				// v[i] = index of orbit containing set[i]
+				// orbit_type[l - 1] = number of elements lying in an orbit of length l
+				// orbit_type[c * go + l - 1] = number of times that an orbit of length l
+				// intersects the set in c elements.
+
+				ost << "Set " << i << ":\\\\" << endl;
+				for (l = 1; l <= goi; l++) {
+					vector<int> Idx;
+					Oos->idx_of_points_in_orbits_of_length_l(
+								set, set_size, goi, l,
+								Idx,
+								verbose_level);
+					if (Idx.size()) {
+
+						int len;
+						long int a, b;
+
+						len = Idx.size();
+						ost << "There are " << len << " elements in orbits of length " << l << ": \\\\" << endl;
+						int h;
+
+						for (h = 0; h < len; h++) {
+							idx = Idx[h];
+							set2[h] = set[idx];
+						}
+
+						for (h = 0; h < len; h++) {
+							idx = Idx[h];
+							ost << "$" << set[idx] << "$";
+							if (h < len - 1) {
+								ost << ", ";
+							}
+						}
+						ost << "\\\\" << endl;
+
+						for (h = 0; h < len; h++) {
+							a = set2[h];
+							b = Oos->Sch->orbit_number(a);
+							v[h] = b;
+						}
+						tally By_orbit_number;
+
+						By_orbit_number.init(v, len, FALSE, 0);
+
+						set_of_sets *SoS;
+						int *types;
+						int nb_types;
+						int u;
+
+						SoS = By_orbit_number.get_set_partition_and_types(
+								types, nb_types, verbose_level);
+
+						SoS->sort();
+
+						ost << "Points collected by orbits:\\\\" << endl;
+						for (h = 0; h < nb_types; h++) {
+							ost << "Orbit " << types[h] << " contains ";
+							for (u = 0; u < SoS->Set_size[h]; u++) {
+								a = SoS->Sets[h][u];
+								b = set2[a];
+								ost << "$" << b;
+								ost << " = ";
+								Oos->A->print_point(b, ost);
+								ost << "$";
+								if (u < SoS->Set_size[h] - 1) {
+									ost << ", ";
+								}
+							}
+							//lint_vec_print(ost, SoS->Sets[h], SoS->Set_size[h]);
+							ost << "\\\\" << endl;
+						}
+						FREE_OBJECT(SoS);
+						FREE_int(types);
+					}
+				}
+
+
+
+			}
+		}
+		FREE_lint(set2);
+		FREE_int(v);
+	}
 }
+
+
 
 
 

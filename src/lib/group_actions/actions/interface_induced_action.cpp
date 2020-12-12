@@ -1507,6 +1507,12 @@ static void induced_action_print_point(action &A,
 {
 	action_global AG;
 
+#if 0
+	cout << "induced_action_print_point type=";
+	AG.action_print_symmetry_group_type(ost, A.type_G);
+	cout << endl;
+#endif
+
 	if (A.type_G == action_by_right_multiplication_t) {
 		//action_by_right_multiplication *ABRM = A.G.ABRM;
 		action *sub;

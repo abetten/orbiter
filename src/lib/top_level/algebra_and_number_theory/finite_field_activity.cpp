@@ -302,6 +302,16 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->cheat_sheet_desarguesian_spread_m,
 				verbose_level);
 	}
+	else if (Descr->f_find_CRC_polynomials) {
+
+		algebra_global Algebra;
+
+		Algebra.find_CRC_polynomials(F,
+				Descr->find_CRC_polynomials_nb_errors,
+				Descr->find_CRC_polynomials_information_bits,
+				Descr->find_CRC_polynomials_check_bits,
+				verbose_level);
+	}
 
 	else if (Descr->f_decomposition_by_element) {
 

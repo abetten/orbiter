@@ -358,6 +358,11 @@ public:
 	int f_cheat_sheet_desarguesian_spread;
 	int cheat_sheet_desarguesian_spread_m;
 
+	int f_find_CRC_polynomials;
+	int find_CRC_polynomials_nb_errors;
+	int find_CRC_polynomials_information_bits;
+	int find_CRC_polynomials_check_bits;
+
 	int f_decomposition_by_element;
 	int decomposition_by_element_n;
 	int decomposition_by_element_power;

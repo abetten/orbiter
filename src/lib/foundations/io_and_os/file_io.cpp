@@ -3416,7 +3416,62 @@ void file_io::do_csv_file_select_rows(std::string &fname,
 	}
 	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
 
+	FREE_int(Rows);
 
+	if (f_v) {
+		cout << "file_io::do_csv_file_select_rows done" << endl;
+	}
+}
+
+void file_io::do_csv_file_select_rows_and_cols(std::string &fname,
+		std::string &rows_text, std::string &cols_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::do_csv_file_select_rows_and_cols" << endl;
+	}
+	int *Rows;
+	int nb_rows;
+	int *Cols;
+	int nb_cols;
+
+	int_vec_scan(rows_text, Rows, nb_rows);
+
+	int_vec_scan(rows_text, Cols, nb_cols);
+
+	spreadsheet S;
+
+	S.read_spreadsheet(fname, verbose_level);
+
+
+	int i;
+
+
+
+	string fname_out;
+
+	fname_out.assign(fname);
+	chop_off_extension(fname_out);
+	fname_out.append("_select.csv");
+
+	{
+		ofstream ost(fname_out);
+		ost << "Row,";
+		S.print_table_row_with_column_selection(0, FALSE, Cols, nb_cols, ost);
+		for (i = 0; i < nb_rows; i++) {
+			ost << i << ",";
+			S.print_table_row_with_column_selection(Rows[i] + 1, FALSE,
+					Cols, nb_cols, ost);
+			}
+		ost << "END" << endl;
+	}
+	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
+
+
+	FREE_int(Rows);
+	FREE_int(Cols);
 	if (f_v) {
 		cout << "file_io::do_csv_file_select_rows done" << endl;
 	}

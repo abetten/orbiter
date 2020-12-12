@@ -330,8 +330,9 @@ public:
 			long int *Sets,
 			long int goi,
 			int verbose_level);
-	void report(std::ostream &ost);
-	void report_one_type(std::ostream &ost, int type_idx);
+	void create_latex_report(std::string &prefix, int verbose_level);
+	void report(std::ostream &ost, int verbose_level);
+	void report_one_type(std::ostream &ost, int type_idx, int verbose_level);
 
 };
 

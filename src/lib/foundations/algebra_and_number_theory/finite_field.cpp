@@ -749,7 +749,10 @@ void finite_field::create_tables_prime_field(int verbose_level)
 		cout << "finite_field::create_tables_prime_field" << endl;
 		}
 	reordered_list_of_elements[0] = 0;
-	reordered_list_of_elements[1] = alpha;
+	reordered_list_of_elements[1] = 1;
+	if (q >= 2) {
+		reordered_list_of_elements[2] = alpha;
+	}
 	reordered_list_of_elements_inv[0] = 0;
 	reordered_list_of_elements_inv[alpha] = 1;
 	for (i = 0; i < q; i++) {
@@ -775,7 +778,7 @@ void finite_field::create_tables_prime_field(int verbose_level)
 		}
 	}
 	inv_table[0] = -999999999;
-	for (i = 2; i < q; i++) {
+	for (i = 3; i < q; i++) {
 		a = mult_table[reordered_list_of_elements[i - 1] * q + alpha];
 		reordered_list_of_elements[i] = a;
 		reordered_list_of_elements_inv[a] = i;
