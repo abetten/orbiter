@@ -364,9 +364,20 @@ long int action_on_grassmannian::compute_image_int_embedded(
 
 void action_on_grassmannian::print_point(long int a, ostream &ost)
 {
+	//cout << "action_on_grassmannian::print_point k=" << G->k << " n=" << G->n << endl;
 	G->unrank_lint(a, 0);
+#if 0
 	print_integer_matrix_width(ost, G->M,
 			G->k, G->n, G->n, 2 /*M->GFq->log10_of_q*/);
+#else
+	latex_interface Li;
+
+	ost << "\\left[" << endl;
+	Li.print_integer_matrix_tex(ost,
+			G->M, G->k, G->n);
+	ost << "\\right]" << endl;
+#endif
+
 }
 
 }}

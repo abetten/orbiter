@@ -634,8 +634,8 @@ void set_of_sets::print()
 		lint_vec_print(cout, Sets[i], Set_size[i]);
 		if (i < nb_sets - 1) {
 			cout << ", ";
-			}
 		}
+	}
 	cout << ")" << endl;
 }
 

@@ -100,13 +100,25 @@ F_2:
 	pdflatex GF_2.tex
 	open GF_2.pdf
 
+
+F_3:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 3 -end -end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q3_addition_table.csv 40 24 -draw_matrix_partition 4 3 3
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q3_multiplication_table.csv 40 24 -draw_matrix_partition 4 2 2
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q3_addition_table_reordered.csv 40 24 -draw_matrix_partition 3 3 3
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q3_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 2 2
+	pdflatex GF_3.tex
+	open GF_3.pdf
+
+
 F_7:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 7 -end -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
 	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_addition_table.csv 40 24 -draw_matrix_partition 3 7 7 
 	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_multiplication_table.csv 40 24 -draw_matrix_partition 3 6 6
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_addition_table_reordered.csv 40 24
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_multiplication_table_reordered.csv 40 24
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_addition_table_reordered.csv 40 24 -draw_matrix_partition 3 7 7 
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 6 6
 	pdflatex GF_7.tex
 	open GF_7.pdf
 
@@ -310,6 +322,12 @@ poly_mult_mod_F4:
 		-polynomial_mult_mod "0,1" "0,1" "1,1,1" -end
 
 
+CRC_poly_3_128_10:
+	$(ORBITER_PATH)/orbiter.out -v 1 -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -find_CRC_polynomials 3 128 10 -end
+
+
+
 #############################################################################################################
 # Section 9: Extension Fields
 
@@ -339,6 +357,10 @@ F_8:
 F_9:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 9 -end -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q9_addition_table.csv 40 24 -draw_matrix_partition 4 "3,6" "3,6"
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q9_multiplication_table.csv 40 24 -draw_matrix_partition 4 "2,6" "2,6"
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q9_addition_table_reordered.csv 40 24 -draw_matrix_partition 3 9 9
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q9_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 8 8
 	pdflatex GF_9.tex
 	open GF_9.pdf
 
@@ -349,12 +371,23 @@ F_9:
 F_16:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q16_addition_table.csv 40 24
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q16_multiplication_table.csv 40 24
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q16_addition_table_reordered.csv 40 24
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q16_multiplication_table_reordered.csv 40 24
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q16_addition_table.csv 40 24 -draw_matrix_partition 3 16 16 
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q16_multiplication_table.csv 40 24 -draw_matrix_partition 3 15 15
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q16_addition_table_reordered.csv 40 24 -draw_matrix_partition 3 16 16 
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q16_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 15 15
 	pdflatex GF_16.tex
 	open GF_16.pdf
+
+
+
+F_25:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 25 -end -end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q25_addition_table.csv 40 24 -draw_matrix_partition 3 25 25
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q25_multiplication_table.csv 40 24 -draw_matrix_partition 3 24 24
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q25_addition_table_reordered.csv 40 24 -draw_matrix_partition 3 25 25
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q25_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 24 24
+
 
 
 F_32:
@@ -369,9 +402,9 @@ F_49:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 49 -end -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
 	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q49_addition_table.csv 40 24  -draw_matrix_partition 3 49 49
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q49_multiplication_table.csv 40 24 -draw_matrix_partition 3 49 49
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q49_multiplication_table.csv 40 24 -draw_matrix_partition 3 48 48
 	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q49_addition_table_reordered.csv 40 24 -draw_matrix_partition 3 49 49
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q49_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 49 49
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q49_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 48 48
 	#pdflatex GF_49.tex
 	#open GF_49.pdf
 
@@ -380,6 +413,10 @@ F_49:
 F_64:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 64 -end -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q64_addition_table.csv 40 24  -draw_matrix_partition 3 64 64
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q64_multiplication_table.csv 40 24 -draw_matrix_partition 3 63 63
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q64_addition_table_reordered.csv 40 24 -draw_matrix_partition 3 64 64
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q64_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 63 63
 	pdflatex GF_64.tex
 	open GF_64.pdf
 
@@ -6414,6 +6451,8 @@ schreier_tree:
 	open poly_orbits_d3_n3_q2.pdf
 
 
+
+
 #############################################################################################################
 # Section 43: The Povray Interface
 
@@ -6475,17 +6514,6 @@ monkey:
 	mv makefile_animation POV
 
 
-monkey_video:
-	- rm -r FRAMES
-	- mkdir FRAMES
-	- rm monkey.mp4
-	$(ORBITER_PATH)/orbiter.out \
-		-prepare_frames \
-			-i 0 30 monkey_0_%03d.png \
-			-output_starts_at 0 \
-			-o FRAMES/frame%04d.png \
-		-end
-	ffmpeg -r 5 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  monkey.mp4
 
 
 
@@ -6576,17 +6604,6 @@ HCV_deform:
 
 
 
-HCV_deform_video:
-	- rm -r FRAMES
-	- mkdir FRAMES
-	- rm HCV_deform.mp4
-	$(ORBITER_PATH)/orbiter.out \
-		-prepare_frames \
-			-i 0 93 HCV_deform_0/HCV_deform_0_%03d.png \
-			-output_starts_at 0 \
-			-o FRAMES/frame%04d.png \
-		-end
-	ffmpeg -r 5 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  HCV_deform.mp4
 
 
 HCV_deform_2:
@@ -6648,6 +6665,78 @@ Clebsch:
 	mv makefile_animation POV
 
 
+
+
+endrass8:
+	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
+		-round 0 -nb_frames_default 30 -output_mask endrass_octic_%d_%03d.pov \
+		-video_options -W 1024 -H 768  -global_picture_scale 0.75 \
+		-default_angle 75 -clipping_radius 3.7 -no_bottom_plane \
+		-camera 0 "1,1,1" "6,6,3" "0,0,0"  \
+		-rotate_about_111 \
+		-end \
+		-scene_objects \
+			-line_through_two_points_recentered_from_csv_file coordinate_grid.csv \
+			-group_of_things "0" \
+			-group_of_things "1" \
+			-group_of_things "2" \
+			-group_of_things_as_interval 3 39 \
+			-lines 0 0.15 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
+			-lines 1 0.15 "texture{ pigment{ color Green } finish { diffuse 0.9 phong 1}}" \
+			-lines 2 0.15 "texture{ pigment{ color Blue } finish { diffuse 0.9 phong 1}}" \
+			-lines 3 0.05 "texture{ pigment{ color Black } finish { diffuse 0.9 phong 1}}" \
+			-octic_lex_165 "-93.2548,0,0,0,-309.019,0,0,527.529,0,395.647,0,0,0,0,0,0,0,0,0,0,-687.529,0,0,1582.59,0,1186.94,0,0,0,0,-1055.06,0,-1582.59,0,-593.47,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-309.019,0,0,1582.59,0,1186.94,0,0,0,0,-2110.12,0,-3165.17,0,-1186.94,0,0,0,0,0,0,874.039,0,1560.63,0,1677.92,0,343.362,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-93.2548,0,0,527.529,0,395.647,0,0,0,0,-1055.06,0,-1582.59,0,-593.47,0,0,0,0,0,0,874.039,0,1560.63,0,1677.92,0,343.362,0,0,0,0,0,0,0,0,-256,0,-468.077,0,-789.019,0,-525.726,0,0.941125" \
+			-plane_by_dual_coordinates "0,0,1,0" \
+			-group_of_things "0" \
+			-group_of_things "0" \
+			-octics 4 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-planes 5 "texture{ pigment{ color Blue transmit 0.5 } finish { diffuse 0.9 phong 1}}" \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv endrass_octic_0_*.pov POV
+	mv makefile_animation POV
+
+#############################################################################################################
+# Section 44: Creating a Movie Using Ffmpeg
+
+ANIMATIONS:
+
+
+monkey_video:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	- rm monkey.mp4
+	$(ORBITER_PATH)/orbiter.out \
+		-prepare_frames \
+			-i 0 30 monkey_0_%03d.png \
+			-output_starts_at 0 \
+			-o FRAMES/frame%04d.png \
+		-end
+	ffmpeg -r 5 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  monkey.mp4
+
+HCV_deform_video:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	- rm HCV_deform.mp4
+	$(ORBITER_PATH)/orbiter.out \
+		-prepare_frames \
+			-i 0 93 HCV_deform_0/HCV_deform_0_%03d.png \
+			-output_starts_at 0 \
+			-o FRAMES/frame%04d.png \
+		-end
+	ffmpeg -r 5 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  HCV_deform.mp4
+
+
+
+
+#############################################################################################################
+# Section 45: Continuous Function Plotter
+
+
+
+CONTINUOUS_FUNCTION_PLOTTER:
 
 
 lissajous:
@@ -6739,36 +6828,33 @@ lissajous_3d_plot:
 
 
 
-endrass8:
-	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
-		-round 0 -nb_frames_default 30 -output_mask endrass_octic_%d_%03d.pov \
-		-video_options -W 1024 -H 768  -global_picture_scale 0.75 \
-		-default_angle 75 -clipping_radius 3.7 -no_bottom_plane \
-		-camera 0 "1,1,1" "6,6,3" "0,0,0"  \
-		-rotate_about_111 \
-		-end \
-		-scene_objects \
-			-line_through_two_points_recentered_from_csv_file coordinate_grid.csv \
-			-group_of_things "0" \
-			-group_of_things "1" \
-			-group_of_things "2" \
-			-group_of_things_as_interval 3 39 \
-			-lines 0 0.15 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
-			-lines 1 0.15 "texture{ pigment{ color Green } finish { diffuse 0.9 phong 1}}" \
-			-lines 2 0.15 "texture{ pigment{ color Blue } finish { diffuse 0.9 phong 1}}" \
-			-lines 3 0.05 "texture{ pigment{ color Black } finish { diffuse 0.9 phong 1}}" \
-			-octic_lex_165 "-93.2548,0,0,0,-309.019,0,0,527.529,0,395.647,0,0,0,0,0,0,0,0,0,0,-687.529,0,0,1582.59,0,1186.94,0,0,0,0,-1055.06,0,-1582.59,0,-593.47,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-309.019,0,0,1582.59,0,1186.94,0,0,0,0,-2110.12,0,-3165.17,0,-1186.94,0,0,0,0,0,0,874.039,0,1560.63,0,1677.92,0,343.362,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-93.2548,0,0,527.529,0,395.647,0,0,0,0,-1055.06,0,-1582.59,0,-593.47,0,0,0,0,0,0,874.039,0,1560.63,0,1677.92,0,343.362,0,0,0,0,0,0,0,0,-256,0,-468.077,0,-789.019,0,-525.726,0,0.941125" \
-			-plane_by_dual_coordinates "0,0,1,0" \
-			-group_of_things "0" \
-			-group_of_things "0" \
-			-octics 4 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
-			-planes 5 "texture{ pigment{ color Blue transmit 0.5 } finish { diffuse 0.9 phong 1}}" \
-		-scene_objects_end \
-		-povray_end
-	- rm -rf POV
-	mkdir POV
-	mv endrass_octic_0_*.pov POV
-	mv makefile_animation POV
+#############################################################################################################
+# Section 46: Miscellaneous
+
+MISCELLANEOUS:
+
+
+#	$(ORBITER_PATH)/orbiter.out -v 4 -csv_file_select_rows poly_orbits_d3_n3_q2.csv \
+#		"28,113,130,80,84,17,21,110,101,91,50,52,59,26,117,6,38,39,61,11,15,122,121,138,96,134,76,73,75,65,112,136,118,140,27,24,57,49,87,92,131,102,79,20,137,135,129"
+
+
+misc_select:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 7 -end -end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end
+	$(ORBITER_PATH)/orbiter.out -v 4 -csv_file_select_rows_and_cols \
+		GF_q7_multiplication_table_reordered.csv \
+		"0,2,4" "0,2,4" 
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 6 6
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_multiplication_table_reordered_select.csv 40 24 -draw_matrix_partition 3 3 3
+
+
+misc_join:
+	$(ORBITER_PATH)/orbiter.out -v 4 \
+		-csv_file_join poly_orbits_d3_n3_q2_select_F2.csv Orbit_idx \
+		-csv_file_join poly_orbits_d3_n3_q2_select_F4.csv Orbit_idx \
+		-csv_file_join poly_orbits_d3_n3_q2_select_F8.csv Orbit_idx \
+		-csv_file_join poly_orbits_d3_n3_q2_select_F16.csv Orbit_idx \
+		-csv_file_join poly_orbits_d3_n3_q2_select_F32.csv Orbit_idx 
 
 
 #############
@@ -7565,6 +7651,95 @@ semifields_32:
 			-end \
 		-end
 
-select:
-	$(ORBITER_PATH)/orbiter.out -v 4 -csv_file_select_rows poly_orbits_d3_n3_q2.csv \
-		"28,113,130,80,84,17,21,110,101,91,50,52,59,26,117,6,38,39,61,11,15,122,121,138,96,134,76,73,75,65,112,136,118,140,27,24,57,49,87,92,131,102,79,20,137,135,129"
+
+CRC_2_4_4:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -find_CRC_polynomials 2 4 4 -end
+
+CRC_2_5_4:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -find_CRC_polynomials 2 5 4 -end
+
+CRC_2_6_4:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -find_CRC_polynomials 2 6 4 -end
+
+CRC_2_7_4:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -find_CRC_polynomials 2 7 4 -end
+
+CRC_2_8_4:
+	$(ORBITER_PATH)/orbiter.out -v 2 -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -find_CRC_polynomials 2 8 4 -end
+
+CRC_2_9_4:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -find_CRC_polynomials 2 9 4 -end
+
+CRC_2_9_5:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -find_CRC_polynomials 2 9 5 -end
+
+CRC_2_10_5:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -find_CRC_polynomials 2 10 5 -end
+
+CRC_2_32_6:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -find_CRC_polynomials 2 32 6 -end
+
+CRC_2_64_8:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -find_CRC_polynomials 2 64 8 -end
+
+CRC_2_128_8:
+	$(ORBITER_PATH)/orbiter.out -v 1 -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -find_CRC_polynomials 2 128 8 -end
+
+CRC_3_128_8:
+	$(ORBITER_PATH)/orbiter.out -v 1 -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -find_CRC_polynomials 3 128 8 -end
+
+CRC_3_128_10:
+	$(ORBITER_PATH)/orbiter.out -v 1 -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -find_CRC_polynomials 3 128 10 -end
+
+
+
+CRC_2_256_8:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -find_CRC_polynomials 2 256 8 -end
+
+
+CRC_2_256_12:
+	$(ORBITER_PATH)/orbiter.out -v 1 -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -find_CRC_polynomials 2 256 12 -end
+
+CRC_3_256_8:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -find_CRC_polynomials 3 256 8 -end
+
+CRC_3_256_16:
+	$(ORBITER_PATH)/orbiter.out -v 1 -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -find_CRC_polynomials 3 256 16 -end
+
+
+
+CRC_3_8_4:
+	$(ORBITER_PATH)/orbiter.out -v 2 -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -find_CRC_polynomials 3 8 4 -end
+
+
+
+CRC_3_64_8:
+	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -find_CRC_polynomials 3 64 8 -end
+
+
+
+
+
+
+
+
+

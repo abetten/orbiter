@@ -1062,6 +1062,9 @@ public:
 	void print_table_row_latex(int row, int *f_column_select, 
 		int f_enclose_in_parentheses, std::ostream &ost);
 	void print_table_row_detailed(int row, std::ostream &ost);
+	void print_table_row_with_column_selection(int row,
+			int f_enclose_in_parentheses,
+			int *Col_selection, int nb_cols_selected, std::ostream &ost);
 	void print_table_with_row_selection(int *f_selected, 
 			std::ostream &ost);
 	void print_table_sorted(std::ostream &ost, const char *sort_by);

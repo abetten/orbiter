@@ -120,6 +120,11 @@ finite_field_activity_description::finite_field_activity_description()
 	f_cheat_sheet_desarguesian_spread = FALSE;
 	cheat_sheet_desarguesian_spread_m = 0;
 
+	f_find_CRC_polynomials = FALSE;
+	find_CRC_polynomials_nb_errors = 0;
+	find_CRC_polynomials_information_bits = 0;
+	find_CRC_polynomials_check_bits = 0;
+
 	f_decomposition_by_element = FALSE;
 	decomposition_by_element_n = 0;
 	decomposition_by_element_power = 1;
@@ -418,6 +423,17 @@ int finite_field_activity_description::read_arguments(
 			f_cheat_sheet_desarguesian_spread = TRUE;
 			cheat_sheet_desarguesian_spread_m = strtoi(argv[++i]);
 			cout << "-cheat_sheet_desarguesian_spread " << cheat_sheet_desarguesian_spread_m << endl;
+		}
+		else if (stringcmp(argv[i], "-find_CRC_polynomials") == 0) {
+			f_find_CRC_polynomials = TRUE;
+			find_CRC_polynomials_nb_errors = strtoi(argv[++i]);
+			find_CRC_polynomials_information_bits = strtoi(argv[++i]);
+			find_CRC_polynomials_check_bits = strtoi(argv[++i]);
+			cout << "-find_CRC_polynomials "
+					<< " " << find_CRC_polynomials_nb_errors
+					<< " " << find_CRC_polynomials_information_bits
+					<< " " << find_CRC_polynomials_check_bits
+					<< endl;
 		}
 		else if (stringcmp(argv[i], "-decomposition_by_element") == 0) {
 			f_decomposition_by_element = TRUE;

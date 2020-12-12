@@ -477,33 +477,33 @@ void spreadsheet::print_table_row(int row,
 				cout << "printing token '" << tokens[t] << "'" << endl;
 				for (h = 0; h < 10; h++) {
 					cout << h << " : " << (int) tokens[t][h] << endl;
-					}
 				}
+			}
 #endif
 			if (tokens[t][0] == '\"') {
 				f_enclose = FALSE;
-				}
+			}
 			else {
 				f_enclose = TRUE;
-				}
+			}
 			if (f_enclose) {
 				ost << "\"";
-				}
+			}
 			if (tokens[t] == NULL) {
 				cout << "spreadsheet::print_table_row token[t] == NULL, "
 						"t = " << t << endl;
-				}
+			}
 			else {
 				ost << tokens[t];
-				}
+			}
 			if (f_enclose) {
 				ost << "\"";
-				}
-			}
-		if (j < nb_cols - 1) {
-			ost << ",";
 			}
 		}
+		if (j < nb_cols - 1) {
+			ost << ",";
+		}
+	}
 	ost << endl;
 }
 
@@ -571,6 +571,54 @@ void spreadsheet::print_table_row_detailed(int row, ostream &ost)
 		ost << endl;
 		}
 }
+
+void spreadsheet::print_table_row_with_column_selection(int row,
+		int f_enclose_in_parentheses,
+		int *Col_selection, int nb_cols_selected, std::ostream &ost)
+{
+	int j, t, h;
+	int f_enclose;
+
+	//cout << "Row " << row << " : ";
+	for (h = 0; h < nb_cols_selected; h++) {
+		j = Col_selection[h] + 1;
+		t = Table[row * nb_cols + j];
+		if (t >= 0) {
+#if 0
+			if (row == 0 && j == 0) {
+				cout << "printing token '" << tokens[t] << "'" << endl;
+				for (h = 0; h < 10; h++) {
+					cout << h << " : " << (int) tokens[t][h] << endl;
+				}
+			}
+#endif
+			if (tokens[t][0] == '\"') {
+				f_enclose = FALSE;
+			}
+			else {
+				f_enclose = TRUE;
+			}
+			if (f_enclose) {
+				ost << "\"";
+			}
+			if (tokens[t] == NULL) {
+				cout << "spreadsheet::print_table_row_with_column_selection token[t] == NULL, "
+						"t = " << t << endl;
+			}
+			else {
+				ost << tokens[t];
+			}
+			if (f_enclose) {
+				ost << "\"";
+			}
+		}
+		if (h < nb_cols_selected - 1) {
+			ost << ",";
+		}
+	}
+	ost << endl;
+}
+
 
 void spreadsheet::print_table_with_row_selection(
 		int *f_selected, ostream &ost)

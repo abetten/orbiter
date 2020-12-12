@@ -80,7 +80,7 @@ int packing_was_description::read_arguments(int argc, std::string *argv,
 			i += H_Descr->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
-			i++;
+			//i++;
 			cout << "done reading -H" << endl;
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
@@ -96,7 +96,7 @@ int packing_was_description::read_arguments(int argc, std::string *argv,
 			i += N_Descr->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
-			i++;
+			//i++;
 			cout << "done reading -N" << endl;
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
@@ -240,7 +240,7 @@ int packing_was_description::read_arguments(int argc, std::string *argv,
 	}
 
 	cout << "packing_was_description::read_arguments done" << endl;
-	return i;
+	return i + 1;
 }
 
 

@@ -172,14 +172,14 @@ void projective_space::init(int n, finite_field *F,
 			}
 			C.q_binomial_no_table(
 				a,
-				n + 1, i + 1, q, verbose_level - 2);
+				n + 1, i + 1, q, 0 /*verbose_level - 2*/);
 			Nb_subspaces[i] = a.as_lint();
 			//Nb_subspaces[i] = generalized_binomial(n + 1, i + 1, q);
 		}
 
 		C.q_binomial_no_table(
 			a,
-			n, 1, q, verbose_level - 2);
+			n, 1, q, 0 /*verbose_level - 2*/);
 		r = a.as_int();
 		//r = generalized_binomial(n, 1, q);
 	}

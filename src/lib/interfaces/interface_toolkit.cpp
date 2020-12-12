@@ -26,6 +26,11 @@ interface_toolkit::interface_toolkit()
 	//std::string csv_file_select_rows_fname;
 	//std::string csv_file_select_rows_text;
 
+	f_csv_file_select_rows_and_cols = FALSE;
+	//csv_file_select_rows_and_cols_fname;
+	//std::string csv_file_select_rows_and_cols_R_text;
+	//std::string csv_file_select_rows_and_cols_C_text;
+
 	f_csv_file_join = FALSE;
 	//csv_file_join_fname
 	//csv_file_join_identifier
@@ -39,6 +44,9 @@ void interface_toolkit::print_help(int argc,
 	if (stringcmp(argv[i], "-csv_file_select_rows") == 0) {
 		cout << "-cvs_file_select_rows <string : csv_file_name> <string : list of rows>" << endl;
 	}
+	else if (stringcmp(argv[i], "-csv_file_select_rows_and_cols") == 0) {
+		cout << "-csv_file_select_rows_and_cols <string : csv_file_name> <string : list of rows> <string : list of cols>" << endl;
+	}
 	else if (stringcmp(argv[i], "-csv_file_join") == 0) {
 		cout << "-cvs_file_join <string : file_name> <string : column label by which we join>" << endl;
 	}
@@ -51,6 +59,9 @@ int interface_toolkit::recognize_keyword(int argc,
 		return false;
 	}
 	if (stringcmp(argv[i], "-csv_file_select_rows") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-csv_file_select_rows_and_cols") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-csv_file_join") == 0) {
@@ -72,6 +83,17 @@ int interface_toolkit::read_arguments(int argc,
 			csv_file_select_rows_fname.assign(argv[++i]);
 			csv_file_select_rows_text.assign(argv[++i]);
 			cout << "-csv_file_select_rows " << csv_file_select_rows_fname << " " << csv_file_select_rows_text << endl;
+		}
+		else if (stringcmp(argv[i], "-csv_file_select_rows_and_cols") == 0) {
+			f_csv_file_select_rows_and_cols = TRUE;
+			csv_file_select_rows_and_cols_fname.assign(argv[++i]);
+			csv_file_select_rows_and_cols_R_text.assign(argv[++i]);
+			csv_file_select_rows_and_cols_C_text.assign(argv[++i]);
+			cout << "-csv_file_select_rows_and_cols "
+					<< csv_file_select_rows_and_cols_fname
+					<< " " << csv_file_select_rows_and_cols_R_text
+					<< " " << csv_file_select_rows_and_cols_C_text
+					<< endl;
 		}
 		else if (stringcmp(argv[i], "-csv_file_join") == 0) {
 			string s;
@@ -106,6 +128,15 @@ void interface_toolkit::worker(int verbose_level)
 
 		Fio.do_csv_file_select_rows(csv_file_select_rows_fname,
 				csv_file_select_rows_text, verbose_level);
+	}
+	else if (f_csv_file_select_rows_and_cols) {
+
+		file_io Fio;
+
+		Fio.do_csv_file_select_rows_and_cols(
+				csv_file_select_rows_and_cols_fname,
+				csv_file_select_rows_and_cols_R_text, csv_file_select_rows_and_cols_C_text,
+				verbose_level);
 	}
 	else if (f_csv_file_join) {
 

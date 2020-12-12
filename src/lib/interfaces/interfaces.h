@@ -557,6 +557,12 @@ class interface_toolkit {
 	std::string csv_file_select_rows_fname;
 	std::string csv_file_select_rows_text;
 
+	int f_csv_file_select_rows_and_cols;
+	std::string csv_file_select_rows_and_cols_fname;
+	std::string csv_file_select_rows_and_cols_R_text;
+	std::string csv_file_select_rows_and_cols_C_text;
+
+
 	int f_csv_file_join;
 	std::vector<std::string> csv_file_join_fname;
 	std::vector<std::string> csv_file_join_identifier;

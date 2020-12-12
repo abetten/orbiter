@@ -459,6 +459,8 @@ void packing_was::compute_H_orbits_on_lines(int verbose_level)
 			prefix_line_orbits,
 			verbose_level);
 
+	Line_orbits_under_H->create_latex_report(verbose_level);
+
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_lines done" << endl;
 	}
@@ -483,8 +485,14 @@ void packing_was::compute_spread_types_wrt_H(int verbose_level)
 			verbose_level);
 	if (FALSE) {
 		cout << "The spread types are:" << endl;
-		Spread_type->report(cout);
+		Spread_type->report(cout, verbose_level);
 	}
+
+	std::string prefix;
+
+	prefix.assign("H_spread_orbits");
+
+	Spread_type->create_latex_report(prefix, verbose_level);
 
 	if (f_v) {
 		cout << "packing_was::compute_spread_types_wrt_H done" << endl;
@@ -741,8 +749,14 @@ void packing_was::compute_reduced_spread_types_wrt_H(int verbose_level)
 			verbose_level - 2);
 	if (FALSE) {
 		cout << "The reduced spread types are:" << endl;
-		Spread_type_reduced->report(cout);
+		Spread_type_reduced->report(cout, verbose_level);
 	}
+
+	std::string prefix;
+
+	prefix.assign("H_spread_orbits_reduced");
+
+	Spread_type_reduced->create_latex_report(prefix, verbose_level);
 
 	if (f_v) {
 		cout << "packing_was::compute_reduced_spread_types_wrt_H done" << endl;
@@ -1147,11 +1161,11 @@ void packing_was::report2(ostream &ost, int verbose_level)
 	ost << endl;
 
 	ost << "\\section{Spread Types}" << endl;
-	Spread_type->report(ost);
+	Spread_type->report(ost, verbose_level);
 	ost << endl;
 
 	ost << "\\section{Reduced Spread Types}" << endl;
-	Spread_type_reduced->report(ost);
+	Spread_type_reduced->report(ost, verbose_level);
 	ost << endl;
 
 	ost << "\\section{Reduced Spread Orbits}" << endl;
