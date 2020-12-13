@@ -20,7 +20,14 @@ namespace foundations {
 
 layered_graph::layered_graph()
 {
-	null();
+	nb_layers = 0;
+	nb_nodes_total = 0;
+	id_of_first_node = 0;
+	L = NULL;
+	// fname_base
+	f_has_data1 = FALSE;
+	data1 = -1;
+	//null();
 }
 
 layered_graph::~layered_graph()
@@ -30,9 +37,6 @@ layered_graph::~layered_graph()
 
 void layered_graph::null()
 {
-	nb_nodes_total = 0;
-	L = NULL;
-	data1 = -1;
 }
 
 void layered_graph::freeself()
@@ -230,6 +234,7 @@ void layered_graph::add_data1(int data, int verbose_level)
 	if (f_v) {
 		cout << "layered_graph::add_data1" << endl;
 		}
+	f_has_data1 = TRUE;
 	data1 = data;
 }
 
@@ -705,15 +710,21 @@ void layered_graph::draw_with_options(std::string &fname,
 					//G.circle(x, y, rad);
 				}
 
-				if (f_v) {
-					cout << "Vertex " << i << " " << j
-							<< " has the following data1 value: "
-							<< L[i].Nodes[j].data1 << " radius_factor="
-							<< L[i].Nodes[j].radius_factor << endl;
-				}
 
-				if (L[i].Nodes[j].radius_factor >= 1.) {
-					snprintf(label, 1000, "{\\scriptsize %d}", L[i].Nodes[j].data1);
+				if (L[i].Nodes[j].f_has_data1) {
+					if (f_v) {
+						cout << "Vertex " << i << " " << j
+								<< " has the following data1 value: "
+								<< L[i].Nodes[j].data1 << " radius_factor="
+								<< L[i].Nodes[j].radius_factor << endl;
+					}
+
+					if (L[i].Nodes[j].radius_factor >= 1.) {
+						snprintf(label, 1000, "{\\scriptsize %d}", L[i].Nodes[j].data1);
+					}
+					else {
+						label[0] = 0;
+					}
 				}
 				else {
 					label[0] = 0;
@@ -741,7 +752,7 @@ void layered_graph::draw_with_options(std::string &fname,
 									<< " label=" << label << endl;
 						}
 
-						if (TRUE /* L[i].Nodes[j].radius_factor >= 1.*/) {
+						if (strlen(label) /* L[i].Nodes[j].radius_factor >= 1.*/) {
 							//G.circle_text(x, y, L[i].Nodes[j].label);
 							G.aligned_text(x, y, "", label);
 							//G.aligned_text(x, y, "", L[i].Nodes[j].label);
@@ -934,6 +945,7 @@ void layered_graph::write_memory_object(
 	m->write_int(id_of_first_node);
 
 	//cout << "layered_graph::write_memory_object data1=" << data1 << endl;
+	m->write_int(f_has_data1);
 	m->write_int(data1);
 	for (i = 0; i < nb_layers; i++) {
 		L[i].write_memory_object(m, verbose_level - 1);
@@ -970,6 +982,7 @@ void layered_graph::read_memory_object(
 	m->read_int(&nb_layers);
 	m->read_int(&nb_nodes_total);
 	m->read_int(&id_of_first_node);
+	m->read_int(&f_has_data1);
 	m->read_int(&data1);
 
 	//cout << "layered_graph::read_memory_object

@@ -306,7 +306,7 @@ void algebra_global::count_subprimitive(int Q_max, int H_max)
 			for (h = 2; h <= H_max; h++) {
 				//r1 = subprimitive(q, h);
 				formula_subprimitive(h, q, r3, g, 1);
-				phi_g = Phi_of(g, 1);
+				phi_g = eulers_totient_function(g, 1);
 				formula(h, q, r2, 1);
 				//cout << "The experiment gives " << r1 << endl;
 				cout << "g= " << g << endl;
@@ -348,7 +348,7 @@ void algebra_global::count_subprimitive(int Q_max, int H_max)
 }
 
 
-int algebra_global::Phi_of(int n, int verbose_level)
+int algebra_global::eulers_totient_function(int n, int verbose_level)
 {
 	int nb_primes, *primes, *exponents;
 	int i, p, e;

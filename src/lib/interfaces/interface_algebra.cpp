@@ -56,6 +56,16 @@ interface_algebra::interface_algebra()
 	f_young_symmetrizer = FALSE;
 	young_symmetrizer_n = 0;
 	f_young_symmetrizer_sym_4 = FALSE;
+
+
+	f_draw_mod_n = FALSE;
+	draw_mod_n = 0;
+	// draw_mod_n_fname
+	f_draw_mod_n_inverse = FALSE;
+	f_draw_mod_n_additive_inverse = FALSE;
+	f_draw_mod_n_power_cycle = FALSE;
+	f_draw_mod_n_power_cycle_base = 0;
+
 }
 
 
@@ -91,6 +101,18 @@ void interface_algebra::print_help(int argc,
 	}
 	else if (stringcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
 		cout << "-young_symmetrizer_sym_4  " << endl;
+	}
+	else if (stringcmp(argv[i], "-draw_mod_n") == 0) {
+		cout << "-draw_mod_n <int : n>  <string : fname > " << endl;
+	}
+	else if (stringcmp(argv[i], "-draw_mod_n_inverse") == 0) {
+		cout << "-draw_mod_n_inverse " << endl;
+	}
+	else if (stringcmp(argv[i], "-draw_mod_n_additive_inverse") == 0) {
+		cout << "-draw_mod_n_additive_inverse " << endl;
+	}
+	else if (stringcmp(argv[i], "-draw_mod_n_power_cycle") == 0) {
+		cout << "-draw_mod_n_power_cycle <int : base> " << endl;
 	}
 }
 
@@ -133,6 +155,18 @@ int interface_algebra::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-draw_mod_n") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-draw_mod_n_inverse") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-draw_mod_n_additive_inverse") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-draw_mod_n_power_cycle") == 0) {
 		return true;
 	}
 	if (f_v) {
@@ -244,12 +278,32 @@ int interface_algebra::read_arguments(int argc,
 
 		else if (stringcmp(argv[i], "-young_symmetrizer") == 0) {
 			f_young_symmetrizer = TRUE;
+			draw_mod_n_fname.assign(argv[++i]);
 			young_symmetrizer_n = strtoi(argv[++i]);
 			cout << "-young_symmetrizer " << young_symmetrizer_n << endl;
 		}
 		else if (stringcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
 			f_young_symmetrizer_sym_4 = TRUE;
 			cout << "-young_symmetrizer_sym_4 " << endl;
+		}
+		else if (stringcmp(argv[i], "-draw_mod_n") == 0) {
+			f_draw_mod_n = TRUE;
+			draw_mod_n = strtoi(argv[++i]);
+			draw_mod_n_fname.assign(argv[++i]);
+			cout << "-draw_mod_n " << draw_mod_n << " " << draw_mod_n_fname << endl;
+		}
+		else if (stringcmp(argv[i], "-draw_mod_n_inverse") == 0) {
+			f_draw_mod_n_inverse = TRUE;
+			cout << "-draw_mod_n_inverse " << endl;
+		}
+		else if (stringcmp(argv[i], "-draw_mod_n_additive_inverse") == 0) {
+			f_draw_mod_n_additive_inverse = TRUE;
+			cout << "-draw_mod_n_additive_inverse " << endl;
+		}
+		else if (stringcmp(argv[i], "-draw_mod_n_power_cycle") == 0) {
+			f_draw_mod_n_power_cycle = TRUE;
+			f_draw_mod_n_power_cycle_base = strtoi(argv[++i]);
+			cout << "-draw_mod_n_power_cycle " << endl;
 		}
 		else {
 			break;
@@ -321,7 +375,25 @@ void interface_algebra::worker(int verbose_level)
 
 		Algebra.young_symmetrizer_sym_4(verbose_level);
 	}
+	else if (f_draw_mod_n) {
+		plot_tools PT;
 
+		layered_graph_draw_options *O;
+
+
+		if (!The_Orbiter_session->f_draw_options) {
+			cout << "please use option -draw_options .. -end" << endl;
+			exit(1);
+		}
+		O = The_Orbiter_session->draw_options;
+		PT.draw_mod_n(draw_mod_n_fname,
+				O,
+				draw_mod_n,
+				f_draw_mod_n_inverse,
+				f_draw_mod_n_additive_inverse,
+				f_draw_mod_n_power_cycle, f_draw_mod_n_power_cycle_base,
+				verbose_level);
+	}
 
 	if (f_v) {
 		cout << "interface_algebra::worker done" << endl;

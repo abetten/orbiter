@@ -724,6 +724,21 @@ public:
 		int f_point_labels, char **Point_labels,
 		int f_embedded, int f_sideways,
 		int verbose_level);
+	void draw_mod_n(std::string &fname,
+			layered_graph_draw_options *O,
+			int number_n,
+			int f_inverse,
+			int f_additive_inverse,
+			int f_power_cycle, int power_cycle_base,
+			int verbose_level);
+	void draw_mod_n_work(mp_graphics &G,
+			layered_graph_draw_options *O,
+			int number,
+			int f_inverse,
+			int f_additive_inverse,
+			int f_power_cycle, int power_cycle_base,
+			int verbose_level);
+
 };
 
 // #############################################################################

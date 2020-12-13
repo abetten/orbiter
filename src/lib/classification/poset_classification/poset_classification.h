@@ -352,6 +352,9 @@ public:
 	int f_orbit_reps_csv;
 	int f_report;
 
+	int f_node_label_is_group_order;
+	int f_node_label_is_element;
+
 	int f_show_orbit_decomposition;
 	int f_show_stab;
 	int f_save_stab;

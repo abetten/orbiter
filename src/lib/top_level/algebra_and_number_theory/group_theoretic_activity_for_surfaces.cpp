@@ -414,9 +414,9 @@ void group_theoretic_activity::do_create_surface(
 					"before SoA->investigate_surface_and_write_report:" << endl;
 		}
 
-		if (Descr->f_draw_options) {
+		if (The_Orbiter_session->f_draw_options) {
 			SoA->investigate_surface_and_write_report(
-					Descr->draw_options,
+					The_Orbiter_session->draw_options,
 					A,
 					SC,
 					Six_arcs,
@@ -1117,8 +1117,8 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_p
 	}
 
 
-	if (Descr->f_draw_options) {
-		Surf_arc->report(Descr->draw_options, verbose_level);
+	if (The_Orbiter_session->f_draw_options) {
+		Surf_arc->report(The_Orbiter_session->draw_options, verbose_level);
 	}
 	else {
 		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs "

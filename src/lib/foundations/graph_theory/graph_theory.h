@@ -615,6 +615,7 @@ public:
 	int id_of_first_node;
 	graph_layer *L;
 	std::string fname_base;
+	int f_has_data1;
 	int data1;
 
 	layered_graph();

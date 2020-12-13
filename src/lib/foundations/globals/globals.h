@@ -348,6 +348,10 @@ public:
 
 	int t0;
 
+	int f_draw_options;
+	layered_graph_draw_options *draw_options;
+
+
 	int f_list_arguments;
 
 	int f_seed;

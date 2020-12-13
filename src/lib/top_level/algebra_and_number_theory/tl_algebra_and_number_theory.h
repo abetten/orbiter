@@ -463,8 +463,8 @@ public:
 	int f_poset_classification_control;
 	poset_classification_control *Control;
 
-	int f_draw_options;
-	layered_graph_draw_options *draw_options;
+	//int f_draw_options;
+	//layered_graph_draw_options *draw_options;
 
 	int f_orbits_on_points;
 	int f_export_trees;

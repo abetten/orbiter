@@ -1954,21 +1954,30 @@ void poset_classification::make_graph(int depth,
 				snprintf(text2, 1000, "$\\emptyset$");
 				//snprintf(text2, 1000, "$\\emptyset$;%s", text);
 			}
+
 			LG->add_text(lvl, po, text2, 0/*verbose_level*/);
 
 			// if no vector data, the text will be printed:
 			//LG->add_node_vec_data(lvl, po, the_set, lvl, 0 /* verbose_level */);
 
 
-#if 0
-			if (lvl) {
-				// label the node with the point:
-				LG->add_node_data1(lvl, po, root[n].get_pt(), 0/*verbose_level*/);
+			if (Control->f_node_label_is_group_order) {
+				// label the node with the group order:
+				LG->add_node_data1(lvl, po, go.as_int(), 0/*verbose_level*/);
 			}
-#else
-			// label the node with the group order:
-			LG->add_node_data1(lvl, po, go.as_int(), 0/*verbose_level*/);
-#endif
+			else if (Control->f_node_label_is_element) {
+				// label the node with the point:
+				if (lvl) {
+					LG->add_node_data1(lvl, po, root[n].get_pt(), 0/*verbose_level*/);
+				}
+				else {
+					// root node has no element
+				}
+			}
+			else {
+				LG->add_node_data1(lvl, po, n, 0/*verbose_level*/);
+			}
+
 			if (lvl) {
 				LG->add_node_data2(lvl, po, lvl - 1, 0/*verbose_level*/);
 				LG->add_node_data3(lvl, po,

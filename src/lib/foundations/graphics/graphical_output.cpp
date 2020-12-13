@@ -132,6 +132,10 @@ void graphical_output::draw_layered_graph_from_file(std::string &fname,
 
 	}
 
+	string fname_full;
+
+	fname_full.assign(fname_out);
+	fname_full.append(".mp");
 
 	LG->draw_with_options(fname_out, Opt, verbose_level - 10);
 
@@ -149,7 +153,7 @@ void graphical_output::draw_layered_graph_from_file(std::string &fname,
 
 	if (f_v) {
 		cout << "graphical_output::draw_layered_graph_from_file "
-				"Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+				"Written file " << fname_full << " of size " << Fio.file_size(fname_full) << endl;
 	}
 
 	FREE_OBJECT(LG);

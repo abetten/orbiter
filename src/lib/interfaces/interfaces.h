@@ -74,6 +74,14 @@ class interface_algebra {
 	int young_symmetrizer_n;
 	int f_young_symmetrizer_sym_4;
 
+	int f_draw_mod_n;
+	int draw_mod_n;
+	std::string draw_mod_n_fname;
+	int f_draw_mod_n_inverse;
+	int f_draw_mod_n_additive_inverse;
+	int f_draw_mod_n_power_cycle;
+	int f_draw_mod_n_power_cycle_base;
+
 
 public:
 	interface_algebra();

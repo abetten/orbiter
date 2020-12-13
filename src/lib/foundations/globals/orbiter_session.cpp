@@ -34,6 +34,10 @@ orbiter_session::orbiter_session()
 
 	t0 = 0;
 
+	f_draw_options = FALSE;
+	draw_options = NULL;
+
+
 	f_list_arguments = FALSE;
 
 	f_seed = FALSE;
@@ -78,6 +82,9 @@ void orbiter_session::print_help(int argc,
 	if (stringcmp(argv[i], "-v") == 0) {
 		cout << "-v <int : verbosity>" << endl;
 	}
+	else if (stringcmp(argv[i], "-draw_options") == 0) {
+		cout << "-draw_options ... -end" << endl;
+	}
 	else if (stringcmp(argv[i], "-list_arguments") == 0) {
 		cout << "-list_arguments" << endl;
 	}
@@ -105,6 +112,9 @@ int orbiter_session::recognize_keyword(int argc,
 		std::string *argv, int i, int verbose_level)
 {
 	if (stringcmp(argv[i], "-v") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-draw_options") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-list_arguments") == 0) {
@@ -148,6 +158,22 @@ int orbiter_session::read_arguments(int argc,
 		if (stringcmp(argv[i], "-v") == 0) {
 			verbose_level = strtoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
+		}
+		else if (stringcmp(argv[i], "-draw_options") == 0) {
+			f_draw_options = TRUE;
+
+			draw_options = NEW_OBJECT(layered_graph_draw_options);
+			cout << "-draw_options " << endl;
+			i += draw_options->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -draw_options " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-f_draw_options " << endl;
 		}
 		else if (stringcmp(argv[i], "-list_arguments") == 0) {
 			f_list_arguments = TRUE;
