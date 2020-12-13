@@ -65,6 +65,9 @@ poset_classification_control::poset_classification_control()
 	f_orbit_reps_csv = FALSE;
 	f_report = FALSE;
 
+	f_node_label_is_group_order = FALSE;
+	f_node_label_is_element = FALSE;
+
 	f_show_orbit_decomposition = FALSE;
 	f_show_stab = FALSE;
 	f_save_stab = FALSE;
@@ -168,7 +171,18 @@ int poset_classification_control::read_arguments(
 				cout << "-report" << endl;
 			}
 		}
-
+		else if (stringcmp(argv[i], "-node_label_is_group_order") == 0) {
+			f_node_label_is_group_order = TRUE;
+			if (f_v) {
+				cout << "-node_label_is_group_order" << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-node_label_is_element") == 0) {
+			f_node_label_is_element = TRUE;
+			if (f_v) {
+				cout << "-node_label_is_element" << endl;
+			}
+		}
 		else if (stringcmp(argv[i], "-show_orbit_decomposition") == 0) {
 			f_show_orbit_decomposition = TRUE;
 			if (f_v) {
@@ -345,6 +359,12 @@ void poset_classification_control::print()
 	if (f_draw_options) {
 		cout << "-draw_options" << endl;
 		draw_options->print();
+	}
+	if (f_node_label_is_group_order) {
+		cout << "-node_label_is_group_order" << endl;
+	}
+	if (f_node_label_is_element) {
+		cout << "-node_label_is_element" << endl;
 	}
 	if (f_lex) {
 		cout << "-lex" << endl;

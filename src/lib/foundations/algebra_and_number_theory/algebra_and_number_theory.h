@@ -135,7 +135,7 @@ public:
 	void factor_cyclotomic(int n, int q, int d,
 		int *coeffs, int f_poly, std::string &poly, int verbose_level);
 	void count_subprimitive(int Q_max, int H_max);
-	int Phi_of(int n, int verbose_level);
+	int eulers_totient_function(int n, int verbose_level);
 	void formula_subprimitive(int d, int q,
 		longinteger_object &Rdq, int &g, int verbose_level);
 	void formula(int d, int q, longinteger_object &Rdq, int verbose_level);

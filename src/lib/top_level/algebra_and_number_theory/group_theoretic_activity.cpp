@@ -130,11 +130,11 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 
 	if (Descr->f_report) {
-		if (!Descr->f_draw_options) {
+		if (!The_Orbiter_session->f_draw_options) {
 			cout << "for a report, please use -draw_options" << endl;
 			exit(1);
 		}
-		report(Descr->draw_options, verbose_level);
+		report(The_Orbiter_session->draw_options, verbose_level);
 	}
 
 	if (Descr->f_print_elements) {
@@ -457,7 +457,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		algebra_global_with_action Algebra;
 
 
-		if (Descr->f_orbits_on_polynomials_draw_tree && !Descr->f_draw_options) {
+		if (Descr->f_orbits_on_polynomials_draw_tree && !The_Orbiter_session->f_draw_options) {
 			cout << "please use -draw_options ... -end" << endl;
 			exit(1);
 		}
@@ -467,7 +467,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 				Descr->orbits_on_polynomials_degree,
 				Descr->f_recognize_orbits_on_polynomials, Descr->recognize_orbits_on_polynomials_text,
 				Descr->f_orbits_on_polynomials_draw_tree, Descr->orbits_on_polynomials_draw_tree_idx,
-				Descr->draw_options,
+				The_Orbiter_session->draw_options,
 				verbose_level);
 	}
 
