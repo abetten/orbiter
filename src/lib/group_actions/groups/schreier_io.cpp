@@ -1457,8 +1457,14 @@ void schreier::draw_tree2(std::string &fname,
 	fname_full.assign(fname);
 	fname_full.append(".mp");
 
+	if (f_v) {
+		cout << "schreier::draw_tree2 before creating G" << endl;
+	}
 	mp_graphics G(fname_full, x_min, y_min, x_max, y_max,
 		Opt->f_embedded, Opt->f_sideways, verbose_level - 1);
+	if (f_v) {
+		cout << "schreier::draw_tree2 after creating G" << endl;
+	}
 	G.out_xmin() = 0;
 	G.out_ymin() = 0;
 	G.out_xmax() = Opt->xout;
@@ -1470,7 +1476,13 @@ void schreier::draw_tree2(std::string &fname,
 
 	int x = x_max / 2;
 	int y;
+	if (f_v) {
+		cout << "schreier::draw_tree2 before calc_y_coordinate" << endl;
+	}
 	calc_y_coordinate(y, 0, max_depth, y_max);
+	if (f_v) {
+		cout << "schreier::draw_tree2 after calc_y_coordinate" << endl;
+	}
 
 
 	if (f_v) {

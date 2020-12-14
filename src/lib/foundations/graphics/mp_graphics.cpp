@@ -1791,6 +1791,7 @@ void mp_graphics::header()
 	f_min_max_set = FALSE;
 	//system("rm a");
 
+#ifndef SYSTEMWINDOWS
 	system("date >a");
 	{
 	ifstream f1("a");
@@ -1800,7 +1801,7 @@ void mp_graphics::header()
 	header_log(str);
 	header_mp(str);
 	header_tikz(str);
-
+#endif
 }
 
 void mp_graphics::footer()
