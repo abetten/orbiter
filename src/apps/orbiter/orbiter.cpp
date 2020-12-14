@@ -45,6 +45,8 @@ int main(int argc, const char **argv)
 #ifdef SYSTEM_IS_MACINTOSH
 	cout << "SYSTEM_IS_MACINTOSH is defined" << endl;
 #endif
+	cout << "sizeof(int)=" << sizeof(int) << endl;
+	cout << "sizeof(long int)=" << sizeof(long int) << endl;
 
 
 	std::string *Argv;
