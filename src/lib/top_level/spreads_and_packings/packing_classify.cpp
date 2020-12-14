@@ -96,6 +96,109 @@ void packing_classify::freeself()
 	null();
 }
 
+void packing_classify::spread_table_init(
+		poset_classification_control *Control, linear_group *LG,
+		int dimension_of_spread_elements,
+		int f_select_spread, std::string &select_spread_text,
+		std::string &path_to_spread_tables,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "packing_classify::spread_table_init "
+				"dimension_of_spread_elements=" << dimension_of_spread_elements << endl;
+	}
+	action *A;
+	int n, q;
+	matrix_group *Mtx;
+	spread_classify *T;
+
+
+	A = LG->A2;
+	n = A->matrix_group_dimension();
+	Mtx = A->get_matrix_group();
+	q = Mtx->GFq->q;
+	if (f_v) {
+		cout << "packing_classify::spread_table_init n=" << n
+				<< " k=" << dimension_of_spread_elements << " q=" << q << endl;
+	}
+
+
+	T = NEW_OBJECT(spread_classify);
+
+
+	if (f_v) {
+		cout << "packing_classify::spread_table_init before T->init" << endl;
+	}
+
+
+	T->init(LG, dimension_of_spread_elements, Control, TRUE /* f_recoordinatize */, verbose_level - 1);
+
+	if (f_v) {
+		cout << "packing_classify::spread_table_init after T->init" << endl;
+	}
+
+
+	spread_table_with_selection *Spread_table_with_selection;
+
+	Spread_table_with_selection = NEW_OBJECT(spread_table_with_selection);
+
+	if (f_v) {
+		cout << "packing_classify::spread_table_init "
+				"before Spread_table_with_selection->init" << endl;
+	}
+	Spread_table_with_selection->init(T,
+		f_select_spread,
+		select_spread_text,
+		path_to_spread_tables,
+		verbose_level);
+	if (f_v) {
+		cout << "packing_classify::spread_table_init "
+				"after Spread_table_with_selection->init" << endl;
+	}
+
+
+
+
+
+	if (f_v) {
+		cout << "packing_classify::spread_table_init before init" << endl;
+	}
+	init(Spread_table_with_selection,
+		TRUE, // ECA->f_lex,
+		verbose_level);
+	if (f_v) {
+		cout << "packing_classify::spread_table_init after init" << endl;
+	}
+
+#if 0
+	cout << "before IA->init" << endl;
+	IA->init(T->A, P->A_on_spreads, P->gen,
+		P->size_of_packing, P->prefix_with_directory, ECA,
+		callback_packing_report,
+		NULL /*callback_subset_orbits*/,
+		P,
+		verbose_level);
+	cout << "after IA->init" << endl;
+#endif
+
+	if (f_v) {
+		cout << "packing_classify::spread_table_init before P->compute_spread_table" << endl;
+	}
+	Spread_table_with_selection->compute_spread_table(verbose_level);
+	if (f_v) {
+		cout << "packing_classify::spread_table_init after P->compute_spread_table" << endl;
+	}
+
+	if (f_v) {
+		cout << "packing_classify::spread_table_init done" << endl;
+	}
+
+
+}
+
+
 void packing_classify::init(
 		spread_table_with_selection *Spread_table_with_selection,
 		int f_lexorder_test,

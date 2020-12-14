@@ -134,7 +134,12 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 			cout << "for a report, please use -draw_options" << endl;
 			exit(1);
 		}
-		report(The_Orbiter_session->draw_options, verbose_level);
+
+		LG->create_latex_report(
+				The_Orbiter_session->draw_options,
+				Descr->f_sylow, Descr->f_group_table, Descr->f_classes,
+				verbose_level);
+
 	}
 
 	if (Descr->f_print_elements) {
@@ -342,7 +347,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	// packings:
 
 	else if (Descr->f_packing_with_assumed_symmetry) {
-		if (!Descr->f_packing_classify) {
+		if (!Descr->f_spread_table_init) {
 			cout << "packing with symmetry needs packing" << endl;
 			exit(1);
 		}
@@ -350,10 +355,10 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before do_packing_classify" << endl;
+					"before do_spread_table_init" << endl;
 		}
 
-		do_packing_classify(Descr->dimension_of_spread_elements,
+		do_spread_table_init(Descr->dimension_of_spread_elements,
 				Descr->spread_selection_text,
 				Descr->spread_tables_prefix,
 				0, // starter_size
@@ -362,7 +367,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after do_packing_classify" << endl;
+					"after do_spread_table_init" << endl;
 		}
 
 		packing_was *PW;
@@ -401,21 +406,21 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		FREE_OBJECT(P);
 
 	}
-	else if (Descr->f_packing_classify) {
+	else if (Descr->f_spread_table_init) {
 		packing_classify *P;
 
 		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity before do_packing_classify" << endl;
+			cout << "group_theoretic_activity::perform_activity before do_spread_table_init" << endl;
 		}
 
-		do_packing_classify(Descr->dimension_of_spread_elements,
+		do_spread_table_init(Descr->dimension_of_spread_elements,
 				Descr->spread_selection_text,
 				Descr->spread_tables_prefix,
 				0, // starter_size
 				P,
 				verbose_level);
 		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity after do_packing_classify" << endl;
+			cout << "group_theoretic_activity::perform_activity after do_spread_table_init" << endl;
 		}
 
 		FREE_OBJECT(P);
@@ -901,46 +906,6 @@ void group_theoretic_activity::do_find_subgroups(
 	}
 }
 
-
-void group_theoretic_activity::report(layered_graph_draw_options *draw_option, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "group_theoretic_activity::report" << endl;
-	}
-	char fname[1000];
-	char title[1000];
-	const char *author = "Orbiter";
-	const char *extras_for_preamble = "";
-
-	sprintf(fname, "%s_report.tex", LG->label.c_str());
-	sprintf(title, "The group $%s$", LG->label_tex.c_str());
-
-	{
-		ofstream fp(fname);
-		latex_interface L;
-
-		//latex_head_easy(fp);
-
-		L.head(fp,
-			FALSE /* f_book */, TRUE /* f_title */,
-			title, author,
-			FALSE /*f_toc*/, FALSE /* f_landscape*/, FALSE /* f_12pt*/,
-			TRUE /*f_enlarged_page*/, TRUE /* f_pagenumbers*/,
-			extras_for_preamble);
-
-		LG->report(fp, Descr->f_sylow, Descr->f_group_table,
-				Descr->f_classes,
-				draw_option,
-				verbose_level);
-
-		L.foot(fp);
-	}
-	if (f_v) {
-		cout << "group_theoretic_activity::report done" << endl;
-	}
-}
 
 void group_theoretic_activity::print_elements(int verbose_level)
 {
@@ -2896,7 +2861,7 @@ void group_theoretic_activity::do_spread_classify(int k, int verbose_level)
 	}
 }
 
-void group_theoretic_activity::do_packing_classify(int dimension_of_spread_elements,
+void group_theoretic_activity::do_spread_table_init(int dimension_of_spread_elements,
 		std::string &spread_selection_text,
 		std::string &spread_tables_prefix,
 		int starter_size,
@@ -2906,7 +2871,7 @@ void group_theoretic_activity::do_packing_classify(int dimension_of_spread_eleme
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "group_theoretic_activity::do_packing_classify" << endl;
+		cout << "group_theoretic_activity::do_spread_table_init" << endl;
 	}
 
 	poset_classification_control *Control;
@@ -2920,20 +2885,20 @@ void group_theoretic_activity::do_packing_classify(int dimension_of_spread_eleme
 	}
 
 
-	algebra_global_with_action Algebra;
 
-	Algebra.packing_init(
+	P = NEW_OBJECT(packing_classify);
+
+	P->spread_table_init(
 			Control, LG,
 			dimension_of_spread_elements,
 			TRUE /* f_select_spread */, spread_selection_text,
 			spread_tables_prefix,
-			P,
 			verbose_level);
 
 
 
 	if (f_v) {
-		cout << "group_theoretic_activity::do_packing_classify done" << endl;
+		cout << "group_theoretic_activity::do_spread_table_init done" << endl;
 	}
 }
 

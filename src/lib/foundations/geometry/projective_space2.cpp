@@ -2983,14 +2983,13 @@ int projective_space::elliptic_curve_addition(
 }
 
 void projective_space::draw_point_set_in_plane(
-	std::string &fname, long int *Pts, int nb_pts,
+	std::string &fname,
+	layered_graph_draw_options *O,
+	long int *Pts, int nb_pts,
 	int f_with_points, int f_point_labels,
-	int f_embedded, int f_sideways, int rad,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int xmax = 1000000;
-	int ymax = 1000000;
 	int q, i;
 	int *Table;
 	plot_tools Pt;
@@ -3021,9 +3020,8 @@ void projective_space::draw_point_set_in_plane(
 			cout << "projective_space::draw_point_set_in_plane "
 					"before projective_plane_draw_grid" << endl;
 		}
-		Pt.projective_plane_draw_grid(fname, xmax, ymax, f_with_points, rad,
+		Pt.projective_plane_draw_grid(fname, O,
 			q, Table, nb_pts, TRUE, Labels,
-			f_embedded, f_sideways,
 			verbose_level - 1);
 		if (f_v) {
 			cout << "projective_space::draw_point_set_in_plane "
@@ -3039,9 +3037,9 @@ void projective_space::draw_point_set_in_plane(
 			cout << "projective_space::draw_point_set_in_plane "
 					"before projective_plane_draw_grid" << endl;
 		}
-		Pt.projective_plane_draw_grid(fname, xmax, ymax, f_with_points, rad,
+		Pt.projective_plane_draw_grid(fname, O,
 			q, Table, nb_pts, FALSE, NULL,
-			f_embedded, f_sideways, verbose_level - 1);
+			verbose_level - 1);
 		if (f_v) {
 			cout << "projective_space::draw_point_set_in_plane "
 					"after projective_plane_draw_grid" << endl;

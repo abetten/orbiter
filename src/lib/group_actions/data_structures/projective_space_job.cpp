@@ -705,11 +705,21 @@ void projective_space_job::perform_job_for_one_set(
 		if (f_v) {
 			cout << "perform_job_for_one_set f_draw_points_in_plane" << endl;
 		}
+
+		layered_graph_draw_options *O;
+
+
+		if (!The_Orbiter_session->f_draw_options) {
+			cout << "please use option -draw_options .. -end" << endl;
+			exit(1);
+		}
+		O = The_Orbiter_session->draw_options;
+
 		F->do_draw_points_in_plane(
-			the_set_in, set_size_in,
-			Descr->draw_points_in_plane_fname_base, Descr->f_point_labels,
-			Descr->f_embedded, Descr->f_sideways,
-			verbose_level);
+				O,
+				the_set_in, set_size_in,
+				Descr->draw_points_in_plane_fname_base, Descr->f_point_labels,
+				verbose_level);
 	}
 	else if (Descr->f_canonical_form) {
 		if (f_v) {

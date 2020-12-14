@@ -269,6 +269,24 @@ find_roots_e:
 		-polynomial_find_roots "1,16,3" -end
 
 
+roots_over_F2:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2   -end -end \
+		-with F -do \
+		-finite_field_activity  \
+		-polynomial_find_roots "0,1,0,1,1,1" -end
+
+
+
+roots_over_F8:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 8 -override_polynomial 11  -end -end \
+		-with F -do \
+		-finite_field_activity  \
+		-polynomial_find_roots "0,1,0,1,1,1" -end
+
+
+
 
 # degree and then order of the field of coefficients:
 
@@ -689,7 +707,9 @@ PROJECTIVE_PLANES:
 
 
 PG_2_4:
-	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 4 -end -end \
+	$(ORBITER_PATH)/orbiter.out \
+		-draw_options -rad 200 -end \
+		-define F -finite_field -q 4 -end -end \
 		-with F -do -finite_field_activity -cheat_sheet_PG 2 -end
 	pdflatex PG_2_4.tex 
 	open PG_2_4.pdf
@@ -746,32 +766,25 @@ PG_2_4_incma:
 #PG_n2_q4_incidence_matrix.csv
 
 
-PG_2_7:
-	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 7 -end -end \
-		-with F -do -finite_field_activity -cheat_sheet_PG 2 -end
-	pdflatex PG_2_7.tex 
-	open PG_2_7.pdf
-
 
 
 PG_2_8:
-	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 8 -end -end \
+	$(ORBITER_PATH)/orbiter.out \
+		-draw_options -rad 200 -end \
+		-define F -finite_field -q 8 -end -end \
 		-with F -do -finite_field_activity -cheat_sheet_PG 2 -end
 	pdflatex PG_2_8.tex 
 	open PG_2_8.pdf
 
 PG_2_16:
-	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 16 -end -end \
+	$(ORBITER_PATH)/orbiter.out \
+		-draw_options -xin 20000 -yin 20000 -rad 200 -line_width 0.3 -nodes_empty -end \
+		-define F -finite_field -q 16 -end -end \
 		-with F -do -finite_field_activity -cheat_sheet_PG 2 -end
 	pdflatex PG_2_16.tex 
 	open PG_2_16.pdf
 
 
-PG_2_128:
-	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 128 -end -end \
-		-with F -do -finite_field_activity -cheat_sheet_PG 2 -end
-	pdflatex PG_2_128.tex 
-	open PG_2_128.pdf
 
 
 
@@ -2043,6 +2056,19 @@ PG_3_4_subsets:
 
 
 
+PGGL_2_9_orbits:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-draw_options -end \
+		-define G -linear_group -PGGL 2 9 -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+			-poset_classification_control -problem_label PGGL_2_9 -W -depth 5 -report -end \
+			-orbits_on_subsets 5 \
+			-draw_poset \
+			-report \
+		-end
+	pdflatex PGGL_2_9_poset.tex
+	open PGGL_2_9_poset.pdf
 
 
 #############################################################################################################
@@ -5687,6 +5713,14 @@ desarguesian_spread_in_PG_3_4:
 	pdflatex Desarguesian_Spread_3_4.tex
 	open Desarguesian_Spread_3_4.pdf
 
+desarguesian_spread_in_PG_3_5:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define FQ -finite_field -q 25 -end -end \
+		-define Fq -finite_field -q 5 -end -end \
+		-with FQ -and Fq -do -finite_field_activity -cheat_sheet_desarguesian_spread 2 -end
+	pdflatex Desarguesian_Spread_3_5.tex
+	open Desarguesian_Spread_3_5.pdf
+
 
 spreads4:
 	- mkdir SPREADS_4
@@ -5820,7 +5854,7 @@ packing:
 				-W \
 				-problem_label packing_4 \
 			-end \
-			-packing_classify 2 "0,1,2" "SPREAD_TABLES_4/" \
+			-spread_table_init 2 "0,1,2" "SPREAD_TABLES_4/" \
 		-end
 
 
@@ -5849,7 +5883,7 @@ packing_2A:
 				-W \
 				-problem_label packing_4 \
 			-end \
-			-packing_classify 2 "0,1,2" "SPREAD_TABLES_4/" \
+			-spread_table_init 2 "0,1,2" "SPREAD_TABLES_4/" \
 			-packing_with_assumed_symmetry \
 				-H -PGGL 4 4 -subgroup_by_generators "2A" 2 1 \
 					"1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 1" \
@@ -5933,7 +5967,7 @@ packing_2C_prepare:
 				-W \
 				-problem_label packing_4 \
 			-end \
-			-packing_classify 2 "0,1,2" "SPREAD_TABLES_4/" \
+			-spread_table_init 2 "0,1,2" "SPREAD_TABLES_4/" \
 			-packing_with_assumed_symmetry \
 				-H -PGGL 4 4 -subgroup_by_generators "2C" 2 1 \
 					"1,0,0,0, 1,1,0,0, 0,0,1,0, 0,0,1,1, 0" \
@@ -5986,7 +6020,7 @@ packing_2C_500_make_graphs:
 				-W \
 				-problem_label packing_4 \
 			-end \
-			-packing_classify 2 "0,1,2" "SPREAD_TABLES_4/" \
+			-spread_table_init 2 "0,1,2" "SPREAD_TABLES_4/" \
 			-packing_with_assumed_symmetry \
 				-H -PGGL 4 4 -subgroup_by_generators "2C" 2 1 \
 					"1,0,0,0, 1,1,0,0, 0,0,1,0, 0,0,1,1, 0" \
@@ -6021,7 +6055,7 @@ packing_2C_500_read:
 				-W \
 				-problem_label packing_4 \
 			-end \
-			-packing_classify 2 "0,1,2" "SPREAD_TABLES_4/" \
+			-spread_table_init 2 "0,1,2" "SPREAD_TABLES_4/" \
 			-packing_with_assumed_symmetry \
 				-H -PGGL 4 4 -subgroup_by_generators "2C" 2 1 \
 					"1,0,0,0, 1,1,0,0, 0,0,1,0, 0,0,1,1, 0" \

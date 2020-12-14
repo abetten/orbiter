@@ -1908,6 +1908,7 @@ void geometry_global::Walsh_matrix(finite_field *F, int n, int *W, int verbose_l
 }
 
 void geometry_global::do_cheat_sheet_PG(finite_field *F,
+		layered_graph_draw_options *O,
 		int n,
 		int verbose_level)
 {
@@ -1937,7 +1938,7 @@ void geometry_global::do_cheat_sheet_PG(finite_field *F,
 	if (f_v) {
 		cout << "geometry_global::do_cheat_sheet_PG before P->create_latex_report" << endl;
 	}
-	P->create_latex_report(verbose_level);
+	P->create_latex_report(O, verbose_level);
 	if (f_v) {
 		cout << "geometry_global::do_cheat_sheet_PG after P->create_latex_report" << endl;
 	}

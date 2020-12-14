@@ -87,9 +87,10 @@ projective_space_job_description::projective_space_job_description()
 		//draw_points_in_plane_fname_base = NULL;
 		// follow up option for f_draw_points_in_plane:
 
-		f_point_labels = FALSE;
-		f_embedded = FALSE;
-		f_sideways = FALSE;
+
+	f_point_labels = FALSE;
+		//f_embedded = FALSE;
+		//f_sideways = FALSE;
 
 	f_canonical_form = FALSE;
 	//canonical_form_fname_base;
@@ -317,10 +318,14 @@ int projective_space_job_description::read_arguments(
 			draw_points_in_plane_fname_base.assign(argv[++i]);
 			cout << "-draw_points_in_plane" << draw_points_in_plane_fname_base << endl;
 		}
+
+
+
 		else if (stringcmp(argv[i], "-point_labels") == 0) {
 			f_point_labels = TRUE;
 			cout << "-point_labels" << endl;
 		}
+
 		else if (stringcmp(argv[i], "-canonical_form") == 0) {
 			f_canonical_form = TRUE;
 			canonical_form_fname_base.assign(argv[++i]);
@@ -336,6 +341,7 @@ int projective_space_job_description::read_arguments(
 			ideal_degree = strtoi(argv[++i]);
 			cout << "-ideal_PART " << ideal_degree << endl;
 		}
+#if 0
 		else if (stringcmp(argv[i], "-embedded") == 0) {
 			f_embedded = TRUE;
 			cout << "-embedded" << endl;
@@ -344,6 +350,7 @@ int projective_space_job_description::read_arguments(
 			f_sideways = TRUE;
 			cout << "-sideways" << endl;
 		}
+#endif
 		else if (stringcmp(argv[i], "-intersect_with_set_from_file") == 0) {
 			f_intersect_with_set_from_file = TRUE;
 			intersect_with_set_from_file_fname.assign(argv[++i]);

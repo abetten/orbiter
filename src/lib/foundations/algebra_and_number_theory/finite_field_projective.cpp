@@ -5615,16 +5615,16 @@ void finite_field::do_embed_points(int n,
 }
 
 void finite_field::do_draw_points_in_plane(
+		layered_graph_draw_options *O,
 		long int *set, int set_size,
-	std::string &fname_base, int f_point_labels,
-	int f_embedded, int f_sideways,
-	int verbose_level)
+		std::string &fname_base, int f_point_labels,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	projective_space *P;
 	int n = 2;
-	int rad = 17000;
+	//int rad = 17000;
 
 	if (f_v) {
 		cout << "finite_field::do_draw_points_in_plane" << endl;
@@ -5645,9 +5645,11 @@ void finite_field::do_draw_points_in_plane(
 		}
 
 	P->draw_point_set_in_plane(
-			fname_base, set, set_size,
+			fname_base,
+			O,
+			set, set_size,
 			TRUE /*f_with_points*/, f_point_labels,
-			f_embedded, f_sideways, rad,
+			//f_embedded, f_sideways, rad,
 			verbose_level - 2);
 	FREE_OBJECT(P);
 

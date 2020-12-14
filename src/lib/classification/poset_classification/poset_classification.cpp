@@ -1000,27 +1000,23 @@ int poset_classification::count_live_points(
 	return nb_points;
 }
 
-void poset_classification::find_automorphism_group_of_order(
-		int level, int order)
+void poset_classification::find_node_by_stabilizer_order(
+		int level, int order, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int nb_nodes, node, i, j, elt_order;
 	longinteger_object ago;
 	long int set[300];
 	
+	if (f_v) {
+		cout << "poset_classification::find_node_by_stabilizer_order" << endl;
+	}
 	nb_nodes = nb_orbits_at_level(level);
 	for (i = 0; i < nb_nodes; i++) {
 		node = first_poset_orbit_node_at_level[level] + i;
 
-#if 0
-		if (root[node].nb_strong_generators == 0) {
-			ago.create(1, __FILE__, __LINE__);
-		}
-		else {
-			ago.create_product(Poset->A->base_len(), root[node].tl);
-		}
-#else
 		root[node].get_stabilizer_order(this, ago);
-#endif
+
 		if (ago.as_int() == order) {
 			cout << "found a node whose automorphism group is order "
 					<< order << endl;

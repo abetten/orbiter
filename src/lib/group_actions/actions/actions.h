@@ -768,7 +768,9 @@ public:
 			int f_strong_gens, strong_generators *SG,
 			layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
-	void report_what_we_act_on(std::ostream &ost, int verbose_level);
+	void report_what_we_act_on(std::ostream &ost,
+			layered_graph_draw_options *O,
+			int verbose_level);
 	void read_orbit_rep_and_candidates_from_files_and_process(
 			std::string &prefix,
 		int level, int orbit_at_level, int level_of_candidates_file,

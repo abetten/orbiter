@@ -522,12 +522,6 @@ void poset_classification::report_poset_of_orbits(std::ostream &ost)
 
 	string cmd;
 
-#if 0
-	snprintf(cmd, 10000, "cp %s.layered_graph ./poset.layered_graph", fname_base);
-	cout << "executing: " << cmd << endl;
-	system(cmd);
-#endif
-
 
 	if (The_Orbiter_session->f_orbiter_path) {
 

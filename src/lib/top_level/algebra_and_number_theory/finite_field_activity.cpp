@@ -263,7 +263,16 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		geometry_global Geo;
 
-		Geo.do_cheat_sheet_PG(F, Descr->cheat_sheet_PG_n,
+		layered_graph_draw_options *O;
+
+
+		if (!The_Orbiter_session->f_draw_options) {
+			cout << "please use option -draw_options .. -end" << endl;
+			exit(1);
+		}
+		O = The_Orbiter_session->draw_options;
+
+		Geo.do_cheat_sheet_PG(F, O, Descr->cheat_sheet_PG_n,
 				verbose_level);
 	}
 	else if (Descr->f_cheat_sheet_Gr) {

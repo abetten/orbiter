@@ -593,9 +593,10 @@ void mp_graphics::draw_polar_grid(double r_max,
 }
 
 void mp_graphics::draw_axes_and_grid(
+		layered_graph_draw_options *O,
 	double x_min, double x_max,
 	double y_min, double y_max,
-	double x_stretch, double y_stretch,
+	double dx, double dy,
 	int f_x_axis_at_y_min, int f_y_axis_at_x_min, 
 	int x_mod, int y_mod, int x_tick_mod, int y_tick_mod, 
 	double x_labels_offset, double y_labels_offset, 
@@ -607,8 +608,10 @@ void mp_graphics::draw_axes_and_grid(
 	int *Px, *Py;
 	//double dx = x_stretch;//ONE_MILLION * 50 * x_stretch;
 	//double dy = y_stretch;//ONE_MILLION * 50 * y_stretch;
-	double dx = ONE_MILLION * 50 * x_stretch;
-	double dy = ONE_MILLION * 50 * y_stretch;
+	//double dx = ONE_MILLION * 50 * x_stretch;
+	//double dy = ONE_MILLION * 50 * y_stretch;
+	//double dx = O->xin * 0.5 / (double) (q + 1);
+	//double dy = O->yin * 0.5 / (double) (q + 1); // stretch factor
 	int N = 1000;
 	int n;
 	int i, j, h;
@@ -1790,19 +1793,14 @@ void mp_graphics::header()
 	f_min_max_set = FALSE;
 	//system("rm a");
 
-#ifndef SYSTEMWINDOWS
-	char str[1024];
+	os_interface Os;
+	string str;
 
-	system("date >a");
-	{
-	ifstream f1("a");
-	f1.getline(str, sizeof(str));
-	}
+	Os.get_date(str);
 
 	header_log(str);
 	header_mp(str);
 	header_tikz(str);
-#endif
 }
 
 void mp_graphics::footer()
@@ -1916,7 +1914,7 @@ void mp_graphics::fill_idx(int *Px, int *Py, int *Idx, int n,
 // device specific output commands: log file
 // #############################################################################
 
-void mp_graphics::header_log(char *str_date)
+void mp_graphics::header_log(std::string &str_date)
 {
 	fp_log << "% file: " << fname_log << endl;
 	fp_log << "% created by Orbiter graphics interface" << endl;
@@ -2050,7 +2048,7 @@ void mp_graphics::circle_log(int x1, int y1, int rad)
 // #############################################################################
 
 
-void mp_graphics::header_mp(char *str_date)
+void mp_graphics::header_mp(std::string &str_date)
 {
 	fp_mp << "% file: " << fname_mp << endl;
 	fp_mp << "% created by Orbiter metapost interface" << endl;
@@ -2388,7 +2386,7 @@ void mp_graphics::line_thickness_mp()
 // device specific output commands: tikz
 // #############################################################################
 
-void mp_graphics::header_tikz(char *str_date)
+void mp_graphics::header_tikz(std::string &str_date)
 {
 	fp_tikz << "% file: " << fname_tikz << endl;
 	fp_tikz << "% created by Orbiter tikz interface" << endl;
@@ -3763,9 +3761,11 @@ void mp_graphics::draw_density2_multiple_curves(int no,
 
 }
 
-void mp_graphics::projective_plane_draw_grid2(int q,
-	int *Table, int nb, int f_with_points, int rad,
-	int f_point_labels, char **Point_labels, int verbose_level)
+void mp_graphics::projective_plane_draw_grid2(
+		layered_graph_draw_options *O,
+		int q,
+		int *Table, int nb,
+		int f_point_labels, char **Point_labels, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	double a, b;
@@ -3773,22 +3773,22 @@ void mp_graphics::projective_plane_draw_grid2(int q,
 
 	//int rad = 17000;
 	int i, h;
-	double x_stretch = 0.0010;
-	double y_stretch = 0.0010;
+	//double x_stretch = 1.0 / (double) (q + 1);
+	//double y_stretch = 1.0 / (double) (q + 1);
 	//double x_stretch = 0.01;
 	//double y_stretch = 0.01;
 
 	double *Dx, *Dy;
 	int *Px, *Py;
-	double dx = ONE_MILLION * 50 * x_stretch;
-	double dy = ONE_MILLION * 50 * y_stretch;
+	double dx = O->xin * 0.5 / (double) (q + 1);
+	double dy = O->yin * 0.5 / (double) (q + 1); // stretch factor
 	int N = 1000;
 
 
 	if (f_v) {
 		cout << "projective_plane_draw_grid2" << endl;
 		cout << "projective_plane_draw_grid2 q=" << q << endl;
-		cout << "projective_plane_draw_grid2 x_stretch=" << x_stretch << " y_stretch" << y_stretch << endl;
+		//cout << "projective_plane_draw_grid2 x_stretch=" << x_stretch << " y_stretch" << y_stretch << endl;
 		cout << "projective_plane_draw_grid2 dx=" << dx << " dy=" << dy << endl;
 	}
 
@@ -3809,8 +3809,8 @@ void mp_graphics::projective_plane_draw_grid2(int q,
 		}
 
 
-	draw_axes_and_grid(
-		0., (double)(q - 1), 0., (double)(q - 1), x_stretch, y_stretch,
+	draw_axes_and_grid(O,
+		0., (double)(q - 1), 0., (double)(q - 1), dx, dy,
 		TRUE /* f_x_axis_at_y_min */, TRUE /* f_y_axis_at_x_min */,
 		1 /* x_mod */, 1 /* y_mod */, 1, 1,
 		-1. /* x_labels_offset */, -1. /* y_labels_offset */,
@@ -3818,6 +3818,7 @@ void mp_graphics::projective_plane_draw_grid2(int q,
 		TRUE /* f_v_lines */, 1 /* subdivide_v */,
 		TRUE /* f_h_lines */, 1 /* subdivide_h */,
 		verbose_level - 1);
+
 
 
 	if (f_v) {
@@ -3866,7 +3867,7 @@ void mp_graphics::projective_plane_draw_grid2(int q,
 		}
 	polygon4(Px, Py, 0, 2, 3, 1);
 
-	if (f_with_points) {
+	if (!O->f_nodes_empty) {
 
 		if (f_v) {
 			cout << "projective_plane_draw_grid2 "
@@ -3902,7 +3903,7 @@ void mp_graphics::projective_plane_draw_grid2(int q,
 				}
 
 			//G.nice_circle(Px[a * Q + b], Py[a * Q + b], rad);
-			nice_circle(Px[0], Py[0], rad);
+			nice_circle(Px[0], Py[0], O->rad);
 			if (f_point_labels) {
 				text(Px[0], Py[0], Point_labels[h]);
 			}

@@ -424,9 +424,9 @@ public:
 		std::string draw_points_in_plane_fname_base;
 		// follow up option for f_draw_points_in_plane:
 
-		int f_point_labels;
-		int f_embedded;
-		int f_sideways;
+	int f_point_labels;
+		//int f_embedded;
+		//int f_sideways;
 
 	int f_canonical_form;
 	std::string canonical_form_fname_base;

@@ -83,13 +83,6 @@ public:
 	void linear_codes_with_bounded_minimum_distance(
 			poset_classification_control *Control, linear_group *LG,
 			int d, int target_depth, int verbose_level);
-	void packing_init(
-			poset_classification_control *Control, linear_group *LG,
-			int dimension_of_spread_elements,
-			int f_select_spread, std::string &select_spread_text,
-			std::string &path_to_spread_tables,
-			packing_classify *&P,
-			int verbose_level);
 	void centralizer_of_element(
 			action *A, sims *S,
 			std::string &element_description,
@@ -587,7 +580,7 @@ public:
 		int spread_classify_k;
 
 
-		int f_packing_classify;
+		int f_spread_table_init;
 		int dimension_of_spread_elements;
 		std::string spread_selection_text;
 		std::string spread_tables_prefix;
@@ -681,7 +674,6 @@ public:
 	void do_find_subgroups(
 			int order_of_subgroup,
 			int verbose_level);
-	void report(layered_graph_draw_options *draw_option, int verbose_level);
 	void print_elements(int verbose_level);
 	void print_elements_tex(int verbose_level);
 	void search_subgroup(int verbose_level);
@@ -706,7 +698,7 @@ public:
 			arc_generator_description *Arc_generator_description,
 			int verbose_level);
 	void do_spread_classify(int k, int verbose_level);
-	void do_packing_classify(int dimension_of_spread_elements,
+	void do_spread_table_init(int dimension_of_spread_elements,
 			std::string &spread_selection_text,
 			std::string &spread_tables_prefix,
 			int starter_size,

@@ -282,14 +282,14 @@ void memory_object::read_double(double *f)
 		cout << "memory_object::read_int "
 				"error: l1 < sizeof(double)" << endl;
 		exit(1);
-		}
+	}
 	cp = data + cur_p;
 	cp1 = (char *) &f1;
 	for (j = 0; j < (int)sizeof(double); j++) {
 		*cp1 = *cp;
 		cp1++;
 		cp++;
-		}
+	}
 	cur_pointer += sizeof(double);
 	*f = f1;
 }
@@ -297,7 +297,7 @@ void memory_object::read_double(double *f)
 void memory_object::write_lint(long int i)
 {
 	//block_swap_chars((char *) &i, 8, 1);
-	append(8, (char *) &i, 0);
+	append(sizeof(long int), (char *) &i, 0);
 }
 
 void memory_object::read_lint(long int *i)
@@ -309,20 +309,20 @@ void memory_object::read_lint(long int *i)
 	cur_p = cur_pointer;
 	l = used_length;
 	l1 = l - cur_p;
-	if (l1 < 8) {
+	if (l1 < sizeof(long int)) {
 		cout << "memory_object::read_int "
-				"error: l1 < 8" << endl;
+				"error: l1 < sizeof(long int)" << endl;
 		exit(1);
-		}
+	}
 	cp = data + cur_p;
 	cp1 = (char *) &i1;
-	for (j = 0; j < 8; j++) {
+	for (j = 0; j < sizeof(long int); j++) {
 		*cp1 = *cp;
 		cp1++;
 		cp++;
-		}
+	}
 	//block_swap_chars((char *) &i1, 8, 1);
-	cur_pointer += 8;
+	cur_pointer += sizeof(long int);
 	*i = i1;
 }
 
@@ -331,8 +331,8 @@ void memory_object::write_int(int i)
 	os_interface Os;
 	int_4 i1 = (int_4) i;
 	
-	Os.block_swap_chars((char *) &i1, 4, 1);
-	append(4, (char *) &i1, 0);
+	Os.block_swap_chars((char *) &i1, sizeof(int), 1);
+	append(sizeof(int), (char *) &i1, 0);
 }
 
 void memory_object::read_int(int *i)
@@ -345,34 +345,34 @@ void memory_object::read_int(int *i)
 	
 	if (f_v) {
 		cout << "memory_object::read_int" << endl;
-		}
+	}
 	cur_p = cur_pointer;
 	l = used_length;
 	l1 = l - cur_p;
-	if (l1 < 4) {
+	if (l1 < sizeof(int)) {
 		cout << "memory_object::read_int "
-				"error: l1 < 4" << endl;
+				"error: l1 < sizeof(int)" << endl;
 		exit(1);
-		}
+	}
 	cp = data + cur_p;
 	cp1 = (char *) &i1;
-	for (j = 0; j < 4; j++) {
+	for (j = 0; j < sizeof(int); j++) {
 		*cp1 = *cp;
 		cp1++;
 		cp++;
-		}
+	}
 	if (f_v) {
 		cout << "memory_object::read_int before swap: i1 = " << i1 << endl;
-		}
-	Os.block_swap_chars((char *) &i1, 4, 1);
+	}
+	Os.block_swap_chars((char *) &i1, sizeof(int), 1);
 	if (f_v) {
 		cout << "memory_object::read_int after swap: i1 = " << i1 << endl;
-		}
-	cur_pointer += 4;
+	}
+	cur_pointer += sizeof(int);
 	if (f_v) {
 		cout << "memory_object::read_int "
 				"done read " << i1 << endl;
-		}
+	}
 	*i = (int) i1;
 }
 
@@ -386,7 +386,7 @@ void memory_object::read_file(const char *fname, int verbose_level)
 
 	if (f_v) {
 		cout << "memory_object::read_file" << endl;
-		}
+	}
 	fsize = Fio.file_size(fname);
 	alloc(fsize, 0);
 
@@ -397,7 +397,7 @@ void memory_object::read_file(const char *fname, int verbose_level)
 			1 /* size */, fsize /* nitems */, fp) != fsize) {
 		cout << "memory_object::read_file "
 				"error in fread" << endl;
-		}
+	}
 	fclose(fp);
 #else
 	{
@@ -410,7 +410,7 @@ void memory_object::read_file(const char *fname, int verbose_level)
 	if (f_v) {
 		cout << "memory_object::read_file read file " 
 			<< fname << " of size " << fsize << endl;
-		}
+	}
 }
 
 void memory_object::write_file(const char *fname, int verbose_level)
@@ -420,7 +420,7 @@ void memory_object::write_file(const char *fname, int verbose_level)
 
 	if (f_v) {
 		cout << "memory_object::write_file" << endl;
-		}
+	}
 
 #if 0
 	long int size;
@@ -441,11 +441,11 @@ void memory_object::write_file(const char *fname, int verbose_level)
 		cout << "memory_object::write_file error "
 				"file_size(fname) != used_length" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "memory_object::write_file written file " 
 			<< fname << " of size " << used_length << endl;
-		}
+	}
 }
 
 int memory_object::multiplicity_of_character(char c)

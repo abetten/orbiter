@@ -296,15 +296,6 @@ int os_interface::random_integer(int p)
 	return n;
 }
 
-void os_interface::os_date_string(char *str, int sz)
-{
-	system("date >a");
-	{
-	ifstream f1("a");
-	f1.getline(str, sz);
-	}
-}
-
 int os_interface::os_seconds_past_1970()
 {
 	int a;
@@ -452,6 +443,23 @@ void os_interface::decode_uchar(char *&p, uchar &a)
 	//cout << "decode_uchar i = " << i << endl;
 	//cout << "decode_uchar " << (int) i << endl;
 	a = (uchar)i;
+}
+
+
+void os_interface::get_date(std::string &str)
+{
+#ifndef SYSTEMWINDOWS
+	char s[1024];
+
+	system("date >a");
+	{
+	ifstream f1("a");
+	f1.getline(s, sizeof(s));
+	}
+	str.assign(s);
+#else
+	str.assign("unknown");
+#endif
 }
 
 

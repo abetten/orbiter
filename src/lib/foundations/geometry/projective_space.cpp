@@ -4123,7 +4123,9 @@ void projective_space::report_summary(ostream &ost)
 	ost << "Number of points on a line = " << k << "\\\\" << endl;
 }
 
-void projective_space::report(ostream &ost, int verbose_level)
+void projective_space::report(ostream &ost,
+		layered_graph_draw_options *O,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4164,7 +4166,7 @@ void projective_space::report(ostream &ost, int verbose_level)
 		char str[1000];
 		long int *set;
 		int i;
-		int rad = 17000;
+		//int rad = 17000;
 
 		set = NEW_lint(N_points);
 		for (i = 0; i < N_points; i++) {
@@ -4174,12 +4176,13 @@ void projective_space::report(ostream &ost, int verbose_level)
 		fname_base.assign(str);
 
 		draw_point_set_in_plane(fname_base,
+				O,
 				set, N_points,
 				TRUE /*f_with_points*/,
 				TRUE /*f_point_labels*/,
-				FALSE /*f_embedded*/,
-				FALSE /*f_sideways*/,
-				rad,
+				//FALSE /*f_embedded*/,
+				//FALSE /*f_sideways*/,
+				//rad,
 				verbose_level);
 		FREE_lint(set);
 		ost << "{\\scriptsize" << endl;
@@ -4327,7 +4330,9 @@ void projective_space::make_fname_incidence_matrix_csv(std::string &fname)
 }
 
 
-void projective_space::create_latex_report(int verbose_level)
+void projective_space::create_latex_report(
+		layered_graph_draw_options *O,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4368,7 +4373,7 @@ void projective_space::create_latex_report(int verbose_level)
 			if (f_v) {
 				cout << "projective_space::create_latex_report before P->report" << endl;
 			}
-			report(ost, verbose_level);
+			report(ost, O, verbose_level);
 			if (f_v) {
 				cout << "projective_space::create_latex_report after P->report" << endl;
 			}

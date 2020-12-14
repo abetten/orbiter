@@ -307,23 +307,20 @@ class poset_classification_control {
 
 public:
 
+	int f_problem_label;
+	std::string problem_label;
+
+	int f_path;
+	std::string path;
+
+	int f_depth;
+	int depth;
 
 	int f_draw_options;
-
 	layered_graph_draw_options *draw_options;
 
 	int verbose_level;
 	int verbose_level_group_theory;
-
-	int f_lex;
-	int f_w; // write output in level files (only last level)
-	int f_W; // write output in level files (each level)
-	int f_write_data_files;
-	int f_T; // draw tree file (each level)
-	int f_t; // draw tree file (only last level)
-	int f_print_only;
-	int f_find_group_order;
-	int find_group_order;
 
 	int f_recover;
 	std::string recover_fname;
@@ -333,21 +330,40 @@ public:
 	int extend_r, extend_m;
 	std::string extend_fname;
 
-	int f_depth;
-	int depth;
+	int f_lex;
+
+
+	int f_w; // write output in level files (only last level)
+	int f_W; // write output in level files (each level)
+	int f_write_data_files;
+
+	int f_T; // draw tree file (each level)
+	int f_t; // draw tree file (only last level)
+
+	int f_write_tree; // create a tree
+
+	int f_find_node_by_stabilizer_order;
+	int find_node_by_stabilizer_order;
 
 
 	int f_draw_poset;
 	int f_draw_full_poset;
+
+
 	int f_plesken;
+
+
 	int f_print_data_structure;
+
 	int f_list;
 	int f_list_all;
 	int f_table_of_nodes;
 	int f_make_relations_with_flag_orbits;
+
 	int f_Kramer_Mesner_matrix;
 	int Kramer_Mesner_t;
 	int Kramer_Mesner_k;
+
 	int f_level_summary_csv;
 	int f_orbit_reps_csv;
 	int f_report;
@@ -358,7 +374,7 @@ public:
 	int f_show_orbit_decomposition;
 	int f_show_stab;
 	int f_save_stab;
-	int f_show_whole_orbit;
+	int f_show_whole_orbits;
 
 
 	//int nb_recognize;
@@ -370,11 +386,6 @@ public:
 	std::string schreier_tree_prefix;
 			// comes after problem_label_with_path
 
-	int f_problem_label;
-	std::string problem_label;
-
-	int f_path;
-	std::string path;
 
 
 	poset_classification_control();
@@ -588,7 +599,8 @@ public:
 		int verbose_level);
 	int count_live_points(int level, int node_local,
 		int verbose_level);
-	void find_automorphism_group_of_order(int level, int order);
+	void find_node_by_stabilizer_order(
+			int level, int order, int verbose_level);
 	void get_stabilizer_order(int level, int orbit_at_level, 
 		longinteger_object &go);
 	void get_stabilizer_group(group *&G,  
@@ -799,7 +811,7 @@ public:
 	void draw_poset_fname_poset(std::string &fname, int depth);
 	void draw_poset_fname_tree(std::string &fname, int depth);
 	void draw_poset_fname_poset_detailed(std::string &fname, int depth);
-	void write_treefile_and_draw_tree(std::string &fname_base,
+	void write_treefile(std::string &fname_base,
 		int lvl,
 		layered_graph_draw_options *draw_options,
 		int verbose_level);

@@ -287,7 +287,7 @@ void poset_classification::print_tree()
 			<< nb_poset_orbit_nodes_used << endl;
 	for (i = 0; i < nb_poset_orbit_nodes_used; i++) {
 		print_node(i);
-		}
+	}
 }
 
 void poset_classification::print_extensions_at_level(
@@ -903,9 +903,9 @@ void poset_classification::housekeeping(int i,
 		cout << "average word length=" <<
 				(double) nb2 / (double) nb1 << endl;
 		}
-	if (Control->f_find_group_order) {
-		find_automorphism_group_of_order(i, Control->find_group_order);
-		}
+	if (Control->f_find_node_by_stabilizer_order) {
+		find_node_by_stabilizer_order(i, Control->find_node_by_stabilizer_order, verbose_level);
+	}
 	if (f_vv) {
 		if (nb_nodes < 1000) {
 			int f_with_strong_generators = FALSE;
@@ -1024,7 +1024,7 @@ void poset_classification::housekeeping(int i,
 					"before write_treefile_and_draw_tree" << endl;
 			}
 
-		write_treefile_and_draw_tree(problem_label_with_path, i,
+		write_treefile(problem_label_with_path, i,
 				Control->draw_options,
 				//Control->xmax, Control->ymax, Control->radius, f_embedded,
 				0 /*verbose_level - 1*/);
@@ -1107,7 +1107,7 @@ void poset_classification::housekeeping_no_data_file(int i,
 		}
 
 	if (Control->f_T || (Control->f_t && i == sz)) {
-		write_treefile_and_draw_tree(problem_label_with_path, i,
+		write_treefile(problem_label_with_path, i,
 				Control->draw_options,
 				//Control->xmax, Control->ymax, Control->radius, f_embedded,
 				verbose_level - 1);

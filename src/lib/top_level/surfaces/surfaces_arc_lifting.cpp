@@ -963,7 +963,7 @@ void surfaces_arc_lifting::report2(ostream &ost,
 	report_surfaces_in_detail(ost, verbose_level);
 
 
-	A4->report_what_we_act_on(ost, verbose_level);
+	A4->report_what_we_act_on(ost, draw_options, verbose_level);
 
 
 
