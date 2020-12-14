@@ -1511,6 +1511,76 @@ void linear_group::report(std::ostream &fp,
 }
 
 
+void linear_group::create_latex_report(
+		layered_graph_draw_options *O,
+		int f_sylow, int f_group_table, int f_classes,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "linear_group::create_latex_report" << endl;
+	}
+
+	{
+		string fname;
+		string title;
+		string author;
+
+		fname.assign(label);
+		fname.append("_report.tex");
+		title.assign("The group $");
+		title.append(label_tex);
+		title.append("$");
+
+		author.assign("");
+
+
+		{
+			ofstream ost(fname);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title.c_str(), author.c_str(),
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "linear_group::create_latex_report before report" << endl;
+			}
+			report(ost, f_sylow, f_group_table,
+					f_classes,
+					O,
+					verbose_level);
+			if (f_v) {
+				cout << "linear_group::create_latex_report after report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "linear_group::create_latex_report done" << endl;
+	}
+}
 
 }}
 

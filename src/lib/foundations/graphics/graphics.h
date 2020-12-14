@@ -352,9 +352,10 @@ public:
 	void draw_polar_grid(double r_max, int nb_circles, 
 		int nb_rays, double x_stretch);
 	void draw_axes_and_grid(
+			layered_graph_draw_options *O,
 		double x_min, double x_max, 
 		double y_min, double y_max, 
-		double x_stretch, double y_stretch, 
+		double dx, double dy,
 		int f_x_axis_at_y_min, int f_y_axis_at_x_min, 
 		int x_mod, int y_mod, int x_tick_mod, int y_tick_mod, 
 		double x_labels_offset, double y_labels_offset, 
@@ -476,7 +477,7 @@ public:
 
 
 	// output commands log file:
-	void header_log(char *str_date);
+	void header_log(std::string &str_date);
 	void footer_log();
 	void comment_log(const char *p);
 	void st_alignment_log();
@@ -500,7 +501,7 @@ public:
 
 
 	// output commands metapost:
-	void header_mp(char *str_date);
+	void header_mp(std::string &str_date);
 	void footer_mp();
 	void comment_mp(const char *p);
 	void text_mp(int x1, int y1, const char *p);
@@ -523,7 +524,7 @@ public:
 	void line_thickness_mp();
 
 	// output commands tikz:
-	void header_tikz(char *str_date);
+	void header_tikz(std::string &str_date);
 	void footer_tikz();
 	void comment_tikz(const char *p);
 	void text_tikz(int x1, int y1, const char *p);
@@ -590,9 +591,11 @@ public:
 		const char *label_x,
 		int f_v_grid, int v_grid, int f_h_grid, int h_grid,
 		int f_v_logarithmic, double log_base);
-	void projective_plane_draw_grid2(int q, int *Table,
-		int nb, int f_with_points, int rad,
-		int f_point_labels, char **Point_labels, int verbose_level);
+	void projective_plane_draw_grid2(
+			layered_graph_draw_options *O,
+			int q,
+			int *Table, int nb,
+			int f_point_labels, char **Point_labels, int verbose_level);
 	void draw_matrix_in_color(
 		int f_row_grid, int f_col_grid,
 		int *Table, int nb_colors,
@@ -718,12 +721,11 @@ public:
 		double log_base, int f_switch_x);
 	void y_to_pt_on_curve(int y_in, int &x, int &y,
 		int *outline_value, int *outline_number, int outline_sz);
-	void projective_plane_draw_grid(std::string &fname, int xmax, int ymax,
-		int f_with_points, int rad,
-		int q, int *Table, int nb,
-		int f_point_labels, char **Point_labels,
-		int f_embedded, int f_sideways,
-		int verbose_level);
+	void projective_plane_draw_grid(std::string &fname,
+			layered_graph_draw_options *O,
+			int q, int *Table, int nb,
+			int f_point_labels, char **Point_labels,
+			int verbose_level);
 	void draw_mod_n(std::string &fname,
 			layered_graph_draw_options *O,
 			int number_n,

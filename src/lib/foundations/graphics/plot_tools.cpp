@@ -152,7 +152,7 @@ void plot_tools::draw_density_multiple_curves(std::string &prefix,
 	int f_v_logarithmic, double log_base, int no, int f_embedded, 
 	int verbose_level)
 {
-	verbose_level += 6;
+	//verbose_level += 6;
 	int f_v = (verbose_level >= 1);
 	int f_v5 = (verbose_level >= 5);
 	int **Data2;
@@ -346,15 +346,14 @@ void plot_tools::y_to_pt_on_curve(int y_in, int &x, int &y,
 }
 
 void plot_tools::projective_plane_draw_grid(std::string &fname,
-	int xmax, int ymax, int f_with_points, int rad,
+		layered_graph_draw_options *O,
 	int q, int *Table, int nb, 
 	int f_point_labels, char **Point_labels, 
-	int f_embedded, int f_sideways, 
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int x_min = 0, x_max = 1000000;
-	int y_min = 0, y_max = 1000000;
+	//int x_min = 0, x_max = 1000000;
+	//int y_min = 0, y_max = 1000000;
 	int factor_1000 = 1000;
 	string fname_full;
 	//int f_embedded = TRUE;
@@ -362,48 +361,46 @@ void plot_tools::projective_plane_draw_grid(std::string &fname,
 	
 	if (f_v) {
 		cout << "plot_tools::projective_plane_draw_grid" << endl;
-		cout << "plot_tools::projective_plane_draw_grid xmax=" << xmax << " ymax=" << ymax << endl;
+		//cout << "plot_tools::projective_plane_draw_grid xmax=" << xmax << " ymax=" << ymax << endl;
 	}
 
-	char str[1000];
 
 	fname_full.assign(fname);
-
-	sprintf(str, "_draw.mp");
-
-	fname_full.append(str);
+	fname_full.append("_draw.mp");
 
 
 	{
-	mp_graphics G(fname_full, x_min, y_min, x_max, y_max,
-			f_embedded, f_sideways, verbose_level - 1);
-	G.out_xmin() = 0;
-	G.out_ymin() = 0;
-	G.out_xmax() = xmax;
-	G.out_ymax() = ymax;
-	if (f_v) {
-		cout << "plot_tools::projective_plane_draw_grid" << endl;
-		cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
+		mp_graphics G(fname_full,
+				0, 0,
+				O->xin, O->yin,
+				O->f_embedded, O->f_sideways, verbose_level - 1);
+		G.out_xmin() = 0;
+		G.out_ymin() = 0;
+		G.out_xmax() = O->xout;
+		G.out_ymax() = O->yout;
+		if (f_v) {
+			cout << "plot_tools::projective_plane_draw_grid" << endl;
+			}
+
+		G.header();
+		G.begin_figure(factor_1000);
+
+		if (f_v) {
+			cout << "plot_tools::projective_plane_draw_grid "
+					"before projective_plane_draw_grid2" << endl;
+			}
+		G.projective_plane_draw_grid2(O,
+				q, Table, nb,
+				f_point_labels, Point_labels,
+				verbose_level - 1);
+		if (f_v) {
+			cout << "plot_tools::projective_plane_draw_grid "
+					"after projective_plane_draw_grid2" << endl;
 		}
-	
-	G.header();
-	G.begin_figure(factor_1000);
-	
-	if (f_v) {
-		cout << "plot_tools::projective_plane_draw_grid "
-				"before projective_plane_draw_grid2" << endl;
-		}
-	G.projective_plane_draw_grid2(q, Table, nb,
-			f_with_points, rad, f_point_labels, Point_labels,
-			verbose_level - 1);
-	if (f_v) {
-		cout << "plot_tools::projective_plane_draw_grid "
-				"after projective_plane_draw_grid2" << endl;
-	}
 
 
-	G.end_figure();
-	G.footer();
+		G.end_figure();
+		G.footer();
 	}
 	file_io Fio;
 
@@ -428,8 +425,6 @@ void plot_tools::draw_mod_n(std::string &fname,
 	int f_v = (verbose_level >= 1);
 	int factor_1000 = 1000;
 	string fname_full;
-	//int f_embedded = TRUE;
-	//int f_sideways = FALSE;
 
 	if (f_v) {
 		cout << "plot_tools::draw_mod_n" << endl;
@@ -437,13 +432,9 @@ void plot_tools::draw_mod_n(std::string &fname,
 
 
 
-	char str[1000];
 
 	fname_full.assign(fname);
-
-	sprintf(str, "_draw.mp");
-
-	fname_full.append(str);
+	fname_full.append("_draw.mp");
 
 
 	{

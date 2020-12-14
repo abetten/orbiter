@@ -21,16 +21,23 @@ namespace classification {
 poset_classification_control::poset_classification_control()
 {
 
-	f_draw_options = FALSE;
+	f_problem_label = FALSE;
+	//problem_label = NULL;
 
+	f_path = FALSE;
+	//path = NULL;
+
+	f_depth = FALSE;
+	depth = 0;
+
+	f_draw_options = FALSE;
 	draw_options = NULL;
 
 	verbose_level = 0;
 	verbose_level_group_theory = 0;
 
-	f_lex = FALSE;
-	f_depth = FALSE;
-	depth = 0;
+	f_recover = FALSE;
+	//recover_fname = NULL;
 
 	f_extend = FALSE;
 	extend_from = 0;
@@ -38,17 +45,19 @@ poset_classification_control::poset_classification_control()
 	extend_r = 0;
 	extend_m = 1;
 
-	f_recover = FALSE;
-	//recover_fname = NULL;
+	f_lex = FALSE;
 
 	f_w = FALSE;
 	f_W = FALSE;
 	f_write_data_files = FALSE;
 	f_t = FALSE;
 	f_T = FALSE;
-	f_print_only = FALSE;
-	f_find_group_order = FALSE;
-	find_group_order = 0;
+
+	f_write_tree = FALSE;
+
+	f_find_node_by_stabilizer_order = FALSE;
+	find_node_by_stabilizer_order = 0;
+
 
 	f_draw_poset = FALSE;
 	f_draw_full_poset = FALSE;
@@ -58,9 +67,11 @@ poset_classification_control::poset_classification_control()
 	f_list_all = FALSE;
 	f_table_of_nodes = FALSE;
 	f_make_relations_with_flag_orbits = FALSE;
+
 	f_Kramer_Mesner_matrix = FALSE;
 	Kramer_Mesner_t = 0;
 	Kramer_Mesner_k = 0;
+
 	f_level_summary_csv = FALSE;
 	f_orbit_reps_csv = FALSE;
 	f_report = FALSE;
@@ -71,7 +82,7 @@ poset_classification_control::poset_classification_control()
 	f_show_orbit_decomposition = FALSE;
 	f_show_stab = FALSE;
 	f_save_stab = FALSE;
-	f_show_whole_orbit = FALSE;
+	f_show_whole_orbits = FALSE;
 
 	//nb_recognize = 0;
 
@@ -79,11 +90,6 @@ poset_classification_control::poset_classification_control()
 	f_draw_schreier_trees = FALSE;
 	//schreier_tree_prefix[0] = 0;
 
-	f_problem_label = FALSE;
-	//problem_label = NULL;
-
-	f_path = FALSE;
-	//path = NULL;
 
 
 }
@@ -104,7 +110,28 @@ int poset_classification_control::read_arguments(
 	cout << "poset_classification_control::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-draw_options") == 0) {
+		if (stringcmp(argv[i], "-problem_label") == 0) {
+			f_problem_label = TRUE;
+			problem_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-problem_label " << problem_label << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-path") == 0) {
+			f_path = TRUE;
+			path.assign(argv[++i]);
+			if (f_v) {
+				cout << "-path " << path << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-depth") == 0) {
+			f_depth = TRUE;
+			depth = strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-depth " << depth << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-draw_options") == 0) {
 			f_draw_options = TRUE;
 
 			draw_options = NEW_OBJECT(layered_graph_draw_options);
@@ -134,6 +161,28 @@ int poset_classification_control::read_arguments(
 				cout << "-gv " << verbose_level_group_theory << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-recover") == 0) {
+			f_recover = TRUE;
+			recover_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-recover " << recover_fname << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-extend") == 0) {
+			f_extend = TRUE;
+			extend_from = strtoi(argv[++i]);
+			extend_to = strtoi(argv[++i]);
+			extend_r = strtoi(argv[++i]);
+			extend_m = strtoi(argv[++i]);
+			extend_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-extend from level " << extend_from
+					<< " to level " << extend_to
+					<< " cases congruent " << extend_r
+					<< " mod " << extend_m
+					<< " from file " << extend_fname << endl;
+			}
+		}
 		else if (stringcmp(argv[i], "-lex") == 0) {
 			f_lex = TRUE;
 			if (f_v) {
@@ -152,6 +201,76 @@ int poset_classification_control::read_arguments(
 				cout << "-W" << endl;
 			}
 		}
+
+		else if (stringcmp(argv[i], "-write_data_files") == 0) {
+			f_write_data_files = TRUE;
+			if (f_v) {
+				cout << "-write_data_files" << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-t") == 0) {
+			f_t = TRUE;
+			if (f_v) {
+				cout << "-t" << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-T") == 0) {
+			f_T = TRUE;
+			if (f_v) {
+				cout << "-T" << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-write_tree") == 0) {
+			f_write_tree = TRUE;
+			if (f_v) {
+				cout << "-write_tree" << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-find_node_by_stabilizer_order") == 0) {
+			f_find_node_by_stabilizer_order = TRUE;
+			find_node_by_stabilizer_order = strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-find_node_by_stabilizer_order " << find_node_by_stabilizer_order << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-draw_poset") == 0) {
+			f_draw_poset = TRUE;
+			cout << "-draw_poset " << endl;
+		}
+		else if (stringcmp(argv[i], "-draw_full_poset") == 0) {
+			f_draw_full_poset = TRUE;
+			cout << "-draw_full_poset " << endl;
+		}
+		else if (stringcmp(argv[i], "-plesken") == 0) {
+			f_plesken = TRUE;
+			cout << "-plesken " << endl;
+		}
+		else if (stringcmp(argv[i], "-print_data_structure") == 0) {
+			f_print_data_structure = TRUE;
+			cout << "-print_data_structure " << endl;
+		}
+		else if (stringcmp(argv[i], "-list") == 0) {
+			f_list = TRUE;
+			cout << "-list" << endl;
+		}
+		else if (stringcmp(argv[i], "-list_all") == 0) {
+			f_list_all = TRUE;
+			cout << "-list_all" << endl;
+		}
+		else if (stringcmp(argv[i], "-table_of_nodes") == 0) {
+			f_table_of_nodes = TRUE;
+			cout << "-table_of_nodes" << endl;
+		}
+		else if (stringcmp(argv[i], "-make_relations_with_flag_orbits") == 0) {
+			f_make_relations_with_flag_orbits = TRUE;
+			cout << "-make_relation_with_flag_orbits" << endl;
+		}
+		else if (stringcmp(argv[i], "-Kramer_Mesner_matrix") == 0) {
+			f_Kramer_Mesner_matrix = TRUE;
+			Kramer_Mesner_t = strtoi(argv[++i]);
+			Kramer_Mesner_k = strtoi(argv[++i]);
+			cout << "-Kramer_Mesner_matrix " << Kramer_Mesner_t << " " << Kramer_Mesner_k << endl;
+		}
 		else if (stringcmp(argv[i], "-level_summary_csv") == 0) {
 			f_level_summary_csv = TRUE;
 			if (f_v) {
@@ -164,7 +283,6 @@ int poset_classification_control::read_arguments(
 				cout << "-orbit_reps_csv" << endl;
 			}
 		}
-
 		else if (stringcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			if (f_v) {
@@ -201,111 +319,13 @@ int poset_classification_control::read_arguments(
 				cout << "-save_stab" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-show_whole_orbit") == 0) {
-			f_show_whole_orbit = TRUE;
+		else if (stringcmp(argv[i], "-show_whole_orbits") == 0) {
+			f_show_whole_orbits = TRUE;
 			if (f_v) {
 				cout << "-show_whole_orbit" << endl;
 			}
 		}
 
-		else if (stringcmp(argv[i], "-write_data_files") == 0) {
-			f_write_data_files = TRUE;
-			if (f_v) {
-				cout << "-write_data_files" << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-t") == 0) {
-			f_t = TRUE;
-			if (f_v) {
-				cout << "-t" << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-T") == 0) {
-			f_T = TRUE;
-			if (f_v) {
-				cout << "-T" << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-depth") == 0) {
-			f_depth = TRUE;
-			depth = strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-depth " << depth << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-extend") == 0) {
-			f_extend = TRUE;
-			extend_from = strtoi(argv[++i]);
-			extend_to = strtoi(argv[++i]);
-			extend_r = strtoi(argv[++i]);
-			extend_m = strtoi(argv[++i]);
-			extend_fname.assign(argv[++i]);
-			if (f_v) {
-				cout << "-extend from level " << extend_from
-					<< " to level " << extend_to
-					<< " cases congruent " << extend_r
-					<< " mod " << extend_m
-					<< " from file " << extend_fname << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-recover") == 0) {
-			f_recover = TRUE;
-			recover_fname.assign(argv[++i]);
-			if (f_v) {
-				cout << "-recover " << recover_fname << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-printonly") == 0) {
-			f_print_only = TRUE;
-			if (f_v) {
-				cout << "-printonly" << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-findgroup") == 0) {
-			f_find_group_order = TRUE;
-			find_group_order = strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-findgroup " << find_group_order << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-draw_poset") == 0) {
-			f_draw_poset = TRUE;
-			cout << "-draw_poset " << endl;
-		}
-		else if (stringcmp(argv[i], "-draw_full_poset") == 0) {
-			f_draw_full_poset = TRUE;
-			cout << "-draw_full_poset " << endl;
-		}
-		else if (stringcmp(argv[i], "-plesken") == 0) {
-			f_plesken = TRUE;
-			cout << "-plesken " << endl;
-		}
-		else if (stringcmp(argv[i], "-Kramer_Mesner_matrix") == 0) {
-			f_Kramer_Mesner_matrix = TRUE;
-			Kramer_Mesner_t = strtoi(argv[++i]);
-			Kramer_Mesner_k = strtoi(argv[++i]);
-			cout << "-Kramer_Mesner_matrix " << Kramer_Mesner_t << " " << Kramer_Mesner_k << endl;
-		}
-		else if (stringcmp(argv[i], "-print_data_structure") == 0) {
-			f_print_data_structure = TRUE;
-			cout << "-print_data_structure " << endl;
-		}
-		else if (stringcmp(argv[i], "-list") == 0) {
-			f_list = TRUE;
-			cout << "-list" << endl;
-		}
-		else if (stringcmp(argv[i], "-list_all") == 0) {
-			f_list_all = TRUE;
-			cout << "-list_all" << endl;
-		}
-		else if (stringcmp(argv[i], "-table_of_nodes") == 0) {
-			f_table_of_nodes = TRUE;
-			cout << "-table_of_nodes" << endl;
-		}
-		else if (stringcmp(argv[i], "-make_relations_with_flag_orbits") == 0) {
-			f_make_relations_with_flag_orbits = TRUE;
-			cout << "-make_relation_with_flag_orbits" << endl;
-		}
 		else if (stringcmp(argv[i], "-recognize") == 0) {
 
 			string s;
@@ -323,20 +343,7 @@ int poset_classification_control::read_arguments(
 			schreier_tree_prefix.assign(argv[++i]);
 			cout << "-draw_schreier_trees " << schreier_tree_prefix << endl;
 		}
-		else if (stringcmp(argv[i], "-problem_label") == 0) {
-			f_problem_label = TRUE;
-			problem_label.assign(argv[++i]);
-			if (f_v) {
-				cout << "-problem_label " << problem_label << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-path") == 0) {
-			f_path = TRUE;
-			path.assign(argv[++i]);
-			if (f_v) {
-				cout << "-path " << path << endl;
-			}
-		}
+
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -356,16 +363,27 @@ void poset_classification_control::print()
 
 
 
+	if (f_problem_label) {
+		cout << "-problem_label " << problem_label << endl;
+	}
+	if (f_path) {
+		cout << "-path" << path << endl;
+	}
 	if (f_draw_options) {
 		cout << "-draw_options" << endl;
 		draw_options->print();
 	}
-	if (f_node_label_is_group_order) {
-		cout << "-node_label_is_group_order" << endl;
+	cout << "v=" << verbose_level << endl;
+	cout << "gv=" << verbose_level_group_theory << endl;
+
+	if (f_recover) {
+		cout << "-recover " << recover_fname << endl;
 	}
-	if (f_node_label_is_element) {
-		cout << "-node_label_is_element" << endl;
+	if (f_extend) {
+		cout << "-extend from=" << extend_from << " to=" << extend_to
+			<< " r=" << extend_r << " m=" << extend_m << " fname=" << extend_fname << endl;
 	}
+
 	if (f_lex) {
 		cout << "-lex" << endl;
 	}
@@ -384,8 +402,11 @@ void poset_classification_control::print()
 	if (f_t) {
 		cout << "-t" << endl;
 	}
-	if (f_print_only) {
-		cout << "-print_only" << endl;
+	if (f_write_tree) {
+		cout << "-write_tree" << endl;
+	}
+	if (f_find_node_by_stabilizer_order) {
+		cout << "-find_node_by_stabilizer_order " << find_node_by_stabilizer_order << endl;
 	}
 	if (f_draw_poset) {
 		cout << "-draw_poset" << endl;
@@ -408,14 +429,49 @@ void poset_classification_control::print()
 	if (f_table_of_nodes) {
 		cout << "-table_of_nodes" << endl;
 	}
+	if (f_make_relations_with_flag_orbits) {
+		cout << "-make_relations_with_flag_orbits" << endl;
+	}
+	if (f_Kramer_Mesner_matrix) {
+		cout << "-Kramer_Mesner_matrix t=" << Kramer_Mesner_t << " k=" << Kramer_Mesner_k << endl;
+	}
+	if (f_level_summary_csv) {
+		cout << "-level_summary_csv" << endl;
+	}
+	if (f_orbit_reps_csv) {
+		cout << "-orbit_reps_csv" << endl;
+	}
+	if (f_report) {
+		cout << "-report" << endl;
+	}
+	if (f_node_label_is_group_order) {
+		cout << "-node_label_is_group_order" << endl;
+	}
+	if (f_node_label_is_element) {
+		cout << "-node_label_is_element" << endl;
+	}
+	if (f_show_orbit_decomposition) {
+		cout << "-show_orbit_decomposition" << endl;
+	}
+	if (f_show_stab) {
+		cout << "-show_stab" << endl;
+	}
+	if (f_save_stab) {
+		cout << "-save_stab" << endl;
+	}
+	if (f_show_whole_orbits) {
+		cout << "-show_whole_orbits" << endl;
+	}
+
+	if (recognize.size()) {
+		cout << "-recognize recognizing " << recognize.size() << " many sets" << endl;
+	}
+
 	if (f_export_schreier_trees) {
 		cout << "-export_schreier_trees" << endl;
 	}
-	if (f_path) {
-		cout << "-path" << path << endl;
-	}
-	if (f_problem_label) {
-		cout << "-problem_label " << problem_label << endl;
+	if (f_node_label_is_group_order) {
+		cout << "-node_label_is_group_order" << endl;
 	}
 }
 

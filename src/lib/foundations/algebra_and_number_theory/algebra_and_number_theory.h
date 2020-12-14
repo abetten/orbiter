@@ -1165,10 +1165,10 @@ public:
 			long int *set_in, long int *&set_out, int set_size,
 			int verbose_level);
 	void do_draw_points_in_plane(
+			layered_graph_draw_options *O,
 			long int *set, int set_size,
 			std::string &fname_base, int f_point_labels,
-		int f_embedded, int f_sideways,
-		int verbose_level);
+			int verbose_level);
 	void do_ideal(int n,
 			long int *set_in, int set_size, int degree,
 			long int *&set_out, int &size_out,

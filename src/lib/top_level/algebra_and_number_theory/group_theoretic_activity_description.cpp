@@ -141,7 +141,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_spread_classify = FALSE;
 	spread_classify_k = 0;
 
-	f_packing_classify = FALSE;
+	f_spread_table_init = FALSE;
 	dimension_of_spread_elements = 0;
 	//spread_selection_text = NULL;
 	//spread_tables_prefix = NULL;
@@ -639,12 +639,12 @@ int group_theoretic_activity_description::read_arguments(
 		}
 
 		// packings:
-		else if (stringcmp(argv[i], "-packing_classify") == 0) {
-			f_packing_classify = TRUE;
+		else if (stringcmp(argv[i], "-spread_table_init") == 0) {
+			f_spread_table_init = TRUE;
 			dimension_of_spread_elements = strtoi(argv[++i]);
 			spread_selection_text.assign(argv[++i]);
 			spread_tables_prefix.assign(argv[++i]);
-			cout << "-packing_classify "
+			cout << "-spread_table_init "
 					<< dimension_of_spread_elements
 					<< " " << spread_selection_text
 					<< " " << spread_tables_prefix

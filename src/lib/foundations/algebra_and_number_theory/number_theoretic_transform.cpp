@@ -899,10 +899,10 @@ void number_theoretic_transform::write_code2(ostream &ost,
 
 void number_theoretic_transform::write_code_header(ostream &ost, std::string &fname_code, int verbose_level)
 {
-	char str[1000];
+	string str;
 	os_interface Os;
 
-	Os.os_date_string(str, 1000);
+	Os.get_date(str);
 
 	ost << "/*" << endl;
 	ost << " * " << fname_code << endl;

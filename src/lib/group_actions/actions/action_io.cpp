@@ -140,7 +140,9 @@ void action::report(ostream &ost, int f_sims, sims *S,
 	}
 }
 
-void action::report_what_we_act_on(ostream &ost, int verbose_level)
+void action::report_what_we_act_on(ostream &ost,
+		layered_graph_draw_options *O,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -164,7 +166,7 @@ void action::report_what_we_act_on(ostream &ost, int verbose_level)
 
 		ost << "\\section{The Group Acts on Projective Space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$}" << endl;
 
-		P->report(ost, verbose_level);
+		P->report(ost, O, verbose_level);
 
 
 

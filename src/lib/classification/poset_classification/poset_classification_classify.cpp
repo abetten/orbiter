@@ -151,15 +151,6 @@ int poset_classification::main(int t0,
 		recreate_schreier_vectors_up_to_level(depth_completed - 1, 
 			verbose_level /*MINIMUM(verbose_level, 1)*/);
 	}
-	if (Control->f_print_only) {
-		print_tree();
-		write_treefile_and_draw_tree(
-				problem_label_with_path, depth_completed,
-				Control->draw_options,
-				verbose_level - 1);
-
-		return 0;
-	}
 	if (f_base_case) {
 		depth_completed = Base_case->size;
 	}
@@ -331,6 +322,15 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 		cout << "poset_classification::post_processing problem_label_with_path=" << problem_label_with_path << " verbose_level=" << verbose_level << endl;
 	}
 
+	if (Control->f_write_tree) {
+		print_tree();
+		write_treefile(
+				problem_label_with_path, depth,
+				Control->draw_options,
+				verbose_level - 1);
+
+		//return 0;
+	}
 	if (Control->f_table_of_nodes) {
 		if (f_v) {
 			cout << "poset_classification::post_processing f_table_of_nodes" << endl;
@@ -381,7 +381,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 					Control->f_show_orbit_decomposition /* f_show_orbit_decomposition */,
 					Control->f_show_stab /* f_show_stab */,
 					Control->f_save_stab /* f_save_stab */,
-					Control->f_show_whole_orbit /* f_show_whole_orbit*/);
+					Control->f_show_whole_orbits /* f_show_whole_orbit*/);
 		}
 	}
 
@@ -406,7 +406,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			Control->f_show_orbit_decomposition,
 			Control->f_show_stab,
 			Control->f_save_stab,
-			Control->f_show_whole_orbit);
+			Control->f_show_whole_orbits);
 
 		if (f_v) {
 			cout << "poset_classification::post_processing after "

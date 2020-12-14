@@ -730,6 +730,7 @@ public:
 			int verbose_level);
 	void Walsh_matrix(finite_field *F, int n, int *W, int verbose_level);
 	void do_cheat_sheet_PG(finite_field *F,
+			layered_graph_draw_options *O,
 			int n,
 			int verbose_level);
 	void do_cheat_sheet_Gr(finite_field *F,
@@ -1846,10 +1847,14 @@ public:
 	int is_contained_in_Baer_subline(long int *pts, int nb_pts,
 		int verbose_level);
 	void report_summary(std::ostream &ost);
-	void report(std::ostream &ost, int verbose_level);
+	void report(std::ostream &ost,
+			layered_graph_draw_options *O,
+			int verbose_level);
 	void incidence_matrix_save_csv();
 	void make_fname_incidence_matrix_csv(std::string &fname);
-	void create_latex_report(int verbose_level);
+	void create_latex_report(
+			layered_graph_draw_options *O,
+			int verbose_level);
 	void create_latex_report_for_Grassmannian(int k, int verbose_level);
 
 	// projective_space2.cpp:
@@ -1949,9 +1954,12 @@ public:
 		int *&Table, int verbose_level);
 	int elliptic_curve_addition(int *A6, int p1_rk, int p2_rk, 
 		int verbose_level);
-	void draw_point_set_in_plane(std::string &fname, long int *Pts, int nb_pts,
-		int f_with_points, int f_point_labels, int f_embedded, 
-		int f_sideways, int rad, int verbose_level);
+	void draw_point_set_in_plane(
+		std::string &fname,
+		layered_graph_draw_options *O,
+		long int *Pts, int nb_pts,
+		int f_with_points, int f_point_labels,
+		int verbose_level);
 	void line_plane_incidence_matrix_restricted(long int *Lines, int nb_lines,
 		int *&M, int &nb_planes, int verbose_level);
 	int test_if_lines_are_skew(int line1, int line2, int verbose_level);

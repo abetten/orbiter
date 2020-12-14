@@ -91,7 +91,7 @@ void poset_classification::draw_poset_fname_poset_detailed(
 }
 
 
-void poset_classification::write_treefile_and_draw_tree(
+void poset_classification::write_treefile(
 		std::string &fname_base, int lvl,
 		layered_graph_draw_options *draw_options,
 		int verbose_level)
@@ -99,13 +99,13 @@ void poset_classification::write_treefile_and_draw_tree(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "poset_classification::write_treefile_and_draw_tree "
+		cout << "poset_classification::write_treefile "
 				"verbose_level=" << verbose_level << endl;
 	}
 	if (write_treefile(fname_base, lvl, verbose_level)) {
 #if 0
 		if (f_v) {
-			cout << "poset_classification::write_treefile_and_draw_tree "
+			cout << "poset_classification::write_treefile "
 					"before draw_tree" << endl;
 		}
 		draw_tree(fname_base, lvl, xmax, ymax, rad, f_embedded,
@@ -113,7 +113,7 @@ void poset_classification::write_treefile_and_draw_tree(
 #endif
 	}
 	if (f_v) {
-		cout << "poset_classification::write_treefile_and_draw_tree done" << endl;
+		cout << "poset_classification::write_treefile done" << endl;
 	}
 }
 

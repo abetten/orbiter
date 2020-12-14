@@ -2806,110 +2806,6 @@ void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 	}
 }
 
-void algebra_global_with_action::packing_init(
-		poset_classification_control *Control, linear_group *LG,
-		int dimension_of_spread_elements,
-		int f_select_spread, std::string &select_spread_text,
-		std::string &path_to_spread_tables,
-		packing_classify *&P,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "algebra_global_with_action::packing_init "
-				"dimension_of_spread_elements=" << dimension_of_spread_elements << endl;
-	}
-	action *A;
-	int n, q;
-	matrix_group *Mtx;
-	spread_classify *T;
-
-
-	A = LG->A2;
-	n = A->matrix_group_dimension();
-	Mtx = A->get_matrix_group();
-	q = Mtx->GFq->q;
-	if (f_v) {
-		cout << "algebra_global_with_action::packing_init n=" << n
-				<< " k=" << dimension_of_spread_elements << " q=" << q << endl;
-	}
-
-
-	T = NEW_OBJECT(spread_classify);
-
-
-	if (f_v) {
-		cout << "algebra_global_with_action::packing_init before T->init" << endl;
-	}
-
-
-	T->init(LG, dimension_of_spread_elements, Control, TRUE /* f_recoordinatize */, verbose_level - 1);
-
-	if (f_v) {
-		cout << "algebra_global_with_action::packing_init after T->init" << endl;
-	}
-
-
-	spread_table_with_selection *Spread_table_with_selection;
-
-	Spread_table_with_selection = NEW_OBJECT(spread_table_with_selection);
-
-	if (f_v) {
-		cout << "algebra_global_with_action::packing_init "
-				"before Spread_table_with_selection->init" << endl;
-	}
-	Spread_table_with_selection->init(T,
-		f_select_spread,
-		select_spread_text,
-		path_to_spread_tables,
-		verbose_level);
-	if (f_v) {
-		cout << "algebra_global_with_action::packing_init "
-				"after Spread_table_with_selection->init" << endl;
-	}
-
-
-
-	P = NEW_OBJECT(packing_classify);
-
-
-	if (f_v) {
-		cout << "algebra_global_with_action::packing_init before P->init" << endl;
-	}
-	P->init(Spread_table_with_selection,
-		TRUE, // ECA->f_lex,
-		verbose_level);
-	if (f_v) {
-		cout << "algebra_global_with_action::packing_init after P->init" << endl;
-	}
-
-#if 0
-	cout << "before IA->init" << endl;
-	IA->init(T->A, P->A_on_spreads, P->gen,
-		P->size_of_packing, P->prefix_with_directory, ECA,
-		callback_packing_report,
-		NULL /*callback_subset_orbits*/,
-		P,
-		verbose_level);
-	cout << "after IA->init" << endl;
-#endif
-
-	if (f_v) {
-		cout << "algebra_global_with_action::packing_init before P->compute_spread_table" << endl;
-	}
-	P->Spread_table_with_selection->compute_spread_table(verbose_level);
-	if (f_v) {
-		cout << "algebra_global_with_action::packing_init after P->compute_spread_table" << endl;
-	}
-
-	if (f_v) {
-		cout << "algebra_global_with_action::packing_init done" << endl;
-	}
-
-
-}
-
 void algebra_global_with_action::centralizer_of_element(
 		action *A, sims *S,
 		std::string &element_description,
@@ -3470,15 +3366,6 @@ void algebra_global_with_action::do_cheat_sheet_for_decomposition_by_element_PG(
 					TRUE /* f_pagenumbers */,
 					NULL /* extra_praeamble */);
 
-#if 0
-			if (f_v) {
-				cout << "algebra_global_with_action::do_cheat_sheet_PG before PA->P->report" << endl;
-			}
-			PA->P->report(ost, verbose_level);
-			if (f_v) {
-				cout << "algebra_global_with_action::do_cheat_sheet_PG after PA->P->report" << endl;
-			}
-#endif
 
 			if (f_v) {
 				cout << "algebra_global_with_action::do_cheat_sheet_for_decomposition_by_element_PG f_decomposition_by_element" << endl;
