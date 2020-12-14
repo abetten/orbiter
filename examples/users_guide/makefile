@@ -1951,17 +1951,20 @@ ORBITS_ON_SUBSETS:
 
 PG_2_2_subsets:
 	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-orbiter_path $(ORBITER_PATH) \
 		-draw_options -end \
 		-define G -linear_group -PGL 3 2 -end -end \
 		-with G -do \
 		-group_theoretic_activities \
 			-poset_classification_control -problem_label PGL_3_2 \
-			-depth 7 -draw_poset -draw_options -rad 200 -embedded -end -end \
+			-depth 7 -draw_poset -draw_options -rad 200 -embedded -end -report -end \
 			-orbits_on_subsets 7 \
 			-report \
 		-end
 	pdflatex PGL_3_2_poset_lvl_7.tex
 	open PGL_3_2_poset_lvl_7.pdf
+	pdflatex PGL_3_2_poset.tex
+	open PGL_3_2_poset.pdf
 	#pdflatex PGL_3_2_poset_detailed_lvl_7.tex
 	#open PGL_3_2_poset_detailed_lvl_7.pdf
 
@@ -1972,18 +1975,22 @@ PG_2_2_subsets:
 
 PG_3_2_subsets:
 	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-orbiter_path $(ORBITER_PATH) \
 		-draw_options -end \
 		-define F2 -finite_field -q 2 -end -end \
 		-define G -linear_group -PGL 4 F2 -end -end \
 		-with G -do \
 		-group_theoretic_activities \
 			-poset_classification_control -problem_label PGL_4_2 \
-			-depth 15 -draw_poset -draw_options -rad 200 -embedded -end -end \
+			-depth 15 -draw_poset -draw_options -rad 200 -embedded -end -report -end \
 			-orbits_on_subsets 15 \
 			-report \
 		-end
 	pdflatex PGL_4_2_poset_lvl_15.tex
 	open PGL_4_2_poset_lvl_15.pdf
+	pdflatex PGL_4_2_poset.tex
+	pdflatex PGL_4_2_poset.tex
+	open PGL_4_2_poset.pdf
 	#pdflatex PGL_4_2_poset_detailed_lvl_15.tex
 	#open PGL_4_2_poset_detailed_lvl_15.pdf
 
