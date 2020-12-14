@@ -549,6 +549,8 @@ void poset_classification::write_file(
 	if (m->used_length != size0) {
 		cout << "poset_classification::write_file "
 				"m->used_length != size0" << endl;
+		cout << "m->used_length=" << m->used_length << endl;
+		cout << "size0" << size0 << endl;
 		exit(1);
 	}
 
