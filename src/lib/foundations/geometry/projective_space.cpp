@@ -311,7 +311,7 @@ void projective_space::init_incidence_structure(int verbose_level)
 
 
 
-	if ((long int) N_points * (long int) N_points < 100000) {
+	if ((long int) N_points * (long int) N_points < 10000) {
 
 		if (f_v) {
 			cout << "projective_space::init_incidence_structure "
@@ -328,7 +328,7 @@ void projective_space::init_incidence_structure(int verbose_level)
 		Line_through_two_points = NULL;
 	}
 
-	if ((long int) N_lines * (long int) N_lines < 100000) {
+	if ((long int) N_lines * (long int) N_lines < 10000) {
 		if (f_v) {
 			cout << "projective_space::init_incidence_structure "
 					"allocating Line_intersection" << endl;
