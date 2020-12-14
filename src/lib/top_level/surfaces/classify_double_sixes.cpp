@@ -1589,13 +1589,31 @@ void classify_double_sixes::write_file(ofstream &fp, int verbose_level)
 	}
 
 
+	if (f_v) {
+		cout << "classify_double_sixes::write_file before Five_plus_one->write_file" << endl;
+	}
 	Five_plus_one->write_file(fp,
 			5 /* depth_completed */, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "classify_double_sixes::write_file after Five_plus_one->write_file" << endl;
+	}
 
 
+	if (f_v) {
+		cout << "classify_double_sixes::write_file before Flag_orbits->write_file" << endl;
+	}
 	Flag_orbits->write_file(fp, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "classify_double_sixes::write_file after Flag_orbits->write_file" << endl;
+	}
 
+	if (f_v) {
+		cout << "classify_double_sixes::write_file before Double_sixes->write_file" << endl;
+	}
 	Double_sixes->write_file(fp, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "classify_double_sixes::write_file after Double_sixes->write_file" << endl;
+	}
 
 	if (f_v) {
 		cout << "classify_double_sixes::write_file finished" << endl;

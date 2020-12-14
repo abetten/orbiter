@@ -1786,12 +1786,13 @@ void mp_graphics::coords_min_max(int x, int y)
 
 void mp_graphics::header()
 {
-	char str[1024];
 	
 	f_min_max_set = FALSE;
 	//system("rm a");
 
 #ifndef SYSTEMWINDOWS
+	char str[1024];
+
 	system("date >a");
 	{
 	ifstream f1("a");
