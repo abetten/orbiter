@@ -107,6 +107,9 @@ void mp_graphics::init(std::string &file_name,
 	dev[1] = ymin;
 	dev[2] = xmax;
 	dev[3] = ymax;
+	if (f_v) {
+		cout << "mp_graphics::init done" << endl;
+	}
 }
 
 void mp_graphics::exit(ostream &ost, int verbose_level)
