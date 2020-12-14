@@ -1452,7 +1452,7 @@ void schreier::draw_tree2(std::string &fname,
 
 	if (f_v) {
 		cout << "schreier::draw_tree2" << endl;
-		}
+	}
 
 	fname_full.assign(fname);
 	fname_full.append(".mp");
@@ -1473,18 +1473,30 @@ void schreier::draw_tree2(std::string &fname,
 	calc_y_coordinate(y, 0, max_depth, y_max);
 
 
+	if (f_v) {
+		cout << "schreier::draw_tree2 before subtree_draw_lines" << endl;
+	}
 	subtree_draw_lines(G, Opt,
 			x, y, weight,
 			placement_x, max_depth, i, last,
 			y_max,
 			verbose_level);
+	if (f_v) {
+		cout << "schreier::draw_tree2 after subtree_draw_lines" << endl;
+	}
 
+	if (f_v) {
+		cout << "schreier::draw_tree2 before subtree_draw_vertices" << endl;
+	}
 	subtree_draw_vertices(G, Opt,
 			x, y, weight,
 			placement_x, max_depth, i, last,
 			f_has_point_labels, point_labels,
 			y_max,
 			verbose_level);
+	if (f_v) {
+		cout << "schreier::draw_tree2 after subtree_draw_vertices" << endl;
+	}
 
 	int j, L, l, N;
 	double avg;

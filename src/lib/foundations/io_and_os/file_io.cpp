@@ -2788,7 +2788,7 @@ long int file_io::file_size(const char *name)
 #endif
 #ifdef SYSTEMWINDOWS
 
-	cout << "file_io::file_size SYSTEMWINDOWS" << endl;
+	cout << "file_io::file_size SYSTEMWINDOWS but not SYSTEMUNIX" << endl;
 	exit(1);
 
 	//int handle = _open(name, _O_RDONLY);
