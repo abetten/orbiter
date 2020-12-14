@@ -55,6 +55,15 @@ D45="1,6,1,8,1,9,1,11,1,12,1,13,1,14,1,15,1,16,1,17,1,18,1,19"
 D46="1,5,1,10,1,6,1,13,1,8,1,11,1,9,1,14,1,12,1,15,1,16,1,17,1,18,1,19" 
 D47="1,5,1,10,1,6,1,13,1,8,1,11,1,9,1,14,1,16,1,17,1,18,1,19 "
 
+ALL_DICKSON = \
+	D36_q64 \
+	D47_q64
+	
+
+all : $(ALL_DICKSON)
+
+
+ 
 ND1="1,0,1,1,1,2,1,3,1,7,1,5,1,10,1,6,1,13,1,8,1,11,1,9,1,14,1,12,1,15,1,19"
 ND2="1,0,1,1,1,2,1,3,1,7,1,5,1,10,1,6,1,13,1,19 " 
 ND3="1,0,1,1,1,2,1,3,1,7,1,19 " 
@@ -244,6 +253,93 @@ Dickson7c_q2:
 		-end 
 	pdflatex surface_by_coefficients_q2_report.tex
 	open surface_by_coefficients_q2_report.pdf
+
+Dickson36_q2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 2 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -by_coefficients $(D36) -q 2 \
+		-end \
+		-end 
+	pdflatex surface_by_coefficients_q2_report.tex
+	open surface_by_coefficients_q2_report.pdf
+
+Dickson36_q8:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define F8 -finite_field -q 8 -override_polynomial 11 -end -end \
+		-define G -linear_group -PGL 4 F8 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -by_coefficients $(D36) -q 8 \
+		-end \
+		-end 
+	pdflatex surface_by_coefficients_q8_report.tex
+	open surface_by_coefficients_q8_report.pdf
+
+
+
+D36_q64:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 64 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -by_coefficients $(D36) -q 64 \
+		-end \
+		-end 
+	mv surface_by_coefficients_q64_report.tex D36_q64.tex
+	
+D47_q64:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 64 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -by_coefficients $(D47) -q 64 \
+		-end \
+		-end 
+	mv surface_by_coefficients_q64_report.tex D47_q64.tex
+
+
+
+
+Dickson36_q8_nullspace_l0_l13:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F8 -finite_field -q 8 -override_polynomial 11 -end -end \
+		-with F8 -do \
+		-finite_field_activity \
+		-nullspace 4 4 "1,5,0,0, 0,0,1,5, 1,0,2,4, 0,1,6,2" \
+		-normalize_from_the_right \
+		-end
+
+Dickson36_q8_nullspace_l4_l14:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F8 -finite_field -q 8 -override_polynomial 11 -end -end \
+		-with F8 -do \
+		-finite_field_activity \
+		-nullspace 4 4 "1,7,0,0, 0,0,1,7, 1,0,4,6, 0,1,2,4" \
+		-normalize_from_the_right \
+		-end
+
+Dickson36_q8_nullspace_l8_l12:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F8 -finite_field -q 8 -override_polynomial 11 -end -end \
+		-with F8 -do \
+		-finite_field_activity \
+		-nullspace 4 4 "1,3,0,0, 0,0,1,3, 1,0,6,2, 0,1,4,6" \
+		-normalize_from_the_right \
+		-end
+
+solve_for_mu_32:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F32 -finite_field -q 32 -end -end \
+		-with F32 -do \
+		-finite_field_activity  \
+		-polynomial_find_roots "0,1,0,1,1,1" -end
+
+solve_for_mu_8:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 8 -override_polynomial 11  -end -end \
+		-with F -do \
+		-finite_field_activity  \
+		-polynomial_find_roots "0,1,0,1,1,1" -end
 
 
 rank:
@@ -588,3 +684,20 @@ join:
 		-csv_file_join poly_orbits_d3_n3_q2_select_F16.csv Orbit_idx \
 		-csv_file_join poly_orbits_d3_n3_q2_select_F32.csv Orbit_idx 
 	
+surface_isomorph_D1_D16:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 4 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities -surface_isomorphism_testing \
+			-q 4 -by_coefficients $(D1) -end \
+			-q 4 -by_coefficients $(D16) -end 
+
+
+Dickson6_q2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -linear_group -PGL 4 2 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -by_coefficients $(D6) -q 2 \
+		-end \
+		-end 
+	pdflatex surface_by_coefficients_q2_report.tex
+	open surface_by_coefficients_q2_report.pdf

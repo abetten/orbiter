@@ -1826,7 +1826,7 @@ PGL_4_5_norm_31:
 # Section 23:  Orbit Algorithms
 
 
-ORBIT_ALGORITHMS
+ORBIT_ALGORITHMS:
 
 
 orbits_cubic_surfaces_q2:
