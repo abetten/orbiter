@@ -341,7 +341,7 @@ void poset_classification::report_orbits_summary(std::ostream &ost, int verbose_
 	ost << "D = depth or level\\\\" << endl;
 	ost << "O = orbit with a level\\\\" << endl;
 	ost << "Rep = orbit representative\\\\" << endl;
-	ost << "SO = (order of stabilizer, orbit length)\\\\" << endl;
+	ost << "(S,O) = (order of stabilizer, orbit length)\\\\" << endl;
 	ost << "L = number of live points\\\\" << endl;
 	ost << "F = number of flags\\\\" << endl;
 	//ost << "FO = number of flag orbits\\\\" << endl;
@@ -350,14 +350,14 @@ void poset_classification::report_orbits_summary(std::ostream &ost, int verbose_
 	ost << "\\begin{longtable}{|r|r|r|p{3cm}|r|r|r|r|}" << endl;
 	ost << "\\caption{Orbit Representatives}\\\\" << endl;
 	ost << endl;
-	ost << "\\hline N & D & O & Rep & SO "
+	ost << "\\hline N & D & O & Rep & (S,O) "
 			"& L & F & Gen\\\\ \\hline " << endl;
 	ost << "\\endfirsthead" << endl;
 	ost << endl;
 	ost << "\\multicolumn{8}{c}%" << endl;
 	ost << "{{\\bfseries \\tablename\\ \\thetable{} -- continued "
 			"from previous page}} \\\\" << endl;
-	ost << "\\hline N & D & O & Rep & SO "
+	ost << "\\hline N & D & O & Rep & (S,O) "
 			"& L & F & Gen\\\\ \\hline " << endl;
 	ost << "\\endhead" << endl;
 	ost << endl;
