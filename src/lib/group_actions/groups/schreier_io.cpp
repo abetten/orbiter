@@ -1328,12 +1328,14 @@ void schreier::export_tree_as_layered_graph(int orbit_no,
 	}
 	for (j = 0; j < len; j++) {
 		char text[1000];
+		int a;
 
-		sprintf(text, "%d", orbit[fst + j]);
-		trace_back(NULL, orbit[fst + j], l);
+		a = orbit[fst + j];
+		sprintf(text, "%d", a);
+		trace_back(NULL, a, l);
 		l--;
-		LG->add_text(l, horizontal_position[j],
-				text, 0/*verbose_level*/);
+		LG->add_text(l, horizontal_position[j], text, 0/*verbose_level*/);
+		LG->add_node_data1(l, horizontal_position[j], a, 0/*verbose_level*/);
 	}
 	char str[1000];
 	string fname;

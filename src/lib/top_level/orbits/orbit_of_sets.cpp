@@ -332,16 +332,16 @@ void orbit_of_sets::get_table_of_orbits(long int *&Table,
 	if (f_v) {
 		cout << "orbit_of_sets::get_table_of_orbits orbit_length="
 				<< orbit_length << endl;
-		}
+	}
 	Table = NEW_lint(orbit_length * set_size);
 	for (i = 0; i < orbit_length; i++) {
 		for (j = 0; j < set_size; j++) {
 			Table[i * set_size + j] = Sets[i][j];
-			}
 		}
+	}
 	if (f_v) {
 		cout << "orbit_of_sets::get_table_of_orbits done" << endl;
-		}
+	}
 }
 
 
@@ -358,7 +358,7 @@ void orbit_of_sets::get_table_of_orbits_and_hash_values(long int *&Table,
 	if (f_v) {
 		cout << "orbit_of_sets::get_table_of_orbits_and_hash_values orbit_length="
 				<< orbit_length << endl;
-		}
+	}
 	Table = NEW_lint(orbit_length * set_size);
 	for (i = 0; i < orbit_length; i++) {
 
@@ -367,11 +367,38 @@ void orbit_of_sets::get_table_of_orbits_and_hash_values(long int *&Table,
 		Table[i * set_size + 0] = h;
 		for (j = 1; j < set_size; j++) {
 			Table[i * set_size + j] = Sets[i][j - 1];
-			}
 		}
+	}
 	if (f_v) {
 		cout << "orbit_of_sets::get_table_of_orbits_and_hash_values done" << endl;
+	}
+}
+
+void orbit_of_sets::make_table_of_coset_reps(vector_ge *&Coset_reps, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbit_of_sets::make_table_of_coset_reps" << endl;
+	}
+	int j, prev, label;
+
+	Coset_reps = NEW_OBJECT(vector_ge);
+	Coset_reps->init(A, 0);
+	Coset_reps->allocate(used_length, 0);
+	for (j = 0; j < used_length; j++) {
+		prev = Extra[2 * j + 0];
+		label = Extra[2 * j + 1];
+		if (prev == -1) {
+			A->element_one(Coset_reps->ith(j), 0);
 		}
+		else {
+			A->element_mult(Coset_reps->ith(prev), gens->ith(label), Coset_reps->ith(j), 0);
+		}
+	}
+	if (f_v) {
+		cout << "orbit_of_sets::make_table_of_coset_reps done" << endl;
+	}
 }
 
 void orbit_of_sets::coset_rep(int j)
@@ -387,10 +414,10 @@ void orbit_of_sets::coset_rep(int j)
 		gen = gens->ith(Extra[2 * j + 1]);
 		A->element_mult(cosetrep, gen, cosetrep_tmp, 0);
 		A->element_move(cosetrep_tmp, cosetrep, 0);
-		}
+	}
 	else {
 		A->element_one(cosetrep, 0);
-		}
+	}
 }
 
 void orbit_of_sets::get_orbit_of_points(std::vector<long int> &Orbit, int verbose_level)
@@ -399,7 +426,7 @@ void orbit_of_sets::get_orbit_of_points(std::vector<long int> &Orbit, int verbos
 
 	if (f_v) {
 		cout << "orbit_of_sets::get_orbit_of_points" << endl;
-		}
+	}
 	int i;
 
 	for (i = 0; i < used_length; i++) {
@@ -407,7 +434,7 @@ void orbit_of_sets::get_orbit_of_points(std::vector<long int> &Orbit, int verbos
 	}
 	if (f_v) {
 		cout << "orbit_of_sets::get_orbit_of_points done" << endl;
-		}
+	}
 }
 
 void orbit_of_sets::get_prev(std::vector<int> &Prev, int verbose_level)
@@ -416,7 +443,7 @@ void orbit_of_sets::get_prev(std::vector<int> &Prev, int verbose_level)
 
 	if (f_v) {
 		cout << "orbit_of_sets::get_prev" << endl;
-		}
+	}
 	int i;
 
 	for (i = 0; i < used_length; i++) {
@@ -424,7 +451,7 @@ void orbit_of_sets::get_prev(std::vector<int> &Prev, int verbose_level)
 	}
 	if (f_v) {
 		cout << "orbit_of_sets::get_prev done" << endl;
-		}
+	}
 }
 
 void orbit_of_sets::get_label(std::vector<int> &Label, int verbose_level)
@@ -433,7 +460,7 @@ void orbit_of_sets::get_label(std::vector<int> &Label, int verbose_level)
 
 	if (f_v) {
 		cout << "orbit_of_sets::get_label" << endl;
-		}
+	}
 	int i;
 
 	for (i = 0; i < used_length; i++) {
@@ -441,7 +468,7 @@ void orbit_of_sets::get_label(std::vector<int> &Label, int verbose_level)
 	}
 	if (f_v) {
 		cout << "orbit_of_sets::get_label done" << endl;
-		}
+	}
 }
 
 

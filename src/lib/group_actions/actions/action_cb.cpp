@@ -152,20 +152,22 @@ void action::print_point(
 	(*ptr->ptr_print_point)(*this, a, ost);
 }
 
-void action::unrank_point(int rk, int *v)
+void action::unrank_point(long int rk, int *v)
 // v[low_level_point_size]
 {
 	if (ptr->ptr_unrank_point == NULL) {
-		cout << "action::unrank_point ptr_unrank_point == NULL" << endl;
+		cout << "action::unrank_point ptr_unrank_point == NULL, label=" << ptr->label << endl;
+		exit(1);
 	}
 	(*ptr->ptr_unrank_point)(*this, rk, v);
 }
 
-int action::rank_point(int *v)
+long int action::rank_point(int *v)
 // v[low_level_point_size]
 {
-	if (ptr->ptr_unrank_point == NULL) {
-		cout << "action::rank_point ptr_rank_point == NULL" << endl;
+	if (ptr->ptr_rank_point == NULL) {
+		cout << "action::rank_point ptr_rank_point == NULL, label=" << ptr->label << endl;
+		exit(1);
 	}
 	return (*ptr->ptr_rank_point)(*this, v);
 }
@@ -340,8 +342,7 @@ void action::element_dispose(
 void action::element_print(
 		void *elt, ostream &ost)
 {
-	(*ptr->ptr_element_print)(
-			*this, elt, ost);
+	(*ptr->ptr_element_print)(*this, elt, ost);
 }
 
 void action::element_print_quick(

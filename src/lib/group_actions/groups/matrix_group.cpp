@@ -1670,7 +1670,8 @@ void matrix_group::GL_print_latex(int *Elt, ostream &ost)
 	GFq->print_matrix_latex(ost, D, n, n);
 
 	if (f_affine) {
-		int_vec_print(ost, Elt + n * n, n);
+		GFq->print_matrix_latex(ost, Elt + n * n, 1, n);
+		//int_vec_print(ost, Elt + n * n, n);
 		if (f_semilinear) {
 			ost << "_{" << Elt[n * n + n] << "}" << endl;
 		}

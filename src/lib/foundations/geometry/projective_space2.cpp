@@ -2986,7 +2986,7 @@ void projective_space::draw_point_set_in_plane(
 	std::string &fname,
 	layered_graph_draw_options *O,
 	long int *Pts, int nb_pts,
-	int f_with_points, int f_point_labels,
+	int f_point_labels,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3461,11 +3461,13 @@ void projective_space::plane_equation_from_three_lines_in_three_space(
 	}
 }
 
-void projective_space::decomposition(
+void projective_space::decomposition_from_set_partition(
 	int nb_subsets, int *sz, int **subsets,
 	incidence_structure *&Inc,
 	partitionstack *&Stack,
 	int verbose_level)
+// this function is not used
+// this function used to be called decomposition
 {
 	int f_v = (verbose_level >= 1);
 	int nb_pts, nb_lines;
@@ -3474,7 +3476,7 @@ void projective_space::decomposition(
 	int i, j, level;
 
 	if (f_v) {
-		cout << "projective_space::decomposition" << endl;
+		cout << "projective_space::decomposition_from_set_partition" << endl;
 	}
 	nb_pts = N_points;
 	nb_lines = N_lines;
@@ -3546,12 +3548,12 @@ void projective_space::decomposition(
 		TDO_depth = nb_pts + nb_lines;
 
 		if (f_vv) {
-			cout << "projective_space::decomposition "
+			cout << "projective_space::decomposition_from_set_partition "
 					"before compute_TDO" << endl;
 		}
 		hash = Inc->compute_TDO(*Stack, ht0, TDO_depth, verbose_level + 2);
 		if (f_vv) {
-			cout << "projective_space::decomposition "
+			cout << "projective_space::decomposition_from_set_partition "
 					"after compute_TDO" << endl;
 		}
 
@@ -3570,7 +3572,7 @@ void projective_space::decomposition(
 	FREE_int(part);
 	FREE_int(Mtx);
 	if (f_v) {
-		cout << "projective_space::decomposition done" << endl;
+		cout << "projective_space::decomposition_from_set_partition done" << endl;
 	}
 }
 
@@ -5063,6 +5065,9 @@ void projective_space::hyperplane_lifting_with_two_lines_moved(
 		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
 				"A4:" << endl;
 		int_matrix_print(A4, 4, 4);
+
+		F->print_matrix_latex(cout, A4, 4, 4);
+
 	}
 
 	if (f_v) {

@@ -249,6 +249,7 @@ public:
 		int verbose_level);
 	void read_from_file_binary(std::ifstream &fp,
 		int verbose_level);
+	void write_to_csv_file_coded(std::string &fname, int verbose_level);
 	void extract_subset_of_elements_by_rank_text_vector(
 		const char *rank_vector_text, sims *S, 
 		int verbose_level);

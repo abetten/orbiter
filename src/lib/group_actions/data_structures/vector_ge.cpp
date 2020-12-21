@@ -47,7 +47,7 @@ void vector_ge::freeself()
 	if (data) {
 		FREE_int(data);
 		data = NULL;
-		}
+	}
 }
 
 void vector_ge::init(action *A, int verbose_level)
@@ -99,7 +99,7 @@ void vector_ge::init_by_hdl(action *A, int *gen_hdl, int nb_gen, int verbose_lev
 	allocate(nb_gen, verbose_level);
 	for (i = 0; i < nb_gen; i++) {
 		A->element_retrieve(gen_hdl[i], ith(i), 0);
-		}
+	}
 	if (f_v) {
 		cout << "vector_ge::init_by_hdl done" << endl;
 	}
@@ -284,7 +284,7 @@ void vector_ge::print(ostream &ost)
 		ost << "Element " << i << " / " << len << " is:" << endl;
 		A->element_print_quick(ith(i), ost);
 		ost << endl;
-		}
+	}
 }
 
 #if 0
@@ -299,12 +299,12 @@ ostream& vector_ge::print(ostream& ost)
 		if (data == NULL) {
 			cout << "vector_ge::print fatal: data == NULL" << endl;
 			exit(1);
-			}
+		}
 		A->element_print(ith(i), ost);
 		if (i < len - 1) {
 			ost << ", " << endl;
-			}
 		}
+	}
 	ost << ")" << endl;
 	return ost;
 }
@@ -320,12 +320,12 @@ void vector_ge::print_quick(ostream& ost)
 		if (data == NULL) {
 			cout << "vector_ge::print fatal: data == NULL" << endl;
 			exit(1);
-			}
+		}
 		A->element_print_quick(ith(i), ost);
 		if (i < len - 1) {
 			ost << ", " << endl;
-			}
 		}
+	}
 	ost << ")" << endl;
 }
 
@@ -341,12 +341,12 @@ ostream& vector_ge::print_tex(ostream& ost)
 		if (data == NULL) {
 			cout << "vector_ge::print fatal: data == NULL" << endl;
 			exit(1);
-			}
+		}
 		A->element_print_latex(ith(i), ost);
 		if (i < len - 1) {
 			ost << ", " << endl;
-			}
 		}
+	}
 	//ost << ")" << endl;
 	return ost;
 }
@@ -388,8 +388,8 @@ void vector_ge::print_generators_tex(
 		if (((i + 1) % 4) == 0 && i < len - 1) {
 			ost << "$$" << endl;
 			ost << "$$" << endl;
-			}
 		}
+	}
 	ost << "$$" << endl;
 	for (i = 0; i < len; i++) {
 		A->element_print_for_make_element(ith(i), ost);
@@ -415,7 +415,7 @@ void vector_ge::print_as_permutation(ostream& ost)
 		}
 		if (i < len - 1) {
 			ost << ", " << endl;
-			}
+		}
 	}
 	ost << ")" << endl;
 }
@@ -431,7 +431,7 @@ void vector_ge::allocate(int length, int verbose_level)
 		FREE_int(data);
 		//cout << "vector_ge::allocate warning, data != NULL, "
 		//"we seem to be having a memory leak here" << endl;
-		}
+	}
 	len = length;
 	data = NEW_int(length * A->elt_size_in_int);
 	if (f_v) {
@@ -456,11 +456,11 @@ void vector_ge::reallocate(int new_length, int verbose_level)
 		elt = ith(i);
 		elt2 = data2 + i * A->elt_size_in_int;
 		A->element_move(elt, elt2, FALSE);
-		}
+	}
 	if (data) {
 		FREE_int(data);
 		data = NULL;
-		}
+	}
 	data = data2;
 	len = new_length;
 	if (f_v) {
@@ -483,16 +483,16 @@ void vector_ge::reallocate_and_insert_at(int position, int *elt, int verbose_lev
 		elt1 = ith(i);
 		if (i >= position) {
 			elt2 = data2 + (i + 1) * A->elt_size_in_int;
-			}
+		}
 		else {
 			elt2 = data2 + i * A->elt_size_in_int;
-			}
-		A->element_move(elt1, elt2, FALSE);
 		}
+		A->element_move(elt1, elt2, FALSE);
+	}
 	if (data) {
 		FREE_int(data);
 		data = NULL;
-		}
+	}
 	else {
 		if (f_v) {
 			cout << "vector_ge::reallocate_and_insert_at data == NULL" << endl;
@@ -522,13 +522,14 @@ void vector_ge::insert_at(int length_before, int position, int *elt, int verbose
 		cout << "vector_ge::insert_at" << endl;
 	}
 	for (i = length_before; i >= position; i--) {
-		if (i + 1 >= len)
+		if (i + 1 >= len) {
 			continue;
+		}
 		
 		elt1 = ith(i);
 		elt2 = ith(i + 1);
 		A->element_move(elt1, elt2, FALSE);
-		}
+	}
 	copy_in(position, elt);
 	if (f_v) {
 		cout << "vector_ge::insert_at done" << endl;
@@ -573,7 +574,7 @@ void vector_ge::conjugate_svas(int *Elt)
 		A->element_mult(Elt1, ith(i), Elt2, FALSE);
 		A->element_mult(Elt2, Elt, Elt3, FALSE);
 		A->element_move(Elt3, ith(i), FALSE);
-		}
+	}
 	FREE_int(Elt1);
 	FREE_int(Elt2);
 	FREE_int(Elt3);
@@ -592,7 +593,7 @@ void vector_ge::conjugate_sasv(int *Elt)
 		A->element_mult(Elt, ith(i), Elt2, FALSE);
 		A->element_mult(Elt2, Elt1, Elt3, FALSE);
 		A->element_move(Elt3, ith(i), FALSE);
-		}
+	}
 	FREE_int(Elt1);
 	FREE_int(Elt2);
 	FREE_int(Elt3);
@@ -609,7 +610,7 @@ void vector_ge::print_with_given_action(ostream &ost, action *A2)
 		ost << endl;
 		A2->element_print_as_permutation(ith(i), ost);
 		ost << endl;
-		}
+	}
 }
 
 void vector_ge::print(ostream &ost, int f_print_as_permutation, 
@@ -619,8 +620,9 @@ void vector_ge::print(ostream &ost, int f_print_as_permutation,
 	int i, l;
 	
 	l = len;
-	if (!f_offset)
+	if (!f_offset) {
 		offset = 0;
+	}
 	ost << "Strong generators: (" << l << " of them)" << endl;
 	ost << "f_print_as_permutation=" << f_print_as_permutation << endl;
 	for (i = 0; i < l; i++) {
@@ -633,8 +635,8 @@ void vector_ge::print(ostream &ost, int f_print_as_permutation,
 				offset, f_do_it_anyway_even_for_big_degree, 
 				f_print_cycles_of_length_one, 0/*verbose_level*/);
 			ost << endl;
-			}
 		}
+	}
 }
 
 void vector_ge::print_for_make_element(ostream &ost)
@@ -646,7 +648,7 @@ void vector_ge::print_for_make_element(ostream &ost)
 	for (i = 0; i < l; i++) {
 		A->element_print_for_make_element(ith(i), ost);
 		ost << "\\\\" << endl;
-		}
+	}
 }
 
 
@@ -657,11 +659,11 @@ void vector_ge::write_to_memory_object(memory_object *m, int verbose_level)
 
 	if (f_v) {
 		cout << "vector_ge::write_to_memory_object" << endl;
-		}
+	}
 	m->write_int(len);
 	for (i = 0; i < len; i++) {
 		A->element_write_to_memory_object(ith(i), m, 0);
-		}
+	}
 }
 
 void vector_ge::read_from_memory_object(memory_object *m, int verbose_level)
@@ -671,12 +673,12 @@ void vector_ge::read_from_memory_object(memory_object *m, int verbose_level)
 
 	if (f_v) {
 		cout << "vector_ge::read_from_memory_object" << endl;
-		}
+	}
 	m->read_int(&l);
 	allocate(l, verbose_level);
 	for (i = 0; i < len; i++) {
 		A->element_read_from_memory_object(ith(i), m, 0);
-		}
+	}
 }
 
 void vector_ge::write_to_file_binary(ofstream &fp, int verbose_level)
@@ -686,14 +688,14 @@ void vector_ge::write_to_file_binary(ofstream &fp, int verbose_level)
 
 	if (f_v) {
 		cout << "vector_ge::write_to_file_binary" << endl;
-		}
+	}
 	fp.write((char *) &len, sizeof(int));
 	for (i = 0; i < len; i++) {
 		if (f_v) {
 			cout << "vector_ge::write_to_file_binary writing element " << i << " / " << len << endl;
-			}
-		A->element_write_to_file_binary(ith(i), fp, verbose_level);
 		}
+		A->element_write_to_file_binary(ith(i), fp, verbose_level);
+	}
 }
 
 void vector_ge::read_from_file_binary(ifstream &fp, int verbose_level)
@@ -703,15 +705,43 @@ void vector_ge::read_from_file_binary(ifstream &fp, int verbose_level)
 
 	if (f_v) {
 		cout << "vector_ge::read_from_file_binary" << endl;
-		}
+	}
 	fp.read((char *) &l, sizeof(int));
 	allocate(l, verbose_level);
 	for (i = 0; i < len; i++) {
 		if (f_v) {
 			cout << "vector_ge::read_from_file_binary reading element " << i << " / " << len << endl;
-			}
-		A->element_read_from_file_binary(ith(i), fp, verbose_level);
 		}
+		A->element_read_from_file_binary(ith(i), fp, verbose_level);
+	}
+}
+
+void vector_ge::write_to_csv_file_coded(std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+
+	if (f_v) {
+		cout << "vector_ge::write_to_csv_file_coded" << endl;
+	}
+	int *Table;
+
+	Table = NEW_int(len * A->make_element_size);
+	for (i = 0; i < len; i++) {
+		for (j = 0; j < A->make_element_size; j++) {
+			Table[i * A->make_element_size + j] = ith(i)[j];
+		}
+	}
+	file_io Fio;
+
+	Fio.int_matrix_write_csv(fname, Table, len, A->make_element_size);
+	if (f_v) {
+		cout << "vector_ge::write_to_csv_file_coded written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
+	}
+	if (f_v) {
+		cout << "vector_ge::write_to_csv_file_coded done" << endl;
+	}
 }
 
 void vector_ge::extract_subset_of_elements_by_rank_text_vector(
@@ -722,7 +752,7 @@ void vector_ge::extract_subset_of_elements_by_rank_text_vector(
 	if (f_v) {
 		cout << "vector_ge::extract_subset_of_elements_"
 				"by_rank_text_vector" << endl;
-		}
+	}
 	int *v;
 	int len;
 
@@ -732,13 +762,13 @@ void vector_ge::extract_subset_of_elements_by_rank_text_vector(
 				"by_rank_text_vector after scanning: ";
 		int_vec_print(cout, v, len);
 		cout << endl;
-		}
+	}
 	extract_subset_of_elements_by_rank(v, len, S, verbose_level);
 	FREE_int(v);
 	if (f_v) {
 		cout << "vector_ge::extract_subset_of_elements_"
 				"by_rank_text_vector done" << endl;
-		}
+	}
 }
 
 void vector_ge::extract_subset_of_elements_by_rank(
@@ -750,7 +780,7 @@ void vector_ge::extract_subset_of_elements_by_rank(
 
 	if (f_v) {
 		cout << "vector_ge::extract_subset_of_elements_by_rank" << endl;
-		}
+	}
 	Elt = NEW_int(A->elt_size_in_int);
 	allocate(len, verbose_level);
 	for (i = 0; i < len; i++) {
@@ -761,13 +791,13 @@ void vector_ge::extract_subset_of_elements_by_rank(
 			cout << "vector_ge::extract_subset_of_elements_by_rank "
 					"element " << i << " = " << r << " / " << len << endl;
 			A->element_print_quick(Elt, cout);
-			}
-		A->element_move(Elt, ith(i), 0);
 		}
+		A->element_move(Elt, ith(i), 0);
+	}
 	FREE_int(Elt);
 	if (f_v) {
 		cout << "vector_ge::extract_subset_of_elements_by_rank done" << endl;
-		}
+	}
 }
 
 int vector_ge::test_if_all_elements_stabilize_a_point(action *A2, int pt)
@@ -777,8 +807,8 @@ int vector_ge::test_if_all_elements_stabilize_a_point(action *A2, int pt)
 	for (i = 0; i < len; i++) {
 		if (A2->element_image_of(pt, ith(i), 0) != pt) {
 			return FALSE;
-			}
 		}
+	}
 	return TRUE;
 }
 
@@ -790,20 +820,20 @@ int vector_ge::test_if_all_elements_stabilize_a_set(action *A2,
 
 	if (f_v) {
 		cout << "vector_ge::test_if_all_elements_stabilize_a_set" << endl;
-		}
+	}
 	
 	for (i = 0; i < len; i++) {
 		if (f_v) {
 			cout << "testing element " << i << " / " << len << endl;
-			}
+		}
 		if (!A2->test_if_set_stabilizes(ith(i),
 				sz, set, 0 /* verbose_level*/)) {
 			return FALSE;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "vector_ge::test_if_all_elements_stabilize_a_set done" << endl;
-		}
+	}
 	return TRUE;
 }
 
@@ -817,13 +847,13 @@ schreier *vector_ge::orbits_on_points_schreier(
 	if (f_v) {
 		cout << "vector_ge::orbits_on_points_schreier "
 				"degree = " << A_given->degree << endl;
-		}
+	}
 	if (f_v) {
 		cout << "vector_ge::orbits_on_points_schreier "
 				"action ";
 		A_given->print_info();
 		cout << endl;
-		}
+	}
 
 	Sch = NEW_OBJECT(schreier);
 
@@ -835,7 +865,7 @@ schreier *vector_ge::orbits_on_points_schreier(
 	if (f_v) {
 		cout << "vector_ge::orbits_on_points_schreier "
 				"done, we found " << Sch->nb_orbits << " orbits" << endl;
-		}
+	}
 	return Sch;
 }
 

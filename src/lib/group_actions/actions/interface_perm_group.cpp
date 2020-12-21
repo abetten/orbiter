@@ -68,6 +68,7 @@ static void perm_group_print_point(action &A, long int a, std::ostream &ost);
 
 void action_pointer_table::init_function_pointers_permutation_group()
 {
+	label.assign("function_pointers_permutation_group");
 	ptr_element_image_of = perm_group_element_image_of;
 	ptr_element_image_of_low_level = NULL;
 	ptr_element_linear_entry_ij = NULL;

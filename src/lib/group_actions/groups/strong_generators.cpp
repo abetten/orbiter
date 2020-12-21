@@ -1209,11 +1209,11 @@ long int strong_generators::group_order_as_lint()
 	return go.as_lint();
 }
 
-void strong_generators::print_generators_gap(ostream &ost)
+void strong_generators::print_generators_gap(std::ostream &ost)
 {
-	int i, j, a;
+	int i;
 
-	ost << "strong_generators::print_generators_gap Generators in GAP format are:" << endl;
+	ost << "Generators in GAP format are:" << endl;
 	if (A->degree < 200) {
 		ost << "G := Group([";
 		for (i = 0; i < gens->len; i++) {
@@ -1232,8 +1232,14 @@ void strong_generators::print_generators_gap(ostream &ost)
 	else {
 		ost << "too big to print" << endl;
 	}
-	ost << "strong_generators::print_generators_gap "
-			"Generators in compact permutation form are:" << endl;
+}
+
+
+void strong_generators::print_generators_compact(std::ostream &ost)
+{
+	int i, j, a;
+
+	ost << "Generators in compact permutation form are:" << endl;
 	if (A->degree < 200) {
 		ost << gens->len << " " << A->degree << endl;
 		for (i = 0; i < gens->len; i++) {
@@ -1256,7 +1262,7 @@ void strong_generators::print_generators(ostream &ost)
 	int i;
 	longinteger_object go;
 
-	ost << "strong_generators::print_generators computing group order" << endl;
+	cout << "strong_generators::print_generators computing group order" << endl;
 	group_order(go);
 	ost << "Strong generators for a group of order "
 			<< go << " tl=";
@@ -1283,7 +1289,7 @@ void strong_generators::print_generators(ostream &ost)
 		}
 	}
 
-	ost << "strong_generators::print_generators Generators as permutations are:" << endl;
+	ost << "Generators as permutations are:" << endl;
 
 
 
@@ -1642,18 +1648,19 @@ void strong_generators::print_with_given_action(
 		//ost << endl;
 		ost << "$$" << endl;
 		ost << "as permutation:" << endl;
-		ost << "$$" << endl;
-		if (A->degree < 1000) {
+		//ost << "$$" << endl;
+		if (A2->degree < 1000) {
 			A2->element_print_as_permutation(gens->ith(i), ost);
 		}
 		else {
 			cout << "strong_generators::print_with_given_action "
 					"the degree is too large, we won't print "
 					"the permutation representation" << endl;
+			ost << "too big to print";
 		}
-		ost << endl;
-		ost << "$$" << endl;
-		//ost << "\\\\" << endl;
+		//ost << endl;
+		//ost << "$$" << endl;
+		ost << "\\\\" << endl;
 	}
 }
 

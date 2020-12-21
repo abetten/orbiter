@@ -1938,7 +1938,7 @@ void gl_classes::report(ostream &ost, int verbose_level)
 
 	int i;
 
-	ost << "\\section{All conjugacy Classes of GL$(" << k << "," << q << ")$}" << endl;
+	ost << "\\section*{Conjugacy Classes of ${\\rm GL}(" << k << "," << q << ")$}" << endl;
 
 
 	int *M;
@@ -1950,6 +1950,7 @@ void gl_classes::report(ostream &ost, int verbose_level)
 
 	M = NEW_int(k * k);
 
+	ost << "The number of conjugacy classes of ${\\rm GL}(" << k << "," << q << ")$ is " << nb_classes << ":\\\\" << endl;
 	ost << "$$" << endl;
 	for (i = 0; i < nb_classes; i++) {
 
@@ -1978,7 +1979,7 @@ void gl_classes::report(ostream &ost, int verbose_level)
 
 
 	for (i = 0; i < nb_classes; i++) {
-		ost << "Representative " << i << " / "
+		ost << "Class " << i << " / "
 				<< nb_classes << "\\\\" << endl;
 		print_matrix_and_centralizer_order_latex(ost, R + i);
 		}

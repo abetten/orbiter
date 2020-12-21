@@ -181,5 +181,20 @@ void action_by_representation::compute_image_int_low_level(
 		}
 }
 
+void action_by_representation::unrank_point(
+	long int a, int *v, int verbose_level)
+{
+	F->PG_element_unrank_modified_lint(v, 1, dimension, a);
+}
+
+long int action_by_representation::rank_point(
+	int *v, int verbose_level)
+{
+	long int a;
+
+	F->PG_element_rank_modified_lint(v, 1, dimension, a);
+	return a;
+}
+
 }}
 

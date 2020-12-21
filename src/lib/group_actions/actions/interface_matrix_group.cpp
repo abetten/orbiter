@@ -84,6 +84,7 @@ static long int matrix_group_rank_point(action &A, int *v);
 
 void action_pointer_table::init_function_pointers_matrix_group()
 {
+	label.assign("function_pointers_matrix_group");
 	ptr_element_image_of = matrix_group_element_image_of;
 	ptr_element_image_of_low_level = matrix_group_element_image_of_low_level;
 	ptr_element_linear_entry_ij = matrix_group_element_linear_entry_ij;

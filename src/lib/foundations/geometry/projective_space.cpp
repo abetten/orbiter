@@ -12,6 +12,8 @@ using namespace std;
 #define MAX_NUMBER_OF_LINES_FOR_INCIDENCE_MATRIX 100000
 #define MAX_NUMBER_OF_LINES_FOR_LINE_TABLE 1000000
 #define MAX_NUMBER_OF_POINTS_FOR_POINT_TABLE 1000000
+#define MAX_NB_POINTS_FOR_LINE_THROUGH_TWO_POINTS_TABLE 10000
+#define MAX_NB_POINTS_FOR_LINE_INTERSECTION_TABLE 10000
 
 
 namespace orbiter {
@@ -311,7 +313,8 @@ void projective_space::init_incidence_structure(int verbose_level)
 
 
 
-	if ((long int) N_points < 10000) {
+
+	if ((long int) N_points < MAX_NB_POINTS_FOR_LINE_THROUGH_TWO_POINTS_TABLE) {
 
 		if (f_v) {
 			cout << "projective_space::init_incidence_structure "
@@ -328,7 +331,7 @@ void projective_space::init_incidence_structure(int verbose_level)
 		Line_through_two_points = NULL;
 	}
 
-	if ((long int) N_lines < 10000) {
+	if ((long int) N_lines < MAX_NB_POINTS_FOR_LINE_INTERSECTION_TABLE) {
 		if (f_v) {
 			cout << "projective_space::init_incidence_structure "
 					"allocating Line_intersection" << endl;
@@ -4133,7 +4136,8 @@ void projective_space::report(ostream &ost,
 		cout << "projective_space::report" << endl;
 	}
 
-	ost << "\\small" << endl;
+	ost << "\\subsection*{The projective space ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
+	ost << "\\noindent" << endl;
 	ost << "\\arraycolsep=2pt" << endl;
 	ost << "\\parindent=0pt" << endl;
 	ost << "$q = " << F->q << "$\\\\" << endl;
@@ -4161,7 +4165,7 @@ void projective_space::report(ostream &ost,
 
 	if (n == 2) {
 		//ost << "\\clearpage" << endl << endl;
-		ost << "\\subsection{The Plane}" << endl;
+		ost << "\\subsection*{The plane}" << endl;
 		string fname_base;
 		char str[1000];
 		long int *set;
@@ -4178,7 +4182,6 @@ void projective_space::report(ostream &ost,
 		draw_point_set_in_plane(fname_base,
 				O,
 				set, N_points,
-				TRUE /*f_with_points*/,
 				TRUE /*f_point_labels*/,
 				//FALSE /*f_embedded*/,
 				//FALSE /*f_sideways*/,
@@ -4193,7 +4196,7 @@ void projective_space::report(ostream &ost,
 	}
 
 	//ost << "\\clearpage" << endl << endl;
-	ost << "\\subsection{The Points of ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
+	ost << "\\subsection*{The points of ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
 	cheat_sheet_points(ost, verbose_level);
 
 	//cheat_sheet_point_table(ost, verbose_level);
@@ -4213,13 +4216,13 @@ void projective_space::report(ostream &ost,
 	for (k = 1; k < n; k++) {
 		//ost << "\\clearpage" << endl << endl;
 		if (k == 1) {
-			ost << "\\subsection{The Lines of ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
+			ost << "\\subsection*{The lines of ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
 		}
 		else if (k == 2) {
-			ost << "\\subsection{The Planes of ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
+			ost << "\\subsection*{The planes of ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
 		}
 		else {
-			ost << "\\subsection{The Subspaces of dimension " << k << " of ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
+			ost << "\\subsection*{The subspaces of dimension " << k << " of ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
 		}
 		//ost << "\\section{Subspaces of dimension " << k << "}" << endl;
 		if (f_v) {
@@ -4235,14 +4238,14 @@ void projective_space::report(ostream &ost,
 #if 0
 	if (n >= 2 && N_lines < 25) {
 		//ost << "\\clearpage" << endl << endl;
-		ost << "\\section{Line intersections}" << endl;
+		ost << "\\section*{Line intersections}" << endl;
 		cheat_sheet_line_intersection(ost, verbose_level);
 	}
 
 
 	if (n >= 2 && N_points < 25) {
 		//ost << "\\clearpage" << endl << endl;
-		ost << "\\section{Line through point-pairs}" << endl;
+		ost << "\\section*{Line through point-pairs}" << endl;
 		cheat_sheet_line_through_pairs_of_points(ost, verbose_level);
 	}
 #endif
@@ -4257,6 +4260,7 @@ void projective_space::report(ostream &ost,
 	Poly3 = NEW_OBJECT(homogeneous_polynomial_domain);
 	Poly4 = NEW_OBJECT(homogeneous_polynomial_domain);
 
+	ost << "\\subsection*{The polynomial rings associated with ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
 	Poly1->init(F,
 			n + 1 /* nb_vars */, 1 /* degree */,
 			FALSE /* f_init_incidence_structure */,

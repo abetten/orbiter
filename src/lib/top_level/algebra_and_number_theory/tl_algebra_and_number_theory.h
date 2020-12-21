@@ -23,6 +23,25 @@ namespace top_level {
 
 class algebra_global_with_action {
 public:
+	void orbits_under_conjugation(
+			long int *the_set, int set_size, sims *S,
+			strong_generators *SG,
+			vector_ge *Transporter,
+			int verbose_level);
+	void create_subgroups(
+			long int *the_set, int set_size, sims *S, action *A_conj,
+			schreier *Classes,
+			vector_ge *Transporter,
+			int verbose_level);
+	void orbits_on_set_from_file(
+			long int *the_set, int set_size,
+			action *A1, action *A2,
+			vector_ge *gens,
+			std::string &label_set,
+			std::string &label_group,
+			long int *&Table,
+			int &orbit_length,
+			int verbose_level);
 	void conjugacy_classes_based_on_normal_forms(action *A,
 			sims *override_Sims,
 			std::string &label,
@@ -144,6 +163,26 @@ public:
 			int verbose_level);
 	void report_surfaces_by_lines(std::ostream &ost,
 			struct cubic_surface_data_set *Data, tally &T, int verbose_level);
+	void orbits_on_points(
+			linear_group *LG,
+			action *A2,
+			int f_load_save,
+			std::string &prefix,
+			orbits_on_something *&Orb,
+			//int f_stabilizer, int f_export_trees, int f_shallow_tree, int f_report,
+			int verbose_level);
+	void find_singer_cycle(linear_group *LG,
+			action *A1, action *A2,
+			int verbose_level);
+	void search_element_of_order(linear_group *LG,
+			action *A1, action *A2,
+			int order, int verbose_level);
+	void element_rank(linear_group *LG,
+			action *A1,
+			std::string &elt_data, int verbose_level);
+	void element_unrank(linear_group *LG,
+			action *A1,
+			std::string &rank_string, int verbose_level);
 
 };
 
@@ -472,6 +511,11 @@ public:
 	int f_centralizer_of_element;
 	std::string element_description_text;
 	std::string element_label;
+	int f_conjugacy_class_of_element;
+	// uses element_description_text and element_label
+	int f_orbits_on_group_elements_under_conjugation;
+	std::string orbits_on_group_elements_under_conjugation_fname;
+	std::string orbits_on_group_elements_under_conjugation_transporter_fname;
 	int f_normalizer_of_cyclic_subgroup;
 	int f_find_subgroup;
 	int find_subgroup_order;
@@ -502,15 +546,24 @@ public:
 	std::string isomorphism_Klein_quadric_fname;
 	int f_print_elements;
 	int f_print_elements_tex;
+
 	int f_multiply;
 	std::string multiply_a;
 	std::string multiply_b;
+
 	int f_inverse;
 	std::string inverse_a;
+
+	int f_raise_to_the_power;
+	std::string raise_to_the_power_a_text;
+	std::string raise_to_the_power_exponent_text;
+
 	int f_export_gap;
 	int f_export_magma;
+
 	int f_order_of_products;
 	std::string order_of_products_elements;
+
 	int f_reverse_isomorphism_exterior_square;
 
 	// classification of optimal linear codes:
@@ -613,6 +666,10 @@ public:
 		int f_representation_on_polynomials;
 		int representation_on_polynomials_degree;
 
+		int f_Andre_Bruck_Bose_construction;
+		int Andre_Bruck_Bose_construction_spread_no;
+		std::string Andre_Bruck_Bose_construction_label;
+
 
 
 	group_theoretic_activity_description();
@@ -659,6 +716,7 @@ public:
 	void classes(int verbose_level);
 	void multiply(int verbose_level);
 	void inverse(int verbose_level);
+	void raise_to_the_power(int verbose_level);
 	void do_export_gap(int verbose_level);
 	void do_export_magma(int verbose_level);
 	void create_group_table(int verbose_level);
@@ -721,6 +779,16 @@ public:
 			int verbose_level);
 	int subspace_orbits_test_set(
 			int len, long int *S, int verbose_level);
+	void do_conjugacy_class_of_element(
+			std::string &elt_label, std::string &elt_text, int verbose_level);
+	void do_orbits_on_group_elements_under_conjugation(
+			std::string &fname_group_elements_coded,
+			std::string &fname_transporter,
+			int verbose_level);
+	void do_Andre_Bruck_Bose_construction(int spread_no,
+			int f_Fano, int f_arcs, int f_depth, int depth,
+			std::string &label,
+			int verbose_level);
 
 
 	// group_theoretic_activity_for_surfaces.cpp:

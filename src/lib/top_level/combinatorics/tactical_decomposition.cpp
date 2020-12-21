@@ -178,8 +178,25 @@ void tactical_decomposition::init(int nb_rows, int nb_cols,
 
 void tactical_decomposition::report(int f_enter_math, ostream &ost)
 {
+#if 0
 	Inc->get_and_print_tactical_decomposition_scheme_tex(
 		ost, f_enter_math, *Stack);
+#else
+	cout << "translation_plane_via_andre_model::report "
+			"Row-scheme:" << endl;
+	ost << "Tactical decomposition schemes:\\\\" << endl;
+	ost << "$$" << endl;
+	Inc->get_and_print_row_tactical_decomposition_scheme_tex(
+		ost, FALSE /* f_enter_math */,
+		TRUE /* f_print_subscripts */, *Stack);
+	cout << "translation_plane_via_andre_model::report "
+			"Col-scheme:" << endl;
+	ost << "\\qquad" << endl;
+	Inc->get_and_print_column_tactical_decomposition_scheme_tex(
+		ost, FALSE /* f_enter_math */,
+		TRUE /* f_print_subscripts */, *Stack);
+	ost << "$$" << endl;
+#endif
 }
 
 

@@ -74,10 +74,6 @@ int graph_theoretic_activity_description::read_arguments(
 			f_print = TRUE;
 			cout << "-print" << endl;
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
-			cout << "-end" << endl;
-			return i;
-			}
 		else if (stringcmp(argv[i], "-sort_by_colors") == 0) {
 			f_sort_by_colors = TRUE;
 			cout << "-sort_by_colors " << endl;
@@ -93,6 +89,10 @@ int graph_theoretic_activity_description::read_arguments(
 			f_save = TRUE;
 			cout << "-save " << endl;
 		}
+		else if (stringcmp(argv[i], "-end") == 0) {
+			cout << "-end" << endl;
+			break;
+			}
 		else {
 			cout << "graph_theoretic_activity_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
@@ -100,7 +100,7 @@ int graph_theoretic_activity_description::read_arguments(
 
 	} // next i
 	cout << "graph_theoretic_activity_description::read_arguments done" << endl;
-	return i;
+	return i + 1;
 }
 
 

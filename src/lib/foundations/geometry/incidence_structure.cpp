@@ -1026,8 +1026,7 @@ int incidence_structure::refine_row_partition_safe(
 	int *neighbors;
 
 	if (f_v) {
-		cout << "incidence_structure::refine_row_"
-				"partition_safe" << endl;
+		cout << "incidence_structure::refine_row_partition_safe" << endl;
 	}
 	row_classes = NEW_int(PStack.ht);
 	col_classes = NEW_int(PStack.ht);
@@ -1060,8 +1059,7 @@ int incidence_structure::refine_row_partition_safe(
 		}
 	}
 	if (f_vv) {
-		cout << "incidence_structure::refine_row_"
-				"partition_safe data:" << endl;
+		cout << "incidence_structure::refine_row_partition_safe data:" << endl;
 		print_integer_matrix_width(cout, data, nb_points(),
 				nb_col_classes, nb_col_classes, 3);
 	}
@@ -1090,8 +1088,7 @@ int incidence_structure::refine_row_partition_safe(
 	FREE_int(row_class_idx);
 	FREE_int(col_class_idx);
 	if (f_v) {
-		cout << "incidence_structure::refine_row_"
-				"partition_safe done" << endl;
+		cout << "incidence_structure::refine_row_partition_safe done" << endl;
 	}
 	if (PStack.ht == ht) {
 		return FALSE;
@@ -1356,8 +1353,7 @@ incidence_structure::print_row_tactical_decomposition_scheme_incidences_tex(
 	sorting Sorting;
 
 	if (f_v) {
-		cout << "incidence_structure::print_row_tactical_"
-				"decomposition_scheme_incidences_tex" << endl;
+		cout << "incidence_structure::print_row_tactical_decomposition_scheme_incidences_tex" << endl;
 	}
 
 	row_scheme = NEW_int(nb_row_classes * nb_col_classes);
@@ -1462,8 +1458,7 @@ incidence_structure::print_col_tactical_decomposition_scheme_incidences_tex(
 	sorting Sorting;
 
 	if (f_v) {
-		cout << "incidence_structure::print_col_tactical_"
-				"decomposition_scheme_incidences_tex" << endl;
+		cout << "incidence_structure::print_col_tactical_decomposition_scheme_incidences_tex" << endl;
 	}
 
 	col_scheme = NEW_int(nb_row_classes * nb_col_classes);
@@ -2262,8 +2257,7 @@ void incidence_structure::print_non_tactical_decomposition_scheme_tex(
 	int f_v = FALSE;
 	
 	if (f_v) {
-		cout << "incidence_structure::print_non_tactical_"
-				"decomposition_scheme_tex" << endl;
+		cout << "incidence_structure::print_non_tactical_decomposition_scheme_tex" << endl;
 	}
 	PStack.allocate_and_get_decomposition(
 		row_classes, row_class_inv, nb_row_classes,
@@ -2645,8 +2639,7 @@ void incidence_structure::decomposition_print_tex(ostream &ost,
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "incidence_structure::decomposition_"
-				"print_tex get decomposition" << endl;
+		cout << "incidence_structure::decomposition_print_tex get decomposition" << endl;
 	}
 	PStack.allocate_and_get_decomposition(
 		row_classes, row_class_inv, nb_row_classes,

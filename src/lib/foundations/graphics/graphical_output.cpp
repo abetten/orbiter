@@ -87,6 +87,9 @@ void graphical_output::draw_layered_graph_from_file(std::string &fname,
 		}
 #endif
 
+	if (Opt->f_x_stretch) {
+		LG->scale_x_coordinates(Opt->x_stretch, verbose_level);
+	}
 
 
 	string fname_out;
@@ -94,11 +97,6 @@ void graphical_output::draw_layered_graph_from_file(std::string &fname,
 	fname_out.assign(fname);
 	chop_off_extension(fname_out);
 	fname_out.append("_draw");
-#if 0
-	if (Opt->f_spanning_tree) {
-		fname_out.append("_tree");
-	}
-#endif
 
 	//fname_out.append(".mp");
 

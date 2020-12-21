@@ -426,8 +426,8 @@ void interface_symbol_table::do_group_theoretic_activity(
 
 	Orbiter_top_level_session->find_symbols(with_labels, Idx);
 
-	if (with_labels.size() != 1) {
-		cout << "-group_theoretic_activity requires exactly one input" << endl;
+	if (with_labels.size() < 1) {
+		cout << "-group_theoretic_activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -438,6 +438,14 @@ void interface_symbol_table::do_group_theoretic_activity(
 		group_theoretic_activity Activity;
 
 		Activity.init(Group_theoretic_activity_description, LG->F, LG, verbose_level);
+
+		if (with_labels.size() == 2) {
+			cout << "-group_theoretic_activity has two inputs" << endl;
+			linear_group *LG2;
+			LG2 = (linear_group *) Orbiter_top_level_session->get_object(Idx[1]);
+
+			Activity.A2 = LG2->A_linear;
+		}
 
 		if (f_v) {
 			cout << "interface_symbol_table::do_group_theoretic_activity "

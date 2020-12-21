@@ -511,27 +511,27 @@ void classify_double_sixes::report(std::ostream &ost,
 	if (f_v) {
 		cout << "classify_double_sixes::report reporting groups" << endl;
 	}
-	ost << "\\section{The groups}" << endl;
-	ost << "\\subsection{The semilinear group}" << endl;
+	//ost << "\\section*{The groups}" << endl;
+	ost << "\\section*{The semilinear group}" << endl;
 	A->report(ost, A->f_has_sims, A->Sims, A->f_has_strong_generators, A->Strong_gens, draw_options, verbose_level);
-	A->print_points(ost);
+	A->latex_all_points(ost);
 
 	if (f_v) {
 		cout << "classify_double_sixes::report reporting orthogonal group" << endl;
 	}
-	ost << "\\subsection{The orthogonal group}" << endl;
+	ost << "\\section*{The orthogonal group}" << endl;
 	A2->report(ost, A2->f_has_sims, A2->Sims, A2->f_has_strong_generators, A2->Strong_gens, draw_options, verbose_level);
 	if (A2->degree < 100) {
-		A2->print_points(ost);
+		A2->latex_all_points(ost);
 	}
 
 	if (f_v) {
 		cout << "classify_double_sixes::report reporting line stabilizer" << endl;
 	}
-	ost << "\\subsection{The group stabilizing the fixed line}" << endl;
+	ost << "\\section*{The group stabilizing the fixed line}" << endl;
 	A_on_neighbors->report(ost, A_on_neighbors->f_has_sims, A_on_neighbors->Sims,
 			A_on_neighbors->f_has_strong_generators, A_on_neighbors->Strong_gens, draw_options, verbose_level);
-	A_on_neighbors->print_points(ost);
+	A_on_neighbors->latex_all_points(ost);
 
 	ost << "{\\small\\arraycolsep=2pt" << endl;
 	SG_line_stab->print_generators_tex(ost);
@@ -540,6 +540,7 @@ void classify_double_sixes::report(std::ostream &ost,
 	if (f_v) {
 		cout << "classify_double_sixes::report before Five_plus_one->report" << endl;
 	}
+	ost << "\\section*{The classification of five-plus-ones}" << endl;
 	Five_plus_one->report(ost, verbose_level);
 
 

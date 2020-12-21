@@ -56,7 +56,8 @@ public:
 		int verbose_level);
 	void points_on_line(andre_construction_line_element *Line, 
 		int *pts_on_line, int verbose_level);
-	
+	void report(std::ostream &ost, int verbose_level);
+
 };
 
 
@@ -779,6 +780,7 @@ public:
 			std::ostream &ost, long int a);
 	void print_set(long int *v, int len);
 	void print_set_tex(std::ostream &ost, long int *v, int len);
+	void print_set_tex_with_perp(std::ostream &ost, long int *v, int len);
 	int nb_points_covered(int verbose_level);
 	void points_covered(long int *the_points, int verbose_level);
 	void unrank_lint_here(int *Mtx, long int rk, int verbose_level);
@@ -1958,7 +1960,7 @@ public:
 		std::string &fname,
 		layered_graph_draw_options *O,
 		long int *Pts, int nb_pts,
-		int f_with_points, int f_point_labels,
+		int f_point_labels,
 		int verbose_level);
 	void line_plane_incidence_matrix_restricted(long int *Lines, int nb_lines,
 		int *&M, int &nb_planes, int verbose_level);
@@ -1987,7 +1989,7 @@ public:
 	void plane_equation_from_three_lines_in_three_space(
 		long int *three_lines,
 		int *plane_eqn4, int verbose_level);
-	void decomposition(int nb_subsets, int *sz, int **subsets, 
+	void decomposition_from_set_partition(int nb_subsets, int *sz, int **subsets,
 		incidence_structure *&Inc, 
 		partitionstack *&Stack, 
 		int verbose_level);

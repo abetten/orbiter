@@ -370,6 +370,8 @@ public:
 	void perform_tests(strong_generators *SG, int verbose_level);
 	void multiply_based_on_text(std::string &data_A, std::string &data_B, int verbose_level);
 	void inverse_based_on_text(std::string &data_A, int verbose_level);
+	void raise_to_the_power_based_on_text(std::string &data_A,
+			std::string &exponent_text, int verbose_level);
 
 
 	// action_group_theory.cpp:
@@ -817,7 +819,8 @@ public:
 	void print_info();
 	void report_basic_orbits(std::ostream &ost);
 	void print_base();
-	void print_points(std::ostream &ost);
+	void latex_all_points(std::ostream &ost);
+	void latex_point_set(std::ostream &ost, long int *set, int sz, int verbose_level);
 	void print_group_order(std::ostream &ost);
 	void print_group_order_long(std::ostream &ost);
 	void print_vector(vector_ge &v);
@@ -849,8 +852,8 @@ public:
 	void print_quick(std::ostream &ost, void *elt);
 	void print_as_permutation(std::ostream &ost, void *elt);
 	void print_point(int a, std::ostream &ost);
-	void unrank_point(int rk, int *v);
-	int rank_point(int *v);
+	void unrank_point(long int rk, int *v);
+	long int rank_point(int *v);
 	void code_for_make_element(int *data, void *elt);
 	void print_for_make_element(std::ostream &ost, void *elt);
 	void print_for_make_element_no_commas(std::ostream &ost, void *elt);
@@ -1018,6 +1021,8 @@ void callback_choose_random_generator_orthogonal(int iteration,
 class action_pointer_table {
 
 public:
+
+	std::string label;
 
 	/** function pointers for group actions */
 	long int (*ptr_element_image_of)(action &A, long int a, void *elt, int verbose_level);

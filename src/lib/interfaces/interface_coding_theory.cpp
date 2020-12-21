@@ -258,8 +258,8 @@ int interface_coding_theory::read_arguments(int argc,
 				long_code_generators.push_back(s);
 			}
 			cout << "-long_code " << long_code_n << endl;
-			for (i = 0; i < n; i++) {
-				cout << " " << long_code_generators[i] << endl;
+			for (int h = 0; h < n; h++) {
+				cout << " " << long_code_generators[h] << endl;
 			}
 		}
 		else {

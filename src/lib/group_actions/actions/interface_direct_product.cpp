@@ -82,6 +82,7 @@ static void direct_product_group_print_point(action &A,
 
 void action_pointer_table::init_function_pointers_direct_product_group()
 {
+	label.assign("function_pointers_direct_product_group");
 	ptr_element_image_of = direct_product_group_element_image_of;
 	ptr_element_image_of_low_level =
 			direct_product_group_element_image_of_low_level;

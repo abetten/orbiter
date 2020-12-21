@@ -430,6 +430,7 @@ public:
 
 	int f_canonical_form;
 	std::string canonical_form_fname_base;
+
 	int f_ideal_LEX;
 	int f_ideal_PART;
 	int ideal_degree;
@@ -460,10 +461,6 @@ public:
 
 	projective_space_job_description();
 	~projective_space_job_description();
-#if 0
-	void read_arguments_from_string(
-			const char *str, int verbose_level);
-#endif
 	int read_arguments(
 		int argc, std::string *argv,
 		int verbose_level);

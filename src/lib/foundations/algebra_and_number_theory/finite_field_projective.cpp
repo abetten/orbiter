@@ -5621,10 +5621,8 @@ void finite_field::do_draw_points_in_plane(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
 	projective_space *P;
 	int n = 2;
-	//int rad = 17000;
 
 	if (f_v) {
 		cout << "finite_field::do_draw_points_in_plane" << endl;
@@ -5648,8 +5646,7 @@ void finite_field::do_draw_points_in_plane(
 			fname_base,
 			O,
 			set, set_size,
-			TRUE /*f_with_points*/, f_point_labels,
-			//f_embedded, f_sideways, rad,
+			f_point_labels,
 			verbose_level - 2);
 	FREE_OBJECT(P);
 

@@ -143,6 +143,7 @@ public:
 		int &set_size, int verbose_level);
 	void get_table_of_orbits_and_hash_values(long int *&Table,
 			int &orbit_length, int &set_size, int verbose_level);
+	void make_table_of_coset_reps(vector_ge *&Coset_reps, int verbose_level);
 	void coset_rep(int j);
 		// result is in cosetrep
 		// determines an element in the group

@@ -55,54 +55,57 @@ void translation_plane_via_andre_model::freeself()
 {
 	if (Andre) {
 		FREE_OBJECT(Andre);
-		}
+	}
 	if (Line) {
 		FREE_OBJECT(Line);
-		}
+	}
 	if (Incma) {
 		FREE_int(Incma);
-		}
+	}
 	if (pts_on_line) {
 		FREE_int(pts_on_line);
-		}
+	}
 	if (Line_through_two_points) {
 		FREE_int(Line_through_two_points);
-		}
+	}
 	if (Line_intersection) {
 		FREE_int(Line_intersection);
-		}
+	}
+#if 0
 	if (An) {
 		FREE_OBJECT(An);
-		}
+	}
 	if (An1) {
 		FREE_OBJECT(An1);
-		}
+	}
+#endif
 	if (OnAndre) {
 		FREE_OBJECT(OnAndre);
-		}
+	}
 	if (strong_gens) {
 		FREE_OBJECT(strong_gens);
-		}
+	}
 	if (Inc) {
 		FREE_OBJECT(Inc);
-		}
+	}
 	if (Stack) {
 		FREE_OBJECT(Stack);
-		}
+	}
 	if (Poset) {
 		FREE_OBJECT(Poset);
-		}
+	}
 	if (arcs) {
 		FREE_OBJECT(arcs);
-		}
+	}
 	null();
 }
 
 
 void translation_plane_via_andre_model::init(
 	long int *spread_elements_numeric,
-	int k, finite_field *F, 
+	int k, action *An, action *An1,
 	vector_ge *spread_stab_gens, longinteger_object &spread_stab_go, 
+	std::string &label,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -116,9 +119,17 @@ void translation_plane_via_andre_model::init(
 		cout << "translation_plane_via_andre_model::init" << endl;
 		cout << "translation_plane_via_andre_model::init "
 				"verbose_level=" << verbose_level << endl;
-		}
+	}
 
-	translation_plane_via_andre_model::F = F;
+	translation_plane_via_andre_model::label.assign(label);
+
+	//translation_plane_via_andre_model::F = F;
+	F = An->matrix_group_finite_field();
+	if (An1->matrix_group_finite_field()->q != F->q) {
+		cout << "translation_plane_via_andre_model::init "
+				"The finite fields must have the same order" << endl;
+		exit(1);
+	}
 	translation_plane_via_andre_model::q = F->q;
 	translation_plane_via_andre_model::k = k;
 	if (f_v) {
@@ -126,7 +137,7 @@ void translation_plane_via_andre_model::init(
 				"q=" << q << endl;
 		cout << "translation_plane_via_andre_model::init "
 				"k=" << k << endl;
-		}
+	}
 	n = 2 * k;
 	n1 = n + 1;
 	k1 = k + 1;
@@ -139,7 +150,7 @@ void translation_plane_via_andre_model::init(
 		lint_vec_print(cout, spread_elements_numeric,
 				NT.i_power_j(q, k) + 1);
 		cout << endl;
-		}
+	}
 
 	Andre->init(F, k, spread_elements_numeric, verbose_level - 2);
 	
@@ -151,7 +162,7 @@ void translation_plane_via_andre_model::init(
 				"N=" << N << endl;
 		cout << "translation_plane_via_andre_model::init "
 				"Andre->spread_size=" << Andre->spread_size << endl;
-		}
+	}
 
 
 
@@ -161,11 +172,11 @@ void translation_plane_via_andre_model::init(
 
 	for (i = 0; i < N * N; i++) {
 		Incma[i] = 0;
-		}
+	}
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "
 				"computing incidence matrix:" << endl;
-		}
+	}
 
 	Line->init(Andre, verbose_level);
 
@@ -173,7 +184,7 @@ void translation_plane_via_andre_model::init(
 		if (f_v10) {
 			cout << "translation_plane_via_andre_model::init "
 					"before Line->unrank j=" << j << endl;
-			}
+		}
 		Line->unrank(j, 0 /*verbose_level*/);
 		Andre->points_on_line(Line,
 				pts_on_line, 0 /* verbose_level */);
@@ -182,28 +193,43 @@ void translation_plane_via_andre_model::init(
 					"Line_" << j << "=";
 			int_vec_print(cout, pts_on_line, Andre->order + 1);
 			cout << endl;
-			}
+		}
 		for (h = 0; h < Andre->order + 1; h++) {
 			i = pts_on_line[h];
 			if (i >= N) {
 				cout << "translation_plane_via_andre_model::init "
 						"i >= N" << endl;
 				exit(1);
-				}
-			Incma[i * N + j] = 1;
 			}
+			Incma[i * N + j] = 1;
 		}
+	}
+
+
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "
 				"Incidence matrix of the translation plane "
 				"has been computed" << endl;
-		}
+	}
 	
+
+	string fname;
+	file_io Fio;
+
+	fname.assign(label);
+	fname.append("_incma.csv");
+	Fio.int_matrix_write_csv(fname, Incma, N, N);
+	if (f_v) {
+		cout << "translation_plane_via_andre_model::init "
+				"written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
 	Line_through_two_points = NEW_int(N * N);
 	for (i = 0; i < N * N; i++) {
 		Line_through_two_points[i] = -1;
-		}
+	}
 	for (j = 0; j < N; j++) {
 		Line->unrank(j, 0 /*verbose_level*/);
 		Andre->points_on_line(Line,
@@ -214,27 +240,27 @@ void translation_plane_via_andre_model::init(
 				i2 = pts_on_line[v];
 				Line_through_two_points[i1 * N + i2] = j;
 				Line_through_two_points[i2 * N + i1] = j;
-				}
 			}
 		}
+	}
 	Line_intersection = NEW_int(N * N);
 	for (i = 0; i < N * N; i++) {
 		Line_intersection[i] = -1;
-		}
+	}
 	for (i = 0; i < N; i++) {
 		for (j1 = 0; j1 < N; j1++) {
 			if (Incma[i * N + j1] == 0) {
 				continue;
-				}
+			}
 			for (j2 = j1 + 1; j2 < N; j2++) {
 				if (Incma[i * N + j2] == 0) {
 					continue;
-					}
+				}
 				Line_intersection[j1 * N + j2] = i;
 				Line_intersection[j2 * N + j1] = i;
-				}
 			}
 		}
+	}
 	
 
 	//int_matrix_print(Incma, N, N);
@@ -247,15 +273,15 @@ void translation_plane_via_andre_model::init(
 	Adj = NEW_int(twoN * twoN);
 	for (i = 0; i < twoN * twoN; i++) {
 		Adj[i] = 0;
-		}
+	}
 	for (i = 0; i < N; i++) {
 		for (j = 0; j < N; j++) {
 			if (Incma[i * N + j]) {
 				Adj[i * twoN + N + j] = 1;
 				Adj[(N + j) * twoN + i] = 1;
-				}
 			}
 		}
+	}
 
 
 	if (f_v) {
@@ -263,7 +289,7 @@ void translation_plane_via_andre_model::init(
 				"Adjacency matrix of incidence matrix has "
 				"been computed" << endl;
 		//int_matrix_print(Adj, twoN, twoN);
-		}
+	}
 
 
 	//exit(1);
@@ -311,9 +337,22 @@ void translation_plane_via_andre_model::init(
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "
 				"after Inc->init_by_matrix" << endl;
-		}
+	}
 	
+	translation_plane_via_andre_model::An = An;
+	translation_plane_via_andre_model::An1 = An1;
 
+	f_semilinear = An->is_semilinear_matrix_group();
+	n = An->matrix_group_dimension();
+	if (An1->matrix_group_dimension() != n + 1) {
+		cout << "dim An1 != dim An + 1" << endl;
+		cout << "dim An = " << n << endl;
+		cout << "dim An1 = " << An1->matrix_group_dimension() << endl;
+		exit(1);
+	}
+
+
+#if 0
 	int f_basis = FALSE;
 	vector_ge *nice_gens;
 
@@ -322,12 +361,12 @@ void translation_plane_via_andre_model::init(
 	f_semilinear = FALSE;
 	if (!NT.is_prime(q)) {
 		f_semilinear = TRUE;
-		}
+	}
 	
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "
 				"initializing action An" << endl;
-		}
+	}
 	An = NEW_OBJECT(action);
 	An->init_projective_group(n, F, f_semilinear,
 			f_basis, TRUE /* f_init_sims */,
@@ -338,18 +377,19 @@ void translation_plane_via_andre_model::init(
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "
 				"initializing action An1" << endl;
-		}
+	}
 	An1 = NEW_OBJECT(action);
 	An1->init_projective_group(n1, F, f_semilinear,
 			f_basis, TRUE /* f_init_sims */,
 			nice_gens,
 			0 /*verbose_level */);
 	FREE_OBJECT(nice_gens);
+#endif
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "
 				"initializing OnAndre" << endl;
-		}
+	}
 
 
 	OnAndre = NEW_OBJECT(action);
@@ -362,7 +402,7 @@ void translation_plane_via_andre_model::init(
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "
 				"initializing spread stabilizer" << endl;
-		}
+	}
 
 	strong_gens->generators_for_translation_plane_in_andre_model(
 		An1, An, 
@@ -373,7 +413,7 @@ void translation_plane_via_andre_model::init(
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "
 				"initializing spread stabilizer" << endl;
-		}
+	}
 
 
 	longinteger_object stab_go;
@@ -386,7 +426,7 @@ void translation_plane_via_andre_model::init(
 		cout << "translation_plane_via_andre_model::init "
 				"we will now compute the tactical decomposition "
 				"induced by the spread stabilizer" << endl;
-		}
+	}
 
 
 
@@ -439,14 +479,15 @@ void translation_plane_via_andre_model::init(
 		Inc->get_and_print_column_tactical_decomposition_scheme_tex(
 			cout, FALSE /* f_enter_math */,
 			TRUE /* f_print_subscripts */, *Stack);
-		}
+	}
 #endif
 	//FREE_OBJECT(T);
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init done" << endl;
-		}
+	}
 }
+
 
 void translation_plane_via_andre_model::classify_arcs(
 		const char *prefix, int depth, int verbose_level)
@@ -457,9 +498,8 @@ void translation_plane_via_andre_model::classify_arcs(
 	//char fname_base[1000];
 
 	if (f_v) {
-		cout << "translation_plane_via_andre_model::"
-				"classify_arcs" << endl;
-		}
+		cout << "translation_plane_via_andre_model::classify_arcs" << endl;
+	}
 
 	arcs = NEW_OBJECT(poset_classification);
 
@@ -473,7 +513,7 @@ void translation_plane_via_andre_model::classify_arcs(
 		cout << "translation_plane_via_andre_model::"
 				"classify_arcs "
 				"before gen->initialize" << endl;
-		}
+	}
 
 	Control = NEW_OBJECT(poset_classification_control);
 
@@ -523,7 +563,7 @@ void translation_plane_via_andre_model::classify_arcs(
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::classify_arcs "
 				"before generator_main" << endl;
-		}
+	}
 
 	arcs->main(t0, 
 		schreier_depth, 
@@ -546,7 +586,7 @@ void translation_plane_via_andre_model::classify_arcs(
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::classify_arcs "
 				"before isomorph_build_db" << endl;
-		}
+	}
 
 	isomorph_build_db(An1, OnAndre, arcs, 
 		depth, 
@@ -557,7 +597,7 @@ void translation_plane_via_andre_model::classify_arcs(
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::classify_arcs done" << endl;
-		}
+	}
 
 }
 
@@ -572,13 +612,13 @@ void translation_plane_via_andre_model::classify_subplanes(
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::classify_subplanes" << endl;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::classify_subplanes "
 				"before gen->initialize" << endl;
-		}
+	}
 
 	Control = NEW_OBJECT(poset_classification_control);
 
@@ -621,7 +661,7 @@ void translation_plane_via_andre_model::classify_subplanes(
 		time_check(cout, t0);
 		cout << endl;
 		exit(0);
-		}
+	}
 #endif
 
 	int schreier_depth = 1000;
@@ -633,7 +673,7 @@ void translation_plane_via_andre_model::classify_subplanes(
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::classify_subplanes "
 				"before generator_main" << endl;
-		}
+	}
 
 	arcs->main(t0, 
 		schreier_depth, 
@@ -668,7 +708,7 @@ void translation_plane_via_andre_model::classify_subplanes(
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::classify_subplanes done" << endl;
-		}
+	}
 
 }
 
@@ -682,19 +722,19 @@ int translation_plane_via_andre_model::check_arc(
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::check_arc" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "translation_plane_via_andre_model::"
 				"check_arc the set is";
 		lint_vec_print(cout, S, len);
 		cout << endl;
-		}
+	}
 	for (i = 0; i < len; i++) {
 		if (/*S[i] < Andre->spread_size ||*/ S[i] >= N) {
 			ret = FALSE;
 			goto finish;
-			}
 		}
+	}
 	if (len >= 3) {
 		for (i = 0; i < len; i++) {
 			a = S[i];
@@ -702,24 +742,26 @@ int translation_plane_via_andre_model::check_arc(
 				b = S[j];
 				l = Line_through_two_points[a * N + b];
 				for (h = 0; h < len; h++) {
-					if (h == i) 
+					if (h == i) {
 						continue;
-					if (h == j)
+					}
+					if (h == j) {
 						continue;
+					}
 					c = S[h];
 					if (Incma[c * N + l]) {
 						ret = FALSE;
 						goto finish;
-						}
 					}
 				}
 			}
 		}
+	}
 
 finish:
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::check_arc done ret=" << ret << endl;
-		}
+	}
 	return ret;
 }
 
@@ -735,21 +777,21 @@ int translation_plane_via_andre_model::check_subplane(
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::check_subplane" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "translation_plane_via_andre_model::"
 				"check_subplane the set is";
 		lint_vec_print(cout, S, len);
 		cout << endl;
-		}
+	}
 
 
 	if (len >= 2) {
 		len2 = (len * (len - 1)) >> 1;
-		}
+	}
 	else {
 		len2 = 1;
-		}
+	}
 	L = NEW_int(len2); // bad! No memory stuff in a test function
 
 
@@ -760,16 +802,16 @@ int translation_plane_via_andre_model::check_subplane(
 			if (a == b) {
 				ret = FALSE;
 				goto finish;
-				}
 			}
 		}
+	}
 
 	for (i = 0; i < len; i++) {
 		if (/*S[i] < Andre->spread_size ||*/ S[i] >= N) {
 			ret = FALSE;
 			goto finish;
-			}
 		}
+	}
 	if (len >= 3) {
 
 		// compute all secants:
@@ -783,21 +825,21 @@ int translation_plane_via_andre_model::check_subplane(
 					cout << "translation_plane_via_andre_model::"
 							"check_subplane a == b" << endl;
 					exit(1);
-					}
+				}
 				c = Line_through_two_points[a * N + b];
 				L[h] = c;
 				if (f_vv) {
 					cout << "Line through point " << a
 							<< " and point " << b << " is " << c << endl;
-					}
-				h++;
 				}
+				h++;
 			}
+		}
 		if (h != len2) {
 			cout << "translation_plane_via_andre_model::"
 					"check_subplane h != len2" << endl;
 			exit(1);
-			}
+		}
 		tally C;
 
 		C.init(L, len2, FALSE, 0);
@@ -807,28 +849,28 @@ int translation_plane_via_andre_model::check_subplane(
 			if (f_v) {
 				cout << "The set determines too many lines, "
 						"namely " << C.nb_types << endl;
-				}
+			}
 			ret = FALSE;
 			goto finish;
-			}
+		}
 		//check if no more than three points per line:
 		for (i = 0; i < C.nb_types; i++) {
 			l = C.type_len[i];
 			if (l > 3) {
 				if (f_v) {
 					cout << "The set contains 4 collinear points" << endl;
-					}
+				}
 				ret = FALSE;
 				goto finish;
-				}
 			}
 		}
+	}
 
 finish:
 	FREE_int(L);
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::check_subplane done ret=" << ret << endl;
-		}
+	}
 	return ret;
 }
 
@@ -842,12 +884,12 @@ int translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane(
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane the set is";
 		lint_vec_print(cout, S, 4);
 		cout << endl;
-		}
+	}
 	h = 0;
 	for (i = 0; i < 4; i++) {
 		a = S[i];
@@ -855,12 +897,12 @@ int translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane(
 			b = S[j];
 			l[h] = Line_through_two_points[a * N + b];
 			h++;
-			}
 		}
+	}
 	if (h != 6) {
 		cout << "translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane" << endl;
 		exit(1);
-		}
+	}
 	d1 = Line_intersection[l[0] * N + l[5]];
 	d2 = Line_intersection[l[1] * N + l[4]];
 	d3 = Line_intersection[l[2] * N + l[3]];
@@ -869,22 +911,115 @@ int translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane(
 		ret = TRUE;
 		for (i = 0; i < 4; i++) {
 			subplane7[i] = S[i];
-			}
+		}
 		subplane7[4] = d1;
 		subplane7[5] = d2;
 		subplane7[6] = d3;
-		}
+	}
 	else {
 		ret = FALSE;
-		}
+	}
 
 //finish:
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane "
 				"done ret=" << ret << endl;
-		}
+	}
 	return ret;
 }
+
+
+void translation_plane_via_andre_model::create_latex_report(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "translation_plane_via_andre_model::create_latex_report" << endl;
+	}
+
+	{
+		char str[1000];
+		string fname;
+		char title[1000];
+		char author[1000];
+
+		snprintf(str, 1000, "%s_report.tex", label.c_str());
+		fname.assign(str);
+		snprintf(title, 1000, "Translation plane %s", label.c_str());
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "translation_plane_via_andre_model::create_latex_report before report" << endl;
+			}
+			report(ost, verbose_level);
+			if (f_v) {
+				cout << "translation_plane_via_andre_model::create_latex_report after report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "translation_plane_via_andre_model::create_latex_report done" << endl;
+	}
+}
+
+void translation_plane_via_andre_model::report(std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "translation_plane_via_andre_model::report" << endl;
+	}
+
+
+	Andre->report(ost, verbose_level);
+
+	ost << "Automorphism group:\\\\" << endl;
+
+	ost << "{\\small\\arraycolsep=2pt" << endl;
+	strong_gens->print_generators_tex(ost);
+	ost << "}" << endl;
+
+	T->report(TRUE /* f_enter_math */, ost);
+
+	if (f_v) {
+		cout << "translation_plane_via_andre_model::report done" << endl;
+	}
+}
+
+
+
+
+//
+//
+//
 
 int translation_plane_via_andre_model_check_arc(
 		int len, long int *S, void *data, int verbose_level)
@@ -899,20 +1034,20 @@ int translation_plane_via_andre_model_check_arc(
 				"checking set ";
 		lint_vec_print(cout, S, len);
 		cout << endl;
-		}
+	}
 	f_OK = TP->check_arc(S, len, 0 /*verbose_level - 1*/);
 	if (f_OK) {
 		if (f_v) {
 			cout << "accepted" << endl;
-			}
-		return TRUE;
 		}
+		return TRUE;
+	}
 	else {
 		if (f_v) {
 			cout << "rejected" << endl;
-			}
-		return FALSE;
 		}
+		return FALSE;
+	}
 }
 
 int translation_plane_via_andre_model_check_subplane(
@@ -928,20 +1063,20 @@ int translation_plane_via_andre_model_check_subplane(
 		cout << "translation_plane_via_andre_model_check_subplane checking set ";
 		lint_vec_print(cout, S, len);
 		cout << endl;
-		}
+	}
 	f_OK = TP->check_subplane(S, len, verbose_level - 1);
 	if (f_OK) {
 		if (f_v) {
 			cout << "accepted" << endl;
-			}
-		return TRUE;
 		}
+		return TRUE;
+	}
 	else {
 		if (f_v) {
 			cout << "rejected" << endl;
-			}
-		return FALSE;
 		}
+		return FALSE;
+	}
 }
 
 }}

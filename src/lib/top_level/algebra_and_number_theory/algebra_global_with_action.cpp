@@ -17,6 +17,450 @@ namespace orbiter {
 namespace top_level {
 
 
+void algebra_global_with_action::orbits_under_conjugation(
+		long int *the_set, int set_size, sims *S,
+		strong_generators *SG,
+		vector_ge *Transporter,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_under_conjugation" << endl;
+	}
+	action A_conj;
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_under_conjugation "
+				"before A_conj.induced_action_by_conjugation" << endl;
+	}
+	A_conj.induced_action_by_conjugation(S, S,
+			FALSE /* f_ownership */, FALSE /* f_basis */,
+			verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_under_conjugation "
+				"created action by conjugation" << endl;
+	}
+
+	action *A_conj_restricted;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_under_conjugation "
+				"before A_conj.restricted_action" << endl;
+	}
+
+	A_conj_restricted = A_conj.restricted_action(the_set, set_size,
+			verbose_level);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_under_conjugation "
+				"after A_conj.restricted_action" << endl;
+	}
+
+
+
+	schreier Classes;
+	Classes.init(A_conj_restricted, verbose_level - 2);
+	Classes.init_generators(*SG->gens, verbose_level - 2);
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_under_conjugation "
+				"before Classes.compute_all_point_orbits" << endl;
+	}
+	Classes.compute_all_point_orbits(1 /*verbose_level - 1*/);
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_under_conjugation "
+				"after Classes.compute_all_point_orbits" << endl;
+		cout << "found " << Classes.nb_orbits << " conjugacy classes" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_under_conjugation "
+				"before create_subgroups" << endl;
+	}
+	create_subgroups(
+			the_set, set_size, S, &A_conj,
+			&Classes,
+			Transporter,
+			verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_under_conjugation "
+				"after create_subgroups" << endl;
+	}
+
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_under_conjugation done" << endl;
+	}
+}
+
+void algebra_global_with_action::create_subgroups(
+		long int *the_set, int set_size, sims *S, action *A_conj,
+		schreier *Classes,
+		vector_ge *Transporter,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::create_subgroups" << endl;
+	}
+
+	int i, j;
+	int f, l, rep;
+	long int *the_set_sorted;
+	long int *position;
+	sorting Sorting;
+
+	the_set_sorted = NEW_lint(set_size);
+	position = NEW_lint(set_size);
+	lint_vec_copy(the_set, the_set_sorted, set_size);
+	//Sorting.lint_vec_heapsort(the_set_sorted, set_size);
+	for (i = 0; i < set_size; i++) {
+		position[i] = i;
+	}
+	Sorting.lint_vec_heapsort_with_log(the_set_sorted, position, set_size);
+
+	for (i = 0; i < Classes->nb_orbits; i++) {
+
+		f = Classes->orbit_first[i];
+		l = Classes->orbit_len[i];
+		rep = Classes->orbit[f];
+		if (f_v) {
+			cout << "Orbit " << i << " has length " << l << " representative is " << rep << " = " << the_set[rep] << endl;
+		}
+	}
+
+	long int rk0;
+	long int rk1;
+	long int rk2;
+	int idx;
+	int *Elt0;
+	int *Elt1;
+	int *Elt2;
+	int nb_flag_orbits;
+	long int *Flags;
+	int *SO;
+	int *SOL;
+
+	Elt0 = NEW_int(S->A->elt_size_in_int);
+	Elt1 = NEW_int(S->A->elt_size_in_int);
+	Elt2 = NEW_int(S->A->elt_size_in_int);
+
+	f = Classes->orbit_first[0];
+	l = Classes->orbit_len[0];
+	if (l != 1) {
+		cout << "algebra_global_with_action::create_subgroups l != 1" << endl;
+		exit(1);
+	}
+	rep = Classes->orbit[f];
+	rk0 = the_set[rep];
+
+	S->element_unrank_lint(rk0, Elt0);
+
+	nb_flag_orbits = 0;
+	Flags = NEW_lint(Classes->nb_orbits * 3);
+	SO = NEW_int(Classes->nb_orbits);
+	SOL = NEW_int(Classes->nb_orbits);
+
+	for (j = 1; j < Classes->nb_orbits; j++) {
+
+
+
+		f = Classes->orbit_first[j];
+		l = Classes->orbit_len[j];
+		rep = Classes->orbit[f];
+		rk1 = the_set[rep];
+		rk2 = S->mult_by_rank(rk0, rk1, 0 /*verbose_level*/);
+
+		if (Sorting.lint_vec_search(the_set_sorted, set_size, rk2, idx, 0 /*verbose_level*/)) {
+			cout << "flag orbit " << nb_flag_orbits << " : " << j << " l=" << l << " : " << rk0 << "," << rk1 << "," << rk2 << endl;
+
+			S->element_unrank_lint(rk1, Elt1);
+			S->element_unrank_lint(rk2, Elt2);
+			S->A->element_print_quick(Elt0, cout);
+			S->A->element_print_quick(Elt1, cout);
+			S->A->element_print_quick(Elt2, cout);
+
+			Flags[nb_flag_orbits * 3 + 0] = rk0;
+			Flags[nb_flag_orbits * 3 + 1] = rk1;
+			Flags[nb_flag_orbits * 3 + 2] = rk2;
+			SO[nb_flag_orbits] = j;
+			SOL[nb_flag_orbits] = l;
+			nb_flag_orbits++;
+		}
+
+	}
+
+	if (f_v) {
+		cout << "We found " << nb_flag_orbits << " flag orbits" << endl;
+	}
+
+	int flag;
+	int nb_iso;
+	int *upstep_transversal_size;
+	int *iso_type_of_flag_orbit;
+	int *f_is_definition;
+	int *flag_orbit_of_iso_type;
+	int *f_fused;
+	long int cur_flag[3];
+	long int cur_flag_mapped1[3];
+	int h, pt;
+
+	upstep_transversal_size = NEW_int(nb_flag_orbits);
+	iso_type_of_flag_orbit = NEW_int(nb_flag_orbits);
+	flag_orbit_of_iso_type = NEW_int(nb_flag_orbits);
+	f_is_definition = NEW_int(nb_flag_orbits);
+	f_fused = NEW_int(nb_flag_orbits);
+	int_vec_zero(f_is_definition, nb_flag_orbits);
+	int_vec_zero(f_fused, nb_flag_orbits);
+
+	nb_iso = 0;
+	for (flag = 0; flag < nb_flag_orbits; flag++) {
+		if (f_fused[flag]) {
+			continue;
+		}
+		f_is_definition[flag] = TRUE;
+		iso_type_of_flag_orbit[flag] = nb_iso;
+		flag_orbit_of_iso_type[nb_iso] = flag;
+		upstep_transversal_size[nb_iso] = 1;
+
+		for (h = 1; h < 3; h++) {
+			if (h == 1) {
+				cur_flag[0] = Flags[flag * 3 + 1];
+				cur_flag[1] = Flags[flag * 3 + 0];
+				cur_flag[2] = Flags[flag * 3 + 2];
+			}
+			else {
+				cur_flag[0] = Flags[flag * 3 + 2];
+				cur_flag[1] = Flags[flag * 3 + 1];
+				cur_flag[2] = Flags[flag * 3 + 0];
+			}
+
+			// move cur_flag[0] to the_set[0] using the inverse of Transporter
+
+			if (!Sorting.lint_vec_search(the_set_sorted, set_size, cur_flag[0], idx, 0 /*verbose_level*/)) {
+				cout << "cannot find cur_flag[0] in the_set_sorted" << endl;
+				exit(1);
+			}
+			pt = position[idx];
+			S->A->element_invert(Transporter->ith(pt), Elt0, 0);
+			for (int u = 0; u < 3; u++) {
+				cur_flag_mapped1[u] = A_conj->element_image_of(cur_flag[u], Elt0, 0);
+			}
+			if (cur_flag_mapped1[0] != rk0) {
+				cout << "cur_flag_mapped1[u] != rk0" << endl;
+				exit(1);
+			}
+
+
+
+			if (!Sorting.lint_vec_search(the_set_sorted, set_size, cur_flag_mapped1[1], idx, 0 /*verbose_level*/)) {
+				cout << "cannot find cur_flag[1] in the_set_sorted" << endl;
+				exit(1);
+			}
+			pt = position[idx];
+			j = Classes->orbit_number(pt);
+			if (j == SO[flag]) {
+				cout << "found an automorphism" << endl;
+				upstep_transversal_size[nb_iso]++;
+			}
+			else {
+				if (!Sorting.int_vec_search(SO, nb_flag_orbits, j, idx)) {
+					cout << "cannot find j in SO" << endl;
+					exit(1);
+				}
+				f_fused[idx] = TRUE;
+			}
+		}
+
+		nb_iso++;
+	}
+
+	cout << "We found " << nb_iso << " conjugacy classes of subgroups" << endl;
+	for (i = 0; i < nb_iso; i++) {
+		flag = flag_orbit_of_iso_type[i];
+		rk0 = Flags[flag * 3 + 0];
+		rk1 = Flags[flag * 3 + 1];
+		rk2 = Flags[flag * 3 + 2];
+		cout << i << " : " << flag << " : " <<  " : " << SO[flag] << " l=" << SOL[flag]
+				<< " : " << rk0 << "," << rk1 << "," << rk2 << " : "
+				<< upstep_transversal_size[i] << endl;
+	}
+
+	FREE_int(upstep_transversal_size);
+	FREE_int(iso_type_of_flag_orbit);
+	FREE_int(f_is_definition);
+	FREE_int(f_fused);
+	FREE_int(flag_orbit_of_iso_type);
+	FREE_lint(Flags);
+	FREE_int(SO);
+	FREE_int(Elt0);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_lint(the_set_sorted);
+	FREE_lint(position);
+	if (f_v) {
+		cout << "algebra_global_with_action::create_subgroups done" << endl;
+	}
+}
+
+void algebra_global_with_action::orbits_on_set_from_file(
+		long int *the_set, int set_size,
+		action *A1, action *A2,
+		vector_ge *gens,
+		std::string &label_set,
+		std::string &label_group,
+		long int *&Table,
+		int &orbit_length,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_on_set_from_file" << endl;
+	}
+
+	orbit_of_sets *OS;
+
+	OS = NEW_OBJECT(orbit_of_sets);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_on_set_from_file before OS->init" << endl;
+	}
+	OS->init(A1, A2, the_set, set_size, gens, verbose_level - 2);
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_on_set_from_file after OS->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "Found an orbit of length " << OS->used_length << endl;
+	}
+
+	int set_size1;
+
+	if (f_v) {
+		cout << "before OS->get_table_of_orbits" << endl;
+	}
+	OS->get_table_of_orbits_and_hash_values(Table,
+			orbit_length, set_size1, verbose_level - 2);
+	if (f_v) {
+		cout << "after OS->get_table_of_orbits" << endl;
+	}
+
+	if (f_v) {
+		cout << "before OS->get_table_of_orbits" << endl;
+	}
+	OS->get_table_of_orbits(Table,
+			orbit_length, set_size, verbose_level);
+	if (f_v) {
+		cout << "after OS->get_table_of_orbits" << endl;
+	}
+
+
+	// write transporter as csv file:
+
+	string fname;
+
+	vector_ge *Coset_reps;
+
+	if (f_v) {
+		cout << "before OS->make_table_of_coset_reps" << endl;
+	}
+	OS->make_table_of_coset_reps(Coset_reps, verbose_level);
+	if (f_v) {
+		cout << "after OS->make_table_of_coset_reps" << endl;
+	}
+
+	fname.assign(label_set);
+	fname.append("_orbit_under_");
+	fname.append(label_group);
+	fname.append("_transporter.csv");
+
+	Coset_reps->write_to_csv_file_coded(fname, verbose_level);
+
+	// testing Coset_reps
+
+	if (f_v) {
+		cout << "testing Coset_reps " << endl;
+	}
+
+	long int rk0 = the_set[0];
+	long int rk1;
+
+	for (int i = 0; i < orbit_length; i++) {
+		rk1 = A2->element_image_of(rk0, Coset_reps->ith(i), 0);
+		if (rk1 != Table[i * set_size + 0]) {
+			cout << "rk1 != Table[i * set_size + 0], i=" << i << endl;
+			exit(1);
+		}
+	}
+
+	if (f_v) {
+		cout << "testing Coset_reps passes" << endl;
+	}
+
+	// write as csv file:
+
+
+	fname.assign(label_set);
+	fname.append("_orbit_under_");
+	fname.append(label_group);
+	fname.append(".csv");
+
+	if (f_v) {
+		cout << "Writing orbit to file " << fname << endl;
+	}
+	file_io Fio;
+
+	Fio.lint_matrix_write_csv(fname, Table, orbit_length, set_size);
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+
+	// write as txt file:
+
+
+	fname.assign(label_set);
+	fname.append("_orbit_under_");
+	fname.append(label_group);
+	fname.append(".txt");
+
+	if (f_v) {
+		cout << "Writing table to file " << fname << endl;
+	}
+	{
+		ofstream ost(fname);
+		int i;
+		for (i = 0; i < orbit_length; i++) {
+			ost << set_size;
+			for (int j = 0; j < set_size; j++) {
+				ost << " " << Table[i * set_size + j];
+			}
+			ost << endl;
+		}
+		ost << -1 << " " << orbit_length << endl;
+	}
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+	if (f_v) {
+		cout << "before FREE_OBJECT(OS)" << endl;
+	}
+	FREE_OBJECT(OS);
+	if (f_v) {
+		cout << "after FREE_OBJECT(OS)" << endl;
+	}
+	FREE_OBJECT(Coset_reps);
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_on_set_from_file done" << endl;
+	}
+}
+
 
 void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(action *A,
 		sims *override_Sims,
@@ -2820,7 +3264,8 @@ void algebra_global_with_action::centralizer_of_element(
 				<< " element_description=" << element_description << endl;
 	}
 
-	prefix.assign("element_");
+	prefix.assign(A->label);
+	prefix.append("_elt_");
 	prefix.append(label);
 
 	Elt = NEW_int(A->elt_size_in_int);
@@ -2883,6 +3328,57 @@ void algebra_global_with_action::centralizer_of_element(
 	gens->print_generators_tex();
 
 
+	string fname;
+
+	fname.assign(prefix);
+	fname.append("_centralizer.tex");
+
+
+	{
+		char title[1000];
+		char author[1000];
+
+		snprintf(title, 1000, "Centralizer of element %s", label.c_str());
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "algebra_global_with_action::centralizer_of_element before report" << endl;
+			}
+			gens->print_generators_tex(ost);
+
+			if (f_v) {
+				cout << "algebra_global_with_action::centralizer_of_element after report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
 	FREE_int(data);
 
 	if (f_v) {
@@ -2904,8 +3400,10 @@ void algebra_global_with_action::normalizer_of_cyclic_subgroup(
 				<< " element_description=" << element_description << endl;
 	}
 
-	prefix.assign("element_");
+	prefix.assign("normalizer_of_");
 	prefix.append(label);
+	prefix.append("_in_");
+	prefix.append(A->label);
 
 	Elt = NEW_int(A->elt_size_in_int);
 
@@ -2933,8 +3431,14 @@ void algebra_global_with_action::normalizer_of_cyclic_subgroup(
 
 	o = A->element_order(Elt);
 	if (f_v) {
+		cout << "algebra_global_with_action::normalizer_of_cyclic_subgroup label=" << label
+				<< " element order=" << o << endl;
+	}
+
+	if (f_v) {
 		cout << "algebra_global_with_action::normalizer_of_cyclic_subgroup Elt:" << endl;
 		A->element_print_quick(Elt, cout);
+		cout << endl;
 		cout << "algebra_global_with_action::normalizer_of_cyclic_subgroup on points:" << endl;
 		A->element_print_as_permutation(Elt, cout);
 		//cout << "algebra_global_with_action::centralizer_of_element on lines:" << endl;
@@ -2964,9 +3468,71 @@ void algebra_global_with_action::normalizer_of_cyclic_subgroup(
 	}
 
 
+
 	cout << "algebra_global_with_action::normalizer_of_cyclic_subgroup "
 			"generators for the normalizer are:" << endl;
 	gens->print_generators_tex();
+
+
+	string fname;
+
+	fname.assign(prefix);
+	fname.append(".tex");
+
+
+	{
+		char title[1000];
+		char author[1000];
+
+		snprintf(title, 1000, "Normalizer of cyclic subgroup %s", label.c_str());
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+			longinteger_object go;
+			gens->group_order(go);
+			ost << "The subgroup generated by " << endl;
+			ost << "$$" << endl;
+			A->element_print_latex(Elt, ost);
+			ost << "$$" << endl;
+			ost << "has order " << o << "\\\\" << endl;
+			ost << "The normalizer has order " << go << "\\\\" << endl;
+			if (f_v) {
+				cout << "algebra_global_with_action::normalizer_of_cyclic_subgroup before report" << endl;
+			}
+			gens->print_generators_tex(ost);
+
+			if (f_v) {
+				cout << "algebra_global_with_action::normalizer_of_cyclic_subgroup after report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+
 
 
 	FREE_int(data);
@@ -4215,6 +4781,443 @@ void algebra_global_with_action::report_surfaces_by_lines(std::ostream &ost,
 	}
 
 }
+
+
+void algebra_global_with_action::orbits_on_points(
+		linear_group *LG,
+		action *A2,
+		int f_load_save,
+		std::string &prefix,
+		orbits_on_something *&Orb,
+		//int f_stabilizer, int f_export_trees, int f_shallow_tree, int f_report,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_on_points" << endl;
+	}
+	//cout << "computing orbits on points:" << endl;
+
+
+#if 1
+
+	//orbits_on_something *Orb;
+
+	Orb = NEW_OBJECT(orbits_on_something);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_on_points before Orb->init" << endl;
+	}
+	Orb->init(
+			A2,
+			LG->Strong_gens,
+			f_load_save,
+			prefix,
+			verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_on_points after Orb->init" << endl;
+	}
+
+
+
+#else
+
+	schreier *Sch;
+	Sch = NEW_OBJECT(schreier);
+
+	cout << "Strong generators are:" << endl;
+	LG->Strong_gens->print_generators(cout);
+	cout << "Strong generators in tex are:" << endl;
+	LG->Strong_gens->print_generators_tex(cout);
+	cout << "Strong generators as permutations are:" << endl;
+	LG->Strong_gens->print_generators_as_permutations();
+
+
+
+
+	//A->all_point_orbits(*Sch, verbose_level);
+	A2->all_point_orbits_from_generators(*Sch,
+			LG->Strong_gens,
+			verbose_level);
+
+	longinteger_object go;
+	int orbit_idx;
+
+	LG->Strong_gens->group_order(go);
+	cout << "Computing stabilizers. Group order = " << go << endl;
+	if (f_stabilizer) {
+		for (orbit_idx = 0; orbit_idx < Sch->nb_orbits; orbit_idx++) {
+
+			strong_generators *SG;
+
+			SG = Sch->stabilizer_orbit_rep(
+					LG->A_linear /*default_action*/,
+					go,
+					orbit_idx, 0 /*verbose_level*/);
+
+			cout << "orbit " << orbit_idx << " / " << Sch->nb_orbits << ":" << endl;
+			SG->print_generators_tex(cout);
+
+		}
+	}
+
+
+	cout << "computing orbits on points done." << endl;
+
+
+	if (f_report) {
+
+	}
+	{
+		string fname;
+		file_io Fio;
+		int *orbit_reps;
+		int i;
+
+
+		fname.assign(A2->label);
+		fname.append("_orbit_reps.csv");
+
+		orbit_reps = NEW_int(Sch->nb_orbits);
+
+
+		for (i = 0; i < Sch->nb_orbits; i++) {
+			orbit_reps[i] = Sch->orbit[Sch->orbit_first[i]];
+		}
+
+
+		Fio.int_vec_write_csv(orbit_reps, Sch->nb_orbits, fname, "OrbRep");
+
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+	{
+		string fname;
+		file_io Fio;
+		int *orbit_reps;
+		int i;
+
+
+		fname.assign(A2->label);
+		fname.append("_orbit_length.csv");
+
+		orbit_reps = NEW_int(Sch->nb_orbits);
+
+
+		for (i = 0; i < Sch->nb_orbits; i++) {
+			orbit_reps[i] = Sch->orbit_len[i];
+		}
+
+
+		Fio.int_vec_write_csv(orbit_reps, Sch->nb_orbits, fname, "OrbLen");
+
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+
+	cout << "before Sch->print_and_list_orbits." << endl;
+	if (A2->degree < 1000) {
+		Sch->print_and_list_orbits(cout);
+	}
+	else {
+		cout << "The degree is too large." << endl;
+	}
+
+	string fname_orbits;
+	file_io Fio;
+
+	fname_orbits.assign(A2->label);
+	fname_orbits.append("_orbits.tex");
+
+
+	Sch->latex(fname_orbits);
+	cout << "Written file " << fname_orbits << " of size "
+			<< Fio.file_size(fname_orbits) << endl;
+
+
+
+	if (f_export_trees) {
+		string fname_tree_mask;
+
+		fname_tree_mask.assign(A2->label);
+		fname_tree_mask.append("_%d.layered_graph");
+
+		for (orbit_idx = 0; orbit_idx < Sch->nb_orbits; orbit_idx++) {
+			cout << "orbit " << orbit_idx << " / " <<  Sch->nb_orbits
+					<< " before Sch->export_tree_as_layered_graph" << endl;
+			Sch->export_tree_as_layered_graph(0 /* orbit_no */,
+					fname_tree_mask,
+					verbose_level - 1);
+		}
+	}
+
+	if (f_shallow_tree) {
+		orbit_idx = 0;
+		schreier *shallow_tree;
+		string fname_schreier_tree_mask;
+
+		cout << "computing shallow Schreier tree for orbit " << orbit_idx << endl;
+
+	#if 0
+		enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy =
+				shallow_schreier_tree_standard;
+				//shallow_schreier_tree_Seress_deterministic;
+				//shallow_schreier_tree_Seress_randomized;
+				//shallow_schreier_tree_Sajeeb;
+	#endif
+		int f_randomized = TRUE;
+
+		Sch->shallow_tree_generators(orbit_idx,
+				f_randomized,
+				shallow_tree,
+				verbose_level);
+
+		cout << "computing shallow Schreier tree done." << endl;
+
+		fname_schreier_tree_mask.assign(A2->label);
+		fname_schreier_tree_mask.append("_%d_shallow.layered_graph");
+
+		shallow_tree->export_tree_as_layered_graph(0 /* orbit_no */,
+				fname_schreier_tree_mask,
+				verbose_level - 1);
+	}
+#endif
+
+	if (f_v) {
+		cout << "algebra_global_with_action::orbits_on_points done" << endl;
+	}
+}
+
+void algebra_global_with_action::find_singer_cycle(linear_group *LG,
+		action *A1, action *A2,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_singer_cycle" << endl;
+	}
+	sims *H;
+
+	//G = LG->initial_strong_gens->create_sims(verbose_level);
+	H = LG->Strong_gens->create_sims(verbose_level);
+
+	//cout << "group order G = " << G->group_order_int() << endl;
+	cout << "group order H = " << H->group_order_lint() << endl;
+
+	int *Elt;
+	longinteger_object go;
+	int i, d, q, cnt, ord, order;
+	number_theory_domain NT;
+
+	if (!A1->is_matrix_group()) {
+		cout << "group_theoretic_activity::find_singer_cycle needs matrix group" << endl;
+		exit(1);
+	}
+	matrix_group *M;
+
+	M = A1->get_matrix_group();
+	q = M->GFq->q;
+	d = A1->matrix_group_dimension();
+
+	if (A1->is_projective()) {
+		order = (NT.i_power_j(q, d) - 1) / (q - 1);
+	}
+	else {
+		order = NT.i_power_j(q, d) - 1;
+	}
+	if (f_v) {
+		cout << "algebra_global_with_action::find_singer_cycle looking for an "
+				"element of order " << order << endl;
+	}
+
+	Elt = NEW_int(A1->elt_size_in_int);
+	H->group_order(go);
+
+	cnt = 0;
+	for (i = 0; i < go.as_int(); i++) {
+		H->element_unrank_lint(i, Elt);
+
+
+		ord = A2->element_order(Elt);
+
+	#if 0
+		cout << "Element " << setw(5) << i << " / "
+				<< go.as_int() << ":" << endl;
+		A->element_print(Elt, cout);
+		cout << endl;
+		A->element_print_as_permutation(Elt, cout);
+		cout << endl;
+	#endif
+
+		if (ord != order) {
+			continue;
+		}
+		if (!M->has_shape_of_singer_cycle(Elt)) {
+			continue;
+		}
+		cout << "Element " << setw(5) << i << " / "
+					<< go.as_int() << " = " << cnt << ":" << endl;
+		A2->element_print(Elt, cout);
+		cout << endl;
+		A2->element_print_as_permutation(Elt, cout);
+		cout << endl;
+		cnt++;
+	}
+	cout << "we found " << cnt << " group elements of order " << order << endl;
+
+	FREE_int(Elt);
+	if (f_v) {
+		cout << "algebra_global_with_action::find_singer_cycle done" << endl;
+	}
+}
+
+void algebra_global_with_action::search_element_of_order(linear_group *LG,
+		action *A1, action *A2,
+		int order, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::search_element_of_order" << endl;
+	}
+	sims *H;
+
+	//G = LG->initial_strong_gens->create_sims(verbose_level);
+	H = LG->Strong_gens->create_sims(verbose_level);
+
+	//cout << "group order G = " << G->group_order_int() << endl;
+	cout << "group order H = " << H->group_order_lint() << endl;
+
+	int *Elt;
+	longinteger_object go;
+	int i, cnt, ord;
+
+	Elt = NEW_int(A1->elt_size_in_int);
+	H->group_order(go);
+
+	cnt = 0;
+	for (i = 0; i < go.as_int(); i++) {
+		H->element_unrank_lint(i, Elt);
+
+
+		ord = A2->element_order(Elt);
+
+	#if 0
+		cout << "Element " << setw(5) << i << " / "
+				<< go.as_int() << ":" << endl;
+		A->element_print(Elt, cout);
+		cout << endl;
+		A->element_print_as_permutation(Elt, cout);
+		cout << endl;
+	#endif
+
+		if (ord != order) {
+			continue;
+		}
+		cout << "Element " << setw(5) << i << " / "
+					<< go.as_int() << " = " << cnt << ":" << endl;
+		A2->element_print(Elt, cout);
+		cout << endl;
+		A2->element_print_as_permutation(Elt, cout);
+		cout << endl;
+		cnt++;
+	}
+	cout << "we found " << cnt << " group elements of order " << order << endl;
+
+	FREE_int(Elt);
+	if (f_v) {
+		cout << "algebra_global_with_action::search_element_of_order done" << endl;
+	}
+}
+
+void algebra_global_with_action::element_rank(linear_group *LG,
+		action *A1,
+		std::string &elt_data, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::element_rank" << endl;
+	}
+	sims *H;
+
+	//G = LG->initial_strong_gens->create_sims(verbose_level);
+	H = LG->Strong_gens->create_sims(verbose_level);
+
+	//cout << "group order G = " << G->group_order_int() << endl;
+	cout << "group order H = " << H->group_order_lint() << endl;
+
+	cout << "creating element " << elt_data << endl;
+	int *Elt;
+
+	Elt = NEW_int(A1->elt_size_in_int);
+	A1->make_element_from_string(Elt, elt_data, 0);
+
+	cout << "Element :" << endl;
+	A1->element_print(Elt, cout);
+	cout << endl;
+
+	longinteger_object a;
+	H->element_rank(a, Elt);
+
+	cout << "The rank of the element is " << a << endl;
+
+
+	FREE_int(Elt);
+	FREE_OBJECT(H);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::element_rank done" << endl;
+	}
+}
+
+void algebra_global_with_action::element_unrank(linear_group *LG,
+		action *A1,
+		std::string &rank_string, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::element_unrank" << endl;
+	}
+	sims *H;
+
+	//G = LG->initial_strong_gens->create_sims(verbose_level);
+	H = LG->Strong_gens->create_sims(verbose_level);
+
+	//cout << "group order G = " << G->group_order_int() << endl;
+	cout << "group order H = " << H->group_order_lint() << endl;
+
+	int *Elt;
+
+	Elt = NEW_int(A1->elt_size_in_int);
+
+
+	longinteger_object a;
+
+	a.create_from_base_10_string(rank_string.c_str(), 0 /*verbose_level*/);
+
+	cout << "Creating element of rank " << a << endl;
+
+	H->element_unrank(a, Elt);
+
+	cout << "Element :" << endl;
+	A1->element_print(Elt, cout);
+	cout << endl;
+
+
+	FREE_int(Elt);
+	FREE_OBJECT(H);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::element_unrank done" << endl;
+	}
+}
+
 
 
 }}

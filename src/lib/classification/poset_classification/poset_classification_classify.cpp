@@ -650,11 +650,9 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 							"before get_A()->report" << endl;
 				}
 
-				get_A()->report(ost,
-						FALSE /* f_sims */,
-						NULL, //A1/*LG->A_linear*/->Sims,
-						FALSE /* f_strong_gens */,
-						NULL,
+				get_A2()->report(ost,
+						FALSE /* f_sims */, NULL,
+						FALSE /* f_strong_gens */, NULL,
 						Control->draw_options,
 						verbose_level - 1);
 
@@ -1131,21 +1129,21 @@ void poset_classification::extend_node(
 
 
 	int f_show_progress = FALSE;
-	if (root[prev].get_nb_of_extensions() > 1000) {
+	if (root[prev].get_nb_of_extensions() > 10000) {
 		f_show_progress = TRUE;
 	}
-	int nb_flags_100;
+	int nb_flags_10;
 
-	nb_flags_100 = root[prev].get_nb_of_extensions() / 100 + 1;
+	nb_flags_10 = root[prev].get_nb_of_extensions() / 10 + 1;
 
 	for (prev_ex = 0; prev_ex < root[prev].get_nb_of_extensions(); prev_ex++) {
 		
-		if (f_show_progress && (prev_ex % nb_flags_100) == 0) {
+		if (f_show_progress && (prev_ex % nb_flags_10) == 0) {
 			print_level_info(size, prev);
 			cout << "poset_classification::extend_node "
 					"working on extension "
 					<< prev_ex << " / " << root[prev].get_nb_of_extensions()
-					<< " : progress " << prev_ex / nb_flags_100 << " %" << endl;
+					<< " : progress " << prev_ex / nb_flags_10 << " * 10 %" << endl;
 
 
 		}
