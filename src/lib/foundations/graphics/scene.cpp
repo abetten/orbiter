@@ -185,7 +185,7 @@ void scene::freeself()
 	null();
 }
 
-double scene::label(int idx, const char *txt)
+double scene::label(int idx, std::string &txt)
 {
 	if (idx >= nb_points) {
 		cout << "scene::label idx >= nb_points, "
@@ -1393,7 +1393,7 @@ int scene::face5(int pt1, int pt2, int pt3, int pt4, int pt5)
 
 
 void scene::draw_lines_with_selection(int *selection, int nb_select, 
-	const char *options, ostream &ost)
+		std::string &options, ostream &ost)
 {
 	int i, j, h, s;
 	numerics N;
@@ -1430,7 +1430,7 @@ void scene::draw_lines_with_selection(int *selection, int nb_select,
 }
 
 void scene::draw_line_with_selection(int line_idx, 
-	const char *options, ostream &ost)
+		std::string &options, ostream &ost)
 {
 	int j, h, s;
 	numerics N;
@@ -1630,7 +1630,7 @@ void scene::draw_lines_bj_with_offset(int offset, ostream &ost)
 
 
 void scene::draw_edges_with_selection(int *selection, int nb_select, 
-	const char *options, ostream &ost)
+		std::string &options, ostream &ost)
 {
 	int s, i, j, h, pt1, pt2;
 	numerics N;
@@ -1668,7 +1668,7 @@ void scene::draw_edges_with_selection(int *selection, int nb_select,
 }
 
 void scene::draw_faces_with_selection(int *selection, int nb_select, 
-	double thickness_half, const char *options, ostream &ost)
+	double thickness_half, std::string &options, ostream &ost)
 {
 	int s, i, j;
 		
@@ -1689,7 +1689,7 @@ void scene::draw_faces_with_selection(int *selection, int nb_select,
 }
 
 
-void scene::draw_face(int idx, double thickness_half, const char *options, 
+void scene::draw_face(int idx, double thickness_half, std::string &options,
 	ostream &ost)
 {
 	int f_v = FALSE;
@@ -1788,7 +1788,7 @@ void scene::draw_face(int idx, double thickness_half, const char *options,
 
 void scene::draw_planes_with_selection(
 	int *selection, int nb_select,
-	const char *options, ostream &ost)
+	std::string &options, ostream &ost)
 // for instance color = "Orange transmit 0.5 "
 {
 	int i, j, h, s;
@@ -1820,7 +1820,7 @@ void scene::draw_planes_with_selection(
 
 void scene::draw_plane(
 	int idx,
-	const char *options, ostream &ost)
+	std::string &options, ostream &ost)
 // for instance color = "Orange transmit 0.5 "
 {
 	int h;
@@ -1847,7 +1847,7 @@ void scene::draw_plane(
 
 void scene::draw_points_with_selection(
 	int *selection, int nb_select,
-	double rad, const char *options, ostream &ost)
+	double rad, std::string &options, ostream &ost)
 // rad = 0.06 works
 {
 	int i, j, h, s;
@@ -1880,7 +1880,7 @@ void scene::draw_points_with_selection(
 }
 
 void scene::draw_cubic_with_selection(int *selection, int nb_select, 
-	const char *options, ostream &ost)
+		std::string &options, ostream &ost)
 {
 	int i, j, h, s;
 	numerics N;
@@ -1917,7 +1917,7 @@ void scene::draw_cubic_with_selection(int *selection, int nb_select,
 }
 
 void scene::draw_quartic_with_selection(int *selection, int nb_select,
-	const char *options, ostream &ost)
+		std::string &options, ostream &ost)
 {
 	int i, j, h, s;
 	numerics N;
@@ -1954,7 +1954,7 @@ void scene::draw_quartic_with_selection(int *selection, int nb_select,
 }
 
 void scene::draw_octic_with_selection(int *selection, int nb_select,
-	const char *options, ostream &ost)
+		std::string &options, ostream &ost)
 {
 	int i, j, h, s;
 	numerics N;
@@ -1991,7 +1991,7 @@ void scene::draw_octic_with_selection(int *selection, int nb_select,
 }
 
 void scene::draw_quadric_with_selection(int *selection, int nb_select, 
-	const char *options, ostream &ost)
+		std::string &options, ostream &ost)
 {
 	int i, j, h, s;
 	numerics N;
@@ -2022,7 +2022,7 @@ void scene::draw_quadric_with_selection(int *selection, int nb_select,
 }
 
 void scene::draw_quadric_clipped_by_plane(int quadric_idx, int plane_idx,
-	const char *options, ostream &ost)
+		std::string &options, ostream &ost)
 {
 	int h;
 	numerics N;
@@ -2061,7 +2061,7 @@ void scene::draw_quadric_clipped_by_plane(int quadric_idx, int plane_idx,
 
 
 void scene::draw_line_clipped_by_plane(int line_idx, int plane_idx,
-		const char *options, ostream &ost)
+		std::string &options, ostream &ost)
 {
 	int h;
 	numerics N;
@@ -4655,7 +4655,7 @@ void scene::print_a_face(int face_idx)
 
 #define MY_OWN_BUFSIZE ONE_MILLION
 
-void scene::read_obj_file(const char *fname, int verbose_level)
+void scene::read_obj_file(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char *buf;
@@ -5386,7 +5386,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 
 		pt_idx = strtoi(argv[++i]);
 		text.assign(argv[++i]);
-		label(pt_idx, text.c_str());
+		label(pt_idx, text);
 	}
 	else if (stringcmp(argv[i], "-triangular_face_given_by_three_lines") == 0) {
 		cout << "-triangular_face_given_by_three_lines" << endl;
@@ -5581,7 +5581,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 
 		fname.assign(argv[++i]);
 		cout << "before reading file " << fname << endl;
-		read_obj_file(fname.c_str(), verbose_level - 1);
+		read_obj_file(fname, verbose_level - 1);
 		cout << "after reading file " << fname << endl;
 	}
 	else {
@@ -5755,12 +5755,12 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		string properties;
 
 		group_idx = strtoi(argv[++i]);
-		rad = strtoi(argv[++i]);
+		rad = strtof(argv[++i]);
 		properties.assign(argv[++i]);
 
 		drawable_set_of_objects D;
 
-		D.init_spheres(group_idx, rad, properties.c_str(), verbose_level);
+		D.init_spheres(group_idx, rad, properties, verbose_level);
 		Drawables.push_back(D);
 	}
 	else if (stringcmp(argv[i], "-cylinders") == 0) {
@@ -5775,7 +5775,7 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 
 		drawable_set_of_objects D;
 
-		D.init_cylinders(group_idx, rad, properties.c_str(), verbose_level);
+		D.init_cylinders(group_idx, rad, properties, verbose_level);
 		Drawables.push_back(D);
 	}
 	else if (stringcmp(argv[i], "-prisms") == 0) {
@@ -5790,7 +5790,7 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 
 		drawable_set_of_objects D;
 
-		D.init_prisms(group_idx, thickness, properties.c_str(), verbose_level);
+		D.init_prisms(group_idx, thickness, properties, verbose_level);
 		Drawables.push_back(D);
 	}
 	else if (stringcmp(argv[i], "-planes") == 0) {
@@ -5805,7 +5805,7 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 
 		drawable_set_of_objects D;
 
-		D.init_planes(group_idx, properties.c_str(), verbose_level);
+		D.init_planes(group_idx, properties, verbose_level);
 		Drawables.push_back(D);
 	}
 	else if (stringcmp(argv[i], "-lines") == 0) {
@@ -5820,7 +5820,7 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 
 		drawable_set_of_objects D;
 
-		D.init_lines(group_idx, rad, properties.c_str(), verbose_level);
+		D.init_lines(group_idx, rad, properties, verbose_level);
 		Drawables.push_back(D);
 	}
 	else if (stringcmp(argv[i], "-cubics") == 0) {
@@ -5835,7 +5835,7 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 
 		drawable_set_of_objects D;
 
-		D.init_cubics(group_idx, properties.c_str(), verbose_level);
+		D.init_cubics(group_idx, properties, verbose_level);
 		Drawables.push_back(D);
 	}
 	else if (stringcmp(argv[i], "-quadrics") == 0) {
@@ -5850,7 +5850,7 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 
 		drawable_set_of_objects D;
 
-		D.init_quadrics(group_idx, properties.c_str(), verbose_level);
+		D.init_quadrics(group_idx, properties, verbose_level);
 		Drawables.push_back(D);
 	}
 	else if (stringcmp(argv[i], "-quartics") == 0) {
@@ -5865,7 +5865,7 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 
 		drawable_set_of_objects D;
 
-		D.init_quartics(group_idx, properties.c_str(), verbose_level);
+		D.init_quartics(group_idx, properties, verbose_level);
 		Drawables.push_back(D);
 	}
 	else if (stringcmp(argv[i], "-octics") == 0) {
@@ -5880,7 +5880,7 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 
 		drawable_set_of_objects D;
 
-		D.init_octics(group_idx, properties.c_str(), verbose_level);
+		D.init_octics(group_idx, properties, verbose_level);
 		Drawables.push_back(D);
 	}
 	else if (stringcmp(argv[i], "-texts") == 0) {
@@ -5897,7 +5897,7 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 
 		drawable_set_of_objects D;
 
-		D.init_labels(group_idx, thickness_half, scale, properties.c_str(), verbose_level);
+		D.init_labels(group_idx, thickness_half, scale, properties, verbose_level);
 		Drawables.push_back(D);
 	}
 	else if (stringcmp(argv[i], "-deformation_of_cubic_lex") == 0) {

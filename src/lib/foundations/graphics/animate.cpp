@@ -729,7 +729,7 @@ void animate::animate_one_round(
 }
 
 
-void animate::draw_single_line(int line_idx, const char *color, ostream &fp)
+void animate::draw_single_line(int line_idx, std::string &color, ostream &fp)
 {
 	int s[1];
 
@@ -737,7 +737,7 @@ void animate::draw_single_line(int line_idx, const char *color, ostream &fp)
 	S->draw_lines_with_selection(s, 1, color, fp);
 }
 
-void animate::draw_single_quadric(int idx, const char *color, ostream &fp)
+void animate::draw_single_quadric(int idx, std::string &color, ostream &fp)
 {
 	int s[1];
 
@@ -753,7 +753,7 @@ void animate::draw_single_surface(int surface_idx, ostream &fp)
 	S->draw_cubic_with_selection(s, 1, Pov->color_white, fp);
 }
 
-void animate::draw_single_surface_with_color(int surface_idx, const char *color, ostream &fp)
+void animate::draw_single_surface_with_color(int surface_idx, std::string &color, ostream &fp)
 {
 	int s[1];
 
@@ -762,7 +762,7 @@ void animate::draw_single_surface_with_color(int surface_idx, const char *color,
 }
 
 void animate::draw_Hilbert_point(int point_idx, double rad,
-		const char *options, ostream &fp)
+		std::string &options, ostream &fp)
 {
 	int s[1];
 
@@ -770,7 +770,7 @@ void animate::draw_Hilbert_point(int point_idx, double rad,
 	S->draw_points_with_selection(s, 1, rad, options, fp);
 }
 
-void animate::draw_Hilbert_line(int line_idx, const char *color, ostream &fp)
+void animate::draw_Hilbert_line(int line_idx, std::string &color, ostream &fp)
 {
 	int s[1];
 
@@ -780,7 +780,7 @@ void animate::draw_Hilbert_line(int line_idx, const char *color, ostream &fp)
 		fp);
 }
 
-void animate::draw_Hilbert_plane(int plane_idx, const char *color, ostream &fp)
+void animate::draw_Hilbert_plane(int plane_idx, std::string &color, ostream &fp)
 {
 	int s[1];
 
@@ -2317,7 +2317,7 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 	int idx;
 	double thickness_half = 0.15;
 	double extra_spacing = 0;
-	const char *color_options = "pigment { Black } ";
+	string color_options("pigment { Black } ");
 	//const char *color_options = "pigment { BrightGold } finish { reflection .25 specular 1 }";
 	//double up_x = 1.,up_y = 1., up_z = 1.;
 	//double view[3];
@@ -2347,8 +2347,15 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 	double off_y = 0.25;
 	double off_z = -0.1;
 
+	string one("1");
+	string two("2");
+	string three("3");
+	string four("4");
+	string five("5");
+	string six("6");
+
 	idx = 36;
-	draw_text("1", thickness_half, extra_spacing,
+	draw_text(one, thickness_half, extra_spacing,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
@@ -2357,7 +2364,7 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 		//view[0], view[1], view[2],
 		fp, verbose_level - 1);
 	idx = 31;
-	draw_text("2", thickness_half, extra_spacing,
+	draw_text(two, thickness_half, extra_spacing,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
@@ -2366,7 +2373,7 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 		//view[0], view[1], view[2],
 		fp, verbose_level - 1);
 	idx = 32;
-	draw_text("3", thickness_half, extra_spacing,
+	draw_text(three, thickness_half, extra_spacing,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
@@ -2375,7 +2382,7 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 		//view[0], view[1], view[2],
 		fp, verbose_level - 1);
 	idx = 33;
-	draw_text("4", thickness_half, extra_spacing,
+	draw_text(four, thickness_half, extra_spacing,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
@@ -2384,7 +2391,7 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 		//view[0], view[1], view[2],
 		fp, verbose_level - 1);
 	idx = 34;
-	draw_text("5", thickness_half, extra_spacing,
+	draw_text(five, thickness_half, extra_spacing,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
@@ -2393,7 +2400,7 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 		//view[0], view[1], view[2],
 		fp, verbose_level - 1);
 	idx = 37;
-	draw_text("6", thickness_half, extra_spacing,
+	draw_text(six, thickness_half, extra_spacing,
 		scale,
 		off_x, off_y, off_z,
 		color_options,
@@ -3030,11 +3037,11 @@ void animate::union_end(
 }
 
 
-void animate::draw_text(const char *text,
+void animate::draw_text(std::string &text,
 		double thickness_half, double extra_spacing,
 		double scale,
 		double off_x, double off_y, double off_z,
-		const char *color_options,
+		std::string &color_options,
 		int idx_point,
 		//double x, double y, double z,
 		//double up_x, double up_y, double up_z,
@@ -3176,7 +3183,7 @@ void animate::draw_text_with_selection(int *selection, int nb_select,
 	double thickness_half, double extra_spacing,
 	double scale,
 	double off_x, double off_y, double off_z,
-	const char *options, const char *group_options,
+	std::string &options, std::string &group_options,
 	ostream &ost, int verbose_level)
 {
 	int i, s;
@@ -3197,7 +3204,7 @@ void animate::draw_text_with_selection(int *selection, int nb_select,
 		text = S->Labels[s].second;
 
 
-		draw_text(text.c_str(),
+		draw_text(text,
 				thickness_half, extra_spacing,
 				scale,
 				off_x, off_y, off_z,
