@@ -52,14 +52,14 @@ public:
 	void animate_one_round(
 		int round,
 		int verbose_level);
-	void draw_single_line(int line_idx, const char *color, std::ostream &fp);
-	void draw_single_quadric(int idx, const char *color, std::ostream &fp);
+	void draw_single_line(int line_idx, std::string &color, std::ostream &fp);
+	void draw_single_quadric(int idx, std::string &color, std::ostream &fp);
 	void draw_single_surface(int surface_idx, std::ostream &fp);
-	void draw_single_surface_with_color(int surface_idx, const char *color, std::ostream &fp);
+	void draw_single_surface_with_color(int surface_idx, std::string &color, std::ostream &fp);
 	void draw_Hilbert_point(int point_idx, double rad,
-			const char *options, std::ostream &fp);
-	void draw_Hilbert_line(int line_idx, const char *color, std::ostream &fp);
-	void draw_Hilbert_plane(int plane_idx, const char *color, std::ostream &fp);
+			std::string &options, std::ostream &fp);
+	void draw_Hilbert_line(int line_idx, std::string &color, std::ostream &fp);
+	void draw_Hilbert_plane(int plane_idx, std::string &color, std::ostream &fp);
 	void draw_Hilbert_red_line(int idx_one_based, std::ostream &fp);
 	void draw_Hilbert_blue_line(int idx_one_based, std::ostream &fp);
 	void draw_Hilbert_red_lines(std::ostream &fp);
@@ -117,11 +117,11 @@ public:
 			int h, int nb_frames, int round,
 			double clipping_radius,
 			std::ostream &fp);
-	void draw_text(const char *text,
+	void draw_text(std::string &text,
 			double thickness_half, double extra_spacing,
 			double scale,
 			double off_x, double off_y, double off_z,
-			const char *color_options,
+			std::string &color_options,
 			int idx_point,
 			//double x, double y, double z,
 			//double up_x, double up_y, double up_z,
@@ -131,7 +131,7 @@ public:
 		double thickness_half, double extra_spacing,
 		double scale,
 		double off_x, double off_y, double off_z,
-		const char *options, const char *group_options,
+		std::string &options, std::string &group_options,
 		std::ostream &ost, int verbose_level);
 };
 
@@ -167,30 +167,30 @@ public:
 	double d;
 	double d2; // for text: scale
 
-	const char *properties;
+	std::string properties;
 
 	drawable_set_of_objects();
 	~drawable_set_of_objects();
 	void init_spheres(int group_idx, double rad,
-			const char *properties, int verbose_level);
+			std::string &properties, int verbose_level);
 	void init_cylinders(int group_idx,
-			double rad, const char *properties, int verbose_level);
+			double rad, std::string &properties, int verbose_level);
 	void init_prisms(int group_idx,
-			double thickness, const char *properties, int verbose_level);
+			double thickness, std::string &properties, int verbose_level);
 	void init_planes(int group_idx,
-			const char *properties, int verbose_level);
+			std::string &properties, int verbose_level);
 	void init_lines(int group_idx,
-			double rad, const char *properties, int verbose_level);
+			double rad, std::string &properties, int verbose_level);
 	void init_cubics(int group_idx,
-			const char *properties, int verbose_level);
+			std::string &properties, int verbose_level);
 	void init_quadrics(int group_idx,
-			const char *properties, int verbose_level);
+			std::string &properties, int verbose_level);
 	void init_quartics(int group_idx,
-			const char *properties, int verbose_level);
+			std::string &properties, int verbose_level);
 	void init_octics(int group_idx,
-			const char *properties, int verbose_level);
+			std::string &properties, int verbose_level);
 	void init_labels(int group_idx,
-			double thickness_half, double scale, const char *properties, int verbose_level);
+			double thickness_half, double scale, std::string &properties, int verbose_level);
 	void draw(animate *Anim, std::ostream &ost,
 			int f_group_is_animated, int frame, int verbose_level);
 
@@ -755,28 +755,28 @@ class povray_interface {
 public:
 
 
-	const char *color_white_simple;
-	const char *color_white;
-	const char *color_white_very_transparent;
-	const char *color_black;
-	const char *color_pink;
-	const char *color_pink_transparent;
-	const char *color_green;
-	const char *color_gold;
-	const char *color_red;
-	const char *color_blue;
-	const char *color_yellow;
-	const char *color_yellow_transparent;
-	const char *color_scarlet;
-	const char *color_brown;
-	const char *color_orange;
-	const char *color_orange_transparent;
-	const char *color_orange_no_phong;
-	const char *color_chrome;
-	const char *color_gold_dode;
-	const char *color_gold_transparent;
-	const char *color_red_wine_transparent;
-	const char *color_yellow_lemon_transparent;
+	std::string color_white_simple;
+	std::string color_white;
+	std::string color_white_very_transparent;
+	std::string color_black;
+	std::string color_pink;
+	std::string color_pink_transparent;
+	std::string color_green;
+	std::string color_gold;
+	std::string color_red;
+	std::string color_blue;
+	std::string color_yellow;
+	std::string color_yellow_transparent;
+	std::string color_scarlet;
+	std::string color_brown;
+	std::string color_orange;
+	std::string color_orange_transparent;
+	std::string color_orange_no_phong;
+	std::string color_chrome;
+	std::string color_gold_dode;
+	std::string color_gold_transparent;
+	std::string color_red_wine_transparent;
+	std::string color_yellow_lemon_transparent;
 
 	double sky[3];
 	double location[3];
@@ -909,7 +909,7 @@ public:
 	~scene();
 	void null();
 	void freeself();
-	double label(int idx, const char *txt);
+	double label(int idx, std::string &txt);
 	double point_coords(int idx, int j);
 	double line_coords(int idx, int j);
 	double plane_coords(int idx, int j);
@@ -1018,9 +1018,9 @@ public:
 	int face4(int pt1, int pt2, int pt3, int pt4);
 	int face5(int pt1, int pt2, int pt3, int pt4, int pt5);
 	void draw_lines_with_selection(int *selection, int nb_select, 
-		const char *options, std::ostream &ost);
+			std::string &options, std::ostream &ost);
 	void draw_line_with_selection(int line_idx, 
-		const char *options, std::ostream &ost);
+			std::string &options, std::ostream &ost);
 	void draw_lines_cij_with_selection(int *selection, int nb_select, 
 			std::ostream &ost);
 	void draw_lines_cij(std::ostream &ost);
@@ -1034,28 +1034,28 @@ public:
 	void draw_lines_bj(std::ostream &ost);
 	void draw_lines_bj_with_offset(int offset, std::ostream &ost);
 	void draw_edges_with_selection(int *selection, int nb_select, 
-		const char *options, std::ostream &ost);
+			std::string &options, std::ostream &ost);
 	void draw_faces_with_selection(int *selection, int nb_select, 
-		double thickness_half, const char *options, std::ostream &ost);
-	void draw_face(int idx, double thickness_half, const char *options, 
+		double thickness_half, std::string &options, std::ostream &ost);
+	void draw_face(int idx, double thickness_half, std::string &options,
 			std::ostream &ost);
 	void draw_planes_with_selection(int *selection, int nb_select, 
-		const char *options, std::ostream &ost);
-	void draw_plane(int idx, const char *options, std::ostream &ost);
+			std::string &options, std::ostream &ost);
+	void draw_plane(int idx, std::string &options, std::ostream &ost);
 	void draw_points_with_selection(int *selection, int nb_select, 
-		double rad, const char *options, std::ostream &ost);
+		double rad, std::string &options, std::ostream &ost);
 	void draw_cubic_with_selection(int *selection, int nb_select, 
-		const char *options, std::ostream &ost);
+			std::string &options, std::ostream &ost);
 	void draw_quartic_with_selection(int *selection, int nb_select,
-		const char *options, std::ostream &ost);
+			std::string &options, std::ostream &ost);
 	void draw_octic_with_selection(int *selection, int nb_select,
-		const char *options, std::ostream &ost);
+			std::string &options, std::ostream &ost);
 	void draw_quadric_with_selection(int *selection, int nb_select, 
-		const char *options, std::ostream &ost);
+			std::string &options, std::ostream &ost);
 	void draw_quadric_clipped_by_plane(int quadric_idx, int plane_idx,
-		const char *options, std::ostream &ost);
+			std::string &options, std::ostream &ost);
 	void draw_line_clipped_by_plane(int line_idx, int plane_idx,
-			const char *options, std::ostream &ost);
+			std::string &options, std::ostream &ost);
 	int intersect_line_and_plane(int line_idx, int plane_idx, 
 		int &intersection_point_idx, 
 		int verbose_level);
@@ -1119,7 +1119,7 @@ public:
 	void print_a_line(int line_idx);
 	void print_a_plane(int plane_idx);
 	void print_a_face(int face_idx);
-	void read_obj_file(const char *fname, int verbose_level);
+	void read_obj_file(std::string &fname, int verbose_level);
 	void add_a_group_of_things(int *Idx, int sz, int verbose_level);
 	void create_regulus(int idx, int nb_lines, int verbose_level);
 	void clipping_by_cylinder(int line_idx, double r, std::ostream &ost);

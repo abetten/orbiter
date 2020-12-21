@@ -42,7 +42,7 @@ drawable_set_of_objects::drawable_set_of_objects()
 	d = 0.;
 	d2 = 0.;
 
-	properties = NULL;
+	//properties = NULL;
 }
 
 drawable_set_of_objects::~drawable_set_of_objects()
@@ -51,7 +51,7 @@ drawable_set_of_objects::~drawable_set_of_objects()
 }
 
 void drawable_set_of_objects::init_spheres(int group_idx,
-		double rad, const char *properties, int verbose_level)
+		double rad, std::string &properties, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -61,7 +61,7 @@ void drawable_set_of_objects::init_spheres(int group_idx,
 	drawable_set_of_objects::group_idx = group_idx;
 	type = 1;
 	d = rad;
-	drawable_set_of_objects::properties = properties;
+	drawable_set_of_objects::properties.assign(properties);
 
 
 	if (f_v) {
@@ -70,7 +70,7 @@ void drawable_set_of_objects::init_spheres(int group_idx,
 }
 
 void drawable_set_of_objects::init_cylinders(int group_idx,
-		double rad, const char *properties, int verbose_level)
+		double rad, std::string &properties, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -80,7 +80,7 @@ void drawable_set_of_objects::init_cylinders(int group_idx,
 	drawable_set_of_objects::group_idx = group_idx;
 	type = 2;
 	d = rad;
-	drawable_set_of_objects::properties = properties;
+	drawable_set_of_objects::properties.assign(properties);
 
 
 	if (f_v) {
@@ -89,7 +89,7 @@ void drawable_set_of_objects::init_cylinders(int group_idx,
 }
 
 void drawable_set_of_objects::init_prisms(int group_idx,
-		double thickness, const char *properties, int verbose_level)
+		double thickness, std::string &properties, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -99,7 +99,7 @@ void drawable_set_of_objects::init_prisms(int group_idx,
 	drawable_set_of_objects::group_idx = group_idx;
 	type = 3;
 	d = thickness;
-	drawable_set_of_objects::properties = properties;
+	drawable_set_of_objects::properties.assign(properties);
 
 
 	if (f_v) {
@@ -108,7 +108,7 @@ void drawable_set_of_objects::init_prisms(int group_idx,
 }
 
 void drawable_set_of_objects::init_planes(int group_idx,
-		const char *properties, int verbose_level)
+		std::string &properties, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -118,7 +118,7 @@ void drawable_set_of_objects::init_planes(int group_idx,
 	drawable_set_of_objects::group_idx = group_idx;
 	type = 4;
 	//d = thickness;
-	drawable_set_of_objects::properties = properties;
+	drawable_set_of_objects::properties.assign(properties);
 
 
 	if (f_v) {
@@ -127,7 +127,7 @@ void drawable_set_of_objects::init_planes(int group_idx,
 }
 
 void drawable_set_of_objects::init_lines(int group_idx,
-		double rad, const char *properties, int verbose_level)
+		double rad, std::string &properties, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -137,7 +137,7 @@ void drawable_set_of_objects::init_lines(int group_idx,
 	drawable_set_of_objects::group_idx = group_idx;
 	type = 5;
 	d = rad;
-	drawable_set_of_objects::properties = properties;
+	drawable_set_of_objects::properties.assign(properties);
 
 
 	if (f_v) {
@@ -146,7 +146,7 @@ void drawable_set_of_objects::init_lines(int group_idx,
 }
 
 void drawable_set_of_objects::init_cubics(int group_idx,
-		const char *properties, int verbose_level)
+		std::string &properties, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -156,7 +156,7 @@ void drawable_set_of_objects::init_cubics(int group_idx,
 	drawable_set_of_objects::group_idx = group_idx;
 	type = 6;
 	//d = rad;
-	drawable_set_of_objects::properties = properties;
+	drawable_set_of_objects::properties.assign(properties);
 
 
 	if (f_v) {
@@ -165,7 +165,7 @@ void drawable_set_of_objects::init_cubics(int group_idx,
 }
 
 void drawable_set_of_objects::init_quadrics(int group_idx,
-		const char *properties, int verbose_level)
+		std::string &properties, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -175,7 +175,7 @@ void drawable_set_of_objects::init_quadrics(int group_idx,
 	drawable_set_of_objects::group_idx = group_idx;
 	type = 7;
 	//d = rad;
-	drawable_set_of_objects::properties = properties;
+	drawable_set_of_objects::properties.assign(properties);
 
 
 	if (f_v) {
@@ -184,7 +184,7 @@ void drawable_set_of_objects::init_quadrics(int group_idx,
 }
 
 void drawable_set_of_objects::init_quartics(int group_idx,
-		const char *properties, int verbose_level)
+		std::string &properties, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -194,7 +194,7 @@ void drawable_set_of_objects::init_quartics(int group_idx,
 	drawable_set_of_objects::group_idx = group_idx;
 	type = 8;
 	//d = rad;
-	drawable_set_of_objects::properties = properties;
+	drawable_set_of_objects::properties.assign(properties);
 
 
 	if (f_v) {
@@ -203,7 +203,7 @@ void drawable_set_of_objects::init_quartics(int group_idx,
 }
 
 void drawable_set_of_objects::init_octics(int group_idx,
-		const char *properties, int verbose_level)
+		std::string &properties, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -213,7 +213,7 @@ void drawable_set_of_objects::init_octics(int group_idx,
 	drawable_set_of_objects::group_idx = group_idx;
 	type = 9;
 	//d = rad;
-	drawable_set_of_objects::properties = properties;
+	drawable_set_of_objects::properties.assign(properties);
 
 
 	if (f_v) {
@@ -222,7 +222,7 @@ void drawable_set_of_objects::init_octics(int group_idx,
 }
 
 void drawable_set_of_objects::init_labels(int group_idx,
-		double thickness_half, double scale, const char *properties, int verbose_level)
+		double thickness_half, double scale, std::string &properties, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -233,7 +233,7 @@ void drawable_set_of_objects::init_labels(int group_idx,
 	type = 10;
 	d = thickness_half;
 	d2 = scale;
-	drawable_set_of_objects::properties = properties;
+	drawable_set_of_objects::properties.assign(properties);
 
 
 	if (f_v) {
@@ -354,11 +354,14 @@ void drawable_set_of_objects::draw(animate *Anim, ostream &ost,
 		if (f_v) {
 			cout << "type == 10 labels" << endl;
 		}
+		string dummy;
+
+		dummy.assign("");
 		Anim->draw_text_with_selection(Selection, sz,
 				d /* thickness_half */, 0. /* extra_spacing */,
 				d2 /* scale */,
 				0. /* off_x */, 0. /* off_y */, 0. /* off_z */,
-				properties, "" /* group_options */,
+				properties, dummy /* group_options */,
 				ost, verbose_level);
 	}
 	else {
