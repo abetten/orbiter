@@ -1420,8 +1420,10 @@ void latex_interface::print_type_vector_tex(std::ostream &ost, int *v, int len)
 			continue;
 		}
 		if (f_first) {
-			ost << ",\\,";
 			f_first = FALSE;
+		}
+		else {
+			ost << ",\\,";
 		}
 		ost << i;
 		if (a > 9) {

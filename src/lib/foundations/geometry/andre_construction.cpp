@@ -196,6 +196,25 @@ void andre_construction::points_on_line(
 		}
 }
 
+void andre_construction::report(std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "andre_construction::report" << endl;
+	}
+
+
+	ost << "The spread: \\\\" << endl;
+
+	Grass->print_set_tex(ost, spread_elements_numeric, spread_size);
+
+	if (f_v) {
+		cout << "andre_construction::report done" << endl;
+	}
+}
+
+
 }
 }
 

@@ -35,6 +35,11 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_centralizer_of_element = FALSE;
 	//element_description_text = NULL;
 	//element_label = NULL;
+	f_conjugacy_class_of_element = FALSE;
+	f_orbits_on_group_elements_under_conjugation = FALSE;
+	//std::string orbits_on_group_elements_under_conjugation_fname;
+	//orbits_on_group_elements_under_conjugation_transporter_fname
+
 	f_normalizer_of_cyclic_subgroup = FALSE;
 	f_find_subgroup = FALSE;
 	find_subgroup_order = 0;
@@ -76,6 +81,12 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//multiply_b = NULL;
 	f_inverse = FALSE;
 	//inverse_a = NULL;
+
+	f_raise_to_the_power = FALSE;
+	//std::string raise_to_the_power_a_text;
+	//std::string raise_to_the_power_exponent_text;
+
+
 	f_export_gap = FALSE;
 	f_export_magma = FALSE;
 	f_order_of_products = FALSE;
@@ -172,6 +183,9 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	representation_on_polynomials_degree = 0;
 
 
+	f_Andre_Bruck_Bose_construction = FALSE;
+	Andre_Bruck_Bose_construction_spread_no = 0;
+	// Andre_Bruck_Bose_construction_label
 
 }
 
@@ -261,6 +275,24 @@ int group_theoretic_activity_description::read_arguments(
 			cout << "-centralizer_of_element " << element_label
 					<< " " << element_description_text << endl;
 		}
+		else if (stringcmp(argv[i], "-conjugacy_class_of_element") == 0) {
+			f_conjugacy_class_of_element = TRUE;
+			element_label.assign(argv[++i]);
+			element_description_text.assign(argv[++i]);
+			cout << "-conjugacy_class_of_element " << element_label
+					<< " " << element_description_text << endl;
+		}
+		else if (stringcmp(argv[i], "-orbits_on_group_elements_under_conjugation") == 0) {
+			f_orbits_on_group_elements_under_conjugation = TRUE;
+			orbits_on_group_elements_under_conjugation_fname.assign(argv[++i]);
+			orbits_on_group_elements_under_conjugation_transporter_fname.assign(argv[++i]);
+			cout << "-orbits_on_group_elements_under_conjugation "
+					<< " " << orbits_on_group_elements_under_conjugation_fname
+					<< " " << orbits_on_group_elements_under_conjugation_transporter_fname
+					<< endl;
+		}
+
+
 		else if (stringcmp(argv[i], "-normalizer_of_cyclic_subgroup") == 0) {
 			f_normalizer_of_cyclic_subgroup = TRUE;
 			element_label.assign(argv[++i]);
@@ -365,6 +397,13 @@ int group_theoretic_activity_description::read_arguments(
 			f_inverse = TRUE;
 			inverse_a.assign(argv[++i]);
 			cout << "-inverse " << inverse_a << endl;
+		}
+		else if (stringcmp(argv[i], "-raise_to_the_power") == 0) {
+			f_raise_to_the_power = TRUE;
+			raise_to_the_power_a_text.assign(argv[++i]);
+			raise_to_the_power_exponent_text.assign(argv[++i]);
+			cout << "-raise_to_the_power " << raise_to_the_power_a_text
+					<< " " << raise_to_the_power_exponent_text << endl;
 		}
 		else if (stringcmp(argv[i], "-export_gap") == 0) {
 			f_export_gap = TRUE;
@@ -754,7 +793,15 @@ int group_theoretic_activity_description::read_arguments(
 		else if (stringcmp(argv[i], "-representation_on_polynomials") == 0) {
 			f_representation_on_polynomials = TRUE;
 			representation_on_polynomials_degree = strtoi(argv[++i]);
-			cout << "-representation_on_polynomials " << endl;
+			cout << "-representation_on_polynomials " << representation_on_polynomials_degree << endl;
+		}
+
+		else if (stringcmp(argv[i], "-Andre_Bruck_Bose_construction") == 0) {
+			f_Andre_Bruck_Bose_construction = TRUE;
+			Andre_Bruck_Bose_construction_spread_no = strtoi(argv[++i]);
+			Andre_Bruck_Bose_construction_label.assign(argv[++i]);
+			cout << "-Andre_Bruck_Bose_construction " << Andre_Bruck_Bose_construction_spread_no
+					<< " " << Andre_Bruck_Bose_construction_label << endl;
 		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {

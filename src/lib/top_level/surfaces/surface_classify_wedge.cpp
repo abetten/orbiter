@@ -2367,7 +2367,7 @@ void surface_classify_wedge::report_surface(
 				"orbit_index = " << orbit_index << endl;
 	}
 
-	ost << endl << "\\clearpage" << endl << endl;
+	ost << endl; // << "\\clearpage" << endl << endl;
 	ost << "\\section*{Surface $" << q << "\\#"
 			<< orbit_index << "$}" << endl;
 
@@ -3031,24 +3031,66 @@ void surface_classify_wedge::report(ostream &ost, int f_with_stabilizers,
 	latex_interface L;
 
 
+#if 0
 	ost << "\\section{The field of order " << LG->F->q << "}" << endl;
 	ost << "\\noindent The field ${\\mathbb F}_{"
 			<< LG->F->q
 			<< "}$ :\\\\" << endl;
 	LG->F->cheat_sheet(ost, verbose_level);
+#endif
 
 	Classify_double_sixes->report(ost, draw_options, verbose_level);
 
+	if (f_v) {
+		cout << "surface_classify_wedge::report before Classify_double_sixes->print_five_plus_ones" << endl;
+	}
 	Classify_double_sixes->print_five_plus_ones(ost);
+	if (f_v) {
+		cout << "surface_classify_wedge::report after Classify_double_sixes->print_five_plus_ones" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_classify_wedge::report before Classify_double_sixes->Flag_orbits->print_latex" << endl;
+	}
 	Classify_double_sixes->Flag_orbits->print_latex(ost, "Flag orbits for double sixes", TRUE);
+	if (f_v) {
+		cout << "surface_classify_wedge::report after Classify_double_sixes->Flag_orbits->print_latex" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_classify_wedge::report before Classify_double_sixes->Double_sixes->print_latex" << endl;
+	}
 	Classify_double_sixes->Double_sixes->print_latex(ost, "Double Sixes", TRUE,
 			FALSE, NULL, NULL);
+	if (f_v) {
+		cout << "surface_classify_wedge::report after Classify_double_sixes->Double_sixes->print_latex" << endl;
+	}
 
+	if (f_v) {
+		cout << "surface_classify_wedge::report before Flag_orbits->print_latex" << endl;
+	}
 	Flag_orbits->print_latex(ost, "Flag orbits for surfaces", TRUE);
+	if (f_v) {
+		cout << "surface_classify_wedge::report after Flag_orbits->print_latex" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_classify_wedge::report before Surfaces->print_latex" << endl;
+	}
 	Surfaces->print_latex(ost, "Surfaces", TRUE,
 			FALSE, NULL, NULL);
+	if (f_v) {
+		cout << "surface_classify_wedge::report after Surfaces->print_latex" << endl;
+	}
 
+	if (f_v) {
+		cout << "surface_classify_wedge::report before latex_surfaces" << endl;
+	}
 	latex_surfaces(ost, f_with_stabilizers);
+	if (f_v) {
+		cout << "surface_classify_wedge::report after latex_surfaces" << endl;
+	}
 
 	if (f_v) {
 		cout << "surface_classify_wedge::report done" << endl;

@@ -79,6 +79,9 @@ public:
 	void compute_image_int_low_level(
 		action &A, int *Elt, int *input, int *output, 
 		int verbose_level);
+	void unrank_point(long int a, int *v, int verbose_level);
+	long int rank_point(int *v, int verbose_level);
+
 };
 
 // #############################################################################

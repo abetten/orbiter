@@ -406,6 +406,35 @@ void wreath_product::compute_tensor_ranks(int verbose_level)
 	compute_tensor_ranks(TR, Prev, verbose_level);
 }
 
+void wreath_product::unrank_point(long int a, int *v, int verbose_level)
+{
+	if (a < nb_factors) {
+		cout << "wreath_product::unrank_point "
+					"we are in the permutation, cannot unrank" << endl;
+		exit(1);
+	}
+	a -= nb_factors;
+	if (a < nb_factors * M->degree) {
+		cout << "wreath_product::unrank_point "
+					"we are in the projected components, cannot unrank" << endl;
+		exit(1);
+	}
+	a -= nb_factors * M->degree;
+	F->PG_element_unrank_modified_lint(v, 1,
+			dimension_of_tensor_action, a);
+}
+
+long int wreath_product::rank_point(int *v, int verbose_level)
+{
+	long int a, b;
+
+	a = nb_factors + nb_factors * M->degree;
+	F->PG_element_rank_modified_lint(v, 1,
+			dimension_of_tensor_action, b);
+	a += b;
+	return a;
+}
+
 long int wreath_product::element_image_of(int *Elt, long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

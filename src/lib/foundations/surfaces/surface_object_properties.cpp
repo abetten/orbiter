@@ -347,7 +347,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 	Type_pts_on_lines->init_lint(pts_on_lines->Set_size,
 		pts_on_lines->nb_sets, FALSE, 0);
 	if (f_v) {
-		cout << "type of pts_on_lines:" << endl;
+		cout << "points on lines:" << endl;
 		Type_pts_on_lines->print_naked_tex(cout, TRUE);
 		cout << endl;
 	}
@@ -1713,23 +1713,20 @@ void surface_object_properties::print_general(std::ostream &ost)
 		C_plane_type_by_points->print_naked_tex(ost, TRUE);
 		ost << "$$" << endl;
 	}
-	ost << "Type of pts on lines:" << endl;
+	ost << "Points on lines:" << endl;
 	ost << "$$" << endl;
 	Type_pts_on_lines->print_naked_tex(ost, TRUE);
 	ost << "$$" << endl;
-	ost << endl;
-	ost << "Type of lines on point:" << endl;
+	ost << "Lines on points:" << endl;
 	ost << "$$" << endl;
 	Type_lines_on_point->print_naked_tex(ost, TRUE);
 	ost << "$$" << endl;
-	ost << endl;
 #if 0
 	ost << "Type iso of tritangent planes: ";
 	ost << "$$" << endl;
 	Type_iso_tritangent_planes->print_naked_tex(ost, TRUE);
 	ost << "$$" << endl;
 #endif
-	ost << endl;
 }
 
 void surface_object_properties::print_affine_points_in_source_code(std::ostream &ost)
@@ -1795,7 +1792,7 @@ void surface_object_properties::print_points(std::ostream &ost)
 
 void surface_object_properties::print_Eckardt_points(std::ostream &ost)
 {
-	latex_interface L;
+	//latex_interface L;
 	int i, j, p, a, b, c;
 	int v[4];
 
@@ -1810,13 +1807,16 @@ void surface_object_properties::print_Eckardt_points(std::ostream &ost)
 	//ost << "%%\\clearpage" << endl;
 	//ost << "The Eckardt points are:\\\\" << endl;
 	//ost << "\\begin{multicols}{2}" << endl;
-	ost << "\\begin{align*}" << endl;
+	//ost << "\\begin{align*}" << endl;
 	for (i = 0; i < nb_Eckardt_points; i++) {
+
+		ost << "$";
+
 		p = Eckardt_points_index[i];
 
 		SO->Surf->unrank_point(v, Eckardt_points[i]);
 
-		ost << i << " &: ";
+		ost << i << " : ";
 		if (SO->nb_lines == 27) {
 			ost << "E_{" << SO->Surf->Schlaefli->Eckard_point_label_tex[Eckardt_points_schlaefli_labels[i]] << "}=";
 		}
@@ -1865,16 +1865,14 @@ void surface_object_properties::print_Eckardt_points(std::ostream &ost)
 		else {
 			ost << ".";
 		}
+		ost << "\\; T= " << tangent_plane_rank_global[p];
+		ost << "$\\\\" << endl;
 		if (tangent_plane_rank_global[p] == -1) {
 			cout << "Eckardt point is singular. This should not happen" << endl;
 			exit(1);
 		}
-		else {
-			ost << "\\; T= " << tangent_plane_rank_global[p];
 		}
-		ost << "\\\\" << endl;
-		}
-	ost << "\\end{align*}" << endl;
+	//ost << "\\end{align*}" << endl;
 
 	{
 		//latex_interface L;
@@ -1885,11 +1883,13 @@ void surface_object_properties::print_Eckardt_points(std::ostream &ost)
 			p = Eckardt_points_index[i];
 			T[i] = tangent_plane_rank_global[p];
 		}
-		ost << "Set of tangent planes: $";
-		L.lint_set_print_tex(ost, T, nb_Eckardt_points);
-		ost << "$\\\\" << endl;
+		ost << "Set of tangent planes: ";
+		lint_vec_print(ost, T, nb_Eckardt_points);
+		ost << "\\\\" << endl;
 		FREE_lint(T);
 	}
+
+	latex_interface L;
 
 	ost << "Line type of Eckardt points: $";
 	L.print_type_vector_tex(ost, Eckardt_points_line_type, nb_Eckardt_points);
@@ -1915,14 +1915,14 @@ void surface_object_properties::print_Eckardt_points(std::ostream &ost)
 
 void surface_object_properties::print_Hesse_planes(std::ostream &ost)
 {
-	latex_interface L;
+	//latex_interface L;
 	int i, j;
 
-	ost << "Hesse planes: \\\\";
-	ost << "Number of Hesse planes: " << nb_Hesse_planes << "\\\\";
-	ost << "Set of Hesse planes: $";
-	L.lint_set_print_tex(ost, Hesse_planes, nb_Hesse_planes);
-	ost << "$\\\\" << endl;
+	ost << "\\subsection*{Hesse planes}" << endl;
+	ost << "Number of Hesse planes: " << nb_Hesse_planes << "\\\\" << endl;
+	ost << "Set of Hesse planes: ";
+	lint_vec_print(ost, Hesse_planes, nb_Hesse_planes);
+	ost << "\\\\" << endl;
 
 	SO->Surf->Gr3->print_set_tex(ost, Hesse_planes, nb_Hesse_planes);
 
@@ -1931,6 +1931,7 @@ void surface_object_properties::print_Hesse_planes(std::ostream &ost)
 	cout << "Hesse plane : rank : Incident Eckardt points\\\\" << endl;
 
 	for (j = 0; j < nb_Hesse_planes; j++) {
+
 
 		int H[9], cnt, h;
 
@@ -1952,12 +1953,12 @@ void surface_object_properties::print_Hesse_planes(std::ostream &ost)
 
 		for (h = 0; h < 9; h++) {
 			i = H[h];
-			ost << "$E_{" << SO->Surf->Schlaefli->Eckard_point_label_tex[Eckardt_points_schlaefli_labels[i]] << "}";
+			ost << "$E_{" << SO->Surf->Schlaefli->Eckard_point_label_tex[Eckardt_points_schlaefli_labels[i]] << "}$";
 			if (h < 9 - 1) {
-				ost << ",$ ";
+				ost << ", ";
 			}
 		}
-		ost << "$\\\\" << endl;
+		ost << "\\\\" << endl;
 	}
 }
 
@@ -1966,22 +1967,22 @@ void surface_object_properties::print_axes(std::ostream &ost)
 	latex_interface L;
 	int i, j, idx, t_idx, t_r, a;
 
-	ost << "Axes: \\\\";
-	ost << "Number of axes: " << nb_axes << "\\\\";
-	ost << "Axes: \\\\";
+	ost << "\\subsection*{Axes}" << endl;
+	ost << "Number of axes: " << nb_axes << "\\\\" << endl;
+	ost << "Axes: \\\\" << endl;
 	for (i = 0; i < nb_axes; i++) {
 		idx = Axes_index[i];
 		t_idx = idx / 2;
 		t_r = idx % 2;
-		ost << i << " : " << idx << " = " << t_idx << "," << t_r << " = $" << endl;
+		ost << i << " : " << idx << " = " << t_idx << "," << t_r << " = " << endl;
 		for (j = 0; j < 3; j++) {
 			a = Axes_Eckardt_points[i * 3 + j];
-			ost << "E_{" << SO->Surf->Schlaefli->Eckard_point_label_tex[a] << "}";
+			ost << "$E_{" << SO->Surf->Schlaefli->Eckard_point_label_tex[a] << "}$";
 			if (j < 3 - 1) {
 				ost << ", ";
 			}
 		}
-		ost << "$\\\\" << endl;
+		ost << "\\\\" << endl;
 	}
 }
 

@@ -331,6 +331,7 @@ int projective_space_job_description::read_arguments(
 			canonical_form_fname_base.assign(argv[++i]);
 			cout << "-canonical_form" << canonical_form_fname_base << endl;
 		}
+
 		else if (stringcmp(argv[i], "-ideal_LEX") == 0) {
 			f_ideal_LEX = TRUE;
 			ideal_degree = strtoi(argv[++i]);
@@ -341,16 +342,6 @@ int projective_space_job_description::read_arguments(
 			ideal_degree = strtoi(argv[++i]);
 			cout << "-ideal_PART " << ideal_degree << endl;
 		}
-#if 0
-		else if (stringcmp(argv[i], "-embedded") == 0) {
-			f_embedded = TRUE;
-			cout << "-embedded" << endl;
-		}
-		else if (stringcmp(argv[i], "-sideways") == 0) {
-			f_sideways = TRUE;
-			cout << "-sideways" << endl;
-		}
-#endif
 		else if (stringcmp(argv[i], "-intersect_with_set_from_file") == 0) {
 			f_intersect_with_set_from_file = TRUE;
 			intersect_with_set_from_file_fname.assign(argv[++i]);

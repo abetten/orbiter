@@ -507,6 +507,23 @@ void group_theoretic_activity::do_surface_classify(int verbose_level)
 	}
 
 
+	if (Descr->f_report) {
+
+		layered_graph_draw_options *O;
+
+
+		if (!The_Orbiter_session->f_draw_options) {
+			cout << "please use option -draw_options .. -end" << endl;
+			exit(1);
+		}
+		O = The_Orbiter_session->draw_options;
+
+
+		SCW->create_report(TRUE /*f_with_stabilizers */,
+				O,
+				verbose_level);
+	}
+
 	FREE_OBJECT(SCW);
 	FREE_OBJECT(Surf_A);
 	FREE_OBJECT(Surf);

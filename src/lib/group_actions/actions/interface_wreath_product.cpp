@@ -72,10 +72,13 @@ static void wreath_product_group_element_print_verbose(action &A,
 	void *elt, std::ostream &ost);
 static void wreath_product_group_print_point(action &A,
 	long int a, std::ostream &ost);
+static void wreath_product_group_unrank_point(action &A, long int rk, int *v);
+static long int wreath_product_group_rank_point(action &A, int *v);
 
 
 void action_pointer_table::init_function_pointers_wreath_product_group()
 {
+	label.assign("function_pointers_wreath_product_group");
 	ptr_element_image_of = wreath_product_group_element_image_of;
 	ptr_element_image_of_low_level =
 			wreath_product_group_element_image_of_low_level;
@@ -106,6 +109,8 @@ void action_pointer_table::init_function_pointers_wreath_product_group()
 	ptr_element_print_for_make_element_no_commas =
 			wreath_product_group_element_print_for_make_element_no_commas;
 	ptr_print_point = wreath_product_group_print_point;
+	ptr_unrank_point = wreath_product_group_unrank_point;
+	ptr_rank_point = wreath_product_group_rank_point;
 }
 
 
@@ -483,6 +488,53 @@ static void wreath_product_group_print_point(action &A, long int a, ostream &ost
 			"not yet implemented" << endl;
 	exit(1);
 }
+
+
+static void wreath_product_group_unrank_point(action &A, long int rk, int *v)
+{
+	action_global AG;
+	//cout << "wreath_product_group_unrank_point" << endl;
+
+	if (A.type_G == wreath_product_t) {
+		wreath_product *W;
+		W = A.G.wreath_product_group;
+
+		W->unrank_point(rk, v, 0 /* verbose_level*/);
+
+
+		}
+	else {
+		cout << "wreath_product_group_unrank_point type_G unknown:: type_G = ";
+		AG.action_print_symmetry_group_type(cout, A.type_G);
+		cout << endl;
+		exit(1);
+		}
+
+}
+
+static long int wreath_product_group_rank_point(action &A, int *v)
+{
+	action_global AG;
+	//cout << "wreath_product_group_rank_point" << endl;
+	long int rk = -1;
+
+	if (A.type_G == wreath_product_t) {
+		wreath_product *W;
+		W = A.G.wreath_product_group;
+
+		rk = W->rank_point(v, 0 /* verbose_level */);
+	}
+	else {
+		cout << "wreath_product_group_rank_point type_G unknown:: type_G = ";
+		AG.action_print_symmetry_group_type(cout, A.type_G);
+		cout << endl;
+		exit(1);
+		}
+
+	return rk;
+}
+
+
 
 }}
 

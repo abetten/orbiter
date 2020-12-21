@@ -442,6 +442,7 @@ public:
 	void place(int verbose_level);
 	void place_with_grouping(int *group_size, int nb_groups, 
 		double x_stretch, int verbose_level);
+	void scale_x_coordinates(double x_stretch, int verbose_level);
 	void write_memory_object(memory_object *m, int verbose_level);
 	void read_memory_object(memory_object *m, int verbose_level);
 };
@@ -513,6 +514,8 @@ public:
 		int verbose_level);
 	void depth_first_rank_recursion(layered_graph *G, int &r, 
 		int verbose_level);
+	void scale_x_coordinate(double x_stretch, int verbose_level);
+
 };
 
 
@@ -629,6 +632,7 @@ public:
 	double average_word_length();
 	void place(int verbose_level);
 	void place_with_y_stretch(double y_stretch, int verbose_level);
+	void scale_x_coordinates(double x_stretch, int verbose_level);
 	void place_with_grouping(int **Group_sizes, int *Nb_groups, 
 		double x_stretch, int verbose_level);
 	void add_edge(int l1, int n1, int l2, int n2, int verbose_level);
@@ -705,6 +709,8 @@ public:
 	int f_sideways;
 	int f_show_level_info;
 	int f_label_edges;
+	int f_x_stretch;
+	double x_stretch;
 	int f_y_stretch;
 	double y_stretch;
 	int f_scale;

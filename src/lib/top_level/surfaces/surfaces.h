@@ -516,13 +516,6 @@ public:
 	classification_step *Surfaces;
 
 
-#if 0
-	int nb_identify;
-	char **Identify_label;
-	int **Identify_coeff;
-	int **Identify_monomial;
-	int *Identify_length;
-#endif
 
 	surface_classify_wedge();
 	~surface_classify_wedge();
@@ -543,18 +536,6 @@ public:
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp, int verbose_level);
 
-#if 0
-	void identify_surfaces(int verbose_level);
-	void identify(int nb_identify,
-		char **Identify_label,
-		int **Identify_coeff,
-		int **Identify_monomial,
-		int *Identify_length,
-		int verbose_level);
-	void identify_surface_command_line(int cnt,
-		int &isomorphic_to, int *Elt_isomorphism,
-		int verbose_level);
-#endif
 	void identify_HCV_and_print_table(int verbose_level);
 	void identify_F13_and_print_table(int verbose_level);
 	void identify_Bes_and_print_table(int verbose_level);

@@ -36,6 +36,7 @@ action_pointer_table::~action_pointer_table()
 
 void action_pointer_table::null_function_pointers()
 {
+	label.assign("null");
 	ptr_element_image_of = NULL;
 	ptr_element_image_of_low_level = NULL;
 	ptr_element_linear_entry_ij = NULL;

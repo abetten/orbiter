@@ -38,6 +38,8 @@ layered_graph_draw_options::layered_graph_draw_options()
 	f_sideways = FALSE;
 	f_show_level_info = FALSE;
 	f_label_edges = FALSE;
+	f_x_stretch = FALSE;
+	x_stretch = 1.;
 	f_y_stretch = FALSE;
 	y_stretch = 1.;
 	f_scale = FALSE;
@@ -134,6 +136,11 @@ int layered_graph_draw_options::read_arguments(
 			f_label_edges = TRUE;
 			cout << "-label_edges " << endl;
 		}
+		else if (stringcmp(argv[i], "-x_stretch") == 0) {
+			f_x_stretch = TRUE;
+			x_stretch = strtof(argv[++i]);
+			cout << "-x_stretch " << x_stretch << endl;
+		}
 		else if (stringcmp(argv[i], "-y_stretch") == 0) {
 			f_y_stretch = TRUE;
 			y_stretch = strtof(argv[++i]);
@@ -204,6 +211,9 @@ void layered_graph_draw_options::print()
 	cout << "f_sideways=" << f_sideways << endl;
 	cout << "f_show_level_info=" << f_show_level_info << endl;
 	cout << "f_label_edges=" << f_label_edges << endl;
+	if (f_x_stretch) {
+		cout << "x_stretch=" << x_stretch << endl;
+	}
 	if (f_y_stretch) {
 		cout << "y_stretch=" << y_stretch << endl;
 	}

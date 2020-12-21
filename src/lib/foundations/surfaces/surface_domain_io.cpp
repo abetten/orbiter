@@ -205,6 +205,9 @@ void surface_domain::print_lines_tex(ostream &ost, long int *Lines, int nb_lines
 {
 	int i;
 	latex_interface L;
+	long int *Rk;
+
+	Rk = NEW_lint(nb_lines);
 
 	for (i = 0; i < nb_lines; i++) {
 		//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
@@ -226,8 +229,27 @@ void surface_domain::print_lines_tex(ostream &ost, long int *Lines, int nb_lines
 		ost << "\\left[" << endl;
 		L.print_integer_matrix_tex(ost, Gr->M, 2, 4);
 		ost << "\\right]_{" << Lines[i] << "}" << endl;
+
+		int v6[6];
+
+		P->Pluecker_coordinates(Lines[i], v6, 0 /* verbose_level */);
+
+		Rk[i] = F->Qplus_rank(v6, 1, 5, 0 /* verbose_level*/);
+
+		ost << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
+				<< v6[2] << "," << v6[3] << "," << v6[4]
+				<< "," << v6[5] << " ";
+		ost << ")_{" << Rk[i] << "}";
 		ost << "$$" << endl;
-		}
+	}
+	ost << "Rank of lines: ";
+	lint_vec_print(ost, Lines, nb_lines);
+	ost << "\\\\" << endl;
+	ost << "Rank of points on Klein quadric: ";
+	lint_vec_print(ost, Rk, nb_lines);
+	ost << "\\\\" << endl;
+
+	FREE_lint(Rk);
 
 }
 

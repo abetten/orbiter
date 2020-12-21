@@ -1265,7 +1265,7 @@ void linear_group::init_subgroup_Janko1(int verbose_level)
 	}
 }
 
-void linear_group::report(std::ostream &fp,
+void linear_group::report(std::ostream &ost,
 		int f_sylow, int f_group_table,
 		int f_conjugacy_classes_and_normalizers,
 		layered_graph_draw_options *LG_Draw_options,
@@ -1309,15 +1309,17 @@ void linear_group::report(std::ostream &fp,
 
 
 
-		fp << "\\section{The Group $" << label_tex << "$}" << endl;
+		ost << "\\section*{The Group $" << label_tex << "$}" << endl;
 
 
 		H->group_order(go);
 
-		fp << "\\noindent The order of the group $"
+		ost << "\\noindent The order of the group $"
 				<< label_tex
 				<< "$ is " << go << "\\\\" << endl;
 
+
+#if 0
 		fp << "\\noindent The field ${\\mathbb F}_{"
 				<< F->q
 				<< "}$ :\\\\" << endl;
@@ -1328,10 +1330,12 @@ void linear_group::report(std::ostream &fp,
 		if (f_v) {
 			cout << "linear_group::report after F->cheat_sheet" << endl;
 		}
+#endif
 
 
-		fp << "\\noindent The group acts on a set of size "
-				<< A->degree << "\\\\" << endl;
+
+		ost << "\\noindent The group acts on a set of size "
+				<< A2->degree << "\\\\" << endl;
 
 #if 0
 		if (A->degree < 1000) {
@@ -1343,19 +1347,21 @@ void linear_group::report(std::ostream &fp,
 		//cout << "Order H = " << H->group_order_int() << "\\\\" << endl;
 
 		if (f_has_nice_gens) {
-			fp << "Nice generators:\\\\" << endl;
-			nice_gens->print_tex(fp);
+			ost << "Nice generators:\\\\" << endl;
+			nice_gens->print_tex(ost);
 		}
 		else {
-			cout << "Strong generators:\\\\" << endl;
-			Strong_gens->print_generators_tex(fp);
 		}
+
+		cout << "Strong generators:\\\\" << endl;
+		Strong_gens->print_generators_tex(ost);
+
 
 		if (f_v) {
 			cout << "linear_group::report before A2->report" << endl;
 		}
 
-		A2->report(fp, TRUE /*f_sims*/, H,
+		A2->report(ost, TRUE /*f_sims*/, H,
 				TRUE /* f_strong_gens */, Strong_gens,
 				LG_Draw_options,
 				verbose_level);
@@ -1368,7 +1374,7 @@ void linear_group::report(std::ostream &fp,
 			cout << "linear_group::report before A2->report_basic_orbits" << endl;
 		}
 
-		A2->report_basic_orbits(fp);
+		A2->report_basic_orbits(ost);
 
 		if (f_v) {
 			cout << "linear_group::report after A2->report_basic_orbits" << endl;
@@ -1387,13 +1393,13 @@ void linear_group::report(std::ostream &fp,
 			{
 				latex_interface L;
 
-				fp << "\\begin{sidewaystable}" << endl;
-				fp << "$$" << endl;
-				L.int_matrix_print_tex(fp, Table, n, n);
-				fp << "$$" << endl;
-				fp << "\\end{sidewaystable}" << endl;
+				ost << "\\begin{sidewaystable}" << endl;
+				ost << "$$" << endl;
+				L.int_matrix_print_tex(ost, Table, n, n);
+				ost << "$$" << endl;
+				ost << "\\end{sidewaystable}" << endl;
 
-				H->print_all_group_elements_tex(fp);
+				H->print_all_group_elements_tex(ost);
 
 			}
 
@@ -1478,7 +1484,7 @@ void linear_group::report(std::ostream &fp,
 
 			Syl = NEW_OBJECT(sylow_structure);
 			Syl->init(H, verbose_level);
-			Syl->report(fp);
+			Syl->report(ost);
 
 		}
 		else {
@@ -1495,7 +1501,7 @@ void linear_group::report(std::ostream &fp,
 				cout << "linear_group::report f_conjugacy_classes_and_normalizers is true" << endl;
 			}
 
-			A2->report_conjugacy_classes_and_normalizers(fp, H,
+			A2->report_conjugacy_classes_and_normalizers(ost, H,
 					verbose_level);
 
 			if (f_v) {

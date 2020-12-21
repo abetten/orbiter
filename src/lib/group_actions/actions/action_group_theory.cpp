@@ -28,7 +28,7 @@ void action::normalizer_using_MAGMA(
 
 	if (f_v) {
 		cout << "action::normalizer_using_MAGMA" << endl;
-		}
+	}
 
 	fname_magma.assign(fname_magma_prefix);
 	fname_magma.append(".magma");
@@ -49,7 +49,7 @@ void action::normalizer_using_MAGMA(
 	n = degree;
 	if (f_v) {
 		cout << "action::normalizer_using_MAGMA n = " << n << endl;
-		}
+	}
 	{
 		ofstream fp(fname_magma);
 
@@ -73,17 +73,15 @@ void action::normalizer_using_MAGMA(
 		fp << "UnsetOutputFile();" << endl;
 	}
 
-	if (Fio.file_size(fname_output) == 0) {
+	if (Fio.file_size(fname_output) <= 0) {
 
 		magma_interface Magma;
 
 		Magma.run_magma_file(fname_magma, verbose_level);
-		if (Fio.file_size(fname_output) == 0) {
-			cout << "please run magma on the file " << fname_magma << endl;
-			cout << "for instance, try" << endl;
-			cout << Magma.Orbiter_session->magma_path << "magma " << fname_magma << endl;
-			exit(1);
-		}
+		cout << "please run magma on the file " << fname_magma << endl;
+		cout << "for instance, try" << endl;
+		cout << Magma.Orbiter_session->magma_path << "magma " << fname_magma << endl;
+		exit(1);
 	}
 
 	if (f_v) {
@@ -96,7 +94,7 @@ void action::normalizer_using_MAGMA(
 
 	if (f_v) {
 		cout << "action::normalizer_using_MAGMA" << endl;
-		}
+	}
 	{
 		ifstream fp(fname_output);
 
@@ -112,8 +110,8 @@ void action::normalizer_using_MAGMA(
 		for (i = 0; i < nb_gens; i++) {
 			for (j = 0; j < degree; j++) {
 				fp >> perms[i * degree + j];
-				}
 			}
+		}
 		if (f_v) {
 			cout << "action::normalizer_using_MAGMA we read all "
 					"generators from file " << fname_output << endl;
@@ -121,7 +119,7 @@ void action::normalizer_using_MAGMA(
 	}
 	for (i = 0; i < nb_gens * degree; i++) {
 		perms[i]--;
-		}
+	}
 
 	//longinteger_object go1;
 
@@ -155,7 +153,7 @@ void action::normalizer_using_MAGMA(
 
 	if (f_v) {
 		cout << "action::normalizer_using_MAGMA done" << endl;
-		}
+	}
 }
 
 void action::conjugacy_classes_using_MAGMA(std::string &prefix,
@@ -381,7 +379,7 @@ void action::conjugacy_classes_and_normalizers_using_MAGMA(
 	file_io Fio;
 
 	Magma.run_magma_file(fname_magma, verbose_level);
-	if (Fio.file_size(fname_output) == 0) {
+	if (Fio.file_size(fname_output) <= 0) {
 		cout << "please run magma on the file " << fname_magma << endl;
 		cout << "for instance, try" << endl;
 		cout << Magma.Orbiter_session->magma_path << "magma " << fname_magma << endl;
@@ -763,6 +761,9 @@ void action::find_subgroups_using_MAGMA(std::string &prefix,
 			cout << "action::find_subgroups_using_MAGMA after "
 					"find_subgroups_using_MAGMA2" << endl;
 		}
+		cout << "please run the magma file " << fname_magma
+				<< ", retrieve the output file " << fname_output
+				<< " and come back" << endl;
 	}
 	if (f_v) {
 		cout << "action::find_subgroups_using_MAGMA done" << endl;
@@ -932,7 +933,7 @@ void action::find_subgroups_using_MAGMA2(std::string &prefix,
 
 
 
-		fp << "Subgroups:=ElementaryAbelianSubgroups(G: OrderEqual:=4);" << endl;
+		fp << "Subgroups:=ElementaryAbelianSubgroups(G: OrderEqual:=" << subgroup_order << ");" << endl;
 		fp << "Indicator:=[true: i in [1..#Subgroups]];" << endl;
 
 
@@ -1042,7 +1043,7 @@ void action::conjugacy_classes_and_normalizers(sims *override_Sims,
 	fname_output.append("_classes_out.txt");
 
 
-	if (Fio.file_size(fname_output) == 0) {
+	if (Fio.file_size(fname_output) <= 0) {
 		if (f_v) {
 			cout << "action::conjugacy_classes_and_normalizers before "
 					"conjugacy_classes_and_normalizers_using_MAGMA" << endl;
@@ -1717,7 +1718,7 @@ void action::report_fixed_objects(int *Elt,
 	fp << "$$" << endl;
 	element_print_latex(Elt, fp);
 	fp << "$$" << endl;
-	fp << "has the following fixed objects:" << endl;
+	fp << "has the following fixed objects:\\\\" << endl;
 
 
 #if 0

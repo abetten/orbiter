@@ -432,6 +432,13 @@ void graph_node::depth_first_rank_recursion(
 		}
 }
 
+void graph_node::scale_x_coordinate(double x_stretch, int verbose_level)
+{
+	x_coordinate *= x_stretch;
+}
+
+
+
 }
 }
 

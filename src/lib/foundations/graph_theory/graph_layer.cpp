@@ -124,6 +124,16 @@ void graph_layer::place_with_grouping(
 		}
 }
 
+void graph_layer::scale_x_coordinates(double x_stretch, int verbose_level)
+{
+	int i;
+
+	for (i = 0; i < nb_nodes; i++) {
+		Nodes[i].scale_x_coordinate(x_stretch, verbose_level);
+		}
+}
+
+
 void graph_layer::write_memory_object(
 		memory_object *m, int verbose_level)
 {

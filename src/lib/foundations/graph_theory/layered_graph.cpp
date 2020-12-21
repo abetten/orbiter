@@ -141,6 +141,16 @@ void layered_graph::place_with_y_stretch(double y_stretch, int verbose_level)
 		}
 }
 
+void layered_graph::scale_x_coordinates(double x_stretch, int verbose_level)
+{
+	int i;
+
+	for (i = 0; i < nb_layers; i++) {
+		L[i].scale_x_coordinates(x_stretch, verbose_level);
+		//L[i].place(verbose_level);
+		}
+}
+
 void layered_graph::place_with_grouping(int **Group_sizes,
 		int *Nb_groups, double x_stretch, int verbose_level)
 {

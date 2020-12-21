@@ -29,11 +29,15 @@ void action::report(ostream &ost, int f_sims, sims *S,
 		cout << "action::report" << endl;
 	}
 
-	ost << "\\section{The Group}" << endl;
+	ost << "\\section*{The Action}" << endl;
 
 	ost << "Group action $" << label_tex
 			<< "$ of degree " << degree << "\\\\" << endl;
 
+	if (degree < 100) {
+		ost << "We act on the following set:\\\\" << endl;
+		latex_all_points(ost);
+	}
 
 	if (is_matrix_group()) {
 		ost << "The group is a matrix group.\\\\" << endl;
@@ -51,7 +55,7 @@ void action::report(ostream &ost, int f_sims, sims *S,
 
 		P->init(M->n - 1, F, TRUE, verbose_level);
 
-		ost << "The group acts on projective space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$\\\\" << endl;
+		ost << "The base action is on projective space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$\\\\" << endl;
 
 		P->report_summary(ost);
 
@@ -60,7 +64,7 @@ void action::report(ostream &ost, int f_sims, sims *S,
 		FREE_OBJECT(P);
 		}
 
-		ost << "\\subsection{The finite field ${\\mathbb F}_{" << F->q << "}$}" << endl;
+		ost << "\\subsection*{The finite field ${\\mathbb F}_{" << F->q << "}$}" << endl;
 
 		F->cheat_sheet(ost, verbose_level);
 
@@ -81,6 +85,8 @@ void action::report(ostream &ost, int f_sims, sims *S,
 			cout << "action::report after W->report" << endl;
 		}
 	}
+
+	ost << "\\subsection*{Base and Stabilizer Chain}" << endl;
 
 	if (f_sims) {
 		if (f_v) {
@@ -130,10 +136,24 @@ void action::report(ostream &ost, int f_sims, sims *S,
 	}
 	if (Stabilizer_chain) {
 		if (f_strong_gens) {
+
+			ost << "GAP export: \\\\" << endl;
 			ost << "\\begin{verbatim}" << endl;
 			SG->print_generators_gap(ost);
 			ost << "\\end{verbatim}" << endl;
-		}
+
+
+			ost << "Magma export: \\\\" << endl;
+			ost << "\\begin{verbatim}" << endl;
+			SG->export_magma(this, ost);
+			ost << "\\end{verbatim}" << endl;
+
+			ost << "Compact form: \\\\" << endl;
+			ost << "\\begin{verbatim}" << endl;
+			SG->print_generators_compact(ost);
+			ost << "\\end{verbatim}" << endl;
+
+}
 	}
 	if (f_v) {
 		cout << "action::report done" << endl;
@@ -164,7 +184,7 @@ void action::report_what_we_act_on(ostream &ost,
 
 		P->init(M->n - 1, F, TRUE, verbose_level);
 
-		ost << "\\section{The Group Acts on Projective Space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$}" << endl;
+		ost << "\\section*{The Group Acts on Projective Space ${\\rm PG}(" << M->n - 1 << ", " << F->q << ")$}" << endl;
 
 		P->report(ost, O, verbose_level);
 
@@ -723,14 +743,15 @@ void action::print_base()
 	}
 }
 
-void action::print_points(ostream &ost)
+void action::latex_all_points(std::ostream &ost)
 {
 	int i;
 	int *v;
 
-	cout << "action::print_points "
-			"low_level_point_size=" << low_level_point_size <<  endl;
 	v = NEW_int(low_level_point_size);
+#if 0
+	cout << "action::latex_all_points "
+			"low_level_point_size=" << low_level_point_size <<  endl;
 	ost << "{\\renewcommand*{\\arraystretch}{1.5}" << endl;
 	ost << "$$" << endl;
 	ost << "\\begin{array}{|c|c|}" << endl;
@@ -753,7 +774,7 @@ void action::print_points(ostream &ost)
 			else {
 				ost << ", \\;" << endl;
 			}
-			ost << "\\begin{array}{|c|c|c|}" << endl;
+			ost << "\\begin{array}{|c|c|}" << endl;
 			ost << "\\hline" << endl;
 			ost << "i & P_{i}\\\\" << endl;
 			ost << "\\hline" << endl;
@@ -763,9 +784,96 @@ void action::print_points(ostream &ost)
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
 	ost << "$$}%" << endl;
+	cout << "action::latex_all_points done" << endl;
+#else
+	if (low_level_point_size < 10) {
+		ost << "\\begin{multicols}{2}" << endl;
+	}
+	ost << "\\noindent" << endl;
+	for (i = 0; i < degree; i++) {
+		unrank_point(i, v);
+		ost << i << " = ";
+		int_vec_print(ost, v, low_level_point_size);
+		ost << "\\\\" << endl;
+	}
+	if (low_level_point_size < 10) {
+		ost << "\\end{multicols}" << endl;
+	}
+
+#endif
+
 	FREE_int(v);
-	cout << "action::print_points done" << endl;
 }
+
+void action::latex_point_set(std::ostream &ost, long int *set, int sz, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+	int *v;
+
+	if (f_v) {
+		cout << "action::print_points "
+				"low_level_point_size=" << low_level_point_size <<  endl;
+	}
+	v = NEW_int(low_level_point_size);
+#if 0
+	ost << "{\\renewcommand*{\\arraystretch}{1.5}" << endl;
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|c|c|}" << endl;
+	ost << "\\hline" << endl;
+	ost << "i & P_{i} \\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < sz; i++) {
+		unrank_point(set[i], v);
+		ost << i << " & ";
+		ost << set[i] << " = ";
+		int_vec_print(ost, v, low_level_point_size);
+		ost << "\\\\" << endl;
+		if (((i + 1) % 10) == 0) {
+			ost << "\\hline" << endl;
+			ost << "\\end{array}" << endl;
+			if (((i + 1) % 50) == 0) {
+				ost << "$$" << endl;
+				ost << "$$" << endl;
+			}
+			else {
+				ost << ", \\;" << endl;
+			}
+			ost << "\\begin{array}{|c|c|}" << endl;
+			ost << "\\hline" << endl;
+			ost << "i & P_{i}\\\\" << endl;
+			ost << "\\hline" << endl;
+			ost << "\\hline" << endl;
+		}
+	}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$}%" << endl;
+#else
+
+	if (low_level_point_size < 10) {
+		ost << "\\begin{multicols}{2}" << endl;
+	}
+	ost << "\\noindent" << endl;
+	for (i = 0; i < sz; i++) {
+		unrank_point(set[i], v);
+		ost << i << " : ";
+		ost << set[i] << " = ";
+		int_vec_print(ost, v, low_level_point_size);
+		ost << "\\\\" << endl;
+	}
+	if (low_level_point_size < 10) {
+		ost << "\\end{multicols}" << endl;
+	}
+#endif
+
+	FREE_int(v);
+	if (f_v) {
+		cout << "action::print_points done" << endl;
+	}
+}
+
 
 void action::print_group_order(ostream &ost)
 {

@@ -1172,14 +1172,17 @@ public:
 
 	tactical_decomposition *T;
 
+	std::string label;
+
 	translation_plane_via_andre_model();
 	~translation_plane_via_andre_model();
 	void null();
 	void freeself();
 	void init(long int *spread_elements_numeric,
-		int k, finite_field *F,
+		int k, action *An, action *An1,
 		vector_ge *spread_stab_gens,
 		longinteger_object &spread_stab_go,
+		std::string &label,
 		int verbose_level);
 	void classify_arcs(const char *prefix,
 		int depth, int verbose_level);
@@ -1190,6 +1193,9 @@ public:
 	int check_if_quadrangle_defines_a_subplane(
 		long int *S, int *subplane7,
 		int verbose_level);
+	void create_latex_report(int verbose_level);
+	void report(std::ostream &ost, int verbose_level);
+
 };
 
 

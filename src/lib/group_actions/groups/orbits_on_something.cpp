@@ -1030,14 +1030,28 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 		cout << "orbits_on_something::report" << endl;
 	}
 
+
+	longinteger_object go;
+
+
+
+	SG->group_order(go);
+
 	int i, orbit_length, nb_orbits, j, idx, l1;
 
-	ost << "There are " << Orbits_classified_nb_types << " types of orbits:\\\\" << endl;
+	ost << "\\section*{Group Orbits}" << endl;
+	//of a group of order " << go << "\\\\" << endl;
+
+	ost << "Orbits of the group $" << A->label_tex << "$:\\\\" << endl;
+	SG->print_generators_tex(ost);
+
+	ost << "Considering the orbit length, there are "
+			<< Orbits_classified_nb_types << " types of orbits:\\\\" << endl;
 	ost << "$$" << endl;
 	int_vec_print(ost, Orbits_classified_length,
 			Orbits_classified_nb_types);
 	ost << "$$" << endl;
-	ost << "i : type[i] : number of orbits" << endl;
+	ost << "i : orbit length : number of orbits\\\\" << endl;
 	for (i = 0; i < Orbits_classified->nb_sets; i++) {
 		ost << i << " : " << Orbits_classified_length[i] << " : "
 				<< Orbits_classified->Set_size[i] << "\\\\" << endl;
@@ -1046,8 +1060,6 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 	Orbits_classified->print_table_tex(ost);
 
 	long int *Orb;
-
-
 
 	for (i = 0; i < Orbits_classified->nb_sets; i++) {
 		orbit_length = Orbits_classified_length[i];
@@ -1060,9 +1072,45 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 			idx = Orbits_classified->Sets[i][j];
 			ost << "Orbit " << idx << ":" << endl;
 			Sch->get_orbit(idx, Orb, l1, 0 /* verbose_level*/);
-			ost << "$$" << endl;
+			//ost << "$$" << endl;
 			lint_vec_print(ost, Orb, orbit_length);
-			ost << "$$" << endl;
+			//ost << "$$" << endl;
+			ost << "\\\\" << endl;
+
+			A->latex_point_set(ost, Orb, orbit_length, 0 /* verbose_level */);
+		}
+	}
+
+	ost << "\\bigskip" << endl;
+
+	for (i = 0; i < Orbits_classified->nb_sets; i++) {
+		orbit_length = Orbits_classified_length[i];
+		ost << "Orbits of length " << orbit_length << ":\\\\" << endl;
+		nb_orbits = Orbits_classified->Set_size[i];
+
+		Orb = NEW_lint(orbit_length);
+
+		for (j = 0; j < nb_orbits; j++) {
+			idx = Orbits_classified->Sets[i][j];
+			ost << "Orbit " << idx << ":" << endl;
+			Sch->get_orbit(idx, Orb, l1, 0 /* verbose_level*/);
+			//ost << "$$" << endl;
+			lint_vec_print(ost, Orb, orbit_length);
+			//ost << "$$" << endl;
+			ost << "\\\\" << endl;
+
+			//A->latex_point_set(ost, Orb, orbit_length, 0 /* verbose_level */);
+
+			strong_generators *SG_stab;
+
+			SG_stab = Sch->stabilizer_orbit_rep(
+						SG->A /*default_action*/,
+						go,
+						idx, 0 /*verbose_level*/);
+
+			ost << "Stabilizer of orbit representative " << Orb[0] << ":\\\\" << endl;
+			SG_stab->print_generators_tex(ost);
+			SG_stab->print_with_given_action(ost, A);
 
 
 		}

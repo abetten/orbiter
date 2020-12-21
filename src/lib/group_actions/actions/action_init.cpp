@@ -2089,7 +2089,8 @@ void action::init_group_from_strong_generators(
 
 
 	if (f_vv) {
-		cout << "calling allocate_base_data, initial base:";
+		cout << "action::init_group_from_strong_generators "
+				"calling allocate_base_data, initial base:";
 		int_vec_print(cout, given_base, given_base_length);
 		cout << " of length " << given_base_length << endl;
 	}
@@ -2144,11 +2145,11 @@ void action::init_group_from_strong_generators(
 	}
 
 	if (f_vv) {
-		cout << "init_sims" << endl;
+		cout << "action::init_group_from_strong_generators before init_sims" << endl;
 	}
 	init_sims_only(G, 0/*verbose_level - 1*/);
 	if (f_vv) {
-		cout << "after init_sims" << endl;
+		cout << "action::init_group_from_strong_generators after init_sims" << endl;
 	}
 	compute_strong_generators_from_sims(0/*verbose_level - 2*/);
 

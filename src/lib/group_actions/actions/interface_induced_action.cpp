@@ -75,6 +75,7 @@ static long int induced_action_rank_point(action &A, int *v);
 
 void action_pointer_table::init_function_pointers_induced_action()
 {
+	label.assign("function_pointers_induced_action");
 	//ptr_get_transversal_rep = induced_action_get_transversal_rep;
 	ptr_element_image_of = induced_action_element_image_of;
 	ptr_element_image_of_low_level = induced_action_element_image_of_low_level;
@@ -1955,7 +1956,7 @@ static void induced_action_unrank_point(action &A, long int rk, int *v)
 		if (FALSE) {
 			cout << "induced_action_unrank_point "
 					"action_on_wedge_product_t" << endl;
-			}
+		}
 		action_on_wedge_product *AW = A.G.AW;
 
 		action *sub;
@@ -1965,10 +1966,20 @@ static void induced_action_unrank_point(action &A, long int rk, int *v)
 			cout << "induced_action_unrank_point "
 					"no subaction" << endl;
 			exit(1);
-			}
+		}
 		AW->unrank_point(v, rk);
 		//b = AW->compute_image_int(*sub, Elt, a, verbose_level - 1);
+	}
+	else if (A.type_G == action_by_representation_t) {
+		if (FALSE) {
+			cout << "induced_action_unrank_point "
+					"action_by_representation_t" << endl;
 		}
+		action_by_representation *Rep = A.G.Rep;
+
+		Rep->unrank_point(rk, v, 0 /* verbose_level*/);
+		//b = AW->compute_image_int(*sub, Elt, a, verbose_level - 1);
+	}
 	else {
 		cout << "induced_action_unrank_point type_G unknown:: type_G = ";
 		AG.action_print_symmetry_group_type(cout, A.type_G);
@@ -2221,6 +2232,16 @@ static long int induced_action_rank_point(action &A, int *v)
 		rk = AW->rank_point(v);
 		//b = AW->compute_image_int(*sub, Elt, a, verbose_level - 1);
 		}
+	else if (A.type_G == action_by_representation_t) {
+		if (FALSE) {
+			cout << "induced_action_rank_point "
+					"action_by_representation_t" << endl;
+		}
+		action_by_representation *Rep = A.G.Rep;
+
+		rk = Rep->rank_point(v, 0 /* verbose_level*/);
+		//b = AW->compute_image_int(*sub, Elt, a, verbose_level - 1);
+	}
 	else {
 		cout << "induced_action_rank_point type_G unknown:: type_G = ";
 		AG.action_print_symmetry_group_type(cout, A.type_G);

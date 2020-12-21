@@ -1546,7 +1546,12 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 	M1 = M + cnt * sz;
 	int_vec_zero(M1, n1 * n1);
 	for (i = 0; i < n1; i++) {
-		M1[i * n1 + i] = alpha;
+		if (i < n1 - 1) {
+			M1[i * n1 + i] = alpha;
+		}
+		else {
+			M1[i * n1 + i] = 1;
+		}
 	}
 	if (f_semilinear) {
 		M1[n1 * n1] = 0;
@@ -1567,8 +1572,8 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 			for (i = 0; i < n1; i++) {
 				M1[i * n1 + i] = 1;
 			}
-			M1[(n1 - 1) * n1 + h] =
-					F->frobenius_power(alpha, u); // computes alpha^{p^u}
+			M1[(n1 - 1) * n1 + h] = F->power(alpha, u);
+			// no: computes alpha^{p^u}
 			if (f_semilinear) {
 				M1[n1 * n1] = 0;
 			}
@@ -1588,8 +1593,8 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 		if (f_v) {
 			cout << "strong_generators::generators_for_translation_plane_in_andre_model generator " << h << " / "
 					<< nb_gens << endl;
-			int_vec_print(cout, M1, sz);
-			cout << endl;
+			int_matrix_print(M1, n1, n1);
+			//cout << endl;
 		}
 		A_PGL_n1_q->make_element(my_gens->ith(h), M1, 0 /* verbose_level */);
 	}

@@ -1508,7 +1508,7 @@ void arc_generator_early_test_function(long int *S, int len,
 {
 	arc_generator *Gen = (arc_generator *) data;
 	//verbose_level = 1;
-	int f_v = (verbose_level >= 1);
+	int f_v = TRUE; //(verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "arc_generator_early_test_function for set ";

@@ -1623,6 +1623,7 @@ public:
 	void print_generators_MAGMA(action *A, std::ostream &ost);
 	void export_magma(action *A, std::ostream &ost);
 	void print_generators_gap(std::ostream &ost);
+	void print_generators_compact(std::ostream &ost);
 	void print_generators(std::ostream &ost);
 	void print_generators_in_latex_individually(std::ostream &ost);
 	void print_generators_tex();
@@ -1975,6 +1976,8 @@ public:
 			action *A_mtx, int nb_factors,
 			int verbose_level);
 	void compute_tensor_ranks(int verbose_level);
+	void unrank_point(long int a, int *v, int verbose_level);
+	long int rank_point(int *v, int verbose_level);
 	long int element_image_of(int *Elt, long int a, int verbose_level);
 	void element_image_of_low_level(int *Elt,
 			int *input, int *output, int verbose_level);
