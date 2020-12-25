@@ -45,7 +45,7 @@ char *algebra_global::search_for_primitive_polynomial_of_given_degree(
 	char *s;
 	int i, j;
 	if (f_v) {
-		cout << "found a polynomial. It's rank is " << rk << endl;
+		cout << "found a primitive polynomial. The rank is " << rk << endl;
 	}
 
 	s = NEW_char(rk.len() + 1);
@@ -146,12 +146,12 @@ void algebra_global::factor_cyclotomic(int n, int q, int d,
 
 	NT.factor_prime_power(q, p, e);
 	if (f_v) {
-		cout << "factor_cyclotomic q=" << q << " p=" << q
+		cout << "algebra_global::factor_cyclotomic q=" << q << " p=" << q
 			<< " e=" << e << " n=" << n << endl;
 	}
 	m = NT.order_mod_p(q, n);
 	if (f_v) {
-		cout << "order mod q is m=" << m << endl;
+		cout << "algebra_global::factor_cyclotomic order mod q is m=" << m << endl;
 	}
 	field_degree = e * m;
 	Q = NT.i_power_j(p, field_degree);
@@ -175,7 +175,8 @@ void algebra_global::factor_cyclotomic(int n, int q, int d,
 	FQX.create_object_of_degree(h, d);
 
 	if (e > 1) {
-		cout << "embedding the coefficients into the larger field" << endl;
+		cout << "algebra_global::factor_cyclotomic "
+				"embedding the coefficients into the larger field" << endl;
 		for (i = 0; i <= d; i++) {
 			c = coeffs[i];
 			if (c == 0) {
@@ -196,7 +197,8 @@ void algebra_global::factor_cyclotomic(int n, int q, int d,
 	}
 
 	if (f_v) {
-		cout << "the polynomial is: ";
+		cout << "algebra_global::factor_cyclotomic "
+				"the polynomial is: ";
 		FQX.print_object(h, cout);
 		cout << endl;
 	}
@@ -213,7 +215,8 @@ void algebra_global::factor_cyclotomic(int n, int q, int d,
 	Beta = FQ.alpha_power(beta);
 
 	if (f_v) {
-		cout << "the primitive n-th root of unity we choose "
+		cout << "algebra_global::factor_cyclotomic "
+				"the primitive n-th root of unity we choose "
 				"is beta = alpha^" << beta << " = " << Beta << endl;
 	}
 
@@ -227,7 +230,8 @@ void algebra_global::factor_cyclotomic(int n, int q, int d,
 		FQX.division_with_remainder(h, Xma, quo, rem, 0);
 		b = FQX.s_i(rem, 0);
 		if (b == 0) {
-			cout << "zero Beta^" << a << " log "
+			cout << "algebra_global::factor_cyclotomic "
+					"zero Beta^" << a << " log "
 				<< FQ.log_alpha(t) << endl;
 			roots[nb_roots++] = a;
 		}
@@ -250,12 +254,14 @@ void algebra_global::factor_cyclotomic(int n, int q, int d,
 		cout << c << " : " << cv << " : ";
 		if (ccv < 0) {
 			if ((-ccv % n) != n - 1) {
-				cout << "error: c=" << c << " cv=" << cv << endl;
+				cout << "algebra_global::factor_cyclotomic "
+						"error: c=" << c << " cv=" << cv << endl;
 				exit(1);
 			}
 		}
 		else if ((ccv % n) != 1) {
-			cout << "error: c=" << c << " cv=" << cv << endl;
+			cout << "algebra_global::factor_cyclotomic "
+					"error: c=" << c << " cv=" << cv << endl;
 			exit(1);
 		}
 		for (i = 0; i < nb_roots; i++) {
@@ -350,11 +356,15 @@ void algebra_global::count_subprimitive(int Q_max, int H_max)
 
 int algebra_global::eulers_totient_function(int n, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int nb_primes, *primes, *exponents;
 	int i, p, e;
 	longinteger_domain D;
 	longinteger_object N, R, A, B, C;
 
+	if (f_v) {
+		cout << "algebra_global::eulers_totient_function" << endl;
+	}
 	N.create(n, __FILE__, __LINE__);
 	D.factor(N, nb_primes, primes, exponents, verbose_level);
 	R.create(1, __FILE__, __LINE__);
@@ -363,15 +373,24 @@ int algebra_global::eulers_totient_function(int n, int verbose_level)
 		e = exponents[i];
 		A.create(p, __FILE__, __LINE__);
 		D.power_int(A, e);
-		cout << "p^e=" << A << endl;
+		if (f_v) {
+			cout << "p^e=" << A << endl;
+		}
 		B.create(p, __FILE__, __LINE__);
 		D.power_int(B, e - 1);
-		cout << "p^{e-1}=" << A << endl;
+		if (f_v) {
+			cout << "p^{e-1}=" << A << endl;
+		}
 		B.negate();
 		D.add(A, B, C);
-		cout << "p^e-p^{e-1}=" << C << endl;
+		if (f_v) {
+			cout << "p^e-p^{e-1}=" << C << endl;
+		}
 		D.mult(R, C, A);
 		A.assign_to(R);
+	}
+	if (f_v) {
+		cout << "algebra_global::eulers_totient_function done" << endl;
 	}
 	return R.as_int();
 }
@@ -387,19 +406,25 @@ void algebra_global::formula_subprimitive(int d, int q,
 	number_theory_domain NT;
 
 	if (f_v) {
-		cout << "d=" << d << " q=" << q << endl;
+		cout << "algebra_global::formula_subprimitive d=" << d << " q=" << q << endl;
 	}
 	Theta.create(q, __FILE__, __LINE__);
 	M1.create(-1, __FILE__, __LINE__);
 	Qm1.create(q-1, __FILE__, __LINE__);
 	D.power_int(Theta, d);
 	D.add(Theta, M1, A);
-	cout << "q^d-1 = " << A << endl;
+	if (f_v) {
+		cout << "q^d-1 = " << A << endl;
+	}
 	D.integral_division(A, Qm1, Theta, C, 0);
-	cout << "theta = " << Theta << endl;
+	if (f_v) {
+		cout << "theta = " << Theta << endl;
+	}
 	D.integral_division_by_int(Theta, q - 1, C, theta_mod_qm1);
 	g = NT.gcd_lint(q - 1, theta_mod_qm1);
-	cout << "g = " << g << endl;
+	if (f_v) {
+		cout << "g = " << g << endl;
+	}
 	D.factor(Theta, nb_primes, primes, exponents, verbose_level);
 	if (f_v) {
 		cout << "theta = " << Theta << endl;
@@ -416,16 +441,24 @@ void algebra_global::formula_subprimitive(int d, int q,
 		//r = r * (i_power_j(p, e) - i_power_j(p, e - 1));
 		A.create(p, __FILE__, __LINE__);
 		D.power_int(A, e);
-		cout << "p^e=" << A << endl;
+		if (f_v) {
+			cout << "p^e=" << A << endl;
+		}
 		B.create(p, __FILE__, __LINE__);
 		D.power_int(B, e - 1);
-		cout << "p^{e-1}=" << A << endl;
+		if (f_v) {
+			cout << "p^{e-1}=" << A << endl;
+		}
 		B.negate();
 		D.add(A, B, C);
-		cout << "p^e-p^{e-1}=" << C << endl;
+		if (f_v) {
+			cout << "p^e-p^{e-1}=" << C << endl;
+		}
 		D.mult(R, C, A);
 		A.assign_to(R);
-		cout << "R=" << R << endl;
+		if (f_v) {
+			cout << "R=" << R << endl;
+		}
 	}
 	if (f_v) {
 		cout << "\\Phi(theta)=" << R << endl;
@@ -444,6 +477,9 @@ void algebra_global::formula_subprimitive(int d, int q,
 		cout << "R/d=" << A << endl;
 	}
 	A.assign_to(Rdq);
+	if (f_v) {
+		cout << "algebra_global::formula_subprimitive done" << endl;
+	}
 }
 
 void algebra_global::formula(int d, int q, longinteger_object &Rdq, int verbose_level)
@@ -456,20 +492,26 @@ void algebra_global::formula(int d, int q, longinteger_object &Rdq, int verbose_
 	number_theory_domain NT;
 
 	if (f_v) {
-		cout << "d=" << d << " q=" << q << endl;
+		cout << "algebra_global::formula d=" << d << " q=" << q << endl;
 	}
 	Theta.create(q, __FILE__, __LINE__);
 	M1.create(-1, __FILE__, __LINE__);
 	Qm1.create(q - 1, __FILE__, __LINE__);
 	D.power_int(Theta, d);
 	D.add(Theta, M1, A);
-	cout << "q^d-1 = " << A << endl;
+	if (f_v) {
+		cout << "q^d-1 = " << A << endl;
+	}
 	D.integral_division(A, Qm1, Theta, C, 0);
-	cout << "theta = " << Theta << endl;
+	if (f_v) {
+		cout << "theta = " << Theta << endl;
+	}
 	D.integral_division_by_int(Theta,
 		q - 1, C, theta_mod_qm1);
 	g = NT.gcd_lint(q - 1, theta_mod_qm1);
-	cout << "g = " << g << endl;
+	if (f_v) {
+		cout << "g = " << g << endl;
+	}
 	D.factor(Theta, nb_primes, primes, exponents, verbose_level);
 	if (f_v) {
 		cout << "theta = " << Theta << endl;
@@ -535,10 +577,12 @@ int algebra_global::subprimitive(int q, int h)
 	C = NEW_int(f * (q - 1));
 	SM = NEW_int(Q);
 	CM = NEW_int(q - 1);
-	for (k = 0; k < Q; k++)
+	for (k = 0; k < Q; k++) {
 		SM[k] = 0;
-	for (k = 0; k < q - 1; k++)
+	}
+	for (k = 0; k < q - 1; k++) {
 		CM[k] = 0;
+	}
 
 	for (k = 0; k < f; k++) {
 		for (j = 0; j < q - 1; j++) {
@@ -547,21 +591,21 @@ int algebra_global::subprimitive(int q, int h)
 			if (s >= Q) {
 				cout << "s=" << s << " >= Q=" << Q << endl;
 				exit(1);
-				}
+			}
 			SM[s]++;
 			if (s == f) {
 				if (c >= q - 1) {
 					cout << "c=" << c << " >= q-1=" << q-1 << endl;
 					exit(1);
-					}
+				}
 				CM[c]++;
 				C[k * (q - 1) + j] = c;
-				}
+			}
 			else {
 				C[k * (q - 1) + j] = -1;
-				}
 			}
 		}
+	}
 #if 0
 	cout << "subexponents mod " << q - 1 << " :" << endl;
 	print_integer_matrix_width(cout, S, f, q - 1, q - 1, 2);
@@ -576,8 +620,8 @@ int algebra_global::subprimitive(int q, int h)
 	for (i = 0; i < Q; i++) {
 		if (SM[i]) {
 			cout << i << " : " << SM[i] << endl;
-			}
 		}
+	}
 #endif
 	cout << f << "^" << SM[f] << endl;
 	cout << "multiplicities CM:" << endl;
@@ -587,8 +631,8 @@ int algebra_global::subprimitive(int q, int h)
 	for (i = 0; i < q - 1; i++) {
 		if (CM[i]) {
 			r = CM[i];
-			}
 		}
+	}
 
 	//cout << "delete S" << endl;
 	FREE_int(S);
@@ -763,15 +807,16 @@ int algebra_global::PHG_element_normalize_from_front(finite_ring &R,
 	for (i = 0; i < len; i++) {
 		a = v[i * stride];
 		if (R.is_unit(a)) {
-			if (a == 1)
+			if (a == 1) {
 				return i;
+			}
 			a = R.inverse(a);
 			for (j = 0; j < len; j++) {
 				v[j * stride] = R.mult(v[j * stride], a);
-				}
-			return i;
 			}
+			return i;
 		}
+	}
 	cout << "algebra_global::PHG_element_normalize_from_front "
 			"vector is not free" << endl;
 	exit(1);
@@ -793,44 +838,44 @@ int algebra_global::PHG_element_rank(finite_ring &R,
 	if (len <= 0) {
 		cout << "algebra_global::PHG_element_rank len <= 0" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "the vector before normalization is ";
 		for (i = 0; i < len; i++) {
 			cout << v[i * stride] << " ";
-			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 	idx = PHG_element_normalize(R, v, stride, len);
 	if (f_v) {
 		cout << "the vector after normalization is ";
 		for (i = 0; i < len; i++) {
 			cout << v[i * stride] << " ";
-			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 	w = NEW_int(len - 1);
 	embedding = NEW_int(len - 1);
 	for (i = 0, j = 0; i < len - 1; i++, j++) {
 		if (i == idx) {
 			j++;
-			}
-		embedding[i] = j;
 		}
+		embedding[i] = j;
+	}
 	for (i = 0; i < len - 1; i++) {
 		w[i] = v[embedding[i] * stride];
-		}
+	}
 	for (i = 0; i < len - 1; i++) {
 		a = w[i];
 		b = a % R.get_p();
 		v[embedding[i] * stride] = b;
 		w[i] = (a - b) / R.get_p();
-		}
+	}
 	if (f_v) {
 		cout << "w=";
 		int_vec_print(cout, w, len - 1);
 		cout << endl;
-		}
+	}
 	r1 = Gg.AG_element_rank(R.get_e(), w, 1, len - 1);
 	R.get_Fp()->PG_element_rank_modified_lint(v, stride, len, r2);
 
@@ -1017,17 +1062,21 @@ int algebra_global::is_diagonal_matrix(int *A, int n)
 
 const char *algebra_global::get_primitive_polynomial(int p, int e, int verbose_level)
 {
-	//int f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	int idx;
-	char *s;
+	//char *s;
 	sorting Sorting;
 
-	if (!Sorting.int_vec_search(finitefield_primes, finitefield_nb_primes, p, idx)) {
-		cout << "I don't have prime " << p << " in the tables" << endl;
+	if (f_v) {
+		cout << "algebra_global::get_primitive_polynomial" << endl;
+	}
 
+	if (!Sorting.int_vec_search(finitefield_primes, finitefield_nb_primes, p, idx)) {
+			cout << "algebra_global::get_primitive_polynomial "
+					"I don't have prime " << p << " in the tables" << endl;
 		exit(1);
 
-
+#if 0
 		cout << "searching for a polynomial of degree " << e << endl;
 
 		algebra_global AG;
@@ -1035,29 +1084,26 @@ const char *algebra_global::get_primitive_polynomial(int p, int e, int verbose_l
 		s = AG.search_for_primitive_polynomial_of_given_degree(p, e, verbose_level);
 		cout << "the search came up with a polynomial of degree " << e << ", coded as " << s << endl;
 		return s;
-	}
-#if 0
-	for (idx = 0; idx < finitefield_nb_primes; idx++) {
-		if (finitefield_primes[idx] == p)
-			break;
-	}
-	if (idx == finitefield_nb_primes) {
-		cout << "get_primitive_polynomial() couldn't find prime " << p << endl;
-		exit(1);
-	}
 #endif
+
+	}
 	if (e > finitefield_largest_degree_irreducible_polynomial[idx]) {
-		cout << "get_primitive_polynomial() I do not have a polynomial\n";
+		cout << "algebra_global::get_primitive_polynomial "
+				"I do not have a polynomial" << endl;
 		cout << "of that degree over that field" << endl;
 		cout << "requested: degree " << e << " polynomial over GF(" << p << ")" << endl;
 		exit(1);
 	}
 	const char *m = finitefield_primitive_polynomial[idx][e - 2];
 	if (strlen(m) == 0) {
-		cout << "get_primitive_polynomial() I do not have a polynomial\n";
+		cout << "algebra_global::get_primitive_polynomial "
+				"I do not have a polynomial" << endl;
 		cout << "of that degree over that field" << endl;
 		cout << "requested: degree " << e << " polynomial over GF(" << p << ")" << endl;
 		exit(1);
+	}
+	if (f_v) {
+		cout << "algebra_global::get_primitive_polynomial done" << endl;
 	}
 	return m;
 }
@@ -1380,8 +1426,8 @@ void algebra_global::make_all_irreducible_polynomials_of_degree_d(
 		cout << endl;
 	}
 
-	FX.create_object_by_rank(g, 0, __FILE__, __LINE__, verbose_level);
-	FX.create_object_by_rank(minpol, 0, __FILE__, __LINE__, verbose_level);
+	FX.create_object_by_rank(g, 0, __FILE__, __LINE__, 0 /* verbose_level */);
+	FX.create_object_by_rank(minpol, 0, __FILE__, __LINE__, 0 /* verbose_level */);
 
 	int *Frobenius;
 	int *Normal_basis;

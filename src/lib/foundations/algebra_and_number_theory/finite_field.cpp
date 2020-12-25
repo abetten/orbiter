@@ -100,11 +100,6 @@ finite_field::~finite_field()
 	if (v3) {
 		FREE_int(v3);
 	}
-#if 0
-	if (symbol_for_print) {
-		FREE_char(symbol_for_print);
-	}
-#endif
 	if (f_belongs_to_quadratic_subfield) {
 		FREE_int(f_belongs_to_quadratic_subfield);
 	}
@@ -209,16 +204,7 @@ void finite_field::set_default_symbol_for_print()
 
 void finite_field::init_symbol_for_print(const char *symbol)
 {
-#if 0
-	if (symbol_for_print) {
-		FREE_char(symbol_for_print);
-		symbol_for_print = NULL;
-	}
-	symbol_for_print = NEW_char(strlen(symbol) + 1);
-	strcpy(symbol_for_print, symbol);
-#else
 	symbol_for_print.assign(symbol);
-#endif
 }
 
 void finite_field::init_override_polynomial(int q,
@@ -747,7 +733,7 @@ void finite_field::create_tables_prime_field(int verbose_level)
 	
 	if (f_v) {
 		cout << "finite_field::create_tables_prime_field" << endl;
-		}
+	}
 	reordered_list_of_elements[0] = 0;
 	reordered_list_of_elements[1] = 1;
 	if (q >= 2) {
@@ -880,18 +866,22 @@ int finite_field::minus_one()
 
 int finite_field::is_zero(int i)
 {
-	if (i == 0)
+	if (i == 0) {
 		return TRUE;
-	else
+	}
+	else {
 		return FALSE;
+	}
 }
 
 int finite_field::is_one(int i)
 {
-	if (i == 1)
+	if (i == 1) {
 		return TRUE;
-	else
+	}
+	else {
 		return FALSE;
+	}
 }
 
 int finite_field::mult(int i, int j)
@@ -1017,7 +1007,7 @@ int finite_field::product_n(int *a, int n)
 
 	if (n == 0) {
 		return 1;
-		}
+	}
 	x = a[0];
 	for (i = 1; i < n; i++) {
 		x = mult(x, a[i]);

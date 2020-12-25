@@ -22,15 +22,16 @@ namespace top_level {
 blt_set_classify::blt_set_classify()
 {
 	Blt_set_domain = NULL;
+	LG = NULL;
+	A = NULL;
+	starter_size = 0;
 	f_semilinear = FALSE;
+	q = 0;
 	Control = NULL;
 	Poset = NULL;
 	gen = NULL;
-	q = 0;
 	degree = 0;
 	target_size = 0;
-	starter_size = 0;
-	A = NULL;
 	//null();
 }
 
@@ -81,12 +82,10 @@ void blt_set_classify::freeself()
 
 
 
-void blt_set_classify::init_basic(orthogonal *O,
-	int f_semilinear,
-	//const char *input_prefix,
-	//const char *base_fname,
-	int starter_size,  
-	int verbose_level)
+void blt_set_classify::init_basic(linear_group *LG,
+		poset_classification_control *Control,
+		int starter_size,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -94,46 +93,120 @@ void blt_set_classify::init_basic(orthogonal *O,
 		cout << "blt_set_classify::init_basic" << endl;
 		cout << "blt_set_classify::init_basic "
 				"verbose_level = " << verbose_level << endl;
-		}
+	}
+
+	action_on_orthogonal *AO;
+	orthogonal *O;
+	int f_semilinear;
 
 
-	//gen = NEW_OBJECT(poset_classification);
+	blt_set_classify::starter_size = starter_size;
+	blt_set_classify::LG = LG;
+	A = LG->A2;
 
+
+	if (A->type_G != action_on_orthogonal_t) {
+		cout << "the group must be of orthogonal type" << endl;
+		exit(1);
+	}
+	AO = A->G.AO;
+	O = AO->O;
+	q = O->F->q;
+	f_semilinear = A->subaction->is_semilinear_matrix_group();
+
+	if (f_v) {
+		cout << "blt_set_classify::init_basic" << endl;
+		cout << "blt_set_classify::init_basic "
+				"f_semilinear = " << f_semilinear << endl;
+	}
+
+
+#if 0
+	if (f_v) {
+		cout << "blt_set_classify::init_basic "
+				"before lex_least_base_in_place" << endl;
+	}
+	A->lex_least_base_in_place(0 /*verbose_level - 2*/);
+	if (f_v) {
+		cout << "blt_set_classify::init_basic "
+				"after lex_least_base_in_place" << endl;
+	}
+	if (f_v) {
+		cout << "blt_set_classify::init_group "
+				"computing lex least base done" << endl;
+		cout << "blt_set::init_group base: ";
+		lint_vec_print(cout, A->get_base(), A->base_len());
+		cout << endl;
+	}
+#endif
 	
 
 	Blt_set_domain = NEW_OBJECT(blt_set_domain);
 	Blt_set_domain->init(O, verbose_level);
 
-	blt_set_classify::f_semilinear = f_semilinear;
-
-	q = O->F->q;
 	degree = Blt_set_domain->degree;
 	target_size = Blt_set_domain->target_size;
-	blt_set_classify::starter_size = starter_size;
 
-	//strcpy(starter_directory_name, input_prefix);
-	//strcpy(prefix, base_fname);
-	//sprintf(prefix_with_directory, "%s%s",
-	//		starter_directory_name, base_fname);
-
-	//strcpy(gen->fname_base, prefix_with_directory);
-		
-
-	Control = NEW_OBJECT(poset_classification_control);
-
-	Control->f_depth = TRUE;
-	Control->depth = target_size;
 
 	if (f_v) {
 		cout << "blt_set_classify::init_basic q=" << q
 				<< " target_size = " << target_size << endl;
-		}
+	}
 	
 	if (f_v) {
+		cout << "blt_set_classify::init_basic depth = " << Control->depth << endl;
+	}
+
+
+
+	Poset = NEW_OBJECT(poset);
+	Poset->init_subset_lattice(A, A,
+			LG->Strong_gens,
+			verbose_level);
+
+	if (f_v) {
+		cout << "blt_set_classify::init_basic before "
+				"Poset->add_testing_without_group" << endl;
+	}
+	Poset->add_testing_without_group(
+			blt_set_classify_early_test_func_callback,
+				this /* void *data */,
+				verbose_level);
+	if (f_v) {
+		cout << "blt_set_classify::init_basic after "
+				"Poset->add_testing_without_group" << endl;
+	}
+
+	Poset->f_print_function = FALSE;
+	Poset->print_function = blt_set_classify_print;
+	Poset->print_function_data = (void *) this;
+
+	gen = NEW_OBJECT(poset_classification);
+
+	//gen->initialize_and_allocate_root_node(Control, Poset,
+	//	Control->depth /* sz */, verbose_level);
+
+
+	if (f_v) {
+		cout << "blt_set_classify::init_basic before gen->compute_orbits_on_subsets" << endl;
+	}
+	gen->compute_orbits_on_subsets(
+			starter_size/* target_depth */,
+			Control,
+			Poset,
+			verbose_level);
+
+	if (f_v) {
+		cout << "blt_set_classify::init_basic after gen->compute_orbits_on_subsets" << endl;
+	}
+
+
+	if (f_v) {
 		cout << "blt_set_classify::init_basic finished" << endl;
-		}
+	}
 }
 
+#if 0
 void blt_set_classify::init_group(int f_semilinear, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -224,7 +297,6 @@ void blt_set_classify::init_group(int f_semilinear, int verbose_level)
 	}
 }
 
-
 void blt_set_classify::init_orthogonal_hash(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -240,53 +312,7 @@ void blt_set_classify::init_orthogonal_hash(int verbose_level)
 		cout << "blt_set_classify::init_orthogonal_hash finished" << endl;
 	}
 }
-
-void blt_set_classify::init2(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "blt_set_classify::init2" << endl;
-	}
-
-
-	
-	if (f_v) {
-		cout << "blt_set_classify::init2 depth = " << Control->depth << endl;
-	}
-
-
-
-	Poset = NEW_OBJECT(poset);
-	Poset->init_subset_lattice(A, A,
-			A->Strong_gens,
-			verbose_level);
-	
-	if (f_v) {
-		cout << "blt_set_classify::init2 before "
-				"Poset->add_testing_without_group" << endl;
-	}
-	Poset->add_testing_without_group(
-			blt_set_classify_early_test_func_callback,
-				this /* void *data */,
-				verbose_level);
-
-	Poset->f_print_function = FALSE;
-	Poset->print_function = blt_set_classify_print;
-	Poset->print_function_data = (void *) this;
-
-	gen = NEW_OBJECT(poset_classification);
-
-	gen->initialize_and_allocate_root_node(Control, Poset,
-		Control->depth /* sz */, verbose_level);
-	
-
-	if (f_v) {
-		cout << "blt_set_classify::init2 done" << endl;
-	}
-}
-
-
+#endif
 
 
 
@@ -498,7 +524,6 @@ void blt_set_classify::create_graphs_list_of_cases(
 	char str[1000];
 	string fname;
 	string fname_list_of_cases;
-	//char graph_fname_base[1000];
 	int orbit;
 	int nb_orbits;
 	long int *list_of_cases_created;
@@ -511,7 +536,6 @@ void blt_set_classify::create_graphs_list_of_cases(
 	fname.assign(gen->get_problem_label_with_path());
 	fname.append(str);
 
-	//sprintf(fname, "%s_lvl_%d", gen->get_problem_label_with_path(), starter_size);
 
 	sprintf(str, "_list_of_cases.txt");
 	fname_list_of_cases.assign(output_prefix);
@@ -519,9 +543,6 @@ void blt_set_classify::create_graphs_list_of_cases(
 	fname_list_of_cases.append(case_label);
 	fname_list_of_cases.append(str);
 
-
-	//sprintf(fname_list_of_cases, "%s%s_list_of_cases.txt",
-	//		output_prefix, case_label);
 
 	nb_orbits = Fio.count_number_of_orbits_in_file(fname, 0);
 	if (f_v) {
@@ -564,7 +585,7 @@ void blt_set_classify::create_graphs_list_of_cases(
 			fname.assign(output_prefix);
 			fname.append(CG->fname_base);
 			fname.append(".bin");
-			//snprintf(fname, 2000, "%s%s.bin", output_prefix, CG->fname_base);
+
 			CG->save(fname, verbose_level - 2);
 			
 			nb_vertices = CG->nb_points;
@@ -969,7 +990,7 @@ void blt_set_classify::report(orbit_transversal *T, int verbose_level)
 	int f_pagenumbers = TRUE;
 	latex_interface L;
 
-	sprintf(title, "BLT-sets of Q$(4,%d)$", q);
+	sprintf(title, "BLT-sets of ${\\cal Q}(4,%d)$", q);
 	cout << "Writing file " << fname << " with "
 			<< T->nb_orbits << " BLT-sets:" << endl;
 	L.head(f, f_book, f_title,
@@ -1520,14 +1541,6 @@ void blt_set_classify_callback_report(isomorph *Iso, void *data, int verbose_lev
 	Gen->report_from_iso(*Iso, verbose_level);
 }
 
-#if 0
-void blt_set_classify_callback_subset_orbits(isomorph *Iso, void *data, int verbose_level)
-{
-	blt_set *Gen = (blt_set *) data;
-
-	Gen->subset_orbits(*Iso, verbose_level);
-}
-#endif
 
 }}
 

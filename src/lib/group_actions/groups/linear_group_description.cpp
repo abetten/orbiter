@@ -19,6 +19,9 @@ linear_group_description::linear_group_description()
 	f_general = FALSE;
 	f_affine = FALSE;
 	f_GL_d_q_wr_Sym_n = FALSE;
+	f_orthogonal = FALSE;
+	f_orthogonal_p = FALSE;
+	f_orthogonal_m = FALSE;
 	GL_wreath_Sym_d = 0;
 	GL_wreath_Sym_n = 0;
 
@@ -30,6 +33,8 @@ linear_group_description::linear_group_description()
 	f_semilinear = FALSE;
 	f_special = FALSE;
 	
+
+	// induced actions and subgroups:
 	f_wedge_action = FALSE;
 	f_wedge_action_detached = FALSE;
 	f_PGL2OnConic = FALSE;
@@ -240,6 +245,50 @@ int linear_group_description::read_arguments(
 					<< " " << input_q << " " << GL_wreath_Sym_n << endl;
 		}
 
+		// the orthogonal groups:
+		// PGO0, PGOp, PGOm
+		else if (stringcmp(argv[i], "-PGO") == 0) {
+			n = strtoi(argv[++i]);
+			input_q.assign(argv[++i]);
+			f_orthogonal = TRUE;
+			f_semilinear = FALSE;
+			cout << "-PGO " << n << " " << input_q << endl;
+		}
+		else if (stringcmp(argv[i], "-PGOp") == 0) {
+			n = strtoi(argv[++i]);
+			input_q.assign(argv[++i]);
+			f_orthogonal_p = TRUE;
+			f_semilinear = FALSE;
+			cout << "-PGOp " << n << " " << input_q << endl;
+		}
+		else if (stringcmp(argv[i], "-PGOm") == 0) {
+			n = strtoi(argv[++i]);
+			input_q.assign(argv[++i]);
+			f_orthogonal_m = TRUE;
+			f_semilinear = FALSE;
+			cout << "-PGOm " << n << " " << input_q << endl;
+		}
+		else if (stringcmp(argv[i], "-PGGO") == 0) {
+			n = strtoi(argv[++i]);
+			input_q.assign(argv[++i]);
+			f_orthogonal = TRUE;
+			f_semilinear = TRUE;
+			cout << "-PGGO " << n << " " << input_q << endl;
+		}
+		else if (stringcmp(argv[i], "-PGGOp") == 0) {
+			n = strtoi(argv[++i]);
+			input_q.assign(argv[++i]);
+			f_orthogonal_p = TRUE;
+			f_semilinear = TRUE;
+			cout << "-PGGOp " << n << " " << input_q << endl;
+		}
+		else if (stringcmp(argv[i], "-PGGOm") == 0) {
+			n = strtoi(argv[++i]);
+			input_q.assign(argv[++i]);
+			f_orthogonal_m = TRUE;
+			f_semilinear = TRUE;
+			cout << "-PGGOm " << n << " " << input_q << endl;
+		}
 
 
 		else if (stringcmp(argv[i], "-wedge") == 0) {

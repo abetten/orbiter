@@ -670,6 +670,9 @@ public:
 		int Andre_Bruck_Bose_construction_spread_no;
 		std::string Andre_Bruck_Bose_construction_label;
 
+		int f_BLT_starter;
+		int BLT_starter_size;
+
 
 
 	group_theoretic_activity_description();
@@ -788,6 +791,10 @@ public:
 	void do_Andre_Bruck_Bose_construction(int spread_no,
 			int f_Fano, int f_arcs, int f_depth, int depth,
 			std::string &label,
+			int verbose_level);
+	void do_BLT_starter(
+			linear_group *LG,
+			int starter_size,
 			int verbose_level);
 
 

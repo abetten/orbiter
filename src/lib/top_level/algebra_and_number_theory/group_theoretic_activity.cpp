@@ -147,8 +147,9 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 
 	if (Descr->f_report) {
+
 		if (!The_Orbiter_session->f_draw_options) {
-			cout << "for a report, please use -draw_options" << endl;
+			cout << "for a report of the group, please use -draw_options" << endl;
 			exit(1);
 		}
 
@@ -515,6 +516,14 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	}
 
 
+	else if (Descr->f_BLT_starter) {
+		do_BLT_starter(
+					LG,
+					Descr->BLT_starter_size,
+					verbose_level);
+	}
+
+
 	if (f_v) {
 		cout << "group_theoretic_activity::perform_activity done" << endl;
 	}
@@ -802,7 +811,8 @@ void group_theoretic_activity::normalizer(int verbose_level)
 					TRUE /* f_pagenumbers */,
 					NULL /* extra_praeamble */);
 
-			ost << "\\noindent The group $" << LG->label_tex << "$ of order " << H_order << " is:\\\\" << endl;
+			ost << "\\noindent The group $" << LG->label_tex << "$ "
+					"of order " << H_order << " is:\\\\" << endl;
 			LG->Strong_gens->print_generators_tex(ost);
 
 			ost << "\\bigskip" << endl;
@@ -2115,102 +2125,6 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 	}
 
 
-#if 0
-
-	for (int d = 0; d <= depth; d++) {
-		cout << "There are " << PC->nb_orbits_at_level(d)
-				<< " orbits on subsets of size " << d << ":" << endl;
-
-		if (d < Descr->orbits_on_subsets_size) {
-			//continue;
-		}
-		PC->list_all_orbits_at_level(d,
-				FALSE /* f_has_print_function */,
-				NULL /* void (*print_function)(ostream &ost, int len, int *S, void *data)*/,
-				NULL /* void *print_function_data*/,
-				FALSE /* f_show_orbit_decomposition */,
-				TRUE /* f_show_stab */,
-				FALSE /* f_save_stab */,
-				FALSE /* f_show_whole_orbit*/);
-	}
-#endif
-
-	if (f_v) {
-		cout << "group_theoretic_activity::orbits_on_poset_post_processing "
-				"after PC->list_all_orbits_at_level" << endl;
-	}
-
-#if 0
-	if (Descr->f_report) {
-
-		if (f_v) {
-			cout << "group_theoretic_activity::orbits_on_poset_post_processing doing a report" << endl;
-		}
-		{
-			char fname_report[1000];
-			sprintf(fname_report, "%s_poset.tex", LG->label.c_str());
-			latex_interface L;
-			file_io Fio;
-
-			{
-				ofstream ost(fname_report);
-				L.head_easy(ost);
-
-				if (f_v) {
-					cout << "group_theoretic_activity::orbits_on_poset_post_processing "
-							"before A1->report" << endl;
-				}
-
-				A1 /*LG->A_linear*/->report(ost,
-						FALSE /* f_sims */,
-						NULL, //A1/*LG->A_linear*/->Sims,
-						TRUE /* f_strong_gens */,
-						LG->Strong_gens,
-						verbose_level - 1);
-
-				if (f_v) {
-					cout << "group_theoretic_activity::orbits_on_poset_post_processing "
-							"after LG->A_linear->report" << endl;
-				}
-
-				L.foot(ost);
-			}
-			cout << "Written file " << fname_report << " of size "
-					<< Fio.file_size(fname_report) << endl;
-		}
-	}
-#endif
-
-#if 0
-	if (Descr->f_draw_poset) {
-		{
-		char fname_poset[1000];
-		sprintf(fname_poset, "%s_poset_%d", LG->prefix, depth);
-		PC->draw_poset(fname_poset,
-				depth /*depth*/, 0 /* data1 */,
-				TRUE /* f_embedded */,
-				FALSE /* f_sideways */,
-				0 /* verbose_level */);
-		}
-	}
-
-	if (Descr->f_draw_full_poset) {
-		{
-		char fname_poset[1000];
-		sprintf(fname_poset, "%s_poset_%d", LG->prefix, depth);
-		//double x_stretch = 0.4;
-		PC->draw_poset_full(fname_poset, depth,
-			0 /* data1 */, Descr->f_embedded, Descr->f_sideways,
-			Descr->x_stretch, 0 /*verbose_level */);
-
-		const char *fname_prefix = "flag_orbits";
-
-		PC->make_flag_orbits_on_relations(
-				depth, fname_prefix, verbose_level);
-
-		}
-	}
-#endif
 
 
 	if (Descr->f_test_if_geometric) {
@@ -2384,166 +2298,6 @@ void group_theoretic_activity::do_classify_arcs(
 		cout << "group_theoretic_activity::do_classify_arcs after Gen->main" << endl;
 	}
 
-#if 0
-	if (Gen->f_starter) {
-			cout << "preparing level spreadsheet" << endl;
-			{
-			spreadsheet *Sp;
-			Gen->gen->make_spreadsheet_of_level_info(
-					Sp, Gen->ECA->starter_size, Gen->verbose_level);
-			char fname_csv[1000];
-			sprintf(fname_csv, "arcs_%d_%d_level.csv",
-					Gen->q, Gen->ECA->starter_size);
-			Sp->save(fname_csv, Gen->verbose_level);
-			delete Sp;
-			}
-			cout << "preparing orbit spreadsheet" << endl;
-			{
-			spreadsheet *Sp;
-			Gen->gen->make_spreadsheet_of_orbit_reps(
-					Sp, Gen->ECA->starter_size);
-			char fname_csv[1000];
-			sprintf(fname_csv, "arcs_%d_%d.csv",
-					Gen->q, Gen->ECA->starter_size);
-			Sp->save(fname_csv, Gen->verbose_level);
-			delete Sp;
-			}
-			cout << "preparing orbit spreadsheet done" << endl;
-	}
-
-	if (f_draw_poset) {
-		cout << "f_draw_poset verbose_level=" << verbose_level << endl;
-		{
-		char fname_poset[1000];
-
-		Gen->gen->draw_poset_fname_base_poset_lvl(fname_poset, Gen->ECA->starter_size);
-#if 0
-		sprintf(fname_poset, "arcs_%d_poset_%d",
-				Gen->q, Gen->ECA->starter_size);
-#endif
-		Gen->gen->draw_poset(fname_poset,
-				Gen->ECA->starter_size /*depth*/,
-				0 /* data1 */,
-				f_embedded /* f_embedded */,
-				FALSE /* f_sideways */,
-				verbose_level);
-		}
-	}
-	if (f_draw_full_poset) {
-		cout << "f_draw_full_poset verbose_level=" << verbose_level << endl;
-		{
-		char fname_flag_orbits[1000];
-
-		Gen->gen->draw_poset_fname_base_poset_lvl(fname_flag_orbits, Gen->ECA->starter_size);
-		strcat(fname_flag_orbits, "_flag_orbits");
-
-		Gen->gen->make_flag_orbits_on_relations(
-				Gen->ECA->starter_size, fname_flag_orbits, verbose_level);
-		}
-	}
-	if (f_report) {
-		cout << "doing a report" << endl;
-
-		file_io Fio;
-
-		{
-		char fname[1000];
-		char title[1000];
-		char author[1000];
-		//int f_with_stabilizers = TRUE;
-
-		sprintf(title, "Arcs over GF(%d) ", q);
-		sprintf(author, "Orbiter");
-		sprintf(fname, "Arcs_q%d.tex", q);
-
-			{
-			ofstream fp(fname);
-			latex_interface L;
-
-			//latex_head_easy(fp);
-			L.head(fp,
-				FALSE /* f_book */,
-				TRUE /* f_title */,
-				title, author,
-				FALSE /*f_toc */,
-				FALSE /* f_landscape */,
-				FALSE /* f_12pt */,
-				TRUE /*f_enlarged_page */,
-				TRUE /* f_pagenumbers*/,
-				NULL /* extra_praeamble */);
-
-			fp << "\\section{The field of order " << q << "}" << endl;
-			fp << "\\noindent The field ${\\mathbb F}_{"
-					<< Gen->q
-					<< "}$ :\\\\" << endl;
-			Gen->F->cheat_sheet(fp, verbose_level);
-
-			fp << "\\section{The plane PG$(2, " << q << ")$}" << endl;
-
-			fp << "The points in the plane PG$(2, " << q << ")$:\\\\" << endl;
-
-			fp << "\\bigskip" << endl;
-
-
-			Gen->P->cheat_sheet_points(fp, 0 /*verbose_level*/);
-
-
-			int f_group_table = FALSE;
-			double tikz_global_scale = 0.3;
-			double tikz_global_line_width = 1.;
-			int factor1000 = 1000;
-
-			LG->report(fp, f_sylow, f_group_table,
-					tikz_global_scale, tikz_global_line_width, factor1000,
-					verbose_level);
-
-			fp << endl;
-			fp << "\\section{Poset Classification}" << endl;
-			fp << endl;
-
-
-			Gen->gen->report(fp);
-
-			L.foot(fp);
-			}
-		cout << "Written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-		}
-		if (f_recognize) {
-			cout << "recognizing the set " << recognize_set_ascii << endl;
-			long int *recognize_set;
-			int recognize_set_sz;
-			int *transporter;
-			int *transporter_inv;
-			int f_implicit_fusion = TRUE;
-			int final_node = 0;
-
-			lint_vec_scan(recognize_set_ascii, recognize_set, recognize_set_sz);
-			cout << "set=";
-			lint_vec_print(cout, recognize_set, recognize_set_sz);
-			cout << endl;
-
-			transporter = NEW_int(A->elt_size_in_int);
-			transporter_inv = NEW_int(A->elt_size_in_int);
-			Gen->gen->recognize(
-					recognize_set, recognize_set_sz, transporter, f_implicit_fusion,
-					final_node, verbose_level);
-			cout << "final_node = " << final_node << endl;
-
-			A->element_invert(transporter, transporter_inv, 0);
-
-			cout << "transporter=" << endl;
-			A->element_print(transporter, cout);
-			cout << endl;
-
-			cout << "transporter_inv=" << endl;
-			A->element_print(transporter_inv, cout);
-			cout << endl;
-
-		}
-	}
-#endif
-
 
 	FREE_OBJECT(Gen);
 	}
@@ -2709,19 +2463,6 @@ void group_theoretic_activity::do_tensor_permutations(int verbose_level)
 	if (f_v) {
 		cout << "group_theoretic_activity::do_tensor_permutations" << endl;
 	}
-
-#if 0
-	poset_classification_control *Control;
-
-	if (Descr->f_poset_classification_control) {
-		Control = Descr->Control;
-	}
-	else {
-		Control = NEW_OBJECT(poset_classification_control);
-	}
-#endif
-
-
 
 	tensor_classify *T;
 
@@ -3600,7 +3341,50 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(int spread_no,
 	}
 }
 
+void group_theoretic_activity::do_BLT_starter(
+		linear_group *LG,
+		int starter_size,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "group_theoretic_activity::do_BLT_starter" << endl;
+	}
+
+	poset_classification_control *Control;
+
+	if (Descr->f_poset_classification_control) {
+		Control = Descr->Control;
+	}
+	else {
+		cout << "please use option -poset_classification_control" << endl;
+		exit(1);
+		//Control = NEW_OBJECT(poset_classification_control);
+	}
+
+	blt_set_classify *BLT;
+
+	BLT = NEW_OBJECT(blt_set_classify);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_BLT_starter before BLT->init_basic" << endl;
+	}
+	BLT->init_basic(LG,
+			Control,
+			starter_size,
+			verbose_level);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_BLT_starter after BLT->init_basic" << endl;
+	}
+
+	FREE_OBJECT(BLT);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_BLT_starter done" << endl;
+	}
+
+}
 
 // #############################################################################
 // global functions:

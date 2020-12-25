@@ -19,11 +19,14 @@ namespace foundations {
 void finite_field::representing_matrix8_R(int *A,
 		int q, int a, int b, int c, int d)
 {
-	int i;	
+	//int i;
 	
+	int_vec_zero(A, 64);
+#if 0
 	for (i = 0; i < 8 * 8; i++) {
 		A[i] = 0;
 		}
+#endif
 	A[0 * 8 + 0] = m_term(q, d, d, d);
 	A[0 * 8 + 1] = m_term(q, c, c, c);
 	A[0 * 8 + 2] = m_term(q, d, d, c);
@@ -102,7 +105,7 @@ void finite_field::representing_matrix8_R(int *A,
 void finite_field::representing_matrix9_R(int *A,
 		int q, int a, int b, int c, int d)
 {
-	int i;
+	//int i;
 	int tq = 2 * q;
 	int tq1 = 2 * q + 1;
 	int tq2 = 2 * q + 2;
@@ -110,9 +113,12 @@ void finite_field::representing_matrix9_R(int *A,
 	int q2 = q + 2;
 	
 	
+	int_vec_zero(A, 81);
+#if 0
 	for (i = 0; i < 9 * 9; i++) {
 		A[i] = 0;
 		}
+#endif
 	A[0 * 9 + 0] = term1(d,tq2);
 	A[0 * 9 + 1] = term2(c,d,q1,q1);
 	A[0 * 9 + 2] = term1(c,tq2);
@@ -339,7 +345,7 @@ void finite_field::representing_matrix8_U(int *A, int a, int b, int c, int d, in
 		cout << "finite_field::representing_matrix8_U "
 				"field does not have a cubic subfield" << endl;
 		exit(1);
-		}
+	}
 	//cout << "a=" << a << " b=" << b << " c=" << c << " d=" << d << endl;
 	
 	q = NT.i_power_j(p, r);
@@ -502,13 +508,13 @@ void finite_field::representing_matrix8_U(int *A, int a, int b, int c, int d, in
 	for (j = 2; j <= 4; j++) {
 		for (i = 0; i < 8; i++) {
 			A[i * 8 + j] = mult(A[i * 8 + j], delta1);
-			}
 		}
+	}
 	for (j = 5; j <= 7; j++) {
 		for (i = 0; i < 8; i++) {
 			A[i * 8 + j] = mult(A[i * 8 + j], delta2);
-			}
 		}
+	}
 	FREE_int(eta);
 	FREE_int(zeta);
 	FREE_int(M1);
@@ -531,7 +537,7 @@ void finite_field::representing_matrix8_V(int *A, int beta)
 		cout << "finite_field::representing_matrix8_V "
 				"field does not have a cubic subfield" << endl;
 		exit(1);
-		}
+	}
 	//cout << "a=" << a << " b=" << b << " c=" << c << " d=" << d << endl;
 	
 	q = NT.i_power_j(p, r);
@@ -542,8 +548,11 @@ void finite_field::representing_matrix8_V(int *A, int beta)
 	delta1 = inverse(T3(add(beta_21, negate(beta_12))));
 	delta2 = inverse(T3(add(beta_123, negate(beta_132))));
 
+	int_vec_zero(A, 64);
+#if 0
 	for (i = 0; i < 8 * 8; i++)
 		A[i] = 0;
+#endif
 	
 	A[0 * 8 + 0] = 1;
 	A[1 * 8 + 1] = 1;
@@ -570,19 +579,19 @@ void finite_field::representing_matrix8_V(int *A, int beta)
 	for (j = 2; j <= 4; j++) {
 		for (i = 2; i <= 4; i++) {
 			A[i * 8 + j] = mult(A[i * 8 + j], delta1);
-			}
 		}
+	}
 	for (j = 5; j <= 7; j++) {
 		for (i = 5; i <= 7; i++) {
 			A[i * 8 + j] = mult(A[i * 8 + j], delta2);
-			}
 		}
+	}
 }
 
 
 void finite_field::representing_matrix9b(int *A, int beta)
 {
-	int r, /*q,*/ beta_q, delta, minus_one, i;
+	int r, /*q,*/ beta_q, delta, minus_one; //, i;
 		// gamma, betagamma, i, Tgamma, Tbetagamma, nTgamma;
 	
 	r = e / 2;
@@ -590,7 +599,7 @@ void finite_field::representing_matrix9b(int *A, int beta)
 		cout << "finite_field::representing_matrix9b field "
 				"does not have a quadratic subfield" << endl;
 		exit(1);
-		}
+	}
 	//q = i_power_j(p, r);
 	minus_one = negate(1);
 	beta_q = frobenius_power(beta, r);
@@ -606,8 +615,11 @@ void finite_field::representing_matrix9b(int *A, int beta)
 	//cout << "nTgamma=" << nTgamma << endl;
 	//cout << "Tbetagamma=" << Tbetagamma << endl;
 	
+	int_vec_zero(A, 81);
+#if 0
 	for (i = 0; i < 81; i++)
 		A[i] = 0;
+#endif
 	
 	// changed to n e w base:
 	// attention, now transposed!
@@ -752,7 +764,7 @@ A[7 * 8 + 7] = N3(a);
 
 void finite_field::representing_matrix8b(int *A, int beta)
 {
-	int r, q, delta, omega, i;
+	int r, q, delta, omega; //, i;
 	number_theory_domain NT;
 	
 	r = e / 3;
@@ -760,7 +772,7 @@ void finite_field::representing_matrix8b(int *A, int beta)
 		cout << "finite_field::representing_matrix8b "
 				"field does not have a cubic subfield" << endl;
 		exit(1);
-		}
+	}
 	q = NT.i_power_j(p, r);
 
 	delta = inverse(add(T3(power(beta, 2*q+1)),negate(T3(power(beta,q+2)))));
@@ -768,8 +780,11 @@ void finite_field::representing_matrix8b(int *A, int beta)
 	cout << "delta=" << delta << endl;
 	cout << "omega=" << omega << endl;
 	
+	int_vec_zero(A, 64);
+#if 0
 	for (i = 0; i < 64; i++)
 		A[i] = 0;
+#endif
 	
 	A[0 * 8 + 0] = 1;
 	A[7 * 8 + 7] = 1;
@@ -864,7 +879,7 @@ int finite_field::term1(int a1, int e1)
 	x = 1;
 	if (e1) {
 		x = mult(x, power(a1, e1));
-		}
+	}
 	return x;
 }
 
@@ -875,10 +890,10 @@ int finite_field::term2(int a1, int a2, int e1, int e2)
 	x = 1;
 	if (e1) {
 		x = mult(x, power(a1, e1));
-		}
+	}
 	if (e2) {
 		x = mult(x, power(a2, e2));
-		}
+	}
 	return x;
 }
 
@@ -889,13 +904,13 @@ int finite_field::term3(int a1, int a2, int a3, int e1, int e2, int e3)
 	x = 1;
 	if (e1) {
 		x = mult(x, power(a1, e1));
-		}
+	}
 	if (e2) {
 		x = mult(x, power(a2, e2));
-		}
+	}
 	if (e3) {
 		x = mult(x, power(a3, e3));
-		}
+	}
 	return x;
 }
 
@@ -907,16 +922,16 @@ int finite_field::term4(int a1, int a2, int a3, int a4,
 	x = 1;
 	if (e1) {
 		x = mult(x, power(a1, e1));
-		}
+	}
 	if (e2) {
 		x = mult(x, power(a2, e2));
-		}
+	}
 	if (e3) {
 		x = mult(x, power(a3, e3));
-		}
+	}
 	if (e4) {
 		x = mult(x, power(a4, e4));
-		}
+	}
 	return x;
 }
 
@@ -928,31 +943,21 @@ int finite_field::term5(int a1, int a2, int a3, int a4, int a5,
 	x = 1;
 	if (e1) {
 		x = mult(x, power(a1, e1));
-		}
+	}
 	if (e2) {
 		x = mult(x, power(a2, e2));
-		}
+	}
 	if (e3) {
 		x = mult(x, power(a3, e3));
-		}
+	}
 	if (e4) {
 		x = mult(x, power(a4, e4));
-		}
+	}
 	if (e5) {
 		x = mult(x, power(a5, e5));
-		}
+	}
 	return x;
 }
-
-#if 0
-int finite_field::product2(int a1, int a2)
-{
-	int x;
-	
-	x = mult(x, power(a1, a2));
-	return x;
-}
-#endif
 
 int finite_field::m_term(int q, int a1, int a2, int a3)
 {
