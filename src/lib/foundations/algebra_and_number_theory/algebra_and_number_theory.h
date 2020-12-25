@@ -211,11 +211,24 @@ public:
 	void find_CRC_polynomials(finite_field *F,
 			int t, int da, int dc,
 			int verbose_level);
-	void search_for_CRC_polynomial(int t, int da, int *A, int dc, int *C, int i, finite_field *F,
-			long int &nb_sol, std::vector<std::vector<int> > &Solutions, int verbose_level);
-	int test_all_two_bit_patterns(int da, int *A, int dc, int *C, finite_field *F, int verbose_level);
-	int test_all_three_bit_patterns(int da, int *A, int dc, int *C, finite_field *F, int verbose_level);
+	void search_for_CRC_polynomials(int t,
+			int da, int *A, int dc, int *C, int i, finite_field *F,
+			long int &nb_sol, std::vector<std::vector<int> > &Solutions,
+			int verbose_level);
+	void search_for_CRC_polynomials_binary(int t,
+			int da, int *A, int dc, int *C, int i,
+			long int &nb_sol, std::vector<std::vector<int> > &Solutions,
+			int verbose_level);
+	int test_all_two_bit_patterns(int da, int *A, int dc, int *C,
+			finite_field *F, int verbose_level);
+	int test_all_three_bit_patterns(int da, int *A, int dc, int *C,
+			finite_field *F, int verbose_level);
+	int test_all_two_bit_patterns_binary(int da, int *A, int dc, int *C,
+			int verbose_level);
+	int test_all_three_bit_patterns_binary(int da, int *A, int dc, int *C,
+			int verbose_level);
 	int remainder_is_nonzero(int da, int *A, int db, int *B, finite_field *F);
+	int remainder_is_nonzero_binary(int da, int *A, int db, int *B);
 
 };
 

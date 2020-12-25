@@ -2878,7 +2878,8 @@ void algebra_global::find_CRC_polynomials(finite_field *F,
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "algebra_global::find_CRC_polynomials t=" << t << " info=" << da << " check=" << dc << endl;
+		cout << "algebra_global::find_CRC_polynomials t=" << t
+				<< " info=" << da << " check=" << dc << endl;
 	}
 
 	//int dc = 4; //dc is the number of parity bits & degree of g(x)
@@ -2901,9 +2902,17 @@ void algebra_global::find_CRC_polynomials(finite_field *F,
 
 	std::vector<std::vector<int>> Solutions;
 
-	search_for_CRC_polynomial(t, da, A, dc, C, 0, F, nb_sol, Solutions, verbose_level - 1);
+	if (F->q == 2) {
+		search_for_CRC_polynomials_binary(t, da, A, dc, C, 0,
+				nb_sol, Solutions, verbose_level - 1);
+	}
+	else {
+		search_for_CRC_polynomials(t, da, A, dc, C, 0, F,
+				nb_sol, Solutions, verbose_level - 1);
+	}
 
-	cout << "algebra_global::find_CRC_polynomials info=" << da << " check=" << dc << " nb_sol=" << nb_sol << endl;
+	cout << "algebra_global::find_CRC_polynomials info=" << da
+			<< " check=" << dc << " nb_sol=" << nb_sol << endl;
 
 	for (i = 0; i < Solutions.size(); i++) {
 		cout << i << " : ";
@@ -2912,12 +2921,15 @@ void algebra_global::find_CRC_polynomials(finite_field *F,
 		}
 		cout << endl;
 	}
-	cout << "algebra_global::find_CRC_polynomials info=" << da << " check=" << dc << " nb_sol=" << nb_sol << endl;
+	cout << "algebra_global::find_CRC_polynomials info=" << da
+			<< " check=" << dc << " nb_sol=" << nb_sol << endl;
 
 }
 
-void algebra_global::search_for_CRC_polynomial(int t, int da, int *A, int dc, int *C, int i, finite_field *F,
-		long int &nb_sol, std::vector<std::vector<int> > &Solutions, int verbose_level)
+void algebra_global::search_for_CRC_polynomials(int t,
+		int da, int *A, int dc, int *C, int i, finite_field *F,
+		long int &nb_sol, std::vector<std::vector<int> > &Solutions,
+		int verbose_level)
 {
 
 	if (i == dc + 1) {
@@ -2958,7 +2970,7 @@ void algebra_global::search_for_CRC_polynomial(int t, int da, int *A, int dc, in
 	if (i == dc) {
 
 		C[i] = 1;
-		search_for_CRC_polynomial(t, da, A, dc, C, i + 1, F, nb_sol, Solutions, verbose_level);
+		search_for_CRC_polynomials(t, da, A, dc, C, i + 1, F, nb_sol, Solutions, verbose_level);
 
 
 	}
@@ -2969,12 +2981,74 @@ void algebra_global::search_for_CRC_polynomial(int t, int da, int *A, int dc, in
 
 			C[i] = c;
 
-			search_for_CRC_polynomial(t, da, A, dc, C, i + 1, F, nb_sol, Solutions, verbose_level);
+			search_for_CRC_polynomials(t, da, A, dc, C, i + 1, F, nb_sol, Solutions, verbose_level);
 		}
 	}
 }
 
-int algebra_global::test_all_two_bit_patterns(int da, int *A, int dc, int *C, finite_field *F, int verbose_level)
+void algebra_global::search_for_CRC_polynomials_binary(int t,
+		int da, int *A, int dc, int *C, int i,
+		long int &nb_sol, std::vector<std::vector<int> > &Solutions,
+		int verbose_level)
+{
+
+	if (i == dc + 1) {
+
+		int ret;
+
+		if (t >= 2) {
+			ret = test_all_two_bit_patterns_binary(da, A, dc, C, verbose_level);
+			if (ret && t >= 3) {
+				ret = test_all_three_bit_patterns_binary(da, A, dc, C, verbose_level);
+			}
+		}
+		else {
+			cout << "illegal value for t, t=" << t << endl;
+			exit(1);
+		}
+		if (ret) {
+			cout << "solution " << nb_sol << " is ";
+			for (int j = dc; j >= 0; j--) {
+				cout << C[j];
+			}
+			cout << endl;
+
+			vector<int> sol;
+
+			for (int j = 0; j <= dc; j++) {
+				sol.push_back(C[j]);
+			}
+			Solutions.push_back(sol);
+
+
+			nb_sol++;
+		}
+
+		return;
+	}
+
+	if (i == dc) {
+
+		C[i] = 1;
+		search_for_CRC_polynomials_binary(t, da, A, dc, C, i + 1, nb_sol, Solutions, verbose_level);
+
+
+	}
+	else {
+		int c;
+
+		for (c = 0; c < 2; c++) {
+
+			C[i] = c;
+
+			search_for_CRC_polynomials_binary(t, da, A, dc, C, i + 1, nb_sol, Solutions, verbose_level);
+		}
+	}
+}
+
+
+int algebra_global::test_all_two_bit_patterns(int da, int *A, int dc, int *C,
+		finite_field *F, int verbose_level)
 // returns true if division by C leaves a nonzero remainder for all two bit error patters
 {
 
@@ -3055,7 +3129,8 @@ int algebra_global::test_all_two_bit_patterns(int da, int *A, int dc, int *C, fi
 	return true;
 }
 
-int algebra_global::test_all_three_bit_patterns(int da, int *A, int dc, int *C, finite_field *F, int verbose_level)
+int algebra_global::test_all_three_bit_patterns(int da, int *A, int dc, int *C,
+		finite_field *F, int verbose_level)
 // returns true if division by C leaves a nonzero remainder for all two bit error patters
 {
 
@@ -3141,6 +3216,162 @@ int algebra_global::test_all_three_bit_patterns(int da, int *A, int dc, int *C, 
 	return true;
 }
 
+int algebra_global::test_all_two_bit_patterns_binary(int da, int *A, int dc, int *C,
+		int verbose_level)
+// returns true if division by C leaves a nonzero remainder for all two bit error patters
+{
+
+	//cout << "choosetwo" << endl;
+
+	int f_v = (verbose_level >= 1);
+
+	int i;
+	int j;
+	int k;
+	int ret;
+	int B[da + dc + 1];
+
+	if (f_v) {
+		cout << "testing polynomial: ";
+		for (k = dc; k >= 0; k--) {
+			cout << C[k];
+		}
+		cout << endl;
+	}
+
+	for (i = 0; i <= da; i++) {
+		A[i] = 0;
+	}
+
+	for (i = 0; i <= da; i++) {
+
+
+		A[i] = 1;
+
+		for (j = i + 1; j <= da; j++) {
+
+
+			A[j] = 1;
+
+			for (k = 0; k <= da; k++) {
+				B[dc + k] = A[k];
+			}
+			for (k = 0; k < dc; k++) {
+				B[k] = 0;
+			}
+
+			if (f_v) {
+				cout << "testing error pattern: ";
+				for (k = dc + da; k >= 0; k--) {
+					cout << B[k];
+				}
+			}
+
+
+
+			ret = remainder_is_nonzero_binary(da, B, dc, C);
+
+			if (f_v) {
+				cout << " : ";
+				for (k = dc; k >= 0; k--) {
+					cout << B[k];
+				}
+				cout << endl;
+			}
+
+			if (!ret) {
+				return false;
+			}
+
+			A[j] = 0;
+		}
+
+		A[i] = 0;
+	}
+	return true;
+}
+
+int algebra_global::test_all_three_bit_patterns_binary(int da, int *A, int dc, int *C,
+		int verbose_level)
+// returns true if division by C leaves a nonzero remainder for all two bit error patters
+{
+
+	//cout << "choosetwo" << endl;
+
+	int f_v = (verbose_level >= 1);
+
+	int i1, i2, i3;
+	int k;
+	int ret;
+	int B[da + dc + 1];
+
+	if (f_v) {
+		cout << "testing polynomial: ";
+		for (k = dc; k >= 0; k--) {
+			cout << C[k];
+		}
+		cout << endl;
+	}
+
+	for (int h = 0; h <= da; h++) {
+		A[h] = 0;
+	}
+
+	for (i1 = 0; i1 <= da; i1++) {
+
+		A[i1] = 1;
+
+		for (i2 = i1 + 1; i2 <= da; i2++) {
+
+
+			A[i2] = 1;
+
+			for (i3 = i2 + 1; i3 <= da; i3++) {
+
+
+				A[i3] = 1;
+
+				for (int h = 0; h <= da; h++) {
+					B[dc + h] = A[h];
+				}
+				for (int h = 0; h < dc; h++) {
+					B[h] = 0;
+				}
+
+				if (f_v) {
+					cout << "testing error pattern: ";
+					for (int h = dc + da; h >= 0; h--) {
+						cout << B[h];
+					}
+				}
+
+
+
+				ret = remainder_is_nonzero_binary(da, B, dc, C);
+
+				if (f_v) {
+					cout << " : ";
+					for (int h = dc; h >= 0; h--) {
+						cout << B[h];
+					}
+					cout << endl;
+				}
+
+				if (!ret) {
+					return false;
+				}
+
+				A[i3] = 0;
+			}
+			A[i2] = 0;
+		}
+
+		A[i1] = 0;
+	}
+	return true;
+}
+
+
 int algebra_global::remainder_is_nonzero(int da, int *A, int db, int *B, finite_field *F)
 // returns true if the remainder of A after division by B is nonzero
 {
@@ -3157,7 +3388,42 @@ int algebra_global::remainder_is_nonzero(int da, int *A, int db, int *B, finite_
 
 			for (j = db, k = i; j >= 0; j--, k--) {
 
+				//A[k] = (A[k] + B[j]) % 2;
 				A[k] = F->add(A[k], F->mult(mav, B[j]));
+					//A[k] = subtraction(A[k], B[j], p);
+					//A[k]=(A[k]+2-B[j])%2;
+			}
+		}
+	}
+
+
+	for (int k = da + db; k >= 0; k--) {
+		if (A[k]) {
+			return true;
+		}
+	}
+	return false;
+}
+
+
+int algebra_global::remainder_is_nonzero_binary(int da, int *A, int db, int *B)
+// returns true if the remainder of A after division by B is nonzero
+{
+
+	int i, j, k, a;
+
+	for (i = da + db; i >= db; i--) {
+
+		a = A[i];
+
+		if (a) {
+
+			//mav = F->negate(F->inverse(a));
+
+			for (j = db, k = i; j >= 0; j--, k--) {
+
+				A[k] = (A[k] + B[j]) % 2;
+				//A[k] = F->add(A[k], F->mult(mav, B[j]));
 					//A[k] = subtraction(A[k], B[j], p);
 					//A[k]=(A[k]+2-B[j])%2;
 			}
