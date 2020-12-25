@@ -703,6 +703,7 @@ public:
 	// #########################################################################
 	// finite_field_linear_groups.cpp
 	// #########################################################################
+
 	void diagonal_orbit_perm(int n,
 			long int *orbit, long int *orbit_inv, int verbose_level);
 	void frobenius_orbit_perm(int n,
@@ -787,6 +788,7 @@ public:
 	// #########################################################################
 	// finite_field_orthogonal.cpp
 	// #########################################################################
+
 	void Q_epsilon_unrank(
 		int *v, int stride, int epsilon, int k,
 		int c1, int c2, int c3, long int a, int verbose_level);

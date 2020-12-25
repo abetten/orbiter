@@ -155,6 +155,9 @@ public:
 	int f_general;
 	int f_affine;
 	int f_GL_d_q_wr_Sym_n;
+	int f_orthogonal;
+	int f_orthogonal_p;
+	int f_orthogonal_m;
 	int GL_wreath_Sym_d;
 	int GL_wreath_Sym_n;
 
@@ -170,6 +173,9 @@ public:
 	finite_field *F;
 	int f_semilinear;
 	int f_special;
+
+	// induced actions and subgroups:
+
 
 	int f_wedge_action;
 	int f_wedge_action_detached;
@@ -1713,10 +1719,11 @@ public:
 	// strong_generators_groups.cpp
 	void init_linear_group_from_scratch(action *&A, 
 		finite_field *F, int n, 
-		int f_projective, int f_general, int f_affine, 
-		int f_semilinear, int f_special, 
-		int f_GL_d_wreath_Sym_n,
-		int GL_wreath_Sym_d, int GL_wreath_Sym_n,
+		linear_group_description *Descr,
+		//int f_projective, int f_general, int f_affine,
+		//int f_semilinear, int f_special,
+		//int f_GL_d_wreath_Sym_n,
+		//int GL_wreath_Sym_d, int GL_wreath_Sym_n,
 		vector_ge *&nice_gens,
 		int verbose_level);
 	void special_subgroup(int verbose_level);

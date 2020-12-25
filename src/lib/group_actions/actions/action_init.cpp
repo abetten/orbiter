@@ -1899,19 +1899,37 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 	char str1[1000];
 	char str2[1000];
 
-	if (O->epsilon == 1) {
-		sprintf(str1, "PGOp_%d_%d", O->n, q);
-	}
-	else if (O->epsilon == -1) {
-		sprintf(str1, "PGOm_%d_%d", O->n, q);
+	if (f_semilinear) {
+		if (O->epsilon == 1) {
+			sprintf(str1, "PGGOp_%d_%d", O->n, q);
+			sprintf(str2, "{\\rm P}\\Gamma{\\rm O}^+(%d,%d)", O->n, q);
+		}
+		else if (O->epsilon == -1) {
+			sprintf(str1, "PGGOm_%d_%d", O->n, q);
+			sprintf(str2, "{\\rm P}\\Gamma{\\rm O}^-(%d,%d)", O->n, q);
+		}
+		else {
+			sprintf(str1, "PGGO_%d_%d", O->n, q);
+			sprintf(str2, "{\\rm P}\\Gamma{\\rm O}(%d,%d)", O->n, q);
+		}
 	}
 	else {
-		sprintf(str1, "PGO_%d_%d", O->n, q);
+		if (O->epsilon == 1) {
+			sprintf(str1, "PGOp_%d_%d", O->n, q);
+			sprintf(str2, "{\\rm PGO}^+(%d,%d)", O->n, q);
+		}
+		else if (O->epsilon == -1) {
+			sprintf(str1, "PGOm_%d_%d", O->n, q);
+			sprintf(str2, "{\\rm PGO}^-(%d,%d)", O->n, q);
+		}
+		else {
+			sprintf(str1, "PGO_%d_%d", O->n, q);
+			sprintf(str2, "{\\rm PGO}(%d,%d)", O->n, q);
+		}
 	}
 
-	algebra_global AG;
+	//algebra_global AG;
 
-	sprintf(str2, "{\\rm PGO}^{%s}(%d,%d)", AG.plus_minus_string(O->epsilon), O->n, q);
 
 
 	label.assign(str1);

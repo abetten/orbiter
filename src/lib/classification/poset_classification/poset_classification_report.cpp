@@ -276,7 +276,7 @@ void poset_classification::report(std::ostream &ost, int verbose_level)
 
 
 		ost << endl;
-		ost << "\\subsection{Orbits at Level " << level << "}" << endl;
+		ost << "\\subsection*{Orbits at Level " << level << "}" << endl;
 		ost << endl;
 
 
@@ -563,7 +563,9 @@ void poset_classification::report_poset_of_orbits(std::ostream &ost)
 
 	}
 	else {
-		cmd.assign("");
+		cout << "poset_classification::report_poset_of_orbits "
+				"We need -orbiter_path to be set" << endl;
+		exit(1);
 
 	}
 
@@ -572,48 +574,32 @@ void poset_classification::report_poset_of_orbits(std::ostream &ost)
 
 	char str[1000];
 
-	if (Control->f_draw_options) {
-		sprintf(str, " -xin %d -yin %d -xout %d -yout %d -rad %d",
-				Control->draw_options->xin,
-				Control->draw_options->yin,
-				Control->draw_options->xout,
-				Control->draw_options->yout,
-				Control->draw_options->rad);
+	if (!Control->f_draw_options) {
+		cout << "poset_classification::report_poset_of_orbits "
+				"We need -draw_options to be set in -poset_classification_control" << endl;
+		exit(1);
+	}
+
+	sprintf(str, " -xin %d -yin %d -xout %d -yout %d -rad %d",
+			Control->draw_options->xin,
+			Control->draw_options->yin,
+			Control->draw_options->xout,
+			Control->draw_options->yout,
+			Control->draw_options->rad);
+	cmd.append(str);
+
+	if (Control->draw_options->f_y_stretch) {
+		sprintf(str, " -y_stretch %lf ", Control->draw_options->y_stretch);
 		cmd.append(str);
 	}
-	else {
-		cmd.append(" "
-			"-xin 1000000 -yin 1000000 "
-			"-xout 1000000 -yout 1000000 -rad 20000 ");
-	}
 
-	if (Control->f_draw_options) {
-		if (Control->draw_options->f_y_stretch) {
-			sprintf(str, " -y_stretch %lf ", Control->draw_options->y_stretch);
-			cmd.append(str);
-		}
+	if (Control->draw_options->f_line_width) {
+		sprintf(str, " -line_width %lf ", Control->draw_options->line_width);
+		cmd.append(str);
 	}
-	else {
-		cmd.append(" -y_stretch 0.75 ");
-	}
-
-	if (Control->f_draw_options) {
-		if (Control->draw_options->f_line_width) {
-			sprintf(str, " -line_width %lf ", Control->draw_options->line_width);
-			cmd.append(str);
-		}
-	}
-	else {
-		cmd.append(" -line_width 0.5 ");
-	}
-
-	if (Control->f_draw_options) {
-		if (Control->draw_options->f_spanning_tree) {
-			sprintf(str, " -spanning_tree ");
-			cmd.append(str);
-		}
-	}
-	else {
+	if (Control->draw_options->f_spanning_tree) {
+		sprintf(str, " -spanning_tree ");
+		cmd.append(str);
 	}
 
 	cout << "executing: " << cmd << endl;

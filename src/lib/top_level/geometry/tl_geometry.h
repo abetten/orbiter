@@ -246,36 +246,33 @@ public:
 
 	blt_set_domain *Blt_set_domain;
 
+	linear_group *LG;
+	action *A; // orthogonal group
+
+
+	int starter_size;
+
 	int f_semilinear;
 
 	int q;
 
-	int starter_size;
-
 	poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen;
-	action *A; // orthogonal group
 	int degree;
 
 
 	int target_size;
 
 
-	void read_arguments(int argc, const char **argv);
 	blt_set_classify();
 	~blt_set_classify();
 	void null();
 	void freeself();
-	void init_basic(orthogonal *O,
-		int f_semilinear,
-		//const char *input_prefix,
-		//const char *base_fname,
-		int starter_size,
-		int verbose_level);
-	void init_group(int f_semilinear, int verbose_level);
-	void init_orthogonal_hash(int verbose_level);
-	void init2(int verbose_level);
+	void init_basic(linear_group *LG,
+			poset_classification_control *Control,
+			int starter_size,
+			int verbose_level);
 	void create_graphs(
 		int orbit_at_level_r, int orbit_at_level_m,
 		int level_of_candidates_file,

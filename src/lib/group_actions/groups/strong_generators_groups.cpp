@@ -20,10 +20,11 @@ namespace group_actions {
 void strong_generators::init_linear_group_from_scratch(
 	action *&A,
 	finite_field *F, int n, 
-	int f_projective, int f_general, int f_affine, 
-	int f_semilinear, int f_special, 
-	int f_GL_d_wreath_Sym_n,
-	int GL_wreath_Sym_d, int GL_wreath_Sym_n,
+	linear_group_description *Descr,
+	//int f_projective, int f_general, int f_affine,
+	//int f_semilinear, int f_special,
+	//int f_GL_d_wreath_Sym_n,
+	//int GL_wreath_Sym_d, int GL_wreath_Sym_n,
 	vector_ge *&nice_gens,
 	int verbose_level)
 {
@@ -41,12 +42,12 @@ void strong_generators::init_linear_group_from_scratch(
 	int f_basis = TRUE;
 	int f_init_sims = FALSE;
 	
-	if (f_projective) {
+	if (Descr->f_projective) {
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
 					"before A->init_projective_group" << endl;
 		}
-		A->init_projective_group(n, F, f_semilinear, 
+		A->init_projective_group(n, F, Descr->f_semilinear,
 			f_basis, f_init_sims,
 			nice_gens,
 			verbose_level - 1);
@@ -55,12 +56,12 @@ void strong_generators::init_linear_group_from_scratch(
 					"after A->init_projective_group" << endl;
 		}
 	}
-	else if (f_general) {
+	else if (Descr->f_general) {
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
 					"before A->init_general_linear_group" << endl;
 		}
-		A->init_general_linear_group(n, F, f_semilinear, 
+		A->init_general_linear_group(n, F, Descr->f_semilinear,
 			f_basis, f_init_sims,
 			nice_gens,
 			verbose_level - 1);
@@ -69,12 +70,12 @@ void strong_generators::init_linear_group_from_scratch(
 					"after A->init_general_linear_group" << endl;
 		}
 	}
-	else if (f_affine) {
+	else if (Descr->f_affine) {
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
 					"before A->init_affine_group" << endl;
 		}
-		A->init_affine_group(n, F, f_semilinear, 
+		A->init_affine_group(n, F, Descr->f_semilinear,
 			f_basis, f_init_sims,
 			nice_gens,
 			verbose_level - 1);
@@ -83,19 +84,47 @@ void strong_generators::init_linear_group_from_scratch(
 					"after A->init_affine_group" << endl;
 		}
 	}
-	else if (f_GL_d_wreath_Sym_n) {
+	else if (Descr->f_GL_d_q_wr_Sym_n) {
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
 					"before init_wreath_product_group" << endl;
 		}
 		A->init_wreath_product_group(
-				GL_wreath_Sym_n /* nb_factors */,
-				GL_wreath_Sym_d /* n */, F, nice_gens,
+				Descr->GL_wreath_Sym_n /* nb_factors */,
+				Descr->GL_wreath_Sym_d /* n */, F, nice_gens,
 				verbose_level);
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
 					"after init_wreath_product_group" << endl;
 		}
+	}
+	else if (Descr->f_orthogonal || Descr->f_orthogonal_p || Descr->f_orthogonal_m) {
+		if (f_v) {
+			cout << "strong_generators::init_linear_group_from_scratch "
+					"detected orthogonal group" << endl;
+		}
+		int epsilon;
+		if (Descr->f_orthogonal) {
+			epsilon = 0;
+		}
+		else if (Descr->f_orthogonal_p) {
+			epsilon = 1;
+		}
+		else if (Descr->f_orthogonal_m) {
+			epsilon = -1;
+		}
+		else {
+			cout << "cannot reach this" << endl;
+			exit(1);
+		}
+		A->init_orthogonal_group(epsilon,
+			n, F,
+			TRUE /* f_on_points */, FALSE /* f_on_lines */,
+			FALSE /* f_on_points_and_lines */,
+			Descr->f_semilinear,
+			TRUE /* f_basis */, verbose_level);
+
+
 	}
 	else {
 		cout << "strong_generators::init_linear_group_from_scratch "
@@ -109,7 +138,7 @@ void strong_generators::init_linear_group_from_scratch(
 				"fatal: !A->f_has_strong_generators" << endl;
 	}
 
-	if (f_special) {
+	if (Descr->f_special) {
 
 
 		if (f_v) {
@@ -151,12 +180,12 @@ void strong_generators::init_linear_group_from_scratch(
 	if (f_v) {
 		cout << "strong_generators::init_linear_group_from_scratch "
 				"strong generators have been created" << endl;
-		}
+	}
 
 	if (f_vv) {
 		print_generators(cout);
 		print_generators_tex();
-		}
+	}
 
 
 	if (f_v) {
