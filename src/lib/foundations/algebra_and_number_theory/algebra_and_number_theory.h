@@ -2414,6 +2414,11 @@ private:
 	unipoly_object factor_poly;
 		// the coefficients of factor_poly are negated
 		// so that mult_mod is easier
+
+	int f_print_sub;
+	//int f_use_variable_name;
+	std::string variable_name;
+
 public:
 
 	unipoly_domain(finite_field *GFq);

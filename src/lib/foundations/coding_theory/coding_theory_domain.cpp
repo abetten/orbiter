@@ -3005,13 +3005,20 @@ void coding_theory_domain::investigate_code(long int *Words,
 	file_io Fio;
 
 	if (f_v) {
-		cout << "investigate_code" << endl;
+		cout << "coding_theory_domain::investigate_code" << endl;
+		cout << "n=" << n << endl;
 		cout << "set:" << endl;
 		lint_vec_print(cout, Words, nb_words);
 		cout << endl;
 	}
 
 	dimensions(n, nb_rows, nb_cols);
+
+	if (f_v) {
+		cout << "coding_theory_domain::investigate_code" << endl;
+		cout << "nb_rows=" << nb_rows << endl;
+		cout << "nb_cols=" << nb_cols << endl;
+	}
 
 	v = NEW_int(n);
 	M1 = NEW_int(nb_rows * nb_cols);
@@ -3213,7 +3220,7 @@ void coding_theory_domain::do_long_code(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "do_long_code" << endl;
+		cout << "coding_theory_domain::do_long_code" << endl;
 	}
 
 	int i, j;
@@ -3259,12 +3266,16 @@ void coding_theory_domain::do_long_code(
 	geometry_global Gg;
 	int *Wt;
 	int wt;
+	//int N;
 
+	//N = 1 << n;
 	dimensions_N(n, nb_rows, nb_cols);
 
-	cout << "n=" << n << endl;
-	cout << "nb_rows=" << nb_rows << endl;
-	cout << "nb_cols=" << nb_cols << endl;
+	if (f_v) {
+		cout << "n=" << n << endl;
+		cout << "nb_rows=" << nb_rows << endl;
+		cout << "nb_cols=" << nb_cols << endl;
+	}
 
 	sz = 1 << k;
 	message = NEW_int(k);
@@ -3593,8 +3604,12 @@ void coding_theory_domain::dimensions(int n, int &nb_rows, int &nb_cols)
 void coding_theory_domain::dimensions_N(int N, int &nb_rows, int &nb_cols)
 {
 	int i, j;
+	long int a, b;
+	number_theory_domain NT;
 
-	place_binary(N - 1, i, j);
+	a = NT.int_log2(N);
+	b = 1 << a;
+	place_binary(b - 1, i, j);
 	nb_rows = i + 1;
 	nb_cols = j + 1;
 }

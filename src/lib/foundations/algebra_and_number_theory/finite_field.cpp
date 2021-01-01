@@ -417,11 +417,13 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 	}
 	NT.factor_prime_power(order_subfield, p1, e1);
 	if (p1 != p) {
-		cout << "the subfield must have the same characteristic" << endl;
+		cout << "finite_field::compute_subfield_polynomial "
+				"the subfield must have the same characteristic" << endl;
 		exit(1);
 	}
 	if ((e % e1)) {
-		cout << "is not a subfield" << endl;
+		cout << "finite_field::compute_subfield_polynomial "
+				"is not a subfield" << endl;
 		exit(1);
 	}
 
@@ -450,7 +452,8 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 	q1 = NT.i_power_j(p, e1);
 	subgroup_index = (q - 1) / (q1 - 1);
 	if (f_v) {
-		cout << "subfield " << p << "^" << e1 << " : subgroup_index = "
+		cout << "finite_field::compute_subfield_polynomial "
+				"subfield " << p << "^" << e1 << " : subgroup_index = "
 			<< subgroup_index << endl;
 	}
 	for (i = 0; i <= e1; i++) {
@@ -460,7 +463,7 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 		{
 			unipoly_object elt;
 		
-			Fq.create_object_by_rank(elt, jj, __FILE__, __LINE__, verbose_level);
+			Fq.create_object_by_rank(elt, jj, __FILE__, __LINE__, 0 /*verbose_level*/);
 			if (f_v) {
 				cout << i << " : " << j << " : " << jj << " : ";
 				Fq.print_object(elt, cout);
@@ -470,20 +473,20 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 		}
 	}
 	if (f_v) {
-		cout << "M=" << endl;
+		cout << "finite_field::compute_subfield_polynomial M=" << endl;
 		print_integer_matrix_width(cout, M, 
 			e, e1 + 1, e1 + 1, GFp.log10_of_q);
 	}
 	rk = GFp.Gauss_simple(M, e, e1 + 1, 
 		base_cols, 0/*verbose_level*/);
 	if (f_vv) {
-		cout << "after Gauss=" << endl;
+		cout << "finite_field::compute_subfield_polynomial after Gauss=" << endl;
 		print_integer_matrix_width(cout, M, 
 			e, e1 + 1, e1 + 1, GFp.log10_of_q);
 		cout << "rk=" << rk << endl;
 	}
 	if (rk != e1) {
-		cout << "fatal: rk != e1" << endl;
+		cout << "finite_field::compute_subfield_polynomial fatal: rk != e1" << endl;
 		cout << "rk=" << rk << endl;
 		exit(1);
 	}
@@ -511,7 +514,7 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 	}
 
 	if (f_vv) {
-		cout << "the relation is " << endl;
+		cout << "finite_field::compute_subfield_polynomial the relation is " << endl;
 		int_vec_print(cout, K, e1 + 1);
 		cout << endl;
 	}
@@ -522,7 +525,8 @@ int finite_field::compute_subfield_polynomial(int order_subfield,
 		unipoly_object elt;
 		
 		FX.create_object_by_rank(elt, a, __FILE__, __LINE__, verbose_level);
-		cout << "subfield of order " << NT.i_power_j(p, e1)
+		cout << "finite_field::compute_subfield_polynomial "
+				"subfield of order " << NT.i_power_j(p, e1)
 				<< " : " << a << " = ";
 		Fq.print_object(elt, cout);
 		cout << endl;
